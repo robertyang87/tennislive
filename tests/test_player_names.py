@@ -164,6 +164,58 @@ def test_review_queue_is_non_blocking_and_only_contains_provisional_names():
     assert "Learner Tien" not in expected
 
 
+def test_中国军团名单里每个名字都要是译名函数查得出来的():
+    """**`CHINESE_PLAYER_NAMES` 里写错一个字，就是永远命中不了，而且不报错。**
+
+    命中判据是 `player_zh(p.name) in CHINESE_PLAYER_NAMES`
+    （`render/common.py` 的 `is_chinese_involved`）——名单这一侧是死字符串，
+    译名那一侧是函数输出，两边差一个字就永远对不上。而它坏起来的样子是
+    「这位球员的比赛没进中国军团」，**和「今天她没打」一模一样**。
+
+    2026-08-14 复算出两个躺了很久的错字，改在 `render/common.py`：
+
+        徐一幡 → 徐一璠     Yifan Xu
+        魏思佳 → 韦思佳     Sijia Wei，姓是「韦」不是「魏」
+
+    ⚠️ 最要命的时候是**只剩 flashscore 一个源**：那个源 `Player.country`
+    一律留空（`sources/flashscore.py` 的模块 docstring 写着为什么），国籍那
+    一半判据整个失效，**这张表就是唯一的中国球员探测器**。而中国球员是这个
+    号的第一优先级选题。2026-08-04~07 ESPN 和 SofaScore 同时被拉黑那三天，
+    走的正是这条路。
+
+    ⚠️ 判据**自动推导，不维护第二张名单**：可达集合是拿两张译名表
+    （`players.py` 的 `PLAYER_ZH` + `player_names_top500.json` 快照）里的
+    每一个英文名**真跑一遍 `player_zh()`** 收上来的——CLAUDE.md 那条
+    「判断改没改对不要看文件内容，直接调 `player_zh()`」说的就是这个。
+    钉死那两个错字的话，下一个错字它就是哑的。
+    """
+    from tennislive.zh import player_zh
+    from tennislive.zh.players import PLAYER_ZH
+    from tennislive.render.common import CHINESE_PLAYER_NAMES
+
+    payload = json.loads(SNAPSHOT.read_text(encoding="utf-8"))
+    english = set(PLAYER_ZH)
+    for tour in ("ATP", "WTA"):
+        english.update(e["name_en"] for e in payload["tours"][tour])
+
+    # 真跑函数，不读字典的 values()——读字典验的是「表里有这个词」，
+    # 跑函数验的才是「渲染时那条路真的会吐出这个词」。
+    reachable = {player_zh(name) for name in english}
+
+    # 判据自己的判据：主语没了、或者可达集合塌成空的时候要出声，
+    # 而不是变成一盏恒真的绿灯。
+    assert CHINESE_PLAYER_NAMES, "中国军团名单空了，这条判据没有主语"
+    assert len(reachable) > 900, f"可达译名只有 {len(reachable)} 个，探测器坏了"
+    assert "郑钦文" in reachable, "连郑钦文都查不出来，探测器坏了"
+    assert "郑钦雯" not in reachable, "探测器把不存在的名字也算成可达了"
+
+    unreachable = sorted(CHINESE_PLAYER_NAMES - reachable)
+    assert not unreachable, (
+        f"这些名字 player_zh() 永远吐不出来，写进名单等于永远命中不了："
+        f"{unreachable}——名单里的字要和译名表一模一样，"
+        f"改完直接调 player_zh() 验，别看文件内容")
+
+
 def test_带重音的拼法要认得出是同一个人():
     """**同一个人换个拼法就掉回英文名，而且不吭声。**
 
