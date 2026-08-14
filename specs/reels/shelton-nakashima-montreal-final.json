@@ -188,6 +188,45 @@
   "push": {
     "summary": "谢尔顿卫冕蒙特利尔",
     "lead": "蒙特利尔ATP1000男单决赛，5号种子、世界第10的谢尔顿6-3 7-6(4)战胜28号种子、世界第31的中岛，成功卫冕加拿大公开赛男单冠军，耗时1小时29分。整场决赛他10个发球局全部保下，中岛一个破发点都没能拿到；首盘3-3时他在对手发球局拿到三个破发点、兑现第三个，6-3拿下；第二盘双方12局零破发点直接进抢七，中岛救下一个赛点，谢尔顿在第二个赛点上收官。去年在多伦多、今年在蒙特利尔，他成为本世纪第四个卫冕加拿大公开赛的球员，前三个是穆雷、德约科维奇和纳达尔。这是他生涯第七个巡回赛冠军，也是第一次一盘不失地拿下一站。",
-    "_why": "`push_reel.SUMMARY_MAX = 13`，「谢尔顿卫冕蒙特利尔」= 9 字，在闸内。只写 summary 和 lead，matchup／score／event 由封面算——一个数写两处必分叉。"
+    "_why": "`push_reel.SUMMARY_MAX = 13`，「谢尔顿卫冕蒙特利尔」= 9 字，在闸内。只写 summary 和 lead，matchup／score／event 由封面算——一个数写两处必分叉。",
+    "_no_auto_why": "这条**故意不开** `auto: true`，而且不是「忘了」——原本确实是忘了（合并之后 auto-push-reel run 49 绿着跳过、什么都没发，等了四分钟没等到 pushed.json 才发现），随后走手动 `mode=push push=true` 补发成功，流水号 21913b07f4aa4d628fee157a570baae3。⚠️ **补发那条路不写 `pushed.json`**：`git ls-files output/2026-08-14/reel/shelton-nakashima-montreal-final/` 里没有这个文件，而 auto-push 的「没推过」那道闸正是查它。所以现在补 `auto: true` 的话，将来任何一次重渲（render.json 一变，auto-push-reel 就触发）都会让同一条片子**再发一遍微信**——而那条消息发出去收不回来。已经发过、又没有推送标记的片子，只能显式留在手动那条路上。"
+  },
+  "stats": {
+    "tour": "atp",
+    "a": {
+      "headshot": "assets/players/headshots/atp-N0AE.png",
+      "aces": 8,
+      "df": 1,
+      "winners": 19,
+      "ue": 21,
+      "first_in": 40,
+      "first_total": 64,
+      "first_won": 32,
+      "second_won": 12,
+      "second_total": 24,
+      "bp_conv": 0,
+      "bp_chances": 0,
+      "pts_won": 53,
+      "pts_total": 118
+    },
+    "b": {
+      "headshot": "assets/players/headshots/atp-S0S1.png",
+      "aces": 7,
+      "df": 0,
+      "winners": 22,
+      "ue": 12,
+      "first_in": 37,
+      "first_total": 54,
+      "first_won": 32,
+      "second_won": 13,
+      "second_total": 17,
+      "bp_conv": 2,
+      "bp_chances": 4,
+      "pts_won": 65,
+      "pts_total": 118
+    },
+    "footer_venue": "Centre Court · 蒙特利尔",
+    "footer_date": "2026年8月14日",
+    "_source": "flashscore match id 8zQf6RtH（本仓库 tools/match_feed.py 直连 FS_STATS，Match 范围）。a=中岛（客队/败者），b=谢尔顿（主队/胜者），和 cover.matchup 数组顺序一致。⚠️ ATP 这条线 flashscore 直接给 Winners/非受迫失误（22-19 / 12-21），不像 WTA 那几场要另找编辑稿——这两项是接口原值，没有二次加工。first_in/first_total 由『Service Points Won 45/54 与 44/64』和『一发得分 32/37、二发得分 13/17』反推并交叉核对：谢尔顿 37+17=54 ✓、中岛 40+24=64 ✓；一发进球率 37/54=68.5%≈接口的 69%、40/64=62.5%≈63%，两边都对得上。bp_conv/bp_chances 取『Break Points Converted』（谢尔顿 2/4、中岛 0/0），并用『Break Points Saved』互补校验（中岛救 2/4 対谢尔顿转化 2/4；谢尔顿救 0/0 対中岛转化 0/0——**谢尔顿全场没有面对过一个破发点**，两边加总一致）。总得分 65/118 与 53/118 取『Total Points Won』原值。"
   }
 }
