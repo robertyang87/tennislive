@@ -45,6 +45,10 @@ import requests
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 from tennislive.publish.pushplus import push  # noqa: E402
+from tennislive.render.ai_disclosure import (  # noqa: E402
+    DISCLOSURE_COST,
+    with_ai_disclosure,
+)
 from tennislive.render.hashtags import (  # noqa: E402
     MAX_HASHTAGS,
     hashtag_count,
@@ -571,15 +575,24 @@ def split_copy(copy_text: str) -> tuple[str, str]:
 
     ⚠️ 这不是编辑口味，是平台的硬限制。真要长，办法是**提炼**不是放宽——
     见 `docs/post-match-interview-sources.md`「文案分两段」那节。
+
+    ⚠️ **AI 生成合成内容标识也从这 1000 字里出**（2026-08-14 起，见
+    `render.ai_disclosure`）：它是真的会被粘进那一格的字，不能只算正文自己。
+    所以正文本身的预算是 `BODY_MAX - DISCLOSURE_COST`，报错里把这个账拆开写——
+    只报「超过 1000」的话，作者拿自己的字数一数会对不上，然后去怀疑闸坏了。
     """
+    copy_text = with_ai_disclosure(copy_text)
     lines = copy_text.splitlines()
     title = lines[0].strip() if lines else ""
     start = 2 if len(lines) > 1 and not lines[1].strip() else 1
     body = "\n".join(lines[start:]).strip()
     if len(body) > BODY_MAX:
         raise SystemExit(
-            f"小红书正文 {len(body)} 字，超过 {BODY_MAX} 字上限，粘不进去。\n"
-            "别放宽这个数——它是平台定的。把原文整段搬进正文正是超标的原因：\n"
+            f"小红书正文 {len(body)} 字（含 {DISCLOSURE_COST} 字的 AI 标识），"
+            f"超过 {BODY_MAX} 字上限，粘不进去。\n"
+            f"正文本身还能写 {BODY_MAX - DISCLOSURE_COST} 字。\n"
+            "别放宽这个数——它是平台定的；标识是法规定的，两个都不是可调的。\n"
+            "把原文整段搬进正文正是超标的原因：\n"
             "前面写提炼过的要点、总结和给读者的启发，后面只留最值得抄的那几句原话。")
     return title, body
 

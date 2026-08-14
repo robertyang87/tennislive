@@ -10,6 +10,7 @@ from typing import Any, Mapping
 
 from PIL import Image
 
+from .ai_disclosure import mask_ai_disclosure
 from .tournament_story import TournamentStory
 
 
@@ -22,6 +23,15 @@ MAX_CARD_TEXT_CHARS = 520
 MAX_CARD_BYTES = 950_000
 MIN_SOURCE_WIDTH = 900
 MIN_SOURCE_HEIGHT = 540
+# 卡片上不该出现的「生产脚手架」词：这些是写给流水线自己看的字，漏到画面上
+# 读者只会读到「这张卡是机器凑的」。
+#
+# ⚠️ **2026-08-14 收窄了它的范围，不是删掉它。** 《人工智能生成合成内容标识
+# 办法》（2025-09-01 生效）要求的显式标识，用的正是「AI 生成」这个词
+# （GB 45438-2025 的推荐写法也是它）——于是这张表的**净效果**变成了「把合规
+# 标识要用的那几个字主动挡在画面之外」。它本来要拦的东西一个都没变，所以
+# 现在的做法是**先把标识那句话遮掉再扫**（`_production_label_hit`），
+# 和译名那条判据「先把文中所有规范名遮掉，再找剩下的近似串」是同一个手法。
 FORBIDDEN_PRODUCTION_LABELS = ("程序生成", "自动生成", "AI生成", "AI 生成")
 FORBIDDEN_TEMPLATE_LABELS = (
     "三道窄门",
@@ -51,6 +61,22 @@ class _VisibleText(HTMLParser):
         text = " ".join(data.split())
         if text:
             self.blocks.append(text)
+
+
+def _production_label_hit(visible_text: str) -> str:
+    """卡片可见文字里有没有「生产脚手架」词；有就返回是哪一个。
+
+    **遮掉 AI 标识再扫**：标识本身写着「AI 生成」，不遮的话这道闸会把一次
+    **合规动作**判成**违规内容**——而扩大化的判据不吭声，它只会让下一个人
+    把标识从卡片上删掉。抽成函数是为了这条判据够得着
+    （`test_合规标识不会被生产描述那道闸拦下来`）：闸埋在
+    `evaluate_knowledge_visuals` 里面的话，验它得先造一整套 story 和图片。
+    """
+    scannable = mask_ai_disclosure(visible_text)
+    return next(
+        (label for label in FORBIDDEN_PRODUCTION_LABELS if label in scannable),
+        "",
+    )
 
 
 def _visible_blocks(body: str) -> list[str]:
@@ -205,10 +231,7 @@ def evaluate_knowledge_visuals(
             errors.append(f"{kind} 页文字总量 {total_chars}，超过 {MAX_CARD_TEXT_CHARS}")
         if longest > MAX_TEXT_BLOCK_CHARS:
             errors.append(f"{kind} 页最长文字块 {longest} 字，超过 {MAX_TEXT_BLOCK_CHARS}")
-        forbidden = next(
-            (label for label in FORBIDDEN_PRODUCTION_LABELS if label in visible_text),
-            "",
-        )
+        forbidden = _production_label_hit(visible_text)
         if forbidden:
             errors.append(f"{kind} 页含面向内部的生产描述：{forbidden}")
         canned = next(

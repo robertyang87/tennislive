@@ -827,6 +827,7 @@ def cmd_publish_wechat(args) -> int:
         publish_article,
         publish_image_post,
     )
+    from .render.ai_disclosure import with_ai_disclosure
     from .render.terminal import console
 
     d = Path(args.dir)
@@ -850,8 +851,15 @@ def cmd_publish_wechat(args) -> int:
                 return 1
             content = ""
             if xhs_f.exists():
-                lines = xhs_f.read_text(encoding="utf-8").splitlines()
-                content = "\n".join(lines[2:]) if len(lines) > 2 else ""
+                # 公众号图片消息也是一个**会把正文发出去**的出口，所以正文
+                # 一样要带 AI 生成合成内容标识（见 `render.ai_disclosure`）。
+                # 顺手把切法换成全仓库那一个惯用法（空行才跳两行）：原来写死
+                # 跳两行，文案没空行时会把正文第一句一起吃掉——而那个错不报错。
+                lines = with_ai_disclosure(
+                    xhs_f.read_text(encoding="utf-8")
+                ).splitlines()
+                body_start = 2 if len(lines) > 1 and not lines[1].strip() else 1
+                content = "\n".join(lines[body_start:]).strip()
             result = publish_image_post(
                 title=title,
                 content=content,
@@ -944,6 +952,7 @@ def cmd_publish_flash(args) -> int:
     import re
 
     from .publish.pushplus import PushPlusError, push
+    from .render.ai_disclosure import with_ai_disclosure
     from .render.terminal import console
 
     manifest = Path(args.manifest)
@@ -965,7 +974,9 @@ def cmd_publish_flash(args) -> int:
     sent = 0
     for item in items:
         title = str(item.get("title") or "网球热点")
-        raw_text = str(item.get("text") or "")
+        # 内容雷达这条线的微信正文直接从 package.json 的 `text` 走，不经过
+        # `to_copy_page`——所以标识要在这儿加一次（见 `render.ai_disclosure`）。
+        raw_text = with_ai_disclosure(str(item.get("text") or ""))
         lines = raw_text.splitlines()
         if lines and lines[0].strip() == title:
             lines = lines[2:] if len(lines) > 1 and not lines[1].strip() else lines[1:]
