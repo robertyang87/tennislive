@@ -764,25 +764,29 @@ def hook_title_px(lines: list[str]) -> int:
 # 本身，不再是只加在标题上的额外间距。520→580，往下 60px。
 # 2026-08-12 账号所有者第四次反馈：「文案+赛场之上（药丸）都要往下再移动一点，
 # 不要过多遮挡主体背景图」——580→610，再往下 30px。**这次已经贴着安全上限**：
-# 3 行 96px 钩子的最坏情况要占 819px（见下面 `STORYCOPY_TITLE_GAP_EXTRA` 那段
-# 的账），610+819=1429，离画布底只剩 11px——再往下移之前得先看这条片子的钩子
-# 是不是真的到了三行，两行以内还有余量（308 而不是 357），但硬上限已经不宽裕了。
-# 钩子和比分板从这儿往下排，所以比分板变高只会往下长，不会把药丸顶上去。
-STORYCOPY_TOP = 610
-
-# 药丸和标题之间**额外**加的间距（px）。2026-08-07/08 两次「移动」都只动这个数，
-# 药丸钉在 STORYCOPY_TOP 不动；2026-08-09 药丸也跟着 STORYCOPY_TOP 下移了 60px
-# 之后，标题不需要再额外撑开那么多才能保持原来的下移幅度——100→40，抵掉
-# STORYCOPY_TOP 那 60px，标题/比分板的绝对位置和上一版基本持平（不会因为
-# 药丸下移而被顶得更靠下、更接近溢出）。
-# `.storycopy` 是 column flex 且 gap:34px，这段额外量加在 `.storytitle` 的
-# margin-top 上——只加宽药丸→标题这一段间距，标题→比分板之间仍是原来的 34px，
-# 两者跟着标题一起往下移。
-# ⚠️ 最坏情况核过：药丸64＋间距34＋额外间距40＋三行96px的钩子(357)＋间距34＋
-# 比分板(290) = 819。2026-08-12 STORYCOPY_TOP 580→610 之后，从 610 排到 1429，
-# 离画布底只剩 11px，不溢出——但余量比上一版（41px）薄了很多，见
-# `test_台头药丸的位置不跟着比分板漂` 里那条算总高度的断言。
-STORYCOPY_TITLE_GAP_EXTRA = 40
+# 3 行 96px 钩子的最坏情况要占 819px（药丸 64＋gap 34＋额外间距 40＋钩子 357
+# ＋gap 34＋比分板 290），610+819=1429，离画布底只剩 11px——再往下移之前得先看
+# 这条片子的钩子是不是真的到了三行，两行以内还有余量（308 而不是 357），
+# 但硬上限已经不宽裕了。
+# 钩子和比分板从这儿往下排，所以比分板变高只会往下长，不会把标题顶上去。
+#
+# ⚠️ **2026-08-14 药丸整块拿掉之后，这个常量换了主语**：它原来量的是药丸的
+# 顶边，现在量的是**标题的顶边**（`.storycopy` 的第一个孩子从药丸变成了
+# `.storytitle`）。610 → 750 不是「又往下移了一次」，**是把药丸原来占的那
+# 一截原样折进锚点，好让标题和比分板一个像素都不动**：
+#
+#     旧：610（药丸顶）＋ 药丸 65 ＋ gap 34 ＋ 额外间距 40 = 749（标题框顶）
+#     新：750（标题框顶）
+#
+# ⚠️ 750 这个数是**渲出来量的，不是按上面那笔加法算的**：先按算出来的 748
+# 渲了一版，标题墨迹落在 y=757、比改前高 2px（药丸的实际高度是 65 不是 64，
+# 而 `.kicker` 那 65px 里有多少是 line-height 的行距，CSS 里看不出来）。
+# 加回 2px 之后两版的墨迹顶边都是 **y=759**。
+#
+# 账号所有者为「文案再往下一点、别遮住主体」反馈过四次（08-07/08-08/08-09/
+# 08-12），**删一颗装饰不该把那四次一起退回去**——真渲出来量过，改前改后
+# 标题墨迹的顶边都是 y=759。
+STORYCOPY_TOP = 750
 
 
 def _scrim_css(clear: bool) -> str:
@@ -906,7 +910,11 @@ def _solo_body(cover: dict) -> tuple[str, str]:
         f'<div class="brandlines"><span class="brand">网球时差 · {column}</span>'
         + (f'<span class="topic">{html.escape(topic)}</span>' if topic else "")
         + f'</div></div></div>'
-        f'<div class="storycopy"><span class="kicker">{column}</span>'
+        # ⚠️ **这儿曾经有一颗品牌绿的「台头药丸」**（`.kicker`），2026-08-14
+        # 账号所有者「把赛场之上那个黄色的药丸整体移除」，整块拿掉了。栏目名
+        # 没有丢——它一直同时印在左上角那行 `网球时差 · {column}` 里，药丸是
+        # 第二遍。判据 `test_台头药丸不许自己回来`。
+        f'<div class="storycopy">'
         f'<div class="storytitle">{hook}</div>{_solo_score_html(cover)}</div>')
     # **`fit: "width"` 这条路以前只有 VS 的分格有**（`_panel_style`），solo 没有——
     # 而 CLAUDE.md 那条「横素材在 3:4 的海报里要 `fit: "width"`，不是 cover」写的是
@@ -975,8 +983,6 @@ __SCRIM__
  gap:34px;align-items:flex-start}
 .hseam{position:absolute;left:0;right:0;height:6px;background:#c6f65a;z-index:4;
  transform:translateY(-50%);box-shadow:0 0 26px rgba(0,0,0,.55)}
-.kicker{align-self:flex-start;background:#c6f65a;color:#062018;font-size:30px;
- font-weight:800;letter-spacing:4px;padding:11px 26px;border-radius:999px}
 .storytitle{font-family:'TL Display SC','TL Sans SC',sans-serif;
  line-height:1.24;font-weight:400;color:#f4fbf7;white-space:nowrap;
  text-shadow:0 2px 6px rgba(0,0,0,.9),0 6px 30px rgba(0,0,0,.85),
@@ -1062,12 +1068,13 @@ __SCRIM__
 """
         .replace("__SCRIM__", _scrim_css(clear_scrim))
         .replace("__STORYCOPY_TOP__", str(STORYCOPY_TOP))
-        # `above`（父子同框那种上下叠版式）不加这段额外间距：那条路已经把
-        # `.storycopy` 改成从底部锚定、gap 收到 26px，为的是不让文案撞上中间
-        # 那道分界线；额外撑开标题只会把整块顶得更高，和它的目的相反。
-        + (f".storytitle{{font-size:{title_px}px}}" if above else
-           f".storytitle{{font-size:{title_px}px;"
-           f"margin-top:{STORYCOPY_TITLE_GAP_EXTRA}px}}")
+        # ⚠️ 这儿曾经给 `.storytitle` 补一段 `margin-top`（`STORYCOPY_TITLE_GAP_EXTRA`），
+        # 撑开的是**药丸到标题**那一截。药丸 2026-08-14 整块拿掉之后这个常量
+        # 没有主语了——那 40px 连同药丸自己的 64＋gap 34 一起折进了
+        # `STORYCOPY_TOP`（610→748），所以标题的绝对位置一个像素没变。
+        # **别再把它加回来**：现在标题就是第一个孩子，补 margin 只会把整块
+        # 往下推，而下面只剩 11px 余量。
+        + f".storytitle{{font-size:{title_px}px}}"
         # 上下叠一张时文案压到底部——**居中会正好骑在分界线上**，把上格的下半
         # 和下格的上半（那只搭在眉骨上的手，正是这条片子的落点）一起盖住。
         # 追加在最后，同特异性下后写的赢。
