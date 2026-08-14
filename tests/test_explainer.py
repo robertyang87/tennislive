@@ -2128,6 +2128,93 @@ _KNOWN_TYPOS = {
 _TYPO_SAFE = ("巴基斯坦", "斯图加特")
 
 
+#: 「全汉字」和「全汉字或间隔号」的极大区间。
+#:
+#: 2026-08-14 profile 出来的：`test_人名要以译名表为准` 单跑 **255 秒**，占了
+#: CI 关键路径（全量 `-n auto --dist loadfile` 396 秒）的大半。热点不是模糊匹配
+#: 本身，是**那句逐窗口的字符范围检查**——
+#:
+#:     ncalls        tottime  cumtime  函数
+#:     373,891,284   110.0s   256.4s   builtins.all          ← 字符范围检查
+#:     704,601,834   138.2s   138.2s   <genexpr> 判据①的 all
+#:     241,744,812    42.8s    42.8s   <genexpr> 判据②的 all
+#:      34,402,718    33.5s    85.3s   builtins.sum          ← 过了闸才走到这儿
+#:     （语料 3899 段 / 521,856 字，规范名 547 个，命中 5 条；总计 702s，
+#:       上面这份是带 cProfile 的口径，裸跑 255s）
+#:
+#: `all` 被调了 **3.739 亿次**，而它只跟「这一段是不是全汉字」有关，**跟拿哪个
+#: 名字去比一点关系都没有**——547 个名字每个都把同一个窗口重新验了一遍。
+#: 所以提到外面：整段文本一次正则切出极大区间，窗口只在区间内滑。语义完全
+#: 一样——原来那句 `all` 要求窗口整段都是汉字，等价于「窗口落在某个极大汉字
+#: 区间里」，而遮罩用的全角空格（U+3000）本来就在这个范围外，照旧断开区间。
+#:
+#: ⚠️ 范围要和原来那两个条件**逐字对得上**：`"一" <= c <= "鿿"` 就是
+#: U+4E00–U+9FFF，判据①另外放行间隔号，判据②不放行。写宽一个字符就是
+#: 一条悄悄放行的假绿。
+_CJK_RUN = re.compile("[一-鿿]+")
+_CJK_DOT_RUN = re.compile("[一-鿿·]+")
+
+
+def _typo_index(probes):
+    """把 (比对串, 报出去的名字) 建成两把钥匙的索引：前两字、第 3-4 字。
+
+    上面那条注释拆掉了「每个窗口验 547 遍字符范围」；这条拆掉剩下的那一半
+    冗余——**每个窗口和 547 个名字逐个比一遍**。
+
+    窗口和比对串恰好差一个字，那个字要么落在前两位、要么落在第 3 位往后：
+
+    * 落在第 3 位往后 → **前两个字必然一模一样** → 「前两字」那张表查得到
+    * 落在前两位     → **第 3、4 个字必然一模一样** → 「第 3-4 字」那张表查得到
+
+    两支是穷尽的（差的那个字不落在前两位，就落在第 3 位往后），所以并起来
+    **必然盖住所有真候选，一个都不漏**；查出来的假候选再逐字数一遍差多少
+    剔掉，所以**也一个都不多**。比对串最短 4 个字（`canon` 就是这么筛的），
+    两把钥匙各 2 个字，正好取得到。
+
+    ⚠️ 一个名字可能同时被两把钥匙查到（差的那个字在第 5 位往后时，前两字和
+    第 3-4 字都对得上）。`_near_misses` 里那句 `probe[:2] == head_key` 就是
+    为这个——**不去重会把同一处报两遍**。
+    """
+    by_head, by_mid = {}, {}
+    for probe, name in probes:
+        by_head.setdefault(probe[:2], []).append((probe, name))
+        by_mid.setdefault(probe[2:4], []).append((probe, name))
+    return by_head, by_mid
+
+
+def _near_misses(masked, run_re, index):
+    """找出 `masked` 里和某个比对串**恰好差一个字**的窗口，产出 (窗口, 名字)。
+
+    `run_re` 决定窗口允许哪些字符（见 `_CJK_RUN` / `_CJK_DOT_RUN`），
+    `index` 是 `_typo_index` 建的那两张表。
+    """
+    by_head, by_mid = index
+    hits = []
+    for run in run_re.finditer(masked):
+        seg = run.group()
+        n = len(seg)
+        # 比对串最短 4 个字，所以起点最远到 n-4；n < 4 时 range 直接是空的。
+        for i in range(n - 3):
+            head_key = seg[i:i + 2]
+            for probe, name in by_head.get(head_key, ()):
+                width = len(probe)
+                if i + width > n:
+                    continue        # 窗口伸出了这段区间，原来那句 all 也拦得住
+                window = seg[i:i + width]
+                if sum(a != b for a, b in zip(window, probe)) == 1:
+                    hits.append((window, name))
+            for probe, name in by_mid.get(seg[i + 2:i + 4], ()):
+                if probe[:2] == head_key:
+                    continue        # 已经在「前两字」那一支里数过，别数第二遍
+                width = len(probe)
+                if i + width > n:
+                    continue
+                window = seg[i:i + width]
+                if sum(a != b for a, b in zip(window, probe)) == 1:
+                    hits.append((window, name))
+    return hits
+
+
 def test_人名要以译名表为准():
     """人名不手打，以 `zh/players.py` 为准——这条写在 CLAUDE.md 里，仍然被违反了两次。
 
@@ -2160,6 +2247,24 @@ def test_人名要以译名表为准():
             text = text.replace(name, "　" * len(name))
         return text
 
+    # ① 等长、恰好差一个字：「里巴金娜」之于「莱巴金娜」
+    index_same = _typo_index([(name, name) for name in canon])
+
+    # ② 少一个字、其余至多差一个字：「科梅萨纳」之于「科梅萨尼亚」。
+    #
+    # 2026-08-02 补的。那天四个人名错，判据 ① 只拦住一个——**而我第一反应
+    # 是「补编辑距离 ≤1 的增删」，量完才发现那也拦不住**：科梅萨纳到
+    # 科梅萨尼亚的编辑距离是 **2**（改 纳→尼、再插 亚），不是 1。
+    #
+    # 先试过「共同前缀 ≥3」那种宽判据，全部 1106 段存量上报出 **33 条**，
+    # 全是合法短称或另一个真人（维纳斯 / 克鲁兹 / 亚历山德拉）——判据宁可
+    # 窄不可宽，扩大化的判据不吭声。收窄成这一条之后只剩 1 条误报，
+    # 已声明在 `_ON_PURPOSE` 里。
+    #
+    # 极大 CJK 串试过，不行：中文没有词边界，整句话就是一个串。
+    index_short = _typo_index([(name[:-1], name) for name in canon
+                               if len(name) - 1 >= 4 and "·" not in name])
+
     bad = []
 
     def keep(msg: str) -> bool:
@@ -2180,38 +2285,13 @@ def test_人名要以译名表为准():
         # 缺口一直没现形；`known` 并进 top500 表之后「斯图加特」撞上新收进来的
         # 「斯图尔特」才炸出来（见 `_TYPO_SAFE` 那条注释）。改成遮过的 `safe`。
         masked = strip_known(safe)
-        for name in canon:
-            # ① 等长、恰好差一个字：「里巴金娜」之于「莱巴金娜」
-            width = len(name)
-            for i in range(len(masked) - width + 1):
-                window = masked[i:i + width]
-                if not all("一" <= c <= "鿿" or c == "·" for c in window):
-                    continue
-                if sum(a != b for a, b in zip(window, name)) == 1:
-                    bad.append(f"{where}：「{window}」是不是想写「{name}」")
-
-            # ② 少一个字、其余至多差一个字：「科梅萨纳」之于「科梅萨尼亚」。
-            #
-            # 2026-08-02 补的。那天四个人名错，判据 ① 只拦住一个——**而我第一反应
-            # 是「补编辑距离 ≤1 的增删」，量完才发现那也拦不住**：科梅萨纳到
-            # 科梅萨尼亚的编辑距离是 **2**（改 纳→尼、再插 亚），不是 1。
-            #
-            # 先试过「共同前缀 ≥3」那种宽判据，全部 1106 段存量上报出 **33 条**，
-            # 全是合法短称或另一个真人（维纳斯 / 克鲁兹 / 亚历山德拉）——判据宁可
-            # 窄不可宽，扩大化的判据不吭声。收窄成这一条之后只剩 1 条误报，
-            # 已声明在 `_ON_PURPOSE` 里。
-            #
-            # 极大 CJK 串试过，不行：中文没有词边界，整句话就是一个串。
-            short = width - 1
-            if short < 4 or "·" in name:
-                continue
-            head = name[:short]
-            for i in range(len(masked) - short + 1):
-                window = masked[i:i + short]
-                if not all("一" <= c <= "鿿" for c in window):
-                    continue
-                if sum(a != b for a, b in zip(window, head)) == 1:
-                    bad.append(f"{where}：「{window}」是不是想写「{name}」")
+        # ① 允许间隔号（名字里有「维纳斯·威廉姆斯」这种），② 只认汉字——
+        # 两条的字符范围原来各写在一句 `all(...)` 里，现在收进那两个正则，
+        # 见 `_CJK_RUN` / `_CJK_DOT_RUN` 上面那段。
+        for window, name in _near_misses(masked, _CJK_DOT_RUN, index_same):
+            bad.append(f"{where}：「{window}」是不是想写「{name}」")
+        for window, name in _near_misses(masked, _CJK_RUN, index_short):
+            bad.append(f"{where}：「{window}」是不是想写「{name}」")
 
     # **「赛场之上」的 spec 和文案也要扫。** 这条测试原来只看解说片的脚本，
     # 于是 2026-07-29 我在 `eala-fernandez.xhs.txt` 里把 Rybakina 写成
@@ -2293,6 +2373,148 @@ def test_人名要以译名表为准():
     assert not stale, (
         f"{stale} 已经不违规了（或者名字写错了），从 _SHIPPED_TYPOS 里删掉——"
         "这张表只许减不许加")
+
+
+def test_人名近似匹配的索引和笨办法结果一样():
+    """`_typo_index` / `_near_misses` 是上一条测试的加速索引，这条钉住它和
+    「逐个名字滑窗口」那个笨办法**结果完全一样**。
+
+    2026-08-14 加的。上一条原来单跑 **255 秒**，把 CI 关键路径（全量 396 秒）
+    吃掉大半；换成两把钥匙查表之后 **1.6 秒**。而换掉的是**判据本身的实现**——
+    判据悄悄变窄是这个仓库反复栽过的那种坏：它不报错，只是从此拦不住东西，
+    而测试照样绿（「是不是这一版那道闸恒真了一个月」「碰巧对和真的接上了
+    长得一模一样」）。所以拿笨办法当基准做差分，比的是**多重集**。
+
+    ⚠️ **真语料上那条判据只命中 5 条，证不动「一般情况下也一样」。** 所以这里
+    自己造语料，把两条判据的每一支都打满：改一个字的（判据①该报）、少一个字
+    再改一个的（判据②该报）、差两个字的和原样的真名字（两条都不该报）、
+    间隔号（判据①放行、判据②不放行）、遮罩用的全角空格，以及汉字区间两头
+    的边界字符（U+4DFF / U+4E00 / U+9FFF / U+A000）——范围写宽一个字符，
+    就是一条悄悄放行的假绿。
+    """
+    import random
+
+    from tennislive.zh import _ranked_player_names
+    from tennislive.zh.players import PLAYER_ZH
+
+    known = sorted(
+        set(PLAYER_ZH.values()) | set(_ranked_player_names().values()) | _ON_PURPOSE,
+        key=len, reverse=True,
+    )
+    # 每种长度各取几个，外加全部带间隔号的——跑得快，又盖得住 4 字到最长的
+    # 那个名字的每一档长度（长度只取一档的话，「窗口伸出区间」那一支就没样本）。
+    canon, taken = [], {}
+    for name in sorted(n for n in known if len(n) >= 4):
+        if taken.get(len(name), 0) < 8 or "·" in name:
+            canon.append(name)
+        taken[len(name)] = taken.get(len(name), 0) + 1
+    assert len({len(n) for n in canon}) >= 5, "长度盖得太少，差分没意义"
+    assert any("·" in n for n in canon), "没有带间隔号的名字，判据①那一支没样本"
+
+    def naive_scan(masked):
+        """HEAD~ 的写法，逐字抄下来当基准。"""
+        out = []
+        for name in canon:
+            width = len(name)
+            for i in range(len(masked) - width + 1):
+                window = masked[i:i + width]
+                if not all("一" <= c <= "鿿" or c == "·" for c in window):
+                    continue
+                if sum(a != b for a, b in zip(window, name)) == 1:
+                    out.append((window, name))
+            short = width - 1
+            if short < 4 or "·" in name:
+                continue
+            head = name[:short]
+            for i in range(len(masked) - short + 1):
+                window = masked[i:i + short]
+                if not all("一" <= c <= "鿿" for c in window):
+                    continue
+                if sum(a != b for a, b in zip(window, head)) == 1:
+                    out.append((window, name))
+        return out
+
+    index_same = _typo_index([(n, n) for n in canon])
+    index_short = _typo_index([(n[:-1], n) for n in canon
+                               if len(n) - 1 >= 4 and "·" not in n])
+
+    def indexed_scan(masked):
+        return (_near_misses(masked, _CJK_DOT_RUN, index_same)
+                + _near_misses(masked, _CJK_RUN, index_short))
+
+    cjk = [chr(c) for c in range(0x4E00, 0x4E00 + 300)]
+    #: 汉字区间的两头、外面各一个，加上间隔号、遮罩用的全角空格、标点和拉丁字母
+    edge = ["䷿", "一", "鿿", "ꀀ", "·", "　", "，", "A", " "]
+    rnd = random.Random(20260814)      # 钉死种子：这条测试不许今天绿明天红
+
+    def retype(name, k):
+        """把 k 个字改到别的汉字上。"""
+        chars = list(name)
+        for pos in rnd.sample(range(len(chars)), min(k, len(chars))):
+            chars[pos] = rnd.choice(cjk)
+        return "".join(chars)
+
+    # ⚠️ **两条判据的字符范围只差一个间隔号，而随机语料撞不出那个差别。**
+    # 反向验证时逮到的：把判据②也换成放行间隔号的 `_CJK_DOT_RUN`（范围写宽
+    # 一个字符，正是「悄悄放行的假绿」那一类），200 条随机语料**全绿**——
+    # 因为要露馅得凑出「窗口里带一个间隔号、其余和 head 一字不差」这种形状，
+    # 随机撞不到。所以这几条钉死，不靠运气：
+    #
+    #   `name[:-1] + "·"`  长度等于名字，只差最后一个字 → **判据①该报**（①放行间隔号）
+    #   `head[:-1] + "·"`  长度等于 head，只差最后一个字 → **判据②不该报**（②只认汉字）
+    corpus = []
+    for name in canon[:40]:
+        if "·" in name:
+            continue
+        corpus.append("的" + name[:-1] + "·" + "在")
+        head = name[:-1]
+        if len(head) >= 4:
+            corpus.append("的" + head[:-1] + "·" + "在")
+            corpus.append("的" + head[:2] + "·" + head[3:] + "在")
+
+    fired_same = fired_short = 0
+    for _ in range(200):
+        parts = []
+        for _ in range(rnd.randint(1, 6)):
+            roll = rnd.random()
+            if roll < 0.30:                      # 改一个字 → 判据①该报
+                parts.append(retype(rnd.choice(canon), 1))
+            elif roll < 0.50:                    # 少一个字再改一个 → 判据②该报
+                name = rnd.choice(canon)
+                parts.append(retype(name[:-1], 1) if len(name) > 4
+                             else retype(name, 1))
+            elif roll < 0.62:                    # 差两个字 → 两条都不该报
+                parts.append(retype(rnd.choice(canon), 2))
+            elif roll < 0.74:                    # 原样的真名字 → 不该报
+                parts.append(rnd.choice(canon))
+            elif roll < 0.88:
+                parts.append("".join(rnd.choice(cjk)
+                                     for _ in range(rnd.randint(1, 8))))
+            else:
+                parts.append("".join(rnd.choice(edge)
+                                     for _ in range(rnd.randint(1, 4))))
+        corpus.append("".join(parts))
+
+    for text in corpus:
+        baseline = sorted(naive_scan(text))
+        assert baseline == sorted(indexed_scan(text)), (
+            f"索引和笨办法对不上，语料是 {text!r}\n"
+            f"  笨办法：{baseline}\n"
+            f"  走索引：{sorted(indexed_scan(text))}")
+        # 判据①的窗口和名字等长，判据②的窗口少一个字——分开数，见下。
+        fired_same += sum(1 for w, n in baseline if len(w) == len(n))
+        fired_short += sum(1 for w, n in baseline if len(w) == len(n) - 1)
+
+    # ⚠️ **判据自己也要有判据。** 上面每一句断言的都是「两边一样」，而
+    # 「两边都没报」同样满足它——语料要是造得不对题，这条测试会变成一盏
+    # 恒真的绿灯（这个仓库为「断言恒真」栽过好几次）。
+    #
+    # ⚠️ 而**只数总条数是不够的**：判据①的样本比②多得多，光看总数，②那一支
+    # 整个哑掉也照样过关。所以两支分开钉。实测（2026-08-14，钉死的种子，
+    # 114 个名字盖住 4~16 字十档长度）**①188 条 / ②55 条**；门槛按数量级留，
+    # 别贴着实测写——译名表长了短了这两个数会跟着动，而那不是回归。
+    assert fired_same > 50, f"判据①只命中 {fired_same} 条，差分等于没比"
+    assert fired_short > 15, f"判据②只命中 {fired_short} 条，差分等于没比"
 
 
 def test_旁白不解说画面():
