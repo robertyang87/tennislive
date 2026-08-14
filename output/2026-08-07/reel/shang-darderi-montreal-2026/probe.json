@@ -1,5 +1,5 @@
 {
-  "url": "https://acdn.ak-stream-videoplatform.sky.it/secure/hls/2026/08/06/1116425/master.m3u8?hdnts=st=1786063451~exp=1786063751~acl=/secure/hls/2026/08/06/1116425/*~hmac=c26b0cb03287b1646aeefb39f3c42b490bcc020b6df823596d9edd0ece9c7bb9",
+  "url": "https://acdn.ak-stream-videoplatform.sky.it/secure/hls/2026/08/06/1116425/master.m3u8",
   "width": 1280,
   "height": 720,
   "duration": 123.233,
@@ -49,5 +49,6 @@
     "score_03.jpg"
   ],
   "every": 2.0,
-  "captions": null
+  "captions": null,
+  "_url_note": "原来存的是一条短时签名 HLS（TTL 300 秒，2026-08-07 失效），2026-08-14 把签名串去掉只留资产路径——和 specs/reels/shang-darderi-montreal-2026.json 的 source_url 同一个写法。为什么这条源被禁、片子为什么不删，看那条 spec 的 _source_denied。"
 }
