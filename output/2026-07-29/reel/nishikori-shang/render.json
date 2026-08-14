@@ -1,4 +1,5 @@
 {
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-nishikori-shang/nishikori-shang.mp4",
-  "video_bytes": 30185483
+  "video_bytes": 30185483,
+  "_release_tag_note": "tag `reel-nishikori-shang` 被两个日期目录共用（另一份是 2026-07-28）。2026-08-14 用 Range GET 量的，tag 上是 30185483 字节，和本目录对得上——也就是**本目录这一份才是线上那条**。重渲会 `--clobber` 换掉它，换了要重量。"
 }

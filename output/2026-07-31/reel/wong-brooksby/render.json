@@ -4,5 +4,6 @@
   "segments_seconds": 90.3,
   "film_seconds": 91.483,
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-wong-brooksby/wong-brooksby.mp4",
-  "video_bytes": 55028980
+  "video_bytes": 55028980,
+  "_release_tag_note": "⚠️ 这份记录已经不作数：tag `reel-wong-brooksby` 被 2026-08-01 那一趟重渲 `--clobber` 换掉了。2026-08-14 用 Range GET 量的，tag 上现在是 55323809 字节，也就是 output/2026-08-01/reel/wong-brooksby 那一份。本目录的 video_bytes 和 film_seconds 说的是它自己渲出来那一版（55028980），**线上已经取不到**——拿本目录的 video_url 配本目录的 film_seconds 会算错。"
 }

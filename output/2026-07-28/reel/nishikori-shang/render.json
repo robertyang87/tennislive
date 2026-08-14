@@ -1,4 +1,5 @@
 {
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-nishikori-shang/nishikori-shang.mp4",
-  "video_bytes": 35863138
+  "video_bytes": 35863138,
+  "_release_tag_note": "⚠️ 这份记录已经不作数：tag `reel-nishikori-shang` 被 2026-07-29 那一趟重渲 `--clobber` 换掉了。2026-08-14 用 Range GET 量的，tag 上现在是 30185483 字节，也就是 output/2026-07-29/reel/nishikori-shang 那一份；本目录记的 35863138 那条片子在线上已经取不到。所以这一份**故意不填 film_seconds**——按 URL 量会量到另一条片子的长度，而那个数正要当观看比例的分母，认错人比空着糟得多。"
 }
