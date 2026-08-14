@@ -7,7 +7,7 @@ run 30755226229）。43 秒不值得优化，真正的成本是**人的往返**�
 合并、再记得回来点一次 dispatch。这个脚本要省掉的是最后那一下。
 
 **而它是这条链上唯一新增的风险点**，因为微信那条消息发出去收不回来。
-所以判据全部收在这儿（不写进 YAML，那儿测不了），四道闸一道都不能省：
+所以判据全部收在这儿（不写进 YAML，那儿测不了），五道闸一道都不能省：
 
 1. **路径形状**必须是 `output/<日期>/reel/<slug>/render.json`
 2. spec 里必须显式写 `"push": {"auto": true}` ——**默认关**，
@@ -20,7 +20,9 @@ run 30755226229）。43 秒不值得优化，真正的成本是**人的往返**�
    按文件存不存在判**恒为假**——那道闸等于没装，会重复发；
    ② 只活在工作区里的标记本来就不算数（同一个毛病在复制页上踩过两次：
    日志印着链接、步骤 success、人点开 404）
-4. 一趟**最多一条**。一次合并带进来两条成片就一条都不发，报出来让人手动。
+4. **海报在仓库里**：`<outdir>/poster.jpg` 是推送正文的第一屏，没有它这条
+   消息只剩两个按钮，看不出这是谁打谁。见 `wants_auto_push` 里那一段
+5. 一趟**最多一条**。一次合并带进来两条成片就一条都不发，报出来让人手动。
    批量自动发微信，错一次就是错一片
 
 判据在 `tests/test_auto_push.py`，每一道都反向验证过。
@@ -87,7 +89,7 @@ def _spec_paths(repo: Path, slug: str) -> tuple[Path, Path]:
 
 
 def wants_auto_push(repo: Path, slug: str, outdir: Path) -> None:
-    """四道闸，过不了就 `Skip`（带理由）。"""
+    """五道闸，过不了就 `Skip`（带理由）。"""
     # **render.json 必须还在仓库里。** 工作流那头已经用 --diff-filter=AM 滤掉了
     # 删除项，这儿再兜一层：被删的旧产物（清理被顶替的版本）不是新渲完的片子，
     # 它的 spec 往往还写着 auto:true、目录里又没有 pushed.json——不拦的话会
@@ -104,7 +106,7 @@ def wants_auto_push(repo: Path, slug: str, outdir: Path) -> None:
 
     # 复用 push_reel 那份读法，别在这儿另解一遍 JSON——「一个数写两处必分叉」。
     sys.path.insert(0, str(Path(__file__).resolve().parent))
-    from push_reel import push_is_auto  # noqa: PLC0415
+    from push_reel import POSTER_NAME, push_is_auto  # noqa: PLC0415
 
     if not push_is_auto(copy_path):
         raise Skip(f"{slug}：spec 里没写 push.auto=true，不自动发"
@@ -119,6 +121,44 @@ def wants_auto_push(repo: Path, slug: str, outdir: Path) -> None:
         except OSError:
             when = "详情在仓库里，这次没检出"
         raise Skip(f"{slug}：已经推过了（{when}），不重复发")
+
+    # 海报是推送正文的**第一屏**，`push_reel.POSTER_NAME` 那行注释写着
+    # 「没有它的推送只有两个按钮，看不出这是谁打谁」。
+    #
+    # **来路（2026-08-13）**：`archive-media.yml mode=purge` 用 git filter-repo
+    # 从全史抹掉了 output/ 下所有 mp4/jpg/jpeg/png/webm/mov（账号所有者认领过的
+    # 取舍，17 GB → 789 MB）。副作用是**仓库里一张 poster.jpg 都不剩了**
+    # （量过：122 个 reel 目录，122 个都没有）。新渲的片子没事——render 会重新
+    # 生成并提交；有风险的是**purge 之前渲好、purge 之后才推**的老片子。
+    #
+    # **为什么整条不发，而不是发一条没有海报的**：这不是我现挑的口径，是
+    # **手动那条路早就定了的**——`match-reel.yml` 的「push 模式先确认成片真的
+    # 落地了」那一步写着 `test -f .../poster.jpg || { echo "::error::海报不在
+    # ——推送第一屏就是它，没有它只剩两个按钮"; exit 1; }`。同一个问题两条路
+    # 给两个答案，就是「一个数写两处必分叉」的政策版：同一条片子手动推被拦下、
+    # 自动推却降级发了出去，而微信那条消息收不回来。
+    #
+    # ⚠️ **`push_reel.py` 那条软降级不算数。** 它确实在缺海报时打了一行
+    # `[封面] … 不在`，但那是**发之前最后一步**的一句 print，而且这一趟是绿的
+    # ——「没有人会去读一条绿 run 的日志」。更要紧的是它拦不住：
+    # `prepare_image_delivery` 遇到 `not sources` 直接返回、`wait_for_images`
+    # 遇到 `not pending` 直接返回（都实测过），因为没有海报就没有 `<img>`，
+    # **没有链接可探，两道现成的闸一道都走不到**。
+    #
+    # ⚠️ **查 `tracked()` 不查 `is_file()`**，和上面那道「已经推过」同一个理由，
+    # 而且这里更硬：这个脚本跑在工作流的「挑出该自动发的那一条」那一步，
+    # 排在 `git sparse-checkout add` **之前**，`output/` 那一格根本不在工作区。
+    # 按 `is_file()` 判就是**恒为假**——那不是漏发一条，是**每一条都不发**，
+    # 整条自动推送静静地死掉。判据 `test_稀疏检出下海报也要认得出`。
+    poster = outdir / POSTER_NAME
+    if not tracked(repo, poster):
+        raise Skip(
+            f"{slug}：{poster} 不在仓库里，不发——推送第一屏就是海报，"
+            "没有它这条消息只剩两个按钮，看不出这是谁打谁。\n"
+            "        来路：2026-08-13 那次 purge 从全史抹掉了所有 jpg，"
+            "purge 之前渲好、之后才推的片子都会撞上这条。\n"
+            "        出路：重跑一次 match-reel mode=render（push=false）"
+            "把海报渲回来，它会随 PR 进 main，这条闸自然就过了。")
 
 
 def pick(changed: list[str], repo: Path) -> tuple[str, Path] | None:
