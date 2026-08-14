@@ -38,6 +38,20 @@
     "summary": "一盘未失 卫冕加拿大",
     "lead": "2026 国家银行公开赛（蒙特利尔）决赛，谢尔顿 6-3 7-6(4) 击败中岛布兰登，整站一盘未失卫冕，拿下生涯第 2 个大师赛冠军，排名升到世界第 6。捧杯致辞里他花了很长一段恭喜对手「你是美国网球的未来——我们都是」，又拿去年在多伦多夺冠开了个玩笑，最后落在「我不一定每场都能赢，但我总会把一切都留在场上」。捧杯致辞全程，中英双语字幕。"
   },
+  "transcript_disagree_ok": {
+    "rate": 0.157,
+    "why": "实测 15.6%（闸门 12%，天花板 18%），逐处看过：**每一处都是 whisper 比 YouTube 更简，没有一处是反方向**（YouTube 听错、whisper 听对）。绝大多数是 `uh`/`um` 这类填词被 whisper 吞掉；三处实词分歧 `this season`→`the scene`、`uh fede`→`fed a`、`the`→`they` 都是误听，不影响意思；`that'll`→`that` 是缩读。真正把比例顶上去的是 whisper **整段漏掉**的两块：多伦多那段玩笑（`i i'm not going to say anything bad about toronto i i love toronto too`）和里克叔叔那段（`i don't know how many uncles will do that so uh to my parents uncle rick i appreciate`）——而这两段在 YouTube 原字幕里都在（拿本地 cap_by-sWlvWFuo.en.json3 逐条核过）。漏掉的原因看时间轴就清楚：72.0 秒是 `[laughter]`、84.0 秒是 `[cheering]`、136.9 秒是 `[applause]`，这两块正好压在全场笑声和掌声上，`small.en` 在人声被观众盖住时就是这个表现。**这条片子引用的每一句原话都单独核过在不在原字幕里**（封面钩子那句 `I may not win every time I play, but I always leave it all on the court`、`skin and blood on that side of the court`、`the future of American tennis`、以及正文引的整段多伦多玩笑），九句全部命中。"
+  },
+  "caption_gaps_ok": {
+    "11.8-13.9": "掌声。前一条 9.8 秒是 `[applause]`，下一条 13.9 秒 `I want to congratulate Brandon.` 立刻接上——whisper 在这儿听到的 `I` 正是这句的第一个词，zh 第 5 行已经覆盖",
+    "81.0-84.0": "笑声＋欢呼。72.0 秒 `[laughter]`、84.0 秒 `[cheering]`，他讲完多伦多那段玩笑等观众反应；84.0 秒 `but Montreal just as much.` 接上，whisper 听到的 `But` 正是这句，zh 第 28 行已经覆盖",
+    "138.9-141.4": "掌声。前一条 136.9 秒是 `[applause]`（他刚谢完家人），141.4 秒 `Uh, to the sponsors, uh, National Bank,` 接上，whisper 听到的 `to` 正是这句，zh 第 50 行已经覆盖",
+    "189.3-193.2": "纯掌声。两头 187.3 和 193.2 秒都是 `[applause]`，中间没有台词——他刚说完 `So thank all of you.`，全场鼓掌，随后 194.2 秒才起 `Last of all, I want to thank the fans.`",
+    "203.1-205.4": "掌声。前一条 201.1 秒是 `[applause]`，205.4 秒 `Tennis wise, this has been one of the` 接上，whisper 听到的 `Tennis` 正是这句，zh 第 67 行已经覆盖",
+    "225.4-227.9": "纯掌声＋欢呼。两头 223.4 秒 `[applause]`、227.9 秒 `[cheering]`、229.3 秒又一次 `[applause]`，中间没有台词——他刚谢完球迷一周的热情，随后 230.2 秒才起 `I I love this game.`"
+  },
+  "_verified_clean": "对不上 15.6%，超闸门但没超天花板，已在 transcript_disagree_ok 里逐处认领。6 处空档全部核对本地原始字幕 cap_by-sWlvWFuo.en.json3 确认是掌声／笑声边界，不是漏词——每一处的下一条字幕事件都紧接着把话接上了，销账见 caption_gaps_ok。封面、takeaway、小红书正文里引用的九句原话逐句核过都在原字幕里。",
+  "transcript_verified": true,
   "zh": [
     "首先",
     "也是最重要的 我要感谢上帝",
