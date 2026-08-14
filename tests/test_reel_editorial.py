@@ -406,6 +406,11 @@ def _summary_offenders():
 
 
 _SUMMARY_LEGACY_已推送 = frozenset({
+    # ⚠️ 这条是这道判据落地（#332）的同一天做的，两边并行，改完 spec 才撞上。
+    #    它 08-14 03:2x 已经自动推送过了——`push.summary` 参与拼微信标题，
+    #    改它会让今天算出来的标题和当时真发出去的那条对不上（eala-osaka 那条
+    #    「故意不补 summary」记的就是这个），所以按已推送挂账，不改字。
+    "landaluce-draper",            # 兰达卢塞逆转
     "osaka-fernandez",             # 大坂直美淘汰费尔南德斯
     "osaka-mertens",               # 奥萨卡横扫梅尔滕斯晋级
     "rybakina-gauff-toronto-sf",   # 莱巴金娜逆转晋级
