@@ -1,5 +1,22 @@
 {
-  "_note": "中国大陆球员名单，用于从场上采访标题里认出「有中国球员的场次」。名字取自 src/tennislive/zh/players.py（译名唯一出处，别在这里另写译名）。标题里的写法两种都有——『Qinwen Zheng』和『Zheng Qinwen』——所以匹配时两种顺序都要试。",
+  "_note": "中国大陆球员名单，用于从场上采访标题里认出「有中国球员的场次」，也是 render/common.py 的 CHINESE_PLAYER_NAMES 的同源表。名字取自 src/tennislive/zh/players.py（译名唯一出处，别在这里另写译名）。标题里的写法两种都有——『Qinwen Zheng』和『Zheng Qinwen』——所以匹配时两种顺序都要试。",
+
+  "_roster_note": "**收谁，判据在这儿（2026-08-14 定）。** 在这之前这张表没有标准：它和 render/common.py 的 CHINESE_PLAYER_NAMES 各 24 人，看着一样，实际只重合 22 个——两人前后各手抄了一遍，四个名字各只进了一边。而漏一个人的样子是「他的比赛没进中国军团」「他的采访没被推」，和「今天他没打」一模一样。判据是：①**ATP／WTA 单打 top500 里国籍 CHN 的，只要译名已定就收**；②不在 top500 的（双打名将、掉出榜的老将）**手工收，每条写 `_why`**；③译名还没定的**不收**，挂在 `_pending_translation` 里。每条用 `admit` 标明走的是 ① 还是 ②。",
+
+  "_country_note": "⚠️ **国籍要查，不许按拼音写法猜。** 「大陆用不带连字符的拼音、港台用带连字符的」这个启发式**自己有反例**：`Jia-Jing Lu`（逯佳境）带连字符却是大陆球员，`Sheng-Mei Bai` 同理；反过来 `Lulu Sun`（新西兰）、`Ann Li`（美国）不带连字符却不是。查得到的地方两个：WTA 官方球员接口 `api.wtatennis.com/tennis/players/?pageSize=50&name=<全名>` 的 `countryCode`（⚠️ `name` 是**整串子串匹配**并按姓氏字母排序，拿姓去查会翻到别人身上——上面那个例子里查 `Shi` 返回的第一条是格鲁吉亚的 Abashidze。要拿**全名**查），以及排名 PDF 里的 IOC 码（ATP 行内 `Cui, Jie (CHN)`；WTA 在名字的下一行）。本表每一位 2026-08-14 都按这两条之一核过。",
+
+  "_rank_note": "⚠️ 表里**故意不存排名**。排名每周都动，存进来就是一个会过期而且过期时不吭声的数。`admit` 只回答「这条是按哪条规则收的」，不回答「他现在第几」。要现在的排名去查 `src/tennislive/zh/player_names_top500.json` 或者排名 PDF。收进来时的快照：ATP 榜 2026-08-14 抓、WTA 榜 For 10 August 2026。",
+
+  "_pending_translation_note": "CHN 单打 top500 里的，但 `player_zh()` 目前只给得出一个**机器音译的裸姓**（「王」「杨」「任」），不是名字。**不收**，理由不是懒：这张表的 `zh` 会直接印进微信推送（印一个「王」出去就是一条坏消息），而 CHINESE_PLAYER_NAMES 里塞一个裸姓会**把同姓的人一起认成他**——机器兜底给的正是姓，所以以后每多一个查不到译名的同姓球员就多一次误认。译名定下来（写进 data/player_name_overrides.json 或 zh/players.py）之后再按规则 ① 收进来。",
+  "_pending_translation": [
+    {"en": "Yufei Ren", "tour": "WTA", "machine_zh": "任"},
+    {"en": "Yidi Yang", "tour": "WTA", "machine_zh": "杨"},
+    {"en": "Jiaqi Wang", "tour": "WTA", "machine_zh": "王"},
+    {"en": "Yujia Huang", "tour": "WTA", "machine_zh": "黄"},
+    {"en": "Lan Mi", "tour": "WTA", "machine_zh": "米"},
+    {"en": "Chengyiyi Yuan", "tour": "WTA", "machine_zh": "元"}
+  ],
+
   "_excluded_note": "以下几位会被姓氏/拼音特征误判为中国大陆球员，明确排除：谢淑薇（Su-Wei Hsieh，中华台北）、Ann Li（美国）、Lulu Sun（新西兰）。排除项写在这里而不是靠代码猜，是为了下次有人加名单时能看见理由。",
   "excluded": [
     "Su-Wei Hsieh",
@@ -11,125 +28,219 @@
     {
       "en": "Qinwen Zheng",
       "zh": "郑钦文",
-      "tour": "WTA"
+      "tour": "WTA",
+      "admit": "singles-top500"
     },
     {
       "en": "Xinyu Wang",
       "zh": "王欣瑜",
-      "tour": "WTA"
+      "tour": "WTA",
+      "admit": "singles-top500"
     },
     {
       "en": "Shuai Zhang",
       "zh": "张帅",
-      "tour": "WTA"
+      "tour": "WTA",
+      "admit": "singles-top500"
     },
     {
       "en": "Xiyu Wang",
       "zh": "王曦雨",
-      "tour": "WTA"
+      "tour": "WTA",
+      "admit": "singles-top500"
     },
     {
       "en": "Yue Yuan",
       "zh": "袁悦",
-      "tour": "WTA"
+      "tour": "WTA",
+      "admit": "singles-top500"
     },
     {
       "en": "Lin Zhu",
       "zh": "朱琳",
-      "tour": "WTA"
+      "tour": "WTA",
+      "admit": "singles-top500"
     },
     {
       "en": "Yafan Wang",
       "zh": "王雅繁",
-      "tour": "WTA"
+      "tour": "WTA",
+      "admit": "singles-top500"
     },
     {
       "en": "Sijia Wei",
       "zh": "韦思佳",
-      "tour": "WTA"
+      "tour": "WTA",
+      "admit": "singles-top500"
     },
     {
       "en": "Xinyu Gao",
       "zh": "高馨妤",
-      "tour": "WTA"
-    },
-    {
-      "en": "Saisai Zheng",
-      "zh": "郑赛赛",
-      "tour": "WTA"
-    },
-    {
-      "en": "Xinyun Han",
-      "zh": "韩馨蕴",
-      "tour": "WTA"
-    },
-    {
-      "en": "Zhaoxuan Yang",
-      "zh": "杨钊煊",
-      "tour": "WTA"
+      "tour": "WTA",
+      "admit": "singles-top500"
     },
     {
       "en": "Hanyu Guo",
       "zh": "郭涵煜",
-      "tour": "WTA"
-    },
-    {
-      "en": "Yifan Xu",
-      "zh": "徐一璠",
-      "tour": "WTA"
+      "tour": "WTA",
+      "admit": "singles-top500"
     },
     {
       "en": "Yexin Ma",
       "zh": "马烨欣",
-      "tour": "WTA"
+      "tour": "WTA",
+      "admit": "singles-top500"
     },
     {
-      "en": "Xinran Sun",
-      "zh": "孙心然",
-      "tour": "WTA"
+      "en": "Xiaodi You",
+      "zh": "尤晓迪",
+      "tour": "WTA",
+      "admit": "singles-top500"
     },
     {
-      "en": "Ye Qiu Yu",
-      "zh": "叶秋语",
-      "tour": "WTA"
+      "en": "Zhuoxuan Bai",
+      "zh": "白卓璇",
+      "tour": "WTA",
+      "admit": "singles-top500"
+    },
+    {
+      "en": "Fangran Tian",
+      "zh": "田方然",
+      "tour": "WTA",
+      "admit": "singles-top500"
+    },
+    {
+      "en": "Han Shi",
+      "zh": "施晗",
+      "tour": "WTA",
+      "admit": "singles-top500"
+    },
+    {
+      "en": "Xinxin Yao",
+      "zh": "姚欣辛",
+      "tour": "WTA",
+      "admit": "singles-top500"
+    },
+    {
+      "en": "Zongyu Li",
+      "zh": "李宗钰",
+      "tour": "WTA",
+      "admit": "singles-top500"
+    },
+    {
+      "en": "Jia-Jing Lu",
+      "zh": "逯佳境",
+      "tour": "WTA",
+      "admit": "singles-top500"
     },
     {
       "en": "Zhizhen Zhang",
       "zh": "张之臻",
-      "tour": "ATP"
+      "tour": "ATP",
+      "admit": "singles-top500"
     },
     {
       "en": "Juncheng Shang",
       "zh": "商竣程",
-      "tour": "ATP"
+      "tour": "ATP",
+      "admit": "singles-top500"
     },
     {
       "en": "Yunchaokete Bu",
       "zh": "布云朝克特",
-      "tour": "ATP"
+      "tour": "ATP",
+      "admit": "singles-top500"
     },
     {
       "en": "Yibing Wu",
       "zh": "吴易昺",
-      "tour": "ATP"
+      "tour": "ATP",
+      "admit": "singles-top500"
     },
     {
       "en": "Yi Zhou",
       "zh": "周意",
-      "tour": "ATP"
+      "tour": "ATP",
+      "admit": "singles-top500"
     },
     {
       "en": "Fajing Sun",
       "zh": "孙发京",
-      "tour": "ATP"
+      "tour": "ATP",
+      "admit": "singles-top500"
+    },
+    {
+      "en": "Jie Cui",
+      "zh": "崔杰",
+      "tour": "ATP",
+      "admit": "singles-top500"
+    },
+    {
+      "en": "Xinyu Jiang",
+      "zh": "蒋欣玗",
+      "tour": "WTA",
+      "admit": "manual",
+      "_why": "双打专精，WTA 双打第 30——这条线单打排名进不去，而双打前 30 的采访值得推。"
+    },
+    {
+      "en": "Yifan Xu",
+      "zh": "徐一璠",
+      "tour": "WTA",
+      "admit": "manual",
+      "_why": "双打名将，WTA 双打第 31，法网双打冠军。单打早已不打。"
+    },
+    {
+      "en": "Qianhui Tang",
+      "zh": "汤千慧",
+      "tour": "WTA",
+      "admit": "manual",
+      "_why": "双打第 56；单打第 1430，够不着 top500。"
+    },
+    {
+      "en": "Zhaoxuan Yang",
+      "zh": "杨钊煊",
+      "tour": "WTA",
+      "admit": "manual",
+      "_why": "双打专精，WTA 双打第 61。"
     },
     {
       "en": "Feng Shuo",
       "zh": "冯硕",
-      "tour": "ATP"
+      "tour": "WTA",
+      "admit": "manual",
+      "_why": "双打第 114。⚠️ 这条 2026-08-14 之前登记成 `tour: ATP`，是错的——ATP 单打榜全表没有任何一个 Feng，WTA 双打榜第 114 写着 `FENG, SHUO (CHN)`，WTA 球员接口 id=325807 也是 CHN。"
+    },
+    {
+      "en": "Ye Qiu Yu",
+      "zh": "叶秋语",
+      "tour": "WTA",
+      "admit": "manual",
+      "_why": "双打第 136；单打第 1201。⚠️ WTA 官方的英文写法是 `Qiu Yu Ye`（姓在后），这里存的 `Ye Qiu Yu` 是 ESPN 的写法；匹配时两种顺序都会试，两边都盖得住。"
+    },
+    {
+      "en": "Saisai Zheng",
+      "zh": "郑赛赛",
+      "tour": "WTA",
+      "admit": "manual",
+      "_why": "老将，生涯最高单打第 34；现在单打第 1516、双打第 230，两边都掉出 500。"
+    },
+    {
+      "en": "Xinran Sun",
+      "zh": "孙心然",
+      "tour": "WTA",
+      "admit": "manual",
+      "_why": "2010 年生的小将，单打第 610、双打第 1206，还没进 top500；留着是因为她已经在打职业赛。"
+    },
+    {
+      "en": "Xinyun Han",
+      "zh": "韩馨蕴",
+      "tour": "WTA",
+      "admit": "manual",
+      "_why": "老将（1990 年生），生涯最高单打第 46。⚠️ 现在**两张排名表里都查不到**，国籍是拿 WTA 球员接口 id=312636 核的（CHN）。哪天确认退役了就从这张表里去掉。"
     }
   ],
   "_surname_note": "**只认全名会漏掉一大半。** 实测漏的都是关键条目：『Zheng Quarter-final post-match interview | Roland-Garros 2025』（郑钦文法网八强，只写姓）、『Zhu/Zhang On-Court Interview | United Cup 2026』（双打配对，两个姓）。所以允许**只按姓**匹配，但姓氏歧义大，必须配 excluded_full 消歧——Michael Zheng 是美国人、Lulu Sun 是新西兰人、Ann Li 是美国人，他们的姓都在名单里。只按姓命中时**不断言是哪一位**，标成待确认。",
+  "_surname_scope_note": "⚠️ **这张姓氏表不跟着 players 一起长。** 2026-08-14 加进 players 的八位，姓氏一个都没往这里加，理由是这些姓在英文标题里歧义太大，加进来换到的是误推不是多推：`You` 就是英文单词 you，`Li`／`Lu`／`Shi`／`Tian`／`Bai` 在别国球员和普通词里到处都是（`Ann Li` 已经在 excluded_full 里就是这条的先例）。姓氏匹配是**逐个认领**的能力，判据是「这个姓在英文里够独特，而且这位球员真的出现过只写姓的标题」——两条都成立才加，加的时候在这儿写一句为什么。",
   "surnames": [
     "Zheng",
     "Wang",
