@@ -17,6 +17,7 @@ import requests
 
 from ..digest import Digest
 from ..timeutil import fmt_schedule_time, fmt_time_beijing
+from .ai_disclosure import with_ai_disclosure
 from .common import (
     curate_for_social,
     group_by_tournament,
@@ -108,7 +109,12 @@ def to_copy_page(
     """生成适合手机打开的一键复制页面。
 
     alt_titles：V1 §3.1 的备选标题（候选 ②③），人工从 3 个候选里选 1 个。
+
+    ⚠️ **复制页是四条线共用的那个出口**（解说片 / 知识帖 / 内容雷达 / 竖版
+    短片都调它），也是文案真正被粘到小红书的地方——所以 AI 生成合成内容的
+    标识必须在这儿加一次，而不是指望每份文案自己写。见 `ai_disclosure`。
     """
+    xhs_text = with_ai_disclosure(xhs_text)
     lines = xhs_text.splitlines()
     title = lines[0].strip() if lines else ""
     body_start = 2 if len(lines) > 1 and not lines[1].strip() else 1
@@ -212,9 +218,13 @@ def to_push_html(
     xhs_text: str | None = None,
     videos: list[str] | None = None,
 ) -> str:
-    """Render the PushPlus review message as the actual Xiaohongshu post."""
+    """Render the PushPlus review message as the actual Xiaohongshu post.
+
+    正文照旧带 AI 生成合成内容标识（`ai_disclosure`）：这条线的定时已经停了，
+    但它仍然是一个**会把正文发出去**的出口，标识不能按「现在跑不跑」来发。
+    """
     d = digest.today
-    raw = (xhs_text or "").strip()
+    raw = with_ai_disclosure((xhs_text or "").strip())
     lines = raw.splitlines()
     title = lines[0].strip() if lines else pick_headline_auto(digest)
     body_start = 2 if len(lines) > 1 and not lines[1].strip() else 1
@@ -699,7 +709,7 @@ def to_schedule_push_html(
     ``asset_dir`` 把它们换成本地文件上传到 PushPlus 图床，只有没配图床密钥时
     才真的走 CDN（那时需要图已经提交上去）。
     """
-    raw = (xhs_text or "").strip()
+    raw = with_ai_disclosure((xhs_text or "").strip())
     lines = raw.splitlines()
     title = lines[0].strip() if lines else ""
     body_start = 2 if len(lines) > 1 and not lines[1].strip() else 1
