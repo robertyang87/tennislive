@@ -38,6 +38,12 @@
     "summary": "油箱见底 仍站到最后",
     "lead": "2026国家银行公开赛（多伦多）决赛，斯瓦泰克6-2 6-3击败莱巴金娜，夺得本站冠军。这是莱巴金娜本站第4场三盘大战后的决赛——半决赛采访里她说这一周已经在场上站了11个半小时，颁奖礼上她说『今天油箱只剩一半，我尽力了但还不够』，随后感谢赛事方、赞助商、志愿者和自己的团队。亚军致辞全程，中英双语字幕。"
   },
+  "caption_gaps_ok": {
+    "324.3-328.2": "两头是[cheering and applause]和[applause]——她说完『真的希望能很快再回到这里』之后现场鼓掌欢呼，不是漏词，是掌声打断，随后她重新起头『我还想……』",
+    "348.5-350.9": "两头是[applause and cheering]和紧接着的『And last uh of course thank you to my team』——第二份ASR在这段掌声尾声听到的『And』就是下一句『And last…』提前露头的第一个词，那句话在350.9秒之后完整出现，zh第61行『最后 当然要谢谢』已经覆盖，不是漏词"
+  },
+  "_verified_clean": "对不上8.3%（闸门12%），逐处看过。①最关键的一处：`tank`→`time`——这个词正是钩子和标题的核心（『今天油箱只剩一半』），直接拿YouTube自己的原始 cap_bDttZof7qXI.en.json3 核对过 301.44 秒那条事件，原文明确写着『The tank was half empty today.』，第二份small.en的『time』是误听，不改。②`uh`×5/`i'm`→`i`/`also`→`—`：填词、缩读，whisper吞掉的虚词，不影响内容。③`ega`→`iga`：人名误听，zh已经正确译成『伊加』。④`uh b`→`the ball`、`sharers`→`champers`：都是对同一句『and uh B kids sharers, everyone』（=ball kids, ushers, everyone）的误听，两个模型给出的猜测都不准，zh第59行『所有志愿者 球童 每一个人』刻意不去断这个有争议的词，只保留能确定的部分。⑤`won't`→`wouldn't`：说话人现场的口误（『it won't be impossible』本身就是双重否定的滑嘴），zh第64行『我不可能打进决赛』按她想表达的意思译，两种听法都不改变这句的含义。空档2处见 caption_gaps_ok。",
+  "transcript_verified": true,
   "zh": [
     "谢谢大家",
     "一时不知道该说什么",
