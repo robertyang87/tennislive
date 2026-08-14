@@ -1,5 +1,6 @@
 {
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-nishikori-shang/nishikori-shang.mp4",
   "video_bytes": 35863138,
-  "_release_tag_note": "⚠️ 这份记录已经不作数：tag `reel-nishikori-shang` 被 2026-07-29 那一趟重渲 `--clobber` 换掉了。2026-08-14 用 Range GET 量的，tag 上现在是 30185483 字节，也就是 output/2026-07-29/reel/nishikori-shang 那一份；本目录记的 35863138 那条片子在线上已经取不到。所以这一份**故意不填 film_seconds**——按 URL 量会量到另一条片子的长度，而那个数正要当观看比例的分母，认错人比空着糟得多。"
+  "_release_tag_note": "⚠️ 这份记录已经不作数：tag `reel-nishikori-shang` 被 2026-07-29 那一趟重渲 `--clobber` 换掉了。2026-08-14 用 Range GET 量的，tag 上现在是 30185483 字节，也就是 output/2026-07-29/reel/nishikori-shang 那一份；本目录记的 35863138 那条片子在线上已经取不到。所以这一份**故意不填 film_seconds**——按 URL 量会量到另一条片子的长度，而那个数正要当观看比例的分母，认错人比空着糟得多。",
+  "_film_seconds_note": "⚠️ **回填不了，故意留空。** 这条 7/28 的产物和 output/2026-07-29/reel/nishikori-shang 指向**同一个** Release tag（reel-nishikori-shang），而 tag 上现在挂的是 7/29 重渲的那一版：Range GET 量到 30185483 字节，本产物记的是 35863138。也就是说按 video_url 认领会静默认错人，量出来的 71.280s 是 7/29 那一版的片长，不是这一版的。7/28 这版的成片本身已经不在任何地方了（Release 被 --clobber 覆盖过），所以宁可空着，也不写一个属于另一条片子的数——它正要被当成「均观看比例」的分母。"
 }

@@ -3,6 +3,28 @@
 The generated snapshot is deterministic once a name has been translated:
 manual/media overrides win, then the curated Python table, then the previous
 snapshot. Only genuinely new names reach the network translation fallbacks.
+
+## 国籍（`country`）
+
+⚠️ **两份排名 PDF 里本来就写着 IOC 国籍码，而解析器一直把它扔掉。**
+ATP 那份写在同一行的括号里（`459  Cui, Jie (CHN) 102 0 …`），旧正则用的是
+**非捕获组** `(?:\\([A-Z]{3}\\)\\s+)?`——匹配上了，然后丢掉；WTA 那份写在
+名字的**下一行**（`ZHENG, SAISAI` / `CHN`），旧扫描根本没看那一行。
+
+代价是实的：`data/cn_players.json` 那张中国球员名单（漏一个人＝他的比赛不进
+「中国军团」、他的采访不被推，而且不吭声）只能靠人手抄，收谁没有标准——
+2026-08-14 量出来它和 `render/common.py` 的 `CHINESE_PLAYER_NAMES` 各 24 人却
+只重合 22 个，同时漏掉了 8 位 CHN 单打 top500。那张名单的收录判据现在写在
+`cn_players.json` 的 `_roster_note` 里，第一条就是「CHN 单打 top500 自动进」，
+而**这一份快照存下 `country` 之后，那一条就能从快照直接算出来**，不用再
+下载 PDF、也不用再按拼音写法猜国籍（那个启发式有反例：`Jia-Jing Lu` 带连字符
+却是大陆球员）。
+
+⚠️ 它是**可选字段**：仓库里现存的快照是在这之前生成的，一条 `country` 都没有，
+所以 `validate_snapshot` 不许要求它——真要求了，那条校验对现存快照当场恒红，
+而「一条常年红的检查和没有检查是同一个毛病」。下一次真跑同步时它自己就有了。
+PDF 本身也不是每行都有（ATP 2309 行里 2224 行有，WTA 1575 行里 1449 行有——
+中立身份的球员就没有），所以取不到时留空串，不猜。
 """
 
 from __future__ import annotations
@@ -43,6 +65,9 @@ class RankedName:
     rank: int
     name: str
     surname: str
+    #: IOC 三字国籍码，PDF 那一行没写就是空串（见模块 docstring）。
+    #: **不猜**——按拼音写法推国籍的启发式有反例。
+    country: str = ""
 
 
 def _normalize(value: str) -> str:
@@ -56,9 +81,10 @@ def _canonical_name(first: str, surname: str) -> str:
 def parse_atp_text(text: str, limit: int = RANKING_LIMIT) -> list[RankedName]:
     rows: list[RankedName] = []
     for line in text.splitlines():
+        # 第 3 组原来是**非捕获**的——国籍码匹配上了然后被扔掉，见模块 docstring。
         match = re.match(
             r"^\s*(\d{1,4})(?:T)?\s+(.+?)\s+"
-            r"(?:\([A-Z]{3}\)\s+)?\d+(?:\s|$)",
+            r"(?:\(([A-Z]{3})\)\s+)?\d+(?:\s|$)",
             line,
         )
         if not match:
@@ -68,7 +94,8 @@ def parse_atp_text(text: str, limit: int = RANKING_LIMIT) -> list[RankedName]:
         if "," not in raw:
             continue
         surname, first = (part.strip() for part in raw.split(",", 1))
-        rows.append(RankedName("ATP", rank, _canonical_name(first, surname), surname))
+        rows.append(RankedName("ATP", rank, _canonical_name(first, surname), surname,
+                               match.group(3) or ""))
     return _validate_ranking_rows(rows, "ATP", limit)
 
 
@@ -89,7 +116,12 @@ def parse_wta_text(text: str, limit: int = RANKING_LIMIT) -> list[RankedName]:
         rank = int(lines[index])
         surname, first = (part.strip().title() for part in raw.split(",", 1))
         name = _canonical_name(first, surname).replace("'S", "'s")
-        rows.append(RankedName("WTA", rank, name, surname))
+        # 国籍在**名字的下一行**，而且不是每个人都有——中立身份的球员那一行
+        # 直接是积分（实测榜首萨巴伦卡就没有）。所以只在它真是三个大写字母时
+        # 才当国籍，别按位置硬取。
+        nxt = lines[index + 3] if index + 3 < len(lines) else ""
+        country = nxt if re.fullmatch(r"[A-Z]{3}", nxt) else ""
+        rows.append(RankedName("WTA", rank, name, surname, country))
     return _validate_ranking_rows(rows, "WTA", limit)
 
 
@@ -283,15 +315,19 @@ def build_snapshot(
         zh, source, source_url = resolved
         if not zh or not _CJK_RE.search(zh) or re.search(r"[A-Za-z]", zh):
             raise ValueError(f"{row.tour} #{row.rank} has no Chinese name: {row.name}")
-        tours[row.tour].append(
-            {
-                "rank": row.rank,
-                "name_en": row.name,
-                "name_zh": zh,
-                "translation_source": source,
-                "translation_source_url": source_url,
-            }
-        )
+        entry = {
+            "rank": row.rank,
+            "name_en": row.name,
+            "name_zh": zh,
+            "translation_source": source,
+            "translation_source_url": source_url,
+        }
+        # **取不到就整个不写这个键**，别写一个空串。空串和「这个人没有国籍」
+        # 长得一样，而下游要问的是「他是不是 CHN」——`entry.get("country")`
+        # 对两种情况都回假，但缺键至少能被 `"country" in entry` 分出来。
+        if row.country:
+            entry["country"] = row.country
+        tours[row.tour].append(entry)
 
     validate_snapshot({"tours": tours})
     return {

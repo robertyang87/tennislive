@@ -2542,9 +2542,12 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
     if (outro := _build_outro(outdir)) is not None:
         parts.append(outro)
 
+    # ⚠️ **两个 return，两个都要记片长。** 这个文件里同一个形状栽过一次
+    # （`build_cover` 委托链上只改了一个 return，成片当场塌成 12 秒），
+    # 所以两条出路都走同一个 `_record_film_seconds`，别在这儿各写一遍。
     if len(parts) == 1:
         body.replace(out)
-        return out
+        return _record_film_seconds(out, outdir)
     lst = outdir / "_concat.txt"
     lst.write_text("".join(f"file '{p.name}'\n" for p in parts), encoding="utf-8")
     subprocess.run(["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
@@ -2552,6 +2555,51 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
                     "-c", "copy", str(out)], check=True, timeout=600)
     for tmp in (*parts, lst):
         tmp.unlink(missing_ok=True)
+    return _record_film_seconds(out, outdir)
+
+
+def probe_duration(path: Path) -> float:
+    """成片时长（秒）。和 `build_match_reel.probe_duration` 同一条口径。"""
+    out = subprocess.run(
+        ["ffprobe", "-v", "error", "-show_entries", "format=duration",
+         "-of", "default=nw=1:nk=1", str(path)],
+        check=True, capture_output=True, text=True, timeout=120).stdout.strip()
+    return float(out)
+
+
+def _record_film_seconds(out: Path, outdir: Path) -> Path:
+    """把**成片**时长写进 `render.json`，然后原样返回 `out`。
+
+    ⚠️ **正片长度不是成片长度**，而这条线一直只有前者。`main()` 打印的
+    `spec['end'] - spec['start']` 是**裁出来那一段**的长度，成片前面还有封面、
+    后面还有解读卡和品牌片尾——实测两者差 1~21 秒。差多少取决于解读卡的口播
+    有多长，**光看 spec 算不出来**（和「赛场之上」那条线的 `cover_seconds` /
+    `outro_seconds` 是同一个道理）。
+
+    ⚠️ 这条线的 `render.json` 原来**根本不是这儿写的**：它由工作流最后那步
+    发 Release 时才创建，只放 `video_url` / `video_bytes`。于是 19 条采访产物
+    **0 条有 `film_seconds`**，「均观看比例」这类要拿片长当分母的指标，对整条
+    线算不出来——而它坏起来的样子是「这条线没有数据」，不是报错。
+
+    ⚠️ **合并写，不覆盖。** 工作流那一步之后还会往同一个文件里写
+    `video_url` / `video_bytes`（它自己也是先读后写的），两边谁覆盖谁都是
+    静默丢字段。
+
+    ⚠️ 探不到时**只告警，不抛**：片长是元数据，成片已经渲出来了，为一次
+    ffprobe 失败把整趟六分钟的 render 判死不划算。但两条路都要出声——
+    默默不写和写成功长得一模一样。
+    """
+    try:
+        secs = probe_duration(out)
+    except Exception as exc:  # noqa: BLE001 —— 探不到就是探不到，原因照实打
+        print(f"[片长] ffprobe 读不出 {out.name}，`film_seconds` 这次没写：{exc}")
+        return out
+    path = outdir / "render.json"
+    data = json.loads(path.read_text(encoding="utf-8")) if path.is_file() else {}
+    data["film_seconds"] = round(secs, 3)
+    path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n",
+                    encoding="utf-8")
+    print(f"[片长] 成片 {secs:.2f}s → {path}")
     return out
 
 
@@ -2732,7 +2780,16 @@ def main() -> int:
                 + "、".join(f"`{gap_key(a, b)}`" for a, b in holes) + "。")
         out = render(spec, ass, outdir)
         size = out.stat().st_size / 1e6
-        print(f"成片 {out}（{size:.1f} MB，{spec['end'] - spec['start']:.1f} 秒）")
+        # ⚠️ **两个数，别只报一个。** 这一行原来只印
+        # `spec['end'] - spec['start']`，那是**裁出来那一段**的长度，不是成片
+        # 的——成片还带着封面、解读卡和品牌片尾，实测差 1~21 秒。读到这行的人
+        # 会拿它当片长（我们自己就拿它算过观看比例），而它一直偏短，还不吭声。
+        # 真片长由 `_record_film_seconds` 量完写进 `render.json`。
+        film = json.loads((outdir / "render.json").read_text(encoding="utf-8")).get(
+            "film_seconds") if (outdir / "render.json").is_file() else None
+        film_txt = f"{film:.1f} 秒" if film else "片长没量到"
+        print(f"成片 {out}（{size:.1f} MB，{film_txt}；"
+              f"其中正片 {spec['end'] - spec['start']:.1f} 秒）")
     return 0
 
 
