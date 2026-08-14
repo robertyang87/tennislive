@@ -1,4 +1,4 @@
-"""「合进 main 就自动发微信」的四道闸。
+"""「合进 main 就自动发微信」的五道闸。
 
 这条路省掉的是人的往返（合完还要记得回来点一次 dispatch），而它是整条链上
 **唯一新增的风险点**——微信那条消息发出去收不回来。所以每一道闸都在这儿
@@ -43,12 +43,17 @@ def repo(tmp_path: Path) -> Path:
 
     ⚠️ 必须是真 git：「已经推过」那道闸查的是 `git ls-files`，不是
     `test -f`——喂一个普通目录就把那道闸绕过去了，而绕过去之后测试**照样绿**。
+
+    ⚠️ **海报要有。** 一条真渲完的片子必然带着 `poster.jpg`（render 生成它，
+    `match-reel.yml` 的清理那步还特意留着它），所以这个 fixture 也得有——
+    这样「该发的照发」那几条验的才是它们各自那道闸，而不是被海报闸拦下。
     """
     (tmp_path / "specs/reels").mkdir(parents=True)
     (tmp_path / "specs/reels/demo.xhs.txt").write_text("文案", encoding="utf-8")
     outdir = tmp_path / "output/2026-08-03/reel/demo"
     outdir.mkdir(parents=True)
     (outdir / "render.json").write_text("{}", encoding="utf-8")
+    (outdir / "poster.jpg").write_bytes(b"\xff\xd8\xff not-a-real-jpeg")
     _git(tmp_path, "init", "-q")
     # render.json 提交进仓库——现实里它就是先由 render 工作流提交、随 PR
     # 进 main 的；「已删除的产物不算候选」那道闸查的是 git ls-files，
@@ -62,6 +67,22 @@ def repo(tmp_path: Path) -> Path:
 def _commit_all(repo: Path) -> None:
     _git(repo, "add", "-A")
     _git(repo, "-c", "user.email=a@b", "-c", "user.name=c", "commit", "-qm", "x")
+
+
+def _second_reel(repo: Path, slug: str = "demo2") -> Path:
+    """再造一条**渲完的**片子（spec + 文案 + render.json + 海报）。
+
+    海报在这儿是必需品，不是装饰：少了它「海报在仓库里」那道闸会把这条
+    候选筛掉，于是「一趟带进来两条」那类测试只剩一个候选、恒绿——一道
+    真闸就这么被另一道闸悄悄遮住了。收在一处，别在每个测试里各写一遍。
+    """
+    _spec(repo, {"auto": True}, slug=slug)
+    (repo / f"specs/reels/{slug}.xhs.txt").write_text("文案", encoding="utf-8")
+    outdir = repo / f"output/2026-08-03/reel/{slug}"
+    outdir.mkdir(parents=True)
+    (outdir / "render.json").write_text("{}", encoding="utf-8")
+    (outdir / "poster.jpg").write_bytes(b"\xff\xd8\xff not-a-real-jpeg")
+    return outdir
 
 
 def _spec(repo: Path, push: dict | None, slug: str = "demo") -> None:
@@ -160,16 +181,94 @@ def test_稀疏检出下也要拦得住(repo: Path):
     assert gate.pick(CHANGED, repo) is None
 
 
-# ---------------------------------------------------------------- 闸 4：只发一条
+# ---------------------------------------------------------------- 闸 4：海报
+
+def test_海报不在仓库里就不发(repo: Path, capsys):
+    """**2026-08-13 那次 purge 抖出来的。**
+
+    `archive-media.yml mode=purge` 用 git filter-repo 从全史抹掉了 output/ 下
+    所有 jpg（认领过的取舍，17 GB → 789 MB），于是**仓库里一张 poster.jpg
+    都不剩**。新渲的片子没事（render 会重新生成并提交），撞上的是
+    **purge 之前渲好、purge 之后才推**的老片子。
+
+    海报是推送正文的第一屏，没有它这条消息只剩两个按钮，看不出这是谁打谁。
+    """
+    _spec(repo, {"auto": True})
+    (repo / "output/2026-08-03/reel/demo/poster.jpg").unlink()
+    _git(repo, "rm", "-q", "--cached",
+         "output/2026-08-03/reel/demo/poster.jpg")
+    _commit_all(repo)
+
+    assert gate.pick(CHANGED, repo) is None, (
+        "海报不在仓库里还照发——推出去就是一条没有第一屏的消息，"
+        "而微信那条消息收不回来")
+    out = capsys.readouterr().out
+    assert "poster.jpg" in out, f"跳过了却没说是海报的问题：{out}"
+    # 报错要说出路，不能只说不行——这条的出路是重渲一次把海报渲回来
+    assert "mode=render" in out, f"没说怎么把它救回来：{out}"
+
+
+def test_海报在就照发(repo: Path):
+    """反向验证上一条：同样的输入，只把海报放回去，就该发。
+
+    没有这一条的话，「一条都不发」可以由任何一个 bug 造成——**证明不了
+    是海报那道闸在起作用**（`test_写了auto才发` 那条的同款理由）。
+    """
+    _spec(repo, {"auto": True})
+    picked = gate.pick(CHANGED, repo)
+    assert picked is not None, "海报好好地在仓库里，却被拦下了"
+    assert picked[0] == "demo"
+
+
+def test_稀疏检出下海报也要认得出(repo: Path):
+    """**这道闸最容易写错的地方，而写错的后果比漏发大得多。**
+
+    这个脚本跑在工作流的「挑出该自动发的那一条」那一步，排在
+    `git sparse-checkout add` **之前**——`output/` 那一格根本不在工作区。
+    按 `(outdir / "poster.jpg").is_file()` 判就是**恒为假**：不是漏发一条，
+    是**每一条都不发**，整条自动推送静静地死掉，而 run 还是绿的。
+
+    这条把工作区里那份删掉（模拟稀疏检出的样子）、索引里留着，要求照常发。
+    反向验证过：把 `tracked()` 换成 `is_file()` 当场红。
+    """
+    _spec(repo, {"auto": True})
+    _commit_all(repo)
+    (repo / "output/2026-08-03/reel/demo/poster.jpg").unlink()
+
+    picked = gate.pick(CHANGED, repo)
+    assert picked is not None, (
+        "海报在仓库里、只是没检出到工作区，就被判成「没有海报」——"
+        "按 is_file() 判的话每一条都会这样")
+    assert picked[0] == "demo"
+
+
+def test_两条推送路径对缺海报的口径要一致():
+    """**手动那条路一直是硬拦的，自动这条以前一道检查都没有。**
+
+    `match-reel.yml` 的「push 模式先确认成片真的落地了」里写着
+    `test -f .../poster.jpg || { echo "::error::海报不在…"; exit 1; }`。
+    同一个问题两条路给两个答案，就是「一个数写两处必分叉」的政策版：
+    同一条片子手动推被拦下、自动推却降级发了出去。
+
+    所以这条钉的是**手动那头别被拆掉**——自动这头由上面几条盯着。
+
+    ⚠️ 扫之前先去掉整行注释：`match-reel.yml` 的注释里正写着
+    「**poster.jpg 要留下**：推送正文的第一屏就是它」，连注释一起扫的话，
+    把这道闸整个删掉也照样绿（这个仓库为「注释制造假绿」栽过）。
+    """
+    body = _yaml_only(
+        Path(".github/workflows/match-reel.yml").read_text(encoding="utf-8"))
+    assert re.search(r"test -f[^\n]*poster\.jpg[^\n]*\|\|[^}]*exit 1", body), (
+        "match-reel 的 push 预检不再硬拦缺海报的片子了——"
+        "两条推送路径的口径又分叉了")
+
+
+# ---------------------------------------------------------------- 闸 5：只发一条
 
 def test_一趟带进来两条就一条都不发(repo: Path):
     """批量自动发微信，错一次就是错一片。"""
     _spec(repo, {"auto": True})
-    _spec(repo, {"auto": True}, slug="demo2")
-    (repo / "specs/reels/demo2.xhs.txt").write_text("文案", encoding="utf-8")
-    second = repo / "output/2026-08-03/reel/demo2"
-    second.mkdir(parents=True)
-    (second / "render.json").write_text("{}", encoding="utf-8")
+    _second_reel(repo)
     _commit_all(repo)
 
     with pytest.raises(SystemExit):
@@ -195,11 +294,7 @@ def test_同一批里删一条活一条要发活的那条(repo: Path):
     """zheng-lanlana 那次合并的真实形状：删掉被顶替的旧版 + 新渲的一条。
     删除项被滤掉后，活的那条必须照常发——别把防批量的闸误触发。"""
     _spec(repo, {"auto": True})
-    _spec(repo, {"auto": True}, slug="demo2")
-    (repo / "specs/reels/demo2.xhs.txt").write_text("文案", encoding="utf-8")
-    second = repo / "output/2026-08-03/reel/demo2"
-    second.mkdir(parents=True)
-    (second / "render.json").write_text("{}", encoding="utf-8")
+    _second_reel(repo)
     _commit_all(repo)
     _git(repo, "rm", "-rq", "output/2026-08-03/reel/demo")
     _git(repo, "-c", "user.email=a@b", "-c", "user.name=c",
