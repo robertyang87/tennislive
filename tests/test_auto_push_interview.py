@@ -560,6 +560,12 @@ _ALREADY_PUSHED = frozenset({
     "eala-pegula-dc2026-final-presser",
     "eala-svitolina-dc2026-qf",
     "pegula-eala-dc2026-final",
+    # 2026-08-14 CI 抓到的两条「新到货」（多伦多决赛颁奖礼，PR #331 合进 main
+    # 的时候这张名单已经冻好了）。**自检干活了**：它们走过推送流程（仓库里有
+    # copy.html）却不在名单里，而这条线一个 pushed.json 都没有——给它们开
+    # auto 就是把老消息再发一遍。补进来，不是把自检改松。
+    "rybakina-swiatek-tor2026-final",
+    "swiatek-rybakina-tor2026-final",
     "rybakina-gauff-tor2026-sf",
     "rybakina-osaka-tor2026-qf",
     "sabalenka-uchijima-tor2026-r64",
