@@ -83,6 +83,26 @@ ACE/双误/一发这几项在 flashscore `df_st_1` 就有；Winners/非受迫失
     "frac"  分子/分母，**主数字就是分数本身**（不折算成 %），比率越大越好
 
 两边相等（比如双误打平）不点亮任何一侧——不替谁背书。
+
+## ⚠️ 制胜分 / 非受迫失误这两行可以缺，其余不许缺
+
+账号所有者 2026-08-14（斯瓦泰克-莱巴金娜那张）：「**没有的话这两条就不显示**」。
+
+来路是数据源的硬限制，不是懒得填：**WTA 巡回赛（1000/500/250）拿不到
+`Winners` / `Unforced errors`**——flashscore 那个 feed 对 WTA 巡回赛只给 17 项，
+WTA 官方 `/stats` 的 32 个字段一个都不含，八条路都自证过是真空
+（CLAUDE.md「上面那句范围写宽了」那节）。而**大满贯的女子比赛和 ATP 一直有**，
+所以这两行绝大多数时候照常出现。
+
+判据不是「谁重要」，是**这个数存不存在**：
+
+    OPTIONAL_FIELDS 里的字段    两边都没有 → 整行不画
+                                只有一边有 → **报错**（数据对不齐是 bug，不是缺数据）
+    其余字段                    缺任何一个 → 报错，照旧
+
+⚠️ **还留了一道下限**：至少要画得出 `MIN_ROWS` 行，否则报错。不设的话，
+一份几乎全空的 stats 也能渲出一张「看起来正常」的图——而这正是本仓库
+反复记的那种不吭声的坏。
 """
 from __future__ import annotations
 
@@ -115,6 +135,44 @@ ROW_SPECS = [
     ("破发点转化", "frac", "bp_conv", "bp_chances"),
     ("总得分", "hi", "pts_won"),
 ]
+
+# 这两项 WTA 巡回赛拿不到（见模块 docstring）。**只有这两个可以缺**，
+# 别往里加——加一个就等于允许那一行悄悄消失，而缺一行的图和完整的图
+# 在产物上长得一模一样。
+OPTIONAL_FIELDS = frozenset({"winners", "ue"})
+
+# 画不出这么多行就报错。9 行里最多允许缺制胜分和非受迫失误，所以下限是 7。
+MIN_ROWS = 7
+
+
+def usable_rows(a: dict, b: dict) -> list[tuple]:
+    """按「这个数存不存在」筛出要画的行。
+
+    ⚠️ **只有两边都没有才跳过。** 只有一边有的时候报错——那不是「拿不到」，
+    那是数据对不齐，而对不齐的图会把两个人的数放在同一行里比。
+    """
+    rows = []
+    for spec_row in ROW_SPECS:
+        fields = spec_row[2:]
+        in_a = all(f in a for f in fields)
+        in_b = all(f in b for f in fields)
+        if in_a and in_b:
+            rows.append(spec_row)
+            continue
+        if in_a != in_b:
+            raise SystemExit(
+                f"「{spec_row[0]}」这一行只有一边有数（a={in_a} b={in_b}）。"
+                "两边都没有才跳过；只有一边有是数据对不齐，不是拿不到。")
+        if not set(fields) <= OPTIONAL_FIELDS:
+            raise SystemExit(
+                f"「{spec_row[0]}」这一行缺字段 {sorted(fields)}，而它不在可缺清单里。"
+                f"可缺的只有制胜分和非受迫失误（{sorted(OPTIONAL_FIELDS)}）——"
+                "那两项 WTA 巡回赛拿不到，其余的都拿得到。")
+    if len(rows) < MIN_ROWS:
+        raise SystemExit(
+            f"只画得出 {len(rows)} 行，少于下限 {MIN_ROWS}。"
+            "一份几乎全空的 stats 也能渲出一张看起来正常的图，所以这里拦住。")
+    return rows
 
 _SET_TOKEN_RE = re.compile(r"^(\d{1,2})-(\d{1,2})(\(\d{1,2}\))?$")
 
@@ -194,9 +252,11 @@ def build(spec: dict) -> str:
         if "headshot" not in raw:
             raise SystemExit(f"stats.{side} 缺 `headshot`——先用 "
                               "tools/fetch_official_headshot.py 抓一张，再把路径写进来。")
-        missing = [f for spec_row in ROW_SPECS for f in spec_row[2:] if f not in raw]
+        missing = [f for spec_row in ROW_SPECS for f in spec_row[2:]
+                   if f not in raw and f not in OPTIONAL_FIELDS]
         if missing:
             raise SystemExit(f"stats.{side} 缺这些字段：{sorted(set(missing))}")
+    rows = usable_rows(a, b)
 
     matchup = cover.get("matchup") or []
     if len(matchup) != 2:
@@ -218,7 +278,7 @@ def build(spec: dict) -> str:
 
     rows_html = "".join(
         _stat_row_html(spec_row[0], *_stat_row(spec_row[1], a, b, *spec_row[2:]))
-        for spec_row in ROW_SPECS)
+        for spec_row in rows)
 
     def side(meta: dict, raw: dict, where: str) -> str:
         is_win = str(meta["name"]).strip() == winner
