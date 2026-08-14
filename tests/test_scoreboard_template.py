@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import re
 import sys
 from pathlib import Path
@@ -64,6 +65,198 @@ def test_match_video_remains_full_bleed():
     assert "overlay=(W-w)/2" not in graph
 
 
+#: 冻结的浏览器实测：`.score-cn` 的 `scrollWidth`（px），在**改动之前**的
+#: 33px 字号下、用 Chromium 量的（1080×1440，device_scale_factor=1）。
+#:
+#: 它的作用是给 `_name_width_px` 那套 PIL 量法当靠山：我们在 Python 里算宽度、
+#: 决定字号，而**真正排版的是浏览器**——两边只要有一处对不上（换字体、改
+#: `.score-rank` 的 em、加了 letter-spacing），算出来的字号就会悄悄不够，
+#: 名字压到框线上而没有任何东西报错。
+_BROWSER_NAME_PX_AT_33 = {
+    ("亚历山德罗娃", 19): 226,
+    ("安尼西莫娃", 10): 200,
+    ("巴图什科娃", 42): 200,
+    ("费尔南德斯", 34): 200,
+    ("麦克纳莉", 73): 173,
+    ("奥索里奥", 55): 173,
+    ("汤森德", 94): 147,
+}
+
+
+def test_量名字宽度要和浏览器对得上():
+    """PIL 量出来的比 Chromium 稳定**小 1~2px**（字体一样，取整口径不同）。
+
+    判据钉两头：不许偏大（偏大就等于高估了占地，字号被无谓压小），也不许小
+    太多（小太多就会算出一个其实放不下的字号）。`SCORE_NAME_SLACK_PX` 就是
+    按这个偏差留的余量。
+    """
+    worst = 0.0
+    for (name, rank), browser in _BROWSER_NAME_PX_AT_33.items():
+        got = versus_poster._name_width_px(name, rank, 33)
+        gap = got - browser
+        assert -versus_poster.SCORE_NAME_SLACK_PX <= gap <= 0.5, (
+            f"{name}（{rank}）：PIL 量出 {got:.1f}px，浏览器是 {browser}px，"
+            f"差 {gap:+.1f}px——超出 `SCORE_NAME_SLACK_PX` 能兜住的范围了")
+        worst = min(worst, gap)
+    assert abs(worst) <= versus_poster.SCORE_NAME_SLACK_PX, (
+        f"最坏偏差 {worst:.1f}px，而余量只留了 "
+        f"{versus_poster.SCORE_NAME_SLACK_PX}px")
+
+
+def test_每盘一列算宽度不许把赛果整串拿去匹配():
+    """`_SET_RE` 是锚死的（`^…$`），拿它 `findall` 整串恒为 0。
+
+    第一版就是这么写的：每块板都按「1 盘」算名字那一列，于是它以为有 528px
+    可用——**名字反而更大，而且一个字都不报错**。所以这条判据钉的是数出来的
+    盘数，不是「有没有调用某个函数」。
+    """
+    assert versus_poster._set_count("6-3 4-6 6-4") == 3
+    assert versus_poster._set_count("7-6(3) 4-6 6-4") == 3
+    assert versus_poster._set_count("6-1 6-2") == 2
+    assert versus_poster._set_count("") == 0
+    # 盘越多、名字那一列越窄，这是这套算法的全部前提
+    assert (versus_poster.score_name_avail_px(3)
+            < versus_poster.score_name_avail_px(2))
+
+
+def test_中文名字号按最长的名字算不许超出那一列():
+    """账号所有者 2026-08-14：「球员的中文名字号再大一些，现在太小了」。
+
+    字号因此不是写死的，而是 `min(上限, 这一列装得下的最大值)`——和封面钩子
+    的 `hook_title_px` 同一个形状。**必须算**：`亚历山德罗娃（19）` 在原来的
+    33px 下就要 226px，而那一列当时只有 198px，也就是加大之前它已经压在右边
+    那道框线上了（36 张比分板里有 4 条名字如此）。
+    """
+    vp = versus_poster
+    # ① 短名字拿满上限
+    short = [{"name": "汤森德", "rank": 94}, {"name": "奥索里奥", "rank": 55}]
+    assert vp.score_cn_px(short, 3) == vp.SCORE_CN_MAX_PX
+
+    # ② 最长的那一对要缩下来，而且**两个人共用一个字号**
+    longest = [{"name": "亚历山德罗娃", "rank": 19}, {"name": "斯维托丽娜", "rank": 9}]
+    small = vp.score_cn_px(longest, 3)
+    assert small < vp.SCORE_CN_MAX_PX, "六个字的名字还给满字号，那一列装不下"
+    assert small == vp.score_cn_px(list(reversed(longest)), 3), "换个顺序算出两个数"
+
+    # ③ 盘数少 → 那一列宽 → 同样的名字能给更大的字号（这一条同时钉住盘数真的
+    #    被读进去了；`_set_count` 写错时它会退化成恒等）
+    assert vp.score_cn_px(longest, 2) > small
+
+    # ④ 算出来的字号必须**真的装得下**，逐条 spec 验
+    checked = 0
+    for path in sorted(ROOT.glob("specs/reels/*.json")):
+        cover = json.loads(path.read_text("utf-8")).get("cover") or {}
+        if str(cover.get("layout", "")).strip() != "solo" or not cover.get("scoreboard"):
+            continue
+        matchup = cover.get("matchup") or []
+        sets = vp._set_count(cover.get("result"))
+        px = vp.score_cn_px(matchup, sets)
+        room = vp.score_name_avail_px(sets)
+        for meta in matchup:
+            width = vp._name_width_px(str(meta.get("name") or ""), meta.get("rank"), px)
+            assert width + vp.SCORE_NAME_SLACK_PX <= room, (
+                f"{path.name}：{meta.get('name')} 在 {px}px 下要 {width:.0f}px，"
+                f"而 {sets} 盘那一列只有 {room:.0f}px")
+        checked += 1
+    assert checked >= 30, f"只校到 {checked} 块比分板，主语多半没了"
+
+
+def _rendered_cn_px(monkeypatch: pytest.MonkeyPatch, cover: dict) -> int:
+    monkeypatch.setattr(versus_poster, "_fetch_match_duration", lambda source, where: "1:51")
+    _, css = versus_poster._solo_body({
+        **cover, "eyebrow": "赛场之上", "layout": "solo", "hook": "赢了",
+        "portrait": {"image": "assets/logo/brand/icon.png"},
+    })
+    hit = re.search(r"\.score-cn\{[^}]*?font-size:(\d+)px", css, re.S)
+    assert hit, f"渲出来的 CSS 里没有 .score-cn 的字号：{css[:200]}"
+    return int(hit.group(1))
+
+
+def test_算出来的字号要真的写进CSS(monkeypatch: pytest.MonkeyPatch):
+    """⚠️ **只验 `score_cn_px` 算得对，拦不住「它的结果没被用上」。**
+
+    反向验证时把 CSS 里的 `__SCORE_CN_PX__` 换回写死的 `33px`，上面那几条
+    **全绿**——函数照样算出 44 和 41，只是没有人读。这个仓库为同一个形状栽过
+    好几次（`_push` 写错键名而退路刚好给出对的答案、`_cut_person` 从来没跑起来
+    过），共同点都是「规矩写对了，实现是空的」。
+
+    所以这条判据**改一个值验一次**：换一对更长的名字，渲出来的字号必须跟着变。
+    """
+    short = _rendered_cn_px(monkeypatch, {
+        "winner": "汤森德", "result": "3-6 6-3 6-3",
+        "scoreboard": {"court": "Stadium 3", "duration_source": {"url": "fixture"}},
+        "matchup": [{"name": "汤森德", "name_en": "T. TOWNSEND", "country": "USA", "rank": 94},
+                    {"name": "奥索里奥", "name_en": "C. OSORIO", "country": "COL", "rank": 55}],
+    })
+    long_ = _rendered_cn_px(monkeypatch, {
+        "winner": "斯维托丽娜", "result": "3-6 6-0 6-3",
+        "scoreboard": {"court": "Stadium 3", "duration_source": {"url": "fixture"}},
+        "matchup": [{"name": "亚历山德罗娃", "name_en": "E. ALEXANDROVA", "country": "RUS", "rank": 19},
+                    {"name": "斯维托丽娜", "name_en": "E. SVITOLINA", "country": "UKR", "rank": 9}],
+    })
+    assert short == versus_poster.SCORE_CN_MAX_PX, (
+        f"短名字渲出来是 {short}px，而上限是 {versus_poster.SCORE_CN_MAX_PX}px"
+        "——多半是 CSS 里那个字号被写死了，`score_cn_px` 算完没人读")
+    assert long_ < short, (
+        f"换成更长的名字，渲出来的字号还是 {long_}px——CSS 没有跟着 spec 变")
+
+
+def test_中文名的字号上限只许往上调():
+    """账号所有者说的是「再大一些」，那这个数就不该被谁顺手调回去。
+
+    和 `test_成片的编码参数不许为了压体积往下调` 同一个形状：它拦的不是手滑，
+    是下一次有人重新论证「小一点也看得清」。
+    """
+    assert versus_poster.SCORE_CN_MAX_PX >= 44, (
+        f"中文名上限被调到了 {versus_poster.SCORE_CN_MAX_PX}px，"
+        "而账号所有者 2026-08-14 要求的是「再大一些」（当时是 33px，定在 44px）")
+    assert versus_poster.SCORE_NAME_COL_FR >= 2.3, (
+        "名字那一列的宽度是字号涨得上去的前提，收窄它等于把字号又压回来")
+
+
+def test_英文名要退成注脚但还读得出(monkeypatch: pytest.MonkeyPatch):
+    """账号所有者 2026-08-14：「英文名可以字号小一些」（中文名涨到 44px 之后
+    22px 的英文行跟着显得抢戏）。
+
+    两头都要钉：**小到位**（不然这条反馈等于没做），**又不能小到读不出**——
+    渲了 22/20/19/18/17 五档摆一起看，17px 配着 1.5px 的字距开始发虚。
+
+    还要盯**它真的写进了 CSS**：常量改对而占位符没换，渲出来还是老样子，
+    而这种错这个仓库栽过好几次（同一轮里就有一次，见
+    `test_算出来的字号要真的写进CSS`）。
+    """
+    vp = versus_poster
+    assert vp.SCORE_EN_PX <= 20, (
+        f"英文名还是 {vp.SCORE_EN_PX}px，账号所有者要的是比原来的 22px 小一些")
+    assert vp.SCORE_EN_PX >= 16, (
+        f"英文名 {vp.SCORE_EN_PX}px 太小了：1080 宽的画布放到手机上，"
+        "17px 配 1.5px 字距就已经开始发虚")
+    assert vp.SCORE_EN_PX < vp.SCORE_CN_MAX_PX, "英文名是注脚，不许和中文名一样大"
+
+    monkeypatch.setattr(vp, "_fetch_match_duration", lambda source, where: "1:51")
+    _, css = vp._solo_body({
+        **_cover(), "eyebrow": "赛场之上", "layout": "solo", "hook": "赢了",
+        "portrait": {"image": "assets/logo/brand/icon.png"},
+    })
+    hit = re.search(r"\.score-en\{[^}]*?font-size:(\d+)px", css, re.S)
+    assert hit and int(hit.group(1)) == vp.SCORE_EN_PX, (
+        f"CSS 里英文名的字号是 {hit.group(1) if hit else '缺'}，"
+        f"而常量是 {vp.SCORE_EN_PX}——占位符没换上")
+
+
+def test_名字那一列加宽之后盘分那几列还够用():
+    """名字列从 1.55fr 加宽到 2.3fr，代价落在盘分那几列上——要证明它们没被压瘪。
+
+    盘分是 60px 的数字，抢七还要挂一个 `.45em` 的上标。三盘那一档是最窄的。
+    """
+    fr = versus_poster.SCORE_NAME_COL_FR
+    for sets in (2, 3):
+        column = 928 / (fr + sets)
+        assert column >= 120, (
+            f"{sets} 盘时每一格盘分只剩 {column:.0f}px，装 60px 的数字太挤")
+        assert column >= 86, "已经掉到 minmax 的下限 86px，网格会开始挤名字那一列"
+
+
 def _tracks(value: str) -> list[str]:
     """按**浏览器的读法**把轨道列表拆开：只在括号外的空白处断。
 
@@ -122,4 +315,7 @@ def test_比分板的盘分要真的排在名字右边(monkeypatch: pytest.Monke
         f"名字一列 + 每盘一列 = 4 条轨道，解出来却是 {len(tracks)} 条：{value!r}\n"
         "盘分会竖着堆在名字底下，而 HTML 字符串断言看不出这一点。")
     # 名字那一列要比盘分列宽：`A. SABALENKA` 比一个 `6` 长得多，等分会挤到换行。
-    assert "1.55fr" in tracks[0], f"名字那列没留够宽度：{tracks[0]!r}"
+    # 宽度从常量推，不写死——2026-08-14 为了让中文名字号涨上去，这一列从
+    # 1.55fr 加宽到了 2.3fr，写死的话每加宽一次都要来改这条断言。
+    assert f"{versus_poster.SCORE_NAME_COL_FR}fr" in tracks[0], (
+        f"名字那列没留够宽度：{tracks[0]!r}")

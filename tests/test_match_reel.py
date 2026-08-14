@@ -8974,7 +8974,57 @@ def test_短钩子新上限不会打破三行96px的最坏情况上界():
         "超出 1440 的画布")
 
 
-def test_scoreboard_html里决胜盘的格子真的带着那个类(monkeypatch):
+#: 比分板那几道框线共用的白色。**一个出处**：每一条 `border` 都得是它。
+_BOARD_LINE = "rgba(244,251,247,"
+#: 品牌绿的两种写法（描边用 hex，垫底用 rgb 三元组）。决胜盘那块绿两样都用过。
+_BRAND_GREEN = ("#c6f65a", "198,246,90")
+
+
+def _board_rules(vp) -> dict[str, str]:
+    """从**真渲出来的 CSS** 里解出比分板那些规则：`{选择器: 声明块}`。
+
+    ⚠️ **先剥掉 `/* */`。** 这块 CSS 的注释正是这个仓库记教训的地方，它此刻
+    就写着「曾经是 8px 品牌绿描边」——连注释一起扫，「把坑记下来」会被判成
+    「又踩了这个坑」（同一个形状本仓库栽过六次）。
+
+    只收选择器里带 `.score…` 的规则：`.setwin{color:#c6f65a}` 是**盘分数字**
+    的强调色，那个绿要留着，不在这条判据的射程里（`.storyscore` 同理，
+    它的类名不是以 `score` 起头的）。
+    """
+    _, css = vp._solo_body({
+        "eyebrow": "赛场之上", "layout": "solo", "hook": "赢了",
+        "portrait": {"image": "assets/logo/brand/icon.png"},
+        "winner": "萨巴伦卡", "result": "6-3 4-6 6-4",
+        "scoreboard": {"court": "Centre Court", "duration_source": {"url": "fixture"}},
+        "matchup": [{"name": "萨巴伦卡", "country": "BLR", "rank": 1},
+                    {"name": "张帅", "country": "CHN", "rank": 62}],
+    })
+    css = re.sub(r"/\*[\s\S]*?\*/", "", css)
+    rules = {}
+    for hit in re.finditer(r"([^{}]+)\{([^{}]*)\}", css):
+        selector = " ".join(hit.group(1).split())
+        if re.search(r"\.score[\w-]*", selector):
+            rules[selector] = hit.group(2)
+    return rules
+
+
+def test_比分板每一格的竖线都一样不许再给决胜盘描边(monkeypatch):
+    """账号所有者 2026-08-14：「把最后一盘比分前面的绿色竖线变成和其他框线
+    一样的白色」「**以后都这样固定下来**」。
+
+    在这之前决胜盘那一格挂 `score-set--deciding`：左边框 8px 品牌绿 + 一层
+    14% 的品牌绿垫底。现在整块取消——竖线和其余框线同色同粗，绿底一并去掉
+    （量过：单剩那层绿，那一格的色相从 200.6° 偏到 185.5°、饱和度 .379 → .257，
+    渲两版摆一起看，读起来是「这一格脏了」不是「这一格重要」）。
+
+    判据钉三头，三个方向分别反向验证过：
+
+    1. **markup**：三盘只有三个一模一样的 `score-set` 格子，谁都不多一个类
+    2. **CSS 的框线**：比分板里每一条 `border*` 都用同一道白线——这一条不认
+       类名，所以换个名字把绿线加回来照样红
+    3. **CSS 的底色**：品牌绿不许出现在任何一条 `.score…` 规则里——第 2 条
+       只管 `border`，那层 `background` 的绿要靠这一条接住
+    """
     vp = _vp()
     monkeypatch.setattr(vp, "_fetch_match_duration", lambda source, where: "1:16")
     cover = {
@@ -8983,15 +9033,35 @@ def test_scoreboard_html里决胜盘的格子真的带着那个类(monkeypatch):
         "matchup": [{"name": "萨巴伦卡", "country": "BLR", "rank": 1},
                     {"name": "张帅", "country": "CHN", "rank": 62}],
     }
-    html_out = vp._scoreboard_html(cover)
-    assert html_out.count("score-set--deciding") == 1, (
-        "三盘只该有一处决胜盘描边：\n" + html_out)
-    # 决胜盘一定是最后一个 score-set 格子，不是随便哪一个
-    last_set = html_out.rfind('<div class="score-set')
-    assert "score-set--deciding" in html_out[last_set:last_set + 60]
 
-    straight = vp._scoreboard_html({**cover, "result": "6-3 6-4"})
-    assert "score-set--deciding" not in straight, "直落两盘不该出现决胜盘描边"
+    # ① 三盘 → 三个格子，class 一个字都不许多
+    html_out = vp._scoreboard_html(cover)
+    cells = re.findall(r'<div class="(score-set[^"]*)"', html_out)
+    assert cells == ["score-set"] * 3, (
+        f"每一盘一个格子、class 必须一模一样，解出来却是 {cells}：\n{html_out}")
+
+    rules = _board_rules(vp)
+    # 判据自己的判据：主语还在（选择器改名或者 CSS 拿不到时，下面两条会变成
+    # 恒真的绿灯，而那和"守住了"长得一模一样）
+    assert ".score-set" in rules, f"比分板的 CSS 没解出来，解到的是：{sorted(rules)}"
+
+    for selector, decls in rules.items():
+        for decl in decls.split(";"):
+            if ":" not in decl:
+                continue
+            prop, value = (part.strip() for part in decl.split(":", 1))
+            # ② 框线：`box-sizing:border-box` 的属性名是 box-sizing，不在这里
+            if prop in {"border", "border-top", "border-right",
+                        "border-bottom", "border-left"}:
+                assert _BOARD_LINE in value, (
+                    f"`{selector}` 的 {prop} 不是比分板那道白框线：{value!r}\n"
+                    "账号所有者要的是「和其他框线一样的白色」，"
+                    "别再给某一盘单开一条带颜色的描边。")
+        # ③ 底色：那层 14% 的绿垫底同样不许回来
+        for green in _BRAND_GREEN:
+            assert green not in decls.lower(), (
+                f"`{selector}` 里又出现了品牌绿 {green}：{decls.strip()!r}\n"
+                "比分板是全透明底 + 白框线；绿只留给盘分数字（`.setwin`）。")
 
 
 def test_顶栏比分逐盘上色赢盘绿输盘灰():

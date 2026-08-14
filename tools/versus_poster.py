@@ -76,6 +76,9 @@ INK = "#04120d"            # 深底
 TEXT = "#f4fbf7"
 DIM = "#9fb4aa"
 REPO_ROOT = Path(__file__).resolve().parents[1]
+#: 字体和 CSS 里那几条 `@font-face` 用的是同一批文件——量宽度必须量它们，
+#: 拿系统字体量出来的数和渲出来的画面对不上。
+FONT_DIR = REPO_ROOT / "assets" / "fonts"
 
 
 SEAM_ANGLE = 7.4           # 中缝那条绿线的倾角（度）
@@ -482,6 +485,100 @@ def _scoreboard_sets(result: str, where: str) -> list[tuple[int, int, str | None
     return scores
 
 
+#: 比分板名字那一列占几份，其余每一盘各占 1 份。
+#:
+#: ⚠️ **2026-08-14 从 1.55 加宽到 2.3**，为的是让中文名的字号涨得上去（账号所有者
+#: 「球员的中文名字号再大一些，现在太小了」）。原来名字那格只有
+#: `928×1.55/4.55 − 118 = 198px` 可用，而 `亚历山德罗娃（19）` 在 33px 下就要
+#: **226px**——也就是说加大之前它**已经在溢出**，排名那几个字正压在右边那道
+#: 框线上（36 张比分板里 4 条名字如此）。加宽之后同样 3 盘有 285px。
+#: 盘分那几列并不吃亏：一个 60px 的数字占不到 40px，而每列仍有 175px。
+SCORE_NAME_COL_FR = 2.3
+#: 中文名字号：**上限**（短名字就用这一档）和**下限**（名字太长时能缩到哪儿）。
+SCORE_CN_MAX_PX = 44
+SCORE_CN_MIN_PX = 28
+#: 英文名那一行——**注脚，不是主语**。中文名涨到 44px 之后 22px 显得抢戏，
+#: 账号所有者 2026-08-14「英文名可以字号小一些」。18px 是渲了五档摆一起
+#: 挑出来的，判据 `test_英文名要退成注脚但还读得出` 钉住上下两头。
+SCORE_EN_PX = 18
+#: `.score-rank` 是 `.62em`，`margin-left:4px`——量宽度要把这两样算进去。
+SCORE_RANK_EM = 0.62
+SCORE_RANK_GAP_PX = 4
+#: PIL 量出来的宽度比 Chromium 稳定小 1~2px（见 `test_量名字宽度要和浏览器对得上`
+#: 那张冻结表）。留 3px，别贴着算。
+SCORE_NAME_SLACK_PX = 3
+
+
+def _set_count(result: object) -> int:
+    """赛果里有几盘——**和 `_scoreboard_sets` 一样按空白切再逐个匹配**。
+
+    ⚠️ `_SET_RE` 是锚死的（`^…$`），拿它 `findall` 整个字符串恒为 0；
+    第一版就是这么写的，于是每块板都按「1 盘」去算名字那一列的宽度，
+    名字反而更宽——**而它一个字都不会报错**。
+    """
+    return sum(1 for token in str(result or "").split() if _SET_RE.match(token))
+
+
+def score_name_avail_px(sets: int) -> float:
+    """名字那一格**留给文字**的宽度（px）。
+
+    `.storycopy` 左右各留 70px → 940；`.scoreboard` 边框 6px×2 → 928 是网格的
+    内宽。名字那一列按 `SCORE_NAME_COL_FR : 1 : 1 …` 分，再扣掉
+    `.score-person` 的左右内边距（22+16）和国旗那一格（66+14）。
+
+    量过：`sets=3`、`fr=1.55` 时这个式子给 198.1，浏览器报的 `clientWidth`
+    正是 **198**——所以它不是推的，是对得上的。
+    """
+    column = 928 * SCORE_NAME_COL_FR / (SCORE_NAME_COL_FR + max(1, sets))
+    return column - (22 + 16) - (66 + 14)
+
+
+def _name_width_px(name: str, rank: object, px: int) -> float:
+    """这一行中文名（含 `（排名）`）在 `px` 字号下有多宽，拿真字体量。
+
+    中文名走 `TL Display SC`（得意黑），排名走 `TL Sans SC`（思源黑）——和 CSS
+    里那两条 `font-family` 一一对应。**别用「一个汉字一个 em」估**：得意黑是
+    斜体变形字，实测 `亚历山德罗娃` 6 个字在 33px 下只有 191px 而不是 198。
+    """
+    from PIL import ImageFont  # noqa: PLC0415
+
+    width = ImageFont.truetype(str(FONT_DIR / "SmileySans-Oblique.ttf"), px).getlength(name)
+    if rank is not None:
+        rank_px = max(1, round(px * SCORE_RANK_EM))
+        width += ImageFont.truetype(
+            str(FONT_DIR / "NotoSansSC-Regular-sub.ttf"), rank_px
+        ).getlength(f"（{int(rank)}）") + SCORE_RANK_GAP_PX
+    return width
+
+
+def score_cn_px(matchup: list, sets: int) -> int:
+    """比分板上中文名的字号：短名字给满 `SCORE_CN_MAX_PX`，长的按宽度缩。
+
+    和封面钩子那条 `hook_title_px` 是同一个形状——**字号是算出来的，不是写死
+    的**，所以「名字要更大」和「长名字不许压到框线上」可以同时成立。
+
+    ⚠️ **两位球员共用一个字号**（取两人里更紧的那个）。各算各的会让同一块板
+    上两行字一大一小，看着像渲错了。
+    """
+    avail = score_name_avail_px(sets) - SCORE_NAME_SLACK_PX
+    px = SCORE_CN_MAX_PX
+    for meta in matchup:
+        name = str(meta.get("name") or "").strip()
+        if not name:
+            continue
+        unit = _name_width_px(name, meta.get("rank"), 100) / 100.0
+        if unit > 0:
+            px = min(px, int(avail / unit))
+    if px < SCORE_CN_MIN_PX:
+        # 退路要出声：缩到下限还是放不下，那一行会压到框线上，而画面上
+        # 看起来只是「这个名字有点挤」。
+        print(f"[比分板] ⚠️ 名字太长，{sets} 盘只有 {avail:.0f}px，"
+              f"算下来要 {px}px 才放得下，已经按下限 {SCORE_CN_MIN_PX}px 渲——"
+              "这一行会顶到右边的框线")
+        px = SCORE_CN_MIN_PX
+    return px
+
+
 def _scoreboard_person(meta: dict, where: str) -> str:
     name = str(meta.get("name") or "").strip()
     if not name:
@@ -532,20 +629,29 @@ def _scoreboard_html(cover: dict) -> str:
     # **之前**渲的，仓库里那份走的还是老的一行赛果。又一次「断言全绿不等于
     # 页面对」。判据 `test_比分板的盘分要真的排在名字右边` 直接渲一张出来量。
     # 名字那列给 1.55fr：`A. SABALENKA` 比盘分宽得多，等分会把它挤到换行。
-    columns = " ".join(["minmax(0,1.55fr)"] + ["minmax(86px,1fr)"] * len(scores))
+    columns = " ".join([f"minmax(0,{SCORE_NAME_COL_FR}fr)"]
+                       + ["minmax(86px,1fr)"] * len(scores))
 
-    # **决胜盘（打满了才有的最后一盘）单独加一道描边**——账号所有者反复提到的
-    # 跌宕（「二比五落后」「三个赛点没给」）常常就发生在这一盘，但比分板此刻对
-    # 「这盘不一样」完全没有反应：文案在讲跌宕，图表却装若无其事。
-    # 只有真的打满（>2 盘）才有决胜盘，直落两盘赢下的比赛没有这一档。
+    # ⚠️ **决胜盘不再单独描边**（账号所有者 2026-08-14：「把最后一盘比分前面的
+    # 绿色竖线变成和其他框线一样的白色」「以后都这样固定下来」）。
+    #
+    # 原来那一格挂 `score-set--deciding`，左边框换成品牌绿并粗一档、底下再垫
+    # 一层 14% 的品牌绿——立意是「跌宕常常就发生在这一盘」。现在整块取消：
+    # 每一格的竖线都和其余框线一样。**类跟着一起删掉，不留一个没有样式的
+    # 钩子**——一个版式永远不读的键就是个不吭声的死键。
+    #
+    # 绿底同时去掉，不是顺手扩大范围：那 14% 的绿是**给绿竖线垫底的**（它和
+    # 描边是同一次改动引进来的一套）。竖线变白之后单剩它，量出来那一格的色相
+    # 从 200.6° 偏到 185.5°、饱和度从 .379 掉到 .257——渲两版摆一起看，读起来
+    # 是「这一格脏了」，不是「这一格重要」，正好撞上账号所有者要的「有吸引力」。
+    # 判据 `test_比分板每一格的竖线都一样不许再给决胜盘描边`。
     cells = []
-    for idx, (left, right, tiebreak) in enumerate(scores):
+    for left, right, tiebreak in scores:
         left_class = "setwin" if left > right else "setlose"
         right_class = "setwin" if right > left else "setlose"
         tb = f"<sup>({tiebreak})</sup>" if tiebreak else ""
-        deciding = " score-set--deciding" if len(scores) > 2 and idx == len(scores) - 1 else ""
         cells.append(
-            f'<div class="score-set{deciding}">'
+            '<div class="score-set">'
             f'<span class="score-number {left_class}">{left}{tb}</span>'
             f'<span class="score-number {right_class}">{right}</span>'
             '</div>')
@@ -1019,25 +1125,27 @@ __SCRIM__
  justify-content:center;margin-right:14px}
 .score-flag{display:block;width:58px;height:38px;object-fit:cover}
 .score-names{display:flex;flex-direction:column;justify-content:center;min-width:0}
-.score-cn{font-family:'TL Display SC','TL Sans SC',sans-serif;font-size:33px;
- line-height:1.08;white-space:nowrap}
+/* 字号是**算出来的**（`score_cn_px`）：短名字给满上限，长名字按这一列的宽度
+   缩，两位球员共用一个数。写死一个值的话，`亚历山德罗娃（19）` 会压到右边
+   那道框线上——加大之前它就已经在压了。 */
+.score-cn{font-family:'TL Display SC','TL Sans SC',sans-serif;
+ font-size:__SCORE_CN_PX__px;line-height:1.08;white-space:nowrap}
 .score-rank{font-family:'TL Sans SC',sans-serif;font-size:.62em;margin-left:4px}
-.score-en{font-family:'TL Sans SC',sans-serif;font-size:22px;line-height:1.15;
- letter-spacing:1.5px;color:#dcefe4;white-space:nowrap;margin-top:5px}
+/* 英文名是**注脚不是主语**：中文名 2026-08-14 从 33px 涨到 44px 之后，22px 的
+   英文行跟着显得抢戏，账号所有者「英文名可以字号小一些」→ 18px。渲了
+   22/20/19/18/17 五档摆一起看：17px 配着 1.5px 的字距开始发虚，18px 是最后
+   一档「明显退成注脚、又还读得出」的。字距**不跟着缩**——小号全大写本来就
+   该松一点。 */
+.score-en{font-family:'TL Sans SC',sans-serif;font-size:__SCORE_EN_PX__px;
+ line-height:1.15;letter-spacing:1.5px;color:#dcefe4;white-space:nowrap;margin-top:5px}
+/* 每一盘一格，格与格之间就这一道竖线，**所有格子一视同仁**。
+   ⚠️ 决胜盘曾经单独有一条 `.score-set--deciding`（8px 品牌绿描边 + 14% 绿底），
+   2026-08-14 账号所有者要求整块取消，理由和判据写在 `_scoreboard_html` 里那段
+   注释。**别再给某一盘单开一条规则**——竖线的粗细和颜色只有这一处出处，
+   写第二处必分叉。
+   6px 是账号所有者一路加粗上来的：2026-08-09 1px→2px、2026-08-12「白线还是
+   太细」→3px、2026-08-13「还是太细，加粗一倍」→6px。 */
 .score-set{display:flex;flex-direction:column;border-left:6px solid rgba(244,251,247,.9)}
-/* **决胜盘单独描边**：这一盘打满了才存在，往往正是钩子讲的那段跌宕
-   （「二比五落后」「三个赛点没给」）。左边框换成品牌绿并再粗一档，加一层
-   14% 不透明度的品牌绿垫底——那是「一屏只留一个强调色」允许的中间态：
-   够醒目，但不跟真正的强调色（赢盘数字）抢。不引入第二种颜色，
-   只是同一种绿分了层级。
-   ⚠️ **8px 是相对网格线定的，不是拍的**：网格线 2026-08-09 从 1px 加粗到
-   2px，2026-08-12 账号所有者反馈「白线还是太细」又加粗到 3px（决胜盘描边
-   跟着走到 4px），2026-08-13 账号所有者再反馈「还是太细，加粗一倍」——
-   网格线 3px→6px，决胜盘描边同样翻倍到 8px，保持「比网格线粗一档」的
-   既定关系（4/3 的粗细比例延续到 8/6）。写 7px 的话就是套「网格线+1」
-   那条旧公式，不是这次「加粗一倍」的要求，两条公式这次对不上，
-   听后面这条——账号所有者最近一次说的是「倍」不是「一档」。 */
-.score-set--deciding{border-left:8px solid #c6f65a;background:rgba(198,246,90,.14)}
 .score-number{flex:1;display:flex;align-items:center;justify-content:center;
  font-family:'TL Numeral','TL Sans SC',sans-serif;font-size:60px;font-weight:800}
 .score-number+.score-number{border-top:6px solid rgba(244,251,247,.9)}
@@ -1068,6 +1176,9 @@ __SCRIM__
 """
         .replace("__SCRIM__", _scrim_css(clear_scrim))
         .replace("__STORYCOPY_TOP__", str(STORYCOPY_TOP))
+        .replace("__SCORE_EN_PX__", str(SCORE_EN_PX))
+        .replace("__SCORE_CN_PX__", str(score_cn_px(
+            cover.get("matchup") or [], _set_count(cover.get("result")))))
         # ⚠️ 这儿曾经给 `.storytitle` 补一段 `margin-top`（`STORYCOPY_TITLE_GAP_EXTRA`），
         # 撑开的是**药丸到标题**那一截。药丸 2026-08-14 整块拿掉之后这个常量
         # 没有主语了——那 40px 连同药丸自己的 64＋gap 34 一起折进了
