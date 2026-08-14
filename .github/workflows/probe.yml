@@ -7,6 +7,18 @@ on:
     paths:
       - ".github/workflows/probe.yml"
 
+# **不写这一块就是继承仓库默认，而默认可能是「读写」。** 2026-08-14 补上。
+# 这一条**握着两个密钥**（`SPORTRADAR_API_KEY` / `RAPIDAPI_KEY`），偏偏又是
+# 全仓库少数几条没写权限的——密钥和可写 token 落在同一个 job 里，是最不该
+# 省的那一处。
+#
+# 它只探数据源、把覆盖率报告传成 artifact：不 `git commit`、不 `git push`、
+# 不发 Release（`probe-output/` 只活在 runner 的工作区，`upload-artifact`
+# 走的是 runtime token，不吃 `GITHUB_TOKEN` 的权限）。所以 `contents: read`。
+# 判据在 `test_每条工作流都要自己写permissions`。
+permissions:
+  contents: read
+
 jobs:
   analyze:
     runs-on: ubuntu-latest

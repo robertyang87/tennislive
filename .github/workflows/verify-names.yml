@@ -4,6 +4,16 @@ name: verify-names
 on:
   workflow_dispatch:
 
+# **不写这一块就是继承仓库默认，而默认可能是「读写」。** 2026-08-14 补上。
+#
+# ⚠️ **别看名字就以为它会写译名表**——会写的是 `player-name-sync.yml`
+# （那条真的 `git commit` + `git push`，所以它有 `contents: write`）。
+# 这一条只跑 `tools/verify_names.py`：拿维基百科核一遍词典，**结果打印到
+# 日志**（`on:` 那句注释就是这么写的），一个文件都不落、一次 git 都不跑。
+# 两条名字很像、权限差一档——所以判据自动推导，别靠人记着谁是谁。
+permissions:
+  contents: read
+
 jobs:
   verify:
     runs-on: ubuntu-latest

@@ -3927,6 +3927,77 @@ def synthesize(segments: list[Segment], outdir: Path, voice: str, rate: str,
     return out
 
 
+#: 「这条 URL 是换来的，不是公开的」——每条都带一句它是什么，报错时原样印出来，
+#: 免得下一个人只看见「被拦了」却不知道拦的是哪一个特征。
+#: 一律 `re.IGNORECASE` 匹配（查询参数的大小写各家不一样），所以模式里不再
+#: 单写标志位——写了又不读的字段就是个不吭声的死键。
+_SIGNED_URL_MARKERS: tuple[tuple[str, str], ...] = (
+    ("Akamai 令牌鉴权（hdnts）", r"hdnts="),
+    ("AWS SigV4 签名", r"x-amz-signature"),
+    # 参数边界要认 `~`：Akamai 那串 `st=…~exp=…~hmac=…` 用波浪号分隔，
+    # 只认 `?&` 会漏掉它。⚠️ 不写成裸的 `signature=`——那会从
+    # `…foosignature=` 中间匹配上，判据宁可窄，不可宽。
+    ("CloudFront / 通用签名参数", r"(?:^|[?&;~])signature="),
+    # **长 token 才算**。短的 `token=abc` 多半是普通查询参数（分页游标、
+    # 语言标记），拿它当签名拦下来就是误伤。32 位是签名/JWT 的下限。
+    ("长签名令牌（token）", r"(?:^|[?&;~])token=[^&;~#\s]{32,}"),
+    # 只看**路径**那一段（`^[^?#]*` 卡在问号之前）：`/secure/` 出现在查询
+    # 参数的**值**里是噪音，`?next=/secure/x` 这种不该拦。
+    ("受控资产路径（/secure/）", r"^[^?#]*/secure/"),
+)
+
+
+def _reject_signed_source_urls(urls: dict[str, str]) -> None:
+    """**换取签名 URL 去拉付费/受地区限制的流，这条路禁掉。**
+
+    2026-08-14 账号所有者定的。来路是 `shang-darderi-montreal-2026`——
+    它的 `_source` 自己写着「通过 Sky 页面公开 API **换取短时签名 HLS** 后
+    探测成功」，而仓库里其余 89 条源全是「公开 URL 当公开 URL 取」。
+
+    **差的不是画质也不是稳定性，是法律类别**：前者是取一个任何人点开都能取到
+    的地址，后者是**程序化换取访问令牌绕开发布方的访问控制**（规避技术保护
+    措施，DMCA §1201 那一类），而对家是 Sky Italia。这条线上「源片从哪儿来」
+    的规矩一直写在 CLAUDE.md 里（WTA 官方频道 / Tennis TV / ATP 官方 YouTube，
+    以及 Tennis TV 那条**公开 entitlement 接口标着 `free` 的条目**），
+    换签名令牌从来不在那张表上——它是一次没人认领过的越界。
+
+    ⚠️ **这道闸没有「显式认领」的出路**，和 `mixed_fps` / `silent_source` /
+    `conform` 那一族不是一回事：那几条是**取舍**（两个选择都说得通，认领一下
+    把「想清楚了」和「凑合一下」分开），这一条是**禁令**——没有哪份 spec 值得
+    为它开一个口子。要用这个素材，就去拿一个未签名的公开地址，或者换源。
+
+    ⚠️ **闸排在下载之前**（`spec_sources` 由 `validate_spec` 调，而
+    `validate_spec` 是 `render()` 的第一行）：这是 spec 的**形状**问题，
+    `--dry-run` 0.2 秒就该红，不该等几百 MB 下完才说。这条线上「闸装在哪一步」
+    的老账已经记过好几笔（复制页那道闸装在渲的那一步、认领低清那道）。
+
+    ⚠️ **判据宁可窄，不可宽**：`token=` 要长过 32 位才算（短的多半是分页游标），
+    `signature=` 要贴着参数边界（不然 `foosignature=` 也中），`/secure/` 只看
+    路径不看查询串。拿仓库里全部 90 条源扫过——除了那一条，一条都不中。
+    """
+    bad: list[str] = []
+    for key, url in urls.items():
+        text = str(url)
+        hit = [name for name, pattern in _SIGNED_URL_MARKERS
+               if re.search(pattern, text, re.IGNORECASE)]
+        if hit:
+            where = f"`{key}`" if key else "`source_url`"
+            bad.append(f"  {where}：{'、'.join(hit)}\n    {text[:160]}")
+    if not bad:
+        return
+    raise ReelError(
+        "源片地址看着是**换取签名令牌**拿到的受控流，这条路禁掉了：\n"
+        + "\n".join(bad)
+        + "\n\n公开 URL 当公开 URL 取是一回事；程序化换一个短时令牌去拉"
+          "付费或受地区限制的流是另一回事——后者规避的是发布方的访问控制，"
+          "而且那个令牌几分钟就死，spec 里留着它既不能复现也不能核对。\n"
+          "出路两条：①换成**未签名**的公开资产地址（点开就能取的那种）；"
+          "②换源——WTA 官方 YouTube、Tennis TV 官方频道、ATP 官方 YouTube，"
+          "或 Tennis TV 库里标着 `free` 的条目（走公开 entitlement 接口，"
+          "见 `official.fetch_tennistv_video_metadata`）。"
+    )
+
+
 def spec_sources(spec: dict) -> dict[str, str]:
     """spec 声明的源片：`{键: url}`。
 
@@ -3948,10 +4019,17 @@ def spec_sources(spec: dict) -> dict[str, str]:
             raise ReelError(
                 f'`sources` 要写成非空的 {{"键": "url"}}，段里用 "source": "键" 引用；'
                 f"现在是 {multi!r}")
-        return {str(k): str(v) for k, v in multi.items()}
+        resolved = {str(k): str(v) for k, v in multi.items()}
+        _reject_signed_source_urls(resolved)
+        return resolved
     if "source_url" not in spec:
         raise ReelError('spec 里要有 `source_url`（单源）或 `sources`（多源）')
-    return {"": spec["source_url"]}
+    # **收在这儿，不是收在 `validate_spec` 里另调一次**：这个函数是「spec →
+    # 源片地址」的唯一出处（`validate_spec` / `render` / `check_archival_fit` /
+    # 工作流那条缓存键全走它），装在这儿每个消费者自动都护住，不用挨个记得加。
+    single = {"": str(spec["source_url"])}
+    _reject_signed_source_urls(single)
+    return single
 
 
 def conform_sources(paths: dict[str, Path], spec: dict | None,
