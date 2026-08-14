@@ -244,6 +244,33 @@ _LEGACY_VS_COVERS = frozenset({
     "wang-pareja", "wang-samsonova", "wong-brooksby", "wong-gea",
     "wong-lehecka",
 })
+# ⭐ 钩子写得太长、渲出来字号低于 `MIN_HOOK_TITLE_PX` 的存量 solo 封面。
+# 账号所有者 2026-08-14 定下限之前发的，**已发的片子不为版式重渲**——
+# 微信那条消息发出去收不回来。
+#
+# ⚠️ **只许减不许加。** 加一个名字进来就等于让一条新片子绕过新规矩，而它不会
+# 报错。判据 `test_solo封面的钩子每行不许超过十个字` 会自检这张表：里面的每个
+# slug 都必须真的存在、真的是 solo、而且真的还超着——写错一个名字，豁免就成了
+# 一盏恒真的绿灯（`_LEGACY_VS_COVERS` 那条栽过的形状）。
+_LEGACY_LONG_HOOKS = frozenset({
+    "alexandrova-sabalenka", "anisimova-bartunkova", "bencic-eala",
+    "bencic-townsend", "chwalinska-gibson", "cincinnati-story",
+    "eala-mcnally", "eala-pegula-final", "eala-story",
+    "eala-washington-story", "fernandez-andreeva", "fonseca-ruud",
+    "fritz-jodar-final", "gauff-korneeva", "gauff-sakkari",
+    "jodar-fils-montreal-qf", "landaluce-draper", "medvedev-zandschulp",
+    "nakashima-jodar-montreal-sf", "noskova-mcnally", "osaka-fernandez",
+    "osaka-mertens", "pegula-rakhimova", "rybakina-gauff-toronto-sf",
+    "rybakina-kasatkina", "rybakina-li", "rybakina-osaka",
+    "rybakina-samsonova", "shang-darderi-montreal-2026", "shang-rublev",
+    "shang-vallejo", "shelton-fonseca", "shelton-mensik",
+    "shelton-nakashima-montreal-final", "shelton-tien-montreal-sf",
+    "shnaider-pegula", "sonmez-kasatkina", "svitolina-alexandrova",
+    "svitolina-anisimova", "swiatek-golubic", "swiatek-kostyuk",
+    "swiatek-rybakina-toronto-final", "swiatek-shnaider",
+    "swiatek-svitolina-toronto-sf", "tirante-fritz", "zhang-ostapenko",
+    "zhang-sabalenka", "zverev-griekspoor",
+})
 # contain 模式横向保留多少。0.62 → 1920 宽的源片留 1190px，球员落在画面
 # 19%~81% 之间都还在，缩到 1080 宽后有 980 高，占屏高一半——比整幅铺进来的
 # 608 高大了六成。
@@ -4144,6 +4171,61 @@ def _preflight_cutout(spec: dict) -> None:
         ) from exc
 
 
+def hook_lines(spec: dict) -> list[str]:
+    """封面钩子按行拆开——**和 `versus_poster._solo_body` 同一个切法**。
+
+    两处各切一遍必分叉，而分叉的样子是「闸量的行数和渲出来的不是一回事」。
+    """
+    cover = spec.get("cover") or {}
+    return [ln.strip() for ln in str(cover.get("hook", "")).split("\n")
+            if ln.strip()]
+
+
+def _hook_lines_fit_the_title(spec: dict) -> None:
+    """钩子每行不许长到把标题字号压到 `MIN_HOOK_TITLE_PX` 以下。
+
+    账号所有者 2026-08-14（看了 `townsend-osorio` 那张海报）：「**以后封面
+    下面标题的字号就保持这种，不要再小了，所以以后要控制每行文字的数量**」。
+
+    ⚠️ **闸装在 spec 形状这一层，不装在渲染那一层**：字号是从行长算出来的，
+    行长写在 spec 里，所以 `--dry-run` 0.2 秒就能报——而渲染那一层要等到
+    下完源片、跑完 TTS 之后才走到封面。这跟「返工比慢更贵」是同一条。
+
+    ⚠️ **字号的公式不在这儿**，调 `versus_poster.hook_title_px()`。抄一份
+    过来就是「一个数写两处必分叉」，而分叉那天闸会放过一条渲出来更小的钩子，
+    还不报错。
+    """
+    lines = hook_lines(spec)
+    cover = spec.get("cover") or {}
+    if not lines or str(cover.get("layout", "")).strip() != "solo":
+        return
+    if str(spec.get("slug", "")) in _LEGACY_LONG_HOOKS:
+        return
+    from versus_poster import (  # noqa: PLC0415
+        HOOK_MAX_CHARS, MIN_HOOK_TITLE_PX, hook_title_px)
+    px = hook_title_px(lines)
+    if px >= MIN_HOOK_TITLE_PX:
+        return
+    over = [ln for ln in lines if len(ln) > HOOK_MAX_CHARS]
+    raise ReelError(
+        f"封面钩子渲出来只有 {px}px，低于下限 {MIN_HOOK_TITLE_PX}px。\n"
+        f"标题字号是按**最长那一行**算的（{versus_width()} ÷ 字数），"
+        f"所以每行最多 {HOOK_MAX_CHARS} 个字符：\n"
+        + "".join(f"  · {len(ln):2d} 字 「{ln}」\n" for ln in over)
+        + "**这条约束的是文案不是版式**——把长的那行拆开或者砍短，"
+        "别去调字号。\n"
+        "钩子只有两行的位置，讲的是「这场球发生了什么」的那一下；"
+        "排名、轮次、比分海报上已经印着了，不用在这儿重说一遍。")
+
+
+def versus_width() -> int:
+    """标题可用宽度，报错信息里要用。放在这儿是为了不在模块顶层 import
+    `versus_poster`——它会拖进 webcards / explainer 那一串，而 dry-run 用不上。
+    """
+    from versus_poster import TITLE_WIDTH_PX  # noqa: PLC0415
+    return TITLE_WIDTH_PX
+
+
 def validate_spec(spec: dict) -> list[Segment]:
     """**只看 spec，不碰源片**——所以它能在开跑的第一秒跑完。
 
@@ -4177,6 +4259,7 @@ def validate_spec(spec: dict) -> list[Segment]:
     _validate_editorial_contract(
         spec, required=_editorial_contract_required(spec, urls, topbar))
     _absolute_claims_need_a_source(spec)
+    _hook_lines_fit_the_title(spec)
     segments = parse_segments(spec, urls, next(iter(urls)))
     check_archival_fit(spec, segments)
     return segments
