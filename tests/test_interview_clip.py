@@ -2318,23 +2318,30 @@ def test_小红书正文不许超一千字():
     ⚠️ **2026-08-14 起这 1000 字里还要装下 AI 生成合成内容标识**（《人工智能
     生成合成内容标识办法》，见 `tennislive.render.ai_disclosure`）：标识是真的
     会被粘进那一格的字，所以正文本身的预算变成 `1000 - DISCLOSURE_COST`。
-    九份**写在标识之前、并且已经发出去**的文案因此超了预算——它们挂在
-    `_LEGACY_OVER_BUDGET` 里（已发的片子不重推，微信那条消息收不回来）。
+    十份**写在标识之前、并且已经发出去**的文案因此超了预算。
 
-    ⚠️ **这张表是重量出来的，不是把两边的旧名单并起来。** 它同时被两件事
-    啃着同一个 1000 字预算：PR #341 修对的口径（`push_reel.main()` 会先顶一行
-    标题进正文）和这次的标识（47 字）。按修对之前的口径算，表里是四条；
-    按修对之后的口径重量，是**九条**——两个旧名单的并集只有五条，也就是说
-    **照抄任何一半都会漏掉四条**，而漏掉的那几条会在真推送那一刻才报，
-    微信一个字都发不出去（`shelton-nakashima-mtl2026-final` 8/14 正是这么栽的，
+    ⚠️ **口径要按修对之后的算。** 这 1000 字同时被两件事啃着：PR #341 修对的
+    口径（`push_reel.main()` 会先顶一行标题进正文）和这次的标识（47 字）。
+    少算任何一头都会放过几条，而放过的那几条会在**真推送那一刻**才报，微信
+    一个字都发不出去（`shelton-nakashima-mtl2026-final` 8/14 正是这么栽的：
     本地量 974 过关、CI 全绿、合并之后真推报 1001）。
 
-    表有三道自检，第三道是**推导的**：
-    ①每条都必须真的还超着（改短了当场红，提醒把它删掉）；
-    ②名字必须真的还在（写错的豁免是一盏恒真的绿灯）；
-    ③**每条都必须真的已经发出去**（仓库里有它的 `copy.html`）——这一道让
-    「只许减不许加」从一句注释变成一条判据：给一份**还没发**的新文案加豁免，
-    它当场红。新文案要么留出标识的位置，要么去提炼。
+    ## 豁免不是一张名单，是「已经发出去了」这个事实
+
+    ⚠️ 第一版这儿冻着一份九条的 `_LEGACY_OVER_BUDGET`。它当天就少了一条
+    （`rybakina-swiatek-tor2026-final-presser` 在快照之后到货），而这条线
+    **一天到货 2~8 条**——手写名单在这个节奏下只会一直红，然后每次都被
+    「加一行」修掉，几周之内退化成许可证。本仓库同一天在 `_ALREADY_PUSHED`
+    上刚踩过一模一样的一遍。
+
+    所以主语换成集合差：**超预算只有一种情形可以放行——这份文案已经推出去了**
+    （仓库里有它的 `copy.html`）。已发的改不动（微信那条消息收不回来，小红书
+    要换视频得重新上传），而**还没发的超标就是该去提炼**，那正是这道闸的本意。
+    「加一行」这个动作从此不存在，判据也不需要人喂。
+
+    它**自己会收敛**：这条改动合进去之后写的每一份新文案，都会在
+    `--dry-run` 的第 0.2 秒被拦下来（`build_match_reel` 本来就调 `split_copy`
+    预检字数），所以「已发且超标」这个集合只会变小不会变大。
     """
     import contextlib
     import io
@@ -2345,22 +2352,6 @@ def test_小红书正文不许超一千字():
     sys.path.insert(0, str(ROOT / "tools"))
     from push_reel import BODY_MAX, cut_at_tags, split_copy
 
-    # 已发的九份，正文写在 AI 标识之前，顶上标题、加上标识就越过 1000 字。
-    # 括号里是**按修对之后的口径**（顶标题 + 标识）量出来的正文字数，
-    # 九份全部已经推过微信、不会再走一次 `split_copy`。
-    # ⚠️ **只许减不许加**，而下面第③道自检让这句话真的成立：给一份还没发的
-    # 新文案加豁免会当场红。新文案要么留出标识的位置，要么去提炼。
-    _LEGACY_OVER_BUDGET = frozenset({
-        "eala-svitolina-dc2026-qf.xhs.txt",        # 1033
-        "chwalinska-gibson.xhs.txt",               # 1027
-        "wong-gea.xhs.txt",                        # 1021
-        "rybakina-osaka-tor2026-qf.xhs.txt",       #  996
-        "lina-cincinnati-2012.xhs.txt",            #  995
-        "shelton-nakashima-mtl2026-final.xhs.txt", #  992
-        "sabalenka-uchijima-tor2026-r64.xhs.txt",  #  981
-        "eala-story.xhs.txt",                      #  973
-        "alexandrova-sabalenka-tor2026-r16.xhs.txt",  # 955
-    })
 
     # ⚠️ **先把这个数钉住，再拿它去量。** 第一版只写了 `len(body) <= BODY_MAX`
     # ——反向验证时把上限改成 100000，闸和断言**一起松了**，测试照样绿。
@@ -2390,52 +2381,48 @@ def test_小红书正文不许超一千字():
         "push_reel 不再把标题顶在文案最前面了——这条测试模拟的那一步没了，"
         "口径要跟着改，否则它又会比真跑的少量一整行")
 
-    checked, seen_legacy = 0, set()
+    # ⚠️ 用 `git ls-files` 不用 `Path.glob`：CI 的稀疏检出把 `output/` 挡在
+    # 外面，索引里的条目只是被标了 skip-worktree，`glob` 在 CI 上恒空——
+    # 而空集合和「一条都没发过」长得一模一样。git 跑不起来要当场出声。
+    tracked = subprocess.run(
+        ["git", "ls-files", "-z", "output/interviews/*/copy.html",
+         "output/*/reel/*/copy.html"],
+        capture_output=True, text=True, check=True, cwd=ROOT).stdout
+    published = {line.split("/")[-2] for line in tracked.split("\0") if line}
+    # 判据自己的判据①：主语没了的样子就是这个集合为空，而那时**每一条超标的
+    # 文案都会被判成「还没发」**——那是红，不是绿，所以这一条守的是别让它
+    # 变成一条永远红的检查。
+    assert len(published) >= 10, (
+        f"只数到 {len(published)} 条有复制页的文案，判据失效了")
+
+    checked, over = 0, []
     for f in sorted((ROOT / "specs").glob("*/*.xhs.txt")):
         with contextlib.redirect_stdout(io.StringIO()):
             raw = cut_at_tags(f.read_text(encoding="utf-8"))
         staged = f"占位标题\n\n{raw}"        # 照 push_reel.main() 顶一行标题
         checked += 1
-        if f.name in _LEGACY_OVER_BUDGET:
-            # 表自检①：豁免的那几条必须**真的还超着**。哪天有人把文案改短了，
-            # 这一行会当场红，提醒把它从表里删掉——而不是留一条谁也没验过的豁免。
-            with pytest.raises(SystemExit):
-                split_copy(staged)
-            seen_legacy.add(f.name)
+        slug = f.name[: -len(".xhs.txt")]
+        if slug in published:
+            # 已经推出去了：微信那条消息收不回来，小红书要换视频得重新上传，
+            # **改这份文案改不动已经发生的那次发布**。所以它超不超都放行——
+            # 但下面那个循环外的断言会把「已发而且超标」的份数打印出来，
+            # 免得「一条都没超」和「这段根本没跑」长得一样。
+            try:
+                with contextlib.redirect_stdout(io.StringIO()):
+                    split_copy(staged)
+            except SystemExit:
+                over.append(f.name)
             continue
-        _, body = split_copy(staged)       # 超了它自己就 SystemExit
+        # 还没发的：超了就是该去提炼，那正是这道闸的本意。
+        with contextlib.redirect_stdout(io.StringIO()):
+            _, body = split_copy(staged)   # 超了它自己就 SystemExit
         assert len(body) <= BODY_MAX, f"{f.name} 正文 {len(body)} 字"
 
-    # 判据自己的判据：主语没了（目录改名、glob 写错）的样子就是一份都没校到，
+    # 判据自己的判据②：主语没了（目录改名、glob 写错）的样子就是一份都没校到，
     # 而那时上面整个循环会安安静静地全绿。
     assert checked >= 10, f"只校到 {checked} 份文案，判据大概没找对目录"
-
-    # 表自检②：名字写错的豁免拦不住任何东西，还会让人以为它拦住了
-    # （本仓库「豁免表里每个 slug 必须真的存在」栽过一次）。
-    assert seen_legacy == set(_LEGACY_OVER_BUDGET), (
-        "豁免表里这几条在 specs/ 里根本没有："
-        f"{sorted(set(_LEGACY_OVER_BUDGET) - seen_legacy)}")
-
-    # 表自检③（**推导的，这条让「只许减不许加」从注释变成判据**）：豁免的
-    # 前提是「已经发出去了、改不动了」。复制页是推送流程写的，`copy.html`
-    # 在仓库里就说明这条走过那条路——给一份**还没发**的新文案加豁免，这里
-    # 当场红，而那正是往这张表里加行时唯一有诱惑的那种加法。
-    # ⚠️ 用 `git ls-files` 不用 `Path.glob`：CI 的稀疏检出把 `output/` 挡在
-    # 外面，索引里的条目只是被标了 skip-worktree，`glob` 在 CI 上恒空——
-    # 而空集合和「一条都没发过」长得一模一样。
-    tracked = subprocess.run(
-        ["git", "ls-files", "output/interviews/*/copy.html",
-         "output/*/reel/*/copy.html"],
-        capture_output=True, text=True, check=True, cwd=ROOT).stdout.split()
-    published = {line.split("/")[-2] for line in tracked if line}
-    assert len(published) >= 10, (
-        f"只数到 {len(published)} 条有复制页的文案，第③道自检失效了")
-    unpublished = sorted(name for name in _LEGACY_OVER_BUDGET
-                         if name[:-len(".xhs.txt")] not in published)
-    assert not unpublished, (
-        f"这几条挂着豁免却**还没发出去**：{unpublished}——"
-        "豁免的前提是「已经发了、改不动了」。还没发的超预算文案要去提炼，"
-        "或者把标识那 47 个字的位置留出来，不是加一行豁免")
+    print(f"  {checked} 份文案，已发而且超预算的 {len(over)} 份（放行）："
+          f"{sorted(over)}")
 
 
 def test_采访成片一律走Release不进git():
