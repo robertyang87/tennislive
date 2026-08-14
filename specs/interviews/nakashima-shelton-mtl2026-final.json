@@ -54,6 +54,8 @@
     "199.8-203.7": "同上，那次欢呼的最后一段：两头 197.8 和 203.7 秒都是 `[cheering]`，直到 206.3 秒观众停下来他才补上 `I'm not I'm not just saying that sitting here in the final today`，zh 第 51 行已经覆盖。⚠️ 从 164.2 到 206.3 一共 42 秒，这就是封面上「全场欢呼四十秒」那个数的出处",
     "223.4-228.3": "掌声。前一条 221.4 秒是 `[cheering and applause]`（他刚说完这儿像家一样），228.3 秒 `Unfortunately,` 接上——就是「可惜明年我们要回多伦多了」那句，zh 第 58 行已经覆盖"
   },
+  "_verified_clean": "分歧逐处看过，**没有一处语义对不上**——全是 `uh`/`um` 填词和他自己的磕巴重复（`more than more than Toronto`、`I'm not I'm not just saying`、`my whole my whole career`、`but uh but I I uh I I really look forward`）被 whisper 收掉。\n\n判据本身在这条上改了（账号所有者定的，见 commit：比对前把填词从两边一起去掉）。改之前 `small.en` 19.8%、`medium.en` 19.0%，双双越过 18% 天花板；改之后**这一趟连 `transcript_disagree_ok` 都不用写就过了 12% 的闸门**（run 31774125669 的「转写交叉校验」success）——也就是说原来那个数量的是「他有多磕巴」，不是「源可不可信」，这一降正好把这件事证实了。\n\n12 处空档全部核对本地原始字幕 `cap_vYFlFTYII3s.en.json3` 确认是掌声／欢呼边界，销账见 `caption_gaps_ok`；其中六处是同一次欢呼。封面、takeaway、小红书正文引用的原话（`really enjoy here in Montreal more than more than Toronto`、`how hard it is to go back to back, especially in different cities`、`I'm not just saying that sitting here in the final today`、`Feels such like home here`、`we'll be back in Toronto next year`）逐句核过都在原字幕里。",
+  "transcript_verified": true,
   "zh": [
     "大家好",
     "首先 要特别恭喜谢尔顿",
