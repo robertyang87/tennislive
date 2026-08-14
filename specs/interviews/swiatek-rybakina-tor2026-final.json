@@ -1,0 +1,66 @@
+{
+  "slug": "swiatek-rybakina-tor2026-final",
+  "url": "https://www.youtube.com/watch?v=bDttZof7qXI",
+  "source_title": "Iga Swiatek vs. Elena Rybakina - Match Highlights（@WTA 官方频道，YouTube RSS 确认 channel_id=UCaBIVVpHjq6j3tSyxwTE-8Q，2026-08-14T00:13:32Z 上传）",
+  "start": 373.76,
+  "end": 415.0,
+  "_note": "同一条视频（bDttZof7qXI）里紧接在莱巴金娜亚军致辞之后的斯瓦泰克捧杯致辞（373.76–415.0秒）。**事实**见 `rybakina-swiatek-tor2026-final`的_note（比分、数据、全满贯纪录），不重复抄一遍。\n\n**这条只记捧杯致辞本身的内容**：她开场先对着团队里没能到场的人说『抱歉我拿下这第一个冠军的时候你不在场』，随后说『我想把这个冠军献给每一个正在承受不公评判和恶意的人，继续努力，继续成长，专注在自己身上，因为你知道什么才是对你最好』。这段话没有指名道姓，视频本身也没有更多上下文，不替她过度解读『不公评判和恶意』具体指什么——原话是什么就是什么。",
+  "_source": [
+    "https://www.tsn.ca/tennis/video/2026/08/13/rybakina-beats-gauff-will-take-on-swiatek-in-nbo-final-in-toronto/",
+    "https://www.tennismajors.com/wta-tour-news/swiatek-completes-career-sweep-of-north-american-swing-with-dominant-win-over-rybakina-in-toronto-858483.html"
+  ],
+  "column": "赛后开麦",
+  "interview_kind": "赛后捧杯致辞",
+  "event": "2026 国家银行公开赛（多伦多）决赛",
+  "winner": "斯瓦泰克",
+  "cover": {
+    "frame_at": 385.0,
+    "_why": "还没看过这一帧，从转写猜的：385.0秒落在她说『献给每一个正在承受不公评判和恶意的人』这句话中间——全篇分量最重的一句，猜测她这时表情会比较郑重。之后要跑一趟 `mode=cover` 确认好看，不好看再换。",
+    "title": [
+      "这个冠军 她说要献给",
+      "「正在承受不公评判和恶意的人」"
+    ],
+    "sub": "6-2 6-3夺冠 完成北美硬地全满贯",
+    "_copy_why": "钩子直接引她的原话——这是全篇最重的一句，不是身份罗列。sub补钩子没提到的硬事实：全满贯纪录，两条都能被_source查证。",
+    "tag": "2026 多伦多决赛 · 斯瓦泰克"
+  },
+  "takeaway": {
+    "close": {
+      "point": "冠军献给「正在承受不公评判和恶意的人」",
+      "ask": "冠军之外 她还想说给谁听？"
+    }
+  },
+  "push": {
+    "_why": "matchup/score和顶栏一致；summary卡在13字，接的是捧杯致辞里最重的那句；lead把比分、全满贯纪录和这句致辞分开说。",
+    "matchup": "斯瓦泰克 vs 莱巴金娜",
+    "score": "6-2 6-3",
+    "event": "",
+    "summary": "冠军献给这些人",
+    "lead": "2026国家银行公开赛（多伦多）决赛，斯瓦泰克6-2 6-3击败莱巴金娜，夺得2026赛季首冠、生涯第12个WTA1000冠军，完成北美硬地大师赛的全满贯，是达成这项纪录最年轻的球员。捧杯致辞里，她说要把这个冠军献给『每一个正在承受不公评判和恶意的人』。捧杯致辞全程，中英双语字幕。"
+  },
+  "transcript_disagree_ok": {
+    "rate": 0.130,
+    "why": "77词的短转写，分子只有7处、且全是whisper（第二份）比YouTube（第一份）更简：`um`×3/`uh`×1都是whisper吞掉的虚词；`and always`→`—`和`thank you`→`—`是whisper整段漏听（YouTube有、whisper没有，说明YouTube更全，不是更错）；`um what's`→`what`是虚词+口误的组合，不改变意思。逐处看完没有一处是YouTube听错、把whisper听对的方向，也没有任何一处涉及封面/标题/takeaway引用的原话。分歧率过闸门是因为总词数太短（77词，7处分歧就占9%起跳），不是内容有问题。"
+  },
+  "caption_gaps_ok": {
+    "400.9-403.7": "不是漏词。查了本地raw caption（cap_bDttZof7qXI.en.json3）：393.99秒她说到『and always』，紧接394.96秒出现[cheering]、398.89秒[applause]（观众为『不公评判和恶意』那句鼓掌），下一条字幕事件403.68秒『and always remember what's ahead and um what's might be possible』完整衔接——第二份ASR听到的『remember』就是这条事件提前几百毫秒的边界效应，YouTube原字幕在gap结束的同一时刻已经把这句话完整接上了，zh第52-53行『永远记得前面 还有什么是可能的』覆盖的正是这句，不缺内容"
+  },
+  "_verified_clean": "对不上13.0%（闸门12%，天花板18%），逐处看过，全部是whisper更简（虚词、整段漏听），没有一处是YouTube的原文有错。详情见 transcript_disagree_ok.why。唯一一处空档（400.9-403.7秒）核对raw caption后确认不是漏词，是applause导致的字幕事件边界，紧接着的下一条事件把话完整接上了，见 caption_gaps_ok。",
+  "transcript_verified": true,
+  "zh": [
+    "抱歉 拿下这第一冠时 你不在场",
+    "你没能在现场",
+    "就像我刚才说的那样",
+    "我想把这个冠军献给",
+    "每一个正在承受不公评判",
+    "和恶意的人",
+    "继续努力 继续成长",
+    "专注在自己身上",
+    "因为你知道什么",
+    "才是对你最好",
+    "永远记得前面",
+    "还有什么是可能的",
+    "好了 我们走到了这里",
+    "谢谢"
+  ]
+}
