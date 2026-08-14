@@ -10013,3 +10013,128 @@ def test_签名源那道闸排在下载之前():
     with pytest.raises(reel.ReelError):
         reel.validate_spec(json.loads(
             Path("specs/reels/shang-darderi-montreal-2026.json").read_text("utf-8")))
+
+
+# ── 会下载源片的那条路，一律经过 spec_sources ──────────────────────────────
+#
+# 来路（2026-08-14）：`tools/build_match_reel.py` 里躺着一个零调用方的
+# `resolve_sources(spec, outdir)`——2026-08-01 加多源支持时写的，`render()`
+# 后来把这段内联重写成走 `spec_sources(spec)` 的版本，**没把旧的删掉**。
+#
+# 它单独存在只是浪费 17 行；真正的问题是**它绕过了签名源那道闸**：
+# `_reject_signed_source_urls` 收在 `spec_sources()` 里，而它自己读
+# `spec["source_url"]` 就直接交给 `download()`。而它的名字看着**正是**
+# 「把源片下下来」该调的那个——下一个人复活它，那道禁令对这条路就是哑的，
+# 而且不吭声。**死代码不吭声，被绕过的闸也不吭声，两个叠在一起就是陷阱。**
+
+
+def _download_paths_without_the_gate(source: str) -> list[str]:
+    """一份 Python 源码里，「自己解析源片字段 + 自己下载 + 不走闸」的函数名。
+
+    判据**宁可窄，不可宽**，三个条件缺一不可：
+
+    - 调了 `download(` / `yt_download(`——只解析不下载的那几处不算。
+      `load_spec` / `check_segment_cuts` / `probes_for_spec` / `--dry-run` 那段
+      和 `tools/check_reel_cuts.py` 各自都抄着一份同样的回退，**但它们只用来按
+      URL 认领 probe.json，一个字节都不下载**，绕过闸没有后果；而它们要的恰恰是
+      「spec 有毛病也别把诊断带崩」，硬改成调 `spec_sources()` 反而会让
+      `--dry-run` 在本该报出问题的地方先抛出来。
+    - 出现了 **`"source_url"` / `"sources"` 这两个字面量之一**，也就是它在自己
+      解析 spec 的源片字段。按**整串相等**比，不按子串——docstring 里提到这两个
+      词是常事，而这个仓库为「连注释一起扫，把坑记下来被判成又踩了这个坑」栽过
+      五次。`render()` 和 `main()` 都不含这两个字面量，所以都不进这张网。
+    - 没有调 `spec_sources(`。
+
+    ⚠️ 嵌套函数算在外层函数头上（`ast.walk` 不分层）——**偏严的方向**：
+    真出现「外层下载、内层解析」也会被点名，那正是该点名的。
+    """
+    tree = ast.parse(source)
+    bad: list[str] = []
+    for node in ast.walk(tree):
+        if not isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
+            continue
+        calls = {c.func.id for c in ast.walk(node)
+                 if isinstance(c, ast.Call) and isinstance(c.func, ast.Name)}
+        if not calls & {"download", "yt_download"}:
+            continue
+        if "spec_sources" in calls:
+            continue
+        literals = {n.value for n in ast.walk(node)
+                    if isinstance(n, ast.Constant) and isinstance(n.value, str)}
+        if literals & {"source_url", "sources"}:
+            bad.append(node.name)
+    return bad
+
+
+def test_下载源片一律走spec_sources():
+    """既自己解析 spec 的源片字段、又自己 `download()` 的函数，一个都不许有。
+
+    判据钉三头，**第三头是它不恒真的证明**：
+
+    ① **主语自证**：这个文件里真的扫得到会下载的函数，而且 `render()` 在里面、
+       它真的调了 `spec_sources()`。少了这一条，有人把 `download` 改个名字、
+       或者这条扫描写错了路径，禁令那一半就会安安静静地全绿——
+       「空列表和一份都没有长得一模一样」。
+    ② **禁令**：整个 `tools/` 下一个违规都没有。今天是 0 条，这正是目标状态。
+    ③ **反向锚点**：把删掉的那个 `resolve_sources` 原样喂回探测器，它必须被点名。
+       ②本身是一条空断言，只有③能证明它**咬得动**——这个仓库为「拆掉一道闸测试
+       照样绿」栽过好几次（`stop_reason == refusal` 那条、`_cut_person` 那条）。
+
+    ⚠️ 这道闸只覆盖 reel 这条线的 `spec_sources`。采访片（`build_interview_clip`）
+    的源片字段是另一套 schema，够不着这个函数——**那不是漏，是分工**：
+    凭据形状那一层由 `tests/test_no_signed_urls.py` 全仓库扫（`specs/**/*.json`
+    连采访 spec 一起盖住），这条管的是「解析和下载写在同一个函数里」这个形状。
+    """
+    tools = Path("tools")
+
+    # ① 主语自证
+    reel_src = (tools / "build_match_reel.py").read_text(encoding="utf-8")
+    tree = ast.parse(reel_src)
+    downloaders = {
+        node.name: {c.func.id for c in ast.walk(node)
+                    if isinstance(c, ast.Call) and isinstance(c.func, ast.Name)}
+        for node in ast.walk(tree)
+        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))
+        and {c.func.id for c in ast.walk(node)
+             if isinstance(c, ast.Call) and isinstance(c.func, ast.Name)} & {"download"}
+    }
+    assert len(downloaders) >= 2, (
+        f"只扫到 {sorted(downloaders)} 会下载——判据失效了（`download` 改名了？）")
+    assert "render" in downloaders, "扫不到 render() 会下载，判据的主语没了"
+    assert "spec_sources" in downloaders["render"], (
+        "render() 不再从 `spec_sources()` 取源片地址了——签名源那道闸对出片这条"
+        "唯一真会下载的路就是哑的")
+
+    # ② 禁令：tools/ 下一个都没有
+    offenders: list[str] = []
+    for path in sorted(tools.glob("*.py")):
+        offenders += [f"{path.name}::{name}" for name
+                      in _download_paths_without_the_gate(path.read_text(encoding="utf-8"))]
+    assert not offenders, (
+        "这几个函数自己解析 spec 的源片字段、自己下载，却没走 `spec_sources()`：\n  "
+        + "\n  ".join(offenders)
+        + "\n\n`_reject_signed_source_urls`（禁掉换签名令牌拉受控流那条源）收在"
+          "`spec_sources()` 里，绕过去这道闸就是哑的，而且不吭声。\n"
+          "补法：`urls = spec_sources(spec)` 之后再挨个 `download()`，"
+          "别自己抄一份 `sources or {\"\": source_url}` 的回退。")
+
+    # ③ 反向锚点：删掉的那个原样喂回来，必须被点名
+    删掉的那个 = (
+        "def resolve_sources(spec: dict, outdir: Path) -> dict[str, Path]:\n"
+        '    """把 spec 里的源片全下下来，返回 {名字: 路径}。"""\n'
+        '    urls = dict(spec.get("sources") or {})\n'
+        "    if not urls:\n"
+        '        urls = {"": spec["source_url"]}\n'
+        "    paths: dict[str, Path] = {}\n"
+        "    for name, url in urls.items():\n"
+        '        dest = outdir / (f"source_{name}.mp4" if name else "source.mp4")\n'
+        "        if not dest.is_file():\n"
+        "            dest = download(url, dest)\n"
+        "        paths[name] = dest\n"
+        "    return paths\n"
+    )
+    assert _download_paths_without_the_gate(删掉的那个) == ["resolve_sources"], (
+        "探测器认不出它想拦的那个形状——②那条断言因此是一盏恒真的绿灯")
+    assert not _download_paths_without_the_gate(
+        删掉的那个.replace("    urls = dict", "    urls = spec_sources(spec)\n    _ = dict")), (
+        "走了 `spec_sources()` 还被点名，这个判据会逼下一个人去绕开它")
