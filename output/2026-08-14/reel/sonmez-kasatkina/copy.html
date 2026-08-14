@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>8.14 赛场之上 | 森梅兹救赛点逆转</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>森梅兹2-6 7-6(4) 6-3逆转卡萨金娜，闯过辛辛那提WTA1000女单第一轮，耗时2小时14分。
+
+这场球最硬的一个数字：全场190分打完，两人各拿95分，一分不差。
+
+分水岭只有一格。第二盘第10局，卡萨金娜发球胜赛局，40-30握着赛点——只要再赢一分，这场球就结束了。她双误送掉了那一分，随后被破，5-5。轮到森梅兹发球，卡萨金娜连拿三个破发点，一个都没能兑现。抢七7-4，大比分被扳平。
+
+第一盘本来是卡萨金娜的：自己的发球局一个没丢，两次破发，30分钟6-2。第三盘森梅兹一上来连下四局5-1，被回破一局后在第9局兑现赛点。
+
+技术统计：卡萨金娜4个Ace对0，但双误11比3；破发点转化她6/12，森梅兹6/7——机会更多的是卡萨金娜，抓住的是森梅兹。
+
+这不是按排名的爆冷，赢的反而是名次更高的那个。真正的重量在两条相反的曲线上。24岁的森梅兹今年7月刚把生涯最高排名推到世界第48，那是土耳其女子网球史上的最高名次，超过比育卡奇此前的第60；她也是继比育卡奇之后第二位打进WTA前100的土耳其女子球员，首冠拿在2024年11月的梅里达。29岁的卡萨金娜四年前排到过世界第8，手里有八个巡回赛冠军和一个法网半决赛，本周掉到第68，上一周刚丢掉七个位次。
+
+两人此前在今年法网首轮交过一次手，卡萨金娜6-4 6-4赢下。这一场把交手战绩扳成一比一。
+
+土耳其历史上排名最高的那个人，能在辛辛那提走多远？
+
+#网球时差 #森梅兹 #卡萨金娜 #辛辛那提站 #WTA1000</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>土耳其历史上排名最高的球员，能在辛辛那提走多远？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
