@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>8.15 赛场之上 | 七个赛点她才拿下这场</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>七个赛点，前六个都被对面救回去了
+
+先说一个数：全场 207 分，赢的那个人只多拿了 7 分。这就是这场球的全部形状——两个多小时里，没有一刻是真正安全的。
+
+20 岁的巴尔通科娃上周刚做了一件事：在多伦多打进第三轮，世界排名第一次进入前 40，现在是第 39。这也意味着她第一次要以「被看好的那一方」走进一场正赛首战。对面是排名 113、从资格赛打进来的恰拉耶娃——而四个月前在马德里，赢球的那个人是恰拉耶娃。
+
+被看好，是一种重量。这场球里它的样子是：首盘开局她自己的发球局被拖进六次平分、三个破发点，还是丢了；这一盘她的一发只有 41%，送出 4 个双误。三比三之后连丢两局，4-6。
+
+第二盘开局又被破，0-2 落后。一盘一破，转播解说的原话是「她里外都是麻烦」。然后她连赢五局到 5-2 ——扳回来靠的不是突然发力，是接发：这一盘她接对方二发拿下了七成的分。6-4，一盘一平。
+
+决胜盘她一上来连下三局，4-1 领先。可 5-3 那个发球胜赛局打成了拉锯：40-15 两个赛点没兑现，之后她一共拿到 7 个赛点，恰拉耶娃救下了前 6 个；同一局里恰拉耶娃 3 次拿到破发点，全被她挡住。第 7 个赛点才落地，2 小时 47 分。
+
+那一局解说说得毫不客气：「她看起来不像想赢下这场球，更像是不想输掉它。」
+
+这句话其实很准，但它未必是批评。第一次站在被看好的位置上，人最容易做的就是「别输」，而不是「去赢」。她这场没赢得漂亮，可她赢下来了——下一轮对科斯蒂亚。
+
+这样熬下来的一场胜利，和一场干净利落的胜利比，你觉得哪一场更能说明问题？
+
+⚙️ AI 生成合成内容标识：旁白（如有）为 AI 合成语音，部分画面经 AI 工具处理。
+
+#网球 #WTA #辛辛那提 #巴尔通科娃 #网球时差</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>这样熬下来的一场胜利，算好还是不算？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
