@@ -13,6 +13,7 @@
 - **推送标题必须让人一眼看出谁赢了**，所以给了赛果就把「vs」换成比分。
 """
 
+import ast
 import json
 import inspect
 import os
@@ -1291,10 +1292,43 @@ def test_push只能在main上而且要第一步就拦():
 
 def test_默认音色是云见():
     """定下来的是云见（体育解说那把嗓子）。默认值以前写着云希，靠每次手动传参
-    盖过去——漏一次就换了个人在说话。"""
+    盖过去——漏一次就换了个人在说话。
+
+    ⚠️ **两处一起钉**。同一件事在工作流和 CLI 各配了一遍，而这条判据原来只钉
+    工作流那半——于是 `--voice` 的默认值在代码里安安静静写了很久的云希
+    （2026-08-14 才发现）。它一直没出事，是因为工作流两处调用都显式传参盖过去了；
+    真正在吃这个默认值的是本地跑 `--check-narration` 的人，而那正是最该拿到云见
+    的场景（拿云希估出来的余量，对真渲的那把嗓子不作数）。
+
+    ⚠️ **代码那半用 AST 取，不按文本扫。** `zh-CN-YunxiNeural` 在这个文件里
+    出现三次，全在注释和 docstring 里——那正是这个仓库记教训的地方
+    （`_reject_dead_voice_keys` 的 docstring 里就摆着「同一个键、两把嗓子」的
+    实测）。连注释一起扫，「把坑记下来」会被判成「又踩了这个坑」。
+    """
     text = WORKFLOW.read_text(encoding="utf-8")
     assert "zh-CN-YunjianNeural" in text
     assert "zh-CN-YunxiNeural" not in text
+
+    tree = ast.parse(Path("tools/build_match_reel.py").read_text(encoding="utf-8"))
+    defaults = {}
+    for node in ast.walk(tree):
+        if not (isinstance(node, ast.Call)
+                and isinstance(node.func, ast.Attribute)
+                and node.func.attr == "add_argument"
+                and node.args
+                and isinstance(node.args[0], ast.Constant)
+                and node.args[0].value in ("--voice", "--rate")):
+            continue
+        for kw in node.keywords:
+            if kw.arg == "default" and isinstance(kw.value, ast.Constant):
+                defaults[node.args[0].value] = kw.value.value
+    assert defaults.get("--voice") == "zh-CN-YunjianNeural", (
+        f"CLI 的 --voice 默认值是 {defaults.get('--voice')!r}，不是云见。\n"
+        "工作流那半改了、代码这半没改，就是「同一件事在两处各配一遍，只改了一处」"
+        "——而它不吭声：工作流显式传参，坏的只有本地 --check-narration 那条快路。")
+    assert defaults.get("--rate") == "+6%", (
+        f"CLI 的 --rate 默认值是 {defaults.get('--rate')!r}；"
+        "语速和音色是一对，估旁白长度的系数是按「云见 +6%」量的")
 
 
 def test_cookies模式不产任何产物():
