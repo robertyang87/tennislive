@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>8.14 赛后开麦 | 一句话 全场欢呼四十秒</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>他一句话，让全场欢呼了四十秒
+
+📍2026 国家银行公开赛（蒙特利尔）决赛
+🎾 谢尔顿 6-3 7-6(4) 中岛布兰登
+🎤 中英双语字幕 · 亚军致辞
+
+生涯第一个大师赛决赛，中岛布兰登输给了卫冕的谢尔顿。亚军致辞里他谢完团队、谢完家人，讲到看台的时候说了一句大实话——从164秒到206秒，字幕轨上连着八条欢呼和掌声，四十多秒里他一个字都插不进去。亚军致辞全程。
+
+① 他先替赢的那个人说了句公道话
+
+I think, uh, a lot of people don&#x27;t realize how hard it is to go back to back, especially in uh, in different cities.
+我觉得吧，很多人没意识到卫冕有多难，尤其还是在两座不同的城市。
+
+② 就是这句话，让全场炸了
+
+And uh and I&#x27;m going to be honest, really really enjoy here in Montreal more than more than Toronto.
+我说句实话，我在蒙特利尔比在多伦多更开心。
+
+③ 等观众停下来，他补了一句
+
+I&#x27;m not I&#x27;m not just saying that sitting here in the final today, but even before this week, really enjoy my time here. Feels uh such like home here.
+我不是因为今天坐在这里打决赛才这么说。在这一周之前，我就很享受在这儿的时间。这儿感觉就像家一样。
+
+这站赛事在多伦多和蒙特利尔之间轮着办，所以他最后那句是：可惜明年我们要回多伦多了，但我真的很期待两年后再回到这里。
+
+明年回多伦多，他还会这么说吗？评论区聊聊。
+
+#中岛布兰登 #谢尔顿 #ATP #蒙特利尔站 #网球时差</textarea>
+    </section>
+    
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
