@@ -1,0 +1,56 @@
+# 转写交叉校验：shelton-nakashima-mtl2026-final
+
+- 第一份：YouTube 自动字幕 **545** 词
+- 第二份：faster-whisper（small.en）**466** 词
+- **对不上 15.6%**（闸门 12%）
+
+## 分歧逐处（左＝YouTube 自动字幕，右＝第二份）
+
+- `uh uh` → `—`
+- `and` → `—`
+- `um` → `—`
+- `uh` → `—`
+- `um` → `—`
+- `uh` → `—`
+- `um` → `—`
+- `uh` → `—`
+- `uh` → `—`
+- `uh` → `—`
+- `um` → `—`
+- `uh` → `—`
+- `this season` → `the scene`
+- `uh` → `—`
+- `um` → `—`
+- `uh i i'm not going to say anything bad about toronto i i love toronto too um` → `—`
+- `uh` → `—`
+- `um` → `—`
+- `uh fede` → `fed a`
+- `uh` → `—`
+- `uh` → `—`
+- `uh` → `—`
+- `uh` → `—`
+- `uh` → `—`
+- `uh i don't know how many uncles will do that so uh to my parents uncle rick i appreciate` → `—`
+- `uh` → `—`
+- `uh` → `—`
+- `uh` → `—`
+- `uh` → `—`
+- `uh` → `—`
+- `uh` → `—`
+- `the` → `they`
+- `uh` → `—`
+- `uh` → `—`
+- `um` → `—`
+- `um` → `—`
+- `a` → `—`
+- `uh` → `—`
+- `uh` → `—`
+- `um` → `—`
+- `uh` → `—`
+- `um` → `—`
+- `i` → `—`
+- `uh` → `—`
+- `uh` → `—`
+- `uh` → `—`
+- `um` → `—`
+- `that'll` → `that`
