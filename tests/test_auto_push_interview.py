@@ -536,100 +536,68 @@ def test_等复制页的窗口要装得进job的超时():
         "等待走不完就会被砍在「已提交、没发消息」那一段")
 
 
-# **2026-08-14 冻结：名单里这些在自动推送上线之前就已经推过微信了。**
-#
-# ⚠️ 原来这三处注释都写着「这 17 条」，而冻结当天之后已经补进来两批、现在是
-# 21 条——**带数字的注释会过期，而它过期的时候不吭声**。数量由名单自己说了算，
-# 注释里不再写死一个会漂的数。
-#
-# 判据不是记忆，是产物：`git ls-files output/interviews/<slug>/copy.html`
-# ——复制页是推送流程写的，它在仓库里就说明这条走过那条路（`swiatek-shnaider-
-# tor2026-qf` 没有，它只到 `--stage subs`，push 块也是空的）。
-#
-# **给它们开 `push.auto` 是这条线上唯一能造成重发的动作**：闸 3 查的是
-# `pushed.json`，而名单里一条都没有（自动推送那天才有这个机制），拦不住。
-# 而微信那条消息发出去收不回来。
-#
-# ⚠️ **只许减不许加。** 减是有意义的（哪条真要重发，那是一次看得见的决定）；
-# 加进来只会把「以后新写的采访也不许开」偷偷变成规矩，而这条线本来就该开。
-_ALREADY_PUSHED = frozenset({
-    "alexandrova-sabalenka-tor2026-r16",
-    "eala-mcnally-toronto-2026-r3",
-    "eala-mcnally-toronto-2026-r3-presser",
-    "eala-mcnally-toronto-2026-r3-presser-full",
-    "eala-osaka-dc2026-sf",
-    "eala-osaka-dc2026-sf-studio",
-    "eala-parks-toronto-2026",
-    "eala-pegula-dc2026-final",
-    "eala-pegula-dc2026-final-presser",
-    "eala-svitolina-dc2026-qf",
-    "pegula-eala-dc2026-final",
-    # 2026-08-14 CI 抓到的两条「新到货」（多伦多决赛颁奖礼，PR #331 合进 main
-    # 的时候这张名单已经冻好了）。**自检干活了**：它们走过推送流程（仓库里有
-    # copy.html）却不在名单里，而这条线一个 pushed.json 都没有——给它们开
-    # auto 就是把老消息再发一遍。补进来，不是把自检改松。
-    "rybakina-swiatek-tor2026-final",
-    "swiatek-rybakina-tor2026-final",
-    "rybakina-gauff-tor2026-sf",
-    "rybakina-osaka-tor2026-qf",
-    "sabalenka-uchijima-tor2026-r64",
-    "sabalenka-zhang-tor2026-r3",
-    "shang-rublev-mtl2026-r2",
-    "shelton-mensik-mtl2026-qf",
-    # 2026-08-14 同一天第二批「新到货」（蒙特利尔 ATP1000 决赛的两条双语字幕
-    # 成片，PR 合进 main 的时候这张名单又没跟着走）。判据照旧是产物：仓库里有
-    # copy.html、没有 pushed.json，两条 spec 的 push 块里也都没有 `auto`。
-    # ⚠️ **一天之内同一个自检抓到两批，说明漏的不是记性是流程**——采访这条线
-    # 出片的那个提交本来就该顺手把 slug 补进来，而不是等 CI 红了再补。
-    "nakashima-shelton-mtl2026-final",
-    "shelton-nakashima-mtl2026-final",
-})
+def _tracked_slugs(pattern: str) -> set[str]:
+    """`output/interviews/<slug>/…` 里被 git 跟踪的 slug 集合。
 
-
-def test_已经推过的老spec不许开自动推送():
-    """**这条线上唯一能造成重发的动作，就是给名单里这些开 `auto`。**
-
-    闸 3（没推过）查的是 `pushed.json`，而它们一个都没有——自动推送是
-    2026-08-14 才有的，之前每一次推送都是人手动 dispatch，没有任何东西
-    记下「发过了」。所以那道闸对存量是哑的，只能在 spec 这头拦。
-
-    ⚠️ **这条不拦新写的采访。** 给一条还没发过的采访写 `"auto": true` 正是
-    这套机制存在的理由；它推过一次之后 `pushed.json` 会进仓库，闸 3 从那时起
-    接管，`auto` 留着完全正常——所以这里**不能**去断言「开了 auto 的都还没
-    pushed.json」，那会在第一条自动推送成功的当天变成一条常年红。
+    ⚠️ 用 `git ls-files` 不用 `Path.glob`：CI 的稀疏检出把 `output/` 挡在外面，
+    而索引里的条目只是被标了 skip-worktree——`glob` 在 CI 上恒空，而**空集合和
+    「一条都没有」长得一模一样**。
     """
-    for slug in sorted(_ALREADY_PUSHED):
-        push = json.loads(
-            (Path("specs/interviews") / f"{slug}.json").read_text(
-                encoding="utf-8")).get("push") or {}
-        assert push.get("auto") is not True, (
-            f"{slug} 在自动推送上线之前就推过微信了，而它没有 pushed.json——"
-            "开了 auto 就是把同一条消息再发一遍，而消息收不回来")
+    out = subprocess.run(["git", "ls-files", pattern],
+                         capture_output=True, text=True, check=True)
+    return {line.split("/")[2] for line in out.stdout.split() if line}
 
 
-def test_那张已推送名单自己要立得住():
-    """**一个会过期的名单和一条常年红的检查是同一个毛病。**
+def test_推过而没记下的采访不许开自动推送():
+    """**这条线上唯一能造成重发的动作，就是给「推过、却没有 `pushed.json`」
+    的那些开 `auto`。**
 
-    名字写错一个，上面那条对它就是哑的（读的是一个不存在的 slug，
-    `FileNotFoundError` 倒还算出声）——更坏的是**漏掉一条**：那条老 spec
-    就不在任何判据的射程里了。所以两头都自证：
+    闸 3（没推过）查的是 `pushed.json`。自动推送 2026-08-14 才上线，在那之前
+    每一次推送都是人手动 dispatch，**没有任何东西记下「发过了」**——所以那道闸
+    对存量是哑的，只能在 spec 这头拦。判据是产物：复制页是推送流程写的，
+    `copy.html` 在仓库里就说明这条走过那条路（`swiatek-shnaider-tor2026-qf`
+    没有，它只到 `--stage subs`）。
 
-    - 名单里每个 slug 都还是一条真 spec；
-    - 仓库里**每一个**有 `copy.html`（＝走过推送流程）的 slug 都在名单里。
+    ⚠️ **主语是算出来的，不是一张手写名单。** 原来这儿冻着一份 17 条的
+    `_ALREADY_PUSHED` 外加一条「名单要完整」的自检，**一天之内被 CI 抓红六次**，
+    每次的修法都是「加一行」。注释上写着「只许减不许加」，可那是注释不是判据——
+    实测加一行两条测试双双转绿。按这条线 2~8 条/天的到货节奏，几周之内它就退化
+    成一张许可证。**改成集合差之后，「加一行」这个动作根本不存在。**
+
+    补第五、六行那次，补的人自己在注释里写下了结论：「⚠️ 一天之内同一个自检
+    抓到两批，说明**漏的不是记性是流程**」——对，而流程这一头没法靠更用力地
+    记住来修：出片那个提交本来就不该负责往一张测试文件里的名单添名字。
+
+    ⚠️ **而那张名单还锁死了这套机制本身。** 一条新采访开 `auto` 推成功之后，
+    工作流先提交 `copy.html`（`--stage page`）、发完微信再提交 `pushed.json`
+    （`--record`）——于是它同时有了两样。名单那版的自检会要求把它补进名单，
+    而补进去之后另一条又要求它 `auto is not True`：**两条互斥，从第一条自动
+    推送成功那天起谁也满足不了。** 减掉 `pushed.json` 那一半就自然放行——
+    标记一落库，闸 3 接管，`auto` 留着完全正常，正是这套机制该有的样子。
     """
-    done = subprocess.run(["git", "ls-files", "output/interviews/*/copy.html"],
-                          capture_output=True, text=True, check=True)
-    published = {line.split("/")[2] for line in done.stdout.split() if line}
+    published = _tracked_slugs("output/interviews/*/copy.html")
+    # **判据自己的判据。** 主语没了（目录改名、glob 写错、`output/` 真被清空）
+    # 的样子就是这个集合为空，而那时这条测试会安安静静地全绿。
     assert len(published) >= 10, (
         f"只数到 {len(published)} 条有复制页的采访，判据失效了")
 
-    for slug in sorted(_ALREADY_PUSHED):
-        assert (Path("specs/interviews") / f"{slug}.json").is_file(), (
-            f"名单里的 {slug} 已经不是一条 spec 了——名字写错的豁免是一盏恒真的绿灯")
-    missing = sorted(published - _ALREADY_PUSHED)
-    assert not missing, (
-        f"这些采访走过推送流程却不在名单里：{missing}——"
-        "它们同样没有 pushed.json，给它们开 auto 一样会重发")
+    suspects = sorted(published - _tracked_slugs("output/interviews/*/pushed.json"))
+    orphan, checked = [], 0
+    for slug in suspects:
+        spec = Path("specs/interviews") / f"{slug}.json"
+        if not spec.is_file():
+            orphan.append(slug)
+            continue
+        checked += 1
+        push = json.loads(spec.read_text(encoding="utf-8")).get("push") or {}
+        assert push.get("auto") is not True, (
+            f"{slug} 推过微信了，而仓库里没有它的 pushed.json——闸 3 拦不住，"
+            "开了 auto 就是把同一条消息再发一遍，而消息收不回来")
+    if orphan:
+        # 产物在、spec 没了。它开不了 auto（没有 spec 可写），所以不算错；
+        # 但**要说一声**——不然「跳过了 N 条」和「查过 N 条」在日志上一样。
+        print(f"  [跳过] 这些采访有复制页却没有 spec：{orphan}")
+    print(f"  推过而没记下的 {len(suspects)} 条，真查了 {checked} 条")
 
 
 def test_只add自己那一格():
