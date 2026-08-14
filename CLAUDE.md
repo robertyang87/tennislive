@@ -269,6 +269,10 @@ spec 才没丢——但它后来过时了，所以**写进去还要记得改**�
     WTA API     /matches        比分、种子、用时、轮次              ❌
     WTA API     /matches/<id>/stats（官方统计端点）                 ❌ 字段表里根本没这两项
 
+⚠️ **第一行那句话 2026-08-14 修正过：它只对 WTA 巡回赛成立，大满贯的女子比赛
+flashscore 一直有 Winners/UE。** 详见本节末尾「上面那句范围写宽了」那一段——
+**引用这张表之前先读那一段**，别照着它得出「女子一律没有」。
+
 ——然后回复「这两个数三个源都没有」，还自作主张拿另一个口径（Ace 15 / 双误 16）
 **把账号所有者定的主题换掉了**。他顶了回来：「你不找你总都肯定找不到呀……
 不然这个亮点就没了，这个主题就要用这个去切入啊」。
@@ -304,6 +308,8 @@ spec 才没丢——但它后来过时了，所以**写进去还要记得改**�
                 ↑ 里面有 MatchID、SeedA/SeedB、ResultString、MatchTimeTotal
     官方统计    GET api.wtatennis.com/tennis/tournaments/<id>/<年>/matches/<MatchID>/stats
                 ↑ setnum 0=全场 1/2/3=分盘；有 Ace/双误/一二发/破发点，**没有 UE/Winner**
+                  （32 个字段整份打出来核过，含 `winner`/`unforced` 的一个都没有；
+                   十个端点变体全 404，`?extended=true` 这类参数被**静默忽略**）
     编辑稿      GET www.wtatennis.com/tournament/<id>/<城市>/<年>/scores/<MatchID>
                 ↑ **这一页的 HTML 里挂着这场的赛后稿链接**，UE/Winner 在那儿
 
@@ -313,6 +319,65 @@ city 写着 `TORONTO`（flashscore 也是 Toronto，tennisabstract 标 Montreal�
 
 ⚠️ **SofaScore 在这台沙箱恒 403**（`api.` 和 `www.` 两个入口都试过，带 Referer
 也一样），别再把它排进候选。
+
+#### ⭐ 2026-08-14 修正：上面那句「flashscore 没有 UE/Winner」**范围写宽了**
+
+账号所有者问「女子比赛缺制胜分和 UE，有什么渠道能拿到」。**去量了一遍，发现
+分界线根本不是 ATP/WTA，是「巡回赛 vs 大满贯」**——同一个 `df_st_1` feed：
+
+| 抽样（都实测过） | 统计项数 | Winners / Unforced errors |
+|---|---|---|
+| 温网 女单 伊埃拉-斯瓦泰克 `0EU7qszi` | 23 | ✅ **有** |
+| 美网 女单 萨巴伦卡-阿尼西莫娃 `M3WOyNpQ` | 23 | ✅ **有** |
+| 澳网 女单 高芙-斯维托丽娜 `x8nLC0V1` | 22 | ✅ **有** |
+| 法网 女单 `vBdPktcE` | 20 | ✅ **有** |
+| ATP1000 蒙特利尔决赛 `8zQf6RtH` | 20 | ✅ 有 |
+| **WTA1000 多伦多决赛** `OACDWR4j` | 17 | ❌ 无 |
+| **WTA1000 辛辛那提 R1** `2uGeYNog` | 17 | ❌ 无 |
+| **WTA500 柏林** `C6gUGttH` | 17 | ❌ 无 |
+
+也就是说**四大满贯的女子比赛一直拿得到，而我们已经在用那个 feed**——一行代码
+都不用改。缺口只剩 **WTA 巡回赛（1000/500/250）**，那三档恰好少的就是
+`Winners` / `Unforced errors` / `Net points won` 这一组「击球质量」项。
+
+⚠️ **这条老判据当年不是量错的，是「查了一场就写成了一类」。** 那次查的是
+多伦多（WTA1000），结论却写成了整个 WTA——**而「WTA 都没有」和「这一场没有」
+在当时的产物上长得一模一样**。和本文件里「空结果先自证是真空」是一家的，
+只是这次要自证的不是空不空，是**空的范围有多大**。
+
+**WTA 巡回赛这一段，2026-08-14 探到底了，下面这些别再重探**（都自证过是真空）：
+
+| 探过什么 | 结果 |
+|---|---|
+| flashscore `df_st_2/3/4` | 和 `df_st_1` **同一份**（字节数一样）；`df_stx/sts/sum/mi_1` 全空 |
+| WTA 官方 `/stats` 的**全部 32 个字段** | `winner` / `unforced` / `error` 一个都不含 |
+| WTA API 端点变体 ×10（`/statistics` `/pointbypoint` `/insights` `/extendedstats` `/shotquality` …） | 全 404 |
+| `/stats?extended=true` / `?type=full` | **参数被静默忽略**——返回长度和裸的一模一样（1640B），别被 200 骗了 |
+| WTA 比赛页 HTML | `unforced` 0 次；49 个 `winner"` **全是 CSS 类名** |
+| tennisexplorer | **根本没有技术统计**那一块 |
+| SofaScore | 照旧 403 |
+| **画面自证**（WTA 官方集锦片尾） | ❌ 奖杯 → 采访 → 台标 → 订阅卡，**没有统计图**（两张缩略图墙逐格看过） |
+
+**剩下两条真能用的，但都是加料不是主力：**
+
+- **Match Charting Project**（`tennisabstract.com/charting/`）：2026 年已标注
+  **422 场女子**，给的是 `Winners (FH/BH)` / `UFE (FH/BH)`，**比单个数字还细**。
+  ⚠️ **但它是志愿者标的，而且偏早轮**——多伦多 2026 只标到 R16（12 场），
+  **QF / SF / 决赛一场都没有**，而那正是我们做片子的轮次。所以：值得每条片子
+  去碰一次运气，不能指望它
+- **编辑稿**（WTA 官网 Match Reaction / by-the-numbers）：莱巴金娜那次
+  「58 winners, 58 errors」就是从这儿来的。⚠️ **但它按故事角度写，不按字段写**
+  ——同样去查多伦多决赛那篇，通篇只有「a forehand winner sealed a hold」这种
+  叙述，**一个计数都没有**。碰运气，同样不能当渠道
+
+**所以现在的口径是：**
+
+    大满贯（含女子）  → flashscore 直接有，`stats` 块照 ATP 那套填
+    ATP 巡回赛        → flashscore 直接有
+    WTA 巡回赛        → 先碰 MCP、再碰编辑稿；两边都没有就写 `_no_stats_why`
+
+最后那一条正是 `test_赛场之上要么带数据统计图要么说清为什么不带` 留的活口——
+**查不到就如实不画，别硬凑一张缺两项的图**。
 
 ### 「排除了 A 和 B」不等于「就是 C」
 
