@@ -38,6 +38,15 @@
     "summary": "冠军献给这些人",
     "lead": "2026国家银行公开赛（多伦多）决赛，斯瓦泰克6-2 6-3击败莱巴金娜，夺得2026赛季首冠、生涯第12个WTA1000冠军，完成北美硬地大师赛的全满贯，是达成这项纪录最年轻的球员。捧杯致辞里，她说要把这个冠军献给『每一个正在承受不公评判和恶意的人』。捧杯致辞全程，中英双语字幕。"
   },
+  "transcript_disagree_ok": {
+    "rate": 0.130,
+    "why": "77词的短转写，分子只有7处、且全是whisper（第二份）比YouTube（第一份）更简：`um`×3/`uh`×1都是whisper吞掉的虚词；`and always`→`—`和`thank you`→`—`是whisper整段漏听（YouTube有、whisper没有，说明YouTube更全，不是更错）；`um what's`→`what`是虚词+口误的组合，不改变意思。逐处看完没有一处是YouTube听错、把whisper听对的方向，也没有任何一处涉及封面/标题/takeaway引用的原话。分歧率过闸门是因为总词数太短（77词，7处分歧就占9%起跳），不是内容有问题。"
+  },
+  "caption_gaps_ok": {
+    "400.9-403.7": "不是漏词。查了本地raw caption（cap_bDttZof7qXI.en.json3）：393.99秒她说到『and always』，紧接394.96秒出现[cheering]、398.89秒[applause]（观众为『不公评判和恶意』那句鼓掌），下一条字幕事件403.68秒『and always remember what's ahead and um what's might be possible』完整衔接——第二份ASR听到的『remember』就是这条事件提前几百毫秒的边界效应，YouTube原字幕在gap结束的同一时刻已经把这句话完整接上了，zh第52-53行『永远记得前面 还有什么是可能的』覆盖的正是这句，不缺内容"
+  },
+  "_verified_clean": "对不上13.0%（闸门12%，天花板18%），逐处看过，全部是whisper更简（虚词、整段漏听），没有一处是YouTube的原文有错。详情见 transcript_disagree_ok.why。唯一一处空档（400.9-403.7秒）核对raw caption后确认不是漏词，是applause导致的字幕事件边界，紧接着的下一条事件把话完整接上了，见 caption_gaps_ok。",
+  "transcript_verified": true,
   "zh": [
     "抱歉 拿下这第一冠时 你不在场",
     "你没能在现场",
