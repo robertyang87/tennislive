@@ -3107,6 +3107,81 @@ STORIES = STORIES + (
         source_url="https://www.youtube.com/watch?v=NryVymv9AMY",
     ),
     _trivia_story(
+        slug="tour-balls",
+        title="四个星期，四种球",
+        subtitle="网球冷知识 · 器材篇",
+        identity="从阿尔卡拉斯缺席的那个夏天说起",
+        chips=("冷知识", "球的规格", "赞助合同"),
+        hero=(
+            "美网之前的四个星期，球员要打四种不一样的球——2023 赛季女子巡回赛"
+            "一共用过 10 个品牌、19 种型号。球打软了会变重，想打出原来的速度"
+            "就得自己加力，那份力压在手腕、肘和肩上。"
+        ),
+        facts=(
+            "2023 赛季女子巡回赛一共用过 10 个品牌、19 种型号的球，男子巡回赛"
+            "的数字与此相仿；弗里茨与阿尔卡拉斯都点过，美网之前的四周里要打"
+            "四种不同的球。选哪一家一直由每站赛事自行决定，属于赞助合同范畴。",
+            "⚠️ 没有任何一方证明过球与具体伤病之间的因果，片子里一律不写因果。"
+            "可核的只有：阿尔卡拉斯 2026-04-14 巴塞罗那首轮赛后手腕伤，诊断为"
+            "腱鞘炎，缺席法网、女王与温网，是他 2020 年打职业以来第一次缺席温网；"
+            "同期德约科维奇右手腕、诺里手腕、弗里茨前臂均有伤病记录。",
+            "ATP 与 WTA 在 2024 年澳网开赛前宣布对网球做战略评估，并说明 2025 年"
+            "之前不会有变化。此后两项落地：2025 年选球厂的权力从赛事收归统一指定；"
+            "挑战赛试行更勤的换球——首次换球由第 7 局提前到第 5 局，"
+            "此后由每 9 局改为每 7 局。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2026-04-14", player="阿尔卡拉斯", age="2026 巴塞罗那 R1",
+                headline="赢下比赛，手腕伤了",
+                detail=(
+                    "巴塞罗那首轮赛后手腕受伤，诊断为腱鞘炎，"
+                    "缺席法网、女王与温网；2020 年打职业以来第一次缺席温网。"
+                ),
+                source_url=(
+                    "https://www.skysports.com/tennis/news/12110/13545776/"
+                    "carlos-alcaraz-confirms-he-will-withdraw-from-wimbledon-"
+                    "due-to-wrist-injury"
+                ),
+            ),
+            ChampionMoment(
+                date="2024-01", player="ATP / WTA", age="2024 澳网开赛前",
+                headline="宣布战略评估，同时说 2025 年前不会变",
+                detail=(
+                    "两项巡回赛宣布对网球做一次战略评估；拉奥尼奇当时的评价是"
+                    "「感觉他们在把这件事往后拖」。2023 赛季女子巡回赛用过 "
+                    "10 个品牌、19 种型号。"
+                ),
+                source_url=(
+                    "https://www.nbcdfw.com/news/sports/tennis/"
+                    "can-too-many-tennis-ball-changes-cause-injuries-players-"
+                    "think-so-the-tours-are-checking/3437133/"
+                ),
+            ),
+            ChampionMoment(
+                date="2025", player="ATP", age="2025 赛季起",
+                headline="选球厂收归统一指定，挑战赛试更勤地换球",
+                detail=(
+                    "选球供应商由赛事各自决定改为统一指定；挑战赛试行首次换球"
+                    "由第 7 局提前到第 5 局、此后由每 9 局改为每 7 局。"
+                    "阿尔卡拉斯的诉求是全年所有赛事用同一种球。"
+                ),
+                source_url=(
+                    "https://tennisuptodate.com/atp/atp-takes-action-on-tennis-"
+                    "balls-as-players-search-for-solution-to-growing-injury-concerns"
+                ),
+            ),
+        ),
+        image_keys=(),
+        source_label="AP / NBC · ATP 官方 · Sky Sports 综合整理",
+        image_credit="示意图 · 网球时差绘制",
+        source_url=(
+            "https://www.nbcdfw.com/news/sports/tennis/"
+            "can-too-many-tennis-ball-changes-cause-injuries-players-"
+            "think-so-the-tours-are-checking/3437133/"
+        ),
+    ),
+    _trivia_story(
         slug="cramp-timeout",
         title="抽筋，为何叫不来暂停",
         subtitle="网球冷知识 · 规则篇",
