@@ -2330,13 +2330,52 @@ def test_小红书正文不许超一千字():
         f"BODY_MAX 被改成了 {BODY_MAX}。这是平台定的，不是可调的——"
         "正文超了要去提炼，不是放宽这个数")
 
-    checked = 0
+    # ⚠️ **运行时会先在最前面顶一行算出来的标题**，这条测试必须照做，
+    # 否则它量的和真跑的不是同一段字。`push_reel.main()` 里是
+    # `copy_text = f"{title}\n\n{copy_text}"`——顶进去之后，**文案自己的
+    # 第一行被挤进正文**（那正是「钩子退成正文第一行」那条口径），于是
+    # 真正的正文 = 整份文件，而不是「文件去掉第一行」。
+    #
+    # 不模拟这一步，量出来就比真跑的少一整行标题，而**少的那点正好够让一份
+    # 超标的文案在这儿绿着过去**：2026-08-14 谢尔顿蒙特利尔那条本地量 974
+    # 过关、CI 全绿、PR 合并，真推的时候报 **1001**，微信一个字都没发出去
+    # （run 31775244995）。差的 27 就是标题那 25 个字加两个换行。
+    src = (ROOT / "tools" / "push_reel.py").read_text(encoding="utf-8")
+    assert 'copy_text = f"{title}\\n\\n{copy_text}"' in src, (
+        "push_reel 不再把标题顶在文案最前面了——这条测试模拟的那一步没了，"
+        "口径要跟着改，否则它又会比真跑的少量一整行")
+
+    # 口径修对之后翻出来的三份**已经发出去的**文案。它们超标的那些字全是
+    # 正文内容（`chwalinska-gibson` 超的那一段正是公开更正过的「硬地三胜」
+    # 那张逐场表），**已发的不为一个新口径去改**——微信那条消息收不回来，
+    # 而把published的正文删短并不能让它变回合规，只是把内容弄丢。
+    #
+    # ⚠️ **只许减不许加**，而且下面那个自检钉住「表里每个名字都真的还超标」：
+    # 名字写错或者哪天被改短了，豁免就成了一盏恒真的绿灯。
+    _LEGACY_OVER_BODY = {
+        "eala-svitolina-dc2026-qf.xhs.txt",
+        "chwalinska-gibson.xhs.txt",
+        "wong-gea.xhs.txt",
+    }
+
+    checked, seen_legacy = 0, set()
     for f in sorted((ROOT / "specs").glob("*/*.xhs.txt")):
         with contextlib.redirect_stdout(io.StringIO()):
             raw = cut_at_tags(f.read_text(encoding="utf-8"))
-        _, body = split_copy(raw)          # 超了它自己就 SystemExit
-        assert len(body) <= BODY_MAX, f"{f.name} 正文 {len(body)} 字"
+        lines = f"占位标题\n\n{raw}".splitlines()
+        body = "\n".join(lines[2:]).strip()
+        if f.name in _LEGACY_OVER_BODY:
+            assert len(body) > BODY_MAX, (
+                f"{f.name} 已经不超标了（{len(body)} 字），从 _LEGACY_OVER_BODY "
+                "里删掉——留着它就是一条恒真的豁免")
+            seen_legacy.add(f.name)
+            checked += 1
+            continue
+        _, got = split_copy(f"占位标题\n\n{raw}")   # 超了它自己就 SystemExit
+        assert len(got) <= BODY_MAX, f"{f.name} 正文 {len(got)} 字"
         checked += 1
+    assert seen_legacy == _LEGACY_OVER_BODY, (
+        f"豁免表里这几个文件不存在了：{_LEGACY_OVER_BODY - seen_legacy}")
     assert checked >= 10, f"只校到 {checked} 份文案，判据大概没找对目录"
 
 
