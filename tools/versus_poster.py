@@ -534,18 +534,26 @@ def _scoreboard_html(cover: dict) -> str:
     # 名字那列给 1.55fr：`A. SABALENKA` 比盘分宽得多，等分会把它挤到换行。
     columns = " ".join(["minmax(0,1.55fr)"] + ["minmax(86px,1fr)"] * len(scores))
 
-    # **决胜盘（打满了才有的最后一盘）单独加一道描边**——账号所有者反复提到的
-    # 跌宕（「二比五落后」「三个赛点没给」）常常就发生在这一盘，但比分板此刻对
-    # 「这盘不一样」完全没有反应：文案在讲跌宕，图表却装若无其事。
-    # 只有真的打满（>2 盘）才有决胜盘，直落两盘赢下的比赛没有这一档。
+    # ⚠️ **决胜盘不再单独描边**（账号所有者 2026-08-14：「把最后一盘比分前面的
+    # 绿色竖线变成和其他框线一样的白色」「以后都这样固定下来」）。
+    #
+    # 原来那一格挂 `score-set--deciding`，左边框换成品牌绿并粗一档、底下再垫
+    # 一层 14% 的品牌绿——立意是「跌宕常常就发生在这一盘」。现在整块取消：
+    # 每一格的竖线都和其余框线一样。**类跟着一起删掉，不留一个没有样式的
+    # 钩子**——一个版式永远不读的键就是个不吭声的死键。
+    #
+    # 绿底同时去掉，不是顺手扩大范围：那 14% 的绿是**给绿竖线垫底的**（它和
+    # 描边是同一次改动引进来的一套）。竖线变白之后单剩它，量出来那一格的色相
+    # 从 200.6° 偏到 185.5°、饱和度从 .379 掉到 .257——渲两版摆一起看，读起来
+    # 是「这一格脏了」，不是「这一格重要」，正好撞上账号所有者要的「有吸引力」。
+    # 判据 `test_比分板每一格的竖线都一样不许再给决胜盘描边`。
     cells = []
-    for idx, (left, right, tiebreak) in enumerate(scores):
+    for left, right, tiebreak in scores:
         left_class = "setwin" if left > right else "setlose"
         right_class = "setwin" if right > left else "setlose"
         tb = f"<sup>({tiebreak})</sup>" if tiebreak else ""
-        deciding = " score-set--deciding" if len(scores) > 2 and idx == len(scores) - 1 else ""
         cells.append(
-            f'<div class="score-set{deciding}">'
+            '<div class="score-set">'
             f'<span class="score-number {left_class}">{left}{tb}</span>'
             f'<span class="score-number {right_class}">{right}</span>'
             '</div>')
@@ -1024,20 +1032,14 @@ __SCRIM__
 .score-rank{font-family:'TL Sans SC',sans-serif;font-size:.62em;margin-left:4px}
 .score-en{font-family:'TL Sans SC',sans-serif;font-size:22px;line-height:1.15;
  letter-spacing:1.5px;color:#dcefe4;white-space:nowrap;margin-top:5px}
+/* 每一盘一格，格与格之间就这一道竖线，**所有格子一视同仁**。
+   ⚠️ 决胜盘曾经单独有一条 `.score-set--deciding`（8px 品牌绿描边 + 14% 绿底），
+   2026-08-14 账号所有者要求整块取消，理由和判据写在 `_scoreboard_html` 里那段
+   注释。**别再给某一盘单开一条规则**——竖线的粗细和颜色只有这一处出处，
+   写第二处必分叉。
+   6px 是账号所有者一路加粗上来的：2026-08-09 1px→2px、2026-08-12「白线还是
+   太细」→3px、2026-08-13「还是太细，加粗一倍」→6px。 */
 .score-set{display:flex;flex-direction:column;border-left:6px solid rgba(244,251,247,.9)}
-/* **决胜盘单独描边**：这一盘打满了才存在，往往正是钩子讲的那段跌宕
-   （「二比五落后」「三个赛点没给」）。左边框换成品牌绿并再粗一档，加一层
-   14% 不透明度的品牌绿垫底——那是「一屏只留一个强调色」允许的中间态：
-   够醒目，但不跟真正的强调色（赢盘数字）抢。不引入第二种颜色，
-   只是同一种绿分了层级。
-   ⚠️ **8px 是相对网格线定的，不是拍的**：网格线 2026-08-09 从 1px 加粗到
-   2px，2026-08-12 账号所有者反馈「白线还是太细」又加粗到 3px（决胜盘描边
-   跟着走到 4px），2026-08-13 账号所有者再反馈「还是太细，加粗一倍」——
-   网格线 3px→6px，决胜盘描边同样翻倍到 8px，保持「比网格线粗一档」的
-   既定关系（4/3 的粗细比例延续到 8/6）。写 7px 的话就是套「网格线+1」
-   那条旧公式，不是这次「加粗一倍」的要求，两条公式这次对不上，
-   听后面这条——账号所有者最近一次说的是「倍」不是「一档」。 */
-.score-set--deciding{border-left:8px solid #c6f65a;background:rgba(198,246,90,.14)}
 .score-number{flex:1;display:flex;align-items:center;justify-content:center;
  font-family:'TL Numeral','TL Sans SC',sans-serif;font-size:60px;font-weight:800}
 .score-number+.score-number{border-top:6px solid rgba(244,251,247,.9)}
