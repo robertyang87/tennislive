@@ -497,6 +497,14 @@ _XHS_LEDE_LEGACY_已推送 = frozenset({
     "shelton-mensik", "shnaider-pegula", "svitolina-alexandrova",
     "svitolina-anisimova", "swiatek-golubic", "swiatek-kostyuk",
     "swiatek-shnaider",
+    # 2026-08-14 CI 抓到的第一条「新到货」。它不是漏网——这道判据是 08-14 写的，
+    # 而这条片子 08-14 就已经 `已自动推送` 落在 main 上了（提交 4573b713），
+    # 正文那句「7号种子、世界第8斯瓦泰克6-2 6-3横扫2号种子（世界第2）莱巴金娜，
+    # 夺得多伦多WTA1000女单冠军，全场只用1小时15分」典型地把信息流里最贵的
+    # 第一行让给了通稿字段。**判据是对的，它属于规矩生效之前的存量。**
+    # ⚠️ 放进「已推送」这半，是因为微信那条消息发出去收不回来；小红书正文
+    # 理论上还能编辑，但那要人去平台上改，不是改这个文件能解决的。
+    "swiatek-rybakina-toronto-final",
 })
 
 # ⏰ **还没推——正文是纯文本文件，改第一行不用重渲。**
