@@ -182,8 +182,19 @@ def test_回填的片长要带标记而且认不对人的宁可空着():
     assert interviews, "采访产物一条都没有，但 reel 有——目录写错了？"
     missing = [p for p in interviews
                if "film_seconds" not in json.loads(p.read_text(encoding="utf-8"))]
+    # ⚠️ **它会收敛，别把它当成又一张要天天喂的名单。** 渲染器两个出口现在都写
+    # `film_seconds`（`test_采访片两个出口都要写film_seconds` 钉着），所以这条改动
+    # 合进 main 之后新片子自带这个键。**唯一还会红的窗口**，是这条改动还挂在 PR 上
+    # 的时候 main 上又渲出来的那几条——2026-08-14 就这么红过一次（蒙特利尔决赛
+    # 两条）。**报错要说出路**：那几条补一次就完了，不是把这条判据改松。
     assert not missing, (
-        f"这几条采访产物还没有 film_seconds：{[p.parent.name for p in missing]}")
+        f"这几条采访产物还没有 film_seconds：{[p.parent.name for p in missing]}\n"
+        "补法（几秒钟，不下整片）：读它 render.json 里的 video_url，"
+        "先用 `Range: bytes=0-1` 拿 Content-Range 的总长和 video_bytes 比一次"
+        "（HEAD 对 Release 附件恒 401；对不上就说明 tag 上挂的不是这一版，"
+        "那种**宁可空着**并留一句 _film_seconds_note），再 "
+        "`ffprobe -v error -show_entries format=duration -of default=nw=1:nk=1 <url>`，"
+        f"写回 film_seconds 并标上 film_seconds_source: {BACKFILL_MARK}")
 
     for path in interviews + reels:
         data = json.loads(path.read_text(encoding="utf-8"))
