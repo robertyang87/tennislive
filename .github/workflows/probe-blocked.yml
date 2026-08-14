@@ -51,6 +51,17 @@ on:
         required: false
         default: ""
 
+# **不写这一块就是继承仓库默认，而默认可能是「读写」。** 2026-08-14 补上。
+# 这一条握着 `YT_COOKIES_TXT`（一份能冒充登录态的 cookie），密钥和可写
+# token 落在同一个 job 里是最不该省的那一处。
+#
+# 而它的 docstring 头一句就写着「**什么都不产、什么都不提交**，结论全打在
+# 日志里」——也就是说这条从设计上就不需要写权限，只是从来没人把它写下来。
+# 探到的图走 `upload-artifact`（runtime token，不吃 `GITHUB_TOKEN` 的权限）。
+# 判据在 `test_每条工作流都要自己写permissions`。
+permissions:
+  contents: read
+
 jobs:
   probe:
     runs-on: ubuntu-latest

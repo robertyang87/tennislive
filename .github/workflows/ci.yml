@@ -28,6 +28,21 @@ concurrency:
   group: ci-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: ${{ github.ref_name != 'main' }}
 
+# **不写这一块就是继承仓库默认，而默认可能是「读写」。** 2026-08-14 盘出来：
+# 24 条工作流里有 4 条（ci / probe / probe-blocked / verify-names）压根没有
+# `permissions:`，于是它们的 `GITHUB_TOKEN` 拿到多大的权限取决于仓库设置里
+# 那个开关——而**那个开关不在这个仓库里，改了也不会有任何一次 CI 变红**。
+# 这正是这个仓库反复记的那个形状：兜底出事的时候不吭声。
+#
+# 这一条只跑 pytest：不 `git commit`、不 `git push`、不发 Release、不调
+# GitHub API（`tests/conftest.py` 那条 autouse fixture 还特意把
+# `GITHUB_TOKEN` / `GH_TOKEN` 从环境里摘掉，免得单元测试真去打 api.github.com）。
+# 所以 `contents: read` 就够，其余一律不给。
+# 判据在 `test_每条工作流都要自己写permissions` 和
+# `test_不提交产物也不发Release的工作流不许要写权限`。
+permissions:
+  contents: read
+
 jobs:
   test:
     runs-on: ubuntu-latest

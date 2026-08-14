@@ -78,15 +78,21 @@ def test_every_workflow_that_commits_generated_files_has_a_size_gate():
     这道闸」，新加工作流自动被覆盖。
 
     加这条推导的当天就抓到一个：我自己新写的 `push-reel.yml` 漏了闸。
+
+    ⚠️ **两边都要先 `_yaml_only` 去掉整行注释**（本文件其余几条早就这么做了，
+    只有这条一直读的是原文）。2026-08-14 补 `permissions:` 时当场撞上：
+    `ci.yml` 新写的注释里有一句「这一条只跑 pytest：不 `git commit`、不
+    `git push`」——**一条明说自己不提交的注释，把 ci.yml 判成了会提交的**，
+    然后要它装体积闸。这正是 CLAUDE.md 里记了五遍的那个形状：工作流的注释是
+    这个仓库存放教训的地方，连注释一起扫，「把坑记下来」会被判成「又踩了这个坑」。
+    ⚠️ 下面那半边同样要剥——注释掉的闸不算装了闸，那是**假绿**的方向。
     """
-    committers = [
-        path for path in sorted(Path(".github/workflows").glob("*.yml"))
-        if "git commit" in path.read_text(encoding="utf-8")
-    ]
+    bodies = {path: _yaml_only(path.read_text(encoding="utf-8"))
+              for path in sorted(Path(".github/workflows").glob("*.yml"))}
+    committers = [path for path, body in bodies.items() if "git commit" in body]
     assert len(committers) >= 8, f"只找到 {len(committers)} 条会提交的工作流，判据可能失效了"
     for path in committers:
-        assert "python tools/check_staged_file_sizes.py" in path.read_text(
-            encoding="utf-8"), (
+        assert "python tools/check_staged_file_sizes.py" in bodies[path], (
             f"{path.name} 会 git commit 却没有体积闸——"
             "渲完一整趟才被 GitHub 拒收是最贵的失败")
 
@@ -527,3 +533,132 @@ def test_裸curl发微信要检查返回体里的code():
             "「只重试没送到、拒绝不重发」已经在 publish/pushplus.py 里实现了；"
             "这儿再套一层会把 `code != 200` 也重发，"
             "而微信那条消息发出去收不回来")
+
+
+def _workflow_bodies() -> dict[Path, str]:
+    """全部工作流，**去掉整行注释**再给出来。
+
+    这个仓库的注释是存放教训的地方，正文里必然写着当年那些错值、别的工作流的
+    名字、以及「这里不装 X」这种话。连注释一起扫，「把坑记下来」会被判成
+    「又踩了这个坑」——本文件里的体积闸那条 2026-08-14 刚栽过一次。
+    """
+    return {path: _yaml_only(path.read_text(encoding="utf-8"))
+            for path in sorted(Path(".github/workflows").glob("*.yml"))}
+
+
+def _top_level_permissions(body: str) -> dict[str, str] | None:
+    """顶层那个 `permissions:` 块，`{范围: 级别}`；没写就是 None。
+
+    **只认顶层**（顶格的 `permissions:`）：job 级也能写，但这个仓库全在顶层，
+    而「没写」和「写在别处」要分得开——前者是继承仓库默认（可能是读写），
+    后者是想清楚过的。
+    """
+    match = re.search(r"^permissions:[ \t]*$", body, re.M)
+    if match is None:
+        return None
+    out: dict[str, str] = {}
+    for line in body[match.end():].splitlines()[1:]:
+        if not line.strip():
+            continue
+        got = re.match(r"^[ \t]+([\w-]+):[ \t]*([\w-]+)[ \t]*$", line)
+        if got is None:                      # 缩进结束 = 这个块完了
+            break
+        out[got.group(1)] = got.group(2)
+    return out
+
+
+def test_每条工作流都要自己写permissions():
+    """**不写这一块，token 有多大权限就取决于仓库设置里那个开关。**
+
+    2026-08-14 盘出来：24 条工作流里有 4 条压根没有 `permissions:`——
+    `ci` / `probe` / `probe-blocked` / `verify-names`。而 GitHub 的老默认是
+    「读写」，也就是说它们可能一直在用一个能推 main 的 token 跑；其中
+    **`probe-blocked` 握着 `YT_COOKIES_TXT`、`probe` 握着
+    `SPORTRADAR_API_KEY` + `RAPIDAPI_KEY`**——密钥和可写 token 落在同一个
+    job 里是最不该省的那一处。
+
+    ⚠️ **这个漏洞的样子是「什么都没发生」**：那个开关不在这个仓库里，改了它
+    也不会有任何一次 run 变红，翻工作流文件更是一个字都看不出来。又一次
+    「兜底出事的时候不吭声」，只不过这次不吭声的是一个默认值。
+
+    判据**自己推导，不维护白名单**：`.github/workflows/` 下每一个 `.yml` 都要
+    有顶层 `permissions:`。新加一条工作流自动被盖住——CLAUDE.md 里
+    「一个会过期的名单和一条常年红的检查是同一个毛病」说的就是这个。
+    """
+    missing = [path.name for path, body in _workflow_bodies().items()
+               if _top_level_permissions(body) is None]
+    assert not missing, (
+        f"这几条工作流没写 `permissions:`，于是继承仓库默认（可能是读写）："
+        f"{missing}\n"
+        "按它真正要做的事显式写死：只读代码就 `contents: read`；"
+        "要 `git commit`/`git push`/发 Release 才给 `contents: write`；"
+        "要点 `pages.yml` 的 workflow_dispatch 才给 `actions: write`。")
+
+
+def test_不提交产物也不发Release的工作流不许要写权限():
+    """`contents: write` 要有**它自己**的理由，不是随手抄上一条工作流。
+
+    能正当要到写权限的只有两件事，两件都在 `run:` 里看得见：
+    **`git commit`**（往仓库里写产物）和**发 Release**（成片 2026-08-13 起
+    一律走 Release 附件，`gh release` 同样吃 `contents: write`）。
+
+    判据**自己推导，不维护白名单**。拿改之前的现状扫过一遍确认不误伤：
+    9 条带 `contents: write` 的**全都**真的 `git commit`（archive-media /
+    assets / auto-push-* / explainer / flash / frame-grab / interview-clip /
+    knowledge-adhoc / match-reel / news-brief / oncourt-interviews /
+    player-name-sync / voice-sample），一条误伤都没有；而
+    `pages-selftest` / `push-existing` / `source-health` / `video-localize`
+    本来就写着 `contents: read`。
+
+    ⚠️ 发 Release 那一支是**故意留着的**：今天每条发 Release 的工作流恰好也都
+    `git commit`，所以只认 `git commit` 也能过——但那是**碰巧对**，而
+    「碰巧对」和「真的接上了」长得一模一样，还会一直绿。哪天出现一条只传
+    Release 不提交的工作流，只认 commit 的判据会把它误判成越权。
+    """
+    offenders = []
+    for path, body in _workflow_bodies().items():
+        perms = _top_level_permissions(body) or {}
+        if perms.get("contents") != "write":
+            continue
+        commits = "git commit" in body
+        releases = bool(re.search(r"gh release|action-gh-release", body))
+        if not commits and not releases:
+            offenders.append(path.name)
+    assert not offenders, (
+        f"这几条要了 `contents: write`，却既不 `git commit` 也不发 Release："
+        f"{offenders}\n"
+        "写权限要有它自己的理由——只读代码的改成 `contents: read`。")
+
+    # **判据自己也要有判据。** 主语没了它会变成一盏恒真的绿灯：真扫到过
+    # 带写权限的工作流，这条断言才说明上面那个循环跑过。
+    writers = [path.name for path, body in _workflow_bodies().items()
+               if (_top_level_permissions(body) or {}).get("contents") == "write"]
+    assert len(writers) >= 8, f"只扫到 {len(writers)} 条带写权限的工作流，判据失效了"
+
+
+def test_四条只读工作流不许悄悄要回写权限():
+    """上一条管「有没有理由」，这条管**这四条具体的**。
+
+    它们 2026-08-14 之前一个 `permissions:` 都没有，补的时候逐条核过它们真正
+    做什么：`ci` 只跑 pytest；`probe` / `probe-blocked` 只探源、把报告传成
+    artifact（`upload-artifact` 走 runtime token，不吃 `GITHUB_TOKEN` 的权限）；
+    `verify-names` 只拿维基百科核一遍译名表、**结果打印到日志**。四条都不
+    `git commit`、不 `git push`、不发 Release、不调 GitHub API。
+
+    ⚠️ **`verify-names` 最容易被名字骗**：会写译名表的是
+    `player-name-sync.yml`（那条真的提交推送，所以它有 `contents: write`）。
+    两条名字很像、权限差一档——所以这里钉的是**实测出来的那一档**，
+    别让下一个人按名字猜。
+    """
+    bodies = _workflow_bodies()
+    for name in ("ci.yml", "probe.yml", "probe-blocked.yml", "verify-names.yml"):
+        path = Path(".github/workflows") / name
+        assert path in bodies, f"{name} 不在了——主语没了就得换判据，别留着一条常年红"
+        perms = _top_level_permissions(bodies[path])
+        assert perms == {"contents": "read"}, (
+            f"{name} 的权限现在是 {perms}，应该只有 `contents: read`。"
+            "要改就先说清楚它新做了什么需要更大权限的事。")
+        # 反过来钉一次：真做了写的事却还挂着只读，是另一头的坏（会红在 runner 上）
+        assert "git commit" not in bodies[path] and "git push" not in bodies[path], (
+            f"{name} 开始提交/推送了，那 `contents: read` 会让它在 runner 上红——"
+            "两边要一起改")

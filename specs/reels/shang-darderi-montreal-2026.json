@@ -1,7 +1,8 @@
 {
   "slug": "shang-darderi-montreal-2026",
-  "source_url": "https://acdn.ak-stream-videoplatform.sky.it/secure/hls/2026/08/06/1116425/master.m3u8?hdnts=st=1786073073~exp=1786073373~acl=/secure/hls/2026/08/06/1116425/*~hmac=8e28dd738ae0fb792a37a330146374b57e1b9fb2f2b136a3a983e4688307d9e9",
-  "_source": "Sky Sport 官方高光，通过 Sky 页面公开 API 换取短时签名 HLS 后探测成功：1280×720、25 fps、123.233 秒。记分条贯穿比赛，片头与末段含网前握手。封面使用 Tennis TV 官方 X 赛后视频约 9 秒处的商竣程摸头低头画面，专门突出遗憾情绪。",
+  "source_url": "https://acdn.ak-stream-videoplatform.sky.it/secure/hls/2026/08/06/1116425/master.m3u8",
+  "_source": "Sky Sport 官方高光，通过 Sky 页面公开 API 换取短时签名 HLS 后探测成功：1280×720、25 fps、123.233 秒。记分条贯穿比赛，片头与末段含网前握手。封面使用 Tennis TV 官方 X 赛后视频约 9 秒处的商竣程摸头低头画面，专门突出遗憾情绪。⚠️ 这句「换取短时签名 HLS」记的是一个**反面先例**，看 `_source_denied`，别照抄这个取源方法。",
+  "_source_denied": "⚠️ **反面先例，别照抄这条取源方法。** 2026-08-14 账号所有者定：程序化换取签名令牌去拉付费/受地区限制的流，这条路禁掉，判据落在 `build_match_reel._reject_signed_source_urls`（`--dry-run` 就红）。仓库里其余 89 条源全是「公开 URL 当公开 URL 取」，只有这一条是换来的——差的不是画质也不是稳定性，是法律类别：那是规避发布方的访问控制（DMCA §1201 那一类），而对家是 Sky Italia。合规的取源在 CLAUDE.md 里一直写着：WTA 官方 YouTube、Tennis TV 官方频道、ATP 官方 YouTube，以及 Tennis TV 库里标着 `free` 的条目（走公开 entitlement 接口）。**片子本身不删**——内容和其余官方高光同类，跨类的是获取方法，而且已经发出去了，收不回来。**`source_url` 换过**：原值带着 `?hdnts=st=…~exp=…~hmac=…` 的签名串，TTL 300 秒、2026-08-07 03:29:33Z 就已失效（同一个签名 URL 刷新过三个令牌值，散在 5 个提交 6 个 blob 里，全部过期）。死令牌留着既不能复现也不能核对，所以只留未签名的资产路径当标识；它带着 `/secure/`，会被上面那道闸拦下——**那正是这条 spec 现在该有的状态：它不该再被渲一次**。⚠️ `output/2026-08-07/reel/shang-darderi-montreal-2026/probe.json` 的 `url` 字段里还留着第一版签名串（本轮不在改动范围内，另行处理）。它能被发现，正是因为 `_source` 当初把取源方法如实写了出来——这个仓库的规矩是留判据，不是抹痕迹。",
   "_match": {
     "赛事": "蒙特利尔 National Bank Open（ATP1000）男单第三轮",
     "场地": "Rogers Court",

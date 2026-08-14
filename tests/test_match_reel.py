@@ -7362,17 +7362,42 @@ def test_每条spec的旁白都还估得下():
 
     改 spec 不重渲是常事（措辞、注解、规矩追认），所以这条要**每次 CI 都跑**。
     它只吃 `specs/` 和 `tools/`，不联网、不碰产物。
+
+    ⚠️ **被源禁令拦下的 spec 不参与这一问**，因为它按设计就渲不出来了
+    （2026-08-14 起，换取签名令牌拉受控流那条路禁掉，见
+    `_reject_signed_source_urls`）。**但不许静静跳过**：这里把它们收成一张
+    表并断言它**恰好**是已知那一份——多出一条就是有人又写了一个换签名 URL 的
+    源，当场红。豁免表带自检，只许减不许加，和这个仓库其余几张一个形状。
     """
     reel = _reel()
+    # 只有这一条：`_source` 自己写着「通过 Sky 页面公开 API 换取短时签名 HLS」，
+    # 它是**反面先例**（spec 里的 `_source_denied` 记着全部来路），片子不删、
+    # 但也不该再渲一次。
+    known_denied = {"shang-darderi-montreal-2026"}
     broken: list[str] = []
+    denied: set[str] = set()
     checked = 0
     for slug, spec in _reel_specs().items():
+        try:
+            reel.spec_sources(spec)
+        except reel.ReelError as exc:
+            # ⚠️ 只放过**源禁令**这一种，别把 ReelError 整类都吞掉——
+            # 那会把「这条 spec 真的坏了」也一起变成绿灯。
+            if "换取签名令牌" not in str(exc):
+                raise
+            denied.add(slug)
+            continue
         for index, secs, room in reel.narration_estimates(reel.validate_spec(spec)):
             checked += 1
             if room < -reel.SPEECH_EST_ERR:
                 broken.append(f"{slug} 第 {index + 1} 段：画面 "
                               f"{spec['segments'][index]['end'] - spec['segments'][index]['start']:.1f}s"
                               f"，估旁白 {secs:.2f}s")
+    assert denied == known_denied, (
+        f"被源禁令拦下的 spec 变了：现在是 {sorted(denied)}，"
+        f"名单里写的是 {sorted(known_denied)}。\n"
+        "多出来的那条多半是又写了一个换签名令牌拿到的源——那条路是禁的，"
+        "换未签名的公开地址或换源；少掉的那条修好了就把它从名单里划掉。")
     assert checked >= 100, f"只估到 {checked} 段，判据失效了"
     assert not broken, (
         "这几段的旁白比自己那段画面长（离线估，已经扣掉 "
@@ -9867,3 +9892,124 @@ def test_传Release附件要重试而且不许用会被errexit杀掉的写法():
     #    render.json，然后发到微信，而消息发出去收不回来
     assert 'UPLOADED" = 1 ]' in body and "exit 1" in body, (
         "四次都没传上去却没有拦住：下游会把一个取不到的链接写进 render.json")
+
+
+def test_换取签名URL拉受控流这条源禁掉():
+    """**公开 URL 当公开 URL 取是一回事；程序化换一个短时令牌是另一回事。**
+
+    2026-08-14 账号所有者定的。来路是 `shang-darderi-montreal-2026`——它的
+    `_source` 自己写着「通过 Sky 页面公开 API **换取短时签名 HLS** 后探测
+    成功」，而仓库里其余 89 条源全是「点开就能取的地址」。差的不是画质也不是
+    稳定性，是**法律类别**：后者规避的是发布方的访问控制（DMCA §1201 那一类），
+    而对家是 Sky Italia。CLAUDE.md 里「源片从哪儿来」那张表（WTA 官方 YouTube /
+    Tennis TV 官方频道 / ATP 官方 YouTube / Tennis TV 标 `free` 的条目）从来
+    没有「换签名令牌」这一档——它是一次没人认领过的越界。
+
+    ⚠️ **这道闸没有「显式认领」的出路**，和 `mixed_fps` / `silent_source` /
+    `conform` 不是一族：那几条是**取舍**（两个选择都说得通，认领一下把「想清楚
+    了」和「凑合一下」分开），这一条是**禁令**——没有哪份 spec 值得开这个口子。
+
+    ⚠️ **判据宁可窄，不可宽。** 下半张表是**不许被误伤的**那些：短 `token=`
+    是分页游标不是签名，`foosignature=` 不是参数、只是名字里带这个词，
+    查询串里的 `secure/` 是噪音。三个方向都反向验证过——放宽任何一条，
+    下半张表当场有一行红。
+    """
+    reel = _reel()
+
+    # ① 该拦的：五个特征各一条，外加真实那一条（带完整 Akamai 令牌串）
+    must_reject = {
+        "Akamai hdnts": "https://acdn.example.it/hls/x/master.m3u8"
+                        "?hdnts=st=1786073073~exp=1786073373~hmac=8e28dd73",
+        "AWS SigV4": "https://s3.example.com/v.m3u8?X-Amz-Signature=8e28dd73ae0f",
+        "CloudFront": "https://d1.cloudfront.net/v.m3u8?Signature=abc~Key-Pair-Id=K1",
+        "长 token": "https://x.example.com/v.m3u8?token=" + "a" * 40,
+        "受控路径": "https://acdn.example.it/secure/hls/2026/08/06/1116425/master.m3u8",
+        "真实那条": "https://acdn.ak-stream-videoplatform.sky.it/secure/hls/"
+                    "2026/08/06/1116425/master.m3u8?hdnts=st=1786073073~"
+                    "exp=1786073373~acl=/secure/hls/2026/08/06/1116425/*~"
+                    "hmac=8e28dd738ae0fb792a37a330146374b57e1b9fb2f2b136a3a98",
+    }
+    for label, url in must_reject.items():
+        with pytest.raises(reel.ReelError) as got:
+            reel.spec_sources({"source_url": url})
+        assert "禁掉" in str(got.value), f"{label} 拦下来了，但报错没说这条路是禁的"
+        # **报错要说出路**，只说不行等于让下一个人再去猜一遍
+        assert "未签名" in str(got.value) and "换源" in str(got.value), (
+            f"{label} 的报错没给出路（①换未签名的公开地址 ②换源）")
+
+    # ② 多源那一支也要拦——写两处必分叉，而分叉那半边是静静放行
+    with pytest.raises(reel.ReelError):
+        reel.spec_sources({"sources": {"a": "https://www.youtube.com/watch?v=ok",
+                                       "b": must_reject["Akamai hdnts"]}})
+
+    # ③ 不许误伤：仓库里其余 89 条源的形状，加三条容易撞上的
+    must_pass = [
+        "https://www.youtube.com/watch?v=OvjNXy1mQjY",
+        "https://youtu.be/OvjNXy1mQjY",
+        "https://players.brightcove.net/1/x_default/index.html?videoId=6402850037112",
+        "https://www.youtube.com/watch?v=abc&token=short",     # 短 token 是游标
+        "https://api.example.com/v?next=1&foosignature=abc",   # 不贴参数边界
+        # ⚠️ 这一条要写成 `next=/secure/…`，**前后都得有斜杠**才验得到「只看
+        # 路径」这件事。第一版写的是 `utm=secure/thing`——那串里压根没有
+        # `/secure/`，把 `^[^?#]*` 拆掉它照样过，**守卫是死的**。是反向验证
+        # 才发现的：一个自己不成立的守卫，和没有守卫一模一样。
+        "https://x.example.com/hls/master.m3u8?next=/secure/thing",
+    ]
+    for url in must_pass:
+        reel.spec_sources({"source_url": url})                 # 不许抛
+
+    # ④ 仓库里现有的源，除了那条反面先例，一条都不许被拦
+    hit = []
+    for slug, spec in _reel_specs().items():
+        try:
+            reel.spec_sources(spec)
+        except reel.ReelError as exc:
+            if "换取签名令牌" in str(exc):
+                hit.append(slug)
+    assert hit == ["shang-darderi-montreal-2026"], (
+        f"被这道闸拦下的 spec 是 {hit}，应该只有那条反面先例。"
+        "多出来说明判据放宽了、误伤了合规的源。")
+
+
+def test_签名源那道闸排在下载之前():
+    """又是「闸装在哪一步」那条老账——**只测行为拦不住位置错**。
+
+    这是 spec 的**形状**问题：一个源片字节都不用碰就能判。排在下载后面的话，
+    每写错一次都要先等几百 MB 下完；而这条线上「返工比慢更贵」是整套优化的
+    出发点。所以它必须在 `--dry-run` 就红。
+
+    判据钉三头：
+    ① 它收在 `spec_sources`——那是「spec → 源片地址」的唯一出处，
+       `validate_spec` / `render` / `check_archival_fit` 全走它，装一处
+       每个消费者自动护住，不用挨个记得加；
+    ② `render()` 里 `validate_spec(spec)` 排在 `download(` 前面（既有判据
+       已经钉过，这里连着这条一起钉，免得有人把 `spec_sources` 挪走）；
+    ③ **`--dry-run` 那条路真的走得到**——它调 `validate_spec`，而
+       `validate_spec` 调 `spec_sources`。
+    """
+    reel = _reel()
+    src = Path(reel.__file__).read_text(encoding="utf-8")
+
+    # ① 闸收在 spec_sources 里（去掉 docstring 再看，注释里提到函数名是常事）
+    body = inspect.getsource(reel.spec_sources)
+    assert "_reject_signed_source_urls" in body.split('"""')[-1], (
+        "这道闸不在 `spec_sources` 里——那是 spec 转源片地址的唯一出处，"
+        "装在别处就会漏掉某个消费者")
+
+    # ② render() 里形状校验排在下载前面
+    render_body = src[src.index("def render("):]
+    render_body = render_body[:render_body.index("\ndef ", 1)]
+    assert render_body.index("validate_spec(spec)") < render_body.index("download(url, path)"), (
+        "spec 形状校验排到下载后面了——这道闸跟着一起失效")
+
+    # ③ validate_spec 真的走到 spec_sources；dry-run 真的走到 validate_spec
+    assert "spec_sources(spec)" in inspect.getsource(reel.validate_spec).split('"""')[-1], (
+        "validate_spec 不再调 spec_sources，dry-run 就够不着这道闸了")
+    main_body = src[src.index("def main("):]
+    dry = main_body[main_body.index("if args.dry_run:"):]
+    assert "validate_spec(spec)" in dry[:400], "--dry-run 那条路没调 validate_spec"
+
+    # ④ 真跑一遍 dry-run 的第一步：不联网、不碰源片，当场红
+    with pytest.raises(reel.ReelError):
+        reel.validate_spec(json.loads(
+            Path("specs/reels/shang-darderi-montreal-2026.json").read_text("utf-8")))
