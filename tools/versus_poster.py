@@ -497,6 +497,10 @@ SCORE_NAME_COL_FR = 2.3
 #: 中文名字号：**上限**（短名字就用这一档）和**下限**（名字太长时能缩到哪儿）。
 SCORE_CN_MAX_PX = 44
 SCORE_CN_MIN_PX = 28
+#: 英文名那一行——**注脚，不是主语**。中文名涨到 44px 之后 22px 显得抢戏，
+#: 账号所有者 2026-08-14「英文名可以字号小一些」。18px 是渲了五档摆一起
+#: 挑出来的，判据 `test_英文名要退成注脚但还读得出` 钉住上下两头。
+SCORE_EN_PX = 18
 #: `.score-rank` 是 `.62em`，`margin-left:4px`——量宽度要把这两样算进去。
 SCORE_RANK_EM = 0.62
 SCORE_RANK_GAP_PX = 4
@@ -1127,8 +1131,13 @@ __SCRIM__
 .score-cn{font-family:'TL Display SC','TL Sans SC',sans-serif;
  font-size:__SCORE_CN_PX__px;line-height:1.08;white-space:nowrap}
 .score-rank{font-family:'TL Sans SC',sans-serif;font-size:.62em;margin-left:4px}
-.score-en{font-family:'TL Sans SC',sans-serif;font-size:22px;line-height:1.15;
- letter-spacing:1.5px;color:#dcefe4;white-space:nowrap;margin-top:5px}
+/* 英文名是**注脚不是主语**：中文名 2026-08-14 从 33px 涨到 44px 之后，22px 的
+   英文行跟着显得抢戏，账号所有者「英文名可以字号小一些」→ 18px。渲了
+   22/20/19/18/17 五档摆一起看：17px 配着 1.5px 的字距开始发虚，18px 是最后
+   一档「明显退成注脚、又还读得出」的。字距**不跟着缩**——小号全大写本来就
+   该松一点。 */
+.score-en{font-family:'TL Sans SC',sans-serif;font-size:__SCORE_EN_PX__px;
+ line-height:1.15;letter-spacing:1.5px;color:#dcefe4;white-space:nowrap;margin-top:5px}
 /* 每一盘一格，格与格之间就这一道竖线，**所有格子一视同仁**。
    ⚠️ 决胜盘曾经单独有一条 `.score-set--deciding`（8px 品牌绿描边 + 14% 绿底），
    2026-08-14 账号所有者要求整块取消，理由和判据写在 `_scoreboard_html` 里那段
@@ -1167,6 +1176,7 @@ __SCRIM__
 """
         .replace("__SCRIM__", _scrim_css(clear_scrim))
         .replace("__STORYCOPY_TOP__", str(STORYCOPY_TOP))
+        .replace("__SCORE_EN_PX__", str(SCORE_EN_PX))
         .replace("__SCORE_CN_PX__", str(score_cn_px(
             cover.get("matchup") or [], _set_count(cover.get("result")))))
         # ⚠️ 这儿曾经给 `.storytitle` 补一段 `margin-top`（`STORYCOPY_TITLE_GAP_EXTRA`），

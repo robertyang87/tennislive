@@ -214,6 +214,36 @@ def test_中文名的字号上限只许往上调():
         "名字那一列的宽度是字号涨得上去的前提，收窄它等于把字号又压回来")
 
 
+def test_英文名要退成注脚但还读得出(monkeypatch: pytest.MonkeyPatch):
+    """账号所有者 2026-08-14：「英文名可以字号小一些」（中文名涨到 44px 之后
+    22px 的英文行跟着显得抢戏）。
+
+    两头都要钉：**小到位**（不然这条反馈等于没做），**又不能小到读不出**——
+    渲了 22/20/19/18/17 五档摆一起看，17px 配着 1.5px 的字距开始发虚。
+
+    还要盯**它真的写进了 CSS**：常量改对而占位符没换，渲出来还是老样子，
+    而这种错这个仓库栽过好几次（同一轮里就有一次，见
+    `test_算出来的字号要真的写进CSS`）。
+    """
+    vp = versus_poster
+    assert vp.SCORE_EN_PX <= 20, (
+        f"英文名还是 {vp.SCORE_EN_PX}px，账号所有者要的是比原来的 22px 小一些")
+    assert vp.SCORE_EN_PX >= 16, (
+        f"英文名 {vp.SCORE_EN_PX}px 太小了：1080 宽的画布放到手机上，"
+        "17px 配 1.5px 字距就已经开始发虚")
+    assert vp.SCORE_EN_PX < vp.SCORE_CN_MAX_PX, "英文名是注脚，不许和中文名一样大"
+
+    monkeypatch.setattr(vp, "_fetch_match_duration", lambda source, where: "1:51")
+    _, css = vp._solo_body({
+        **_cover(), "eyebrow": "赛场之上", "layout": "solo", "hook": "赢了",
+        "portrait": {"image": "assets/logo/brand/icon.png"},
+    })
+    hit = re.search(r"\.score-en\{[^}]*?font-size:(\d+)px", css, re.S)
+    assert hit and int(hit.group(1)) == vp.SCORE_EN_PX, (
+        f"CSS 里英文名的字号是 {hit.group(1) if hit else '缺'}，"
+        f"而常量是 {vp.SCORE_EN_PX}——占位符没换上")
+
+
 def test_名字那一列加宽之后盘分那几列还够用():
     """名字列从 1.55fr 加宽到 2.3fr，代价落在盘分那几列上——要证明它们没被压瘪。
 
