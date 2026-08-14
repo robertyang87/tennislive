@@ -42,8 +42,8 @@ ROOT = Path(__file__).resolve().parent.parent
 NOTE_KEY = "_release_tag_note"
 
 
-def _tracked_render_json() -> list[Path]:
-    """被 git 跟踪的成片记录。
+def _tracked_render_json() -> list[str]:
+    """被 git 跟踪的成片记录，**仓库相对路径**。
 
     ⚠️ 用 `git ls-files` 不用 `Path.glob`：CI 的稀疏检出把 `output/` 挡在
     外面，索引里的条目只是被标了 skip-worktree——`glob` 在 CI 上恒空，
@@ -55,7 +55,29 @@ def _tracked_render_json() -> list[Path]:
          "output/interviews/*/render.json"],
         capture_output=True, text=True, cwd=ROOT)
     assert out.returncode == 0, f"git ls-files 跑不起来（{out.returncode}）：{out.stderr}"
-    return [ROOT / line for line in out.stdout.split() if line]
+    return [line for line in out.stdout.split() if line]
+
+
+def _read_tracked(path: str) -> dict:
+    """读一份被跟踪的 JSON——**枚举和读取要用同一个口径**。
+
+    ⚠️ 这是「稀疏检出」那条坑的**另一半**，而它只在 CI 上现形：`git ls-files`
+    列得出来的路径，在稀疏检出下**不在工作树上**（索引里的条目只是被标了
+    skip-worktree），于是 `Path.read_text()` 当场 `FileNotFoundError`。
+    2026-08-14 这条判据第一版就是这么红的（run 31778874818）——本地全绿，
+    因为沙箱是全量检出。**枚举用索引、读取用工作树，是两个口径。**
+
+    所以：工作树上有就读工作树（这样还没提交的改动也看得见，写挂账的人
+    跑一次就知道够不够），没有就退回去读**索引里那份 blob**。
+    """
+    disk = ROOT / path
+    if disk.is_file():
+        return json.loads(disk.read_text(encoding="utf-8"))
+    out = subprocess.run(["git", "show", f":{path}"],
+                         capture_output=True, text=True, cwd=ROOT)
+    assert out.returncode == 0, (
+        f"{path} 既不在工作树上、索引里也读不出来（{out.returncode}）：{out.stderr}")
+    return json.loads(out.stdout)
 
 
 def test_同一个Release_tag被两份产物共用时每一份都要挂账():
@@ -82,9 +104,9 @@ def test_同一个Release_tag被两份产物共用时每一份都要挂账():
     assert len(records) >= 20, (
         f"只数到 {len(records)} 份成片记录，判据失效了")
 
-    by_url: dict[str, list[tuple[Path, int | None]]] = defaultdict(list)
+    by_url: dict[str, list[tuple[str, int | None]]] = defaultdict(list)
     for path in records:
-        data = json.loads(path.read_text(encoding="utf-8"))
+        data = _read_tracked(path)
         url = data.get("video_url")
         if url:
             by_url[url].append((path, data.get("video_bytes")))
@@ -103,12 +125,12 @@ def test_同一个Release_tag被两份产物共用时每一份都要挂账():
         collisions += 1
         tag = url.split("/download/")[-1].split("/")[0]
         for path, size in rows:
-            data = json.loads(path.read_text(encoding="utf-8"))
+            data = _read_tracked(path)
             if not str(data.get(NOTE_KEY, "")).strip():
-                others = sorted(str(other.parent.relative_to(ROOT))
+                others = sorted(str(Path(other).parent)
                                 for other, _ in rows if other != path)
                 missing.append(
-                    f"{path.parent.relative_to(ROOT)}（记的 {size} 字节，"
+                    f"{Path(path).parent}（记的 {size} 字节，"
                     f"tag `{tag}` 还被这几份共用：{others}）")
 
     assert not missing, (
@@ -138,16 +160,16 @@ def test_挂账那句话不许写成一句空话():
 
     checked = 0
     for path in _tracked_render_json():
-        data = json.loads(path.read_text(encoding="utf-8"))
+        data = _read_tracked(path)
         note = str(data.get(NOTE_KEY, "")).strip()
         if not note:
             continue
         checked += 1
         assert len(note) >= 20, (
-            f"{path.parent.name} 的 {NOTE_KEY} 只有 {len(note)} 个字：{note!r}——"
+            f"{Path(path).parent.name} 的 {NOTE_KEY} 只有 {len(note)} 个字：{note!r}——"
             "挂账要说清「记的那一版已经不在 tag 上了、真的那一版在哪儿」")
         assert re.search(r"\d{4}-\d\d-\d\d", note), (
-            f"{path.parent.name} 的 {NOTE_KEY} 里没有日期：{note!r}——"
+            f"{Path(path).parent.name} 的 {NOTE_KEY} 里没有日期：{note!r}——"
             "「真的那一版在哪个目录」是这句话唯一有用的信息，写不出来说明没查")
 
     # ⚠️ 这里**故意不设下限**：哪天所有碰撞都被清掉（比如换了 tag 方案），
