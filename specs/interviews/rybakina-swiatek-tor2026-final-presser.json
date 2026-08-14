@@ -12,7 +12,7 @@
   ],
   "_window_why": "从 13.0 秒起——片头前 14 秒没有台词（字幕轨第一条事件在 14.2 秒），留 1.2 秒气口进她第一句「总体来说这一站算是成功的」。尾部到 372.0（整条片长），最后一句「谢谢」在 364.0。**中间一刀没剪**：账号所有者定过采访片不设时长上限、不要过多剪辑，这条 6 分钟的发布会四个记者提问全留着。",
   "transcript_verified": true,
-  "_verified_clean": "两份转写对不上 5.0%（闸门 12%），远在带子里，逐处看过没有一处是 YouTube 原文错了：`iga`→`igor`、`aryna`→`irina`、`elena`→`lina` 是 medium.en 把人名听岔（原文对得上 WTA 官方赛报的伊加·斯瓦泰克 / 阿丽娜·萨巴伦卡 / 埃琳娜·莱巴金娜）；`going to`→`gonna`、`this is`→`there's`、`compare`→`comparing` 是口语缩读；`pity`→`busy`、`faults`→`folds`、`match`→`much` 是同音近音，上下文（『很可惜』『两个双误』『比赛』）只有原文讲得通；其余是虚词和 medium.en 整段漏听。唯一一处空档见 `caption_gaps_ok`。",
+  "_verified_clean": "两份转写对不上 **5.4%**（闸门 12%，出处是仓库里那份 `transcript_diff.md`；run 31778145006 那趟量到 5.0%，whisper 两趟有微小差别，都远在带子里），逐处看过没有一处是 YouTube 原文错了：`iga`→`igor`、`aryna`→`irina`、`elena`→`lina` 是 medium.en 把人名听岔（原文对得上 WTA 官方赛报的伊加·斯瓦泰克 / 阿丽娜·萨巴伦卡 / 埃琳娜·莱巴金娜）；`going to`→`gonna`、`this is`→`there's`、`compare`→`comparing` 是口语缩读；`pity`→`busy`、`faults`→`folds`、`match`→`much` 是同音近音，上下文（『很可惜』『两个双误』『比赛』）只有原文讲得通；`important`→`importance`、`these`→`this`、`would`→`will` 是词形；`morning during the day then at night`→`tournament` 是 medium.en 整段漏听（原文那句『很多场排在早上和白天，然后是晚上』是她讲赛程安排的主干，YouTube 那份完整）。唯一一处空档见 `caption_gaps_ok`。",
   "caption_gaps_ok": {
     "93.0-95.1": "**不是漏词，是两个提问之间的换人**——⚠️ 这是从转写结构推的，我没听音轨（沙箱下不动 YouTube）。判据两条：①这 2.1 秒的前一句是她上一个回答的收尾『and uh somehow next time I'm going to do better.』（90.52 起、93.04 收），后一句是 95.12 的 `>>` 新说话人『How did you feel coming into Toronto this year after Wimbledon?』——**空档正好压在一次发言权交接上**，发布会主持人点下一位记者、话筒递过去就是这个长度；②第二份 ASR（medium.en）在这几秒同样什么都没有，两个源一致地空。这条不是英语听不出来的那种空档（她全程英语），没有内容丢失。"
   },
@@ -22,7 +22,7 @@
   "winner": "斯瓦泰克",
   "cover": {
     "frame_at": 166.0,
-    "_why": "还没看过这一帧，从转写猜的：165 秒上下正是她说完「哪儿是不疼的」、接着讲「现在感觉整个人是散的」那一段，发布会机位全程对着她，猜测这时的表情是疲惫而不是场面话。渲完要打开海报确认，不好看就往 170~180 挪。",
+    "_why": "**渲完打开看过了，不挪。**（原来这条写的是「从转写猜的，渲完要确认，不好看就往 170~180 挪」——现在是看过之后的结论。）166.0 落在 164.12「Uh so, yeah.」和 167.08「I feel kind of destroyed」之间，也就是她答完「哪儿是不疼的」之后的那个停顿。三条判据：①**她右手正搭在自己左小臂上**——记者问的就是这条手臂，画面和钩子问的是同一件事；②表情是**自嘲的笑**，而那句话本身就是苦笑式的回答（「我不太确定能不能告诉你，哪儿是不疼的」），不是哭腔——情绪对得上题；③四要素在画面里自证：桌牌 `ELENA RYBAKINA`、背板 `NATIONAL BANK` / `ROGERS`（这一站的冠名和主赞助商）、桌牌上还印着 WTA1000 的标。",
     "title": [
       "记者问她手臂是不是有伤",
       "「我不太确定哪儿是不疼的」"
