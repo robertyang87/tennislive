@@ -1,0 +1,213 @@
+{
+  "slug": "sonmez-kasatkina",
+  "_slug_why": "赢家在前（森梅兹胜）。和 swiatek-rybakina-toronto-final、shelton-nakashima-montreal-final 同一条规矩。⚠️ 译名以 `player_zh()` 为准：Zeynep Sonmez → **森梅兹**（不是索梅兹/松梅兹），Daria Kasatkina → **卡萨金娜**；两条都在 `src/tennislive/zh/players.py` 里，实调函数核过。",
+  "source_url": "https://youtu.be/7fNTWjWbWhw",
+  "_source": "WTA 官方 YouTube 频道单场集锦，标题 `Daria Kasatkina vs. Zeynep Sonmez | 2026 Cincinnati Round 1 | WTA Match Highlights`，频道 = `WTA`（yt-dlp 搜索里 `%(channel)s` 核过；同一批搜索结果里那条『Serena Williams vs Emma Raducanu | 2026 Cincinnati Round 1』频道是 `Tennis Eala`，搬运/伪造号，没有采用）。四处画面自证：① 记分条烧着 `D. KASATKINA / Z. SONMEZ`，逐格读数与 flashscore 2uGeYNog 的逐分完全对得上；② 258.5s Rolex 计时钟显示 `2:14`，与 WTA 官方 `MatchTimeTotal=02:14:12` 一致；③ 292.5~296.5s 打出终局比分图 `DARIA KASATKINA 6 6 3 / ZEYNEP SONMEZ 2 7 6`，与官方 `ScoreString=2-6,7-6(4),6-3` 逐位一致；④ 场边与底线广告为 `Credit One Bank` / `Western & Southern Financial Group` / `Kroger` / `Great American`，辛辛那提站的赞助商阵容。时长 309.22s——WTA 纯集锦定长 310s（CLAUDE.md「WTA 集锦带不带场上采访看时长」），所以这条**不含赛后采访**，全部是比赛画面加颁奖前的场内镜头。",
+  "_column": "赛场之上。讲一场对决，封面 solo 版式印赛果（带国旗和排名），赢家在前。",
+  "topbar": {
+    "line1": "WTA1000 辛辛那提 第一轮",
+    "line2": "森梅兹 2-6 7-6(4) 6-3 卡萨金娜"
+  },
+  "_topbar_why": "赛事级别和轮次取 WTA API（`api.wtatennis.com/tennis/tournaments/1017/2026/matches?states=C`，MatchID `LS102`、`RoundID=1`）。⚠️ 轮次按 CLAUDE.md 写「第一轮」，不写「128 强」——96 签赛前 32 号种子轮空，这是签表的第一轮。比分与 `ScoreString=2-6,7-6(4),6-3` 逐位一致，赢家在前。",
+  "editorial": {
+    "mode": "match_review",
+    "question": "一场从头到尾谁也没拉开的球，最后是怎么被一个赛点决定的？",
+    "thesis": "这场球没有强弱之分——一百九十分打完，两个人各拿九十五分，一分不差。真正的分水岭只有一格：第二盘第十局，卡萨金娜发球胜赛局、四十比三十握着赛点，一记双误把它送了出去。从那一分之后，这场球再没回到她手里。",
+    "beats": [
+      "开场是卡萨金娜的：发球局一个没丢，两次破发，三十分钟六比二拿下第一盘。",
+      "第二盘咬到四平，卡萨金娜再破一局，五比四，只差自己一个发球局。",
+      "分水岭：那一局她没保住——四十比三十的赛点上一记双误，被追成五平；森梅兹接着在自己的发球局连救三个破发点。",
+      "抢七七比四，森梅兹扳平大比分；卡萨金娜丢掉的不只是一盘。",
+      "决胜盘森梅兹拉到五比一，被回破一局后在第九局兑现赛点，两小时十四分收工。"
+    ],
+    "human_context": {
+      "angle": "这场球的重量不在排名上——森梅兹世界第五十、卡萨金娜第六十八，赢的反而是名次更高的那个，不是爆冷。重量在两条相反的曲线上：森梅兹今年七月刚把生涯最高排名推到第四十八，那是土耳其女子网球史上的最高名次；而卡萨金娜四年前排到过世界第八，手里有八个巡回赛冠军和一个法网半决赛，如今掉到六十八，还刚刚在上一周丢掉七个位次。一个在往上走，一个在往下掉，两条线正好在辛辛那提的第一轮交叉。",
+      "facts": [
+        "森梅兹 2026 年 7 月 13 日把生涯最高排名推到世界第 48，是土耳其女子网球史上的最高名次，超过比育卡奇此前的第 60。",
+        "森梅兹是第二位进入 WTA 前 100 的土耳其女子球员，前一位是 2016 年伊斯坦布尔冠军比育卡奇。",
+        "森梅兹的首个巡回赛冠军是 2024 年 11 月的梅里达站。",
+        "卡萨金娜生涯最高世界第 8（2022 年 10 月 24 日），八个巡回赛单打冠军，最好的大满贯成绩是 2022 年法网半决赛。",
+        "卡萨金娜出生于俄罗斯，现在代表澳大利亚参赛（WTA 官方球员档案国别为 AUS）。",
+        "本场赛前榜单（WTA 官方，rankedAt 2026-08-10）：森梅兹第 50、1082 分、周变化 +2；卡萨金娜第 68、1003 分、周变化 −7。",
+        "两人此前在 2026 年法网首轮交手过一次，卡萨金娜 6-4 6-4 获胜；这一场把交手战绩扳成一比一。",
+        "转播解说在片中原话：『Having saved a match point in the 10th game of the second set』（220.8s）与『a debut to savor for Sonmez in Cincinnati』（258.7s）。"
+      ],
+      "sources": [
+        "https://www.wtatennis.com/tournaments/1017/cincinnati/2026/scores/LS102",
+        "https://www.wtatennis.com/videos/4559103/sonmez-escapes-kasatkina-from-match-point-down-in-cincinnati-opener",
+        "https://en.wikipedia.org/wiki/Zeynep_S%C3%B6nmez",
+        "https://en.wikipedia.org/wiki/Daria_Kasatkina",
+        "https://api.wtatennis.com/tennis/players/ranked?page=0&pageSize=100&type=rankSingles&sort=asc&metric=SINGLES"
+      ]
+    }
+  },
+  "_facts": {
+    "赛果": "森梅兹 2-6 7-6(4) 6-3 胜卡萨金娜。WTA API `ResultString='Z. Sonmez d D. Kasatkina 2-6,7-6(4),6-3'`（MatchID LS102）；flashscore match_id `2uGeYNog` 分盘 6-2 6-7 3-6（主队=卡萨金娜视角）逐位一致。",
+    "赛事": "辛辛那提 Cincinnati Open（WTA1000）女单**第一轮**。WTA API EventID 1017 / RoundID 1。⚠️ 96 签赛，前 32 号种子首轮轮空，所以这一轮里两人都不是种子（`SeedA`/`SeedB` 均为空）。",
+    "北京时间开赛": "2026-08-13 23:10（flashscore `AD=1786633800`）；结束 2026-08-14 01:24（`AO=1786641853`）。",
+    "用时": "2 小时 14 分 12 秒（WTA API `MatchTimeTotal=02:14:12`）。flashscore 分盘用时 0:30 / 1:10 / 0:36，合计 2:16——**分盘相加比官方总时长多 2 分钟**，是换场休息计不计的口径差；片子里只说官方那个 2:14，不说分盘相加。片内 258.5s 的 Rolex 计时钟画面显示 `2:14`，和官方口径对得上。",
+    "球场": "Grandstand。转播解说 228.8s 原话『we are going all the way in our opening match on **Grandstand**』——这是画面自带的自证，不是从场馆结构推的。",
+    "排名": "赛时口径取 WTA 官方榜单 `rankedAt=2026-08-10`（比赛前那个周一）：森梅兹第 50、卡萨金娜第 68。⚠️ 网上有一组 52/61 的说法（搜索摘要，未标日期），**没有采用**——CLAUDE.md「两个源报两个数时先查哪个新」，官方这份带日期且更新。⚠️ 维基信息框写卡萨金娜 No.62（2026-07-20），也是旧快照。片内解说 277.1s 说森梅兹『on the verge of the top 50』，口语，不作数据用。",
+    "年龄": "森梅兹 24 岁（2002-04-30 生，WTA 官方球员档案 id=326907）；卡萨金娜 29 岁（1997-05-07 生，id=322082）。都是按生日和比赛日 2026-08-13 算出来的，不照抄任何一处现成说法。",
+    "国籍": "森梅兹 TUR；卡萨金娜 **AUS**（WTA 官方档案 countryCode=AUS，俄罗斯出生后改代表澳大利亚）。",
+    "技术统计（全场，WTA 官方 stats 接口 tournaments/1017/2026/matches/LS102/stats setnum=0）": "a=卡萨金娜、b=森梅兹。Ace 4/0；双误 11/3；一发进球 65/98 与 51/92；一发得分 38/30；发球总得分 51/48；破发点转化 6/12 与 6/7；总得分 **95/95**。⚠️ **总得分以官方为准，不用 flashscore 的 94/95**：官方这组内部自洽（卡萨金娜 51 发球分 + 44 接发分 = 95；森梅兹 48 + 47 = 95；合计 190 = 98+92），flashscore 那份的发球分 65+33=98 与它自己写的 97 差一，对不上。",
+    "制胜分和非受迫失误": "**拿不到，整两行不画。** WTA 巡回赛（1000/500/250）在 flashscore 只给 17 项统计，缺的正是 Winners / Unforced errors / Net points won 这一组；WTA 官方 stats 的 32 个字段一个都不含；Match Charting Project 没标这场（`tools/mcp_stats.py find --who Sonmez --year 2026` 只有 3 场，都不是辛辛那提）。八条路怎么自证的记在 CLAUDE.md「上面那句范围写宽了」那节。账号所有者定的口径就是「没有的话这两条就不显示」。",
+    "分水岭那一分": "第二盘第 10 局，卡萨金娜 5-4 发球胜赛局。flashscore 逐分 `15:0, 15:15, 15:30, 30:30, 40:30 |B3|, 40:40, 40:A |B1|`——`|B3|` 就是赛点（主队在前，40:30 是卡萨金娜的赛点），随后被破。**四重独立自证**：① 这份逐分；② flashscore 统计里单列的 `Match points saved` 卡萨金娜 0、森梅兹 **1**；③ WTA 官网标题『Sonmez escapes Kasatkina from match point down』；④ 片内转播解说 220.8s『Having saved a match point in the 10th game of the second set』。**赛点是被一记双误送掉的**——这一条出处是 WTA 官方稿，逐分数据本身只记到「这一分丢了」，不记怎么丢的。",
+    "森梅兹随后那一局": "5-5 她自己发球，逐分 `15:0, 30:0, 30:15, 40:15 |B1|, 40:30 |B1|, 40:40, A:40 |B1|, 40:40, 40:A`——连救三个破发点保发到 6-5。",
+    "⚠️ 赛点那一局不在集锦里": "集锦 162.5s→164.5s 有一刀：记分条从第二盘 4-4（森梅兹发球）直接跳到 5-5（森梅兹发球、占先）。也就是说**卡萨金娜 5-4 发球胜赛局那一局整个被剪掉了**，画面上看不到那记双误。按 CLAUDE.md「转折点不在集锦里就明说」，这条记在这儿：片子里那句话是**画面外的事实**（四重信源都在上面），配的画面是紧接着的 5-5 保发，不冒充是同一格。",
+    "逐局细节": "第一盘卡萨金娜发球局一个没丢、两次破发，6-2（0:30）。第二盘 4-4 时卡萨金娜破发到 5-4；丢掉赛点后被追平，森梅兹保发 6-5，卡萨金娜零封保发进抢七，抢七 7-4。决胜盘森梅兹连下四局到 5-1，卡萨金娜回破一局到 3-5，第九局森梅兹在卡萨金娜的发球局兑现赛点（逐分 `30:40 |B1| |B3|`）。"
+  },
+  "_editing_why": "**开场三格按定死的顺序**：① 全片最强的一格（252.48–257.64，赛点那一分落地，不配旁白、只有现场声）→ ② 一句话把落点说出来（257.64–264.5，她的庆祝）→ ③ 才给坐标（0.4–20.08，两人入场）。⚠️ 冷开场没有取源片开头：官方集锦按时间顺序剪，开头是入场和第一盘，戏剧性最低。所有窗口都对着 `probe.json` 的 25 个硬切点排，段体不跨切点；末尾封顶 299.08（最后一个硬切点，之后 300.5s 是 WTA 台标和订阅卡，不能用）。",
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "森梅兹",
+    "hook": "对手四十比三十握着赛点\n她把已经输掉的球赢了回来",
+    "_hook_why": "上一句是过程（对手手里握着赛点这个具体局面），下一句是落点（她把球赢回来了）。⚠️ 不复述赛果条和顶栏印着的东西——没有比分、没有轮次、没有排名，那三样海报上已经有了。讲的是这场球发生了什么，不是两个人是谁。",
+    "topic": "WTA1000辛辛那提 · 女单第一轮",
+    "portrait": {
+      "image": "assets/reel/sonmez-cincinnati-2026-r1.jpg",
+      "focus": 0.62,
+      "focus_y": 0.42,
+      "zoom": 1.0
+    },
+    "_portrait_why": "WTA 官方图库这场的实拍：`photoresources.wtatennis.com/photo-resources/2026/08/13/24716305-e7c5-4888-8d72-4839d8606798/Sonmez-R1-DB-.jpg?width=3000`，3000×2000 真实相机分辨率，是 WTA 自己那篇『Sonmez escapes Kasatkina from match point down』的头图。四道闸门逐条过：① **精准**——路径日期 2026/08/13 就是比赛当天、文件名写着球员和轮次（`Sonmez-R1`），球衣（深色无袖上衣＋粉色遮阳帽＋粉裙＋ASICS）与片内 150.5/162.5/172.5s 逐帧一致，背景 `Credit One Bank` 是辛辛那提站的场边广告；② **在比赛中**——正手击球瞬间，球就在拍面上，不是训练照也不是场外；③ **有冲击力**——全身舒展、表情看得见，主体不占满一屏；④ **清晰度**——3000×2000 原生，不是放大。亮度量过：均值 66.9、中位 56、暗于 50 只占 14.7%，不是逆光剪影。⚠️ **没有从视频抽帧**：候选帧里过『正脸+双眼+清晰』三条判据的只有 265.6s 一帧，而那一格按缩略图墙是**卡萨金娜**（输的那个），主体就错了。⚠️ 裸 URL 返回 400，必须带 `?width=`（CLAUDE.md 记过这个坑）。",
+    "scrim": "clear",
+    "_scrim_why": "和近期几条一致：只关掉画面正中的 radial 暗角，上下两头照留。",
+    "winner": "森梅兹",
+    "result": "2-6 7-6(4) 6-3",
+    "matchup": [
+      {
+        "name": "森梅兹",
+        "name_en": "Zeynep Sonmez",
+        "country": "TUR",
+        "rank": 50
+      },
+      {
+        "name": "卡萨金娜",
+        "name_en": "Daria Kasatkina",
+        "country": "AUS",
+        "rank": 68
+      }
+    ],
+    "_matchup_rank_why": "两个名次都取 WTA 官方榜单接口 `rankedAt=2026-08-10`（比赛前那个周一，正是赛时口径）：森梅兹 50、卡萨金娜 68。⚠️ `matchup` 是**版式顺序**不是赛果顺序，赛果行由 `winner` 决定——这条 CLAUDE.md 专门记过（wang-samsonova 那次标题把输的人写成赢了）。",
+    "scoreboard": {
+      "court": "Grandstand",
+      "duration_source": {
+        "provider": "wta",
+        "url": "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches?states=C&page=0&pageSize=200",
+        "match_id": "LS102",
+        "field": "MatchTimeTotal",
+        "source_page": "https://www.wtatennis.com/tournaments/1017/cincinnati/2026/scores/LS102"
+      },
+      "_court_why": "转播解说 228.8s 原话『our opening match on Grandstand』——画面自带的自证。⚠️ 没有按『1000 赛第一轮多半在几号场』这类结构去推，那是猜。",
+      "_duration_why": "`MatchTimeTotal: \"02:14:12\"` → 板上印 `2:14`。不手填，`_fetch_match_duration()` 每次渲海报现拉接口；片内 258.5s 的 Rolex 钟也是 2:14。"
+    }
+  },
+  "stats": {
+    "tour": "wta",
+    "a": {
+      "headshot": "assets/players/headshots/wta-326907.jpg",
+      "aces": 0,
+      "df": 3,
+      "first_in": 51,
+      "first_total": 92,
+      "first_won": 30,
+      "second_won": 18,
+      "second_total": 41,
+      "bp_conv": 6,
+      "bp_chances": 7,
+      "pts_won": 95
+    },
+    "b": {
+      "headshot": "assets/players/headshots/wta-322082.jpg",
+      "aces": 4,
+      "df": 11,
+      "first_in": 65,
+      "first_total": 98,
+      "first_won": 38,
+      "second_won": 13,
+      "second_total": 33,
+      "bp_conv": 6,
+      "bp_chances": 12,
+      "pts_won": 95
+    },
+    "footer_venue": "Grandstand · 辛辛那提",
+    "footer_date": "2026年8月13日",
+    "_source": "WTA 官方 stats 接口 `tournaments/1017/2026/matches/LS102/stats` setnum=0。接口的 a=卡萨金娜（主队）、b=森梅兹（客队），而**这张图是 `cover.matchup[0]` 配 `stats.a`**，所以这里按 matchup 的顺序放：`stats.a`＝森梅兹、`stats.b`＝卡萨金娜，和接口反过来。⚠️ 第一版照接口顺序填，渲出来左栏标着「森梅兹」却挂着卡萨金娜的头像和她的 4 个 Ace、11 个双误——**名字、头像、数字三样里错了两样，而图本身看起来完全正常**。是渲出来打开看才发现的，查源码或者只跑测试都抓不到。二发由接口反推并双向核对：卡萨金娜 98−65=33、51−38=13；森梅兹 92−51=41、48−30=18。总得分 95/95 与「发球分+接发分」两边各自加总一致（51+44、48+47），合计 190=98+92。⚠️ **制胜分和非受迫失误两行整行不画**——WTA 巡回赛拿不到（见 `_facts.制胜分和非受迫失误`），账号所有者定的口径是「没有的话这两条就不显示」，`render_stat_card.usable_rows()` 按字段在不在决定画不画。头像走 `tools/fetch_official_headshot.py wta`，颜色数 71661 / 30538，不是占位剪影。"
+  },
+  "segments": [
+    {
+      "start": 252.48,
+      "end": 257.64
+    },
+    {
+      "start": 257.64,
+      "end": 264.44,
+      "narration": "二十四岁的森梅兹，把一场已经输掉的球赢了回来。"
+    },
+    {
+      "start": 0.4,
+      "end": 18.0,
+      "narration": "北京时间八月十三号夜里十一点十分，辛辛那提站，女单第一轮。世界第五十的森梅兹，对上卡萨金娜——四年前排到过世界第八，手里有八个巡回赛冠军，如今掉到第六十八。"
+    },
+    {
+      "start": 20.08,
+      "end": 29.92,
+      "narration": "开场是卡萨金娜的。自己的发球局一个没丢，还两次破掉对手，三十分钟，六比二拿下第一盘。"
+    },
+    {
+      "start": 85.28,
+      "end": 96.76,
+      "narration": "第一盘最后一局，她一口气拿到三个盘点，也就是再赢一分就能收走这一盘。第一个，她就兑现了。",
+      "crosses_cut": "91.8s 那一刀两边讲的是同一件事：88.5~91.8 卡萨金娜在盘点上发球，92.5~96.5 是她拿下这一盘的那一分。同一个人、同一个动作的前后半段，不是整句旁白压到别人身上。（缩略图墙逐格看过）"
+    },
+    {
+      "start": 151.0,
+      "end": 162.04,
+      "narration": "第二盘一路咬到四平。第九局，卡萨金娜再破一次发球，五比四领先——只差自己的一个发球局。"
+    },
+    {
+      "start": 163.48,
+      "end": 171.96,
+      "narration": "那一局她没能保住。四十比三十，一个赛点，一记双误送了出去。"
+    },
+    {
+      "start": 179.88,
+      "end": 195.5,
+      "narration": "五平之后轮到森梅兹发球，三个破发点，她一个都没给。抢七里两个人一路换着领先，森梅兹先拿到盘点，七比四收下这一盘。打到这儿，比赛已经过去一个半小时。"
+    },
+    {
+      "start": 203.2,
+      "end": 212.0,
+      "narration": "一比一。而对卡萨金娜来说，刚刚丢掉的不只是一盘，是一场已经握在手里的胜利。"
+    },
+    {
+      "start": 236.36,
+      "end": 245.2,
+      "narration": "决胜盘，森梅兹一上来就连下四局，五比一。这一盘她只用了三十六分钟。"
+    },
+    {
+      "start": 245.2,
+      "end": 248.88,
+      "narration": "卡萨金娜回破一局，追到三比五。"
+    },
+    {
+      "start": 265.0,
+      "end": 270.0,
+      "narration": "她张开双臂，然后走向球网。",
+      "_why": "这一段故意不带数字——dry-run 的节奏检查报中段十段里九段在报数据，而「不要平白叙事」要的正是中间有一次纯情绪的停顿。画面核过：264.5s 她双臂举起，268.5s 两人在网前拥抱，这句话说的就是这两格之间那几秒。"
+    },
+    {
+      "start": 275.0,
+      "end": 288.0,
+      "narration": "一百九十分打完，两人各拿九十五分，一分不差。分水岭只有那一格。土耳其历史上排名最高的球员，能在辛辛那提走多远？"
+    }
+  ],
+  "push": {
+    "summary": "森梅兹救赛点逆转",
+    "lead": "辛辛那提WTA1000女单第一轮，世界第50的森梅兹2-6 7-6(4) 6-3逆转世界第68的卡萨金娜，耗时2小时14分。分水岭在第二盘第10局：卡萨金娜发球胜赛局、40-30握着赛点，一记双误送了出去，被追成5-5；森梅兹随后在自己的发球局连救三个破发点保发，抢七7-4扳平大比分，决胜盘一度5-1领先，被回破一局后在第九局兑现赛点。全场190分两人各拿95分，一分不差——差别只在那一个赛点上。24岁的森梅兹今年7月刚把生涯最高排名推到世界第48，是土耳其女子网球史上的最高名次；29岁的卡萨金娜四年前排到过世界第8，拿过八个巡回赛冠军和一个法网半决赛。",
+    "auto": true,
+    "_why": "`push_reel.SUMMARY_MAX = 13`，量 `len()` 原始字符数。「森梅兹救赛点逆转」= 8 字，在闸内。只写 summary 和 lead，matchup／score／event 由封面算——一个数写两处必分叉。`auto: true`：这条是新片、没有 `pushed.json`，合进 main 由 auto-push-reel 发，不走手动补发那条路。"
+  }
+}
