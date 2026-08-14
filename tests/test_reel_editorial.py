@@ -18,6 +18,10 @@
 从 8 到 25 连成一片、没有任何一道缝，按中位数 14 设闸等于宣布一半的库存有罪。
 它只留了一道棘轮（不许比今天最坏的还坏），零豁免。
 
+⚠️ **同一天晚些时候，那条被账号所有者翻了过来，现在是硬闸**（≤10 字符 /
+≥94px，第二节里连同它为什么翻面一起记着）。棘轮留着——它扫的是全部封面，
+硬闸只管 solo 那一支。
+
 ⚠️ 另有两条候选（「开场 N 秒内必须开口」「收尾不许用『还能走多远』」）在动手
 之前就被扫描否掉了，**没有写进这份文件**：前者会误伤 14 条（片子有常驻顶栏
 字幕，静音用户并非零文字信息），后者的数字虚高且已自愈（08-10 起 2/18，与
@@ -203,39 +207,81 @@ def test_复读钩子的豁免表只许减不许加():
 # （`jodar-fils-montreal-qf`，37px），不是拍的；它零豁免、只拦新的漂移。
 _HOOK_LINE_WORST_TODAY = 25
 
+# ──────────────────────────────────────────────────────────────────────────
+# ⭐ 2026-08-14 当天晚些时候：**账号所有者把上面这条翻成了硬闸**
+# ──────────────────────────────────────────────────────────────────────────
+#
+# 他看了 `townsend-osorio` 那张渲出来的海报，原话：「**以后封面下面标题的字号
+# 就保持这种，不要再小了，所以以后要控制每行文字的数量，把这个记下来**」。
+# 那张的最长行是 10 个字符 → 940/10 = **94px**，就是下限。
+#
+# ⚠️ **上面那段「不能做成闸」的推理错在哪儿，值得单记一笔**：它去数据里找
+# 「一道干净的缝」，没找到就断定设不了闸。可**这个阈值本来就不在数据里**——
+# 它在渲出来的那张图上。分布之所以连成一片，正是因为它整段都在漂（均值
+# 11.4 → 14.5 → 17.0，那半段观察是对的）；**一条漂出来的分布不会自带分界线，
+# 拿它找缝等于问「今天的坏和昨天的坏之间有没有台阶」。**
+# 判据是「这一行在信息流的缩略图里还读不读得出来」，那要打开图看，不是排直方图。
+#
+# ⚠️ 「宣布一半的库存有罪」这个担心也没有变成现实——已发的片子本来就不重渲，
+# 豁免表照记（`build_match_reel._LEGACY_LONG_HOOKS`，48 条，只许减不许加）。
+# 当时真正该问的不是「有多少条会红」，是「新的那条要不要按这个写」。
+#
+# 闸装在 `build_match_reel.validate_spec` 里（`--dry-run` 0.2 秒就报），
+# 这里只做两件事：**扫一遍库存**、**自检那张豁免表**。
+
 
 def _hook_line_lengths():
-    """{slug: (最长行字数, 算出来的字号)}，只看有钩子的封面。"""
+    """{slug: (最长行字数, 算出来的字号)}，只看有钩子的封面。
+
+    ⚠️ 字号**调 `versus_poster.hook_title_px()`**，不在这儿抄一遍公式——
+    抄一份就是「一个数写两处必分叉」，而分叉那天这份扫描报的字号和海报上
+    真正渲出来的不是一回事，还不报错。
+    """
+    versus_poster = _versus_poster()
     out = {}
     for slug, spec in _specs():
         lines = _hook_lines(spec)
         if not lines:
             continue
-        longest = max(len(ln) for ln in lines)
-        cap = 124 if len(lines) <= 2 else 96
-        out[slug] = (longest, min(cap, int(940 / longest)))
+        out[slug] = (max(len(ln) for ln in lines),
+                     versus_poster.hook_title_px(lines))
     return out
 
 
-def test_钩子字号那个公式没变过():
-    """上面整段推理（行越长字越小、25 字只剩 37px）全建立在这个公式上。
-
-    公式一改，那段话和它推出来的棘轮就都要重算——所以把它钉住，
-    **而且是 import 出来钉的，不是 grep 出来的**：改完源码要验的是 import
-    的结果，`grep` 会被注释和 docstring 骗过去。
-    """
+def _versus_poster():
     sys.path.insert(0, str(Path("tools").resolve()))
     import versus_poster
+    return versus_poster
 
+
+def test_钩子字号那个公式没变过():
+    """上面整段推理（行越长字越小、25 字只剩 37px、10 字正好 94px）全建立在
+    这个公式上。公式一改，那段话、棘轮和硬闸就都要重算。
+
+    ⚠️ **钉法是「喂进去算一遍」，不是 grep**：改完源码要验的是 import 的结果，
+    `grep` 会被注释和 docstring 骗过去——而这个仓库的注释里必然写着那条公式。
+    第一版正是拿源码字符串钉的，重构一次就当场变成一条常年红。
+    """
+    versus_poster = _versus_poster()
     assert versus_poster.SHORT_HOOK_TITLE_PX == 124, \
         "短钩子的字号上限变了，重算钩子长度那一节的账"
-    body = Path("tools/versus_poster.py").read_text("utf-8")
-    assert "title_px = min(cap, int(940 / max(" in body, \
-        "钩子字号不再是 min(cap, 940/最长行) 了，上面那段推理要重做"
+    # 25 字 → 37px（棘轮那个当前最坏值）、10 字 → 94px（硬闸那条下限），
+    # 两个端点都是上面那两段话直接引用的数。
+    assert versus_poster.hook_title_px(["一" * 25, "短"]) == 37
+    assert versus_poster.hook_title_px(["一" * 10, "短"]) == \
+        versus_poster.MIN_HOOK_TITLE_PX == 94
+    assert versus_poster.hook_title_px(["一" * 11, "短"]) < 94, \
+        "11 个字要掉到下限以下，不然 HOOK_MAX_CHARS 就不该是 10"
+    assert versus_poster.HOOK_MAX_CHARS == 10
 
 
 def test_钩子最长行不许比今天最坏的还长():
-    """棘轮，不是闸：只拦「比现在更坏」，不宣布一半的库存有罪。"""
+    """棘轮，不是闸：只拦「比现在更坏」，不宣布一半的库存有罪。
+
+    ⚠️ 硬闸上线之后它**没有变成冗余**：硬闸只管 `layout == "solo"`
+    （字号是算出来的那一支），而 cutout / diagonal 那几版的 `.hook` 是写死的
+    100px，掉不下去也就没有下限可守——它们的漂移只有这道棘轮拦得住。
+    """
     lengths = _hook_line_lengths()
     over = {s: v for s, v in lengths.items() if v[0] > _HOOK_LINE_WORST_TODAY}
     assert not over, (
@@ -245,6 +291,66 @@ def test_钩子最长行不许比今天最坏的还长():
         f"那一屏，别再往下漂了。"
     )
     assert len(lengths) >= 40, f"只扫到 {len(lengths)} 条钩子，判据的主语像是没了"
+
+
+def _solo_hook_px():
+    """{slug: (最长行字数, 字号)}，**只看 solo**——字号算出来的只有这一支。"""
+    versus_poster = _versus_poster()
+    out = {}
+    for slug, spec in _specs():
+        cover = spec.get("cover") or {}
+        lines = _hook_lines(spec)
+        if not lines or str(cover.get("layout", "")).strip() != "solo":
+            continue
+        out[slug] = (max(len(ln) for ln in lines),
+                     versus_poster.hook_title_px(lines))
+    return out
+
+
+def test_solo封面的钩子每行不许超过十个字():
+    """账号所有者 2026-08-14：「以后封面下面标题的字号就保持这种，不要再小了，
+    所以以后要控制每行文字的数量」。
+
+    ⚠️ 这里断言的是**新片子**——已发的挂在 `_LEGACY_LONG_HOOKS` 里，
+    已发的片子不为版式重渲（微信那条消息发出去收不回来）。
+    """
+    reel = _build_match_reel()
+    versus_poster = _versus_poster()
+    fresh = {s: v for s, v in _solo_hook_px().items()
+             if s not in reel._LEGACY_LONG_HOOKS
+             and v[1] < versus_poster.MIN_HOOK_TITLE_PX}
+    assert not fresh, (
+        f"这几条 solo 封面的钩子渲出来低于 {versus_poster.MIN_HOOK_TITLE_PX}px："
+        f"{fresh}（值是「最长行字数, 字号」）。每行最多 "
+        f"{versus_poster.HOOK_MAX_CHARS} 个字符——**改文案，不要去调字号**。"
+    )
+    assert len(_solo_hook_px()) >= 40, "只扫到几条 solo 钩子，判据的主语像是没了"
+
+
+def test_钩子豁免表里的每一条都还真的超着():
+    """豁免表的自检：**写错一个名字，豁免就成了一盏恒真的绿灯。**
+
+    三头都要钉——slug 真的存在、真的是 solo、真的还超着。第三条是给「后来
+    改短了」那种情况留的：改完就该从表里删掉，不然表会慢慢变成一张许可证。
+    """
+    reel = _build_match_reel()
+    versus_poster = _versus_poster()
+    measured = _solo_hook_px()
+    ghosts = sorted(set(reel._LEGACY_LONG_HOOKS) - set(measured))
+    assert not ghosts, (
+        f"豁免表里这几个 slug 不存在、或者已经不是 solo 封面了：{ghosts}。"
+        f"名字写错的话这一条就永远豁免不到任何东西。")
+    healed = sorted(s for s in reel._LEGACY_LONG_HOOKS
+                    if measured[s][1] >= versus_poster.MIN_HOOK_TITLE_PX)
+    assert not healed, (
+        f"这几条已经不超了，把它们从 `_LEGACY_LONG_HOOKS` 里删掉：{healed}。"
+        f"豁免表只许减不许加。")
+
+
+def _build_match_reel():
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import build_match_reel
+    return build_match_reel
 
 
 # ──────────────────────────────────────────────────────────────────────────

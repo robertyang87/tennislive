@@ -719,6 +719,42 @@ def _cutout_body(cover: dict, versus: dict, names: list) -> tuple[str, str]:
 # （2×124×1.24≈308px）比 3 行 96px 的总高（357px，`STORYCOPY_TOP` 那笔"最坏
 # 情况"的账基于这个数）矮，所以只放开 1~2 行不会打破已经验证过的上界。
 SHORT_HOOK_TITLE_PX = 124
+LONG_HOOK_TITLE_PX = 96
+# 标题可用宽度：画布 1080 宽，左右各留 70px。一个汉字约占一个字号的宽，
+# 所以「最长那一行有几个字」直接决定字号——这是下面 `hook_title_px()` 的全部。
+TITLE_WIDTH_PX = 940
+
+# ⭐ **字号下限。** 账号所有者 2026-08-14（看了 `townsend-osorio` 那张海报）：
+# 「以后封面下面标题的字号就保持这种，不要再小了，**所以以后要控制每行文字的
+# 数量**」。那张的最长行是 10 个字符 → 940/10 = 94px，就是这个数。
+#
+# ⚠️ **这条真正约束的是文案，不是版式。** 字号是从行长算出来的，
+# 所以「字号不许更小」＝「每行不许更长」。存量 48 条 solo 封面里最狠的一条
+# （`jodar-fils-montreal-qf`）最长行 25 个字符，渲出来只有 37px——在信息流的
+# 缩略图里那一行基本读不出来，而封面是唯一决定人点不点的一屏。
+MIN_HOOK_TITLE_PX = 94
+# 每行的字符上限**从上面两个数推出来**，不另写一个数——一个数写两处必分叉。
+HOOK_MAX_CHARS = TITLE_WIDTH_PX // MIN_HOOK_TITLE_PX
+
+
+def hook_title_px(lines: list[str]) -> int:
+    """钩子标题的字号：**按最长那一行算**，别写死。
+
+    左右各留 70px，可用 `TITLE_WIDTH_PX`；一个汉字约占一个字号的宽，
+    写死 96px 时 10 个字就是 960px——**顶出去自动折行**，而钩子本来已经手写
+    好了断行，再折一次就多出一个孤行。
+
+    **短句的上限比长句高一档，但只放开给 1~2 行的钩子**（见
+    `SHORT_HOOK_TITLE_PX` 上面那段账）。
+
+    ⚠️ 这个函数是字号的**唯一出处**：`_solo_body` 渲海报用它，
+    `build_match_reel.validate_spec` 的行长闸也用它。两处各算一遍必分叉，
+    而分叉的样子是「闸放过了一条渲出来更小的钩子」——不报错。
+    """
+    if not lines:
+        return SHORT_HOOK_TITLE_PX
+    cap = SHORT_HOOK_TITLE_PX if len(lines) <= 2 else LONG_HOOK_TITLE_PX
+    return min(cap, int(TITLE_WIDTH_PX / max(len(ln) for ln in lines)))
 
 # 台头药丸的顶边（px，画布 1080×1440）。**老版一行赛果时药丸落在 502~536**
 # （量的是已发的 eala-parks / shang-rublev 两张海报），520 取在中间。
@@ -838,20 +874,13 @@ def _solo_body(cover: dict) -> tuple[str, str]:
     clear_scrim = str(cover.get("scrim", "")).strip().lower() == "clear"
     lines = [ln.strip() for ln in str(cover.get("hook", "")).split("\n") if ln.strip()]
     hook = "".join(f"<div>{html.escape(ln)}</div>" for ln in lines)
-    # 标题字号按**最长那一行**算，别写死。左右各留 70px，可用 940px；一个汉字
-    # 约占一个字号的宽，写死 96px 时 10 个字就是 960px——**顶出去自动折行**，
-    # 而钩子本来已经手写好了断行，再折一次就多出一个孤行。
+    # 标题字号按**最长那一行**算，别写死——算法和它的来路全在 `hook_title_px()`
+    # 的 docstring 里。这里只调用，不复制那个公式。
     #
-    # **短句的上限比长句高一档，但只放开给 1~2 行的钩子。** 原来无论几行都封顶
-    # 96px，一个四字爆点和一个九字长句渲出来几乎一样大（940/4=235 和 940/9=104，
-    # 两者都在 96 附近封顶或接近封顶）——现在唯一的"视觉锤"字号是死的。
     # ⚠️ **3 行钩子不许跟着涨**：`STORYCOPY_TOP` 那段"最坏情况"是按三行 96px 算的
     # （557 行注释 + `test_台头药丸的位置不跟着比分板漂` 那条测试），涨了 3 行的
-    # 上限就要重新核那笔账。而 2 行 124px 的总高（2×124×1.24≈308px）本来就比
-    # 3 行 96px 的总高（3×96×1.24≈357px）矮，所以只放开 1~2 行不会打破那个
-    # 已经验证过的上界——不用碰 `STORYCOPY_TOP` 或那条测试。
-    cap = SHORT_HOOK_TITLE_PX if len(lines) <= 2 else 96
-    title_px = min(cap, int(940 / max((len(ln) for ln in lines), default=1)))
+    # 上限就要重新核那笔账。
+    title_px = hook_title_px(lines)
     column = html.escape(str(cover.get("eyebrow", "网球有故事")))
     if above:
         if not above.get("image"):
