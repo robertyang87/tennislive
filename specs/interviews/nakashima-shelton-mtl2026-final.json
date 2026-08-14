@@ -9,6 +9,8 @@
     "https://sports.yahoo.com/articles/shelton-successfully-defends-national-bank-014459469.html",
     "https://www.atptour.com/en/news/shelton-nakashima-montreal-2026-thursday-final"
   ],
+  "whisper_model": "medium.en",
+  "_whisper_model_why": "默认的 `small.en` 在这条上报 19.8%，**超过 18% 的天花板，认领挡不住**（闸的原话：这个量级不是虚词能解释的，必然有整段对不上）。去查了源，结论是没有整段对不上——逐处看下来分歧全是一个形状：他讲话极其磕巴，同一个词组连说两遍（`more than more than Toronto`、`I'm not I'm not just saying`、`but uh but I I uh I I really look forward`、`my whole my whole career`、`so many uh so many people`），外加满篇的 `uh`/`um`；`small.en` 会把这些重复和填词整个收掉，于是分子被这一类刷高，而没有任何一处是语义对不上的。**所以换的是尺子，不是闸**：`medium.en` 对重复和填词忠实得多，仓库里另外三条 spec 已经在用它（`eala-mcnally-*` 那几条）。⚠️ 换完要是还超 18%，那就不是尺子的问题，得回去查源，不许硬认领。",
   "column": "赛后开麦",
   "interview_kind": "赛后亚军致辞",
   "event": "2026 国家银行公开赛（蒙特利尔）决赛",
@@ -37,6 +39,20 @@
     "event": "",
     "summary": "一句话 全场欢呼四十秒",
     "lead": "2026 国家银行公开赛（蒙特利尔）决赛，中岛布兰登 6-3 7-6(4) 负于谢尔顿，这是他生涯第一个大师赛决赛。亚军致辞里他先恭喜对手「很多人没意识到背靠背夺冠有多难，尤其还是在两座不同的城市」，谢完团队和家人之后讲到观众，说了一句「说实话，我在蒙特利尔比在多伦多更开心」——全场欢呼了四十秒，他一个字都插不进去。亚军致辞全程，中英双语字幕。"
+  },
+  "caption_gaps_ok": {
+    "28.9-33.9": "掌声。前一条 26.9 秒是 `[applause]`（他刚讲完恭喜对手那段），33.9 秒 `Uh, I'd like to say thank you to my team.` 接上——whisper 在这儿听到的 `I'd` 正是这句的词，zh 第 12 行已经覆盖",
+    "60.3-65.8": "掌声。前一条 58.3 秒是 `[applause]`（谢完团队），65.8 秒 `Uh, of course, also thank you to my family.` 接上，zh 第 23 行已经覆盖",
+    "85.2-89.1": "纯掌声。两头 83.2 和 89.1 秒都是 `[applause]`，中间没有台词——他刚说完全靠家人，全场鼓掌",
+    "114.7-117.2": "纯掌声。前一条 112.7 秒 `[cheering and applause]`、后一条 117.2 秒 `[applause]`，中间没有台词",
+    "132.4-136.8": "掌声。前一条 130.3 秒是 `[applause]`（谢完工作人员和球童），136.8 秒 `Also, big thank you to all the crowd` 接上——whisper 听到的 `Also,` 正是这句，zh 第 43 行已经覆盖",
+    "167.5-169.7": "**这一处到 203.7 秒的六段空档是同一次欢呼**：164.2 秒他说完 `than Toronto.`，全场炸开，169.6 秒起字幕轨连着 `[cheering]`/`[applause]`。这一段是他一个字都插不进去的开头",
+    "171.7-174.2": "同上，那次欢呼的第 2 段：两头 169.6 秒 `[cheering]`、174.2 秒 `[applause]`",
+    "176.2-178.8": "同上，第 3 段：两头 174.2 秒和 178.8 秒都是 `[applause]`",
+    "184.8-188.6": "同上，第 4 段：两头 182.7 秒和 188.6 秒都是 `[cheering]`",
+    "193.3-197.8": "同上，第 5 段：两头 191.3 秒 `[applause]`、197.8 秒 `[cheering]`",
+    "199.8-203.7": "同上，那次欢呼的最后一段：两头 197.8 和 203.7 秒都是 `[cheering]`，直到 206.3 秒观众停下来他才补上 `I'm not I'm not just saying that sitting here in the final today`，zh 第 51 行已经覆盖。⚠️ 从 164.2 到 206.3 一共 42 秒，这就是封面上「全场欢呼四十秒」那个数的出处",
+    "223.4-228.3": "掌声。前一条 221.4 秒是 `[cheering and applause]`（他刚说完这儿像家一样），228.3 秒 `Unfortunately,` 接上——就是「可惜明年我们要回多伦多了」那句，zh 第 58 行已经覆盖"
   },
   "zh": [
     "大家好",
