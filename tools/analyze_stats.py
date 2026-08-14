@@ -42,6 +42,24 @@ def _rate(part: float, whole: float, spec="{:.2%}") -> str:
     return spec.format(part / whole) if whole else "—"
 
 
+def duration_sources(got: dict[str, int], missing: dict[str, int]) -> None:
+    """片长从哪儿读到的 —— **读到的和读不到的一起报**。
+
+    2026-08-13 成片改走 GitHub Release 之后 `output/` 下一个 mp4 都没有了，
+    而 `duration_of` 当时只解析 mp4、失败还是裸 `return`：整节「均观看比例」
+    静静地算不出来，看起来和「今天没数据」一模一样。所以这一行必须两头都印 ——
+    只报成功的，证明不了它真的看过；只报失败的，证明不了它成功过。
+    """
+    if not (got or missing):
+        return
+    total = sum(got.values()) + sum(missing.values())
+    bits = [f"{n} 条←{note}" for note, n in sorted(got.items(), key=lambda kv: -kv[1])]
+    print(f"  片长出处（{sum(got.values())}/{total} 拿到）："
+          + ("　".join(bits) if bits else "一条都没拿到"))
+    for note, n in sorted(missing.items(), key=lambda kv: -kv[1]):
+        print(f"    ⚠ {n} 条读不到：{note}")
+
+
 def overview(works: list[Work]) -> None:
     plat = works[0].platform
     span = [w.published for w in works if w.published]
@@ -224,9 +242,16 @@ def watch_ratio(works: list[Work]) -> list[dict]:
         return []
     print("\n### 均观看比例（平均播放时长 ÷ 成片时长，不是完播率）")
     rows, recs, pairs, pending = [], [], [], []
+    got: dict[str, int] = {}
+    missing: dict[str, int] = {}
     for w in works:
         if w.is_photo:
             continue
+        # 先量片长，好让下面那行统计覆盖到**每一条视频**，而不只是有播放时长的
+        # 那些——片长读不到正是这一节整个消失的原因，它不该被上面的闸挡在统计外。
+        length = duration_of(w)
+        (got if length else missing)[w.duration_note] = \
+            (got if length else missing).get(w.duration_note, 0) + 1
         # 平均播放时长为 0 = 后台还没统计出来（当天刚发的常常是这样），不是
         # 「没人看」。算成 0% 会把中位数拖垮：小红书这批里两条今天发的会把
         # 中位从 19.5% 压到 15.5%，而且看不出是数据没到还是片子太差。
@@ -234,7 +259,6 @@ def watch_ratio(works: list[Work]) -> list[dict]:
             if w.get("avg_watch") == 0:
                 pending.append(w)
             continue
-        length = duration_of(w)
         if not length:
             continue
         ratio = w.get("avg_watch") / length
@@ -249,7 +273,8 @@ def watch_ratio(works: list[Work]) -> list[dict]:
         row.append(fmt(w.get("plays")))
         rows.append(row)
     if not rows:
-        print("  没有能同时拿到片长和播放时长的作品 —— 先看「未匹配」一节，"
+        duration_sources(got, missing)
+        print("  没有能同时拿到片长和播放时长的作品 —— 上面那行说的就是卡在哪儿，"
               "别当成没有视频。")
         return []
     rows.sort(key=lambda r: float(r[3].rstrip("%")), reverse=True)
@@ -260,6 +285,7 @@ def watch_ratio(works: list[Work]) -> list[dict]:
     print(table(rows, heads))
     print(f"\n  {len(recs)} 条：片长中位 {median([r['片长'] for r in recs]):.0f}s，"
           f"均观看比例中位 {median([r['均观看比例'] for r in recs]):.1%}")
+    duration_sources(got, missing)
     if pending:
         print(f"  另有 {len(pending)} 条平均播放时长还是 0，后台没统计出来，未计入："
               + "、".join(w.label[:18] for w in pending))
@@ -401,8 +427,11 @@ def main() -> int:
     args = ap.parse_args()
 
     items = index_output(args.output_root)
+    # 「带成片」这一格原来数的是本地 mp4，而 2026-08-13 成片改走 Release 之后
+    # 它恒为 0 —— 印出来像「一份都没生成」。两个出处分开数，别合成一个数。
     print(f"output/ 下 {len(items)} 份已生成的内容"
-          f"（{sum(1 for i in items if i['mp4'])} 份带成片）")
+          f"（{sum(1 for i in items if i.get('film_seconds'))} 份 render.json 记着片长，"
+          f"{sum(1 for i in items if i['mp4'])} 份本地还留着 mp4）")
 
     loaded, dump = [], {}
     for path in args.tables:
