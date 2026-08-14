@@ -118,9 +118,19 @@ def test_有stats的spec都要有headshot文件和全部字段():
             assert headshot_path.is_file(), (
                 f"{p.name} stats.{side}.headshot 指向的文件不存在："
                 f"{raw['headshot']}")
-            needed = {f for row in sc.ROW_SPECS for f in row[2:]}
+            # ⚠️ 制胜分 / 非受迫失误可以缺——**WTA 巡回赛拿不到那两项**
+            # （见 `render_stat_card` 模块 docstring 和 CLAUDE.md），账号所有者
+            # 2026-08-14 定的口径是「没有的话这两条就不显示」。其余字段照旧必填。
+            needed = {f for row in sc.ROW_SPECS for f in row[2:]} - sc.OPTIONAL_FIELDS
             missing = needed - set(raw)
             assert not missing, f"{p.name} stats.{side} 缺这些字段：{missing}"
+        # ⚠️ 可缺归可缺，**两边必须缺得一样**：只有一边有的时候那一行会把
+        # 两个人的数放在同一行里比，而图上看起来完全正常。
+        for field in sorted(sc.OPTIONAL_FIELDS):
+            have = [side for side in ("a", "b") if field in stats[side]]
+            assert len(have) != 1, (
+                f"{p.name} 的 `{field}` 只有 stats.{have[0]} 有——两边都没有才算"
+                "「拿不到」，只有一边有是数据对不齐")
         assert stats.get("_source"), (
             f"{p.name} 的 stats 缺 `_source`——这张图存在的意义就是"
             "数字要经得起查，_source 不是可选项")
