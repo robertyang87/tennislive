@@ -1,0 +1,180 @@
+{
+  "slug": "bartunkova-charaeva",
+  "_slug_why": "赢家在前（巴尔通科娃胜）。⚠️ 译名实调过 `tennislive.zh.player_zh()`（渲染时走的就是这条路，不是看文件内容）：Nikola Bartunkova → **巴尔通科娃**、Alina Charaeva → **恰拉耶娃**、Sorana Cirstea → **科斯蒂亚**、Amanda Anisimova → **阿尼西莫娃**。⚠️ 已发的 `anisimova-bartunkova` 把这两个人写成了「巴图什科娃」和「安尼西莫娃」，两个都和译名表对不上——那条片子已经烧进成片、不重渲，但**这条一律以表为准**。（`test_人名要以译名表为准` 用的是「差一个字」的近似串，「巴图什科娃 / 巴尔通科娃」差两个字，所以当时没被拦下。）",
+
+  "source_url": "https://www.youtube.com/watch?v=GiLLR-ySjYg",
+  "_source": "WTA 官方 YouTube 频道单场集锦《Nikola Bartunkova vs. Alina Charaeva | 2026 Cincinnati Round 1》，307.71s、1920×1080、25fps。四处自证：① 记分条整场烧着 `N. BARTUNKOVA / A. CHARAEVA`，逐格读数和 flashscore `ATRKTwkL` 的逐分对得上（16.5~32.5s 板上挂着 `BREAK POINT`、比分 `1 15 / 3 40`，逐分里首盘第五局正是 `15:0, 15:15, 15:30, 15:40 |B1|, 30:40 |B1|`）；② 126.5~128.5s 和 190.5~192.5s 两次打出 `ROUND 1` 赛果图形，先是 `4 / 6`（首盘归恰拉耶娃）、再是 `4 6 / 6 4`（一盘一平），与 WTA 官方 `ResultString='N. Bartunkova d A. Charaeva 4-6,6-4,6-3'` 一致；③ 场边广告是 `Western & Southern Financial Group` / `Fifth Third Bank` / `Kroger` / `Credit One` / `P&G` / `Great American` / `Veroni`，辛辛那提站的赞助商阵容；④ 转播解说 293.52s 原话报出终局比分『she's over the line and she's into the next round. 4-6 6-4 6-3』。时长 307.71s ≈ WTA 纯集锦的定长 310s，所以**不含赛后采访**，全部是比赛画面。",
+  "_column": "赛场之上。讲一场对决，封面 solo 版式印赛果（带国旗和排名），赢家在前。",
+
+  "topbar": {
+    "line1": "WTA1000 辛辛那提 第一轮",
+    "line2": "巴尔通科娃 4-6 6-4 6-3 恰拉耶娃"
+  },
+  "_topbar_why": "赛事和轮次取 WTA API（`tournaments/1017/2026/matches`，MatchID `LS105`）。⚠️ WTA 自己的比赛页把这一轮标成 `Round of 128`，按 CLAUDE.md 的轮次规矩写「第一轮」——96 签前 32 号种子轮空，这是签表的第一轮，两人都不是种子。比分与 `ResultString` 逐位一致，赢家在前。",
+
+  "editorial": {
+    "mode": "match_review",
+    "question": "一个刚刚第一次进入世界前四十的二十岁球员，正赛首战对上排名一百一十三的资格赛球员——为什么这场球会打掉两小时四十七分，还要七个赛点才结束？",
+    "thesis": "这场球从头到尾没有一个人真正占上风：两百零七分里巴尔通科娃只多拿了七分。她输掉的第一盘不是被打崩的，是自己交出去的——一发只有四成一、四个双误。第二盘零比二落后之后她连赢五局把比赛拽了回来，靠的是接发（接对手二发拿下七成的分）。而决胜盘五比三那个发球胜赛局，她拿到七个赛点，恰拉耶娃救掉了前六个，同一局里恰拉耶娃还三次拿到破发点——她一个都没让出去。",
+    "beats": [
+      "首盘开局她自己的发球局被拖进六次平分、三个破发点，最后还是丢了；这一盘她的一发只有四成一，送出四个双误，三比三之后连丢两局，四比六。",
+      "第二盘开局又被破，零比二落后——一盘一破。转播解说的原话是『she was in all sorts of bother a set and a break down』。",
+      "她随后连赢五局到五比二，两次破掉恰拉耶娃的发球局；这一盘她接对方二发拿下七成的分，六比四扳平。",
+      "决胜盘她一上来连下三局（第二局拿到四个破发点破掉对手发球局），四比一领先，看起来该结束了。",
+      "五比三轮到她发球胜赛局：四十比十五两个赛点都没兑现，此后拉锯到她一共拿到七个赛点、恰拉耶娃救下前六个；同一局恰拉耶娃三次拿到破发点，全被她挡住，第七个赛点才落地。"
+    ],
+    "human_context": {
+      "angle": "这场球之所以值得看，是因为它发生在她刚刚迈过一道线的第二个星期。巴尔通科娃 2026 年 4 月 20 日的生涯最高排名还是世界第九十三，上周在多伦多闯进第三轮（第二轮 6-3 6-4 淘汰二十七号种子陶森）之后，排名第一次进入前四十——WTA 官方的 Rankings Watch 用的就是『entered the Top 40 for the first time』。也就是说，这是她第一次以『被看好的那一方』身份走进一场正赛首战：对面是排名一百一十三、从资格赛打进来的恰拉耶娃。而四个月前的马德里，赢球的那个人是恰拉耶娃。转播解说在决胜盘那个发球胜赛局里说得毫不客气：『She's looking like a player that doesn't want to win this match. She'd rather avoid losing it.』",
+      "facts": [
+        "巴尔通科娃 2006 年 2 月 25 日生（WTA 官方球员档案 id 330364），比赛日 20 岁，捷克。",
+        "赛前榜单（WTA 官方 ranked 接口，rankedAt 2026-08-10）：巴尔通科娃单打第 39、1203 分；恰拉耶娃单打第 113。",
+        "WTA 官方 Rankings Watch 原文：巴尔通科娃在多伦多打进第三轮后『entered the Top 40 for the first time』，升到第 39。",
+        "多伦多第二轮她 6-3 6-4 淘汰二十七号种子陶森（WTA 官方视频《Bartunkova upsets No. 27 seed Tauson in Toronto second round》）。",
+        "多伦多第三轮她 3-6 6-0 6-4 负于阿尼西莫娃——那一场本号做过一条片子（`anisimova-bartunkova`），是从阿尼西莫娃那一侧讲的。",
+        "两人此前交手过：2026 年 4 月 21 日在马德里，恰拉耶娃 6-7(6) 6-2 7-6(6) 赢下（flashscore `GfxhPI9E`）。",
+        "全场用时 2 小时 47 分 46 秒（WTA 官方 `MatchTimeTotal='02:47:46'`）；分盘用时 0:56 / 0:53 / 1:00（flashscore `df_sui_1`）。",
+        "全场总得分 107-100（WTA 官方 stats 接口 setnum=0）。⚠️ flashscore 记的是 108-101，两个源差一分，但**净胜都是 7 分**——旁白只说净胜，不说总数的那一位。",
+        "巴尔通科娃全场 6 个 Ace、7 个双误、一发进球率 48%（55/115）；首盘一发只有 41%、双误 4 个（flashscore 分盘统计）。",
+        "决胜盘第九局（她 5-3 发球胜赛局）：逐分里 `|B3|`（赛点）出现 7 次、`|B1|`（对手的破发点）出现 3 次；WTA/flashscore 的统计行 `Match points saved 恰拉耶娃 6` 与之对得上——七个赛点里她救下六个。",
+        "第二盘她从 0-2 落后连赢五局到 5-2（flashscore 逐分）；转播解说 179.68~190.56s 原话『she was in all sorts of bother a set and a breakdown but she reeled off five games in a row』。",
+        "下一轮对手是科斯蒂亚（flashscore 辛辛那提 1/32-finals `tjDaBrKD`）。"
+      ],
+      "sources": [
+        "https://www.wtatennis.com/tournaments/1017/cincinnati/2026/scores/LS105",
+        "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches/LS105/stats",
+        "https://api.wtatennis.com/tennis/players/ranked?page=0&pageSize=100&type=rankSingles&sort=asc&metric=SINGLES",
+        "https://www.wtatennis.com/news/4559575/rankings-watch-swiatek-returns-to-top-5-rybakina-narrows-gap-to-no-1",
+        "https://www.wtatennis.com/videos/4554223/bartunkova-upsets-no-27-seed-tauson-in-toronto-second-round",
+        "https://www.wtatennis.com/players/330364/nikola-bartunkova"
+      ],
+      "voice_label": "第一次被当成赢家的人"
+    }
+  },
+
+  "_claims": {
+    "排名第一次进入前四十": [
+      "https://www.wtatennis.com/news/4559575/rankings-watch-swiatek-returns-to-top-5-rybakina-narrows-gap-to-no-1",
+      "https://api.wtatennis.com/tennis/players/ranked?page=0&pageSize=100&type=rankSingles&sort=asc&metric=SINGLES"
+    ],
+    "_why": "「第一次」是全称断言，按 CLAUDE.md 要两个独立主机的信源：WTA 官方 Rankings Watch 稿（原文 `entered the Top 40 for the first time`）＋ WTA 官方 ranked 接口（`rankedAt=2026-08-10` 报第 39，是可穷举的榜单而不是我查到的几场）。⚠️ 维基把她的生涯最高写成 2026-04-20 的第 93——那是**那一天**的快照，不是现在，和上面两条不矛盾。"
+  },
+
+  "_no_repeat": "`anisimova-bartunkova`（多伦多第三轮）是**从阿尼西莫娃那一侧**讲的：她的手腕伤病、两次雨断、第二盘 6-0。那条片子里巴尔通科娃只出现了一次身份介绍（非种子、世界第四十二），她自己的来路一个字都没铺开。所以这条讲她的排名爬升是新的，**但多伦多那场比赛本身只一句带过**（`facts` 里留着出处，旁白不讲），不重述雨断和 6-0。",
+
+  "_editing_why": "十二段全部落在 probe 的 `scene_cuts` 之间，没有一段跨镜头（切点：1.92 / 29.76 / 117.84 / 128.84 / 141.88 / 168.36 / 180.56 / 194.0 / 196.28 / 210.24 / 231.6 / 248.72 / 260.68 / 267.36 / 297.6）。⚠️ `point_ends` 这一趟是 0 条——probe 没给 `--scorebox`，所以「死球之后再切」这一条这次没有机器判据，段界一律取**源片自己的镜头边界**（CLAUDE.md 2026-08-12 那条：源片没有完整保留这一分时，按源片给的边界切，不假装等到了死球）。冷开场取 260.80–267.30，是最后一分落地那一个镜头，不配旁白、只留现场声。",
+
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "巴尔通科娃",
+    "hook": "六个赛点被救下\n第七个才落地",
+    "_hook_why": "两行都是过程，不是身份——排名、轮次、比分海报上已经印着了（CLAUDE.md「钩子要有剧情的跌宕」）。最长行 7 个字符，在 `HOOK_MAX_CHARS=10` 之内。「被救下」留的口子由赛果行回答：她还是赢了。",
+    "topic": "WTA1000辛辛那提 · 女单第一轮",
+    "portrait": {
+      "image": "assets/reel/bartunkova-toronto-2026.jpg",
+      "focus": 0.5,
+      "focus_y": 0.5,
+      "zoom": 1.0
+    },
+    "_portrait_why": "⚠️ **这张不是本场的实拍，是九天前多伦多站的**，出处 WTA 官方图库 `photo-resources/2026/08/05/cd24d375-da72-4c9a-a9c6-34c34c2617fa/Nikola-Bartunkova-Toronto-2026.jpg?width=4000`（4000×2430，正手引拍、球在画面里、脸看得见、原生分辨率不是放大）。**为什么退到这一步，是查到底之后的结果，不是省事**：本场的实拍在渲这一版的时候还没有——她的 WTA 球员页一共挂着四张（2026-01-29 的抠图、07-22、08-03、08-05 多伦多），最新一张就是这张；辛辛那提站页面当天上传的五张里是贝伊莱克、博尔特、麦克纳利和两张 Getty，没有她；这场没有 Match Reaction 稿，比赛页只有通用宣传图。**同一套球衣**是这次能退这一步的判据：本场片内 0.5s / 52.5s / 152.5s / 256.5s 她穿的是白色背心＋浅紫短裙＋白色 adidas 发带，和这张照片一模一样，所以压在成片上不会读成「另一个时期的人」。**对不上的只有场地底色**（多伦多深藏蓝 vs 辛辛那提中蓝）。四道闸门里第一道的「地点」这一项没过，如实记在这儿。",
+    "scrim": "clear",
+    "_scrim_why": "和近期几条一致：只关掉画面正中的 radial 暗角，上下两头照留。",
+    "winner": "巴尔通科娃",
+    "result": "4-6 6-4 6-3",
+    "matchup": [
+      {
+        "name": "巴尔通科娃",
+        "name_en": "Nikola Bartunkova",
+        "country": "CZE",
+        "rank": 39
+      },
+      {
+        "name": "恰拉耶娃",
+        "name_en": "Alina Charaeva",
+        "country": "ARM",
+        "rank": 113
+      }
+    ],
+    "_matchup_rank_why": "两个名次都取 WTA 官方 ranked 接口 `rankedAt=2026-08-10`（比赛前那个周一，正是赛时口径）：巴尔通科娃 39、恰拉耶娃 113。⚠️ `matchup` 是**版式顺序**不是赛果顺序，赛果行由 `winner` 决定。",
+    "scoreboard": {
+      "court": "Lindner Family Tennis Center",
+      "duration_source": {
+        "provider": "wta",
+        "url": "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches?states=C&page=0&pageSize=200",
+        "match_id": "LS105",
+        "field": "MatchTimeTotal",
+        "source_page": "https://www.wtatennis.com/tournaments/1017/cincinnati/2026/scores/LS105"
+      },
+      "_court_why": "⚠️ **这一格填的是场馆，不是球场——因为球场号查不到，而 CLAUDE.md 明令不能猜。** 七条路都走过：WTA 比赛页的 `Court` 一栏直接印着 `-`；WTA 的 order-of-play 只有当天（8/15）那一版，`?date=` / `?day=` 参数被忽略；`api.wtatennis.com/.../courts`、`/order-of-play`、`/schedule` 三个端点全 404；flashscore 的 `dm_` / `mi_` 两个明细 feed 对这场返回空；转播解说整份转写里没有出现 court / stadium / grandstand（`townsend-osorio` 那次球场名正是解说报出来的）；赛事官网 `cincinnatiopen.com/schedule/` 301。WTA API 给了 `CourtID: 5`，我拿今天的 order-of-play 反查过映射（CourtID 2→Grandstand、3→Stadium 3、7→Court 6、8→Court 7），**但它推不到 5**：按这个偏移往上外推需要 CourtID 11 才对得上今天排在 Court 10 的比赛，而全赛事只用到 1~10——映射自相矛盾，按 CLAUDE.md「没有文档的枚举码宁可交叉验证也别信数字表面顺序」，不外推。`Lindner Family Tennis Center` 是 WTA 比赛页正文自己写的场馆名，真、可核，只是没有球场号那么具体。",
+      "_duration_why": "`MatchTimeTotal: \"02:47:46\"` → 板上印 `2:47`。不手填，`_fetch_match_duration()` 每次渲海报现拉接口；flashscore 的分盘用时相加是 2:49，同量级。"
+    }
+  },
+
+  "_no_stats_why": "⚠️ **这条不画数据统计图，因为两位球员的官方头像都拿不到，不是因为拿不到数据。** 数据是齐的（WTA 官方 stats 接口 `LS105` setnum=0 与 flashscore `df_st_1` 在 Ace/双误/一二发/破发点上完全一致，只有总得分差一分）。卡上强制要 `stats.a/b.headshot`（`render_stat_card` 缺了直接 SystemExit），而 `tools/fetch_official_headshot.py wta` 对 330364 和 329198 都返回 404；恰拉耶娃的 WTA 球员页上一张本人照片都没有（只有站点通用图），连能裁头像的官方抠图都没有。按 CLAUDE.md「查不到就如实不画，别硬凑一张缺项的图」，这几个数改由旁白和小红书正文交代。",
+
+  "segments": [
+    { "start": 260.80, "end": 267.30 },
+    {
+      "start": 267.50,
+      "end": 274.00,
+      "narration": "发球胜赛局，她拿到七个赛点，六个被对手救掉。"
+    },
+    {
+      "start": 2.10,
+      "end": 14.50,
+      "narration": "北京时间八月十四号夜里十一点，辛辛那提女单第一轮。二十岁的巴尔通科娃，世界第三十九，对手排名一百一十三。"
+    },
+    {
+      "start": 14.60,
+      "end": 27.50,
+      "narration": "开场第一个发球局，她就被拖进六次平分，三个破发点，最后还是丢了。这一盘她的一发只有四成一，还送出四个双误。"
+    },
+    {
+      "start": 117.90,
+      "end": 128.70,
+      "narration": "三比三之后她连丢两局，四比六丢掉首盘，用了五十六分钟。这一盘恰拉耶娃拿到七个破发点，兑现两个。"
+    },
+    {
+      "start": 130.60,
+      "end": 141.80,
+      "narration": "第二盘开局又被破，零比二落后。一盘一破，转播解说的原话是：她里外都是麻烦。"
+    },
+    {
+      "start": 144.60,
+      "end": 156.00,
+      "narration": "然后她连赢五局。扳回来靠的不是突然发力，是接发——这一盘她接对方二发拿下七成的分。"
+    },
+    {
+      "start": 170.00,
+      "end": 180.40,
+      "narration": "五比二之后她的发球局又丢了一个。六比四，第二盘还是回来了——这场球被她硬拽回了起点。"
+    },
+    {
+      "start": 196.40,
+      "end": 210.10,
+      "narration": "决胜盘她一上来连下三局。第二局拿到四个破发点，破掉对手发球局。三比零，四比一，看起来这场球要结束了。"
+    },
+    {
+      "start": 233.00,
+      "end": 248.60,
+      "narration": "五比三，轮到她发球——赢下这一局，这场球就结束了。四十比十五，两个赛点，她一个都没拿下。解说在这一局里说：她看起来不像想赢，更像不想输。"
+    },
+    {
+      "start": 248.90,
+      "end": 260.60,
+      "narration": "这一局她一共拿到七个赛点，恰拉耶娃救下了前六个。中间恰拉耶娃三次拿到破发点，也全被她挡了回去。"
+    },
+    {
+      "start": 288.60,
+      "end": 297.50,
+      "narration": "两小时四十七分，两百零七分她只多拿七分。这样熬下来的一场胜利，算好还是不算？"
+    }
+  ],
+
+  "push": {
+    "summary": "七个赛点她才拿下这场",
+    "lead": "辛辛那提WTA1000女单第一轮，上周刚第一次进入世界前40的20岁捷克人巴尔通科娃，4-6 6-4 6-3 击败排名113的资格赛球员恰拉耶娃，耗时2小时47分。这场球从头到尾没有人真正占上风：全场207分她只多拿7分。首盘她的一发只有41%、送出4个双误，三比三之后连丢两局，四比六。第二盘0-2落后——一盘一破，转播解说说她「里外都是麻烦」——她随后连赢五局到5-2，靠的是接发，这一盘接对方二发拿下七成的分。决胜盘她连下三局、4-1领先，可5-3那个发球胜赛局打成了拉锯：她一共拿到7个赛点，恰拉耶娃救下前6个；同一局恰拉耶娃3次拿到破发点，全被她挡住，第7个赛点才落地。四个月前在马德里，赢球的那个人还是恰拉耶娃。下一轮她对科斯蒂亚。",
+    "auto": false,
+    "_why": "`push_reel.SUMMARY_MAX = 13`，「七个赛点她才拿下这场」= 10 字，在闸内，而且剥掉名字和「赢了/晋级」之后仍然留着这条片子独有的那件事。⚠️ `auto: false`：封面用的是九天前多伦多的实拍（见 `cover._portrait_why`），四道闸门里「地点」那一项没过——合并即自动发微信是收不回来的一步，所以这条走手动 `mode=push push=true`，等成片和封面都看过再发。"
+  }
+}
