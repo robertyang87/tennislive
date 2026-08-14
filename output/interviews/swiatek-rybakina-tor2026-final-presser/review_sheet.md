@@ -57,7 +57,7 @@
 | 51 | 1:56.2 | [▶](https://youtu.be/0jJRmt9Ou1M?t=120) | And do you think that's something | 你觉得这是不是 |  |
 | 52 | 1:57.3 | [▶](https://youtu.be/0jJRmt9Ou1M?t=121) | that you maybe want to keep | 你想一直带着 |  |
 | 53 | 1:58.9 | [▶](https://youtu.be/0jJRmt9Ou1M?t=123) | with you going forward? | 走下去的东西？ |  |
-| 54 | 2:00.0 | [▶](https://youtu.be/0jJRmt9Ou1M?t=124) | Well, I did it really during the tournament. | 比赛期间我其实没有 |  |
+| 54 | 2:00.0 | [▶](https://youtu.be/0jJRmt9Ou1M?t=124) | Well, I didn't feel it during the tournament. | 比赛期间我其实没有 | ✏️ 已订正 |
 | 55 | 2:02.2 | [▶](https://youtu.be/0jJRmt9Ou1M?t=126) | Um I guess now I mean, after I won, | 我想现在 我是说 赢下来之后 |  |
 | 56 | 2:06.9 | [▶](https://youtu.be/0jJRmt9Ou1M?t=131) | um I kind of let myself feel it a little bit | 我才让自己稍微感受了一下 |  |
 | 57 | 2:09.8 | [▶](https://youtu.be/0jJRmt9Ou1M?t=134) | because um yeah, | 因为是这样 |  |
@@ -247,7 +247,7 @@
 
 ## 自动字幕的空档（≥2 秒连一个事件都没有）
 
-- **37.7–41.3 秒**（片内，3.7 秒空白，[跳过去](https://youtu.be/0jJRmt9Ou1M?t=42)）　**还没销账**
-- **326.3–330.2 秒**（片内，3.9 秒空白，[跳过去](https://youtu.be/0jJRmt9Ou1M?t=330)）　**还没销账**
+- **37.7–41.3 秒**（片内，3.7 秒空白，[跳过去](https://youtu.be/0jJRmt9Ou1M?t=42)）　**不是漏词，是两个提问之间的换人**——和 `rybakina-swiatek-tor2026-final-presser` 那一处同一个形状。判据：前一条字幕事件是她第一个回答的收尾『of myself and super happy.』（38.84 起、42.16 收），后一条是 45.84 的 `>>` 新说话人『Hey Iga, congrats on the title.』——空档正好压在一次发言权交接上。⚠️ 这是从转写结构推的，我没听音轨（沙箱下不动 YouTube 的媒体流）。
+- **326.3–330.2 秒**（片内，3.9 秒空白，[跳过去](https://youtu.be/0jJRmt9Ou1M?t=330)）　**是笑声，而且源自己写着**——这一处不用推：前一条字幕事件就是 328.81 的 `>> [laughter]`（328.81 起、330.83 收），也就是她说完『如果你是波兰人，你就懂了』之后全场笑出来那一下；空档是笑声还没停、下一位记者还没开口的那几秒，334.72 才接上『Wondering if you can describe a little bit your winning reaction…』。自动字幕对着噪声不产词是它本来的行为，**`[laughter]` 这个标记本身就是源在说「我听见了，只是不是人话」**。 ⚠️ **报告里说第二份 ASR 在这几秒听出了一个 `I'm`，那不是漏掉的台词**：她那句话在 327.80 的 `know.` 就说完了，下一位记者 334.72 才开口，中间只有笑声——单个虚词正是 whisper 对着噪声的标准产物（本仓库记过它对噪声会重复、会吐出整场没出现过的词）。不补进 `en_fixed`。
 
 打开源片听这几秒：**有人说话就是漏了**，掌声／欢呼就不是。结论写进 spec 的 `caption_gaps_ok`（键 `起-止`，秒，一位小数）。
