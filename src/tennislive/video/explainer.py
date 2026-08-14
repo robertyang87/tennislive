@@ -2040,6 +2040,51 @@ _BALL_LOAD_DIAGRAM = """
 """
 
 
+# 第④屏讲的是「他缺席了整个草地赛季」，而**缺席拍不出来**——一张他在场上
+# 的照片正好把这一屏说反。这是「示意图的触发条件是照片讲不清，不是照片
+# 找不到」那条的标准实例（保护排名那条的「代价」屏同理）。⚠️ 这一屏把四个
+# 人摆在一起，靠的正是照片给不了的东西：同一个赛季里的时间跨度。
+_BALL_HURT_DIAGRAM = """
+<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="52" text-anchor="middle" fill="#e7f3ec"
+        font-size="38" font-weight="800">2026 赛季，手臂上的伤</text>
+  <text x="450" y="96" text-anchor="middle" fill="#a9bcb2"
+        font-size="26" font-weight="700">没有人证明过这些伤和球有因果</text>
+
+  <rect x="60" y="140" width="780" height="112" rx="14"
+        fill="rgba(198,246,90,.14)" stroke="#c6f65a" stroke-width="2"/>
+  <text x="86" y="182" fill="#c6f65a" font-size="30" font-weight="800">阿尔卡拉斯</text>
+  <text x="86" y="222" fill="#e7f3ec" font-size="27" font-weight="700">
+    4 月 14 日巴塞罗那首轮赛后伤腕，诊断腱鞘炎</text>
+  <text x="814" y="182" text-anchor="end" fill="#c6f65a"
+        font-size="27" font-weight="800">缺席 法网 · 女王 · 温网</text>
+  <text x="814" y="222" text-anchor="end" fill="#a9bcb2"
+        font-size="25" font-weight="700">2020 打职业以来第一次缺温网</text>
+
+  <rect x="60" y="276" width="780" height="72" rx="12"
+        fill="rgba(231,243,236,.08)" stroke="rgba(231,243,236,.26)" stroke-width="2"/>
+  <text x="86" y="322" fill="#e7f3ec" font-size="29" font-weight="800">德约科维奇</text>
+  <text x="814" y="322" text-anchor="end" fill="#a9bcb2"
+        font-size="27" font-weight="700">右手腕</text>
+
+  <rect x="60" y="364" width="780" height="72" rx="12"
+        fill="rgba(231,243,236,.08)" stroke="rgba(231,243,236,.26)" stroke-width="2"/>
+  <text x="86" y="410" fill="#e7f3ec" font-size="29" font-weight="800">诺里</text>
+  <text x="814" y="410" text-anchor="end" fill="#a9bcb2"
+        font-size="27" font-weight="700">手腕</text>
+
+  <rect x="60" y="452" width="780" height="72" rx="12"
+        fill="rgba(231,243,236,.08)" stroke="rgba(231,243,236,.26)" stroke-width="2"/>
+  <text x="86" y="498" fill="#e7f3ec" font-size="29" font-weight="800">弗里茨</text>
+  <text x="814" y="498" text-anchor="end" fill="#a9bcb2"
+        font-size="27" font-weight="700">前臂</text>
+
+  <text x="450" y="566" text-anchor="middle" fill="#e7f3ec"
+        font-size="28" font-weight="800">能确定的只有一件：说这话的人越来越多</text>
+</svg>
+"""
+
+
 _BALL_FIX_DIAGRAM = """
 <svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">
   <text x="450" y="52" text-anchor="middle" fill="#e7f3ec"
@@ -5445,13 +5490,14 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             "弗里茨说，年轻的时候他不太容易受伤，这两年是真的感觉到了。"
             "这里要说清楚一件事：没有人能证明这些伤是球造成的。"
             "能确定的只有一件——说这话的人越来越多。",
-            "assets/explainer/tour-balls/alcaraz_wrist.jpg",
             "",
+            "示意图 · 网球时差绘制",
             (
                 "巴塞罗那首轮 手腕伤了",
                 "腱鞘炎 缺席法网和温网",
                 "转职业以来第一次缺温网",
             ),
+            _BALL_HURT_DIAGRAM,
         ),
         (
             "today",
