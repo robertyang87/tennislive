@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>8.14 赛场之上 | 谢尔顿卫冕蒙特利尔</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>谢尔顿6-3 7-6(4)战胜中岛，卫冕蒙特利尔ATP1000男单冠军，耗时1小时29分。这是1995年阿加西胜桑普拉斯之后，加拿大公开赛男单第一次由两个美国人打决赛。
+
+整场决赛最硬的一个数字：谢尔顿的10个发球局全部保下，中岛一个破发点都没能拿到。
+
+首盘3-3，中岛发球局被打到三个破发点，他连救两个，第三个没能守住。谢尔顿4-3领先后冲着球员席吼了很久，那是这场决赛第一次出现明确的倾斜。随后他保发到5-3，中间打出全场最快的一发228公里，6-3拿下首盘，只用了33分钟。
+
+第二盘变成一场纯粹的发球较量：整整12局，双方一个破发点都没有出现过——不是拿到了没兑现，是根本没拿到。6-6进抢七，谢尔顿先拿到赛点，中岛救下第一个，第二个赛点落地，7-6(4)。
+
+技术统计：制胜分谢尔顿22个，中岛19个；非受迫失误谢尔顿12个，中岛21个；一发得分率86%对80%；总得分65-53。中岛全场只丢一个发球局，8个Ace还比对手多一个——他不是被碾压的，他只是始终摸不到对手的发球局。
+
+这也是两条曲线第九次贴在一起。两人此前交手5次，谢尔顿全胜，中岛只赢下过一盘；而他们打过的前8盘，全部走到7-5或者7-6。这场决赛的第二盘又是7-6，剧本一字未改。
+
+谢尔顿去年在多伦多捧起这座奖杯，今年在蒙特利尔又捧了一次。本世纪之前，只有穆雷、德约科维奇和纳达尔卫冕过加拿大公开赛，他是第四个。这是他生涯第七个巡回赛冠军，本赛季此前还拿下达拉斯、慕尼黑、斯图加特，而这一次是他第一次一盘不失地拿下一站。
+
+中岛这两周把实时排名推到生涯最高的第22位。他的上一个冠军还是2022年在家乡圣迭戈拿的，中间隔着2023年那场严重的膝伤。
+
+23岁的谢尔顿，还能走到哪儿？
+
+#网球时差 #谢尔顿 #中岛布兰登 #蒙特利尔ATP1000 #加拿大公开赛</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>二十三岁，他还能走到哪儿？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
