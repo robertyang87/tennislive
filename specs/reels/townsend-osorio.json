@@ -1,0 +1,224 @@
+{
+  "slug": "townsend-osorio",
+  "_slug_why": "赢家在前（汤森德胜）。和 sonmez-kasatkina、shelton-nakashima-montreal-final 同一条规矩。⚠️ 译名以 `src/tennislive/zh/players.py` 为准，实调过表：Taylor Townsend → **汤森德**，Camila Osorio → **奥索里奥**，Elena Rybakina → **莱巴金娜**，Katerina Siniakova → **西尼亚科娃**。",
+  "source_url": "https://youtu.be/L98Gbg2qXDw",
+  "_source": "WTA 官方 YouTube 频道单场集锦。四处画面自证：① 记分条整场烧着 `T. TOWNSEND / C. OSORIO`，逐格读数与 flashscore `6TGrqu0B` 的逐分完全对得上（第二盘 3-3 那个破发点 200.5~212.5s 板上写着 `BREAK POINT 40:15`，逐分那一局正是 `15:0, 30:0, 30:15, 40:15 |B1|`）；② 236.5~238.5s 打出 `ROUND 1 / TAYLOR TOWNSEND 3 6 6 / CAMILA OSORIO 6 3 3` 的赛果图形，与 WTA 官方 `ResultString` 逐位一致；③ 场边广告为 `Fifth Third Bank` / `Credit One Bank` / `Western & Southern Financial Group` / `Kroger` / `P&G` / `Great American`，辛辛那提站的赞助商阵容；④ 转播解说 6.24s 原话点名球场：『welcomes Taylor Townsend onto the Tony Trabert Stadium 3』。时长 307.90s——WTA 纯集锦定长 310s（CLAUDE.md「WTA 集锦带不带场上采访看时长」），所以这条**不含赛后采访**，全部是比赛画面。",
+  "_column": "赛场之上。讲一场对决，封面 solo 版式印赛果（带国旗和排名），赢家在前。",
+  "topbar": {
+    "line1": "WTA1000 辛辛那提 第一轮",
+    "line2": "汤森德 3-6 6-3 6-3 奥索里奥"
+  },
+  "_topbar_why": "赛事级别和轮次取 WTA API（`api.wtatennis.com/tennis/tournaments/1017/2026/matches?states=C`，MatchID `LS126`、`RoundID=1`）。⚠️ 轮次按 CLAUDE.md 写「第一轮」，不写「128 强」——96 签赛前 32 号种子轮空，这是签表的第一轮，两人都不是种子。比分与 `ResultString='T. Townsend d C. Osorio 3-6,6-3,6-3'` 逐位一致，赢家在前。",
+  "editorial": {
+    "mode": "match_review",
+    "question": "一个单打世界第九十四的人，在自己最擅长的那块地方（网前）赢下了这场球——可她整整一盘都没能破掉对手的发球局，那道坎是怎么迈过去的？",
+    "thesis": "汤森德首盘发了五个 Ace，却一个破发点都没兑现，四十分钟就把这一盘输掉了。她赢下这场球靠的不是突然发力，而是把接发这一头一点点扳过来：全场第一次破掉奥索里奥的发球局要等到第二盘三平，那之后她又破了四次。而奥索里奥丢掉这场球的另一头也很清楚——七个双误、一发只进了百分之五十二。",
+    "beats": [
+      "首盘奥索里奥一发只进了百分之三十九，却拿下其中百分之九十一的分；汤森德零比二的破发点，四十分钟丢掉这一盘。",
+      "第二盘头六局两人各自保发，三平；第七局汤森德第一次破掉奥索里奥的发球局，转播解说当场点出『这是她整场第一次破掉奥索里奥』。",
+      "第九局她又在奥索里奥的发球局上拿到盘点，六比三扳平——这一盘奥索里奥一个破发点都没拿到。",
+      "决胜盘汤森德一上来连下两局，被回破一局，随后再破到五比二；那记让全场起立的救球把她送上赛点。",
+      "第一个赛点没兑现，奥索里奥保住发球局追到三比五；汤森德轮到自己发球，四十比零结束比赛，两小时十分。"
+    ],
+    "human_context": {
+      "angle": "这场球是在一块四天前才有名字的球场上打的。辛辛那提站 2026 年 8 月 9 日把三号球场命名为特拉伯特球场，纪念这位辛辛那提本地出生、拿过十个大满贯冠军的名人堂球员；四天后，三十岁的美国人汤森德走上这块场地，转播解说的第一句就是『Huge ovation for the American』。而她本人的分量其实不在单打排名上——她是双打世界第二，手里有三个大满贯双打冠军，2025 年 7 月 28 日升上过双打世界第一，在那个位置上待了八周。这场球最响的一次掌声也确实来自网前：五比二时她救起一记必死的球，全场起立。",
+      "facts": [
+        "三号球场 2026 年 8 月 9 日正式命名为 Tony Trabert Stadium，纪念辛辛那提本地出生的名人堂球员特拉伯特（1930 年生，业余时代世界第一，十个大满贯冠军）；本届赛事 8 月 11 日开赛。",
+        "转播解说 6.24s 原话：『welcomes Taylor Townsend onto the Tony Trabert Stadium 3. Huge ovation for the American』。",
+        "汤森德 1996 年 4 月 16 日生，比赛日 30 岁；左手持拍；生涯最高单打排名第 46（WTA 官方球员档案 `Career High 46`）。",
+        "汤森德的三个大满贯双打冠军：2024 温网、2025 澳网、2026 法网，全部与西尼亚科娃搭档（WTA 官方球员档案 Career Highlights DOUBLES Winner 名单）。",
+        "汤森德 2025 年 7 月 28 日升上双打世界第一，累计在这个位置上待了 8 周（WTA 官方球员档案 Career in Review 原文）。",
+        "汤森德 2026 年在奥斯汀站打进生涯第一个 WTA 单打决赛，负于同胞斯特恩斯（WTA 官方 Career Highlights『SINGLES Finalist (1): 2026 - Austin』；转播解说 125.6~130.2s 也提到了这一条）。",
+        "本场赛前榜单（WTA 官方，rankedAt 2026-08-10）：奥索里奥单打第 55、1048 分；汤森德单打第 94、813 分；汤森德双打第 2、8845 分（第一是西尼亚科娃）。",
+        "奥索里奥 2001 年 12 月 22 日生，比赛日 24 岁，哥伦比亚。",
+        "两人此前交手一次，汤森德这一场把交手战绩改写成 2-0（WTA 官方视频说明原文：『Taylor Townsend improved to 2-0 against Camila Osorio』）。",
+        "汤森德下一轮对二号种子莱巴金娜（同一份 WTA 官方视频说明）。"
+      ],
+      "sources": [
+        "https://www.wtatennis.com/tournaments/1017/cincinnati/2026/scores/LS126",
+        "https://www.wtatennis.com/videos/4559097/townsend-tops-osorio-from-a-set-down-in-cincinnati-to-meet-rybakina-next",
+        "https://www.wtatennis.com/players/318609/taylor-townsend",
+        "https://cincinnatiopen.com/news/cincinnati-open-names-stadium-for-tony-trabert/",
+        "https://api.wtatennis.com/tennis/players/ranked?page=0&pageSize=300&type=rankSingles&sort=asc&metric=SINGLES"
+      ]
+    }
+  },
+  "_facts": {
+    "赛果": "汤森德 3-6 6-3 6-3 胜奥索里奥。WTA API `ResultString='T. Townsend d C. Osorio 3-6,6-3,6-3'`（EventID 1017 / MatchID LS126 / RoundID 1）；flashscore match_id `6TGrqu0B` 的逐分逐局重建出来的分盘完全一致。",
+    "赛事": "辛辛那提 Cincinnati Open（WTA1000）女单**第一轮**。⚠️ 96 签赛，前 32 号种子首轮轮空，所以这一轮两人都不是种子（`SeedA`/`SeedB` 均为空）。",
+    "北京时间开赛": "2026-08-13 23:10（flashscore `AD=1786633800` → 15:10 UTC）；结束 2026-08-14 01:21（`AO=1786641680` → 17:21 UTC）。两端相差 2 小时 11 分，与官方 `MatchTimeTotal=02:10:43` 对得上。⚠️ 网上预告页写的开赛时间是『4:00pm』（美东），那是赛前的预排，实际是当天该场地的第一场，11:10 美东开打——以 flashscore 的实际时间戳为准。",
+    "用时": "2 小时 10 分 43 秒（WTA API `MatchTimeTotal=02:10:43`）。分盘 0:40:01 / 0:48:21 / 0:42:20，相加 2:10:42，只差 1 秒，两个口径一致。转播解说 286.1s 原话『just over 2 hours and 10 minutes of work』。",
+    "球场": "Tony Trabert Stadium 3。转播解说 6.24s 原话『welcomes Taylor Townsend onto the Tony Trabert Stadium 3』——画面自带的自证，不是从场馆结构推的。这块场地 2026-08-09 才正式命名（Cincinnati Open 官网公告），本届 8 月 11 日开赛，也就是命名后第四天这场球就打在上面。",
+    "排名": "赛时口径取 WTA 官方榜单 `rankedAt=2026-08-10`（比赛前那个周一）：奥索里奥单打第 55、汤森德单打第 94。**这是名次低的赢了名次高的**。汤森德的双打排名在同一份榜单上是第 2（西尼亚科娃第 1）。",
+    "年龄": "汤森德 30 岁（1996-04-16 生，WTA 官方球员档案 id=318609，页面同时印着 `30 yrs`）；奥索里奥 24 岁（2001-12-22 生，id=325898）。都是按生日和比赛日 2026-08-13 算出来的。",
+    "技术统计（全场）": "**两个独立源逐项完全一致**：WTA 官方 `tournaments/1017/2026/matches/LS126/stats` setnum=0，与 flashscore `df_st_1`。a=汤森德、b=奥索里奥。Ace 9/2；双误 1/7；一发进球 56/82 与 47/90（68% / 52%）；一发得分 36/56 与 31/47；二发得分 16/26 与 20/43；破发点转化 4/11 与 3/6；总得分 91/81（共 172 分）。内部自洽：汤森德 52 发球分 + 39 接发分 = 91；奥索里奥 51 + 30 = 81；82+90 = 172。",
+    "制胜分和非受迫失误": "**拿不到，整两行不画。** WTA 巡回赛（1000/500/250）在 flashscore 只给 17 项统计，缺的正是 Winners / Unforced errors / Net points won 这一组（这场的 `df_st_1` 逐项数过，确实没有）；WTA 官方 stats 的 32 个字段一个都不含；Match Charting Project 没标这场（`tools/mcp_stats.py find --who Townsend --year 2026` 查过）。八条路怎么自证的记在 CLAUDE.md「上面那句范围写宽了」那节。账号所有者定的口径是「没有的话这两条就不显示」。",
+    "分水岭": "**第二盘第七局，三平，汤森德全场第一次破掉奥索里奥的发球局。** 三重自证：① flashscore 逐分该局 `15:0, 30:0, 30:15, 40:15 |B1|`，一个破发点就兑现；② 片内 200.5~212.5s 记分条烧着 `BREAK POINT / T. TOWNSEND 3 3 40 / C. OSORIO 6 3 15`；③ 转播解说 209.6~217.6s 原话『Takes the break and so leading 4-3. **The first time she's broken Osorio in the match**』。首盘她 0/2 破发点，也就是整整一盘零破发。",
+    "赛点": "汤森德在决胜盘 5-2、奥索里奥发球时拿到全场第一个赛点（逐分 `40:30 |B1| |B3|`），没兑现；奥索里奥保住发球局追到 3-5。随后汤森德自己发球，`15:0, 30:0, 40:0 |B3|` 零封结束比赛。**四重自证**：① 这份逐分；② flashscore 统计单列的 `Match points saved` 汤森德 0、奥索里奥 **1**；③ 片内 260.5~280.5s 记分条 `MATCH POINT` 挂在 5-2 40:30 上，282.5~288.5s 变成 `MATCH POINT #2` 挂在 5-3 40:0 上；④ 分盘统计里奥索里奥决胜盘 `Match points saved 1`。",
+    "⚠️ 救掉的那个赛点不在集锦里": "集锦 260.28~277.84s 播的就是那个赛点的一分，但**记分条一直停在 `40:30 MATCH POINT`，然后直接切到 5-3**——奥索里奥保住发球局的过程（40:40 之后两次占先）整段被剪掉了。按 CLAUDE.md「转折点不在集锦里就明说」，这条记在这儿：片子里那句「这一分奥索里奥拿走了，还保住了发球局」是**画面外的事实**（上面四重信源），不冒充是画面上看得见的。",
+    "⚠️ 第二盘中段也剪掉了三局": "记分条从 184.5~196.5s 的 `1-2` 直接跳到 198.5s 的 `3-3`，中间四、五、六三局（都是保发）没进集锦。`scene_cuts` 和 `scene_cuts_loose` **都没报**这一刀——两边是同一个机位的同角度宽景，帧间差过不了阈值，正是 CLAUDE.md 说的「`scene_cuts` 是下限，不是上限」。段落分界因此按**记分条变化**定在 197.5s，不是按切点。",
+    "首盘那个反差": "奥索里奥首盘一发只进了 39%，却拿下其中 91%（10/11）；汤森德首盘发了 5 个 Ace，破发点 0/2。flashscore 分盘统计。",
+    "逐局细节": "第一盘：汤森德开局保发（救 2 个破发点），第三局被破，第九局再被破，3-6，40 分钟。第二盘：前六局各自保发（第一局汤森德有 1 个破发点没兑现），第七局破发到 4-3，第九局在盘点上再破，6-3；这一盘奥索里奥**一个破发点都没有**。第三盘：汤森德连下两局到 2-0，第三局被回破，第六局再破到 4-2，第八局在奥索里奥发球局上拿到赛点未果，第九局自己发球 40-0 结束。"
+  },
+  "_editing_why": "**开场三格按定死的顺序**：① 全片最强的一格（247.6–253.8，那记让全场起立的救球，不配旁白、只有现场声）→ ② 一句话把落点说出来（253.8–260.2，她的反应和全场起立）→ ③ 才给坐标（0.4–10.1，她入场）。⚠️ 冷开场没有取源片开头：官方集锦按时间顺序剪，开头是入场和第一盘，戏剧性最低；而这一分正是 WTA 自己做成 Hot Shot 的那一记（标题『Standing ovation! Taylor Townsend thrills Cincinnati with volley pickup』）。除 197.5 那一处外，所有窗口都对着 `probe.json` 的 39 个硬切点排；197.5 那一刀切点检测漏了，判据是记分条从 1-2 跳到 3-3（见 `_facts` 里那条）。末尾封顶 297.7（最后一个硬切点 297.80 之前），之后 298.5s 起是 WTA 台标和订阅卡，不能用。",
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "汤森德",
+    "hook": "全场起立的那一分\n换来的赛点，她没拿下",
+    "_hook_why": "上一句是过程（那记让全场站起来的救球），下一句是反转（它换来的赛点没兑现）。⚠️ 不复述海报上已经印着的东西——没有比分、没有轮次、没有排名，赛果行和顶栏都有；「她没拿下」留着的那个口子，正好由赛果行回答（她还是赢了），两者合起来才是钩子。",
+    "topic": "WTA1000辛辛那提 · 女单第一轮",
+    "portrait": {
+      "image": "assets/reel/townsend-cincinnati-2026-r1.jpg",
+      "focus": 0.5,
+      "focus_y": 0.5,
+      "zoom": 1.0
+    },
+    "_portrait_why": "WTA 官方图库这场的实拍：`photoresources.wtatennis.com/photo-resources/2026/08/13/fd1278ba-1f65-415f-93b9-08b48e367d01/Townsend-R1-Dylan-Buell-Getty-2.jpg?width=4000`，原始 6206×4137，取 4000×2666。四道闸门逐条过：① **精准**——它就是 WTA 这场比赛集锦视频（id 4559097『Townsend tops Osorio from a set down in Cincinnati』）的官方头图，CMS 里这张图的标题写着『Taylor Townsend, Cincinnati 2026』、日期 `2026-08-13T17:37:00Z`（比赛 17:21 UTC 结束，16 分钟后发的），文件名 `Townsend-R1`；② **在比赛中**——反手引拍、球就在画面里，不是训练照也不是场外；③ **有冲击力**——全身舒展、脸看得见，主体不占满一屏；④ **清晰度**——原生 6206×4137，不是放大。⚠️ **我一度因为球衣颜色把这张误判成别场比赛，那个判断是错的**：照片里的裙子是红色（色相 343~346°），而片内 240~296s 那几格读出来是品红（306~322°）。去量了才知道是同一件——片内 0.5/6.5/32.5/40.5/58.5/124.5s 这几格读出来是 334~346°，和照片一致，**是后半程换了机位之后高饱和红被压出了色域**（那几格的绿通道被压到 0~6）。另有一条硬证据：照片和片内的**场地颜色完全对得上**（深蓝挡风布 218.2° vs 218.6°，亮蓝外场 202.3° vs 206.4°）。**球衣颜色不能当认人判据，场地颜色可以。**",
+    "scrim": "clear",
+    "_scrim_why": "和近期几条一致：只关掉画面正中的 radial 暗角，上下两头照留。",
+    "winner": "汤森德",
+    "result": "3-6 6-3 6-3",
+    "matchup": [
+      {
+        "name": "汤森德",
+        "name_en": "Taylor Townsend",
+        "country": "USA",
+        "rank": 94
+      },
+      {
+        "name": "奥索里奥",
+        "name_en": "Camila Osorio",
+        "country": "COL",
+        "rank": 55
+      }
+    ],
+    "_matchup_rank_why": "两个名次都取 WTA 官方榜单接口 `rankedAt=2026-08-10`（比赛前那个周一，正是赛时口径）：汤森德 94、奥索里奥 55。印的是**单打**排名（汤森德的双打第 2 写在旁白和正文里，不进名条——名条那一栏在这个栏目里一直是单打）。⚠️ `matchup` 是**版式顺序**不是赛果顺序，赛果行由 `winner` 决定。",
+    "scoreboard": {
+      "court": "Stadium 3",
+      "duration_source": {
+        "provider": "wta",
+        "url": "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches?states=C&page=0&pageSize=200",
+        "match_id": "LS126",
+        "field": "MatchTimeTotal",
+        "source_page": "https://www.wtatennis.com/tournaments/1017/cincinnati/2026/scores/LS126"
+      },
+      "_court_why": "转播解说 6.24s 原话『onto the Tony Trabert Stadium 3』。板上只印 `Stadium 3`——全名 `Tony Trabert Stadium 3` 二十二个字符，会把这一行顶出去；命名这件事写进旁白和小红书正文，不挤在板上。",
+      "_duration_why": "`MatchTimeTotal: \"02:10:43\"` → 板上印 `2:10`。不手填，`_fetch_match_duration()` 每次渲海报现拉接口；转播解说 286.1s 说『just over 2 hours and 10 minutes』，对得上。"
+    }
+  },
+  "stats": {
+    "tour": "wta",
+    "a": {
+      "headshot": "assets/players/headshots/wta-318609.jpg",
+      "aces": 9,
+      "df": 1,
+      "first_in": 56,
+      "first_total": 82,
+      "first_won": 36,
+      "second_won": 16,
+      "second_total": 26,
+      "bp_conv": 4,
+      "bp_chances": 11,
+      "pts_won": 91
+    },
+    "b": {
+      "headshot": "assets/players/headshots/wta-325898.jpg",
+      "aces": 2,
+      "df": 7,
+      "first_in": 47,
+      "first_total": 90,
+      "first_won": 31,
+      "second_won": 20,
+      "second_total": 43,
+      "bp_conv": 3,
+      "bp_chances": 6,
+      "pts_won": 81
+    },
+    "footer_venue": "Stadium 3 · 辛辛那提",
+    "footer_date": "2026年8月13日",
+    "_source": "WTA 官方 stats 接口 `tournaments/1017/2026/matches/LS126/stats` setnum=0，与 flashscore `df_st_1` **逐项完全一致**（两个独立源，Ace/双误/一二发/破发点/总得分十几项一个不差）。⚠️ **这张图是 `cover.matchup[0]` 配 `stats.a`**，所以 `stats.a`＝汤森德、`stats.b`＝奥索里奥，和接口的 a/b 顺序恰好同向（接口 a 也是汤森德）。二发由接口反推并双向核对：汤森德 82−56=26、52−36=16；奥索里奥 90−47=43、51−31=20；flashscore 直接给的 `2nd serve points won 62% (16/26)` 和 `47% (20/43)` 完全对上。⚠️ **制胜分和非受迫失误两行整行不画**——WTA 巡回赛拿不到（见 `_facts.制胜分和非受迫失误`），`render_stat_card.usable_rows()` 按字段在不在决定画不画。头像走 `tools/fetch_official_headshot.py wta`，不是占位剪影。"
+  },
+  "segments": [
+    {
+      "start": 247.6,
+      "end": 253.8
+    },
+    {
+      "start": 253.8,
+      "end": 260.2,
+      "narration": "全场为这一分站了起来。她输掉了第一盘。"
+    },
+    {
+      "start": 0.4,
+      "end": 10.1,
+      "narration": "北京时间八月十三号夜里十一点十分，辛辛那提站，女单第一轮，三号球场。"
+    },
+    {
+      "start": 18.7,
+      "end": 29.3,
+      "narration": "汤森德三十岁，左手持拍。单打世界第九十四，双打世界第二，三个大满贯冠军。"
+    },
+    {
+      "start": 77.2,
+      "end": 89.2,
+      "narration": "首盘汤森德发了五个 Ace，破发点却是零比二——整整一盘，她一次都没能破掉对手的发球局。发球是她的强项，接发不是。",
+      "_why": "⚠️ 第一版这一段真语音只有 7.32s，画面 12.0s，`mode=narration` 报 4.68s 哑场（门槛 4.0s）。补长了旁白，没有收窗口——77.08~89.40 是一整个镜头，`end` 往前挪会切在一分中间。"
+    },
+    {
+      "start": 126.6,
+      "end": 137.6,
+      "narration": "奥索里奥二十四岁，世界第五十五。首盘她一发只进了三成九，可进的那些，九成一都赢了。",
+      "crosses_cut": "131.28s 那一刀两边都是奥索里奥这一头：126.5~130.5 是她在盘点上的近景（记分条烧着 SET POINT #2），132.5~136.5 是她拿下这一盘的那几分。同一个人、同一件事的前后半段。（缩略图墙逐格看过）"
+    },
+    {
+      "start": 137.9,
+      "end": 149.5,
+      "narration": "四十分钟，第一盘归了奥索里奥。汤森德要么从这儿开始把接发扳过来，要么这场球就到此为止。",
+      "crosses_cut": "144.24s 那一刀两边讲的还是同一件事：137.9~144.2 是奥索里奥拿下首盘之后的庆祝，144.5~149.5 是换场，而 148.5s 那一格正好打出首盘比分图 `TAYLOR TOWNSEND 3 / CAMILA OSORIO 6`。（缩略图墙逐格看过）"
+    },
+    {
+      "start": 184.9,
+      "end": 197.4,
+      "narration": "第二盘第一局汤森德拿到一个破发点，奥索里奥救掉了。之后五局，对手的发球局她一次都没再碰到。三平。",
+      "_why": "⚠️ 原来写的是「奥索里奥的发球局」，`mode=narration` 报切词器把它切成 `奥索 ｜ 里奥的`——名字被劈开、还多带了一个「的」。这一句里她的名字前面已经出现过一次，第二次改用「对手」把边界让开。"
+    },
+    {
+      "start": 197.6,
+      "end": 210.2,
+      "narration": "第七局，四十比十五，汤森德拿到破发点，一个就够了。这是她整场第一次破掉对手的发球局，四比三。",
+      "_why": "⚠️ 同上：原来的「破掉奥索里奥的发球局」被切成 `奥索 ｜ 里奥的`，改用「对手」。这一句的出处是转播解说 209.6s 原话『The first time she's broken Osorio in the match』。"
+    },
+    {
+      "start": 221.2,
+      "end": 227.3,
+      "narration": "第九局再破一次，六比三，扳平。"
+    },
+    {
+      "start": 228.0,
+      "end": 238.0,
+      "narration": "整个第二盘，奥索里奥一个破发点都没有。决胜盘她连下两局，一路拉到五比二。"
+    },
+    {
+      "start": 260.4,
+      "end": 277.7,
+      "narration": "五比二，奥索里奥发球。刚才那记救球，把汤森德送到了这场球的第一个赛点。再赢一分，比赛就结束了。而这一分，奥索里奥拿走了，还保住了发球局，追到三比五。"
+    },
+    {
+      "start": 282.2,
+      "end": 286.35,
+      "_why": "故意不配旁白：这是比赛的最后一分，只留现场声。dry-run 的节奏检查报过中段旁白八成在报数据，「不要平白叙事」要的正是一次纯画面的停顿，而全片最该停的地方就是这儿。"
+    },
+    {
+      "start": 286.5,
+      "end": 297.7,
+      "narration": "两小时十分，第二个赛点，她一分没丢。双打世界第二的那双手，在单打里还能走多远？"
+    }
+  ],
+  "push": {
+    "summary": "汤森德救球换赛点，没兑现",
+    "lead": "辛辛那提WTA1000女单第一轮，世界第94的汤森德3-6 6-3 6-3逆转世界第55的奥索里奥，耗时2小时10分。首盘她发了5个Ace，破发点却是0比2，40分钟就丢了；整场第一次破掉对手的发球局要等到第二盘三平，转播解说当场点出「这是她整场第一次破掉奥索里奥」，那之后她又破了四次。决胜盘5-2，一记让全场起立的网前救球把她送上赛点，可那个赛点没兑现，奥索里奥保住发球局追到3-5；汤森德轮到自己发球，40-0结束比赛。30岁的汤森德是双打世界第二，拿过三个大满贯双打冠军，2025年7月升上过双打世界第一。下一轮她对二号种子莱巴金娜。",
+    "auto": true,
+    "_why": "`push_reel.SUMMARY_MAX = 13`，量 `len()` 原始字符数。「汤森德救球换赛点，没兑现」= 12 字，在闸内。⚠️ 第一版写的是「汤森德逆转晋级」，被 `test_推送标题不许只有名字加赛果` 当场拦下——剥掉名字和「逆转晋级」之后一个字不剩，在微信的消息列表里分不出是哪一条片子。现在这句留住的是这条片子独有的那件事：一记救球换来赛点、而那个赛点没拿下。只写 summary 和 lead，matchup／score／event 由封面算——一个数写两处必分叉。`auto: true`：这条是新片、没有 `pushed.json`，合进 main 由 auto-push-reel 发，不走手动补发那条路。"
+  }
+}
