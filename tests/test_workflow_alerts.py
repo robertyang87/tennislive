@@ -662,3 +662,34 @@ def test_四条只读工作流不许悄悄要回写权限():
         assert "git commit" not in bodies[path] and "git push" not in bodies[path], (
             f"{name} 开始提交/推送了，那 `contents: read` 会让它在 runner 上红——"
             "两边要一起改")
+
+
+def test_CI要把最慢的测试打进日志():
+    """`ci.yml` 那行 pytest 必须带 `--durations`，不然这一步没有诊断出口。
+
+    **来路（2026-08-14）：** 同一个 commit（45975571）两个口径差 5.3 倍——
+
+        沙箱 4 核    1884 passed, 34 skipped in 108.91s
+        runner 4 核  1883 passed, 35 skipped in 581.55s   （run 31783930140）
+
+    同一棵树、同样的条数、同样的核数，所以**不是代码变慢了**；同一条分支相隔
+    四分钟的两趟（178s / 647s）更直白。也就是说这一步的耗时主要由 runner 当时
+    的状态决定，而它**排在每一次合并前面**。
+
+    在这之前，慢的那趟在日志里只有一串点：既查不出是哪几条测试，也证明不了
+    「不是这次改的」。这个仓库为「只在成功时出声的检查没法证明它真的看过」
+    记过好几笔——**一个没有诊断出口的关键路径，慢起来只能靠猜**，而猜出来的
+    结论会被下一个人当判据用。
+
+    ⚠️ 判据只钉「有这个出口」，**不钉具体条数**（25 是拍的，改成 30 没有意义
+    上的差别）；也**不钉时长上限**——把一个含 runner 抖动的总时长写成硬闸，
+    等于每隔几趟就红一次，而「一条常年红的检查和没有检查是同一个毛病」。
+    """
+    body = _yaml_only(_workflow("ci.yml"))
+    line = [ln for ln in body.splitlines() if "pytest" in ln and "run:" in ln]
+    assert len(line) == 1, f"ci.yml 里跑 pytest 的行不是一条：{line}"
+    assert "--durations" in line[0], (
+        "ci.yml 那行 pytest 不再打印最慢的测试了：\n  " + line[0].strip()
+        + "\n\nCI 排在每次合并前面，而它的耗时在 runner 上会 3~10 分钟乱跳"
+          "（同一个 commit 实测 108.91s vs 581.55s）。没有这份榜单，"
+          "「今天怎么这么慢」既查不出是哪几条，也证明不了不是这次改的。")

@@ -2024,23 +2024,18 @@ def segments_straddling_cuts(
     return straddling, unchecked, tail_cuts
 
 
-def resolve_sources(spec: dict, outdir: Path) -> dict[str, Path]:
-    """把 spec 里的源片全下下来，返回 {名字: 路径}。
-
-    单源 spec 走 `source_url`，键是空串——和 `Segment.source` 的默认值对上，
-    老 spec 一个字都不用改。
-    """
-    urls = dict(spec.get("sources") or {})
-    if not urls:
-        urls = {"": spec["source_url"]}
-    paths: dict[str, Path] = {}
-    for name, url in urls.items():
-        dest = outdir / (f"source_{name}.mp4" if name else "source.mp4")
-        if not dest.is_file():
-            with stage(f"下载源片 {name or '(单源)'}"):
-                dest = download(url, dest)
-        paths[name] = dest
-    return paths
+# ⚠️ 这儿原来有一个 `resolve_sources(spec, outdir)`：自己读 `spec["source_url"]`
+# 然后挨个 `download()`。它是 2026-08-01 加多源支持时写的，`render()` 后来把这段
+# 内联重写成了走 `spec_sources(spec)` 的版本，**却没把它删掉**——从那以后它零调用方。
+#
+# 2026-08-14 删掉，不是为了省那 17 行，是因为**它绕过了签名源那道闸**：
+# `_reject_signed_source_urls` 收在 `spec_sources()` 里，而这个函数不走它，
+# 直接把 spec 里那串 URL 交给 `download()`。也就是说哪天有人复活它（名字看着
+# 正是"把源片下下来"该调的那个），那道禁令对这条路就是哑的。
+#
+# **死代码不吭声，而它绕过的那道闸也不吭声——两个不吭声叠在一起就是一个陷阱。**
+# 判据 `test_下载源片一律走spec_sources` 从此自己推导：这个文件里凡是既碰
+# spec 的源片字段、又调 `download()` 的函数，都必须经过 `spec_sources()`。
 
 
 # 跟踪裁切 -----------------------------------------------------------------
@@ -4025,8 +4020,18 @@ def spec_sources(spec: dict) -> dict[str, str]:
     if "source_url" not in spec:
         raise ReelError('spec 里要有 `source_url`（单源）或 `sources`（多源）')
     # **收在这儿，不是收在 `validate_spec` 里另调一次**：这个函数是「spec →
-    # 源片地址」的唯一出处（`validate_spec` / `render` / `check_archival_fit` /
-    # 工作流那条缓存键全走它），装在这儿每个消费者自动都护住，不用挨个记得加。
+    # 源片地址」**唯一一处会把地址交出去下载**的出处（`validate_spec` /
+    # `render` / `check_archival_fit` / 工作流那条缓存键全走它），装在这儿每个
+    # 消费者自动都护住，不用挨个记得加。
+    #
+    # ⚠️ **别把这句话读成「全仓库只有这一处解析 sources/source_url」**——2026-08-14
+    # 数过，`load_spec`、`check_segment_cuts`、`probes_for_spec`、`--dry-run` 那段
+    # 和 `tools/check_reel_cuts.py` 各自还抄着一份同样的 `sources or {源:url}`
+    # 回退。**它们只用来按 URL 认领 probe.json，一个字节都不下载**，所以绕过这道
+    # 闸没有后果；而它们要的恰恰是「spec 有毛病也别把诊断带崩」，改成调这个函数
+    # 反倒会让 `--dry-run` 在本该报出问题的时候先抛出来。真正危险的是**又下载又
+    # 自己解析**的那种——`resolve_sources` 就是，已经删了，判据见
+    # `test_下载源片一律走spec_sources`。
     single = {"": str(spec["source_url"])}
     _reject_signed_source_urls(single)
     return single
