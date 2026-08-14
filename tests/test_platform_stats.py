@@ -74,9 +74,23 @@ def _dy(name, when, kind="1-3min视频", plays=1000, fin=0.02, s5=0.40, b2=0.33,
             str(avg), str(likes), "0", "0", "0", str(home), str(fans)]
 
 
-def _item(title, day, mp4=None):
-    return {"title": title, "norm": ps.normalize(title), "dir": Path("x"),
-            "date": day, "mp4": mp4}
+def _item(title, day, mp4=None, film_seconds=None, dir=Path("x")):
+    return {"title": title, "norm": ps.normalize(title), "dir": dir,
+            "date": day, "mp4": mp4, "film_seconds": film_seconds}
+
+
+def _copy_html(outdir: Path, title: str, body: str = "正文") -> Path:
+    """复制页，照真产物的形状写：标题在 `<textarea id="title">`，而 `<h1>`
+    是写死的常量「贴图发布文案」——两者一起摆进来，判据才拦得住「又去读 h1」。
+    """
+    outdir.mkdir(parents=True, exist_ok=True)
+    path = outdir / "copy.html"
+    path.write_text(
+        "<html><body><h1>贴图发布文案</h1>"
+        f'<textarea id="title">{title}</textarea>'
+        f'<textarea id="body">{body}</textarea></body></html>',
+        encoding="utf-8")
+    return path
 
 
 def _mp4_with_duration(tmp_path: Path, seconds: int = 120) -> Path:
@@ -302,6 +316,118 @@ def test_日期差太远的不算命中():
 
 def test_normalize只留下用来比对的字():
     assert ps.normalize("🎾7.26 网球有故事｜温网屋顶谁说了算") == "726网球有故事温网屋顶谁说了算"
+
+
+# --------------------------------------------------------------- 产物索引
+
+
+def test_竖版视频线也要进产物索引(tmp_path):
+    """2026-08-14 核出来的真因：索引原来只认 `xiaohongshu.txt` 为锚，而**竖版
+    视频线一份都不产这个文件** —— 实测 `output/` 下 73 份全在解说片 / 内容雷达 /
+    知识帖那几条线上，reel 和 interviews 是 **0**，它们的文案出口是 `copy.html`。
+
+    于是 83 个视频线产物目录从来没进过索引，而症状是「未匹配 N/N 条」——
+    和「这些内容压根没生成过」长得一模一样。空结果先自证是真空。
+
+    ⚠️ 判据造在 tmp_path 上，不拿 `output/` 当主语：CI 的稀疏检出不含它，
+    那样这条会静静变成一盏恒真的绿灯。
+    """
+    root = tmp_path / "output"
+    # 解说片那条线：两个文件都有
+    ex = root / "2026-08-12" / "explainer" / "some-topic"
+    ex.mkdir(parents=True)
+    (ex / "xiaohongshu.txt").write_text("🎾8.12 网球有故事｜甲\n正文", encoding="utf-8")
+    _copy_html(ex, "🎾8.12 网球有故事｜甲")
+    # 视频线：**只有** copy.html，没有 xiaohongshu.txt
+    reel = root / "2026-08-12" / "reel" / "jodar-fils"
+    _copy_html(reel, "8.12 赛场之上 | 霍达尔逆转救三赛点收官")
+    itv = root / "interviews" / "eala-parks"
+    _copy_html(itv, "8.6 赛后开麦 | 伊埃拉谈这一场")
+
+    items = ps.index_output(root)
+    got = {it["title"] for it in items}
+    assert "8.12 赛场之上 | 霍达尔逆转救三赛点收官" in got, "reel 没进索引"
+    assert "8.6 赛后开麦 | 伊埃拉谈这一场" in got, "interviews 没进索引"
+    assert "🎾8.12 网球有故事｜甲" in got, "解说片那条线不许被改坏"
+    # 两个锚点都在的目录只算一次——重复计数会让同一条内容在匹配时自己和自己并列
+    assert len(items) == 3, [it["title"] for it in items]
+
+
+def test_复制页的标题要从textarea抠不是从h1(tmp_path):
+    """`<h1>` 写死是「贴图发布文案」一个常量，对任何一天的复制页都一样。
+
+    仓库为它栽过一次：一道「是不是这一版」的闸拿 `<h1>` 当指纹，恒真了一个月。
+    这里再取一次 h1，156 份产物会全归成同一个标题，然后每条作品都匹配到它。
+    """
+    root = tmp_path / "output"
+    _copy_html(root / "2026-08-12" / "reel" / "a", "8.12 赛场之上 | 甲")
+    _copy_html(root / "2026-08-12" / "reel" / "b", "8.12 赛场之上 | 乙")
+    titles = sorted(it["title"] for it in ps.index_output(root))
+    assert titles == ["8.12 赛场之上 | 乙", "8.12 赛场之上 | 甲"]
+    assert "贴图发布文案" not in titles
+
+
+# --------------------------------------------------------------- 片长出处
+
+
+def test_片长优先读render_json而不是解析mp4(tmp_path):
+    """2026-08-13 成片一律走 GitHub Release，`output/` 下**一个 mp4 都没有了**
+    （实测 0 份）。`render.json` 的 `film_seconds` 是渲染那一刻记下来的，不依赖
+    成片还在不在本地（实测 reel 58/66，**已推送的 22/22 全有**），所以它是
+    第一顺位；解析 mp4 退成兜底，老产物可能没有 render.json。
+    """
+    outdir = tmp_path / "2026-08-12" / "reel" / "x"
+    outdir.mkdir(parents=True)
+    _copy_html(outdir, "8.12 赛场之上 | 甲")
+    (outdir / "render.json").write_text('{"film_seconds": 54.72}', encoding="utf-8")
+    item = ps.index_output(tmp_path)[0]
+    assert item["film_seconds"] == pytest.approx(54.72)
+    assert item["mp4"] is None                       # Release 之后本地没有 mp4
+
+    w = _work("🎾某条", plays=100, avg_watch=10.0)
+    w.item = item
+    assert ps.duration_of(w) == pytest.approx(54.72)
+
+    # 兜底那条：没有 render.json 就解析 mp4，两个数不一样才证明真的换了源
+    mp4 = _mp4_with_duration(tmp_path, seconds=120)
+    w2 = _work("🎾老产物", plays=100, avg_watch=10.0)
+    w2.item = _item("🎾老产物", date(2026, 7, 26), mp4=mp4)
+    assert ps.duration_of(w2) == pytest.approx(120)
+
+
+def test_片长两条路都要出声(capsys):
+    """只在成功时出声的检查证明不了它真的看过，只在失败时出声的证明不了它成功过。
+
+    原来 `duration_of` 读不到就裸 `return None`，一个字都不打印 —— Release 迁移
+    之后它对 100% 的内容返回 None，而「均观看比例」整节消失的样子和「今天没数据」
+    一模一样。所以三种结局必须在 `duration_note` 里分得开，并且报告两头都印。
+    """
+    hit = _work("🎾读到了", plays=100, avg_watch=10.0)
+    hit.item = _item("🎾读到了", date(2026, 8, 12), film_seconds=54.72)
+    miss = _work("🎾两条都读不到", plays=100, avg_watch=10.0)
+    miss.item = _item("🎾两条都读不到", date(2026, 8, 12))     # 无 film_seconds 也无 mp4
+    orphan = _work("🎾没对上产物", plays=100, avg_watch=10.0)
+
+    ps.duration_of(hit), ps.duration_of(miss), ps.duration_of(orphan)
+    assert "film_seconds" in hit.duration_note, hit.duration_note
+    assert hit.duration_note != miss.duration_note != orphan.duration_note
+    assert all(w.duration_note for w in (hit, miss, orphan)), "读不到也必须留下原因"
+
+    an.watch_ratio([hit, miss])
+    out = capsys.readouterr().out
+    assert "片长出处" in out
+    assert "1/2 拿到" in out, out            # 成功那半要报数
+    assert miss.duration_note in out, out    # 失败那半也要报，且带原因
+
+
+def test_片长一条都拿不到时不许闷声收场(capsys):
+    """整节算不出来时，必须说清是卡在片长上——那正是 Release 迁移当天的样子。"""
+    w = _work("🎾某条", plays=100, avg_watch=10.0)
+    w.item = _item("🎾某条", date(2026, 8, 12))
+    assert an.watch_ratio([w]) == []
+    out = capsys.readouterr().out
+    assert "片长出处（0/1 拿到）" in out
+    assert "别当成没有视频" in out
 
 
 # ----------------------------------------------------------------- 报告

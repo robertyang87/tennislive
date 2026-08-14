@@ -251,6 +251,75 @@ jobs:
           path: ${{ steps.gen.outputs.outdir }}
           retention-days: 14
 
+      # **查产物，不查信号。** 这两个脚本一直躺在 `tools/` 里，而
+      # `grep -rn check_explainer_landed .github/` 除了它自己**零命中**——
+      # 写好了一次都没跑过。CLAUDE.md 把「`check_explainer_landed` 报不合格」
+      # 列为仅有的两个该停下来的闸之一：**规矩写了、工具写了、就是没接上。**
+      # 同一个形状仓库栽过：`check_reel_landed.py` 也曾零调用方，补跑一遍它自己
+      # 就报出两个真缺陷（音轨比画面短 ×7、38 秒数字静音 ×1）。
+      #
+      # ⚠️ **位置**（三头都要卡住，缺一头这道闸就没意义）：
+      #   1. 排在「上传成片 artifact」**之后**——闸红了片子还有处可取，
+      #      和下面提交步骤那句「成片仍在 artifact 里」是同一个承诺；
+      #   2. 排在「成片发到 Release」**之前**——那一步末尾 `rm -f "$CLIP"`
+      #      把成片删了，还会重写 render.json 和 push.html，排在它后面就没得验了；
+      #   3. 排在「提交成片到仓库」**之前**——进了 main，`publish pushplus`
+      #      那条路就会把它发到微信，而微信那条消息发出去收不回来。
+      - name: 查这一版产物本身合不合格
+        run: |
+          OUTDIR="${{ steps.gen.outputs.outdir }}"
+          SLUG="${{ steps.gen.outputs.slug }}"
+
+          # ① 这条片子**到底是谁配的音**——读成片旁边的 narration.json，
+          #    不拿「工作流传了什么参数」去推。这条线正是栽在那个推理上：
+          #    工作流每次传一个写死的旧 `--voice`，代码里换默认值等于没换，
+          #    三条片子用着被替换掉的声音发了出去（见本文件开头 voice 那个
+          #    输入的注释）。每段 mp3 生成完就删了，mp4 里也读不出语音名。
+          #
+          # ⚠️ **留空＝用代码默认，期望值必须跟着退回代码默认**，不能在这儿
+          #    补一个字面量。`check_explainer_voice.py` 已经为这个栽过一次：
+          #    它抄着 `WANT_RATE = "+28%"`，而代码 2026-08-03 定回 +22%
+          #    （29 份已落库的 narration.json 里 19 份是 +22%）——照原样接进来
+          #    就是一条**常年红**，而常年红和没有检查是同一个毛病。
+          VARGS=()
+          if [ -n "${{ github.event.inputs.voice }}" ]; then VARGS+=(--voice "${{ github.event.inputs.voice }}"); fi
+          if [ -n "${{ github.event.inputs.rate }}" ]; then VARGS+=(--rate "${{ github.event.inputs.rate }}"); fi
+          python tools/check_explainer_voice.py --local "$(dirname "$OUTDIR")" "$SLUG" "${VARGS[@]}"
+
+          # ② **这一版的字真的烧进产物了没有。** 喂进去的是脚本自己算出来的
+          #    每屏小标——它来自 `explainer_script(story)`，也就是渲染的**输入**，
+          #    而查的是渲染的**输出**。少一屏就报出是哪一屏（小红书正文卡着
+          #    1000 字，为了塞下而丢掉一屏，正是这条线上活着的风险）。
+          #
+          # ⚠️ **不喂旁白原文**：`.ass` 去过标点、`.words.json` 本来就不含标点，
+          #    旁白搜不到的样子是「★ 一个文件都没有」，和「没落库」一模一样。
+          #    量过存量 243 屏：小标命中 241，旁白前 14 字含标点的 228 条只命中 7。
+          #    判据连同这两个数记在 check_explainer_landed.py 的 docstring 里。
+          # ⚠️ **小标由这段自己写进文件，不走 stdout 重定向。** 走重定向的话，
+          #    将来哪次 `explainer_script` 顺手 print 一句诊断，那行就会被
+          #    `mapfile` 当成一条小标喂进 `--says`，然后必然搜不到——报出来是
+          #    「★ 一个文件都没有」，看着像片子不合格，其实是原料被污染了。
+          #    （量过：今天它一个字都不打，所以这是防将来，不是修现在。）
+          python - "$SLUG" /tmp/beat_titles.txt <<'PY'
+          import sys
+          from pathlib import Path
+          from tennislive.render.tournament_story import find_story_by_slug
+          from tennislive.video.explainer import explainer_script
+          story = find_story_by_slug(sys.argv[1])
+          if story is None:
+              raise SystemExit(f"找不到 slug {sys.argv[1]} 的选题，这道闸没法验")
+          titles = [seg.title for seg in explainer_script(story) if seg.title.strip()]
+          if not titles:
+              raise SystemExit("一屏小标都没算出来——喂空的 --says 等于不查")
+          Path(sys.argv[2]).write_text("\n".join(titles) + "\n", encoding="utf-8")
+          print(f"这一版共 {len(titles)} 屏，小标全部要在产物里找得到")
+          PY
+          mapfile -t SAYS < /tmp/beat_titles.txt
+          # 空数组会让 `--says` 后面一个值都没有，那就退化成只查「目录非空」的
+          # 假绿。脚本自己也拦这一种，这儿再挡一道，免得错怪到产物头上。
+          [ "${#SAYS[@]}" -gt 0 ] || { echo "::error::没算出任何小标"; exit 1; }
+          python tools/check_explainer_landed.py --local "$OUTDIR" "$SLUG" --says "${SAYS[@]}"
+
       # **成片一律发到 Release，不进 git。**（2026-08-13 起）
       #
       # 来路：账号所有者 2026-08-13「当前代码库太大了」「后面新的视频全部走

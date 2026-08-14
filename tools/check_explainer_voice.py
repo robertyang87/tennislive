@@ -34,8 +34,22 @@ REPO = Path(__file__).resolve().parents[1]
 def _outdir_date() -> str:
     return datetime.now(timezone(timedelta(hours=8))).date().isoformat()
 
-WANT_VOICE = "zh-CN-YunjianNeural"  # 云健
-WANT_RATE = "+28%"
+# **期望值只有一个出处：代码里的默认值。**
+#
+# ⚠️ 这两个数原来是抄在这儿的字面量（`zh-CN-YunjianNeural` / **`+28%`**），
+# 而语速 2026-08-03 已经从 +28% 定回 **+22%**（账号所有者听完 special-exempt：
+# 「语速太快了」，见 `explainer.DEFAULT_RATE` 上面那段实测）。
+# 抄的那份没跟着改，于是这个脚本对**今天每一条新片子**都会报「✗ 与期望不符」。
+# 量过存量：29 份已落库的 `narration.json` 里 **19 份是 +22%**、10 份是 +28%
+# ——2026-08-14 要把它接进 `explainer.yml` 当闸，照原样装上去就是一条**常年红**，
+# 而一条常年红的检查和没有检查是同一个毛病。
+#
+# 「一个数写两处必分叉」，所以直接读代码里那份。⚠️ **不许 try/except 退回字面量**：
+# 悄悄退回去的话，「期望值取自代码」和「期望值又停在某一版」在日志上一模一样。
+from tennislive.video.explainer import DEFAULT_RATE, DEFAULT_VOICE  # noqa: E402
+
+WANT_VOICE = DEFAULT_VOICE  # 云健
+WANT_RATE = DEFAULT_RATE
 
 
 def _read(slug: str, args) -> dict | None:

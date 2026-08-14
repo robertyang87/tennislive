@@ -18,13 +18,30 @@
    平均色，换没换图一比就知道（换过图的偏差在 45～70，同图在 0.1 以内）。
 
 用法：
-    # 只查文案
+    # 只查文案（已经落库的那一版，从 git ref 读）
     python tools/check_explainer_landed.py zheng-eala --says 钦文还在打 祝钦文好运
+    # 刚渲完、还没提交的这一版（从工作区读）——工作流里的闸走的是这条
+    python tools/check_explainer_landed.py --local output/2026-08-14/explainer/hawkeye \
+        hawkeye --says 球压没压线
     # 连画面一起查（先在本地渲一份做参照）
-    python tools/check_explainer_landed.py zheng-eala --says 祝钦文好运 \
-        --slide 5 --against /tmp/ze/slide_05.png
+    python tools/check_explainer_landed.py --local output/2026-08-14/explainer/zheng-eala \
+        zheng-eala --says 祝钦文好运 --slide 5 --against /tmp/ze/slide_05.png
 
 退出码 0＝全部对上；2＝有对不上的。缺什么、差多少都打印出来。
+
+⚠️ **`--says` 喂每屏的小标，别喂旁白原文。** 字幕（`.ass`）去过标点
+（「字幕里不写标点」那条规矩）也换过数字（`arabic_numerals`），词边界
+（`.words.json`）本来就不含标点——**旁白原文因此几乎搜不到**，而搜不到报出来是
+「★ 一个文件都没有」，**和「这一版没落库」长得一模一样**，正是这个脚本存在的
+全部理由要防的东西。
+
+2026-08-14 拿存量 39 条 deck、243 屏量过（不是推的）：
+
+    每屏小标         命中 241 / 243   两条落差都是脚本后来改过（drift）
+    旁白前 14 字     含标点的 228 条命中 7；不含标点的 15 条也只命中 7
+
+小标不带句末标点，而且 `copy.html` / `push.html` / `xiaohongshu.txt` 三份文案
+里都有，所以它是这条线上唯一稳的那个抓手。
 """
 
 from __future__ import annotations
@@ -84,6 +101,39 @@ def _dist(a: list[float], b: list[float]) -> float:
     return (sum((x - y) ** 2 for x, y in zip(a, b)) / len(a)) ** 0.5
 
 
+def _reader(args):
+    """产物从哪儿读——git ref 上那一版，还是工作区里刚渲完的这一版。
+
+    ⚠️ **两条路问的是两个问题，不能混。** git ref 那条回答「已经落库的那一版
+    是不是这一版」（本文件开头那几条教训说的就是它）；`--local` 那条回答
+    「刚渲完的这一版本身合不合格」。
+
+    `--local` 是 2026-08-14 把这个脚本接进 `explainer.yml` 时补的，**没有它
+    这道闸装不上**：闸必须排在提交之前（进了 main，`publish pushplus` 就会把
+    它发到微信，而消息发出去收不回来），可那一刻 outdir 一个字节都还没进 git，
+    拿默认的 `origin/main` 去查，报出来是「在 origin/main 上还不存在」——
+    **那句话的意思是「还没提交」，不是「不合格」**。
+
+    返回 (这一版在哪儿, 列文件, 读一个文件)。
+    """
+    if args.local:
+        root = Path(args.local)
+
+        def ls() -> list[str]:
+            return sorted(p.name for p in root.iterdir()) if root.is_dir() else []
+
+        def read(name: str) -> bytes:
+            p = root / name
+            return p.read_bytes() if p.is_file() else b""
+
+        return f"{root}（工作区）", ls, read
+
+    outdir = f"output/{args.date}/explainer/{args.slug}"
+    return (f"{outdir}（{args.ref}）",
+            lambda: _ls(args.ref, outdir),
+            lambda name: _git(args.ref, f"{outdir}/{name}"))
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("slug")
@@ -94,12 +144,24 @@ def main() -> int:
     ap.add_argument("--against", help="本地渲染的同一屏 PNG，作为参照")
     ap.add_argument("--not-this", dest="not_this",
                     help="上一版的同一屏 PNG。给了它，判据必须先证明分得清新旧")
+    ap.add_argument("--local", default="",
+                    help="改读工作区里的这个 outdir（渲完还没提交时用），"
+                         "如 output/2026-08-14/explainer/hawkeye")
     args = ap.parse_args()
 
-    outdir = f"output/{args.date}/explainer/{args.slug}"
-    names = _ls(args.ref, outdir)
+    # **什么都不查的检查报绿，和它查过了长得一模一样。** 不给 `--says` 也不给
+    # `--slide` 时，下面两段全被跳过，只剩「目录非空」——那不是一道闸，是一盏
+    # 恒亮的绿灯。接进工作流的当天就得防住这个：谁把 `--says` 那一串漏了，
+    # 这一步照样 0 退出，而「查过了」这三个字会被记到这条片子头上。
+    if not args.says and args.slide is None:
+        print("★ 既没给 --says 也没给 --slide，这一趟什么都没查——不算「已落地」")
+        return 2
+
+    where, ls, read = _reader(args)
+    names = ls()
     if not names:
-        print(f"{outdir} 在 {args.ref} 上还不存在")
+        # ⚠️ 「还没提交」和「不合格」必须分得开，所以两条路各说各的话。
+        print(f"{where} 是空的" if args.local else f"{where} 上还不存在（可能只是还没提交）")
         return 2
 
     # 把目录里所有文本读成一份，记住每句话是在哪个文件里命中的。
@@ -124,7 +186,7 @@ def main() -> int:
                 return raw
         return raw
 
-    texts = {n: _searchable(n, _git(args.ref, f"{outdir}/{n}").decode("utf-8", "replace"))
+    texts = {n: _searchable(n, read(n).decode("utf-8", "replace"))
              for n in names if n.endswith(TEXT_SUFFIXES)}
     bad = 0
     for phrase in args.says:
@@ -138,11 +200,19 @@ def main() -> int:
         # 否则查旧成片会误报「还没落库」。
         raw = b""
         for suffix in (".jpg", ".png"):
-            raw = _git(args.ref, f"{outdir}/slide_{args.slide:02d}{suffix}")
+            raw = read(f"slide_{args.slide:02d}{suffix}")
             if raw:
                 break
         if not raw:
-            print(f"  slide_{args.slide:02d}.[jpg|png] 还没落库"); return 2
+            # ⚠️ **2026-08-13 起幻灯不再进 git**（成片走 Release，`archive-media`
+            # 把历史 mp4/jpg 一起清了）。所以在 git ref 那条路上这一句**必然**
+            # 出现，而它的意思是「没东西可验」，不是「这一版不合格」——量过：
+            # `origin/main` 上 `slide_*.jpg` 和 `*.mp4` 各 0 个。
+            # 要比画面就在渲完当场用 `--local` 比，那时它还在工作区。
+            print(f"  slide_{args.slide:02d}.[jpg|png] 取不到"
+                  + ("" if args.local else
+                     "——幻灯 2026-08-13 起不进 git 了，比画面请用 --local 在渲完当场比"))
+            return 2
         repo = _grid(Image.open(io.BytesIO(raw)))
         new = _grid(Image.open(args.against))
         d_new = _dist(repo, new)

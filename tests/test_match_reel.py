@@ -1071,6 +1071,16 @@ def test_闪避的钥匙要补齐否则片尾没声音():
     assert "任一路 EOF" in src, "为什么要 apad 没有留下判据，下次会有人删掉"
 
 
+# 成片那一步允许的 preset。2026-08-14 拿真素材量下来，`medium` 是最后一档
+# 「比 slow 快、而画质量不出差别」的；再往快（`fast` 起）就开始掉，`veryfast`
+# 同样 crf 18 出来的文件反而比 slow 小 3.3~24.9%——那不是省，那是它根本没在
+# 同一个画质上编（PSNR 掉 0.85~2.76 dB）。表和来路写在 `FINAL_PRESET` 上面。
+#
+# 收成一个常量给三条判据共用：这个口径写两处必分叉，而分叉的样子是「一条测试
+# 拦得住、另一条放行」，两条都绿的时候没人看得出来。
+_FINAL_PRESET_OK = frozenset({"veryslow", "slower", "slow", "medium"})
+
+
 def test_成片的编码参数不许为了压体积往下调():
     """账号所有者 2026-07-29 定的：「**不要舍弃画质，没有硬性要求 20mb**」。
 
@@ -1091,12 +1101,125 @@ def test_成片的编码参数不许为了压体积往下调():
     reel = _reel()
     assert reel.FINAL_CRF == "18", (
         f"成片 crf 被改成了 {reel.FINAL_CRF}。20 MB 不是硬指标，别拿画质换它。")
-    assert reel.FINAL_PRESET == "slow"
+    # ⚠️ 这一行原来钉的是 `== "slow"`。2026-08-14 量下来 preset 和 crf 是两件
+    # 事——preset 换成 `medium` 快 28~38%、PSNR 只差 0.04~0.18 dB，画质量不出
+    # 差别（表在 `FINAL_PRESET` 上面）。所以**这条测试只管它该管的那一半**：
+    # crf 照旧钉死，preset 只拦「掉到量得出画质损失的那一档」；具体钉在哪个
+    # 值，归 test_成片preset按实测定在medium不许再往快里推。
+    assert reel.FINAL_PRESET in _FINAL_PRESET_OK, (
+        f"成片 preset 被推到了 {reel.FINAL_PRESET}——那一档同样 crf 18 出来的"
+        "文件反而更小，也就是根本没在同一个画质上编（veryfast 掉 0.85~2.76 dB）")
 
     # 参数要走常量，不能又硬写回调用里——硬写的那份改起来没人看得见理由
     src = Path(reel.__file__).read_text(encoding="utf-8")
     assert '"-crf", FINAL_CRF' in src, "成片那一步没用 FINAL_CRF 常量"
     assert '"-crf", "18"' not in src, "成片的 crf 又被硬写回调用里了"
+
+
+def test_成片preset按实测定在medium不许再往快里推():
+    """**preset 和 crf 是两件事**：preset 决定编码器花多少**时间**去找省比特的
+    编法，crf 决定**留多少画质**。上一条测试管 crf（画质，不许动）；这一条管
+    preset（体积换时间），2026-08-14 拿真素材量过之后把它从 `slow` 挪到
+    `medium`。
+
+    来路：一趟 render 862s，render 步 747s，而「烧字幕+成片」一步就是 **423.7s，
+    占整趟 49%**——最大的一块，而它一直没被量过。`slow` 当年不是拍的：成片要塞
+    进 git（100 MiB 服务端硬拒），比特省一点就多一分进仓库的机会。**2026-08-13
+    起成片一律走 Release 附件（单个 2 GB），那个约束没了**，账才值得重算。
+
+    量出来的（四核、真素材、照真实流水线的形状，两个样本分别取高运动量实拍和
+    低运动量图形两头；完整两张表在 `FINAL_PRESET` 上面）：
+
+        slow → medium   快 28~38%，大 1.6~6.1%，PSNR 差 0.04~0.18 dB
+
+    也就是**画质量不出差别，而省下 117~163 秒**。
+
+    ⚠️ **这条测试真正要拦的是「再往快推一档」，因为那一档伪装成两头都赚**：
+    `veryfast` 同样 crf 18，出来的文件比 `slow` **还小**（−3.3% / −24.9%）。
+    同一个 crf 下 preset 越快只会越大，**它反而变小就说明它根本没在同一个画质
+    上编**——PSNR 跟着掉 0.85 / 2.76 dB。只看时间和体积，这看起来像是又快又省；
+    只有量 SSIM/PSNR 才看得见。
+
+    所以这条不只钉住那个值，还**把源码里那两张表读回来，验它确实支持这个决定**：
+    表被人改成别的说法、或者被删掉一半，这里会当场对不上。判据自己也要有判据。
+    """
+    reel = _reel()
+    assert reel.FINAL_PRESET == "medium", (
+        f"成片 preset 被改成了 {reel.FINAL_PRESET}。它不是拍的，是量出来的："
+        "medium 是最后一档「比 slow 快、而画质量不出差别」的；再快一档 veryfast "
+        "同样 crf 18 出来的文件反而更小，也就是画质掉了。要改先重量一遍。")
+    # crf 不许被这条顺手带下去——两件事各管各的
+    assert reel.FINAL_CRF == "18", "改 preset 不许连累 crf"
+
+    src = Path(reel.__file__).read_text(encoding="utf-8")
+
+    # 参数要走常量。⚠️ 这两句「不许硬写」要在**去掉整行注释之后**扫：注释里
+    # 正写着 `preset slow`（记的是当年为什么只能是它），连注释一起扫会把
+    # 「把来路记下来」判成「又硬写回去了」。
+    code = "\n".join(ln for ln in src.splitlines()
+                     if not ln.lstrip().startswith("#"))
+    assert '"-preset", FINAL_PRESET, "-crf", FINAL_CRF' in code, (
+        "成片那一步没有同时走 FINAL_PRESET / FINAL_CRF 两个常量")
+    for hard in ('"-preset", "slow"', '"-preset", "medium"'):
+        assert hard not in code, f"成片的 preset 又被硬写回调用里了：{hard}"
+
+    # —— 把源码里那两张对照表读回来 ——
+    # 表长这样（一行一个 preset）：
+    #     slow      32.18s   14.32 MiB       —      0.990284   46.580   ← 改前
+    row = re.compile(
+        r"^#\s+(veryfast|slow|medium|fast)\s+([\d.]+)s\s+([\d.]+) MiB\s+"
+        r"(\S+)\s+(0\.\d+)\s+([\d.]+)")
+    rows: list[tuple[str, float, float, float, float]] = []
+    for line in src.splitlines():
+        m = row.match(line)
+        if m:
+            rows.append((m.group(1), float(m.group(2)), float(m.group(3)),
+                         float(m.group(5)), float(m.group(6))))
+
+    # **判据自己的判据**：主语没了它要出声，不能变成一条恒真的绿灯。
+    # 两个样本 × 四档 preset ＝ 8 行，少一行就说明表被改动过。
+    assert len(rows) == 8, (
+        f"`FINAL_PRESET` 上面那两张对照表只读出 {len(rows)} 行，应该是 8 行"
+        "（两个样本 × slow/medium/fast/veryfast）。表被删了或者格式变了——"
+        "而这个决定的全部依据就是那两张表，它没了这条测试就什么都没验")
+    for name in ("slow", "medium", "fast", "veryfast"):
+        got = [r for r in rows if r[0] == name]
+        assert len(got) == 2, f"表里 {name} 出现了 {len(got)} 次，两个样本各该有一次"
+
+    # 按出现顺序切成两个样本，每个样本内部 slow/medium/fast/veryfast 各一行
+    for sample in (rows[:4], rows[4:]):
+        by = {r[0]: r for r in sample}
+        slow, medium, fast, veryfast = (
+            by["slow"], by["medium"], by["fast"], by["veryfast"])
+
+        # ① 换 medium 的理由：真的更快
+        assert medium[1] < slow[1], (
+            f"表里 medium 的编码时间 {medium[1]}s 并不比 slow 的 {slow[1]}s 快——"
+            "那这次更换就没有依据了")
+        # ② 而且画质量不出差别（0.5 dB 是「开始看得出来」的量级，实测差一个数量级）
+        assert slow[4] - medium[4] < 0.5, (
+            f"表里 medium 的 PSNR 比 slow 低 {slow[4] - medium[4]:.3f} dB——"
+            "超过 0.5 dB 就不能再说「画质量不出差别」，这次更换要重新论证")
+        # ③ 代价是体积，但要小到无所谓（成片走 Release，2 GB 额度）
+        assert medium[2] > slow[2], (
+            "表里 medium 反而比 slow 小——同一个 crf 下更快的 preset 只会更大，"
+            "变小就说明这两行不是在同一个画质上量的，表读错了")
+        assert medium[2] / slow[2] < 1.10, (
+            f"表里 medium 比 slow 大 {(medium[2] / slow[2] - 1) * 100:.1f}%，"
+            "超过 10% 就该重新算这笔账")
+
+        # ④ **不许再往快推的证据**：veryfast 同样 crf 18 反而更小＝画质掉了。
+        #    这一条是这张表最值钱的那一行——它拦的正是「看时间和体积都更好，
+        #    那就再快一档」这个下一步。
+        assert veryfast[2] < slow[2], (
+            "表里 veryfast 并不比 slow 小——那「它变小＝没在同一个画质上编」"
+            "这个论据就不成立了，`medium` 这个停止位要重新论证")
+        assert slow[4] - veryfast[4] > 0.5, (
+            f"表里 veryfast 的 PSNR 只比 slow 低 {slow[4] - veryfast[4]:.3f} dB，"
+            "掉得没那么多的话，「再快一档就掉画质」这个结论撑不住")
+        # ⑤ fast 是那条坡的起点：它对 medium 已经没有画质上的好处
+        assert fast[4] <= medium[4] + 0.05, (
+            "表里 fast 的 PSNR 比 medium 还高出一截——那 medium 就不该是停止位了")
 
 
 def test_没有官方抠图时报错要指出退回照片版():
@@ -3433,9 +3556,15 @@ def test_中间段的编码参数要往快里调不是往省比特里调():
     assert int(reel.PART_CRF) <= 14, (
         f"中间段 crf 被推到了 {reel.PART_CRF}。快 preset + 高 crf 是两头都丢："
         "既没省时间，又把画质提前丢在一个临时文件里。")
-    # 成片那一步一个字都不许跟着动
-    assert reel.FINAL_PRESET == "slow" and reel.FINAL_CRF == "18", (
+    # 成片那一步不许被中间段连累着一起推到快档
+    # （原来这儿写死 `== "slow"`；2026-08-14 成片 preset 按实测换成了 `medium`，
+    #  所以这条只钉它该钉的那件事：**成片没有被拖进中间段那一档**。crf 照旧钉死。）
+    assert reel.FINAL_CRF == "18", (
         "改中间段不许连累成片——省时间要从中间产物上省，不能从交出去的那一份上省")
+    assert reel.FINAL_PRESET in _FINAL_PRESET_OK, (
+        f"成片 preset 跟着中间段一起跑到了 {reel.FINAL_PRESET}。中间段马上要被"
+        "重编，成片是交出去的那一份，两者的账完全不同——量过：那一档的成片"
+        "同样 crf 18 反而更小，也就是画质掉了")
 
 
 def _checkout_block(text: str) -> str | None:

@@ -36,6 +36,16 @@
 结论是它**够用来排序、不能用来读水平**。小红书压根不给真完播率，所以那边的
 真完播率无从得知 —— 空着，别拿另外两家的倍数去填。
 
+## 片长有两个出处，而 mp4 那个已经空了（2026-08-14 核）
+
+2026-08-13 起成片一律走 GitHub Release，`output/` 下**一个 mp4 都没有**。所以
+片长优先读 `render.json` 的 `film_seconds`（渲染时自己记的，reel 58/66、
+**已推送的 22/22 全有**），解析 mp4 退成兜底。见 `duration_of`。
+
+同一轮还核出一条更根本的：产物索引原来只认 `xiaohongshu.txt` 为锚，而**竖版
+视频线一份都不产这个文件**（73 : 0），于是 83 个 reel / interviews 目录从来
+没进过索引 —— 那才是「视频线零数据」的真因。见 `index_output`。
+
 ## 平台之间不能互相代入
 
 同一条内容在三边差 2～14 倍，而且**排序都不一样**：「大师赛为什么变两周」在
@@ -52,6 +62,7 @@ from __future__ import annotations
 
 import csv
 import io
+import json
 import re
 import statistics
 import sys
@@ -167,6 +178,9 @@ class Work:
     label: str = ""                      # 对上产物后换成干净的标题
     item: dict | None = field(default=None, repr=False)
     match_note: str = ""
+    # 片长是从哪儿读到的，或者为什么两条路都读不到。见 `duration_of`：
+    # 只在成功时出声的检查证明不了它真的看过，只在失败时出声的证明不了它成功过。
+    duration_note: str = ""
 
     def get(self, key: str):
         return self.values.get(key)
@@ -328,24 +342,70 @@ def _dir_date(path: Path) -> date | None:
     return None
 
 
-def index_output(root: Path) -> list[dict]:
-    """扫出所有「已生成的一篇内容」：标题 + 目录日期 + 同目录的成片。
+_TITLE_BOX_RE = re.compile(
+    r"<textarea[^>]*\bid=[\"']title[\"'][^>]*>(.*?)</textarea>", re.S)
 
-    以 `xiaohongshu.txt` 为锚，它的**第一行就是发文标题** —— 让产物自证，
-    不写死映射表。mp4 在同目录下找；找不到不是错（图文本来就没有）。
+
+def _title_from_xhs(path: Path) -> str:
+    """`xiaohongshu.txt` 的第一行就是发文标题。"""
+    return next((ln.strip() for ln in
+                 path.read_text(encoding="utf-8").splitlines() if ln.strip()), "")
+
+
+def _title_from_copy(path: Path) -> str:
+    """复制页的当期标题在 `<textarea id="title">`。
+
+    ⚠️ **不是 `<h1>`** —— 那儿写死是「贴图发布文案」一个常量，对任何一天的
+    复制页都一样。仓库里为它栽过一次：一道「是不是这一版」的闸拿 `<h1>` 当
+    指纹，于是恒真了一个月（见 CLAUDE.md）。这里再取一次 `<h1>`，就会把 156
+    份产物全归成同一个标题。
+    """
+    m = _TITLE_BOX_RE.search(path.read_text(encoding="utf-8"))
+    return m.group(1).strip() if m else ""
+
+
+def _film_seconds(outdir: Path) -> float | None:
+    """渲染时自己记下来的成片时长。读不到返回 None，判断留给调用方。"""
+    try:
+        data = json.loads((outdir / "render.json").read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return None
+    secs = data.get("film_seconds") if isinstance(data, dict) else None
+    return float(secs) if isinstance(secs, (int, float)) and secs > 0 else None
+
+
+def index_output(root: Path) -> list[dict]:
+    """扫出所有「已生成的一篇内容」：标题 + 目录日期 + 片长的两个出处。
+
+    **两个锚点，缺一不可。** 2026-08-14 实测：`xiaohongshu.txt` 只有解说片 /
+    内容雷达 / 知识帖那几条线在产，**竖版视频线（reel + interviews）一份都
+    没有** —— 73 : 0，它的文案出口是 `copy.html` 和 `specs/reels/<slug>.xhs.txt`。
+    只认前一个锚点的话，这个工具**从来就读不到视频线**（83 个产物目录一个都
+    没进过索引），而它报出来的样子是「未匹配 N/N 条」——和「这些内容压根没
+    生成过」长得一模一样。空结果先自证是真空。
+
+    `copy.html` 是严格超集（实测 156 份，73 个带 `xiaohongshu.txt` 的目录**全部**
+    也有它），所以按目录取一次就够，两个锚点不会重复计数。`xiaohongshu.txt`
+    优先只是为了不动既有那 73 条的行为——两者在重叠目录上实测 72/73 逐字相同，
+    剩下那条只差一个开头的 emoji，而 `normalize()` 本来就把它去掉。
+
+    片长记两个出处，取舍见 `duration_of`。找不到都不是错：图文本来就没有片长。
     """
     items = []
-    for txt in sorted(root.rglob("xiaohongshu.txt")):
+    for outdir in sorted({p.parent for p in root.rglob("copy.html")}
+                         | {p.parent for p in root.rglob("xiaohongshu.txt")}):
+        xhs, copy = outdir / "xiaohongshu.txt", outdir / "copy.html"
         try:
-            lines = txt.read_text(encoding="utf-8").splitlines()
+            title = (_title_from_xhs(xhs) if xhs.is_file()
+                     else _title_from_copy(copy) if copy.is_file() else "")
         except OSError:
             continue
-        title = next((ln.strip() for ln in lines if ln.strip()), "")
         if not title:
             continue
-        mp4s = sorted(txt.parent.glob("*.mp4"))
-        items.append({"title": title, "norm": normalize(title), "dir": txt.parent,
-                      "date": _dir_date(txt.parent), "mp4": mp4s[0] if mp4s else None})
+        mp4s = sorted(outdir.glob("*.mp4"))
+        items.append({"title": title, "norm": normalize(title), "dir": outdir,
+                      "date": _dir_date(outdir), "mp4": mp4s[0] if mp4s else None,
+                      "film_seconds": _film_seconds(outdir)})
     return items
 
 
@@ -430,12 +490,47 @@ def attach(works: list[Work], items: list[dict]) -> None:
 
 
 def duration_of(work: Work) -> float | None:
-    if not (work.item and work.item["mp4"]):
+    """成片时长：先读 `render.json` 的 `film_seconds`，读不到再退回解析 mp4。
+
+    ## 为什么换顺序（2026-08-14）
+
+    2026-08-13 起成片一律走 GitHub Release，`output/` 下**一个 mp4 都没有了**
+    （实测 0 份）。而这个函数原来只解析 mp4，于是对**100% 的内容**返回 None，
+    **还是裸 `return`，一个字都不打印**。净效果是「均观看比例」整节算不出来，
+    而它和「今天没数据」长得一模一样 —— 又一次「兜底出事的时候不吭声」。
+    CLAUDE.md 里「完播只有 2~3%，所以最硬的事实要放第①屏」那条规矩，全部依据
+    就是这个指标。
+
+    `film_seconds` 是渲染那一刻自己记下来的，**不依赖成片还在不在本地**，所以
+    它才该是第一顺位（实测 reel 58/66 有，**已推送的 22/22 全有**）。mp4 那条
+    留着不动：老产物可能没有 `render.json`，也可能成片还躺在本地。
+
+    ## 两条路都要出声
+
+    出处记进 `work.duration_note`，「读到了、出处是谁」和「两条都读不到」在
+    报告里分得开。只在成功时出声的检查证明不了它真的看过，只在失败时出声的
+    检查证明不了它成功过 —— 这次栽的正是后一种。
+    """
+    if not work.item:
+        work.duration_note = "没对上产物"
         return None
-    try:
-        return mvhd_seconds(work.item["mp4"].read_bytes())
-    except (OSError, ValueError):
-        return None
+    film = work.item.get("film_seconds")
+    if film:
+        work.duration_note = "render.json film_seconds"
+        return float(film)
+    mp4 = work.item.get("mp4")
+    if mp4:
+        try:
+            secs = mvhd_seconds(mp4.read_bytes())
+        except (OSError, ValueError) as exc:
+            work.duration_note = f"mp4 解不开（{type(exc).__name__}）"
+            return None
+        if secs:
+            work.duration_note = f"解析 {mp4.name}"
+            return float(secs)
+    work.duration_note = ("render.json 没有 film_seconds，同目录也没有 mp4"
+                          "（成片走 Release 之后这是常态）")
+    return None
 
 
 # ---------------------------------------------------------------- 工具
