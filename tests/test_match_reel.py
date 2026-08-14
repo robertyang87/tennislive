@@ -8339,10 +8339,37 @@ def test_同一届赛事顶栏的中文名要统一():
     统一成同一个前缀——这样以后加新的这一届赛事的 spec，判据自动接管，
     不用回来给这个测试加名字；换到别的赛事（比如辛辛那提）不会被误伤，
     因为它们的正文里不会出现这些关键词。
+
+    ⚠️ 2026-08-14 补的一处：上面那句"正文里不会出现这些关键词"是这条测试
+    自己的假设，`landaluce-draper`（辛辛那提 ATP1000）第一次把它证伪——
+    `human_context.facts` 里合理提到了德雷珀"蒙特利尔外卡首轮出局"（他本赛季
+    另一站的伤病史，和这条片子讲的辛辛那提无关），blob 扫描是**整份 spec**，
+    于是"蒙特利尔"+这条片子自己的"ATP1000"（辛辛那提也是 1000 级）撞在一起，
+    把一条辛辛那提的 spec 误判成"属于国家银行公开赛"。**背景事实提一句别的
+    赛事，不等于这条片子在讲那个赛事**——和"贴近比赛事实"那节里"只查会发出去
+    的字段"是同一个教训，只是这次连"发出去"的 push.lead 也会踩中（合理引用
+    别的赛事作背景），所以不是排除 `_` 开头字段就够，而是要排除"背景事实"这几个
+    容器本身：`_facts`（顶层注解）、`editorial.human_context`（facts/sources
+    本来就是给这场比赛找上下文用的，会引别的赛事）、`push`（微信正文，同样会
+    引背景）。真正描述"这条片子在讲哪一站"的字段留着：`topbar`、
+    `editorial.question/thesis/beats`、`cover`、`segments` 的旁白——这些字段
+    没有理由点别的赛事的名字，除非这条片子真的是那一届赛事的。
     """
     reel = _reel()
     canonical = {"WTA": "WTA1000 多伦多", "ATP": "ATP1000 蒙特利尔"}
     keywords = ("National Bank Open", "国家银行公开赛", "加拿大公开赛", "Rogers Cup")
+
+    def _outward_blob(spec: dict) -> str:
+        outward = {
+            "topbar": spec.get("topbar"),
+            "cover": {k: v for k, v in (spec.get("cover") or {}).items()
+                      if not str(k).startswith("_")},
+            "editorial": {k: v for k, v in (spec.get("editorial") or {}).items()
+                          if k in ("question", "thesis", "beats")},
+            "segments": [{"narration": s.get("narration", "")}
+                         for s in spec.get("segments") or []],
+        }
+        return json.dumps(outward, ensure_ascii=False)
 
     def belongs_to_this_event(blob: str) -> bool:
         if any(k in blob for k in keywords):
@@ -8356,7 +8383,7 @@ def test_同一届赛事顶栏的中文名要统一():
         line1 = (spec.get("topbar") or {}).get("line1", "")
         if not line1:
             continue
-        blob = json.dumps(spec, ensure_ascii=False)
+        blob = _outward_blob(spec)
         if not belongs_to_this_event(blob):
             continue
         checked += 1
