@@ -55,6 +55,7 @@ not a bot`，`tv` 报 `This video is DRM protected`，默认的 `android vr`
 from __future__ import annotations
 
 import argparse
+import difflib
 import io
 import json
 import re
@@ -1321,6 +1322,50 @@ def _takeaway_text(card: dict) -> str:
 # 0.12 是留给标点、口吃、大小写这类无害差异的；语义级的分歧远达不到这个量。
 TRANSCRIPT_MAX_DISAGREE = 0.12
 
+# 比对之前**两边一起去掉**的填词。
+#
+# 为什么要去：这道闸量的是「第一份源可不可信」，而 `uh`/`um` 这类填词
+# **whisper 系统性地会丢**——丢不丢跟源可不可信一点关系没有，它是这把尺子
+# 自己的噪声。留着它们，分歧率就变成了「说话人有多磕巴」的度量，而不是
+# 「两份转写对不对得上」的度量。
+#
+# 这不是把闸放松，是**把尺子量的东西修对**：去掉两边共同的噪声之后，剩下的
+# 差异全是真的实词分歧，同样的 0.12 门槛因此对真问题**更敏感**，不是更松。
+#
+# 来路（2026-08-14，中岛布兰登蒙特利尔亚军致辞）：`small.en` 报 19.8%、
+# 换 `medium.en` 报 19.0%，**双双越过 0.18 的天花板**，而逐处看下来没有一处
+# 语义对不上。量了才知道根子在分布：那条 394 词里 42 个是 `uh`/`um`（10.7%），
+# 另有 4.5% 是紧邻重复的磕巴——**光这一类就占 15.2%**，实测分歧不过是它
+# 再加四五个百分点的常规抖动。同一天谢尔顿那条 545 词、填词 8.3%，实测 15.6%，
+# 两条是同一个形状。分母还被欢呼吃掉一截：那 243 秒里有 42 秒是纯掌声，
+# 一个词都没有。
+#
+# ⚠️ **名单宁可窄，不可宽**（本仓库的老规矩）。只收无歧义的英语犹豫音；
+# `ah`/`eh`/`mm` 一概不收——`eh` 在加拿大英语里是真词，`mm` 可能是应答，
+# 把它们去掉就会开始吃掉真内容，那才是真的放松闸。
+# ⚠️ **不去紧邻重复的磕巴**（`I I`、`more than more than`）：那要靠猜边界，
+# 而「very very good」这种是真内容。填词这一档已经够，多做一步就越界了。
+_COMPARE_FILLERS = frozenset({"uh", "uhh", "um", "umm", "erm"})
+
+
+def compare_tokens(text: str) -> list[str]:
+    """比对用的词流：小写、去标点、**去掉填词**。见 `_COMPARE_FILLERS`。"""
+    words = re.sub(r"[^\w\s']", " ", text.lower()).split()
+    return [w for w in words if w and w not in _COMPARE_FILLERS]
+
+
+def disagree_rate(first: str, second: str) -> tuple[float, list, list, difflib.SequenceMatcher]:
+    """两份转写对不上多少。返回 (比例, 第一份词流, 第二份词流, matcher)。
+
+    **抽出来是为了能测**：真跑一次 `verify_transcript` 要下音频、跑 whisper，
+    只有 runner 上跑得动；而「填词有没有被去掉」这件事是纯函数的事，
+    不该只能靠一趟三分钟的 run 来验。
+    """
+    a, b = compare_tokens(first), compare_tokens(second)
+    sm = difflib.SequenceMatcher(None, a, b, autojunk=False)
+    same = sum(m.size for m in sm.get_matching_blocks())
+    return 1 - same / max(len(a), 1), a, b, sm
+
 # 第二份 ASR 的默认模型。**只有这一处出处**——写两处必分叉，而分叉的样子是
 # 报告上印着一个模型、真正跑的是另一个，谁也看不出来。
 DEFAULT_WHISPER = "small.en"
@@ -1400,14 +1445,8 @@ def verify_transcript(spec: dict, lines: list[dict], outdir: Path) -> Path:
     (outdir / "whisper.json").write_text(
         json.dumps(mine, ensure_ascii=False, indent=1), encoding="utf-8")
 
-    def norm(text: str) -> list[str]:
-        return [w for w in re.sub(r"[^\w\s']", " ", text.lower()).split() if w]
-
-    theirs = norm(" ".join(seg["en"] for seg in lines))
-    ours = norm(" ".join(w for _, w in mine))
-    sm = difflib.SequenceMatcher(None, theirs, ours, autojunk=False)
-    same = sum(b.size for b in sm.get_matching_blocks())
-    rate = 1 - same / max(len(theirs), 1)
+    rate, theirs, ours, sm = disagree_rate(
+        " ".join(seg["en"] for seg in lines), " ".join(w for _, w in mine))
 
     # **第一份是谁，要照实写。** 这条线原来只有一个源，所以这儿写死了「YouTube
     # 自动字幕」；接进 Tennis TV 之后第一份其实是本地跑的 ASR（spec 的 `asr_model`），
@@ -1419,6 +1458,12 @@ def verify_transcript(spec: dict, lines: list[dict], outdir: Path) -> Path:
               f"- 第二份：faster-whisper（{_second_model(spec)}）"
               f"**{len(ours)}** 词",
               f"- **对不上 {rate:.1%}**（闸门 {TRANSCRIPT_MAX_DISAGREE:.0%}）", "",
+              # **报告要说清它到底量了什么。** 词数是去掉填词之后的，
+              # 不写这一句的话，回头有人拿它跟视频里数出来的词数对，会以为报告错了。
+              f"⚠️ 上面两个词数和分歧率都是**去掉 "
+              f"{'/'.join(sorted(_COMPARE_FILLERS))} 这类填词之后**算的："
+              "这些词 whisper 系统性地会丢，跟源可不可信无关，留着只会把"
+              "「说话人有多磕巴」量成「两份转写对不上」。", "",
               f"## 分歧逐处（左＝{first}，右＝第二份）", ""]
     for tag, i1, i2, j1, j2 in sm.get_opcodes():
         if tag == "equal":

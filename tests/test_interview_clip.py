@@ -15,6 +15,7 @@
 from __future__ import annotations
 
 import ast
+import difflib
 import json
 import re
 from pathlib import Path
@@ -3000,6 +3001,45 @@ def test_非YouTube的源没有自动字幕轨要说清楚而不是去拉(monkey
     assert "不是 YouTube" in said
     assert "ASR" in said and "cap_" in said, f"没说出路：{said}"
     assert "asr_model" in said, f"没提醒第二份 ASR 那道闸：{said}"
+
+
+def test_算分歧率之前要把填词从两边一起去掉():
+    """⚠️ **这道闸量的是「源可不可信」，不是「说话人有多磕巴」。**
+
+    `uh`/`um` 这类填词 whisper 系统性地会丢，丢不丢跟第一份源可不可信毫无关系
+    ——它是这把尺子自己的噪声。留着它们，一个磕巴的人就会把分歧率顶穿天花板，
+    而逐处看下来一句语义分歧都没有（2026-08-14 中岛布兰登那条：`small.en`
+    19.8%、`medium.en` 19.0%，双双越过 0.18，而 394 词里 42 个是填词）。
+
+    **去掉不是把闸放松**：两边共同的噪声消掉之后，剩下的差异全是真实词分歧，
+    同样的门槛对真问题更敏感。下面第 3 段就是钉这一头的。
+    """
+    from tools import build_interview_clip as m
+
+    # ① 只差填词 → 去掉之后必须是 0
+    first = "Um, I'd like to uh thank my team, uh, all of you."
+    second = "I'd like to thank my team, all of you."
+    rate, a, b, _ = m.disagree_rate(first, second)
+    assert rate == 0, f"只差填词却报了 {rate:.1%}：{a} vs {b}"
+    assert "uh" not in a and "um" not in a, f"填词没去干净：{a}"
+
+    # ② 反向验证：**不去填词的话，同一对就是一个很难看的数**——
+    #    这一段证明上面那个 0 是「去掉填词」买来的，不是这对样本本来就一样
+    raw = [w for w in re.sub(r"[^\w\s']", " ", first.lower()).split() if w]
+    raw2 = [w for w in re.sub(r"[^\w\s']", " ", second.lower()).split() if w]
+    sm = difflib.SequenceMatcher(None, raw, raw2, autojunk=False)
+    naive = 1 - sum(x.size for x in sm.get_matching_blocks()) / len(raw)
+    assert naive > 0.2, f"这对样本没有区分度，反向验证是空的：{naive:.1%}"
+
+    # ③ **真的实词分歧一个都不许被吃掉。** 去填词只许消掉填词，
+    #    否则这道闸就真的被放松了——那正是它唯一不能出的错。
+    rate2, _, _, _ = m.disagree_rate("I thank my team for the support",
+                                     "I thank my coach for the support")
+    assert rate2 > 0, "实词换掉了却报 0，这道闸被放松了"
+
+    # ④ 名单宁可窄，不可宽：`eh` 在加拿大英语里是真词，不许当填词吃掉
+    assert "eh" in m.compare_tokens("It was great, eh")
+    assert "ah" in m.compare_tokens("Ah, that was close")
 
 
 def test_第二份ASR必须换个模型否则那道闸是空的(monkeypatch, tmp_path):
