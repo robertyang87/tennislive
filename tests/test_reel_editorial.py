@@ -547,3 +547,128 @@ def test_小红书标题的豁免表只许减不许加():
         f"这几条的小红书标题已经不是通稿导语了，把它们从豁免表里删掉：{stale}"
         f"——这张表只许减不许加"
     )
+
+
+# ──────────────────────────────────────────────────────────────────────────
+# 五、「赛场之上」要显式认领数据统计图和自动推送
+# ──────────────────────────────────────────────────────────────────────────
+#
+# 来路：2026-08-14 `shelton-nakashima-montreal-final`（蒙特利尔决赛）在**同一条
+# 片子上连踩两次同一个形状的坑**——
+#
+#   ① 漏写 `push.auto: true` → 合并进 main 之后 `auto-push-reel` 那趟
+#      **是绿的，却什么都没发**。闸按设计跳过了（默认不自动发是对的），
+#      可"跳过"和"发成功了"在 run 列表上长得一模一样，是四分钟没等到
+#      `pushed.json` 才发现的。
+#   ② 漏写 `stats` 块 → 推送里没有数据统计图。`render()` 里写着
+#      「有 `stats` 就必须渲出来，渲不出来要出声」——**而没写 `stats` 时
+#      它一行代码都不跑**，同样不出声。账号所有者收到推送后问
+#      「比赛的技术统计图片没在推送里面啊」。
+#
+# 两个字段都是**显式认领**（和 `mixed_fps` / `silent_source` / `_layout_why`
+# 一个形状）：默认关掉是对的，坏就坏在"忘了写"和"想清楚了不写"在产物上
+# 分不出来。所以这条判据不要求它们必须为真，只要求**必须表态**：
+#
+#   `stats`      有 → 过；没有 → 必须写 `_no_stats_why` 说清为什么
+#   `push.auto`  true → 过；没有 → 必须写 `push._no_auto_why` 说清走哪条路发
+#
+# ⚠️ 为什么允许不写：`stats` 真有写不了的时候。`swiatek-rybakina-toronto-final`
+# 的 `_facts` 里记着——WTA 官方 stats 接口和 flashscore 的 Points 分类都不给
+# Winners/非受迫失误，那一场翻遍编辑稿也没有，硬凑一张缺两项的图不如不画。
+# `push.auto` 同理：手动 `mode=push` 也是正路（那条路有完整预检）。
+#
+# ⚠️ 存量 52/34 条挂在下面两张表里，**只许减不许加**，而且两张表都有自检：
+# 表里每个 slug 必须真的存在、而且必须真的还缺着——写错一个名字，豁免就
+# 成了一盏恒真的绿灯（本文件上面那两张表同样的做法）。
+
+_STATS_LEGACY = frozenset({
+    "alexandrova-sabalenka", "anisimova-bartunkova", "bencic-eala",
+    "bencic-townsend", "chwalinska-gibson", "eala-fernandez", "eala-mcnally",
+    "eala-osaka", "eala-parks", "eala-pegula-final", "eala-svitolina",
+    "eala-zheng", "fernandez-andreeva", "fonseca-ruud", "fritz-jodar-final",
+    "gauff-korneeva", "gauff-sakkari", "gea-shapovalov", "landaluce-draper",
+    "medvedev-zandschulp", "nishikori-shang", "noskova-mcnally",
+    "osaka-fernandez", "osaka-mertens", "pegula-rakhimova", "potapova-venus",
+    "rybakina-gauff-toronto-sf", "rybakina-kasatkina", "rybakina-li",
+    "rybakina-samsonova", "shang-darderi-montreal-2026", "shang-rublev",
+    "shang-vallejo", "shelton-fonseca", "shnaider-pegula",
+    "svitolina-alexandrova", "svitolina-anisimova", "swiatek-golubic",
+    "swiatek-kostyuk", "swiatek-rybakina-toronto-final", "swiatek-shnaider",
+    "tirante-fritz", "wang-kasatkina", "wang-pareja", "wang-samsonova",
+    "wong-brooksby", "wong-gea", "wong-lehecka", "zhang-ostapenko",
+    "zhang-putintseva", "zhang-sabalenka", "zverev-griekspoor",
+})
+
+_AUTO_LEGACY = frozenset({
+    "chwalinska-gibson", "eala-fernandez", "eala-mcnally", "eala-osaka",
+    "eala-parks", "eala-pegula-final", "eala-svitolina", "eala-zheng",
+    "fernandez-andreeva", "fritz-jodar-final", "gauff-sakkari",
+    "gea-shapovalov", "medvedev-zandschulp", "nishikori-shang",
+    "noskova-mcnally", "pegula-rakhimova", "potapova-venus",
+    "rybakina-kasatkina", "rybakina-li", "shang-darderi-montreal-2026",
+    "shang-rublev", "shang-vallejo",
+    "tirante-fritz", "wang-kasatkina", "wang-pareja", "wang-samsonova",
+    "wong-brooksby", "wong-gea", "wong-lehecka", "zhang-ostapenko",
+    "zhang-putintseva", "zhang-sabalenka", "zverev-griekspoor",
+})
+
+
+def _court_specs():
+    """「赛场之上」里真出片的那些（只有 cover+stats 的精简统计图 JSON 不算）。"""
+    for slug, spec in _specs():
+        if (spec.get("cover") or {}).get("eyebrow") != "赛场之上":
+            continue
+        if not spec.get("segments"):
+            continue
+        yield slug, spec
+
+
+def _missing_stats():
+    return {s for s, spec in _court_specs()
+            if "stats" not in spec and not spec.get("_no_stats_why")}
+
+
+def _missing_auto():
+    out = set()
+    for slug, spec in _court_specs():
+        push = spec.get("push") or {}
+        if push.get("auto") is True or push.get("_no_auto_why"):
+            continue
+        out.add(slug)
+    return out
+
+
+def test_赛场之上要么带数据统计图要么说清为什么不带():
+    fresh = _missing_stats() - _STATS_LEGACY
+    assert not fresh, (
+        f"这几条「赛场之上」既没有 `stats` 块、也没写 `_no_stats_why`：{sorted(fresh)}。"
+        f"数据统计图是显式认领——**忘了写和想清楚了不写，在产物上分不出来**，"
+        f"而 render 在没有 `stats` 时一行代码都不跑、一个字都不说。"
+        f"ATP 那条线 flashscore 直接给 Winners/非受迫失误；WTA 那几场查不到就"
+        f"写一句 `_no_stats_why` 说明查过哪些源。"
+    )
+    assert len(list(_court_specs())) >= 50, "一条 spec 都没扫到，判据的主语像是没了"
+
+
+def test_赛场之上要么开自动推送要么说清走哪条路():
+    fresh = _missing_auto() - _AUTO_LEGACY
+    assert not fresh, (
+        f"这几条「赛场之上」既没写 `push.auto: true`、也没写 `push._no_auto_why`："
+        f"{sorted(fresh)}。合并进 main 之后 `auto-push-reel` 会**绿着跳过**——"
+        f"「跳过」和「发出去了」在 run 列表上长得一模一样。"
+        f"要自动发就写 `auto: true`；打算手动 `mode=push` 就写一句 `_no_auto_why`。"
+    )
+
+
+def test_这两张豁免表只许减不许加():
+    for slug in sorted(_STATS_LEGACY | _AUTO_LEGACY):
+        assert (SPEC_DIR / f"{slug}.json").is_file(), \
+            f"{slug} 这条 spec 已经没了，把它从豁免表里删掉"
+    stale_stats = _STATS_LEGACY - _missing_stats()
+    assert not stale_stats, (
+        f"这几条已经有 `stats`（或写了 `_no_stats_why`）了，从表里删掉："
+        f"{sorted(stale_stats)}——这张表只许减不许加")
+    stale_auto = _AUTO_LEGACY - _missing_auto()
+    assert not stale_auto, (
+        f"这几条已经表过态了，从表里删掉：{sorted(stale_auto)}"
+        f"——这张表只许减不许加")
