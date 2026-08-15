@@ -1,0 +1,290 @@
+{
+  "slug": "hijikata-monfils",
+  "source_url": "https://www.youtube.com/watch?v=lPpLK1IUk7E",
+  "_source": "**Tennis TV 官方频道**（`youtube.com/@TennisTV`）的单场集锦，标题 `🇦🇺 Rinky Hijikata vs Gael Monfils 🇫🇷 | Cincinnati 2026 Highlights`，211.3 秒、1920×1080、50 fps。频道由 YouTube oEmbed 自报（`author_name = Tennis TV`）。四处画面自证：① 记分条整场烧着 `HIJIKATA / MONFILS`，比分从首盘 1-2 一路到 5-3 四十比零的赛点都能和 flashscore 的逐分对上；② 93.5 秒挂出 `BREAK POINTS WON` 图形（`HIJIKATA 0/0 · MONFILS 2/3`），和首盘统计一致；③ 场地印着 `P&G`、中场 `ATP TOUR`、网带 `Emirates`，后场背板依次 `Old Spice · Gillette · Spruce`、另一侧 `Fifth Third · Old Spice · CreditOne · W&S`——辛辛那提站的赞助商阵容；④ 右上角全程烧着 `TennisTV` 台标。\n\n⚠️ **ATP 官方频道同一场也发了一版（`iIFG4XH65tM`），没用它**：CLAUDE.md「源片的清晰度和完整度不能将就」——两版都够 1080p，而 Tennis TV 这版明显长得多（这版实测 211.3 秒，ATP 官方那版按频道页的时长标签大约两分钟出头）。\n\n⚠️ **我在挑源片那一步把两版的时长都读错了**：拿频道列表页 HTML 里「N minutes, M seconds」的无障碍文本按「videoId 前后 4000/8000 字符」去找，那个窗口会串到相邻视频的标签上，于是这版被读成「12 分 08 秒」。真实时长是 probe 下完之后 ffprobe 报的 **211.3 秒**。**结论没变（仍然是这版更长），但那三个数是错的**——下次要时长就 probe，或者 `yt-dlp --print '%(duration)s'`，别拿邻近字符窗口去猜。",
+  "_column": "赛场之上",
+  "topbar": {
+    "line1": "ATP1000 辛辛那提 第一轮",
+    "line2": "土方凛辉 2-6 7-6(5) 6-3 孟菲尔斯"
+  },
+  "_topbar_why": "第二行和 `cover.winner`（土方凛辉）、`cover.result`（2-6 7-6(5) 6-3）、`cover.matchup` 的名字机械一致。",
+  "editorial": {
+    "mode": "match_review",
+    "question": "首盘三十一分钟就六比二拿下、全场发球直接得分十六比三的那个人，怎么输掉了这场球？",
+    "thesis": "因为他把能赢的都赢在了前三十一分钟，之后两个小时里一样一样地漏了出去。首盘他的发球局一个没丢、一发进了五成五、三十一分钟六比二；到第三盘一发只剩三成九，二发被打了三十三分，一个人送出二十六个非受迫失误。中间那盘是分水岭：他的发球局被破，三比四落后，立刻又破了回来；抢七里他还一度五比四领先——然后连丢三分，第二盘六十四分钟，输了。决胜盘第二局他握着**五个局点**没能保住，比分从此再没回来。全场二百二十四个小分，土方一百一十五、孟菲尔斯一百零九，只差六分。而这一场的分量不在数据上：**这是孟菲尔斯第十四次来辛辛那提，也是最后一次**——他已经宣布这个赛季打完就退役。",
+    "beats": [
+      "前段：首盘三十一分钟六比二，发球局一个没丢，是他这一年打得最像自己的半小时",
+      "中段：第二盘他一盘打出十个发球直接得分，仍然在抢七五比四领先之后连丢三分；决胜盘第二局五个局点没保住",
+      "结局：一发从五成五掉到三成九，第三盘二十六个非受迫失误；两小时三十三分之后全场起立，他第十四次也是最后一次走出这片场地"
+    ],
+    "human_context": {
+      "angle": "这一场的场外切口是**一次告别**，不是「爆冷」。孟菲尔斯 2025 年十月宣布 2026 年是他职业生涯的最后一个赛季，这场球因此是他在辛辛那提的第十四次、也是最后一次登场——ATP 官方给同一场比赛的视频标题就写着 `Hijikata rallies to end Monfils' Cincinnati 2026 career in R1`。再往下一层是他这一年的处境：今年打到这场为止一共十三场、只赢了四场；五月底法网之后两个多月没有出现在巡回赛上，八月初才在蒙特利尔复出。世界排名已经掉到三百零五，而他的生涯最高是第六。赛后两个人在网前抱了一下，全场起立鼓掌。",
+      "facts": [
+        "孟菲尔斯 1986-09-01 出生，本场 39 岁；这场球打在 8 月 13 日（北京 8 月 14 日），距他四十岁生日还有 18 天",
+        "土方凛辉 2001-02-23 出生，25 岁，澳大利亚人；生涯最高世界第 62（2024-08-26），2023 年澳网男双冠军（与库布勒）",
+        "2026 年到这场球为止孟菲尔斯打了 13 场、4 胜 9 负；5 月 25 日法网之后到 8 月 4 日蒙特利尔之间没有比赛",
+        "土方凛辉赛前是四连败（8 月 2 日蒙特利尔、7 月 29 日、6 月 30 日、6 月 19 日），上一次赢球是 6 月 18 日",
+        "两个人此前从未交手，这是第一次（flashscore `df_hh_1` 的对战记录为空，含本场 1:0）",
+        "孟菲尔斯 2011 年在辛辛那提打进 1/4 决赛，2024 年第二轮击败过当时世界第三的阿尔卡拉斯"
+      ],
+      "sources": [
+        "https://www.atptour.com/en/news/monfils-final-season-announcement-october-2025",
+        "https://www.espn.com/tennis/story/_/id/46445763/tennis-star-gael-monfils-retire-end-next-season",
+        "https://www.espn.com/tennis/story/_/id/49605734/monfils-ousted-1st-round-hijikata-final-cincinnati-open",
+        "https://www.thescore.com/atp/news/3579555/hijikata-rallies-to-beat-monfils-in-1-st-round-of-cincinnati-open",
+        "https://ca.sports.yahoo.com/news/hijikata-rallies-beat-monfils-1st-032450701.html",
+        "https://www.atptour.com/en/video/highlights-hijikata-rallies-to-end-monfils-cincinnati-2026-career-in-r1"
+      ],
+      "voice_label": "最后一次来辛辛那提"
+    }
+  },
+  "_no_repeat": "⚠️ **今天已经发过 `boulter-volynets`（同一站、同一轮），那条的落点是「数据的悖论」——输的那个人小分和局数都更多。这一条一个字都不许去碰那个角度**：这场球恰好也只差六个小分（115-109），很诱人，但赢的那个人分更多，形状根本不是同一个，而且连着两条都用「数据反常」当落点就是同一栏目内的重复。这一条的落点是**告别**。\n\n⚠️ 同样躲开 `maria-yastremska`（8 月 15 日发的，同一站）那条的角度——**年龄**。这一条里孟菲尔斯的年龄只在两处出现（开场一句、末尾「再过十八天满四十岁」），都是**一句带过的来路**，不铺开讲「三十九岁还在打」这件事本身。CLAUDE.md「上一条铺开讲过的主体，一个字都别碰；看不懂这场球所必需的来路，一句带过」。",
+  "_editing_why": "二十九段，取源片 62.6–200.9 里的十三个镜头块，全部落在 `probe.json` 的 `scene_cuts` 之间（每段末尾另留 `SEG_FADE=0.18` 秒的溶解底料，都不越过下一个切点）。\n\n**冷开场用 62.6–65.6**（孟菲尔斯拿下首盘之后的庆祝近景），不是源片开头——开头那十几秒是首盘 1-2 时的一个普通底线回合，戏剧性最低（CLAUDE.md「冷开场不许随手取源片开头」）。开完这一格再倒回 14.1 秒从头讲。\n\n⚠️ **两个人的球衣要认清，否则「谁在画面里」全反**：孟菲尔斯**绿色上衣 + 黑色短裤**，土方凛辉**白色上衣 + 红色短裤 + 白色 Yonex 帽**。判据不是看着像——记分条整场烧着两个人的名字和局分，45.5 秒（2-3 时的绿衣近景）、63.5 秒（2-6 之后的绿衣庆祝）、186.5 秒（赛后低头的绿衣）都能和逐分对上；180.5 秒白衣那位对着自己的包厢庆祝，而 144.5 秒包厢里那几件蓝色澳大利亚队服是他的团队。\n\n**189.1–200.9 是网前那一段**（拥抱、说话、全场起立），源片到 201.22 就切进 Tennis TV 的订阅卡，所以这条片子的可用素材到 200.9 为止。\n\n⚠️ `scene_cuts_loose` 在 44.46–44.50、145.74–145.76、152.72–152.74、180.28–180.30 是每 0.02 秒一个，那是同一次剪辑被重复报了两三遍，不是三个独立切点。",
+  "_match": {
+    "flashscore_id": "OEf3f83l",
+    "_why": "flashscore 的逐分（`df_mh_1_OEf3f83l`）、统计（`df_st_1_`）、分盘用时（`df_sui_1_`）、交手与近期战绩（`df_hh_1_`）都从这个 id 取。**home = 土方凛辉 = 统计里的 SH = spec 里的 a**，**away = 孟菲尔斯 = SI = b**，和 `cover.matchup` 的顺序一致。\n\n⚠️ **ATP 这边没有公开的比赛时长 JSON 接口**（`atptour.com` 对本环境一律 403、`api.protennislive.com` 要 token，实测 401），所以时长照 `landaluce-draper` / `baez-dimitrov` 走通的做法用 `data:` URL 把核过的数字连同出处一起写进 `cover.scoreboard.duration_source`——**数字不是手填的口径，是 feed 原样抄来的**。"
+  },
+  "_hit_data": "跑了 `python3 tools/match_stat_hooks.py OEf3f83l --home 土方凛辉 --away 孟菲尔斯`，六条候选：\n\n    [总分差]   土方 115 - 孟菲尔斯 109，净差 6 分\n    [破发点]   土方 3/5（60%） · 孟菲尔斯 4/6（67%）\n    [连续保发] 土方 4 个 · 孟菲尔斯 7 个\n    [交手记录] 1:0（含本场），此前从未交手\n\n**这一条挑的不是总分差**（见 `_no_repeat`：今天已经有一条以「小分反常」当落点的片子了），挑的是**统计接口里那两栏**：\n\n    发球直接得分   孟菲尔斯 16  ·  土方 3      （第二盘一盘就有 10 个）\n    一发成功率     55% → 51% → 39%（分盘）\n    非受迫失误     孟菲尔斯 55（第三盘 26） · 土方 39\n\n它们说的是同一件事的两头：**发球一直在给他分，而其余部分一盘比一盘漏得多**。",
+  "_claims": {
+    "这是孟菲尔斯第十四次也是最后一次在辛辛那提出场": "三个独立出处。① **AP 通稿**（thescore.com / ca.sports.yahoo.com 两家转载，同一份 CINCINNATI (AP) 稿）：`Monfils made his 14th and final appearance at the Cincinnati Open. The 39-year-old Frenchman has announced he's retiring at the end of 2026.`；② **ESPN** 的标题就是 `Monfils ousted in 1st round by Hijikata in final Cincinnati Open`；③ **ATP 官方**给同一场比赛的视频标题 `Highlights: Hijikata rallies to end Monfils' Cincinnati 2026 career in R1`。退役本身另有 ATP 官方 2025 年 10 月的公告和 ESPN 的报道。",
+    "赛后全场起立为他鼓掌": "**AP 通稿**：`He received a standing ovation from the crowd following Thursday's match.`（thescore.com / Yahoo Sports 两家转载）。画面同样自证：189.1–200.9 那一段里两个人在网前拥抱、看台整片站着。",
+    "全场发球直接得分十六比三，第二盘一盘十个": "flashscore `df_st_1_OEf3f83l`：`Match · Aces SH÷3 SI÷16`；分盘一栏 `Set 1 · Aces SH÷2 SI÷1`、`Set 2 · Aces SH÷1 SI÷10`、`Set 3 · Aces SH÷0 SI÷5`，三盘相加 3/16，和全场那一行内部一致。",
+    "一发成功率从五成五掉到三成九": "flashscore `df_st_1_OEf3f83l` 分盘一栏的 `1st serve percentage`：孟菲尔斯（SI）`Set 1 55%`、`Set 2 51%`、`Set 3 39%`。同一栏土方（SH）是 64% / 38% / 69%。",
+    "第三盘他送了二十六个非受迫失误": "flashscore `df_st_1_OEf3f83l`：`Set 3 · Unforced errors SH÷15 SI÷26`；全场那一行是 `SH÷39 SI÷55`，分盘 5+24+26=55 内部一致。",
+    "决胜盘第二局他有五个局点": "flashscore 逐分 `df_mh_1_OEf3f83l` 第三盘第二局（`HC÷2 HE÷0 HH÷2`，孟菲尔斯发球被破）的分序：`15:0, 15:15, 15:30, 30:30, 30:40, 40:40, 40:A, 40:40, 40:A, 40:40, 40:A, 40:40, A:40 |B1|, 40:40, 40:A, 40:40, A:40 |B1|`——比分写作「土方:孟菲尔斯」，所以 `30:40` 和四次 `40:A` 是**孟菲尔斯的局点**（共五个），两次 `A:40 |B1|` 是土方的破发点，第二个兑现。画面同样自证：147.5 秒和 150.5 秒的记分条读作 `HIJIKATA 2 7 1 AD / MONFILS 6 6⁵ 0`，153.5 秒变成 `… 2 / … 0`。",
+    "抢七里他五比四领先之后连丢三分": "flashscore 逐分 `df_mh_1_OEf3f83l` 的 `Tiebreak - Set 2`：得分顺序（写作「土方:孟菲尔斯」）0-1、1-1、2-1、2-2、2-3、3-3、4-3、4-4、**4-5**、5-5、6-5、7-5——也就是**孟菲尔斯五比四领先之后，最后三分全被拿走**。⚠️ `HC` 是土方、`HE` 是孟菲尔斯，别读反：117.5 秒烧在画面上的 `HIJIKATA 2 6 4 / MONFILS 6 6 3` 和 `HC÷4 HE÷3` 那一行对得上。画面自证：117.5–126.5 秒记分条读 `2 6 4 / 6 6 3`，129.5 秒 `4 / 4`，132.5–138.5 秒 `6 / 5`，141.5 秒变成 `2 7 / 6 6⁵`。",
+    "全场二百二十四个小分，土方一百一十五、孟菲尔斯一百零九": "flashscore `df_st_1_OEf3f83l`：`Total Points Won SH÷51% (115/224) SI÷49% (109/224)`；发球分 `SH÷64% (65/101)`＋`SI÷59% (73/123)`＝224，内部一致。",
+    "今年到这场为止他一共只赢过四场，法网之后两个多月没打": "两个独立出处。① **flashscore** `df_hh_1_OEf3f83l` 的 `Last matches: Monfils G.`（50 条，回溯到 2024-10-22，没有截断）：2026 年共 13 场、4 胜 9 负；胜场是 2 月 25 日阿卡普尔科、3 月 5 日印第安维尔斯、4 月 5 日蒙特卡洛、8 月 4 日蒙特利尔，而 5 月 25 日法网之后到 8 月 4 日蒙特利尔之间**一场比赛都没有**。② **赛前预览**（thestatszone.com，2026-08-12 发）：`Monfils has returned to ATP action this month for the first time since his wildcard entrance at Roland-Garros.`",
+    "两个人此前从未交手": "flashscore `df_hh_1_OEf3f83l` 的 `Head-to-head matches` 一节在含本场之后是 1:0（硬地 1:0），此前为空；`tools/match_stat_hooks.py` 打出来的 `[交手记录] Hijikata R. 1 : 0 Monfils G.（含本场）` 是同一份数据。",
+    "土方凛辉赛前四连败": "flashscore `df_hh_1_OEf3f83l` 的 `Last matches: Hijikata R.`：本场之前依次是 8 月 2 日蒙特利尔负、7 月 29 日负、6 月 30 日负、6 月 19 日负，上一胜是 6 月 18 日。**赛前预览**（thestatszone.com）独立写着 `Hijikata has now succumbed to four successive losses since reaching the third round of Queen's back in mid-June.`"
+  },
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "孟菲尔斯",
+    "hook": "三十一分钟拿下首盘\n最后一次来这里",
+    "_hook_why": "封面主体是**输的那个**——刷到这条的人是冲孟菲尔斯来的，不是冲土方凛辉（CLAUDE.md「solo 封面放谁：放刷到这条的人是冲谁来的那个，输赢不管」，`arango-venus` 是同一个形状）。\n\n上一行是**过程**（首盘只用了三十一分钟），下一行是**落点**（这是他最后一次来辛辛那提）。两行都不复述海报上已经印着的东西——排名、轮次、盘分、用时全在比分板上，钩子一个字都没重复。\n\n最长行 9 个字符，在 `HOOK_MAX_CHARS = 10` 以内。",
+    "topic": "辛辛那提ATP1000 · 男单第一轮",
+    "portrait": {
+      "frame_at": 129.5,
+      "focus": 0.5,
+      "focus_y": 0.5,
+      "zoom": 1.0
+    },
+    "_portrait_why": "129.5 秒：第二盘抢七四比四，孟菲尔斯（绿衣）转向看台、双手举起来把全场叫起来。\n\n四道闸门逐条过：①时间地点人物——同一镜头块 127.58–131.24 秒，记分条读作 `HIJIKATA 2 6 4 / MONFILS 6 6 4`，是抢七四平那一分之后；绿衣是孟菲尔斯（见 `_editing_why` 里的球衣判据）；②画面对上这一屏在说的那件事——这条片子讲的是一次告别，要的是**他还在场上使劲的那一下**，不是赛后低头那一格（186.5 秒有，故意不用）。CLAUDE.md「主视角不等于看笑话」，`arango-venus` 栽过一次：那次挑的是「零比四落后还在握拳」，这次是「抢七里把看台叫起来」，同一个口径；③冲击力——中近景、动作明确、背后整片看台；④清晰度——这一格没有运动模糊。\n\n⚠️ **`pick_cover_frames` 这次帮不上**：528 帧里只活下来 43 个候选，最高的 `sharp` 只有 87.1（46.0 秒，而且 `faces: 2`），大部分 `eyes: 0`——转播的近景要么在动要么侧着。所以这一版按四道闸门人工选，不按候选表。\n\n⚠️ **`frame_at` 是照三秒一格的缩略图墙定的，等 `mode=cover` 把 `cover_src/portrait.jpg` 提交回来之后要再看一眼那一帧本身**（CLAUDE.md：「看过缩略图」和「看过那一帧」是两件事）。`focus` 同理，本地 `render_cover_local.py` 七秒一版。",
+    "scrim": "clear",
+    "winner": "土方凛辉",
+    "result": "2-6 7-6(5) 6-3",
+    "matchup": [
+      {
+        "name": "土方凛辉",
+        "name_en": "Rinky Hijikata",
+        "country": "AUS",
+        "rank": 95
+      },
+      {
+        "name": "孟菲尔斯",
+        "name_en": "Gael Monfils",
+        "country": "FRA",
+        "rank": 305
+      }
+    ],
+    "_matchup_rank_why": "两个名次都取 flashscore 的 ATP 官方排名榜单 feed `ran_dSJr14Y8`（`RA` = 本周、`RAP` = 上周）：土方凛辉 95（上周 93）、孟菲尔斯 305（上周 347）。⚠️ **tennisabstract 和 tennisexplorer 这天报的是 93 / 347，那是上一周那份榜单**——两个源打架时先查哪个新（CLAUDE.md），而 `RAP` 恰好就等于那两家的数，说明它们慢了一期。孟菲尔斯从 347 涨到 305 是因为 8 月 4 日在蒙特利尔赢了一场。⚠️ **两个人都不是种子**，海报不印种子序号。⚠️ flashscore 比赛 feed 里的 `CA`/`CB`（本场是 24 / 77）**不是排名**，那是国别代码——真名次 95 / 305 和它们对不上。",
+    "_name_why": "两个中文名都走 `player_zh()`：`Rinky Hijikata → 土方凛辉`、`Gael Monfils → 孟菲尔斯`。⚠️ **不写「莫菲斯」**，译名表里登记的是孟菲尔斯。",
+    "scoreboard": {
+      "court": "Center Court",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22:%20%222:33:00%22%2C%20%22source_feed%22:%20%22https://global.flashscore.ninja/2/x/feed/df_sui_1_OEf3f83l%22%7D",
+        "field": "duration"
+      },
+      "_duration_why": "flashscore `df_sui_1_OEf3f83l`：`RC÷0:31`＋`RD÷1:04`＋`RE÷0:58`＝`RB÷2:33`，三盘分用时加总和总用时自洽。ATP 没有公开的比赛时长 JSON 接口（`atptour.com` 对本环境一律 403、`api.protennislive.com` 实测 401），所以照 `baez-dimitrov` / `landaluce-draper` 走通的做法用 `data:` URL 把核过的数字连同出处一起写进去。",
+      "_court_why": "辛辛那提的中央球场。**画面自证**：本场 0.5–9.5 秒的全场机位，与同一站 `baez-dimitrov`（那条已经考据过是 `P&G Center Court`）的全场机位并排比过——地面 `P&G` 标、中场 `ATP TOUR` 字样、`Emirates` 网带广告、裁判椅和球童席位置完全一致。⚠️ **只写 `Center Court`，不写全称**：`baez-dimitrov` 那条的全称是从 ATP 官方赛后稿里考据出来的（『Draper opened on Center Court』那一支），而这一场我没找到写明场地全称的官方稿，冠名商那一段不照抄。"
+    }
+  },
+  "stats": {
+    "tour": "atp",
+    "a": {
+      "headshot": "assets/players/headshots/atp-H0BH.png",
+      "aces": 3,
+      "df": 4,
+      "first_in": 55,
+      "first_total": 100,
+      "first_won": 37,
+      "second_won": 28,
+      "second_total": 45,
+      "bp_conv": 3,
+      "bp_chances": 5,
+      "pts_won": 115
+    },
+    "b": {
+      "headshot": "assets/players/headshots/atp-MC65.png",
+      "aces": 16,
+      "df": 7,
+      "first_in": 57,
+      "first_total": 123,
+      "first_won": 46,
+      "second_won": 27,
+      "second_total": 66,
+      "bp_conv": 4,
+      "bp_chances": 6,
+      "pts_won": 109
+    },
+    "footer_venue": "辛辛那提 · 男单第一轮",
+    "footer_date": "2026年8月14日",
+    "_source": "flashscore `df_st_1_OEf3f83l` 的 `Match` 一栏（**home = 土方凛辉 = 这里的 a，away = 孟菲尔斯 = b**，顺序和 `cover.matchup` 一致）：土方 Ace 3、双误 4、一发 55%、一发得分 67%(37/55)、二发得分 62%(28/45)、破发点 3/5、总分 51%(115/224)；孟菲尔斯 Ace 16、双误 7、一发 46%、一发得分 81%(46/57)、二发得分 41%(27/66)、破发点 4/6、总分 49%(109/224)。\n\n⚠️ **flashscore 自己差一分**：它记土方的发球分是 `65/101`，而 `55+45=100`。两边只差 1，是数据商在 let 上的记法差异；`first_total` 照 `first_in + second_total` 算（100），和 `28/45=62%`、`55/100=55%` 都对得上。孟菲尔斯那边 `57+66=123`，和 `Service Points Won SI÷59% (73/123)` 精确一致，没有这个问题。",
+    "_headshot_source": "两张都是 **ATP 官方证件头像**，走 CLAUDE.md 记的那条路：`https://<任一 ATP 赛事域名>/-/media/alias/player-headshot/<球员ID>`（`atptour.com` 总站 403，赛事域名镜像同一批；这次用的是 `mubadaladcopen.com`）。球员 ID 来自 ATP 球员页 URL：`atptour.com/en/players/rinky-hijikata/h0bh/overview`、`atptour.com/en/players/gael-monfils/mc65/overview`。⚠️ **各自量过颜色数**（238 / 254），不是那张 2 色的占位剪影——我按错的 ID 试过 `M0EB`/`H0AE`/`HG21`/`HA97`，四个都回 4729 字节、2 色的灰色人形，而它 `HTTP 200`、`image/png`、同样 300×300，只看状态码分不出来。⚠️ `H986` 回的是一张真头像但**不是土方凛辉**（金发大胡子），所以「有颜色」也只是必要条件——两张都打开看过。"
+  },
+  "_voice": "云见（`zh-CN-YunjianNeural`）、`+6%`，和这条线其余片子一致。",
+  "segments": [
+    {
+      "start": 62.6,
+      "end": 65.6,
+      "_why": "冷开场。孟菲尔斯拿下首盘之后的庆祝近景（62.46–65.86 这个镜头块），不配旁白，靠现场声。"
+    },
+    {
+      "start": 14.1,
+      "end": 21.4,
+      "narration": "三十九岁的孟菲尔斯，第十四次来辛辛那提。这一次，也是最后一次。"
+    },
+    {
+      "start": 22.0,
+      "end": 28.6,
+      "narration": "北京时间八月十四号早上七点，辛辛那提第一轮。"
+    },
+    {
+      "start": 29.1,
+      "end": 36.4,
+      "narration": "对面是二十五岁的土方凛辉，世界第九十五。两个人此前从没交过手。"
+    },
+    {
+      "start": 36.9,
+      "end": 44.1,
+      "narration": "开场是他的节奏。整个首盘，他的发球局一个都没丢。"
+    },
+    {
+      "start": 46.6,
+      "end": 54.2,
+      "narration": "二比三，土方发球，三十比四十。他拿到破发点，而且兑现了。"
+    },
+    {
+      "start": 56.7,
+      "end": 62.2,
+      "narration": "二比五，第二个盘点。首盘六比二，三十一分钟。"
+    },
+    {
+      "start": 67.5,
+      "end": 76.8,
+      "narration": "三十一分钟。而今年到这场球之前他只赢过四场——法网之后，他两个多月没打过比赛。"
+    },
+    {
+      "start": 78.4,
+      "end": 86.5,
+      "narration": "第二盘，他的发球开始发力。全场十六记发球直接得分，光第二盘就有十个。"
+    },
+    {
+      "start": 86.8,
+      "end": 91.6,
+      "narration": "对面那个人，全场只有三记。"
+    },
+    {
+      "start": 93.3,
+      "end": 99.0,
+      "narration": "三比三之后，先动手的是土方。"
+    },
+    {
+      "start": 99.3,
+      "end": 104.4,
+      "narration": "他连拿三分破掉发球局，四比三。"
+    },
+    {
+      "start": 107.3,
+      "end": 112.4,
+      "narration": "五比四，土方发球。孟菲尔斯立刻破了回来。"
+    },
+    {
+      "start": 115.3,
+      "end": 121.2,
+      "narration": "五比五，第二盘进了抢七。这一盘打了一小时零四分钟。"
+    },
+    {
+      "start": 121.5,
+      "end": 127.3,
+      "narration": "抢七打到四比三，领先的是土方。"
+    },
+    {
+      "start": 127.8,
+      "end": 131.0,
+      "_why": "抢七四比四，他转向看台把全场叫起来。这一格不配旁白——封面选的就是这一帧，让现场声自己响。"
+    },
+    {
+      "start": 131.5,
+      "end": 137.4,
+      "narration": "他追平，还反超到五比四。然后连丢三分。"
+    },
+    {
+      "start": 137.7,
+      "end": 141.3,
+      "narration": "七比五，一盘一平。"
+    },
+    {
+      "start": 143.8,
+      "end": 145.5,
+      "_why": "土方的包厢（蓝色澳大利亚队服）在鼓掌。1.7 秒的镜头块，不配旁白。"
+    },
+    {
+      "start": 147.6,
+      "end": 152.5,
+      "narration": "决胜盘第二局，他有五个局点。"
+    },
+    {
+      "start": 152.9,
+      "end": 155.6,
+      "narration": "一个都没保住。"
+    },
+    {
+      "start": 156.0,
+      "end": 161.8,
+      "narration": "一发从五成五掉到三成九，越来越多的分要靠二发。"
+    },
+    {
+      "start": 164.2,
+      "end": 168.6,
+      "narration": "第三盘他送了二十六个非受迫失误。"
+    },
+    {
+      "start": 172.0,
+      "end": 180.0,
+      "narration": "五比三，土方发球胜赛局。四十比零，三个赛点，第一个就落地了。"
+    },
+    {
+      "start": 180.5,
+      "end": 184.3,
+      "narration": "土方赛前刚吞下四连败。"
+    },
+    {
+      "start": 184.8,
+      "end": 188.7,
+      "narration": "这个赛季打完，他就不打了。"
+    },
+    {
+      "start": 189.1,
+      "end": 193.2,
+      "narration": "网前，两个人抱了一下，全场起立。"
+    },
+    {
+      "start": 193.5,
+      "end": 196.9,
+      "narration": "再过十八天，他满四十岁。"
+    },
+    {
+      "start": 197.2,
+      "end": 200.9,
+      "narration": "你会记得他的哪一场球？"
+    }
+  ],
+  "push": {
+    "summary": "孟菲尔斯最后一届辛辛那提",
+    "lead": "辛辛那提男单第一轮，土方凛辉 2-6 7-6(5) 6-3 赢了孟菲尔斯。首盘只打了三十一分钟——孟菲尔斯发球局一个没丢，六比二拿下，那是他这一年打得最像自己的半个小时。之后两个小时里，赢下这场球需要的东西一样一样地漏了出去：一发成功率从五成五掉到三成九，第三盘一个人送出二十六个非受迫失误。抢七里他五比四领先之后连丢三分；决胜盘第二局他握着五个局点没能保住，比分从此再没回来。全场二百二十四个小分，两个人只差六分。而这一场的分量不在数据上——这是他第十四次来辛辛那提，也是最后一次：他已经宣布这个赛季打完就退役。赛后两个人在网前抱了一下，全场起立。再过十八天，他满四十岁。",
+    "auto": true
+  }
+}
