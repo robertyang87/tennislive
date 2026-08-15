@@ -158,13 +158,33 @@ _REEL_MARGIN_V = VIDEO_H - (CARD_TOP + CARD_H - _ASS_MARGIN_V)
 # 可选的比赛信息顶栏。它只给「赛场之上」需要持续交代比赛背景的片子启用：
 # 封面仍然完整铺满，比赛画面从封面之后开始放进这个独立的信息带，片尾品牌页
 # 则恢复原来的完整画面，不把「关注网球时差」和比赛信息混在一起。
-TOPBAR_H = 150
+#
+# ⭐ 2026-08-15 账号所有者：「顶部比分栏高度建议再调小一些」。**150 → 126，
+# 字号一个都没动**——量出来那 150px 里只有 101px 是字：
+#
+#     行           墨迹          留白
+#     第一行 HEAD  27 ~ 71       上 27
+#     第二行 BODY  99 ~ 128      行间 28、下 25
+#
+# 也就是说一半以上的高度是留白，收留白就够，不用去动 54/38 那两个字号
+# （顶栏是全片曝光最长的元素，缩字号是拿可读性换高度，方向反了）。
+#
+# ⚠️ **减的是行间和底部，不是顶部。** 三档都渲出来量过（`上留白/行间/下留白`）：
+#
+#     150（改前）  27 / 28 / 25
+#     **126（现在）  21 / 16 / 19**
+#     118          15 / 16 / 17   ← 第二行几乎贴着盒底，看着是「挤」不是「紧」
+#
+# 顶部只让出 6px 是故意的：**往上收是有风险的那个方向**（越靠近画面上沿越容易
+# 撞到 app 自己的顶部 UI），而账号所有者要的是总高度降下来——那笔账在行间和
+# 底部那 53px 里就付得起。
+TOPBAR_H = 126
 TOPBAR_HEAD_FONT = "得意黑"          # 和封面 storytitle 同一支标题字体
 TOPBAR_BODY_FONT = "Noto Sans CJK SC"  # 第二行只负责清楚读信息
 TOPBAR_HEAD_SIZE = 54
 TOPBAR_BODY_SIZE = 38
-TOPBAR_HEAD_TOP = 24
-TOPBAR_BODY_TOP = 92
+TOPBAR_HEAD_TOP = 18
+TOPBAR_BODY_TOP = 72
 TOPBAR_MARGIN_H = 48
 
 # **源片自己烧了记分条时，字幕要让开它。**
@@ -5261,9 +5281,25 @@ TOPBAR_SETDASH_ASS = r"{\c&H009CA793&}"
 #: 或者往这一行加了第二种属性覆盖而没跟着复位，都会当场红。
 TOPBAR_RESET_ASS = "{\\c" + TOPBAR_BODY_COLOUR + "&}"
 
+#: 赢家名字的高亮。账号所有者 2026-08-15：「顶部比分栏，赢球的球员名字要高亮
+#: 出来」。
+#:
+#: **和赢盘同一个绿，不另起一个颜色**：这一行里绿只有一个意思——「这个赢了」，
+#: 名字赢的是整场，数字赢的是那一盘。多加一支色等于让读者再学一条规则。
+#:
+#: ⚠️ **不加粗，这是量出来的不是图省事。** 同一句挂 `{\b1}` 真渲出来，第二行
+#: 墨迹宽度 294px → **293px**——差 1px，而且方向还是反的，也就是**什么都没发生**：
+#: `fontsdir`（`assets/fonts`）里只有 `NotoSansSC-Bold-sub.ttf` 这个**子集**，
+#: libass 既解不到完整的 Bold face 也不给合成。写上去会得到一个「看起来做了、
+#: 其实没做」的高亮——而这个仓库最不缺的就是这种。真解到那个子集反而更糟：
+#: 生僻字会变豆腐块。
+#: ⚠️ **也不靠提亮。** `TOPBAR_SETLOSE_ASS` 上面那段已经把账算过了：顶栏是直接
+#: 烧进 H.264 的，明暗差压完就读不出来，所以这一行一律**靠色相分**。
+TOPBAR_WINNER_ASS = TOPBAR_SETWIN_ASS
+
 
 def colorize_topbar_score(line: str) -> str:
-    """顶栏第二行里每一盘比分按"赢盘绿输盘灰"上色，其余原样保留。
+    """顶栏第二行上色：**赢家名字高亮**，每一盘比分按"赢盘绿输盘灰"上色。
 
     ⚠️ **判据和 `versus_poster._sets_html` 一样：那一盘里谁的局数大，不是
     谁赢了整场。** `line` 是 `_expected_topbar_score_line` 拼出来的
@@ -5271,13 +5307,34 @@ def colorize_topbar_score(line: str) -> str:
     那一盘拿到的局数"，可能小于右边（赢家那一盘输了）。按"左边是不是更大"
     上色，不是按"左边是谁"。
 
-    只有匹配得上 `_SET_RE` 的 token（"6-3"、"7-6(5)"）才上色，姓名 token
-    原样穿过——两个正则用的是同一个 `_SET_RE`，不会把人名误判成比分。
+    只有匹配得上 `_SET_RE` 的 token（"6-3"、"7-6(5)"）才当比分上色——
+    两个正则用的是同一个 `_SET_RE`，不会把人名误判成比分。**输家的名字一个
+    标签都不沾地穿过去**，赢家的名字挂 `TOPBAR_WINNER_ASS`。
+
+    ⚠️ **赢家是「开头那一串非比分 token」，不是 `split(" ")[0]`。**
+    `line` 由 `_expected_topbar_score_line` 拼成 `"{赢家} {result} {输家}"`，
+    而译名里真出现空格时（复姓、带点的西名）只取第一个 token 会把名字劈成
+    两半——高亮半个名字比不高亮更难看，而且**不报错**。
     """
     from versus_poster import _SET_RE  # noqa: PLC0415
 
+    tokens = line.split(" ")
+    lead = 0
+    while lead < len(tokens) and not _SET_RE.match(tokens[lead]):
+        lead += 1
+    # ⚠️ **一盘比分都没有就一个字都不高亮。** 那说明这行不是「名 比分 名」的
+    # 形状（`topbar` 是可选的，spec 里也可能手写别的），而此时 `lead` 正好等于
+    # token 总数——照着涂就是**把整行刷成绿的**，一句「这行不对」都不会有。
+    if lead >= len(tokens):
+        lead = 0
+
     parts = []
-    for token in line.split(" "):
+    if lead:
+        # 整块包一次，不逐 token 包——多 token 的名字各包各的会在名字中间插进
+        # 一对多余的标签，渲出来一样，但读 ASS 的人会以为那是两个人。
+        parts.append(f"{TOPBAR_WINNER_ASS}{' '.join(tokens[:lead])}"
+                     f"{TOPBAR_RESET_ASS}")
+    for token in tokens[lead:]:
         m = _SET_RE.match(token)
         if not m:
             parts.append(token)
