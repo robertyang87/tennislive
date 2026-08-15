@@ -451,3 +451,102 @@ def test_match_feed的4xx是明确拒绝不重试(monkeypatch):
     with pytest.raises(SystemExit):
         mf._get("http://example.test/feed")
     assert calls["n"] == 1
+
+
+# ---------- match_stat_hooks --stats-block ----------
+#
+# **来路是一次真实的漏填**（2026-08-15，`hijikata-monfils`）：那场 flashscore
+# 有 `Winners 30/35`、`Unforced errors 39/55`，写 spec 的人（我）在旁白里用了
+# UE，却没把这两个字段抄进 `stats` 块——成片里那张数据图因此少了两行。
+# ⚠️ **而它一个字都不报**：`render_stat_card.OPTIONAL_FIELDS` 允许这两项缺席
+# （多数场次接口里真的没有），所以「漏抄」和「本来就没有」在产物上长得一模一样。
+#
+# 手抄十二个数字这件事本身就是那个坑，所以现在从接口直接摊出来。
+
+def _st_row(item, home, away, scope="Match"):
+    return (scope, "grp", item, home, away)
+
+
+def _feed_rows(*, with_quality=True):
+    """一份 `Match` 那一栏的最小样本，字段名和格式都照真实 feed 写。"""
+    rows = [
+        _st_row("Aces", "3", "16"),
+        _st_row("Double Faults", "4", "7"),
+        _st_row("1st serve points won", "67% (37/55)", "81% (46/57)"),
+        _st_row("2nd serve points won", "62% (28/45)", "41% (27/66)"),
+        _st_row("Break Points Converted", "3/5", "4/6"),
+        _st_row("Total Points Won", "51% (115/224)", "49% (109/224)"),
+    ]
+    if with_quality:
+        rows += [_st_row("Winners", "30", "35"),
+                 _st_row("Unforced errors", "39", "55")]
+    return rows
+
+
+def test_接口给了制胜分和非受迫失误就必须摊进stats块(monkeypatch):
+    """有这两项时不许丢——丢了那张数据图会少两行，而且不出声。"""
+    mod = _stat_hooks()
+    monkeypatch.setattr(mod, "stats", lambda _mid: _feed_rows(with_quality=True))
+    blk = mod.stats_block("X")
+
+    assert blk["_has_winners_ue"] is True
+    assert (blk["a"]["winners"], blk["b"]["winners"]) == (30, 35)
+    assert (blk["a"]["ue"], blk["b"]["ue"]) == (39, 55)
+    assert blk["_missing_required"] == []
+
+    # 其余字段照 `render_stat_card` 要的名字和口径摊开
+    assert blk["a"]["aces"] == 3 and blk["b"]["aces"] == 16
+    assert (blk["a"]["first_in"], blk["a"]["first_won"]) == (55, 37)
+    assert (blk["a"]["second_total"], blk["a"]["second_won"]) == (45, 28)
+    assert (blk["a"]["bp_conv"], blk["a"]["bp_chances"]) == (3, 5)
+    assert (blk["a"]["pts_won"], blk["a"]["pts_total"]) == (115, 224)
+    # ⚠️ `first_total` 按 `first_in + second_total` 算，不取接口的 Service Points
+    # Won 分母——那个数偶尔差 1（let 的记法差异），而一发成功率是 first_in/first_total
+    assert blk["a"]["first_total"] == 55 + 45
+    assert blk["b"]["first_total"] == 57 + 66
+
+
+def test_接口没有这两项时不许硬凑(monkeypatch):
+    """反过来那一头：多数场次真的没有，这时留空是对的，不许编。"""
+    mod = _stat_hooks()
+    monkeypatch.setattr(mod, "stats", lambda _mid: _feed_rows(with_quality=False))
+    blk = mod.stats_block("X")
+
+    assert blk["_has_winners_ue"] is False
+    for side in ("a", "b"):
+        assert "winners" not in blk[side]
+        assert "ue" not in blk[side]
+    # 少了这两项**不算缺必填**——`render_stat_card` 把它们列进了 OPTIONAL_FIELDS
+    assert blk["_missing_required"] == []
+    # 而真正的必填项一个都不能少，否则那张图会用一份半空的数渲出来
+    assert blk["a"]["aces"] == 3 and blk["a"]["pts_won"] == 115
+
+
+def test_必填项解不出来要报出来不能静默跳过(monkeypatch):
+    mod = _stat_hooks()
+    rows = [r for r in _feed_rows() if r[2] != "Total Points Won"]
+    monkeypatch.setattr(mod, "stats", lambda _mid: rows)
+    blk = mod.stats_block("X")
+    assert any("pts_won" in m for m in blk["_missing_required"])
+
+
+def test_可缺的字段两处必须是同一份(monkeypatch):
+    """`match_stat_hooks` 里哪些能缺，和 `render_stat_card` 允许缺的那份，
+    **必须自己推导出来对得上**——两处各写一份名单，早晚会分叉，而分叉的样子是
+    「这一行悄悄消失」。"""
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import render_stat_card  # noqa: PLC0415
+
+    mod = _stat_hooks()
+    optional_here = {field for field, _item, _which, required in mod._STATS_FIELDS
+                     if not required}
+    assert optional_here == set(render_stat_card.OPTIONAL_FIELDS), (
+        "两处的「可缺字段」对不上：match_stat_hooks 认为可缺的是 "
+        f"{sorted(optional_here)}，render_stat_card 认的是 "
+        f"{sorted(render_stat_card.OPTIONAL_FIELDS)}")
+
+    # 反过来也钉住：这个表必须盖住那张图要画的每一个字段，
+    # 少一个就等于「摊出来的 stats 块渲不出完整的图」
+    needed = {f for spec_row in render_stat_card.ROW_SPECS for f in spec_row[3:]}
+    covered = {field for field, *_ in mod._STATS_FIELDS} | {"first_total"}
+    assert needed <= covered, f"这张图要的字段没盖全：{sorted(needed - covered)}"

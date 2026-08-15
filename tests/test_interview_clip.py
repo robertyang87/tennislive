@@ -2600,8 +2600,20 @@ def test_采访成片一律走Release不进git():
         "传完 Release 没删本地那份——git add 照样把它吃进去，白传一趟")
 
     # ④ 顺序：验成片 → Release → 提交成片
-    i_verify = names.index("验成片")
-    i_commit = names.index("提交成片")
+    # ⚠️ **按前缀认，不按全等认。** 这条原来写的是 `names.index("验成片")`，
+    # 而那一步后来被改名成「验成片（L2 成片落地闸）」——**步骤本身还在、顺序也
+    # 还对，测试却直接 ValueError 挂掉**。步骤名会带上后缀（改名、加副标题），
+    # 而这一条查的是**顺序**不是名字，用全等等于把「改了个标题」判成「这一步没了」。
+    # ⚠️ 前缀仍然要唯一：命中两条就不知道在比哪一条的顺序了。
+    def _only_step_starting(prefix: str) -> int:
+        hits = [i for i, n in enumerate(names) if (n or "").startswith(prefix)]
+        assert len(hits) == 1, (
+            f"「{prefix}」开头的步骤有 {len(hits)} 条（{[names[i] for i in hits]}）——"
+            "顺序判据要求它唯一")
+        return hits[0]
+
+    i_verify = _only_step_starting("验成片")
+    i_commit = _only_step_starting("提交成片")
     assert i_verify < i_rel < i_commit, (
         f"顺序不对（验成片={i_verify}，Release={i_rel}，提交={i_commit}）——"
         "验成片要在 rm 之前，Release 要在提交之前")
