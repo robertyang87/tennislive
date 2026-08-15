@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>8.16 赛场之上 | 阿尼西莫娃两盘进第三轮</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>十七局，九局是破发。
+
+6-2 6-3，净打一小时十七分钟，辛辛那提女单第二轮。赢的是世界第十的阿尼西莫娃，输的是世界第五十的森梅兹。
+
+开场四局，两个人轮流把对方的发球局拿走，一局都没守住。这场球的分水岭不在谁打得更狠，在谁先把自己的发球局稳下来。
+
+森梅兹全场八个发球局只保住两个，前五个连着丢。阿尼西莫娃自己也不干净——她的前两个发球局同样被破掉，第二盘开局还被破了一次。
+
+第一盘六比二之后下了一场雨。回来之后两个人连着保了六局，那是全场唯一一段谁都守得住的时间。可一到三比五，森梅兹的发球局又丢了；而阿尼西莫娃的最后四个发球局一个没丢，最后那一个正是发球胜赛局。
+
+数字：一百一十六分她拿到六十九个，七个发球直接得分对两个，十二次破发点机会兑现六次，一发得分率从第一盘的六成一涨到第二盘的七成五。
+
+再往前一层：今年一月五号，她排到过世界第三，那是她的生涯最高；八月这一期是第十。
+
+二〇二五年她打进过两次大满贯决赛。温网那一场，零比六、零比六，对手是斯瓦泰克。两个月后的美网决赛，她输给了萨巴伦卡。
+
+那一年真正翻过来的是十一月。利雅得的年终总决赛小组赛，她先输一盘，然后连扳两盘赢了斯瓦泰克——六比七、六比四、六比二，第一次打进年终总决赛的半决赛。
+
+第三轮，她碰伊埃拉。两个人此前没有交手记录。
+
+你看好谁？
+
+#网球 #WTA #辛辛那提公开赛 #阿尼西莫娃 #网球时差</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>下一轮她碰伊埃拉，你看好谁？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
