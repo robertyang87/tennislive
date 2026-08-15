@@ -62,6 +62,33 @@ ACE/双误/一发这几项在 flashscore `df_st_1` 就有；Winners/非受迫失
                                  通常更快。查不到不代表以后也查不到，
                                  隔几小时可以再查一次
 
+**2026-08-15 又加探了三条，都是真空，但三条都值得记**（wang-vandewinkel，
+辛辛那提 WTA1000 首轮）：
+
+    赛事官网自己的实时 feed      辛辛那提的 `score-center` 用的是
+                                 `https://tennis-feeds.rain-digital.ca/get/
+                                 <wta|atp>/<赛事 slug>/<matchId>`，纯 HTTP、
+                                 不用浏览器，`feed_ip`/`tournament` 两个值就
+                                 明写在赛事官网页面的 `<script>` 里。给的是
+                                 分盘 12 项，**没有 Winners/UE**（`-stats`
+                                 `-pbp` `-full` 这些端点变体全返回空数组）。
+                                 ⚠️ 记它不是因为它有 UE，是因为它是**第三条
+                                 独立数据线**——flashscore 和 WTA 官方掐架
+                                 时它能当裁判，见下
+    tennis.com 比赛页            `/tournaments/<赛事>/matches/<slug>-<日期>`，
+                                 统计表是**服务端直出的 HTML**（不用跑 JS），
+                                 11 项技术统计。同样没有 Winners/UE，但同样
+                                 是一条独立数据线
+    Yahoo Sports 比赛页          Sportradar 那条线，页面很大但 `unforced`
+                                 零命中
+
+⚠️ **多查这几个源的第二个用处：flashscore 会多算分，而它自己前后矛盾。**
+wang-vandewinkel 那场 flashscore 报范德温克尔发球总分 95、总得分 67，可
+54 一发 ＋ 40 二发 = 94、35 ＋ 10 = 45 ≠ 它写的 46；WTA 官方 `/stats`、
+赛事官网 feed、tennis.com **三个源都说 94/66**。所以 `_source` 里遇到
+「这个源自己对不上」时不要只记一句「如实记下不抹平」——**再拉一个源就能
+把它判掉**，而判掉之前那张图上印的是个错数字。
+
 **这条不是「查够了就能用」的许可**，是「查完这一轮该查的都查了，仍然
 一个都没有」时如实说清楚查过什么——参照上面『查得够深、查得够广』那条
 判据，报告里要点名每一个查过的源和它给出的结论（含"被墙""无覆盖"这类
@@ -75,7 +102,8 @@ ACE/双误/一发这几项在 flashscore `df_st_1` 就有；Winners/非受迫失
 
 ## 每一行谁占优
 
-`ROW_SPECS` 是这张图的固定模板，换球员不用改。方向语义：
+`ROW_SPECS` 是这张图的固定模板，换球员不用改。每条是
+`(中文标签, 英文标签, 方向, *字段名)`。方向语义：
 
     "hi"    数字越大越好（ACE / 制胜分 / 总得分）
     "lo"    数字越小越好（双误 / 非受迫失误）
@@ -83,6 +111,61 @@ ACE/双误/一发这几项在 flashscore `df_st_1` 就有；Winners/非受迫失
     "frac"  分子/分母，**主数字就是分数本身**（不折算成 %），比率越大越好
 
 两边相等（比如双误打平）不点亮任何一侧——不替谁背书。
+
+### 中文标签底下那行英文（账号所有者 2026-08-15：「后续都这么做」）
+
+英文跟中文写在**同一条 `ROW_SPECS`**里，不另开一张对照表——两处必分叉，而
+分叉的样子是「某一行的英文是上一行的」，图上完全看不出来。
+
+⚠️ **这一行不许把行高撑高**（账号所有者同一句话里的第二个要求：「每行的高度
+不变」）。所以它是 `position:absolute` 挂在 `.slabel` 底下的，**不参与行盒的
+高度计算**；中文那行再用 `position:relative` 往上提一点，让「中文 + 英文」这
+一对在原来那个行高里视觉居中。两样都改不得：
+
+    英文改成在流内（去掉 absolute）  → 每行长高，整张图跟着变长
+    中文那个 relative 位移去掉        → 一对偏下，压到分隔线上
+
+实测（wang-vandewinkel，2160×3840）：加英文前后**相邻两条分隔线的间距一模
+一样**，整张表的首尾像素位置也一模一样。判据在
+`test_每行英文不许把行高撑高`。
+
+⚠️ **`top` 那个 −24px 是量出来的，别按感觉调。** 账号所有者 2026-08-15 第二次
+反馈：「把中文往上移，英文在下面，然后它们并行居中。垂直居中」——最早那版写的
+−11px 只够把英文塞进去，「中文 + 英文」这一对的光学中心仍然比两侧那个大号数字
+**低 18~25px**（2160 空间，也就是 9~12 个 CSS 像素），看起来是整块往下坠。
+
+量法：按分隔线切出每一行，左列（数字）和中列（中英）各取墨迹的上下沿，比两个
+中心。英文 19px 那一版扫出来 −21px 最正（+0.6）；同一天账号所有者又说「英文
+太小」，字号提到 24px 之后**这一对整体变高，−21px 就不够了**，重扫：
+
+    top:-23px   每行偏移 [—, 4, 0, 0, 0, 6, 4]    平均 +2.3
+    top:-24px   每行偏移 [—, 2, -2, -2, -2, 4, 2]  平均 +0.3   ← 选它
+    top:-25px   每行偏移 [—, 0, -4, -4, -4, 2, 0]  平均 -1.7
+
+（ACE 那一行没有英文，走 `.slabel--solo`，不参与这张表。）
+
+剩下那 ±4px（2160 空间 ≈ 2 个 CSS 像素）是字形本身的差别（`%` 比纯数字高、
+`6/17` 那道斜杠更长），不是版式没对齐——**再调只会把一部分行调正、另一部分
+调歪**。判据在 `test_中英那一对的垂直位置是量出来的一组数`。
+
+⚠️ **改英文字号就要重扫 `top`。** 上面这两轮正是同一件事发生了两次：19 → 24px
+之后 −21px 立刻不对了，而**歪掉在产物上不报错**。判据把「中文字号 / 英文字号 /
+行距 / 位移」四个数一起锁住，动任何一个都当场红，逼着重量一次。
+
+### ⚠️ 中文标签本身就是英文的那一行，不出英文
+
+账号所有者 2026-08-15：「**ACE 就不要英文了**」——底下再写一行 `Aces` 是把同一个
+词说两遍。`ROW_SPECS` 里英文写**空串**就是认领这件事：不出那个 span，并且换一档
+位移（`.slabel--solo`）——`−24px` 是按两行的高度量的，只剩一行还提 24px 会顶太高。
+
+solo 那一档单独量过：纯中文在 `top:0` 时比数字中心**低 10.6px**，所以取 −5px，
+实测 ACE 那一行偏移 +2。
+
+⚠️ 英文的**水平**居中不是靠 `left:0;right:0`——`.slabel` 那一格的宽度是按
+中文文字撑出来的（`white-space:nowrap` + `grid` 的 `auto` 列），而英文往往更宽
+（`Break Points Converted` 比「破发点转化」宽一截）。撑在格子里会换行，所以用
+`left:50%` + `translateX(-50%)`：以中文的中心为轴，而那个中心正好是画布中心
+（三列 `1fr auto 1fr`）。
 
 ## ⚠️ 制胜分 / 非受迫失误这两行可以缺，其余不许缺
 
@@ -125,15 +208,18 @@ W, H = 1080, 1920
 
 # (标签, 类型, ...字段名)——固定模板，见模块 docstring「每一行谁占优」。
 ROW_SPECS = [
-    ("ACE", "hi", "aces"),
-    ("双误", "lo", "df"),
-    ("制胜分", "hi", "winners"),
-    ("非受迫失误", "lo", "ue"),
-    ("一发成功率", "pct", "first_in", "first_total"),
-    ("一发得分率", "pct", "first_won", "first_in"),
-    ("二发得分率", "pct", "second_won", "second_total"),
-    ("破发点转化", "frac", "bp_conv", "bp_chances"),
-    ("总得分", "hi", "pts_won"),
+    # ⚠️ 英文写空串＝**这一行故意不要英文**（账号所有者 2026-08-15：「ACE 就
+    # 不要英文了」）。判据只放行「中文标签本身就是英文」的那种（ACE），
+    # 中文标签留空串是另一回事，照旧报错。
+    ("ACE", "", "hi", "aces"),
+    ("双误", "Double Faults", "lo", "df"),
+    ("制胜分", "Winners", "hi", "winners"),
+    ("非受迫失误", "Unforced Errors", "lo", "ue"),
+    ("一发成功率", "1st Serve %", "pct", "first_in", "first_total"),
+    ("一发得分率", "1st Serve Points Won", "pct", "first_won", "first_in"),
+    ("二发得分率", "2nd Serve Points Won", "pct", "second_won", "second_total"),
+    ("破发点转化", "Break Points Converted", "frac", "bp_conv", "bp_chances"),
+    ("总得分", "Total Points Won", "hi", "pts_won"),
 ]
 
 # 这两项 WTA 巡回赛拿不到（见模块 docstring）。**只有这两个可以缺**，
@@ -153,7 +239,7 @@ def usable_rows(a: dict, b: dict) -> list[tuple]:
     """
     rows = []
     for spec_row in ROW_SPECS:
-        fields = spec_row[2:]
+        fields = spec_row[3:]
         in_a = all(f in a for f in fields)
         in_b = all(f in b for f in fields)
         if in_a and in_b:
@@ -205,15 +291,26 @@ def _stat_row(kind: str, a: dict, b: dict, *fields: str) -> tuple:
     raise ValueError(f"未知的行类型：{kind}")
 
 
-def _stat_row_html(label: str, lv: str, lf: str, rv: str, rf: str, lead: str | None) -> str:
+def _stat_row_html(label: str, label_en: str, lv: str, lf: str, rv: str, rf: str,
+                   lead: str | None) -> str:
+    """⚠️ 英文那个 `<span>` **必须嵌在 `.slabel` 里面**，不能当成第四个网格项。
+
+    `.srow` 是 `1fr auto 1fr` 三列，多一个子元素就多一列，整行版式塌掉；
+    而嵌在里面 + `position:absolute`，它既不占列也不占高度（见模块 docstring
+    「这一行不许把行高撑高」）。
+    """
     lcls = " lead" if lead == "a" else ""
     rcls = " lead" if lead == "b" else ""
     lfrac = f'<span class="sfrac">({html.escape(lf)})</span>' if lf else ""
     rfrac = f'<span class="sfrac">({html.escape(rf)})</span>' if rf else ""
+    # 英文是空串的那一行（ACE）不出这个 span，并且换一档位移：`.slabel` 那个
+    # −21px 是按「中文 + 英文」两行的高度量的，只剩一行还提 21px 就顶太高了。
+    en = f'<span class="slabel-en">{html.escape(label_en)}</span>' if label_en else ""
+    solo = "" if label_en else " slabel--solo"
     return f"""
 <div class="srow">
   <span class="sval sval-l{lcls}"><span class="smain">{html.escape(lv)}</span>{lfrac}</span>
-  <span class="slabel">{html.escape(label)}</span>
+  <span class="slabel{solo}">{html.escape(label)}{en}</span>
   <span class="sval sval-r{rcls}"><span class="smain">{html.escape(rv)}</span>{rfrac}</span>
 </div>"""
 
@@ -252,7 +349,7 @@ def build(spec: dict) -> str:
         if "headshot" not in raw:
             raise SystemExit(f"stats.{side} 缺 `headshot`——先用 "
                               "tools/fetch_official_headshot.py 抓一张，再把路径写进来。")
-        missing = [f for spec_row in ROW_SPECS for f in spec_row[2:]
+        missing = [f for spec_row in ROW_SPECS for f in spec_row[3:]
                    if f not in raw and f not in OPTIONAL_FIELDS]
         if missing:
             raise SystemExit(f"stats.{side} 缺这些字段：{sorted(set(missing))}")
@@ -277,7 +374,8 @@ def build(spec: dict) -> str:
     icon_html = f'<img class="brand-icon" src="{_data_uri(icon)}" alt="">'
 
     rows_html = "".join(
-        _stat_row_html(spec_row[0], *_stat_row(spec_row[1], a, b, *spec_row[2:]))
+        _stat_row_html(spec_row[0], spec_row[1],
+                       *_stat_row(spec_row[2], a, b, *spec_row[3:]))
         for spec_row in rows)
 
     def side(meta: dict, raw: dict, where: str) -> str:
@@ -355,8 +453,12 @@ body{{color:{vp.TEXT};font-family:'TL Sans SC','Noto Sans CJK SC',sans-serif;
 .setdash{{color:#93a79c;margin:0 .05em;font-size:.7em}}
 .tb{{font-size:.42em;color:#93a79c;vertical-align:super;margin-left:.04em}}
 .setplain{{color:#c6f65a}}
+/* 球场和用时分两行（账号所有者 2026-08-15）。⚠️ 第二行用 `h2h-meta2` 只压
+   行距，**不再重复 `margin-top:18px`**——那 18px 是比分块和这一段之间的呼吸，
+   不是行距；两行都带上会把用时那行推得像另一个板块。 */
 .h2h-meta{{margin-top:18px;font-family:'TL Sans SC',sans-serif;font-size:21px;
  color:{vp.DIM};text-align:center;white-space:nowrap;letter-spacing:.3px}}
+.h2h-meta2{{margin-top:6px}}
 
 .wrap{{padding:52px 74px 0}}
 .section-title{{font-family:'TL Display SC','TL Sans SC',sans-serif;font-size:38px;
@@ -384,8 +486,25 @@ body{{color:{vp.TEXT};font-family:'TL Sans SC','Noto Sans CJK SC',sans-serif;
 .sval.lead .smain{{color:#c6f65a;font-weight:700}}
 .sfrac{{font-size:23px;font-weight:400;color:rgba(244,251,247,.6)}}
 .sval.lead .sfrac{{color:rgba(198,246,90,.75)}}
+/* 中文标签 + 底下那行英文。⚠️ 两条都不许动，理由见模块 docstring
+   「中文标签底下那行英文」那节：
+   - `.slabel` 的 `top:-24px` 是 `position:relative` 的**视觉**位移，不改
+     行盒高度；它把「中文 + 英文」这一对在原来的行高里顶回视觉居中。
+     ⚠️ 这个数是量出来的（扫墨迹比两个光学中心，−23/−24/−25 三档都渲过），
+     不是拍的；**改英文字号就要重扫一次**，docstring 里有那张表。
+   - `.slabel-en` 是 `position:absolute`，**不参与行盒高度计算**——这是
+     「每行的高度不变」唯一的实现方式。改成流内每行就会长高。
+   `left:50%` + `translateX(-50%)` 而不是 `left:0;right:0`：这一格的宽度是
+   中文撑出来的，英文更宽（`Break Points Converted`），撑在格子里会换行。 */
 .slabel{{font-family:'TL Sans SC',sans-serif;font-size:32px;font-weight:700;
- color:rgba(244,251,247,.92);letter-spacing:.3px;text-align:center;white-space:nowrap}}
+ color:rgba(244,251,247,.92);letter-spacing:.3px;text-align:center;white-space:nowrap;
+ position:relative;top:-24px}}
+.slabel-en{{position:absolute;top:100%;left:50%;transform:translateX(-50%);
+ margin-top:4px;white-space:nowrap;font-size:24px;font-weight:400;
+ letter-spacing:.7px;color:rgba(244,251,247,.46)}}
+/* 没有英文的那一行（ACE）：只剩中文一行，−21px 会把它顶太高。solo 的
+   位移单独量过（纯中文在 top:0 时比数字中心低 10.6px，所以取 −5px）。 */
+.slabel--solo{{top:-5px}}
 
 .footer{{margin-top:38px;padding-top:20px;border-top:1px solid rgba(244,251,247,.18);
  display:flex;justify-content:space-between;align-items:center;
@@ -402,7 +521,8 @@ body{{color:{vp.TEXT};font-family:'TL Sans SC','Noto Sans CJK SC',sans-serif;
   {h2h_a}
   <div class="h2h-mid">
     {sets_rows}
-    <div class="h2h-meta">{html.escape(court)} · {html.escape(duration)}</div>
+    <div class="h2h-meta">{html.escape(court)}</div>
+    <div class="h2h-meta h2h-meta2">{html.escape(duration)}</div>
   </div>
   {h2h_b}
 </div>
