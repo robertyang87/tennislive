@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>8.16 赛场之上 | 哈恰诺夫抢七连丢六分</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>决胜盘他一个发球局都没丢，六个破发点全救了下来。然后他输了这场球。
+
+5-7 6-3 7-6(2)，两小时二十四分钟，辛辛那提男单第一轮。赢的是世界第九十六的科瓦切维奇，输的是哈恰诺夫。
+
+这场球从头到尾没人破得动谁。两个人一共十九个破发点，只有两个变成了破发：第一盘五比五科瓦切维奇被破一次，第二盘二比一哈恰诺夫被破一次，此后再没有第三次。
+
+决胜盘是这场球最奇怪的一盘。十二局，全部保发。哈恰诺夫在那一盘发出六个发球直接得分，一发成功率七成二，对面拿到的六个破发点他一个都没让出去——而他自己的三个，一个都没兑现。
+
+于是一切压进抢七。第一分是他的。接着他连丢六分，一比六。科瓦切维奇手里五个赛点，他救回来一个，七比二。
+
+全场他多发六个发球直接得分，十六比十；却少拿十一个小分，九十七比一百零八。差的不是球，是最后那七分钟。
+
+再往前一层：二〇一九年七月十五号，他排到过世界第八。二〇一八年巴黎大师赛决赛，他七比五、六比四赢了德约科维奇，那是他唯一的大师赛冠军。东京奥运会他拿到男单银牌。二〇二二年美网、二〇二三年澳网，两次打进大满贯半决赛。今年三月他还是世界第十五，这一期是第三十九。
+
+而赢他的那个人，纽约上西区长大，五岁跟着父母在中央公园开始打球，伊利诺伊大学金融本科，校队打了五年。上一次赢球还要追到五月的汉堡——那一站他以幸运落败者的身份进正赛，赢了头号种子、当时的世界第五奥热-阿利亚西姆，打进半决赛。那之后到今天，他在巡回赛正赛一场没赢过。
+
+他还能再拿一个大师赛冠军吗？
+
+#网球 #ATP #辛辛那提公开赛 #哈恰诺夫 #网球时差</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>他还能再拿一个大师赛冠军吗？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
