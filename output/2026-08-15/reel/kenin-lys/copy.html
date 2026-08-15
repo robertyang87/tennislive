@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>8.15 赛场之上 | 肯宁首盘只赢一局</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>1-6 6-3 6-3。比分看着一边倒，分数上却是平的：全场一百四十二分，肯宁七十一分，利斯七十一分，一分不差。
+
+第一盘二十一分钟就结束了，六比一。那一盘肯宁三十四分只拿到九分，自己发了五个双误；而利斯一发进球率八成九，一发得分十六分一分没丢。转播解说当时的话是&quot;这一盘还没真正开始就结束了——二十分钟，六比一&quot;。
+
+转折在第二盘第二局：肯宁破掉利斯的发球局，二比零。而整个第一盘她一共只赢了一局。从那儿开始她的落点往边线上走，解说改口说&quot;突然之间肯宁开始打到点上了&quot;。六比三，扳回一盘。
+
+决胜盘第一局又是破发，从那儿一直领先到底。
+
+还有一处官方集锦没剪进去，但它是全场最险的一段：决胜盘三比二、肯宁自己的发球局，她零比四十落后，连着救下四个破发点才保住——那一局要是丢了，比分就是三比三，这场球是另一个走向。逐分记录里那四个破发点标得清清楚楚。
+
+几个数字：
+双误，肯宁六个、利斯十个，全场十六个。
+破发点，肯宁八次面对救下五次，利斯五次面对只救下一次。
+破发点转化，肯宁五次机会拿下四次，利斯八次机会只拿下三次。
+
+关于肯宁：二〇二〇年一月，二十一岁的她在墨尔本 4-6 6-2 6-2 赢下穆古鲁扎，拿到澳网冠军；那一年她还打进法网决赛，世界排名最高到过第四。而 2026 年这一整年，她单打五胜十九负——一月在布里斯班时还是世界第二十八，到八月初的多伦多已经掉到第一百一十八。这一站她是靠一张外卡进的正赛，对面的利斯则是资格赛输了球、靠递补进来的幸运落败者。来之前肯宁已经连输三场，上一次赢球还是六月底的温网第一轮。
+
+两个人此前从未交手过。
+
+#网球 #WTA #辛辛那提公开赛 #肯宁 #网球时差</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>一半一半的球，凭什么是她赢？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
