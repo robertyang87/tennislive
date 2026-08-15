@@ -332,6 +332,7 @@ PLAYER_ZH: dict[str, str] = {
     "Sara Errani": "埃拉尼",
     "Camila Osorio": "奥索里奥",
     "Emiliana Arango": "阿朗戈",
+    "Nadia Podoroska": "波多罗斯卡",
     "Renata Zarazua": "萨拉苏亚",
     "Solana Sierra": "谢拉",
     "Suzan Lamens": "拉门斯",
