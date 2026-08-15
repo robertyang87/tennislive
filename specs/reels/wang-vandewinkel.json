@@ -113,25 +113,25 @@
       "bp_conv": 6,
       "bp_chances": 17,
       "pts_won": 80,
-      "pts_total": 147
+      "pts_total": 146
     },
     "b": {
       "headshot": "assets/players/headshots/wta-331102.jpg",
       "aces": 3,
       "df": 9,
       "first_in": 54,
-      "first_total": 95,
+      "first_total": 94,
       "first_won": 35,
       "second_won": 10,
       "second_total": 40,
       "bp_conv": 3,
       "bp_chances": 9,
-      "pts_won": 67,
-      "pts_total": 147
+      "pts_won": 66,
+      "pts_total": 146
     },
     "footer_venue": "7 号球场 · 辛辛那提",
     "footer_date": "2026年8月15日",
-    "_source": "flashscore `df_st_1_Q1gtDWnp` 的 `Match` 一栏原样抄：王欣瑜 Ace 2、双误 7、一发 48%、一发得分 68%(17/25)、二发得分 52%(14/27)、破发点转化 6/17、发球分 31/52、总得分 80/147；范德温克尔 Ace 3、双误 9、一发 57%、一发得分 65%(35/54)、二发得分 25%(10/40)、破发点转化 3/9、发球分 46/95、总得分 67/147。`first_total` 填的是发球总分：王欣瑜 25+27=52，和它自己报的发球分 31/52 对得上，25/52=48% 也对得上一发成功率。\n\n⚠️ **范德温克尔那一侧源数据本身差一分**：54 个一发分 + 40 个二发分 = 94，而它报的发球总分是 95（54/95=56.8%，正好是它写的 57%）。也就是有一个发球分没被归进一发或二发。这里按它自己的口径填 `first_total: 95`，把这个不一致如实记在这儿，不去替它抹平。\n\n⚠️ **制胜分／非受迫失误这两项没有，是查过之后确认拿不到**（CLAUDE.md：WTA 巡回赛的 flashscore feed 恒缺 Winners / Unforced errors / Net points won，这场 `df_st_1` 同样只有 17 项）。另外两条路也都碰过：Match Charting Project 用 `tools/mcp_stats.py find` 扫过全部 18107 条索引，范德温克尔 0 场、王欣瑜最新一条停在 2026-07-03 温网——索引落后三天上下，这场结构性地还没轮到；WTA 官网这场没有 Match Reaction 稿，只有一条 62 字的视频说明，一个计数都没有。所以这两行按 `OPTIONAL_FIELDS` 缺着，不硬凑。"
+    "_source": "**口径 2026-08-15 从 flashscore 换成了 WTA 官方 `/stats`**（`api.wtatennis.com/tennis/tournaments/1017/2026/matches/LS066/stats`，`setnum=0` 那一档）：王欣瑜 Ace 2、双误 7、一发进 25/52、一发得分 17、二发得分 14/27、破发点转化 6/17、总得分 80；范德温克尔 Ace 3、双误 9、一发进 54/94、一发得分 35、二发得分 10/40、破发点转化 3/9、总得分 66。`first_total` 填的是发球总分（`totservplayed`），`second_total` = 发球总分 − 一发进球数。\n\n⚠️ **换口径是因为 flashscore 在范德温克尔那一侧多算了一分，而这不是「两种口径」，是它自己前后矛盾。** 原来这条 spec 照抄 flashscore 的 `first_total: 95` / `pts_won: 67`，并把这个不一致如实记着「不去替它抹平」——2026-08-15 拿另外两个源一对，这一分有了唯一答案：\n\n| 范德温克尔 | 发球总分 | 发球得分 | 全场总得分 |\n|---|---|---|---|\n| flashscore `df_st_1` | **95** | **46** | **67** |\n| WTA 官方 `/stats` LS066 | 94 | 45 | 66 |\n| 辛辛那提官方赛事 feed（分盘相加） | 94 | — | 66 |\n| tennis.com（一发 52/94，另一条数据线） | 94 | — | — |\n\nflashscore 那一栏**自己就对不上**：54 个一发分 ＋ 40 个二发分 = 94 ≠ 95，35 ＋ 10 = 45 ≠ 46。而 94 那一侧三个源互相印证、且内部自洽（王欣瑜 52 ＋ 范德温克尔 94 = 146 = 80 ＋ 66）。所以全场总分是 **146** 不是 147，范德温克尔的总得分是 **66** 不是 67。⚠️ `_hit_data` 里那句「净差 13 分」是 `match_stat_hooks.py` 读 flashscore 跑出来的原文，按订正后的数应是 **净差 14 分**——那一段是工具输出的忠实记录，不改它，判据记在这儿。⚠️ 视频旁白和顶栏都没提总得分，所以这次订正不影响已发的成片。\n\n⚠️ **辛辛那提官方 feed 这条路是这次新挖出来的**（赛事官网 `score-center` 自己在用的实时数据源，纯 HTTP、不用浏览器）：\n\n    https://tennis-feeds.rain-digital.ca/get/wta/cincinnati/LS066\n\n给的是 `stat`（球场、用时、比分、赢家）＋ `s1`/`s2` 分盘统计，每盘每人 12 项。**没有制胜分／非受迫失误**，端点变体 `-stats` / `-stat` / `-pbp` / `-full` / `-detail` 全部返回空数组（只有 `-h2h` 有内容）。\n\n⚠️ **制胜分／非受迫失误这两项拿不到，2026-08-15 又整轮查过一遍，十二个源逐个记在这儿，别再重探一遍：**\n\n| 源 | 结论 |\n|---|---|\n| flashscore `df_st_1_Q1gtDWnp` | 17 项，无 Winners / Unforced errors（当天重新拉过一次原始 feed 确认） |\n| WTA 官方 `/stats` LS066 | 32 个字段整份打出来核过，含 `winner`/`unforced`/`error` 的一个都没有 |\n| **辛辛那提官方赛事 feed（新）** | 每盘 12 项，无；五个端点变体全空 |\n| **tennis.com 比赛页（新）** | 服务端直出统计表，11 项技术统计（另有 8 项球员档案），**无**。顺带它是第三条独立数据线，上面那张表用到了它 |\n| **Yahoo Sports 比赛页（新）** | 682 KB 页面里 `unforced` 零命中 |\n| Match Charting Project | `tools/mcp_stats.py find` 扫全部 18107 条：范德温克尔只有 2024 BJK Cup 一场，王欣瑜最新停在 2026-06-26 巴特洪堡——索引落后三天上下，这场结构性地还没轮到 |\n| WTA 官网编辑稿 | 这场没有 Match Reaction / by-the-numbers，只有一条 62 字的视频说明，一个计数都没有 |\n| rallyher.com | 有辛辛那提的赛果汇总页，但只列比分，这一场没有赛后稿 |\n| 中文媒体（新浪／网易 ×2／直播吧） | 四篇报道全文搜「制胜分」「非受迫」「主动失误」，零命中 |\n| tennistemple | 403（带完整浏览器头也一样） |\n| sofascore / matchstat | 403（老账，再确认一次） |\n| ultimatetennisstatistics | 连接被重置 |\n| 画面自证 | 源片 258.2 秒是纯集锦，最后一格 256.5 秒是网前握手，**没有赛后统计图** |\n\n所以这两行按 `OPTIONAL_FIELDS` 缺着，图上只画七行，不硬凑。**「查不到」不等于「以后也没有」**——MCP 那条隔几天回头再查一次往往就标上了（CLAUDE.md 那条明写着这个形状），真补上了再重渲这张图。"
   },
 
   "_voice": "云见（`zh-CN-YunjianNeural`），语速 +6%，和这条线其余片子一致。",

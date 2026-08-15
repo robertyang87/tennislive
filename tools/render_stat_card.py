@@ -62,6 +62,33 @@ ACE/双误/一发这几项在 flashscore `df_st_1` 就有；Winners/非受迫失
                                  通常更快。查不到不代表以后也查不到，
                                  隔几小时可以再查一次
 
+**2026-08-15 又加探了三条，都是真空，但三条都值得记**（wang-vandewinkel，
+辛辛那提 WTA1000 首轮）：
+
+    赛事官网自己的实时 feed      辛辛那提的 `score-center` 用的是
+                                 `https://tennis-feeds.rain-digital.ca/get/
+                                 <wta|atp>/<赛事 slug>/<matchId>`，纯 HTTP、
+                                 不用浏览器，`feed_ip`/`tournament` 两个值就
+                                 明写在赛事官网页面的 `<script>` 里。给的是
+                                 分盘 12 项，**没有 Winners/UE**（`-stats`
+                                 `-pbp` `-full` 这些端点变体全返回空数组）。
+                                 ⚠️ 记它不是因为它有 UE，是因为它是**第三条
+                                 独立数据线**——flashscore 和 WTA 官方掐架
+                                 时它能当裁判，见下
+    tennis.com 比赛页            `/tournaments/<赛事>/matches/<slug>-<日期>`，
+                                 统计表是**服务端直出的 HTML**（不用跑 JS），
+                                 11 项技术统计。同样没有 Winners/UE，但同样
+                                 是一条独立数据线
+    Yahoo Sports 比赛页          Sportradar 那条线，页面很大但 `unforced`
+                                 零命中
+
+⚠️ **多查这几个源的第二个用处：flashscore 会多算分，而它自己前后矛盾。**
+wang-vandewinkel 那场 flashscore 报范德温克尔发球总分 95、总得分 67，可
+54 一发 ＋ 40 二发 = 94、35 ＋ 10 = 45 ≠ 它写的 46；WTA 官方 `/stats`、
+赛事官网 feed、tennis.com **三个源都说 94/66**。所以 `_source` 里遇到
+「这个源自己对不上」时不要只记一句「如实记下不抹平」——**再拉一个源就能
+把它判掉**，而判掉之前那张图上印的是个错数字。
+
 **这条不是「查够了就能用」的许可**，是「查完这一轮该查的都查了，仍然
 一个都没有」时如实说清楚查过什么——参照上面『查得够深、查得够广』那条
 判据，报告里要点名每一个查过的源和它给出的结论（含"被墙""无覆盖"这类
