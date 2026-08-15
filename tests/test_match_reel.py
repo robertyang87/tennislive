@@ -4385,7 +4385,13 @@ def test_dry_run要拿probe查选段(tmp_path):
         buf = io.StringIO()
         with redirect_stdout(buf):
             assert reel.probe_dry_run(long_spec, segs) is True
-        assert "超出源片末尾" in buf.getvalue()
+        # ⚠️ 断言里那个 **14.18** 不是随手写的：段尾 44.0 + `SEG_FADE` 0.18
+        # 减去源片的 30.0。**它同时钉住了「dry-run 把溶解底料算进去了」**——
+        # 少算那 0.18 秒的话这儿会印 14.00，而那正是 run 680 白跑一趟的原因
+        # （dry-run 报「没有硬伤」，render 到了 runner 上才红）。
+        assert "第 1 段" in buf.getvalue()
+        assert "超出 14.18s" in buf.getvalue(), \
+            f"没把溶解底料算进去，或者根本没报：{buf.getvalue()}"
 
         # **一份都没认领上要出声**——空结果先自证是真空。
         monkey.setattr(reel, "probes_for_spec", lambda _s: ({}, [""]))
@@ -5025,6 +5031,79 @@ def test_段落不许写过源片末尾(monkeypatch):
     monkeypatch.setattr(reel, "probe_duration", lambda _p: need - 0.2)
     with pytest.raises(reel.ReelError, match="超出"):
         reel._check_segments_fit([seg], {"": fake})
+
+
+def test_写过源片末尾这条规矩只有一处实现():
+    """`--dry-run` 和 render 那道闸判的必须是**同一条**规矩。
+
+    ⚠️ **这条测试是一次白跑的 render 换来的**（run 680，2026-08-15）。在那之前
+    「段落不许写过源片末尾」写在两处，而两处的算式不一样：
+
+        --dry-run          seg.end             > dur      ← 少算溶解底料
+        _check_segments_fit  seg.end + SEG_FADE > dur
+
+    于是 `bejlek-pliskova` 的末段（171.6–176.0s，源片 176.08s）在本地
+    **报「选段这一层没有硬伤（片长）」**，到了 runner 上 render 第 2 秒当场红。
+
+    dry-run 存在的全部意义就是「0.2 秒、在本地、把形状错拦下来」。一条它拦不住
+    而 render 拦得住的规矩，把这个承诺打了个洞——**而洞的样子是「本地全绿，
+    远端红」**，跟仓库里「一个数写两处必分叉」记过的那几次一模一样。
+
+    判据钉两头：**同一个函数**（不许谁再另写一遍），而且**它真的算上了
+    `SEG_FADE`**（只钉前一头的话，两处一起少算照样绿）。
+    """
+    import ast  # noqa: PLC0415
+    import inspect  # noqa: PLC0415
+
+    reel = _reel()
+
+    # ① 行为：贴着源片末尾、只差溶解底料那 0.18 秒的段，必须被认出来
+    seg = _seg(reel, 0.0, 5.0)
+    assert reel.segments_over_source_end([seg], {"": 5.02}), \
+        "少算了 SEG_FADE：5.0s 的段配 5.02s 的源片，溶解底料取不到还说没事"
+    assert not reel.segments_over_source_end([seg], {"": 5.0 + reel.SEG_FADE + 0.1}), \
+        "留够底料的也被拦了，判据太宽"
+    assert not reel.segments_over_source_end([seg], {"": None}), \
+        "源片没探过就不该判——宁可漏报，别拿一个不存在的时长去拦"
+
+    # ② 两处都得走这一个函数
+    src = inspect.getsource(reel)
+    callers = {
+        node.parent_func
+        for node in _calls_named(ast.parse(src), "segments_over_source_end")
+    }
+    assert "_check_segments_fit" in callers, "render 那道闸没走共用的那个函数"
+    assert any("dry" in name or "cut" in name for name in callers), \
+        f"dry-run 那条路没走共用的那个函数，调用方只有 {sorted(callers)}"
+
+    # ③ 谁也不许在别处把这条规矩再写一遍。`seg.end` 和源片时长直接比大小的
+    #    地方，只许出现在共用的那个函数里。
+    tree = ast.parse(src)
+    for func in ast.walk(tree):
+        if not isinstance(func, ast.FunctionDef):
+            continue
+        if func.name == "segments_over_source_end":
+            continue
+        body = ast.get_source_segment(src, func) or ""
+        body = re.sub(r'"""[\s\S]*?"""', "", body)          # docstring 里写着教训
+        body = "\n".join(ln for ln in body.splitlines()
+                         if not ln.lstrip().startswith("#"))
+        assert not re.search(r"seg\.end\s*>\s*dur", body), \
+            f"{func.name} 又把「写过源片末尾」自己写了一遍"
+
+
+def _calls_named(tree, name: str):
+    """AST 里所有对 `name` 的调用，每个挂上它所在的函数名。"""
+    import ast  # noqa: PLC0415
+
+    for func in ast.walk(tree):
+        if not isinstance(func, ast.FunctionDef):
+            continue
+        for node in ast.walk(func):
+            if isinstance(node, ast.Call) and isinstance(node.func, ast.Name) \
+                    and node.func.id == name:
+                node.parent_func = func.name  # type: ignore[attr-defined]
+                yield node
 
 
 def _render_body(reel) -> str:

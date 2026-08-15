@@ -3842,16 +3842,15 @@ def probe_dry_run(spec: dict, segments: list["Segment"]) -> bool:
 
     # ① 写过源片末尾。ffmpeg 的 `-ss`/`-t` 越界**不报错**，只安安静静出一段
     #    短的，而后面每一句旁白和字幕都跟着整体错位。
-    for index, seg in enumerate(segments):
-        if seg.image:
-            continue                      # 整屏证据段没有源片窗口，无从越界
-        probe = probes.get(urls.get(seg.source, ""))
-        if not probe or not probe.get("duration"):
-            continue
-        dur = float(probe["duration"])
-        if seg.end > dur + 0.05:
-            hard.append(f"  第 {index + 1} 段 end={seg.end:.2f}s "
-                        f"超出源片末尾（{dur:.2f}s）")
+    #    ⚠️ **复用 render 那道闸的同一个函数**（`segments_over_source_end`）——
+    #    这一条以前在这儿另写了一遍，少算了 `SEG_FADE` 那 0.18 秒的溶解底料，
+    #    于是 dry-run 报「没有硬伤」而 render 在 runner 上红（run 680）。
+    hard.extend(segments_over_source_end(
+        segments,
+        {seg.source: (float(probe["duration"])
+                      if (probe := probes.get(urls.get(seg.source, "")))
+                      and probe.get("duration") else None)
+         for seg in segments}))
     for tag, spot in _cover_frame_spots(spec):
         probe = probes.get(urls.get(str(spot.get("source", "")), ""))
         if probe and probe.get("duration") \
@@ -4381,6 +4380,45 @@ def validate_spec(spec: dict) -> list[Segment]:
     return segments
 
 
+#: 「写过源片末尾」这句话的开头，`--dry-run` 和 render 那道闸共用一份。
+OVER_SOURCE_END_HEAD = (
+    "有段写过了源片的末尾。**ffmpeg 越界不报错，只会悄悄出一段短的**，"
+    "于是它后面每一句旁白和字幕都会整体错位：\n")
+
+
+def segments_over_source_end(segments: list[Segment],
+                             durations: dict[str, float | None]) -> list[str]:
+    """哪几段写过了源片末尾——**`--dry-run` 和 render 那道闸共用这一个函数**。
+
+    ⚠️ **它存在的理由是一次白跑的 render（run 680，2026-08-15）。** 在那之前
+    这条规矩写在两处：`--dry-run` 判的是 `seg.end > dur`，render 里的
+    `_check_segments_fit` 判的是 `seg.end + SEG_FADE > dur`。两处差着那 0.18 秒的
+    溶解底料，于是 `bejlek-pliskova` 的末段（171.6–176.0s，源片 176.08s）
+    **dry-run 报「选段这一层没有硬伤（片长）」，render 到了 runner 上才红**。
+
+    dry-run 存在的全部意义就是「0.2 秒、在本地、把形状错拦下来」；一条它拦不住
+    而 render 拦得住的规矩，等于把这个承诺打了个洞——而洞的样子是「本地全绿，
+    远端红」，跟这个仓库里「一个数写两处必分叉」记过的那几次一模一样。
+    同一份判据只许有一个出处，判据在 `test_写过源片末尾这条规矩只有一处实现`。
+
+    `durations` 的值可以是 None（那条源片没探过）——**探不到就不判**，
+    宁可漏报也别拿一个不存在的时长去拦。容差 0.05s：源片时长本身有帧级误差。
+    """
+    over: list[str] = []
+    for index, seg in enumerate(segments):
+        if seg.image:
+            continue                      # 整屏证据段不消耗源片
+        limit = durations.get(seg.source)
+        need = seg.end + SEG_FADE
+        if limit is None or need <= limit + 0.05:
+            continue
+        over.append(f"  第 {index + 1} 段：{seg.start:.1f}–{seg.end:.1f}s"
+                    f"（溶解还要往后多取 {need - seg.end:.2f}s）"
+                    f"，而源片{('（' + seg.source + '）') if seg.source else ''}"
+                    f"只有 {limit:.1f}s，超出 {need - limit:.2f}s")
+    return over
+
+
 def _check_segments_fit(segments: list[Segment], sources: dict[str, Path]) -> None:
     """段落不许写过源片的末尾。
 
@@ -4407,24 +4445,10 @@ def _check_segments_fit(segments: list[Segment], sources: dict[str, Path]) -> No
     `test_片尾接上之后每个分段都要留溶解底料`。
     """
     durations = {key: probe_duration(path) for key, path in sources.items()}
-    over = []
-    for index, seg in enumerate(segments):
-        if seg.image:
-            continue                      # 整屏证据段不消耗源片
-        limit = durations.get(seg.source)
-        need = seg.end + SEG_FADE
-        if limit is None or need <= limit + 0.05:
-            continue
-        over.append(f"  第 {index + 1} 段：{seg.start:.1f}–{seg.end:.1f}s"
-                    f"（溶解还要往后多取 {need - seg.end:.2f}s）"
-                    f"，而源片{('（' + seg.source + '）') if seg.source else ''}"
-                    f"只有 {limit:.1f}s，超出 {need - limit:.2f}s")
+    over = segments_over_source_end(segments, durations)
     if over:
-        raise ReelError(
-            "有段写过了源片的末尾。**ffmpeg 越界不报错，只会悄悄出一段短的**，"
-            "于是它后面每一句旁白和字幕都会整体错位：\n"
-            + "\n".join(over)
-            + "\n\n把 `end` 收回片长以内，或者换一条更长的源片。")
+        raise ReelError(OVER_SOURCE_END_HEAD + "\n".join(over)
+                        + "\n\n把 `end` 收回片长以内，或者换一条更长的源片。")
 
 
 def render(spec: dict, outdir: Path, *, voice: str, rate: str,
