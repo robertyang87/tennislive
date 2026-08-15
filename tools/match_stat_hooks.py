@@ -251,6 +251,68 @@ def h2h_candidate(match_id: str) -> dict | None:
     return {"label": "交手记录", "detail": detail, "source": "flashscore df_hh_1"}
 
 
+# spec 的 `stats.a` / `stats.b` 要哪些字段 ← flashscore `Match` 那一栏的哪一项。
+# 值取 `num` 还是 `den`：`"67% (37/55)"` 解出来 num=37 den=55，一发得分是分子、
+# 一发**进了几个**是分母。
+_STATS_FIELDS = [
+    # (spec 字段, flashscore item, 取 num 还是 den, 缺了算不算错)
+    ("aces",         "Aces",                     "num", True),
+    ("df",           "Double Faults",            "num", True),
+    ("winners",      "Winners",                  "num", False),
+    ("ue",           "Unforced errors",          "num", False),
+    ("first_in",     "1st serve points won",     "den", True),
+    ("first_won",    "1st serve points won",     "num", True),
+    ("second_total", "2nd serve points won",     "den", True),
+    ("second_won",   "2nd serve points won",     "num", True),
+    ("bp_conv",      "Break Points Converted",   "num", True),
+    ("bp_chances",   "Break Points Converted",   "den", True),
+    ("pts_won",      "Total Points Won",         "num", True),
+    ("pts_total",    "Total Points Won",         "den", True),
+]
+
+
+def stats_block(match_id: str) -> dict:
+    """把 flashscore `Match` 那一栏摊成 spec 能直接粘的 `stats.a` / `stats.b`。
+
+    **来路是一次真实的漏填**（2026-08-15，`hijikata-monfils`）：那场
+    flashscore 有 `Winners 30/35`、`Unforced errors 39/55`，我在旁白里用了
+    UE，却**没把这两个字段填进 `stats` 块**——于是成片里那张数据图少了两行，
+    而 `render_stat_card` 把它们列在 `OPTIONAL_FIELDS` 里（因为多数场次真的
+    没有），所以**少两行和本来就没有长得一模一样，一个字都不报**。
+
+    ⚠️ **这两项能不能拿到是一场一场的事，不是按巡回赛分的。** 2026-08-13
+    辛辛那提 43 场里只有 3 场有（土方-孟菲尔斯、斯瓦伊达-贝卢奇、法里亚-
+    布鲁克斯比），三场全是 ATP；同一站同一天另外 20 场 ATP 和 20 场 WTA
+    都没有。**所以别按「ATP 有 / WTA 没有」推，跑一次这个函数看它给不给。**
+
+    `first_total` 不从接口取，按 `first_in + second_total` 算——flashscore 的
+    `Service Points Won` 分母偶尔和这两项之和差 1（let 的记法差异），而
+    `render_stat_card` 的一发成功率是 `first_in / first_total`，用和式才自洽。
+    """
+    idx = index_stats(stats(match_id))
+    out: dict[str, dict] = {"a": {}, "b": {}}
+    missing: list[str] = []
+    for field, item, which, required in _STATS_FIELDS:
+        row = idx.get(("Match", item))
+        vals = None
+        if row is not None:
+            h, a = row[0].get(which), row[1].get(which)
+            if h is not None and a is not None:
+                vals = (h, a)
+        if vals is None:
+            if required:
+                missing.append(f"{field}（{item} 的 {which}）")
+            continue
+        out["a"][field] = vals[0]
+        out["b"][field] = vals[1]
+    if "first_in" in out["a"] and "second_total" in out["a"]:
+        for side in ("a", "b"):
+            out[side]["first_total"] = out[side]["first_in"] + out[side]["second_total"]
+    out["_missing_required"] = missing
+    out["_has_winners_ue"] = "winners" in out["a"] and "ue" in out["a"]
+    return out
+
+
 def collect(match_id: str, home: str, away: str) -> dict:
     idx = index_stats(stats(match_id))
     games = points(match_id)
@@ -309,6 +371,9 @@ def main() -> int:
     ap.add_argument("--home", default="主队")
     ap.add_argument("--away", default="客队")
     ap.add_argument("--json", action="store_true")
+    ap.add_argument("--stats-block", action="store_true",
+                    help="只打 spec 能直接粘的 stats.a / stats.b（含制胜分和非受迫失误，"
+                         "有就一定带上——手抄最容易把这两项漏掉）")
     args = ap.parse_args()
 
     if args.from_spec:
@@ -325,6 +390,17 @@ def main() -> int:
         header = f"对阵: {home} vs {away}（flashscore_id: {match_id}）"
     else:
         ap.error("要给出 match_id，或 --from-spec <slug>")
+
+    if args.stats_block:
+        blk = stats_block(match_id)
+        print(header)
+        if blk["_missing_required"]:
+            print("⚠️ 必填项没解出来：" + "、".join(blk["_missing_required"]))
+        print("制胜分 / 非受迫失误：" + ("**这场有，必须填**" if blk["_has_winners_ue"]
+                                        else "这场接口里没有——照 render_stat_card 的 "
+                                             "OPTIONAL_FIELDS 留空即可"))
+        print(json.dumps({k: blk[k] for k in ("a", "b")}, ensure_ascii=False, indent=2))
+        return 0
 
     result = collect(match_id, home, away)
     if args.json:
