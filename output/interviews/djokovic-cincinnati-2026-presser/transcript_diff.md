@@ -1,0 +1,126 @@
+# 转写交叉校验：djokovic-cincinnati-2026-presser
+
+- 第一份：YouTube 自动字幕 **1564** 词
+- 第二份：faster-whisper（medium.en）**1459** 词
+- **对不上 11.2%**（闸门 12%）
+
+⚠️ 上面两个词数和分歧率都是**去掉 erm/uh/uhh/um/umm 这类填词之后**算的：这些词 whisper 系统性地会丢，跟源可不可信无关，留着只会把「说话人有多磕巴」量成「两份转写对不上」。
+
+## 分歧逐处（左＝YouTube 自动字幕，右＝第二份）
+
+- `novak` → `but`
+- `you found your way` → `—`
+- `—` → `yeah`
+- `—` → `oh`
+- `i` → `—`
+- `i` → `but`
+- `on` → `in`
+- `at the` → `—`
+- `had` → `at`
+- `best of` → `that's the`
+- `that` → `—`
+- `and` → `—`
+- `to` → `—`
+- `a` → `was`
+- `really` → `pretty`
+- `in in a` → `you know`
+- `won` → `want`
+- `once` → `one`
+- `and` → `in`
+- `you know` → `—`
+- `—` → `to`
+- `ben navarro and` → `then of our own you know`
+- `one of the` → `—`
+- `which is` → `—`
+- `and` → `—`
+- `me` → `—`
+- `a you know` → `—`
+- `hopefully` → `for the`
+- `than one` → `upon`
+- `ready` → `flying`
+- `for` → `the`
+- `i know i'm` → `—`
+- `curious` → `because`
+- `it's` → `is it`
+- `—` → `and`
+- `someone who` → `some of you`
+- `there are a lot of cameras on you what is it` → `—`
+- `having them` → `—`
+- `more personal spaces` → `—`
+- `and` → `—`
+- `a` → `—`
+- `and` → `—`
+- `i` → `—`
+- `neutral` → `natural`
+- `and` → `to`
+- `and` → `—`
+- `leave` → `live`
+- `you know` → `now`
+- `the` → `—`
+- `that` → `—`
+- `to` → `—`
+- `to` → `—`
+- `—` → `i'll`
+- `to` → `—`
+- `and` → `—`
+- `i i` → `—`
+- `a` → `—`
+- `his` → `he's`
+- `and` → `—`
+- `i'm` → `—`
+- `in` → `you know`
+- `days'` → `days`
+- `will` → `—`
+- `world cup stuff like that` → `—`
+- `back at` → `like`
+- `—` → `went`
+- `a national` → `some`
+- `a rest` → `arrest`
+- `in` → `and`
+- `what` → `—`
+- `hoping we're` → `—`
+- `4` → `four`
+- `it it it` → `—`
+- `you know` → `—`
+- `tempo` → `temple`
+- `need` → `needs`
+- `needs` → `it's`
+- `—` → `time`
+- `you know` → `—`
+- `and and` → `—`
+- `to` → `is`
+- `i'm i'm` → `—`
+- `and` → `—`
+- `i'm` → `we're`
+- `and` → `—`
+- `a of` → `—`
+- `of` → `—`
+- `to` → `—`
+- `to` → `—`
+- `to` → `—`
+- `i'm` → `and`
+- `and` → `then`
+- `rest and` → `rested`
+- `in` → `—`
+- `what` → `—`
+- `i` → `—`
+- `dimensional feeling` → `dimension`
+- `like 10` → `ten`
+- `2` → `two`
+- `going to` → `gonna`
+- `again` → `—`
+- `too` → `—`
+- `on the tennis court` → `—`
+- `—` → `in`
+- `you know` → `—`
+- `and` → `—`
+- `i` → `—`
+- `ahead ahead` → `have had`
+- `physiotherapist` → `physiotherapies`
+- `prepare` → `there`
+- `you know` → `—`
+- `not the` → `but`
+- `my longevity for` → `—`
+- `you know i don't me too i` → `—`
+- `i` → `to`
+- `—` → `thank`
