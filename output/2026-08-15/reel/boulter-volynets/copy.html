@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>8.15 赛场之上 | 博尔特少赢七分赢了球</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>7-5 0-6 6-4。赢的这个人，全场比对手少赢了七个小分。
+
+先把数字摆齐：全场一百七十五个小分，沃利内茨拿到九十一，博尔特八十四；二十八局，沃利内茨十五局，博尔特十三局；发球局沃利内茨保住八个、博尔特七个；Ace 沃利内茨一个、博尔特零个；破发点兑现沃利内茨七个、博尔特六个。每一栏都是沃利内茨领先，赢的却是博尔特。
+
+差额去哪儿了？全在中间那一盘。第二盘零比六，三十四分钟，三十六个小分里博尔特只拿到十个——净输十六分。而首盘她四十三比四十、决胜盘三十一比二十五，两盘都赢在该赢的地方。网球就是这么算账的：一盘输得再彻底，也只值一盘。
+
+首盘她赢得并不轻松，一小时十分钟，自己送出去六个双误，七比五才拿下。第二盘开局三个发球局一局没保住，零比五时对手拿到三个盘点。间歇之后她换了一件上衣回来，决胜盘先破发三比二，四比三轮到自己发球，零比四十，一下被追成四平。紧接着她把对手的发球局破了回来，五比四，发球胜赛局的第二个赛点落地。
+
+转播解说说，这场球什么都有：九十分钟的雨歇，一次医疗暂停，还有来回换手的势头。
+
+而对博尔特来说，这一场的分量不在数据上。转播解说赢球那一刻的原话是「她终于终结了五连败」——上一次赢球是六月十二号在女王杯赢莱巴金娜，之后她连输五场：维基奇、费尔南德斯、格兰特、克鲁格、克罗斯。再往前一层，她二〇二五年掉出前一百，二〇二六年一路爬回来，年初世界第一百一十二，七月初到过第六十。
+
+顺带一提，两个人此前唯一一次交手是今年二月的俄斯特拉发，博尔特两盘胜——那一站她拿了冠军。
+
+这样赢一场，算不算赢回来了？
+
+#网球 #WTA #辛辛那提公开赛 #博尔特 #网球时差</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>这样赢一场，算不算赢回来了？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
