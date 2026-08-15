@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>8.16 赛场之上 | 西西帕斯五个赛点才赢</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>赢下这场首轮，西西帕斯用掉了五个赛点。
+
+7-6(4) 7-5，两小时整，辛辛那提男单第一轮。
+
+这一场真正的分量，在他们上一次见面。
+
+二〇二五年六月三十号，温网首轮。对面的鲁瓦耶从资格赛打上来，那是他的温网正赛首秀；西西帕斯是二十四号种子。第一盘四比一落后时西西帕斯就叫了医疗暂停治疗后背，输掉第二盘之后选择退赛，全场一小时十二分钟。赛后他说，自己完全找不到答案，而这条腰伤从二〇二三年退出年终总决赛起就一直没好。
+
+十四个月之后，同一个对手，他赢了。但每一次把门推开，对面都能顶回来一次。
+
+首盘二比二他先破发，三比三就被破了回来。抢七他一度五比一领先，鲁瓦耶追到四比六，第三个盘点才落地。
+
+第二盘四比二领先之后：二比五，鲁瓦耶发球，三十比四十，第一个赛点——鲁瓦耶救下来还保住了这一局；五比三，轮到西西帕斯自己发球胜赛局——被破；五比六，鲁瓦耶发球，零比四十，三个赛点一次摆在他面前——三个连着被救回来。第四个赛点才收工。
+
+全场一百五十五个小分他拿到八十五个，而破发点是七次机会兑现三次，鲁瓦耶两次机会全兑现。
+
+再往前一层：二〇二一年八月九号他排到过世界第三，两次打进大满贯决赛，两次都输给德约科维奇。现在他世界第四十九。一个月前在瑞士的格施塔德，他拿到了十六个月来的第一个冠军，生涯第十三个。
+
+这一次，他至少是自己走出去的。
+
+他还回得去从前的位置吗？
+
+#网球 #ATP #辛辛那提公开赛 #西西帕斯 #网球时差</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>他还回得去从前的位置吗？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
