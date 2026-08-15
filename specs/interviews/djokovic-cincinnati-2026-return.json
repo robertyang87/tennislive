@@ -3,7 +3,7 @@
   "url": "https://www.youtube.com/watch?v=prsYrVNMITA",
   "source_title": "Novak Djokovic on THAT Final vs Alcaraz & Cincinnati Return（@TennisTV 官方账号，2026-08-14 发）",
   "start": 0.0,
-  "end": 106.5,
+  "end": 104.76,
   "whisper_model": "medium.en",
   "topbar": false,
   "_no_topbar_why": "**这条不是赛后采访，是这一站开打之前录的**（Tennis TV 的赛前专访，第一句就是「诺瓦克，欢迎回到辛辛那提」）。顶栏印的是「哪一站哪一轮、谁跟谁打成什么样」——这条片子没有轮次、没有对手、没有比分，照常印等于凭空造一场比赛出来。账号所有者 2026-08-14 就这条点名：「不要顶部的比赛信息提示栏」。",
@@ -12,7 +12,7 @@
     "https://www.atptour.com/en/news/alcaraz-djokovic-cincinnati-2023-final",
     "https://cincinnatiopen.com/news/djokovic-captures-third-western-southern-title-in-instant-classic-over-alcaraz/"
   ],
-  "_window_why": "0.0–106.5，**整条，一刀没剪**（采访片不设时长上限、不要过多剪辑）。第一条字幕事件就在 0.08（提问的第一个字），所以从 0 起；最后一句「Thank you」在 104.24，收在 106.5 留一口气。源片 115 秒，末尾那几秒是 Tennis TV 的片尾板，不收。",
+  "_window_why": "0.0–104.76，**采访本体一刀没剪，只切掉末尾的 Tennis TV 片尾板**（采访片不设时长上限、不要过多剪辑）。第一条字幕事件就在 0.08（提问的第一个字），所以从 0 起。\n\n⚠️ **第一版写的是 `end: 106.5`，还注着「末尾那几秒是 Tennis TV 的片尾板，不收」——那句话是错的，片尾板整个在窗口里面**，第一版成片的最后 1.7 秒就是那块板。账号所有者 2026-08-15 点出来：「把后面 tennis tv 的片尾也裁剪掉啊」。**我当时是照着源片总长推的，没打开成片看过**——又一次「查产物，不查信号」。\n\n**这一版是逐帧量出来的**：把已发的那版成片从 Release 拉回本地（沙箱下不动 YouTube，但 curl 得动 Release 附件），25fps，封面是**前 45 帧完全相同**、第 46 帧起画面才动，也就是 `COVER_SECONDS = 1.8`，所以 `源片时刻 = 成片时刻 − 1.8`。逐帧读下来——\n\n    成片 106.56 / 源片 104.76   他的最后一帧：低头转开，已经说完谢谢\n    成片 106.60 / 源片 104.80   **Tennis TV 那颗球标的甩入动画第一帧**（整幅均值 31→71，一帧跳上去）\n    成片 106.84 / 源片 105.04   定版白色球标\n    成片 107.04 / 源片 105.24   「Tennis TV — THE BEST SEAT IN TENNIS」逐字打出\n\n收在 **104.76**：`-t` 只收 pts 小于它的帧，最后一帧落在 104.72，片尾板一帧都进不来；代价是丢掉他 104.76 那一帧（0.04 秒，看不出来），而多收一帧就是账号所有者点名要去掉的那个东西。\n\n⚠️ **代价要说清楚**：他那句「Thank you／谢谢」的字幕从 1.66 秒缩到 **0.52 秒**。那是收尾的最后一拍、紧接着就是解读卡，**没有任何一句话被截掉**（最后一个字幕事件起于 104.24，104.76 之后源片里再没有事件），所以 48 条 zh 一条不少，`--stage verify` 本地重跑仍是「字幕 48 组双语、0 处空档」。",
   "column": "赛后开麦",
   "interview_kind": "赛前专访",
   "event": "2026 辛辛那提 ATP1000",

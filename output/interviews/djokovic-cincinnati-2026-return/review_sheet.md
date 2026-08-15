@@ -1,6 +1,6 @@
 # 转写核对表：djokovic-cincinnati-2026-return
 
-源片 https://www.youtube.com/watch?v=prsYrVNMITA　采访段 0.0–106.5 秒（共 48 行）
+源片 https://www.youtube.com/watch?v=prsYrVNMITA　采访段 0.0–104.8 秒（共 48 行）
 
 | # | 片内 | 跳到源片 | 英文 | 中文 | 判据 |
 |--:|:--|:--|:--|:--|:--|
