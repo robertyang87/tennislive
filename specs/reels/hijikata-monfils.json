@@ -1,7 +1,7 @@
 {
   "slug": "hijikata-monfils",
   "source_url": "https://www.youtube.com/watch?v=lPpLK1IUk7E",
-  "_source": "**Tennis TV 官方频道**（`youtube.com/@TennisTV`）的单场集锦，标题 `🇦🇺 Rinky Hijikata vs Gael Monfils 🇫🇷 | Cincinnati 2026 Highlights`，211.3 秒、1920×1080、50 fps。频道由 YouTube oEmbed 自报（`author_name = Tennis TV`）。四处画面自证：① 记分条整场烧着 `HIJIKATA / MONFILS`，比分从首盘 1-2 一路到 5-3 四十比零的赛点都能和 flashscore 的逐分对上；② 93.5 秒挂出 `BREAK POINTS WON` 图形（`HIJIKATA 0/0 · MONFILS 2/3`），和首盘统计一致；③ 场地印着 `P&G`、中场 `ATP TOUR`、网带 `Emirates`，后场背板依次 `Old Spice · Gillette · Spruce`、另一侧 `Fifth Third · Old Spice · CreditOne · W&S`——辛辛那提站的赞助商阵容；④ 右上角全程烧着 `TennisTV` 台标。\n\n⚠️ **ATP 官方频道同一场也发了一版（`iIFG4XH65tM`），没用它**：CLAUDE.md「源片的清晰度和完整度不能将就」——两版都够 1080p，而 Tennis TV 这版明显长得多（这版实测 211.3 秒，ATP 官方那版按频道页的时长标签大约两分钟出头）。\n\n⚠️ **我在挑源片那一步把两版的时长都读错了**：拿频道列表页 HTML 里「N minutes, M seconds」的无障碍文本按「videoId 前后 4000/8000 字符」去找，那个窗口会串到相邻视频的标签上，于是这版被读成「12 分 08 秒」。真实时长是 probe 下完之后 ffprobe 报的 **211.3 秒**。**结论没变（仍然是这版更长），但那三个数是错的**——下次要时长就 probe，或者 `yt-dlp --print '%(duration)s'`，别拿邻近字符窗口去猜。",
+  "_source": "**Tennis TV 官方频道**（`youtube.com/@TennisTV`）的单场集锦，标题 `🇦🇺 Rinky Hijikata vs Gael Monfils 🇫🇷 | Cincinnati 2026 Highlights`，211.3 秒、1920×1080、50 fps。频道由 YouTube oEmbed 自报（`author_name = Tennis TV`）。四处画面自证：① 记分条整场烧着 `HIJIKATA / MONFILS`，比分从首盘 1-2 一路到 5-3 四十比零的赛点都能和 flashscore 的逐分对上；② 93.5 秒挂出 `BREAK POINTS WON` 图形（`HIJIKATA 0/0 · MONFILS 2/3`），和首盘统计一致；③ 场地印着 `P&G`、中场 `ATP TOUR`、网带 `Emirates`，后场背板依次 `Old Spice · Gillette · Spruce`、另一侧 `Fifth Third · Old Spice · CreditOne · W&S`——辛辛那提站的赞助商阵容；④ 右上角全程烧着 `TennisTV` 台标。\n\n⚠️ **ATP 官方频道同一场也发了一版（`iIFG4XH65tM`），没用它**：CLAUDE.md「源片的清晰度和完整度不能将就」——两版都是 1080p，而**这版 211 秒、ATP 官方那版 118 秒**，长 1.8 倍。两个数都是 `yt-dlp --skip-download --print '%(duration)s %(height)s %(channel)s'` 量出来的（`channel` 同时自证频道是 `Tennis TV` / `ATP Tour`）。\n\n⚠️ **挑源片那一步我一度把两版的时长都读错了**：拿频道列表页 HTML 里「N minutes, M seconds」的无障碍文本按「videoId 前后 4000/8000 字符」去找，那个窗口会串到相邻视频的标签上，于是这版被读成「12 分 08 秒」、ATP 那版「2 分 20 秒」。**结论碰巧没变（仍然是这版更长），但两个数都是错的**——邻近字符窗口不是认领的钥匙，要时长就直接问 yt-dlp（沙箱里问得到，见 CLAUDE.md）。",
   "_column": "赛场之上",
   "topbar": {
     "line1": "ATP1000 辛辛那提 第一轮",
@@ -69,9 +69,9 @@
       "frame_at": 129.5,
       "focus": 0.5,
       "focus_y": 0.5,
-      "zoom": 1.0
+      "zoom": 1.18
     },
-    "_portrait_why": "129.5 秒：第二盘抢七四比四，孟菲尔斯（绿衣）转向看台、双手举起来把全场叫起来。\n\n四道闸门逐条过：①时间地点人物——同一镜头块 127.58–131.24 秒，记分条读作 `HIJIKATA 2 6 4 / MONFILS 6 6 4`，是抢七四平那一分之后；绿衣是孟菲尔斯（见 `_editing_why` 里的球衣判据）；②画面对上这一屏在说的那件事——这条片子讲的是一次告别，要的是**他还在场上使劲的那一下**，不是赛后低头那一格（186.5 秒有，故意不用）。CLAUDE.md「主视角不等于看笑话」，`arango-venus` 栽过一次：那次挑的是「零比四落后还在握拳」，这次是「抢七里把看台叫起来」，同一个口径；③冲击力——中近景、动作明确、背后整片看台；④清晰度——这一格没有运动模糊。\n\n⚠️ **`pick_cover_frames` 这次帮不上**：528 帧里只活下来 43 个候选，最高的 `sharp` 只有 87.1（46.0 秒，而且 `faces: 2`），大部分 `eyes: 0`——转播的近景要么在动要么侧着。所以这一版按四道闸门人工选，不按候选表。\n\n⚠️ **`frame_at` 是照三秒一格的缩略图墙定的，等 `mode=cover` 把 `cover_src/portrait.jpg` 提交回来之后要再看一眼那一帧本身**（CLAUDE.md：「看过缩略图」和「看过那一帧」是两件事）。`focus` 同理，本地 `render_cover_local.py` 七秒一版。",
+    "_portrait_why": "129.5 秒：第二盘抢七四比四，孟菲尔斯（绿衣）转向看台、双手举起来把全场叫起来。\n\n四道闸门逐条过：①时间地点人物——同一镜头块 127.58–131.24 秒，记分条读作 `HIJIKATA 2 6 4 / MONFILS 6 6 4`，是抢七四平那一分之后；绿衣是孟菲尔斯（见 `_editing_why` 里的球衣判据）；②画面对上这一屏在说的那件事——这条片子讲的是一次告别，要的是**他还在场上使劲的那一下**，不是赛后低头那一格（186.5 秒有，故意不用）。CLAUDE.md「主视角不等于看笑话」，`arango-venus` 栽过一次：那次挑的是「零比四落后还在握拳」，这次是「抢七里把看台叫起来」，同一个口径；③冲击力——中近景、动作明确、背后整片看台；④清晰度——这一格没有运动模糊。\n\n⚠️ **`pick_cover_frames` 这次帮不上**：528 帧里只活下来 43 个候选，最高的 `sharp` 只有 87.1（46.0 秒，而且 `faces: 2`），大部分 `eyes: 0`——转播的近景要么在动要么侧着。所以这一版按四道闸门人工选，不按候选表。\n\n⚠️ **`frame_at` 是照三秒一格的缩略图墙定的，等 `mode=cover` 把 `cover_src/portrait.jpg` 提交回来之后要再看一眼那一帧本身**（CLAUDE.md：「看过缩略图」和「看过那一帧」是两件事）。`focus` 同理，本地 `render_cover_local.py` 七秒一版。\n\n⚠️ **`zoom` 是渲出来两版摆一起比出来的**（`render_cover_local.py`，本地几秒一版）：`1.0` 那版他只占画面中间一小块、脸糊在人群里；`1.18` 这版他大了近两成，脸读得出来，而背后那片举着手的看台一点没少——**这一格的力量一半在他、一半在身后站起来的整片人**，两样都要留住。再往上推就会把两侧的看台切掉，那就只剩一个人在举手了。",
     "scrim": "clear",
     "winner": "土方凛辉",
     "result": "2-6 7-6(5) 6-3",
