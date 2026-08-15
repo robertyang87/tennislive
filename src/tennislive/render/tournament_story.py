@@ -3107,6 +3107,67 @@ STORIES = STORIES + (
         source_url="https://www.youtube.com/watch?v=NryVymv9AMY",
     ),
     _trivia_story(
+        slug="golden-masters",
+        title="WTA 为什么没有金大师",
+        subtitle="网球冷知识 · 赛制篇",
+        identity="从斯瓦泰克拿下加拿大站说起",
+        chips=("冷知识", "赛制", "金大师"),
+        hero=(
+            "男子集齐九站大师赛有个名字，叫金大师，吉尼斯世界纪录有正式条目；"
+            "德约科维奇 2018 年第一个做到，辛纳 2026 年在罗马成为第二个。"
+            "而女子这边找不到对应的说法——要拿满，先得有一张固定的表，"
+            "而女子那十站到 2024 年才定下来。"
+        ),
+        facts=(
+            "Career Golden Masters（金大师）指集齐全部九站 ATP 大师赛。"
+            "吉尼斯世界纪录有正式条目，ATP 官网专门发稿。德约科维奇 2018 年"
+            "在辛辛那提第一个完成（2020 年又完成一遍）；辛纳 2026-05-17 在罗马"
+            "6-4 6-4 胜鲁德完成，24 岁，史上最年轻，用时 33 个月最快。",
+            "男子九站与女子十站**只有六站重合**：男子独有蒙特卡洛、上海、巴黎，"
+            "女子独有多哈、迪拜、北京、武汉。两边的差异不是细节，是小半张表。",
+            "女子那张表逐年在变：2021 创立（北京、武汉当年取消），"
+            "2022 全年只有八站（武汉换成瓜达拉哈拉，迪拜不在表上），"
+            "2023 北京回来，2024 全部改成强制、武汉回归、多哈与迪拜同时转正——"
+            "十站到这一年才定型。",
+            "⚠️ 没有官方口径能回答「谁拿满过」，所以片子里那把尺子是自己定的，"
+            "并且在片中明说：按今天这十个场地数，不管当年那一站是什么级别。"
+            "斯瓦泰克八站（缺迪拜、武汉），小威廉姆斯七站（缺多哈、迪拜、武汉）。"
+            "⚠️ 「历史上没有第三个人到过八站」没有穷举，片子里一个字都不写。",
+            "男子那张表也不是永远不变：九站是 2009 年上海顶掉汉堡那年定的型，"
+            "到 2026 年十七年没变过；而 ATP 已于 2025-10-23 宣布，"
+            "2028 年沙特将加入，成为第十站。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2026-05-17", player="辛纳", age="2026 罗马决赛",
+                headline="6-4 6-4 胜鲁德，成为第二个金大师",
+                detail=(
+                    "24 岁，史上最年轻完成金大师，用时 33 个月最快；"
+                    "同时是 50 年来第一个夺得罗马冠军的意大利男子。"
+                ),
+                source_url="https://en.wikipedia.org/wiki/ATP_Masters_1000_tournaments",
+            ),
+            ChampionMoment(
+                date="2026-08-13", player="斯瓦泰克", age="2026 加拿大站决赛",
+                headline="6-2 6-3 胜莱巴金娜，近一年来第一个冠军",
+                detail=(
+                    "多伦多，75 分钟。生涯第 26 冠、第 12 座 WTA1000，"
+                    "超过萨巴伦卡（11 座）升至该项历史第二。"
+                    "赛前她整个 2026 赛季一个决赛都没进过，排名掉到世界第八。"
+                ),
+                source_url=(
+                    "https://www.wtatennis.com/news/4559201/swiatek-ends-"
+                    "yearlong-title-drought-in-toronto-after-sweeping-past-"
+                    "rybakina-in-straight-sets"
+                ),
+            ),
+        ),
+        image_keys=(),
+        image_credit="WTA 官方图库 · 2026 加拿大站多伦多，斯瓦泰克捧杯",
+        source_url="https://en.wikipedia.org/wiki/ATP_Masters_1000_tournaments",
+        source_label="维基 ATP Masters 1000 / WTA 1000 两页、WTA 官网赛后稿、吉尼斯世界纪录",
+    ),
+    _trivia_story(
         slug="tour-balls",
         title="四个星期，四种球",
         subtitle="网球冷知识 · 器材篇",
