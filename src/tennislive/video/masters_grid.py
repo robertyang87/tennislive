@@ -170,3 +170,111 @@ def two_tours_grid() -> str:
             )
     parts.append("</svg>")
     return "\n".join(parts)
+
+
+# ── ④屏：女子那张表一直在变（全片的核心答案） ────────────────────────
+#
+# ⚠️ 每一行都可核（维基 WTA 1000 tournaments，2026-08-14 查）：
+# 2021 创立时是 4 强制 + 5 非强制，而北京和武汉当年直接取消；2022 武汉换成
+# 瓜达拉哈拉、多哈和迪拜在 1000 与 500 之间轮换（**那年全年只有 8 站**）；
+# 2023 北京回来；2024 全部改成强制、武汉回归、瓜达拉哈拉降回 500、
+# 多哈和迪拜同时成为常设 1000——**十站到这一年才定型**。
+#
+# ⚠️ 故意不讲「为什么会变」（疫情、中国赛季停摆、赛事产权买卖）：原因链太长，
+# 每一环都要单独找证据，塞进来会把核心答案冲散。只讲「它变了」这个可核的事实。
+WTA_TABLE_YEARS = (
+    ("2021", "创立", "北京武汉当年取消", 9),
+    ("2022", "武汉换成瓜达拉哈拉", "迪拜不在表上", 8),
+    ("2023", "北京回来", "", 9),
+    ("2024", "全部改成强制", "十站定型", 10),
+)
+
+
+def wta_table_drift() -> str:
+    """女子那张表的逐年变动。2024 那一行高亮——十站到这年才定下来。"""
+    parts = [
+        '<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">',
+        '<text x="450" y="40" text-anchor="middle" font-size="34" '
+        'font-weight="700" fill="#e7f3ec">女子那张表一直在变</text>',
+        '<text x="450" y="76" text-anchor="middle" font-size="25" '
+        'fill="#a9bcb2">十站到 2024 年才定下来</text>',
+    ]
+    top = 118
+    for i, (year, change, note, count) in enumerate(WTA_TABLE_YEARS):
+        y = top + i * 108
+        final = year == "2024"
+        accent = "#8fd6a8" if final else "#a9bcb2"
+        parts.append(
+            f'<rect x="56" y="{y}" width="788" height="88" rx="10" '
+            f'fill="{accent}" fill-opacity="{0.18 if final else 0.07}" '
+            f'stroke="{accent}" stroke-width="{3 if final else 1}"/>'
+        )
+        parts.append(
+            f'<text x="96" y="{y + 56}" font-size="40" font-weight="700" '
+            f'fill="{accent}">{year}</text>'
+        )
+        parts.append(
+            f'<text x="240" y="{y + 38}" font-size="26" fill="#e7f3ec">{change}</text>'
+        )
+        if note:
+            parts.append(
+                f'<text x="240" y="{y + 72}" font-size="22" fill="#a9bcb2">{note}</text>'
+            )
+        parts.append(
+            f'<text x="800" y="{y + 56}" text-anchor="end" font-size="36" '
+            f'font-weight="700" fill="{accent}">{count} 站</text>'
+        )
+    parts.append("</svg>")
+    return "\n".join(parts)
+
+
+# ── ⑧屏：男子那张表 2028 年也要变 ────────────────────────────────────
+#
+# ⚠️ 这一屏是全片的落点，而它把「性别对立」那条路堵住了：尺子本来就是人定的，
+# 男子那把也在改。维基 ATP Masters 1000 页原文：「On October 23, 2025, the ATP
+# announced that a new Masters 1000 tournament (the tenth on the calendar) will
+# be held in Saudi Arabia, likely beginning in 2028.」
+#
+# ⚠️ 「九站没变过」要写 **2009 年至今**（上海顶掉汉堡、马德里改红土那年定的型），
+# 不是「二十年」——我第一版写二十年，是没查就说的。
+ATP_TABLE_YEARS = (
+    ("2009", "上海顶掉汉堡，九站定型", 9),
+    ("2026", "十七年没变过", 9),
+    ("2028", "沙特加入", 10),
+)
+
+
+def atp_table_future() -> str:
+    """男子那张表也不是永远不变——2028 年变成十站。"""
+    parts = [
+        '<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">',
+        '<text x="450" y="40" text-anchor="middle" font-size="34" '
+        'font-weight="700" fill="#e7f3ec">男子那把尺子也要改</text>',
+        '<text x="450" y="76" text-anchor="middle" font-size="25" '
+        'fill="#a9bcb2">2028 年沙特加入，变成十站</text>',
+    ]
+    top = 140
+    for i, (year, note, count) in enumerate(ATP_TABLE_YEARS):
+        y = top + i * 126
+        future = year == "2028"
+        accent = "#e0b13a" if future else "#5b9bd5"
+        parts.append(
+            f'<rect x="56" y="{y}" width="788" height="100" rx="10" '
+            f'fill="{accent}" fill-opacity="{0.20 if future else 0.08}" '
+            f'stroke="{accent}" stroke-width="{3 if future else 1}"'
+            + (' stroke-dasharray="10 6"' if future else "")
+            + "/>"
+        )
+        parts.append(
+            f'<text x="96" y="{y + 62}" font-size="42" font-weight="700" '
+            f'fill="{accent}">{year}</text>'
+        )
+        parts.append(
+            f'<text x="252" y="{y + 60}" font-size="28" fill="#e7f3ec">{note}</text>'
+        )
+        parts.append(
+            f'<text x="800" y="{y + 62}" text-anchor="end" font-size="38" '
+            f'font-weight="700" fill="{accent}">{count} 站</text>'
+        )
+    parts.append("</svg>")
+    return "\n".join(parts)
