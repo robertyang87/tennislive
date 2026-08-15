@@ -102,7 +102,8 @@ wang-vandewinkel 那场 flashscore 报范德温克尔发球总分 95、总得分
 
 ## 每一行谁占优
 
-`ROW_SPECS` 是这张图的固定模板，换球员不用改。方向语义：
+`ROW_SPECS` 是这张图的固定模板，换球员不用改。每条是
+`(中文标签, 英文标签, 方向, *字段名)`。方向语义：
 
     "hi"    数字越大越好（ACE / 制胜分 / 总得分）
     "lo"    数字越小越好（双误 / 非受迫失误）
@@ -110,6 +111,29 @@ wang-vandewinkel 那场 flashscore 报范德温克尔发球总分 95、总得分
     "frac"  分子/分母，**主数字就是分数本身**（不折算成 %），比率越大越好
 
 两边相等（比如双误打平）不点亮任何一侧——不替谁背书。
+
+### 中文标签底下那行英文（账号所有者 2026-08-15：「后续都这么做」）
+
+英文跟中文写在**同一条 `ROW_SPECS`**里，不另开一张对照表——两处必分叉，而
+分叉的样子是「某一行的英文是上一行的」，图上完全看不出来。
+
+⚠️ **这一行不许把行高撑高**（账号所有者同一句话里的第二个要求：「每行的高度
+不变」）。所以它是 `position:absolute` 挂在 `.slabel` 底下的，**不参与行盒的
+高度计算**；中文那行再用 `position:relative` 往上提一点，让「中文 + 英文」这
+一对在原来那个行高里视觉居中。两样都改不得：
+
+    英文改成在流内（去掉 absolute）  → 每行长高，整张图跟着变长
+    中文那个 relative 位移去掉        → 一对偏下，压到分隔线上
+
+实测（wang-vandewinkel，2160×3840）：加英文前后**相邻两条分隔线的间距一模
+一样**，整张表的首尾像素位置也一模一样。判据在
+`test_每行英文不许把行高撑高`。
+
+⚠️ 英文的**水平**居中不是靠 `left:0;right:0`——`.slabel` 那一格的宽度是按
+中文文字撑出来的（`white-space:nowrap` + `grid` 的 `auto` 列），而英文往往更宽
+（`Break Points Converted` 比「破发点转化」宽一截）。撑在格子里会换行，所以用
+`left:50%` + `translateX(-50%)`：以中文的中心为轴，而那个中心正好是画布中心
+（三列 `1fr auto 1fr`）。
 
 ## ⚠️ 制胜分 / 非受迫失误这两行可以缺，其余不许缺
 
@@ -152,15 +176,15 @@ W, H = 1080, 1920
 
 # (标签, 类型, ...字段名)——固定模板，见模块 docstring「每一行谁占优」。
 ROW_SPECS = [
-    ("ACE", "hi", "aces"),
-    ("双误", "lo", "df"),
-    ("制胜分", "hi", "winners"),
-    ("非受迫失误", "lo", "ue"),
-    ("一发成功率", "pct", "first_in", "first_total"),
-    ("一发得分率", "pct", "first_won", "first_in"),
-    ("二发得分率", "pct", "second_won", "second_total"),
-    ("破发点转化", "frac", "bp_conv", "bp_chances"),
-    ("总得分", "hi", "pts_won"),
+    ("ACE", "Aces", "hi", "aces"),
+    ("双误", "Double Faults", "lo", "df"),
+    ("制胜分", "Winners", "hi", "winners"),
+    ("非受迫失误", "Unforced Errors", "lo", "ue"),
+    ("一发成功率", "1st Serve %", "pct", "first_in", "first_total"),
+    ("一发得分率", "1st Serve Points Won", "pct", "first_won", "first_in"),
+    ("二发得分率", "2nd Serve Points Won", "pct", "second_won", "second_total"),
+    ("破发点转化", "Break Points Converted", "frac", "bp_conv", "bp_chances"),
+    ("总得分", "Total Points Won", "hi", "pts_won"),
 ]
 
 # 这两项 WTA 巡回赛拿不到（见模块 docstring）。**只有这两个可以缺**，
@@ -180,7 +204,7 @@ def usable_rows(a: dict, b: dict) -> list[tuple]:
     """
     rows = []
     for spec_row in ROW_SPECS:
-        fields = spec_row[2:]
+        fields = spec_row[3:]
         in_a = all(f in a for f in fields)
         in_b = all(f in b for f in fields)
         if in_a and in_b:
@@ -232,7 +256,14 @@ def _stat_row(kind: str, a: dict, b: dict, *fields: str) -> tuple:
     raise ValueError(f"未知的行类型：{kind}")
 
 
-def _stat_row_html(label: str, lv: str, lf: str, rv: str, rf: str, lead: str | None) -> str:
+def _stat_row_html(label: str, label_en: str, lv: str, lf: str, rv: str, rf: str,
+                   lead: str | None) -> str:
+    """⚠️ 英文那个 `<span>` **必须嵌在 `.slabel` 里面**，不能当成第四个网格项。
+
+    `.srow` 是 `1fr auto 1fr` 三列，多一个子元素就多一列，整行版式塌掉；
+    而嵌在里面 + `position:absolute`，它既不占列也不占高度（见模块 docstring
+    「这一行不许把行高撑高」）。
+    """
     lcls = " lead" if lead == "a" else ""
     rcls = " lead" if lead == "b" else ""
     lfrac = f'<span class="sfrac">({html.escape(lf)})</span>' if lf else ""
@@ -240,7 +271,7 @@ def _stat_row_html(label: str, lv: str, lf: str, rv: str, rf: str, lead: str | N
     return f"""
 <div class="srow">
   <span class="sval sval-l{lcls}"><span class="smain">{html.escape(lv)}</span>{lfrac}</span>
-  <span class="slabel">{html.escape(label)}</span>
+  <span class="slabel">{html.escape(label)}<span class="slabel-en">{html.escape(label_en)}</span></span>
   <span class="sval sval-r{rcls}"><span class="smain">{html.escape(rv)}</span>{rfrac}</span>
 </div>"""
 
@@ -279,7 +310,7 @@ def build(spec: dict) -> str:
         if "headshot" not in raw:
             raise SystemExit(f"stats.{side} 缺 `headshot`——先用 "
                               "tools/fetch_official_headshot.py 抓一张，再把路径写进来。")
-        missing = [f for spec_row in ROW_SPECS for f in spec_row[2:]
+        missing = [f for spec_row in ROW_SPECS for f in spec_row[3:]
                    if f not in raw and f not in OPTIONAL_FIELDS]
         if missing:
             raise SystemExit(f"stats.{side} 缺这些字段：{sorted(set(missing))}")
@@ -304,7 +335,8 @@ def build(spec: dict) -> str:
     icon_html = f'<img class="brand-icon" src="{_data_uri(icon)}" alt="">'
 
     rows_html = "".join(
-        _stat_row_html(spec_row[0], *_stat_row(spec_row[1], a, b, *spec_row[2:]))
+        _stat_row_html(spec_row[0], spec_row[1],
+                       *_stat_row(spec_row[2], a, b, *spec_row[3:]))
         for spec_row in rows)
 
     def side(meta: dict, raw: dict, where: str) -> str:
@@ -411,8 +443,20 @@ body{{color:{vp.TEXT};font-family:'TL Sans SC','Noto Sans CJK SC',sans-serif;
 .sval.lead .smain{{color:#c6f65a;font-weight:700}}
 .sfrac{{font-size:23px;font-weight:400;color:rgba(244,251,247,.6)}}
 .sval.lead .sfrac{{color:rgba(198,246,90,.75)}}
+/* 中文标签 + 底下那行英文。⚠️ 两条都不许动，理由见模块 docstring
+   「中文标签底下那行英文」那节：
+   - `.slabel` 的 `top:-11px` 是 `position:relative` 的**视觉**位移，不改
+     行盒高度；它把「中文 + 英文」这一对在原来的行高里顶回视觉居中。
+   - `.slabel-en` 是 `position:absolute`，**不参与行盒高度计算**——这是
+     「每行的高度不变」唯一的实现方式。改成流内每行就会长高。
+   `left:50%` + `translateX(-50%)` 而不是 `left:0;right:0`：这一格的宽度是
+   中文撑出来的，英文更宽（`Break Points Converted`），撑在格子里会换行。 */
 .slabel{{font-family:'TL Sans SC',sans-serif;font-size:32px;font-weight:700;
- color:rgba(244,251,247,.92);letter-spacing:.3px;text-align:center;white-space:nowrap}}
+ color:rgba(244,251,247,.92);letter-spacing:.3px;text-align:center;white-space:nowrap;
+ position:relative;top:-11px}}
+.slabel-en{{position:absolute;top:100%;left:50%;transform:translateX(-50%);
+ margin-top:4px;white-space:nowrap;font-size:19px;font-weight:400;
+ letter-spacing:.7px;color:rgba(244,251,247,.40)}}
 
 .footer{{margin-top:38px;padding-top:20px;border-top:1px solid rgba(244,251,247,.18);
  display:flex;justify-content:space-between;align-items:center;

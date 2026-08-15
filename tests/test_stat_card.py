@@ -121,7 +121,7 @@ def test_有stats的spec都要有headshot文件和全部字段():
             # ⚠️ 制胜分 / 非受迫失误可以缺——**WTA 巡回赛拿不到那两项**
             # （见 `render_stat_card` 模块 docstring 和 CLAUDE.md），账号所有者
             # 2026-08-14 定的口径是「没有的话这两条就不显示」。其余字段照旧必填。
-            needed = {f for row in sc.ROW_SPECS for f in row[2:]} - sc.OPTIONAL_FIELDS
+            needed = {f for row in sc.ROW_SPECS for f in row[3:]} - sc.OPTIONAL_FIELDS
             missing = needed - set(raw)
             assert not missing, f"{p.name} stats.{side} 缺这些字段：{missing}"
         # ⚠️ 可缺归可缺，**两边必须缺得一样**：只有一边有的时候那一行会把
@@ -178,6 +178,84 @@ def test_真实spec渲染出的html比分顺序方向都对():
 
     # 双误 6:6 平手，两边都不该有 lead class
     assert "lead" not in srow_containing("双误")
+
+
+def test_每一行都要有英文标签():
+    """账号所有者 2026-08-15：「中间的技术统计再加一行写对应的英文，**后续都
+    这么做**」。所以这不是某一张图的临时加工，是模板的一部分——以后往
+    `ROW_SPECS` 里加一行忘了写英文，这条当场红。
+
+    英文和中文写在**同一条 `ROW_SPECS`** 里，不另开一张对照表：两处必分叉，
+    而分叉的样子是「某一行的英文是上一行的」，图上完全看不出来。
+    """
+    seen = set()
+    for row in sc.ROW_SPECS:
+        cn, en = row[0], row[1]
+        assert isinstance(en, str) and en.strip(), f"「{cn}」这一行没有英文标签"
+        assert en.isascii(), f"「{cn}」的英文标签 {en!r} 里有非 ASCII 字符"
+        assert en != cn, f"「{cn}」的英文位置填的还是中文"
+        assert en not in seen, (
+            f"英文标签 {en!r} 重复了——两行印同一个英文，读的人分不出哪行是哪行")
+        seen.add(en)
+    # 方向那一位现在排在第 2 位（cn, en, kind, *fields），别又滑回去
+    assert {row[2] for row in sc.ROW_SPECS} <= {"hi", "lo", "pct", "frac"}, \
+        "ROW_SPECS 的第 2 位不是方向了——加英文时索引挪错了"
+
+
+def test_每行英文不许把行高撑高():
+    """账号所有者同一句话里的第二个要求：「**每行的高度不变**，同时还是居中显示」。
+
+    实测过（wang-vandewinkel 2160×3840）：加英文前后七条分隔线的 y 坐标
+    **一个像素都没动**（1502 / 1740 / 1978 / 2216 / 2454 / 2692 / 2930，
+    间距恒为 238），页脚那条也在原位。这条测试钉住做到这件事的那套机制，
+    因为**行高变了在产物上不报错**，只是整张图悄悄变长。
+
+    三头都要钉：
+
+    1. 英文那个 span **嵌在 `.slabel` 里面**——`.srow` 是 `1fr auto 1fr` 三列，
+       它要是变成第四个子元素就多一列，整行版式塌掉；
+    2. `.slabel-en` 必须 `position:absolute`——绝对定位才不参与行盒高度，
+       改成流内每行就会长高；
+    3. 水平居中靠 `left:50%` + `translateX(-50%)`，不是 `left:0;right:0`——
+       那一格的宽度是中文撑出来的，而英文更宽（`Break Points Converted`），
+       撑在格子里会换行。
+    """
+    repo = Path(__file__).resolve().parent.parent
+    spec = json.loads((repo / "specs/reels/rybakina-osaka.json").read_text(encoding="utf-8"))
+
+    import os
+
+    os.chdir(repo)
+    out = sc.build(spec)
+
+    # ① 结构：查真渲出来的 HTML，不查源码文本
+    nested = re.findall(
+        r'<span class="slabel">[^<]+<span class="slabel-en">[^<]+</span></span>', out)
+    n_rows = out.count('<div class="srow">')
+    assert n_rows >= sc.MIN_ROWS, f"只渲出 {n_rows} 行，样本 spec 不对"
+    assert len(nested) == n_rows, (
+        f"{n_rows} 行里只有 {len(nested)} 行的英文嵌在 .slabel 内。"
+        "英文单独成一个网格项会多出一列，三列版式塌掉")
+
+    # ② + ③ 机制：那两条 CSS 规则本身
+    en_rule = re.search(r"\.slabel-en\{([^}]*)\}", out)
+    assert en_rule, "CSS 里没有 .slabel-en 规则"
+    css = en_rule.group(1).replace(" ", "")
+    assert "position:absolute" in css, (
+        "`.slabel-en` 不是绝对定位——它会参与行盒高度，每行都会长高，"
+        "而这件事在产物上不报错，只是整张图悄悄变长")
+    assert "left:50%" in css and "translateX(-50%)" in css, (
+        "英文的水平居中要靠 left:50% + translateX(-50%)。"
+        "`.slabel` 那一格是按中文宽度撑的，英文更宽，撑在格子里会换行")
+
+    cn_rule = re.search(r"\n\.slabel\{([^}]*)\}", out)
+    assert cn_rule, "CSS 里没有 .slabel 规则"
+    cn_css = cn_rule.group(1).replace(" ", "")
+    assert "position:relative" in cn_css, \
+        "`.slabel-en` 的绝对定位要以 `.slabel` 为基准，后者必须 position:relative"
+    assert re.search(r"top:-\d+px", cn_css), (
+        "`.slabel` 少了往上提的那个位移——中文会留在原来的基线上，"
+        "「中文 + 英文」这一对整体偏下，压到分隔线上")
 
 
 def test_数据图文件名两处要同源():
