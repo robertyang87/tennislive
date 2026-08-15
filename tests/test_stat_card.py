@@ -258,6 +258,46 @@ def test_每行英文不许把行高撑高():
         "「中文 + 英文」这一对整体偏下，压到分隔线上")
 
 
+def test_中英那一对的垂直位置是量出来的一组数():
+    """账号所有者 2026-08-15 第二次反馈：「把中文往上移，英文在下面，然后它们
+    并行居中。**垂直居中**」。
+
+    第一版 `top:-11px` 只够把英文塞进去——「中文 + 英文」这一对的光学中心仍然
+    比两侧那个大号数字低 18~25px（2160 空间），整块往下坠。−20/−21/−22 三档
+    都真渲过、扫墨迹比过两个中心，−21px 的平均偏移 +0.6px 最正（那张表在
+    `render_stat_card` 的 docstring 里）。
+
+    ⚠️ **这条锁的不是 `top` 一个数，是量那一次的整组输入。** 光学中心由
+    「中文字号 + 英文字号 + 两行间距 + top」四个数一起决定，改任何一个，
+    −21px 就不再是量出来的那个答案了——而**歪掉在产物上不报错**，只是每一行
+    的标签整体偏一点，谁也不会注意到。所以四个一起钉：动其中任何一个，这条
+    当场红，逼着重量一次而不是顺手改个数。
+    """
+    src = Path(sc.__file__).read_text(encoding="utf-8")
+
+    def decl(rule: str, prop: str) -> str:
+        m = re.search(rf"\n\.{rule}\{{{{([^}}]*)\}}}}", src)
+        assert m, f"CSS 里没有 .{rule} 规则"
+        got = re.search(rf"(?<![\w-]){prop}:(-?[\d.]+)px", m.group(1).replace(" ", ""))
+        assert got, f".{rule} 少了 {prop}"
+        return got.group(1)
+
+    measured = {
+        (".slabel", "top"): "-21",          # 量出来的那个位移
+        (".slabel", "font-size"): "32",     # 下面三个是量那一次的前提
+        ("slabel-en", "font-size"): "19",
+        ("slabel-en", "margin-top"): "4",
+    }
+    for (rule, prop), want in measured.items():
+        got = decl(rule.lstrip("."), prop)
+        assert got == want, (
+            f"`.{rule.lstrip('.')}` 的 {prop} 从 {want}px 变成了 {got}px。"
+            "中英那一对的垂直居中是拿这四个数一起量出来的（中文字号 32、"
+            "英文字号 19、行距 4、位移 -21），改任何一个都要照 "
+            "render_stat_card 的 docstring 重新扫一次墨迹中心，"
+            "不是顺手把这条测试里的数字改掉")
+
+
 def test_数据图文件名两处要同源():
     """`build_match_reel.py` 渲出 `stat_card.jpg`，`push_reel.py` 找同名文件
     决定推不推这一屏——两处各写一份字符串必分叉（`POSTER_NAME` 那次已经

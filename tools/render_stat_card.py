@@ -129,6 +129,22 @@ wang-vandewinkel 那场 flashscore 报范德温克尔发球总分 95、总得分
 一样**，整张表的首尾像素位置也一模一样。判据在
 `test_每行英文不许把行高撑高`。
 
+⚠️ **`top` 那个 −21px 是量出来的，别按感觉调。** 账号所有者 2026-08-15 第二次
+反馈：「把中文往上移，英文在下面，然后它们并行居中。垂直居中」——第一版写的
+−11px 只够把英文塞进去，「中文 + 英文」这一对的光学中心仍然比两侧那个大号数字
+**低 18~25px**（2160 空间，也就是 9~12 个 CSS 像素），看起来是整块往下坠。
+
+量法：按分隔线切出每一行，左列（数字）和中列（中英）各取墨迹的上下沿，比两个
+中心。三档扫下来——
+
+    top:-20px   每行偏移 [7, 4, 0, 0, 0, 6, 4]   平均 +2.6
+    top:-21px   每行偏移 [5, 2, -2, -2, -2, 4, 2] 平均 +0.6   ← 选它
+    top:-22px   每行偏移 [3, 0, -4, -4, -4, 2, 0] 平均 -1.4
+
+剩下那 ±5px（2160 空间 ≈ 2.5 个 CSS 像素）是字形本身的差别（`%` 比纯数字高、
+`6/17` 那道斜杠更长），不是版式没对齐——**再调只会把一部分行调正、另一部分
+调歪**。判据在 `test_中英那一对要和数字垂直居中`。
+
 ⚠️ 英文的**水平**居中不是靠 `left:0;right:0`——`.slabel` 那一格的宽度是按
 中文文字撑出来的（`white-space:nowrap` + `grid` 的 `auto` 列），而英文往往更宽
 （`Break Points Converted` 比「破发点转化」宽一截）。撑在格子里会换行，所以用
@@ -445,15 +461,17 @@ body{{color:{vp.TEXT};font-family:'TL Sans SC','Noto Sans CJK SC',sans-serif;
 .sval.lead .sfrac{{color:rgba(198,246,90,.75)}}
 /* 中文标签 + 底下那行英文。⚠️ 两条都不许动，理由见模块 docstring
    「中文标签底下那行英文」那节：
-   - `.slabel` 的 `top:-11px` 是 `position:relative` 的**视觉**位移，不改
+   - `.slabel` 的 `top:-21px` 是 `position:relative` 的**视觉**位移，不改
      行盒高度；它把「中文 + 英文」这一对在原来的行高里顶回视觉居中。
+     ⚠️ 这个数是量出来的（扫墨迹比两个光学中心，−20/−21/−22 三档都渲过），
+     不是拍的；改它之前先读 docstring 里那张表。
    - `.slabel-en` 是 `position:absolute`，**不参与行盒高度计算**——这是
      「每行的高度不变」唯一的实现方式。改成流内每行就会长高。
    `left:50%` + `translateX(-50%)` 而不是 `left:0;right:0`：这一格的宽度是
    中文撑出来的，英文更宽（`Break Points Converted`），撑在格子里会换行。 */
 .slabel{{font-family:'TL Sans SC',sans-serif;font-size:32px;font-weight:700;
  color:rgba(244,251,247,.92);letter-spacing:.3px;text-align:center;white-space:nowrap;
- position:relative;top:-11px}}
+ position:relative;top:-21px}}
 .slabel-en{{position:absolute;top:100%;left:50%;transform:translateX(-50%);
  margin-top:4px;white-space:nowrap;font-size:19px;font-weight:400;
  letter-spacing:.7px;color:rgba(244,251,247,.40)}}
