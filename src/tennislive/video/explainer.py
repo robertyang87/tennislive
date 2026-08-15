@@ -1942,6 +1942,188 @@ _CRAMP_RULE_DIAGRAM = """
 </svg>
 """
 
+# 这条片子讲的是**球的规格**（每站换牌子），不是 `ball-pick` 讲的换球**节奏**
+# （每 7 局 / 9 局）。两条同栏目，判据是「这一屏在回答哪个问题」：那条问
+# 「为什么要换」，这条问「为什么每站不一样」。⚠️ 末尾那一屏会提到 5/7 局，
+# 那是**因为伤病要改的新数字**，不是把那条的来龙去脉再铺一遍。
+_BALL_COUNT_DIAGRAM = """
+<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="52" text-anchor="middle" fill="#e7f3ec"
+        font-size="38" font-weight="800">一年里，球换过多少种</text>
+  <text x="450" y="96" text-anchor="middle" fill="#a9bcb2"
+        font-size="26" font-weight="700">2023 赛季 · 女子巡回赛</text>
+
+  <text x="150" y="192" text-anchor="middle" fill="#a9bcb2"
+        font-size="27" font-weight="700">品牌</text>
+  <text x="150" y="268" text-anchor="middle" fill="#e7f3ec"
+        font-size="86" font-weight="800">10</text>
+
+  <text x="450" y="192" text-anchor="middle" fill="#a9bcb2"
+        font-size="27" font-weight="700">型号</text>
+  <text x="450" y="268" text-anchor="middle" fill="#c6f65a"
+        font-size="86" font-weight="800">19</text>
+
+  <text x="750" y="192" text-anchor="middle" fill="#a9bcb2"
+        font-size="27" font-weight="700">美网前四周</text>
+  <text x="750" y="268" text-anchor="middle" fill="#e7f3ec"
+        font-size="86" font-weight="800">4</text>
+
+  <line x1="70" y1="330" x2="830" y2="330"
+        stroke="rgba(231,243,236,.20)" stroke-width="2"/>
+
+  <text x="70" y="400" fill="#a9bcb2" font-size="26" font-weight="700">
+    男子巡回赛的数字与此相仿</text>
+  <text x="70" y="452" fill="#e7f3ec" font-size="29" font-weight="800">
+    选哪一家的球，由每站赛事自己决定</text>
+  <text x="70" y="504" fill="#e7f3ec" font-size="29" font-weight="800">
+    那是赞助合同的一部分，不是技术标准</text>
+</svg>
+"""
+
+
+_BALL_LOAD_DIAGRAM = """
+<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="52" text-anchor="middle" fill="#e7f3ec"
+        font-size="38" font-weight="800">球变重之后，力去了哪里</text>
+  <text x="450" y="96" text-anchor="middle" fill="#a9bcb2"
+        font-size="26" font-weight="700">同样的球速与旋转，代价换了个地方付</text>
+
+  <rect x="60" y="150" width="230" height="96" rx="14"
+        fill="rgba(231,243,236,.10)" stroke="rgba(231,243,236,.30)" stroke-width="2"/>
+  <text x="175" y="196" text-anchor="middle" fill="#e7f3ec"
+        font-size="28" font-weight="800">打上十几局</text>
+  <text x="175" y="230" text-anchor="middle" fill="#a9bcb2"
+        font-size="25" font-weight="700">气压往下掉</text>
+
+  <text x="312" y="208" text-anchor="middle" fill="#a9bcb2"
+        font-size="34" font-weight="800">&#8594;</text>
+
+  <rect x="335" y="150" width="230" height="96" rx="14"
+        fill="rgba(231,243,236,.10)" stroke="rgba(231,243,236,.30)" stroke-width="2"/>
+  <text x="450" y="196" text-anchor="middle" fill="#e7f3ec"
+        font-size="28" font-weight="800">球变软、变重</text>
+  <text x="450" y="230" text-anchor="middle" fill="#a9bcb2"
+        font-size="25" font-weight="700">同样挥拍，球更慢</text>
+
+  <text x="587" y="208" text-anchor="middle" fill="#a9bcb2"
+        font-size="34" font-weight="800">&#8594;</text>
+
+  <rect x="610" y="150" width="230" height="96" rx="14" fill="#c6f65a"/>
+  <text x="725" y="196" text-anchor="middle" fill="#0d2a1c"
+        font-size="28" font-weight="800">球员自己加力</text>
+  <text x="725" y="230" text-anchor="middle" fill="#0d2a1c"
+        font-size="25" font-weight="700">补回那份速度</text>
+
+  <text x="450" y="322" text-anchor="middle" fill="#a9bcb2"
+        font-size="26" font-weight="700">加出来的那一份力，落在这四个地方</text>
+
+  <rect x="70" y="356" width="180" height="74" rx="12"
+        fill="rgba(198,246,90,.16)" stroke="#c6f65a" stroke-width="2"/>
+  <text x="160" y="403" text-anchor="middle" fill="#c6f65a"
+        font-size="30" font-weight="800">手腕</text>
+  <rect x="273" y="356" width="180" height="74" rx="12"
+        fill="rgba(198,246,90,.16)" stroke="#c6f65a" stroke-width="2"/>
+  <text x="363" y="403" text-anchor="middle" fill="#c6f65a"
+        font-size="30" font-weight="800">肘</text>
+  <rect x="476" y="356" width="180" height="74" rx="12"
+        fill="rgba(198,246,90,.16)" stroke="#c6f65a" stroke-width="2"/>
+  <text x="566" y="403" text-anchor="middle" fill="#c6f65a"
+        font-size="30" font-weight="800">前臂</text>
+  <rect x="679" y="356" width="151" height="74" rx="12"
+        fill="rgba(198,246,90,.16)" stroke="#c6f65a" stroke-width="2"/>
+  <text x="754" y="403" text-anchor="middle" fill="#c6f65a"
+        font-size="30" font-weight="800">肩</text>
+
+  <text x="450" y="500" text-anchor="middle" fill="#e7f3ec"
+        font-size="28" font-weight="800">而下一站换了牌子，这条链子要重走一遍</text>
+</svg>
+"""
+
+
+# 第④屏讲的是「他缺席了整个草地赛季」，而**缺席拍不出来**——一张他在场上
+# 的照片正好把这一屏说反。这是「示意图的触发条件是照片讲不清，不是照片
+# 找不到」那条的标准实例（保护排名那条的「代价」屏同理）。⚠️ 这一屏把四个
+# 人摆在一起，靠的正是照片给不了的东西：同一个赛季里的时间跨度。
+_BALL_HURT_DIAGRAM = """
+<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="52" text-anchor="middle" fill="#e7f3ec"
+        font-size="38" font-weight="800">2026 赛季，手臂上的伤</text>
+  <text x="450" y="96" text-anchor="middle" fill="#a9bcb2"
+        font-size="26" font-weight="700">没有人证明过这些伤和球有因果</text>
+
+  <rect x="60" y="140" width="780" height="112" rx="14"
+        fill="rgba(198,246,90,.14)" stroke="#c6f65a" stroke-width="2"/>
+  <text x="86" y="182" fill="#c6f65a" font-size="30" font-weight="800">阿尔卡拉斯</text>
+  <text x="86" y="222" fill="#e7f3ec" font-size="27" font-weight="700">
+    4 月 14 日巴塞罗那首轮赛后伤腕，诊断腱鞘炎</text>
+  <text x="814" y="182" text-anchor="end" fill="#c6f65a"
+        font-size="27" font-weight="800">缺席 法网 · 女王 · 温网</text>
+  <text x="814" y="222" text-anchor="end" fill="#a9bcb2"
+        font-size="25" font-weight="700">2020 打职业以来第一次缺温网</text>
+
+  <rect x="60" y="276" width="780" height="72" rx="12"
+        fill="rgba(231,243,236,.08)" stroke="rgba(231,243,236,.26)" stroke-width="2"/>
+  <text x="86" y="322" fill="#e7f3ec" font-size="29" font-weight="800">德约科维奇</text>
+  <text x="814" y="322" text-anchor="end" fill="#a9bcb2"
+        font-size="27" font-weight="700">右手腕</text>
+
+  <rect x="60" y="364" width="780" height="72" rx="12"
+        fill="rgba(231,243,236,.08)" stroke="rgba(231,243,236,.26)" stroke-width="2"/>
+  <text x="86" y="410" fill="#e7f3ec" font-size="29" font-weight="800">诺里</text>
+  <text x="814" y="410" text-anchor="end" fill="#a9bcb2"
+        font-size="27" font-weight="700">手腕</text>
+
+  <rect x="60" y="452" width="780" height="72" rx="12"
+        fill="rgba(231,243,236,.08)" stroke="rgba(231,243,236,.26)" stroke-width="2"/>
+  <text x="86" y="498" fill="#e7f3ec" font-size="29" font-weight="800">弗里茨</text>
+  <text x="814" y="498" text-anchor="end" fill="#a9bcb2"
+        font-size="27" font-weight="700">前臂</text>
+
+  <text x="450" y="566" text-anchor="middle" fill="#e7f3ec"
+        font-size="28" font-weight="800">能确定的只有一件：说这话的人越来越多</text>
+</svg>
+"""
+
+
+_BALL_FIX_DIAGRAM = """
+<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="52" text-anchor="middle" fill="#e7f3ec"
+        font-size="38" font-weight="800">两年里，真正动过的两刀</text>
+  <text x="450" y="96" text-anchor="middle" fill="#a9bcb2"
+        font-size="26" font-weight="700">绿色＝已经落地　灰色＝当时只是承诺</text>
+
+  <line x1="118" y1="170" x2="118" y2="520"
+        stroke="rgba(231,243,236,.22)" stroke-width="3"/>
+
+  <circle cx="118" cy="196" r="13" fill="rgba(231,243,236,.34)"/>
+  <text x="166" y="188" fill="#a9bcb2" font-size="26" font-weight="700">2024 澳网开赛前</text>
+  <text x="166" y="228" fill="#e7f3ec" font-size="30" font-weight="800">
+    宣布对网球做一次战略评估</text>
+  <text x="166" y="266" fill="#a9bcb2" font-size="25" font-weight="700">
+    同时说明：2025 年之前不会有变化</text>
+
+  <circle cx="118" cy="336" r="13" fill="#c6f65a"/>
+  <text x="166" y="328" fill="#c6f65a" font-size="26" font-weight="700">2025</text>
+  <text x="166" y="368" fill="#e7f3ec" font-size="30" font-weight="800">
+    选球厂的权力从赛事手里收上来</text>
+  <text x="166" y="406" fill="#a9bcb2" font-size="25" font-weight="700">
+    改成统一指定供应商</text>
+
+  <circle cx="118" cy="472" r="13" fill="#c6f65a"/>
+  <text x="166" y="464" fill="#c6f65a" font-size="26" font-weight="700">挑战赛试行中</text>
+  <text x="166" y="504" fill="#e7f3ec" font-size="30" font-weight="800">
+    首次换球提前到第 5 局，之后每 7 局</text>
+</svg>
+"""
+
+
+from .masters_grid import (
+    atp_table_future,
+    nine_masters_grid,
+    two_tours_grid,
+    wta_table_drift,
+)
+
 _SCRIPTS: dict[str, tuple[tuple, ...]] = {
     # 账号所有者 2026-08-05：「**要精确且深入浅出让人易懂**」。
     #
@@ -5251,6 +5433,159 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             "下一次抽筋来得更早一点，他还赢得回来吗？",
         ),
     ),
+    "golden-masters": (
+        (
+            "now", "今天", "斯瓦泰克熬了快一年",
+            "北京时间今天凌晨，多伦多。斯瓦泰克六比二、六比三赢下决赛。"
+            "这是她将近一年来第一个冠军，也是第十二座 WTA 一千。",
+            "assets/explainer/golden-masters/swiatek.jpg",
+            "WTA 官方图库 · 2026 加拿大站多伦多，斯瓦泰克捧杯",
+            ("多伦多 六比二 六比三", "近一年来第一个冠军", "第十二座 WTA1000"),
+        ),
+        (
+            "name", "男子", "集齐九站，叫金大师",
+            "男子那边有个说法。九站大师赛全部拿过一次，就叫金大师。"
+            "吉尼斯世界纪录有正式条目。德约科维奇二零一八年第一个做到；"
+            "今年五月在罗马，辛纳成了第二个，二十四岁。",
+            "", "示意图 · 网球时差绘制",
+            ("九站全拿过 叫金大师", "吉尼斯有正式条目", "德约十八年 辛纳今年"),
+            nine_masters_grid(),
+        ),
+        (
+            "tables", "两张表", "只有六站重合",
+            "而女子这边，找不到对应的说法。为什么？先看两张表。"
+            "男子九站，女子十站，只有六站是重合的。"
+            "蒙特卡洛、上海、巴黎，女子没有；多哈、迪拜、北京、武汉，男子没有。",
+            "", "示意图 · 网球时差绘制",
+            ("男子九站 女子十站", "只有六站重合", "差的是小半张表"),
+            two_tours_grid(),
+        ),
+        (
+            "drift", "一直在变", "十站到二零二四年才定",
+            "更关键的是，女子那张表一直在变。二零二一年才创立。"
+            "二零二二年全年只有八站。二零二三年北京回来。"
+            "直到二零二四年，十站才全部定下来。要拿满，先得有一张固定的表。",
+            "", "示意图 · 网球时差绘制",
+            ("二二年全年只有八站", "二四年十站才定型", "要拿满 先得有固定的表"),
+            wta_table_drift(),
+        ),
+        (
+            "count", "自己定把尺子", "八站，和七站",
+            "所以没有官方口径。下面这把尺子是我们自己定的："
+            "今天这十个场地，她赢过几个。斯瓦泰克八个，还差迪拜和武汉。"
+            "往前数，小威廉姆斯七个。",
+            "assets/explainer/golden-masters/serena.jpg",
+            "James Boyes · CC BY 2.0 · 2011 年伊斯特本，小威廉姆斯发球",
+            ("尺子是我们自己定的", "斯瓦泰克八站", "小威廉姆斯七站"),
+        ),
+        (
+            "next", "尺子会改", "二零二八年变成十站",
+            "不过男子那张表也不是永远不变。九站是二零零九年才定下来的，"
+            "十七年没动过。而 ATP 已经宣布，二零二八年沙特会加进来。"
+            "所以尺子本来就是人定的——到那时候，金大师是拿满九站，还是十站？",
+            "", "示意图 · 网球时差绘制",
+            ("九站是二零零九年定的", "二零二八年沙特加入", "尺子本来就是人定的"),
+            atp_table_future(),
+            "到那时候，金大师算拿满九站，还是十站？",
+        ),
+    ),
+    "tour-balls": (
+        (
+            "now",
+            "赛场",
+            "四个星期，四种不一样的球",
+            "先看美网之前的那四个星期。加拿大打完打辛辛那提，然后是纽约。"
+            "弗里茨和阿尔卡拉斯都数过，这四个星期，他们要打四种不一样的球。"
+            "不是四筒，是四种。牌子不同，重量不同，弹起来也不同。"
+            "布尔特的说法更直接——它每周都在变。",
+            "assets/explainer/tour-balls/ball_change.jpg",
+            "Steven Pisano · CC BY 2.0 · 2014 年 8 月 21 日美网资格赛，"
+            "主裁把新球分给球童",
+            (
+                "美网前四周 四种不同的球",
+                "牌子 重量 弹性都不一样",
+                "布尔特 它每周都在变",
+            ),
+        ),
+        (
+            "rule",
+            "为什么",
+            "选哪家球，一直是赛事自己定",
+            "二零二三年那一年，女子巡回赛一共用过十个品牌、十九种型号。"
+            "男子那边的数字差不多。为什么会有十九种？"
+            "因为选哪一家的球，一直由每站赛事自己决定。"
+            "那是赞助合同的一部分，不是技术标准。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "2023 赛季 女子巡回赛",
+                "10 个品牌 19 种型号",
+                "选哪家球 由赛事自己定",
+            ),
+            _BALL_COUNT_DIAGRAM,
+        ),
+        (
+            "why",
+            "力去哪了",
+            "球变重之后，代价换了个地方付",
+            "球里面是有气压的。打上十几局，压力往下掉，球会变软、变重。"
+            "想打出原来那个速度和旋转，就得自己加力。"
+            "加出来的那一份，全压在手腕、肘、前臂和肩上。"
+            "德约科维奇提过一个他自己的观察。"
+            "从新冠之后，有些东西变了。"
+            "几乎所有主要球厂用的中国生产设施，都换过。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "球失压 变软变重",
+                "同样的球速要自己加力",
+                "力压在手腕肘前臂肩",
+            ),
+            _BALL_LOAD_DIAGRAM,
+        ),
+        (
+            "who",
+            "谁在疼",
+            "阿尔卡拉斯缺了整个草地赛季",
+            "今年四月十四号，巴塞罗那第一轮，阿尔卡拉斯赢下比赛，手腕伤了。"
+            "诊断是腱鞘炎。他缺席了法网，缺席了女王，也缺席了温网。"
+            "二零二零年打职业以来，他第一次没有出现在温布尔登。"
+            "同一段时间，德约科维奇的右手腕在疼，诺里的手腕也在疼。"
+            "弗里茨说，年轻的时候他不太容易受伤，这两年是真的感觉到了。"
+            "这里要说清楚一件事：没有人能证明这些伤是球造成的。"
+            "能确定的只有一件——说这话的人越来越多。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "巴塞罗那首轮 手腕伤了",
+                "腱鞘炎 缺席法网和温网",
+                "转职业以来第一次缺温网",
+            ),
+            _BALL_HURT_DIAGRAM,
+        ),
+        (
+            "today",
+            "动了什么",
+            "两年里，真正落地的是两刀",
+            "二零二四年澳网开赛之前，两个巡回赛宣布，要对网球做一次战略评估。"
+            "同时说明，二零二五年之前不会有变化。"
+            "拉奥尼奇当时的评价是，感觉他们在把这件事往后拖。"
+            "后来动了两刀。第一刀在二零二五年，"
+            "选球厂的权力从赛事手里收上来，改成统一指定。"
+            "第二刀在挑战赛试。第一次换球从第七局提前到第五局，"
+            "之后从每九局改成每七局。让球尽量待在它刚出筒的样子。"
+            "阿尔卡拉斯要的其实一直很简单——全年所有赛事，用同一种球。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "2024 宣布战略评估",
+                "2025 改成统一指定供应商",
+                "挑战赛试 第 5 局就换球",
+            ),
+            _BALL_FIX_DIAGRAM,
+            "球该由谁来定——赛事，还是打球的人？",
+        ),
+    ),
 }
 
 
@@ -5315,6 +5650,14 @@ _CAPTIONS: dict[str, dict] = {
             "男子直入线第 101，女子第 102；之后涨的用不上，跌的也不还。"
         ),
         "tags": ("网球", "网球时差", "商竣程", "郑钦文", "网球冷知识"),
+    },
+    "golden-masters": {
+        "hook": (
+            "男子集齐九站大师赛有个名字，叫金大师，吉尼斯世界纪录有正式条目。\n"
+            "女子这边找不到对应的说法——要拿满，先得有一张固定的表，"
+            "而女子那十站到 2024 年才定下来。"
+        ),
+        "tags": ("网球", "网球时差", "斯瓦泰克", "金大师", "网球冷知识"),
     },
     "mandatory-1000": {
         "hook": (
@@ -5488,6 +5831,13 @@ _CAPTIONS: dict[str, dict] = {
             "ATP 规则书写得很直白：球员不能为抽筋申请医疗暂停，只能趁换边治疗。"
         ),
         "tags": ("网球", "网球时差", "勒纳·钱", "医疗暂停", "网球冷知识"),
+    },
+    "tour-balls": {
+        "hook": (
+            "美网之前的四个星期，球员要打四种不一样的球——2023 年那一年，女子巡回赛用过 19 种型号。\n"
+            "球打软了会变重，想打出原来的速度就得自己加力，那份力压在手腕、肘和肩上。"
+        ),
+        "tags": ("网球", "网球时差", "网球肘", "阿尔卡拉斯", "网球冷知识"),
     },
 }
 
@@ -6042,6 +6392,32 @@ _OPENINGS: dict[str, dict] = {
         # 提的那个问题的答案（beat②「医疗暂停认哪几种情况」）；三张实拍
         # 全部放进正文屏，那儿没有铺满整卡的分辨率门槛。
         "diagram": _CRAMP_RULE_DIAGRAM,
+        "credit": "示意图 · 网球时差绘制",
+    },
+    "golden-masters": {
+        "topic": "女子为什么没有金大师",
+        # ⚠️ 封面这一问指向**为什么没有**，末屏那一问指向**以后按几站算**，
+        # 两件事。回声那道判据按字集重合度算，问同一件事照样会被拦。
+        "question": "女子为什么没有金大师？",
+        "narration": "女子为什么没有金大师？"
+        "男子集齐九站叫金大师，女子那张表二零二四年才定型。",
+        "credit": "WTA 官方图库 · 2026 加拿大站多伦多，斯瓦泰克捧杯",
+        # ⚠️ 标签必须专属：默认那五个和别的冷知识片一字不差，
+        # `test_文案的开场和标签属于它自己的选题` 会当场红。
+        "tags": ("网球", "网球时差", "斯瓦泰克", "金大师", "网球冷知识"),
+    },
+    "tour-balls": {
+        "topic": "四个星期，四种球",
+        # ⚠️ 封面这一问指向**为什么不统一**，末屏那一问指向**该由谁定**，
+        # 两件事。回声那条判据（`test_末屏那一问不能是封面那一问的回声`）
+        # 按字集重合度算，措辞不同但问同一件事照样会被拦。
+        "question": "为什么每一站的球都不一样？",
+        "narration": "为什么每一站的球都不一样？"
+        "二零二三年那一年，女子巡回赛用过十九种。",
+        # 这一站没有单场比赛做锚，所以不写 fixture。封面用 beat② 那张图——
+        # 它就是封面那一问的答案，而且「19」这个数是全片最硬的事实，
+        # 按「最硬的那个事实放第①屏」它本来就该在最前面。
+        "diagram": _BALL_COUNT_DIAGRAM,
         "credit": "示意图 · 网球时差绘制",
     },
 }
