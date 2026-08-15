@@ -17,7 +17,8 @@
   "interview_kind": "赛前专访",
   "event": "2026 辛辛那提 ATP1000",
   "en_fixed": {
-    "25": "where does that final against Alcaraz sit"
+    "25": "where does that final against Alcaraz sit",
+    "17": "of injury with different severity"
   },
   "cover": {
     "frame_at": 23.0,
@@ -93,5 +94,7 @@
     "能回来真的很兴奋",
     "祝你这一周顺利",
     "谢谢"
-  ]
+  ],
+  "transcript_verified": true,
+  "_verified_clean": "两份转写对不上 **8.0%**（闸门 12%），**0 处空档**。逐处看过，没有一处是意思变了——全是口语的碎片：`you know` ×3、`i say top`、`that i've`、`for`、`him`、`to` 这些填充和重复被 medium.en 丢掉；`roller coaster`→`rollercoaster`、`shade`→`shades`、`there`→`it` 是词形。\n\n**两处订正写进了 `en_fixed`**，都不是「谁对谁错」而是「烧在画面上的英文不该长这样」：\n① 第 25 行 `Alcarz` → `Alcaraz`——自动字幕把人名拼错了，这是要印在屏幕上的；\n② 第 17 行 `of inner sorry injury with different severity` → `of injury with different severity`——`inner sorry` 是他说到一半自我纠正（「some kind of inn—，sorry，injury」），**第二份 ASR 也没有这两个词**，原样烧上去看着像我们转写错了。订正之后 910.5px → 661.7px，比原来还窄，不会撞宽度闸。"
 }

@@ -20,7 +20,7 @@
 | 14 | 0:25.8 | [▶](https://youtu.be/prsYrVNMITA?t=25) | to be honest. | 我身体最好的一次 |  |
 | 15 | 0:26.6 | [▶](https://youtu.be/prsYrVNMITA?t=26) | any other grand slam I played | 过去两年我打的每一个大满贯 |  |
 | 16 | 0:27.8 | [▶](https://youtu.be/prsYrVNMITA?t=27) | in the last two years there was some kind | 之后都会有 |  |
-| 17 | 0:29.9 | [▶](https://youtu.be/prsYrVNMITA?t=29) | of inner sorry injury with different severity | 或轻或重的伤 |  |
+| 17 | 0:29.9 | [▶](https://youtu.be/prsYrVNMITA?t=29) | of injury with different severity | 或轻或重的伤 | ✏️ 已订正 |
 | 18 | 0:33.5 | [▶](https://youtu.be/prsYrVNMITA?t=33) | that took more time for me to address | 要花更多时间去处理 |  |
 | 19 | 0:37.1 | [▶](https://youtu.be/prsYrVNMITA?t=37) | and then come back competing | 才能回来比赛 |  |
 | 20 | 0:38.6 | [▶](https://youtu.be/prsYrVNMITA?t=38) | so this time I was healthy | 而这次我是健康的状态 |  |
