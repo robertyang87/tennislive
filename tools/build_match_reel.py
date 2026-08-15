@@ -95,6 +95,7 @@ import subprocess
 import sys
 import time
 from contextlib import contextmanager
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -4550,15 +4551,25 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     parts: list[Path] = [build_cover(sources, primary, spec,
                                  outdir / "part_cover.mp4", source_w,
                                  cover_secs, tail=SEG_FADE)]
-    for index, seg in enumerate(segments):
+    def _encode_one(item):
+        index, seg = item
+        dest = outdir / f"part_{index:02d}.mp4"
         if seg.image:
-            parts.append(cut_still_segment(
-                seg, outdir / f"part_{index:02d}.mp4", tail=SEG_FADE))
-            continue
-        parts.append(cut_segment(sources[seg.source], seg,
-                                 outdir / f"part_{index:02d}.mp4",
-                                 source_w, tracks.get(index),
-                                 tail=SEG_FADE))
+            return index, cut_still_segment(seg, dest, tail=SEG_FADE)
+        return index, cut_segment(sources[seg.source], seg, dest,
+                                  source_w, tracks.get(index), tail=SEG_FADE)
+
+    # **分段编码并行**：各段独立、各写各的文件、`-ss` 输入寻址后互不干扰。
+    # 线程池够用——ffmpeg 是独立进程，`subprocess.run` 会放掉 GIL，瓶颈在
+    # 每个 ffmpeg 进程自己的 CPU，不在这条 Python 线程上。worker 数跟着核走，
+    # 但**至少 1**：单核机器或只有一段时退回串行，别为并行而并行。
+    workers = max(1, min(len(segments), os.cpu_count() or 2))
+    if workers > 1 and len(segments) > 1:
+        with ThreadPoolExecutor(max_workers=workers) as ex:
+            encoded = list(ex.map(_encode_one, enumerate(segments)))
+    else:
+        encoded = [_encode_one(e) for e in enumerate(segments)]
+    parts += [p for _, p in sorted(encoded, key=lambda t: t[0])]
     parts.append(build_outro(outdir, outro_secs, tail=0.0))
 
     silent = outdir / "_video.mp4"
