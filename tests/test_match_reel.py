@@ -6399,9 +6399,11 @@ def test_片尾接上之后每个分段都要留溶解底料(tmp_path):
         f"{reel.SEG_FADE}s 底料，xfade 的 offset 落到流末尾之外，"
         "整条片子在那个接缝上截断，而 ffmpeg 不报错")
     assert "parts.append(build_outro(" in body, "片尾页没有接进 parts"
-    # 片尾必须是**最后**一个 part：长度账全靠这个顺序
+    # 片尾必须是**最后**一个 part：长度账全靠这个顺序。分段现在是并行编码后
+    # 按 index 排序统一 `parts += ...`，所以锚点从 `parts.append(cut_segment(`
+    # 换成那行 sorted 的追加——但「片尾最后」这个不变式不变。
     assert body.index("parts.append(build_outro(") > body.index(
-        "parts.append(cut_segment("), (
+        "parts += [p for _, p in sorted(encoded"), (
         "片尾页要排在所有分段之后——它是末段，长度账按这个顺序算")
 
     # ② 真跑一次长度账
