@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>8.15 赛场之上 | 布瓦松九个发球局零破发点</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>6-3 6-2。赢的这个人世界第二百八十一，靠一张外卡进的正赛；输的那个世界第五十六。
+
+真正的数字在发球局上：布瓦松九个发球局全部保住，克鲁格整场一个破发点都没拿到——不是拿到了没兑现，是根本没拿到。WTA 官方统计里那一栏写着 0。
+
+反过来看更刺眼：克鲁格自己救下了十三个破发点里的十个，救球救得比对手还多。可她九个接发球局，一个都没赢下来。全场一百一十九分，四十八比七十一。
+
+第一盘三十七分钟就结束了，六比三。转播解说当时的原话是&quot;从头到尾都是她在打&quot;。
+
+关于布瓦松，需要交代一年前那两周：二〇二五年五月，世界第三百六十一的她拿着一张外卡进法网正赛，连赢五场打进半决赛——依次淘汰了世界第二十四的梅尔滕斯、第一百一十三的卡利尼娜、第一百三十八的雅克莫，然后是世界第三的佩古拉和世界第六的米拉·安德烈耶娃，半决赛输给高芙。一个月后她在汉堡五场全胜拿下冠军，路上还赢了当时世界第三十九的亚斯特雷姆斯卡。那年九月到北京时，她的排名是第四十一。
+
+然后是网球这项运动最不留情面的一条规矩：积分按五十二周滚动，去年赚到的分，今年同一周会一笔一笔掉光。于是二〇二六年法网打完，她从第四十三掉到第一百五十五；温网打完，再掉到第二百九十九。今年这一场之前，她单打只赢过两场球——一场在斯特拉斯堡赢了王欣瑜，一场在多伦多赢了阿朗戈。
+
+今天她又是靠一张外卡进的正赛。而她的发球局，还是一年前那副样子。
+
+两个人此前没有交手过。
+
+#网球 #WTA #辛辛那提公开赛 #布瓦松 #网球时差</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>这样的外卡，能给几次？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>

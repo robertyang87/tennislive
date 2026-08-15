@@ -1,0 +1,223 @@
+{
+  "slug": "boisson-krueger",
+  "source_url": "https://www.youtube.com/watch?v=1812vHurcws",
+  "_source": "**辛辛那提赛事官方 YouTube 频道**（Cincinnati Open）的单场集锦「Ashlyn Krueger vs Lois Boisson | 2026 Cincinnati Open | Round One」。178.45 秒 / 1920×1080 / **29.97 fps**。四处自证叠在一起：① 频道是赛事官方（oEmbed 的 `author_name` = `Cincinnati Open`）；② 画面里烧死的记分条从头到尾写着 `A. KRUEGER / L. BOISSON`，62.5 秒那格还挂着 `ROUND 1 · ASHLYN KRUEGER 3 · LOIS BOISSON 6` 的整版比分图形；③ 场边广告是 Western & Southern Financial Group / Kroger / Credit One / Fifth Third Bank / Secret——辛辛那提这一站的赞助商阵容，和同一站另外几条片子对得上；④ 解说在 69.36 秒说 `38 minutes six games to three`（第一盘 6-3），在 171.52 秒说 `And that's gone wide`，和 WTA 官方 `ResultString`「L. Boisson d A. Krueger 6-3,6-2」对得上。\n\n⚠️ **这条不是 WTA 官方频道那一档**（那档叫 `… | 2026 Cincinnati Round 1 | WTA Match Highlights`，5~7 分钟）。这一场 WTA 官方没有发单场集锦——按「空结果先自证是真空」核过控制组：同一天同一轮的汤森德、卡萨金娜、巴尔通科娃、阿朗戈、肯宁、贝莱克六场 WTA 官方都发了，所以不是渠道停了，是没轮到这一场。赛事官方这一档同样是 1080p（`maxresdefault` 存在，probe 实测 1920×1080），不将就。",
+  "_column": "赛场之上",
+  "topbar": {
+    "line1": "WTA1000 辛辛那提 第一轮",
+    "line2": "布瓦松 6-3 6-2 克鲁格"
+  },
+  "_topbar_why": "第二行按 `cover.winner`（布瓦松）＋ `cover.result`（6-3 6-2）＋ `cover.matchup` 机械拼出来，和封面比分板、推送标题同一个出处。",
+  "editorial": {
+    "mode": "match_review",
+    "question": "一个世界第二百八十一、靠外卡进正赛的人，凭什么让世界第五十六一个破发点都拿不到？",
+    "thesis": "因为她的发球局今天没有裂缝。布瓦松九个发球局全部保住，**克鲁格整场一个破发点都没拿到**（WTA 官方 `breakptsplayeda = 0`，flashscore `Break Points Saved SI÷0/0` 与 `Return games won SH÷0% (0/9)` 两处互证）。反过来克鲁格自己救下了十三个破发点里的十个——救球救得比对手还多，还是零比二输掉，因为她九个接发球局一个都没赢下来。而这正是一年前那个人的样子：二〇二五年法网，世界第三百六十一的布瓦松靠一张外卡连赢五场打进半决赛，路上淘汰了世界第三的佩古拉和世界第六的米拉·安德烈耶娃；一个月后她在汉堡拿了冠军，排名升到第四十一。今年那两笔分数先后到期，她从第四十三掉到第一百五十五、再掉到第二百九十九，这一场之前全年只赢过两场球。",
+    "beats": [
+      "九个发球局，克鲁格一个破发点都没拿到——不是没兑现，是根本没拿到",
+      "反过来克鲁格救下十三个破发点里的十个，仍然零比二，因为她九个接发球局一个都没赢",
+      "一年前她世界第三百六十一、靠外卡打进法网半决赛；今年那些分数到期，排名掉到两百多"
+    ],
+    "human_context": {
+      "angle": "这场球讲的是**排名分数到期这件事长什么样**。二〇二五年五月，世界第三百六十一的布瓦松拿着一张外卡进法网正赛，连赢五场打进半决赛，路上淘汰了世界第三的佩古拉和世界第六的米拉·安德烈耶娃，最后输给高芙；一个月后她在汉堡五场全胜拿了冠军，排名升到第四十一。这两笔分数按五十二周的规矩会在一年后逐笔掉光——于是二〇二六年法网打完，她从第四十三掉到第一百五十五；温网打完，再掉到第二百九十九。今年这一场之前，她单打只赢过两场球，其中一场赢的是王欣瑜。今天她又是靠一张外卡进的正赛，而她的发球局仍然是一年前那副样子：九局，对手一个破发点都没拿到。",
+      "facts": [
+        "布瓦松 2003-05-16 出生，这场球时 23 岁；克鲁格 2004-05-07 出生，22 岁（WTA 官方 `players/328884`、`players/329409` 的 `dateOfBirth`）",
+        "2026-08-10 那一期排名：布瓦松 281、克鲁格 56",
+        "本场布瓦松是**外卡**进正赛（WTA 官方这场 `EntryTypeB = Wc`；flashscore `df_sui_1` 的 `PSPA÷WC`）",
+        "2025 法网：布瓦松世界第 361、外卡，连胜梅尔滕斯(24)、卡利尼娜(113)、雅克莫(138)、佩古拉(3)、米拉·安德烈耶娃(6)，半决赛负于高芙",
+        "2025 汉堡：五场全胜夺冠（含胜世界第 39 的亚斯特雷姆斯卡），赛后排名升到第 46，到北京时是第 41",
+        "2026 赛季逐站排名：马德里 46 → 罗马 43 → 法网 43 → 斯海尔托亨博思 155 → 温网 154 → 多伦多 299",
+        "本场之前 2026 单打 2 胜 8 负，两场胜利分别是斯特拉斯堡胜王欣瑜（当时世界第 32）和多伦多胜阿朗戈（97）",
+        "本场：布瓦松九个发球局全保，克鲁格整场 0 个破发点；克鲁格救下 10/13 个破发点，接发球局 0/9",
+        "第一盘 37 分 29 秒、第二盘 45 分 18 秒、全场 1 小时 22 分 51 秒（WTA 官方 `/stats` 的 `settime` 和 `MatchTimeTotal`；flashscore 记 0:37 / 0:46 / 1:23，两个源一致）"
+      ],
+      "sources": [
+        "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches?page=0&pageSize=400",
+        "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches/LS118/stats",
+        "https://api.wtatennis.com/tennis/players/328884/matches?page=0&pageSize=100",
+        "https://api.wtatennis.com/tennis/players/ranked?page=0&pageSize=100&type=rankSingles&at=2026-08-10&metric=SINGLES",
+        "https://www.flashscore.com/match/tennis/pMzOJOWa/#/match-summary",
+        "https://www.cnn.com/2025/06/03/sport/roland-garros-lois-boisson-profile-intl-spt",
+        "https://www.rolandgarros.com/en-us/article/rg2025-crazy-lois-boisson-numbers"
+      ],
+      "voice_label": "去年在法网连掀两个种子的那个外卡"
+    }
+  },
+  "_no_repeat": "同一站已经发过 `wang-vandewinkel`（王欣瑜）、`wangxiyu-timofeeva`（王曦雨）、`arango-venus`（阿朗戈胜大威廉姆斯）、`bartunkova-charaeva`、`townsend-osorio`、`sonmez-kasatkina`、`kenin-lys`、`bejlek-pliskova`。这一条的主体是布瓦松，和上面八条没有重叠的人。\n\n⚠️ **和 `bejlek-pliskova` 撞形状要躲开**：那条讲的是「排名在爬的人输掉一小时」，这条讲的是「排名在掉的人赢下一小时」，方向正好相反，但两条都会提到「排名怎么来的」。所以这一条**不重复那条的写法**——不写「一千名开外爬回来」那种爬升叙事，只讲分数到期这件事本身；也**不碰普利斯科娃**。\n\n⚠️ 王欣瑜在这条里只出现一次（布瓦松今年两场胜利之一），是**事实**不是转场——`wang-vandewinkel` 讲的是她自己那场球，两条没有重叠内容。",
+  "_editing_why": "源片 178.45 秒，全部可用（172.5 起是庆祝和网前握手，没有订阅卡也没有采访）。\n\n⚠️ **硬切点只有 12 个，而这条集锦真正的镜头数远不止**：`scene_cuts`（阈值 0.35）在 51.18 到 101.03 之间一刀都没报，可缩略图墙上 52.5（她赢下第一盘的近景）、62.5（整版比分图形）、70.5（换边）、72.5（第二盘底线宽景）明明是四个镜头。所以选段用的是**硬切点当硬约束、松切点（127 个）当线索**，最后一律拿 `preview_segments_local.py` 逐段看过画面（CLAUDE.md「`scene_cuts` 是下限，不是上限」）。\n\n把哪几段给谁，按「这一句在替谁说话，画面里就要是谁」定：第 2 段（25.5~33）和第 5 段（51.8~59.5）是布瓦松的中近景，第 4 段说克鲁格时用的是两个人都在的底线宽景（这条集锦里克鲁德的独镜只有 158.5 一格，太靠后、也不在讲她的那一句上）。讲统计的几段用宽景。\n\n⚠️ 段落顺序和源片时间轴同向（25.5 → 34 → 43 → 51.8 → 72 → 82 → 92 → 105 → 121.5 → 136.5 → 146 → 174.5），烧在画面上的记分条是往前走的。",
+  "_match": {
+    "flashscore_id": "pMzOJOWa",
+    "wta_match_id": "LS118",
+    "_why": "flashscore 的逐分／分盘统计／用时／交手记录走 `pMzOJOWa`（`df_mh_1` / `df_st_1` / `df_sui_1` / `df_hh_1`，**home = 克鲁格，away = 布瓦松**，拿 `ResultString`「L. Boisson d A. Krueger 6-3,6-2」交叉核对过方向）；WTA 官方那半边走 `tournaments/1017/2026/matches` 里的 `LS118`，另有 `/stats` 端点。",
+    "_开球": "WTA 官方 `MatchTimeStamp` = 2026-08-13T17:18:04Z → 北京 **8/14 01:18**；flashscore 的 `KC÷` → 北京 **8/14 01:30**。⚠️ 两个源差十二分钟，但**都落在凌晨一点这个钟头里**，所以旁白说「凌晨一点多」，两边都成立（CLAUDE.md「两个源对不上就说到点不说分」）。",
+    "_用时": "⚠️ **这一场三个源全都对得上，所以用时可以印**：WTA 官方 `MatchTimeTotal` = **01:22:51**，`/stats` 的分盘 `settime` = 00:37:29 / 00:45:18（加起来 1:22:47），flashscore 记 0:37 / 0:46 / **1:23**。旁白里写「三十七分钟」（第一盘）用的是这两个官方源共同的那个数。⚠️ 转播解说在 69.36 秒说的是 `38 minutes`——那是他自己的四舍五入，**不采用**。"
+  },
+  "_hit_data": "`tools/match_stat_hooks.py pMzOJOWa --home 克鲁格 --away 布瓦松` 跑出来 6 条候选：\n\n    [总分差] 克鲁格 48 - 布瓦松 71，净差 23 分\n    [布瓦松 一发得分率摆动] 第1盘87% → 第2盘73%\n    [布瓦松 破发点兑现] 3/13（23%）\n    [克鲁格 连续保发] 3 个发球局\n    [布瓦松 连续保发] **9 个发球局**\n    [交手记录] Krueger 0 : 1 Boisson（含本场）\n\n**挑进片子的是第五条，而且是它的另一面**：布瓦松九个发球局连续保发＝**克鲁格整场一个破发点都没拿到**。选它是因为它有**两个独立源**：① WTA 官方 `/stats` 的 `breakptsplayeda = 0`（分盘也都是 0）；② flashscore `df_st_1` 的 `Break Points Saved SI÷0/0` 和 `Return games won SH÷0% (0/9)`。再加一层内部互证——逐分 `df_mh_1` 里布瓦松的九个发球局（`HG÷2`）**没有出现过一次 `|B1|`**（出现的 `|B2|`/`|B3|` 是她自己的盘点和赛点）。\n\n配着用的是它的反面：克鲁格救下 10/13 个破发点——**救球救得比对手还多，还是零比二**，因为她九个接发球局一个都没赢。",
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "布瓦松",
+    "hook": "九个发球局\n一个破发点都没给",
+    "_hook_why": "封面主体是布瓦松——她既是赢的那个，也是刷到这条的人冲着来的那个（去年法网那两周之后她的名字才被记住），两条判据同向。\n\n两行都讲**过程**，不讲身份：排名、轮次、比分海报的赛果行上已经印着了（`布瓦松（281） 6-3 6-2 克鲁格（56）`），钩子再写一遍是白占那 27 个字。最长行 8 个字符，在 `HOOK_MAX_CHARS = 10` 以内。\n\n⚠️ 「一个破发点都没给」这个说法是从这个仓库自己的范例里来的——CLAUDE.md 记着「决胜盘二比五落后，五个赛点 / 他一个没给」。这里的「没给」说的正是同一件事：对手不是没兑现，是**根本没拿到**。",
+    "topic": "WTA1000辛辛那提 · 女单第一轮",
+    "portrait": {
+      "frame_at": 120.5,
+      "focus": 0.53,
+      "focus_y": 0.5,
+      "zoom": 1.0
+    },
+    "_portrait_why": "**换过一次帧，是渲出来看了才换的。** `pick_cover_frames` 扫了 446 格，**一格正面人脸都没找到**（426 格判「没有正面人脸」，剩下 20 格全是侧脸）——这条集锦的近景本来就少，而且都是侧身。所以第一版只能在那 20 格里按清晰度挑，取了断档第一的 **16.82 秒**（`sharp = 998.4`，第二名 215.9；`motion = 8.66` 也最低）。渲出来看（run 683）有两个毛病：① 她那一格是**压低重心准备接发**，而钩子讲的是她的**发球局**——CLAUDE.md 第 ② 道闸门要的是「画面对上这一屏在说的那件事」，接发和发球正好对反；② 背景里栏杆、看台观众和一个球童挤在一起，而她的脸是低着侧过去的。\n\n现在用 **120.5 秒**：她发球引拍到顶，抛球手和持拍手同时举起、身体拉成弓，背后是 Secret / CreditOne / Western & Southern 的挡板——干净，没有近处的人。而且这一格的记分条写着 `MATCH POINT #2 · KRUEGER 3 2 / BOISSON 6 5 Ad`，**她正在自己的发球局上发赛点**，和钩子说的是同一件事。\n\n四道闸门逐条过：①时间地点人物——记分条写着 `J. KRUEGER / L. BOISSON`，是本场；②画面对得上这一屏在说的那件事——钩子讲她的发球局，这一格就是她在发球，而且是发赛点；③冲击力——全身舒展的发球定格，不是大头；④清晰度——转播流本身的软换帧解决不了（CLAUDE.md「清晰度换帧解决不了，问题在源片」），但这一格没有运动模糊压在脸上。\n\n⚠️ 52.5 / 64.5 / 66.5 三格是她赢下第一盘之后的中近景，`sharp` 只有 6~14，糊得没法用；172.5 那格是她赢球后走动，前景横着两个粉色球包，太乱。\n\n⚠️ **官方比赛照那条路查到底了**，和 `kenin-lys` / `bejlek-pliskova` 同一个结论：WTA 官网这场没有 Match Reaction 稿，`cincinnatiopen.com` 的图库这一天只有种子选手。控制组成立——同一天别的球员有图，所以不是渠道不存在，是没轮到这一场。",
+    "scrim": "clear",
+    "winner": "布瓦松",
+    "result": "6-3 6-2",
+    "matchup": [
+      {
+        "name": "布瓦松",
+        "name_en": "Lois Boisson",
+        "country": "FRA",
+        "rank": 281
+      },
+      {
+        "name": "克鲁格",
+        "name_en": "Ashlyn Krueger",
+        "country": "USA",
+        "rank": 56
+      }
+    ],
+    "_matchup_rank_why": "取 WTA 官方 `players/ranked?at=2026-08-10&metric=SINGLES` 那一期（辛辛那提正赛期间生效的就是它）：布瓦松 281、克鲁格 56。⚠️ 译名表 `player_names_top500.json` 里给布瓦松记的是 292、克鲁格 67——**那是表自己的 `ranking_date` 快照，不是这一周**，排名一律以 `players/ranked` 的当期为准。",
+    "scoreboard": {
+      "court": "Lindner Family Tennis Center",
+      "_court_why": "⚠️ **球场号查不实，所以印场馆名，不印号。** WTA API 这场的 `CourtID` 是 1，但这个字段在同一站已经被证伪过一次（`LS066` 写 8，而源片画面里的白牌印着 `COURT 7`），这条集锦的 178 秒里也没有任何一格拍到号牌。退到场馆名，和这一站其余几条一致。",
+      "duration_source": {
+        "provider": "wta",
+        "url": "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches?page=0&pageSize=400",
+        "match_id": "LS118",
+        "field": "MatchTimeTotal",
+        "source_page": "https://www.wtatennis.com/tournaments/1017/cincinnati/2026/scores/LS118"
+      }
+    },
+    "_layout_why": "「赛场之上」2026-08-04 起一律 solo，这一条没有退回 VS 的理由。"
+  },
+  "stats": {
+    "tour": "wta",
+    "a": {
+      "headshot": "assets/players/headshots/wta-328884.jpg",
+      "aces": 3,
+      "df": 3,
+      "first_in": 26,
+      "first_total": 50,
+      "first_won": 21,
+      "second_won": 18,
+      "second_total": 24,
+      "bp_conv": 3,
+      "bp_chances": 13,
+      "pts_won": 71,
+      "pts_total": 119
+    },
+    "b": {
+      "headshot": "assets/players/headshots/wta-329409.jpg",
+      "aces": 1,
+      "df": 7,
+      "first_in": 39,
+      "first_total": 69,
+      "first_won": 24,
+      "second_won": 13,
+      "second_total": 30,
+      "bp_conv": 0,
+      "bp_chances": 0,
+      "pts_won": 48,
+      "pts_total": 119
+    },
+    "footer_venue": "辛辛那提 · 女单第一轮",
+    "footer_date": "2026年8月14日",
+    "_source": "flashscore `df_st_1_pMzOJOWa` 的 `Match` 一栏（**home = 克鲁格，away = 布瓦松**，这里 a = 布瓦松、b = 克鲁格，和 `cover.matchup` 的顺序一致）：布瓦松 Ace 3、双误 3、一发 52%、一发得分 81%(21/26)、二发得分 75%(18/24)、破发点 3/13、总分 60%(71/119)；克鲁格 Ace 1、双误 7、一发 57%、一发得分 62%(24/39)、二发得分 43%(13/30)、**破发点 0/0**、总分 40%(48/119)。一发总数从「一发得分 (21/26)」和「二发得分 (18/24)」反推：26+24=50 个发球分。WTA 官方 `/stats` 的 `totservplayedb = 50`、`ptsplayed1stservb = 26` 完全对得上。",
+    "_headshot_source": "两张都是**赛事官方站自己的证件头像**，文件名里带着 WTA 球员 ID，自证是谁：`cincinnatiopen.com/wp-content/uploads/2025/07/328884__Lois-Boisson.jpg`（布瓦松，WTA id 328884，2429×3648）和 `cincinnatiopen.com/wp-content/uploads/2024/08/329409__Ashlyn-Krueger.jpg`（克鲁格，id 329409，492×656）。"
+  },
+  "_voice": "云见（`zh-CN-YunjianNeural`），语速 +6%，和这条线其余片子一致。\n\n⚠️ 本地 `--check-narration` 走 edge-tts、runner 走 Azure，而 **Azure 快 6.6%**——本地量到的余量到 runner 上只会更宽，不会更紧。",
+  "segments": [
+    {
+      "start": 167.5,
+      "end": 174.0,
+      "crosses_cut": "跨 171.2 那一刀，两边是同一个时刻——最后一分落地（解说在 171.52 秒说 `And that's gone wide`）→ 布瓦松转身走向场边。这正是冷开场要的那一格。",
+      "_why": "冷开场，不配旁白，走现场声和解说。记分条上 `MATCH POINT #4` 从 164.5 秒起就挂着。"
+    },
+    {
+      "start": 25.5,
+      "end": 33.0,
+      "narration": "六比三，六比二。这一场之前，赢的这个人今年只赢过两场球。",
+      "_why": "落点段。26.5 和 28.5 两格是布瓦松走动和握拳的中景，替她说的话压在她自己身上。"
+    },
+    {
+      "start": 34.0,
+      "end": 41.5,
+      "narration": "北京时间八月十四号凌晨一点多，辛辛那提站，女单第一轮。",
+      "_why": "坐标段。⚠️ 说「一点多」不说分：WTA 官方记北京 01:18、flashscore 记 01:30，**两个源差十二分钟**，但都在一点这个钟头里。"
+    },
+    {
+      "start": 43.0,
+      "end": 50.5,
+      "narration": "对面的克鲁格二十二岁，世界第五十六，比布瓦松高两百二十五位。"
+    },
+    {
+      "start": 51.8,
+      "end": 60.0,
+      "narration": "第一盘六比三，三十七分钟。转播解说当时的话是，从头到尾都是她在打。",
+      "_why": "这几秒是她赢下第一盘之后的中近景。解说原话在 63.04 秒：`dominant really from start to finish`。 ⚠️ 段尾从 59.5 放到 60.0：本地 edge-tts 量出来余量只有 +0.04s（贴着满）。runner 走 Azure、快 6.6%，换算过去本来也装得下，但贴满的段经不起改一个字。60.5 那格仍然是布瓦松（挂着第一盘比分图形），画面没换人。"
+    },
+    {
+      "start": 72.0,
+      "end": 81.5,
+      "narration": "整场九个发球局，克鲁格一个破发点都没拿到。不是没兑现，是根本没拿到。"
+    },
+    {
+      "start": 82.0,
+      "end": 91.0,
+      "narration": "反过来，克鲁格自己救下了十三个破发点里的十个。可她九个接发球局，一个都没赢。"
+    },
+    {
+      "start": 92.0,
+      "end": 100.5,
+      "narration": "一年前的这个时候，她世界排名第三百六十一，靠一张外卡进的法网正赛。"
+    },
+    {
+      "start": 105.0,
+      "end": 114.5,
+      "narration": "她连赢五场打进半决赛，路上淘汰了世界第三的佩古拉，和世界第六的米拉·安德烈耶娃。",
+      "_why": "⚠️ 轮次写「半决赛」不写「四强」（CLAUDE.md）。⚠️ 「安德烈耶娃」必须带名字——译名表里另有一个埃里卡·安德烈耶娃。"
+    },
+    {
+      "start": 121.5,
+      "end": 129.5,
+      "narration": "一个月后她在汉堡拿了冠军，排名升到第四十一。今年，那些分数陆续到期。"
+    },
+    {
+      "start": 136.5,
+      "end": 145.0,
+      "narration": "法网之后她从第四十三掉到第一百五十五，温网之后再掉到第二百九十九。"
+    },
+    {
+      "start": 146.0,
+      "end": 155.0,
+      "narration": "所以今天这一场，是她今年的第三场胜利。前两场里有一场，赢的是王欣瑜。"
+    },
+    {
+      "start": 174.5,
+      "end": 178.0,
+      "narration": "这样的外卡，能给几次？",
+      "_why": "收尾一问落在网前握手那一格上（176.5）。这一问往前看，接的是片子里唯一贯穿的那条线——她这一年两次进正赛靠的都是外卡，而外卡是别人给的、数量有限。\n⚠️ 原来写的是「外卡还能给她几次？」，`--check-narration` 的切词报告把整段切成了单字，而「还」正是个破音字（hái / huán），孤立成 token 时没有上下文可依。换成不含破音字的写法。"
+    }
+  ],
+  "_claims": {
+    "克鲁格整场一个破发点都没拿到": "两个独立源，外加一层内部互证。① **WTA 官方** `tournaments/1017/2026/matches/LS118/stats`：`breakptsplayeda = 0`（setnum 0 全场，setnum 1、2 分盘也都是 0）。② **flashscore** `df_st_1_pMzOJOWa`：`Break Points Saved SI÷0/0`，以及 `Return games won SH÷0% (0/9)`。③ 内部互证：逐分 `df_mh_1_pMzOJOWa` 里布瓦松发球的九局（`HG÷2`）**一次 `|B1|` 都没有**；出现的 `|B2|`（第一盘末局）和 `|B3|`（第二盘末局）是她自己的盘点和赛点。",
+    "克鲁格救下十三个破发点里的十个、九个接发球局一个都没赢": "flashscore `df_st_1_pMzOJOWa`：`Break Points Saved SH÷10/13`、`Return games won SH÷0% (0/9)`；WTA 官方 `/stats` 的 `breakptsconvb = 3`、`breakptsplayedb = 13`（对手拿到 13 个、兑现 3 个 ⇔ 她救下 10 个）对得上。",
+    "2025 法网她世界第 361、靠外卡打进半决赛，路上淘汰佩古拉和米拉·安德烈耶娃": "两个独立源。① **WTA 官方生涯比赛库** `players/328884/matches`：2025-05-25 罗兰加洛斯六场，`rank_1 = 361`、`entry_type = W`（外卡），依次胜 Mertens(24)、Kalinina(113)、Jacquemot(138)、**Pegula(3)**、**Mirra Andreeva(6)**，负于 Gauff(2)。② **CNN** 2025-06-03 的人物稿标题就写着 `the world No. 361 wildcard`，正文写她淘汰了 24 号种子梅尔滕斯、3 号种子佩古拉和 6 号种子米拉·安德烈耶娃。⚠️ **旁白里写的是「世界第三」「世界第六」（排名），不是种子序号**——CLAUDE.md「种子序号不是排名」，这两处两个源正好都成立，但取排名那一个更稳。\n\n⚠️ **没有写「她的第一个大满贯正赛」**，虽然 CNN 说的是 `playing her first Grand Slam`：WTA 官方比赛库里她 2022-05-22 和 2023-05-28 两次以外卡出现在罗兰加洛斯（`rank` 574 / 488，都是首轮出局），接口分不出那两次是正赛还是资格赛。**两个源对不上的全称断言就不写**（CLAUDE.md「查得够深、查得够广」）。",
+    "2025 汉堡她五场全胜拿了冠军": "WTA 官方生涯比赛库：2025-07-14 汉堡五场，依次胜 Grabher(138)、Korpatsch(163)、Tomova(105)、**Yastremska(39)**、Bondar(77)，**无一败**——五场全胜且没有后续比赛，即这一站的冠军。赛后下一站（8-17 克利夫兰）她的 `rank` 是 46。",
+    "今年的排名逐站掉法": "WTA 官方生涯比赛库里每一场都带着她当时的 `rank_1`：马德里(4-21) **46** → 罗马(5-5) 43 → 帕尔马125(5-11) 43 → 斯特拉斯堡(5-17) 50 → 法网(5-24) **43** → 斯海尔托亨博思(6-8) **155** → 温网(6-29) 154 → 多伦多(8-2) **299**；到 2026-08-10 那一期是 **281**。⚠️ **旁白只说观察到的数**（「法网之后从 43 掉到 155，温网之后再掉到 299」），说「那些分数陆续到期」是在描述五十二周滚动积分这个规则本身，不是替她解释别的原因。",
+    "本场之前 2026 单打 2 胜 8 负，其中一场赢的是王欣瑜": "WTA 官方生涯比赛库 2026 年十场单打逐场扫过：胜斯特拉斯堡的 **Xinyu Wang（当时世界第 32）**、胜多伦多的 Arango(97)；负 Stearns、Siniakova、Salkova、Mboko、Kalinskaya、Sierra、Rybakina、Ruzic。⚠️ 第二个源是**画面自证**：转播解说在源片 171.52 秒说 `And in a season where wins have been very hard to come by for Lois [Boisson]`。",
+    "本场是两人第一次交手": "两个独立源。① flashscore `df_hh_1_pMzOJOWa` 的交手栏里只有本场一行。② 布瓦松 WTA 官方生涯 251 场单打逐场扫过，对手姓 `Krueger` 的只有 **2022-04-11 贝林佐纳的 Adelina Krueger（GER，id 328875）**——**不是** Ashlyn Krueger（USA，id 329409）。⚠️ 这正是「按姓认人会认错」的实例，所以是按 **id** 判的。"
+  },
+  "push": {
+    "summary": "布瓦松九个发球局零破发点",
+    "lead": "辛辛那提女单第一轮，世界第二百八十一、靠外卡进正赛的布瓦松 6-3 6-2 赢了世界第五十六的克鲁格——九个发球局全部保住，克鲁格整场一个破发点都没拿到。反过来克鲁格自己救下了十三个破发点里的十个，救球救得比对手还多，仍然零比二，因为她九个接发球局一个都没赢。一年前的这个时候，世界第三百六十一的布瓦松靠一张外卡在法网连赢五场打进半决赛，路上淘汰了世界第三的佩古拉和世界第六的米拉·安德烈耶娃；一个月后她在汉堡五场全胜夺冠，排名升到第四十一。今年那两笔分数先后到期——法网之后从第四十三掉到第一百五十五，温网之后再掉到第二百九十九。这一场之前，她全年只赢过两场球。",
+    "auto": true
+  }
+}
