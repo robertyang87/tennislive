@@ -53,7 +53,11 @@ from tools.build_interview_clip import (
     _ts,
     _NO_TAIL,
     _SENT_END,
+    _COMPARE_FILLERS,
     _FILLER,
+    _HESITATION_RE,
+    drop_hesitations,
+    strip_hesitation_lines,
     _bare,
     _caption_spans,
     _en_width,
@@ -4198,3 +4202,158 @@ def test_提交那一步不许再写回pull_rebase():
     assert "&& break" not in body, (
         "循环里又出现了 `&& break`：`bash -e` 下 AND 列表非末尾命令失败不退出，"
         "循环耗尽会绿着过去（见 test_推送重试耗尽必须报错不许绿着过去）")
+
+
+# ---------------------------------------------------------------- 语气词
+
+def test_烧进画面的英文不许留语气词():
+    """账号所有者 2026-08-15：「**以后把英文字幕里的语气词去掉比如 uh en 之类的**」。
+
+    左边每一条都是从存量 26 份自动字幕里**抄出来的真实行**，不是编的。
+    实测这批素材里只有两种真的出现过——`uh` 264 次、`um` 247 次。
+    """
+    真实行 = {
+        "Um, honestly, I don't know.": "Honestly, I don't know.",
+        "a lot of uh chances during the matches": "a lot of chances during the matches",
+        "Uh just incredible, thrilling,": "Just incredible, thrilling,",
+        "the Park Next Door uh type of ride um": "the Park Next Door type of ride",
+        "Um haven't played": "Haven't played",
+        "Yeah, uh, thanks for waiting, guys.": "Yeah, thanks for waiting, guys.",
+        ">> Uh, yeah, thanks for waiting.": ">> Yeah, thanks for waiting.",
+    }
+    for src, want in 真实行.items():
+        got, changed = drop_hesitations(src)
+        assert got == want, f"{src!r} → {got!r}，想要 {want!r}"
+        assert changed, f"{src!r} 明明有语气词，却报「没改」"
+
+
+def test_去语气词不许吃掉真词():
+    """**扩大化的判据不吭声**——它不会说「我删多了」，只会让画面上少几个词。
+
+    ⚠️ 三类都要挡住，各是一种删错法：
+    词里面撞上（`humble`／`German`）、真实的应答（`ah`／`mm`／`eh`）、
+    以及**不在名单里的拉长音**（`uhhh`）——名单窄是故意的，宁可漏也不吃真词。
+    """
+    for text in ("humble beginnings", "an umbrella", "the German player",
+                 "Ah, that was tough.", "Mm, maybe.", "It was tough, eh?",
+                 "Oh, I know.", "you know, like", "Uhuru played well",
+                 "uhhh I mean"):
+        got, changed = drop_hesitations(text)
+        assert (got, changed) == (text, False), f"{text!r} 被改成了 {got!r}"
+
+
+def test_整行只有语气词的原样留下():
+    """实测 2226 行里有 5 行是这样（光秃秃一个 `Uh` / `Um,`）。
+
+    **不许去空**：去空了画面上就是「有中文、没英文」，而那一行的中文还在。
+    真要处理得人来定（改 `en_fixed`，或者把中文一起改），机器不替他决定。
+    """
+    for src in ("Uh", "Um,", ">> Uh.", "um"):
+        got, changed = drop_hesitations(src)
+        assert (got, changed) == (src, False), f"{src!r} 被去空成了 {got!r}"
+
+
+def test_整行只有语气词要出声(capsys):
+    """只在有改动时出声的检查证明不了它跑过——**0 行也要印，整行只有语气词更要印**。
+
+    不说的话，「这一行整行只有语气词」和「这一行本来就没有语气词」在日志上
+    长得一模一样，而画面上会实打实印一个 `Uh`。
+    """
+    hit, only = strip_hesitation_lines(_lines(["Um, I think so.", "Uh", "No doubt."]))
+    out = capsys.readouterr().out
+    assert (hit, only) == (1, 1)
+    assert "第 2 行整行只有语气词" in out, f"没点名是哪一行：{out!r}"
+    assert "去掉语气词 1 行" in out, f"没报改了几行：{out!r}"
+
+    strip_hesitation_lines(_lines(["No doubt.", "Just incredible."]))
+    assert "去掉语气词 0 行" in capsys.readouterr().out, "一个都没有的时候不出声"
+
+
+def test_去语气词不许改行数否则存量的中文全对不上():
+    """**这一条是这套改动的全部风险所在。**
+
+    切行之前去掉是「更对」的位置（语气词不该参与断行和量宽），可拿存量量过：
+    **25 条 spec 里 16 条的行数会变**（`swiatek-rybakina-…-presser` 234→228、
+    `shelton-mensik` 232→227）。而 `zh` 是**逐行手写的**、`en_fixed` 是
+    **按行号挂的**——行数一变这两样全部对不上，`write_ass` 那道
+    「中文 N 行、英文 M 行，对不上」当场红。已发的片子不为措辞重渲，
+    可 spec 还在仓库里、CI 每次都校。
+
+    所以判据钉两头：**切行那一步不许去语气词**（去了行数就会变），
+    **去完之后行数一个不许少**。
+    """
+    text = ("Um, honestly I don't know. Uh it was a really hard-fought battle "
+            "and um I will just enjoy tonight. Um, for many reasons.")
+    raw = segment(_words(text), 0, 999)
+    assert any(_HESITATION_RE.search(ln["en"]) for ln in raw), (
+        "切行那一步把语气词去掉了——那会改断行、进而改行数，"
+        "而 `zh` 是逐行手写的、`en_fixed` 按行号挂")
+
+    lines = segment(_words(text), 0, 999)
+    n = len(lines)
+    hit, _ = strip_hesitation_lines(lines)
+    assert hit >= 1, "这段话里明明有语气词"
+    assert len(lines) == n, f"行数从 {n} 变成了 {len(lines)}——存量的中文会全部错位"
+
+
+def test_烧进画面的语气词名单只许最窄的那一档():
+    """这个模块里有**三份**口头语名单，用途不同、宽窄不同，别互相搬：
+
+        `_COMPARE_FILLERS`  两份 ASR 比对时两边都去掉    最窄
+        `_FILLER`           跟记者的人工引语比对时去掉    最宽，只影响比对不影响产物
+        烧字幕（复用第一份）  **从画面上真的删掉**        风险最高
+
+    所以这一条钉两头：**烧字幕用的就是第一份那一份**（不是抄一遍，用 AST 判，
+    注释里提到它不算数），**而且这一份必须一直是窄的**——谁哪天为了比对方便
+    把它放宽，这条当场红，逼他显式把两份拆开，而不是让画面上的字悄悄少几个词。
+    """
+    src = (ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8")
+    node = next(n for n in ast.walk(ast.parse(src))
+                if isinstance(n, ast.Assign)
+                and any(getattr(t, "id", "") == "_HESITATION_RE" for t in n.targets))
+    names = {n.id for n in ast.walk(node.value) if isinstance(n, ast.Name)}
+    assert "_COMPARE_FILLERS" in names, (
+        "烧字幕的名单自己抄了一份——两份必分叉，而分叉的样子是"
+        "「比对时算语气词、烧字幕时不算」，两边各说各的，不报错")
+
+    for w in _COMPARE_FILLERS:
+        assert _HESITATION_RE.fullmatch(w), f"{w} 在名单里却认不出来"
+    有歧义 = {"ah", "eh", "mm", "hmm", "mhm", "oh", "er", "yeah", "like", "well", "so"}
+    assert not (宽 := 有歧义 & set(_COMPARE_FILLERS)), (
+        f"{sorted(宽)} 进了要从画面上删掉的名单——`eh` 在加拿大英语里是真词、"
+        "`mm`/`ah` 可能是应答，删掉就开始吃真内容。"
+        "要为比对放宽的话，请把两份名单显式拆开")
+    # ⚠️ **别在这儿加一条「窄的那份必须包含在宽的那份里」。** 我写过，当场红：
+    # 两份在**两个方向上**都各有各的（`_COMPARE_FILLERS` 多 `uhh`/`umm`，
+    # `_FILLER` 多 `er`/`ah`/`mm`/`hmm`/`mhm`），它们是各自按自己的用途挑的，
+    # 从来不是嵌套关系。那条断言听起来很合理，而合理不等于量过。
+
+
+def test_去语气词真的接在出片那条路上(tmp_path):
+    """「算得对」和「算出来被用上了」是两件事——这个仓库为它栽过
+    （`_push` 键名写错、`_cut_person` 从来没跑起来过）。
+
+    所以钉两头：**烧出来的 ASS 里真的没有语气词**（真跑一遍 `write_ass`），
+    **而且 `main()` 真的调了它、调在写字幕之前**（只验行为的话，
+    有人把 `strip_hesitation_lines` 从 `main()` 里删掉，上面那半截照样绿）。
+    """
+    text = ("Um, honestly I don't know. Uh it was a really hard-fought battle "
+            "and um I will just enjoy tonight.")
+    lines = segment(_words(text), 0, 999)
+    strip_hesitation_lines(lines)
+    path = tmp_path / "t.ass"
+    write_ass(lines, ["一"] * len(lines), 0.0, path)
+    for row in path.read_text(encoding="utf-8").splitlines():
+        if ",EN,," not in row:
+            continue
+        body = row.split(",,0,0,0,,", 1)[1]
+        assert not _HESITATION_RE.search(body), f"烧进画面的英文还留着语气词：{body!r}"
+
+    src = (ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8")
+    main = next(n for n in ast.walk(ast.parse(src))
+                if isinstance(n, ast.FunctionDef) and n.name == "main")
+    at = {n.func.id: n.lineno for n in ast.walk(main)
+          if isinstance(n, ast.Call) and isinstance(n.func, ast.Name)}
+    assert "strip_hesitation_lines" in at, "`main()` 根本没调它——写了不等于跑过"
+    assert at["strip_hesitation_lines"] < at["write_ass"], (
+        "去语气词排在了写字幕后面，等于没去")
