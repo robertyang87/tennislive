@@ -417,12 +417,16 @@ jobs:
           PYTHONPATH=src python tools/build_interview_clip.py --spec "$SPEC" --stage render
 
       # **查产物，不查信号。** 步骤 success 不等于成片存在——探一下文件和时长。
-      - name: 验成片
+      # 2026-08-15 起升级成完整 L2 成片落地闸（docs/qa-contract.md §三）：
+      # 原来只 `test -s` + ffprobe 时长，**不查分辨率、不查音画等长、不查字幕**。
+      # 采访片这条线一直缺这道闸，出问题只有等账号所有者回头翻微信才发现。
+      - name: 验成片（L2 成片落地闸）
         if: github.event.inputs.mode == 'render'
         run: |
           OUT="output/interviews/${{ github.event.inputs.slug }}/${{ github.event.inputs.slug }}.mp4"
           test -s "$OUT" || { echo "成片不存在或是空的：$OUT"; exit 1; }
-          ffprobe -v error -show_entries format=duration,size -of default=nw=1 "$OUT"
+          PYTHONPATH=src python tools/check_interview_landed.py \
+            --slug "${{ github.event.inputs.slug }}" --film "$OUT"
 
       # **采访成片一律发到 Release，不进 git。**（2026-08-13 起）
       #
