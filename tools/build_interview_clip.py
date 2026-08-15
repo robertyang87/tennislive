@@ -1396,6 +1396,90 @@ def compare_tokens(text: str) -> list[str]:
     return [w for w in words if w and w not in _COMPARE_FILLERS]
 
 
+# 烧进画面的英文里，这些词要去掉。**名单就是上面那个 `_COMPARE_FILLERS`**，
+# 不另开一份：两处想要的是同一个性质——「无歧义的英语犹豫音，删掉不丢内容」，
+# 而 `_COMPARE_FILLERS` 上面那段已经把 `ah`/`eh`/`mm` 为什么不收论证过了
+# （`eh` 在加拿大英语里是真词，`mm` 可能是应答），别在这儿重记一遍。
+#
+# ⚠️ **这个模块里一共有三份「口头语」名单，用途不同，别互相搬**：
+#
+#     _COMPARE_FILLERS  两份 ASR 逐词比对时**两边都去掉**  最窄，因为去多了会掩盖真分歧
+#     _FILLER           跟记者写的人工引语比对时去掉        最宽（记者不会写 `ah`/`mm`），
+#                                                          它只影响比对，不影响产物
+#     这一条（复用第一份）  **从烧进画面的字幕里真的删掉**    风险最高：删多了观众就少看到内容
+#
+# 所以这一条**只能用最窄的那份**。判据 `test_烧进画面的语气词名单只许最窄的那一档`
+# 把这件事钉住：谁哪天为了比对方便把 `_COMPARE_FILLERS` 放宽，那条测试当场红，
+# 逼他显式把两份拆开，而不是让画面上的字悄悄少几个词。
+_HESITATION_RE = re.compile(
+    r"(?<![\w'-])(?:" + "|".join(sorted(_COMPARE_FILLERS, key=len, reverse=True))
+    + r")(?![\w'-])", re.I)
+
+
+def drop_hesitations(text: str) -> tuple[str, bool]:
+    """去掉一行英文字幕里的犹豫音，返回 (新文本, 变没变)。
+
+    来路：账号所有者 2026-08-15「**以后把英文字幕里的语气词去掉比如 uh en
+    之类的**」。实测这批素材里只有两种真的出现过——`uh` 264 次、`um` 247 次，
+    `ah`/`eh`/`mm`/`hmm`/`erm` 一次都没有（26 份自动字幕全扫过）。
+
+    ⚠️ **为什么在切行之后去，不在切行之前去。** 切行之前去是「更对」的位置
+    （填词不该参与断行和量宽），可我拿存量量了一遍：**25 条 spec 里 16 条的
+    行数会变**（`swiatek-rybakina-…-presser` 234→228、`shelton-mensik` 232→227）。
+    而 `zh` 是**逐行手写的**、`en_fixed` 是**按行号挂的**——行数一变，
+    这两样全部对不上，`write_ass` 那道「中文 N 行、英文 M 行，对不上」当场红。
+    已发的片子不为措辞重渲，可 spec 还在仓库里、CI 每次都校。
+    所以这儿只改**这一行的文本**，一个字都不动断行。
+    代价说清楚：断行仍然是按带填词的原文排的，偶尔会比理想的松一格；
+    换来的是零存量破坏。
+
+    ⚠️ **整行只剩填词的，原样留下**（返回 `changed=False`），交给调用方出声。
+    实测 2226 行里有 5 行是这样（光秃秃一个 `Uh` / `Um,`）。去空的话画面上
+    就是「有中文、没英文」，而那一行的中文还在——真要处理得人来定（改
+    `en_fixed`，或者把中文一起改），机器不替他决定这件事。
+
+    大小写要补回来：`Um, honestly, …` 去掉之后是 `honestly, …`，
+    句首小写看着像漏了个词。只在**原文那一格本来就是大写**时才补。
+    """
+    out = _HESITATION_RE.sub("", text)
+    out = re.sub(r"\s*,(?:\s*,)+", ",", out)      # 连着的逗号并成一个
+    out = re.sub(r"\s+([,.?!])", r"\1", out)      # 标点前多出来的空格
+    out = re.sub(r"\s{2,}", " ", out)
+    mark, body = (">>", out.lstrip()[2:]) if out.lstrip().startswith(">>") else ("", out)
+    body = body.strip().lstrip(",.:;-—– ").strip()
+    if not re.search(r"[\w]", body):              # 整行只有填词 → 不动它
+        return text, False
+    if (head := re.search(r"[A-Za-z]", text)) and head.group().isupper():
+        body = re.sub(r"[A-Za-z]", lambda m: m.group().upper(), body, count=1)
+    out = f">> {body}" if mark else body
+    return out, out != text
+
+
+def strip_hesitation_lines(lines: list[dict]) -> tuple[int, int]:
+    """整份字幕逐行去犹豫音。**原地改，行数一个都不动**，返回 (改了几行, 整行只有语气词几行)。
+
+    **抽成函数是为了能测。** 判据要证明的不是「`drop_hesitations` 会算」，是
+    「出片那条路上真的算了」——这个仓库为「算得对 ≠ 算出来被用上了」栽过
+    （`_push` 键名写错、`_cut_person` 从来没跑起来过）。留在 `main()` 里
+    的话，只能靠扫源码文本去猜它接没接上。
+    """
+    hit = only = 0
+    for i, seg in enumerate(lines, 1):
+        seg["en"], changed = drop_hesitations(seg["en"])
+        hit += changed
+        if not changed and _HESITATION_RE.search(seg["en"]):
+            # 整行只剩填词——原样留着，但**要出声**：不说的话它和「这一行本来
+            # 就没有填词」在日志上长得一模一样，而画面上会实打实印一个 `Uh`。
+            only += 1
+            print(f"⚠️ 第 {i} 行整行只有语气词：{seg['en']!r}　"
+                  "去掉就没有英文了。要处理就用 `en_fixed` 改写这一行，"
+                  "或者连同这一行的中文一起改。")
+    # 只在有改动时出声的检查证明不了它跑过——0 行也要印。
+    print(f"去掉语气词 {hit} 行"
+          + (f"（另有 {only} 行整行只有语气词，没动）" if only else ""))
+    return hit, only
+
+
 def disagree_rate(first: str, second: str) -> tuple[float, list, list, difflib.SequenceMatcher]:
     """两份转写对不上多少。返回 (比例, 第一份词流, 第二份词流, matcher)。
 
@@ -2768,6 +2852,10 @@ def main() -> int:
         if 0 <= idx < len(lines):
             lines[idx]["en"] = v
             lines[idx]["fixed"] = True
+    # **犹豫音在这儿去，排在 `en_fixed` 之后**：`en_fixed` 是手写的整行替换，
+    # 而这条规矩管的是「烧进画面的英文长什么样」，手写那几行同样算数——
+    # 存量里就有 8 处 `en_fixed` 自己带着 `um`／`Uh`。
+    strip_hesitation_lines(lines)
     (outdir / "lines.json").write_text(
         json.dumps(lines, ensure_ascii=False, indent=1), encoding="utf-8")
     # **每一步都过这道闸，不只是 verify。** 它不联网、不要 whisper，本地就能跑，
