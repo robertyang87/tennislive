@@ -1,18 +1,14 @@
 {
   "slug": "baez-dimitrov",
   "_slug_why": "赢家在前（巴埃斯胜）。栏目规矩 slug 按赢家-输家；封面主角是**输的那个**（迪米特洛夫），和 medvedev-zandschulp / tirante-fritz 一个形状——这条片子讲的是他怎么把一场已经拿在手里的球送掉。",
-
   "source_url": "https://www.youtube.com/watch?v=AVf-dnxxQT4",
   "_source": "Tennis TV 官方 YouTube 频道（@TennisTV）单场集锦，标题 `Grigor Dimitrov vs Sebastian Baez First Career Meeting | Cincinnati 2026 Highlights`。probe run（2026-08-15 00:05 UTC）实测：223.84s、1920×1080、59.94fps。\n\n⚠️ **为什么用 Tennis TV 那版而不是 ATP 官方频道那版**：同一场 ATP Tour 频道也发了（`s2UhA9rWhm8`），但只有 98 秒，装不下决胜盘从 4-1 到 4-6 那五局；Tennis TV 这版 224 秒。CLAUDE.md「源片的清晰度和完整度不能将就，分辨率越高、剪辑越完整的那个版本优先」——两条都是官方源，取更完整的那条。\n\n**画面自证**（逐格读过 score_00~05.jpg 的记分条裁切，和 flashscore 逐分 `v51JjQ2D` 对得上）：\n- 0.5~24.5s 记分条 `BAEZ 1 / DIMITROV 2`，巴埃斯发球从 15:15 走到 15:40——对应逐分里首盘「1-3 主队发球，客队拿下 ← 1个破发点」那一局\n- 26.5~39.1s 跳到 `BAEZ 1 30 / DIMITROV 5 40`、发球点在迪米特洛夫那一行——首盘 1-5 他发球，40:30 是盘点；40.5s 记分条读到 `BAEZ 1 / DIMITROV 6`，首盘 6-1 结束\n- 58.5~72.9s `BAEZ 2 40 / DIMITROV 1 30`、发球点在迪米特洛夫——次盘 2-1 他发球被逼到破发点；74.5s 记分条 `BAEZ 3 / DIMITROV 1`，破发完成\n- 88.5~96.5s `BAEZ 5 40 / DIMITROV 3 0`、发球点在巴埃斯——次盘 5-3 他发球 40:0 三个盘点；98.5s 读到 `BAEZ 6 / DIMITROV 3`\n- 100.5~118.5s 决胜盘开局，118.5s 读到 `BAEZ 0 / DIMITROV 2`\n- 120.5~130.5s `BAEZ 2 / DIMITROV 4`、发球点在迪米特洛夫，比分走到 40:30（巴埃斯的破发点）；132.5s 读到 `BAEZ 3 / DIMITROV 4`\n- **136.5~150.5s 连续八格都是 `BAEZ 3 / DIMITROV 4 AD`、发球点在巴埃斯**——这就是逐分里「4-4 主队发球，主队拿下 ← 4个破发点」那一局，四个破发点全在这十几秒里\n- 152.5~176.5s `BAEZ 4 40 / DIMITROV 4 15`→`4 AD`、发球点在迪米特洛夫；178.5s 读到 `BAEZ 5 / DIMITROV 4`\n- 198.5~200.5s `BAEZ 5 40 / DIMITROV 4 30`、发球点在巴埃斯——赛点；202.5s 记分条翻成 `BAEZ 6`\n- 204.5~213.6s 赛后握手（`GREAT AMERICAN` 背板 → 网前拥抱）\n- ⚠️ **213.81s 之后是 Tennis TV 自己的 `TAP TO SUBSCRIBE` 片尾卡，不使用**，可用素材上限 213.6s\n\n⚠️ **这条源片没有自动字幕**（probe 的 captions_debug.txt 记着八档 client 全返回 `There are no subtitles for the requested languages`），所以这条片子的判据全部来自记分条 + flashscore 逐分，没有解说文本可引。\n\n**谁穿什么**（认人判据，逐格核过）：迪米特洛夫穿**玫红/酒红 Lacoste polo**、白帽（帽子上的鳄鱼标在 118.5s 那格看得见）、络腮胡；巴埃斯穿**淡紫渐粉上衣**、白帽、粉色球拍框。212.5s 的握手特写里左边是巴埃斯、右边是迪米特洛夫，和 ATP 官方头像（`atp-D875` / `atp-B0BI`）逐一对得上。⚠️ 迪米特洛夫那件在强光下读出来是玫红、在阴影里是酒红，**别拿它当两个人**。",
-
   "_column": "赛场之上。ATP1000 首轮，持外卡的前世界第三在自己九年前夺冠的场地上决胜盘 4-1 领先后连丢五局。封面 solo 版式，主角是输的那个。",
-
   "topbar": {
     "line1": "辛辛那提ATP1000 首轮",
     "line2": "巴埃斯 1-6 6-3 6-4 迪米特洛夫"
   },
   "_topbar_why": "flashscore match id `v51JjQ2D`（本仓库 tools/match_feed.py 直连）：分盘 1-6 / 6-3 / 6-4（主队巴埃斯视角），总用时 1:49（0:22+0:35+0:52）；`PSPA÷WC` 标注外卡（迪米特洛夫）。Yahoo Sports 赛后稿独立核实同一比分：『exiting in the first round 1-6, 6-3, 6-4』『unable to hold onto a 4-1 lead in the third set』『lost the last five games』。第二行赢家在前，和 `cover.winner`＋`cover.result` 机械一致。",
-
   "editorial": {
     "mode": "match_review",
     "question": "决胜盘 4-1 领先、离晋级只差两局的迪米特洛夫，是怎么把最后五局一局不剩地送掉的？",
@@ -47,12 +43,10 @@
       ]
     }
   },
-
   "_match": {
     "flashscore_id": "v51JjQ2D",
     "_why": "flashscore 单场 id，`tools/match_feed.py find --tour atp --event cincinnati --who Dimitrov` 拿到的。逐分、分盘统计、总用时、外卡标记（`PSPA÷WC`）、开球时刻（`KC`）、head-to-head 都从这个 id 取。"
   },
-
   "_hit_data": {
     "_tool": "python3 tools/match_stat_hooks.py --from-spec baez-dimitrov（flashscore v51JjQ2D），8 条候选原样记在下面",
     "总分差": "巴埃斯 74 − 迪米特洛夫 79，净差 5 分，**输的那个人多拿 5 分** ← 挑中的就是这条，小红书正文第一句和片子第 12/13 段用的都是它",
@@ -63,7 +57,6 @@
     "交手记录": "巴埃斯 1 : 0 迪米特洛夫（含本场）·硬地 1:0 —— 也就是生涯首次交手",
     "_没挑的为什么没挑": "一发得分率摆动那两条方向不对——迪米特洛夫三盘分别 85/90/75%，读起来像「他一发一直很好」，而这条片子的落点是他在**领先之后**丢掉的那五局；连续保发 5:5 完全对称，说不出东西。总分差那条既是算出来的、又正好和落点重合，所以它当了封面之外的第二个钩子。"
   },
-
   "_facts": {
     "开赛时刻": "flashscore 该场 `KC÷1786725300` → UTC 2026-08-14 16:35，辛辛那提当地 8/14 12:35（EDT），**北京时间 8 月 15 日 00:35**。片子里报的是北京时间（读者在国内），比分板 footer 的日期同口径写 2026年8月15日。",
     "决胜盘逐局": "0-1 迪保发 / 0-2 迪破发 / 0-3 迪保发 / 1-3 巴保发 / 1-4 迪保发（**迪米特洛夫 4-1 领先**）/ 2-4 巴保发 / 3-4 巴破发 / 4-4 巴保发（救 4 个破发点，4 次平分）/ 5-4 巴破发 / 6-4 巴保发（1 个赛点）。**巴埃斯连赢最后五局**，和 Yahoo『lost the last five games』一致。",
@@ -71,14 +64,11 @@
     "为什么不写「他崩了」这类心理判断": "整改期规矩：每个战术或心理判断都要能回到记分条、官方赛报、统计或按帧画面。这条片子没有自动字幕、也没查到带技术细节的官方赛后稿，所以旁白只说**数得出来的东西**（双误、破发点、分差、用时），不替他解释原因。",
     "年龄": "迪米特洛夫 1991-05-16 生，本场 35 岁（Yahoo 稿同样写 the 35-year-old）；巴埃斯 2000-12-28 生，本场 25 岁。片子里只用了『三十五岁』这一处，按生日算过。"
   },
-
   "_claims": {
     "生涯第一个大师赛冠军": "2017 年辛辛那提是迪米特洛夫的第一个 ATP 大师赛冠军，决赛 6-3 7-5 胜克耶高斯、全程一盘未失。https://www.atptour.com/en/news/dimitrov-kyrgios-cincinnati-2017-final ；https://en.wikipedia.org/wiki/2017_Western_%26_Southern_Open_%E2%80%93_Men%27s_singles",
     "两人首次交手（此前从未交手）": "flashscore 该场 head-to-head 区块只有这一场记录；Tennis TV 官方视频标题写着 First Career Meeting。https://global.flashscore.ninja/2/x/feed/df_hh_1_v51JjQ2D ；https://www.youtube.com/watch?v=AVf-dnxxQT4"
   },
-
   "_editing_why": "十三段、可用素材 0~213.6s。**开场三格**按 CLAUDE.md：① 197.4~202.6 赛点那一分落地，不配旁白、只留现场声（全片最强的一格）；② 202.7~213.6 赛后走向球网到网前拥抱，这一句把落点说出来；③ 之后回到 10.2s 从头讲，坐标（北京时间、赛事、轮次）放在第三格。\n\n**窗口一律切在源片自己的 scene_cuts 上**（probe 给的 34 个硬切点），只有两段跨切点、都在 `crosses_cut` 里认领了。87.05 那个 loose cut 是真镜头变化，所以第 5 段从 87.2 起而不是 86.1。\n\n**转折点没有被剪掉**：135.0~149.6 这十四秒六在源片里是完整保留的（记分条连续八格 `3 / 4 AD`），正是那四个破发点，给了全片最长的一段。",
-
   "cover": {
     "eyebrow": "赛场之上",
     "layout": "solo",
@@ -122,7 +112,6 @@
       "_court_why": "P&G Center Court。**画面自证**：本场 14.5s/30.5s 的全场机位，与同一站 `landaluce-draper`（ATP 官方赛后稿明写『Draper opened on Center Court』）24.5s/42.5s 的全场机位并排比过——地面 `P&G` 标、中场 `ATP TOUR` 字样、`Emirates` 网带广告、后场背板广告顺序（Old Spice · CreditOne · W&S Financial · Kroger）、裁判椅和球童席位置完全一致。全称沿用 landaluce-draper 已经考据过的写法。"
     }
   },
-
   "stats": {
     "tour": "atp",
     "a": {
@@ -153,9 +142,8 @@
     },
     "footer_venue": "P&G Center Court · 辛辛那提",
     "footer_date": "2026年8月15日",
-    "_source": "flashscore `v51JjQ2D` 的 Match 汇总（本仓库 tools/match_feed.py 直连）。接口的主队＝巴埃斯、客队＝迪米特洛夫，而**这张图是 `cover.matchup[0]` 配 `stats.a`**，matchup[0] 就是巴埃斯，所以顺序和接口一致，没有反过来。逐项双向核对：巴埃斯一发 47/77＝61%（接口 `1st serve percentage 61%`）、二发 30 局＝77−47，发球分 49/77 与「一发 30 + 二发 19」一致；迪米特洛夫一发 43/76＝57%（接口 57%）、二发 33＝76−43，发球分 51/76 与「35+16」一致；总得分 74+79＝153，与两人「发球分+接发分」各自加总（49+25、51+28）一致。\n\n⚠️ **制胜分和非受迫失误两行整行不画**：flashscore 这场只在第二盘和第三盘给了 Winners/Unforced errors，**第一盘没有**，所以没有可信的全场汇总；把两盘的数加起来当全场是编数字。`render_stat_card.usable_rows()` 按字段在不在决定画不画，缺字段就整行不显示。\n\n头像走 `tools/fetch_official_headshot.py atp --via https://www.mubadaladcopen.com`（atptour.com 总站 403，赛事域名镜像同一批）：`B0BI` 253 种颜色、`D875` 256 种，不是占位剪影（占位只有 2 种色）；两张都打开看过，和片内 212.5s 握手特写里的两个人对得上。"
+    "_source": "flashscore `v51JjQ2D` 的 Match 汇总（本仓库 tools/match_feed.py 直连）。接口的主队＝巴埃斯、客队＝迪米特洛夫，而**这张图是 `cover.matchup[0]` 配 `stats.a`**，matchup[0] 就是巴埃斯，所以顺序和接口一致，没有反过来。逐项双向核对：巴埃斯一发 47/77＝61%（接口 `1st serve percentage 61%`）、二发 30 局＝77−47，发球分 49/77 与「一发 30 + 二发 19」一致；迪米特洛夫一发 43/76＝57%（接口 57%）、二发 33＝76−43，发球分 51/76 与「35+16」一致；总得分 74+79＝153，与两人「发球分+接发分」各自加总（49+25、51+28）一致。\n\n⚠️ **制胜分和非受迫失误两行整行不画：这场的 flashscore feed 里根本没有这两项**——`df_st_1_v51JjQ2D` 的 Match 汇总只有 17 个统计项，Set 1/2/3 也各只有 16 个，少的正好是 `Winners` / `Unforced errors` / `Net points won` 这一组「击球质量」项。`render_stat_card.usable_rows()` 按字段在不在决定画不画，缺字段就整行不显示。\n\n⚠️⚠️ **这条注释的第一版写的是「只有第二、三盘给了 Winners/UE，第一盘没有」，那是错的。**我把同一批命令里 `show OEf3f83l`（希吉卡塔-孟菲尔斯）的输出当成了这一场的。逐个 feed 数过之后才看清：**这不是分盘的差别，是按场的差别**，而且同一天同一站就分成两半——\n  20 项（有 Winners/UE）：兰达卢塞-德雷珀 `dbir2a5c`、沙波瓦洛夫-马纳里诺 `Srkz97Is`、希吉卡塔-孟菲尔斯 `OEf3f83l`\n  17 项（没有）：本场 `v51JjQ2D`、罗耶-西西帕斯 `z9hr7omf`、德罗盖-贝雷蒂尼 `nTBxi7nn`、商竣程-索内戈 `xdXFLp2m`\n**所以 CLAUDE.md 那条「ATP 巡回赛 flashscore 直接给 Winners/非受迫失误」要收窄一档：有没有是按场给的，不是按巡回赛给的。**⚠️ 也别顺手拿场地去解释——本场和兰达卢塞-德雷珀是**同一片 P&G Center Court**（画面自证过），一个有一个没有，场地不是那个变量；真实原因没查到，不编。\n\n另外两类源也查了，都没有：ATP 官方站对本环境一律 403；Match Charting Project（`tools/mcp_stats.py find --who ... --year 2026`）里迪米特洛夫只标到7 月温网、巴埃斯只标到 7 月巴斯塔德，**没有这一场**。\n\n头像走 `tools/fetch_official_headshot.py atp --via https://www.mubadaladcopen.com`（atptour.com 总站 403，赛事域名镜像同一批）：`B0BI` 253 种颜色、`D875` 256 种，不是占位剪影（占位只有 2 种色）；两张都打开看过，和片内 212.5s 握手特写里的两个人对得上。"
   },
-
   "segments": [
     {
       "start": 197.4,
@@ -225,7 +213,6 @@
       "crosses_cut": "191.31s 和 194.08s 两处：巴埃斯擦汗 → 发球 → 迪米特洛夫在底线后走动，都是发球胜赛局这一段里的连续镜头。"
     }
   ],
-
   "push": {
     "summary": "迪米特洛夫决胜盘连丢五局",
     "lead": "辛辛那提ATP1000男单首轮，世界第53位的巴埃斯1-6 6-3 6-4逆转淘汰持外卡参赛的迪米特洛夫，耗时1小时49分。首盘迪米特洛夫只用22分钟就6-1拿下，34分里拿走24分；第二盘他的一发命中率掉到48%，巴埃斯6-3扳平。决胜盘迪米特洛夫一度4-1领先，离晋级只差两局——转折出现在3-4那一局：巴埃斯自己的发球局被逼到四个破发点、来回打了四次平分，一个都没让对手兑现。此后迪米特洛夫再没赢下一局，连丢最后五局。全场153分他拿了79分，比对手多5分，却输了这场球；决胜盘他一个人送出4个双误，拿到6个破发点只兑现1个。九年前的2017年，正是在这块场地上，他拿到了生涯第一个大师赛冠军。",
