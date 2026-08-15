@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>8.15 赛场之上 | 迪米特洛夫决胜盘连丢五局</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>全场多拿5分的那个人，输了这场球
+
+先说一个数：辛辛那提首轮这场球一共153个小分，迪米特洛夫拿到79分，巴埃斯74分。多拿5分的那个人，一小时49分钟之后走下场，第二轮没有他。
+
+这块场地对迪米特洛夫不是随便哪一块。2017年他就是在辛辛那提拿到生涯第一个ATP大师赛冠军，那一届他一盘未失，决赛6-3 7-5击败克耶高斯。九年后他回到这里，世界排名第138位，靠一张赛会外卡才进的正赛。中间发生了什么，很多人记得那一幕：2025年温网第四轮，他6-3 7-5两盘领先辛纳，第三盘发球后捂住右胸，右胸肌部分撕裂，退赛，随后缺席美网。
+
+这场球他起手极好。首盘22分钟就结束，34分里他拿走24分，发球分赢下八成四，6-1。第二盘他的一发命中率掉到48%，巴埃斯6-3扳平。
+
+真正的分水岭在决胜盘，但不在他丢掉的那五局里。他一度4-1领先，离晋级只差两局。3-4那一局轮到巴埃斯发球——注意，这是巴埃斯自己的发球局，被逼到四个破发点，来回打了四次平分。破成任何一个，迪米特洛夫接下来只要守住自己的发球局，比赛就结束了。四个，一个都没兑现。
+
+从那一局起，他再没赢下一局。4-4被破，5-4被破，最后五局一局不剩。整个决胜盘他拿到6个破发点只兑现1个，自己却送出4个双误——全场7个双误，对面只有2个。
+
+35岁，排名138，一场只差两局就能拿下的球，被自己送掉了。
+
+一场比赛的胜负，到底是被赢下来的，还是被丢掉的？
+
+⚙️ AI 生成合成内容标识：旁白（如有）为 AI 合成语音，部分画面经 AI 工具处理。
+
+#网球 #ATP #辛辛那提 #迪米特洛夫 #网球时差</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>决胜盘四比一领先还能输掉，这样的球你见过几次？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
