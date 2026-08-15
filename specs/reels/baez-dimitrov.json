@@ -1,0 +1,219 @@
+{
+  "slug": "baez-dimitrov",
+  "_slug_why": "赢家在前（巴埃斯胜）。栏目规矩 slug 按赢家-输家；封面主角是**输的那个**（迪米特洛夫），和 medvedev-zandschulp / tirante-fritz 一个形状——这条片子讲的是他怎么把一场已经拿在手里的球送掉。",
+
+  "source_url": "https://www.youtube.com/watch?v=AVf-dnxxQT4",
+  "_source": "Tennis TV 官方 YouTube 频道（@TennisTV）单场集锦，标题 `Grigor Dimitrov vs Sebastian Baez First Career Meeting | Cincinnati 2026 Highlights`。probe run（2026-08-15 00:05 UTC）实测：223.84s、1920×1080、59.94fps。\n\n⚠️ **为什么用 Tennis TV 那版而不是 ATP 官方频道那版**：同一场 ATP Tour 频道也发了（`s2UhA9rWhm8`），但只有 98 秒，装不下决胜盘从 4-1 到 4-6 那五局；Tennis TV 这版 224 秒。CLAUDE.md「源片的清晰度和完整度不能将就，分辨率越高、剪辑越完整的那个版本优先」——两条都是官方源，取更完整的那条。\n\n**画面自证**（逐格读过 score_00~05.jpg 的记分条裁切，和 flashscore 逐分 `v51JjQ2D` 对得上）：\n- 0.5~24.5s 记分条 `BAEZ 1 / DIMITROV 2`，巴埃斯发球从 15:15 走到 15:40——对应逐分里首盘「1-3 主队发球，客队拿下 ← 1个破发点」那一局\n- 26.5~39.1s 跳到 `BAEZ 1 30 / DIMITROV 5 40`、发球点在迪米特洛夫那一行——首盘 1-5 他发球，40:30 是盘点；40.5s 记分条读到 `BAEZ 1 / DIMITROV 6`，首盘 6-1 结束\n- 58.5~72.9s `BAEZ 2 40 / DIMITROV 1 30`、发球点在迪米特洛夫——次盘 2-1 他发球被逼到破发点；74.5s 记分条 `BAEZ 3 / DIMITROV 1`，破发完成\n- 88.5~96.5s `BAEZ 5 40 / DIMITROV 3 0`、发球点在巴埃斯——次盘 5-3 他发球 40:0 三个盘点；98.5s 读到 `BAEZ 6 / DIMITROV 3`\n- 100.5~118.5s 决胜盘开局，118.5s 读到 `BAEZ 0 / DIMITROV 2`\n- 120.5~130.5s `BAEZ 2 / DIMITROV 4`、发球点在迪米特洛夫，比分走到 40:30（巴埃斯的破发点）；132.5s 读到 `BAEZ 3 / DIMITROV 4`\n- **136.5~150.5s 连续八格都是 `BAEZ 3 / DIMITROV 4 AD`、发球点在巴埃斯**——这就是逐分里「4-4 主队发球，主队拿下 ← 4个破发点」那一局，四个破发点全在这十几秒里\n- 152.5~176.5s `BAEZ 4 40 / DIMITROV 4 15`→`4 AD`、发球点在迪米特洛夫；178.5s 读到 `BAEZ 5 / DIMITROV 4`\n- 198.5~200.5s `BAEZ 5 40 / DIMITROV 4 30`、发球点在巴埃斯——赛点；202.5s 记分条翻成 `BAEZ 6`\n- 204.5~213.6s 赛后握手（`GREAT AMERICAN` 背板 → 网前拥抱）\n- ⚠️ **213.81s 之后是 Tennis TV 自己的 `TAP TO SUBSCRIBE` 片尾卡，不使用**，可用素材上限 213.6s\n\n⚠️ **这条源片没有自动字幕**（probe 的 captions_debug.txt 记着八档 client 全返回 `There are no subtitles for the requested languages`），所以这条片子的判据全部来自记分条 + flashscore 逐分，没有解说文本可引。\n\n**谁穿什么**（认人判据，逐格核过）：迪米特洛夫穿**玫红/酒红 Lacoste polo**、白帽（帽子上的鳄鱼标在 118.5s 那格看得见）、络腮胡；巴埃斯穿**淡紫渐粉上衣**、白帽、粉色球拍框。212.5s 的握手特写里左边是巴埃斯、右边是迪米特洛夫，和 ATP 官方头像（`atp-D875` / `atp-B0BI`）逐一对得上。⚠️ 迪米特洛夫那件在强光下读出来是玫红、在阴影里是酒红，**别拿它当两个人**。",
+
+  "_column": "赛场之上。ATP1000 首轮，持外卡的前世界第三在自己九年前夺冠的场地上决胜盘 4-1 领先后连丢五局。封面 solo 版式，主角是输的那个。",
+
+  "topbar": {
+    "line1": "辛辛那提ATP1000 首轮",
+    "line2": "巴埃斯 1-6 6-3 6-4 迪米特洛夫"
+  },
+  "_topbar_why": "flashscore match id `v51JjQ2D`（本仓库 tools/match_feed.py 直连）：分盘 1-6 / 6-3 / 6-4（主队巴埃斯视角），总用时 1:49（0:22+0:35+0:52）；`PSPA÷WC` 标注外卡（迪米特洛夫）。Yahoo Sports 赛后稿独立核实同一比分：『exiting in the first round 1-6, 6-3, 6-4』『unable to hold onto a 4-1 lead in the third set』『lost the last five games』。第二行赢家在前，和 `cover.winner`＋`cover.result` 机械一致。",
+
+  "editorial": {
+    "mode": "match_review",
+    "question": "决胜盘 4-1 领先、离晋级只差两局的迪米特洛夫，是怎么把最后五局一局不剩地送掉的？",
+    "thesis": "这场球的分水岭不在他丢掉的那五局里，而在 3-4 那一个他没拿下的接发局：巴埃斯在自己的发球局上被逼到四个破发点，来回打了四次平分，一个都没让他兑现。兑现任何一个，迪米特洛夫接下来只要守住自己的发球局就能结束比赛。四个都救掉之后，比赛的方向当场就翻了——迪米特洛夫再没赢下一局，而全场一百五十三分里，他其实比对手多拿五分。",
+    "beats": [
+      "首盘二十二分钟，迪米特洛夫的发球分拿下八成四，三十四分里拿走二十四分，6-1。这块场地正是他 2017 年拿到生涯第一个大师赛冠军的地方。",
+      "第二盘他的一发命中率掉到 48%，巴埃斯拿到第一个破发点就兑现，3-1 领先，最终 6-3 扳平，两盘打完五十七分钟。",
+      "决胜盘迪米特洛夫连下两局、一路领先到 4-1，离晋级只差两局。",
+      "3-4 巴埃斯发球，那一局来回打了四次平分，迪米特洛夫连拿四个破发点，一个都没兑现——这是全场的转折点。",
+      "4-4 他自己发球被破，5-4 再被破，最后五局一局没赢。全场他多拿五分，输了这场球。"
+    ],
+    "human_context": {
+      "angle": "这场球最扎人的不是比分，是地点：辛辛那提是迪米特洛夫拿到生涯第一个大师赛冠军的地方，2017 年他在这里一盘未失、决赛 6-3 7-5 击败克耶高斯。九年后他排名跌到 138 位、靠一张赛会外卡才进正赛——而把他挡在第二轮外面的，是一个此前从未和他交过手、比他小十岁的对手。",
+      "facts": [
+        "迪米特洛夫本场持赛会外卡出战、世界排名第 138 位——ATP 官方新闻标题『Stan Wawrinka, Grigor Dimitrov among Cincinnati Open wild cards』与 Yahoo Sports 赛后稿『his ranking down to 138 and playing on a wild card』两个独立源；flashscore 该场 `PSPA÷WC` 字段第三重确认外卡身份",
+        "2017 年迪米特洛夫在辛辛那提拿到生涯第一个 ATP 大师赛冠军，决赛 6-3 7-5 击败克耶高斯，全程一盘未失——ATP 官方稿『Grigor Dimitrov Beats Nick Kyrgios To Win Cincy Title, First Masters 1000 Crown』与 Wikipedia『2017 Western & Southern Open – Men's singles』两个独立源",
+        "2025 年温网第四轮，迪米特洛夫 6-3 7-5 两盘领先辛纳时右胸肌部分撕裂退赛，随后因该伤缺席当年美网——Tennis.com『Grigor Dimitrov retires with two-set lead over Jannik Sinner after suffering pectoral injury at Wimbledon』与 Sky Sports『Grigor Dimitrov to miss US Open with pectoral injury suffered in heartbreaking Wimbledon retirement』两个独立源",
+        "巴埃斯本场世界第 53 位（上周第 48），迪米特洛夫第 138 位（上周第 137）——flashscore ATP 官方排名榜单 feed `ran_dSJr14Y8`（RA=本周名次、RAP=上周），另一条独立检索交叉确认巴埃斯第 53",
+        "两人生涯首次交手——flashscore 该场 head-to-head feed（`df_hh_1_v51JjQ2D`）的『Head-to-head matches』区块里只有这一场；Tennis TV 官方视频标题直接写着『First Career Meeting』",
+        "全场技术统计（flashscore `v51JjQ2D` 分盘统计，Match 汇总）：总分 153，迪米特洛夫 79（52%）、巴埃斯 74（48%）；Ace 6:1、双误 7:2（决胜盘迪米特洛夫一个人 4 个双误）；破发点迪米特洛夫拿到 9 个兑现 3 个，巴埃斯拿到 6 个兑现 3 个；决胜盘迪米特洛夫拿到 6 个破发点只兑现 1 个，其中 3-4 那一局连拿 4 个全部落空",
+        "首盘迪米特洛夫的发球分拿下 84%（16/19），三十四分拿走二十四分，用时 22 分钟；第二盘他的一发命中率 48%，巴埃斯二发得分率 73%——同一份分盘统计",
+        "场地：P&G Center Court。判据是**画面自证**——把本场 14.5s/30.5s 的全场机位和同一站已发的 `landaluce-draper`（ATP 官方稿明写『Draper opened on Center Court』）24.5s/42.5s 并排看，球场左侧 `P&G` 地面标、中场 `ATP TOUR` 字样、`Emirates` 网带广告、后场背板广告顺序（Old Spice · CreditOne · W&S Financial · Kroger）、裁判椅与球童席的位置**完全一致**，是同一片场地。全称写法沿用 landaluce-draper 的考据（赛事官网 court 清单里是 `P&G Center Court`；检索结果里出现过的『P&G Stadium Court』官网清单里没有，判为松散转述）"
+      ],
+      "sources": [
+        "https://www.atptour.com/en/news/cincinnati-2026-wild-cards-announcement",
+        "https://www.atptour.com/en/news/dimitrov-kyrgios-cincinnati-2017-final",
+        "https://en.wikipedia.org/wiki/2017_Western_%26_Southern_Open_%E2%80%93_Men%27s_singles",
+        "https://www.tennis.com/news/articles/grigor-dimitrov-retires-two-set-lead-jannik-sinner-pectoral-injury-wimbledon",
+        "https://www.skysports.com/tennis/news/32833/13403585/grigor-dimitrov-to-miss-us-open-with-pectoral-injury-suffered-in-heartbreaking-wimbledon-retirement",
+        "https://sports.yahoo.com/articles/former-cincinnati-contenders-suffer-contrasting-193305593.html",
+        "https://global.flashscore.ninja/2/x/feed/df_hh_1_v51JjQ2D"
+      ]
+    }
+  },
+
+  "_facts": {
+    "开赛时刻": "flashscore 该场 `KC÷1786725300` → UTC 2026-08-14 16:35，辛辛那提当地 8/14 12:35（EDT），**北京时间 8 月 15 日 00:35**。片子里报的是北京时间（读者在国内），比分板 footer 的日期同口径写 2026年8月15日。",
+    "决胜盘逐局": "0-1 迪保发 / 0-2 迪破发 / 0-3 迪保发 / 1-3 巴保发 / 1-4 迪保发（**迪米特洛夫 4-1 领先**）/ 2-4 巴保发 / 3-4 巴破发 / 4-4 巴保发（救 4 个破发点，4 次平分）/ 5-4 巴破发 / 6-4 巴保发（1 个赛点）。**巴埃斯连赢最后五局**，和 Yahoo『lost the last five games』一致。",
+    "3-4那一局为什么是转折点": "那一局是**巴埃斯**发球（3-4 落后）。迪米特洛夫在这一局拿到 4 个破发点（30:40 一次、40:A 三次）；破成的话是 3-5，接下来轮到迪米特洛夫自己发球结束比赛。四个全部落空之后他再没赢下一局。",
+    "为什么不写「他崩了」这类心理判断": "整改期规矩：每个战术或心理判断都要能回到记分条、官方赛报、统计或按帧画面。这条片子没有自动字幕、也没查到带技术细节的官方赛后稿，所以旁白只说**数得出来的东西**（双误、破发点、分差、用时），不替他解释原因。",
+    "年龄": "迪米特洛夫 1991-05-16 生，本场 35 岁（Yahoo 稿同样写 the 35-year-old）；巴埃斯 2000-12-28 生，本场 25 岁。片子里只用了『三十五岁』这一处，按生日算过。"
+  },
+
+  "_claims": {
+    "生涯第一个大师赛冠军": "2017 年辛辛那提是迪米特洛夫的第一个 ATP 大师赛冠军，决赛 6-3 7-5 胜克耶高斯、全程一盘未失。https://www.atptour.com/en/news/dimitrov-kyrgios-cincinnati-2017-final ；https://en.wikipedia.org/wiki/2017_Western_%26_Southern_Open_%E2%80%93_Men%27s_singles",
+    "两人首次交手（此前从未交手）": "flashscore 该场 head-to-head 区块只有这一场记录；Tennis TV 官方视频标题写着 First Career Meeting。https://global.flashscore.ninja/2/x/feed/df_hh_1_v51JjQ2D ；https://www.youtube.com/watch?v=AVf-dnxxQT4"
+  },
+
+  "_editing_why": "十三段、可用素材 0~213.6s。**开场三格**按 CLAUDE.md：① 197.4~202.6 赛点那一分落地，不配旁白、只留现场声（全片最强的一格）；② 202.7~213.6 赛后走向球网到网前拥抱，这一句把落点说出来；③ 之后回到 10.2s 从头讲，坐标（北京时间、赛事、轮次）放在第三格。\n\n**窗口一律切在源片自己的 scene_cuts 上**（probe 给的 34 个硬切点），只有两段跨切点、都在 `crosses_cut` 里认领了。87.05 那个 loose cut 是真镜头变化，所以第 5 段从 87.2 起而不是 86.1。\n\n**转折点没有被剪掉**：135.0~149.6 这十四秒六在源片里是完整保留的（记分条连续八格 `3 / 4 AD`），正是那四个破发点，给了全片最长的一段。",
+
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "迪米特洛夫",
+    "hook": "决胜盘四比一领先\n最后五局，他一局没赢",
+    "_hook_why": "上一句是过程（领先到什么程度），下一句是落点（然后一局没赢）。两行 8 字和 10 字，都在 HOOK_MAX_CHARS=10 以内。⚠️ 不复述海报上已经印着的东西——排名、轮次、盘分比分都在比分板和顶栏上；钩子里的『四比一』是**决胜盘的局分**，比分板印的是盘分，不是同一个数。",
+    "topic": "辛辛那提ATP1000 · 男单首轮",
+    "portrait": {
+      "frame_at": 194.5,
+      "focus": 0.5,
+      "focus_y": 0.4,
+      "zoom": 1.0
+    },
+    "_portrait_why": "194.5 秒：巴埃斯正在发球胜赛局，迪米特洛夫在底线后走动，记分条读作 `BAEZ 5 15 / DIMITROV 4 0`。**情绪对题**——这条片子讲的是一个人怎么把领先送掉，要的是他等着对手发球结束比赛的那一下，不是别人的庆祝。按 CLAUDE.md「大头特写不等于有冲击力」选的中景：人是全身、背后有看台和赛事背板、记分条自证是哪一分，比 208.5s 那个赛后近景（平背景、只有半身）信息多。\n\n⚠️ 这是抽帧（1920×1080，3:4 取景窗取 810 宽，放大 1.33 倍）。probe 的自动候选七帧里没有一帧同时满足『正脸+两只眼』，最好的一帧（209.81s，270px 脸、两只眼）判为『脸糊 54.0』——所以这一版不按候选表选，按四道闸门人工选。focus / focus_y 要本地渲出来并排比过再定。",
+    "scrim": "clear",
+    "_scrim_why": "和近期几条一致：只关掉画面正中的 radial 暗角，上下两头照留。",
+    "winner": "巴埃斯",
+    "result": "1-6 6-3 6-4",
+    "matchup": [
+      {
+        "name": "巴埃斯",
+        "name_en": "Sebastian Baez",
+        "country": "ARG",
+        "rank": 53
+      },
+      {
+        "name": "迪米特洛夫",
+        "name_en": "Grigor Dimitrov",
+        "country": "BUL",
+        "rank": 138
+      }
+    ],
+    "_matchup_rank_why": "两个名次都取 flashscore 的 ATP 官方排名榜单 feed `ran_dSJr14Y8`（字段 RA=本周、RAP=上周）：巴埃斯 53（上周 48）、迪米特洛夫 138（上周 137）。迪米特洛夫的 138 与 Yahoo Sports 赛后稿『his ranking down to 138』独立一致。⚠️ **flashscore 比赛 feed 里的 `CA`/`CB`（本场是 22 / 41）不是排名**，CLAUDE.md 早记过这个坑，这里再验一次：真名次是 53 / 138，和那两个数对不上。⚠️ `matchup` 是**版式顺序**不是赛果顺序，赛果行由 `winner` 决定。",
+    "scoreboard": {
+      "court": "P&G Center Court",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22:%20%221:49:00%22%2C%20%22source_feed%22:%20%22https://global.flashscore.ninja/2/x/feed/df_sur_1_v51JjQ2D%22%7D",
+        "field": "duration"
+      },
+      "_duration_why": "flashscore `df_sur_1_v51JjQ2D`：`RC÷0:22`＋`RD÷0:35`＋`RE÷0:52`＝`RB÷1:49`，三盘分用时加总和总用时自洽。ATP 没有公开的比赛时长 JSON 接口（atptour.com 对本环境一律 403），所以照 `landaluce-draper` 那条已经走通的做法用 `data:` URL 把核过的数字连同出处一起写进去——**数字不是手填的口径，是 feed 原样抄来的**。",
+      "_court_why": "P&G Center Court。**画面自证**：本场 14.5s/30.5s 的全场机位，与同一站 `landaluce-draper`（ATP 官方赛后稿明写『Draper opened on Center Court』）24.5s/42.5s 的全场机位并排比过——地面 `P&G` 标、中场 `ATP TOUR` 字样、`Emirates` 网带广告、后场背板广告顺序（Old Spice · CreditOne · W&S Financial · Kroger）、裁判椅和球童席位置完全一致。全称沿用 landaluce-draper 已经考据过的写法。"
+    }
+  },
+
+  "stats": {
+    "tour": "atp",
+    "a": {
+      "headshot": "assets/players/headshots/atp-B0BI.png",
+      "aces": 1,
+      "df": 2,
+      "first_in": 47,
+      "first_total": 77,
+      "first_won": 30,
+      "second_won": 19,
+      "second_total": 30,
+      "bp_conv": 3,
+      "bp_chances": 6,
+      "pts_won": 74
+    },
+    "b": {
+      "headshot": "assets/players/headshots/atp-D875.png",
+      "aces": 6,
+      "df": 7,
+      "first_in": 43,
+      "first_total": 76,
+      "first_won": 35,
+      "second_won": 16,
+      "second_total": 33,
+      "bp_conv": 3,
+      "bp_chances": 9,
+      "pts_won": 79
+    },
+    "footer_venue": "P&G Center Court · 辛辛那提",
+    "footer_date": "2026年8月15日",
+    "_source": "flashscore `v51JjQ2D` 的 Match 汇总（本仓库 tools/match_feed.py 直连）。接口的主队＝巴埃斯、客队＝迪米特洛夫，而**这张图是 `cover.matchup[0]` 配 `stats.a`**，matchup[0] 就是巴埃斯，所以顺序和接口一致，没有反过来。逐项双向核对：巴埃斯一发 47/77＝61%（接口 `1st serve percentage 61%`）、二发 30 局＝77−47，发球分 49/77 与「一发 30 + 二发 19」一致；迪米特洛夫一发 43/76＝57%（接口 57%）、二发 33＝76−43，发球分 51/76 与「35+16」一致；总得分 74+79＝153，与两人「发球分+接发分」各自加总（49+25、51+28）一致。\n\n⚠️ **制胜分和非受迫失误两行整行不画**：flashscore 这场只在第二盘和第三盘给了 Winners/Unforced errors，**第一盘没有**，所以没有可信的全场汇总；把两盘的数加起来当全场是编数字。`render_stat_card.usable_rows()` 按字段在不在决定画不画，缺字段就整行不显示。\n\n头像走 `tools/fetch_official_headshot.py atp --via https://www.mubadaladcopen.com`（atptour.com 总站 403，赛事域名镜像同一批）：`B0BI` 253 种颜色、`D875` 256 种，不是占位剪影（占位只有 2 种色）；两张都打开看过，和片内 212.5s 握手特写里的两个人对得上。"
+  },
+
+  "segments": [
+    {
+      "start": 197.4,
+      "end": 202.6
+    },
+    {
+      "start": 202.7,
+      "end": 213.6,
+      "narration": "决胜盘他四比一领先，然后连丢最后五局。三十五岁的迪米特洛夫，倒在了自己拿过冠军的这块场地上。",
+      "crosses_cut": "207.17s 和 210.08s 两处：巴埃斯走向球网 → 迪米特洛夫走向球网 → 网前拥抱，是赛后同一段连续画面的三个机位，说的也正是这一段。"
+    },
+    {
+      "start": 10.2,
+      "end": 25.0,
+      "narration": "北京时间八月十五号凌晨零点三十五分，辛辛那提大师赛首轮。世界第一百三十八的迪米特洛夫持外卡参赛，对手是世界第五十三的巴埃斯，两人首次交手。"
+    },
+    {
+      "start": 26.2,
+      "end": 39.1,
+      "narration": "首盘只用了二十二分钟。三十四分里迪米特洛夫拿走二十四分，六比一。二〇一七年，他正是在这块场地上拿到生涯第一个大师赛冠军。"
+    },
+    {
+      "start": 57.2,
+      "end": 71.0,
+      "narration": "第二盘迪米特洛夫的一发掉到四成八，巴埃斯拿到第一个破发点就兑现了——破发点，就是再赢一分就能拿下对手的发球局。三比一。"
+    },
+    {
+      "start": 87.2,
+      "end": 98.7,
+      "narration": "第二盘六比三，巴埃斯扳平了。两盘打完五十七分钟，这场球的走向第一次翻了过来——而最难熬的那一盘还没开始。"
+    },
+    {
+      "start": 100.3,
+      "end": 109.3,
+      "narration": "决胜盘一上来，迪米特洛夫连下两局，二比零。看上去他已经把这场球拿回去了。"
+    },
+    {
+      "start": 120.4,
+      "end": 127.55,
+      "narration": "四比一领先，他离晋级只差两局。剩下的比赛一局都没赢下。"
+    },
+    {
+      "start": 135.0,
+      "end": 149.6,
+      "narration": "三比四，巴埃斯发球。这一局来回打了四次平分，迪米特洛夫拿到四个破发点——兑现一个就能自己发球结束比赛。四个，巴埃斯一个都没让他兑现。"
+    },
+    {
+      "start": 152.15,
+      "end": 167.3,
+      "narration": "四比四。这一盘他送出四个双误，全场七个，巴埃斯只有两个。去年温网他两盘领先辛纳时右胸肌撕裂，退赛，接着缺席了美网。"
+    },
+    {
+      "start": 169.0,
+      "end": 178.95,
+      "narration": "巴埃斯拿到破发点，兑现了。五比四——从四比一开始，迪米特洛夫已经连丢四局。",
+      "crosses_cut": "176.26s 一处：巴埃斯握有破发点的近景 → 破发成功之后的近景，同一局里的两个机位，说的就是这一局。"
+    },
+    {
+      "start": 179.06,
+      "end": 187.3,
+      "narration": "全场一百五十三分，迪米特洛夫拿了七十九分，比巴埃斯多五分。"
+    },
+    {
+      "start": 187.32,
+      "end": 197.2,
+      "narration": "多拿五分的那个人输了这场球。决胜盘四比一领先还能输掉，这样的球你见过几次？",
+      "crosses_cut": "191.31s 和 194.08s 两处：巴埃斯擦汗 → 发球 → 迪米特洛夫在底线后走动，都是发球胜赛局这一段里的连续镜头。"
+    }
+  ],
+
+  "push": {
+    "summary": "迪米特洛夫决胜盘连丢五局",
+    "lead": "辛辛那提ATP1000男单首轮，世界第53位的巴埃斯1-6 6-3 6-4逆转淘汰持外卡参赛的迪米特洛夫，耗时1小时49分。首盘迪米特洛夫只用22分钟就6-1拿下，34分里拿走24分；第二盘他的一发命中率掉到48%，巴埃斯6-3扳平。决胜盘迪米特洛夫一度4-1领先，离晋级只差两局——转折出现在3-4那一局：巴埃斯自己的发球局被逼到四个破发点、来回打了四次平分，一个都没让对手兑现。此后迪米特洛夫再没赢下一局，连丢最后五局。全场153分他拿了79分，比对手多5分，却输了这场球；决胜盘他一个人送出4个双误，拿到6个破发点只兑现1个。九年前的2017年，正是在这块场地上，他拿到了生涯第一个大师赛冠军。",
+    "auto": true,
+    "_why": "push_reel.SUMMARY_MAX=13，`迪米特洛夫决胜盘连丢五局`＝12 字，在闸内。只写 summary 和 lead，matchup/score/event 由封面算。`auto: true`——这条片子的封面、旁白、统计图三样的判据都在 spec 里核过，走 auto-push-reel 那条路（合并即推送）。"
+  }
+}
