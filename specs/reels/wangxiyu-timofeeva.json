@@ -6,9 +6,9 @@
   "_column": "赛场之上",
   "topbar": {
     "line1": "WTA1000 辛辛那提 第一轮",
-    "line2": "王曦雨 6-0 3-0 退赛 季莫费耶娃"
+    "line2": "王曦雨 6-0 3-0 季莫费耶娃"
   },
-  "_topbar_why": "第二行按 `cover.winner`（王曦雨）＋ `cover.result`（6-0 3-0 退赛）＋ `cover.matchup` 机械拼出来，和封面、推送标题同一个出处。退赛写进 `result` 是照 `zhang-ostapenko` 那条已发片子的写法（`6-0 4-0 退赛`）——**不另起一套**。",
+  "_topbar_why": "第二行按 `cover.winner`（王曦雨）＋ `cover.result`（6-0 3-0）＋ `cover.matchup` 机械拼出来，和封面比分板、推送标题同一个出处。\n\n⚠️ **「退赛」不写进 `result`，是被闸拦出来的，不是漏了。** 第一版照 `zhang-ostapenko` 那条已发片子写成 `6-0 3-0 退赛`，runner 上 `mode=cover` 第 2 秒就红：\n\n    cover 的 result='6-0 3-0 退赛' 含无法拆分的盘分 '退赛'；比分板需要用 `6-1 4-6 6-2` 或带抢七小分的格式。\n\n`versus_poster._scoreboard_sets` 逐 token 过 `_SET_RE`，认不出就 `SystemExit`；而 `zhang-ostapenko` 是**比分板成为硬要求之前**发的（那条 `topbar` 是 null、封面也不渲比分板），所以它那个写法在今天的版式上根本走不到。\n\n⚠️ 顺带记一笔：**同一个字段两个解析器，宽严不一样**——`render_stat_card` 那条路（`_sets_html` 的退路）认不出的 token 原样渲成一格，所以数据统计图在本地把 `退赛` 渲出来了、看着完全正常；只有封面这条会红。**「一处渲得出来」不等于「另一处也行」。**\n\n退赛这件事没有丢：第一句旁白就是「六比零，三比零，对手退赛」，末段再说一次，小红书正文和微信 `lead` 里也都写着。而且 `3-0` 本身就不是一盘打完的比分。",
   "editorial": {
     "mode": "match_review",
     "question": "一场对手中途退赛、比分只有 6-0 3-0 的首轮，凭什么值得看？",
@@ -64,7 +64,7 @@
     "_portrait_why": "**这场球没有官方实拍可用，退回本场抽帧。** 查过三处：她的 WTA 球员页（`wtatennis.com/players/326160/xiyu-wang`）除了 2025 年 3 月那张棚拍抠图 `Wang-Torso_326160.png` 之外没有任何比赛照；`wtatennis.com/search?q=Xiyu Wang` 没有这一站的稿子；这场的比分页没有 Match Reaction。\n\n1688.5 秒这一格是从合集这 177 秒里手工挑的：她的正面近景只有这一格（黑色 Nike 帽、白色球衣上印着中文赞助字、右手白护腕），表情是刚在开场那个十六分的发球局里扛下来之后的紧绷——**和钩子讲的那件事是同一个情绪**。\n\n⚠️ `pick_cover_frames.py` 这一趟**没法用**：它扫的是整条 2556 秒的合集、不认 `clip_from`/`clip_to`，出来的十二张候选全在 29–1140 秒，也就是**别人的比赛**。这跟 CLAUDE.md 记的「人脸检测在这一步是错的工具」不是一回事——这次是工具的取景范围就不对，别把它读成「这段里没有近景」。",
     "scrim": "clear",
     "winner": "王曦雨",
-    "result": "6-0 3-0 退赛",
+    "result": "6-0 3-0",
     "matchup": [
       {
         "name": "王曦雨",
