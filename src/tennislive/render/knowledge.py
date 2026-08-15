@@ -18,7 +18,6 @@ from ..digest import Digest
 from ..research.visual_sources import curated_source_urls, resolve_story_visuals
 from ..timeutil import WEEKDAY_ZH
 from .pushmsg import to_copy_page
-from .ai_disclosure import with_ai_disclosure
 from .hashtags import hashtag_count, limit_hashtags
 from .knowledge_visual_qa import evaluate_knowledge_visuals
 from .tournament_story import (
@@ -464,11 +463,10 @@ def knowledge_push_html_from_parts(
     copy page button and the long-press hint are the parts that make a push
     usable on a phone, and they were worth having in one place.
 
-    ⚠️ **知识帖和解说片两条线的微信正文都从这儿出**，所以 AI 生成合成内容的
-    标识加在这一处就够，别在两个调用方各加一遍——「一个数写两处必分叉」。
-    见 `ai_disclosure`。
+    ⚠️ **知识帖和解说片两条线的微信正文都从这儿出**。AI 生成合成内容标识
+    原来就是加在这一处的（别在两个调用方各加一遍），**2026-08-15 起不加了**，
+    见 `ai_disclosure` 顶上那段。
     """
-    xhs_text = with_ai_disclosure(xhs_text)
     lines = xhs_text.strip().splitlines()
     title = html.escape(lines[0] if lines else "")
     body_start = 2 if len(lines) > 1 and not lines[1].strip() else 1
