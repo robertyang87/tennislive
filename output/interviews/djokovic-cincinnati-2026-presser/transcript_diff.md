@@ -1,16 +1,17 @@
 # 转写交叉校验：djokovic-cincinnati-2026-presser
 
 - 第一份：YouTube 自动字幕 **1564** 词
-- 第二份：faster-whisper（medium.en）**1465** 词
-- **对不上 11.1%**（闸门 12%）
+- 第二份：faster-whisper（medium.en）**1459** 词
+- **对不上 11.2%**（闸门 12%）
 
 ⚠️ 上面两个词数和分歧率都是**去掉 erm/uh/uhh/um/umm 这类填词之后**算的：这些词 whisper 系统性地会丢，跟源可不可信无关，留着只会把「说话人有多磕巴」量成「两份转写对不上」。
 
 ## 分歧逐处（左＝YouTube 自动字幕，右＝第二份）
 
-- `novak you've got` → `thank you cuts`
+- `novak` → `but`
 - `you found your way` → `—`
 - `—` → `yeah`
+- `—` → `oh`
 - `i` → `—`
 - `i` → `but`
 - `on` → `in`
@@ -23,7 +24,8 @@
 - `a` → `was`
 - `really` → `pretty`
 - `in in a` → `you know`
-- `won at least once` → `want to do this one`
+- `won` → `want`
+- `once` → `one`
 - `and` → `in`
 - `you know` → `—`
 - `—` → `to`
@@ -48,29 +50,31 @@
 - `and` → `—`
 - `a` → `—`
 - `and` → `—`
-- `i i` → `—`
+- `i` → `—`
 - `neutral` → `natural`
+- `and` → `to`
 - `and` → `—`
 - `leave` → `live`
+- `you know` → `now`
+- `the` → `—`
 - `that` → `—`
 - `to` → `—`
-- `and` → `—`
 - `to` → `—`
 - `—` → `i'll`
 - `to` → `—`
 - `and` → `—`
 - `i i` → `—`
-- `in his craft and` → `these craftings`
 - `a` → `—`
+- `his` → `he's`
 - `and` → `—`
 - `i'm` → `—`
+- `in` → `you know`
 - `days'` → `days`
 - `will` → `—`
 - `world cup stuff like that` → `—`
 - `back at` → `like`
 - `—` → `went`
 - `a national` → `some`
-- `give` → `keep`
 - `a rest` → `arrest`
 - `in` → `and`
 - `what` → `—`
@@ -85,36 +89,38 @@
 - `you know` → `—`
 - `and and` → `—`
 - `to` → `is`
-- `i'm` → `—`
+- `i'm i'm` → `—`
 - `and` → `—`
 - `i'm` → `we're`
-- `a` → `—`
+- `and` → `—`
+- `a of` → `—`
 - `of` → `—`
 - `to` → `—`
 - `to` → `—`
 - `to` → `—`
+- `i'm` → `and`
 - `and` → `then`
 - `rest and` → `rested`
 - `in` → `—`
 - `what` → `—`
-- `and that's` → `so`
-- `and i` → `—`
+- `i` → `—`
 - `dimensional feeling` → `dimension`
 - `like 10` → `ten`
 - `2` → `two`
 - `going to` → `gonna`
-- `again i` → `i'm gonna`
+- `again` → `—`
 - `too` → `—`
 - `on the tennis court` → `—`
 - `—` → `in`
-- `can you` → `—`
 - `you know` → `—`
 - `and` → `—`
+- `i` → `—`
 - `ahead ahead` → `have had`
 - `physiotherapist` → `physiotherapies`
 - `prepare` → `there`
 - `you know` → `—`
-- `not the` → `—`
-- `me too i` → `mean to`
+- `not the` → `but`
+- `my longevity for` → `—`
+- `you know i don't me too i` → `—`
 - `i` → `to`
 - `—` → `thank`
