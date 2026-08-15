@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>8.16 赛场之上 | 奥斯塔彭科十三个双误出局</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>十三个双误，对面只有一个。
+
+6-1 6-3，净打一小时二十二分钟，辛辛那提女单第二轮，四号球场。赢的是世界第四十一的弗雷赫，输的是二十六号种子、世界第三十的奥斯塔彭科。
+
+这场球她输给的主要不是对手，是自己的发球。一发只进了四成三；二发那三十二分里丢掉二十四分；全场一百零四分，她拿到四十个。第一盘她发四个发球局丢了三个，三十四分钟，一比六——光这一盘就六个双误。
+
+第二盘她真的换了个开头。先破掉弗雷赫的发球局，再回来守自己的：那一局她面对一个破发点，两次占先才拿下。二比零。
+
+那是她全场唯一一次领先。
+
+从那儿往后的九局，她只再赢了一局。第二盘又是七个双误，三比四轮到自己发球时零比四十，三个破发点一个也没救下来；弗雷赫发球胜赛局，拿到赛点收工。
+
+再往前一层：二〇一七年的法网，她刚过完二十岁生日两天，以非种子身份决赛四比六、六比四、六比三赢了当时的世界第三哈勒普，是一九三三年以来第一个赢下法网的非种子女子，也是拉脱维亚第一个大满贯单打冠军。第二年三月，她排到过世界第五。生涯九个巡回赛冠军。
+
+她的球从那时候起就是同一套：站在底线里面往死里打。打进去就是二十岁那年的那种冠军，打不进去就是今天这样，一盘六个双误。
+
+而今天赢球的弗雷赫比她还小半岁，同是一九九七年生人，生涯最高只到世界第二十二，一个巡回赛冠军——走的完全是另一条路。
+
+十三个双误，是状态，还是这套打法本来就要付的代价？
+
+#网球 #WTA #辛辛那提公开赛 #奥斯塔彭科 #网球时差</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>十三个双误，是状态，还是这套打法的代价？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
