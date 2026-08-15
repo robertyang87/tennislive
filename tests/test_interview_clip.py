@@ -33,6 +33,7 @@ from tools.build_interview_clip import (
     header_lines,
     review_sheet,
     segment,
+    wants_topbar,
     write_ass,
     zh_problems,
     _ASS_HEAD,
@@ -1147,6 +1148,48 @@ def test_顶栏从头挂到尾(tmp_path):
     assert all(",0:00:00.00," in r for r in head), "顶栏要从第 0 秒就在"
     end = _ts(lines[-1]["b"])
     assert all(end in r for r in head), f"顶栏要挂到最后一行结束（{end}）"
+
+
+def test_关掉顶栏要显式认领而且默认不许变(tmp_path):
+    """账号所有者 2026-08-14（德约科维奇重返辛辛那提那条）：「不要顶部的比赛
+    信息提示栏」。理由不是版式口味——**顶栏印的那句话在那条片子上不成立**：
+    它答的是「哪一站哪一轮、谁跟谁打成什么样」，而那段采访录在这一站开打
+    **之前**，没有轮次、没有对手、没有比分，照常印等于凭空造一场比赛。
+
+    四头都要钉，缺一头这个开关就是个能把顶栏悄悄弄丢的洞：
+
+    1. **不写这个字段 = 一个字都不变。** 存量 spec 全靠这一条。
+    2. `topbar: false` ＋ `_no_topbar_why` → 真的不印。
+    3. `topbar: false` 却没写理由 → 报错。和 `mixed_fps` / `silent_source` /
+       `_layout_why` 同一个形状：**认领这一步把「想清楚了」和「凑合一下」分开**。
+    4. ⚠️ **`"false"`（字符串）要报错。** Python 里非空字符串是真值，所以它
+       的实际效果是**照常印顶栏**——而写的人以为关掉了。「悄悄没关掉」和
+       「本来就没想关」长得一模一样（CLAUDE.md 里 `push.auto` 那条栽过一次）。
+    """
+    lines = _lines(["one two", "three four"])
+    base = {"slug": "t", "event": "某站八强", "interview_kind": "赛后场上采访",
+            "push": {"matchup": "甲 vs 乙"}, "zh": ["一", "二"]}
+
+    def heads(spec):
+        path = tmp_path / f"{len(list(tmp_path.iterdir()))}.ass"
+        write_ass(lines, spec["zh"], 0.0, path, spec)
+        return [r for r in path.read_text(encoding="utf-8").splitlines()
+                if r.startswith("Dialogue") and "HEAD" in r]
+
+    assert len(heads(base)) == 2, "没写 `topbar` 的存量 spec 必须一个字都不变"
+    assert wants_topbar(base) is True
+
+    off = {**base, "topbar": False,
+           "_no_topbar_why": "录在开打之前，没有轮次没有对手没有比分"}
+    assert wants_topbar(off) is False
+    assert heads(off) == [], "写了 `topbar: false` 就不许再印顶栏"
+
+    with pytest.raises(SystemExit, match="_no_topbar_why"):
+        wants_topbar({**base, "topbar": False})
+
+    # ⚠️ 字符串那一支：**不许被当成 False**，也不许被当成 True 悄悄放过。
+    with pytest.raises(SystemExit, match="topbar"):
+        wants_topbar({**base, "topbar": "false"})
 
 
 def test_改字号会让行号失准要在报错里说出来(tmp_path):

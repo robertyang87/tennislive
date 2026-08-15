@@ -1028,6 +1028,44 @@ _SCORE_PX = 44
 _SCORE_TAGS = rf"\c&HFFFFFF&\fs{_SCORE_PX}"
 
 
+def wants_topbar(spec: dict) -> bool:
+    """这条片子印不印顶栏。**默认印**，关掉要显式认领。
+
+    账号所有者 2026-08-14（德约科维奇重返辛辛那提那条）：「不要顶部的比赛
+    信息提示栏」。理由不是版式口味，是**顶栏说的那句话在这条片子上不成立**：
+    它印的是「哪一站哪一轮、谁跟谁打成什么样」，而那条采访录在**这一站开打
+    之前**——没有轮次，没有对手，没有比分。照常印就是凭空造一场比赛出来。
+
+    ⚠️ **默认必须是「印」，关掉必须写理由。** 反过来做（默认不印、要印才写）
+    的后果是可预见的：绝大多数片子是赛后的，顶栏正是它们回答「这是哪一场」
+    的唯一出口（封面只有 1.2 秒，刷到中段的人没看过），而**漏写不会报错**，
+    只会安安静静少一整条信息。所以这里和 `mixed_fps` / `silent_source` /
+    `_layout_why` 是同一个形状：**认领这一步把「想清楚了」和「凑合一下」分开**。
+
+    ⚠️ **`"topbar": "false"`（字符串）要报错。** Python 里非空字符串是真值，
+    于是它的效果是**照常印顶栏**——而写的人以为自己关掉了。「悄悄没关掉」
+    和「本来就没想关」长得一模一样（CLAUDE.md 里 `push.auto` 那条栽过一次）。
+    """
+    if "topbar" not in spec:
+        return True
+    on = spec["topbar"]
+    if not isinstance(on, bool):
+        raise SystemExit(
+            f"{spec.get('slug', '?')} 的 `topbar` 写成了 {on!r}——只认真正的"
+            " `true` / `false`。\n"
+            "字符串 \"false\" 在 Python 里是**真值**，效果是照常印顶栏，"
+            "而你以为关掉了。")
+    if on:
+        return True
+    if not str(spec.get("_no_topbar_why", "")).strip():
+        raise SystemExit(
+            f"{spec.get('slug', '?')} 写了 `topbar: false` 却没写 `_no_topbar_why`。\n"
+            "顶栏是刷到中段的人唯一能回答「这是哪一场」的地方，关掉它要留下判据：\n"
+            '  "_no_topbar_why": "这条录在开打之前，没有轮次没有对手没有比分，'
+            '照常印等于凭空造一场比赛"')
+    return False
+
+
 def header_runs(spec: dict) -> tuple[list[tuple[str, str, str]], ...]:
     """顶栏两行，**拆成一段一段**：`(文本, 字体 kind, 颜色覆盖或 "")`。
 
@@ -1237,7 +1275,7 @@ def write_ass(lines: list[dict], zh: list[str], clip_start: float, path: Path,
     if bad := zh_problems(lines, zh):
         raise SystemExit("中文字幕过不了：\n  " + "\n  ".join(bad))
     ev = []
-    if spec is not None:
+    if spec is not None and wants_topbar(spec):
         # 顶栏一直挂着：整条片子从头到尾都要能回答「这是哪一场」。
         # 刷到中段的人没看过封面，而封面只有 1.8 秒。
         a, b = _ts(0.0), _ts(lines[-1]["b"] - clip_start)
