@@ -298,5 +298,7 @@
     "event": "",
     "summary": "他说家人替他腾出二十年",
     "lead": "德约科维奇在辛辛那提的赛前发布会，全程十分钟，四个问题一个没剪。他谈了这一站的来路（2005 年他职业生涯第一个大师赛正赛就在这儿，而这里也是他最后凑齐金大师的那一站，此前输过四五个决赛、大多输给费德勒），谈了那部拍了八年、由《最后一舞》导演操刀的纪录片，也谈了休赛期。而最重的一段在后面：他说现在「不再是一切都围着我转」，自己一直低估了家人这二十多年替他腾出空间所付出的支持和牺牲——他不想让自己「只剩下一个维度」。中英双语字幕，全程。"
-  }
+  },
+  "transcript_verified": true,
+  "_verified_clean": "两份转写对不上 **11.1%**（闸门 12%），**0 处空档**。第一份 YouTube 自动字幕 1564 词，第二份 faster-whisper `medium.en` 1465 词。\n\n**逐处看过（报告整份读完，不是只看了尾巴），没有一处是「whisper 对、我们错」**——反过来倒有一串是 whisper 听坏了而我们这边是对的：\n\n    ben navarro and  → then of our own you know   ← 本·纳瓦罗是这站的老板，我们这边对\n    neutral          → natural                    ← 「hard for me to be neutral」\n    leave            → live                       ← 「I leave to other people to judge」\n    a rest           → arrest\n    tempo            → temple\n    physiotherapist  → physiotherapies\n    prepare          → there\n    novak you've got → thank you cuts             ← 开场第一句，whisper 整句听坏\n    in his craft and → these craftings\n    won at least once→ want to do this one\n\n其余全是三类噪声：①填充和口吃被 whisper 丢掉（`you know` ×5、`i i`、`it it it`、`and`／`to`／`a` 这些单字）；②数字和缩写的写法（`like 10`→`ten`、`2`→`two`、`4`→`four`、`going to`→`gonna`）；③whisper 整段没听出来（`there are a lot of cameras on you what is it`、`world cup stuff like that`、`on the tennis court`）。\n\n**所以这一轮一条 `en_fixed` 都没有从报告里加。** spec 里那四条是切行之后自己看出来的「整行读起来不对」，跟这份报告无关。"
 }
