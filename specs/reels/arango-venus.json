@@ -1,0 +1,229 @@
+{
+  "slug": "arango-venus",
+  "_slug_why": "赢家在前：阿朗戈 6-2 6-2 胜大威廉姆斯。⚠️ 和 `potapova-venus`（7.29 华盛顿首轮）不是同一场，也不是同一个主体——那条讲的是大威，这条讲的是阿朗戈，见 `_no_repeat`。",
+  "source_url": "https://www.youtube.com/watch?v=1O4Rpr1NQeU",
+  "_source": "**WTA 官方 YouTube 频道**（`channel=WTA`、`uploader_id=@WTA`），标题《Emiliana Arango vs. Venus Williams | 2026 Cincinnati Round 1 | WTA Match Highlights》，451.7 秒、1920×1080、25 fps，上传 2026-08-14。四处自证叠在一起：① **频道和标题**——官方频道自己写明赛事、轮次、对阵；② **烧死的记分条**逐格读过，和 flashscore 的逐分记录（`tCIjOHCr`）一分不差：14.5s 的 `0:15` 正是全场第一分（解说同一秒说 `Love 15.`）、166.5–174.5s 的 `BREAK POINT / ARANGO 4 40 / WILLIAMS 2 30` 对上第一盘第七局、176.5–184.5s 的 `SET POINT / 5 40 / 2 15` 对上第一盘第八局、258.5–266.5s 的 `MATCH POINT / 6 5 40 / 2 2 0` 对上第二盘第八局的三个赛点；③ **球衣**——阿朗戈深紫红背心（胸前 Colsanitas）＋粉裙＋白帽，和 WTA 官方发布的这场实拍（`assets/reel/arango-cincinnati-2026.jpg`）完全一致；④ **解说**在 266.72s 说 `That's E[mili]ana Arango into the second round in Cincinnati`，和赛果吻合。\n\n⚠️ **298.5 秒之后是场上采访，这条片子一秒都没用**——见 `_editing_why`。",
+  "_column": "赛场之上",
+  "topbar": {
+    "line1": "WTA1000 辛辛那提 第一轮",
+    "line2": "阿朗戈 6-2 6-2 大威廉姆斯"
+  },
+  "_topbar_why": "第二行和 `cover.winner`／`cover.result`／`cover.matchup` 机械一致：赢家阿朗戈在前，比分 6-2 6-2，对手大威廉姆斯。译名两个都取自译名表（`player_zh('Emiliana Arango')` → 阿朗戈、`player_zh('Venus Williams')` → 大威廉姆斯）——⚠️ 我第一反应写的是「阿兰戈」，查表才发现表里是**阿朗戈**。",
+  "editorial": {
+    "mode": "match_review",
+    "question": "一个从资格赛打进来、世界第九十五的二十五岁球员，为什么能用六十六分钟、只丢四局就送走大威廉姆斯？",
+    "thesis": "阿朗戈把这场球打成了一场跑动战，而不是对攻：她自己只送出九个非受迫失误，把大威廉姆斯逼出四十个。代价是她全场八个发球局一个没丢（大威廉姆斯整场只拿到过一个破发点，没兑现），而大威廉姆斯在自己的一发上拿到的分比对手还少——二十九个一发分，她赢十二分，阿朗戈赢十七分。",
+    "beats": [
+      "开场第一个发球局就定了调：大威廉姆斯发球，三十比四十被逼到破发点，阿朗戈破掉，一比零。",
+      "中段阿朗戈只做一件事——按教练说的『腿要跑得快』，把球一个个放回去，让对面自己出错；第一盘四比二她再破一次，六比二收下，用时三十二分钟。",
+      "第二盘大威廉姆斯的发球局又丢两个，零比四落后；阿朗戈自己的八个发球局一个没丢，最后在三个赛点上收场，下一轮对卫冕冠军斯瓦泰克。"
+    ],
+    "human_context": {
+      "angle": "这场球的落差不在排名上，在履历上：阿朗戈是**从资格赛打进来的**，而且两场资格赛都先输一盘才赢回来（3-6 6-4 6-4 胜萨斯诺维奇、4-6 7-5 6-3 胜波多罗斯卡）——正赛第一场，对面站着的是大威廉姆斯。而她 2000 年 11 月出生时，大威廉姆斯已经是温网冠军了：WTA 官方赛后稿的第一句话写的就是『born just a few months after Venus Williams won her first Grand Slam singles title in 2000』。赛后她自己用的词是 surreal：『当签表出来我看到的时候，我心想，天哪。』",
+      "facts": [
+        "阿朗戈 2000 年 11 月 28 日生（WTA 官方球员档案 id 324789），比赛日 25 岁，哥伦比亚人。",
+        "大威廉姆斯 1980 年 6 月 17 日生（WTA 官方球员档案 id 230220），比赛日 46 岁；她的第一个大满贯单打冠军是 2000 年温网（决赛日 2000-07-08），比阿朗戈出生早四个多月。",
+        "两人的参赛资格：阿朗戈 `EntryTypeA='Q'`（资格赛），大威廉姆斯 `EntryTypeB='Wc'`（外卡）——WTA 官方赛事接口 `tournaments/1017/2026/matches`，MatchID `LS113`。",
+        "阿朗戈的两场资格赛（同一接口，`DrawLevelType='Q'`）：`RS050` [10]E. Arango d A. Sasnovich 3-6,6-4,6-4；`RS025` [10]E. Arango d N. Podoroska 4-6,7-5,6-3——两场都先丢一盘。",
+        "赛前榜单（WTA 官方 ranked 接口，rankedAt 2026-08-10）：阿朗戈单打第 95、813 分；大威廉姆斯单打第 615、75 分。",
+        "全场用时 1 小时 6 分 5 秒（WTA 官方 `MatchTimeTotal='01:06:05'`）；分盘 0:32 / 0:34（flashscore `df_sur_1`）；WTA 官方赛后稿写的是『over 1 hour and 6 minutes』——三个源对得上。",
+        "制胜分／非受迫失误取自 **WTA 官网 Match Reaction 赛后稿**（`wtatennis.com/news/4559754/`）：大威廉姆斯 40 个非受迫失误、20 个制胜分；阿朗戈 9 个非受迫失误、8 个制胜分。⚠️ 这两项 flashscore 的 WTA 巡回赛 feed 里没有（CLAUDE.md『WTA 巡回赛这一段，2026-08-14 探到底了』），走的正是那条『编辑稿』路线。",
+        "教练那句话是她自己在场上采访里转述的，赛后稿也引了同一句：『I don’t want to see you moving slow; all I want to see is for your legs to go fast』——本片旁白第 6 段是它的中译。",
+        "下一轮对手是卫冕冠军斯瓦泰克（WTA 官方赛后稿：『She’ll face defending champion Iga Swiatek in the second round』）。",
+        "这是她本赛季在 WTA1000 级别的第二场胜利（同一篇赛后稿：『just her second at WTA 1000 level this year』）。"
+      ],
+      "sources": [
+        "https://www.wtatennis.com/news/4559754/",
+        "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches?pageSize=300",
+        "https://api.wtatennis.com/tennis/players/ranked?page=0&pageSize=100&type=rankSingles&metric=SINGLES&at=2026-08-10",
+        "https://global.flashscore.ninja/2/x/feed/df_mh_1_tCIjOHCr",
+        "https://global.flashscore.ninja/2/x/feed/df_st_1_tCIjOHCr"
+      ]
+    }
+  },
+  "_no_repeat": "⚠️ **大威廉姆斯这条线上本号发过 `potapova-venus`（华盛顿首轮，7.29）**，那条已经铺开讲过的东西这条一个字都不碰：四十六岁这个年龄的意义、去年也是在这站赢下至今最后一场球、一发七成八对二发两成四、今年九场全输连败到十二场、二十二盘里赢过四盘。\n\n按 CLAUDE.md「看不懂这场球所必需的来路，一句带过」：这条只留**两处一句带过**——第 3 段的「四十六岁的大威廉姆斯，拿的是一张外卡」（不交代年龄和参赛资格，读者看不懂这个对阵为什么成立），以及封面赛果行里印的世界第 615。**主体是阿朗戈**：资格赛、九对四十的失误账、八个发球局一个没丢、下一轮撞斯瓦泰克——`potapova-venus` 一个字都没讲过。",
+  "_editing_why": "⚠️ **源片 451.7 秒里，比赛画面只到 297.8 秒；298.5–441.6 秒是阿朗戈的场上采访，441.6 秒之后是 WTA 片尾卡。** 按 CLAUDE.md「⭐ 采访不进复盘——集锦尾巴的采访是赛后开麦的素材，不是复盘的情绪佐料」，这条片子**所有窗口都收在 294.0 秒以内**，一秒采访都没用（那段单独记成「赛后开麦」候选）。\n\n**窗口都锚在源片自己的镜头边界上**（`probe.json` 的 `scene_cuts`）：40 个切点里用到的是 11.92 / 30.28 / 34.36 / 94.84 / 149.0 / 154.92 / 172.76 / 179.52 / 198.08 / 207.76 / 241.96 / 255.76 / 269.76 / 283.72 / 297.8。每一段都待在两个相邻切点之间。\n\n**冷开场取的是赛点那一格（259.5 秒），不是源片开头**——最后一分落地 + 她的反应，不配旁白，走现场声。源片开头（0.4–11.7 秒）挪到了第 3 段当坐标那一屏，那儿正好是全场第一分（记分条随后翻成 `0:15`）。",
+  "_claims": "这条片子里没有『零胜／唯一／史上第一／从来没有』这一族的全称断言——所有数都是当场统计和赛前榜单，各自带出处（见 `editorial.human_context.facts`）。⚠️ 解说在 266.72 秒说的『into the second round in Cincinnati for the first time in her career』是一条**全称断言**，只有转播这一个源，**故意没有写进旁白和文案**（CLAUDE.md：全称断言要两个独立源，凑不齐就不说）。",
+  "_match": {
+    "flashscore_id": "tCIjOHCr",
+    "_why": "给 `tools/match_stat_hooks.py --from-spec arango-venus` 用。这个 id 从 flashscore 的 `df_hh_1` 自证过：`KP÷tCIjOHCr`、`KF÷Cincinnati`、`KJ÷*Arango E.`、`KC÷1786729200`（＝ 2026-08-14 17:40 UTC）。"
+  },
+  "_hit_data": "跑过 `PYTHONPATH=src python3 tools/match_stat_hooks.py --from-spec arango-venus`，它给了 6 条候选，原样抄在这儿：\n\n    [总分差] 阿朗戈 60 - 大威廉姆斯 39，净差 21 分\n    [阿朗戈 破发点兑现] 4/5（80%）\n    [大威廉姆斯 破发点兑现] 0/1（0%）\n    [阿朗戈 连续保发] 8 个发球局\n    [大威廉姆斯 连续被破] 3 个发球局\n    [交手记录] 阿朗戈 1:0 大威廉姆斯（含本场）——也就是两人首次交手\n    分盘用时 0:32 / 0:34，全场 1:06\n\n**用上的是第 1～4 条**：99 分 60-39 写进文案第一段；八个发球局全保 + 对手 0/1 写进旁白第 12 段，也是封面钩子的上半行。\n\n⚠️ **真正当「狠数据」用的那一条不在这份候选里**，是另外从 `df_st_1` 读出来的：`1st serve points won 41% (12/29)` 和阿朗戈的 `1st return points won 59% (17/29)` **共用 29 这个分母**——大威廉姆斯在自己的一发上，对手拿分比她还多（17 比 12）。这个工具目前不会把「同一分母的攻防两栏」配成一条候选，所以它报不出来；写进旁白第 13 段和文案标题。\n\n⚠️ 制胜分／非受迫失误（8-20、9-40）同样不在候选里——那两项 WTA 巡回赛的 flashscore feed 根本没有，是从 WTA 官网赛后稿拿的，见 `stats._source`。",
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "阿朗戈",
+    "hook": "八个发球局一个没丢\n大威廉姆斯只赢四局",
+    "_hook_why": "两行都是**过程**不是身份——排名、轮次、比分海报别处已经印着了（CLAUDE.md「钩子要有剧情的跌宕」）。最长行 9 个字符，在 `HOOK_MAX_CHARS=10` 之内。第一行是阿朗戈这一侧的过程（和海报上的人对得上），第二行把结果落到大威廉姆斯身上——刷到这条的人多半是冲她来的。两个数都可核：八个发球局全保（flashscore `Break Points Saved` 1/1、对手 `Break Points Converted` 0/1）、十六局里大威廉姆斯赢四局（逐分 `df_mh_1` 数出来，6-2 6-2）。",
+    "topic": "WTA1000辛辛那提 · 女单第一轮",
+    "portrait": {
+      "image": "assets/reel/arango-cincinnati-2026.jpg",
+      "fit": "width",
+      "focus": 0.5,
+      "focus_y": 0.45
+    },
+    "_portrait_why": "**WTA 官方发布的这场比赛的实拍**（Getty 2290492429），从 WTA 官网这场的 Match Reaction 赛后稿《Arango wins 'surreal' Cincinnati match with Venus》的 `twitter:image` 拿到原图路径：`photoresources.wtatennis.com/wta/photo/2026/08/14/105531cd-2cc2-42f5-bdeb-584726b1698f/GettyImages-2290492429.jpg?width=4000`，原图 4664×3109。\n\n四道闸门逐条过：① **精准**——路径里的日期 `2026/08/14` 就是比赛日，稿子本身讲的就是这一场；球衣、帽子、鞋（深紫红 Colsanitas 背心＋粉裙＋白帽＋Asics）和源片里的她逐项对得上；② **在比赛中**——发球随挥，脚离地、拍在身侧，不是训练照也不是场外；③ **冲击力**——全身在框内、动作舒展、背景干净的场地蓝，不是大头特写；④ **清晰度**——原生相机分辨率，比从 1080p 抽帧再放大 1.78 倍强一个量级（CLAUDE.md「封面用真实照片，不要从视频里抽帧」）。\n\n⚠️ **入库前横向收了一刀**：原图 3:2，她只占画面左中部，右边和右下是大片空场。按 x 的 5%~87% 裁成 3824×3109（比例 1.23），**只收没人的那一侧**——她横跨原图 x 的 18%~68%，裁完左右各还剩 600~890 像素留白（CLAUDE.md「整个人在画面里、左右留白比想象的更多」）。收完之后在海报上她大了约两成，上下那条空带也从 720px 缩到 560px。\n\n**横素材在 3:4 的海报里按宽度铺**（`fit: \"width\"`，CLAUDE.md 那条；按 cover 裁的话 3:4 窗口正好只有原图一半宽，她伸出去的那条腿和球拍必被切掉）。`focus_y` 渲了 0.25/0.40/0.42/0.45/0.50/0.60六档并排比出来——0.25 让照片下沿正好横穿钩子那两行、看着像渲糊了，0.60 把球拍推到比分板后面，**0.45 是照片下沿落在比分板顶边、球拍和鞋都完整、上面那条空带又最小**的那一档。",
+    "scrim": "clear",
+    "_scrim_why": "和近期几条一致：只关掉画面正中的 radial 暗角，上下两头照留。",
+    "winner": "阿朗戈",
+    "result": "6-2 6-2",
+    "matchup": [
+      {
+        "name": "阿朗戈",
+        "name_en": "Emiliana Arango",
+        "country": "COL",
+        "rank": 95
+      },
+      {
+        "name": "大威廉姆斯",
+        "name_en": "Venus Williams",
+        "country": "USA",
+        "rank": 615
+      }
+    ],
+    "_matchup_rank_why": "两个名次都取 WTA 官方 ranked 接口 `rankedAt=2026-08-10`（比赛前那个周一，正是赛时口径）：阿朗戈第 95（813 分，page 0）、大威廉姆斯第 615（75 分，page 6）。⚠️ `matchup` 是**版式顺序**不是赛果顺序，赛果行由 `winner` 决定。",
+    "scoreboard": {
+      "court": "Lindner Family Tennis Center",
+      "duration_source": {
+        "provider": "wta",
+        "url": "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches?states=C&page=0&pageSize=300",
+        "match_id": "LS113",
+        "field": "MatchTimeTotal",
+        "source_page": "https://www.wtatennis.com/tournaments/1017/cincinnati/2026/scores/LS113"
+      },
+      "_court_why": "⚠️ **填的是场馆不是球场号，因为球场号查不到而 CLAUDE.md 明令不能猜。** WTA 比赛页 `LS113` 的 Court 一栏是空的（整页只出现 `Lindner Family Tennis Center in Mason, Ohio` 这个场馆名）；`api.wtatennis.com/.../order-of-play` 404；`matches?date=2026-08-14` 的 date 参数被**静默忽略**（返回的还是全量）。WTA API 给了 `CourtID: 2`，`bartunkova-charaeva` 那条曾从当天的 order-of-play 反查出 `2→Grandstand`，但那张映射它自己就记着高位 ID 自相矛盾——**一个只在一天上验过的映射不够硬**，不外推。",
+      "_duration_why": "`MatchTimeTotal: \"01:06:05\"` → 板上印 `1:06`。不手填，`_fetch_match_duration()` 每次渲海报现拉接口；flashscore `df_sur_1` 的 `RB÷1:06` 和 WTA 赛后稿的『1 hour and 6 minutes』都对得上。"
+    }
+  },
+  "stats": {
+    "tour": "wta",
+    "a": {
+      "headshot": "assets/players/headshots/wta-324789.jpg",
+      "aces": 2,
+      "df": 1,
+      "winners": 8,
+      "ue": 9,
+      "first_in": 35,
+      "first_total": 49,
+      "first_won": 25,
+      "second_won": 9,
+      "second_total": 14,
+      "bp_conv": 4,
+      "bp_chances": 5,
+      "pts_won": 60,
+      "pts_total": 99
+    },
+    "b": {
+      "headshot": "assets/players/headshots/wta-230220.jpg",
+      "aces": 1,
+      "df": 2,
+      "winners": 20,
+      "ue": 40,
+      "first_in": 29,
+      "first_total": 50,
+      "first_won": 12,
+      "second_won": 12,
+      "second_total": 21,
+      "bp_conv": 0,
+      "bp_chances": 1,
+      "pts_won": 39,
+      "pts_total": 99
+    },
+    "footer_venue": "Lindner Family Tennis Center · 辛辛那提",
+    "footer_date": "2026年8月15日",
+    "_source": "**两个源，分工写清楚：**\n\n① ACE／双误／一发二发／破发点／总得分——flashscore `df_st_1_tCIjOHCr` 的 `Match` 一栏原样抄：阿朗戈 Ace 2、双误 1、一发 71%、一发得分 71%(25/35)、二发 64%(9/14)、破发点转化 4/5、发球分 34/49；大威廉姆斯 Ace 1、双误 2、一发 58%、一发得分 41%(12/29)、二发 57%(12/21)、破发点转化 0/1、发球分 24/50。`first_in`/`first_total` 由「一发得分 (25/35)」和「发球分 (34/49)」反推：35 个一发分 ÷ 49 个发球分 = 71.4%，和它自己报的 `1st serve percentage 71%` 对得上；大威一侧 29/50 = 58%，同样对得上。总得分 99 分 = 49+50，阿朗戈 34+(50-24)=60、大威 24+(49-34)=39。\n\n② 制胜分／非受迫失误——**flashscore 的 WTA 巡回赛 feed 没有这两项**（这场 `df_st_1` 只有 17 项，缺 Winners／Unforced errors／Net points won，正是 CLAUDE.md 记的那一组），走**编辑稿**：WTA 官网这场的 Match Reaction 稿 `wtatennis.com/news/4559754/` 正文写着『frustrate Williams into 40 unforced errors, while committing just nine herself』和『Arango's eight winners were far closer to her mistake total, while Williams recorded 20』。⚠️ 也查过 Match Charting Project（`tools/mcp_stats.py`）：索引最新只到 2026-08-12，辛辛那提 2026 **一条都没标**，不是『这场没有』而是『还没轮到』。"
+  },
+  "_voice": "走工作流默认的云见 `zh-CN-YunjianNeural` `+6%`，不在 spec 里另写一份（顶层 voice/rate 没有任何代码读，写了等于没写）。",
+  "segments": [
+    {
+      "start": 259.5,
+      "end": 268.8,
+      "narration": "",
+      "_why": "① 画面爆点，不配旁白，走现场声。第二盘第八局的三个赛点：记分条 258.5–266.5 秒写着 `MATCH POINT / E.ARANGO 6 5 40 / V.WILLIAMS 2 2 0`，最后一分在 266.5 秒前后落地（解说 266.72 秒接上『That's E[mili]ana Arango into the second round in Cincinnati』），随后是她的反应。整段待在切点 255.76 和 269.76 之间。"
+    },
+    {
+      "start": 274.5,
+      "end": 283.5,
+      "narration": "六比二，六比二。一小时零六分钟，大威廉姆斯只赢下四局。",
+      "_why": "② 落点。网前握手那一段（切点 274.12–283.72）。「只赢下四局」是逐分数出来的：16 局 12-4。"
+    },
+    {
+      "start": 0.4,
+      "end": 11.7,
+      "narration": "北京时间八月十五号凌晨一点，辛辛那提WTA一千女单第一轮。四十六岁的大威廉姆斯，拿的是一张外卡。",
+      "_why": "③ 坐标。这一段正是全场第一分（记分条随后翻成 `0:15`，解说 2.56 秒说 `Love 15.`），大威廉姆斯发球。⚠️ 时刻说到「点」不说「分」：flashscore `KC÷1786729200` 换算是北京 01:40，WTA 的 `MatchTimeStamp` 是北京 01:27，两个源差 13 分钟——CLAUDE.md「两个源对不上就说到点不说分」。"
+    },
+    {
+      "start": 17.6,
+      "end": 30.2,
+      "narration": "对面的阿朗戈二十五岁，世界第九十五，从资格赛打进来的。开场第一个发球局，她就把大威廉姆斯逼到了破发点。",
+      "_why": "记分条这一整段写着 `BREAK POINT / ARANGO 40 / WILLIAMS 30`，对上逐分第一盘第一局的 `40:30 |B1|`。⚠️ 第二句把主语写成「她」（＝阿朗戈）是为了下一段的「破掉了」不换人——CLAUDE.md「三个盘点都没救下来」那条踩过。"
+    },
+    {
+      "start": 30.4,
+      "end": 34.3,
+      "narration": "破掉了，一比零。",
+      "_why": "情绪落点：她握拳的近景（30.5／32.5 秒两格），记分条还停在 `BREAK POINT`（比分板滞后，CLAUDE.md 记过）。承前省略的主语是上一段末尾的「她」＝阿朗戈。"
+    },
+    {
+      "start": 86.8,
+      "end": 94.6,
+      "narration": "她的教练说，我不想看到你慢，我只想看到你的腿跑得快。",
+      "_why": "她自己在场上采访里转述的原话（`I don't want to see you moving slow; all I want to see is for your legs to go fast`），WTA 赛后稿也引了同一句。⚠️ **采访的画面一秒没用**，只把这句话的中译压在她跑动的回合上。这一段落在切点 86.4–94.84 之间，解说 94.88 秒接『Oh no. How good was that?』，说明球在 94.5 秒前后死。"
+    },
+    {
+      "start": 138.5,
+      "end": 148.9,
+      "narration": "她就这么跑了一整场，一个球一个球地放回去。全场，她只有九个非受迫失误。",
+      "_why": "解说 133.52 秒刚说完『Oh, great defense from [A]rango』，这一段就是那种回合；148.72 秒解说『Superb.』收尾，球在 148.7 秒前后死，切点在 149.0。九个非受迫失误出自 WTA 官网赛后稿。"
+    },
+    {
+      "start": 149.4,
+      "end": 154.7,
+      "narration": "而大威廉姆斯，四十个。",
+      "_why": "接上一段的九对四十。画面是大威廉姆斯的两格近景（152.5／154.5），表情对得上这句话。切点 149.0–154.92。"
+    },
+    {
+      "start": 165.8,
+      "end": 172.5,
+      "narration": "第一盘四比二，阿朗戈又拿到一个破发点。",
+      "_why": "记分条 166.5–172.5 秒写着 `BREAK POINT / ARANGO 4 40 / WILLIAMS 2 30`，对上逐分第一盘第七局。⚠️ 主语写全名不写「她」——上一段的主语是大威廉姆斯，承前省略会换错人。「拿到」是她自己的破发点（CLAUDE.md「拿到／面对」那条）。"
+    },
+    {
+      "start": 183.6,
+      "end": 190.5,
+      "narration": "六比二，第一盘三十二分钟。",
+      "_why": "她赢下第一盘之后的近景 + 转播挂出的 `EMILIANA ARANGO 6 / VENUS WILLIAMS 2` 分盘图形。三十二分钟出自 flashscore `df_sur_1` 的 `RC÷0:32`。"
+    },
+    {
+      "start": 198.5,
+      "end": 207.5,
+      "narration": "第二盘开始，大威廉姆斯的发球局又丢了两个。零比四。",
+      "_why": "记分条从 `6 2 / 2 0` 走到 `6 3 / 2 0`，正是第二盘第三局那次破发（逐分：`40:30 |B1|`、`A:40 |B1|`，第二个破发点才破成）。第二盘她丢的是第一局和第三局两个发球局，随后 0-4。切点 198.08–207.76。"
+    },
+    {
+      "start": 223.8,
+      "end": 235.0,
+      "narration": "整场比赛，阿朗戈的八个发球局一个没丢；大威廉姆斯只拿到过一个破发点，没兑现。",
+      "_why": "flashscore：阿朗戈 `Break Points Saved 1/1`，大威廉姆斯 `Break Points Converted 0/1`。那唯一一个破发点在第一盘第四局（逐分 `40:A |B1|`）。画面是第二盘 4-0 的回合。"
+    },
+    {
+      "start": 245.2,
+      "end": 255.7,
+      "narration": "大威廉姆斯这天的一发，一共二十九个小分。自己赢下十二个，对面赢了十七个。",
+      "_why": "这条片子的「狠数据」：同一个 29 分的分母，flashscore 一边写 `1st serve points won 41% (12/29)`、另一边写阿朗戈 `1st return points won 59% (17/29)`——她在自己的一发上拿分比对手还少。⚠️ 写「小分」不写「二十九分」：后者换成「二十九分钟」读起来一样通顺（`test_旁白里的分不许读成分钟`）。窗口收在切点 245.0–255.76 之间，解说 255.28 秒说 `That's nicely done.`，球在 255 秒前后死。"
+    },
+    {
+      "start": 284.2,
+      "end": 294.0,
+      "narration": "阿朗戈的下一轮，是卫冕冠军斯瓦泰克。二十五岁，世界第九十五，她还能走多远？",
+      "_why": "她向看台致意 + 转播的 `CONGRATULATIONS` 图形（290.5 秒）。下一轮对手出自 WTA 官方赛后稿。末屏那一问不和封面钩子重复——钩子讲的是这一场怎么赢的，这一问指向下一场。⚠️ 窗口收在 294.0 秒，离采访开始（298.5 秒）还有 4.5 秒余量。"
+    }
+  ],
+  "push": {
+    "summary": "大威廉姆斯只赢下四局",
+    "lead": "辛辛那提WTA1000女单第一轮，从资格赛打进来的25岁哥伦比亚人阿朗戈，6-2 6-2 送走46岁的大威廉姆斯，用时1小时06分。全场99分她拿到60分；16局里大威廉姆斯只赢4局。开场第一个发球局阿朗戈就破了发，此后她自己的8个发球局一个没丢——大威廉姆斯整场只拿到过1个破发点，没兑现。最扎眼的一栏在一发上：大威廉姆斯的29个一发分，她自己赢12分，阿朗戈赢17分。WTA官方赛后稿给的失误账是40比9，制胜分20比8。阿朗戈本周的前两场都在资格赛，而且都先输一盘；她出生时，大威廉姆斯已经拿过温网冠军四个多月。下一轮，她对卫冕冠军斯瓦泰克。",
+    "auto": true,
+    "_why": "`push_reel.SUMMARY_MAX=13`，`大威廉姆斯只赢下四局`＝10 字，在闸内。`auto: true`——四道闸门全过（封面是 WTA 官方发布的这场实拍），回到常规终点：合并即推送。"
+  }
+}
