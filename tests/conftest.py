@@ -37,6 +37,21 @@ def _no_ambient_github_token(monkeypatch):
         monkeypatch.delenv(name, raising=False)
 
 
+@pytest.fixture(autouse=True)
+def _isolate_tts_cache(monkeypatch, tmp_path):
+    """TTS 内容缓存默认落在 `~/.cache/tennislive-tts`，测试里会**跨测试污染**：
+    上一个测试合成的「同一句」会命中缓存，让下一个测 edge-tts 重试逻辑的测试
+    一步都不走——`test_reel_narration.py` 三条就是这么红在 CI 上的（缓存命中后
+    `built` 记 0 次、`ReelError` 也不抛了）。
+
+    每个测试都指到一个干净的临时目录；要测缓存本身的测试自己
+    `monkeypatch.setenv("TENNISLIVE_TTS_CACHE", ...)` 覆盖——autouse 先跑、
+    测试体后跑，显式给的那份必然盖过这里（和上面 `_no_ambient_github_token`
+    同一个形状）。
+    """
+    monkeypatch.setenv("TENNISLIVE_TTS_CACHE", str(tmp_path / "tts-cache"))
+
+
 def make_match(
     home_name="Jannik Sinner",
     away_name="Novak Djokovic",
