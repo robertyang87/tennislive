@@ -10618,3 +10618,40 @@ def test_下载源片一律走spec_sources():
     assert not _download_paths_without_the_gate(
         删掉的那个.replace("    urls = dict", "    urls = spec_sources(spec)\n    _ = dict")), (
         "走了 `spec_sources()` 还被点名，这个判据会逼下一个人去绕开它")
+
+
+def test_数据图的头像和matchup里的名字必须是同一个人():
+    """`stats.a` 对应 `cover.matchup[0]`，而 `headshot` 就在 `stats` 块里——
+    两边错位的话，数据图上会**用甲的脸和乙的名字，配甲的数字**。
+
+    2026-08-15 `sonmez-anisimova` 真踩过：`stats.a/b` 按 flashscore 的
+    home/away 填（森梅兹在前），而 `cover.matchup` 是版式顺序（阿尼西莫娃在前），
+    于是那张图把赢球的阿尼西莫娃印成「2 个 ACE、47 分」——**输的那个人的数据**。
+    渲染、`--dry-run`、全量测试、`check_reel_landed` 一律不出声：图上每个数
+    单看都对，只有把名字和数字对起来才看得出来。
+
+    ⚠️ 判据**自己从 `specs/` 推**，不维护名单：同一个头像文件在别的 spec 里
+    挂过哪个中文名，这里就必须还是那个名。谁把 a/b 填反，那张头像就会同时
+    挂上两个名字，当场红。新球员第一次出现时这条是哑的（没有第二处可比），
+    那是它天然的边界——它拦的是**和已有产物矛盾**，不是拦「填错」本身。
+    """
+    import collections
+
+    seen: dict[str, collections.Counter] = collections.defaultdict(collections.Counter)
+    for path in sorted(Path("specs/reels").glob("*.json")):
+        spec = json.loads(path.read_text(encoding="utf-8"))
+        stats = spec.get("stats") or {}
+        names = [m.get("name") for m in (spec.get("cover", {}).get("matchup") or [])]
+        if len(names) != 2:
+            continue
+        for key, idx in (("a", 0), ("b", 1)):
+            shot = (stats.get(key) or {}).get("headshot")
+            if shot and names[idx]:
+                seen[Path(shot).name][names[idx]] += 1
+
+    clashes = {k: dict(v) for k, v in seen.items() if len(v) > 1}
+    assert not clashes, (
+        "同一张官方头像挂到了两个中文名下——十有八九是某条 spec 的 stats.a/b "
+        f"填反了（a 必须对应 cover.matchup[0]）：{clashes}"
+    )
+    assert len(seen) >= 8, f"判据失效了：只扫到 {len(seen)} 张头像"
