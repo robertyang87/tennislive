@@ -4341,6 +4341,26 @@ def versus_width() -> int:
     return TITLE_WIDTH_PX
 
 
+def _solo_scoreboard_shape(spec: dict) -> None:
+    """「赛场之上」solo 封面的比分板形状——**和渲染那道闸共用一个函数**。
+
+    ⚠️ **这一条是一次白跑的 cover run 换来的（run 687，2026-08-15）**：
+    `maria-yastremska` 漏了 `cover.scoreboard`，而这条规矩当时只写在
+    `versus_poster` 的渲染路径上——那儿排在下载源片之后。于是 `--dry-run`
+    报「spec 形状没问题」，到 runner 上第 84 秒才红，白付一趟 checkout ＋
+    装依赖 ＋ 装 Chromium。判据 `test_赛场之上的比分板形状要在dry_run就拦下来`。
+
+    ⚠️ `versus_poster` 只在这儿 import（和 `versus_width` 同一个理由）。
+    """
+    cover = spec.get("cover")
+    if not isinstance(cover, dict):
+        return
+    from versus_poster import solo_scoreboard_shape_error  # noqa: PLC0415
+    problem = solo_scoreboard_shape_error(cover)
+    if problem:
+        raise ReelError(problem)
+
+
 def validate_spec(spec: dict) -> list[Segment]:
     """**只看 spec，不碰源片**——所以它能在开跑的第一秒跑完。
 
@@ -4375,6 +4395,7 @@ def validate_spec(spec: dict) -> list[Segment]:
         spec, required=_editorial_contract_required(spec, urls, topbar))
     _absolute_claims_need_a_source(spec)
     _hook_lines_fit_the_title(spec)
+    _solo_scoreboard_shape(spec)
     segments = parse_segments(spec, urls, next(iter(urls)))
     check_archival_fit(spec, segments)
     return segments

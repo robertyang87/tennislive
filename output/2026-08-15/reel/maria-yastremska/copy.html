@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>8.15 赛场之上 | 玛利亚三十九岁只丢三局</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>6-1 6-2，七十二分钟。赢的这个人，五天前刚过完三十九岁生日。
+
+先看一个能算出来的数：全场九十九个小分，玛利亚拿到六十四个，净胜二十九。九十九分球里净胜二十九，这不是「险胜」能出现的分差。
+
+再看她是怎么做到的。第一盘二十七分钟就结束了——转播解说当时的原话是「她轻轻松松拿下首盘」——亚斯特雷姆斯卡三个发球局，一局都没保住。全场七个发球局，她只保住两个。而她最强的那件武器整场没有落地：零个爱司球，四个双误，二发得分率只有百分之二十七；同一栏玛利亚是百分之六十三。
+
+这场球唯一一次像样的抵抗发生在第二盘第五局。玛利亚三比一领先，在对手的发球局上打到四十比十五，再赢一分就是四比一。那一局来回打了七次平分，她一共拿到五个破发点，转播把第五个破发点的字样直接烧在了画面上，而这五个，一个都没兑现。可这一局换来的，就是亚斯特雷姆斯卡全场三局里的一局：紧接着轮到玛利亚发球，她被逼到十五比四十，救下两个破发点保住，然后立刻再破一个发球局，五比二，发球胜赛局。
+
+关于玛利亚需要交代的来路：她有两个女儿，大的十二岁、小的五岁，丈夫是她的教练，一家人跟着她跑巡回赛。二〇二二年温网，生完第二个孩子十五个月，她三十四岁打进了半决赛；二〇二五年女王杯，她从资格赛一路打进正赛拿下冠军，那年三十七岁。
+
+今年并不顺。年初她世界第四十三，七月初掉到第九十六。一个月前她在纽波特的草地上五场全胜拿下那一站的冠军，排名才回到第八十。对面的亚斯特雷姆斯卡年初还是世界第二十七，这一周已经掉到第一百零七——两个人的排名，今年正好交叉了一次。
+
+三十九岁，能走到哪儿？
+
+#网球 #WTA #辛辛那提公开赛 #玛利亚 #网球时差</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>三十九岁，能走到哪儿？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
