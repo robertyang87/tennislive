@@ -1,8 +1,11 @@
 """世界第一那条片子的图表——在位周数榜，和「差距能小到什么程度」的阶梯。
 
 数据全部出自 **WTA 官方 2026 年版 Record Book**（`WTAMG26_WTARecordBook.pdf`，
-2026-08-15 下载核对）：p4 `WEEKS AT WTA WORLD NO.1 SINGLES`、
-p1 `NO.1 SINGLES RANKING HISTORY (since November 3, 1975)`。
+2026-08-15 下载核对）：**p5** `SINGLES: WEEKS AT No.1`（累计周数榜）、
+**p2** `NO.1 SINGLES RANKING HISTORY (since November 3, 1975)`（逐段沿革）、
+**p6** `MOST CONSECUTIVE WEEKS AT No.1`（连续榜，和 p5 是两张榜）。
+⚠️ 页码是 `pypdf` 数出来的（`reader.pages[4]` 即第 5 页），不是照着 PDF 上
+印的页眉抄的——那份 PDF 的页眉从 `- 3 -` 开始，两套编号差两页。
 
 ⚠️ **周数榜只画 8 个人，而官方榜是 29 个人**——省掉的那一段要在图上写出来，
 见 `weeks_at_no1_chart()` 的第二条警告。
@@ -66,7 +69,7 @@ def weeks_at_no1_chart() -> str:
     ⚠️ 而这件事**要在图上说出来**（副标题里写着「条长按平方根」），
     不然就是一张骗人的图。
     """
-    top, bar_h, gap = 100, 34, 14
+    top, bar_h, gap = 100, 34, 11
     x0, maxw = 280, 520
     hi = max(w for _, _, w in WEEKS_AT_NO1) ** 0.5
     parts = [
@@ -131,8 +134,74 @@ MARGINS: tuple[tuple[str, str, str], ...] = (
 )
 
 
+def goolagong_gap() -> str:
+    """一九七六到二零零七：那两周，三十一年之后才追认。
+
+    ⚠️ **两个端点是圆点，不是一根按比例画的条。** 三十一年是一千六百多周，
+    那两周按比例只有零点九个像素——画出来等于没有，而**看起来又像画过了**。
+    「差距能小到什么程度」那张图敢开方是因为副标题写着开了方；这一张没有
+    诚实的比例可用，所以干脆不声称比例。
+
+    ⚠️ 这一屏是**示意图而不是照片**，理由是仓库里那条硬判据：
+    「他/她**没打**（缺席、放弃、等待）——这是示意图的触发条件」。
+    她那三十一年不在球场上，一张她打球的照片会把这一屏说反。
+    """
+    x0, x1, y = 148, 752, 222
+    parts = [
+        '<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">',
+        '<text x="450" y="42" text-anchor="middle" font-size="34" '
+        'font-weight="700" fill="#e7f3ec">那两周，三十一年后才追认</text>',
+        '<text x="450" y="76" text-anchor="middle" font-size="21" '
+        'fill="#a9bcb2">WTA 官方 · 1976 年 4 到 7 月的几张成绩单没录进电脑</text>',
+        # ⚠️ 线分两段，中间留给那句「31 年」。别画整条再把字压上去——示意图
+        # 落在卡片上时背景不是纯色，拿一块底色去盖会露出一个方块。
+        f'<line x1="{x0}" y1="{y}" x2="300" y2="{y}" stroke="#8fd6a8" '
+        'stroke-width="4" stroke-opacity="0.45"/>',
+        f'<line x1="600" y1="{y}" x2="{x1}" y2="{y}" stroke="#8fd6a8" '
+        'stroke-width="4" stroke-opacity="0.45"/>',
+        f'<circle cx="{x0}" cy="{y}" r="14" fill="#8fd6a8"/>',
+        f'<circle cx="{x1}" cy="{y}" r="14" fill="#e0b13a"/>',
+        f'<text x="{x0}" y="{y - 40}" text-anchor="middle" font-size="26" '
+        'fill="#e7f3ec">1976.4.26</text>',
+        f'<text x="{x0}" y="{y + 52}" text-anchor="middle" font-size="26" '
+        'fill="#8fd6a8">登顶，两周</text>',
+        f'<text x="{x1}" y="{y - 40}" text-anchor="middle" font-size="26" '
+        'fill="#e7f3ec">2007.12.27</text>',
+        f'<text x="{x1}" y="{y + 52}" text-anchor="middle" font-size="26" '
+        'fill="#e0b13a">她才收到通知</text>',
+        f'<text x="450" y="{y + 13}" text-anchor="middle" '
+        'font-size="38" font-weight="700" fill="#e0b13a">中间隔了 31 年</text>',
+    ]
+    steps = (
+        ("1976", "成绩单漏录进电脑"),
+        ("2007", "档案室翻出那几张纸"),
+        ("12.27", "一通电话，她才知道"),
+    )
+    for i, (when, what) in enumerate(steps):
+        ry = 306 + i * 60
+        parts.append(
+            f'<rect x="{x0}" y="{ry}" width="{x1 - x0}" height="48" rx="9" '
+            'fill="#8fd6a8" fill-opacity="0.08"/>'
+        )
+        parts.append(
+            f'<text x="{x0 + 34}" y="{ry + 35}" font-size="26" '
+            f'fill="#a9bcb2">{when}</text>'
+        )
+        parts.append(
+            f'<text x="{x0 + 190}" y="{ry + 35}" font-size="26" '
+            f'fill="#e7f3ec">{what}</text>'
+        )
+    parts.append("</svg>")
+    return "\n".join(parts)
+
+
 def margin_ladder() -> str:
-    """4 分 → 0.8 分 → 0 分。最后一行是并列，所以画成两条并排的条。"""
+    """54 分 → 0.8 分 → 0 分。最后一行是并列，所以描边和垫底都换成强调色。
+
+    ⚠️ 三行**不是一张排行榜**，是同一件事的三个样子——两条巡回赛都没有
+    「历史最小分差」这项官方纪录，副标题「三种计分口径，各讲各的」就是
+    为了不让人把它读成榜。第一行为什么不是那个「4 分」，见常量上面那段。
+    """
     parts = [
         '<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">',
         '<text x="450" y="40" text-anchor="middle" font-size="34" '
@@ -141,23 +210,23 @@ def margin_ladder() -> str:
         'fill="#a9bcb2">三种计分口径，各讲各的</text>',
     ]
     for i, (num, who, note) in enumerate(MARGINS):
-        y = 118 + i * 146
+        y = 110 + i * 130
         zero = num.startswith("0 ")
         colour = "#e0b13a" if zero else "#8fd6a8"
         parts.append(
-            f'<rect x="60" y="{y}" width="780" height="116" rx="10" '
+            f'<rect x="60" y="{y}" width="780" height="104" rx="10" '
             f'fill="{colour}" fill-opacity="{0.20 if zero else 0.08}" '
             f'stroke="{colour}" stroke-width="{3 if zero else 1}"/>'
         )
         parts.append(
-            f'<text x="104" y="{y + 62}" font-size="46" font-weight="700" '
+            f'<text x="104" y="{y + 58}" font-size="46" font-weight="700" '
             f'fill="{colour}">{num}</text>'
         )
         parts.append(
-            f'<text x="290" y="{y + 46}" font-size="26" fill="#e7f3ec">{who}</text>'
+            f'<text x="290" y="{y + 42}" font-size="26" fill="#e7f3ec">{who}</text>'
         )
         parts.append(
-            f'<text x="290" y="{y + 84}" font-size="21" fill="#a9bcb2">{note}</text>'
+            f'<text x="290" y="{y + 78}" font-size="21" fill="#a9bcb2">{note}</text>'
         )
     parts.append("</svg>")
     return "\n".join(parts)
