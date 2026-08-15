@@ -129,21 +129,37 @@ wang-vandewinkel 那场 flashscore 报范德温克尔发球总分 95、总得分
 一样**，整张表的首尾像素位置也一模一样。判据在
 `test_每行英文不许把行高撑高`。
 
-⚠️ **`top` 那个 −21px 是量出来的，别按感觉调。** 账号所有者 2026-08-15 第二次
-反馈：「把中文往上移，英文在下面，然后它们并行居中。垂直居中」——第一版写的
+⚠️ **`top` 那个 −24px 是量出来的，别按感觉调。** 账号所有者 2026-08-15 第二次
+反馈：「把中文往上移，英文在下面，然后它们并行居中。垂直居中」——最早那版写的
 −11px 只够把英文塞进去，「中文 + 英文」这一对的光学中心仍然比两侧那个大号数字
 **低 18~25px**（2160 空间，也就是 9~12 个 CSS 像素），看起来是整块往下坠。
 
 量法：按分隔线切出每一行，左列（数字）和中列（中英）各取墨迹的上下沿，比两个
-中心。三档扫下来——
+中心。英文 19px 那一版扫出来 −21px 最正（+0.6）；同一天账号所有者又说「英文
+太小」，字号提到 24px 之后**这一对整体变高，−21px 就不够了**，重扫：
 
-    top:-20px   每行偏移 [7, 4, 0, 0, 0, 6, 4]   平均 +2.6
-    top:-21px   每行偏移 [5, 2, -2, -2, -2, 4, 2] 平均 +0.6   ← 选它
-    top:-22px   每行偏移 [3, 0, -4, -4, -4, 2, 0] 平均 -1.4
+    top:-23px   每行偏移 [—, 4, 0, 0, 0, 6, 4]    平均 +2.3
+    top:-24px   每行偏移 [—, 2, -2, -2, -2, 4, 2]  平均 +0.3   ← 选它
+    top:-25px   每行偏移 [—, 0, -4, -4, -4, 2, 0]  平均 -1.7
 
-剩下那 ±5px（2160 空间 ≈ 2.5 个 CSS 像素）是字形本身的差别（`%` 比纯数字高、
+（ACE 那一行没有英文，走 `.slabel--solo`，不参与这张表。）
+
+剩下那 ±4px（2160 空间 ≈ 2 个 CSS 像素）是字形本身的差别（`%` 比纯数字高、
 `6/17` 那道斜杠更长），不是版式没对齐——**再调只会把一部分行调正、另一部分
-调歪**。判据在 `test_中英那一对要和数字垂直居中`。
+调歪**。判据在 `test_中英那一对的垂直位置是量出来的一组数`。
+
+⚠️ **改英文字号就要重扫 `top`。** 上面这两轮正是同一件事发生了两次：19 → 24px
+之后 −21px 立刻不对了，而**歪掉在产物上不报错**。判据把「中文字号 / 英文字号 /
+行距 / 位移」四个数一起锁住，动任何一个都当场红，逼着重量一次。
+
+### ⚠️ 中文标签本身就是英文的那一行，不出英文
+
+账号所有者 2026-08-15：「**ACE 就不要英文了**」——底下再写一行 `Aces` 是把同一个
+词说两遍。`ROW_SPECS` 里英文写**空串**就是认领这件事：不出那个 span，并且换一档
+位移（`.slabel--solo`）——`−24px` 是按两行的高度量的，只剩一行还提 24px 会顶太高。
+
+solo 那一档单独量过：纯中文在 `top:0` 时比数字中心**低 10.6px**，所以取 −5px，
+实测 ACE 那一行偏移 +2。
 
 ⚠️ 英文的**水平**居中不是靠 `left:0;right:0`——`.slabel` 那一格的宽度是按
 中文文字撑出来的（`white-space:nowrap` + `grid` 的 `auto` 列），而英文往往更宽
@@ -192,7 +208,10 @@ W, H = 1080, 1920
 
 # (标签, 类型, ...字段名)——固定模板，见模块 docstring「每一行谁占优」。
 ROW_SPECS = [
-    ("ACE", "Aces", "hi", "aces"),
+    # ⚠️ 英文写空串＝**这一行故意不要英文**（账号所有者 2026-08-15：「ACE 就
+    # 不要英文了」）。判据只放行「中文标签本身就是英文」的那种（ACE），
+    # 中文标签留空串是另一回事，照旧报错。
+    ("ACE", "", "hi", "aces"),
     ("双误", "Double Faults", "lo", "df"),
     ("制胜分", "Winners", "hi", "winners"),
     ("非受迫失误", "Unforced Errors", "lo", "ue"),
@@ -284,10 +303,14 @@ def _stat_row_html(label: str, label_en: str, lv: str, lf: str, rv: str, rf: str
     rcls = " lead" if lead == "b" else ""
     lfrac = f'<span class="sfrac">({html.escape(lf)})</span>' if lf else ""
     rfrac = f'<span class="sfrac">({html.escape(rf)})</span>' if rf else ""
+    # 英文是空串的那一行（ACE）不出这个 span，并且换一档位移：`.slabel` 那个
+    # −21px 是按「中文 + 英文」两行的高度量的，只剩一行还提 21px 就顶太高了。
+    en = f'<span class="slabel-en">{html.escape(label_en)}</span>' if label_en else ""
+    solo = "" if label_en else " slabel--solo"
     return f"""
 <div class="srow">
   <span class="sval sval-l{lcls}"><span class="smain">{html.escape(lv)}</span>{lfrac}</span>
-  <span class="slabel">{html.escape(label)}<span class="slabel-en">{html.escape(label_en)}</span></span>
+  <span class="slabel{solo}">{html.escape(label)}{en}</span>
   <span class="sval sval-r{rcls}"><span class="smain">{html.escape(rv)}</span>{rfrac}</span>
 </div>"""
 
@@ -430,8 +453,12 @@ body{{color:{vp.TEXT};font-family:'TL Sans SC','Noto Sans CJK SC',sans-serif;
 .setdash{{color:#93a79c;margin:0 .05em;font-size:.7em}}
 .tb{{font-size:.42em;color:#93a79c;vertical-align:super;margin-left:.04em}}
 .setplain{{color:#c6f65a}}
+/* 球场和用时分两行（账号所有者 2026-08-15）。⚠️ 第二行用 `h2h-meta2` 只压
+   行距，**不再重复 `margin-top:18px`**——那 18px 是比分块和这一段之间的呼吸，
+   不是行距；两行都带上会把用时那行推得像另一个板块。 */
 .h2h-meta{{margin-top:18px;font-family:'TL Sans SC',sans-serif;font-size:21px;
  color:{vp.DIM};text-align:center;white-space:nowrap;letter-spacing:.3px}}
+.h2h-meta2{{margin-top:6px}}
 
 .wrap{{padding:52px 74px 0}}
 .section-title{{font-family:'TL Display SC','TL Sans SC',sans-serif;font-size:38px;
@@ -461,20 +488,23 @@ body{{color:{vp.TEXT};font-family:'TL Sans SC','Noto Sans CJK SC',sans-serif;
 .sval.lead .sfrac{{color:rgba(198,246,90,.75)}}
 /* 中文标签 + 底下那行英文。⚠️ 两条都不许动，理由见模块 docstring
    「中文标签底下那行英文」那节：
-   - `.slabel` 的 `top:-21px` 是 `position:relative` 的**视觉**位移，不改
+   - `.slabel` 的 `top:-24px` 是 `position:relative` 的**视觉**位移，不改
      行盒高度；它把「中文 + 英文」这一对在原来的行高里顶回视觉居中。
-     ⚠️ 这个数是量出来的（扫墨迹比两个光学中心，−20/−21/−22 三档都渲过），
-     不是拍的；改它之前先读 docstring 里那张表。
+     ⚠️ 这个数是量出来的（扫墨迹比两个光学中心，−23/−24/−25 三档都渲过），
+     不是拍的；**改英文字号就要重扫一次**，docstring 里有那张表。
    - `.slabel-en` 是 `position:absolute`，**不参与行盒高度计算**——这是
      「每行的高度不变」唯一的实现方式。改成流内每行就会长高。
    `left:50%` + `translateX(-50%)` 而不是 `left:0;right:0`：这一格的宽度是
    中文撑出来的，英文更宽（`Break Points Converted`），撑在格子里会换行。 */
 .slabel{{font-family:'TL Sans SC',sans-serif;font-size:32px;font-weight:700;
  color:rgba(244,251,247,.92);letter-spacing:.3px;text-align:center;white-space:nowrap;
- position:relative;top:-21px}}
+ position:relative;top:-24px}}
 .slabel-en{{position:absolute;top:100%;left:50%;transform:translateX(-50%);
- margin-top:4px;white-space:nowrap;font-size:19px;font-weight:400;
- letter-spacing:.7px;color:rgba(244,251,247,.40)}}
+ margin-top:4px;white-space:nowrap;font-size:24px;font-weight:400;
+ letter-spacing:.7px;color:rgba(244,251,247,.46)}}
+/* 没有英文的那一行（ACE）：只剩中文一行，−21px 会把它顶太高。solo 的
+   位移单独量过（纯中文在 top:0 时比数字中心低 10.6px，所以取 −5px）。 */
+.slabel--solo{{top:-5px}}
 
 .footer{{margin-top:38px;padding-top:20px;border-top:1px solid rgba(244,251,247,.18);
  display:flex;justify-content:space-between;align-items:center;
@@ -491,7 +521,8 @@ body{{color:{vp.TEXT};font-family:'TL Sans SC','Noto Sans CJK SC',sans-serif;
   {h2h_a}
   <div class="h2h-mid">
     {sets_rows}
-    <div class="h2h-meta">{html.escape(court)} · {html.escape(duration)}</div>
+    <div class="h2h-meta">{html.escape(court)}</div>
+    <div class="h2h-meta h2h-meta2">{html.escape(duration)}</div>
   </div>
   {h2h_b}
 </div>

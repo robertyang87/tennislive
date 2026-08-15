@@ -187,11 +187,21 @@ def test_每一行都要有英文标签():
 
     英文和中文写在**同一条 `ROW_SPECS`** 里，不另开一张对照表：两处必分叉，
     而分叉的样子是「某一行的英文是上一行的」，图上完全看不出来。
+
+    ⚠️ **英文写空串是允许的，但只对「中文标签本身就是英文」的那种**（ACE，
+    账号所有者 2026-08-15：「ACE 就不要英文了」——底下再写一行 `Aces` 是把同一个
+    词说两遍）。中文是真中文却把英文留空，照旧红：那是漏填，不是认领。
     """
     seen = set()
     for row in sc.ROW_SPECS:
         cn, en = row[0], row[1]
-        assert isinstance(en, str) and en.strip(), f"「{cn}」这一行没有英文标签"
+        assert isinstance(en, str), f"「{cn}」的英文标签不是字符串"
+        if not en:
+            assert cn.isascii(), (
+                f"「{cn}」把英文留空了。只有中文标签本身就是英文的那种"
+                "（ACE）才允许留空——底下再写一遍是重复；中文标签留空串"
+                "是漏填，不是认领")
+            continue
         assert en.isascii(), f"「{cn}」的英文标签 {en!r} 里有非 ASCII 字符"
         assert en != cn, f"「{cn}」的英文位置填的还是中文"
         assert en not in seen, (
@@ -232,9 +242,20 @@ def test_每行英文不许把行高撑高():
     nested = re.findall(
         r'<span class="slabel">[^<]+<span class="slabel-en">[^<]+</span></span>', out)
     n_rows = out.count('<div class="srow">')
+    # ACE 那一行故意没有英文（`.slabel--solo`），所以分母是「有英文的行数」，
+    # 不是总行数——拿总行数当分母的话，以后再有一行认领「不要英文」这条就会
+    # 误伤，而误伤会逼下一个人把检查删掉。
+    n_en = sum(1 for row in sc.usable_rows(spec["stats"]["a"], spec["stats"]["b"])
+               if row[1])
+    # ⚠️ 数 markup 里的，不是裸 `slabel--solo`——那个串在 CSS 规则里也出现一次，
+    # 按裸串数会多算一个（第一版就是这么写的，当场把 7 行数成 8 行）。
+    n_solo = out.count('<span class="slabel slabel--solo">')
     assert n_rows >= sc.MIN_ROWS, f"只渲出 {n_rows} 行，样本 spec 不对"
-    assert len(nested) == n_rows, (
-        f"{n_rows} 行里只有 {len(nested)} 行的英文嵌在 .slabel 内。"
+    assert n_en and n_solo, "样本里要同时有带英文和不带英文的行，否则这条只验了一半"
+    assert n_en + n_solo == n_rows, (
+        f"{n_rows} 行里带英文 {n_en} 行 + 不带英文 {n_solo} 行对不上总数")
+    assert len(nested) == n_en, (
+        f"{n_en} 个有英文的行里只有 {len(nested)} 行的英文嵌在 .slabel 内。"
         "英文单独成一个网格项会多出一列，三列版式塌掉")
 
     # ② + ③ 机制：那两条 CSS 规则本身
@@ -283,10 +304,13 @@ def test_中英那一对的垂直位置是量出来的一组数():
         return got.group(1)
 
     measured = {
-        (".slabel", "top"): "-21",          # 量出来的那个位移
+        (".slabel", "top"): "-24",          # 量出来的那个位移（英文 24px 那一版）
         (".slabel", "font-size"): "32",     # 下面三个是量那一次的前提
-        ("slabel-en", "font-size"): "19",
+        ("slabel-en", "font-size"): "24",
         ("slabel-en", "margin-top"): "4",
+        # 没有英文的那一行（ACE）单独量的一档：纯中文在 top:0 时比数字中心
+        # 低 10.6px，取 -5px，实测偏移 +2
+        ("slabel--solo", "top"): "-5",
     }
     for (rule, prop), want in measured.items():
         got = decl(rule.lstrip("."), prop)
@@ -296,6 +320,29 @@ def test_中英那一对的垂直位置是量出来的一组数():
             "英文字号 19、行距 4、位移 -21），改任何一个都要照 "
             "render_stat_card 的 docstring 重新扫一次墨迹中心，"
             "不是顺手把这条测试里的数字改掉")
+
+
+def test_球场和用时分两行():
+    """账号所有者 2026-08-15：「比赛时间和球场分两行」。
+
+    原来是 `7 号球场 · 1:47` 挤在一行。判据查**真渲出来的 HTML**：两个值各占
+    一个 `.h2h-meta`，而且中间那个间隔点没了——只查「有没有两个 div」防不住
+    「分了行但还留着 `·`」，只查「没有 `·`」防不住「换成别的符号还是一行」。
+    """
+    repo = Path(__file__).resolve().parent.parent
+    spec = json.loads((repo / "specs/reels/rybakina-osaka.json").read_text(encoding="utf-8"))
+
+    import os
+
+    os.chdir(repo)
+    out = sc.build(spec)
+
+    metas = re.findall(r'<div class="h2h-meta[^"]*">([^<]*)</div>', out)
+    assert len(metas) == 2, f"球场和用时要各占一行，扫到 {len(metas)} 行：{metas}"
+    court = str(spec["cover"]["scoreboard"]["court"]).strip()
+    assert metas[0] == court, f"第一行应该是球场，实际是 {metas[0]!r}"
+    assert re.fullmatch(r"\d+:\d\d", metas[1]), f"第二行应该是用时，实际是 {metas[1]!r}"
+    assert "·" not in "".join(metas), "分了行就不要那个间隔点了"
 
 
 def test_数据图文件名两处要同源():
