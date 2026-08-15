@@ -25,6 +25,8 @@ import pytest
 
 from tools.build_interview_clip import (
     CANVAS_H,
+    CROP_RATIO,
+    CROP_SHIFT_MAX,
     CAPTION_GAP_SECS,
     ROOT,
     caption_gaps,
@@ -38,6 +40,7 @@ from tools.build_interview_clip import (
     zh_problems,
     _ASS_HEAD,
     _BAND_TOP,
+    _crop_expr,
     _EN_TOP,
     _FONT_FILES,
     _FONT_SIZE,
@@ -1148,6 +1151,64 @@ def test_顶栏从头挂到尾(tmp_path):
     assert all(",0:00:00.00," in r for r in head), "顶栏要从第 0 秒就在"
     end = _ts(lines[-1]["b"])
     assert all(end in r for r in head), f"顶栏要挂到最后一行结束（{end}）"
+
+
+def test_横着挪窗口能把右上角的台标裁掉(tmp_path):
+    """账号所有者 2026-08-15（德约那条 Tennis TV 赛前专访）：「最好把右上角的
+    tennistv logo 裁剪掉」。
+
+    **`keep` 在这儿使不上**：它只能从底下切，而台标在顶上，竖着切就要切他的头。
+    横着挪窗口是唯一躲得开的方向——4:3 窗口在 16:9 源片上保留 x 0.125–0.875，
+    而那个台标左沿量出来在 0.823，只差 0.052。
+
+    ⚠️ **为什么不走 `logo_box` / `removelogo`**：那条路的掩膜是「连续 N 帧都亮在
+    同一处」的交集，而这个台标**不是每一帧都在**——实测（run 31855069324）
+    单帧里 1511 个像素亮于 170、峰值 245，12 帧取完交集却是空的，
+    「空掩膜就报错」那道闸当场拦下。**能被窗口躲开的台标就该躲开**：
+    裁掉是确定的，补笔画是估计的。
+
+    **这条真跑一遍 ffmpeg**，不查表达式字符串——查字符串只能防「有人把它删了」，
+    防不住「它从来没工作过」（本仓库的老账）。
+    """
+    import numpy as np
+    from PIL import Image
+
+    src = tmp_path / "src.mp4"
+    # 深灰底 ＋ 右上角一个白块，位置照德约那条量到的：源片 x 0.83–0.97、y 0.04–0.10
+    subprocess.run(
+        ["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+         "-f", "lavfi", "-i", "color=c=0x303030:s=1920x1080:d=1",
+         "-vf", "drawbox=x=iw*0.83:y=ih*0.04:w=iw*0.14:h=ih*0.06:color=white@1:t=fill",
+         "-frames:v", "1", str(src)], check=True)
+
+    def white_pixels(shift):
+        out = tmp_path / f"{shift}.png"
+        subprocess.run(
+            ["ffmpeg", "-y", "-hide_banner", "-loglevel", "error", "-i", str(src),
+             "-vf", _crop_expr(CROP_RATIO, 1.0, shift) + ",scale=1080:810",
+             "-frames:v", "1", str(out)], check=True)
+        return int((np.asarray(Image.open(out).convert("L")) > 200).sum())
+
+    # ① 不挪＝台标还在。**先证明它在**，否则「挪完没有了」可能只是本来就没有
+    assert white_pixels(0.0) > 500, "测试片自己就没有台标，那下面那条断言是恒真的"
+    # ② 挪 0.06 ＝ 一个白像素都不剩
+    assert white_pixels(-0.06) == 0, "窗口左移之后台标该整个出框"
+
+    # ③ 默认那一支**一个字符都不许变**：存量 spec 全靠它
+    assert _crop_expr(CROP_RATIO) == _crop_expr(CROP_RATIO, 1.0, 0.0)
+    assert ":0" in _crop_expr(CROP_RATIO) and "iw" in _crop_expr(CROP_RATIO)
+    assert "+" not in _crop_expr(CROP_RATIO) and "-0." not in _crop_expr(CROP_RATIO)
+
+    # ④ 越界要报错。ffmpeg 会把出界的窗口**夹回边上**——画面照样出得来，
+    #    只是没挪到你要的位置，而这种错不吭声
+    with pytest.raises(SystemExit, match="crop_shift_x"):
+        _crop_expr(CROP_RATIO, 1.0, -(CROP_SHIFT_MAX + 0.01))
+
+    # ⑤ 两个调用点都要传。漏一个的表现是「成片裁对了、封面没裁」——
+    #    两张图分开看都正常，只有并排才发现台标还留在封面上
+    src_txt = (ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8")
+    assert src_txt.count('spec.get("crop_shift_x"') == 2, \
+        "封面和成片两条路都要读 `crop_shift_x`，漏一个就只裁一半"
 
 
 def test_关掉顶栏要显式认领而且默认不许变(tmp_path):
