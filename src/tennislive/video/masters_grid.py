@@ -40,7 +40,13 @@ NINE_MASTERS: tuple[tuple[str, str, str], ...] = (
     ("加拿大", "canada-iga-stadium-centre-court.jpg", "hard"),
     ("辛辛那提", "cincinnati-centre-court-full.jpg", "hard"),
     ("上海", "shanghai-qizhong-centre-court.jpg", "hard"),
-    ("巴黎", "paris-centre-court.jpg", "hard"),
+    # ⚠️ 换过一次：原来的 `paris-centre-court.jpg` 是室内紫光秀场镜头，
+    # 光束和人群占满，**球场几乎看不见**——账号所有者一眼指出来。现在这张
+    # 满场、球场清楚，和其余八格同一种视觉语言（高位全景＋满看台）。
+    # ⚠️ 它是**贝尔西**（Palais Omnisports Paris-Bercy）2024-10-30，而巴黎
+    # 大师赛 2025 年已搬到拉德芳斯球馆（Nanterre）。城市没错，场馆是上一个——
+    # 要用现址得另找，这条留着让下一个人知道这不是没注意到。
+    ("巴黎", "paris-bercy-centre-court.jpg", "hard"),
 )
 
 VENUE_DIR = Path("assets/venues")
