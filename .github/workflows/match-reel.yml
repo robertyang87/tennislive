@@ -476,6 +476,20 @@ jobs:
           key: reel-src-${{ github.event.inputs.slug }}-${{ steps.srckey.outputs.hash }}
           restore-keys: reel-src-${{ github.event.inputs.slug }}-
 
+      # TTS 缓存和源片缓存**形状不同**：源片按 URL hash 键，源不变键就不变，
+      # 命中即完事；TTS 是内容寻址（`~/.cache/tennislive-tts/<内容hash>.mp3`），
+      # 集合只会越跑越全。所以用**滚动键**（run_id 进 key）：每趟 restore-keys
+      # 按 slug 前缀捞回上一趟攒下的全部音频，跑完把「旧 + 新增」一起存成新键。
+      # 只改封面/字幕重渲时，旁白 text 没变 → 每段都命中内容 hash → 一分不重合成。
+      - name: 缓存 TTS（同文旁白跨趟不重合成）
+        if: github.event.inputs.mode != 'push'
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/tennislive-tts
+          key: reel-tts-${{ github.event.inputs.slug }}-${{ github.run_id }}
+          restore-keys: |
+            reel-tts-${{ github.event.inputs.slug }}-
+
       - name: 算出目录
         id: paths
         run: |

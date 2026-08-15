@@ -3080,14 +3080,56 @@ def edge_tts_verdict(exc: BaseException) -> tuple[bool, str]:
     return False, f"{name}：不在已知的「没送到」清单里，不重发"
 
 
+def _tts_content_key(text: str, voice: str, rate: str, pitch: str,
+                     style: str, styledegree: str, lead_pause: float) -> str:
+    """TTS 内容缓存键：同文同参数 = 同一段音频，可跨趟复用。
+
+    ⚠️ **键按内容算，不按路径/序号算。** 旁白 text 没变、只改封面/字幕/换段
+    顺序时，voice 不该重合成——「改了字」和「没改字」只有内容 hash 分得开
+    （仓库里「源片键按 URL 算」是同一个形状的教训）。分隔符用 ASCII 的
+    Unit Separator（0x1f），防「text 尾 + voice 头」拼出一个跨字段碰撞。
+    """
+    payload = "\x1f".join([text, voice, rate, pitch, style, styledegree,
+                           str(lead_pause)])
+    return hashlib.sha256(payload.encode("utf-8")).hexdigest()[:32]
+
+
 def tts_one(text: str, path: Path, voice: str, rate: str,
-             pitch: str = "+0Hz", style: str = "", styledegree: str = "",
-             lead_pause: float = 0.0) -> list[dict]:
-    """合一条语音，落盘并返回词边界。
+            pitch: str = "+0Hz", style: str = "", styledegree: str = "",
+            lead_pause: float = 0.0) -> list[dict]:
+    """合一条语音，落盘并返回词边界（带内容缓存：同文同参数不重合成）。
 
     抽出来是因为**封面也要配音**了：封面那句得在渲封面之前就合出来——封面停多久
     由它的长度决定（见 `cover_length`），不能等到 `synthesize()` 那一步。
     """
+    key = _tts_content_key(text, voice, rate, pitch, style, styledegree,
+                           lead_pause)
+    cache_dir = Path(os.environ.get(
+        "TENNISLIVE_TTS_CACHE",
+        str(Path.home() / ".cache" / "tennislive-tts")))
+    cached_mp3 = cache_dir / f"{key}.mp3"
+    cached_marks = cache_dir / f"{key}.json"
+    if cached_mp3.is_file() and cached_marks.is_file():
+        print(f"[TTS] 命中缓存 {key[:10]}（{len(text)} 字），不重合成")
+        shutil.copyfile(cached_mp3, path)
+        return json.loads(cached_marks.read_text(encoding="utf-8"))
+    marks = _tts_one_uncached(text, path, voice, rate, pitch, style,
+                              styledegree, lead_pause)
+    try:
+        cache_dir.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(path, cached_mp3)
+        cached_marks.write_text(json.dumps(marks, ensure_ascii=False),
+                                encoding="utf-8")
+    except OSError:
+        # 缓存写失败不该把整条片子带崩——缓存是加速，不是正确性。
+        pass
+    return marks
+
+
+def _tts_one_uncached(text: str, path: Path, voice: str, rate: str,
+                      pitch: str = "+0Hz", style: str = "", styledegree: str = "",
+                      lead_pause: float = 0.0) -> list[dict]:
+    """真正跑合成的那半截（`tts_one` 的缓存外逻辑）。"""
     # **配了 Azure 就走 Azure。** 同一把嗓子（`zh-CN-YunjianNeural`），多出
     # 十个情绪风格和真 `<break>`——两条路 2026-08-04 在 runner 上并排探过
     # （run 30884267406 / 30892017944）。词边界单位已经在 `azure_tts` 里对齐到

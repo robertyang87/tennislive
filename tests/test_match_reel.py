@@ -474,6 +474,58 @@ def _reel():
     return build_match_reel
 
 
+def test_tts内容键同文同参数同键不同文不同键():
+    """缓存键按内容算：改一个字、换一把嗓子、改一个参数都要换键——
+    「改了字」和「没改字」只有内容 hash 分得开。"""
+    reel = _reel()
+    a = reel._tts_content_key("同一句", "v", "+0%", "+0Hz", "", "", 0.0)
+    b = reel._tts_content_key("同一句", "v", "+0%", "+0Hz", "", "", 0.0)
+    assert a == b, "同文同参数必须同键"
+    c = reel._tts_content_key("同一句改", "v", "+0%", "+0Hz", "", "", 0.0)
+    d = reel._tts_content_key("同一句", "v2", "+0%", "+0Hz", "", "", 0.0)
+    e = reel._tts_content_key("同一句", "v", "+10%", "+0Hz", "", "", 0.0)
+    assert len({a, c, d, e}) == 4, "文本/声音/语速任何一个变了都要换键"
+
+
+def test_tts命中缓存不重合成(monkeypatch, tmp_path):
+    """重渲（只改封面/字幕）时旁白文本没变，voice 不该重合成。"""
+    reel = _reel()
+    monkeypatch.setenv("TENNISLIVE_TTS_CACHE", str(tmp_path))
+    calls = {"n": 0}
+    marks = [{"offset": 0, "duration": 100, "text": "x"}]
+
+    def fake_uncached(text, path, *a, **k):
+        calls["n"] += 1
+        path.write_bytes(b"FAKE_MP3")
+        return marks
+
+    monkeypatch.setattr(reel, "_tts_one_uncached", fake_uncached)
+    p1 = tmp_path / "a.mp3"
+    p2 = tmp_path / "b.mp3"
+    got1 = reel.tts_one("同一句", p1, "v", "+0%")
+    got2 = reel.tts_one("同一句", p2, "v", "+0%")
+    assert got1 == got2 == marks
+    assert calls["n"] == 1, "同文同参数第二次该命中缓存，不该再合成"
+    assert p2.read_bytes() == b"FAKE_MP3"
+
+
+def test_tts换字就重合成(monkeypatch, tmp_path):
+    """改了旁白文字就必须重合成，缓存不许给出旧音频。"""
+    reel = _reel()
+    monkeypatch.setenv("TENNISLIVE_TTS_CACHE", str(tmp_path))
+    calls = {"n": 0}
+
+    def fake_uncached(text, path, *a, **k):
+        calls["n"] += 1
+        path.write_bytes(text.encode())
+        return []
+
+    monkeypatch.setattr(reel, "_tts_one_uncached", fake_uncached)
+    reel.tts_one("第一句", tmp_path / "a.mp3", "v", "+0%")
+    reel.tts_one("第二句", tmp_path / "b.mp3", "v", "+0%")
+    assert calls["n"] == 2, "换字必须重合成"
+
+
 def test_成片帧率跟着源片走(monkeypatch):
     """硬定 30 而源片 25，就是每 5 帧补一帧、一秒卡五次。
 
