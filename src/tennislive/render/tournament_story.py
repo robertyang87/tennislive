@@ -3107,6 +3107,142 @@ STORIES = STORIES + (
         source_url="https://www.youtube.com/watch?v=NryVymv9AMY",
     ),
     _trivia_story(
+        slug="golden-masters",
+        title="WTA 为什么没有金大师",
+        subtitle="网球冷知识 · 赛制篇",
+        identity="从斯瓦泰克拿下加拿大站说起",
+        chips=("冷知识", "赛制", "金大师"),
+        hero=(
+            "男子集齐九站大师赛有个名字，叫金大师，吉尼斯世界纪录有正式条目；"
+            "德约科维奇 2018 年第一个做到，辛纳 2026 年在罗马成为第二个。"
+            "而女子这边找不到对应的说法——要拿满，先得有一张固定的表，"
+            "而女子那十站到 2024 年才定下来。"
+        ),
+        facts=(
+            "Career Golden Masters（金大师）指集齐全部九站 ATP 大师赛。"
+            "吉尼斯世界纪录有正式条目，ATP 官网专门发稿。德约科维奇 2018 年"
+            "在辛辛那提第一个完成（2020 年又完成一遍）；辛纳 2026-05-17 在罗马"
+            "6-4 6-4 胜鲁德完成，24 岁，史上最年轻，用时 33 个月最快。",
+            "男子九站与女子十站**只有六站重合**：男子独有蒙特卡洛、上海、巴黎，"
+            "女子独有多哈、迪拜、北京、武汉。两边的差异不是细节，是小半张表。",
+            "女子那张表逐年在变：2021 创立（北京、武汉当年取消），"
+            "2022 全年只有八站（武汉换成瓜达拉哈拉，迪拜不在表上），"
+            "2023 北京回来，2024 全部改成强制、武汉回归、多哈与迪拜同时转正——"
+            "十站到这一年才定型。",
+            "⚠️ 没有官方口径能回答「谁拿满过」，所以片子里那把尺子是自己定的，"
+            "并且在片中明说：按今天这十个场地数，不管当年那一站是什么级别。"
+            "斯瓦泰克八站（缺迪拜、武汉），小威廉姆斯七站（缺多哈、迪拜、武汉）。"
+            "⚠️ 「历史上没有第三个人到过八站」没有穷举，片子里一个字都不写。",
+            "男子那张表也不是永远不变：九站是 2009 年上海顶掉汉堡那年定的型，"
+            "到 2026 年十七年没变过；而 ATP 已于 2025-10-23 宣布，"
+            "2028 年沙特将加入，成为第十站。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2026-05-17", player="辛纳", age="2026 罗马决赛",
+                headline="6-4 6-4 胜鲁德，成为第二个金大师",
+                detail=(
+                    "24 岁，史上最年轻完成金大师，用时 33 个月最快；"
+                    "同时是 50 年来第一个夺得罗马冠军的意大利男子。"
+                ),
+                source_url="https://en.wikipedia.org/wiki/ATP_Masters_1000_tournaments",
+            ),
+            ChampionMoment(
+                date="2026-08-13", player="斯瓦泰克", age="2026 加拿大站决赛",
+                headline="6-2 6-3 胜莱巴金娜，近一年来第一个冠军",
+                detail=(
+                    "多伦多，75 分钟。生涯第 26 冠、第 12 座 WTA1000，"
+                    "超过萨巴伦卡（11 座）升至该项历史第二。"
+                    "赛前她整个 2026 赛季一个决赛都没进过，排名掉到世界第八。"
+                ),
+                source_url=(
+                    "https://www.wtatennis.com/news/4559201/swiatek-ends-"
+                    "yearlong-title-drought-in-toronto-after-sweeping-past-"
+                    "rybakina-in-straight-sets"
+                ),
+            ),
+        ),
+        image_keys=(),
+        image_credit="WTA 官方图库 · 2026 加拿大站多伦多，斯瓦泰克捧杯",
+        source_url="https://en.wikipedia.org/wiki/ATP_Masters_1000_tournaments",
+        source_label="维基 ATP Masters 1000 / WTA 1000 两页、WTA 官网赛后稿、吉尼斯世界纪录",
+    ),
+    _trivia_story(
+        slug="tour-balls",
+        title="四个星期，四种球",
+        subtitle="网球冷知识 · 器材篇",
+        identity="从阿尔卡拉斯缺席的那个夏天说起",
+        chips=("冷知识", "球的规格", "赞助合同"),
+        hero=(
+            "美网之前的四个星期，球员要打四种不一样的球——2023 赛季女子巡回赛"
+            "一共用过 10 个品牌、19 种型号。球打软了会变重，想打出原来的速度"
+            "就得自己加力，那份力压在手腕、肘和肩上。"
+        ),
+        facts=(
+            "2023 赛季女子巡回赛一共用过 10 个品牌、19 种型号的球，男子巡回赛"
+            "的数字与此相仿；弗里茨与阿尔卡拉斯都点过，美网之前的四周里要打"
+            "四种不同的球。选哪一家一直由每站赛事自行决定，属于赞助合同范畴。",
+            "⚠️ 没有任何一方证明过球与具体伤病之间的因果，片子里一律不写因果。"
+            "可核的只有：阿尔卡拉斯 2026-04-14 巴塞罗那首轮赛后手腕伤，诊断为"
+            "腱鞘炎，缺席法网、女王与温网，是他 2020 年打职业以来第一次缺席温网；"
+            "同期德约科维奇右手腕、诺里手腕、弗里茨前臂均有伤病记录。",
+            "ATP 与 WTA 在 2024 年澳网开赛前宣布对网球做战略评估，并说明 2025 年"
+            "之前不会有变化。此后两项落地：2025 年选球厂的权力从赛事收归统一指定；"
+            "挑战赛试行更勤的换球——首次换球由第 7 局提前到第 5 局，"
+            "此后由每 9 局改为每 7 局。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2026-04-14", player="阿尔卡拉斯", age="2026 巴塞罗那 R1",
+                headline="赢下比赛，手腕伤了",
+                detail=(
+                    "巴塞罗那首轮赛后手腕受伤，诊断为腱鞘炎，"
+                    "缺席法网、女王与温网；2020 年打职业以来第一次缺席温网。"
+                ),
+                source_url=(
+                    "https://www.skysports.com/tennis/news/12110/13545776/"
+                    "carlos-alcaraz-confirms-he-will-withdraw-from-wimbledon-"
+                    "due-to-wrist-injury"
+                ),
+            ),
+            ChampionMoment(
+                date="2024-01", player="ATP / WTA", age="2024 澳网开赛前",
+                headline="宣布战略评估，同时说 2025 年前不会变",
+                detail=(
+                    "两项巡回赛宣布对网球做一次战略评估；拉奥尼奇当时的评价是"
+                    "「感觉他们在把这件事往后拖」。2023 赛季女子巡回赛用过 "
+                    "10 个品牌、19 种型号。"
+                ),
+                source_url=(
+                    "https://www.nbcdfw.com/news/sports/tennis/"
+                    "can-too-many-tennis-ball-changes-cause-injuries-players-"
+                    "think-so-the-tours-are-checking/3437133/"
+                ),
+            ),
+            ChampionMoment(
+                date="2025", player="ATP", age="2025 赛季起",
+                headline="选球厂收归统一指定，挑战赛试更勤地换球",
+                detail=(
+                    "选球供应商由赛事各自决定改为统一指定；挑战赛试行首次换球"
+                    "由第 7 局提前到第 5 局、此后由每 9 局改为每 7 局。"
+                    "阿尔卡拉斯的诉求是全年所有赛事用同一种球。"
+                ),
+                source_url=(
+                    "https://tennisuptodate.com/atp/atp-takes-action-on-tennis-"
+                    "balls-as-players-search-for-solution-to-growing-injury-concerns"
+                ),
+            ),
+        ),
+        image_keys=(),
+        source_label="AP / NBC · ATP 官方 · Sky Sports 综合整理",
+        image_credit="示意图 · 网球时差绘制",
+        source_url=(
+            "https://www.nbcdfw.com/news/sports/tennis/"
+            "can-too-many-tennis-ball-changes-cause-injuries-players-"
+            "think-so-the-tours-are-checking/3437133/"
+        ),
+    ),
+    _trivia_story(
         slug="cramp-timeout",
         title="抽筋，为何叫不来暂停",
         subtitle="网球冷知识 · 规则篇",
