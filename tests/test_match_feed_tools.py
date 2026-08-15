@@ -7,6 +7,7 @@
 
 from __future__ import annotations
 
+import json
 import sys
 from pathlib import Path
 
@@ -162,8 +163,10 @@ def test_破发点兑现率():
     sh = _stat_hooks()
     idx = sh.index_stats([("Match", "Return", "Break Points Converted", "6/8", "7/13")])
     out = sh.break_point_conversion(idx, "麦克纳莉", "伊埃拉")
-    assert {"label": "麦克纳莉 破发点兑现", "detail": "6/8（75%）"} in out
-    assert {"label": "伊埃拉 破发点兑现", "detail": "7/13（54%）"} in out
+    assert {"label": "麦克纳莉 破发点兑现", "detail": "6/8（75%）",
+            "source": "flashscore df_st_1（破发点）"} in out
+    assert {"label": "伊埃拉 破发点兑现", "detail": "7/13（54%）",
+            "source": "flashscore df_st_1（破发点）"} in out
 
 
 def _alternating(pattern_home: str, pattern_away: str) -> list[dict]:
@@ -299,3 +302,152 @@ def test_h2h一场都没有返回None不是抛错(monkeypatch):
                         lambda name, mid: "SA÷2¬~KA÷All surfaces¬"
                         "~KB÷Head-to-head matches¬")
     assert sh.h2h_candidate("CUR00001") is None
+
+
+# ---------- match_stat_hooks --from-spec ----------
+
+
+def test_from_spec读spec取id和中文名(tmp_path):
+    """`--from-spec` 的机械半截：从 spec 里抽出 flashscore_id 和两个中文名。"""
+    sh = _stat_hooks()
+    spec = {"_match": {"flashscore_id": "ABC123"},
+            "cover": {"matchup": [{"name": "商竣程"}, {"name": "卢布列夫"}]}}
+    (tmp_path / "demo.json").write_text(json.dumps(spec, ensure_ascii=False),
+                                        encoding="utf-8")
+    got = sh.load_spec_slug("demo", tmp_path)
+    assert got == {"slug": "demo", "flashscore_id": "ABC123",
+                   "home": "商竣程", "away": "卢布列夫"}
+
+
+def test_from_spec缺flashscore_id报错并指路(tmp_path):
+    """缺 id 要报错指路，不静默空跑——「找不到 id」和「这场没数据」不一样。"""
+    sh = _stat_hooks()
+    (tmp_path / "demo.json").write_text(
+        json.dumps({"cover": {"matchup": [{"name": "甲"}, {"name": "乙"}]}},
+                   ensure_ascii=False), encoding="utf-8")
+    with pytest.raises(KeyError, match="flashscore_id"):
+        sh.load_spec_slug("demo", tmp_path)
+
+
+def test_from_spec找不到spec报错(tmp_path):
+    """slug 拼错要出声，别让调用方以为「这场没有狠数据」。"""
+    sh = _stat_hooks()
+    with pytest.raises(FileNotFoundError):
+        sh.load_spec_slug("no-such-slug", tmp_path)
+
+
+def test_狠数据候选都带来源标注():
+    """每条候选必须带 source——「写进 _facts 可机械回查」的前提是来源在场。
+    判据是字段在场，不是具体文案。"""
+    sh = _stat_hooks()
+    e = lambda num=None, den=None, pct=None, raw="": {  # noqa: E731
+        "raw": raw, "pct": pct, "num": num, "den": den}
+    idx = {
+        ("Match", "Total Points Won"): (e(60), e(56)),
+        ("Set 1", "1st serve points won"): (e(32, 40, 80, "80% (32/40)"),
+                                            e(28, 40, 70, "70% (28/40)")),
+        ("Set 2", "1st serve points won"): (e(16, 40, 40, "40% (16/40)"),
+                                            e(28, 40, 70, "70% (28/40)")),
+        ("Match", "Break Points Converted"): (e(4, 10), e(2, 8)),
+    }
+    games = [{"server": "home", "winner": "home"},
+             {"server": "away", "winner": "away"},
+             {"server": "home", "winner": "home"},
+             {"server": "away", "winner": "away"},
+             {"server": "home", "winner": "home"},
+             {"server": "away", "winner": "away"},
+             {"server": "home", "winner": "home"}]
+    got = []
+    tp = sh.total_points_gap(idx, "甲", "乙")
+    assert tp is not None
+    got.append(tp)
+    got += sh.first_serve_swing(idx, "甲", "乙")
+    got += sh.break_point_conversion(idx, "甲", "乙")
+    got += sh.longest_streaks(games, "甲", "乙")
+    assert got, "这套合成数据至少该出几条候选，先修数据别改判据"
+    for c in got:
+        assert c.get("source"), f"{c['label']} 缺来源标注"
+
+
+def test_from_spec主入口把id和名字喂给collect(monkeypatch, capsys):
+    """主入口的接缝：--from-spec 解出的三个值必须原样进 collect。"""
+    import sys as _sys
+    sh = _stat_hooks()
+    called = {}
+    monkeypatch.setattr(sh, "load_spec_slug",
+                        lambda slug, specs_dir=None: {
+                            "slug": slug, "flashscore_id": "FS01",
+                            "home": "甲", "away": "乙"})
+    monkeypatch.setattr(sh, "collect",
+                        lambda mid, home, away: called.update(
+                            mid=mid, home=home, away=away) or
+                        {"candidates": [], "durations": []})
+    old_argv = _sys.argv
+    _sys.argv = ["match_stat_hooks.py", "--from-spec", "some-slug"]
+    try:
+        rc = sh.main()
+    finally:
+        _sys.argv = old_argv
+    assert rc == 0
+    assert called == {"mid": "FS01", "home": "甲", "away": "乙"}
+    out = capsys.readouterr().out
+    assert "FS01" in out and "some-slug" in out
+
+
+# ---------- match_feed._get 重试（只重试"没送到"） ----------
+
+
+def _match_feed():
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import match_feed  # noqa: PLC0415
+
+    return match_feed
+
+
+class _FakeResp:
+    def __init__(self, body: bytes):
+        self._body = body
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *exc):
+        return False
+
+    def read(self) -> bytes:
+        return self._body
+
+
+def test_match_feed网络抖动会重试而不是裸崩(monkeypatch):
+    """`_get` 只重试「没送到」：前两次 IncompleteRead（网络截断）、第三次
+    成功，要返回数据。一次抖动就裸崩会把 `--from-spec` 整条带倒——
+    2026-08-14 真实踩过，这不是纸面规矩。"""
+    import http.client
+    mf = _match_feed()
+    calls = {"n": 0}
+
+    def flaky(*_a, **_k):
+        calls["n"] += 1
+        if calls["n"] < 3:
+            raise http.client.IncompleteRead(b"", 10)
+        return _FakeResp(b"ok")
+
+    monkeypatch.setattr(mf.urllib.request, "urlopen", flaky)
+    assert mf._get("http://example.test/feed") == b"ok"
+    assert calls["n"] == 3
+
+
+def test_match_feed的4xx是明确拒绝不重试(monkeypatch):
+    """HTTP 4xx 是「没有这场/被挡」，重试只会把同一个 404 再问三遍——
+    当场 SystemExit，一次都不多试。"""
+    mf = _match_feed()
+    calls = {"n": 0}
+
+    def denied(*_a, **_k):
+        calls["n"] += 1
+        raise mf.urllib.error.HTTPError("http://x", 404, "Not Found", {}, None)
+
+    monkeypatch.setattr(mf.urllib.request, "urlopen", denied)
+    with pytest.raises(SystemExit):
+        mf._get("http://example.test/feed")
+    assert calls["n"] == 1

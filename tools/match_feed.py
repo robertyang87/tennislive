@@ -43,9 +43,11 @@
 from __future__ import annotations
 
 import argparse
+import http.client
 import json
 import re
 import sys
+import time
 import urllib.error
 import urllib.request
 
@@ -65,15 +67,33 @@ AO_DAY = ("https://prod-scores-api.ausopen.com/year/{year}/period/{period}"
           "/day/{day}/results")
 
 
-def _get(url: str, headers: dict | None = None, data: bytes | None = None) -> bytes:
+def _get(url: str, headers: dict | None = None, data: bytes | None = None,
+         attempts: int = 3) -> bytes:
+    """拉一个 feed。**只重试「没送到」**：网络异常和 HTTP 5xx 是抖动，重试；
+    HTTP 4xx 是明确拒绝（404 不存在 / 403 被挡），当场 SystemExit——
+    别把「被挡」重试成「它在路上」。一次 IncompleteRead 就裸崩会把整条
+    `match_stat_hooks --from-spec` 带倒（2026-08-14 实测踩过）。
+    """
     req = urllib.request.Request(url, data=data, headers={
         "User-Agent": UA, "Accept": "*/*", **(headers or {})})
-    try:
-        with urllib.request.urlopen(req, timeout=40) as fh:
-            return fh.read()
-    except urllib.error.HTTPError as exc:
-        raise SystemExit(f"{url}\n  HTTP {exc.code} —— 被挡还是不存在，"
-                         f"看状态码和 Content-Type，别当成「没有这场」") from exc
+    for i in range(attempts):
+        try:
+            with urllib.request.urlopen(req, timeout=40) as fh:
+                return fh.read()
+        except urllib.error.HTTPError as exc:
+            if 500 <= exc.code < 600 and i + 1 < attempts:
+                time.sleep(0.5 * (i + 1))
+                continue
+            raise SystemExit(f"{url}\n  HTTP {exc.code} —— 被挡还是不存在，"
+                             f"看状态码和 Content-Type，别当成「没有这场」") from exc
+        except (urllib.error.URLError, TimeoutError, ConnectionError,
+                http.client.HTTPException) as exc:
+            if i + 1 >= attempts:
+                raise SystemExit(
+                    f"{url}\n  连了 {attempts} 次都失败（{type(exc).__name__}）"
+                    f"——网络抖动还是被挡，别当成「没有这场」") from exc
+            time.sleep(0.5 * (i + 1))
+    raise SystemExit(f"{url}\n  连了 {attempts} 次都失败")
 
 
 def fs_feed(name: str, match_id: str) -> str:

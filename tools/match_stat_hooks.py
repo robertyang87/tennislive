@@ -15,6 +15,12 @@
 用法：
 
     python tools/match_stat_hooks.py QsT5YnEa --home 麦克纳莉 --away 伊埃拉
+    python tools/match_stat_hooks.py --from-spec shang-rublev   # 从 spec 读 id 和对阵名
+
+`--from-spec <slug>` 读 `specs/reels/<slug>.json` 的 `_match.flashscore_id` 和
+`cover.matchup` 两个名字，免去手动翻 id——写 spec 时动笔前先跑这一条（四问自查
+第①问的机械半截：算出候选，挑不挑仍是人的事）。spec 缺 flashscore_id 时报错并
+指出去哪拿，不静默空跑。
 
 产出的候选（不是每场都会全部凑齐，字段覆盖率随赛事级别浮动）：
 - **总分差**：`[Match/Points] Total Points Won` 算出来的净差
@@ -92,6 +98,7 @@ def total_points_gap(idx: dict, home: str, away: str) -> dict | None:
         "label": "总分差",
         "detail": f"{home} {h} - {away} {a}，净差 {diff} 分" + (f"，{leader} 领先" if leader else "，打平"),
         "diff": diff,
+        "source": "flashscore df_mh_1（总分）",
     }
 
 
@@ -113,7 +120,8 @@ def first_serve_swing(idx: dict, home: str, away: str,
         swing = max(pcts) - min(pcts)
         if swing >= threshold:
             detail = " → ".join(f"第{n}盘{p}%" for n, p in seq)
-            out.append({"label": f"{name} 一发得分率摆动", "detail": detail, "swing": swing})
+            out.append({"label": f"{name} 一发得分率摆动", "detail": detail,
+                        "swing": swing, "source": "flashscore df_st_1（分盘一发得分率）"})
     return out
 
 
@@ -126,7 +134,8 @@ def break_point_conversion(idx: dict, home: str, away: str) -> list[dict]:
         v = row[0 if who == "home" else 1]
         if v["num"] is not None and v["den"]:
             pct = round(v["num"] / v["den"] * 100)
-            out.append({"label": f"{name} 破发点兑现", "detail": f"{v['num']}/{v['den']}（{pct}%）"})
+            out.append({"label": f"{name} 破发点兑现", "detail": f"{v['num']}/{v['den']}（{pct}%）",
+                        "source": "flashscore df_st_1（破发点）"})
     return out
 
 
@@ -155,7 +164,8 @@ def longest_streaks(games: list[dict], home: str, away: str,
                 run = run + 1 if held == want_hold else 0
                 best = max(best, run)
             if best >= threshold:
-                out.append({"label": f"{name} {label}", "detail": f"{best} 个发球局"})
+                out.append({"label": f"{name} {label}", "detail": f"{best} 个发球局",
+                            "source": "flashscore df_mh_1（逐局）"})
     return out
 
 
@@ -238,7 +248,7 @@ def h2h_candidate(match_id: str) -> dict | None:
     detail = " · ".join(parts)
     if total["unmarked"]:
         detail += f"（另有 {total['unmarked']} 场赢家标记缺失，没算进去）"
-    return {"label": "交手记录", "detail": detail}
+    return {"label": "交手记录", "detail": detail, "source": "flashscore df_hh_1"}
 
 
 def collect(match_id: str, home: str, away: str) -> dict:
@@ -257,26 +267,78 @@ def collect(match_id: str, home: str, away: str) -> dict:
     return {"candidates": candidates, "durations": durations(match_id)}
 
 
+def load_spec_slug(slug: str, specs_dir: Path | None = None) -> dict:
+    """读一条 reel spec，抽出 `--from-spec` 要的三个字段。
+
+    Returns: {"slug", "flashscore_id", "home", "away"}（home/away 是中文名）
+    Raises:
+        FileNotFoundError —— spec 文件不存在（slug 拼错 / 不在 specs/reels/）
+        KeyError —— 缺 `_match.flashscore_id` 或 `cover.matchup` 不足两人，
+                    错误信息里指出去哪拿 id，不让调用方瞎猜。
+    """
+    if specs_dir is None:
+        specs_dir = Path(__file__).resolve().parent.parent / "specs" / "reels"
+    path = Path(specs_dir) / f"{slug}.json"
+    if not path.exists():
+        raise FileNotFoundError(
+            f"找不到 spec：{path}。slug 拼错？还是这条片子的 spec 在别的目录？")
+    data = json.loads(path.read_text(encoding="utf-8"))
+    fs_id = (data.get("_match") or {}).get("flashscore_id")
+    if not fs_id:
+        raise KeyError(
+            f"{path.name} 没有 _match.flashscore_id。先用 "
+            "`python tools/match_feed.py find --tour <atp|wta> --event <站点> --who <球员>` "
+            "拿到比赛 id，补进 spec 再跑。")
+    matchup = (data.get("cover") or {}).get("matchup") or []
+    if len(matchup) < 2 or not matchup[0].get("name") or not matchup[1].get("name"):
+        raise KeyError(f"{path.name} 的 cover.matchup 缺对阵双方的名字（至少两人）。")
+    return {
+        "slug": slug,
+        "flashscore_id": fs_id,
+        "home": matchup[0]["name"],
+        "away": matchup[1]["name"],
+    }
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
-    ap.add_argument("match_id")
+    ap.add_argument("match_id", nargs="?", default=None,
+                    help="flashscore 比赛 id；给了 --from-spec 就不用给")
+    ap.add_argument("--from-spec", metavar="SLUG", default=None,
+                    help="从 specs/reels/<slug>.json 读 flashscore_id 和对阵名")
     ap.add_argument("--home", default="主队")
     ap.add_argument("--away", default="客队")
     ap.add_argument("--json", action="store_true")
     args = ap.parse_args()
 
-    result = collect(args.match_id, args.home, args.away)
+    if args.from_spec:
+        try:
+            meta = load_spec_slug(args.from_spec)
+        except (FileNotFoundError, KeyError) as e:
+            print(f"错误：{e}", file=sys.stderr)
+            return 2
+        match_id, home, away = meta["flashscore_id"], meta["home"], meta["away"]
+        header = (f"spec: specs/reels/{meta['slug']}.json\n"
+                  f"对阵: {home} vs {away}（flashscore_id: {match_id}）")
+    elif args.match_id:
+        match_id, home, away = args.match_id, args.home, args.away
+        header = f"对阵: {home} vs {away}（flashscore_id: {match_id}）"
+    else:
+        ap.error("要给出 match_id，或 --from-spec <slug>")
+
+    result = collect(match_id, home, away)
     if args.json:
         print(json.dumps(result, ensure_ascii=False, indent=2))
         return 0
 
+    print(header)
     if not result["candidates"]:
         print("没算出候选——这场的分盘统计字段可能没铺全（越低级别赛事越常见），"
               "不代表没有值得写的数字，去 `match_feed.py show` 的原始输出里人工翻一遍")
     else:
         print(f"{len(result['candidates'])} 条候选（不是判定，挑哪条、怎么写仍然是人的事）：")
         for c in result["candidates"]:
-            print(f"  [{c['label']}] {c['detail']}")
+            print(f"  [{c['label']}] {c['detail']}  ← {c.get('source', '')}")
     print("\n分盘用时：")
     for name, t in result["durations"]:
         print(f"  {name}: {t}")
