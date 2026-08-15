@@ -9146,7 +9146,8 @@ def test_顶栏比分逐盘上色赢盘绿输盘灰():
     reel = _reel()
     # 萨巴伦卡赢下整场；result "6-3 4-6 6-4" 是赢家视角：第二盘她输了（4<6）
     line = reel.colorize_topbar_score("萨巴伦卡 6-3 4-6 6-4 张帅")
-    assert line.startswith("萨巴伦卡 ")
+    # 赢家名字挂高亮（2026-08-15 起），输家名字仍然一个标签都不沾
+    assert line.startswith(f"{reel.TOPBAR_WINNER_ASS}萨巴伦卡")
     assert line.endswith(" 张帅")
     # 第一盘 6-3：赢家那一盘也赢了，左边（6）应该是 setwin 色；
     # 连字符压暗（和比分板 `.setdash` 同一个理由），整盘结束才复位。
@@ -9165,15 +9166,39 @@ def test_顶栏上色带抢七小分():
 
 def test_顶栏上色不会把人名当成比分():
     reel = _reel()
-    # 人名里没有 "数字-数字" 这个形状，_SET_RE 匹配不上，原样穿过
+    # 人名里没有 "数字-数字" 这个形状，_SET_RE 匹配不上，不会被当成一盘比分
     line = reel.colorize_topbar_score("萨巴伦卡 6-3 张帅")
-    # 名字必须**一个标签都不沾**地穿过去
-    assert line.startswith("萨巴伦卡 ") and line.endswith(" 张帅"), \
-        f"名字被套上颜色标签了——_SET_RE 不该匹配人名：{line}"
-    # 只有一盘 → 只上一次赢盘色。⚠️ 这儿不数 `TOPBAR_RESET_ASS`：输盘色现在
-    # 就等于正文色（2026-08-09 起「输盘不压暗」），两个常量是同一个字符串，
-    # 数它等于把「盘末复位」和「输盘上色」混在一起数。
-    assert line.count(reel.TOPBAR_SETWIN_ASS) == 1, f"只有一盘，赢盘色只该上一次：{line}"
+    # **输家的名字一个标签都不沾**地穿过去
+    assert line.endswith(" 张帅"), \
+        f"输家名字被套上标签了——_SET_RE 不该匹配人名：{line}"
+    # 赢家的名字整块高亮，而且是**当成名字**高亮的，不是被拆成"比分"上色：
+    # 名字和它的高亮标签之间不许插进 setdash（那是比分里连字符的颜色）
+    assert line.startswith(f"{reel.TOPBAR_WINNER_ASS}萨巴伦卡{reel.TOPBAR_RESET_ASS}"), \
+        f"赢家名字没有整块高亮：{line}"
+    assert reel.TOPBAR_SETDASH_ASS not in line.split(" ")[0], \
+        f"名字被按比分拆开上色了：{line}"
+
+
+def test_顶栏赢家名字整块高亮而且没有比分就不涂():
+    """账号所有者 2026-08-15：「赢球的球员名字要高亮出来」。
+
+    两头都要钉：
+
+    1. **名字里有空格也整块高亮。** `split(" ")[0]` 会把带空格的译名劈成两半，
+       高亮半个名字比不高亮更难看——**而且不报错**。
+    2. **一盘比分都没有就一个字都不涂。** 那时"开头那一串非比分 token"正好是
+       整行，照着涂就是把整行刷绿，同样不报错。
+    """
+    reel = _reel()
+    win = reel.TOPBAR_WINNER_ASS
+
+    two = reel.colorize_topbar_score("大 威廉姆斯 6-3 6-4 阿朗戈")
+    assert two.startswith(f"{win}大 威廉姆斯{reel.TOPBAR_RESET_ASS}"), \
+        f"带空格的名字没有整块高亮：{two}"
+
+    for plain in ("完全没有比分的一行", "退赛", "甲 乙"):
+        assert reel.colorize_topbar_score(plain) == plain, \
+            f"这一行里一盘比分都没有，不该涂任何颜色：{plain}"
 
 
 def test_顶栏配色跟着比分板走():
@@ -9313,7 +9338,11 @@ def test_顶栏复位不许用r否则脉冲被清掉(tmp_path):
              "-i", "color=c=black:s=1080x1440:d=20:r=25",
              "-vf", f"subtitles={ass}",
              "-ss", str(second), "-frames:v", "1", str(png)], check=True)
-        band = np.asarray(pil.open(png).convert("RGB"))[80:150, :, :]
+        # ⚠️ 取样带从常量推，别写死行号。原来这儿是 `[80:150]`，而
+        # `TOPBAR_BODY_TOP` 2026-08-15 从 92 收到了 72——写死的带子会从上边
+        # 切掉第二行的头几行像素，而**它只会让量出来的宽度小一点，不会报错**。
+        top = reel.TOPBAR_BODY_TOP - 2
+        band = np.asarray(pil.open(png).convert("RGB"))[top:top + 80, :, :]
         cols = np.where(band.sum(axis=2) > 60)[1]
         assert cols.size, f"{second}s 这一帧 BODY 行没渲出任何字"
         return int(cols.max() - cols.min())
@@ -9329,6 +9358,65 @@ def test_顶栏复位不许用r否则脉冲被清掉(tmp_path):
     # 另一头：上色本身没被这个修法弄丢
     text = ass.read_text(encoding="utf-8")
     assert reel.TOPBAR_SETWIN_ASS in text and reel.TOPBAR_SETLOSE_ASS in text
+
+
+def test_顶栏盒子要装得下两行字并且留出余量(tmp_path):
+    """账号所有者 2026-08-15：「顶部比分栏高度建议再调小一些」。150 → 126。
+
+    **收的是留白，不是字号**——量出来那 150px 里只有 101px 是字（第一行墨迹
+    27~71、第二行 99~128），一半以上是留白。顶栏是全片曝光最长的元素，缩字号
+    是拿可读性换高度。
+
+    这条判据钉的不是「等于 126」，是**「还装得下」**：把一个量出来的数写死，
+    下一个人想再调就只能改判据，而改判据的人不会知道 126 是怎么来的。所以它
+    真渲一帧量墨迹，只要求三处留白都还在。谁把 `TOPBAR_H` 再往下调到字贴边、
+    或者反过来把字号调大到撑破盒子，都会在这儿红。
+
+    ⚠️ **必须带 `fontsdir`**，和 `topbar_filtergraph` 一样：不带的话字体解析
+    看这台机器上装了什么，量出来的行高在沙箱和 CI 上不是一回事。
+    """
+    import shutil  # noqa: PLC0415
+    import subprocess  # noqa: PLC0415
+
+    reel = _reel()
+    assert shutil.which("ffmpeg"), "没有 ffmpeg，这条判据跑不了：apt install ffmpeg"
+    np = pytest.importorskip("numpy")
+    pil = pytest.importorskip("PIL.Image")
+
+    fonts = Path("assets/fonts").resolve()
+    ass = reel.write_topbar_ass(("WTA1000 辛辛那提 第一轮", "王曦雨 6-0 3-0 季莫费耶娃"),
+                                0.0, 2.0, tmp_path / "tb.ass")
+    png = tmp_path / "tb.png"
+    subprocess.run(
+        ["ffmpeg", "-v", "error", "-y", "-f", "lavfi",
+         "-i", f"color=c=black:s={reel.VIDEO_W}x{reel.VIDEO_H}:d=1",
+         "-vf", f"subtitles={ass}:fontsdir={fonts}",
+         "-frames:v", "1", str(png)], check=True)
+
+    # 逐行找墨迹，切成连续段；黑底上任何字都亮，阈值给低一点也不会误收
+    rows = np.asarray(pil.open(png).convert("L"))[: reel.TOPBAR_H + 60]
+    lit = np.where(rows.max(axis=1) > 40)[0]
+    assert lit.size, "顶栏一个字都没渲出来"
+    bands, start = [], lit[0]
+    for i in range(1, lit.size):
+        if lit[i] != lit[i - 1] + 1:
+            bands.append((int(start), int(lit[i - 1])))
+            start = lit[i]
+    bands.append((int(start), int(lit[-1])))
+    bands = [b for b in bands if b[1] - b[0] >= 3]
+
+    assert len(bands) == 2, (
+        f"顶栏应该正好两行字，量到 {len(bands)} 段：{bands}——"
+        "多半是两行挤到一起了（行间留白被调没），或者有一行没渲出来")
+    (h0, h1), (b0, b1) = bands
+    top_pad, mid_gap, bottom_pad = h0, b0 - h1, reel.TOPBAR_H - b1
+    where = (f"上留白 {top_pad}px、行间 {mid_gap}px、下留白 {bottom_pad}px"
+             f"（盒高 {reel.TOPBAR_H}，墨迹 {bands}）")
+    assert b1 < reel.TOPBAR_H, f"第二行已经戳出盒子外面了：{where}"
+    # 12px 是下界不是目标：现在是 21/16/19，还留着一档余量。实测 118px 那一版
+    # 是 15/16/17，看着已经是「挤」不是「紧」——所以下界压在它下面一点。
+    for name, got in (("上", top_pad), ("行间", mid_gap), ("下", bottom_pad)):
+        assert got >= 12, f"{name}留白只剩 {got}px，字快贴边了：{where}"
 
 
 def test_赛场之上的quote段不许是赛后采访():

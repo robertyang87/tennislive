@@ -59,7 +59,12 @@ def test_match_video_remains_full_bleed():
         1.8, 10.0, Path("topbar.ass"), Path("subtitles.ass")
     )
     assert "crop=1080:1440" in graph
-    assert "drawbox=x=0:y=0:w=iw:h=150" in graph
+    # ⚠️ **盒高从常量推，别写死。** 原来这儿是 `h=150`，而 `TOPBAR_H`
+    # 2026-08-15 收到了 126（账号所有者要顶栏矮一点）——写死的话，这条本来只
+    # 管「比赛画面有没有铺满」的判据会因为一次纯粹的版式调整而红，读的人还得
+    # 先弄明白 150 是打哪儿来的。顶栏该多高归
+    # `test_顶栏盒子要装得下两行字并且留出余量` 管，那条真渲一帧量墨迹。
+    assert f"drawbox=x=0:y=0:w=iw:h={build_match_reel.TOPBAR_H}" in graph
     assert "scale=-2:1290" not in graph
     assert "match_bg_src" not in graph
     assert "overlay=(W-w)/2" not in graph
