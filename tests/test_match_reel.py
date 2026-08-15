@@ -7045,6 +7045,24 @@ def _measured_narration() -> list[tuple[str, int, int, int, float]]:
         # 元数据。原来这儿写的是 `render_json["cover_seconds"]`，迁移完当场
         # KeyError——**加餐把整条测试带崩了**，而它本来的契约是「产物读不了
         # 就跳过」。
+        # ⚠️ **别的 TTS 后端渲出来的成片，不是今天这个模型的证据。** 系数按
+        # `SPEECH_FITTED_BACKEND` 拟合（现在是 Azure），而 2026-08-04 之前那
+        # 十三条走的是 edge-tts。同一把 `YunjianNeural`、同样 `+6%`，两个后端
+        # 的中位差 **0.6 秒**（edge +0.13 / azure −0.49）——混在一起校，量到的
+        # 是后端差不是模型差，而它长得就像「模型漂了」。2026-08-15 那次
+        # `abs(mid) <= 0.4` 报红就是这么来的：老系数对 edge-tts 一直准
+        # （中位 +0.04），只是 Azure 占了 81% 把池化中位数拖过了线。
+        #
+        # 没记 `narration_backend` 的一律算「对不上」：那个字段是和 Azure 一起
+        # 加进来的，缺它就说明这条渲在切换之前。**跳过要出声**，否则「这批不算
+        # 数」和「取法写错了」长得一模一样——下面 `len(live) >= 60` 那道底也是
+        # 为这个留的。
+        backend = render_json.get("narration_backend")
+        if "cover_seconds" in render_json and backend != reel.SPEECH_FITTED_BACKEND:
+            print(f"  [跳过] {outdir.name} 是 {backend or '(没记后端)'} 渲的，"
+                  f"而系数按 {reel.SPEECH_FITTED_BACKEND} 拟合——"
+                  "换后端的成片校不了这个模型")
+            continue
         offset = render_json.get("cover_seconds")
         if offset is None:
             print(f"  [跳过] {outdir.name} 的 render.json 只有 Release 链接，"
@@ -7137,34 +7155,39 @@ def _measured_narration() -> list[tuple[str, int, int, int, float]]:
     return out
 
 
-# 从上面那套办法里挑出来冻结的一份，按字数从短到长铺开（2.95s ~ 17.57s）。
+# 从上面那套办法里挑出来冻结的一份，按字数从短到长铺开（1.42s ~ 30.19s）。
 # **这一份必须留在测试里**：`output/` 在 CI 上不存在，判据的主语没了就会变成
 # 一盏恒真的绿灯——2026-08-01 那次「只校到 0 条」就是这么来的。
+#
+# ⭐ 2026-08-15 **整张表换过一次**：原来那 17 条里 16 条是 edge-tts 渲的，而
+# 系数已经按 Azure 重拟合（见 `build_match_reel.py` 里 `SPEECH_FITTED_BACKEND`
+# 上面那段）。**留着它们等于让 CI 拿一个已经不生产任何东西的后端来判卷**——
+# 老样本在新系数下中位 +0.60、最坏 2.37，两条断言一起红，而模型对今天的产物
+# 是准的。所以表跟着系数走：现在每一条都出自 `narration_backend == "azure"`
+# 的成片，取法和以前一样（按字数铺开 + 两头的极端）。
 _SPEECH_FIXTURE = [
-    ("gea-shapovalov", 0, 8, 3, 2.95),
-    ("eala-pegula", 12, 13, 2, 3.48),
-    ("eala-pegula", 7, 18, 3, 5.02),
-    ("wong-brooksby", 2, 20, 3, 5.33),
-    ("eala-pegula", 9, 23, 4, 6.41),
-    ("jodar-fritz", 16, 25, 5, 6.70),
-    ("eala-pegula", 0, 29, 6, 7.87),
-    ("jodar-fritz", 0, 32, 6, 8.21),
-    ("jodar-fritz", 6, 35, 5, 8.54),
-    ("hewitt-washington", 9, 39, 5, 9.92),
-    ("zheng-lanlana", 14, 43, 5, 10.15),
-    ("gea-shapovalov", 6, 50, 8, 11.18),
-    ("gea-shapovalov", 3, 60, 9, 13.90),
-    ("gea-shapovalov", 4, 81, 10, 17.57),
+    ("eala-story", 16, 4, 1, 1.42),
+    ("chwalinska-gibson", 7, 14, 2, 3.48),
+    ("rybakina-osaka", 5, 17, 2, 3.94),
+    ("svitolina-alexandrova", 5, 20, 3, 4.82),
+    ("zhang-sabalenka", 5, 23, 4, 6.12),
+    ("eala-story", 2, 25, 3, 5.57),
+    ("gauff-korneeva", 2, 27, 3, 5.88),
+    ("zverev-griekspoor", 9, 29, 4, 6.89),
+    ("osaka-fernandez", 2, 31, 4, 7.06),
+    ("wangxiyu-timofeeva", 1, 33, 6, 7.42),
+    ("eala-story", 6, 37, 3, 7.94),
+    ("wangxiyu-timofeeva", 6, 42, 6, 9.10),
+    ("baez-dimitrov", 9, 50, 7, 12.10),
+    # 长的那一头也要有：154 字是目前最长的一段，短样本再多也证明不了长句上
+    # 系数没跑偏（老系数正是「长段估得太长」栽的，见 speech_seconds 的注释）。
+    ("swiatek-rybakina-toronto-final", 7, 154, 13, 30.19),
     # 两头的极端也要在表里——**样本不带尾巴，误差带子就没法自证不虚高**。
-    # 121 段里最偏的就这两条（−1.27 / +1.42）。
-    ("gea-shapovalov", 5, 67, 10, 14.40),
-    ("wong-gea", 3, 42, 9, 12.67),
-    # 2026-08-11：cincinnati-story 第 3 段（Azure 比 edge-tts 快，见
-    # build_match_reel.py 的 SPEECH_EST_ERR 注释），当前样本表里最偏的一条
-    # （−2.07s）。不把它收进来的话，SPEECH_EST_ERR 调到能盖住它，就会撞上
-    # 「不许比冻结样本最坏还宽出半秒」那道自检——两条闸互相打架，闸本身就
-    # 失效了。
-    ("cincinnati-story", 3, 60, 8, 11.64),
+    # 580 段里最偏的就这两条（−1.49 / +1.64），而 `SPEECH_EST_ERR` 正是按
+    # 后者定的：漏掉它，那道「不许比冻结样本最坏还宽出半秒」的自检会当场
+    # 把带子判成虚高——两条闸互相打架，闸本身就失效了。
+    ("rybakina-osaka", 6, 44, 4, 7.54),
+    ("wang-kasatkina", 11, 34, 6, 9.65),
 ]
 
 
