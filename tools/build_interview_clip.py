@@ -964,6 +964,10 @@ def segment(words: list[tuple[float, str]], start: float, end: float,
 # ⚠️ 代价是她举起的手偶尔会贴到画面边缘。要更保险就把 `CROP_RATIO` 调到 16/9。
 CANVAS_W, CANVAS_H = 1080, 1440
 CROP_RATIO = 4 / 3
+# `crop_shift_x` 的上限。16:9 的源片上 4:3 窗口两边各只剩 0.125 的余量，
+# 再挪窗口就出界了——**而 ffmpeg 会把出界的窗口夹回边上，画面照样出得来**，
+# 只是没挪到你要的位置。这种错不吭声，所以在这儿拦。
+CROP_SHIFT_MAX = 0.125
 # 顶栏。**原来这 150px 是空的**——账号所有者：「建议顶部文字说明当前是什么
 # 比赛的赛后采访，不然好多人不知道背景」。刷到中段的人只看见一个人在说话，
 # 不知道这是哪一站、哪一轮、谁跟谁。封面那一屏答得了，但它只出现 1.8 秒，
@@ -1026,6 +1030,44 @@ _MARK_COLOUR = r"\c&H8CDC4A&"
 # 不放大会显得比旁边的名字小一号。38 是渲出来比的（32 偏小，44 就开始抢戏）。
 _SCORE_PX = 44
 _SCORE_TAGS = rf"\c&HFFFFFF&\fs{_SCORE_PX}"
+
+
+def wants_topbar(spec: dict) -> bool:
+    """这条片子印不印顶栏。**默认印**，关掉要显式认领。
+
+    账号所有者 2026-08-14（德约科维奇重返辛辛那提那条）：「不要顶部的比赛
+    信息提示栏」。理由不是版式口味，是**顶栏说的那句话在这条片子上不成立**：
+    它印的是「哪一站哪一轮、谁跟谁打成什么样」，而那条采访录在**这一站开打
+    之前**——没有轮次，没有对手，没有比分。照常印就是凭空造一场比赛出来。
+
+    ⚠️ **默认必须是「印」，关掉必须写理由。** 反过来做（默认不印、要印才写）
+    的后果是可预见的：绝大多数片子是赛后的，顶栏正是它们回答「这是哪一场」
+    的唯一出口（封面只有 1.2 秒，刷到中段的人没看过），而**漏写不会报错**，
+    只会安安静静少一整条信息。所以这里和 `mixed_fps` / `silent_source` /
+    `_layout_why` 是同一个形状：**认领这一步把「想清楚了」和「凑合一下」分开**。
+
+    ⚠️ **`"topbar": "false"`（字符串）要报错。** Python 里非空字符串是真值，
+    于是它的效果是**照常印顶栏**——而写的人以为自己关掉了。「悄悄没关掉」
+    和「本来就没想关」长得一模一样（CLAUDE.md 里 `push.auto` 那条栽过一次）。
+    """
+    if "topbar" not in spec:
+        return True
+    on = spec["topbar"]
+    if not isinstance(on, bool):
+        raise SystemExit(
+            f"{spec.get('slug', '?')} 的 `topbar` 写成了 {on!r}——只认真正的"
+            " `true` / `false`。\n"
+            "字符串 \"false\" 在 Python 里是**真值**，效果是照常印顶栏，"
+            "而你以为关掉了。")
+    if on:
+        return True
+    if not str(spec.get("_no_topbar_why", "")).strip():
+        raise SystemExit(
+            f"{spec.get('slug', '?')} 写了 `topbar: false` 却没写 `_no_topbar_why`。\n"
+            "顶栏是刷到中段的人唯一能回答「这是哪一场」的地方，关掉它要留下判据：\n"
+            '  "_no_topbar_why": "这条录在开打之前，没有轮次没有对手没有比分，'
+            '照常印等于凭空造一场比赛"')
+    return False
 
 
 def header_runs(spec: dict) -> tuple[list[tuple[str, str, str]], ...]:
@@ -1237,7 +1279,7 @@ def write_ass(lines: list[dict], zh: list[str], clip_start: float, path: Path,
     if bad := zh_problems(lines, zh):
         raise SystemExit("中文字幕过不了：\n  " + "\n  ".join(bad))
     ev = []
-    if spec is not None:
+    if spec is not None and wants_topbar(spec):
         # 顶栏一直挂着：整条片子从头到尾都要能回答「这是哪一场」。
         # 刷到中段的人没看过封面，而封面只有 1.8 秒。
         a, b = _ts(0.0), _ts(lines[-1]["b"] - clip_start)
@@ -2261,22 +2303,47 @@ def logo_mask(src: Path, box: list[float], dest: Path, mirrored: bool = False,
     return dest
 
 
-def _crop_expr(ratio: float, keep: float = 1.0) -> str:
+def _crop_expr(ratio: float, keep: float = 1.0, shift: float = 0.0) -> str:
     """裁切窗口。`keep` 是**从顶上往下保留多少**（1.0 ＝ 整幅）。
 
-    加它是为了**把角标裁掉**：伊埃拉那条场上采访只有一个转载有，画面右下角
-    盖着上传者的水印（翻转之后到左下角）。量出来它横向占 x 0.669–0.925，
-    翻转后 0.075–0.331，而 4:3 居中裁切保留的是 0.125–0.875——**几何上没有
-    一个 4:3 窗口能同时避开它和保住主体**，横着躲不掉。
+    `shift` 是窗口**横向挪多少**（源片宽度的比例，负数往左）。默认 0 ＝ 居中，
+    存量 spec 一个像素都不变。
+
+    **加它是为了裁掉右上角的台标**，而 `keep` 那一招在这儿使不上：`keep` 只能
+    从底下切，台标在顶上，竖着切就要切他的头。德约那条（Tennis TV 赛前专访）
+    量出来台标左沿在源片 x 0.823，而 4:3 居中窗口保留的是 0.125–0.875——
+    只差 0.052 就能整个躲开，**横着挪一下就够了，不用动版式的任何一个数**。
+
+    ⚠️ **为什么不用 `logo_box` 那条路**：`removelogo` 的掩膜是「连续 N 帧都亮在
+    同一处」的交集，而 Tennis TV 这个台标**不是每一帧都在**——实测
+    （run 31855069324）框里亮度峰值 245、单帧 1511 个像素亮于 170，
+    12 帧一取交集却是空的，那道「空掩膜就报错」的闸当场拦下。
+    **台标只要能被窗口躲开，就该躲开**：裁掉是确定的，补笔画是估计的。
+
+    ---
+    `keep` 加它是为了**把角标裁掉**：伊埃拉那条场上采访只有一个转载有，
+    画面右下角盖着上传者的水印（翻转之后到左下角）。量出来它横向占
+    x 0.669–0.925，翻转后 0.075–0.331，而 4:3 居中裁切保留的是 0.125–0.875
+    ——**几何上没有一个 4:3 窗口能同时避开它和保住主体**，横着躲不掉。
 
     但它贴着画面最底，**竖着裁得掉**：保留上 86% 就干净了（渲出来比过
     100% / 86% / 82% 三档），而裁掉的那一条是球场地面，人一点没动。
     窗口仍然是 `ratio`，只是整体变小，再缩放回同样的输出尺寸——**版式的
     几何一个数都不用改**。
+
+    ⚠️ **两个参数管的是两个方向，别互相顶替**：`keep` 竖着切（只能从底下切），
+    `shift` 横着挪。角标在底就用 `keep`，在左右上角就用 `shift`。
     """
+    if not -CROP_SHIFT_MAX <= shift <= CROP_SHIFT_MAX:
+        raise SystemExit(
+            f"`crop_shift_x` = {shift}，超出 ±{CROP_SHIFT_MAX}。\n"
+            "窗口挪出源片边界之后 ffmpeg 会把它夹回去——**画面照样出得来，"
+            "只是没挪到你要的位置**，而这种错不吭声。"
+            "16:9 的源片上 4:3 窗口两边各只剩 0.125 的余量。")
     h = f"ih*{keep:g}"
     w = f"ih*{ratio * keep:.6f}"
-    return f"crop={w}:{h}:(iw-{w})/2:0"
+    off = f"(iw-{w})/2" if not shift else f"(iw-{w})/2{shift:+.6f}*iw"
+    return f"crop={w}:{h}:{off}:0"
 
 
 def cover_poster(spec: dict, src: Path, outdir: Path, logo: str = "") -> Path:
@@ -2295,7 +2362,8 @@ def cover_poster(spec: dict, src: Path, outdir: Path, logo: str = "") -> Path:
                     "-ss", str(spec["cover"]["frame_at"]), "-i", str(src),
                     "-vf", (("hflip," if spec.get("mirrored") else "") + logo
                             + _crop_expr(spec.get("crop_ratio", CROP_RATIO),
-                                         float(spec.get("crop_keep_top", 1.0)))),
+                                         float(spec.get("crop_keep_top", 1.0)),
+                                         float(spec.get("crop_shift_x", 0.0)))),
                     "-frames:v", "1", "-q:v", "2", str(frame)], check=True, timeout=300)
     # **叫 `poster.jpg`，不叫 `cover.jpg`**：`push_reel.py` 只认这个名字，
     # 改名等于推送里少一整屏海报，而它**只会打印一行提示，不报错**。
@@ -2492,6 +2560,9 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
         logo = f"removelogo=filename={m},"
     flip = "hflip," if spec.get("mirrored") else ""
     keep = float(spec.get("crop_keep_top", 1.0))
+    # ⚠️ **两个调用点都要传。** 漏一个的表现是「成片裁对了、封面没裁」
+    # ——两张图分开看都正常，只有并排才发现台标还在封面上。
+    shift = float(spec.get("crop_shift_x", 0.0))
     chain = (
         # 垫底：**品牌深绿纯色**，不再从这一帧画面模糊出来——见 `_BG_COLOUR`
         # 上面那段注释。`d={dur}` 卡住这个虚拟源的时长：`color` 是无限长的
@@ -2500,7 +2571,7 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
         # `timeout=1800` 才被杀掉。
         f"color=c={_BG_COLOUR}:s={CANVAS_W}x{CANVAS_H}:d={dur}:r=25[bg];"
         # 前景：横向收边到 crop_ratio，再铺满画布宽度
-        f"[0:v]{flip}{logo}{_crop_expr(ratio, keep)},scale={CANVAS_W}:{vh}[fg];"
+        f"[0:v]{flip}{logo}{_crop_expr(ratio, keep, shift)},scale={CANVAS_W}:{vh}[fg];"
         f"[bg][fg]overlay=0:{VIDEO_TOP}[v];"
         # `fontsdir` 指向**仓库里的字体目录**（得意黑的 ttf 在那儿）。
         # 系统字体照旧走 fontconfig，思源黑体不受影响——`fontsdir` 是**追加**

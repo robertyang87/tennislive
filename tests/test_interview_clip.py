@@ -25,6 +25,8 @@ import pytest
 
 from tools.build_interview_clip import (
     CANVAS_H,
+    CROP_RATIO,
+    CROP_SHIFT_MAX,
     CAPTION_GAP_SECS,
     ROOT,
     caption_gaps,
@@ -33,10 +35,12 @@ from tools.build_interview_clip import (
     header_lines,
     review_sheet,
     segment,
+    wants_topbar,
     write_ass,
     zh_problems,
     _ASS_HEAD,
     _BAND_TOP,
+    _crop_expr,
     _EN_TOP,
     _FONT_FILES,
     _FONT_SIZE,
@@ -1147,6 +1151,106 @@ def test_顶栏从头挂到尾(tmp_path):
     assert all(",0:00:00.00," in r for r in head), "顶栏要从第 0 秒就在"
     end = _ts(lines[-1]["b"])
     assert all(end in r for r in head), f"顶栏要挂到最后一行结束（{end}）"
+
+
+def test_横着挪窗口能把右上角的台标裁掉(tmp_path):
+    """账号所有者 2026-08-15（德约那条 Tennis TV 赛前专访）：「最好把右上角的
+    tennistv logo 裁剪掉」。
+
+    **`keep` 在这儿使不上**：它只能从底下切，而台标在顶上，竖着切就要切他的头。
+    横着挪窗口是唯一躲得开的方向——4:3 窗口在 16:9 源片上保留 x 0.125–0.875，
+    而那个台标左沿量出来在 0.823，只差 0.052。
+
+    ⚠️ **为什么不走 `logo_box` / `removelogo`**：那条路的掩膜是「连续 N 帧都亮在
+    同一处」的交集，而这个台标**不是每一帧都在**——实测（run 31855069324）
+    单帧里 1511 个像素亮于 170、峰值 245，12 帧取完交集却是空的，
+    「空掩膜就报错」那道闸当场拦下。**能被窗口躲开的台标就该躲开**：
+    裁掉是确定的，补笔画是估计的。
+
+    **这条真跑一遍 ffmpeg**，不查表达式字符串——查字符串只能防「有人把它删了」，
+    防不住「它从来没工作过」（本仓库的老账）。
+    """
+    import numpy as np
+    from PIL import Image
+
+    src = tmp_path / "src.mp4"
+    # 深灰底 ＋ 右上角一个白块，位置照德约那条量到的：源片 x 0.83–0.97、y 0.04–0.10
+    subprocess.run(
+        ["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+         "-f", "lavfi", "-i", "color=c=0x303030:s=1920x1080:d=1",
+         "-vf", "drawbox=x=iw*0.83:y=ih*0.04:w=iw*0.14:h=ih*0.06:color=white@1:t=fill",
+         "-frames:v", "1", str(src)], check=True)
+
+    def white_pixels(shift):
+        out = tmp_path / f"{shift}.png"
+        subprocess.run(
+            ["ffmpeg", "-y", "-hide_banner", "-loglevel", "error", "-i", str(src),
+             "-vf", _crop_expr(CROP_RATIO, 1.0, shift) + ",scale=1080:810",
+             "-frames:v", "1", str(out)], check=True)
+        return int((np.asarray(Image.open(out).convert("L")) > 200).sum())
+
+    # ① 不挪＝台标还在。**先证明它在**，否则「挪完没有了」可能只是本来就没有
+    assert white_pixels(0.0) > 500, "测试片自己就没有台标，那下面那条断言是恒真的"
+    # ② 挪 0.06 ＝ 一个白像素都不剩
+    assert white_pixels(-0.06) == 0, "窗口左移之后台标该整个出框"
+
+    # ③ 默认那一支**一个字符都不许变**：存量 spec 全靠它
+    assert _crop_expr(CROP_RATIO) == _crop_expr(CROP_RATIO, 1.0, 0.0)
+    assert ":0" in _crop_expr(CROP_RATIO) and "iw" in _crop_expr(CROP_RATIO)
+    assert "+" not in _crop_expr(CROP_RATIO) and "-0." not in _crop_expr(CROP_RATIO)
+
+    # ④ 越界要报错。ffmpeg 会把出界的窗口**夹回边上**——画面照样出得来，
+    #    只是没挪到你要的位置，而这种错不吭声
+    with pytest.raises(SystemExit, match="crop_shift_x"):
+        _crop_expr(CROP_RATIO, 1.0, -(CROP_SHIFT_MAX + 0.01))
+
+    # ⑤ 两个调用点都要传。漏一个的表现是「成片裁对了、封面没裁」——
+    #    两张图分开看都正常，只有并排才发现台标还留在封面上
+    src_txt = (ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8")
+    assert src_txt.count('spec.get("crop_shift_x"') == 2, \
+        "封面和成片两条路都要读 `crop_shift_x`，漏一个就只裁一半"
+
+
+def test_关掉顶栏要显式认领而且默认不许变(tmp_path):
+    """账号所有者 2026-08-14（德约科维奇重返辛辛那提那条）：「不要顶部的比赛
+    信息提示栏」。理由不是版式口味——**顶栏印的那句话在那条片子上不成立**：
+    它答的是「哪一站哪一轮、谁跟谁打成什么样」，而那段采访录在这一站开打
+    **之前**，没有轮次、没有对手、没有比分，照常印等于凭空造一场比赛。
+
+    四头都要钉，缺一头这个开关就是个能把顶栏悄悄弄丢的洞：
+
+    1. **不写这个字段 = 一个字都不变。** 存量 spec 全靠这一条。
+    2. `topbar: false` ＋ `_no_topbar_why` → 真的不印。
+    3. `topbar: false` 却没写理由 → 报错。和 `mixed_fps` / `silent_source` /
+       `_layout_why` 同一个形状：**认领这一步把「想清楚了」和「凑合一下」分开**。
+    4. ⚠️ **`"false"`（字符串）要报错。** Python 里非空字符串是真值，所以它
+       的实际效果是**照常印顶栏**——而写的人以为关掉了。「悄悄没关掉」和
+       「本来就没想关」长得一模一样（CLAUDE.md 里 `push.auto` 那条栽过一次）。
+    """
+    lines = _lines(["one two", "three four"])
+    base = {"slug": "t", "event": "某站八强", "interview_kind": "赛后场上采访",
+            "push": {"matchup": "甲 vs 乙"}, "zh": ["一", "二"]}
+
+    def heads(spec):
+        path = tmp_path / f"{len(list(tmp_path.iterdir()))}.ass"
+        write_ass(lines, spec["zh"], 0.0, path, spec)
+        return [r for r in path.read_text(encoding="utf-8").splitlines()
+                if r.startswith("Dialogue") and "HEAD" in r]
+
+    assert len(heads(base)) == 2, "没写 `topbar` 的存量 spec 必须一个字都不变"
+    assert wants_topbar(base) is True
+
+    off = {**base, "topbar": False,
+           "_no_topbar_why": "录在开打之前，没有轮次没有对手没有比分"}
+    assert wants_topbar(off) is False
+    assert heads(off) == [], "写了 `topbar: false` 就不许再印顶栏"
+
+    with pytest.raises(SystemExit, match="_no_topbar_why"):
+        wants_topbar({**base, "topbar": False})
+
+    # ⚠️ 字符串那一支：**不许被当成 False**，也不许被当成 True 悄悄放过。
+    with pytest.raises(SystemExit, match="topbar"):
+        wants_topbar({**base, "topbar": "false"})
 
 
 def test_改字号会让行号失准要在报错里说出来(tmp_path):
