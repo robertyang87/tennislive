@@ -116,3 +116,57 @@ def nine_masters_grid() -> str:
         )
     parts.append("</svg>")
     return "\n".join(parts)
+
+
+# ── ③屏：男子九站 vs 女子十站 ────────────────────────────────────────
+#
+# ⚠️ 这一屏**故意不用照片**。②屏已经把「九站长什么样」交代完了，这一屏要讲的
+# 是**两个集合的关系**——而十三张照片挤进 900x600 每张只剩 180 单位宽，球场
+# 根本看不清，还要再背六百多 KB 的 base64。集合关系是结构，画成结构最清楚。
+#
+# ⚠️ 名单是核过的（2026-08-14，维基 ATP Masters 1000 / WTA 1000 两页）：
+# 男子九站里**没有**多哈、迪拜、北京、武汉；女子十站里没有蒙特卡洛、上海、巴黎。
+# 也就是说两边的差异不是细节，是小半张表。
+MEN_ONLY = ("蒙特卡洛", "上海", "巴黎")
+SHARED = ("印第安维尔斯", "迈阿密", "马德里", "罗马", "加拿大", "辛辛那提")
+WOMEN_ONLY = ("多哈", "迪拜", "北京", "武汉")
+
+
+def two_tours_grid() -> str:
+    """男子九站与女子十站的重合关系。三段：男子独有 / 共有 / 女子独有。"""
+    men, women = "#5b9bd5", "#d98cb3"
+    both = "#8fd6a8"
+    # ⚠️ 第一版在顶上并排放「男子 9 站」「女子 10 站」两个标题，**暗示了一个
+    # 并不存在的左右分栏**——底下其实是上中下三段。计数并进副标题就没这个歧义。
+    # 另外第一版「女子独有」那四个换行后，武汉单独掉到末行和页脚字撞在一起，
+    # 同样是渲出来才看见的（排版按最后一个元素的落点算，不是按最后一格）。
+    parts = [
+        '<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">',
+        '<text x="450" y="40" text-anchor="middle" font-size="34" '
+        'font-weight="700" fill="#e7f3ec">两张表长得不一样</text>',
+        '<text x="450" y="76" text-anchor="middle" font-size="25" '
+        'fill="#a9bcb2">男子 9 站 · 女子 10 站 · 只有 6 站重合</text>',
+    ]
+    rows = (
+        (MEN_ONLY, men, "男子独有", 126),
+        (SHARED, both, "两边都有", 244),
+        (WOMEN_ONLY, women, "女子独有", 424),
+    )
+    for names, colour, label, top in rows:
+        parts.append(
+            f'<text x="60" y="{top}" font-size="24" fill="#a9bcb2">{label}'
+            f"（{len(names)}）</text>"
+        )
+        for i, zh in enumerate(names):
+            bx = 60 + (i % 3) * 262
+            by = top + 18 + (i // 3) * 58
+            parts.append(
+                f'<rect x="{bx}" y="{by}" width="244" height="46" rx="8" '
+                f'fill="{colour}" fill-opacity="0.16" stroke="{colour}" stroke-width="2"/>'
+            )
+            parts.append(
+                f'<text x="{bx + 122}" y="{by + 31}" text-anchor="middle" '
+                f'font-size="26" fill="#e7f3ec">{zh}</text>'
+            )
+    parts.append("</svg>")
+    return "\n".join(parts)
