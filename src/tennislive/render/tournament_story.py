@@ -3107,6 +3107,101 @@ STORIES = STORIES + (
         source_url="https://www.youtube.com/watch?v=NryVymv9AMY",
     ),
     _trivia_story(
+        slug="weeks-at-no1",
+        title="世界第一最短当过多久",
+        subtitle="网球冷知识 · 排名篇",
+        identity="从莱巴金娜差一步说起",
+        chips=("冷知识", "排名", "世界第一"),
+        # ⚠️ 这一段会整段进小红书文案，而那儿单段上限 120 字
+        # （`knowledge._validate_copy_for_publish`）。第一版写了 121 字，差一个字红。
+        hero=(
+            "莱巴金娜输掉多伦多决赛——而这一站冠亚军只差 350 分，就算她赢了也还差 4 分。"
+            "世界第一设榜五十年只有 29 个人坐过：连续最久的格拉芙和小威廉姆斯各 186 周；"
+            "最少的古拉贡一辈子只坐过两周，而那两周她三十一年之后才知道。"
+        ),
+        facts=(
+            "WTA 官方 2026 年版 Record Book：1975-11-03 设榜至今共 29 人当过女单世界第一。"
+            "**两张榜要分开说**——p5 `SINGLES: WEEKS AT No.1` 是**累计**（格拉芙 377 居首，"
+            "榜尾古拉贡 2 周）；p6 `MOST CONSECUTIVE WEEKS AT No.1` 是**连续**"
+            "（格拉芙与小威廉姆斯并列 186、纳芙拉蒂洛娃 156、巴蒂 114、埃弗特 113、"
+            "塞莱斯 91、辛吉斯 80）。账号所有者看完第一版说「要看连续的」，"
+            "所以片子里画的是连续榜，每行右边把累计也印出来做对照。"
+            "⚠️ 斯瓦泰克那 75 周 p6 没列（它只到 80），是从 p2 沿革表逐段算的——"
+            "**判据是同一段代码算出来的前七名和 p6 一字不差**。"
+            "⚠️ 古拉贡放在连续榜上成立（她一辈子只坐过一段，连续＝累计＝2），"
+            "但**不许写成「连续最短」**：海宁、莎拉波娃、扬科维奇、萨芬娜都有过 1 周的一段。"
+            "她是**累计最少**，那才是片子要讲的那个数。",
+            "古拉贡那两周：1976-04-26 到 05-10（Record Book p2 沿革表原样）。"
+            "她在洛杉矶的 Virginia Slims 夺冠后以 **0.8 分**之差超过埃弗特。"
+            "0.8 分这种数字在今天不可能出现——1975 到 1996 年 WTA 用的是**平均分制**"
+            "（总分除以参赛站数，除数最低 12），1997 年才改成累加。",
+            "而这两周当年没有被记录：1976 年 4 到 7 月的几张纸质成绩单没录进电脑，"
+            "她的分数没算全。WTA 的 John Dolan 在档案里翻出这些记录重算了一遍，"
+            "2007-12-27 通知她——**隔了 31 年**。WTA 主席当时的说法是"
+            "「我们早年的记录工作并不完善」。",
+            "排名差这一条**改过三次，最后回到了「4 分」**，判据是那两个数自己自洽："
+            "输掉决赛（实际发生）官方排名 莱巴金娜 8316 / 萨巴伦卡 8670，差 **354**；"
+            "赢下冠军（当时的赌注）莱巴金娜 **8666**，差 **4**。"
+            "8666 − 8316 = 350，正好是 WTA1000 的冠亚军分差——两个数是同一件事的两面。"
+            "8666／4 分有两个独立出处（cincinnatiopen.com 签表前瞻、Yardbarker 赛前稿），"
+            "8670 是官方排名接口现在就查得到的。"
+            "⚠️ **真正站不住的是 WTA 官方 08-14 Rankings Watch 那句 "
+            "「narrowed the gap to just 54 points」**：冠亚军差 350 分，"
+            "「输了差 54」和「赢了差 4」不可能同时成立。"
+            "账号所有者两次都是对的（「不止差 54 分吧」「如果夺冠才多得 50 分这不符合逻辑啊」），"
+            "而我一度把错归到了「4」头上。"
+            "**官方发的推算和官方发的排名不是一回事**，前者会算错——查产物，不查信号。",
+            "⚠️ 片子里**不写「史上最小分差」**：0.8 分（平均分制）、4 分（52 周滚动累计）、"
+            "0 分（1995-08-15 起格拉芙与塞莱斯并列 64 周，是当年 WTA 的一次安排）"
+            "各是各的口径，两条巡回赛都没有「最小分差」这项官方纪录，"
+            "并排成一张榜就是账号所有者说的「本来是科普却成了浆糊」。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="1976-04-26", player="古拉贡", age="1976 洛杉矶站夺冠后",
+                headline="以 0.8 分超过埃弗特，登上世界第一",
+                detail=(
+                    "两周后（05-10）埃弗特拿回。当年是平均分制，"
+                    "所以才会出现零点八分这种差距。"
+                ),
+                source_url=(
+                    "https://www.espn.com/sports/tennis/news/story?id=3169960"
+                ),
+            ),
+            ChampionMoment(
+                date="2007-12-27", player="古拉贡", age="31 年之后",
+                headline="WTA 翻出纸质档案重算，才正式追认这两周",
+                detail=(
+                    "1976 年 4 到 7 月的成绩单没录进电脑；"
+                    "WTA 的 John Dolan 用几个月时间把记录找齐重算。"
+                ),
+                source_url=(
+                    "https://www.tennismajors.com/wta-tour-news/december-27-2007-"
+                    "evonne-goolagong-finally-granted-world-no-1-status-313698.html"
+                ),
+            ),
+            ChampionMoment(
+                date="2026-08-13", player="莱巴金娜", age="2026 加拿大站决赛",
+                headline="6-2 6-3 负于斯瓦泰克，仍是世界第二",
+                detail=(
+                    "官方排名 萨巴伦卡 8670 / 莱巴金娜 8316，差 354 分；"
+                    "就算赢下冠军也只到 8666，还差 4 分。她生涯从未当过世界第一。"
+                ),
+                source_url=(
+                    "https://api.wtatennis.com/tennis/players/ranked"
+                    "?page=0&pageSize=4&type=rankSingles&sort=asc&metric=SINGLES"
+                ),
+            ),
+        ),
+        image_keys=(),
+        image_credit="WTA 官方图库 · 2026 加拿大站多伦多，莱巴金娜",
+        source_url=(
+            "https://wtafiles.wtatennis.com/pdf/publications/2026MG/"
+            "WTAMG26_WTARecordBook.pdf"
+        ),
+        source_label="WTA 官方 2026 年版 Record Book、WTA 官网 Rankings Watch、ESPN、Tennis Majors",
+    ),
+    _trivia_story(
         slug="golden-masters",
         title="WTA 为什么没有金大师",
         subtitle="网球冷知识 · 赛制篇",
