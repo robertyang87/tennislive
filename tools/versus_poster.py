@@ -597,6 +597,41 @@ def _scoreboard_person(meta: dict, where: str) -> str:
         '</span></div>')
 
 
+def solo_scoreboard_shape_error(cover: dict) -> str | None:
+    """「赛场之上」solo 封面的比分板**形状**够不够——只读 spec，不联网。
+
+    ⚠️ **它存在的理由是一次白跑的 cover run（run 687，2026-08-15）。** 在那之前
+    这条规矩只活在渲染路径的三处 `raise` 上（`_solo_score_html` 查 scoreboard 在
+    不在、`_scoreboard_html` 查 `court`、`_fetch_match_duration` 查 `url`），
+    而那三处**全排在下载源片之后**。于是 `maria-yastremska` 漏写 `cover.scoreboard`
+    时，本地 `--dry-run` 报「spec 形状没问题」，到 runner 上第 84 秒才红。
+
+    dry-run 存在的全部意义就是「秒级、在本地、把形状错拦下来」；一条它拦不住而
+    render 拦得住的**形状**规矩，等于把这个承诺打了个洞——而洞的样子是「本地
+    全绿，远端红」。和 `segments_over_source_end` 是同一个形状，同一份判据只许有
+    一个出处：渲染那三处现在都从这儿走。
+
+    ⚠️ **只查形状，不查内容**：`duration_source.url` 取不取得到数、那个 `match_id`
+    在不在返回里，都要联网，仍然归 `_fetch_match_duration`。
+
+    返回 None ＝ 没问题（也包括「这条不归它管」：不是赛场之上、或者没写 result）。
+    """
+    if str(cover.get("eyebrow") or "").strip() != "赛场之上":
+        return None
+    if not str(cover.get("result") or "").strip():
+        return None
+    scoreboard = cover.get("scoreboard")
+    if not isinstance(scoreboard, dict):
+        return ("「赛场之上」solo 封面必须使用新版比分板："
+                "cover.scoreboard 不能省略（需包含 court 和 duration_source）。")
+    if not str(scoreboard.get("court") or "").strip():
+        return "赛场之上比分板缺 `scoreboard.court`，不能猜场地名称。"
+    source = scoreboard.get("duration_source")
+    if not isinstance(source, dict) or not str(source.get("url") or "").strip():
+        return "cover.scoreboard 缺 `duration_source.url`：比赛时长不能手填。"
+    return None
+
+
 def _scoreboard_html(cover: dict) -> str:
     """「赛场之上」统一首页比分板：直角、全透明、双语姓名、逐盘着色。"""
     result = str(cover.get("result") or "").strip()
@@ -614,10 +649,13 @@ def _scoreboard_html(cover: dict) -> str:
             f"cover.winner={winner!r} 不在 cover.matchup 的两个名字里："
             f"{[p.get('name') for p in pair]}")
     lose = next(p for p in pair if p is not win)
+    # 形状那一层收在 `solo_scoreboard_shape_error` 里，`--dry-run` 走的是同一份
+    # ——写两处必分叉，而分叉的样子是「本地全绿，远端红」。
+    problem = solo_scoreboard_shape_error(cover)
+    if problem:
+        raise SystemExit(problem)
     scoreboard = cover.get("scoreboard") or {}
     court = str(scoreboard.get("court") or "").strip()
-    if not court:
-        raise SystemExit("赛场之上比分板缺 `scoreboard.court`，不能猜场地名称。")
     source = scoreboard.get("duration_source") or {}
     duration = _fetch_match_duration(source, "cover.scoreboard")
     scores = _scoreboard_sets(result, "cover")
@@ -677,10 +715,9 @@ def _solo_score_html(cover: dict) -> str:
     # 而不是暴露模板契约没有满足。以后这个栏目缺 scoreboard 必须直接失败；
     # 这样新稿不会再出现两套封面，历史已经发布的旧海报也不会被悄悄改写。
     if str(cover.get("eyebrow") or "").strip() == "赛场之上":
-        if not isinstance(cover.get("scoreboard"), dict):
-            raise SystemExit(
-                "「赛场之上」solo 封面必须使用新版比分板："
-                "cover.scoreboard 不能省略（需包含 court 和 duration_source）。")
+        problem = solo_scoreboard_shape_error(cover)
+        if problem:
+            raise SystemExit(problem)
         return _scoreboard_html(cover)
     # 「网球有故事」不是比赛封面；保留它原有的兼容路径，避免把比分误当成
     # 这类内容的标题。它不会影响「赛场之上」的统一出口。

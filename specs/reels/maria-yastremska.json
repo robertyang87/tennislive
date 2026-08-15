@@ -86,6 +86,17 @@
       }
     ],
     "_matchup_rank_why": "取 WTA 官方 `players/ranked?type=rankSingles&at=2026-08-10&metric=SINGLES` 那一期——这场球打在 8 月 13 日，当期榜单就是 8 月 10 日发布的那份。玛利亚 80、亚斯特雷姆斯卡 107。⚠️ `player_names_top500.json` 里玛利亚记的是 rank 79，那是 7 月 27 日那一期，不是这场球当期的。⚠️ 两人本场都不是种子（WTA 官方这场 `SeedA`/`SeedB` 都是空），所以海报上不印种子序号——CLAUDE.md「种子序号不是排名」。",
+    "scoreboard": {
+      "court": "Lindner Family Tennis Center",
+      "_court_why": "⚠️ **球场号查不实，所以印场馆名，不印号。** WTA API 这场的 `CourtID` 是 5，但这个字段在同一站已经被证伪过一次（`LS066` 写 8，而源片画面里的白牌印着 `COURT 7`），这条集锦的 178 秒里也没有任何一格拍到号牌。退到场馆名，和 `kenin-lys` / `bejlek-pliskova` / `boisson-krueger` 一致。",
+      "duration_source": {
+        "provider": "wta",
+        "url": "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches?page=0&pageSize=400",
+        "match_id": "LS121",
+        "field": "MatchTimeTotal",
+        "source_page": "https://www.wtatennis.com/tournaments/1017/cincinnati/2026/scores/LS121"
+      }
+    },
     "_name_why": "两个中文名都走 `player_zh()`：`Tatjana Maria → 玛利亚`（`player_names_top500.json`，出处新华社）、`Dayana Yastremska → 亚斯特雷姆斯卡`。⚠️ **旧表 `zh/players.py` 里写的是「玛丽亚」，和新表差一个字**；CLAUDE.md 明写着 `player_names_top500.json` 优先，所以全片用「玛利亚」。"
   },
   "stats": {

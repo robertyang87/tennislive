@@ -4494,7 +4494,12 @@ def test_dry_run秒级返回且一个字节都不下载(tmp_path):
     import sys as _sys
     import time as _time
 
-    spec = _json.loads(Path("specs/reels/wong-lehecka.json").read_text(encoding="utf-8"))
+    # ⚠️ **底稿要挑一条今天还渲得出来的。** 原来用的是 `wong-lehecka`，而
+    # 「赛场之上 solo 封面必须有 `cover.scoreboard`」这条规矩（#368）是在它发出去
+    # 之后才立的——底稿一旦过不了形状闸，这条测试量的就不再是「dry-run 快不快」，
+    # 而是「底稿旧不旧」。见 `_LEGACY_NO_SCOREBOARD`。
+    spec = _json.loads(
+        Path("specs/reels/boisson-krueger.json").read_text(encoding="utf-8"))
     spec["source_url"] = "http://0.0.0.0/绝对下不动.mp4"
     path = tmp_path / "fake.json"
     path.write_text(_json.dumps(spec, ensure_ascii=False), encoding="utf-8")
@@ -5090,6 +5095,83 @@ def test_写过源片末尾这条规矩只有一处实现():
                          if not ln.lstrip().startswith("#"))
         assert not re.search(r"seg\.end\s*>\s*dur", body), \
             f"{func.name} 又把「写过源片末尾」自己写了一遍"
+
+
+def test_赛场之上的比分板形状要在dry_run就拦下来():
+    """`cover.scoreboard` 缺不缺，`--dry-run` 就要报，不许留到 runner 上。
+
+    ⚠️ **这条测试是一次白跑的 cover run 换来的**（run 687，2026-08-15）。
+    「赛场之上 solo 封面必须有 scoreboard」这条规矩当时只写在 `versus_poster`
+    的渲染路径上，而那条路排在**下载源片之后**：`maria-yastremska` 漏了这个块，
+    本地 `--dry-run` 报「spec 形状没问题」，到 runner 上第 84 秒才红——
+    checkout、装依赖、装 Chromium、下源片全白付。
+
+    和 `test_写过源片末尾这条规矩只有一处实现` 是同一个形状，只是那次两处**算法
+    不同**、这次是**只有一处**：两种毛病的长相一模一样，都是「本地全绿，远端红」。
+
+    判据钉四头：**拦得住**（三种缺法各一）、**不许误伤**（网球有故事那条线照旧
+    走老退路）、**`validate_spec` 真的调了它**（只测行为的话，检查排在下载后面
+    照样绿）、**渲染那一路走的是同一个函数**（不然又是写两处必分叉）。
+    """
+    import ast  # noqa: PLC0415
+    import inspect  # noqa: PLC0415
+
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import versus_poster as vp  # noqa: PLC0415
+
+    reel = _reel()
+    good = json.loads(Path("specs/reels/maria-yastremska.json").read_text("utf-8"))
+    cover = good["cover"]
+    assert vp.solo_scoreboard_shape_error(cover) is None, "好的那份反而被拦了"
+
+    def _tweak(**changes):
+        c = json.loads(json.dumps(cover))
+        for path, value in changes.items():
+            node, *rest = path.split("__")
+            target, key = (c, node) if not rest else (c[node], rest[0])
+            target.pop(key, None) if value is None else target.__setitem__(key, value)
+        return c
+
+    # ① 三种缺法都要拦住
+    assert vp.solo_scoreboard_shape_error(_tweak(scoreboard=None)), "整块没写也放行了"
+    assert vp.solo_scoreboard_shape_error(_tweak(scoreboard__court="")), \
+        "`scoreboard.court` 空着也放行了"
+    assert vp.solo_scoreboard_shape_error(
+        _tweak(scoreboard__duration_source={"provider": "wta"})), \
+        "`duration_source` 没有 url 也放行了——比赛时长会被手填"
+
+    # ② 不许误伤：网球有故事的 solo 封面照旧走老退路，不该被这条拦
+    story = _tweak(scoreboard=None)
+    story["eyebrow"] = "网球有故事"
+    assert vp.solo_scoreboard_shape_error(story) is None, \
+        "判据扩大化了——它只管「赛场之上」这一个栏目"
+
+    # ③ `validate_spec` 真的调了它（钉位置，不只钉行为）
+    assert "_solo_scoreboard_shape(" in inspect.getsource(reel.validate_spec), \
+        "validate_spec 没调这道闸——那 dry-run 就还是拦不住"
+    hollow = json.loads(json.dumps(good))
+    hollow["cover"].pop("scoreboard")
+    with pytest.raises(reel.ReelError, match="scoreboard"):
+        reel.validate_spec(hollow)
+
+    # ④ 渲染那一路走的是同一个函数，别人不许再写一遍那句话
+    poster_src = inspect.getsource(vp)
+    callers = {
+        node.parent_func
+        for node in _calls_named(ast.parse(poster_src), "solo_scoreboard_shape_error")
+    }
+    assert "_solo_score_html" in callers and "_scoreboard_html" in callers, \
+        f"渲染那两处没走共用的那个函数，调用方只有 {sorted(callers)}"
+    for func in ast.walk(ast.parse(poster_src)):
+        if not isinstance(func, ast.FunctionDef) or \
+                func.name == "solo_scoreboard_shape_error":
+            continue
+        body = ast.get_source_segment(poster_src, func) or ""
+        body = re.sub(r'"""[\s\S]*?"""', "", body)          # docstring 里写着教训
+        body = "\n".join(ln for ln in body.splitlines()
+                         if not ln.lstrip().startswith("#"))
+        assert "cover.scoreboard 不能省略" not in body, \
+            f"{func.name} 又把这条规矩自己写了一遍"
 
 
 def _calls_named(tree, name: str):
@@ -7508,6 +7590,49 @@ def test_疑似切点要趁源片还在的时候量出来():
         "跨切点那道判据读到了疑似切点——线索当判据用，会把一批合法的段判红")
 
 
+#: 「赛场之上 solo 封面必须有 `cover.scoreboard`」这条规矩（#368）立起来**之前**
+#: 发出去的十九条。已发的片子不为版式重渲——微信那条消息发出去收不回来，所以它们
+#: 就停在这个样子；**只许减不许加**，表自己带自检（见 `_with_legacy_scoreboard`）。
+#:
+#: ⚠️ 这张表**只放过封面那道形状闸**，别的一律照旧。它存在的理由是：这条规矩是
+#: 在渲染路径上立的，而那条路排在下载源片之后，所以立的时候没人发现存量过不了。
+#: 2026-08-15 把同一份判据搬进 `validate_spec`（好让 dry-run 秒级就报）时才现形。
+_LEGACY_NO_SCOREBOARD = {
+    "chwalinska-gibson", "eala-fernandez", "eala-osaka", "eala-svitolina",
+    "medvedev-zandschulp", "noskova-mcnally", "potapova-venus",
+    "rybakina-kasatkina", "shang-rublev", "tirante-fritz", "wang-kasatkina",
+    "wang-pareja", "wang-samsonova", "wong-brooksby", "wong-gea",
+    "wong-lehecka", "zhang-ostapenko", "zhang-putintseva", "zverev-griekspoor",
+}
+
+
+def _with_legacy_scoreboard(slug: str, spec: dict) -> dict:
+    """存量里没有 `cover.scoreboard` 的那十九条，补一个占位块再往下走。
+
+    ⚠️ **占位块只为让 `validate_spec` 能走到旁白那一问**，一个像素都不会渲出来；
+    补的是形状不是内容。不在表里的 spec 一个字都不动。
+
+    ⚠️ **表自带自检**：名字写错、或者哪条后来补上了真的 scoreboard，都会当场红。
+    一个写错的名字就是一盏永远亮着的绿灯——这个仓库为它栽过。
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import versus_poster as vp  # noqa: PLC0415
+
+    stale = slug in _LEGACY_NO_SCOREBOARD and \
+        vp.solo_scoreboard_shape_error(spec.get("cover") or {}) is None
+    assert not stale, (
+        f"{slug} 已经有合格的 `cover.scoreboard` 了（或者名字写错了），"
+        "从 `_LEGACY_NO_SCOREBOARD` 里删掉——这张表只许减不许加")
+    if slug not in _LEGACY_NO_SCOREBOARD:
+        return spec
+    patched = json.loads(json.dumps(spec))
+    patched["cover"]["scoreboard"] = {
+        "court": "（占位：这条 spec 发在 #368 之前，不会重渲）",
+        "duration_source": {"url": "https://example.invalid/legacy"},
+    }
+    return patched
+
+
 def test_每条spec的旁白都还估得下():
     """**每条 spec 都要现在还渲得出来**，不只是发的那天渲得出来。
 
@@ -7543,6 +7668,7 @@ def test_每条spec的旁白都还估得下():
                 raise
             denied.add(slug)
             continue
+        spec = _with_legacy_scoreboard(slug, spec)
         for index, secs, room in reel.narration_estimates(reel.validate_spec(spec)):
             checked += 1
             if room < -reel.SPEECH_EST_ERR:
