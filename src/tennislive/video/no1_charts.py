@@ -4,11 +4,18 @@
 2026-08-15 下载核对）：p4 `WEEKS AT WTA WORLD NO.1 SINGLES`、
 p1 `NO.1 SINGLES RANKING HISTORY (since November 3, 1975)`。
 
-⚠️ **周数榜只取译名表里有的人**。官方榜上还有穆古鲁扎（4 周）、普利斯科娃
-（8 周）、特蕾西·奥斯汀、达文波特——`src/tennislive/zh/players.py` 里没有
-这四个，而这个仓库为「人名手打」栽过两次（莱巴金娜写成里巴金娜、
-奥斯塔彭科写成奥斯塔片科，两次都发出去了）。**为一张图去手打四个译名不值**，
-真要用先把它们补进表里。
+⚠️ **周数榜只画 8 个人，而官方榜是 29 个人**——省掉的那一段要在图上写出来，
+见 `weeks_at_no1_chart()` 的第二条警告。
+
+⚠️ **不要按「译名表里有没有」去筛这张榜**。第一版就是这么筛的，还在注释里
+写着「只有穆古鲁扎、普利斯科娃、特蕾西·奥斯汀、达文波特四个不在表里」——
+**那句话是编的**。真拿 `player_zh()` 跑一遍：不在表里的是九个（巴蒂、达文
+波特、毛瑞斯莫、萨芬娜、奥斯汀、扬科维奇、卡普里亚蒂、桑切斯·维卡里奥、
+穆古鲁扎），而普利斯科娃**在**表里。按那个假名单筛出来的图静静丢掉了 19 行，
+其中海宁、沃兹尼亚奇、哈勒普、阿扎伦卡、大坂直美、莎拉波娃……全都在表里，
+**一个理由都没有就没了**——而降序条形图看起来就是一张完整排行榜，
+读者会以为斯瓦泰克后面紧接着就是萨巴伦卡（真实是中间还隔着四个人）。
+判据：注释里的名单**要跑一遍再写**，别凭印象。
 
 ⚠️ 「0.8 分」和「4 分」**不是同一把尺子**：1976 年是平均分制，今天是 52 周
 滚动累计；而「并列」是当年 WTA 的一次安排，不是算出来的 0 分。所以阶梯那张
@@ -18,57 +25,86 @@ p1 `NO.1 SINGLES RANKING HISTORY (since November 3, 1975)`。
 
 from __future__ import annotations
 
-# (中文名, 周数)。官方 p4 原样，只筛掉译名表里没有的人。
-WEEKS_AT_NO1: tuple[tuple[str, int], ...] = (
-    ("格拉芙", 377),
-    ("纳芙拉蒂洛娃", 332),
-    ("小威廉姆斯", 319),
-    ("埃弗特", 260),
-    ("辛吉斯", 209),
-    ("塞莱斯", 178),
-    ("斯瓦泰克", 125),
-    ("萨巴伦卡", 71),
-    ("大威廉姆斯", 11),
-    ("古拉贡", 2),
+# (名次, 中文名, 周数)。官方 p5 `SINGLES: WEEKS AT No.1` 原样，**连着的前七名
+# ＋ 榜尾那一个**。中间第 8~28 名不画，但要在图上说清楚略掉了谁（见下）。
+WEEKS_AT_NO1: tuple[tuple[int, str, int], ...] = (
+    (1, "格拉芙", 377),
+    (2, "纳芙拉蒂洛娃", 332),
+    (3, "小威廉姆斯", 319),
+    (4, "埃弗特", 260),
+    (5, "辛吉斯", 209),
+    (6, "塞莱斯", 178),
+    (7, "斯瓦泰克", 125),
+    (29, "古拉贡", 2),
 )
+
+# 官方榜的总人数和被略掉的那一段，印在图上。写死是因为它就是那份 PDF 的事实；
+# 改数据要连这三个数一起改，判据在 tests 里（总数 = 画出来的 + 略掉的）。
+NO1_TOTAL = 29  # 1975-11-03 设榜至今当过世界第一的人数
+SKIPPED_RANGE = (121, 4)  # 第 8 名巴蒂 121 周 ~ 第 28 名穆古鲁扎 4 周
 
 
 def weeks_at_no1_chart() -> str:
-    """在位周数榜。顶端 377 周和榜尾 2 周同框——差 188 倍。
+    """**累计**在位周数榜。顶端 377 周和榜尾 2 周同框——差 188 倍。
 
-    ⚠️ 条长按**平方根**画，不按线性。线性的话 2 周那根只有 0.5 个像素，
+    ⚠️ 是**累计**不是连续，标题里必须写出来。账号所有者一眼问「你这是连续
+    多少周的排序啊」——而原标题「在世界第一待了多少周」两种读法都通。
+    拿官方 p1 沿革表自证过：格拉芙先后九段（186+1+3+87+1+5+9+2+18＝312）
+    加上与塞莱斯并列的两段（64+1＝65），312+65 正好是 377。
+    她**最长的一段只有 186 周**——连续榜是另一张榜（小威和格拉芙并列 186、
+    纳芙拉蒂洛娃 156、巴蒂 114），两张别混。
+
+    ⚠️ **画了 8 个人，榜上是 29 个**，所以每一行都印着名次、末尾还写着
+    「第 8 ~ 第 28 名没画」。降序条形图**天生看起来像一张完整排行榜**——
+    第一版就是这么静静丢掉 19 行的，读者会以为斯瓦泰克后面紧接着萨巴伦卡。
+    「摆了 7 格」和「总共就 7 格」长得一样，一次不出声的截断读起来就是
+    「全看过了」。
+
+    ⚠️ 条长按**平方根**画，不按线性。线性的话 2 周那根只有 3 个像素，
     「最短的那个人」在图上直接消失——而她正是这一屏要讲的人。开方之后
     2 周仍然明显最短（约为 377 那根的 7%），但看得见。
     ⚠️ 而这件事**要在图上说出来**（副标题里写着「条长按平方根」），
     不然就是一张骗人的图。
     """
-    top, bar_h, gap = 96, 34, 12
-    x0, maxw = 250, 560
-    hi = max(w for _, w in WEEKS_AT_NO1) ** 0.5
+    top, bar_h, gap = 100, 34, 14
+    x0, maxw = 280, 520
+    hi = max(w for _, _, w in WEEKS_AT_NO1) ** 0.5
     parts = [
         '<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">',
-        '<text x="450" y="40" text-anchor="middle" font-size="34" '
-        'font-weight="700" fill="#e7f3ec">在世界第一待了多少周</text>',
-        '<text x="450" y="72" text-anchor="middle" font-size="21" '
-        'fill="#a9bcb2">WTA 官方纪录 · 条长按平方根，否则最短那根看不见</text>',
+        '<text x="450" y="42" text-anchor="middle" font-size="34" '
+        'font-weight="700" fill="#e7f3ec">累计在世界第一多少周</text>',
+        '<text x="450" y="76" text-anchor="middle" font-size="21" '
+        f'fill="#a9bcb2">WTA 官方 · 累计非连续 · 设榜以来共 {NO1_TOTAL} 人 · '
+        "条长按平方根，否则最短那根看不见</text>",
     ]
-    for i, (zh, wk) in enumerate(WEEKS_AT_NO1):
+    for i, (rank, zh, wk) in enumerate(WEEKS_AT_NO1):
         y = top + i * (bar_h + gap)
         w = maxw * (wk**0.5) / hi
-        last = zh == "古拉贡"
+        last = rank == NO1_TOTAL
         colour = "#e0b13a" if last else "#8fd6a8"
         parts.append(
-            f'<text x="{x0 - 16}" y="{y + 24}" text-anchor="end" font-size="23" '
+            f'<text x="{x0 - 74}" y="{y + 25}" text-anchor="end" font-size="26" '
             f'fill="#e7f3ec">{zh}</text>'
+        )
+        parts.append(
+            f'<text x="{x0 - 16}" y="{y + 25}" text-anchor="end" font-size="21" '
+            f'fill="#a9bcb2">第{rank}</text>'
         )
         parts.append(
             f'<rect x="{x0}" y="{y}" width="{w:.1f}" height="{bar_h}" rx="5" '
             f'fill="{colour}" fill-opacity="{0.9 if last else 0.55}"/>'
         )
         parts.append(
-            f'<text x="{x0 + w + 12:.1f}" y="{y + 24}" font-size="23" '
+            f'<text x="{x0 + w + 12:.1f}" y="{y + 25}" font-size="26" '
             f'font-weight="{700 if last else 400}" fill="{colour}">{wk} 周</text>'
         )
+    gap_y = top + (len(WEEKS_AT_NO1) - 1) * (bar_h + gap) + bar_h + 46
+    hi_wk, lo_wk = SKIPPED_RANGE
+    parts.append(
+        f'<text x="450" y="{gap_y}" text-anchor="middle" font-size="26" '
+        f'fill="#a9bcb2">第 8 ~ 第 28 名这 {NO1_TOTAL - len(WEEKS_AT_NO1)} 人没画，'
+        f"她们在 {lo_wk} ~ {hi_wk} 周之间</text>"
+    )
     parts.append("</svg>")
     return "\n".join(parts)
 
