@@ -96,5 +96,12 @@
     "谢谢"
   ],
   "transcript_verified": true,
-  "_verified_clean": "两份转写对不上 **8.0%**（闸门 12%），**0 处空档**。逐处看过，没有一处是意思变了——全是口语的碎片：`you know` ×3、`i say top`、`that i've`、`for`、`him`、`to` 这些填充和重复被 medium.en 丢掉；`roller coaster`→`rollercoaster`、`shade`→`shades`、`there`→`it` 是词形。\n\n**两处订正写进了 `en_fixed`**，都不是「谁对谁错」而是「烧在画面上的英文不该长这样」：\n① 第 25 行 `Alcarz` → `Alcaraz`——自动字幕把人名拼错了，这是要印在屏幕上的；\n② 第 17 行 `of inner sorry injury with different severity` → `of injury with different severity`——`inner sorry` 是他说到一半自我纠正（「some kind of inn—，sorry，injury」），**第二份 ASR 也没有这两个词**，原样烧上去看着像我们转写错了。订正之后 910.5px → 661.7px，比原来还窄，不会撞宽度闸。"
+  "_verified_clean": "两份转写对不上 **8.0%**（闸门 12%），**0 处空档**。逐处看过，没有一处是意思变了——全是口语的碎片：`you know` ×3、`i say top`、`that i've`、`for`、`him`、`to` 这些填充和重复被 medium.en 丢掉；`roller coaster`→`rollercoaster`、`shade`→`shades`、`there`→`it` 是词形。\n\n**两处订正写进了 `en_fixed`**，都不是「谁对谁错」而是「烧在画面上的英文不该长这样」：\n① 第 25 行 `Alcarz` → `Alcaraz`——自动字幕把人名拼错了，这是要印在屏幕上的；\n② 第 17 行 `of inner sorry injury with different severity` → `of injury with different severity`——`inner sorry` 是他说到一半自我纠正（「some kind of inn—，sorry，injury」），**第二份 ASR 也没有这两个词**，原样烧上去看着像我们转写错了。订正之后 910.5px → 661.7px，比原来还窄，不会撞宽度闸。",
+  "logo_box": [
+    0.8,
+    0.02,
+    0.19,
+    0.12
+  ],
+  "_logo_box_why": "Tennis TV 的角标在右上角，**框是从渲出来的海报上量回去的，不是猜的**：第一趟成片（run 31854626176）的 `poster.jpg` 上，那块亮像素落在 x 1005–1079、y 182–233；海报是 1080×1440、4:3 的画面带占 y 150–960，而 3:4 窗口在源片里保留的是横向 0.125–0.875——换算回去是**源片 x 0.823–0.874、y 0.040–0.103**。\n\n⚠️ **框要比量到的宽**：右边那截已经被 3:4 窗口切在 0.875 上，源片里它还继续往右，而 `removelogo` 排在 `crop` **之前**（滤镜链是 `[0:v]{flip}{logo}{crop},scale`），吃的是整幅源片——所以盖到 0.99，把整个角标补掉，再由 crop 取中间那一块。只盖到 0.875 的话补痕的右半边会被留在窗口边上。\n\n⚠️ **用 `removelogo` 不用 `delogo`**（见 `logo_mask` 的 docstring）：后者把整个矩形抹平再从框边横向插值，笔画之间的原始像素一起毁掉，留一条竖纹带。"
 }
