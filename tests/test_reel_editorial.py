@@ -778,3 +778,78 @@ def test_这两张豁免表只许减不许加():
     assert not stale_auto, (
         f"这几条已经表过态了，从表里删掉：{sorted(stale_auto)}"
         f"——这张表只许减不许加")
+
+
+# 六、「赛场之上」要么有狠数据、要么说清为什么没有
+# ──────────────────────────────────────────────────────────────────────────
+#
+# 来路：`docs/short-video-benchmark-strategy.md`（2026-08-09）逐镜实测头部
+# 账号——27 秒短版能打，靠开头一句算出来的狠数据（「总分仅仅领先 4 分」），
+# 长版留人靠技术统计织进转折；我们这边这类数字长期靠人工翻 `match_feed.py
+# show` 手算。`tools/match_stat_hooks.py` 的 `--from-spec` 已把它机械化
+# （总分差 / 一发摆动 / 破发点兑现 / 连续保发 / H2H），这一条是把「跑没跑
+# 工具」变成显式认领：
+#
+#   `_hit_data`        有 → 过（记 match_stat_hooks 拿到的候选，或挑进正文的那条）
+#   没有 → 必须写 `_no_hit_data_why` 说清为什么（首次交手 / 低级别无统计 / 查遍无）
+#
+# 为什么**不**硬逼着把狠数据写进钩子：那和「有吸引力」一样是编辑判断，
+# 机械挡不住，硬凑一个会被绕过的判据比没有更糟（CLAUDE.md 那句）。这条只
+# 认领「查过没有」，不替人决定「写不写」。
+#
+# 为什么**不是** `validate_spec` 的 runtime 闸：和 `_no_stats_why` 一个道理
+# ——「忘了查」和「查过确实没有」在产物上分不出来，而闸要拦的是前者。runtime
+# 闸拦前者必然误伤后者；测试闸配豁免表，只拦「既没查、也没说」的新片。
+#
+# 豁免表 = 这条闸上线之前就写好的全部「赛场之上」（62 条）。新片必须表态。
+
+_HIT_DATA_LEGACY = frozenset({
+    "alexandrova-sabalenka", "anisimova-bartunkova", "bartunkova-charaeva",
+    "bencic-eala", "bencic-townsend", "chwalinska-gibson", "eala-fernandez",
+    "eala-mcnally",
+    "eala-osaka", "eala-parks", "eala-pegula-final", "eala-svitolina",
+    "eala-zheng", "fernandez-andreeva", "fonseca-ruud", "fritz-jodar-final",
+    "gauff-korneeva", "gauff-sakkari", "gea-shapovalov",
+    "jodar-fils-montreal-qf", "landaluce-draper", "medvedev-zandschulp",
+    "nakashima-jodar-montreal-sf", "nishikori-shang", "noskova-mcnally",
+    "osaka-fernandez", "osaka-mertens", "pegula-rakhimova", "potapova-venus",
+    "rybakina-gauff-toronto-sf", "rybakina-kasatkina", "rybakina-li",
+    "rybakina-osaka", "rybakina-samsonova", "shang-darderi-montreal-2026",
+    "shang-rublev", "shang-vallejo", "shelton-fonseca", "shelton-mensik",
+    "shelton-nakashima-montreal-final", "shelton-tien-montreal-sf",
+    "shnaider-pegula", "sonmez-kasatkina", "svitolina-alexandrova",
+    "svitolina-anisimova", "swiatek-golubic", "swiatek-kostyuk",
+    "swiatek-rybakina-toronto-final", "swiatek-shnaider",
+    "swiatek-svitolina-toronto-sf", "tirante-fritz", "townsend-osorio",
+    "wang-kasatkina", "wang-pareja", "wang-samsonova", "wong-brooksby",
+    "wong-gea", "wong-lehecka", "zhang-ostapenko", "zhang-putintseva",
+    "zhang-sabalenka", "zverev-griekspoor",
+})
+
+
+def _missing_hit_data():
+    return {s for s, spec in _court_specs()
+            if not spec.get("_hit_data") and not spec.get("_no_hit_data_why")}
+
+
+def test_赛场之上要么有狠数据要么说清为什么没有():
+    fresh = _missing_hit_data() - _HIT_DATA_LEGACY
+    assert not fresh, (
+        f"这几条「赛场之上」既没写 `_hit_data`、也没写 `_no_hit_data_why`："
+        f"{sorted(fresh)}。狠数据（总分差/一发摆动/破发点兑现/连续保发/H2H）"
+        f"是显式认领——「忘了跑 match_stat_hooks」和「查过确实没有」在产物上"
+        f"分不出来。先跑 `python tools/match_stat_hooks.py --from-spec <slug>`，"
+        f"把候选记进 `_hit_data`；真没有（首次交手/低级别无统计）就写一句"
+        f"`_no_hit_data_why` 说清查过哪些源。"
+    )
+    assert len(list(_court_specs())) >= 50, "一条 spec 都没扫到，判据的主语像是没了"
+
+
+def test_狠数据豁免表只许减不许加():
+    for slug in sorted(_HIT_DATA_LEGACY):
+        assert (SPEC_DIR / f"{slug}.json").is_file(), \
+            f"{slug} 这条 spec 已经没了，把它从豁免表里删掉"
+    stale = _HIT_DATA_LEGACY - _missing_hit_data()
+    assert not stale, (
+        f"这几条已经表过态了（有 `_hit_data` 或 `_no_hit_data_why`），从表里删掉："
+        f"{sorted(stale)}——这张表只许减不许加")
