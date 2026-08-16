@@ -33,6 +33,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 from tennislive.digest import build_digest  # noqa: E402
 from tennislive.models import MatchStatus  # noqa: E402
 from tennislive.render.rating import _level_of, match_score  # noqa: E402
+from tennislive.zh import player_name_en  # noqa: E402
 
 # 编排器按**北京时间**的「今天」抓 digest——凌晨结束的欧美比赛在 flashscore 算
 # 昨天，build_digest 自己会把昨日也并进 results，这里只负责给它「今天」这个锚点。
@@ -104,8 +105,10 @@ def candidates(digest) -> list[dict]:
             "score": score,
             "level": _level_of(m),
             "round": m.round_name or "",
-            "home": m.home[0].name,
-            "away": m.away[0].name,
+            # ⚠️ 缩写名还原成全名再往下传——detect_highlights 的搜索词和
+            # assemble 的译名都要全名，缩写（Kovacevic A.）直接拿去搜会搜错。
+            "home": player_name_en(m.home[0].name),
+            "away": player_name_en(m.away[0].name),
             "status": str(m.status),
             # T0 探测的搜索词要用：赛事名（剥赞助商前缀）+ 年份。
             "event": m.tournament.name,
