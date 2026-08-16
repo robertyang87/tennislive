@@ -2037,7 +2037,7 @@ body{{width:{CANVAS_W}px;height:{CANVAS_H}px;position:relative;overflow:hidden;
 .brand-icon{{width:52px;height:52px;object-fit:contain;
  filter:drop-shadow(0 2px 8px rgba(0,0,0,.55))}}
 .brand{{font-family:'TL Display SC','TL Sans SC',sans-serif;
- font-size:38px;font-weight:400;letter-spacing:1px}}
+ font-size:38px;font-weight:400;letter-spacing:1px;color:#f4fbf7}}
 .shot{{position:absolute;top:{VIDEO_TOP}px;left:0;width:{CANVAS_W}px;height:{VIDEO_H}px;
  overflow:hidden}}
 .shot img{{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);height:100%}}
