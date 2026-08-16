@@ -140,8 +140,25 @@ def test_main写出草稿文件(tool, monkeypatch, tmp_path, capsys):
     monkeypatch.setattr(a.Path, "resolve",
                         classmethod(lambda cls: tmp_path.parent / "fake" / "assemble_spec.py"))
     monkeypatch.setattr(sys, "argv", [
-        "assemble_spec.py", "--slug", "demo", "--home", "A E", "--away", "B R"])
+        "assemble_spec.py", "--slug", "demo", "--home", "A E", "--away", "B R",
+        "--write"])
     rc = a.main()
     assert rc == 0
     out = capsys.readouterr().out
     assert "草稿 →" in out
+
+
+def test_main默认不落盘(tool, monkeypatch, tmp_path, capsys):
+    a = tool
+    monkeypatch.setattr(a, "assemble", lambda **kw: {
+        "_draft": True, "slug": kw["slug"], "cover": {"matchup": []},
+        "_notes": []})
+    monkeypatch.setattr(a.Path, "resolve",
+                        classmethod(lambda cls: tmp_path.parent / "fake" / "assemble_spec.py"))
+    monkeypatch.setattr(sys, "argv", [
+        "assemble_spec.py", "--slug", "demo", "--home", "A E", "--away", "B R"])
+    rc = a.main()
+    assert rc == 0
+    out = capsys.readouterr().out
+    assert "没落盘" in out and "草稿 →" not in out, (
+        "默认必须只打印不写文件——手动控制要先看后写，别默认就把草稿落进仓库")

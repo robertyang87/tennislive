@@ -51,10 +51,9 @@ def test_hd_gate读不出尺寸也不静默放过(tmp_path):
     assert len(drop) == 1 and drop[0][1].startswith("读不出尺寸")
 
 
-def test_main全低清非零退出并说去拿真实照片(tmp_path, capsys):
+def test_main全低清非零退出并说去拿真实照片(tmp_path, capsys, monkeypatch):
     pcf = _tool()
     small = _img(tmp_path / "small.jpg", 640, 480)
-    monkeypatch = pytest.MonkeyPatch()
     monkeypatch.setenv("MINIMAX_API_KEY", "sk-dummy")
     monkeypatch.setattr(sys, "argv", [
         "pick_cover_frame.py", "--frames", str(small),
@@ -66,10 +65,9 @@ def test_main全低清非零退出并说去拿真实照片(tmp_path, capsys):
         "全低清必须非零退出并明说去拿真实照片，不许静默挑一张软的")
 
 
-def test_main无密钥跳过并出声(tmp_path, capsys):
+def test_main无密钥跳过并出声(tmp_path, capsys, monkeypatch):
     pcf = _tool()
     hd = _img(tmp_path / "hd.jpg", 1080, 1440)
-    monkeypatch = pytest.MonkeyPatch()
     monkeypatch.delenv("MINIMAX_API_KEY", raising=False)
     monkeypatch.setattr(sys, "argv", [
         "pick_cover_frame.py", "--frames", str(hd), "--angle", "逆转"])

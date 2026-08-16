@@ -28,7 +28,7 @@ def test_schema钉死三个判据字段():
     )
 
 
-def test_ask_quality把钩子和正文喂进prompt(tmp_path):
+def test_ask_quality把钩子和正文喂进prompt(tmp_path, monkeypatch):
     cq = _tool()
     slug = "demo"
     (tmp_path / "demo.xhs.txt").write_text("这是一段小红书正文", encoding="utf-8")
@@ -50,8 +50,9 @@ def test_ask_quality把钩子和正文喂进prompt(tmp_path):
     monkeypatch_path.mkdir(parents=True)
     (monkeypatch_path / "demo.xhs.txt").write_text("这是一段小红书正文",
                                                     encoding="utf-8")
-    import pathlib
-    monkeypatch = pytest.MonkeyPatch()
+    # ⚠️ 用 pytest 的 monkeypatch fixture，别手动 new 一个 MonkeyPatch()：
+    # 手动那个没注册进 fixture，测试结束 cwd 不还原，会污染它后面跑的测试
+    # （test_reel_editorial 的 glob('specs/reels/*.json') 会落到这个 tmp 里全空）。
     monkeypatch.chdir(tmp_path)  # 让 specs/reels/<slug>.xhs.txt 相对路径落到 tmp
 
     verdict = cq.ask_quality(FakeChat(), spec)
