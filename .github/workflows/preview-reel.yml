@@ -96,10 +96,39 @@ jobs:
       - name: 装 Chromium（封面/角标渲染）
         run: python -m playwright install --with-deps chromium
 
+      - name: 起 PO token provider
+        continue-on-error: true
+        run: |
+          pip install -q bgutil-ytdlp-pot-provider
+          docker run --name bgutil-pot -d -p 4416:4416 \
+            brainicism/bgutil-ytdlp-pot-provider
+          for i in $(seq 1 25); do
+            if curl -sf http://127.0.0.1:4416/ping >/dev/null; then
+              echo "provider 起来了（第 $i 次探活）"
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "::warning::PO token provider 50 秒内没起来，退回 client 梯子"
+
+      - name: 落 cookies（配了 Secret 才有）
+        id: cookies
+        env:
+          YT_COOKIES_TXT: ${{ secrets.YT_COOKIES_TXT }}
+        run: |
+          if [ -n "$YT_COOKIES_TXT" ]; then
+            printf '%s' "$YT_COOKIES_TXT" > "$RUNNER_TEMP/yt-cookies.txt"
+            echo "path=$RUNNER_TEMP/yt-cookies.txt" >> "$GITHUB_OUTPUT"
+            echo "已写入 cookies（$(wc -l < "$RUNNER_TEMP/yt-cookies.txt") 行）"
+          else
+            echo "::notice::未配置 YT_COOKIES_TXT，只能靠 player client 梯子碰运气"
+          fi
+
       - name: 渲开球之前
         env:
           AZURE_SPEECH_KEY: ${{ secrets.AZURE_SPEECH_KEY }}
           AZURE_SPEECH_REGION: ${{ secrets.AZURE_SPEECH_REGION }}
+          YT_COOKIES: ${{ steps.cookies.outputs.path }}
         run: |
           if [ "${{ github.event.inputs.dry_run }}" = "true" ]; then
             PYTHONPATH=src python tools/preview_beats.py --slug "${{ github.event.inputs.slug }}" --dry-run
