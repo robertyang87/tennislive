@@ -39,6 +39,8 @@ SKIP = re.compile(r"\.(png|jpe?g|webp|svg|gif|ico|woff2?|ttf|css|mp4)(\?|$)", re
 # 只有真二进制才不读正文。**别按「是不是 application/json」过滤**——见
 # `on_response` 里那段注释，TNNS 的 `/v1/web` 回的就不是 json 类型。
 _BINARY_CTYPE = re.compile(r"^(image|video|audio|font)/|octet-stream", re.I)
+# 一行日志太长会被截；分段打，段长按 GitHub Actions 日志行的实际承受量取。
+_CHUNK = 1500
 
 
 def _dump_objects(body: str, word: str, limit: int = 3) -> None:
@@ -154,6 +156,10 @@ def main() -> int:
                          "被动抓到的响应和 --fetch 结果都会扫，不止后者——"
                          "TNNS 这类站 context.request 会被 403，被动抓包往往是"
                          "唯一拿得到数据的路，之前只有 --fetch 能 --dump 等于白扫")
+    ap.add_argument("--print-body", default="",
+                    help="正文里含这个串的响应，**整份**分段打进日志。"
+                         "artifact 在沙箱下不下来，写解析器又必须看整份——"
+                         "`--dump` 只对键值对形状的 JSON 有用，索引压缩的载荷得看全")
     ap.add_argument("--dump-limit", type=int, default=3,
                     help="--dump 每个响应最多打印几个匹配对象")
     ap.add_argument("--top-keys", action="store_true",
@@ -301,6 +307,17 @@ def main() -> int:
             print("     " + j[max(0, k - 400):k + 900].replace("\n", " ")[:1200])
         if args.dump and r["body"] and args.dump in r["body"]:
             _dump_objects(r["body"], args.dump, limit=args.dump_limit)
+        # ⚠️ **artifact 在这台沙箱下不下来**（`api.github.com` 恒 403），所以
+        # 「把响应存成文件回头看」这条路走不通——要看完整正文只能 print 进
+        # 日志。这跟 CLAUDE.md「报告让工具自己 print 进日志」是同一条。
+        # 另：`--dump` 只对「键值对形状」的 JSON 有用，而 TNNS 这份是
+        # `K`/`P`/`_` 索引压缩（字符串抽成表、数据里放下标），要写解析器
+        # 必须看整份。
+        if args.print_body and args.print_body in (r["body"] or ""):
+            body = r["body"]
+            print(f"     ---- 完整正文 {len(body)} 字节，每段 {_CHUNK} 字符 ----")
+            for off in range(0, len(body), _CHUNK):
+                print(f"     [body {off}] " + body[off:off + _CHUNK])
         if args.top_keys and r["body"]:
             _print_top_keys(r["body"])
     if not seen:
