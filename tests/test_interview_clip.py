@@ -4452,3 +4452,78 @@ def test_认领开头那道闸排在下载之前():
         assert body.index("check_opening(") < body.index(later), (
             f"认领开头那道闸排在 `{later}` 后面了——它只读 spec，"
             "该在第 0.2 秒就报")
+
+
+def test_封面顶栏要和解说片那份台头是同一套值():
+    """账号所有者 2026-08-16：「赛后开麦模块也要加顶部白条和栏目标题」
+    「参考网球栏目，也做顶部彩条和顶栏标明栏目名」。
+
+    ⚠️ **这是同一件事的第二处实现**，而这个仓库为「同一件事写两处」栽过好几次。
+    分叉在这儿的表现最阴：**两张封面分开看都正常**，只有摆在一起才看得出彩条
+    的颜色差一档、台头低了几像素——而没有人会把两个栏目的封面摆在一起看。
+
+    所以判据**从解说片那份源码里把值抠出来比**，不在这儿另记一张表：
+    `_render_intro_badge` 改了而封面没跟着改（或者反过来），当场红。
+
+    ⚠️ **抠的是真正会生效的那几行，不是「这个词出现过没有」**：彩条那句
+    `linear-gradient(...)` 的四个色标、`.head` 的 top/left、图标尺寸、
+    两行字号。少抠一样，那一样就可以自己漂走。
+    """
+    import inspect
+
+    import tools.build_interview_clip as clip
+    from tennislive.video import explainer as E
+
+    badge = inspect.getsource(E._render_intro_badge)
+    cover = inspect.getsource(clip.build_cover)
+
+    def 抠(src, pat, 什么):
+        m = re.search(pat, src)
+        assert m, f"从{什么}里抠不出 `{pat}`——那份实现的写法变了，这条判据的主语没了"
+        return m.group(1)
+
+    项 = [
+        (r"linear-gradient\(90deg,([^)]*#4bb8ff[^)]*)\)", "彩条的四个色标"),
+        (r"\.bar\{*\{*position:absolute;top:0;left:0;right:0;height:(\d+)px", "彩条厚度"),
+        (r"\.head\{*\{*position:absolute;top:(\d+)px", "台头离顶多远"),
+        (r"\.head\{*\{*position:absolute;top:\d+px;left:(\d+)px", "台头左边距"),
+        (r"\.brand-icon\{*\{*width:(\d+)px", "图标尺寸"),
+        (r"\.brand\{*\{*font-family:'TL Display SC','TL Sans SC',sans-serif;\s*\n?\s*font-size:(\d+)px", "品牌行字号"),
+        (r"\.topic\{*\{*font-family:'TL Sans SC',sans-serif;font-size:(\d+)px", "标题行字号"),
+    ]
+    for pat, 什么 in 项:
+        a, b = 抠(badge, pat, f"解说片台头的{什么}"), 抠(cover, pat, f"封面顶栏的{什么}")
+        assert a == b, (
+            f"{什么}两处对不上：解说片 `{a}`，封面 `{b}`。\n"
+            "⚠️ 这两套台头是同一个东西，账号所有者要的就是「参考网球栏目」——"
+            "改一处必须改另一处，不然两个栏目的封面会悄悄长成两个样子。")
+
+    # 判据自己的判据：上面七项一个都没抠到的话，循环体根本没跑过。
+    assert len(项) == 7
+
+
+def test_封面顶栏印栏目名底部就不许再印一遍():
+    """⚠️ **栏目名只许印一次。**
+
+    「赛场之上」那颗黄色药丸就是因为这个被账号所有者整块删掉的
+    （CLAUDE.md「台头药丸不许自己回来」）——栏目名一直同时印在左上角那行
+    `网球时差 · 赛场之上` 里，药丸只是第二遍。
+
+    赛后开麦的封面 2026-08-16 加上顶栏之后是同一个形状：底部那颗 tag 原来写的是
+    `赛后开麦 · 2026 辛辛那提 · 阿朗戈`，前半截现在在顶栏了。
+
+    判据钉两头：**顶栏必须印**（不然这次改动等于没做），**底部那颗 tag 不许再拼
+    column 进去**（不然又印两遍）。
+    """
+    import inspect
+
+    import tools.build_interview_clip as clip
+
+    src = inspect.getsource(clip.build_cover)
+    assert "网球时差 · {column}" in src, (
+        "封面顶栏没印栏目名——账号所有者要的就是「顶栏标明栏目名」")
+    m = re.search(r"^\s*tag = (.+)$", src, re.M)
+    assert m, "抠不出底部那颗 tag 是怎么拼的——这条判据的主语没了"
+    assert "column" not in m.group(1), (
+        f"底部 tag 又把栏目名拼进去了：`{m.group(1).strip()}`\n"
+        "顶栏已经印过一次了，这是第二遍——和被删掉的那颗黄色药丸同一个形状。")
