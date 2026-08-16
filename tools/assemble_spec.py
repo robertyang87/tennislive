@@ -126,7 +126,9 @@ def facts_text(hit_data: list[dict]) -> str:
 
 
 def assemble(*, slug: str, home: str, away: str, event: str, year: int,
-             fixture: str, flashscore_id: str | None) -> dict:
+             fixture: str, flashscore_id: str | None,
+             captions_path: str | None = None,
+             cuts_path: str | None = None) -> dict:
     notes: list[str] = []
     draft: dict = {
         "_draft": True,
@@ -212,6 +214,36 @@ def assemble(*, slug: str, home: str, away: str, event: str, year: int,
             draft.pop("editorial", None)
             notes.append("⚠️ 文案这一步没成（模型或网络），editorial 留空")
 
+    # ⑥ 窗口起草（DeepSeek 读字幕+切点）。只在给了 captions + cuts（probe 产物）
+    #    时才跑——probe 之前这两个文件不存在，跳过并在 notes 出声。
+    if captions_path and cuts_path:
+        try:
+            from draft_segments import _read_captions, _read_cuts, draft_segments
+            caps = _read_captions(Path(captions_path))
+            cuts = _read_cuts(Path(cuts_path))
+            if not caps:
+                notes.append("⚠️ captions 是空的，窗口起草跳过（退回人工）")
+            elif not chat.ready:
+                notes.append("⚠️ 没配 key，窗口起草跳过")
+            else:
+                beats = "\n".join(
+                    (draft.get("editorial") or {}).get("beats", []))
+                seg = draft_segments(chat, captions_text=caps, cuts=cuts,
+                                     beats=beats, home=player_zh(home),
+                                     away=player_zh(away))
+                if seg and seg.get("segments"):
+                    draft["segments"] = seg["segments"]
+                    notes.append(f"窗口起草 {len(seg['segments'])} 段"
+                                 + (f"，拦掉 {seg.get('_dropped', 0)} 段废窗口"
+                                    if seg.get("_dropped") else ""))
+                else:
+                    notes.append("⚠️ 窗口起草没成（模型或全被闸拦掉），segments 留空")
+        except Exception as exc:  # noqa: BLE001 —— 窗口起草失败不拖垮整份草稿
+            notes.append(f"⚠️ 窗口起草没成（{type(exc).__name__}: {exc}）")
+    else:
+        notes.append("⚠️ 没给 captions/cuts（probe 还没落库），窗口起草跳过——"
+                     "等 probe 完成后再补跑")
+
     draft["_notes"] = notes
     return draft
 
@@ -226,13 +258,18 @@ def main() -> int:
     ap.add_argument("--fixture", default="", help="赛前信息，进文案 prompt")
     ap.add_argument("--flashscore-id", default=None,
                     help="已知 flashscore id 就跳过反查")
+    ap.add_argument("--captions", default=None,
+                    help="probe 产出的 captions.txt（给了就跑窗口起草）")
+    ap.add_argument("--cuts", default=None,
+                    help="probe.json（读 scene_cuts，配 --captions 用）")
     ap.add_argument("--write", action="store_true",
                     help="把草稿落盘到 specs/reels/<slug>.draft.json；不给就只打印")
     args = ap.parse_args()
 
     draft = assemble(slug=args.slug, home=args.home, away=args.away,
                      event=args.event, year=args.year, fixture=args.fixture,
-                     flashscore_id=args.flashscore_id)
+                     flashscore_id=args.flashscore_id,
+                     captions_path=args.captions, cuts_path=args.cuts)
 
     print(json.dumps(draft, ensure_ascii=False, indent=2))
     if not args.write:

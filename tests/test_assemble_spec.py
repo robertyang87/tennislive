@@ -167,6 +167,62 @@ def test_assemble有id但文案失败时不静默(tool, monkeypatch):
         "文案失败必须出声，不许把缺 editorial 的草稿当成「本来就没配」")
 
 
+def test_assemble没给captions出声跳过窗口(tool, monkeypatch):
+    a = tool
+    monkeypatch.setattr(a, "resolve_match_id", lambda h, aw: "4CYI9Ick")
+    monkeypatch.setattr(a, "matchup_order",
+                        lambda h, aw, mid: [(h, a.player_zh(h)), (aw, a.player_zh(aw))])
+    monkeypatch.setattr(a, "stats_block", lambda mid: {
+        "a": {}, "b": {}, "_missing_required": [], "_has_winners_ue": False})
+    monkeypatch.setattr(a, "collect", lambda mid, h, aw: {"candidates": [], "durations": []})
+    monkeypatch.setattr(a, "points", lambda mid: [])
+    monkeypatch.setattr(a, "rank_games", lambda games: [])
+    monkeypatch.setattr(a, "Chat", lambda: type("C", (), {"ready": True, "channel": "x"})())
+    monkeypatch.setattr(a, "draft_editorial", lambda chat, **kw: {"beats": ["b"]})
+
+    draft = a.assemble(slug="x", home="A E", away="B R", event="C", year=2026,
+                       fixture="", flashscore_id="4CYI9Ick")
+    assert "segments" not in draft
+    assert any("没给 captions" in n for n in draft["_notes"]), (
+        "没给 captions 要出声说明窗口起草跳过，别静默")
+
+
+def test_assemble给captions跑窗口起草(tool, monkeypatch, tmp_path):
+    a = tool
+    monkeypatch.setattr(a, "resolve_match_id", lambda h, aw: "4CYI9Ick")
+    monkeypatch.setattr(a, "matchup_order",
+                        lambda h, aw, mid: [(h, a.player_zh(h)), (aw, a.player_zh(aw))])
+    monkeypatch.setattr(a, "stats_block", lambda mid: {
+        "a": {}, "b": {}, "_missing_required": [], "_has_winners_ue": False})
+    monkeypatch.setattr(a, "collect", lambda mid, h, aw: {"candidates": [], "durations": []})
+    monkeypatch.setattr(a, "points", lambda mid: [])
+    monkeypatch.setattr(a, "rank_games", lambda games: [])
+    monkeypatch.setattr(a, "Chat", lambda: type("C", (), {"ready": True, "channel": "x"})())
+    monkeypatch.setattr(a, "draft_editorial",
+                        lambda chat, **kw: {"beats": ["前段"]})
+
+    caps = tmp_path / "captions.txt"
+    caps.write_text("0.08\tBen\n13.76\tDespite\n", encoding="utf-8")
+    cuts = tmp_path / "probe.json"
+    cuts.write_text('{"scene_cuts": [6.8, 13.08]}', encoding="utf-8")
+
+    # 打桩 draft_segments 模块里的函数，避免真调 DeepSeek
+    fake = type("M", (), {
+        "_read_captions": staticmethod(lambda p: "0.08: Ben\n13.76: Despite\n"),
+        "_read_cuts": staticmethod(lambda p: [6.8, 13.08]),
+        "draft_segments": staticmethod(
+            lambda chat, **kw: {"segments": [
+                {"start": 0.08, "end": 13.08, "narration": "一段"}], "_dropped": 0}),
+    })()
+    monkeypatch.setitem(sys.modules, "draft_segments", fake)
+
+    draft = a.assemble(slug="x", home="A E", away="B R", event="C", year=2026,
+                       fixture="", flashscore_id="4CYI9Ick",
+                       captions_path=str(caps), cuts_path=str(cuts))
+    assert draft["segments"][0]["narration"] == "一段"
+    assert any("窗口起草 1 段" in n for n in draft["_notes"])
+
+
 def test_main写出草稿文件(tool, monkeypatch, tmp_path, capsys):
     a = tool
     monkeypatch.setattr(a, "assemble", lambda **kw: {
