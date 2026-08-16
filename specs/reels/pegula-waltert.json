@@ -1,0 +1,224 @@
+{
+  "slug": "pegula-waltert",
+  "source_url": "https://www.youtube.com/watch?v=tnh5cA-ZaL0",
+  "_source": "WTA 官方 YouTube 频道的单场集锦，标题 `Simona Waltert vs. Jessica Pegula | 2026 Cincinnati Round 2 | WTA Match Highlights`（oEmbed 的 `author_name` 是 `WTA`）。1920×1080、25 fps、**472.6 秒**。\n\n⚠️⚠️ **这一条超过 310 秒，尾巴上挂着场上采访**——CLAUDE.md「WTA 纯集锦定长 310 秒，超出的那部分才是采访」正是说这个。转写里 **298.56 秒**开始就是采访提问（`Uh Jess, tough win against an opponent you've never met…`），一直到 462 秒。**采访整段不进片子**：`scene_cuts` 在 **298.4** 有一刀，正好是那个边界，所有窗口都收在 297.5 秒以内。⚠️ 不是「不配原声就行」，画面也一秒都不收（CLAUDE.md 2026-08-15 账号所有者重申过「赛场之上视频不要赛后采访」）。\n\n比赛画面本身到 266.5 秒结束（解说 `another error ends the match`），266.5–298.4 是握手、致意和全屏赛果台标。\n\n四要素自证：记分条整场烧着 `S. WALTERT / J. PEGULA [3]`；294.5 秒全屏台标 `SIMONA WALTERT 3 2 / JESSICA PEGULA 6 6`；场边是 `Kroger` / `Fifth Third Bank` / `Credit One` / `Great American`（辛辛那提本站赞助商）。",
+  "_column": "赛场之上",
+  "topbar": {
+    "line1": "WTA1000 辛辛那提 第二轮",
+    "line2": "佩古拉 6-3 6-2 瓦尔特特"
+  },
+  "_topbar_why": "照「赢家 比分 输家」排，和 WTA 官方 `ResultString`（`[3]J. Pegula d S. Waltert 6-3,6-2`）一致。轮次 `RoundID=2`、YouTube 标题 `Round 2` 对得上。",
+  "editorial": {
+    "mode": "match_review",
+    "question": "世界第三用一个半小时结束战斗，对面到底垮在哪儿？",
+    "thesis": "垮在发球上。瓦尔特特全场**十一个双误**，佩古拉只有一个；她的发球局连着丢了五个。佩古拉自己并不完美——两盘各被破过一次，十一个破发机会只兑现六个——但她不需要更多：对面每一个发球局都在往下掉。",
+    "beats": [
+      "前段：前四局各自保发，二比二；然后瓦尔特特连丢两个发球局，二比五",
+      "中段：佩古拉五比二发球胜盘时被破了回去，三比五；她再破一次，六比三拿下第一盘",
+      "结局：第二盘她上来就破，被破回一次之后再破，六比二；全场一小时三十一分钟"
+    ],
+    "human_context": {
+      "angle": "这一场的场外切口是**「回到决赛过的地方」**。WTA 官网给这条集锦的标题就是「前决赛选手佩古拉在辛辛那提轻松过关」——她是**二〇二四年这站的亚军**。而这是两个人**第一次交手**，转播赛后第一句问的正是这个：`an opponent you've never met`。瓦尔特特二十五岁、瑞士人、世界第八十七，本站从资格赛打进正赛。",
+      "facts": [
+        "佩古拉 1994-02-24 出生，本场时 32 岁；瓦尔特特 2000-12-13 出生，25 岁（WTA 官方球员接口 id 316956 / 325771）",
+        "当期世界排名：佩古拉第 3、瓦尔特特第 87（WTA 官网球员页）",
+        "佩古拉是本站 3 号种子（WTA 官方 ResultString 写作 `[3]J. Pegula`）",
+        "佩古拉是 2024 年辛辛那提亚军（WTA 官网这条集锦的摘要原文：`the 2024 Cincinnati runner-up`）",
+        "两盘用时 0:45:26 / 0:46:28，合计 1:31:54；官方 MatchTimeTotal 01:31:57（差 3 秒）",
+        "双误 瓦尔特特 11、佩古拉 1（WTA 官方 dblflta/b，flashscore df_st_1 同值）",
+        "破发点 佩古拉 6/11、瓦尔特特 2/6；全场小分 48:71",
+        "瓦尔特特的发球局连着丢了五个（逐分 df_mh_1：第一盘 2-3、2-5、3-6，第二盘 0-2、1-3）",
+        "转播 266.56 秒原话：another error ends the match",
+        "转播 280.40 秒原话：A little closer than the score line suggests though at times. 63 62. Pegula is through in just over an hour and a half"
+      ],
+      "sources": [
+        "https://www.wtatennis.com/videos/4560295/former-finalist-pegula-races-to-opening-win-in-cincinnati",
+        "https://www.wtatennis.com/players/316956/jessica-pegula",
+        "https://www.wtatennis.com/players/325771/simona-waltert",
+        "https://www.youtube.com/watch?v=tnh5cA-ZaL0"
+      ],
+      "voice_label": "回到决赛过的地方"
+    }
+  },
+  "_claims": {
+    "佩古拉是二〇二四年辛辛那提的亚军": "① **WTA 官网**这条集锦页的 schema.org `VideoObject` 摘要原文：`No. 3 seed Jessica Pegula, the 2024 Cincinnati runner-up, booked her spot in the third round` https://www.wtatennis.com/videos/4560295/former-finalist-pegula-races-to-opening-win-in-cincinnati ；② 同一页的标题 `Former finalist Pegula races to opening win in Cincinnati`。⚠️ 片子里只说「二〇二四年这站的亚军」，**不说「唯一」「史上第一」这类全称**。",
+    "两个人此前没交手过": "① **转播赛后提问原话**（本条源片 298.56 秒起）：`an opponent you've you've never met` https://www.youtube.com/watch?v=tnh5cA-ZaL0 ；② **flashscore 交手记录** `df_hh_1_nkHJMFv0`：`Waltert S. 0 : 1 Pegula J.（含本场）· 硬地 0:1`——本场之前是空的 https://global.flashscore.ninja/2/x/feed/df_hh_1_nkHJMFv0 。\n\n⚠️ 那句转播原话出自**采访段**（298.56 秒之后），**画面和原声都没有进片子**——只把这个事实写进旁白，出处记在这儿。"
+  },
+  "_no_repeat": "同栏目今天已发的四条各自的落点，这一条都不碰：\n  · `zhang-day` 零 ACE；`navarro-kalinina` 全场只多赢一个小分；`parry-mertens` 对手一发从八成掉到三成八；`noskova-boulter` 连续保发。\n  · ⚠️ **`parry-mertens` 也是「对手发球崩了」，所以这条换一个量**：那条用的是**一发得分率**的分盘曲线，这条用的是**双误 11:1** 和**连丢五个发球局**——同一类事的两个不同切面，而且这条的落点是佩古拉「回到自己打过决赛的地方」，不是崩盘本身。",
+  "_editing_why": "源片 472.6 秒，**尾巴 298.4 秒之后是场上采访，一秒都不收**（见 `_source`）。结构照「开场三格」：① 赛点落地 ＋ 她赢下那一刻（不配旁白）→ ② 落点 → ③ 坐标；之后回到 11.7 秒按时间顺序走，末段回到 290.2 秒收尾。\n\n两个人分得很开：**佩古拉浅紫背心配白帽，瓦尔特特粉色上衣配黑裙**。封面那张官方实拍就是浅紫那套，和源片同一套。\n\n旁白定稿之后跑了第二遍 `preview_segments_local.py` 核「这句话说的那个人是不是画面里那个人」。",
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "佩古拉",
+    "hook": "对手十一个双误\n她自己只有一个",
+    "_hook_why": "两行是**同一件事的两头**，讲的是过程不是身份：十一比一的双误差，正是这场球一个半小时就结束的原因。海报别处印着排名、轮次、比分，不重复。最长行 7 个字符，在 `HOOK_MAX_CHARS = 10` 以内。",
+    "_subject_view_why": "封面放佩古拉：世界第三、本站 3 号种子、二〇二四年这站的亚军——她是把人拉进来的那个名字。瓦尔特特世界第八十七，从资格赛打上来，不构成「输的那个才是流量主体」的取舍。",
+    "topic": "辛辛那提WTA1000 · 女单第二轮",
+    "portrait": {
+      "image": "assets/reel/pegula-cincinnati-2026-r2.jpg",
+      "focus": 0.44,
+      "focus_y": 0.34,
+      "zoom": 1.0
+    },
+    "_portrait_why": "**官方实拍，不是抽帧**。4000×2809，铺 1080×1440 是 **0.51× 缩小**。\n\n取法：`videos/highlights` 索引 → 这条集锦页 → schema.org `VideoObject` 的 `thumbnailUrl`。\n\n⭐ **这一张的文件名本身就自证四要素**（和前几条的 `GettyImages-…` 不一样）：`Jessica_Pegula_-_Cincinnati_Open_2026_-_Day_5-DSC_6854.jpg`——球员、赛事、年份、第几个比赛日全写在里面，正是 CLAUDE.md 说的强形式。另加两条旁证：路径日期 `2026/08/15`，以及**衣服和源片同一套**（浅紫背心 ＋ 白色遮阳帽，源片 258.5 / 268.5 / 284.5 秒都是这一套）。\n\n四道闸门：① 见上；② **在比赛中**——正手随挥到位；③ 有冲击力——盯着球、拍子收在头顶；④ 4000×2809 真实相机分辨率。\n\n⚠️ 取原图必须带 `?width=4000`。",
+    "winner": "佩古拉",
+    "result": "6-3 6-2",
+    "matchup": [
+      {
+        "name": "佩古拉",
+        "name_en": "Jessica Pegula",
+        "country": "USA",
+        "rank": 3
+      },
+      {
+        "name": "瓦尔特特",
+        "name_en": "Simona Waltert",
+        "country": "SUI",
+        "rank": 87
+      }
+    ],
+    "_matchup_rank_why": "两个排名都取 **WTA 官网球员页**：佩古拉第 3、瓦尔特特第 87。⚠️ 这一条**种子序号和排名恰好一样**（3 号种子、世界第三），但仍然分开核过，不是拿种子当排名。",
+    "_name_why": "`Jessica Pegula → 佩古拉`、`Simona Waltert → 瓦尔特特`，两个都是跑 `player_zh()` 拿的，不是手打。",
+    "scoreboard": {
+      "court": "Lindner Family Tennis Center",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%20%221%3A31%3A57%22%2C%20%22source_feed%22%3A%20%22WTA%20official%20LS055%20settime%200%3A45%3A26%20%2B%200%3A46%3A28%20%3D%201%3A31%3A54%2C%20MatchTimeTotal%2001%3A31%3A57%22%7D",
+        "field": "duration"
+      },
+      "_duration_why": "取 **WTA 官方** `matches/LS055/stats` 的分盘 `settime`：`0:45:26` ＋ `0:46:28` ＝ `1:31:54`，同一份数据的 `MatchTimeTotal` 是 `01:31:57`——差 3 秒，自洽。转播 285.76 秒也说 `through in just over an hour and a half`，对得上。",
+      "_court_why": "⚠️ **这一场的球场名没查实，所以印场馆名**。WTA 官方给的是 `CourtID 2`，而 CLAUDE.md 明写着**这个码位在两条已发 spec 上互相打架**（一条读成中心球场、一条读成 Grandstand），没有标定。\n\n另外两条路也走空了：**转播全程没提球场名**（转写里 `court` 一次都没出现，不像 `navarro-kalinina` 的 `on court 10` 或 `parry-mertens` 的 `on court four`）；源片里也没有拍到写着球场名的牌子。\n\n所以按同站 `cirstea-bartunkova` / `bucsa-chwalinska` 的先例印场馆名——**宁可粗一档，也别印一个没查实的球场号**。"
+    }
+  },
+  "stats": {
+    "tour": "wta",
+    "a": {
+      "headshot": "assets/players/headshots/wta-316956.jpg",
+      "aces": 3,
+      "df": 1,
+      "first_in": 32,
+      "first_won": 23,
+      "second_total": 20,
+      "second_won": 10,
+      "bp_conv": 6,
+      "bp_chances": 11,
+      "pts_won": 71,
+      "pts_total": 119,
+      "first_total": 52
+    },
+    "b": {
+      "headshot": "assets/players/headshots/wta-325771.jpg",
+      "aces": 4,
+      "df": 11,
+      "first_in": 36,
+      "first_won": 18,
+      "second_total": 31,
+      "second_won": 11,
+      "bp_conv": 2,
+      "bp_chances": 6,
+      "pts_won": 48,
+      "pts_total": 119,
+      "first_total": 67
+    },
+    "footer_venue": "辛辛那提 · 女单第二轮",
+    "footer_date": "2026年8月15日",
+    "_source": "数出自 `python3 tools/match_stat_hooks.py nkHJMFv0 --stats-block`。\n\n⚠️⚠️ **`a`/`b` 是调过顺序的**：工具按 flashscore 的 home/away 排，这一场 home 是**瓦尔特特**；而 `cover.matchup[0]` 是**佩古拉**（封面主体、赢家）。CLAUDE.md 写着 `stats.a` 跟的是 `cover.matchup[0]` 不是 feed 的 home/away，所以整块 a/b 对调、头像跟着换。判据是 `test_数据图的头像和matchup里的名字必须是同一个人`。\n\n两个源逐项一致（WTA 官方 `matches/LS055/stats` 对 flashscore `df_st_1`）：ACE 3:4、**双误 1:11**、一发 32/52 对 36/67、破发点 6/11 对 2/6、小分 71:48。\n\n⚠️ 制胜分和非受迫失误这场接口里没有——WTA 巡回赛这一档本来就不给。\n\n⚠️ `first_total` 按 `first_in + second_total` 算（32+20=52、36+31=67）。"
+  },
+  "_hit_data": "跑过 `python3 tools/match_stat_hooks.py nkHJMFv0`，七条候选全在。挑进片子的是**双误 11:1**（钩子两行就是它）和从逐分数出来的**瓦尔特特连丢五个发球局**。\n\n没用的：\n  · 总分差 23 分（71:48）——`navarro-kalinina` 今天刚拿小分差当落点；\n  · 瓦尔特特一发得分率 61%→39%——⚠️ **`parry-mertens` 一小时前刚用过「对手一发曲线」**，所以这条换成双误这个更硬的单一数字；\n  · 破发点 6/11 对 2/6——`noskova-boulter` 用过破发点；\n  · 交手记录 0:1——首次交手，写进来路不做落点。",
+  "_voice": "配音走仓库默认的云见（zh-CN-YunjianNeural，+6%），这条 spec 不另设 voice/style。",
+  "segments": [
+    {
+      "start": 262.0,
+      "end": 270.8,
+      "_why": "① 画面爆点，不配旁白，走现场声。记分条从 258.5 秒起挂着 `MATCH POINT`，266.5 秒解说说 `another error ends the match`——这一段正好是最后一分打完加她赢下的反应。段尾收在切点 270.96 之前。"
+    },
+    {
+      "start": 271.2,
+      "end": 278.5,
+      "narration": "二〇二四年这站的亚军回来了。这一次，她一个半小时就结束了。",
+      "_why": "② 落点。画面是 `CONGRATULATIONS` 图形加两个人网前握手。「二〇二四年亚军」出自 WTA 官网这条集锦自己的摘要。"
+    },
+    {
+      "start": 11.7,
+      "end": 21.5,
+      "narration": "北京时间八月十六号凌晨四点多，辛辛那提第二轮。三号种子佩古拉，对瑞士人瓦尔特特。",
+      "_why": "③ 坐标。正文从这里开始，两个名字都写出来。⚠️ 时刻说到点不说分：WTA 官方 `MatchTimeStamp` 换算成北京时间是 04:23。"
+    },
+    {
+      "start": 27.2,
+      "end": 36.5,
+      "narration": "佩古拉世界第三，瓦尔特特第八十七，从资格赛打进正赛。两个人此前没交过手。",
+      "_why": "两个人的来路。「没交过手」两个源核过（flashscore 交手记录本场之前是空的；转播赛后第一句问的就是 `an opponent you've never met`）。"
+    },
+    {
+      "start": 45.4,
+      "end": 50.5,
+      "narration": "前四局各自保发，二比二。",
+      "_why": "第一盘前段。逐分：1-0、1-1、2-1、2-2 四局全是保发。\n\n⚠️ **窗口收短过**：第一版这一段估出来是哑场（没人说话超过 4.0s 的门槛），把 `end` 往前挪，不靠硬凑旁白填。"
+    },
+    {
+      "start": 58.0,
+      "end": 65.0,
+      "narration": "然后瓦尔特特连丢两个发球局。二比五，第一盘眼看就没了。",
+      "_why": "逐分第一盘 `2-3` 和 `2-5` 两局都是瓦尔特特发球被破。\n\n⚠️ **窗口收短过**：第一版这一段估出来是哑场（没人说话超过 4.0s 的门槛），把 `end` 往前挪，不靠硬凑旁白填。"
+    },
+    {
+      "start": 70.0,
+      "end": 77.0,
+      "narration": "问题出在她的二发上。全场十一个双误，瓦尔特特一个人包了。",
+      "_why": "双误 11:1 是这场球的核心数（WTA 官方和 flashscore 一致）。⚠️ 先说「她」再点名，是因为上一段句尾的主语就是瓦尔特特，中间没换人。\n\n⚠️ **窗口收短过**：第一版这一段估出来是哑场（没人说话超过 4.0s 的门槛），把 `end` 往前挪，不靠硬凑旁白填。"
+    },
+    {
+      "start": 96.6,
+      "end": 101.5,
+      "narration": "佩古拉的一发很稳，全场只丢过九分。",
+      "_why": "不依赖这一刻的比分的一句（一发得分 23/32，丢 9 分，WTA 官方与 flashscore 一致）。⚠️ 第一版这儿写的是「五比二发球胜盘被破」，**放错了地方**——记分条要到 119 秒才是那一局，是第二遍 `preview_segments_local.py` ＋ 放大记分条抓出来的。\n\n⚠️ 措辞收短过：第一版真语音量出来余量只有 +0.24s（很紧），而这一段被两个切点夹死（96.4 / 101.64），窗口没法再放。"
+    },
+    {
+      "start": 119.5,
+      "end": 129.5,
+      "narration": "五比二，她发球胜盘，四十比十五。这一局她没保住，三比五。",
+      "_why": "记分条 120.5–130.5 秒是 `S. WALTERT 2 15 / J. PEGULA [3] 5 40`，发球指示球标在佩古拉那一行——**她在发球胜盘**，逐分那一局（`3-5`）正是她被破回去。\n\n⚠️ **措辞为切词改过**：第一版写「佩古拉发球胜盘」，`words.json` 报出 `拉发` 骑在人名边界上。改用「她」——上一段句尾刚点过佩古拉，而这一段画面里发球的正是她（记分条球标在她那一行），指代不会歧义。"
+    },
+    {
+      "start": 132.5,
+      "end": 140.5,
+      "narration": "她马上破了回来。零比四十，三个盘点，第一盘六比三。",
+      "_why": "记分条 132.5–150.5 秒是 `WALTERT 3 0 / PEGULA 5 40` 加绿标 `SET POINT #3`——**这一局是瓦尔特特发球**，逐分 `3-6` 那局写着 `0:40 |B1| |B2|`（破发点＋盘点）。152.5 秒记分条已经变成第二盘。"
+    },
+    {
+      "start": 154.0,
+      "end": 158.5,
+      "narration": "第二盘佩古拉上来就破发。",
+      "_why": "记分条 152.5 秒起进入第二盘（`WALTERT 3 0 15 / PEGULA 6 0 30`）。逐分第二盘 `0-2` 那局：瓦尔特特发球被破。\n\n⚠️ 窗口收短过：8.0s 配一句 2.8s 的旁白是哑场（门槛 4.0s）。"
+    },
+    {
+      "start": 214.0,
+      "end": 221.0,
+      "narration": "十一个里她兑现了六个。而瓦尔特特六个机会只拿到两个。",
+      "_why": "WTA 官方破发点：佩古拉 6/11、瓦尔特特 2/6，flashscore 同值。\n\n⚠️ **窗口收短过**：第一版这一段估出来是哑场（没人说话超过 4.0s 的门槛），把 `end` 往前挪，不靠硬凑旁白填。"
+    },
+    {
+      "start": 232.0,
+      "end": 238.0,
+      "narration": "第一盘之后，瓦尔特特的发球局连着丢了五个。",
+      "_why": "逐分数出来的：第一盘 2-3、2-5、3-6，第二盘 0-2、1-3，中间没有一个保发。\n\n⚠️ **窗口收短过**：第一版这一段估出来是哑场（没人说话超过 4.0s 的门槛），把 `end` 往前挪，不靠硬凑旁白填。"
+    },
+    {
+      "start": 283.2,
+      "end": 290.0,
+      "narration": "全场一百一十九个小分，佩古拉拿走七十一个。一小时三十一分钟。",
+      "_why": "数据。71:48 和用时都是 WTA 官方，flashscore 同值。⚠️ 写「小分」不写「分」，躲开「分/分钟」的读音歧义。画面是她向看台致意。"
+    },
+    {
+      "start": 290.2,
+      "end": 297.5,
+      "narration": "两年前她在这儿打进过决赛。这一次能走到哪儿？",
+      "_why": "收尾一问，落回「二〇二四年亚军」那条线，**不是封面那一问的回声**（钩子问的是双误）。画面是 `JESSICA PEGULA` 名字图形和全屏赛果台标。⚠️ **段尾 297.5 必须收在切点 298.4 之前**——298.56 秒起就是场上采访，一秒都不能进。"
+    }
+  ],
+  "push": {
+    "summary": "佩古拉一个半小时过关",
+    "lead": "辛辛那提女单第二轮，世界第三、3 号种子佩古拉 6-3 6-2 赢下从资格赛打上来的瑞士人瓦尔特特，用时一小时三十一分钟。这场球的账很简单：**全场十一个双误，瓦尔特特一个人包了，佩古拉只有一个**。前四局两个人各自保发，二比二；然后瓦尔特特连丢两个发球局，二比五。佩古拉五比二发球胜盘时被破了回去，但她马上再破一次，六比三拿下第一盘，那一盘用了四十五分钟。第二盘她上来就破发，自己被破一次之后立刻破回，六比二收工。第一盘之后瓦尔特特的发球局**连着丢了五个**。破发点佩古拉六中十一、瓦尔特特二中六，全场一百一十九个小分佩古拉拿走七十一个。转播赛后那句话是：比分看着轻松，有些时候其实比比分近。而这场球最重的一层在场外——佩古拉是**二〇二四年辛辛那提的亚军**，WTA 官网给这条集锦起的标题就是「前决赛选手回来了」。两个人此前从没交过手，转播赛后问她的第一句正是这个。",
+    "auto": true
+  }
+}
