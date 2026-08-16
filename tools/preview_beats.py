@@ -1,5 +1,16 @@
 #!/usr/bin/env python3
-"""开球之前：纯视频剪辑管线，独立于 explainer.py 的卡片流水线。
+"""开球之前纯视频的 **beat / 角标辅助函数**——属于一条**独立的开球之前管线**。
+
+⚠️ 本文件**不是**完整的构建入口（还没有 `main`/`assemble_preview_reel`），只提供
+开球之前比「赛场之上」多出来的那几样 segment 编码器：多源素材 beat、压在画面
+上的信息条角标、海报 beat。
+
+⚠️ **开球之前要独立，不和 match-reel 混。** 账号所有者 08-08 定的是「单独走
+一条管线」——既不走 explainer（卡片视频），也不复用 match-reel（赛场之上那条）。
+当前存量 spec 还躺在 `specs/reels/` 下、由 match-reel.yml 渲，那是**历史遗留的
+混线状态**，正是接下来要拆开的；`assemble_preview_reel` + 自己的 CLI + 自己的
+workflow 补齐之后，开球之前就彻底独立。文件名从 `build_preview_reel.py` 改成
+`preview_beats.py`，是为了不让人误以为它已经是个能独立出片的构建入口。
 
 ## 为什么单独一个文件
 

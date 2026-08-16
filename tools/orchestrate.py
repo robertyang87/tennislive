@@ -123,14 +123,13 @@ def mark_dispatched(state: dict, dispatched: list[dict]) -> None:
 
 
 def _workflow_for(column: str) -> str:
-    # 赛场之上（reel）和开球之前（preview）**都走 match-reel.yml**：
-    # 开球之前的 spec 也在 specs/reels/ 下（jodar-fritz 等），match-reel 的
-    # 多源机制（sources + mixed_fps）本来就是给「开球之前没有单条集锦、只有
-    # 多组源片」准备的——纯视频。
-    # ⚠️ 别把 preview 路由到 explainer：explainer.py `_SCRIPTS` 里硬编码的
-    # 「开球之前」是**卡片视频**（整屏文字卡+TTS），正是账号所有者 08-08 要
-    # 换掉的旧形式。图卡版走 flash.yml（内容雷达），也不在这一层。
-    return "match-reel.yml"
+    # 赛场之上（reel）走 match-reel.yml；开球之前（preview）走**独立的**
+    # preview-reel.yml——账号所有者 08-08 定了「单独走一条管线」，不和
+    # match-reel（赛场之上那条）混，也不走 explainer（卡片视频）。
+    # ⚠️ preview-reel.yml 还没建（preview_beats.py 还缺 assemble/CLI），
+    # 建好之前编排器对 preview 只 print 计划、点 run 会失败——见 main() 的闸。
+    return {"reel": "match-reel.yml", "preview": "preview-reel.yml"}.get(
+        column, "match-reel.yml")
 
 
 def main() -> int:
