@@ -92,3 +92,25 @@ def test_main字幕空跳过出声(monkeypatch, capsys, tmp_path):
     assert ds.main() == 0
     out = capsys.readouterr().out
     assert "captions 是空的" in out, "没有字幕要出声，别静默退回人工"
+
+
+def test_clean_segments拦掉零长度和超短窗口():
+    ds = _tool()
+    got = ds.clean_segments({"segments": [
+        {"start": 30.96, "end": 30.96, "narration": "零长度"},
+        {"start": 1.0, "end": 1.5, "narration": "太短"},
+        {"start": 222.32, "end": 224.8, "narration": "正常"},
+    ]})
+    assert len(got["segments"]) == 1, "零长度和 <2s 的段要拦掉，只留正常段"
+    assert got["segments"][0]["narration"] == "正常"
+    assert got["_dropped"] == 2, "拦掉几段要记下来，别静默"
+
+
+def test_clean_segments坏字段也不放过():
+    ds = _tool()
+    got = ds.clean_segments({"segments": [
+        {"narration": "没有 start/end"},
+        {"start": "abc", "end": 10.0, "narration": "start 不是数"},
+    ]})
+    assert got["segments"] == []
+    assert got["_dropped"] == 2
