@@ -5120,6 +5120,80 @@ ESPN 那份是**上一周的快照**，维基那条明写着 `(3 August 2026)`�
   含糊说法便宜得多
 - 「前二十五」这种范围**读起来像谨慎，其实是把没查清的事包装成了查清的事**——
   而且它比错的数字更难被下一个人发现
+
+#### ⭐⭐ ATP 排名去**官方 posting** 拿：`protennislive.com/posting/<年>/<赛事id>/`
+
+账号所有者 2026-08-16：「**你要去官方渠道去看排名，维基百科不能做为第一源**」。
+
+**`atptour.com` 对本环境恒 403**（本文件记过好几次），于是这条线一直在用二手源。
+真去找才发现**官方 posting 站是通的**，纯 HTTP、不用 token：
+
+    正赛签表   https://www.protennislive.com/posting/<年>/<赛事id>/mds.pdf
+    资格赛签表 https://www.protennislive.com/posting/<年>/<赛事id>/qs.pdf
+    双打       .../mdd.pdf
+    （赛事 id 就是 ATP 的那个，辛辛那提＝422；ent/oop/ss/ip/acc 一律 404，别试）
+
+一份 `mds.pdf` 里印着**这一站的全部权威事实**，而且页脚带发布时间戳
+（`Released 08/15/2026 20:54:48`）：
+
+    Seeded Players Top Half        ← **种子号 + 世界排名，两栏分开印**
+      Player                Rank
+      5 de Minaur, Alex       7
+      8 Shelton, Ben         10
+    62 Q HALYS, Quentin FRA        ← **`Q` ＝ 资格赛打上来的**
+    Last Direct Acceptance: Tsitsipas, Stefanos - 85
+    Withdrawals / Retirements / Alternates-Lucky Losers   ← 各自成栏
+
+⚠️ **`pypdf` 直接抽得出文本**，不用 OCR。签表正文里种子号贴在名字前面
+（`64 5 DE MINAUR, Alex AUS`），而**排名只在 `Seeded Players` 那张小表里**
+——非种子球员的排名在正赛签表里没有，要去 `qs.pdf` 的资格赛种子表找
+（`2 Halys, Quentin 54`）。
+
+##### ⚠️ 我这次错在哪儿：拿二手源去校验二手源，跳不出二手源
+
+`halys-deminaur` 三个源打架（维基信息框 **5**、tennisexplorer **7**、维基签表
+种子表 **8**），我按本文件「先查哪个新」那条去分辨，**过程看着很严谨，结论是错的**：
+
+1. 先发现 **tennisexplorer 的 `?date=` 被静默忽略**——`2026-08-03` 和 `2026-08-10`
+   返回**一模一样的表**，**而页眉把我传的日期回显了出来**。这一条是真的，
+   而且伪装得比 WTA 那两次（`?extended=true`、`year=2026`）更好：**它回显了参数**。
+   ⚠️ **判据不是「参数被接受了」，是「换个值内容变没变」**
+2. 然后挑**谢尔顿**当标定物（他刚拿蒙特利尔冠军，排名必然动过），维基签表把他
+   排第 **6**，据此判定维基那张表是当期 ⇒ 德米纳尔取 **8**
+
+**第 2 步整个是错的**：官方签表印的是**谢尔顿第 10**、德米纳尔第 **7**，
+和 tennisexplorer 一致；维基那张种子表从第 4 位起整段偏了一位。
+**而我的标定物（谢尔顿的维基信息框）本身也是维基**——两个都错，还互相印证。
+
+| | 谢尔顿 | 德米纳尔 |
+|---|---|---|
+| **ATP 官方 `mds.pdf`** | **10** | **7** |
+| tennisexplorer | 10 | 7 |
+| 维基签表的种子表 | 6 ❌ | 8 ❌ |
+| 维基球员信息框 | 6 ❌ | 5（停在 `13 July 2026`）❌ |
+
+⚠️ **教训不是「维基不准」，是「校验链的根必须落在官方」。** 挑标定物这个技巧
+本身没问题——错在**标定物和被校验的对象出自同一个源**，那等于让它自己给自己作证。
+先去官方拿一个数，再拿它去标定二手源，顺序反了就是这次。
+
+⚠️ **这个错差点发出去**：海报和数据图上都印着 `(8)`，成片已经渲完、`check_reel_landed`
+0 项不合格、全量 2001 绿——**没有任何一道闸查得了一个「格式正确的错数字」**。
+是账号所有者一句话拦下来的。
+
+#### ⚠️ 编辑稿的**引语**可以抄，**结论**不可以
+
+同一条片子上，beIN Sports 的赛报给了两段德米纳尔的原话（真的，进了片子），
+同一篇的摘要里还有一句「**德米纳尔已经连续九次赢下阿利斯**」——**假的**。
+两个交手源都推翻它：flashscore 的 Head-to-head 段只有三条，tennisexplorer 的
+`mutual/` 页直接报 `Halys leads 2-1`，而且**此前两次都是阿利斯赢**。
+
+**核完之后这条反而成了片子最好的落点**（德米纳尔第一次赢下这个人）——
+也就是说，去核一个看着无关紧要的数字，换回来的是一条比原计划更强的线。
+
+⚠️ 这跟「非空 ≠ 对题」是一家的：**一篇稿子里，可直接引用的部分和需要复核的
+部分混在一起，而它们读起来一样权威**。原话是记者听到的，结论是记者（或摘要
+生成器）算的——**只有后者会算错**。
+
 规矩之前发出去的十二条封面挂在 `_LEGACY_NO_FLAG` 里，**只许减不许加**。
 
 ### 轮次写「半决赛 / 1/4 决赛 / 1/8 决赛」，不写「四强 / 八强」
@@ -5349,6 +5423,106 @@ ESPN 那份是**上一周的快照**，维基那条明写着 `(3 August 2026)`�
 调过色、洛斯卡沃斯那次官网图是效果图）说的都是同一件事：**授权和来源不是
 靠感觉判的，是靠画面自己证明的**。
 
+##### ⭐⭐ 2026-08-16 补上第三档：Tennis TV 的**短集锦是免费的**，YouTube 缺场时用它
+
+账号所有者：「**ATP 的赛场之上 highlight 可以去 tennistv 找啊**」，随后定了顺序：
+「**优先级就是 YouTube 找不到就找 Tennis TV 的 short highlight**」。
+
+`docs/atp-highlights-source.md` 2026-08-09 那版写着「单场集锦 `premium`——要订阅」，
+据此把 ATP 判成只能靠 YouTube 碰运气。**那句话对它查的那一档是真的，而它把一档
+写成了全部**：Tennis TV 的单场集锦挂在**两个平行的 library 版块**下——
+
+| 版块 | slug | entitlement | 时长 | 抽样 |
+|---|---|---|---|---|
+| `library/match-highlights` | `…-highlights` | **premium** | 全长 | 2/2 |
+| **`library/short-highlights`** | 同名带 **`-short-highlights`** | **free** | **2 分半** | **20/20** |
+
+⚠️ **两档的 slug 只差六个字母，页面长得一模一样**，只有 `data-entitlement`
+那一个属性把它们分开。上一版**只打开了一个版块**——这是「查空一类不等于查空全部」
+的又一次，只不过要自证的不是空不空，是**空的范围有多大**；同一个形状
+（「查了一场就写成了一类」）这个仓库已经栽过三次，这是第四次。
+
+实测（辛辛那提 2026 R1/R2 那一页，20 条全查过）：**20/20 free、h264+aac**，
+和付费全长档**一一对应**——没有一场只有付费档。零 token，
+`fetch_tennistv_video_metadata` 早就写好了这条路。
+
+⚠️⚠️ **分辨率和帧率按条算，不是这一档的属性。** 我第一版写的是
+「1920×1080 / 30 fps」——**拿一条推的**。抽样 8 条逐条列格式表：**5 条 1080p、
+3 条只有 720p**（`shang-sonego` `marozsan-zheng` `atmane-etcheverry`）；
+帧率 `paul-hurkacz` 30 fps、`shang-sonego` 25 fps。**这是我在同一份文档里
+第二次犯「查了一场就写成了一类」**——而那份文档整个上半段讲的就是这个错。
+影响不小：3:4 竖版窗口从 1080p 取只要放大 1.33 倍，从 720p 取要 **2.0 倍**。
+**选源之前先 `yt-dlp --list-formats` 跑一次**，别照抄任何一个数。
+
+⚠️ **manifest 上的令牌只活 60 秒**（`exp - iat = 60`，`customerId` 是
+`anonymous`）。所以**解析必须在下载那一刻做**，spec 里放**页面地址**——
+钉进去就是一条一分钟后必死的链接，而它失败的样子和「这条片子被下架了」
+一模一样。⚠️ 但 60 秒**不是下载的时限**：实测整条 154 秒、74.6 MB 一趟下完没事。
+
+⚠️ **顺序是 YouTube 在前**（账号所有者定的），而它管的是**去哪儿找**，
+**不是「YouTube 版更完整」**。短集锦顶上来的是**覆盖**——ATP 的 YouTube 覆盖
+本来就不稳，而短集锦每场都有。
+
+##### ⚠️⚠️ 「赛事自己的官方频道」是**第二条备选**，而它的 ATP 版反而更短
+
+账号所有者 2026-08-16：「**还有每个赛事自己官方的 youtube 频道有时也会有集锦，
+比如 cincinnati open**」，随后定了位置：「**这个可以做备选方案**」。所以现在是
+
+    主路   ATP Tour / Tennis TV 官方 YouTube 频道
+    备选   赛事自己的官方频道  ／  Tennis TV library/short-highlights
+    都没有 → 报「这场没源」跳过
+
+⚠️ **两条备选之间挑哪个，量了再说，别按写的先后。** 真去量了 `@CincyProTennis`
+（oEmbed 的 `author_name` 是 `Cincinnati Open`，权威），辛辛那提 R2 那三场 ATP
+**两边都有**，正好直接比：
+
+| 这一场 | 赛事官方频道 | Tennis TV 短集锦 | |
+|---|---|---|---|
+| Paul vs Hurkacz | 130s | **154s** | TTV **+24s** |
+| Landaluce vs Arnaldi | 129s | **156s** | **+27s** |
+| Kecmanovic vs Cobolli | 121s | **152s** | **+31s** |
+
+同一个频道**两个巡回赛还差一档**：ATP **121~130s**、WTA **178~185s**——
+也就是它对 **WTA 是全场最长的一版**，对 **ATP 是最短的**（抽样 ATP 3、WTA 5，一页）。
+
+**所以「排在前面」不等于「更完整」，找到之后还要量一次**——「同一场有两版时挑长的
+那一版」那条照旧管用，而这次它真的咬人了。判据是那条老命令
+（`--print '%(duration)s %(height)s %(channel)s'`），⚠️ 记得带 `--js-runtimes node`。
+
+赛事频道这一档的四个坑（都是实测，别按标题模式硬解析）：
+**它 ATP+WTA 都收**（CLAUDE.md 原来标成「WTA 这一站」，错的）、
+**同一场会出现两次**（`Ostapenko vs Frech` 两个 videoId，按标题去重会留两条）、
+**标题格式不可靠**（同页就有一条 `Shuai Zhang vs Kayla Day match highlights`，
+没有 `| 赛事 | 轮次` 后缀，严格解析会漏掉它而**漏掉的样子就是「这场没有」**）、
+**混着非比赛条目**（`Cincy Serves Honoree` 61s，判据是标题里有没有 ` vs `）。
+
+⚠️ **量时长别逐条打 yt-dlp**：实测连打 42 次就吃 **HTTP 429**，之后每条都报
+`Sign in to confirm you're not a bot`——**和「这些视频不存在」长得一模一样**
+（14/14 全空是系统性的，不是间歇）。频道页 HTML 里的 `ytInitialData` 一次全给：
+每条视频是一个 `lockupViewModel`，**`contentId` 和时长同属这一个节点**——
+按结构取，不是按字符距离猜（那个坑本文件早记过）。权威标题走 oEmbed，没被限流打到。
+
+**代码这一头修的是「出路写出来了，代码自己不走」。** `_reject_signed_source_urls`
+的报错正文里早写着「Tennis TV 库里标着 `free` 的条目」这条出路，而
+`build_match_reel.download()` 从来不解析 Tennis TV 页面地址——直接喂给 yt-dlp
+会报 `This video is only available for registered users`，**一句指向「cookie
+过期了」的错，而真相是这条路根本没接上**。采访线 2026-08-05 就接了，出片线
+一直没有。这跟 `build_match_reel.py` 1192 行记的那次是同一个形状。
+
+- **解析只有一份**：`official.media_url()`，两条线各包一层只翻译异常类型
+  （出片线 `ReelError`、采访线 `SystemExit`）。写两处必分叉，而**分叉的样子是
+  「采访线能下、出片线报『注册用户才能看』」**——两个入口各试一次才看得出来，
+  而没有人会为一条已经通了的线再试一次
+- ⚠️ **缓存键必须还用页面地址**，别就地把 `url` 覆盖成解出来的那个：令牌 60 秒
+  一换，拿它当键**每趟都是新键、缓存永远不命中**（那一百秒的重下白付），
+  还会把缓存目录撑满，**而那表现为「今天 CI 怎么慢了点」**
+- ⚠️ **`.m3u8` 不走 curl 那条直链**：它不是文件，是播放列表，curl 下回来几 KB
+  文本必然过不了 ffprobe，白挨一次请求还打印一句指错方向的「直链下到 0.0 MB」。
+  判的是**这东西本身是不是播放列表**，不是维护「哪些站要交给 yt-dlp」的域名名单
+- 四条判据都反向验证过，**扫「有没有自己再抄一份解析」要用 AST**：
+  `build_match_reel.py` 的报错正文里正写着那个函数名，按文本扫会把「把出路写清楚」
+  判成「又抄了一份」
+
 #### WTA：同样要挑 1080p，别退而求其次
 
 `eala-championship` 那条早就踩过一次：wtatennis.com 站内嵌入播放器
@@ -5389,8 +5563,14 @@ ESPN 那份是**上一周的快照**，维基那条明写着 `(3 August 2026)`�
 
     curl -s "https://www.youtube.com/@atptour/videos"        -H "User-Agent: Mozilla/5.0 …"
     curl -s "https://www.youtube.com/@TennisTV/videos"        -H "User-Agent: Mozilla/5.0 …"
-    curl -s "https://www.youtube.com/@CincyProTennis/videos"  # WTA 这一站是赛事官方频道
+    curl -s "https://www.youtube.com/@CincyProTennis/videos"  # ⚠️ 赛事官方频道，**ATP+WTA 都收**
     # 正则 "videoId":"([\w-]{11})" 取前 20~30 个（页面按时间倒序）
+
+⚠️ **第三行原来注着「WTA 这一站是赛事官方频道」——2026-08-16 量出来是错的**：
+同一页里 ATP 3 条、WTA 10 条。**赛事自己的官方频道是一档独立的源**
+（账号所有者：「还有每个赛事自己官方的 youtube 频道有时也会有集锦，
+比如 cincinnati open」），每站一个，**扫的时候要按当周的站去找它的频道**，
+不是只认这三个写死的名字。
 
 ⚠️ **标题不在 `videoId` 旁边**，别按字符距离去凑（那个坑见上面「别拿频道列表页的
 HTML 去猜时长」）。逐个走 **oEmbed** 拿权威的标题和频道名：
@@ -5403,6 +5583,16 @@ HTML 去猜时长」）。逐个走 **oEmbed** 拿权威的标题和频道名：
 **③ 同一场有两版时挑哪个**：`yt-dlp --skip-download --print '%(duration)s %(height)s %(channel)s'`，
 见上面那一节。实测 ATP 官方的单场集锦普遍两分钟上下，Tennis TV 的是三到八分钟——
 **但每次都要量，别照抄这句**。
+
+**③ᵇ 主路（ATP Tour / Tennis TV 频道）没扫到的场次** → 两条备选：先看**这一站
+自己的官方频道**（每站一个，按当周的站去找），再看 **Tennis TV 短集锦**：
+
+    curl -sS -H "User-Agent: tennislive/0.1" https://www.tennistv.com/library/short-highlights \
+      | grep -o '/videos/[0-9]*/[a-z0-9-]*short-highlights' | sort -u
+
+免费档、1080p、每场都有，spec 的 `source_url` 直接写这个**页面地址**
+（解析在下载那一刻做）。⚠️ 顺序是 **YouTube 在前**，而且这一档是**定长 2 分半的
+剪短版**——详见上面「2026-08-16 补上第三档」和 `docs/atp-highlights-source.md`。
 
 **④ 去重**：`ls specs/reels/ | grep -i <姓>`。⚠️ **按对阵双方的姓各查一遍**，
 文件名的先后顺序不固定（`wang-vandewinkel` 就是这么查出来「已经做过」的）。

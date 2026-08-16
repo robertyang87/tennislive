@@ -13,6 +13,7 @@ from dataclasses import asdict, dataclass
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Callable
+from urllib.parse import urlparse
 
 import requests
 
@@ -27,6 +28,9 @@ from .pipeline import (
 )
 
 WTA_VIDEO_HUB = "https://www.wtatennis.com/videos/"
+# 判「是不是 Tennis TV」要**按主机名**，不是按字符串里有没有 `tennistv`——
+# 一条 `https://example.com/?ref=tennistv.com` 会从中间匹配上。
+TENNISTV_HOST = "tennistv.com"
 TENNISTV_HOT_SHOTS_HUB = "https://www.tennistv.com/library/hot-shots"
 TENNISTV_HOT_SHOTS_API = (
     "https://api.tennistv.com/content/atpmedia/video/EN/"
@@ -740,6 +744,44 @@ def fetch_tennistv_video_metadata(
         source_width=int(width_match.group(1)) if width_match else 1920,
         source_height=int(height_match.group(1)) if height_match else 1080,
     )
+
+
+def media_url(url: str) -> str:
+    """把 spec 里的**页面地址**换成 yt-dlp 真下得动的那个地址。
+
+    Tennis TV 的页面地址 yt-dlp 直接下会报 `This video is only available for
+    registered users`；而 `fetch_tennistv_video_metadata` 走的是它**公开的
+    entitlement 接口**——`data-entitlement="free"` 的条目（页面上就写着）
+    不用登录、不用订阅就解得出 HLS。别再往这个函数里塞账号密码。
+
+    ⚠️ **解析必须在下载那一刻做，不能把解出来的地址钉进 spec。** 实测那个
+    manifest 上的令牌**只活 60 秒**（`exp - iat = 60`，payload 里的
+    `customerId` 是 `anonymous`，可见确实没用到任何登录）——钉进 spec 就是
+    一条一分钟后必死的链接，而它失败的样子和「这条片子被下架了」一模一样。
+
+    ⚠️ **这个函数住在这儿是因为两条线都要用它。** 「赛后开麦」
+    （`build_interview_clip`）和「赛场之上」（`build_match_reel`）各自
+    包一层把异常翻译成自己那套错误类型，但**认主机、调接口、报错文案只有
+    这一份**——写两处必分叉，而分叉的样子是「采访线能下、出片线报
+    『注册用户才能看』」。
+    """
+    if TENNISTV_HOST not in urlparse(url).netloc.lower():
+        return url
+    meta = fetch_tennistv_video_metadata(
+        OfficialVideoCandidate(title="", url=url, tour="ATP"))
+    playback = str(getattr(meta, "playback_url", "") or "")
+    if not playback.startswith("https://"):
+        raise VideoPipelineError(
+            f"Tennis TV 没给出 HLS：{url}\n"
+            "这条多半不是免费条目——打开页面看 `data-entitlement`，"
+            "写着 `free` 才走得通这条路。\n"
+            "⚠️ 单场集锦分两档，**别只查一档就下结论**："
+            "`library/match-highlights` 那批 `<赛事>-<轮次>-<对阵>-highlights` "
+            "是 `premium`（要订阅，账号所有者已否掉）；"
+            "`library/short-highlights` 那批同名带 `-short-highlights` 的是 "
+            "`free`，2 分半、1080p，就是这条路要的东西。")
+    print(f"[源] Tennis TV 解出 HLS（{getattr(meta, 'duration_ms', 0) / 1000:.1f} 秒）")
+    return playback
 
 
 def _digest_name_tokens(digest: Digest) -> set[str]:

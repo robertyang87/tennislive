@@ -4771,6 +4771,167 @@ def test_源片缓存的键要按URL算():
         "报错会变成一句和 spec 无关的缓存错误")
 
 
+def _reel_download_stub(monkeypatch, tmp_path, resolved):
+    """把 `download()` 除「取哪个地址」以外的每一步都打桩，返回真跑过的命令表。
+
+    只打桩，不改判据：`_resolve_media_url` 换成一个认得出的常量，其余
+    （yt-dlp 在不在、下到的够不够高、存不存缓存）都不是这几条要验的东西。
+    """
+    import build_match_reel as m  # noqa: PLC0415
+
+    cmds: list[list[str]] = []
+
+    def _fake_run(cmd, **kw):
+        cmds.append(list(cmd))
+        if cmd and cmd[0] == "curl":
+            Path(cmd[cmd.index("-o") + 1]).write_bytes(b"not a video")
+        else:
+            Path(cmd[cmd.index("-o") + 1]).write_bytes(b"x" * 64)
+        return type("P", (), {"returncode": 0, "stderr": "", "stdout": ""})()
+
+    monkeypatch.setattr(m, "_resolve_media_url", lambda u: resolved)
+    monkeypatch.setattr(m.shutil, "which", lambda name: "/usr/bin/yt-dlp")
+    monkeypatch.setattr(m.subprocess, "run", _fake_run)
+    monkeypatch.setattr(m, "probe_size", lambda p: (1920, 1080))
+    return m, cmds
+
+
+TENNISTV_PAGE = (
+    "https://www.tennistv.com/videos/4560312/"
+    "cincinnati-2026-r2-paul-hurkacz-short-highlights")
+
+
+def test_下载那一步要先把TennisTV的页面地址解成HLS(monkeypatch, tmp_path):
+    """**只测 `media_url` 自己对拦不住位置错**：它写出来了、`download()` 不调，
+    行为测试照样绿，而出片那一步会拿页面地址去喂 yt-dlp，报
+    `This video is only available for registered users`——一句指向
+    「cookie 过期了」的错，而真相是这条路根本没接上。
+
+    这条线 2026-08-16 起要吃 Tennis TV：`library/short-highlights` 那批标着
+    `data-entitlement="free"` 的单场短集锦（实测 20/20 全 free、2 分半、
+    1920×1080），是 ATP「赛场之上」第一条不用订阅也不看 YouTube 脸色的源。
+    采访线 2026-08-05 就接了这一步，出片线一直没有——而
+    `_reject_signed_source_urls` 的报错正文里早写着「Tennis TV 库里标着
+    `free` 的条目」这条出路。**出路写出来了，代码自己不走。**
+    """
+    monkeypatch.delenv("TENNISLIVE_SOURCE_CACHE", raising=False)
+    m, cmds = _reel_download_stub(monkeypatch, tmp_path, "https://cdn.example/x.m3u8")
+    monkeypatch.setattr(m, "_keep_source", lambda u, s: None)
+
+    m.download(TENNISTV_PAGE, tmp_path / "s.mp4")
+
+    assert cmds, "一条命令都没跑"
+    assert cmds[-1][-1] == "https://cdn.example/x.m3u8", (
+        "download() 没走 _resolve_media_url，页面地址直接喂给了 yt-dlp："
+        f"{cmds[-1][-1]}")
+
+
+def test_播放列表不许先走curl那条直链(monkeypatch, tmp_path):
+    """`.m3u8` **不是一个文件，是一张播放列表**。
+
+    curl 下回来是几 KB 文本，必然过不了那道 ffprobe，白挨一次请求，
+    还在日志里留一句指错方向的「直链下到 0.0 MB，ffprobe 读不出视频流」——
+    下一个人会去查源片是不是坏了，而它好好的。
+
+    ⚠️ 判的是**这个东西本身是不是播放列表**，不是「哪些站要交给 yt-dlp」。
+    域名名单会过期，而过期的名单和一条常年红的检查是同一个毛病。
+    """
+    monkeypatch.delenv("TENNISLIVE_SOURCE_CACHE", raising=False)
+    m, cmds = _reel_download_stub(monkeypatch, tmp_path, "https://cdn.example/x.m3u8")
+    monkeypatch.setattr(m, "_keep_source", lambda u, s: None)
+
+    m.download(TENNISTV_PAGE, tmp_path / "s.mp4")
+
+    assert not [c for c in cmds if c and c[0] == "curl"], (
+        "解出来的是 .m3u8，却还先 curl 了一遍——那一趟必然失败且日志指错方向")
+
+    # 反面：普通直链**照旧**走 curl，别顺手把这条路一起关掉。
+    # ⚠️ 解析这一步也要跟着还原成「原样返回」——不还原的话这半条验的还是
+    # 那个 m3u8，测试会因为**错误的原因**变红（或变绿）。
+    cmds.clear()
+    monkeypatch.setattr(m, "_resolve_media_url", lambda u: u)
+    m.download("https://pan.example/a.mp4", tmp_path / "d.mp4")
+    assert cmds and cmds[0][0] == "curl", (
+        "普通直链不再走 curl 了——这条路是被逼出来的（YouTube 封着，"
+        "人只能自己下好传到网盘），不许连坐")
+
+
+def test_解出来的带令牌地址不许当缓存键(monkeypatch, tmp_path):
+    """缓存按 URL 的哈希认领，而 Tennis TV 解出来的 manifest **带一个只活
+    60 秒的令牌**（实测 `exp - iat = 60`）。
+
+    拿它当键的话**每一趟都是新键，缓存永远不命中**——而缓存正是为了省下
+    「同一条源片 probe / cover / render 各下一次」那三趟里的两趟（实测一个
+    70 MB 的源片要下 100.86 秒）。更糟的是缓存目录会被一堆一次性条目撑满，
+    把 Chromium 和抠图模型挤出仓库缓存，**而那表现为「今天 CI 怎么慢了点」**。
+
+    页面地址是稳定的，它才是键。判据钉的就是「进出缓存用的都是页面地址」。
+    """
+    monkeypatch.setenv("TENNISLIVE_SOURCE_CACHE", str(tmp_path / "cache"))
+    token_url = "https://cdn.example/x.m3u8?token=" + "a" * 40
+    m, _cmds = _reel_download_stub(monkeypatch, tmp_path, token_url)
+
+    keyed: list[str] = []
+    real_cached, real_keep = m._cached_source, m._keep_source
+
+    def _spy_cached(url, suffix):
+        keyed.append(url)
+        return real_cached(url, suffix)
+
+    def _spy_keep(url, src):
+        keyed.append(url)
+        return real_keep(url, src)
+
+    monkeypatch.setattr(m, "_cached_source", _spy_cached)
+    monkeypatch.setattr(m, "_keep_source", _spy_keep)
+
+    m.download(TENNISTV_PAGE, tmp_path / "s.mp4")
+
+    assert keyed, "缓存那两步一次都没被调到"
+    assert all(u == TENNISTV_PAGE for u in keyed), (
+        "缓存键用了解析之后那个带令牌的地址，60 秒后就是另一个键——"
+        f"缓存永远不会命中：{[u[:60] for u in keyed if u != TENNISTV_PAGE]}")
+
+
+def test_认TennisTV要按主机名而且只有一份实现():
+    """两条线（赛后开麦、赛场之上）共用 `official.media_url`。
+
+    写两处必分叉，而**分叉的样子是「采访线能下、出片线报『注册用户才能看』」**
+    ——两个入口各自试一次才看得出来，而没有人会为一条已经通了的线再试一次。
+
+    顺带钉住「按主机名认」：`https://example.com/?ref=tennistv.com` 会从中间
+    匹配上，而它不是 Tennis TV。
+    """
+    from tennislive.video import official  # noqa: PLC0415
+
+    assert official.TENNISTV_HOST not in ("", None)
+    # 非 Tennis TV 一律原样返回，一次网络都不许发
+    for url in ("https://www.youtube.com/watch?v=abc",
+                "https://example.com/?ref=tennistv.com",
+                "https://cdn.example/already.m3u8"):
+        assert official.media_url(url) == url, url
+
+    # 两条线都不许自己再抄一份解析逻辑。
+    # ⚠️ **用 AST，不按文本扫**：`build_match_reel.py` 的报错正文里正写着
+    # 「见 `official.fetch_tennistv_video_metadata`」——那是**出路**，不是调用。
+    # 按文本扫会把「把出路写清楚」判成「又抄了一份」，这个仓库为「判据扫得太宽、
+    # 被自己的注释误伤」栽过五次。字符串常量不进 Name/Attribute。
+    for tool in (Path("tools/build_match_reel.py"),
+                 Path("tools/build_interview_clip.py")):
+        tree = ast.parse(tool.read_text(encoding="utf-8"))
+        names = set()
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Name):
+                names.add(node.id)
+            elif isinstance(node, ast.Attribute):
+                names.add(node.attr)
+            elif isinstance(node, ast.ImportFrom):
+                names.update(a.name for a in node.names)
+        assert "fetch_tennistv_video_metadata" not in names, (
+            f"{tool} 自己又抄了一份 Tennis TV 解析——正文只该有 "
+            "`official.media_url` 一份，这儿只做异常翻译")
+
+
 def test_不下源片的模式不许等PO_token():
     """`起 PO token provider` 是给**下载**用的（docker pull ＋ 探活，实测 11 秒）。
 

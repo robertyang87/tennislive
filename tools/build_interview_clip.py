@@ -74,7 +74,8 @@ OUTDIR = ROOT / "output" / "interviews"
 #
 # 判「是不是 YouTube」要**按主机名**，不是按字符串里有没有 `youtube`——
 # 一条 `https://example.com/?ref=youtube.com` 会从中间匹配上。
-_TENNISTV_HOST = "tennistv.com"
+# （认 Tennis TV 那个常量搬去 `official.TENNISTV_HOST` 了，和 `media_url` 一起：
+#  留一个没人读的副本在这儿就是个不吭声的死键。）
 
 
 def is_youtube(url: str) -> bool:
@@ -105,34 +106,21 @@ def _video_id(url: str) -> str:
 def media_url(url: str) -> str:
     """把 spec 里的**页面地址**换成 yt-dlp 真下得动的那个地址。
 
-    Tennis TV 的页面地址 yt-dlp 直接下会报 `This video is only available for
-    registered users`；但仓库自己的 `video/official` 早写好了走它**公开的
-    entitlement 接口**那条路——`data-entitlement="free"` 的条目（页面上写着）
-    不用登录、不用订阅就解得出 HLS。别再往这个函数里塞账号密码。
-
-    ⚠️ **解析必须在下载那一刻做，不能把解出来的地址钉进 spec。** manifest 带
-    令牌、会过期，钉进去就是一条今天能用明天 403 的死链——而它失败的样子和
-    「这条片子被下架了」一模一样。
+    ⚠️ **正文搬到 `tennislive.video.official.media_url` 了**，因为「赛场之上」
+    （`build_match_reel`）2026-08-16 起也走 Tennis TV，两条线共用同一份认主机 +
+    调 entitlement 接口的逻辑——写两处必分叉，而分叉的样子是「采访线能下、
+    出片线报『注册用户才能看』」。这儿只剩一件事：**把异常翻译成这条线的**
+    `SystemExit`，让 CLI 打一句人话而不是甩一份 traceback。
     """
-    if _TENNISTV_HOST not in urlparse(url).netloc.lower():
-        return url
     # 这两个只有 Tennis TV 这条路要，放在函数里 import：其余几步（切行、核对表、
     # 出封面）不该因为多了一个源就多拖一个包。
-    from tennislive.video.official import (  # noqa: PLC0415
-        OfficialVideoCandidate,
-        fetch_tennistv_video_metadata,
-    )
+    from tennislive.video.official import media_url as _resolve  # noqa: PLC0415
+    from tennislive.video.pipeline import VideoPipelineError  # noqa: PLC0415
 
-    meta = fetch_tennistv_video_metadata(
-        OfficialVideoCandidate(title="", url=url, tour="ATP"))
-    playback = str(getattr(meta, "playback_url", "") or "")
-    if not playback.startswith("https://"):
-        raise SystemExit(
-            f"Tennis TV 没给出 HLS：{url}\n"
-            "这条多半不是免费条目——打开页面看 `data-entitlement`，"
-            "写着 `free` 才走得通这条路。")
-    print(f"[源] Tennis TV 解出 HLS（{getattr(meta, 'duration_ms', 0) / 1000:.1f} 秒）")
-    return playback
+    try:
+        return _resolve(url)
+    except VideoPipelineError as exc:
+        raise SystemExit(str(exc)) from exc
 
 # 字幕左右各留 64px（ASS 的 MarginL/MarginR），所以一行可用 952px。
 # **宽度要量，不能按字符数估。** 原来按「62 个字符」断行，那在 Noto Sans 40
