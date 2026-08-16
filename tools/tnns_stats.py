@@ -263,6 +263,14 @@ def _report(match_id: str, decoded: dict) -> None:
     if not whole:
         print("⚠️ 全场那一块没有制胜分/非受迫失误——"
               "读 hasExtendedStats 判「这场有没有」，别从这里反推")
+        # ⚠️ **查空也要留下判据。** 「忘了查」和「查过确实没有」在产物上分不
+        # 出来（那张图两种情况都少两行），所以这条路必须也给出能粘的东西——
+        # 不然下一个人只能自己现编一句，而现编的话看不出是哪天、查的哪个 id。
+        # 对应 `test_数据图缺制胜分和UE的要说清TNNS那趟跑出来是什么`。
+        print("\n粘进 spec 的 `stats` 块（这一趟查空了，要挂账）：")
+        print(f'  "_winners_ue_why": "跑过 tnns-stats（id={match_id}），'
+              f'hasExtendedStats={has_extended_stats(decoded)}，'
+              f'TNNS 这场也没有这两行；flashscore 同样没有。"')
         return
     print(f"制胜分       {whole['winners']}")
     print(f"非受迫失误   {whole['ue']}")
