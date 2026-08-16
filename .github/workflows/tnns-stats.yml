@@ -1,0 +1,107 @@
+# TNNS Live 的单场技术统计——**制胜分和非受迫失误在这儿**。
+#
+# 为什么单独一条工作流：这条**必须在 runner 上跑**。Cloudflare 的 Turnstile
+# 挑战只有真浏览器过得去（`curl` 和 Playwright 的 `context.request` 一律拿到
+# `Just a moment` 挑战页），而沙箱里的 Chromium 连 example.com 都 ERR_
+# CONNECTION_RESET——2026-08-16 拿 example.com / flashscore / tnnslive 三个站
+# 做过控制组，全 reset，**所以那不是 TNNS 在挡我们**。
+#
+# ⚠️ **不接进出片流程。** 一次要开浏览器 25~30 秒且不可缓存（挑战每次重过），
+# 而 `match-reel` 的 render 已经有一堆非它不可的步骤。这条是**写 spec 的时候
+# 手动跑一趟**，把两行数字抄进 `stats` 块——和 `mcp_stats.py` 同一个用法。
+#
+# ⚠️ **结果直接 print 进日志，不存 artifact**：artifact 在这台沙箱下不下来
+# （`api.github.com` 恒 403），存了也拿不回来。
+name: tnns-stats
+
+on:
+  workflow_dispatch:
+    inputs:
+      who:
+        description: "球员姓，逗号分隔（如 Zverev,Norrie）。给了 match_id 就不用"
+        required: false
+        default: ""
+      match_id:
+        description: "TNNS 的数字 id（如 73465930）。知道就直接给，省掉找那一跳"
+        required: false
+        default: ""
+      date:
+        description: "赛程日期 YYYY-MM-DD（跨日的比赛要给）"
+        required: false
+        default: ""
+
+# 只读就够——这条不写任何东西回仓库。
+permissions:
+  contents: read
+
+concurrency:
+  group: tnns-stats-${{ github.event.inputs.match_id }}${{ github.event.inputs.who }}
+  cancel-in-progress: false
+
+jobs:
+  stats:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      # ⚠️ **稀疏检出排除 output/**：这条一个产物都不碰，而 output/ 会让
+      # checkout 从几秒变成一分多钟（CLAUDE.md「不碰产物的工作流不许把
+      # output 拉下来」）。
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            tools
+            src
+            pyproject.toml
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: 装 Chromium
+        # 10 而不是 9：等 dpkg 锁最多再花 110 秒，而 2×240 秒本来就贴着 9 分钟。
+        timeout-minutes: 10
+        run: |
+          python -m pip install -q playwright
+          # ⚠️ **`--with-deps` 会跑 apt，而这个仓库的 apt 会抽风**（CLAUDE.md
+          # 那条「一次静静烧了 13 分 42 秒」）。240 秒是 4~48 倍余量；
+          # **别调小**——apt 只是慢不是挂死，把「慢」误判成「挂死」，重试
+          # 就从救场变成三倍的浪费。
+          #
+          # ⚠️⚠️ **第一次超时会毒死第二次，所以重试之前必须等 dpkg 锁松开。**
+          # `timeout` 杀掉的是 `playwright install` 那层壳，**它派生的 apt-get
+          # 活了下来并攥着 `/var/lib/dpkg/lock-frontend`**——run 31003290962
+          # 的日志里第 2 次只活了两秒就死在 `Could not get lock`。
+          # 这一段是从 `match-reel.yml` 抄的，**连注释一起抄**：这个仓库的
+          # 注释就是教训的存放处，只抄结构会把坑再踩一遍（CLAUDE.md 明写）。
+          #
+          # ⚠️ 用 `pgrep -x`（按可执行名精确匹配），不是 `pgrep -f`——`-f`
+          # 扫整条命令行会把循环自己数进去（CLAUDE.md 那条经典）。
+          pw_wait_apt() {
+            for _ in $(seq 1 22); do
+              if ! pgrep -x apt-get >/dev/null && ! pgrep -x dpkg >/dev/null; then
+                return 0
+              fi
+              sleep 5
+            done
+            echo "::warning::等了 110 秒 dpkg 锁还没松开——下一次八成会在两秒内死在 Could not get lock，不是 apt 装不上"
+          }
+          for i in 1 2; do
+            timeout 240 python -m playwright install --with-deps chromium && break
+            echo "::warning::装 Chromium 第 $i 次没跑完（多半卡在 --with-deps 的 apt）"
+            pw_wait_apt
+          done
+
+      - name: 取这一场的统计
+        env:
+          T_WHO: ${{ github.event.inputs.who }}
+          T_MATCH_ID: ${{ github.event.inputs.match_id }}
+          T_DATE: ${{ github.event.inputs.date }}
+        # ⚠️ 值走 env + bash 数组，**不要把 `${{ }}` 直接拼进脚本正文**：
+        # 值里带引号会和模板的引号相撞，而 GitHub 在 bash 解析之前就替换掉了，
+        # 拼出来的脚本不报语法错、只是跑了另一条命令（CLAUDE.md 记过这个坑）。
+        run: |
+          ARGS=()
+          IFS=',' read -ra WS <<< "$T_WHO"
+          for w in "${WS[@]}"; do [ -n "$w" ] && ARGS+=(--who "$w"); done
+          [ -n "$T_MATCH_ID" ] && ARGS+=(--match-id "$T_MATCH_ID")
+          [ -n "$T_DATE" ] && ARGS+=(--date "$T_DATE")
+          python tools/tnns_stats.py fetch "${ARGS[@]}"

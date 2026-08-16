@@ -32,6 +32,10 @@ on:
         description: "browser 模式：在 fetch 回来的 JSON 里找含这个词的对象"
         required: false
         default: ""
+      print_body:
+        description: "browser 模式：正文含这个串的响应，整份分段打进日志（索引压缩的载荷 --dump 扫不动，而 artifact 在沙箱下不下来）"
+        required: false
+        default: ""
       link:
         description: "browser 模式：把页面里含这个串的 href 列出来"
         required: false
@@ -189,6 +193,7 @@ jobs:
           P_MODE: ${{ github.event.inputs.mode }}
           P_URL: ${{ github.event.inputs.url }}
           P_DUMP: ${{ github.event.inputs.dump }}
+          P_PRINT_BODY: ${{ github.event.inputs.print_body }}
           P_LINK: ${{ github.event.inputs.link }}
           P_FETCH: ${{ github.event.inputs.fetch }}
           P_URLS: ${{ github.event.inputs.urls }}
@@ -202,6 +207,7 @@ jobs:
             EXTRA_ARGS=()
             [ -n "$P_URL" ] && EXTRA_ARGS+=(--url "$P_URL")
             [ -n "$P_DUMP" ] && EXTRA_ARGS+=(--dump "$P_DUMP")
+            [ -n "$P_PRINT_BODY" ] && EXTRA_ARGS+=(--print-body "$P_PRINT_BODY")
             [ -n "$P_LINK" ] && EXTRA_ARGS+=(--link "$P_LINK")
             [ "$P_TOP_KEYS" = "true" ] && EXTRA_ARGS+=(--top-keys)
             [ "$P_HTML_CONTEXT" = "true" ] && EXTRA_ARGS+=(--html-context)
