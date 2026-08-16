@@ -1,6 +1,6 @@
 # 转写核对表：noskova-boulter-cincinnati-2026-r2
 
-源片 https://www.youtube.com/watch?v=2p7KpyznXG0　采访段 296.4–434.0 秒（共 59 行）
+源片 https://www.youtube.com/watch?v=2p7KpyznXG0　采访段 296.4–432.7 秒（共 59 行）
 
 | # | 片内 | 跳到源片 | 英文 | 中文 | 判据 |
 |--:|:--|:--|:--|:--|:--|
