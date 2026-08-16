@@ -22,6 +22,8 @@
 
 from __future__ import annotations
 
+from .diagram_palette import AMBER, FILL, INK, LIME, SOFT
+
 import base64
 import io
 from pathlib import Path
@@ -98,9 +100,9 @@ def nine_masters_grid() -> str:
     parts = [
         '<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">',
         '<text x="450" y="30" text-anchor="middle" font-size="34" '
-        'font-weight="700" fill="#e7f3ec">九站大师赛</text>',
+        f'font-weight="700" fill="{INK}">九站大师赛</text>',
         '<text x="450" y="56" text-anchor="middle" font-size="22" '
-        'fill="#a9bcb2">红土三站 · 硬地六站</text>',
+        f'fill="{SOFT}">红土三站 · 硬地六站</text>',
     ]
     for i, (zh, fname, surface) in enumerate(NINE_MASTERS):
         cx = x0 + (i % cols) * (tw + gap)
@@ -116,7 +118,7 @@ def nine_masters_grid() -> str:
         )
         parts.append(
             f'<text x="{cx + tw / 2:.1f}" y="{cy + th + 22:.1f}" text-anchor="middle" '
-            f'font-size="24" fill="#e7f3ec">{zh}</text>'
+            f'font-size="24" fill=f"{INK}">{zh}</text>'
         )
     parts.append("</svg>")
     return "\n".join(parts)
@@ -139,7 +141,7 @@ WOMEN_ONLY = ("多哈", "迪拜", "北京", "武汉")
 def two_tours_grid() -> str:
     """男子九站与女子十站的重合关系。三段：男子独有 / 共有 / 女子独有。"""
     men, women = "#5b9bd5", "#d98cb3"
-    both = "#8fd6a8"
+    both = FILL
     # ⚠️ 第一版在顶上并排放「男子 9 站」「女子 10 站」两个标题，**暗示了一个
     # 并不存在的左右分栏**——底下其实是上中下三段。计数并进副标题就没这个歧义。
     # 另外第一版「女子独有」那四个换行后，武汉单独掉到末行和页脚字撞在一起，
@@ -147,9 +149,9 @@ def two_tours_grid() -> str:
     parts = [
         '<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">',
         '<text x="450" y="40" text-anchor="middle" font-size="34" '
-        'font-weight="700" fill="#e7f3ec">两张表长得不一样</text>',
+        f'font-weight="700" fill="{INK}">两张表长得不一样</text>',
         '<text x="450" y="76" text-anchor="middle" font-size="25" '
-        'fill="#a9bcb2">男子 9 站 · 女子 10 站 · 只有 6 站重合</text>',
+        f'fill="{SOFT}">男子 9 站 · 女子 10 站 · 只有 6 站重合</text>',
     ]
     rows = (
         (MEN_ONLY, men, "男子独有", 126),
@@ -158,7 +160,7 @@ def two_tours_grid() -> str:
     )
     for names, colour, label, top in rows:
         parts.append(
-            f'<text x="60" y="{top}" font-size="24" fill="#a9bcb2">{label}'
+            f'<text x="60" y="{top}" font-size="24" fill=f"{SOFT}">{label}'
             f"（{len(names)}）</text>"
         )
         for i, zh in enumerate(names):
@@ -170,7 +172,7 @@ def two_tours_grid() -> str:
             )
             parts.append(
                 f'<text x="{bx + 122}" y="{by + 31}" text-anchor="middle" '
-                f'font-size="26" fill="#e7f3ec">{zh}</text>'
+                f'font-size="26" fill=f"{INK}">{zh}</text>'
             )
     parts.append("</svg>")
     return "\n".join(parts)
@@ -199,15 +201,15 @@ def wta_table_drift() -> str:
     parts = [
         '<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">',
         '<text x="450" y="40" text-anchor="middle" font-size="34" '
-        'font-weight="700" fill="#e7f3ec">女子那张表一直在变</text>',
+        f'font-weight="700" fill="{INK}">女子那张表一直在变</text>',
         '<text x="450" y="76" text-anchor="middle" font-size="25" '
-        'fill="#a9bcb2">十站到 2024 年才定下来</text>',
+        f'fill="{SOFT}">十站到 2024 年才定下来</text>',
     ]
     top = 118
     for i, (year, change, note, count) in enumerate(WTA_TABLE_YEARS):
         y = top + i * 108
         final = year == "2024"
-        accent = "#8fd6a8" if final else "#a9bcb2"
+        accent = FILL if final else SOFT
         parts.append(
             f'<rect x="56" y="{y}" width="788" height="88" rx="10" '
             f'fill="{accent}" fill-opacity="{0.18 if final else 0.07}" '
@@ -218,11 +220,11 @@ def wta_table_drift() -> str:
             f'fill="{accent}">{year}</text>'
         )
         parts.append(
-            f'<text x="240" y="{y + 38}" font-size="26" fill="#e7f3ec">{change}</text>'
+            f'<text x="240" y="{y + 38}" font-size="26" fill=f"{INK}">{change}</text>'
         )
         if note:
             parts.append(
-                f'<text x="240" y="{y + 72}" font-size="22" fill="#a9bcb2">{note}</text>'
+                f'<text x="240" y="{y + 72}" font-size="22" fill=f"{SOFT}">{note}</text>'
             )
         parts.append(
             f'<text x="800" y="{y + 56}" text-anchor="end" font-size="36" '
@@ -253,15 +255,15 @@ def atp_table_future() -> str:
     parts = [
         '<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">',
         '<text x="450" y="40" text-anchor="middle" font-size="34" '
-        'font-weight="700" fill="#e7f3ec">男子那把尺子也要改</text>',
+        f'font-weight="700" fill="{INK}">男子那把尺子也要改</text>',
         '<text x="450" y="76" text-anchor="middle" font-size="25" '
-        'fill="#a9bcb2">2028 年沙特加入，变成十站</text>',
+        f'fill="{SOFT}">2028 年沙特加入，变成十站</text>',
     ]
     top = 140
     for i, (year, note, count) in enumerate(ATP_TABLE_YEARS):
         y = top + i * 126
         future = year == "2028"
-        accent = "#e0b13a" if future else "#5b9bd5"
+        accent = AMBER if future else "#5b9bd5"
         parts.append(
             f'<rect x="56" y="{y}" width="788" height="100" rx="10" '
             f'fill="{accent}" fill-opacity="{0.20 if future else 0.08}" '
@@ -274,7 +276,7 @@ def atp_table_future() -> str:
             f'fill="{accent}">{year}</text>'
         )
         parts.append(
-            f'<text x="252" y="{y + 60}" font-size="28" fill="#e7f3ec">{note}</text>'
+            f'<text x="252" y="{y + 60}" font-size="28" fill=f"{INK}">{note}</text>'
         )
         parts.append(
             f'<text x="800" y="{y + 62}" text-anchor="end" font-size="38" '

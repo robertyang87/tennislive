@@ -3202,6 +3202,119 @@ STORIES = STORIES + (
         source_label="WTA 官方 2026 年版 Record Book、WTA 官网 Rankings Watch、ESPN、Tennis Majors",
     ),
     _trivia_story(
+        slug="gamesmanship",
+        # ⚠️ 标题受两条上限夹着，而**两条的前缀不一样长**：知识帖那条前缀
+        # `📖7.23网球有故事｜` 是 9 位，文案那条 `🎾7.26 网球有故事｜` 是 9.5 位。
+        # 原来写「规则书里真有「盘外招」这个词」是 23 位、去掉「这个词」是
+        # 20.0／20.5——**卡着前一条过、被后一条打红**。所以别按其中一条调，
+        # 要按更长的那个前缀留余量。现在这句 18.5 位。
+        title="盘外招写在规则书里",
+        subtitle="网球冷知识 · 规则篇",
+        identity="从霍达尔那两次鞋带说起",
+        chips=("冷知识", "规则", "盘外招"),
+        # ⚠️ 这一段整段进小红书文案，单段上限 120 字
+        # （`knowledge._validate_copy_for_publish`）。
+        hero=(
+            "霍达尔在辛辛那提第二轮鞋带断了两次，然后从第三盘 1-5 连赢六局。"
+            "「盘外招」不是球迷发明的词——gamesmanship 就写在 ATP 规则书里，出现 3 次；"
+            "而鞋那一条更细：坏了主裁应当停表，没坏想换不准。"
+        ),
+        facts=(
+            "⚠️ **这条片子全程只引条文，不给任何人定性**（账号所有者：「按最稳妥的"
+            "方式去表达」）。片子里出现的每一句判断都能在 ATP 2026 年版规则书"
+            "（`2026-rulebook_19dec25.pdf`，210 页，2026-08-16 下载核对）里指出行；"
+            "涉及当事人的部分只有**比分、轮次和双方的原话**。"
+            "**没有任何一句写他是不是在使坏**——因为规则书自己把「认定意图归谁管」"
+            "写清楚了，那才是这条片子的落点。",
+            "`gamesmanship` 这个词在全书出现 **3 次**（数出来的：`count()` == 3，"
+            "落在第 105、108、110 页；首字母大写的 `Gamesmanship` 出现 **0** 次）。"
+            "三处的情态动词还不一样，而主语都是主裁："
+            "① `N.4)b) Not Playing to the Reasonable Pace of the Server`——接发方"
+            "使用 gamesmanship 时主裁 **must** 判行为违例，若只是拖慢了发球方的"
+            "合理节奏则在 25 秒前判时间违例；"
+            "② 医疗那一节——自称急性伤病但被判定为抽筋，若认定涉及 gamesmanship，"
+            "**could** 判非体育行为；"
+            "③ `Receiver Not Ready` 判例——接发方反射性回球后喊「等一下」，"
+            "主裁认为涉及 gamesmanship 时 **may** 判行为违例。",
+            "时间结构（`N. Continuous Play/Delay of Game` 原文）："
+            "球出界到下一分开球最多 **25 秒**，换边 **90 秒**，盘间 **120 秒**。",
+            "鞋，`P. Time and Equipment Cases` 里连着三条判例，**分界是坏没坏**："
+            "① `Shoe Breaks`——鞋坏了而备用的在更衣室，「主裁应当停止比赛并允许"
+            "该球员去拿鞋」；② `Changing Shoes`——换边时要求换鞋换袜，主裁可以适当"
+            "延长换边时间，**一场限一次**，「除非『装备失灵』条款优先，那样的话"
+            "主裁有权逐次裁量」，且此时不得离场；③ `Replacing Shoes`——没坏、只是"
+            "想换一双鞋底不同的，**请求被驳回**，「这不算『装备失灵』」。"
+            "同一节里还有反例可作对照：重缠拍柄不算装备失灵（照判时间违例），"
+            "而护膝这类医疗器具算。",
+            "离场那道门（`Q. Toilet/Change of Attire Break` 原文）：三盘制一场一次、"
+            "五盘制两次；只能在盘间，且不得用于其他目的；厕所从进门起算最多 3 分钟，"
+            "换衣、或换衣加厕所合计最多 5 分钟；超时按连续两次时间违例罚。"
+            "**而条文明写着「Shirts, socks, and shoes should be changed on court」**"
+            "——能离场的只有换湿短裤/内裤。这一条正好说明鞋这件事根本不在那道门里。",
+            "当事人这一场的事实（ATP 官方战报 + 多家赛报交叉）：2026-08-15 辛辛那提"
+            "第二轮，霍达尔 **7-5 4-6 7-5** 胜沙波瓦洛夫；第三盘 **1-5** 落后、"
+            "救下赛点、连赢六局。鞋带在第三盘断了**两次**，第二次断在 **3-5**。"
+            "沙波瓦洛夫当场对他喊的原话是「The last time you were drinking water」；"
+            "赛后霍达尔的原话是「It's a situation I can't control, honestly. "
+            "My shoelaces broke, and I needed time to prepare new ones.」，"
+            "并说下一场会多带鞋带或备用鞋来缩短停顿。"
+            "⚠️ 两个源在第一次断的比分上不一致（1-4 / 1-5），所以片子只写「第三盘"
+            "落后时断了两次，第二次在 3-5」——**3-5 是两个源都说的那个**。",
+            "⚠️ **故意不画「2021 年美网八分钟 → 现在三分钟」那种跨年份对比。**"
+            "那是大满贯赛事、归大满贯规则书管，不归 ATP 这本；而"
+            "「判历史事件要用当年那本规则书」说的正是这种混用。手上只有 2026 这一本，"
+            "就只讲这一本写了什么。",
+            "⚠️ **也不写「他以前也这样过」这类归纳。** 华盛顿和加拿大站确实各有过一次"
+            "鞋带停顿的报道，但把三次串成一个模式就是在替读者下结论，"
+            "而这正是账号所有者说的「最稳妥」要躲开的东西。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2026-08-15", player="霍达尔", age="2026 辛辛那提第二轮",
+                headline="7-5 4-6 7-5 胜沙波瓦洛夫，第三盘 1-5 落后连赢六局",
+                detail=(
+                    "第三盘鞋带断了两次，第二次断在 3-5。"
+                    "赛后他说：这件事我控制不了，鞋带断了，我需要时间准备新的。"
+                ),
+                source_url=(
+                    "https://www.atptour.com/en/news/"
+                    "jodar-shapovalov-cincinnati-2026-r2-saturday"
+                ),
+            ),
+            ChampionMoment(
+                date="2026 版", player="ATP 规则书", age="第 VII 章 THE COMPETITION",
+                headline="gamesmanship 全书出现三次，三处都要先认定意图",
+                detail=(
+                    "N.4 接发方拖慢节奏 must 判行为违例；医疗那一节 could 判；"
+                    "Receiver Not Ready 判例 may 判。三处主语都是主裁。"
+                ),
+                source_url=(
+                    "https://www.mubadaladcopen.com/-/media/files/rulebook/2026/"
+                    "2026-rulebook_19dec25.pdf"
+                ),
+            ),
+            ChampionMoment(
+                date="2026 版", player="ATP 规则书", age="P. Time and Equipment Cases",
+                headline="鞋那三条判例：分界是坏没坏，不是换不换",
+                detail=(
+                    "Shoe Breaks 主裁应当停表；Changing Shoes 一场限一次、"
+                    "装备失灵优先则逐次裁量；Replacing Shoes 没坏想换，不准。"
+                ),
+                source_url=(
+                    "https://www.mubadaladcopen.com/-/media/files/rulebook/2026/"
+                    "2026-rulebook_19dec25.pdf"
+                ),
+            ),
+        ),
+        image_keys=(),
+        image_credit="ATP 官方图库 · 2026 辛辛那提公开赛第二轮，霍达尔",
+        source_url=(
+            "https://www.mubadaladcopen.com/-/media/files/rulebook/2026/"
+            "2026-rulebook_19dec25.pdf"
+        ),
+        source_label="ATP 2026 年版规则书、ATP 官方战报、Tennis365 / Puntodebreak 赛后稿",
+    ),
+    _trivia_story(
         slug="golden-masters",
         title="WTA 为什么没有金大师",
         subtitle="网球冷知识 · 赛制篇",

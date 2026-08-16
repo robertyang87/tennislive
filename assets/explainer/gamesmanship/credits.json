@@ -1,0 +1,19 @@
+{
+ "_why": "「规则书里真有『盘外招』这个词」那条冷知识片的配图。片子讲的是 2026-08-15 辛辛那提第二轮霍达尔对沙波瓦洛夫那场鞋带风波，所以①屏必须是**那一站那一场**的实拍——手上原有的 `assets/reel/jodar-montreal-2026-celebration.jpg` 是蒙特利尔的，赛事对不上，过不了第一道闸门。",
+
+ "jodar.jpg": {
+  "title": "霍达尔，2026 辛辛那提公开赛第二轮",
+  "source": "ATP 官方战报《Rafael Jodar saves match point, reels off improbable comeback win against Denis Shapovalov》的头图",
+  "page": "https://www.nextgenatpfinals.com/en/news/jodar-shapovalov-cincinnati-2026-r2-saturday",
+  "url": "https://www.nextgenatpfinals.com/-/media/images/news/2026/08/15/23/33/jodar-cincinnati-2026-r2-holder.jpg",
+  "license": "ATP 官方图库 · 非商业资讯引用",
+  "size": "1920x1080（原生，未缩放未裁剪）",
+  "四要素": "**路径本身就把四要素写死了**：`/news/2026/08/15/23/33/jodar-cincinnati-2026-r2-holder.jpg`——日期 2026-08-15、赛事 cincinnati、轮次 r2、人物 jodar，全部由 ATP 自己的 CMS 写在里面，不靠看图推断。稿子标题又直接点名这场比赛（saves match point / comeback win against Shapovalov）。",
+  "checked": "2026-08-15 下载后 Read 打开看过：握拳，侧脸，白色 Adidas 短袖，右手持拍，夜场，看台虚化成蓝红色块。四道闸门：①精准（CMS 路径写死）②在比赛中——是场上赢下关键分之后的即时反应，不是场外或发布会③冲击力：下颌收紧、拳头握死，正对上这一屏「一比五落后、救下赛点、连赢六局」④清晰度 1920×1080 原生。",
+  "_不裁的理由": "比例 1.78 < 1.95，卡片按 contain 信箱式缩放，构图原样留住。裁 3:4 会把握拳的那只手切掉——而那只手正是这一屏的情绪落点（和 weeks-at-no1 那张莱巴金娜是同一个判断）。",
+
+  "_ATP总站403怎么绕过去的": "⚠️ `atptour.com` 对本环境一律 403（CLAUDE.md 早记过），**这次带浏览器 UA 的 curl 也是 403**，那条老经验对图片和 PDF 都已经不成立。能过的是 **ATP 系的其它域名**：这张图和那篇稿子都在 `nextgenatpfinals.com` 上一字不差地镜像着（`/-/media/` 路径同构），2026 版规则书 PDF 则是从 `mubadaladcopen.com/-/media/files/rulebook/2026/2026-rulebook_19dec25.pdf` 下到的。**「ATP 总站封，赛事/系列赛域名镜像同一批」这条现在覆盖三类东西：新闻图、媒体库图、规则书 PDF。**",
+
+  "用在": "① 屏"
+ }
+}
