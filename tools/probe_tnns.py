@@ -36,6 +36,9 @@ API_HINT = re.compile(
     r"match|event|score|player)", re.I)
 # 静态资源不记，否则一屏全是图和字体
 SKIP = re.compile(r"\.(png|jpe?g|webp|svg|gif|ico|woff2?|ttf|css|mp4)(\?|$)", re.I)
+# 只有真二进制才不读正文。**别按「是不是 application/json」过滤**——见
+# `on_response` 里那段注释，TNNS 的 `/v1/web` 回的就不是 json 类型。
+_BINARY_CTYPE = re.compile(r"^(image|video|audio|font)/|octet-stream", re.I)
 
 
 def _dump_objects(body: str, word: str, limit: int = 3) -> None:
@@ -185,13 +188,24 @@ def main() -> int:
             url = resp.url
             if SKIP.search(url) or not API_HINT.search(url):
                 return
+            ctype = (resp.headers.get("content-type") or "").lower()
             body = ""
-            try:
-                if "json" in (resp.headers.get("content-type") or ""):
+            note = ""
+            # ⚠️ **不按 content-type 过滤。** 原来只在 `json in content-type`
+            # 时才读，于是 TNNS 的 `/v1/web?...`（它回的不是 `application/json`）
+            # 一律记成 `body=""`，打印出来是「响应 0 字节」——而**「没读」和
+            # 「真的是空」在那行日志上长得一模一样**，2026-08-16 因此白跑两趟
+            # runner。这跟本仓库「只在成功时出声的检查，没法证明它真的看过」
+            # 是同一个形状，只是这次不出声的是「我跳过了这一条」。
+            if _BINARY_CTYPE.search(ctype):
+                note = f"<二进制 {ctype}，不读>"
+            else:
+                try:
                     body = resp.text()
-            except Exception as exc:  # noqa: BLE001
-                body = f"<读不出来 {type(exc).__name__}>"
-            seen.append({"status": resp.status, "url": url, "body": body})
+                except Exception as exc:  # noqa: BLE001
+                    note = f"<读不出来 {type(exc).__name__}: {exc}>"
+            seen.append({"status": resp.status, "url": url, "body": body,
+                         "ctype": ctype, "note": note})
 
         ctx.on("response", on_response)
         page = ctx.new_page()
@@ -224,19 +238,45 @@ def main() -> int:
 
         for url in args.fetch:
             print(f"\n→ fetch {url}")
-            # **不能在页面里 fetch()**：跨域被浏览器自己拦掉（Failed to fetch），
-            # 通行证在 cookie 里但请求压根没发出去。`context.request` 走的是
-            # 浏览器的网络栈、带同一套 cookie，且不受 CORS 管。
+            # ⚠️ **两条路都要试，而且顺序是「页面里」优先。**
+            #
+            # 原来只走 `ctx.request`，注释写着「页面里 fetch 会被 CORS 拦掉」
+            # ——**那句话是推的，没量过**，而 2026-08-16 实测它对 TNNS 恰好
+            # 是反的：`ctx.request` 拿到的是 Cloudflare 的 `Just a moment`
+            # 挑战页（403，六千字节的 HTML），因为它不带页面那次挑战换来的
+            # 执行环境；而这个 app 自己就在从 `tnnslive.com` 跨域打
+            # `api.tnnslive.com`，说明服务端**发了 CORS 头**，页面里 fetch
+            # 走得通。
+            #
+            # 两条都留着并**分别报状态**：哪条通是站点的性质，不是我们能推的
+            # ——下一个站可能正好相反。
+            body, status, how = "", None, ""
             try:
-                resp = ctx.request.get(url, headers={
-                    "Referer": "https://tnnslive.com/",
-                    "Accept": "application/json,text/plain,*/*",
-                })
-                body = resp.text()
-                status = resp.status
+                got = page.evaluate(
+                    """async (u) => {
+                        try {
+                            const r = await fetch(u, {credentials: 'include'});
+                            return {ok: true, status: r.status, text: await r.text()};
+                        } catch (e) {
+                            return {ok: false, err: String(e)};
+                        }
+                    }""", url)
             except Exception as exc:  # noqa: BLE001
-                print(f"  失败：{type(exc).__name__}: {exc}")
-                continue
+                got = {"ok": False, "err": f"{type(exc).__name__}: {exc}"}
+            if got.get("ok"):
+                body, status, how = got["text"], got["status"], "页面里 fetch"
+            else:
+                print(f"  页面里 fetch 不通：{got.get('err')}　→ 退回 context.request")
+                try:
+                    resp = ctx.request.get(url, headers={
+                        "Referer": "https://tnnslive.com/",
+                        "Accept": "application/json,text/plain,*/*",
+                    })
+                    body, status, how = resp.text(), resp.status, "context.request"
+                except Exception as exc:  # noqa: BLE001
+                    print(f"  两条都失败：{type(exc).__name__}: {exc}")
+                    continue
+            print(f"  （走的是 {how}）")
             print(f"  HTTP {status} · {len(body)} 字节")
             for w in args.want:
                 print(f"  里面有 {w!r}：{w in body}")
@@ -248,7 +288,11 @@ def main() -> int:
     for i, r in enumerate(seen):
         hit = [w for w in args.want if w in (r["body"] or "")]
         print(f"[{i:02d}] {r['status']} {r['url'][:150]}")
-        print(f"     响应 {len(r['body'])} 字节"
+        # ⚠️ **content-type 和「为什么没读」也要打出来。** 只打字节数的话，
+        # 「服务端回了个空」「我按类型跳过了」「读的时候抛了」三种情况在日志上
+        # 一模一样——2026-08-16 就是被这一行骗过两趟。
+        print(f"     响应 {len(r['body'])} 字节 · {r.get('ctype') or '(无 content-type)'}"
+              + (f" {r['note']}" if r.get("note") else "")
               + (f" · 命中 {hit}" if hit else ""))
         if hit:
             j = r["body"]
