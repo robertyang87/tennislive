@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>8.17 赛场之上 | 莱巴金娜一发三成四照样赢</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>第一盘她发了二十九个一发，只进十个。三成四。她还是六比三拿下了。
+
+6-3 6-4，一小时十八分钟，北京时间八月十六号夜里开打，辛辛那提女单第二轮。二号种子、世界第二的莱巴金娜，直落两盘赢下三十岁的美国人汤森德。
+
+这场球看起来很顺，实际上是被一栏数据托着走的。
+
+先看她难看的那几栏。一发进球率：莱巴金娜全场 48%，汤森德 62%。一发得分率：莱巴金娜 66%，汤森德 77%。两项她都更差。
+
+赢的地方在二发。全场二发得分率，莱巴金娜 72%（23 分 / 32 分），汤森德 32%（6 分 / 19 分）——差四十个百分点。也就是说，汤森德每一次把她逼到第二发球，都没能把这个便宜换成分。反过来看同一件事：接对方的二发，莱巴金娜赢了 68%，汤森德只有 28%。
+
+过程也不是没有惊险。第一盘二比四，轮到莱巴金娜发球，零比四十——汤森德一口气拿到三个破发点，这一局最后一共给了她四个，一个都没兑现。那是整个第一盘她唯一一次被逼到那个位置。第二盘她先破发再被扳回：四十比十五领先的那一局连丢四分，二比二。汤森德随后连着保住发球局，反过来四比三领先。四平那一局，莱巴金娜拿到全场四个破发点里的一个，兑现，随后发球胜赛。
+
+小分 62 比 49，破发点 3/4 对 1/5，发球局她只丢了一个。
+
+上周多伦多，她五场胜利里有四场打满三盘才进了决赛。这一场一小时十八分钟。赛后场上采访，她开口第一句是：今天我对自己的发球挺满意。
+
+——那个一发只进了不到一半的发球。
+
+下一轮碰弗雷赫。
+
+#网球 #WTA #辛辛那提公开赛 #莱巴金娜 #网球时差</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>下一轮碰弗雷赫，你压哪边？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
