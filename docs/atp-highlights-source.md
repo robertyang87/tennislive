@@ -1,39 +1,205 @@
-# ATP 源片：Tennis TV 单场集锦要订阅，账号所有者拍板不订（2026-08-09）
+# ATP 源片：Tennis TV 的**短集锦**是免费的（2026-08-16 更正）
 
-> 账号所有者：「atp 也要搞定啊」→ 探明 Tennis TV 每场都发官方单场集锦、
-> 卡点在订阅 token → 账号所有者：「**我没有会员，太贵了没必要**」。
-> 所以 ①订阅那档**永久出局**，ATP 走免费路，方案见下。
+> 账号所有者 2026-08-16：「**ATP 的赛场之上 highlight 可以去 tennistv 找啊**」
+> ——给了一条 `.../cincinnati-2026-r2-paul-hurkacz-**short**-highlights`。
+> 去量了一遍：**这条路通，而且不要订阅。**
 
-## 实测事实
+## ⚠️ 这份文档 2026-08-09 那版的结论是错的，错法值得记
 
-`https://www.tennistv.com/library/match-highlights` 列着蒙特利尔 2026 的
-**每一场**单场集锦，slug 规律固定：
+那版写着「单场集锦 `data-entitlement="premium"`——要订阅 token」，据此把 ATP
+判成「只能靠 ATP Tour YouTube 频道碰运气」。**那句话对它查的那一档是真的，
+而它把一档写成了全部**——Tennis TV 的单场集锦分两档，挂在**两个平行的
+library 版块**下：
 
-    /videos/<id>/montreal-2026-r3-darderi-shang-highlights      ← 商竣程那场也有
-    /videos/<id>/montreal-2026-r4-fils-norrie-highlights
-    …（R2/R3/R4 二十条全在，当天场次当天上）
+| 版块 | slug | entitlement | 时长 | 抽样 |
+|---|---|---|---|---|
+| `library/match-highlights` | `<赛事>-<轮次>-<对阵>-highlights` | **premium**（要订阅，账号所有者已否掉） | 全长 | 2/2 |
+| **`library/short-highlights`** | 同名带 **`-short-highlights`** | **free** | **2 分半** | **20/20** |
 
-- 单场集锦 `data-entitlement="premium"`——**要订阅 token**
-- 当日合集（Tuesday Highlights 那类）是 `freemium`——免费注册账号即可
-- 页面沙箱直连可达；下载走 streamamg（采访线已验证 yt-dlp 能下）
+上一版**只查了 `match-highlights` 这一个版块**，而 `library/short-highlights`
+从来没被打开过。这正是 CLAUDE.md 里「空结果先自证是真空」「查空一类不等于
+查空全部」那条——只不过这次要自证的不是空不空，是**空的范围有多大**；
+同一个形状这个仓库已经栽过三次（「查了一场就写成了一类」）。
 
-## 免费路两档（订阅档已被账号所有者否掉，别再提）
+⚠️ **两档的 slug 差六个字母，页面长得一模一样。** 只有 `data-entitlement`
+那一个属性把它们分开——所以**判据是打开页面看那个属性**，不是看标题像不像。
 
-| 档 | 要什么 | 覆盖 |
+## 实测（2026-08-16，辛辛那提 2026 R1/R2 那一页）
+
+**覆盖**：`match-highlights` 20 场、`short-highlights` 20 场，**一一对应**，
+没有一场只有付费档。⚠️ 这是**一页的抽样**（一站两轮），别读成「永远都有」——
+做片子之前照旧打开那一页看一眼。
+
+**规格**（20 条全查过 entitlement 和时长）：
+
+    entitlement   20/20 free
+    时长          2:28 ~ 2:39（几乎定长 ~155 秒，和 WTA 纯集锦定长 310 秒同一个形状）
+    编码          h264 + aac
+    HLS 档位      483×272 / 640×360 / 1280×720 （/ 1920×1080）
+
+### ⚠️⚠️ 分辨率和帧率**按条算，不是这一档的属性**——别照抄，跑一次看
+
+这一节第一版写的是「1920×1080 · 30 fps」，**那是拿一条推出来的**。抽样 8 条
+逐条列格式表：
+
+| 最高档 | 条数 | 例 |
 |---|---|---|
-| **① ATP Tour YouTube 频道（主路）** | 无 | 大场次有免费单场集锦，覆盖不稳定；runner 上探。和 WTA 的 YouTube 路是同一套下载栈 |
-| ② 免费注册 token（可选升级，零费用） | 账号所有者注册一个**免费** Tennis TV 账号、取 JWT 配 `TENNISTV_JWT` secret | 解锁 `freemium` 档的**当日合集**（Tuesday Highlights 那类）——要在合集里按烧死的记分条定位单场，重活但机械可做 |
+| **1080p** | 5/8 | `paul-hurkacz` `borges-kokkinakis` `walton-mejia` `halys-de-minaur` `fery-duckworth` |
+| **只有 720p** | 3/8 | `shang-sonego` `marozsan-zheng` `atmane-etcheverry` |
 
-场上采访不受影响：`fetch_tennistv_video_metadata` 走的公开 entitlement
-接口（`data-entitlement="free"` 那批），不要任何 token，赛后开麦照旧。
+帧率同样按条算：`paul-hurkacz` 是 **30 fps**，`shang-sonego` 是 **25 fps**。
 
-② 真要配的话：注册免费账号 → F12 → Network 里找
-`Authorization: Bearer <一长串>` → 配进 Settings → Secrets → **Actions**
-（⚠️ 加到 Codespaces 那栏工作流读不到且不报错）。token 会过期，
-探针要把 HTTP 状态和响应体一起报，和「视频下架」区分开。
+⚠️ **这是本文档第二次犯同一个错**——上面那一整节讲的就是「2026-08-09 那版把
+一档写成了全部」，而我在同一份文档里又拿一条写成了一类。**「查了一场就写成
+了一类」和真事实写在文档里长得一模一样。**
 
-## 班次口径
+⚠️ **实际影响不小**：3:4 竖版窗口从 1080p 取只要放大 1.33 倍，从 720p 取要
+**2.0 倍**（`eala-championship` 那条算过这笔账）。所以**选源之前先列一次格式表**：
 
-ATP 场次的源片解析顺序：**① YouTube 免费单场集锦 → 没有就报「这场没源」
-跳过**（②没配之前不参与）。选题优先级照旧（中国球员>顶级>热点）——
-ATP 覆盖不稳是源的限制，不是选题规则变了；YouTube 上探得到就做。
+    python3 -m yt_dlp --no-warnings --list-formats "<解出来的 HLS>"
+
+只有 720p 的，跨源剪辑还要按「多源剪辑：帧率要认领」写 `mixed_fps`。
+
+**解析链**（零 token，`fetch_tennistv_video_metadata` 早就写好了）：
+
+    页面 → data-entry-id → api.tennistv.com/entitlementcheck/v1/videoentitlements/<entry>
+         → api.playback.streamamg.com/v1/entry/<entry> → streamamg 的 HLS
+
+⚠️ **manifest 上那个令牌只活 60 秒**（payload `exp - iat = 60`，
+`customerId` 是 `anonymous`——可见确实没用到任何登录）。所以
+**解析必须在下载那一刻做，不能把解出来的地址钉进 spec**：钉进去就是一条
+一分钟后必死的链接，而它失败的样子和「这条片子被下架了」一模一样。
+spec 里放**页面地址**（不带令牌，`_reject_signed_source_urls` 放行）。
+
+⚠️ 但 60 秒**不是下载的时限**：实测整条 154 秒、74.6 MB 的片子一趟下完没事，
+令牌只管换取那一步。别为此去拆分片下载。
+
+**沙箱下得动**——被挡的是 YouTube，不是 streamamg（CLAUDE.md 早记过这一条）。
+所以这条源比 WTA 那条更好在本地走完整条流水线。
+
+## 班次口径（更新）
+
+账号所有者 2026-08-16 定的顺序：「**优先级就是 YouTube 找不到就找
+Tennis TV 的 short highlight**」。
+
+1. **主路**：ATP Tour 官方 YouTube 频道 / Tennis TV 官方 YouTube 频道
+2. **备选**（主路没有这一场时才用，两条都是账号所有者点名的「备选方案」）：
+   - **赛事自己的官方 YouTube 频道** —— 「**还有每个赛事自己官方的 youtube
+     频道有时也会有集锦，比如 cincinnati open**」「**这个可以做备选方案**」
+   - **Tennis TV `library/short-highlights`** —— 免费、1080p、每场都有
+3. 都没有才报「这场没源」跳过
+
+⚠️ **两条备选之间挑哪个，量了再说**，别按这里的先后：实测辛辛那提 R2 那三场
+**ATP 是 Tennis TV 短集锦更长**（+24~+31s），而**WTA 是赛事频道最长**
+（178~185s）。数在下一节。
+
+### ⚠️ 「YouTube 优先」说的是**去哪儿找**，不是「YouTube 版更完整」
+
+顺序管的是**覆盖**（先去哪儿翻），**不是**「先找到的那版就用」。CLAUDE.md 里
+「同一场有两版时挑长的那一版」那条照旧管用，而且**这次量出来它咬人了**——
+辛辛那提 2026 R2 那三场 ATP，两边都有，赛事频道那版**反而更短**：
+
+| 这一场 | 赛事官方频道 | Tennis TV 短集锦 | |
+|---|---|---|---|
+| Paul vs Hurkacz | 130s | **154s** | TTV **+24s** |
+| Landaluce vs Arnaldi | 129s | **156s** | **+27s** |
+| Kecmanovic vs Cobolli | 121s | **152s** | **+31s** |
+
+同一个频道**两个巡回赛还差一档**：ATP **121~130s**、WTA **178~185s**
+（抽样 ATP 3 条、WTA 5 条，一页）。也就是说赛事频道对 **WTA 是全场最长的一版**，
+对 **ATP 是最短的**。
+
+⚠️ **所以按顺序找到之后还要量一次**，别拿「它排在前面」当「它更完整」：
+
+    yt-dlp --js-runtimes node --skip-download --print '%(duration)s %(height)s %(channel)s' <url>
+
+### ⚠️ 赛事官方频道这一档的四个坑（Cincinnati Open 实测）
+
+- **它两个巡回赛都收**。CLAUDE.md 的候选扫描那节原来把 `@CincyProTennis` 标成
+  「WTA 这一站是赛事官方频道」，**量出来是错的**——同一页里 ATP 3 条、WTA 10 条
+- **同一场会出现两次**：`Ostapenko vs Frech` 两个不同的 videoId，时长都是 185s。
+  按标题去重会留下两条，要按 videoId 认
+- **标题格式不可靠**。多数是 `<A> vs <B> | 2026 Cincinnati Open | Round Two`，
+  但同一页里就有一条 `Shuai Zhang vs Kayla Day match highlights`——**没有
+  `| 赛事 | 轮次` 后缀**。按严格模式解析会漏掉它（而漏掉的样子就是「这场没有」）
+- **列表里混着非比赛条目**（`Cincy Serves Honoree`，61s）。判据是标题里有没有
+  ` vs `，不是「它在这个频道里」
+
+⚠️ **这个顺序和「挑更长更完整的那版」是同一条**，不是妥协：YouTube 那批
+单场集锦实测 **2~8 分钟**（Tennis TV 频道那批偏长），而短集锦是**定长 2 分半**
+——它是被剪短的那一版。片长在这条线上是内容（「不要砍片长」「我怕故事讲解
+不完整」），所以拿得到长的就不要将就短的。
+
+⚠️ 反过来也别读成「短集锦是次品」：ATP 的 YouTube 覆盖**本来就不稳**
+（这份文档 2026-08-09 那版整篇讲的就是这件事），而短集锦是**每场都有**的。
+它顶上来的不是画质，是**覆盖**——2 分半、1080p，够剪一条「赛场之上」。
+
+**订阅那一档永久出局**（账号所有者：「我没有会员，太贵了没必要」），
+`TENNISTV_JWT` 那条可选升级也不必再提——短集锦这一档根本不需要它。
+
+选题优先级照旧（中国球员 > 顶级 > 热点，半决赛级别以上直接做）。
+
+### 量频道那一页的时长：从 `ytInitialData` 按**结构**取，别逐条打 player API
+
+逐条 `yt-dlp` 去问时长会把这台机器打进限流——实测连打 42 次之后
+**HTTP 429 Too Many Requests**，接着每条都报
+`Sign in to confirm you're not a bot`，**而那和「这些视频不存在」长得一模一样**
+（CLAUDE.md「空结果先自证是真空」的又一个实例：14/14 全空是系统性的，不是间歇）。
+
+频道页的 HTML 里就有，一次请求全拿到：
+
+```python
+data = json.loads(re.search(r"var ytInitialData = (\{.*?\});</script>", html, re.S).group(1))
+# 每条视频是一个 lockupViewModel：contentId 就是 videoId，时长在同一个节点里
+```
+
+⚠️ **要按节点取，不能按字符距离猜**——CLAUDE.md 那条「别拿频道列表页的 HTML
+去猜时长」说的是「`videoId` 前后 N 字符里找时长」那种写法，**那个窗口会串到
+相邻视频的标签上**（同一场两版被读成 12 分 08 秒和 2 分 20 秒，两个数都错而
+结论碰巧没变）。`contentId` 和时长同属一个 `lockupViewModel`，这是结构不是距离。
+
+⚠️ 权威标题走 **oEmbed**（`youtube.com/oembed?url=…&format=json`），它的
+`author_name` 就是「这条是不是官方发的」的判据——**搬运号一律不用**。
+oEmbed 这条路没被限流打到。
+
+**这份解析是拿两个口径对出来的，不是声明出来的**：退避之后 yt-dlp 单条问到的
+`Landaluce vs Arnaldi` 是 **129s / 1080p / `Cincinnati Open`**，和 `ytInitialData`
+里结构化取出来的 129s **一分不差**——列映射读错的话这个数不可能对上。
+顺带这一条也确认了赛事频道给的是 **1080p**。
+
+## ⭐ 怎么自己找到一条（**别再靠人翻网页把链接递过来**）
+
+账号所有者 2026-08-16：「**你要研究一下怎么去 Tennis TV 官网下载对应的这种
+short 的集锦。不要以后每次都用，我去找完把链接给你，这不符合自动化的能力呀**」。
+
+    python3 tools/tennistv_catalog.py tournament 422_2026 --who shang
+    python3 tools/tennistv_catalog.py player     S0RE            # 这个人的全部（商竣程 47 条）
+    python3 tools/tennistv_catalog.py match      422_2026_MS122  # 一场球的三条，看免费的是哪条
+    python3 tools/tennistv_catalog.py recent                     # 不知道赛事 sid 就先看这个
+
+走的是 Tennis TV 自己的公开内容 API（`api.tennistv.com/content/atpmedia/video/EN/`，
+要 `account: atpmedia` 头），全库 58226 条。每条带着 `ATP_PLAYER` /
+`ATP_TOURNAMENT` / **`ATP_MATCH`** 的 sid、`entitlement:` 和 `video-type:` 标签、
+轮次和城市——**按比赛定位是最准的一把钥匙**，一场球通常三条：`replay`（付费）、
+`match-highlights`（付费）、**`short-highlights`（免费）**。
+
+⚠️ **原来那条「翻 library 页」的路留着当兜底，但它只有最新 20 条**：
+
+    curl -sS -H "User-Agent: tennislive/0.1" https://www.tennistv.com/library/short-highlights \
+      | grep -o '/videos/[0-9]*/[a-z0-9-]*short-highlights' | sort -u
+
+`shang-sonego` 那次差点栽在这儿——**那一页最老到不了一天前**，而要找的比赛在
+30 小时前。别按 slug 猜存不存在：**猜错时页面照样返回 200**（soft-404）。
+
+参数、不生效的参数名清单、以及两个坑（`tags[]` 回 400 的 HTML、采访被打上
+短集锦标签）全写在 `tools/tennistv_catalog.py` 的模块 docstring 里，别在这儿
+抄第二遍。判据在 `tests/test_tennistv_catalog.py`，三条都反向验证过。
+
+## 代码在哪
+
+- 解析：`tennislive.video.official.media_url()` —— **两条线共用这一份**
+  （「赛场之上」`build_match_reel`、「赛后开麦」`build_interview_clip`
+  各包一层只翻译异常类型）。写两处必分叉，而**分叉的样子是「采访线能下、
+  出片线报『注册用户才能看』」**——那正是 2026-08-16 之前的状态
+- 判据：`tests/test_match_reel.py` 四条（解析真被调到、播放列表不走 curl、
+  缓存键用页面地址、只有一份实现），四条都反向验证过
