@@ -1,6 +1,6 @@
 # 转写核对表：tirante-djokovic-cincinnati-2026-r2
 
-源片 https://www.youtube.com/watch?v=lyu2NHRog_g　采访段 227.9–355.5 秒（共 56 行）
+源片 https://www.youtube.com/watch?v=lyu2NHRog_g　采访段 227.9–352.6 秒（共 56 行）
 
 | # | 片内 | 跳到源片 | 英文 | 中文 | 判据 |
 |--:|:--|:--|:--|:--|:--|
