@@ -1,0 +1,22 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+WrapStyle: 0
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: TL,Noto Sans CJK SC,68,&H00ECF3E7,&H000000FF,&H00181E14,&H00000000,1,0,0,0,100,100,0,0,1,3,0,8,150,150,1524,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.09,0:00:01.35,TL,,0,0,0,,要说清楚这件事
+Dialogue: 0,0:00:01.35,0:00:03.70,TL,,0,0,0,,得先看规则书怎么切时间
+Dialogue: 0,0:00:03.70,0:00:04.57,TL,,0,0,0,,球出界之后
+Dialogue: 0,0:00:04.57,0:00:05.69,TL,,0,0,0,,到下一分开球
+Dialogue: 0,0:00:05.69,0:00:07.16,TL,,0,0,0,,最多{\fs78}25{\fs68}秒
+Dialogue: 0,0:00:07.16,0:00:08.47,TL,,0,0,0,,换边{\fs78}90{\fs68}秒
+Dialogue: 0,0:00:08.47,0:00:11.13,TL,,0,0,0,,一盘打完{\fs78}120{\fs68}秒 超了
+Dialogue: 0,0:00:11.13,0:00:12.32,TL,,0,0,0,,主裁判时间违例
+Dialogue: 0,0:00:12.32,0:00:14.62,TL,,0,0,0,,罚的是超时 不是别的
