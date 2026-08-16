@@ -5017,6 +5017,47 @@ fancybox，原图挂在 `<a href>` 上。真页面上量：裸文本扫到 **40 
 ⚠️ **当天那一辑一般当晚才上线**（`--match-date <今天>` 退出码 2）。**那是「还没发」
 不是「没有」**——写 `_frame_why` 的时候要这么写，别写成「这条渠道没有」。
 
+##### ⭐ 问「今天那批到了没有」要问**媒体库**，不是图库页——而它 403 是 UA 的问题
+
+图库页只列**已发布的文章**，媒体库列的是**已上传的文件**，赛事方往往先传后发：
+
+    GET https://<站>/wp-json/wp/v2/media?per_page=100&orderby=date&order=desc
+        &_fields=date,source_url,media_details.width,media_details.height
+
+⚠️⚠️ **我第一次判它「403，走不通」，那是错的——403 是 UA 的问题。** 拿
+`User-Agent: Python-urllib` 去请求吃 403，换成浏览器 UA 当场 200。
+**「这条路不通」和「我敲门的姿势不对」长得一模一样**，判空之前先换个 UA 试一次。
+
+它顺带**还多捞出一批**：同一天 8/15，图库页给 41 张，加上媒体库是 **67 张**——
+多出来的是挂在别的文章上的实拍（`deep-cincinnati-open-run_CincinnatiOpen_20260815_*.jpg`），
+那些永远不会出现在「Day N Best-of Photos」那一辑里。
+
+##### ⚠️ 同一轮里量死的四条，别再重探
+
+| 试过什么 | 结果 |
+|---|---|
+| **ATP Sitecore `/-/media/` 加尺寸参数** | ❌ `?w=4000` / `?mw=4000` / `?width=4000` / `?h=&w=` **全部被静默忽略**，恒 1920×1080、字节数都一样。⚠️ 又是「参数被接受了 ≠ 参数生效了」，判据是**换个值内容变没变** |
+| **ATP 文章从赛事域名镜像取** | ❌ `/en/news/<slug>` 一律 404——镜像只服务 `/-/media/` 静态资源，**不镜像 ATP 全站页面**（`atptour.com` 本体照旧 403） |
+| **赛事独立图片站 / DAM** | ❌ `photos.` / `media.` / `gallery.` / `assets.` 子域全 403，`<赛事>.photoshelter.com` 404 |
+| **X / Instagram** | ❌ `x.com/<账号>` 只给 JS 壳；`api.x.com` 要鉴权（400）；Instagram 429 |
+
+##### ⭐⭐ 而尺寸最大的那条在**当地报纸**：Yahoo 转载的 `media.zenfs.com`
+
+辛辛那提当地的 **The Enquirer**（USA Today 网络）派自己的摄影师拍这一站，图集
+被 Yahoo 转载，原图挂在 `media.zenfs.com/en/cincinnati_com_the_enquirer_slideshows_<N>/`
+——**实测 5221×3481 ~ 8640×5760**，全画幅相机原图，比 WTA 那条还大一倍，
+而且挂在**当天的 live blog** 上（`sports.yahoo.com/articles/live-atp-wta-2nd-round-…`）。
+
+⚠️ **但它过不了「自证」这一关，所以是第三档不是第一档**：
+
+- 文件名是 32 位哈希（`2079a033657d73a5415a090ee04d222a.jpg`），**不自证是谁、哪天**
+- Yahoo 页面里**抠不出 caption / credit**（`Enquirer` 出现 126 次，没有一个结构化字段）
+- 版权是报社的，属于四类源里的第 ③ 档「新闻站/图片社转载」——授权照实记，
+  发布前人工判断
+
+**所以它的用法是：官方图库真等不到、而这一屏又非要实拍时，去那儿挑一张，
+然后自己打开看认人。** 别把它当成第一顺位。
+
 #### ⚠️ 而它真的没有的时候：判据是「WTA 自己都在用资料图」
 
 `zhang-day`（辛辛那提第一轮，张帅胜戴伊）四类源翻到底一张都没有。
