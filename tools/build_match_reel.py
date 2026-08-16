@@ -4573,6 +4573,7 @@ def validate_spec(spec: dict) -> list[Segment]:
     _validate_editorial_contract(
         spec, required=_editorial_contract_required(spec, urls, topbar))
     _absolute_claims_need_a_source(spec)
+    _players_are_worth_a_reel(spec)
     _hook_lines_fit_the_title(spec)
     _solo_scoreboard_shape(spec)
     photo = cover_photo_problem(spec)
@@ -4581,6 +4582,102 @@ def validate_spec(spec: dict) -> list[Segment]:
     segments = parse_segments(spec, urls, next(iter(urls)))
     check_archival_fit(spec, segments)
     return segments
+
+
+#: 「排名够高」这一档的线。**它不是从名次分布里找出来的缝**——真实分布
+#: （已发片子里两人中的最高名次）是 3 5 7 8 10 19 20 22 23 28 30 35 36 39 42
+#: 53 54 66 92 95 96，一路连着，没有任何一道干净的台阶。拿它去找缝就是
+#: CLAUDE.md「一条漂出来的分布不会自带分界线」说的那件事。
+#:
+#: **真正的判据是「刷到的人认不认得这个名字」，那不在名次里。** 20 是一个
+#: 说得出口的代理：它把已发片子里靠名次立住的那几条（佩古拉 3、德约 5、
+#: 德米纳尔 7、诺斯科娃 8、阿尼西莫娃 10、科斯蒂亚 19、伊埃拉 20）留在里面，
+#: 而把账号所有者点名的那一档（陶森 42／斯特恩斯 53）挡在外面。
+#: **认不认得的那一半，靠下面第 ③ 条显式认领，不靠这个数。**
+HEAT_TOP_RANK = 20
+
+#: 已经做过的，**只许减不许加**。自检在
+#: `test_热度豁免表只许减不许加`：表里每个 slug 必须真的存在、而且真的还
+#: 过不了这道闸——写错一个名字，豁免就成了一盏恒真的绿灯。
+#:
+#: ⚠️ **这张表里有两种东西，别混着读**：
+#:
+#: 一种是**本来就够热、只是那时候还没有 `_heat_why` 这个字段可写**——大威、
+#: 孟菲尔斯、迪米特洛夫、德雷珀、西西帕斯、奥斯塔彭科、伊埃拉、卡萨金娜、
+#: 普利斯科娃、哈恰诺夫、莱巴金娜、斯维托丽娜这些，今天补一句认领就能过闸。
+#: 另一种才是账号所有者 2026-08-16 说的**「热度太低」**：陶森／斯特恩斯、
+#: 纳瓦罗／卡利尼娜、博尔特／沃利内茨、肯宁／利斯那一档。
+#:
+#: 没有把第一种就地补认领，是因为**认领要写清楚「为什么刷到的人认得他」，
+#: 那是二十几次判断**；写进来的都是我这一轮真的想清楚的，剩下的留在表里，
+#: 哪条要重渲就哪条补。
+_LEGACY_LOW_HEAT = frozenset({
+    # ——— 本来够热，只是没地方认领 ———
+    "arango-venus", "hijikata-monfils", "baez-dimitrov", "landaluce-draper",
+    "tsitsipas-royer", "ostapenko-frech", "eala-parks", "eala-mcnally",
+    "sonmez-kasatkina", "bejlek-pliskova", "kovacevic-khachanov",
+    "rybakina-samsonova", "svitolina-anisimova",
+    "nakashima-jodar-montreal-sf",
+    # ——— 这一档正是「热度太低」说的那种 ———
+    "stearns-tauson", "navarro-kalinina", "boulter-volynets", "kenin-lys",
+    "maria-yastremska", "bucsa-chwalinska", "chwalinska-gibson",
+    "parry-mertens", "bartunkova-charaeva", "townsend-osorio",
+    "boisson-krueger",
+})
+
+
+def _players_are_worth_a_reel(spec: dict) -> None:
+    """账号所有者 2026-08-16：「**球员热度太低的就不要做了**」。
+
+    CLAUDE.md 原来那道闸写的是「有话题 **或** 排名够高（顶级球员／种子）」，
+    而 **WTA1000 有 32 个种子**——「是种子」几乎筛不掉任何人。陶森（世界第 42、
+    27 号种子）对斯特恩斯（第 53）就是这么过闸的。
+
+    现在三条占一条：
+
+    ① **中国球员**（`country == "CHN"`）——不看名次。中国观众本来就是冲这个
+       来的，CLAUDE.md ①档说的就是「不用等一个额外的理由」。
+    ② **世界前 20**（`HEAT_TOP_RANK`）——注意是**名次**不是种子号。
+    ③ **显式认领 `cover._heat_why`**——写清楚「刷到的人凭什么认得这个人」。
+
+    ⚠️ **③ 才是这条闸真正的出口，不是漏洞。** 大威廉姆斯世界第 615、孟菲尔斯
+    第 305、迪米特洛夫第 138——这三条是这条线上最该做的片子，而它们一条都过不了
+    名次那一关。**热度不在名次里**，所以必须留一个写字的地方；代价是那句话要
+    自己站得住。
+
+    ⚠️ **不许拿这几样当 `_heat_why`**（CLAUDE.md 已经点过名）：
+    「他是种子」（32 个种子不叫热度）、「数据反常」（`boulter-volynets` 那条
+    趣闻正是被点名否掉的）、「这场球很精彩」（那是比赛的形状，不是人的热度）。
+
+    ⚠️ 闸装在**形状**这一层，`--dry-run` 0.2 秒就报——选题不够格是**开工之前**
+    该知道的事，不是渲完四分钟才发现。
+    """
+    if str(spec.get("slug", "")) in _LEGACY_LOW_HEAT:
+        return
+    cover = spec.get("cover") or {}
+    matchup = cover.get("matchup") or []
+    if not matchup:
+        return                      # 没有名条的老版式，交给别的闸
+    if str(cover.get("_heat_why", "")).strip():
+        return
+    if any(str(m.get("country", "")).upper() == "CHN" for m in matchup):
+        return
+    ranks = [m.get("rank") for m in matchup if isinstance(m.get("rank"), int)]
+    if any(r <= HEAT_TOP_RANK for r in ranks):
+        return
+    who = "、".join(
+        f"{m.get('name', '?')}（{m.get('rank') if m.get('rank') is not None else '排名未填'}）"
+        for m in matchup)
+    raise ReelError(
+        f"**热度不够，这条别做。** 场上是 {who}——没有中国球员，"
+        f"也没有人排进世界前 {HEAT_TOP_RANK}。\n"
+        "账号所有者 2026-08-16：「球员热度太低的就不要做了」。\n\n"
+        "真觉得够热，就在 `cover._heat_why` 里写清楚**刷到的人凭什么认得他**"
+        "（大满贯冠军、奥运冠军、复出、最后一个赛季、正在发酵的破圈故事…），"
+        "写了就放行。\n"
+        "⚠️ 但这几样不算：「他是种子」——WTA1000 有 32 个种子；"
+        "「这场数据很反常」——`boulter-volynets` 那条趣闻正是被点名否掉的；"
+        "「这场球很精彩」——那是比赛的形状，不是人的热度。")
 
 
 #: 「写过源片末尾」这句话的开头，`--dry-run` 和 render 那道闸共用一份。

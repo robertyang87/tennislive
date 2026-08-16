@@ -40,6 +40,7 @@
 比没有更糟（CLAUDE.md 里几条「故意没有测试」是同一个理由）。
 """
 
+import inspect
 import json
 import re
 import sys
@@ -853,3 +854,90 @@ def test_狠数据豁免表只许减不许加():
     assert not stale, (
         f"这几条已经表过态了（有 `_hit_data` 或 `_no_hit_data_why`），从表里删掉："
         f"{sorted(stale)}——这张表只许减不许加")
+
+
+# ── 热度：球员本身够不够让人停下来 ────────────────────────────────────────
+#
+# 账号所有者 2026-08-16：「**球员热度太低的就不要做了**」。
+#
+# 闸本身在 `build_match_reel._players_are_worth_a_reel`（形状层，`--dry-run`
+# 0.2 秒就报——选题不够格是**开工之前**该知道的事）。这里只守它的豁免表，
+# 形状和这份文件里另外几张表一样：**只许减不许加 + 自检**。
+
+def _low_heat_offenders():
+    """{slug: 场上两个人}，只收过不了那道闸的。
+
+    ⚠️ **判据从 `build_match_reel` 里取，不在这儿抄一份**——抄一份就是
+    「一个数写两处必分叉」，而分叉那天闸会放过一条它本该拦的片子，还不报错。
+    """
+    sys.path.insert(0, "tools")
+    import build_match_reel as reel  # noqa: PLC0415
+
+    out = {}
+    for slug, spec in _specs():
+        cover = spec.get("cover") or {}
+        matchup = cover.get("matchup") or []
+        if not matchup:
+            continue
+        if str(cover.get("_heat_why", "")).strip():
+            continue
+        if any(str(m.get("country", "")).upper() == "CHN" for m in matchup):
+            continue
+        ranks = [m.get("rank") for m in matchup if isinstance(m.get("rank"), int)]
+        if any(r <= reel.HEAT_TOP_RANK for r in ranks):
+            continue
+        out[slug] = [(m.get("name"), m.get("rank")) for m in matchup]
+    return out
+
+
+def test_热度太低的不做():
+    """新写的 spec 要么有中国球员、要么有人进世界前 20、要么显式认领热度。"""
+    sys.path.insert(0, "tools")
+    import build_match_reel as reel  # noqa: PLC0415
+
+    fresh = {k: v for k, v in _low_heat_offenders().items()
+             if k not in reel._LEGACY_LOW_HEAT}
+    assert not fresh, (
+        f"这几条场上没有中国球员、也没有人排进世界前 {reel.HEAT_TOP_RANK}："
+        f"{fresh}。账号所有者 2026-08-16：「球员热度太低的就不要做了」。\n"
+        f"真觉得够热就在 `cover._heat_why` 里写清楚**刷到的人凭什么认得他**；"
+        f"⚠️ 「他是种子」不算（WTA1000 有 32 个种子），"
+        f"「数据反常」也不算（`boulter-volynets` 那条正是被点名否掉的）。")
+    # 判据自己的判据：主语没了（改了字段名、换了目录）要出声，别变成恒真绿灯。
+    assert len(list(_specs())) >= 40, "一条 spec 都没扫到，判据的主语像是没了"
+
+
+def test_热度豁免表只许减不许加():
+    sys.path.insert(0, "tools")
+    import build_match_reel as reel  # noqa: PLC0415
+
+    for slug in sorted(reel._LEGACY_LOW_HEAT):
+        assert (SPEC_DIR / f"{slug}.json").is_file(), \
+            f"{slug} 这条 spec 已经没了，把它从 `_LEGACY_LOW_HEAT` 里删掉"
+    stale = set(reel._LEGACY_LOW_HEAT) - set(_low_heat_offenders())
+    assert not stale, (
+        f"这几条已经过得了热度那道闸了（补了 `_heat_why`、或者名次/国别变了），"
+        f"把它们从 `_LEGACY_LOW_HEAT` 里删掉：{stale}——这张表只许减不许加")
+
+
+def test_前20那条线是名次不是种子号():
+    """⚠️ 这条闸最容易被改回原样的地方，就是把「名次」读成「种子」。
+
+    原来的口径写的是「顶级球员／种子」，而 WTA1000 有 **32 个种子**——
+    陶森（世界第 42、27 号种子）对斯特恩斯（第 53）就是这么过闸的，
+    而那正是账号所有者点名的那一条。所以这里钉死：闸只看 `matchup[].rank`，
+    `seed` 这个词不许出现在判据里。
+    """
+    sys.path.insert(0, "tools")
+    import build_match_reel as reel  # noqa: PLC0415
+
+    src = inspect.getsource(reel._players_are_worth_a_reel)
+    body = re.sub(r'"""[\s\S]*?"""', "", src)      # docstring 里正写着「种子」
+    assert "seed" not in body.lower(), \
+        "热度闸读到了 `seed`——种子号不是排名，32 个种子筛不掉任何人"
+    assert '"rank"' in body, "热度闸没读 `rank`，那它判的就不是名次"
+    # 反向锚点：陶森那一场（42 / 53）必须真的过不了闸，否则这条线形同虚设。
+    spec = json.loads((SPEC_DIR / "stearns-tauson.json").read_text("utf-8"))
+    ranks = [m["rank"] for m in spec["cover"]["matchup"]]
+    assert min(ranks) > reel.HEAT_TOP_RANK, \
+        f"陶森那场最高名次 {min(ranks)} 落进了前 {reel.HEAT_TOP_RANK}，这条线太松"
