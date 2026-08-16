@@ -47,6 +47,7 @@ import argparse
 import json
 import re
 import sys
+from datetime import date
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -128,7 +129,8 @@ def facts_text(hit_data: list[dict]) -> str:
 def assemble(*, slug: str, home: str, away: str, event: str, year: int,
              fixture: str, flashscore_id: str | None,
              captions_path: str | None = None,
-             cuts_path: str | None = None) -> dict:
+             cuts_path: str | None = None,
+             cover: bool = False) -> dict:
     notes: list[str] = []
     draft: dict = {
         "_draft": True,
@@ -244,6 +246,39 @@ def assemble(*, slug: str, home: str, away: str, event: str, year: int,
         notes.append("⚠️ 没给 captions/cuts（probe 还没落库），窗口起草跳过——"
                      "等 probe 完成后再补跑")
 
+    # ⑦ 封面官方实拍（可选，--cover 触发）。WTA 场次才有这条官方路：英文名
+    #    反查 WTA MatchID → 抓赛后稿头图。抓得到就写 cover.portrait.image，
+    #    抓不到（稿子没挂/没实拍）就留空出声——封面是 cover_photo_problem 硬闸
+    #    管的，抓错比不抓更糟，宁可留空让 render 前闸走抽帧认领。
+    if cover:
+        try:
+            import requests
+            from datetime import timedelta
+
+            from fetch_match_pbp import find_match as wta_find_match
+            from fetch_wta_cover_photo import fetch_cover
+            session = requests.Session()
+            today = date.today()
+            event_id, wyear, match_id, _row = wta_find_match(
+                session, [_surname(home), _surname(away)],
+                today - timedelta(days=2), today)
+            # city slug 从 tournament 数据里没有现成的，先用英文小写全名兜底——
+            # 抓不到只是退回无封面，不硬来。
+            out = Path(f"assets/reel/{slug}-cover.jpg")
+            code, note = fetch_cover(str(event_id), str(wyear), "cincinnati",
+                                     match_id, [_surname(home), _surname(away)],
+                                     out, today)
+            notes.append(f"封面官方实拍：{note}")
+            if code == 0:
+                draft.setdefault("cover", {})["portrait"] = {
+                    "image": str(out), "_portrait_why": "WTA 官方赛后稿头图，自动抓取"}
+            else:
+                notes.append("⚠️ 封面没抓到（稿子没挂或没有实拍），portrait 留空，"
+                             "render 前 cover_photo_problem 闸会要求认领 frame_at/_frame_why")
+        except Exception as exc:  # noqa: BLE001 —— 封面失败不拖垮整份草稿
+            notes.append(f"⚠️ 封面抓取没成（{type(exc).__name__}: {exc}）——"
+                         "portrait 留空，终审或 render 前再补")
+
     draft["_notes"] = notes
     return draft
 
@@ -262,6 +297,8 @@ def main() -> int:
                     help="probe 产出的 captions.txt（给了就跑窗口起草）")
     ap.add_argument("--cuts", default=None,
                     help="probe.json（读 scene_cuts，配 --captions 用）")
+    ap.add_argument("--cover", action="store_true",
+                    help="试抓 WTA 官方实拍封面（抓不到就留空出声，不硬来）")
     ap.add_argument("--write", action="store_true",
                     help="把草稿落盘到 specs/reels/<slug>.draft.json；不给就只打印")
     args = ap.parse_args()
@@ -269,7 +306,8 @@ def main() -> int:
     draft = assemble(slug=args.slug, home=args.home, away=args.away,
                      event=args.event, year=args.year, fixture=args.fixture,
                      flashscore_id=args.flashscore_id,
-                     captions_path=args.captions, cuts_path=args.cuts)
+                     captions_path=args.captions, cuts_path=args.cuts,
+                     cover=args.cover)
 
     print(json.dumps(draft, ensure_ascii=False, indent=2))
     if not args.write:

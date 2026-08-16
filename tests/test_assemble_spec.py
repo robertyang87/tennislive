@@ -223,6 +223,66 @@ def test_assemble给captions跑窗口起草(tool, monkeypatch, tmp_path):
     assert any("窗口起草 1 段" in n for n in draft["_notes"])
 
 
+def test_assemble封面抓到写portrait(tool, monkeypatch):
+    a = tool
+    monkeypatch.setattr(a, "resolve_match_id", lambda h, aw: "4CYI9Ick")
+    monkeypatch.setattr(a, "matchup_order",
+                        lambda h, aw, mid: [(h, a.player_zh(h)), (aw, a.player_zh(aw))])
+    monkeypatch.setattr(a, "stats_block", lambda mid: {
+        "a": {}, "b": {}, "_missing_required": [], "_has_winners_ue": False})
+    monkeypatch.setattr(a, "collect", lambda mid, h, aw: {"candidates": [], "durations": []})
+    monkeypatch.setattr(a, "points", lambda mid: [])
+    monkeypatch.setattr(a, "rank_games", lambda games: [])
+    monkeypatch.setattr(a, "Chat", lambda: type("C", (), {"ready": True, "channel": "x"})())
+    monkeypatch.setattr(a, "draft_editorial", lambda chat, **kw: {"beats": ["b"]})
+
+    # 打桩封面反查 + 抓取两个模块（都在 assemble 函数内 import）
+    fake_pbp = type("M", (), {"find_match": staticmethod(
+        lambda session, players, since, until: ("1017", 2026, "LS061", {}))})()
+    fake_cover = type("M", (), {"fetch_cover": staticmethod(
+        lambda *a, **kw: (0, "已存封面（4700×2957）"))})()
+    monkeypatch.setitem(sys.modules, "fetch_match_pbp", fake_pbp)
+    monkeypatch.setitem(sys.modules, "fetch_wta_cover_photo", fake_cover)
+    # requests 要 mock 成**模块**（有 Session 这个类属性），不是实例——
+    # `import requests` 拿到的必须是模块，requests.Session() 才调得动。
+    monkeypatch.setitem(sys.modules, "requests",
+                        type("requests", (), {"Session": staticmethod(lambda: object())})())
+
+    draft = a.assemble(slug="x", home="A E", away="B R", event="C", year=2026,
+                       fixture="", flashscore_id="4CYI9Ick", cover=True)
+    assert draft["cover"]["portrait"]["image"].endswith("x-cover.jpg"), (
+        "抓到了封面要写进 cover.portrait.image")
+    assert any("封面官方实拍" in n for n in draft["_notes"])
+
+
+def test_assemble封面没抓到留空出声(tool, monkeypatch):
+    a = tool
+    monkeypatch.setattr(a, "resolve_match_id", lambda h, aw: "4CYI9Ick")
+    monkeypatch.setattr(a, "matchup_order",
+                        lambda h, aw, mid: [(h, a.player_zh(h)), (aw, a.player_zh(aw))])
+    monkeypatch.setattr(a, "stats_block", lambda mid: {
+        "a": {}, "b": {}, "_missing_required": [], "_has_winners_ue": False})
+    monkeypatch.setattr(a, "collect", lambda mid, h, aw: {"candidates": [], "durations": []})
+    monkeypatch.setattr(a, "points", lambda mid: [])
+    monkeypatch.setattr(a, "rank_games", lambda games: [])
+    monkeypatch.setattr(a, "Chat", lambda: type("C", (), {"ready": True, "channel": "x"})())
+    monkeypatch.setattr(a, "draft_editorial", lambda chat, **kw: {"beats": ["b"]})
+
+    fake_pbp = type("M", (), {"find_match": staticmethod(
+        lambda session, players, since, until: ("1017", 2026, "LS061", {}))})()
+    fake_cover = type("M", (), {"fetch_cover": staticmethod(
+        lambda *a, **kw: (2, "稿子还没挂"))})()
+    monkeypatch.setitem(sys.modules, "fetch_match_pbp", fake_pbp)
+    monkeypatch.setitem(sys.modules, "fetch_wta_cover_photo", fake_cover)
+    monkeypatch.setitem(sys.modules, "requests",
+                        type("requests", (), {"Session": staticmethod(lambda: object())})())
+
+    draft = a.assemble(slug="x", home="A E", away="B R", event="C", year=2026,
+                       fixture="", flashscore_id="4CYI9Ick", cover=True)
+    assert "portrait" not in draft.get("cover", {}), "抓不到就留空，别硬塞"
+    assert any("封面没抓到" in n for n in draft["_notes"]), "抓不到要出声"
+
+
 def test_main写出草稿文件(tool, monkeypatch, tmp_path, capsys):
     a = tool
     monkeypatch.setattr(a, "assemble", lambda **kw: {
