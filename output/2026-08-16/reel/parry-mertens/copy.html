@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>8.16 赛场之上 | 帕里掀翻二十一号种子</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>第一盘她的一发赢下八成。第二盘只剩三成八。
+
+2-6、6-2、6-2，两小时二十分钟，北京时间八月十六号早上七点前后开打，辛辛那提女单第二轮，四号球场。世界第 66 的帕里逆转 21 号种子梅尔滕斯。
+
+先说第一盘。那四十五分钟完全是梅尔滕斯的：一发得分率八成，五比二时轮到她发球胜盘，四十比十五，两个盘点，第二个就落了地。帕里那大半个小时只拿到两局。
+
+然后这场球换了个人打。
+
+梅尔滕斯的一发得分率，第二盘掉到三成八，决胜盘四成三。发球局连着丢——第二盘丢两个，决胜盘丢三个，第一盘之后一共被破五次。而帕里第二盘一个发球局都没丢。
+
+转播在第二盘结束时说了一句：很难说清刚才到底发生了什么，但帕里一点都不会在意。
+
+全场一百六十一个小分，帕里拿走八十八个。她自己的一发赢下七成五。
+
+真正重的一层在场外。WTA 官网给这条集锦写的第一句就是：帕里进这一周之前，五场输了四场。站在网对面的是世界第 22、生涯最高排到过世界第 12 的梅尔滕斯，转播还提了一句，她温网之后没打多少比赛。
+
+两个人此前只交手过一次，二〇一九年法网红土，梅尔滕斯 6-1 6-3 赢的。这是她们第一次在硬地上碰面。
+
+转播最后那句话是：这是法国人帕里第一次在硬地上赢下世界前三十的球员。
+
+二十三岁，第三轮。她能走多远？
+
+#网球 #WTA #辛辛那提公开赛 #帕里 #网球时差</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>她能走多远？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
