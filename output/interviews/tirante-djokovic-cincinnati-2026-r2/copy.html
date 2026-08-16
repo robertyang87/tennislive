@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>8.16 赛后开麦 | 蒂兰特掀翻德约科维奇</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>赢下德约科维奇之后，他第一句谈的是自己浪费掉的十三个破发点
+
+📍2026 辛辛那提 ATP1000 第二轮
+🎾 蒂兰特 2-6 6-4 6-4 德约科维奇
+🎤 中英双语字幕 · 赛后场上采访
+
+先输一盘，再连扳两盘。全场总分只差六分。而最刺眼的一个数是：蒂兰特拿到十五个破发点，只兑现了两个——德约是六个里兑现两个。
+
+一个非种子直入正赛的阿根廷人，掀翻了世界第五、在这一站拿过三个冠军的德约科维奇。两人此前从未交手。
+
+采访里最值得停一下的是：主持人问他此刻的感受，他没有先讲赢，先讲的是那十三个没抓住的机会。
+
+① 他自己把压力说破了
+
+It&#x27;s so much pressure when you can break so many time, because I have so many points to break and I couldn&#x27;t. So that was the key: keep believing in me, in my forehand, in myself.
+压力太大了，有那么多次机会破发，我拿到了那么多破发点，可我没能兑现。所以关键还是相信自己，相信我的正手，相信我自己。
+
+② 打完之后他想到的是谁
+
+So they are in Argentina, but they are in my head as well.
+他们人在阿根廷，但也一直在我脑子里。
+
+③ 团队今年给了他什么
+
+第二个问题问的是团队。他的答案不是技术，是心理。
+
+With my person that help me with the mental health. So they are helping me a lot, and this I think was the key for this year: to keep believing in me, and to listen more my team.
+有一位专门帮我处理心理的人。他们帮了我很多，我觉得这就是今年的关键——一直相信我自己，多听我团队的话。
+
+顶住这种压力，靠的是什么？
+
+#蒂兰特 #德约科维奇 #辛辛那提 #ATP #网球时差</textarea>
+    </section>
+    
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
