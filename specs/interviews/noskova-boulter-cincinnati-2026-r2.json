@@ -106,5 +106,7 @@
     "event": "",
     "summary": "温网冠军后第一胜",
     "lead": "2026 辛辛那提 WTA1000 第二轮，六号种子诺斯科娃 6-3 6-3 战胜布尔特——这是她七月拿下温网之后的第一场胜利（此前在多伦多首战即负于麦克纳莉）。赛后场上采访里，主持人问她「你不太会庆祝，那现在呢」，她答：「我到现在还是不知道怎么庆祝。过去这几周发生的事我大概还没完全消化。按说我应该因此获得很大的信心，但并没有。一切还是老样子，还是网球，球场还是那个球场，什么都没变——我得回来，从头再来，像什么都没发生过一样。」中英双语字幕，全程。"
-  }
+  },
+  "transcript_verified": true,
+  "_verified_clean": "两份转写对不上 **3.1%**（闸门 12%），**0 处空档**——这条线到目前为止最低的一条。第一份 YouTube 自动字幕 355 词，第二份 faster-whisper `medium.en` 350 词。\n\n**分歧一共只有 9 处，逐处看过，没有一处是「whisper 对、我们错」**：\n\n    comes      → —          我们这边是采访者那句被切掉开头的残句，whisper 整个没听出来\n    to / at    → —          单字虚词\n    — → i                   同上\n    going to   → gonna ×2   缩写写法\n    gained     → gain       她原话就是 `would have thought I would gained`（语法上别扭，但那是她说的）\n    break down → breakdown  网球里「落后一个破发」就是 `a break down`，我们这边对；whisper 拼成了一个词\n    noskova    → noshkova   **whisper 把她的姓拼错了**，我们这边对（而且 en_fixed 里专门修过一次）\n\n**所以这一轮一条 `en_fixed` 都没有从报告里加。** spec 里那四条是切行之后自己看出来的：`Linda Noscoa` → `Linda Noskova`（人名要烧在画面上）、`Ianic` → `Jannik`（去温网官方频道核过男单冠军是辛纳）、外加两处断句和标点。"
 }
