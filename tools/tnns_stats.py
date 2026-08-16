@@ -136,7 +136,18 @@ def winners_ue(decoded: dict, period: str = "Match") -> dict | None:
     声明的，读它比从缺字段反推可靠——「没有这两行」和「我解错了」在产物上
     长得一模一样。
     """
-    block = (decoded.get("data") or {}).get(period)
+    # ⚠️⚠️ **分盘挂在 `data.data`，不是 `data`——`K[0]` 是 `data`，而它套了两层。**
+    #
+    # 2026-08-16 端到端第一趟就栽在这儿，而它的样子是**自相矛盾**：
+    # `hasExtendedStats` 读得到（那个键挂在**外层** `data` 上），分盘读不到，
+    # 于是工具一边说「这场有扩展统计」一边说「没有制胜分」。
+    #
+    # ⚠️ 根子是**我的 fixture 假了**：#398 那份 `_REAL` 的 docstring 写着
+    # 「真数据，不是手搓的」，实际是照着 `--print-body` 的片段**手工拼的，
+    # 拼的时候少套了一层**。CLAUDE.md 那句「手搓的 fixture 只能验函数的局部
+    # 行为，验不了它和真页面对不对得上」——这次连「是不是真数据」都写错了，
+    # 而那句话本身让下一个人（我自己）不会再去核。
+    block = ((decoded.get("data") or {}).get("data") or {}).get(period)
     if block is None:
         return None
     found: dict[str, list] = {}
@@ -175,7 +186,16 @@ def _page_fetch(page, url: str) -> str | None:
     try:
         return page.evaluate(
             """async (u) => {
-                const r = await fetch(u, {credentials: 'include'});
+                // ⚠️ **不许带 `credentials: 'include'`。** 第一版带了，实测
+                // `TypeError: Failed to fetch`，我据此写下「页面内 fetch 对
+                // api. 子域是跨域的」——**那个结论是错的**。真因是：服务端
+                // 回的是 `Access-Control-Allow-Origin: *`，而带 credentials
+                // 时浏览器**要求**具体 origin ＋ `Allow-Credentials: true`，
+                // 于是拒绝，报的错和「跨域被拦」一模一样。
+                // 判据摆在眼前而我没读：被动抓包里 `[03] [04] [05]` 三发**就是
+                // 页面自己打到 api.tnnslive.com 的**——它能打，就说明 CORS 是
+                // 放行的，不通的只可能是我多加的那个选项。
+                const r = await fetch(u);
                 return await r.text();
             }""", url)
     except Exception as exc:  # noqa: BLE001
@@ -230,11 +250,35 @@ def _browser_capture(urls: list[str], marks: list[str], wait: int = 22,
             if "Just a moment" in html:
                 print("[TNNS] ⚠️ Cloudflare 挑战**没过**——这一趟拿不到数据，"
                       "不是这场没有统计")
+        # ⚠️ **页面内取回来的东西不许和被动抓包混用同一个键。**
+        # 2026-08-16 run 31956961716 就栽在这儿：按 `date=2026-08-15` 那一发
+        # `Failed to fetch` 了，而首页的被动抓包**早就把同一个键填上了今天的
+        # 赛程**，于是日志照样打「按 date=2026-08-15 取到 149 场」——
+        # **参数没生效，而它宣称生效了**。这正是这个函数上一版要修的那个形状，
+        # 只是换到了下一层。所以另起 `in_page:` 前缀，谁是谁一目了然。
         for key, url in (in_page or {}).items():
             print(f"[TNNS] 页面内取 {url}")
             body = _page_fetch(page, url)
+            if not body:
+                # ⚠️ **页面内 fetch 对 `api.tnnslive.com` 是跨域的，会 `Failed to
+                # fetch`**（2026-08-16 run 31958875002 实测）。而**顶层导航不受
+                # CORS 管**——直接把浏览器开到那个接口地址，响应正文照样拿得到，
+                # 挑战也已经在上一跳过了。
+                #
+                # ⚠️ 之前那句「页面里 fetch 会被 CORS 拦掉」的注释**当年是推的、
+                # 没量过**，我把它推翻改成了「页面里优先」；今天量出来是
+                # **两者各对一半**：同域（tnnslive.com 自己的接口）页面内能发，
+                # 跨到 api. 子域就不行。所以两条都留着，先试便宜的那条。
+                print("[TNNS] 页面内取不到，改用顶层导航（不受 CORS 管）")
+                try:
+                    resp = page.goto(url, timeout=60000,
+                                     wait_until="domcontentloaded")
+                    body = resp.text() if resp else None
+                except Exception as exc:  # noqa: BLE001
+                    print(f"[TNNS] 导航也失败：{type(exc).__name__}: {exc}")
+                    body = None
             if body and "Just a moment" not in body:
-                got[key] = body
+                got[f"in_page:{key}"] = body
         browser.close()
     return got
 
@@ -284,14 +328,26 @@ def fetch(who: list[str], date: str | None = None,
         # 判据一律是 **换个值内容变没变**，不是「参数被接受了」。
         want = {_DAY_MARK: _DAY_API.format(date=date)} if date else None
         caps = _browser_capture([home], [_DAY_MARK], in_page=want)
-        day = caps.get(_DAY_MARK)
+        if date:
+            # ⚠️ **给了日期就只认按日期取回来的那一份，取不到要红。**
+            # 首页的被动抓包给的是**今天**，拿它顶替会静静地在错的一天里找人，
+            # 而找不到的样子和「TNNS 没有这场」一模一样。
+            day = caps.get(f"in_page:{_DAY_MARK}")
+            if not day:
+                raise SystemExit(
+                    f"[TNNS] 按 date={date} 那一发没成功（上面那行 `页面内 fetch "
+                    f"失败` 写着原因）。\n"
+                    f"⚠️ **不退回首页那份**——首页给的是今天，用它去找 {who} "
+                    f"必然找不到，而那和「TNNS 没有这场」长得一模一样。\n"
+                    f"知道数字 id 就直接 `--match-id`，那条路不碰赛程。")
+            print(f"[TNNS] 按 date={date} 取到 {len(day)} 字节、"
+                  f"{len(json.loads(day).get('all_matches') or [])} 场")
+        else:
+            day = caps.get(_DAY_MARK)
         if not day:
             raise SystemExit(
                 "[TNNS] 当天赛程一条都没抓到——**先别当成「这场没有」**："
                 "多半是 Cloudflare 没过或者等的时间不够（--wait）。")
-        if date:
-            print(f"[TNNS] 按 date={date} 取到 {len(day)} 字节、"
-                  f"{len(json.loads(day).get('all_matches') or [])} 场")
         match_id = find_match_id(day, who)
         if not match_id:
             raise SystemExit(
@@ -310,26 +366,59 @@ def fetch(who: list[str], date: str | None = None,
     return match_id, decode(body)
 
 
+def players_of(decoded: dict, period: str = "Match") -> list | None:
+    """这一块的列顺序——**决定 `stats.a/b` 填给谁**。
+
+    ⚠️ **和分盘同一层（`data.data`），不是外层。** 2026-08-16 端到端跑通那一趟
+    这行还打着 `（选手顺序 None）`：`winners_ue` 改对了层级，而这儿另写了一遍
+    `data.get("Match")`，就是「一个数写两处必分叉」。分叉的样子不是报错，
+    是**列顺序悄悄变成 None**——而列顺序正是账号所有者截图里点出来的那件事
+    （Townsend 在前、Rybakina 在后，跟比分行的顺序相反）。
+    """
+    block = ((decoded.get("data") or {}).get("data") or {}).get(period) or [{}]
+    return block[0].get("players")
+
+
 def _report(match_id: str, decoded: dict) -> None:
     data = decoded.get("data") or {}
     print(f"\n=== TNNS 单场统计 id={match_id} ===")
     print(f"hasExtendedStats: {has_extended_stats(decoded)}")
     whole = winners_ue(decoded, "Match")
     if not whole:
-        print("⚠️ 全场那一块没有制胜分/非受迫失误——"
-              "读 hasExtendedStats 判「这场有没有」，别从这里反推")
-        # ⚠️ **查空也要留下判据。** 「忘了查」和「查过确实没有」在产物上分不
-        # 出来（那张图两种情况都少两行），所以这条路必须也给出能粘的东西——
-        # 不然下一个人只能自己现编一句，而现编的话看不出是哪天、查的哪个 id。
-        # 对应 `test_数据图缺制胜分和UE的要说清TNNS那趟跑出来是什么`。
+        ext = has_extended_stats(decoded)
+        # ⚠️⚠️ **`hasExtendedStats=True` 却抠不出这两行，是自相矛盾，不是「没有」。**
+        #
+        # 2026-08-16 端到端第一趟就撞上了（run 31956957338，兹维列夫那场）：
+        # 接口自己说 True，而这份响应里没有 Key Stats 那几组——**同一场我手里有
+        # 原文，41/25、35/36 明明在**。也就是说抓到的不是完整那一份（多半是
+        # 默认标签页的统计，Stats 那一屏还没加载）。
+        #
+        # 而第一版在这儿照样打印了一句能粘的 `_winners_ue_why`，内容是
+        # 「TNNS 这场也没有这两行」——**一句自信的假话**，还打算被抄进 spec 当
+        # 判据。那比抓不到坏得多：抓不到只是没帮上忙，这是主动给出错答案，
+        # 而下一个人没有第二个地方可以对。
+        if ext:
+            raise SystemExit(
+                f"[TNNS] ⚠️ 自相矛盾：`hasExtendedStats` 是 {ext}，"
+                f"却抠不出制胜分/非受迫失误。\n"
+                f"**这不是「这场没有」**，是这一趟抓到的不是完整那一份"
+                f"（多半是默认标签页，Stats 那一屏还没加载）。\n"
+                f"别把它写成 `_winners_ue_why`——那会把一句假话钉成判据。\n"
+                f"先用 `probe-blocked` 的 `--print-body` 把整份响应打出来看。")
+        # 走到这儿才是真的没有：接口自己说没有扩展统计。
+        # ⚠️ 查空也要留下判据——「忘了查」和「查过确实没有」在产物上分不出来
+        # （那张图两种情况都少两行），所以这条路要给出能粘的东西，不然下一个人
+        # 只能自己现编一句，而现编的看不出是哪天、查的哪个 id。
+        print(f"⚠️ 这场没有扩展统计（hasExtendedStats={ext}）")
         print("\n粘进 spec 的 `stats` 块（这一趟查空了，要挂账）：")
         print(f'  "_winners_ue_why": "跑过 tnns-stats（id={match_id}），'
-              f'hasExtendedStats={has_extended_stats(decoded)}，'
+              f'hasExtendedStats={ext}，'
               f'TNNS 这场也没有这两行；flashscore 同样没有。"')
         return
     print(f"制胜分       {whole['winners']}")
     print(f"非受迫失误   {whole['ue']}")
-    print(f"（选手顺序 {(data.get('Match') or [{}])[0].get('players')}）")
+    who = players_of(decoded) or ["?", "?"]
+    print(f"（选手顺序 {who}）")
     sets = [(p, winners_ue(decoded, p)) for p in ("Set 1", "Set 2", "Set 3")]
     sets = [(p, v) for p, v in sets if v]
     for p, v in sets:
@@ -342,10 +431,9 @@ def _report(match_id: str, decoded: dict) -> None:
               f"  {'✅' if ok else '❌ 对不上，多半解错了，别用'}")
     print("\n粘进 spec 的 `stats` 块（⚠️ a/b 跟 cover.matchup 的顺序，"
           "不是这里的顺序——CLAUDE.md「stats.a 跟的是 cover.matchup[0]」）：")
-    print(f'  "winners": {whole["winners"][0]},  "ue": {whole["ue"][0]}    ← '
-          f'{(data.get("Match") or [{}])[0].get("players", ["?", "?"])[0]}')
-    print(f'  "winners": {whole["winners"][1]},  "ue": {whole["ue"][1]}    ← '
-          f'{(data.get("Match") or [{}])[0].get("players", ["?", "?"])[1]}')
+    for i in (0, 1):
+        print(f'  "winners": {whole["winners"][i]},  "ue": {whole["ue"][i]}'
+              f'    ← {who[i]}')
 
 
 def main() -> int:

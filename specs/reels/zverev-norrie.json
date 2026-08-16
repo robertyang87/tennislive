@@ -108,7 +108,9 @@
       "bp_conv": 3,
       "bp_chances": 16,
       "pts_won": 100,
-      "pts_total": 187
+      "pts_total": 187,
+      "winners": 41,
+      "ue": 35
     },
     "b": {
       "headshot": "assets/players/headshots/atp-N771.png",
@@ -122,11 +124,13 @@
       "bp_conv": 1,
       "bp_chances": 3,
       "pts_won": 87,
-      "pts_total": 187
+      "pts_total": 187,
+      "winners": 25,
+      "ue": 36
     },
     "footer_venue": "辛辛那提 · 男单第二轮",
     "footer_date": "2026年8月16日",
-    "_source": "`python3 tools/match_stat_hooks.py YyhLnwY9 --stats-block`，出处是 flashscore `df_st_1_YyhLnwY9` 的 `Match` 一栏。\n\n**这次 a/b 和工具的输出同序**：flashscore 的 home 是兹维列夫，而 `cover.matchup[0]` 也是兹维列夫，两边正好一致——⚠️ 但这是巧合不是规律，`halys-deminaur` 那条就是反的（CLAUDE.md「`stats.a` 跟的是 `cover.matchup[0]`，不是 feed 的 home/away」）。判据是渲出来看**左边那张脸是不是左边那个名字**。\n\n⚠️ **这场接口里没有制胜分和非受迫失误**，工具自己报的。同一天辛辛那提 43 场里只有 3 场有这两项，别照抄别条的写法。\n\n发球总分按 `first_in + second_total` 算（74 = 39+35、111 = 64+47），不取接口的 `Service Points Won` 分母。\n\n⚠️ **兹维列夫一发进球率只有 53%（39/74），却打了 16 个 Ace**——两个数都出自同一栏，不是抄错。",
+    "_source": "`python3 tools/match_stat_hooks.py YyhLnwY9 --stats-block`，出处是 flashscore `df_st_1_YyhLnwY9` 的 `Match` 一栏。\n\n**这次 a/b 和工具的输出同序**：flashscore 的 home 是兹维列夫，而 `cover.matchup[0]` 也是兹维列夫，两边正好一致——⚠️ 但这是巧合不是规律，`halys-deminaur` 那条就是反的（CLAUDE.md「`stats.a` 跟的是 `cover.matchup[0]`，不是 feed 的 home/away」）。判据是渲出来看**左边那张脸是不是左边那个名字**。\n\n⚠️ **这场接口里没有制胜分和非受迫失误**，工具自己报的。同一天辛辛那提 43 场里只有 3 场有这两项，别照抄别条的写法。\n\n发球总分按 `first_in + second_total` 算（74 = 39+35、111 = 64+47），不取接口的 `Service Points Won` 分母。\n\n⚠️ **兹维列夫一发进球率只有 53%（39/74），却打了 16 个 Ace**——两个数都出自同一栏，不是抄错。  制胜分/非受迫失误取自 TNNS Live（tnns-stats run 31958829098，id=73465930）：分盘 11+13+17=41、7+8+10=25、17+5+13=35、10+9+17=36，四个数同时和全场对上；列序 ['Zverev','Norrie'] 与 cover.matchup 一致，另以 aces 16/3 交叉核对过 a/b 没填反。⚠️ 只取这两项——TNNS 的一发分母 64/113 和 first_in+second_total=111 对不上，一发成功率仍按和式算。",
     "_headshot_source": "两张都是 **ATP 官方证件头像**：`https://<ATP 赛事域名>/-/media/alias/player-headshot/<球员ID>`（总站 403，赛事域名镜像同一批）。兹维列夫 `Z355`、诺里 `N771`，都是 300×300 透明底 PNG、**颜色数 241 / 245**（不是那张 2 色的占位剪影）。两张并排渲出来看过：戴 adidas 发带的是兹维列夫，另一张是诺里。"
   },
   "_voice": "云见（`zh-CN-YunjianNeural`）、`+6%`，和这条线其余片子一致。",
