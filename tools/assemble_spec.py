@@ -45,6 +45,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -52,7 +53,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 
 from fetch_match_stats_fs import StatsError, find_match  # noqa: E402
-from match_feed import points  # noqa: E402
+from match_feed import fs_feed, points  # noqa: E402
 from match_stat_hooks import collect, stats_block  # noqa: E402
 from find_turning_points import _label, rank_games  # noqa: E402
 from tennislive.research.brief import Chat  # noqa: E402
@@ -76,6 +77,45 @@ def resolve_match_id(home: str, away: str) -> str | None:
         return mid or None
     except StatsError:
         return None
+
+
+def matchup_order(home: str, away: str, flashscore_id: str) -> list[tuple[str, str]]:
+    """matchup 顺序必须跟 flashscore 的 home/away 一致，不是跟命令行传参顺序。
+
+    判据（CLAUDE.md「stats.a 跟 cover.matchup[0] 不是 feed 的 home/away」）：
+    `stats_block` 的 a/b 按 flashscore 的 home/away（SH/SI）排，而
+    `render_stat_card` 的 a 对应 `cover.matchup[0]`——所以 matchup 顺序也必须按
+    flashscore 的 home/away 排。人传 `--home B --away A` 时若照抄，数据图会把
+    a 的数字挂在 B 名下、b 的数字挂在 A 名下，**把赢家印成输家**，四道闸一道
+    都不响。
+
+    实现：读 `df_hh_1` 的 FH/FK（home/away 英文全名），拿它把两个输入归位。
+    读不到就退回命令行顺序（出声，别静默）。
+    """
+    try:
+        body = fs_feed("df_hh_1", flashscore_id)
+        # ⚠️ 别只 split("~")[0]：FH/FK 在「Last matches」那条记录里（第一条是
+        # SA÷N 的计数行），从整份 body 里找才稳。
+        f = dict(re.findall(r"(F[HK])÷([^¬]*)", body))
+        fs_home, fs_away = f.get("FH", ""), f.get("FK", "")
+    except Exception:  # noqa: BLE001 —— 网络失败就退回命令行顺序
+        fs_home = fs_away = ""
+    if not fs_home or not fs_away:
+        return [(home, player_zh(home)), (away, player_zh(away))]
+    # 按「谁的姓出现在 flashscore 的 home 里」归位，而不是按整名相等——feed 是
+    # 「Baez S.」缩写，命令行是「Sebastian Baez」，整名对不上。
+    def side_is(fs_name: str, full: str) -> bool:
+        return _surname(full).casefold() in fs_name.casefold()
+
+    ordered = []
+    for fs_name in (fs_home, fs_away):
+        if side_is(fs_name, home):
+            ordered.append((home, player_zh(home)))
+        elif side_is(fs_name, away):
+            ordered.append((away, player_zh(away)))
+    if len(ordered) == 2:
+        return ordered
+    return [(home, player_zh(home)), (away, player_zh(away))]
 
 
 def facts_text(hit_data: list[dict]) -> str:
@@ -106,6 +146,15 @@ def assemble(*, slug: str, home: str, away: str, event: str, year: int,
         draft["_match"] = {"flashscore_id": mid}
         notes.append(f"flashscore id：{mid}"
                      + ("（给定）" if flashscore_id else "（按球员姓反查）"))
+        # ⚠️ 拿到 id 就立刻重排 matchup——stats.a 跟的是 flashscore 的 home，
+        # 而 render_stat_card 的 a 跟 cover.matchup[0]，顺序不一致数据图会
+        # 把赢家印成输家（CLAUDE.md 记过的坑）。
+        ordered = matchup_order(home, away, mid)
+        if [x[1] for x in ordered] != [player_zh(home), player_zh(away)]:
+            notes.append("matchup 按 flashscore home/away 重排："
+                         + " vs ".join(x[1] for x in ordered))
+        draft["cover"]["matchup"] = [
+            {"name": zh, "name_en": en} for en, zh in ordered]
     else:
         notes.append("⚠️ 没反查到 flashscore id——stats 块 / 狠数据 / 转折局"
                      "都依赖它，这三块本轮跳过。用 tools/match_feed.py find 拿到 id "

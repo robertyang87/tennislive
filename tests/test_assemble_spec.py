@@ -47,6 +47,37 @@ def test_facts_text把狠数据拼成行():
     assert mod.facts_text([]) == ""
 
 
+def test_matchup_order按flashscore的home归位(monkeypatch):
+    """核心判据：stats.a 跟 flashscore 的 home，而 render_stat_card 的 a 跟
+    matchup[0]——所以 matchup 顺序必须跟 flashscore 的 home/away，不是命令行。
+    命令行传反了（--home 是 feed 里的 away），数据图会把 a 的数字挂在错的人名下。"""
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("assemble_spec", _TOOLS / "assemble_spec.py")
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    # feed 里 home = Baez S.，away = Dimitrov G.；命令行传反了顺序
+    monkeypatch.setattr(mod, "fs_feed", lambda name, mid: "FH÷Baez S.¬FK÷Dimitrov G.¬~...")
+    ordered = mod.matchup_order("Grigor Dimitrov", "Sebastian Baez", "v51JjQ2D")
+    assert [en for en, zh in ordered] == ["Sebastian Baez", "Grigor Dimitrov"], (
+        "matchup 顺序必须跟 flashscore 的 home(Baez)/away(Dimitrov)，"
+        "不是命令行传入的顺序——否则 stats.a 会挂在 Dimitrov 名下")
+
+
+def test_matchup_order读不到feed退回命令行顺序(monkeypatch):
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("assemble_spec", _TOOLS / "assemble_spec.py")
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+
+    def _boom(name, mid):
+        raise RuntimeError("net down")
+
+    monkeypatch.setattr(mod, "fs_feed", _boom)
+    ordered = mod.matchup_order("A E", "B R", "x")
+    assert [en for en, zh in ordered] == ["A E", "B R"], (
+        "读不到 feed 就退回命令行顺序——但那时 stats 块也没生成，谈不上错位")
+
+
 def test_assemble无id时跳过三块并出声(tool, monkeypatch):
     a = tool
     # 反查失败 → 无 id → stats/狠数据/转折局都该跳过，但仍写草稿 + 出声
@@ -72,6 +103,8 @@ def test_assemble无id时跳过三块并出声(tool, monkeypatch):
 def test_assemble有id时各块拼装(tool, monkeypatch):
     a = tool
     monkeypatch.setattr(a, "resolve_match_id", lambda h, aw: "4CYI9Ick")
+    monkeypatch.setattr(a, "matchup_order",
+                        lambda h, aw, mid: [(h, a.player_zh(h)), (aw, a.player_zh(aw))])
     monkeypatch.setattr(a, "stats_block", lambda mid: {
         "a": {"aces": 0}, "b": {"aces": 0},
         "_missing_required": [], "_has_winners_ue": False})
@@ -117,6 +150,8 @@ def test_assemble有id时各块拼装(tool, monkeypatch):
 def test_assemble有id但文案失败时不静默(tool, monkeypatch):
     a = tool
     monkeypatch.setattr(a, "resolve_match_id", lambda h, aw: "4CYI9Ick")
+    monkeypatch.setattr(a, "matchup_order",
+                        lambda h, aw, mid: [(h, a.player_zh(h)), (aw, a.player_zh(aw))])
     monkeypatch.setattr(a, "stats_block", lambda mid: {
         "a": {}, "b": {}, "_missing_required": [], "_has_winners_ue": False})
     monkeypatch.setattr(a, "collect", lambda mid, h, aw: {"candidates": [], "durations": []})
