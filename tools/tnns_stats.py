@@ -163,12 +163,37 @@ _STATS_MARK = "submode=stats"
 _DAY_MARK = "/v1/matches"
 
 
-def _browser_capture(urls: list[str], marks: list[str], wait: int = 22) -> dict:
+_DAY_API = "https://api.tnnslive.com/v1/matches?date={date}&web=true"
+
+
+def _page_fetch(page, url: str) -> str | None:
+    """在**页面里**发请求——挑战过了之后这条路是通的，`context.request` 不通。
+
+    ⚠️ 那句「页面里 fetch 会被 CORS 拦掉」是**推的、没量过**，`probe_tnns.py`
+    2026-08-16 实测对 TNNS 恰好相反。这里用的正是量出来的那条。
+    """
+    try:
+        return page.evaluate(
+            """async (u) => {
+                const r = await fetch(u, {credentials: 'include'});
+                return await r.text();
+            }""", url)
+    except Exception as exc:  # noqa: BLE001
+        print(f"[TNNS] 页面内 fetch 失败：{type(exc).__name__}: {exc}")
+        return None
+
+
+def _browser_capture(urls: list[str], marks: list[str], wait: int = 22,
+                     in_page: dict | None = None) -> dict:
     """依次打开几个页面，把 URL 含某个标记的响应正文收回来。
 
     **被动抓包，不猜路径。** `context.request` 和 curl 都会拿到 Cloudflare 的
     `Just a moment` 挑战页（403），只有页面自己发的请求过得去——`probe_tnns.py`
     的模块 docstring 记着这条，2026-08-16 又实测确认了一次。
+
+    `in_page`（`{键: URL}`）是**被动抓包够不着的那部分**：赛程按日期分，而首页
+    只给今天，想要别的日子只能自己带 `?date=` 去问。挑战是页面过的，所以这一步
+    必须在同一个会话里、用页面自己的 fetch 发。
     """
     from playwright.sync_api import sync_playwright
 
@@ -205,6 +230,11 @@ def _browser_capture(urls: list[str], marks: list[str], wait: int = 22) -> dict:
             if "Just a moment" in html:
                 print("[TNNS] ⚠️ Cloudflare 挑战**没过**——这一趟拿不到数据，"
                       "不是这场没有统计")
+        for key, url in (in_page or {}).items():
+            print(f"[TNNS] 页面内取 {url}")
+            body = _page_fetch(page, url)
+            if body and "Just a moment" not in body:
+                got[key] = body
         browser.close()
     return got
 
@@ -234,16 +264,28 @@ def fetch(who: list[str], date: str | None = None,
     """
     if not match_id:
         home = "https://tnnslive.com/"
-        day = _browser_capture([home], [_DAY_MARK]).get(_DAY_MARK)
+        # ⚠️ **首页只给今天。** `--date` 曾经是个**收下来就扔掉的参数**——只在
+        # 报错文案里出现过一次，而那句话还写着「跨日的比赛要给 --date」，
+        # 于是给了 `--date` 照样查空，报错还指着你再给一次。这个仓库为这个形状
+        # 栽过好几回（WTA 的 `?extended=true`、tennisexplorer 的 `?date=`），
+        # 判据一律是 **换个值内容变没变**，不是「参数被接受了」。
+        want = {_DAY_MARK: _DAY_API.format(date=date)} if date else None
+        caps = _browser_capture([home], [_DAY_MARK], in_page=want)
+        day = caps.get(_DAY_MARK)
         if not day:
             raise SystemExit(
                 "[TNNS] 当天赛程一条都没抓到——**先别当成「这场没有」**："
                 "多半是 Cloudflare 没过或者等的时间不够（--wait）。")
+        if date:
+            print(f"[TNNS] 按 date={date} 取到 {len(day)} 字节、"
+                  f"{len(json.loads(day).get('all_matches') or [])} 场")
         match_id = find_match_id(day, who)
         if not match_id:
             raise SystemExit(
-                f"[TNNS] 当天赛程里没有 {who} 这一场。⚠️ 赛程按日期分，"
-                f"跨日的比赛要给 --date（现在给的是 {date or '默认今天'}）。")
+                f"[TNNS] {date or '今天'} 的赛程里没有 {who} 这一场。\n"
+                f"⚠️ 先分清是哪一种：赛程按**日期**分（跨日的要给 `--date`，"
+                f"注意 TNNS 按 UTC 分日，北京时间夜场算前一天）；"
+                f"名字按 `n` 字段子串匹配，写全姓、别写中文。")
         print(f"[TNNS] 认到这一场：id={match_id}")
     body = _browser_capture([f"https://tnnslive.com/match/{match_id}"],
                             [_STATS_MARK]).get(_STATS_MARK)

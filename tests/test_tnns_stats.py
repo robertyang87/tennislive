@@ -146,6 +146,57 @@ def test_flashscore缺这两项时要把TNNS这条路指出来():
     assert "tnns-stats" in seg or "tnns_stats" in seg, "没把 TNNS 这条路指出来"
 
 
+def test_date这个参数要真的进到请求里():
+    """⚠️ **它第一版是个收下来就扔掉的参数。**
+
+    `fetch()` 只在**报错文案**里用过 `date` 一次，而那句话还写着「跨日的比赛
+    要给 --date」——于是给了 `--date` 照样查空，报错还指着你再给一次。首页只
+    给今天，所以昨天的比赛结构性地一定找不到。
+
+    这个仓库为同一个形状栽过好几回（WTA 的 `?extended=true` 被静默忽略、
+    tennisexplorer 的 `?date=` 回显了参数却返回同一张表），判据一律是
+    **换个值内容变不变**，不是「参数被接受了」。这里钉的是它前面那一步：
+    那个值到底有没有被拼进请求 URL。
+    """
+    # ⚠️ 收**每一次**调用，不是最后一次：`fetch` 会调两趟（先赛程、后统计），
+    # 第二趟的 `in_page` 是 None，只记最后一次就会把第一趟的证据盖掉——
+    # 而那看起来正好像「参数被扔了」。
+    calls = []
+
+    def fake_capture(urls, marks, wait=22, in_page=None):
+        calls.append(in_page)
+        return {tnns_stats._DAY_MARK: json.dumps(
+            {"all_matches": [{"k": 42, "p": [{"n": "Zhang"}, {"n": "Day"}]}]})}
+
+    real = tnns_stats._browser_capture
+    tnns_stats._browser_capture = fake_capture
+    try:
+        try:
+            tnns_stats.fetch(["Zhang", "Day"], date="2026-08-15")
+        except SystemExit:
+            pass                      # 第二跳（统计）在这条测试里走不到，无所谓
+    finally:
+        tnns_stats._browser_capture = real
+
+    dated = [c for c in calls if c]
+    assert dated, "给了 --date 却没有任何一条按日期发的请求——参数被扔了"
+    url = dated[0][tnns_stats._DAY_MARK]
+    assert "date=2026-08-15" in url, f"日期没拼进请求：{url}"
+    # 换个值必须换出另一个 URL——不然「拼进去了」也只是看起来拼进去了
+    calls.clear()
+    tnns_stats._browser_capture = fake_capture
+    try:
+        try:
+            tnns_stats.fetch(["Zhang", "Day"], date="2026-08-14")
+        except SystemExit:
+            pass
+    finally:
+        tnns_stats._browser_capture = real
+    again = [c for c in calls if c]
+    assert again and "date=2026-08-14" in again[0][tnns_stats._DAY_MARK], \
+        f"换了日期请求没跟着变：{again}"
+
+
 def test_取TNNS要单独一条工作流不许接进出片流程():
     """一次开浏览器 25~30 秒且不可缓存（挑战每次重过）。
 
