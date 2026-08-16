@@ -183,6 +183,8 @@ jobs:
         if: github.event.inputs.dry_run != 'true'
         run: |
           OUTDIR="output/preview/${{ github.event.inputs.slug }}"
+          git config user.name "Claude"
+          git config user.email "noreply@anthropic.com"
           git add "$OUTDIR"
           python tools/check_staged_file_sizes.py
           git commit -m "preview: ${{ github.event.inputs.slug }}" || echo "没有可提交的"
