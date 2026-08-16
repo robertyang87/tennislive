@@ -46,9 +46,11 @@ on:
         required: false
         default: ""
 
-# 提交产物 + 成片发 Release 都要写权限（match-reel 同款）。
+# 提交产物 + 成片发 Release 要 contents: write；推微信要触发 pages.yml 重新发布
+# 复制页（push_reel.trigger_pages_build 走 workflow_dispatch），要 actions: write。
 permissions:
   contents: write
+  actions: write
 
 jobs:
   render:
@@ -117,7 +119,27 @@ jobs:
           pip install -q "yt-dlp[default]" edge-tts azure-cognitiveservices-speech
 
       - name: 装 Chromium（封面/角标渲染）
-        run: python -m playwright install --with-deps chromium
+        timeout-minutes: 10
+        run: |
+          pw_wait_apt() {
+            for _ in $(seq 1 22); do
+              if ! pgrep -x apt-get >/dev/null && ! pgrep -x dpkg >/dev/null; then
+                return 0
+              fi
+              sleep 5
+            done
+            echo "::warning::等了 110 秒 dpkg 锁还没松开——下一次尝试八成会在两秒内死在 Could not get lock，不是 apt 装不上"
+          }
+          pw_retry() {
+            for i in 1 2; do
+              timeout 240 python -m playwright install --with-deps chromium && return 0
+              echo "::warning::装 Chromium 第 $i 次没跑完（多半卡在 --with-deps 的 apt）"
+              pw_wait_apt
+            done
+            echo "::error::装 Chromium 两次都没成功"
+            return 1
+          }
+          pw_retry
 
       - name: 起 PO token provider
         continue-on-error: true
