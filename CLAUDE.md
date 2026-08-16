@@ -5121,6 +5121,39 @@ ESPN 那份是**上一周的快照**，维基那条明写着 `(3 August 2026)`�
 - 「前二十五」这种范围**读起来像谨慎，其实是把没查清的事包装成了查清的事**——
   而且它比错的数字更难被下一个人发现
 
+#### ⭐⭐ WTA 排名去**官方 PDF** 拿：`wtafiles.wtatennis.com/pdf/rankings/Singles_Numeric.pdf`
+
+上面那条给 ATP 定了官方源，**WTA 这半边一直空着**——于是 `rank` 这个字段反复
+卡住出片（`stearns-tauson` 就是因为它停了一轮）。2026-08-16 找到了，
+**它就是 ATP posting PDF 的 WTA 对应物**：纯 HTTP、不用 token、`pypdf` 直接读。
+
+    curl -sL -o rank.pdf -H "User-Agent: Mozilla/5.0" \
+      https://wtafiles.wtatennis.com/pdf/rankings/Singles_Numeric.pdf
+    # 34 页、11864 行；表头写着 As of / Printed 两个日期
+    # 每条：Rank ｜ (Prior) ｜ NAME ｜ Nat ｜ Points ｜ # Trn …
+
+⚠️ **名字是全大写的 `姓, 名`**（`TAUSON, CLARA`）。按 `Tauson` 大小写去搜**零命中**，
+而那和「这个人不在榜上」长得一模一样——我第一次就是这么搜的，11864 行里报了 0 条。
+⚠️ 双打是同目录下的另一份 PDF，别拿错。
+
+**为什么非它不可**（另外三条都走不通，别再重探）：
+
+| 路 | 结果 |
+|---|---|
+| `tools/lookup_player_meta.py`（ESPN） | **恒 403**，ATP/WTA 两个榜单都取不到 |
+| `wtatennis.com/rankings/singles` 网页 | **只有前 50**，`?page=2` / `?pageSize=200` **被静默忽略**（三个参数返回的字节数一模一样，1175687） |
+| `api.wtatennis.com/tennis/players/<id>` | 有生日国别，**没有排名**；`/rankings`、`/tennis/rankings/singles` 一律 404 |
+| `api.wtatennis.com/tennis/tournaments/<id>/<年>/players` | **只有种子号**（`seed`），没有排名 |
+| tennisexplorer 球员页 | 是个 JS 壳，`Country:` / `Age:` 都不在 HTML 里 |
+
+⚠️ **种子号和排名差得可以很远，别拿种子号顶排名。** 陶森在辛辛那提是 **27 号种子**，
+而官方 PDF 里她是**世界第 42**（`Prior` 那栏写着 30）——种子是按报名截止那周的排名排的，
+之后掉了。两个数都对，混成一件事就成了假话（本文件前面卢布列夫那条记的是同一件事）。
+
+**验它有没有读对，用「相邻名次」自证**：`FRECH, MAGDALENA 41` → `TAUSON, CLARA 42`
+→ `SAMSONOVA, LIUDMILA 43`，单调连续；再拿一个已经发出去的片子对一下
+（`PEGULA, JESSICA 3`，和 `pegula-waltert` 海报上印的一致）。
+
 #### ⭐⭐ ATP 排名去**官方 posting** 拿：`protennislive.com/posting/<年>/<赛事id>/`
 
 账号所有者 2026-08-16：「**你要去官方渠道去看排名，维基百科不能做为第一源**」。
