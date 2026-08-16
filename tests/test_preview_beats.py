@@ -244,3 +244,54 @@ def test_assemble_preview_reel委托render(monkeypatch, tmp_path):
     assert captured["voice"] == "v" and captured["rate"] == "r"
     assert captured["outdir"] == tmp_path
     assert film == tmp_path / "x.mp4"
+
+
+# ---------- beat 类型分派 ----------
+
+
+def test_encode_preview_beat分派footage(monkeypatch, tmp_path):
+    import preview_beats as pb  # noqa: PLC0415
+
+    captured = {}
+
+    def fake_cut(source, start, end, cx, dest, **kw):
+        captured.update(kind="footage", source=source, start=start, end=end,
+                        cx=cx, overlay=kw.get("overlay"))
+        dest.write_bytes(b"x")
+        return dest
+
+    monkeypatch.setattr(pb, "cut_footage_beat", fake_cut)
+    out = pb.encode_preview_beat(
+        {"type": "footage", "source": "dc", "start": 1.0, "end": 3.0, "cx": 0.4},
+        {"dc": tmp_path / "dc.mp4"}, tmp_path, 0, tail=0.3)
+    assert captured["kind"] == "footage"
+    assert captured["start"] == 1.0 and captured["end"] == 3.0
+    assert captured["cx"] == 0.4
+    assert out.name == "beat_00.mp4"
+
+
+def test_encode_preview_beat分派poster(monkeypatch, tmp_path):
+    import preview_beats as pb  # noqa: PLC0415
+
+    captured = {}
+
+    def fake_poster(poster, dest, seconds, tail=0.0):
+        captured.update(kind="poster", poster=poster, seconds=seconds)
+        dest.write_bytes(b"x")
+        return dest
+
+    monkeypatch.setattr(pb, "poster_beat", fake_poster)
+    (tmp_path / "p.jpg").write_bytes(b"x")
+    out = pb.encode_preview_beat(
+        {"type": "poster", "poster": str(tmp_path / "p.jpg"), "seconds": 2.0},
+        {}, tmp_path, 1)
+    assert captured["kind"] == "poster"
+    assert captured["seconds"] == 2.0
+    assert out.name == "beat_01.mp4"
+
+
+def test_encode_preview_beat未知类型报错不静默(monkeypatch, tmp_path):
+    import preview_beats as pb  # noqa: PLC0415
+
+    with __import__("pytest").raises(pb.ReelError, match="不认识"):
+        pb.encode_preview_beat({"type": "h2h_none"}, {}, tmp_path, 0)
