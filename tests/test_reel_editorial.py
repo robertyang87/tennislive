@@ -1114,3 +1114,89 @@ def test_打多少拍的豁免表只许减不许加():
     stale = _RALLY_SECONDS_LEGACY - set(_rally_seconds_offenders())
     assert not stale, (
         f"这几条已经不说秒了，从表里删掉：{sorted(stale)}——这张表只许减不许加")
+
+
+# ──────────────────────────────────────────────────────────────────────────
+# N、百分比一律写成「百分之 N」，不写「几成几」
+# ──────────────────────────────────────────────────────────────────────────
+#
+# 账号所有者 2026-08-16：「**以后文案和配音里不要再出现几成几了，就说百分之多少
+# 用数字写上**」。
+#
+# 来路：这条线的旁白长期在写「一发只进了三成四」「二发得分率都上了七成五」
+# 「一发得分率从六成一涨到七成五」。**「三成四」要读的人自己换算成 34%**，
+# 而这类片子的观众是刷过来的，多想一步就是走掉一个人——和「轮次写半决赛不写
+# 四强」是同一个形状（那条防的是「四强是打到哪一步」要多想一步）。
+#
+# 改法：**旁白里写「百分之三十四」这种会被 TTS 读对的形式，屏幕上和正文里写
+# 数字**。`arabic_numerals()` 会把旁白里的中文数字换成阿拉伯数字再烧进字幕，
+# 所以「百分之三十四」在画面上就是「百分之34」；小红书正文直接写 `34%` 也行，
+# 那是给眼睛读的。
+#
+# ⚠️ **这条只拦「几成几」这一个说法，不拦百分比本身。** 一发成功率该讲还是讲。
+#
+# ⚠️ **判据不扫 `_why` / `_source` 这类注解**——那儿正引着这条规矩本身的例子，
+# 连它一起扫就会把「把规矩记下来」判成「又违反了规矩」（这个仓库犯过五次）。
+#
+# ⚠️ 正则要求「成」**前面紧挨着一个数词**，所以「改成 / 完成 / 变成 / 裁成 /
+# 判成 / 一发成功率」都不会被误伤（改、完、变、裁、判、发都不是数词）；
+# 「成功 / 成为 / 成立 / 成绩 / 成片 / 成长」再用后向排除挡一层。
+_PERCENT_IDIOM = re.compile(r"[一二三四五六七八九两]成(?![功为立绩片长])")
+
+# 这条规矩之前就发出去的，收不回来。**只许减不许加**，底下的判据会自检。
+_PERCENT_IDIOM_LEGACY = frozenset({
+    "baez-dimitrov", "bartunkova-charaeva", "cirstea-bartunkova",
+    "eala-osaka", "eala-pegula-final", "eala-ruse", "eala-zheng",
+    "fonseca-ruud", "hijikata-monfils", "kenin-lys", "kovacevic-khachanov",
+    "medvedev-zandschulp", "navarro-kalinina", "noskova-mcnally",
+    "ostapenko-frech", "parry-mertens", "potapova-venus", "shang-vallejo",
+    "sonmez-anisimova", "swiatek-rybakina-toronto-final", "townsend-osorio",
+    "townsend-rybakina", "wang-pareja", "wang-vandewinkel", "wang-vekic",
+    "wangxiyu-timofeeva", "zhang-sabalenka", "zverev-griekspoor",
+})
+
+
+def _percent_idiom_offenders():
+    """{slug: [命中的说法]}，只扫**会发出去**的字段。"""
+    out = {}
+    for slug, spec in _specs():
+        texts = [str((spec.get("cover") or {}).get("hook") or "")]
+        texts += [str(v) for v in (spec.get("push") or {}).values()
+                  if isinstance(v, str)]
+        texts += [str(s.get("narration") or "") for s in spec.get("segments") or []]
+        texts += [str(v) for v in (spec.get("topbar") or {}).values()
+                  if isinstance(v, str)]
+        xhs = SPEC_DIR / f"{slug}.xhs.txt"
+        if xhs.is_file():
+            texts.append(xhs.read_text("utf-8"))
+        hits = [m.group(0) for t in texts for m in _PERCENT_IDIOM.finditer(t)]
+        if hits:
+            out[slug] = sorted(set(hits))
+    return out
+
+
+def test_百分比写百分之多少不写几成几():
+    fresh = {k: v for k, v in _percent_idiom_offenders().items()
+             if k not in _PERCENT_IDIOM_LEGACY}
+    assert not fresh, (
+        f"这几条把百分比写成了「几成几」：{fresh}。账号所有者 2026-08-16："
+        f"「以后文案和配音里不要再出现几成几了，就说百分之多少用数字写上」——"
+        f"「三成四」要读的人自己换算成 34%，而刷到这条的人多想一步就走了。\n"
+        f"⚠️ 旁白写「百分之三十四」（TTS 读得对，`arabic_numerals()` 会把它烧成"
+        f"「百分之34」）；小红书正文直接写 `34%` 也行，那是给眼睛读的。\n"
+        f"⚠️ 这条只拦这一个说法，不拦百分比本身——一发成功率该讲还是讲。")
+    assert len(list(_specs())) >= 40, "一条 spec 都没扫到，判据的主语像是没了"
+
+
+def test_几成几的豁免表只许减不许加():
+    """表里每个 slug 必须真的存在、而且真的还带着这个说法。
+
+    写错一个名字，豁免就成了一盏恒真的绿灯。
+    """
+    for slug in sorted(_PERCENT_IDIOM_LEGACY):
+        assert (SPEC_DIR / f"{slug}.json").is_file(), \
+            f"{slug} 这条 spec 已经没了，把它从豁免表里删掉"
+    stale = _PERCENT_IDIOM_LEGACY - set(_percent_idiom_offenders())
+    assert not stale, (
+        f"这几条已经不写「几成几」了，从表里删掉：{sorted(stale)}"
+        f"——这张表只许减不许加")

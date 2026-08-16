@@ -65,8 +65,18 @@
     "winner": "莱巴金娜",
     "result": "6-3 6-4",
     "matchup": [
-      { "name": "莱巴金娜", "name_en": "Elena Rybakina", "country": "KAZ", "rank": 2 },
-      { "name": "汤森德", "name_en": "Taylor Townsend", "country": "USA", "rank": 94 }
+      {
+        "name": "莱巴金娜",
+        "name_en": "Elena Rybakina",
+        "country": "KAZ",
+        "rank": 2
+      },
+      {
+        "name": "汤森德",
+        "name_en": "Taylor Townsend",
+        "country": "USA",
+        "rank": 94
+      }
     ],
     "_matchup_rank_why": "排名是**当期名次不是种子号**（CLAUDE.md：种子序号不是排名）。WTA 官方 `players/ranked` 接口，`rankedAt 2026-08-10`：莱巴金娜第 2（8316 分）、汤森德第 94（813 分）。莱巴金娜的种子号恰好也是 2，两个数字碰巧相同，但登记的是名次。",
     "_name_why": "两个中文名都走 `player_zh()`：`player_zh(\"Elena Rybakina\")` → 莱巴金娜、`player_zh(\"Taylor Townsend\")` → 汤森德。跑过，不是照着别的 spec 抄的。",
@@ -94,7 +104,9 @@
       "bp_chances": 4,
       "pts_won": 62,
       "pts_total": 111,
-      "first_total": 61
+      "first_total": 61,
+      "winners": 13,
+      "ue": 22
     },
     "b": {
       "headshot": "assets/players/headshots/wta-318609.jpg",
@@ -108,11 +120,13 @@
       "bp_chances": 5,
       "pts_won": 49,
       "pts_total": 111,
-      "first_total": 50
+      "first_total": 50,
+      "winners": 17,
+      "ue": 14
     },
     "footer_venue": "辛辛那提 · 女单第二轮",
     "footer_date": "2026年8月16日",
-    "_winners_ue_why": "跑过 tnns-stats（id=73467044），hasExtendedStats=True，TNNS 这场也没有这两行；flashscore 同样没有。",
+    "_winners_ue_why": "⚠️ **这一栏原来是空的，而那是我查错了。** 第一版写着「跑过 tnns-stats（id=73467044），TNNS 这场也没有这两行」——`73467044` 认到的**不是这一场**，于是拿回一个假的「没有」，还把它当成事实写进了 spec。CLAUDE.md 里「⭐⭐ 2026-08-16：这张表少了一行，而那一行有——**TNNS Live**」那一节**正好拿这场当样例**（`WTA 汤森德-莱巴金娜`，run 31959466961，`17 / 13`、`14 / 22`），答案一直印在那儿。\n\n重跑（`tnns-stats.yml` run 31969012305，`who=Rybakina,Townsend` `date=2026-08-16`）拿到的是：选手顺序 `['Townsend','Rybakina']`，制胜分 `[17, 13]`、非受迫失误 `[14, 22]`；分盘 `[Set 1] 7/5、7/9`，`[Set 2] 10/8、7/13`，**两项的分盘合计都等于全场**（工具自带的自证，✅ ✅），和 CLAUDE.md 记的那一版一字不差。\n\n⚠️ **a/b 跟着 `cover.matchup[0]`（莱巴金娜）走，和 TNNS 的顺序相反**，所以整块对调：`a` 是莱巴金娜 `13 / 22`，`b` 是汤森德 `17 / 14`。\n\n⚠️ 这两个数和这条片子的主线**互相印证**：汤森德制胜分更多（17 比 13）、非受迫失误更少（14 比 22），可她还是输了——赢的地方在二发（莱巴金娜 23/32，汤森德 6/19），正是旁白第 ⑦⑧ 段讲的那件事。\n\n⚠️ **成片不重渲**（消息发出去收不回来），只把数据图补齐重出。",
     "_source": "数出自 `python3 tools/match_stat_hooks.py YiKyCk7b --stats-block`。\n\n⚠️⚠️ **`a`/`b` 是调过顺序的**：工具按 flashscore 的 home/away 排，这一场 home 是**汤森德**；而 `cover.matchup[0]` 是**莱巴金娜**（封面主体、赢家）。CLAUDE.md 写着 `stats.a` 跟的是 `cover.matchup[0]` 不是 feed 的 home/away，所以整块 a/b 对调、头像跟着换。判据是 `test_数据图的头像和matchup里的名字必须是同一个人`。\n\n⚠️ `first_total` 按 `first_in + second_total` 算（29+32=61、31+19=50），不取接口的 `Service Points Won` 分母——这一场两者一致，仍然按和式填，免得下一条不一致时口径漂。"
   },
   "_hit_data": "跑过 `python3 tools/match_stat_hooks.py YiKyCk7b`，八条候选：总分差 49–62（净 13）、汤森德一发得分率 69%→87%、莱巴金娜 50%→74%、汤森德破发点 1/5、莱巴金娜 3/4、汤森德连续保发 3 局、莱巴金娜连续保发 6 局、交手 0:2。\n\n**挑进钩子和正文的不在这八条里，是从同一份 `df_st_1` 的分盘段自己读出来的第九条**：莱巴金娜第一盘一发进球率只有 **34%**（10/29），全场 **48%**，而她的二发得分率全场 **72%**（23/32）对汤森德的 **32%**（6/19）。理由是那八条里最狠的「总分差 13」和「破发点 3/4 对 1/5」都只是在复述比分的走向，而这一条是**反直觉**的——全场最难看的那一栏恰好是她赢球的地方。工具给的是候选，挑哪条仍然是人的事。",
