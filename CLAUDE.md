@@ -5382,11 +5382,18 @@ h264+aac、⚠️ 30 fps（不是 25，跨源剪辑要写 `mixed_fps`）**，而
 **不是「YouTube 版更完整」**。短集锦顶上来的是**覆盖**——ATP 的 YouTube 覆盖
 本来就不稳，而短集锦每场都有。
 
-##### ⚠️⚠️ 而「赛事自己的官方频道」是第三个 YouTube 来源，**它的 ATP 版反而更短**
+##### ⚠️⚠️ 「赛事自己的官方频道」是**第二条备选**，而它的 ATP 版反而更短
 
 账号所有者 2026-08-16：「**还有每个赛事自己官方的 youtube 频道有时也会有集锦，
-比如 cincinnati open**」。真去量了 `@CincyProTennis`（oEmbed 的 `author_name`
-是 `Cincinnati Open`，权威），辛辛那提 R2 那三场 ATP **两边都有**，正好直接比：
+比如 cincinnati open**」，随后定了位置：「**这个可以做备选方案**」。所以现在是
+
+    主路   ATP Tour / Tennis TV 官方 YouTube 频道
+    备选   赛事自己的官方频道  ／  Tennis TV library/short-highlights
+    都没有 → 报「这场没源」跳过
+
+⚠️ **两条备选之间挑哪个，量了再说，别按写的先后。** 真去量了 `@CincyProTennis`
+（oEmbed 的 `author_name` 是 `Cincinnati Open`，权威），辛辛那提 R2 那三场 ATP
+**两边都有**，正好直接比：
 
 | 这一场 | 赛事官方频道 | Tennis TV 短集锦 | |
 |---|---|---|---|
@@ -5496,7 +5503,8 @@ HTML 去猜时长」）。逐个走 **oEmbed** 拿权威的标题和频道名：
 见上面那一节。实测 ATP 官方的单场集锦普遍两分钟上下，Tennis TV 的是三到八分钟——
 **但每次都要量，别照抄这句**。
 
-**③ᵇ ② 里没扫到的 ATP 场次**（三个 YouTube 来源都没发这一场）→ 去 Tennis TV 的短集锦补：
+**③ᵇ 主路（ATP Tour / Tennis TV 频道）没扫到的场次** → 两条备选：先看**这一站
+自己的官方频道**（每站一个，按当周的站去找），再看 **Tennis TV 短集锦**：
 
     curl -sS -H "User-Agent: tennislive/0.1" https://www.tennistv.com/library/short-highlights \
       | grep -o '/videos/[0-9]*/[a-z0-9-]*short-highlights' | sort -u

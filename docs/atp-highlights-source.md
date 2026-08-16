@@ -63,13 +63,16 @@ spec 里放**页面地址**（不带令牌，`_reject_signed_source_urls` 放行
 账号所有者 2026-08-16 定的顺序：「**优先级就是 YouTube 找不到就找
 Tennis TV 的 short highlight**」。
 
-1. **YouTube 这一档**（主路），三个来源都算：
-   - ATP Tour 官方频道
-   - Tennis TV 官方频道
-   - **赛事自己的官方频道** —— 账号所有者 2026-08-16：「**还有每个赛事自己
-     官方的 youtube 频道有时也会有集锦，比如 cincinnati open**」
-2. **Tennis TV `library/short-highlights`**（YouTube 没有这一场时）—— 免费、1080p
+1. **主路**：ATP Tour 官方 YouTube 频道 / Tennis TV 官方 YouTube 频道
+2. **备选**（主路没有这一场时才用，两条都是账号所有者点名的「备选方案」）：
+   - **赛事自己的官方 YouTube 频道** —— 「**还有每个赛事自己官方的 youtube
+     频道有时也会有集锦，比如 cincinnati open**」「**这个可以做备选方案**」
+   - **Tennis TV `library/short-highlights`** —— 免费、1080p、每场都有
 3. 都没有才报「这场没源」跳过
+
+⚠️ **两条备选之间挑哪个，量了再说**，别按这里的先后：实测辛辛那提 R2 那三场
+**ATP 是 Tennis TV 短集锦更长**（+24~+31s），而**WTA 是赛事频道最长**
+（178~185s）。数在下一节。
 
 ### ⚠️ 「YouTube 优先」说的是**去哪儿找**，不是「YouTube 版更完整」
 
