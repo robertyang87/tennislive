@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>8.17 赛后开麦 | 斯瓦泰克六比零胜阿朗戈</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>赢成六比零的人 说的却是「我得先重新熟悉这块场地」
+
+📍2026 辛辛那提 WTA1000 第二轮
+🎾 卫冕冠军斯瓦泰克 6-3 6-0 阿朗戈
+🎤 中英双语字幕 · 赛后场上采访
+
+第二盘一局没丢。可她赛后被问「今天打得这么顺，一定很满意吧」，回答里一个字都没提碾压——她谈的是适应。
+
+对手阿朗戈上一轮刚 6-2 6-2 赢下大威廉姆斯，那是她生涯第一次打进这一站第二轮。
+
+① 她自己怎么解释这场球
+
+Yeah, for sure. It was necessary for me to get to know the court and find the rhythm because it&#x27;s much different than in Toronto.
+当然。我必须先熟悉这块场地、找到节奏，因为这里和多伦多很不一样。
+
+I was patient and I came back for a second set knowing what to improve, and it went pretty smooth from that.
+我沉住了气，第二盘回来的时候已经知道该改什么，之后就打得很顺了。
+
+② 隔着耳机也听得见
+
+主持人问她，以卫冕冠军身份重回这块球场是什么感觉——「我知道你戴着耳机，但你感觉得到吗？」
+
+The music is pretty loud, but I still can hear. So thank you guys for the support and the nice welcome.
+音乐挺响，但我还是听得见。谢谢大家的支持，也谢谢这么好的欢迎。
+
+③ 场地是新的
+
+I love coming back here, especially now that the site is so beautiful and brand new. I&#x27;m really happy to be back.
+我很喜欢回到这里，尤其是现在这个场地这么漂亮，全都是新的。能回来我真的很开心。
+
+④ 下一轮
+
+下一轮对萨卡里。她说：「这个赛季我们已经交过手，彼此的球路都清楚，就看谁能打出更高的质量。」
+
+主持人最后那句是对所有在这里夺过冠的人说的——欢迎回家。
+
+换一块场地，你要多久找到手感？
+
+#斯瓦泰克 #辛辛那提 #WTA #网球时差</textarea>
+    </section>
+    
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
