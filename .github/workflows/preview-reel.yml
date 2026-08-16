@@ -23,10 +23,9 @@ on:
         required: false
         default: "false"
 
-# 第一版只渲到 runner、不提交产物也不发 Release，只读即可；等接上
-# 「提交 render.json + 成片发 Release」那两步（match-reel 同款）再加回 contents: write。
+# 提交产物 + 成片发 Release 都要写权限（match-reel 同款）。
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   render:
@@ -97,3 +96,55 @@ jobs:
           else
             PYTHONPATH=src python tools/preview_beats.py --slug "${{ github.event.inputs.slug }}"
           fi
+
+      # 成片一律走 Release 不进 git（match-reel 同款）。预览线产物目录独立：
+      # output/preview/<slug>/，和 reel 的 output/<日期>/reel/<slug> 分家。
+      - name: 成片发到 Release
+        if: github.event.inputs.dry_run != 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          OUTDIR="output/preview/${{ github.event.inputs.slug }}"
+          REEL="$OUTDIR/${{ github.event.inputs.slug }}.mp4"
+          TAG="preview-${{ github.event.inputs.slug }}"
+          gh release view "$TAG" >/dev/null 2>&1 \
+            || gh release create "$TAG" --title "开球之前 · ${{ github.event.inputs.slug }}" \
+                 --notes "开球之前纯视频，成片走 Release 附件。"
+          SZ=$(stat -c%s "$REEL")
+          UPLOADED=0
+          for i in 1 2 3 4; do
+            if gh release upload "$TAG" "$REEL" --clobber; then UPLOADED=1; break; fi
+            echo "第 $i 次传 Release 没成，${i}0s 后重试"
+            sleep $((i * 10))
+          done
+          [ "$UPLOADED" = 1 ] || { echo "::error::Release 传了 4 次都没上去"; exit 1; }
+          URL="https://github.com/$GITHUB_REPOSITORY/releases/download/$TAG/${{ github.event.inputs.slug }}.mp4"
+          python - "$OUTDIR/render.json" "$URL" "$SZ" <<'PY'
+          import json, pathlib, sys
+          path, url, size = sys.argv[1], sys.argv[2], int(sys.argv[3])
+          data = json.loads(pathlib.Path(path).read_text(encoding="utf-8"))
+          data["video_url"] = url
+          data["video_bytes"] = size
+          pathlib.Path(path).write_text(
+              json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+          print("render.json 记下 video_url")
+          PY
+          rm -f "$REEL"
+
+      - name: 丢掉不进仓库的中间物
+        if: github.event.inputs.dry_run != 'true'
+        run: |
+          OUTDIR="output/preview/${{ github.event.inputs.slug }}"
+          rm -f "$OUTDIR"/source* "$OUTDIR"/*.part "$OUTDIR"/*.ytdl \
+            "$OUTDIR"/voice_*.mp3 "$OUTDIR"/_cover.* "$OUTDIR"/poster.html \
+            "$OUTDIR"/_versus_* "$OUTDIR"/_subs* "$OUTDIR"/part_*.mp4 \
+            "$OUTDIR"/_video.mp4
+
+      - name: 提交产物
+        if: github.event.inputs.dry_run != 'true'
+        run: |
+          OUTDIR="output/preview/${{ github.event.inputs.slug }}"
+          git add "$OUTDIR"
+          python tools/check_staged_file_sizes.py
+          git commit -m "preview: ${{ github.event.inputs.slug }}" || echo "没有可提交的"
+          git push origin HEAD:main
