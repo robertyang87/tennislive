@@ -170,7 +170,10 @@ def main() -> int:
 
     import subprocess
 
-    from detect_highlights import query_for, search, pick_highlight
+    # **走 `find_highlight`，不要自己拼「搜一次然后挑一条」**——优先级链
+    # （主路 YouTube → 备选 Tennis TV 免费短集锦）只有那一处实现，写两处必分叉，
+    # 而分叉的样子是「手动跑说探到了，自动班次说没探到」。
+    from detect_highlights import find_highlight, query_for
 
     dispatched: list[dict] = []
     for c in todo:
@@ -178,10 +181,13 @@ def main() -> int:
         if c["column"] == "reel":
             # 完赛片（赛场之上）要集锦 URL 才能 probe——先 T0 探测。
             q = query_for(c["home"], c["away"], c["event"], c["year"])
-            url = pick_highlight(search(q), c["home"], c["away"])
+            url, via = find_highlight(c["home"], c["away"], c["event"], c["year"])
             if not url:
                 print(f"  [{c['slug']}] 集锦还没探到（{q[:40]}…），跳过，下次再探")
                 continue
+            # 走了哪条路要进日志：短集锦是定长 2 分半的剪短版，和 YouTube 那批
+            # 2~8 分钟的不是一回事，写 spec 的人要知道自己拿到的是哪一种。
+            print(f"  [{c['slug']}] 源片走 {via}")
             cmd = ["gh", "workflow", "run", wf, "--ref", "main",
                    "-f", "mode=probe", "-f", f"slug={c['slug']}", "-f", f"url={url}"]
         else:
