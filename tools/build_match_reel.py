@@ -4620,8 +4620,8 @@ _LEGACY_LOW_HEAT = frozenset({
     "nakashima-jodar-montreal-sf",
     # ——— 这一档正是「热度太低」说的那种 ———
     "stearns-tauson", "navarro-kalinina", "boulter-volynets", "kenin-lys",
-    "maria-yastremska", "bucsa-chwalinska", "chwalinska-gibson",
-    "parry-mertens", "bartunkova-charaeva", "townsend-osorio",
+    "maria-yastremska", "parry-mertens", "bartunkova-charaeva",
+    "townsend-osorio",
     "boisson-krueger",
 })
 
