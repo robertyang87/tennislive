@@ -73,7 +73,14 @@ jobs:
             src
             tests
             tools
-            output
+            # ⚠️ **只要 `output/preview` 这一格，不要裸的 `output`。** 后者会把
+            # 一 GB 多的历史产物全拉下来，checkout 白等一分半（daily 量到 1:31、
+            # match-reel 2:44）。这条工作流只写 `output/preview/<slug>`，前缀固定，
+            # 静态列出来就够，不用像 match-reel 那样等算出目录再 `sparse-checkout add`。
+            # ⚠️ **不能只做一半**：漏掉这一格的话 `git add` 只警告并退出 0，
+            # 产物静默丢掉，而那是跑完之后才发现的。判据
+            # `test_不碰产物的工作流不许把output拉下来`。
+            output/preview
 
       - uses: actions/setup-python@v5
         with:
@@ -250,6 +257,12 @@ jobs:
 
       - name: 写复制页（必须排在提交之前）
         if: github.event.inputs.push == 'true'
+        env:
+          # ⚠️ **拿不到 token，`trigger_pages_build()` 会直接跳过**——跳过之后
+          # 探活只能干等别的 push 去触发 Pages，最后把复制页那颗按钮摘掉，
+          # 日志上和「今天 Pages 慢」长得一模一样。`match-reel.yml` 的同名步骤
+          # 一直是这么给的。判据 `test_会发微信的工作流都要能触发Pages`。
+          GITHUB_TOKEN: ${{ github.token }}
         run: |
           COPY="specs/reels/${{ github.event.inputs.slug }}.xhs.txt"
           test -f "$COPY" || { echo "::error::找不到 $COPY"; exit 1; }
