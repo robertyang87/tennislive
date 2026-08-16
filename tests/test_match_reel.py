@@ -5097,6 +5097,36 @@ def test_写过源片末尾这条规矩只有一处实现():
             f"{func.name} 又把「写过源片末尾」自己写了一遍"
 
 
+def test_比分板的英文名只在名里缩写姓整个留下():
+    """`Elena-Gabriela Ruse` 曾经被印成 **`E. -. G. RUSE`**。
+
+    老写法先 `replace("-", " - ")` 再按空格切，于是**连字符自己变成了一个「名」**，
+    多出一个 `-.`；带连字符的姓（`Pavlyuchenkova-Smith`）同样会被拦腰切成
+    `P. -. SMITH`。**两种都不报错**——渲染照常、质检照常，只有打开海报才看得见，
+    正是这个仓库反复记的那种「不吭声」。
+
+    钉两头：**名**里的连字符要缩成 `E.-G.`（不是 `E. -. G.`），**姓**里的连字符
+    一个字都不许动。另外已经缩好的（第一段就带 `.`）原样放行。
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import versus_poster as vp  # noqa: PLC0415
+
+    cases = {
+        "Elena-Gabriela Ruse": "E.-G. RUSE",
+        "Jean-Julien Rojer": "J.-J. ROJER",
+        "Maja Chwalinska": "M. CHWALINSKA",
+        "Alexandra Eala": "A. EALA",
+        "Anastasia Pavlyuchenkova-Smith": "A. PAVLYUCHENKOVA-SMITH",
+        "E.-G. Ruse": "E.-G. RUSE",
+    }
+    for full, want in cases.items():
+        got = vp._english_display("某人", {"name_en": full}, "test")
+        assert got == want, f"{full!r} 缩成了 {got!r}，应该是 {want!r}"
+    assert " -." not in vp._english_display(
+        "某人", {"name_en": "Elena-Gabriela Ruse"}, "test"), (
+        "又出现了那个孤零零的 `-.`——连字符被当成一个名字了")
+
+
 def test_赛场之上的比分板形状要在dry_run就拦下来():
     """`cover.scoreboard` 缺不缺，`--dry-run` 就要报，不许留到 runner 上。
 
@@ -7590,6 +7620,103 @@ def test_疑似切点要趁源片还在的时候量出来():
         "跨切点那道判据读到了疑似切点——线索当判据用，会把一批合法的段判红")
 
 
+def _with_legacy_soft_cover(slug: str, spec: dict) -> dict:
+    """存量封面的豁免表在**工具里**（`build_match_reel.LEGACY_SOFT_COVERS`），
+    不在这儿——`--dry-run` 也要能跑存量。这里只留一个占位函数保持调用点不变。"""
+    return spec
+
+
+def test_封面大图一律用官方高清图不许抽帧():
+    """账号所有者 2026-08-16，一条消息里说了三遍：「封面一定要选高清大图，不然
+    没人愿意点进去看」「抽帧的图都不太清晰啊」「**都说了**不要用截图抽帧的这种
+    方式去做封面大图，非常的不清晰啊！去找官方的」。
+
+    ⚠️ 「都说了」是给我的——CLAUDE.md 里「封面用真实照片，不要从视频里抽帧」
+    一直写着，连账都算过（1080p 抽帧铺 3:4 要放大 1.33~1.78 倍，而源片是压缩
+    转播流，换帧、锐化都救不回来）。**规矩没变，是实现漂了**：solo 版式给了
+    `frame_at` 这条近路，于是六十条片子全走了它。所以这次要落成闸。
+
+    钉四头：
+
+    ① **行为**：抽帧不认领 → 红；认领了 → 过
+    ② **行为**：照片撑不满卡片 → 红（换个来源不算过关）；够大 → 过
+    ③ **位置**：`validate_spec` 真的调了它——只测行为的话，闸排在下载后面
+       照样全绿，而真实代价是每次都要先等几百 MB 下完（本仓库栽过两次）
+    ④ **范围**：只管 `cover.portrait`（封面大图），不管 `versus.top/bottom`
+       那两格抠图——那儿的账是反的（本场抽帧 0.61× 缩小，官方棚拍图 1.55×
+       放大），判据宁可窄，不可宽
+    """
+    reel = _reel()
+
+    def solo(portrait: dict) -> dict:
+        return {"cover": {"layout": "solo", "portrait": portrait}}
+
+    # ① 抽帧要认领
+    assert reel.cover_photo_problem(solo({"frame_at": 152.5})), \
+        "抽帧没认领也放行了——这道闸等于没装"
+    assert "去找官方的" in reel.cover_photo_problem(solo({"frame_at": 152.5})), \
+        "报错没说出路：四类源怎么翻、WTA 那条路怎么走"
+    assert reel.cover_photo_problem(
+        solo({"frame_at": 152.5, "_frame_why": "四类源都翻过，见 _source"})) is None, \
+        "认领过了还拦——那会逼人去关掉这道闸"
+    assert reel.cover_photo_problem(
+        solo({"frame_at": 152.5, "_frame_why": "   "})) is not None, \
+        "空白也算认领的话，认领就成了一个形式"
+
+    # ② 照片不许放大（拿真图量，别手搓）
+    from PIL import Image  # noqa: PLC0415
+
+    big = Path("assets/players/aryna-sabalenka.jpg")
+    with Image.open(big) as raw:
+        assert min(raw.size[0] / reel.COVER_FILL_W,
+                   raw.size[1] / reel.COVER_FILL_H) < 1.0, (
+            f"{big.name} 现在够大了，这条断言要换一张更小的图当样本")
+    assert reel.cover_photo_problem(solo({"image": str(big)})), \
+        "撑不满卡片的照片也放行了——那正是「非常的不清晰」那一类"
+    assert reel.cover_photo_problem(
+        solo({"image": str(big), "_low_res_why": "只有这一张"})) is None, \
+        "认领过的取舍还拦"
+
+    # ③ 位置：dry-run 那条路真的走得到
+    assert "cover_photo_problem(" in inspect.getsource(reel.validate_spec), \
+        "validate_spec 没调这道闸——那 dry-run 就还是拦不住，要等下载完才报"
+
+    # ④ 范围：抠图那两格不归它管
+    assert reel.cover_photo_problem(
+        {"cover": {"versus": {"top": {"frame_at": 12.0},
+                              "bottom": {"frame_at": 34.0}}}}) is None, \
+        "把 VS 版式的抠图也拦了——那两格本来就该用本场抽帧（0.61× 缩小更锐）"
+
+    # ⑤ 豁免表自检：每个 slug 必须真的存在，而且真的还过不了这道闸
+    specs = _reel_specs()
+    for slug in sorted(reel.LEGACY_SOFT_COVERS):
+        assert slug in specs, (
+            f"`LEGACY_SOFT_COVERS` 里的 {slug!r} 找不到对应的 spec"
+            "——写错一个名字，豁免就成了一盏恒真的绿灯")
+        naked = json.loads(json.dumps(specs[slug]))
+        naked.pop("slug", None)          # 绕开豁免，看它本身过不过得了
+        assert reel.cover_photo_problem(naked) is not None, (
+            f"{slug} 的封面已经过得了这道闸了，从 `LEGACY_SOFT_COVERS` 里删掉"
+            "——这张表只许减不许加")
+
+    # ⑥ 而**没进表的 spec 一律要过**：立规矩的那天顺手扫一遍存量，
+    #   不留给下一个人去撞（CLAUDE.md「立一条新的形状规矩时，顺手拿它扫一遍 specs/」）
+    left = sorted(s for s, sp in specs.items()
+                  if s not in reel.LEGACY_SOFT_COVERS
+                  and reel.cover_photo_problem(sp) is not None)
+    assert not left, f"这几条既不在豁免表里、封面又过不了闸：{left}"
+
+    # ⑦ **认领了抽帧的，必须说清四类源各自查了什么**——一句「找不到」不算认领
+    for slug, sp in specs.items():
+        why = str((((sp.get("cover") or {}).get("portrait") or {})
+                   .get("_frame_why")) or "")
+        if not why:
+            continue
+        assert len(why) >= 60, (
+            f"{slug} 的 `_frame_why` 太短（{len(why)} 字）——"
+            "这一栏要写清楚四类源各自查了什么、结果如何，不是写一句「没找到」")
+
+
 #: 「赛场之上 solo 封面必须有 `cover.scoreboard`」这条规矩（#368）立起来**之前**
 #: 发出去的十九条。已发的片子不为版式重渲——微信那条消息发出去收不回来，所以它们
 #: 就停在这个样子；**只许减不许加**，表自己带自检（见 `_with_legacy_scoreboard`）。
@@ -7668,7 +7795,7 @@ def test_每条spec的旁白都还估得下():
                 raise
             denied.add(slug)
             continue
-        spec = _with_legacy_scoreboard(slug, spec)
+        spec = _with_legacy_soft_cover(slug, _with_legacy_scoreboard(slug, spec))
         for index, secs, room in reel.narration_estimates(reel.validate_spec(spec)):
             checked += 1
             if room < -reel.SPEECH_EST_ERR:
@@ -8880,11 +9007,19 @@ def test_同一届赛事顶栏的中文名要统一():
         }
         return json.dumps(outward, ensure_ascii=False)
 
-    def belongs_to_this_event(blob: str) -> bool:
-        if any(k in blob for k in keywords):
+    def belongs_to_this_event(blob: str, line1: str) -> bool:
+        """⚠️ **只认顶栏那一行，不扫整份 spec。**
+
+        顶栏写的就是「这条片子讲的是哪一站」；而正文里提到多伦多是常事——
+        `eala-ruse` 讲的是**辛辛那提**，只是在来路那一句里说了「多伦多打进第四轮」，
+        第一版按整份 blob 扫，把它判成了多伦多那一届，然后要求它把顶栏改成
+        `WTA1000 多伦多`。**判据宁可窄，不可宽**：扫得太宽的判据不吭声，
+        只会让下一个人把对的写法改成错的。
+        """
+        if any(k in line1 for k in keywords):
             return True
-        return ("多伦多" in blob and "WTA1000" in blob) or \
-               ("蒙特利尔" in blob and "ATP1000" in blob)
+        return ("多伦多" in line1 and "WTA1000" in line1) or \
+               ("蒙特利尔" in line1 and "ATP1000" in line1)
 
     checked = 0
     for path in sorted(Path("specs/reels").glob("*.json")):
@@ -8893,7 +9028,7 @@ def test_同一届赛事顶栏的中文名要统一():
         if not line1:
             continue
         blob = _outward_blob(spec)
-        if not belongs_to_this_event(blob):
+        if not belongs_to_this_event(blob, line1):
             continue
         checked += 1
         tour = "WTA" if "WTA1000" in line1 else ("ATP" if "ATP1000" in line1 else None)
