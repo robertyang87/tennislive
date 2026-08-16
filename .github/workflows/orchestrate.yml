@@ -2,9 +2,10 @@ name: orchestrate
 
 # 无人值守编排器：定时扫赛果/赛程 → 打分路由 → 去重 → 报告候选。
 #
-# ⚠️ 第一版只做**扫候选 + 报告**（dry-run），不真正 dispatch——因为 dispatch 一个
-# 新 slug 需要集锦视频 URL（T0 探测），而 T0 探测还没自动化。等 detect-highlights
-# 那一步接上、URL 能自动拿到，再在这条 workflow 里放开 `--apply`。
+# ⚠️ **cron 只做「扫候选 + 报告」（dry-run），不真正 dispatch。** 真正 dispatch 走
+# 下面的 workflow_dispatch 手动入口（apply=true）——账号所有者点一下才真的
+# dispatch probe + 自动备料。手动验证过 dispatch 链路稳了，再决定要不要把 cron
+# 升级成自动 apply；**那一步是「做出去收不回来」的产出动作开关，不默认放开。**
 #
 # 候选报告写进 job summary（`$GITHUB_STEP_SUMMARY`），账号所有者 / AI 在 run 页面
 # 就能看到「今天该做哪几条」，比翻日志便宜。
@@ -15,10 +16,27 @@ on:
     # 真正的事件驱动（赛果刚出就触发）要等 T0 探测，见 tools/orchestrate.py 的
     # docstring 和 docs/thirty-minute-pipeline.md。
     - cron: "*/30 * * * *"
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      apply:
+        description: "真 dispatch probe（并自动备料）。不给就只扫候选+报告"
+        required: false
+        type: boolean
+        default: false
+      max:
+        description: "单次最多点几条 run（无人值守防错一片）"
+        required: false
+        type: number
+        default: 3
+      no_assemble:
+        description: "dispatch 后不跑 assemble 备料"
+        required: false
+        type: boolean
+        default: false
 
 permissions:
-  contents: read
+  contents: write   # apply 分支要把 data/orchestration_state.json 提交回仓库
+  actions: write    # apply 分支 gh workflow run 派发别的生产工作流
 
 jobs:
   orchestrate:
@@ -43,6 +61,36 @@ jobs:
       - name: 装依赖
         run: pip install -q -e .
 
+      # ⚠️ apply 分支要自己写 GH_TOKEN：gh workflow run 派发别的 workflow 靠它。
+      # checkout 那步用的 token 默认只读，不显式传 dispatch 会在第 N 秒报 403
+      # （permission 不够），和「没匹配到候选」长得不一样。
       - name: 扫赛果/赛程并报告候选
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          PYTHONPATH=src python tools/orchestrate.py 2>&1 | tee "$GITHUB_STEP_SUMMARY"
+          ARGS=()
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && \
+             [ "${{ github.event.inputs.apply }}" = "true" ]; then
+            ARGS+=(--apply --max "${{ github.event.inputs.max }}")
+            if [ "${{ github.event.inputs.no_assemble }}" = "true" ]; then
+              ARGS+=(--no-assemble)
+            fi
+          fi
+          PYTHONPATH=src python tools/orchestrate.py "${ARGS[@]}" 2>&1 | tee "$GITHUB_STEP_SUMMARY"
+
+      # apply 记了 state（data/orchestration_state.json），要提交回仓库——否则
+      # 下一趟又把它当「没 dispatch 过」重复点 run。apply 之外不产生任何提交，
+      # 所以只有 apply 分支 commit。
+      - name: 提交 state（仅 apply 分支）
+        if: github.event_name == 'workflow_dispatch' && github.event.inputs.apply == 'true'
+        run: |
+          git config user.name "Claude"
+          git config user.email "claude@tennislive.local"
+          git add data/orchestration_state.json
+          if git diff --cached --quiet; then
+            echo "state 没有变化，不提交"
+          else
+            python tools/check_staged_file_sizes.py
+            git commit -m "orchestrate: 记录已 dispatch 状态"
+            git push
+          fi
