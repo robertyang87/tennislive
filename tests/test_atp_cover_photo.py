@@ -1,0 +1,107 @@
+"""ATP 封面实拍这条路（赛事官网 WordPress 图库）的判据。
+
+**为什么这条路存在**：已发的 84 条 spec 里 64 条用抽帧，只有 20 条用实拍，
+而 4000px 那一档全是女子——WTA 有 `photoresources...?width=4000`，
+**ATP 一直没有对应物**。`tools/fetch_atp_cover_photo.py` 补的就是这一格。
+
+这里钉的四条都是**当天量出来才知道方向的**，每一条我都先写反过一次：
+
+| 判据 | 我先写反的那一版 |
+|---|---|
+| 只扫 `<img src>` 会漏掉绝大多数图 | 「当期图多半是懒加载的，要开 Chromium」——**假的**，URL 一直在 `srcset` 里 |
+| `-scaled` 比裸文件名**大** | 「bare filename = original」——**量出来是反的** |
+| 日期按**文件名的日期戳**认，不按辑名的「Day N」 | 差点按辑号认，而 Day 5 那辑装的是 `081526` |
+| 画布只有一处出处 | 工具里另抄一份 1080×1440 |
+"""
+from __future__ import annotations
+
+import sys
+from datetime import date
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT / "tools"))
+
+import fetch_atp_cover_photo as atp  # noqa: E402
+
+
+def test_ATP封面工具和渲染器认的画布是同一个():
+    """一个数写两处必分叉。工具不 import 渲染器（要能单跑），所以在这儿钉住。"""
+    body = (ROOT / "tools" / "build_match_reel.py").read_text(encoding="utf-8")
+    line = next(l for l in body.splitlines() if l.startswith("COVER_FILL_W"))
+    rhs = line.split("=", 1)[1]
+    w, h = (int(x.strip()) for x in rhs.split(","))
+    assert (atp.FILL_W, atp.FILL_H) == (w, h), (
+        f"工具认的画布 {atp.FILL_W}×{atp.FILL_H} 和渲染器的 {w}×{h} 对不上——"
+        "分叉的样子是「工具说撑得满，闸说撑不满」")
+
+
+#: 真页面（day-5-best-of-photos，2026-08-16 存的）上量出来的：**裸文本扫到
+#: 40 张当期实拍，只扫 `src="` 只有 2 张**。差距不是边角——图库是 fancybox，
+#: 原图挂在 `<a href>` 上，`<img>` 里放的是缩略图。
+_MEASURED_ALL, _MEASURED_SRC_ONLY = 40, 2
+
+
+def test_扫图不许只看img_src否则当期图漏掉九成五():
+    """⚠️ **这条是那句错结论的判据**。
+
+    我先前只在 `<img ...>` 标签里找，一辑只捞到一张，据此写下「当期图多半是
+    懒加载的，要开 Chromium」——而路径一直在 HTML 里，只是挂在 fancybox 的
+    `<a href>` 上。**扫得太窄和真的没有长得一模一样。**
+
+    所以这里喂的 fixture 就是真页面的形状：大图是**链接目标**，`<img>` 里
+    是缩略图。
+    """
+    html = (
+        '<a href="https://x.com/wp-content/uploads/2026/08/081526_DAY-EIGHT_M-1-of-9.jpg"'
+        ' data-fancybox="video-gallery"><span class="vh">081526_DAY EIGHT_M (1 of 9)</span></a>'
+        '<img src="https://x.com/wp-content/uploads/2026/08/081526_DAY-EIGHT_M-1-of-9-300x200.jpg">'
+        '<a href="https://x.com/wp-content/uploads/2026/08/081526_DAY-EIGHT_M-2-of-9.jpg"'
+        ' data-fancybox="video-gallery"></a>'
+        '<img data-src="https://x.com/wp-content/uploads/2026/08/081526_DAY-EIGHT_M-3-of-9.jpg">'
+    )
+    names = {u.rsplit("/", 1)[-1] for u in atp._urls_in(html, "x.com")}
+    assert names == {"081526_DAY-EIGHT_M-1-of-9.jpg",
+                     "081526_DAY-EIGHT_M-2-of-9.jpg",
+                     "081526_DAY-EIGHT_M-3-of-9.jpg"}, (
+        f"扫出来 {sorted(names)}——第 2 张只在 `<a href>` 上、第 3 张只在 "
+        "`data-src` 上，两张都不许漏；第 1 张的 `-300x200` 缩略图要归并回原图")
+    assert _MEASURED_SRC_ONLY * 20 <= _MEASURED_ALL, (
+        "真页面上只扫 src= 只能捞到二十分之一——这个比例是这条判据存在的理由，"
+        "改小它之前先去真页面重量一次")
+
+
+def test_响应式后缀要去干净但别把别的数字吃掉():
+    keep = "081526_DAY-EIGHT_MIKE-BAKER-112-of-229.jpg"
+    assert atp._VARIANT.sub("", keep) == keep, (
+        "`-112-of-229` 不是响应式后缀，去掉它就指到一张不存在的图了")
+    assert atp._VARIANT.sub("", "A-1024x683.jpg") == "A.jpg"
+    assert atp._VARIANT.sub("", "A-150x150.png") == "A.png"
+
+
+def test_日期按文件名的日期戳认不按辑名的DayN认():
+    """⚠️ **辑名的「Day N」是赛事内部编号，和日历日差着好几天。**
+
+    实测：`day-5-best-of-photos` 那一辑装的是 **`081526`**（资格赛也算进
+    Day 里）。按辑号认就会把 8/15 的照片当成 8/5 的。
+    """
+    assert atp.stamp_of("https://x/081526_DAY-EIGHT_MIKE-BAKER-1-of-25.jpg") == date(2026, 8, 15)
+    assert atp.stamp_of("https://x/CincinnatiOpen_20260815_JM021268_JW1.jpg") == date(2026, 8, 15)
+    # 赞助商图没有日期戳——认不出来要返回 None（工具会把条数打出来），
+    # 不许瞎猜一个日期，那会让它冒充成当天的实拍。
+    assert atp.stamp_of("https://x/2026_WTA-Unlocked-v2_DigitalAd-564x564-1.jpg") is None
+    assert atp.stamp_of("https://x/logo.png") is None
+
+
+def test_撑不满就要报要放大多少倍():
+    """2000×1333 是这条路 2026 年那批的实测尺寸，铺 1080×1440 是 0.93×。
+
+    **它过不了 `cover_photo_problem` 的 1.00× 地板**，所以工具必须把这个数
+    报出来并点名 `_low_res_why`——不然下一个人会以为「官方图 = 过关」。
+    """
+    assert atp.fill_ratio(2000, 1333) < 1.0
+    assert round(atp.fill_ratio(2000, 1333), 2) == 0.93
+    # 2023 年那批的 `-scaled` 是 2560×1707，撑得满。
+    assert atp.fill_ratio(2560, 1707) >= 1.0
+    # WTA 那条 4000px 的路，作为对照。
+    assert atp.fill_ratio(4000, 2461) > 1.7
