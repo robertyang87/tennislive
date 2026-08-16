@@ -2444,6 +2444,131 @@ def cover_poster(spec: dict, src: Path, outdir: Path, logo: str = "") -> Path:
     return poster
 
 
+#: 一条采访片**怎么开头**，只有这两种，写它就是自己看过源片。
+#:
+#: 账号所有者 2026-08-16（看完 `tirante-djokovic-cincinnati-2026-r2`）：
+#: 「**蒂兰特这个视频做的很好，先交代了比赛结束，后续的赛后采访建议都这么开头**」。
+#:
+#: 那条片子的窗口不是从第一个问题起，是往前多收了 13.8 秒——赛点落地
+#: （解说喊 `and there we go`）＋ 转播自己把这场球的分量报出来
+#: （`Thiago Agustin Tirante of Argentina / with the biggest win of his life. /
+#: He takes down the three-time champion here, Novak Djokovic.`）。
+#:
+#: **为什么它更好，三条都不是文风问题**：
+#:
+#: - 刷到这条的人**不用先搞清「这是谁、赢了谁」才听得懂采访**。采访本身
+#:   从第一句起就默认你知道，而封面只停 1.2 秒
+#: - 开场第 ① 格因此是**全片最强的那一格画面**（赛点／庆祝），
+#:   而不是一个人站着说话——CLAUDE.md「开场三格的顺序」那条本来就这么要求
+#: - 那句分量是**转播自己说的**，比我们替他说硬（同一条线上「画面自证」的
+#:   老规矩：来源自己写下的东西 > 我们的转述）
+_OPENING_KINDS = {
+    "match_end": "从比赛结束那一刻起——赛点落地 ＋ 转播报出赛果／分量，然后接采访",
+    "none": "源片里根本没有比赛画面（发布会、演播室专访），收不到",
+}
+
+
+def check_opening(spec: dict) -> None:
+    """这条片子怎么开头，**必须显式认领**，没有默认值。
+
+    和 `interview_kind` / `mixed_fps` / `silent_source` / `_layout_why` 是同一个
+    形状：**认领这一步把「看过源片、确实没有比赛画面」和「没想过这件事」分开**。
+
+    ⚠️ **默认是 `match_end`，而不是「有就收、没有就算」。** 反过来做的后果是
+    可预见的：从第一个问题起是**最省事**的写法（第一条字幕事件就在那儿，
+    `start` 抄过来就行），所以不设默认、不认领的话，每一条都会自然滑回去，
+    而**漏掉那一段不会报错**——片子照样出得来，只是开场从「赛点落地」
+    变成「一个人站着开始说话」。
+
+    ⚠️ **`kind: "none"` 必须写 `why`。** 「源片里没有比赛画面」是一个可以查证的
+    事实（发布会背板、演播室），不是一句可以随口写的免责。写不出来就说明
+    **还没打开源片看过**——而那正是这道闸要拦的。
+
+    ⚠️ **收多少有上界，别把集锦搬进来。** 这条线是「保留原声主体」，开头收的是
+    **最后一分 ＋ 解说那一两句**，不是半分钟集锦——收多了就变成「赛场之上」，
+    而那是另一个栏目。蒂兰特那条 13.8 秒是量出来的一个好尺度。
+    """
+    slug = spec.get("slug", "?")
+    if slug in _LEGACY_NO_OPENING:
+        return
+    op = spec.get("opening")
+    if not isinstance(op, dict) or not (kind := str(op.get("kind", "")).strip()):
+        raise SystemExit(
+            f"{slug} 缺 `opening`——这条片子怎么开头没人认领。\n"
+            "账号所有者 2026-08-16 定的默认：**先交代比赛结束，再接采访**"
+            "（`tirante-djokovic-cincinnati-2026-r2` 就是这么开的，往前多收了"
+            " 13.8 秒的赛点和解说）。\n"
+            "写成：\n"
+            '  "opening": {"kind": "match_end", "lead_in": 13.8, '
+            '"why": "227.9 起：赛点落地 ＋ 解说报出「他掀翻了这里的三冠王」"}\n'
+            "源片里真的没有比赛画面（发布会／演播室）就写：\n"
+            '  "opening": {"kind": "none", "why": "整条是发布会，背板和记者提问，'
+            '前面没有任何比赛画面"}\n'
+            "⚠️ 这个字段没有默认值——从第一个问题起是最省事的写法，"
+            "不认领的话每条都会滑回去，而漏掉那一段**不会报错**。")
+    if kind not in _OPENING_KINDS:
+        raise SystemExit(
+            f"{slug} 的 `opening.kind`「{kind}」不认识。只有两种：\n"
+            + "\n".join(f"  {k}　{v}" for k, v in _OPENING_KINDS.items()))
+    if not str(op.get("why", "")).strip():
+        raise SystemExit(
+            f"{slug} 的 `opening` 没写 `why`。\n"
+            "两种都要写：`match_end` 要说清收的是哪一段（起点、解说说了什么），"
+            "`none` 要说清**为什么源片里没有比赛画面**——那是个可以查证的事实"
+            "（背板／话筒／提问方式），写不出来就说明还没打开源片看过。")
+    if kind == "match_end":
+        lead = op.get("lead_in")
+        if not isinstance(lead, (int, float)) or not 0 < lead <= _OPENING_LEAD_MAX:
+            raise SystemExit(
+                f"{slug} 的 `opening.lead_in` 是 {lead!r}——`match_end` 要记下"
+                f"「往前多收了几秒」，而且必须在 0 到 {_OPENING_LEAD_MAX} 秒之间。\n"
+                "⚠️ 上界不是洁癖：这条线是「保留原声主体」，开头收的是**最后一分"
+                " ＋ 解说那一两句**；收成半分钟集锦就变成「赛场之上」了，"
+                "而那是另一个栏目。")
+
+
+#: 开头多收几秒的上界。
+#:
+#: ⚠️ **第一版写的是 30，而它是拿一条片子拍出来的，第二条就顶穿了。**
+#: 蒂兰特那条 13.8 秒（赛点 ＋ 三句解说），我据此把上界定在 30；
+#: 紧接着的 `arango-venus` 那条，从解说交代赛果起算就要 **34 秒**——
+#: 而它一点都不像集锦，是**一整段连续的赛后画面**（赛点、庆祝、握手、解说收尾）。
+#: 这正是本文件反复记的那个毛病：**查了一场就写成了一类**。
+#:
+#: **真正的判据是质的，不是秒数**：收的是不是**一整段连续的比赛结束**，
+#: 而不是把好几个回合拼起来。秒数只是那条判据的代理，所以取在
+#: 「一段连续赛后画面装得下」这个量级上（40 秒），别当成编辑目标。
+#:
+#: ⚠️ 顺带一条真实约束，比秒数硬：**赛点之后往往有十来秒只有欢呼、没有解说**
+#: （`arango-venus` 是 255.3→266.7，整整 11 秒）。对双语字幕片那是**屏幕上
+#: 什么都没有的一段**，所以起点通常该切在「解说开口交代赛果」那一句上，
+#: 而不是赛点那一帧——这也是为什么这条的 `lead_in` 是 34 而不是 45。
+_OPENING_LEAD_MAX = 40.0
+
+#: 这条规矩（2026-08-16）之前发出去的片子，**只许减不许加**，表自带自检
+#: （`test_没认领开头的老片子只许减不许加`）：每个 slug 必须真的存在、
+#: 而且真的还没有 `opening`——写错一个名字，豁免就成了一盏恒真的绿灯。
+#:
+#: 已发的不重渲（微信那条消息收不回来）。
+_LEGACY_NO_OPENING = frozenset({
+    "alexandrova-sabalenka-tor2026-r16", "chwalinska-cincinnati-2026-studio",
+    "djokovic-cincinnati-2026-presser", "djokovic-cincinnati-2026-return",
+    "eala-mcnally-toronto-2026-r3", "eala-mcnally-toronto-2026-r3-presser",
+    "eala-mcnally-toronto-2026-r3-presser-full", "eala-osaka-dc2026-sf",
+    "eala-osaka-dc2026-sf-studio", "eala-parks-toronto-2026",
+    "eala-pegula-dc2026-final", "eala-pegula-dc2026-final-presser",
+    "eala-svitolina-dc2026-qf", "nakashima-shelton-mtl2026-final",
+    "noskova-boulter-cincinnati-2026-r2", "pegula-eala-dc2026-final",
+    "rybakina-gauff-tor2026-sf", "rybakina-osaka-tor2026-qf",
+    "rybakina-swiatek-tor2026-final", "rybakina-swiatek-tor2026-final-presser",
+    "sabalenka-uchijima-tor2026-r64", "sabalenka-zhang-tor2026-r3",
+    "shang-rublev-mtl2026-r2", "shelton-mensik-mtl2026-qf",
+    "shelton-nakashima-mtl2026-final", "swiatek-rybakina-tor2026-final",
+    "swiatek-rybakina-tor2026-final-presser", "swiatek-shnaider-tor2026-qf",
+    "tirante-djokovic-cincinnati-2026-r2",
+})
+
+
 # 规矩之前发出去的六条，**只许减不许加**，而且有自检（见
 # `test_没有解读卡的老片子只许减不许加`）：表里每个 slug 必须真的存在、
 # 而且真的还没有 `takeaway`——写错一个名字，豁免就成了一盏恒真的绿灯。
@@ -2823,6 +2948,10 @@ def main() -> int:
     localca.trust_local_proxy_ca()
 
     spec = json.loads(Path(args.spec).read_text(encoding="utf-8"))
+    # **排在最前面，每一趟都过。** 它只读 spec、不联网、不下源片——
+    # 「这条片子怎么开头」是写 spec 那一刻就该定下来的事，让它在第 0.2 秒报，
+    # 而不是等九分钟的 render 出片之后再由人看出来「怎么一上来就有人在说话」。
+    check_opening(spec)
     outdir = OUTDIR / spec["slug"]
     outdir.mkdir(parents=True, exist_ok=True)
     ass = outdir / f"{spec['slug']}.ass"

@@ -3336,3 +3336,46 @@ def test_示意图的颜色要和卡片本身是同一套():
         assert not hits, (
             f"{name}.py 里还写着退役的颜色 {sorted(hits)}——"
             "从 diagram_palette 取，别再各调各的")
+
+
+def test_探活正常是第几次要按间隔算不许写死1(caplog):
+    """账号所有者那条盘外招推送的日志里挂着一条 WARNING，说「这条链上多半还有
+    别的没接上」——**而链子好好的**。
+
+    第一次探活是紧跟在 `trigger_pages_build()` 之后发出的（中间只隔一次 HTTP
+    往返），而点一下到部署完实测 19 秒。所以 30 秒间隔下，**第一枪结构性打不中**，
+    健康值本来就是第 2 次。原来那句告警写死「正常应该第 1 次就中」，是把另一条
+    线的时序搬了过来。
+
+    CLAUDE.md 记着同一个形状：「判据要连它的时序前提一起搬」「一个搬错线的判据
+    比没有判据坏——它会让下一个人去追一个不存在的问题，而且他找不到」。
+
+    钉三头：算得对、正常那几次**不许**报 warning、真的慢了**必须**报。
+    """
+    import logging
+
+    from tennislive.render import pushmsg as P
+
+    # ① 算得对：第 1 次在 t=0，第 n 次在 (n-1)*delay，第一个够得着 19 秒的才算数
+    assert P.expected_first_hit(30.0) == 2, "30 秒间隔下第 2 次才够得着 19 秒"
+    assert P.expected_first_hit(10.0) == 3, "10 秒间隔要到第 3 次（20s）才过 19 秒"
+    assert P.expected_first_hit(0) == 1, "间隔 0 是退化情况，别除零"
+
+    # ② 正常范围内不许报 warning——这正是被误报的那一格
+    caplog.clear()
+    with caplog.at_level(logging.INFO, logger=P.logger.name):
+        P._say_probe_hit(2, "https://example.invalid/copy.html", delay=30.0)
+    warnings = [r for r in caplog.records if r.levelno >= logging.WARNING]
+    assert not warnings, (
+        "30 秒间隔下第 2 次命中是**最快的健康值**，不该报警："
+        + "；".join(r.getMessage() for r in warnings))
+    assert any("最快能中的是第 2 次" in r.getMessage() for r in caplog.records), (
+        "命中那一行要把「最快能中的是第几次」一起打出来，"
+        "不然读日志的人得回头翻文档才知道 2 是正常的")
+
+    # ③ 真的慢了必须报——判据自己的判据：②那一条不能是因为它从来不报警才绿
+    caplog.clear()
+    with caplog.at_level(logging.INFO, logger=P.logger.name):
+        P._say_probe_hit(5, "https://example.invalid/copy.html", delay=30.0)
+    assert [r for r in caplog.records if r.levelno >= logging.WARNING], (
+        "第 5 次才命中是真的异常（比最快值多三次），必须报 warning")
