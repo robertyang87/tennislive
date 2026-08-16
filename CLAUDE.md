@@ -2452,6 +2452,53 @@ eala-fernandez 渲了 3 轮、wang-samsonova 2 轮，全在这个坑里。
 所以复盘这条线的稳定性时，判据是**「有没有一条废片被发出去」**，
 不是红绿比。红得早是收益，不是成本。
 
+### ⭐⭐ 2026-08-16：「能不能多线程」——能，但**能并行的和不能并行的要分清**
+
+账号所有者：「**以后能否多线程去跑任务啊，现在串行有点慢**」。
+
+先把今天两条采访片的账摊开（真实时间戳，不是估的）：
+
+| 这一步 | 实测 | 能不能和别的重叠 |
+|---|---|---|
+| 找源片、核事实、写 spec / zh | 本地，分钟级 | ✅ 和别的 slug 的 render 完全重叠 |
+| **切行 `--stage subs`** | **本地 1 秒** | ✅ **根本不用上 runner**，见下 |
+| `mode=render` ①（跑转写校验，停在 `transcript_verified` 闸上） | 3.5~5 分钟 | ✅ 不同 slug 之间可并行 |
+| `mode=render` ②（真出片） | 6.5~8 分钟 | ✅ 同上 |
+| 拉回成片逐帧验尾巴／封面 | 本地 1 分钟 | ✅ |
+| CI | **2~10 分钟**（runner 抖动，见本文件那条） | ✅ 和 render 并行 |
+| `mode=push`（发微信） | **1 分 15 秒** | ❌ **必须串行**，见下 |
+
+**① 最大的一个浪费：切行原来每条都要跑一趟 runner，而它本地就能跑。**
+`--stage subs` 唯一要联网的是拉自动字幕，而字幕**沙箱下得动**（被挡的是取媒体，
+不是取字幕）。把它放进产物目录，整条 subs 就离线了：
+
+    yt-dlp --extractor-args "youtube:player_client=web_embedded" --ignore-no-formats-error \
+      --skip-download --write-auto-subs --sub-langs en --sub-format json3 \
+      -o "cap_<videoid>.%(ext)s" "<url>"
+    cp cap_<videoid>.en.json3 output/interviews/<slug>/
+    PYTHONPATH=src python3 tools/build_interview_clip.py --spec specs/interviews/<slug>.json --stage subs
+
+⚠️ 缩略图墙那几行会报「8 档 client 都取不到」——**那是正常的，跳过就行**，
+切行不需要它。省下的是一整趟 runner 往返（run 约 2 分 ＋ 排队和拉产物）。
+
+**② 不同 slug 的 render 可以同时发。** `interview-clip.yml` 的 `concurrency`
+分组是 `interview-clip-${slug}`，**分组名带 slug**，所以两条片子互不掐。
+今天诺斯科娃和蒂兰特我是串着来的，那是我保守，不是机制要求。
+
+**③ `mode=push` 不许并行。** 两趟都要往 **main** 写 `copy.html`、提交、然后等
+Pages 重建——同时跑会在提交上撞车，而且 Pages 一次只建一版。今天两条是
+15:27:20 和 15:31:18 分开发的，各 1 分 15 秒。**这一步本来就便宜，没有并行的必要。**
+
+**④ 真正该省的是「为了叫醒 CI 而推的那几次」。** 工作流自己用 `GITHUB_TOKEN`
+提交的产物**不触发 CI**（GitHub 防递归，本文件 Pages 那条记的是同一条规则），
+所以每次都要我再推一个自己的提交把 CI 叫起来——而**每推一次就重启一趟 CI**
+（`concurrency` 掐掉上一趟）。今天为此推了五次。改法是**攒够再推**：
+本地全量绿之后一次性推，别边改边推。
+
+⚠️ **不能靠并行绕过的两件事**：同一条片子的 `render ① → 读报告 → render ②`
+是数据依赖（第二趟要第一趟的转写报告），合并要等 CI 绿。这两条是顺序本身，
+不是排队。
+
 ### ⭐ 一条片子为什么要一个半小时——**慢的不是 run，是趟数**
 
 账号所有者 2026-08-05：「从选题定下来到推送视频到微信整个流程很长很慢，
