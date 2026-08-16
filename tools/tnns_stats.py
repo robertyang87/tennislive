@@ -136,7 +136,18 @@ def winners_ue(decoded: dict, period: str = "Match") -> dict | None:
     声明的，读它比从缺字段反推可靠——「没有这两行」和「我解错了」在产物上
     长得一模一样。
     """
-    block = (decoded.get("data") or {}).get(period)
+    # ⚠️⚠️ **分盘挂在 `data.data`，不是 `data`——`K[0]` 是 `data`，而它套了两层。**
+    #
+    # 2026-08-16 端到端第一趟就栽在这儿，而它的样子是**自相矛盾**：
+    # `hasExtendedStats` 读得到（那个键挂在**外层** `data` 上），分盘读不到，
+    # 于是工具一边说「这场有扩展统计」一边说「没有制胜分」。
+    #
+    # ⚠️ 根子是**我的 fixture 假了**：#398 那份 `_REAL` 的 docstring 写着
+    # 「真数据，不是手搓的」，实际是照着 `--print-body` 的片段**手工拼的，
+    # 拼的时候少套了一层**。CLAUDE.md 那句「手搓的 fixture 只能验函数的局部
+    # 行为，验不了它和真页面对不对得上」——这次连「是不是真数据」都写错了，
+    # 而那句话本身让下一个人（我自己）不会再去核。
+    block = ((decoded.get("data") or {}).get("data") or {}).get(period)
     if block is None:
         return None
     found: dict[str, list] = {}
