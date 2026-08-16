@@ -213,3 +213,29 @@ def test_取TNNS要单独一条工作流不许接进出片流程():
     lines = [ln for ln in reel.splitlines() if not ln.strip().startswith("#")]
     assert "tnns_stats" not in "\n".join(lines), \
         "TNNS 混进 match-reel 了——每条片子会白背一次浏览器启动"
+
+
+def test_撞名要停不许静默取第一条():
+    """姓是子串匹配，而同一天很容易有两个张、两个 Wang。
+
+    ⚠️ 取第一条会安安静静给出**另一场**的制胜分/非受迫失误——数字合法、图画得
+    出来、分盘自证也过（那本来就是另一场自洽的数据）。CLAUDE.md 里「按 slug
+    认领会静默认错人」是同一个形状：**认领的钥匙不唯一时，唯一安全的动作是
+    报出来让人挑。**
+    """
+    import pytest
+    day = json.dumps({"all_matches": [
+        {"k": 1, "p": [{"n": "Shuai Zhang"}, {"n": "Kayla Day"}]},
+        {"k": 2, "p": [{"n": "Zhang Zhizhen"}, {"n": "Holger Dayne"}]},
+    ]})
+    with pytest.raises(SystemExit) as err:
+        tnns_stats.find_match_id(day, ["Zhang", "Day"])
+    msg = str(err.value)
+    assert "id=1" in msg and "id=2" in msg, f"没把候选列出来让人挑：{msg}"
+    # 唯一命中照旧要正常返回，别把闸设成「永远不许有结果」
+    one = json.dumps({"all_matches": [
+        {"k": 7, "p": [{"n": "Shuai Zhang"}, {"n": "Kayla Day"}]},
+        {"k": 8, "p": [{"n": "Coco Gauff"}, {"n": "Iga Swiatek"}]},
+    ]})
+    assert tnns_stats.find_match_id(one, ["Zhang", "Day"]) == "7"
+    assert tnns_stats.find_match_id(one, ["Nobody"]) is None

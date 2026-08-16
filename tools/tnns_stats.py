@@ -247,11 +247,24 @@ def find_match_id(day_body: str, who: list[str]) -> str | None:
     """
     data = json.loads(day_body)
     want = [w.lower() for w in who]
+    hits = []
     for m in data.get("all_matches") or []:
-        names = " ".join(str(p.get("n", "")) for p in (m.get("p") or [])).lower()
-        if all(w in names for w in want):
-            return str(m.get("k"))
-    return None
+        shown = " / ".join(str(p.get("n", "")) for p in (m.get("p") or []))
+        if all(w in shown.lower() for w in want):
+            hits.append((str(m.get("k")), shown))
+    if not hits:
+        return None
+    if len(hits) > 1:
+        # ⚠️ **撞名要停，不许取第一条。** 姓是子串匹配，而同一天很容易有两个
+        # 张、两个 Wang；取第一条会安安静静给出**另一场**的制胜分/非受迫失误
+        # ——数字合法、图画得出来、自证也过（那本来就是另一场自洽的数据）。
+        # CLAUDE.md 里「按 slug 认领会静默认错人」是同一个形状：认领的钥匙
+        # 不唯一的时候，唯一安全的动作是报出来让人挑。
+        raise SystemExit(
+            "[TNNS] " + f"{who} 在当天赛程里匹配到 {len(hits)} 场，不知道是哪一场：\n"
+            + "\n".join(f"    id={k}  {shown}" for k, shown in hits)
+            + "\n把姓写全一点，或者直接给 --match-id。")
+    return hits[0][0]
 
 
 def fetch(who: list[str], date: str | None = None,
