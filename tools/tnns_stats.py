@@ -250,6 +250,24 @@ def _browser_capture(urls: list[str], marks: list[str], wait: int = 22,
         for key, url in (in_page or {}).items():
             print(f"[TNNS] 页面内取 {url}")
             body = _page_fetch(page, url)
+            if not body:
+                # ⚠️ **页面内 fetch 对 `api.tnnslive.com` 是跨域的，会 `Failed to
+                # fetch`**（2026-08-16 run 31958875002 实测）。而**顶层导航不受
+                # CORS 管**——直接把浏览器开到那个接口地址，响应正文照样拿得到，
+                # 挑战也已经在上一跳过了。
+                #
+                # ⚠️ 之前那句「页面里 fetch 会被 CORS 拦掉」的注释**当年是推的、
+                # 没量过**，我把它推翻改成了「页面里优先」；今天量出来是
+                # **两者各对一半**：同域（tnnslive.com 自己的接口）页面内能发，
+                # 跨到 api. 子域就不行。所以两条都留着，先试便宜的那条。
+                print("[TNNS] 页面内取不到，改用顶层导航（不受 CORS 管）")
+                try:
+                    resp = page.goto(url, timeout=60000,
+                                     wait_until="domcontentloaded")
+                    body = resp.text() if resp else None
+                except Exception as exc:  # noqa: BLE001
+                    print(f"[TNNS] 导航也失败：{type(exc).__name__}: {exc}")
+                    body = None
             if body and "Just a moment" not in body:
                 got[f"in_page:{key}"] = body
         browser.close()
@@ -339,6 +357,19 @@ def fetch(who: list[str], date: str | None = None,
     return match_id, decode(body)
 
 
+def players_of(decoded: dict, period: str = "Match") -> list | None:
+    """这一块的列顺序——**决定 `stats.a/b` 填给谁**。
+
+    ⚠️ **和分盘同一层（`data.data`），不是外层。** 2026-08-16 端到端跑通那一趟
+    这行还打着 `（选手顺序 None）`：`winners_ue` 改对了层级，而这儿另写了一遍
+    `data.get("Match")`，就是「一个数写两处必分叉」。分叉的样子不是报错，
+    是**列顺序悄悄变成 None**——而列顺序正是账号所有者截图里点出来的那件事
+    （Townsend 在前、Rybakina 在后，跟比分行的顺序相反）。
+    """
+    block = ((decoded.get("data") or {}).get("data") or {}).get(period) or [{}]
+    return block[0].get("players")
+
+
 def _report(match_id: str, decoded: dict) -> None:
     data = decoded.get("data") or {}
     print(f"\n=== TNNS 单场统计 id={match_id} ===")
@@ -377,7 +408,8 @@ def _report(match_id: str, decoded: dict) -> None:
         return
     print(f"制胜分       {whole['winners']}")
     print(f"非受迫失误   {whole['ue']}")
-    print(f"（选手顺序 {(data.get('Match') or [{}])[0].get('players')}）")
+    who = players_of(decoded) or ["?", "?"]
+    print(f"（选手顺序 {who}）")
     sets = [(p, winners_ue(decoded, p)) for p in ("Set 1", "Set 2", "Set 3")]
     sets = [(p, v) for p, v in sets if v]
     for p, v in sets:
@@ -390,10 +422,9 @@ def _report(match_id: str, decoded: dict) -> None:
               f"  {'✅' if ok else '❌ 对不上，多半解错了，别用'}")
     print("\n粘进 spec 的 `stats` 块（⚠️ a/b 跟 cover.matchup 的顺序，"
           "不是这里的顺序——CLAUDE.md「stats.a 跟的是 cover.matchup[0]」）：")
-    print(f'  "winners": {whole["winners"][0]},  "ue": {whole["ue"][0]}    ← '
-          f'{(data.get("Match") or [{}])[0].get("players", ["?", "?"])[0]}')
-    print(f'  "winners": {whole["winners"][1]},  "ue": {whole["ue"][1]}    ← '
-          f'{(data.get("Match") or [{}])[0].get("players", ["?", "?"])[1]}')
+    for i in (0, 1):
+        print(f'  "winners": {whole["winners"][i]},  "ue": {whole["ue"][i]}'
+              f'    ← {who[i]}')
 
 
 def main() -> int:

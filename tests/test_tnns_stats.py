@@ -361,3 +361,35 @@ def test_分盘挂在内层的data少套一层要读不到():
     # 而且 `winners_ue` 必须走内层那条路
     assert tnns_stats.winners_ue(got, "Match") == {"winners": [41, 25],
                                                    "ue": [35, 36]}
+
+
+def test_列顺序要读得出来不许是None():
+    """⚠️ **列顺序决定 `stats.a/b` 填给谁，读不出来比读错更容易被放过。**
+
+    2026-08-16 端到端跑通那一趟，数字全对、自证 ✅，唯独这行打着
+    `（选手顺序 None）`——`winners_ue` 改对了层级，而 `_report` 里另写了一遍
+    `data.get("Match")`，**「一个数写两处必分叉」**。分叉的样子不是报错，
+    是列顺序悄悄变成 None，而下一个人照着填就可能填反。
+
+    ⚠️ 账号所有者当天的截图正好点了这件事：那一场列头是
+    **Townsend 在前、Rybakina 在后**，和上面比分行的顺序**相反**——
+    所以列顺序必须从 `players` 读，不能从比分行推。
+    """
+    got = tnns_stats.decode(_REAL)
+    assert tnns_stats.players_of(got) == ["Zverev", "Norrie"]
+    assert tnns_stats.players_of(got, "Set 1") == ["Zverev", "Norrie"]
+    # 源码里不许再出现旧层级那种写法。
+    # ⚠️ **要连 docstring 一起剥掉，不只是 `#` 行**——`players_of` 的 docstring
+    # 里正写着「而这儿另写了一遍 `data.get("Match")`」，那是**在记教训**，
+    # 只剥 `#` 会把它判成「又踩了这个坑」。这个仓库为「被自己的说明文字误伤」
+    # 栽过五六次，今天这是第三次。
+    # ⚠️ 别用 `ast.get_docstring()` 去 replace：它回的是**去过缩进**的那一份，
+    # 和源码原文对不上，一个字都删不掉**而且不报错**（CLAUDE.md 明写）。
+    import re
+    body = Path("tools/tnns_stats.py").read_text("utf-8")
+    code = re.sub(r'"""[\s\S]*?"""', "", body)
+    code = "\n".join(l for l in code.splitlines()
+                     if not l.lstrip().startswith("#"))
+    assert 'data.get("Match")' not in code, (
+        "又在 `data` 那一层取分盘了——分盘在 `data.data`，"
+        "少一层的样子是「hasExtendedStats 读得到、分盘读不到」的自相矛盾")
