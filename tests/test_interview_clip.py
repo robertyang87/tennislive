@@ -4369,3 +4369,86 @@ def test_去语气词真的接在出片那条路上(tmp_path):
     assert "strip_hesitation_lines" in at, "`main()` 根本没调它——写了不等于跑过"
     assert at["strip_hesitation_lines"] < at["write_ass"], (
         "去语气词排在了写字幕后面，等于没去")
+
+
+# ── 怎么开头（`opening`）────────────────────────────────────────────────
+#
+# 账号所有者 2026-08-16，看完 `tirante-djokovic-cincinnati-2026-r2`：
+# 「**蒂兰特这个视频做的很好，先交代了比赛结束，后续的赛后采访建议都这么开头**」。
+
+
+def test_没认领开头的老片子只许减不许加():
+    """`_LEGACY_NO_OPENING` 的自检，和解读卡那张表同一个理由：表里每个 slug
+    必须真的存在、而且真的还没有 `opening`。
+
+    ⚠️ **写错一个名字，豁免就成了一盏恒真的绿灯**：那条 spec 既不在名单里
+    （名字对不上），也没人发现名单里那个名字指向空气。
+    """
+    import tools.build_interview_clip as clip
+
+    have = {p.stem for p in _iv_specs()}
+    ghosts = clip._LEGACY_NO_OPENING - have
+    assert not ghosts, f"豁免名单里这几个 slug 不存在，等于没豁免任何东西：{ghosts}"
+
+    for slug in sorted(clip._LEGACY_NO_OPENING):
+        d = json.loads((Path("specs/interviews") / f"{slug}.json").read_text("utf-8"))
+        assert not d.get("opening"), (
+            f"{slug} 已经认领了 `opening`，就该从豁免名单里划掉——名单只许减不许加")
+
+
+def test_新的采访片必须认领怎么开头():
+    """两头都钉：**存量全过**，而且**闸真的咬得动**。
+
+    ⚠️ 只验前一头的话，一条恒真的 `check_opening` 也能过——所以下面拿假 spec
+    把四种错法各走一遍，每一种都必须抛。
+    """
+    import tools.build_interview_clip as clip
+
+    for p in _iv_specs():
+        d = json.loads(p.read_text("utf-8"))
+        clip.check_opening(d)          # 缺字段 / kind 写错 / 没 why / lead_in 越界都会抛
+
+    ok = {"slug": "新片", "opening": {"kind": "match_end", "lead_in": 13.8,
+                                      "why": "赛点落地 ＋ 解说报出赛果"}}
+    clip.check_opening(ok)
+    clip.check_opening({"slug": "新片", "opening": {"kind": "none",
+                                                    "why": "整条是发布会背板"}})
+
+    坏 = [
+        ({"slug": "新片"}, "缺 opening"),
+        ({"slug": "新片", "opening": {"kind": "match_end", "lead_in": 13.8}}, "没 why"),
+        ({"slug": "新片", "opening": {"kind": "highlight", "why": "a"}}, "kind 不认识"),
+        ({"slug": "新片", "opening": {"kind": "match_end", "why": "a"}}, "缺 lead_in"),
+        ({"slug": "新片", "opening": {"kind": "match_end", "lead_in": 0, "why": "a"}},
+         "lead_in 是 0"),
+        # ⚠️ 上界不是洁癖：收成一长条集锦就变成「赛场之上」了，那是另一个栏目。
+        # 用 `_OPENING_LEAD_MAX + 1` 而不是写死一个数——**上界改过一次**
+        # （30 → 40，`arango-venus` 那条第一次就顶穿了 30），写死的话改上界
+        # 那天这条会跟着一起松，而它自己不出声。
+        ({"slug": "新片", "opening": {"kind": "match_end",
+                                      "lead_in": clip._OPENING_LEAD_MAX + 1,
+                                      "why": "a"}}, "lead_in 超上界"),
+    ]
+    for spec, label in 坏:
+        with pytest.raises(SystemExit):
+            clip.check_opening(spec)
+            pytest.fail(f"这一种没拦住：{label}")
+
+
+def test_认领开头那道闸排在下载之前():
+    """⚠️ **只测行为拦不住位置错。**
+
+    「这条片子怎么开头」是写 spec 那一刻就该定下来的事，只读 spec、不联网。
+    闸排在 `fetch_words` / `yt_download` 后面时上面两条照样全绿，而真实代价是
+    每次漏认领都要先等一趟网络往返——甚至要等九分钟的 render 出片之后，
+    才由人看出来「怎么一上来就有人在说话」。
+    """
+    src = Path("tools/build_interview_clip.py").read_text("utf-8")
+    body = src.split("def main(")[1]
+    body = "\n".join(ln for ln in body.splitlines()
+                     if not ln.lstrip().startswith("#"))
+    assert "check_opening(" in body, "`main()` 里没有调 `check_opening`"
+    for later in ("fetch_words(", "storyboard_sheet(", "segment("):
+        assert body.index("check_opening(") < body.index(later), (
+            f"认领开头那道闸排在 `{later}` 后面了——它只读 spec，"
+            "该在第 0.2 秒就报")
