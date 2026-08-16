@@ -118,9 +118,12 @@ WTA 官网正文也写 `2-hour, 50-minute battle`。
 
 ### ✅ 排名已经查到了（2026-08-16 补）
 
-出处是 **WTA 官方 numeric 排名 PDF**（`wtafiles.wtatennis.com/pdf/rankings/Singles_Numeric.pdf`，
-`As of: 10 August 2026` / `Printed: 14 August 2026`）——用法和坑记在 CLAUDE.md
-「WTA 排名去官方 PDF 拿」那一节，别再重探 ESPN / 网页 / tennisexplorer。
+**两个官方源逐项一致**，都是 `As of 2026-08-10` 这一版榜单
+（用法和参数坑记在 CLAUDE.md「WTA 排名：`players/ranked` 这个接口」那一节）：
+
+    ① api.wtatennis.com/tennis/players/ranked?page=0&pageSize=100
+         &type=rankSingles&sort=asc&name=&metric=SINGLES     ← rankedAt 2026-08-10
+    ② wtafiles.wtatennis.com/pdf/rankings/Singles_Numeric.pdf ← As of 10 August 2026
 
 | | 世界排名 | 上周 | 积分 |
 |---|---|---|---|

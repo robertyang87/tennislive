@@ -5121,28 +5121,49 @@ ESPN 那份是**上一周的快照**，维基那条明写着 `(3 August 2026)`�
 - 「前二十五」这种范围**读起来像谨慎，其实是把没查清的事包装成了查清的事**——
   而且它比错的数字更难被下一个人发现
 
-#### ⭐⭐ WTA 排名去**官方 PDF** 拿：`wtafiles.wtatennis.com/pdf/rankings/Singles_Numeric.pdf`
+#### ⭐⭐ WTA 排名：`players/ranked` 这个接口，**参数少一个就 400**
 
 上面那条给 ATP 定了官方源，**WTA 这半边一直空着**——于是 `rank` 这个字段反复
-卡住出片（`stearns-tauson` 就是因为它停了一轮）。2026-08-16 找到了，
-**它就是 ATP posting PDF 的 WTA 对应物**：纯 HTTP、不用 token、`pypdf` 直接读。
+卡住出片（`stearns-tauson` 就是因为它停了一轮）。
+
+**主路是 JSON 接口**（`noskova-boulter` 的 `_facts` 里早就写着 `players/ranked`，
+只是没人把参数记下来）：
+
+    GET https://api.wtatennis.com/tennis/players/ranked
+        ?page=0&pageSize=100&type=rankSingles&sort=asc&name=&metric=SINGLES
+    → [{"ranking":53,"points":1061,"tournamentsPlayed":22,"movement":4,
+        "rankedAt":"2026-08-10T00:00:00Z",
+        "player":{"id":327573,"fullName":"Peyton Stearns","dateOfBirth":"2001-10-08",…}}, …]
+
+⚠️⚠️ **少一个参数就是 400，而 400 读起来像「这个接口没有排名」。** 我 2026-08-16
+就是这么栽的：`?page=0&pageSize=300&type=rankSingles&sort=asc` 报 400，我据此往这份
+文档里写了「players 接口没有排名」——**那句话是错的，是猜参数猜错了**。
+`metric=SINGLES` 是必须的，`name=` 空着也要给。**加参数要一个一个试，别整串换掉
+再从一个 400 推出结论。**
+
+⚠️ 它一次给 100 条；`rankedAt` 就是这一版榜单的日期，**写进 spec 的排名要连它一起记**
+（排名是快照不是常量，重渲旧片子之前要重查）。
+
+**深过前 100 用官方 PDF**（`pypdf` 直接读，34 页覆盖到一千名开外）：
 
     curl -sL -o rank.pdf -H "User-Agent: Mozilla/5.0" \
       https://wtafiles.wtatennis.com/pdf/rankings/Singles_Numeric.pdf
-    # 34 页、11864 行；表头写着 As of / Printed 两个日期
+    # 表头写着 As of / Printed 两个日期
     # 每条：Rank ｜ (Prior) ｜ NAME ｜ Nat ｜ Points ｜ # Trn …
 
-⚠️ **名字是全大写的 `姓, 名`**（`TAUSON, CLARA`）。按 `Tauson` 大小写去搜**零命中**，
-而那和「这个人不在榜上」长得一模一样——我第一次就是这么搜的，11864 行里报了 0 条。
-⚠️ 双打是同目录下的另一份 PDF，别拿错。
+⚠️ **PDF 里名字是全大写的 `姓, 名`**（`TAUSON, CLARA`）。按 `Tauson` 大小写去搜
+**零命中**，而那和「这个人不在榜上」长得一模一样——我第一次就是这么搜的，
+11864 行里报了 0 条。⚠️ 双打是同目录下的另一份 PDF，别拿错。
 
-**为什么非它不可**（另外三条都走不通，别再重探）：
+**两条路互相印证过**（同一天、同一个 `As of 2026-08-10`）：陶森 42/1184、
+斯特恩斯 53/1061、佩古拉 3/6680、弗雷赫 41、萨姆索诺娃 43——**逐项相同**。
+
+**走不通的三条，别再重探**：
 
 | 路 | 结果 |
 |---|---|
 | `tools/lookup_player_meta.py`（ESPN） | **恒 403**，ATP/WTA 两个榜单都取不到 |
 | `wtatennis.com/rankings/singles` 网页 | **只有前 50**，`?page=2` / `?pageSize=200` **被静默忽略**（三个参数返回的字节数一模一样，1175687） |
-| `api.wtatennis.com/tennis/players/<id>` | 有生日国别，**没有排名**；`/rankings`、`/tennis/rankings/singles` 一律 404 |
 | `api.wtatennis.com/tennis/tournaments/<id>/<年>/players` | **只有种子号**（`seed`），没有排名 |
 | tennisexplorer 球员页 | 是个 JS 壳，`Country:` / `Age:` 都不在 HTML 里 |
 

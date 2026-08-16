@@ -1,0 +1,228 @@
+{
+  "slug": "stearns-tauson",
+  "source_url": "https://www.youtube.com/watch?v=8dDecMRVlkw",
+  "_source": "WTA 官方 YouTube 频道的单场集锦，标题 `Peyton Stearns vs. Clara Tauson | 2026 Cincinnati Round 2 | WTA Match Highlights`（oEmbed 的 `author_name` 是 `WTA`）。1920×1080、25 fps、**381.48 秒**。\n\n⚠️⚠️ **这一条超过 310 秒，尾巴上挂着场上采访**——CLAUDE.md「WTA 纯集锦定长 310 秒，超出的那部分才是采访」正是说这个。转写里 **300.08 秒**开始就是采访提问（`>> 4-1 in the third, but you mustered up enough energy…`），画面从 **300.5 秒**起是主持人＋陶森手持 WTA TOUR 话筒，一直到 371 秒；371.36 起是 WTA 片尾订阅卡。**采访整段不进片子——画面和原声都不收**（账号所有者 2026-08-15：「赛场之上视频不要赛后采访」）。所有窗口收在 **295.4 秒**以内。\n\n⚠️ **这条的采访边界不能靠切点兜底**：`scene_cuts`（阈值 0.35）在 295.64 之后直接跳到 371.36，「走动 → 图形卡 → 采访」这几刀一刀都没认出来；`scene_cuts_loose` 里那个 **299.88** 才是真边界。所以边界是**逐格读缩略图读出来的**，不是切点给的。\n\n比赛画面本身到 ~270 秒（赛点落地约 262–269），270–286 是庆祝和网前握手，288–298 是 `CONGRATULATIONS!` 图形和全屏赛果台标。\n\n四要素自证：记分条整场烧着 `P. STEARNS / C. TAUSON [27]`；298.5 秒全屏台标 `ROUND 2 / PEYTON STEARNS 6 1 5 / CLARA TAUSON 7 6 7`；场边是 `P&G` / `Credit One` / `Western & Southern Financial Group` / `Kroger` / `Fifth Third Bank`（辛辛那提本站赞助商）。",
+  "_column": "赛场之上",
+  "topbar": {
+    "line1": "WTA1000 辛辛那提 第二轮",
+    "line2": "陶森 7-6(7) 1-6 7-5 斯特恩斯"
+  },
+  "_topbar_why": "照「赢家 比分 输家」排，和 WTA 官方 `ResultString`（`[27]C. Tauson d P. Stearns 7-6(7),1-6,7-5`）一致。轮次 `RoundID=2`、YouTube 标题 `Round 2` 对得上。",
+  "editorial": {
+    "mode": "match_review",
+    "question": "两次被逼到墙角的那个人，怎么把这场球拿回来的？",
+    "thesis": "靠不肯把领先让出去的那几分。斯特恩斯两次握着大好局面——第一盘抢七二比五、决胜盘四比一——两次都没能收口。陶森不是靠一波爆发翻盘的，她是把每一次落后都一分一分磨回去：抢七从二比五磨到九比七，决胜盘从一比四磨到七比五，全场两小时五十分钟，小分一百一十四比一百一十四，完全打平。",
+    "beats": [
+      "前段：第一盘一小时十四分钟谁也没拉开，抢七里斯特恩斯先到五比二",
+      "中段：陶森把抢七追到七平、再到八比七，九比七拿下第一盘；第二盘斯特恩斯反打回来只丢一局",
+      "结局：决胜盘斯特恩斯先到四比一，陶森一局一局咬回五平，再连下两局，七比五"
+    ],
+    "human_context": {
+      "angle": "这一场的场外切口是**「客场把主场宠儿熬下去」**。WTA 官网给这条集锦的标题原话就是 `oust home favorite Stearns`——斯特恩斯是美国人，这是美国的赛事，而这一场是当天最后一场，转播原话 `a late night battle with the home favorite`。陶森二十三岁、丹麦人，本站二十七号种子但当期世界第四十二（种子按报名截止那周排，那时她还在三十上下）。",
+      "facts": [
+        "陶森 2002-12-21 出生，本场时 23 岁；斯特恩斯 2001-10-08 出生，24 岁（WTA 官方球员接口 id 327793 / 327573）",
+        "当期世界排名：陶森第 42（1184 分）、斯特恩斯第 53（1061 分），榜单日期 2026-08-10。两个官方源逐项一致（`players/ranked` 接口与 `Singles_Numeric.pdf`）",
+        "陶森是本站 27 号种子（记分条整场烧着 `C. TAUSON [27]`，WTA 官方 ResultString 写作 `[27]C. Tauson`）；斯特恩斯非种子",
+        "分盘用时 01:14:39 / 00:43:08 / 00:52:35，官方 MatchTimeTotal 02:50:27（三个分盘加起来 2:50:22，差 5 秒）",
+        "全场小分 114:114（flashscore df_mh_1），而陶森赢了",
+        "破发点：斯特恩斯 7/19、陶森 5/9（flashscore df_st_1）",
+        "ACE 陶森 13、斯特恩斯 8；双误 陶森 10、斯特恩斯 6（WTA 官方 acesa/b、dblflta/b 与 flashscore 一致）",
+        "第一盘抢七斯特恩斯一度 5-2 领先（记分条 126.5 秒 `6|5 / 6|2`，逐分 df_mh_1 同）",
+        "决胜盘陶森一度 1-4 落后（逐分 df_mh_1：1:0 2:0 2:1 3:1 4:1），之后七局里赢了六局",
+        "转播 277.28 秒原话：It's Tauson who comes out on top in a late night battle with the home favorite",
+        "转播 286.24 秒原话：There were various points in the evening where it looked like it wasn't going to be her night",
+        "下一轮对手是诺斯科娃（转播图形 `CLARA TAUSON ADVANCES TO ROUND 3 · WILL PLAY LINDA NOSKOVA`，采访里主持人也说了 `She just won Wimbledon`）"
+      ],
+      "sources": [
+        "https://www.wtatennis.com/videos/4560466/tauson-flips-4-1-deficit-in-decider-to-oust-home-favorite-stearns",
+        "https://api.wtatennis.com/tennis/players/ranked?page=0&pageSize=100&type=rankSingles&sort=asc&name=&metric=SINGLES",
+        "https://wtafiles.wtatennis.com/pdf/rankings/Singles_Numeric.pdf",
+        "https://www.youtube.com/watch?v=8dDecMRVlkw"
+      ],
+      "voice_label": "客场熬下主场宠儿"
+    }
+  },
+  "_claims": {
+    "第一盘抢七斯特恩斯一度五比二领先": "① **画面自证**——源片 126.5 秒的记分条直接印着 `TIE BREAK · P. STEARNS 6|5 / C. TAUSON [27] 6|2`，144.5 秒是 `6|5 / 6|3`，156.5 秒是 `6|7 / 6|7`（七平），162.5–180.5 秒是 `SET POINT #4 · 6|7 / 6|8`；② **flashscore 逐分** `df_mh_1_CUDy2d3L` 的抢七序列 `…5:2, 5:3, 6:3, …, 6:6, 6:7, 7:7, 7:8, 7:9` https://global.flashscore.ninja/2/x/feed/df_mh_1_CUDy2d3L 。\n\n⚠️ **故意不写「斯特恩斯手握三个盘点」**：逐分的 `6:3` 推出来是三个，可记分条的 `SET POINT #N` 徽标编号对不上（6-7 时显示 `#3`、7-8 时显示 `#4`——若斯特恩斯真有三个，陶森的第一个该是 `#4` 而不是 `#3`）。两个源打架就不印，只印两个源都直接给的「二比五」。",
+    "决胜盘陶森一度一比四落后": "① **WTA 官网**这条集锦页的标题和摘要原文：`Tauson flips 4-1 deficit in decider` / `coming from 4-1 down in the third` https://www.wtatennis.com/videos/4560466/tauson-flips-4-1-deficit-in-decider-to-oust-home-favorite-stearns ；② **flashscore 逐分** `df_mh_1_CUDy2d3L` 第三盘逐局 `1:0 2:0 2:1 3:1 4:1 4:2 4:3 4:4 5:4 5:5 5:6 5:7`（主队是斯特恩斯）。\n\n⚠️ **这个低点没进集锦**：源片 240.5 秒记分条还是决胜盘 1-0，下一格就跳到 246.5 秒的 4-3。所以旁白里说它、**画面不许声称在演它**（第 12 段的窗口对应的是 4-1 之后那一段）。"
+  },
+  "_no_repeat": "同栏目 8.16 已发的五条各自的落点，这一条都不碰：\n  · `zhang-day` 零 ACE；`navarro-kalinina` 全场只多赢一个小分；`parry-mertens` 对手一发从八成掉到三成八；`pegula-waltert` 双误十一比一＋连丢五个发球局；`noskova-boulter` 被破之后连保八局。\n  · ⚠️ **这一条手上也有一个「小分打平」的数（114:114）**，比 `navarro-kalinina` 的「只多赢一个」还极端——**故意不当落点、只在正文里带一句**。同一个栏目同一天用两次同一种切面就是自我重复，而这条真正独有的是**两次从落后翻回来的过程**。\n  · ⚠️ 收尾提到诺斯科娃是**因为她是下一轮对手**，不重讲 `noskova-boulter` 铺开过的「温网冠军后首胜」那条线。",
+  "_editing_why": "源片 381.5 秒，**300.08 秒之后是场上采访，一秒都不收**（见 `_source`）。结构照「开场三格」：① 赛点落地 ＋ 她赢下那一刻（不配旁白，走现场声）→ ② 落点 → ③ 坐标；之后回到 2.0 秒按时间顺序走，末段回到 289.6 秒收尾。\n\n两个人分得很开：**斯特恩斯粉色连衣裙配粉色遮阳帽，陶森浅蓝背心配藏青 adidas 遮阳帽**。封面那张官方实拍就是浅蓝那套，和源片同一套。\n\n15 段全部落在 `scene_cuts` 的同一个镜头里，只有第 1 段跨了 269.32（两边都是陶森，已挂 `crosses_cut`）。\n\n旁白定稿之后跑了第二遍 `preview_segments_local.py` 核「这句话说的那个人是不是画面里那个人」。",
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "陶森",
+    "hook": "抢七二比五落后\n决胜盘一比四",
+    "_hook_why": "两行是**同一件事的两次**，讲的是过程不是身份：两回被逼到墙角，两回翻回来——这正是这场球独有的形状。海报别处印着排名、轮次、比分，不重复。最长行 7 个字符，在 `HOOK_MAX_CHARS = 10` 以内。\n\n⚠️ 没用「全场小分打平」那个更抓眼的数，理由写在 `_no_repeat`：同一天同栏目的 `navarro-kalinina` 刚用过同一种切面。",
+    "_subject_view_why": "封面放陶森：她是赢的那个，也是这条片子讲的主体（两次翻盘的人）。斯特恩斯虽是主场球员，但对中文读者不构成「输的那个才是流量主体」的取舍——两个人都不是大名字，那就放赢家兼叙事主体。",
+    "topic": "辛辛那提WTA1000 · 女单第二轮",
+    "portrait": {
+      "image": "assets/reel/tauson-cincinnati-2026-r2.jpg",
+      "focus": 0.42,
+      "focus_y": 0.3,
+      "zoom": 1.0
+    },
+    "_portrait_why": "**官方实拍，不是抽帧**。4000×2700，铺 1080×1440 是 **0.53× 缩小**。\n\n取法：这条集锦页（`videos/4560466`）的 schema.org `VideoObject.thumbnailUrl`。⚠️ 取原图**必须带 `?width=4000`**——不带参数是 **HTTP 400 不是 404**，读成「这张图不存在」就会白白退回抽帧。\n\n⚠️ **文件名是 `GettyImages-2290118693.jpg`，本身不自证四要素**（和 `pegula-waltert` 那张 `Jessica_Pegula_-_Cincinnati_Open_2026_-_Day_5-…` 不一样）。所以自证靠另外三条：① **CMS 引用关系**——它就是这场比赛那条集锦的头图，路径日期 `2026/08/16`；② **球衣**——浅蓝背心＋藏青 adidas 遮阳帽，和源片里陶森同一套（42.5 秒近景、360.5 秒采访都看得清）；③ **场地**——同一批广告板（P&G / Credit One）。\n\n四道闸门：① 见上；② **在比赛中**——双手反拍随挥，**球就在拍面前**；③ 有冲击力——盯着球、表情绷着；④ 4000×2700 真实相机分辨率。",
+    "winner": "陶森",
+    "result": "7-6(7) 1-6 7-5",
+    "matchup": [
+      {
+        "name": "陶森",
+        "name_en": "Clara Tauson",
+        "country": "DEN",
+        "rank": 42
+      },
+      {
+        "name": "斯特恩斯",
+        "name_en": "Peyton Stearns",
+        "country": "USA",
+        "rank": 53
+      }
+    ],
+    "_matchup_rank_why": "两个排名取 **WTA 官方 `players/ranked`**（`rankedAt 2026-08-10`），并和官方 `Singles_Numeric.pdf` 逐项对过：陶森 42/1184、斯特恩斯 53/1061，两个源完全一致。\n\n⚠️ **陶森是 27 号种子但世界第 42**——种子按报名截止那周的排名排（她那时约第 30，PDF 的 `Prior` 栏就写着 30），之后掉了。**两个数都对，别混成一件事**（CLAUDE.md 卢布列夫那条记的是同一个坑）。",
+    "_name_why": "`Clara Tauson → 陶森`、`Peyton Stearns → 斯特恩斯`，两个都是跑 `player_zh()` 拿的，不是手打。⚠️ 入口在 `tennislive.zh`，不是 `tennislive.zh.players`。",
+    "scoreboard": {
+      "court": "Lindner Family Tennis Center",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%20%222%3A50%3A27%22%2C%20%22source_feed%22%3A%20%22WTA%20official%20LS049%20settime%2001%3A14%3A39%20%2B%2000%3A43%3A08%20%2B%2000%3A52%3A35%20%3D%202%3A50%3A22%2C%20MatchTimeTotal%2002%3A50%3A27%22%7D",
+        "field": "duration"
+      },
+      "_duration_why": "取 **WTA 官方** `matches/LS049/stats` 的分盘 `settime`：`01:14:39` ＋ `00:43:08` ＋ `00:52:35` ＝ `2:50:22`，同一份数据的 `MatchTimeTotal` 是 `02:50:27`——差 5 秒，自洽。\n\n⚠️ **flashscore 的 `1:11 + 0:44 + 0:53 = 2:48` 偏短两分钟，没用**（CLAUDE.md 早写过 flashscore 的用时不要单独信）。第三个源是**画面自证**：源片 264.5 秒那一格里场地的 Rolex 时钟读数正好是 `2:50`；WTA 官网正文也写 `2-hour, 50-minute battle`。",
+      "_court_why": "⚠️ **这一场的球场名没查实，所以印场馆名**。WTA 官方给的是 `CourtID 1`，而 CLAUDE.md 的标定表里**这个码位还没标定过**（已知 6 → Court 4、5 → Court 10、3 → Stadium 3、2 → 有争议）。\n\n另外两条路也走空了：**转播全程没提球场名**（转写里 `court` 一次都没出现，不像 `navarro-kalinina` 的 `on court 10` 或 `parry-mertens` 的 `on court four`）；源片里也没拍到写着球场名的牌子。\n\n线索是有的——这是当天最后一场（`closed out Saturday's slate`）、看台规模明显比 `zhang-day` 的 4 号场大，多半是中心球场——**但线索不是查实**。按同站 `pegula-waltert` / `cirstea-bartunkova` 的先例印场馆名，宁可粗一档，也别印一个没查实的球场号。"
+    }
+  },
+  "stats": {
+    "tour": "wta",
+    "a": {
+      "headshot": "assets/players/headshots/wta-327793.jpg",
+      "aces": 13,
+      "df": 10,
+      "first_in": 82,
+      "first_won": 50,
+      "second_total": 44,
+      "second_won": 16,
+      "bp_conv": 5,
+      "bp_chances": 9,
+      "pts_won": 114,
+      "pts_total": 228,
+      "first_total": 126
+    },
+    "b": {
+      "headshot": "assets/players/headshots/wta-327573.jpg",
+      "aces": 8,
+      "df": 6,
+      "first_in": 57,
+      "first_won": 37,
+      "second_total": 45,
+      "second_won": 17,
+      "bp_conv": 7,
+      "bp_chances": 19,
+      "pts_won": 114,
+      "pts_total": 228,
+      "first_total": 102
+    },
+    "footer_venue": "辛辛那提 · 女单第二轮",
+    "footer_date": "2026年8月16日",
+    "_source": "数出自 `python3 tools/match_stat_hooks.py CUDy2d3L --stats-block`。\n\n⚠️⚠️ **`a`/`b` 是调过顺序的**：工具按 flashscore 的 home/away 排，这一场 home 是**斯特恩斯**；而 `cover.matchup[0]` 是**陶森**（封面主体、赢家）。CLAUDE.md 写着 `stats.a` 跟的是 `cover.matchup[0]` 不是 feed 的 home/away，所以整块 a/b 对调、头像跟着换。判据是 `test_数据图的头像和matchup里的名字必须是同一个人`。\n\n⚠️ 制胜分和非受迫失误这场接口里没有——WTA 巡回赛这一档本来就不给。\n\n⚠️ `first_total` 按 `first_in + second_total` 算（82+44=126、57+45=102）。\n\n⚠️ **小分两边都是 114**（228 分打平）——不是填错，是这场球真的完全平分。",
+    "_headshot_why": "两张都是 `wtafiles.blob.core.windows.net/images/headshots/<id>.jpg` 直接取到的 **492×656**，正好是版式要的尺寸，不用像 `wta-325771` 那样从 1600×1500 的 PNG 按 alpha 抠头再合白底。"
+  },
+  "_hit_data": "跑过 `python3 tools/match_stat_hooks.py CUDy2d3L`，九条候选全在。挑进片子的是**从落后翻回来的两段过程**（抢七 2-5、决胜盘 1-4），它们不在工具的候选里——工具给的是数，这条片子的落点是过程。\n\n没用的，以及为什么：\n  · **总分差 0（114:114 完全打平）**——最抓眼的一个，但 `navarro-kalinina`（同一天同栏目）刚用过「只多赢一个小分」，同一种切面不重复用；退到正文里带一句；\n  · **斯特恩斯连续被破 5 个发球局**——`pegula-waltert`（同一天）刚用过「连丢五个发球局」；\n  · **破发点 7/19 对 5/9**——`noskova-boulter` 用过破发点；\n  · **一发得分率分盘摆动**——`parry-mertens`（同一天）刚用过这条曲线；\n  · **交手记录 1:2**——两人此前交手过两次，不构成「首次交手」这类落点。",
+  "_voice": "配音走仓库默认的云见（zh-CN-YunjianNeural，+6%），这条 spec 不另设 voice/style。",
+  "segments": [
+    {
+      "start": 265.4,
+      "end": 273.5,
+      "crosses_cut": "269.32 那一刀两边**都是陶森**：切之前是赛点那一分的回合（记分条 262.5–268.5 一直挂着 `MATCH POINT`），切之后是她赢下之后的反应（270.5 抬头、272.5 攥着球）。这一段不配旁白，走现场声，谈不上「整句旁白压在别人身上」。",
+      "_why": "① 画面爆点，不配旁白。记分条从 262.5 秒起挂着 `MATCH POINT`（`6 6 5 15 / 7 1 6 40`），266.5/268.5 是那一分的回合，270 之后是她赢下的反应。段尾收在切点 278.28 之前。"
+    },
+    {
+      "start": 278.4,
+      "end": 285.5,
+      "narration": "两小时五十分钟。这场球是陶森从两次落后里抢回来的。",
+      "_why": "② 落点。画面是网前握手（278.5 走向球网、280.5 两个人握手）。\n\n⚠️ **措辞是第一遍 `preview_segments_local` 之后改的**：原来写「两次**她**都翻了回来」，而这个窗口后半段（282.5、284.5 两格）近端是**斯特恩斯**（粉色）——一句讲陶森的话压在输球那个人身上，正是 CLAUDE.md 拦的那种。改成**把陶森的名字写出来**，并且把主语从「她」换成「这场球」，握手画面里两个人都在就不再矛盾。"
+    },
+    {
+      "start": 2.0,
+      "end": 11.0,
+      "narration": "北京时间八月十六号早上八点，辛辛那提第二轮。二十七号种子陶森对斯特恩斯。",
+      "_why": "③ 坐标。⚠️ 时刻说到点不说分：WTA 官方 `MatchTimeStamp` 是 `2026-08-16T00:07:58Z`，换算北京时间 08:07。⚠️ 轮次写「第二轮」不写「三十二强」。段落落在切点 1.84–27.12 这一个镜头里。"
+    },
+    {
+      "start": 27.5,
+      "end": 35.5,
+      "narration": "陶森世界第四十二，斯特恩斯第五十三。这是斯特恩斯的主场。",
+      "_why": "两个人的来路。排名两个官方源核过（见 `_matchup_rank_why`）。「主场」出自 WTA 官网标题 `home favorite` 和转播原话。⚠️ 没说种子号，因为上一段刚说过。"
+    },
+    {
+      "start": 44.0,
+      "end": 51.0,
+      "narration": "第一盘打了一小时十四分钟。一小时十四分钟，只打完了一盘。",
+      "_why": "第一盘的体量。用时出自 WTA 官方分盘 `settime` 的 `01:14:39`。画面是这一盘中段的回合，落在切点 43.24–60.52 这一个镜头里。"
+    },
+    {
+      "start": 83.5,
+      "end": 90.5,
+      "narration": "五比四，四十平。这一盘谁先松一下，谁就没了。",
+      "_why": "记分条 82.5 秒是 `P. STEARNS 5 40 / C. TAUSON 4 40`——五比四、四十平。⚠️ 只说记分条直接给的两件事，**不说谁在发球**（这一格看不出发球指示）。窗口落在切点 82.96–91.52 这一个镜头里。"
+    },
+    {
+      "start": 126.0,
+      "end": 134.0,
+      "narration": "抢七里，斯特恩斯先拿到五比二。这一盘看着已经不是陶森的了。",
+      "_why": "记分条 126.5 秒直接印着 `TIE BREAK · 6|5 / 6|2`。窗口落在切点 125.44–141.24 这一个镜头里。"
+    },
+    {
+      "start": 145.0,
+      "end": 152.5,
+      "narration": "她没有一次把落后一口气追平。是一分，一分，再一分。",
+      "_why": "记分条 146.5–154.5 秒是 `6|6 / 6|7`——陶森反超到 7-6。逐分序列 `6:3 6:4 6:5 6:6 6:7` 同。窗口落在切点 144.84–153.04 这一个镜头里。"
+    },
+    {
+      "start": 161.0,
+      "end": 169.5,
+      "narration": "七平之后陶森拿到八比七。盘点在手，再赢一分，这一盘就是她的。",
+      "_why": "记分条 156.5–160.5 秒是 `6|7 / 6|7`（七平），162.5–180.5 秒是 `SET POINT #4 · 6|7 / 6|8`。⚠️ **「盘点」是这条片子里第一次出现的术语，就地解释了一句**（CLAUDE.md：术语第一次出现就地解释）。窗口落在切点 160.76–179.32 这一个镜头里。\n\n⚠️ **第一遍 `preview_segments_local` 之后把「她」换成了「陶森」**：这个窗口四格里有三格近端是斯特恩斯（粉色），宽景回合虽然两个人都在，但主语写出来更稳（CLAUDE.md：把名字写出来）。"
+    },
+    {
+      "start": 180.0,
+      "end": 187.0,
+      "narration": "九比七。一小时十四分钟，第一盘终于有了归属。",
+      "_why": "抢七 9-7（官方 `ResultString` 的 `7-6(7)`、逐分末尾 `7:9`）。画面 188.5 秒起是 `CLARA TAUSON` ＋ 丹麦国旗的归属图形，窗口收在它之前，落在切点 179.32–191.88 这一个镜头里。"
+    },
+    {
+      "start": 204.5,
+      "end": 212.0,
+      "narration": "可第二盘整个反了过来。四比一，六比一——陶森只拿到一局。",
+      "_why": "记分条 204.5–218.5 秒是 `6 4 40 / 7 1 15`——第二盘斯特恩斯 4-1；220.5–234.5 秒是 `SET POINT #3 · 6 5 Ad / 7 1`。第二盘终局 6-1（官方 `ResultString`）。窗口落在切点 203.04–217.16 这一个镜头里。"
+    },
+    {
+      "start": 239.7,
+      "end": 245.4,
+      "narration": "决胜盘一上来就是斯特恩斯的，四比一。",
+      "_why": "记分条 240.5 秒是决胜盘 `6 6 1 40 / 7 1 0 30`。⚠️ **1-4 那个低点本身没进集锦**（下一格 246.5 秒已经是 4-3），所以这句话是旁白在讲、画面没有声称在演它——两个源见 `_claims`。窗口落在切点 239.52–245.56 这一个镜头里。\n\n⚠️⚠️ **第一遍 `preview_segments_local` 抓到的最重的一处**：原来写「决胜盘，**她**又落后到一比四」，而这个窗口三格**全是斯特恩斯**（粉色，240.5 那格她正在握拳）——一句讲陶森落后的话，压在赢下那几局的人身上，读者会把「她」读成画面里那个人，整句意思就反了。改成**主语换成斯特恩斯**：同一个事实，而画面（她握拳、记分条挂着 `BREAK POINT`）正好在演它。"
+    },
+    {
+      "start": 247.5,
+      "end": 251.4,
+      "narration": "陶森又开始一分一分地咬。",
+      "_why": "记分条 246.5–250.5 秒是 `6 6 4 / 7 1 3 Ad` 加 `BREAK POINT`——决胜盘 4-3、陶森占先，正是她在追的那一段。窗口落在切点 247.36–251.6 这一个镜头里。\n\n⚠️ 上一段主语已经换成斯特恩斯，所以这一段**把陶森的名字写出来**，不用「她」——否则接在斯特恩斯后面会指错人。"
+    },
+    {
+      "start": 254.0,
+      "end": 258.5,
+      "narration": "五平。这一次陶森没再让回去。",
+      "_why": "记分条 252.5–260.5 秒是 `6 6 5 15 / 7 1 5 40`——五平。之后 262.5 秒已经是 `6 6 5 15 / 7 1 6 40` 加 `MATCH POINT`。逐分第三盘末尾 `5:5 5:6 5:7`。窗口落在切点 253.84–259.92 这一个镜头里。\n\n⚠️ 同上：这个窗口三格里两格近端是斯特恩斯（粉色），主语写出来才不会指错。"
+    },
+    {
+      "start": 289.6,
+      "end": 295.4,
+      "narration": "下一轮碰刚拿温网的诺斯科娃。她还能走多远？",
+      "_why": "收尾一问，**不是封面那一问的回声**（钩子讲的是两次落后）。画面是 `CONGRATULATIONS!` 图形和她走向场边。下一轮对手两个源：转播图形 `CLARA TAUSON ADVANCES TO ROUND 3 · WILL PLAY LINDA NOSKOVA`，以及采访里主持人那句 `She just won Wimbledon`。\n\n⚠️ **段尾 295.4 必须收在 295.64 之前**——300.08 秒起就是场上采访，一秒都不能进；而 295.64 之后到 371.36 探不到切点，边界只能手动卡（见 `_source`）。"
+    }
+  ],
+  "push": {
+    "summary": "陶森两次落后翻盘晋级",
+    "lead": "辛辛那提女单第二轮，二十七号种子、世界第四十二的丹麦人陶森 7-6(7) 1-6 7-5 熬过美国本土球员斯特恩斯，用时**两小时五十分钟**，是当天最后一场结束的比赛。这场球的形状很干净：**斯特恩斯两次握着大好局面，两次没能收口**。第一盘打了一小时十四分钟，抢七里斯特恩斯一度 **5-2** 领先，陶森一分一分追到七平、再到八比七，九比七拿下；第二盘斯特恩斯反打回来，只让对手拿到一局，六比一扳平；决胜盘斯特恩斯又先冲到 **4-1**，陶森一局一局咬回五平，再连下两局，七比五。全场**二百二十八个小分，两个人各拿一百一十四个，完全打平**——而赢的是陶森。破发点斯特恩斯十九次机会兑现七次、陶森九次兑现五次。转播赛后那句话是：这一晚有好几个时刻，看起来都不像是属于她的。下一轮她碰上刚拿了温网的诺斯科娃——采访里她说，那是她很好的朋友，两个人一起打过很多双打，诺斯科娃夺冠时她立刻发了消息过去。",
+    "auto": true
+  }
+}
