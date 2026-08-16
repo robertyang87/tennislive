@@ -1,0 +1,99 @@
+name: preview-reel
+
+# 开球之前 · 独立管线（纯视频）。渲染核心委托 build_match_reel.render()（预览 spec
+# 用的就是 segments+sources+mixed_fps 那套 schema），入口和产物目录独立：
+#   spec   specs/previews/<slug>.json（存量 4 条老片还在 specs/reels/，只读回退）
+#   产物   output/preview/<slug>/
+# 和 match-reel 分家，是为了「开球之前」以后能长出自己那几样 beat 类型
+# （footage_beat / poster_beat / stat_overlay，见 tools/preview_beats.py），
+# 不因改 match-reel 而互相波及。
+#
+# 第一版只做 render（+ 可选的 --dry-run 形状校验）；probe / cover / push 分档
+# 以后按需要再加——先能出片，再谈完整。
+
+on:
+  workflow_dispatch:
+    inputs:
+      slug:
+        description: "开球之前 spec 文件名（不带 .json）"
+        required: true
+        default: "jodar-fritz"
+      dry_run:
+        description: "true = 只验 spec 形状，不下载不渲染"
+        required: false
+        default: "false"
+
+# 第一版只渲到 runner、不提交产物也不发 Release，只读即可；等接上
+# 「提交 render.json + 成片发 Release」那两步（match-reel 同款）再加回 contents: write。
+permissions:
+  contents: read
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    concurrency:
+      group: preview-reel-${{ github.event.inputs.slug }}
+      cancel-in-progress: true
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            specs
+            tools
+            src
+            assets
+            output
+          sparse-checkout-cone-mode: false
+
+      - name: 装 ffmpeg
+        timeout-minutes: 6
+        run: |
+          apt_retry() {
+            for i in 1 2; do
+              sudo timeout 150 "$@" && return 0
+              echo "::warning::apt 第 $i 次没跑完：$*"
+              sudo dpkg --configure -a || true
+              sleep 10
+            done
+            echo "::error::apt 两次都没成功：$*"
+            return 1
+          }
+          apt_retry apt-get update -qq
+          apt_retry apt-get install -y -qq ffmpeg
+
+      - name: 装中文字体（封面和烧字幕都要）
+        timeout-minutes: 6
+        run: |
+          apt_retry() {
+            for i in 1 2; do
+              sudo timeout 150 "$@" && return 0
+              echo "::warning::apt 第 $i 次没跑完：$*"
+              sudo dpkg --configure -a || true
+              sleep 10
+            done
+            echo "::error::apt 两次都没成功：$*"
+            return 1
+          }
+          apt_retry apt-get install -y -qq fonts-noto-cjk fonts-noto-color-emoji
+
+      - name: 装依赖
+        run: |
+          pip install -q -e ".[webrender,visualqa,cutout]"
+          # ⚠️ yt-dlp 要装 [default]，它才带 yt-dlp-ejs——少了它不报「装少了」，
+          # 而是解不了 YouTube 的 n challenge，报得像个源片问题。
+          pip install -q "yt-dlp[default]" edge-tts azure-cognitiveservices-speech
+
+      - name: 装 Chromium（封面/角标渲染）
+        run: python -m playwright install --with-deps chromium
+
+      - name: 渲开球之前
+        env:
+          AZURE_SPEECH_KEY: ${{ secrets.AZURE_SPEECH_KEY }}
+          AZURE_SPEECH_REGION: ${{ secrets.AZURE_SPEECH_REGION }}
+        run: |
+          if [ "${{ github.event.inputs.dry_run }}" = "true" ]; then
+            PYTHONPATH=src python tools/preview_beats.py --slug "${{ github.event.inputs.slug }}" --dry-run
+          else
+            PYTHONPATH=src python tools/preview_beats.py --slug "${{ github.event.inputs.slug }}"
+          fi

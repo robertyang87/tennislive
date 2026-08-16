@@ -74,6 +74,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 from build_match_reel import (  # noqa: E402
     ReelError,
+    load_spec,  # noqa: F401
+    render as render_reel,  # noqa: F401
+    validate_spec,  # noqa: F401
     dissolve_filtergraph,  # noqa: F401  (导出给装配函数用，见下)
     duck_filtergraph,  # noqa: F401
     _still_to_clip,  # noqa: F401
@@ -235,3 +238,71 @@ def poster_beat(poster: Path, dest: Path, seconds: float,
     接缝的溶解料，`dissolve_filtergraph` 会正好把它吃掉。
     """
     return _still_to_clip(poster, dest, seconds + tail)
+
+
+# 独立管线的 spec 目录。存量 4 条开球之前 spec 还躺在 specs/reels/ 下（历史混线），
+# 新 spec 一律写进这里；load_preview_spec 对老 slug 退回 reels 只为了老片子还能渲。
+PREVIEW_SPEC_DIR = ROOT / "specs" / "previews"
+PREVIEW_OUTDIR = ROOT / "output" / "preview"
+
+
+def load_preview_spec(slug: str) -> dict:
+    """从 specs/previews/<slug>.json 读，读不到再退回 specs/reels/<slug>.json。
+
+    回退是**只读兼容**（4 条存量老片还在 reels 下），不是「允许新 spec 继续混线」。
+    判据：specs/previews/ 下出现的 slug 优先，读到了就 print 一句「独立目录」。
+    """
+    p = PREVIEW_SPEC_DIR / f"{slug}.json"
+    if p.is_file():
+        print(f"[spec] {p}（独立目录）")
+        return load_spec(p)
+    legacy = ROOT / "specs" / "reels" / f"{slug}.json"
+    if legacy.is_file():
+        print(f"[spec] {legacy}（历史混线，存量老片）")
+        return load_spec(legacy)
+    raise ReelError(
+        f"找不到开球之前 spec：{slug}——specs/previews/ 和 specs/reels/ 都找过")
+
+
+def assemble_preview_reel(spec: dict, outdir: Path, *,
+                          voice: str, rate: str) -> Path:
+    """开球之前独立管线的装配入口——现阶段委托给 `build_match_reel.render()`。
+
+    ⚠️ 这是**入口独立**，不是渲染独立：预览 spec 用的就是 match-reel 的
+    `segments + sources + mixed_fps` schema，`render()` 已经验证能渲。真正独立的
+    beat 类型（footage_beat / poster_beat / stat_overlay，本文件上半部分那几样）
+    是下一步——等有真实素材，再往 render 前插一层「按 beat 类型分派」，而不是
+    现在写一段「写了没跑过」的装配。
+    """
+    return render_reel(spec, outdir, voice=voice, rate=rate)
+
+
+def main() -> int:
+    import argparse
+
+    ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
+    ap.add_argument("--slug", required=True)
+    ap.add_argument("--dry-run", action="store_true",
+                    help="只验 spec 形状，不下载不渲染")
+    ap.add_argument("--voice", default="zh-CN-YunjianNeural")
+    ap.add_argument("--rate", default="+6%")
+    args = ap.parse_args()
+
+    spec = load_preview_spec(args.slug)
+
+    if args.dry_run:
+        validate_spec(spec)
+        print(f"[dry-run] 开球之前 spec {args.slug} 形状 OK："
+              f"源片 {len(spec.get('sources') or {})} 组，"
+              f"段落 {len(spec.get('segments') or [])} 段")
+        return 0
+
+    outdir = PREVIEW_OUTDIR / args.slug
+    film = assemble_preview_reel(spec, outdir,
+                                 voice=args.voice, rate=args.rate)
+    print(f"成片 {film}")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
