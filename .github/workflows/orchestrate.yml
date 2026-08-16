@@ -85,7 +85,9 @@ jobs:
         if: github.event_name == 'workflow_dispatch' && github.event.inputs.apply == 'true'
         run: |
           git config user.name "Claude"
-          git config user.email "claude@tennislive.local"
+          # ⚠️ 邮箱必须是 noreply@anthropic.com，别改成别的：GitHub 认不出的
+          # 邮箱会把提交标成 Unverified（`test_提交产物的工作流一律用Claude的身份`）。
+          git config user.email "noreply@anthropic.com"
           git add data/orchestration_state.json
           if git diff --cached --quiet; then
             echo "state 没有变化，不提交"

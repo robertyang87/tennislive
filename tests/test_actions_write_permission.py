@@ -57,6 +57,32 @@ _PAGES_ENTRIES = (
     (r"check_pages_trigger\.py", "tools/check_pages_trigger.py"),
 )
 
+#: `actions: write` 的**第二种**正当理由：这条工作流自己要派发别的工作流。
+#:
+#: ⚠️ **2026-08-16 补的，而补它的方式值得记一笔。** 这条判据的原始前提是
+#: 「`actions: write` 只为点 Pages 而存在」——那句话在写它的时候是真的，
+#: `orchestrate.yml`（编排器的 apply 分支 `gh workflow run` 派发生产工作流）
+#: 一进 main 就不成立了，于是它被判成「权限块是从别处复制粘贴来的」，
+#: 而报错还教人去**删掉那行 `actions: write`**——照做的话 apply 那条路
+#: 会静静地 dispatch 失败，正是这条判据下半截专门要防的那种功能 bug。
+#:
+#: **判据要跟着结构走，不是跟着当初那一版的数走**（CLAUDE.md 记过同一个形状：
+#: 解读卡的门槛按两张卡定，砍成一张之后就成了一条常年红）。所以不是放宽成
+#: 「谁要谁拿」，是**把第二个正当理由显式登记进来，两个方向照旧都钉**：
+#: 给了就必须落在这两类里的某一类，用得着就必须给。
+#:
+#: ⚠️ **按工具入口写，不按 `gh workflow run` 这个字面写**，和 `_PAGES_ENTRIES`
+#: 完全同一个形状：真正 dispatch 的那一句在 `tools/orchestrate.py:243`
+#: （`["gh", "workflow", "run", wf, …]`），**YAML 里只出现工具名**。
+#: 第一版我按字面扫，当场还是红——因为 `orchestrate.yml` 里 `gh workflow run`
+#: 只出现在**注释**里（第 6 行和第 63 行），而 `_yaml_only` 正好把注释剥掉了。
+#: 又一次「查的东西和跑的东西不是一回事」。
+_DISPATCH_ENTRIES = (
+    (r"orchestrate\.py", "tools/orchestrate.py"),
+    (r"gh\s+workflow\s+run", "gh workflow run（直接写在 run: 里）"),
+    (r"gh\s+api\b[^\n]*/dispatches", "gh api …/dispatches"),
+)
+
 
 def _yaml_only(text: str) -> str:
     """去掉注释再扫。
@@ -64,9 +90,20 @@ def _yaml_only(text: str) -> str:
     ⚠️ **这个仓库的注释正是教训的存放处**，正文里必然写着当年那些错值和不该装的
     东西——连注释一起扫，「把坑记下来」会被判成「又踩了这个坑」（同一个错这里
     犯过五次）。
+
+    ⚠️ **剥完注释要把行尾的空白一起收掉。** 少了这一步，写成
+
+        actions: write    # apply 分支 gh workflow run 派发别的生产工作流
+
+    的那一行剥完是 `  actions: write    `——**尾巴上那四个空格还在**，而下面那条
+    权限块的正则要求值后面直接换行，于是整个 `permissions:` 块匹配不上，报出来
+    是「有 actions: write 却找不到顶层 permissions 块」。`orchestrate.yml`
+    2026-08-16 就是这么红的：**权限块写得好好的，判据自己剥出来的残渣把它挡住了。**
+    这跟本文件上面那条「注释被误伤」是一家的，只不过误伤它的不是注释本身，
+    是**去掉注释之后剩下的那点空白**。
     """
     lines = [l for l in text.splitlines() if not l.lstrip().startswith("#")]
-    return re.sub(r"#.*", "", "\n".join(lines))
+    return "\n".join(re.sub(r"#.*", "", l).rstrip() for l in lines)
 
 
 def test_给了actions_write的工作流都真的要点Pages():
@@ -77,34 +114,40 @@ def test_给了actions_write的工作流都真的要点Pages():
     assert len(files) >= 15, f"只扫到 {len(files)} 条工作流，判据失效了"
 
     granted, needed = set(), {}
+    pages_only = set()
     for path in files:
         body = _yaml_only(path.read_text(encoding="utf-8"))
         if re.search(r"^\s*actions:\s*write", body, re.M):
             granted.add(path.name)
         hits = [label for pat, label in _PAGES_ENTRIES if re.search(pat, body)]
         if hits:
+            pages_only.add(path.name)
+        hits += [label for pat, label in _DISPATCH_ENTRIES if re.search(pat, body)]
+        if hits:
             needed[path.name] = hits
 
     # 判据自己的判据②：一条都没扫出来的话下面两个集合差恒为空。
     assert granted, "一条 actions: write 都没扫到——权限块的写法变了？"
-    assert needed, "一条会点 Pages 的工作流都没扫到——三个入口的名字变了？"
+    assert pages_only, "一条会点 Pages 的工作流都没扫到——三个入口的名字变了？"
 
     多给 = sorted(granted - set(needed))
     assert not 多给, (
-        f"这几条有 actions: write 却跑不到任何一个点 Pages 的入口：{多给}\n"
+        f"这几条有 actions: write 却既不点 Pages 也不派发别的工作流：{多给}\n"
         "要么是权限块从别处复制粘贴来的（最常见的走样方式），要么是那条线不再"
         "推送了。删掉它那行 `actions: write`。")
 
     少给 = sorted(set(needed) - granted)
     assert not 少给, (
-        "这几条会点 Pages 却没有 actions: write："
+        "这几条要么点 Pages 要么派发别的工作流，却没有 `actions: write`："
         + "".join(f"\n  {name} → {needed[name]}" for name in 少给)
-        + "\n\n⚠️ **这是功能 bug 不是安全问题**：dispatch 会静静失败，Pages 不重建，"
-          "探活探不到，最后复制页那颗按钮被摘掉——而日志上它和「今天 Pages 慢」"
-          "长得一模一样。给它加上 `actions: write`。")
+        + "\n\n⚠️ **这是功能 bug 不是安全问题**：dispatch 会静静失败。"
+          "点 Pages 那一支的后果是 Pages 不重建 → 探活探不到 → 复制页那颗按钮"
+          "被摘掉，而日志上它和「今天 Pages 慢」长得一模一样；派发那一支的后果是"
+          "编排器报告说「已 dispatch」而实际上一条都没发出去。给它加上 "
+          "`actions: write`。")
 
-    print(f"  {len(granted)} 条给了 actions: write，和真正要点 Pages 的那 "
-          f"{len(needed)} 条完全重合")
+    print(f"  {len(granted)} 条给了 actions: write，和真正用得着的那 "
+          f"{len(needed)} 条完全重合（其中 {len(pages_only)} 条是为点 Pages）")
 
 
 def test_点Pages那几条不许再多要别的权限():
