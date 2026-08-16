@@ -238,9 +238,19 @@ def _english_display(name: str, meta: dict, where: str) -> str:
             f"{where} 缺 `name_en`：比分板必须显示中文名＋排名和英文名，"
             "不能猜英文拼法。")
     # 规范表里通常是全名；比分板采用首字母＋姓氏的短名形式。
-    parts = value.replace("-", " - ").split()
+    #
+    # ⚠️ **连字符只在名里缩写，姓一律整个留下。** 老写法是先
+    # `replace("-", " - ")` 再按空格切，于是连字符自己变成了一个「名」——
+    # `Elena-Gabriela Ruse` 缩成 **`E. -. G. RUSE`**（2026-08-16 渲伊埃拉那张
+    # 海报时看见的），而带连字符的姓（`Pavlyuchenkova-Smith`）会被拦腰切成
+    # `P. -. SMITH`。两种都不报错，只是印在海报上很怪。
+    # 现在只按空白切：**名**里的每一段各取首字母、用 `-` 接回去
+    # （`Elena-Gabriela` → `E.-G.`），**姓**原样大写。
+    parts = value.split()
     if len(parts) > 1 and "." not in parts[0]:
-        value = " ".join([f"{part[0]}." for part in parts[:-1]] + [parts[-1].upper()])
+        given = ["-".join(f"{bit[0]}." for bit in part.split("-") if bit)
+                 for part in parts[:-1]]
+        value = " ".join(given + [parts[-1].upper()])
     return value.upper()
 
 

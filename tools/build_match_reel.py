@@ -4361,6 +4361,149 @@ def _solo_scoreboard_shape(spec: dict) -> None:
         raise ReelError(problem)
 
 
+#: 封面大图不许放大——照片要铺满的是**成片里的那张卡**（1080×1440），不是
+#: 截图时那张 2 倍图。拿 2 倍图当基准会得出「几乎每张都在放大」的假警报
+#: （`tools/check_cover_resolution.py` 第一次量就这么错过）。
+COVER_FILL_W, COVER_FILL_H = 1080, 1440
+
+#: 「封面大图一律用官方高清实拍」这条规矩（账号所有者 2026-08-16 重申）立起来
+#: **之前**发出去的片子。已发的不为封面重渲——微信那条消息发出去收不回来。
+#:
+#: ⚠️ **这张表在工具里，不在测试里**，因为 `--dry-run` 也要能跑存量：闸装在
+#: `validate_spec` 上，不放过它们的话，任何一条老 spec 都 dry-run 不动了
+#: （`test_dry_run秒级返回且一个字节都不下载` 这类测试正是拿老 spec 跑的）。
+#: `_LEGACY_LONG_HOOKS` 是同一个形状，也在这个文件里。
+#:
+#: **只许减不许加**，自检在 `test_封面大图一律用官方高清图不许抽帧`：表里每个 slug
+#: 必须真的存在、而且真的还过不了这道闸——写错一个名字，豁免就成了一盏恒真的绿灯。
+LEGACY_SOFT_COVERS = frozenset({
+    # 封面是从源片抽的帧
+    "alexandrova-sabalenka", "anisimova-bartunkova", "arango-venus",
+    "baez-dimitrov", "bartunkova-charaeva", "bejlek-pliskova", "bencic-eala",
+    "bencic-townsend", "boisson-krueger", "boulter-volynets",
+    "chwalinska-gibson", "cincinnati-story", "djokovic-tirante",
+    "eala-mcnally", "eala-parks", "eala-pegula-final", "fernandez-andreeva",
+    "fonseca-ruud", "fritz-jodar-final", "gauff-korneeva", "gauff-sakkari",
+    "gea-shapovalov", "hewitt-washington", "hijikata-monfils", "kenin-lys",
+    "kovacevic-khachanov", "landaluce-draper", "maria-yastremska",
+    "medvedev-zandschulp", "nakashima-jodar-montreal-sf", "noskova-mcnally",
+    "osaka-fernandez", "osaka-mertens", "ostapenko-frech", "pegula-rakhimova",
+    "rybakina-kasatkina", "rybakina-li", "rybakina-samsonova", "shang-rublev",
+    "shang-vallejo", "shelton-fonseca", "shelton-mensik",
+    "shelton-tien-montreal-sf", "shnaider-pegula", "sonmez-anisimova",
+    "svitolina-alexandrova", "svitolina-anisimova", "swiatek-golubic",
+    "swiatek-kostyuk", "swiatek-shnaider", "swiatek-svitolina-toronto-sf",
+    "tirante-fritz", "tsitsipas-royer", "wang-kasatkina", "wang-vandewinkel",
+    "wangxiyu-timofeeva", "zhang-ostapenko", "zhang-putintseva",
+    "zhang-sabalenka", "zverev-griekspoor",
+    # 封面给的是照片，但它撑不满 1080×1440，也就是在放大
+    "jodar-fils-montreal-qf", "shang-darderi-montreal-2026",
+    "shelton-nakashima-montreal-final", "swiatek-rybakina-toronto-final",
+    "zheng-lanlana",
+})
+
+
+def cover_photo_problem(spec: dict) -> str | None:
+    """封面大图：要么是**官方高清实拍**，要么显式认领「我抽帧了，为什么」。
+
+    ## 来路
+
+    账号所有者 2026-08-16，一条消息里说了三遍：「封面一定要选高清大图，不然
+    没人愿意点进去看」「抽帧的图都不太清晰啊」「**都说了**不要用截图抽帧的
+    这种方式去做封面大图，非常的不清晰啊！去找官方的。高清图片呀」。
+
+    ⚠️ **「都说了」是给我的。** 这条规矩 CLAUDE.md 里一直写着（「封面用真实
+    照片，不要从视频里抽帧」），连账都算过：1920×1080 的一帧铺 3:4 要放大
+    1.33~1.78 倍，而**源片是压缩转播流，换帧、锐化都救不回来**。规矩没变，
+    是实现漂了——`solo` 版式给了 `frame_at` 这条近路，于是每条片子都走它。
+    本文件另一处早写过同一个形状：「规矩写对了，实现是空的」。
+
+    ## 两道闸，各拦一头
+
+    - **抽帧要认领**：写了 `portrait.frame_at` 就必须写 `portrait._frame_why`
+      ——说清四类源各自查了什么、结果如何。和 `mixed_fps` / `silent_source` /
+      `cover._layout_why` 一个形状：**认领这一步把「想清楚了」和「凑合一下」
+      分开**。这不是给抽帧留后门，是让它变成一次看得见的决定
+    - **给了照片就不许放大**：照片短边撑不满 1080×1440 的话，它比抽帧还糊
+      ——那正是这条规矩要防的东西，换个来源不算过关
+
+    ## 官方高清图上哪儿拿（2026-08-16 实测，别每次现搓）
+
+        赛后稿   tools/fetch_wta_cover_photo.py --tournament <id> --year <年>
+                 --match <MatchID> --surnames <姓> <姓>
+        没赛后稿 www.wtatennis.com/videos/highlights 的 HTML 里挂着每条集锦的
+                 头图（`photo-resources/<年>/<月>/<日>/<uuid>/<姓>-R2-<摄影师>.jpg`）
+        取原图   photoresources.wtatennis.com/<那条路径>**?width=4000**
+                 ⚠️ 不带 `width` 参数是 **400**，`/wta/photo/` 那个前缀换了
+                 uuid、直接拿会 **403**——两种失败都不长得像「这张图不存在」
+
+    ⚠️ **只管 `cover.portrait`（封面大图），不管 `cover.versus.top/bottom`。**
+    那两格是**抠图**，账反过来：本场抽帧裁出来的人 660×1040 落进 634px 的槽位
+    是 0.61× 缩小（更锐），官方棚拍图裁到胯只有 265×410、要放大 1.55×（最软）
+    ——CLAUDE.md「上面这条只管『整帧铺满』，不管『抠出来的人』」记的就是这个。
+    判据宁可窄，不可宽。
+    """
+    if str(spec.get("slug") or "") in LEGACY_SOFT_COVERS:
+        return None
+    cover = spec.get("cover")
+    if not isinstance(cover, dict):
+        return None
+    art = cover.get("portrait")
+    if not isinstance(art, dict):
+        return None
+    image = art.get("image")
+    if not image:
+        if art.get("frame_at") is None or str(art.get("_frame_why") or "").strip():
+            return None
+        return (
+            "封面大图是从源片抽的帧（portrait.frame_at），而**封面一律先找官方"
+            "高清实拍**（账号所有者 2026-08-16：「不要用截图抽帧的这种方式去做"
+            "封面大图，非常的不清晰啊！去找官方的」）。\n"
+            "四类源按顺序过一遍：\n"
+            "  ① 赛事/协会官方图库——WTA 这条最省事，两步：\n"
+            "     python3 tools/fetch_wta_cover_photo.py --tournament <id> "
+            "--year <年> --match <MatchID> --surnames <姓> <姓>\n"
+            "     没赛后稿就翻 www.wtatennis.com/videos/highlights 的 HTML，"
+            "每条集锦都挂着自己的头图；取原图要带 ?width=4000\n"
+            "  ② 赛事/协会新闻页（/en/media/news 这类，别只试 /photos）\n"
+            "  ③ 新闻站、图片社转载、官方社媒\n"
+            "  ④ Commons / Openverse / Flickr\n"
+            "**四类都翻到底仍然没有**，才回来抽帧，并在 "
+            "`cover.portrait._frame_why` 里写清楚每条查了什么、结果如何"
+            "——一句话就行，但必须写；不写就是走近路，不是决定。")
+    path = Path(str(image))
+    if not path.exists():
+        return f"封面大图找不到：{path}"
+    try:
+        from PIL import Image, ImageOps  # noqa: PLC0415
+
+        with Image.open(path) as raw:
+            width, height = ImageOps.exif_transpose(raw).size
+    except Exception:                     # noqa: BLE001 — 读不出尺寸就不判
+        return None
+    crop = art.get("crop")
+    if isinstance(crop, (list, tuple)) and len(crop) == 4:
+        width = round(width * (float(crop[2]) - float(crop[0])))
+        height = round(height * (float(crop[3]) - float(crop[1])))
+    if width <= 0 or height <= 0:
+        return f"封面大图裁完是空的：{path}（crop={crop}）"
+    zoom = float(art.get("zoom") or 1.0)
+    fill = min(width / COVER_FILL_W, height / COVER_FILL_H) / max(zoom, 1e-6)
+    if fill >= 1.0 or str(art.get("_low_res_why") or "").strip():
+        return None
+    return (
+        f"封面大图撑不满卡片：{path.name} 裁完 {width}×{height}"
+        f"，铺 {COVER_FILL_W}×{COVER_FILL_H}"
+        f"{f'（zoom {zoom:g}）' if abs(zoom - 1.0) > 1e-9 else ''}"
+        f"只有 {fill:.2f}×，也就是要放大 {1 / fill:.2f} 倍。\n"
+        "**放大过的照片和抽帧一样糊**，换个来源不算过关——账号所有者要的是"
+        "「高清大图」。回去拿原图（WTA 那条路带 ?width=4000 能到 4000px 宽），"
+        "或者把 zoom 收回去。\n"
+        "确实只有这一张（历史照片、独家时刻），就写一句 "
+        "`cover.portrait._low_res_why` 认领这个取舍——CLAUDE.md「精准优先于"
+        "清晰，但要在 credits 里写明放大了多少」说的就是这种情况。")
+
+
 def validate_spec(spec: dict) -> list[Segment]:
     """**只看 spec，不碰源片**——所以它能在开跑的第一秒跑完。
 
@@ -4396,6 +4539,9 @@ def validate_spec(spec: dict) -> list[Segment]:
     _absolute_claims_need_a_source(spec)
     _hook_lines_fit_the_title(spec)
     _solo_scoreboard_shape(spec)
+    photo = cover_photo_problem(spec)
+    if photo:
+        raise ReelError(photo)
     segments = parse_segments(spec, urls, next(iter(urls)))
     check_archival_fit(spec, segments)
     return segments
