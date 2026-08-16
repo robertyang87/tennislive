@@ -1,0 +1,94 @@
+{
+  "schema_version": 1,
+  "status": "pass",
+  "story_slug": "golden-masters",
+  "standards": {
+    "license_policy": "record-only: credit/license are logged (unknown/unverified when missing) and never a fail condition; pre-publish rights review is a human step",
+    "photo_count_max": 64,
+    "photo_source_uniqueness": "same photo/source may appear only once",
+    "page_visual": "every page requires one distinct verified photo",
+    "non_cover_visual": "distinct exact-event photo; infographic may only be an overlay",
+    "rule_explainer": "topic-specific diagram plus verified photo required",
+    "player_crop": "head-safe object position",
+    "production_labels": "internal generation labels are forbidden",
+    "story_ordinals": "semantic icons replace ordinal markers",
+    "year_markers": "calendar years must use four digits",
+    "canned_story_labels": "fixed teaching-style labels are forbidden",
+    "max_text_block_chars": 82,
+    "max_card_text_chars": 520,
+    "card_size": [
+      1080,
+      1440
+    ],
+    "max_card_bytes": 950000
+  },
+  "photo_uses": 1,
+  "photo_sources": [
+    "https://en.wikipedia.org/wiki/ATP_Masters_1000_tournaments"
+  ],
+  "resolved_visuals": [],
+  "pages": [
+    {
+      "kind": "knowledge",
+      "visual": "verified-photo",
+      "text_chars": 115,
+      "longest_text_block": 50,
+      "photo_count": 1,
+      "photo_sources": [
+        "https://en.wikipedia.org/wiki/ATP_Masters_1000_tournaments"
+      ]
+    },
+    {
+      "kind": "story",
+      "visual": "narrative-timeline",
+      "text_chars": 292,
+      "longest_text_block": 51,
+      "photo_count": 0,
+      "photo_sources": []
+    },
+    {
+      "kind": "explainer",
+      "visual": "trivia-explainer",
+      "text_chars": 185,
+      "longest_text_block": 42,
+      "photo_count": 0,
+      "photo_sources": []
+    },
+    {
+      "kind": "today",
+      "visual": "history-timeline",
+      "text_chars": 213,
+      "longest_text_block": 34,
+      "photo_count": 0,
+      "photo_sources": []
+    }
+  ],
+  "rendered_cards": [
+    {
+      "file": "card_00_knowledge.jpg",
+      "width": 1080,
+      "height": 1440,
+      "bytes": 409574
+    },
+    {
+      "file": "card_01_story.jpg",
+      "width": 1080,
+      "height": 1440,
+      "bytes": 303349
+    },
+    {
+      "file": "card_02_explainer.jpg",
+      "width": 1080,
+      "height": 1440,
+      "bytes": 205286
+    },
+    {
+      "file": "card_03_today.jpg",
+      "width": 1080,
+      "height": 1440,
+      "bytes": 224485
+    }
+  ],
+  "errors": [],
+  "warnings": []
+}
