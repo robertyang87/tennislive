@@ -51,8 +51,9 @@ def test_candidates跳过进行中的比赛():
 def test_工作流映射按栏目对上生产线():
     o = _tool()
     assert o._workflow_for("reel") == "match-reel.yml"
-    assert o._workflow_for("preview") == "explainer.yml", (
-        "开球之前是解说片，走 explainer，别派给 match-reel——两条线产物/质检/推送完全不同")
+    assert o._workflow_for("preview") == "match-reel.yml", (
+        "开球之前的 spec 在 specs/reels/ 下、走 match-reel 纯视频——别派给 "
+        "explainer（那是 _SCRIPTS 硬编码的卡片视频，正被取代）")
 
 
 def test_slug取姓拼横杠():
