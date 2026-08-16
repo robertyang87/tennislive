@@ -37,13 +37,23 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          # 不写 sparse-checkout-cone-mode（默认 cone 模式）：它会**自动带上根目录
+          # 的 pyproject.toml**——`pip install -e .` 靠它，漏了就是
+          # 「does not appear to be a Python project」（第一次验证就是这么红的）。
           sparse-checkout: |
-            specs
-            tools
-            src
             assets
+            data
+            docs
+            specs
+            src
+            tests
+            tools
             output
-          sparse-checkout-cone-mode: false
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
 
       - name: 装 ffmpeg
         timeout-minutes: 6
