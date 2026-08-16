@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>8.16 赛场之上 | 德约科维奇输给世界第五十</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>一个发球局，他守了十七分五十一秒。
+
+2-6 6-4 6-4，两小时四十四分钟，辛辛那提男单第二轮，中央球场。赢的是世界第五十的蒂兰特，输的是三号种子、世界第五的德约科维奇。
+
+这场球他扛住了对手，没扛住自己的身体。
+
+第一盘看着还是那个他：四十五分钟六比二，四个发球局一个没丢。分水岭是第二盘一比一那个发球局——两个人打了九次平分，蒂兰特在这一局拿到四个破发点，德约科维奇一个一个救了回来。转播专门为这一局挂了一次台标：GAME DURATION 17:51。
+
+守是守住了，代价随后就到。换边之后他跟着工作人员走出画面，场边呕吐、叫了医疗暂停；第二盘还是四比六丢掉。
+
+第三盘他一路顶到四比四，自己的发球局上蒂兰特连着拿到三个破发点，德约科维奇三个全救掉，第四个被兑现——那是他整场决胜盘唯一一次被破。此后蒂兰特发球胜赛局，三个赛点收工。
+
+全场十五个破发点，他救下十三个。还是输了。
+
+这一场真正的分量在时间上：这是他七月十号温网半决赛输给辛纳之后的第一场比赛，中间空了五周多；三十九岁；而辛辛那提正是他拿过三次冠军的地方（2018、2020、2023），2023 年对阿尔卡拉斯那场决赛打了三小时四十九分钟，是 ATP 三盘制决赛史上最长的一场，他救下赛点才赢。二〇〇五年他第一次打这站，二十一年里，这是他头一回连第三轮都没进。
+
+而赢球的蒂兰特二十五岁，阿根廷拉普拉塔人，至今没有一个巡回赛冠军。但这不是一次走运：赛前他刚在蒙特利尔七比五、六比三赢了世界第八弗里茨，靠那一站的积分从第六十五升了十五位，排到生涯最高的世界第五十；德约科维奇是他生涯第四个赢下的世界前十。他下一轮对兰达卢塞。
+
+十七分五十一秒守下来的那一局，最后没能换来这场球。是这一天太热，还是三十九岁本来就要付这个价？
+
+#网球 #ATP #辛辛那提公开赛 #德约科维奇 #网球时差</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>这一场输在天气，还是输在年纪？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
