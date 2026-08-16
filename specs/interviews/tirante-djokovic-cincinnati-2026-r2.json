@@ -102,6 +102,8 @@
       "ask": "顶住这种压力 靠的是什么？"
     }
   },
+  "transcript_verified": true,
+  "_verified_clean": "两份转写对不上 **5.4%**（闸门 12%），**0 处空档**。第一份 YouTube 自动字幕 354 词，第二份 faster-whisper `medium.en` 349 词。\n\n**17 处分歧逐处看过，一条 `en_fixed` 都没加**——因为凡是能判对错的地方，**全是我们这边对、whisper 错**：\n\n    legend  → lesson    `against a legend like Novak`，whisper 听成 lesson\n    health  → head      `mental health` 听成 mental head，**两处**\n    novak   → novaka\n    djokovic thiago → jokovic\n    thiago agustin tirante of → —   开场那句解说 whisper 整个没听出来\n\n剩下的分成两类，都不动：\n\n- **他本来就这么说的**（非母语者的语法）：`manage`（whisper 给 managed）、`time`（times）、`confident`（confidence）、`with`（for）。whisper 的语言模型会替他把语法「改对」，而这条线发的是**他真说的那句**，不是改顺的版本\n- **口吃对齐的噪音**：`i` → `—`、`—` → `i`、`—` → `and`、`doing` → `—`\n\n⚠️ **只有一处两份都听不出来**：第 13 行 `I think so for for for bigs,`——YouTube 给 `bigs`，whisper 给 `biggs`，也就是那个音真的像 /bɪɡs/，但两边都没解出一个说得通的词。**没有硬改**（照本文件的规矩，`en_fixed` 只写确认过的），中文那一行写的是「我想是这样」——只译他确定说了的 `I think so`，含糊那半截不替他编。\n\n⚠️ 另有一处**分歧本身有意义、但两边都说得通**：第 27 行 `the key know keep believing in me`，whisper 给的是 `you know`。留 YouTube 那版（`that was, I think, the key`——和整句的意思合得上），而 whisper 在**同一句里**把 `legend` 听成 `lesson`、`novak` 听成 `novaka`，这一处不足以顶掉它。记在这儿是因为它不是噪音，是一个真的没定下来的地方。",
   "push": {
     "_why": "顶栏第二行要和赛果机械一致：对阵和比分取自 ATP 官方签表那一行（`26 64 64 T. Tirante`），赢家在前。",
     "matchup": "蒂兰特 vs 德约科维奇",
