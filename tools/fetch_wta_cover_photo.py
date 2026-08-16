@@ -101,6 +101,48 @@ def photo_date_off(url: str, match_day: date) -> int | None:
     return abs((date(y, mo, d) - match_day).days)
 
 
+def fetch_cover(tournament: str, year: str, city: str, match: str,
+                surnames: list[str], out: Path, match_day: date) -> tuple[int, str]:
+    """抓一张官方实拍封面。返回 (退出码, 说明)。0=抓到了，1=没抓到（可重试），
+    2=稿子还没挂（等会儿再试）。
+
+    ⚠️ 从 main 抽出来给 assemble 复用——「英文名→WTA MatchID→抓头图」这条链
+    别写两处。抓到的图已经过尺寸底线 + 文件名/日期自证预警，但**情绪对不对题
+    仍要人看**（四道闸门的第一道）。"""
+    scores = (f"https://www.wtatennis.com/tournament/{tournament}"
+              f"/{city}/{year}/scores/{match}")
+    page = _get(scores).decode("utf-8", "replace")
+    links = sorted(set(re.findall(r'href="(/news/\d+[^"]+)"', page)))
+    chosen = pick_article(links, surnames)
+    if not chosen:
+        return 2, (f"比赛页上还没有这一场的赛后稿（页面共 {len(links)} 篇文章，"
+                   "没有一篇 slug 含这两个姓）。Match Reaction 一般赛后一小时内"
+                   "上线——等会儿再试，别当成「没有实拍」。")
+    art = _get("https://www.wtatennis.com" + chosen).decode("utf-8", "replace")
+    img_url = og_image(art)
+    if not img_url:
+        return 1, "文章页没有 og:image——版式变了，去页面里人工找头图。"
+    blob = _get(img_url)
+    from PIL import Image  # noqa: PLC0415
+
+    with Image.open(io.BytesIO(blob)) as im:
+        w, h = im.size
+    if w < MIN_WIDTH:
+        return 1, (f"头图只有 {w}×{h}，低于 {MIN_WIDTH}px 底线——比不过抽帧的账，"
+                   "不用它。退回 frame_at 抽帧或去别的源找。")
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_bytes(blob)
+    notes = [f"已存 {out}（{w}×{h}，{len(blob) / 1e6:.1f} MB），文章 {chosen}"]
+    if filename_certifies(img_url, surnames):
+        notes.append("✅ 文件名自证（含球员姓氏）")
+    else:
+        notes.append("⚠️ 文件名不自证（编号名）——靠文章 slug 自证，用之前打开看一眼")
+    off = photo_date_off(img_url, match_day)
+    if off is not None and off > 2:
+        notes.append(f"⚠️ 头图路径日期和比赛日差 {off} 天——可能是资料图，打开核对")
+    return 0, "；".join(notes)
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--tournament", required=True, help="WTA tournamentGroup.id")
@@ -116,51 +158,15 @@ def main() -> int:
 
     scores = (f"https://www.wtatennis.com/tournament/{args.tournament}"
               f"/{args.city}/{args.year}/scores/{args.match}")
-    page = _get(scores).decode("utf-8", "replace")
-    links = sorted(set(re.findall(r'href="(/news/\d+[^"]+)"', page)))
-    chosen = pick_article(links, args.surnames)
-    if not chosen:
-        print(f"比赛页上还没有这一场的赛后稿（页面共 {len(links)} 篇文章，"
-              f"没有一篇 slug 含 {args.surnames}）。Match Reaction 一般赛后"
-              "一小时内上线——等会儿再试，别把这个当成「没有实拍」。")
-        return 2
-    print(f"文章：{chosen}")
-    art = _get("https://www.wtatennis.com" + chosen).decode("utf-8", "replace")
-    img_url = og_image(art)
-    if not img_url:
-        print("文章页没有 og:image——版式变了，去页面里人工找头图。")
-        return 1
-    print(f"头图：{img_url}")
-
-    blob = _get(img_url)
-    from PIL import Image  # noqa: PLC0415
-
-    with Image.open(io.BytesIO(blob)) as im:
-        w, h = im.size
-    if w < MIN_WIDTH:
-        print(f"头图只有 {w}×{h}，低于 {MIN_WIDTH}px 底线——比不过抽帧的账，"
-              "不用它。退回 frame_at 抽帧或去别的源找。")
-        return 1
-
-    certified = filename_certifies(img_url, args.surnames)
     day = (date.fromisoformat(args.match_date) if args.match_date
            else date.today())
-    off = photo_date_off(img_url, day)
-    out = Path(args.out)
-    out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_bytes(blob)
-    print(f"已存 {out}（{w}×{h}，{len(blob) / 1e6:.1f} MB）")
-    if certified:
-        print("✅ 文件名自证（含球员姓氏）")
-    else:
-        print("⚠️ 文件名不自证（编号名）——靠文章 slug 自证。**用之前打开看一眼**，"
-              "确认是本场（球衣/场地/情绪对得上）。")
-    if off is not None and off > 2:
-        print(f"⚠️ 头图路径日期和比赛日差 {off} 天——可能是资料图"
-              "（决赛稿配半决赛图的账，CLAUDE.md 记过）。打开核对。")
-    print("四道闸门照旧：精准/比赛中/冲击力/清晰度——工具只保证来源和尺寸，"
-          "情绪对不对题要人看。")
-    return 0
+    code, note = fetch_cover(args.tournament, args.year, args.city, args.match,
+                             args.surnames, Path(args.out), day)
+    print(note)
+    if code == 0:
+        print("四道闸门照旧：精准/比赛中/冲击力/清晰度——工具只保证来源和尺寸，"
+              "情绪对不对题要人看。")
+    return code
 
 
 if __name__ == "__main__":
