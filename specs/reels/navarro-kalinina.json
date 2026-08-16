@@ -1,0 +1,265 @@
+{
+  "slug": "navarro-kalinina",
+  "source_url": "https://www.youtube.com/watch?v=yqM2Z4ngsOk",
+  "_source": "WTA 官方 YouTube 频道的单场集锦，标题 `Emma Navarro vs. Anhelina Kalinina | 2026 Cincinnati Round 2 | WTA Match Highlights`（`author_name` 走 oEmbed 核过是 `WTA`，不是搬运号）。1920×1080、25 fps、306.99 秒。\n\n⚠️ **同一场还有一版**：辛辛那提赛事官方频道 `7hYoxJ7XCY0`。选 WTA 这版是因为它就是 1080p 的单场集锦；而 wtatennis.com 站内那版 Brightcove 是 336 秒（schema.org `duration: PT5M36S`），比这版长 29 秒。\n\n⚠️ **307 秒 < 310 秒**，也就是 CLAUDE.md 里「WTA 纯集锦定长 310 秒，超出的那部分才是场上采访」那条判据说的**纯集锦**——尾巴上没有采访要躲。末尾 298.88 秒之后是 WTA 的订阅片尾卡，窗口全部收在 296.8 秒以内。\n\n四要素自证：记分条整场烧着 `E. NAVARRO [25] / A. KALININA`；场边广告板是 `Western & Southern Financial Group` / `Great American` / `Kroger` / `Fifth Third Bank`（辛辛那提本站赞助商）；120.5 秒和 292.5 秒两次挂出全屏赛果台标，写着 `ROUND 2`。",
+  "_column": "赛场之上",
+  "topbar": {
+    "line1": "WTA1000 辛辛那提 第二轮",
+    "line2": "纳瓦罗 3-6 6-4 6-2 卡利尼娜"
+  },
+  "_topbar_why": "第二行照「赢家 比分 输家」排，比分用赢家自己的局数在前——和 WTA 官方 `ResultString`（`[25]E. Navarro d A. Kalinina 3-6,6-4,6-2`）逐字一致，也和 `cover.winner` / `cover.result` / `cover.matchup` 对得上。\n\n轮次写「第二轮」不写「次轮」以外的花样：WTA 官方 `RoundID=2`，YouTube 标题写着 `Round 2`，源片 120.5 秒的全屏台标也写着 `ROUND 2`。⚠️ 96 签的一千分赛前 32 号种子首轮轮空，所以二十五号种子的首战就是第二轮——这和同站 `zhang-day`（非种子，第一轮）不矛盾。",
+  "editorial": {
+    "mode": "match_review",
+    "question": "一场只多赢一个小分的球，她是怎么从落后一盘里翻回来的？",
+    "thesis": "这场球的分水岭是**一发**。第一盘卡利尼娜的一发得分率八成，纳瓦罗只有六成七——四局连丢，第一盘六比三没了。从第二盘起两条线交叉着走：纳瓦罗爬到八成六、八成七，卡利尼娜掉到七成三、五成九。而整场的账薄得吓人——一百六十九个小分，纳瓦罗只多赢了一个（八十五比八十四）。真正的落点在场外：这是她**第四次**打进辛辛那提正赛，前三次一场没赢过，今天是第一场。",
+    "beats": [
+      "前段：第一盘咬到三比二，然后卡利尼娜一口气连下四局——她的一发那一盘赢下八成，六比三",
+      "中段：第二盘纳瓦罗上来就破发，三比二时自己的发球局被破回三比三；五比四发球胜盘，前两个盘点被救，第三个才落地",
+      "结局：第三盘六比二，比赛滑进第三个小时；全场一百六十九个小分，她只多赢一个"
+    ],
+    "human_context": {
+      "angle": "这一场的场外切口是**「终于」**。纳瓦罗二〇二四年九月排到过世界第八，那年年终也是第八；而辛辛那提一直是她过不去的地方——二〇二三、二四、二五连着三年打进正赛，一场都没赢过。这次是第四次，转播在赛点落地那一刻说的正是这句：`And at her fourth attempt, the number 25 seed finally claims her first ever main draw win in Cincinnati`。而这一场还是在 **10 号球场**打的（解说三次点名 `on court 10`），不是中心球场——一个前世界第八，在辛辛那提的外场为一场正赛胜利打满两小时十六分钟。",
+      "facts": [
+        "纳瓦罗 2001-05-18 出生，本场时 25 岁；卡利尼娜 1997-02-07 出生，29 岁（WTA 官方球员接口，id 325410 / 320567）",
+        "当期世界排名：纳瓦罗第 28、卡利尼娜第 51（WTA 官网球员页 Ranking 一栏）",
+        "纳瓦罗生涯最高世界第 8，2024-09-09；2024 年终排名也是第 8（WTA 官网球员页 + Wikipedia）",
+        "纳瓦罗是本站 25 号种子（WTA 官方 ResultString 写作 `[25]E. Navarro d A. Kalinina`；记分条上整场烧着 `[25]`）",
+        "三盘用时 0:37:16 / 0:52:17 / 0:46:31，合计 2:16:04；官方 MatchTimeTotal 02:16:05（两个数差 1 秒，互相印证）",
+        "转播解说 112.88 秒、218.72 秒、246.72 秒三次说 `on court 10`——球场名由画面自己给出",
+        "转播解说 118.40 秒原话：Four games on the spin, lethal behind the first serve（第一盘卡利尼娜连下四局）",
+        "转播解说 213.04 秒原话：Third time lucky for Emma Navarro（第三个盘点才兑现）",
+        "转播解说 246.72 秒原话：clock just ticking into a third hour on court 10. 2 hours and one minute played",
+        "转播解说 286.32 秒原话：And at her fourth attempt, the number 25 seed finally claims her first ever main draw win in Cincinnati",
+        "全场小分 85:84（WTA 官方 totptswona/b，flashscore df_st_1 同值）；ACE 15:2；双误 7:5；破发点 4/7 对 3/9"
+      ],
+      "sources": [
+        "https://www.wtatennis.com/videos/4560397/navarro-spoils-kalininas-upset-bid-to-earn-first-cincinnati-main-draw-win",
+        "https://www.wtatennis.com/players/325410/emma-navarro",
+        "https://www.wtatennis.com/players/320567/anhelina-kalinina",
+        "https://en.wikipedia.org/wiki/Emma_Navarro",
+        "https://www.youtube.com/watch?v=yqM2Z4ngsOk"
+      ],
+      "voice_label": "外场上的前世界第八"
+    }
+  },
+  "_claims": {
+    "全场一百六十九个小分，她只多赢一个（85:84）": "① **WTA 官方** `matches/LS054/stats` 的 `totptswona=85` / `totptswonb=84` https://api.wtatennis.com/tennis/tournaments/1017/2026/matches/LS054/stats ；② **flashscore** `df_st_1_M5YwAxef` 的总分栏同样是 85:84。⚠️ 两个源逐项都对得上（ACE 15:2、双误 7:5、一发 49/92 对 47/77、破发点 4/7 对 3/9），不是只对上了这一项。",
+    "她生涯最高排到过世界第八": "① **WTA 官网球员页**的 `Career High` 一栏写着 `8` https://www.wtatennis.com/players/325410/emma-navarro ；② **Wikipedia** 写作 `No. 8 (September 9, 2024)`，并在生涯数据表里给出 2024 年终排名 8 https://en.wikipedia.org/wiki/Emma_Navarro 。",
+    "辛辛那提正赛她此前一场都没赢过，这是第四次打正赛、第一次赢": "① **WTA 官方**——这条集锦自己的标题和摘要：`Navarro spoils Kalinina's upset bid to earn first Cincinnati main-draw win`，摘要写着 `her first main-draw win at the event` https://www.wtatennis.com/videos/4560397/navarro-spoils-kalininas-upset-bid-to-earn-first-cincinnati-main-draw-win ；② **Wikipedia** 的成绩时间线：辛辛那提正赛 **0–3**，2023 年首轮负、2024 年首轮负、2025 年首轮负（2025 那场是以 8 号种子负于资格赛球员塞德尔，Tennis Majors 有单独报道）https://en.wikipedia.org/wiki/Emma_Navarro ；③ **本条源片 286.32 秒的转播解说原话**：`And at her fourth attempt, the number 25 seed finally claims her first ever main draw win in Cincinnati`。\n\n⚠️ **只说「正赛一场没赢过」，不说「三次都首轮出局」**：她 2025 年是 8 号种子，96 签前 32 号种子首轮轮空，那一场按轮次是第二轮而不是第一轮——**断言的粒度不许超过查询的粒度**，所以片子里一律写「打进正赛、一场没赢过」，不写轮次。"
+  },
+  "_no_repeat": "同站同栏目最近几条各自的落点，这一条一个都不碰：\n  · `noskova-boulter`（8/15 同站）——「被破之后连保八局」＋「对手全场只有两个破发点」。**所以这条不拿连续保发、也不拿破发点总数当落点**；\n  · `cirstea-bartunkova`（8/15 同站）——「四个盘点全丢，第五个才拿下」。**这条里纳瓦罗也需要三个盘点才收下第二盘，但只在走向里一笔带过，不做落点、不进钩子、不进标题**；\n  · `zhang-day`（8/15 同站）——「零 ACE 逆转」，也是先丢一盘再赢。**这条的 ACE 是反过来的（15 比 2），而落点是「第四次才赢」不是逆转本身**；\n  · `bucsa-chwalinska` / `eala-ruse` / `sonmez-anisimova` / `ostapenko-frech` / `kenin-lys` 都是同站同期，落点各不相同。\n\n⚠️ 纳瓦罗此前没在这条线上出现过，来路（世界第八、第二十八）是第一次交代，不是重讲。",
+  "_editing_why": "源片 306.99 秒、25 fps、一条源片，全部窗口都是单镜头内的连续区间，唯一跨切点的是第 ① 段（见那一段的 `crosses_cut`）。\n\n**结构照 CLAUDE.md「开场三格」**：① 画面爆点（赛点落地 ＋ 她赢下那一刻，不配旁白、走现场声）→ ② 落点（第四次才赢下一场）→ ③ 坐标（时间、赛事、轮次）。③ 之后回到 2.2 秒按时间顺序走完整场，末段回到 291.2 秒收尾。\n\n**每一段都拿 `score_*.jpg` 的放大记分条对过**，不是照缩略图猜——这条线上最容易错的就是「这句话说的那个人不是画面里那个人」：\n  · 60–82 秒绿标是 `BREAK POINT #2`，记分条 `3:30 / 3:40`，**纳瓦罗发球被破**成三比四；\n  · 100.6–110.4 秒绿标是 `SET POINT`，记分条 `3 15 / 5 40`，**纳瓦罗在自己的发球局上同时面对破发点和盘点**，没保住，第一盘六比三；\n  · 132–148 秒是第二盘第一局，记分条 `0 30 / 0 40`＋球标在卡利尼娜那边，**卡利尼娜发球**，纳瓦罗破成一比零；\n  · 164–172 秒 `BREAK POINT`，记分条 `1 30 / 0 40`，**纳瓦罗发球救下**，二比零；\n  · 174–190 秒 `BREAK POINT #2`，记分条 `3 30 / 2 40`，**这一个没救下来**，三比三；\n  · 192–216 秒 `SET POINT` → `SET POINT #3`，记分条 `5 40 / 4 30` → `5 Ad / 4`，**五比四发球胜盘，第三个盘点才落地**；\n  · 274.5 秒起 `MATCH POINT`，281.88 秒切点就是她赢下那一刻。\n\n**旁白定稿之后又跑了一遍 `preview_segments_local.py`**（CLAUDE.md 要求的第二遍：第一遍看画面好不好，第二遍看「这句话说的那个人是不是画面里那个人」）。纳瓦罗穿绿色连衣裙、卡利尼娜白上衣黑短裙，两个人在缩略图里分得很开，另有记分条上的发球指示球标可交叉核对。",
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "纳瓦罗",
+    "hook": "一百六十九个小分\n她只多赢了一个",
+    "_hook_why": "两行讲的都是**过程**——整场打了多少分、她多赢了几个，海报别处印的是排名、轮次和比分，两边不重复（CLAUDE.md「钩子要有剧情的跌宕，不是把两个身份摆在一起」）。\n\n最长行 8 个字符，在 `HOOK_MAX_CHARS = 10` 以内。\n\n⚠️ **写「小分」不写「分」**：一是躲开「分/分钟」的读音歧义（`test_旁白里的分不许读成分钟` 拦的就是这个），二是海报上同时印着 `3-6 6-4 6-2`，不写清楚会被读成「多赢一局」。\n\n⚠️ **这个数不是「数据反常」**——赢的那个人小分也更多，只是只多一个。`boulter-volynets` 被账号所有者点名的那种「输的人小分更多」的悖论不是这条；这条的入场券是她**二十五号种子、前世界第八**（②档），一个小分只是写法上的加分项。",
+    "_subject_view_why": "封面放纳瓦罗：她是赢的那个，也是把人拉进来的那个名字——二〇二四年的世界第八、当期第二十八、本站二十五号种子。卡利尼娜世界第五十一，不构成「输的那个才是流量主体」的取舍（`arango-venus` 那种大威式的例外在这一场不成立）。",
+    "topic": "辛辛那提WTA1000 · 女单第二轮",
+    "portrait": {
+      "image": "assets/reel/navarro-cincinnati-2026-r2.jpg",
+      "focus": 0.42,
+      "focus_y": 0.38,
+      "zoom": 1.0
+    },
+    "_portrait_why": "**官方实拍，不是抽帧**（账号所有者 2026-08-16 连说三遍：「封面一定要选高清大图」「不要用截图抽帧的这种方式去做封面大图」「去找官方的。高清图片呀」）。4000×2667，铺 1080×1440 是 **0.54× 缩小**，不是放大。\n\n取法（CLAUDE.md 那条路的第 ② 条）：这一场**还没有 Match Reaction 赛后稿**（`fetch_wta_cover_photo.py` 报「页面共 8 篇文章，没有一篇 slug 含 Navarro/Kalinina」），所以走 `videos/highlights` 索引 → 这条集锦自己的页面 → 头图。\n\n⚠️ **这张的文件名不自证**（`GettyImages-2288206636.jpg` 里没有球员、赛事、轮次），四要素靠另外四条，逐条核过：\n  ① **CMS 的引用关系**——它是这条视频的 `thumbnailUrl`，而同一段 schema.org `VideoObject` 的 `name` 写着 `Navarro spoils Kalinina's upset bid to earn first Cincinnati main-draw win`，`uploadDate` 是 `2026-08-16T02:51:38Z`。「这张图挂在这场比赛的集锦上」比文件名更硬；\n  ② **路径日期 2026/08/16**，和比赛（北京时间 8/16 凌晨结束）对得上；\n  ③ **衣服和源片同一套**——照片里是绿色连衣裙、右胸 Red Bull 标；源片 0.5 / 12.5 / 28.5 / 30.5 / 132.5 秒的纳瓦罗是同一套绿裙，而卡利尼娜整场是白上衣配黑短裙，两个人分得很开；\n  ④ **背景对得上**——照片背景是深藏青挡板，源片里同一面挡板上就是 `Western & Southern Financial Group` / `Great American` 那一排。⚠️ 按 CLAUDE.md「球衣颜色不能当认人判据，场地颜色可以」，这里第 ④ 条比第 ③ 条硬，两条都记着。\n\n四道闸门：① 时间地点人物见上；② **在比赛中**——她正在击一记双手反拍，球就在拍面上；③ 有冲击力——眉头绷着、马尾甩开、球定在拍面上；④ 够清晰——4000×2667 真实相机分辨率。\n\n⚠️ **取原图必须带 `?width=4000`**：不带参数是 400 Bad Request；换成 og:image 那个 `/wta/photo/<uuid>/` 前缀是 403（而且那个 uuid 和 `photo-resources/` 下的不是同一个）。",
+    "winner": "纳瓦罗",
+    "result": "3-6 6-4 6-2",
+    "matchup": [
+      {
+        "name": "纳瓦罗",
+        "name_en": "Emma Navarro",
+        "country": "USA",
+        "rank": 28
+      },
+      {
+        "name": "卡利尼娜",
+        "name_en": "Anhelina Kalinina",
+        "country": "UKR",
+        "rank": 51
+      }
+    ],
+    "_matchup_rank_why": "两个排名都取 **WTA 官网球员页**的 `Ranking` 一栏：纳瓦罗第 28（https://www.wtatennis.com/players/325410/emma-navarro ）、卡利尼娜第 51（https://www.wtatennis.com/players/320567/anhelina-kalinina ）。\n\n⚠️ **二十五号种子不是世界第二十五**——种子按报名截止那期排，她当期是第 28。CLAUDE.md「种子序号不是排名」记的就是这个。\n\n⚠️ ESPN 那条路（`tools/lookup_player_meta.py`）当天两个榜单都是 **HTTP 403**，所以没走它。",
+    "_name_why": "`Emma Navarro → 纳瓦罗`、`Anhelina Kalinina → 卡利尼娜`，两个都是**跑 `player_zh()` 拿的**（不是手打）。",
+    "scoreboard": {
+      "court": "Court 10",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%20%222%3A16%3A05%22%2C%20%22source_feed%22%3A%20%22WTA%20official%20LS054%20settime%200%3A37%3A16%20%2B%200%3A52%3A17%20%2B%200%3A46%3A31%20%3D%202%3A16%3A04%2C%20MatchTimeTotal%2002%3A16%3A05%22%7D",
+        "field": "duration"
+      },
+      "_duration_why": "取 **WTA 官方** `matches/LS054/stats` 的分盘 `settime`：`0:37:16` ＋ `0:52:17` ＋ `0:46:31` ＝ `2:16:04`，而同一份数据里的 `MatchTimeTotal` 是 `02:16:05`——**两个数互相印证，差 1 秒**，这才叫自洽。\n\n⚠️ **flashscore 报 2:18（0:37 + 0:53 + 0:48），偏长约两分钟**——CLAUDE.md「比赛用时不要只信 flashscore」记的就是这一类，这已经是这条线上第三次量到同一个方向。\n\n第三个源是**转播解说自己**：246.72 秒说 `2 hours and one minute played`，而那一刻正是第三盘四比二前后——按官方分盘时间推算（37:16 + 52:17 ＝ 1:29:33，加第三盘打到一半），对得上。",
+      "_court_why": "**球场名由转播自己给出**，不是推的：解说在 112.88 秒（`she has silenced this crowd on court 10`）、218.72 秒（`the green machine motors into the third and final set on court 10`）、246.72 秒（`clock just ticking into a third hour on court 10`）**三次点名 `court 10`**。\n\n⚠️ 这同时**标定了 WTA 官方 `CourtID 5`**——这一场的 `CourtID` 是 5，而同站 `cirstea-bartunkova` 也是 `CourtID 5`、当时没有任何一条已发 spec 能标定它，只好退回场馆名 `Lindner Family Tennis Center`。现在有了：`CourtID 5 → Court 10`。已发的那一条不为这个重渲（消息发出去收不回来，而场馆名只是粗一档、不是错）。\n\n同站已标定的另外两个：`CourtID 6 → Court 4`（`zhang-day` 画面里那块牌子）、`CourtID 3 → Stadium 3`（`townsend-osorio` 解说原话）。`CourtID 2` 在两条已发 spec 上仍然互相打架，没标定。"
+    }
+  },
+  "stats": {
+    "tour": "wta",
+    "a": {
+      "headshot": "assets/players/headshots/wta-325410.jpg",
+      "aces": 15,
+      "df": 7,
+      "first_in": 49,
+      "first_won": 40,
+      "second_total": 43,
+      "second_won": 15,
+      "bp_conv": 4,
+      "bp_chances": 7,
+      "pts_won": 85,
+      "pts_total": 169,
+      "first_total": 92
+    },
+    "b": {
+      "headshot": "assets/players/headshots/wta-320567.jpg",
+      "aces": 2,
+      "df": 5,
+      "first_in": 47,
+      "first_won": 33,
+      "second_total": 30,
+      "second_won": 14,
+      "bp_conv": 3,
+      "bp_chances": 9,
+      "pts_won": 84,
+      "pts_total": 169,
+      "first_total": 77
+    },
+    "footer_venue": "辛辛那提 · 女单第二轮",
+    "footer_date": "2026年8月15日",
+    "_source": "整块出自 `python3 tools/match_stat_hooks.py M5YwAxef --stats-block`，一个数都没改（headshot 两行是另加的）。\n\n⚠️ **这一条 `a`/`b` 不用调顺序**：工具按 flashscore 的 home/away 排，而这一场 home 就是纳瓦罗（`AE÷Navarro E.`），`cover.matchup[0]` 也是她，两边天然一致。判据仍然是头像和名字对不对得上（`test_数据图的头像和matchup里的名字必须是同一个人`）。\n\n⚠️ **这一场两个源逐项全等**，没有 CLAUDE.md 记过的「`df_mh_1` 少一分」那个分叉：WTA 官方 `totptswona/b` 是 85:84，flashscore `df_st_1` 也是 85:84；ACE 15:2、双误 7:5、一发 49/92 对 47/77、破发点 4/7 对 3/9 也全部一致。所以旁白和文案用的就是数据图上这一套。\n\n⚠️ **制胜分和非受迫失误这场接口里没有**——WTA 巡回赛这一档本来就不给（CLAUDE.md 2026-08-15 逐场量过：有没有是按场算的，不按巡回赛分）。工具明确报了「这场接口里没有」，`render_stat_card.OPTIONAL_FIELDS` 允许它们缺席。\n\n⚠️ `first_total` 按 `first_in + second_total` 算（49+43=92、47+30=77），不取接口的 `Service Points Won` 分母——CLAUDE.md 记过两者偶尔差 1。"
+  },
+  "_hit_data": "跑过 `python3 tools/match_stat_hooks.py M5YwAxef`，八条候选全在。挑进片子的是**总分差 1 分（85:84）**和**一发得分率的交叉摆动**（纳瓦罗 67%→86%→87%，卡利尼娜 80%→73%→59%），外加 ACE 15:2。\n\n⚠️ **总分差这一条要跟 `boulter-volynets` 那次分开看**。账号所有者点名说过「数据反常不是话题」，指的是**输的那个人小分更多**那种悖论——它是趣闻，换不来停留。这一场不是悖论：赢的人小分也更多，只是只多一个，它量的是「这场球有多紧」，而且**它不是这条片子的入场券**（入场券是二十五号种子、前世界第八这个②档身份，加上「第四次才赢下一场」这个落点）。它只做钩子和收尾那一笔账。\n\n同一份候选里没用的：\n  · 破发点 4/7 对 3/9——⚠️ 同站 `noskova-boulter` 昨天刚拿破发点当落点，这条不碰；\n  · 双方连续保发 6 / 4 个——同上，`noskova-boulter` 用过；\n  · 交手记录 2:0（含本场）——两场分别在红土和硬地，样本太薄，没有可讲的历史。",
+  "_voice": "配音走仓库默认的云见（zh-CN-YunjianNeural，+6%），这条 spec 不另设 voice/style。",
+  "segments": [
+    {
+      "start": 277.2,
+      "end": 285.2,
+      "crosses_cut": "281.88 那个切点就是赛点落地的那一下——切点两边是**同一个连续动作**（她发出那记大球、对手回不过来、她转身）和**同一个人**，正是 CLAUDE.md 说的「窗口本来就该切在源片自己的镜头边界上」的反面用法：这里要的恰恰是把边界包进来。切在 281.8 的话画面停在一个空球场上，② 屏就落不到人身上。",
+      "_why": "① 画面爆点，不配旁白，走现场声。记分条从 274.5 秒起挂着 `MATCH POINT`；转播解说这一段的原话是 `it's not quite the ace, but it's a very big serve and that will do nicely for Emma Navarro`。**段尾拉到 285.2 是为了把她赢下之后走向网前那几步收进来**。"
+    },
+    {
+      "start": 285.4,
+      "end": 291.0,
+      "narration": "第四次打进辛辛那提的正赛，她第一次赢下一场球。",
+      "_why": "② 落点。画面是她赢球之后走向球网、和卡利尼娜握手那一段（288.5 秒是握手）。这句话是转播自己在同一时刻说的：`And at her fourth attempt, the number 25 seed finally claims her first ever main draw win in Cincinnati`——**画面和话说的是同一件事、同一个人**。"
+    },
+    {
+      "start": 2.2,
+      "end": 11.6,
+      "narration": "北京时间八月十六号凌晨五点，辛辛那提第二轮。二十五号种子纳瓦罗，对上卡利尼娜。",
+      "_why": "③ 坐标。本片正文从这里开始，两个名字都写出来，后面才敢用「她」。画面是开场第一分的回合（切点 2.0 之后、11.84 之前，单镜头）。\n\n⚠️ **时刻只说到点，不说分**：WTA 官方 `MatchTimeStamp` 换算成北京时间是 05:26，而 flashscore 的计划开赛 `AD` 是 05:35，**两个源差九分钟**——CLAUDE.md「两个源对不上就说到点不说分」说的就是这个。"
+    },
+    {
+      "start": 12.0,
+      "end": 22.0,
+      "narration": "纳瓦罗二〇二四年排到过世界第八，现在是第二十八。卡利尼娜是乌克兰人，世界第五十一。",
+      "_why": "两个人的来路，各一句带过。⚠️ 这是纳瓦罗在这条线上第一次出现，所以来路要交代（CLAUDE.md「看不懂这场球所必需的来路，一句带过，别展开」）。⚠️ **二十五号种子不是世界第二十五**，所以排名单说；两个数都和 `cover.matchup` 登记的一致。"
+    },
+    {
+      "start": 46.2,
+      "end": 52.6,
+      "narration": "第一盘一开始，两个人谁也没能拉开。",
+      "_why": "第一盘前段。记分条这一段是 `3 15 / 2 40`——三比二，**卡利尼娜发球**（球标在她那一行），画面里也是她（白上衣黑短裙）。⚠️ **这一句故意不报比分**：读记分条的段落已经够多了（CLAUDE.md 的 25% 密度闸），而且这一句要的是「咬得紧」这个感觉。"
+    },
+    {
+      "start": 53.0,
+      "end": 58.8,
+      "narration": "卡利尼娜的一发又深又准，那一盘她赢下八成。",
+      "_why": "给后面「连下四局」一个机制。⚠️ **这一段画面里发球的正是卡利尼娜**（记分条 `3 15 / 2 40`，球标在她那一行），所以这句话说的人就是画面里的人——第一版把这句放在 67–75 秒，那儿是**纳瓦罗**在发球，等于整句压在对手身上，是跑 `preview_segments_local.py` 第二遍时抓出来的。\n\n八成这个数出自 flashscore 分盘一发得分率（第一盘 80%），解说 121.84 秒的原话是 `lethal behind the first serve`。"
+    },
+    {
+      "start": 59.6,
+      "end": 65.0,
+      "narration": "然后卡利尼娜一口气连下四局。",
+      "_why": "转折。⚠️ 这个「四局」是转播自己数的（118.40 秒 `Four games on the spin`），也和逐分对得上：三比二之后卡利尼娜连拿三比三、三比四、三比五、三比六。画面 60.5 / 62.5 秒是卡利尼娜拿下三比三那一局，64.5 秒记分条已经变成 `3 30 / 3 40` 加绿标 `BREAK POINT #2`。\n\n⚠️ **主语写全名**，不接上一段的「她」——中间隔着一次镜头切换，听感上是两段话。"
+    },
+    {
+      "start": 67.0,
+      "end": 75.4,
+      "narration": "四局里的第二局是这么丢的——纳瓦罗自己的发球局，一个破发点没救下来。",
+      "_why": "记分条这一段整段是 `3 30 / 3 40` 加绿标 `BREAK POINT #2`——**三比三，纳瓦罗发球，三十比四十**，逐分那一局是 `15:40 |B1|, 30:40 |B1|`，第二个破发点被兑现，三比四。画面里白衣的卡利尼娜在接发。"
+    },
+    {
+      "start": 100.6,
+      "end": 110.4,
+      "narration": "第一盘的最后一分，纳瓦罗自己发球。那一分同时是破发点，也是盘点。",
+      "_why": "第一盘的收口。记分条这一段是 `3 15 / 5 40` 加绿标 `SET POINT`，逐分里那一分同时带 `|B1|`（破发点）和 `|B2|`（盘点）——**两个标记落在同一分上**，所以旁白这么说。⚠️ 发球的是纳瓦罗（逐分 `HG=1`），画面 102.5 秒里她穿绿裙正要发球。\n\n⚠️ **措辞是为切词改过的**：第一版写「最后一分落在纳瓦罗的发球局上」，`voice_09.words.json` 报出 `在纳瓦罗` 骑在人名边界上——念出来是一个不存在的词。在人名前加逗号把它撑开。"
+    },
+    {
+      "start": 115.8,
+      "end": 121.6,
+      "narration": "六比三，第一盘归了卡利尼娜。",
+      "_why": "画面正好是 120.5 秒那张全屏赛果台标 `ROUND 2 / EMMA NAVARRO 3 / ANHELINA KALININA 6`——**画面自己把这一盘的比分写出来了**。"
+    },
+    {
+      "start": 144.5,
+      "end": 151.5,
+      "narration": "第二盘换了个开头，纳瓦罗上来就破掉对面的发球局。",
+      "_why": "第二盘第一局。记分条 `0 30 / 0 40`、发球指示球标在卡利尼娜那一行——**这一局是卡利尼娜发球**，纳瓦罗破成一比零（逐分第二盘第一局 `HG=2, HK=1`）。150.5 秒记分条已经变成 `3 1 / 6 0`，破发成立。"
+    },
+    {
+      "start": 164.2,
+      "end": 172.5,
+      "narration": "纳瓦罗自己的发球局，被逼到只差一个小分就丢掉。这一个她守住了。",
+      "_why": "记分条 `1 30 / 0 40` 加绿标 `BREAK POINT`——纳瓦罗发球、三十比四十。逐分那一局是 `30:40 |B1|, 40:40, A:40`，**她救下来了**，二比零。\n\n⚠️ **主语必须写全名**：这一段的第一格（164.5s）是**卡利尼娜**的接发特写，如果写成「自己的发球局，她被逼到……」，读者会把「她」接到画面里那个人身上——而那正好是对手。这是跑 `preview_segments_local.py` 第二遍时抓出来的第二处。"
+    },
+    {
+      "start": 174.5,
+      "end": 182.0,
+      "narration": "同样的局面又来一次。这一次没守住，三比三。",
+      "_why": "记分条 `3 30 / 2 40` 加绿标 `BREAK POINT #2`——同样是纳瓦罗发球、三十比四十，这一次被破回三比三（逐分 `HH=1, HK=2`）。⚠️ 和上一段是**同一个形状的两局，结果相反**，所以两段挨着放。"
+    },
+    {
+      "start": 192.6,
+      "end": 201.8,
+      "narration": "五比四，她发球胜盘，手里攥着三个盘点。前两个都被卡利尼娜救了回去。",
+      "_why": "记分条 `5 40 / 4 30` 加绿标 `SET POINT`。逐分那一局是 `40:30 |B2|, 40:40, A:40 |B2|, 40:40, A:40 |B2|`——**三个盘点**。转播 201.12 秒对其中一个的原话是 `that is such a gutsy shot to play in that situation`，说的是卡利尼娜救球。"
+    },
+    {
+      "start": 209.0,
+      "end": 216.0,
+      "narration": "第三个才落地。解说那句话是，第三次才走运。",
+      "_why": "记分条这一段是 `5 Ad / 4` 加绿标 `SET POINT #3`，214.5 秒画面里她抬手庆祝。转播 213.04 秒原话就是 `Third time lucky for Emma Navarro`——**引的是解说这一秒说的话，不是我们自己的评价**。第二盘六比四，一盘平。",
+      "crosses_cut": "210.76 是转播在**同一分里换机位**——记分条 208.5 / 210.5 / 212.5 / 214.5 秒四格全是 `5 Ad / 4` 加绿标 `SET POINT #3`，也就是同一局、同一个盘点还没打完。切点两边都只有纳瓦罗一个人（绿色连衣裙），没有换人，所以整句旁白不会压到对手身上。"
+    },
+    {
+      "start": 233.0,
+      "end": 239.0,
+      "narration": "第三盘，节奏换了个人。纳瓦罗把局面攥住了。",
+      "_why": "记分条这一段是第三盘 `2 40 / 1 30`（纳瓦罗二比一领先、自己发球）。⚠️ **没写「上来就破发」**——那一局（第三盘第一局）不在这条集锦的画面里，写了就会压在一段对不上的画面上。\n\n⚠️ **措辞是为切词改过的**：第一版写「节奏整个到了纳瓦罗这边」，切词报出 `了纳瓦罗` 骑在人名边界上。拆成两句，人名起句。"
+    },
+    {
+      "start": 241.2,
+      "end": 249.5,
+      "narration": "两个人的发球局连着打到平分，比赛滑进第三个小时。",
+      "_why": "这两句都是转播 239.12–249.04 秒自己说的：`the last two service games went to deuce` ＋ `clock just ticking into a third hour on court 10. 2 hours and one minute played`。"
+    },
+    {
+      "start": 249.9,
+      "end": 258.8,
+      "narration": "十五个 ACE 对两个。纳瓦罗的一发只进了一半，可进了的那些，她赢下八成。",
+      "_why": "数据一。ACE 15:2、一发进球 49/92（53%）、一发得分 40/49（82%）——WTA 官方和 flashscore 两个源逐项一致。**这两个数摆在一起才有意思**：一发进得少，但进了就几乎拿分。\n\n⚠️ **主语写全名**：上一段说的是「两个人」，「她」在这儿没有就近的指代对象。"
+    },
+    {
+      "start": 259.2,
+      "end": 265.5,
+      "narration": "而一发得分率这条线，从第一盘的六成七，爬到了八成七。",
+      "_why": "数据二，也是这场球的机制。flashscore 分盘一发得分率：纳瓦罗 67% → 86% → 87%。⚠️ 对面的那条线（80% → 73% → 59%）在文案里写，片子里只讲一条——两条一起念在十秒里说不清。"
+    },
+    {
+      "start": 265.7,
+      "end": 275.4,
+      "narration": "全场一百六十九个小分。两个人打满两小时十六分钟，纳瓦罗只多赢了一个。",
+      "_why": "数据三，也是钩子那两行。85:84，WTA 官方和 flashscore 两个源一致。用时取 WTA 官方分盘 `settime` 之和 2:16:04（`MatchTimeTotal` 02:16:05）。⚠️ 写「小分」不写「分」，躲开「分/分钟」的读音歧义。\n\n⚠️ **主语必须写全名**：这一段 266.5–272.5 秒四格里在画面中间的都是**卡利尼娜**，写成「她只多赢了一个」会被读成卡利尼娜多赢——而事实正好相反。这是跑 `preview_segments_local.py` 第二遍时抓出来的第三处。"
+    },
+    {
+      "start": 291.2,
+      "end": 296.8,
+      "narration": "二〇二四年的世界第八，还能回到那儿吗？",
+      "_why": "收尾一问，落在她自己的排名弧线上——**不是封面那一问的回声**（钩子问的是这场球有多紧，这一问指向的是往后）。画面是她向看台致意、以及 292.5 秒那张全屏赛果台标。⚠️ 段尾 296.8 收在切点 296.92 之前，296.92 之后就是 WTA 的订阅片尾卡。"
+    }
+  ],
+  "push": {
+    "summary": "纳瓦罗多赢一分逆转",
+    "lead": "辛辛那提女单第二轮，25 号种子纳瓦罗 3-6 6-4 6-2 赢下卡利尼娜，用时两小时十六分钟。这场球的账薄得吓人：全场一百六十九个小分，她只多赢了**一个**——八十五比八十四。第一盘她三比二领先，然后卡利尼娜一口气连下四局，那一盘卡利尼娜的一发得分率是八成，六比三。转折从第二盘开始：纳瓦罗上来就破发，三比二时自己的发球局被破回三比三，五比四发球胜盘时手里攥着三个盘点，**前两个都被救了回去，第三个才落地**——转播当场说了一句「第三次才走运」。第三盘六比二，比赛滑进第三个小时。真正的分水岭是一发：她的一发得分率从第一盘的六成七，一路爬到八成六、八成七，而卡利尼娜从八成掉到七成三、五成九。全场十五个 ACE 对两个。而这场球最重的一层在场外：纳瓦罗二〇二四年九月排到过世界第八，那年年终也是第八；可辛辛那提一直是她过不去的地方，二〇二三、二四、二五连着三年打进正赛，一场都没赢过。这是第四次。赛点落地那一刻转播说的是：在她第四次尝试之后，25 号种子终于拿下了自己在辛辛那提的第一场正赛胜利。这一场还是在 10 号球场打的，不是中心球场。",
+    "auto": true
+  }
+}
