@@ -5378,10 +5378,41 @@ h264+aac、⚠️ 30 fps（不是 25，跨源剪辑要写 `mixed_fps`）**，而
 钉进去就是一条一分钟后必死的链接，而它失败的样子和「这条片子被下架了」
 一模一样。⚠️ 但 60 秒**不是下载的时限**：实测整条 154 秒、74.6 MB 一趟下完没事。
 
-⚠️ **顺序是 YouTube 在前，而这不是妥协**：YouTube 那批单场集锦 2~8 分钟，
-短集锦是**定长 2 分半**的剪短版，正好撞上「不要砍片长」「挑更长更完整的那版」。
-短集锦顶上来的不是画质，是**覆盖**——ATP 的 YouTube 覆盖本来就不稳，
-而短集锦每场都有。
+⚠️ **顺序是 YouTube 在前**（账号所有者定的），而它管的是**去哪儿找**，
+**不是「YouTube 版更完整」**。短集锦顶上来的是**覆盖**——ATP 的 YouTube 覆盖
+本来就不稳，而短集锦每场都有。
+
+##### ⚠️⚠️ 而「赛事自己的官方频道」是第三个 YouTube 来源，**它的 ATP 版反而更短**
+
+账号所有者 2026-08-16：「**还有每个赛事自己官方的 youtube 频道有时也会有集锦，
+比如 cincinnati open**」。真去量了 `@CincyProTennis`（oEmbed 的 `author_name`
+是 `Cincinnati Open`，权威），辛辛那提 R2 那三场 ATP **两边都有**，正好直接比：
+
+| 这一场 | 赛事官方频道 | Tennis TV 短集锦 | |
+|---|---|---|---|
+| Paul vs Hurkacz | 130s | **154s** | TTV **+24s** |
+| Landaluce vs Arnaldi | 129s | **156s** | **+27s** |
+| Kecmanovic vs Cobolli | 121s | **152s** | **+31s** |
+
+同一个频道**两个巡回赛还差一档**：ATP **121~130s**、WTA **178~185s**——
+也就是它对 **WTA 是全场最长的一版**，对 **ATP 是最短的**（抽样 ATP 3、WTA 5，一页）。
+
+**所以「排在前面」不等于「更完整」，找到之后还要量一次**——「同一场有两版时挑长的
+那一版」那条照旧管用，而这次它真的咬人了。判据是那条老命令
+（`--print '%(duration)s %(height)s %(channel)s'`），⚠️ 记得带 `--js-runtimes node`。
+
+赛事频道这一档的四个坑（都是实测，别按标题模式硬解析）：
+**它 ATP+WTA 都收**（CLAUDE.md 原来标成「WTA 这一站」，错的）、
+**同一场会出现两次**（`Ostapenko vs Frech` 两个 videoId，按标题去重会留两条）、
+**标题格式不可靠**（同页就有一条 `Shuai Zhang vs Kayla Day match highlights`，
+没有 `| 赛事 | 轮次` 后缀，严格解析会漏掉它而**漏掉的样子就是「这场没有」**）、
+**混着非比赛条目**（`Cincy Serves Honoree` 61s，判据是标题里有没有 ` vs `）。
+
+⚠️ **量时长别逐条打 yt-dlp**：实测连打 42 次就吃 **HTTP 429**，之后每条都报
+`Sign in to confirm you're not a bot`——**和「这些视频不存在」长得一模一样**
+（14/14 全空是系统性的，不是间歇）。频道页 HTML 里的 `ytInitialData` 一次全给：
+每条视频是一个 `lockupViewModel`，**`contentId` 和时长同属这一个节点**——
+按结构取，不是按字符距离猜（那个坑本文件早记过）。权威标题走 oEmbed，没被限流打到。
 
 **代码这一头修的是「出路写出来了，代码自己不走」。** `_reject_signed_source_urls`
 的报错正文里早写着「Tennis TV 库里标着 `free` 的条目」这条出路，而
@@ -5444,8 +5475,14 @@ h264+aac、⚠️ 30 fps（不是 25，跨源剪辑要写 `mixed_fps`）**，而
 
     curl -s "https://www.youtube.com/@atptour/videos"        -H "User-Agent: Mozilla/5.0 …"
     curl -s "https://www.youtube.com/@TennisTV/videos"        -H "User-Agent: Mozilla/5.0 …"
-    curl -s "https://www.youtube.com/@CincyProTennis/videos"  # WTA 这一站是赛事官方频道
+    curl -s "https://www.youtube.com/@CincyProTennis/videos"  # ⚠️ 赛事官方频道，**ATP+WTA 都收**
     # 正则 "videoId":"([\w-]{11})" 取前 20~30 个（页面按时间倒序）
+
+⚠️ **第三行原来注着「WTA 这一站是赛事官方频道」——2026-08-16 量出来是错的**：
+同一页里 ATP 3 条、WTA 10 条。**赛事自己的官方频道是一档独立的源**
+（账号所有者：「还有每个赛事自己官方的 youtube 频道有时也会有集锦，
+比如 cincinnati open」），每站一个，**扫的时候要按当周的站去找它的频道**，
+不是只认这三个写死的名字。
 
 ⚠️ **标题不在 `videoId` 旁边**，别按字符距离去凑（那个坑见上面「别拿频道列表页的
 HTML 去猜时长」）。逐个走 **oEmbed** 拿权威的标题和频道名：
@@ -5459,7 +5496,7 @@ HTML 去猜时长」）。逐个走 **oEmbed** 拿权威的标题和频道名：
 见上面那一节。实测 ATP 官方的单场集锦普遍两分钟上下，Tennis TV 的是三到八分钟——
 **但每次都要量，别照抄这句**。
 
-**③ᵇ ATP 的场次 ② 里没扫到**（YouTube 没发这一场）→ 去 Tennis TV 的短集锦补：
+**③ᵇ ② 里没扫到的 ATP 场次**（三个 YouTube 来源都没发这一场）→ 去 Tennis TV 的短集锦补：
 
     curl -sS -H "User-Agent: tennislive/0.1" https://www.tennistv.com/library/short-highlights \
       | grep -o '/videos/[0-9]*/[a-z0-9-]*short-highlights' | sort -u

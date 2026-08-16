@@ -63,9 +63,45 @@ spec 里放**页面地址**（不带令牌，`_reject_signed_source_urls` 放行
 账号所有者 2026-08-16 定的顺序：「**优先级就是 YouTube 找不到就找
 Tennis TV 的 short highlight**」。
 
-1. **ATP Tour / Tennis TV 官方 YouTube 频道**（主路）—— 大场次有免费单场集锦
+1. **YouTube 这一档**（主路），三个来源都算：
+   - ATP Tour 官方频道
+   - Tennis TV 官方频道
+   - **赛事自己的官方频道** —— 账号所有者 2026-08-16：「**还有每个赛事自己
+     官方的 youtube 频道有时也会有集锦，比如 cincinnati open**」
 2. **Tennis TV `library/short-highlights`**（YouTube 没有这一场时）—— 免费、1080p
-3. 两条都没有才报「这场没源」跳过
+3. 都没有才报「这场没源」跳过
+
+### ⚠️ 「YouTube 优先」说的是**去哪儿找**，不是「YouTube 版更完整」
+
+顺序管的是**覆盖**（先去哪儿翻），**不是**「先找到的那版就用」。CLAUDE.md 里
+「同一场有两版时挑长的那一版」那条照旧管用，而且**这次量出来它咬人了**——
+辛辛那提 2026 R2 那三场 ATP，两边都有，赛事频道那版**反而更短**：
+
+| 这一场 | 赛事官方频道 | Tennis TV 短集锦 | |
+|---|---|---|---|
+| Paul vs Hurkacz | 130s | **154s** | TTV **+24s** |
+| Landaluce vs Arnaldi | 129s | **156s** | **+27s** |
+| Kecmanovic vs Cobolli | 121s | **152s** | **+31s** |
+
+同一个频道**两个巡回赛还差一档**：ATP **121~130s**、WTA **178~185s**
+（抽样 ATP 3 条、WTA 5 条，一页）。也就是说赛事频道对 **WTA 是全场最长的一版**，
+对 **ATP 是最短的**。
+
+⚠️ **所以按顺序找到之后还要量一次**，别拿「它排在前面」当「它更完整」：
+
+    yt-dlp --js-runtimes node --skip-download --print '%(duration)s %(height)s %(channel)s' <url>
+
+### ⚠️ 赛事官方频道这一档的四个坑（Cincinnati Open 实测）
+
+- **它两个巡回赛都收**。CLAUDE.md 的候选扫描那节原来把 `@CincyProTennis` 标成
+  「WTA 这一站是赛事官方频道」，**量出来是错的**——同一页里 ATP 3 条、WTA 10 条
+- **同一场会出现两次**：`Ostapenko vs Frech` 两个不同的 videoId，时长都是 185s。
+  按标题去重会留下两条，要按 videoId 认
+- **标题格式不可靠**。多数是 `<A> vs <B> | 2026 Cincinnati Open | Round Two`，
+  但同一页里就有一条 `Shuai Zhang vs Kayla Day match highlights`——**没有
+  `| 赛事 | 轮次` 后缀**。按严格模式解析会漏掉它（而漏掉的样子就是「这场没有」）
+- **列表里混着非比赛条目**（`Cincy Serves Honoree`，61s）。判据是标题里有没有
+  ` vs `，不是「它在这个频道里」
 
 ⚠️ **这个顺序和「挑更长更完整的那版」是同一条**，不是妥协：YouTube 那批
 单场集锦实测 **2~8 分钟**（Tennis TV 频道那批偏长），而短集锦是**定长 2 分半**
@@ -80,6 +116,34 @@ Tennis TV 的 short highlight**」。
 `TENNISTV_JWT` 那条可选升级也不必再提——短集锦这一档根本不需要它。
 
 选题优先级照旧（中国球员 > 顶级 > 热点，半决赛级别以上直接做）。
+
+### 量频道那一页的时长：从 `ytInitialData` 按**结构**取，别逐条打 player API
+
+逐条 `yt-dlp` 去问时长会把这台机器打进限流——实测连打 42 次之后
+**HTTP 429 Too Many Requests**，接着每条都报
+`Sign in to confirm you're not a bot`，**而那和「这些视频不存在」长得一模一样**
+（CLAUDE.md「空结果先自证是真空」的又一个实例：14/14 全空是系统性的，不是间歇）。
+
+频道页的 HTML 里就有，一次请求全拿到：
+
+```python
+data = json.loads(re.search(r"var ytInitialData = (\{.*?\});</script>", html, re.S).group(1))
+# 每条视频是一个 lockupViewModel：contentId 就是 videoId，时长在同一个节点里
+```
+
+⚠️ **要按节点取，不能按字符距离猜**——CLAUDE.md 那条「别拿频道列表页的 HTML
+去猜时长」说的是「`videoId` 前后 N 字符里找时长」那种写法，**那个窗口会串到
+相邻视频的标签上**（同一场两版被读成 12 分 08 秒和 2 分 20 秒，两个数都错而
+结论碰巧没变）。`contentId` 和时长同属一个 `lockupViewModel`，这是结构不是距离。
+
+⚠️ 权威标题走 **oEmbed**（`youtube.com/oembed?url=…&format=json`），它的
+`author_name` 就是「这条是不是官方发的」的判据——**搬运号一律不用**。
+oEmbed 这条路没被限流打到。
+
+**这份解析是拿两个口径对出来的，不是声明出来的**：退避之后 yt-dlp 单条问到的
+`Landaluce vs Arnaldi` 是 **129s / 1080p / `Cincinnati Open`**，和 `ytInitialData`
+里结构化取出来的 129s **一分不差**——列映射读错的话这个数不可能对上。
+顺带这一条也确认了赛事频道给的是 **1080p**。
 
 ## 怎么扫一天的候选（**先扫 YouTube，缺哪几场再来这儿补**）
 
