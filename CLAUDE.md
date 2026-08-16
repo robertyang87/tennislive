@@ -5349,6 +5349,61 @@ ESPN 那份是**上一周的快照**，维基那条明写着 `(3 August 2026)`�
 调过色、洛斯卡沃斯那次官网图是效果图）说的都是同一件事：**授权和来源不是
 靠感觉判的，是靠画面自己证明的**。
 
+##### ⭐⭐ 2026-08-16 补上第三档：Tennis TV 的**短集锦是免费的**，YouTube 缺场时用它
+
+账号所有者：「**ATP 的赛场之上 highlight 可以去 tennistv 找啊**」，随后定了顺序：
+「**优先级就是 YouTube 找不到就找 Tennis TV 的 short highlight**」。
+
+`docs/atp-highlights-source.md` 2026-08-09 那版写着「单场集锦 `premium`——要订阅」，
+据此把 ATP 判成只能靠 YouTube 碰运气。**那句话对它查的那一档是真的，而它把一档
+写成了全部**：Tennis TV 的单场集锦挂在**两个平行的 library 版块**下——
+
+| 版块 | slug | entitlement | 时长 | 抽样 |
+|---|---|---|---|---|
+| `library/match-highlights` | `…-highlights` | **premium** | 全长 | 2/2 |
+| **`library/short-highlights`** | 同名带 **`-short-highlights`** | **free** | **2 分半** | **20/20** |
+
+⚠️ **两档的 slug 只差六个字母，页面长得一模一样**，只有 `data-entitlement`
+那一个属性把它们分开。上一版**只打开了一个版块**——这是「查空一类不等于查空全部」
+的又一次，只不过要自证的不是空不空，是**空的范围有多大**；同一个形状
+（「查了一场就写成了一类」）这个仓库已经栽过三次，这是第四次。
+
+实测（辛辛那提 2026 R1/R2 那一页，20 条全查过）：**20/20 free、1920×1080、
+h264+aac、⚠️ 30 fps（不是 25，跨源剪辑要写 `mixed_fps`）**，而且和付费全长档
+**一一对应**——没有一场只有付费档。零 token，`fetch_tennistv_video_metadata`
+早就写好了这条路。
+
+⚠️ **manifest 上的令牌只活 60 秒**（`exp - iat = 60`，`customerId` 是
+`anonymous`）。所以**解析必须在下载那一刻做**，spec 里放**页面地址**——
+钉进去就是一条一分钟后必死的链接，而它失败的样子和「这条片子被下架了」
+一模一样。⚠️ 但 60 秒**不是下载的时限**：实测整条 154 秒、74.6 MB 一趟下完没事。
+
+⚠️ **顺序是 YouTube 在前，而这不是妥协**：YouTube 那批单场集锦 2~8 分钟，
+短集锦是**定长 2 分半**的剪短版，正好撞上「不要砍片长」「挑更长更完整的那版」。
+短集锦顶上来的不是画质，是**覆盖**——ATP 的 YouTube 覆盖本来就不稳，
+而短集锦每场都有。
+
+**代码这一头修的是「出路写出来了，代码自己不走」。** `_reject_signed_source_urls`
+的报错正文里早写着「Tennis TV 库里标着 `free` 的条目」这条出路，而
+`build_match_reel.download()` 从来不解析 Tennis TV 页面地址——直接喂给 yt-dlp
+会报 `This video is only available for registered users`，**一句指向「cookie
+过期了」的错，而真相是这条路根本没接上**。采访线 2026-08-05 就接了，出片线
+一直没有。这跟 `build_match_reel.py` 1192 行记的那次是同一个形状。
+
+- **解析只有一份**：`official.media_url()`，两条线各包一层只翻译异常类型
+  （出片线 `ReelError`、采访线 `SystemExit`）。写两处必分叉，而**分叉的样子是
+  「采访线能下、出片线报『注册用户才能看』」**——两个入口各试一次才看得出来，
+  而没有人会为一条已经通了的线再试一次
+- ⚠️ **缓存键必须还用页面地址**，别就地把 `url` 覆盖成解出来的那个：令牌 60 秒
+  一换，拿它当键**每趟都是新键、缓存永远不命中**（那一百秒的重下白付），
+  还会把缓存目录撑满，**而那表现为「今天 CI 怎么慢了点」**
+- ⚠️ **`.m3u8` 不走 curl 那条直链**：它不是文件，是播放列表，curl 下回来几 KB
+  文本必然过不了 ffprobe，白挨一次请求还打印一句指错方向的「直链下到 0.0 MB」。
+  判的是**这东西本身是不是播放列表**，不是维护「哪些站要交给 yt-dlp」的域名名单
+- 四条判据都反向验证过，**扫「有没有自己再抄一份解析」要用 AST**：
+  `build_match_reel.py` 的报错正文里正写着那个函数名，按文本扫会把「把出路写清楚」
+  判成「又抄了一份」
+
 #### WTA：同样要挑 1080p，别退而求其次
 
 `eala-championship` 那条早就踩过一次：wtatennis.com 站内嵌入播放器
@@ -5403,6 +5458,15 @@ HTML 去猜时长」）。逐个走 **oEmbed** 拿权威的标题和频道名：
 **③ 同一场有两版时挑哪个**：`yt-dlp --skip-download --print '%(duration)s %(height)s %(channel)s'`，
 见上面那一节。实测 ATP 官方的单场集锦普遍两分钟上下，Tennis TV 的是三到八分钟——
 **但每次都要量，别照抄这句**。
+
+**③ᵇ ATP 的场次 ② 里没扫到**（YouTube 没发这一场）→ 去 Tennis TV 的短集锦补：
+
+    curl -sS -H "User-Agent: tennislive/0.1" https://www.tennistv.com/library/short-highlights \
+      | grep -o '/videos/[0-9]*/[a-z0-9-]*short-highlights' | sort -u
+
+免费档、1080p、每场都有，spec 的 `source_url` 直接写这个**页面地址**
+（解析在下载那一刻做）。⚠️ 顺序是 **YouTube 在前**，而且这一档是**定长 2 分半的
+剪短版**——详见上面「2026-08-16 补上第三档」和 `docs/atp-highlights-source.md`。
 
 **④ 去重**：`ls specs/reels/ | grep -i <姓>`。⚠️ **按对阵双方的姓各查一遍**，
 文件名的先后顺序不固定（`wang-vandewinkel` 就是这么查出来「已经做过」的）。

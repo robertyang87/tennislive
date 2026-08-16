@@ -1144,6 +1144,21 @@ def _keep_source(url: str, src: Path) -> None:
         print(f"[缓存] 存不进去，下一趟还要重下：{exc}")
 
 
+def _resolve_media_url(url: str) -> str:
+    """页面地址 → 真下得动的地址。正文在 `official.media_url`，两条线共用一份。
+
+    这儿只把异常翻译成本文件的 `ReelError`，好让它和别的出片错误走同一条
+    报错路径（`render()` 那一层是按 `ReelError` 收的）。
+    """
+    from tennislive.video.official import media_url  # noqa: PLC0415
+    from tennislive.video.pipeline import VideoPipelineError  # noqa: PLC0415
+
+    try:
+        return media_url(url)
+    except VideoPipelineError as exc:
+        raise ReelError(str(exc)) from exc
+
+
 def download(url: str, dest: Path) -> Path:
     """取**最高清晰度**：先试 1080p 的 avc1（码率最高的那档），退到 bestvideo。
 
@@ -1161,13 +1176,34 @@ def download(url: str, dest: Path) -> Path:
         print(f"[缓存] 命中，没有重下（{dest.stat().st_size / 1e6:.1f} MB）")
         return dest
 
+    # **页面地址不一定就是下载地址。** Tennis TV 的 `library/short-highlights`
+    # 那批标着 `data-entitlement="free"` 的单场短集锦（2 分半、1080p）要先过一次
+    # 公开 entitlement 接口才拿得到 HLS；直接把页面地址喂给 yt-dlp 会报
+    # `This video is only available for registered users`——**一句指向「cookie
+    # 过期了」的错，而真相是这条路根本没接上**。采访线 2026-08-05 就接了，
+    # 出片线一直没有，而报错正文里早写着「Tennis TV 库里标着 `free` 的条目」
+    # 这条出路（`_reject_signed_source_urls`）——**出路写出来了，代码自己不走**，
+    # 和本文件 1192 行记的那次是同一个形状。
+    #
+    # ⚠️ **`fetch` 和 `url` 必须分开，别就地把 `url` 覆盖掉。** 缓存
+    # （`_cached_source` / `_keep_source`）按 URL 的哈希认领，而解出来的
+    # manifest 带一个**只活 60 秒**的令牌：拿它当键的话每趟都是新键，
+    # 缓存**永远不命中**（那一百秒的下载白付，见 CLAUDE.md「同一条源片会被下
+    # 两到三次」），还会把缓存目录撑满。页面地址是稳定的，它才是键。
+    fetch = _resolve_media_url(url)
+
     # 不是 YouTube 就是一个普通直链（网盘、赛事站…），curl 一下就完了。
     # 这条路是被逼出来的：YouTube 对这台机器和 runner 都封着，人只能自己下好
     # 传到网盘，再把直链给我们。
+    # ⚠️ `.m3u8` **不是一个文件，是一张播放列表**——curl 下回来的是几 KB 文本，
+    # 必然过不了下面那道 ffprobe，白挨一次请求还打印一句指错方向的
+    # 「直链下到 0.0 MB」。这不是在维护「哪些站要交给 yt-dlp」的域名名单
+    # （那种名单会过期），判的是**这个东西本身是不是播放列表**。
     direct_failed = ""
-    if "youtube.com" not in url and "youtu.be" not in url:
+    if ("youtube.com" not in fetch and "youtu.be" not in fetch
+            and ".m3u8" not in fetch):
         proc = subprocess.run(
-            ["curl", "-sSL", "--fail", "-o", str(dest), url],
+            ["curl", "-sSL", "--fail", "-o", str(dest), fetch],
             capture_output=True, text=True)
         if proc.returncode != 0 or not dest.is_file() or dest.stat().st_size == 0:
             dest.unlink(missing_ok=True)
@@ -1243,7 +1279,7 @@ def download(url: str, dest: Path) -> Path:
         proc = subprocess.run(
             [binary, *YTDLP_BASE, "--no-warnings", "-f", selector,
              *sort, *cookies, *extra, "--merge-output-format", "mp4",
-             "-o", str(dest), url],
+             "-o", str(dest), fetch],
             capture_output=True, text=True,
         )
         if proc.returncode == 0 and dest.is_file() and dest.stat().st_size > 0:
