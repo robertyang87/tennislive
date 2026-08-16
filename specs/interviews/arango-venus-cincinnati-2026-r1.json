@@ -137,5 +137,10 @@
     "event": "",
     "summary": "阿朗戈赢下大威廉姆斯",
     "lead": "2026 辛辛那提 WTA1000 第一轮，二十五岁的哥伦比亚人阿朗戈 6-2 6-2 战胜大威廉姆斯，生涯第一次打进这一站第二轮。赛后场上采访里，主持人开口就是一句把时间拉得很长的话：「她拿下第一个大满贯的时候，离你出生还有几个月。」——大威 2000 年 7 月拿下温网，阿朗戈同年 11 月出生。她的回答是：「感觉太不真实了。签表出来我一看到就想，天哪。我从小就在电视上看她，现在真的跟她打上了，太疯狂了。」后面还聊了她今天只想着「让腿快起来」、被教练拉去打高尔夫，以及那顶反戴帽的来历。中英双语字幕，全程。"
-  }
+  },
+  "en_fixed": {
+    "56": "and so my coach was out there."
+  },
+  "_verified_clean": "两份转写对不上 **3.1%**（闸门 12%），**0 处空档**。第一份 YouTube 自动字幕 553 词，第二份 faster-whisper `medium.en` 552 词。\n\n**13 处分歧逐处看过，只加了一条 `en_fixed`。**\n\n⚠️ **加的那一条是第 56 行**：`and so my go my coach was out there.` → `and so my coach was out there.`\n\n判据是**词级时间戳**，不是「读起来别扭」——`cap_*.json3` 里那一句拆开是\n\n    385.20  my    +0ms\n            go    +241ms      ← 241 毫秒，一个被切断的词\n            my    +481ms\n            coach +801ms\n\n两个 `my` 夹着一个 241 毫秒的碎片，正是一次自我更正的形状；而**第二份 whisper 在这儿什么都没听出来**（分歧报的是 `my go` → `—`）。两个源合起来指向同一件事：那不是一个词。烧在画面上的英文是给人学的，留着 `my go my` 只会教出一个不存在的说法。\n\n**其余 12 处一条都不动**，分三类：\n\n- **我们这边对、whisper 错**：`that's emiliana` → `to miliana`、`arango` → `—`、\n  `62 62 emiliana` → `six two six two ameliana`（数字写法，不是听错）\n- **她本来就这么说的**（非母语者的语法和口语）：`liked`/`like`、`is`/`it's`、\n  `he was`/`he's`、`you`/`you've`\n- **口吃对齐的噪音**：`i` → `—`、`a` → `—`、`—` → `the`、`who` → `you`\n\n⚠️ **只有一处两边都说得通、而我留了 YouTube 那版**：第 68 行\n`which is funny enough`，whisper 给的是 `you know the`。留前者，因为\n`funny enough` 是一个完整的英语说法、而且和整句（教练拉她去打高尔夫）合得上；\nwhisper 那版 `which is funny, you know, the...` 是一句没说完的话。记在这儿是因为\n它不是噪音，是一个真的有两种读法的地方。",
+  "transcript_verified": true
 }
