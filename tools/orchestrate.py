@@ -92,6 +92,9 @@ def candidates(digest) -> list[dict]:
             "home": m.home[0].name,
             "away": m.away[0].name,
             "status": str(m.status),
+            # T0 探测的搜索词要用：赛事名（剥赞助商前缀）+ 年份。
+            "event": m.tournament.name,
+            "year": m.start_utc.year if m.start_utc else date.today().year,
         })
     out.sort(key=lambda c: c["score"], reverse=True)
     return out
@@ -126,8 +129,7 @@ def _workflow_for(column: str) -> str:
     # 赛场之上（reel）走 match-reel.yml；开球之前（preview）走**独立的**
     # preview-reel.yml——账号所有者 08-08 定了「单独走一条管线」，不和
     # match-reel（赛场之上那条）混，也不走 explainer（卡片视频）。
-    # ⚠️ preview-reel.yml 还没建（preview_beats.py 还缺 assemble/CLI），
-    # 建好之前编排器对 preview 只 print 计划、点 run 会失败——见 main() 的闸。
+    # ⚠️ preview 目前只报不 dispatch（spec 还没自动生成），见 main() 的闸。
     return {"reel": "match-reel.yml", "preview": "preview-reel.yml"}.get(
         column, "match-reel.yml")
 
@@ -167,14 +169,30 @@ def main() -> int:
         return 0
 
     import subprocess
+
+    from detect_highlights import query_for, search, pick_highlight
+
+    dispatched: list[dict] = []
     for c in todo:
         wf = _workflow_for(c["column"])
-        cmd = ["gh", "workflow", "run", wf, "--ref", "main",
-               "-f", f"mode=probe", "-f", f"slug={c['slug']}"]
+        if c["column"] == "reel":
+            # 完赛片（赛场之上）要集锦 URL 才能 probe——先 T0 探测。
+            q = query_for(c["home"], c["away"], c["event"], c["year"])
+            url = pick_highlight(search(q), c["home"], c["away"])
+            if not url:
+                print(f"  [{c['slug']}] 集锦还没探到（{q[:40]}…），跳过，下次再探")
+                continue
+            cmd = ["gh", "workflow", "run", wf, "--ref", "main",
+                   "-f", "mode=probe", "-f", f"slug={c['slug']}", "-f", f"url={url}"]
+        else:
+            # 开球之前：没有单条集锦、spec 还没生成，先只报不 dispatch。
+            print(f"  [{c['slug']}] 开球之前暂不自动 dispatch（spec 待生成）")
+            continue
         print(f"[dispatch] {' '.join(cmd)}")
         subprocess.run(cmd, check=True)
-    mark_dispatched(state, todo)
-    print(f"已点 {len(todo)} 条 run 并记入 state。")
+        dispatched.append(c)
+    mark_dispatched(state, dispatched)
+    print(f"已点 {len(dispatched)} 条 run 并记入 state。")
     return 0
 
 
