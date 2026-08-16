@@ -11013,3 +11013,40 @@ def test_数据图的头像和matchup里的名字必须是同一个人():
         f"填反了（a 必须对应 cover.matchup[0]）：{clashes}"
     )
     assert len(seen) >= 8, f"判据失效了：只扫到 {len(seen)} 张头像"
+
+
+def test_手动推送也要记下已推送否则自动闸会再发一次():
+    """⚠️ **两条推送路径共用同一个「发过了」的判据，而只有一条在写它。**
+
+    来路：2026-08-16 补发 `bucsa-chwalinska` / `eala-ruse`（被「一趟最多一条」
+    拦下之后在仓库里躺了 13 小时）时发现——`auto_push_gate` 判「发过了」的
+    **唯一**依据是 `<outdir>/pushed.json` 在仓库里，而写它的步骤只在
+    `auto-push-reel.yml` 里有，`match-reel.yml` 全文一个字都没提过它。
+
+    于是**凡是走手动 `mode=push` 发出去的片子，在自动闸眼里永远是「没发过」**：
+    哪天它的 `render.json` 再被合进 main 一次，自动闸就会再发一条微信，
+    而消息收不回来。当天量了一遍，`push.auto:true` 且没有标记的有 9 条。
+
+    ⚠️ 判据钉**两头**：这一步存在，**而且排在推送之后**。只钉存在的话，
+    有人把它挪到推送前面照样绿——而那更坏：推送失败会留下一个「已经发过」的
+    假标记，这条片子从此再也发不出去，**而且不吭声**。
+    """
+    text = WORKFLOW.read_text(encoding="utf-8")
+    names = _steps(text)
+    assert "推送到微信（可选）" in names, "推送那一步的名字变了，判据的主语没了"
+    assert "记下已经推送过" in names, (
+        "`match-reel.yml` 没有「记下已经推送过」这一步——手动推的片子在自动闸"
+        "眼里永远是「没发过」，`render.json` 再动一次就会重复发一条微信。")
+    assert names.index("记下已经推送过") > names.index("推送到微信（可选）"), (
+        "「记下已经推送过」排在了推送**之前**——推送失败会留下一个「已经发过」的"
+        "假标记，这条片子从此再也发不出去，而且不吭声。")
+
+    block = _step_block("记下已经推送过", text)
+    assert "auto_push_gate.py" in block and "--record" in block, (
+        "没走 `auto_push_gate.py --record`——那是「发过了」这个标记的唯一出处，"
+        "另写一份必分叉，而分叉那天自动闸会重复发一条微信。")
+    # 标记只有进了仓库才算数（`auto_push_gate` 判的是 `git ls-files`，不是工作区）
+    assert "git push" in block, "标记没推回仓库，等于没记"
+    # ⚠️ 不许带 always()：上一步红了就不该记
+    assert "always()" not in block, (
+        "这一步不许带 `always()`——推送红了还记标记，就是那个「假标记」。")

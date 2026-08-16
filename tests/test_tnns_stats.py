@@ -239,3 +239,77 @@ def test_撞名要停不许静默取第一条():
     ]})
     assert tnns_stats.find_match_id(one, ["Zhang", "Day"]) == "7"
     assert tnns_stats.find_match_id(one, ["Nobody"]) is None
+
+
+def test_声称有却抠不出来要报矛盾不许写成这场没有():
+    """⚠️ **这条判据的来路是我的工具说了一句自信的假话。**
+
+    2026-08-16 端到端第一趟（run 31956957338，兹维列夫那场）：接口自己说
+    `hasExtendedStats: True`，而抓回来的那份里抠不出 Key Stats 那几组——
+    **同一场我手里有原文，41/25、35/36 明明在**。也就是说抓到的不是完整那
+    一份，不是这场没有。
+
+    而第一版在这儿照样打印了一句能粘的 `_winners_ue_why`，内容是「TNNS 这场
+    也没有这两行」，还打算被抄进 spec 当判据。**那比抓不到坏得多**：抓不到只是
+    没帮上忙，这是主动给出一个错答案，而下一个人没有第二个地方可以对
+    （CLAUDE.md 里「喊错了是主动给出错答案」那条）。
+
+    ⚠️ 两头都要钉：矛盾要报错，而**真的没有**（接口自己说 False/None）
+    照旧要给出能粘的挂账句——只钉前一头的话，把整条路改成一律报错也能过，
+    而那会把「查过确实没有」这种正当情形也堵死。
+    """
+    import pytest
+
+    def _payload(ext):
+        k = ["data", "Match", "hasExtendedStats"]
+        return json.dumps({"K": k, "P": [], "_": {"0": {"1": [], "2": ext}}})
+
+    # ① 声称有、抠不出来 → 必须报矛盾，且**不许**吐出 `_winners_ue_why`
+    with pytest.raises(SystemExit) as err:
+        tnns_stats._report("73465930", tnns_stats.decode(_payload(True)))
+    msg = str(err.value)
+    assert "自相矛盾" in msg, msg
+    # ⚠️ 只认**能粘的那一行**（`"_winners_ue_why": "`），不认散文里提到这个
+    # 字段名——报错正文里那句「别把它写成 `_winners_ue_why`」是**在教人别写**，
+    # 按裸名字扫会把它判成「还在教人写」。判据宁可窄，不可宽，而这个仓库为
+    # 「被自己的说明文字误伤」栽过好几次。
+    assert '"_winners_ue_why":' not in msg, "还在吐能粘的假话"
+
+    # ② 接口自己说没有 → 照旧给能粘的挂账句，别报错
+    for ext in (False, None):
+        body = _payload(ext) if ext is not None else json.dumps(
+            {"K": ["data", "Match"], "P": [], "_": {"0": {"1": []}}})
+        tnns_stats._report("42", tnns_stats.decode(body))   # 不许抛
+
+
+def test_按日期取不到要红不许退回首页那份():
+    """⚠️ **首页给的是今天，拿它顶替会静静地在错的一天里找人。**
+
+    2026-08-16 run 31956961716 实况：按 `date=2026-08-15` 那一发
+    `Failed to fetch`，而首页的被动抓包**早把同一个键填成了今天的赛程**，
+    于是日志照打「按 date=2026-08-15 取到 149 场」——**参数没生效，而它宣称
+    生效了**，然后在今天的赛程里找昨天的人，找不到。
+
+    ⚠️ 而「找不到」和「TNNS 没有这场」长得一模一样——这正是这一整条线反复要
+    防的那个形状。所以取不到必须红。
+
+    ⚠️ 这条是 `test_date这个参数要真的进到请求里` **拦不住**的那一半：
+    那条只钉「URL 拼对了」，把退回首页那一支加回来它照样绿（反向验证过）。
+    两条各管一头，缺一个都会漏。
+    """
+    import pytest
+
+    def cap_dated_fails(urls, marks, wait=22, in_page=None):
+        # 被动抓包拿到了首页（今天）那份，按日期那一发失败——真实事故的形状
+        return {tnns_stats._DAY_MARK: json.dumps(
+            {"all_matches": [{"k": 1, "p": [{"n": "Someone Else"}]}]})}
+
+    real = tnns_stats._browser_capture
+    tnns_stats._browser_capture = cap_dated_fails
+    try:
+        with pytest.raises(SystemExit) as err:
+            tnns_stats.fetch(["Zhang", "Day"], date="2026-08-15")
+    finally:
+        tnns_stats._browser_capture = real
+    msg = str(err.value)
+    assert "不退回首页那份" in msg, f"退回了首页那份，或者没说清为什么不退：{msg}"
