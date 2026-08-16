@@ -5135,6 +5135,65 @@ fancybox，原图挂在 `<a href>` 上。真页面上量：裸文本扫到 **40 
 拿别一站的图配这一场，正是本文件记过的「资料图」坑（同一个 Getty 编号挂在两个
 日期目录下）。所以那条片子**渲得出来但先不推**（`push.auto` 关掉），等官方出图再换。
 
+#### ⭐⭐ 2026-08-16 又扫出三条渠道，全收进 `tools/find_cover_photo.py`
+
+账号所有者：「**多找几个渠道获取高清大图**」。上面那两条（WTA `photo-resources`、
+赛事官网图库页）之外，实测又通了三条——**别再每次现搓，跑那个工具**：
+
+    python3 tools/find_cover_photo.py --player Tjen --event Cincinnati --day 6 \
+        --site cincinnatiopen.com --date 2026-08-16
+    python3 tools/find_cover_photo.py --getty 2288964672      # 这个编号是哪一场
+
+**① ⭐⭐ `GettyImages-<id>.jpg` 从「不能用」翻成「能用」。** 以前把它判死是因为
+「文件名什么都不说」，而其实两头都通：
+
+- **WTA 的 CDN 存的是无水印原图**，`?width=4000` 实测拿到 **4000×2666**
+- **Getty 自己的 `/detail/<id>` 页给出完整说明**——球员、赛事、轮次、场馆、日期，
+  四要素一次全齐
+
+⚠️ **看见 `GettyImages-*` 一律先查说明，别按「它挂在这场的页面上」就当成本场。**
+实测反例：`2288964672` 就挂在辛辛那提那条集锦的页面上，说明写的却是
+「National Bank Open, **August 08, 2026**, **Sobeys Stadium in Toronto**」——
+又一张资料图。同一批里 `2290118693`（Tauson–Stearns 辛辛那提 Day 5）和
+`2290359738`（Parry 辛辛那提 8/13）才是真的本站图。
+
+**② ⭐ 单条视频页比列表页多带图。** `/videos/<id>/<slug>` 的正文里除了封面还挂着
+别的图（谭雅妮那条集锦的页面上就多一张萨巴伦卡的 Getty）。扫图要扫**单条页**，
+不能只扫 `/videos/highlights` 那张列表。
+
+**③ ⭐ 赛事官网的 WordPress REST 媒体库**——比翻图库页早，能按日期过滤、
+直接给原图尺寸：
+
+    /wp-json/wp/v2/media?per_page=100&orderby=date&order=desc
+    /wp-json/wp/v2/media?after=2026-08-16T00:00:00
+    /?rest_route=/wp/v2/media          ← 等价入口
+
+⚠️⚠️ **必须带浏览器 UA。** 拿 `tennislive/0.1` 这类 UA 请求是 **403**，
+看起来像「这个站根本没开 REST 接口」——这一条当场骗过我一次。
+⚠️ 赛事图库的文件名**没有球员名**（`081526_DAY-EIGHT_MIKE-BAKER-112-of-229.jpg`），
+所以 `?search=<姓>` 在这儿恒空；它的用处是**按日期看当天的图上没上**。
+
+**④ ⭐ 「图库什么时候上线」是可以量的，别在当天下午反复扫。** 拿
+`posts?orderby=date` 读 `day-N-best-of-photos` 的 `date_gmt`，实测：
+
+    day-1  2026-08-12T00:00Z      day-4  2026-08-15T00:48Z
+    day-3  2026-08-14T01:56Z      day-5  2026-08-16T02:57Z
+
+也就是**当天那一辑在次日 UTC 00:00–03:00 之间上线**（当地 20:00–23:00）。
+比赛当天下午扫到 0 张是**结构性的**，不是这一天没有实拍。
+
+**⑤ 实测走不通的，别再试**（省得下一个人重探一遍）：
+
+| 路 | 结果 |
+|---|---|
+| Getty 自己的 comp 图 `media.gettyimages.com/id/…` | 脱离页面上下文一律 **400**（签名参数绑上下文）；而且 `w=gi` 是**带水印**的 |
+| Getty API `api.gettyimages.com` | **401**，要 key |
+| Reuters 图片站 | **401** |
+| `api.wtatennis.com` 的 `media` / `photos` / `content` / `players/<id>/media` | 全 **404** |
+| `wtatennis.com/galleries` | 404。`/photos` 有，但那是专题图集，不是当日比赛图 |
+| tennis.com 的比赛页 | 只有国旗和头像，没有比赛图 |
+| Flickr / Alamy / Imago / Zimbio | JS 渲染或带水印，取不到可用原图 |
+
 ### ⚠️ 2026-08-16：用 Tennis TV 的源片，**片尾和台标都要剪掉**
 
 账号所有者：「**如果用 Tennis TV 的视频的话，需要把它的片尾和它的 logo 剪掉。**」
