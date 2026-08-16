@@ -159,6 +159,16 @@ jobs:
             PYTHONPATH=src python tools/preview_beats.py --slug "${{ github.event.inputs.slug }}"
           fi
 
+      # 预览片和赛场之上是同一个 render() 出的（同画布/音轨/字幕），所以
+      # check_reel_landed 直接适用；只是用 --film 显式指到 preview 目录，
+      # --slug 读 spec（存量老片在 specs/reels/ 下）。
+      - name: 查成片本身合不合格
+        if: github.event.inputs.dry_run != 'true'
+        run: |
+          python tools/check_reel_landed.py \
+            --slug "${{ github.event.inputs.slug }}" \
+            --film "output/preview/${{ github.event.inputs.slug }}/${{ github.event.inputs.slug }}.mp4"
+
       # 成片一律走 Release 不进 git（match-reel 同款）。预览线产物目录独立：
       # output/preview/<slug>/，和 reel 的 output/<日期>/reel/<slug> 分家。
       - name: 成片发到 Release
