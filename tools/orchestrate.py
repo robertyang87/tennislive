@@ -134,6 +134,26 @@ def _workflow_for(column: str) -> str:
         column, "match-reel.yml")
 
 
+def assemble_draft(c: dict, *, skip: bool = False) -> list[str]:
+    """dispatch probe 之后顺手备料。返回 notes（每句一行），失败也不抛。
+
+    ⚠️ 只打印草稿、不落盘——正式 spec 永远人终审后自己写，落盘是 assemble_spec
+    自己 `--write` 的事。备料失败（没配 key、flashscore 反查不到）都出声，
+    不许把 dispatch 那一步带崩：probe 已经点下去了，备料只是顺带的便宜货。
+    """
+    if skip:
+        return ["[assemble] 已跳过（--no-assemble）"]
+    try:
+        from assemble_spec import assemble
+        draft = assemble(slug=c["slug"], home=c["home"], away=c["away"],
+                         event=c["event"], year=c["year"], fixture="",
+                         flashscore_id=None)
+        return [f"[assemble] {c['slug']} 草稿备好（未落盘）", *draft["_notes"]]
+    except Exception as exc:  # noqa: BLE001 —— 备料失败不许把 dispatch 带崩
+        return [f"[assemble] {c['slug']} 备料没成（{type(exc).__name__}: {exc}）"
+                "——不影响 probe，终审时手动补"]
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("--apply", action="store_true",
@@ -142,6 +162,8 @@ def main() -> int:
                     help="单次最多点几条 run（无人值守防错一片，默认 %(default)s）")
     ap.add_argument("--column", choices=["reel", "preview"], default=None,
                     help="只看某一栏")
+    ap.add_argument("--no-assemble", action="store_true",
+                    help="dispatch probe 后不跑 assemble 备料（默认会跑，只打印草稿）")
     args = ap.parse_args()
 
     dig = build_digest()
@@ -197,6 +219,12 @@ def main() -> int:
         print(f"[dispatch] {' '.join(cmd)}")
         subprocess.run(cmd, check=True)
         dispatched.append(c)
+        # 备料：probe 出缩略图墙之后，草稿自动跟着备好（只打印不落盘）。手动控制
+        # 途径留三处：--apply 是总开关、--no-assemble 关备料、落盘要 assemble 自己
+        # 的 --write。文案那步在没配 DeepSeek key 的环境会退化出声，不静默。
+        if c["column"] == "reel":
+            for note in assemble_draft(c, skip=args.no_assemble):
+                print(f"      {note}")
     mark_dispatched(state, dispatched)
     print(f"已点 {len(dispatched)} 条 run 并记入 state。")
     return 0

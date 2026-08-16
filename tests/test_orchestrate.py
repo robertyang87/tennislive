@@ -60,3 +60,37 @@ def test_slug取姓拼横杠():
     o = _tool()
     m = _match(0)
     assert o.slug_for(m) == "eala-pegula"
+
+
+def test_assemble_draft跳过出声(monkeypatch):
+    o = _tool()
+    notes = o.assemble_draft({"slug": "x"}, skip=True)
+    assert notes == ["[assemble] 已跳过（--no-assemble）"]
+
+
+def test_assemble_draft成功返回备料notes(monkeypatch):
+    o = _tool()
+
+    def _fake_assemble(**kw):
+        return {"_notes": ["flashscore id：A"]}
+
+    fake = type("M", (), {"assemble": staticmethod(_fake_assemble)})()
+    monkeypatch.setitem(sys.modules, "assemble_spec", fake)
+    notes = o.assemble_draft({"slug": "eala-pegula", "home": "A E", "away": "B R",
+                              "event": "C", "year": 2026})
+    assert notes[0] == "[assemble] eala-pegula 草稿备好（未落盘）"
+    assert "flashscore id：A" in notes
+
+
+def test_assemble_draft失败不抛出声(monkeypatch):
+    o = _tool()
+
+    class Boom:
+        def assemble(self, **kw):
+            raise RuntimeError("network down")
+
+    monkeypatch.setitem(sys.modules, "assemble_spec", Boom())
+    notes = o.assemble_draft({"slug": "x", "home": "A", "away": "B",
+                              "event": "C", "year": 2026})
+    assert any("备料没成" in n and "network down" in n for n in notes), (
+        "备料失败必须出声且不抛——dispatch 已经点下去了，别让便宜的备料把整趟带崩")
