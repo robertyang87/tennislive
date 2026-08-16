@@ -6896,10 +6896,27 @@ def _slide_html(
                 f"这一屏既没有 image 也没有 diagram：[{segment.label}] {segment.title}\n"
                 "补一张图或画一张示意图；别让它悄悄套用别的选题的图。"
             )
+        # ⚠️ 示意图那一屏用**另一条 scrim**（`scrim--diagram`）。
+        #
+        # 账号所有者 2026-08-16：「卡片上面的文字做成图片之后看起来很不清晰」
+        # 「把文字的亮度调高」。查下去根子不在颜色，在这一层：`.scrim` 排在
+        # `.diagram-wrap` 后面、两个都是 `position:absolute` 又都没有 z-index，
+        # 所以**它盖在示意图上面**，而它顶部那一档是 55% 的压暗。
+        #
+        # 示意图从 `top:210px` 起、920px 宽的 3:2 画布高 613px，也就是占卡片
+        # 高度的 14.6%~57.2%——按 `.scrim` 的四个色标插值，这一段被压暗
+        # **36%（顶）到 19%（底）**。渲出来量过：框内正文的对比度只有 3.8:1，
+        # 而同一张卡下半的要点是 **17:1**。差了四倍多，看上去就是「暗和模糊」。
+        #
+        # scrim 存在的理由是**让贴底的 `.copy` 压在照片上还读得出来**；而这一屏
+        # 底下根本没有照片，背景是我们自己画的 `.hero.diagram` 渐变。也就是说
+        # 这层压暗一点用没有，纯粹在削自己的字。
+        #
+        # 所以示意图这一屏的 scrim **上半整段透明**，只保留底部那一段。
         hero = (
             '<div class="hero diagram"></div>'
             f'<div class="diagram-wrap">{segment.diagram}</div>'
-            '<div class="scrim"></div>'
+            '<div class="scrim scrim--diagram"></div>'
         )
     # One line, always: CJK glyphs run about one em wide, so size the headline
     # off its own length rather than letting it wrap.
@@ -6985,6 +7002,14 @@ body{{font-family:'TL Sans SC','Noto Sans CJK SC','Noto Sans SC',sans-serif;}}
 .diagram-wrap svg{{width:920px;height:auto;}}
 .scrim{{position:absolute;inset:0;background:linear-gradient(180deg,
  rgba(6,28,20,.55) 0%,rgba(6,28,20,.10) 34%,rgba(6,28,20,.20) 60%,rgba(6,28,20,.94) 100%);}}
+/* 示意图那一屏：上半**一点都不压**。示意图是我们自己画在深绿渐变上的，
+   下面没有照片要压住，scrim 在这儿只会把自己的字削暗（实测顶部 −36%、
+   底部 −19%，正文对比度掉到 3.8:1，而同一张卡下半的要点是 17:1）。
+   58% 这个拐点是示意图画布的下沿（top 210px + 613px ÷ 1440px ≈ 57.2%）
+   再留一点余量——底下那一段照旧压住，`.copy` 的可读性一个字都没让。 */
+.scrim--diagram{{background:linear-gradient(180deg,
+ rgba(6,28,20,0) 0%,rgba(6,28,20,0) 58%,rgba(6,28,20,.30) 74%,
+ rgba(6,28,20,.94) 100%);}}
 .bar{{position:absolute;top:0;left:0;right:0;height:12px;z-index:5;
  background:linear-gradient(90deg,#c6f65a 0%,#37e29a 34%,#ff5a6a 67%,#4bb8ff 100%);}}
 .head{{position:absolute;top:44px;left:70px;right:70px;z-index:5;display:flex;

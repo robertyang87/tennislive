@@ -32,14 +32,20 @@
 
 from __future__ import annotations
 
+from .diagram_palette import AMBER, FILL, INK, LIME, SOFT
+
 # 一张图里最低的那点墨不许超过这个 y——再往下会被卡片上那颗序号药丸压住。
 # 这个数是渲成真卡片看出来的，不是从 viewBox 推的（600 是画布高，不是可用高）。
 INK_BOTTOM = 500
 
-_FG = "#e7f3ec"
-_DIM = "#a9bcb2"
-_GREEN = "#8fd6a8"
-_GOLD = "#e0b13a"
+# 本地别名，只为让下面那些 f-string 短一点。**值一律从 `diagram_palette`
+# 来，不在这儿另调**——账号所有者 2026-08-16 说的「卡片上的文字…很土，
+# 前景的颜色很鲜艳」，根子就是这几个模块各调各的，和卡片自己那套对不上。
+_FG = INK        # 正文，和卡片 `.point` 同色
+_DIM = SOFT      # 次级说明
+_ACC = LIME      # **文字**上的强调色，和卡片 `.point i` / `.ask` 同色
+_FILL = FILL     # 大面积的条和框，铺一片亮绿会盖过字，所以底色另用一档
+_GOLD = AMBER    # 第二类（不准 / 例外）
 
 
 def _head(title: str, subtitle: str) -> list[str]:
@@ -84,7 +90,7 @@ def time_structure() -> str:
         )
         parts.append(
             f'<rect x="{x0}" y="{y}" width="{w:.0f}" height="{bar_h}" rx="7" '
-            f'fill="{_GREEN}" fill-opacity="0.5"/>'
+            f'fill="{_FILL}" fill-opacity="0.5"/>'
         )
         # ⚠️ 秒数**装不下就摆到条子外面**。`25 秒` 在 36px 下约 80px 宽，而最短
         # 那根条子只有 98px——压在里面正好探出头一点点，看着像渲错了。这跟
@@ -92,7 +98,7 @@ def time_structure() -> str:
         inside = w >= 118
         parts.append(
             f'<text x="{x0 + (22 if inside else w + 20):.0f}" y="{y + 40}" '
-            f'font-size="36" font-weight="700" fill="{_GREEN}">{secs} 秒</text>'
+            f'font-size="36" font-weight="700" fill="{_ACC}">{secs} 秒</text>'
         )
         parts.append(
             f'<text x="{x0 - 20}" y="{y + 74}" text-anchor="end" font-size="26" '
@@ -129,7 +135,8 @@ def shoe_rule() -> str:
     # 失灵优先…`）。判据只有一条：**渲出来看**。
     for i, (name, case, decision, allowed) in enumerate(SHOE_CASES):
         y = 104 + i * 120
-        colour = _GREEN if allowed else _GOLD
+        colour = _FILL if allowed else _GOLD      # 框：大面积，用底色那一档
+        ink = _ACC if allowed else _GOLD           # 字：用和卡片同一个亮绿
         parts.append(
             f'<rect x="52" y="{y}" width="796" height="112" rx="12" '
             f'fill="{colour}" fill-opacity="{0.12 if allowed else 0.20}" '
@@ -177,7 +184,8 @@ def toilet_rule() -> str:
     for i, (what, limit) in enumerate(TOILET_LIMITS):
         y = 128 + i * 92
         last = i == len(TOILET_LIMITS) - 1
-        colour = _GOLD if last else _GREEN
+        colour = _GOLD if last else _FILL         # 框
+        ink = _GOLD if last else _ACC              # 字
         parts.append(
             f'<rect x="52" y="{y}" width="796" height="74" rx="10" '
             f'fill="{colour}" fill-opacity="{0.20 if last else 0.09}" '
@@ -223,7 +231,7 @@ def two_violations() -> str:
         y = 108 + i * 110
         parts.append(
             f'<rect x="52" y="{y}" width="796" height="98" rx="12" '
-            f'fill="{_GREEN}" fill-opacity="0.10" stroke="{_GREEN}" stroke-width="1"/>'
+            f'fill="{_FILL}" fill-opacity="0.10" stroke="{_FILL}" stroke-width="1"/>'
         )
         parts.append(
             f'<text x="76" y="{y + 44}" font-size="28" fill="{_FG}">{what}</text>'
@@ -290,7 +298,7 @@ def word_in_the_book() -> str:
         # 正文屏那套抄的。
         parts.append(
             f'<rect x="52" y="{y}" width="796" height="94" rx="12" '
-            f'fill="{_GREEN}" fill-opacity="0.16" stroke="{_GREEN}" '
+            f'fill="{_FILL}" fill-opacity="0.16" stroke="{_FILL}" '
             f'stroke-width="2" stroke-opacity="0.7"/>'
         )
         parts.append(

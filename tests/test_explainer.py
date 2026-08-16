@@ -3235,3 +3235,104 @@ def test_卡片缩一半要用lanczos不许退回缺省的bicubic(tmp_path):
     assert E._SCALE_FLAGS == "lanczos", (
         f"_SCALE_FLAGS 现在是 {E._SCALE_FLAGS!r}；换之前照 _SCALE_FLAGS "
         "上面那张表的口径重量一遍，别按感觉换")
+
+
+def test_示意图那一屏的scrim不许压在示意图上():
+    """账号所有者 2026-08-16：「卡片上面的文字做成图片之后看起来很不清晰」
+    「把文字的亮度调高」。
+
+    根子不在颜色，在图层：`.scrim` 排在 `.diagram-wrap` 后面、两个都是
+    `position:absolute` 又都没有 z-index，所以**它盖在示意图上面**，而它顶部
+    那一档是 55% 的压暗。示意图占卡片高度的 14.6%~57.2%，按四个色标插值是
+    被压暗 36%（顶）到 19%（底）——渲出来量过：框内正文对比度只有 **3.8:1**，
+    而同一张卡下半的要点是 **17:1**。
+
+    scrim 存在的理由是让贴底的 `.copy` 压在**照片**上还读得出来；示意图这一屏
+    底下没有照片，背景是我们自己画的渐变，所以这层压暗纯粹在削自己的字。
+
+    判据钉两头：**示意图那一屏用的是另一条 scrim**，而且**那条 scrim 的上半
+    是全透明的**。只钉前一头的话，有人把 `scrim--diagram` 定义成和 `.scrim`
+    一样也照样绿。
+    """
+    from tennislive.video import explainer as E
+
+    story = find_story_by_slug("weeks-at-no1")
+    segs = E.explainer_script(story)
+    diagram_seg = next(s for s in segs[1:] if s.diagram and not s.image)
+    html = E._slide_html(2, diagram_seg, theme="dark", topic="", column="网球有故事")
+
+    assert 'class="scrim scrim--diagram"' in html, (
+        "示意图那一屏还在用通用的 .scrim——它会盖在示意图上面，"
+        "顶部压暗 36%，正文对比度从 8:1 掉到 3.8:1")
+
+    # 那条 scrim 的**第一段必须是全透明**。取 `.scrim--diagram` 的 background，
+    # 把色标读出来：0% 那一档的 alpha 要是 0。
+    block = html.split(".scrim--diagram{")[1].split("}")[0]
+    stops = re.findall(r"rgba\(\s*\d+\s*,\s*\d+\s*,\s*\d+\s*,\s*([\d.]+)\s*\)\s+(\d+)%", block)
+    assert stops, f"读不出 .scrim--diagram 的色标：{block}"
+    top = [float(a) for a, pos in stops if int(pos) == 0]
+    assert top and top[0] == 0, (
+        f".scrim--diagram 顶部 alpha 是 {top}，不是 0——示意图又被压暗了")
+    # 示意图画布下沿约在 57.2%，那之前一档都不许开始压。
+    early = [(float(a), int(pos)) for a, pos in stops if int(pos) < 57 and float(a) > 0]
+    assert not early, (
+        f"57% 之前就开始压暗了：{early}。示意图的下沿在 57.2%（top 210px + "
+        "920px 宽的 3:2 画布高 613px ÷ 1440px），那之前一点都不该压")
+    # 反过来：**底下那一段必须还压着**，不然 .copy 压在示意图上会读不出来。
+    bottom = [float(a) for a, pos in stops if int(pos) == 100]
+    assert bottom and bottom[0] >= 0.9, (
+        f"底部 alpha 只有 {bottom}——.copy 就是靠它压住背景才读得出来的")
+
+
+def test_示意图的颜色要和卡片本身是同一套():
+    """账号所有者同一条消息：「卡片上的文字和前景的文字的颜色看起来很土，
+    前景的颜色很鲜艳，卡片上的文字就比较暗和模糊」。
+
+    卡片下半（`.point` / `.point i`）用的是 `#f4fbf7` 正文加 `#c6f65a` 亮绿；
+    而后加的 `no1_charts` / `rulebook_cards` 里我自己调了 `#e7f3ec` 正文加
+    `#8fd6a8` 薄荷、`#e0b13a` 暗金——**同一张卡上两套色，下半鲜艳上半发闷**。
+
+    ⚠️ 这不是「调得不好看」，是**分叉**：`explainer.py` 里那 40 多张老示意图
+    早就一路写着 `#c6f65a`，也就是这套色本来就定过，只有后加的模块没跟上。
+    所以判据是**从卡片自己的 CSS 里把颜色抠出来比**，不是另记一张色表——
+    CSS 改了而 `diagram_palette` 不改，当场红。
+    """
+    from tennislive.video import diagram_palette as P
+    from tennislive.video import explainer as E
+
+    story = find_story_by_slug("weeks-at-no1")
+    css = E._slide_html(2, E.explainer_script(story)[2], theme="dark",
+                        topic="", column="网球有故事")
+
+    def rule(selector: str) -> str:
+        return css.split(selector + "{")[1].split("}")[0]
+
+    body = re.search(r"color:(#[0-9a-fA-F]{6})", rule(".point")).group(1)
+    accent = re.search(r"color:(#[0-9a-fA-F]{6})", rule(".point i")).group(1)
+    assert P.INK == body, (
+        f"示意图正文 {P.INK} 和卡片 .point 的 {body} 不是同一个色——"
+        "同一张卡上两套色，上半就会看着比下半闷")
+    assert P.LIME == accent, (
+        f"示意图强调色 {P.LIME} 和卡片 .point i 的 {accent} 不是同一个色")
+
+    # 三个模块一个都不许再自己写死颜色（`FILL` 之外的那几档）。
+    # 用 AST 找模块级的字符串常量，注释和 docstring 里提到旧色不算数。
+    import ast
+
+    retired = {"#e7f3ec", "#a9bcb2", "#e0b13a"}
+    for name in ("no1_charts", "masters_grid", "rulebook_cards"):
+        src = (_REPO / "src" / "tennislive" / "video" / f"{name}.py").read_text(
+            encoding="utf-8")
+        tree = ast.parse(src)
+        lits = {
+            node.value
+            for node in ast.walk(tree)
+            if isinstance(node, ast.Constant) and isinstance(node.value, str)
+        }
+        # docstring 会整段进来，所以按「出现过退役色」而不是「等于退役色」查
+        hits = {c for c in retired
+                for lit in lits
+                if c in lit and not lit.lstrip().startswith("\n")}
+        assert not hits, (
+            f"{name}.py 里还写着退役的颜色 {sorted(hits)}——"
+            "从 diagram_palette 取，别再各调各的")
