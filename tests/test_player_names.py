@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from tennislive.zh import player_zh
+from tennislive.zh import player_name_en, player_zh
 
 
 SNAPSHOT = (
@@ -449,3 +449,22 @@ def test_国籍要跟着进快照而且取不到就不写这个键():
                             for e in snap["tours"][t]]
                         for t in ("ATP", "WTA")}}
     validate_snapshot(legacy)
+
+
+def test_player_name_en缩写名还原成全名():
+    """编排器拿到的 ESPN 缩写名要还原成全名，否则搜索词变成 'A. Khachanov'。"""
+    assert player_name_en("Kovacevic A.") == "aleksandar kovacevic"
+    assert player_name_en("Khachanov K.") == "karen khachanov"
+    assert player_name_en("Kenin S.") == "sofia kenin"
+    assert player_name_en("De Minaur A.") == "alex de minaur"
+
+
+def test_player_name_en全名保持不变规范化():
+    assert player_name_en("Alex de Minaur") == "alex de minaur"
+    assert player_name_en("Alexandra Eala") == "alexandra eala"
+
+
+def test_player_name_en查不到或撞姓原样返回():
+    # 查不到：原样返回（认不出来好过认成另一个人）
+    assert player_name_en("Nobody N.") == "Nobody N."
+    assert player_name_en("") == ""

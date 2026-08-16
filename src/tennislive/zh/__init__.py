@@ -24,6 +24,7 @@ __all__ = [
     "SURFACE_ZH",
     "LEVEL_ZH",
     "player_zh",
+    "player_name_en",
     "tournament_zh",
     "round_zh",
     "surface_zh",
@@ -200,6 +201,47 @@ def player_zh(name: str) -> str:
         if len(set(matches)) == 1:
             return matches[0]
     return name
+
+
+def _abbrev_surname_key(name: str, lookup: dict[str, str]) -> str | None:
+    """缩写名反查英文全名键。唯一命中才返回，不唯一/查不到返回 None。
+
+    ⚠️ 这是 `player_zh` 最后那段「缩写形式」逻辑的**键版本**——同一套判据
+    （去掉带点的词、剩下的词拼成姓、在 lookup 的英文键里找唯一以它结尾的），
+    只是返回命中键而不是中文值。别另写一套匹配规则，否则「player_name_en
+    认得出、player_zh 认不出」这种分叉会静默地让搜索词和译名各说各话。
+    """
+    cleaned = name.replace(",", " ").strip()
+    parts = [p for p in cleaned.split() if p]
+    surname_candidates = [p for p in parts if not p.endswith(".") and len(p) > 2]
+    if not surname_candidates:
+        return None
+    surname = _normalize_name(" ".join(surname_candidates))
+    matches = {k for k in lookup if k.endswith(" " + surname) or k == surname}
+    return next(iter(matches)) if len(matches) == 1 else None
+
+
+def player_name_en(name: str) -> str:
+    """球员名 → 英文全名。缩写名（`Kovacevic A.`）还原成全名（`Aleksandar Kovacevic`）。
+
+    编排器从 digest 拿到的名字可能来自 ESPN 的缩写（`Kenin S.`），而
+    `detect_highlights` 的搜索词和 assemble 的译名都要全名——缩写直接拿去搜，
+    搜索词变成 `A. Khachanov`，一条集锦都搜不到。这里把缩写还原成全名。
+
+    ⚠️ 复用 `player_zh` 的匹配判据（同一张 `_player_lookup` 表，键就是英文全名）：
+    全名精确命中 → 返回规范化全名；缩写名 → 唯一命中才还原，不唯一/查不到就
+    原样返回（认不出来好过认成另一个人，和 player_zh 同一条规矩）。
+    """
+    if not name:
+        return name
+    lookup = _player_lookup()
+    norm = _normalize_name(name)
+    if norm in lookup:
+        return norm                       # 已经是全名（或精确别名），规范化返回
+    # 词序反转 / 去中间名两条先不重复 player_zh 的全套——编排器的输入要么全名
+    # 要么缩写，这两种上面已经覆盖。这里补缩写反查。
+    key = _abbrev_surname_key(name, lookup)
+    return key if key else name
 
 
 def surface_zh(surface: str | None) -> str | None:

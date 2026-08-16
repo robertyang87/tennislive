@@ -102,7 +102,27 @@ def test_candidates同场去重且留全名():
     cands = o.candidates(d)
     slugs = [c["slug"] for c in cands]
     assert slugs == ["kenin-lys"], f"同场去重后只该有一条，实际 {slugs}"
-    assert cands[0]["home"] == "Sofia Kenin", "去重要留全名版，不是缩写版"
+    assert cands[0]["home"] == "sofia kenin", "去重要留全名版，不是缩写版"
+
+
+def test_candidates缩写名还原成全名():
+    """ESPN 缩写名（Kovacevic A.）要还原成全名——detect_highlights 的搜索词和
+    assemble 的译名都要全名，缩写直接拿去搜会搜错。"""
+    from tennislive.digest import Digest
+    from tennislive.models import (Match, MatchStatus, Player, SetScore, Tour,
+                                   Tournament)
+    o = _tool()
+    m = Match(
+        match_id="x", tour=Tour.WTA,
+        tournament=Tournament(name="Cincinnati", tour=Tour.WTA, level="W1000"),
+        home=[Player(name="Kovacevic A.", country="USA")],
+        away=[Player(name="Khachanov K.", country="RUS")],
+        status=MatchStatus.FINISHED, round_name="Final",
+        sets=[SetScore(6, 4)])
+    d = Digest(today=None, results=[m], live=[], schedule=[], source="x")
+    cands = o.candidates(d)
+    assert cands[0]["home"] == "aleksandar kovacevic", "缩写名要还原成全名"
+    assert cands[0]["away"] == "karen khachanov"
 
 
 def test_beijing_today是date():
