@@ -119,6 +119,38 @@ def gallery_posts(site: str) -> list[str]:
     return out
 
 
+def media_library(site: str, pages: int = 4) -> list[tuple[str, str]]:
+    """WordPress 自己的媒体库接口，返回 `(上传时刻, 原图地址)`，按时间倒序。
+
+    ⚠️ **它比翻图库页早一步**：图库页只列**已发布的文章**，而媒体库列的是
+    **已上传的文件**——赛事方往往先把当天那批传上去、稍后才发那篇
+    「Day N Best-of Photos」。要问「今天那批到了没有」，问这儿。
+
+    ⚠️⚠️ **之前判它 403 是错的，403 是 UA 的问题。** 我第一次拿
+    `User-Agent: Python-urllib` 去请求，吃了 403，就写下「WP REST 403，走不通」
+    ——换成浏览器 UA 当场 200，一次 100 条、带 `media_details.width/height`。
+    **「这条路不通」和「我敲门的姿势不对」长得一模一样**，判空之前先换个 UA 试一次。
+    """
+    import json as _json  # noqa: PLC0415
+
+    out: list[tuple[str, str]] = []
+    for page in range(1, pages + 1):
+        url = (f"https://{site}/wp-json/wp/v2/media?per_page=100&orderby=date"
+               f"&order=desc&page={page}"
+               "&_fields=date,source_url,media_details.width,media_details.height")
+        try:
+            batch = _json.loads(_get(url).decode("utf-8", "replace"))
+        except Exception:                 # noqa: BLE001 — 接口变了就退回翻页那条路
+            break
+        if not batch:
+            break
+        for m in batch:
+            src = m.get("source_url") or ""
+            if src:
+                out.append((str(m.get("date") or ""), src))
+    return out
+
+
 def _urls_in(html: str, site: str) -> list[str]:
     """从一页 HTML 里捞出所有原图地址，去重、去响应式变体。
 
@@ -199,18 +231,30 @@ def run(site: str, match_day: date, pick: str, out: Path | None,
     notes.append(f"图库里 {len(posts)} 辑：" + "、".join(
         p.rstrip("/").rsplit("/", 1)[-1] for p in posts))
 
-    hits: list[tuple[str, str]] = []      # (图, 出自哪一辑)
+    # ⚠️ **两条路一起扫，媒体库排在前面**：图库页只列已发布的文章，媒体库列的是
+    # 已上传的文件——当天那批往往先传上去、稍后才发那篇 Day N。
+    sources: list[tuple[str, str]] = [("媒体库", u) for _, u in media_library(site)]
+    lib_n = len(sources)
+    for post in posts:
+        sources += [(post.rstrip("/").rsplit("/", 1)[-1], u) for u in photo_urls(post)]
+    notes.append(f"媒体库 {lib_n} 条 ＋ 图库页 {len(sources) - lib_n} 张")
+
+    hits: list[tuple[str, str]] = []      # (图, 出自哪儿)
     scanned = 0
     unstamped = 0
-    for post in posts:
-        for url in photo_urls(post):
-            scanned += 1
-            got = stamp_of(url)
-            if got is None:
-                unstamped += 1
-                continue
-            if got == match_day:
-                hits.append((url, post))
+    seen_url: set[str] = set()
+    for post, url in sources:
+        if url in seen_url:
+            continue
+        seen_url.add(url)
+        url = _VARIANT.sub("", url)
+        scanned += 1
+        got = stamp_of(url)
+        if got is None:
+            unstamped += 1
+            continue
+        if got == match_day:
+            hits.append((url, post))
     notes.append(f"扫了 {scanned} 张，其中 {unstamped} 张认不出日期戳"
                  f"（多半是赞助商图）；日期戳 == {match_day} 的有 {len(hits)} 张")
 
