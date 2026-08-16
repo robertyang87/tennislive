@@ -22,6 +22,29 @@ on:
         description: "true = 只验 spec 形状，不下载不渲染"
         required: false
         default: "false"
+      push:
+        description: "渲染完推送到微信（默认 false，先验片）"
+        required: false
+        type: boolean
+        default: false
+      # 推送文案一律不给默认值——默认值只能是上一条片子的文案，不传就顶着别人
+      # 的话发出去（match-reel 同一条教训）。开球之前没有比分，score 固定留空。
+      matchup:
+        description: "对阵进标题，如「霍达尔 vs 弗里茨」（push=true 时必填）"
+        required: false
+        default: ""
+      event:
+        description: "赛事与轮次进标题，如「华盛顿 ATP500 男单决赛」"
+        required: false
+        default: ""
+      summary:
+        description: "一句话概括（顶掉对阵+赛事）"
+        required: false
+        default: ""
+      lead:
+        description: "正文第一句"
+        required: false
+        default: ""
 
 # 提交产物 + 成片发 Release 都要写权限（match-reel 同款）。
 permissions:
@@ -179,6 +202,34 @@ jobs:
             "$OUTDIR"/_versus_* "$OUTDIR"/_subs* "$OUTDIR"/part_*.mp4 \
             "$OUTDIR"/_video.mp4
 
+      - name: 取日期（开球之前产物不按日期分目录，push_reel 要显式 --date）
+        id: date
+        if: github.event.inputs.push == 'true'
+        run: |
+          DATE=$(python3 - <<'PY'
+          import json, re
+          spec = json.load(open("specs/reels/${{ github.event.inputs.slug }}.json", encoding="utf-8"))
+          m = re.search(r"(\d{4})-(\d{2})-(\d{2})", str(spec.get("_fixture") or ""))
+          print(m.group(1) if m else "")
+          PY
+          )
+          [ -n "$DATE" ] || { echo "::error::从 _fixture 取不到日期"; exit 1; }
+          echo "date=$DATE" >> "$GITHUB_OUTPUT"
+
+      - name: 写复制页（必须排在提交之前）
+        if: github.event.inputs.push == 'true'
+        run: |
+          COPY="specs/reels/${{ github.event.inputs.slug }}.xhs.txt"
+          test -f "$COPY" || { echo "::error::找不到 $COPY"; exit 1; }
+          python tools/push_reel.py --stage page \
+            --outdir "output/preview/${{ github.event.inputs.slug }}" \
+            --date "${{ steps.date.outputs.date }}" \
+            --matchup "${{ github.event.inputs.matchup }}" \
+            --event "${{ github.event.inputs.event }}" \
+            --summary "${{ github.event.inputs.summary }}" \
+            --lead "${{ github.event.inputs.lead }}" \
+            --copy "$COPY"
+
       - name: 提交产物
         if: github.event.inputs.dry_run != 'true'
         run: |
@@ -189,3 +240,20 @@ jobs:
           python tools/check_staged_file_sizes.py
           git commit -m "preview: ${{ github.event.inputs.slug }}" || echo "没有可提交的"
           git push origin HEAD:main
+
+      - name: 推送到微信（可选）
+        if: github.event.inputs.push == 'true'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
+          TENNISLIVE_ASSET_REV: ${{ github.sha }}
+        run: |
+          COPY="specs/reels/${{ github.event.inputs.slug }}.xhs.txt"
+          python tools/push_reel.py \
+            --outdir "output/preview/${{ github.event.inputs.slug }}" \
+            --date "${{ steps.date.outputs.date }}" \
+            --matchup "${{ github.event.inputs.matchup }}" \
+            --event "${{ github.event.inputs.event }}" \
+            --summary "${{ github.event.inputs.summary }}" \
+            --lead "${{ github.event.inputs.lead }}" \
+            --copy "$COPY"
