@@ -1,0 +1,38 @@
+{
+  "slug": "rybakina-townsend-cincinnati-2026-r2",
+  "url": "https://www.youtube.com/watch?v=iszb3-lsyLc",
+  "source_title": "Taylor Townsend vs. Elena Rybakina | 2026 Cincinnati Round 2 | WTA Match Highlights（@wta 官方频道）",
+  "start": 296.0,
+  "end": 397.0,
+  "whisper_model": "medium.en",
+  "column": "赛后开麦",
+  "interview_kind": "赛后场上采访",
+  "event": "2026 辛辛那提 WTA1000 第二轮",
+  "winner": "莱巴金娜",
+  "opening": {
+    "kind": "match_end",
+    "lead_in": 14.0,
+    "why": "⚠️ **待定初值——这一趟只跑 `--stage subs` 取字幕，起点要看过字幕再定。**\n\n为什么先按 296.0 探：这条是 WTA 官方逐场集锦，**纯集锦定长 310 秒**，而这条 397 秒——超出的 87 秒就是尾巴上的场上采访。所以采访大约从 310 起，往前收十几秒正好是赛点落地 ＋ 解说交代赛果。\n\n定稿前必须核两件事（阿朗戈那条的教训）：①**起点不许落在一段没有字幕的画面上**——赛点之后常有十几秒只有欢呼、零字幕事件，而这是双语字幕片；②**末尾不许把 WTA 片尾板收进来**——`end` 要拿成片拉回本地逐帧量（片尾板是整幅均值一帧跳上去），别按「离源片末尾还有几秒」推。"
+  },
+  "zh": [],
+  "_facts": [
+    "⚠️ **这一版是探测用的骨架，`zh` 还空着、赛果和排名都还没核。** 走一趟 `--stage subs` 拿到英文行之后再补。",
+    "赛果先按 flashscore 当日总表记：`Townsend T. vs Rybakina E. | 3-6 4-6`，也就是**莱巴金娜 6-3 6-4 胜汤森德**。定稿前要拿 WTA 官方 `matches` 接口的 `Winner` 字段交叉核一次（`ResultString` 的 `d` 不可靠，本仓库记过）。",
+    "⚠️ **同一场另有一条「赛场之上」在做**（`output/2026-08-17/reel/townsend-rybakina/probe.json` 已落库）。**这不算重复**——「同一件事，不同栏目各讲一次不算重复」，而这一条给的是她自己的原话。定稿时看一眼那条的落点，别在同栏目内重讲。"
+  ],
+  "cover": {
+    "frame_at": 350.0,
+    "_why": "⚠️ **待定初值。** 封面帧一律从**渲出来的成片**上挑，不猜——阿朗戈那条猜的那格渲出来是她的背影。",
+    "title": ["待定", "待定"],
+    "sub": "辛辛那提第二轮 赛后场上采访",
+    "tag": "2026 辛辛那提 · 莱巴金娜"
+  },
+  "takeaway": {"close": {"point": "待定", "ask": "待定"}},
+  "push": {
+    "matchup": "莱巴金娜 vs 汤森德",
+    "score": "6-3 6-4",
+    "event": "",
+    "summary": "待定",
+    "lead": "待定"
+  }
+}
