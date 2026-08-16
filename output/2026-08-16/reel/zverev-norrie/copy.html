@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>8.16 赛场之上 | 一分打了三十八秒</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>一分打了三十八秒，全场站起来鼓掌——而那一分，是输球的那个人赢的
+
+先说这一分。
+
+第二盘二比一，诺里发球。从他抛球到球落地，整整三十八秒。源片这三十八秒里一刀都没剪，记分条从头到尾停在同一个比分上，场边的 LED 直接打出了 EPIC RALLY，全场站了起来。
+
+赢下这一分的是诺里。输掉这场球的也是诺里。
+
+辛辛那提男单第二轮，世界第三、一号种子的兹维列夫 3-6 6-3 6-3 赢了世界第三十七的诺里，用了两小时三十分。
+
+这场球真正难看的地方在破发点上。兹维列夫全场拿到十六个破发点，只兑现三个；诺里拿到三个，兑现一个。
+
+决胜盘更极端：九个破发点。第一局是一场二十二分的马拉松，兹维列夫拿到六个，诺里一个一个救了下来；第三局又是一个，还是没进。前七个，全丢。
+
+第八个出现在三比三、诺里发球那一局，一次就进。第九个，同时是赛点。
+
+再说一层交手史，这一层查的时候差点写错。
+
+按 flashscore 的记录，两个人在巡回赛和大满贯交手八次——从二〇一九年的阿卡普尔科、蒙特利尔，到 ATP 杯、维也纳、两届澳网、温网，再到这一晚——兹维列夫八战全胜，诺里零胜。
+
+但换一个源再查一次，多出来两场：二〇一四年的 West Lakes 挑战赛，二〇一三年的一站 Futures，赢的都是诺里。那两场，兹维列夫十六、十七岁。
+
+所以完整的说法是：全生涯十次，八比二；而上了巡回赛之后，诺里对他还是零。
+
+顺带一个容易被忽略的位置：兹维列夫世界第三，却是这一站的一号种子——世界前两位的辛纳和阿尔卡拉斯都不在这张签表里。顶着头号种子的牌子，第二轮被拖了两个半小时。
+
+一分打了三十八秒还是丢了——换成你，第八个破发点还敢要吗？
+
+#网球时差 #兹维列夫 #诺里 #辛辛那提大师赛 #赛场之上</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>换成你，第八个还敢要吗？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
