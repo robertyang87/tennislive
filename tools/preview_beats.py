@@ -240,6 +240,42 @@ def poster_beat(poster: Path, dest: Path, seconds: float,
     return _still_to_clip(poster, dest, seconds + tail)
 
 
+def encode_preview_beat(beat: dict, sources: dict[str, Path], outdir: Path,
+                        index: int, *, tail: float = 0.0) -> Path:
+    """把一个 preview beat 分派到对应的编码器，落一个 `beat_NN.mp4`。
+
+    这是「开球之前」和「赛场之上」分家的关键：match-reel 的 segment 只有一种
+    形状（窗口 + 裁切），preview 的 beat 有**类型**——真实素材 beat（可选压一条
+    信息角标）、海报 beat。装配时按 `type` 分派，未知类型报错不静默（栏目/类型
+    和生产线要一一对上，拼错一个 type 不能变成「这段静默丢了」）。
+
+    beat 形状：
+      footage  {"type": "footage", "source": "dc", "start": 54.0, "end": 65.0,
+                "cx": 0.5, "overlay": Path|None}
+      poster   {"type": "poster", "poster": "path/poster.jpg", "seconds": 3.0}
+    """
+    dest = outdir / f"beat_{index:02d}.mp4"
+    kind = beat.get("type")
+    if kind == "footage":
+        src = sources.get(str(beat.get("source") or ""))
+        if src is None:
+            raise ReelError(
+                f"beat {index} 是 footage 类型，但 source={beat.get('source')!r} "
+                f"不在 sources 里（有：{sorted(sources)}）")
+        return cut_footage_beat(
+            src, float(beat["start"]), float(beat["end"]),
+            float(beat.get("cx", 0.5)), dest, tail=tail,
+            overlay=beat.get("overlay"))
+    if kind == "poster":
+        poster = Path(str(beat.get("poster") or ""))
+        if not poster.is_file():
+            raise ReelError(f"beat {index} 是 poster 类型，但海报不存在：{poster}")
+        return poster_beat(poster, dest, float(beat["seconds"]), tail=tail)
+    raise ReelError(
+        f"beat {index} 的 type={kind!r} 不认识——只认 footage / poster；"
+        "拼错的类型不能静默丢段（栏目和生产线要一一对上）")
+
+
 # 独立管线的 spec 目录。存量 4 条开球之前 spec 还躺在 specs/reels/ 下（历史混线），
 # 新 spec 一律写进这里；load_preview_spec 对老 slug 退回 reels 只为了老片子还能渲。
 PREVIEW_SPEC_DIR = ROOT / "specs" / "previews"
