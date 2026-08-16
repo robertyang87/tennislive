@@ -26,6 +26,14 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
+        with:
+          # 编排器只碰 src（digest/rating）、tools（orchestrate.py）、data（state），
+          # 一个字节都不碰 output/assets——全量 checkout 白等一分半。
+          sparse-checkout: |
+            src
+            tools
+            data
+            specs
 
       - uses: actions/setup-python@v5
         with:
