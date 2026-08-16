@@ -1,4 +1,4 @@
-"""开球之前纯视频管线（`tools/build_preview_reel.py`）的判据。
+"""开球之前纯视频管线（`tools/preview_beats.py`）的判据。
 
 这条线目前只有两个真正新写的部件：`cut_footage_beat`（裁切+居中+角标合成）
 和 `_render_stat_overlay`（角标本身）。其余（`dissolve_filtergraph` /
@@ -36,7 +36,7 @@ def test_footage_beat按cx把源片的指定位置钉到画面中心(tmp_path):
     if not _has_ffmpeg():
         raise AssertionError("没有 ffmpeg/ffprobe，这条判据跑不了：apt install ffmpeg")
 
-    import build_preview_reel as R  # noqa: PLC0415
+    import preview_beats as R  # noqa: PLC0415
     from PIL import Image  # noqa: PLC0415
 
     source = tmp_path / "source.mp4"
@@ -70,7 +70,7 @@ def test_footage_beat按cx把源片的指定位置钉到画面中心(tmp_path):
 
 def test_角标要撑满整段不提前消失(tmp_path):
     """真实素材验证过（8 秒主片段，0.2/4.0/7.8 秒角标都在，见
-    `build_preview_reel.cut_footage_beat` 的 docstring），这里把它锁进
+    `preview_beats.cut_footage_beat` 的 docstring），这里把它锁进
     自动判据：静态图当输入不给 `-loop 1`，配合 `overlay` 默认的
     `eof_action=repeat`，角标应该一直撑到主片段结束，不会像
     `_render_intro_badge` 当年那样被 60 秒的 `-t` 拖长或提前消失。
@@ -78,7 +78,7 @@ def test_角标要撑满整段不提前消失(tmp_path):
     if not _has_ffmpeg():
         raise AssertionError("没有 ffmpeg/ffprobe，这条判据跑不了：apt install ffmpeg")
 
-    import build_preview_reel as R  # noqa: PLC0415
+    import preview_beats as R  # noqa: PLC0415
     from PIL import Image  # noqa: PLC0415
 
     source = tmp_path / "source.mp4"
@@ -120,7 +120,7 @@ def test_角标要撑满整段_反向验证(tmp_path):
     if not _has_ffmpeg():
         raise AssertionError("没有 ffmpeg/ffprobe，这条判据跑不了：apt install ffmpeg")
 
-    import build_preview_reel as R  # noqa: PLC0415
+    import preview_beats as R  # noqa: PLC0415
     from PIL import Image  # noqa: PLC0415
 
     source = tmp_path / "source.mp4"
@@ -144,7 +144,7 @@ def test_player_card角标要渲出真实的国旗名字排名(tmp_path):
     if not shutil.which("ffmpeg"):
         raise AssertionError("没有 ffmpeg，这条判据跑不了")
 
-    import build_preview_reel as R  # noqa: PLC0415
+    import preview_beats as R  # noqa: PLC0415
     from PIL import Image  # noqa: PLC0415
 
     png = R._render_stat_overlay(
@@ -161,7 +161,7 @@ def test_player_card角标要渲出真实的国旗名字排名(tmp_path):
 
 
 def test_player_card缺国旗或排名要报错不许悄悄渲空(tmp_path):
-    import build_preview_reel as R  # noqa: PLC0415
+    import preview_beats as R  # noqa: PLC0415
 
     with pytest.raises(SystemExit):
         R._render_stat_overlay(
@@ -174,7 +174,7 @@ def test_player_card缺国旗或排名要报错不许悄悄渲空(tmp_path):
 
 
 def test_不支持的角标类型要报错不能悄悄渲空(tmp_path):
-    import build_preview_reel as R  # noqa: PLC0415
+    import preview_beats as R  # noqa: PLC0415
 
     with pytest.raises(ValueError):
         R._render_stat_overlay(
@@ -186,7 +186,7 @@ def test_poster_beat产出的时长要包含tail(tmp_path):
     if not _has_ffmpeg():
         raise AssertionError("没有 ffmpeg/ffprobe，这条判据跑不了：apt install ffmpeg")
 
-    import build_preview_reel as R  # noqa: PLC0415
+    import preview_beats as R  # noqa: PLC0415
 
     poster = tmp_path / "poster.jpg"
     _run(["ffmpeg", "-v", "error", "-y", "-f", "lavfi", "-i",
