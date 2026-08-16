@@ -186,7 +186,16 @@ def _page_fetch(page, url: str) -> str | None:
     try:
         return page.evaluate(
             """async (u) => {
-                const r = await fetch(u, {credentials: 'include'});
+                // ⚠️ **不许带 `credentials: 'include'`。** 第一版带了，实测
+                // `TypeError: Failed to fetch`，我据此写下「页面内 fetch 对
+                // api. 子域是跨域的」——**那个结论是错的**。真因是：服务端
+                // 回的是 `Access-Control-Allow-Origin: *`，而带 credentials
+                // 时浏览器**要求**具体 origin ＋ `Allow-Credentials: true`，
+                // 于是拒绝，报的错和「跨域被拦」一模一样。
+                // 判据摆在眼前而我没读：被动抓包里 `[03] [04] [05]` 三发**就是
+                // 页面自己打到 api.tnnslive.com 的**——它能打，就说明 CORS 是
+                // 放行的，不通的只可能是我多加的那个选项。
+                const r = await fetch(u);
                 return await r.text();
             }""", url)
     except Exception as exc:  # noqa: BLE001
