@@ -32,7 +32,7 @@
     "和两人第一次交手时一样",
     "那一次",
     "是去年在美国的硬地上",
-    "打到第三盘",
+    "她晋级第三轮",
     "作为斯瓦泰克的铁杆球迷",
     "我是 在场的观众也是",
     "特别过瘾",
@@ -131,5 +131,7 @@
     "Sakuri": "Sakkari",
     "hardc": "hard",
     "gain": "game"
-  }
+  },
+  "_verified_clean": "两份转写对不上 **4.9%**（闸门 12%），**0 处空档**。第一份 YouTube 自动字幕\n465 词，第二份 faster-whisper `medium.en` 464 词。\n\n**17 处分歧逐处看过，一条 `en_fixed` 都没加**——凡是能判对错的地方全是我们这边对：\n\n    iga / iga swiatek  → egos fiontech   whisper 把她的名字整个听崩了（三处）\n    arango             → miliana orango  同上\n    sakkari            → sakari\n    us                 → u s             写法\n    break up           → breakup         写法\n    going to           → gonna （三处）   她确实说的 gonna，写成 going to 更好读\n\n剩下的是口吃对齐的噪音（`it's`→`—`、`—`→`orango`、`and`→`it`、`the`→`a`、\n`were`→`are`）。\n\n⚠️ **有一处两份说的是相反的意思，而它必须判**：第 44 行\n`The music is pretty loud, but I still **can** hear.`——whisper 给的是 **can't**。\n**留 `can`**，判据是它后面那句：`So thank you guys for the support and the nice\nwelcome.` 听不见的话不会接着谢观众的欢迎；而且主持人那一问正是\n「隔着耳机你感觉得到吗」，她的回答是在肯定。⚠️ 这不是噪音，是一个**方向相反**\n的分歧，所以单独记一笔。\n\n⚠️⚠️ **另一处分歧替我抓到了一个翻译错误，而错的是我不是 ASR。**\n第 18 行 `through the third`，whisper 给的是 `he has`——两边都没解出一句完整的话。\n我第一版把它译成「**打到第三盘**」，**那是错的**：\n\n- 「once again she gets just three games」说的是阿朗戈只拿了三局（6-3 6-0\n  正好三局），一场 6-3 6-0 不可能「打到第三盘」\n- 转播在赛末的固定说法是 `she's through to the third round`——**同一站同一个\n  转播团队，莱巴金娜那条的最后一句就是 `through to the third round`**\n\n所以那半句是 ASR 把 `through to the third round` 截断了，中文改成「**她晋级第三轮**」。\n英文照旧不动（`en_fixed` 只写确认过的，而这半句原样就是它被截断的样子）。\n\n⚠️ 记这一笔是因为：**交叉校验报告的用处不只是抓 ASR 的错，它也会把我自己\n读错的地方顶出来**——那一行两份都听不清，恰恰说明它值得停下来想一遍。",
+  "transcript_verified": true
 }

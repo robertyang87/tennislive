@@ -21,7 +21,7 @@
 | 15 | 0:31.1 | [▶](https://youtu.be/93ZnNdjI-g4?t=295) | as she did in the first meeting | 和两人第一次交手时一样 |  |
 | 16 | 0:32.4 | [▶](https://youtu.be/93ZnNdjI-g4?t=296) | between the two | 那一次 |  |
 | 17 | 0:33.3 | [▶](https://youtu.be/93ZnNdjI-g4?t=297) | on the US hard courts last year | 是去年在美国的硬地上 |  |
-| 18 | 0:35.6 | [▶](https://youtu.be/93ZnNdjI-g4?t=300) | through the third | 打到第三盘 |  |
+| 18 | 0:35.6 | [▶](https://youtu.be/93ZnNdjI-g4?t=300) | through the third | 她晋级第三轮 |  |
 | 19 | 0:36.5 | [▶](https://youtu.be/93ZnNdjI-g4?t=300) | as a big Iga Swiatek fan I | 作为斯瓦泰克的铁杆球迷 |  |
 | 20 | 0:38.9 | [▶](https://youtu.be/93ZnNdjI-g4?t=303) | am and so are the fans here. | 我是 在场的观众也是 |  |
 | 21 | 0:40.4 | [▶](https://youtu.be/93ZnNdjI-g4?t=304) | It was really cool | 特别过瘾 |  |
