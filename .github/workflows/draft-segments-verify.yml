@@ -1,0 +1,99 @@
+name: draft-segments-verify
+
+# 手动验证「DeepSeek 从字幕推断窗口」的质量。这不是生产工作流，是命门验证：
+# 「填窗口」自动化能不能成立，取决于 DeepSeek 读 captions 推断的窗口对不对得上
+# 画面。给它一条已有完整 captions + 已有 spec（人工窗口当基准）的比赛，跑
+# draft_segments，把产出的窗口打进 job summary，人打开逐条和人工 spec 对。
+#
+# ⚠️ 只读、只打印，不提交、不发微信、不 dispatch 任何东西。它是「验一下」
+# 和「发出去」分开的产物——和 news-brief 的 push=false 同一个理由。
+
+on:
+  workflow_dispatch:
+    inputs:
+      slug:
+        description: "已有 probe 产物的 reel slug（如 swiatek-kostyuk）"
+        required: true
+      home:
+        description: "主队中文名"
+        required: false
+        default: "主队"
+      away:
+        description: "客队中文名"
+        required: false
+        default: "客队"
+      beats:
+        description: "叙事大纲（前段/中段/结局，可留空用已有 spec 的）"
+        required: false
+        default: ""
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # 只读 output/ 里那个 slug 的 captions + probe.json，加 specs 对照。
+          sparse-checkout: |
+            output
+            specs
+            tools
+            src
+            pyproject.toml
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: 装依赖
+        run: pip install -q -e .
+
+      - name: 定位 captions 和 probe.json
+        id: locate
+        run: |
+          CAP=$(ls output/*/reel/${{ inputs.slug }}/captions.txt 2>/dev/null | head -1)
+          PROBE=$(ls output/*/reel/${{ inputs.slug }}/probe.json 2>/dev/null | head -1)
+          if [ -z "$CAP" ] || [ -z "$PROBE" ]; then
+            echo "::error::找不到 output/*/reel/${{ inputs.slug }}/captions.txt 或 probe.json"
+            echo "::error::这个 slug 还没有完整 probe 产物，换一个已 probe 过的"
+            exit 1
+          fi
+          echo "captions=$CAP" >> "$GITHUB_OUTPUT"
+          echo "probe=$PROBE" >> "$GITHUB_OUTPUT"
+
+      - name: 跑 draft_segments 并打进 summary
+        env:
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          VERIFY_SLUG: ${{ inputs.slug }}
+        run: |
+          BEATS="${{ inputs.beats }}"
+          if [ -z "$BEATS" ]; then
+            # 没给 beats 就从已有 spec 里读（如果有）。单行 python -c，别换行——
+            # 换行就得顶格，YAML 块标量会把它当新 key。
+            BEATS=$(VERIFY_SLUG="$VERIFY_SLUG" python -c "import json,os,pathlib; p=pathlib.Path('specs/reels')/(os.environ['VERIFY_SLUG']+'.json'); print(chr(10).join(json.loads(p.read_text()).get('editorial',{}).get('beats',[])) if p.is_file() else '')")
+          fi
+          echo "## draft_segments 验证：${{ inputs.slug }}" >> "$GITHUB_STEP_SUMMARY"
+          echo '```json' >> "$GITHUB_STEP_SUMMARY"
+          PYTHONPATH=src python tools/draft_segments.py \
+            --captions "${{ steps.locate.outputs.captions }}" \
+            --cuts "${{ steps.locate.outputs.probe }}" \
+            --beats "$BEATS" \
+            --home "${{ inputs.home }}" --away "${{ inputs.away }}" \
+            | tee -a "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+
+      - name: 同时打印已有 spec 的人工窗口做对照
+        run: |
+          SPEC="specs/reels/${{ inputs.slug }}.json"
+          if [ -f "$SPEC" ]; then
+            echo "## 人工 spec 的窗口（对照基准）" >> "$GITHUB_STEP_SUMMARY"
+            echo '```json' >> "$GITHUB_STEP_SUMMARY"
+            SPEC="$SPEC" python -c "import json,os; d=json.load(open(os.environ['SPEC'])); [print(json.dumps({k:s.get(k) for k in ('start','end','narration') if k in s}, ensure_ascii=False)) for s in d.get('segments',[])]" | tee -a "$GITHUB_STEP_SUMMARY"
+            echo '```' >> "$GITHUB_STEP_SUMMARY"
+          fi
