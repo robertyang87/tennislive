@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>8.17 赛场之上 | 第二盘只让对手拿五分</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>第一盘一比一，斯瓦泰克自己发球，四十比零领先。阿朗戈一分一分追了回来，拿到两个破发点，兑现了第二个。一比二——那是斯瓦泰克这场球唯一一次落后。
+
+6-3 6-0，一小时十二分钟。北京时间八月十七号凌晨零点三十三分开打，辛辛那提女单第二轮。世界第五、本站七号种子的斯瓦泰克，赢下世界第九十五的阿朗戈。
+
+落后之后她立刻破了回来，二比二。第一盘剩下的六局她赢了五局，六比三收下——可这一盘打满了四十五分钟，阿朗戈拿到 27 分。其中三比二那一局，阿朗戈自己发球 40-15 领先，照样被斯瓦泰克破掉。
+
+第二盘完全是另一副样子：二十七分钟，六比零。整盘阿朗戈只拿到 5 分，一个制胜分都没有。
+
+两盘的差别摆在数据上：斯瓦泰克的非受迫失误第一盘 17 个、第二盘 4 个；一发得分率从 64% 涨到 100%。全场制胜分 18 比 4。制胜分和非受迫失误取自 TNNS 的分盘统计，分盘合计与全场自洽；其余数据出自 flashscore 和 WTA 官方接口。
+
+从一比二落后算起，接下来的十二局她赢了十一局。最后七局，一局没丢。
+
+阿朗戈来的时候本来带着势头——首轮她刚淘汰了大威廉姆斯。两个人同岁，本场时都是二十五岁，世界排名差了九十位。
+
+#网球 #WTA #辛辛那提公开赛 #斯瓦泰克 #网球时差</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>这样的斯瓦泰克，谁挡得住？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
