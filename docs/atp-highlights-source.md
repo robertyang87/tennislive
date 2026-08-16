@@ -167,14 +167,33 @@ oEmbed 这条路没被限流打到。
 里结构化取出来的 129s **一分不差**——列映射读错的话这个数不可能对上。
 顺带这一条也确认了赛事频道给的是 **1080p**。
 
-## 怎么扫一天的候选（**先扫 YouTube，缺哪几场再来这儿补**）
+## ⭐ 怎么自己找到一条（**别再靠人翻网页把链接递过来**）
+
+账号所有者 2026-08-16：「**你要研究一下怎么去 Tennis TV 官网下载对应的这种
+short 的集锦。不要以后每次都用，我去找完把链接给你，这不符合自动化的能力呀**」。
+
+    python3 tools/tennistv_catalog.py tournament 422_2026 --who shang
+    python3 tools/tennistv_catalog.py player     S0RE            # 这个人的全部（商竣程 47 条）
+    python3 tools/tennistv_catalog.py match      422_2026_MS122  # 一场球的三条，看免费的是哪条
+    python3 tools/tennistv_catalog.py recent                     # 不知道赛事 sid 就先看这个
+
+走的是 Tennis TV 自己的公开内容 API（`api.tennistv.com/content/atpmedia/video/EN/`，
+要 `account: atpmedia` 头），全库 58226 条。每条带着 `ATP_PLAYER` /
+`ATP_TOURNAMENT` / **`ATP_MATCH`** 的 sid、`entitlement:` 和 `video-type:` 标签、
+轮次和城市——**按比赛定位是最准的一把钥匙**，一场球通常三条：`replay`（付费）、
+`match-highlights`（付费）、**`short-highlights`（免费）**。
+
+⚠️ **原来那条「翻 library 页」的路留着当兜底，但它只有最新 20 条**：
 
     curl -sS -H "User-Agent: tennislive/0.1" https://www.tennistv.com/library/short-highlights \
       | grep -o '/videos/[0-9]*/[a-z0-9-]*short-highlights' | sort -u
 
-逐条打开看 `data-entitlement` 和 `itemprop="duration"`。⚠️ 别按 slug 猜
-`-short-highlights` 存不存在——**猜错时页面照样返回 200**（soft-404 这个仓库
-栽过），要看属性抠不抠得出来。
+`shang-sonego` 那次差点栽在这儿——**那一页最老到不了一天前**，而要找的比赛在
+30 小时前。别按 slug 猜存不存在：**猜错时页面照样返回 200**（soft-404）。
+
+参数、不生效的参数名清单、以及两个坑（`tags[]` 回 400 的 HTML、采访被打上
+短集锦标签）全写在 `tools/tennistv_catalog.py` 的模块 docstring 里，别在这儿
+抄第二遍。判据在 `tests/test_tennistv_catalog.py`，三条都反向验证过。
 
 ## 代码在哪
 
