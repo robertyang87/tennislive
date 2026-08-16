@@ -24,7 +24,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
-from datetime import date
+from datetime import date, timedelta
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -33,6 +33,12 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 from tennislive.digest import build_digest  # noqa: E402
 from tennislive.models import MatchStatus  # noqa: E402
 from tennislive.render.rating import _level_of, match_score  # noqa: E402
+
+# 编排器按**北京时间**的「今天」抓 digest——凌晨结束的欧美比赛在 flashscore 算
+# 昨天，build_digest 自己会把昨日也并进 results，这里只负责给它「今天」这个锚点。
+def _beijing_today() -> date:
+    from datetime import datetime, timezone
+    return (datetime.now(timezone.utc) + timedelta(hours=8)).date()
 
 # 250 及以上才算「巡回赛级别」，读者认得出来（docs/columns.md 的选题门槛）。
 TOUR_LEVELS = frozenset({"GS", "M1000", "W1000", "500", "250", "Finals", "TeamCup"})
@@ -44,13 +50,22 @@ DEFAULT_MAX = 3
 def slug_for(m) -> str:
     """从两个球员的英文名取姓，拼成 slug（和 specs/reels/<slug>.json 一个形状）。
 
-    名字形如 "Alexandra Eala" → 取最后一个词 "eala"；"Qinwen Zheng" → "zheng"。
-    两个都取不到姓时退回整个名字，slug 只做目录名，不必严格等于译名。
+    名字有两种形状，姓的位置相反：
+      "Alexandra Eala"   → 名在前，姓在最后一个词 → "eala"
+      "Kenin S."         → 姓在前，名缩写成首字母点 → 姓在第一个词 → "kenin"
+    ⚠️ 判据：最后一个词若是「单个字母 + 点」（缩写名的形状），就取第一个词；
+    否则取最后一个词。不修这个，ESPN 缩写名会产出 `s.-e.` 这种垃圾 slug，
+    同一场比赛还和全名版各得一个 slug，去重失效、dispatch 点错目录。
     """
-    def last(name: str) -> str:
-        words = (name or "").strip().split()
-        return (words[-1] if words else name).lower()
-    return f"{last(m.home[0].name)}-{last(m.away[0].name)}"
+    def surname(name: str) -> str:
+        words = [w for w in (name or "").strip().split() if w]
+        if not words:
+            return ""
+        last = words[-1]
+        if len(last.rstrip(".")) == 1 and last.endswith("."):
+            return words[0]            # 缩写名：姓在开头
+        return last
+    return f"{surname(m.home[0].name).lower()}-{surname(m.away[0].name).lower()}"
 
 
 def route(m) -> str:
@@ -96,8 +111,20 @@ def candidates(digest) -> list[dict]:
             "event": m.tournament.name,
             "year": m.start_utc.year if m.start_utc else date.today().year,
         })
-    out.sort(key=lambda c: c["score"], reverse=True)
-    return out
+    # 同一场比赛会在 digest 里出现两次（一个源给全名、一个源给缩写），slug_for
+    # 归一之后两者同 slug。按 slug 去重，**优先留全名版**——home/away 名字越长、
+    # 越不含缩写点的那条才是 assemble 和 detect_highlights 要的全名。
+    dedup: dict[str, dict] = {}
+
+    def _fuller(a: dict, b: dict) -> dict:
+        key = lambda x: (len(x["home"]) + len(x["away"])
+                         - (x["home"].count(".") + x["away"].count(".")))
+        return a if key(a) >= key(b) else b
+
+    for c in out:
+        prev = dedup.get(c["slug"])
+        dedup[c["slug"]] = c if prev is None else _fuller(prev, c)
+    return sorted(dedup.values(), key=lambda c: c["score"], reverse=True)
 
 
 def load_state() -> dict:
@@ -166,7 +193,7 @@ def main() -> int:
                     help="dispatch probe 后不跑 assemble 备料（默认会跑，只打印草稿）")
     args = ap.parse_args()
 
-    dig = build_digest()
+    dig = build_digest(_beijing_today())
     cands = candidates(dig)
     if args.column:
         cands = [c for c in cands if c["column"] == args.column]
