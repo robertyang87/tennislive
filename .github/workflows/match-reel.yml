@@ -1033,3 +1033,32 @@ jobs:
             --summary "${{ github.event.inputs.summary }}" \
             --lead "${{ github.event.inputs.push_lead }}" \
             --copy "$COPY"
+
+      # ⚠️ **手动推的片子也要记标记，否则自动闸会把它当成「没发过」再发一次。**
+      #
+      # 来路：2026-08-16 补发 `bucsa-chwalinska` / `eala-ruse`（那两条被
+      # 「一趟最多一条」拦下之后在仓库里躺了 13 小时）时发现——`auto_push_gate`
+      # 判「发过了」的**唯一**依据是 `<outdir>/pushed.json` 在仓库里，而写它的
+      # 步骤只在 `auto-push-reel.yml` 里有，这条手动路径全文一个字都没提过它。
+      # 于是**凡是走手动 `mode=push` 发出去的片子，在自动闸眼里永远是「没发过」**：
+      # 哪天它的 `render.json` 再被合进 main 一次，就会再发一条微信，而消息
+      # 收不回来。当天量了一遍，`push.auto:true` 且没有标记的有 9 条。
+      #
+      # ⚠️⚠️ **必须排在推送之后，不许提前。** 反过来的话，推送失败会留下一个
+      # 「已经发过」的假标记，这条片子从此再也发不出去，**而且不吭声**——
+      # `auto_push_gate` 的注释和 CLAUDE.md 都专门写过这个顺序。
+      # 所以这一步不带 `always()`：上一步红了就不该记。
+      - name: 记下已经推送过
+        if: github.event.inputs.push == 'true' && (github.event.inputs.mode == 'render' || github.event.inputs.mode == 'push')
+        run: |
+          python tools/auto_push_gate.py \
+            --record "${{ steps.paths.outputs.outdir }}" \
+            --run "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
+            --now "$(date -u +%FT%TZ)"
+          git config user.name "Claude"
+          git config user.email "noreply@anthropic.com"
+          git add --sparse "${{ steps.paths.outputs.outdir }}"
+          python tools/check_staged_file_sizes.py
+          git commit -m "reel: ${{ github.event.inputs.slug }} 已推送" || exit 0
+          git pull --rebase origin main
+          git push origin main

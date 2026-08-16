@@ -981,9 +981,7 @@ _WINNERS_UE_LEGACY = frozenset({
     "jodar-shapovalov", "kenin-lys", "maria-yastremska", "navarro-kalinina",
     "noskova-boulter", "ostapenko-frech", "parry-mertens", "pegula-waltert",
     "sonmez-anisimova", "sonmez-kasatkina", "stearns-tauson", "townsend-osorio",
-    "tsitsipas-royer", "wang-vandewinkel", "wangxiyu-timofeeva", "zhang-day",
-    "zverev-norrie",
-})
+    "tsitsipas-royer", "wang-vandewinkel", "wangxiyu-timofeeva",     })
 
 
 def _missing_winners_ue():
