@@ -1,0 +1,39 @@
+{
+  "slug": "swiatek-arango-cincinnati-2026-r2",
+  "url": "https://www.youtube.com/watch?v=93ZnNdjI-g4",
+  "source_title": "Iga Swiatek vs. Emiliana Arango | 2026 Cincinnati Round 2 | WTA Match Highlights（@wta 官方频道）",
+  "start": 296.0,
+  "end": 411.0,
+  "whisper_model": "medium.en",
+  "column": "赛后开麦",
+  "interview_kind": "赛后场上采访",
+  "event": "2026 辛辛那提 WTA1000 第二轮",
+  "winner": "斯瓦泰克",
+  "opening": {
+    "kind": "match_end",
+    "lead_in": 14.0,
+    "why": "⚠️ **待定初值——这一趟只跑 `--stage subs` 取字幕，起点要看过字幕再定。**\n\n先按 296.0 探：WTA 官方逐场集锦**纯集锦定长 310 秒**，这条 411 秒，超出的 101 秒就是尾巴上的场上采访。所以采访大约从 310 起，往前收十几秒正好是赛点落地 ＋ 解说交代赛果。\n\n定稿前必须核两件事：①**起点不许落在一段没有字幕的画面上**——赛点之后常有十几秒只有欢呼、零字幕事件，而这是双语字幕片（阿朗戈那条 11 秒、莱巴金娜那条 12.8 秒，都躲开了）；②**末尾不许把 WTA 片尾板收进来**——`end` 要拿成片拉回本地逐帧量，别按「离源片末尾还有几秒」推。"
+  },
+  "zh": [],
+  "_facts": [
+    "⚠️ **这一版是探测用的骨架，`zh` 还空着。** 走一趟 `--stage subs` 拿到英文行之后再补。",
+    "赛果先按 flashscore 当日总表记：`Swiatek I. vs Arango E. | 6-3 6-0`。定稿前要拿 WTA 官方 `matches` 接口的 `Winner` 字段交叉核一次（`ResultString` 的 `d` 不可靠，本仓库记过）。",
+    "⭐ **这一场接着我们刚发的那条**：阿朗戈第一轮 6-2 6-2 赢了大威廉姆斯（`arango-venus-cincinnati-2026-r1`，已推微信），**那条封面上转播打出的下三分之一图形写的就是 `WILL PLAY IGA SWIATEK`**。第二轮她 3-6 0-6 输给斯瓦泰克。⚠️ 写文案时这条线可以用，但**主角是斯瓦泰克**（这是她的赛后采访），别写成阿朗戈的续集。",
+    "⚠️ **同栏目已经发过五条斯瓦泰克**（多伦多决赛的场上和发布会各两条、`swiatek-shnaider-tor2026-qf`）。定稿前扫一遍那几条讲过什么，别重讲——CLAUDE.md「同一栏目内不许重讲已经铺开过的东西」。"
+  ],
+  "cover": {
+    "frame_at": 350.0,
+    "_why": "⚠️ **待定初值。** 封面帧一律从**渲出来的成片**上挑，不猜——阿朗戈那条猜的那格渲出来是她的背影。",
+    "title": ["待定", "待定"],
+    "sub": "辛辛那提第二轮 赛后场上采访",
+    "tag": "2026 辛辛那提 · 斯瓦泰克"
+  },
+  "takeaway": {"close": {"point": "待定", "ask": "待定"}},
+  "push": {
+    "matchup": "斯瓦泰克 vs 阿朗戈",
+    "score": "6-3 6-0",
+    "event": "",
+    "summary": "待定",
+    "lead": "待定"
+  }
+}
