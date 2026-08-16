@@ -1,0 +1,40 @@
+name: orchestrate
+
+# 无人值守编排器：定时扫赛果/赛程 → 打分路由 → 去重 → 报告候选。
+#
+# ⚠️ 第一版只做**扫候选 + 报告**（dry-run），不真正 dispatch——因为 dispatch 一个
+# 新 slug 需要集锦视频 URL（T0 探测），而 T0 探测还没自动化。等 detect-highlights
+# 那一步接上、URL 能自动拿到，再在这条 workflow 里放开 `--apply`。
+#
+# 候选报告写进 job summary（`$GITHUB_STEP_SUMMARY`），账号所有者 / AI 在 run 页面
+# 就能看到「今天该做哪几条」，比翻日志便宜。
+
+on:
+  schedule:
+    # 每 30 分钟扫一次。这个频率是「热点/赛果第一时间」的起点，不是终点——
+    # 真正的事件驱动（赛果刚出就触发）要等 T0 探测，见 tools/orchestrate.py 的
+    # docstring 和 docs/thirty-minute-pipeline.md。
+    - cron: "*/30 * * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  orchestrate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: 装依赖
+        run: pip install -q -e .
+
+      - name: 扫赛果/赛程并报告候选
+        run: |
+          PYTHONPATH=src python tools/orchestrate.py 2>&1 | tee "$GITHUB_STEP_SUMMARY"
