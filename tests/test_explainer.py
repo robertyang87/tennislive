@@ -3160,3 +3160,78 @@ def test_解说成片一律走Release不进git():
         f"顺序不对（生成={i_gen}，artifact={i_art}，Release={i_rel}，"
         f"提交={i_commit}）——artifact 要先拿到 mp4 当兜底，Release/rm 要在"
         "提交之前，否则 mp4 又进 git")
+
+
+def test_卡片缩一半要用lanczos不许退回缺省的bicubic(tmp_path):
+    """账号所有者 2026-08-16：「文字卡做成视频之后，上面的文字虚化了不少，
+    看起来不是太清晰和做渲染之前」。
+
+    卡片是 2160×2880 截的，成片画布只有 1080 宽——每一屏都要**整整缩小一半**
+    才进得了视频。缩小用哪个滤镜，决定了字的笔画还剩多少；`swscale` 的缺省是
+    bicubic，而这条线一直没给它指定过。量出来 bicubic 比 lanczos 少 13.6% 的
+    高频能量，是 q86 JPEG（2.2%）的六倍，也远大于 `crf 26`（量不出来）。
+    出处和那张表写在 `_SCALE_FLAGS` 上面。
+
+    判据钉两头，缺一头都拦不住这个错：
+
+    · **行为**——真跑一次 ffmpeg，真的把一张「深绿底浅色小字」缩一半，
+      lanczos 出来的笔画必须比 bicubic 实。只钉字符串的话，哪天有人换成
+      `flags=neighbor` 照样绿
+    · **位置**——每一条把卡片缩进画布的 `scale=` 都要带上 `flags=`。只验行为
+      的话，漏掉片尾那一条也不会红
+    """
+    import shutil
+    import subprocess
+
+    import numpy as np
+
+    from tennislive.video import explainer as E
+
+    body = Path(E.__file__).read_text(encoding="utf-8")
+
+    # ① 位置：凡是 force_original_aspect_ratio=decrease（把卡片缩进画布的那种）
+    #    都必须显式指定滤镜。自己从源码里推，不维护白名单——以后多一条
+    #    scale+pad 的链子，它会替人记得。
+    shrink = re.findall(r"scale=\{[^}]+\}:\{[^}]+\}:"
+                        r"(?:\"\s*\n\s*f\")?force_original_aspect_ratio=decrease"
+                        r"(:flags=\{?[A-Za-z_]+\}?)?", body)
+    assert shrink, "一条把卡片缩进画布的 scale= 都没找到——判据的主语没了"
+    missing = [s for s in shrink if not s]
+    assert not missing, (
+        f"{len(missing)} 条缩放链没写 flags=，会落回 swscale 缺省的 bicubic："
+        "文字卡的笔画会少掉一成多的高频。见 _SCALE_FLAGS 上面那张表")
+
+    # ② 行为：真缩一次，量高频能量。没有 ffmpeg 就是环境缺依赖，不许 skip——
+    #    一条常年跳过的检查和常年红是同一个毛病。
+    assert shutil.which("ffmpeg"), "缺 ffmpeg：装上再跑，别把这条跳过去"
+    src = tmp_path / "card.png"
+    # 造一张「深绿底 + 浅色一像素细线」的卡：细线正是笔画在 2× 下的样子，
+    # 缩一半之后滤镜好不好，全看它还剩多少对比度。
+    subprocess.run(
+        ["ffmpeg", "-v", "error", "-f", "lavfi",
+         "-i", "color=c=0x0b3a2a:s=2160x2880",
+         "-vf", "drawgrid=w=6:h=6:t=1:c=0xe7f3ec",
+         "-frames:v", "1", "-y", str(src)],
+        check=True,
+    )
+
+    def high_freq(flags: str) -> float:
+        out = tmp_path / f"{flags}.png"
+        subprocess.run(
+            ["ffmpeg", "-v", "error", "-i", str(src),
+             "-vf", f"scale=1080:1440:flags={flags}", "-y", str(out)],
+            check=True,
+        )
+        from PIL import Image
+
+        a = np.asarray(Image.open(out).convert("L"), dtype=float)
+        return float((a[1:-1, 1:-1] * -4 + a[:-2, 1:-1] + a[2:, 1:-1]
+                      + a[1:-1, :-2] + a[1:-1, 2:]).var())
+
+    lanczos, bicubic = high_freq("lanczos"), high_freq("bicubic")
+    assert lanczos > bicubic * 1.05, (
+        f"lanczos({lanczos:.0f}) 没比 bicubic({bicubic:.0f}) 实——"
+        "这条判据引用的那个差别不存在了，先重量一遍再改常量")
+    assert E._SCALE_FLAGS == "lanczos", (
+        f"_SCALE_FLAGS 现在是 {E._SCALE_FLAGS!r}；换之前照 _SCALE_FLAGS "
+        "上面那张表的口径重量一遍，别按感觉换")

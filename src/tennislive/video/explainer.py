@@ -75,6 +75,39 @@ _PAGES_URL = os.environ.get(
 # 示意图，放大对比，别按比例推。
 _SLIDE_JPEG_QUALITY = 86
 
+# 卡片是 **2160×2880** 截的（`device_scale_factor=2`），而成片画布只有
+# 1080 宽——所以每一屏都要被**整整缩小一半**才进得了视频。缩小用哪个滤镜，
+# 决定了字的笔画还剩多少。
+#
+# 账号所有者 2026-08-16：「文字卡做成视频之后，上面的文字虚化了不少，
+# 看起来不是太清晰和做渲染之前」。把 `weeks-at-no1` 第 ③ 屏（那张连续
+# 周数榜，全片字最密的一屏）拆成三段分别量了一遍，量的是示意图那一块
+# （y 100~1200，避开烧进去的字幕）的**拉普拉斯方差**——高频能量，笔画
+# 越实这个数越大：
+#
+#     无损源 → lanczos 下采样（上限，不编码）      1302.6
+#     q86 源 → lanczos 下采样                     1274.3   ← JPEG 只花掉 2.2%
+#     q86 源 → **bicubic** 下采样（swscale 缺省）  1100.7   ← **少了 13.6%**
+#     q86 源 → bicubic → crf 26（改之前的成片）    1129.7
+#     q86 源 → lanczos → crf 26（现在）            1299.9
+#
+# 三条结论，都是量出来的：
+#
+# · **虚的不是编码，是下采样。** `crf 26` 一点高频都没吃掉（1100.7 → 1129.7，
+#   PSNR 40.5 dB）；试过 crf 20，体积涨 41%、高频原地不动（1284.1）——
+#   那句「crf 别再往上推」照旧成立，但**往下调也买不到清晰度**，别去动它
+# · **q86 的 JPEG 也不是主因**（2.2%），是 bicubic 的六分之一。不用为了
+#   视频再多渲一份无损卡
+# · **轻锐化是陷阱**：`unsharp` 能把这个数刷到 2100，而 PSNR 掉到 35.3——
+#   涨的是振铃不是细节。和封面那条「锐化能把 779 刷到 1727 而细节并没有
+#   回来」是同一个坑
+#
+# 代价只有体积 **+1.3%**（同一屏两秒：78595 → 79606 字节）。
+#
+# ⚠️ 仓库里另一条线（`build_match_reel.py`）**早就一路写着 `flags=lanczos`**，
+# 只有解说片这条漏了——不是有人权衡过，是这一行从来没被量过。
+_SCALE_FLAGS = "lanczos"
+
 
 class _Unset:
     """「这个参数没传」的哨兵，用来和「传了 None」区分开。
@@ -8063,7 +8096,8 @@ def assemble_explainer_video(
     margin_v = card_top + CARD_H - 156
     for i in range(n):
         chain = (
-            f"[{2 * i + offset}:v]scale={VIDEO_W}:{canvas_h}:force_original_aspect_ratio=decrease,"
+            f"[{2 * i + offset}:v]scale={VIDEO_W}:{canvas_h}:"
+            f"force_original_aspect_ratio=decrease:flags={_SCALE_FLAGS},"
             f"pad={VIDEO_W}:{canvas_h}:(ow-iw)/2:(oh-ih)/2:color={_BAND_COLOR},"
             f"setsar=1,fps=30"
         )
@@ -8108,7 +8142,8 @@ def assemble_explainer_video(
         # 两份必分叉，所以这儿是照抄上面那一段的形状，改动只有「不加字幕」。
         vi = 2 * n + offset
         filters.append(
-            f"[{vi}:v]scale={VIDEO_W}:{canvas_h}:force_original_aspect_ratio=decrease,"
+            f"[{vi}:v]scale={VIDEO_W}:{canvas_h}:"
+            f"force_original_aspect_ratio=decrease:flags={_SCALE_FLAGS},"
             f"pad={VIDEO_W}:{canvas_h}:(ow-iw)/2:(oh-ih)/2:color={_BAND_COLOR},"
             f"setsar=1,fps=30,format=yuv420p[v{n}]"
         )
