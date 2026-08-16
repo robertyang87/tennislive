@@ -941,3 +941,93 @@ def test_前20那条线是名次不是种子号():
     ranks = [m["rank"] for m in spec["cover"]["matchup"]]
     assert min(ranks) > reel.HEAT_TOP_RANK, \
         f"陶森那场最高名次 {min(ranks)} 落进了前 {reel.HEAT_TOP_RANK}，这条线太松"
+
+
+# 七、数据图缺制胜分/非受迫失误的，必须去 TNNS 问过一次
+# ──────────────────────────────────────────────────────────────────────────
+#
+# 来路：2026-08-16 账号所有者问「怎么 ATP 的比赛统计卡片里没有制胜分和 UE
+# 了？」，我答「这两场接口里没有」——**错的**。他回了一句「tnns live 有啊」
+# 外加一张截图：兹维列夫-诺里那场 `Winners 41/25`、`Unforced Errors 35/36`
+# 就在 TNNS Live 的 Stats 页上。随后定死了口径：「**肯定都要拿到啊**」。
+#
+# ⚠️ **这是同一个形状今天第三次**（CLAUDE.md「查空一类不等于查空全部」）：
+# 我量的是 flashscore 一家，报出来的却是「没有」。而 `render_stat_card` 的
+# `OPTIONAL_FIELDS` 允许这两项缺席（WTA 巡回赛那一档 flashscore 真的不给），
+# 于是**「漏查」和「本来就没有」在产物上长得一模一样**——图少两行，
+# 渲染不报错、质检 0 项不合格、全量测试全绿。
+#
+# 所以闸认领的是「**问过 TNNS 了**」这一步，不是「必须有这两行」：
+#
+#   `stats.a/b` 两边都有 `winners` + `ue`  → 过
+#   缺 → 必须写 `stats._winners_ue_why`，说清 TNNS 那趟跑出来是什么
+#
+# ⚠️ **为什么不做成 `validate_spec` 的 runtime 闸**：和 `_no_stats_why`
+# 一个道理——「忘了查」和「查过确实没有」在产物上分不出来，runtime 闸拦前者
+# 必然误伤后者（TNNS 的 `hasExtendedStats` 真会是 false）。
+#
+# ⚠️ **也不接进出片流程**：TNNS 要真浏览器过 Cloudflare 挑战，一次 25~30 秒
+# 且不可缓存。写 spec 的时候手动跑一趟 `tnns-stats.yml`，和 `mcp_stats.py`
+# 同一个用法。
+#
+# 豁免表 = 这条闸上线之前就写好的全部（25 条）。⚠️ 里面**包括
+# `zverev-norrie`**——正是账号所有者截图的那一场，也就是说这条闸拦的第一个
+# 例子就是它自己的来路：那两行数字一直拿得到，而它发出去的时候没有。
+# 已发的片子不重渲（微信那条消息收不回来），所以只挂账，只管以后。
+
+_WINNERS_UE_LEGACY = frozenset({
+    "baez-dimitrov", "bejlek-pliskova", "boisson-krueger", "boulter-volynets",
+    "bucsa-chwalinska", "cirstea-bartunkova", "eala-ruse", "hijikata-monfils",
+    "jodar-shapovalov", "kenin-lys", "maria-yastremska", "navarro-kalinina",
+    "noskova-boulter", "ostapenko-frech", "parry-mertens", "pegula-waltert",
+    "sonmez-anisimova", "sonmez-kasatkina", "stearns-tauson", "townsend-osorio",
+    "tsitsipas-royer", "wang-vandewinkel", "wangxiyu-timofeeva", "zhang-day",
+    "zverev-norrie",
+})
+
+
+def _missing_winners_ue():
+    """有 `stats` 块、却缺制胜分/非受迫失误、又没说查过 TNNS 的那些。
+
+    ⚠️ 两边都要查。`render_stat_card.usable_rows` 对「只有一边有」是报错的
+    （那是数据对不齐，不是拿不到），这里按同一个口径认「有」。
+    """
+    out = set()
+    for slug, spec in _court_specs():
+        stats = spec.get("stats")
+        if not stats:
+            continue                      # 整块没有 → 归 `_no_stats_why` 那条闸管
+        a, b = stats.get("a") or {}, stats.get("b") or {}
+        if all(key in a and key in b for key in ("winners", "ue")):
+            continue
+        if stats.get("_winners_ue_why"):
+            continue
+        out.add(slug)
+    return out
+
+
+def test_数据图缺制胜分和UE的要说清TNNS那趟跑出来是什么():
+    fresh = _missing_winners_ue() - _WINNERS_UE_LEGACY
+    assert not fresh, (
+        f"这几条的数据图缺制胜分/非受迫失误，又没写 `stats._winners_ue_why`："
+        f"{sorted(fresh)}。**flashscore 没有 ≠ 没有**——TNNS Live 这两行"
+        f"按场给，去问一次：\n"
+        f"    gh workflow run tnns-stats.yml -f who=<姓>,<姓>\n"
+        f"拿到就填进 `stats.a/b` 的 `winners` / `ue`；TNNS 也说没有"
+        f"（`hasExtendedStats` 是 false）就写一句 `_winners_ue_why` 记下来。"
+        f"⚠️ 只填这两项——TNNS 的一发分母和 `first_in + second_total` 对不上，"
+        f"而那张图画的是 `first_in / first_total`，要用和式才自洽。"
+    )
+    # 判据自己的判据：主语没了它要出声，而不是变成一盏恒真的绿灯
+    withstats = [s for s, spec in _court_specs() if spec.get("stats")]
+    assert len(withstats) >= 30, "带 stats 的 spec 一条都没扫到，判据的主语像是没了"
+
+
+def test_制胜分豁免表只许减不许加():
+    for slug in sorted(_WINNERS_UE_LEGACY):
+        assert (SPEC_DIR / f"{slug}.json").is_file(), \
+            f"{slug} 这条 spec 已经没了，把它从豁免表里删掉"
+    stale = _WINNERS_UE_LEGACY - _missing_winners_ue()
+    assert not stale, (
+        f"这几条已经有制胜分/非受迫失误（或写了 `_winners_ue_why`）了，"
+        f"从表里删掉：{sorted(stale)}——这张表只许减不许加")
