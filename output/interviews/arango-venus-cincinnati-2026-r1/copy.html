@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>8.17 赛后开麦 | 阿朗戈赢下大威廉姆斯</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>「她拿下第一个大满贯的时候，离你出生还有几个月」
+
+📍2026 辛辛那提 WTA1000 第一轮
+🎾 阿朗戈 6-2 6-2 大威廉姆斯
+🎤 中英双语字幕 · 赛后场上采访
+
+主持人第一句就把时间拉得很长，而它可以核：大威廉姆斯 2000 年 7 月拿下温网，那是她第一个大满贯；阿朗戈同年 11 月 28 日出生。差四个月。
+
+二十五岁的哥伦比亚人，第一次打进这一站第二轮。
+① 签表出来那一刻
+
+Definitely. It felt so surreal. When the draw came out and I saw it, I was like, &quot;Oh man.&quot; It&#x27;s so exciting to get to have this opportunity. Growing up, I always saw her on TV and now getting to play her is really crazy.
+确实，感觉太不真实了。签表出来我一看到就想，天哪。居然有这样的机会。我从小就在电视上看她，现在真的跟她打上了，太疯狂了。
+
+② 她今天只想着一件事
+
+Honestly, my legs. My coach told me, I do not want to see you moving slow. The only thing I want is for your legs to go fast.
+说实话，是我的腿。我教练跟我说，我不想看到你移动变慢。我只要一件事，就是你的腿快起来。
+
+③ 被教练拉去打高尔夫
+
+The thing is he&#x27;s really good and I am not that good so it really pisses me off.
+问题是他打得特别好，而我不行，所以真的很气人。
+
+④ 那顶反戴的帽子
+
+小时候头发长不出来，教练说得把头发扎起来，妈妈说那就编辫子。她问：那我的帽子怎么办？
+
+She goes, &quot;Why don&#x27;t you just put it backwards?&quot; I was 10 years old and I&#x27;ve kept it since.
+她说，那你就反着戴呗。那年我十岁，一直戴着。
+
+你的偶像，也在电视里吗？
+
+#阿朗戈 #大威廉姆斯 #辛辛那提 #WTA #网球时差</textarea>
+    </section>
+    
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
