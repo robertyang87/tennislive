@@ -7626,6 +7626,68 @@ def _with_legacy_soft_cover(slug: str, spec: dict) -> dict:
     return spec
 
 
+#: 用 Tennis TV 源片、而且发在「片尾和台标要剪掉」这条规矩（账号所有者 2026-08-16）
+#: 之前的片子。已发的不重渲——**只许减不许加**，自检在下面那条测试里。
+_LEGACY_TENNISTV = {
+    "baez-dimitrov", "djokovic-tirante", "eala-svitolina", "fonseca-ruud",
+    "fritz-jodar-final", "gea-shapovalov", "hewitt-washington",
+    "hijikata-monfils", "kovacevic-khachanov",
+    "landaluce-draper", "medvedev-zandschulp", "nakashima-jodar-montreal-sf",
+    "shang-darderi-montreal-2026", "shang-vallejo", "shelton-fonseca",
+    "shelton-nakashima-montreal-final", "shelton-tien-montreal-sf",
+    "tirante-fritz", "tsitsipas-royer", "wang-samsonova", "wong-brooksby",
+    "wong-gea", "wong-lehecka", "zverev-griekspoor",
+}
+
+
+def _uses_tennistv(spec: dict) -> bool:
+    """这条 spec 的源片是不是 Tennis TV 的。
+
+    ⚠️ **只看 `_source` 和 `_editing_why` 这两栏**（我们自己写的来路交代），
+    不扫整份 spec——`_no_repeat` 里会点名别的片子，那些片子的名字里带 Tennis TV
+    就会把这一条误判成「也用了 Tennis TV」。判据宁可窄，不可宽。
+    """
+    blob = " ".join(str(spec.get(k) or "") for k in ("_source", "_editing_why"))
+    return "Tennis TV" in blob or "TennisTV" in blob
+
+
+def test_用TennisTV的源片要说清片尾和台标怎么剪掉():
+    """账号所有者 2026-08-16：「**如果用 Tennis TV 的视频的话，需要把它的片尾和它的
+    logo 剪掉。**」
+
+    两样东西，两个位置：
+
+    - **片尾**是那张订阅／品牌卡，挂在源片末尾。它一旦落进任何一段窗口，成片里就会
+      出现别人的品牌页——而 ffmpeg 不会报错，只有打开成片才看得见。
+    - **台标**是烧在画面角上的水印。3:4 的取景窗只取 1920 里的 810px，居中时右上角
+      那块本来就在窗外；可 `cx` 一往那边挪就会把它框进来。
+
+    所以用 Tennis TV 源片的 spec 必须写一句 `_tennistv_trim`，说清这两样各自怎么
+    处理的（末段收在第几秒、离片尾多远；取景窗有没有把角上那块框进来）。
+    **和 `mixed_fps` / `silent_source` / `_frame_why` 一个形状：认领这一步把
+    「想清楚了」和「凑合一下」分开。**
+
+    ⚠️ 已发的挂在 `_LEGACY_TENNISTV` 里，只许减不许加，表自带自检。
+    """
+    specs = _reel_specs()
+    for slug in sorted(_LEGACY_TENNISTV):
+        assert slug in specs, (
+            f"`_LEGACY_TENNISTV` 里的 {slug!r} 找不到对应的 spec"
+            "——写错一个名字，豁免就成了一盏恒真的绿灯")
+        assert _uses_tennistv(specs[slug]), (
+            f"{slug} 已经不是 Tennis TV 的源片了，从 `_LEGACY_TENNISTV` 里删掉")
+
+    fresh = sorted(
+        slug for slug, spec in specs.items()
+        if _uses_tennistv(spec) and slug not in _LEGACY_TENNISTV
+        and not str(spec.get("_tennistv_trim") or "").strip())
+    assert not fresh, (
+        f"这几条用了 Tennis TV 的源片，却没写 `_tennistv_trim`：{fresh}。\n"
+        "账号所有者 2026-08-16 定的：**片尾和台标都要剪掉**。写一句说清"
+        "末段离片尾多远、取景窗有没有把角上那块台标框进来——"
+        "「忘了看」和「看过了没问题」在成片上分不出来。")
+
+
 def test_封面大图一律用官方高清图不许抽帧():
     """账号所有者 2026-08-16，一条消息里说了三遍：「封面一定要选高清大图，不然
     没人愿意点进去看」「抽帧的图都不太清晰啊」「**都说了**不要用截图抽帧的这种
