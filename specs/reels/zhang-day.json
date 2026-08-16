@@ -103,7 +103,9 @@
       "bp_chances": 12,
       "pts_won": 83,
       "pts_total": 157,
-      "first_total": 73
+      "first_total": 73,
+      "winners": 28,
+      "ue": 37
     },
     "b": {
       "headshot": "assets/players/headshots/wta-322534.jpg",
@@ -117,11 +119,14 @@
       "bp_chances": 3,
       "pts_won": 74,
       "pts_total": 157,
-      "first_total": 83
+      "first_total": 83,
+      "winners": 24,
+      "ue": 46
     },
     "footer_venue": "辛辛那提 · 女单第一轮",
     "footer_date": "2026年8月15日",
-    "_source": "整块是 `python3 tools/match_stat_hooks.py 4CYI9Ick --stats-block` 吐出来的，**只改了一个数**，见下。\n\n⚠️ **`a` 对应 `cover.matchup[0]`（张帅），不是「feed 的 home/away」**——这一条两者恰好一致（flashscore 的 home 就是张帅），工具的输出可以直接用。判据是头像和名字对不对得上（`test_数据图的头像和matchup里的名字必须是同一个人`）。\n\n⚠️ **`pts_total` 从工具报的 156 改成 157**：工具是把 flashscore 三盘的 `Total Points Won` 分母相加（53＋49＋54），而**它自己第三盘的两个分子加起来是 55 不是 54**（33＋22），分母那一格是错的。**WTA 官方** `…/LS082/stats` 的 `setnum 0` 写着 `totptswona=83 / totptswonb=74`（＝157），`setnum 3` 写着 `33 / 22`（＝55），逐盘 53＋49＋55＝157 自洽。83＋74＝157，用官方的。\n\n⚠️ **制胜分和非受迫失误这场接口里没有**（工具明说），`stats` 块少那两行——WTA 巡回赛这一档本来就不给，CLAUDE.md 记过。\n\n两个头像都是官方图：戴伊走 `tools/fetch_official_headshot.py wta \"Kayla Day\"`（id 322534，27226 种颜色）；⚠️ **张帅那个按姓名搜不到**（WTA 球员库里 `Shuai Zhang` 搜出来全是别的 Zhang），改成拿排名接口查到 id 311779 之后直接取 `wtafiles.blob.core.windows.net/images/headshots/311779.jpg`（39316 种颜色，492×656）。两张都打开看过，不是那种 2 色的占位剪影。"
+    "_source": "整块是 `python3 tools/match_stat_hooks.py 4CYI9Ick --stats-block` 吐出来的，**只改了一个数**，见下。\n\n⚠️ **`a` 对应 `cover.matchup[0]`（张帅），不是「feed 的 home/away」**——这一条两者恰好一致（flashscore 的 home 就是张帅），工具的输出可以直接用。判据是头像和名字对不对得上（`test_数据图的头像和matchup里的名字必须是同一个人`）。\n\n⚠️ **`pts_total` 从工具报的 156 改成 157**：工具是把 flashscore 三盘的 `Total Points Won` 分母相加（53＋49＋54），而**它自己第三盘的两个分子加起来是 55 不是 54**（33＋22），分母那一格是错的。**WTA 官方** `…/LS082/stats` 的 `setnum 0` 写着 `totptswona=83 / totptswonb=74`（＝157），`setnum 3` 写着 `33 / 22`（＝55），逐盘 53＋49＋55＝157 自洽。83＋74＝157，用官方的。\n\n⚠️ **制胜分和非受迫失误这场接口里没有**（工具明说），`stats` 块少那两行——WTA 巡回赛这一档本来就不给，CLAUDE.md 记过。\n\n两个头像都是官方图：戴伊走 `tools/fetch_official_headshot.py wta \"Kayla Day\"`（id 322534，27226 种颜色）；⚠️ **张帅那个按姓名搜不到**（WTA 球员库里 `Shuai Zhang` 搜出来全是别的 Zhang），改成拿排名接口查到 id 311779 之后直接取 `wtafiles.blob.core.windows.net/images/headshots/311779.jpg`（39316 种颜色，492×656）。两张都打开看过，不是那种 2 色的占位剪影。",
+    "_winners_ue_source": "TNNS Live（tnns-stats run 31959905990，--who Zhang,Day --date 2026-08-15）：分盘 7+9+12=28、8+8+8=24、16+11+10=37、13+18+15=46，四个数同时和全场对上；列序 ['Zhang','Day'] 与 cover.matchup 一致，另以 ACE 0/8 交叉核过没填反（flashscore df_st_1_4CYI9Ick：home 张帅 0 个 Ace）。⚠️ 只取这两项——TNNS 的一发分母和 first_in+second_total 对不上，一发成功率仍按和式算。"
   },
   "_claims": {
     "本场张帅一个ACE都没发、戴伊发了八个": "两个独立出处逐项对上。① **flashscore** `df_st_1_4CYI9Ick` 分盘 `Aces`：第一盘 0:3、第二盘 0:2、第三盘 0:3，合计 **0 : 8**；② **WTA 官方** `…/matches/LS082/stats`：`setnum 0` 的 `acesa=0 acesb=8`，分盘 `setnum 1/2/3` 的 `acesb` 是 3 / 2 / 3。两边完全一致。",
