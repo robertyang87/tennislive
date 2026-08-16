@@ -2005,13 +2005,39 @@ def build_cover(spec: dict, frame: Path, dest: Path) -> Path:
     cov = spec["cover"]
     b64 = base64.b64encode(frame.read_bytes()).decode()
     title = "<br>".join(cov["title"])
-    tag = f"{spec.get('column', '赛后开麦')} · {cov.get('tag', '')}".strip(" ·")
+    column = spec.get("column", "赛后开麦")
+    # ⚠️ **栏目名只印一次。** 它现在在左上角那行 `网球时差 · 赛后开麦` 里，
+    # 底部那颗 tag 再写一遍就是白占位置——「赛场之上」的黄色药丸就是因为
+    # 这个被账号所有者整块删掉的（CLAUDE.md「台头药丸不许自己回来」）。
+    tag = cov.get("tag", "")
+    # 顶栏第二行：这条片子的标题。默认取 `push.summary`——那正是微信那条
+    # 推送的标题，**一个出处**，不让人再敲一遍（CLAUDE.md「推送元数据的
+    # 出处是 spec，不是命令行」是同一条）。
+    topic = cov.get("topic") or (spec.get("push") or {}).get("summary", "")
+    icon = ROOT / "assets" / "logo" / "brand" / "icon.png"
+    brand_icon = (
+        f'<img class=brand-icon src="data:image/png;base64,'
+        f'{base64.b64encode(icon.read_bytes()).decode()}">' if icon.is_file() else ""
+    )
     html = f"""<!doctype html><meta charset=utf-8><style>{_font_css()}
 *{{margin:0;padding:0;box-sizing:border-box}}
 body{{width:{CANVAS_W}px;height:{CANVAS_H}px;position:relative;overflow:hidden;
  font-family:'TL Sans SC',sans-serif;background:#06140f}}
 .bg{{position:absolute;inset:0;background:url(data:image/jpeg;base64,{b64}) center/cover;
  filter:blur(46px) brightness(.34);transform:scale(1.25)}}
+.bar{{position:absolute;top:0;left:0;right:0;height:12px;
+ background:linear-gradient(90deg,#c6f65a 0%,#37e29a 34%,#ff5a6a 67%,#4bb8ff 100%)}}
+.head{{position:absolute;top:44px;left:70px;right:70px;display:flex;align-items:center;
+ text-shadow:0 2px 12px rgba(0,0,0,.6)}}
+.brandwrap{{display:flex;align-items:center;gap:14px}}
+.brandlines{{display:flex;flex-direction:column;gap:2px}}
+.topic{{font-family:'TL Sans SC',sans-serif;font-size:27px;font-weight:700;
+ color:#dcefe4;letter-spacing:1px;
+ text-shadow:0 2px 10px rgba(0,0,0,.9),0 0 24px rgba(6,28,20,.8)}}
+.brand-icon{{width:52px;height:52px;object-fit:contain;
+ filter:drop-shadow(0 2px 8px rgba(0,0,0,.55))}}
+.brand{{font-family:'TL Display SC','TL Sans SC',sans-serif;
+ font-size:38px;font-weight:400;letter-spacing:1px;color:#f4fbf7}}
 .shot{{position:absolute;top:{VIDEO_TOP}px;left:0;width:{CANVAS_W}px;height:{VIDEO_H}px;
  overflow:hidden}}
 .shot img{{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);height:100%}}
@@ -2028,6 +2054,10 @@ body{{width:{CANVAS_W}px;height:{CANVAS_H}px;position:relative;overflow:hidden;
 .tag span{{font-family:'TL Display SC','TL Sans SC',sans-serif;font-size:32px;
  color:#74dcc3;letter-spacing:1.5px}}
 </style><div class=bg></div><div class=shot><img src="data:image/jpeg;base64,{b64}"></div>
+<div class=bar></div>
+<div class=head><div class=brandwrap>{brand_icon}<div class=brandlines>
+<span class=brand>网球时差 · {column}</span>
+<span class=topic>{topic}</span></div></div></div>
 <div class=band><div class=title>{title}</div>
 <div class=sub>{cov.get('sub', '')}</div>
 <div class=tag><i></i><span>{tag}</span></div></div>"""
