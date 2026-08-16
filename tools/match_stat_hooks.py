@@ -396,9 +396,21 @@ def main() -> int:
         print(header)
         if blk["_missing_required"]:
             print("⚠️ 必填项没解出来：" + "、".join(blk["_missing_required"]))
-        print("制胜分 / 非受迫失误：" + ("**这场有，必须填**" if blk["_has_winners_ue"]
-                                        else "这场接口里没有——照 render_stat_card 的 "
-                                             "OPTIONAL_FIELDS 留空即可"))
+        if blk["_has_winners_ue"]:
+            print("制胜分 / 非受迫失误：**这场有，必须填**")
+        else:
+            # ⚠️ **别在这儿写「这场没有」。** 2026-08-16 我就是这么答的，
+            # 而账号所有者甩来一张 TNNS Live 的截图，那两行就在上面——
+            # **flashscore 没有 ≠ 没有**（CLAUDE.md「查空一类不等于查空全部」）。
+            # 所以这行只说 flashscore 的范围，并把下一条路指出来。
+            print("制胜分 / 非受迫失误：**flashscore 这场没有**——"
+                  "⚠️ 这不等于拿不到。先去 TNNS 问一次：\n"
+                  "    gh workflow run tnns-stats.yml -f who=<姓>,<姓>"
+                  f"    # 或 -f match_id=<TNNS 数字 id>\n"
+                  "  （要真浏览器过 Cloudflare，只能在 runner 上跑；解法和判据见 "
+                  "tools/tnns_stats.py）\n"
+                  "  两边都没有，才照 render_stat_card 的 OPTIONAL_FIELDS 留空，"
+                  "并在 spec 的 `stats._source` 里写清楚**两个源都查过**")
         print(json.dumps({k: blk[k] for k in ("a", "b")}, ensure_ascii=False, indent=2))
         return 0
 

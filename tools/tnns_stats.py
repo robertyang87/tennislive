@@ -155,7 +155,152 @@ def has_extended_stats(decoded: dict) -> bool | None:
     return (decoded.get("data") or {}).get("hasExtendedStats")
 
 
+# ---------------------------------------------------------------- 取数
+# ⚠️ **这一半只能在 runner 上跑**：要真浏览器过 Cloudflare。沙箱里 Chromium
+# 连 example.com 都 ERR_CONNECTION_RESET（2026-08-16 控制组验过），不是站在挡。
+
+_STATS_MARK = "submode=stats"
+_DAY_MARK = "/v1/matches"
+
+
+def _browser_capture(urls: list[str], marks: list[str], wait: int = 22) -> dict:
+    """依次打开几个页面，把 URL 含某个标记的响应正文收回来。
+
+    **被动抓包，不猜路径。** `context.request` 和 curl 都会拿到 Cloudflare 的
+    `Just a moment` 挑战页（403），只有页面自己发的请求过得去——`probe_tnns.py`
+    的模块 docstring 记着这条，2026-08-16 又实测确认了一次。
+    """
+    from playwright.sync_api import sync_playwright
+
+    got: dict[str, str] = {}
+    with sync_playwright() as pw:
+        browser = pw.chromium.launch(args=["--no-sandbox"])
+        ctx = browser.new_context(
+            user_agent=("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+                        "AppleWebKit/537.36 (KHTML, like Gecko) "
+                        "Chrome/126.0.0.0 Safari/537.36"),
+            viewport={"width": 1280, "height": 900}, locale="en-US")
+
+        def on_response(resp):
+            for mark in marks:
+                if mark in resp.url and mark not in got:
+                    # ⚠️ 不按 content-type 过滤——TNNS 回的是 text/html。
+                    try:
+                        body = resp.text()
+                    except Exception:  # noqa: BLE001
+                        return
+                    if body:
+                        got[mark] = body
+
+        ctx.on("response", on_response)
+        page = ctx.new_page()
+        for url in urls:
+            print(f"[TNNS] 打开 {url}")
+            try:
+                page.goto(url, timeout=60000, wait_until="domcontentloaded")
+            except Exception as exc:  # noqa: BLE001
+                print(f"[TNNS] goto 失败：{type(exc).__name__}: {exc}")
+            page.wait_for_timeout(wait * 1000)
+            html = page.content()
+            if "Just a moment" in html:
+                print("[TNNS] ⚠️ Cloudflare 挑战**没过**——这一趟拿不到数据，"
+                      "不是这场没有统计")
+        browser.close()
+    return got
+
+
+def find_match_id(day_body: str, who: list[str]) -> str | None:
+    """在当天赛程里按球员名找这一场，返回数字 id（`k`）。
+
+    ⚠️ **按姓找，别按赛事名找**：同一站男女的赛事名可能不一样（MCP 那条踩过
+    `Canada_Masters` / `Toronto`）。名字用 `n` 字段的子串匹配，大小写不敏感。
+    """
+    data = json.loads(day_body)
+    want = [w.lower() for w in who]
+    for m in data.get("all_matches") or []:
+        names = " ".join(str(p.get("n", "")) for p in (m.get("p") or [])).lower()
+        if all(w in names for w in want):
+            return str(m.get("k"))
+    return None
+
+
+def fetch(who: list[str], date: str | None = None,
+          match_id: str | None = None) -> tuple[str, dict]:
+    """一个浏览器会话跑完：（找 id →）打开这一场 → 收统计响应 → 解码。
+
+    ⚠️ **不去解「数字 id → 文档 id」那一跳。** 统计接口用的是 Firestore 风格的
+    文档 id，而**打开这一场的页面，前端自己会带着它去请求**——被动收下来比
+    自己再推一次可靠，也少一条会随前端改动而失效的假设。
+    """
+    if not match_id:
+        home = "https://tnnslive.com/"
+        day = _browser_capture([home], [_DAY_MARK]).get(_DAY_MARK)
+        if not day:
+            raise SystemExit(
+                "[TNNS] 当天赛程一条都没抓到——**先别当成「这场没有」**："
+                "多半是 Cloudflare 没过或者等的时间不够（--wait）。")
+        match_id = find_match_id(day, who)
+        if not match_id:
+            raise SystemExit(
+                f"[TNNS] 当天赛程里没有 {who} 这一场。⚠️ 赛程按日期分，"
+                f"跨日的比赛要给 --date（现在给的是 {date or '默认今天'}）。")
+        print(f"[TNNS] 认到这一场：id={match_id}")
+    body = _browser_capture([f"https://tnnslive.com/match/{match_id}"],
+                            [_STATS_MARK]).get(_STATS_MARK)
+    if not body:
+        raise SystemExit(
+            f"[TNNS] 打开了 match/{match_id}，但没收到 {_STATS_MARK} 那条响应。"
+            "⚠️ 这**不等于**这场没有扩展统计——接口自己有 hasExtendedStats "
+            "这个键，收得到响应才读得到它。")
+    return match_id, decode(body)
+
+
+def _report(match_id: str, decoded: dict) -> None:
+    data = decoded.get("data") or {}
+    print(f"\n=== TNNS 单场统计 id={match_id} ===")
+    print(f"hasExtendedStats: {has_extended_stats(decoded)}")
+    whole = winners_ue(decoded, "Match")
+    if not whole:
+        print("⚠️ 全场那一块没有制胜分/非受迫失误——"
+              "读 hasExtendedStats 判「这场有没有」，别从这里反推")
+        return
+    print(f"制胜分       {whole['winners']}")
+    print(f"非受迫失误   {whole['ue']}")
+    print(f"（选手顺序 {(data.get('Match') or [{}])[0].get('players')}）")
+    sets = [(p, winners_ue(decoded, p)) for p in ("Set 1", "Set 2", "Set 3")]
+    sets = [(p, v) for p, v in sets if v]
+    for p, v in sets:
+        print(f"  [{p}] 制胜分 {v['winners']}　非受迫失误 {v['ue']}")
+    # **自证**：分盘加起来要等于全场。对不上宁可红，别把假数发出去。
+    for field in ("winners", "ue"):
+        tot = [sum(v[field][i] for _, v in sets) for i in (0, 1)]
+        ok = tot == list(whole[field])
+        print(f"  自证 {field}：分盘合计 {tot} vs 全场 {whole[field]}"
+              f"  {'✅' if ok else '❌ 对不上，多半解错了，别用'}")
+    print("\n粘进 spec 的 `stats` 块（⚠️ a/b 跟 cover.matchup 的顺序，"
+          "不是这里的顺序——CLAUDE.md「stats.a 跟的是 cover.matchup[0]」）：")
+    print(f'  "winners": {whole["winners"][0]},  "ue": {whole["ue"][0]}    ← '
+          f'{(data.get("Match") or [{}])[0].get("players", ["?", "?"])[0]}')
+    print(f'  "winners": {whole["winners"][1]},  "ue": {whole["ue"][1]}    ← '
+          f'{(data.get("Match") or [{}])[0].get("players", ["?", "?"])[1]}')
+
+
 def main() -> int:
+    if len(sys.argv) >= 2 and sys.argv[1] == "fetch":
+        import argparse
+        ap = argparse.ArgumentParser(prog="tnns_stats.py fetch")
+        ap.add_argument("--who", action="append", default=[],
+                        help="球员姓（可给多次），在当天赛程里认这一场")
+        ap.add_argument("--date", default=None, help="赛程日期 YYYY-MM-DD")
+        ap.add_argument("--match-id", default=None,
+                        help="已经知道数字 id 就直接给，省掉找那一跳")
+        args = ap.parse_args(sys.argv[2:])
+        if not args.who and not args.match_id:
+            print("要么给 --who，要么给 --match-id")
+            return 2
+        mid, decoded = fetch(args.who, args.date, args.match_id)
+        _report(mid, decoded)
+        return 0
     if len(sys.argv) < 3 or sys.argv[1] != "decode":
         print(__doc__)
         return 2

@@ -125,3 +125,40 @@ def test_池下标越界原样留着不许变成None():
     assert tnns_stats._from_pool("p:0", ["a"]) == "a"
     # 池里本来就有 "92% (12/13)" 这种值，裸串不许被当成下标
     assert tnns_stats._from_pool("1a", ["a", "b"]) == "1a"
+
+
+def test_flashscore缺这两项时要把TNNS这条路指出来():
+    """⚠️ **这条判据的来路是一句错话。**
+
+    2026-08-16 账号所有者问「怎么 ATP 的统计卡片里没有制胜分和 UE 了」，
+    `match_stat_hooks --stats-block` 那行原来写的是「这场接口里没有」，我照抄
+    答了「这两场没有」——而 TNNS Live 上那两行就在。**flashscore 没有 ≠ 没有。**
+
+    所以这行现在必须①把范围收在 flashscore 上、②指出 TNNS 这条路。
+    """
+    body = Path("tools/match_stat_hooks.py").read_text("utf-8")
+    # ⚠️ 锚在**打印那一处**，不是 `_has_winners_ue` 第一次出现的地方——
+    # 它先在 `stats_block` 里被赋值，按第一次出现取会切到那儿，
+    # 于是这条判据变成一盏恒红的灯（第一版就是这么写的）。
+    i = body.index('blk["_has_winners_ue"]')
+    seg = body[i - 200: i + 1400]
+    assert "flashscore 这场没有" in seg, "范围没收住——「这场没有」是错话"
+    assert "tnns-stats" in seg or "tnns_stats" in seg, "没把 TNNS 这条路指出来"
+
+
+def test_取TNNS要单独一条工作流不许接进出片流程():
+    """一次开浏览器 25~30 秒且不可缓存（挑战每次重过）。
+
+    ⚠️ 判据钉两头：**入口够得着**（有这条工作流、能手动跑），
+    **而且没混进 match-reel**——接进去就是每条片子白背半分钟。
+    """
+    wf = Path(".github/workflows/tnns-stats.yml")
+    assert wf.is_file(), "工作流不在——工具写了却没有入口，等于没有"
+    text = wf.read_text("utf-8")
+    assert "workflow_dispatch" in text, "手动入口没了"
+    assert "tools/tnns_stats.py fetch" in text, "没真的调那条命令"
+    # 出片那条线不许出现它
+    reel = Path(".github/workflows/match-reel.yml").read_text("utf-8")
+    lines = [ln for ln in reel.splitlines() if not ln.strip().startswith("#")]
+    assert "tnns_stats" not in "\n".join(lines), \
+        "TNNS 混进 match-reel 了——每条片子会白背一次浏览器启动"
