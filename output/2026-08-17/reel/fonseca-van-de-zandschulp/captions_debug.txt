@@ -1,0 +1,54 @@
+拿不到自动字幕，各 client 的原因如下：
+
+### web(+POT)
+WARNING: Only images are available for download. use --list-formats to see them
+ERROR: [youtube] I4BZMcRllUo: Requested format is not available. Use --list-formats for a list of available formats
+
+### mweb(+POT)
+[youtube] Extracting URL: https://www.youtube.com/watch?v=I4BZMcRllUo
+[youtube] I4BZMcRllUo: Downloading webpage
+[youtube] I4BZMcRllUo: Downloading mweb client config
+[youtube] I4BZMcRllUo: Downloading mweb player API JSON
+[youtube] [pot:bgutil:http] Generating a gvs PO Token for mweb client via bgutil HTTP server
+[youtube] I4BZMcRllUo: Downloading player b0d2d49a-main
+[youtube] [jsc:node] Solving JS challenges using node
+[info] I4BZMcRllUo: Downloading 1 format(s): 399+251
+[info] There are no subtitles for the requested languages
+
+### tv(+POT)
+WARNING: [youtube] I4BZMcRllUo: Some tv client https formats have been skipped as they are missing a URL. YouTube may have enabled the SABR-only streaming experiment for your account. See  https://github.com/yt-dlp/yt-dlp/issues/12482  for more details
+
+### 默认
+[youtube] Extracting URL: https://www.youtube.com/watch?v=I4BZMcRllUo
+[youtube] I4BZMcRllUo: Downloading webpage
+[youtube] I4BZMcRllUo: Downloading tv downgraded player API JSON
+[youtube] I4BZMcRllUo: Downloading player b0d2d49a-main
+[youtube] [jsc:node] Solving JS challenges using node
+[info] I4BZMcRllUo: Downloading 1 format(s): 399+251
+[info] There are no subtitles for the requested languages
+
+### android_vr
+WARNING: [youtube] Skipping client "android_vr" since it does not support cookies
+WARNING: Only images are available for download. use --list-formats to see them
+ERROR: [youtube] I4BZMcRllUo: Requested format is not available. Use --list-formats for a list of available formats
+
+### tv_simply
+WARNING: [youtube] Skipping client "tv_simply" since it does not support cookies
+WARNING: Only images are available for download. use --list-formats to see them
+ERROR: [youtube] I4BZMcRllUo: Requested format is not available. Use --list-formats for a list of available formats
+
+### web_embedded
+[youtube] Extracting URL: https://www.youtube.com/watch?v=I4BZMcRllUo
+[youtube] I4BZMcRllUo: Downloading webpage
+[youtube] I4BZMcRllUo: Downloading web embedded client config
+[youtube] I4BZMcRllUo: Downloading player b0d2d49a-main
+[youtube] I4BZMcRllUo: Downloading web embedded player API JSON
+[youtube] [jsc:node] Solving JS challenges using node
+[info] I4BZMcRllUo: Downloading 1 format(s): 399+251
+[info] There are no subtitles for the requested languages
+
+### android+ios
+WARNING: [youtube] Skipping client "android" since it does not support cookies
+WARNING: [youtube] Skipping client "ios" since it does not support cookies
+WARNING: Only images are available for download. use --list-formats to see them
+ERROR: [youtube] I4BZMcRllUo: Requested format is not available. Use --list-formats for a list of available formats
