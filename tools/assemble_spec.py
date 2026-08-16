@@ -57,7 +57,7 @@ from match_stat_hooks import collect, stats_block  # noqa: E402
 from find_turning_points import _label, rank_games  # noqa: E402
 from tennislive.research.brief import Chat  # noqa: E402
 from tennislive.zh import player_zh  # noqa: E402
-from draft_spec import SCHEMA, SYSTEM, draft_editorial  # noqa: E402
+from draft_spec import draft_editorial  # noqa: E402
 
 TURNING_POINT_TOP = 5
 DRAFT_SUFFIX = ".draft.json"
@@ -177,20 +177,24 @@ def main() -> int:
     ap.add_argument("--fixture", default="", help="赛前信息，进文案 prompt")
     ap.add_argument("--flashscore-id", default=None,
                     help="已知 flashscore id 就跳过反查")
+    ap.add_argument("--write", action="store_true",
+                    help="把草稿落盘到 specs/reels/<slug>.draft.json；不给就只打印")
     args = ap.parse_args()
 
     draft = assemble(slug=args.slug, home=args.home, away=args.away,
                      event=args.event, year=args.year, fixture=args.fixture,
                      flashscore_id=args.flashscore_id)
 
+    print(json.dumps(draft, ensure_ascii=False, indent=2))
+    if not args.write:
+        print("\n（干跑，没落盘。要写进仓库加 --write。）")
+        return 0
+
     outdir = Path(__file__).resolve().parent.parent / "specs" / "reels"
     outdir.mkdir(parents=True, exist_ok=True)
     out = outdir / f"{args.slug}{DRAFT_SUFFIX}"
     out.write_text(json.dumps(draft, ensure_ascii=False, indent=2), encoding="utf-8")
-
-    print(f"草稿 → {out}")
-    for note in draft["_notes"]:
-        print(f"  {note}")
+    print(f"\n草稿 → {out}")
     print("\n窗口（segments）和封面（cover.portrait 官方实拍）留给终审补，"
           "见草稿 _notes 里每个环节的成败。")
     return 0
