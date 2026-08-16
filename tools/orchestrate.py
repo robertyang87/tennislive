@@ -123,11 +123,14 @@ def mark_dispatched(state: dict, dispatched: list[dict]) -> None:
 
 
 def _workflow_for(column: str) -> str:
-    # 赛场之上（reel）走 match-reel；开球之前（preview）是**解说片**，走 explainer。
-    # 两条线产物目录/质检/推送完全不同，别映射到同一个 workflow（这是踩过的
-    # 同名 slug 另一头的形状：栏目和生产线要一一对上）。
-    return {"reel": "match-reel.yml", "preview": "explainer.yml"}.get(
-        column, "match-reel.yml")
+    # 赛场之上（reel）和开球之前（preview）**都走 match-reel.yml**：
+    # 开球之前的 spec 也在 specs/reels/ 下（jodar-fritz 等），match-reel 的
+    # 多源机制（sources + mixed_fps）本来就是给「开球之前没有单条集锦、只有
+    # 多组源片」准备的——纯视频。
+    # ⚠️ 别把 preview 路由到 explainer：explainer.py `_SCRIPTS` 里硬编码的
+    # 「开球之前」是**卡片视频**（整屏文字卡+TTS），正是账号所有者 08-08 要
+    # 换掉的旧形式。图卡版走 flash.yml（内容雷达），也不在这一层。
+    return "match-reel.yml"
 
 
 def main() -> int:
