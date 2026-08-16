@@ -31,6 +31,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 
 from tennislive.digest import build_digest  # noqa: E402
+from tennislive.models import MatchStatus  # noqa: E402
 from tennislive.render.rating import _level_of, match_score  # noqa: E402
 
 # 250 及以上才算「巡回赛级别」，读者认得出来（docs/columns.md 的选题门槛）。
@@ -57,14 +58,24 @@ def route(m) -> str:
 
     赛后开麦（interview）不在这一层：它走采访源检测（oncourt-interviews），
     二期再并进来——采访片依赖「采访视频上线」，和「赛果出来」是两个钟。
+    ⚠️ 进行中（live）的比赛**不该被路由**——它既不是能复盘的完赛，也不是
+    能前瞻的未开赛。`candidates()` 里已把它排除，这里返回空串。
     """
-    return "reel" if m.status.is_final else "preview"
+    if m.status.is_final:
+        return "reel"
+    if m.status == MatchStatus.SCHEDULED:
+        return "preview"
+    return ""
 
 
 def candidates(digest) -> list[dict]:
-    """扫 digest，返回过门槛的候选（按分降序）。只认单打巡回赛级别。"""
+    """扫 digest，返回过门槛的候选（按分降序）。只认单打巡回赛级别。
+
+    ⚠️ 只扫 results（完赛）+ schedule（未开赛），**不扫 live**——进行中的比赛
+    既不能复盘也不能前瞻，别给一场正在打的比赛发内容。
+    """
     out = []
-    for m in digest.results + digest.live + digest.schedule:
+    for m in digest.results + digest.schedule:
         if _level_of(m) not in TOUR_LEVELS:
             continue
         if len(m.home) != 1 or len(m.away) != 1:
@@ -112,7 +123,10 @@ def mark_dispatched(state: dict, dispatched: list[dict]) -> None:
 
 
 def _workflow_for(column: str) -> str:
-    return {"reel": "match-reel.yml", "preview": "match-reel.yml"}.get(
+    # 赛场之上（reel）走 match-reel；开球之前（preview）是**解说片**，走 explainer。
+    # 两条线产物目录/质检/推送完全不同，别映射到同一个 workflow（这是踩过的
+    # 同名 slug 另一头的形状：栏目和生产线要一一对上）。
+    return {"reel": "match-reel.yml", "preview": "explainer.yml"}.get(
         column, "match-reel.yml")
 
 
