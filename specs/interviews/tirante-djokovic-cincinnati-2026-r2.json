@@ -1,0 +1,13 @@
+{
+  "slug": "tirante-djokovic-cincinnati-2026-r2",
+  "url": "https://www.youtube.com/watch?v=lyu2NHRog_g",
+  "source_title": "Thiago Tirante Gets BIGGEST Career Win Vs Novak Djokovic | Cincinnati 2026 Highlights（@TennisTV 官方频道）",
+  "start": 227.9,
+  "end": 355.5,
+  "whisper_model": "medium.en",
+  "column": "赛后开麦",
+  "interview_kind": "赛后场上采访",
+  "event": "2026 辛辛那提 ATP1000 第二轮",
+  "winner": "蒂兰特",
+  "_window_why": "⚠️ **这是待验的初值，`end` 还没量过。**\n\n**怎么找到这一条的**：账号所有者 2026-08-16 说「有些采访是在那个集锦的后半部分」，照这个把三个频道各扫了 45 条。Tennis TV 辛辛那提这一批单场集锦是 139~224 秒，**这条 363 秒，长出一倍**——把自动字幕拉下来读尾巴，241.68 起换人说话（`>> Thiago, huge congratulations…`），确认是场上采访，两个问题。\n\n**起点 227.9**：不从第一个问题起，往前多收 13.8 秒的解说——`Thiago Agustin Tirante of Argentina / with the biggest win of his life. / He takes down the three-time champion here, Novak Djokovic.` 这三句是转播自己把这场球的分量说出来了，比我们替他说强；而且开场那一格正好是他刚赢下赛点之后（224.24 解说喊 `and there we go`），撞上「开场第 ① 格放全片最强的那一格画面」。\n\n⚠️ **终点 355.5 是最后一条字幕事件的结束时刻，不是量出来的片尾板边界。** 源片 363 秒，中间还有 7.5 秒没有任何字幕事件。\n\n**不照总长推**，因为那个推理今天刚被证伪过两次：德约那条 Tennis TV 的片尾板占 10.24 秒（115 − 104.76），诺斯科娃那条 WTA 的占 10.34 秒（443 − 432.66）——两个数几乎一样，照它推这条的片尾板该从 **352.8** 起，**而那会切进他最后一句话**（末词 `the right thing.` 起于 352.48）。也就是说这个「10.2 秒」不通用，尾巴里多半还有掌声和主持人收尾。\n\n**所以这一版渲完必须逐帧量**：成片走 Release，`curl` 拉回本地（沙箱下不动 YouTube，但下得动 Release 附件），`源片时刻 = 成片时刻 − 1.8 + 227.9`，找整幅均值一帧跳上去的那一帧就是 Tennis TV 球标甩入。量出来再把 `end` 收到它前面。"
+}
