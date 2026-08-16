@@ -4452,3 +4452,166 @@ def test_认领开头那道闸排在下载之前():
         assert body.index("check_opening(") < body.index(later), (
             f"认领开头那道闸排在 `{later}` 后面了——它只读 spec，"
             "该在第 0.2 秒就报")
+
+
+def test_封面顶栏要和解说片那份台头是同一套值():
+    """账号所有者 2026-08-16：「赛后开麦模块也要加顶部白条和栏目标题」
+    「参考网球栏目，也做顶部彩条和顶栏标明栏目名」。
+
+    ⚠️ **这是同一件事的第二处实现**，而这个仓库为「同一件事写两处」栽过好几次。
+    分叉在这儿的表现最阴：**两张封面分开看都正常**，只有摆在一起才看得出彩条
+    的颜色差一档、台头低了几像素——而没有人会把两个栏目的封面摆在一起看。
+
+    所以判据**从解说片那份源码里把值抠出来比**，不在这儿另记一张表：
+    `_render_intro_badge` 改了而封面没跟着改（或者反过来），当场红。
+
+    ⚠️ **抠的是真正会生效的那几行，不是「这个词出现过没有」**：彩条那句
+    `linear-gradient(...)` 的四个色标、`.head` 的 top/left、图标尺寸、
+    两行字号。少抠一样，那一样就可以自己漂走。
+    """
+    import inspect
+
+    import tools.build_interview_clip as clip
+    from tennislive.video import explainer as E
+
+    badge = inspect.getsource(E._render_intro_badge)
+    cover = inspect.getsource(clip.build_cover)
+
+    def 抠(src, pat, 什么):
+        m = re.search(pat, src)
+        assert m, f"从{什么}里抠不出 `{pat}`——那份实现的写法变了，这条判据的主语没了"
+        return m.group(1)
+
+    项 = [
+        (r"linear-gradient\(90deg,([^)]*#4bb8ff[^)]*)\)", "彩条的四个色标"),
+        (r"\.bar\{*\{*position:absolute;top:0;left:0;right:0;height:(\d+)px", "彩条厚度"),
+        (r"\.head\{*\{*position:absolute;top:(\d+)px", "台头离顶多远"),
+        (r"\.head\{*\{*position:absolute;top:\d+px;left:(\d+)px", "台头左边距"),
+        (r"\.brand-icon\{*\{*width:(\d+)px", "图标尺寸"),
+        (r"\.brand\{*\{*font-family:'TL Display SC','TL Sans SC',sans-serif;\s*\n?\s*font-size:(\d+)px", "品牌行字号"),
+        (r"\.topic\{*\{*font-family:'TL Sans SC',sans-serif;font-size:(\d+)px", "标题行字号"),
+    ]
+    for pat, 什么 in 项:
+        a, b = 抠(badge, pat, f"解说片台头的{什么}"), 抠(cover, pat, f"封面顶栏的{什么}")
+        assert a == b, (
+            f"{什么}两处对不上：解说片 `{a}`，封面 `{b}`。\n"
+            "⚠️ 这两套台头是同一个东西，账号所有者要的就是「参考网球栏目」——"
+            "改一处必须改另一处，不然两个栏目的封面会悄悄长成两个样子。")
+
+    # 判据自己的判据：上面七项一个都没抠到的话，循环体根本没跑过。
+    assert len(项) == 7
+
+
+def test_封面顶栏印栏目名底部就不许再印一遍():
+    """⚠️ **栏目名只许印一次。**
+
+    「赛场之上」那颗黄色药丸就是因为这个被账号所有者整块删掉的
+    （CLAUDE.md「台头药丸不许自己回来」）——栏目名一直同时印在左上角那行
+    `网球时差 · 赛场之上` 里，药丸只是第二遍。
+
+    赛后开麦的封面 2026-08-16 加上顶栏之后是同一个形状：底部那颗 tag 原来写的是
+    `赛后开麦 · 2026 辛辛那提 · 阿朗戈`，前半截现在在顶栏了。
+
+    判据钉两头：**顶栏必须印**（不然这次改动等于没做），**底部那颗 tag 不许再拼
+    column 进去**（不然又印两遍）。
+    """
+    import inspect
+
+    import tools.build_interview_clip as clip
+
+    src = inspect.getsource(clip.build_cover)
+    assert "网球时差 · {column}" in src, (
+        "封面顶栏没印栏目名——账号所有者要的就是「顶栏标明栏目名」")
+    m = re.search(r"^\s*tag = (.+)$", src, re.M)
+    assert m, "抠不出底部那颗 tag 是怎么拼的——这条判据的主语没了"
+    assert "column" not in m.group(1), (
+        f"底部 tag 又把栏目名拼进去了：`{m.group(1).strip()}`\n"
+        "顶栏已经印过一次了，这是第二遍——和被删掉的那颗黄色药丸同一个形状。")
+
+
+def test_封面顶栏两行字都要是浅色(tmp_path):
+    """账号所有者 2026-08-16：「网球时差 赛后开麦 字体是黑色的啊」。
+
+    ⚠️ **这个 bug 的形状是「抄了规则，没抄它依赖的前提」。** 解说片那份台头里
+    `.brand` **自己没有 color**——它的浅色写在 `body{color:#f4fbf7}` 上。我把
+    `.brand` 整段抄进封面，而封面的 `body` 没有 `color`，于是它掉回浏览器默认的
+    黑色，压在深色台头上几乎看不见。
+
+    ⚠️ **上面那条比 CSS 文本的判据看不见这个**：两份的 `.brand` 一字不差，
+    对得上得很——错的是**它继承的那一层**。这正是本仓库反复记的「查产物，
+    不查信号」：要判「这行字是不是浅色」，只能**把封面渲出来量像素**。
+
+    ⚠️ **也不能整块台头一起量**：`.topic` 一直带着自己的 `color`，是亮的，
+    整块量的话坏的那一版**照样绿**（实测过）。两行必须分开量。
+
+    区间是量出来的，不是拍的（`.head` top:44px，品牌行 38px、标题行 27px）：
+
+        品牌行 y46-86    坏的 最亮 79，亮于 200 的像素 0.00%
+                         好的 最亮 248，亮于 200 的像素 12.83%
+        标题行 y92-124   好的 最亮 232，亮于 200 的像素 12.92%
+
+    两档差一个数量级，门槛落在中间。
+    """
+    import inspect
+
+    import numpy as np
+    from PIL import Image
+
+    import tools.build_interview_clip as clip
+
+    # 中灰底片：过 `brightness(.34)` 之后台头那条底大约 43，够暗——
+    # 黑字在上面出不了亮像素，白字出得了。这是这条判据能分开两档的前提。
+    frame = tmp_path / "f.jpg"
+    Image.new("RGB", (1080, 810), (128, 128, 128)).save(frame, quality=92)
+    spec = {
+        "slug": "t", "column": "赛后开麦",
+        "cover": {"title": ["标题一行", "标题二行"], "sub": "副标题", "tag": "标签"},
+        "push": {"summary": "顶栏第二行"},
+    }
+    try:
+        out = clip.build_cover(spec, frame, tmp_path / "p.png")
+    except Exception as exc:                                    # noqa: BLE001
+        if "chrom" in str(exc).lower() or "executable" in str(exc).lower():
+            raise AssertionError(
+                "没有 Chromium，这条判据跑不了——它必须真渲出来量像素，"
+                "查 CSS 文本看不见「颜色是继承来的」这一类错") from exc
+        raise
+
+    a = np.asarray(Image.open(out).convert("L"), dtype=float)
+
+    def 亮(y0, y1):
+        band = a[y0:y1, 140:760]
+        return band.max(), (band > 200).mean() * 100
+
+    for 名, y0, y1 in (("品牌行（网球时差 · 赛后开麦）", 46, 86),
+                       ("标题行（push.summary）", 92, 124)):
+        mx, pct = 亮(y0, y1)
+        assert mx >= 200 and pct >= 3.0, (
+            f"顶栏的{名}不是浅色：最亮 {mx:.0f}，亮于 200 的像素只有 {pct:.2f}%。\n"
+            "⚠️ 八成是这一行的 color 没写、指望从 body 继承——而封面的 body "
+            "没有 color。解说片那份是靠 `body{color:#f4fbf7}` 撑着的，"
+            "**抄那段 CSS 的时候要连这个前提一起抄，或者给这一行写死 color**。")
+
+    # 判据自己的判据①：两条带子必须真的分开量到东西，否则上面是两句空话。
+    assert 亮(46, 86)[1] > 0 and 亮(92, 124)[1] > 0
+
+    # 判据自己的判据②：台头**底下**那条必须是暗的。整幅都亮的话，上面那两句
+    # 就成了恒真的绿灯——亮底上黑字白字都能量到亮像素。
+    #
+    # ⚠️ **它拦的是渲染那头，不是这条测试自己的底片。** 反向验证时我先去改底片
+    # （128 → 255），**没红**——因为 `.bg` 上那句 `brightness(.34)` 把纯白也压到
+    # 87，怎么选都够暗。真能让它红的是**把那句压暗拿掉**（实测：台头底下亮于 200
+    # 的像素 0% → 98.5%）。也就是说这一条守的是「哪天有人把封面底调亮」，
+    # 而那正好会让上面两句失效。
+    #
+    # 记这一笔是因为**我第一版把触发条件写错了**：写着「比如底片选亮了」，而那个
+    # 方向根本触发不了它。一个反向验证不了的守卫，和一条恒真的绿灯长得一模一样。
+    暗底 = a[128:146, 140:760]
+    assert (暗底 > 200).mean() * 100 < 1.0, (
+        f"台头底下那条也是亮的（亮于 200 占 {(暗底>200).mean()*100:.2f}%）——"
+        "封面底被调亮了，这条判据分不开黑字和白字，等于没装")
+
+    # 顺带钉住：这一行的 color 必须是显式写出来的，不许再退回继承。
+    src = inspect.getsource(clip.build_cover)
+    assert re.search(r"\.brand\{\{[^}]*color:#", src), (
+        "`.brand` 又没有自己的 color 了——它会掉回 body，而封面的 body 没有 color")
