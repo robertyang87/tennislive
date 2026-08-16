@@ -142,6 +142,12 @@ def sweep_wta(player: str | None, event: str | None, day: str | None) -> list[di
     out: list[dict] = []
     for path in sorted(found):
         name = path.rsplit("/", 1)[-1]
+        # 站点自己的素材（赞助商 logo、栏目瓷砖、分享图）也住在同一个 CDN 上，
+        # 不过滤的话不带条件跑一次会吐一屏 `Corpay_400x160.png` 这种。
+        # 判据是**实拍图自己的命名**：`<球员>_-_<赛事>_-_Day_N-DSC_1234.jpg`
+        # 或者 `GettyImages-<id>.jpg`，两种之外的一律不是比赛图。
+        if not (re.search(r"-DSC_\d", name) or name.startswith("GettyImages-")):
+            continue
         gid = re.match(r"GettyImages-(\d+)\.", name)
         row = {
             "name": name,
@@ -161,6 +167,29 @@ def sweep_wta(player: str | None, event: str | None, day: str | None) -> list[di
     return out
 
 
+def original_url(url: str) -> str | None:
+    """⭐ WordPress 的 `-scaled` **不是原图，是 2560 的封顶版**——去掉它才是原图。
+
+    实测（`cincinnatiopen.com`，2026-08-16）：
+
+        CincinnatiOpen_20260813_JM010573_JW1-scaled.jpg   2560×1707
+        CincinnatiOpen_20260813_JM010573_JW1.jpg          **4991×3328**
+        081326_DAY-SIX_MIKE-BAKER-25-of-48-scaled.jpg     2560×1707
+        081326_DAY-SIX_MIKE-BAKER-25-of-48.jpg            **5541×3694**
+
+    ⚠️ **反过来不成立**：`source_url` 里**没有** `-scaled` 的那些（上传时就
+    ≤2560，如 `081526_DAY-EIGHT_MIKE-BAKER-149-of-229.jpg` 的 2000×1333），
+    去猜一个 `-scaled` 是 404——那个就已经是原图了。
+
+    ⚠️ 这条同时纠正 CLAUDE.md 里两处打架的旧注（一处说「`-scaled` 比裸名大」、
+    一处说「2026 这一批没有 `-scaled`」）：**判据是 `source_url` 自己带不带
+    `-scaled`**，带就去掉、不带就用它，别按年份或按印象猜。
+    """
+    if url.endswith("-scaled.jpg"):
+        return url[: -len("-scaled.jpg")] + ".jpg"
+    return None
+
+
 def sweep_tournament(site: str, date: str | None) -> dict:
     """赛事官网的 WP 媒体库 ＋ 图库上线时刻。"""
     base = f"https://{site}/wp-json/wp/v2"
@@ -177,9 +206,10 @@ def sweep_tournament(site: str, date: str | None) -> dict:
         md = m.get("media_details") or {}
         if not md.get("width"):
             continue                                            # PDF 之类
+        url = m.get("source_url") or ""
         res["media"].append(
             {"date": m.get("date"), "wh": f"{md.get('width')}x{md.get('height')}",
-             "url": m.get("source_url")}
+             "url": url, "original": original_url(url)}
         )
     try:
         posts = json.loads(
@@ -230,6 +260,9 @@ def main() -> int:
             print(f"  {args.date or '最近 100 条'}：{len(hits)} 张")
             for m in hits[:8]:
                 print(f"    {m['date']}  {m['wh']:11} {m['url'].rsplit('/', 1)[-1][:56]}")
+                if m["original"]:
+                    print(f"      ⭐ 去掉 -scaled 才是原图（实测能到 5541×3694）："
+                          f"{m['original']}")
             if res["galleries"]:
                 print("  图库上线时刻（判据：当天那一辑在次日 UTC 00:00–03:00 之间）：")
                 for g in sorted(res["galleries"], key=lambda x: x["date"])[-6:]:
