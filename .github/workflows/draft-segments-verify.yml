@@ -36,14 +36,10 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
-        with:
-          # 只读 output/ 里那个 slug 的 captions + probe.json，加 specs 对照。
-          sparse-checkout: |
-            output
-            specs
-            tools
-            src
-            pyproject.toml
+        # 全量 checkout：要读 output/*/reel/<slug>/captions.txt，稀疏检出只能
+        # 列到目录级、挑不出「只一个 slug」，反而被判成「把 1.36 GB 的 output
+        # 整个拉进稀疏范围」。这条是**手动触发的低频验证**（不在定时/出片路径），
+        # 慢 checkout 不压关键路径，和 archive-media 同理由，全量最干净。
 
       - uses: actions/setup-python@v5
         with:
@@ -69,7 +65,6 @@ jobs:
       - name: 跑 draft_segments 并打进 summary
         env:
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           VERIFY_SLUG: ${{ inputs.slug }}
         run: |
           BEATS="${{ inputs.beats }}"
