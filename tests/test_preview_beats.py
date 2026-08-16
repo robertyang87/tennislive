@@ -199,3 +199,48 @@ def test_poster_beat产出的时长要包含tail(tmp_path):
          "-show_entries", "stream=duration", "-of", "csv=p=0", str(out)],
         check=True, capture_output=True, text=True).stdout.strip())
     assert abs(dur - 2.3) < 0.1, f"应该是 2.0+0.3=2.3s，实测 {dur:.2f}s"
+
+
+# ---------- 入口逻辑（load_preview_spec / assemble / 委托） ----------
+
+
+def test_load_preview_spec独立目录优先(monkeypatch, tmp_path):
+    import preview_beats as pb  # noqa: PLC0415
+
+    monkeypatch.setattr(pb, "ROOT", tmp_path)
+    monkeypatch.setattr(pb, "PREVIEW_SPEC_DIR", tmp_path / "specs" / "previews")
+    (tmp_path / "specs" / "previews").mkdir(parents=True)
+    (tmp_path / "specs" / "previews" / "x.json").write_text("{}", encoding="utf-8")
+    (tmp_path / "specs" / "reels").mkdir(parents=True)
+    (tmp_path / "specs" / "reels" / "x.json").write_text("{}", encoding="utf-8")
+    monkeypatch.setattr(pb, "load_spec", lambda p: {"_from": str(p)})
+    got = pb.load_preview_spec("x")
+    assert got["_from"].endswith("previews/x.json"), "独立目录优先"
+
+
+def test_load_preview_spec退回reels只读兼容(monkeypatch, tmp_path):
+    import preview_beats as pb  # noqa: PLC0415
+
+    monkeypatch.setattr(pb, "ROOT", tmp_path)
+    monkeypatch.setattr(pb, "PREVIEW_SPEC_DIR", tmp_path / "specs" / "previews")
+    (tmp_path / "specs" / "reels").mkdir(parents=True)
+    (tmp_path / "specs" / "reels" / "x.json").write_text("{}", encoding="utf-8")
+    monkeypatch.setattr(pb, "load_spec", lambda p: {"_from": str(p)})
+    got = pb.load_preview_spec("x")
+    assert got["_from"].endswith("reels/x.json"), "老片退回 reels 只读兼容"
+
+
+def test_assemble_preview_reel委托render(monkeypatch, tmp_path):
+    import preview_beats as pb  # noqa: PLC0415
+
+    captured = {}
+
+    def fake_render(spec, outdir, *, voice, rate):
+        captured.update(spec=spec, outdir=outdir, voice=voice, rate=rate)
+        return tmp_path / "x.mp4"
+
+    monkeypatch.setattr(pb, "render_reel", fake_render)
+    film = pb.assemble_preview_reel({"slug": "x"}, tmp_path, voice="v", rate="r")
+    assert captured["voice"] == "v" and captured["rate"] == "r"
+    assert captured["outdir"] == tmp_path
+    assert film == tmp_path / "x.mp4"
