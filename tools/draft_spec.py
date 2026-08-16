@@ -12,8 +12,8 @@
 ⚠️ 只起草编辑内容，**不写 segments 窗口**（start/end/cx）——窗口由机械工具从
 逐分数据/切点提候选（find_turning_points 提转折局、scene_cuts 提切点、
 point_ends 提死球），不靠 DeepSeek：它是纯文本模型，没有视觉，分析不了视频。
-真正需要视觉的环节只剩**封面帧终审**（哪一帧是赢球瞬间），那是人 / 未来 vision
-模型的事，不是文本 LLM 能兜的。
+真正需要视觉的环节只剩**封面情绪终审**（讲逆转就找他扛住那一刻），那是
+`pick_cover_frame.py`（MiniMax M3 视觉）的事，不是文本 LLM 能兜的。
 
 用法：
     python tools/draft_spec.py --slug eala-pegula --home Eala --away Pegula \
