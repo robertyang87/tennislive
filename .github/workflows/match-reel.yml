@@ -993,6 +993,42 @@ jobs:
           path: ${{ steps.paths.outputs.outdir }}
           retention-days: 14
 
+      # probe 失败（下不动源片）时，把 slug 从编排器 state 里摘掉——否则它已被
+      # 标记「已 dispatch」，下次 cron 跳过它、永不重试。摘掉之后下次 cron 会重新
+      # 探测 + dispatch，这就是 probe 失败的自愈。
+      # ⚠️ 只在 probe 模式失败时摘：render 失败不该摘（spec 已经写好了，重来会
+      # 重渲而不是重探），而且 render 失败要人去修 spec 或源片，不是自动重试。
+      - name: probe 失败摘 state（自愈）
+        if: failure() && github.event.inputs.mode == 'probe'
+        run: |
+          SLUG="${{ github.event.inputs.slug }}"
+          python - <<'PY'
+          import json, pathlib, os
+          p = pathlib.Path("data/orchestration_state.json")
+          if not p.is_file():
+              print("没有 orchestration_state.json，无需摘")
+              raise SystemExit(0)
+          state = json.loads(p.read_text(encoding="utf-8"))
+          disp = state.get("dispatched", {})
+          if os.environ["SLUG"] in disp:
+              del disp[os.environ["SLUG"]]
+              p.write_text(json.dumps(state, ensure_ascii=False, indent=2),
+                           encoding="utf-8")
+              print(f"已把 {os.environ['SLUG']} 从 orchestration_state 摘掉，"
+                    "下次 cron 会重新探测 + dispatch")
+          else:
+              print(f"{os.environ['SLUG']} 不在 state 里，无需摘")
+          PY
+          git config user.name "Claude"
+          git config user.email "noreply@anthropic.com"
+          git add data/orchestration_state.json
+          if git diff --cached --quiet; then
+            echo "state 没有变化，不提交"
+          else
+            git commit -m "orchestrate: probe 失败，摘掉 $SLUG 的 dispatch 标记"
+            git push origin "HEAD:${{ github.ref_name }}" || echo "::warning::state 摘除提交失败（不影响本次失败告警）"
+          fi
+
       - name: 提交产物
         if: github.event.inputs.mode != 'narration' && github.event.inputs.mode != 'cookies'
         run: |

@@ -221,21 +221,35 @@ def main() -> int:
         return 0
 
     import subprocess
+    from concurrent.futures import ThreadPoolExecutor
 
     # **走 `find_highlight`，不要自己拼「搜一次然后挑一条」**——优先级链
     # （主路 YouTube → 备选 Tennis TV 免费短集锦）只有那一处实现，写两处必分叉，
     # 而分叉的样子是「手动跑说探到了，自动班次说没探到」。
-    from detect_highlights import find_highlight, query_for
+    from detect_highlights import find_highlight
+
+    # ⚠️ **探测并行，dispatch 串行。** 探测是 IO 密集（yt-dlp 搜索 + Tennis TV
+    # 翻页，一场可能几秒到十几秒），多场串行探测会线性累加，比赛时效性高的
+    # 时候这就是延迟。并行探测把 N 场的探测时间压成「最慢那一场」。
+    # dispatch 保持串行——gh workflow run 本身快（1~2 秒），而且要顺序写 state、
+    # 顺序点 run，并行 dispatch 反而容易撞 concurrency 和 state 写入。
+    def _probe(c: dict) -> tuple[dict, str | None, str]:
+        if c["column"] != "reel":
+            return c, None, ""
+        url, via = find_highlight(c["home"], c["away"], c["event"], c["year"])
+        return c, url, via
+
+    results: list[tuple[dict, str | None, str]] = []
+    if todo:
+        with ThreadPoolExecutor(max_workers=min(8, len(todo))) as pool:
+            results = list(pool.map(_probe, todo))
 
     dispatched: list[dict] = []
-    for c in todo:
+    for c, url, via in results:
         wf = _workflow_for(c["column"])
         if c["column"] == "reel":
-            # 完赛片（赛场之上）要集锦 URL 才能 probe——先 T0 探测。
-            q = query_for(c["home"], c["away"], c["event"], c["year"])
-            url, via = find_highlight(c["home"], c["away"], c["event"], c["year"])
             if not url:
-                print(f"  [{c['slug']}] 集锦还没探到（{q[:40]}…），跳过，下次再探")
+                print(f"  [{c['slug']}] 集锦还没探到，跳过，下次再探")
                 continue
             # 走了哪条路要进日志：短集锦是定长 2 分半的剪短版，和 YouTube 那批
             # 2~8 分钟的不是一回事，写 spec 的人要知道自己拿到的是哪一种。
