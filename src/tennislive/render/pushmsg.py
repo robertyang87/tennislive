@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import html
 import logging
+import math
 import os
 import re
 
@@ -602,20 +603,56 @@ def drop_dead_copy_button(
     return _COPY_BUTTON_RE.sub("", html_body, count=1), None
 
 
-def _say_probe_hit(nth: int, url: str) -> None:
+def expected_first_hit(delay: float) -> int:
+    """第几次探活**才可能**命中——从间隔算出来，不写死。
+
+    第 1 次探活是紧跟在 `trigger_pages_build()` 之后发出的（中间只隔一次
+    HTTP 往返），而点一下到部署完实测要
+    `MEASURED_PAGES_DISPATCH_TO_LIVE_SECONDS` 秒。所以第 n 次探活距离那一下
+    大约是 `(n-1) * delay` 秒，**第一次够得着的是**
+
+        1 + ceil(MEASURED / delay)
+
+    30 秒间隔 → 2；40 秒间隔 → 2；20 秒间隔 → 2；60 秒间隔 → 1。
+
+    ⚠️ **这个函数是为了修一条搬错线的判据。** 原来那句告警写死「正常应该第 1
+    次就中」——那句话只有在「第一次探活比那一下晚 19 秒以上」时才成立，而这条
+    线上第一枪是**结构性打不中**的。2026-08-16 盘外招那条推送的日志里因此挂着
+    一条 WARNING，说「这条链上多半还有别的没接上」，而链子好好的。
+
+    CLAUDE.md 记过同一个形状：「判据要连它的时序前提一起搬」「一个搬错线的判据
+    比没有判据坏——它会让下一个人去追一个不存在的问题，而且他找不到」。
+    """
+    if delay <= 0:
+        return 1
+    return 1 + math.ceil(MEASURED_PAGES_DISPATCH_TO_LIVE_SECONDS / delay)
+
+
+def _say_probe_hit(nth: int, url: str, *, delay: float = _COPY_PAGE_RETRY_SECONDS) -> None:
     """探活命中时如实报第几次——两条探活路径共用，别各写一遍再对不上。
 
-    第 1 次是预期（实测 19 秒 < 30 秒的探活间隔）；第 2 次以上把预期一并打出来，
-    好让读日志的人当场知道这是个异常，而不用回头翻 CLAUDE.md 才想起来该是 1。
+    ⚠️ **「正常是第几次」按间隔算，不写死 1**（见 `expected_first_hit`）：
+    第一次探活紧跟在点 Pages 之后发出，而部署要 19 秒，所以 30 秒间隔下健康值
+    本来就是 2。写死 1 的那一版会在**完全正常**的推送上挂一条
+    「这条链上多半还有别的没接上」，把人引去追一个不存在的问题。
     """
-    if nth <= 1:
-        logger.info("复制页第 1 次探活命中：已是这一版的内容 %s", url)
+    ok = expected_first_hit(delay)
+    if nth <= ok:
+        logger.info(
+            # 措辞和下面那条 warning 保持一致（「最快能中的是第 N 次」），
+            # 两行读起来才是同一件事的两面。
+            "复制页第 %d 次探活命中（间隔 %.0fs，部署要 %.0fs，最快能中的是第 %d 次）"
+            "：已是这一版的内容 %s",
+            nth, delay, MEASURED_PAGES_DISPATCH_TO_LIVE_SECONDS, ok, url,
+        )
         return
     logger.warning(
         "复制页第 %d 次探活才命中：%s——实测点一下到部署完只要 %.0f 秒，"
-        "而探活间隔 %.0f 秒，正常应该第 1 次就中。这条链上多半还有别的没接上"
-        "（点没点动、提交排在探活后面、指纹取错了那一格），别当成「Pages 今天慢」",
-        nth, url, MEASURED_PAGES_DISPATCH_TO_LIVE_SECONDS, _COPY_PAGE_RETRY_SECONDS,
+        "而探活间隔 %.0f 秒，最快能中的是第 %d 次。多出来的那几次说明这条链上"
+        "还有别的没接上（点没点动、提交排在探活后面、指纹取错了那一格），"
+        "别当成「Pages 今天慢」",
+        nth, url, MEASURED_PAGES_DISPATCH_TO_LIVE_SECONDS,
+        delay, ok,
     )
 
 
@@ -649,7 +686,7 @@ def _probe_page(
                 response.headers.get("Content-Type", "").lower()
             ):
                 if not expect or expect in response.text:
-                    _say_probe_hit(attempt + 1, url)
+                    _say_probe_hit(attempt + 1, url, delay=delay)
                     return True
                 # 这一条要出声：它和「取不到」是两种毛病，日志里混成一句就
                 # 永远查不出到底是没发布还是发布了旧版
@@ -680,7 +717,10 @@ def live_copy_page_url(
             if response.status_code == 200 and "text/html" in (
                 response.headers.get("Content-Type", "").lower()
             ):
-                _say_probe_hit(attempt + 1, url)
+                # ⚠️ 这条路的间隔和 `_probe_page` 不一样（20s vs 30s），所以
+                # 「正常是第几次」也不一样——`delay` 必须传进去，别让它按缺省
+                # 那条线的间隔去算。这正是那句告警原来搬错线的同一个毛病。
+                _say_probe_hit(attempt + 1, url, delay=delay)
                 return url
             logger.info("复制页暂不可达（HTTP %s）：%s", response.status_code, url)
         except requests.RequestException as e:  # noqa: PERF203

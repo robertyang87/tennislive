@@ -1029,3 +1029,174 @@ def test_制胜分豁免表只许减不许加():
     assert not stale, (
         f"这几条已经有制胜分/非受迫失误（或写了 `_winners_ue_why`）了，"
         f"从表里删掉：{sorted(stale)}——这张表只许减不许加")
+
+
+# 八、一个球说打了多少**拍**，不说多少秒
+# ──────────────────────────────────────────────────────────────────────────
+#
+# 账号所有者 2026-08-16：「**以后不要说一个球打了多少秒，应该说打了多少拍，
+# 这样大家才有概念**」。
+#
+# 来路是我当天发出去的那条片子：`zverev-norrie` 的钩子和推送标题都写着
+# 「一分打了三十八秒」。**秒数没有参照系**——三十八秒是长还是短，观众没有概念；
+# 而「二十六拍」谁都知道那是一分打疯了。
+#
+# ⚠️ **判据必须窄，这条尤其容易扩大化。** 同样带「秒」的四类写法里，
+# **只有第一类**是这条要拦的：
+#
+#     ❌ 一分/一球/回合/破发点  打了 N 秒     ← 单分的长度，要改成「拍」
+#     ✅ 用时 2 小时 44 分 05 秒              ← **比赛用时**，比分板上就印着
+#     ✅ 一个发球局他守了十七分五十一秒       ← 一**局**不是一个球，分钟是有概念的
+#     ✅ 转播解说在片子的一百五十七秒说       ← 片内**时间戳**，不是球的长度
+#
+# 第一版我按裸的「N 秒」扫，八条里六条是误伤——**扩大化的判据不吭声，
+# 它只会让下一个人把对的写法改掉**（本文件和 CLAUDE.md 记过五六次）。
+#
+# ⚠️ **拿不到拍数就别写长度。** 巡回赛的公开数据源普遍不给单分拍数
+# （只有大满贯官方的 `RallyCount` 有），所以这条的正确处置往往是**换一个说法**
+# ——说这一分怎么结束的、全场站起来鼓掌，而不是硬凑一个秒数。
+
+_RALLY_SECONDS = re.compile(
+    r"(?:一分|这一分|那一分|一个球|这个球|回合|破发点|赛点|盘点)"
+    r"[^。！？\n]{0,10}?(?:打了|持续了?|来回了?|僵持了?)\s*"
+    # ⚠️ 中间要允许「超过/将近/足足」这类修饰词—— 写的是
+    # 「破发点持续了**超过**三十秒」，不留这个口子它就漏掉，而那句是同一个毛病。
+    r"(?:超过|将近|接近|足足|整整)?\s*"
+    r"[〇零一二三四五六七八九十百\d]+\s*秒")
+
+# 已发出去的，收不回来。**只许减不许加。**
+_RALLY_SECONDS_LEGACY = frozenset({
+    "zverev-norrie",                 # 钩子＋推送标题：「一分打了三十八秒」
+    "swiatek-svitolina-toronto-sf",  # 正文：「破发点持续了超过三十秒」
+})
+
+
+def _rally_seconds_offenders():
+    """{slug: [命中的原句]}，只扫**会发出去**的字段。
+
+    ⚠️ 不扫 `_why` / `_source` 这类注解——那儿正引着这条规矩本身的例子，
+    连它一起扫就会把「把规矩记下来」判成「又违反了规矩」（这个仓库犯过五次）。
+    """
+    out = {}
+    for slug, spec in _specs():
+        texts = [str((spec.get("cover") or {}).get("hook") or "")]
+        texts += [str(v) for v in (spec.get("push") or {}).values()
+                  if isinstance(v, str)]
+        texts += [str(s.get("narration") or "") for s in spec.get("segments") or []]
+        texts += [str(v) for v in (spec.get("topbar") or {}).values()
+                  if isinstance(v, str)]
+        xhs = SPEC_DIR / f"{slug}.xhs.txt"
+        if xhs.is_file():
+            texts.append(xhs.read_text("utf-8"))
+        hits = [m.group(0) for t in texts for m in _RALLY_SECONDS.finditer(t)]
+        if hits:
+            out[slug] = sorted(set(hits))
+    return out
+
+
+def test_一个球说打了多少拍不说多少秒():
+    fresh = {k: v for k, v in _rally_seconds_offenders().items()
+             if k not in _RALLY_SECONDS_LEGACY}
+    assert not fresh, (
+        f"这几条把**单分的长度**写成了秒：{fresh}。账号所有者 2026-08-16："
+        f"「不要说一个球打了多少秒，应该说打了多少拍，这样大家才有概念」——"
+        f"秒数没有参照系，三十八秒是长是短观众不知道；「二十六拍」谁都懂。\n"
+        f"⚠️ 拿不到拍数就**别写长度**，换个说法（这一分怎么结束的、全场什么反应），"
+        f"别硬凑一个秒数。巡回赛的公开源普遍不给单分拍数。\n"
+        f"⚠️ 比赛用时、一局的分钟数、片内时间戳都不在这条管辖内。")
+    assert len(list(_specs())) >= 40, "一条 spec 都没扫到，判据的主语像是没了"
+
+
+def test_打多少拍的豁免表只许减不许加():
+    for slug in sorted(_RALLY_SECONDS_LEGACY):
+        assert (SPEC_DIR / f"{slug}.json").is_file(), \
+            f"{slug} 这条 spec 已经没了，把它从豁免表里删掉"
+    stale = _RALLY_SECONDS_LEGACY - set(_rally_seconds_offenders())
+    assert not stale, (
+        f"这几条已经不说秒了，从表里删掉：{sorted(stale)}——这张表只许减不许加")
+
+
+# ──────────────────────────────────────────────────────────────────────────
+# N、百分比一律写成「百分之 N」，不写「几成几」
+# ──────────────────────────────────────────────────────────────────────────
+#
+# 账号所有者 2026-08-16：「**以后文案和配音里不要再出现几成几了，就说百分之多少
+# 用数字写上**」。
+#
+# 来路：这条线的旁白长期在写「一发只进了三成四」「二发得分率都上了七成五」
+# 「一发得分率从六成一涨到七成五」。**「三成四」要读的人自己换算成 34%**，
+# 而这类片子的观众是刷过来的，多想一步就是走掉一个人——和「轮次写半决赛不写
+# 四强」是同一个形状（那条防的是「四强是打到哪一步」要多想一步）。
+#
+# 改法：**旁白里写「百分之三十四」这种会被 TTS 读对的形式，屏幕上和正文里写
+# 数字**。`arabic_numerals()` 会把旁白里的中文数字换成阿拉伯数字再烧进字幕，
+# 所以「百分之三十四」在画面上就是「百分之34」；小红书正文直接写 `34%` 也行，
+# 那是给眼睛读的。
+#
+# ⚠️ **这条只拦「几成几」这一个说法，不拦百分比本身。** 一发成功率该讲还是讲。
+#
+# ⚠️ **判据不扫 `_why` / `_source` 这类注解**——那儿正引着这条规矩本身的例子，
+# 连它一起扫就会把「把规矩记下来」判成「又违反了规矩」（这个仓库犯过五次）。
+#
+# ⚠️ 正则要求「成」**前面紧挨着一个数词**，所以「改成 / 完成 / 变成 / 裁成 /
+# 判成 / 一发成功率」都不会被误伤（改、完、变、裁、判、发都不是数词）；
+# 「成功 / 成为 / 成立 / 成绩 / 成片 / 成长」再用后向排除挡一层。
+_PERCENT_IDIOM = re.compile(r"[一二三四五六七八九两]成(?![功为立绩片长])")
+
+# 这条规矩之前就发出去的，收不回来。**只许减不许加**，底下的判据会自检。
+_PERCENT_IDIOM_LEGACY = frozenset({
+    "baez-dimitrov", "bartunkova-charaeva", "cirstea-bartunkova",
+    "eala-osaka", "eala-pegula-final", "eala-ruse", "eala-zheng",
+    "fonseca-ruud", "hijikata-monfils", "kenin-lys", "kovacevic-khachanov",
+    "medvedev-zandschulp", "navarro-kalinina", "noskova-mcnally",
+    "ostapenko-frech", "parry-mertens", "potapova-venus", "shang-vallejo",
+    "sonmez-anisimova", "swiatek-rybakina-toronto-final", "townsend-osorio",
+    "townsend-rybakina", "wang-pareja", "wang-vandewinkel", "wang-vekic",
+    "wangxiyu-timofeeva", "zhang-sabalenka", "zverev-griekspoor",
+})
+
+
+def _percent_idiom_offenders():
+    """{slug: [命中的说法]}，只扫**会发出去**的字段。"""
+    out = {}
+    for slug, spec in _specs():
+        texts = [str((spec.get("cover") or {}).get("hook") or "")]
+        texts += [str(v) for v in (spec.get("push") or {}).values()
+                  if isinstance(v, str)]
+        texts += [str(s.get("narration") or "") for s in spec.get("segments") or []]
+        texts += [str(v) for v in (spec.get("topbar") or {}).values()
+                  if isinstance(v, str)]
+        xhs = SPEC_DIR / f"{slug}.xhs.txt"
+        if xhs.is_file():
+            texts.append(xhs.read_text("utf-8"))
+        hits = [m.group(0) for t in texts for m in _PERCENT_IDIOM.finditer(t)]
+        if hits:
+            out[slug] = sorted(set(hits))
+    return out
+
+
+def test_百分比写百分之多少不写几成几():
+    fresh = {k: v for k, v in _percent_idiom_offenders().items()
+             if k not in _PERCENT_IDIOM_LEGACY}
+    assert not fresh, (
+        f"这几条把百分比写成了「几成几」：{fresh}。账号所有者 2026-08-16："
+        f"「以后文案和配音里不要再出现几成几了，就说百分之多少用数字写上」——"
+        f"「三成四」要读的人自己换算成 34%，而刷到这条的人多想一步就走了。\n"
+        f"⚠️ 旁白写「百分之三十四」（TTS 读得对，`arabic_numerals()` 会把它烧成"
+        f"「百分之34」）；小红书正文直接写 `34%` 也行，那是给眼睛读的。\n"
+        f"⚠️ 这条只拦这一个说法，不拦百分比本身——一发成功率该讲还是讲。")
+    assert len(list(_specs())) >= 40, "一条 spec 都没扫到，判据的主语像是没了"
+
+
+def test_几成几的豁免表只许减不许加():
+    """表里每个 slug 必须真的存在、而且真的还带着这个说法。
+
+    写错一个名字，豁免就成了一盏恒真的绿灯。
+    """
+    for slug in sorted(_PERCENT_IDIOM_LEGACY):
+        assert (SPEC_DIR / f"{slug}.json").is_file(), \
+            f"{slug} 这条 spec 已经没了，把它从豁免表里删掉"
+    stale = _PERCENT_IDIOM_LEGACY - set(_percent_idiom_offenders())
+    assert not stale, (
+        f"这几条已经不写「几成几」了，从表里删掉：{sorted(stale)}"
+        f"——这张表只许减不许加")
