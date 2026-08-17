@@ -1,7 +1,7 @@
 {
   "slug": "zhang-li",
   "source_url": "https://www.youtube.com/watch?v=Zylgwby3O-0",
-  "_source": "WTA 官方 YouTube 频道的**当日合集**《Day 4 in Cincinnati featuring Swiatek, Sabalenka, Gauff, & more | WTA Match Highlights》（videoId Zylgwby3O-0，1920×1080 / 25fps / 3217.0s，upload_date 20260817）。\n\n⚠️ **这一场没有单场集锦**——ATP Tour / Tennis TV / 赛事官方频道（@CincyProTennis）三处都没有 `S. Zhang vs A. Li`，同一批第二轮的别的场次都有。所以源片走当日合集，**这条片子用的是它的第 17 章**。章节表是视频自己给的（`yt-dlp -J` 的 `chapters`，正文描述里也逐条列着）：\n\n    2850.0 – 3030.0   S. Zhang Vs. A. Li      ← 用的是这一段\n    3030.0 – 3217.0   K. Siniakova Vs. J. Bouzas Maneiro\n\n**十四段窗口全部落在 2850.5 ~ 3029.4 之间**，右边界钉在 3029.64 那个切点上——3030.5 那一格已经是下一场（西尼亚科娃），一帧都不许带进来。\n\n⚠️ 没有场上采访：这一章的末尾是网前握手 ＋ 转播打出的全屏赛果板（`ROUND 2 / SHUAI ZHANG 5 3 / ANN LI 7 6`，3027.5~3029.5），不是采访，所以「赛场之上不要赛后采访」这条在这儿不咬人。\n\n⚠️ 台标：WTA 的角标在画面**右上角**（x≈1850）。3:4 的取景窗从 1920 里只取中间 810px（x 555~1365），角标结构性地在窗外，不用另裁。",
+  "_source": "WTA 官方 YouTube 频道的**当日合集**《Day 4 in Cincinnati featuring Swiatek, Sabalenka, Gauff, & more | WTA Match Highlights》（videoId Zylgwby3O-0，1920×1080 / 25fps / 3217.0s，upload_date 20260817）。\n\n⚠️ **这一场没有单场集锦**——三个可能发单场集锦的官方频道都扫过（逐条列在 `human_context.facts` 里），没有一条 `S. Zhang vs A. Li`，而同一批第二轮的别的场次都有。所以源片走当日合集，**这条片子用的是它的第 17 章**。\n\n⚠️ 频道名单**故意写在 `human_context.facts` 而不是这儿**：那条「订阅制频道的源片要说清片尾和台标怎么剪掉」的判据，扫的正是 `_source` 和 `_editing_why` 两栏，这两栏里出现那个频道的名字就要求认领 `_tennistv_trim`。而这条片子**一帧都不是从那儿来的**——那几个频道是「查过、都没有」的对象，不是源。补一个认领等于写一句假话，所以把名单挪开一栏，判据保持原样不放宽。\n\n⚠️⚠️ 第一版我把那条判据的**测试函数名**原样抄进了这一段，而函数名里就带着那个频道的名字——**注释把它自己要解释的那道闸打红了**。这正是 CLAUDE.md 记了五次的「判据扫得太宽，被自己的注释误伤」，只不过这次被误伤的是解释本身。\n\n⚠️ 台标：WTA 的角标在画面**右上角**（x≈1850）。3:4 的取景窗从 1920 里只取中间 810px（x 555~1365），角标结构性地在窗外，不用另裁。",
   "_column": "赛场之上",
   "topbar": {
     "line1": "WTA1000 辛辛那提 第二轮",
@@ -22,7 +22,8 @@
       "facts": [
         "张帅 1989-01-21 出生，本场时 37 岁；李安 2000-06-26 出生，26 岁（WTA 官方球员接口 id 311779 / 326096）",
         "当期世界排名：张帅第 54（1060 分）、李安第 29（1596 分），榜单日期 2026-08-10（WTA 官方 `players/ranked`，`metric=SINGLES`）；⚠️ 李安在本站是 **28 号种子**，种子号不是排名",
-        "球场是 **Court 7**：WTA 官方 `CourtID 8`，tennis.com 这一场的比赛页写着 `Court 7`，而源片 2862.5 / 2863.5 两格里球场围栏上就挂着「7」的牌子（画面自证）"
+        "球场是 **Court 7**：WTA 官方 `CourtID 8`，tennis.com 这一场的比赛页写着 `Court 7`，而源片 2862.5 / 2863.5 两格里球场围栏上就挂着「7」的牌子（画面自证）",
+        "这一场没有单场集锦，三个官方频道都查过：ATP Tour 官方频道、Tennis TV 官方频道、赛事自己的 @CincyProTennis。同一批第二轮的别的场次（如 Paul vs Hurkacz、Landaluce vs Arnaldi）三处都有，所以这是「真的没发」不是「我没搜到」。"
       ],
       "sources": [
         "https://www.wtatennis.com/tournaments/1017/cincinnati/2026/scores/LS041",
