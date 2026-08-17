@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>8.17 赛场之上 | 高芙丢首盘后逆转</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>高芙丢掉第一盘之后，把后面两盘打成了 6-4、6-1
+
+辛辛那提 WTA1000 女单第二轮，大看台球场。4 号种子、世界第四的高芙 2-6 6-4 6-1 逆转萨姆索诺娃，用时 2 小时 06 分 55 秒。
+
+真正解释这场球的是一发得分率那一栏——两个人的曲线正好交叉：
+
+第一盘 高芙 64% ｜ 萨姆索诺娃 86%
+第二盘 高芙 88% ｜ 萨姆索诺娃 69%
+决胜盘 高芙 87% ｜ 萨姆索诺娃 64%
+
+第一盘只打了 31 分钟。那一盘萨姆索诺娃的四个发球局一个没丢，高芙自己的四个丢了两个。
+
+从第二盘起换了个人：高芙一个发球局都没丢，制胜分 12-4；全场 11 个 ACE，其中 7 个来自这一盘，而萨姆索诺娃整盘一个都没有。决胜盘她送出 17 个非受迫失误，高芙 8 个。
+
+丢掉第一盘之后的 17 局，高芙赢了 12 局——比她整个第一盘赢下的还多 10 局。
+
+中间还断过一场雨。高芙赛后在场上说：那场雨来得正是时候，让她重新调整了一下。
+
+还有一个数：五次交手，萨姆索诺娃赢过 3 盘，一场没赢过。而三次打满三盘的那三次，都是她先拿下第一盘——2019 林茨、2021 查尔斯顿，加上这一场。
+
+#网球 #网球时差 #高芙 #辛辛那提公开赛 #WTA</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>这剧本还能演几次？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
