@@ -1175,6 +1175,105 @@ def _percent_idiom_offenders():
     return out
 
 
+#: 旁白／文案里「几点几分」那种精确到分的开球时刻。
+#:
+#: ⚠️ **这不是文风问题，是精确到了错的东西。** 账号所有者 2026-08-17：
+#: 「以后配音里不要再说具体到几点几分开球，就给个大概时间，比如夜里 11 点多、
+#: 凌晨 2 点多之类的」。
+#:
+#: 去量了一遍，他这条同时在修一个事实错误：`十一点十分` 在**九条已发 spec**
+#: 里出现，`七点十分` 五条、`六点十分` 和 `十点五十分` 各两条——横跨辛辛那提／
+#: 蒙特利尔、好几个不同日期。拿 flashscore 当天的表一看
+#: 就明白了——**46 场里 17 场（36%）和别的场共用同一个「开球时刻」**，
+#: 5 场并列 23:05、5 场并列 23:10。五场球不可能在同一分钟开打，那是**分场地
+#: 的整批开赛时刻**，也就是 CLAUDE.md「一个时刻有三种口径」里的
+#: 「`Not Before` 是下界不是时刻」。
+#:
+#: 排在别人后面的那几场，真实开球可能晚一个多小时，而旁白白纸黑字写着
+#: 「十一点十分开球」。**说法一改成大概时刻，这句话就永远字面为真**，
+#: 不管源给的是哪一个口径。
+_CLOCK_MINUTE = re.compile(
+    r"(?:零点|[一二三四五六七八九十]{1,3}点)\s*[零〇一二三四五六七八九十]{1,4}\s*分"
+    r"|(?<!\d)\d{1,2}\s*点\s*\d{1,2}\s*分"
+)
+
+#: 这条规矩之前发出去的，**只许减不许加**（表自带自检）。
+_CLOCK_MINUTE_LEGACY = frozenset({
+    "alexandrova-sabalenka", "baez-dimitrov", "bencic-eala",
+    "bucsa-chwalinska", "eala-mcnally", "eala-osaka", "eala-parks",
+    "eala-ruse", "faria-shelton", "gauff-korneeva", "gauff-samsonova",
+    "gea-shapovalov", "krejcikova-bejlek", "landaluce-draper",
+    "medvedev-zandschulp", "osaka-fernandez", "pegula-rakhimova",
+    "rybakina-gauff-toronto-sf", "rybakina-osaka", "rybakina-samsonova",
+    "sabalenka-gibson", "shang-vallejo", "shelton-fonseca", "shelton-mensik",
+    "shelton-tien-montreal-sf", "snigur-keys", "sonmez-kasatkina",
+    "svitolina-alexandrova", "svitolina-anisimova", "swiatek-arango",
+    "swiatek-shnaider", "townsend-osorio", "townsend-rybakina",
+    "trungelliti-medvedev", "wang-vandewinkel", "wang-vekic",
+    "wangxiyu-fernandez", "wong-gea", "zhang-day", "zhang-ostapenko",
+})
+
+
+def _clock_minute_offenders():
+    """{slug: [命中的说法]}，只扫**会发出去**的字段。"""
+    out = {}
+    for slug, spec in _specs():
+        texts = [str((spec.get("cover") or {}).get("hook") or "")]
+        texts += [str(v) for v in (spec.get("push") or {}).values()
+                  if isinstance(v, str)]
+        texts += [str(s.get("narration") or "") for s in spec.get("segments") or []]
+        texts += [str(v) for v in (spec.get("topbar") or {}).values()
+                  if isinstance(v, str)]
+        xhs = SPEC_DIR / f"{slug}.xhs.txt"
+        if xhs.is_file():
+            texts.append(xhs.read_text("utf-8"))
+        hits = [m.group(0) for t in texts for m in _CLOCK_MINUTE.finditer(t)]
+        if hits:
+            out[slug] = sorted(set(hits))
+    return out
+
+
+def test_开球时刻只说个大概不报到分():
+    """账号所有者 2026-08-17：「不要再说具体到几点几分开球，就给个大概时间」。
+
+    **怎么说才永远字面为真**（「多」用反方向比不用更糟——23:49 说成
+    「十一点多」是把人往早了带）：
+
+        分钟 0–9    「X 点」        5:08  → 凌晨五点
+        分钟 10–39  「X 点多」      23:10 → 夜里十一点多
+        分钟 40–59  「快 X+1 点」   22:49 → 快十一点
+
+    ⚠️ **时段词要留着**（凌晨／深夜／夜里／晚上／上午／早上）。「凌晨两点多」
+    比「两点多」多给的正是这个栏目要的那层情绪——**看的人是熬着夜看的**。
+
+    ⚠️ `零点十六分` 说「凌晨十二点多」，别说「零点多」，口语里不这么讲。
+
+    ⚠️ 这条只拦「点+分」这一个形状，**不拦时长**：「用时两小时二十二分」
+    「一个发球局守了十七分五十一秒」照旧能写——那是量出来的，不是排期给的。
+    """
+    fresh = {k: v for k, v in _clock_minute_offenders().items()
+             if k not in _CLOCK_MINUTE_LEGACY}
+    assert not fresh, (
+        f"这几条把开球时刻报到了分钟：{fresh}。\n"
+        f"⚠️ 它不只是啰嗦——**那个分钟多半是整批开赛时刻，不是这一场的**："
+        f"实测当天 46 场里 17 场共用同一个『开球时刻』（5 场并列 23:05、"
+        f"5 场并列 23:10），排在后面的场次真实开球可能晚一个多小时。\n"
+        f"改成：0–9 分说「X 点」、10–39 分说「X 点多」、40–59 分说「快 X+1 点」，"
+        f"时段词（凌晨／深夜／晚上）留着。")
+    assert len(list(_specs())) >= 40, "一条 spec 都没扫到，判据的主语像是没了"
+
+
+def test_报时刻的豁免表只许减不许加():
+    """表里每个 slug 必须真的存在、而且真的还带着这个说法。"""
+    for slug in sorted(_CLOCK_MINUTE_LEGACY):
+        assert (SPEC_DIR / f"{slug}.json").is_file(), \
+            f"{slug} 这条 spec 已经没了，把它从豁免表里删掉"
+    stale = _CLOCK_MINUTE_LEGACY - set(_clock_minute_offenders())
+    assert not stale, (
+        f"{sorted(stale)} 已经不报到分了，从豁免表里删掉——"
+        f"写错名字的豁免就是一盏恒真的绿灯")
+
+
 def test_百分比写百分之多少不写几成几():
     fresh = {k: v for k, v in _percent_idiom_offenders().items()
              if k not in _PERCENT_IDIOM_LEGACY}
