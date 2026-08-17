@@ -3,7 +3,7 @@
   "url": "https://www.youtube.com/watch?v=ZTDuZsufG_s",
   "source_title": "Coco Gauff vs. Liudmila Samsonova | 2026 Cincinnati Round 2 | WTA Match Highlights（@wta 官方频道）",
   "start": 257.4,
-  "end": 504.4,
+  "end": 503.9,
   "whisper_model": "medium.en",
   "column": "赛后开麦",
   "interview_kind": "赛后场上采访",
@@ -142,11 +142,12 @@
     "⭐ **这场是今天这个比赛日打的**（flashscore `f_2_0`：`Gauff C. vs Samsonova L. | 2-6 6-4 6-1`）——**先丢一盘再连扳两盘**，第三盘 6-1。定稿前拿 WTA 官方 `matches` 接口的 `Winner` 字段交叉核一次。",
     "⚠️ **同栏目做过高芙一条**（`rybakina-gauff` 那条是莱巴金娜的采访，主角不是她）。定稿前扫一遍别重讲。",
     "⚠️ **`end: 504.4` 是按 WTA 片尾板约 10.3 秒推的**（源片 515s，最后一条字幕 501.36）。渲完必须拉回本地逐帧量。",
-    "⭐ **内容比赛果重的地方在后半段**：今天是她父亲 55 岁生日，「我不想在他生日这天输」；她还讲了柏林首轮出局之后打电话跟父亲说「我不想打了」，以及那句对所有网球爸爸说的话——`be good to your girls and don't put too much pressure on them`。⚠️ 这几段是这条片子真正的落点，写文案时别让比分占满。"
+    "⭐ **内容比赛果重的地方在后半段**：今天是她父亲 55 岁生日，「我不想在他生日这天输」；她还讲了柏林首轮出局之后打电话跟父亲说「我不想打了」，以及那句对所有网球爸爸说的话——`be good to your girls and don't put too much pressure on them`。⚠️ 这几段是这条片子真正的落点，写文案时别让比分占满。",
+    "柏林／温网这条线核过（tennisexplorer 2026）：柏林 17.06 负巴多萨 1-6 6-3 6-2，单打只有这一场——她首轮轮空，这就是她在柏林的第一场球，和「首轮就输了」对得上；温网打进半决赛（09.07 负穆霍娃 6-2 1-6 7-6），正是她说的 a good run。柏林是温网前最后一站，所以「就在温网之前」这个时间点成立。"
   ],
   "cover": {
-    "frame_at": 400.0,
-    "_why": "⚠️ **待定初值。** 封面帧一律从**渲出来的成片**上挑，不猜。",
+    "frame_at": 480.8,
+    "_why": "**从渲出来的成片上挑的，不是从缩略图墙上猜的**——成片的画面带 y150–960 就是海报的裁切，\n所以拉回本地按 `源片 = 成片 + 255.6` 换算就能逐帧挑（`start 257.4 − 封面 1.80s`；\n这个偏移和量片尾时用的是同一个，量出来 成片 248.581 ↔ 源片 504.18 对得上）。\n\n成片 225.2 → 源片 480.8：镜头在 224.5 才切到她，这一格是全片笑得最开的一帧——\n整个头都在框里、上方还留着空，麦克风压在胸口没挡脸，眼睛读得出来。\n\n⚠️ **情绪对题不是碰巧**：源片 480.88 她正说到 `sounded like mine. So, I appreciate it.`\n——她在讲看台上听见几个爸爸的加油声「听起来像我爸」，正是封面这两行讲的那件事。\n前后两组候选（成片 177.8 / 182.8 那一带）也在笑，但头顶顶到画面边上了。",
     "title": [
       "今天是她爸爸的生日",
       "「我不想在他生日这天输」"
@@ -181,9 +182,13 @@
   },
   "en_fixed": {
     "9": "We shouldn't be surprised.",
-    "10": "You are an absolute warrior."
+    "10": "You are an absolute warrior.",
+    "81": "it was kind of right before Wimbledon"
   },
   "caption_gaps_ok": {
     "294.8-297.4": "**掌声，不是漏词——而且这一次源片自己写了出来。**\n\n    288.00  `>> We shouldn't be surp`     ← 转播解说最后一句（被切断）\n    292.79  `[cheering]`                  ← **自动字幕自己标的**\n    297.44  `You`\n    298.96  `are an absolute`             ← 场上主持人第一问\n\n空档正夹在 292.79 那条 `[cheering]` 后面：**转播交接到场上采访之间的那段掌声**，\n这条线上每条片子都有，形状完全一样（`sabalenka-uchijima` / `arango-venus` 都销过）。\n\n⚠️ **判据是「源片自己有没有出声」，不是「有没有词」**——CLAUDE.md 那条说的正是\n这个：没有词就没有分歧，空白反而让分歧率更好看。这里源片明确标了 `[cheering]`，\n所以它不是「没人说话且我们不知道为什么」，是**转播自己说了这几秒是欢呼**。\n\n⚠️ **这是量出来和读出来的，不是听出来的**——这条源片是 YouTube，沙箱下不动，\n没法像萨巴伦卡那条一样再去量响度。要更硬的证据只能等渲完把成片拉回来看画面。"
-  }
+  },
+  "_verified_clean": "两份转写对不上 **6.4%**（闸门 12%），空档 1 处（已销账）。\n第一份 YouTube 自动字幕 762 词，第二份 faster-whisper `medium.en` 738 词。\n\n**28 处分歧逐处看过，只有一处两份都是坏的，其余都是我们这边对。**\n\n⚠️⚠️ **第 81 行：`I mumbled` → `Wimbledon`。这一处两个源都坏，是重建出来的。**\n\n    YouTube  `it was kind of right before **I mumbled**`\n    whisper  `it was kind of right before **I'm able then**`\n\n两串都不成话，而且**都在同一个位置、都像 Wimbledon 的音**（Wim-ble-don →\nI-mum-bled / I'm-able-then）。⚠️ **光靠「听着像」不够**，所以去查了赛程：\n\n- **柏林 2026**：17.06 负巴多萨 1-6 6-3 6-2，**单打只有这一场**——她首轮轮空，\n  这就是她在柏林打的第一场球，和她说的 `I lost first round Berlin` 对得上\n- **温网 2026**：打进**半决赛**（09.07 负穆霍娃），正是第 90 行她自己说的\n  `I had a good run at Wimbledon`\n- 柏林是温网前最后一站，所以「就在温网之前」这个时间点成立\n\n三条合起来，这一整段讲的就是「柏林首轮出局 → 给爸爸打电话说想不打了 →\n两天后去练 → 温网打出好成绩」，缺的那个词只能是 Wimbledon。\n\n⚠️ **这是重建，不是听出来的**——这条源片是 YouTube，沙箱下不动，我没法去听。\n判据是「两个源同位置同音型 ＋ 赛程对得上 ＋ 她自己后面又提了一次温网」，三条都可查。\n写在这儿是为了下一个人能复核，而不是把它当成 ASR 干净给出来的东西。\n\n**其余 27 处不动**，三类：\n\n- **whisper 把名字听坏**（`gauff`→`golf` 三次、`gauff's`→`golf`、\n  `liudmila`→`lidmila`、`coco`→`coca`、`dad he would`→`daddy will`）——我们这边对\n- **whisper 漏词**（`sealing`／`thank you i was like`／`figure out a way to`／\n  `was like i didn't i`／`out there for cheering on me and` → `—`）——我们这边对\n- **时态和虚词**（`called`/`call`、`practiced`/`practice`、`were`/`are`、\n  `the`/`to`、`and`/`in`）——过去式那几处我们对，其余是对齐噪音\n\n另有 `word_fix` 六条修 ASR 毁掉的名字（`Koko Golf`／`Goff`／`Goth` → Coco Gauff、\n`Ludmilis Samson Sonova` → Liudmila Samsonova、`Algarass` → Alcaraz），\n`en_fixed` 另两条修一处播报和主持人被并进同一行的 `We shouldn't be surp You`。",
+  "transcript_verified": true,
+  "_tail_why": "⚠️ **`end` 从 504.4 收到 503.9——第一版把 WTA 片尾板收进来了 0.18 秒。**\n\n和 `rybakina-townsend` 同一个形状，判据也一样：把成片从 Release 拉回本地逐帧量，\n**不按「离源片末尾还有多远」推**（那段余量本身就是片尾板）。\n\n    源片 = 成片 + 255.6      （窗口起点 257.4 → 成片 1.80，正好是封面那 45 帧）\n\n    成片 248.581   均值 64.3   她还在画面里（最后一格真内容）  → 源片 504.18\n    成片 248.621   均值  6.6   **一帧掉下去——片尾板的黑场**    → 源片 504.22\n    成片 248.741   均值 26.3   绿底往上爬\n    成片 248.781   均值 33.3   **裁出来放大看过：WTA 绿底大 logo**\n\n收到 503.9 留 0.3 秒余量。"
 }
