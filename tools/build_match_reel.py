@@ -4436,6 +4436,13 @@ LEGACY_SOFT_COVERS = frozenset({
     "jodar-fils-montreal-qf", "shang-darderi-montreal-2026",
     "shelton-nakashima-montreal-final", "swiatek-rybakina-toronto-final",
     "zheng-lanlana",
+    # ⚠️ **2026-08-17 追加的这一批**：抽帧那条路原来靠一句 `_frame_why` 就能
+    # 放行，这天把那个口子封了（见 `cover_photo_problem`），于是这些**已经发出去
+    # 的**片子要显式挂进来。已发的不重渲——微信那条消息收不回来。
+    "altmaier-musetti", "fonseca-van-de-zandschulp", "fritz-michelsen",
+    "gauff-samsonova", "halys-deminaur", "jodar-shapovalov", "sabalenka-gibson",
+    "svitolina-valentova", "trungelliti-medvedev", "tsitsipas-auger-aliassime",
+    "wangxiyu-fernandez", "zhang-day", "zhang-li", "zverev-norrie",
 })
 
 
@@ -4489,8 +4496,16 @@ def cover_photo_problem(spec: dict) -> str | None:
         return None
     image = art.get("image")
     if not image:
-        if art.get("frame_at") is None or str(art.get("_frame_why") or "").strip():
+        if art.get("frame_at") is None:
             return None
+        # ⚠️⚠️ **2026-08-17：`_frame_why` 不再放行。**
+        # 账号所有者：「我觉得还是要**找到对应比赛的高清大图**是最重要的
+        # **前置条件**，不然封面不清晰没有吸引力」。
+        #
+        # 原来这儿写一句话就能过去，于是 100 条 solo 里 **74 条**走了抽帧——
+        # 「认领」这个形状在别处管用（`mixed_fps` / `silent_source`），
+        # 在这儿不管用：**它把一件该在开工之前做完的事，变成了收工之后补一句话**。
+        # 前置条件的意思是没有它就不开工，不是有了它更好。
         return (
             "封面大图是从源片抽的帧（portrait.frame_at），而**封面一律先找官方"
             "高清实拍**（账号所有者 2026-08-16：「不要用截图抽帧的这种方式去做"
@@ -4504,9 +4519,19 @@ def cover_photo_problem(spec: dict) -> str | None:
             "  ② 赛事/协会新闻页（/en/media/news 这类，别只试 /photos）\n"
             "  ③ 新闻站、图片社转载、官方社媒\n"
             "  ④ Commons / Openverse / Flickr\n"
-            "**四类都翻到底仍然没有**，才回来抽帧，并在 "
-            "`cover.portrait._frame_why` 里写清楚每条查了什么、结果如何"
-            "——一句话就行，但必须写；不写就是走近路，不是决定。")
+            "\n一条命令把三档一起跑（⚠️ **`--site` 和 `--date` 都要给**，"
+            "不给的话赛事官网那一档整个不跑，而它最常有图；`--date` 要填这场球的"
+            "**当地**日期，夜场在北京是次日）：\n"
+            "  python3 tools/find_cover_photo.py --player <姓> --event <赛事名> "
+            "--site <赛事域名> --date <当地日期>\n"
+            "\n⚠️ **写一句 `_frame_why` 不再能放行了。** 账号所有者 2026-08-17："
+            "「还是要**找到对应比赛的高清大图**是最重要的**前置条件**，"
+            "不然封面不清晰没有吸引力」——前置条件的意思是**没有它就不开工**。\n"
+            "⚠️ **夜场的图要等约 24 小时**（打完已过午夜 → 归次日那一辑 → "
+            "次日晚上才发）。查空**先确认是「还没发」还是「真没有」**：\n"
+            "  · 还没发 → **等**，别拿抽帧顶上\n"
+            "  · 真没有（小场次、冷门对阵，赛事方就是没派摄影）→ 这场**不做**，"
+            "或者换一场；封面不清晰的片子没人点，做了也是白做")
     path = Path(str(image))
     if not path.exists():
         return f"封面大图找不到：{path}"

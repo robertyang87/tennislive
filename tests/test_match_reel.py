@@ -7909,9 +7909,14 @@ def test_封面大图一律用官方高清图不许抽帧():
     转播流，换帧、锐化都救不回来）。**规矩没变，是实现漂了**：solo 版式给了
     `frame_at` 这条近路，于是六十条片子全走了它。所以这次要落成闸。
 
+    ⚠️⚠️ **2026-08-17 这条的第 ① 头翻了面。** 账号所有者：「还是要**找到对应
+    比赛的高清大图**是最重要的**前置条件**，不然封面不清晰没有吸引力」——
+    抽帧**认领了也不再放行**。翻面的来路和数据（100 条 solo 里 74 条走了抽帧）
+    在 `test_抽帧当封面不许再靠一句话放行` 的 docstring 里，这儿不抄第二遍。
+
     钉四头：
 
-    ① **行为**：抽帧不认领 → 红；认领了 → 过
+    ① **行为**：抽帧一律红——**写不写 `_frame_why` 都拦**
     ② **行为**：照片撑不满卡片 → 红（换个来源不算过关）；够大 → 过
     ③ **位置**：`validate_spec` 真的调了它——只测行为的话，闸排在下载后面
        照样全绿，而真实代价是每次都要先等几百 MB 下完（本仓库栽过两次）
@@ -7929,12 +7934,13 @@ def test_封面大图一律用官方高清图不许抽帧():
         "抽帧没认领也放行了——这道闸等于没装"
     assert "去找官方的" in reel.cover_photo_problem(solo({"frame_at": 152.5})), \
         "报错没说出路：四类源怎么翻、WTA 那条路怎么走"
+    # ⚠️ 这两条 2026-08-17 翻了面：`_frame_why` 不再放行（前置条件，不是事后声明）
     assert reel.cover_photo_problem(
-        solo({"frame_at": 152.5, "_frame_why": "四类源都翻过，见 _source"})) is None, \
-        "认领过了还拦——那会逼人去关掉这道闸"
+        solo({"frame_at": 152.5, "_frame_why": "四类源都翻过，见 _source"})), \
+        "写了 `_frame_why` 又把抽帧放行了——前置条件被写回成了事后声明"
     assert reel.cover_photo_problem(
         solo({"frame_at": 152.5, "_frame_why": "   "})) is not None, \
-        "空白也算认领的话，认领就成了一个形式"
+        "空白的 `_frame_why` 当然也要拦"
 
     # ② 照片不许放大（拿真图量，别手搓）
     from PIL import Image  # noqa: PLC0415
@@ -8123,24 +8129,36 @@ def test_dry_run要把装不下的旁白当场报出来(tmp_path):
     assert "装不下" in bad.stdout, bad.stdout
 
 
-def test_单人封面的暗角可以按条关掉但两头要留(tmp_path):
-    """账号所有者 2026-08-03：「不要虚化背景，铺满全 3:4 的画」。
+def test_封面正中那道暗角默认不画两头要留(tmp_path):
+    """账号所有者 2026-08-17：「背景图**不要再加前面阴影**，导致背景图看着模糊啊」。
 
-    「铺满」本来就成立（solo 是 `background-size:cover`，照片顶到四边、没有垫层）；
-    让实拍看起来发虚的是盖在整幅上的 `.scrim`——它的第二道 radial 在**画面正中**
-    压 58% 的暗，一张真实照片被洗成一层背景板。
+    同一件事他说过两次——2026-08-03 是「不要虚化背景，铺满全 3:4 的画」。
+    「铺满」本来就成立（solo 是 `background-size:cover`）；让实拍看起来发虚的是
+    `.scrim` 的第二道 radial：它在**画面正中**压 58% 的暗，一张真实照片被洗成
+    一层背景板，读起来就是「这张图不清楚」。真渲出来量过，同一张海报正中那一段
+    的均亮 **64.9 → 85.9**。
 
-    ⚠️ **不许直接改那个默认值。** 那段 CSS 是从解说片的 cover 屏整段抄过来的，
-    源码注释写着「一个数都没动，各调各的就会慢慢漂开」。所以做成**按条声明**
-    （`cover.scrim: "clear"`），没声明的片子和解说片仍然是同一个样子。
+    ## 为什么是翻默认，不是再加一个开关
 
-    判据三头，缺一头都可能变成假绿：
+    这个开关 2026-08-03 就有了（`cover.scrim: "clear"`），而翻面之前数了一遍：
+    **100 条 solo 里 74 条已经逐条写着它**。也就是说它早就不是默认，只是每个人
+    都得记得写那一行；剩下 26 条不是选了暗角，是**漏了**——`svitolina-valentova`
+    就在这 26 条里，而账号所有者正是看着它说的这句话。**一个 74% 的人都要手动
+    关掉的默认值，本身就是错的默认值。**
 
-    1. 关掉的**只有正中那一道**——上下两头必须留着，台头压在顶上、钩子压在
-       中间偏下，浅色字压在浅色画面上会没。
-    2. **默认仍然带中心暗角**（不声明的片子不受影响）。
+    ## 判据三头，缺一头都可能变成假绿
+
+    1. 关掉的**只有正中那一道**——上下两头必须留着：台头压在顶上、比分板压在
+       底下，浅色字压在浅色画面上会没。这一头是「判据自己的判据」：两头也一起
+       关掉的话，主断言照样绿，而海报是坏的。
+    2. **加回来要显式写 `scrim: "dim"`**——留一条路给「文字正好压在主体上」那种
+       素材，但它得是一次看得见的决定。
     3. **这个开关真的接在 `_solo_body` 上**——只测 `_scrim_css` 证明不了海报
        读了它。这是这个仓库反复栽的「写了不等于跑过」。
+
+    ⚠️ `"clear"` 这个老写法继续认（74 条已发的 spec 写着它），它现在和不写
+    一个意思——**不许因为「默认已经清了」就去把那 74 行删掉**：删了它们在
+    翻面之前的历史就读不出来了。
     """
     sys.path.insert(0, str(Path("tools").resolve()))
     import versus_poster as vp  # noqa: PLC0415
@@ -8148,13 +8166,15 @@ def test_单人封面的暗角可以按条关掉但两头要留(tmp_path):
     CENTRE = "radial-gradient(128% 40% at 50% 50%"
     TOP_BOTTOM = "linear-gradient(180deg,rgba(6,28,20,.62)"
 
-    assert CENTRE in vp._scrim_css(False), "默认那一版没有中心暗角了"
-    assert CENTRE not in vp._scrim_css(True), "clear 没有关掉中心暗角"
+    # ① 默认不画；显式 dim 才画
+    assert CENTRE not in vp._scrim_css(False), "默认又把中心暗角画上了"
+    assert CENTRE in vp._scrim_css(True), "`scrim: \"dim\"` 加不回中心暗角"
+    # ② 上下两头两种情况都要留
     for flag in (False, True):
         assert TOP_BOTTOM in vp._scrim_css(flag), (
-            "上下两头的渐变被一起关掉了——台头和钩子会压在浅色画面上看不见")
+            "上下两头的渐变被一起关掉了——台头和比分板会压在浅色画面上看不见")
 
-    # ③ 真走一遍 `_solo_body`：声明了就不带，没声明就带
+    # ③ 真走一遍 `_solo_body`
     from PIL import Image  # noqa: PLC0415
 
     photo = tmp_path / "p.jpg"
@@ -8162,10 +8182,135 @@ def test_单人封面的暗角可以按条关掉但两头要留(tmp_path):
     base = {"eyebrow": "赛场之上", "subject": "某人", "hook": "一行钩子",
             "portrait": {"image": str(photo)}}
     _, plain = vp._solo_body(dict(base))
-    _, cleared = vp._solo_body({**base, "scrim": "clear"})
-    assert CENTRE in plain, "不声明 scrim 的封面丢了中心暗角"
-    assert CENTRE not in cleared, (
-        "`cover.scrim: \"clear\"` 没接进 `_solo_body`——开关写了但海报没读")
+    _, legacy_clear = vp._solo_body({**base, "scrim": "clear"})
+    _, dimmed = vp._solo_body({**base, "scrim": "dim"})
+    assert CENTRE not in plain, "不写 scrim 的封面还带着中心暗角——默认没翻过来"
+    assert CENTRE not in legacy_clear, "老写法 `clear` 不再等于「不画」了"
+    assert CENTRE in dimmed, (
+        "`cover.scrim: \"dim\"` 没接进 `_solo_body`——开关写了但海报没读")
+
+
+def test_抽帧当封面不许再靠一句话放行(tmp_path):
+    """账号所有者 2026-08-17：「我觉得还是要**找到对应比赛的高清大图**是最重要的
+    **前置条件**，不然封面不清晰没有吸引力」。
+
+    ## 为什么「认领」这个形状在这儿不管用
+
+    这条闸原来是「写了 `frame_at` 就必须写 `_frame_why`」——和 `mixed_fps` /
+    `silent_source` 一个形状，**认领一下把「想清楚了」和「凑合一下」分开**。
+    在别处管用，在这儿不管用：数出来 **100 条 solo 里 74 条走了抽帧**。
+
+    根子是它**把一件该在开工之前做完的事，变成了收工之后补一句话**——真到了
+    写 `_frame_why` 的时候，源片已经下过、段也挑完了，没有人会为了一张封面
+    把两小时的活退回去重来。**前置条件的意思是没有它就不开工，不是有了它更好。**
+
+    ## 判据两头
+
+    1. **`_frame_why` 不再放行**——写得再详细也拦
+    2. **豁免只认名单**（`LEGACY_SOFT_COVERS`，已发的那批，只许减不许加），
+       名单之外一律红
+
+    ⚠️ **`_low_res_why` 那条没跟着变**，是故意的：赛事官网的实拍常常是
+    2000×1334，铺 1080×1440 算下来 fill=0.93，**本来就够不着 1.00 的地板**。
+    那是一张真的官方实拍，只是短了一点——把它也判死，等于把唯一能用的那条
+    渠道也堵上。**分界是「抽帧」和「实拍」，不是「够不够 1.00」。**
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    reel = _reel()
+
+    base = {
+        "slug": "某条还没发的新片子",
+        "cover": {"layout": "solo", "portrait": {"frame_at": 123.4}},
+    }
+    # ① 什么都不写 → 红
+    assert reel.cover_photo_problem(dict(base)), "抽帧的封面居然过了"
+    # ② 写一篇很详细的 `_frame_why` → **照样红**
+    wordy = json.loads(json.dumps(base))
+    wordy["cover"]["portrait"]["_frame_why"] = (
+        "四类源都翻过：WTA photo-resources 没有、赛事媒体库当天全是日场、"
+        "The Enquirer 两天都没有网球报道、Getty 取不到。")
+    problem = reel.cover_photo_problem(wordy)
+    assert problem, "写了 `_frame_why` 又把抽帧放行了——前置条件被写成了事后声明"
+    assert "前置条件" in problem, f"报错没说清为什么不再放行：{problem[:200]}"
+    # ③ 报错要给出**能直接跑**的那条命令，而且带上两个容易漏的参数
+    for must in ("find_cover_photo.py", "--site", "--date", "还没发"):
+        assert must in problem, f"报错正文缺 {must!r}：{problem[:400]}"
+
+    # ④ 豁免只认名单
+    legacy = dict(base, slug=sorted(reel.LEGACY_SOFT_COVERS)[0])
+    assert reel.cover_photo_problem(legacy) is None, "已发的那批被这道闸打红了"
+
+    # ⑤ 真实拍只是短一点，仍然靠 `_low_res_why` 放行（赛事官网就是 2000×1334）
+    from PIL import Image  # noqa: PLC0415
+
+    photo = tmp_path / "official.jpg"
+    Image.new("RGB", (2000, 1334), (70, 110, 150)).save(photo)
+    shot = {"slug": "某条还没发的新片子",
+            "cover": {"layout": "solo",
+                      "portrait": {"image": str(photo),
+                                   "_low_res_why": "赛事官网原图就是 2000×1334"}}}
+    assert reel.cover_photo_problem(shot) is None, (
+        "官方实拍 2000×1334（fill=0.93）被判死了——那是唯一能用的那条渠道")
+
+
+def test_信箱式垫层不许再压暗而且两处是同一个出处(tmp_path):
+    """账号所有者 2026-08-17：「**背景图不要再加前面阴影，导致背景图看着模糊啊**」。
+
+    ⚠️ **这和上一条（`.scrim` 的中心暗角）不是同一层。** 他说的是
+    `fit: "width"` 那几张的**垫底层**：照片按宽度铺时上下会空出来，底下垫同一张
+    照片的放大版——原来带着 `brightness(.42)`，于是上下两条变成又黑又糊的带子，
+    读起来像渲坏了，而不像照片的延续。`wangxiyu-fernandez` 那张就是。
+
+    四版渲出来摆一起比过（本地 7 秒一版）：`blur44+暗.42`（改前，上下近黑）／
+    `blur44+不压暗`（亮回来但仍糊成一片）／**`blur16+不压暗`**（现在这档，
+    底色和照片连成一片）／`不糊不压暗`（**裁判的头在顶上重复了一次**，
+    一眼看出是两张图）。
+
+    ## 判据三头
+
+    1. **不许再有 `brightness`**——这是他点名的那一样
+    2. **blur 要在 (0, 16] 之间**：往 0 推不是「更清楚」，是那份复制品认得出来、
+       和上层那张打架；往回推就又变成一条糊带子
+    3. **两处必须共用同一个出处**（`PAD_FILTER`）——solo 一处、VS 分格一处，
+       写两处必分叉，而分叉的样子是「有的封面上下发黑、有的不发黑」
+
+    ⚠️ **`.bg` 那一层（VS 版式背后的球场）没动**：它不是垫层，是给棚拍抠图
+    一个「这是一场球」的语境，`blur 12 / dim .72` 是当年渲了三档比出来的
+    （源码注释里记着 `blur 22 + dim .5` 会糊到看不出是球场）。12 条用它的
+    spec 全是 2026-08-14 及以前的，solo 早就是默认版式了。
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import versus_poster as vp  # noqa: PLC0415
+
+    pad = vp.PAD_FILTER
+    assert "brightness" not in pad, (
+        f"垫层又压暗了：{pad!r}——账号所有者点名的就是这一样")
+    m = re.search(r"blur\((\d+)px\)", pad)
+    assert m, f"垫层的 blur 读不出来：{pad!r}"
+    blur = int(m.group(1))
+    assert 0 < blur <= 16, (
+        f"垫层 blur={blur}px。往 0 推那份复制品会认得出来（裁判的头重复一次），"
+        "往回推又变成一条糊带子——16 是比出来的那一档")
+
+    src = Path("tools/versus_poster.py").read_text(encoding="utf-8")
+    body = "\n".join(ln for ln in src.splitlines()
+                     if not ln.lstrip().startswith("#"))
+    assert body.count("PAD_FILTER") >= 3, (
+        "垫层只剩一处调用了——solo 和 VS 分格两处都要用它")
+    assert "blur(44px)" not in body, (
+        "还有一处写着 blur(44px) 的字面量——两处必分叉，得走 PAD_FILTER")
+
+    # 真走一遍 `_solo_body`：`fit: width` 那条路上不许再出现 brightness
+    from PIL import Image  # noqa: PLC0415
+
+    photo = tmp_path / "p.jpg"
+    Image.new("RGB", (1920, 1080), (60, 90, 140)).save(photo)
+    base = {"eyebrow": "赛场之上", "subject": "某人", "hook": "一行钩子",
+            "portrait": {"image": str(photo), "fit": "width"}}
+    _, css = vp._solo_body(base)
+    before = css.split(".hero::before{")[1].split("}")[0]
+    assert "brightness" not in before, f"垫层那条规则还压着暗：{before}"
+    assert pad.split(";")[0] in before, "垫层没走 PAD_FILTER——改了常量海报不跟着变"
 
 
 def test_装yt_dlp一律要带default():
