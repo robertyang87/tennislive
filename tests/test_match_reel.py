@@ -7996,6 +7996,58 @@ def test_封面大图一律用官方高清图不许抽帧():
             "这一栏要写清楚四类源各自查了什么、结果如何，不是写一句「没找到」")
 
 
+def test_spec引的图不许放在output里CI上看不见():
+    """⚠️ **`ci.yml` 的稀疏检出不含 `output/`**，所以一条指到那儿的图片路径
+    **在本地存在、在 CI 上不存在**——而上面那道 `cover_photo_problem` 是真去
+    `Path(...).exists()` 的，于是它在 CI 上报「封面大图找不到」。
+
+    `swiatek-sakkari` 就是这么红的：官方实拍图我顺手落在了 probe 产物那一格
+    （`output/<date>/reel/<slug>/cover_src/portrait.jpg`），而**另外 26 条 spec
+    全放在 `assets/`**。本地全量 2146 绿、CI 两条红，两条同一个根因。
+
+    ⚠️ **这条是「测试不许拿 `output/` 当判据的主语」的镜像**：那条说的是判据
+    自己的主语在 CI 上不在（表现是**假绿**，`glob` 恒空）；这条是**被判据检查的
+    那个东西**在 CI 上不在（表现是**红**）。两种都只在 CI 上现形，而这一种更
+    值得装闸——它拦得住的是「本地过了、远端才红」这一整趟往返。
+
+    ⚠️ 判据只认**图片后缀**（渲染真要读的那种），不认 `probe.json` /
+    `captions.txt` 这类文本引用——`_editing_why` / `_source` 里提到产物路径是常事。
+
+    ⚠️ 跳过 `_` 开头的键是**预防，不是实测**：量过一遍，现在 114 条 spec 里
+    它一条都没排除掉（注解里的路径嵌在句子中间，`startswith("output/")` 本来
+    就够不着）。写在这儿是因为哪天有人写 `"_alt": "output/….jpg"`，那是注解
+    不是素材——别让下一个人以为这一行已经拦下过什么。
+    """
+    import re as _re  # noqa: PLC0415
+
+    IMG = _re.compile(r"\.(jpg|jpeg|png|webp)$", _re.I)
+    offenders: list[str] = []
+
+    def walk(node, slug: str, path: str) -> None:
+        if isinstance(node, dict):
+            for k, v in node.items():
+                # `_` 开头的是写给下一个人看的注解，不是素材路径
+                if not str(k).startswith("_"):
+                    walk(v, slug, f"{path}.{k}")
+        elif isinstance(node, list):
+            for i, v in enumerate(node):
+                walk(v, slug, f"{path}[{i}]")
+        elif isinstance(node, str) and node.startswith("output/") and IMG.search(node):
+            offenders.append(f"{slug}{path} = {node}")
+
+    specs = _reel_specs()
+    for slug, spec in specs.items():
+        walk(spec, slug, "")
+    assert not offenders, (
+        "这些图片路径指到 output/ 里，而 CI 的稀疏检出看不见它 —— 渲染那一刻会报"
+        "「找不到」，可本地一切正常：\n  " + "\n  ".join(offenders)
+        + "\n把图挪进 assets/（另外那些 spec 都是这么放的），别留在产物目录里")
+
+    # 判据自己的判据：主语真的在。specs 读不到的话上面那句恒真，
+    # 而「一条恒真的绿灯」和「真的没问题」长得一模一样。
+    assert len(specs) >= 100, f"只扫到 {len(specs)} 条 spec，判据的主语没了"
+
+
 #: 「赛场之上 solo 封面必须有 `cover.scoreboard`」这条规矩（#368）立起来**之前**
 #: 发出去的十九条。已发的片子不为版式重渲——微信那条消息发出去收不回来，所以它们
 #: 就停在这个样子；**只许减不许加**，表自己带自检（见 `_with_legacy_scoreboard`）。
