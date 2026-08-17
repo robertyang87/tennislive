@@ -8,6 +8,28 @@ CLAUDE.md「封面大图一律用官方高清实拍」那条的配套工具。�
     python3 tools/find_cover_photo.py --player Tjen --event Cincinnati --day 6
     python3 tools/find_cover_photo.py --player Sabalenka --site cincinnatiopen.com --date 2026-08-16
     python3 tools/find_cover_photo.py --getty 2288964672      # 只查一个 Getty 编号是哪一场
+    python3 tools/find_cover_photo.py --discover <新赛事域名>   # 换一站先跑这条
+
+## ⭐⭐ 哪几条**跨得过赛事**——2026-08-17 量的，账很难看
+
+账号所有者：「**多找几个渠道，不然下一个赛事就不一定有了啊**」。去量了一遍，
+他说的这个风险不是隐忧，是**现状**：
+
+| 渠道 | 跨赛事吗 | 分辨率 | 判据 |
+|---|---|---|---|
+| ⭐⭐ **AP 通讯社** | ✅ **通讯社，每站都派人** | **4700~8600px** | 说明里四要素 ＋ 署名全齐，原图挂在 `?url=` 上 |
+| **WTA `photo-resources`** | ✅ **巡回赛级** | 4000px | 每站都在同一个 CDN 上，不用换域名 |
+| **当地报纸每日图集** | ⚠️ **按城市换域名** | 4813px | 六份报纸里**五份**认同一个 `/picture-gallery/` ＋ `/gcdn/` 形状 |
+| **赛事官网 WP 媒体库** | ❌ **基本是特例** | 5541px | 扫了 **11 个赛事官网，只有辛辛那提一个**开着 WP REST |
+
+⚠️ **原来分辨率最高的两条（赛事图库、当地报纸）恰好都跨不过赛事**：一条只在
+辛辛那提有，一条得先知道当地哪份报纸。**AP 那条是 2026-08-17 补上的，
+它同时占住「最高」和「跨得过」两头**——这条渠道就是为账号所有者那句话找的。
+换一站之前照旧先跑 `--discover`，别假设上一站那套还在。
+
+⚠️ **这条渠道原来把 `cincinnati.com` 写死在代码里**——也就是说「当地报纸」
+这一档在别的站上**根本不会跑**，而它跳过的样子和查空一模一样。现在按城市查
+`_LOCAL_PAPERS`，查不到就明说没跑。
 
 ## 查得通的渠道（都实测过）
 
@@ -71,7 +93,8 @@ CLAUDE.md「封面大图一律用官方高清实拍」那条的配套工具。�
 
    也就是**当天那一辑在次日 UTC 00:00–03:00 之间上线**（当地 20:00–23:00）。
 
-5. ⭐⭐⭐ **当地报纸的每日图集**（2026-08-17 挖出来的，**这条是分辨率最高的一条**）。
+5. ⭐⭐⭐ **当地报纸的每日图集**（2026-08-17 挖出来的；⚠️ 它一度是分辨率最高的
+   一条，同一天下午被下面第 6 条的 AP 超过了——**引用之前先看那张跨赛事的表**）。
    辛辛那提这一站是 **The Enquirer**（USA Today／Gannett 网络）派自己的摄影师拍，
    每个比赛日出一辑：
 
@@ -97,6 +120,26 @@ CLAUDE.md「封面大图一律用官方高清实拍」那条的配套工具。�
    ⚠️ **覆盖面和赛事图库一样偏主球场**：8/14 那辑 54 张、8/15 那辑 95 张，
    两辑里含 `Wang` 的都是 0 张。**有这条渠道不等于有这个人**。
 
+6. ⭐⭐ **AP 通讯社**（2026-08-17 挖的，**唯一一条又高清又跨得过赛事的**）：
+
+       搜索  https://apnews.com/search?q=<球员>%20tennis   ＋ /hub/tennis
+       文章  <img src="https://dims.apnews.com/dims4/…?url=<原图>" alt="<说明>">
+       原图  把 `?url=` 解出来 → assets.apnews.com/…   实测 **8212×5576 / 6226×4796**
+
+   说明自带四要素 ＋ 署名：「Ben Shelton of the United States hoists the trophy
+   following his win over compatriot Brandon Nakashima during final tennis action
+   at the National Bank Open in Montreal on Thursday, Aug. 13, 2026.
+   (Christinne Muschi/The Canadian Press via AP)」
+
+   ⚠️ **别直接用 `dims.apnews.com` 那个地址**——它是按版面缩好的（980×653 /
+   767×511），铺封面连一半都不到，而且**不报错**。
+   ⚠️ **搜索结果里混着一批固定的边栏稿**：三个完全无关的词各回 69~70 篇，
+   **三者交集 40 篇**。所以筛靠的是**说明里有没有这个人**，不是搜索结果本身。
+   ⚠️⚠️ **光按人筛会拿回资料图。** 实测 `--player Svitolina` 不筛赛事时头三张
+   是意大利公开赛捧杯 ＋ 多伦多半决赛两张——**每张都是她，没一张是这一场**。
+   所以 `--event` 也要参与筛（同一份代码 `Shelton`＋`Montreal` 拿回 2 张全对）。
+   ⚠️ 版权是 AP 的（第 ③ 档「新闻站／图片社转载」），署名照实记进 credits。
+
 ## 实测走不通的，别再试
 
 | 路 | 结果 |
@@ -113,13 +156,18 @@ CLAUDE.md「封面大图一律用官方高清实拍」那条的配套工具。�
 | `wtatennis.com/galleries` | 404。`/photos` 有，但那是专题图集，不是当日比赛图 |
 | tennis.com 的比赛页 | 只有国旗和头像，没有比赛图 |
 | Flickr / Alamy / Imago / Zimbio | JS 渲染或带水印，取不到可用原图 |
+| **WTA 单场比分页 `/scores/<MatchID>`** | **每一场给的是同一批 7 张**（实测 `LS063` 和 `LS039` 两场的清单一字不差，里面还混着 2023/2024 的旧图）——那是版面的边栏，**不是这一场的图**。看着最像「每场一张头图」，其实不是 |
+| WTA 扫更多入口（`/scores`、`/tournament/<id>/…/scores`、`/photos`） | 相比现有三个入口只多出 **2 张，而且都不对题**（一张 2025 年的、一张别站的）。`/photos` 和 `/news` **返回的是同一份**（字节数一样） |
+| 赛事 WP 媒体库的 `alt_text` / `caption` | 当天批量上传的那些**全是空的**，`?search=<姓>` 只匹配得上文件名（头像、少数精选图）。**这条路认不出照片里是谁**，是硬限制不是没调对 |
 """
 from __future__ import annotations
 
 import argparse
+import html as html_mod
 import json
 import re
 import sys
+import urllib.parse
 
 import requests
 
@@ -229,8 +277,34 @@ def sweep_wta(player: str | None, event: str | None, day: str | None) -> list[di
     return out
 
 
-_GANNETT_SITE = "https://www.cincinnati.com"
 _GANNETT_CDN = "https://www.gannett-cdn.com/"
+
+#: ⭐ **办赛城市 → 当地那份 Gannett／USA TODAY 网络的报纸。**
+#:
+#: 这条渠道原来把 `cincinnati.com` **写死**在代码里，也就是说它只对辛辛那提
+#: 一站有效——账号所有者 2026-08-17 那句「多找几个渠道，**不然下一个赛事就
+#: 不一定有了啊**」点的正是这个。
+#:
+#: 2026-08-17 实测：同一个 `/picture-gallery/…/<id>/` 形状 ＋ 同一个 `/gcdn/`
+#: 原图 CDN，**六份报纸里五份成立**：
+#:
+#:     desertsun.com          200  picture-gallery 1 条    /gcdn/ 40 次
+#:     azcentral.com          200                  2 条              40 次
+#:     providencejournal.com  200                 14 条              40 次
+#:     lohud.com              200                  7 条              40 次
+#:     cincinnati.com         200                  7 条              40 次   ← 已经在用的那份
+#:     statesman.com          **410**              0 条               0 次   ← 这份没了
+#:
+#: ⚠️ **「报纸站活着」不等于「这一站有网球图集」**：上表量的是这个域名还认不认
+#: `/picture-gallery/`，不是它拍不拍网球。真有没有要 `--paper <域名>` 跑一次
+#: 才知道——和赛事图库那条一样，**查空要自证是真空**。
+_LOCAL_PAPERS = {
+    "cincinnati": "www.cincinnati.com",          # ✅ 已经出过图（4813×3209）
+    "indian wells": "www.desertsun.com",         # 形状对得上，网球图集没验过
+    "phoenix": "www.azcentral.com",
+    "newport": "www.providencejournal.com",
+    "new york": "www.lohud.com",                 # 美网这一带的 Gannett 报
+}
 
 
 def gannett_original(url: str) -> str:
@@ -244,15 +318,20 @@ def gannett_original(url: str) -> str:
     return re.sub(r"^https://[a-z0-9.-]+/gcdn/", _GANNETT_CDN, url)
 
 
-def sweep_enquirer(player: str | None, day: str | None) -> list[dict]:
-    """扫 The Enquirer 的每日图集：说明自带四要素，原图 4800px 级。
+def sweep_local_paper(paper: str, event: str | None, player: str | None,
+                      day: str | None) -> list[dict]:
+    """扫当地报纸的每日图集：说明自带四要素，原图 4800px 级。
 
-    `day` 给 `2026-08-16` 这种；不给就把最近几天的图集都翻一遍。
+    `paper` 是报纸域名（`www.cincinnati.com`）——**以前这个值写死在代码里**，
+    于是这条渠道只对辛辛那提成立；现在从 `_LOCAL_PAPERS` 查或者用 `--paper` 给。
+    `day` 给 `2026-08-16` 这种；不给就把索引页上翻得到的图集都看一遍。
     """
+    site = f"https://{paper.lstrip('https://').lstrip('/')}"
+    query = (event or "tennis").replace(" ", "%20")
     days = [day] if day else None
     galleries: list[str] = []
     try:
-        idx = _get(f"{_GANNETT_SITE}/search/?q=photos%20cincinnati%20open", timeout=40)
+        idx = _get(f"{site}/search/?q=photos%20{query}", timeout=40)
         galleries += re.findall(r"/picture-gallery/sports/\d{4}/\d{2}/\d{2}/[a-z0-9-]+/\d+/", idx)
     except Exception:                                           # noqa: BLE001
         pass
@@ -261,7 +340,7 @@ def sweep_enquirer(player: str | None, day: str | None) -> list[dict]:
         month = ("january february march april may june july august september "
                  "october november december").split()[int(m) - 1]
         try:
-            sm = _get(f"{_GANNETT_SITE}/sitemap/{y}/{month}/{int(d)}/", timeout=40)
+            sm = _get(f"{site}/sitemap/{y}/{month}/{int(d)}/", timeout=40)
             galleries += re.findall(
                 r"/picture-gallery/sports/\d{4}/\d{2}/\d{2}/[a-z0-9-]+/\d+/", sm)
         except Exception:                                       # noqa: BLE001
@@ -272,7 +351,7 @@ def sweep_enquirer(player: str | None, day: str | None) -> list[dict]:
         if days and f"/{days[0].replace('-', '/')}/" not in path:
             continue
         try:
-            html = _get(_GANNETT_SITE + path, timeout=60)
+            html = _get(site + path, timeout=60)
         except Exception:                                       # noqa: BLE001
             continue
         for blob in re.findall(r"<script type=application/ld\+json>(.*?)</script>",
@@ -300,6 +379,115 @@ def sweep_enquirer(player: str | None, day: str | None) -> list[dict]:
     return out
 
 
+_AP = "https://apnews.com"
+#: AP 的图走一个动态缩放器：
+#: `dims.apnews.com/dims4/default/<hash>/…/resize/980x653!/…?url=<原图>`
+#: ——**原图地址就挂在 `?url=` 上**，而缩放器给的是 980 宽的版面图。
+_AP_DIMS = re.compile(r"https://dims\.apnews\.com/dims4/[^\"'\s\\]+")
+
+
+def ap_original(dims_url: str) -> str | None:
+    """从 AP 缩放器的地址里把原图抠出来。
+
+    ⚠️ **别直接用 `dims.apnews.com` 那个地址**：它是按版面缩好的（实测
+    `980x653` / `767x511`），铺 1080×1440 连一半都不到。`?url=` 后面那个
+    `assets.apnews.com/...` 才是原图——实测 **8640×5760** 和 **4714×3143**。
+    """
+    q = urllib.parse.parse_qs(urllib.parse.urlparse(
+        dims_url.replace("&amp;", "&")).query)
+    got = (q.get("url") or [None])[0]
+    return got if got and got.startswith("http") else None
+
+
+def sweep_ap(player: str | None, event: str | None, limit: int = 8) -> list[dict]:
+    """⭐⭐ **通讯社这一档：AP。这是唯一一条「换个赛事照样有」的高清渠道。**
+
+    2026-08-17 挖出来的，来路是账号所有者那句「多找几个渠道，**不然下一个赛事
+    就不一定有了啊**」——去量了一遍才发现分辨率最高的那两条
+    （赛事图库 5541px、当地报纸 4813px）**都不跨赛事**：前者 11 个赛事官网只有
+    辛辛那提一个开着 WP REST，后者得先知道当地哪份报纸。
+    **而 AP 是通讯社，每站都派人。**
+
+    实测（`apnews.com/hub/tennis`）：
+
+        原图      assets.apnews.com/...   **8640×5760**（8.0 MB）／ 4714×3143
+        说明      `<img alt>` 里，四要素全齐 ＋ 署名：
+                  「Ben Shelton of the United States hoists the trophy following
+                   his win over compatriot Brandon Nakashima during final tennis
+                   action at the National Bank Open in Montreal on Thursday,
+                   Aug. 13, 2026. (Christinne Muschi/The Canadian Press via AP)」
+
+    ⚠️ **搜索是真的在筛，但结果里混着一批固定的边栏稿。** `?q=` 三个完全无关的
+    词各回 69~70 篇，**三者交集 40 篇**——那 40 篇是每页都挂的推荐位。
+    独有的才是搜出来的（`Svitolina` 独有 29 篇）。**「非空 ≠ 对题」**：
+    只数条数会以为搜索没生效，只信条数又会把边栏稿当成命中。这里靠
+    **说明里有没有这个人**来筛，不靠搜索结果本身。
+
+    ⚠️ **版权是 AP 的**（属于四类源里第 ③ 档「新闻站／图片社转载」），
+    署名照实记进 credits，发布前人工判断。
+    """
+    want = (player or "").lower()
+    queries = [q for q in (f"{player} tennis" if player else None,
+                           f"{event} tennis" if event else None,
+                           "tennis") if q]
+    slugs: list[str] = []
+    for q in queries:
+        try:
+            html = _get(f"{_AP}/search?q={urllib.parse.quote(q)}", timeout=40)
+        except Exception:                                       # noqa: BLE001
+            continue
+        for u in re.findall(r"https://apnews\.com/article/[a-z0-9-]+", html):
+            if u not in slugs:
+                slugs.append(u)
+    try:
+        hub = _get(f"{_AP}/hub/tennis", timeout=40)
+        for u in re.findall(r"https://apnews\.com/article/[a-z0-9-]+", hub):
+            if u not in slugs:
+                slugs.append(u)
+    except Exception:                                           # noqa: BLE001
+        pass
+
+    # 先按 slug 粗筛，别为了那 40 篇边栏稿去拉 70 个页面
+    def looks_relevant(u: str) -> bool:
+        tail = u.rsplit("/", 1)[-1]
+        if want and want.split()[-1] in tail:
+            return True
+        return bool(re.search(r"tennis|open|wimbledon|slam", tail))
+
+    out: list[dict] = []
+    for url in [u for u in slugs if looks_relevant(u)][:limit]:
+        try:
+            html = _get(url, timeout=40)
+        except Exception:                                       # noqa: BLE001
+            continue
+        pairs = re.findall(
+            r'<img[^>]*?src="(https://dims\.apnews\.com/[^"]+)"[^>]*?alt="([^"]{30,400})"',
+            html)
+        pairs += [(b, a) for a, b in re.findall(
+            r'<img[^>]*?alt="([^"]{30,400})"[^>]*?src="(https://dims\.apnews\.com/[^"]+)"',
+            html)]
+        seen: set[str] = set()
+        for dims, cap in pairs:
+            orig = ap_original(dims)
+            if not orig or orig in seen:
+                continue
+            seen.add(orig)
+            cap = html_mod.unescape(cap)
+            # ⚠️ 判据是**说明里有没有这个人**，不是「这篇稿子搜出来了」——
+            # 边栏稿混在结果里，而它们的图跟这场球毫无关系。
+            if want and want.split()[-1] not in cap.lower():
+                continue
+            # ⚠️⚠️ **光按人筛会拿回一堆资料图**，而它们和本场图长得一模一样。
+            # 实测 `--player Svitolina`：不筛赛事时头三张分别是温网的捧杯、
+            # 多伦多半决赛（两张，还是斯瓦泰克赢的那场）——**每一张都是她，
+            # 每一张都不是这一场**。这正是 Getty 那条「看见就先查说明」的同一个坑，
+            # 只不过 AP 把说明直接给了，所以能机筛。
+            if event and event.split()[0].lower() not in cap.lower():
+                continue
+            out.append({"article": url, "caption": cap, "url": orig})
+    return out
+
+
 def original_url(url: str) -> str | None:
     """⭐ WordPress 的 `-scaled` **不是原图，是 2560 的封顶版**——去掉它才是原图。
 
@@ -321,6 +509,64 @@ def original_url(url: str) -> str | None:
     if url.endswith("-scaled.jpg"):
         return url[: -len("-scaled.jpg")] + ".jpg"
     return None
+
+
+#: `--discover` 要挨个敲的门。**这张表是「怎么问」，不是「有什么」**——
+#: 一个都不通才叫这个站没有照片接口，而那要跑一次才知道。
+_DISCOVER = (
+    ("WP 媒体库", "/wp-json/wp/v2/media?per_page=1"),
+    ("WP 备用入口", "/?rest_route=/wp/v2/media&per_page=1"),
+    ("图片 sitemap", "/sitemap-image.xml"),
+    ("sitemap 索引", "/sitemap_index.xml"),
+    ("robots（里面写着 sitemap 在哪）", "/robots.txt"),
+)
+
+
+def discover(site: str) -> list[str]:
+    """这个赛事官网到底有没有照片接口——**下一个赛事的第一条命令**。
+
+    ⚠️⚠️ **2026-08-17 量出来的账，这条渠道基本不通用**：拿这张表扫了 11 个
+    赛事官网，**只有 `cincinnatiopen.com` 一个开着 WP REST**：
+
+        cincinnatiopen.com      WP 媒体库 200 json=1        ✅
+        usopen.org              200 但不是 json（是首页 HTML）
+        winstonsalemopen.com / tennisintheland.com /
+        nationalbankopen.com / mubadalacitidcopen.com /
+        japanopentennis.com     WP 404，备用入口回的是 HTML
+        abiertogdl.com.mx / monterreyopen.mx /
+        koreaopentennis.com     沙箱出网就够不着
+        chengduopen.com         SSL 握手失败
+
+    也就是说「赛事官网媒体库」**是辛辛那提的特例，不是一条通用渠道**——账号
+    所有者那句「不然下一个赛事就不一定有了啊」是对的，而且比预想的更糟。
+    真正跨赛事成立的只有 **WTA `photo-resources`**（巡回赛级）和**当地报纸**
+    （按城市换域名，见 `_LOCAL_PAPERS`）。
+
+    ⚠️ **`200` 不等于「通了」**：不是 WordPress 的站会拿首页 HTML 回你一个 200
+    （`usopen.org` 就是），只看状态码会把它读成「有接口」。判据是**回来的是不是
+    JSON**——所以这里解析一次再报。
+    """
+    out = [f"=== {site} 有没有照片接口"]
+    for label, path in _DISCOVER:
+        try:
+            resp = requests.get(f"https://{site}{path}", headers=_UA, timeout=25)
+        except Exception as exc:                                # noqa: BLE001
+            out.append(f"  {label:32} 够不着：{type(exc).__name__}")
+            continue
+        tag = f"{resp.status_code} {len(resp.content)}B"
+        if label.startswith("WP") and resp.status_code == 200:
+            try:
+                tag += f"　✅ JSON，{len(json.loads(resp.text))} 条"
+            except Exception:                                   # noqa: BLE001
+                tag += "　❌ **回的是 HTML 不是 JSON**——这个站不是 WordPress"
+        if label.startswith("robots") and resp.status_code == 200:
+            found = re.findall(r"(?i)^sitemap:\s*(\S+)", resp.text, re.M)
+            tag += "　| " + (", ".join(found[:3]) if found else "没写 sitemap")
+        out.append(f"  {label:32} {tag}")
+    out.append("  ⚠️ 一条都不通**不代表这一站没有照片**——它只说明这几扇门没开。"
+               "还有 WTA `photo-resources`（巡回赛级，永远该试）和当地报纸"
+               "（`--paper <域名>`）两条。")
+    return out
 
 
 def sweep_tournament(site: str, date: str | None, player: str | None = None) -> dict:
@@ -390,7 +636,16 @@ def main() -> int:
     ap.add_argument("--site", help="赛事官网域名，如 cincinnatiopen.com")
     ap.add_argument("--date", help="赛事图库按这一天筛，如 2026-08-16")
     ap.add_argument("--getty", help="只查一个 Getty 编号是哪一场")
+    ap.add_argument("--paper", help="当地报纸域名（不给就按 --event 从 "
+                                    "_LOCAL_PAPERS 查；查不到就跳过这一档并说明）")
+    ap.add_argument("--discover", help="**新赛事的第一条命令**：敲一遍这个赛事"
+                                       "官网有没有照片接口，别再手搓 curl")
     args = ap.parse_args()
+
+    if args.discover:
+        for line in discover(args.discover):
+            print(line)
+        return 0
 
     if args.getty:
         print(getty_caption(args.getty) or "（这个编号查不到说明）")
@@ -418,14 +673,41 @@ def main() -> int:
             print(f"     说明：{r['caption']}")
         print(f"     {r['url']}")
 
-    print("\n=== The Enquirer 每日图集（说明自带四要素，原图 4800px 级）")
-    enq = sweep_enquirer(args.player, args.date)
-    if not enq:
-        print("  没有对得上的。⚠️ 这一辑**按比赛日出**，当天的往往次日才上线；"
-              "而且它和赛事图库一样偏主球场——**有这条渠道不等于有这个人**。")
-    for r in enq[:10]:
-        print(f"  {r['caption'][:150]}")
-        print(f"     {r['credit']} · {r['url']}")
+    # ⭐⭐ 通讯社这一档**每站都有**，所以它无条件跑——不像下面两档要先知道
+    # 这一站在哪个城市、官网是不是 WordPress。
+    print("\n=== AP 通讯社（唯一一条**又高清又跨得过赛事**的，原图 4700~8600px）")
+    ap = sweep_ap(args.player, args.event)
+    if not ap:
+        print("  没有对得上的。⚠️ AP 一天只发几场的图，**「这一场没有」不等于"
+              "「这条渠道不行」**；隔几小时或换个赛事名再试。")
+    for r in ap[:8]:
+        print(f"  {r['caption'][:160]}")
+        print(f"     {r['url']}")
+
+    # ⚠️ 这一档以前把 `cincinnati.com` 写死在代码里，也就是**只对辛辛那提成立**。
+    # 现在按办赛城市查 `_LOCAL_PAPERS`，查不到就明说这一档没跑——
+    # 跳过的那一档和查空的那一档在输出里长得一模一样（上面 `--site` 那次的教训）。
+    paper = args.paper
+    if not paper and args.event:
+        for city, dom in _LOCAL_PAPERS.items():
+            if city in args.event.lower():
+                paper = dom
+                break
+    if paper:
+        print(f"\n=== {paper} 每日图集（说明自带四要素，原图 4800px 级）")
+        enq = sweep_local_paper(paper, args.event, args.player, args.date)
+        if not enq:
+            print("  没有对得上的。⚠️ 这一辑**按比赛日出**，当天的往往次日才上线；"
+                  "而且它和赛事图库一样偏主球场——**有这条渠道不等于有这个人**。")
+        for r in enq[:10]:
+            print(f"  {r['caption'][:150]}")
+            print(f"     {r['credit']} · {r['url']}")
+    else:
+        print("\n=== 当地报纸每日图集　⚠️ **这一档没跑**")
+        print(f"  不知道这一站在哪个城市——`_LOCAL_PAPERS` 里现有 "
+              f"{'、'.join(_LOCAL_PAPERS)}。")
+        print("  补一句就有：--paper <报纸域名，如 www.cincinnati.com>；"
+              "新城市查一次 Gannett／USA TODAY 网络里当地那份，加进 `_LOCAL_PAPERS`。")
 
     # ⚠️⚠️ **不给 `--site` 时这一档整个不跑，而它正是三条里最常有图的一条。**
     # 2026-08-17 就是这么白判过一次：`--player Svitolina --event Cincinnati`
@@ -436,7 +718,7 @@ def main() -> int:
     # 而且末尾那份清单把「这一趟到底查了哪几档」逐条列出来。
     if not args.site:
         print("\n=== 赛事官网的 WordPress 媒体库　⚠️ **这一档没跑**")
-        print("  没给 `--site`，而它是三条里最常有图的一条（当日实拍原图 2000px 级，"
+        print("  没给 `--site`，而它当日实拍最全（原图 2000px 级，"
               "去掉 `-scaled` 能到 5541×3694）。")
         print("  补一句就有：--site <赛事域名，如 cincinnatiopen.com> "
               "--date <这场球的**当地**日期>")
@@ -478,8 +760,9 @@ def main() -> int:
 
     # **这一趟到底查了哪几档，明着写出来。** 写 `cover.portrait._frame_why`
     # 的人要照抄这份清单，不许写成「四类源都翻过」——没跑的那一档不算翻过。
-    ran = ["WTA photo-resources", "The Enquirer 每日图集"]
+    ran = ["WTA photo-resources", "AP 通讯社"]
     skipped = []
+    (ran if paper else skipped).append("当地报纸每日图集")
     (ran if args.site else skipped).append("赛事官网 WordPress 媒体库")
     print("\n=== 这一趟查了什么")
     print(f"  跑过：{'、'.join(ran)}")
