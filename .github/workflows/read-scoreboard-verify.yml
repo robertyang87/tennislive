@@ -14,6 +14,10 @@ on:
       slug:
         description: "有 score_*.jpg 的 reel slug（如 wangxiyu-timofeeva）"
         required: true
+      surnames:
+        description: "两个球员的英文姓（空格分隔，反查逐分用，如 wang timofeeva）"
+        required: false
+        default: ""
 
 permissions:
   contents: read
@@ -58,9 +62,9 @@ jobs:
 
       - name: 同时打印逐分数据做对照（比分序列基准）
         env:
-          VERIFY_SLUG: ${{ inputs.slug }}
+          VERIFY_SURNAMES: ${{ inputs.surnames }}
         run: |
           echo "## 对照：逐分数据（每一分的比分，来自 WTA）" >> "$GITHUB_STEP_SUMMARY"
           echo '```' >> "$GITHUB_STEP_SUMMARY"
-          VERIFY_SLUG="$VERIFY_SLUG" PYTHONPATH=src python -c "import os,sys,datetime,requests; sys.path.insert(0,'tools'); from fetch_match_pbp import find_match,get; s=requests.Session(); parts=os.environ['VERIFY_SLUG'].split('-'); ev,y,mid,row=find_match(s,parts,datetime.date(2026,8,13),datetime.date(2026,8,17)); payload=get(s,'tournaments/'+str(ev)+'/'+str(y)+'/matches/'+str(mid)+'/point-by-point'); [print('fen',p['pointNumber'],'set',p['setNumber'],'game',p['gameNumber'],p['scoreAfterPoint']['gameScore']['teamAScore']+'-'+p['scoreAfterPoint']['gameScore']['teamBScore'],'server',p['server'],'winner',p['pointWinner']) for p in payload['points']]" 2>&1 >> "$GITHUB_STEP_SUMMARY"
+          VERIFY_SURNAMES="$VERIFY_SURNAMES" PYTHONPATH=src python -c "import os,sys,datetime,requests; sys.path.insert(0,'tools'); from fetch_match_pbp import find_match,get; s=requests.Session(); parts=os.environ['VERIFY_SURNAMES'].split(); ev,y,mid,row=find_match(s,parts,datetime.date(2026,8,13),datetime.date(2026,8,17)); payload=get(s,'tournaments/'+str(ev)+'/'+str(y)+'/matches/'+str(mid)+'/point-by-point'); [print('fen',p['pointNumber'],'set',p['setNumber'],'game',p['gameNumber'],p['scoreAfterPoint']['gameScore']['teamAScore']+'-'+p['scoreAfterPoint']['gameScore']['teamBScore'],'server',p['server'],'winner',p['pointWinner']) for p in payload['points']]" 2>&1 >> "$GITHUB_STEP_SUMMARY"
           echo '```' >> "$GITHUB_STEP_SUMMARY"
