@@ -16,7 +16,7 @@
     "_measured": "片尾板从 **104.50s** 起（0.5 秒一格量整幅均值：98.0 → 5.2 → 172.3 → 211.3 → 恒定 36.5，是一段甩入动画）。最后一句 `Thank you.` 收在 102.72，所以 `end: 104.4` 把话说完、把片尾板挡在外面。**在本地量的源片**，不用等成片。"
   },
   "zh": [
-    "海梅 恭喜你",
+    "法里亚 恭喜你",
     "我们看到你坐在椅子上",
     "坐了很久",
     "那会儿你在想什么",
@@ -107,5 +107,12 @@
   },
   "word_fix": {
     "Shaim": "Jaime"
-  }
+  },
+  "en_fixed": {
+    "44": "He came back at you hard at the end",
+    "45": "of the first set and you were a break down",
+    "49": "Yeah, sure. I was 4-1 down on this set."
+  },
+  "_verified_clean": "两份转写对不上 **6.4%**（闸门 12%），**0 处空档**。第一份 ASR `small.en`\n298 词，第二份 faster-whisper `medium.en` 299 词。\n\n⚠️ **这条不是 YouTube 源**（Tennis TV `library/interviews` 的免费条目），所以\n**第一份也是我们自己跑的**——两份必须换模型，否则同一个模型跑两遍必然逐词一致，\n分歧率恒为 0%，报告全绿而它什么都没验证。这里是 `small.en` → `medium.en`。\n\n**17 处分歧逐处看过，两处是真错，而且都在主持人那一句上。**\n\n⚠️⚠️ **第 44 行：`You came back at you hard` → `He came back at you hard`。**\n「你朝你自己追上来」不成立——主语说的是谢尔顿。whisper 那一处正是 `you` → `he`，\n拿音频另跑两个错开的窗口复核，两次都给 `He came back at you hard`。\n\n⚠️ **第 45 行：`a breakdown` → `a break down`。** 网球里 \"a break down\" 是\n「落后一个破发」，写成一个词就成了「崩溃」。同一段两个窗口一个写 `breakdown`\n一个写 `break down`，按术语取后者。\n\n⚠️ **第 30 行 `Beat my mentality.` 不动——它不是幻觉，是他真这么说的。**\n判据是 CLAUDE.md 那条「错开窗口再跑两次」：`54–63` / `55–62` / `56.5–61.5`\n三个窗口 **全给同一串**，而且第一份 `small.en` 也是它。他是葡萄牙人，这一句\n本来就是不标准的英语；我们照实转写，中文按意思写成「我的心态吧」。\n\n**其余 15 处不动**：写法差异（`gonna`/`going to`、`you gotta`/`you've got to`、\n`ten`/`10`）和 whisper 自己的漏词（`a`/`it's`/`so i'm`/`know you` → `—`，\n我们这边对）。\n\n⚠️ **名字两处**：`word_fix` 把 `Shaim` → `Jaime`（ASR 把葡萄牙语名字听坏了）；\n中文第一行原来手打「海梅」，**译名表里没有这个词条**，改成表给的姓「法里亚」——\n`player_zh(\"Jaime Faria\")` → 法里亚，全站只用这一个。\n\n**赛果另核过**（tennisexplorer mutual 页）：**法里亚 6-4 6-4 谢尔顿，两人第一次\n交手**，而他是从资格赛打上来的。他说的「这一盘我一比四落后，然后连赢五局」\n和第二盘 6-4 对得上。\n\n⚠️ **第 49 行只补了个空格**：`4 -1` → `4-1`。那是切词留下的痕迹，不是他说的，\n`on this set`（而不是 `in`）照留——他本来就不是母语者。",
+  "transcript_verified": true
 }

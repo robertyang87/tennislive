@@ -3,7 +3,7 @@
   "url": "https://www.youtube.com/watch?v=iszb3-lsyLc",
   "source_title": "Taylor Townsend vs. Elena Rybakina | 2026 Cincinnati Round 2 | WTA Match Highlights（@wta 官方频道）",
   "start": 269.8,
-  "end": 386.4,
+  "end": 385.9,
   "whisper_model": "medium.en",
   "column": "赛后开麦",
   "interview_kind": "赛后场上采访",
@@ -81,8 +81,8 @@
     "⚠️ **`end: 386.4` 是按 WTA 片尾板约 10.3 秒推的**（源片 397s，最后一条字幕 384.48）。**必须拿渲出来的成片拉回本地逐帧量**——片尾板是整幅均值一帧跳上去，而「离源片末尾还有几秒」这个推法这条线上栽过一次（诺斯科娃那条的 9 秒『余量』里有 8 秒就是片尾板本身）。"
   ],
   "cover": {
-    "frame_at": 350.0,
-    "_why": "⚠️ **待定初值。** 封面帧一律从**渲出来的成片**上挑，不猜——阿朗戈那条猜的那格渲出来是她的背影。",
+    "frame_at": 356.2,
+    "_why": "**从渲出来的成片上挑的，不是猜的。** 第一版占位值 350.0 渲出来她正好半闭着眼、\n嘴在词中间——CLAUDE.md 那条「看过缩略图和看过那一帧是两件事」说的就是这个。\n\n拉回成片之后按 `源片 = 成片 + 267.979` 换算（标定见 `_tail_why`），先 3 秒一格\n扫完整段挑出两处，再 0.1 秒一格细看：\n\n    成片 88.2 → **源片 356.2**   眼睛看着镜头、自然的笑、话筒完全出画、背景干净\n    成片 114.0（源片 382.0）      也在笑，但手正抬起来挥手、人偏下\n    成片 82.0（源片 350.0）       ← 第一版，半闭眼 + 词中间\n\n⚠️ **能这么挑是因为成片的画面带 y150–960 就是海报的取景**，所以从成片裁出来那一条\n和封面上最终看到的是同一块画面；不用为了试一帧去跑一趟 `mode=cover`。",
     "title": [
       "八站一千分赛 首战一场没输",
       "「今天最满意的是发球」"
@@ -118,5 +118,6 @@
     "20": "We played before and it"
   },
   "_verified_clean": "两份转写对不上 **5.5%**（闸门 12%），**0 处空档**。第一份 YouTube 自动字幕\n365 词，第二份 faster-whisper `medium.en` 356 词。\n\n**13 处分歧逐处看过，其中一处是真错，而且它和这条片子自己的另一行矛盾。**\n\n⚠️⚠️ **第 20 行：`never played before` → 改成 `We played before`。**\n\n    第 14 行（主持人）  `you've played her before.`   ← 两份转写都这么写\n    第 20 行（她自己）  YouTube `never played` / whisper `we played`\n\n**「从没交过手」和主持人上一句「你以前跟她交过手」不可能同时成立**，而主持人\n那句两份转写完全一致，她那句正是两份分歧的那一处——所以错的是第 20 行。\n\n**去查了第二个源**（tennisexplorer 的 mutual 页）：**莱巴金娜 2-0 汤森德，\n上一次是 2024 年迈阿密第三轮，6-3 6-7 6-4**。三盘，正对得上她说的\n「一直是一场硬仗」。⚠️ **中文第一版跟着 YouTube 写成「我们以前没交过手」，\n和第 14 行当场打架**，已改成「我们以前交过手」；小红书正文里那句引文同步改了，\n并把迈阿密那场的比分补进去当背景。\n\n⚠️⚠️ **这一条的第一版注释里，我引了一句源片根本没有的解说**\n（「as she did in the first meeting between the two on the US hard courts\nlast year」）。**结论碰巧是对的，判据是编的**——全文搜 `first meeting` /\n`last year` / `US hard` 一个都没有。CLAUDE.md 写着「判据落进文档的那一刻要问\n一句——它引用的那个东西，我打开看过吗？」，这就是那一句的又一个实例，而且\n**它比写错更危险：一个编出来的判据配上一个正确的结论，下一个人没有任何理由\n去查它**。现在钉的两条都是真的：第 14 行在核对表里、H2H 在 tennisexplorer 上。\n\n⚠️ 另外三条 `en_fixed`，都是**一个词被切成两个 / 数字写法**，`word_fix` 修不了：\n\n    第 1 行   `8 1,000 events this season.`        → `Eight 1000 events this season.`\n    第 6 行   `Taylor Towns end three and four.`   → `Townsend three and four.`\n    第 42 行  `Okay, Magdalena F in the next round.` → `Magdalena Frech`\n\n`word_fix` 另有五条，ASR 把三个人名全毁了（`Rebecca` / `Rebeccina` /\n`Reebachina` 三种错法都指莱巴金娜）。\n\n**其余 9 处不动**，分两类：写法差异（`score line`/`scoreline`、\n`hardcourt`/`hard court`、`8 1 000`/`eight one thousand`）和 whisper 漏词\n（`taylor`/`well`/`the`/`elena`/`try`/`supporting today` → `—`，我们这边对）。\n\n⚠️ **只有一处两边都没解出说得通的话**：第 11–12 行\n`to play all the those doubles in the single, but against Rybakina`，\nwhisper 给的是 `same goal`。**没有硬改**（`en_fixed` 只写确认过的），\n中文那一行只译她确定的意思——「她还要兼顾双打」，含糊那半截不替她编。",
-  "transcript_verified": true
+  "transcript_verified": true,
+  "_tail_why": "⚠️ **`end` 从 386.4 收到 385.9——第一版把 WTA 片尾板收进来了 0.2 秒。**\n\n判据是**把渲出来的成片从 Release 拉回本地逐帧看**，不是按「离源片末尾还有多远」推：\n\n    源片总长 396.0，第一版 end=386.4 → 「还剩 9.6 秒，片尾板应该在那之后」\n    ——**这条推理是错的**，CLAUDE.md 记过：那 9.6 秒里绝大部分就是片尾板本身\n\n拉回成片之后先标定坐标（拿一处**已知**的字幕换行当尺）：\n\n    第 57→58 行在源片 384.08 换 → 成片里量到 116.101\n    ∴ 源片 = 成片 + 267.979        （反推窗口起点 269.8 → 成片 1.821，\n                                    正好是封面那 45 帧＝1.80s，自洽）\n\n然后逐帧量整幅均值：\n\n    成片 118.181  均值 76.3   她还在画面里（最后一格真内容）\n    成片 118.221  均值 10.1   **一帧掉下去——片尾板的黑场**  → 源片 386.20\n    成片 118.501  均值 50.6   **WTA 绿底大 logo，肉眼可见**  → 源片 386.48\n\n所以片尾板从**源片 386.20** 起。收到 385.9 留 0.3 秒余量，也够渲染器在段尾\n做溶解时多读的那一点。最后一行字幕（源片 384.08–386.78）因此只显示 1.82 秒，\n读得完。"
 }

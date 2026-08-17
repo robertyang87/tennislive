@@ -4,7 +4,7 @@
 
 | # | 片内 | 跳到源片 | 英文 | 中文 | 判据 |
 |--:|:--|:--|:--|:--|:--|
-| 1 | 0:01.9 | 片内 1.9 秒 | Jaime, huge congratulations. | 海梅 恭喜你 |  |
+| 1 | 0:01.9 | 片内 1.9 秒 | Jaime, huge congratulations. | 法里亚 恭喜你 |  |
 | 2 | 0:04.9 | 片内 4.9 秒 | We saw you sitting on the chair at the end | 我们看到你坐在椅子上 |  |
 | 3 | 0:06.2 | 片内 6.2 秒 | of the match. | 坐了很久 |  |
 | 4 | 0:07.8 | 片内 7.8 秒 | What were you thinking about? | 那会儿你在想什么 |  |
@@ -47,12 +47,12 @@
 | 41 | 1:18.4 | 片内 78.4 秒 | to celebrate. | 就该好好庆祝 |  |
 | 42 | 1:18.9 | 片内 78.9 秒 | Because mentally you were tested | 今天你的心理被反复考验 |  |
 | 43 | 1:20.0 | 片内 80.0 秒 | so many times today. | 考验了很多次 |  |
-| 44 | 1:21.1 | 片内 81.1 秒 | You came back at you hard at the end | 第一盘末段他追得很凶 |  |
-| 45 | 1:22.2 | 片内 82.2 秒 | of the first set and you were a breakdown | 第二盘你还被破发 |  |
+| 44 | 1:21.1 | 片内 81.1 秒 | He came back at you hard at the end | 第一盘末段他追得很凶 | ✏️ 已订正 |
+| 45 | 1:22.2 | 片内 82.2 秒 | of the first set and you were a break down | 第二盘你还被破发 | ✏️ 已订正 |
 | 46 | 1:23.6 | 片内 83.6 秒 | in the second. | 落后了 |  |
 | 47 | 1:25.0 | 片内 85.0 秒 | You thought clearly | 那些时刻你的头脑 |  |
 | 48 | 1:25.9 | 片内 85.9 秒 | in those moments today. | 一直很清楚 |  |
-| 49 | 1:27.2 | 片内 87.2 秒 | Yeah, sure. I was 4 -1 down on this set. | 确实 这一盘我一比四落后 |  |
+| 49 | 1:27.2 | 片内 87.2 秒 | Yeah, sure. I was 4-1 down on this set. | 确实 这一盘我一比四落后 | ✏️ 已订正 |
 | 50 | 1:30.4 | 片内 90.4 秒 | I made five games in a row | 然后连赢五局 |  |
 | 51 | 1:32.1 | 片内 92.1 秒 | against Ben Shelton in this center court. | 对手是谢尔顿 还是在中央球场 |  |
 | 52 | 1:34.2 | 片内 94.2 秒 | Not easy, so I'm just really focused | 不容易 所以我就是很专注 |  |

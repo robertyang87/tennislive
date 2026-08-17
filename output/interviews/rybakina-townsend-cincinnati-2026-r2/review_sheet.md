@@ -1,6 +1,6 @@
 # 转写核对表：rybakina-townsend-cincinnati-2026-r2
 
-源片 https://www.youtube.com/watch?v=iszb3-lsyLc　采访段 269.8–386.4 秒（共 58 行）
+源片 https://www.youtube.com/watch?v=iszb3-lsyLc　采访段 269.8–385.9 秒（共 58 行）
 
 | # | 片内 | 跳到源片 | 英文 | 中文 | 判据 |
 |--:|:--|:--|:--|:--|:--|
