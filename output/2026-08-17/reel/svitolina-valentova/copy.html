@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>8.17 赛场之上 | 七个赛点她全救下</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>18 岁的瓦伦托娃握着七个赛点，最后决胜盘 0-6
+
+辛辛那提 WTA1000 女单第二轮，P&amp;G 中央球场。8 号种子、世界第 9 的斯维托丽娜 3-6 7-6(5) 6-0 逆转世界第 64 的瓦伦托娃，全场 2 小时 22 分 54 秒。
+
+分水岭是第二盘 6-5，斯维托丽娜自己的发球局。
+
+转播记分条把这件事直接印在了画面上：156 秒那一段挂着「MATCH POINT 6」，174 秒之后换成「MATCH POINT 7」——编号本身就说明前面还有五个。两个都没兑现，抢七 5-7 丢掉。
+
+这一盘打了 1 小时 11 分，比第一盘长了整整 30 分钟：
+
+第一盘 41 分钟（瓦伦托娃 6-3）
+第二盘 71 分钟（斯维托丽娜 7-6(5)）
+决胜盘 28 分钟（斯维托丽娜 6-0）
+
+决胜盘像换了个人。非受迫失误那一栏：
+
+第一盘 瓦伦托娃 20 ｜ 斯维托丽娜 15
+第二盘 瓦伦托娃 35 ｜ 斯维托丽娜 24
+决胜盘 瓦伦托娃 12 ｜ 斯维托丽娜 2
+
+制胜分同一盘是 6 对 10。斯维托丽娜的一发得分率也一路往上走：60% → 59% → 79%。
+
+全场看下来是这样一组数：瓦伦托娃 35 个制胜分，比对面多 11 个；可非受迫失误是 67 对 41。破发点她拿到 15 个，只兑现 5 个；斯维托丽娜 12 个，兑现 6 个。机会更多的是她，收得更干净的是对面。
+
+她 18 岁，2007 年 2 月生。斯维托丽娜 31 岁。两个人这是第一次交手。
+
+看台上有人举着乌克兰国旗。
+
+#网球 #网球时差 #斯维托丽娜 #辛辛那提公开赛 #WTA</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>七个赛点，下一次呢？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
