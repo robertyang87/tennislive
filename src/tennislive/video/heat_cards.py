@@ -1,4 +1,4 @@
-"""「28 度也能叫极端高温」那条片子的四张示意图。
+"""「28 度也能叫极端高温」那条片子的三张示意图。
 
 条文出自 **ATP 2026 年版规则书**（`2026-rulebook_19dec25.pdf`，210 页，
 2026-08-17 下载后逐条核对）第 VII 章 `O. Heat Policy`——**这一节 2026 年才有**，
@@ -64,76 +64,16 @@ def _head(title: str, subtitle: str) -> list[str]:
     ]
 
 
-# 2026-08-15 当地 15:00，梅森（辛辛那提赛场所在地）。德约那场 14:15 开打，
-# 第二盘那个 18 分钟的发球局大致落在这一小时里。
-# 出处：Open-Meteo 历史存档 API（`archive-api.open-meteo.com/v1/archive`）。
-# ⚠️ 顺序是**故意**的：气温排第一，因为它是这一屏要拆穿的那个数。
-THAT_AFTERNOON: tuple[tuple[str, str, str], ...] = (
-    ("气温", "28.6", "°C"),
-    ("湿度", "76", "%"),
-    ("风速", "1.3", "km/h"),
-    ("日照", "491", "W/m²"),
-)
-
-
-def that_afternoon() -> str:
-    """那天下午场上的四个读数——气温单独摆左边，因为它是被拆穿的那个。
-
-    ⚠️ 这一屏**不画 WBGT 的值**。那个数由 ATP 在场地上量、不公开，我们没有；
-    画一个算出来的数上去，就是把推断印成事实。这一屏只说「原料是这四样」。
-    """
-    parts = _head("德约倒下那天，场上四个数", "2026-08-15 当地 15:00 · Open-Meteo 历史存档")
-
-    # 左边：气温，大字、但用**次级色**——它是这一屏要说「别只看它」的那个数。
-    parts.append(
-        f'<rect x="52" y="120" width="330" height="230" rx="14" '
-        f'fill="{_DIM}" fill-opacity="0.10" stroke="{_DIM}" stroke-width="1"/>'
-    )
-    parts.append(
-        f'<text x="217" y="168" text-anchor="middle" font-size="28" '
-        f'fill="{_DIM}">气温</text>'
-    )
-    parts.append(
-        f'<text x="217" y="256" text-anchor="middle" font-size="76" '
-        f'font-weight="700" fill="{_DIM}">28.6</text>'
-    )
-    parts.append(
-        f'<text x="217" y="300" text-anchor="middle" font-size="30" '
-        f'fill="{_DIM}">摄氏度</text>'
-    )
-    parts.append(
-        f'<text x="217" y="336" text-anchor="middle" font-size="26" '
-        f'fill="{_DIM}">听起来不吓人</text>'
-    )
-
-    # 右边：另外三个，竖排，用强调色——它们才是这一屏的主语。
-    for i, (label, value, unit) in enumerate(THAT_AFTERNOON[1:]):
-        y = 120 + i * 78
-        parts.append(
-            f'<rect x="410" y="{y}" width="438" height="66" rx="10" '
-            f'fill="{_FILL}" fill-opacity="0.12" stroke="{_FILL}" stroke-width="1"/>'
-        )
-        parts.append(
-            f'<text x="436" y="{y + 44}" font-size="28" fill="{_FG}">{label}</text>'
-        )
-        parts.append(
-            f'<text x="822" y="{y + 44}" text-anchor="end" font-size="34" '
-            f'font-weight="700" fill="{_ACC}">{value} {unit}</text>'
-        )
-
-    # ⚠️ 这一行和底下那句**故意隔开 60px 以上**：它们是两件事（一句描述、
-    # 一句结论）。第一版排在 404，和 496 之间空出 92px 的洞，读起来像漏了一行。
-    parts.append(
-        f'<text x="450" y="432" text-anchor="middle" font-size="30" '
-        f'fill="{_FG}">湿度七成半，风几乎没有，太阳还在头顶</text>'
-    )
-    parts.append(
-        f'<text x="450" y="{INK_BOTTOM - 4}" text-anchor="middle" font-size="30" '
-        f'fill="{_FG}">要不要停赛，看的不是第一个数</text>'
-    )
-    parts.append("</svg>")
-    return "\n".join(parts)
-
+# ⚠️ **原来这儿还有一张 `that_afternoon()`——那天下午四个气象读数装在四个
+# 框里——2026-08-17 删掉了。** 账号所有者的原话是「我需要更多是图片或视频，
+# 而不是文字卡片」，而四个数字摆进四个方框正是最像文字卡片的那一种。第 ②
+# 屏换成了那天下午的实拍（满场、白得发亮的天），**四个数一个没丢**，搬进了
+# 旁白和要点。数据出处记在 `assets/explainer/heat-rule/credits.json` 和
+# `tournament_story` 的 `_facts` 里。
+#
+# ⚠️ 剩下这三张**不换**：一个是公式的权重、一个是门槛的阶梯、一个是两句
+# 原话——照片讲不清，那正是「示意图的触发条件是照片讲不清，不是照片找不到」
+# 说的那种。别为了「多点图」把它们也换掉。
 
 # ISO 7243:2017 的户外公式：WBGT = 0.7·自然湿球 + 0.2·黑球 + 0.1·干球。
 # ⚠️ 这三份权重**不出自 ATP 规则书**——规则书只说 WBGT 是「composite metric」，
