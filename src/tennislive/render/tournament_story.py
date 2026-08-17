@@ -2493,6 +2493,111 @@ STORIES = STORIES + (
         source_url="https://en.wikipedia.org/wiki/Coleman_Wong",
     ),
     _trivia_story(
+        slug="wang-sabalenka",
+        title="王欣瑜第三轮VS萨巴伦卡",
+        subtitle="赛事前瞻 · WTA 1000",
+        identity="唯一一次交手，她拿走过第一盘",
+        chips=("WTA 1000", "第三轮", "第二次交手"),
+        hero=(
+            "辛辛那提第三轮，王欣瑜对上世界第一萨巴伦卡。两人只交手过一次："
+            "2022 年 1 月澳网第二轮，当时 20 岁的王欣瑜在罗德·拉沃尔球场"
+            "6-1 拿下第一盘，最终 1-2 落败；那场球的总得分是 84-83，多的那一分在她手上。"
+        ),
+        facts=(
+            "萨巴伦卡 1998 年 5 月生，白俄罗斯人，2026 年 8 月 10 日那期排名世界第一、"
+            "8670 分；本赛季至辛辛那提第三轮前 39 胜 7 负，其中硬地 26 胜 2 负，"
+            "本赛季三个冠军分别在布里斯班、印第安维尔斯和迈阿密；生涯 24 个巡回赛单打冠军，"
+            "并在 2024 年拿下辛辛那提站冠军。本站第二轮 6-2、7-6(2) 胜吉布森。",
+            "王欣瑜 2001 年 9 月生，2026 年 8 月 10 日那期世界第 36（较上期升 5 位），"
+            "生涯最高第 30；本赛季 22 胜 19 负。1 月在奥克兰一路打进决赛，"
+            "随后的澳网连胜奥斯塔彭科与诺斯科娃、打进 1/8 决赛。本站首轮 6-4、6-3 "
+            "胜范德温克尔，第二轮 3-6、6-1、6-4 逆转 31 号种子维基奇，用时 2 小时 11 分。",
+            "两人唯一一次交手是 2022 年 1 月 20 日澳网第二轮，场地是罗德·拉沃尔球场，"
+            "全场 1 小时 56 分钟。王欣瑜 6-1 拿下第一盘后 4-6、2-6 落败；"
+            "那一盘萨巴伦卡双误 12 次，全场双误 19 次，而全场总得分王欣瑜 84、萨巴伦卡 83。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2022-01",
+                player="王欣瑜",
+                age="20 岁",
+                headline="澳网次轮 6-1 拿下萨巴伦卡的第一盘",
+                detail="罗德·拉沃尔球场，1 小时 56 分钟，最终 6-1、4-6、2-6 落败；"
+                "全场总得分 84-83，多的那一分在她手上。",
+                source_url="https://www.tennisexplorer.com/mutual/sabalenka-aryna/wang-77549/",
+            ),
+            ChampionMoment(
+                date="2026-08-16",
+                player="王欣瑜",
+                age="24 岁",
+                headline="辛辛那提次轮逆转 31 号种子维基奇",
+                detail="先丢一盘，3-6、6-1、6-4 拿下，用时 2 小时 11 分，进入第三轮。",
+                source_url="https://www.wtatennis.com/tournament/1017/cincinnati/2026/scores",
+            ),
+        ),
+        image_keys=(),
+        source_label="WTA 官方排名与赛会数据 / flashscore 官方逐盘统计 / tennisexplorer",
+        image_credit="WTA 官方图库",
+        source_url="https://www.wtatennis.com/tournament/1017/cincinnati/2026/scores",
+    ),
+    _trivia_story(
+        slug="eala-anisimova",
+        # ⚠️ 写「三轮」不写「第三轮」：`knowledge_title` 会拼成
+        # 「📖8.17网球有故事｜…」，带「第」字算出来 21 个字位，超过小红书标题
+        # 那一格的 20 —— `test_knowledge_titles_are_specific_and_fit_xiaohongshu`
+        # 当场红。轮次的完整叫法在封面 fixture 和旁白里照旧是「第三轮」。
+        title="伊埃拉三轮VS阿尼西莫娃",
+        subtitle="赛事前瞻 · WTA 1000",
+        identity="一个爬到生涯最高，一个从世界第三往回找",
+        chips=("WTA 1000", "第三轮", "首次交手"),
+        # ⚠️ `hero` 也会铺成知识帖的一段，同样卡 120 字（第一版 128 字，红过一次）。
+        hero=(
+            "辛辛那提第三轮，世界第 20 的伊埃拉第一次碰上世界第 10 的阿尼西莫娃。"
+            "伊埃拉今年 39 胜 19 负，6 月在柏林赢下莱巴金娜、8 月在华盛顿拿到生涯首冠；"
+            "阿尼西莫娃排到过世界第 3，今年最好成绩是 2 月的迪拜四强。"
+        ),
+        facts=(
+            "阿尼西莫娃 2001 年 8 月生，美国人，生涯最高世界第 3，2026 年 8 月 10 日"
+            "那期世界第 10、4353 分；本赛季 18 胜 10 负，而 2025 赛季是 48 胜 19 负。"
+            "1 月澳网打进 1/4 决赛负于佩古拉，2 月迪拜打进四强又负于同一人；"
+            "2 月之后再没打进过四强。本站 9 号种子，第二轮 6-2、6-3 胜森梅兹。",
+            # ⚠️ 这一条压在 120 字以内是硬要求：`knowledge_copy` 把每条 fact 铺成
+            # 知识帖的一段，而 `test_all_knowledge_copy_is_plain_mobile_first_and_not_numbered`
+            # 拦超过 120 字的段（手机上读不下去）。第一版 145 字当场红，
+            # 「本站第二轮鲁塞退赛」那半句因此挪到了下一条。
+            "伊埃拉 2005 年 5 月生，2026 年 8 月 10 日那期世界第 20，就是她的生涯最高，"
+            "本赛季 39 胜 19 负。6 月柏林站第二轮 7-5、6-4 胜莱巴金娜，1/4 决赛再胜"
+            "斯维托丽娜进四强；8 月 3 日华盛顿夺冠，生涯首个巡回赛单打冠军。"
+            "这是她第一次参加辛辛那提站。",
+            "两人此前从未交手，公开记录里的交手战绩是 0-0，这是巡回赛生涯第一次正面交锋。"
+            "伊埃拉本站第二轮 6-1、3-0 领先时对手鲁塞退赛，全场只打了 58 分钟；"
+            "赢下第三轮的人进 16 强。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2026-06-18",
+                player="伊埃拉",
+                age="21 岁",
+                headline="柏林次轮 7-5、6-4 胜莱巴金娜",
+                detail="随后 1/4 决赛 6-3、6-4 再胜斯维托丽娜，打进柏林站四强。",
+                source_url="https://www.tennisexplorer.com/player/eala/?annual=2026",
+            ),
+            ChampionMoment(
+                date="2026-02-20",
+                player="阿尼西莫娃",
+                age="24 岁",
+                headline="迪拜四强，本赛季至今的最好成绩",
+                detail="1/4 决赛 2-6、7-5、7-6(4) 胜安德烈耶娃，四强 1-6、6-4、6-3 负于佩古拉；"
+                "此后半年再没打进过四强。",
+                source_url="https://www.tennisexplorer.com/player/anisimova-3be62/?annual=2026",
+            ),
+        ),
+        image_keys=(),
+        source_label="WTA 官方排名与赛会数据 / tennisexplorer 逐场记录",
+        image_credit="The Enquirer / WTA 官方图库",
+        source_url="https://www.wtatennis.com/tournament/1017/cincinnati/2026/scores",
+    ),
+    _trivia_story(
         slug="masters-format",
         title="大师赛为什么变两周",
         subtitle="网球观察 · 赛程篇",

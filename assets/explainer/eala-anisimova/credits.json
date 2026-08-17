@@ -1,0 +1,60 @@
+{
+  "_note": "「开球之前」伊埃拉 VS 阿尼西莫娃，辛辛那提第三轮（北京时间 2026-08-18 早）。图片版（解说片），不从比赛录像里剪。每张都 Read 打开看过，不是只看元数据。",
+  "_source_why": "三张实拍全部出自 **The Enquirer 每日图集**（USA Today／Gannett 网络，辛辛那提本地报纸派自己的摄影师拍这一站）。它的说明**自带完整四要素**——球员、对手、赛事、场馆、日期一句话齐全，比赛事图库的文件名还硬：`Amanda Anisimova, of the United States, returns to Zeynep Sonmez, of Turkey, at the Cincinnati Open at the Lindner Family Tennis Center in Mason, Ohio`。原图挂在 `gannett-cdn.com/authoring/…`（说明里给的 `cincinnati.com/gcdn/…` 恒 406，要换域名，见 CLAUDE.md），4000~6500px 级。\n\n版权是报社的（`Albert Cesare/The Enquirer`），属于四类源里的第 ③ 档「新闻站／图片社」，授权照实记，发布前由人工判断。\n\n⚠️ WTA 官方图库这一批**没有阿尼西莫娃**（`sweep_wta` 跑过，0 张）——那是「还没发」不是「没有」，WTA 一批只发几个人。",
+  "anisimova_cincinnati_2026_backhand.jpg": {
+    "source": "The Enquirer（USA Today Network），经 gannett-cdn 原图",
+    "page": "https://www.gannett-cdn.com/authoring/authoring-images/2026/08/15/PCIN/91319413007-081526-tennis-07.JPG",
+    "description": "图集原说明：`Amanda Anisimova, of the United States, returns to Zeynep Sonmez, of Turkey, at the Cincinnati Open at the Lindner Family Tennis Center in Mason, Ohio`。那正是她本站第二轮（8/15，6-2 6-3 胜森梅兹）。\n\n四道闸门：①时间地点人物全由说明自证；②在比赛中——双手反手引拍到击球之间，球在画面里；③有冲击力——正脸、眼睛盯着球，看得见表情，不是只有一张脸的大头；④够清晰——原图 8640×5760，入库缩到 3200×2133（卡片只有 2160×2880，留足余量），铺 1080×1440 是 0.68 倍缩小。",
+    "date": "2026-08-15",
+    "author": "Albert Cesare / The Enquirer",
+    "licence": "unverified — 报社版权，非商业资讯引用，发布前由人工判断",
+    "size": [
+      3200,
+      2133
+    ]
+  },
+  "anisimova_cincinnati_2026_forehand.jpg": {
+    "source": "The Enquirer（USA Today Network），经 gannett-cdn 原图",
+    "page": "https://www.gannett-cdn.com/authoring/authoring-images/2026/08/15/PCIN/91319410007-081526-tennis-10.JPG",
+    "description": "同一辑同一场，原说明同上（`Anisimova … returns to Sonmez …`）。用在末屏，和第 ① 屏那张**不是同一个动作**：这张是正手，球正在拍面前，另一只手张开保持平衡——CLAUDE.md「同一个人两屏不能长一样」。原图 4227×2818，入库缩到 3200×2133。",
+    "date": "2026-08-15",
+    "author": "Albert Cesare / The Enquirer",
+    "licence": "unverified — 报社版权，非商业资讯引用，发布前由人工判断",
+    "size": [
+      3200,
+      2133
+    ]
+  },
+  "eala_cincinnati_2026_serve.jpg": {
+    "source": "The Enquirer（USA Today Network），经 gannett-cdn 原图",
+    "page": "https://www.gannett-cdn.com/authoring/authoring-images/2026/08/15/PCIN/91319420007-081526-tennis-25.JPG",
+    "description": "图集原说明：`Alexandra Eala, of the Philippines, serves to Elena Gabriela Ruse, of Russia, at the Cincinnati Open at the Lindner Family Tennis Center in Mason, Ohio`——那正是她本站第二轮（8/15，6-1 3-0 领先时鲁塞退赛）。\n\n**画面自证**：背景挡板上印着 `WTA 1000`，赛事级别写在画面里。\n\n四道闸门：①说明自证；②在比赛中——发球触球那一刻，球在拍面上；③有冲击力——低机位仰角，人和拍撑满画面高度；④够清晰——原图 4363×6544，**竖构图**，入库缩到 2000×3000，铺 1080×1440 是 0.54 倍缩小。竖图铺 3:4 的卡不用横向切掉两边，这也是它当封面的原因。",
+    "date": "2026-08-15",
+    "author": "Albert Cesare / The Enquirer",
+    "licence": "unverified — 报社版权，非商业资讯引用，发布前由人工判断",
+    "size": [
+      2000,
+      3000
+    ]
+  },
+  "_reused": {
+    "assets/explainer/nadal-academy/eala_washington_2026_trophy.jpg": "第 ③ 屏（讲她八月在华盛顿拿到生涯首冠）用的是仓库里已有的这张捧杯照，credits 在 assets/explainer/nadal-academy/credits.json。CLAUDE.md 的第 2 道闸门有明确例外：**这一屏讲的是夺冠时，捧杯照优先于击球中**。"
+  },
+  "_rejected": [
+    "gannett `…-081526-tennis-04.JPG`（Anisimova serves）—— 抛球预备的近景，脸是侧面、被球拍挡住半张，不如反手那张能看见表情。",
+    "gannett `…-081526-tennis-24.JPG`（Eala reacts after winning a point）—— 握拳庆祝，情绪很好，但这条片子四张实拍里已经有一张是「她在场上的样子」，而封面需要的是竖构图；留给以后。",
+    "gannett `…-081526-tennis-21/23.JPG` —— 说明写的主体是**鲁塞**（`Elena Gabriela Ruse … reacts / prepares to return`），不是伊埃拉。**说明里主体是谁，就得按谁算**，不能因为画面里两个人都在就当成伊埃拉的照片。"
+  ],
+  "eala_cincinnati_2026_stretch.jpg": {
+    "source": "The Enquirer（USA Today Network），经 gannett-cdn 原图",
+    "page": "https://www.gannett-cdn.com/authoring/authoring-images/2026/08/15/PCIN/91319417007-081526-tennis-22.JPG",
+    "description": "图集原说明：`Alexandra Eala, of the Philippines, returns to Elena Gabriela Ruse, of Russia, at the Cincinnati Open at the Lindner Family Tennis Center in Mason, Ohio`——同一辑同一场（本站第二轮，8/15）。\n\n用在第 ④ 屏。⚠️ **换掉的是「和封面同一张」**：第一版这一屏和封面共用那张发球竖图，渲出来两屏一模一样，而且要点块正好压在她脸上（发球那张主体在画面下半）。这张的主体在上半、右侧，要点块落在左下的空场上，脸不被盖。\n\n四道闸门：①说明自证；②在比赛中——单手伸到极限接球，球在画面里；③有冲击力——手臂和球拍连成一条斜线，表情用力；④够清晰——原图 5273×3515，入库缩到 3200×2133，铺 1080×1440 是 0.68 倍缩小。",
+    "date": "2026-08-15",
+    "author": "Albert Cesare / The Enquirer",
+    "licence": "unverified — 报社版权，非商业资讯引用，发布前由人工判断",
+    "size": [
+      3200,
+      2133
+    ]
+  }
+}
