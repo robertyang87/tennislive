@@ -8123,24 +8123,36 @@ def test_dry_run要把装不下的旁白当场报出来(tmp_path):
     assert "装不下" in bad.stdout, bad.stdout
 
 
-def test_单人封面的暗角可以按条关掉但两头要留(tmp_path):
-    """账号所有者 2026-08-03：「不要虚化背景，铺满全 3:4 的画」。
+def test_封面正中那道暗角默认不画两头要留(tmp_path):
+    """账号所有者 2026-08-17：「背景图**不要再加前面阴影**，导致背景图看着模糊啊」。
 
-    「铺满」本来就成立（solo 是 `background-size:cover`，照片顶到四边、没有垫层）；
-    让实拍看起来发虚的是盖在整幅上的 `.scrim`——它的第二道 radial 在**画面正中**
-    压 58% 的暗，一张真实照片被洗成一层背景板。
+    同一件事他说过两次——2026-08-03 是「不要虚化背景，铺满全 3:4 的画」。
+    「铺满」本来就成立（solo 是 `background-size:cover`）；让实拍看起来发虚的是
+    `.scrim` 的第二道 radial：它在**画面正中**压 58% 的暗，一张真实照片被洗成
+    一层背景板，读起来就是「这张图不清楚」。真渲出来量过，同一张海报正中那一段
+    的均亮 **64.9 → 85.9**。
 
-    ⚠️ **不许直接改那个默认值。** 那段 CSS 是从解说片的 cover 屏整段抄过来的，
-    源码注释写着「一个数都没动，各调各的就会慢慢漂开」。所以做成**按条声明**
-    （`cover.scrim: "clear"`），没声明的片子和解说片仍然是同一个样子。
+    ## 为什么是翻默认，不是再加一个开关
 
-    判据三头，缺一头都可能变成假绿：
+    这个开关 2026-08-03 就有了（`cover.scrim: "clear"`），而翻面之前数了一遍：
+    **100 条 solo 里 74 条已经逐条写着它**。也就是说它早就不是默认，只是每个人
+    都得记得写那一行；剩下 26 条不是选了暗角，是**漏了**——`svitolina-valentova`
+    就在这 26 条里，而账号所有者正是看着它说的这句话。**一个 74% 的人都要手动
+    关掉的默认值，本身就是错的默认值。**
 
-    1. 关掉的**只有正中那一道**——上下两头必须留着，台头压在顶上、钩子压在
-       中间偏下，浅色字压在浅色画面上会没。
-    2. **默认仍然带中心暗角**（不声明的片子不受影响）。
+    ## 判据三头，缺一头都可能变成假绿
+
+    1. 关掉的**只有正中那一道**——上下两头必须留着：台头压在顶上、比分板压在
+       底下，浅色字压在浅色画面上会没。这一头是「判据自己的判据」：两头也一起
+       关掉的话，主断言照样绿，而海报是坏的。
+    2. **加回来要显式写 `scrim: "dim"`**——留一条路给「文字正好压在主体上」那种
+       素材，但它得是一次看得见的决定。
     3. **这个开关真的接在 `_solo_body` 上**——只测 `_scrim_css` 证明不了海报
        读了它。这是这个仓库反复栽的「写了不等于跑过」。
+
+    ⚠️ `"clear"` 这个老写法继续认（74 条已发的 spec 写着它），它现在和不写
+    一个意思——**不许因为「默认已经清了」就去把那 74 行删掉**：删了它们在
+    翻面之前的历史就读不出来了。
     """
     sys.path.insert(0, str(Path("tools").resolve()))
     import versus_poster as vp  # noqa: PLC0415
@@ -8148,13 +8160,15 @@ def test_单人封面的暗角可以按条关掉但两头要留(tmp_path):
     CENTRE = "radial-gradient(128% 40% at 50% 50%"
     TOP_BOTTOM = "linear-gradient(180deg,rgba(6,28,20,.62)"
 
-    assert CENTRE in vp._scrim_css(False), "默认那一版没有中心暗角了"
-    assert CENTRE not in vp._scrim_css(True), "clear 没有关掉中心暗角"
+    # ① 默认不画；显式 dim 才画
+    assert CENTRE not in vp._scrim_css(False), "默认又把中心暗角画上了"
+    assert CENTRE in vp._scrim_css(True), "`scrim: \"dim\"` 加不回中心暗角"
+    # ② 上下两头两种情况都要留
     for flag in (False, True):
         assert TOP_BOTTOM in vp._scrim_css(flag), (
-            "上下两头的渐变被一起关掉了——台头和钩子会压在浅色画面上看不见")
+            "上下两头的渐变被一起关掉了——台头和比分板会压在浅色画面上看不见")
 
-    # ③ 真走一遍 `_solo_body`：声明了就不带，没声明就带
+    # ③ 真走一遍 `_solo_body`
     from PIL import Image  # noqa: PLC0415
 
     photo = tmp_path / "p.jpg"
@@ -8162,10 +8176,12 @@ def test_单人封面的暗角可以按条关掉但两头要留(tmp_path):
     base = {"eyebrow": "赛场之上", "subject": "某人", "hook": "一行钩子",
             "portrait": {"image": str(photo)}}
     _, plain = vp._solo_body(dict(base))
-    _, cleared = vp._solo_body({**base, "scrim": "clear"})
-    assert CENTRE in plain, "不声明 scrim 的封面丢了中心暗角"
-    assert CENTRE not in cleared, (
-        "`cover.scrim: \"clear\"` 没接进 `_solo_body`——开关写了但海报没读")
+    _, legacy_clear = vp._solo_body({**base, "scrim": "clear"})
+    _, dimmed = vp._solo_body({**base, "scrim": "dim"})
+    assert CENTRE not in plain, "不写 scrim 的封面还带着中心暗角——默认没翻过来"
+    assert CENTRE not in legacy_clear, "老写法 `clear` 不再等于「不画」了"
+    assert CENTRE in dimmed, (
+        "`cover.scrim: \"dim\"` 没接进 `_solo_body`——开关写了但海报没读")
 
 
 def test_装yt_dlp一律要带default():

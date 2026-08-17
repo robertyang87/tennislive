@@ -942,19 +942,27 @@ def hook_title_px(lines: list[str]) -> int:
 STORYCOPY_TOP = 750
 
 
-def _scrim_css(clear: bool) -> str:
+def _scrim_css(dim_centre: bool) -> str:
     """盖在照片上的那层暗。
 
-    **上下两头一定要留**：台头压在顶上、钩子压在中间偏下，浅色字压在浅色画面上
-    就没了。**能关掉的只有正中那道 radial**——它是给「文字正好压在主体上」准备的，
-    代价是把整张实拍洗淡一档。
+    **上下两头一定要留**：台头压在顶上、比分板压在底下，浅色字压在浅色画面上
+    就没了。⚠️ 中间那一段本来就只有 8%，压的是天空和看台，不是主体。
+
+    ⚠️⚠️ **正中那道 radial 默认不画了**（2026-08-17）。账号所有者：「背景图不要
+    再加前面阴影，**导致背景图看着模糊啊**」——那正是它干的事：在画面正中压 58%
+    的暗，一张实拍被洗成一层背景板，读起来就是「这张图不清楚」。
+
+    **翻面之前先数了一遍**：100 条 solo 里已经有 **74 条**逐条写着
+    `scrim: "clear"` 把它关掉——也就是说它早就不是默认，只是每个人都得自己记得
+    写那一行；剩下 26 条不是选择了它，是**漏了**。默认翻过来之后那 26 条一起
+    受益，而真要压暗的按条写 `scrim: "dim"` ＋ `_scrim_why`。
     """
     top_bottom = ("linear-gradient(180deg,rgba(6,28,20,.62) 0%,rgba(6,28,20,.16) 17%,"
                   "rgba(6,28,20,.08) 32%,rgba(6,28,20,.08) 66%,rgba(6,28,20,.22) 84%,"
                   "rgba(6,28,20,.58) 100%)")
     centre = ("radial-gradient(128% 40% at 50% 50%,rgba(6,28,20,.58) 0%,"
               "rgba(6,28,20,.30) 58%,rgba(6,28,20,0) 100%)")
-    layers = top_bottom if clear else f"{top_bottom},{centre}"
+    layers = f"{top_bottom},{centre}" if dim_centre else top_bottom
     return f".scrim{{position:absolute;inset:0;background:{layers}}}"
 
 
@@ -1021,14 +1029,12 @@ def _solo_body(cover: dict) -> tuple[str, str]:
     icon_html = (f'<img class="brand-icon" src="{_data_uri(icon)}" alt="">'
                  if icon.is_file() else "")
     topic = str(cover.get("topic", "")).strip()
-    # **正中那道暗角是可以关掉的。** 下面那层 `.scrim` 是从解说片的 cover 屏
-    # 整段抄过来的（两条线出去的封面必须一个样），它的第二道 radial 在画面
-    # **正中**压 58% 的暗——文字压在中间时那是必要的对比度，可素材本身够暗、
-    # 或者账号所有者要「照片就是照片」时，它会把一张实拍洗成一层背景板。
-    # 账号所有者 2026-08-03：「不要虚化背景，铺满全 3:4 的画」。
-    # 所以**按条声明**（`cover.scrim: "clear"`），不去动那个共用的默认值——
-    # 各调各的就会慢慢漂开，那正是这段注释原本要防的。
-    clear_scrim = str(cover.get("scrim", "")).strip().lower() == "clear"
+    # **正中那道暗角默认不画**（2026-08-17 翻的面，来路见 `_scrim_css`）。
+    # 账号所有者 2026-08-03「不要虚化背景，铺满全 3:4 的画」、2026-08-17
+    # 「背景图不要再加前面阴影，导致背景图看着模糊啊」——同一件事说了两次。
+    # ⚠️ `"clear"` 这个老写法继续认（74 条已发的 spec 写着它），它现在和不写
+    # 一个意思；要把暗角**加回来**才需要显式写 `scrim: "dim"`。
+    dim_centre = str(cover.get("scrim", "")).strip().lower() == "dim"
     lines = [ln.strip() for ln in str(cover.get("hook", "")).split("\n") if ln.strip()]
     hook = "".join(f"<div>{html.escape(ln)}</div>" for ln in lines)
     # 标题字号按**最长那一行**算，别写死——算法和它的来路全在 `hook_title_px()`
@@ -1221,7 +1227,7 @@ __SCRIM__
 .tb{font-size:.62em;color:#93a79c;vertical-align:super;margin-left:.06em}
 .setplain{color:#c6f65a;margin-right:.42em}
 """
-        .replace("__SCRIM__", _scrim_css(clear_scrim))
+        .replace("__SCRIM__", _scrim_css(dim_centre))
         .replace("__STORYCOPY_TOP__", str(STORYCOPY_TOP))
         .replace("__SCORE_EN_PX__", str(SCORE_EN_PX))
         .replace("__SCORE_CN_PX__", str(score_cn_px(
