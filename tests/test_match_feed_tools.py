@@ -304,6 +304,61 @@ def test_h2h一场都没有返回None不是抛错(monkeypatch):
     assert sh.h2h_candidate("CUR00001") is None
 
 
+# ─── 近况（df_hh_1 的 Last matches 分区）───
+
+def _recent_form_feed() -> str:
+    """每个场地分区各带一节 Last matches，同一批近况在四个场地标签下重复四遍。
+
+    真实 df_hh_1 的形状：`KA÷<场地>¬ … ~KB÷Last matches: <球员>¬<最近几场>
+    ~KB÷Head-to-head matches¬…`，四个场地（All surfaces/Clay/Grass/Hard）各重复
+    一遍同一位球员的近况。dedup 判据：按球员名去重，保留第一份。
+    """
+    row = ("~KC÷{ts}¬KP÷{mid}¬KD÷hard¬KF÷{city}¬AC÷3¬"
+           "KJ÷{p1}¬UE÷x¬KK÷{p2}¬UG÷y¬KL÷{sets}¬")
+    # Saba 近况：W L W（2 胜 1 负，从近到远）
+    saba = (row.format(ts=9, mid="R1", city="Rome", p1="*Saba A.",
+                       p2="Other A.", sets="2:0")
+            + row.format(ts=8, mid="R2", city="Berlin", p1="Saba A.",
+                         p2="*Other B.", sets="1:2")
+            + row.format(ts=7, mid="R3", city="Doha", p1="*Saba A.",
+                         p2="Other C.", sets="2:1"))
+    # Alex 近况：L L W（1 胜 2 负）
+    alex = (row.format(ts=9, mid="R4", city="Rome", p1="Alex E.",
+                       p2="*Other D.", sets="0:2")
+            + row.format(ts=8, mid="R5", city="Berlin", p1="*Other E.",
+                         p2="Alex E.", sets="2:0")
+            + row.format(ts=7, mid="R6", city="Doha", p1="*Alex E.",
+                         p2="Other F.", sets="2:0"))
+    last_matches = (f"~KB÷Last matches: Saba A.¬{saba}"
+                    f"~KB÷Last matches: Alex E.¬{alex}"
+                    "~KB÷Head-to-head matches¬")
+    return ("SA÷2¬~KA÷All surfaces¬" + last_matches
+            + "~KA÷Clay¬" + last_matches
+            + "~KA÷Grass¬" + last_matches
+            + "~KA÷Hard¬" + last_matches)
+
+
+def test_parse_recent_form按球员去重不按场地重复():
+    """四场地各带一节 Last matches，同一位球员的近况重复四遍——解析要按球员名
+    去重，否则 recent_form_candidate 会把两个人各拼四遍（8 行）。"""
+    sh = _stat_hooks()
+    forms = sh.parse_recent_form(_recent_form_feed())
+    players = [f["player"] for f in forms]
+    assert players == ["Saba A.", "Alex E."], f"去重后应各一个，实际 {players}"
+
+
+def test_recent_form_candidate每人一句不去重成八行(monkeypatch):
+    """「X 最近 N 场 M 胜（串）」一人一句，4 场地 × 2 人 = 2 句，不是 8 句。"""
+    sh = _stat_hooks()
+    monkeypatch.setattr(sh, "fs_feed", lambda name, mid: _recent_form_feed())
+    got = sh.recent_form_candidate("CUR00001")
+    assert got["label"] == "近况"
+    detail = got["detail"]
+    assert detail.count("最近 3 场") == 2, f"应两个人各一句，实际：{detail}"
+    assert "Saba A. 最近 3 场 2 胜（WLW）" in detail
+    assert "Alex E. 最近 3 场 1 胜（LLW）" in detail
+
+
 # ---------- match_stat_hooks --from-spec ----------
 
 

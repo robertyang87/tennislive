@@ -7,6 +7,7 @@
 
 from __future__ import annotations
 
+import json
 import sys
 from pathlib import Path
 
@@ -20,6 +21,12 @@ def tool(monkeypatch):
     sys.path.insert(0, str(_TOOLS))
     import assemble_spec as a  # noqa: PLC0415
 
+    # 默认桩掉两个网络源：单元测试不许碰外网（conftest 清了 token，这里清网络）。
+    # 想测聚合逻辑的测试再自己 monkeypatch 覆盖这两处。
+    monkeypatch.setattr(a, "fetch_rankings",
+                        lambda: type("R", (), {"atp": [], "wta": []})())
+    monkeypatch.setattr(a, "fetch_zh_hot",
+                        lambda **kw: type("H", (), {"hits": [], "scanned": 0})())
     return a
 
 
@@ -176,6 +183,91 @@ def test_assemble把H2H自动喂进background(tool, monkeypatch):
         "H2H 要从狠数据里自动拎出来当球员背景喂给文案——文案要有背景支撑，别纯报比分")
 
 
+class _Entry:
+    """rank_map 只吃 `.name` / `.rank`，给个最小 RankEntry 形状。"""
+
+    def __init__(self, name: str, rank: int):
+        self.name = name
+        self.rank = rank
+
+
+def test_build_background聚合H2H近况排名热点(tool, monkeypatch):
+    """四个机械源要一起进 background：H2H + 近况（从 hit_data 拎）+ 排名 + 中文热点。"""
+    a = tool
+    monkeypatch.setattr(a, "fetch_rankings", lambda: type("R", (), {
+        "atp": [_Entry("Alexandra Eala", 140)],
+        "wta": [_Entry("Jessica Pegula", 9)],
+    })())
+    monkeypatch.setattr(a, "fetch_zh_hot", lambda **kw: type("H", (), {
+        "hits": [{"word": "郑钦文状态怎么了", "source": "微博热搜",
+                  "terms": ("eala",), "matched": ("伊埃拉",)}],
+        "scanned": 232,
+    })())
+
+    hit = [
+        {"label": "交手记录", "detail": "Eala A. 0 : 1 Pegula J."},
+        {"label": "近况", "detail": "Eala A. 最近 5 场 4 胜（WWWLW）；Pegula J. 最近 5 场 3 胜（WLWLW）"},
+        {"label": "总分差", "detail": "净差 4 分"},  # 狠数据不进 background，只进 facts
+    ]
+    text, notes = a.build_background("Alexandra Eala", "Jessica Pegula", hit)
+    assert "交手记录：Eala A. 0 : 1 Pegula J." in text
+    assert "近况：Eala A. 最近 5 场 4 胜" in text
+    assert "排名：伊埃拉 世界第 140；佩古拉 世界第 9" in text
+    assert "中文热搜：郑钦文状态怎么了（微博热搜）" in text
+    assert "总分差" not in text, "狠数据只进 facts，不进 background——背景是「这个人」，不是「这个比分」"
+    assert not notes, f"四个源都成功，不该有失败 note：{notes}"
+
+
+def test_build_background排名源挂了不拖垮(tool, monkeypatch):
+    """一个源挂了只写 note，背景仍返回能拿到的部分——退化要出声不静默。"""
+    a = tool
+    monkeypatch.setattr(a, "fetch_rankings", lambda: (_ for _ in ()).throw(ConnectionError("down")))
+    monkeypatch.setattr(a, "fetch_zh_hot",
+                        lambda **kw: type("H", (), {"hits": [], "scanned": 0})())
+    hit = [{"label": "交手记录", "detail": "Eala A. 1 : 0 Pegula J."}]
+    text, notes = a.build_background("Alexandra Eala", "Jessica Pegula", hit)
+    assert "交手记录" in text, "排名挂了 H2H 还得在"
+    assert any("排名没成" in n for n in notes), "排名失败要出声"
+
+
+def test_build_background热点撞不上不是抓挂了(tool, monkeypatch):
+    """中文热榜上没这两位是常态，note 要把「撞不上」和「抓挂了」分开说。"""
+    a = tool
+    monkeypatch.setattr(a, "fetch_rankings",
+                        lambda: type("R", (), {"atp": [], "wta": []})())
+    monkeypatch.setattr(a, "fetch_zh_hot",
+                        lambda **kw: type("H", (), {"hits": [], "scanned": 232})())
+    _, notes = a.build_background("Alexandra Eala", "Jessica Pegula", [])
+    assert any("扫 232 条" in n and "没有撞上" in n for n in notes), (
+        "扫了 232 条却没撞上，note 要说清是「扫了但没有」，别和「抓挂了」混在一起")
+
+
+def test_assemble命令行background优先跳过聚合(tool, monkeypatch):
+    """--background 显式给了就跳过自动聚合（终审手填时用），别画蛇添足。"""
+    a = tool
+    monkeypatch.setattr(a, "resolve_match_id", lambda h, aw: "4CYI9Ick")
+    monkeypatch.setattr(a, "matchup_order",
+                        lambda h, aw, mid: [(h, a.player_zh(h)), (aw, a.player_zh(aw))])
+    monkeypatch.setattr(a, "stats_block", lambda mid: {
+        "a": {}, "b": {}, "_missing_required": [], "_has_winners_ue": False})
+    monkeypatch.setattr(a, "collect", lambda mid, h, aw: {"candidates": [], "durations": []})
+    monkeypatch.setattr(a, "points", lambda mid: [])
+    monkeypatch.setattr(a, "rank_games", lambda games: [])
+    monkeypatch.setattr(a, "Chat", lambda: type("C", (), {"ready": True, "channel": "x"})())
+
+    captured = {}
+
+    def fake_editorial(chat, **kw):
+        captured.update(kw)
+        return {"beats": ["b"]}
+
+    monkeypatch.setattr(a, "draft_editorial", fake_editorial)
+    # 打了桩还显式给了 background——断言收到的就是命令行那份，不是聚合出来的
+    a.assemble(slug="x", home="A E", away="B R", event="C", year=2026,
+               fixture="", flashscore_id="4CYI9Ick", background="终审手填的背景")
+    assert captured["background"] == "终审手填的背景"
+
+
 def test_assemble给source_url写进草稿(tool, monkeypatch):
     a = tool
     monkeypatch.setattr(a, "resolve_match_id", lambda h, aw: "4CYI9Ick")
@@ -274,6 +366,44 @@ def test_assemble给captions跑窗口起草(tool, monkeypatch, tmp_path):
                        captions_path=str(caps), cuts_path=str(cuts))
     assert draft["segments"][0]["narration"] == "一段"
     assert any("窗口起草 1 段" in n for n in draft["_notes"])
+
+
+def test_assemble机械对齐优先于读字幕(tool, monkeypatch, tmp_path):
+    """给了 pbp + scoreboard 就走 align_points 机械对齐出 segments，标
+    `_segments_source`，且不跑 draft_segments 那条读字幕的老路。"""
+    a = tool
+    monkeypatch.setattr(a, "resolve_match_id", lambda h, aw: "4CYI9Ick")
+    monkeypatch.setattr(a, "matchup_order",
+                        lambda h, aw, mid: [(h, a.player_zh(h)), (aw, a.player_zh(aw))])
+    monkeypatch.setattr(a, "stats_block", lambda mid: {
+        "a": {}, "b": {}, "_missing_required": [], "_has_winners_ue": False})
+    monkeypatch.setattr(a, "collect", lambda mid, h, aw: {"candidates": [], "durations": []})
+    monkeypatch.setattr(a, "points", lambda mid: [])
+    monkeypatch.setattr(a, "rank_games", lambda games: [])
+    monkeypatch.setattr(a, "Chat", lambda: type("C", (), {"ready": True, "channel": "x"})())
+    monkeypatch.setattr(a, "draft_editorial", lambda chat, **kw: {
+        "narration": ["她一分一分追回来", "五个破发点一个都没给", "六比零三比零"]})
+
+    # 合成逐分：B 发球被 A 破发（第 3 分是破发点 40-0）
+    def _pt(pa, pb, winner="A"):
+        return {"setNumber": 1, "gameNumber": 1, "server": "B", "pointWinner": winner,
+                "scoreAfterPoint": {"gameScore": {"teamAScore": pa, "teamBScore": pb}}}
+    pbp = tmp_path / "pbp.json"
+    pbp.write_text(json.dumps({"raw": {"points": [
+        _pt("15", "0"), _pt("30", "0"), _pt("40", "0"), _pt("G", "0")]}},
+        ensure_ascii=False), encoding="utf-8")
+    sb = tmp_path / "scoreboard.json"
+    sb.write_text(json.dumps([{"t": 10.0, "score": "0 0 40 0"}], ensure_ascii=False),
+                  encoding="utf-8")
+
+    draft = a.assemble(slug="x", home="A E", away="B R", event="C", year=2026,
+                       fixture="", flashscore_id="4CYI9Ick",
+                       pbp_path=str(pbp), scoreboard_path=str(sb))
+    assert draft.get("_segments_source", "").startswith("align_points"), (
+        "机械对齐的 segments 要标出来源，别和读字幕那条路混")
+    assert len(draft["segments"]) >= 4, "冷开场 + 三个 beat 至少 4 段"
+    assert draft["segments"][0]["narration"] == "", "冷开场不配旁白"
+    assert any("窗口机械对齐" in n for n in draft["_notes"])
 
 
 def test_assemble封面抓到写portrait(tool, monkeypatch):
