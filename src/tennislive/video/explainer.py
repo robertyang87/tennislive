@@ -586,6 +586,157 @@ _ZHENG_EALA_DIAGRAM = """
 </svg>
 """
 
+# 2022 澳网那一场：这一屏画的是**一个悖论**，而悖论没有照片。
+# 三个数摆在一起才成立：她拿走了第一盘、对面那一盘双误十二次、全场总得分
+# 她还多一分——每一个单看都只是个数字，摞起来才是「差一点」。
+#
+# ⚠️ 总分那两根条**故意画得几乎一样长**（84 : 83），因为「几乎一样长」就是
+# 这一屏要说的话；条形图上不写字（CLAUDE.md），数字排在条的右边。
+# 强调色只给王欣瑜那一侧（`LIME`），对手一侧一律用 `FILL` 的薄荷绿当底。
+# ⚠️ **viewBox 高度钉在 640，落点两行钉在 y=568 / 608**——这两个数是渲出来
+# 对着卡片调的，不是拍的。SVG 按宽度铺满（920px），所以它在卡上的实际高度是
+# `920 × H/900`：第一版写 660 高、落点 y=586，算出来比 `_ZHENG_EALA_DIAGRAM`
+# 那张（640 / 572）低 14px，**正好撞进序号药丸那一行**，注脚的头几个字被
+# 「② 唯一一次」盖住。四道闸门和全量测试对这个一点声音都没有——
+# **只有渲出来打开看才看得见**。改这张图要连高度一起看。
+_WANG_SABALENKA_AO2022_DIAGRAM = """
+<svg viewBox="0 0 900 640" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="40" text-anchor="middle" fill="#f4fbf7"
+        font-size="32" font-weight="800">2022 年 1 月 · 澳网次轮 · 罗德·拉沃尔球场</text>
+
+  <g fill="#cfe6d8" font-size="22" font-weight="700" text-anchor="middle">
+    <text x="440" y="98">第一盘</text><text x="580" y="98">第二盘</text><text x="720" y="98">第三盘</text>
+  </g>
+
+  <rect x="378" y="112" width="124" height="62" rx="8"
+        fill="rgba(198,246,90,.16)" stroke="#c6f65a" stroke-width="4"/>
+  <text x="150" y="154" fill="#f4fbf7" font-size="27" font-weight="800">王欣瑜</text>
+  <g font-size="40" font-weight="800" text-anchor="middle">
+    <text x="440" y="157" fill="#c6f65a">6</text>
+    <text x="580" y="157" fill="#cfe6d8">4</text>
+    <text x="720" y="157" fill="#cfe6d8">2</text>
+  </g>
+  <text x="150" y="220" fill="#f4fbf7" font-size="27" font-weight="800">萨巴伦卡</text>
+  <g font-size="40" font-weight="800" text-anchor="middle" fill="#cfe6d8">
+    <text x="440" y="223">1</text><text x="580" y="223">6</text><text x="720" y="223">6</text>
+  </g>
+
+  <line x1="140" y1="262" x2="810" y2="262" stroke="rgba(207,230,216,.35)" stroke-width="2"/>
+
+  <text x="140" y="314" fill="#f4fbf7" font-size="27" font-weight="800">双误</text>
+  <rect x="330" y="292" width="98" height="30" rx="6" fill="#c6f65a"/>
+  <text x="444" y="317" fill="#f4fbf7" font-size="28" font-weight="800">7</text>
+  <rect x="330" y="336" width="266" height="30" rx="6" fill="#8fd6a8"/>
+  <text x="612" y="361" fill="#f4fbf7" font-size="28" font-weight="800">19</text>
+  <text x="140" y="362" fill="#cfe6d8" font-size="21" font-weight="700">其中首盘 12</text>
+
+  <line x1="140" y1="396" x2="810" y2="396" stroke="rgba(207,230,216,.35)" stroke-width="2"/>
+
+  <text x="140" y="448" fill="#f4fbf7" font-size="27" font-weight="800">全场总得分</text>
+  <rect x="330" y="426" width="424" height="30" rx="6" fill="#c6f65a"/>
+  <text x="770" y="451" fill="#f4fbf7" font-size="28" font-weight="800">84</text>
+  <rect x="330" y="470" width="419" height="30" rx="6" fill="#8fd6a8"/>
+  <text x="765" y="495" fill="#f4fbf7" font-size="28" font-weight="800">83</text>
+
+  <text x="450" y="568" text-anchor="middle" fill="#f4fbf7"
+        font-size="30" font-weight="800">多的那一分在她手上，她还是输了</text>
+  <text x="450" y="608" text-anchor="middle" fill="#cfe6d8"
+        font-size="20" font-weight="700">全场 1 小时 56 分 · 数据出自 flashscore</text>
+</svg>
+"""
+
+# 这一屏回答的是「明天要面对的到底是什么」，而它是两个赛季战绩的**比例**——
+# 照片给不了比例。条长＝硬地胜率，数字排在条外（条上不写字）。
+# ⚠️ 条形只铺到 x=628，右边那 272px 是**留给数字的**，不是空着。第一版条铺到
+# 748、数字从 768 左对齐，「26 胜 2 负」五个字 32px 排出去右端到 928——
+# **超出 900 的画布，「负」字被切在画面外**。数字改成 `text-anchor="end"`
+# 钉在 x=872，条再长也不会把它推出去。
+_WANG_SABALENKA_HARD_DIAGRAM = """
+<svg viewBox="0 0 900 560" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="46" text-anchor="middle" fill="#f4fbf7"
+        font-size="36" font-weight="800">2026 赛季，在硬地上</text>
+  <text x="450" y="86" text-anchor="middle" fill="#cfe6d8"
+        font-size="22" font-weight="700">条长＝硬地胜场占比 · 截至辛辛那提第三轮之前</text>
+
+  <text x="88" y="176" fill="#f4fbf7" font-size="30" font-weight="800">萨巴伦卡</text>
+  <rect x="88" y="196" width="540" height="46" rx="8" fill="rgba(207,230,216,.14)"/>
+  <rect x="88" y="196" width="501" height="46" rx="8" fill="#8fd6a8"/>
+  <text x="872" y="230" text-anchor="end" fill="#f4fbf7"
+        font-size="32" font-weight="800">26 胜 2 负</text>
+
+  <text x="88" y="322" fill="#f4fbf7" font-size="30" font-weight="800">王欣瑜</text>
+  <rect x="88" y="342" width="540" height="46" rx="8" fill="rgba(207,230,216,.14)"/>
+  <rect x="88" y="342" width="309" height="46" rx="8" fill="#c6f65a"/>
+  <text x="872" y="376" text-anchor="end" fill="#f4fbf7"
+        font-size="32" font-weight="800">12 胜 9 负</text>
+
+  <text x="450" y="462" text-anchor="middle" fill="#f4fbf7"
+        font-size="30" font-weight="800">萨巴伦卡今年在硬地上只输过两场</text>
+  <text x="450" y="504" text-anchor="middle" fill="#cfe6d8"
+        font-size="21" font-weight="700">8 月 18 日晚，两条线在辛辛那提碰上</text>
+</svg>
+"""
+
+# 阿尼西莫娃这一年：一条线，二月见顶之后一路平。
+# 「她还没走回去」是**一段时间里发生的事**，单张照片说不出来；把每一站的
+# 最好轮次点在同一条轴上，那个平段自己就现形了。
+_ANISIMOVA_2026_DIAGRAM = """
+<svg viewBox="0 0 900 620" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="42" text-anchor="middle" fill="#f4fbf7"
+        font-size="34" font-weight="800">阿尼西莫娃的 2026：二月之后</text>
+  <text x="450" y="80" text-anchor="middle" fill="#cfe6d8"
+        font-size="21" font-weight="700">每个点＝那一站走到的最后一轮</text>
+
+  <g stroke="rgba(207,230,216,.18)" stroke-width="2">
+    <line x1="150" y1="140" x2="836" y2="140"/>
+    <line x1="150" y1="212" x2="836" y2="212"/>
+    <line x1="150" y1="284" x2="836" y2="284"/>
+    <line x1="150" y1="356" x2="836" y2="356"/>
+  </g>
+  <g fill="#cfe6d8" font-size="21" font-weight="700" text-anchor="end">
+    <text x="138" y="147">四强</text>
+    <text x="138" y="219">八强</text>
+    <text x="138" y="291">16 强</text>
+    <text x="138" y="363">第三轮</text>
+  </g>
+
+  <line x1="150" y1="410" x2="836" y2="410" stroke="rgba(207,230,216,.40)" stroke-width="3"/>
+  <g fill="#cfe6d8" font-size="21" font-weight="700" text-anchor="middle">
+    <text x="196" y="444">1 月</text>
+    <text x="290" y="444">2 月</text>
+    <text x="430" y="444">3 月</text>
+    <text x="570" y="444">5 月</text>
+    <text x="664" y="444">6 月</text>
+    <text x="758" y="444">7 月</text>
+    <text x="836" y="444">8 月</text>
+  </g>
+
+  <path d="M196 212 L290 140 L384 284 L478 284 L570 356 L664 212 L758 356 L836 284"
+        fill="none" stroke="#8fd6a8" stroke-width="6"/>
+  <g fill="#8fd6a8">
+    <circle cx="196" cy="212" r="9"/><circle cx="384" cy="284" r="9"/>
+    <circle cx="478" cy="284" r="9"/><circle cx="570" cy="356" r="9"/>
+    <circle cx="664" cy="212" r="9"/><circle cx="758" cy="356" r="9"/>
+    <circle cx="836" cy="284" r="9"/>
+  </g>
+  <circle cx="290" cy="140" r="15" fill="#c6f65a" stroke="#061c14" stroke-width="4"/>
+  <text x="290" y="116" text-anchor="middle" fill="#c6f65a"
+        font-size="25" font-weight="800">迪拜 四强</text>
+  <text x="196" y="192" text-anchor="middle" fill="#cfe6d8"
+        font-size="20" font-weight="700">澳网 八强</text>
+  <!-- ⚠️ 六月那个点必须标出来是**八强**。它在图上是二月之后最高的一个尖峰，
+       而这一屏的要点第三条写着「2 月之后再没打进过四强」——不标的话两者读起来
+       像在打架，其实八强比四强还差一轮。渲出来看才发现的。 -->
+  <text x="664" y="192" text-anchor="middle" fill="#cfe6d8"
+        font-size="20" font-weight="700">女王 八强</text>
+
+  <text x="450" y="536" text-anchor="middle" fill="#f4fbf7"
+        font-size="30" font-weight="800">半年过去，那条线再没抬起来过</text>
+  <text x="450" y="580" text-anchor="middle" fill="#cfe6d8"
+        font-size="20" font-weight="700">今年 18 胜 10 负 · 去年整季 48 胜 19 负</text>
+</svg>
+"""
+
 # A losing streak is the one thing in this deck no photograph can hold: it is
 # not a moment, it is the absence of moments. Drawing it also puts the two
 # facts that matter side by side — her last win and the start of the streak
@@ -5826,6 +5977,190 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             "球该由谁来定——赛事，还是打球的人？",
         ),
     ),
+    # 王欣瑜第三轮对萨巴伦卡。四屏，不是五屏——`eala-mcnally` 已有先例，
+    # 屏数跟着内容走。⚠️ 这条片子只有两张照片过得了四道闸门（王欣瑜和
+    # 萨巴伦卡各一张本站官方实拍），另外两屏画的**恰好是照片讲不清的两样**：
+    # 一场四年前比赛的统计悖论，和两个赛季战绩的比例。不是拿示意图凑数。
+    #
+    # ⚠️ 同栏目不许重讲：`wang-vekic`（赛场之上）刚讲过 8/16 逆转维基奇那一场，
+    # 但那是**另一条产品线的另一个栏目**——「不同栏目各讲一次不算重复」。
+    # 这里只把它当来路一句带过（第 ③ 屏），不铺开逐分。
+    "wang-sabalenka": (
+        (
+            "wall",
+            "对面",
+            # ⚠️ 标题里点名，不写「她」。读者刚从封面（王欣瑜的脸）翻过来，
+            # 这一屏换成萨巴伦卡的照片——「她只输过两场」会被读成封面那个人。
+            # `test_标题不靠代词指人` 对这一条是哑的（它只在别的条件下才咬），
+            # 所以这一条是自己看出来的，不是测试拦下来的。
+            "萨巴伦卡今年只输过两场硬地",
+            "先看对面站的是谁。阿丽娜·萨巴伦卡，白俄罗斯人，二十八岁，世界第一。"
+            "本赛季到这一站之前，她三十九胜七负；把场地拆开看更吓人——"
+            "硬地二十六胜两负。生涯二十四个巡回赛单打冠军，今年就拿了三个，"
+            "布里斯班、印第安维尔斯和迈阿密。而辛辛那提这一站，"
+            "二〇二四年的冠军就是她。本站第二轮，她六比二、七比六拿下吉布森。",
+            "assets/explainer/wang-sabalenka/sabalenka_cincinnati_2026.jpg",
+            "WTA 官方图库 · 2026 年 8 月 16 日辛辛那提女单第二轮，萨巴伦卡发球",
+            (
+                "世界第 1，今年 39 胜 7 负",
+                "硬地 26 胜 2 负",
+                "2024 年辛辛那提冠军",
+            ),
+        ),
+        (
+            "before",
+            "唯一一次",
+            "四年前那一盘，六比一",
+            "两个人只碰过一次。二〇二二年一月二十号，澳网第二轮，罗德·拉沃尔球场。"
+            "当时二十岁的王欣瑜先拿下第一盘，六比一——那一盘萨巴伦卡双误了十二次，"
+            "全场十九次。后面两盘萨巴伦卡反了过来，六比四、六比二。"
+            "可把整场的分数加起来是八十四比八十三，多的那一分在王欣瑜手上。"
+            "一小时五十六分钟，她拿到的分比对面多，比赛还是输了。",
+            "",
+            "网球时差绘制 · 数据出自 flashscore 官方逐盘统计，与 tennisexplorer 交叉核对",
+            (
+                "2022 澳网次轮，她赢下首盘 6-1",
+                "那一盘萨巴伦卡双误 12 次",
+                "总得分 84:83，多的一分在她手上",
+            ),
+            _WANG_SABALENKA_AO2022_DIAGRAM,
+        ),
+        (
+            "now",
+            "这一年",
+            "一月奥克兰，王欣瑜打进决赛",
+            "另一边，王欣瑜，二十四岁，这一期世界第三十六，比上一期升了五位，"
+            "生涯最高是第三十。今年一月，她在奥克兰一路打进决赛；紧接着的澳网，"
+            "她连过奥斯塔彭科和诺斯科娃，走到一八决赛。这一站她是从第一轮打起的："
+            "先六比四、六比三赢下范德温克尔；第二轮先丢一盘，再三比六、六比一、六比四"
+            "把三十一号种子维基奇拖了两小时十一分钟，逆转晋级。",
+            "assets/reel/wang-cincinnati-2026-r2.jpg",
+            "WTA 官方图库 · 2026 年 8 月 16 日辛辛那提女单第二轮，王欣瑜反手",
+            (
+                "世界第 36，生涯最高第 30",
+                "1 月奥克兰打进决赛",
+                "本站逆转 31 号种子维基奇",
+            ),
+        ),
+        (
+            "stake",
+            "这一场",
+            "赢的人进十六强",
+            "所以北京时间八月十八号晚上，这两条线在辛辛那提碰上。"
+            "一边是今年在硬地上只输过两场的世界第一，一边是刚刚打满三盘、"
+            "花了两个多小时才赢下上一轮的人。四年前那次，她们打满了三盘，"
+            "一小时五十六分钟。这一次赢的那个人，进十六强。",
+            "",
+            "网球时差绘制 · 战绩出自 tennisexplorer 2026 赛季逐场记录",
+            (
+                "北京时间 8 月 18 日晚开球",
+                "赢的人进 16 强",
+                "四年前那场打了 1 小时 56 分",
+            ),
+            _WANG_SABALENKA_HARD_DIAGRAM,
+            "四年前那场打了一小时五十六分钟。这一次，你觉得会更久，还是更短？",
+        ),
+    ),
+    # 伊埃拉第三轮对阿尼西莫娃。⚠️ 伊埃拉在**同一个栏目**里已经出现过两次
+    # （`zheng-eala` / `eala-mcnally`），那两条铺开讲过的——美网青少年冠军、
+    # 2025 迈阿密外卡四强、温网胜斯瓦泰克、菲律宾历史最高排名、多伦多票房——
+    # 这一条一个字都不碰，只把「八月拿到生涯第一个冠军」当看懂这场球所必需的
+    # 来路一句带过（CLAUDE.md 2026-08-05 划的那条界）。新的那半是柏林那两场
+    # （胜莱巴金娜、胜斯维托丽娜）和「第一次来辛辛那提」，此前一次没讲过。
+    "eala-anisimova": (
+        (
+            "rival",
+            "对面",
+            "阿尼西莫娃排到过世界第三",
+            "先看对面站的是谁。阿曼达·阿尼西莫娃，二〇〇一年八月生，美国人，"
+            "这个月底满二十五岁。她的生涯最高排名是世界第三，现在是世界第十。"
+            "这一站她是九号种子，第二轮六比二、六比三赢下森梅兹，"
+            "两盘都没让对手咬住。",
+            "assets/explainer/eala-anisimova/anisimova_cincinnati_2026_backhand.jpg",
+            "Albert Cesare / The Enquirer · 2026 年 8 月 15 日辛辛那提女单第二轮，"
+            "阿尼西莫娃回击森梅兹",
+            (
+                "生涯最高世界第 3，现在第 10",
+                "本站 9 号种子",
+                "第二轮 6-2 6-3 胜森梅兹",
+            ),
+        ),
+        (
+            "year",
+            "她的这一年",
+            "最好的成绩，停在二月",
+            "但这一年她走得不顺。到辛辛那提之前，十八胜十负。一月的澳网她打进"
+            "四分之一决赛，输给佩古拉；二月的迪拜打进四强，四强又输给同一个人。"
+            "那之后的半年——印第安维尔斯、迈阿密、多伦多都停在十六强，"
+            "法国公开赛和温网都停在第三轮。做个对照：去年一整个赛季，"
+            "她是四十八胜十九负。",
+            "",
+            "网球时差绘制 · 战绩出自 tennisexplorer 2026 赛季逐场记录",
+            (
+                "今年 18 胜 10 负，去年 48 胜 19 负",
+                "最好成绩：2 月迪拜四强",
+                "2 月之后再没打进过四强",
+            ),
+            _ANISIMOVA_2026_DIAGRAM,
+        ),
+        (
+            "climb",
+            "另一边",
+            "六月在柏林，伊埃拉赢了莱巴金娜",
+            "另一边是伊埃拉，二十一岁，这一期世界第二十——那也是她的生涯最高。"
+            "今年六月的柏林，第二轮她七比五、六比四赢下莱巴金娜，"
+            "四分之一决赛又六比三、六比四赢下斯维托丽娜，一路打进四强。"
+            "八月三号，她在华盛顿拿到生涯第一个巡回赛单打冠军。"
+            "今年到这一站为止，三十九胜十九负。",
+            "assets/explainer/nadal-academy/eala_washington_2026_trophy.jpg",
+            "Rafa Nadal Academy 官网转载（图注自署 Foto: WTA）· "
+            "2026 年 8 月 3 日华盛顿女单决赛，伊埃拉夺冠后举杯",
+            (
+                "6 月柏林次轮 7-5 6-4 胜莱巴金娜",
+                "同站 1/4 决赛再胜斯维托丽娜",
+                "今年 39 胜 19 负，世界第 20",
+            ),
+        ),
+        (
+            "first",
+            "第一次",
+            "两个人从来没打过",
+            "有意思的是，这两个人此前一次都没碰过面。公开记录里的交手战绩是零比零，"
+            "第三轮是她们巡回赛生涯的第一次正面交锋。而辛辛那提这一站，"
+            "伊埃拉也是第一次来。第二轮她六比一、三比零领先的时候，"
+            "对手鲁塞退赛——那场球她只在场上待了五十八分钟。",
+            # ⚠️ **不是封面那张。** 第一版这一屏和封面共用发球竖图，渲出来两屏
+            # 一模一样，而且要点块正好压在她脸上（那张的主体在画面下半）。
+            # 换成同一辑同一场的另一张：她伸展够球，主体在上半，要点块落在空场上。
+            "assets/explainer/eala-anisimova/eala_cincinnati_2026_stretch.jpg",
+            "Albert Cesare / The Enquirer · 2026 年 8 月 15 日辛辛那提女单第二轮，"
+            "伊埃拉伸展击球",
+            (
+                "此前 0-0，生涯第一次交手",
+                "伊埃拉第一次打辛辛那提",
+                "第二轮 6-1 3-0，鲁塞退赛",
+            ),
+        ),
+        (
+            "stake",
+            "这一场",
+            "一个刚上来，一个想回去",
+            "所以这一场，两个人要的东西不一样。伊埃拉的世界第二十是她自己的最高点，"
+            "她要做的是把这个位置坐住，再往前挪。阿尼西莫娃站过世界第三，"
+            "她今年要找回来的是那个高度。北京时间八月十八号早上，"
+            "两个人第一次站到球网的两边，赢的那个进十六强。",
+            "assets/explainer/eala-anisimova/anisimova_cincinnati_2026_forehand.jpg",
+            "Albert Cesare / The Enquirer · 2026 年 8 月 15 日辛辛那提女单第二轮，"
+            "阿尼西莫娃正手",
+            (
+                "北京时间 8 月 18 日早上开球",
+                "赢的人进 16 强",
+                "两人第一次站到球网两边",
+            ),
+            "",
+            "阿尼西莫娃上一次打进四强是二月。你觉得，这一站会是下一次吗？",
+        ),
+    ),
 }
 
 
@@ -5840,6 +6175,20 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
 # 这个洞。判据落在 test_每条片子的标签都放满五个。
 _DEFAULT_TAGS = ("网球", "网球时差", "网球冷知识", "网球科普", "网球运动")
 _CAPTIONS: dict[str, dict] = {
+    "wang-sabalenka": {
+        "hook": (
+            "四年前的澳网次轮，王欣瑜在罗德·拉沃尔球场 6-1 拿走了萨巴伦卡的第一盘——\n"
+            "那场球的总得分是 84 比 83，多的那一分在她手上，她还是输了。"
+        ),
+        "tags": ("网球", "网球时差", "王欣瑜", "萨巴伦卡", "辛辛那提"),
+    },
+    "eala-anisimova": {
+        "hook": (
+            "一个 6 月在柏林赢下莱巴金娜、8 月拿到生涯第一个冠军；\n"
+            "另一个排到过世界第三，今年最好的成绩停在二月的一个四强。两人第一次交手。"
+        ),
+        "tags": ("网球", "网球时差", "伊埃拉", "阿尼西莫娃", "辛辛那提"),
+    },
     "equal-pay": {
         "hook": (
             "同一站比赛、同一块场地，第一轮就输：男选手 23760 美元，女选手 11270。\n"
@@ -6215,6 +6564,74 @@ _OPENINGS: dict[str, dict] = {
         # 所以出处自己写一行。素材授权见 assets/explainer/shang-rublev/credits.json。
         "image": "assets/explainer/shang-rublev/cover.jpg",
         "credit": "网球时差绘制 · ATP 官方棚拍抠图 + 2026 年 8 月 2 日蒙特利尔 IGA 球场（加拿大通讯社）",
+    },
+    "wang-sabalenka": {
+        "column": "开球之前",
+        "topic": "王欣瑜 VS 萨巴伦卡：辛辛那提第三轮",
+        # ⚠️ 这一问指向**过程**（那一盘怎么拿下的），不是身份。「世界第一 VS
+        # 世界第三十六」两个排名，海报下面那行 fixture 已经印着了，钩子再写
+        # 一遍就是白占那几个字（CLAUDE.md「钩子要有剧情的跌宕」那条）。
+        # ⚠️ 12 个字位，不是 14。原来写「那一盘六比一，**还能再来一次**吗？」，
+        # `test_封面那一问要能排进一行` 量出来只有 77px（门槛 84px）——字号是按
+        # 字数算的，多两个字就掉到会在词中间断行的那一档。砍掉「一次」不丢信息。
+        "question": "那一盘六比一，能再来吗？",
+        "narration": "那一盘六比一，能再来吗？二〇二二年一月的墨尔本，"
+                     "王欣瑜在罗德·拉沃尔球场从萨巴伦卡手里拿走了第一盘。"
+                     "四年多过去，两个人第二次碰面。",
+        "fixture": {
+            "date": "8.18",
+            # ⚠️ **带星号，和 `shang-rublev` 同一个理由。** flashscore 的
+            # `AD` 和 tennisexplorer 都给 UTC 14:00（＝北京 22:00），两源一致；
+            # 但同一格里塞着辛辛那提当天 8 场女单，全部标着同一个时刻——
+            # 那是**这一节的开场时间**，不是这一场的开球时刻。赛事官网的
+            # Order of Play 在本环境恒 403（CLAUDE.md 记过），拿不到确切时刻。
+            # 按「一个时刻有三种口径，别压成一种」，这是 order-estimate 那一档。
+            "time": "22:00*",
+            "level": "WTA1000",
+            "site": "辛辛那提",
+            "round": "第三轮",
+            "players": ("王欣瑜", "萨巴伦卡"),
+        },
+        # 封面就是第 ③ 屏那张 WTA 官方实拍（4000×2725，铺 1080×1440 是 0.53 倍
+        # **缩小**，不放大）——`_opening_segment` 会按图路径自动借用那一屏的署名。
+        # ⚠️ 不抽帧：CLAUDE.md 2026-08-17「高清大图是前置条件」。
+        # ⚠️ 封面放王欣瑜不放萨巴伦卡：中国球员是这条线的第 ① 档，
+        # 「放刷到这条的人是冲谁来的那个」。
+        "image": "assets/reel/wang-cincinnati-2026-r2.jpg",
+    },
+    "eala-anisimova": {
+        "column": "开球之前",
+        "topic": "伊埃拉 VS 阿尼西莫娃：辛辛那提第三轮",
+        # 这一问指向两条**轨迹的方向**，而片子四屏正是在铺这两条轨迹；
+        # 末屏那一问收在阿尼西莫娃那条线的具体一点上（二月之后没进过四强），
+        # 两问不重合。
+        "question": "谁的这一年，是往上走的？",
+        "narration": "谁的这一年，是往上走的？一个六月在柏林赢下莱巴金娜，"
+                     "八月拿到生涯第一个冠军；另一个曾经排到世界第三，"
+                     "今年最好的成绩停在二月的一个四强。八月十八号，她们第一次碰面。",
+        "fixture": {
+            "date": "8.18",
+            # ⚠️ 同上，带星号。flashscore 给 UTC 00:30（＝北京 8/18 08:30，
+            # 当地 8/17 晚 20:30 的夜场），tennisexplorer 的阿尼西莫娃页给
+            # 02:30 GMT+2 ＝ 同一个 UTC 时刻，两源一致；但官方 Order of Play
+            # 取不到，仍是 order-estimate 那一档。
+            "time": "08:30*",
+            "level": "WTA1000",
+            "site": "辛辛那提",
+            "round": "第三轮",
+            "players": ("伊埃拉", "阿尼西莫娃"),
+        },
+        # 封面用这张竖构图（2000×3000，铺 1080×1440 是 0.54 倍缩小）。
+        # ⚠️ 封面放伊埃拉：她是账号所有者点过名的热点球员，刷到这条的人多半是
+        # 冲她来的。
+        # ⚠️ **署名必须自己写一行**：`_opening_segment` 只有在封面图和某个 beat
+        # 的图**是同一个路径**时才自动借用它的 credit。第一版这张同时是第 ④ 屏
+        # 那一屏（于是借得到），后来第 ④ 屏换成了 `…_stretch.jpg`（两屏一模一样
+        # 太重复），封面就借不到了——`test_每个成稿选题都要有可查证的图片出处`
+        # 当场红。和 `svitolina-handshake` 那条注释记的是同一件事。
+        "image": "assets/explainer/eala-anisimova/eala_cincinnati_2026_serve.jpg",
+        "credit": "Albert Cesare / The Enquirer · 2026 年 8 月 15 日辛辛那提女单第二轮，"
+                  "伊埃拉发球",
     },
     "nadal-academy": {
         # ⚠️ 原来写「纳达尔学院：七个人，七条来时路」——账号所有者 2026-08-04

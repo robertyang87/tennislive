@@ -1,0 +1,24 @@
+{
+  "_note": "「开球之前」王欣瑜 VS 萨巴伦卡，辛辛那提第三轮（北京时间 2026-08-18 晚）。图片版（解说片），不从比赛录像里剪。每张都 Read 打开看过，不是只看元数据。",
+  "_only_two_photos_why": "这条片子四屏，只有两屏是照片——**不是拿示意图凑数，是那两屏画的恰好是照片讲不清的东西**：第 ② 屏是一场四年前比赛的统计悖论（她拿走首盘、对面双误 19 次、总得分她还多一分，最后仍然输了），第 ④ 屏是两个赛季硬地战绩的比例（26 胜 2 负 vs 12 胜 9 负）。CLAUDE.md：「示意图的触发条件是照片讲不清，不是照片找不到」。\n\n照片这一头确实也探到底了：王欣瑜本站只有 WTA 官方那一张（`sweep_wta` 跑过 `Wang` / `Xinyu` 两个词，各 1 张）；The Enquirer 的 8/16 图集当时还没上线（判据是 `posts?orderby=date`：当天那一辑在次日 UTC 00:00–03:00 发，而 8/16 那辑到查的时候仍不在 sitemap 里）；Commons 上她的比赛照全是 2022 年 9 月东京站和 2018 年温网青少年，连续三轮退避重试**全部 429**，拿不下来。萨巴伦卡本站同样只有 WTA 那一张。",
+  "sabalenka_cincinnati_2026.jpg": {
+    "source": "WTA 官方图库（photoresources.wtatennis.com）",
+    "page": "https://photoresources.wtatennis.com/photo-resources/2026/08/17/4e3a698e-e50f-4206-b2c1-c6bbe8926051/Aryna_Sabalenka_-_Cincinnati_Open_2026_-_Day_6-DSC_5907.jpg?width=4000",
+    "description": "**文件名自证四要素**：`Aryna_Sabalenka_-_Cincinnati_Open_2026_-_Day_6-DSC_5907.jpg` 写着球员、赛事、年份和第几个比赛日；路径日期 2026/08/17 是她 8/16 那场（第二轮 6-2 7-6(2) 胜吉布森，UTC 18:56 开打）打完之后上传的。同一批命名的 `Xinyu_Wang_-_Cincinnati_Open_2026_-_Day_6-DSC_1213.jpg` 就是本片第 ③ 屏那张，Day 6 ＝ 8/16，两者对得上。\n\n四道闸门：①时间地点人物由文件名自证；②在比赛中——发球随挥，重心已经过网、后腿离地；③有冲击力——全身伸展加地面投影，蓝场大面积留白；④够清晰——4000×2482，铺 1080×1440 是 0.58 倍**缩小**。\n\n⚠️ 不带 `?width=` 参数是 400 Bad Request 不是 404，按状态码判会以为这张图取不到（CLAUDE.md 记过）。",
+    "date": "2026-08-16",
+    "author": "unknown（WTA 官方图库；⚠️ 这一批的文件名**不带摄影师后缀**，同批带署名的写作 `Eala-R2-Jimmie.jpg`。第一版这里写了「Jimmie48 / WTA」——那是从别的文件推的，不是这个文件名说的，已改回 unknown）",
+    "licence": "WTA 官方图库 · 非商业资讯引用，发布前由人工判断",
+    "size": [
+      4000,
+      2482
+    ]
+  },
+  "_reused": {
+    "assets/reel/wang-cincinnati-2026-r2.jpg": "第 ③ 屏和封面用的是仓库里已有的这张（`specs/reels/wang-vekic.json` 入的库，credits 在 assets/reel/credits.json）。WTA 官方图，4000×2725，出处是 WTA 官网 8/16 那条集锦的头图 `Xinyu_Wang_-_Cincinnati_Open_2026_-_Day_6-DSC_1213.jpg?width=4000`。铺 1080×1440 是 0.53 倍缩小。"
+  },
+  "_rejected": [
+    "assets/players/aryna-sabalenka.jpg（Commons, Rick Munroe, CC BY-SA 4.0, 1044×1390）—— 打开看过：她**坐在场边**的近景肖像，不在比赛中，第 2 道闸门不过。而且 1044 宽铺 1080×1440 要放大 3.4%。",
+    "commons `XINYU WANG 20220919a1/a4/a8.jpg`（江戸村のとくぞう, CC BY-SA 4.0）—— 2022 年 9 月东京泛太平洋公开赛，和第 ② 屏讲的 2022 年 1 月澳网是同一年不同站，本可以配在那一屏并把站名写进署名；**但 upload.wikimedia.org 连续三轮退避重试全部 429**，一张都没下下来。下次做这条线可以再试一次。",
+    "cincinnatiopen.com 的 WordPress 媒体库 8/16 那批 —— 文件名只有日期、摄影师和序号（`081626_DAY-NINE_MIKE-BAKER-12-of-93.jpg`），**没有球员名**，四道闸门的第一道只兜得住时间地点，人物必须逐张打开认；而那一批 2000×1333 的图铺 1080×1440 是 1.08 倍放大。这一趟没用上。"
+  ]
+}
