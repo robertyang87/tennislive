@@ -3379,3 +3379,62 @@ def test_探活正常是第几次要按间隔算不许写死1(caplog):
         P._say_probe_hit(5, "https://example.invalid/copy.html", delay=30.0)
     assert [r for r in caplog.records if r.levelno >= logging.WARNING], (
         "第 5 次才命中是真的异常（比最快值多三次），必须报 warning")
+
+
+def test_示意图吐出来的每个颜色属性都得是合法的():
+    """⚠️ 2026-08-16 我自己写坏过一次，而**四道闸全绿、渲出来也像模像样**。
+
+    起因是把三个示意图模块的硬编码颜色换成 `diagram_palette` 的 token 时，
+    用脚本批量替换，中间一步给字符串补 `f` 前缀的正则**连 SVG 属性值里那对
+    引号也补上了**，于是生成出来是
+
+        fill=f"#f4fbf7"
+
+    多一个 `f`。这在 HTML 解析里是 `fill` 取到一个垃圾值——Chromium 不报错，
+    照样渲出一张看着挺正常的图，只有把两版逐像素比才看得出笔画暗了一档
+    （量出来那一块的最亮像素从 `#f4fbf7` 掉到 `#0d2b1e`，也就是底色）。
+    19 处，跨两个模块。
+
+    「渲出来看」这一关它是过得去的——**所以判据不能是看，得是解析**。
+    这条扫每一张示意图吐出来的 SVG，要求每个颜色属性的值都是认得出来的东西。
+    """
+    import importlib
+    import xml.etree.ElementTree as ET
+
+    diagrams = {
+        "no1_charts": ("weeks_at_no1_chart", "goolagong_gap", "margin_ladder"),
+        "masters_grid": ("nine_masters_grid", "two_tours_grid",
+                         "wta_table_drift", "atp_table_future"),
+        "rulebook_cards": ("time_structure", "shoe_rule", "toilet_rule",
+                           "two_violations", "word_in_the_book"),
+    }
+    # 判据自己的判据：模块改名 / 函数删掉的样子就是一张空表，那时它会安静地全绿。
+    checked = 0
+    ok_value = re.compile(r"^(#[0-9a-fA-F]{3,8}|none|currentColor|url\(#[\w-]+\))$")
+    for mod, fns in diagrams.items():
+        m = importlib.import_module(f"tennislive.video.{mod}")
+        for fn in fns:
+            svg = getattr(m, fn)()
+            checked += 1
+
+            # ① **真的用 XML 解析器解一遍**。`fill=f"#f4fbf7"` 在解析器眼里
+            #    直接是语法错，而正则想认它总会误伤——第一版就把文本里的
+            #    `2Q=` 当成了属性名。判据宁可用真解析器，不用手搓的模式。
+            try:
+                root = ET.fromstring(svg)
+            except ET.ParseError as exc:
+                raise AssertionError(
+                    f"{mod}.{fn} 吐出来的不是合法 SVG：{exc}——"
+                    "十有八九是批量替换时给 SVG 属性里的引号补了 f 前缀"
+                    "（`fill=f\"…\"`）。Chromium 不会报错，只会把那个值整个读废"
+                ) from None
+
+            # ② 每个颜色属性的值都要认得出来
+            for el in root.iter():
+                for attr in ("fill", "stroke"):
+                    val = el.get(attr)
+                    if val is not None:
+                        assert ok_value.match(val), (
+                            f"{mod}.{fn} 的 <{el.tag}> {attr} 值认不出来：{val!r}")
+
+    assert checked >= 12, f"只校到 {checked} 张示意图，判据失效了"

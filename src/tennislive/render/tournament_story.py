@@ -3315,6 +3315,128 @@ STORIES = STORIES + (
         source_label="ATP 2026 年版规则书、ATP 官方战报、Tennis365 / Puntodebreak 赛后稿",
     ),
     _trivia_story(
+        slug="heat-rule",
+        title="28 度也能叫极端高温",
+        subtitle="网球冷知识 · 规则篇",
+        identity="从德约在辛辛那提那场说起",
+        chips=("冷知识", "规则", "高温"),
+        # ⚠️ 这一段整段进小红书文案，单段上限 120 字
+        # （`knowledge._validate_copy_for_publish`）。
+        hero=(
+            "德约倒下那天，辛辛那提的气温只有 28.6 度。而 ATP 今年新立的高温规则不看气温，"
+            "看 WBGT——湿球占七成，气温只占一成。三十点一以上可申请十分钟降温休息，"
+            "三十二点二以上整片室外场停。"
+        ),
+        facts=(
+            "⚠️ **这条片子不给德约下诊断。** 他赛后只说「一个跟了我好多年的健康问题，"
+            "湿度和高温大的时候特别麻烦」（Sky Sports 转述的原话是 "
+            "「It's just a condition that I have, health-wise, that has been bothering me "
+            "for the past couple of years」＋「a lot of issues, especially when it is humid "
+            "and it is hot」），**没有说是什么病**，也没有任何一方宣布过诊断。"
+            "所以片子里「中暑」两个字一次都不出现，只写他说过的话和场上发生的事。"
+            "⚠️ 另有二手源把他的话记成「I've been dealing with it for many years now」，"
+            "措辞和 Sky 那版不一致——**只用两版都成立的那部分**（多年的老毛病＋湿热加重）。",
+
+            # ⚠️ 开头那一句要在**第 40 字之前**留下一个句读（。！？；：，），
+            # 否则 `test_knowledge_card_facts_never_hard_truncate_mid_clause`
+            # 会判它「卡片上会被从句子中间切断」。⚠️ **`、` 不算句读**——
+            # `webcards._CLAUSE_MARKS` 里只有那六个，第一版正是被这个坑住的。
+            "那一场的事实（flashscore ＋ Sky Sports 赛报交叉核过），比赛编号 `h4BvGELE`："
+            "2026-08-15 辛辛那提第二轮，德约科维奇 **6-2 4-6 4-6** 负蒂兰特，"
+            "AC=3（打完的，不是退赛）。第二盘第三局他保发打了 **18 分钟、九次平分、"
+            "救下四个破发点**，那一局之后叫医疗暂停，理疗师先上、随后队医上，"
+            "冰毛巾敷头颈、吃了药；第二盘丢掉后两个人都回了更衣室。"
+            "⚠️ **没有写「那是官方降温休息」**——报道只说两人回了更衣室，"
+            "有没有正式启动新规没有任何一方说过，而降温休息和自行回更衣室在报道里长得一样。",
+
+            "那天的气象读数（Open-Meteo 历史存档 API，梅森 39.36N/-84.27E，当地 15:00）："
+            "气温 **28.6°C**、相对湿度 **76%**、风速 **1.3 km/h**、短波辐射 **491 W/m²**。"
+            "比赛当地 14:15 开打。"
+            "⚠️ **这四个数不是 WBGT，是 WBGT 的原料。** 真正的 WBGT 由 ATP Sport Science & "
+            "Medical 在场地上量或确认（规则书原文），**不公开**，我们手上没有那个数——"
+            "所以片子一个字都不声称那天越没越过 30.1 那条线。",
+
+            "规则原文（ATP 2026 年版 `2026-rulebook_19dec25.pdf`，210 页，2026-08-17 下载核对，"
+            "第 VII 章 `O. Heat Policy`，印刷第 210/211 页）："
+            "四档 Normal < 29.0 / Heat Advisory 29.0–30.0 / Extreme Heat 1 ≥ 30.1 / "
+            "Extreme Heat 2 ≥ 32.2；Level 1 时**单打**任一方可在第三盘前申请，"
+            "一经申请**对双方生效**且**置于第二、三盘之间**，时长 10 分钟，"
+            "可冲澡换衣、降温、补水、接受指导，由 ATP 医疗人员监督；"
+            "**双打没有正式降温休息**，只有 WBGT ≥ 31.0 时主裁可在盘间批准 90 秒补水延长；"
+            "Level 2 时 WBGT ≥ 32.2 **持续 15 分钟**，监督暂停所有室外球场，"
+            "要 WBGT 低于 30.5 **持续 20 分钟**才可复赛。"
+            "⚠️ 屋顶另有一条：WBGT ≥ 32.0 或场地表面 ≥ 45°C 关顶，**关顶按暂停处理**，"
+            "且一旦关上，这场比赛剩下的时间都不再打开——片子没讲这一条，篇幅所限。",
+
+            "⚠️ 这一节在规则书里是孤零零的一块，没有散落在别处的补充："
+            "`WBGT`、`Heat Policy`、`Cooling Break`、`Extreme Heat` 四个词"
+            "**全书只出现在同一页上**（PDF 第 106 页；数过，别的页一次都没有），"
+            "另有第 192 页一句交叉引用「关顶因高温的，见 ATP Heat Policy」。",
+
+            "⚠️ **七二一那三份权重不出自 ATP 规则书。** 规则书只写 WBGT 是"
+            "「the composite metric used to assess heat stress」，一个系数都没给。"
+            "`0.7·自然湿球 + 0.2·黑球 + 0.1·干球` 出自 **ISO 7243:2017** 的户外公式。"
+            "两个出处不能混着说成一个。",
+
+            "这条规则的来路（2025 年 10 月上海大师赛）：维基百科记的是气温超过 30°C、"
+            "湿度超过 80%；德约本人在那一站的原话是「It's brutal when you have over 80 per "
+            "cent humidity day after day」，两处互相印证。鲁内在第三轮对安贝尔的医疗暂停里"
+            "问主裁「Do you want a player to die on court?」，主裁答「I don't know, but that "
+            "is a very good question.」——这一段四家以上独立赛报一致。"
+            "⚠️ **故意不写「七名球员中途退赛」**：那个数只有一个二手源说过，"
+            "而带数字的断言要两个独立源。能确证的是辛纳因抽筋退出、"
+            "阿特曼首轮打了八局退赛、梅德韦杰夫十六强抽筋（Sky Sports 逐条点名）。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2026-08-15", player="德约科维奇", age="2026 辛辛那提第二轮",
+                headline="6-2 4-6 4-6 负蒂兰特，第二盘中间叫医疗暂停",
+                # ⚠️ headline ＋ detail 会拼成知识帖的一整段，而**正文每段上限
+                # 120 字**（`knowledge._validate_copy_for_publish`）。第一版拼出来
+                # 130 字，当场红——写 detail 的时候要连 headline 一起数。
+                detail=(
+                    "第二盘第三局保发 18 分钟、九次平分、救下四个破发点，"
+                    "之后叫了医疗暂停。赛后他说这是跟了他多年的健康问题，湿热时特别麻烦。"
+                ),
+                source_url=(
+                    "https://www.skysports.com/tennis/news/12110/13573671/"
+                    "novak-djokovic-reveals-ongoing-health-condition-after-defeat-in-cincinnati"
+                ),
+            ),
+            ChampionMoment(
+                date="2026 版", player="ATP 规则书", age="第 VII 章 O. Heat Policy",
+                headline="WBGT 30.1 可申请十分钟，32.2 持续十五分钟全场停",
+                detail=(
+                    "单打任一方申请、对双方生效、置于第二三盘之间；双打没有，"
+                    "只有 31.0 以上主裁可在盘间多给 90 秒补水。复赛要 30.5 以下持续 20 分钟。"
+                ),
+                source_url=(
+                    "https://www.dallasopen.com/-/media/files/rulebook/2026/"
+                    "2026-rulebook_19dec25.pdf"
+                ),
+            ),
+            ChampionMoment(
+                date="2025-10", player="鲁内", age="2025 上海大师赛第三轮",
+                headline="医疗暂停里问主裁：你们是想让球员死在场上吗",
+                detail=(
+                    "当时气温超过 30 度、湿度超过 80%。主裁的回答是"
+                    "「我不知道，但这是个很好的问题」。一年之后 Heat Policy 写进规则书。"
+                ),
+                source_url=(
+                    "https://www.aljazeera.com/sports/2025/10/8/"
+                    "do-you-want-a-player-to-die-on-court-tennis-stars-wilt-in-china-heat"
+                ),
+            ),
+        ),
+        image_keys=(),
+        image_credit="Cincinnati Open 官方图 · 2026 辛辛那提第二轮，德约科维奇",
+        source_url=(
+            "https://www.dallasopen.com/-/media/files/rulebook/2026/"
+            "2026-rulebook_19dec25.pdf"
+        ),
+        source_label="ATP 2026 年版规则书、ISO 7243:2017、Open-Meteo 历史存档、Sky Sports / Al Jazeera 赛报",
+    ),
+    _trivia_story(
         slug="golden-masters",
         title="WTA 为什么没有金大师",
         subtitle="网球冷知识 · 赛制篇",
