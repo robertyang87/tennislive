@@ -147,6 +147,35 @@ def test_assemble有id时各块拼装(tool, monkeypatch):
     assert captured["fixture"] == "北京时间"
 
 
+def test_assemble把H2H自动喂进background(tool, monkeypatch):
+    a = tool
+    monkeypatch.setattr(a, "resolve_match_id", lambda h, aw: "4CYI9Ick")
+    monkeypatch.setattr(a, "matchup_order",
+                        lambda h, aw, mid: [(h, a.player_zh(h)), (aw, a.player_zh(aw))])
+    monkeypatch.setattr(a, "stats_block", lambda mid: {
+        "a": {}, "b": {}, "_missing_required": [], "_has_winners_ue": False})
+    # collect 返回含「交手记录」的候选
+    monkeypatch.setattr(a, "collect", lambda mid, h, aw: {
+        "candidates": [{"label": "交手记录", "detail": "Eala S. 1 : 0 Pegula J."}],
+        "durations": []})
+    monkeypatch.setattr(a, "points", lambda mid: [])
+    monkeypatch.setattr(a, "rank_games", lambda games: [])
+    monkeypatch.setattr(a, "Chat", lambda: type("C", (), {"ready": True, "channel": "x"})())
+
+    captured = {}
+
+    def fake_editorial(chat, **kw):
+        captured.update(kw)
+        return {"beats": ["b"]}
+
+    monkeypatch.setattr(a, "draft_editorial", fake_editorial)
+
+    a.assemble(slug="x", home="A E", away="B R", event="C", year=2026,
+               fixture="", flashscore_id="4CYI9Ick")
+    assert "1 : 0" in captured.get("background", ""), (
+        "H2H 要从狠数据里自动拎出来当球员背景喂给文案——文案要有背景支撑，别纯报比分")
+
+
 def test_assemble给source_url写进草稿(tool, monkeypatch):
     a = tool
     monkeypatch.setattr(a, "resolve_match_id", lambda h, aw: "4CYI9Ick")

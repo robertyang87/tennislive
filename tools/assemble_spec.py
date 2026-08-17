@@ -131,7 +131,9 @@ def assemble(*, slug: str, home: str, away: str, event: str, year: int,
              captions_path: str | None = None,
              cuts_path: str | None = None,
              cover: bool = False,
-             source_url: str = "") -> dict:
+             source_url: str = "",
+             background: str = "") -> dict:
+    background_param = background
     notes: list[str] = []
     draft: dict = {
         "_draft": True,
@@ -208,16 +210,21 @@ def assemble(*, slug: str, home: str, away: str, event: str, year: int,
         except Exception as exc:  # noqa: BLE001
             notes.append(f"⚠️ 转折局没成（{type(exc).__name__}: {exc}）")
 
-    # ⑤ 文案（DeepSeek）。facts 用上面算出的狠数据候选喂。
+    # ⑤ 文案（DeepSeek）。facts 用上面算出的狠数据候选喂，background 从狠数据
+    #    里拎出「交手记录」当球员背景（H2H 是唯一机械拿得到的背景；排名/金句/
+    #    纪录这类要 lookup_player_meta 或编辑稿，暂靠终审补）。
     chat = Chat()
     if not chat.ready:
         notes.append("⚠️ 没配 DEEPSEEK_API_KEY / ANTHROPIC_API_KEY，文案跳过——"
                      "钩子/论点/beats/旁白留给终审手写。")
     else:
         notes.append(f"文案通道 {chat.channel}")
+        hit = draft.get("_hit_data", [])
+        h2h = next((c["detail"] for c in hit if c.get("label") == "交手记录"), "")
+        background = background_param or (f"交手记录：{h2h}" if h2h else "")
         draft["editorial"] = draft_editorial(
             chat, home=home, away=away, event=event, year=year,
-            fixture=fixture, facts=facts_text(draft.get("_hit_data", [])))
+            fixture=fixture, facts=facts_text(hit), background=background)
         if draft["editorial"] is None:
             draft.pop("editorial", None)
             notes.append("⚠️ 文案这一步没成（模型或网络），editorial 留空")
@@ -307,6 +314,8 @@ def main() -> int:
                     help="试抓 WTA 官方实拍封面（抓不到就留空出声，不硬来）")
     ap.add_argument("--source-url", default="",
                     help="源片 URL（render 硬要求，编排器探测集锦时拿到）")
+    ap.add_argument("--background", default="",
+                    help="球员背景（排名/年龄/H2H/纪录/金句），有就喂给文案")
     ap.add_argument("--write", action="store_true",
                     help="把草稿落盘到 specs/reels/<slug>.draft.json；不给就只打印")
     args = ap.parse_args()
@@ -315,7 +324,8 @@ def main() -> int:
                      event=args.event, year=args.year, fixture=args.fixture,
                      flashscore_id=args.flashscore_id,
                      captions_path=args.captions, cuts_path=args.cuts,
-                     cover=args.cover, source_url=args.source_url)
+                     cover=args.cover, source_url=args.source_url,
+                     background=args.background)
 
     print(json.dumps(draft, ensure_ascii=False, indent=2))
     if not args.write:

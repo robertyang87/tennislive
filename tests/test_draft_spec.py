@@ -33,10 +33,12 @@ def test_draft_editorial把fixture和facts喂进prompt():
 
     got = ds.draft_editorial(FakeChat(), home="Eala", away="Pegula",
                              event="Washington", year=2026,
-                             fixture="北京时间 8 月 3 日", facts="总分差 9 分")
+                             fixture="北京时间 8 月 3 日", facts="总分差 9 分",
+                             background="Eala 世界第 28；两人交手 Eala 1-0")
     assert "Eala" in captured["user"] and "Pegula" in captured["user"]
     assert "北京时间 8 月 3 日" in captured["user"], "fixture 要进 prompt"
     assert "总分差 9 分" in captured["user"], "狠数据要进 prompt"
+    assert "世界第 28" in captured["user"], "球员背景要进 prompt（有背景支撑的文案）"
     assert captured["schema"] is ds.SCHEMA
     assert got["hook"] == ["a"]
 

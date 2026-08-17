@@ -43,24 +43,48 @@ SCHEMA = {
     },
 }
 
-SYSTEM = """你是网球短视频账号「网球时差」的编辑，给「赛场之上」栏目起草内容。
+SYSTEM = """你是网球短视频账号「网球时差」的编辑，给「赛场之上」栏目起草文案。
+
 账号的硬规矩（照做，别发挥）：
-- 钩子讲**过程**（几比几落后、救了几个赛点、连丢几局、逆转），不是把**身份**
-  （排名/年龄/国籍/冠军）摆在一起——身份海报别处已经印着了。
-- 每条旁白都要能回答「前段走势 / 中段转折 / 结局回应」三问，按时间顺序。
-- 事实必须能落到比赛记录里，不编造比分、不夸大。
-- 收尾落在一问上（互动），不要「还能走多远」这种空话。
-- 钩子每行 ≤ 10 个字符（中文算一个字）。
-只输出一个 json 对象，字段：hook（2 行）、question、thesis、beats（3 段）、
-human_context、narration（每段一句，对应 beats）。"""
+
+【有球员背景，别纯报比分】
+- 文案要有球员的信息背景做支撑：年龄、排名、国籍、种子、H2H、纪录、告别、
+  金句——这些让这条片子「说的是这个人」，不是「说的是这个比分」。
+- 但背景是**一句带过**，别展开铺陈：身份海报别处已经印着了，钩子再写一遍是
+  白占字数。
+
+【有趣生动，引人入胜】
+- 用**数字反差**制造记忆点：不是「他赢了」，是「多拿五分的那个人输了」、
+  「五个局点一个都没保住」、「世界第一双误四个，却赢了」。
+- 用**悬念层层推进**：把转折拆成几步，每句留一个「然后呢」——
+  「一度四比一领先」→「连丢四局」→「多拿五分却输了」。
+- 每句旁白 ≤ 50 字，一条一个事实，不堆叠。
+
+【结合比分】
+- 旁白讲的事要落到比分上：讲赛点就写「第三个赛点才兑现」、讲破发就写
+  「破发点就是再赢一分就……」、讲转折就写「从四比一到五比四」。
+
+【事实底线】
+- 只写给到的素材里有的事实，不编造比分、不编造球员说的话。
+- 给到的背景、金句、纪录，用了就要原样用，别改写数字。
+
+【收尾一问】
+- 收尾落在**这一场球的具体悬念**上（「决胜盘四比一领先还能输掉，这样的球你
+  见过几次？」「你会记得他的哪一场球？」），不要「还能走多远」这种空话。
+
+只输出一个 json 对象，字段：hook（2 行，每行 ≤10 字符）、question、thesis、
+beats（3 段）、human_context（场外切口：金句/纪录/复仇/告别，一段话）、
+narration（每段一句，对应 beats）。"""
 
 
 def draft_editorial(chat: Chat, *, home: str, away: str, event: str, year: int,
-                    fixture: str, facts: str = "") -> dict | None:
+                    fixture: str, facts: str = "", background: str = "") -> dict | None:
     user = (
         f"这场球：{home} vs {away}，{event} {year}。\n"
         f"赛前信息（fixture）：{fixture}\n"
         f"已核实的狠数据/技术统计（有就用，没有不强凑）：\n{facts or '（没有）'}\n"
+        f"球员信息背景（排名/年龄/国籍/H2H/纪录/金句，有就用，别编）：\n"
+        f"{background or '（没有）'}\n"
     )
     return chat.ask(SYSTEM, user, schema=SCHEMA, max_tokens=2000)
 
@@ -74,6 +98,8 @@ def main() -> int:
     ap.add_argument("--year", type=int, required=True)
     ap.add_argument("--fixture", default="")
     ap.add_argument("--facts", default="", help="match_stat_hooks 的候选（粘贴）")
+    ap.add_argument("--background", default="",
+                    help="球员信息背景：排名/年龄/国籍/H2H/纪录/金句（粘贴）")
     args = ap.parse_args()
 
     chat = Chat()
@@ -82,7 +108,8 @@ def main() -> int:
         return 0
     print(f"通道 {chat.channel}")
     draft = draft_editorial(chat, home=args.home, away=args.away, event=args.event,
-                            year=args.year, fixture=args.fixture, facts=args.facts)
+                            year=args.year, fixture=args.fixture, facts=args.facts,
+                            background=args.background)
     if draft is None:
         print("[跳过] 模型这步没成（见日志），本条不起草")
         return 0
