@@ -101,7 +101,7 @@ def nine_masters_grid() -> str:
         '<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">',
         '<text x="450" y="30" text-anchor="middle" font-size="34" '
         f'font-weight="700" fill="{INK}">九站大师赛</text>',
-        '<text x="450" y="56" text-anchor="middle" font-size="22" '
+        '<text x="450" y="56" text-anchor="middle" font-size="26" '
         f'fill="{SOFT}">红土三站 · 硬地六站</text>',
     ]
     for i, (zh, fname, surface) in enumerate(NINE_MASTERS):
@@ -118,7 +118,7 @@ def nine_masters_grid() -> str:
         )
         parts.append(
             f'<text x="{cx + tw / 2:.1f}" y="{cy + th + 22:.1f}" text-anchor="middle" '
-            f'font-size="24" fill=f"{INK}">{zh}</text>'
+            f'font-size="26" fill="{INK}">{zh}</text>'
         )
     parts.append("</svg>")
     return "\n".join(parts)
@@ -150,7 +150,7 @@ def two_tours_grid() -> str:
         '<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">',
         '<text x="450" y="40" text-anchor="middle" font-size="34" '
         f'font-weight="700" fill="{INK}">两张表长得不一样</text>',
-        '<text x="450" y="76" text-anchor="middle" font-size="25" '
+        '<text x="450" y="76" text-anchor="middle" font-size="26" '
         f'fill="{SOFT}">男子 9 站 · 女子 10 站 · 只有 6 站重合</text>',
     ]
     rows = (
@@ -160,7 +160,7 @@ def two_tours_grid() -> str:
     )
     for names, colour, label, top in rows:
         parts.append(
-            f'<text x="60" y="{top}" font-size="24" fill=f"{SOFT}">{label}'
+            f'<text x="60" y="{top}" font-size="26" fill="{SOFT}">{label}'
             f"（{len(names)}）</text>"
         )
         for i, zh in enumerate(names):
@@ -172,7 +172,7 @@ def two_tours_grid() -> str:
             )
             parts.append(
                 f'<text x="{bx + 122}" y="{by + 31}" text-anchor="middle" '
-                f'font-size="26" fill=f"{INK}">{zh}</text>'
+                f'font-size="26" fill="{INK}">{zh}</text>'
             )
     parts.append("</svg>")
     return "\n".join(parts)
@@ -202,7 +202,7 @@ def wta_table_drift() -> str:
         '<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">',
         '<text x="450" y="40" text-anchor="middle" font-size="34" '
         f'font-weight="700" fill="{INK}">女子那张表一直在变</text>',
-        '<text x="450" y="76" text-anchor="middle" font-size="25" '
+        '<text x="450" y="76" text-anchor="middle" font-size="26" '
         f'fill="{SOFT}">十站到 2024 年才定下来</text>',
     ]
     top = 118
@@ -220,11 +220,11 @@ def wta_table_drift() -> str:
             f'fill="{accent}">{year}</text>'
         )
         parts.append(
-            f'<text x="240" y="{y + 38}" font-size="26" fill=f"{INK}">{change}</text>'
+            f'<text x="240" y="{y + 38}" font-size="26" fill="{INK}">{change}</text>'
         )
         if note:
             parts.append(
-                f'<text x="240" y="{y + 72}" font-size="22" fill=f"{SOFT}">{note}</text>'
+                f'<text x="240" y="{y + 72}" font-size="26" fill="{SOFT}">{note}</text>'
             )
         parts.append(
             f'<text x="800" y="{y + 56}" text-anchor="end" font-size="36" '
@@ -256,7 +256,7 @@ def atp_table_future() -> str:
         '<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">',
         '<text x="450" y="40" text-anchor="middle" font-size="34" '
         f'font-weight="700" fill="{INK}">男子那把尺子也要改</text>',
-        '<text x="450" y="76" text-anchor="middle" font-size="25" '
+        '<text x="450" y="76" text-anchor="middle" font-size="26" '
         f'fill="{SOFT}">2028 年沙特加入，变成十站</text>',
     ]
     top = 140
@@ -276,7 +276,7 @@ def atp_table_future() -> str:
             f'fill="{accent}">{year}</text>'
         )
         parts.append(
-            f'<text x="252" y="{y + 60}" font-size="28" fill=f"{INK}">{note}</text>'
+            f'<text x="252" y="{y + 60}" font-size="28" fill="{INK}">{note}</text>'
         )
         parts.append(
             f'<text x="800" y="{y + 62}" text-anchor="end" font-size="38" '

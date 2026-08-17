@@ -311,7 +311,7 @@ def word_in_the_book() -> str:
         # 这一屏用不着那块底：金色加粗在深绿底上已经足够跳出来，而且
         # 「一屏只留一个强调色」本来就说了别再叠第二种强调。
         parts.append(
-            f'<text x="76" y="{y + 78}" font-size="24" fill="{_DIM}">{before}'
+            f'<text x="76" y="{y + 78}" font-size="26" fill="{_DIM}">{before}'
             f'<tspan font-size="26" font-weight="700" fill="{_GOLD}">{word}</tspan>'
             f'<tspan fill="{_DIM}">{after}</tspan></text>'
         )

@@ -81,8 +81,8 @@ def weeks_at_no1_chart() -> str:
         '<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">',
         '<text x="450" y="42" text-anchor="middle" font-size="34" '
         f'font-weight="700" fill="{INK}">连续在世界第一多少周</text>',
-        '<text x="450" y="76" text-anchor="middle" font-size="21" '
-        f'fill=f"{SOFT}">WTA 官方 · 每人最长的那一段 · 设榜以来共 {NO1_TOTAL} 人 · '
+        '<text x="450" y="76" text-anchor="middle" font-size="26" '
+        f'fill="{SOFT}">WTA 官方 · 每人最长的那一段 · 设榜以来共 {NO1_TOTAL} 人 · '
         "条长按平方根</text>",
     ]
     for i, (rank, zh, consec, total) in enumerate(CONSEC_AT_NO1):
@@ -92,11 +92,11 @@ def weeks_at_no1_chart() -> str:
         colour = AMBER if last else FILL
         parts.append(
             f'<text x="{x0 - 124}" y="{y + 24}" text-anchor="end" font-size="26" '
-            f'fill=f"{INK}">{zh}</text>'
+            f'fill="{INK}">{zh}</text>'
         )
         parts.append(
-            f'<text x="{x0 - 16}" y="{y + 24}" text-anchor="end" font-size="20" '
-            f'fill=f"{SOFT}">{rank}</text>'
+            f'<text x="{x0 - 16}" y="{y + 24}" text-anchor="end" font-size="26" '
+            f'fill="{SOFT}">{rank}</text>'
         )
         parts.append(
             f'<rect x="{x0}" y="{y}" width="{w:.1f}" height="{bar_h}" rx="5" '
@@ -107,13 +107,13 @@ def weeks_at_no1_chart() -> str:
             f'font-weight="{700 if last else 400}" fill="{colour}">{consec} 周</text>'
         )
         parts.append(
-            f'<text x="840" y="{y + 24}" text-anchor="end" font-size="20" '
-            f'fill=f"{SOFT}">累计 {total}</text>'
+            f'<text x="840" y="{y + 24}" text-anchor="end" font-size="26" '
+            f'fill="{SOFT}">累计 {total}</text>'
         )
     note_y = top + (len(CONSEC_AT_NO1) - 1) * pitch + bar_h + 44
     parts.append(
-        f'<text x="450" y="{note_y}" text-anchor="middle" font-size="24" '
-        f'fill=f"{SOFT}">榜上另外 {NO1_TOTAL - len(CONSEC_AT_NO1)} 人没画；'
+        f'<text x="450" y="{note_y}" text-anchor="middle" font-size="26" '
+        f'fill="{SOFT}">榜上另外 {NO1_TOTAL - len(CONSEC_AT_NO1)} 人没画；'
         "古拉贡一辈子只坐过这一段，累计也是 2 周</text>"
     )
     parts.append("</svg>")
@@ -167,16 +167,16 @@ def goolagong_gap() -> str:
         '<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">',
         '<text x="450" y="42" text-anchor="middle" font-size="34" '
         f'font-weight="700" fill="{INK}">那两周，三十一年后才追认</text>',
-        '<text x="450" y="76" text-anchor="middle" font-size="21" '
+        '<text x="450" y="76" text-anchor="middle" font-size="26" '
         f'fill="{SOFT}">WTA 官方 · 1976 年 4 到 7 月的几张成绩单没录进电脑</text>',
         # ⚠️ 线分两段，中间留给那句「31 年」。别画整条再把字压上去——示意图
         # 落在卡片上时背景不是纯色，拿一块底色去盖会露出一个方块。
-        f'<line x1="{x0}" y1="{y}" x2="300" y2="{y}" stroke=f"{FILL}" '
+        f'<line x1="{x0}" y1="{y}" x2="300" y2="{y}" stroke="{FILL}" '
         'stroke-width="4" stroke-opacity="0.45"/>',
-        f'<line x1="600" y1="{y}" x2="{x1}" y2="{y}" stroke=f"{FILL}" '
+        f'<line x1="600" y1="{y}" x2="{x1}" y2="{y}" stroke="{FILL}" '
         'stroke-width="4" stroke-opacity="0.45"/>',
-        f'<circle cx="{x0}" cy="{y}" r="14" fill=f"{FILL}"/>',
-        f'<circle cx="{x1}" cy="{y}" r="14" fill=f"{AMBER}"/>',
+        f'<circle cx="{x0}" cy="{y}" r="14" fill="{FILL}"/>',
+        f'<circle cx="{x1}" cy="{y}" r="14" fill="{AMBER}"/>',
         f'<text x="{x0}" y="{y - 40}" text-anchor="middle" font-size="26" '
         f'fill="{INK}">1976.4.26</text>',
         f'<text x="{x0}" y="{y + 52}" text-anchor="middle" font-size="26" '
@@ -201,11 +201,11 @@ def goolagong_gap() -> str:
         )
         parts.append(
             f'<text x="{x0 + 34}" y="{ry + 35}" font-size="26" '
-            f'fill=f"{SOFT}">{when}</text>'
+            f'fill="{SOFT}">{when}</text>'
         )
         parts.append(
             f'<text x="{x0 + 190}" y="{ry + 35}" font-size="26" '
-            f'fill=f"{INK}">{what}</text>'
+            f'fill="{INK}">{what}</text>'
         )
     parts.append("</svg>")
     return "\n".join(parts)
@@ -222,7 +222,7 @@ def margin_ladder() -> str:
         '<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">',
         '<text x="450" y="40" text-anchor="middle" font-size="34" '
         f'font-weight="700" fill="{INK}">差距能小到什么程度</text>',
-        '<text x="450" y="72" text-anchor="middle" font-size="21" '
+        '<text x="450" y="72" text-anchor="middle" font-size="26" '
         f'fill="{SOFT}">三种计分口径，各讲各的</text>',
     ]
     for i, (num, who, note) in enumerate(MARGINS):
@@ -239,10 +239,10 @@ def margin_ladder() -> str:
             f'fill="{colour}">{num}</text>'
         )
         parts.append(
-            f'<text x="290" y="{y + 42}" font-size="26" fill=f"{INK}">{who}</text>'
+            f'<text x="290" y="{y + 42}" font-size="26" fill="{INK}">{who}</text>'
         )
         parts.append(
-            f'<text x="290" y="{y + 78}" font-size="21" fill=f"{SOFT}">{note}</text>'
+            f'<text x="290" y="{y + 78}" font-size="26" fill="{SOFT}">{note}</text>'
         )
     parts.append("</svg>")
     return "\n".join(parts)
