@@ -7909,9 +7909,14 @@ def test_封面大图一律用官方高清图不许抽帧():
     转播流，换帧、锐化都救不回来）。**规矩没变，是实现漂了**：solo 版式给了
     `frame_at` 这条近路，于是六十条片子全走了它。所以这次要落成闸。
 
+    ⚠️⚠️ **2026-08-17 这条的第 ① 头翻了面。** 账号所有者：「还是要**找到对应
+    比赛的高清大图**是最重要的**前置条件**，不然封面不清晰没有吸引力」——
+    抽帧**认领了也不再放行**。翻面的来路和数据（100 条 solo 里 74 条走了抽帧）
+    在 `test_抽帧当封面不许再靠一句话放行` 的 docstring 里，这儿不抄第二遍。
+
     钉四头：
 
-    ① **行为**：抽帧不认领 → 红；认领了 → 过
+    ① **行为**：抽帧一律红——**写不写 `_frame_why` 都拦**
     ② **行为**：照片撑不满卡片 → 红（换个来源不算过关）；够大 → 过
     ③ **位置**：`validate_spec` 真的调了它——只测行为的话，闸排在下载后面
        照样全绿，而真实代价是每次都要先等几百 MB 下完（本仓库栽过两次）
@@ -7929,12 +7934,13 @@ def test_封面大图一律用官方高清图不许抽帧():
         "抽帧没认领也放行了——这道闸等于没装"
     assert "去找官方的" in reel.cover_photo_problem(solo({"frame_at": 152.5})), \
         "报错没说出路：四类源怎么翻、WTA 那条路怎么走"
+    # ⚠️ 这两条 2026-08-17 翻了面：`_frame_why` 不再放行（前置条件，不是事后声明）
     assert reel.cover_photo_problem(
-        solo({"frame_at": 152.5, "_frame_why": "四类源都翻过，见 _source"})) is None, \
-        "认领过了还拦——那会逼人去关掉这道闸"
+        solo({"frame_at": 152.5, "_frame_why": "四类源都翻过，见 _source"})), \
+        "写了 `_frame_why` 又把抽帧放行了——前置条件被写回成了事后声明"
     assert reel.cover_photo_problem(
         solo({"frame_at": 152.5, "_frame_why": "   "})) is not None, \
-        "空白也算认领的话，认领就成了一个形式"
+        "空白的 `_frame_why` 当然也要拦"
 
     # ② 照片不许放大（拿真图量，别手搓）
     from PIL import Image  # noqa: PLC0415
@@ -8182,6 +8188,69 @@ def test_封面正中那道暗角默认不画两头要留(tmp_path):
     assert CENTRE not in legacy_clear, "老写法 `clear` 不再等于「不画」了"
     assert CENTRE in dimmed, (
         "`cover.scrim: \"dim\"` 没接进 `_solo_body`——开关写了但海报没读")
+
+
+def test_抽帧当封面不许再靠一句话放行(tmp_path):
+    """账号所有者 2026-08-17：「我觉得还是要**找到对应比赛的高清大图**是最重要的
+    **前置条件**，不然封面不清晰没有吸引力」。
+
+    ## 为什么「认领」这个形状在这儿不管用
+
+    这条闸原来是「写了 `frame_at` 就必须写 `_frame_why`」——和 `mixed_fps` /
+    `silent_source` 一个形状，**认领一下把「想清楚了」和「凑合一下」分开**。
+    在别处管用，在这儿不管用：数出来 **100 条 solo 里 74 条走了抽帧**。
+
+    根子是它**把一件该在开工之前做完的事，变成了收工之后补一句话**——真到了
+    写 `_frame_why` 的时候，源片已经下过、段也挑完了，没有人会为了一张封面
+    把两小时的活退回去重来。**前置条件的意思是没有它就不开工，不是有了它更好。**
+
+    ## 判据两头
+
+    1. **`_frame_why` 不再放行**——写得再详细也拦
+    2. **豁免只认名单**（`LEGACY_SOFT_COVERS`，已发的那批，只许减不许加），
+       名单之外一律红
+
+    ⚠️ **`_low_res_why` 那条没跟着变**，是故意的：赛事官网的实拍常常是
+    2000×1334，铺 1080×1440 算下来 fill=0.93，**本来就够不着 1.00 的地板**。
+    那是一张真的官方实拍，只是短了一点——把它也判死，等于把唯一能用的那条
+    渠道也堵上。**分界是「抽帧」和「实拍」，不是「够不够 1.00」。**
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    reel = _reel()
+
+    base = {
+        "slug": "某条还没发的新片子",
+        "cover": {"layout": "solo", "portrait": {"frame_at": 123.4}},
+    }
+    # ① 什么都不写 → 红
+    assert reel.cover_photo_problem(dict(base)), "抽帧的封面居然过了"
+    # ② 写一篇很详细的 `_frame_why` → **照样红**
+    wordy = json.loads(json.dumps(base))
+    wordy["cover"]["portrait"]["_frame_why"] = (
+        "四类源都翻过：WTA photo-resources 没有、赛事媒体库当天全是日场、"
+        "The Enquirer 两天都没有网球报道、Getty 取不到。")
+    problem = reel.cover_photo_problem(wordy)
+    assert problem, "写了 `_frame_why` 又把抽帧放行了——前置条件被写成了事后声明"
+    assert "前置条件" in problem, f"报错没说清为什么不再放行：{problem[:200]}"
+    # ③ 报错要给出**能直接跑**的那条命令，而且带上两个容易漏的参数
+    for must in ("find_cover_photo.py", "--site", "--date", "还没发"):
+        assert must in problem, f"报错正文缺 {must!r}：{problem[:400]}"
+
+    # ④ 豁免只认名单
+    legacy = dict(base, slug=sorted(reel.LEGACY_SOFT_COVERS)[0])
+    assert reel.cover_photo_problem(legacy) is None, "已发的那批被这道闸打红了"
+
+    # ⑤ 真实拍只是短一点，仍然靠 `_low_res_why` 放行（赛事官网就是 2000×1334）
+    from PIL import Image  # noqa: PLC0415
+
+    photo = tmp_path / "official.jpg"
+    Image.new("RGB", (2000, 1334), (70, 110, 150)).save(photo)
+    shot = {"slug": "某条还没发的新片子",
+            "cover": {"layout": "solo",
+                      "portrait": {"image": str(photo),
+                                   "_low_res_why": "赛事官网原图就是 2000×1334"}}}
+    assert reel.cover_photo_problem(shot) is None, (
+        "官方实拍 2000×1334（fill=0.93）被判死了——那是唯一能用的那条渠道")
 
 
 def test_信箱式垫层不许再压暗而且两处是同一个出处(tmp_path):
