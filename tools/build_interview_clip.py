@@ -3022,9 +3022,14 @@ def main() -> int:
     review_sheet(spec, lines, outdir)
     # **每一步都把没销账的空档喊出来**，不要只在 render 那一步拦。等到出片才知道
     # 少了三秒，前面配中文、调断行的功夫全是在一份缺了一块的稿子上做的。
+    # ⚠️ **键要一起印出来。** 这一行原来只报「片内 37.4–40.0 秒」，而
+    # `caption_gaps_ok` 的键是**源片**秒（`294.8-297.4`）——照着提示写键，
+    # 写出来的那个键永远对不上，而对不上的样子就是「销了账它还在喊」。
+    # render 那一步（下面）一直是印键的，只有这一行漏了。
     for a, b in _unresolved_gaps(spec, caption_gaps(spec, outdir)):
         print(f"⚠️ 空档没销账：片内 {a - spec['start']:.1f}–{b - spec['start']:.1f} 秒"
-              f"（{b - a:.1f} 秒自动字幕是空的）　{_yt_at(spec['url'], a)}")
+              f"（{b - a:.1f} 秒自动字幕是空的）　{_yt_at(spec['url'], a)}\n"
+              f"   销账写进 `caption_gaps_ok`，键是 `{gap_key(a, b)}`")
 
     if args.stage == "verify":
         verify_transcript(spec, lines, outdir)
