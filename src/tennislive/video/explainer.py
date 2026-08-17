@@ -7206,15 +7206,44 @@ body{{font-family:'TL Sans SC','Noto Sans CJK SC','Noto Sans SC',sans-serif;}}
 /* The cover used to sit under a flat 62-78% wash, which made every deck
    open on the same dark green rectangle with a photo faintly behind it —
    the one frame that has to stop a thumb was the least visible. Darken
-   only where words actually are: a band at the top for the brand line, a
-   soft ellipse behind the centred question, and a foot for the video's
-   lower edge. Everything between stays near the photo's own exposure. */
+   only where words actually are: a band at the top for the brand line and
+   a foot for the copy. Everything between stays near the photo's exposure.
+
+   ⚠️ 这条原来还叠着第二层 `radial-gradient(128% 40% at 50% 50%)`，注释写的
+   理由是「给**居中的那一问**垫一层软椭圆」。而 `.copy` 早就改成贴底了
+   （见上面那段：账号所有者要求「文案移到底部」，和 VS 海报对齐），
+   **居中的那一问从此不存在**——椭圆留在原地，压的是照片正中间，
+   也就是人脸那一块。⚠️ 它一个字都不报：封面照样渲得出来，四道闸门全过，
+   只有账号所有者一句「感觉封面还有蒙了一层阴影」点破。
+   量出来画面正中被压掉 61%（只剩 39% 的亮度透出来）。
+   ⚠️ 这段话本身不许写日期——上面那条注释已经为这个栽过两次，这是第三次
+   （写的时候顺手把日期写进来了，靠那条判据当场红才发现）。
+
+   **删掉椭圆不是把封面整体调亮**：椭圆原来在文案那一带也顺手压着一层，
+   删了要补回来，否则标题就压在大太阳底下的草地上了（`wimbledon-whites`
+   就是这个形状）。所以起坡从 66% 提到 **54%**、底下几档同时压重
+   （.34@70% / .62@88% / 收尾 .70）。纯白底片量出来的压暗曲线：
+
+        高度      改前（带椭圆）   改后
+         35%        0.351         0.071
+         50%        0.412         0.071   ← 画面正中，椭圆压掉四成
+         70%        0.323         0.318
+         85%        0.249         0.532   ← 文案那一带反而更暗了
+
+   也就是**主体那一段放开、文案那一段压得比原来还重**，不是整体调亮。
+
+   ⚠️ **别拿「标题带对比度」这类聚合数去调这条曲线。** 试过三种取样口径，
+   给出三个互相矛盾的答案：固定带子会把标题上方的空档算进「底」（标题只有
+   一行的封面因此被读成最差）；按行找字又分不开「白字」和「大太阳底下的
+   白草地」，两者亮度一样。**真正托住可读性的是 `.cover .title` 那三层
+   text-shadow，而任何按中位数算的对比度都看不见逐字的描边光晕。**
+   所以这条曲线是**渲出来一张张看定的**，判据只钉压暗曲线本身
+   （`test_封面不许再压一层居中的阴影`），不钉某张封面的对比度读数——
+   那会随换图漂移，变成一条常年红或者一盏假绿灯。 */
 .cover .scrim{{background:
  linear-gradient(180deg,rgba(6,28,20,.62) 0%,rgba(6,28,20,.16) 17%,
-  rgba(6,28,20,.08) 32%,rgba(6,28,20,.08) 66%,rgba(6,28,20,.22) 84%,
-  rgba(6,28,20,.58) 100%),
- radial-gradient(128% 40% at 50% 50%,rgba(6,28,20,.58) 0%,
-  rgba(6,28,20,.30) 58%,rgba(6,28,20,0) 100%);}}
+  rgba(6,28,20,.08) 32%,rgba(6,28,20,.08) 54%,rgba(6,28,20,.34) 70%,
+  rgba(6,28,20,.62) 88%,rgba(6,28,20,.70) 100%);}}
 .kicker{{align-self:flex-start;background:#c6f65a;color:#062018;font-size:30px;
  font-weight:800;letter-spacing:4px;padding:11px 26px;border-radius:999px;}}
 .tail{{align-self:flex-start;font-size:34px;font-weight:700;color:#dff3e8;
