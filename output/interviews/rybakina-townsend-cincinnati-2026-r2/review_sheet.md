@@ -4,7 +4,7 @@
 
 | # | 片内 | 跳到源片 | 英文 | 中文 | 判据 |
 |--:|:--|:--|:--|:--|:--|
-| 1 | 0:00.3 | [▶](https://youtu.be/iszb3-lsyLc?t=270) | 8 1,000 events this season. | 本赛季八站一千分赛 |  |
+| 1 | 0:00.3 | [▶](https://youtu.be/iszb3-lsyLc?t=270) | Eight 1000 events this season. | 本赛季八站一千分赛 | ✏️ 已订正 |
 | 2 | 0:02.4 | [▶](https://youtu.be/iszb3-lsyLc?t=272) | Rybakina is the only player to win | 莱巴金娜是唯一一个 |  |
 | 3 | 0:04.0 | [▶](https://youtu.be/iszb3-lsyLc?t=273) | the opening match in all eight as she comes | 八站首战全胜的人 |  |
 | 4 | 0:07.2 | [▶](https://youtu.be/iszb3-lsyLc?t=277) | through a tough encounter closer | 而这一场比比分 |  |
@@ -23,7 +23,7 @@
 | 17 | 0:34.7 | [▶](https://youtu.be/iszb3-lsyLc?t=304) | She's a tough opponent, | 她是个难缠的对手 |  |
 | 18 | 0:35.6 | [▶](https://youtu.be/iszb3-lsyLc?t=305) | but you handled her well today. | 但你今天处理得很好 |  |
 | 19 | 0:37.8 | [▶](https://youtu.be/iszb3-lsyLc?t=307) | Yeah, she is really tough opponent. | 是啊 她真的很难打 |  |
-| 20 | 0:39.4 | [▶](https://youtu.be/iszb3-lsyLc?t=309) | never played before and it | 我们以前没交过手 |  |
+| 20 | 0:39.4 | [▶](https://youtu.be/iszb3-lsyLc?t=309) | We played before and it | 我们以前交过手 | ✏️ 已订正 |
 | 21 | 0:40.9 | [▶](https://youtu.be/iszb3-lsyLc?t=310) | was always a battle and today I'm happy | 一直是一场硬仗 今天我很高兴 |  |
 | 22 | 0:44.7 | [▶](https://youtu.be/iszb3-lsyLc?t=314) | that I was playing well first set | 第一盘我打得不错 |  |
 | 23 | 0:47.1 | [▶](https://youtu.be/iszb3-lsyLc?t=316) | and then in the second she stepped in it | 第二盘她压了上来 |  |

@@ -34,7 +34,7 @@
     "她是个难缠的对手",
     "但你今天处理得很好",
     "是啊 她真的很难打",
-    "我们以前没交过手",
+    "我们以前交过手",
     "一直是一场硬仗 今天我很高兴",
     "第一盘我打得不错",
     "第二盘她压了上来",
@@ -102,7 +102,7 @@
     "score": "6-3 6-4",
     "event": "",
     "summary": "莱巴金娜胜汤森德",
-    "lead": "2026 辛辛那提 WTA1000 第二轮，莱巴金娜 6-3 6-4 战胜汤森德。转播在赛后报出一个数：**本赛季八站 WTA1000，她是唯一一个八站首战全胜的球员。**赛后场上采访里，主持人问她现在球上什么在起作用，她的答案很具体：「今天我最满意的是发球，它确实帮了我很多。上周在多伦多非常难，打了很多三盘，但我很高兴自己扛了下来。」谈到这场，她说第一盘打得不错，第二盘汤森德压了上来，「有几分咬得很紧，结果偏向了我，有擦网也有压线，但赢下来我非常高兴」。下一轮她对弗雷赫。中英双语字幕，全程。"
+    "lead": "2026 辛辛那提 WTA1000 第二轮，莱巴金娜 6-3 6-4 战胜汤森德。转播在赛后报出一个数：本赛季八站 WTA1000，她是唯一一个八站首战全胜的球员。赛后场上采访里，主持人问她现在球上什么在起作用，她的答案很具体：「今天我最满意的是发球，它确实帮了我很多。上周在多伦多非常难，打了很多三盘，但我很高兴自己扛了下来。」谈到这场，她说第一盘打得不错，第二盘汤森德压了上来，「有几分咬得很紧，结果偏向了我，有擦网也有压线，但赢下来我非常高兴」。下一轮她对弗雷赫。中英双语字幕，全程。"
   },
   "word_fix": {
     "Rebecca": "Rybakina",
@@ -113,6 +113,10 @@
   },
   "en_fixed": {
     "6": "Townsend three and four.",
-    "42": "Okay, Magdalena Frech in the next round."
-  }
+    "42": "Okay, Magdalena Frech in the next round.",
+    "1": "Eight 1000 events this season.",
+    "20": "We played before and it"
+  },
+  "_verified_clean": "两份转写对不上 **5.5%**（闸门 12%），**0 处空档**。第一份 YouTube 自动字幕\n365 词，第二份 faster-whisper `medium.en` 356 词。\n\n**13 处分歧逐处看过，其中一处是真错，而且它和这条片子自己的另一行矛盾。**\n\n⚠️⚠️ **第 20 行：`never played before` → 改成 `We played before`。**\n\n    第 14 行（主持人）  `you've played her before.`   ← 两份转写都这么写\n    第 20 行（她自己）  YouTube `never played` / whisper `we played`\n\n**「从没交过手」和主持人上一句「你以前跟她交过手」不可能同时成立**，而主持人\n那句两份转写完全一致，她那句正是两份分歧的那一处——所以错的是第 20 行。\n\n**去查了第二个源**（tennisexplorer 的 mutual 页）：**莱巴金娜 2-0 汤森德，\n上一次是 2024 年迈阿密第三轮，6-3 6-7 6-4**。三盘，正对得上她说的\n「一直是一场硬仗」。⚠️ **中文第一版跟着 YouTube 写成「我们以前没交过手」，\n和第 14 行当场打架**，已改成「我们以前交过手」；小红书正文里那句引文同步改了，\n并把迈阿密那场的比分补进去当背景。\n\n⚠️⚠️ **这一条的第一版注释里，我引了一句源片根本没有的解说**\n（「as she did in the first meeting between the two on the US hard courts\nlast year」）。**结论碰巧是对的，判据是编的**——全文搜 `first meeting` /\n`last year` / `US hard` 一个都没有。CLAUDE.md 写着「判据落进文档的那一刻要问\n一句——它引用的那个东西，我打开看过吗？」，这就是那一句的又一个实例，而且\n**它比写错更危险：一个编出来的判据配上一个正确的结论，下一个人没有任何理由\n去查它**。现在钉的两条都是真的：第 14 行在核对表里、H2H 在 tennisexplorer 上。\n\n⚠️ 另外三条 `en_fixed`，都是**一个词被切成两个 / 数字写法**，`word_fix` 修不了：\n\n    第 1 行   `8 1,000 events this season.`        → `Eight 1000 events this season.`\n    第 6 行   `Taylor Towns end three and four.`   → `Townsend three and four.`\n    第 42 行  `Okay, Magdalena F in the next round.` → `Magdalena Frech`\n\n`word_fix` 另有五条，ASR 把三个人名全毁了（`Rebecca` / `Rebeccina` /\n`Reebachina` 三种错法都指莱巴金娜）。\n\n**其余 9 处不动**，分两类：写法差异（`score line`/`scoreline`、\n`hardcourt`/`hard court`、`8 1 000`/`eight one thousand`）和 whisper 漏词\n（`taylor`/`well`/`the`/`elena`/`try`/`supporting today` → `—`，我们这边对）。\n\n⚠️ **只有一处两边都没解出说得通的话**：第 11–12 行\n`to play all the those doubles in the single, but against Rybakina`，\nwhisper 给的是 `same goal`。**没有硬改**（`en_fixed` 只写确认过的），\n中文那一行只译她确定的意思——「她还要兼顾双打」，含糊那半截不替她编。",
+  "transcript_verified": true
 }
