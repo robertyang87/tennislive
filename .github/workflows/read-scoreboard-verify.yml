@@ -39,24 +39,24 @@ jobs:
       - name: 装依赖
         run: pip install -q -e .
 
-      - name: 定位 score 图目录
+      - name: 定位 contact 缩略图墙
         id: locate
         run: |
-          DIR=$(ls -d output/*/reel/${{ inputs.slug }} 2>/dev/null | head -1)
-          if [ -z "$DIR" ]; then
-            echo "::error::找不到 output/*/reel/${{ inputs.slug }}"
+          FRAMES=$(ls output/*/reel/${{ inputs.slug }}/contact_*.jpg 2>/dev/null | head -4)
+          if [ -z "$FRAMES" ]; then
+            echo "::error::找不到 output/*/reel/${{ inputs.slug }}/contact_*.jpg"
             exit 1
           fi
-          echo "dir=$DIR" >> "$GITHUB_OUTPUT"
+          echo "frames=$FRAMES" >> "$GITHUB_OUTPUT"
 
-      - name: MiniMax 读记分条并打进 summary
+      - name: MiniMax 抽帧缩略图墙里找比分板并打进 summary
         env:
           MINIMAX_API_KEY: ${{ secrets.MINIMAX_API_KEY }}
         run: |
           echo "## read_scoreboard 验证：${{ inputs.slug }}" >> "$GITHUB_STEP_SUMMARY"
           echo '```json' >> "$GITHUB_STEP_SUMMARY"
           PYTHONPATH=src python tools/read_scoreboard.py \
-            --dir "${{ steps.locate.outputs.dir }}" \
+            --frames ${{ steps.locate.outputs.frames }} \
             | tee -a "$GITHUB_STEP_SUMMARY"
           echo '```' >> "$GITHUB_STEP_SUMMARY"
 
