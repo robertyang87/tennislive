@@ -1,0 +1,66 @@
+name: read-scoreboard-verify
+
+# 手动验证「MiniMax 读记分条比分」的质量——这是「配音不脱节」的命门。
+# 「逐分数据（赛点在第几分）→ 视频第几秒」的对齐，唯一可靠信号是比分数字：
+# 逐分数据有 gameScore，比分板画面烧着同样的 15/30/40。读得准，就能对齐；
+# 读不准，这条链就走不通。给它一条有 score_*.jpg 的比赛，跑 read_scoreboard，
+# 把「时间码 → 比分」打进 job summary，人打开看读得对不对。
+#
+# ⚠️ 只读、只打印，不提交、不发微信、不 dispatch 任何东西。
+
+on:
+  workflow_dispatch:
+    inputs:
+      slug:
+        description: "有 score_*.jpg 的 reel slug（如 wangxiyu-timofeeva）"
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        # 全量 checkout：读 output/*/reel/<slug>/score_*.jpg，同 draft-segments-verify
+        # 的理由，稀疏检出挑不出「只一个 slug」，低频手动验证全量最干净。
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: 装依赖
+        run: pip install -q -e .
+
+      - name: 定位 score 图目录
+        id: locate
+        run: |
+          DIR=$(ls -d output/*/reel/${{ inputs.slug }} 2>/dev/null | head -1)
+          if [ -z "$DIR" ]; then
+            echo "::error::找不到 output/*/reel/${{ inputs.slug }}"
+            exit 1
+          fi
+          echo "dir=$DIR" >> "$GITHUB_OUTPUT"
+
+      - name: MiniMax 读记分条并打进 summary
+        env:
+          MINIMAX_API_KEY: ${{ secrets.MINIMAX_API_KEY }}
+        run: |
+          echo "## read_scoreboard 验证：${{ inputs.slug }}" >> "$GITHUB_STEP_SUMMARY"
+          echo '```json' >> "$GITHUB_STEP_SUMMARY"
+          PYTHONPATH=src python tools/read_scoreboard.py \
+            --dir "${{ steps.locate.outputs.dir }}" \
+            | tee -a "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+
+      - name: 同时打印逐分数据做对照（比分序列基准）
+        env:
+          VERIFY_SLUG: ${{ inputs.slug }}
+        run: |
+          echo "## 对照：逐分数据（每一分的比分，来自 WTA）" >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+          VERIFY_SLUG="$VERIFY_SLUG" PYTHONPATH=src python -c "import os,sys,datetime,requests; sys.path.insert(0,'tools'); from fetch_match_pbp import find_match,get; s=requests.Session(); parts=os.environ['VERIFY_SLUG'].split('-'); ev,y,mid,row=find_match(s,parts,datetime.date(2026,8,13),datetime.date(2026,8,17)); payload=get(s,'tournaments/'+str(ev)+'/'+str(y)+'/matches/'+str(mid)+'/point-by-point'); [print('fen',p['pointNumber'],'set',p['setNumber'],'game',p['gameNumber'],p['scoreAfterPoint']['gameScore']['teamAScore']+'-'+p['scoreAfterPoint']['gameScore']['teamBScore'],'server',p['server'],'winner',p['pointWinner']) for p in payload['points']]" 2>&1 >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
