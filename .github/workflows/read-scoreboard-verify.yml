@@ -41,13 +41,18 @@ jobs:
 
       - name: 定位 contact 缩略图墙
         id: locate
+        env:
+          VERIFY_SLUG: ${{ inputs.slug }}
         run: |
-          FRAMES=$(ls output/*/reel/${{ inputs.slug }}/contact_*.jpg 2>/dev/null | head -4)
+          # 用 python glob 找，别靠 shell 的 ls 通配符——GitHub Actions 的 bash
+          # 展开 output/*/ 时日期目录太多、且 head 提前关管道可能吞结果。
+          FRAMES=$(VERIFY_SLUG="$VERIFY_SLUG" python3 -c "import glob,os; fs=sorted(glob.glob('output/*/reel/'+os.environ['VERIFY_SLUG']+'/contact_*.jpg')); print(' '.join(fs[:4]))")
           if [ -z "$FRAMES" ]; then
             echo "::error::找不到 output/*/reel/${{ inputs.slug }}/contact_*.jpg"
             exit 1
           fi
           echo "frames=$FRAMES" >> "$GITHUB_OUTPUT"
+          echo "定位到：$FRAMES"
 
       - name: MiniMax 抽帧缩略图墙里找比分板并打进 summary
         env:
