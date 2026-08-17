@@ -42,8 +42,26 @@ CLAUDE.md「封面大图一律用官方高清实拍」那条的配套工具。�
    ⚠️⚠️ **必须带浏览器 UA**：拿 `tennislive/0.1` 这类 UA 请求是 **403**，
    看起来像「这个站没开 REST 接口」。这一条骗过我一次。
    ⚠️ 另一条等价入口是 `/?rest_route=/wp/v2/media`。
-   ⚠️ 赛事图库的文件名**没有球员名**（`081526_DAY-EIGHT_MIKE-BAKER-112-of-229.jpg`），
-   所以 `?search=<姓>` 在这儿是空的——它的用处是**按日期看当天的图上没上**。
+   ⚠️ 赛事图库的文件名**没有球员名**（`081526_DAY-EIGHT_MIKE-BAKER-112-of-229.jpg`）。
+
+   ⚠️⚠️ **但「所以 `?search=<姓>` 在这儿是空的」这句话是错的，2026-08-17 量翻了。**
+   WordPress 的 `search` 搜的**不只是文件名，还有 `title` / `alt_text` / `caption`
+   这几个元数据字段**——而赛事方是给图填了 title 的：
+
+       ?search=Fonseca  → CincyOpen8.16.26BJ_289.jpg（2000×1334，title="Fonseca"）
+                          CincyOpen8.13.26BJ_66.jpg （2000×1333，title="Fonseca"）
+       ?search=Shelton  → Ben-Shelton_20260815_000010.jpg（这一批**文件名就带名字**）
+
+   **三个文件名都不含 `Fonseca`，可它们全被 search 搜出来了。** 那句错注释的来路
+   很典型：只看了文件名，就替 `search` 下了结论——「我没查过的」被写成了「查过没有」。
+
+   所以这一档**要按两条各扫一遍**：`?search=<姓>` 拿命名和元数据两种，
+   `?after=/&before=` 拿当天全量。⚠️ 仍然要打开看：`search` 命中的可能是**场外**照
+   （丰塞卡那三张里两张是签名和拿相机），过不了第 2 道闸门。
+
+   ⚠️ **这条渠道也可能只有头像**：搜 `Shnaider` / `Chwalinska` 各只回一张
+   492×656 的官方头像（`330482__Diana-Shnaider.jpg`），那不是比赛照。
+   **「search 有命中」不等于「有能用的图」**，还是要看尺寸和内容。
 
 4. ⭐ **图库什么时候上线是可以量的，别在当天下午反复扫。** 拿
    `posts?orderby=date` 读 `day-N-best-of-photos` 的 `date_gmt`，实测：
@@ -305,10 +323,34 @@ def original_url(url: str) -> str | None:
     return None
 
 
-def sweep_tournament(site: str, date: str | None) -> dict:
-    """赛事官网的 WP 媒体库 ＋ 图库上线时刻。"""
+def sweep_tournament(site: str, date: str | None, player: str | None = None) -> dict:
+    """赛事官网的 WP 媒体库 ＋ 图库上线时刻。
+
+    ⚠️ **两条各扫一遍**：按日期拿当天全量，按 `?search=<姓>` 拿命名和元数据两种。
+    第二条 2026-08-17 才补上——在那之前这个函数只按日期扫，而模块 docstring 里
+    写着「文件名没有球员名，所以 search 是空的」。**那句话是错的**：WordPress 的
+    search 还搜 `title` / `alt_text` / `caption`，而赛事方给图填了 title——
+    搜 `Fonseca` 回来三张文件名里根本不含 `Fonseca` 的比赛照。
+    """
     base = f"https://{site}/wp-json/wp/v2"
-    res: dict = {"media": [], "galleries": []}
+    res: dict = {"media": [], "galleries": [], "by_name": []}
+    if player:
+        try:
+            named = json.loads(_get(
+                f"{base}/media?per_page=40&search={player}"
+                "&_fields=date,source_url,media_details,title"))
+            for m in named:
+                md = m.get("media_details") or {}
+                if not md.get("width"):
+                    continue
+                url = m.get("source_url") or ""
+                res["by_name"].append({
+                    "date": m.get("date"), "wh": f"{md.get('width')}x{md.get('height')}",
+                    "title": (m.get("title") or {}).get("rendered", ""),
+                    "url": url, "original": original_url(url),
+                })
+        except Exception:                                       # noqa: BLE001
+            pass
     try:
         media = json.loads(_get(f"{base}/media?per_page=100&orderby=date&order=desc"))
     except Exception as exc:                                    # noqa: BLE001
@@ -385,12 +427,43 @@ def main() -> int:
         print(f"  {r['caption'][:150]}")
         print(f"     {r['credit']} · {r['url']}")
 
+    # ⚠️⚠️ **不给 `--site` 时这一档整个不跑，而它正是三条里最常有图的一条。**
+    # 2026-08-17 就是这么白判过一次：`--player Svitolina --event Cincinnati`
+    # 只跑了上面两档、都报「没有对得上的」，我据此在 `_frame_why` 里写下
+    # 「四类源都翻过」——而赛事媒体库当天其实躺着 18 张实拍。**跳过的那一档
+    # 和查空的那一档在输出里长得一模一样**（CLAUDE.md「空结果先自证是真空」／
+    # 「扫得太窄和真的没有长得一模一样」）。所以现在**没跑的要出声**，
+    # 而且末尾那份清单把「这一趟到底查了哪几档」逐条列出来。
+    if not args.site:
+        print("\n=== 赛事官网的 WordPress 媒体库　⚠️ **这一档没跑**")
+        print("  没给 `--site`，而它是三条里最常有图的一条（当日实拍原图 2000px 级，"
+              "去掉 `-scaled` 能到 5541×3694）。")
+        print("  补一句就有：--site <赛事域名，如 cincinnatiopen.com> "
+              "--date <这场球的**当地**日期>")
+        print("  ⚠️ 当地日期不是北京日期：夜场（当地 21:00 之后开打）在北京是次日。")
     if args.site:
         print(f"\n=== {args.site} 的 WordPress 媒体库")
-        res = sweep_tournament(args.site, args.date)
+        res = sweep_tournament(args.site, args.date, args.player)
         if res.get("error"):
             print("  " + res["error"])
         else:
+            # ⚠️ 先报按名字搜到的那一批。**这一条 2026-08-17 才补上**——在那之前
+            # 这一档只按日期扫，而模块 docstring 断言 search 是空的（错的）。
+            named = res.get("by_name") or []
+            if args.player:
+                print(f"  ⭐ 按名字搜（`?search={args.player}`，搜的是文件名 ＋ "
+                      f"title/alt/caption）：{len(named)} 张")
+                for m in named[:8]:
+                    print(f"    {m['date'][:10]}  {m['wh']:11} "
+                          f"{m['url'].rsplit('/', 1)[-1][:44]}  title={m['title'][:20]}")
+                    if m["original"]:
+                        print(f"      ⭐ 去掉 -scaled 才是原图：{m['original']}")
+                if not named:
+                    print("    没有。⚠️ 这不等于当天没图——赛事图库多数文件名和 title "
+                          "都不带球员名，按日期那一档还要看。")
+                elif all(int(m["wh"].split("x")[0]) < 1200 for m in named):
+                    print("    ⚠️ **全是小图**（492×656 那种是官方头像，不是比赛照）。"
+                          "「search 有命中」不等于「有能用的图」。")
             hits = res["media"]
             print(f"  {args.date or '最近 100 条'}：{len(hits)} 张")
             for m in hits[:8]:
@@ -402,6 +475,16 @@ def main() -> int:
                 print("  图库上线时刻（判据：当天那一辑在次日 UTC 00:00–03:00 之间）：")
                 for g in sorted(res["galleries"], key=lambda x: x["date"])[-6:]:
                     print(f"    {g['slug']:26} UTC {g['date_gmt']}")
+
+    # **这一趟到底查了哪几档，明着写出来。** 写 `cover.portrait._frame_why`
+    # 的人要照抄这份清单，不许写成「四类源都翻过」——没跑的那一档不算翻过。
+    ran = ["WTA photo-resources", "The Enquirer 每日图集"]
+    skipped = []
+    (ran if args.site else skipped).append("赛事官网 WordPress 媒体库")
+    print("\n=== 这一趟查了什么")
+    print(f"  跑过：{'、'.join(ran)}")
+    if skipped:
+        print(f"  ⚠️ **没跑**：{'、'.join(skipped)}——这几档的结果是**未知**，不是「没有」")
     return 0
 
 

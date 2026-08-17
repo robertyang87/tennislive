@@ -30,5 +30,11 @@
     "license": "WTA 官方图库（photoresources.wtatennis.com），本号自媒体使用",
     "mirror": "https://photoresources.wtatennis.com/photo-resources/2026/08/16/0d470f5b-7c21-431a-b2c6-376bf0ada45b/GettyImages-2288437113.jpg?width=4000",
     "note": "WTA 官网 `videos/highlights` 索引里 **Cirstea vs Bartunkova 那条集锦挂的头图**。4000×2667。\n\n⚠️ **这一张的文件名不自证**（`GettyImages-2288437113.jpg` 里没有球员、赛事、轮次），所以四要素靠另外三条：① **CMS 的引用关系**——它是这条集锦的头图，而那条集锦的标题写着 `Sorana Cirstea vs. Nikola Bartunkova | 2026 Cincinnati Round 2`（和 `townsend-osorio` 那次同一个形状：「这张图挂在这场比赛的集锦上」比文件名更硬）；② **路径日期 2026/08/16**，比赛是北京时间 8/16 凌晨（19:13Z 开赛）；③ **人脸比对**——和 WTA 官方头像 `312469` 并排看过（眉骨、鼻梁、发际线一致），而对面的巴尔通科娃是二十岁、戴 adidas 发带，两个人差得很远。\n\n⚠️ **取原图必须带 `?width=4000`**：不带参数是 400 Bad Request。"
+  },
+  "wang-cincinnati-2026-r2.jpg": {
+    "artist": "unknown（WTA 官方图库，这一批的文件名不带摄影师后缀；同批带署名的写作 `Eala-R2-Jimmie.jpg`）",
+    "license": "WTA 官方图库（photoresources.wtatennis.com），本号自媒体使用",
+    "mirror": "https://photoresources.wtatennis.com/photo-resources/2026/08/16/aa1524c8-5f82-4d50-9c4c-d6e8580a6d3a/Xinyu_Wang_-_Cincinnati_Open_2026_-_Day_6-DSC_1213.jpg?width=4000",
+    "note": "⚠️ **这条是 2026-08-17 补的——这张图入库时（`specs/reels/wang-vekic.json`）漏了 credits，而 reel 那条线不查 credits.json，所以它一直是个空洞。**出处写在那条 spec 的 `cover._portrait_why` 里：WTA 官网 8/16 那条集锦（`/videos/4560683/wang-slides-into-cincinnati-third-round-over-vekic`）的头图。\n\n**文件名自证四要素**：球员 `Xinyu_Wang`、赛事 `Cincinnati_Open`、年份 `2026`、第几个比赛日 `Day 6`（＝8/16，她 3-6 6-1 6-4 逆转 31 号种子维基奇那一场）。4000×2725，真实相机分辨率不是放大，铺 1080×1440 是 0.53× 缩小。\n\n**画面自证**：她穿的淡紫球衣和源片 16.5／64.5／192.5 秒的近景同一套，背景是 `FIFTH THIRD BANK` 和 `P&G` 挡板——辛辛那提本站的赞助商。动作是反手随挥、球在场上。\n\n⚠️ 取原图必须带 `?width=4000`，不带参数是 400 Bad Request 不是 404。"
   }
 }

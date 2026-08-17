@@ -3379,3 +3379,164 @@ def test_探活正常是第几次要按间隔算不许写死1(caplog):
         P._say_probe_hit(5, "https://example.invalid/copy.html", delay=30.0)
     assert [r for r in caplog.records if r.levelno >= logging.WARNING], (
         "第 5 次才命中是真的异常（比最快值多三次），必须报 warning")
+
+
+def test_示意图吐出来的每个颜色属性都得是合法的():
+    """⚠️ 2026-08-16 我自己写坏过一次，而**四道闸全绿、渲出来也像模像样**。
+
+    起因是把三个示意图模块的硬编码颜色换成 `diagram_palette` 的 token 时，
+    用脚本批量替换，中间一步给字符串补 `f` 前缀的正则**连 SVG 属性值里那对
+    引号也补上了**，于是生成出来是
+
+        fill=f"#f4fbf7"
+
+    多一个 `f`。这在 HTML 解析里是 `fill` 取到一个垃圾值——Chromium 不报错，
+    照样渲出一张看着挺正常的图，只有把两版逐像素比才看得出笔画暗了一档
+    （量出来那一块的最亮像素从 `#f4fbf7` 掉到 `#0d2b1e`，也就是底色）。
+    19 处，跨两个模块。
+
+    「渲出来看」这一关它是过得去的——**所以判据不能是看，得是解析**。
+    这条扫每一张示意图吐出来的 SVG，要求每个颜色属性的值都是认得出来的东西。
+    """
+    import importlib
+    import xml.etree.ElementTree as ET
+
+    diagrams = {
+        "no1_charts": ("weeks_at_no1_chart", "goolagong_gap", "margin_ladder"),
+        "masters_grid": ("nine_masters_grid", "two_tours_grid",
+                         "wta_table_drift", "atp_table_future"),
+        "rulebook_cards": ("time_structure", "shoe_rule", "toilet_rule",
+                           "two_violations", "word_in_the_book"),
+    }
+    # 判据自己的判据：模块改名 / 函数删掉的样子就是一张空表，那时它会安静地全绿。
+    checked = 0
+    ok_value = re.compile(r"^(#[0-9a-fA-F]{3,8}|none|currentColor|url\(#[\w-]+\))$")
+    for mod, fns in diagrams.items():
+        m = importlib.import_module(f"tennislive.video.{mod}")
+        for fn in fns:
+            svg = getattr(m, fn)()
+            checked += 1
+
+            # ① **真的用 XML 解析器解一遍**。`fill=f"#f4fbf7"` 在解析器眼里
+            #    直接是语法错，而正则想认它总会误伤——第一版就把文本里的
+            #    `2Q=` 当成了属性名。判据宁可用真解析器，不用手搓的模式。
+            try:
+                root = ET.fromstring(svg)
+            except ET.ParseError as exc:
+                raise AssertionError(
+                    f"{mod}.{fn} 吐出来的不是合法 SVG：{exc}——"
+                    "十有八九是批量替换时给 SVG 属性里的引号补了 f 前缀"
+                    "（`fill=f\"…\"`）。Chromium 不会报错，只会把那个值整个读废"
+                ) from None
+
+            # ② 每个颜色属性的值都要认得出来
+            for el in root.iter():
+                for attr in ("fill", "stroke"):
+                    val = el.get(attr)
+                    if val is not None:
+                        assert ok_value.match(val), (
+                            f"{mod}.{fn} 的 <{el.tag}> {attr} 值认不出来：{val!r}")
+
+    assert checked >= 12, f"只校到 {checked} 张示意图，判据失效了"
+
+
+def test_封面不许再压一层居中的阴影(tmp_path):
+    """账号所有者：「感觉封面还有蒙了一层阴影」。
+
+    `.cover .scrim` 原来叠着两层：一条竖向渐变，**外加**一层
+    `radial-gradient(... at 50% 50%)`。那层椭圆的注释写着理由是
+    「给**居中的那一问**垫一层软椭圆」——而 `.copy` 早就按账号所有者的要求
+    改成贴底了（和 VS 海报对齐），**居中的那一问从此不存在**。椭圆留在原地，
+    压的就成了照片正中间，也就是人脸那一块。
+
+    ⚠️ **它一个字都不报**：封面照样渲得出来，四道闸门全过，全量测试全绿。
+    分辨率、授权、四要素、构图统统合格——错的只是「有一层黑纱盖在上面」，
+    而那没有任何一条判据在看。
+
+    ⚠️ **不能拿 CSS 文本当判据。** 上面那段注释里正引着 `radial-gradient(128% 40%`
+    这个老写法（这个仓库的注释就是教训的存放处），按文本扫会把「把坑记下来」
+    判成「又踩了这个坑」——同一个错本仓库犯过五次。所以这一条**渲出来量像素**。
+
+    量法：拿一张**纯白照片**当封面底图，渲出来每一行的灰度直接就是 `1 - alpha`
+    ——不依赖任何一张真照片，也就不会被「换了张图」搅乱。实测两版：
+
+        高度      改前（带椭圆）   改后
+         35%        0.351         0.071
+         40%        0.382         0.071
+         50%        0.412         0.071   ← 画面正中被压掉四成
+         70%        0.323         0.318
+         85%        0.249         0.532   ← 文案那一带反而更暗了
+        100%        0.539         0.650
+
+    ⚠️ **为什么不去钉每张封面的「标题对比度」**：试过三种取样口径，三个互相
+    矛盾的答案。固定带子会把标题上方的空档算进「底」（标题只有一行的封面
+    因此被读成最差）；按行找字又分不开「白字」和「大太阳底下的白草地」。
+    真正托住可读性的是 `.cover .title` 那三层 text-shadow，而按中位数算的
+    对比度看不见逐字的描边光晕——36 张封面逐张打开看过，标题全都读得出来，
+    而同一批数字里有六张「低于 AA」。**一个会随换图漂移的判据，不是变成
+    常年红就是变成假绿灯**，所以这里只钉压暗曲线本身。
+
+    **两头都要钉，缺一头都不算判据：**
+
+    ① 正中那一段必须近乎透明——只钉这一头的话，把整条 scrim 删光也是绿的。
+    ② 文案那一带必须够暗——只钉这一头的话，椭圆加回来照样绿（它在底部
+       反而更亮，见上表）。
+
+    ⚠️ 门槛落在两版中间，不贴着任何一版：正中 0.071 vs 0.351~0.412，取 0.20；
+    底部 0.532 vs 0.249，取 0.40。两个方向分别反向验证过（把椭圆加回来，
+    第 ① 条红；把底部那几档拉平成老写法的 .22，第 ② 条红）。
+
+    ⚠️ 正中只取 35~50%——**主体（脸、上半身）在那一段**。60% 往下已经是
+    起坡区（`.copy` 长标题会占到那儿），把它算进「正中」会逼着下一个人
+    为了过闸把文案那一带的压暗也拆掉，而那正是这条判据的另一头要拦的。
+    """
+    import numpy as np
+    from PIL import Image
+
+    from tennislive.video.explainer import ExplainerSegment, render_explainer_slides
+
+    repo = Path(__file__).resolve().parents[1]
+    white = repo / "assets" / "_scrim_probe_white.png"
+    Image.new("RGB", (2000, 1500), (255, 255, 255)).save(white)
+    seg = ExplainerSegment(
+        kind="cover", label="网球冷知识", title="这一屏只用来量压暗曲线",
+        narration="", image=f"assets/{white.name}",
+    )
+    try:
+        render_explainer_slides([seg], tmp_path, topic="量一量", column="网球有故事")
+    except Exception as exc:                                    # noqa: BLE001
+        if "chrom" in str(exc).lower() or "executable" in str(exc).lower():
+            raise AssertionError(
+                "没有 Chromium，这条判据跑不了——它必须真渲出来量像素，"
+                "查 CSS 文本看不见「有一层黑纱盖在上面」这一类错") from exc
+        raise
+    finally:
+        white.unlink(missing_ok=True)
+
+    a = np.asarray(Image.open(tmp_path / "slide_00.jpg").convert("L"), dtype=float)
+    h, w = a.shape
+    # 取最左那一条：`.copy` 从 x=70 起（2x 截图后 140），左边距干净，
+    # 量到的才是 scrim 本身，不掺文字和它的描边。
+    strip = a[:, : int(w * 0.03)].mean(axis=1)
+
+    def alpha(pct: float) -> float:
+        return 1.0 - float(strip[min(int(h * pct), h - 1)]) / 255.0
+
+    正中 = max(alpha(p) for p in (0.35, 0.40, 0.45, 0.50))
+    assert 正中 <= 0.20, (
+        f"封面正中被压掉了 {正中 * 100:.0f}%——那儿没有字，压它只是把照片蒙住。\n"
+        "⚠️ 八成是又给 `.cover .scrim` 叠了一层居中的 radial-gradient。"
+        "那层当年是给**居中的那一问**垫底的，而 `.copy` 早就贴底了，"
+        "它现在压的是人脸。")
+
+    文案带 = min(alpha(p) for p in (0.85, 0.90, 0.95))
+    assert 文案带 >= 0.40, (
+        f"文案那一带只压了 {文案带 * 100:.0f}%——封面标题是近白的 #f4fbf7，"
+        "底不够暗就读不出来了。\n"
+        "⚠️ 这一条是上面那条的另一头：删掉居中那层黑纱的同时，底部那几档"
+        "**要一起压重**（老写法靠椭圆在文案那一带顺手帮忙，删了得补回来）。")
+
+    # 判据自己的判据：这条带子必须真的量到了变化，否则上面两句是在量一张
+    # 恒定的图。纯白底片过 scrim 之后，顶、中、底三段必然是三个不同的数。
+    assert alpha(0.02) > 正中 and 文案带 > 正中, (
+        "顶/中/底量出来没有差别——底片或取样列选错了，这两条断言等于恒真")

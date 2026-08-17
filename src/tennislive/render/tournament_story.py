@@ -2493,6 +2493,162 @@ STORIES = STORIES + (
         source_url="https://en.wikipedia.org/wiki/Coleman_Wong",
     ),
     _trivia_story(
+        slug="wang-sabalenka",
+        title="王欣瑜第三轮VS萨巴伦卡",
+        subtitle="赛事前瞻 · WTA 1000",
+        identity="唯一一次交手，她拿走过第一盘",
+        chips=("WTA 1000", "第三轮", "第二次交手"),
+        hero=(
+            "辛辛那提第三轮，王欣瑜对上世界第一萨巴伦卡。两人只交手过一次："
+            "2022 年 1 月澳网第二轮，当时 20 岁的王欣瑜在罗德·拉沃尔球场"
+            "6-1 拿下第一盘，最终 1-2 落败；那场球的总得分是 84-83，多的那一分在她手上。"
+        ),
+        facts=(
+            "萨巴伦卡 1998 年 5 月生，白俄罗斯人，2026 年 8 月 10 日那期排名世界第一、"
+            "8670 分；本赛季至辛辛那提第三轮前 39 胜 7 负，其中硬地 26 胜 2 负，"
+            "本赛季三个冠军分别在布里斯班、印第安维尔斯和迈阿密；生涯 24 个巡回赛单打冠军，"
+            "并在 2024 年拿下辛辛那提站冠军。本站第二轮 6-2、7-6(2) 胜吉布森。",
+            "王欣瑜 2001 年 9 月生，2026 年 8 月 10 日那期世界第 36（较上期升 5 位），"
+            "生涯最高第 30；本赛季 22 胜 19 负。1 月在奥克兰一路打进决赛，"
+            "随后的澳网连胜奥斯塔彭科与诺斯科娃、打进 1/8 决赛。本站首轮 6-4、6-3 "
+            "胜范德温克尔，第二轮 3-6、6-1、6-4 逆转 31 号种子维基奇，用时 2 小时 11 分。",
+            "两人唯一一次交手是 2022 年 1 月 20 日澳网第二轮，场地是罗德·拉沃尔球场，"
+            "全场 1 小时 56 分钟。王欣瑜 6-1 拿下第一盘后 4-6、2-6 落败；"
+            "那一盘萨巴伦卡双误 12 次，全场双误 19 次，而全场总得分王欣瑜 84、萨巴伦卡 83。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2022-01",
+                player="王欣瑜",
+                age="20 岁",
+                headline="澳网次轮 6-1 拿下萨巴伦卡的第一盘",
+                detail="罗德·拉沃尔球场，1 小时 56 分钟，最终 6-1、4-6、2-6 落败；"
+                "全场总得分 84-83，多的那一分在她手上。",
+                source_url="https://www.tennisexplorer.com/mutual/sabalenka-aryna/wang-77549/",
+            ),
+            ChampionMoment(
+                date="2026-08-16",
+                player="王欣瑜",
+                age="24 岁",
+                headline="辛辛那提次轮逆转 31 号种子维基奇",
+                detail="先丢一盘，3-6、6-1、6-4 拿下，用时 2 小时 11 分，进入第三轮。",
+                source_url="https://www.wtatennis.com/tournament/1017/cincinnati/2026/scores",
+            ),
+        ),
+        image_keys=(),
+        source_label="WTA 官方排名与赛会数据 / flashscore 官方逐盘统计 / tennisexplorer",
+        image_credit="WTA 官方图库",
+        source_url="https://www.wtatennis.com/tournament/1017/cincinnati/2026/scores",
+    ),
+    _trivia_story(
+        slug="eala-anisimova",
+        # ⚠️ 写「三轮」不写「第三轮」：`knowledge_title` 会拼成
+        # 「📖8.17网球有故事｜…」，带「第」字算出来 21 个字位，超过小红书标题
+        # 那一格的 20 —— `test_knowledge_titles_are_specific_and_fit_xiaohongshu`
+        # 当场红。轮次的完整叫法在封面 fixture 和旁白里照旧是「第三轮」。
+        title="伊埃拉三轮VS阿尼西莫娃",
+        subtitle="赛事前瞻 · WTA 1000",
+        identity="一个爬到生涯最高，一个从世界第三往回找",
+        chips=("WTA 1000", "第三轮", "首次交手"),
+        # ⚠️ `hero` 也会铺成知识帖的一段，同样卡 120 字（第一版 128 字，红过一次）。
+        hero=(
+            "辛辛那提第三轮，世界第 20 的伊埃拉第一次碰上世界第 10 的阿尼西莫娃。"
+            "伊埃拉今年 39 胜 19 负，6 月在柏林赢下莱巴金娜、8 月在华盛顿拿到生涯首冠；"
+            "阿尼西莫娃排到过世界第 3，今年最好成绩是 2 月的迪拜四强。"
+        ),
+        facts=(
+            "阿尼西莫娃 2001 年 8 月生，美国人，生涯最高世界第 3，2026 年 8 月 10 日"
+            "那期世界第 10、4353 分；本赛季 18 胜 10 负，而 2025 赛季是 48 胜 19 负。"
+            "1 月澳网打进 1/4 决赛负于佩古拉，2 月迪拜打进四强又负于同一人；"
+            "2 月之后再没打进过四强。本站 9 号种子，第二轮 6-2、6-3 胜森梅兹。",
+            # ⚠️ 这一条压在 120 字以内是硬要求：`knowledge_copy` 把每条 fact 铺成
+            # 知识帖的一段，而 `test_all_knowledge_copy_is_plain_mobile_first_and_not_numbered`
+            # 拦超过 120 字的段（手机上读不下去）。第一版 145 字当场红，
+            # 「本站第二轮鲁塞退赛」那半句因此挪到了下一条。
+            "伊埃拉 2005 年 5 月生，2026 年 8 月 10 日那期世界第 20，就是她的生涯最高，"
+            "本赛季 39 胜 19 负。6 月柏林站第二轮 7-5、6-4 胜莱巴金娜，1/4 决赛再胜"
+            "斯维托丽娜进四强；8 月 3 日华盛顿夺冠，生涯首个巡回赛单打冠军。"
+            "这是她第一次参加辛辛那提站。",
+            "两人此前从未交手，公开记录里的交手战绩是 0-0，这是巡回赛生涯第一次正面交锋。"
+            "伊埃拉本站第二轮 6-1、3-0 领先时对手鲁塞退赛，全场只打了 58 分钟；"
+            "赢下第三轮的人进 16 强。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2026-06-18",
+                player="伊埃拉",
+                age="21 岁",
+                headline="柏林次轮 7-5、6-4 胜莱巴金娜",
+                detail="随后 1/4 决赛 6-3、6-4 再胜斯维托丽娜，打进柏林站四强。",
+                source_url="https://www.tennisexplorer.com/player/eala/?annual=2026",
+            ),
+            ChampionMoment(
+                date="2026-02-20",
+                player="阿尼西莫娃",
+                age="24 岁",
+                headline="迪拜四强，本赛季至今的最好成绩",
+                detail="1/4 决赛 2-6、7-5、7-6(4) 胜安德烈耶娃，四强 1-6、6-4、6-3 负于佩古拉；"
+                "此后半年再没打进过四强。",
+                source_url="https://www.tennisexplorer.com/player/anisimova-3be62/?annual=2026",
+            ),
+        ),
+        image_keys=(),
+        source_label="WTA 官方排名与赛会数据 / tennisexplorer 逐场记录",
+        image_credit="The Enquirer / WTA 官方图库",
+        source_url="https://www.wtatennis.com/tournament/1017/cincinnati/2026/scores",
+    ),
+    _trivia_story(
+        slug="fonseca-oconnell",
+        title="丰塞卡第三轮VS奥康奈尔",
+        subtitle="赛事前瞻 · ATP 1000",
+        identity="一个轮空进第二轮，一个从资格赛打了四场",
+        chips=("ATP 1000", "第三轮", "首次交手"),
+        hero=(
+            "辛辛那提第三轮，19 岁的丰塞卡第一次碰上 32 岁的奥康奈尔。丰塞卡是本站 23 号种子，"
+            "5 月在法网从两盘落后翻掉德约科维奇；奥康奈尔世界第 129，从资格赛打起，四场才走到这一轮。"
+        ),
+        facts=(
+            # ⚠️ 每条都压在 120 字以内：`knowledge_copy` 把每条 fact 铺成知识帖的
+            # 一段，`test_all_knowledge_copy_is_plain_mobile_first_and_not_numbered`
+            # 拦超过 120 字的段。这一批写完是 118 / 108 / 115 / 74。
+            "丰塞卡 2006 年 8 月 21 日生，巴西人，本站 23 号种子、世界第 27，生涯最高第 24。"
+            "5 月 29 日法网第三轮，他在菲利普·夏蒂埃球场 4-6、4-6、6-3、7-5、7-5 逆转德约科维奇，"
+            "用时 4 小时 57 分。",
+            "丰塞卡本赛季 21 胜 14 负。8 月蒙特利尔第二轮 7-6(3)、7-5 胜西西帕斯，"
+            "第三轮 7-6(6)、6-3 胜鲁德。本站首轮轮空，第二轮 6-4、7-6(2) 胜范德赞德舒尔普，"
+            "用时 1 小时 48 分。",
+            "奥康奈尔 1994 年 6 月 3 日生，澳大利亚人，世界第 129，生涯最高第 53。本站从资格赛打起，"
+            "四场合计 6 小时 43 分：胜斯威尼、舍甫琴科、迈赫扎克，上一轮 7-5 领先、"
+            "第二盘 1-2 时 11 号种子鲁德退赛。",
+            "奥康奈尔今年的红土赛季一场没赢，0 胜 6 负。两人此前从未交手，公开记录里的交手战绩是 0-0，"
+            "这是生涯第一次正面交锋；第三轮赢的人进 16 强。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2026-05-29",
+                player="丰塞卡",
+                age="18 岁",
+                headline="法网第三轮两盘落后翻掉德约科维奇",
+                detail="菲利普·夏蒂埃球场，4-6、4-6、6-3、7-5、7-5，用时 4 小时 57 分；"
+                "两天后再 7-5、7-6(8)、5-7、6-2 胜鲁德，打进 1/4 决赛。",
+                source_url="https://www.tennisexplorer.com/player/fonseca-57dc1/?annual=2026",
+            ),
+            ChampionMoment(
+                date="2026-08-16",
+                player="奥康奈尔",
+                age="32 岁",
+                headline="从资格赛打到第三轮，四场 6 小时 43 分",
+                detail="资格赛胜斯威尼、舍甫琴科，正赛首轮 6-4、7-6(5) 胜迈赫扎克；"
+                "第二轮 7-5 拿下首盘、次盘 1-2 时 11 号种子鲁德退赛。",
+                source_url="https://www.tennisexplorer.com/player/o-connell-020b8/?annual=2026",
+            ),
+        ),
+        image_keys=(),
+        source_label="ATP 官方签表（protennislive posting）/ flashscore 官方逐盘统计 / tennisexplorer 逐场记录",
+        image_credit="Cincinnati Open 官方图库",
+        source_url="https://www.protennislive.com/posting/2026/422/mds.pdf",
+    ),
+    _trivia_story(
         slug="masters-format",
         title="大师赛为什么变两周",
         subtitle="网球观察 · 赛程篇",
@@ -3313,6 +3469,128 @@ STORIES = STORIES + (
             "2026-rulebook_19dec25.pdf"
         ),
         source_label="ATP 2026 年版规则书、ATP 官方战报、Tennis365 / Puntodebreak 赛后稿",
+    ),
+    _trivia_story(
+        slug="heat-rule",
+        title="28 度也能叫极端高温",
+        subtitle="网球冷知识 · 规则篇",
+        identity="从德约在辛辛那提那场说起",
+        chips=("冷知识", "规则", "高温"),
+        # ⚠️ 这一段整段进小红书文案，单段上限 120 字
+        # （`knowledge._validate_copy_for_publish`）。
+        hero=(
+            "德约倒下那天，辛辛那提的气温只有 28.6 度。而 ATP 今年新立的高温规则不看气温，"
+            "看 WBGT——湿球占七成，气温只占一成。三十点一以上可申请十分钟降温休息，"
+            "三十二点二以上整片室外场停。"
+        ),
+        facts=(
+            "⚠️ **这条片子不给德约下诊断。** 他赛后只说「一个跟了我好多年的健康问题，"
+            "湿度和高温大的时候特别麻烦」（Sky Sports 转述的原话是 "
+            "「It's just a condition that I have, health-wise, that has been bothering me "
+            "for the past couple of years」＋「a lot of issues, especially when it is humid "
+            "and it is hot」），**没有说是什么病**，也没有任何一方宣布过诊断。"
+            "所以片子里「中暑」两个字一次都不出现，只写他说过的话和场上发生的事。"
+            "⚠️ 另有二手源把他的话记成「I've been dealing with it for many years now」，"
+            "措辞和 Sky 那版不一致——**只用两版都成立的那部分**（多年的老毛病＋湿热加重）。",
+
+            # ⚠️ 开头那一句要在**第 40 字之前**留下一个句读（。！？；：，），
+            # 否则 `test_knowledge_card_facts_never_hard_truncate_mid_clause`
+            # 会判它「卡片上会被从句子中间切断」。⚠️ **`、` 不算句读**——
+            # `webcards._CLAUSE_MARKS` 里只有那六个，第一版正是被这个坑住的。
+            "那一场的事实（flashscore ＋ Sky Sports 赛报交叉核过），比赛编号 `h4BvGELE`："
+            "2026-08-15 辛辛那提第二轮，德约科维奇 **6-2 4-6 4-6** 负蒂兰特，"
+            "AC=3（打完的，不是退赛）。第二盘第三局他保发打了 **18 分钟、九次平分、"
+            "救下四个破发点**，那一局之后叫医疗暂停，理疗师先上、随后队医上，"
+            "冰毛巾敷头颈、吃了药；第二盘丢掉后两个人都回了更衣室。"
+            "⚠️ **没有写「那是官方降温休息」**——报道只说两人回了更衣室，"
+            "有没有正式启动新规没有任何一方说过，而降温休息和自行回更衣室在报道里长得一样。",
+
+            "那天的气象读数（Open-Meteo 历史存档 API，梅森 39.36N/-84.27E，当地 15:00）："
+            "气温 **28.6°C**、相对湿度 **76%**、风速 **1.3 km/h**、短波辐射 **491 W/m²**。"
+            "比赛当地 14:15 开打。"
+            "⚠️ **这四个数不是 WBGT，是 WBGT 的原料。** 真正的 WBGT 由 ATP Sport Science & "
+            "Medical 在场地上量或确认（规则书原文），**不公开**，我们手上没有那个数——"
+            "所以片子一个字都不声称那天越没越过 30.1 那条线。",
+
+            "规则原文（ATP 2026 年版 `2026-rulebook_19dec25.pdf`，210 页，2026-08-17 下载核对，"
+            "第 VII 章 `O. Heat Policy`，印刷第 210/211 页）："
+            "四档 Normal < 29.0 / Heat Advisory 29.0–30.0 / Extreme Heat 1 ≥ 30.1 / "
+            "Extreme Heat 2 ≥ 32.2；Level 1 时**单打**任一方可在第三盘前申请，"
+            "一经申请**对双方生效**且**置于第二、三盘之间**，时长 10 分钟，"
+            "可冲澡换衣、降温、补水、接受指导，由 ATP 医疗人员监督；"
+            "**双打没有正式降温休息**，只有 WBGT ≥ 31.0 时主裁可在盘间批准 90 秒补水延长；"
+            "Level 2 时 WBGT ≥ 32.2 **持续 15 分钟**，监督暂停所有室外球场，"
+            "要 WBGT 低于 30.5 **持续 20 分钟**才可复赛。"
+            "⚠️ 屋顶另有一条：WBGT ≥ 32.0 或场地表面 ≥ 45°C 关顶，**关顶按暂停处理**，"
+            "且一旦关上，这场比赛剩下的时间都不再打开——片子没讲这一条，篇幅所限。",
+
+            "⚠️ 这一节在规则书里是孤零零的一块，没有散落在别处的补充："
+            "`WBGT`、`Heat Policy`、`Cooling Break`、`Extreme Heat` 四个词"
+            "**全书只出现在同一页上**（PDF 第 106 页；数过，别的页一次都没有），"
+            "另有第 192 页一句交叉引用「关顶因高温的，见 ATP Heat Policy」。",
+
+            "⚠️ **七二一那三份权重不出自 ATP 规则书。** 规则书只写 WBGT 是"
+            "「the composite metric used to assess heat stress」，一个系数都没给。"
+            "`0.7·自然湿球 + 0.2·黑球 + 0.1·干球` 出自 **ISO 7243:2017** 的户外公式。"
+            "两个出处不能混着说成一个。",
+
+            "这条规则的来路（2025 年 10 月上海大师赛）：维基百科记的是气温超过 30°C、"
+            "湿度超过 80%；德约本人在那一站的原话是「It's brutal when you have over 80 per "
+            "cent humidity day after day」，两处互相印证。鲁内在第三轮对安贝尔的医疗暂停里"
+            "问主裁「Do you want a player to die on court?」，主裁答「I don't know, but that "
+            "is a very good question.」——这一段四家以上独立赛报一致。"
+            "⚠️ **故意不写「七名球员中途退赛」**：那个数只有一个二手源说过，"
+            "而带数字的断言要两个独立源。能确证的是辛纳因抽筋退出、"
+            "阿特曼首轮打了八局退赛、梅德韦杰夫十六强抽筋（Sky Sports 逐条点名）。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2026-08-15", player="德约科维奇", age="2026 辛辛那提第二轮",
+                headline="6-2 4-6 4-6 负蒂兰特，第二盘中间叫医疗暂停",
+                # ⚠️ headline ＋ detail 会拼成知识帖的一整段，而**正文每段上限
+                # 120 字**（`knowledge._validate_copy_for_publish`）。第一版拼出来
+                # 130 字，当场红——写 detail 的时候要连 headline 一起数。
+                detail=(
+                    "第二盘第三局保发 18 分钟、九次平分、救下四个破发点，"
+                    "之后叫了医疗暂停。赛后他说这是跟了他多年的健康问题，湿热时特别麻烦。"
+                ),
+                source_url=(
+                    "https://www.skysports.com/tennis/news/12110/13573671/"
+                    "novak-djokovic-reveals-ongoing-health-condition-after-defeat-in-cincinnati"
+                ),
+            ),
+            ChampionMoment(
+                date="2026 版", player="ATP 规则书", age="第 VII 章 O. Heat Policy",
+                headline="WBGT 30.1 可申请十分钟，32.2 持续十五分钟全场停",
+                detail=(
+                    "单打任一方申请、对双方生效、置于第二三盘之间；双打没有，"
+                    "只有 31.0 以上主裁可在盘间多给 90 秒补水。复赛要 30.5 以下持续 20 分钟。"
+                ),
+                source_url=(
+                    "https://www.dallasopen.com/-/media/files/rulebook/2026/"
+                    "2026-rulebook_19dec25.pdf"
+                ),
+            ),
+            ChampionMoment(
+                date="2025-10", player="鲁内", age="2025 上海大师赛第三轮",
+                headline="医疗暂停里问主裁：你们是想让球员死在场上吗",
+                detail=(
+                    "当时气温超过 30 度、湿度超过 80%。主裁的回答是"
+                    "「我不知道，但这是个很好的问题」。一年之后 Heat Policy 写进规则书。"
+                ),
+                source_url=(
+                    "https://www.aljazeera.com/sports/2025/10/8/"
+                    "do-you-want-a-player-to-die-on-court-tennis-stars-wilt-in-china-heat"
+                ),
+            ),
+        ),
+        image_keys=(),
+        image_credit="Cincinnati Open 官方图 · 2026 辛辛那提第二轮，德约科维奇",
+        source_url=(
+            "https://www.dallasopen.com/-/media/files/rulebook/2026/"
+            "2026-rulebook_19dec25.pdf"
+        ),
+        source_label="ATP 2026 年版规则书、ISO 7243:2017、Open-Meteo 历史存档、Sky Sports / Al Jazeera 赛报",
     ),
     _trivia_story(
         slug="golden-masters",
