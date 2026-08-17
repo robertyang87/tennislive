@@ -106,6 +106,25 @@ CUT_VS_Y = 0.40            # VS 圆压在两人胸口高度，不在脚下
 CUT_SINK = -36
 # 半身抠图截在腰上，硬边一眼看得出来，所以底部这一段淡出去。
 CUT_FADE = "mask-image:linear-gradient(180deg,#000 80%,transparent 99%)"
+
+# **信箱式那几张的垫底层。** 照片按宽度铺（`fit: "width"`）时上下会空出来，
+# 底下垫同一张照片的放大版；`scale(1.2)` 给模糊留溢出量，否则边缘透底。
+#
+# ⚠️⚠️ **2026-08-17 去掉了压暗。** 原来是 `blur(44px) brightness(.42)`，
+# 账号所有者：「**背景图不要再加前面阴影，导致背景图看着模糊啊**」——他指的
+# 就是这一层：压到 .42 之后上下两条变成又黑又糊的带子，读起来像渲坏了，
+# 而不像照片的延续。
+#
+# 四版渲出来摆一起比的（`wangxiyu-fernandez`，本地 7 秒一版）：
+#
+#     blur44 + 暗.42（改前）  上下两条近黑，就是他说的那个
+#     blur44 + 不压暗          亮回来了，但仍然糊成一片
+#     **blur16 + 不压暗**      ← 现在这档。底色和照片连成一片，看得出是同一个场地
+#     不糊也不压暗             裁判的头在顶上**重复了一次**，一眼看出是两张图
+#
+# ⚠️ **别再往 0 推**：不糊那一版的问题不是「太清楚」，是那份复制品认得出来，
+# 和上层那张打架。16 是最后一档「还看得出是延续、又不像第二张照片」的。
+PAD_FILTER = "filter:blur(16px);transform:scale(1.2)"
 #: 侧边被切断时那一条淡出的宽度（占抠图宽的比例）。
 #: **官方棚拍抠图用不上**——那种图人物四周本来就有空白，边是人自己的轮廓。
 #: 本场抽帧不一样：近景里人比画框大，抠出来的 alpha 直接贴到画框侧边，
@@ -1093,8 +1112,7 @@ def _solo_body(cover: dict) -> tuple[str, str]:
         solo_pad = (f".hero::before{{content:'';position:absolute;inset:0;"
                     f"background-image:url('{uri}');background-size:cover;"
                     f"background-position:{focus:.1f}% 50%;"
-                    f"filter:blur(44px) brightness(.42);transform:scale(1.2);"
-                    f"z-index:-1}}")
+                    f"{PAD_FILTER};z-index:-1}}")
     else:
         solo_bg = "" if above else (
             f"background-image:url('{uri}');background-size:cover;"
@@ -1308,7 +1326,7 @@ def _panel_css(side: str, image: Path, panel: dict,
     return (box
             + f".p-{side}::before{{background-image:url('{uri}');"
             f"background-size:cover;background-position:{focus:.1f}% 50%;"
-            f"filter:blur(44px) brightness(.42);transform:scale(1.2)}}"
+            f"{PAD_FILTER}}}"
             + f".p-{side}::after{{background-image:url('{uri}');"
             f"background-size:{zoom:.1f}% auto;"
             f"background-position:{focus:.1f}% {focus_y:.1f}%;"

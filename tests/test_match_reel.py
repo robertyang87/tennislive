@@ -8184,6 +8184,66 @@ def test_封面正中那道暗角默认不画两头要留(tmp_path):
         "`cover.scrim: \"dim\"` 没接进 `_solo_body`——开关写了但海报没读")
 
 
+def test_信箱式垫层不许再压暗而且两处是同一个出处(tmp_path):
+    """账号所有者 2026-08-17：「**背景图不要再加前面阴影，导致背景图看着模糊啊**」。
+
+    ⚠️ **这和上一条（`.scrim` 的中心暗角）不是同一层。** 他说的是
+    `fit: "width"` 那几张的**垫底层**：照片按宽度铺时上下会空出来，底下垫同一张
+    照片的放大版——原来带着 `brightness(.42)`，于是上下两条变成又黑又糊的带子，
+    读起来像渲坏了，而不像照片的延续。`wangxiyu-fernandez` 那张就是。
+
+    四版渲出来摆一起比过（本地 7 秒一版）：`blur44+暗.42`（改前，上下近黑）／
+    `blur44+不压暗`（亮回来但仍糊成一片）／**`blur16+不压暗`**（现在这档，
+    底色和照片连成一片）／`不糊不压暗`（**裁判的头在顶上重复了一次**，
+    一眼看出是两张图）。
+
+    ## 判据三头
+
+    1. **不许再有 `brightness`**——这是他点名的那一样
+    2. **blur 要在 (0, 16] 之间**：往 0 推不是「更清楚」，是那份复制品认得出来、
+       和上层那张打架；往回推就又变成一条糊带子
+    3. **两处必须共用同一个出处**（`PAD_FILTER`）——solo 一处、VS 分格一处，
+       写两处必分叉，而分叉的样子是「有的封面上下发黑、有的不发黑」
+
+    ⚠️ **`.bg` 那一层（VS 版式背后的球场）没动**：它不是垫层，是给棚拍抠图
+    一个「这是一场球」的语境，`blur 12 / dim .72` 是当年渲了三档比出来的
+    （源码注释里记着 `blur 22 + dim .5` 会糊到看不出是球场）。12 条用它的
+    spec 全是 2026-08-14 及以前的，solo 早就是默认版式了。
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import versus_poster as vp  # noqa: PLC0415
+
+    pad = vp.PAD_FILTER
+    assert "brightness" not in pad, (
+        f"垫层又压暗了：{pad!r}——账号所有者点名的就是这一样")
+    m = re.search(r"blur\((\d+)px\)", pad)
+    assert m, f"垫层的 blur 读不出来：{pad!r}"
+    blur = int(m.group(1))
+    assert 0 < blur <= 16, (
+        f"垫层 blur={blur}px。往 0 推那份复制品会认得出来（裁判的头重复一次），"
+        "往回推又变成一条糊带子——16 是比出来的那一档")
+
+    src = Path("tools/versus_poster.py").read_text(encoding="utf-8")
+    body = "\n".join(ln for ln in src.splitlines()
+                     if not ln.lstrip().startswith("#"))
+    assert body.count("PAD_FILTER") >= 3, (
+        "垫层只剩一处调用了——solo 和 VS 分格两处都要用它")
+    assert "blur(44px)" not in body, (
+        "还有一处写着 blur(44px) 的字面量——两处必分叉，得走 PAD_FILTER")
+
+    # 真走一遍 `_solo_body`：`fit: width` 那条路上不许再出现 brightness
+    from PIL import Image  # noqa: PLC0415
+
+    photo = tmp_path / "p.jpg"
+    Image.new("RGB", (1920, 1080), (60, 90, 140)).save(photo)
+    base = {"eyebrow": "赛场之上", "subject": "某人", "hook": "一行钩子",
+            "portrait": {"image": str(photo), "fit": "width"}}
+    _, css = vp._solo_body(base)
+    before = css.split(".hero::before{")[1].split("}")[0]
+    assert "brightness" not in before, f"垫层那条规则还压着暗：{before}"
+    assert pad.split(";")[0] in before, "垫层没走 PAD_FILTER——改了常量海报不跟着变"
+
+
 def test_装yt_dlp一律要带default():
     """**`pip install yt-dlp` 少了 `[default]`，报出来是「这条片子没有格式」。**
 
