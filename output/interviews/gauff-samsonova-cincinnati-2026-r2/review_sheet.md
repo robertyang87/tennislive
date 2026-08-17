@@ -1,6 +1,6 @@
 # 转写核对表：gauff-samsonova-cincinnati-2026-r2
 
-源片 https://www.youtube.com/watch?v=ZTDuZsufG_s　采访段 257.4–504.4 秒（共 121 行）
+源片 https://www.youtube.com/watch?v=ZTDuZsufG_s　采访段 257.4–503.9 秒（共 121 行）
 
 | # | 片内 | 跳到源片 | 英文 | 中文 | 判据 |
 |--:|:--|:--|:--|:--|:--|
@@ -84,7 +84,7 @@
 | 78 | 2:53.5 | [▶](https://youtu.be/ZTDuZsufG_s?t=430) | It's really good. | 挺好的 |  |
 | 79 | 2:54.5 | [▶](https://youtu.be/ZTDuZsufG_s?t=431) | I'm having fun out here. | 我在场上很快乐 |  |
 | 80 | 2:55.8 | [▶](https://youtu.be/ZTDuZsufG_s?t=433) | Yeah, | 是啊 |  |
-| 81 | 2:56.6 | [▶](https://youtu.be/ZTDuZsufG_s?t=434) | it was kind of right before I mumbled | 那大概是在温网之前 |  |
+| 81 | 2:56.6 | [▶](https://youtu.be/ZTDuZsufG_s?t=434) | it was kind of right before Wimbledon | 那大概是在温网之前 | ✏️ 已订正 |
 | 82 | 2:58.5 | [▶](https://youtu.be/ZTDuZsufG_s?t=435) | and I lost first round Berlin | 我柏林首轮就输了 |  |
 | 83 | 2:59.6 | [▶](https://youtu.be/ZTDuZsufG_s?t=436) | and I I called my dad. | 然后我给我爸打了电话 |  |
 | 84 | 3:00.9 | [▶](https://youtu.be/ZTDuZsufG_s?t=438) | I was like, I want to stop. | 我说 我想不打了 |  |
