@@ -705,9 +705,26 @@ jobs:
             --top 12 || true
           ls -la "$OUT/cover_candidates" 2>/dev/null || true
 
+      # 逐分 + 比分板机械对齐备料（配音不脱节的命门）。probe 出完 contact_*.jpg
+      # 之后：fetch_match_pbp 拉 WTA 逐分 + MiniMax 读比分板。两步都可选、都降级
+      # ——对齐是「给 segments 加料」不是硬闸，没料就退回下面 assemble 里 DeepSeek
+      # 读字幕那条老路。ATP 场没有 WTA 逐分通路，自然降级（prepare_alignment 出声）。
+      - name: probe — 逐分+比分板对齐备料
+        if: github.event.inputs.mode == 'probe' && github.event.inputs.home != ''
+        env:
+          MINIMAX_API_KEY: ${{ secrets.MINIMAX_API_KEY }}
+        run: |
+          OUT="${{ steps.paths.outputs.outdir }}"
+          PYTHONPATH=src python tools/prepare_alignment.py \
+            --home "${{ github.event.inputs.home }}" \
+            --away "${{ github.event.inputs.away }}" \
+            --outdir "$OUT"
+
       # probe 出完缩略图墙 + captions + 切点之后，顺手把 spec 草稿也备好——这是
       # 「写 spec」自动化的最后一环：stats/狠数据/转折局/文案/窗口/封面一次跑齐，
       # 人只终审。只在编排器传了 home/away 时才跑（手动 probe 不带这些，跳过出声）。
+      # 若上面机械对齐备出了 pbp.json + scoreboard.json，就传进去——assemble 会用
+      # 逐分+比分板对齐出 segments（比读字幕准）；没备出就退回读字幕。
       - name: probe — 自动备料写 spec 草稿
         if: github.event.inputs.mode == 'probe' && github.event.inputs.home != ''
         env:
@@ -715,6 +732,10 @@ jobs:
         run: |
           OUT="${{ steps.paths.outputs.outdir }}"
           SLUG="${{ github.event.inputs.slug }}"
+          ALIGN_ARGS=""
+          if [ -f "$OUT/pbp.json" ] && [ -f "$OUT/scoreboard.json" ]; then
+            ALIGN_ARGS="--pbp $OUT/pbp.json --scoreboard $OUT/scoreboard.json"
+          fi
           PYTHONPATH=src python tools/assemble_spec.py \
             --slug "$SLUG" \
             --home "${{ github.event.inputs.home }}" \
@@ -724,6 +745,7 @@ jobs:
             --captions "$OUT/captions.txt" \
             --cuts "$OUT/probe.json" \
             --source-url "${{ github.event.inputs.url }}" \
+            $ALIGN_ARGS \
             --write
 
       # 只下源片 + 出海报就停：不分段、不合语音、不编码。改一档 scale / cx /

@@ -71,12 +71,42 @@ wangxiyu-timofeeva 这场：
 - 转折点候选（find_turning_points：破发点/盘点/赛点密度排序，但它是**局级**不是分级）
 - 叙事文案起草（draft_spec：hook/thesis/beats/human_context/narration）
 - 死球检测（find_point_ends + detect_scorebox，但信号有噪声，见 §2）
+- ✅ **读比分板**（`read_scoreboard.py`）：MiniMax 视觉读**整帧** `contact_*.jpg`
+  （自己找比分板，不依赖预裁剪的 `score_*.jpg`），输出 `[{t, score}]`
+- ✅ **比分序列对齐**（`tools/align_points.py`）：`point_states()` 从 WTA 逐分
+  重建每一分的局分+小分 + 标记破发/盘点/赛点；`parse_scoreboard()` 把比分板原文
+  抽成 (局分,小分)；`align()` 把每个关键分定位到视频秒。纯函数离线可测。
+- ✅ **叙事模板化裁剪 + 旁白窗口挂载**（`align_points.screen_anchors()` +
+  `segment_skeleton()`）：把 9 屏里**有逐分锚点的四屏**（①冷开场/⑤首盘/⑥转折/
+  ⑦结局）映射到视频秒，再生成 `[锚点±margin]` 的 segments 草稿，旁白按 beats
+  顺序挂。②③④⑧⑨ 要么复用邻近锚点、要么留终审挑空镜。
+- ✅ **整链接线**：`prepare_alignment.py`（probe 后跑 `fetch_match_pbp` + `read_scoreboard`
+  备好 pbp.json + scoreboard.json）→ `assemble_spec.py --pbp --scoreboard`（用
+  align_points 出 segments）→ `match-reel.yml` 的 probe 段已接上。没料就降级回
+  DeepSeek 读字幕，对齐是加料不是硬闸。
 
-**待实现（按优先级）**：
-1. **读比分板**：MiniMax 视觉读 score_*.jpg，输出「第 X 秒 → 比分」
-2. **比分序列对齐**：把「视频比分序列」和「逐分比分序列」匹配，定位转折点到视频秒
-3. **叙事模板化裁剪**：把 §1 的九屏结构落成机械规则 + 逐分数据驱动
-4. **旁白窗口自动挂载**：draft_spec 的 narration 挂到对齐后的窗口
+**待实现（只剩边界，不是核心链）**：
+- **窗口边界收口**：`segment_skeleton` 给的是 `[锚点±margin]` 草稿，真正的
+  start/end 还要按旁白时长（speech_seconds）和切点（scene_cuts）收——成片 spec
+  里那些「8.7s 窗口装 8.35s 旁白只剩 0.35s」的 `_why` 就是这一步的手工活。
+- **ATP 逐分**：`fetch_match_pbp` 只通 WTA（ATP 没有免鉴权的逐分通路，见
+  `fetch_match_pbp.py` docstring）。ATP 场自然降级读字幕，暂不机械对齐。
+
+### align_points 的五个函数
+
+- `point_states(points)`：WTA 逐分 → 每分 `{games_A, games_B, point_A, point_B,
+  break_point, game_point, set_point, match_point}`。局分从 set/game 变化重建
+  （不能用 `scoreAfterPoint.sets`，那是终局比分）。
+- `parse_scoreboard(text)`：比分板原文 → `(局分A, 局分B, 小分A, 小分B)`，抽数字
+  分类（含 15/30/40 是小数，否则局数）。
+- `align(reads, states)`：关键分（破发/盘点/赛点）→ 命中的视频秒。局分精确、
+  小分读到了也对上；一个关键分命中多个秒全保留（慢放/回放会重复出现）。
+- `screen_anchors(states, aligned, clip_end)`：9 屏锚点——①赛点/⑤首盘首个关键分/
+  ⑥最后一个破发点/⑦最后一个盘点赛点/⑨视频结尾。
+- `segment_skeleton(anchors, narration, margin)`：锚点+旁白 → segments 草稿。
+
+边界（v1 不解析）：比分板 AD 优势分、抢七 `7-6(5)`、三盘比显示——这些读不出
+单局比分时返回 None 不猜，交给下游。
 
 ## 6. 一个可完整跑通的例子
 
