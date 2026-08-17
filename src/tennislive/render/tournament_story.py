@@ -2392,6 +2392,63 @@ STORIES = STORIES + (
         "fresh-off-washington-title-eala-powers-into-toronto-third-round",
     ),
     _trivia_story(
+        slug="williams-sisters",
+        title="威廉姆斯姐妹重组打双打",
+        subtitle="赛事前瞻 · WTA 1000",
+        identity="四年后第一次一起上场",
+        chips=("WTA 1000", "女双首轮", "双方外卡"),
+        hero=(
+            "威廉姆斯姐妹以外卡身份重组，辛辛那提站女双首轮对上同样持外卡的"
+            "科斯秋克/斯特恩斯；上一次两人一起打双打，还是 2022 年美网首轮。"
+        ),
+        facts=(
+            "2022 年 9 月 1 日美网女双首轮，姐妹俩负于赫拉德茨卡/诺斯科娃一轮出局；"
+            "那是小威廉姆斯职业生涯的最后一场双打，此后她离开球场。",
+            "小威廉姆斯 1981 年 9 月生，2026 年 6 月 9 日在女王杯复出，"
+            "距上一场职业比赛 1375 天；那场她与 19 岁的姆博科搭档，"
+            "7-6、6-2 击败三号种子罗特利夫/梅利查尔-马丁内斯。",
+            "作为一对组合，两人拿过 14 个大满贯女双冠军——澳网 4 个、法网 2 个、"
+            "温网 6 个、美网 2 个，最后一冠是 2016 年温网；另有悉尼、北京、伦敦"
+            "三届奥运女双金牌。",
+            "本站两队都持外卡：官方女双正赛签表上，科斯秋克/斯特恩斯列第 21 位、"
+            "威廉姆斯姐妹列第 22 位，两行都标着 WC，首轮即相遇。",
+            "大威廉姆斯 1980 年 6 月生，本赛季一直在打；这也是姐妹俩第一次"
+            "以一对组合的身份参加辛辛那提站。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2022-09",
+                player="威廉姆斯姐妹",
+                age="42 岁 / 40 岁",
+                headline="美网女双首轮出局",
+                detail="小威廉姆斯职业生涯的最后一场双打，此后离开球场四年。",
+                source_url="https://en.wikipedia.org/wiki/2022_US_Open_%E2%80%93_Women%27s_doubles",
+            ),
+            ChampionMoment(
+                date="2026-06",
+                player="小威廉姆斯",
+                age="44 岁",
+                headline="女王杯复出，7-6、6-2 赢下首轮",
+                detail="距上一场职业比赛 1375 天，搭档是 19 岁的姆博科。",
+                source_url="https://en.wikipedia.org/wiki/Serena_Williams",
+            ),
+            ChampionMoment(
+                date="2026-08",
+                player="威廉姆斯姐妹",
+                age="46 岁 / 44 岁",
+                headline="辛辛那提女双首轮，两队都是外卡",
+                detail="官方签表上并排列第 21、22 位，首轮即相遇。",
+                source_url="https://cincinnatiopen.com/news/"
+                "cincinnati-open-womens-wild-cards-headlined-by-williams-sisters-doubles-entry/",
+            ),
+        ),
+        image_keys=(),
+        source_label="赛事官方签表与 Order of Play / 赛事官网新闻 / 维基百科",
+        image_credit="All-Pro Reels · CC BY-SA 2.0 · Wikimedia Commons",
+        source_url="https://cincinnatiopen.com/news/"
+        "cincinnati-open-womens-wild-cards-headlined-by-williams-sisters-doubles-entry/",
+    ),
+    _trivia_story(
         slug="venus-potapova",
         title="维纳斯首轮VS波塔波娃",
         subtitle="赛事前瞻 · WTA 500",

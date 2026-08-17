@@ -612,10 +612,15 @@ def test_赛前片的封面要写清是哪一场():
             assert spec.get(key) and str(spec[key]) in when, f"{slug} 的封面小字缺 {key}"
         home, away = spec["players"]
         assert who == f"{home}  VS  {away}", f"{slug} 的对阵行版式不对：{who}"
-        for name in (home, away):
-            assert name in known, (
-                f"{slug} 封面上的「{name}」不在译名表里——人名不要手打，"
-                "先查 src/tennislive/zh/")
+        # 双打的一「边」是一支队（「大威廉姆斯/小威廉姆斯」），所以按 `/` 拆开
+        # 逐个查表。**这不是放宽**：拆完每个名字照样必须在表里，只是不再假设
+        # 一边只有一个人。写成「威廉姆斯姐妹」这种集合名词仍然过不了——它不在
+        # 表里，也确实不该印在对阵行上（那一行要回答的是「谁打谁」）。
+        for side in (home, away):
+            for name in side.split("/"):
+                assert name in known, (
+                    f"{slug} 封面上的「{name}」不在译名表里——人名不要手打，"
+                    "先查 src/tennislive/zh/")
         # 渲出来也要真的在卡上，不能只活在数据里。
         doc = _slide_html(0, cover, column=column)
         assert when in doc and who in doc, f"{slug} 的封面小字没渲进卡片"
@@ -2065,6 +2070,10 @@ def test_复制页那道闸装在发的那一步不是渲的那一步():
 # 稿子里**故意**用的写法，不在译名表里但也不是笔误。加进来之前先想清楚：
 # 表里没有的名字，正确做法是补进 `zh/players.py`，这里只留「同一个人的另一种叫法」。
 _ON_PURPOSE = {
+    # 「开球之前」第一条双打片子（williams-sisters）的对阵行。一「边」是一支队，
+    # 而这一队在中文里的固定叫法就是这四个字——不是手打的错译。写全两个人的译名
+    # 渲出来要折三行、末行只剩一个「斯」，所以这里印集合名，个人译名放在正文里。
+    "威廉姆斯姐妹",
     "维纳斯·威廉姆斯",   # 表里是「大威廉姆斯」；这条片子通篇叫她维纳斯，是写稿的选择
     # 伊埃拉的名（Alexandra Eala）。下面那条「少一个字」的判据会把它读成
     # 「亚历山德罗娃」——**两个都是真人，判据分不出来**，只能显式声明。
