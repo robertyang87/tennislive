@@ -95,11 +95,19 @@ FILL_W, FILL_H = 1080, 1440
 #: WordPress 的响应式变体后缀（`-1024x683`）。去掉它才是那一档的原图。
 _VARIANT = re.compile(r"-\d{2,4}x\d{2,4}(?=\.(?:jpe?g|png)$)", re.I)
 
-#: 文件名里的日期戳，两种都实测过：
+#: 文件名里的日期戳。⚠️ **一个赛事同时有好几位摄影师，每人一套命名**——
+#: 只认其中一套的后果是**静默漏掉另外几套**，而漏掉的样子和「这一天没有实拍」
+#: 一模一样（CLAUDE.md「扫得太窄和真的没有长得一模一样」）。
+#:
+#: 2026-08-17 量出来的账：辛辛那提 8/16 只认 `CincinnatiOpen_<YYYYMMDD>_`
+#: 时是 **18 张**，把三套都认上是 **60 张**——漏了 42 张，超过三分之二。
+#:
 #:   `081526_DAY-EIGHT_MIKE-BAKER-112-of-229.jpg`   → MMDDYY
 #:   `CincinnatiOpen_20260815_JM021268_JW1.jpg`     → YYYYMMDD
+#:   `CincyOpen8.16.26BJ_306.jpg`                   → M.D.YY（点分隔，不补零）
 _STAMP_MDY = re.compile(r"(?<!\d)(\d{2})(\d{2})(\d{2})_", re.I)
 _STAMP_YMD = re.compile(r"(?<!\d)(20\d{2})(\d{2})(\d{2})(?!\d)")
+_STAMP_DOT = re.compile(r"(?<!\d)(\d{1,2})\.(\d{1,2})\.(\d{2})(?!\d)")
 
 
 def _get(url: str, timeout: int = 40) -> bytes:
@@ -176,12 +184,15 @@ def stamp_of(url: str) -> date | None:
     m = _STAMP_YMD.search(name)
     if m:
         y, mo, d = (int(x) for x in m.groups())
-    else:
-        m = _STAMP_MDY.search(name)
-        if not m:
-            return None
+    elif (m := _STAMP_MDY.search(name)):
         mo, d, yy = (int(x) for x in m.groups())
         y = 2000 + yy
+    elif (m := _STAMP_DOT.search(name)):
+        # `CincyOpen8.16.26BJ_306.jpg`：月/日不补零，年是两位
+        mo, d, yy = (int(x) for x in m.groups())
+        y = 2000 + yy
+    else:
+        return None
     try:
         return date(y, mo, d)
     except ValueError:

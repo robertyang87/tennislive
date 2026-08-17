@@ -105,3 +105,37 @@ def test_撑不满就要报要放大多少倍():
     assert atp.fill_ratio(2560, 1707) >= 1.0
     # WTA 那条 4000px 的路，作为对照。
     assert atp.fill_ratio(4000, 2461) > 1.7
+
+def test_日期戳三套命名都要认出来():
+    """**一个赛事同时有好几位摄影师，每人一套文件名。**
+
+    只认其中一套的后果是**静默漏掉另外几套**，而漏掉的样子和「这一天没有实拍」
+    一模一样——CLAUDE.md「扫得太窄和真的没有长得一模一样」的又一个实例。
+
+    2026-08-17 量出来的账（辛辛那提 8/16，赛事官网媒体库）：
+
+        只认 `CincinnatiOpen_<YYYYMMDD>_`      18 张
+        三套都认                                **60 张**   ← 漏了 42 张，超过三分之二
+
+    而我据此在 spec 里写过「赛事媒体库当天全是日场，没有这一场」——**那句话是
+    从一个漏了三分之二的扫描结果得出来的**。
+
+    ⚠️ 这条判据钉的是「三套都认」，不是「认得出某一个具体文件名」：
+    **不认识的要返回 None**（赞助商图、logo 不能被当成某一天的实拍）。
+    """
+    from fetch_atp_cover_photo import stamp_of
+
+    cases = {
+        "CincinnatiOpen_20260816_JM021783_PS2.jpg": date(2026, 8, 16),
+        "081626_DAY-SEVEN_MIKE-BAKER-1-of-9.jpg": date(2026, 8, 16),
+        "CincyOpen8.16.26BJ_306.jpg": date(2026, 8, 16),
+        # 月/日不补零的那一套，跨到两位数的月份也要对
+        "CincyOpen12.3.26BJ_7.jpg": date(2026, 12, 3),
+    }
+    for name, want in cases.items():
+        assert stamp_of(name) == want, f"{name} 认成了 {stamp_of(name)}，应当是 {want}"
+
+    for junk in ("sponsor-logo.png", "hero-banner.jpg", "cincy-map-v2.png"):
+        assert stamp_of(junk) is None, (
+            f"{junk} 被认成了 {stamp_of(junk)}——认不出的必须返回 None，"
+            "不然赞助商图会被当成某一天的实拍")
