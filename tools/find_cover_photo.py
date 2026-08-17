@@ -385,6 +385,20 @@ def main() -> int:
         print(f"  {r['caption'][:150]}")
         print(f"     {r['credit']} · {r['url']}")
 
+    # ⚠️⚠️ **不给 `--site` 时这一档整个不跑，而它正是三条里最常有图的一条。**
+    # 2026-08-17 就是这么白判过一次：`--player Svitolina --event Cincinnati`
+    # 只跑了上面两档、都报「没有对得上的」，我据此在 `_frame_why` 里写下
+    # 「四类源都翻过」——而赛事媒体库当天其实躺着 18 张实拍。**跳过的那一档
+    # 和查空的那一档在输出里长得一模一样**（CLAUDE.md「空结果先自证是真空」／
+    # 「扫得太窄和真的没有长得一模一样」）。所以现在**没跑的要出声**，
+    # 而且末尾那份清单把「这一趟到底查了哪几档」逐条列出来。
+    if not args.site:
+        print("\n=== 赛事官网的 WordPress 媒体库　⚠️ **这一档没跑**")
+        print("  没给 `--site`，而它是三条里最常有图的一条（当日实拍原图 2000px 级，"
+              "去掉 `-scaled` 能到 5541×3694）。")
+        print("  补一句就有：--site <赛事域名，如 cincinnatiopen.com> "
+              "--date <这场球的**当地**日期>")
+        print("  ⚠️ 当地日期不是北京日期：夜场（当地 21:00 之后开打）在北京是次日。")
     if args.site:
         print(f"\n=== {args.site} 的 WordPress 媒体库")
         res = sweep_tournament(args.site, args.date)
@@ -402,6 +416,16 @@ def main() -> int:
                 print("  图库上线时刻（判据：当天那一辑在次日 UTC 00:00–03:00 之间）：")
                 for g in sorted(res["galleries"], key=lambda x: x["date"])[-6:]:
                     print(f"    {g['slug']:26} UTC {g['date_gmt']}")
+
+    # **这一趟到底查了哪几档，明着写出来。** 写 `cover.portrait._frame_why`
+    # 的人要照抄这份清单，不许写成「四类源都翻过」——没跑的那一档不算翻过。
+    ran = ["WTA photo-resources", "The Enquirer 每日图集"]
+    skipped = []
+    (ran if args.site else skipped).append("赛事官网 WordPress 媒体库")
+    print("\n=== 这一趟查了什么")
+    print(f"  跑过：{'、'.join(ran)}")
+    if skipped:
+        print(f"  ⚠️ **没跑**：{'、'.join(skipped)}——这几档的结果是**未知**，不是「没有」")
     return 0
 
 
