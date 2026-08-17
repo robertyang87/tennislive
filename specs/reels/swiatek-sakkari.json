@@ -104,7 +104,9 @@
    "bp_conv": 5,
    "bp_chances": 7,
    "pts_won": 81,
-   "pts_total": 145
+   "pts_total": 145,
+   "winners": 21,
+   "ue": 37
   },
   "b": {
    "headshot": "assets/players/headshots/wta-318312.jpg",
@@ -118,9 +120,11 @@
    "bp_conv": 1,
    "bp_chances": 8,
    "pts_won": 64,
-   "pts_total": 145
+   "pts_total": 145,
+   "winners": 9,
+   "ue": 39
   },
-  "_source": "十二项来自 `match_stat_hooks.py jTKEPkPP --stats-block`（flashscore `df_st_1`）。\n\n⚠️ **`a` 跟的是 `cover.matchup[0]` ＝ 斯瓦泰克**。这一条 feed 的 home 正好也是斯瓦泰克（`AE=Swiatek I.`），两个顺序碰巧一致，所以直接用了——但判据是 matchup 不是 home。自证：`a.pts_won 81 > b.pts_won 64`，而赢球的是斯瓦泰克。\n\n⚠️ `first_total` 按 `first_in + second_total` 算（56+22=78、39+28=67），不取接口的`Service Points Won` 分母——一发成功率画的是 `first_in / first_total`，用和式才自洽。\n\n⚠️ **制胜分和非受迫失误留空**：flashscore 这场的 `df_st_1` 只有 17 项，没有这两行；TNNS 那趟**没跑**（`tnns-stats.yml` 要在 runner 上开 Chromium）。所以这不是「查遍无」，是「只查了 flashscore」——下次要用这两项先跑 TNNS。",
+  "_source": "十二项来自 `match_stat_hooks.py jTKEPkPP --stats-block`（flashscore `df_st_1`）。\n\n⚠️ **`a` 跟的是 `cover.matchup[0]` ＝ 斯瓦泰克**。这一条 feed 的 home 正好也是斯瓦泰克（`AE=Swiatek I.`），两个顺序碰巧一致，所以直接用了——但判据是 matchup 不是 home。自证：`a.pts_won 81 > b.pts_won 64`，而赢球的是斯瓦泰克。\n\n⚠️ `first_total` 按 `first_in + second_total` 算（56+22=78、39+28=67），不取接口的`Service Points Won` 分母——一发成功率画的是 `first_in / first_total`，用和式才自洽。\n\n**制胜分和非受迫失误来自 TNNS**（flashscore 这场的 `df_st_1` 只有 17 项，没有这两行）：\n`tnns-stats.yml who=Swiatek,Sakkari date=2026-08-17`，run 32054577268，TNNS id=73467022。\n  制胜分 [21, 9]　非受迫失误 [37, 39]\n  分盘 Set1 [7,8]/[17,13]、Set2 **[8,0]**/[11,11]、Set3 [6,1]/[9,15]\n  自证：分盘合计 == 全场（两项都 ✅）。\n⚠️ 报告里那行**「选手顺序 ['Swiatek', 'Sakkari']」就是自证**——和 `cover.matchup` （斯瓦泰克在前）同序，所以直接按 a/b 填；两个名字对不上这一场的话，后面的数一个都不能用。\n⚠️ 数字会赛后修订，引用之前重跑一趟，别拿几小时前的数当准。",
   "footer_venue": "P&G Stadium Court · 辛辛那提",
   "footer_date": "2026.08.17"
  },
