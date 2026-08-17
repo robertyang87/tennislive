@@ -147,6 +147,30 @@ def test_assemble有id时各块拼装(tool, monkeypatch):
     assert captured["fixture"] == "北京时间"
 
 
+def test_assemble给source_url写进草稿(tool, monkeypatch):
+    a = tool
+    monkeypatch.setattr(a, "resolve_match_id", lambda h, aw: "4CYI9Ick")
+    monkeypatch.setattr(a, "matchup_order",
+                        lambda h, aw, mid: [(h, a.player_zh(h)), (aw, a.player_zh(aw))])
+    monkeypatch.setattr(a, "stats_block", lambda mid: {
+        "a": {}, "b": {}, "_missing_required": [], "_has_winners_ue": False})
+    monkeypatch.setattr(a, "collect", lambda mid, h, aw: {"candidates": [], "durations": []})
+    monkeypatch.setattr(a, "points", lambda mid: [])
+    monkeypatch.setattr(a, "rank_games", lambda games: [])
+    monkeypatch.setattr(a, "Chat", lambda: type("C", (), {"ready": True, "channel": "x"})())
+    monkeypatch.setattr(a, "draft_editorial", lambda chat, **kw: {"beats": ["b"]})
+
+    draft = a.assemble(slug="x", home="A E", away="B R", event="C", year=2026,
+                       fixture="", flashscore_id="4CYI9Ick",
+                       source_url="https://youtube.com/watch?v=abc")
+    assert draft["source_url"] == "https://youtube.com/watch?v=abc", (
+        "source_url 是 render 硬要求，编排器探测集锦时拿到就该写进草稿")
+    # 没给 source_url 时不该有这键（render 会明确报错，比空值更响）
+    draft2 = a.assemble(slug="y", home="A E", away="B R", event="C", year=2026,
+                        fixture="", flashscore_id="4CYI9Ick")
+    assert "source_url" not in draft2
+
+
 def test_assemble有id但文案失败时不静默(tool, monkeypatch):
     a = tool
     monkeypatch.setattr(a, "resolve_match_id", lambda h, aw: "4CYI9Ick")
