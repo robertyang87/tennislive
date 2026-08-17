@@ -59,6 +59,8 @@ from match_stat_hooks import collect, stats_block  # noqa: E402
 from find_turning_points import _label, rank_games  # noqa: E402
 from tennislive.research.brief import Chat  # noqa: E402
 from tennislive.zh import player_zh  # noqa: E402
+from tennislive.sources.rankings import fetch_rankings, norm_name, rank_map  # noqa: E402
+from tennislive.research.zh_trends import fetch_zh_hot  # noqa: E402
 from draft_spec import draft_editorial  # noqa: E402
 
 TURNING_POINT_TOP = 5
@@ -126,10 +128,83 @@ def facts_text(hit_data: list[dict]) -> str:
     return "\n".join(f"- {c.get('label', '')}: {c.get('detail', '')}" for c in hit_data)
 
 
+def _rank_line(name_en: str, lookup: dict[str, int]) -> str:
+    """查即时世界排名，拼「X 世界第 N」。查不到（前 150 外/榜上没有）返回空串。"""
+    r = lookup.get(norm_name(name_en))
+    return f"{player_zh(name_en)} 世界第 {r}" if r is not None else ""
+
+
+def _hot_line(hits, home: str, away: str) -> str:
+    """中文热搜里撞上这两位球员的，拼一句。撞不上返回空串。
+
+    榜上没有这两位是常态（一轮扫 232 条，通常 0～1 条网球），不是抓挂了——
+    「撞不上」和「抓挂了」在 _notes 里分开报，由 build_background 负责。
+    """
+    home_zh = player_zh(home).casefold()
+    away_zh = player_zh(away).casefold()
+    home_s = _surname(home).casefold()
+    away_s = _surname(away).casefold()
+    for h in hits:
+        hay = (" ".join(h.get("terms", ())) + " " + h.get("word", "")).casefold()
+        if any(n and n in hay for n in (home_zh, away_zh, home_s, away_s)):
+            return f"中文热搜：{h.get('word')}（{h.get('source')}）"
+    return ""
+
+
+def build_background(home: str, away: str, hit_data: list[dict]) -> tuple[str, list[str]]:
+    """聚合球员信息背景：H2H + 近况（从 hit_data 拎）+ 排名 + 中文热点。
+
+    这是账号所有者「不光只是 H2H，还有前几轮的战国、当前的热点，都要作为信息
+    背景，查全了」的落点。返回 (背景文本, 每源成败 notes)。**每源失败不拖垮
+    整体**——一个源挂了只写一句 note，背景仍返回能拿到的部分（仓库里「兜底
+    出事不吭声」栽过太多次，这里每个源要么给内容、要么给失败原因）。
+
+    年龄/生日、纪录/里程碑、金句这三类**没有机械源**：年龄要球员档案、纪录要
+    全称断言双源、金句要赛后采访人工转写——它们由 editorial 的 human_context
+    调研补，不在本函数范围内（写进 _notes 提醒终审）。
+    """
+    parts: list[str] = []
+    notes: list[str] = []
+
+    # ① H2H + 近况：已经从 collect() 进 hit_data 了，拎出来即可（不另发请求）。
+    for label in ("交手记录", "近况"):
+        c = next((c for c in hit_data if c.get("label") == label), None)
+        if c:
+            parts.append(f"{label}：{c['detail']}")
+
+    # ② 排名：ESPN rankings（只到前 150；掉出去 = 榜上看不见，不是「没排名」）。
+    try:
+        ranks = fetch_rankings()
+        lookup = {**rank_map(ranks.atp), **rank_map(ranks.wta)}
+        lines = [ln for ln in (_rank_line(home, lookup), _rank_line(away, lookup)) if ln]
+        if lines:
+            parts.append("排名：" + "；".join(lines))
+        else:
+            notes.append("排名：两位都不在榜单前 150（见 lookup_player_meta 的说明，"
+                         "掉出榜单≠没有排名，终审要写排名的话去 ATP/WTA 官网查）")
+    except Exception as exc:  # noqa: BLE001 —— 排名失败不拖垮背景
+        notes.append(f"⚠️ 排名没成（{type(exc).__name__}: {exc}）")
+
+    # ③ 中文热点：两位球员是否正在中文平台热榜上。
+    try:
+        res = fetch_zh_hot(top=60)
+        hit_line = _hot_line(res.hits, home, away)
+        if hit_line:
+            parts.append(hit_line)
+        else:
+            notes.append(f"中文热点：扫 {res.scanned} 条，没有撞上这两位球员")
+    except Exception as exc:  # noqa: BLE001
+        notes.append(f"⚠️ 中文热点没成（{type(exc).__name__}: {exc}）")
+
+    return ("\n".join(parts) if parts else ""), notes
+
+
 def assemble(*, slug: str, home: str, away: str, event: str, year: int,
              fixture: str, flashscore_id: str | None,
              captions_path: str | None = None,
              cuts_path: str | None = None,
+             pbp_path: str | None = None,
+             scoreboard_path: str | None = None,
              cover: bool = False,
              source_url: str = "",
              background: str = "") -> dict:
@@ -210,9 +285,10 @@ def assemble(*, slug: str, home: str, away: str, event: str, year: int,
         except Exception as exc:  # noqa: BLE001
             notes.append(f"⚠️ 转折局没成（{type(exc).__name__}: {exc}）")
 
-    # ⑤ 文案（DeepSeek）。facts 用上面算出的狠数据候选喂，background 从狠数据
-    #    里拎出「交手记录」当球员背景（H2H 是唯一机械拿得到的背景；排名/金句/
-    #    纪录这类要 lookup_player_meta 或编辑稿，暂靠终审补）。
+    # ⑤ 文案（DeepSeek）。facts 用上面算出的狠数据候选喂，background 自动聚合
+    #    H2H + 近况 + 排名 + 中文热点（账号所有者：「不光只是 H2H，还有前几轮的
+    #    战国、当前的热点，都要作为信息背景，查全了」）。--background 给了就
+    #    优先用命令行那份，跳过自动聚合（终审手填时用）。
     chat = Chat()
     if not chat.ready:
         notes.append("⚠️ 没配 DEEPSEEK_API_KEY / ANTHROPIC_API_KEY，文案跳过——"
@@ -220,8 +296,14 @@ def assemble(*, slug: str, home: str, away: str, event: str, year: int,
     else:
         notes.append(f"文案通道 {chat.channel}")
         hit = draft.get("_hit_data", [])
-        h2h = next((c["detail"] for c in hit if c.get("label") == "交手记录"), "")
-        background = background_param or (f"交手记录：{h2h}" if h2h else "")
+        if background_param:
+            background = background_param
+            notes.append("背景用命令行 --background 传入，跳过自动聚合")
+        else:
+            background, bg_notes = build_background(home, away, hit)
+            notes.extend(bg_notes)
+            notes.append("背景聚合：H2H/近况/排名/中文热点已备齐（年龄/纪录/金句"
+                         "要 human_context 调研补，见 spec 合同）")
         draft["editorial"] = draft_editorial(
             chat, home=home, away=away, event=event, year=year,
             fixture=fixture, facts=facts_text(hit), background=background)
@@ -229,9 +311,40 @@ def assemble(*, slug: str, home: str, away: str, event: str, year: int,
             draft.pop("editorial", None)
             notes.append("⚠️ 文案这一步没成（模型或网络），editorial 留空")
 
-    # ⑥ 窗口起草（DeepSeek 读字幕+切点）。只在给了 captions + cuts（probe 产物）
-    #    时才跑——probe 之前这两个文件不存在，跳过并在 notes 出声。
-    if captions_path and cuts_path:
+    # ⑥ 窗口（机械对齐优先：逐分+比分板 → 骨架）。给了 pbp + scoreboard 才跑——
+    #    这是「配音不脱节」的正路（docs/scoreboard-alignment.md）：逐分数据是内容、
+    #    比分板是定位，align_points 把「赛点/破发点那一分」定位到视频秒，再按 9 屏
+    #    模板生成 segments 草稿、旁白按 beats 挂。没给就走下面的 DeepSeek 读字幕
+    #    （draft_segments）那条老路。
+    if pbp_path and scoreboard_path:
+        try:
+            from align_points import align as _align_points, point_states as _pt_states
+            from align_points import screen_anchors, segment_skeleton
+            pbp = json.loads(Path(pbp_path).read_text(encoding="utf-8"))
+            raw = pbp.get("raw") or pbp
+            # ⚠️ 别叫 `points`——模块顶有 `from match_feed import points`，这里
+            # 再赋一个局部 `points` 会把它变成整函数作用域的局部变量，④ 转折局
+            # 那步的 `points(mid)` 就 UnboundLocalError 了（Python 作用域规则）。
+            pbp_points = raw.get("points") or []
+            reads = json.loads(Path(scoreboard_path).read_text(encoding="utf-8"))
+            states = _pt_states(pbp_points)
+            aligned = _align_points(reads, states)
+            anchors = screen_anchors(states, aligned)
+            narration = (draft.get("editorial") or {}).get("narration", [])
+            segs = segment_skeleton(anchors, narration)
+            if segs:
+                draft["segments"] = segs
+                draft["_segments_source"] = "align_points（逐分+比分板机械对齐）"
+                notes.append(f"窗口机械对齐 {len(segs)} 段（align_points），"
+                             f"锚点 {anchors}")
+            else:
+                notes.append("⚠️ 机械对齐没产出窗口（比分板读太少？），segments 留空")
+        except Exception as exc:  # noqa: BLE001 —— 机械对齐失败不拖垮整份草稿
+            notes.append(f"⚠️ 机械对齐没成（{type(exc).__name__}: {exc}）")
+
+    # ⑥′ 窗口起草（DeepSeek 读字幕+切点）。只在「没走机械对齐」且给了 captions +
+    #    cuts（probe 产物）时才跑——probe 之前这两个文件不存在，跳过并在 notes 出声。
+    if captions_path and cuts_path and "segments" not in draft:
         try:
             from draft_segments import _read_captions, _read_cuts, draft_segments
             caps = _read_captions(Path(captions_path))
@@ -310,6 +423,10 @@ def main() -> int:
                     help="probe 产出的 captions.txt（给了就跑窗口起草）")
     ap.add_argument("--cuts", default=None,
                     help="probe.json（读 scene_cuts，配 --captions 用）")
+    ap.add_argument("--pbp", default=None,
+                    help="fetch_match_pbp --json 落盘的 pbp.json（配 --scoreboard 走机械对齐）")
+    ap.add_argument("--scoreboard", default=None,
+                    help="read_scoreboard.py 落盘的 scoreboard.json（配 --pbp 走机械对齐）")
     ap.add_argument("--cover", action="store_true",
                     help="试抓 WTA 官方实拍封面（抓不到就留空出声，不硬来）")
     ap.add_argument("--source-url", default="",
@@ -324,6 +441,7 @@ def main() -> int:
                      event=args.event, year=args.year, fixture=args.fixture,
                      flashscore_id=args.flashscore_id,
                      captions_path=args.captions, cuts_path=args.cuts,
+                     pbp_path=args.pbp, scoreboard_path=args.scoreboard,
                      cover=args.cover, source_url=args.source_url,
                      background=args.background)
 

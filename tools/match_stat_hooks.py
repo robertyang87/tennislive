@@ -251,6 +251,79 @@ def h2h_candidate(match_id: str) -> dict | None:
     return {"label": "交手记录", "detail": detail, "source": "flashscore df_hh_1"}
 
 
+def parse_recent_form(text: str) -> list[dict]:
+    """`df_hh_1` 的「Last matches」分区 → 每个球员最近几场的战绩。
+
+    分区名是 `Last matches: <球员名>`，里面每一行是一场：对手（KJ/KK）、
+    比分（KL）、`*` 标赢家、赛事（KF）。这给出「前几轮战果」——账号所有者要的
+    背景信息之一（「前几轮的战国等等事件」）。
+
+    ⚠️ 和 parse_h2h 是**同一份 feed 的不同分区**，别各写一份字段解析——
+    `*` 标赢家的语义、KJ/KK/KL/KF 这些字段名在两边是同一个意思。
+    """
+    out: list[dict] = []
+    seen: set[str] = set()
+    # 按分区切：Last matches 分区之间夹着 Head-to-head 分区，用 player 名分隔
+    for m in re.finditer(r"Last matches: ([^¬]*)¬", text):
+        player = m.group(1).strip()
+        # ⚠️ 每个场地分区（All surfaces/Clay/Grass/Hard）各带一节「Last matches」，
+        # 而每节里的最近几场是**同一批**——df_hh_1 把同一位球员的近况在四个场地
+        # 标签下重复了四遍。不 dedup 的话 recent_form_candidate 会把「Baez S.」和
+        # 「Dimitrov G.」各拼四遍（4 场地 × 2 人 = 8 行）。按球员名去重，保留第一份。
+        if player in seen:
+            continue
+        seen.add(player)
+        # 这个分区到下一个 KB÷ 之前，是这位球员的最近几场
+        rest = text[m.end():]
+        sec = rest.split("KB÷")[0]
+        rows = []
+        for chunk in sec.split("~"):
+            f = dict(re.findall(r"(K[A-Z])÷([^¬]*)", chunk))
+            if "KP" not in f or "KL" not in f:
+                continue
+            p1, p2 = f.get("KJ", ""), f.get("KK", "")
+            if p1.startswith("*"):
+                winner = p1.lstrip("*")
+            elif p2.startswith("*"):
+                winner = p2.lstrip("*")
+            else:
+                winner = ""
+            rows.append({"p1": p1.lstrip("*"), "p2": p2.lstrip("*"),
+                         "sets": f.get("KL", ""), "winner": winner,
+                         "event": f.get("KF", "")})
+        out.append({"player": player, "rows": rows})
+    return out
+
+
+def recent_form_candidate(match_id: str, *, top: int = 5) -> dict | None:
+    """近况候选：两个球员各自最近几场的战绩，一句拼出来。
+
+    「X 最近五场四胜」「Y 赛前刚吞下四连败」——这是文案里「这个人带着什么
+    状态来的」的背景，不是比分本身。找不到就返回 None（低级别赛事可能没标）。
+    """
+    forms = parse_recent_form(fs_feed("df_hh_1", match_id))
+    if not forms:
+        return None
+    parts = []
+    for form in forms:
+        if not form["rows"]:
+            continue
+        rows = form["rows"][:top]
+        # 最近 top 场的胜负串：W 赢 L 输，从近到远
+        streak = "".join(
+            "W" if (r["winner"] and r["winner"] in (r["p1"], r["p2"])
+                    and r["winner"] == form["player"])
+            else ("L" if r["winner"] else "?")
+            for r in rows)
+        wins = streak.count("W")
+        parts.append(f"{form['player']} 最近 {len(rows)} 场 {wins} 胜"
+                     f"（{streak}）")
+    if not parts:
+        return None
+    return {"label": "近况", "detail": "；".join(parts),
+            "source": "flashscore df_hh_1 Last matches"}
+
+
 # spec 的 `stats.a` / `stats.b` 要哪些字段 ← flashscore `Match` 那一栏的哪一项。
 # 值取 `num` 还是 `den`：`"67% (37/55)"` 解出来 num=37 den=55，一发得分是分子、
 # 一发**进了几个**是分母。
@@ -326,6 +399,9 @@ def collect(match_id: str, home: str, away: str) -> dict:
     hh = h2h_candidate(match_id)
     if hh:
         candidates.append(hh)
+    form = recent_form_candidate(match_id)
+    if form:
+        candidates.append(form)
     return {"candidates": candidates, "durations": durations(match_id)}
 
 
