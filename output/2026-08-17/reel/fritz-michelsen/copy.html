@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>8.17 赛场之上 | 第一局丢发球此后没再给</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>开场第一局就丢了发球，此后他一个破发点都没给对手
+
+辛辛那提男单第二轮，六号种子、美国男单第一、世界第八的弗里茨 6-3 6-4 赢了同胞米切尔森，一小时二十六分。
+
+这场球的开头其实很不顺。
+
+第一局他自己发球，被逼到破发点，救掉一个，第二个没救掉——开场就丢了发球局。
+
+而那是这一整场他唯一一次丢发球局。
+
+下一局他零比四十拿到三个破发点，第一个就兑现，一比一。随后连拿三局到四比一，六比三收下首盘，四十分钟。
+
+真正把比分定死的是第二盘的第一局。
+
+米切尔森自己发球，四十比十五领先。弗里茨一分一分追成平分，拿到两个破发点，第一个被救，第二个兑现。转播的记分条上当时就烧着一行黄字，写的正是「破发点二号」。
+
+二比零。此后两个人各守各的发球局，一局没再易手，弗里茨六比四发球胜赛，末局一个赛点收工。
+
+数据这一层最值得看的是这一组。
+
+制胜分二十五比十三，几乎两倍。而非受迫失误三十比三十一，几乎一模一样。
+
+也就是说，他赢在打进的球多，不是失误少——这两个数得摆在一起看才有意思，单看任何一个都会读错。
+
+再看发球那一头：米切尔森全场只拿到两个破发点，两个都在第一局。此后弗里茨发的九个发球局，对手一个破发点都没碰到。
+
+一百三十一分里弗里茨赢下七十二分。Ace 七比四，双误六比八。
+
+最后说一层来路。
+
+弗里茨二十八岁，是现在的美国男单第一；米切尔森二十一岁，世界第四十二，生涯最高第三十，是美国这一代往上顶的那几个人里最靠前的一个。
+
+两个人此前交手四次，二比二。今晚是第五次，也是第一次在大师赛上碰面。
+
+一个开场就丢发球局的人，最后只丢了七局给对手。你觉得下一次会是谁？
+
+#网球时差 #弗里茨 #米切尔森 #辛辛那提大师赛 #赛场之上</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>两个美国人，下一次会是谁？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
