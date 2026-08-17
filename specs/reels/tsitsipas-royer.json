@@ -41,7 +41,7 @@
   "_editing_why": "二十八段，取源片 0.5–197.3 里的十四个镜头块，全部落在 `probe.json` 的 `scene_cuts` 之间（每段末尾另留 `SEG_FADE=0.18` 秒的溶解底料，都不越过下一个切点）。\n\n**冷开场用 63.6–68.6**（首盘抢七拿下之后西西帕斯的正面近景），不是源片开头——开头那七秒是首盘 2-1 时的一个普通底线回合，戏剧性最低（CLAUDE.md「冷开场不许随手取源片开头」）。开完这一格再倒回 0.5 秒从头讲。\n\n⚠️ **两个人要认清，否则「谁在画面里」全反**：西西帕斯**长发 + 白色发带 + 淡紫色上衣**，鲁瓦耶**短发 + 白色上衣**。判据不是看着像——记分条整场烧着两个人的名字和局分，18.5 秒换边时的台标直接打出两个人的全名；51.5 / 63.5 / 66.5 / 174.5 / 177.5 秒的近景是长发白发带那位，99.5 / 117.5 / 135.5 / 144.5 / 165.5 秒的近景是短发那位。⚠️ 138.5 秒那个戴帽子的黑衣男子是**教练席上的人，不是球员**，不要当成鲁瓦耶。\n\n**181.0–197.3 是赛后那一段**（握手、举拍致意、走向场边），源片到 197.58 就切进 Tennis TV 的订阅卡，所以这条片子的可用素材到 197.3 为止。\n\n⚠️ `scene_cuts_loose` 在 7.22–7.24、77.5–77.52、142.32–142.36、189.88–189.92、194.66–194.68 是每 0.02 秒一个，那是同一次剪辑被重复报了两三遍，不是几个独立切点。",
   "_match": {
     "flashscore_id": "z9hr7omf",
-    "_why": "flashscore 的逐分（`df_mh_1_z9hr7omf`）、统计（`df_st_1_`）、分盘用时（`df_sui_1_`）、交手与近期战绩（`df_hh_1_`）都从这个 id 取。**home = 鲁瓦耶 = 统计里的 SH = spec 里的 a**，**away = 西西帕斯 = SI = b**。\n\n⚠️ **`cover.matchup` 的顺序和这里相反**（西西帕斯在前、鲁瓦耶在后），那是版式顺序不是数据顺序——`stats.a/b` 跟 feed 的 home/away 走，别按 matchup 的顺序填。\n\n⚠️ ATP 这边没有公开的比赛时长 JSON 接口（`atptour.com` 对本环境一律 403、`api.protennislive.com` 实测 401），所以时长照 `baez-dimitrov` / `hijikata-monfils` 走通的做法用 `data:` URL 把核过的数字连同出处一起写进 `cover.scoreboard.duration_source`。"
+    "_why": "flashscore 的逐分（`df_mh_1_z9hr7omf`）、统计（`df_st_1_`）、分盘用时（`df_sui_1_`）、交手与近期战绩（`df_hh_1_`）都从这个 id 取。**home = 鲁瓦耶 = 统计里的 SH**，**away = 西西帕斯 = SI**。\n\n⚠️⚠️ **而 `stats.a/b` 不跟 feed 走，跟 `cover.matchup` 走**（a ↔ matchup[0] ＝ 西西帕斯）。**这一行原来写反了**（原文：「home = 鲁瓦耶 = spec 里的 a」「`stats.a/b` 跟 feed 的 home/away 走，别按 matchup 的顺序填」），照它填出来的数据图把赢家印成了输家——来龙去脉见 `stats._source`。\n\n⚠️ ATP 这边没有公开的比赛时长 JSON 接口（`atptour.com` 对本环境一律 403、`api.protennislive.com` 实测 401），所以时长照 `baez-dimitrov` / `hijikata-monfils` 走通的做法用 `data:` URL 把核过的数字连同出处一起写进 `cover.scoreboard.duration_source`。"
   },
   "_hit_data": "跑了 `python3 tools/match_stat_hooks.py z9hr7omf --home 鲁瓦耶 --away 西西帕斯`，八条候选：\n\n    [总分差]   鲁瓦耶 70 - 西西帕斯 85，净差 15 分\n    [破发点]   鲁瓦耶 2/2（100%） · 西西帕斯 3/7（43%）\n    [一发摆动] 鲁瓦耶 74%→61% · 西西帕斯 76%→65%\n    [连续保发] 鲁瓦耶 5 个 · 西西帕斯 7 个\n    [交手记录] 1:1（含本场）· 草地 1:0 · 硬地 0:1\n\n**挑的是破发点那一栏**（`3/7` 对 `2/2`）——它和这条片子的主题是同一件事：\n**门推了七次才开三次，而对面推两次开两次**。⚠️ 总分差 15 分**不用**：今天已经有一条以「小分」当落点的片子了（见 `_no_repeat`）。\n\n⚠️ **制胜分和非受迫失误这场接口里没有**（`match_stat_hooks --stats-block` 明说了），所以 `stats` 块不带这两项，数据图按 `render_stat_card` 的 `OPTIONAL_FIELDS` 少那两行。同一站同一天的 `hijikata-monfils` 反而有——**这两项是一场一场的，不按巡回赛分**。",
   "_claims": {
@@ -102,20 +102,6 @@
   "stats": {
     "tour": "atp",
     "a": {
-      "headshot": "assets/players/headshots/atp-R0EB.png",
-      "aces": 2,
-      "df": 4,
-      "first_in": 46,
-      "first_won": 31,
-      "second_total": 33,
-      "second_won": 14,
-      "bp_conv": 2,
-      "bp_chances": 2,
-      "pts_won": 70,
-      "pts_total": 155,
-      "first_total": 79
-    },
-    "b": {
       "headshot": "assets/players/headshots/atp-TE51.png",
       "aces": 4,
       "df": 2,
@@ -129,9 +115,23 @@
       "pts_total": 155,
       "first_total": 76
     },
+    "b": {
+      "headshot": "assets/players/headshots/atp-R0EB.png",
+      "aces": 2,
+      "df": 4,
+      "first_in": 46,
+      "first_won": 31,
+      "second_total": 33,
+      "second_won": 14,
+      "bp_conv": 2,
+      "bp_chances": 2,
+      "pts_won": 70,
+      "pts_total": 155,
+      "first_total": 79
+    },
     "footer_venue": "辛辛那提 · 男单第一轮",
     "footer_date": "2026年8月14日",
-    "_source": "**整块是 `python3 tools/match_stat_hooks.py z9hr7omf --stats-block` 摊出来的，不是手抄的**——它直接读 flashscore `df_st_1_z9hr7omf` 的 `Match` 一栏（**home = 鲁瓦耶 = a，away = 西西帕斯 = b**），顺序跟 feed 走。⚠️ 这个 `a/b` 顺序和 `cover.matchup`（西西帕斯在前）**是反的**，别对着 matchup 填。\n\n⚠️ **这场没有制胜分和非受迫失误**，工具明说了「这场接口里没有」，所以那两行不填、数据图少两行——这是 `render_stat_card.OPTIONAL_FIELDS` 允许的。⚠️ 同一站同一天的 `hijikata-monfils` 反而**有**：这两项是一场一场的事，别按巡回赛推。",
+    "_source": "**整块是 `python3 tools/match_stat_hooks.py z9hr7omf --stats-block` 摊出来的**——它读的是 flashscore `df_st_1_z9hr7omf` 的 `Match` 一栏，而那份数据的 **home = 鲁瓦耶（SH）、away = 西西帕斯（SI）**。\n\n⚠️⚠️ **这里的 `a`/`b` 相对工具的输出是反的，这是对的。** `stats.a` 跟的是 **`cover.matchup[0]`＝西西帕斯**（版式顺序，不是 feed 顺序）——CLAUDE.md「`stats.a` 跟的是 `cover.matchup[0]`，不是 feed 的 home/away」。\n\n⚠️⚠️ **这条 spec 原来是按 feed 顺序填的，填反了，而且它自己的两处注释还把错的规矩写成了对的**（原文：「`stats.a/b` 跟 feed 的 home/away 走，别按 matchup 的顺序填」）。**成片里那张数据图因此把赢家印成了输家**：\n\n    左边  西西帕斯（赢家）   ACE 2 · 双误 4 · 总得分 70   ← 全是鲁瓦耶的\n    右边  鲁瓦耶             ACE 4 · 双误 2 · 总得分 85   ← 全是西西帕斯的\n\nflashscore 逐项核过：`Total Points Won  home=45% (70/155) / away=55% (85/155)`，而 `AE(home)=Royer V.`、`AF(away)=Tsitsipas S.`——**西西帕斯赢的是 85 分那一半**，他也确实 7-6(4) 7-5 赢了这场球。\n\n**是 `test_数据图的头像和matchup里的名字必须是同一个人` 抓到的**：`atp-TE51.png` 在这条里挂着「鲁瓦耶」、在 `tsitsipas-auger-aliassime` 里挂着「西西帕斯」，同一张官方头像两个中文名。而 TE51 那张脸是长发＋头带＋胡须，**就是西西帕斯本人**。⚠️ 这正是 CLAUDE.md 说的「唯一肉眼可查的破绽是脸」——渲染、质检、`--dry-run` 全绿，图上每一个数单看都是真的，错的只有它挂在谁名下。\n\n⚠️ **已发的成片不重渲**（微信那条消息发出去收不回来），所以**成片里那张数据图仍然是反的**；改这条 spec 是为了它以后不再渲错、也为了那道闸不再红。`push.summary` 一个字没动。\n\n⚠️ **这场没有制胜分和非受迫失误**，工具明说了「这场接口里没有」，所以那两行不填、数据图少两行——这是 `render_stat_card.OPTIONAL_FIELDS` 允许的。⚠️ 同一站同一天的 `hijikata-monfils` 反而**有**：这两项是一场一场的事，别按巡回赛推。",
     "_headshot_source": "两张都是 **ATP 官方证件头像**，走 CLAUDE.md 记的那条路：`https://<任一 ATP 赛事域名>/-/media/alias/player-headshot/<球员ID>`（`atptour.com` 总站 403，赛事域名镜像同一批）。球员 ID 来自 ATP 球员页 URL：`atptour.com/en/players/stefanos-tsitsipas/te51/overview`、`atptour.com/en/players/valentin-royer/r0eb/overview`。\n\n⚠️ **颜色数只能证明「不是占位剪影」，证明不了「是这个人」。** 我先按 `R0FP` 猜鲁瓦耶，拿回来的是一张 **256 色的真头像**——深色卷发、红色上衣，**根本不是他**，而它 `HTTP 200`、`image/png`、同样 300×300、颜色数也漂亮。查到官方球员页 URL 才知道是 `R0EB`。**猜 ID 这一步没有便宜路：要么从 ATP 球员页 URL 抄，要么把图打开看。** 两张都打开看过，和片子里的人对得上（西西帕斯长发白发带、鲁瓦耶短发）。"
   },
   "_voice": "云见（`zh-CN-YunjianNeural`）、`+6%`，和这条线其余片子一致。",
