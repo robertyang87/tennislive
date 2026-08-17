@@ -130,7 +130,8 @@ def assemble(*, slug: str, home: str, away: str, event: str, year: int,
              fixture: str, flashscore_id: str | None,
              captions_path: str | None = None,
              cuts_path: str | None = None,
-             cover: bool = False) -> dict:
+             cover: bool = False,
+             source_url: str = "") -> dict:
     notes: list[str] = []
     draft: dict = {
         "_draft": True,
@@ -143,6 +144,11 @@ def assemble(*, slug: str, home: str, away: str, event: str, year: int,
             ],
         },
     }
+    # source_url 是 render 的硬要求（load_spec 里「既没有 sources 也没有
+    # source_url」就报错）。编排器探测集锦时已经拿到 url，这里接住写进草稿，
+    # 草稿才够得上「能渲染」的最小形状。
+    if source_url:
+        draft["source_url"] = source_url
 
     # ① flashscore id：给了就用，没给就反查。
     mid = flashscore_id or resolve_match_id(home, away)
@@ -299,6 +305,8 @@ def main() -> int:
                     help="probe.json（读 scene_cuts，配 --captions 用）")
     ap.add_argument("--cover", action="store_true",
                     help="试抓 WTA 官方实拍封面（抓不到就留空出声，不硬来）")
+    ap.add_argument("--source-url", default="",
+                    help="源片 URL（render 硬要求，编排器探测集锦时拿到）")
     ap.add_argument("--write", action="store_true",
                     help="把草稿落盘到 specs/reels/<slug>.draft.json；不给就只打印")
     args = ap.parse_args()
@@ -307,7 +315,7 @@ def main() -> int:
                      event=args.event, year=args.year, fixture=args.fixture,
                      flashscore_id=args.flashscore_id,
                      captions_path=args.captions, cuts_path=args.cuts,
-                     cover=args.cover)
+                     cover=args.cover, source_url=args.source_url)
 
     print(json.dumps(draft, ensure_ascii=False, indent=2))
     if not args.write:

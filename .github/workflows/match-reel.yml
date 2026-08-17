@@ -723,6 +723,7 @@ jobs:
             --year "${{ github.event.inputs.year }}" \
             --captions "$OUT/captions.txt" \
             --cuts "$OUT/probe.json" \
+            --source-url "${{ github.event.inputs.url }}" \
             --write
 
       # 只下源片 + 出海报就停：不分段、不合语音、不编码。改一档 scale / cx /
