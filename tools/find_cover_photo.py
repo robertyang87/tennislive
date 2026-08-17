@@ -228,7 +228,7 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--player", help="按球员姓过滤（文件名或 Getty 说明里出现）")
-    ap.add_argument("--event", help="按赛事名过滤，如 Cincinnati")
+    ap.add_argument("--event", help="按赛事名过滤，如 Cincinnati（⚠️ 是名字不是 id）")
     ap.add_argument("--day", help="按第几个比赛日过滤，如 6")
     ap.add_argument("--site", help="赛事官网域名，如 cincinnatiopen.com")
     ap.add_argument("--date", help="赛事图库按这一天筛，如 2026-08-16")
@@ -238,6 +238,17 @@ def main() -> int:
     if args.getty:
         print(getty_caption(args.getty) or "（这个编号查不到说明）")
         return 0
+
+    # ⚠️ `--event` 比的是**赛事名**（文件名里写的是 `Cincinnati_Open_2026`、
+    # Getty 说明里写的是 `Cincinnati Open`），不是 WTA 的数字赛事 id。
+    # 传 `--event 1017` 不会报错，只会**一张都匹配不上**——而那个空结果和
+    # 「今天真的还没发图」长得一模一样（CLAUDE.md「空结果先自证是真空」／
+    # 「零命中先怀疑自己的查询词」）。2026-08-17 就是这么白判过一次
+    # `wangxiyu-fernandez` 的封面。
+    if args.event and args.event.isdigit():
+        ap.error(f"--event 要给赛事名不是 id：把 {args.event!r} 换成 "
+                 f"'Cincinnati' 这样的名字（图库文件名里写的是 "
+                 f"`<球员>_-_Cincinnati_Open_2026_-_Day_N-DSC_1234.jpg`）")
 
     print("=== WTA photo-resources（文件名带四要素；Getty 的去查说明）")
     rows = sweep_wta(args.player, args.event, args.day)
