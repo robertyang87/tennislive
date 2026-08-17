@@ -165,11 +165,11 @@ def _workflow_for(column: str) -> str:
 
 
 def assemble_draft(c: dict, *, skip: bool = False) -> list[str]:
-    """dispatch probe 之后顺手备料。返回 notes（每句一行），失败也不抛。
+    """⚠️ 已弃用：备料职责移到了 probe 工作流的「自动备料写 spec 草稿」步骤
+    （那儿有 captions + DeepSeek key + 能写盘），编排器不再本地跑 assemble。
 
-    ⚠️ 只打印草稿、不落盘——正式 spec 永远人终审后自己写，落盘是 assemble_spec
-    自己 `--write` 的事。备料失败（没配 key、flashscore 反查不到）都出声，
-    不许把 dispatch 那一步带崩：probe 已经点下去了，备料只是顺带的便宜货。
+    留着这个函数是为了不破坏它名下三条测试的历史判据——「备料失败不许把
+    dispatch 带崩」这条规矩仍然成立，只是执行点换到了 probe 工作流里。
     """
     if skip:
         return ["[assemble] 已跳过（--no-assemble）"]
@@ -193,7 +193,7 @@ def main() -> int:
     ap.add_argument("--column", choices=["reel", "preview"], default=None,
                     help="只看某一栏")
     ap.add_argument("--no-assemble", action="store_true",
-                    help="dispatch probe 后不跑 assemble 备料（默认会跑，只打印草稿）")
+                    help="dispatch probe 时不传 home/away，跳过工作流里的自动备料写草稿")
     args = ap.parse_args()
 
     dig = build_digest(_beijing_today())
@@ -242,6 +242,11 @@ def main() -> int:
             print(f"  [{c['slug']}] 源片走 {via}")
             cmd = ["gh", "workflow", "run", wf, "--ref", "main",
                    "-f", "mode=probe", "-f", f"slug={c['slug']}", "-f", f"url={url}"]
+            # home/away/event/year 传给 probe，触发工作流里的「自动备料写 spec 草稿」。
+            # --no-assemble 就不传这几个，probe 只出缩略图墙不备料——手动控制开关。
+            if not args.no_assemble:
+                cmd += ["-f", f"home={c['home']}", "-f", f"away={c['away']}",
+                        "-f", f"event={c['event']}", "-f", f"year={c['year']}"]
         else:
             # 开球之前：没有单条集锦、spec 还没生成，先只报不 dispatch。
             print(f"  [{c['slug']}] 开球之前暂不自动 dispatch（spec 待生成）")
@@ -249,12 +254,9 @@ def main() -> int:
         print(f"[dispatch] {' '.join(cmd)}")
         subprocess.run(cmd, check=True)
         dispatched.append(c)
-        # 备料：probe 出缩略图墙之后，草稿自动跟着备好（只打印不落盘）。手动控制
-        # 途径留三处：--apply 是总开关、--no-assemble 关备料、落盘要 assemble 自己
-        # 的 --write。文案那步在没配 DeepSeek key 的环境会退化出声，不静默。
-        if c["column"] == "reel":
-            for note in assemble_draft(c, skip=args.no_assemble):
-                print(f"      {note}")
+        # 备料不再在编排器本地跑——它没有 captions（probe 还没落库）也没 DeepSeek
+        # key。probe 工作流里已经有「自动备料写 spec 草稿」一步（有 captions + key
+        # + 能写盘），编排器只负责 dispatch probe 并把 home/away/event/year 传进去。
     mark_dispatched(state, dispatched)
     print(f"已点 {len(dispatched)} 条 run 并记入 state。")
     return 0
