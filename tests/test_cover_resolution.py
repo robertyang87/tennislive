@@ -92,6 +92,17 @@ _UNDERSIZED = {
     # 换上它的理由是账号所有者「最好再减少示意图」——原来封面画的是
     # `wbgt_recipe()`，**和第 ③ 屏一模一样的那张图**，三十秒内给了两遍。
     "heat-rule": 0.93,         # 2000x1333
+    # 2000x1334，和上一条同一个图库、同一个形状。⚠️ **不是「懒得找更大的」**：
+    # 赛事官网媒体库 `?search=Fonseca` 只有三张比赛照，**全部 2000 像素**；
+    # 三个文件名各探一次 `-scaled` 变体，**全部 404**（8/14 那批才有，去掉后缀
+    # 能到四五千像素，这三张没有），也就是 2000 就是原图。媒体库里高度 ≥1440 的
+    # 那 87 张逐条读过 `alt_text`，**没有一张是丰塞卡**；The Enquirer 8/16、8/17
+    # 两天的 sitemap 里一条网球报道都没有；ATP 那条路照旧 403。
+    # ⚠️ 本届唯一一张过得了这条地板的当日照（`…JM022042_PS2.jpg`，2000×1500）
+    # **认不出是谁**——为了过分辨率那道闸去用一张认不出人的照片，是把第 4 道闸门
+    # 放到第 1 道前面，方向反了。完整取舍在
+    # assets/explainer/fonseca-oconnell/credits.json 的 `_cover_is_underscale_why`。
+    "fonseca-oconnell": 0.93,  # 2000x1334
 }
 # lucky-loser 的封面不在这张名单上，但它的做法值得记一句，因为**这条 1.00x 的
 # 地板正是那张图的垫层能减到多小的下界**。
@@ -241,12 +252,14 @@ def test_能推近的片子是算出来的不是手写的():
     就会给一张经不起推的图加上动效，而且没人会发现。
     """
     eligible = [s for s in _PHOTO_COVERS if _fill(s) / chk.PUSH >= chk.FLOOR]
-    # 当前这批：不够推的有 10 条（4 张本来就在放大 + 6 张够铺满推不动）。
+    # 当前这批：不够推的有 11 条（5 张本来就在放大 + 6 张够铺满推不动）。
     # 加选题会动这个数——它跟着实际分辨率走，不是另维护的名单。
     # ⚠️ 2026-08-17 从 9 变 10：`heat-rule` 的封面从示意图换成了实拍
     # （账号所有者「最好再减少示意图」），而那张 2000×1333 铺满是 0.93x，
     # 于是 `_PHOTO_COVERS` 和「在放大」那一档同时各多一条。
-    assert len(eligible) == len(_PHOTO_COVERS) - 10
+    # ⚠️ 同日从 10 变 11：`fonseca-oconnell` 的封面同样是赛事图库那一批
+    # 2000 像素的实拍（见 `_UNDERSIZED` 里那段），形状和 `heat-rule` 一模一样。
+    assert len(eligible) == len(_PHOTO_COVERS) - 11
     for slug in _UNDERSIZED:
         assert slug not in eligible, f"{slug} 本来就在放大，不该被判成能推近"
 

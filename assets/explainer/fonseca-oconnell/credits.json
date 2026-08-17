@@ -1,0 +1,60 @@
+{
+  "_note": "「开球之前」丰塞卡 VS 奥康奈尔，辛辛那提第三轮（北京时间 2026-08-18 晚 22:00）。图片版（解说片），不从比赛录像里剪。四张每一张都 Read 打开看过，不是只看元数据。",
+  "_four_photos_zero_diagrams": "⚠️ **这条片子四屏四张照片，一张示意图都没有。**账号所有者 2026-08-17：「为啥还要有示意图啊」。这一条从写的时候就按那句话来：CLAUDE.md 的判据是「示意图的触发条件是照片讲不清，**不是照片找不到**」，而这条片子要说的每一件事——一个人从资格赛打上来、一个人在夏蒂埃两盘落后翻掉德约科维奇、看台上的巴西人、明天几点开球——**没有一件是「数与数之间的关系」**，也就都不该画。\n\n（对照：`wang-sabalenka` 保留的那张示意图画的是一个统计悖论——拿走首盘、对面双误 19 次、总得分自己还多一分，最后仍然输了。那是照片讲不清的，所以留着。）",
+  "_only_fonseca_has_photos": "⚠️ **奥康奈尔那一屏没有他本人的照片，这是查过之后的结论，不是没找。**\n\n    赛事官网 WordPress 媒体库   `?search=O'Connell` / `?search=Connell` 各 1 张，**都是同一张 300×300 的官方头像**（`O483__Christopher-OConnell.png`，2023 年入库）\n    WTA photo-resources          ATP 球员，不在这条渠道里\n    The Enquirer 每日图集        8/16、8/17 两天的 sitemap 里**一条网球报道都没有**（`/sitemap/2026/august/16/` 和 `/17/` 逐条看过）\n    ATP 那条路                   `atptour.com` 对本环境恒 403（CLAUDE.md 记过很多次）\n\n**结构性的原因**：他是从资格赛打上来的非种子，官方摄影跟的是主球场和大名字。所以第 ① 屏用的是**外场满座的宽景**——那正是他打前三场的地方，画面自己写着 `CINCINNATI OPEN`，不用认人（认错人的代价是把别人的脸印上去）。",
+  "fonseca_cincinnati_2026_fist.jpg": {
+    "source": "Cincinnati Open 官方图库（cincinnatiopen.com WordPress 媒体库）",
+    "page": "https://cincinnatiopen.com/wp-content/uploads/2026/08/CincyOpen8.16.26BJ_289.jpg",
+    "description": "**人物由发布方自己写死**：这条媒体记录的 `title` 就是 `Fonseca`，`alt_text` 是 `Fonseca pumps his fist while standing next to the net`——不是我看图推的。文件名 `8.16.26` 是拍摄日（当地 8 月 16 日，也就是他第二轮 6-4 7-6(2) 胜范德赞德舒尔普那一天）。\n\n四道闸门：①时间地点人物由发布方的 title/alt 和文件名自证；②在比赛中——他站在网前握拳，球拍还在手上，身后整片看台坐满；③有冲击力——正脸、握拳、满场背景，不是大头特写；④清晰度 2000×1334。\n\n用在封面和第 ② 屏。⚠️ 铺 1080×1440 是 **0.93 倍**，也就是要放大 8%，过不了 `test_封面图不许被放大` 的 1.00x 地板——**认领在 `_UNDERSIZED` 里**，理由见 `_cover_is_underscale_why`。",
+    "date": "2026-08-16",
+    "author": "unknown（Cincinnati Open 官方摄影；⚠️ `CincyOpen<日期>BJ_<序号>` 这个命名里的 `BJ` 是摄影师缩写，而**赛事没有在任何字段里把它展开成全名**，所以这里不替它编一个。同一图库里 `081626_DAY-NINE_MIKE-BAKER-…` 那种是明写的，这一批不是。）",
+    "licence": "unverified — 赛事官方图库，非商业资讯引用，发布前由人工判断",
+    "size": [
+      2000,
+      1334
+    ]
+  },
+  "fonseca_cincinnati_2026_polaroid.jpg": {
+    "source": "Cincinnati Open 官方图库（cincinnatiopen.com WordPress 媒体库）",
+    "page": "https://cincinnatiopen.com/wp-content/uploads/2026/08/CincyOpen8.13.26BJ_59.jpg",
+    "description": "**人物同样由发布方写死**：`title=Fonseca`，`alt_text=Fonseca uses a polaroid camera while wearing a brown shirt and white cap`。文件名 `8.13.26` ＝ 当地 8 月 13 日，赛前那几天。\n\n用在第 ③ 屏——那一屏讲的是「他八月二十一号才满二十岁」，而这张正是一个十九岁的人在球场上拿着拍立得拍东西。⚠️ 按四道闸门第 2 道的**正确读法**（2026-08-03 账号所有者补的那条）：判据是「画面要对上这一屏在说的那件事」，不是「必须在击球」。这一屏说的不是一分球，是他多大。",
+    "date": "2026-08-13",
+    "author": "unknown（同上，`BJ` 未展开）",
+    "licence": "unverified — 赛事官方图库，非商业资讯引用，发布前由人工判断",
+    "size": [
+      2000,
+      1333
+    ]
+  },
+  "fonseca_cincinnati_2026_flag.jpg": {
+    "source": "Cincinnati Open 官方图库（cincinnatiopen.com WordPress 媒体库）",
+    "page": "https://cincinnatiopen.com/wp-content/uploads/2026/08/CincyOpen8.13.26BJ_66.jpg",
+    "description": "**人物由发布方写死**：`title=Fonseca`，`alt_text=Fonseca signs autographs for the fans wearing a brown shirt and white cap`。\n\n打开看过：他在场边给围栏外的人签名，一位球迷递过来的是**一顶黄色帽子和一面巴西国旗**（绿黄两色、中间的蓝球看得见），挡板上印着 `Western & Southern Financial Group`。用在第 ④ 屏——那一屏讲的就是明天等着他的是谁，而这张画面里的国旗正是那件事本身，不用旁白替它说。",
+    "date": "2026-08-13",
+    "author": "unknown（同上，`BJ` 未展开）",
+    "licence": "unverified — 赛事官方图库，非商业资讯引用，发布前由人工判断",
+    "size": [
+      2000,
+      1333
+    ]
+  },
+  "cincinnati_outer_court_2026.jpg": {
+    "source": "Cincinnati Open 官方图库（cincinnatiopen.com WordPress 媒体库）",
+    "page": "https://cincinnatiopen.com/wp-content/uploads/2026/08/CincyOpen8.16.26BJ_487.jpg",
+    "description": "`alt_text` 是 `A wide view of a full outer stadium court under a cloudy blue sky, spectators packed into the stands on all sides and a match underway`——**发布方自己说这是外场**。\n\n**画面自证**：正对镜头的挡板上刷着 `CINCINNATI OPEN`，左侧记分牌写着 `MATCH TIME 0:59`，两侧看台坐满，一个球员正在发球。时间地点由文件名 `8.16.26` 和这块牌子一起钉住。\n\n用在第 ① 屏（讲奥康奈尔从资格赛四场打上来）。⚠️ **这一屏故意不放人**：他本人这一站只有一张 300×300 的官方头像，见 `_only_fonseca_has_photos`；而资格赛和前两轮打的正是这种外场，画面对得上这一屏在说的那件事。",
+    "date": "2026-08-16",
+    "author": "unknown（同上，`BJ` 未展开）",
+    "licence": "unverified — 赛事官方图库，非商业资讯引用，发布前由人工判断",
+    "size": [
+      2000,
+      1333
+    ]
+  },
+  "_cover_is_underscale_why": "封面 `fonseca_cincinnati_2026_fist.jpg` 铺 1080×1440 是 **0.926 倍**，要放大 8%，所以它进了 `tests/test_cover_resolution.py` 的 `_UNDERSIZED`。**这不是「懒得找更大的」，是这一站他的照片就这么大**，量过：\n\n    赛事图库 `?search=Fonseca`   3 张比赛照，**全部 2000×1334 / 2000×1333**\n    `-scaled` 变体              三个文件名各探一次，**全部 404**——也就是 2000 就是原图\n                                （CLAUDE.md 记过：8/14 那批有 `-scaled`，去掉后缀能到四五千像素；这三张没有）\n    媒体库里 ≥1440 高的那 87 张   逐条看过 `alt_text`，**没有一张是丰塞卡**\n    The Enquirer                8/16、8/17 两天没有网球图集\n\n和 `heat-rule` 那条（德约科维奇 2000×1333）是同一个形状，处置照抄：进名单、写清为什么、只许变大不许变小。",
+  "_rejected": [
+    "`F0FV__Joao-Fonseca.png`（300×300，2025 年入库的官方头像）—— 头像不是比赛照，第 2 道闸门不过，尺寸也只够小图标。",
+    "`081626_DAY-NINE_MIKE-BAKER-28-of-29.jpg`（1333×2000，唯一一张既够高又是当天的）—— `alt_text` 是「一位球员和一位女士、一个戴渔夫帽的小孩在赞助商展台合影」，**认不出是谁**，第 1 道闸门的人物这一项过不了。够大不等于对题。",
+    "`CincinnatiOpen_20260816_JM022042_PS2.jpg`（2000×1500，本届唯一一张过得了 1.00x 地板的当日照）—— `alt_text` 只说「一位球员穿蓝绿色上衣、栗色短裤抛球发球」，同样认不出人。**为了过分辨率那道闸去用一张认不出人的照片，是把第 4 道闸门放到第 1 道前面**，方向反了。",
+    "`CincyOpen8.15.26BJ_380.jpg`（一位球员抱着球包向观众挥手离场，身后挡板写着 Congratulations）—— 画面很好，日期也对得上奥康奈尔赢迈赫扎克那一场，**但 alt/title 都没写是谁**。这一条正是「看着像」和「自证」的分界：像不算数。"
+  ]
+}
