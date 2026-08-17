@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "status": "pass",
-  "story_slug": "gamesmanship",
+  "story_slug": "heat-rule",
   "fetch_enabled": true,
   "strict": true,
   "policy": "事实先交叉核验；图片失败时排除失败来源并同题重试，仍失败则按新闻价值切换主题；候选耗尽后交给后续班次。",
@@ -23,8 +23,9 @@
   ],
   "failed_curated_source_urls": [],
   "input_domains": [
-    "atptour.com",
-    "mubadaladcopen.com"
+    "aljazeera.com",
+    "dallasopen.com",
+    "skysports.com"
   ],
   "providers_queried": [
     "bing-web-image",
@@ -40,336 +41,336 @@
     {
       "page": "story",
       "provider": "curated-editorial",
-      "query": "gamesmanship 2026 tennis",
+      "query": "heat-rule 2026 tennis",
       "status": "empty",
       "candidate_count": 0
     },
     {
       "page": "story",
       "provider": "official-story-pages",
-      "query": "gamesmanship 2026 tennis",
-      "status": "empty",
-      "candidate_count": 0
-    },
-    {
-      "page": "story",
-      "provider": "wikimedia-commons",
-      "query": "gamesmanship 2026 tennis",
-      "status": "empty",
-      "candidate_count": 0
-    },
-    {
-      "page": "story",
-      "provider": "openverse",
-      "query": "gamesmanship 2026 tennis",
-      "status": "empty",
-      "candidate_count": 0
-    },
-    {
-      "page": "story",
-      "provider": "bing-web-image",
-      "query": "gamesmanship 2026 tennis",
-      "status": "empty",
-      "candidate_count": 0
-    },
-    {
-      "page": "story",
-      "provider": "official-tennis-archive",
-      "query": "gamesmanship 2026 tennis",
-      "status": "empty",
-      "candidate_count": 0
-    },
-    {
-      "page": "story",
-      "provider": "flickr-public",
-      "query": "gamesmanship 2026 tennis",
-      "status": "ok",
-      "candidate_count": 12
-    },
-    {
-      "page": "story",
-      "provider": "duckduckgo-web-image",
-      "query": "gamesmanship 2026 tennis",
-      "status": "empty",
-      "candidate_count": 0
-    },
-    {
-      "page": "story",
-      "provider": "wikimedia-commons",
-      "query": "gamesmanship tennis",
+      "query": "heat-rule 2026 tennis",
       "status": "ok",
       "candidate_count": 2
     },
     {
       "page": "story",
+      "provider": "wikimedia-commons",
+      "query": "heat-rule 2026 tennis",
+      "status": "ok",
+      "candidate_count": 4
+    },
+    {
+      "page": "story",
       "provider": "openverse",
-      "query": "gamesmanship tennis",
+      "query": "heat-rule 2026 tennis",
       "status": "empty",
       "candidate_count": 0
     },
     {
       "page": "story",
       "provider": "bing-web-image",
-      "query": "gamesmanship tennis",
-      "status": "empty",
-      "candidate_count": 0
+      "query": "heat-rule 2026 tennis",
+      "status": "ok",
+      "candidate_count": 1
     },
     {
       "page": "story",
       "provider": "official-tennis-archive",
-      "query": "gamesmanship tennis",
+      "query": "heat-rule 2026 tennis",
       "status": "empty",
       "candidate_count": 0
     },
     {
       "page": "story",
       "provider": "flickr-public",
-      "query": "gamesmanship tennis",
+      "query": "heat-rule 2026 tennis",
       "status": "ok",
       "candidate_count": 12
     },
     {
       "page": "story",
       "provider": "duckduckgo-web-image",
-      "query": "gamesmanship tennis",
+      "query": "heat-rule 2026 tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "story",
+      "provider": "wikimedia-commons",
+      "query": "heat-rule tennis",
+      "status": "ok",
+      "candidate_count": 12
+    },
+    {
+      "page": "story",
+      "provider": "openverse",
+      "query": "heat-rule tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "story",
+      "provider": "bing-web-image",
+      "query": "heat-rule tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "story",
+      "provider": "official-tennis-archive",
+      "query": "heat-rule tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "story",
+      "provider": "flickr-public",
+      "query": "heat-rule tennis",
+      "status": "ok",
+      "candidate_count": 12
+    },
+    {
+      "page": "story",
+      "provider": "duckduckgo-web-image",
+      "query": "heat-rule tennis",
       "status": "empty",
       "candidate_count": 0
     },
     {
       "page": "explainer",
       "provider": "curated-editorial",
-      "query": "gamesmanship 2026 规则 网球冷知识 tennis",
+      "query": "heat-rule 2026 规则 网球冷知识 tennis",
       "status": "empty",
       "candidate_count": 0
     },
     {
       "page": "explainer",
       "provider": "official-story-pages",
-      "query": "gamesmanship 2026 规则 网球冷知识 tennis",
-      "status": "empty",
-      "candidate_count": 0
-    },
-    {
-      "page": "explainer",
-      "provider": "wikimedia-commons",
-      "query": "gamesmanship 2026 规则 网球冷知识 tennis",
-      "status": "empty",
-      "candidate_count": 0
-    },
-    {
-      "page": "explainer",
-      "provider": "openverse",
-      "query": "gamesmanship 2026 规则 网球冷知识 tennis",
-      "status": "empty",
-      "candidate_count": 0
-    },
-    {
-      "page": "explainer",
-      "provider": "bing-web-image",
-      "query": "gamesmanship 2026 规则 网球冷知识 tennis",
-      "status": "empty",
-      "candidate_count": 0
-    },
-    {
-      "page": "explainer",
-      "provider": "official-tennis-archive",
-      "query": "gamesmanship 2026 规则 网球冷知识 tennis",
-      "status": "empty",
-      "candidate_count": 0
-    },
-    {
-      "page": "explainer",
-      "provider": "flickr-public",
-      "query": "gamesmanship 2026 规则 网球冷知识 tennis",
-      "status": "ok",
-      "candidate_count": 12
-    },
-    {
-      "page": "explainer",
-      "provider": "duckduckgo-web-image",
-      "query": "gamesmanship 2026 规则 网球冷知识 tennis",
-      "status": "empty",
-      "candidate_count": 0
-    },
-    {
-      "page": "explainer",
-      "provider": "wikimedia-commons",
-      "query": "gamesmanship 2026 tennis",
-      "status": "empty",
-      "candidate_count": 0
-    },
-    {
-      "page": "explainer",
-      "provider": "openverse",
-      "query": "gamesmanship 2026 tennis",
-      "status": "empty",
-      "candidate_count": 0
-    },
-    {
-      "page": "explainer",
-      "provider": "bing-web-image",
-      "query": "gamesmanship 2026 tennis",
-      "status": "empty",
-      "candidate_count": 0
-    },
-    {
-      "page": "explainer",
-      "provider": "official-tennis-archive",
-      "query": "gamesmanship 2026 tennis",
-      "status": "empty",
-      "candidate_count": 0
-    },
-    {
-      "page": "explainer",
-      "provider": "flickr-public",
-      "query": "gamesmanship 2026 tennis",
-      "status": "ok",
-      "candidate_count": 12
-    },
-    {
-      "page": "explainer",
-      "provider": "duckduckgo-web-image",
-      "query": "gamesmanship 2026 tennis",
-      "status": "empty",
-      "candidate_count": 0
-    },
-    {
-      "page": "explainer",
-      "provider": "wikimedia-commons",
-      "query": "gamesmanship tennis",
+      "query": "heat-rule 2026 规则 网球冷知识 tennis",
       "status": "ok",
       "candidate_count": 2
     },
     {
       "page": "explainer",
+      "provider": "wikimedia-commons",
+      "query": "heat-rule 2026 规则 网球冷知识 tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "explainer",
       "provider": "openverse",
-      "query": "gamesmanship tennis",
+      "query": "heat-rule 2026 规则 网球冷知识 tennis",
       "status": "empty",
       "candidate_count": 0
     },
     {
       "page": "explainer",
       "provider": "bing-web-image",
-      "query": "gamesmanship tennis",
+      "query": "heat-rule 2026 规则 网球冷知识 tennis",
       "status": "empty",
       "candidate_count": 0
     },
     {
       "page": "explainer",
       "provider": "official-tennis-archive",
-      "query": "gamesmanship tennis",
+      "query": "heat-rule 2026 规则 网球冷知识 tennis",
       "status": "empty",
       "candidate_count": 0
     },
     {
       "page": "explainer",
       "provider": "flickr-public",
-      "query": "gamesmanship tennis",
+      "query": "heat-rule 2026 规则 网球冷知识 tennis",
       "status": "ok",
       "candidate_count": 12
     },
     {
       "page": "explainer",
       "provider": "duckduckgo-web-image",
-      "query": "gamesmanship tennis",
+      "query": "heat-rule 2026 规则 网球冷知识 tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "explainer",
+      "provider": "wikimedia-commons",
+      "query": "heat-rule 2026 tennis",
+      "status": "ok",
+      "candidate_count": 4
+    },
+    {
+      "page": "explainer",
+      "provider": "openverse",
+      "query": "heat-rule 2026 tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "explainer",
+      "provider": "bing-web-image",
+      "query": "heat-rule 2026 tennis",
+      "status": "ok",
+      "candidate_count": 1
+    },
+    {
+      "page": "explainer",
+      "provider": "official-tennis-archive",
+      "query": "heat-rule 2026 tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "explainer",
+      "provider": "flickr-public",
+      "query": "heat-rule 2026 tennis",
+      "status": "ok",
+      "candidate_count": 12
+    },
+    {
+      "page": "explainer",
+      "provider": "duckduckgo-web-image",
+      "query": "heat-rule 2026 tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "explainer",
+      "provider": "wikimedia-commons",
+      "query": "heat-rule tennis",
+      "status": "ok",
+      "candidate_count": 12
+    },
+    {
+      "page": "explainer",
+      "provider": "openverse",
+      "query": "heat-rule tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "explainer",
+      "provider": "bing-web-image",
+      "query": "heat-rule tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "explainer",
+      "provider": "official-tennis-archive",
+      "query": "heat-rule tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "explainer",
+      "provider": "flickr-public",
+      "query": "heat-rule tennis",
+      "status": "ok",
+      "candidate_count": 12
+    },
+    {
+      "page": "explainer",
+      "provider": "duckduckgo-web-image",
+      "query": "heat-rule tennis",
       "status": "empty",
       "candidate_count": 0
     },
     {
       "page": "today",
       "provider": "curated-editorial",
-      "query": "gamesmanship 2026 tennis",
+      "query": "heat-rule 2025 tennis",
       "status": "empty",
       "candidate_count": 0
     },
     {
       "page": "today",
       "provider": "official-story-pages",
-      "query": "gamesmanship 2026 tennis",
-      "status": "empty",
-      "candidate_count": 0
-    },
-    {
-      "page": "today",
-      "provider": "wikimedia-commons",
-      "query": "gamesmanship 2026 tennis",
-      "status": "empty",
-      "candidate_count": 0
-    },
-    {
-      "page": "today",
-      "provider": "openverse",
-      "query": "gamesmanship 2026 tennis",
-      "status": "empty",
-      "candidate_count": 0
-    },
-    {
-      "page": "today",
-      "provider": "bing-web-image",
-      "query": "gamesmanship 2026 tennis",
-      "status": "empty",
-      "candidate_count": 0
-    },
-    {
-      "page": "today",
-      "provider": "official-tennis-archive",
-      "query": "gamesmanship 2026 tennis",
-      "status": "empty",
-      "candidate_count": 0
-    },
-    {
-      "page": "today",
-      "provider": "flickr-public",
-      "query": "gamesmanship 2026 tennis",
+      "query": "heat-rule 2025 tennis",
       "status": "ok",
-      "candidate_count": 12
-    },
-    {
-      "page": "today",
-      "provider": "duckduckgo-web-image",
-      "query": "gamesmanship 2026 tennis",
-      "status": "empty",
-      "candidate_count": 0
+      "candidate_count": 2
     },
     {
       "page": "today",
       "provider": "wikimedia-commons",
-      "query": "gamesmanship tennis",
+      "query": "heat-rule 2025 tennis",
       "status": "ok",
       "candidate_count": 2
     },
     {
       "page": "today",
       "provider": "openverse",
-      "query": "gamesmanship tennis",
+      "query": "heat-rule 2025 tennis",
       "status": "empty",
       "candidate_count": 0
     },
     {
       "page": "today",
       "provider": "bing-web-image",
-      "query": "gamesmanship tennis",
-      "status": "empty",
-      "candidate_count": 0
+      "query": "heat-rule 2025 tennis",
+      "status": "ok",
+      "candidate_count": 1
     },
     {
       "page": "today",
       "provider": "official-tennis-archive",
-      "query": "gamesmanship tennis",
+      "query": "heat-rule 2025 tennis",
       "status": "empty",
       "candidate_count": 0
     },
     {
       "page": "today",
       "provider": "flickr-public",
-      "query": "gamesmanship tennis",
+      "query": "heat-rule 2025 tennis",
       "status": "ok",
       "candidate_count": 12
     },
     {
       "page": "today",
       "provider": "duckduckgo-web-image",
-      "query": "gamesmanship tennis",
+      "query": "heat-rule 2025 tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "today",
+      "provider": "wikimedia-commons",
+      "query": "heat-rule tennis",
+      "status": "ok",
+      "candidate_count": 12
+    },
+    {
+      "page": "today",
+      "provider": "openverse",
+      "query": "heat-rule tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "today",
+      "provider": "bing-web-image",
+      "query": "heat-rule tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "today",
+      "provider": "official-tennis-archive",
+      "query": "heat-rule tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "today",
+      "provider": "flickr-public",
+      "query": "heat-rule tennis",
+      "status": "ok",
+      "candidate_count": 12
+    },
+    {
+      "page": "today",
+      "provider": "duckduckgo-web-image",
+      "query": "heat-rule tennis",
       "status": "empty",
       "candidate_count": 0
     }
@@ -380,30 +381,52 @@
   "attempts": [
     {
       "provider": "official-media",
-      "page_url": "https://www.mubadaladcopen.com/-/media/files/rulebook/2026/2026-rulebook_19dec25.pdf",
-      "source_url": "https://www.mubadaladcopen.com/-/media/files/rulebook/2026/2026-rulebook_19dec25.pdf",
+      "page_url": "https://www.dallasopen.com/-/media/files/rulebook/2026/2026-rulebook_19dec25.pdf",
+      "source_url": "https://www.dallasopen.com/-/media/files/rulebook/2026/2026-rulebook_19dec25.pdf",
       "image_url": "",
-      "credit": "mubadaladcopen.com",
+      "credit": "dallasopen.com",
       "license": "官方媒体 · 非商业资讯引用",
       "status": "reference-only",
       "reason": "官方页面未暴露 og:image，仅用于事实与事件核验",
-      "search_text": "  https://www.mubadaladcopen.com/-/media/files/rulebook/2026/2026-rulebook_19dec25.pdf",
+      "search_text": "  https://www.dallasopen.com/-/media/files/rulebook/2026/2026-rulebook_19dec25.pdf",
       "image_text": " ",
       "width": 0,
       "height": 0
     },
     {
-      "provider": "official-page",
-      "page_url": "https://www.atptour.com/en/news/jodar-shapovalov-cincinnati-2026-r2-saturday",
-      "status": "error",
-      "reason": "403 Client Error: Forbidden for url: https://www.atptour.com/en/news/jodar-shapovalov-cincinnati-2026-r2-saturday"
+      "provider": "official-media",
+      "page_url": "https://www.skysports.com/tennis/news/12110/13573671/novak-djokovic-reveals-ongoing-health-condition-after-defeat-in-cincinnati",
+      "source_url": "https://www.skysports.com/tennis/news/12110/13573671/novak-djokovic-reveals-ongoing-health-condition-after-defeat-in-cincinnati",
+      "image_url": "https://e0.365dm.com/26/08/1600x900/skysports-novak-djokovic-tennis_7323164.jpg?20260816130002=",
+      "credit": "skysports.com",
+      "license": "官方媒体 · 非商业资讯引用",
+      "status": "candidate",
+      "reason": "官方页面图片作为正常候选参与评分；机构署名照记",
+      "search_text": "novak djokovic reveals ongoing health condition after cincinnati defeat | tennis news | sky sports novak djokovic took a medical break after a gruelling 18-minute hold before losing 2-6, 6-4, 6-4; with the 24-time major champion later revealing that a health condition was behind the decision; the us open is live on sky sports from august 30 https://www.skysports.com/tennis/news/12110/13573671/novak-djokovic-reveals-ongoing-health-condition-after-defeat-in-cincinnati",
+      "image_text": " https://e0.365dm.com/26/08/1600x900/skysports-novak-djokovic-tennis_7323164.jpg?20260816130002=",
+      "width": 0,
+      "height": 0
+    },
+    {
+      "provider": "official-media",
+      "page_url": "https://www.aljazeera.com/sports/2025/10/8/do-you-want-a-player-to-die-on-court-tennis-stars-wilt-in-china-heat",
+      "source_url": "https://www.aljazeera.com/sports/2025/10/8/do-you-want-a-player-to-die-on-court-tennis-stars-wilt-in-china-heat",
+      "image_url": "https://www.aljazeera.com/wp-content/uploads/2025/10/GettyImages-2239769602-1759912711.jpg?resize=1200%2C675",
+      "credit": "aljazeera.com",
+      "license": "官方媒体 · 非商业资讯引用",
+      "status": "candidate",
+      "reason": "官方页面图片作为正常候选参与评分；机构署名照记",
+      "search_text": "‘do you want a player to die on court?’ – tennis stars wilt in china heat | tennis news | al jazeera weather conditions have led to player complaints; mercury is likely to rise through to sunday’s shanghai masters final. https://www.aljazeera.com/sports/2025/10/8/do-you-want-a-player-to-die-on-court-tennis-stars-wilt-in-china-heat",
+      "image_text": "‘do you want a player to die on court?’ – tennis stars wilt in china heat https://www.aljazeera.com/wp-content/uploads/2025/10/gettyimages-2239769602-1759912711.jpg?resize=1200%2c675",
+      "width": 0,
+      "height": 0
     },
     {
       "page": "cover",
       "status": "selected",
-      "cached_file": "trivia-gamesmanship.jpg",
-      "title": "File:2019 USTA U.S. Open qualies chair umpire.jpg",
-      "subject": "gamesmanship",
+      "cached_file": "trivia-heat-rule.jpg",
+      "title": "德约科维奇，2026 辛辛那提公开赛第二轮",
+      "subject": "heat-rule",
       "required_years": [
         "2026"
       ],
@@ -420,7 +443,7 @@
       "page": "story",
       "status": "generated-visual",
       "reason": "多源检索后无相关性和分辨率同时达标的照片",
-      "query": "gamesmanship 2026 tennis",
+      "query": "heat-rule 2026 tennis",
       "required_event_terms": [],
       "providers": [
         "curated-editorial",
@@ -432,111 +455,111 @@
         "flickr-public",
         "duckduckgo-web-image"
       ],
-      "candidate_count": 26,
+      "candidate_count": 43,
       "exact_candidate_count": 0,
       "archive_candidate_count": 0,
       "rejection_counts": {
-        "low-visual-impact-metadata": 4,
-        "duplicate-candidate": 12,
-        "metadata-relevance-below-3": 10
+        "subject-or-person-mismatch": 15,
+        "duplicate-candidate": 9,
+        "metadata-relevance-below-3": 19
       },
       "failed_curated_source_urls": [],
       "source_runs": [
         {
           "page": "story",
           "provider": "curated-editorial",
-          "query": "gamesmanship 2026 tennis",
+          "query": "heat-rule 2026 tennis",
           "status": "empty",
           "candidate_count": 0
         },
         {
           "page": "story",
           "provider": "official-story-pages",
-          "query": "gamesmanship 2026 tennis",
-          "status": "empty",
-          "candidate_count": 0
-        },
-        {
-          "page": "story",
-          "provider": "wikimedia-commons",
-          "query": "gamesmanship 2026 tennis",
-          "status": "empty",
-          "candidate_count": 0
-        },
-        {
-          "page": "story",
-          "provider": "openverse",
-          "query": "gamesmanship 2026 tennis",
-          "status": "empty",
-          "candidate_count": 0
-        },
-        {
-          "page": "story",
-          "provider": "bing-web-image",
-          "query": "gamesmanship 2026 tennis",
-          "status": "empty",
-          "candidate_count": 0
-        },
-        {
-          "page": "story",
-          "provider": "official-tennis-archive",
-          "query": "gamesmanship 2026 tennis",
-          "status": "empty",
-          "candidate_count": 0
-        },
-        {
-          "page": "story",
-          "provider": "flickr-public",
-          "query": "gamesmanship 2026 tennis",
-          "status": "ok",
-          "candidate_count": 12
-        },
-        {
-          "page": "story",
-          "provider": "duckduckgo-web-image",
-          "query": "gamesmanship 2026 tennis",
-          "status": "empty",
-          "candidate_count": 0
-        },
-        {
-          "page": "story",
-          "provider": "wikimedia-commons",
-          "query": "gamesmanship tennis",
+          "query": "heat-rule 2026 tennis",
           "status": "ok",
           "candidate_count": 2
         },
         {
           "page": "story",
+          "provider": "wikimedia-commons",
+          "query": "heat-rule 2026 tennis",
+          "status": "ok",
+          "candidate_count": 4
+        },
+        {
+          "page": "story",
           "provider": "openverse",
-          "query": "gamesmanship tennis",
+          "query": "heat-rule 2026 tennis",
           "status": "empty",
           "candidate_count": 0
         },
         {
           "page": "story",
           "provider": "bing-web-image",
-          "query": "gamesmanship tennis",
-          "status": "empty",
-          "candidate_count": 0
+          "query": "heat-rule 2026 tennis",
+          "status": "ok",
+          "candidate_count": 1
         },
         {
           "page": "story",
           "provider": "official-tennis-archive",
-          "query": "gamesmanship tennis",
+          "query": "heat-rule 2026 tennis",
           "status": "empty",
           "candidate_count": 0
         },
         {
           "page": "story",
           "provider": "flickr-public",
-          "query": "gamesmanship tennis",
+          "query": "heat-rule 2026 tennis",
           "status": "ok",
           "candidate_count": 12
         },
         {
           "page": "story",
           "provider": "duckduckgo-web-image",
-          "query": "gamesmanship tennis",
+          "query": "heat-rule 2026 tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "story",
+          "provider": "wikimedia-commons",
+          "query": "heat-rule tennis",
+          "status": "ok",
+          "candidate_count": 12
+        },
+        {
+          "page": "story",
+          "provider": "openverse",
+          "query": "heat-rule tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "story",
+          "provider": "bing-web-image",
+          "query": "heat-rule tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "story",
+          "provider": "official-tennis-archive",
+          "query": "heat-rule tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "story",
+          "provider": "flickr-public",
+          "query": "heat-rule tennis",
+          "status": "ok",
+          "candidate_count": 12
+        },
+        {
+          "page": "story",
+          "provider": "duckduckgo-web-image",
+          "query": "heat-rule tennis",
           "status": "empty",
           "candidate_count": 0
         }
@@ -546,7 +569,7 @@
       "page": "explainer",
       "status": "generated-visual",
       "reason": "多源检索后无相关性和分辨率同时达标的照片",
-      "query": "gamesmanship 2026 规则 网球冷知识 tennis",
+      "query": "heat-rule 2026 规则 网球冷知识 tennis",
       "required_event_terms": [],
       "providers": [
         "curated-editorial",
@@ -558,153 +581,153 @@
         "flickr-public",
         "duckduckgo-web-image"
       ],
-      "candidate_count": 38,
+      "candidate_count": 55,
       "exact_candidate_count": 0,
       "archive_candidate_count": 0,
       "rejection_counts": {
-        "low-visual-impact-metadata": 4,
-        "duplicate-candidate": 24,
-        "metadata-relevance-below-3": 10
+        "subject-or-person-mismatch": 19,
+        "duplicate-candidate": 19,
+        "metadata-relevance-below-3": 17
       },
       "failed_curated_source_urls": [],
       "source_runs": [
         {
           "page": "explainer",
           "provider": "curated-editorial",
-          "query": "gamesmanship 2026 规则 网球冷知识 tennis",
+          "query": "heat-rule 2026 规则 网球冷知识 tennis",
           "status": "empty",
           "candidate_count": 0
         },
         {
           "page": "explainer",
           "provider": "official-story-pages",
-          "query": "gamesmanship 2026 规则 网球冷知识 tennis",
-          "status": "empty",
-          "candidate_count": 0
-        },
-        {
-          "page": "explainer",
-          "provider": "wikimedia-commons",
-          "query": "gamesmanship 2026 规则 网球冷知识 tennis",
-          "status": "empty",
-          "candidate_count": 0
-        },
-        {
-          "page": "explainer",
-          "provider": "openverse",
-          "query": "gamesmanship 2026 规则 网球冷知识 tennis",
-          "status": "empty",
-          "candidate_count": 0
-        },
-        {
-          "page": "explainer",
-          "provider": "bing-web-image",
-          "query": "gamesmanship 2026 规则 网球冷知识 tennis",
-          "status": "empty",
-          "candidate_count": 0
-        },
-        {
-          "page": "explainer",
-          "provider": "official-tennis-archive",
-          "query": "gamesmanship 2026 规则 网球冷知识 tennis",
-          "status": "empty",
-          "candidate_count": 0
-        },
-        {
-          "page": "explainer",
-          "provider": "flickr-public",
-          "query": "gamesmanship 2026 规则 网球冷知识 tennis",
-          "status": "ok",
-          "candidate_count": 12
-        },
-        {
-          "page": "explainer",
-          "provider": "duckduckgo-web-image",
-          "query": "gamesmanship 2026 规则 网球冷知识 tennis",
-          "status": "empty",
-          "candidate_count": 0
-        },
-        {
-          "page": "explainer",
-          "provider": "wikimedia-commons",
-          "query": "gamesmanship 2026 tennis",
-          "status": "empty",
-          "candidate_count": 0
-        },
-        {
-          "page": "explainer",
-          "provider": "openverse",
-          "query": "gamesmanship 2026 tennis",
-          "status": "empty",
-          "candidate_count": 0
-        },
-        {
-          "page": "explainer",
-          "provider": "bing-web-image",
-          "query": "gamesmanship 2026 tennis",
-          "status": "empty",
-          "candidate_count": 0
-        },
-        {
-          "page": "explainer",
-          "provider": "official-tennis-archive",
-          "query": "gamesmanship 2026 tennis",
-          "status": "empty",
-          "candidate_count": 0
-        },
-        {
-          "page": "explainer",
-          "provider": "flickr-public",
-          "query": "gamesmanship 2026 tennis",
-          "status": "ok",
-          "candidate_count": 12
-        },
-        {
-          "page": "explainer",
-          "provider": "duckduckgo-web-image",
-          "query": "gamesmanship 2026 tennis",
-          "status": "empty",
-          "candidate_count": 0
-        },
-        {
-          "page": "explainer",
-          "provider": "wikimedia-commons",
-          "query": "gamesmanship tennis",
+          "query": "heat-rule 2026 规则 网球冷知识 tennis",
           "status": "ok",
           "candidate_count": 2
         },
         {
           "page": "explainer",
+          "provider": "wikimedia-commons",
+          "query": "heat-rule 2026 规则 网球冷知识 tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "explainer",
           "provider": "openverse",
-          "query": "gamesmanship tennis",
+          "query": "heat-rule 2026 规则 网球冷知识 tennis",
           "status": "empty",
           "candidate_count": 0
         },
         {
           "page": "explainer",
           "provider": "bing-web-image",
-          "query": "gamesmanship tennis",
+          "query": "heat-rule 2026 规则 网球冷知识 tennis",
           "status": "empty",
           "candidate_count": 0
         },
         {
           "page": "explainer",
           "provider": "official-tennis-archive",
-          "query": "gamesmanship tennis",
+          "query": "heat-rule 2026 规则 网球冷知识 tennis",
           "status": "empty",
           "candidate_count": 0
         },
         {
           "page": "explainer",
           "provider": "flickr-public",
-          "query": "gamesmanship tennis",
+          "query": "heat-rule 2026 规则 网球冷知识 tennis",
           "status": "ok",
           "candidate_count": 12
         },
         {
           "page": "explainer",
           "provider": "duckduckgo-web-image",
-          "query": "gamesmanship tennis",
+          "query": "heat-rule 2026 规则 网球冷知识 tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "explainer",
+          "provider": "wikimedia-commons",
+          "query": "heat-rule 2026 tennis",
+          "status": "ok",
+          "candidate_count": 4
+        },
+        {
+          "page": "explainer",
+          "provider": "openverse",
+          "query": "heat-rule 2026 tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "explainer",
+          "provider": "bing-web-image",
+          "query": "heat-rule 2026 tennis",
+          "status": "ok",
+          "candidate_count": 1
+        },
+        {
+          "page": "explainer",
+          "provider": "official-tennis-archive",
+          "query": "heat-rule 2026 tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "explainer",
+          "provider": "flickr-public",
+          "query": "heat-rule 2026 tennis",
+          "status": "ok",
+          "candidate_count": 12
+        },
+        {
+          "page": "explainer",
+          "provider": "duckduckgo-web-image",
+          "query": "heat-rule 2026 tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "explainer",
+          "provider": "wikimedia-commons",
+          "query": "heat-rule tennis",
+          "status": "ok",
+          "candidate_count": 12
+        },
+        {
+          "page": "explainer",
+          "provider": "openverse",
+          "query": "heat-rule tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "explainer",
+          "provider": "bing-web-image",
+          "query": "heat-rule tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "explainer",
+          "provider": "official-tennis-archive",
+          "query": "heat-rule tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "explainer",
+          "provider": "flickr-public",
+          "query": "heat-rule tennis",
+          "status": "ok",
+          "candidate_count": 12
+        },
+        {
+          "page": "explainer",
+          "provider": "duckduckgo-web-image",
+          "query": "heat-rule tennis",
           "status": "empty",
           "candidate_count": 0
         }
@@ -714,7 +737,7 @@
       "page": "today",
       "status": "generated-visual",
       "reason": "多源检索后无相关性和分辨率同时达标的照片",
-      "query": "gamesmanship 2026 tennis",
+      "query": "heat-rule 2025 tennis",
       "required_event_terms": [],
       "providers": [
         "curated-editorial",
@@ -726,111 +749,111 @@
         "flickr-public",
         "duckduckgo-web-image"
       ],
-      "candidate_count": 26,
+      "candidate_count": 41,
       "exact_candidate_count": 0,
       "archive_candidate_count": 0,
       "rejection_counts": {
-        "low-visual-impact-metadata": 4,
+        "subject-or-person-mismatch": 7,
         "duplicate-candidate": 11,
-        "metadata-relevance-below-3": 11
+        "metadata-relevance-below-3": 23
       },
       "failed_curated_source_urls": [],
       "source_runs": [
         {
           "page": "today",
           "provider": "curated-editorial",
-          "query": "gamesmanship 2026 tennis",
+          "query": "heat-rule 2025 tennis",
           "status": "empty",
           "candidate_count": 0
         },
         {
           "page": "today",
           "provider": "official-story-pages",
-          "query": "gamesmanship 2026 tennis",
-          "status": "empty",
-          "candidate_count": 0
-        },
-        {
-          "page": "today",
-          "provider": "wikimedia-commons",
-          "query": "gamesmanship 2026 tennis",
-          "status": "empty",
-          "candidate_count": 0
-        },
-        {
-          "page": "today",
-          "provider": "openverse",
-          "query": "gamesmanship 2026 tennis",
-          "status": "empty",
-          "candidate_count": 0
-        },
-        {
-          "page": "today",
-          "provider": "bing-web-image",
-          "query": "gamesmanship 2026 tennis",
-          "status": "empty",
-          "candidate_count": 0
-        },
-        {
-          "page": "today",
-          "provider": "official-tennis-archive",
-          "query": "gamesmanship 2026 tennis",
-          "status": "empty",
-          "candidate_count": 0
-        },
-        {
-          "page": "today",
-          "provider": "flickr-public",
-          "query": "gamesmanship 2026 tennis",
+          "query": "heat-rule 2025 tennis",
           "status": "ok",
-          "candidate_count": 12
-        },
-        {
-          "page": "today",
-          "provider": "duckduckgo-web-image",
-          "query": "gamesmanship 2026 tennis",
-          "status": "empty",
-          "candidate_count": 0
+          "candidate_count": 2
         },
         {
           "page": "today",
           "provider": "wikimedia-commons",
-          "query": "gamesmanship tennis",
+          "query": "heat-rule 2025 tennis",
           "status": "ok",
           "candidate_count": 2
         },
         {
           "page": "today",
           "provider": "openverse",
-          "query": "gamesmanship tennis",
+          "query": "heat-rule 2025 tennis",
           "status": "empty",
           "candidate_count": 0
         },
         {
           "page": "today",
           "provider": "bing-web-image",
-          "query": "gamesmanship tennis",
-          "status": "empty",
-          "candidate_count": 0
+          "query": "heat-rule 2025 tennis",
+          "status": "ok",
+          "candidate_count": 1
         },
         {
           "page": "today",
           "provider": "official-tennis-archive",
-          "query": "gamesmanship tennis",
+          "query": "heat-rule 2025 tennis",
           "status": "empty",
           "candidate_count": 0
         },
         {
           "page": "today",
           "provider": "flickr-public",
-          "query": "gamesmanship tennis",
+          "query": "heat-rule 2025 tennis",
           "status": "ok",
           "candidate_count": 12
         },
         {
           "page": "today",
           "provider": "duckduckgo-web-image",
-          "query": "gamesmanship tennis",
+          "query": "heat-rule 2025 tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "today",
+          "provider": "wikimedia-commons",
+          "query": "heat-rule tennis",
+          "status": "ok",
+          "candidate_count": 12
+        },
+        {
+          "page": "today",
+          "provider": "openverse",
+          "query": "heat-rule tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "today",
+          "provider": "bing-web-image",
+          "query": "heat-rule tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "today",
+          "provider": "official-tennis-archive",
+          "query": "heat-rule tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "today",
+          "provider": "flickr-public",
+          "query": "heat-rule tennis",
+          "status": "ok",
+          "candidate_count": 12
+        },
+        {
+          "page": "today",
+          "provider": "duckduckgo-web-image",
+          "query": "heat-rule tennis",
           "status": "empty",
           "candidate_count": 0
         }
@@ -839,10 +862,10 @@
   ],
   "selection_evidence": {
     "kind": "trivia",
-    "candidate_slug": "gamesmanship",
-    "result_count": 82,
-    "live_count": 1,
-    "schedule_count": 11,
+    "candidate_slug": "heat-rule",
+    "result_count": 0,
+    "live_count": 0,
+    "schedule_count": 0,
     "selection_basis": "no media/search signals attached on this path; ranked on match context, intrinsic curiosity, shareability and cooldown",
     "viral_prior": 0.0,
     "topic_score": 0.0,
@@ -850,7 +873,7 @@
     "trend_signal_count": 0,
     "media_search_heat": 0.0,
     "candidate_rank": 1,
-    "candidate_count": 21,
+    "candidate_count": 1,
     "visual_preflight_rejections": 0,
     "visual_preflight_status": "pass",
     "same_topic_attempt": 1,
