@@ -53,12 +53,43 @@ CLAUDE.md「封面大图一律用官方高清实拍」那条的配套工具。�
 
    也就是**当天那一辑在次日 UTC 00:00–03:00 之间上线**（当地 20:00–23:00）。
 
+5. ⭐⭐⭐ **当地报纸的每日图集**（2026-08-17 挖出来的，**这条是分辨率最高的一条**）。
+   辛辛那提这一站是 **The Enquirer**（USA Today／Gannett 网络）派自己的摄影师拍，
+   每个比赛日出一辑：
+
+       索引  https://www.cincinnati.com/sitemap/2026/august/<DD>/
+             （或 /search/?q=photos%20cincinnati%20open）
+       一辑  /picture-gallery/sports/2026/08/<DD>/photos-cincinnati-open-<slug>/<id>/
+       图    那一页的 `<script type=application/ld+json>` 里是一串 ImageObject，
+             每条带 `url` ＋ **完整四要素说明** ＋ `copyrightHolder`
+
+   ⚠️⚠️ **原图要换域名**：说明里给的是 `https://www.cincinnati.com/gcdn/authoring/…`，
+   而那个地址**恒 406**（`www.usatoday.com/gcdn/…` 也是）。把
+   `https://www.cincinnati.com/gcdn/` 换成 **`https://www.gannett-cdn.com/`**
+   就是无水印原图——实测 **4813×3209**，铺 1080×1440 只要 **0.45×**，
+   连 `_low_res_why` 都不用写。⚠️ 请求要带 `Accept: image/*`，不然还是 406。
+
+   ⚠️ **它的说明比赛事图库的文件名还硬**：
+   「Alex de Minaur, of Australia, returns to Quentin Halys, of France, at the
+   Cincinnati Open at the Lindner Family Tennis Center in Mason, Ohio, on
+   Saturday, August 15, 2026」——球员、对手、赛事、场馆、日期一句话全齐，
+   四道闸门第一道直接过。
+   ⚠️ 版权是报社的（`Albert Cesare/The Enquirer`），属于四类源里的第 ③ 档
+   「新闻站／图片社转载」——授权照实记进 credits，发布前人工判断。
+   ⚠️ **覆盖面和赛事图库一样偏主球场**：8/14 那辑 54 张、8/15 那辑 95 张，
+   两辑里含 `Wang` 的都是 0 张。**有这条渠道不等于有这个人**。
+
 ## 实测走不通的，别再试
 
 | 路 | 结果 |
 |---|---|
 | Getty 自己的 comp 图 `media.gettyimages.com/id/…` | 脱离页面上下文一律 **400**（签名参数绑上下文）；而且 `w=gi` 是**带水印**的 |
 | Getty API `api.gettyimages.com` | **401**，要 key |
+| Getty 搜索页 `gettyimages.com/search/2/image` | 沙箱里 curl 拿到的是 **JS 壳**（0 个 asset）；**上 runner 开真 Chromium 也不行——直接弹 reCAPTCHA**（run 31983856305 抓到 `recaptcha/api2/anchor`）。这条 2026-08-17 探到底了 |
+| 沙箱里开 Chromium 走代理 | `--proxy-server` 和 playwright 的 `proxy=` 都试过，一律 `ERR_CONNECTION_RESET`，连自家能 curl 通的站都打不开。**要真浏览器只能上 runner**（`probe-blocked.yml` 的 `mode=browser`） |
+| `atptour.com` | 换浏览器 UA 之后仍是 **403**（沙箱和 runner 都是），这条老结论不变 |
+| `photos.` / `media.` `.cincinnatiopen.com` 子域 | 403，换 UA 无效 |
+| 网易／新浪等中文门户配的图 | 是**资料图**：实测 163 那两篇写这场球的稿子配的是她别站的旧照（960×640、1280×832），四道闸门第一道就过不了 |
 | Reuters 图片站 | **401** |
 | `api.wtatennis.com` 的 `media` / `photos` / `content` / `players/<id>/media` | 全 **404** |
 | `wtatennis.com/galleries` | 404。`/photos` 有，但那是专题图集，不是当日比赛图 |
@@ -71,7 +102,8 @@ import argparse
 import json
 import re
 import sys
-import urllib.request
+
+import requests
 
 # 浏览器 UA 不是洁癖：赛事官网的 WP REST 对非浏览器 UA 直接 403（见模块 docstring）。
 _UA = {
@@ -98,8 +130,20 @@ _WTA_PAGES = (
 
 
 def _get(url: str, timeout: int = 30) -> str:
-    req = urllib.request.Request(url, headers=_UA)
-    return urllib.request.urlopen(req, timeout=timeout).read().decode("utf-8", "replace")
+    """⚠️⚠️ **必须走 `requests`，不能走 `urllib`。**
+
+    2026-08-17 在 `cincinnati.com` 上量出来的：同一个 URL、同一个 UA、同一份
+    `Accept`，**urllib 恒 403、requests 恒 200**。差别不在头的内容，在**头的
+    大小写**——`urllib.request.Request` 会把头名规范成 `User-agent`（小写 a），
+    而浏览器和 requests 发的是 `User-Agent`；Gannett 那道 WAF 按这个指纹判机器人。
+
+    ⚠️ 这一条骗过我一次：换 Mac/Windows UA、换 Accept、加 Accept-Language 全试过，
+    五种组合**全是 403**，看起来就像「这个站不让爬」——而真因是发请求的库。
+    「这条路不通」和「我敲门的姿势不对」长得一模一样，**判空之前先换一个 HTTP 客户端**。
+    """
+    resp = requests.get(url, headers=_UA, timeout=timeout)
+    resp.raise_for_status()
+    return resp.text
 
 
 def getty_caption(gid: str) -> str | None:
@@ -164,6 +208,77 @@ def sweep_wta(player: str | None, event: str | None, day: str | None) -> list[di
         if day and f"day {day}".lower() not in hay.lower() and f"Day_{day}" not in name:
             continue
         out.append(row)
+    return out
+
+
+_GANNETT_SITE = "https://www.cincinnati.com"
+_GANNETT_CDN = "https://www.gannett-cdn.com/"
+
+
+def gannett_original(url: str) -> str:
+    """把图集说明里那个 406 的地址换成真正拿得到原图的那个。
+
+    ⚠️ `https://www.cincinnati.com/gcdn/authoring/…` 和
+    `https://www.usatoday.com/gcdn/…` **恒 406**（带不带 Referer 都一样）；
+    换成 `https://www.gannett-cdn.com/authoring/…` 才是无水印原图（实测 4813×3209）。
+    取的时候还要带 `Accept: image/*`。
+    """
+    return re.sub(r"^https://[a-z0-9.-]+/gcdn/", _GANNETT_CDN, url)
+
+
+def sweep_enquirer(player: str | None, day: str | None) -> list[dict]:
+    """扫 The Enquirer 的每日图集：说明自带四要素，原图 4800px 级。
+
+    `day` 给 `2026-08-16` 这种；不给就把最近几天的图集都翻一遍。
+    """
+    days = [day] if day else None
+    galleries: list[str] = []
+    try:
+        idx = _get(f"{_GANNETT_SITE}/search/?q=photos%20cincinnati%20open", timeout=40)
+        galleries += re.findall(r"/picture-gallery/sports/\d{4}/\d{2}/\d{2}/[a-z0-9-]+/\d+/", idx)
+    except Exception:                                           # noqa: BLE001
+        pass
+    if days:
+        y, m, d = days[0].split("-")
+        month = ("january february march april may june july august september "
+                 "october november december").split()[int(m) - 1]
+        try:
+            sm = _get(f"{_GANNETT_SITE}/sitemap/{y}/{month}/{int(d)}/", timeout=40)
+            galleries += re.findall(
+                r"/picture-gallery/sports/\d{4}/\d{2}/\d{2}/[a-z0-9-]+/\d+/", sm)
+        except Exception:                                       # noqa: BLE001
+            pass
+
+    out: list[dict] = []
+    for path in sorted(set(galleries)):
+        if days and f"/{days[0].replace('-', '/')}/" not in path:
+            continue
+        try:
+            html = _get(_GANNETT_SITE + path, timeout=60)
+        except Exception:                                       # noqa: BLE001
+            continue
+        for blob in re.findall(r"<script type=application/ld\+json>(.*?)</script>",
+                               html, re.S):
+            try:
+                data = json.loads(blob)
+            except Exception:                                   # noqa: BLE001
+                continue
+            for item in (data if isinstance(data, list) else [data]):
+                images = item.get("image") if isinstance(item, dict) else None
+                if isinstance(images, dict):
+                    images = [images]
+                for img in images or []:
+                    if not isinstance(img, dict) or not img.get("url"):
+                        continue
+                    cap = img.get("caption") or ""
+                    if player and player.lower() not in cap.lower():
+                        continue
+                    out.append({
+                        "gallery": path,
+                        "caption": cap,
+                        "credit": img.get("copyrightHolder"),
+                        "url": gannett_original(img["url"]),
+                    })
     return out
 
 
@@ -260,6 +375,15 @@ def main() -> int:
         if r["caption"]:
             print(f"     说明：{r['caption']}")
         print(f"     {r['url']}")
+
+    print("\n=== The Enquirer 每日图集（说明自带四要素，原图 4800px 级）")
+    enq = sweep_enquirer(args.player, args.date)
+    if not enq:
+        print("  没有对得上的。⚠️ 这一辑**按比赛日出**，当天的往往次日才上线；"
+              "而且它和赛事图库一样偏主球场——**有这条渠道不等于有这个人**。")
+    for r in enq[:10]:
+        print(f"  {r['caption'][:150]}")
+        print(f"     {r['credit']} · {r['url']}")
 
     if args.site:
         print(f"\n=== {args.site} 的 WordPress 媒体库")

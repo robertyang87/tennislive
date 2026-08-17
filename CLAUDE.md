@@ -5241,6 +5241,52 @@ fancybox，原图挂在 `<a href>` 上。真页面上量：裸文本扫到 **40 
 那道 1.00× 地板，要写一句 `cover.portrait._low_res_why`——**但它仍然远好过抽帧**：
 2000px 是相机原图，抽帧是压缩转播流的 1920×1080 再放大 1.33 倍。
 
+##### ⭐⭐⭐ 2026-08-17 第四条渠道：**当地报纸的每日图集**，原图 4813×3209
+
+账号所有者：「**多尝试不同的方案啊 / 403 的你要多想想办法啊**」。照做挖出来的，
+**分辨率比前三条都高一档**：辛辛那提这一站是 **The Enquirer**（USA Today／
+Gannett）派自己的摄影师拍，每个比赛日出一辑，一辑 54~95 张。
+
+    索引  https://www.cincinnati.com/sitemap/2026/august/<DD>/
+    一辑  /picture-gallery/sports/2026/08/<DD>/photos-cincinnati-open-<slug>/<id>/
+    图    那一页 `<script type=application/ld+json>` 里一串 ImageObject，
+          每条带 url ＋ **完整四要素说明** ＋ copyrightHolder
+
+⚠️⚠️ **原图要换域名**：说明里给的是 `https://www.cincinnati.com/gcdn/authoring/…`，
+而那个地址**恒 406**（`usatoday.com/gcdn/…` 也是）。换成
+**`https://www.gannett-cdn.com/authoring/…`** 就是无水印原图——实测 **4813×3209**，
+铺 1080×1440 只要 **0.45×**，连 `_low_res_why` 都不用写。请求要带 `Accept: image/*`。
+
+⚠️ **它的说明比赛事图库的文件名还硬**：「Alex de Minaur, of Australia, returns to
+Quentin Halys, of France, at the Cincinnati Open at the Lindner Family Tennis
+Center in Mason, Ohio, on Saturday, August 15, 2026」——球员、对手、赛事、场馆、
+日期一句话全齐。版权是报社的（`Albert Cesare/The Enquirer`），属于四类源里的
+第 ③ 档，授权照实记进 credits。
+
+⚠️ **有这条渠道不等于有这个人**：8/14 那辑 54 张、8/15 那辑 95 张，含 `Wang` 的
+都是 0 张——它和赛事图库一样偏主球场。
+
+###### ⭐⭐ 而挡在它前面的那个 403，真因不是 UA，是**发请求的库**
+
+`cincinnati.com` 用 curl 是 200、用 `tools/find_cover_photo.py` 恒 403。
+换 Mac／Windows UA、换 `Accept`、加 `Accept-Language`——**五种组合全是 403**，
+看起来就是「这个站不让爬」。真因是：
+
+> **`urllib.request.Request` 会把头名规范成 `User-agent`（小写 a）**，
+> 而浏览器和 `requests` 发的是 `User-Agent`。Gannett 那道 WAF 按这个指纹判机器人。
+
+同一个 URL、同一份头，**urllib 恒 403、requests 恒 200**。
+
+⚠️ 所以「403 先换 UA」那条要再加一层：**换完 UA 还 403，就换一个 HTTP 客户端**
+（urllib ↔ requests ↔ curl）。这跟本文件里「`add_repo` 之前不要 curl 预检」
+「WP REST 必须带浏览器 UA」是同一族——**「这条路不通」和「我敲门的姿势不对」
+长得一模一样**，而这次连姿势都不在头里，在库里。
+
+⚠️ 顺带一条边界：**沙箱里的 Chromium 过不了这个代理**（`--proxy-server` 和
+playwright 的 `proxy=` 都试过，一律 `ERR_CONNECTION_RESET`，连自家能 curl 通的站
+都打不开）。要真浏览器只能上 runner——`probe-blocked.yml` 的 `mode=browser`
+本来就是干这个的，`--url` 随便给。
+
 ##### ⚠️ 而这个工具本身有两个查询词的坑，两次都吐一个**假的空**／**假的中**
 
 2026-08-17 做 `wangxiyu-fernandez` 时两个都踩了，一次判错一个方向：
