@@ -169,7 +169,15 @@ def align(reads: list[dict], states: list[dict]) -> list[dict]:
                 continue
             if pa and pb and (pa != s["point_A"] or pb != s["point_B"]):
                 continue
-            hits.append(r.get("t"))
+            # ⚠️ MiniMax 输出的时间码 `t` 类型不稳：同一份 scoreboard.json 里有的
+            # 格子给 float（2.5）、有的给字符串（"126.5"）。不归一化的话，
+            # segment_skeleton 拿它做减法就 TypeError（str - float）。读不出数字
+            # 的格子跳过（不猜）。
+            try:
+                t = float(r.get("t"))
+            except (TypeError, ValueError):
+                continue
+            hits.append(t)
         if hits:
             out.append({"index": s["index"], "set": s["set"], "game": s["game"],
                         "games": f"{s['games_A']}-{s['games_B']}",
