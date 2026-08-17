@@ -20,17 +20,17 @@ def _tool():
 def test_无key跳过出声(monkeypatch, capsys, tmp_path):
     rs = _tool()
     monkeypatch.delenv("MINIMAX_API_KEY", raising=False)
-    monkeypatch.setattr(sys, "argv", ["read_scoreboard.py", "--dir", str(tmp_path)])
+    monkeypatch.setattr(sys, "argv", ["read_scoreboard.py", "--frames", str(tmp_path / "x.jpg")])
     assert rs.main() == 2
     assert "没配 MINIMAX_API_KEY" in capsys.readouterr().out
 
 
-def test_没score图跳过出声(monkeypatch, capsys, tmp_path):
+def test_帧不存在跳过出声(monkeypatch, capsys, tmp_path):
     rs = _tool()
     monkeypatch.setenv("MINIMAX_API_KEY", "sk-test")
-    monkeypatch.setattr(sys, "argv", ["read_scoreboard.py", "--dir", str(tmp_path)])
+    monkeypatch.setattr(sys, "argv", ["read_scoreboard.py", "--frames", str(tmp_path / "x.jpg")])
     assert rs.main() == 2
-    assert "没有 score_*.jpg" in capsys.readouterr().out
+    assert "帧都不存在" in capsys.readouterr().out
 
 
 def test_ask剥掉代码围栏(monkeypatch, tmp_path):

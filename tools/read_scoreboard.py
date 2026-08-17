@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""用 MiniMax 视觉读记分条条带（score_*.jpg），输出「时间码 → 比分」序列。
+"""用 MiniMax 视觉读比分板，输出「时间码 → 比分」序列。
 
 ## 为什么是这条链的命门
 
@@ -7,16 +7,21 @@
 `gameScore`（15/30/40），比分板画面烧着同样的 15/30/40。两者对齐，就能把
 「赛点那一分」从「逐分第 N 分」定位到「视频第 X 秒」。
 
-但「读比分板数字」是视觉活。probe 已经产出了给**人**读比分的素材——
-`score_*.jpg`（裁出记分条那一块、放大到能读、每格烧时间码的缩略图墙）。
-这个工具把「人读」换成「MiniMax 读」。
+## 抽帧是机械的，识别是视觉的（账号所有者 2026-08-17 定的分工）
+
+「让 MiniMax 按 Claude 那种方式抽帧、定格、识别比分」——**抽帧**是机械的：
+probe 已经每隔 N 秒从源片抽一帧、烧上时间码、拼成 `contact_*.jpg`（整帧缩略
+图墙）。**识别**是视觉的：MiniMax 在**整帧画面里自己找比分板**、读数字，
+不依赖人工裁好的记分条条带（`score_*.jpg` 那个「左下 42%」的固定框是给人
+看的，不一定框得准，而且不是自动检测的）。
 
 ⚠️ 只读、只输出，不改任何东西。读出来的比分序列是**候选**，要和逐分数据的
 比分序列对齐之后才算数（见 docs/scoreboard-alignment.md §3）。
 
 用法：
     MINIMAX_API_KEY=... python tools/read_scoreboard.py \
-        --dir output/2026-08-15/reel/wangxiyu-timofeeva \
+        --frames output/2026-08-15/reel/wangxiyu-timofeeva/contact_00.jpg \
+        --frames output/2026-08-15/reel/wangxiyu-timofeeva/contact_01.jpg \
         --out /tmp/scoreboard.json
 """
 
@@ -34,13 +39,15 @@ ENDPOINT = "https://api.minimaxi.com/v1/chat/completions"
 MODEL = "MiniMax-M3"
 
 SYSTEM = (
-    "你是网球记分员。给你一张网球比赛转播的记分条条带图（多个格子并排，"
-    "每个格子里是放大的记分条，左上角烧着这一帧的时间码，形如 `13.7s`）。\n"
-    "读每个格子：时间码是多少秒、这一帧记分条显示的双方比分是什么。\n"
-    "⚠️ 记分条比分通常是「局分 盘分」或「局分 小分」的格式，比如"
-    " `1-2`（局分）配 `15-30`（小分），或者三盘比 `6 4 0 / 4 6 2`。"
-    "照格子原样读，读不清的格子跳过，别编。\n"
+    "你是网球记分员。给你一张网球比赛转播画面的缩略图墙（多个格子并排，"
+    "每个格子是完整的一帧画面，左上角烧着这一帧的时间码，形如 `13.7s`）。\n"
+    "在每个格子的**画面里自己找比分板**（通常在画面角落，是一块深色底、"
+    "上面有双方名字和比分数字的条），读出比分。\n"
+    "⚠️ 比分板上通常有：双方球员名缩写、局分（如 1-2）、小分（15/30/40/AD），"
+    "或三盘比（6 4 0 / 4 6 2）。照画面原样读，读不清的格子跳过、比分留空，"
+    "**别编**。\n"
     "只输出一个 json 数组，每项 {t: 时间码数字, score: \"读到的比分原文\"}。"
+    "比分读不清也要输出 {t: ..., score: \"\"}，别漏掉格子。"
 )
 
 
@@ -84,8 +91,8 @@ def _ask(image: Path, key: str) -> list[dict] | None:
 
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
-    ap.add_argument("--dir", required=True, type=Path,
-                    help="probe 产物目录（含 score_*.jpg）")
+    ap.add_argument("--frames", required=True, type=Path, nargs="+",
+                    help="整帧缩略图墙（contact_*.jpg），可给多张")
     ap.add_argument("--out", default="", help="把比分序列写进这个 json 文件")
     args = ap.parse_args()
 
@@ -94,17 +101,17 @@ def main() -> int:
         print("[跳过] 没配 MINIMAX_API_KEY 环境变量，退化出声")
         return 2
 
-    sheets = sorted(args.dir.glob("score_*.jpg"))
-    if not sheets:
-        print(f"[跳过] {args.dir} 里没有 score_*.jpg")
+    frames = [p for p in args.frames if p.is_file()]
+    if not frames:
+        print("[跳过] 给的帧都不存在")
         return 2
 
     all_rows: list[dict] = []
-    for sheet in sheets:
-        print(f"读 {sheet.name} …")
-        rows = _ask(sheet, key)
+    for frame in frames:
+        print(f"读 {frame.name} …")
+        rows = _ask(frame, key)
         if rows is None:
-            print(f"  ⚠️ {sheet.name} 没读出 json，跳过")
+            print(f"  ⚠️ {frame.name} 没读出 json，跳过")
             continue
         print(f"  {len(rows)} 个格子")
         all_rows.extend(rows)
