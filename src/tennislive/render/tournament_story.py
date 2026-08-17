@@ -2598,6 +2598,57 @@ STORIES = STORIES + (
         source_url="https://www.wtatennis.com/tournament/1017/cincinnati/2026/scores",
     ),
     _trivia_story(
+        slug="fonseca-oconnell",
+        title="丰塞卡第三轮VS奥康奈尔",
+        subtitle="赛事前瞻 · ATP 1000",
+        identity="一个轮空进第二轮，一个从资格赛打了四场",
+        chips=("ATP 1000", "第三轮", "首次交手"),
+        hero=(
+            "辛辛那提第三轮，19 岁的丰塞卡第一次碰上 32 岁的奥康奈尔。丰塞卡是本站 23 号种子，"
+            "5 月在法网从两盘落后翻掉德约科维奇；奥康奈尔世界第 129，从资格赛打起，四场才走到这一轮。"
+        ),
+        facts=(
+            # ⚠️ 每条都压在 120 字以内：`knowledge_copy` 把每条 fact 铺成知识帖的
+            # 一段，`test_all_knowledge_copy_is_plain_mobile_first_and_not_numbered`
+            # 拦超过 120 字的段。这一批写完是 118 / 108 / 115 / 74。
+            "丰塞卡 2006 年 8 月 21 日生，巴西人，本站 23 号种子、世界第 27，生涯最高第 24。"
+            "5 月 29 日法网第三轮，他在菲利普·夏蒂埃球场 4-6、4-6、6-3、7-5、7-5 逆转德约科维奇，"
+            "用时 4 小时 57 分。",
+            "丰塞卡本赛季 21 胜 14 负。8 月蒙特利尔第二轮 7-6(3)、7-5 胜西西帕斯，"
+            "第三轮 7-6(6)、6-3 胜鲁德。本站首轮轮空，第二轮 6-4、7-6(2) 胜范德赞德舒尔普，"
+            "用时 1 小时 48 分。",
+            "奥康奈尔 1994 年 6 月 3 日生，澳大利亚人，世界第 129，生涯最高第 53。本站从资格赛打起，"
+            "四场合计 6 小时 43 分：胜斯威尼、舍甫琴科、迈赫扎克，上一轮 7-5 领先、"
+            "第二盘 1-2 时 11 号种子鲁德退赛。",
+            "奥康奈尔今年的红土赛季一场没赢，0 胜 6 负。两人此前从未交手，公开记录里的交手战绩是 0-0，"
+            "这是生涯第一次正面交锋；第三轮赢的人进 16 强。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2026-05-29",
+                player="丰塞卡",
+                age="18 岁",
+                headline="法网第三轮两盘落后翻掉德约科维奇",
+                detail="菲利普·夏蒂埃球场，4-6、4-6、6-3、7-5、7-5，用时 4 小时 57 分；"
+                "两天后再 7-5、7-6(8)、5-7、6-2 胜鲁德，打进 1/4 决赛。",
+                source_url="https://www.tennisexplorer.com/player/fonseca-57dc1/?annual=2026",
+            ),
+            ChampionMoment(
+                date="2026-08-16",
+                player="奥康奈尔",
+                age="32 岁",
+                headline="从资格赛打到第三轮，四场 6 小时 43 分",
+                detail="资格赛胜斯威尼、舍甫琴科，正赛首轮 6-4、7-6(5) 胜迈赫扎克；"
+                "第二轮 7-5 拿下首盘、次盘 1-2 时 11 号种子鲁德退赛。",
+                source_url="https://www.tennisexplorer.com/player/o-connell-020b8/?annual=2026",
+            ),
+        ),
+        image_keys=(),
+        source_label="ATP 官方签表（protennislive posting）/ flashscore 官方逐盘统计 / tennisexplorer 逐场记录",
+        image_credit="Cincinnati Open 官方图库",
+        source_url="https://www.protennislive.com/posting/2026/422/mds.pdf",
+    ),
+    _trivia_story(
         slug="masters-format",
         title="大师赛为什么变两周",
         subtitle="网球观察 · 赛程篇",
