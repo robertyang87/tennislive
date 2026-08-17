@@ -4167,6 +4167,32 @@ ffmpeg 进度中间，而 run 是绿的——**没有人会去读一条绿 run �
 （见「100 MiB 是 git 的限制」那节），所以**每一条已发的成片都是本地可取的**——
 `render.json` 的 `video_url` 就是那个地址，不用去猜。
 
+##### ⚠️ 拉回来的那份**不许落在 `output/` 里**——下一次 `git add -A` 会把它吃进去
+
+2026-08-17 差 30 秒就把一个 **41.8 MB 的 mp4 提交进了历史**。经过很平淡，
+所以更值得记：`check_reel_landed.py` 按产物目录找成片，我图省事就把 Release 那份
+`curl -o output/<date>/reel/<slug>/<slug>.mp4` 下到了它要找的位置；验完 0 项不合格，
+顺手 `git add -A && git commit` 提交笔记——**mp4 一起进去了**。
+`git show --stat` 第一行才看见。
+
+⚠️ **三道该拦的闸一道都没响，而且每一道都「没做错」：**
+
+| | 为什么没响 |
+|---|---|
+| `test_成片一律走Release不进git` | 它查的是 `git ls-files`，而那一刻文件还**没被跟踪** |
+| 全量测试 | 跑在 `git add` **之前**（文件在盘上了，但那条判据看的不是盘） |
+| 工作流的「丢掉不进仓库的中间物」 | 那是 **runner 上**的清理，管不到我在沙箱里下的这一份 |
+
+也就是说**「一个躺在被跟踪目录里的未跟踪大文件」是个盲区**：它离进历史只差一个
+`git add -A`，而这个仓库的提交习惯就是 `git add -A`。
+
+- **下到 `output/` 外面**（scratchpad），要么**验完立刻 `mv` 走**
+- **`git commit` 之后先看一眼 `git show --stat`**。它比「提交成功了」多花一秒，
+  而这一秒挡的是一次改写历史——2026-08-13 那次清理花了 17 GB → 789 MB，
+  代价是所有 commit SHA 都变了、已发消息里的图片链接可能失效
+- 这跟「查产物，不查信号」是一家的：**`git commit` 返回 0 是信号，
+  `git show --stat` 列出来的那几行才是产物**
+
 拿回来之后能做的事，都是几秒钟的：
 
 | 想知道 | 怎么量 |
@@ -5062,15 +5088,42 @@ fancybox，原图挂在 `<a href>` 上。真页面上量：裸文本扫到 **40 
 只扫 `src="` 只有 **2 张**。**扫得太窄和真的没有长得一模一样**，判据钉在
 `test_扫图不许只看img_src否则当期图漏掉九成五`。
 
-⚠️ **`-scaled` 比裸文件名大，不是小**（我也写反过一次）：
+##### ⭐⭐ 2026-08-16 纠正：`-scaled` 是 **2560 的封顶版，不是原图**——去掉它
 
-    Wickerham_…_148.jpg          2048×1365
-    Wickerham_…_148-scaled.jpg   **2560×1707**   ← 撑得满
+上面这一段原来写着两句互相打架的话（「`-scaled` 比裸名大」／「2026 这一批只有
+2000×1333、没有 `-scaled`」），**两句都不对**。真去量（`cincinnatiopen.com`，
+最近 300 条媒体）：
 
-⚠️ **但 2026 年这一批只有 2000×1333、没有 `-scaled`（404）**，铺 1080×1440 是
-**0.93×**，过不了 `cover_photo_problem` 那道 1.00× 地板，要写一句
-`cover.portrait._low_res_why`。**它仍然远好过抽帧**：2000px 是相机原图，
-而抽帧是压缩转播流的 1920×1080 再放大 1.33 倍，两个「1920」不是一回事。
+    CincinnatiOpen_20260813_JM010573_JW1-scaled.jpg   2560×1707
+    CincinnatiOpen_20260813_JM010573_JW1.jpg          **4991×3328**
+    081326_DAY-SIX_MIKE-BAKER-25-of-48-scaled.jpg     2560×1707
+    081326_DAY-SIX_MIKE-BAKER-25-of-48.jpg            **5541×3694**
+    CincyOpen8.14.26BJ_249-scaled.jpg                 2560×1707
+    CincyOpen8.14.26BJ_249.jpg                        3095×2064
+
+**判据不是年份也不是印象，是 `source_url` 自己带不带 `-scaled`**：
+
+| `source_url` | 怎么办 |
+|---|---|
+| 以 `-scaled.jpg` 结尾 | **去掉那个后缀**才是原图（实测能到 5541×3694） |
+| 不带 | 它就是原图（上传时 ≤2560），猜一个 `-scaled` 是 404 |
+
+⚠️ 「2026 这一批只有 2000×1333」错在**只看了图库页**：图库页链的是 2000 那一版，
+而**媒体库里同一天有大量 2560 的 `-scaled`**（最近 300 条里 74 条），
+去掉后缀就是四五千像素的原图。这跟同一节上面那条「只扫 `img src` 会漏掉九成五」
+是同一个形状——**扫得太窄和真的没有长得一模一样**。
+
+⚠️ 尺寸决定要不要写 `_low_res_why`（`cover_photo_problem` 的地板是 1.00×）：
+
+    5541×3694 → 0.39×  ✅        2560×1707 → 0.84×  ✅
+    2000×1333 → 1.08×  ⚠️        1900×1267 → 1.14×  ⚠️
+
+也就是说**挑对文件就不用写豁免**：`CincinnatiOpen_<日期>_JM…` / `CincyOpen<日期>BJ_…`
+那两位摄影师的图有 `-scaled`（→ 原图四五千），而 `MIKE-BAKER` / `ROBERTA-BURNS`
+的当日图库那一批多半上传时就是 2000，封顶在那儿。
+
+⚠️ **就算是 2000×1333 也远好过抽帧**：那是相机原图，而抽帧是压缩转播流的
+1920×1080 再放大 1.33 倍，两个「1920」不是一回事。
 
 ⚠️ **日期按文件名的日期戳认，别按辑名的「Day N」认**——`day-5-best-of-photos`
 那一辑装的是 **`081526`**（资格赛也算进内部 Day 编号）。
@@ -5134,6 +5187,151 @@ fancybox，原图挂在 `<a href>` 上。真页面上量：裸文本扫到 **40 
 ⚠️ **多伦多那张不能拿来用**：四道闸门第一道是时间地点人物都要对上，
 拿别一站的图配这一场，正是本文件记过的「资料图」坑（同一个 Getty 编号挂在两个
 日期目录下）。所以那条片子**渲得出来但先不推**（`push.auto` 关掉），等官方出图再换。
+
+#### ⭐⭐ 2026-08-16 又扫出三条渠道，全收进 `tools/find_cover_photo.py`
+
+账号所有者：「**多找几个渠道获取高清大图**」。上面那两条（WTA `photo-resources`、
+赛事官网图库页）之外，实测又通了三条——**别再每次现搓，跑那个工具**：
+
+    python3 tools/find_cover_photo.py --player Tjen --event Cincinnati --day 6 \
+        --site cincinnatiopen.com --date 2026-08-16
+    python3 tools/find_cover_photo.py --getty 2288964672      # 这个编号是哪一场
+
+**① ⭐⭐ `GettyImages-<id>.jpg` 从「不能用」翻成「能用」。** 以前把它判死是因为
+「文件名什么都不说」，而其实两头都通：
+
+- **WTA 的 CDN 存的是无水印原图**，`?width=4000` 实测拿到 **4000×2666**
+- **Getty 自己的 `/detail/<id>` 页给出完整说明**——球员、赛事、轮次、场馆、日期，
+  四要素一次全齐
+
+⚠️ **看见 `GettyImages-*` 一律先查说明，别按「它挂在这场的页面上」就当成本场。**
+实测反例：`2288964672` 就挂在辛辛那提那条集锦的页面上，说明写的却是
+「National Bank Open, **August 08, 2026**, **Sobeys Stadium in Toronto**」——
+又一张资料图。同一批里 `2290118693`（Tauson–Stearns 辛辛那提 Day 5）和
+`2290359738`（Parry 辛辛那提 8/13）才是真的本站图。
+
+**② ⭐ 单条视频页比列表页多带图。** `/videos/<id>/<slug>` 的正文里除了封面还挂着
+别的图（谭雅妮那条集锦的页面上就多一张萨巴伦卡的 Getty）。扫图要扫**单条页**，
+不能只扫 `/videos/highlights` 那张列表。
+
+**③ ⭐ 赛事官网的 WordPress REST 媒体库**——比翻图库页早，能按日期过滤、
+直接给原图尺寸：
+
+    /wp-json/wp/v2/media?per_page=100&orderby=date&order=desc
+    /wp-json/wp/v2/media?after=2026-08-16T00:00:00
+    /?rest_route=/wp/v2/media          ← 等价入口
+
+⚠️⚠️ **必须带浏览器 UA。** 拿 `tennislive/0.1` 这类 UA 请求是 **403**，
+看起来像「这个站根本没开 REST 接口」——这一条当场骗过我一次。
+⚠️ 赛事图库的文件名**没有球员名**（`081526_DAY-EIGHT_MIKE-BAKER-112-of-229.jpg`），
+所以 `?search=<姓>` 在这儿恒空；它的用处是**按日期看当天的图上没上**。
+
+**④ ⭐ 「图库什么时候上线」是可以量的，别在当天下午反复扫。** 拿
+`posts?orderby=date` 读 `day-N-best-of-photos` 的 `date_gmt`，实测：
+
+    day-1  2026-08-12T00:00Z      day-4  2026-08-15T00:48Z
+    day-3  2026-08-14T01:56Z      day-5  2026-08-16T02:57Z
+
+也就是**当天那一辑在次日 UTC 00:00–03:00 之间上线**（当地 20:00–23:00）。
+比赛当天下午扫到 0 张是**结构性的**，不是这一天没有实拍。
+
+**⑤ 实测走不通的，别再试**（省得下一个人重探一遍）：
+
+| 路 | 结果 |
+|---|---|
+| Getty 自己的 comp 图 `media.gettyimages.com/id/…` | 脱离页面上下文一律 **400**（签名参数绑上下文）；而且 `w=gi` 是**带水印**的 |
+| Getty API `api.gettyimages.com` | **401**，要 key |
+| Reuters 图片站 | **401** |
+| `api.wtatennis.com` 的 `media` / `photos` / `content` / `players/<id>/media` | 全 **404** |
+| `wtatennis.com/galleries` | 404。`/photos` 有，但那是专题图集，不是当日比赛图 |
+| tennis.com 的比赛页 | 只有国旗和头像，没有比赛图 |
+| Flickr / Alamy / Imago / Zimbio | JS 渲染或带水印，取不到可用原图 |
+
+##### ⭐⭐ 2026-08-17：赛事图库里有**两批**图，「best-of」那一批基本不是比赛照
+
+上面第 ④ 条量出了「当天那一辑什么时候上线」，于是我把「等 `day-N-best-of-photos`」
+当成了「等这场球的实拍」——**打开看才发现那是两回事**。day-5 那一辑 38 张当日原图，
+按文件名前缀正好分成两批，**内容完全不同**：
+
+| 前缀 | 是什么 | 抽样看到的 |
+|---|---|---|
+| `081N26_DAY-X_MIKE-BAKER-<i>-of-<n>` | **场外氛围**（这一辑的主体） | DJ 打碟、球员签名、厨师做菜、访谈台、小孩举球、球场远景、纪念品店、赞助商摊位——8 张里只有 1 张在场上，还是个认不出人的看台宽景 |
+| **`CincinnatiOpen_2026MMDD_JM<数字>_<XX>.jpg`** | **真正的比赛动作照** | 6 张全是击球中的近景／中景，**2000×1334**，而且**不只拍明星**——外场的普通球员也在里面 |
+
+⚠️ **所以判据不是「那一辑上线了没有」，是「媒体库里有没有当天日期的 `CincinnatiOpen_<YYYYMMDD>_` 前缀」。**
+按「best-of 上线了」去等，等到的是一堆厨师和纪念品店，而**那和「今天没拍到她」
+长得一模一样**——又一次「非空 ≠ 对题」，只不过这次非空的是一整个图库。
+
+⚠️ 那一批**没有 `-scaled`，2000×1334 就是原图**（上面「`-scaled` 是 2560 的封顶版」
+那条的反面已经写过）。铺 1080×1440 是 **1.08×**，过不了 `cover_photo_problem`
+那道 1.00× 地板，要写一句 `cover.portrait._low_res_why`——**但它仍然远好过抽帧**：
+2000px 是相机原图，抽帧是压缩转播流的 1920×1080 再放大 1.33 倍。
+
+##### ⭐⭐⭐ 2026-08-17 第四条渠道：**当地报纸的每日图集**，原图 4813×3209
+
+账号所有者：「**多尝试不同的方案啊 / 403 的你要多想想办法啊**」。照做挖出来的，
+**分辨率比前三条都高一档**：辛辛那提这一站是 **The Enquirer**（USA Today／
+Gannett）派自己的摄影师拍，每个比赛日出一辑，一辑 54~95 张。
+
+    索引  https://www.cincinnati.com/sitemap/2026/august/<DD>/
+    一辑  /picture-gallery/sports/2026/08/<DD>/photos-cincinnati-open-<slug>/<id>/
+    图    那一页 `<script type=application/ld+json>` 里一串 ImageObject，
+          每条带 url ＋ **完整四要素说明** ＋ copyrightHolder
+
+⚠️⚠️ **原图要换域名**：说明里给的是 `https://www.cincinnati.com/gcdn/authoring/…`，
+而那个地址**恒 406**（`usatoday.com/gcdn/…` 也是）。换成
+**`https://www.gannett-cdn.com/authoring/…`** 就是无水印原图——实测 **4813×3209**，
+铺 1080×1440 只要 **0.45×**，连 `_low_res_why` 都不用写。请求要带 `Accept: image/*`。
+
+⚠️ **它的说明比赛事图库的文件名还硬**：「Alex de Minaur, of Australia, returns to
+Quentin Halys, of France, at the Cincinnati Open at the Lindner Family Tennis
+Center in Mason, Ohio, on Saturday, August 15, 2026」——球员、对手、赛事、场馆、
+日期一句话全齐。版权是报社的（`Albert Cesare/The Enquirer`），属于四类源里的
+第 ③ 档，授权照实记进 credits。
+
+⚠️ **有这条渠道不等于有这个人**：8/14 那辑 54 张、8/15 那辑 95 张，含 `Wang` 的
+都是 0 张——它和赛事图库一样偏主球场。
+
+###### ⭐⭐ 而挡在它前面的那个 403，真因不是 UA，是**发请求的库**
+
+`cincinnati.com` 用 curl 是 200、用 `tools/find_cover_photo.py` 恒 403。
+换 Mac／Windows UA、换 `Accept`、加 `Accept-Language`——**五种组合全是 403**，
+看起来就是「这个站不让爬」。真因是：
+
+> **`urllib.request.Request` 会把头名规范成 `User-agent`（小写 a）**，
+> 而浏览器和 `requests` 发的是 `User-Agent`。Gannett 那道 WAF 按这个指纹判机器人。
+
+同一个 URL、同一份头，**urllib 恒 403、requests 恒 200**。
+
+⚠️ 所以「403 先换 UA」那条要再加一层：**换完 UA 还 403，就换一个 HTTP 客户端**
+（urllib ↔ requests ↔ curl）。这跟本文件里「`add_repo` 之前不要 curl 预检」
+「WP REST 必须带浏览器 UA」是同一族——**「这条路不通」和「我敲门的姿势不对」
+长得一模一样**，而这次连姿势都不在头里，在库里。
+
+⚠️ 顺带一条边界：**沙箱里的 Chromium 过不了这个代理**（`--proxy-server` 和
+playwright 的 `proxy=` 都试过，一律 `ERR_CONNECTION_RESET`，连自家能 curl 通的站
+都打不开）。要真浏览器只能上 runner——`probe-blocked.yml` 的 `mode=browser`
+本来就是干这个的，`--url` 随便给。
+
+##### ⚠️ 而这个工具本身有两个查询词的坑，两次都吐一个**假的空**／**假的中**
+
+2026-08-17 做 `wangxiyu-fernandez` 时两个都踩了，一次判错一个方向：
+
+**① `--event` 比的是赛事名，传 WTA 的数字 id 恒空。** 我传的是 `--event 1017`
+（那是接口里的赛事 id），而它拿去比的是文件名和 Getty 说明——里面写的是
+`Cincinnati_Open_2026` / `Cincinnati Open`。**一张都匹配不上，不报错**，
+打出来是那句「没有对得上的。⚠️ 这是『还没发』不是『没有』」——
+**和真的还没发一模一样**，我据此判了两条片子「今天拿不到图」。
+换成 `--event Cincinnati` 立刻出图。现在传数字**当场报错**并给出正确写法。
+又一次「零命中先怀疑自己的查询词」。
+
+**② `--player Wang` 会中一个**同姓不同人**的。** 换对之后唯一命中的是
+`Xinyu_Wang_-_Cincinnati_Open_2026_-_Day_6-DSC_1213.jpg`——那是**王欣瑜**，
+而我要的是**王曦雨**。同一站同一天两个中国选手都姓 Wang（WTA 接口里两条
+`ResultString` 都写作 `X. Wang`，flashscore 才分成 `Wang Xin.` / `Wang Xiy.`）。
+**「非空 ≠ 对题」在这儿是会直接把错的人印上封面的**：四道闸门第一道（人物）
+过不了，而分辨率、授权、日期全对得上。⚠️ **姓能撞的时候，`--player` 要用
+文件名里的全名写法**（`Xiyu_Wang` / `Xinyu_Wang`），别只给姓。
 
 ### ⚠️ 2026-08-16：用 Tennis TV 的源片，**片尾和台标都要剪掉**
 
