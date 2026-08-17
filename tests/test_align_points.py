@@ -126,6 +126,20 @@ def test_align关键分定位到视频秒(ap):
     assert aligned[0]["t"] == [10.0, 12.5], "两个命中的读都要保留（慢放/回放会重复出现）"
 
 
+def test_align时间码类型不一致也归一化(ap):
+    """MiniMax 输出的 t 有的 float 有的 str，align 要统一归一化，别把 str 传给
+    下游做减法（TypeError: str - float）。读不出数字的格子跳过。"""
+    states = ap.point_states(_break_sequence())  # 第 2 分破发点 40-0
+    reads = [
+        {"t": "10.5", "score": "0 0 40 0"},    # str 时间码
+        {"t": 12.0, "score": "0 0 40 0"},      # float 时间码
+        {"t": "读不清", "score": "0 0 40 0"},   # 读不出数字，跳过
+    ]
+    aligned = ap.align(reads, states)
+    assert aligned[0]["t"] == [10.5, 12.0], "str 和 float 都归一化成 float，读不清的跳过"
+    assert all(isinstance(t, float) for t in aligned[0]["t"])
+
+
 def test_align无关键分时返回空(ap):
     """一场没有破发/盘点/赛点的比赛（两边一路保发到 1-0），align 返回空。"""
     states = ap.point_states(_two_game_set())
