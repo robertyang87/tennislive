@@ -33,3 +33,28 @@
     `{"image": "assets/reel/tirante-cincinnati-2026-r3.jpg", ...}`，**重渲整条片子**
     （成片开头那 1.2 秒就是海报本身，只跑 `mode=cover` 换出来的海报和成片里那一屏会对不上），
     然后照常合并 → `mode=push` ＋ `push=true`。
+
+- **`cirstea-kalinskaya`**（辛辛那提 WTA1000 第三轮，2026-08-17，科斯蒂亚 6-7(4) 6-1 5-0 Ret. 胜卡林斯卡娅，因伤退赛）
+  - 账号所有者直接给出 YouTube 链接授权制作（`_match._match_day_why` 里记了这条例外）
+  - **片子还没渲染**——`cover.portrait.image` 一直是字面量 `"PENDING"`，`validate_spec`
+    在 `cover_photo_problem` 那道闸直接拦下，连下源片都没走到（和 `tirante-landaluce`
+    不同：那条已经渲完，这条连 render 都没跑过，`probe.json` 是唯一落地的产物）
+  - probe 已经跑过：`output/2026-08-18/reel/cirstea-kalinskaya/`（缩略图墙、逐分/记分板
+    对照表、captions 全在），spec 的 segments／旁白已经写完并跑过 `--check-narration`
+    真实语音校验（12 段全部装得下，无哑场），小红书正文 651 字也写好了——**唯一缺的
+    就是这一格**
+  - 四类源 2026-08-18 05:31Z 又查了一遍，**这一场一张都没有**：
+    - 赛事官网 WordPress 媒体库：8/17 只上了 4 张 `CincyOpen8.17.26BJ_{13,103,159,187}`，
+      **四张全是科博利**（和 `tirante-landaluce` 那条查到的是同一批）
+    - WTA `photo-resources`（Match Reaction 稿头图／集锦视频页头图）：`sweep_wta` 查
+      "Cirstea"／"Kalinskaya" 都是空，这场还没有对应的赛后稿
+    - AP 通讯社：命中的三张全是资料图（2026 罗马、2026 马德里、2025 美网），没有一张
+      是这一站；Kalinskaya 零命中
+    - The Enquirer：8/17 那一辑没有这两个人（和 `tirante-landaluce` 记录的 28 张核对一致）
+  - **判据是「还没发」**：这场因雨延误跨了近 5 小时（`MatchTimeStamp` 到 `LastUpdated`
+    相差 4:51:54），素材大概率还在摄影师手里整理，和 `tirante-landaluce` 是同一批
+    「还没上全」的批次
+  - **接回来怎么做**：把两个文件 `git mv` 回 `specs/reels/`，把 `cover.portrait.image`
+    换成真实图片路径（`fit`/`focus`/`focus_y`/`zoom` 按实际图片重新量，当前写的
+    `focus_y: 0.4` 只是占位猜测），跑一次完整 `mode=render`（这条从来没渲过，不是
+    重渲），`check_reel_landed` 0 项不合格后合并 → `mode=push` ＋ `push=true`。
