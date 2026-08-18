@@ -251,7 +251,16 @@ jobs:
             return 1
           }
           apt_retry apt-get update -qq
-          apt_retry apt-get install -y -qq ffmpeg
+          # ⚠️ **`--no-install-recommends` 不是洁癖，是这一步的耗时本身。**
+          # 2026-08-18 `apt-get install ... ffmpeg` 连着两次吃满 150 秒被杀
+          # （ci run 32088524320：01:34:52 和 01:37:33 各报一次没跑完；同一趟的
+          # `apt-get update` 一句警告都没有——**慢的只有 install**）。ffmpeg 的
+          # recommends 拖着一整串 VA-API 驱动，而 runner 上根本没有硬件解码可用；
+          # `.claude/hooks/session-start.sh` 早就是这么装的，只是工作流这半边没跟上。
+          # `Acquire::Retries=3` 让 apt 自己在一次尝试里换一次镜像，
+          # 而不是挂在一个不响应的 host 上等我们的 `timeout` 来杀。
+          apt_retry apt-get install -y -qq --no-install-recommends \
+            -o Acquire::Retries=3 ffmpeg
 
       # ⚠️ **`cover` 也要**：封面走 HTML 渲染（和知识帖同一套字），少了中文字体
       # 出来的是豆腐块。加 cover 档那次漏了这三步，run 155 就是这么红的——
@@ -1023,7 +1032,12 @@ jobs:
       - name: probe 失败摘 state（自愈）
         if: failure() && github.event.inputs.mode == 'probe'
         run: |
-          SLUG="${{ github.event.inputs.slug }}"
+          # ⚠️ `SLUG=…` 只是个 shell 变量，**不进子进程的环境**——底下那段 python 里
+          # `os.environ["SLUG"]` 会 KeyError。它挂在 `failure()` 上，平时根本走不到，
+          # 所以从写下来那天起一直没出声；2026-08-18 run 32086089179 第一次真走到
+          # （probe 死在装 ffmpeg）就炸了，**自愈那一步自己也失败了**。
+          # 要么 export、要么走 `env:`——这里用 export。
+          export SLUG="${{ github.event.inputs.slug }}"
           python - <<'PY'
           import json, pathlib, os
           p = pathlib.Path("data/orchestration_state.json")
