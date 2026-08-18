@@ -828,6 +828,10 @@ def test_顶栏赢家的名字要高亮不是输家():
     **重用 `_MARK_COLOUR`，不新开一支颜色**：那正是顶栏竖条 `▍` 和
     `highlight_en()` 高亮关键短语用的同一支品牌绿——「一屏（这条片子从头
     到尾算一屏）只留一个强调色」，见 `highlight_en` 的 docstring。
+
+    ⚠️ 这条只管**名字**。比分本身按盘上色的判据在
+    `test_顶栏比分按盘上色赢的那盘才绿`——两件事分开测，别在一条测试里
+    既卡名字又卡比分，改一头容易误伤另一头。
     """
     from tools.build_interview_clip import _MARK_COLOUR
 
@@ -839,17 +843,69 @@ def test_顶栏赢家的名字要高亮不是输家():
     assert _MARK_COLOUR not in by_text["乙 · 赛后场上采访"], (
         "输家「乙」不该也被高亮——一屏只留一个强调色，两个都染色等于都没染")
 
-    # 落到真正渲染的 ASS 文本里也要能看见：赢家那一段（比分之前）挂着
-    # `_MARK_COLOUR`，比分和输家那两段（比分之后）不该再带它——`\r` 复位
-    # 干净，颜色没有粘连过去。
+
+def test_顶栏比分按盘上色赢的那盘才绿():
+    """账号所有者 2026-08-18，看完莱巴金娜那条截图之后两句话定的：「顶栏第二行
+    的比分，要把赢的一盘的颜色跟赢的人的颜色、字体改成一样的」，紧跟着又补
+    一句「赢的一盘的比分变绿」——**按盘判，不是给整条比分统一换个颜色**。
+
+    `push.score` 的记法是从赢家视角连续写下来的（每一盘前面那个数永远是
+    赢家自己的局数），所以判据很直接：这一盘里前一个数比后一个数大，
+    赢家就拿下了这一盘，那一段才带 `_MARK_COLOUR`；反过来（赢家丢了这一盘）
+    留默认色，跟输家的名字一样。
+
+    两个场景都要覆盖，因为直落两盘时「按盘上色」和「整条统一上色」长得
+    一模一样，只有丢过一盘的比赛才能证明这条判据真的是按盘算的，不是
+    看见有 `winner` 就把整条比分刷绿。
+    """
+    from tools.build_interview_clip import _MARK_COLOUR
+
+    # 场景一：直落两盘，两盘都是赢家拿下的，两段都该绿。
+    straight = header_runs({"slug": "t", "event": "某站 1/4 决赛", "winner": "甲",
+                            "interview_kind": "赛后场上采访",
+                            "push": {"matchup": "甲 vs 乙", "score": "6-3 6-4"}})[1]
+    score_runs = [(text.strip(), tags) for text, kind, tags, _ in straight if kind == "num"]
+    assert [t for t, _ in score_runs] == ["6-3", "6-4"]
+    assert all(_MARK_COLOUR in tags for _, tags in score_runs), (
+        f"直落两盘，两段比分都该带 {_MARK_COLOUR}：{score_runs}")
+
+    # 场景二：三盘赛丢了中间那盘（真实案例：亚历山德罗娃 7-6(3) 4-6 6-4 胜
+    # 萨巴伦卡）——中间 4-6 是赢家「甲」输掉的那一盘，不该染色；两头是他
+    # 赢下的，要染色。抢七带的 (3) 不该干扰这个判断。
+    dropped = header_runs({"slug": "t", "event": "某站 1/4 决赛", "winner": "甲",
+                           "interview_kind": "赛后场上采访",
+                           "push": {"matchup": "甲 vs 乙", "score": "7-6(3) 4-6 6-4"}})[1]
+    score_runs2 = [(text.strip(), tags) for text, kind, tags, _ in dropped if kind == "num"]
+    assert [t for t, _ in score_runs2] == ["7-6(3)", "4-6", "6-4"]
+    won, lost, won2 = score_runs2
+    assert _MARK_COLOUR in won[1], f"「7-6(3)」是赢家拿下的这一盘，该带颜色：{won}"
+    assert _MARK_COLOUR not in lost[1], f"「4-6」是赢家丢掉的这一盘，不该染色：{lost}"
+    assert _MARK_COLOUR in won2[1], f"「6-4」是赢家拿下的这一盘，该带颜色：{won2}"
+
+    # 落到真正渲染的 ASS 文本里同样要能看见——`\r` 复位干净，颜色没有在
+    # 三段比分之间粘连（比如「7-6(3)」的绿没有漏到「4-6」头上）。
+    # ⚠️ 只能抓「4-6」**自己那个** `{...}` 标签块，不能整段切片：切到下一段
+    # 「6-4」文本之前会把「6-4」自己的标签也捎带进来（那正是这条测试的
+    # 上一版栽过的坑——切片边界和标签边界对不齐，`{...}6-4` 的 `{...}`
+    # 排在「6-4」文本之前，却被算进了「4-6」那一段的检查范围）。
     _, line_b = header_ass({"slug": "t", "event": "某站 1/4 决赛", "winner": "甲",
                             "interview_kind": "赛后场上采访",
-                            "push": {"matchup": "甲 vs 乙", "score": "6-3 6-4"}})
-    score_idx = line_b.index("6-3")
-    assert _MARK_COLOUR in line_b[:score_idx], (
-        f"赢家那一段（比分之前）应该带 {_MARK_COLOUR}：{line_b[:score_idx]}")
-    assert _MARK_COLOUR not in line_b[score_idx:], (
-        f"比分之后（比分本身、输家那一段）不该再出现 {_MARK_COLOUR}：{line_b[score_idx:]}")
+                            "push": {"matchup": "甲 vs 乙", "score": "7-6(3) 4-6 6-4"}})
+    tag_46 = re.search(r"(\{[^}]*\})4-6", line_b).group(1)
+    assert _MARK_COLOUR not in tag_46, (
+        f"「4-6」自己的标签不该带颜色：{tag_46!r}")
+
+
+def test_顶栏比分解不出胜负要报错():
+    """`_SET_SCORE_RE` 只认「数字-数字」（抢七带 `(数字)` 也认）。真喂进一个
+    它解不出来的写法（比如带 `ret.` 的退赛记法），要报错而不是悄悄留白——
+    留白看起来和「这一盘赢家真的输了」一模一样，是两件不同的事却给出同一个
+    画面，比报错更容易骗过人。
+    """
+    with pytest.raises(SystemExit, match="解不出胜负"):
+        header_runs({"slug": "t", "event": "某站 1/4 决赛", "winner": "甲",
+                    "interview_kind": "赛后场上采访",
+                    "push": {"matchup": "甲 vs 乙", "score": "6-3 ret."}})
 
 
 def test_并成一个词的ASR错要在切行之前修(tmp_path):
