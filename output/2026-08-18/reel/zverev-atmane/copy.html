@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>8.18 赛场之上 | 二十六局只有两次破发</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>二十六局只有两次破发，两个抢七打完，他只多赢六分
+
+辛辛那提男单第三轮，一号种子、世界第三的兹维列夫 7-6(4) 7-6(6) 赢下世界第四十五的阿特马内，两小时零九分。
+
+整场球只有两次破发，而且都在第一盘的前五局。
+
+阿特马内一上来就把兹维列夫的第一个发球局拿下，连赢三局，零比三。兹维列夫在第五局回破，三个破发点上兑现了第二个。
+
+然后这场球就再也没有人丢过发球局——首盘剩下的八局、次盘全部十二局，二十三个发球局，一个没丢。整个第二盘，两个人加起来只出现过一个破发点，还是兹维列夫在第一局面对的，救掉了。
+
+于是两盘都交给抢七。
+
+第一个抢七七比四，兹维列夫在六比四拿到两个盘点，第一个就兑现。第二个抢七要长得多：他先拿到赛点，阿特马内在他的发球分上把它救了回去，追成六平，最后八比六才结束。全场唯一一个被救掉的赛点，就是这一个。
+
+技术统计几乎贴在一起。总分一百五十二，七十九比七十三。制胜分二十七比二十二，非受迫失误二十五比十六——两项都是兹维列夫更多。一发得分率 85% 比 76%，可二发反过来，阿特马内 71%、兹维列夫 60%。
+
+真正拉开的只有那一个发球局。
+
+阿特马内不是第一次在这片场地做主角。去年八月他世界第一百三十六，在辛辛那提连过弗里茨和鲁内两个前十，一路打进半决赛（出处：ATP 官网球员页）。
+
+今年他回来，把世界第三逼进了两个抢七，然后输掉了其中的一分。
+
+一场球二十六局，最后由一局决定。你觉得这算输得冤吗？
+
+#网球时差 #兹维列夫 #阿特马内 #辛辛那提大师赛 #赛场之上</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>你觉得这算输得冤吗？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
