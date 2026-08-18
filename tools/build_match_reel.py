@@ -4443,6 +4443,13 @@ LEGACY_SOFT_COVERS = frozenset({
     "gauff-samsonova", "halys-deminaur", "jodar-shapovalov", "sabalenka-gibson",
     "svitolina-valentova", "trungelliti-medvedev", "tsitsipas-auger-aliassime",
     "wangxiyu-fernandez", "zhang-day", "zhang-li", "zverev-norrie",
+    # ⚠️ **2026-08-18 显式破例，账号所有者当面批准**：`anisimova-eala` 四类源
+    # 都还没发这场比赛的官方实拍（`cover.portrait._frame_why` 里记着逐条查证），
+    # 账号所有者要求「先渲染伊埃拉的」——被这道闸拦下之后当场问过「这算不算
+    # 破例」，回答是「破例，先用抽帧渲」。这不是「已发不重渲」的存量，是**唯一
+    # 一次主动授权的例外**：官方图一上线，`cover.portrait` 要换成真图并重渲，
+    # 这条不能留在这张表里当成永久豁免——见 `specs/reels/pending/README.md`。
+    "anisimova-eala",
 })
 
 
