@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>8.18 赛场之上 | 菲斯六比一开局仍打满三盘</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>六比一拿下首盘，他还是被拖进了决胜盘
+
+辛辛那提男单第三轮，二十一号种子、世界第二十四的菲斯 6-1 6-7(7) 6-3 赢下九号种子、世界第十二的莱赫奇卡，用时 1 小时 56 分。
+
+先看第一盘。
+
+十六分钟就打完了。莱赫奇卡三十七分里只赢下十一分，二发七分只拿到一分；菲斯 5-1 领先时转播打出三个盘点，第一个就收掉了。六比一。
+
+如果这场球照着这个势头走下去，它本该在一小时之内结束。
+
+第二盘换了个样子。
+
+十二局打下来，全场只出现过一个破发点。两个人的发球局一局没丢，总分四十一比四十一，谁也压不住谁——二发上莱赫奇卡拿下十四分里的十分，菲斯拿下十一分里的九分。
+
+抢七里菲斯拿到了一个赛点。莱赫奇卡救了下来，九比七扳回一盘。光这一盘，打了整整一个小时。
+
+决胜盘是第三种比赛。两边的发球同时松动：九局里冒出九个破发点，一共四次破发。莱赫奇卡一上来就被破，零比三；追到三比五之后，轮到菲斯发球收官。
+
+四十比十五，两个赛点。第一个被救掉，第二个收掉——转播在画面上把它数成了第三个赛点。也就是说，菲斯一共用掉三个赛点才赢下这场球，前两个都被莱赫奇卡救了回去。
+
+技术统计并不对称：制胜分二十五比十九，非受迫失误三十五比五十。一百七十四分，菲斯赢下九十七分。他赢的不是更漂亮，是失误更少。
+
+这已经是两个人今年第四次碰面：二月多哈、三月迈阿密、四月马德里，然后是这一场。上一次分量最重——三月的迈阿密半决赛，莱赫奇卡 6-2 6-2 直落两盘赢下，拿到自己生涯第一个大师赛决赛资格（出处：ATP 官网赛报）。
+
+六次交手，现在是四比二，菲斯领先。
+
+下一回，还会这么难吗？
+
+#网球时差 #菲斯 #莱赫奇卡 #辛辛那提大师赛 #赛场之上</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>下一回还这么难吗？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
