@@ -1,0 +1,243 @@
+{
+  "slug": "noskova-tauson",
+  "source_url": "https://www.youtube.com/watch?v=oEXAA3TvUbs",
+  "_source": "WTA 官方 YouTube 频道单场集锦（账号所有者直接给出这条链接并要求做）。308.71 秒、1920×1080、25 fps——接近 WTA 纯集锦定长 310 秒，打开看过：300.6 秒起是 WTA 台标甩入加订阅卡，全片没有场上采访，是一条纯比赛集锦，所有窗口收在 298.6 秒以内。",
+  "_match": {
+    "flashscore_id": "rJwGzMJ6",
+    "wta_match_id": "LS024",
+    "wta_event_id": "1017",
+    "_why": "两个源都核过：flashscore `rJwGzMJ6`（df_st_1 统计、df_sui_1 分盘用时、df_mh_1 逐局逐分、df_hh_1 交手史），WTA 官方 `LS024`（`[6]L. Noskova d [27]C. Tauson 7-6(3),6-2`、`RoundID 3`、`MatchTimeTotal 01:38:05`、`ScoreTbSet1 3`）。轮次口径和同一天已发的 `shnaider-chwalinska`（同为 `RoundID 3`）一致，写「第三轮」。",
+    "_match_day_why": "账号所有者直接给出这条 YouTube 链接并说「这个可以做」——这是「上一个比赛日的不要做了」那条规矩的显式授权例外（和 `shnaider-chwalinska`／`cirstea-kalinskaya` 是同一个形状）。开球 2026-08-17 22:28:49Z，这场当时只在 flashscore 的 `f_2_-1` 里，`f_2_0` 已经找不到（实测过）。"
+  },
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "诺斯科娃",
+    "hook": "三比五落后\n她救下了盘点",
+    "_hook_why": "讲**过程**，不讲身份——排名、种子、轮次比分海报上都印着了。两行分别 6 字和 7 字，solo 上限 10。\n\n两个数都出自逐分数据（flashscore `df_mh_1`）：第一盘第八局结束局分 3-5（陶森领先，只差一局拿下这一盘）；第十局陶森自己发球、局分 4-5，画面里挂着 `BREAK POINT #2`（|B2| 标记），转播解说原话 `Moskava saving a set point in the opener`——那正是她救下的这一盘唯一的盘点。\n\n⚠️ **有意不写最终比分**：7-6(3) 6-2 海报下面赛果行本来就印着，钩子再写一遍是白占字。",
+    "_subject_view_why": "封面放诺斯科娃：这一场的赢家，世界第八、六号种子，本身也是账号所有者点名的热点名单之外的强排名球员——热度闸②（世界前 20）过得干净利落。",
+    "_heat_why": "诺斯科娃当期世界第 8（5016 分，WTA 榜单日期 2026-08-10），本站 6 号种子——过热度闸②（世界前 20）。⚠️ 更硬的一条：她是**上个月刚拿下温网冠军的新科大满贯得主**（2026-07-11 决赛胜穆霍娃），本身就是本文件登记过的热点名单式球员。",
+    "topic": "WTA1000 辛辛那提 · 女单第三轮",
+    "portrait": {
+      "image": "PENDING",
+      "fit": "cover",
+      "focus": 0.5,
+      "focus_y": 0.35,
+      "zoom": 1.0,
+      "_photo_why": "⚠️⚠️ **封面大图待定，尚未落地——按 2026-08-17 定的硬闸，这是前置条件，不能用抽帧顶替。** 四类官方渠道都查过一遍（2026-08-18 05:4x Z）：\n\n① **WTA `photo-resources`**：`sweep_wta(\"Noskova\")` 命中的唯一一张是 `Linda_Noskova_-_National_Bank_Open_2026_-_Day_1-DSC_4072.jpg`——**这是多伦多站 Day 1 的资料图，不是辛辛那提，不是这一场**（时间地点都不对，四道闸门第一道就过不了，本文件反复记过的「资料图」坑）。`sweep_wta(\"Tauson\")` 空\n② **赛事官网 WordPress 媒体库**：`search=Noskova`／`search=Tauson` 只命中各自 **2024 年** 的标准头像图（492×656），不是这场实拍；按日期 `2026-08-17` 扫的全量媒体库里也没有这两个人的名字（和 `cirstea-kalinskaya`／`tirante-landaluce` 撞的是同一批「还没上线」）\n③ **AP 通讯社**：两个人都零命中\n④ **The Enquirer**（Gannett CDN）：8/17 那一辑没有这两个人\n\n**结论：这是「还没发」，不是「没有」**——三条同一天（08-17）的辛辛那提片子（`tirante-landaluce`／`cirstea-kalinskaya`／这一条）都撞在同一个媒体库更新窗口上。片子其余部分（事实核实、分段、旁白）已经全部就绪，等图落地直接补上重渲即可。"
+    },
+    "scrim": "clear",
+    "matchup": [
+      {
+        "name": "诺斯科娃",
+        "name_en": "Linda Noskova",
+        "country": "CZE",
+        "rank": 8
+      },
+      {
+        "name": "陶森",
+        "name_en": "Clara Tauson",
+        "country": "DEN",
+        "rank": 42
+      }
+    ],
+    "_name_why": "两个中文名都走 `player_zh()`：`player_zh(\"Linda Noskova\")` → 诺斯科娃、`player_zh(\"Clara Tauson\")` → 陶森，实调过。",
+    "winner": "诺斯科娃",
+    "result": "7-6(3) 6-2",
+    "scoreboard": {
+      "court": "Lindner Family Tennis Center",
+      "_court_why": "⚠️ **球场名没查实，印场馆名**。WTA 官方 `matches` 给的是 `CourtID 4`，这一站的 `CourtID` 字段早就被证伪过（同站不同 spec 上互相打架，见 `cirstea-bartunkova`／`noskova-boulter` 的 `_court_why`），`4` 没有任何一条已发 spec 标定过。源片里逐格找过，挡板上只有赞助商 logo，没有球场名；转播解说全程没提球场名。按同站惯例印 `Lindner Family Tennis Center`。",
+      "duration_source": {
+        "provider": "wta",
+        "url": "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches?page=0&pageSize=400",
+        "match_id": "LS024",
+        "field": "MatchTimeTotal",
+        "source_page": "https://www.wtatennis.com/tournament/1017/cincinnati/2026/scores/LS024"
+      },
+      "_duration_why": "WTA 官方 `MatchTimeTotal 01:38:05`；分盘 `settime` 01:06:24 + 00:31:38 = 1:38:02，和总计差 3 秒——三个数互相印证。flashscore `df_sui_1` 报 1:07 + 0:32 = 1:39，同一个量级，没有偏离规律。"
+    }
+  },
+  "editorial": {
+    "mode": "match_review",
+    "question": "陶森三比五领先、只差一局就能拿下第一盘的时候，诺斯科娃是怎么把这一盘救回来的？",
+    "thesis": "诺斯科娃开局不错，第一局就顶住拉锯保发，一比零。可陶森随后连追带赶，一路反超到三比五——只差一局，第一盘就是她的。诺斯科娃自己发球，从多次占先的拉锯里把这一局拽回来，四比五。真正的分水岭在第十局：陶森发球，只要她守住，这一盘直接结束——诺斯科娃连续救下这一局所有的破发点，最后一个恰好也是这一盘唯一的盘点，反而自己完成了破发，扳平五比五。她趁势再拿一局，六比五，陶森保发追平进抢七，诺斯科娃抢七一上来就拉开身位，七比三，一小时零六分钟，第一盘到手。第二盘她延续着这股势头，两次破发，六比二，三十二分钟收官。",
+    "beats": [
+      "前段：诺斯科娃开局保发，随后陶森连追带赶反超到三比五领先，只差一局拿下第一盘",
+      "中段：诺斯科娃四比五守住发球局；第十局陶森手握盘点，被诺斯科娃连续救下并完成破发，扳平五比五",
+      "结局：六比五、抢七七比三拿下第一盘，第二盘两次破发六比二收官"
+    ],
+    "human_context": {
+      "angle": "这是她拿下人生首个大满贯之后，辛辛那提这一站打进的第三轮——⚠️ **温网夺冠那段背景已经在 `noskova-mcnally` 铺开讲过（决赛胜穆霍娃、二十一岁、十五年来最年轻温网冠军），`noskova-boulter` 也提过一句，这一条不再重复**，只用来说明这场逆转的分量：新科大满贯冠军在压力局面下的韧性。",
+      "facts": [
+        "诺斯科娃 2004-11-17 出生，本场时 21 岁；陶森 2002-12-21 出生，23 岁（WTA 官方 players 接口，id 329668 / 327793）",
+        "当期世界排名：诺斯科娃第 8（5016 分）、陶森第 42（1184 分），榜单日期 2026-08-10（players/ranked，metric=SINGLES）",
+        "种子：诺斯科娃 6 号、陶森 27 号（WTA 官方 SeedA=6、SeedB=27，记分条整场烧着 [6] 和 [27]）。⚠️ 种子号不是排名，两个数都对，混着说就成了假话",
+        "轮次第三轮：WTA 官方 RoundID=3，与同一天同一站的 shnaider-chwalinska／cirstea-kalinskaya 同一轮次口径。诺斯科娃第二轮 6-3 6-3 胜布尔特（`noskova-boulter`，已发）",
+        "用时 MatchTimeTotal 01:38:05；分盘 settime 01:06:24 / 00:31:38，相加 1:38:02，自洽（差 3 秒）",
+        "第一盘逐局走势（flashscore df_mh_1）：G1 诺斯科娃保发 1-0；G2 陶森保发 1-1；G3 诺斯科娃发球被破 1-2；G4 陶森保发 1-3；G5 诺斯科娃保发 2-3；G6 陶森保发 2-4；G7 诺斯科娃保发 3-4；G8 陶森保发 3-5——只差一局拿下第一盘；G9 诺斯科娃自己发球，从多次占先里守住 4-5；G10 陶森发球，`|B1|` 标记多次、一次 `|B2|`（盘点），诺斯科娃连续救下并完成破发，5-5；G11 诺斯科娃保发 6-5；G12 陶森保发追平 6-6，进抢七",
+        "抢七 7-3（WTA 官方 ScoreTbSet1=3）：诺斯科娃前六分拿下五分，一路领先到底",
+        "转播解说 44.32 秒原话：`Mosa back on serve at one game`（自动字幕把 Noskova 转录成 Mosa/Moskova/Moska 等，人名识别错误，不影响事实）；226.80-241.12 秒原话：`Linda Noska bearing all the hallmarks of the champion that she is, the Grand Slam champion that she is nowadays...Took her a while to get going in that one. She had to come from a breakdown. She had to save a set point`——转播明确点出「救下盘点」这一处",
+        "转播解说 283.12-296.64 秒原话：`All smiles and embraces at the end. Moskava saving a set point in the opener...but coming through in fine style in the end to keep herself on course for a first 10,000 title to go with the Wimbledon title that she won last month`——「上个月的温网冠军」是转播原话，不是我们的断言；「冲击第一个 1000 冠军」是这一站还没打完时的展望，措辞不能写成既成事实",
+        "全场技术统计（WTA 官方 LS024/stats setnum 0，与 flashscore df_st_1 双核一致）：ACE 17:9、双误 10:5、破发点兑现 3/9 : 1/2、总得分 78:65（143 分中）",
+        "破发对应关系：诺斯科娃破发陶森 3 次（第一盘 G10、第二盘 G3、G7），陶森破发诺斯科娃 1 次（第一盘 G3）——与官方 breakptsconva=3 / breakptsconvb=1 逐项吻合",
+        "第二盘逐局走势：G1 陶森保发 0-1；G2 诺斯科娃保发 1-1；G3 陶森发球被破 2-1；G4 诺斯科娃保发 3-1；G5 陶森保发 3-2；G6 诺斯科娃保发 4-2；G7 陶森发球被破 5-2；G8 诺斯科娃保发 6-2",
+        "交手史 陶森 2-1 领先（本场之前）：2025-01-12 澳网首轮陶森 2-1 胜（5-7 6-3 6-4）、2025-02-20 迪拜 1/4 决赛陶森 2-0 胜（7-6 6-4）、本场诺斯科娃胜。两个源核过：flashscore df_hh_1 给出比分和日期，tennisexplorer 的 mutual 页独立给出总记录「1 - 2」（诺斯科娃视角）——本场之后总记录变成 2-2。⚠️ 这条只写进小红书正文，片子里不讲，避免和「新科大满贯冠军救盘点」这条主线抢戏"
+      ],
+      "sources": [
+        "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches?page=0&pageSize=400",
+        "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches/LS024/stats",
+        "https://api.wtatennis.com/tennis/players/ranked?page=0&pageSize=100&type=rankSingles&sort=asc&name=&metric=SINGLES",
+        "https://global.flashscore.ninja/2/x/feed/df_st_1_rJwGzMJ6",
+        "https://global.flashscore.ninja/2/x/feed/df_sui_1_rJwGzMJ6",
+        "https://global.flashscore.ninja/2/x/feed/df_mh_1_rJwGzMJ6",
+        "https://global.flashscore.ninja/2/x/feed/df_hh_1_rJwGzMJ6",
+        "https://www.tennisexplorer.com/mutual/noskova-linda/tauson-clara/",
+        "https://www.wtatennis.com/tournament/1017/cincinnati/2026/scores/LS024"
+      ],
+      "voice_label": "救下盘点"
+    }
+  },
+  "topbar": {
+    "line1": "WTA1000 辛辛那提 第三轮",
+    "line2": "诺斯科娃 7-6(3) 6-2 陶森"
+  },
+  "_no_repeat": "⚠️ **诺斯科娃这条线上已经发过两条**（`noskova-mcnally` 多伦多第二轮负麦克纳莉、`noskova-boulter` 辛辛那提第二轮胜布尔特），这一条要躲开它们铺开过的每一样：\n  · **温网夺冠细节**（`noskova-mcnally` 第 4 段整段铺开：决赛胜穆霍娃、二十一岁、十五年来最年轻温网冠军）——这一条**一个字不碰**，只在 `_facts` 里当角度的来路，片子里一句都不展开；\n  · **多伦多输给麦克纳莉那件事**——不用再提，与这一站无关；\n  · **「夺冠后第几场胜利」这类计数**（`noskova-boulter` 用过一次：「夺冠之后她只打过一场球，多伦多输给麦克纳莉」）——这一条不再用这个句式，落点换成这场比赛本身的转折（救盘点）。\n\n同一天同一站的兄弟片：`shnaider-chwalinska`（施奈德两盘用时对比）、`cirstea-kalinskaya`（科斯蒂亚连赢十一局＋对手退赛）——两条线的落点都不一样，不用额外避让。",
+  "stats": {
+    "tour": "wta",
+    "a": {
+      "headshot": "assets/players/headshots/wta-329668.jpg",
+      "aces": 17,
+      "df": 10,
+      "first_in": 46,
+      "first_won": 36,
+      "first_total": 70,
+      "second_total": 24,
+      "second_won": 9,
+      "bp_conv": 3,
+      "bp_chances": 9,
+      "pts_won": 78,
+      "pts_total": 143,
+      "winners": 48,
+      "ue": 25
+    },
+    "b": {
+      "headshot": "assets/players/headshots/wta-327793.jpg",
+      "aces": 9,
+      "df": 5,
+      "first_in": 37,
+      "first_won": 26,
+      "first_total": 73,
+      "second_total": 36,
+      "second_won": 14,
+      "bp_conv": 1,
+      "bp_chances": 2,
+      "pts_won": 65,
+      "pts_total": 143,
+      "winners": 20,
+      "ue": 18
+    },
+    "_source": "十二项来自 flashscore `df_st_1_rJwGzMJ6` 的 `Match` 那一档（`match_stat_hooks.py rJwGzMJ6 --stats-block` 跑出的原始输出），并且 aces/df/bp_conv/bp_chances/pts_won/first_total 六项和 WTA 官方 `LS024/stats` 的 setnum 0 逐项对过（acesa=17/acesb=9、dblflta=10/dblfltb=5、breakptsconva=3/breakptsconvb=1、breakptsplayeda=9/breakptsplayedb=2、totptswona=78/totptswonb=65、totservplayeda=70/totservplayedb=73，全部一致）。\n\n⚠️ **`a` 跟的是 `cover.matchup[0]`＝诺斯科娃**——flashscore 的 `SH`（home）也正好是诺斯科娃、`SI` 是陶森，同序但仍按 `matchup` 对抄，不按 feed 的 home/away 走（CLAUDE.md「stats.a 跟的是 cover.matchup[0]，不是 feed 的 home/away」）。头像按内容核：`wta-329668` 是诺斯科娃、`wta-327793` 是陶森（两份都是既有 spec 沿用下来的文件，`fetch_official_headshot.py` 当年取的，非占位剪影）。\n\n⚠️ `first_total` 不猜，按 `first_in + second_total` 算：诺斯科娃 46+24=70（WTA 官方 `totservplayeda=70` 对得上）、陶森 37+36=73（`totservplayedb=73` 对得上）。`first_in`/`first_won` 取的是 WTA 官方 `ptsplayed1stserva`/`ptswon1stserva`（即 flashscore「1st serve points won」那一行的分母/分子，不是「1st serve percentage」那一行——那一行只给百分比，凑不出这两个整数）。pts_total 用 flashscore 的 143（等于 WTA 官方 `totptswona+totptswonb`=78+65=143 的另一半算法，两人各自的 `pts_total` 都是全场总分 143，符合 render_stat_card 的既有写法）。\n\n**制胜分和非受迫失误来自 TNNS**（`tnns-stats.yml` run **32104235533**，match id 73466998，报告自报「选手顺序 ['Noskova', 'Tauson']」——和 `cover.matchup` 同序；`hasExtendedStats: True`，分盘合计＝全场两项都自证 ✅：制胜分 33+15=48 / 15+5=20，非受迫失误 19+6=25 / 12+6=18。⚠️ flashscore 的 `df_st_1` 这一场只有 17 项，没有这两行——WTA 巡回赛那一档的老毛病，「flashscore 没有」不等于「没有」。",
+    "footer_venue": "Lindner Family Tennis Center · 辛辛那提",
+    "footer_date": "2026.08.17"
+  },
+  "_hit_data": "跑过 `tools/match_stat_hooks.py rJwGzMJ6`。挑进片子的是**这一盘唯一的盘点**（第十局，陶森发球手握盘点，被诺斯科娃救下并完成破发）——这是钩子、开场落点、收尾一问共用的核心事实，逐分数据和转播解说双核过。",
+  "_claims": "全片没有「零胜／唯一／史上第一」这类跨场次的全称断言（「这一盘唯一的盘点」是这一场内部的统计，逐分数据可直接核，不需要额外信源）。「上个月温网冠军」这句转播原话直接引用可用。交手史「陶森 2-1 领先」是全称式的历史断言，flashscore df_hh_1 和 tennisexplorer 两个源核过。",
+  "_editing_why": "**这场官方集锦的画面覆盖率明显高于同一批其他片子**——第一盘从 2-4 到 3-5 到 4-5 到关键的第十局，几乎每一次局分变化都有对应的现场回合镜头，probe 的 `scene_cuts` 是 [14.48, 19.08, 36.84, 40.76, 43.36, 50.84, 62.92, 67.6, 69.36, 73.88, 78.52, 87.12, 89.04, 103.96, 107.4, 108.32, 118.32, 122.8, 134.48, 137.04, 139.04, 149.76, 151.48, 154.52, 157.32, 167.92, 171.48, 176.84, 195.76, 199.64, 212.92, 218.68, 224.92, 242.68, 255.84, 269.88, 272.04, 279.32, 298.64, 300.6]，每一段窗口都对齐了这些边界。\n\n**唯二不在集锦里的**：第二盘 Game4-6（局分从 2-1 直接跳到 5-2，中间三局没有画面，用旁白概括交代）；第一盘 Game2-Game6 具体的每一分（局分 1-1 到 2-4 之间的推进，画面是常规回合镜头承接，不逐分描述）。\n\n**认人**：诺斯科娃是浅绿色（薄荷绿）背心/连衣裙、深蓝色帽子、丸子头或马尾——三处独立时刻交叉认过：16.5 秒她发球（记分条发球图标在 NOSKOVA 行）、258.5-270.5 秒 MATCH POINT 时她发球（同样图标核实）、288.5 秒赛后网前互动她穿浅绿色走向裁判椅（赢家签字确认比分的标准动作）。陶森是淡紫/浅白色系背心+白色短裙，288.5 秒同一帧里在网前另一侧。记分条 `L. NOSKOVA [6]` 在上、`C. TAUSON [27]` 在下。\n\n末尾 300.6 秒起是 WTA 台标甩入加订阅卡，所有窗口收在 298.6 秒以内。",
+  "segments": [
+    {
+      "start": 279.5,
+      "end": 286.0,
+      "_why": "① **冷开场，不配旁白，走现场声**。网前握手庆祝（切点 279.32 和 298.64 之间，同一个连续镜头），280.5 秒全屏赛果条刚显示完 `LINDA NOSKOVA 7 6 / CLARA TAUSON 6 2`。CLAUDE.md「开场三格的顺序」：第 ① 格是画面爆点，不是坐标。"
+    },
+    {
+      "start": 288.3,
+      "end": 294.5,
+      "narration": "这一盘，她救下了唯一的一个盘点。",
+      "_why": "② 落点，不复读封面钩子（钩子讲的是比分反差，这里直接点出「盘点」这个词，呼应转播解说原话 `saving a set point in the opener`）。画面延续同一个大窗口（两人各自走向场边/裁判台），情绪从握手自然过渡。"
+    },
+    {
+      "start": 1.0,
+      "end": 12.3,
+      "narration": "北京时间八月十八号早上六点半，辛辛那提第三轮。世界第八的诺斯科娃，对阵世界第四十二的陶森。",
+      "_why": "③ 坐标。开球 2026-08-17 22:28:49Z＝北京 08-18 06:28，按 CLAUDE.md「只说个大概」写「早上六点半」。画面是源片开局的常规对拉镜头（0-14.48 是一个镜头）。印排名不印种子号（8/42 号种子对应世界第 8/42，这次两个数字巧合一致，但仍按官方排名字段引用，不是拿种子号顶替）。"
+    },
+    {
+      "start": 19.3,
+      "end": 28.0,
+      "narration": "第一局，诺斯科娃自己发球，几个占先来回，稳住了，一比零。",
+      "_why": "④ 逐局：`df_mh_1` G1 是 `15:0, 30:0, 40:0, 40:15, 40:30, 40:40, A:40`——领先之后被追到占先反复，最终守住。画面记分条 16.5 秒显示 `Ad`（占先），发球图标在 NOSKOVA 行，与逐分吻合（19.08-36.84 是一个镜头）。"
+    },
+    {
+      "start": 43.6,
+      "end": 49.1,
+      "narration": "可很快，局面被追平——",
+      "_why": "⑤ 逐局：G2 陶森保发 1-1。这一段用最简短的一句带过换局过程，画面是常规回合镜头（43.36-50.84 是一个镜头），破折号收尾直接接下一段的转折。"
+    },
+    {
+      "start": 80.5,
+      "end": 87.0,
+      "narration": "陶森随后连追带赶，局分反超到二比四。",
+      "_why": "⑥ **画面自证**：78.5-106.5 秒记分条持续显示 `2 | 4`——诺斯科娃两局、陶森四局，陶森领先。逐局这一段是 G3（诺斯科娃发球被破 1-2）到 G6（陶森保发 2-4）。"
+    },
+    {
+      "start": 127.4,
+      "end": 134.3,
+      "narration": "三比五。只差一局，第一盘就是陶森的了。",
+      "_why": "⑦ **画面自证**：120.5-134.5 秒记分条显示 `3 | 5`——G8 陶森保发之后的局分。这是全片陶森领先最多的一刻，也是这条片子的核心悬念点。"
+    },
+    {
+      "start": 139.5,
+      "end": 149.6,
+      "narration": "自己发球，诺斯科娃从三十比四十、从一次次占先里，把这一局拽了回来。四比五。",
+      "_why": "⑧ **画面自证**：136.5-150.5 秒记分条从 `3|30` 一路拉锯到 `3|Ad`——G9 诺斯科娃自己发球，逐分数据这一局没有破发点标记，是纯粹的保发拉锯。"
+    },
+    {
+      "start": 157.5,
+      "end": 166.3,
+      "narration": "接下来这一局，轮到陶森发球——只要她守住，第一盘直接结束。",
+      "_why": "⑨ **画面自证**：157.32 秒起记分条挂出 `BREAK POINT #2`，局分 `4|Ad / 5`——G10 陶森发球，从诺斯科娃视角看是破发点，从陶森视角看正是这一盘的盘点。"
+    },
+    {
+      "start": 182.6,
+      "end": 195.6,
+      "narration": "可这一局，陶森连续几个破发点都没能兑现。最后一个，是这一盘唯一的盘点——诺斯科娃反而完成了破发，五比五。",
+      "_why": "⑩ **画面自证**：160.5-198.5 秒记分条持续挂着 `BREAK POINT #2`，局分在 `4|Ad/5` 附近反复拉锯，198.5 秒变成 `6|15/5|15`——G10 结束，诺斯科娃破发成功，5-5。逐分数据这一局有多个 `|B1|` 标记和一次 `|B2|`（盘点），与转播解说「She had to save a set point」完全吻合。"
+    },
+    {
+      "start": 205.4,
+      "end": 212.6,
+      "narration": "六比五，陶森保发追平，六比六，进了抢七。",
+      "_why": "⑪ **画面自证**：200.5 秒记分条显示 `6|5`（诺斯科娃保发 G11），216.5-220.5 秒显示 `6|6` 并挂出 `TIE-BREAK`（G12 陶森保发追平）。"
+    },
+    {
+      "start": 218.9,
+      "end": 224.7,
+      "narration": "抢七，诺斯科娃一上来就拉开了身位。",
+      "_why": "⑫ **画面自证**：218.68-224.92 秒记分条显示抢七小分变化（诺斯科娃领先），220.5 秒挂出 `SET POINT #2`——她在抢七前段已经建立优势。"
+    },
+    {
+      "start": 225.1,
+      "end": 232.0,
+      "narration": "七比三，一小时零六分钟，第一盘到手了。",
+      "_why": "⑬ **画面自证**：224.92-242.68 秒这段窗口里，抢七收尾（诺斯科娃拿到赛点、赢下最后一分）之后 234.5-240.5 秒全屏赛果条显示 `LINDA NOSKOVA 7 / CLARA TAUSON 6`。用时取 WTA 官方 `settime` 第一盘 `01:06:24`。"
+    },
+    {
+      "start": 244.7,
+      "end": 251.4,
+      "narration": "第二盘，她延续着这股势头。两次破发。",
+      "_why": "⑭ **画面自证**：244.5-256.5 秒记分条挂出 `BREAK POINT`，局分从第二盘 `1|1` 推进——G3 诺斯科娃破发到 2-1（后面 G7 的第二次破发不在这段窗口里，画面缺口用「两次破发」概括交代，逐局数据里两次都核过）。"
+    },
+    {
+      "start": 262.7,
+      "end": 269.6,
+      "narration": "六比二，三十二分钟，她拿下了整场比赛。",
+      "_why": "⑮ **画面自证**：258.5-270.5 秒记分条持续显示 `5|2` 加 `MATCH POINT`——G8 诺斯科娃保发赢下比赛。用时取 WTA 官方 `settime` 第二盘 `00:31:38`。"
+    },
+    {
+      "start": 272.3,
+      "end": 279.0,
+      "narration": "这一路走下去，还有几个盘点，等着她去救？",
+      "_why": "⑯ 收尾落在一问上（CLAUDE.md「末屏那一问不能是封面钩子的回声」）：钩子讲的是这一场的比分反差，这一问接的是转播原话里的展望——`to keep herself on course for a first 1000 title`，暗示这条路还没走完。画面是 272.04-279.32 秒她场边整理装备、准备下一分的镜头，情绪从专注延续到收尾，不重复封面钩子的措辞。"
+    }
+  ]
+}
