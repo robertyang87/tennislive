@@ -14,27 +14,22 @@
 ⚠️ **不许拿同一站别的日子的图顶上**——那是 CLAUDE.md 反复记过的「资料图」坑
 （同一个 Getty 编号挂在两个日期目录下那次）。四道闸门第一道要时间、地点、人物**三样都对**。
 
-## 2026-08-18 毕业的四条
+## 2026-08-18 毕业的五条
 
-`jodar-tabilo` / `tirante-landaluce` / `fery-deminaur` / `zverev-atmane` 都靠
-**市场本地化新闻搜索**（Bing 新闻限定 `mkt=<球员国籍对应语种>`）找到了官方高清实拍，
+`jodar-tabilo` / `tirante-landaluce` / `fery-deminaur` / `zverev-atmane` / `lehecka-fils`
+都靠**市场本地化新闻搜索**（Bing 新闻限定 `mkt=<球员国籍对应语种>`）找到了官方高清实拍，
 `git mv` 回了 `specs/reels/`，等重渲、合并、推送。找图的方法和逐条验证记录见各自
 spec 的 `cover.portrait._frame_why`。
 
+⚠️ `lehecka-fils` 值得单记一笔：第一次查到的 L'Équipe 那张（浅蓝 Lacoste polo 对得上，
+但背景是红色扶手＋红色花丛，翻遍我们自己拍到的辛辛那提画面都没见过）**没敢用**，
+换了西语体育媒体（`mkt=es-ES`）才找到一张背景带 `CreditOne`／`W&S` 广告板、四要素
+对得上的 Getty 供图——只是分辨率只有 1120×1120（fill=0.78×），写了 `_low_res_why`
+认领这个取舍。**「查到一张像的」和「查到对的那张」不是一回事**，背景对不上就换源，
+不能因为衣服对了就将就。
+
 ## 现在住在这儿的
 
-- **`lehecka-fils`**（辛辛那提 ATP1000 第三轮，2026-08-17，菲斯 6-1 6-7(7) 6-3 逆转莱赫奇卡）
-  - 场地是外场 **Tony Trabert Stadium 3**，转播没打全屏台标，官方三条渠道
-    （赛事媒体库、The Enquirer、AP）2026-08-18 查过都没有这一场
-  - **查到一张候选但没敢用**：L'Équipe（Presse Sports / Montassar Yazidi 摄，
-    当天发稿）配图里菲斯穿的浅蓝 Lacoste polo 和我们源片里的一致（连袖标位置都对得上），
-    可背景是红色扶手＋红色花丛的一片观众席——翻遍我们自己在辛辛那提两个场地
-    （P&G Stadium Court、Tony Trabert Stadium 3）拍到的画面，**一次红色装饰都没见过**，
-    和蒙特利尔 Shelton–Nakashima 决赛那条片子的看台配色也对不上任何一处。查不出这块
-    看台在哪儿，就不能排除它是别的赛事的资料图——**宁可空着，不能拿一张没查清楚出处
-    的图去赌**（CLAUDE.md「资料图」那个坑）
-  - 下一步：换一个信源角度再查（DPPI 或 Getty 的直接 detail 页，而不是靠新闻站转载），
-    或者等 8/18 主批图库上线后再扫一次
 - **`paul-vallejo`**（辛辛那提 ATP1000 第三轮，2026-08-17 夜场，保罗 3-6 6-3 6-4 巴列霍）
   - 开球美东 22:40，很晚的夜场；Tennis TV 短集锦已经有了（`source_url` 能下），
     但赛事媒体库到 2026-08-18 02:57Z 那一批只有科博利，AP／英语媒体连一篇赛后稿都
