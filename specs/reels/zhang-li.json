@@ -5,7 +5,7 @@
   "_column": "赛场之上",
   "topbar": {
     "line1": "WTA1000 辛辛那提 第二轮",
-    "line2": "李安 7-5 6-3 张帅"
+    "line2": "李吉妮 7-5 6-3 张帅"
   },
   "_topbar_why": "第二行按 `cover.winner` / `cover.result` / `cover.matchup` 机械对齐；比分是 WTA 官方 `ResultString` 里的 `[28]A. Li d S. Zhang 7-5,6-3`。",
   "editorial": {
@@ -80,7 +80,7 @@
         "rank": 54
       }
     ],
-    "_name_why": "两个中文名都走 player_zh()：player_zh(\"Ann Li\") → **李吉妮**、player_zh(\"Shuai Zhang\") → 张帅。⚠️ **2026-08-19 修正**：这一条原来写的是「player_zh(\"Ann Li\") → 李安」，那句话是假的——实测 player_zh(\"Ann Li\") 一直返回「李吉妮」，「李安」是当时手滑打错、没有真的跑那行代码就写进注解的（CLAUDE.md 那条「判断译名改没改对，不要看文件内容，直接调 player_zh()」说的正是这种坑：写注释的人没跑那行代码）。test_数据图的头像和matchup里的名字必须是同一个人 靠同一张头像（wta-326096.jpg）在 gauff-li.json 里正确挂着「李吉妮」，两相对照当场抓到。\n\n⚠️ **只改了 cover.matchup[0].name 和 cover.winner 这两个被判据读取的字段**。这条片子已经发出去，旁白音轨、topbar 台头、封面海报上烧的都是「李安」——那是已经渲染完成、推送出去的产物，改不了也不重渲。所以 editorial / segments 的旁白文本、_editing_why、_hit_data、push.lead、topbar.line2 里的「李安」**故意保留不动**：它们描述的是这条片子实际说了什么、画面上实际烧着什么，继续保持和已发布的视频一致，比追求 spec 内部用词整齐更重要。排名取 WTA 官方 players/ranked（metric=SINGLES，rankedAt 2026-08-10）：李吉妮 29、张帅 54。⚠️ 李吉妮在本站是 28 号种子，海报上印的是排名不是种子号。",
+    "_name_why": "两个中文名都走 player_zh()：player_zh(\"Ann Li\") → **李吉妮**、player_zh(\"Shuai Zhang\") → 张帅。⚠️ **2026-08-19 修正**：这一条原来写的是「player_zh(\"Ann Li\") → 李安」，那句话是假的——实测 player_zh(\"Ann Li\") 一直返回「李吉妮」，「李安」是当时手滑打错、没有真的跑那行代码就写进注解的（CLAUDE.md 那条「判断译名改没改对，不要看文件内容，直接调 player_zh()」说的正是这种坑：写注释的人没跑那行代码）。test_数据图的头像和matchup里的名字必须是同一个人 靠同一张头像（wta-326096.jpg）在 gauff-li.json 里正确挂着「李吉妮」，两相对照当场抓到。\n\n⚠️ **spec 里能改的字段全改了**：cover.matchup[0].name、cover.winner、topbar.line2（test_用了第三方源片就要有整改合同不看栏目 那道闸要求它和 cover 算出来的一致，没有留豁免口子）——这些都只是 JSON 文本，改它们不会反过来影响已经渲染完成的那份视频。\n\n⚠️ **spec 改不到的是已经烧进画面的那些字**：这条片子已经发出去，旁白音轨、topbar 台头图形（topbar.ass 里烧的像素）、封面海报上印的仍然是「李安」——那是已经渲染完成、推送出去的产物，改不了也不重渲（「已发的片子不为版式重渲」）。所以 editorial / segments 的旁白文本、_editing_why、_hit_data、push.lead 里的「李安」**故意保留不动**：它们描述的是这条片子实际说了什么、画面上实际烧着什么，继续保持和已发布的视频一致，比追求 spec 内部用词整齐更重要。也就是说现在 spec 里存在一个**已知、认领过的分叉**：结构化字段（matchup/winner/topbar.line2）说「李吉妮」，叙事性文本（旁白/编辑注释）说「李安」——两边各自内部一致，只是彼此不一致，原因就是上面这段。排名取 WTA 官方 players/ranked（metric=SINGLES，rankedAt 2026-08-10）：李吉妮 29、张帅 54。⚠️ 李吉妮在本站是 28 号种子，海报上印的是排名不是种子号。",
     "_heat_why": "①档：**张帅是中国球员**，`country: CHN`，按 CLAUDE.md「中国球员单打，不管种子不种子、爆不爆冷」直接过闸——不用再等一个额外的理由。附带：她 37 岁、前一天刚在第一轮逆转晋级，这一周还在打的中国单打球员就剩她。",
     "scoreboard": {
       "court": "Court 7",
