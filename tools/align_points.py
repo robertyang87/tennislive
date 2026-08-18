@@ -147,6 +147,32 @@ def parse_scoreboard(text: str) -> tuple[int, int, str, str] | None:
     return None
 
 
+def _pair(text: str) -> tuple[str, str] | None:
+    """`2-0` / `0-40` / `2/0` → (a, b)。空串或不是「数-数」返回 None。"""
+    m = re.match(r"^\s*(\d+)\s*[-/:]\s*(\d+)\s*$", text or "")
+    if not m:
+        return None
+    return m.group(1), m.group(2)
+
+
+def _read_state(r: dict) -> tuple[int, int, str, str] | None:
+    """从一条比分板读里抽出 (局分A, 局分B, 小分A, 小分B)。
+
+    兼容两种形状：结构化（`games`/`points` 字段，read_scoreboard 新版，局分和小分
+    分开读，不会把「局分 2 + 小分 40」混成一个「2-40」）和自由文本（`score` 字段，
+    旧版）。读不出返回 None 不猜。
+    """
+    if "games" in r or "points" in r:
+        g = _pair(r.get("games", ""))
+        p = _pair(r.get("points", ""))
+        if g is None and p is None:
+            return None
+        ga, gb = (int(g[0]), int(g[1])) if g else (-1, -1)
+        pa, pb = p if p else ("", "")
+        return ga, gb, pa, pb
+    return parse_scoreboard(r.get("score", ""))
+
+
 def align(reads: list[dict], states: list[dict]) -> list[dict]:
     """比分板读序列 + 逐分状态 → 每个「关键分」在视频里的秒数。
 
@@ -161,7 +187,7 @@ def align(reads: list[dict], states: list[dict]) -> list[dict]:
     for s in key_states:
         hits = []
         for r in reads:
-            parsed = parse_scoreboard(r.get("score", ""))
+            parsed = _read_state(r)
             if parsed is None:
                 continue
             ga, gb, pa, pb = parsed

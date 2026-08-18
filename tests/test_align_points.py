@@ -126,6 +126,20 @@ def test_align关键分定位到视频秒(ap):
     assert aligned[0]["t"] == [10.0, 12.5], "两个命中的读都要保留（慢放/回放会重复出现）"
 
 
+def test_align读结构化games_points(ap):
+    """read_scoreboard 新版输出 games/points 分开的字段，align 要优先用它——
+    局分和小分分开读，不会把「局分 2 + 小分 40」混成一个「2-40」。"""
+    states = ap.point_states(_break_sequence())  # 第 2 分破发点：局分 0-0、小分 40-0
+    reads = [
+        {"t": 10.0, "games": "0-0", "points": "40-0"},  # 结构化，精确命中破发点
+        {"t": 20.0, "games": "0-0", "points": "0-40"},  # 小分对不上（方向反了），跳过
+        {"t": 30.0, "score": "0 0 40 0"},               # 旧自由文本，仍兼容
+    ]
+    aligned = ap.align(reads, states)
+    assert aligned[0]["index"] == 2
+    assert aligned[0]["t"] == [10.0, 30.0], "结构化 games/points 命中 + 旧 score 文本兼容"
+
+
 def test_align时间码类型不一致也归一化(ap):
     """MiniMax 输出的 t 有的 float 有的 str，align 要统一归一化，别把 str 传给
     下游做减法（TypeError: str - float）。读不出数字的格子跳过。"""
