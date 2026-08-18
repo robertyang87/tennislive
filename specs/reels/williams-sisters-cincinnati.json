@@ -52,8 +52,29 @@
     "wta_match_id": "LD026",
     "_why": "逐分不可得（flashscore 只给这场的分盘统计 `df_st_1`、分盘用时 `df_sui_1`，没有逐分 `df_mh_1`——双打赛事这个 feed 常年缺失），技术统计和分盘用时都从这个 flashscore id 取；官方赛果、轮次、双方选手 id、比赛用时（`MatchTimeTotal`）从 WTA `tournaments/1017/2026/matches?states=C` 里的 `MatchID LD026` 取，两边逐项对得上（6-2,1-6,1-0(8) ≡ 6-2 1-6 10-8）。"
   },
-  "_hit_data": "`_claims` 里核过的几类候选，这一场最硬的两条：\n\n    全场唯一救下的一个赛点，恰好是那次 0-6 到 9-8 的追赶里那一个（flashscore/WTA `Match points saved` 1:0）\n    全场总得分打平：50-50（100 分打个对半）\n\n这两条都不在钩子里（钩子留给「零比六追到九比八」——画面本身就有救球的那一下，比数据卡更直接），但写进了 `human_context.facts` 和第⑬段的旁白。\n\n⚠️ **没有单个球员的击球数据**（制胜分/非受迫失误/一发成功率）：这是双打，flashscore `df_st_1` 给的是两支队伍合计的技术统计，没有拆到某一位球员身上；也没有跑 TNNS（那条路只验证过单打）。这条线以后要接双打的个人数据，得先探一遍 TNNS 或官方 `/stats` 对双打赛事给不给单人数字。",
-  "_no_stats_why": "**没有数据统计图，这是结构性的，不是没查。** `tools/render_stat_card.py` 的卡片按**单人头像**设计（`stats.a/b` 各要一张 `headshot`），而这是一场双打——`威廉姆斯姐妹`／`科斯秋克+斯特恩斯` 每一边都是两个人，卡片没有『选哪张脸代表整支队伍』这个选项，硬填一张就是让另一位球员从图上消失。flashscore `df_st_1` 确实给了整队合计的技术统计（发球、破发点、总分），已经写进 `human_context.facts` 和旁白（全场总分打平、双误对比、救下的那一个赛点），只是没有做成那张卡片。这条线以后接双打数据卡，需要先给 `render_stat_card` 加一种『两人一队』的版式，不是这一条片子该做的事。",
+  "_hit_data": "`_claims` 里核过的几类候选，这一场最硬的两条：\n\n    全场唯一救下的一个赛点，恰好是那次 0-6 到 9-8 的追赶里那一个（flashscore/WTA `Match points saved` 1:0）\n    全场总得分打平：50-50（100 分打个对半）\n\n这两条都不在钩子里（钩子留给「零比六追到九比八」——画面本身就有救球的那一下，比数据卡更直接），但写进了 `human_context.facts`、第⑬段的旁白，以及下面 `stats` 那张数据卡。\n\n⚠️ **仍然没有单个球员的击球数据**（这场谁发的那些 Ace、谁救的那些破发点，拆不到某一位球员身上）：flashscore `df_st_1` 和 TNNS Live（跑了一趟 `tnns-stats.yml` 核实过，见 `stats._source`）给的都是**两支队伍合计**的技术统计，不是逐人拆开的——⚠️ TNNS 之前只在单打上验证过，这次是双打第一次去问，**它照样给（分盘合计自证过），只是给的仍然是队伍合计**，不是四个人各自的数。数据卡上印的因此是「威廉姆斯姐妹」和「科斯秋克/斯特恩斯」两支队伍的对比。",
+  "stats": {
+    "tour": "wta",
+    "a": {
+      "headshot": ["assets/players/headshots/wta-230234.jpg", "assets/players/headshots/wta-230220.jpg"],
+      "aces": 2, "df": 3,
+      "first_in": 32, "first_total": 51, "first_won": 23,
+      "second_won": 7, "second_total": 19,
+      "bp_conv": 2, "bp_chances": 7,
+      "pts_won": 50,
+      "winners": 10, "ue": 13
+    },
+    "b": {
+      "headshot": ["assets/players/headshots/wta-326482.jpg", "assets/players/headshots/wta-327573.jpg"],
+      "aces": 1, "df": 4,
+      "first_in": 27, "first_total": 49, "first_won": 20,
+      "second_won": 9, "second_total": 22,
+      "bp_conv": 2, "bp_chances": 5,
+      "pts_won": 50,
+      "winners": 9, "ue": 21
+    },
+    "_source": "flashscore `df_st_1_ddEAxy3M`（2026-08-18 直接拉的原始 feed，字段：Aces / Double Faults / 1st serve percentage / 1st serve points won / 2nd serve points won / Break Points Converted / Total Points Won）。`SH`＝科斯秋克/斯特恩斯（`stats.b`），`SI`＝威廉姆斯姐妹（`stats.a`）——顺序按 `human_context.facts` 里已经核过的『双误：科斯秋克/斯特恩斯 4 个，威廉姆斯姐妹 3 个』这句反查一致。\n\n`first_total` 不取接口的『Service Points Won』分母，按 `first_in + second_total` 算（CLAUDE.md 记过的口径）：a 边 32+19=51，b 边 27+22=49，两边都和『Service Points Won』给出的分母（51／49）自洽——这也顺带验证了字段没有拆错人：算出来的一发成功率 a=32/51=63%、b=27/49=55%，和 feed 原始的『1st serve percentage』字段（63%／55%）逐位对上，不是巧合。\n\n**制胜分／非受迫失误来自 TNNS Live**（`tools/tnns_stats.py`，2026-08-18 跑了一趟 `tnns-stats.yml`，`--who Williams,Kostyuk --date 2026-08-17`，认到 id=73740306）——⚠️ **这条老判据『WTA 巡回赛的 `df_st_1` 一律没有这两项』只对单打成立，没试过双打有没有**：这次去问了一次，TNNS 双打照样给，而且**分盘合计自证等于全场**（制胜分 [3,5]+[2,4]+[4,1]=[9,10]、UE [6,7]+[11,4]+[4,2]=[21,13]，和它报的全场数字逐位对上），不是声明出来的。TNNS 报的选手顺序是『Kostyuk M / Stearns P』在前、『Williams S / Williams V』在后（winners/ue＝9/21 和 10/13），按 `cover.matchup` 的顺序（`stats.a`＝威廉姆斯姐妹）倒过来填：a＝10/13，b＝9/21。⚠️ **只取这两项**，一发分母仍然按 flashscore 算（CLAUDE.md「只从 TNNS 取 Winners / UE」那条）。\n\n⚠️ **双打没有单人数据，headshot 给的是两个人的头像列表**（`tools/render_stat_card.py` 这次加的『两个人一队』版式，见它的模块 docstring）——数字仍然是整支队伍合计的，不是四个人各自的。头像抓自 `tools/fetch_official_headshot.py`（WTA 官方按姓名查，四张都验过是真人像不是占位剪影）。"
+  },
   "cover": {
     "eyebrow": "赛场之上",
     "layout": "solo",

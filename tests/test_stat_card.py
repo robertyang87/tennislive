@@ -76,6 +76,96 @@ def test_缺headshot单独报错不跟别的字段混在一起():
         sc.build(spec)
 
 
+def test_双打headshot给列表时两张脸都渲染且共享同一个队伍描边():
+    """`stats.a.headshot` 给两个路径的列表（双打，一队两个人）——两张
+    `<img>` 都要出现，而且都带队伍的胜负描边（`h2h-ring--pair win`），
+    不是给其中一个人单独判定。反向验证过：把两张改成同一张路径，
+    `<img>` 计数不变（还是 2 个 `<img src=` 标签，只是 data URI 相同），
+    证明是按列表长度渲的，不是按去重后的路径数渲的。"""
+    repo = Path(__file__).resolve().parent.parent
+    shots = sorted((repo / "assets/players/headshots").glob("*.png"))[:2]
+    assert len(shots) == 2, "仓库里至少要有两张头像素材才能跑这条测试"
+    rel = [str(p.relative_to(repo)) for p in shots]
+
+    import versus_poster as vp  # noqa: E402
+
+    vp._DURATION_CACHE["fake://match-duration"] = "1:18"  # noqa: SLF001
+    spec = {
+        "cover": {
+            "winner": "队伍A",
+            "result": "6-2 6-3",
+            "matchup": [
+                {"name": "队伍A", "name_en": "Team A", "country": "USA", "rank": None},
+                {"name": "队伍B", "name_en": "Team B", "country": None, "rank": None},
+            ],
+            "scoreboard": {
+                "court": "Grandstand",
+                "duration_source": {"url": "fake://match-duration"},
+            },
+        },
+        "stats": {
+            # 凑够 `MIN_ROWS=7`（跳过可选的 winners/ue）——这条测试要走到
+            # `build()` 里渲头像那一段，不能被 `usable_rows` 的行数下限拦住。
+            "a": {"headshot": rel, "aces": 3, "df": 2,
+                  "first_in": 27, "first_total": 49, "first_won": 20,
+                  "second_won": 9, "second_total": 22,
+                  "bp_conv": 2, "bp_chances": 5, "pts_won": 50},
+            "b": {"headshot": rel[0], "aces": 1, "df": 4,
+                  "first_in": 32, "first_total": 51, "first_won": 23,
+                  "second_won": 7, "second_total": 19,
+                  "bp_conv": 2, "bp_chances": 7, "pts_won": 50},
+        },
+    }
+
+    import os
+
+    os.chdir(repo)  # `_data_uri` 按仓库根解相对路径
+    out = sc.build(spec)
+
+    # ⚠️ 不能用裸的 "h2h-mid" 当分界——它先出现在 `<style>` 块的 CSS 选择器
+    # 里（`.h2h-mid{…}`），比 body 里真正的 `<div class="h2h-mid">` 早得多，
+    # 拿它切片会切出一个空字符串。要锚在真实的开标签上。
+    mid_tag = '<div class="h2h-mid">'
+    a_block = out[out.index('<div class="h2h-side">'):out.index(mid_tag)]
+    b_block = out[out.index(mid_tag):]
+
+    # a_block 里除了两张头像，国旗（country="USA"）也是一个 <img>——
+    # 只数 `.h2h-pair` 到 `.h2h-cn` 之间那一段，别被国旗的 <img> 混进来数错。
+    pair_start = a_block.index('<div class="h2h-pair">')
+    pair_end = a_block.index('<div class="h2h-cn">')
+    pair_block = a_block[pair_start:pair_end]
+    assert pair_block.count("<img") == 2, "队伍A给了两张头像，HTML 里应该有两个 <img>"
+    assert 'class="h2h-pair"' in a_block
+    assert 'h2h-ring h2h-ring--pair win' in a_block, "两张脸都要带上队伍赢球的描边"
+    # 队伍B仍然是单张（字符串路径），走的还是原来那条单人路径——list 和
+    # str 两种写法互不干扰，改一边不该连累另一边。国籍留空，没有国旗 <img>，
+    # 所以整个 b_block 里唯一的 <img> 就是它的单张头像。
+    assert b_block.count("<img") == 1
+    assert 'class="h2h-ring win"' not in b_block  # 队伍B输了，不带 win 描边
+    assert 'class="h2h-ring"' in b_block
+
+
+def test_双打headshot列表长度不对就报错():
+    stat_fields = {"aces": 1, "df": 1, "first_in": 1, "first_total": 2,
+                   "first_won": 1, "second_won": 1, "second_total": 1,
+                   "bp_conv": 1, "bp_chances": 1, "pts_won": 50}
+    spec = {
+        "cover": {"winner": "队伍A", "result": "6-2 6-3", "matchup": [
+            {"name": "队伍A", "name_en": "A", "country": None, "rank": None},
+            {"name": "队伍B", "name_en": "B", "country": None, "rank": None},
+        ], "scoreboard": {"court": "x", "duration_source": {"url": "fake://x"}}},
+        "stats": {
+            "a": {"headshot": ["only-one.jpg"], **stat_fields},
+            "b": {"headshot": "y.jpg", **stat_fields},
+        },
+    }
+    import versus_poster as vp  # noqa: E402
+
+    vp._DURATION_CACHE["fake://x"] = "1:00"  # noqa: SLF001
+    with pytest.raises(SystemExit, match="正好两张"):
+        sc.build(spec)
+
+
 def test_数据统计图渲染排在成片写完之后():
     """渲这张图是发生在**视频已经渲完、`render.json` 已经写完**之后的一步——
     这样即使这张图渲失败，已经完工的视频和它的元数据不受影响。判据钉位置，
@@ -114,10 +204,16 @@ def test_有stats的spec都要有headshot文件和全部字段():
         for side in ("a", "b"):
             raw = stats[side]
             assert "headshot" in raw, f"{p.name} stats.{side} 缺 headshot"
-            headshot_path = repo / raw["headshot"]
-            assert headshot_path.is_file(), (
-                f"{p.name} stats.{side}.headshot 指向的文件不存在："
-                f"{raw['headshot']}")
+            # 双打：headshot 可以是两个路径的列表（见 render_stat_card 模块
+            # docstring「双打：两个人一队」），逐个查文件是不是真的在。
+            shots = raw["headshot"] if isinstance(raw["headshot"], list) else [raw["headshot"]]
+            if isinstance(raw["headshot"], list):
+                assert len(shots) == 2, (
+                    f"{p.name} stats.{side}.headshot 给了列表就必须正好两张，"
+                    f"现在是 {len(shots)} 张")
+            for shot in shots:
+                assert (repo / shot).is_file(), (
+                    f"{p.name} stats.{side}.headshot 指向的文件不存在：{shot}")
             # ⚠️ 制胜分 / 非受迫失误可以缺——**WTA 巡回赛拿不到那两项**
             # （见 `render_stat_card` 模块 docstring 和 CLAUDE.md），账号所有者
             # 2026-08-14 定的口径是「没有的话这两条就不显示」。其余字段照旧必填。
