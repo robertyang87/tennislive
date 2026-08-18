@@ -31,6 +31,13 @@
     "mirror": "https://photoresources.wtatennis.com/photo-resources/2026/08/16/0d470f5b-7c21-431a-b2c6-376bf0ada45b/GettyImages-2288437113.jpg?width=4000",
     "note": "WTA 官网 `videos/highlights` 索引里 **Cirstea vs Bartunkova 那条集锦挂的头图**。4000×2667。\n\n⚠️ **这一张的文件名不自证**（`GettyImages-2288437113.jpg` 里没有球员、赛事、轮次），所以四要素靠另外三条：① **CMS 的引用关系**——它是这条集锦的头图，而那条集锦的标题写着 `Sorana Cirstea vs. Nikola Bartunkova | 2026 Cincinnati Round 2`（和 `townsend-osorio` 那次同一个形状：「这张图挂在这场比赛的集锦上」比文件名更硬）；② **路径日期 2026/08/16**，比赛是北京时间 8/16 凌晨（19:13Z 开赛）；③ **人脸比对**——和 WTA 官方头像 `312469` 并排看过（眉骨、鼻梁、发际线一致），而对面的巴尔通科娃是二十岁、戴 adidas 发带，两个人差得很远。\n\n⚠️ **取原图必须带 `?width=4000`**：不带参数是 400 Bad Request。"
   },
+  "williams-return-cincinnati-2026-r1.jpg": {
+    "artist": "Kareem Elgazzar / AP Photo",
+    "license": "美联社（AP）图片，本号自媒体使用",
+    "mirror": "https://assets.apnews.com/c4/c7/4d0ded6292aff4ac8d65e0c42343/835e7bf695e34e37a37f697c7f237dea",
+    "page": "https://apnews.com/article/cincinnati-open-williams-sisters-doubles-bd8e216b33148ef0140c94bc6e6278ec",
+    "note": "AP 赛后稿《Serena and Venus Williams fall just short in return to doubles》里第二张配图，`<img alt>` 原文：「Serena Williams, of the United States, returns a shot against Marta Kostyuk, of Ukraine, and Peyton Stearns, also of the United States, during a women's doubles match at the Cincinnati Open tennis tournament, Monday, Aug. 17, 2026, in Mason, Ohio. (AP Photo/Kareem Elgazzar)」——球员、对手、赛事、日期、场馆、摄影师齐全，AP 自己的图注就是四要素。6688×4458 原图（从 dims.apnews.com 的裁切参数反解出真实尺寸，直接取 `assets.apnews.com` 那个不带 dims 处理的地址）。\n\n**四道闸门**：①精准——就是这场比赛，AP 图注写死；②在比赛中——正手截击，球在拍弦上，网带印着 `WTA TOUR`，画面左上角另一人（伙伴）的鞋和小腿可见，是双打站位；③冲击力——四十四岁的小威廉姆斯在网前伸展救球，动态强；④清晰度——6688×4458，铺 1080×1440 只需缩小，不用放大。\n\n⚠️ **同一篇稿子里还有一张两姐妹并肩走进球场的照片**（AP 图注写着「warm up before their first」），画面更能体现「姐妹重聚」，但那是赛前热身入场，过不了第②道闸门（训练/热身一律不算），所以没用它。"
+  },
   "wang-cincinnati-2026-r2.jpg": {
     "artist": "unknown（WTA 官方图库，这一批的文件名不带摄影师后缀；同批带署名的写作 `Eala-R2-Jimmie.jpg`）",
     "license": "WTA 官方图库（photoresources.wtatennis.com），本号自媒体使用",
