@@ -270,6 +270,50 @@ def segment_skeleton(anchors: dict[str, float | None], narration: list[str],
     return segs
 
 
+def finalize_windows(segments: list[dict], scene_cuts: list[float],
+                     *, speech_seconds=None, tail: float = 0.5) -> list[dict]:
+    """把草稿的 `[锚点±margin]` 窗口收成**能直接 render** 的形状。
+
+    账号所有者：「做好视频直接 merge 推微信」——草稿要够格直接 render，窗口是
+    第一道硬闸（旁白装不下 / 跨切点都拦）。两步：
+
+    1. **装得下旁白**：带旁白的段，窗口至少 `speech_seconds(旁白) + tail` 宽。
+       `speech_seconds` 从 `build_match_reel` 传（拿已发成片拟合的系数），
+       传不进来就用本地兜底（6 字/秒 + 句读）。
+    2. **不跨切点**：窗口里若有 `scene_cuts` 的切点，把 end 收到切点前（留 0.2s
+       溶解）；切点前不够装旁白就把 start 挪到切点后。
+
+    冷开场（无旁白）段只做切点对齐，不硬扩——现场声段本来就是「情绪窗口」。
+    返回收口后的 segments（start/end 保留一位小数）。"""
+    cuts = sorted(float(c) for c in (scene_cuts or []))
+    if speech_seconds is None:
+        def speech_seconds(t):
+            body = t.replace("，", "").replace("。", "").replace("？", "").replace("！", "")
+            return max(0.0, len(body) / 6.0 + 0.3)
+
+    out = []
+    for seg in segments:
+        start = float(seg.get("start", 0.0))
+        end = float(seg.get("end", start + 5.0))
+        nar = (seg.get("narration") or "").strip()
+        need = speech_seconds(nar) + tail if nar else 0.0
+
+        # ① 至少装得下旁白（先向后扩）
+        if end - start < need:
+            end = start + need
+        # ② 窗口内若有个切点，收住它
+        for c in cuts:
+            if start < c < end:
+                if c - start >= need - 0.01:
+                    end = c - 0.2            # 切点前够装旁白，end 收到切点前
+                else:
+                    start = c + 0.2          # 不够就挪到切点后，并重扩 end 到够装
+                    end = max(end, start + need)
+                break
+        out.append({**seg, "start": round(start, 1), "end": round(end, 1)})
+    return out
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("--pbp", required=True, type=Path,

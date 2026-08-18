@@ -310,6 +310,20 @@ def assemble(*, slug: str, home: str, away: str, event: str, year: int,
         if draft["editorial"] is None:
             draft.pop("editorial", None)
             notes.append("⚠️ 文案这一步没成（模型或网络），editorial 留空")
+        else:
+            # 推送文案（summary/lead）也自动起草——「草稿渲完直接合并推微信」的
+            # 推送内容缺口。给不给都是编辑决定，草稿阶段先备好。
+            try:
+                from draft_spec import draft_push
+                push = draft_push(chat, editorial=draft["editorial"],
+                                  facts=facts_text(hit))
+                if push and push.get("summary"):
+                    draft["push"] = push
+                    notes.append("推送文案（summary/lead）已起草")
+                else:
+                    notes.append("⚠️ 推送文案起草没成，留终审")
+            except Exception as exc:  # noqa: BLE001
+                notes.append(f"⚠️ 推送文案没成（{type(exc).__name__}: {exc}）")
 
     # ⑥ 窗口（机械对齐优先：逐分+比分板 → 骨架）。给了 pbp + scoreboard 才跑——
     #    这是「配音不脱节」的正路（docs/scoreboard-alignment.md）：逐分数据是内容、
@@ -333,6 +347,23 @@ def assemble(*, slug: str, home: str, away: str, event: str, year: int,
             narration = (draft.get("editorial") or {}).get("narration", [])
             segs = segment_skeleton(anchors, narration)
             if segs:
+                # 收口：窗口要能直接 render——至少装得下旁白（speech_seconds）
+                # 且不跨切点（probe.json 的 scene_cuts）。这是「草稿渲完直接
+                # 合并推微信」的窗口硬闸（账号所有者：「做好视频直接 merge 推」）。
+                cuts = []
+                if cuts_path:
+                    try:
+                        cuts = json.loads(Path(cuts_path).read_text(
+                            encoding="utf-8")).get("scene_cuts", [])
+                    except (OSError, ValueError):
+                        cuts = []
+                try:
+                    from align_points import finalize_windows
+                    from build_match_reel import speech_seconds
+                    segs = finalize_windows(segs, cuts, speech_seconds=speech_seconds)
+                    notes.append(f"窗口收口：按旁白时长 + {len(cuts)} 个切点收")
+                except Exception as exc:  # noqa: BLE001
+                    notes.append(f"⚠️ 窗口收口没成（{type(exc).__name__}: {exc}）")
                 draft["segments"] = segs
                 draft["_segments_source"] = "align_points（逐分+比分板机械对齐）"
                 notes.append(f"窗口机械对齐 {len(segs)} 段（align_points），"
@@ -388,10 +419,12 @@ def assemble(*, slug: str, home: str, away: str, event: str, year: int,
             event_id, wyear, match_id, _row = wta_find_match(
                 session, [_surname(home), _surname(away)],
                 today - timedelta(days=2), today)
-            # city slug 从 tournament 数据里没有现成的，先用英文小写全名兜底——
-            # 抓不到只是退回无封面，不硬来。
+            # city slug：WTA 官网赛事 URL 用城市小写（多伦多=toronto、
+            # 辛辛那提=cincinnati）。⚠️ 之前硬编码 "cincinnati"，换别的赛事就
+            # 会抓错站——用 event 小写拼，覆盖所有 WTA 场次。
+            city_slug = (event or "").strip().lower().replace(" ", "-")
             out = Path(f"assets/reel/{slug}-cover.jpg")
-            code, note = fetch_cover(str(event_id), str(wyear), "cincinnati",
+            code, note = fetch_cover(str(event_id), str(wyear), city_slug,
                                      match_id, [_surname(home), _surname(away)],
                                      out, today)
             notes.append(f"封面官方实拍：{note}")
