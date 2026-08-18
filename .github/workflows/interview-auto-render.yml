@@ -1,0 +1,89 @@
+name: interview-auto-render
+
+# 「赛后开麦」自动出片的最后一环：把草稿提升成正式 spec（补 winner/matchup，
+# 查赛果），然后 dispatch render——每 slug 一个 run，interview-clip 的
+# concurrency 按 slug 分组，**不同采访天然并行**（好多比赛差不多时间结束）。
+# render 完 `auto-push-interview` 盯 render.json 自动推微信。
+#
+# 前两环在 oncourt-interviews.yml：采集（定时）→ 候选（pick_oncourt_clips）→
+# 自动建草稿（draft_interview_spec，并行 2）。这条只做「提升 + dispatch」。
+
+on:
+  schedule:
+    # 每 30 分钟：终审随时提升草稿，这里随时接住 dispatch。
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: interview-auto-render
+  cancel-in-progress: false
+
+jobs:
+  auto:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            data
+            docs
+            specs
+            src
+            tests
+            tools
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: 装依赖
+        run: pip install -q -e .
+
+      - name: 提升草稿为正式 spec（查赛果补 winner/matchup）
+        run: |
+          # 只提升「赛果里查得到对手」的草稿；查不到的留在草稿等终审
+          # （宁可漏推不误推——顶栏对阵印错比晚一点糟）。
+          python tools/promote_interview_draft.py --write \
+            | tee /tmp/promote.log
+
+      - name: 提交提升结果
+        run: |
+          if git diff --quiet -- specs/interviews; then
+            echo "没有草稿被提升。"
+          else
+            git config user.name "Claude"
+            git config user.email "noreply@anthropic.com"
+            git add specs/interviews
+            python tools/check_staged_file_sizes.py
+            git commit -m "interview: 自动提升赛后开麦 spec 草稿"
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          fi
+
+      - name: dispatch 未 render 的正式 spec（每 slug 一个 run，并行）
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # 扫 specs/interviews/*.json（正式 spec），对照
+          # data/interview_render_dispatched.json（已 dispatch 的 slug）——
+          # 只 dispatch 新的。每 slug 一个 `gh workflow run`，GitHub Actions
+          # 按 interview-clip 的 concurrency（按 slug）天然并行。
+          python tools/pick_interview_renders.py --mark | tee /tmp/todo.txt
+          tail -n +2 /tmp/todo.txt | while read -r slug; do
+            [ -z "$slug" ] && continue
+            echo "[dispatch] interview-clip render $slug"
+            gh workflow run interview-clip.yml --ref main -f "slug=$slug" -f mode=render
+          done
+          git add data/interview_render_dispatched.json
+          if ! git diff --cached --quiet; then
+            git config user.name "Claude"
+            git config user.email "noreply@anthropic.com"
+            python tools/check_staged_file_sizes.py
+            git commit -m "data: interview render dispatch 记录"
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          fi

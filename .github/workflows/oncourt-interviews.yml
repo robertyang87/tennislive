@@ -165,20 +165,19 @@ jobs:
         env:
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
         run: |
-          # 对每个候选自动建草稿：yt-dlp 下音频 → faster-whisper small.en 转写 →
-          # DeepSeek 翻译 → specs/interviews/<slug>.draft.json。这是把今天人工
-          # 做的「转写+翻译+建 spec」机械化；双模型核对（verify_transcript）由
-          # render 时跑第二份完成。候选为空就跳过（连 faster-whisper 都不装）。
+          # 对**全部**候选并行建草稿：yt-dlp 下音频 → faster-whisper small.en 转写 →
+          # DeepSeek 翻译 → specs/interviews/<slug>.draft.json。⚠️ 必须并行——
+          # 好多比赛差不多时间结束，一条一条跑（下音频+whisper+翻译约 1-3 分钟）
+          # N 场就是 N 倍时间；`--max-parallel 2` 把总时间压成「最慢那一场 × 2」，
+          # 也别开太大（whisper 吃 CPU，runner 4 核，2 保守）。候选为空就跳过
+          # （连 faster-whisper 都不装）。
           n=$(python -c "import json;print(len(json.load(open('data/interview_clip_candidates.json'))))" 2>/dev/null || echo 0)
           if [ "$n" = "0" ]; then
             echo "没有成片候选，跳过自动建 spec。"
           else
             pip install -q faster-whisper 2>&1 | tail -1
-            for i in $(seq 0 $((n-1))); do
-              python tools/draft_interview_spec.py --candidate "$i" --write \
-                | tee -a /tmp/oncourt.log \
-                || echo "::warning::第 $i 条草稿没成（跳过，看日志）"
-            done
+            python tools/draft_interview_spec.py --max-parallel 2 --write \
+              | tee -a /tmp/oncourt.log
           fi
 
       - name: 提交新增条目
