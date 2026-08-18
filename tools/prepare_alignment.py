@@ -45,7 +45,10 @@ def fetch_pbp(home: str, away: str, outdir: Path) -> bool:
     session = requests.Session()
     today = date.today()
     surnames = [_surname(home), _surname(away)]
-    # 找最近 3 天到明天这一窗口（reel 都是赛后快做，比赛日就在这一两天内）
+    # 找最近 3 天到明天这一窗口（reel 都是赛后快做，比赛日就在这一两天内），
+    # 找不到就放宽到 7 天。窗口要按**比赛日**算，别按「今天」——凌晨结束的比赛
+    # 在 UTC 里算昨天甚至前天，back=3 有时正好把它卡在窗口外。
+    last = ""
     for back, ahead in ((3, 1), (7, 1)):
         try:
             ev, year, mid, _row = find_match(
@@ -56,6 +59,8 @@ def fetch_pbp(home: str, away: str, outdir: Path) -> bool:
                 json.dumps({"raw": payload}, ensure_ascii=False), encoding="utf-8")
             print(f"逐分拿到：{ev}/{year}/{mid}，{len(payload.get('points', []))} 分")
             return True
+        except SystemExit as exc:  # find_match 找不到就 raise SystemExit，不是 Exception
+            last = str(exc)
         except Exception as exc:  # noqa: BLE001 —— 换个窗口再试，都不行就降级
             last = f"{type(exc).__name__}: {exc}"
     print(f"⚠️ 逐分没拿到（可能 ATP 场或不在窗口）：{last}")
