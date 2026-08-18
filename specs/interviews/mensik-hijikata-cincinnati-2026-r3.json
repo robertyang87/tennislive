@@ -103,5 +103,10 @@
     "event": "",
     "summary": "门西克横扫土方",
     "lead": "2026 辛辛那提 ATP1000 第三轮夜场，门西克 6-3 6-4 胜土方凛辉。比分看着干脆，他讲的全是难：两天前那场三盘硬仗刚过去，今天换成灯光下打，「场地特别慢，真的非常难找到节奏」。主持人给了一个反常的数——土方今天二发得分率有百分之八十，照样输了；门西克把原因归到自己这一头：「我发球非常非常好，接发也拿到很多机会，每一盘都抓住了。」问到状态，他说温网之后休整了一段、和团队在硬地上做了很扎实的准备，美网之前能有这样几场球垫在身后很重要。中英双语字幕，全程。"
-  }
+  },
+  "en_fixed": {
+    "1": "Jakub, congratulations. Clearly tonight"
+  },
+  "transcript_verified": true,
+  "_verified_clean": "两份转写对不上 **3.5%**（闸门 12%），**空档 0 处**，只有 **10 处分歧**——这条线上最干净的一条。\n第一份本地 ASR `small.en` **370** 词，第二份 faster-whisper `medium.en` **360** 词。\n（run 32093949777 的日志里打全了，逐处看过。）\n\n**改了一处，写进 `en_fixed`：第 1 行 `Yeah, congratulations` → `Jakub, congratulations`。**\n三条判据叠起来：\n\n1. 第二份独立跑出来听的就是 **`jakub`**；\n2. **同一个转播、同一个主持人**在霍达尔那条的开场是 `Rafa, congratulations once again`——**先叫名字再恭喜**是这个格式的固定开法；\n3. `Yeah, congratulations` 作为一整段采访的**第一句**不成句（前面没有任何对话，窗口就是从源片 0.0 起的）。\n\n**剩下 9 处不用改**：`round`→`run`（他说的是 `first round`，网球的轮次，第一份对）、`percent`→`—`（第二份把 `80 percent` 的 `percent` 整个丢了，第一份对）、以及 `you know to` / `very` / `of` / `i mean` / `do` / `in` 六处虚词，第二份丢掉而已。\n\n⚠️ **有一处两份都拿不准，照实留着不改**：`back` → `bag`\n（`it's really great to have these kind of matches in my **back** before the US Open`）。`in my back` 不是地道说法，`in my bag` 也说得通，而**两个模型各听成一个**，我没有听音轨的手段去定它。**两种读法的意思是同一个**（这几场球「垫在身后 / 收进囊中」，总之是已经拿到手了），中文译成「垫在身后 真的很重要」在两种读法下都成立，所以烧进画面的英文保持第一份的 `back` 不动——**编一个更顺耳的版本才是错的**。"
 }
