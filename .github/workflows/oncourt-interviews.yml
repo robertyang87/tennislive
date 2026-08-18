@@ -11,25 +11,21 @@ name: oncourt-interviews
 # 为什么跑在 Actions 而不是本地：沙箱下 YouTube 会对连续请求返 429，
 # 退避到 240 秒都拿不到；Actions 的出口没这个问题。
 on:
-# **2026-07-31：定时停掉，只留手动。**
-# `data/oncourt_interviews.json` 攒到 4551 条，但**没有任何一条线在读它**
-# （除了 oncourt 自己那套采集工具）——它在给一个不存在的下游供货。
-# 采集逻辑一个字没动，需要的时候手动跑一次就行。
-#
-# 原来的定时（留档，恢复时照抄）：
-#   schedule:
-#   # **每天两轮**，不是每周。「赢球后的采访」等一周就没意义了——
-#   # 赛事一周打完，周推的话决赛采访最晚要等七天才到手。
-#   #
-#   # cron 一律是 UTC，北京时间要自己减八小时；**减完跨了零点就要连日期一起挪**。
-#   #
-#   # 两轮的分工按**赛区落在 UTC 的哪一段**来定，不是随手挑两个整点：
-#   #   北京 05:00（21:00 UTC）——欧洲白天和傍晚场都打完并上传了
-#   #   北京 11:00（03:00 UTC）——补美洲晚场。美东夜场常在 01:00–04:00 UTC
-#   #                             才结束，上一轮跑的时候它还没打完
-#   # 眼下华盛顿（美东）正在打，第二轮直接冲着它去的。
-#   - cron: "0 21 * * *"   # 北京 05:00（次日）
-#   - cron: "0 3 * * *"    # 北京 11:00（当日）
+  # **2026-08-18 恢复定时。** 之前 7/31 停掉是因为「4551 条库存没有下游在读」；
+  # 现在下游有了——`pick_oncourt_clips.py` 挑成片候选、`oncourt_feed.py` 推清单，
+  # 都是这条库的直接消费者。没有定时采集，新采访永远进不来，成片候选永远是空的。
+  schedule:
+  # **每天两轮**，不是每周。「赢球后的采访」等一周就没意义了——
+  # 赛事一周打完，周推的话决赛采访最晚要等七天才到手。
+  #
+  # cron 一律是 UTC，北京时间要自己减八小时；**减完跨了零点就要连日期一起挪**。
+  #
+  # 两轮的分工按**赛区落在 UTC 的哪一段**来定，不是随手挑两个整点：
+  #   北京 05:00（21:00 UTC）——欧洲白天和傍晚场都打完并上传了
+  #   北京 11:00（03:00 UTC）——补美洲晚场。美东夜场常在 01:00–04:00 UTC
+  #                             才结束，上一轮跑的时候它还没打完
+  - cron: "0 21 * * *"   # 北京 05:00（次日）
+  - cron: "0 3 * * *"    # 北京 11:00（当日）
   workflow_dispatch:
     inputs:
       only:
@@ -156,20 +152,49 @@ jobs:
               | tee -a /tmp/oncourt.log
           fi
 
+      - name: 挑出该剪成片的候选（赛后开麦自动出片链的输入）
+        run: |
+          # 在 oncourt_feed 的选题闸之上再加三道成片闸（oncourt 类型 / 未做过 /
+          # 赛事还在打），写 data/interview_clip_candidates.json 给「自动建 spec →
+          # dispatch render」消费。当前库里没有窗口内的候选很正常（采集刚恢复，
+          # 辛辛那提还没打到关键轮次）——候选文件空着就是「现在没有该做的」。
+          python tools/pick_oncourt_clips.py --write \
+            | tee -a /tmp/oncourt.log
+
+      - name: 自动建赛后开麦 spec 草稿（转写 + 翻译）
+        env:
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+        run: |
+          # 对每个候选自动建草稿：yt-dlp 下音频 → faster-whisper small.en 转写 →
+          # DeepSeek 翻译 → specs/interviews/<slug>.draft.json。这是把今天人工
+          # 做的「转写+翻译+建 spec」机械化；双模型核对（verify_transcript）由
+          # render 时跑第二份完成。候选为空就跳过（连 faster-whisper 都不装）。
+          n=$(python -c "import json;print(len(json.load(open('data/interview_clip_candidates.json'))))" 2>/dev/null || echo 0)
+          if [ "$n" = "0" ]; then
+            echo "没有成片候选，跳过自动建 spec。"
+          else
+            pip install -q faster-whisper 2>&1 | tail -1
+            for i in $(seq 0 $((n-1))); do
+              python tools/draft_interview_spec.py --candidate "$i" --write \
+                | tee -a /tmp/oncourt.log \
+                || echo "::warning::第 $i 条草稿没成（跳过，看日志）"
+            done
+          fi
+
       - name: 提交新增条目
         run: |
-          # 只碰这一个文件。并行的生成任务互相覆盖过整棵 output/，
+          # 只碰这几个文件。并行的生成任务互相覆盖过整棵 output/，
           # 这里从一开始就把范围钉死。
-          if git diff --quiet -- data/oncourt_interviews.json data/oncourt_feed_sent.json; then
+          if git diff --quiet -- data/oncourt_interviews.json data/oncourt_feed_sent.json data/interview_clip_candidates.json specs/interviews; then
             echo "没有新增，不提交。"
             exit 0
           fi
           n=$(python -c "import json;print(len(json.load(open('data/oncourt_interviews.json'))['items']))")
           git config user.name "Claude"
           git config user.email "noreply@anthropic.com"
-          git add data/oncourt_interviews.json data/oncourt_feed_sent.json
+          git add data/oncourt_interviews.json data/oncourt_feed_sent.json data/interview_clip_candidates.json specs/interviews
           python tools/check_staged_file_sizes.py
-          git commit -m "data: 场上赛后采访采集（累计 ${n} 条）"
+          git commit -m "data: 场上赛后采访采集（累计 ${n} 条）+ 成片候选 + 采访 spec 草稿"
           for i in 1 2 3 4; do
             git pull --rebase origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0
             sleep $((2 ** i))
