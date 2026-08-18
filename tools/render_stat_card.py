@@ -28,6 +28,19 @@ spec 有 `segments`/`sources`**——只做统计图、不出视频的比赛（�
       "_source": "写清楚这些数字从哪查来的、怎么核实的——和 spec 别处的 _why 一个规矩"
     }
 
+## 双打：两个人一队
+
+`headshot` 可以是**一个路径**（单打，原样）或**一个正好两个路径的列表**
+（双打，一队两个人）。数字仍然只有一组——flashscore `df_st_1` 给的是
+**队伍合计**（发球/破发点/总分都不拆到某一个人身上），没有第二组数字
+可填，所以 `stats.a`/`stats.b` 的字段结构和单打一模一样，只是 `headshot`
+从一张脸变成两张脸并排（略微重叠，见 `.h2h-pair` 那段 CSS）。
+
+`williams-sisters-cincinnati` 这条是第一次这么用：`stats.a.headshot`
+是 `[威廉姆斯姐妹两人的头像]`，`stats.b.headshot` 是
+`[科斯秋克, 斯特恩斯]` 两张。**别去猜"该放谁的脸代表整支队伍"**——
+这正是当初没做数据图的理由，两个人一起放才不用做这个选择。
+
 **`_source` 不是可选项。** 这张图存在的全部意义就是"数字要经得起查"——
 ACE/双误/一发这几项在 flashscore `df_st_1` 就有；Winners/非受迫失误多数
 公开源都没有，要么找官方转播统计大屏（截图核对），要么找赛事方赛后稿
@@ -385,9 +398,26 @@ def build(spec: dict) -> str:
         rank_html = f'<span class="h2h-rank">（{int(rank)}）</span>' if rank is not None else ""
         flag_html = vp._score_flag(meta, where)  # noqa: SLF001
         en = vp._english_display(meta["name"], meta, where)  # noqa: SLF001
-        headshot_uri = _data_uri(REPO_ROOT / raw["headshot"])
+        headshot = raw["headshot"]
+        if isinstance(headshot, list):
+            # **双打：两张头像，不是一张。** 见模块 docstring「双打：两个人
+            # 一队」——同一个视觉footprint（252×252）里塞两个较小的圆、
+            # 略微重叠，像头像堆叠；两个都跟着队伍的胜负描边，不单独判
+            # 谁赢谁输（这是团队数据，不是个人数据）。
+            if len(headshot) != 2:
+                raise SystemExit(
+                    f"{where}.headshot 给了列表就必须正好两张（双打两个人各一张），"
+                    f"现在是 {len(headshot)} 张。")
+            portrait_html = '<div class="h2h-pair">' + "".join(
+                f'<div class="h2h-ring h2h-ring--pair{ring_cls}">'
+                f'<img src="{_data_uri(REPO_ROOT / p)}" alt=""></div>'
+                for p in headshot) + "</div>"
+        else:
+            headshot_uri = _data_uri(REPO_ROOT / headshot)
+            portrait_html = (f'<div class="h2h-ring{ring_cls}">'
+                              f'<img src="{headshot_uri}" alt=""></div>')
         return f"""<div class="h2h-side">
-  <div class="h2h-ring{ring_cls}"><img src="{headshot_uri}" alt=""></div>
+  {portrait_html}
   <div class="h2h-cn">{html.escape(meta["name"])}{rank_html}</div>
   <div class="h2h-flagrow">{flag_html}<span class="h2h-en">{html.escape(en)}</span></div>
 </div>"""
@@ -431,6 +461,14 @@ body{{color:{vp.TEXT};font-family:'TL Sans SC','Noto Sans CJK SC',sans-serif;
 .h2h-ring.win{{border-color:#c6f65a;box-shadow:0 14px 34px rgba(198,246,90,.4)}}
 .h2h-ring img{{width:100%;height:100%;object-fit:cover;object-position:50% 18%;
  background:#e9efe9}}
+/* 双打：两张小头像叠在同一个 252×252 footprint 里居中，不改
+   `.h2h-mid` 的 padding-top（那个数是照 252px 高的头像量的）。
+   两个圆各 150px、重叠 30px，视觉宽度和单人版的 252px 大致相当。 */
+.h2h-pair{{width:252px;height:252px;display:flex;align-items:center;
+ justify-content:center;flex:0 0 auto}}
+.h2h-ring--pair{{width:150px;height:150px;margin:0 -15px;position:relative}}
+.h2h-ring--pair:first-child{{z-index:2}}
+.h2h-ring--pair:last-child{{z-index:1}}
 .h2h-cn{{font-family:'TL Display SC','TL Sans SC',sans-serif;font-size:41px;
  margin-top:18px;text-align:center;white-space:nowrap}}
 .h2h-rank{{font-size:.6em;color:{vp.DIM};margin-left:2px}}
