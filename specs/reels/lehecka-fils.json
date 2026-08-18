@@ -71,12 +71,13 @@
     "_matchup_rank_why": "2026-08-18 重核过：**排名不取官方签表 `mds.pdf` 的 `Seeded Players` 表**——那一栏是**定种子那周的快照**，不是当期排名。拿辛辛那提这张签表的 12 个种子逐个比 tennisexplorer 的 10.08.2026 榜单，**10 个对不上**（德米纳尔 7/8、科博利 9/10、莱赫奇卡 12/14、霍达尔 15/11、门西克 17/16、瓦舍罗 18/19、保罗 21/24、菲斯 24/21、塔比洛 26/29、费里 36/37；只有兹维列夫 3 和布洛克斯 32 碰巧一样）。⚠️ 它伪装得好，因为 `Rank` 那一列和种子号严格同序——而那恰恰说明它就是排种子用的那份榜单。现在这两个数取 **tennisexplorer 的 10.08.2026 期**（页面自带榜单日期），和同一批片子里 WTA 那条走官方 `players/ranked`（`rankedAt` 2026-08-10）是同一期。",
     "_name_why": "两个中文名都走 `player_zh()`：`player_zh(\"Arthur Fils\")` → 菲斯，`player_zh(\"Jiri Lehecka\")` → 莱赫奇卡。**没有手打。**⚠️ 「菲斯」和「孟菲尔斯」（Monfils）是两个人，按名字 grep 会串——`hijikata-monfils` 那条讲的是后者。",
     "portrait": {
-      "frame_at": 136.5,
-      "focus": 0.5,
-      "focus_y": 0.3,
-      "zoom": 1.0
+      "image": "assets/reel/fils-cincinnati-2026-r3.jpg",
+      "focus": 0.42,
+      "focus_y": 0.5,
+      "zoom": 1.0,
+      "_frame_why": "⚠️ **换过一次源，第一次找的那张查不清出处，没敢用。** L'Équipe（Presse Sports/Montassar Yazidi 摄，2026-08-18 发稿）配了一张菲斯浅蓝 Lacoste polo 的近景，衣服和我们源片一致，但背景是一片红色扶手＋红色花丛的观众席——翻遍我们自己在辛辛那提两个场地（P&G Stadium Court、Tony Trabert Stadium 3）拍到的画面，以及蒙特利尔 Shelton–Nakashima 决赛那条片子的看台，**一次红色装饰都没见过**，查不出这块看台在哪儿，**宁可换源不赌**。\n\n**换成西语体育媒体找到的这张，四要素自证扎实**：puntodebreak.com（西班牙）2026-08-18 发稿「Arthur Fils y una estadística que explica por qué nunca hay que darle por muerto」，`twitter:image:alt` 写着「Fuente: Getty」。图里背景清清楚楚是 **`CreditOne`＋`W&S`（Western & Southern）两块广告板**——和我们源片 24.5~34.5 秒同一批赞助商板（`Western & Southern Financial Group`／`GreatAmerican`／`CreditOne`／`Kroger`）逐字对得上；菲斯的浅蓝 Lacoste polo（袖口菱形 logo 贴片、鳄鱼腕带）和源片 30.5～32.5 秒的近景一件不差。\n\n⚠️ **分辨率是这次的取舍**：原图 **1120×1120**（Drupal 站自己存的方图，非原始比例），`fill = min(1120/1080, 1120/1440) = 0.78×`，够不着 1.00 的地板，见下面 `_low_res_why`。取的是菲斯逆转取胜之后的握拳嘶吼——和我们源片 132.5~139.5 秒那串仰头握拳的情绪是同一类反应，也是这条片子「他从没让人把他当死人」这条落点最直接的画面。",
+      "_low_res_why": "1120×1120，fill=0.78×，够不着 1.00 的地板。**认领这个取舍**：查过的四类源（赛事媒体库、The Enquirer、AP、ATP 官方）到 2026-08-18 都还没有这一场的实拍，等下一批图库上线要再等一天；这张已经是**核实过背景和球衣、Getty 供图**里能找到的最高分辨率版本。1120px 仍然是相机原图（不是抽帧转播流放大），比 1920p 转播画面裁出来再放大 1.78 倍的效果好——账号所有者的封面前置条件是「官方高清实拍」而不是「达到某个像素数」，这张满足前者。"
     },
-    "_portrait_why": "⚠️⚠️ **这是占位，不是最终封面。** `cover_photo_problem` 会当场拦下（`frame_at` 一律不放行），也就是说**这条 spec 现在渲不出来**——这是有意的。\n\n账号所有者 2026-08-18：「**如果没封面，都先做好视频等封面**」。所以窗口、旁白、事实全部做完并验过，**只差一张官方高清实拍**。\n\n**这一趟查了什么（8 月 18 日）**：\n- 赛事官网媒体库 `cincinnatiopen.com/wp-json/wp/v2/media`（浏览器 UA）：带 **8/17 日期戳的只有 4 张**（`CincyOpen8.17.26BJ_*`），打开看过，**四张全是同一个球员的近景特写，不是菲斯也不是莱赫奇卡**。\n- 当地报纸 The Enquirer 8/17 的每日图集（`cincinnati.com/picture-gallery/...`）：44 张，逐条读了 caption，**只有威廉姆斯姐妹双打、斯瓦泰克－萨卡里、莱巴金娜－弗雷赫、科博利－布洛克斯四场**，没有这一场。\n- **这是「还没发」不是「没有」**：这一场是**夜场**（当地 8/17 21:05 开打、23:01 打完），而 CLAUDE.md 量过——夜场的官方图从打完到能取大约要 24 小时，8/17 那一批还在陆续上线。\n\n图一落地就换成 `portrait.image`，**优先近景特写**（账号所有者 2026-08-18：「红框里这些封面图选的比较好，都是近景特写」）。菲斯这一场有现成的情绪：132.5~139.5 秒他仰头、握拳、眼睛发红那一串。",
     "scoreboard": {
       "court": "Tony Trabert Stadium 3",
       "_court_why": "⚠️ **只有一个源，而且现在复核不了，照实说。** 出处是 **ATP 官方 Order of Play `protennislive.com/posting/2026/422/op17.pdf`**（TONY TRABERT STADIUM 3 一栏第 4 场）。写这条 spec 时回头去抓那份 PDF，**已经 404**——`op*.pdf` 只在当天挂着，过了就撤（`op16`/`op17`/`op18` 三个都试过，全 404；同目录的 `mds.pdf` 照旧拿得到，所以不是整站不通）。\n\n⚠️ **这一场没有画面自证**：转播**没有打全屏台标**（同一站的 `zverev-atmane` 打过，写着 `ROUND 3 | P&G STADIUM COURT`），场地地面只刷着 `ATP TOUR`，场边一圈是赞助商板，**没有任何一处写着球场名**。所以 CLAUDE.md 那张「自证强弱」表里，这一条连最弱的那一档都够不上。\n\n⚠️ 唯一的旁证很软，**不足以单独定案**：144.5~146.0 秒的夜景宽景看得出这是一块看台规模明显小于主球场的外场，和「Stadium 3」不矛盾——但它证明不了是哪一块外场。",
