@@ -16,7 +16,7 @@
 
 用法：
     python tools/orchestrate.py                  # 干跑，打印今天该做哪几条
-    python tools/orchestrate.py --apply --max 3  # 真点 run，最多 3 场
+    python tools/orchestrate.py --apply --max 8  # 真点 run，最多 8 场
     python tools/orchestrate.py --column reel    # 只看赛场之上
 """
 from __future__ import annotations
@@ -44,8 +44,11 @@ def _beijing_today() -> date:
 # 250 及以上才算「巡回赛级别」，读者认得出来（docs/columns.md 的选题门槛）。
 TOUR_LEVELS = frozenset({"GS", "M1000", "W1000", "500", "250", "Finals", "TeamCup"})
 STATE_PATH = Path("data/orchestration_state.json")
-# 单次点 run 的上限：无人值守 + 批量发微信，错一次错一片——先压着，跑稳再放宽。
-DEFAULT_MAX = 3
+# 单次点 run 的上限：账号所有者 2026-08-18 定「最大任务放开到 8」——好多比赛
+# 可能同时结束，3 条会让后面几场排到下一班（30 分钟后），时效性高的场次等不起。
+# 8 条并发在 Actions 并发额度内（免费档默认 20 个并发 job）；错一片的风险由
+# 「推微信 = 账号所有者审核通道」兜着，不在调度层再压。
+DEFAULT_MAX = 8
 
 
 def slug_for(m) -> str:
