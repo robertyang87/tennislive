@@ -9972,17 +9972,31 @@ def test_顶栏赢家名字整块高亮而且没有比分就不涂():
             f"这一行里一盘比分都没有，不该涂任何颜色：{plain}"
 
 
-def test_顶栏配色跟着比分板走():
-    """两套渲染引擎（HTML/CSS 和 ASS）不共享代码，颜色只能抄一份过来。
+def test_顶栏赢家色跟着赛后开麦走():
+    """赢家名字和赢盘的颜色，2026-08-18 起不再跟着比分板的 CSS 走。
 
-    ⚠️ **这条必须从 `versus_poster` 的 CSS 里现抠现折算，不能写死 hex。**
-    第一版就是写死的：`assert TOPBAR_SETWIN_ASS == r"{\\c&H005AF6C6&}"`。
-    2026-08-09 比分板把 `.setlose` 从灰 `#93a79c` 改成正文近白（「灰在压缩
-    后的视频里太接近底色」），顶栏还挂着改之前的灰——**而那条写死的断言
-    照样绿**，「同一套数值」这个声明变成了假的，是 rebase 到 main 时才发现。
-    写死的判据只能防「有人把它删了」，防不住「上游改了它没跟着」。
+    账号所有者拿"赛场之上"和"赛后开麦"两条线的顶栏截图对比，要求"赢的人的
+    颜色、赢一盘的颜色都改成和赛后开麦一样"。在这之前这条测试（当时叫
+    `test_顶栏配色跟着比分板走`）从 `versus_poster.py` 的 `.setwin` CSS 里
+    现抠现折算——那条路径现在已经不成立了：两条线的颜色出处本来就是各自
+    独立起的（一条接封面比分板的品牌绿，一条另起一支青绿），这次是显式
+    指定"以赛后开麦为准"，不是"发现两边本该一致却漂了"。
+
+    ⚠️ **这条必须从 `build_interview_clip._MARK_COLOUR` 里现抠，不能写死
+    hex。** 写死的判据只能防"有人把它删了"，防不住"赛后开麦那边又改了、
+    这边没跟着"——而这正是上一版栽过的那个坑，只是换了个出处。
     """
     reel = _reel()
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import build_interview_clip  # noqa: PLC0415
+
+    # `_MARK_COLOUR` 是内联标签的内容（`\c&H8CDC4A&`），不带外层花括号——
+    # 补齐花括号才是一个完整的 ASS 覆盖标签，和 `TOPBAR_SETWIN_ASS` 同一种形状。
+    mark = "{" + build_interview_clip._MARK_COLOUR + "}"
+    assert reel.TOPBAR_SETWIN_ASS == mark
+    assert reel.TOPBAR_WINNER_ASS == mark
+
+    # 连字符和输盘这次没有改动范围，仍然跟着比分板的口径走
     css = Path("tools/versus_poster.py").read_text(encoding="utf-8")
 
     def poster_hex(cls: str) -> str:
@@ -9994,9 +10008,7 @@ def test_顶栏配色跟着比分板走():
         h = hexcolor.lstrip("#")
         return "{\\c&H00" + (h[4:6] + h[2:4] + h[0:2]).upper() + "&}"
 
-    # 赢盘：和比分板 `.setwin` 逐字节对得上
-    assert reel.TOPBAR_SETWIN_ASS == to_ass(poster_hex("setwin"))
-    # 连字符：比分板那次没改它，仍然压暗一档
+    # 连字符：这次没改，仍然压暗一档
     assert reel.TOPBAR_SETDASH_ASS == to_ass(poster_hex("setdash"))
 
     # 输盘：比分板的口径是「用**那个表面自己的正文色**，靠色相和赢盘分开，
@@ -10009,6 +10021,29 @@ def test_顶栏配色跟着比分板走():
         "顶栏是直接烧进 H.264 的，更吃这个问题")
     # 反过来也要成立：赢盘和输盘必须真的不同色，不然上色等于没上
     assert reel.TOPBAR_SETWIN_ASS != reel.TOPBAR_SETLOSE_ASS
+
+
+def test_顶栏比分数字切到赛后开麦同一支字体():
+    """比分数字（连字符也算）要切到 `TOPBAR_SCORE_FONT`，切完还要切回来。
+
+    ⚠️ **切回去的必须是字体和字号两样都复位，不能只复位字体。** Barlow
+    Condensed 是窄身，`TOPBAR_SCORE_SIZE`（44）比正文的 `TOPBAR_BODY_SIZE`
+    （38）大一档——只切字体不切字号，比分数字之后紧跟的输家名字会被
+    Barlow 的字号"续"下去，读起来像输家名字也放大了。
+    """
+    reel = _reel()
+    out = reel.colorize_topbar_score("莱巴金娜 6-4 7-6(4) 弗雷赫")
+
+    fn_switch = rf"\fn{reel.TOPBAR_SCORE_FONT}\fs{reel.TOPBAR_SCORE_SIZE}"
+    fn_reset = rf"\fn{reel.TOPBAR_BODY_FONT}\fs{reel.TOPBAR_BODY_SIZE}"
+    assert out.count(fn_switch) == 2, "两个 set 各自的比分数字都要切一次字体"
+    assert out.count(fn_reset) == 2, "每次切完都要切回正文字体/字号，一次都不能漏"
+    # 连字符必须落在"切字体"和"切回来"之间——"6-4"整体切字体，不是数字切、
+    # 连字符漏在外面
+    switch_pos = out.find(fn_switch)
+    dash_pos = out.find("-", switch_pos)
+    reset_pos = out.find(fn_reset, switch_pos)
+    assert switch_pos < dash_pos < reset_pos, "连字符必须落在切字体和切回来之间"
 
 
 def test_关键分脉冲相对事件起点转毫秒():
