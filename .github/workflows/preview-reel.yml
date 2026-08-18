@@ -88,7 +88,7 @@ jobs:
           cache: pip
 
       - name: 装 ffmpeg
-        timeout-minutes: 6
+        timeout-minutes: 12
         run: |
           apt_retry() {
             for i in 1 2; do
@@ -104,7 +104,7 @@ jobs:
           apt_retry apt-get install -y -qq ffmpeg
 
       - name: 装中文字体（封面和烧字幕都要）
-        timeout-minutes: 6
+        timeout-minutes: 7
         run: |
           apt_retry() {
             for i in 1 2; do
