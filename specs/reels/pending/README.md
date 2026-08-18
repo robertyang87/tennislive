@@ -90,3 +90,34 @@
     图片重新量，当前写的 `focus_y: 0.35` 只是占位猜测），跑一次完整 `mode=render`
     （这条从来没渲过，不是重渲），`check_reel_landed` 0 项不合格后合并 →
     `mode=push` ＋ `push=true`。
+
+- **`anisimova-eala`**（辛辛那提 WTA1000 第三轮，2026-08-17，阿尼西莫娃 4-6 6-4 6-2 逆转伊埃拉）
+  - 世界第 10 的阿尼西莫娃在决胜盘 0-2 落后的情况下连赢六局，逆转世界第 20 的
+    伊埃拉——两人首次交手。真正的分水岭是数据：阿尼西莫娃的非受迫失误三盘从
+    25→13→7 一路收窄，制胜分稳定在 15~16 个
+  - **片子还没渲染**——`cover.portrait.image` 一直是字面量 `"PENDING"`，卡在
+    `cover_photo_problem` 那道闸（和另外两条一样，`probe.json` 是唯一落地的产物）
+  - probe 已经跑过：`output/2026-08-18/reel/anisimova-eala/`（6 张缩略图墙、
+    逐分／记分板对照表、captions 全在），13 段 spec 全部写完，`--dry-run` 和
+    `--check-narration`（zh-CN-YunjianNeural +6%）都过了——12 段全部装得下、
+    单段最长哑场 3.68s（门槛 4.0s），小红书正文 632 字也写好了——**唯一缺的
+    就是这一格**
+  - `stats` 块已经补全：flashscore 十二项和 WTA 官方 `LS025/stats` 逐项对过
+    （break points 两源不一致，取 WTA 官方），TNNS 制胜分/非受迫失误
+    （`tnns-stats.yml` run 32106507506，match id 73467000，「选手顺序
+    ['Eala', 'Anisimova']」自证，分盘合计＝全场两项都对）
+  - 四类源 2026-08-18 06:2x Z 查过一遍，**这一场一张都没有**：
+    - WTA `photo-resources`：没有对得上的
+    - AP 通讯社：两条命中都是资料图（2025 温网夺冠、2025 中网夺冠），不是这一场
+    - 赛事官网 WordPress 媒体库：8/17 最新一批 4 张全是科博利，上传时刻
+      22:57:55 UTC——**早于这场比赛开始**（这场当地 8:30 PM 后才开打，
+      02:06 UTC 08-18 才结束）
+    - The Enquirer：这一辑按比赛日出，当天的往往次日才上线
+  - **判据是「还没发」**：这场是当晚 P&G Stadium Court 的第 6 场（night session
+    主赛事），比赛结束时间晚于赛事媒体库当天最后一次更新，图大概率要等下一批
+    才会上线
+  - **接回来怎么做**：把两个文件 `git mv` 回 `specs/reels/`，把
+    `cover.portrait.image` 换成真实图片路径（`fit`/`focus`/`focus_y`/`zoom` 按实际
+    图片重新量，当前写的 `focus_y: 0.4` 只是占位猜测），跑一次完整 `mode=render`
+    （这条从来没渲过，不是重渲），`check_reel_landed` 0 项不合格后合并 →
+    `mode=push` ＋ `push=true`。
