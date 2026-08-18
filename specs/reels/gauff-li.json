@@ -1,0 +1,225 @@
+{
+  "slug": "gauff-li",
+  "source_url": "https://www.youtube.com/watch?v=E2U0fd_lSFs",
+  "_source": "WTA 官方 YouTube 频道单场集锦《Coco Gauff vs. Ann Li | 2026 Cincinnati Round 3 | WTA Match》。389.49 秒、1920×1080、25 fps——超出 WTA 纯集锦定长 310 秒，打开看过：全片是「集锦 + 场上采访」的合并版本，约 299.44 秒起（自动字幕原话 `Tell us how you did it`）是获胜后的场上采访，所有窗口收在 298.0 秒以内，不碰采访部分（CLAUDE.md「采访不进复盘」）。",
+  "_match": {
+    "flashscore_id": "YwFlKXtA",
+    "wta_match_id": "LS020",
+    "wta_event_id": "1017",
+    "_why": "两个源都核过：flashscore `YwFlKXtA`（df_st_1 统计、df_sui_1 分盘用时、df_mh_1 逐局逐分），WTA 官方 `LS020`（`[4]C. Gauff d [28]A. Li 6-1,7-6(3)`、`RoundID 3`、`MatchTimeTotal 01:33:41`、`ScoreTbSet2 3`）。轮次口径和同一天已发的 `cirstea-kalinskaya`／`noskova-tauson`（同为 `RoundID 3`）一致，写「第三轮」。TNNS 制胜分/非受迫失误另跑一趟核对（match id 73467006，见下）。"
+  },
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "高芙",
+    "hook": "两个赛点\n没拿下",
+    "_hook_why": "讲**过程**，不讲身份——排名、种子、轮次比分海报下面都印着了。两行分别 4 字和 3 字，solo 上限 10。\n\n事实出自转播画面自证：抢七打到六比一时挂出 `MATCH POINT #2`（说明 #1 已经被救下），六比二时又挂出 `MATCH POINT #3`——她自己的两个赛点被李吉妮连续救下，直到第三个才真正拿下比赛（7-3）。⚠️ **有意不写最终比分**：6-1 7-6(3) 海报下面赛果行本来就印着，钩子再写一遍是白占字。",
+    "_subject_view_why": "封面放高芙：这一场的赢家，世界第 4、4 号种子——热度闸①②都过（本身是这个号发过多条片子的常青名字），没有争议。",
+    "_heat_why": "高芙当期世界第 4（榜单日期 2026-08-10），过热度闸②（世界前 20），且是全球关注度最高的球员之一——不需要额外论证。",
+    "topic": "WTA1000 辛辛那提 · 女单第三轮",
+    "portrait": {
+      "image": "assets/reel/gauff-cincinnati-2026-r3.jpg",
+      "fit": "cover",
+      "focus": 0.475,
+      "focus_y": 0.5,
+      "zoom": 1.32,
+      "_photo_why": "官方实拍，WTA 官方集锦视频页自己的 CMS 数据里找到的（`sweep_wta(\"Gauff\")` 这条路没试——高芙这条线已经有官方图沿用惯例，这次直接走视频页更快）：\n`https://www.wtatennis.com/videos/4562057/gauff-pushes-her-way-throught-to-cincinnatis-fourth-round-over-li` 页面的 `og:image` 挂着\n`photo-resources/2026/08/18/30cb8067-3b24-408f-b1d1-5d79cf200b0a/Coco_Gauff_-_Cincinnati_Open_2026_-_Day_8-DSC_3548.jpg`，`?width=4000` 实测拿到 4700×3162（原图，未放大）。这条视频页正是这场比赛的赛后集锦（标题点出「推进到辛辛那提第四轮，对手是李」，和这场 6-1 7-6(3) 胜李吉妮的结果对得上），发布日期 2026-08-18（赛后当天）。\n\n打开看过：俯拍机位，正手抢上前场的伸展击球，球在画面右下角，球衣是浅蓝色 New Balance（和源片里她全程穿的球衣一致），运动感强、清晰锐利，没有水印，场地全蓝、纯色背景不干扰主体。\n\n**裁切按「人物居中、放大到接近铺满」这条新规矩渲出来试的**（账号所有者 2026-08-18：「尽可能把人物放到正中间，同时放大到足够，接近铺满整个画布，四周留一定空间即可」）。原图是横图（4700×3162，1.49:1），cover 到 1080×1440（0.75:1）天然要吃掉大半宽度；人物主体（球拍到脚跟）在原图里横跨约 22%~64% 的宽度，几何中心落在 0.475 附近，`focus` 直接用这个数。`zoom` 从 1.0 起渲，人物只占画面纵向约 66%、上下各留一大截空场——按新规矩往上调，1.3 渲出来球拍尖和落地脚都还在框内、人物占比明显更饱满，最后定 1.32（`render_cover_local.py` 渲过比对，人物顶到接近铺满、四周仍留得出边）。"
+    },
+    "scrim": "clear",
+    "matchup": [
+      {
+        "name": "高芙",
+        "name_en": "Coco Gauff",
+        "country": "USA",
+        "rank": 4
+      },
+      {
+        "name": "李吉妮",
+        "name_en": "Ann Li",
+        "country": "USA",
+        "rank": 29
+      }
+    ],
+    "_name_why": "两个中文名都走 `player_zh()`：`player_zh(\"Coco Gauff\")` → 高芙、`player_zh(\"Ann Li\")` → **李吉妮**（`player_names_top500.json` 第 3727 行），实调过。⚠️ **和已发的 `zhang-li.json`（用的是「李安」）不一致**——那是一条真实的译名漂移：`players.py` 的兜底表写的是「安·李」、`zhang-li.json` 用的「李安」和这两张表都对不上，是手打错误。`zhang-li` 已经推送过，消息发出去收不回来，这条只按 `player_zh()` 的当前权威结果走，不跟着已发的那条错误对齐（CLAUDE.md「改的方向是以译名表为准，不是跟已发的那条对齐」）。",
+    "winner": "高芙",
+    "result": "6-1 7-6(3)",
+    "scoreboard": {
+      "court": "Center Court",
+      "_court_why": "**球员自己在场上采访里说的**：源片 326.80-328.32 秒原话 `it was my first time playing on center court this year`——高芙自己确认这是她今年第一次在中心球场打球。比场馆猜测或 CourtID 反查更硬（CLAUDE.md「画面里能自证的元素」的最强一档：当事人原话）。",
+      "duration_source": {
+        "provider": "wta",
+        "url": "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches?page=0&pageSize=400",
+        "match_id": "LS020",
+        "field": "MatchTimeTotal",
+        "source_page": "https://www.wtatennis.com/tournament/1017/cincinnati/2026/scores/LS020"
+      },
+      "_duration_why": "WTA 官方 `MatchTimeTotal 01:33:41`；分盘 `settime` 00:29:11 + 01:04:23 = 1:33:34，和总计差 7 秒——同一个量级（noskova-tauson 那条差 3 秒），两个数互相印证。"
+    }
+  },
+  "editorial": {
+    "mode": "match_review",
+    "question": "高芙已经把抢七拉开到六比一，为什么最后是七比三才拿下比赛？",
+    "thesis": "高芙第一盘几乎没给对手机会，六比一，不到半小时拿下。第二盘开局她马上完成破发，一比零——可李吉妮很快追了回来，一比二反倒是她占先，比分随即进入拉锯。李吉妮一路追到五比三，自己发球，只差一局就能把这一盘扳平；眼看就要丢掉这一盘，高芙反而在这里连追带赶：四比五、五比五、六比五、六比六，逼入抢七。抢七她一上来就拉开身位，六比一——可李吉妮连救两个赛点，把比分咬到六比三，直到第三个赛点，高芙才真正把比赛收官，七比三。",
+    "beats": [
+      "前段：第一盘六比一轻松拿下；第二盘开局破发领先一比零，随即被追平反超",
+      "中段：李吉妮一路追到五比三、自己发球只差一局；高芙在这里连破带追，四比五到六比六逼入抢七",
+      "结局：抢七六比一领先，李吉妮连救两个赛点，第三个赛点才真正收官，七比三"
+    ],
+    "human_context": {
+      "angle": "这是高芙本站发挥最不「直落」的一场——第二轮她也经历过一次三盘鏖战（2-6 6-4 6-1 胜萨姆索诺娃），这场虽是两盘拿下，但同样几度差点脱手。场上采访她自己也说了：「说实话，今天球很难控制，我觉得我们两个人都犯了不少平时不会犯的失误」——这句话被 TNNS 的技术统计印证了。",
+      "facts": [
+        "高芙 2004-03-13 出生，本场时 22 岁；李吉妮 2000-06-26 出生，26 岁（WTA 官方球员接口 id 328560 / 326096）",
+        "当期世界排名：高芙第 4（榜单日期 2026-08-10，WTA 官方 `players/ranked`，`metric=SINGLES`）、李吉妮第 29",
+        "种子：高芙 4 号、李吉妮 28 号（WTA 官方 `SeedA=4`、`SeedB=28`，`ResultString` 写作 `[4]C. Gauff d [28]A. Li 6-1,7-6(3)`）。⚠️ 种子号不是排名，两个数都对，混着说就成了假话",
+        "轮次第三轮：WTA 官方 `RoundID=3`，与同一天同一站的 `cirstea-kalinskaya`／`noskova-tauson` 同一轮次口径",
+        "用时 `MatchTimeTotal` 01:33:41；分盘 `settime` 00:29:11 / 01:04:23，相加 1:33:34，与总计差 7 秒（自洽，同量级偏差）",
+        "第一盘：flashscore `df_mh_1` 显示高芙从领先到 5-1（`SET POINT`，40-15）再拿下 6-1，全程只被追到过一次占先局面；转播解说原话（65-69 秒）：`Coco Gauff one set away from reaching the fourth round in Cincinnati. Six games to one in just under half an hour.`",
+        "第二盘：画面自证——70.5-88.5 秒记分条显示高芙从 `6-0-40 / 1-0-0`（`BREAK POINT`）打到 `6-1 / 1-0`，第二盘开局即完成破发；120.5-138.5 秒记分条显示 `6-1-30 / 1-2-0`，说明李吉妮随即反破得手、以 2-1 反超；195.6-224.76 秒记分条从 `6-3-40 / 1-4-40`（深盘平分）一路推进到 `SERVING FOR SET`（`6-3 / 1-5`）——李吉妮追到 5-3 自己发球，只差一局拿下第二盘；224.76-238.5 秒记分条显示分数从 `6-3-0 / 1-5-15` 一路推进到 `6-6-5 / 1-6-1`（进入抢七）——高芙在这段窗口里连追带赶，从落后一盘扳平到六比六",
+        "抢七：240.5-268.2 秒记分条／标签自证——240.5 秒显示 `6-6-5 / 1-6-1`（抢七 5-1 高芙领先），248.5 秒 `6-1`，随后依次挂出 `MATCH POINT #2`（比分 6-2，说明 #1 已被救下）和 `MATCH POINT #3`（比分 6-3）——李吉妮连救两个赛点，直到第三个赛点高芙才拿下，抢七 7-3（WTA 官方 `ScoreTbSet2=3`）",
+        "全场技术统计（WTA 官方 `LS020/stats` setnum 0，与 flashscore `df_st_1` 双核一致）：ACE 6:3、双误 6:4、一发进球 41/72(57%):40/70(57%)、破发点兑现 4/10:2/5、总得分 80:62（142 分中）",
+        "转播解说 226.16-231.12 秒原话：`It's a very interesting turn of events, but this set was heading in the other direction`——明确点出高芙从落后翻回来这一段",
+        "赛后场上采访原话（294.56 秒）：`straight sets, but not straightforward`——主持人对这场比赛的总结，直落两盘但过程并不轻松；高芙原话（307.60-320.48 秒）：`Yeah, I mean she started to play better. I had a couple break opportunities in a second. So um just trying to to forget those the ones that I missed. And honestly, it was really hard to control the ball today. I think we're both making a lot of uncanny errors that maybe we both normally don't make`",
+        "制胜分/非受迫失误来自 TNNS（`tnns-stats.yml` run **32193554205**，match id 73467006，报告自报「选手顺序 ['Gauff', 'Li']」——和 `cover.matchup` 同序；`hasExtendedStats: True`，分盘合计＝全场两项都自证 ✅：制胜分 7+6=13 / 4+19=23，非受迫失误 11+16=27 / 17+29=46。⚠️ **李吉妮的制胜分（23）比高芙（13）还多，但非受迫失误也是高芙的将近两倍（46 比 27）**——和高芙自己赛后说的『我们都犯了不少平时不会犯的失误』完全吻合",
+        "交手史：高芙此前 3-0 全胜李吉妮、从未丢过一盘，涵盖硬地/红土/草地三种场地，最近一次 2025 年马德里公开赛第三轮 6-2 6-3。两个源核过：WTA 官方赛前报道原文写着 `having won all three previous meetings in straight sets`，第三方聚合统计站独立给出同样的「3-0，从未丢盘」记录（两个独立信源）——本场之后总记录变成 4-0",
+        "李吉妮第二轮 7-5 6-3 胜张帅（WTA 官方 `LS041`），⚠️ 这条只作背景交代，片子里不展开（`zhang-li` 那条已经从张帅视角讲过这场球）"
+      ],
+      "sources": [
+        "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches?page=0&pageSize=400",
+        "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches/LS020/stats",
+        "https://api.wtatennis.com/tennis/players/ranked?page=0&pageSize=100&type=rankSingles&sort=asc&name=&metric=SINGLES",
+        "https://api.wtatennis.com/tennis/players/326096",
+        "https://global.flashscore.ninja/2/x/feed/df_st_1_YwFlKXtA",
+        "https://global.flashscore.ninja/2/x/feed/df_sui_1_YwFlKXtA",
+        "https://global.flashscore.ninja/2/x/feed/df_mh_1_YwFlKXtA",
+        "https://www.wtatennis.com/news/4560936/gauff-sets-up-all-american-third-round-clash-against-li-in-cincinnati",
+        "https://www.tennismajors.com/wta-tour-news/gauff-cruises-past-li-into-cincinnati-last-16-858814.html",
+        "https://www.wtatennis.com/tournament/1017/cincinnati/2026/scores/LS020"
+      ],
+      "voice_label": "抢七里的两个赛点"
+    }
+  },
+  "topbar": {
+    "line1": "2026 辛辛那提 WTA1000 第三轮",
+    "line2": "高芙 6-1 7-6(3) 李吉妮"
+  },
+  "_no_repeat": "⚠️ **高芙这条线上已经发过一条**（`gauff-samsonova`，辛辛那提第二轮 2-6 6-4 6-1 胜萨姆索诺娃）——那一条铺开讲的是「五次交手、三次萨姆索诺娃先赢一盘、三次都被高芙翻盘」和「雨断＋高芙自己的赛后原话『雨来得正是时候』」。**这一条一个字不碰那两样**，讲的是这场自己的转折（抢七两救赛点）和「今天都犯了不少失误」这句不同的赛后引语。\n\n同一天同一站的兄弟片：`cirstea-kalinskaya`（科斯蒂亚连赢十一局＋对手退赛）、`noskova-tauson`（诺斯科娃救盘点）——三条线落点都不一样，不用额外避让。\n\n`李吉妮` 这条线上已经发过 `zhang-li`（张帅视角讲这场负于「李安」——**同一个人，那条用的是错误的译名**，见上面 `_name_why`）；那条讲的是张帅五比五那一跤的细节，和这条无关，不重复。",
+  "stats": {
+    "tour": "wta",
+    "a": {
+      "headshot": "assets/players/headshots/wta-328560.jpg",
+      "aces": 6,
+      "df": 6,
+      "first_in": 41,
+      "first_won": 28,
+      "first_total": 72,
+      "second_total": 31,
+      "second_won": 18,
+      "bp_conv": 4,
+      "bp_chances": 10,
+      "pts_won": 80,
+      "pts_total": 142,
+      "winners": 13,
+      "ue": 27
+    },
+    "b": {
+      "headshot": "assets/players/headshots/wta-326096.jpg",
+      "aces": 3,
+      "df": 4,
+      "first_in": 40,
+      "first_won": 23,
+      "first_total": 70,
+      "second_total": 30,
+      "second_won": 13,
+      "bp_conv": 2,
+      "bp_chances": 5,
+      "pts_won": 62,
+      "pts_total": 142,
+      "winners": 23,
+      "ue": 46
+    },
+    "_source": "十项来自 flashscore `df_st_1_YwFlKXtA` 的 `Match` 那一档（`match_stat_hooks.py YwFlKXtA --stats-block` 跑出的原始输出），并且 aces/df/bp_conv/bp_chances/pts_won 五项和 WTA 官方 `LS020/stats` 的 setnum 0 逐项对过（acesa=6/acesb=3、dblflta=6/dblfltb=4、breakptsconva=4/breakptsconvb=2、breakptsplayeda=10/breakptsplayedb=5、totptswona=80/totptswonb=62，全部一致）。\n\n⚠️ **`a` 跟的是 `cover.matchup[0]`＝高芙**——flashscore 的 `SH`（home）也正好是高芙、`SI` 是李吉妮，同序但仍按 `matchup` 对抄，不按 feed 的 home/away 走（CLAUDE.md「stats.a 跟的是 cover.matchup[0]，不是 feed 的 home/away」）。头像沿用既有 spec 的文件：`wta-328560`（`gauff-samsonova.json` 已用过）、`wta-326096`（`zhang-li.json` 已用过，但那条挂的中文名是错的「李安」——头像文件本身没问题，只是这次挂对了名字「李吉妮」）。\n\n⚠️ `first_total` 不猜，按 WTA 官方 `ptsplayed1stserva`/`ptsplayed1stservb` 直接取（41/40），并核对 `first_in+second_total`＝`totservplayed`：高芙 41+31=72（对得上 `totservplayeda=72`）、李吉妮 40+30=70（对得上 `totservplayedb=70`）。pts_total 取 flashscore 报的 142（等于官方 `totptswona+totptswonb`=80+62=142）。\n\n**制胜分和非受迫失误来自 TNNS**（`tnns-stats.yml` run **32193554205**，match id 73467006，报告自报「选手顺序 ['Gauff', 'Li']」——和 `cover.matchup` 同序；`hasExtendedStats: True`，分盘合计＝全场两项都自证 ✅：制胜分 7+6=13 / 4+19=23，非受迫失误 11+16=27 / 17+29=46。⚠️ flashscore 的 `df_st_1` 这一场只有这十项，没有 winners/UE 这两行——WTA 巡回赛那一档的老毛病，「flashscore 没有」不等于「没有」。",
+    "footer_venue": "Center Court · 辛辛那提",
+    "footer_date": "2026.08.18"
+  },
+  "_hit_data": "跑过 `tools/match_stat_hooks.py YwFlKXtA`（flashscore 无 winners/UE）和 `tnns-stats.yml`（match id 73467006，拿到 winners/UE）。挑进片子的是**抢七里的两个赛点**（高芙自己的赛点被李吉妮连救两次，第三个才兑现）——这是钩子、开场落点、正文核心事实共用的核心；顺带挖出「李吉妮制胜分比高芙还多、但非受迫失误接近高芙两倍」这条数据线，和高芙自己的赛后原话（『我们都犯了不少平时不会犯的失误』）互相印证，放进了 `editorial.human_context.facts`。",
+  "_claims": "「李吉妮 3-0 全胜（现 4-0）、从未丢过一盘」是全称式的历史断言，两个独立信源核过：WTA 官方赛前报道原文（`having won all three previous meetings in straight sets`）和第三方聚合统计站独立给出的同样记录（3-0，涵盖三种场地）。「场上采访她自己说」「转播解说原话」两处引语直接摘自源片自动字幕，落笔前逐句在 `captions.txt` 里核实存在，不是转述。",
+  "_editing_why": "这条集锦画面覆盖率不低：probe 的 `scene_cuts` 是 [3.8, 15.12, 20.28, 30.8, 31.44, 44.2, 52.8, 70.52, 73.52, 82.16, 86.08, 87.32, 111.0, 117.2, 123.0, 134.0, 136.84, 152.8, 156.68, 191.08, 194.6, 205.0, 206.84, 209.68, 224.76, 229.2, 251.96, 261.36, 264.08, 268.2, 274.68, 286.8, 289.96, 292.52, 299.44, 379.36, 381.36]。⚠️ **195.6-224.76 秒和 224.76-238.5 秒两段各自跨了好几个真实剪辑点**——这两段窗口对应的是「李吉妮追到五比三自己发球」到「高芙连追带赶扳平六比六」这段真实比赛里跨越好几个发球局的进程，官方集锦本身在这段剪得比较碎（短促的多次连续切换），旁白按局分推进走、不逐分描述，画面是连续的比赛动作镜头（发球-回合-下一分），不是同一个镜头硬撑；这一处的做法和 `noskova-tauson` 的 `_editing_why`「两局没有画面，用旁白概括交代」是同一个理由的变体（这里是「有画面但镜头切换密集」，不是「完全没画面」）。\n\n**认人**：高芙是浅蓝色 New Balance 背心+同色系半裙，头带同色，黑色扎发；李吉妮是紫/白色系背心+白色短裙，深色帽子。记分条 `C. GAUFF [4]` 在上、`A. LI [28]` 在下，全程核对过发球指示图标位置。\n\n末尾 299.44 秒起转入场上采访（自动字幕『Tell us how you did it』），所有窗口收在 298.0 秒以内。",
+  "segments": [
+    {
+      "start": 268.2,
+      "end": 274.68,
+      "_why": "① **冷开场，不配旁白，走现场声**。抢七第三个赛点拿下之后的反应镜头（切点 268.2 和 274.68 之间，同一个连续镜头，转播 268.5 秒她转身露出如释重负的表情）。CLAUDE.md「开场三格的顺序」：第 ① 格是画面爆点，不是坐标。"
+    },
+    {
+      "start": 275.0,
+      "end": 281.0,
+      "narration": "这一分，她攒了三次才拿下。",
+      "_why": "② 落点，不复读封面钩子（钩子讲的是「两个赛点没拿下」，这里换个角度点出「攒了三次」，呼应抢七里两次赛点被救、第三次才兑现）。画面延续同一个大窗口（274.68-286.8 是一个连续镜头，庆祝走向场边），情绪从反应自然过渡。"
+    },
+    {
+      "start": 3.8,
+      "end": 14.0,
+      "narration": "北京时间八月十九号凌晨三点多，辛辛那提第三轮。世界第四的高芙，对阵世界第二十九的李吉妮。",
+      "_why": "③ 坐标。开球 2026-08-18T19:10:00Z＝北京 08-19 03:10，按 CLAUDE.md「只说个大概」写「凌晨三点多」。画面是源片开局的常规底线对拉镜头（3.8-15.12 是一个镜头）。印排名不印种子号（4/29 对应世界第 4/29；种子是 4/28，两个数不完全一样，不能混用）。"
+    },
+    {
+      "start": 63.0,
+      "end": 70.4,
+      "narration": "第一盘，她只用了不到半小时，六比一。",
+      "_why": "④ 转播解说原话（65-69 秒）：`Coco Gauff one set away from reaching the fourth round in Cincinnati. Six games to one in just under half an hour.`——直接对应这一段的画面（52.8-70.52 是一个镜头，含赛事名牌转场卡）。"
+    },
+    {
+      "start": 73.52,
+      "end": 79.0,
+      "narration": "第二盘一开局，她马上完成破发，一比零。",
+      "_why": "⑤ **画面自证**：70.5-78.5 秒记分条挂出 `BREAK POINT`，`6-0-40 / 1-0-0`（李吉妮发球被逼到 0-40），破发在这段窗口内完成——第二盘第一局，高芙完成破发。73.52-79.0 落在 73.52-82.16 这一个连续镜头内。"
+    },
+    {
+      "start": 120.5,
+      "end": 129.0,
+      "narration": "可很快被追了回来——一比二，反倒是李吉妮占先。",
+      "_why": "⑥ **画面自证**：120.5-134.5 秒记分条持续显示 `6-1-30 / 1-2-0`，即第二盘李吉妮 2-1 领先（她完成了反破）。窗口收在 129.0s，落在 117.2-123.0 与 123.0-134.0 两个连续回合镜头之内，是常规回合动作。"
+    },
+    {
+      "start": 195.6,
+      "end": 207.0,
+      "narration": "比分越咬越紧，一路拉锯到三比四。李吉妮随后追到五比三，自己发球——只差一局，就能把这一盘扳平。",
+      "_why": "⑦ **画面自证**：195.6-200.5 秒记分条显示 `6-3-40 / 1-4-40`（三比四深盘平分），206.84-209.68 秒挂出 `SERVING FOR SET`，比分 `6-3 / 1-5`——李吉妮追到 5-3、自己发球。这段窗口官方集锦剪得比较碎（跨了 191.08/194.6/205.0/206.84 几个镜头），是连续的比赛动作推进，见 `_editing_why`。"
+    },
+    {
+      "start": 224.76,
+      "end": 235.0,
+      "narration": "眼看这一盘要丢，高芙反而在这里连追带赶——四比五、五比五、六比五、六比六，逼入抢七。",
+      "_why": "⑧ **画面自证**：224.76 秒起记分条从 `6-3-0 / 1-5-15` 推进，230.5 秒已显示 `6-6-5 / 1-6-1`（进入抢七、抢七内部已是 5-1）——这段窗口内高芙完成了从落后一盘到扳平六比六的整个逆转，官方集锦这里剪辑密集（跨越 224.76/229.2 两个镜头），旁白按局分推进概括，不逐分描述。"
+    },
+    {
+      "start": 240.5,
+      "end": 246.0,
+      "narration": "抢七，她一上来就拉开身位，六比一。",
+      "_why": "⑨ **画面自证**：240.5-248.5 秒记分条显示抢七小分从 5-1 推进到 6-1（`6-6-6 / 1-6-1`）——高芙在抢七前段建立压倒性优势。240.5-246.0 落在 240.5-251.96 这一个连续镜头内。"
+    },
+    {
+      "start": 252.0,
+      "end": 260.5,
+      "narration": "两个赛点，接连被李吉妮救下——六比二，六比三。",
+      "_why": "⑩ **画面自证**：252.5-260.5 秒记分条挂出 `MATCH POINT #2`（比分 6-2，说明赛点 #1 已被救下），随后比分推进到 6-3——李吉妮连救两个赛点。窗口落在 251.96-261.36 这一个镜头内。"
+    },
+    {
+      "start": 260.5,
+      "end": 268.2,
+      "narration": "第三个，才真正把这场球收官——七比三。",
+      "_why": "⑩b **画面自证**：262.5-268.2 秒记分条挂出 `MATCH POINT #3`（比分 6-3），随后高芙拿下比赛，抢七 7-3（WTA 官方 `ScoreTbSet2=3`）。这一段直接衔接段①的冷开场庆祝画面（261.36-268.2 横跨 261.36/264.08/268.2 几个短镜头，是抢七收尾阶段官方集锦本身的密集剪辑）。"
+    },
+    {
+      "start": 286.8,
+      "end": 298.0,
+      "narration": "直落两盘，可这场球一点也不轻松——两个没拿下的赛点，算不算她自己给自己找的麻烦？",
+      "_why": "⑪ 收尾落在一问上（CLAUDE.md「末屏那一问不能是封面钩子的回声」）：呼应赛后场上采访主持人原话 `straight sets, but not straightforward`（294.56 秒），钩子讲的是「两个赛点没拿下」这个结果，这里换成一个带评判色彩的问句，证据链扎实（确实有两个未兑现的赛点，可查）。画面是 286.8-298.0 秒她场边整理装备、走向裁判台确认赛果、`ANN LI` 姓名卡转场几个镜头，情绪从专注延续到收尾，窗口收在场上采访（299.44 秒）开始之前。"
+    }
+  ],
+  "push": {
+    "summary": "连丢两个赛点才拿下",
+    "lead": "辛辛那提女单第三轮，世界第 4 的高芙 6-1 7-6(3) 击败世界第 29 的李吉妮，用时 1 小时 33 分。第一盘她只用了不到半小时就拿下，六比一。第二盘开局她马上完成破发，一比零——可李吉妮很快追了回来，一比二反倒是她占先。比分越咬越紧，李吉妮一路追到五比三，自己发球，只差一局就能扳平这一盘。眼看这一盘要丢，高芙在这里连追带赶：四比五、五比五、六比五、六比六，逼入抢七。抢七她一路领先到六比一，李吉妮连救两个赛点把比分咬到六比三，直到第三个赛点，高芙才真正把比赛收官，七比三。真正的分水岭在数据里：全场制胜分李吉妮 23 比高芙 13 反而更多，非受迫失误却是 46 比 27，接近两倍——高芙赛后自己说，「我觉得我们今天都犯了不少平时不会犯的失误」。两人此前交手高芙 3-0 全胜、从未丢过一盘，本场过后总记录来到 4-0。高芙 22 岁，本站 4 号种子；李吉妮 26 岁，本站 28 号种子。",
+    "_no_auto_why": "这条 spec 由本次任务在同一个会话里手动走完 probe→render→merge→push，会话结束前会直接跑 `mode=push push=true` 并确认 PushPlus 200，不依赖 `auto-push-reel` 的自动触发，避免两条路径重复发送。"
+  }
+}
