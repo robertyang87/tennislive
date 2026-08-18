@@ -5614,6 +5614,70 @@ Aug. 13, 2026. (Christinne Muschi/The Canadian Press via AP)」
 回一个 200（`usopen.org` 就是），只看状态码会读成「有接口」。判据是**回来的
 是不是 JSON**。
 
+##### ⭐⭐ 2026-08-18 修正：**赛事媒体库认得出照片里是谁**——`?search=<姓>` ＋ `alt_text`
+
+上面那张「量死的四条」里有一行写着
+
+> **赛事 WP 媒体库的 `alt_text` / `caption`** ——当天批量上传的**全是空的**，
+> `?search=<姓>` 只匹配文件名……**这条路认不出照片里是谁，是硬限制**
+
+**这句话过期了**（也可能当初就量早了：标签是上传之后补的）。真去查：
+
+    GET https://cincinnatiopen.com/wp-json/wp/v2/media
+        ?search=tirante&per_page=20
+        &_fields=date_gmt,title,alt_text,caption,source_url,media_details
+
+    CincyOpen8.15.26BJ_378.jpg            2000×1333
+      title / alt_text = "Thiago Agustin Tirante"
+      caption          = "Photo by Pam Smith/Wick Photography for Cincinnati Open"
+    CincinnatiOpen_20260815_JM021551_LS2.jpg
+      title / alt_text = "Thiago Agustin Tirante"
+      caption          = "Photo by Luke Schlaifer /Wick Photography for Cincinnati Open"
+
+⚠️ **命中的这几张文件名里一个球员名都没有**——匹配的是 `title`／`alt_text`。
+也就是说**当日批量图是打了球员标签的**，而 `caption` 还带着日期和摄影师：
+
+    "During the 2026 Cincinnati Open at Lindner Family Tennis Center on Aug. 17, 2026 in Cin…"
+
+**四要素齐了**（人物、赛事、场馆、日期），不用再一张张打开认人。
+
+⚠️ **它省下的时间是可量的**：8/17 那四张我原来是裁脸、跟四个 ATP 官方头像逐个并排比，
+花了十几分钟还认错了（排除了布洛克斯、兰达卢塞、蒂兰特、霍达尔、德米纳尔、费里）；
+**一次 `?search=` 就给出答案——四张全是 `Flavio Cobolli`**。
+认错的原因也顺带清楚了：`atp-C0E9.png` 那张官方头像上科博利是深色卷发，
+而 `cobolli-blockx` 的 `_editing_why` 里早就写着「那张头像旧了，不能拿它当认人判据」。
+**我写过那句话，然后拿那张头像去认人。**
+
+⚠️ **仍然要打开看**：标签回答「这是谁」，回答不了「情绪对不对题」「是不是近景特写」。
+
+⚠️ 顺带：这个媒体库里还挂着**官方 Order of Play 和签表 PDF**
+（`OP-Uploaded-aug-17-10pm.pdf`、`MDS-Aug-17-953pm.pdf`），是 `protennislive.com` 之外的
+第二个官方出处，而且带上传时刻——赛程临时改动时它比 protennislive 那份更好定版本。
+
+##### ⭐⭐ 官方图什么时候上线：**主批在次日 01:00~03:00Z，之后还有第二波**
+
+2026-08-18 把媒体库最近 535 条按 `date_gmt` 摊开量的（**按拍摄日分组、看上传时刻**，
+这两个日期差一天，别混）：
+
+| 拍摄日 | 张数 | 主批 | 第二波 |
+|---|---|---|---|
+| 8/12 | 21 | 次日 13Z | —— |
+| 8/13 | 31 | 次日 17~18Z（21 张） | 再两天 20Z |
+| 8/14 | 37 | 次日 20Z（13）＋ 再次日 00Z（14） | —— |
+| 8/15 | 91 | 次日 **02~03Z（78 张）** | 次日 17Z、20Z |
+| 8/16 | 75 | 次日 **01~02Z（58 张）** | 次日 16~17Z（12）、20Z（5） |
+| 8/17 | **4** | 8/18 02:57Z ← 窗口对上了，**但只来了 4 张** | 还没来 |
+
+**主批的窗口是次日 01:00~03:00Z（当地 21:00~23:00）**，和「Day N Best-of Photos」那篇
+文章的发布时刻一致（`day-4` 00:48Z、`day-5` 02:57Z、`day-6` 02:36Z）。
+
+⚠️ **但张数是个独立的信号**：8/15 是 91 张、8/16 是 75 张，而 8/17 到现在只有 4 张。
+**窗口开了不等于批到齐了**——「主批时间到了」和「这一天就这么点图」长得一样，
+判据是**张数和往日一个量级没有**。
+
+⚠️ **第二波真实存在**，落在**次日 16Z~20Z**（8/16 那天有 17 张是这么来的）。
+所以「主批只来了几张」不该读成「这一天没有」，该读成「等第二波」。
+
 ##### ⚠️ 同一轮里量死的四条，别再重探
 
 | 试过什么 | 结果 |
@@ -5625,6 +5689,26 @@ Aug. 13, 2026. (Christinne Muschi/The Canadian Press via AP)」
 | **WTA 单场比分页 `/scores/<MatchID>`** | ❌ **每一场给的是同一批 7 张**（`LS063` 和 `LS039` 两场清单一字不差，还混着 2023/2024 的旧图）——那是版面边栏，不是这一场的图。**它看着最像「每场一张头图」，其实不是** |
 | **WTA 再多扫几个入口**（`/scores`、`/tournament/<id>/…/scores`、`/photos`） | ❌ 比现有三个入口只多 **2 张，还都不对题**（一张 2025 年的、一张别站的）；`/photos` 和 `/news` **返回同一份**（字节数一样） |
 | **赛事 WP 媒体库的 `alt_text` / `caption`** | ❌ 当天批量上传的**全是空的**，`?search=<姓>` 只匹配文件名（头像、少数精选图）。**这条路认不出照片里是谁，是硬限制** |
+
+##### ⚠️ 2026-08-18 又扫了一遍「还有没有别的官方渠道」——量死的九条，别再重探
+
+账号所有者问「还有官方其他地方你没有找到的」。逐条试过，**只有两条是新的**
+（上面两节：媒体库的 `?search=` 标签、和上线时刻），其余九条全是死路：
+
+| 试过什么 | 结果 |
+|---|---|
+| **`atptour.com` 换 `requests` ＋ 浏览器 UA** | ❌ 仍然 **403**（首页、新闻页、`/en/media/photos` 三个都试了）。⚠️ 这一条专门试是因为 Gannett 那次的真因是「urllib 的头名大小写」——**这次不是**，ATP 是真的挡 |
+| `photoresources.atptour.com` | ❌ 域名不存在（WTA 有，ATP 没有对应物） |
+| `atpfiles.blob.core.windows.net` | ❌ 400 |
+| Getty 搜索页 / editorial 按赛事 | ❌ 403（只有 `/detail/<id>` 那条还能用，见上面 Getty 那节） |
+| **Imagn（USA Today Sports Images）** | ❌ 200 但是 JS 壳，`/api/search` 404，页面里抠不出任何图链 |
+| Flickr：赛事账号 / `tags=cincinnatiopen` 公开源 | ❌ 账号 404；tag 源最后更新停在 **2026-02-25** |
+| 赛事的 `media.` / `press.` / `photos.` 子域 | ❌ 全部 403（同一个 8327 字节的错误页，说明是通配拦截不是「有站点但没权限」） |
+| `cincinnatiopen.smugmug.com` | ❌ 502 |
+| Alamy / ZUMA | ❌ Alamy 200 但抠不出图链（`c*.alamy.com` 一条没有）；ZUMA 搜索 404 |
+
+⚠️ **`cincinnatiopen.com/photos/` 和 `/gallery/` 是 404，`/media/` 是 200 但不是图库**——
+图库唯一的入口还是 `news/category/photos/` 那条文章流，加上 `wp-json/wp/v2/media` 那个媒体库。
 
 ##### ⭐⭐ 而尺寸最大的那条在**当地报纸**：Yahoo 转载的 `media.zenfs.com`
 
