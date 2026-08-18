@@ -5784,6 +5784,70 @@ playwright 的 `proxy=` 都试过，一律 `ERR_CONNECTION_RESET`，连自家能
 过不了，而分辨率、授权、日期全对得上。⚠️ **姓能撞的时候，`--player` 要用
 文件名里的全名写法**（`Xiyu_Wang` / `Xinyu_Wang`），别只给姓。
 
+##### ⭐⭐ 2026-08-18：**ATP 那半边没有「当日官方图」这个东西**，而封面闸不知道
+
+账号所有者：「**atp 目前一个也没推送微信，咋搞的**」。核下来这话是对的，
+而且原因是**结构性的**，不是那天谁偷懒：
+
+| | 同日官方实拍 | 后果 |
+|---|---|---|
+| **WTA** | `photoresources.wtatennis.com` **当天就发**（赛后稿／集锦视频页的头图） | 三条女子第三轮当天全部拿到实拍，全部推送 |
+| **ATP** | **没有对应物**——赛事图库那一批要**次日** UTC 00:00~03:00 才上 | 2026-08-17 收紧封面闸（`frame_at` 不再放行）之后，**ATP 这条线每天都会卡到次日早上** |
+
+⚠️ **前一天那批 ATP 之所以没卡，是因为它们发在收紧之前**（`altmaier-musetti`
+`tsitsipas-auger-aliassime` `trungelliti-medvedev` 全是 `frame_at`）。
+**一条规矩生效那一刻不会去扫存量，所以「昨天能发」不等于「今天能发」**
+——本文件「立一条新的形状规矩时，顺手拿它扫一遍 `specs/` 再合并」记的是同一件事的另一半。
+
+**解开它的不是放宽闸，是那条当地报纸的渠道**（上一节那条 The Enquirer 每日图集）：
+它**当晚就发**，正好补上 ATP 缺的那一档。2026-08-17 那一辑 28 张里
+科博利–布洛克斯占 6 张，`cobolli-blockx` 的封面就是从那儿来的（2980×4473，
+铺 1080×1440 只要 0.36 倍）。
+
+⚠️ **所以 ATP 的取图顺序和 WTA 不一样，别照搬**：
+
+    WTA   ① WTA photo-resources（当天） → ② 赛事图库（次日） → ③ 当地报纸
+    ATP   ① **当地报纸每日图集（当晚）** → ② 赛事图库（次日） → ③ AP／Getty
+
+###### ⚠️ 而我差点得出「今天 ATP 一张图都没有」——**查询词只放了这一场的两个人**
+
+第一遍我在 The Enquirer 8/17 那一辑里搜的是 `Tirante|Landaluce`（我当时想做的那一场），
+**0 命中**，于是写下「今天 ATP 没有官方图」。把**当天所有 ATP 球员**一起搜：
+**科博利 18 次、布洛克斯 18 次。**
+
+又一次「零命中先怀疑自己的查询词」，而这次的形状值得单记：
+**这条渠道一天只覆盖两三场（偏主球场），所以「按我想做的那一场去查」几乎必然空。
+正确的问法是「今天哪几场有图」，然后按图挑片子**——顺序反过来。
+
+###### ⚠️ 三处不带引号的属性，把我的正则全打空了
+
+Gannett 的 HTML 属性**不带引号**（`href=/foo`、`<script type=application/ld+json>`），
+而我惯用的正则一律写着 `href="..."`。于是同一页上：
+
+    re: href="(/picture-gallery/[^"]+)"        → **0 条**（而 sitemap 里就有那一辑）
+    re: <script type="application/ld\+json">    → **0 个**（而它就在页面里，16 KB）
+    裸文本数 `gcdn/authoring`                    → **92 处**
+
+**三个数摆在一起就能自证是我扫错了**（本文件「两个数对不上就说明是探测错了」）。
+改成 `href=["\']?(/[^\s">]+)` 和 `<script type=application/ld\+json>` 之后，
+28 个 `ImageObject` 全出来了，每个自带 `caption` ＋ `copyrightHolder`。
+
+⚠️ 所以**别拿 ld+json 走不通当结论去改用裸文本扫**——`caption` 才是这条渠道
+唯一的四要素来源（文件名只有日期和序号），丢了它就只剩「打开一张张认人」。
+
+###### 一条能直接抄的命令
+
+    # ① 当天有哪几辑（⚠️ sitemap 的 href 也不带引号）
+    curl -s -A "Mozilla/5.0 …Chrome/126.0…" https://www.cincinnati.com/sitemap/2026/august/17/
+      → /picture-gallery/sports/tennis/2026/08/17/<slug>/<id>/
+
+    # ② 那一辑的 ImageObject（⚠️ 用 requests，不能用 urllib，见上一节那个 403）
+    re.search(r'<script type=application/ld\+json>(.*?)</script>', html, re.S)
+      → json[0]["image"] → 每条有 url / caption / copyrightHolder
+
+    # ③ 原图：把 www.cincinnati.com/gcdn/ 换成 www.gannett-cdn.com/
+    #    （前者恒 406；要带 Accept: image/*）
+
 ### ⚠️ 2026-08-16：用 Tennis TV 的源片，**片尾和台标都要剪掉**
 
 账号所有者：「**如果用 Tennis TV 的视频的话，需要把它的片尾和它的 logo 剪掉。**」
