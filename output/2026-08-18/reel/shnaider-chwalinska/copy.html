@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>8.18 赛场之上 | 施奈德一比四落后仍拿下</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>6-2 只用了 44 分钟，7-6 却打了 83 分钟
+
+北京时间八月十八号凌晨三点多，辛辛那提第三轮。世界第 14 的施奈德对世界第 23 的赫瓦林斯卡，6-2 7-6(3)，用时 2 小时 08 分。
+
+第一盘 44 分 37 秒。开场第一局施奈德就破掉了对手的发球局，八局打完 6-2，看着像一边倒。
+
+第二盘 83 分 36 秒，是第一盘的将近两倍。前五局施奈德只赢下一局，1-4 落后。转折在 2-4 那一局：赫瓦林斯卡自己发球 40-30 领先，再赢一分就是 2-5。施奈德把那一分守住，整整一局从 30-40 一分一分往回拽，最后拿到破发点破了回来。从 1-4 起她连赢四局到 5-4。
+
+可 5-4 自己那一局她没能把比赛结束掉，被破回 5-5；5-5 又拿到一个破发点，赫瓦林斯卡用全场最好的一拍救掉。抢七施奈德一上来连拿四分，6-2 手握四个赛点，丢掉一个之后 7-3 收工。
+
+这一盘为什么要打 83 分钟，账很清楚：施奈德全场拿到 20 个破发点，只兑现 4 个，赫瓦林斯卡救下了其中 16 个。168 分打完，施奈德 93 分、赫瓦林斯卡 75 分，多出 18 分。
+
+全场制胜分 33 比 16、非受迫失误 34 比 22。分盘更刺眼：第二盘施奈德一个人就犯了 24 个非受迫失误，赫瓦林斯卡只有 9 个——可她同时打出 21 记制胜分，对面 8 记。这一盘就是这么打了 83 分钟的。
+
+两个多月前的法网半决赛，赫瓦林斯卡 7-6(4) 6-4 淘汰过施奈德，随后一路打进决赛。这一次换到硬地，两个人的交手变成 2-1——两场都出现过抢七，一人赢下一个。
+
+#网球 #施奈德 #辛辛那提 #WTA #网球时差</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>下一次再碰上，会在哪儿？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
