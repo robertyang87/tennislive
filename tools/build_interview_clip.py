@@ -1014,10 +1014,16 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 
 
 _MARK_COLOUR = r"\c&H8CDC4A&"
-# 比分那一段：提亮 + 稍微放大。Barlow Condensed 是窄身，同字号下墨迹比汉字矮，
-# 不放大会显得比旁边的名字小一号。38 是渲出来比的（32 偏小，44 就开始抢戏）。
+# 比分那一段：跟赢家同色 + 稍微放大。账号所有者 2026-08-18：「顶栏第二行的
+# 比分，要把赢的一盘的颜色跟赢的人的颜色、字体改成一样的」——比分原来是纯白
+# `&HFFFFFF&`，和绿色的赢家名字不是一家，读起来像两条互不相干的信息。
+# 现在比分复用 `_MARK_COLOUR`：这不是又开一支颜色，「一屏只留一个强调色」
+# 仍然成立，只是把强调色的范围从「赢家的名字」扩到「赢家的名字 + 他赢下的
+# 比分」——这两样本来就是同一句话（谁、赢了几比几）。
+# Barlow Condensed 是窄身，同字号下墨迹比汉字矮，不放大会显得比旁边的名字
+# 小一号。44 是渲出来比的（32 偏小，44 就开始抢戏）。
 _SCORE_PX = 44
-_SCORE_TAGS = rf"\c&HFFFFFF&\fs{_SCORE_PX}"
+_SCORE_TAGS = rf"{_MARK_COLOUR}\fs{_SCORE_PX}"
 
 
 def wants_topbar(spec: dict) -> bool:
