@@ -59,16 +59,16 @@
         "name": "菲斯",
         "name_en": "Arthur Fils",
         "country": "FRA",
-        "rank": 24
+        "rank": 21
       },
       {
         "name": "莱赫奇卡",
         "name_en": "Jiri Lehecka",
         "country": "CZE",
-        "rank": 12
+        "rank": 14
       }
     ],
-    "_matchup_rank_why": "两个人都取 **ATP 官方正赛签表 `mds.pdf` 的 Seeded Players 表**（本地下下来用 pypdf 抽的文本）：`9 Lehecka, Jiri 12`、`21 Fils, Arthur 24`。左边那一列是**种子号**，右边那一列才是世界排名。\n\n⚠️ **种子号不是排名**（莱赫奇卡 9 号种子／世界第 12，菲斯 21 号种子／世界第 24——四个数都对，混成一件事就成了假话）；⚠️ **flashscore 的 `CA÷62`／`CB÷77` 不能用**（CLAUDE.md 记过它不是世界排名，这一场给的 62 和 77 和两个人的真实名次都对不上，正好是反证）；⚠️ **`PSPH÷9`／`PSPA÷21` 是种子号**，也不是排名；⚠️ **`Last Direct Acceptance` 那一行同样不能用**，那是报名截止那周的入围排名。",
+    "_matchup_rank_why": "2026-08-18 重核过：**排名不取官方签表 `mds.pdf` 的 `Seeded Players` 表**——那一栏是**定种子那周的快照**，不是当期排名。拿辛辛那提这张签表的 12 个种子逐个比 tennisexplorer 的 10.08.2026 榜单，**10 个对不上**（德米纳尔 7/8、科博利 9/10、莱赫奇卡 12/14、霍达尔 15/11、门西克 17/16、瓦舍罗 18/19、保罗 21/24、菲斯 24/21、塔比洛 26/29、费里 36/37；只有兹维列夫 3 和布洛克斯 32 碰巧一样）。⚠️ 它伪装得好，因为 `Rank` 那一列和种子号严格同序——而那恰恰说明它就是排种子用的那份榜单。现在这两个数取 **tennisexplorer 的 10.08.2026 期**（页面自带榜单日期），和同一批片子里 WTA 那条走官方 `players/ranked`（`rankedAt` 2026-08-10）是同一期。",
     "_name_why": "两个中文名都走 `player_zh()`：`player_zh(\"Arthur Fils\")` → 菲斯，`player_zh(\"Jiri Lehecka\")` → 莱赫奇卡。**没有手打。**⚠️ 「菲斯」和「孟菲尔斯」（Monfils）是两个人，按名字 grep 会串——`hijikata-monfils` 那条讲的是后者。",
     "portrait": {
       "frame_at": 136.5,
