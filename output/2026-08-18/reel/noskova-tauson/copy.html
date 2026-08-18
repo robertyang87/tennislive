@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>8.18 赛场之上 | 三比五落后救下盘点</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>三比五落后，她救下了唯一的盘点
+
+北京时间八月十八号早上六点半，辛辛那提第三轮。世界第 8 的诺斯科娃对阵世界第 42 的陶森，7-6(3) 6-2，用时 1 小时 38 分。
+
+第一盘诺斯科娃开局不错，自己发球顶住拉锯，一比零。可陶森随后连追带赶，一路反超到三比五——只差一局，第一盘就是陶森的了。诺斯科娃自己发球，从三十比四十、从多次占先的拉锯里，把这一局拽了回来，四比五。
+
+真正的分水岭在第十局：轮到陶森发球，只要她守住，第一盘直接结束。可这一局陶森连续几个破发点都没能兑现，最后一个恰好也是这一盘唯一的盘点——诺斯科娃反而完成了破发，扳平五比五。她趁势再拿一局，六比五，陶森保发追平，六比六进抢七。抢七里诺斯科娃一上来就拉开身位，七比三，一小时零六分钟，第一盘到手。
+
+第二盘她延续着这股势头，两次破发，六比二，三十二分钟就收官。
+
+技术统计上，全场制胜分诺斯科娃 48 比陶森 20，接近两倍；一发得分率诺斯科娃 78%（46 中 36），陶森 70%（37 中 26）；破发点诺斯科娃 3/9，陶森 1/2；ACE 17 比 9。
+
+这是诺斯科娃拿下人生首个大满贯——温网冠军——之后打进的辛辛那提第三轮。两人此前交手陶森 2-1 领先（2025 年澳网首轮、迪拜 1/4 决赛均由陶森取胜），本场之后总记录变成 2-2。
+
+这一路走下去，还有几个盘点，等着她去救？
+
+#网球 #诺斯科娃 #辛辛那提 #WTA #网球时差</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>这一路走下去，还有几个盘点，等着她去救？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
