@@ -112,5 +112,7 @@
   "en_fixed": {
     "26": "know, so all the players that I'm",
     "49": "and center court of the Masters 1000 is"
-  }
+  },
+  "transcript_verified": true,
+  "_verified_clean": "两份转写对不上 **4.1%**（闸门 12%），**空档 0 处**。\n第一份本地 ASR `small.en`，第二份 faster-whisper `medium.en`。\n（run 32088755466 的 `转写交叉校验` 那一步日志里打全了，32 处逐条看过。）\n\n**32 处分歧全部核过，`en_fixed` 不用再加。** 分三类——\n\n**① 第二份把两个人名听坏了，3 处**：`rafa` → `—`（他叫 Rafael Jódar，主持人开口就是\n`Rafa, congratulations once again`，第二份整个丢了）、`tabilo` → `the table oh`、\n`tabilo` → `tabila`。都是第一份对。\n\n**② 第二份在嘈杂处凭空多出 17 处插入**（`—` → `am i push i` / `am i to` / `say` /\n`to` / `the` / `and to` / `no` / `not` / `on the` / `when i was` / `all` / `on` /\n`the same` …）。这一类只出现在右边，也就是**第一份没有多写东西**，烧进画面的那一份不受影响。\n\n**③ 其余是虚词和词形，一个字的意思都不改**：`denis`→`dennis`、`you know`→`no`、\n`in all`→`you know`、`be`→`give`、`so`→`—`、`what`→`how it would`、\n`important`→`importantly`、`these`→`in this`、`is`→`it's it's`、`dreamed`→`dream`、\n`as`→`that's`。\n\n⚠️ **`court` → `course of the` 那一处是 `en_fixed` 已经修过的**：两个 ASR 都把\n`center court of the Masters 1000` 听成了 `center course of…`，第 49 行的 `en_fixed`\n按英语本身改回 `court`（网球场地叫 center court，没有 center course）。所以这一处**左边\n是对的、右边是错的**，不是新问题。和莱巴金娜那条的 `serve`/`surf`、斯瓦泰克那条的\n`iga`/`eager` 是同一族：**两份都听错时，「两份对一份」这个机制本身是哑的**，只能靠外部判据。\n\n⚠️ **来路要说清楚，因为我先前报过一个更高的数。** 这条 spec 提交之前我量过一次\n「13.7%」并据此说它卡在闸门上——**那次量的是提交之前的中间状态，我没有留下那份产物，\n复现不了，所以不写它为什么高**。能证明的只有两件事：提交进仓库的这一版，runner 上\n实测 **4.1%**，沙箱里拿同一份 `lines.json` ＋ 本地音轨跑 `medium.en` 实测 **2.9%**\n（410 词 / 443 词，30 处），两个数在同一个量级、分歧清单几乎逐条重合。\n⚠️ 顺带纠一条我当时写错的判据：我说「`medium.en` 系统性地丢 `you know`」——**这一趟\n它反而比第一份多出 33 个词，而且自己也产出了 `you know`**，那句话在这份数据上不成立。"
 }
