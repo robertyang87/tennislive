@@ -242,21 +242,78 @@ def test_apt一律走重试包装不许裸调():
     # 被杀——也就是 apt **一直在推进、只是慢**。那个 100 秒是按「正常 18~53 秒」
     # 拍的，而那是**另一条工作流**的数；`ci.yml` 这一步正常 25~34 秒，镜像变慢时
     # 能到 100 秒以上仍在干活。**把「慢」误判成「挂死」，重试就从救场变成三倍浪费。**
-    # 所以钉住：单次至少 150 秒（实测正常值的 4~6 倍），而且总时长要留在步骤超时以内。
+    # 所以钉住：单次至少 150 秒（实测正常值的 4~6 倍）。
     for path in sorted(Path(".github/workflows").glob("*.yml")):
         body = _yaml_only(path.read_text(encoding="utf-8"))
         for m in re.finditer(r"for i in ([\d ]+); do\n\s*sudo timeout (\d+) ", body):
-            tries, per = len(m.group(1).split()), int(m.group(2))
+            per = int(m.group(2))
             assert per >= 150, (
                 f"{path.name} 的 apt 单次超时只有 {per} 秒——"
                 "比实测的「慢但在推进」还紧，会把慢误判成挂死")
-            assert tries * (per + 10) <= 6 * 60, (
-                f"{path.name} 的 apt 重试总时长 {tries * (per + 10)} 秒，"
-                "超过了步骤的 6 分钟超时——那道兜底的闸就废了")
     assert not naked, (
         "这些地方还在裸调 apt，卡住就是一次红：\n  " + "\n  ".join(naked)
         + "\n改成 `apt_retry apt-get ...`（函数定义抄同一个步骤里那份）")
 
+
+def test_apt重试的预算不许超过步骤自己的超时():
+    """**重试写了不算数，它得跑得完。**
+
+    2026-08-18 `match-reel` 的 probe 连着两趟死在同一个地方（run 32084186086 /
+    32084758610），两趟都是 5 分 10 秒、都在「装 ffmpeg」。日志把形状写得很清楚：
+
+        00:30:37  步骤开始
+        00:33:07  ##[warning]apt 第 1 次没跑完（卡住或超时）：apt-get update -qq
+        00:35:47  ##[error]The action '装 ffmpeg' has timed out after 5 minutes.
+
+    第 2 次 update 从 00:33:17 起跑，跑到第 150 秒正好是 00:35:47——**和步骤超时
+    同一秒**。也就是说重试**在它唯一该起作用的那一次结构性地跑不完**，
+    而失败的样子和「apt 真的挂死了」一模一样。
+
+    根子是两个数各写各的、谁也不看谁：
+
+    - 重试的预算是 `apt_retry` 被调**几次** × `for i in` **几轮** × (`timeout N` + `sleep 10`)。
+      一个装两样东西的步骤（`update` 一次 ＋ `install` 一次）是 **2 × 2 × 160 = 640 秒**。
+    - 而步骤的 `timeout-minutes` 是手写的另一个数。写这行注释的人当时按**一次**调用
+      算成「5.3 分」，还写着「仍在步骤的 6 分钟超时以内」——**而 match-reel 那两步写的是 5**。
+
+    装上这条判据时全仓库 **12 个 apt 步骤里 11 个**预算超了自己的超时，也就是说
+    那半年里只要 apt 真的慢一次，重试一次都没能跑完过。**它一个字都没报**——
+    又一次「兜底出事的时候不吭声」。
+
+    ⚠️ **这条判据不硬编分钟数**（老那条写的是 `<= 6 * 60`，而 match-reel 是 5，
+    于是它对唯一出事的那两个步骤是哑的——「判据比它引用的那个数还松，等于没装」）。
+    这里从**这个步骤自己的 `timeout-minutes`** 和**它自己调了几次 `apt_retry`** 反推。
+    """
+    import yaml  # noqa: PLC0415
+
+    paths = sorted(Path(".github/workflows").glob("*.yml"))
+    checked, over = 0, []
+    for path in paths:
+        spec = yaml.safe_load(path.read_text(encoding="utf-8"))
+        for job in (spec.get("jobs") or {}).values():
+            for step in job.get("steps") or []:
+                run = _strip_shell_comments(step.get("run") or "")
+                if "apt_retry apt-get" not in run:
+                    continue
+                calls = len(re.findall(r"^\s*apt_retry apt-get", run, re.M))
+                m = re.search(r"for i in ([\d ]+); do\n\s*sudo timeout (\d+) ", run)
+                assert m, f"{path.name}「{step.get('name')}」有 apt_retry 却找不到重试循环"
+                tries, per = len(m.group(1).split()), int(m.group(2))
+                budget = calls * tries * (per + 10)
+                limit = int(step.get("timeout-minutes") or 0) * 60
+                checked += 1
+                if budget > limit:
+                    over.append(
+                        f"{path.name}「{step.get('name')}」预算 {budget}s"
+                        f"（{calls} 次调用 × {tries} 轮 × ({per}+10)s）"
+                        f"＞ 步骤超时 {limit}s")
+
+    assert checked >= 10, f"只校到 {checked} 个 apt 步骤，判据可能失效了"
+    assert not over, (
+        "这些步骤的 apt 重试**跑不完**——第二次会在中途被步骤超时杀掉，"
+        "而那和「apt 真挂死了」长得一模一样：\n  " + "\n  ".join(over)
+        + "\n把 `timeout-minutes` 提到 ceil(预算/60) 以上（建议再留 1 分钟余量），"
+        "别去调小单次超时——那会把「慢」误判成「挂死」，见上一条判据。")
 
 def _strip_shell_comments(run: str) -> str:
     """去掉 run 脚本里的整行注释。
