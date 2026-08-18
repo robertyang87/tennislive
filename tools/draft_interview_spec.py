@@ -75,21 +75,36 @@ def _event_year_round(title: str, cal) -> tuple[str, str, str]:
     return ev, str(year), rnd_slug
 
 
-def transcribe(url: str, workdir: Path, model: str = ASR_MODEL) -> list[dict]:
-    """下音频 → faster-whisper 转写 → 字幕条 [{t, text}]。跑不动就抛（在
-    Actions 里装 faster-whisper 之后才跑得动）。"""
+def transcribe(url: str, workdir: Path, model: str = ASR_MODEL) -> tuple[list[dict], float]:
+    """下音频 → faster-whisper 转写 → (字幕条, 时长秒)。跑不动就抛（在
+    Actions 里装 faster-whisper 之后才跑得动）。
+
+    ⚠️ **Tennis TV 的页面地址 yt-dlp 下不动**（`CalledProcessError`，要调
+    entitlement 接口换地址）——先走 `tennislive.video.official.media_url`（和
+    interview-clip / match-reel 同一条路，写两处必分叉）。YouTube 那条带
+    cookies（YT_COOKIES env，interview-clip 的落 cookies 那套）。"""
+    import os
     import subprocess
+
+    from tennislive.video.official import media_url as _resolve  # noqa: PLC0415
+
+    try:
+        dl_url = _resolve(url)
+    except Exception:  # noqa: BLE001 —— 非 Tennis TV 源直接原样下
+        dl_url = url
 
     from faster_whisper import WhisperModel  # noqa: PLC0415
 
     out_mp3 = workdir / "audio.mp3"
-    subprocess.run(
-        ["yt-dlp", "-f", "bestaudio", "-x", "--audio-format", "mp3",
-         "-o", str(out_mp3).replace(".mp3", ".%(ext)s"), url],
-        check=True, capture_output=True)
+    cmd = ["yt-dlp", "-f", "bestaudio", "-x", "--audio-format", "mp3",
+           "-o", str(out_mp3).replace(".mp3", ".%(ext)s"), dl_url]
+    cookies = os.environ.get("YT_COOKIES")
+    if cookies and os.path.isfile(cookies):
+        cmd += ["--cookies", cookies]
+    subprocess.run(cmd, check=True, capture_output=True)
     model_inst = WhisperModel(model, compute_type="int8")
     segments, info = model_inst.transcribe(str(out_mp3), vad_filter=True)
-    dur = getattr(info, "duration", 0.0) or 0.0
+    dur = float(getattr(info, "duration", 0.0) or 0.0)
     rows = [{"t": round(s.start, 2), "text": s.text.strip()}
             for s in segments if s.text.strip()]
     (workdir / "cap_asr.json3").write_text(

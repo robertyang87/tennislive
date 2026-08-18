@@ -164,6 +164,7 @@ jobs:
       - name: 自动建赛后开麦 spec 草稿（转写 + 翻译）
         env:
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          YT_COOKIES: ${{ secrets.YT_COOKIES_TXT }}
         run: |
           # 对**全部**候选并行建草稿：yt-dlp 下音频 → faster-whisper small.en 转写 →
           # DeepSeek 翻译 → specs/interviews/<slug>.draft.json。⚠️ 必须并行——
@@ -195,7 +196,10 @@ jobs:
           python tools/check_staged_file_sizes.py
           git commit -m "data: 场上赛后采访采集（累计 ${n} 条）+ 成片候选 + 采访 spec 草稿"
           for i in 1 2 3 4; do
-            git pull --rebase origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0
+            # --autostash：提交后工作树可能有未跟踪产物（自动建 spec 的临时文件），
+            # 没有它 `git pull --rebase` 会报 unstaged changes 直接失败（真踩过）。
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" \
+              && git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0
             sleep $((2 ** i))
           done
           echo "::error::推送失败"
