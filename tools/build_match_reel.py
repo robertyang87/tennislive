@@ -187,6 +187,15 @@ TOPBAR_HEAD_TOP = 18
 TOPBAR_BODY_TOP = 72
 TOPBAR_MARGIN_H = 48
 
+#: 比分数字的字体和字号——账号所有者 2026-08-18，拿"赛后开麦"的顶栏截图
+#: 跟这条线对比之后要求"改成和赛后开麦一样"。值和字号直接照抄
+#: `build_interview_clip.py` 的 `_ASS_NAME["num"]` / `_SCORE_PX`：
+#: **不是另挑一支像的字体**，是同一支、同一个数字，两条线以后就不会再分叉。
+#: Barlow Condensed 是窄身，同字号下墨迹比汉字矮，不放大会显得比旁边的
+#: 名字小一号——44 是赛后开麦那边渲出来比过的数，这里不重新试一遍。
+TOPBAR_SCORE_FONT = "Barlow Condensed SemiBold"
+TOPBAR_SCORE_SIZE = 44
+
 # **源片自己烧了记分条时，字幕要让开它。**
 #
 # 以前没撞过是因为运气：16:9 的转播源片把记分条放在左下，而 3:4 的窗口只取中间
@@ -5576,8 +5585,13 @@ def _topbar_lines(spec: dict) -> tuple[str, str] | None:
         if column == "赛场之上" and slug not in _LEGACY_NO_TOPBAR:
             raise ReelError(
                 "「赛场之上」的比赛画面必须带比赛信息顶栏，spec.topbar 不能省：\n"
-                '  "topbar": {"line1": "<赛事> <轮次>", "line2": "<赢家> <比分> <对手>"}\n'
-                f'  例：{{"line1": "WTA 1000 加拿大站 第三轮", '
+                '  "topbar": {"line1": "<年份> <赛事> <轮次>", "line2": "<赢家> <比分> <对手>"}\n'
+                # line1 的顺序（年份在最前）2026-08-18 跟"赛后开麦"对齐过：
+                # 账号所有者拿两条线的顶栏截图对比，要求"顶部的标题改成和
+                # 赛后开麦一样的文案"——那边印的是「2026 辛辛那提 WTA1000
+                # 第三轮」，年份领头。这个字段本身是自由文本、代码不校验
+                # 格式，这句例文就是唯一的口径出处。
+                f'  例：{{"line1": "2026 加拿大站 WTA 1000 第三轮", '
                 f'"line2": "{_expected_topbar_score_line(spec) or "萨巴伦卡 6-3 6-4 张帅"}"}}\n'
                 "line2 必须和 cover 的 winner/result/matchup 一致（不许在顶栏另写一份），"
                 "而且带顶栏的新 spec 还要填 editorial 合同。")
@@ -5601,19 +5615,27 @@ def _topbar_lines(spec: dict) -> tuple[str, str] | None:
 #: 肉眼几乎看不出来。
 TOPBAR_BODY_COLOUR = "&H00DBE2D5"
 
-#: ASS 内联颜色标签（`&HBBGGRR&`，字节序和 CSS 的 `#RRGGBB` 相反）。跟比分板
-#: 同一套配色（`versus_poster.py` 的 `.setwin`/`.setlose`/`.setdash`）——
-#: HTML/CSS 和 ASS 是两套不共享代码的渲染引擎，数值只能抄一份过来，靠
-#: `test_顶栏配色跟着比分板走` 盯着别漂（那条**从 versus_poster 的 CSS 里
-#: 现抠现折算**，不写死 hex，所以比分板改色它会当场红）。
+#: ASS 内联颜色标签（`&HBBGGRR&`，字节序和 CSS 的 `#RRGGBB` 相反）。
 #:
-#: ⚠️ **输盘不压暗，靠色相区分。** 2026-08-09 比分板把 `.setlose` 从灰
-#: `#93a79c` 改成正文同款近白，理由是「灰在压缩后的视频里太接近底色，读不出
-#: 谁输了这一盘」——而顶栏是**直接烧进 H.264 的**，比那张静态海报更吃这个
-#: 问题。所以这里跟着走：输的那个数字就用这一行正文本来的颜色
-#: （`TOPBAR_BODY_COLOUR`），赢的给品牌绿，两者靠**色相**分开，不靠明暗。
-#: 第一版照抄了改之前的灰，是在 rebase 到 main 时才发现口径已经变了。
-TOPBAR_SETWIN_ASS = r"{\c&H005AF6C6&}"
+#: ⚠️ **2026-08-18 换了出处：不再跟比分板走，改成跟"赛后开麦"的顶栏走。**
+#: 账号所有者拿两条线的顶栏截图对比之后要求"赢的人的颜色、赢一盘的颜色都
+#: 改成和赛后开麦一样"。原来这个值是从 `versus_poster.py` 的 `.setwin`
+#: 现抠现折算的（品牌绿 `#c6f65a`），和 `build_interview_clip.py` 的
+#: `_MARK_COLOUR`（`#4adc8c`，青绿）从一开始就是两支没有共同出处的颜色——
+#: 两条线各自把顶栏配色接到了自己那条线的东西上（一条接封面比分板，一条
+#: 自己另起一支强调色），互相并不知道对方在用什么。这次是显式指定"以
+#: 赛后开麦为准"，所以直接抄 `_MARK_COLOUR` 的值，不再从比分板折算。
+#: ⚠️ **这意味着"赛场之上"的顶栏赢家色和它自己封面上的比分板赢家色
+#: 从此不再是同一支绿**（封面比分板仍然是品牌绿 `#c6f65a`，没有跟着改——
+#: 这次改的范围明确只是"顶栏的第二行"，封面海报不在这次的要求里）。
+#: 这条分叉是**认领过的**，不是又一次"一个数写两处必分叉"：判据
+#: `test_顶栏赢家色跟着赛后开麦走` 直接从 `build_interview_clip._MARK_COLOUR`
+#: 里现抠，两边再分开就会当场红。
+#:
+#: **输盘不压暗，靠色相区分**（这条没变）：输的那个数字用这一行正文本来的
+#: 颜色（`TOPBAR_BODY_COLOUR`），赢的给上面这支新绿，两者靠色相分开、
+#: 不靠明暗——顶栏是直接烧进 H.264 的，比静态海报更吃"压暗读不出来"这个问题。
+TOPBAR_SETWIN_ASS = r"{\c&H8CDC4A&}"
 TOPBAR_SETLOSE_ASS = "{\\c" + TOPBAR_BODY_COLOUR + "&}"
 #: 连字符仍然压暗一档——比分板那次**只改了比分本身**，`.setdash` 没动
 #: （「连字符是分隔符不是内容」）。
@@ -5658,8 +5680,17 @@ TOPBAR_RESET_ASS = "{\\c" + TOPBAR_BODY_COLOUR + "&}"
 TOPBAR_WINNER_ASS = TOPBAR_SETWIN_ASS
 
 
+#: 比分数字切到 `TOPBAR_SCORE_FONT` 的内联标签，和切回正文字体/字号的标签。
+#: **只切字体和字号，不带颜色**——颜色仍然由 `TOPBAR_SETWIN_ASS` 等各自的
+#: `\c` 标签管，两件事分开写，缺一个都能单独排查（字体不对但颜色对，
+#: 或者反过来）。
+TOPBAR_SCORE_FONT_ASS = rf"{{\fn{TOPBAR_SCORE_FONT}\fs{TOPBAR_SCORE_SIZE}}}"
+TOPBAR_SCORE_FONT_RESET_ASS = rf"{{\fn{TOPBAR_BODY_FONT}\fs{TOPBAR_BODY_SIZE}}}"
+
+
 def colorize_topbar_score(line: str) -> str:
-    """顶栏第二行上色：**赢家名字高亮**，每一盘比分按"赢盘绿输盘灰"上色。
+    """顶栏第二行上色：**赢家名字高亮**，每一盘比分按"赢盘绿输盘灰"上色，
+    比分数字切到 `TOPBAR_SCORE_FONT`（Barlow Condensed SemiBold）。
 
     ⚠️ **判据和 `versus_poster._sets_html` 一样：那一盘里谁的局数大，不是
     谁赢了整场。** `line` 是 `_expected_topbar_score_line` 拼出来的
@@ -5703,10 +5734,13 @@ def colorize_topbar_score(line: str) -> str:
         lcolor = TOPBAR_SETWIN_ASS if int(left) > int(right) else TOPBAR_SETLOSE_ASS
         rcolor = TOPBAR_SETWIN_ASS if int(right) > int(left) else TOPBAR_SETLOSE_ASS
         # 连字符压暗一档，和比分板的 `.setdash` 同一个理由：它是分隔符不是内容。
-        piece = (f"{lcolor}{left}{TOPBAR_SETDASH_ASS}-"
+        # 字体切换包住整个数字块（含连字符），和赛后开麦一样把"6-4"当一个
+        # 整体切字体，不是逐个数字切——连字符跟着数字走，不会露出半个 Noto。
+        piece = (f"{TOPBAR_SCORE_FONT_ASS}{lcolor}{left}{TOPBAR_SETDASH_ASS}-"
                  f"{rcolor}{right}{TOPBAR_RESET_ASS}")
         if tb:
             piece += f"({tb})"
+        piece += TOPBAR_SCORE_FONT_RESET_ASS
         parts.append(piece)
     return " ".join(parts)
 
