@@ -80,9 +80,13 @@
       "court": "P&G Stadium Court",
       "_court_why": "赛事官方秩序册 `OP-Aug-17-1030am.pdf`（Released 08/17/2026 10:41:19 AM）：P&G STADIUM COURT 当晚第 6 场，`Not Before 8:30 PM`，`[17] Alexandra EALA (PHI) vs [9] Amanda ANISIMOVA (USA)`。CourtID=1（WTA 官方 matches 接口）与秩序册排位一致。",
       "duration_source": {
-        "url": "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches/LS025/stats",
-        "field": "MatchTimeTotal"
-      }
+        "provider": "wta",
+        "url": "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches?page=0&pageSize=400",
+        "match_id": "LS025",
+        "field": "MatchTimeTotal",
+        "source_page": "https://www.wtatennis.com/tournament/1017/cincinnati/2026/scores/LS025"
+      },
+      "_duration_why": "WTA 官方 `MatchTimeTotal 02:28:37`；分盘 `settime` 01:06:46 + 00:45:45 + 00:35:59 = 2:28:30，和总计差 7 秒——同一个量级，互相印证（第一次查时误把 `url` 指向了 `/matches/LS025/stats` 那个单场统计端点，那个端点的 setnum=0 行 `settime` 是空的、根本没有 `MatchTimeTotal` 字段，render 那道闸第 10 秒就报错；`MatchTimeTotal` 只在 `/matches?page=…` 这个列表端点里）。"
     }
   },
   "topbar": {
