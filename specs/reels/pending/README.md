@@ -58,3 +58,35 @@
     换成真实图片路径（`fit`/`focus`/`focus_y`/`zoom` 按实际图片重新量，当前写的
     `focus_y: 0.4` 只是占位猜测），跑一次完整 `mode=render`（这条从来没渲过，不是
     重渲），`check_reel_landed` 0 项不合格后合并 → `mode=push` ＋ `push=true`。
+
+- **`noskova-tauson`**（辛辛那提 WTA1000 第三轮，2026-08-17，诺斯科娃 7-6(3) 6-2 胜陶森）
+  - 账号所有者直接给出 YouTube 链接（`https://m.youtube.com/watch?v=oEXAA3TvUbs`）
+    授权制作，同为「previous match day」例外（`_match._match_day_why` 里记了）
+  - **片子还没渲染**——`cover.portrait.image` 一直是字面量 `"PENDING"`，卡在
+    `cover_photo_problem` 那道闸（和 `cirstea-kalinskaya` 一样，`probe.json` 是唯一
+    落地的产物）
+  - probe 已经跑过：`output/2026-08-18/reel/noskova-tauson/`（6 张缩略图墙、
+    逐分／记分板对照表、captions 全在），16 段 spec 全部写完，`--dry-run` 和
+    `--check-narration`（zh-CN-YunjianNeural +6%）都过了——15 段全部装得下、
+    单段最长哑场 2.89s（门槛 4.0s），小红书正文 619 字也写好了——**唯一缺的
+    就是这一格**
+  - `stats` 块已经补全：flashscore 十二项和 WTA 官方 `LS024/stats` 逐项对过，
+    TNNS 制胜分/非受迫失误（`tnns-stats.yml` run 32104235533，match id 73466998，
+    「选手顺序 ['Noskova', 'Tauson']」自证，分盘合计＝全场两项都对）
+  - 四类源 2026-08-18 05:4x Z 查过一遍，**这一场一张都没有**：
+    - WTA `photo-resources`：`sweep_wta("Noskova")` 唯一命中是
+      `Linda_Noskova_-_National_Bank_Open_2026_-_Day_1-DSC_4072.jpg`——**多伦多站
+      Day 1 的资料图，不是辛辛那提、不是这一场**（时间地点都不对，典型的
+      「资料图」坑）；`sweep_wta("Tauson")` 空
+    - 赛事官网 WordPress 媒体库：`search=Noskova`／`search=Tauson` 只命中各自
+      **2024 年**的标准头像图（492×656），按日期 `2026-08-17` 扫全量媒体库也没有
+      这两个人（和另外两条撞的是同一批「还没上线」）
+    - AP 通讯社：两人都零命中
+    - The Enquirer：8/17 那一辑没有这两个人
+  - **判据是「还没发」**：三条同一天（08-17）的辛辛那提片子
+    （`tirante-landaluce`／`cirstea-kalinskaya`／这一条）全撞在同一个媒体库更新窗口上
+  - **接回来怎么做**：把两个文件 `git mv` 回 `specs/reels/`，把
+    `cover.portrait.image` 换成真实图片路径（`fit`/`focus`/`focus_y`/`zoom` 按实际
+    图片重新量，当前写的 `focus_y: 0.35` 只是占位猜测），跑一次完整 `mode=render`
+    （这条从来没渲过，不是重渲），`check_reel_landed` 0 项不合格后合并 →
+    `mode=push` ＋ `push=true`。
