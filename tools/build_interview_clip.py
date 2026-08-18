@@ -1014,10 +1014,60 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 
 
 _MARK_COLOUR = r"\c&H8CDC4A&"
-# 比分那一段：提亮 + 稍微放大。Barlow Condensed 是窄身，同字号下墨迹比汉字矮，
-# 不放大会显得比旁边的名字小一号。38 是渲出来比的（32 偏小，44 就开始抢戏）。
+# 比分那一段：**一盘里，只有赢的那一方自己的数字上绿**——不是整条一个颜色，
+# 也不是整盘一个颜色。账号所有者 2026-08-18 三句话逐步收窄定下来的：
+#
+#     「比分要把赢的一盘的颜色跟赢的人的颜色、字体改成一样的」
+#     「赢的一盘的比分变绿」
+#     「一盘里赢的一方比分数变成绿色」          ← 最后落定的这句
+#
+# 判据是**每一盘里两个数字单独比大小**：数大的那个是这一盘的赢家，只有
+# 它自己染色；数小的那个（连着它自己的短横线）留默认色。同一盘里两个数字
+# **不再一起染色**——直落两盘时（"6-4 7-6"）每盘只有前面那个数（"6"／"7"）
+# 绿，后面那个数（"-4"／"-6"）仍是白的；三盘赛丢了一盘时（"4-6 6-4"）中间
+# 那盘反过来，绿的是后面那个数（"-6"），前面「4」是白的——**这一盘的赢家
+# 不一定是整场比赛的赢家**，账号所有者要的正是这个颗粒度。
+#
+# Barlow Condensed 是窄身，同字号下墨迹比汉字矮，不放大会显得比旁边的名字
+# 小一号。44 是渲出来比的（32 偏小，44 就开始抢戏）——字号对两个数字一视
+# 同仁，只有颜色分谁赢了这一盘。
 _SCORE_PX = 44
-_SCORE_TAGS = rf"\c&HFFFFFF&\fs{_SCORE_PX}"
+_SCORE_SIZE_TAG = rf"\fs{_SCORE_PX}"
+# ⚠️ `push.score` 的记法是**从整场比赛赢家视角连续写下来的**——每一盘前面
+# 那个数永远是整场赢家自己的局数（`alexandrova-sabalenka-tor2026-r16.json`
+# 的 "7-6(3) 4-6 6-4" 就是这么写的：她中间那盘 4-6 输了，局数照旧写自己
+# 在前）。所以「这一盘谁赢的」只用比这一盘里两个数的大小就够，不用另外
+# 传一份「谁赢了每一盘」的数据。抢七的 "(N)" 记的是**这一盘输家**在抢七里
+# 拿到的分数，写法上永远跟在第二个数字后面，跟着第二个数字一起走。
+_SET_SCORE_RE = re.compile(r"^(\d+)-(\d+)(\(\d+\))?$")
+
+
+def _score_runs(score: str) -> list[tuple[str, str, str, int]]:
+    """把 `push.score` 拆成一段一段：**每一盘里，只给赢下这一盘的那个数字上绿**。
+
+    返回的每一段仍然是 `header_runs` 那种 `(文本, kind, 标签, 字号)` 四元组，
+    `kind` 一律 `"num"`（走 Barlow Condensed，量宽度按数字字体的尺子）——
+    这样 `header_lines` 那句 `sum(_measure_at(...))` 不用跟着改，因为总字符
+    和总 kind 没变，只是原来一整段现在拆成了好几小段。短横线跟着**前一个**
+    数字走（"6-" 是一段，"4" 是下一段），冒号左右各自独立上色。
+    """
+    tokens = score.split(" ")
+    runs: list[tuple[str, str, str, int]] = []
+    for i, tok in enumerate(tokens):
+        if not (m := _SET_SCORE_RE.match(tok)):
+            raise SystemExit(
+                f"`push.score` 里这一段解不出胜负：{tok!r}（整条 {score!r}）。\n"
+                "每一盘要写成「数字-数字」，抢七带 (N) 也认得；\n"
+                "退赛／不战而胜这类别的写法，先手动确认这一盘该算谁赢，\n"
+                "再决定要不要放宽这条正则。")
+        n1, n2, paren = m.group(1), m.group(2), m.group(3) or ""
+        trail = " " if i < len(tokens) - 1 else ""
+        n1_won = int(n1) > int(n2)
+        tag1 = (_MARK_COLOUR if n1_won else "") + _SCORE_SIZE_TAG
+        tag2 = (_MARK_COLOUR if not n1_won else "") + _SCORE_SIZE_TAG
+        runs.append((f"{n1}-", "num", tag1, _SCORE_PX))
+        runs.append((f"{n2}{paren}{trail}", "num", tag2, _SCORE_PX))
+    return runs
 
 
 def wants_topbar(spec: dict) -> bool:
@@ -1123,9 +1173,10 @@ def header_runs(spec: dict) -> tuple[list[tuple[str, str, str]], ...]:
         # 短语时用的同一支——「一屏（这条片子从头到尾算一屏）只留一个强调色」，
         # 见 `highlight_en` 的 docstring 和 CLAUDE.md。输的那个名字和比分
         # 前后的「· 赛后场上采访」都留默认色，不然满行都是重点等于没有重点。
-        line_b = [(f"{win} ", "zh", _MARK_COLOUR, _HEAD_SIZE["b"]),
-                  (score, "num", _SCORE_TAGS, _SCORE_PX),
-                  (f" {lose} · {kind}", "zh", "", _HEAD_SIZE["b"])]
+        # 比分本身按盘拆分上色，见 `_score_runs`——不是整条一个颜色。
+        line_b = ([(f"{win} ", "zh", _MARK_COLOUR, _HEAD_SIZE["b"])]
+                  + _score_runs(score)
+                  + [(f" {lose} · {kind}", "zh", "", _HEAD_SIZE["b"])])
     return ([("▍", "zh", _MARK_COLOUR, _HEAD_SIZE["a"]),
              (ev, "head", "", _HEAD_SIZE["a"])], line_b)
 
