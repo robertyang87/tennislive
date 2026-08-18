@@ -132,7 +132,15 @@ jobs:
             echo "::error::apt 两次都没成功：$*"
             return 1
           }
-          apt_retry apt-get update -qq
+          # ⚠️ **`Acquire::http::Timeout` 是这一行的关键，不是装饰。**
+          # 2026-08-18 02:02 那趟 CI（run 32090339473）`apt-get update` **两次各吃满
+          # 150 秒**，一个字节的进度都没有——这是 apt 挂在一个不响应的镜像上等
+          # 它自己的默认超时（120 秒起）的样子，不是「在推进、只是慢」。
+          # 给 apt 自己一个 20 秒的连接超时 ＋ 3 次重试，它会**在我们的 `timeout 150`
+          # 之内自己换一个镜像**；没有这两个参数，外层重试只是把同一次挂死再等一遍。
+          # ⚠️ 别用它去替代外层的 `apt_retry`：那一层管的是「整条命令挂了」，
+          # 这一层管的是「某个 host 不响应」，两层各拦一头。
+          apt_retry apt-get update -qq -o Acquire::Retries=3 -o Acquire::http::Timeout=20
           # ⚠️ **`--no-install-recommends` 不是洁癖，是这一步的耗时本身。**
           # 2026-08-18 `apt-get install ffmpeg` 连着两次吃满 150 秒被杀
           # （run 32085745112：同一趟的 `apt-get update` 十几秒就过了，慢的只有 install）。
