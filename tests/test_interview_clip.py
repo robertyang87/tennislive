@@ -4615,3 +4615,75 @@ def test_封面顶栏两行字都要是浅色(tmp_path):
     src = inspect.getsource(clip.build_cover)
     assert re.search(r"\.brand\{\{[^}]*color:#", src), (
         "`.brand` 又没有自己的 color 了——它会掉回 body，而封面的 body 没有 color")
+
+
+# 台标左沿在源片里的横向位置（归一）。**两条片子各量过一次**：
+# 德约那条赛前专访 0.823、霍达尔那条 0.827（四帧取最小，1058/1280）。
+# 同一个转播模板，取小的那个当判据。
+_TENNISTV_LOGO_LEFT = 0.823
+# 4:3 窗口在 16:9 源片上居中时保留 x 0.125–0.875，所以要躲开台标，
+# 窗口至少要往左挪这么多。**这个数是推出来的，不是拍的**——改上面那个量到的
+# 位置，它自己跟着走。
+_TENNISTV_MIN_SHIFT = _TENNISTV_LOGO_LEFT - 0.875
+
+# 这条规矩立起来之前发的两条。**只许减不许加**，而且下面自带自检。
+_LEGACY_TENNISTV_NO_SHIFT = {
+    "faria-shelton-cincinnati-2026-r2",
+    "shang-rublev-mtl2026-r2",
+}
+
+
+@pytest.mark.parametrize("path", _specs(), ids=lambda p: p.stem)
+def test_TennisTV的源片必须真的把台标挪出窗口(path):
+    """⚠️ **这条是为一个「写了理由、理由是编的」的错立的。**
+
+    霍达尔那条的 `_tennistv_trim` 原话是「台标在右上角，居中取 540 宽的 3:4
+    取景窗框不进来」——**读起来像量过，其实是推的，而且两个数都错**：版式不是
+    3:4 裁切而是横向收边到 4:3（`CROP_RATIO`），居中窗口保留 x 0.125–0.875，
+    而台标左沿在 0.827。第一版成片右上角就印着半个 Tennis TV 标。
+
+    **它是渲完把成片从 Release 拉回来放大看才发现的**，四道闸一道都没响——
+    画面没有任何异常，只是多了个别人的台标，而账号所有者 2026-08-16 点名要求
+    「把它的片尾和它的 logo 剪掉」。
+
+    所以判据不能是「spec 里有没有写一句话」（那正是出错的那一版做的事），
+    只能是**窗口的几何真的躲开了**：`crop_shift_x` 至少要挪到台标左沿之外，
+    或者显式走 `logo_box`（`removelogo`）那条路。
+
+    ⚠️ 阈值从量到的台标位置推，不写死——改 `_TENNISTV_LOGO_LEFT` 它自己跟着走。
+    """
+    spec = json.loads(path.read_text(encoding="utf-8"))
+    if "tennistv.com" not in str(spec.get("url", "")):
+        return
+    if spec["slug"] in _LEGACY_TENNISTV_NO_SHIFT:
+        return
+    if spec.get("logo_box"):
+        return
+    shift = spec.get("crop_shift_x")
+    assert isinstance(shift, int | float), (
+        f"{path.name} 的源片是 Tennis TV，右上角有台标，而 spec 没写 `crop_shift_x`。\n"
+        f"居中的 4:3 窗口保留 x 0.125–0.875，台标左沿在 {_TENNISTV_LOGO_LEFT}——"
+        "**它在窗口里面**。写 `\"crop_shift_x\": -0.06`（德约那条同一个转播模板用的就是这个），"
+        "或者走 `logo_box`。")
+    assert shift <= _TENNISTV_MIN_SHIFT + 1e-9, (
+        f"{path.name} 的 `crop_shift_x` = {shift}，还不够把台标挪出窗口："
+        f"至少要 {_TENNISTV_MIN_SHIFT:.3f}（台标左沿 {_TENNISTV_LOGO_LEFT}、"
+        "居中窗口右沿 0.875）。")
+
+
+def test_那张TennisTV豁免表自己也要是真的():
+    """⚠️ **一个会过期的名单和一条常年红的检查是同一个毛病。**
+
+    表里每个 slug 都要：真的存在、源片真的是 Tennis TV、而且**真的还没挪窗口**。
+    写错一个名字，豁免就成了一盏恒真的绿灯；哪条补上了 `crop_shift_x` 还留在表里，
+    这条会逼人把它删掉。
+    """
+    seen = {p.stem: json.loads(p.read_text(encoding="utf-8")) for p in _specs()}
+    assert seen, "一条 spec 都没扫到——判据的主语没了"
+    for slug in sorted(_LEGACY_TENNISTV_NO_SHIFT):
+        assert slug in seen, f"豁免表里的 {slug} 不存在，这一条豁免是空的"
+        spec = seen[slug]
+        assert "tennistv.com" in str(spec.get("url", "")), \
+            f"{slug} 的源片不是 Tennis TV，不该在这张表里"
+        assert spec.get("crop_shift_x") is None and not spec.get("logo_box"), \
+            f"{slug} 已经把台标挪出去了，从豁免表里删掉"
