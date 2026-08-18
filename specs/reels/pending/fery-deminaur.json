@@ -58,16 +58,16 @@
         "name": "德米纳尔",
         "name_en": "Alex de Minaur",
         "country": "AUS",
-        "rank": 7
+        "rank": 8
       },
       {
         "name": "费里",
         "name_en": "Arthur Fery",
         "country": "GBR",
-        "rank": 36
+        "rank": 37
       }
     ],
-    "_matchup_rank_why": "两个人都取 **ATP 官方正赛签表 `mds.pdf` 的 Seeded Players 表**：`5 de Minaur, Alex 7`、`32 Fery, Arthur 36`。左边那一列是**种子号**，右边那一列才是世界排名。\n\n⚠️ **种子号不是排名**；⚠️ **flashscore 的 `CA`／`CB` 不能用**；⚠️ **`Last Direct Acceptance` 那一行也不能用**，那是报名截止那周的入围排名。",
+    "_matchup_rank_why": "2026-08-18 重核过：**排名不取官方签表 `mds.pdf` 的 `Seeded Players` 表**——那一栏是**定种子那周的快照**，不是当期排名。拿辛辛那提这张签表的 12 个种子逐个比 tennisexplorer 的 10.08.2026 榜单，**10 个对不上**（德米纳尔 7/8、科博利 9/10、莱赫奇卡 12/14、霍达尔 15/11、门西克 17/16、瓦舍罗 18/19、保罗 21/24、菲斯 24/21、塔比洛 26/29、费里 36/37；只有兹维列夫 3 和布洛克斯 32 碰巧一样）。⚠️ 它伪装得好，因为 `Rank` 那一列和种子号严格同序——而那恰恰说明它就是排种子用的那份榜单。现在这两个数取 **tennisexplorer 的 10.08.2026 期**（页面自带榜单日期），和同一批片子里 WTA 那条走官方 `players/ranked`（`rankedAt` 2026-08-10）是同一期。",
     "_name_why": "两个中文名都走 `player_zh()`：`player_zh(\"Alex de Minaur\")` → 德米纳尔，`player_zh(\"Arthur Fery\")` → 费里。**没有手打。**",
     "portrait": {
       "frame_at": 160.5,
