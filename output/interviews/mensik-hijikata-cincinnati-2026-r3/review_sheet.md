@@ -4,7 +4,7 @@
 
 | # | 片内 | 跳到源片 | 英文 | 中文 | 判据 |
 |--:|:--|:--|:--|:--|:--|
-| 1 | 0:00.0 | 片内 0.0 秒 | Yeah, congratulations. Clearly tonight | 恭喜 今晚很明显 |  |
+| 1 | 0:00.0 | 片内 0.0 秒 | Jakub, congratulations. Clearly tonight | 恭喜 今晚很明显 | ✏️ 已订正 |
 | 2 | 0:02.7 | 片内 2.7 秒 | you had a power advantage, but he's an | 你在力量上占优 但他很聪明 |  |
 | 3 | 0:06.6 | 片内 6.6 秒 | intelligent player and he made it | 他让你很难 |  |
 | 4 | 0:08.2 | 片内 8.2 秒 | difficult for you to find a rhythm | 找到自己的节奏 |  |
