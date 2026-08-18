@@ -143,7 +143,8 @@ jobs:
           apt_retry apt-get update -qq -o Acquire::Retries=3 -o Acquire::http::Timeout=20
           # ⚠️ **`--no-install-recommends` 不是洁癖，是这一步的耗时本身。**
           # 2026-08-18 `apt-get install ffmpeg` 连着两次吃满 150 秒被杀
-          # （run 32085745112：同一趟的 `apt-get update` 十几秒就过了，慢的只有 install）。
+          # （run 32085745112 和 ci run 32088524320 各一次：同一趟的 `apt-get update`
+          # 十几秒就过了、一句警告都没有——**慢的只有 install**）。
           # ffmpeg 的 recommends 拖着一整串 VA-API 驱动，而 runner 上根本没有
           # 硬件解码可用——`.claude/hooks/session-start.sh` 早就是这么装的，
           # 只是工作流这半边一直没跟上（「规矩只写在了其中一半」）。
