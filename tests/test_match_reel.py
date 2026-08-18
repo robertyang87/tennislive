@@ -11212,6 +11212,16 @@ def test_数据图的头像和matchup里的名字必须是同一个人():
             continue
         for key, idx in (("a", 0), ("b", 1)):
             shot = (stats.get(key) or {}).get("headshot")
+            # ⚠️ **双打（headshot 是列表）不进这张表**——这条判据的前提是
+            # 「一张脸只对应一个名字」，团队照恰好打破这个前提：同一张
+            # Venus Williams 的头像，单打 spec 里配的名字是「大威廉姆斯」，
+            # 双打 spec 里配的是团队标签「威廉姆斯姐妹」——两个名字都对，
+            # 不是 a/b 填反。真按列表登记会把这种正常情况当成假阳性打红
+            # （2026-08-18 williams-sisters-cincinnati 加团队头像时踩过）。
+            # 代价：双打的 a/b 真填反了，这条测试对它是哑的——和「新球员
+            # 第一次出现时这条是哑的」同一个边界，单打那半的保护不受影响。
+            if isinstance(shot, list):
+                continue
             if shot and names[idx]:
                 seen[Path(shot).name][names[idx]] += 1
 
