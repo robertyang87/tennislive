@@ -14,20 +14,45 @@
 ⚠️ **不许拿同一站别的日子的图顶上**——那是 CLAUDE.md 反复记过的「资料图」坑
 （同一个 Getty 编号挂在两个日期目录下那次）。四道闸门第一道要时间、地点、人物**三样都对**。
 
-## 2026-08-18 毕业的五条
+## ⭐ 找图渠道两条并行，各有各的产出
 
-`jodar-tabilo` / `tirante-landaluce` / `fery-deminaur` / `zverev-atmane` / `lehecka-fils`
-都靠**市场本地化新闻搜索**（Bing 新闻限定 `mkt=<球员国籍对应语种>`）找到了官方高清实拍，
-`git mv` 回了 `specs/reels/`。五条**全部渲完**（`tirante-landaluce` 中途踩过一次
-哑场闸——第 8 段窗口收窄 0.5 秒解决，见该 spec 的 `_why`），等合并、推送。
-找图的方法和逐条验证记录见各自 spec 的 `cover.portrait._frame_why`。
+账号所有者 2026-08-18：「多找找其他图片库啊，不能一棵树上吊死啊」。同一天有两条
+路各自在扩渠道，互不冲突，产出也不重叠：
 
-⚠️ `lehecka-fils` 值得单记一笔：第一次查到的 L'Équipe 那张（浅蓝 Lacoste polo 对得上，
-但背景是红色扶手＋红色花丛，翻遍我们自己拍到的辛辛那提画面都没见过）**没敢用**，
-换了西语体育媒体（`mkt=es-ES`）才找到一张背景带 `CreditOne`／`W&S` 广告板、四要素
-对得上的 Getty 供图——只是分辨率只有 1120×1120（fill=0.78×），写了 `_low_res_why`
-认领这个取舍。**「查到一张像的」和「查到对的那张」不是一回事**，背景对不上就换源，
-不能因为衣服对了就将就。
+**① 市场本地化新闻搜索**（Bing 新闻限定 `mkt=<球员国籍对应语种>`）——
+`jodar-tabilo` / `tirante-landaluce` / `fery-deminaur` / `zverev-atmane` /
+`lehecka-fils` 靠这条找到了官方高清实拍，`git mv` 回了 `specs/reels/`。五条
+**全部渲完**（`tirante-landaluce` 中途踩过一次哑场闸——第 8 段窗口收窄 0.5
+秒解决，见该 spec 的 `_why`）。找图方法和逐条验证记录见各自 spec 的
+`cover.portrait._frame_why`。
+
+⚠️ `lehecka-fils` 值得单记一笔：第一次查到的 L'Équipe 那张（浅蓝 Lacoste polo
+对得上，但背景是红色扶手＋红色花丛，翻遍我们自己拍到的辛辛那提画面都没见过）
+**没敢用**，换了西语体育媒体（`mkt=es-ES`）才找到一张背景带 `CreditOne`／
+`W&S` 广告板、四要素对得上的 Getty 供图——只是分辨率只有 1120×1120
+（fill=0.78×），写了 `_low_res_why` 认领这个取舍。**「查到一张像的」和「查到
+对的那张」不是一回事**，背景对不上就换源，不能因为衣服对了就将就。
+
+**② WTA 官方集锦视频页自己的 CMS 数据**——之前查 WTA 那半边的图，一直只走
+`sweep_wta(player_name)`：直接搜 `photo-resources` 这个 CDN 里挂没挂这个人的
+名字。这条路对 `cirstea-kalinskaya`／`noskova-tauson`（还有 `anisimova-eala`）
+当时都是空的，但**同一批照片其实已经存在**，只是没被这条搜索命中——真正拿到手
+的渠道是**这场比赛自己的官方集锦视频页**：
+
+    https://www.wtatennis.com/videos/<id>/<slug>
+
+页面的 `<meta property="og:image">` 和内嵌 CMS JSON 里直接挂着这场比赛的官方
+实拍（`photo-resources/YYYY/MM/DD/<uuid>/<Player-Name>-Cincinnati-2026.jpg`，
+带 `?width=4000` 能拿到接近原图的分辨率）。视频 id 从
+`https://www.wtatennis.com/videos/highlights` 页面里按标题关键词
+（球员姓氏）用正则 `/videos/(\d+)/([a-z0-9-]+)` 找。
+
+⚠️ **这条路和 `sweep_wta` 不是互相替代，是互相补充**——`sweep_wta` 搜的是
+「这个人名下有没有图」，这条搜的是「这场比赛自己的内容页挂没挂图」，两者的
+索引窗口和覆盖范围不一样，一条空了要去试另一条，不能只查一条就下"没有"的
+结论。`cirstea-kalinskaya`／`noskova-tauson` 靠这条渠道找到了 2026-08-18 才
+发布的官方实拍，已经 `git mv` 回 `specs/reels/` 并渲完，见下面「曾经住在这儿」
+那节。
 
 ## 现在住在这儿的
 
@@ -37,62 +62,6 @@
     还没发——这是「夜场图要等 24 小时」那条的标准形状，不是查漏了
   - 下一步：等下一批赛事图库上线（次日 UTC 00:00~03:00 那个窗口再晚几个小时）或
     英语媒体赛后稿出来再查
-- **`cirstea-kalinskaya`**（辛辛那提 WTA1000 第三轮，2026-08-17，科斯蒂亚 6-7(4) 6-1 5-0 Ret. 胜卡林斯卡娅，因伤退赛）
-  - 账号所有者直接给出 YouTube 链接授权制作（`_match._match_day_why` 里记了这条例外）
-  - **片子还没渲染**——`cover.portrait.image` 一直是字面量 `"PENDING"`，`validate_spec`
-    在 `cover_photo_problem` 那道闸直接拦下，连下源片都没走到（和 `tirante-landaluce`
-    不同：那条已经渲完，这条连 render 都没跑过，`probe.json` 是唯一落地的产物）
-  - probe 已经跑过：`output/2026-08-18/reel/cirstea-kalinskaya/`（缩略图墙、逐分/记分板
-    对照表、captions 全在），spec 的 segments／旁白已经写完并跑过 `--check-narration`
-    真实语音校验（12 段全部装得下，无哑场），小红书正文 651 字也写好了——**唯一缺的
-    就是这一格**
-  - 四类源 2026-08-18 05:31Z 又查了一遍，**这一场一张都没有**：
-    - 赛事官网 WordPress 媒体库：8/17 只上了 4 张 `CincyOpen8.17.26BJ_{13,103,159,187}`，
-      **四张全是科博利**（和 `tirante-landaluce` 那条查到的是同一批）
-    - WTA `photo-resources`（Match Reaction 稿头图／集锦视频页头图）：`sweep_wta` 查
-      "Cirstea"／"Kalinskaya" 都是空，这场还没有对应的赛后稿
-    - AP 通讯社：命中的三张全是资料图（2026 罗马、2026 马德里、2025 美网），没有一张
-      是这一站；Kalinskaya 零命中
-    - The Enquirer：8/17 那一辑没有这两个人（和 `tirante-landaluce` 记录的 28 张核对一致）
-  - **判据是「还没发」**：这场因雨延误跨了近 5 小时（`MatchTimeStamp` 到 `LastUpdated`
-    相差 4:51:54），素材大概率还在摄影师手里整理，和 `tirante-landaluce` 是同一批
-    「还没上全」的批次
-  - **接回来怎么做**：把两个文件 `git mv` 回 `specs/reels/`，把 `cover.portrait.image`
-    换成真实图片路径（`fit`/`focus`/`focus_y`/`zoom` 按实际图片重新量，当前写的
-    `focus_y: 0.4` 只是占位猜测），跑一次完整 `mode=render`（这条从来没渲过，不是
-    重渲），`check_reel_landed` 0 项不合格后合并 → `mode=push` ＋ `push=true`。
-
-- **`noskova-tauson`**（辛辛那提 WTA1000 第三轮，2026-08-17，诺斯科娃 7-6(3) 6-2 胜陶森）
-  - 账号所有者直接给出 YouTube 链接（`https://m.youtube.com/watch?v=oEXAA3TvUbs`）
-    授权制作，同为「previous match day」例外（`_match._match_day_why` 里记了）
-  - **片子还没渲染**——`cover.portrait.image` 一直是字面量 `"PENDING"`，卡在
-    `cover_photo_problem` 那道闸（和 `cirstea-kalinskaya` 一样，`probe.json` 是唯一
-    落地的产物）
-  - probe 已经跑过：`output/2026-08-18/reel/noskova-tauson/`（6 张缩略图墙、
-    逐分／记分板对照表、captions 全在），16 段 spec 全部写完，`--dry-run` 和
-    `--check-narration`（zh-CN-YunjianNeural +6%）都过了——15 段全部装得下、
-    单段最长哑场 2.89s（门槛 4.0s），小红书正文 619 字也写好了——**唯一缺的
-    就是这一格**
-  - `stats` 块已经补全：flashscore 十二项和 WTA 官方 `LS024/stats` 逐项对过，
-    TNNS 制胜分/非受迫失误（`tnns-stats.yml` run 32104235533，match id 73466998，
-    「选手顺序 ['Noskova', 'Tauson']」自证，分盘合计＝全场两项都对）
-  - 四类源 2026-08-18 05:4x Z 查过一遍，**这一场一张都没有**：
-    - WTA `photo-resources`：`sweep_wta("Noskova")` 唯一命中是
-      `Linda_Noskova_-_National_Bank_Open_2026_-_Day_1-DSC_4072.jpg`——**多伦多站
-      Day 1 的资料图，不是辛辛那提、不是这一场**（时间地点都不对，典型的
-      「资料图」坑）；`sweep_wta("Tauson")` 空
-    - 赛事官网 WordPress 媒体库：`search=Noskova`／`search=Tauson` 只命中各自
-      **2024 年**的标准头像图（492×656），按日期 `2026-08-17` 扫全量媒体库也没有
-      这两个人（和另外两条撞的是同一批「还没上线」）
-    - AP 通讯社：两人都零命中
-    - The Enquirer：8/17 那一辑没有这两个人
-  - **判据是「还没发」**：三条同一天（08-17）的辛辛那提片子
-    （`tirante-landaluce`／`cirstea-kalinskaya`／这一条）全撞在同一个媒体库更新窗口上
-  - **接回来怎么做**：把两个文件 `git mv` 回 `specs/reels/`，把
-    `cover.portrait.image` 换成真实图片路径（`fit`/`focus`/`focus_y`/`zoom` 按实际
-    图片重新量，当前写的 `focus_y: 0.35` 只是占位猜测），跑一次完整 `mode=render`
-    （这条从来没渲过，不是重渲），`check_reel_landed` 0 项不合格后合并 →
-    `mode=push` ＋ `push=true`。
 
 ## 曾经住在这儿、现在已经挪出去的
 
@@ -107,4 +76,32 @@
   用现成官方图」，于是封面主体、钩子、`push.summary/lead`、结尾几段旁白、
   小红书正文全部改成阿尼西莫娃视角，`cover.portrait` 换成
   `assets/reel/anisimova-cincinnati-2026-r3.jpg`，`LEGACY_SOFT_COVERS`
-  里那条破例豁免也删掉了（用的是真官方图，不再需要它）。
+  里那条破例豁免也删掉了（用的是真官方图，不再需要它）。**已经推送**
+  （流水号 `30b415ca1f46447da63f79161ec6c4e9`）。
+
+- **`cirstea-kalinskaya`**（辛辛那提 WTA1000 第三轮，2026-08-17，科斯蒂亚
+  6-7(4) 6-1 5-0 Ret. 胜卡林斯卡娅，因伤退赛）——**2026-08-18 挪出去了**。
+  按上面第②条渠道（WTA 集锦视频页 `cirstea-into-cincinnati-last-16-as-
+  kalinskaya-retires` 的 CMS 数据），找到 2026-08-18 才发布的官方实拍
+  （4700×3026，反手双手过肩击球），`sweep_wta("Cirstea")` 当时还是空的，
+  说明这条渠道确实比直接的名字搜索更早/更全。
+
+  ⚠️ **顺带挖出一个真实的渲染器 bug**：`result` 字段是 `"6-7(4) 6-1 5-0 Ret."`，
+  「赛场之上」solo 封面唯一在用的那套比分板（`_scoreboard_sets`）遇到末尾的
+  `Ret.` 词元直接 `SystemExit`——而 VS 版式那条老路（`_sets_html`）的
+  docstring 早就写着「退赛写法（`2-1 ret.`）同样落到这条退路上，只是不上色，
+  不会渲错」。两个渲染器对同一种输入的容忍度不该分叉，已经把 `_scoreboard_sets`
+  改成识别一个可选的退赛/弃权词元（`ret.`／`ret'd`／`w.o.`／`def.` 等），
+  在比分板头部加一个小号中文注脚（"退赛"／"弃权"），不影响正常的三盘/两盘
+  比分。这不是给这一条 spec 单独打的补丁，是所有退赛比分的「赛场之上」
+  以后都用得上的路。**已经渲完**（`output/2026-08-18/reel/cirstea-kalinskaya/`，
+  `check_reel_landed` 0 项不合格），等推送。
+
+- **`noskova-tauson`**（辛辛那提 WTA1000 第三轮，2026-08-17，诺斯科娃
+  7-6(3) 6-2 胜陶森）——**2026-08-18 挪出去了**。同一批新渠道找到的，
+  视频页 `noskova-sets-up-fourth-round-clash-against-anisimova-in-cincinnati`
+  的 CMS 数据挂着 2026-08-18 发布的官方实拍（3930×2619，正手上网截击前的
+  引拍动作），`sweep_wta("Noskova")` 当时命中的是一张多伦多站的资料图
+  （已经排除），这条视频页给出的才是真正对得上这场比赛的图。**已经渲完**
+  （`output/2026-08-18/reel/noskova-tauson/`，`check_reel_landed` 0 项不合格），
+  等推送。

@@ -500,18 +500,39 @@ def _sets_html(result: str) -> str:
     return "".join(out)
 
 
-def _scoreboard_sets(result: str, where: str) -> list[tuple[int, int, str | None]]:
+#: 退赛/弃权那一类收尾词——`_sets_html`（VS 版式那条老路）早就documented过
+#: 「退赛写法（`2-1 ret.`）同样落到这条退路上，只是不上色，不会渲错」，但
+#: `_scoreboard_sets`（「赛场之上」solo 封面唯一在用的那套比分板）当时没跟着
+#: 学会这条——`cirstea-kalinskaya`（3-0 因伤退赛）撞上就是 `SystemExit`。
+#: 两个渲染器对同一种输入的容忍度不该分叉，这儿补的是**同一个已有判断**，
+#: 不是新发明一种显示方式。
+_RETIREMENT_MARKERS = {"ret.", "ret", "ret'd", "w.o.", "wo", "def.", "def", "unfinished"}
+#: 英文标记 → 比分板上印的中文注脚。海报其余部分全是中文，标记不例外。
+_RETIREMENT_LABEL = {
+    "ret.": "退赛", "ret": "退赛", "ret'd": "退赛",
+    "w.o.": "弃权", "wo": "弃权",
+    "def.": "退赛", "def": "退赛",
+    "unfinished": "未打完",
+}
+
+
+def _scoreboard_sets(result: str, where: str) -> tuple[list[tuple[int, int, str | None]], str]:
+    tokens = result.split()
+    note = ""
+    if tokens and not _SET_RE.match(tokens[-1]) and tokens[-1].lower() in _RETIREMENT_MARKERS:
+        note = tokens.pop()
     scores = []
-    for token in result.split():
+    for token in tokens:
         match = _SET_RE.match(token)
         if not match:
             raise SystemExit(
                 f"{where} 的 result={result!r} 含无法拆分的盘分 {token!r}；"
-                "比分板需要用 `6-1 4-6 6-2` 或带抢七小分的格式。")
+                "比分板需要用 `6-1 4-6 6-2` 或带抢七小分的格式，"
+                "退赛可以在末尾单独加一个 `ret.`/`ret'd`/`w.o.` 词元。")
         scores.append((int(match.group(1)), int(match.group(2)), match.group(3)))
     if not scores:
         raise SystemExit(f"{where} 的 result 为空，无法生成比分板。")
-    return scores
+    return scores, note
 
 
 #: 比分板名字那一列占几份，其余每一盘各占 1 份。
@@ -687,7 +708,7 @@ def _scoreboard_html(cover: dict) -> str:
     court = str(scoreboard.get("court") or "").strip()
     source = scoreboard.get("duration_source") or {}
     duration = _fetch_match_duration(source, "cover.scoreboard")
-    scores = _scoreboard_sets(result, "cover")
+    scores, note = _scoreboard_sets(result, "cover")
     # ⚠️ **轨道列表用空格分隔，不是逗号。** 第一版写的是 `",".join(...)`，
     # 渲出来 `grid-template-columns:minmax(0,1fr),minmax(86px,1fr)` 是**非法 CSS**，
     # 整条声明被丢掉、grid 退回单列——两位球员在上、四个盘分竖着排在下面。
@@ -722,11 +743,19 @@ def _scoreboard_html(cover: dict) -> str:
             f'<span class="score-number {left_class}">{left}{tb}</span>'
             f'<span class="score-number {right_class}">{right}</span>'
             '</div>')
+    # ⚠️ 退赛标记不能塞进 `.scoreboard-duration` 那个 span——那个字号是给
+    # 「1:56」这种数字定的（34px），中文注脚混进去会显得比时长本身还重。
+    # 另包一层 `.scoreboard-meta` 把两者当一个整体右对齐，标记本身用和
+    # `court` 同一档字号（26px，`.scoreboard-head` 的基准字号）。
+    note_html = f'<span class="scoreboard-note">{html.escape(_RETIREMENT_LABEL.get(note.lower(), note))}</span>' if note else ""
     return (
         '<div class="scoreboard">'
         '<div class="scoreboard-head">'
         f'<span class="scoreboard-court">{html.escape(court)}</span>'
+        '<span class="scoreboard-meta">'
         f'<span class="scoreboard-duration">{html.escape(duration)}</span>'
+        f'{note_html}'
+        '</span>'
         '</div>'
         f'<div class="scoreboard-grid" style="grid-template-columns:{columns}">'
         f'<div class="scoreboard-players">{_scoreboard_person(win, "cover.matchup[赢家]")}'
@@ -1206,6 +1235,11 @@ __SCRIM__
  font-family:'TL Sans SC',sans-serif;font-size:26px;letter-spacing:1px}
 .scoreboard-duration{font-family:'TL Numeral','TL Sans SC',sans-serif;font-size:34px;
  letter-spacing:0;color:#f4fbf7}
+/* 退赛/弃权注脚：和 duration 当一个整体右对齐，字号退回 head 的基准档
+ （26px），比 duration 的 34px 小一档——它是补充信息，不是这一格的主角。
+ 颜色用和英文名同款的柔和色（`.score-en` 那个 `#dcefe4`），不用主色白。 */
+.scoreboard-meta{display:flex;align-items:baseline;gap:12px}
+.scoreboard-note{font-family:'TL Sans SC',sans-serif;font-size:26px;color:#dcefe4}
 .scoreboard-grid{display:grid;min-height:214px}
 /* ⚠️ 名字这两行的分隔线要和右边比分格子的分隔线对齐，两边必须用同一种
    算法分高度。这儿一直写死 107px（正好是 214÷2，眼下对得上），右边
