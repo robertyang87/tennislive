@@ -129,5 +129,7 @@
     "event": "",
     "summary": "斯瓦泰克逆转萨卡里",
     "lead": "2026 辛辛那提 WTA1000 第三轮，斯瓦泰克 4-6 6-1 6-1 逆转萨卡里，卫冕之路走进 1/8 决赛。首盘她一个破发点都没拿到，这是本赛季第一次；扳回来之后第二盘和第三盘各只丢一局。她把转折说得很实在：第一盘「太多球送到了萨卡里手上」，第二盘开始主动压制，「她开始出现失误，我就知道势头变了」。被问到最近常谈的场内外平衡，这位卫冕冠军的回答是——今年来得晚，场外没什么时间，但明天也许能歇一会儿，「辛辛那提绝对适合做这件事，也许我们会去吃点好吃的」。中英双语字幕，全程。"
-  }
+  },
+  "transcript_verified": true,
+  "_verified_clean": "两份转写对不上 **4.0%**（闸门 12%），**空档 0 处**。\n第一份 YouTube 自动字幕 **405** 词，第二份 faster-whisper `medium.en` **404** 词。\n（run 32086082986 的日志里打全了，逐处看过。）\n\n**15 处分歧全部逐条核过，没有一处需要再改 `en_fixed`。**\n\n真正值得记的只有一处——\n\n    `iga` → `eager`\n\n⚠️ **两个源在这儿是一起错的**：源片原文我们这边之所以是 `iga`，是因为 `word_fix` 把\n`eager` 改成了 `Iga`；而第二份独立跑出来**也听成了 `eager``**。也就是说声学上两个模型\n都听成 eager，靠「两份对一份」这个机制本身分辨不出来。\n\n判据是英语本身：解说那句是 `Wasn't vintage ___ today`，而 **`vintage Iga` 是网球解说的\n固定说法**（指「巅峰状态的斯瓦泰克」），`vintage eager` 不成句。同一条片子里\n`Ega`（主持人叫她）和 `EA Shante`（末句报全名）也都被听错成了别的词，是同一个音的\n同一类错——她的名字读作 EE-ga。\n\n其余 14 处分别是：`sakkari`→`sacri`、`iga`→`egan`、`iga swiatek`→`egan chianti`\n（都是第二份把名字听错，我们这边对）；`sometimes`→`something`、`flipped a`→`flip the`、\n`place does`→`places`（`What kind of place does that put you in` 是原句，我们这边对）；\n`cuz`→`because`（同义，YouTube 保留了口语原样）；其余 `and`/`the`/`it`/`a`/`is`/`i`/`turn`\n全是虚词有无或口吃重复，不影响意思。"
 }
