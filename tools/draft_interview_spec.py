@@ -145,10 +145,33 @@ def build_spec(candidate: dict, zh: list[str], duration: float,
     }
 
 
+def _build_one(c: dict, chat, cal: list[dict], *, write: bool) -> tuple[str, bool, str]:
+    """单条候选的完整流程（下载+转写+翻译+建草稿），供并行调度。"""
+    try:
+        with tempfile.TemporaryDirectory() as td:
+            rows, duration = transcribe(c["url"], Path(td))
+            if not rows:
+                return c.get("title", "?"), False, "转写是空的"
+            zh = translate(rows, chat)
+        spec = build_spec(c, zh, duration, cal)
+        if write:
+            SPECS.mkdir(parents=True, exist_ok=True)
+            out = SPECS / f"{spec['slug']}.draft.json"
+            out.write_text(json.dumps(spec, ensure_ascii=False, indent=2),
+                           encoding="utf-8")
+            return spec["slug"], True, f"{len(zh)} 条字幕，{duration:.0f} 秒"
+        return spec["slug"], True, "干跑"
+    except Exception as exc:  # noqa: BLE001 —— 单条失败不拖垮其余并行任务
+        return c.get("title", "?"), False, f"{type(exc).__name__}: {exc}"
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
-    ap.add_argument("--candidate", type=int, default=0,
-                    help="从候选文件里选第几条（默认 0）")
+    ap.add_argument("--candidate", type=int, default=-1,
+                    help="从候选文件里选第几条（默认 -1＝全部）")
+    ap.add_argument("--max-parallel", type=int, default=2,
+                    help="并行处理几条候选（whisper 转写是 CPU 密集，runner 4 核，"
+                         "默认 2 保守，别把 runner 打满 OOM）")
     ap.add_argument("--write", action="store_true",
                     help="写 specs/interviews/<slug>.draft.json")
     args = ap.parse_args()
@@ -157,7 +180,8 @@ def main() -> int:
     if not cands:
         print("候选文件是空的——先跑 pick_oncourt_clips.py（采集到窗口内的新采访后自然会有）")
         return 2
-    c = cands[args.candidate]
+    if args.candidate >= 0:
+        cands = [cands[args.candidate]]
 
     from tennislive.research.brief import Chat  # noqa: PLC0415
     chat = Chat()
@@ -165,20 +189,27 @@ def main() -> int:
         print("[跳过] 没配 DEEPSEEK_API_KEY，翻译跑不了")
         return 2
 
-    with tempfile.TemporaryDirectory() as td:
-        rows, duration = transcribe(c["url"], Path(td))
-        zh = translate(rows, chat)
-    spec = build_spec(c, zh, duration,
-                      json.loads((ROOT / "data" / "tour_calendar_2026.json")
-                                 .read_text(encoding="utf-8")))
+    cal = json.loads((ROOT / "data" / "tour_calendar_2026.json")
+                     .read_text(encoding="utf-8"))
 
-    if args.write:
-        SPECS.mkdir(parents=True, exist_ok=True)
-        out = SPECS / f"{spec['slug']}.draft.json"
-        out.write_text(json.dumps(spec, ensure_ascii=False, indent=2), encoding="utf-8")
-        print(f"草稿 → {out}（{len(zh)} 条字幕，{duration:.0f} 秒）")
-    else:
-        print(json.dumps(spec, ensure_ascii=False, indent=2))
+    # ⚠️ **并行是这批工作的硬要求**（账号所有者：好多比赛差不多时间结束）。
+    # 一场采访 = 下音频 + whisper 转写（CPU）+ DeepSeek 翻译（IO），串行跑 N 场
+    # 就是 N 倍时间；并行把总时间压成「最慢那场」。faster-whisper 的推理在 C
+    # 层释放 GIL、DeepSeek 是网络 IO，都吃得到并行。用 ThreadPoolExecutor，
+    # 单条失败不拖垮其余。
+    from concurrent.futures import ThreadPoolExecutor, as_completed
+
+    results = []
+    with ThreadPoolExecutor(max_workers=max(1, args.max_parallel)) as pool:
+        futures = [pool.submit(_build_one, c, chat, cal, write=args.write)
+                   for c in cands]
+        for fut in as_completed(futures):
+            name, ok, note = fut.result()
+            results.append((name, ok, note))
+            print(f"{'✅' if ok else '⚠️'} {name}: {note}", flush=True)
+
+    done = sum(1 for _, ok, _ in results if ok)
+    print(f"完成 {done}/{len(results)} 条。")
     return 0
 
 
