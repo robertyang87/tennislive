@@ -1,0 +1,267 @@
+{
+  "slug": "shnaider-chwalinska",
+  "source_url": "https://www.youtube.com/watch?v=aGRWj8Tzo1M",
+  "_source": "WTA 官方 YouTube 频道单场集锦（oEmbed 的 author_name 是 `WTA`，不是搬运号）。305.3 秒、1920×1080、25 fps——**305.3 ≈ WTA 纯集锦的定长 310 秒，也就是尾巴上没有接场上采访**，全片都是比赛画面（CLAUDE.md「310 秒是定长的纯集锦」）。末尾 295.2 秒之后是 WTA 台标甩入（296.5 那一格整幅是绿底 WTA），298.5 起是订阅卡，所有窗口收在 295.0 秒以内。",
+  "_match": {
+    "flashscore_id": "viYscoe4",
+    "wta_match_id": "LS030",
+    "wta_event_id": "1017",
+    "_why": "两个源都核过：flashscore `viYscoe4`（df_st_1 统计、df_sui_1 用时、df_mh_1 逐局、df_hh_1 交手），WTA 官方 `LS030`（`[14]D. Shnaider d [19]M. Chwalinska 6-2,7-6(3)`、`RoundID 3`、`MatchTimeTotal 02:08:11`、`ScoreTbSet2 3`）。",
+    "_match_day_why": "⚠️ **这一场按「上一个比赛日的不做」那条规矩本来是过期的**：开球 2026-08-17 19:10Z，写这条 spec 时它只在 flashscore 的 `f_2_-1` 里，`f_2_0` 里已经找不到（那条边界当天量过，写进了 CLAUDE.md）。**账号所有者显式要求做完并推送**（「当然要啊，越快越好」），所以这一条是**认领过的例外**，不是漏看了比赛日。"
+  },
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "施奈德",
+    "hook": "第一盘四十四分钟\n第二盘八十三分钟",
+    "_hook_why": "讲**过程**，不讲身份——排名、种子、轮次、比分海报上都印着了（CLAUDE.md「钩子要有剧情的跌宕」）。两行各 8 个字符，solo 封面的上限是 10。\n\n两个数都出自 WTA 官方 `LS030/stats` 的 `settime`：第一盘 `00:44:37`、第二盘 `01:23:36`，相加 2:08:13 与 `MatchTimeTotal 02:08:11` 差 2 秒，三个数互相印证（CLAUDE.md「判据是自洽不是加得起来」）。⚠️ **flashscore 报的是 0:46 ＋ 1:32 ＝ 2:18，比官方长十分钟**，又一次撞上「比赛用时不要只信 flashscore」，没采用。\n\n⚠️ **有意避开两个角度**：破发点和「上一次交手比分调了个头」。`rybakina-frech`（同一天同一站第三轮）的钩子就是「十七个破发点／她只兑现三个」；而 `bucsa-chwalinska` 第 15~17 段刚讲过「上一次交手是红土，今天换到硬地比分整个调了个头」——同一个人、同一个栏目，那个形状不能再用一次（CLAUDE.md「真正要躲的重复是同一栏目内的」）。破发点在这条片子里只剩第 ⑩ 段**一句带过**。",
+    "_subject_view_why": "封面放施奈德：世界第十四、本站十四号种子，两个人里把人拉进来的那个名字，而且她赢了球——CLAUDE.md 那张表第一行「一边是大名字」就够了，不用动到「输的那个人反而是主角」那一档。",
+    "_heat_why": "施奈德当期**世界第十四**（2798 分，WTA 榜单日期 2026-08-10），本站十四号种子——过的是热度闸的第 ② 条（世界前 20）。赫瓦林斯卡世界第 23、19 号种子，她本身也在账号所有者点名的「有热点」名单里（今年法网从资格赛打进决赛）。⚠️ 种子号不是排名，两个数都对，混着说就成了假话。",
+    "topic": "WTA1000 辛辛那提 · 女单第三轮",
+    "portrait": {
+      "image": "assets/reel/shnaider-cincinnati-2026-r3.jpg",
+      "fit": "cover",
+      "focus": 0.5,
+      "focus_y": 0.5,
+      "zoom": 1.0,
+      "_photo_why": "**WTA 官方实拍，不是抽帧**：`photoresources.wtatennis.com/photo-resources/2026/08/18/64e1117f-dc87-495f-a3c5-91e5a83e5481/Diana_Shnaider_-_Cincinnati_Open_2026_-_Day_7-DSC_0572.jpg?width=4000`，**4000×2825**，铺 1080×1440 是 **1.96×**，不用放大，也就不用写 `_low_res_why`。\n\n四要素自证：文件名写着球员 Diana Shnaider、赛事 Cincinnati Open 2026、**Day 7**——Day 7 就是 8 月 17 日，正是本场比赛日。\n\n**画面还和源片互证**：同一件黑色连衣裙 ＋ **橙红色发带**，和源片 0.5 秒那一格的近景、164.5 秒那一格的走动镜头是同一身；背景是赛事挡板。四道闸门逐条过：时间地点人物对得上、人在比赛里、情绪对题（这场球她是一分一分磨下来的）、4000px 够清楚。",
+      "_frame_why_not_needed": "这一栏故意不写：`frame_at` 一个都没有，封面走的是官方实拍。"
+    },
+    "scrim": "clear",
+    "matchup": [
+      {
+        "name": "施奈德",
+        "name_en": "Diana Shnaider",
+        "country": "RUS",
+        "rank": 14
+      },
+      {
+        "name": "赫瓦林斯卡",
+        "name_en": "Maja Chwalinska",
+        "country": "POL",
+        "rank": 23
+      }
+    ],
+    "_name_why": "两个中文名都走 `player_zh()`：`player_zh(\"Diana Shnaider\")` → 施奈德、`player_zh(\"Maja Chwalinska\")` → 赫瓦林斯卡，实调过不是照着记忆打的。",
+    "winner": "施奈德",
+    "result": "6-2 7-6(3)",
+    "scoreboard": {
+      "court": "Lindner Family Tennis Center",
+      "_court_why": "**印场馆，不印球场名——因为这一场的球场名没有任何一处自证到。** 源片里逐格找过：挡板上只有 `ATP 1000`、`FIFTH THIRD BANK`、`P&G`、`Credit One`、`Kroger`、`Western & Southern Financial Group`、`WTAFINALS.COM`，**没有一处刷着球场名**；两次全屏赛果台标（58.5 秒、290.5 秒）也只印 `ROUND 3` 和比分。画面能看出的只有「这是一片带临时金属看台的外场」，不是中心球场也不是 Grandstand。\n\n⚠️ **WTA 官方 `CourtID=3` 不能拿来定名**：这一站的 `CourtID` 已经被证伪过——`pegula-navarro`（画面刷着 `GRANDSTAND`）和 `boulter-volynets` / `kenin-lys`（用的都是场馆名）三条的 `CourtID` 都是 2。一个字段对同一站给出互相矛盾的映射，就不能当判据。",
+      "duration_source": {
+        "provider": "wta",
+        "url": "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches?page=0&pageSize=400",
+        "match_id": "LS030",
+        "field": "MatchTimeTotal",
+        "source_page": "https://www.wtatennis.com/tournaments/1017/cincinnati/2026/scores/LS030"
+      },
+      "_duration_why": "WTA 官方 `MatchTimeTotal 02:08:11`；分盘 `settime` 00:44:37 ＋ 01:23:36 ＝ 2:08:13，和总计差 2 秒，三个数互相印证。⚠️ **flashscore 的 `df_sui_1` 报 0:46 ＋ 1:32 ＝ 2:18，偏长十分钟**，没采用——它只有分盘和总计两个数，而这两个数出自同一次计算，对上了也不说明什么。"
+    }
+  },
+  "editorial": {
+    "mode": "match_review",
+    "question": "第一盘四十四分钟就六比二拿下的人，为什么第二盘打了八十三分钟还得靠抢七？",
+    "thesis": "第一盘施奈德开场第一局就破发，四十四分钟六比二，看着像一边倒。第二盘完全是另一场球：前五局她只赢下一局，一比四落后。转折在二比四那一局——赫瓦林斯卡在自己的发球局里三十比四十领先，再赢一分就是二比五，施奈德把那一分守住，整整一局从三十比四十往回拽，最后拿到破发点破了回来。从一比四起她连赢四局到五比四，可自己那一局没能把比赛结束掉，五比五又拿到一个破发点也被赫瓦林斯卡用全场最好的一拍救掉。真正把两个人分开的是抢七：施奈德一上来连拿四分，六比二拿到四个赛点，七比三收工。全场一百六十八分她拿到九十三分，多出十八分——而赫瓦林斯卡二十个破发点里救下了十六个，那正是这一盘为什么要打八十三分钟。",
+    "beats": [
+      "前段：开场第一局施奈德就破掉对手的发球局，第一盘四十四分钟六比二",
+      "中段：第二盘前五局她只赢一局；二比四时对手三十比四十领先，那一局她从三十比四十往回拽，破发回来，连赢四局到五比四",
+      "结局：自己那一局没能结束比赛，五比五破发点又被救掉，抢七一上来连拿四分，六比二四个赛点，七比三"
+    ],
+    "human_context": {
+      "angle": "这一场真正的切口是**两个多月前的那笔账**：今年法网半决赛，赫瓦林斯卡 7-6(4) 6-4 淘汰了施奈德，然后一路打进决赛。那是她们生涯第二次交手。这一次换到硬地、换到辛辛那提第三轮，赢的换成了施奈德——两个人的交手因此变成 2-1。而且两场都是被抢七决定的：法网那次是第一盘 7-6(4) 归赫瓦林斯卡，这一次是第二盘 7-6(3) 归施奈德。",
+      "facts": [
+        "施奈德 2004-04-02 出生，本场时 22 岁；赫瓦林斯卡 2001-10-11 出生，24 岁（WTA 官方 players 接口的 dateOfBirth）",
+        "当期世界排名：施奈德第 14（2798 分）、赫瓦林斯卡第 23（1984 分），榜单日期 2026-08-10（players/ranked，metric=SINGLES）",
+        "种子：施奈德 14 号、赫瓦林斯卡 19 号（WTA 官方 SeedA=14、SeedB=19；记分条整场烧着 [14] 和 [19]）。⚠️ 种子号不是排名，赫瓦林斯卡 19 号种子 / 世界第 23，两个数都对",
+        "用时 MatchTimeTotal 02:08:11；分盘 settime 00:44:37 / 01:23:36，相加 2:08:13，自洽（差 2 秒）。flashscore 报 2:18 偏长十分钟，没采用",
+        "轮次第三轮：WTA 官方 RoundID=3，源片 58.5 秒和 290.5 秒的两次全屏赛果台标都印着 ROUND 3",
+        "交手史 2-1 施奈德领先：2022-04-30 伊斯坦布尔 W60 半决赛施奈德 6-4 6-4、2026-06-04 法网半决赛赫瓦林斯卡 7-6(4) 6-4、本场施奈德 6-2 7-6(3)。轮次由 tennisexplorer 的 mutual 页独立给出（SF / SF / 3R），比分和日期由 flashscore df_hh_1 给出——两个源对得上",
+        "赫瓦林斯卡今年法网从资格赛一路打进决赛（WTA 官网 2026-08-15 稿原文 first victory since reaching the final at Roland Garros）。⚠️ **这条只当角度的背景，片子里一个字都不讲**——`chwalinska-gibson` 第 3 段铺开讲过、`bucsa-chwalinska` 第 5 段一句带过，同一个栏目不再重复",
+        "破发点：施奈德拿到 20 个只兑现 4 个，赫瓦林斯卡救下其中 16 个；反过来赫瓦林斯卡 5 个兑现 2 个（flashscore df_st_1 与 WTA 官方 breakptsconv/breakptsplayed 逐项一致）",
+        "全场小分 93:75（WTA 官方 totptswona/b，flashscore 一致），一百六十八分里施奈德多拿十八分",
+        "抢七逐分（flashscore df_mh_1）：施奈德连拿前四分到 4-0，被追到 4-2，随后 6-2 拿到四个赛点，丢掉一个之后 7-3 收工——WTA 官方与 flashscore 的「救下赛点」都记 1 个，正是 6-2 到 6-3 那一分",
+        "制胜分 33 比 16、非受迫失误 34 比 22（TNNS，run 32094264953，选手顺序 ['Shnaider', 'Chwalinska']，分盘合计＝全场两项都自证）。⚠️ 分盘更刺眼：**第二盘施奈德 24 个非受迫失误、赫瓦林斯卡只有 9 个**，而这一盘是施奈德赢的——她同时也打出了 21 记制胜分（对面 8 记）。这条**只写进小红书正文**，片子里不讲，免得和第 ⑩ 段的破发点账挤在一起"
+      ],
+      "sources": [
+        "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches?page=0&pageSize=400",
+        "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches/LS030/stats",
+        "https://api.wtatennis.com/tennis/players/ranked?page=0&pageSize=100&type=rankSingles&sort=asc&name=&metric=SINGLES",
+        "https://global.flashscore.ninja/2/x/feed/df_st_1_viYscoe4",
+        "https://global.flashscore.ninja/2/x/feed/df_sui_1_viYscoe4",
+        "https://global.flashscore.ninja/2/x/feed/df_mh_1_viYscoe4",
+        "https://global.flashscore.ninja/2/x/feed/df_hh_1_viYscoe4",
+        "https://www.tennisexplorer.com/mutual/chwalinska-maja/shnaider-diana/",
+        "https://tnnslive.com/match/73467026"
+      ],
+      "voice_label": "八十三分钟的第二盘"
+    }
+  },
+  "topbar": {
+    "line1": "WTA1000 辛辛那提 第三轮",
+    "line2": "施奈德 6-2 7-6(3) 赫瓦林斯卡"
+  },
+  "_no_repeat": "⚠️ **赫瓦林斯卡这条线上已经发过两条**（`chwalinska-gibson` 多伦多第二轮、`bucsa-chwalinska` 辛辛那提第二轮），这一条要躲开它们铺开过的每一样：\n  · **月亮球打法**（`chwalinska-gibson` 第 4 段整段在讲）——一个字不碰；\n  · **法网从资格赛打进决赛**——那条铺开讲过、`bucsa-chwalinska` 一句带过，这一条**一个字都不写**，只在 `_facts` 里留作角度的来路；\n  · **温网赛点上崴脚踝**（`bucsa-chwalinska` 第 7 段）——不碰；\n  · **「上一次交手在红土，今天比分调了个头」**（`bucsa-chwalinska` 第 15~17 段）——形状一样，所以这一条**只在收尾一问里落一次「法网那场球讨回来了」**，中段一个字不铺；\n  · **零 ACE**（`bucsa-chwalinska` 的落点）——这一场两个人各 1 个，本来也不成立。\n\n⚠️ **同一天同一站的兄弟片也要躲**：`rybakina-frech`（十七个破发点只兑现三个）和 `pegula-navarro`（五比五之后连赢六局）。所以这一条的落点是**两盘用时的落差**，破发点只在第 ⑩ 段一句带过，收尾一问也不用 `pegula-navarro` 那句「你更信哪一个数」。",
+  "stats": {
+    "tour": "wta",
+    "a": {
+      "headshot": "assets/players/headshots/wta-330482.jpg",
+      "aces": 1,
+      "df": 1,
+      "first_in": 50,
+      "first_won": 35,
+      "first_total": 64,
+      "second_total": 14,
+      "second_won": 8,
+      "bp_conv": 4,
+      "bp_chances": 20,
+      "pts_won": 93,
+      "pts_total": 168,
+      "winners": 33,
+      "ue": 34
+    },
+    "b": {
+      "headshot": "assets/players/headshots/wta-325639.jpg",
+      "aces": 1,
+      "df": 1,
+      "first_in": 77,
+      "first_won": 41,
+      "first_total": 104,
+      "second_total": 27,
+      "second_won": 13,
+      "bp_conv": 2,
+      "bp_chances": 5,
+      "pts_won": 75,
+      "pts_total": 168,
+      "winners": 16,
+      "ue": 22
+    },
+    "_source": "十二项来自 flashscore `df_st_1_viYscoe4` 的 `Match` 那一档，**并且和 WTA 官方 `LS030/stats` 的 setnum 0 逐项对过**（acesa/b、dblflta/b、ptswon1stserva/b、ptsplayed1stserva/b、breakptsconva/b、breakptsplayeda/b、totptswona/b 全部一致）。\n\n⚠️ **`a` 跟的是 `cover.matchup[0]`＝施奈德**，而 flashscore 的 `SH`（home）也正好是施奈德、`SI` 是赫瓦林斯卡，WTA 官方的 `a/b` 同序——三个顺序这一次恰好一致，但抄的时候仍按 `matchup` 对的（CLAUDE.md「stats.a 跟的是 cover.matchup[0]，不是 feed 的 home/away」，那条坑在 `sonmez-anisimova` 和 `tsitsipas-royer` 上各栽过一次）。**头像也是这么核的**：`wta-330482` 是施奈德（WTA players 接口 id=330482），`wta-325639` 是赫瓦林斯卡（id=325639，`bucsa-chwalinska` 里挂的也是这个名字）。\n\n⚠️ `first_total` 不猜，按 `first_in + second_total` 算：施奈德 50+14=64（WTA 官方 `totservplayeda=64` 对得上）、赫瓦林斯卡 77+27=104（`totservplayedb=104` 对得上）。\n\n**制胜分和非受迫失误来自 TNNS**（`tnns-stats.yml` run **32094264953**，match id 73467026，报告自报「选手顺序 `['Shnaider', 'Chwalinska']`」——和 `cover.matchup` 同序；`hasExtendedStats: True`，分盘合计＝全场两项都自证 ✅：制胜分 12+21=33 / 8+8=16，非受迫失误 10+24=34 / 13+9=22）。⚠️ flashscore 的 `df_st_1` 这一场只有 17 项，没有这两行——WTA 巡回赛那一档的老毛病，**「flashscore 没有」不等于「没有」**。\n\n⚠️ 第一趟（run 32093489877）在 runner 上装 Chromium 那步没把 headless shell 装下来，整趟红在 `Executable doesn't exist`——**那是环境问题，不是「这场没有」**，重跑一趟就拿到了。",
+    "footer_venue": "Lindner Family Tennis Center · 辛辛那提",
+    "footer_date": "2026.08.17"
+  },
+  "_hit_data": "跑过 `tools/match_stat_hooks.py viYscoe4`。挑进片子的是**总分差**（93:75，多出十八分，第 ⑱ 段）和**破发点兑现**（20 里 4 个，赫瓦林斯卡救下 16 个，第 ⑩ 段一句带过）。⚠️ 破发点这条**故意只给一句**：`rybakina-frech` 同一天同一站刚拿它当过钩子。真正的落点是两盘用时的落差（44:37 对 83:36），那不是 `match_stat_hooks` 会给的候选，是从 WTA 官方 `settime` 里读出来的。",
+  "_claims": "全片没有「零胜／唯一／史上第一」这类全称断言，所以不需要挂两个独立信源。可核的都是这一场自己的数：比分和轮次出自 WTA 官方 `LS030` ＋ 源片 58.5／290.5 秒的两次全屏赛果台标（`ROUND 3 / DIANA SHNAIDER 6 7 / MAJA CHWALINSKA 2 6`），用时出自 WTA 官方三个自洽的数，逐局走向出自 `df_mh_1`，技术统计出自 flashscore ＋ WTA 官方双核，交手史出自 flashscore `df_hh_1` ＋ tennisexplorer 的 mutual 页（轮次那一列）。",
+  "_editing_why": "**每一段都落在同一个镜头里。** probe 的 `scene_cuts` 是 [17.92, 36.4, 38.84, 47.0, 50.2, 52.2, 61.44, 103.52, 145.36, 147.96, 163.56, 168.16, 177.76, 183.24, 201.48, 219.6, 234.96, 239.36, 241.88, 277.28, 287.16, 295.2, 297.16]，窗口逐条对过，**每一段的段尾加上 0.18 秒的溶解底料之后仍然落在同一个镜头里**。`scene_cuts_loose` 里 1.92 / 19.96 / 40.6 / 52.64 / 106.6 / 108.24 / 146.88 / 165.96 / 180.0 / 181.04 / 203.92 / 205.32 / 221.44 / 222.56 / 282.68 / 297.24 也都对过：只有第 ② 段（281.3–286.9，她自己的反应 → 她的看台）和第 ⑫ 段（163.7–167.9，她走回底线 → 教练席）跨了松切点，两处两边都是**同一拍情绪**，不是换了内容。\n\n**末尾 295.2 秒起是 WTA 台标甩入**（296.5 那一格整幅绿底 WTA，298.5 是订阅卡），所以最后一段收在 294.9。\n\n**认人**：施奈德是黑色连衣裙 ＋ **橙红色发带**、左膝绑着一块白色护具（164.5 那一格看得最清楚），赫瓦林斯卡是白色 Lacoste ＋ 金色马尾——缩略图上分得清；记分条 `D. SHNAIDER [14]` 在上、`M. CHWALINSKA [19]` 在下。\n\n⚠️ **五比四那一局不在集锦里**（CLAUDE.md「转折点不许剪掉：不在集锦里就明说」）：164.5 秒记分条还是 `6 | 4 | 40 / 2 | 4 | 30`（BREAK POINT #3），168.5 秒已经是 `6 | 5 | Ad / 2 | 5`——中间施奈德破发上到五比四、又在自己那一局被破回来的两局全被剪掉了。所以第 ⑬ 段的「没能在自己的发球局里把比赛结束掉」是**旁白交代**，不是画面在演；画面演的是紧接着那一局她又拿到破发点。",
+  "segments": [
+    {
+      "start": 277.5,
+      "end": 281.0,
+      "_why": "① **冷开场，不配旁白，走现场声**。最后一分落地之后她转身怒吼那一格（277.28 是切点，287.16 是下一刀，整段在同一个镜头里）。解说这一刻的原话是 `Extraordinary.`，紧接着是 `[cheering]`。CLAUDE.md「开场三格的顺序」：第 ① 格是画面爆点，不是坐标。"
+    },
+    {
+      "start": 281.3,
+      "end": 286.9,
+      "narration": "两个多月前的法网半决赛，赢的是赫瓦林斯卡。",
+      "_why": "② 落点，**不复读封面钩子**（钩子讲的是两盘用时，这里讲这一场背后的那笔账）。法网那场由两个源给出：flashscore `df_hh_1` 记 2026-06-04 法网红土赫瓦林斯卡 2:0，tennisexplorer 的 mutual 页把轮次和比分补齐（`SF`，7-6 6-4）。\n\n⚠️ 主语写出名字不写代词：这一段前半是施奈德自己、后半（282.68 松切点之后）是她的教练席，赫瓦林斯卡不在画面里。"
+    },
+    {
+      "start": 2.1,
+      "end": 12.6,
+      "narration": "北京时间八月十八号凌晨三点多，辛辛那提第三轮。世界第十四的施奈德，对世界第二十三的赫瓦林斯卡。",
+      "_why": "③ 坐标。开球 2026-08-17 19:10Z ＝ 北京 08-18 03:10，分钟是 10，按 CLAUDE.md「只说个大概」那条写「凌晨三点多」。画面是源片开头（17.92 之前是一个镜头），记分条挂着 `D. SHNAIDER [14] / M. CHWALINSKA [19]` 加 `BREAK POINT #2`。\n\n⚠️ 印**排名**不印种子号（14 号种子／世界第 14 这一场恰好同号，赫瓦林斯卡是 19 号种子／世界第 23，两个数差着四位）。\n\n⚠️ 「世界第十四**的**施奈德」多一个「的」：不加的话切词器容易把「第十四施」切成一个不存在的词。"
+    },
+    {
+      "start": 12.9,
+      "end": 17.7,
+      "narration": "开场第一局，施奈德就破掉了对手。",
+      "_why": "④ 逐局：`df_mh_1` 第一盘第一局记的是「赫瓦林斯卡发球、施奈德赢下、BREAK」——开场第一局就被破。画面上记分条整段挂着 `BREAK POINT #2`，正是这一局。"
+    },
+    {
+      "start": 53.2,
+      "end": 58.8,
+      "narration": "四十四分钟，六比二，第一盘就结束了。",
+      "_why": "⑤ **画面自证**：54.5 到 58.5 是换边，58.5 那一格转播打出全屏赛果条 `ROUND 3 / DIANA SHNAIDER [14] 6 / MAJA CHWALINSKA [19] 2`。四十四分钟取 WTA 官方 `settime` 第一盘 `00:44:37`（不是 flashscore 的 0:46）。"
+    },
+    {
+      "start": 62.0,
+      "end": 70.4,
+      "narration": "可第二盘完全是另一场球。前五局打完，施奈德只赢下其中一局，一比四。",
+      "_why": "⑥ 逐局：第二盘前五局依次是 0-1、1-1、1-2、1-3（施奈德被破）、1-4——五局她只赢下一局。画面是第二盘刚开打的回合（61.44 到 103.52 是一个镜头）。"
+    },
+    {
+      "start": 80.6,
+      "end": 88.0,
+      "narration": "二比四，三十比四十。赫瓦林斯卡再赢一分，就是二比五。",
+      "_why": "⑦ **比分要跟画面对得上**：80.5 到 104.5 那一整段记分条挂的是 `D. SHNAIDER [14] 6 | 2 | 30` / `M. CHWALINSKA [19] 2 | 4 | 40`——第二盘二比四、赫瓦林斯卡发球、她领先三十比四十。逐局这一局的结果是 `3-4 srv=AWAY won=H BREAK`，也就是这一局最后被施奈德破掉了。\n\n⚠️ 写「再赢一分就是二比五」不写「局点」：术语第一次出现就地解释，而这一句直接把它换成了人话。"
+    },
+    {
+      "start": 95.0,
+      "end": 103.2,
+      "narration": "那一分施奈德没让出去。整整一局，她从三十比四十开始，一分一分往回拽。",
+      "_why": "⑧ 同一个镜头往后，记分条整段还是 `6 | 2 | 30` / `2 | 4 | 40`——二十几秒过去比分一格没动，她还在守。106.5 那一格才翻成四十比四十（平分），而那已经是下一个镜头了。\n\n⚠️ 主语写出名字：上一句的主语是赫瓦林斯卡，接「她」会落到对手身上（CLAUDE.md「整句旁白压在对手身上」）。"
+    },
+    {
+      "start": 108.6,
+      "end": 116.0,
+      "narration": "平分之后，施奈德拿到了破发点。再赢一分，这一局就是她的。",
+      "_why": "⑨ 108.5 秒记分条翻成 `6 | 2 | Ad` / `2 | 4` 并挂出 `BREAK POINT`——平分之后她占先，也就是破发点。⚠️ 写「拿到破发点」不写「要到」（CLAUDE.md 定的）。"
+    },
+    {
+      "start": 120.6,
+      "end": 129.4,
+      "narration": "赫瓦林斯卡整场救下了二十个破发点里的十六个。这一个，赫瓦林斯卡没救下来。",
+      "_why": "⑩ 记分条从 108.5 一直挂到 146.5 都是 `6 | 2 | Ad` / `2 | 4` 加 `BREAK POINT`——这一个破发点打了很久，正好放这句账。数出自 flashscore `df_st_1`（Break Points Saved `SI÷16/20`、Break Points Converted `SH÷4/20`）与 WTA 官方 `breakptsconva=4 / breakptsplayeda=20` 双核。\n\n⚠️ **救的人和拿到点的人不是同一个**（CLAUDE.md 那条读者反馈换来的规矩）：破发点是施奈德拿到的，救它的是赫瓦林斯卡，所以两句都把主语写出来，一个代词都不省。\n\n⚠️ 破发点这条**只给这一句**：`rybakina-frech` 同一天同一站刚拿它当过钩子，同栏目不重讲。"
+    },
+    {
+      "start": 148.6,
+      "end": 156.0,
+      "narration": "四比四，施奈德又一次拿到破发点。这一局的第三个了。",
+      "_why": "⑪ **画面自证**：148.5 到 162.5 记分条是 `6 | 4 | 40` / `2 | 4 | 30` 外加 `BREAK POINT #3`——第二盘四比四、赫瓦林斯卡发球、这一局的第三个破发点。⚠️ 中间她破发回来到三比四、又保住四比四这两局被集锦剪掉了（146.5 还是二比四，148.5 已经四比四），所以旁白不去讲那两局。"
+    },
+    {
+      "start": 163.7,
+      "end": 167.9,
+      "narration": "她的教练席，有人站了起来。",
+      "_why": "⑫ 解说在 162.72 秒说的是 `And she makes the pass. Look at the reaction.`，紧接着 167.04 秒 `Sasha's on his feet.`——画面正好是她走回底线（164.5，左膝那块白色护具看得很清楚）接教练席有人站起来鼓掌（166.5）。逐局这一局是 `5-4 srv=AWAY won=H BREAK`，比分交给下一段说。\n\n⚠️ **这一段故意不报数**：中段十几句里得有一次纯情绪的停顿，`--dry-run` 的「节奏」那条代理指的就是这件事（CLAUDE.md「不要平白叙事」）。"
+    },
+    {
+      "start": 168.4,
+      "end": 177.5,
+      "narration": "五比四，可施奈德没能在自己的发球局里把比赛结束掉。五比五，她又拿到一个破发点。",
+      "_why": "⑬ 逐局 `5-5 srv=HOME won=A BREAK`——她在五比四自己的那一局被破了回来。**那一局不在集锦里**（见 `_editing_why`），所以这里是旁白交代；画面演的是紧接着的第十一局，记分条 168.5 到 180.5 挂着 `6 | 5 | Ad` / `2 | 5` 加 `BREAK POINT`，也就是她在赫瓦林斯卡的发球局里又占先。\n\n⚠️ 全片只有这一处出现「发球局」三个字，密度远在 CLAUDE.md 那条 25% 的线以下。"
+    },
+    {
+      "start": 177.95,
+      "end": 182.95,
+      "narration": "赫瓦林斯卡救下来了，全场最好的一拍。",
+      "_why": "⑭ 逐局这一局是 `5-6 srv=AWAY won=A`——赫瓦林斯卡保住了。解说 176.96 秒的原话是 `Oh, that is a shot of the match.`，紧接着 179.52 秒 `Schneider thought she'd won that.`；画面 178.5 那一格正是赫瓦林斯卡自己在庆祝。「全场最好的一拍」是转述解说那一句，不是我们替他下的判断。"
+    },
+    {
+      "start": 183.5,
+      "end": 189.6,
+      "narration": "后面两局谁也没让谁，六比六，抢七决胜。",
+      "_why": "⑮ 逐局 `5-6`（赫瓦林斯卡保）、`6-6`（施奈德保）之后进抢七。画面 182.5 起记分条已经翻成 `6 | 6 | 1` / `2 | 6 | 0` 并挂出 `TIE BREAK`——抢七第一分刚打完，和这句话对得上。"
+    },
+    {
+      "start": 204.8,
+      "end": 212.6,
+      "narration": "抢七一上来，施奈德连拿四分。前面那八十多分钟的拉锯，好像忽然不见了。",
+      "_why": "⑯ **比分跟画面走**：204.5 那一格是 `6 | 6 | 2` / `2 | 6 | 0`，206.5 到 220.5 一直是 `4` / `0`——四比零。逐分记的也是前四分全归施奈德（1-0、2-0、3-0、4-0）。「八十多分钟」取 WTA 官方第二盘 `settime 01:23:36`。"
+    },
+    {
+      "start": 224.6,
+      "end": 233.4,
+      "narration": "六比二，四个赛点。这一盘她们打了八十三分钟，是第一盘的将近两倍。",
+      "_why": "⑰ **画面自证**：224.5 到 236.5 记分条是 `6 | 6 | 6` / `2 | 6 | 2` 外加 `MATCH POINT`——抢七六比二，四个赛点。用时两个数都取 WTA 官方 `settime`：83 分 36 秒对 44 分 37 秒，1.87 倍，所以写「将近两倍」不写「两倍」。"
+    },
+    {
+      "start": 242.2,
+      "end": 252.5,
+      "narration": "最后一分，两个人谁都不肯先松手。一百六十八分打完，施奈德拿到九十三分，多出十八分。",
+      "_why": "⑱ 241.88 到 277.28 是**一整个不间断的镜头**，记分条挂着 `MATCH POINT #2`（六比三之后剩下的赛点）——逐分记的是 6-2 拿到四个赛点、丢掉一个变 6-3、随后 7-3 收工，WTA 官方和 flashscore 都记赫瓦林斯卡「救下 1 个赛点」，就是那一分。\n\n⚠️ **不写「这一分打了多少秒」**（CLAUDE.md：一个球说打了多少拍，不说多少秒），而缩略图是两秒一格，数不出拍数，所以干脆不给长度。小分 93:75 出自 WTA 官方 `totptswona/b`，flashscore 一致。"
+    },
+    {
+      "start": 287.4,
+      "end": 294.9,
+      "narration": "法网半决赛输掉的那场球，施奈德讨了回来。下一次再碰上，会在哪儿？",
+      "_why": "⑲ 收尾落在一问上，不停在数据上（CLAUDE.md「收尾要落在一问上」）。画面是两个人在网前拥抱和握手（287.16 到 295.2 是一个镜头），290.5 那一格转播还挂着全屏赛果条 `ROUND 3 / DIANA SHNAIDER 6 7 / MAJA CHWALINSKA 2 6`。\n\n⚠️ 这一问**不和封面钩子重复**（钩子讲两盘用时），也**不和 `pegula-navarro` 的收尾「你更信哪一个数」撞形状**。"
+    }
+  ],
+  "push": {
+    "summary": "施奈德一比四落后仍拿下",
+    "lead": "第一盘四十四分钟六比二，第二盘却打了八十三分钟。施奈德一度一比四落后，从三十比四十的死角一分一分拽回来，连赢四局；自己那一局没能结束比赛，最后靠抢七七比三收工——两个多月前的法网半决赛，赢的是对面那个人。",
+    "auto": true,
+    "_summary_why": "11 个字，`SUMMARY_MAX=13` 以内。和封面钩子说的不是同一件事——钩子是两盘用时的落差，标题给的是第二盘里那次落后追回。"
+  },
+  "_film_check": "成片渲完从 Release 拉回本地逐帧看过（run 32094645794，142.12s / 1080×1440 / 25fps / 57.6 MB）：\n  · 封面 0.5s 是海报本身；1.4s 冷开场是她赛点落地后的怒吼，顶栏两行都在\n  · **136.0s 和 137.3s 还是网前握手**，转播的全屏赛果条 `ROUND 3 / DIANA SHNAIDER 6 7 / MAJA CHWALINSKA 2 6` 在画面上——**没有混进 WTA 片尾板**（最后一段收在源片 294.9，而 295.2 就是台标甩入的切点）\n  · 138.5s 起是品牌片尾\n  · 逐段量音量：封面 1.2s 是数字静音（这条没有 `cover.narration`，和 `pegula-navarro` 一样），正片 −26.0 / −27.4 dB、片尾 −28.9 dB，都有声音\n⚠️ 拉回来的那份放在 scratchpad，**不落在 `output/` 里**——那儿一个 `git add -A` 就会把 57 MB 提交进历史。"
+}
