@@ -213,3 +213,27 @@ def test_segment_skeleton旁白不够就留空(ap):
     assert segs[0]["narration"] == ""
     assert segs[1]["narration"] == "只有一句"
     assert segs[2]["narration"] == ""
+
+
+def test_finalize_windows装得下旁白不跨切点(ap):
+    """窗口收口：带旁白的段至少 speech_seconds+余量 宽；窗口内的切点要收住，
+    切点前不够装就把 start 挪到切点后重扩。冷开场（无旁白）只做切点对齐。"""
+    segs = [
+        {"start": 10.0, "end": 14.0, "narration": "她一分一分追回来五个破发点一个都没给这场球打了两小时"},
+        {"start": 20.0, "end": 25.0, "narration": ""},   # 冷开场
+    ]
+    out = ap.finalize_windows(segs, [13.0, 30.0])
+    # 第一段：切点 13 在窗口内且切点前不够装旁白 → start 挪到 13.2，end 扩到够装
+    s0 = out[0]
+    assert s0["start"] >= 13.2, "切点前不够装，start 该挪到切点后"
+    assert s0["end"] - s0["start"] >= 5.0, "窗口至少装得下旁白（26 字 ≈ 4.6s + 余量）"
+    # 冷开场：窗口保持，不硬扩
+    assert out[1] == {"start": 20.0, "end": 25.0, "narration": ""}
+
+
+def test_finalize_windows切点前够装就收end(ap):
+    """切点前够装旁白时，end 收到切点前（留溶解），start 不动。"""
+    segs = [{"start": 10.0, "end": 20.0, "narration": "短句"}]
+    out = ap.finalize_windows(segs, [15.0])
+    assert out[0]["end"] == 14.8, "切点 15 前够装（10→14.8 有 4.8s），end 收到切点前"
+    assert out[0]["start"] == 10.0

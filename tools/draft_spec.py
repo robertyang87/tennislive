@@ -89,6 +89,40 @@ def draft_editorial(chat: Chat, *, home: str, away: str, event: str, year: int,
     return chat.ask(SYSTEM, user, schema=SCHEMA, max_tokens=2000)
 
 
+_PUSH_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "summary": {"type": "string"},
+        "lead": {"type": "string"},
+    },
+    "required": ["summary", "lead"],
+}
+
+_PUSH_SYSTEM = """你是网球短视频账号「网球时差」的推送编辑，给一条「赛场之上」片子写推送。
+
+- `summary`：推送标题，**≤20 字位**（全角 1 字、半角 0.5），一句话把「谁赢了、多硬」
+  说清，像「兹维列夫两盘抢七险胜」。别写排名身份（海报已经印着）。
+- `lead`：正文第一段，2-4 句，说清这场球的具体过程 + 一个数字反差，别空话。
+- 只写给到的素材里有的事实，别编比分、别编球员说的话。"""
+
+
+def draft_push(chat: Chat, *, editorial: dict, facts: str = "") -> dict | None:
+    """从 editorial（question/thesis/beats/narration）+ 狠数据生成 push.summary/lead。
+
+    这是「草稿渲完直接合并推微信」的推送内容缺口——之前 summary/lead 靠终审手写。
+    """
+    beats = "\n".join(editorial.get("beats", []))
+    narration = "\n".join(editorial.get("narration", []))
+    user = (
+        f"question：{editorial.get('question', '')}\n"
+        f"thesis：{editorial.get('thesis', '')}\n"
+        f"beats：\n{beats}\n"
+        f"旁白：\n{narration}\n"
+        f"狠数据：\n{facts or '（没有）'}\n"
+    )
+    return chat.ask(_PUSH_SYSTEM, user, schema=_PUSH_SCHEMA, max_tokens=800)
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("--slug", required=True)
