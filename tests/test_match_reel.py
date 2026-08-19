@@ -4725,6 +4725,59 @@ def test_等dpkg锁的预算够长又不许撑爆步骤预算():
         f"只扫到 {len(checked)} 条工作流有 pw_wait_apt，判据的主语像是没了")
 
 
+def test_等满dpkg锁的预算之后要主动杀掉不能只是继续等():
+    """⚠️⚠️ **上一条判据（110~120 秒）当时是绿的——等是等够了，等法本身错了。**
+
+    2026-08-19（run 32211814483，tnns-stats）：`pw_wait_apt` 等满 110 秒，
+    锁**仍然**没松——被 `timeout` 杀掉的那层壳没能把信号传给它派生出来的
+    apt-get（同一条注释早写着「派生的 apt-get 活了下来」），那个孤儿不是
+    挂死，是在镜像上慢慢下一个字体包，110 秒不够它下完；重试的第二次立刻
+    死在 `Could not get lock ... held by process 2657 (apt-get)`。
+
+    而这一层已经贴着步骤预算的上限（上一条判据钉的 110~120 秒——
+    `INSTALL_TIMEOUT×ATTEMPTS + 等待预算 ≤ STEP_BUDGET`）。**继续往上加
+    等待时间不是出路**：上一次就是从 60 秒加到 110 秒才有的这一版，这次
+    撞上同一个天花板，说明「多等一会」这条路本身已经走到头了——被动等待
+    追的是一个移动的靶子（镜像多久能下完那个包，我们控制不了）。
+
+    真正能做的是**不再指望孤儿自己让开，等满就主动结束它**：我们不需要
+    保住它的下载进度——被杀掉那次已经下进 `/var/cache/apt/archives` 的包，
+    下一次重试照样会复用（ci.yml 那条注释早说过）。`sudo pkill -9 apt-get`
+    + `sudo pkill -9 dpkg` + `sudo dpkg --configure -a` 把状态收拾干净，
+    比继续等一个不知道还要多久的下载快得多，也不会撞步骤超时。
+
+    ⚠️ 判据**自己推导，不维护白名单**：凡是有 `pw_wait_apt` 的工作流都算，
+    而且要求这三行**紧跟在等待循环之后、`pw_wait_apt` 函数体收尾之前**
+    ——写在别处（比如只在 `pw_retry` 外层收尾时才清一次）救不了「等满就
+    立刻重试、必死在两秒内」这个场景，因为下一次重试是在 `pw_wait_apt`
+    返回之后立刻发生的。
+    """
+    checked = {}
+    for path in sorted(WORKFLOW.parent.glob("*.yml")):
+        lines = [ln for ln in path.read_text(encoding="utf-8").splitlines()
+                 if not ln.lstrip().startswith("#")]
+        body = "\n".join(lines)
+        if "pw_wait_apt" not in body:
+            continue
+        checked[path.name] = True
+        fn = re.search(r"pw_wait_apt\(\)\s*\{(.*?)\n {10}\}", body, re.S)
+        assert fn, f"{path.name} 的 pw_wait_apt 函数体形状变了，判据的主语没了"
+        tail = fn.group(1).split("等了 110 秒 dpkg 锁还没松开", 1)
+        assert len(tail) > 1, f"{path.name} 找不到那句等满 110 秒的告警"
+        after_warning = tail[1]
+        assert "pkill -9 apt-get" in after_warning, (
+            f"{path.name} 等满 110 秒之后只是继续等——2026-08-19 那次实测证明"
+            "等法本身不够，得在等满之后主动杀掉孤儿 apt-get，不能指望它自己让开")
+        assert "pkill -9 dpkg" in after_warning, (
+            f"{path.name} 只杀了 apt-get 没杀 dpkg——两边 pgrep 都在查，"
+            "杀的时候也要两边都杀")
+        assert "dpkg --configure -a" in after_warning, (
+            f"{path.name} 杀了孤儿却没有 `dpkg --configure -a` 收拾半装状态——"
+            "SIGKILL 打断 apt-get 可能留下半配置好的包，下一次重试会撞见它")
+    assert len(checked) >= 6, (
+        f"只扫到 {len(checked)} 条工作流有 pw_wait_apt，判据的主语像是没了")
+
+
 def test_Chromium缓存都要有restore_keys():
     """键钉在整份 `pyproject.toml` 上太宽，**加一个依赖就把六条线的缓存全废掉**。
 
