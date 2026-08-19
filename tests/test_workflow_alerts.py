@@ -287,6 +287,56 @@ def test_装ffmpeg和字体那批步骤都走共享脚本不留手搓的调用()
         "而那和「apt 真挂死了」长得一模一样。")
 
 
+def test_job级超时要兜得住各步骤自己声明的最坏预算之和():
+    """上一条测试管的是「每一步自己够不够」，这条管**加起来还装不装得进
+    外层那道 job 级预算**——2026-08-19 就在 `ci.yml` 上真的撞过：
+
+        装字体/ffmpeg（apt_install_cached，本 PR 刚从 7 分钟提到 12） + 12
+        装 Chromium（`timeout-minutes: 10`）                          + 10
+                                                          小计 22 分钟
+        而 job 级 `timeout-minutes` 当时是 15
+
+    两步各自的预算都是**认真量出来、有出处的数**（12 是共享脚本的
+    `WORST_CASE_BUDGET`，10 是「2×240s + 110s 等锁」），可**谁都没检查过
+    加起来还塞不塞得进 job 级那道壳**。当天真撞上了：run 32232302155
+    连着两次在 15 分钟整被砍掉，一次是 pytest 卡在 98%（多给几分钟大概率
+    跑完），一次是装 Chromium 第二次还没跑完（也没有死循环，只是被砍早了）。
+
+    ⚠️ **这条不检查「没写 timeout-minutes 的步骤」**——那些多半是 checkout /
+    pip 这类正常几秒到几分钟的步骤，没有一个「最坏预算」的出处可核，硬编一个
+    只会制造假警报。只加总**明确写了 timeout-minutes 的步骤**，job 级预算
+    至少要覆盖这些已知的最坏情况，再加上没写超时的那些步骤的正常余量——
+    所以判据留了 50% 的宽松空间（job 预算 ≥ 步骤之和，不要求等于）。
+    """
+    import yaml  # noqa: PLC0415
+
+    paths = sorted(Path(".github/workflows").glob("*.yml"))
+    checked, over = [], []
+    for path in paths:
+        spec = yaml.safe_load(path.read_text(encoding="utf-8"))
+        for job_name, job in (spec.get("jobs") or {}).items():
+            job_limit = job.get("timeout-minutes")
+            if not job_limit:
+                continue  # 没写 job 级超时的那一半，另一条测试已经在拦
+            step_sum = sum(
+                int(step.get("timeout-minutes") or 0)
+                for step in job.get("steps") or [])
+            if step_sum == 0:
+                continue  # 没有任何一步声明过「最坏预算」，没有基线可比
+            checked.append(f"{path.name}:{job_name}")
+            if job_limit < step_sum:
+                over.append(
+                    f"{path.name}:{job_name} job={job_limit}min "
+                    f"< 步骤之和={step_sum}min")
+
+    assert len(checked) >= 1, "一个有步骤级超时可加总的 job 都没扫到，判据可能失效了"
+    assert not over, (
+        "这些 job 的 timeout-minutes 撑不住它自己各步骤声明的最坏预算之和：\n  "
+        + "\n  ".join(over) + "\n某一步的预算被人加宽过（比如缓存没命中时的重试），"
+        "但外层这道 job 级的壳没跟着调宽——步骤自己还在正常重试的时候，"
+        "job 超时先把整趟砍了，看起来和「卡死了」一模一样。")
+
+
 def _strip_shell_comments(run: str) -> str:
     """去掉 run 脚本里的整行注释。
 

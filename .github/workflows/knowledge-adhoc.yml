@@ -69,7 +69,14 @@ permissions:
 jobs:
   knowledge-adhoc:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    # ⚠️ **2026-08-19：这两步自己声明的最坏预算已经有 22 分钟**（字体 12 ＋
+    # Chromium 10），比原来这行的 20 分钟还多——字体那步的预算是同一天
+    # 从 7 分钟提到 12 分钟的（见 `tools/ci_apt_install.sh`），提完没人
+    # 回头检查外层这道 job 级的壳还装不装得下（`ci.yml` 当天真撞过同一个
+    # 缺口，见那边的注释）。35 分钟＝22（两步最坏情况）＋13（checkout/pip/
+    # 真正生成知识帖那几步的余量）。判据在
+    # `test_job级超时要兜得住各步骤自己声明的最坏预算之和`。
+    timeout-minutes: 35
     env:
       PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
       TENNISLIVE_THEME: ${{ vars.TENNISLIVE_THEME || 'dark' }}

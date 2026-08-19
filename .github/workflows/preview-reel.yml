@@ -55,7 +55,14 @@ permissions:
 jobs:
   render:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    # ⚠️ **2026-08-19：这三步自己声明的最坏预算已经有 34 分钟**（ffmpeg 12 ＋
+    # 字体 12 ＋ Chromium 10），比原来这行的 30 分钟还多——ffmpeg/字体那两步
+    # 的预算是同一天从 7 分钟提到 12 分钟的（见 `tools/ci_apt_install.sh`），
+    # 提完没人回头检查外层这道 job 级的壳还装不装得下（`ci.yml` 当天真撞过
+    # 同一个缺口，见那边的注释）。50 分钟＝34（三步最坏情况）＋16（checkout/
+    # pip/真正渲预览那几步的余量）。判据在
+    # `test_job级超时要兜得住各步骤自己声明的最坏预算之和`。
+    timeout-minutes: 50
     concurrency:
       group: preview-reel-${{ github.event.inputs.slug }}
       cancel-in-progress: true

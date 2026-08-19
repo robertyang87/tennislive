@@ -26,7 +26,15 @@ jobs:
     runs-on: ubuntu-latest
     # oss 模式要装 CPU torch + 拉 2GB 模型 + CPU 合成，30 分钟起步；
     # 其余模式仍在 12 分钟内跑完，超时只是上限不是目标
-    timeout-minutes: 40
+    #
+    # ⚠️ **2026-08-19：这两步自己声明的最坏预算已经有 47 分钟**（装依赖 12 ＋
+    # 试 CosyVoice2 35），比原来这行的 40 分钟还多——装依赖那步的预算是同一天
+    # 从 7 分钟提到 12 分钟的（见 `tools/ci_apt_install.sh`），提完没人回头
+    # 检查外层这道 job 级的壳还装不装得下（`ci.yml` 当天真撞过同一个缺口，
+    # 见那边的注释）。65 分钟＝47（两步最坏情况）＋18（checkout/pip 的余量，
+    # 这个 job 大头本来就在 CosyVoice2 那 35 分钟里，其余步骤都很轻）。
+    # 判据在 `test_job级超时要兜得住各步骤自己声明的最坏预算之和`。
+    timeout-minutes: 65
     steps:
       - uses: actions/checkout@v4
         with:
