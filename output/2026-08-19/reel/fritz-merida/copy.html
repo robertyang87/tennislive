@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>8.19 赛场之上 | 制胜分平非受迫失误差十二</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>制胜分十七平，输的是拉开失误的那个
+
+辛辛那提男单第三轮，六号种子、世界第八的弗里茨主场作战，6-3 6-4 击败非种子、世界第四十的梅里达，净打时间1小时22分。
+
+这场球最扎眼的是并排的两组数字。制胜分：十七比十七，完全打平。非受迫失误：弗里茨十三个，梅里达二十五个，几乎多了一倍——真正拉开比分的不是谁打得更漂亮，是谁先把自己的失误按住。
+
+首盘弗里茨很快找到节奏，在梅里达的发球局里顶到三十比十五，随即完成破发，三比二反超，之后一路没给对手喘息的空间，六比三收官。第二盘他延续压制，一度拉开到四比二；梅里达没有轻易放弃，把比分追近，但弗里茨还是在五比四自己发球时拿到赛点，六比四锁定胜局。
+
+这场球对梅里达的分量比比分本身更重。七月他刚在乌马格拿下生涯首个巡回赛冠军，八月又在蒙特利尔淘汰世界第二十八的于贝尔，闯进生涯第一个大师赛八强——这一站他先后淘汰外卡西里奇、三十号种子伯格斯，一路杀到第三轮。赢下这场，本该是他职业生涯第一场击败世界前十的比赛，他没能兑现。
+
+弗里茨这边，主场作战的意味同样重。继本月拿下华盛顿站冠军之后，他把美国本土的连胜延续到七场，这是他五年内第四次杀进辛辛那提第四轮，本赛季胜场也来到第三十场。
+
+比赛第二盘一度因为看台上一名观众身体不适而暂停了几分钟。转播的解说在赛点之后连说了几句原话——&quot;Oh dear&quot;&quot;What a bizarre ending to the match&quot;——收官的那一刻，连解说都觉得有点意外。
+
+十七比十七的制胜分，梅里达没有输在进攻端。下一次，他补得回来吗？
+
+#网球时差 #弗里茨 #梅里达 #辛辛那提大师赛 #赛场之上</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>制胜分打平，输在失误——下一次，补得回来吗？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
