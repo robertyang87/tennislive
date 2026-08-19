@@ -130,14 +130,20 @@ apt_install_cached() {
 # 字面就是当天编的。它的 CSV writer 行为和我们用了很久的稳定版不一样：
 # `-show_entries stream=duration -of csv=p=0` 吐出 `117.480000,`
 # 带一个尾随逗号，`check_reel_landed.py` 拿它 `float()` 直接崩——
-# **这正是「latest 不等于稳定」的活证据**，不是猜的。
+# **这正是「latest 不等于稳定」的活证据**，不是猜的。那个 crash 已经在
+# `check_reel_landed.py` 里防御性地修了（只取逗号前第一个字段），
+# 不管哪个 ffprobe 版本再吐这种尾巴都不会再崩。
 #
-# 换成 johnvansickle.com 的 `ffmpeg-release-amd64-static.tar.xz`：
-# 它跟的是**上一个带编号的稳定版**（这次拿到的是 7.0.2，`last-modified`
-# 停在 2024-08-24——两年没变过，因为上游没再出新的稳定版），不会像
-# master 快照那样一天一个样。实测：完全静态链接（`ldd` 报
-# "not a dynamic executable"，比 BtbN 那份"只依赖几个 glibc 库"更干净）、
-# 含 libx264/libx265、CSV 输出干净、40 MB 十几秒下完。
+# ⚠️⚠️ **第二版换成了 johnvansickle.com 的稳定版（7.0.2，两年没变过），
+# 却在 CI 上当场撞了另一个坑**（PR #462）：这个 minimal 静态构建
+# **没编 `drawtext` 滤镜**（`-filters` 里查不到，`--enable-libfreetype`
+# 写在 buildconf 里却没用上——大概率是这份构建特意剔的），而
+# `contact_sheet()` 烧时间码用的正是它。`mode=probe` 那条路直接死。
+# **两个候选各缺一半**：BtbN 有全部滤镜（drawtext/ass/xfade 都实测过）
+# 但版本不稳；johnvansickle 版本稳但滤镜不全。这条流水线要的是全部滤镜，
+# 版本漂移那半坑已经用防御性解析堵住了——所以退回 BtbN，**不是绕了一圈
+# 白折腾，是把两次真实失败各自的教训都吃进了最终方案**：URL 换回去，
+# CSV 解析的防御不撤。
 #
 # ⚠️ **不是替换 apt，是多一条更快的路，apt 仍然是保底。** 静态构建
 # 下载失败（那天也抽风、tar 包结构变了……）就原样退回
@@ -147,7 +153,7 @@ ensure_ffmpeg() {
     echo "[ffmpeg] 已经在 PATH 上了，跳过"
     return 0
   fi
-  local url="https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz"
+  local url="https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-linux64-gpl.tar.xz"
   local tmp ok=0
   tmp="$(mktemp -d)"
   if timeout 90 curl -fsSL "$url" -o "$tmp/ffmpeg.tar.xz" 2>"$tmp/dl.log"; then
@@ -165,7 +171,7 @@ ensure_ffmpeg() {
   fi
   rm -rf "$tmp"
   if [ "$ok" = 1 ]; then
-    echo "[ffmpeg] 走静态构建（johnvansickle.com，稳定版不是 master 快照），没碰 apt 镜像"
+    echo "[ffmpeg] 走静态构建（BtbN，GPL 版含 drawtext），没碰 apt 镜像"
     return 0
   fi
   echo "[ffmpeg] 静态构建拿不到，退回 apt"
