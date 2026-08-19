@@ -145,7 +145,7 @@ jobs:
       # 只有**真跑一次混音**才验得出来（查源码里有没有 `apad` 拦不住「它从来
       # 没工作过」）。那个 bug 在九条已发的成片里中了七条，值这十几秒。
       - name: 安装中文字体和 ffmpeg（卡片图 / 字宽 / 混音测试需要）
-        timeout-minutes: 12
+        timeout-minutes: 15
         run: |
           source tools/ci_apt_install.sh
           apt_install_cached fonts-noto-cjk fonts-noto-core fonts-noto-color-emoji ffmpeg

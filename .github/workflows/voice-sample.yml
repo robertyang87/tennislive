@@ -67,7 +67,7 @@ jobs:
             ~/.cache/apt-lists
           key: apt-pkgs-${{ runner.os }}-24.04-voice-sample-v1
       - name: 安装 edge-tts + ffmpeg
-        timeout-minutes: 12
+        timeout-minutes: 15
         run: |
           pip install -q edge-tts
           # Azure 那条路要 SDK 才拿得到词边界（REST 接口不给）——而字幕整条线
