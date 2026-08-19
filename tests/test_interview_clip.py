@@ -2801,6 +2801,142 @@ def test_轮次要写半决赛不写四强():
         "清单只许减不许加——修好了就把它删掉，别留着变成一张许可证。")
 
 
+# 规矩定下来**之前**已经发出去的一批。已发的片子不为了措辞重渲——
+# `sabalenka-wang-cincinnati-2026-r3` 的 `_copy_note` 里账号所有者原话
+# 就是「这条只管以后」。**只许减不许加**：修好一个就从下面删掉一个，
+# 别让它变成一张许可证。
+_LEGACY_BILINGUAL_MENTION = {
+    'alexandrova-sabalenka-tor2026-r16.json',
+    'alexandrova-sabalenka-tor2026-r16.xhs.txt',
+    'arango-venus-cincinnati-2026-r1.json',
+    'arango-venus-cincinnati-2026-r1.xhs.txt',
+    'chwalinska-cincinnati-2026-studio.json',
+    'chwalinska-cincinnati-2026-studio.xhs.txt',
+    'deminaur-fery-cincinnati-2026-r3.json',
+    'deminaur-fery-cincinnati-2026-r3.xhs.txt',
+    'djokovic-cincinnati-2026-presser.json',
+    'djokovic-cincinnati-2026-presser.xhs.txt',
+    'djokovic-cincinnati-2026-return.json',
+    'djokovic-cincinnati-2026-return.xhs.txt',
+    'eala-mcnally-toronto-2026-r3-presser-full.json',
+    'eala-mcnally-toronto-2026-r3-presser-full.xhs.txt',
+    'eala-mcnally-toronto-2026-r3-presser.json',
+    'eala-mcnally-toronto-2026-r3-presser.xhs.txt',
+    'eala-mcnally-toronto-2026-r3.json',
+    'eala-mcnally-toronto-2026-r3.xhs.txt',
+    'eala-osaka-dc2026-sf-studio.json',
+    'eala-osaka-dc2026-sf-studio.xhs.txt',
+    'eala-osaka-dc2026-sf.json',
+    'eala-osaka-dc2026-sf.xhs.txt',
+    'eala-parks-toronto-2026.json',
+    'eala-parks-toronto-2026.xhs.txt',
+    'eala-pegula-dc2026-final-presser.json',
+    'eala-pegula-dc2026-final-presser.xhs.txt',
+    'eala-pegula-dc2026-final.json',
+    'eala-pegula-dc2026-final.xhs.txt',
+    'eala-svitolina-dc2026-qf.json',
+    'eala-svitolina-dc2026-qf.xhs.txt',
+    'faria-shelton-cincinnati-2026-r2.json',
+    'faria-shelton-cincinnati-2026-r2.xhs.txt',
+    'fils-lehecka-cincinnati-2026-r3.json',
+    'fils-lehecka-cincinnati-2026-r3.xhs.txt',
+    'gauff-samsonova-cincinnati-2026-r2.json',
+    'gauff-samsonova-cincinnati-2026-r2.xhs.txt',
+    'jodar-tabilo-cincinnati-2026-r3.json',
+    'jodar-tabilo-cincinnati-2026-r3.xhs.txt',
+    'mensik-hijikata-cincinnati-2026-r3.json',
+    'mensik-hijikata-cincinnati-2026-r3.xhs.txt',
+    'nakashima-shelton-mtl2026-final.json',
+    'nakashima-shelton-mtl2026-final.xhs.txt',
+    'noskova-boulter-cincinnati-2026-r2.json',
+    'noskova-boulter-cincinnati-2026-r2.xhs.txt',
+    'pegula-eala-dc2026-final.json',
+    'pegula-eala-dc2026-final.xhs.txt',
+    'rybakina-frech-cincinnati-2026-r3.json',
+    'rybakina-frech-cincinnati-2026-r3.xhs.txt',
+    'rybakina-gauff-tor2026-sf.json',
+    'rybakina-gauff-tor2026-sf.xhs.txt',
+    'rybakina-osaka-tor2026-qf.xhs.txt',
+    'rybakina-swiatek-tor2026-final-presser.json',
+    'rybakina-swiatek-tor2026-final-presser.xhs.txt',
+    'rybakina-swiatek-tor2026-final.json',
+    'rybakina-swiatek-tor2026-final.xhs.txt',
+    'rybakina-townsend-cincinnati-2026-r2.json',
+    'rybakina-townsend-cincinnati-2026-r2.xhs.txt',
+    'sabalenka-uchijima-tor2026-r64.json',
+    'sabalenka-uchijima-tor2026-r64.xhs.txt',
+    'sabalenka-zhang-tor2026-r3.json',
+    'sabalenka-zhang-tor2026-r3.xhs.txt',
+    'shang-rublev-mtl2026-r2.json',
+    'shang-rublev-mtl2026-r2.xhs.txt',
+    'shelton-mensik-mtl2026-qf.xhs.txt',
+    'shelton-nakashima-mtl2026-final.json',
+    'shelton-nakashima-mtl2026-final.xhs.txt',
+    'swiatek-arango-cincinnati-2026-r2.json',
+    'swiatek-arango-cincinnati-2026-r2.xhs.txt',
+    'swiatek-rybakina-tor2026-final-presser.json',
+    'swiatek-rybakina-tor2026-final-presser.xhs.txt',
+    'swiatek-rybakina-tor2026-final.json',
+    'swiatek-rybakina-tor2026-final.xhs.txt',
+    'swiatek-sakkari-cincinnati-2026-r3.json',
+    'swiatek-sakkari-cincinnati-2026-r3.xhs.txt',
+    'tirante-djokovic-cincinnati-2026-r2.json',
+    'tirante-djokovic-cincinnati-2026-r2.xhs.txt',
+    'zverev-atmane-cincinnati-2026-r3.json',
+    'zverev-atmane-cincinnati-2026-r3.xhs.txt',
+}
+
+
+def test_文案不许再提中英双语字幕():
+    """账号所有者 2026-08-19：「以后不要再在文案里说中英文字幕相关的文案」。
+
+    来路：`sabalenka-wang-cincinnati-2026-r3` 推送之后账号所有者当场纠正。
+    这条线上几乎每条片子的 `push.lead` 和 `.xhs.txt` 都以「中英双语字幕，
+    全程。」或「🎤 中英双语字幕」收尾——**那是制作规格，不是这场球的内容**，
+    读者关心的是发生了什么，不是我们用什么字幕方案做的。
+
+    判据只查会发出去的字段（同 `test_轮次要写半决赛不写四强` 的口径）：
+    `_` 开头的注解跳过——`_copy_note` 里正引着账号所有者这句原话，
+    连它一起扫会把「把规矩记下来」判成「又违反了规矩」。
+
+    ⚠️ **已发的片子不重渲，微信消息发出去收不回来**——`_LEGACY_BILINGUAL_MENTION`
+    收着规矩定下来之前的存量，只许减不许加。
+    """
+    bad = re.compile(r"(中英)?双语字幕|字幕轨|中英字幕")
+
+    def outward(obj):
+        if isinstance(obj, dict):
+            for k, v in obj.items():
+                if isinstance(k, str) and k.startswith("_"):
+                    continue
+                yield from outward(v)
+        elif isinstance(obj, list):
+            for v in obj:
+                yield from outward(v)
+        elif isinstance(obj, str):
+            yield obj
+
+    offenders = {}
+    for path in _specs():
+        hits = sorted({m.group(0) for text in outward(
+            json.loads(path.read_text(encoding="utf-8"))) for m in bad.finditer(text)})
+        if hits:
+            offenders[path.name] = hits
+    for path in sorted(SPECS.glob("*.xhs.txt")):
+        hits = sorted({m.group(0) for m in bad.finditer(path.read_text(encoding="utf-8"))})
+        if hits:
+            offenders[path.name] = hits
+
+    fresh = {k: v for k, v in offenders.items() if k not in _LEGACY_BILINGUAL_MENTION}
+    assert not fresh, (
+        f"这些地方还在提中英双语字幕：{fresh}。"
+        "那是制作规格，不是这场球的内容，删掉。")
+    missing = _LEGACY_BILINGUAL_MENTION - set(offenders)
+    assert not missing, (
+        f"豁免表里这些条目已经不违规了（或者文件名写错了）：{sorted(missing)}。"
+        "清单只许减不许加——修好了就把它删掉，别留着变成一张许可证。")
+
+
 # 中文 68→70（2026-08-12）之前就已经发出去、行超宽了的文件。已发的片子
 # 不为了字号重渲——这几条不会再被渲染，涨字号对它们没有意义，改宽度预算
 # 也换不回一次已经发出去的推送。**只许减不许加**：修好一个（或者它被删除）
