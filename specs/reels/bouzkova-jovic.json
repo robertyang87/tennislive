@@ -1,0 +1,197 @@
+{
+  "slug": "bouzkova-jovic",
+  "source_url": "https://www.youtube.com/watch?v=90M3amiwUbU",
+  "_source": "WTA 官方 YouTube 频道单场集锦《Marie Bouzkova vs. Iva Jovic | 2026 Cincinnati Round 3 | WTA Match Highlights》，5 分 8 秒。",
+  "_match": {
+    "flashscore_id": "OUQgJxvQ",
+    "wta_match_id": "LS021",
+    "wta_event_id": "1017",
+    "_why": "两个源核对一致：flashscore `OUQgJxvQ`（`Bouzkova M.` vs `Jovic I.`，`AC=3` 轮次三）、WTA 官方 `LS021`（`ResultString: [22]M. Bouzkova d [13]I. Jovic 7-6(0),7-6(5)`、`RoundID 3`、`MatchTimeTotal 02:20:46`）。WTA 官方逐盘统计（`LS021/stats` setnum 0）和 flashscore `df_st_1` 十项逐一核对一致（aces 2:1、双误 5:1、破发点兑现 5/9:5/8、总得分 89/169:80/169）。"
+  },
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "布兹科娃",
+    "hook": "三个赛点\n只兑现了一个",
+    "_hook_why": "讲过程，不讲身份。决胜盘抢七她一度六比三、手握三个赛点，约维奇（世界第十六、13 号种子，比布兹科娃排名更高）连救两个才被拿下——WTA 官方 `df_st_1`『Match points saved』字段：布兹科娃 0、约维奇 2，和逐分记录里 6-3→6-4→6-5→7-5 的推进一致。两行 4 字和 6 字，solo 上限 10。⚠️ 有意不写最终比分：海报下面赛果行本来就印着 7-6(0) 7-6(5)。",
+    "_subject_view_why": "封面放布兹科娃：她是赢家，钩子讲的『三个赛点只兑现一个』这条线的主角也是她（三次机会才拿下，不是约维奇的三次机会）。找过约维奇本场的官方实拍——WTA 视频页和赛事媒体库都没有单独挂她这场的照片，只有布兹科娃这一张（见 `portrait._photo_why`）。",
+    "_heat_why": "约维奇当期世界第 16（榜单日期 2026-08-10，WTA 官方 `players/ranked`），过热度闸②（世界前 20）——即使她是这场的输家，闸判的是『谁把人拉进来』，18 岁世界第 16 的名字够格。",
+    "topic": "WTA1000 辛辛那提 · 女单第三轮",
+    "portrait": {
+      "image": "assets/reel/bouzkova-cincinnati-2026-r3.jpg",
+      "fit": "cover",
+      "focus": 0.475,
+      "focus_y": 0.49,
+      "zoom": 1.0,
+      "_photo_why": "官方实拍，WTA 官方赛后集锦视频页自己的 CMS 数据里找到的：`https://www.wtatennis.com/videos/4562230/bouzkovas-experience-gets-past-jovic-to-reach-cincinnati-last-16` 页面的 `og:image` 挂着\n`photo-resources/2026/08/19/983938de-0372-4cad-9b7a-d2d56b26901b/Marie-Bouzkova-Cincinnati-2026.jpg`，同一份视频页 CMS JSON 的 `references` 字段直接列着 `TENNIS_PLAYER reference:320983`（布兹科娃本人的 WTA 球员 id）和 `TENNIS_TOURNAMENTGROUP reference:1017`（辛辛那提），`titleUrlSegment: marie-bouzkova-cincinnati-2026`，四要素齐了。`?width=4000` 实测拿到 4055×2552（原图，未放大）。\n\n打开看过：反手截击准备姿势，双手持拍、专注前压，深蓝球场背景（`First One Bank`／`W&S` 广告板，`W&S`＝Western & Southern，辛辛那提这一站的冠名赞助商），运动感强、清晰锐利，没有水印。⚠️ **约维奇这场没有找到官方实拍**：她的 WTA 球员页 `og:image` 是站点通用默认卡（不是她本人的照片），赛事媒体库当时也没有单独挂她这场的图。\n\n**裁切按『人物居中、放大到接近铺满』这条规矩量出来的**（账号所有者 2026-08-18：『尽可能把人物放到正中间，同时放大到足够，接近铺满整个画布，四周留一定空间即可』）。原图横图 4055×2552（1.59:1），拿网格量过：人物水平范围（左侧裙摆到球拍拍头）约在 0.28~0.67，几何中心 0.475，`focus` 取这个数；垂直范围（头带到膝盖）约在 0.03~0.95，中心 0.49，`focus_y` 取这个数。`zoom` 定在 1.0（不额外放大）——纵向本来就贴得很紧（0.03/0.05 的边距），再放大会切到头带或膝盖；横向在 zoom=1.0 时天然留出约 0.04 的边距，符合『留一定空间』。"
+    },
+    "scrim": "clear",
+    "matchup": [
+      {
+        "name": "布兹科娃",
+        "name_en": "Marie Bouzkova",
+        "country": "CZE",
+        "rank": 27
+      },
+      {
+        "name": "约维奇",
+        "name_en": "Iva Jovic",
+        "country": "USA",
+        "rank": 16
+      }
+    ],
+    "_name_why": "两个中文名都走 `player_zh()`，实调过：`player_zh(\"Marie Bouzkova\")` → 布兹科娃、`player_zh(\"Iva Jovic\")` → 约维奇。排名取 WTA 官方 `players/ranked`（`metric=SINGLES`，`rankedAt 2026-08-10`）：布兹科娃第 27、约维奇第 16。⚠️ 种子和排名是两件事：布兹科娃本站 22 号种子、约维奇本站 13 号种子（种子号比排名更靠前，因为报名截止周的排名比现在更高）——这条片子不提种子号，只用当期排名。",
+    "winner": "布兹科娃",
+    "result": "7-6(0) 7-6(5)",
+    "scoreboard": {
+      "court": "Lindner Family Tennis Center",
+      "_court_why": "⚠️ 球场名没查实，印场馆名。WTA 官方 `matches` 给的是 `CourtID 2`，这一站的 `CourtID` 字段早就被证伪过（同站不同 spec 上互相打架，见 `noskova-tauson`／`cirstea-bartunkova`／`sabalenka-wang` 的 `_court_why`）。源片里挡板只有赞助商 logo，没有球场名。按同站惯例印 `Lindner Family Tennis Center`。",
+      "duration_source": {
+        "provider": "wta",
+        "url": "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches?page=0&pageSize=400",
+        "match_id": "LS021",
+        "field": "MatchTimeTotal",
+        "source_page": "https://www.wtatennis.com/tournament/1017/cincinnati/2026/scores/LS021"
+      },
+      "_duration_why": "WTA 官方 `MatchTimeTotal 02:20:46`；分盘 `settime` 01:00:35 + 01:20:11（估，见下）——两盘都进抢七，总用时和 flashscore `RB 2:22` 同量级一致。"
+    }
+  },
+  "editorial": {
+    "mode": "match_review",
+    "question": "两盘都靠抢七拿下，第一盘七比零，第二盘却被追到六比五——这是同一场比赛吗？",
+    "thesis": "布兹科娃（28 岁，22 号种子，世界第 27）直落两盘 7-6(0) 7-6(5) 淘汰约维奇（18 岁，13 号种子，世界第 16，本场种子和排名都比布兹科娃更高）。第一盘抢七她打出了近乎完美的七比零，一分未失；第二盘抢七才是真正的较量：布兹科娃一度六比三、手握三个赛点，约维奇连救两个，把比分追到六比五，布兹科娃才在第三个赛点上把比赛收住——同样是抢七，一次零封、一次差点被追平，两盘的分量完全不一样。WTA 官方赛后稿给这场定的标题是『经验』——28 岁的老将，压过了那个连七比零的优势都差点没能兑现的自己。",
+    "beats": [
+      "前段：第一盘抢七，布兹科娃七比零零封拿下——这一盘她几乎没给约维奇任何机会",
+      "中段：第二盘打到六比六，再进抢七，比赛真正的悬念从这里才开始",
+      "结局：抢七六比三、三个赛点，约维奇连救两个把比分追到六比五，布兹科娃在第三个赛点上才把比赛收住"
+    ],
+    "human_context": {
+      "angle": "这场胜利的分量藏在种子和排名里：约维奇本站 13 号种子、世界第 16，两项都比布兹科娃（22 号种子、世界第 27）更靠前——账面上她才是更被看好的一方。18 岁对 28 岁，WTA 官方赛后稿的标题直接点破了这场的落点：《Bouzkova's experience gets past Jovic to reach Cincinnati last 16》——不是年轻天才占了上风，是老将的经验笑到了最后。",
+      "facts": [
+        "布兹科娃 1998-07-21 出生，本场时 28 岁；约维奇 2007-12-06 出生，18 岁（WTA 官方球员接口 id 320983 / 332285）",
+        "当期世界排名：布兹科娃第 27、约维奇第 16（榜单日期 2026-08-10，WTA 官方 `players/ranked`，`metric=SINGLES`）",
+        "种子：布兹科娃 22 号种子，约维奇 13 号种子（WTA 官方 `SeedA=22`、`SeedB=13`，`ResultString: [22]M. Bouzkova d [13]I. Jovic`）——约维奇种子和排名都比布兹科娃更靠前",
+        "轮次第三轮：WTA 官方 `RoundID=3`；用时 `MatchTimeTotal` 02:20:46",
+        "比分 7-6(0),7-6(5)：WTA 官方 `ScoreTbSet1=0`（第一盘抢七 7-0）、`ScoreTbSet2=5`（第二盘抢七 7-5），两个源（WTA 官方逐盘统计、flashscore `df_su_1`）一致",
+        "第二盘抢七的关键分：flashscore `df_st_1`『Match points saved』字段——布兹科娃 0、约维奇 2；结合逐分记录（`df_mh_1` 第二盘抢七 6-3 之后连续三分记着 `HM÷3,1` 标记），布兹科娃在 6-3、6-4、6-5 三次机会都是赛点，约维奇救下前两个，第三个没能救下",
+        "全场技术统计（WTA 官方 `LS021/stats` setnum 0，与 flashscore `df_st_1` 双源核对一致）：ACE 2:1、双误 5:1、一发进球 65%(33/51):54%(27/50)、破发点兑现 5/9:5/8、总得分 53%(89/169):47%(80/169)",
+        "WTA 官方赛后集锦视频标题：《Bouzkova's experience gets past Jovic to reach Cincinnati last 16》——WTA 官方给这场比赛的编辑框架是『经验』战胜了排名和种子都更高的年轻对手",
+        "此前两人从未交手过——flashscore 记录里布兹科娃近期比赛列表中，这是她与约维奇的首次相遇"
+      ],
+      "sources": [
+        "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches?page=0&pageSize=400",
+        "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches/LS021/stats",
+        "https://api.wtatennis.com/tennis/players/ranked?page=0&pageSize=100&type=rankSingles&sort=asc&name=&metric=SINGLES",
+        "https://api.wtatennis.com/tennis/players/320983",
+        "https://api.wtatennis.com/tennis/players/332285",
+        "https://global.flashscore.ninja/2/x/feed/df_st_1_OUQgJxvQ",
+        "https://global.flashscore.ninja/2/x/feed/df_mh_1_OUQgJxvQ",
+        "https://global.flashscore.ninja/2/x/feed/df_hh_1_OUQgJxvQ",
+        "https://www.wtatennis.com/videos/4562230/bouzkovas-experience-gets-past-jovic-to-reach-cincinnati-last-16"
+      ],
+      "voice_label": "三个赛点，只兑现了一个"
+    }
+  },
+  "topbar": {
+    "line1": "2026 辛辛那提 WTA1000 第三轮",
+    "line2": "布兹科娃 7-6(0) 7-6(5) 约维奇"
+  },
+  "_no_repeat": "布兹科娃、约维奇两人这条线上都还没发过片子。同一天同一站的兄弟片：`sabalenka-wang`（萨巴伦卡零破发点横扫）、`gauff-li`、`nakashima-medvedev`、`borges-rublev`、`fritz-merida`——五条线落点各不相同，不用额外避让。",
+  "stats": {
+    "tour": "wta",
+    "a": {
+      "headshot": "assets/players/headshots/wta-320983.jpg",
+      "aces": 2,
+      "df": 5,
+      "first_in": 51,
+      "first_won": 33,
+      "first_total": 81,
+      "second_total": 30,
+      "second_won": 16,
+      "bp_conv": 5,
+      "bp_chances": 9,
+      "pts_won": 89,
+      "pts_total": 169
+    },
+    "b": {
+      "headshot": "assets/players/headshots/wta-332285.jpg",
+      "aces": 1,
+      "df": 1,
+      "first_in": 50,
+      "first_won": 27,
+      "first_total": 88,
+      "second_total": 38,
+      "second_won": 21,
+      "bp_conv": 5,
+      "bp_chances": 8,
+      "pts_won": 80,
+      "pts_total": 169
+    },
+    "_source": "十项来自 flashscore `df_st_1_OUQgJxvQ` 的『Match』档，并且 aces/df/bp_conv/bp_chances/pts_won 五项和 WTA 官方 `LS021/stats` setnum 0 逐项核对一致（acesa=2/acesb=1、dblflta=5/dblfltb=1、breakptsconva=5/breakptsconvb=5、breakptsplayeda=9/breakptsplayedb=8、totptswona=89/totptswonb=80，全部一致）。\n\n⚠️ `a` 跟的是 `cover.matchup[0]`＝布兹科娃，`b`＝约维奇——flashscore 的 home/away（`SH`/`SI`）也正好是布兹科娃/约维奇，同序，但仍按 `matchup` 对抄。\n\n`first_in`／`first_total`／`second_total` 取自 WTA 官方逐项统计而不是 flashscore 的百分比：`ptsplayed1stserva=51`＝布兹科娃一发**进球**的分数（first_in），`totservplayeda=81`＝她全部发球分（first_total），`second_total=81-51=30`；51/81=63%，和 flashscore 报的『1st serve percentage 63%』对上，交叉验证过换算方向没搞反。约维奇同理：`ptsplayed1stservb=50`（first_in）、`totservplayedb=88`（first_total）、`second_total=88-50=38`。`first_won`／`second_won` 取 `ptswon1stserv`／`totptswonserv-ptswon1stserv`。\n\n**Winners/UE 两项查过没有，不是没查**：flashscore `df_st_1` 这场只有十项，没有 winners/UE 那两行——WTA 巡回赛这一档常见的老毛病（大满贯女子比赛才稳定有）。TNNS 没跑（核心数据已经足够硬，`tnns-stats.yml` 要单独排一趟），两个字段整个不写，走 `render_stat_card.OPTIONAL_FIELDS` 的缺席路径，不写成 0（0 会被读成『真的零个』）。",
+    "footer_venue": "Lindner Family Tennis Center · 辛辛那提",
+    "footer_date": "2026.08.19"
+  },
+  "_hit_data": "跑过 `tools/match_stat_hooks.py OUQgJxvQ`（flashscore 无 winners/UE，其余十项完整）。挑进片子的是『三个赛点只兑现一个』（`Match points saved`：约维奇 2、布兹科娃 0，逐分记录里 6-3→6-4→6-5→7-5 的进程互相印证）——这是钩子、开场落点、正文核心事实共用的核心。⚠️ flashscore 的『Total games won』字段（两人各 50%(12/24)）原本想拿来当『总局数打平』的佐证，但按两盘的实际比分直接数（7+7=14 vs 6+6=12），根本不是 12-12——这个字段真实含义存疑（可能只统计常规局不含抢七局），没法确认就不用它，已从正文和标题里删掉，只保留两个抢七比分本身的对比（7-0 对 7-5）。",
+  "_claims": "『约维奇种子和排名都比布兹科娃更靠前』核过两处：WTA 官方 `ResultString` 里的种子号（`[22]M. Bouzkova d [13]I. Jovic`）、`players/ranked` 里的当期排名（27 vs 16）——两个源独立给出同一个结论。『此前从未交手』核自 flashscore 的 Bouzkova 近期比赛列表——这是她的比赛日志，不是专门的头对头查询，若之后发现更早的交手记录以那份为准，但目前列表里只有这一场。",
+  "_editing_why": "probe 的 `scene_cuts` = [27.52, 33.32, 45.48, 47.72, 55.72, 100.56, 106.08, 116.64, 119.88, 163.96, 172.88, 176.4, 180.68, 188.44, 208.36, 225.24, 226.8, 249.64, 253.04, 268.8, 279.28, 286.84, 297.76, 299.76]。\n\n**认人**：布兹科娃荧光黄背心＋深色发带，约维奇白色 adidas 网球服（后段换成白色针织衫）。记分条 `M. BOUZKOVA` 在上、`I. JOVIC` 在下，全程按此核对，并逐屏读过 `score_00.jpg`~`score_07.jpg` 八张缩略图墙核对比分进程：163.96-174.5 秒记分条从『6-6』一路显示到『6-0』的抢七比分（第一盘抢七 7-0）；188.44 秒起转入第二盘（记分条显示第一盘定格 7-6）；226.8-238.5 秒记分条挂出『BREAK POINT #2』（约维奇的破发点机会，7-4/6-4 30-40，布兹科娃救下）；240.5-258.5 秒记分条连续挂出『MATCH POINT #2』（6-4，约维奇救下）到『MATCH POINT #3』（6-5，布兹科娃拿下），和 WTA 官方『Match points saved: Jovic 2』完全对应；253.04 秒起转入布兹科娃的庆祝反应镜头，270.5-274.5 秒是网前握手，296.5 秒记分条完整挂出最终比分。298.5 秒起转入 WTA 频道的订阅/品牌片尾，不收进窗口。",
+  "segments": [
+    {
+      "start": 253.04,
+      "end": 262.0,
+      "_why": "① **冷开场，不配旁白，走现场声**。第三个赛点拿下之后布兹科娃的庆祝反应——握拳、微笑，情绪外露。切点 249.64 和 268.8 之间，同一个连续镜头，缩略图墙核对过没有换人。CLAUDE.md「开场三格的顺序」：第 ① 格是画面爆点，不是坐标。"
+    },
+    {
+      "start": 262.0,
+      "end": 268.8,
+      "narration": "三个赛点摆在她面前，她只兑现了最后一个。",
+      "_why": "② 落点，呼应封面钩子的另一个角度——钩子讲结果本身，这里点出『兑现』这个动作。画面延续同一个连续镜头（253.04-268.8 秒，庆祝反应到走向网前之间）。⚠️ 本地余量原为 3.54s，落在『runner 上 Azure 更快、余量会涨过 4.0』的危险区间（CLAUDE.md『本地余量落在 3.0~4.0s 之间的段，在 runner 上很可能就翻过 4.0』），补了『摆在她面前』『最后』两处，`--check-narration` 复核余量降到位。"
+    },
+    {
+      "start": 19.5,
+      "end": 27.0,
+      "narration": "北京时间八月十九号早上九点，辛辛那提第三轮，布兹科娃对阵约维奇。",
+      "_why": "③ 坐标。开球时刻按 flashscore `AD 1787101200`＝北京 2026-08-19 09:00 整（分钟数为 0，按 CLAUDE.md『只说个大概』的规则直接写『九点』，不用『多』）。画面是源片开局阶段的常规底线对拉镜头，第一个切点在 27.52 秒，窗口在此之前，没有跨越。⚠️ 第一版旁白带年龄不带钟点，`--check-narration` 实测超窗（估算余量 -1.21s）且全量测试 `test_赛场之上开场要给出北京时间赛事和轮次` 报没有钟点——砍掉年龄（后面②⑨段已经交代过）换成『九点』、窗口起点从 20.5 提前到 19.5 留余量。"
+    },
+    {
+      "start": 163.96,
+      "end": 172.88,
+      "narration": "第一盘打到六比六，抢七里她一分都没让约维奇碰到——七比零，近乎完美。",
+      "_why": "④ **数据出处**：probe 的记分条缩略图墙（`score_04.jpg`）在 168.5-174.5 秒逐格读到抢七比分『6-0』，和 WTA 官方 `ScoreTbSet1=0` 完全对应——这一读数确凿，但落在这条窗口具体这几秒画面里的是换边整理动作（毛巾、走位），不是那一分本身的击球画面，`preview_segments_local.py` 核对过。窗口选它是因为它紧接在这盘结束之后、170.5-172.5 秒仍有实际回合画面，整体不脱离这一盘，不是刻意找一个『看着像』的窗口去配这句话。窗口落在 163.96-172.88 这一个连续镜头内，不跨切点。⚠️ 第一版旁白只有『第一盘的抢七，她打出了七比零，几乎零封』12 字，离线估余量 4.69s 超过哑场门槛 4.0s，补了『打到六比六』这半句交代背景，也是这场比赛真实的过程。"
+    },
+    {
+      "start": 192.5,
+      "end": 200.5,
+      "narration": "第二盘她还是没能轻松过关，约维奇几次把她逼到了局点。",
+      "_why": "⑤ 铺垫第二盘的拉锯。窗口落在 188.44-208.36 这一个连续的宽景对拉镜头内，取其中一段，不跨切点。呼应下一段『BREAK POINT #2』那一次具体的局点。"
+    },
+    {
+      "start": 226.8,
+      "end": 236.5,
+      "narration": "第二盘六比四那一局，约维奇拿到了破发点，被她硬生生救了下来，一步都没退。",
+      "_why": "⑥ **画面自证**：226.8-238.5 秒记分条挂出『BREAK POINT #2』（7-4/6-4，30-40，约维奇发球方视角的破发点机会），布兹科娃救下未被破发。窗口落在 226.8-249.64 这一个长镜头的前半段，不跨切点。⚠️ 本地余量原为 3.75s，同样落在危险区间，补了『一步都没退』收尾，`--check-narration` 复核余量降到位。"
+    },
+    {
+      "start": 240.5,
+      "end": 249.64,
+      "narration": "抢七六比三，她握着三个赛点——约维奇连救两个，硬是把比分追到六比五。",
+      "_why": "⑦ **画面自证**：240.5-250.5 秒记分条持续挂出『MATCH POINT #2』（6-4），254.5-258.5 秒转为『MATCH POINT #3』（6-5）——WTA 官方『Match points saved』字段（约维奇 2、布兹科娃 0）和这个进程完全对应。窗口落在 226.8-249.64 这一个长镜头的后半段，和⑥同一个镜头，不跨切点。"
+    },
+    {
+      "start": 268.8,
+      "end": 279.28,
+      "narration": "十八岁的约维奇，这场打得一点都不差，一路都在咬着比分——只是最后一个赛点，没能再救一次。",
+      "_why": "⑧ 给约维奇一句公道话，不让全片只剩一边倒的叙事。画面是 268.8-279.28 秒网前握手、布兹科娃转向观众和团队致意的镜头，窗口不跨切点。⚠️ 本地余量原为 3.93s，贴着哑场门槛，补了『一路都在咬着比分』，`--check-narration` 复核余量降到位。"
+    },
+    {
+      "start": 286.84,
+      "end": 296.5,
+      "narration": "两人的第一次交手。世界排名和种子都更高的十八岁约维奇，还会有下一次机会吗？",
+      "_why": "⑨ 收尾落在一问上（CLAUDE.md「末屏那一问不能是封面钩子的回声」）：钩子讲『三个赛点只兑现一个』这个具体的比赛细节，这里换成两人首次交手、约维奇更年轻更有排名优势这条更大的线，开的是一扇新门。画面是 286.84-297.76 秒布兹科娃走向场边、296.5 秒最终比分图形完整挂出的镜头，窗口收在 297.76 秒（WTA 品牌片尾开始）之前。"
+    }
+  ],
+  "push": {
+    "summary": "三个赛点，她只兑现了一个",
+    "lead": "辛辛那提女单第三轮，28 岁的布兹科娃直落两盘 7-6(0) 7-6(5) 淘汰 18 岁的约维奇——约维奇本站是 13 号种子、世界第 16，种子和排名都比布兹科娃（22 号种子、世界第 27）更靠前。第一盘抢七布兹科娃打出了七比零，几乎零封；第二盘抢七才是真正的较量：布兹科娃一度六比三手握三个赛点，约维奇连救两个把比分追到六比五，布兹科娃才在第三个赛点上收住比赛。WTA 官方赛后稿给这场定的标题是『经验』——这是两人的首次交手。",
+    "_no_auto_why": "这条 spec 由本次任务在同一个会话里手动走完 probe→render→merge→push，会话结束前会直接跑 `mode=push push=true` 并确认 PushPlus 200，不依赖 `auto-push-reel` 的自动触发，避免两条路径重复发送。"
+  }
+}
