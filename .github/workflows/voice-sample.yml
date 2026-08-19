@@ -102,7 +102,7 @@ jobs:
           # 只是这半边一直没跟上（「规矩只写在了其中一半」）。
           # `Acquire::Retries=3` 让 apt 自己在一次尝试里换一次镜像，
           # 而不是挂在一个不响应的 host 上等我们的 `timeout` 来杀。
-          apt_retry apt-get install -y -qq --no-install-recommends -o Acquire::Retries=3 ffmpeg
+          apt_retry apt-get install -y -qq --no-install-recommends -o Acquire::Retries=3 -o Acquire::http::Timeout=20 ffmpeg
 
       # 探一遍免费端点认哪些 SSML（break / express-as / prosody）。报告直接
       # print 进日志——这台沙箱下不了 artifact，写文件等于白跑。

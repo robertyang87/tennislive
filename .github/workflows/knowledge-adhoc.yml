@@ -142,7 +142,7 @@ jobs:
           # ⚠️ 别用它去替代外层的 `apt_retry`：那一层管的是「整条命令挂了」，
           # 这一层管的是「某个 host 不响应」，两层各拦一头。
           apt_retry apt-get update -qq -o Acquire::Retries=3 -o Acquire::http::Timeout=20
-          apt_retry apt-get install -y -qq fonts-noto-cjk
+          apt_retry apt-get install -y -qq -o Acquire::Retries=3 -o Acquire::http::Timeout=20 fonts-noto-cjk
 
       - name: 安装 tennislive
         run: pip install -q -e ".[webrender,visualqa]"

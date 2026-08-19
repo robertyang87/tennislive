@@ -276,7 +276,7 @@ jobs:
           # 只是这半边一直没跟上（「规矩只写在了其中一半」）。
           # `Acquire::Retries=3` 让 apt 自己在一次尝试里换一次镜像，
           # 而不是挂在一个不响应的 host 上等我们的 `timeout` 来杀。
-          apt_retry apt-get install -y -qq --no-install-recommends -o Acquire::Retries=3 ffmpeg
+          apt_retry apt-get install -y -qq --no-install-recommends -o Acquire::Retries=3 -o Acquire::http::Timeout=20 ffmpeg
 
       # ⚠️ **`cover` 也要**：封面走 HTML 渲染（和知识帖同一套字），少了中文字体
       # 出来的是豆腐块。加 cover 档那次漏了这三步，run 155 就是这么红的——
@@ -321,7 +321,7 @@ jobs:
             echo "::error::apt 两次都没成功：$*"
             return 1
           }
-          apt_retry apt-get install -y -qq fonts-noto-cjk fonts-noto-color-emoji
+          apt_retry apt-get install -y -qq -o Acquire::Retries=3 -o Acquire::http::Timeout=20 fonts-noto-cjk fonts-noto-color-emoji
 
       # 封面走 HTML 渲染（和知识帖同一套字），所以要 webrender + Chromium。
       # 少了它 render 会死在 ModuleNotFoundError: playwright，而且是在下完

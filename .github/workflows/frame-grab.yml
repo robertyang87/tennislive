@@ -97,7 +97,7 @@ jobs:
           # 只是这半边一直没跟上（「规矩只写在了其中一半」）。
           # `Acquire::Retries=3` 让 apt 自己在一次尝试里换一次镜像，
           # 而不是挂在一个不响应的 host 上等我们的 `timeout` 来杀。
-          apt_retry apt-get install -y -qq --no-install-recommends -o Acquire::Retries=3 ffmpeg
+          apt_retry apt-get install -y -qq --no-install-recommends -o Acquire::Retries=3 -o Acquire::http::Timeout=20 ffmpeg
           # **`[default]` 不是可选的**：它才带 `yt-dlp-ejs`，而解 YouTube 的
           # n challenge 要跑一段 JS。少了它 yt-dlp **不报「装少了」**，而是
           # 格式表里只剩故事板，于是任何选择器（连 `worst`）都匹配不上，

@@ -127,7 +127,7 @@ jobs:
           # ⚠️ 别用它去替代外层的 `apt_retry`：那一层管的是「整条命令挂了」，
           # 这一层管的是「某个 host 不响应」，两层各拦一头。
           apt_retry apt-get update -qq -o Acquire::Retries=3 -o Acquire::http::Timeout=20
-          apt_retry apt-get install -y -qq fonts-noto-cjk
+          apt_retry apt-get install -y -qq -o Acquire::Retries=3 -o Acquire::http::Timeout=20 fonts-noto-cjk
 
       - name: 安装 tennislive + edge-tts
         run: |
@@ -250,7 +250,7 @@ jobs:
           # 只是这半边一直没跟上（「规矩只写在了其中一半」）。
           # `Acquire::Retries=3` 让 apt 自己在一次尝试里换一次镜像，
           # 而不是挂在一个不响应的 host 上等我们的 `timeout` 来杀。
-          apt_retry apt-get install -y --no-install-recommends -o Acquire::Retries=3 ffmpeg
+          apt_retry apt-get install -y --no-install-recommends -o Acquire::Retries=3 -o Acquire::http::Timeout=20 ffmpeg
 
       - name: 生成解说视频
         id: gen

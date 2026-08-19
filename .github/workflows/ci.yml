@@ -148,7 +148,14 @@ jobs:
           # ffmpeg 的 recommends 拖着一整串 VA-API 驱动，而 runner 上根本没有
           # 硬件解码可用——`.claude/hooks/session-start.sh` 早就是这么装的，
           # 只是工作流这半边一直没跟上（「规矩只写在了其中一半」）。
+          # ⚠️ 2026-08-19 这一行连着两趟（PR #448 run 32218612883）各吃满两次
+          # 150 秒——`Acquire::http::Timeout` 只加在了上面 `update` 那行，
+          # `install` 这行没跟着加，是「同一件事在两处各写一遍，必然分叉」的
+          # 又一次：update 挂了会自己在 20 秒内换镜像，install 没有这个参数就
+          # 只能干等 apt 自己的默认超时，两次外层 `timeout 150` 全部耗在同一个
+          # 不响应的 host 上。
           apt_retry apt-get install -y -qq --no-install-recommends -o Acquire::Retries=3 \
+            -o Acquire::http::Timeout=20 \
             fonts-noto-cjk fonts-noto-core fonts-noto-color-emoji ffmpeg
       - name: 安装依赖
         run: pip install -q -e ".[dev,webrender,visualqa]"
