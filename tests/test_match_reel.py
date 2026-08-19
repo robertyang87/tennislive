@@ -4430,6 +4430,94 @@ def test_dry_run要拿probe查选段(tmp_path):
         probe["url"]}, "按 URL 认领的口径不对"
 
 
+def test_没量过死球的源片要把猜到的候选翻出来提醒(tmp_path):
+    """`point_ends` 空着有两种成因，长得一模一样：**没给** `--scorebox`，
+    或者给了但记分条检出真的是空的。`bouzkova-jovic` 那条是前一种——
+    `suggest_scorebox()` 猜到了候选（`--scorebox 90,870,416,980`），只印在
+    probe 那趟 run 的日志里，没人再翻，`--dry-run` 对这一层完全不吭声。
+
+    账号所有者 2026-08-19：「剪辑的时候要等死球了再去切下一段视频，切记」——
+    这条把猜到的候选存进 `probe.json`（`scorebox_guess`），`--dry-run` 翻出来
+    当提醒。⚠️ **仍然只报不拦**：`--scorebox` 给了也可能因为记分条滞后／
+    镜头切走而检出为空，做成硬闸会重复 `crosses_cut` 那次的错
+    （见 `probe_dry_run` 的 docstring）。
+    """
+    reel = _reel()
+    spec = {
+        "slug": "t", "source_url": "https://x.invalid/a.mp4",
+        "segments": [{"start": 10.0, "end": 20.0, "narration": "一句话"}],
+    }
+    segs = reel.parse_segments(spec, {"": Path("x")}, "")
+    import io  # noqa: PLC0415
+    from contextlib import redirect_stdout  # noqa: PLC0415
+
+    def _run(point_ends, scorebox_guess):
+        probe = {"url": spec["source_url"], "duration": 30.0,
+                 "scene_cuts": [], "point_ends": point_ends,
+                 "scorebox_guess": scorebox_guess}
+        monkey = pytest.MonkeyPatch()
+        monkey.setattr(reel, "probes_for_spec", lambda _s: ({probe["url"]: probe}, []))
+        buf = io.StringIO()
+        try:
+            with redirect_stdout(buf):
+                hard = reel.probe_dry_run(spec, segs)
+        finally:
+            monkey.undo()
+        return hard, buf.getvalue()
+
+    # 猜到了候选、没人拿去重跑——要点出那个候选
+    hard, out = _run([], "90,870,416,980")
+    assert hard is False, "没量过死球不许是硬闸，会把批量存量片子挡在门外"
+    assert "90,870,416,980" in out, f"猜到的候选没被翻出来：{out}"
+    assert "还没有人拿它重跑" in out, f"没说清这是「猜了没确认」：{out}"
+
+    # 猜不出候选（可能没有常驻记分条）——要说清是这种情况，不是「忘了猜」
+    hard, out = _run([], None)
+    assert hard is False
+    assert "猜不出记分条" in out, f"没区分「猜不出来」和「猜到了没确认」：{out}"
+
+    # **量过、真的有死球数据**——不该再报这条提醒
+    hard, out = _run([15.5, 30.2], "90,870,416,980")
+    assert hard is False
+    assert "还没有人拿它重跑" not in out, f"已经量出数据了，不该还提醒去重跑：{out}"
+    assert "猜不出记分条" not in out
+
+
+def test_suggest_scorebox要把猜到的候选返回不能只打印(monkeypatch, tmp_path):
+    """`probe.json` 要存住这个候选，返回值必须是真的——查源码文本防不住
+    「函数签名改了返回值，调用点却还按 None 处理」这种半吊子重构。
+    """
+    reel = _reel()
+
+    class _FakeDetect:
+        DARK_FREQ = 0.65
+        MIN_FILL = 0.70
+
+        @staticmethod
+        def detect(_video):
+            return [{"box": (10, 20, 30, 40), "fill": 0.91}]
+
+    monkeypatch.setitem(sys.modules, "detect_scorebox", _FakeDetect)
+    import io  # noqa: PLC0415
+    from contextlib import redirect_stdout  # noqa: PLC0415
+    buf = io.StringIO()
+    with redirect_stdout(buf):
+        guess = reel.suggest_scorebox(tmp_path / "x.mp4")
+    assert guess == "10,20,30,40", f"没把猜到的候选原样返回：{guess!r}"
+
+    class _EmptyDetect:
+        DARK_FREQ = 0.65
+        MIN_FILL = 0.70
+
+        @staticmethod
+        def detect(_video):
+            return []
+
+    monkeypatch.setitem(sys.modules, "detect_scorebox", _EmptyDetect)
+    assert reel.suggest_scorebox(tmp_path / "x.mp4") is None, \
+        "猜不出候选时必须返回 None，不能返回一个假值"
+
+
 def test_窗口对齐源片镜头边界不算中途换镜头():
     """⚠️ **这个容差是量出来的，不是拍的。**
 
