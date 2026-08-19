@@ -66,6 +66,16 @@ def sh(*args: str) -> str:
     return proc.stdout
 
 
+def _ffprobe_float(out: str) -> float:
+    """`-of csv=p=0` 拿单个字段，理论上应该是干净的一个数——**但不同 ffprobe
+    版本的 csv writer 行为不一样**：2026-08-19 撞过一次某个构建吐出
+    `117.480000,` 带一个尾随空字段，`float()` 直接崩（那次真因是装的是
+    master 每日快照而不是钉死的稳定版，见 ci_apt_install.sh 的 `ensure_ffmpeg`
+    注释）。**换回稳定版之后这个坑不会再复现，但解析本身不该赌下一个 ffprobe
+    版本永远不这么干**——只取第一个逗号前的字段，多出来的空尾巴丢掉。"""
+    return float(out.strip().split(",")[0])
+
+
 def shanghai_today() -> str:
     """产物目录按上海时间算——工作流里是 `TZ=Asia/Shanghai date +%F`，
     而沙箱跑在 UTC，16:00 UTC 之后两者差一天。"""
@@ -270,9 +280,9 @@ def main() -> int:
     bad += 0 if ok else 1
     print(f"[{'ok' if ok else '不合格'}] 分辨率 {w}×{h}（要 {VIDEO_W}×{VIDEO_H}）")
 
-    v_dur = float(sh("ffprobe", "-v", "error", "-select_streams", "v:0",
+    v_dur = _ffprobe_float(sh("ffprobe", "-v", "error", "-select_streams", "v:0",
                      "-show_entries", "stream=duration",
-                     "-of", "csv=p=0", str(film)).strip())
+                     "-of", "csv=p=0", str(film)))
     segs = spec_segments_seconds(spec)
     outro = outro_seconds(film)
     if cover is None:
@@ -296,9 +306,9 @@ def main() -> int:
 
     # 音轨比画面短 = 结尾那几秒无声。分段拼接（concat + copy）会把每段 AAC 的
     # 编码器延迟一路累出来，累到几秒就听得出来了。
-    a_dur = float(sh("ffprobe", "-v", "error", "-select_streams", "a:0",
+    a_dur = _ffprobe_float(sh("ffprobe", "-v", "error", "-select_streams", "a:0",
                      "-show_entries", "stream=duration",
-                     "-of", "csv=p=0", str(film)).strip())
+                     "-of", "csv=p=0", str(film)))
     ok = v_dur - a_dur < 1.0
     bad += 0 if ok else 1
     print(f"[{'ok' if ok else '不合格'}] 音轨 {a_dur:.2f}s，比画面短 "

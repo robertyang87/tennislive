@@ -106,18 +106,20 @@ jobs:
             ~/.cache/apt-lists
           key: apt-pkgs-${{ runner.os }}-24.04-preview-reel-v1
       - name: 装 ffmpeg
-        timeout-minutes: 12
+        timeout-minutes: 15
         run: |
           source tools/ci_apt_install.sh
-          apt_install_cached ffmpeg
+          ensure_ffmpeg
 
       # 缓存在「装 ffmpeg」那一步之前已经恢复过了，同一个 job，
       # 这一步接着用，不用再单独 actions/cache 一次。
       - name: 装中文字体（封面和烧字幕都要）
         # ⚠️ 7 分钟不够：`apt_install_cached` 缓存没命中时会退到
-        # apt_retry(update) + apt_retry(install) 各两次 150 秒，
-        # 最坏 2×2×160=640 秒 ≈ 10.7 分。按 12 分钟留够余量。
-        timeout-minutes: 12
+        # apt_retry(update) + apt_retry(install) 各两次 150 秒。
+        # ⚠️⚠️ 2026-08-19 又涨了一次（详见 match-reel.yml 同一处的注释）：
+        # `apt_install_cached` 最前面那句「先试本地安装」补上 `timeout 150`
+        # 之后，最坏预算是 150 + 2×2×160 = 790 秒 ≈ 13.2 分。按 15 分钟留够余量。
+        timeout-minutes: 15
         run: |
           source tools/ci_apt_install.sh
           apt_install_cached fonts-noto-cjk fonts-noto-color-emoji

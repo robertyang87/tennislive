@@ -247,12 +247,13 @@ def test_装ffmpeg和字体那批步骤都走共享脚本不留手搓的调用()
     `update`/`install` 两行是不是都带了 `Acquire::http::Timeout`——这些
     以前是逐个工作流文件各查一遍，现在**这套逻辑只有一份**
     （`tools/ci_apt_install.sh`），`test_共享的apt安装脚本形状要对` 管住了
-    脚本本身；这条测试只管调用方——**每一处 `apt_install_cached` 调用**，
-    它所在的步骤必须给够 `timeout-minutes`。
+    脚本本身；这条测试只管调用方——**每一处 `apt_install_cached` 或
+    `ensure_ffmpeg` 调用**，它所在的步骤必须给够 `timeout-minutes`。
 
-    共享脚本的最坏路径是固定的：`apt_install_cached` 缓存没命中时退到
-    `apt_retry(update)` + `apt_retry(install)`，每个 `apt_retry` 最多两轮、
-    每轮 `timeout 150 + sleep 10`——**2 × 2 × 160 = 640 秒 ≈ 10.7 分**。
+    共享脚本的最坏路径是固定的：`apt_install_cached` 先试一次本地安装
+    （`timeout 150`），没成功才退到 `apt_retry(update)` + `apt_retry(install)`，
+    每个 `apt_retry` 最多两轮、每轮 `timeout 150 + sleep 10`——
+    **150 + 2 × 2 × 160 = 790 秒 ≈ 13.2 分**。
 
     这条判据是「装 ffmpeg 和字体一律先试本地缓存不能只靠重试」那条测试
     自己没管到的另一半：那条测试钉的是「缓存步骤在不在、source 语句在不在」，
@@ -260,8 +261,26 @@ def test_装ffmpeg和字体那批步骤都走共享脚本不留手搓的调用()
     那天就在这儿踩过一次真的——`match-reel.yml`／`preview-reel.yml` 各有一处
     字体步骤留着改缓存之前的 `timeout-minutes: 7`，而新的 `apt_install_cached`
     在缓存没命中时会退到 update+install 两段，7 分钟装不完。
+
+    ⚠️ **同一天傍晚第二次涨预算**：`apt_install_cached` 最前面那句「先试
+    本地安装」原来没有 `timeout` 包着（当时的假设是「本地缓存命中，几秒钟
+    的事，不用防」），run 32290505356 撞出这个假设不成立——同一个 job 里
+    前一步刚摸过网、索引是新的，不代表这一批包的 `.deb` 也已经在盘上，这句
+    照样可能悄悄发起真下载，而它一旦卡住**没有任何超时**，只能靠外层
+    `timeout-minutes` 硬杀，而且会连累后面本该重试的 `apt_retry` 一起陪葬。
+    补上 `timeout 150` 之后，最坏预算从 640 秒涨到了这儿的 790 秒——
+    **这也是为什么这条判据比 `apt_retry` 的两段乘积多出一个 150**。
+
+    ⚠️⚠️ **同一天晚上第三次：ffmpeg 这个包单独反复失灵，`ensure_ffmpeg`
+    先试 GitHub Releases 上的静态构建（`timeout 90` 的 curl），失败了才落回
+    `apt_install_cached ffmpeg` 那条老路**——所以调 `ensure_ffmpeg` 的步骤
+    最坏预算要再加这 90 秒（`90 + 790 = 880 秒`）。这条测试原来只认
+    `apt_install_cached` 这一个名字，`ensure_ffmpeg` 上线的当天就把
+    `checked` 从两位数砍到 7——**主语没了一半，判据要跟着两个名字一起认**，
+    不然「换个函数名」会悄悄把这条闸对一半步骤变成哑的。
     """
-    WORST_CASE_BUDGET = 2 * 2 * (150 + 10)  # 640 秒，和共享脚本的形状对齐
+    APT_ONLY_BUDGET = 150 + 2 * 2 * (150 + 10)  # 790 秒：本地安装那句(150) + update/install 两段重试(640)
+    ENSURE_FFMPEG_BUDGET = 90 + APT_ONLY_BUDGET  # 880 秒：静态构建的 curl(90) 落空才轮到上面那条老路
 
     checked, over = [], []
     for path in sorted(Path(".github/workflows").glob("*.yml")):
@@ -271,18 +290,23 @@ def test_装ffmpeg和字体那批步骤都走共享脚本不留手搓的调用()
                 rf"\n      - name: {re.escape(name)}\n(.*?)(?=\n      - name:|\Z)",
                 text, re.S)
             block = _strip_shell_comments(block_m.group(1)) if block_m else ""
-            if "apt_install_cached" not in block:
+            calls_ensure_ffmpeg = bool(re.search(r"(?<![\w-])ensure_ffmpeg(?![\w-])", block))
+            calls_apt_cached = "apt_install_cached" in block
+            if not (calls_ensure_ffmpeg or calls_apt_cached):
                 continue
+            budget = ENSURE_FFMPEG_BUDGET if calls_ensure_ffmpeg else APT_ONLY_BUDGET
             checked.append(f"{path.name}「{name}」")
             m = re.search(r"timeout-minutes:\s*(\d+)", block)
             limit = int(m.group(1)) * 60 if m else 0
-            if limit < WORST_CASE_BUDGET:
-                over.append(f"{path.name}「{name}」timeout-minutes={limit // 60 if limit else '(没写)'}")
+            if limit < budget:
+                over.append(
+                    f"{path.name}「{name}」timeout-minutes="
+                    f"{limit // 60 if limit else '(没写)'}，要 ≥ {budget // 60 + 1} 分钟")
 
-    assert len(checked) >= 10, f"只校到 {len(checked)} 处 apt_install_cached，判据可能失效了"
+    assert len(checked) >= 10, f"只校到 {len(checked)} 处 apt_install_cached/ensure_ffmpeg，判据可能失效了"
     assert not over, (
-        f"这些步骤调了 apt_install_cached，但 timeout-minutes 撑不住缓存全没命中"
-        f"时的最坏预算（{WORST_CASE_BUDGET}s ≈ {WORST_CASE_BUDGET // 60 + 1} 分钟）：\n  "
+        f"这些步骤调了 apt_install_cached 或 ensure_ffmpeg，但 timeout-minutes 撑不住"
+        f"缓存/静态构建全落空时的最坏预算：\n  "
         + "\n  ".join(over) + "\n第二次重试会在中途被步骤超时杀掉，"
         "而那和「apt 真挂死了」长得一模一样。")
 

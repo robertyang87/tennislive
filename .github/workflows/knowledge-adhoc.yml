@@ -119,7 +119,7 @@ jobs:
             ~/.cache/apt-lists
           key: apt-pkgs-${{ runner.os }}-24.04-knowledge-adhoc-v1
       - name: 安装中文字体（卡片图需要）
-        timeout-minutes: 12
+        timeout-minutes: 15
         run: |
           source tools/ci_apt_install.sh
           apt_install_cached fonts-noto-cjk

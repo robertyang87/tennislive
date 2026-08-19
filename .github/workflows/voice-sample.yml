@@ -67,14 +67,14 @@ jobs:
             ~/.cache/apt-lists
           key: apt-pkgs-${{ runner.os }}-24.04-voice-sample-v1
       - name: 安装 edge-tts + ffmpeg
-        timeout-minutes: 12
+        timeout-minutes: 15
         run: |
           pip install -q edge-tts
           # Azure 那条路要 SDK 才拿得到词边界（REST 接口不给）——而字幕整条线
           # 就建立在词边界上。只在 mode=azure 时用得到，装着不碍别的模式。
           pip install -q azure-cognitiveservices-speech
           source tools/ci_apt_install.sh
-          apt_install_cached ffmpeg
+          ensure_ffmpeg
 
       # 探一遍免费端点认哪些 SSML（break / express-as / prosody）。报告直接
       # print 进日志——这台沙箱下不了 artifact，写文件等于白跑。

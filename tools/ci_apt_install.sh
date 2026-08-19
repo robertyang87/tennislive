@@ -44,6 +44,27 @@
 # 做下载**（`APT::Sandbox::User=root`）。这跳过整套「先撞权限再退回」的
 # 折腾，不影响缓存目录本身怎么建、谁读得到——**跟「继续调重试参数治不了根」
 # 是同一个道理，这次要治的不是重试次数，是权限模型本身**。
+#
+# ⚠️⚠️ **2026-08-19 傍晚又撞了一次，这次是`apt_install_cached` 自己那句
+# 「先试一次零网络的本地安装」没有 `timeout` 包着。** run 32290505356：
+# `装中文字体` 那一步整整 12 分钟**零输出**，被外层 `timeout-minutes: 12`
+# 硬杀——不是 `apt_retry` 那种「第 1 次没跑完」的警告刷两轮再报错（那种
+# 好歹每 150~160 秒打一行），是从进这个函数起**一个字都没打印过**，说明
+# 卡的就是最前面那句裸的 `sudo apt-get … install …`。
+#
+# 根子在于这句话的注释一直是错的：它说「零网络」，但**只有索引和 .deb 都
+# 在盘上才成立**。同一个 job 里前一步（装 ffmpeg）缓存也没命中、摸了网、
+# 刷新过 `Dir::State::lists` 里的索引——那份索引现在是新的，**但 ffmpeg
+# 自己的 .deb 已经下好了，字体包的 .deb 从来没被请求过**。于是这句「本地
+# 安装」看着像会命中缓存，实际上还是要去下字体包的 .deb，而它**不经过
+# `apt_retry`，没有 `timeout` 包着**——这跟前面两次「镜像不响应」是同一个
+# 底层风险，只是这次连累的是一条完全没有防护的代码路径。
+#
+# 修法是把这句也用 `timeout` 包起来，让它顶多卡 150 秒就摔回退路，
+# 而不是一直卡到外层 `timeout-minutes` 才被杀掉、把后面 `apt_retry`
+# 那条真正会摸网重试的路一起陪葬。**代价是最坏预算从 640 秒涨到
+# 790 秒**（150 + 640），调用方的 `timeout-minutes` 要跟着涨，
+# 判据在 `tests/test_workflow_alerts.py` 的 `WORST_CASE_BUDGET`。
 set -uo pipefail
 
 APT_CACHE_DIR="${APT_CACHE_DIR:-$HOME/.cache/apt-archives}"
@@ -66,13 +87,19 @@ apt_retry() {
 
 # 用法：apt_install_cached <包名...>
 #
-# 先试一次「只用本地缓存装，不碰网络」——`Dir::Cache::Archives` /
-# `Dir::State::lists` 指到的两个目录如果被 actions/cache 命中过，索引和
-# .deb 都已经在盘上，这一步几秒钟就装完，一次 HTTP 请求都不发。
+# 先试一次「优先吃本地缓存」——`Dir::Cache::Archives` / `Dir::State::lists`
+# 指到的两个目录如果被 actions/cache 命中过、且这批包的 .deb 也真的在盘上，
+# 这一步几秒钟就装完，一次 HTTP 请求都不发。
+#
+# ⚠️ **它不保证零网络**：索引是新的（比如同一个 job 里前一步刚 `apt-get
+# update` 过）不等于这批包的 .deb 也已经下过——前一步装的是另一批包，
+# 索引里认得这批包不代表本地就有它们的安装文件，这句仍然可能去摸网。
+# 正因为「像是本地安装，其实在下载」这件事分不清楚，它才**必须**包一层
+# `timeout`：卡住的时候不吭声，和真的在装一样，只有超时兜底才拦得住。
 # 缓存没命中、或者装到一半发现缺包/索引太旧，才回退到会摸网的那条老路
 # （apt-get update + install，各自 `apt_retry` 兜两次）。
 apt_install_cached() {
-  if sudo apt-get "${_apt_opts[@]}" install -y -qq --no-install-recommends "$@" \
+  if sudo timeout 150 apt-get "${_apt_opts[@]}" install -y -qq --no-install-recommends "$@" \
        2>/tmp/apt_install_cached.log; then
     echo "[apt] 缓存命中：零网络请求装上了 $*"
     return 0
@@ -83,4 +110,70 @@ apt_install_cached() {
     -o Acquire::Retries=3 -o Acquire::http::Timeout=20
   apt_retry apt-get "${_apt_opts[@]}" install -y -qq --no-install-recommends \
     -o Acquire::Retries=3 -o Acquire::http::Timeout=20 "$@"
+}
+
+# ⚠️⚠️ 2026-08-19 下午到晚上，apt 镜像单单对 ffmpeg 这个包反复失灵——
+# `apt-get update` 有时能成，但紧接着 `apt-get install ffmpeg` 两次
+# 150 秒都拿不到那个 .deb（run 32300118619／32302142919／32304343522
+# 连续三次都死在这儿，中间隔了 5～15 分钟冷却也没用）。这不是「慢」，
+# 是这一个包的下载路径当天持续不通——`Acquire::http::Timeout=20` 这层
+# 防线对着一个会接受连接、只是数据一直不来的源没用。
+#
+# **真正的杠杆是别去碰这条镜像。** 同一条流水线本来就靠
+# `release-assets.githubusercontent.com` 发成片（「成片一律走 Release
+# 不进 git」），这条路今天全程稳定——所以 ffmpeg 改成先试一个托管在
+# GitHub Releases 上的静态构建。
+#
+# ⚠️⚠️ **第一版指的是 BtbN/FFmpeg-Builds 的 `latest` 标签，当场翻车**
+# （run 32307313856）：那个标签**每天跟着 FFmpeg master 重新构建**，
+# 不是一个钉死的版本——那天下到的 ffprobe 是 `N-126217-…-20260819`，
+# 字面就是当天编的。它的 CSV writer 行为和我们用了很久的稳定版不一样：
+# `-show_entries stream=duration -of csv=p=0` 吐出 `117.480000,`
+# 带一个尾随逗号，`check_reel_landed.py` 拿它 `float()` 直接崩——
+# **这正是「latest 不等于稳定」的活证据**，不是猜的。那个 crash 已经在
+# `check_reel_landed.py` 里防御性地修了（只取逗号前第一个字段），
+# 不管哪个 ffprobe 版本再吐这种尾巴都不会再崩。
+#
+# ⚠️⚠️ **第二版换成了 johnvansickle.com 的稳定版（7.0.2，两年没变过），
+# 却在 CI 上当场撞了另一个坑**（PR #462）：这个 minimal 静态构建
+# **没编 `drawtext` 滤镜**（`-filters` 里查不到，`--enable-libfreetype`
+# 写在 buildconf 里却没用上——大概率是这份构建特意剔的），而
+# `contact_sheet()` 烧时间码用的正是它。`mode=probe` 那条路直接死。
+# **两个候选各缺一半**：BtbN 有全部滤镜（drawtext/ass/xfade 都实测过）
+# 但版本不稳；johnvansickle 版本稳但滤镜不全。这条流水线要的是全部滤镜，
+# 版本漂移那半坑已经用防御性解析堵住了——所以退回 BtbN，**不是绕了一圈
+# 白折腾，是把两次真实失败各自的教训都吃进了最终方案**：URL 换回去，
+# CSV 解析的防御不撤。
+#
+# ⚠️ **不是替换 apt，是多一条更快的路，apt 仍然是保底。** 静态构建
+# 下载失败（那天也抽风、tar 包结构变了……）就原样退回
+# `apt_install_cached ffmpeg`——旧路径一个字没删，坏的方向不会比现在更糟。
+ensure_ffmpeg() {
+  if command -v ffmpeg >/dev/null 2>&1 && command -v ffprobe >/dev/null 2>&1; then
+    echo "[ffmpeg] 已经在 PATH 上了，跳过"
+    return 0
+  fi
+  local url="https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-linux64-gpl.tar.xz"
+  local tmp ok=0
+  tmp="$(mktemp -d)"
+  if timeout 90 curl -fsSL "$url" -o "$tmp/ffmpeg.tar.xz" 2>"$tmp/dl.log"; then
+    local ffbin ffprobebin
+    ffbin=$(tar -tJf "$tmp/ffmpeg.tar.xz" 2>/dev/null | grep -m1 '/ffmpeg$' || true)
+    ffprobebin=$(tar -tJf "$tmp/ffmpeg.tar.xz" 2>/dev/null | grep -m1 '/ffprobe$' || true)
+    if [ -n "$ffbin" ] && [ -n "$ffprobebin" ]; then
+      tar -xJf "$tmp/ffmpeg.tar.xz" -C "$tmp" "$ffbin" "$ffprobebin" 2>/dev/null
+      sudo install -m 755 "$tmp/$ffbin" /usr/local/bin/ffmpeg 2>/dev/null
+      sudo install -m 755 "$tmp/$ffprobebin" /usr/local/bin/ffprobe 2>/dev/null
+      if command -v ffmpeg >/dev/null 2>&1 && ffmpeg -version >/dev/null 2>&1; then
+        ok=1
+      fi
+    fi
+  fi
+  rm -rf "$tmp"
+  if [ "$ok" = 1 ]; then
+    echo "[ffmpeg] 走静态构建（BtbN，GPL 版含 drawtext），没碰 apt 镜像"
+    return 0
+  fi
+  echo "[ffmpeg] 静态构建拿不到，退回 apt"
+  apt_install_cached ffmpeg
 }
