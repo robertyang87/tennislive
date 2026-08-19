@@ -16,7 +16,9 @@
     "74": "of get back into a raucous stadium",
     "109": "I think there's joy.",
     "157": "so tonight Peyton Stearns",
-    "159": "and we talked to her and Marta downstairs"
+    "159": "and we talked to her and Marta downstairs",
+    "162": "Can you talk a little bit about Peyton",
+    "165": "I feel like Peyton I to play"
   },
   "zh": [
     "嗨 维纳斯 塞雷娜",
@@ -254,5 +256,7 @@
     "**四年之约**：外媒（Yahoo Sports／Olympics.com／WTA 官网）一致报道，这是两人自 2022 年美网之后第一次以组合出战双打——那场也是小威廉姆斯当年宣布『evolution』退役announcement 后公开赛场上最后一次比赛。原计划先在 2026 年温网重聚，但小威在温网单打首轮不敌乔因特（Maya Joint）的比赛中『tweaked her right knee at the end of the first set』，赛后宣布因伤退出原定的温网双打（多家外媒：NBC News／CBS News／ESPN／Fox News 均报道，小威在 Instagram 发文说明伤情）。这次辛辛那提是伤后两人第一次重新搭档，也是小威复出以来第一次在硬地作战（此前女王赛、柏林、温网三站全是草地）。",
     "**采访本身的话**：塞雷娜谈膝伤——『That was a little traumatic experience for me. Took me like two hours to leave the locker room that night』；被问到打球乐趣有没有变——她说『I never really enjoyed the process, but I think this time I'm enjoying the process a little bit more than I've ever have』；被问到搭档斯特恩斯的对手科斯秋克（在温网一起训练过）——『when she does back flips』；结尾被问到是谁先提议重新打双打，两人没直接回答，只说『we've waited a long time to get back on the doubles court...I think eventually we would find our way to each other』。",
     "**斯特恩斯的主场身份**：记者原话『Peyton Stearns is from Mason Ohio』——Mason, Ohio 正是 Lindner Family Tennis Center（辛辛那提公开赛场地）所在地，属实（本条线其他 spec 里已多次确认这一地理事实，如 `arango-venus-cincinnati-2026-r1.json` 等）。这条 presser 里维纳斯就此回应『to play in your hometown, she's from Mason...that's kind of awesome』。"
-  ]
+  ],
+  "transcript_verified": true,
+  "_verified_clean": "run 32241987051（runner，--stage verify）：第一份 YouTube 自动字幕 1205 词，第二份 faster-whisper（small.en）1123 词，对不上 8.8%（闸门 12%），去掉填词之后算的。44 处分歧逐条核过——绝大多数是记者主持 Q&A 时的程序性套话（『next question』『okay raise your hand』『okay we'll do two more』这类，small.en 系统性丢掉），或 gonna/going to、cuz/because、you're/your 这类填词变体，不影响画面内容。两处从原始 cap_NJFI1Cz3Bmc.en.json3 逐字核对过、需要说明：①`rust`↔`rest`、`feel`↔`fill`——YouTube 原文『We kicked off a little rust in the middle』『we're starting to feel it』『how we feel out there』『I feel like Payton』，四处都清楚读『rust』『feel』，和 zh 第 13 行『中段打得有点生疏』（生疏＝rust）已经对得上，whisper 的 rest/fill 是这一段的独立误听；②`payton`↔`peyton`——两份转写独立一致地认出是同一个词（球员名），只是拼法不同，官方拼法是『Peyton』（Stearns），已把 en_fixed[162]/[165] 从『Payton』订正为『Peyton』（第 157 行此前已经订正过，这次是补上另外两处漏改的）。⚠️ 剩一处没有强行拍板：`joy`↔`joyous`（en_fixed[109]）。原始字幕这里是『I I think there's joyos』——本身就是个残缺/糊字，不是干净的一个词；whisper 独立听成『joyous』，但『there's joyous』不成句（joyous 是形容词，『there's』后面接名词才通），而『there's joy』语法完整、和上下文『Why not?』衔接得上，所以保留 en_fixed 里原来的『I think there's joy.』——这是权衡过语法通不通之后的判断，不是简单信了哪一份转写，留在这儿是给下一个人一个可查的理由，不是拍脑袋定的。空档：caption_gaps.md 报了 1 处（189.9–194.8 秒），键 190.8-195.8，已经在 caption_gaps_ok 里认领——两位记者换人提问之间的走动/等待，没人说话。"
 }
