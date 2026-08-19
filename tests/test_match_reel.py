@@ -4899,19 +4899,31 @@ def test_装ffmpeg和字体一律先试本地缓存不能只靠重试():
     - **不许再有内联的 `apt_retry() {`**：那份逻辑现在只活在共享脚本里，
       写两处必分叉（`Acquire::http::Timeout` 只加在 update 那行、install
       没跟着加，就是这个仓库自己啃过两次的坑）
-    - **调 `apt_install_cached` 之前必须先 `source` 那份脚本**——这个函数
-      不会凭空存在
+    - **调 `apt_install_cached` 或 `ensure_ffmpeg` 之前必须先 `source`
+      那份脚本**——这两个函数都不会凭空存在
     - **每个用到它的文件，前面必须有一个真的 `actions/cache@v4` 步骤**，
       缓存路径里带着 `apt-archives`——没有缓存步骤，「先试本地缓存」这句话
-      就是一句空话，`apt_install_cached` 每次都会走到摸网那条回退路
+      就是一句空话，`apt_install_cached` 每次都会走到摸网那条回退路。
+      `ensure_ffmpeg` 一样要这条：它自己的静态构建落空之后落回的还是
+      `apt_install_cached`
     - 判据自己的判据：扫到的文件数不许掉下 8——这是共享脚本落地那天覆盖的
       全部工作流数量
+
+    ⚠️ **`ensure_ffmpeg` 上线那天这条判据也要跟着换主语，理由和它的邻居
+    `test_装ffmpeg和字体那批步骤都走共享脚本不留手搓的调用` 一样**：
+    ffmpeg 那几处调用从 `apt_install_cached ffmpeg` 换成了 `ensure_ffmpeg`
+    （先试 GitHub Releases 上的静态构建，落空才退回 apt 这条老路），
+    只认 `apt_install_cached` 这一个名字会让 `frame-grab.yml`／
+    `voice-sample.yml` 两个文件从「校过」变成「没校」——**换个函数名不该
+    让判据的覆盖面跟着缩水**。
     """
     files_with_cache_calls = []
     for path in sorted(WORKFLOW.parent.glob("*.yml")):
         raw = path.read_text(encoding="utf-8")
         body = _yaml_only(raw)
-        if "apt_install_cached" not in body:
+        calls_ensure_ffmpeg = bool(re.search(r"(?<![\w-])ensure_ffmpeg(?![\w-])", body))
+        calls_apt_cached = "apt_install_cached" in body
+        if not (calls_ensure_ffmpeg or calls_apt_cached):
             continue
         files_with_cache_calls.append(path.name)
 
@@ -4926,18 +4938,20 @@ def test_装ffmpeg和字体一律先试本地缓存不能只靠重试():
             if "actions/cache@v4" in block_yaml_only and "apt-archives" in block_yaml_only:
                 cache_step_seen = True
                 continue
-            if "apt_install_cached" not in block_yaml_only:
+            calls_here = ("apt_install_cached" in block_yaml_only
+                          or re.search(r"(?<![\w-])ensure_ffmpeg(?![\w-])", block_yaml_only))
+            if not calls_here:
                 continue
             assert cache_step_seen, (
-                f"{path.name} 的步骤「{name}」调了 apt_install_cached，"
+                f"{path.name} 的步骤「{name}」调了 apt_install_cached 或 ensure_ffmpeg，"
                 "但前面没有一个真的 actions/cache@v4 步骤缓存 apt-archives——"
                 "『先试本地缓存』就成了一句空话，每次都会走到摸网那条回退路")
             assert "source tools/ci_apt_install.sh" in block_yaml_only, (
-                f"{path.name} 的步骤「{name}」调了 apt_install_cached 却没有先 "
-                "source 共享脚本——这个函数不会凭空存在")
+                f"{path.name} 的步骤「{name}」调了 apt_install_cached 或 ensure_ffmpeg "
+                "却没有先 source 共享脚本——这两个函数都不会凭空存在")
 
     assert len(files_with_cache_calls) >= 8, (
-        f"只扫到 {len(files_with_cache_calls)} 个文件用了 apt_install_cached，"
+        f"只扫到 {len(files_with_cache_calls)} 个文件用了 apt_install_cached/ensure_ffmpeg，"
         "判据的主语像是没了")
 
 
