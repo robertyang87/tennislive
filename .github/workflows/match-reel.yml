@@ -222,106 +222,55 @@ jobs:
       # ffmpeg 两种模式都要；**中文字体只有渲染要**（封面和烧字幕）。
       # 原来合成一步挂在所有模式前面，而 apt 那一步挂死过——probe 因此被一个
       # 它根本用不到的依赖拖住二十分钟。拆开，并给超时：卡住要失败，不要空转。
+      #
+      # ⚠️ **2026-08-19 (bouzkova-jovic 那趟 render) `apt-get update` 连着两次
+      # 吃满 150 秒、零字节进度**——`Acquire::http::Timeout=20` 那道防线对着一个
+      # 彻底不响应的镜像没能生效，和 PR #448 那次 ci.yml 撞的是同一个坑。
+      # 继续调重试参数治不了根：真正的杠杆是**大多数 run 根本不碰这个镜像**。
+      # `tools/ci_apt_install.sh` 把 apt 的索引和下载缓存重定向到这里缓存住的
+      # 目录，先试一次零网络的本地安装，缓存没命中才回退到会摸网的老路。
+      - name: 缓存 apt 包（ffmpeg + 字体，绕开镜像抽风）
+        if: github.event.inputs.mode != 'push'
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/apt-archives
+            ~/.cache/apt-lists
+          key: apt-pkgs-${{ runner.os }}-24.04-ffmpeg-fonts-v1
       - name: 装 ffmpeg
         # push 模式一帧都不碰：`push_reel.py` 那条路里 ffmpeg / ffprobe /
         # subprocess **一个都没出现**，装它白花半分钟。
         if: github.event.inputs.mode != 'push'
         timeout-minutes: 12
         run: |
-          # ⚠️ apt 镜像会抽风，而且不是偶发：2026-08-04 两小时内两次——一次静静烧了
-          # **13 分 42 秒**（那时没有闸），一次被 `timeout-minutes: 6` 掐掉
-          # （run 30878555571），而正常只要 **18~53 秒**，重跑那趟 34 秒就过了。
-          # 硬超时只把「静静烧半小时」换成「6 分钟红掉、要人重跑」——**方向对了但停在
-          # 一半**：卡住的正确处置是换一次重试，不是整趟失败。
-          # ⚠️ **第一版写的是 3 × 100 秒，当场把 CI 弄红了**（run 30880649692）：
-          # 三次全跑满 100 秒被杀，也就是 apt **一直在推进、只是慢**，不是挂死。
-          # 那个 100 秒是按「正常 18~53 秒」拍的，而那是**另一条工作流**的数——
-          # ci.yml 这一步正常 25~34 秒，镜像变慢时能到 100 秒以上仍在干活。
-          # **把「慢」误判成「挂死」，重试就从救场变成了三倍的浪费。**
-          # ⚠️⚠️ **2026-08-18：这句话原来写的是「5.3 分，仍在步骤的 6 分钟超时以内」，
-          #    而它把预算算漏了一半——这一步调 `apt_retry` **两次**（update 一次、
-          #    install 一次），真正的上界是 2 × 2 × (150s + 10s) = **640 秒 ≈ 10.7 分**。
-          #    于是 match-reel 那两步（`timeout-minutes: 5`）连着两趟死在同一个地方：
-          #    第 1 次 update 吃满 150 秒 → sleep 10 → 第 2 次跑到第 150 秒那一刻
-          #    正好撞上步骤超时（run 32084186086 / 32084758610，00:33:07 报第一次没跑完、
-          #    00:35:47 步骤被杀）。**重试在它唯一该起作用的那一次结构性地跑不完。**
-          #    步骤超时现在按 `calls × tries × (per + 10)` 反推并留 1 分钟余量，
-          #    判据 `test_apt重试的预算不许超过步骤自己的超时` 自己算不硬编。
-          # 每次都留 150 秒（正常值的 4~6 倍），只有真挂死才会两次都吃满。
-          apt_retry() {
-            for i in 1 2; do
-              sudo timeout 150 "$@" && return 0
-              echo "::warning::apt 第 $i 次没跑完（卡住或超时）：$*"
-              sudo dpkg --configure -a || true   # 上一次被 SIGTERM 打断可能留下半装状态
-              sleep 10
-            done
-            echo "::error::apt 两次都没成功：$*"
-            return 1
-          }
-          # ⚠️ **`Acquire::http::Timeout` 是这一行的关键，不是装饰。**
-          # 2026-08-18 02:02 那趟 CI（run 32090339473）`apt-get update` **两次各吃满
-          # 150 秒**，一个字节的进度都没有——这是 apt 挂在一个不响应的镜像上等
-          # 它自己的默认超时（120 秒起）的样子，不是「在推进、只是慢」。
-          # 给 apt 自己一个 20 秒的连接超时 ＋ 3 次重试，它会**在我们的 `timeout 150`
-          # 之内自己换一个镜像**；没有这两个参数，外层重试只是把同一次挂死再等一遍。
-          # ⚠️ 别用它去替代外层的 `apt_retry`：那一层管的是「整条命令挂了」，
-          # 这一层管的是「某个 host 不响应」，两层各拦一头。
-          apt_retry apt-get update -qq -o Acquire::Retries=3 -o Acquire::http::Timeout=20
-          # ⚠️ **`--no-install-recommends` 不是洁癖，是这一步的耗时本身。**
-          # 2026-08-18 `apt-get install ffmpeg` 连着两次吃满 150 秒被杀
-          # （run 32085745112：00:46:29 起，00:49:11 和 00:51:51 各报一次没跑完；
-          # 同一趟的 `apt-get update` 十几秒就过了，慢的只有 install）。
-          # ffmpeg 的 recommends 拖着一整串 VA-API 驱动，而 runner 上根本没有
-          # 硬件解码可用——`.claude/hooks/session-start.sh` 早就是这么装的，
-          # 只是这半边一直没跟上（「规矩只写在了其中一半」）。
-          # `Acquire::Retries=3` 让 apt 自己在一次尝试里换一次镜像，
-          # 而不是挂在一个不响应的 host 上等我们的 `timeout` 来杀。
-          apt_retry apt-get install -y -qq --no-install-recommends -o Acquire::Retries=3 -o Acquire::http::Timeout=20 ffmpeg
+          source tools/ci_apt_install.sh
+          apt_install_cached ffmpeg
 
       # ⚠️ **`cover` 也要**：封面走 HTML 渲染（和知识帖同一套字），少了中文字体
       # 出来的是豆腐块。加 cover 档那次漏了这三步，run 155 就是这么红的——
       # 「加新能力就要同时改三处」的第 N 次。
       - name: 装中文字体（渲染和封面都要）
         if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover'
-        timeout-minutes: 7
+        # ⚠️ 7 分钟不够：`apt_install_cached` 缓存没命中时会退到
+        # apt_retry(update) + apt_retry(install) 各两次 150 秒，
+        # 最坏 2×2×160=640 秒 ≈ 10.7 分。按 12 分钟留够余量，和这条线上
+        # 其余用到 `apt_install_cached` 的步骤统一（判据
+        # `test_装ffmpeg和字体那批步骤都走共享脚本不留手搓的调用`）。
+        timeout-minutes: 12
         # `fonts-noto-color-emoji` 不是可选项：封面上每个球员名字旁边有一面
         # 国旗（账号所有者 2026-08-02 定的），而**缺了它不报错**——Chromium
         # 回退到没有旗帜字形的字体，🇵🇭 渲成两个方框或者裸的「PH」两个字母，
         # 海报照样出得来。同一条规矩这一天已经咬过三次（fonts-noto-core、
         # pip 行漏了 `-e .`、ci.yml 漏了字体）。判据在
         # `test_封面的国旗要有字体渲得出来`：它真渲一次并比像素。
+        #
+        # apt 那套重试/缓存逻辑和上面「装 ffmpeg」共用同一份脚本、同一份
+        # 缓存目录——这一步不用再单独 `actions/cache`：同一个 job 里
+        # ffmpeg 那步如果真的摸了网，索引已经落在 `~/.cache/apt-lists` 里，
+        # 这一步直接吃现成的。
         run: |
-          # ⚠️ apt 镜像会抽风，而且不是偶发：2026-08-04 两小时内两次——一次静静烧了
-          # **13 分 42 秒**（那时没有闸），一次被 `timeout-minutes: 6` 掐掉
-          # （run 30878555571），而正常只要 **18~53 秒**，重跑那趟 34 秒就过了。
-          # 硬超时只把「静静烧半小时」换成「6 分钟红掉、要人重跑」——**方向对了但停在
-          # 一半**：卡住的正确处置是换一次重试，不是整趟失败。
-          # ⚠️ **第一版写的是 3 × 100 秒，当场把 CI 弄红了**（run 30880649692）：
-          # 三次全跑满 100 秒被杀，也就是 apt **一直在推进、只是慢**，不是挂死。
-          # 那个 100 秒是按「正常 18~53 秒」拍的，而那是**另一条工作流**的数——
-          # ci.yml 这一步正常 25~34 秒，镜像变慢时能到 100 秒以上仍在干活。
-          # **把「慢」误判成「挂死」，重试就从救场变成了三倍的浪费。**
-          # ⚠️⚠️ **2026-08-18：这句话原来写的是「5.3 分，仍在步骤的 6 分钟超时以内」，
-          #    而它把预算算漏了一半——这一步调 `apt_retry` **两次**（update 一次、
-          #    install 一次），真正的上界是 2 × 2 × (150s + 10s) = **640 秒 ≈ 10.7 分**。
-          #    于是 match-reel 那两步（`timeout-minutes: 5`）连着两趟死在同一个地方：
-          #    第 1 次 update 吃满 150 秒 → sleep 10 → 第 2 次跑到第 150 秒那一刻
-          #    正好撞上步骤超时（run 32084186086 / 32084758610，00:33:07 报第一次没跑完、
-          #    00:35:47 步骤被杀）。**重试在它唯一该起作用的那一次结构性地跑不完。**
-          #    步骤超时现在按 `calls × tries × (per + 10)` 反推并留 1 分钟余量，
-          #    判据 `test_apt重试的预算不许超过步骤自己的超时` 自己算不硬编。
-          # 每次都留 150 秒（正常值的 4~6 倍），只有真挂死才会两次都吃满。
-          apt_retry() {
-            for i in 1 2; do
-              sudo timeout 150 "$@" && return 0
-              echo "::warning::apt 第 $i 次没跑完（卡住或超时）：$*"
-              sudo dpkg --configure -a || true   # 上一次被 SIGTERM 打断可能留下半装状态
-              sleep 10
-            done
-            echo "::error::apt 两次都没成功：$*"
-            return 1
-          }
-          apt_retry apt-get install -y -qq -o Acquire::Retries=3 -o Acquire::http::Timeout=20 fonts-noto-cjk fonts-noto-color-emoji
+          source tools/ci_apt_install.sh
+          apt_install_cached fonts-noto-cjk fonts-noto-color-emoji
 
       # 封面走 HTML 渲染（和知识帖同一套字），所以要 webrender + Chromium。
       # 少了它 render 会死在 ModuleNotFoundError: playwright，而且是在下完

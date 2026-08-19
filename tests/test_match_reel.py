@@ -4778,6 +4778,121 @@ def test_等满dpkg锁的预算之后要主动杀掉不能只是继续等():
         f"只扫到 {len(checked)} 条工作流有 pw_wait_apt，判据的主语像是没了")
 
 
+def test_装ffmpeg和字体一律先试本地缓存不能只靠重试():
+    """⚠️⚠️ 2026-08-19 一天里连中**三次**同一个坑，三条不同的工作流：
+
+        PR #448（ci.yml，run 32218612883）       `apt-get install` 两次吃满 150 秒
+        PR #451（match-reel.yml render 那趟）    `apt-get update`  两次吃满 150 秒
+        interview-clip.yml mode=subs（run 32212794304/32213180838）
+                                                  `apt-get install` 两次吃满 150 秒
+
+    三次都是**零字节进度**——`Acquire::http::Timeout=20` 那道防线对着一个
+    彻底不响应的镜像没能生效（连接本身没在配置的超时内收敛，是 DNS 还是
+    TCP 层面卡住，从这台机器上看不出来）。继续调重试参数治不了根：
+    这层防线已经调过好几轮（3×100s → 2×150s，`Retries=3`＋`Timeout=20`），
+    还是照样两次都吃满。
+
+    真正的杠杆是**大多数 run 根本不用碰这个镜像**。`apt-get update`／
+    `install` 的产物（索引 + 下载好的 .deb）缓存住之后，装的时候直接从
+    本地满足，一次网络请求都不用发。`tools/ci_apt_install.sh` 就是干这个的：
+    `apt_install_cached` 先试一次零网络的本地安装，只有缓存没命中或不全，
+    才回退到会摸网的 `apt_retry`（那套重试逻辑没扔——真第一次冷启动、
+    或者缓存被清过，还是需要它）。
+
+    索引和下载缓存**不用 `/var/cache/apt/archives` / `/var/lib/apt/lists`
+    这两个系统路径**——它们是 root 建的，`actions/cache@v4` 的 save/restore
+    步骤是非 root 用户跑的，写不进去。改用 `Dir::Cache::Archives` /
+    `Dir::State::lists` 把 apt 这两块状态重定向到 `$HOME/.cache/apt-*`，
+    那两个目录由脚本自己先 `mkdir -p`（普通用户建的，普通用户能写），
+    `sudo apt-get` 写进去的文件默认 644（世界可读），缓存步骤读得到。
+
+    判据钉四头：
+
+    - **不许再有内联的 `apt_retry() {`**：那份逻辑现在只活在共享脚本里，
+      写两处必分叉（`Acquire::http::Timeout` 只加在 update 那行、install
+      没跟着加，就是这个仓库自己啃过两次的坑）
+    - **调 `apt_install_cached` 之前必须先 `source` 那份脚本**——这个函数
+      不会凭空存在
+    - **每个用到它的文件，前面必须有一个真的 `actions/cache@v4` 步骤**，
+      缓存路径里带着 `apt-archives`——没有缓存步骤，「先试本地缓存」这句话
+      就是一句空话，`apt_install_cached` 每次都会走到摸网那条回退路
+    - 判据自己的判据：扫到的文件数不许掉下 8——这是共享脚本落地那天覆盖的
+      全部工作流数量
+    """
+    files_with_cache_calls = []
+    for path in sorted(WORKFLOW.parent.glob("*.yml")):
+        raw = path.read_text(encoding="utf-8")
+        body = _yaml_only(raw)
+        if "apt_install_cached" not in body:
+            continue
+        files_with_cache_calls.append(path.name)
+
+        assert "apt_retry() {" not in body, (
+            f"{path.name} 还留着一份内联的 apt_retry()——共享脚本装好了，"
+            "这份该删掉，不然下次改重试逻辑又要记着改两处")
+
+        cache_step_seen = False
+        for name in _steps(body):
+            block = _step_block(name, raw)
+            block_yaml_only = _yaml_only(block)
+            if "actions/cache@v4" in block_yaml_only and "apt-archives" in block_yaml_only:
+                cache_step_seen = True
+                continue
+            if "apt_install_cached" not in block_yaml_only:
+                continue
+            assert cache_step_seen, (
+                f"{path.name} 的步骤「{name}」调了 apt_install_cached，"
+                "但前面没有一个真的 actions/cache@v4 步骤缓存 apt-archives——"
+                "『先试本地缓存』就成了一句空话，每次都会走到摸网那条回退路")
+            assert "source tools/ci_apt_install.sh" in block_yaml_only, (
+                f"{path.name} 的步骤「{name}」调了 apt_install_cached 却没有先 "
+                "source 共享脚本——这个函数不会凭空存在")
+
+    assert len(files_with_cache_calls) >= 8, (
+        f"只扫到 {len(files_with_cache_calls)} 个文件用了 apt_install_cached，"
+        "判据的主语像是没了")
+
+
+def test_共享的apt安装脚本形状要对():
+    """`tools/ci_apt_install.sh` 是给工作流 `source` 的，形状变了要在这儿先炸，
+    不要等下一次真跑 CI 才发现。
+
+    ⚠️ **2026-08-19 又加了一条**：重定向到 `$HOME/.cache/apt-*` 撞上了
+    apt 自己的沙箱降权——`_apt` 用户进不去 `runner` 的主目录，于是每个文件
+    都要先撞一次权限、警告、再退回 root 下载，表现和「镜像不响应」一模一样
+    （run 32236503405 attempt 4 才第一次在日志里露出来：
+    `couldn't be accessed by user '_apt'. - pkgAcquire::Run (13: Permission
+    denied)`）。`APT::Sandbox::User=root` 让 apt 直接用 root 下载，
+    不走这套降权折腾——**这条判据钉的是「别把这一行删掉」，不是「重新发现
+    这个坑」**：这个坑够贵，值得有一条专门的判据挡住它复发。
+    """
+    script = Path("tools/ci_apt_install.sh")
+    assert script.is_file(), "共享脚本不见了，match-reel.yml 等 8 个文件都在 source 它"
+    body = script.read_text(encoding="utf-8")
+    assert "apt_install_cached()" in body or "apt_install_cached ()" in body
+    assert "apt_retry()" in body or "apt_retry ()" in body
+    # 重定向到非 root 目录才是 actions/cache 能读写的那一半，别退回系统路径。
+    # ⚠️ 先去掉整行注释再查——注释里正解释着「为什么不用系统路径」，
+    # 连注释一起扫会把「把坑记下来」判成「又踩了这个坑」
+    code_only = "\n".join(
+        ln for ln in body.splitlines() if not ln.lstrip().startswith("#"))
+    assert "Dir::Cache::Archives" in code_only
+    assert "Dir::State::lists" in code_only
+    assert "/var/cache/apt/archives" not in code_only
+    assert "/var/lib/apt/lists" not in code_only
+    assert "APT::Sandbox::User=root" in code_only, (
+        "少了这一行，`_apt` 沙箱用户写不进 $HOME/.cache/apt-lists，"
+        "会重新表现成「apt 卡住了」")
+    # 这个选项要跟着 `_apt_opts` 一起进每一次 apt-get 调用，不能只出现在
+    # 某一行——否则「缓存命中那条快路径」和「走网络那条慢路径」只有一条
+    # 真的免了降权折腾，另一条照样撞权限。
+    assert "_apt_opts=(" in code_only and "APT::Sandbox::User=root" in code_only.split(
+        "_apt_opts=(", 1)[1].split(")", 1)[0], (
+        "APT::Sandbox::User=root 要写进 _apt_opts 数组本身，"
+        "这样三处调用（缓存检查 / update / install）才能共用同一份")
+    subprocess.run(["bash", "-n", str(script)], check=True)
+
+
 def test_Chromium缓存都要有restore_keys():
     """键钉在整份 `pyproject.toml` 上太宽，**加一个依赖就把六条线的缓存全废掉**。
 
