@@ -111,3 +111,51 @@ apt_install_cached() {
   apt_retry apt-get "${_apt_opts[@]}" install -y -qq --no-install-recommends \
     -o Acquire::Retries=3 -o Acquire::http::Timeout=20 "$@"
 }
+
+# ⚠️⚠️ 2026-08-19 下午到晚上，apt 镜像单单对 ffmpeg 这个包反复失灵——
+# `apt-get update` 有时能成，但紧接着 `apt-get install ffmpeg` 两次
+# 150 秒都拿不到那个 .deb（run 32300118619／32302142919／32304343522
+# 连续三次都死在这儿，中间隔了 5～15 分钟冷却也没用）。这不是「慢」，
+# 是这一个包的下载路径当天持续不通——`Acquire::http::Timeout=20` 这层
+# 防线对着一个会接受连接、只是数据一直不来的源没用。
+#
+# **真正的杠杆是别去碰这条镜像。** 同一条流水线本来就靠
+# `release-assets.githubusercontent.com` 发成片（「成片一律走 Release
+# 不进 git」），这条路今天全程稳定——所以 ffmpeg 改成先试一个托管在
+# GitHub Releases 上的静态构建（BtbN/FFmpeg-Builds，GPL 版，含
+# libx264/libx265，这条流水线的编码参数都用得上）。实测下载 128 MB
+# 十几秒，动态依赖只有 libm/libdl/librt/libpthread 这几个任何
+# ubuntu-latest 都带的 glibc 级别库，`ffmpeg -version` 跑得动。
+#
+# ⚠️ **不是替换 apt，是多一条更快的路，apt 仍然是保底。** 静态构建
+# 下载失败（GitHub 那天也抽风、tar 包结构变了……）就原样退回
+# `apt_install_cached ffmpeg`——旧路径一个字没删，坏的方向不会比现在更糟。
+ensure_ffmpeg() {
+  if command -v ffmpeg >/dev/null 2>&1 && command -v ffprobe >/dev/null 2>&1; then
+    echo "[ffmpeg] 已经在 PATH 上了，跳过"
+    return 0
+  fi
+  local url="https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-linux64-gpl.tar.xz"
+  local tmp ok=0
+  tmp="$(mktemp -d)"
+  if timeout 90 curl -fsSL "$url" -o "$tmp/ffmpeg.tar.xz" 2>"$tmp/dl.log"; then
+    local ffbin ffprobebin
+    ffbin=$(tar -tJf "$tmp/ffmpeg.tar.xz" 2>/dev/null | grep -m1 '/bin/ffmpeg$' || true)
+    ffprobebin=$(tar -tJf "$tmp/ffmpeg.tar.xz" 2>/dev/null | grep -m1 '/bin/ffprobe$' || true)
+    if [ -n "$ffbin" ] && [ -n "$ffprobebin" ]; then
+      tar -xJf "$tmp/ffmpeg.tar.xz" -C "$tmp" "$ffbin" "$ffprobebin" 2>/dev/null
+      sudo install -m 755 "$tmp/$ffbin" /usr/local/bin/ffmpeg 2>/dev/null
+      sudo install -m 755 "$tmp/$ffprobebin" /usr/local/bin/ffprobe 2>/dev/null
+      if command -v ffmpeg >/dev/null 2>&1 && ffmpeg -version >/dev/null 2>&1; then
+        ok=1
+      fi
+    fi
+  fi
+  rm -rf "$tmp"
+  if [ "$ok" = 1 ]; then
+    echo "[ffmpeg] 走静态构建（GitHub Releases），没碰 apt 镜像"
+    return 0
+  fi
+  echo "[ffmpeg] 静态构建拿不到，退回 apt"
+  apt_install_cached ffmpeg
+}

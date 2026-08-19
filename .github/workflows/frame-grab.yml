@@ -61,7 +61,7 @@ jobs:
         timeout-minutes: 15
         run: |
           source tools/ci_apt_install.sh
-          apt_install_cached ffmpeg
+          ensure_ffmpeg
           # **`[default]` 不是可选的**：它才带 `yt-dlp-ejs`，而解 YouTube 的
           # n challenge 要跑一段 JS。少了它 yt-dlp **不报「装少了」**，而是
           # 格式表里只剩故事板，于是任何选择器（连 `worst`）都匹配不上，

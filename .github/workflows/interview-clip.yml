@@ -153,7 +153,8 @@ jobs:
         if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover'
         run: |
           source tools/ci_apt_install.sh
-          apt_install_cached fonts-noto-cjk fonts-noto-core ffmpeg
+          apt_install_cached fonts-noto-cjk fonts-noto-core
+          ensure_ffmpeg
 
       # **`yt-dlp` 要装 `[default]`**，它才带 `yt-dlp-ejs`——解 YouTube 的
       # n challenge 要跑一段 JS。少了它不会报「装少了」，而是任何格式选择器都

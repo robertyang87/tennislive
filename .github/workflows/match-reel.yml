@@ -244,7 +244,7 @@ jobs:
         timeout-minutes: 15
         run: |
           source tools/ci_apt_install.sh
-          apt_install_cached ffmpeg
+          ensure_ffmpeg
 
       # ⚠️ **`cover` 也要**：封面走 HTML 渲染（和知识帖同一套字），少了中文字体
       # 出来的是豆腐块。加 cover 档那次漏了这三步，run 155 就是这么红的——
