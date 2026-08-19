@@ -1042,7 +1042,7 @@ _SCORE_SIZE_TAG = rf"\fs{_SCORE_PX}"
 _SET_SCORE_RE = re.compile(r"^(\d+)-(\d+)(\(\d+\))?$")
 
 
-def _score_runs(score: str) -> list[tuple[str, str, str, int]]:
+def _score_runs(score: str, px: int = _SCORE_PX) -> list[tuple[str, str, str, int]]:
     """把 `push.score` 拆成一段一段：**每一盘里，只给赢下这一盘的那个数字上绿**。
 
     返回的每一段仍然是 `header_runs` 那种 `(文本, kind, 标签, 字号)` 四元组，
@@ -1050,7 +1050,11 @@ def _score_runs(score: str) -> list[tuple[str, str, str, int]]:
     这样 `header_lines` 那句 `sum(_measure_at(...))` 不用跟着改，因为总字符
     和总 kind 没变，只是原来一整段现在拆成了好几小段。短横线跟着**前一个**
     数字走（"6-" 是一段，"4" 是下一段），冒号左右各自独立上色。
+
+    ⚠️ `px` 默认 `_SCORE_PX`，**双打那一行整体缩小时** `header_runs` 会传一个
+    更小的值进来——两个数字和名字必须缩同一个比例，不然比分和名字大小对不上。
     """
+    tag = rf"\fs{px}"
     tokens = score.split(" ")
     runs: list[tuple[str, str, str, int]] = []
     for i, tok in enumerate(tokens):
@@ -1063,10 +1067,10 @@ def _score_runs(score: str) -> list[tuple[str, str, str, int]]:
         n1, n2, paren = m.group(1), m.group(2), m.group(3) or ""
         trail = " " if i < len(tokens) - 1 else ""
         n1_won = int(n1) > int(n2)
-        tag1 = (_MARK_COLOUR if n1_won else "") + _SCORE_SIZE_TAG
-        tag2 = (_MARK_COLOUR if not n1_won else "") + _SCORE_SIZE_TAG
-        runs.append((f"{n1}-", "num", tag1, _SCORE_PX))
-        runs.append((f"{n2}{paren}{trail}", "num", tag2, _SCORE_PX))
+        tag1 = (_MARK_COLOUR if n1_won else "") + tag
+        tag2 = (_MARK_COLOUR if not n1_won else "") + tag
+        runs.append((f"{n1}-", "num", tag1, px))
+        runs.append((f"{n2}{paren}{trail}", "num", tag2, px))
     return runs
 
 
@@ -1154,8 +1158,11 @@ def header_runs(spec: dict) -> tuple[list[tuple[str, str, str]], ...]:
             "  赛后场上采访 / 赛后新闻发布会 / 赛后演播室专访 / "
             "赛后捧杯致辞 / 赛后亚军致辞 …")
     sides = [s.strip() for s in re.split(r"\bvs\.?\b", mu) if s.strip()]
-    line_b = [(f"{mu} · {kind}", "zh", "", _HEAD_SIZE["b"])]
-    if (score := (push.get("score") or "").strip()):
+
+    def _build_line_b(scale: float = 1.0) -> list[tuple[str, str, str, int]]:
+        b_px = round(_HEAD_SIZE["b"] * scale)
+        if not (score := (push.get("score") or "").strip()):
+            return [(f"{mu} · {kind}", "zh", "", b_px)]
         if not (win := (spec.get("winner") or "").strip()):
             raise SystemExit(
                 f"{slug} 写了 `push.score` 却没写 `winner`。\n"
@@ -1174,9 +1181,23 @@ def header_runs(spec: dict) -> tuple[list[tuple[str, str, str]], ...]:
         # 见 `highlight_en` 的 docstring 和 CLAUDE.md。输的那个名字和比分
         # 前后的「· 赛后场上采访」都留默认色，不然满行都是重点等于没有重点。
         # 比分本身按盘拆分上色，见 `_score_runs`——不是整条一个颜色。
-        line_b = ([(f"{win} ", "zh", _MARK_COLOUR, _HEAD_SIZE["b"])]
-                  + _score_runs(score)
-                  + [(f" {lose} · {kind}", "zh", "", _HEAD_SIZE["b"])])
+        score_px = round(_SCORE_PX * scale)
+        return ([(f"{win} ", "zh", _MARK_COLOUR, b_px)]
+                + _score_runs(score, score_px)
+                + [(f" {lose} · {kind}", "zh", "", b_px)])
+
+    # 单打两个名字一直装得下，这条缩放路径从没走过。**双打是四个名字**——
+    # `williams-sisters-cincinnati-2026-r1-presser` 是第一条撞上这道闸的：
+    # `科斯秋克/斯特恩斯` ＋ 三盘比分 ＋ `威廉姆斯姐妹` ＋ `· 赛后新闻发布会`
+    # 量出来 1215px，可用只有 984px。和 `score_cn_px()`（比分板中文名字号）
+    # 同一个形状：**字号是算出来的，不是写死的**——先按默认字号量一次，
+    # 装不下再按超出的比例整体缩小（名字和比分一起缩，不然大小对不上）。
+    line_b = _build_line_b()
+    w = sum(_measure_at(k, size, text) for text, k, _, size in line_b)
+    if w > _HEAD_PX:
+        # 留 2% 余量：四舍五入到整数字号之后，量出来的宽度可能比算出来的
+        # 缩放比例贴着算得更宽一点点。
+        line_b = _build_line_b(_HEAD_PX / w * 0.98)
     return ([("▍", "zh", _MARK_COLOUR, _HEAD_SIZE["a"]),
              (ev, "head", "", _HEAD_SIZE["a"])], line_b)
 
