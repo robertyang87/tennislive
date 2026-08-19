@@ -315,6 +315,39 @@ def test_apt重试的预算不许超过步骤自己的超时():
         + "\n把 `timeout-minutes` 提到 ceil(预算/60) 以上（建议再留 1 分钟余量），"
         "别去调小单次超时——那会把「慢」误判成「挂死」，见上一条判据。")
 
+def test_apt_install那行也要带connect超时不能只有update有():
+    """**同一件事在两处各写一遍，必然分叉——这次分叉的是 `update` 和 `install`。**
+
+    2026-08-19 `ci.yml`（PR #448，run 32218612883）连着两趟死在同一个地方：
+    `apt-get update` 那行带着 `Acquire::http::Timeout=20`，两次都在 20 秒内
+    自己换了镜像、顺利过关；紧接着的 `apt-get install` 那行**没有这个参数**，
+    连着两次各吃满 150 秒、一个字节的进度都没有——和「apt 真的挂死了」
+    一模一样，其实只是没给它连接超时，让它去等自己的默认超时（120 秒起）。
+
+    十二处 `apt_retry apt-get install`，事发时只有两处（`interview-clip.yml`
+    的两行）带着这个参数——那是当天早些时候修另一个具体故障时顺手带上的，
+    **没有推广到其余十处**，包括 `ci.yml` 自己：它的 `update` 行本来就有，
+    `install` 行从写下那天起就没有。这条判据把它钉成一处规矩，别再靠
+    「这次刚好也要修」才补一行。
+    """
+    missing = []
+    for path in sorted(Path(".github/workflows").glob("*.yml")):
+        # 命令可能用 `\` 续行（ci.yml 的 install 那行就是），先把续行拼回
+        # 一条逻辑行再查——按单行查会把「参数写在下一行」误判成「没写」。
+        joined = re.sub(r"\\\n\s*", " ", _yaml_only(path.read_text(encoding="utf-8")))
+        for line in joined.splitlines():
+            if "apt_retry apt-get install" not in line:
+                continue
+            if "Acquire::http::Timeout" not in line:
+                missing.append(f"{path.name}: {line.strip()[:70]}")
+
+    assert not missing, (
+        "这些 apt install 行没带 `-o Acquire::http::Timeout=20`——"
+        "镜像不响应时它只会干等默认超时，把重试预算耗在同一次挂死上：\n  "
+        + "\n  ".join(missing)
+    )
+
+
 def _strip_shell_comments(run: str) -> str:
     """去掉 run 脚本里的整行注释。
 
