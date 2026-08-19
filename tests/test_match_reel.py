@@ -4855,7 +4855,17 @@ def test_装ffmpeg和字体一律先试本地缓存不能只靠重试():
 
 def test_共享的apt安装脚本形状要对():
     """`tools/ci_apt_install.sh` 是给工作流 `source` 的，形状变了要在这儿先炸，
-    不要等下一次真跑 CI 才发现。"""
+    不要等下一次真跑 CI 才发现。
+
+    ⚠️ **2026-08-19 又加了一条**：重定向到 `$HOME/.cache/apt-*` 撞上了
+    apt 自己的沙箱降权——`_apt` 用户进不去 `runner` 的主目录，于是每个文件
+    都要先撞一次权限、警告、再退回 root 下载，表现和「镜像不响应」一模一样
+    （run 32236503405 attempt 4 才第一次在日志里露出来：
+    `couldn't be accessed by user '_apt'. - pkgAcquire::Run (13: Permission
+    denied)`）。`APT::Sandbox::User=root` 让 apt 直接用 root 下载，
+    不走这套降权折腾——**这条判据钉的是「别把这一行删掉」，不是「重新发现
+    这个坑」**：这个坑够贵，值得有一条专门的判据挡住它复发。
+    """
     script = Path("tools/ci_apt_install.sh")
     assert script.is_file(), "共享脚本不见了，match-reel.yml 等 8 个文件都在 source 它"
     body = script.read_text(encoding="utf-8")
@@ -4870,6 +4880,16 @@ def test_共享的apt安装脚本形状要对():
     assert "Dir::State::lists" in code_only
     assert "/var/cache/apt/archives" not in code_only
     assert "/var/lib/apt/lists" not in code_only
+    assert "APT::Sandbox::User=root" in code_only, (
+        "少了这一行，`_apt` 沙箱用户写不进 $HOME/.cache/apt-lists，"
+        "会重新表现成「apt 卡住了」")
+    # 这个选项要跟着 `_apt_opts` 一起进每一次 apt-get 调用，不能只出现在
+    # 某一行——否则「缓存命中那条快路径」和「走网络那条慢路径」只有一条
+    # 真的免了降权折腾，另一条照样撞权限。
+    assert "_apt_opts=(" in code_only and "APT::Sandbox::User=root" in code_only.split(
+        "_apt_opts=(", 1)[1].split(")", 1)[0], (
+        "APT::Sandbox::User=root 要写进 _apt_opts 数组本身，"
+        "这样三处调用（缓存检查 / update / install）才能共用同一份")
     subprocess.run(["bash", "-n", str(script)], check=True)
 
 
