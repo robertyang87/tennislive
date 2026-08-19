@@ -1,6 +1,6 @@
 # 转写核对表：sabalenka-wang-cincinnati-2026-r3
 
-源片 https://youtu.be/kCmaozI16jw　采访段 272.2–376.0 秒（共 53 行）
+源片 https://youtu.be/kCmaozI16jw　采访段 272.2–374.4 秒（共 53 行）
 
 | # | 片内 | 跳到源片 | 英文 | 中文 | 判据 |
 |--:|:--|:--|:--|:--|:--|
