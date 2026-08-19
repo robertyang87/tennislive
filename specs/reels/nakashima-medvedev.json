@@ -74,10 +74,10 @@
     "_matchup_rank_why": "两个人的名次直接取任务简报里已经核实过的当周快照（中岛世界第21、梅德韦杰夫世界第6），不再重新查证——`mds.pdf` 的 `Seeded Players` 表另有一组数字（中岛31、梅德韦杰夫6），**那一栏是定种子那周的快照，不是当期排名**（CLAUDE.md 记过这个坑：十几个种子里对不上当期排名的占多数），梅德韦杰夫那个『6』只是巧合地两边一致，中岛的『31』不能用。\n\n⚠️国籍：梅德韦杰夫以中立身份参赛（flashscore 的 `CC`/`FU` 字段写 World），所以 `country` 写 `null`——和 `medvedev-zandschulp.json` 里的处理一致。",
     "_name_why": "两个中文名都走 `player_zh()`：`player_zh(\"Brandon Nakashima\")` → 中岛布兰登，`player_zh(\"Daniil Medvedev\")` → 梅德韦杰夫（**不是**『梅德维杰夫』，容易手滑打错）。\n\n⚠️ **matchup/topbar/narration 里中岛统一写成「中岛」**（短姓氏形式），不是完整的「中岛布兰登」——这不是另一种译法，是跟着这个账号已经发过的两条同一球员的片子（`nakashima-jodar-montreal-sf.json` / `shelton-nakashima-montreal-final.json`）里已经确立的显示惯例走，同一个人不能这条片子叫全名、那条片子叫短名。",
     "portrait": {
-      "image": "PENDING",
+      "image": "assets/reel/nakashima-cincinnati-2026-r3.jpg",
       "fit": "cover",
-      "focus": 0.5,
-      "focus_y": 0.32,
+      "focus": 0.48,
+      "focus_y": 0.5,
       "zoom": 1.0
     },
     "_photo_why": "⚠️⚠️ **封面大图待定，尚未落地——按 2026-08-17 定的硬闸，这是前置条件，不能用抽帧顶替。** 这条 spec 现在 `--dry-run` 会在 `cover_photo_problem` 这一步停住（`封面大图找不到：PENDING`），这是**预期内的**失败，不是这条 spec 的缺陷——`paul-vallejo.json` 目前也是同一个状态（同一份 `cover_photo_problem` 逻辑：`image` 给了一个不存在的路径就会报『找不到』，不给 `image` 又不给 `frame_at` 才会放行；这里故意用`\"PENDING\"` 占住 `image` 这个键，让下一个人一看就知道『这里缺一张图，不是漏填』，而不是让它安静地通过形状校验）。\n\n任务简报明确要求这里留 `PENDING`、不要去抽帧顶替、不要求我这一轮找到真实封面图，所以没有跑 `tools/find_cover_photo.py` 之类的检索——留给下一轮补图时用。补图顺序按 CLAUDE.md 的四类源：① 赛事官网 WordPress 媒体库 `cincinnatiopen.com`（`?search=Nakashima` / `Medvedev`）② 当地报纸 The Enquirer 每日图集 ③ AP 通讯社 ④ Getty via WTA/ATP CDN。**优先近景特写**（账号所有者 2026-08-18 的要求），这条片子的封面主体是中岛，找他赢球或者对峙时的近景。\n\n占位这一帧取 220.5 秒（举拳庆祝、四分之三侧脸），只是为了本地预览有东西看，不会被 `cover_photo_problem` 放行。",
@@ -89,7 +89,8 @@
       }
     },
     "_court_why": "⚠️ **这一条没有找到自证**：画面里场边只有赞助商板（`ATP TOUR` / `Emirates` / `Western & Southern Financial Group`），没有印球场名的台标或标识；官方 Order of Play（`protennislive.com/posting/2026/422/op*.pdf`，op16~op20 全试过）已经 404——和 CLAUDE.md 记过的规律一样，赛事一过当天就撤。\n\n`court` 现在填的是 **`Grandstand`**，来自两次独立网页检索都给出同一个结果：WebSearch 摘要和直接 `WebFetch` 抓取 `tennis.com` 的这场比赛页都说是 Grandstand。⚠️ **但这不是一个强证据**——`tennis.com` 那同一个页面给出的比分数据是明显错的（`6-3, 7-6`，还有『27局对4局』这种根本不成立的读数），所以这一页的可靠性本身存疑，`Grandstand` 只是**中等强度**的旁证，不是自证。留着这条注记，补真实封面图那一轮如果顺手翻到更硬的出处（官方赛程页、画面里的台标），要替换掉这个来源。",
-    "_duration_why": "取 **2:54**（对应 `duration_source` 的 `2:54:00`）。\n\n① `df_su_1_AcaNKFel` 的 `RB÷2:54`，分盘 `RC÷1:05` ＋ `RD÷1:06` ＋ `RE÷0:43` 正好等于它。\n② **画面自证**——源片 220.5 秒（比赛结束、中岛握拳庆祝那一帧）记分板同时印着终局比分，和 `RB` 出自同一条官方转播链路，两者互相印证。\n\n⚠️ `dc_1_AcaNKFel` 的 `DD-DC`（结束时间戳减开始时间戳）算出来是 2:50:45，比 `RB` 的 2:54 少约 4 分钟——这两个时间戳记录的是转播/数据系统的开始结束信号，和纯球场净打时长（`RB`／`RC`＋`RD`＋`RE`）不是同一个口径，CLAUDE.md 记过这条线的规矩是**分盘用时能自己加总的那个数字优先**，所以用 2:54 不用 2:50:45 反推的 2:51。"
+    "_duration_why": "取 **2:54**（对应 `duration_source` 的 `2:54:00`）。\n\n① `df_su_1_AcaNKFel` 的 `RB÷2:54`，分盘 `RC÷1:05` ＋ `RD÷1:06` ＋ `RE÷0:43` 正好等于它。\n② **画面自证**——源片 220.5 秒（比赛结束、中岛握拳庆祝那一帧）记分板同时印着终局比分，和 `RB` 出自同一条官方转播链路，两者互相印证。\n\n⚠️ `dc_1_AcaNKFel` 的 `DD-DC`（结束时间戳减开始时间戳）算出来是 2:50:45，比 `RB` 的 2:54 少约 4 分钟——这两个时间戳记录的是转播/数据系统的开始结束信号，和纯球场净打时长（`RB`／`RC`＋`RD`＋`RE`）不是同一个口径，CLAUDE.md 记过这条线的规矩是**分盘用时能自己加总的那个数字优先**，所以用 2:54 不用 2:50:45 反推的 2:51。",
+    "_portrait_why": "官方实拍，2026-08-19 找到的——他正手回球那一刻的近景。渠道是**当地报纸 The Enquirer 的同日图集**（`cincinnati.com/sitemap/2026/august/18/` → `/picture-gallery/sports/tennis/2026/08/18/cincinnati-open-round-3-continues-in-mason-see-photos/91361103007/`，摄影师 Sam Greene，页面 ld+json 里的 ImageObject 数组自带完整 caption/copyrightHolder），不是官方赛事图库（`cincinnatiopen.com` 的『Day 8』批次到发稿时仍未上线，`day-8-best-of-photos` 那篇文章还不存在，四种日期戳搜索——`CincinnatiOpen_20260818_`/`081826`/`CincyOpen8-18-26`/`CincyOpen8.18.26`——全部 0 命中）。\n\n图注原文：「Brandon Nakashima returns a shot to Daniil Medvedev in the second set of their match in round three of the Cincinnati Open at the Lindner Family Tennis Center in Mason, Ohio, on Tuesday, Aug. 18, 2026.」——球员、对手、赛事、场馆、日期、这场的比分全部写死在 caption 里，四要素自证。原图直连 `www.gannett-cdn.com/authoring/...`（不走 `www.cincinnati.com/gcdn/`，那条 406；要带 `Accept: image/*`），EXIF 里带 `copyright=2026 - The Cincinnati Enquirer/USA Today Network`。原图 3640x2427，铺 1080x1440 fill 远超 1.00x。\n\n源图 3640x2427（横），目标 1080x1440（竖 3:4）。crop 按高度定标，横向从中间截取——中岛的头和上半身落在画面 35%~60% 之间，`focus=0.48` 正好把人物摆在画面中央，球拍和球留在右侧边缘一小截被裁掉，脸、球拍触球那一下全部保留。\n\n**裁切**：`tools/render_cover_local.py --slug nakashima-medvedev` 本地渲过确认，人物完整在框内，没有切到脸或手。"
   },
   "stats": {
     "a": {
@@ -254,7 +255,7 @@
     "summary": "十次双误终告负",
     "lead": "辛辛那提男单第三轮，世界第21的中岛 6-7(3) 7-6(4) 6-1 击败世界第6的梅德韦杰夫，用时两小时五十四分。三次交手，中岛此前三次都输——其中一次是今年一月的布里斯班决赛；这一站之前，他刚在蒙特利尔大师赛决赛输给谢尔顿。首盘他五比二领先、拿到四个盘点，梅德韦杰夫一个都没让他兑现，抢七七比三拿下首盘。第二盘更险：四比五，中岛自己发球，零比四十——三个赛点全在梅德韦杰夫脚下，他一分一分地追平，抢七七比四扳回一盘。决胜盘他连破两个发球局，五比一领先；梅德韦杰夫的一发得分率从第二盘的百分之八十六摔到百分之四十六，全场双误十次，中岛只有一次。六比一锁定比赛——三次告负之后，这一次终于赢了。",
     "auto": false,
-    "_no_auto_why": "**故意关掉自动推送**。这条 spec 现在渲不出来（封面还没有官方高清实拍，`cover_photo_problem` 会拦下），所以它不该被任何一次合并顺手发出去；等换上 `portrait.image` 之后再走手动 `mode=push` ＋ `push=true`，一条一条来。"
+    "_no_auto_why": "这条 spec 由本次任务在同一个会话里手动走完 probe→cover→render→merge→push，会话内会直接跑 mode=push push=true 并确认 PushPlus 200，不依赖 auto-push-reel 的自动触发，避免两条路径重复发送。"
   },
   "_pacing_why": "中段旁白密度偏高——这是一场几乎每一拍都能用具体比分/破发点/百分比讲清楚走势的比赛（双误10:1、一发得分率74→86→46这些数字本身就是这条片子的论点，不是凑数），`narration_density_hint` 那道软提示大概率会报中段比例超过0.75。\n\n查过除了开头钩子和收尾一问，中段确有非数据的判断/情绪句：S3 的坐标句本身不含比分；S4 通篇讲三次告负和蒙特利尔决赛，没有一个比分数字；**S9m 整整 15.5 秒不配旁白**，让缩略图墙上那一长段拉锯的现场声自己撑住（对应 121.08~150.52 秒那一分/一小段拉锯，`scene_cuts` 在这段区间没有任何一刀，是同一个连续镜头）；S12a 收在「梅德韦杰夫的发球开始垮了」这句判断上，不是单纯报数。\n\n这条线上数据密度高是这条片子的选题决定的（钩子就是双误对比），不是流水账——`test_旁白不许把每一局都念一遍` 那条正则（『轮到…发球』『自己的发球局』这一族）在这条 spec 上逐句核过，零命中。"
 }

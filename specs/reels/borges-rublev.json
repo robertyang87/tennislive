@@ -65,13 +65,13 @@
     "_matchup_rank_why": "**卢布列夫（22）**：这是任务简报里已经给定的赛前排名（『entering the match ranked No. 22』），这一轮没有重新核实第二个独立源——如实记这个缺口，而不是假装核过两遍。⚠️ 而 `country: null` 是这个仓库已有的判据：`shang-rublev.json` 记过『ATP 自己的排名表里他是唯一一个名字后面没有国家缩写的』（俄罗斯身份限制），这条沿用同一个结论，没有重查。\n\n**博尔热斯（47）**：这个数是这一轮**独立核实**的——WebSearch 命中两处互相印证：`en.tennistemple.com/player/nuno-borges`（页面标题直接写着『Nuno Borges • ATP 47』）、搜索摘要另给出『No. 47 with 1,045 ranking points, +5 from No. 52 in May 2026』。两处口径一致，都指向 47，取这个数。ATP 官方 `rankings-history` 页面的 URL 也拿到了（见 `editorial.human_context.sources`），但没有逐条核对那张表本身的数字——47 这个数严格说只有『两个二手聚合源互相印证』的可信度，没有直接读一遍 ATP 官方榜单原始数据。",
     "_name_why": "两个中文名都走 `player_zh()`：`player_zh(\"Andrey Rublev\")` → 卢布列夫，`player_zh(\"Nuno Borges\")` → 博尔热斯。没有手打。",
     "portrait": {
-      "image": "PENDING",
+      "image": "assets/reel/rublev-cincinnati-2026-r3.jpg",
       "fit": "cover",
       "focus": 0.5,
-      "focus_y": 0.35,
+      "focus_y": 0.5,
       "zoom": 1.0
     },
-    "_portrait_why": "⚠️⚠️ **占位，不是最终封面。** `cover_photo_problem` 会当场拦下（`image` 是字面字符串 `PENDING`，`Path(\"PENDING\").exists()` 为 False），这是有意的——这条 spec 现在渲不出来。\n\n这一轮**没有真正去查官方高清实拍**（任务范围是把选段、旁白、事实、数据图做完，封面留给下一步）。按 `cover_photo_problem` 报错文本给的顺序，下一步要做的是：\n\n    python3 tools/find_cover_photo.py --player Rublev --event Cincinnati --site cincinnatiopen.com --date 2026-08-18\n    python3 tools/find_cover_photo.py --player Borges --event Cincinnati --site cincinnatiopen.com --date 2026-08-18\n\n⚠️ 封面主体是卢布列夫（见 `_subject_why`），所以优先找**他**这场的实拍——败仗也要找，CLAUDE.md『大名字优先于赢家』的例外本来就覆盖『他输了但仍是封面主体』这种情况。找不到卢布列夫的再退回博尔热斯。",
+    "_portrait_why": "官方实拍，2026-08-19 找到的——他仰头长叹的反应镜头。渠道是**当地报纸 The Enquirer 的同日图集**（`cincinnati.com/sitemap/2026/august/18/` → `/picture-gallery/sports/tennis/2026/08/18/cincinnati-open-round-3-continues-in-mason-see-photos/91361103007/`，摄影师 Sam Greene，页面 ld+json 里的 ImageObject 数组自带完整 caption/copyrightHolder），不是官方赛事图库（`cincinnatiopen.com` 的『Day 8』批次到发稿时仍未上线，`day-8-best-of-photos` 那篇文章还不存在，四种日期戳搜索——`CincinnatiOpen_20260818_`/`081826`/`CincyOpen8-18-26`/`CincyOpen8.18.26`——全部 0 命中）。\n\n图注原文：「Andrey Rublev reacts to a point in the second set of a match between Rublev and Nuno Borges in round three of the Cincinnati Open at the Lindner Family Tennis Center in Mason, Ohio, on Tuesday, Aug. 18, 2026. Borges advanced with a 6-3, 6-4 win over Rublev.」——球员、对手、赛事、场馆、日期、这场的比分全部写死在 caption 里，四要素自证。原图直连 `www.gannett-cdn.com/authoring/...`（不走 `www.cincinnati.com/gcdn/`，那条 406；要带 `Accept: image/*`），EXIF 里带 `copyright=2026 - The Cincinnati Enquirer/USA Today Network`。原图 2697x4042，铺 1080x1440 fill 远超 1.00x。\n\n源图 2697x4042（竖，已经接近 3:4），目标 1080x1440。crop 按宽度定标、纵向从中间截取——他从头顶到鞋底占了画面 5%~95%，`focus_y=0.5` 居中之后头顶和鞋尖各被裁掉不到 1%，人物基本完整入框。这是**输的那一方**，选这张仰头反应镜头而不是发球动作照，是因为它更有情绪张力（CLAUDE.md「同等级别里选情绪外露的那张」），也贴合钩子「他一度反超，最后还是输了」——不是庆祝，是这场球真实的落点。\n\n**裁切**：`tools/render_cover_local.py --slug borges-rublev` 本地渲过确认，人物完整在框内，没有切到脸或手。",
     "scoreboard": {
       "court": "P&G Stadium Court",
       "_court_why": "**没有直接的画面自证**（场边广告带主要是 `Western & Southern Financial Group` / `CreditOne` / `Veroni` 这类赞助商 logo，没有看到写死的球场名）。这个场地名来自这一轮的 WebSearch：`tennis.com` 的这场比赛页面写着『P&G Stadium Court』，并给出了官方赛程时间（美东周二上午 11:00）。**这是佐证不是自证**，如实记在这儿——CLAUDE.md 区分过这两种强度，场边广告板只是弱佐证，这次连广告板上都没直接看到场地名，比佐证还弱一档，留给下一步核实。",
@@ -226,7 +226,7 @@
     "summary": "六年来首次跌出前二十",
     "lead": "辛辛那提ATP1000男单第三轮，博尔热斯 6-3 6-4 击败卢布列夫，生涯首次战胜他——此前五次交手，卢布列夫全部取胜，其中最近一次（2026 法网第三轮）还是靠三盘里两个抢七才险胜。这一次没有悬念：博尔热斯首盘开局连下四局，即便被追到三比五也没有崩，六比三收下首盘；第二盘一度被卢布列夫反超到二比一，很快追平，随后靠更高的破发点转化率（四中三对四中一）和更少的非受迫失误（十九对二十四）锁定胜利。这场败仗把卢布列夫踢出了世界前二十——自 2020 年 1 月以来的第一次。",
     "auto": false,
-    "_no_auto_why": "**故意关掉自动推送**。这条 spec 现在渲不出来（`cover.portrait.image` 是占位字符串 `PENDING`，`cover_photo_problem` 会当场拦下），等换上官方高清实拍之后再走手动 `mode=push` ＋ `push=true`。"
+    "_no_auto_why": "这条 spec 由本次任务在同一个会话里手动走完 probe→cover→render→merge→push，会话内会直接跑 mode=push push=true 并确认 PushPlus 200，不依赖 auto-push-reel 的自动触发，避免两条路径重复发送。"
   },
   "_pacing_why": "12 段里 4 段（⑨⑩ 两段各算一段，加上④⑥两段带比分收尾）明显是在报数据/比分，接近但没有超过一半——这条片子的选题本身就是『效率数据碾压』（`editorial.thesis`），破发点转化和非受迫失误正是全片论点的证据，不是硬凑的流水账。\n\n**没有逐局播报**：首盘中段（1-0 到 3-5 那一串局）只用了两句话带过（④『四比零』、⑤『追回三比五』），没有把中间每一局怎么打的都念一遍；第二盘同样只交代『2-1 → 2-2 → 收官』三个节点，不是每一局。\n\n**有情绪、非数据的句子**：⑥收在『博尔热斯还是收下了』（判断，不是数字），⑫收在一个开放式问题，①段整段不配旁白、靠现场声。"
 }
