@@ -92,6 +92,23 @@ Gauff-Li／Nakashima-Medvedev 五场（含 WTA），**Musetti-Zheng 一张都没
   - 下一步：等下一批赛事图库上线（次日 UTC 00:00~03:00 那个窗口再晚几个小时）或
     英语媒体赛后稿出来再查
 
+- ⚠️ **`swiatek-sakkari.draft.json`——这一条是另一个理由，别按上面那套读**。
+  这不是「等官方高清图」——它是另一位会话/流程留下的**在制品草稿**
+  （`assemble_spec.py` 那批自动化 2026-08-18 22:31 UTC 写的，`_draft: true`，
+  flashscore 统计、破发点密度、H2H、近况全是机器抓的真数据，**但 `editorial`
+  的 question/thesis/beats/human_context、`cover.layout`/`eyebrow`、
+  国旗排名、headshot、结尾一问、小红书文案全部没填**——这些需要真的看过源片、
+  写过判断，我没做过这场球的任何研究，不该替它编。
+  它在 `specs/reels/` 根目录里放了 2 个多小时（main 那批提交是 22:30~22:57 UTC
+  「赛后开麦自动链」那三条），main 的 CI 因此一直红，挡住了所有 PR（含这个仓库
+  当天其他会话渲完的三条片子）。等到 2026-08-19 01:xx UTC 仍无新提交，判断是
+  会话已经停了，不是还在写。`specs/reels/*.json` 是非递归扫的、这个子目录不参与
+  那批判据，机制上和「等封面图」是同一个豁免，只是理由不同——**先 `git mv` 挪
+  进来把 main 的 CI 解开，内容一个字没动**（`assemble_spec.py`／
+  `draft_interview_spec.py` 之类的自动化没有任何一处按路径依赖它继续留在
+  `specs/reels/` 根目录，扫过全部工作流和工具确认过）。谁要接着写，
+  `git mv` 回 `specs/reels/` 就行，草稿本身原封不动。
+
 ## 曾经住在这儿、现在已经挪出去的
 
 - **`anisimova-eala`**（辛辛那提 WTA1000 第三轮，2026-08-17，阿尼西莫娃
@@ -123,17 +140,16 @@ Gauff-Li／Nakashima-Medvedev 五场（含 WTA），**Musetti-Zheng 一张都没
   改成识别一个可选的退赛/弃权词元（`ret.`／`ret'd`／`w.o.`／`def.` 等），
   在比分板头部加一个小号中文注脚（"退赛"／"弃权"），不影响正常的三盘/两盘
   比分。这不是给这一条 spec 单独打的补丁，是所有退赛比分的「赛场之上」
-  以后都用得上的路。**已经渲完**（`output/2026-08-18/reel/cirstea-kalinskaya/`，
-  `check_reel_landed` 0 项不合格），等推送。
+  以后都用得上的路。**已经渲完并推送**（流水号
+  `d93cca65bca8468082cdb07f54ac94ad`）。
 
 - **`noskova-tauson`**（辛辛那提 WTA1000 第三轮，2026-08-17，诺斯科娃
   7-6(3) 6-2 胜陶森）——**2026-08-18 挪出去了**。同一批新渠道找到的，
   视频页 `noskova-sets-up-fourth-round-clash-against-anisimova-in-cincinnati`
   的 CMS 数据挂着 2026-08-18 发布的官方实拍（3930×2619，正手上网截击前的
   引拍动作），`sweep_wta("Noskova")` 当时命中的是一张多伦多站的资料图
-  （已经排除），这条视频页给出的才是真正对得上这场比赛的图。**已经渲完**
-  （`output/2026-08-18/reel/noskova-tauson/`，`check_reel_landed` 0 项不合格），
-  等推送。
+  （已经排除），这条视频页给出的才是真正对得上这场比赛的图。**已经渲完并推送**
+  （流水号 `f0d7e9ef205346e9b8a96419ef73b339`）。
 
 - **`nakashima-medvedev`**（辛辛那提 ATP1000 第三轮，2026-08-18，中岛 6-7(3) 7-6(4)
   6-1 胜梅德韦杰夫）——**2026-08-19 挪出去了**。按上面第③条渠道（The Enquirer
