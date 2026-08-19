@@ -99,64 +99,32 @@ jobs:
       # ffmpeg 是给 `test_现场声不许在最后一句话结束时断掉` 用的：闪避那道闸
       # 只有**真跑一次混音**才验得出来（查源码里有没有 `apad` 拦不住「它从来
       # 没工作过」）。那个 bug 在九条已发的成片里中了七条，值这十几秒。
+      # ⚠️ apt 镜像会抽风，而且不是偶发（2026-08-04 两小时两次、2026-08-18/19
+      # 各中一次，PR #448 run 32218612883 和 PR #451 那趟 render 都是
+      # `apt-get update`/`install` 连着两次吃满 150 秒、零字节进度）——
+      # 调重试参数治不了根，真正的杠杆是**大多数 run 根本不碰这个镜像**。
+      # `tools/ci_apt_install.sh` 把索引和下载缓存住，先试零网络的本地安装，
+      # 缓存没命中才回退到会摸网的老路。CI 这条线跑得最勤，缓存也暖得最快。
+      - name: 缓存 apt 包（中文字体 + ffmpeg，绕开镜像抽风）
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/apt-archives
+            ~/.cache/apt-lists
+          key: apt-pkgs-${{ runner.os }}-24.04-ci-v1
+      # `fonts-noto-core` 不是可选项：字幕切行要**量** Noto Sans 的实际字宽，
+      # 少了它 fontconfig 悄悄回退到 DejaVu（宽 8%），量出来的行宽和渲出来的
+      # 对不上。代码里缺字体直接报错不回退，所以漏装这个包 CI 会红而不是假绿。
+      # 判据落在 `test_ci装的字体覆盖代码要的每一个`。
+      #
+      # ffmpeg 是给 `test_现场声不许在最后一句话结束时断掉` 用的：闪避那道闸
+      # 只有**真跑一次混音**才验得出来（查源码里有没有 `apad` 拦不住「它从来
+      # 没工作过」）。那个 bug 在九条已发的成片里中了七条，值这十几秒。
       - name: 安装中文字体和 ffmpeg（卡片图 / 字宽 / 混音测试需要）
         timeout-minutes: 12
         run: |
-          # ⚠️ apt 镜像会抽风，而且不是偶发：2026-08-04 两小时内两次——
-          # 一次静静烧了 **13 分 42 秒**（那时没有闸），一次被 `timeout-minutes: 6`
-          # 掐掉（run 30878555571），而正常只要 **18~53 秒**。
-          # 硬超时只把「静静烧半小时」换成「6 分钟红掉、要人重跑」——**方向对了但停在
-          # 一半**：卡住的正确处置是换一次重试，不是整趟失败。重跑那趟 34 秒就过了。
-          # ⚠️ **第一版写的是 3 × 100 秒，当场把 CI 弄红了**（run 30880649692）：
-          # 三次全跑满 100 秒被杀，也就是 apt **一直在推进、只是慢**，不是挂死。
-          # 那个 100 秒是按「正常 18~53 秒」拍的，而那是**另一条工作流**的数——
-          # ci.yml 这一步正常 25~34 秒，镜像变慢时能到 100 秒以上仍在干活。
-          # **把「慢」误判成「挂死」，重试就从救场变成了三倍的浪费。**
-          # ⚠️⚠️ **2026-08-18：这句话原来写的是「5.3 分，仍在步骤的 6 分钟超时以内」，
-          #    而它把预算算漏了一半——这一步调 `apt_retry` **两次**（update 一次、
-          #    install 一次），真正的上界是 2 × 2 × (150s + 10s) = **640 秒 ≈ 10.7 分**。
-          #    于是 match-reel 那两步（`timeout-minutes: 5`）连着两趟死在同一个地方：
-          #    第 1 次 update 吃满 150 秒 → sleep 10 → 第 2 次跑到第 150 秒那一刻
-          #    正好撞上步骤超时（run 32084186086 / 32084758610，00:33:07 报第一次没跑完、
-          #    00:35:47 步骤被杀）。**重试在它唯一该起作用的那一次结构性地跑不完。**
-          #    步骤超时现在按 `calls × tries × (per + 10)` 反推并留 1 分钟余量，
-          #    判据 `test_apt重试的预算不许超过步骤自己的超时` 自己算不硬编。
-          # 每次都留 150 秒（正常值的 4~6 倍），只有真挂死才会两次都吃满。
-          apt_retry() {
-            for i in 1 2; do
-              sudo timeout 150 "$@" && return 0
-              echo "::warning::apt 第 $i 次没跑完（卡住或超时）：$*"
-              sudo dpkg --configure -a || true   # 上一次被 SIGTERM 打断可能留下半装状态
-              sleep 10
-            done
-            echo "::error::apt 两次都没成功：$*"
-            return 1
-          }
-          # ⚠️ **`Acquire::http::Timeout` 是这一行的关键，不是装饰。**
-          # 2026-08-18 02:02 那趟 CI（run 32090339473）`apt-get update` **两次各吃满
-          # 150 秒**，一个字节的进度都没有——这是 apt 挂在一个不响应的镜像上等
-          # 它自己的默认超时（120 秒起）的样子，不是「在推进、只是慢」。
-          # 给 apt 自己一个 20 秒的连接超时 ＋ 3 次重试，它会**在我们的 `timeout 150`
-          # 之内自己换一个镜像**；没有这两个参数，外层重试只是把同一次挂死再等一遍。
-          # ⚠️ 别用它去替代外层的 `apt_retry`：那一层管的是「整条命令挂了」，
-          # 这一层管的是「某个 host 不响应」，两层各拦一头。
-          apt_retry apt-get update -qq -o Acquire::Retries=3 -o Acquire::http::Timeout=20
-          # ⚠️ **`--no-install-recommends` 不是洁癖，是这一步的耗时本身。**
-          # 2026-08-18 `apt-get install ffmpeg` 连着两次吃满 150 秒被杀
-          # （run 32085745112 和 ci run 32088524320 各一次：同一趟的 `apt-get update`
-          # 十几秒就过了、一句警告都没有——**慢的只有 install**）。
-          # ffmpeg 的 recommends 拖着一整串 VA-API 驱动，而 runner 上根本没有
-          # 硬件解码可用——`.claude/hooks/session-start.sh` 早就是这么装的，
-          # 只是工作流这半边一直没跟上（「规矩只写在了其中一半」）。
-          # ⚠️ 2026-08-19 这一行连着两趟（PR #448 run 32218612883）各吃满两次
-          # 150 秒——`Acquire::http::Timeout` 只加在了上面 `update` 那行，
-          # `install` 这行没跟着加，是「同一件事在两处各写一遍，必然分叉」的
-          # 又一次：update 挂了会自己在 20 秒内换镜像，install 没有这个参数就
-          # 只能干等 apt 自己的默认超时，两次外层 `timeout 150` 全部耗在同一个
-          # 不响应的 host 上。
-          apt_retry apt-get install -y -qq --no-install-recommends -o Acquire::Retries=3 \
-            -o Acquire::http::Timeout=20 \
-            fonts-noto-cjk fonts-noto-core fonts-noto-color-emoji ffmpeg
+          source tools/ci_apt_install.sh
+          apt_install_cached fonts-noto-cjk fonts-noto-core fonts-noto-color-emoji ffmpeg
       - name: 安装依赖
         run: pip install -q -e ".[dev,webrender,visualqa]"
       # 与 daily.yml 同环境：装上 Chromium 测真实 HTML 渲染路径，

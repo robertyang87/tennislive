@@ -207,145 +207,84 @@ def test_每条工作流都要有超时且apt那一步单独有():
         "实测同一步能从 18 秒变成 13 分 42 秒，而 `-qq` 让它卡的时候不吭声")
 
 
-def test_apt一律走重试包装不许裸调():
-    """**硬超时只做对了一半。**
+def test_工作流不许裸调apt要走共享脚本():
+    """**硬超时只做对了一半，而这一层的逻辑现在只活在一个地方。**
 
-    2026-08-04 两小时内 apt 卡了两次：一次静静烧 **13 分 42 秒**（那时没有闸），
-    一次被 `timeout-minutes: 6` 掐掉（run 30878555571）——而正常只要
-    **18~53 秒**，重跑那趟 34 秒就过了。
+    2026-08-19 起，`装 ffmpeg`／`装中文字体` 那批步骤全部改成
+    `source tools/ci_apt_install.sh && apt_install_cached <包名...>`——
+    重试、超时、缓存这套逻辑收进了共享脚本（见
+    `test_装ffmpeg和字体一律先试本地缓存不能只靠重试` 和
+    `test_共享的apt安装脚本形状要对`），工作流文件里不该再出现任何一处
+    直接调用 `apt-get` 的命令。
 
-    也就是说硬超时把「静静烧半小时」换成了「6 分钟红掉、要人重跑」。方向对，
-    但卡住的正确处置是**换一次重试**，不是整趟失败：镜像抽风是它那头的事，
-    不该变成我们这头的一次红。
-
-    所以裸的 `sudo apt-get` 一律不许出现，要走 `apt_retry`
-    （每次 100 秒超时、最多三次、共 5.5 分钟——仍在步骤的 6 分钟超时以内，
-    那道闸还在兜底）。
+    ⚠️ **只拦真的在跑 apt-get 那个命令，不拦提到它的**：`pw_wait_apt()`
+    （装 Chromium 那条路，PR #447）里有 `pgrep -x apt-get` 和
+    `pkill -9 apt-get`——那是在**查/杀一个叫这个名字的进程**，不是在
+    **执行**这个命令，判据要放过它们，否则会把一条正当的安全网也拦下。
 
     ⚠️ 扫之前先去掉整行注释：工作流的注释正是这个仓库记教训的地方，正文里
     必然写着当年那些错写法，连它一起扫会把「把坑记下来」判成「又踩了这个坑」。
     """
-    naked, wrapped = [], 0
+    naked = []
     for path in sorted(Path(".github/workflows").glob("*.yml")):
         for line in _yaml_only(path.read_text(encoding="utf-8")).splitlines():
-            if "apt-get" not in line:
+            if "apt-get" not in line or "apt_install_cached" in line:
                 continue
-            if "sudo apt-get" in line:
-                naked.append(f"{path.name}: {line.strip()[:60]}")
-            elif "apt_retry apt-get" in line:
-                wrapped += 1
+            if "pkill" in line or "pgrep" in line:
+                continue
+            naked.append(f"{path.name}: {line.strip()[:70]}")
 
-    assert wrapped >= 12, f"只找到 {wrapped} 处 apt_retry，判据可能失效了"
-
-    # ⚠️ **单次超时不许收得比「正常值」还紧。**
-    # 第一版写 3 × 100 秒，当场把 CI 弄红（run 30880649692）：三次全跑满 100 秒
-    # 被杀——也就是 apt **一直在推进、只是慢**。那个 100 秒是按「正常 18~53 秒」
-    # 拍的，而那是**另一条工作流**的数；`ci.yml` 这一步正常 25~34 秒，镜像变慢时
-    # 能到 100 秒以上仍在干活。**把「慢」误判成「挂死」，重试就从救场变成三倍浪费。**
-    # 所以钉住：单次至少 150 秒（实测正常值的 4~6 倍）。
-    for path in sorted(Path(".github/workflows").glob("*.yml")):
-        body = _yaml_only(path.read_text(encoding="utf-8"))
-        for m in re.finditer(r"for i in ([\d ]+); do\n\s*sudo timeout (\d+) ", body):
-            per = int(m.group(2))
-            assert per >= 150, (
-                f"{path.name} 的 apt 单次超时只有 {per} 秒——"
-                "比实测的「慢但在推进」还紧，会把慢误判成挂死")
     assert not naked, (
-        "这些地方还在裸调 apt，卡住就是一次红：\n  " + "\n  ".join(naked)
-        + "\n改成 `apt_retry apt-get ...`（函数定义抄同一个步骤里那份）")
+        "这些地方还在直接调 apt-get，卡住就是一次红，而且绕开了共享脚本的"
+        "缓存和重试：\n  " + "\n  ".join(naked)
+        + "\n改成 `source tools/ci_apt_install.sh` + `apt_install_cached <包名>`")
 
 
-def test_apt重试的预算不许超过步骤自己的超时():
-    """**重试写了不算数，它得跑得完。**
+def test_装ffmpeg和字体那批步骤都走共享脚本不留手搓的调用():
+    """**「每个用到它的文件都要够格」是这条线唯一还留在工作流层面的判据。**
 
-    2026-08-18 `match-reel` 的 probe 连着两趟死在同一个地方（run 32084186086 /
-    32084758610），两趟都是 5 分 10 秒、都在「装 ffmpeg」。日志把形状写得很清楚：
+    重试预算够不够跑得完（≥150s/次、总预算 ≤ 步骤 timeout-minutes）、
+    `update`/`install` 两行是不是都带了 `Acquire::http::Timeout`——这些
+    以前是逐个工作流文件各查一遍，现在**这套逻辑只有一份**
+    （`tools/ci_apt_install.sh`），`test_共享的apt安装脚本形状要对` 管住了
+    脚本本身；这条测试只管调用方——**每一处 `apt_install_cached` 调用**，
+    它所在的步骤必须给够 `timeout-minutes`。
 
-        00:30:37  步骤开始
-        00:33:07  ##[warning]apt 第 1 次没跑完（卡住或超时）：apt-get update -qq
-        00:35:47  ##[error]The action '装 ffmpeg' has timed out after 5 minutes.
+    共享脚本的最坏路径是固定的：`apt_install_cached` 缓存没命中时退到
+    `apt_retry(update)` + `apt_retry(install)`，每个 `apt_retry` 最多两轮、
+    每轮 `timeout 150 + sleep 10`——**2 × 2 × 160 = 640 秒 ≈ 10.7 分**。
 
-    第 2 次 update 从 00:33:17 起跑，跑到第 150 秒正好是 00:35:47——**和步骤超时
-    同一秒**。也就是说重试**在它唯一该起作用的那一次结构性地跑不完**，
-    而失败的样子和「apt 真的挂死了」一模一样。
-
-    根子是两个数各写各的、谁也不看谁：
-
-    - 重试的预算是 `apt_retry` 被调**几次** × `for i in` **几轮** × (`timeout N` + `sleep 10`)。
-      一个装两样东西的步骤（`update` 一次 ＋ `install` 一次）是 **2 × 2 × 160 = 640 秒**。
-    - 而步骤的 `timeout-minutes` 是手写的另一个数。写这行注释的人当时按**一次**调用
-      算成「5.3 分」，还写着「仍在步骤的 6 分钟超时以内」——**而 match-reel 那两步写的是 5**。
-
-    装上这条判据时全仓库 **12 个 apt 步骤里 11 个**预算超了自己的超时，也就是说
-    那半年里只要 apt 真的慢一次，重试一次都没能跑完过。**它一个字都没报**——
-    又一次「兜底出事的时候不吭声」。
-
-    ⚠️ **这条判据不硬编分钟数**（老那条写的是 `<= 6 * 60`，而 match-reel 是 5，
-    于是它对唯一出事的那两个步骤是哑的——「判据比它引用的那个数还松，等于没装」）。
-    这里从**这个步骤自己的 `timeout-minutes`** 和**它自己调了几次 `apt_retry`** 反推。
+    这条判据是「装 ffmpeg 和字体一律先试本地缓存不能只靠重试」那条测试
+    自己没管到的另一半：那条测试钉的是「缓存步骤在不在、source 语句在不在」，
+    这条钉的是「就算缓存全没命中，这一步跑不跑得完」。2026-08-19 装缓存
+    那天就在这儿踩过一次真的——`match-reel.yml`／`preview-reel.yml` 各有一处
+    字体步骤留着改缓存之前的 `timeout-minutes: 7`，而新的 `apt_install_cached`
+    在缓存没命中时会退到 update+install 两段，7 分钟装不完。
     """
-    import yaml  # noqa: PLC0415
+    WORST_CASE_BUDGET = 2 * 2 * (150 + 10)  # 640 秒，和共享脚本的形状对齐
 
-    paths = sorted(Path(".github/workflows").glob("*.yml"))
-    checked, over = 0, []
-    for path in paths:
-        spec = yaml.safe_load(path.read_text(encoding="utf-8"))
-        for job in (spec.get("jobs") or {}).values():
-            for step in job.get("steps") or []:
-                run = _strip_shell_comments(step.get("run") or "")
-                if "apt_retry apt-get" not in run:
-                    continue
-                calls = len(re.findall(r"^\s*apt_retry apt-get", run, re.M))
-                m = re.search(r"for i in ([\d ]+); do\n\s*sudo timeout (\d+) ", run)
-                assert m, f"{path.name}「{step.get('name')}」有 apt_retry 却找不到重试循环"
-                tries, per = len(m.group(1).split()), int(m.group(2))
-                budget = calls * tries * (per + 10)
-                limit = int(step.get("timeout-minutes") or 0) * 60
-                checked += 1
-                if budget > limit:
-                    over.append(
-                        f"{path.name}「{step.get('name')}」预算 {budget}s"
-                        f"（{calls} 次调用 × {tries} 轮 × ({per}+10)s）"
-                        f"＞ 步骤超时 {limit}s")
-
-    assert checked >= 10, f"只校到 {checked} 个 apt 步骤，判据可能失效了"
-    assert not over, (
-        "这些步骤的 apt 重试**跑不完**——第二次会在中途被步骤超时杀掉，"
-        "而那和「apt 真挂死了」长得一模一样：\n  " + "\n  ".join(over)
-        + "\n把 `timeout-minutes` 提到 ceil(预算/60) 以上（建议再留 1 分钟余量），"
-        "别去调小单次超时——那会把「慢」误判成「挂死」，见上一条判据。")
-
-def test_apt_install那行也要带connect超时不能只有update有():
-    """**同一件事在两处各写一遍，必然分叉——这次分叉的是 `update` 和 `install`。**
-
-    2026-08-19 `ci.yml`（PR #448，run 32218612883）连着两趟死在同一个地方：
-    `apt-get update` 那行带着 `Acquire::http::Timeout=20`，两次都在 20 秒内
-    自己换了镜像、顺利过关；紧接着的 `apt-get install` 那行**没有这个参数**，
-    连着两次各吃满 150 秒、一个字节的进度都没有——和「apt 真的挂死了」
-    一模一样，其实只是没给它连接超时，让它去等自己的默认超时（120 秒起）。
-
-    十二处 `apt_retry apt-get install`，事发时只有两处（`interview-clip.yml`
-    的两行）带着这个参数——那是当天早些时候修另一个具体故障时顺手带上的，
-    **没有推广到其余十处**，包括 `ci.yml` 自己：它的 `update` 行本来就有，
-    `install` 行从写下那天起就没有。这条判据把它钉成一处规矩，别再靠
-    「这次刚好也要修」才补一行。
-    """
-    missing = []
+    checked, over = [], []
     for path in sorted(Path(".github/workflows").glob("*.yml")):
-        # 命令可能用 `\` 续行（ci.yml 的 install 那行就是），先把续行拼回
-        # 一条逻辑行再查——按单行查会把「参数写在下一行」误判成「没写」。
-        joined = re.sub(r"\\\n\s*", " ", _yaml_only(path.read_text(encoding="utf-8")))
-        for line in joined.splitlines():
-            if "apt_retry apt-get install" not in line:
+        text = path.read_text(encoding="utf-8")
+        for name in re.findall(r"^      - name: (.+)$", text, re.M):
+            block_m = re.search(
+                rf"\n      - name: {re.escape(name)}\n(.*?)(?=\n      - name:|\Z)",
+                text, re.S)
+            block = _strip_shell_comments(block_m.group(1)) if block_m else ""
+            if "apt_install_cached" not in block:
                 continue
-            if "Acquire::http::Timeout" not in line:
-                missing.append(f"{path.name}: {line.strip()[:70]}")
+            checked.append(f"{path.name}「{name}」")
+            m = re.search(r"timeout-minutes:\s*(\d+)", block)
+            limit = int(m.group(1)) * 60 if m else 0
+            if limit < WORST_CASE_BUDGET:
+                over.append(f"{path.name}「{name}」timeout-minutes={limit // 60 if limit else '(没写)'}")
 
-    assert not missing, (
-        "这些 apt install 行没带 `-o Acquire::http::Timeout=20`——"
-        "镜像不响应时它只会干等默认超时，把重试预算耗在同一次挂死上：\n  "
-        + "\n  ".join(missing)
-    )
+    assert len(checked) >= 10, f"只校到 {len(checked)} 处 apt_install_cached，判据可能失效了"
+    assert not over, (
+        f"这些步骤调了 apt_install_cached，但 timeout-minutes 撑不住缓存全没命中"
+        f"时的最坏预算（{WORST_CASE_BUDGET}s ≈ {WORST_CASE_BUDGET // 60 + 1} 分钟）：\n  "
+        + "\n  ".join(over) + "\n第二次重试会在中途被步骤超时杀掉，"
+        "而那和「apt 真挂死了」长得一模一样。")
 
 
 def _strip_shell_comments(run: str) -> str:
