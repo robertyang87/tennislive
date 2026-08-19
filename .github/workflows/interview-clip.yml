@@ -149,7 +149,7 @@ jobs:
             ~/.cache/apt-lists
           key: apt-pkgs-${{ runner.os }}-24.04-interview-clip-v1
       - name: 装系统依赖
-        timeout-minutes: 12
+        timeout-minutes: 15
         if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover'
         run: |
           source tools/ci_apt_install.sh
@@ -259,7 +259,7 @@ jobs:
             ~/.cache/apt-lists
           key: apt-pkgs-${{ runner.os }}-24.04-interview-clip-subs-v1
       - name: 装依赖（只取字幕）
-        timeout-minutes: 12
+        timeout-minutes: 15
         if: github.event.inputs.mode == 'subs'
         run: |
           source tools/ci_apt_install.sh

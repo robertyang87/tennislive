@@ -44,6 +44,27 @@
 # 做下载**（`APT::Sandbox::User=root`）。这跳过整套「先撞权限再退回」的
 # 折腾，不影响缓存目录本身怎么建、谁读得到——**跟「继续调重试参数治不了根」
 # 是同一个道理，这次要治的不是重试次数，是权限模型本身**。
+#
+# ⚠️⚠️ **2026-08-19 傍晚又撞了一次，这次是`apt_install_cached` 自己那句
+# 「先试一次零网络的本地安装」没有 `timeout` 包着。** run 32290505356：
+# `装中文字体` 那一步整整 12 分钟**零输出**，被外层 `timeout-minutes: 12`
+# 硬杀——不是 `apt_retry` 那种「第 1 次没跑完」的警告刷两轮再报错（那种
+# 好歹每 150~160 秒打一行），是从进这个函数起**一个字都没打印过**，说明
+# 卡的就是最前面那句裸的 `sudo apt-get … install …`。
+#
+# 根子在于这句话的注释一直是错的：它说「零网络」，但**只有索引和 .deb 都
+# 在盘上才成立**。同一个 job 里前一步（装 ffmpeg）缓存也没命中、摸了网、
+# 刷新过 `Dir::State::lists` 里的索引——那份索引现在是新的，**但 ffmpeg
+# 自己的 .deb 已经下好了，字体包的 .deb 从来没被请求过**。于是这句「本地
+# 安装」看着像会命中缓存，实际上还是要去下字体包的 .deb，而它**不经过
+# `apt_retry`，没有 `timeout` 包着**——这跟前面两次「镜像不响应」是同一个
+# 底层风险，只是这次连累的是一条完全没有防护的代码路径。
+#
+# 修法是把这句也用 `timeout` 包起来，让它顶多卡 150 秒就摔回退路，
+# 而不是一直卡到外层 `timeout-minutes` 才被杀掉、把后面 `apt_retry`
+# 那条真正会摸网重试的路一起陪葬。**代价是最坏预算从 640 秒涨到
+# 790 秒**（150 + 640），调用方的 `timeout-minutes` 要跟着涨，
+# 判据在 `tests/test_workflow_alerts.py` 的 `WORST_CASE_BUDGET`。
 set -uo pipefail
 
 APT_CACHE_DIR="${APT_CACHE_DIR:-$HOME/.cache/apt-archives}"
@@ -66,13 +87,19 @@ apt_retry() {
 
 # 用法：apt_install_cached <包名...>
 #
-# 先试一次「只用本地缓存装，不碰网络」——`Dir::Cache::Archives` /
-# `Dir::State::lists` 指到的两个目录如果被 actions/cache 命中过，索引和
-# .deb 都已经在盘上，这一步几秒钟就装完，一次 HTTP 请求都不发。
+# 先试一次「优先吃本地缓存」——`Dir::Cache::Archives` / `Dir::State::lists`
+# 指到的两个目录如果被 actions/cache 命中过、且这批包的 .deb 也真的在盘上，
+# 这一步几秒钟就装完，一次 HTTP 请求都不发。
+#
+# ⚠️ **它不保证零网络**：索引是新的（比如同一个 job 里前一步刚 `apt-get
+# update` 过）不等于这批包的 .deb 也已经下过——前一步装的是另一批包，
+# 索引里认得这批包不代表本地就有它们的安装文件，这句仍然可能去摸网。
+# 正因为「像是本地安装，其实在下载」这件事分不清楚，它才**必须**包一层
+# `timeout`：卡住的时候不吭声，和真的在装一样，只有超时兜底才拦得住。
 # 缓存没命中、或者装到一半发现缺包/索引太旧，才回退到会摸网的那条老路
 # （apt-get update + install，各自 `apt_retry` 兜两次）。
 apt_install_cached() {
-  if sudo apt-get "${_apt_opts[@]}" install -y -qq --no-install-recommends "$@" \
+  if sudo timeout 150 apt-get "${_apt_opts[@]}" install -y -qq --no-install-recommends "$@" \
        2>/tmp/apt_install_cached.log; then
     echo "[apt] 缓存命中：零网络请求装上了 $*"
     return 0

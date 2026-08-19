@@ -105,7 +105,7 @@ jobs:
             ~/.cache/apt-lists
           key: apt-pkgs-${{ runner.os }}-24.04-explainer-v1
       - name: 安装中文字体（幻灯需要）
-        timeout-minutes: 12
+        timeout-minutes: 15
         run: |
           source tools/ci_apt_install.sh
           apt_install_cached fonts-noto-cjk
@@ -199,7 +199,7 @@ jobs:
       # 缓存在「安装中文字体」那一步之前已经恢复过了，同一个 job，
       # 这一步接着用，不用再单独 actions/cache 一次。
       - name: 安装 ffmpeg
-        timeout-minutes: 12
+        timeout-minutes: 15
         run: |
           source tools/ci_apt_install.sh
           apt_install_cached ffmpeg

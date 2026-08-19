@@ -241,7 +241,7 @@ jobs:
         # push 模式一帧都不碰：`push_reel.py` 那条路里 ffmpeg / ffprobe /
         # subprocess **一个都没出现**，装它白花半分钟。
         if: github.event.inputs.mode != 'push'
-        timeout-minutes: 12
+        timeout-minutes: 15
         run: |
           source tools/ci_apt_install.sh
           apt_install_cached ffmpeg
@@ -252,11 +252,14 @@ jobs:
       - name: 装中文字体（渲染和封面都要）
         if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover'
         # ⚠️ 7 分钟不够：`apt_install_cached` 缓存没命中时会退到
-        # apt_retry(update) + apt_retry(install) 各两次 150 秒，
-        # 最坏 2×2×160=640 秒 ≈ 10.7 分。按 12 分钟留够余量，和这条线上
-        # 其余用到 `apt_install_cached` 的步骤统一（判据
-        # `test_装ffmpeg和字体那批步骤都走共享脚本不留手搓的调用`）。
-        timeout-minutes: 12
+        # apt_retry(update) + apt_retry(install) 各两次 150 秒。
+        # ⚠️⚠️ 2026-08-19 傍晚又涨了一次：`apt_install_cached` 最前面那句
+        # 「先试本地安装」原来没有 `timeout` 包着，run 32290505356 撞出它
+        # 也可能悄悄摸网（索引是新的不代表这批包的 .deb 也在盘上），补上
+        # `timeout 150` 之后最坏预算变成 150 + 2×2×160 = 790 秒 ≈ 13.2 分。
+        # 按 15 分钟留够余量，和这条线上其余用到 `apt_install_cached` 的
+        # 步骤统一（判据 `test_装ffmpeg和字体那批步骤都走共享脚本不留手搓的调用`）。
+        timeout-minutes: 15
         # `fonts-noto-color-emoji` 不是可选项：封面上每个球员名字旁边有一面
         # 国旗（账号所有者 2026-08-02 定的），而**缺了它不报错**——Chromium
         # 回退到没有旗帜字形的字体，🇵🇭 渲成两个方框或者裸的「PH」两个字母，

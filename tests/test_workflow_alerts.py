@@ -250,9 +250,10 @@ def test_装ffmpeg和字体那批步骤都走共享脚本不留手搓的调用()
     脚本本身；这条测试只管调用方——**每一处 `apt_install_cached` 调用**，
     它所在的步骤必须给够 `timeout-minutes`。
 
-    共享脚本的最坏路径是固定的：`apt_install_cached` 缓存没命中时退到
-    `apt_retry(update)` + `apt_retry(install)`，每个 `apt_retry` 最多两轮、
-    每轮 `timeout 150 + sleep 10`——**2 × 2 × 160 = 640 秒 ≈ 10.7 分**。
+    共享脚本的最坏路径是固定的：`apt_install_cached` 先试一次本地安装
+    （`timeout 150`），没成功才退到 `apt_retry(update)` + `apt_retry(install)`，
+    每个 `apt_retry` 最多两轮、每轮 `timeout 150 + sleep 10`——
+    **150 + 2 × 2 × 160 = 790 秒 ≈ 13.2 分**。
 
     这条判据是「装 ffmpeg 和字体一律先试本地缓存不能只靠重试」那条测试
     自己没管到的另一半：那条测试钉的是「缓存步骤在不在、source 语句在不在」，
@@ -260,8 +261,17 @@ def test_装ffmpeg和字体那批步骤都走共享脚本不留手搓的调用()
     那天就在这儿踩过一次真的——`match-reel.yml`／`preview-reel.yml` 各有一处
     字体步骤留着改缓存之前的 `timeout-minutes: 7`，而新的 `apt_install_cached`
     在缓存没命中时会退到 update+install 两段，7 分钟装不完。
+
+    ⚠️ **同一天傍晚第二次涨预算**：`apt_install_cached` 最前面那句「先试
+    本地安装」原来没有 `timeout` 包着（当时的假设是「本地缓存命中，几秒钟
+    的事，不用防」），run 32290505356 撞出这个假设不成立——同一个 job 里
+    前一步刚摸过网、索引是新的，不代表这一批包的 `.deb` 也已经在盘上，这句
+    照样可能悄悄发起真下载，而它一旦卡住**没有任何超时**，只能靠外层
+    `timeout-minutes` 硬杀，而且会连累后面本该重试的 `apt_retry` 一起陪葬。
+    补上 `timeout 150` 之后，最坏预算从 640 秒涨到了这儿的 790 秒——
+    **这也是为什么这条判据比 `apt_retry` 的两段乘积多出一个 150**。
     """
-    WORST_CASE_BUDGET = 2 * 2 * (150 + 10)  # 640 秒，和共享脚本的形状对齐
+    WORST_CASE_BUDGET = 150 + 2 * 2 * (150 + 10)  # 790 秒：本地安装那句(150) + update/install 两段重试(640)
 
     checked, over = [], []
     for path in sorted(Path(".github/workflows").glob("*.yml")):
