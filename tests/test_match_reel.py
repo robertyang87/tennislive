@@ -4216,20 +4216,43 @@ def test_停掉的定时不许自己回来():
 def test_没有下游在读的定时任务不许一直跑():
     """**采集了没人读，和空跑是一回事。**
 
-    - `oncourt-interviews`：`data/oncourt_interviews.json` 攒到 4551 条，
-      而除了 oncourt 自己那套采集工具，**没有任何代码 import 它**
-    - `player-name-sync`：六月至今译名表只变过一次，还是人手改的
+    - `player-name-sync`：六月至今译名表只变过一次，还是人手改的——照旧摘掉定时
 
-    两条都摘掉定时、留手动。这条测试拦的是「顺手把 cron 加回来」——
-    要恢复，先给它找个下游，或者把这条测试一起改。
+    ⚠️ **`oncourt-interviews` 2026-08-18 恢复了定时，这条判据跟着改**：当时停的
+    理由是「`data/oncourt_interviews.json` 攒到 4551 条，除了 oncourt 自己那套
+    采集工具，没有任何代码 import 它」——那条理由现在是假的。`tools/oncourt_feed.py`
+    / `tools/pick_oncourt_clips.py` 都真的读 `data/oncourt_interviews.json`，
+    而且分别接在 `interview-auto-render.yml` / `news-brief.yml` /
+    `oncourt-interviews.yml` 三条工作流里，不是孤立脚本。「赛后开麦」需要持续
+    采集才有新素材，没有定时的话候选永远是空的——这正是当初这条判据自己
+    docstring 里写的第二条出路：「先给它找个下游，或者把这条测试一起改」，
+    下游已经有了，改的是这条。
+
+    这条测试只剩 `player-name-sync` 那一半——真给它接上下游，或者也把测试改掉，
+    别顺手把 cron 加回来又没人管。
     """
-    for name in ("oncourt-interviews", "player-name-sync"):
+    for name in ("player-name-sync",):
         body = _yaml_only(
             Path(f".github/workflows/{name}.yml").read_text(encoding="utf-8"))
         head = body.split("\njobs:")[0]
         assert "schedule:" not in head, (
             f"{name} 又挂上定时了——它的产出没有下游在读（2026-07-31 停的）")
         assert "workflow_dispatch:" in head, f"{name} 的手动入口不能一起摘掉"
+
+    # `oncourt-interviews` 现在**要求**有定时（不是禁止），并且要求下游真的存在。
+    body = _yaml_only(
+        Path(".github/workflows/oncourt-interviews.yml").read_text(encoding="utf-8"))
+    head = body.split("\njobs:")[0]
+    assert "schedule:" in head, (
+        "oncourt-interviews 没有定时了——「赛后开麦」需要持续采集，缺了定时"
+        "候选永远是空的")
+    consumers = "\n".join(
+        Path(p).read_text(encoding="utf-8")
+        for p in ("tools/oncourt_feed.py", "tools/pick_oncourt_clips.py")
+    )
+    assert "oncourt_interviews.json" in consumers, (
+        "oncourt_feed.py / pick_oncourt_clips.py 不再读 oncourt_interviews.json 了"
+        "——定时采集又变回没有下游，该重新摘掉")
 
 
 def test_昨日一分这条线不许回来():
