@@ -165,10 +165,10 @@
 | 159 | 5:48.2 | [▶](https://youtu.be/NJFI1Cz3Bmc?t=349) | and we talked to her and Marta downstairs | 我们楼下采访了她和玛尔塔 | ✏️ 已订正 |
 | 160 | 5:49.9 | [▶](https://youtu.be/NJFI1Cz3Bmc?t=350) | for a few minutes and they talked | 聊了几分钟 她们说 |  |
 | 161 | 5:51.0 | [▶](https://youtu.be/NJFI1Cz3Bmc?t=351) | about how special this match was for them. | 这场球对她们来说有多特别 |  |
-| 162 | 5:53.2 | [▶](https://youtu.be/NJFI1Cz3Bmc?t=354) | Can you talk a little bit about Payton | 能不能聊聊佩顿 |  |
+| 162 | 5:53.2 | [▶](https://youtu.be/NJFI1Cz3Bmc?t=354) | Can you talk a little bit about Peyton | 能不能聊聊佩顿 | ✏️ 已订正 |
 | 163 | 5:54.6 | [▶](https://youtu.be/NJFI1Cz3Bmc?t=355) | and Marta and your thoughts on them? | 还有玛尔塔 你们怎么看她们？ |  |
 | 164 | 5:58.2 | [▶](https://youtu.be/NJFI1Cz3Bmc?t=359) | Well, I I don't know. | 这个 我也说不好 |  |
-| 165 | 6:00.6 | [▶](https://youtu.be/NJFI1Cz3Bmc?t=361) | I feel like Payton I to play | 我觉得佩顿 |  |
+| 165 | 6:00.6 | [▶](https://youtu.be/NJFI1Cz3Bmc?t=361) | I feel like Peyton I to play | 我觉得佩顿 | ✏️ 已订正 |
 | 166 | 6:03.3 | [▶](https://youtu.be/NJFI1Cz3Bmc?t=364) | in your hometown, she's from Mason. | 能在自己家乡打球 她是梅森人 |  |
 | 167 | 6:06.2 | [▶](https://youtu.be/NJFI1Cz3Bmc?t=367) | That's kind of awesome to be able to play | 能在这么大一站比赛里打球 |  |
 | 168 | 6:08.5 | [▶](https://youtu.be/NJFI1Cz3Bmc?t=369) | in such a big tournament that's literally | 而且就在自己家门口 |  |
