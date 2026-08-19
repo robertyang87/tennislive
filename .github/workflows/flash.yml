@@ -120,6 +120,22 @@ jobs:
               sleep 5
             done
             echo "::warning::等了 110 秒 dpkg 锁还没松开——下一次尝试八成会在两秒内死在 Could not get lock，不是 apt 装不上"
+            # ⚠️⚠️ 2026-08-19（run 32211814483，tnns-stats）：等满 110 秒，锁**仍然**
+            # 没松——被 `timeout` 杀掉的那层壳没能把信号传给它派生出来的
+            # apt-get（这正是上面那条注释说的「派生的 apt-get 活了下来」），
+            # 那个孤儿这次不是挂死，是在镜像上慢慢下一个字体包，110 秒不够它
+            # 下完。而这一层已经贴着步骤预算的上限（`test_等dpkg锁的预算够长
+            # 又不许撑爆步骤预算` 钉的 110~120 秒）——**再往上加等待时间不是
+            # 出路**：上一次从 60 秒加到 110 秒就是这么来的，这次撞上同一个
+            # 天花板，说明「多等一会」这条路已经走到头了。
+            #
+            # 我们不需要保住那个孤儿的进度：它已经下进
+            # `/var/cache/apt/archives` 的包，下一次重试照样会复用（ci.yml
+            # 那条注释早说过）。所以**主动结束它，不再指望它自己让开**——
+            # 这比继续加大等待预算快得多，也不会撞步骤超时。
+            sudo pkill -9 apt-get 2>/dev/null || true
+            sudo pkill -9 dpkg 2>/dev/null || true
+            sudo dpkg --configure -a 2>/dev/null || true
           }
           pw_retry() {
             for i in 1 2; do

@@ -1,0 +1,221 @@
+{
+  "slug": "sabalenka-wang",
+  "source_url": "https://youtu.be/kCmaozI16jw",
+  "_source": "WTA 官方 YouTube 频道单场集锦《Sabalenka Dominates Wang Xinyu For 50th WTA 1000 Win As No. 1 | Cincinnati 2026 Round 3》。384.48 秒、1920×1080、25 fps——超出 WTA 纯集锦定长 310 秒，打开看过：全片是「集锦 + 场上采访」的合并版本，captions.txt 里 294.5 秒起（`Look at the smile on your face. You must be pleased with your performance tonight.`）是获胜后的场上采访，所有窗口收在 293.0 秒以内，不碰采访部分（CLAUDE.md「采访不进复盘」）。",
+  "_match": {
+    "flashscore_id": "0vM70i9t",
+    "wta_match_id": "LS016",
+    "wta_event_id": "1017",
+    "_why": "两个源都核过：flashscore `0vM70i9t`（`Wang Xin.` 的 slug 是 `wang-xinyu-2001`，和王曦雨 `wangxiyu-` 那条线不冲突）、WTA 官方 `LS016`（`[1]A. Sabalenka d X. Wang 6-1,6-3`、`RoundID 3`、`MatchTimeTotal 00:54:11`、`SeedA=1`/`SeedB` 空——王欣瑜本站未获种子）。同一份 WTA 官方比赛列表里还有另一场 `LS019 X. Wang d [8]E. Svitolina W/O`（同轮次），核对过那是**另一个王欣瑜**（王曦雨，不战而胜斯维托丽娜）——两人在 flashscore 上都缩写成『X. Wang』，靠 slug `wang-xinyu-2001` 分开，避免了 CLAUDE.md 记过的这个坑。TNNS 制胜分/非受迫失误另跑一趟核对（match id 73467046，见下）。"
+  },
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "萨巴伦卡",
+    "hook": "五十四分钟\n零破发点",
+    "_hook_why": "讲**过程**（这场球打成什么样），不讲身份——世界第一、种子号海报下面都印着了。两行分别 5 字和 4 字，solo 上限 10。\n\n事实是全场唯一的硬核数据：flashscore `df_st_1` 和 WTA 官方 `LS016/stats` 双源核对一致，王欣瑜全场 `bp_chances=0`——一次破发点机会都没有拿到过，而萨巴伦卡只用了 54 分钟就结束比赛。⚠️ **有意不写最终比分**：6-1 6-3 海报下面赛果行本来就印着，钩子再写一遍是白占字。",
+    "_subject_view_why": "封面放萨巴伦卡：世界第一，这场是她第 50 场以世界第一身份拿下的 WTA1000 胜利（WTA 官方视频标题原文『50th WTA 1000 Win As No. 1』），叙事重心也在她这边——王欣瑜这场没能拿到一个破发点，没有『她如何抗衡』这条线可讲。热度闸①（中国球员）本来是这条片子被选中的理由，但封面主体判据是『谁把人拉进来』（CLAUDE.md『封面主体是谁，跟这条片子选中的理由是两件事』），这场热度闸②（世界前 20）她本人也稳稳过。王欣瑜没有本站官方实拍（找过，见下），也是这次选萨巴伦卡的现实约束之一。",
+    "_heat_why": "萨巴伦卡当期世界第一（榜单日期 2026-08-10，WTA 官方 `players/ranked`），过热度闸②——不需要额外论证。",
+    "topic": "WTA1000 辛辛那提 · 女单第三轮",
+    "portrait": {
+      "image": "assets/reel/sabalenka-cincinnati-2026-r3.jpg",
+      "fit": "cover",
+      "focus": 0.36,
+      "focus_y": 0.42,
+      "zoom": 1.28,
+      "_photo_why": "官方实拍，WTA 官方集锦视频页自己的 CMS 数据里找到的：`https://www.wtatennis.com/videos/4562109/sabalenka-dominates-wang-xinyu-for-50th-wta-1000-win-as-no-1` 页面的 `og:image` 挂着\n`photo-resources/2026/08/19/cc932d01-1990-4153-84dd-675ef34d60db/Aryna_Sabalenka_-_Cincinnati_Open_2026_-_Day_6-DSC_6165.jpg`，`?width=4000` 实测拿到 4700×2678（原图，未放大）。同一份视频页 CMS JSON 里这张图片的 `references` 字段直接列着 `TENNIS_TOURNAMENTGROUP reference:1017`（辛辛那提）和两个 `TENNIS_PLAYER`（320760＝萨巴伦卡、326376＝王欣瑜），发布时刻 `2026-08-19T00:10:00Z`——比赛 00:04 UTC 结束，6 分钟后发布，和视频描述『Top seed Aryna Sabalenka needed just 54 minutes』（精确对上 `MatchTimeTotal 00:54:11`）互相印证，四要素齐了。\n\n打开看过：正手跟进击球，球拍高举、身体前倾伸展，深蓝球场，运动感强、清晰锐利，没有水印。⚠️ **王欣瑜这场没有找到官方实拍**：她的 WTA 球员页上关联的『Cincinnati Open 2026 - Day 6』标签照片（`Xinyu_Wang_-_Cincinnati_Open_2026_-_Day_6-DSC_1213.jpg`）点开核实是**上一轮对阵范德温克尔那场**的集锦头图（`/videos/4559853/wang-xinyu-surges-past-vandewinkel-in-cincinnati`），不是这场；辛辛那提赛事官网媒体库按 `wang` 搜索只有 2023/2024 年的旧头像图（492×656，非本届实拍）。\n\n**裁切按『人物居中、放大到接近铺满』这条规矩渲出来试的**（账号所有者 2026-08-18：『尽可能把人物放到正中间，同时放大到足够，接近铺满整个画布，四周留一定空间即可』）。原图横图 4700×2678（1.75:1）。⚠️ **`focus` 第一版按『拍头到落地脚』整段外延取了 0.42，渲出来人物实际偏在画面左三分之一**（拍头本身在 1.28 倍放大下已经完全出画，真正决定裁切窗口的是『球拍手到另一只伸展手』这一段，不是拍头）——账号所有者当场指出『说过封面人像要主体居中』，这才回头拿网格量：握拍那只手（不含拍头）在原图里约在 0.20 处，另一只伸展的手约在 0.525 处，几何中心 0.36，`focus` 改成这个数重渲，人物左右留白基本对称。`focus_y` 取 0.42（她的身体主要落在中段）。`zoom` 定 1.28（本地对比过 1.0/1.15/1.28 三档，1.28 时落地脚仍在框内、人物占比明显更饱满）。"
+    },
+    "scrim": "clear",
+    "matchup": [
+      {
+        "name": "萨巴伦卡",
+        "name_en": "Aryna Sabalenka",
+        "country": "BLR",
+        "rank": 1
+      },
+      {
+        "name": "王欣瑜",
+        "name_en": "Xinyu Wang",
+        "country": "CHN",
+        "rank": 36
+      }
+    ],
+    "_name_why": "两个中文名都走 `player_zh()`，实调过：`player_zh(\"Aryna Sabalenka\")` → 萨巴伦卡、`player_zh(\"Xinyu Wang\")` → 王欣瑜。和仓库里已发的 `wang-vandewinkel`／`wang-vekic`（同一个 `wta-326376` 头像）用的是同一个中文名，没有分叉。排名取 WTA 官方 `players/ranked`（`metric=SINGLES`，`rankedAt 2026-08-10`）：萨巴伦卡第 1、王欣瑜第 36。⚠️ 王欣瑜本站未获种子（`SeedB` 为空），种子号和排名是两件事，这条片子不提种子。",
+    "winner": "萨巴伦卡",
+    "result": "6-1 6-3",
+    "scoreboard": {
+      "court": "Lindner Family Tennis Center",
+      "_court_why": "⚠️ **球场名没查实，印场馆名**。WTA 官方 `matches` 给的是 `CourtID 1`，这一站的 `CourtID` 字段早就被证伪过（同站不同 spec 上互相打架，见 `noskova-tauson`／`cirstea-bartunkova` 的 `_court_why`）。源片里挡板只有赞助商 logo（`CreditOne`／`Kroger`／`W&S Financial Group`），没有球场名；转播解说全程没提球场名，采访部分也没有像 `gauff-li` 那样的球场自证原话。按同站惯例印 `Lindner Family Tennis Center`。",
+      "duration_source": {
+        "provider": "wta",
+        "url": "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches?page=0&pageSize=400",
+        "match_id": "LS016",
+        "field": "MatchTimeTotal",
+        "source_page": "https://www.wtatennis.com/tournament/1017/cincinnati/2026/scores/LS016"
+      },
+      "_duration_why": "WTA 官方 `MatchTimeTotal 00:54:11`；分盘 `settime` 00:20:21 + 00:33:43 = 0:54:04，和总计差 7 秒（同一量级偏差，`gauff-li`／`noskova-tauson` 都是 3~7 秒）。"
+    }
+  },
+  "editorial": {
+    "mode": "match_review",
+    "question": "全场下来，王欣瑜一个破发点都没拿到——这是怎么打成的？",
+    "thesis": "开局第一个发球局，萨巴伦卡就把王欣瑜逼到了破发点，连救两个才勉强稳住——但没能扛住第三个，二比零。第一盘中段她再破一次，五比一，二十分钟不到拿下这一盘六比一。第二盘她延续了压力，很快又完成一次破发；王欣瑜确实在这一盘找回了一些手感——解说也提到她这一盘打得更有看头——但比分始终没能追近，六比三，全场结束只用了五十四分钟。而真正说明这场球单向到什么程度的，是那个技术统计：从头到尾，王欣瑜没有一次机会碰到萨巴伦卡的发球局。",
+    "beats": [
+      "前段：第一局王欣瑜连救两个破发点，第三个没扛住，二比零；中段再破一次，五比一，第一盘六比一收官",
+      "中段：第二盘萨巴伦卡延续压力完成破发，王欣瑜这一盘打得更有起色，但比分始终没能追近，六比三",
+      "结局：五十四分钟结束比赛，而全场技术统计显示，王欣瑜一次破发点机会都没有拿到过"
+    ],
+    "human_context": {
+      "angle": "这不是她们第一次交手。两人唯一一次交手在 2022 年澳网——那一次王欣瑜先赢下第一盘六比一，萨巴伦卡才连扳两盘六比四、六比二逆转过关。四年半之后的这场重赛，剧本完全反过来：这次是萨巴伦卡先拿下六比一，而且全程一个破发点都没给王欣瑜。",
+      "facts": [
+        "萨巴伦卡 1998-05-05 出生，本场时 28 岁；王欣瑜 2001-09-26 出生，24 岁（WTA 官方球员接口 id 320760 / 326376）",
+        "当期世界排名：萨巴伦卡第 1（榜单日期 2026-08-10，WTA 官方 `players/ranked`，`metric=SINGLES`）、王欣瑜第 36",
+        "种子：萨巴伦卡 1 号种子；王欣瑜本站未获种子（WTA 官方 `SeedA=1`、`SeedB` 空，`ResultString` 写作 `[1]A. Sabalenka d X. Wang 6-1,6-3`）",
+        "轮次第三轮：WTA 官方 `RoundID=3`",
+        "用时 `MatchTimeTotal` 00:54:11；分盘 `settime` 00:20:21 / 00:33:43，相加 0:54:04，与总计差 7 秒（自洽，同量级偏差）",
+        "第一盘：flashscore `df_mh_1` 逐分显示第一局王欣瑜发球被逼到两个破发点后救下，第三个破发点被萨巴伦卡拿下（二比零）；画面自证——source 0.5-32.5 秒记分条从 `1-0` 一路挂着 `BREAK POINT`（第 12.5 秒起）到 `BREAK POINT #2`（16.5 秒起）再到 `BREAK POINT #2`（20.5 秒起，第二次破发点机会），32.5 秒比分跳到 `2-0`",
+        "第一盘中段：源片 80.5-104.5 秒记分条显示 `4-1` 到 `BREAK POINT` 反复出现（三次破发点机会，86.5/96.5 秒各挂一次），104.5 秒比分跳到 `5-1`；随后 120.5-138.5 秒记分条显示 `SET POINT` 挂出、比分推进到 `6-1`，第一盘结束",
+        "转播解说原话（29.76-36.72 秒）：`Pretty good start here from Sabalinka. … Brilliant from Sabalanka.`；（132.96-136.48 秒）：`Racing through the opening set in 20 minutes. Six games to one.`",
+        "第二盘：源片 160.5-170.5 秒记分条显示 `BREAK POINT` 挂出（王欣瑜发球，40-30 一线），170.5 秒比分推进到萨巴伦卡 `2-0`（第二盘）——延续第一盘的破发压力",
+        "转播解说原话（240.32-242.48 秒）：`There's been more to like from Wongu in this second set.`——解说明确指出王欣瑜在第二盘打得更有起色，但比分仍然没能追近，最终六比三",
+        "全场技术统计（WTA 官方 `LS016/stats` setnum 0，与 flashscore `df_st_1` 双核一致）：ACE 5:2、双误 1:2、一发进球 18/38(47%):21/45(47%)、破发点兑现 4/7:0/0、总得分 53/83:30/83。**王欣瑜全场 `breakptsplayedb=0`——一次破发点机会都没有拿到过**，两个源逐项一致",
+        "赛后场上采访原话（302.72-306.64 秒，萨巴伦卡）：`I cannot complain. She's a tough opponent and to get this win in straight sets and uh under like what, an hour, it's it's insane result.`",
+        "赛后场上采访原话（336.48-340.80 秒，主持人）：`That's 45 consecutive wins at 1,000 tournaments. You're the leader of active players on the WTA.`——这是采访者原话，转述给读者时保留『主持人说』的归属，不当作独立核实过的事实",
+        "视频标题原文『Sabalenka Dominates Wang Xinyu For 50th WTA 1000 Win As No. 1』——WTA 官方给这场比赛的编辑框架是她本人的里程碑（以世界第一身份拿下的第 50 场 WTA1000 胜利）",
+        "交手史：两人此前只交手过一次，2022 年澳大利亚网球公开赛，硬地，萨巴伦卡三盘逆转——flashscore `df_su_1_tGP5DdgS` 逐盘数据：王欣瑜先赢第一盘 6-1，萨巴伦卡连扳两盘 6-4、6-2 拿下比赛（场地 Rod Laver Arena, Melbourne）"
+      ],
+      "sources": [
+        "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches?page=0&pageSize=400",
+        "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches/LS016/stats",
+        "https://api.wtatennis.com/tennis/players/ranked?page=0&pageSize=100&type=rankSingles&sort=asc&name=&metric=SINGLES",
+        "https://api.wtatennis.com/tennis/players/320760",
+        "https://api.wtatennis.com/tennis/players/326376",
+        "https://global.flashscore.ninja/2/x/feed/df_st_1_0vM70i9t",
+        "https://global.flashscore.ninja/2/x/feed/df_sui_1_0vM70i9t",
+        "https://global.flashscore.ninja/2/x/feed/df_mh_1_0vM70i9t",
+        "https://global.flashscore.ninja/2/x/feed/df_hh_1_0vM70i9t",
+        "https://global.flashscore.ninja/2/x/feed/df_su_1_tGP5DdgS",
+        "https://www.wtatennis.com/videos/4562109/sabalenka-dominates-wang-xinyu-for-50th-wta-1000-win-as-no-1"
+      ],
+      "voice_label": "全场零破发点"
+    }
+  },
+  "topbar": {
+    "line1": "2026 辛辛那提 WTA1000 第三轮",
+    "line2": "萨巴伦卡 6-1 6-3 王欣瑜"
+  },
+  "_no_repeat": "萨巴伦卡这条线上已经发过 `sabalenka-gibson`——那一条讲的是另一场球，不同对手、不同轮次，事实互不重叠。同一天同一站的兄弟片：`gauff-li`（高芙抢七两救赛点）、`cirstea-kalinskaya`（科斯蒂亚连赢十一局＋对手退赛）、`noskova-tauson`（诺斯科娃救盘点）——四条线落点都不一样，不用额外避让。`wang-` 系列（`wang-vandewinkel`／`wang-vekic`／`wang-pareja`／`wang-samsonova`）都是王欣瑜的旧场次，这条讲的是这一场自己的转折（零破发点＋2022 澳网交手史），不重复任何一条已发内容。",
+  "stats": {
+    "tour": "wta",
+    "a": {
+      "headshot": "assets/players/headshots/wta-320760.jpg",
+      "aces": 5,
+      "df": 1,
+      "first_in": 23,
+      "first_won": 18,
+      "first_total": 38,
+      "second_total": 15,
+      "second_won": 14,
+      "bp_conv": 4,
+      "bp_chances": 7,
+      "pts_won": 53,
+      "pts_total": 83,
+      "winners": 17,
+      "ue": 5
+    },
+    "b": {
+      "headshot": "assets/players/headshots/wta-326376.jpg",
+      "aces": 2,
+      "df": 2,
+      "first_in": 30,
+      "first_won": 21,
+      "first_total": 45,
+      "second_total": 15,
+      "second_won": 3,
+      "bp_conv": 0,
+      "bp_chances": 0,
+      "pts_won": 30,
+      "pts_total": 83,
+      "winners": 9,
+      "ue": 6
+    },
+    "_source": "十项来自 flashscore `df_st_1_0vM70i9t` 的 `Match` 那一档（`match_stat_hooks.py 0vM70i9t --stats-block` 跑出的原始输出），并且 aces/df/bp_conv/bp_chances/pts_won 五项和 WTA 官方 `LS016/stats` 的 setnum 0 逐项对过（acesa=5/acesb=2、dblflta=1/dblfltb=2、breakptsconva=4/breakptsconvb=0、breakptsplayeda=7/breakptsplayedb=0、totptswona=53/totptswonb=30，全部一致）。\n\n⚠️ **`a` 跟的是 `cover.matchup[0]`＝萨巴伦卡**——flashscore 的 `SH`（home）也正好是萨巴伦卡、`SI` 是王欣瑜，同序但仍按 `matchup` 对抄，不按 feed 的 home/away 走。\n\n⚠️ `first_total` 不猜，按 WTA 官方 `ptsplayed1stserva`/`ptsplayed1stservb` 直接取（38/45），并核对 `first_in+second_total`＝`totservplayed`：萨巴伦卡 23+15=38（对得上 `totservplayeda=38`）、王欣瑜 30+15=45（对得上 `totservplayedb=45`）。pts_total 取 flashscore 报的 83（等于官方 `totptswona+totptswonb`=53+30=83）。\n\n**制胜分和非受迫失误来自 TNNS**（`tnns-stats.yml` run **32211814483**，match id 73467046，报告自报「选手顺序 ['Sabalenka', 'Wang']」——和 `cover.matchup` 同序；`hasExtendedStats: True`，分盘合计＝全场两项都自证 ✅：制胜分 9+8=17 / 3+6=9，非受迫失误 3+2=5 / 4+2=6。⚠️ flashscore 的 `df_st_1` 这一场只有这十项，没有 winners/UE 这两行——WTA 巡回赛那一档的老毛病，「flashscore 没有」不等于「没有」。",
+    "footer_venue": "Lindner Family Tennis Center · 辛辛那提",
+    "footer_date": "2026.08.18"
+  },
+  "_hit_data": "跑过 `tools/match_stat_hooks.py 0vM70i9t`（flashscore 无 winners/UE）和 `tnns-stats.yml`（match id 73467046，拿到 winners/UE）。挑进片子的是**王欣瑜全场零破发点**（`bp_chances=0`，两个源逐项一致）——这是钩子、开场落点、正文核心事实共用的核心；顺带挖出「2022 年澳网首次交手王欣瑜先赢一盘、这次一分未破」这条对比线，放进了 `editorial.human_context.angle`。",
+  "_claims": "「两人此前只交手一次，2022 年澳网王欣瑜先赢一盘、萨巴伦卡逆转」这条历史断言核过两处：flashscore `df_hh_1_0vM70i9t` 的头对头列表（仅 2 场，`KU:KT=2:0` 累计战绩，上一场 epoch 1642644300＝2022-01-20）和该场独立的逐盘比分 `df_su_1_tGP5DdgS`（`BA:BB=6:1`／`BC:BD=4:6`／`BE:BF=2:6`，场地 `Rod Laver Arena, Melbourne`）——两个 flashscore 端点互相印证，不是转述。「45 场连胜」是场上采访主持人的原话，转述时保留了『主持人说』的归属，不作为我们自己核实过的独立事实陈述。",
+  "_editing_why": "probe 的 `scene_cuts` = [7.52, 11.08, 20.48, 21.72, 27.84, 31.36, 38.12, 40.2, 55.48, 73.36, 78.04, 79.92, 91.24, 92.84, 101.08, 105.12, 120.04, 132.76, 137.72, 145.84, 149.8, 156.92, 161.12, 169.56, 183.24, 189.96, 192.0, 193.88, 200.24, 205.68, 213.8, 218.96, 231.0, 252.92, 257.96, 269.88, 284.08, 288.52, 294.44, 374.36, 376.36]。\n\n**认人**：萨巴伦卡深蓝色 Nike 背心＋同色系半裙，深色扎发；王欣瑜浅蓝/白色系背心，白色遮阳帽。记分条 `A. SABALENKA [1]` 在上、`XIN. WANG` 在下，全程按此核对。\n\n末尾 294.44 秒起转入场上采访（自动字幕『Look at the smile on your face』），所有窗口收在 293.0 秒以内。",
+  "segments": [
+    {
+      "start": 258.5,
+      "end": 268.5,
+      "_why": "① **冷开场，不配旁白，走现场声**。记分条挂出 `MATCH POINT`（`SABALENKA 6-5-40 / WANG 1-3-15`），萨巴伦卡逼近特写，专注、紧绷的表情，切点 257.96 和 269.88 之间，同一个连续镜头。CLAUDE.md「开场三格的顺序」：第 ① 格是画面爆点，不是坐标。"
+    },
+    {
+      "start": 269.88,
+      "end": 276.0,
+      "narration": "这场球，她一个破发点都没给。",
+      "_why": "② 落点，呼应封面钩子的另一个角度——钩子讲『五十四分钟零破发点』（结果），这里点出『她一个都没给』（动作），画面延续同一个大窗口（269.88-284.08 是连续镜头，赛点落地到走向场边）。"
+    },
+    {
+      "start": 3.0,
+      "end": 12.4,
+      "narration": "北京时间八月十九号上午七点多，辛辛那提第三轮。世界第一的萨巴伦卡，对阵世界第三十六的王欣瑜。",
+      "crosses_cut": "开局前的常规底线对拉／准备镜头，7.52/11.08 两处切点两侧都是同一对球员在同一片场地的远景，缩略图墙核对过没有换人",
+      "_why": "③ 坐标。开球 2026-08-18T23:10:00Z＝北京 08-19 07:10，按 CLAUDE.md「只说个大概」写「上午七点多」。画面是源片开局的常规底线对拉镜头（7.52-11.08 是一个镜头内的准备阶段），坐标句排在冷开场和落点句之后，不抢在最强画面前面。⚠️ `end` 从 11.5 收到 12.4：真语音（`--check-narration`）实测这段旁白 9.17s，比原窗口 8.5s 超出 0.67s，加宽到不越过第④段 `start`（12.5）为止。"
+    },
+    {
+      "start": 12.5,
+      "end": 21.0,
+      "narration": "开局第一个发球局，她就把对手逼到了破发点，连救两个才勉强稳住。",
+      "crosses_cut": "20.48 秒切点两侧都是王欣瑜在同一片场地的持拍站位镜头，缩略图墙核对过没有换人，且这一格正好是叙述『对手被逼到破发点』时画面上出现的正是王欣瑜本人",
+      "_why": "④ **画面自证**：0.5-32.5 秒记分条从 `1-0` 挂出 `BREAK POINT`（12.5 秒起）到 `BREAK POINT #2`（16.5 秒起、20.5 秒起），王欣瑜的开局发球局连续面对两次破发点机会并各自救下。窗口落在 11.08-20.48 这一段连续对拉镜头内。"
+    },
+    {
+      "start": 24.5,
+      "end": 31.5,
+      "narration": "第三个，没扛住——第一局就丢了自己的发球局，二比零。",
+      "crosses_cut": "27.84 秒切点两侧是常规底线对拉过渡到球员走位镜头，缩略图墙核对过两边都是这两位球员、没有换人",
+      "_why": "⑤ **画面自证**：接续④，20.5-32.5 秒记分条挂着第三次 `BREAK POINT #2` 机会，32.5 秒比分跳到 `2-0`。窗口落在 27.84-31.36 这一段连续镜头内，紧接④之后。⚠️ 原旁白只有『第三个，没扛住——二比零』，本地 edge-tts 余量 3.83s 没触发闸，runner 上 Azure 更快（约快 6.6%），余量涨到 4.19s，撞上 `MAX_SILENT_GAP=4.0` 当场哑场报错（run 32216114280）。补了『第一局就丢了自己的发球局』收尾这一小拍，`--check-narration` 实测本地余量降到 2.06s（按 Azure 快 6.6% 折算约 2.4s，安全）。"
+    },
+    {
+      "start": 84.0,
+      "end": 92.0,
+      "narration": "中段这一局，又是熬到第三个机会才真正破发——五比一。",
+      "crosses_cut": "91.24 秒切点离段尾只差 0.76 秒，两侧都是常规底线对拉镜头，缩略图墙核对过没有换人",
+      "_why": "⑥ **画面自证**：80.5 秒记分条挂出 `BREAK POINT`（第一次），86.5 秒 `BREAK POINT #2`（第二次），96.5-102.5 秒 `BREAK POINT #3`（第三次），104.5 秒比分才跳到 `5-1`——和第一局同一个形状（也是熬到第三个才拿下），呼应④⑤两段。窗口落在 78.04-91.24 这一段镜头内，取其中球员正手击球特写部分。"
+    },
+    {
+      "start": 132.76,
+      "end": 140.0,
+      "narration": "第一盘六比一，二十分钟不到就结束了，转播都在感叹这个速度。",
+      "crosses_cut": "137.72 秒切点是萨巴伦卡走位镜头切到常规底线对拉的过渡，两侧都是这两位球员、缩略图墙核对过没有换人，138.5 秒记分条本身正好挂出完整第一盘比分",
+      "_why": "⑦ 转播解说原话（132.96-136.48 秒）：`Racing through the opening set in 20 minutes. Six games to one.`——直接对应这一段画面（132.76-137.72 是一个连续镜头，含赛事名牌转场卡）。⚠️ 本地余量原为 3.35s，落在『runner 上 Azure 更快、余量会涨过 4.0』的危险区间（CLAUDE.md『本地余量落在 3.0~4.0s 之间的段，在 runner 上很可能就翻过 4.0』），补了『转播都在感叹这个速度』这半句（转述①那句解说原话的语气，不是新事实），`--check-narration` 实测余量降到 1.50s。"
+    },
+    {
+      "start": 161.12,
+      "end": 169.0,
+      "narration": "第二盘她延续了压力，很快又完成一次破发，把领先优势坐实到二比零。",
+      "_why": "⑧ **画面自证**：160.5-170.5 秒记分条挂出 `BREAK POINT`（王欣瑜发球，`6-0-40 / 1-0-30`），170.5 秒比分推进到萨巴伦卡第二盘 `2-0`。窗口落在 161.12-169.56 这一段连续镜头内。⚠️ 原旁白『第二盘她延续了压力，很快又完成一次破发』本地余量 3.75s，runner 上 Azure 一读，余量涨到 4.06s，撞闸报错（run 32216114280，和⑤同一批）。补了『把领先优势坐实到二比零』这半句结论性收尾，`--check-narration` 实测余量降到 1.57s。"
+    },
+    {
+      "start": 231.0,
+      "end": 240.0,
+      "narration": "王欣瑜这一盘打得更有起色，解说也这么说——可比分始终没能追近，节奏还是在她手里。",
+      "_why": "⑨ 转播解说原话（240.32-242.48 秒）：`There's been more to like from Wongu in this second set.`——给王欣瑜一句公道话，不让全片只剩一边倒的叙事。窗口落在 231.0-252.92 这一段连续镜头内，取靠前的部分。⚠️ 本地余量原为 3.12s，同样落在危险区间，补了『节奏还是在她手里』收尾（呼应 `editorial.thesis` 的判断，不是新事实），`--check-narration` 实测余量降到 1.54s。"
+    },
+    {
+      "start": 284.08,
+      "end": 293.8,
+      "narration": "六比一六比三，零破发点——四年半前，王欣瑜赢过她们唯一一盘。这一次，那一盘去哪了？",
+      "crosses_cut": "288.52 秒切点是萨巴伦卡场边动作切到全景体育场镜头，缩略图墙核对过没有换人；这一段末尾正是本条 spec 最硬的自证画面（288.52-292.5 秒最终比分图形完整挂出）",
+      "_why": "⑩ 收尾落在一问上（CLAUDE.md「末屏那一问不能是封面钩子的回声」）：钩子讲『五十四分钟零破发点』这个结果本身，这里换成 2022 年澳网那次王欣瑜先赢一盘的对比——两件事都可查（`editorial.human_context.facts` 里的 `df_su_1_tGP5DdgS` 逐盘数据），开的是一扇新门，不是重复结果。画面是 284.08-294.44 秒她走向场边、最终比分图形挂出的镜头（288.52-292.5 秒记分条显示 `ROUND 3 / ARYNA SABALENKA 6 6 / XINYU WANG 1 3` 完整最终比分），窗口收在场上采访（294.44 秒）开始之前。"
+    }
+  ],
+  "push": {
+    "summary": "全场，她一个破发点都没给",
+    "lead": "辛辛那提女单第三轮，世界第一的萨巴伦卡 6-1 6-3 击败世界第 36 的王欣瑜，用时仅 54 分钟。开局第一个发球局，王欣瑜就被逼到破发点，连救两个也没能扛住第三个，二比零；第一盘中段萨巴伦卡再破一次，五比一，不到二十分钟拿下第一盘六比一。第二盘她延续了压力，很快又完成一次破发——王欣瑜这一盘打得确实更有起色，解说也提到这一点，但比分始终没能追近，六比三收官。真正说明这场球单向程度的是技术统计：全场下来，王欣瑜没有一次机会碰到萨巴伦卡的发球局。这不是两人第一次交手：2022 年澳网她们唯一一次相遇，王欣瑜先赢下第一盘六比一，萨巴伦卡连扳两盘六比四、六比二才逆转过关——四年半后的这场重赛，剧本完全反了过来。萨巴伦卡 28 岁，本站头号种子；王欣瑜 24 岁，本站未获种子。",
+    "_no_auto_why": "这条 spec 由本次任务在同一个会话里手动走完 probe→render→merge→push，会话结束前会直接跑 `mode=push push=true` 并确认 PushPlus 200，不依赖 `auto-push-reel` 的自动触发，避免两条路径重复发送。"
+  }
+}
