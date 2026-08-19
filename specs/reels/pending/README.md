@@ -77,6 +77,30 @@ Gauff-Li／Nakashima-Medvedev 五场（含 WTA），**Musetti-Zheng 一张都没
 
 ## 现在住在这儿的
 
+- **`tiafoe-tien`**（辛辛那提 ATP1000 第三轮，2026-08-19，蒂亚福 6-4 4-6 6-4 胜
+  勒纳·钱，两小时十分）——这场比赛就发生在 2026-08-19（当天），赛事官方图库照惯例要到
+  次日 UTC 00:00~03:00 才批量上线，所以今天必然是空的。四类源逐条跑过：
+  `tools/fetch_atp_cover_photo.py --site cincinnatiopen.com --match-date 2026-08-19`
+  报「2026-08-19 那一辑还没发」（媒体库 379 条 ＋ 图库页 279 张，日期戳等于今天
+  的 0 张）；`tools/find_cover_photo.py --player Tiafoe --event Cincinnati
+  --site cincinnatiopen.com --date 2026-08-19` 四条渠道全跑过（WTA
+  `photo-resources` 不适用于 ATP、AP 通讯社搜了球员名只有默认占位分享图、
+  The Enquirer 同日 gallery 没有这场、`cincinnatiopen.com` WP 媒体库 `?search=
+  Tiafoe` 命中 23 张全是 2025 年及更早的旧照片）。
+  - 这条片子的看点是蒂亚福赛前十二天（8/7）刚在蒙特利尔因伤退赛做完手术，
+    赛后网前被勒纳·钱打趣「你没受伤，你在说谎」，蒂亚福赛后采访自己澄清是玩笑——
+    源片（Tennis TV YouTube 官方单场集锦，标题就叫「Fun Match」）自带完整原声
+    收音，不是二手转述，`editorial.human_context` 和 `_claims` 里逐条记着来源。
+  - 下一步：等赛事官方图库或 AP／The Enquirer 的下一批次上线（预计北京时间
+    2026-08-20 上午前后），或按同样命令重新跑一遍，找到之后 `git mv` 回
+    `specs/reels/`，`cover.portrait.image` 换成真实路径，其余内容不用动。
+  - ⚠️ 顺带修了一个真 bug：`tools/build_match_reel.py` 的
+    `segments_straddling_cuts()` 在段落用新版 `quote: [{"at":...,"text":...}]`
+    （按真实时刻声明的原声字幕）格式、又跨了镜头切点时会 `TypeError` 崩溃——
+    诊断代码试图用 `"／".join()` 拼一个字符串列表，而 `quote` 给的是字典列表。
+    改用已有的 `_quote_text()` 辅助函数（本来就是为了兼容两种写法而存在的），
+    这条片子第 11 段（采访 quote，跨了 168.96s 那个切点）就撞上了这个坑。
+
 - **`musetti-zheng`**（辛辛那提 ATP1000 第三轮，2026-08-18，穆塞蒂 6-1 6-3 胜郑瑞）
   - 2026-08-19 系统查过一轮：赛事官方图库四种日期戳搜索（`CincinnatiOpen_20260818_`／
     `081826`／`CincyOpen8-18-26`／`CincyOpen8.18.26`）全部 0 命中，`day-8-best-of-photos`
