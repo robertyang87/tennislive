@@ -748,7 +748,7 @@ def point_end_candidates(source: Path, scorebox: str) -> list[float]:
     return [round(t, 2) for t in ends]
 
 
-def suggest_scorebox(source: Path) -> None:
+def suggest_scorebox(source: Path) -> str | None:
     """给空着的 `--scorebox` 打一个可以直接抄的建议——**猜的，不是判据**。
 
     `tools/detect_scorebox.py` 按「频繁暗 + 高填充率」猜记分条大概在哪
@@ -759,6 +759,12 @@ def suggest_scorebox(source: Path) -> None:
     猜不出来、或者这台环境缺依赖，都只打一句原因，**不让 probe 这一步失败**：
     这只是个锦上添花的提示，`point_end_candidates` 那道真正要人给值的闸
     不受它影响。
+
+    ⚠️ **返回值要被存进 `probe.json`（`scorebox_guess`），不能只打在日志里。**
+    bouzkova-jovic 那条片子就是这么漏掉的：这句话确实印出来了（run
+    95976088848），可它埋在几百行 ffmpeg 进度中间，probe 那趟 run 一结束
+    就没人会再去翻。`--dry-run` 是我改完 spec 每次都会跑的那 0.2 秒，
+    猜到的候选要能在那儿被看见，不能只指望「记得回去翻日志」。
     """
     sys.path.insert(0, str(Path(__file__).resolve().parent))
     try:
@@ -766,15 +772,17 @@ def suggest_scorebox(source: Path) -> None:
         cands = dsb.detect(source)
     except Exception as exc:  # noqa: BLE001 - 只是个提示，不能把 probe 带崩
         print(f"[记分条] 猜不出来（{exc}），--scorebox 还是要自己量")
-        return
+        return None
     if not cands:
         print(f"[记分条] 猜了一遍，没有够格的候选（门槛 dark_freq>{dsb.DARK_FREQ} "
               f"fill>{dsb.MIN_FILL}）——这条源片可能没有常驻记分条，或者门槛卡严了")
-        return
+        return None
     x0, y0, x1, y1 = cands[0]["box"]
-    print(f"[记分条] 猜的候选：--scorebox {x0},{y0},{x1},{y1}"
+    guess = f"{x0},{y0},{x1},{y1}"
+    print(f"[记分条] 猜的候选：--scorebox {guess}"
           f"（填充率 {cands[0]['fill']:.2f}，只是猜的，"
           "拿缩略图墙对一眼再填进下一轮 probe）")
+    return guess
 
 
 def require_live_sound(source: Path, spec: dict) -> float | None:
@@ -3857,6 +3865,17 @@ def probe_dry_run(spec: dict, segments: list["Segment"]) -> bool:
     | 段体跨镜头切点又没写 `crosses_cut` | `scene_cuts` | 只报，**按离边界多远排序** |
     | 溶解底料跨切点 | 同上 | 只报 |
     | 段尾切在一分打完之前 | `point_ends` | 只报 |
+    | 这条源片的死球时刻整个没量过 | `point_ends`／`scorebox_guess` | 只报，**见下** |
+
+    ⚠️ **最后这一条是 2026-08-19 补的**（账号所有者：「剪辑的时候要等死球了
+    再去切下一段视频，切记」）。`bouzkova-jovic` 那条 probe 时 `--scorebox`
+    从没给过，`suggest_scorebox()` 猜到的候选只印在 probe 那趟 run 的日志里，
+    没人再回头翻——`--dry-run` 对这一层原来完全不吭声。**现在猜到的候选存进
+    `probe.json`（`scorebox_guess`），dry-run 把它翻出来当提醒**：有候选就说
+    「猜过、还没人重跑一轮 probe 确认」，没有候选就说「猜不出记分条，段尾只能
+    靠缩略图墙定」。⚠️ **仍然只报不拦**——道理和下面「死球那条同理」一样，
+    `--scorebox` 给了也可能因为记分条滞后／镜头切走而检出为空，做成硬闸会
+    重复 `crosses_cut` 那次的错。
 
     ⚠️ **只有第一条是硬的，而这是量出来之后改的。**
     我本来把「跨切点」也做成了硬闸——拿 20 条已发 spec 一扫，**10 条会红，
@@ -3933,6 +3952,32 @@ def probe_dry_run(spec: dict, segments: list["Segment"]) -> bool:
             soft.append(
                 f"  第 {index + 1} 段 end={seg.end:.2f}s 像是切在一分打完之前"
                 f"（最近的死球在 {min(cut_mid):.2f}s）——观众看不出这分归谁")
+
+    # ④ 这条源片的 point_ends 整个是空的——**只报不拦，理由同③**，但要分清
+    #    「没量」和「量出来是空的」（`probe.json` 里 `point_ends: []` 两种
+    #    情况长得一样）。`scorebox_guess` 是那唯一的分界：有它就是「猜到了
+    #    候选、没人拿去重跑一轮 probe」，没它才是「量过、真的没找到」。
+    #    bouzkova-jovic 那条就是前一种——猜到的候选埋在 probe 那趟的 run 日志
+    #    里，没人再翻，`--dry-run` 当时对这一层完全没吭声。
+    checked_sources: set[str] = set()
+    for seg in segments:
+        if seg.image or seg.source in checked_sources:
+            continue
+        checked_sources.add(seg.source)
+        probe = probes.get(urls.get(seg.source, ""))
+        if probe is None or probe.get("point_ends"):
+            continue
+        guess = probe.get("scorebox_guess")
+        label = seg.source or "(主源)"
+        if guess:
+            soft.append(
+                f"  源 {label}：死球时刻还没量过——probe 猜过 "
+                f"--scorebox {guess}，还没有人拿它重跑一轮 probe 确认")
+        else:
+            soft.append(
+                f"  源 {label}：死球时刻还没量过，而且猜不出记分条在哪"
+                "（可能没有常驻记分条，或者门槛卡严了）——段尾只能靠"
+                "缩略图墙用眼睛定")
 
     if mid:
         mid.sort(reverse=True)          # 越靠中间越可疑，排前面
@@ -5942,16 +5987,23 @@ def main() -> int:
         # 记分条的位置**没法自动认**（每家转播不一样），所以要人给 `--scorebox`；
         # 不给就跳过，**而且要说为什么**——「没量」和「量出来是空的」长得一样。
         #
-        # **没给的时候顺手猜一个候选打出来**——省得每次都要开缩略图墙自己数
-        # 像素。只是打印，不参与这一趟 `point_ends` 的计算：猜错了不影响本轮
-        # 结果，猜对了下一轮 probe 抄一下就行。
+        # **没给的时候顺手猜一个候选打出来，并存进 probe.json**——省得每次都要
+        # 开缩略图墙自己数像素，也让 `--dry-run` 有得翻（见 `probe_dry_run`）。
+        # 不参与这一趟 `point_ends` 的计算：猜错了不影响本轮结果，
+        # 猜对了下一轮 probe 抄一下就行。
+        scorebox_guess = None
         if not str(args.scorebox).strip():
-            suggest_scorebox(source)
+            scorebox_guess = suggest_scorebox(source)
         ends = point_end_candidates(source, args.scorebox)
         (outdir / "probe.json").write_text(json.dumps({
             "url": args.url, "width": w, "height": h, "duration": duration,
             "fps": fps_expr, "fps_value": round(fps, 3),
             "scene_cuts": cuts, "scene_cuts_loose": loose, "point_ends": ends,
+            # 没给 --scorebox 时猜出来的候选，供 `--dry-run` 提醒「有一个猜测
+            # 在，还没有人拿它重跑」。给了 --scorebox 的这一趟，或者猜不出来
+            # 的那一趟，这里都是 None——和 `point_ends` 一样别把「没猜」和
+            # 「猜了没有」混成一回事。
+            "scorebox_guess": scorebox_guess,
             # 只看了一段就记下来——**下一个人拿 probe.json 排窗口时，
             # 「切点少」和「只扫了一段」长得一模一样**。
             "clip_from": clip_from or None,
