@@ -149,11 +149,12 @@ jobs:
             ~/.cache/apt-lists
           key: apt-pkgs-${{ runner.os }}-24.04-interview-clip-v1
       - name: 装系统依赖
-        timeout-minutes: 12
+        timeout-minutes: 15
         if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover'
         run: |
           source tools/ci_apt_install.sh
-          apt_install_cached fonts-noto-cjk fonts-noto-core ffmpeg
+          apt_install_cached fonts-noto-cjk fonts-noto-core
+          ensure_ffmpeg
 
       # **`yt-dlp` 要装 `[default]`**，它才带 `yt-dlp-ejs`——解 YouTube 的
       # n challenge 要跑一段 JS。少了它不会报「装少了」，而是任何格式选择器都
@@ -259,7 +260,7 @@ jobs:
             ~/.cache/apt-lists
           key: apt-pkgs-${{ runner.os }}-24.04-interview-clip-subs-v1
       - name: 装依赖（只取字幕）
-        timeout-minutes: 12
+        timeout-minutes: 15
         if: github.event.inputs.mode == 'subs'
         run: |
           source tools/ci_apt_install.sh
