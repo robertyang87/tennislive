@@ -21,7 +21,7 @@
 | 15 | 0:29.9 | [▶](https://youtu.be/E2U0fd_lSFs?t=316) | And honestly, it was really hard | 说实话 今天真的很难 |  |
 | 16 | 0:31.6 | [▶](https://youtu.be/E2U0fd_lSFs?t=318) | to control the ball today. | 控制住球 |  |
 | 17 | 0:33.2 | [▶](https://youtu.be/E2U0fd_lSFs?t=320) | I think we're both making a lot | 我们俩今天可能都 |  |
-| 18 | 0:34.7 | [▶](https://youtu.be/E2U0fd_lSFs?t=321) | of unforced errors | 犯了不少非受迫失误 | ✏️ 已订正 |
+| 18 | 0:34.7 | [▶](https://youtu.be/E2U0fd_lSFs?t=321) | of uncanny errors | 犯了不少奇怪的失误 | ✏️ 已订正 |
 | 19 | 0:36.8 | [▶](https://youtu.be/E2U0fd_lSFs?t=323) | that maybe we both normally don't make, | 平时都不太会犯的那种 |  |
 | 20 | 0:38.4 | [▶](https://youtu.be/E2U0fd_lSFs?t=325) | but it was my first time playing | 不过这是我今年第一次 |  |
 | 21 | 0:40.0 | [▶](https://youtu.be/E2U0fd_lSFs?t=327) | on center court this year. | 在这片中心球场打球 |  |
