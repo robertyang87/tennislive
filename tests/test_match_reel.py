@@ -8902,6 +8902,29 @@ def test_成片要记下是哪条路配的音():
         "voiced_by 的返回值没有接进 bad——又是「算出来了没人用」"
 
 
+def test_ffprobe的csv输出带尾随逗号也解析得出来():
+    """2026-08-19 撞的：`ensure_ffmpeg` 第一版装的是 BtbN/FFmpeg-Builds 的
+    `latest` 标签——那是**每天跟着 master 重新构建**的快照，不是钉死的版本。
+    当天下到的 ffprobe 对 `-show_entries stream=duration -of csv=p=0` 吐出
+    `117.480000,`（带一个尾随空字段），`float()` 直接 `ValueError`，
+    整条 render 在最后一步（`查成片本身合不合格`）崩掉（run 32307313856）。
+
+    根因换成 johnvansickle.com 的稳定版之后不会再犯，但解析本身不该赌
+    「下一个 ffprobe 版本永远只吐一个干净的数」——这条测试真喂那个坏字符串，
+    钉住 `_ffprobe_float` 不管尾巴上多出什么都取得出第一个数。
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import check_reel_landed as chk  # noqa: PLC0415
+
+    # ① 正常的干净输出（apt 那个稳定版、johnvansickle 那个稳定版都是这样）
+    assert chk._ffprobe_float("117.480000\n") == pytest.approx(117.48)
+    # ② 当天真炸的那个字符串——多一个尾随逗号（空字段）
+    assert chk._ffprobe_float("117.480000,\n") == pytest.approx(117.48)
+    # ③ 反向验证：换回没有这层保护的写法，②这个真实样本会崩
+    with pytest.raises(ValueError):
+        float("117.480000,\n".strip())
+
+
 def test_屏幕上的次也要写成数字而分发强成不许写():
     """同一行里两种写法，是「转了一半」——和「北京时间8月三号零点」同一个毛病。
 
