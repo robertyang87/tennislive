@@ -188,7 +188,10 @@ jobs:
           # 只是这半边一直没跟上（「规矩只写在了其中一半」）。
           # `Acquire::Retries=3` 让 apt 自己在一次尝试里换一次镜像，
           # 而不是挂在一个不响应的 host 上等我们的 `timeout` 来杀。
-          apt_retry apt-get install -y -qq --no-install-recommends -o Acquire::Retries=3 fonts-noto-cjk fonts-noto-core ffmpeg
+          # ⚠️ 2026-08-19 补上 `Acquire::http::Timeout=20`——单靠 `Retries=3`
+          # 不够，apt 要真的连不上（不只是慢）才会触发重试；给它一个连接超时，
+          # 它才会在我们的外层 `timeout 150` 之内主动换镜像，不是干等默认超时。
+          apt_retry apt-get install -y -qq --no-install-recommends -o Acquire::Retries=3 -o Acquire::http::Timeout=20 fonts-noto-cjk fonts-noto-core ffmpeg
 
       # **`yt-dlp` 要装 `[default]`**，它才带 `yt-dlp-ejs`——解 YouTube 的
       # n challenge 要跑一段 JS。少了它不会报「装少了」，而是任何格式选择器都
@@ -308,7 +311,12 @@ jobs:
           # ⚠️ 别用它去替代外层的 `apt_retry`：那一层管的是「整条命令挂了」，
           # 这一层管的是「某个 host 不响应」，两层各拦一头。
           apt_retry apt-get update -qq -o Acquire::Retries=3 -o Acquire::http::Timeout=20
-          apt_retry apt-get install -y -qq fonts-noto-cjk fonts-noto-core
+          # ⚠️ 2026-08-19 这行连着两趟（run 32212794304 / 32213180838）在同一个
+          # 位置各吃满两次 150 秒——`apt-get update` 那行有 `Acquire::http::Timeout`，
+          # 这行没有，是「同一件事在两处各写一遍，必然分叉」的又一次：update 挂了
+          # 20 秒连接超时会自己换镜像，install 没有就只能干等 apt 自己的默认超时
+          # （120 秒起），两次外层 `timeout 150` 全部耗尽在同一个不响应的 host 上。
+          apt_retry apt-get install -y -qq -o Acquire::Retries=3 -o Acquire::http::Timeout=20 fonts-noto-cjk fonts-noto-core
           pip install -q -e . "yt-dlp[default]"
 
       - name: 开跑前预检（只取字幕）
