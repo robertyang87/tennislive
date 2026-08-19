@@ -136,62 +136,24 @@ jobs:
       #   DejaVu——**比 Noto Sans 宽 8%**，切行时量的宽度和渲出来的对不上，
       #   于是精心算好的「一行不超宽」在 runner 上失效。切行那步现在缺字体
       #   直接报错（不回退），所以这一行漏了会在第 5 秒就炸，不是第 90 秒
+      # ⚠️ apt 镜像会抽风且不是偶发（2026-08-04/18/19 多次撞上 `apt-get
+      # update`/`install` 连着两次吃满 150 秒、零字节进度）——调重试参数治不了根，
+      # 真正的杠杆是大多数 run 根本不碰这个镜像。`tools/ci_apt_install.sh`
+      # 把索引和下载缓存住，先试零网络的本地安装，缓存没命中才回退到老路。
+      - name: 缓存 apt 包（字体 + ffmpeg，绕开镜像抽风）
+        if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover'
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/apt-archives
+            ~/.cache/apt-lists
+          key: apt-pkgs-${{ runner.os }}-24.04-interview-clip-v1
       - name: 装系统依赖
         timeout-minutes: 12
         if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover'
         run: |
-          # ⚠️ apt 镜像会抽风，而且不是偶发：2026-08-04 两小时内两次——
-          # 一次静静烧了 **13 分 42 秒**（那时没有闸），一次被 `timeout-minutes: 6`
-          # 掐掉（run 30878555571），而正常只要 **18~53 秒**。
-          # 硬超时只把「静静烧半小时」换成「6 分钟红掉、要人重跑」——**方向对了但停在
-          # 一半**：卡住的正确处置是换一次重试，不是整趟失败。重跑那趟 34 秒就过了。
-          # ⚠️ **第一版写的是 3 × 100 秒，当场把 CI 弄红了**（run 30880649692）：
-          # 三次全跑满 100 秒被杀，也就是 apt **一直在推进、只是慢**，不是挂死。
-          # 那个 100 秒是按「正常 18~53 秒」拍的，而那是**另一条工作流**的数——
-          # ci.yml 这一步正常 25~34 秒，镜像变慢时能到 100 秒以上仍在干活。
-          # **把「慢」误判成「挂死」，重试就从救场变成了三倍的浪费。**
-          # ⚠️⚠️ **2026-08-18：这句话原来写的是「5.3 分，仍在步骤的 6 分钟超时以内」，
-          #    而它把预算算漏了一半——这一步调 `apt_retry` **两次**（update 一次、
-          #    install 一次），真正的上界是 2 × 2 × (150s + 10s) = **640 秒 ≈ 10.7 分**。
-          #    于是 match-reel 那两步（`timeout-minutes: 5`）连着两趟死在同一个地方：
-          #    第 1 次 update 吃满 150 秒 → sleep 10 → 第 2 次跑到第 150 秒那一刻
-          #    正好撞上步骤超时（run 32084186086 / 32084758610，00:33:07 报第一次没跑完、
-          #    00:35:47 步骤被杀）。**重试在它唯一该起作用的那一次结构性地跑不完。**
-          #    步骤超时现在按 `calls × tries × (per + 10)` 反推并留 1 分钟余量，
-          #    判据 `test_apt重试的预算不许超过步骤自己的超时` 自己算不硬编。
-          # 每次都留 150 秒（正常值的 4~6 倍），只有真挂死才会两次都吃满。
-          apt_retry() {
-            for i in 1 2; do
-              sudo timeout 150 "$@" && return 0
-              echo "::warning::apt 第 $i 次没跑完（卡住或超时）：$*"
-              sudo dpkg --configure -a || true   # 上一次被 SIGTERM 打断可能留下半装状态
-              sleep 10
-            done
-            echo "::error::apt 两次都没成功：$*"
-            return 1
-          }
-          # ⚠️ **`Acquire::http::Timeout` 是这一行的关键，不是装饰。**
-          # 2026-08-18 02:02 那趟 CI（run 32090339473）`apt-get update` **两次各吃满
-          # 150 秒**，一个字节的进度都没有——这是 apt 挂在一个不响应的镜像上等
-          # 它自己的默认超时（120 秒起）的样子，不是「在推进、只是慢」。
-          # 给 apt 自己一个 20 秒的连接超时 ＋ 3 次重试，它会**在我们的 `timeout 150`
-          # 之内自己换一个镜像**；没有这两个参数，外层重试只是把同一次挂死再等一遍。
-          # ⚠️ 别用它去替代外层的 `apt_retry`：那一层管的是「整条命令挂了」，
-          # 这一层管的是「某个 host 不响应」，两层各拦一头。
-          apt_retry apt-get update -qq -o Acquire::Retries=3 -o Acquire::http::Timeout=20
-          # ⚠️ **`--no-install-recommends` 不是洁癖，是这一步的耗时本身。**
-          # 2026-08-18 `apt-get install ffmpeg` 连着两次吃满 150 秒被杀
-          # （run 32085745112：00:46:29 起，00:49:11 和 00:51:51 各报一次没跑完；
-          # 同一趟的 `apt-get update` 十几秒就过了，慢的只有 install）。
-          # ffmpeg 的 recommends 拖着一整串 VA-API 驱动，而 runner 上根本没有
-          # 硬件解码可用——`.claude/hooks/session-start.sh` 早就是这么装的，
-          # 只是这半边一直没跟上（「规矩只写在了其中一半」）。
-          # `Acquire::Retries=3` 让 apt 自己在一次尝试里换一次镜像，
-          # 而不是挂在一个不响应的 host 上等我们的 `timeout` 来杀。
-          # ⚠️ 2026-08-19 补上 `Acquire::http::Timeout=20`——单靠 `Retries=3`
-          # 不够，apt 要真的连不上（不只是慢）才会触发重试；给它一个连接超时，
-          # 它才会在我们的外层 `timeout 150` 之内主动换镜像，不是干等默认超时。
-          apt_retry apt-get install -y -qq --no-install-recommends -o Acquire::Retries=3 -o Acquire::http::Timeout=20 fonts-noto-cjk fonts-noto-core ffmpeg
+          source tools/ci_apt_install.sh
+          apt_install_cached fonts-noto-cjk fonts-noto-core ffmpeg
 
       # **`yt-dlp` 要装 `[default]`**，它才带 `yt-dlp-ejs`——解 YouTube 的
       # n challenge 要跑一段 JS。少了它不会报「装少了」，而是任何格式选择器都
@@ -284,55 +246,24 @@ jobs:
       # ffmpeg，省下三分多钟。
       # **字体两个都要**：切行是按真实字宽切的（`_en_width` / `_zh_width`），
       # 缺了就直接报错——这一步的产物是行的划分，量错了整条片子的字幕都跟着错。
+      # ⚠️ apt 镜像会抽风且不是偶发——`mode=subs` 这条路自己也中过（2026-08-19
+      # run 32212794304 / 32213180838，同一个位置连着两趟各吃满两次 150 秒、
+      # 零字节进度）。调重试参数治不了根，真正的杠杆是大多数 run 根本不碰这个
+      # 镜像，见 `tools/ci_apt_install.sh` 顶部注释。
+      - name: 缓存 apt 包（字体，绕开镜像抽风）
+        if: github.event.inputs.mode == 'subs'
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/apt-archives
+            ~/.cache/apt-lists
+          key: apt-pkgs-${{ runner.os }}-24.04-interview-clip-subs-v1
       - name: 装依赖（只取字幕）
         timeout-minutes: 12
         if: github.event.inputs.mode == 'subs'
         run: |
-          # ⚠️ apt 镜像会抽风，而且不是偶发：2026-08-04 两小时内两次——
-          # 一次静静烧了 **13 分 42 秒**（那时没有闸），一次被 `timeout-minutes: 6`
-          # 掐掉（run 30878555571），而正常只要 **18~53 秒**。
-          # 硬超时只把「静静烧半小时」换成「6 分钟红掉、要人重跑」——**方向对了但停在
-          # 一半**：卡住的正确处置是换一次重试，不是整趟失败。重跑那趟 34 秒就过了。
-          # ⚠️ **第一版写的是 3 × 100 秒，当场把 CI 弄红了**（run 30880649692）：
-          # 三次全跑满 100 秒被杀，也就是 apt **一直在推进、只是慢**，不是挂死。
-          # 那个 100 秒是按「正常 18~53 秒」拍的，而那是**另一条工作流**的数——
-          # ci.yml 这一步正常 25~34 秒，镜像变慢时能到 100 秒以上仍在干活。
-          # **把「慢」误判成「挂死」，重试就从救场变成了三倍的浪费。**
-          # ⚠️⚠️ **2026-08-18：这句话原来写的是「5.3 分，仍在步骤的 6 分钟超时以内」，
-          #    而它把预算算漏了一半——这一步调 `apt_retry` **两次**（update 一次、
-          #    install 一次），真正的上界是 2 × 2 × (150s + 10s) = **640 秒 ≈ 10.7 分**。
-          #    于是 match-reel 那两步（`timeout-minutes: 5`）连着两趟死在同一个地方：
-          #    第 1 次 update 吃满 150 秒 → sleep 10 → 第 2 次跑到第 150 秒那一刻
-          #    正好撞上步骤超时（run 32084186086 / 32084758610，00:33:07 报第一次没跑完、
-          #    00:35:47 步骤被杀）。**重试在它唯一该起作用的那一次结构性地跑不完。**
-          #    步骤超时现在按 `calls × tries × (per + 10)` 反推并留 1 分钟余量，
-          #    判据 `test_apt重试的预算不许超过步骤自己的超时` 自己算不硬编。
-          # 每次都留 150 秒（正常值的 4~6 倍），只有真挂死才会两次都吃满。
-          apt_retry() {
-            for i in 1 2; do
-              sudo timeout 150 "$@" && return 0
-              echo "::warning::apt 第 $i 次没跑完（卡住或超时）：$*"
-              sudo dpkg --configure -a || true   # 上一次被 SIGTERM 打断可能留下半装状态
-              sleep 10
-            done
-            echo "::error::apt 两次都没成功：$*"
-            return 1
-          }
-          # ⚠️ **`Acquire::http::Timeout` 是这一行的关键，不是装饰。**
-          # 2026-08-18 02:02 那趟 CI（run 32090339473）`apt-get update` **两次各吃满
-          # 150 秒**，一个字节的进度都没有——这是 apt 挂在一个不响应的镜像上等
-          # 它自己的默认超时（120 秒起）的样子，不是「在推进、只是慢」。
-          # 给 apt 自己一个 20 秒的连接超时 ＋ 3 次重试，它会**在我们的 `timeout 150`
-          # 之内自己换一个镜像**；没有这两个参数，外层重试只是把同一次挂死再等一遍。
-          # ⚠️ 别用它去替代外层的 `apt_retry`：那一层管的是「整条命令挂了」，
-          # 这一层管的是「某个 host 不响应」，两层各拦一头。
-          apt_retry apt-get update -qq -o Acquire::Retries=3 -o Acquire::http::Timeout=20
-          # ⚠️ 2026-08-19 这行连着两趟（run 32212794304 / 32213180838）在同一个
-          # 位置各吃满两次 150 秒——`apt-get update` 那行有 `Acquire::http::Timeout`，
-          # 这行没有，是「同一件事在两处各写一遍，必然分叉」的又一次：update 挂了
-          # 20 秒连接超时会自己换镜像，install 没有就只能干等 apt 自己的默认超时
-          # （120 秒起），两次外层 `timeout 150` 全部耗尽在同一个不响应的 host 上。
-          apt_retry apt-get install -y -qq -o Acquire::Retries=3 -o Acquire::http::Timeout=20 fonts-noto-cjk fonts-noto-core
+          source tools/ci_apt_install.sh
+          apt_install_cached fonts-noto-cjk fonts-noto-core
           pip install -q -e . "yt-dlp[default]"
 
       - name: 开跑前预检（只取字幕）
