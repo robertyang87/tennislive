@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>8.20 赛场之上 | 四十天后，两盘回归</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>温网出局，蒙特利尔因伤退赛——缺战四十天后复出，阿利亚西姆直落两盘拿下胡安·曼努埃尔·塞伦多洛，晋级辛辛那提大师赛第四轮。
+
+这场胜利比比分更能说明问题。过去四十天，他先是在温网 1/4 决赛负于德约科维奇，紧接着又因为训练中的背伤，缺战了自己的主场蒙特利尔大师赛——他原本是那一站的二号种子，赛前两小时才退赛。辛辛那提复出的首轮，他就六比三七比五拿下了对西西帕斯四年来的第一场胜利。
+
+这一次面对左手将，首盘他同样没能轻松过关：两个人各自都在自己的发球局里救下过一个破发点，一路缠斗到五比五，直到最后一局，他才靠一次破发拿下七比五。拿下首盘之后，比赛的天平彻底倒向了他这一边——次盘他接连破发，一度零比四领先，对手只在自己的发球局里才躲过被打零蛋，最终六比一收官，耗时1小时27分。
+
+这场胜利把两人的交手战绩扳成一比一。去年马德里公开赛第二轮，当时还是资格赛出身的对手以7-6(5) 6-4爆冷淘汰过他，这一次，轮到他扳回一城。
+
+全场技术统计：阿利亚西姆制胜分21、非受迫失误22，对手制胜分10、非受迫失误22；总得分阿利亚西姆63比46；破发点阿利亚西姆3/5兑现，对手0/1。
+
+赛后谈到这场对阵左手将的比赛，他说：
+&quot;It was a tricky start. He is a lefty and you don&#x27;t play them often... He plays at a different pace... You have to find the right adjustments and once I did that, I felt more comfortable.&quot;
+（&quot;开局有点棘手。他是左手将，这种对手不常遇到……他的节奏完全不一样……找到正确的调整之后，我感觉舒服多了。&quot;）
+
+谈及缺战蒙特利尔的背伤，他此前说：
+&quot;I&#x27;m physically ready, it was just bad timing. My back hurt for three days.&quot;
+（&quot;我身体已经准备好了，只是时机不巧。后背疼了三天。&quot;）
+
+下一轮，他将迎战蒂亚福。
+
+数据来源：flashscore实时数据、ATP官方、Tennis Majors、TSN赛后报道。
+
+#网球时差 #辛辛那提大师赛 #阿利亚西姆 #ATP1000 #赛场之上</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>下一轮蒂亚福，他还能稳住吗？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
