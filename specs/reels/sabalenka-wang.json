@@ -20,10 +20,10 @@
     "portrait": {
       "image": "assets/reel/sabalenka-cincinnati-2026-r3.jpg",
       "fit": "cover",
-      "focus": 0.42,
+      "focus": 0.36,
       "focus_y": 0.42,
       "zoom": 1.28,
-      "_photo_why": "官方实拍，WTA 官方集锦视频页自己的 CMS 数据里找到的：`https://www.wtatennis.com/videos/4562109/sabalenka-dominates-wang-xinyu-for-50th-wta-1000-win-as-no-1` 页面的 `og:image` 挂着\n`photo-resources/2026/08/19/cc932d01-1990-4153-84dd-675ef34d60db/Aryna_Sabalenka_-_Cincinnati_Open_2026_-_Day_6-DSC_6165.jpg`，`?width=4000` 实测拿到 4700×2678（原图，未放大）。同一份视频页 CMS JSON 里这张图片的 `references` 字段直接列着 `TENNIS_TOURNAMENTGROUP reference:1017`（辛辛那提）和两个 `TENNIS_PLAYER`（320760＝萨巴伦卡、326376＝王欣瑜），发布时刻 `2026-08-19T00:10:00Z`——比赛 00:04 UTC 结束，6 分钟后发布，和视频描述『Top seed Aryna Sabalenka needed just 54 minutes』（精确对上 `MatchTimeTotal 00:54:11`）互相印证，四要素齐了。\n\n打开看过：正手跟进击球，球拍高举、身体前倾伸展，深蓝球场，运动感强、清晰锐利，没有水印。⚠️ **王欣瑜这场没有找到官方实拍**：她的 WTA 球员页上关联的『Cincinnati Open 2026 - Day 6』标签照片（`Xinyu_Wang_-_Cincinnati_Open_2026_-_Day_6-DSC_1213.jpg`）点开核实是**上一轮对阵范德温克尔那场**的集锦头图（`/videos/4559853/wang-xinyu-surges-past-vandewinkel-in-cincinnati`），不是这场；辛辛那提赛事官网媒体库按 `wang` 搜索只有 2023/2024 年的旧头像图（492×656，非本届实拍）。\n\n**裁切按『人物居中、放大到接近铺满』这条规矩渲出来试的**（账号所有者 2026-08-18：『尽可能把人物放到正中间，同时放大到足够，接近铺满整个画布，四周留一定空间即可』）。原图横图 4700×2678（1.75:1），人物主体（伸展的拍头到落地脚）在原图里横跨约 18%~62% 宽度，几何中心落在 0.42 附近，`focus` 用这个数；纵向她的身体主要落在中段，`focus_y` 同样取 0.42。`zoom` 从 1.0 起渲，本地对比过 1.0/1.15/1.28 三档，1.28 时拍头和落地脚仍在框内、人物占比明显更饱满，定 1.28。"
+      "_photo_why": "官方实拍，WTA 官方集锦视频页自己的 CMS 数据里找到的：`https://www.wtatennis.com/videos/4562109/sabalenka-dominates-wang-xinyu-for-50th-wta-1000-win-as-no-1` 页面的 `og:image` 挂着\n`photo-resources/2026/08/19/cc932d01-1990-4153-84dd-675ef34d60db/Aryna_Sabalenka_-_Cincinnati_Open_2026_-_Day_6-DSC_6165.jpg`，`?width=4000` 实测拿到 4700×2678（原图，未放大）。同一份视频页 CMS JSON 里这张图片的 `references` 字段直接列着 `TENNIS_TOURNAMENTGROUP reference:1017`（辛辛那提）和两个 `TENNIS_PLAYER`（320760＝萨巴伦卡、326376＝王欣瑜），发布时刻 `2026-08-19T00:10:00Z`——比赛 00:04 UTC 结束，6 分钟后发布，和视频描述『Top seed Aryna Sabalenka needed just 54 minutes』（精确对上 `MatchTimeTotal 00:54:11`）互相印证，四要素齐了。\n\n打开看过：正手跟进击球，球拍高举、身体前倾伸展，深蓝球场，运动感强、清晰锐利，没有水印。⚠️ **王欣瑜这场没有找到官方实拍**：她的 WTA 球员页上关联的『Cincinnati Open 2026 - Day 6』标签照片（`Xinyu_Wang_-_Cincinnati_Open_2026_-_Day_6-DSC_1213.jpg`）点开核实是**上一轮对阵范德温克尔那场**的集锦头图（`/videos/4559853/wang-xinyu-surges-past-vandewinkel-in-cincinnati`），不是这场；辛辛那提赛事官网媒体库按 `wang` 搜索只有 2023/2024 年的旧头像图（492×656，非本届实拍）。\n\n**裁切按『人物居中、放大到接近铺满』这条规矩渲出来试的**（账号所有者 2026-08-18：『尽可能把人物放到正中间，同时放大到足够，接近铺满整个画布，四周留一定空间即可』）。原图横图 4700×2678（1.75:1）。⚠️ **`focus` 第一版按『拍头到落地脚』整段外延取了 0.42，渲出来人物实际偏在画面左三分之一**（拍头本身在 1.28 倍放大下已经完全出画，真正决定裁切窗口的是『球拍手到另一只伸展手』这一段，不是拍头）——账号所有者当场指出『说过封面人像要主体居中』，这才回头拿网格量：握拍那只手（不含拍头）在原图里约在 0.20 处，另一只伸展的手约在 0.525 处，几何中心 0.36，`focus` 改成这个数重渲，人物左右留白基本对称。`focus_y` 取 0.42（她的身体主要落在中段）。`zoom` 定 1.28（本地对比过 1.0/1.15/1.28 三档，1.28 时落地脚仍在框内、人物占比明显更饱满）。"
     },
     "scrim": "clear",
     "matchup": [
@@ -207,10 +207,10 @@
     },
     {
       "start": 284.08,
-      "end": 293.0,
-      "narration": "五十四分钟，六比一六比三——而全场，她一次都没让对手摸到破发点。",
+      "end": 293.8,
+      "narration": "六比一六比三，零破发点——四年半前，王欣瑜赢过她们唯一一盘。这一次，那一盘去哪了？",
       "crosses_cut": "288.52 秒切点是萨巴伦卡场边动作切到全景体育场镜头，缩略图墙核对过没有换人；这一段末尾正是本条 spec 最硬的自证画面（288.52-292.5 秒最终比分图形完整挂出）",
-      "_why": "⑩ 收尾落在结果和核心数据的复述上，呼应②落点句『她一个都没给』，此处补上确切结果和时长，形成前后呼应但不重复措辞。画面是 284.08-294.44 秒她走向场边、最终比分图形挂出的镜头（288.52-292.5 秒记分条显示 `ROUND 3 / ARYNA SABALENKA 6 6 / XINYU WANG 1 3` 完整最终比分），窗口收在场上采访（294.44 秒）开始之前。"
+      "_why": "⑩ 收尾落在一问上（CLAUDE.md「末屏那一问不能是封面钩子的回声」）：钩子讲『五十四分钟零破发点』这个结果本身，这里换成 2022 年澳网那次王欣瑜先赢一盘的对比——两件事都可查（`editorial.human_context.facts` 里的 `df_su_1_tGP5DdgS` 逐盘数据），开的是一扇新门，不是重复结果。画面是 284.08-294.44 秒她走向场边、最终比分图形挂出的镜头（288.52-292.5 秒记分条显示 `ROUND 3 / ARYNA SABALENKA 6 6 / XINYU WANG 1 3` 完整最终比分），窗口收在场上采访（294.44 秒）开始之前。"
     }
   ],
   "push": {
