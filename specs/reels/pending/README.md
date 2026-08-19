@@ -54,7 +54,36 @@
 发布的官方实拍，已经 `git mv` 回 `specs/reels/` 并渲完，见下面「曾经住在这儿」
 那节。
 
+**③ 当地报纸（The Enquirer）的同日图集，走 sitemap 找入口**——2026-08-19 挖出来的，
+对 ATP 比这条线原有的两条都更快（当天就发，不用等次日 UTC 00:00~03:00 那个
+官方图库批次窗口）：
+
+    https://www.cincinnati.com/sitemap/2026/august/<日>/
+      → 找 href 里带 picture-gallery 的那条（当天可能只有一条，覆盖当天多场比赛）
+    打开那条 gallery 页，正文里 `<script type=application/ld+json>` 是个数组，
+    `data[0]['image']` 就是这一天全部照片，每条自带 `url`／`caption`／`copyrightHolder`
+
+⚠️ **图不按选手分文件夹，是同一个 gallery 混着当天好几场球**——2026-08-18 那一条
+一次给了 32 张，覆盖了 Rublev-Borges／Fritz-Aguilar(Merida)／Andreeva-Tjen／
+Gauff-Li／Nakashima-Medvedev 五场（含 WTA），**Musetti-Zheng 一张都没有**——
+这一站的摄影师显然没有拍全部球场，查到"这个 gallery 里没有"就是真的没有，
+不用怀疑是解析漏了（已经把整份 32 条 caption 过了一遍，没有第二处漏网）。
+
+⚠️ **原图直连要换域名，`www.cincinnati.com/gcdn/authoring/...` 本身 406**：
+去掉 `/gcdn` 换成 `www.gannett-cdn.com/authoring/...`（同一路径的其余部分不变），
+带 `Accept: image/*`。实测拿到 2697×4042~8170×5447，EXIF 里带
+`copyright=2026 - The Cincinnati Enquirer/USA Today Network`，caption 本身就是
+四要素自证（球员、对手、赛事、场馆、日期，往往还带着这场的比分）。
+
 ## 现在住在这儿的
+
+- **`musetti-zheng`**（辛辛那提 ATP1000 第三轮，2026-08-18，穆塞蒂 6-1 6-3 胜郑瑞）
+  - 2026-08-19 系统查过一轮：赛事官方图库四种日期戳搜索（`CincinnatiOpen_20260818_`／
+    `081826`／`CincyOpen8-18-26`／`CincyOpen8.18.26`）全部 0 命中，`day-8-best-of-photos`
+    那篇文章还没发；The Enquirer 8/18 的同日 gallery（见上面③）32 张逐条查过，
+    没有一张是这场；AP 搜了球员名也只有旧闻（温网退赛、法网退赛这类）
+  - 下一步：等赛事官方图库的下一批（次日 UTC 00:00~03:00 窗口的后续批次，或
+    The Enquirer 隔天可能补发另一批 gallery）
 
 - **`paul-vallejo`**（辛辛那提 ATP1000 第三轮，2026-08-17 夜场，保罗 3-6 6-3 6-4 巴列霍）
   - 开球美东 22:40，很晚的夜场；Tennis TV 短集锦已经有了（`source_url` 能下），
@@ -121,3 +150,14 @@
   引拍动作），`sweep_wta("Noskova")` 当时命中的是一张多伦多站的资料图
   （已经排除），这条视频页给出的才是真正对得上这场比赛的图。**已经渲完并推送**
   （流水号 `f0d7e9ef205346e9b8a96419ef73b339`）。
+
+- **`nakashima-medvedev`**（辛辛那提 ATP1000 第三轮，2026-08-18，中岛 6-7(3) 7-6(4)
+  6-1 胜梅德韦杰夫）——**2026-08-19 挪出去了**。按上面第③条渠道（The Enquirer
+  同日 gallery）找到官方实拍，`render_cover_local.py` 本地渲过确认无裁切问题。
+
+- **`borges-rublev`**（辛辛那提 ATP1000 第三轮，2026-08-18，博尔热斯 6-3 6-4
+  爆冷卢布列夫）——**2026-08-19 挪出去了**。同一批 The Enquirer gallery 找到的，
+  封面放卢布列夫（大名字例外，他是输的那一方）。
+
+- **`fritz-merida`**（辛辛那提 ATP1000 第三轮，2026-08-18，弗里茨 6-3 6-4 胜梅里达）
+  ——**2026-08-19 挪出去了**。同一批 The Enquirer gallery 找到的。
