@@ -122,26 +122,38 @@ apt_install_cached() {
 # **真正的杠杆是别去碰这条镜像。** 同一条流水线本来就靠
 # `release-assets.githubusercontent.com` 发成片（「成片一律走 Release
 # 不进 git」），这条路今天全程稳定——所以 ffmpeg 改成先试一个托管在
-# GitHub Releases 上的静态构建（BtbN/FFmpeg-Builds，GPL 版，含
-# libx264/libx265，这条流水线的编码参数都用得上）。实测下载 128 MB
-# 十几秒，动态依赖只有 libm/libdl/librt/libpthread 这几个任何
-# ubuntu-latest 都带的 glibc 级别库，`ffmpeg -version` 跑得动。
+# GitHub Releases 上的静态构建。
+#
+# ⚠️⚠️ **第一版指的是 BtbN/FFmpeg-Builds 的 `latest` 标签，当场翻车**
+# （run 32307313856）：那个标签**每天跟着 FFmpeg master 重新构建**，
+# 不是一个钉死的版本——那天下到的 ffprobe 是 `N-126217-…-20260819`，
+# 字面就是当天编的。它的 CSV writer 行为和我们用了很久的稳定版不一样：
+# `-show_entries stream=duration -of csv=p=0` 吐出 `117.480000,`
+# 带一个尾随逗号，`check_reel_landed.py` 拿它 `float()` 直接崩——
+# **这正是「latest 不等于稳定」的活证据**，不是猜的。
+#
+# 换成 johnvansickle.com 的 `ffmpeg-release-amd64-static.tar.xz`：
+# 它跟的是**上一个带编号的稳定版**（这次拿到的是 7.0.2，`last-modified`
+# 停在 2024-08-24——两年没变过，因为上游没再出新的稳定版），不会像
+# master 快照那样一天一个样。实测：完全静态链接（`ldd` 报
+# "not a dynamic executable"，比 BtbN 那份"只依赖几个 glibc 库"更干净）、
+# 含 libx264/libx265、CSV 输出干净、40 MB 十几秒下完。
 #
 # ⚠️ **不是替换 apt，是多一条更快的路，apt 仍然是保底。** 静态构建
-# 下载失败（GitHub 那天也抽风、tar 包结构变了……）就原样退回
+# 下载失败（那天也抽风、tar 包结构变了……）就原样退回
 # `apt_install_cached ffmpeg`——旧路径一个字没删，坏的方向不会比现在更糟。
 ensure_ffmpeg() {
   if command -v ffmpeg >/dev/null 2>&1 && command -v ffprobe >/dev/null 2>&1; then
     echo "[ffmpeg] 已经在 PATH 上了，跳过"
     return 0
   fi
-  local url="https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-linux64-gpl.tar.xz"
+  local url="https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz"
   local tmp ok=0
   tmp="$(mktemp -d)"
   if timeout 90 curl -fsSL "$url" -o "$tmp/ffmpeg.tar.xz" 2>"$tmp/dl.log"; then
     local ffbin ffprobebin
-    ffbin=$(tar -tJf "$tmp/ffmpeg.tar.xz" 2>/dev/null | grep -m1 '/bin/ffmpeg$' || true)
-    ffprobebin=$(tar -tJf "$tmp/ffmpeg.tar.xz" 2>/dev/null | grep -m1 '/bin/ffprobe$' || true)
+    ffbin=$(tar -tJf "$tmp/ffmpeg.tar.xz" 2>/dev/null | grep -m1 '/ffmpeg$' || true)
+    ffprobebin=$(tar -tJf "$tmp/ffmpeg.tar.xz" 2>/dev/null | grep -m1 '/ffprobe$' || true)
     if [ -n "$ffbin" ] && [ -n "$ffprobebin" ]; then
       tar -xJf "$tmp/ffmpeg.tar.xz" -C "$tmp" "$ffbin" "$ffprobebin" 2>/dev/null
       sudo install -m 755 "$tmp/$ffbin" /usr/local/bin/ffmpeg 2>/dev/null
@@ -153,7 +165,7 @@ ensure_ffmpeg() {
   fi
   rm -rf "$tmp"
   if [ "$ok" = 1 ]; then
-    echo "[ffmpeg] 走静态构建（GitHub Releases），没碰 apt 镜像"
+    echo "[ffmpeg] 走静态构建（johnvansickle.com，稳定版不是 master 快照），没碰 apt 镜像"
     return 0
   fi
   echo "[ffmpeg] 静态构建拿不到，退回 apt"
