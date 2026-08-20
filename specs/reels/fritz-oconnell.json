@@ -1,0 +1,244 @@
+{
+  "slug": "fritz-oconnell",
+  "source_url": "https://youtu.be/ZeUoeYrhNSA",
+  "_source": "**Tennis TV 官方 YouTube 频道**（标题 `Taylor Fritz vs Christopher O'Connell | Cincinnati 2026 Match Highlights`），**163.75 秒、1920×1080 @ 25 fps**，无自动字幕轨（不含赛后场上采访，全片是比赛画面 + 庆祝 + 握手 + Tennis TV 片尾）。\n\n四处画面自证：① 记分条整场烧着 `FRITZ / O'CONNELL`，逐格和 flashscore 的逐分对得上（见 `_editing_why`）；② 134.5 秒记分条右侧烧着黄底 `2 MATCH POINTS`，和 `df_mh_1` 次盘第九局的 `40:15` 那一刻对得上；③ 场边挡板是 `P&G` / `Old Spice` / `CreditOne` / `Fifth Third Bank` / `Emirates` / `ATP TOUR`，是辛辛那提站的赞助商阵容；④ 140.5 秒比赛结束瞬间叠出 `Fifth Third Bank` 赞助商图形，紧接 142.5 秒起是弗里茨的赛后反应、走场、和奥康奈尔的网前握手——不是采访，没有 ATP 话筒、没有采访背板。",
+  "_column": "赛场之上",
+  "topbar": {
+    "line1": "2026 辛辛那提 ATP1000 1/8决赛",
+    "line2": "弗里茨 6-4 6-3 奥康奈尔"
+  },
+  "_topbar_why": "第二行和 `cover.winner`（弗里茨）、`cover.result`（6-4 6-3）、`cover.matchup` 的名字机械一致。轮次照 `cobolli-jodar.json`/`kostyuk-andreeva.json`/`wangxiyu-keys.json` 同一站已经用过的写法「2026 辛辛那提 ATP1000 1/8决赛」，flashscore `AC÷3` 对应 `1/8-finals`。",
+  "_match": {
+    "flashscore_id": "6DY96bDl",
+    "atp_player_ids": "弗里茨 FB98 · 奥康奈尔 O483",
+    "_why": "逐分（`df_mh_1_6DY96bDl`）、统计（`df_st_1_`）、分盘用时（`df_sui_1_`）都从这个 id 取，`tools/match_feed.py show 6DY96bDl --home Fritz --away \"O'Connell\"` 逐局核过。\n\nO483 由 WebSearch 限定 `atptour.com` 搜到的 H2H 页 URL 反证\n（`atptour.com/en/players/atp-head-2-head/christopher-o'connell-vs-.../.../o483`）；\n官方头像端点 `https://www.mubadaladcopen.com/-/media/alias/player-headshot/O483` 返回 300×300、**颜色数 243** 的真头像，不是 2 色占位剪影。⚠️ `atptour.com` 对本环境一律 403，主机名要带 `www.`（裸的 `mubadaladcopen.com` 现在 301）。"
+  },
+  "_hit_data": "`tools/match_feed.py show 6DY96bDl` 报的走势里最硬的三条：\n\n    发球局   弗里茨**十个发球局全部保发**（Service games won 100% 10/10），全场只被逼到一个破发点\n    破发点   弗里茨破发点 **2/7**、奥康奈尔 **0/1**——奥康奈尔一整场只拿到过一次破发机会\n    转折局   次盘四比三，弗里茨在奥康奈尔的发球局里一连拿到三个破发点，第三个才兑现，随即发球胜赛\n\n钩子给的是转折局那条——它是唯一一次真正的悬念（弗里茨其余九个发球局对手一个破发点都没碰到，这场球本身没有太多起伏，真正的戏在这一局里）。",
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "弗里茨",
+    "hook": "连追三个破发点\n第三个才终于兑现",
+    "_hook_why": "封面主体是弗里茨——世界第九、美国男单第一、也是赢的那个，主体和赢家不冲突。\n\n两行讲的是**海报赛果行看不出来的东西**：`6-4 6-3` 那一行看不出这场球全程一边倒（弗里茨全场未失一个发球局），也看不出唯一的悬念集中在次盘四比三那一局——三个破发点才拿下。排名、轮次、比分海报已经印着了，钩子没有重复。\n\n最长行 **8 个字符**（「第三个才终于兑现」），在 `HOOK_MAX_CHARS = 10` 以内。\n\n⚠️ **两行的主语都是弗里茨**，和封面主体、和海报赛果行的赢家是同一个人，读不岔。「兑现」的主语是他自己拿到的破发点，不存在 CLAUDE.md「盘点赛点谁救的必须写出来」拦的那种中途换人（那条拦的是『拿到／要到』的点被别人救走，这条是自己拿到、自己兑现）。\n\n⚠️ **对手奥康奈尔的资格赛突围 + 两站退赛红利晋级这条更抓人的线，没有放进钩子**——按『对手XXX\\n她/他还是……』这个句式（`boulter-volynets`/`chwalinska-gibson` 那批同样用过对手的失误/困境当铺垫），本来可以写，但那条线的分量重到需要展开讲清楚（鲁德退赛 + 丰塞卡退赛两件独立的事），压成钩子的一行会失真，所以放进 `editorial.human_context`，钩子留给这场球本身唯一的悬念。"
+    ,
+    "topic": "ATP1000辛辛那提 · 男单1/8决赛",
+    "scrim": "clear",
+    "winner": "弗里茨",
+    "result": "6-4 6-3",
+    "matchup": [
+      {
+        "name": "弗里茨",
+        "name_en": "Taylor Fritz",
+        "country": "USA",
+        "rank": 9
+      },
+      {
+        "name": "奥康奈尔",
+        "name_en": "Christopher O'Connell",
+        "country": "AUS",
+        "rank": 129
+      }
+    ],
+    "_matchup_rank_why": "两个排名都取自 **tennisexplorer.com 球员页**（`curl` 带浏览器 UA，`WebFetch` 对这个站会被拦）：`Fritz Taylor` 页 `Current/Highest rank - singles: 9. / 4.`；`O'Connell Christopher` 页 `Current/Highest rank - singles: 129. / 53.`。两个数又在 H2H 对阵页（`tennisexplorer.com/mutual/fritz-f1aa7/o-connell-020b8/`）的选手信息表里各自独立重复了一遍，四处一致。\n\n⚠️ **不是种子号**：`protennislive.com/posting/2026/422/mds.pdf` 的 `Seeded Players` 表里弗里茨是种子号，本文件早记过『`Seeded Players` 那一栏 `Rank` 也是快照，和当期排名对不上』——这条一律走 tennisexplorer 的当期排名，不碰签表 PDF 里的那一栏。",
+    "_name_why": "两个中文名都走 `player_zh()`，实跑过：`player_zh('Taylor Fritz') → 弗里茨`、`player_zh(\"Christopher O'Connell\") → 奥康奈尔`。",
+    "portrait": {
+      "image": "PENDING",
+      "_photo_why": "⚠️ **官方高清实拍还没有，四类源查过：**\n\n    ① 赛事官网图库   `tools/find_cover_photo.py --player \"Taylor Fritz\" --event Cincinnati\n                      --site cincinnatiopen.com --date 2026-08-19` 扫过 WordPress 媒体库\n                      当天批次——2026-08-19 那批（87 张）全部拍摄于这场之前，`day-8`\n                      图集还没上线。**这是「还没发」不是「没有」**，media 库主批一般在\n                      次日 UTC 01:00~03:00 才上（见 CLAUDE.md 那节）\n    ② 当地报纸每日图集  The Enquirer 8/19 那一辑还没索引到\n    ③ AP／Getty        没搜到这一场专属的实拍\n    ④ Commons/Openverse 弗里茨有照片，但不是这一场，过不了第一道闸门\n\n**按账号所有者 2026-08-17 定的口径「找到对应比赛的高清大图是前置条件，不然就等」**，\n这条片子先把 spec / 旁白 / editorial 全部写完、全量测试跑绿，`cover.portrait.image`\n留 `PENDING` 占位，**不合并、不渲染、不推送**，等这场的官方实拍上线再补。\n\n下一轮查图命令：\n\n    python3 tools/find_cover_photo.py --player \"Taylor Fritz\" --event Cincinnati \\\n        --site cincinnatiopen.com --date 2026-08-19"
+    },
+    "scoreboard": {
+      "court": "P&G Stadium Court",
+      "_court_why": "tennis.com 这场的比赛页写着 `P&G Stadium Court`，源片场边挡板整场印着 `P&G`——外部核对和画面自证对得上。⚠️ 同一站 `zverev-norrie` 那条印的也是 `P&G Stadium Court`（转播全屏台标自己写的），这条没有全屏台标，只有 tennis.com 这一个出处，但和已验证过的同站写法一致。",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22:%20%221:17:00%22%2C%20%22source_feed%22:%20%22https://global.flashscore.ninja/2/x/feed/df_sui_1_6DY96bDl%22%7D",
+        "field": "duration"
+      },
+      "_duration_why": "flashscore `df_sui_1_6DY96bDl`：`RC÷0:40`＋`RD÷0:37` ＝ **1:17**，等于它自己的 `RB÷1:17`，自洽。ATP 没有公开的比赛时长 JSON 接口，照这条线走通的做法（`fritz-michelsen.json`/`fritz-merida.json` 同款）用 `data:` URL 把核过的数字连同出处写进去。"
+    }
+  },
+  "editorial": {
+    "mode": "match_review",
+    "question": "全场只被破发一次的弗里茨，这场球的悬念藏在哪一局？",
+    "thesis": "藏在次盘四比三——那是全场唯一一次真正的破发点风暴。弗里茨十个发球局全部保发，对手全场只拿到过一个破发点；反过来他自己七次拿到破发机会，兑现两次。首盘打到二比二时，奥康奈尔一口气救回三个破发点才保住发球局，比分缠斗到四比四，但弗里茨随即顶住压力，自己保发到五比四，紧接着在对手发球局逼出一个破发点、一个盘点，六比四拿下首盘。次盘双方一路互保战到四比三，一个破发点都没有出现——直到奥康奈尔自己的发球局，弗里茨一连拿到三个破发点，第三个才终于兑现，五比三，随即发球胜赛。而站在网对面的奥康奈尔，能走到这一轮本身就是个意外：次轮他领先鲁德时鲁德因背伤退赛，第三轮丰塞卡又因腹伤直接退赛——算上资格赛，他到这一轮只完整打过两场比赛，两人也是第一次在硬地上交手。",
+    "beats": [
+      "前段：首盘二比二，奥康奈尔连救三个破发点保发，比分顶到四比四，弗里茨随即回应，六比四拿下首盘",
+      "中段：次盘双方一路互保到四比三，没有破发点，直到奥康奈尔的发球局被连续逼出三个破发点",
+      "结局：第三个破发点兑现，五比三，弗里茨随即发球胜赛，六比三收官——两人交手来到四比零，第一次在硬地上"
+    ],
+    "human_context": {
+      "angle": "这一场的场外切口是**对面那位只完整打了两场比赛就站到这里的人**。奥康奈尔三十二岁、世界第一百二十九，是资格赛突围的球员：次轮面对鲁德时，他先拿下首盘七比五，鲁德背伤发作后一度反超到二比一，还是撑不住弃赛；第三轮丰塞卡又因腹部受伤直接退赛，他不战晋级。也就是说他到今天这一轮，正赛真正打满全场的只有首轮那一场。而弗里茨这边毫无悬念地保持着对他的全胜——四次交手，四次都是直落两盘。",
+      "facts": [
+        "本场 6-4 6-3，1 小时 17 分；分盘用时 0:40 / 0:37（flashscore `df_sui_1_6DY96bDl` 的 `RC`＋`RD`＝`RB`）",
+        "弗里茨**十个发球局全部保发**（Service games won 100% 10/10），全场只被逼到过一个破发点，而且守住了（Break Points Saved 1/1）",
+        "弗里茨破发点 **2 兑现 7**；奥康奈尔全场只拿到 **1 个**破发点，没有兑现",
+        "首盘二比二，奥康奈尔连救 3 个破发点保住发球局（`df_mh_1` `2-2 O'Connell发球，O'Connell拿下 ← 3个破发点`）",
+        "首盘六比四那一局，弗里茨在奥康奈尔的发球局里逼出 1 个破发点、1 个盘点，一次兑现（`df_mh_1` `6-4 O'Connell发球，Fritz拿下 ← 破发、1个破发点、1个盘点`）",
+        "次盘四比三之后，弗里茨在奥康奈尔发球局里连续拿到 **3 个破发点**，第三个才兑现，五比三（`df_mh_1` `5-3 O'Connell发球，Fritz拿下 ← 破发、3个破发点`；134.5 秒画面上烧着黄底 `2 MATCH POINTS`）",
+        "全场制胜分 23 对 10，非受迫失误 23 对 18；总分 110 分，弗里茨赢下 61 分（55%）",
+        "Ace 10 对 3，双误 3 对 1；一发成功率 66% 对 50%",
+        "奥康奈尔今年三十二岁、世界第一百二十九、生涯最高第五十三（tennisexplorer 球员页）；辛辛那提资格赛决赛 6-4 6-1 淘汰 Shevchenko A. 拿到正赛资格",
+        "正赛第一轮 6-4 7-6 击败 Majchrzak K.；第二轮领先鲁德 7-5、次盘一度反超 2-1，鲁德因背伤退赛（flashscore `4v9bquMq` 逐盘用时；WebSearch 交叉核对：Ruud 在多个赛事报道里被引述为『started perfectly, leading 5-2』随后被 O'Connell 追回首盘，次盘退赛前领先 2-1）",
+        "第三轮丰塞卡因腹部受伤直接退赛，奥康奈尔不战晋级（flashscore `IJlSeE5L` 显示比分为空，`Fonseca J. vs O'Connell C.`）——算上资格赛，他到今天这一轮只完整打过两场正赛（Majchrzak、鲁德未打完不计入『完整』）",
+        "两人此前交手 3 次，弗里茨全胜：2023 马德里（红土）7-6(11) 6-4、2024 温布尔登（草地）6-1 6-2 6-4、2025 马德里（红土）6-1 6-4——**今天是两人第一次在硬地上交手**，交手战绩来到 4-0（tennisexplorer.com H2H 对阵页）",
+        "弗里茨生于 1997-10-28（28 岁），奥康奈尔生于 1994-06-03（32 岁），身高 193cm 对 183cm（tennisexplorer H2H 对阵页选手信息表）",
+        "球场 **P&G Stadium Court**（tennis.com 比赛页；场边挡板画面自证 `P&G`）"
+      ],
+      "sources": [
+        "https://global.flashscore.ninja/2/x/feed/df_mh_1_6DY96bDl",
+        "https://global.flashscore.ninja/2/x/feed/df_st_1_6DY96bDl",
+        "https://global.flashscore.ninja/2/x/feed/df_sui_1_6DY96bDl",
+        "https://global.flashscore.ninja/2/x/feed/4v9bquMq",
+        "https://global.flashscore.ninja/2/x/feed/IJlSeE5L",
+        "https://www.tennisexplorer.com/mutual/fritz-f1aa7/o-connell-020b8/",
+        "https://www.tennisexplorer.com/player/fritz-f1aa7/",
+        "https://www.tennisexplorer.com/player/o-connell-020b8/",
+        "https://www.tennis.com/tournaments/cincinnati-open/matches/t-fritz-vs-c-oconnell-2026-08-20",
+        "https://www.abc.net.au/news/2026-08-17/chris-oconnell-casper-ruud-injury-retirement-cincinnati-open/107044976"
+      ],
+      "voice_label": "只打了两场完整比赛的人"
+    }
+  },
+  "_no_repeat": "⚠️ **弗里茨在这一站已经出现过两条**：`fritz-merida`（R3，落点是「制胜分十七比十七打平，输的还是梅里达」，讲他美国本土连胜延续到七场、辛辛那提五年内第四次进第四轮）、`fritz-michelsen`（R2，落点是「第一局就丢发球，此后一个破发点没给」）。**这一条一个字都不重讲那两条的内容**：不提美国连胜、不提第四轮纪录、不提对米切尔森那场的具体过程。这一条的落点是**次盘四比三那一局的破发点风暴**，以及**对手奥康奈尔资格赛突围＋两站退赛红利晋级**——两条老片子里都没有这些内容。奥康奈尔没有在任何已发 spec 里出现过。",
+  "_editing_why": "probe 两轮：第一轮（`--every 2.0`，无 `--scorebox`）拿到 `scene_cuts` 和 `scorebox_guess`；第二轮带 `--scorebox 372,433,954,562` 拿到真实 `point_ends`。`scene_cuts` = [11.84, 20.88, 32.76, 36.04, 47.36, 62.84, 78.0, 87.48, 126.04, 128.28, 132.52, 134.32, 136.12, 140.48, 147.4, 153.68]。\n\n逐一核对（`score_00.jpg`~`score_04.jpg`、`contact_00.jpg`~`contact_02.jpg` 每 2 秒一帧的记分条烧字读出来的，并与 `df_mh_1_6DY96bDl` 逐局对照）：\n\n**首盘**：0.5~8.5 秒已经是 `FRITZ 1-0`（第一局在片头之前已打完）；14.5~20.5 秒记分条持续 `FRITZ 2 AD / O'CONNELL 2`（第四局，奥康奈尔发球，`2-2 O'Connell发球，O'Connell拿下 ← 3个破发点`，多次 AD/AD 往返正是这局连救三个破发点的画面）；22.5 秒转场；24.5~32.5 秒 `FRITZ 4 15 / O'CONNELL 3 40`（第七局，奥康奈尔发球逼近保发）；34.5 秒 `4 30/3 40`；36.5~48.5 秒 `FRITZ 4 15 / O'CONNELL 4 15`（第八局，奥康奈尔已保发到四比四）；50.5~62.5 秒 `FRITZ 5 40 / O'CONNELL 4 15`（第九局，弗里茨保发到五比四之后，随即在对手发球局逼近破发）；64.5 秒转场 `FRITZ 6 / O'CONNELL 4`（首盘定格 6-4）。④a/④b（11.84-20.88/20.88-36.04，crosses_cut）落在这段常规底线来回上，画面持续弗里茨/奥康奈尔发球对峙，与两段旁白讲的『奥康奈尔资格赛突围』『鲁德/丰塞卡退赛红利』内容不直接对应（这两件事这条集锦里没有画面），作为场景过渡背景，不与画面冲突；⑤ 段（36.04-47.36）取的正是奥康奈尔保发到四比四这段常规回合，与旁白『奥康奈尔连救三个破发点，顶到四比四』的过程对应；⑥ 段（47.36-62.84）取弗里茨保发到五比四、逼近对手发球局这段，与旁白『弗里茨顶住压力，保发、逼出破发点盘点，六比四』的过程对应。\n\n**次盘**：66.5 秒已是 `FRITZ 6 2 / O'CONNELL 4 1`（次盘二比一）；80.5~88.5 秒 `FRITZ 6 2 30 / O'CONNELL 4 2 15`（第四局，二比二）；90.5 秒 `6 2 40/4 2 15`；92.5~118.5 秒长时间静止在 `FRITZ 6 4 30 / O'CONNELL 4 3 0`（第七局，弗里茨已建立四比三领先，中间夹杂多帧走动/换边镜头，无新的死球）；⑦ 段（78.0-90.16，crosses_cut 于 87.48——同一个连续回合的镜头角度切换，不是换人换比赛）取奥康奈尔从二比一被追平到弗里茨重新建立领先这段，与旁白『次盘弗里茨很快建立起领先，二比一……战至四比三』一致；⑧ 段（95.36-106.2）落在这段长静止里，画面上是常规底线来回/走动镜头，作为『破发点效率』这段陈述性旁白的背景，不与画面冲突。\n\n**关键破发局**：120.5~126.5 秒 `FRITZ 6 4 30 / O'CONNELL 4 3 0`（弗里茨作为回接方已经 30-0 领先，这是对手第八局的发球局）；128.5~130.5 秒 `6 4 40/4 3 30`（弗里茨逼近至 40-30）；132.5 秒转场；134.5 秒 `FRITZ 6 5 40 / O'CONNELL 4 3 15`，右侧烧着黄底 `2 MATCH POINTS`——弗里茨已完成破发（五比三）并在自己发球局拿到两个赛点；136.5~138.5 秒同一比分持续，弗里茨发球；140.5 秒比赛结束，画面叠出 `Fifth Third Bank` 赞助商图形。⑨ 段（126.04-134.32）取奥康奈尔发球局被逼出连续破发点、最终失守的这段，正是全场唯一的破发点风暴，与旁白『四比三，弗里茨一连逼出三个破发点——第三个，终于兑现，五比三』精确对应。\n\n**收尾**：① 段（134.32-136.12，无旁白）取『2 MATCH POINTS』黄字叠出的那一刻，全片最强的一格——赛点悬念，交给现场声；② 段（136.12-140.48）延续这一刻走向比赛结束的画面，narration 交代最终比分；⑩ 段（140.48-153.68，crosses_cut 于 147.4——弗里茨赛后走场到网前握手是同一段连续的赛后画面，不是切到别的内容）取弗里茨composed 反应、走场、和奥康奈尔网前握手的完整段落，narration 收在两人交手战绩和这场握手上。⚠️ **142.5~152.5 秒不是采访**：没有 ATP 话筒、没有采访背板，只是常规的赛后走场/握手镜头，和 `fritz-michelsen.json` 那条被剪掉的赛后场上采访（有话筒、有背板）是两回事，不受『采访不进复盘』那条约束。**154.5 秒起是 Tennis TV 片尾**（`SEA[SON]`/`Tennis TV` 图形），十段全部收在 153.68 秒之前。",
+  "_tennistv_trim": "**片尾要剪掉，这条源片没有赛后采访要剪。** `scene_cuts` 最后一刀在 153.68 秒，之后是 Tennis TV 的 `Tennis TV / THE BEST SEAT IN TENNIS` 图形和 `TAP TO SUBSCRIBE` 订阅卡（154.5~163.75 秒）；十段 `segments` 全部收在 153.68 秒之前，一帧片尾都没进来。⚠️ 这条和 `fritz-michelsen.json`/`fritz-merida.json` 不同的是：**这条源片本身没有单独的赛后场上采访段**（duration 只有 163.75 秒，比那两条短得多），所以只需要剪片尾这一处，不需要像那两条一样另外剪掉一段采访。\n\n**台标**：Tennis TV 水印一律钉 `cx: 0.5` 不走自动质心，和同一批 ATP 片子同款处置。",
+  "stats": {
+    "tour": "atp",
+    "a": {
+      "headshot": "assets/players/headshots/atp-FB98.png",
+      "aces": 10,
+      "df": 3,
+      "first_in": 38,
+      "first_total": 58,
+      "first_won": 29,
+      "second_won": 13,
+      "second_total": 20,
+      "bp_conv": 2,
+      "bp_chances": 7,
+      "pts_won": 61,
+      "pts_total": 110,
+      "winners": 23,
+      "ue": 23
+    },
+    "b": {
+      "headshot": "assets/players/headshots/atp-O483.png",
+      "aces": 3,
+      "df": 1,
+      "first_in": 26,
+      "first_total": 52,
+      "first_won": 23,
+      "second_won": 10,
+      "second_total": 26,
+      "bp_conv": 0,
+      "bp_chances": 1,
+      "pts_won": 49,
+      "pts_total": 110,
+      "winners": 10,
+      "ue": 18
+    },
+    "footer_venue": "辛辛那提 · 男单1/8决赛",
+    "footer_date": "2026年8月20日",
+    "_source": "`python3 tools/match_feed.py show 6DY96bDl --home Fritz --away \"O'Connell\"`，出处是 flashscore `df_st_1_6DY96bDl` 的 `Match` 一栏。\n\n⚠️ **a/b 和工具输出同向**：flashscore 的 home 是弗里茨（H2H 页面 `Fritz Taylor 4 - 0 O'Connell Christopher`，本场也是主队），`cover.matchup[0]` 也是弗里茨，两者一致，工具的 `a` 块直接填这里的 `a`。\n\n**头像自证**：`atp-FB98.png`（300×300，颜色数 237）和 `atp-O483.png`（300×300，颜色数 243）都是官方端点返回的真头像，不是占位剪影。\n\n⚠️ `first_total` 不取接口的 `Service Points Won` 分母，按 `first_in + second_total` 算（弗里茨 58＝38＋20；奥康奈尔 52＝26＋26）——一发成功率画的是 `first_in / first_total`，用和式才自洽。"
+  },
+  "_voice": "云见（`zh-CN-YunjianNeural`）、`+6%`，和这条线其余片子一致。",
+  "_claims": {
+    "弗里茨十个发球局全部保发，全场只被破发点逼到一次": [
+      "https://global.flashscore.ninja/2/x/feed/df_mh_1_6DY96bDl",
+      "https://global.flashscore.ninja/2/x/feed/df_st_1_6DY96bDl"
+    ],
+    "两人此前交手三次，弗里茨全胜，今天是两人第一次在硬地上交手": [
+      "https://www.tennisexplorer.com/mutual/fritz-f1aa7/o-connell-020b8/"
+    ],
+    "奥康奈尔到这一轮只完整打过两场正赛，鲁德和丰塞卡都是退赛": [
+      "https://global.flashscore.ninja/2/x/feed/4v9bquMq",
+      "https://global.flashscore.ninja/2/x/feed/IJlSeE5L",
+      "https://www.abc.net.au/news/2026-08-17/chris-oconnell-casper-ruud-injury-retirement-cincinnati-open/107044976"
+    ],
+    "_why": "第一条是**双重全称断言**（『十局全部保发』＋『只被逼到一次』），`df_mh_1` 逐局核过：弗里茨发球十局（首盘 1/3/5/7/9，次盘 1/3/5/7/9），每局都以『Fritz发球，Fritz拿下』收尾；`df_st_1` 的 `Break Points Saved` 一栏写着弗里茨 `1/1`——全场只面对过一次破发威胁，且守住了，两个口径互相印证。\n\n第二条 H2H 记录直接读自 tennisexplorer 的对阵页表格（`<td class=\"gScore\">4 - 0</td>`），并逐场核对了场地类型：2023 马德里/2025 马德里均为 Clay、2024 温布尔登为 Grass、2026 辛辛那提为 Hard——前三场都不是硬地，今天确实是第一次。\n\n第三条是本条片子里最容易查错的一条：鲁德那场 flashscore `4v9bquMq` 显示比分 `7-5 1-2`（家=奥康奈尔=1，客=鲁德=2），说明**鲁德退赛时他实际领先次盘 2-1**，不是奥康奈尔领先——WebSearch 检索到的多篇报道（tennistemple/racingandsports/abc.net.au）明确写着『Ruud... finally decided to retire while leading 2-1 in the second set』，与 flashscore 原始字段方向一致，避免了把『7-5, 1-2』这两个数字读反。丰塞卡那场 `IJlSeE5L` 比分字段为空，是不战而胜（walkover）的标准特征。"
+  },
+  "segments": [
+    {
+      "start": 134.32,
+      "end": 136.12,
+      "cx": 0.5,
+      "_why": "① 冷开场，不配旁白，走现场声。全片最强的一格：记分条右侧烧出黄底 `2 MATCH POINTS`，弗里茨刚完成本场唯一一次破发。"
+    },
+    {
+      "start": 136.12,
+      "end": 140.48,
+      "narration": "六比四六比三，弗里茨四连胜。",
+      "cx": 0.5,
+      "_why": "② 落点：直接给出最终比分和对阵历史，紧接冷开场的同一段收尾画面（比赛在这段窗口内结束，140.5 秒叠出赞助商图形）。"
+    },
+    {
+      "start": 0.0,
+      "end": 11.84,
+      "narration": "北京时间八月二十号早上八点多，辛辛那提网球公开赛男单1/8决赛，九号种子弗里茨迎战资格赛突围的奥康奈尔。",
+      "cx": 0.5,
+      "_why": "③ 坐标：开球时刻（AD÷1787186100 → 北京 08:35，按『开球时刻只说个大概』规则写成『早上八点多』）+ 赛事 + 轮次 + 排名。窗口是源片开头首盘第一局刚打完的常规画面，`scene_cuts` 首刀在 11.84 秒，不跨切点。"
+    },
+    {
+      "start": 11.84,
+      "end": 20.88,
+      "narration": "奥康奈尔今年三十二岁，世界第一百二十九，资格赛一路杀进正赛。",
+      "cx": 0.5,
+      "_why": "④a 奥康奈尔背景第一句：年龄、排名、资格赛身份。窗口正是首盘第四局奥康奈尔连救三个破发点的常规回合画面，不跨切点（相邻 `scene_cuts` 11.84/20.88）。"
+    },
+    {
+      "start": 20.88,
+      "end": 36.04,
+      "narration": "次轮他先拿下首盘七比五，次盘鲁德背伤发作，一度反超二比一仍撑不住弃赛——第三轮丰塞卡又因腹伤直接退赛，他直接晋级。算上资格赛，到这一轮他只完整打过两场比赛。",
+      "crosses_cut": "20.88~36.04 秒之间的 32.76 秒是一次镜头角度切换（同一局常规回合的机位变化），contact sheet 核对画面持续是弗里茨/奥康奈尔发球对峙，不是换了比赛或换了人。",
+      "cx": 0.5,
+      "_why": "④b 奥康奈尔的晋级路：鲁德退赛 + 丰塞卡退赛，两件这条集锦里没有画面的事，用本场常规回合作场景过渡背景，不与画面内容冲突（和 `wangxiyu-keys.json` ④a/④b 同样的处置）。"
+    },
+    {
+      "start": 36.04,
+      "end": 47.36,
+      "narration": "首盘二比二，奥康奈尔一口气救回三个破发点，才把这一局保住——比分继续缠斗，一路顶到四比四。",
+      "cx": 0.5,
+      "_why": "⑤ 首盘缠斗：奥康奈尔保发到四比四的过程。窗口是第七/第八局常规回合（`FRITZ 4 15/O'CONNELL 3 40` 到 `FRITZ 4 15/O'CONNELL 4 15`），与旁白过程对应，不跨切点。"
+    },
+    {
+      "start": 47.36,
+      "end": 62.84,
+      "narration": "但弗里茨顶住了压力，先是稳稳保发到五比四；紧接着奥康奈尔发球，弗里茨立刻逼出一个破发点、一个盘点——六比四，首盘顺利到手。",
+      "cx": 0.5,
+      "_why": "⑥ 首盘收官：弗里茨保发＋破发拿下首盘。窗口是第九局常规回合到首盘结束的转场，`df_mh_1` `6-4 O'Connell发球，Fritz拿下 ← 破发、1个破发点、1个盘点` 对应。"
+    },
+    {
+      "start": 78.0,
+      "end": 90.16,
+      "narration": "次盘弗里茨很快建立起领先，二比一——此后双方一路互保，战至四比三，一个破发点都没有出现过。",
+      "crosses_cut": "78.0~90.16 秒之间的 87.48 秒是同一个连续回合的镜头角度切换，contact sheet 核对是同一局比赛画面，不是换了内容。",
+      "cx": 0.5,
+      "_why": "⑦ 次盘建立领先：从二比一到四比三，中间双方互保没有破发点。窗口覆盖 `df_mh_1` 次盘第一到第七局，全部『XX发球，XX拿下』，无 `|B1|`。"
+    },
+    {
+      "start": 95.36,
+      "end": 106.2,
+      "narration": "全场弗里茨只被逼到一个破发点，而且守住了，十个发球局一个没丢；奥康奈尔七次面对破发点，扛下来五次。",
+      "cx": 0.5,
+      "_why": "⑧ 效率数据：陈述性旁白，背景是次盘长静止段（`FRITZ 6 4 30/O'CONNELL 4 3 0` 持续多帧，含走动/换边镜头），不与画面内容冲突（同 `kostyuk-andreeva.json`/`wangxiyu-keys.json` 数据段的处置手法）。"
+    },
+    {
+      "start": 126.04,
+      "end": 134.32,
+      "narration": "四比三，弗里茨一连逼出三个破发点——第三个，终于兑现，五比三。",
+      "crosses_cut": "126.04~134.32 秒之间的 128.28 秒和 132.52 秒都是同一分／同一局连续对峙里的镜头角度切换（宽景切近景、近景切反应镜头），contact sheet 逐格核对：128.5 秒弗里茨在场边稳住、132.5 秒他正在回合中，比分持续从 30-0 走到 40-30，是同一局比赛的连续推进，不是换了人或换了内容。",
+      "cx": 0.5,
+      "_why": "⑨ 全场唯一的破发点风暴：`df_mh_1` `5-3 O'Connell发球，Fritz拿下 ← 破发、3个破发点`，窗口从弗里茨 30-0 领先开始到最终破发前一刻，与旁白精确对应。"
+    },
+    {
+      "start": 140.48,
+      "end": 153.68,
+      "narration": "两人第四次交手，弗里茨全胜，第一次在硬地上。网前这个握手，奥康奈尔从资格赛走到今天，配得上——但如果对手都打满全场，今天会不一样吗？",
+      "crosses_cut": "140.48~153.68 秒之间的 147.4 秒是弗里茨赛后composed反应转场到网前握手的连续赛后段落，同一批画面，不是切到别的内容。",
+      "cx": 0.5,
+      "_why": "⑩ 收尾：H2H 战绩 + 网前握手画面，落在对奥康奈尔这趟旅程的致意上，不停在数据上。"
+    }
+  ],
+  "push": {
+    "summary": "两场比赛就打进1/8决赛",
+    "lead": "辛辛那提男单1/8决赛，九号种子弗里茨 6-4 6-3 击败资格赛突围的奥康奈尔——全场他十个发球局全部保发，只被逼到过一次破发点，还守住了。首盘二比二，奥康奈尔连救三个破发点才保住发球局，比分缠斗到四比四；弗里茨随即回应，自己保发到五比四，紧接着在对手发球局逼出一个破发点、一个盘点，六比四拿下首盘。次盘双方一路互保战到四比三，没有出现任何破发点，直到奥康奈尔的发球局被连续逼出三个破发点——第三个才终于兑现，五比三，弗里茨随即发球胜赛，六比三收官。两人此前交手三次，弗里茨全胜，但今天是两人第一次在硬地上交手，战绩来到四比零。而站在网对面的奥康奈尔，能走到这一轮本身就是个意外：次轮他一度领先鲁德，鲁德因背伤退赛；第三轮丰塞卡又因腹部受伤直接退赛，他不战晋级——算上资格赛，他到今天只完整打过两场正赛。",
+    "_no_auto_why": "封面大图还在等官方实拍上线（见 `cover.portrait._photo_why`），`cover_photo_problem` 会拦住这条 spec，不设 `auto: true`，找到图之后手动走完整条推送流程。"
+  }
+}
