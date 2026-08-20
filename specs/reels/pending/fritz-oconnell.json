@@ -19,8 +19,7 @@
     "layout": "solo",
     "subject": "弗里茨",
     "hook": "连追三个破发点\n第三个才终于兑现",
-    "_hook_why": "封面主体是弗里茨——世界第九、美国男单第一、也是赢的那个，主体和赢家不冲突。\n\n两行讲的是**海报赛果行看不出来的东西**：`6-4 6-3` 那一行看不出这场球全程一边倒（弗里茨全场未失一个发球局），也看不出唯一的悬念集中在次盘四比三那一局——三个破发点才拿下。排名、轮次、比分海报已经印着了，钩子没有重复。\n\n最长行 **8 个字符**（「第三个才终于兑现」），在 `HOOK_MAX_CHARS = 10` 以内。\n\n⚠️ **两行的主语都是弗里茨**，和封面主体、和海报赛果行的赢家是同一个人，读不岔。「兑现」的主语是他自己拿到的破发点，不存在 CLAUDE.md「盘点赛点谁救的必须写出来」拦的那种中途换人（那条拦的是『拿到／要到』的点被别人救走，这条是自己拿到、自己兑现）。\n\n⚠️ **对手奥康奈尔的资格赛突围 + 两站退赛红利晋级这条更抓人的线，没有放进钩子**——按『对手XXX\\n她/他还是……』这个句式（`boulter-volynets`/`chwalinska-gibson` 那批同样用过对手的失误/困境当铺垫），本来可以写，但那条线的分量重到需要展开讲清楚（鲁德退赛 + 丰塞卡退赛两件独立的事），压成钩子的一行会失真，所以放进 `editorial.human_context`，钩子留给这场球本身唯一的悬念。"
-    ,
+    "_hook_why": "封面主体是弗里茨——世界第九、美国男单第一、也是赢的那个，主体和赢家不冲突。\n\n两行讲的是**海报赛果行看不出来的东西**：`6-4 6-3` 那一行看不出这场球全程一边倒（弗里茨全场未失一个发球局），也看不出唯一的悬念集中在次盘四比三那一局——三个破发点才拿下。排名、轮次、比分海报已经印着了，钩子没有重复。\n\n最长行 **8 个字符**（「第三个才终于兑现」），在 `HOOK_MAX_CHARS = 10` 以内。\n\n⚠️ **两行的主语都是弗里茨**，和封面主体、和海报赛果行的赢家是同一个人，读不岔。「兑现」的主语是他自己拿到的破发点，不存在 CLAUDE.md「盘点赛点谁救的必须写出来」拦的那种中途换人（那条拦的是『拿到／要到』的点被别人救走，这条是自己拿到、自己兑现）。\n\n⚠️ **对手奥康奈尔的资格赛突围 + 两站退赛红利晋级这条更抓人的线，没有放进钩子**——按『对手XXX\\n她/他还是……』这个句式（`boulter-volynets`/`chwalinska-gibson` 那批同样用过对手的失误/困境当铺垫），本来可以写，但那条线的分量重到需要展开讲清楚（鲁德退赛 + 丰塞卡退赛两件独立的事），压成钩子的一行会失真，所以放进 `editorial.human_context`，钩子留给这场球本身唯一的悬念。",
     "topic": "ATP1000辛辛那提 · 男单1/8决赛",
     "scrim": "clear",
     "winner": "弗里茨",
@@ -42,8 +41,11 @@
     "_matchup_rank_why": "两个排名都取自 **tennisexplorer.com 球员页**（`curl` 带浏览器 UA，`WebFetch` 对这个站会被拦）：`Fritz Taylor` 页 `Current/Highest rank - singles: 9. / 4.`；`O'Connell Christopher` 页 `Current/Highest rank - singles: 129. / 53.`。两个数又在 H2H 对阵页（`tennisexplorer.com/mutual/fritz-f1aa7/o-connell-020b8/`）的选手信息表里各自独立重复了一遍，四处一致。\n\n⚠️ **不是种子号**：`protennislive.com/posting/2026/422/mds.pdf` 的 `Seeded Players` 表里弗里茨是种子号，本文件早记过『`Seeded Players` 那一栏 `Rank` 也是快照，和当期排名对不上』——这条一律走 tennisexplorer 的当期排名，不碰签表 PDF 里的那一栏。",
     "_name_why": "两个中文名都走 `player_zh()`，实跑过：`player_zh('Taylor Fritz') → 弗里茨`、`player_zh(\"Christopher O'Connell\") → 奥康奈尔`。",
     "portrait": {
-      "image": "PENDING",
-      "_photo_why": "⚠️ **官方高清实拍还没有，四类源查过：**\n\n    ① 赛事官网图库   `tools/find_cover_photo.py --player \"Taylor Fritz\" --event Cincinnati\n                      --site cincinnatiopen.com --date 2026-08-19` 扫过 WordPress 媒体库\n                      当天批次——2026-08-19 那批（87 张）全部拍摄于这场之前，`day-8`\n                      图集还没上线。**这是「还没发」不是「没有」**，media 库主批一般在\n                      次日 UTC 01:00~03:00 才上（见 CLAUDE.md 那节）\n    ② 当地报纸每日图集  The Enquirer 8/19 那一辑还没索引到\n    ③ AP／Getty        没搜到这一场专属的实拍\n    ④ Commons/Openverse 弗里茨有照片，但不是这一场，过不了第一道闸门\n\n**按账号所有者 2026-08-17 定的口径「找到对应比赛的高清大图是前置条件，不然就等」**，\n这条片子先把 spec / 旁白 / editorial 全部写完、全量测试跑绿，`cover.portrait.image`\n留 `PENDING` 占位，**不合并、不渲染、不推送**，等这场的官方实拍上线再补。\n\n下一轮查图命令：\n\n    python3 tools/find_cover_photo.py --player \"Taylor Fritz\" --event Cincinnati \\\n        --site cincinnatiopen.com --date 2026-08-19"
+      "image": "assets/reel/fritz-cincinnati-2026-r16.jpg",
+      "focus": 0.5,
+      "focus_y": 0.35,
+      "zoom": 1.0,
+      "_frame_why": "The Enquirer 8/20 发布的 8/19 同日 gallery（round-of-16-continues-at-cincinnati-open-see-photos/91372587007/）：`Taylor Fritz, of United States, serves to Christopher O'Connell`，Albert Cesare/The Enquirer，5760×8640，发球托球动作，脸和球拍都清晰入镜，背景是虚化的深色场地。原图经www.gannett-cdn.com/authoring/...（替换 www.cincinnati.com/gcdn/ 那个 406 域名）取得，带 Accept: image/* 头。"
     },
     "scoreboard": {
       "court": "P&G Stadium Court",
@@ -185,7 +187,7 @@
     {
       "start": 20.88,
       "end": 36.04,
-      "narration": "次轮他先拿下首盘七比五，次盘鲁德背伤发作，一度反超二比一仍撑不住弃赛——第三轮丰塞卡又因腹伤直接退赛，他直接晋级。算上资格赛，到这一轮他只完整打过两场比赛。",
+      "narration": "次轮他先拿下首盘七比五，次盘鲁德背伤发作，一度反超二比一仍撑不住弃赛——第三轮丰塞卡又因腹伤退赛，他直接晋级。算上资格赛，到这一轮他只完整打过两场比赛。",
       "crosses_cut": "20.88~36.04 秒之间的 32.76 秒是一次镜头角度切换（同一局常规回合的机位变化），contact sheet 核对画面持续是弗里茨/奥康奈尔发球对峙，不是换了比赛或换了人。",
       "cx": 0.5,
       "_why": "④b 奥康奈尔的晋级路：鲁德退赛 + 丰塞卡退赛，两件这条集锦里没有画面的事，用本场常规回合作场景过渡背景，不与画面内容冲突（和 `wangxiyu-keys.json` ④a/④b 同样的处置）。"
@@ -200,7 +202,7 @@
     {
       "start": 47.36,
       "end": 62.84,
-      "narration": "但弗里茨顶住了压力，先是稳稳保发到五比四；紧接着奥康奈尔发球，弗里茨立刻逼出一个破发点、一个盘点——六比四，首盘顺利到手。",
+      "narration": "但弗里茨顶住了压力，先是稳稳保发到五比四；紧接着奥康奈尔发球，弗里茨第一个破发点就是盘点，一击拿下——六比四，首盘顺利到手。",
       "cx": 0.5,
       "_why": "⑥ 首盘收官：弗里茨保发＋破发拿下首盘。窗口是第九局常规回合到首盘结束的转场，`df_mh_1` `6-4 O'Connell发球，Fritz拿下 ← 破发、1个破发点、1个盘点` 对应。"
     },

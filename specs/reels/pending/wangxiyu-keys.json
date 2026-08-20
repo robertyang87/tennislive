@@ -18,8 +18,11 @@
     "_heat_why": "①中国球员——王曦雨（CHN），不需要额外justification（CLAUDE.md『中国球员不用等一个额外的理由』）。补充：她本站是资格赛突围的非种子球员，这是她 2026 年继法网之后第二次把资格赛之旅带到最大级别赛事的1/8决赛，WTA 官方稿称这是她『自温网后重回硬地赛场取得的首批胜利』（原文 `earned her first wins on hard court since the tour switched back to the surface after Wimbledon`）。",
     "topic": "WTA1000 辛辛那提 · 女单1/8决赛",
     "portrait": {
-      "image": "PENDING",
-      "_photo_why": "⚠️ **封面大图还没有官方高清实拍，等到了再补。** 2026-08-20 用 `tools/find_cover_photo.py --player \"Xiyu Wang\" --event Cincinnati --site cincinnatiopen.com --date 2026-08-19` 四类源全查过：①WTA `photo-resources` 没有对得上的（WTA 一批只发几个人，这次没轮到）；②AP 通讯社没有对得上的（AP 一天只发几场）；③`cincinnati.com` 当地每日图集按比赛日出，当天的往往次日才上线；④`cincinnatiopen.com` 的 WordPress 媒体库 2026-08-19 当天已传 87 张，但按上线时刻推算（同站规律『当天那一辑在次日 UTC 00:00–03:00 之间』），覆盖这场晚场比赛（北京时间 08-20 早上 07:10 开球）的那一批还没上线；`?search=Xiyu Wang` 目前只命中一张 492×656 的官方头像小图，不能当封面用。另外 `tools/fetch_wta_cover_photo.py --tournament 1017 --year 2026 --city cincinnati --match LS009 --surnames keys wang --match-date 2026-08-19` 查过 WTA Match Reaction 赛后稿，比赛页 8 篇文章里没有一篇是这场——『Match Reaction 一般赛后一小时内上线，等会儿再试，别当成没有实拍』。**这是『还没发』不是『没有』**：按 2026-08-18 house rule『高清大图是前置条件，没有就等』，`_dry-run`/render/push 都要等真图落地之后再跑，这份 spec 目前只是草稿，不许提交渲染。之后按同一条命令重查，拿到图后把 `image`/`fit`/`focus`/`focus_y`/`zoom` 填实、删掉这条注释里的『还没有』字样。"
+      "image": "assets/reel/wangxiyu-cincinnati-2026-r16.jpg",
+      "focus": 0.68,
+      "focus_y": 0.4,
+      "zoom": 1.0,
+      "_frame_why": "The Enquirer 同一批 gallery：`Xiyu Wang, of China, reacts to scoring a point against Madison Keys`，Albert Cesare/The Enquirer，5656×3771，握拳庆祝一分、侧脸表情看得出用力，背景可见 Cincinnati Open 场边广告牌和看台，四要素自证。她是这场的输家但封面主体（cover.subject=王曦雨，本场唯一的中国球员，符合优先中国球员那条），这张捕捉的是她曾经2-0领先时的competitive intensity，和封面钩子『开局连破带保2比0』呼应，不是嘲讽她后来的告负。"
     },
     "scrim": "clear",
     "matchup": [
