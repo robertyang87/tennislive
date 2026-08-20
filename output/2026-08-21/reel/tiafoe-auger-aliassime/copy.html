@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>8.21 赛场之上 | 五个赛点全救下仍告负</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>五个赛点全救下，第六个才倒下
+
+辛辛那提男单1/8决赛，世界第23的蒂亚福6-3 6-4淘汰六月刚创下生涯最高世界第4的阿利亚西姆。
+
+这是两段伤愈复出的碰撞。蒂亚福十二天前才在蒙特利尔因手伤中途退赛，飞纽约做了手术，辛辛那提复出后一路连胜杀进1/8决赛；阿利亚西姆刚在温网鏖战五盘惜败德约科维奇，紧接着又因训练中突发背伤缺战蒙特利尔。
+
+首盘蒂亚福第四局完成破发，一路带到6-3锁定。
+
+次盘开局对手先保发，蒂亚福扳平后完成破发反超，一度建立4-1领先——阿利亚西姆随即破回一局，把比分追近到4-3。
+
+决胜的第十局，轮到蒂亚福自己发球锁定比赛，一连拿到五个赛点，全部被阿利亚西姆救下。转播的记分屏都打出了“第五个赛点”的字样——直到第六个，蒂亚福才终于把这一分拿下。
+
+全场数据完全是反过来的：阿利亚西姆28记制胜分、13个ACE，是蒂亚福6记制胜分、2个ACE的4.7倍和6.5倍；可他也送出37个非受迫失误，是蒂亚福16个的两倍多。
+
+破发点转化率蒂亚福3/5，阿利亚西姆1/1——关键分上，还是蒂亚福更稳。
+
+制胜分和ACE都被碾压，笑到最后的却是蒂亚福，你怎么看这场球？
+
+#网球时差 #蒂亚福 #阿利亚西姆 #辛辛那提大师赛 #赛场之上</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>火力占优却输球，你觉得他输在哪？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
