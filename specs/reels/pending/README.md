@@ -220,3 +220,11 @@ Gauff-Li／Nakashima-Medvedev 五场（含 WTA），**Musetti-Zheng 一张都没
 
 - **`fritz-merida`**（辛辛那提 ATP1000 第三轮，2026-08-18，弗里茨 6-3 6-4 胜梅里达）
   ——**2026-08-19 挪出去了**。同一批 The Enquirer gallery 找到的。
+
+- **`fritz-oconnell`**（辛辛那提 ATP1000 1/8决赛，2026-08-20，弗里茨 6-4 6-3 胜
+  资格赛突围的奥康奈尔）——**2026-08-20 挪出去了**。The Enquirer 8/20 发布的
+  8/19 同日 gallery（`round-of-16-continues-at-cincinnati-open-see-photos/
+  91372587007/`）里找到实拍（`Taylor Fritz, of United States, serves to
+  Christopher O'Connell`，Albert Cesare/The Enquirer，5760×8640）。
+  `--dry-run`/`--check-narration`/`preview_segments_local.py` 全部核过，
+  已 `git mv` 回 `specs/reels/`。
