@@ -17,83 +17,65 @@ jobs:
     timeout-minutes: 300
     steps:
       - name: Publish six verified reels serially
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const owner = context.repo.owner;
-            const repo = context.repo.repo;
-            const workflow_id = 'match-reel.yml';
-            const slugs = [
-              'fritz-oconnell',
-              'tiafoe-auger-aliassime',
-              'fils-deminaur',
-              'musetti-faria',
-              'tirante-mensik',
-              'rybakina-shnaider'
-            ];
-            const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
-            const failures = [];
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -uo pipefail
+          slugs=(
+            fritz-oconnell
+            tiafoe-auger-aliassime
+            fils-deminaur
+            musetti-faria
+            tirante-mensik
+            rybakina-shnaider
+          )
+          failures=()
 
-            for (const slug of slugs) {
-              const before = await github.rest.actions.listWorkflowRuns({
-                owner, repo, workflow_id, branch: 'main',
-                event: 'workflow_dispatch', per_page: 50
-              });
-              const seen = new Set(before.data.workflow_runs.map(run => run.id));
-              const dispatchedAt = Date.now();
+          for slug in "${slugs[@]}"; do
+            before=$(mktemp)
+            if ! gh run list --repo "$GITHUB_REPOSITORY" \
+              --workflow match-reel.yml --branch main --event workflow_dispatch \
+              --limit 50 --json databaseId --jq '.[].databaseId' > "$before"; then
+              failures+=("$slug: could not snapshot existing runs")
+              rm -f "$before"
+              continue
+            fi
 
-              await github.rest.actions.createWorkflowDispatch({
-                owner, repo, workflow_id, ref: 'main',
-                inputs: {
-                  mode: 'push',
-                  slug,
-                  voice: 'zh-CN-YunjianNeural',
-                  rate: '+6%',
-                  push: 'true'
-                }
-              });
+            if ! gh workflow run match-reel.yml --repo "$GITHUB_REPOSITORY" \
+              --ref main -f mode=push -f "slug=$slug" \
+              -f voice=zh-CN-YunjianNeural -f rate='+6%' -f push=true; then
+              failures+=("$slug: dispatch failed")
+              rm -f "$before"
+              continue
+            fi
 
-              let run = null;
-              for (let attempt = 1; attempt <= 60; attempt += 1) {
-                await wait(5000);
-                const listed = await github.rest.actions.listWorkflowRuns({
-                  owner, repo, workflow_id, branch: 'main',
-                  event: 'workflow_dispatch', per_page: 20
-                });
-                run = listed.data.workflow_runs.find(candidate =>
-                  !seen.has(candidate.id) &&
-                  new Date(candidate.created_at).getTime() >= dispatchedAt - 5000
-                );
-                if (run) break;
-              }
+            run_id=""
+            for attempt in $(seq 1 60); do
+              sleep 5
+              run_id=$(gh run list --repo "$GITHUB_REPOSITORY" \
+                --workflow match-reel.yml --branch main --event workflow_dispatch \
+                --limit 20 --json databaseId --jq '.[].databaseId' \
+                | grep -vxFf "$before" | head -1 || true)
+              [ -n "$run_id" ] && break
+            done
+            rm -f "$before"
 
-              if (!run) {
-                failures.push(`${slug}: dispatch run not found`);
-                continue;
-              }
+            if [ -z "$run_id" ]; then
+              failures+=("$slug: dispatch run not found")
+              continue
+            fi
 
-              core.info(`${slug}: run ${run.id} dispatched`);
-              let finished = null;
-              for (let attempt = 1; attempt <= 250; attempt += 1) {
-                const current = await github.rest.actions.getWorkflowRun({
-                  owner, repo, run_id: run.id
-                });
-                if (current.data.status === 'completed') {
-                  finished = current.data;
-                  break;
-                }
-                await wait(10000);
-              }
+            echo "$slug: waiting for run $run_id"
+            if gh run watch "$run_id" --repo "$GITHUB_REPOSITORY" \
+              --exit-status --interval 10; then
+              echo "$slug: published successfully"
+            else
+              failures+=("$slug: run $run_id failed")
+            fi
+          done
 
-              if (!finished) {
-                failures.push(`${slug}: run ${run.id} timed out`);
-              } else if (finished.conclusion !== 'success') {
-                failures.push(`${slug}: run ${run.id} ${finished.conclusion}`);
-              } else {
-                core.info(`${slug}: run ${run.id} published successfully`);
-              }
-            }
-
-            if (failures.length) {
-              core.setFailed(failures.join('\n'));
-            }
+          if [ "${#failures[@]}" -gt 0 ]; then
+            printf '%s\n' "${failures[@]}" >&2
+            exit 1
+          fi
