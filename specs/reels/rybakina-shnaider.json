@@ -1,0 +1,228 @@
+{
+  "slug": "rybakina-shnaider",
+  "source_url": "https://www.youtube.com/watch?v=unHVYg1mznA",
+  "_source": "WTA 官方 YouTube 频道单场集锦（`author_name: WTA`，oEmbed 核实），标题 `Diana Shnaider vs. Elena Rybakina | 2026 Cincinnati Round of 16 | WTA Match Highlights`，`videoId=unHVYg1mznA`，实测 309s / 1080p / 频道 WTA（`yt-dlp --print`）。",
+  "_match": {
+    "flashscore_id": "Qq8XOYGq",
+    "wta_match_id": "LS015",
+    "wta_event_id": "1017",
+    "_why": "两个源核对一致：flashscore `Qq8XOYGq`（`Shnaider D.`(home) 4-6 4-6 `Rybakina E.`(away)，`AD=1787168400`，北京 2026-08-20 03:40 开球）与 WTA 官方 `LS015`（`ResultString: [2]E. Rybakina d [14]D. Shnaider 6-4,6-4`，`RoundID 4`（与同一天 `anisimova-noskova`/`LS012`、`bejlek-sabalenka`/`LS008` 同一次轮次验证，确认＝1/8 决赛）、`MatchTimeTotal 01:27:26`、`DateSeq 9`）互相印证。技术统计交叉核对：Aces（Shnaider 1／Rybakina 8）、Double Faults（2／4）、1st/2nd serve points won、Break Points Saved（Shnaider 1/3／Rybakina 7/7）、Total Points Won（63／70，合计 133）——flashscore `tools/match_feed.py` 与 WTA 官方逐项一致。"
+  },
+  "segments": [
+    {
+      "start": 278.6,
+      "end": 282.4,
+      "_why": "冷开场，不配旁白。score_06.jpg 268.5~278.5s 显示 Rybakina 五比四发球，40:30（match point #3），278.5~280.5s 之间打完；score_07.jpg 280.5s 已经是网前区域、`ELENA RYB[AKINA]` 图形出现——取分球落地+她的第一反应那两秒。全片最强的一格，靠现场声。"
+    },
+    {
+      "start": 283.0,
+      "end": 291.0,
+      "narration": "六比四、六比四，莱巴金娜拿下这场胜利——十个发球局，她一局都没丢。",
+      "_why": "落点句，讲海报赛果行看不出来的东西（十局全保）。画面延续冷开场之后的网前走动/致意区间（280.5~296.5s 都是这段，score_07.jpg 核对过没有跨到片尾板——片尾板从 300.5s 的绿幕开始）。"
+    },
+    {
+      "start": 1.8,
+      "end": 12.0,
+      "narration": "北京时间八月二十号凌晨，快四点，辛辛那提网球公开赛，女单1/8决赛——莱巴金娜迎战施奈德。",
+      "_why": "坐标句。开球时刻 `AD=1787168400` 换算北京时间 03:40，按『开球时刻只说个大概，不报到分』的分钟档位（40~59 分 → 快X+1点）写成『快四点』。窗口起点对齐 `scene_cuts[0]=1.8`，终点在下一个切点 15.64 之前，画面是开场的发球方向镜头（源片开头几秒常规介绍性镜头，非特写但足够干净）。"
+    },
+    {
+      "start": 78.0,
+      "end": 89.0,
+      "narration": "首盘一比一，她自己的发球局被拖进五个破发点的拉锯，一个接一个救回，最后靠一记贴网的接近球才彻底解围。",
+      "_why": "窗口收在 78.0~89.0s（原窗口 69.12~87.6 估旁白只要 9.37s、大半时间是哑场，改成贴着字幕 86.16s『yeah, well played. Nicely finished off. She acknowledges the good fortune with the net court』那句收尾，让画面落在这一局真正解围的那一拍上）。对应 df_mh_1 的『1-1 Rybakina发球，Rybakina拿下 ← 5个破发点』——旁白讲的是整局的救险，画面给的是收尾那记接近球，不需要逐分展示才成立。",
+      "crosses_cut": "87.60s 从底线宽景切到changeover走动镜头，同一个人（施奈德，黑色Yonex球衣，和seg7/8里她的着装一致），不是跨人；这一拍是那一分刚打完的反应镜头，不强求截到那记接近球本身的画面。"
+    },
+    {
+      "start": 166.96,
+      "end": 179.0,
+      "narration": "转播解说给出的数字和官方统计一致——整个首盘，施奈德一共拿到七个破发点，一个都没能兑现，六比四拱手让出首盘。",
+      "_why": "这段窗口本身就是转播总结首盘的原声区间（字幕166.96~179.92s：『squandering seven break points over the course of that first set...She takes the opening set by six games to four』），画面是首盘收尾的换边/致意镜头，和旁白内容直接对应，不是另找的画面配文字。",
+      "crosses_cut": "168.60s/176.76s 是常规机位切换+镜头切到看台反应（首盘刚打完，观众鼓掌），和旁白『六比四拱手让出首盘』的落点一致，不是误剪。"
+    },
+    {
+      "start": 200.5,
+      "end": 209.0,
+      "narration": "次盘她把这份稳定延续到底——面对同一个对手，她再没让出过一个破发点。",
+      "_why": "画面取自次盘 1-2→2-4 阶段的常规回合镜头（score_05.jpg 200.5~214.5s 核对过，双方正常来回，无缺画面/无观众空镜），对应事实：flashscore 分盘统计 `Set 2 Break Points Saved Rybakina 0/0`——次盘她根本没有面对过破发点，不是『扛住』是『没被逼过』，旁白措辞照此写。窗口对齐 scene_cuts 209.2。"
+    },
+    {
+      "start": 245.04,
+      "end": 254.5,
+      "narration": "次盘四比五，施奈德的发球局同时撞上破发点和赛点，她硬是救了下来，把比分追到五比四。",
+      "_why": "窗口对齐 scene_cuts（245.04→263.88，中间249.36）。score_06.jpg 240.5~264.5s 核对过：games 停在 3-5（Shnaider-Rybakina）打满整个窗口，是同一局的拉锯（多次deuce），对应 `df_mh_1` 的『4-5 Shnaider发球，Shnaider拿下 ← 1个破发点、1个赛点』。",
+      "crosses_cut": "249.36s 中间有一帧纯观众席（无球员），是2秒采样撞上的一次简短过渡镜头，前后都是施奈德的近景/回合画面，不影响这一局『同时撞上破发点和赛点』的叙事。"
+    },
+    {
+      "start": 263.88,
+      "end": 272.5,
+      "narration": "但轮到莱巴金娜自己发球，她也用了两个赛点，才最终锁定六比四、六比四。",
+      "_why": "紧接上一段，score_06.jpg 266.5s起games跳到4-5（Rybakina发球），268.5~276.5s持续显示『MATCH POINT #3』，对应 `df_mh_1` 的『4-6 Rybakina发球，Rybakina拿下 ← 2个赛点』——她自己发球的这一局里出现了match point #2和#3（第1个match point在上一段施奈德的发球局里已经被救掉）。窗口对齐 scene_cuts 272.04。",
+      "crosses_cut": "272.04s 从『MATCH POINT #3』回合镜头切到莱巴金娜赛后走动，同一个人，是那一分打完之后的自然衔接。"
+    },
+    {
+      "start": 92.32,
+      "end": 108.0,
+      "narration": "这场胜利分量更重——她今年一月澳网决赛击败头号种子萨巴伦卡夺冠；本站萨巴伦卡又爆冷出局，世界第一的位置第一次露出缝隙。她能不能顶上去？",
+      "_why": "窗口对齐 scene_cuts（92.32→116.52之间，取到108.0避开116.52那个切点），画面是首盘中段的常规回合/换边镜头，不涉及具体这一分的内容，用来承载宏观背景信息（不是复述画面）。这一段是全片唯一交代『为什么这场球分量更重』的地方，落在 `human_context.angle` 的核心——澳网夺冠、萨巴伦卡爆冷、世界第一之争，三条老 spec 都没提过（见 `_no_repeat`）。收尾那句『她能不能顶上去，还要看接下来能走多远』兼作末屏那一问的口播。",
+      "crosses_cut": "94.36s 是常规机位微调（同一段回合内），双方都还是同一个人，这一段本来就是承载背景信息的中景 B-roll，不涉及具体这一分内容。"
+    }
+  ],
+  "topbar": {
+    "line1": "2026 辛辛那提 WTA1000 1/8决赛",
+    "line2": "莱巴金娜 6-4 6-4 施奈德"
+  },
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "莱巴金娜",
+    "hook": "首盘七个破发点\n她全数救回",
+    "_hook_why": "两行讲的是海报赛果行看不出来的东西：`6-4 6-4` 只看得出比分接近，看不出全场七个破发点（施奈德全部的破发机会）**全部堆在首盘同一段**——尤其一比一那一局，一口气面对五个。WTA 官方转播解说也用了同一个数字（`captions.txt` 166.96s起：『squandering seven break points over the course of that first set』），双源印证。\n\n最长行 7 个字符（『首盘七个破发点』），在 `HOOK_MAX_CHARS = 10` 以内。莱巴金娜世界第二、这场的赢家，也是这一站真正的话题人物（她今年一月刚拿下澳网、正在追世界第一，见 `editorial.human_context.angle`）——对面施奈德世界第十四，热度上不构成对等，封面主体选她没有疑义。",
+    "topic": "WTA1000辛辛那提 · 女单1/8决赛",
+    "scrim": "clear",
+    "winner": "莱巴金娜",
+    "result": "6-4 6-4",
+    "matchup": [
+      {
+        "name": "施奈德",
+        "name_en": "Diana Shnaider",
+        "country": "RUS",
+        "rank": 14
+      },
+      {
+        "name": "莱巴金娜",
+        "name_en": "Elena Rybakina",
+        "country": "KAZ",
+        "rank": 2
+      }
+    ],
+    "_matchup_rank_why": "两个排名都取自 WTA 官方 `players/ranked?type=rankSingles`（`rankedAt: 2026-08-10`）：莱巴金娜 2、施奈德 14。⚠️ 种子号（flashscore `SeedA=14`／`SeedB=2`）这次恰好和排名完全一致，仍按规矩单独核实排名而不是直接抄种子号。",
+    "_name_why": "两个中文名都走 `player_zh()`，实跑过：`player_zh('Elena Rybakina') → 莱巴金娜`、`player_zh('Diana Shnaider') → 施奈德`。",
+    "portrait": {
+      "image": "assets/reel/rybakina-cincinnati-2026-r16.jpg",
+      "fit": "cover",
+      "focus": 0.46,
+      "focus_y": 0.46,
+      "zoom": 1.05,
+      "_photo_why": "WTA 官方 `photo-resources`：`Elena_Rybakina_-_Cincinnati_Open_2026_-_Day_6-DSC_9209.jpg`，路径 `2026/08/19`，正是这场比赛当天（北京 8/20 凌晨开球，美东仍是 8/19）。实测 4000×2613，无水印，`?width=4000` 已是顶格尺寸。\n\n打开看过：莱巴金娜正手上前挥拍击球（击球中，第一道闸门+第二道闸门都过），Yonex 浅绿色球衣，表情专注、微皱眉，看台虚化背景不干扰主体，场边可见 `IZI`／`BANK RBK` 赞助商 logo 和辛辛那提球场深蓝挡墙——四要素自证（人物、赛事场地、动作、日期路径）。这一天她只打了这一场单打（无双打赛程），是当天唯一一张她的实拍，不用比选。\n\n裁切：人物横跨原图约 x 1160~2500（球拍到身体右侧），中心约 0.46；纵向用满原图高度（3:4 裁切在这个横图上宽度是限制维度），focus_y 影响很小，取 0.46 让头部和握拍手都留有余量。zoom 1.05 比 1.0 再收紧一点，让人物更接近铺满，四周仍留得出这是一张完整照片的边。"
+    },
+    "scoreboard": {
+      "court": "Lindner Family Tennis Center",
+      "_court_why": "⚠️ 球场名没查实，印场馆名。WTA 官方 `matches` 给的是 `CourtID 3`，这一站的 `CourtID` 字段早就被证伪过（同站不同 spec 上互相打架，见 `noskova-tauson`／`cirstea-bartunkova`／`sabalenka-wang`／`bouzkova-jovic`／`gauff-bouzkova`／`anisimova-noskova` 的 `_court_why`）。源片场边挡板只有赞助商 logo，没有球场名。按同站惯例印 `Lindner Family Tennis Center`。",
+      "duration_source": {
+        "provider": "wta",
+        "url": "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches?page=0&pageSize=400",
+        "match_id": "LS015",
+        "field": "MatchTimeTotal",
+        "source_page": "https://www.wtatennis.com/tournament/1017/cincinnati/2026/scores/LS015"
+      },
+      "_duration_why": "WTA 官方 `MatchTimeTotal 01:27:26`，与 flashscore `df_sui_1_Qq8XOYGq` 报的『全场 1:27』（分盘 0:47／0:40）同量级一致。"
+    }
+  },
+  "editorial": {
+    "mode": "match_review",
+    "question": "首盘一口气被逼出七个破发点，她凭什么一个都没让出去？",
+    "thesis": "答案不在整场比赛里，只在首盘那一段——七个破发点全部堆在第一盘，且大半集中在她自己的第二个发球局：一比一那一局她被拖进整整五个破发点的拉锯，一个接一个救回，最后靠一记贴网的接近球才彻底解围；此后三比三、三比五又各自扛住一个，六比四拿下首盘。次盘她把这份稳定延续到底，全场再没让对手碰到一个破发点。可这场胜利并不是从头到尾都轻松：次盘四比五，施奈德的发球局同时撞上破发点和赛点，硬是救了下来，把比分追到五比四；轮到莱巴金娜自己发球，她也用了两个赛点才最终把比赛锁定，六比四六比四。而这场胜利对她意味着更多——她今年一月刚在澳网决赛击败头号种子萨巴伦卡、拿下生涯第二座大满贯，本站萨巴伦卡自己又爆冷出局，世界第一的位置第一次露出了缝隙。",
+    "beats": [
+      "前段：首盘一比一，莱巴金娜自己的发球局被拖进五个破发点的拉锯，一个接一个救回；三比三、三比五又各自扛住一个，全场七个破发点全部集中在这一盘，六比四拿下首盘",
+      "中段：次盘她把这份稳定延续到底，再没让对手碰到一个破发点；但四比五时施奈德的发球局同时撞上破发点和赛点，硬是救了下来，把比分追到五比四",
+      "结局：轮到莱巴金娜自己发球，她也用了两个赛点才最终锁定六比四六比四——这场胜利同时把她留在了世界第一的追赶战里"
+    ],
+    "human_context": {
+      "angle": "这场胜利放在更大的背景里分量更重：莱巴金娜今年一月澳网决赛三盘击败头号种子萨巴伦卡夺冠，生涯第二座大满贯（首个是 2022 年温网）；本站头号种子萨巴伦卡自己又在同一轮爆冷不敌贝莱克，世界第一的位置第一次露出了缝隙，而莱巴金娜正是世界第二、最有机会顶上去的人。她要抓住这个机会，眼前这一关却不轻松——首盘就被逼出七个破发点，一口气堆在同一段。",
+      "facts": [
+        "本场 6-4 6-4，1 小时 27 分钟（WTA 官方 `MatchTimeTotal 01:27:26`，flashscore 全场『1:27』互相印证）",
+        "莱巴金娜全场十个发球局全部保住，未被破发一次（WTA 官方 `Service games won 100% 10/10`）；全场共面对七个破发点，全部救回（flashscore `Break Points Saved Rybakina 7/7`），反观施奈德自己三个破发点只救回一个，被破两次",
+        "这七个破发点全部出现在首盘（flashscore 分盘统计：`Set 1 Break Points Saved Rybakina 7/7`，`Set 2` 为 `0/0`），首盘一比一那一局她一口气面对五个（`df_mh_1`：`1-1 Rybakina发球，Rybakina拿下 ← 5个破发点`），随后三比三、三比五各再面对一个，同样守住",
+        "WTA 官方转播解说给出了同一个数字：『the fine margins brutally illustrated there for Diana Schneider squandering seven break points over the course of that first set』（源片自动字幕 166.96s起；ASR 把 Shnaider 转录成了 Schneider，人名以官方译名表为准）",
+        "次盘四比五，施奈德的发球局同时撞上破发点和赛点，救下后把比分追到五比四；下一局莱巴金娜自己发球，也用了两个赛点才最终锁定 6-4 6-4（`df_mh_1`：`4-5 Shnaider发球，Shnaider拿下 ← 1个破发点、1个赛点`／`4-6 Rybakina发球，Rybakina拿下 ← 2个赛点`；官方统计『Match points saved: Shnaider 2』）",
+        "施奈德全场七次拿到破发机会，一次没有兑现；莱巴金娜三次机会兑现两次（WTA 官方 `Break Points Converted` Shnaider 0/7、Rybakina 2/3）",
+        "全场总得分 70 比 63（Rybakina 53%），一发得分率 66% 对 65%，二发得分率 32% 对 57%（flashscore／WTA 官方 stats）",
+        "制胜分 26 比 9，非受迫失误 12 比 5（TNNS `tnns-stats.yml` run 32354417621，who=Shnaider,Rybakina，分盘合计自证一致：Set1 [6,14]/[1,7]、Set2 [3,12]/[4,5]）",
+        "莱巴金娜今年一月澳网决赛 6-4 4-6 6-4 击败头号种子萨巴伦卡夺冠，生涯第二座大满贯（首个是 2022 年温网，决赛击败贾贝尔）",
+        "本站（辛辛那提）1/8决赛，头号种子兼卫冕人萨巴伦卡爆冷不敌贝莱克 7-6(7) 6-4（flashscore `0dRqqOgc`／WTA 官方 `LS008`，同一天已发的 `bejlek-sabalenka` 核实过），世界第一的位置因此出现松动",
+        "两人本赛季此前已交手一次：2026 斯图加特 1/8决赛，莱巴金娜同样两盘拿下（6-3 6-4）——今天是第二次交手，莱巴金娜保持 2-0（tennisexplorer.com H2H 页）",
+        "莱巴金娜 1999 年 6 月 17 日出生，27 岁；施奈德 2004 年 4 月 2 日出生，22 岁（WTA 官方球员接口）",
+        "莱巴金娜世界第 2，施奈德世界第 14（WTA 官方排名，2026-08-10 快照）"
+      ],
+      "sources": [
+        "https://global.flashscore.ninja/2/x/feed/df_mh_1_Qq8XOYGq",
+        "https://global.flashscore.ninja/2/x/feed/df_st_1_Qq8XOYGq",
+        "https://global.flashscore.ninja/2/x/feed/df_sui_1_Qq8XOYGq",
+        "https://global.flashscore.ninja/2/x/feed/df_hh_1_Qq8XOYGq",
+        "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches?page=0&pageSize=400",
+        "https://www.tennisexplorer.com/mutual/rybakina/shnaider-51347/",
+        "https://api.wtatennis.com/tennis/players/324166",
+        "https://api.wtatennis.com/tennis/players/330482",
+        "https://api.wtatennis.com/tennis/players/ranked?page=0&pageSize=20&type=rankSingles&sort=asc&name=&metric=SINGLES",
+        "https://en.wikipedia.org/wiki/2026_Australian_Open_%E2%80%93_Women's_singles",
+        "https://en.wikipedia.org/wiki/2022_Wimbledon_Championships_%E2%80%93_Women's_singles",
+        "https://cincinnatiopen.com/news/with-no-1-in-sight-rybakina-staying-in-the-now/",
+        "https://global.flashscore.ninja/2/x/feed/df_mh_1_0dRqqOgc"
+      ],
+      "voice_label": "首盘七个破发点，一个没让"
+    }
+  },
+  "stats": {
+    "tour": "wta",
+    "a": {
+      "headshot": "assets/players/headshots/wta-330482.jpg",
+      "aces": 1,
+      "df": 2,
+      "first_in": 36,
+      "first_won": 25,
+      "first_total": 57,
+      "second_total": 21,
+      "second_won": 12,
+      "bp_conv": 0,
+      "bp_chances": 7,
+      "pts_won": 63,
+      "pts_total": 133,
+      "winners": 9,
+      "ue": 5
+    },
+    "b": {
+      "headshot": "assets/players/headshots/wta-324166.jpg",
+      "aces": 8,
+      "df": 4,
+      "first_in": 48,
+      "first_won": 41,
+      "first_total": 76,
+      "second_total": 28,
+      "second_won": 9,
+      "bp_conv": 2,
+      "bp_chances": 3,
+      "pts_won": 70,
+      "pts_total": 133,
+      "winners": 26,
+      "ue": 12
+    },
+    "_source": "十项来自 flashscore `tools/match_feed.py show Qq8XOYGq --home Shnaider --away Rybakina`（a=施奈德=cover.matchup[0]，b=莱巴金娜）：aces a=1/b=8、df a=2/b=4、first_in(1st serve points won 分母) a=36/b=48、first_won a=25/b=41、second_total(2nd serve points won 分母) a=21/b=28、second_won a=12/b=9、first_total=first_in+second_total（a 36+21=57／b 48+28=76，与 `Service Points Won` 分母 57/76 互相印证）、bp_conv(Break Points Converted 分子) a=0/b=2、bp_chances(分母) a=7/b=3、pts_won(Total Points Won) a=63/b=70、pts_total=133（两人合计一致）。",
+    "_winners_ue_why": "flashscore 没有这两项（WTA 巡回赛这一档常见的缺口）。已按规矩跑 tnns-stats.yml（who=Shnaider,Rybakina，date=2026-08-19，run 32354417621，match id 73466966）。TNNS hasExtendedStats: True，制胜分/非受迫失误自证过——分盘合计=全场：Set1[6,14]+Set2[3,12]=[9,26] ✅，Set1[1,7]+Set2[4,5]=[5,12] ✅。日志给的选手顺序是[\"Shnaider\",\"Rybakina\"]，和 cover.matchup 顺序（施奈德在前、莱巴金娜在后）一致，不用对调：a(施奈德)=winners 9/ue 5，b(莱巴金娜)=winners 26/ue 12——26记制胜分对12次非受迫失误，进一步印证她全场的统治力。"
+  },
+  "_no_repeat": "⚠️ **莱巴金娜和施奈德各有多条已发 spec，这一条一个字都不重讲那几条铺开过的内容**：\n\n莱巴金娜——`rybakina-frech`（讲破发点转化率低但仍拿下，17个破发点只兑现3个）、`townsend-rybakina`（讲一发成功率低仍赢，34%照样六比三）、`rybakina-samsonova`（讲决胜盘苦战三盘）、`swiatek-rybakina-toronto-final`／`rybakina-gauff-toronto-sf`（多伦多那一站的另外两场）、`rybakina-osaka`（讲另一场对阵）、`rybakina-kasatkina`、`rybakina-li`——这些一个字都不提破发点转化率、一发成功率、苦战三盘这几条老叙事线；这条的落点是**七个破发点全部堆在首盘同一段、且中段的一次拉锯式五连破发点**，是新角度。\n\n施奈德——`shnaider-chwalinska`（讲她自己一比四落后逆转，2小时27分钟鏖战）、`swiatek-shnaider`（讲她这一年还没拿到冠军、这一场一个破发点都没让斯瓦泰克碰到，但她自己是**输**的那一方）、`shnaider-pegula`——这条讲的是她**输**给莱巴金娜、且是被逼到破发点边缘（不是没让对手破，是她自己的破发点没兑现），和 `swiatek-shnaider` 的『零封』完全是反过来的角度，不冲突。\n\n人名相关的宏观事实（澳网夺冠、萨巴伦卡爆冷、世界第一之争）在这一批莱巴金娜／施奈德的已发 spec 里都没有出现过，是这条独有的落点。",
+  "_hit_data": "`tools/match_stat_hooks.py Qq8XOYGq --home Shnaider --away Rybakina` 报的候选里最硬的一条：**莱巴金娜全场十个发球局全部保住，一次都没被破发**——面对的七个破发点全部救回（flashscore `Break Points Saved Rybakina 7/7`），且**全部集中在首盘**（分盘统计 Set1 7/7、Set2 0/0），与逐局 `|B1|` 标记逐项相加一致。WTA 官方转播解说独立给出了同一个数字（『squandering seven break points over the course of that first set』），两个口径互相印证，比总分差（净差7分）或破发点兑现（施奈德0/7）更有画面感和叙事张力，故选它当封面钩子。",
+  "_claims": {
+    "莱巴金娜全场十个发球局全部保住，面对七个破发点全部救回，且全部集中在首盘": [
+      "https://global.flashscore.ninja/2/x/feed/df_mh_1_Qq8XOYGq",
+      "https://global.flashscore.ninja/2/x/feed/df_st_1_Qq8XOYGq"
+    ],
+    "莱巴金娜今年一月澳网决赛击败萨巴伦卡夺冠，生涯第二座大满贯": [
+      "https://en.wikipedia.org/wiki/2026_Australian_Open_%E2%80%93_Women's_singles",
+      "https://en.wikipedia.org/wiki/2022_Wimbledon_Championships_%E2%80%93_Women's_singles"
+    ],
+    "本站头号种子萨巴伦卡本轮爆冷不敌贝莱克": [
+      "https://global.flashscore.ninja/2/x/feed/df_mh_1_0dRqqOgc",
+      "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches?page=0&pageSize=400"
+    ],
+    "两人本赛季此前已交手一次，莱巴金娜保持2-0": [
+      "https://www.tennisexplorer.com/mutual/rybakina/shnaider-51347/"
+    ],
+    "_why": "前两条是全称/整段断言（『全部保住』『生涯第二座』『本站头号种子爆冷』），按规矩要两个独立源或至少一个可穷举的权威源认领——第一条 flashscore 两个 feed（逐局标记+分盘汇总）互相印证；第二条两届大满贯官方结果页（维基）各自独立；第三条同一天已发布、已核实过的 `bejlek-sabalenka` spec 复用的同一对源；第四条 H2H 页本身就是可穷举的交手记录表。"
+  },
+  "push": {
+    "summary": "首盘七个破发点全救回",
+    "lead": "辛辛那提女单1/8决赛，世界第2的莱巴金娜6-4 6-4击败世界第14的施奈德，晋级1/4决赛。全场她十个发球局全部保住，一次都没被破发——而她并不是没被逼过：全场共面对七个破发点，全部集中在首盘，一比一那一局她一口气面对五个，一个接一个救回，最后靠一记贴网的接近球才彻底解围；三比三、三比五又各自扛住一个，六比四拿下首盘。次盘她把这份稳定延续到底，再没让施奈德碰到一个破发点。但这场胜利并非从头轻松到尾：四比五时施奈德的发球局同时撞上破发点和赛点，硬是救了下来，把比分追到五比四；轮到莱巴金娜自己发球，她也用了两个赛点才最终锁定胜局。这场胜利分量更重——她今年一月刚在澳网决赛击败头号种子萨巴伦卡夺冠，生涯第二座大满贯；本站萨巴伦卡自己又在同一轮爆冷出局，世界第一的位置第一次露出了缝隙，而莱巴金娜正是最有机会顶上去的人。",
+    "_no_auto_why": "按『赛场之上』这条线的默认（本文件早有约定），走人工确认这一版 `--dry-run`／全量测试绿了之后再合并，不设 `auto: true`。"
+  }
+}
