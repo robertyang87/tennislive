@@ -1,0 +1,203 @@
+{
+  "slug": "musetti-faria",
+  "source_url": "https://www.tennistv.com/videos/4563072/cincinnati-2026-r4-faria-musetti-short-highlights",
+  "_source": "Tennis TV 官网 library/short-highlights，data-entitlement=free，标题 cincinnati-2026-r4-faria-musetti-short-highlights。YouTube 上 Tennis TV 频道确实有一版（3MfeG7oH5eg，oEmbed author_name=Tennis TV 自证，标题《Jamie Faria Meets Lorenzo Musetti in Last 16》，时长 2:09），但 probe 时全部 8 档 player client 一致报 `The uploader has not made this video available in your country`——这是这一条视频本身的地域封锁（CLAUDE.md『封锁是按视频算的』），不是账号或频道的问题，换成 tennistv.com 的短集锦页面重探。ATP Tour 官方频道当前没有这场的单场集锦（已扫最近30条+搜索）。",
+  "_column": "赛场之上",
+  "editorial": {
+    "mode": "match_review",
+    "question": "刚从资格赛淘汰蒙特利尔冠军谢尔顿、正处在生涯最高排名的法里亚，为什么在1/8决赛遇上穆塞蒂还是两盘落败？",
+    "thesis": "因为法里亚的二发撑不住——他二发得分率只有38%（11/29），穆塞蒂靠这一项全场4次破发法里亚，自己10个发球局只丢1局。首盘一度被逼到2比4落后追至5比4反超，穆塞蒂靠连扳三局才拿下7-5；次盘没有悬念，6-2轻松收官。",
+    "beats": [
+      "首盘前段：穆塞蒂先破发建立2-4领先，法里亚顽强追回到5-4反超",
+      "首盘收官：穆塞蒂连扳三局，5-5、6-5、7-5逆转拿下首盘",
+      "次盘：穆塞蒂两次破发，6-2轻松锁定比赛"
+    ],
+    "human_context": {
+      "angle": "法里亚这一路走得不轻松——他是资格赛突围晋级正赛的，上一轮更是6-4 6-4淘汰了三天前刚拿下蒙特利尔大师赛冠军的谢尔顿，本场世界排名第79，正是他的生涯最高。可这一次，他撞上的是更懂得在关键分上收网的穆塞蒂。",
+      "facts": [
+        "法里亚是本站资格赛突围（ATP官方Order of Play标注[Q]），本场世界排名第79，与生涯最高排名相同（tennisexplorer.com/player/faria-4754c/）",
+        "上一轮法里亚6-4 6-4淘汰了三天前才夺得2026蒙特利尔大师赛冠军的谢尔顿——同一栏目下 faria-shelton.json 已经详细讲过那场（十二个破发点只兑现一个等细节），这里只带过，不重复",
+        "全场穆塞蒂4次破发法里亚，自己10个发球局只丢1局（flashscore Break Points Converted：法里亚1/1、穆塞蒂4/4）",
+        "法里亚二发得分率只有38%（11/29），穆塞蒂在法里亚的二发上拿下了62%的分",
+        "首盘穆塞蒂一度2-4领先，被法里亚追至5-4反超；随后穆塞蒂连扳三局，7-5逆转拿下首盘",
+        "穆塞蒂生涯最高排名第5（tennisexplorer.com/player/musetti/），本场世界第15；法里亚生涯最高第79（本场即是）"
+      ],
+      "sources": [
+        "https://www.tennisexplorer.com/player/musetti/",
+        "https://www.tennisexplorer.com/player/faria-4754c/",
+        "https://www.tennisexplorer.com/player/shelton-38989/"
+      ]
+    }
+  },
+  "_no_repeat": "同一栏目下 faria-shelton.json 已经详细讲过法里亚上一轮怎么淘汰刚夺冠蒙特利尔的谢尔顿（十二个破发点只兑现一个、四比一后连丢五局等细节）——这条只用一句『上一轮他淘汰了刚夺冠的谢尔顿』带过，不重复那场的比分/破发点细节。",
+  "_match": {
+    "flashscore_id": "hbzzZODa",
+    "_why": "flashscore df_su_1_hbzzZODa：AC÷3¬BA÷5¬BB÷7¬RC÷0:44（Set1 法里亚5-穆塞蒂7）¬BC÷2¬BD÷6¬RD÷0:32（Set2 2-6）¬RB÷1:16 自洽。df_mh_1_hbzzZODa 逐分记录：Set1 0-1法里亚发球被破，一路带到2-4穆塞蒂领先；4-4穆塞蒂发球被破，5-4法里亚反超；随后穆塞蒂连扳三局5-5/5-6/5-7拿下首盘。Set2 穆塞蒂两次破发（0-1、1-4），6-2锁定比赛。AD=1787188500（Unix开赛时间）换算北京时间2026-08-20 09:15。tennisexplorer 球员页确认轮次为 round of 16（R16）。ATP官方 Order of Play（OP-Aug18-11pm.pdf，Released 08/18/2026 10:42:08 PM）：TONY TRABERT STADIUM 3 第5场『[Q] Jaime FARIA (POR) vs [10] Lorenzo MUSETTI (ITA)』，Followed By（跟在 Borges-Nakashima 之后）。"
+  },
+  "_hit_data": "穆塞蒂全场4次破发法里亚，自己10个发球局只丢1局，这个反差是全片最硬的数据，用在editorial.thesis和push.summary里；法里亚二发得分率38%对穆塞蒂在法里亚二发上拿下62%用作辅助佐证（tools/match_stat_hooks.py --from-spec 手动核对，出处见 stats._source）。",
+  "topbar": {
+    "line1": "2026 辛辛那提 ATP1000 1/8决赛",
+    "line2": "穆塞蒂 7-5 6-2 法里亚"
+  },
+  "_topbar_why": "赢家在前，比分与 cover.winner/result/matchup 一致。",
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "穆塞蒂",
+    "hook": "一度4比5落后\n他连扳三局逆转",
+    "_hook_why": "首盘中段穆塞蒂被法里亚追至4-5反超（逐分核实），随后连扳三局5-5/6-5/7-5拿下——这是过程不是身份，剧情的跌宕落在这两句上；4次破发/自己只丢1局这类身份型数据留给thesis和正文，避免封面只堆身份。",
+    "_subject_why": "穆塞蒂是这条片子的大名字——生涯最高世界第5，本场世界第15，赢家；法里亚这一路更有故事（资格赛突围、刚淘汰蒙特利尔冠军）但排名更低、也是输家，封面按『放刷到这条的人是冲谁来的那个』给排名更高的赢家穆塞蒂，参照同栏目 fils-deminaur/zverev-paul 先例。",
+    "_heat_why": "穆塞蒂当前世界排名第15，进世界前20档（矩阵②档），不用再论证话题度。",
+    "topic": "8.20 辛辛那提 ATP1000 1/8决赛",
+    "winner": "穆塞蒂",
+    "result": "7-5 6-2",
+    "matchup": [
+      {
+        "name": "穆塞蒂",
+        "name_en": "Lorenzo Musetti",
+        "country": "ITA",
+        "rank": 15
+      },
+      {
+        "name": "法里亚",
+        "name_en": "Jaime Faria",
+        "country": "POR",
+        "rank": 79
+      }
+    ],
+    "_matchup_rank_why": "穆塞蒂15、法里亚79均为 tennisexplorer 当前世界排名（非种子号；官方签表种子号是穆塞蒂[10]、法里亚[Q]资格赛突围）。",
+    "_name_why": "中文名查 player_zh()：Lorenzo Musetti→穆塞蒂，Jaime Faria→法里亚，均与既有 musetti-zheng.json / faria-shelton.json 一致。",
+    "portrait": {
+      "image": "PENDING",
+      "focus": 0.5,
+      "focus_y": 0.35,
+      "zoom": 1.0,
+      "_frame_why": "比赛刚在北京时间08-20 10:35打完（美东08-19 22:35），距今不到6小时。Cincinnati Open 官方 WP 媒体库当前搜 musetti/faria 只有2023~2025年的旧图，今天的批次最新一条是08-20T04:10（复用08-15旧图，不是本场实拍）；官方按惯例主批要到北京时间当晚才上线（见 pending/README.md）。AP News、The Enquirer 每日画廊今天都还没有本场相关内容（已查）。下一步：24小时后重查官方WP媒体库和 The Enquirer 当日画廊。"
+    },
+    "scoreboard": {
+      "court": "Tony Trabert Stadium 3",
+      "_court_why": "Cincinnati Open 官方 Order of Play（OP-Aug18-11pm.pdf，Released 08/18/2026 10:42:08 PM）：TONY TRABERT STADIUM 3 组第5场『[Q] Jaime FARIA (POR) vs [10] Lorenzo MUSETTI (ITA)』。",
+      "duration_source": {
+        "url": "data:application/json,%7B%22feed%22%3A%22df_su_1_hbzzZODa%22%2C%22RB%22%3A%221%3A16%22%7D",
+        "_duration_why": "flashscore df_su_1_hbzzZODa 的 RB=1:16，与两盘 RC/RD=0:44+0:32=1:16 自洽。"
+      }
+    }
+  },
+  "stats": {
+    "a": {
+      "aces": 6,
+      "df": 1,
+      "winners": 18,
+      "ue": 15,
+      "first_in": 34,
+      "first_won": 26,
+      "second_total": 15,
+      "second_won": 11,
+      "bp_conv": 4,
+      "bp_chances": 4,
+      "pts_won": 64,
+      "pts_total": 109,
+      "first_total": 49,
+      "headshot": "assets/players/headshots/atp-M0EJ.png"
+    },
+    "b": {
+      "aces": 4,
+      "df": 4,
+      "winners": 9,
+      "ue": 29,
+      "first_in": 31,
+      "first_won": 22,
+      "second_total": 29,
+      "second_won": 11,
+      "bp_conv": 1,
+      "bp_chances": 1,
+      "pts_won": 45,
+      "pts_total": 109,
+      "first_total": 60,
+      "headshot": "assets/players/headshots/atp-F0F2.png"
+    },
+    "_source": "flashscore df_st_1 分盘技术统计（setnum=0全场），match_feed.py show hbzzZODa --home Faria --away Musetti 打印表。flashscore 的 home=法里亚、away=穆塞蒂，与 cover.matchup 顺序（穆塞蒂在前）刚好相反——stats.a 对应 cover.matchup[0]（穆塞蒂），stats.b 对应 matchup[1]（法里亚），按 render_stat_card.py 的规矩（a 跟 matchup 顺序，不跟 home/away，见该文件第19行注释）手动对调过，不是直接照抄 home/away 的顺序。first_total 按 first_in+second_total 算（穆塞蒂 34+15=49，法里亚 31+29=60）。"
+  },
+  "_voice_why": "默认云见音色 +6%，不设风格，参照本栏目基调。",
+  "_editing_why": "源片 tennistv.com 短集锦，155.6s，probe.json 的 scene_cuts=[0.23,3.43,11.6,16.13,23.83,27.87,43.37,51.33,64.6,79.43,83.03,91.33,92.73,108.17,113.93,121.93,133.83,136.8,144.17,146.7,...]（146.7 起是密集切点簇，抽帧核过：148.5s 是阿尔卡拉斯反应花絮、150.5s 是『BEHIND THE SCENES』沙滩球花絮，跟这场比赛无关；151.73s 起是 Tennis TV 出品卡，全部不收）。\n\n这是压缩版短集锦，不是逐分覆盖：用 score_00~03.jpg 逐帧读记分条核出真实覆盖区间——0.5~10.5s 静态显示『FARIA 0 40/MUSETTI 2 15』（法里亚发球被逼到不利，即将被逆转前一刻），12.5s 跳到『FARIA 1 40』（法里亚扳回一局，1-2），14.5~22.5s 静态显示『FARIA 2 15/MUSETTI 3 30』（2-3）；此后直接跳到26.5s『FARIA 5 0/MUSETTI 5 15』（5-5）——中间 2-4/3-4/4-4(破发)/5-4(法里亚反超) 这一段全场最跌宕的拉锯（对应封面钩子『一度4比5落后』）没有对应画面，集锦跳过了，这条 spec 只在④⑤两段旁白里用一句话带过这段真实发生但没有画面的拉锯，不假装有镜头。46.5~50.5s『FARIA 5/MUSETTI 6 40』（穆塞蒂发球冲七比五），60.5~62.5s 转播打出整盘比分图形『JAIME FARIA 5 / LORENZO MUSETTI 7』，与 flashscore Set1 5-7 完全吻合。64.5~78.5s 静态『FARIA 5 0 30/MUSETTI 7 0 0』——这是次盘开局法里亚那个九分马拉松发球局（|B1| 出现在 40:40 A:40 40:40 40:A 之后，两次占先都没兑现），82.5~94.5s 跳到『FARIA 5 0/MUSETTI 7 2 15』（0-2），96.5~106.5s 跳到『FARIA 5 1/MUSETTI 7 3』（1-3），112.5~118.5s 跳到『FARIA 5 1 40/MUSETTI 7 5 30』（1-5），124.5~136.5s 跳到『FARIA 5 2 30~40/MUSETTI 7 5 40』（2-5 到 5-6 之间，穆塞蒂逼近赛点），138.5s 记分条翻牌『FARIA 5 2/MUSETTI 7 6』——次盘 6-2 锁定比赛，142.5~146.5s 是网前握手。\n\n中间几段（2-4 到 5-4 那段反超、1-3 到 1-5 之间的过程）集锦里没有对应画面，按『别拿比赛的形状当片子的形状』，旁白只在有画面覆盖的窗口里讲对应的事，缺画面的部分放进 editorial.human_context 当背景交代，不硬凑一段没有画面的旁白。",
+  "segments": [
+    {
+      "start": 133.83,
+      "end": 136.8,
+      "cx": 0.5
+    },
+    {
+      "start": 136.8,
+      "end": 142.0,
+      "narration": "穆塞蒂七比五六比二拿下这场1/8决赛。",
+      "cx": 0.5,
+      "_why": "①②冷开场：无声呈现赛点落地那一刻的回合画面，紧接一句短punch报出比分——账号所有者定的『开场三格顺序：画面爆点→落点→坐标』，这条把爆点和落点合并成冷开场+第一句旁白。138.5s 记分条翻牌确认次盘6-2锁定比赛（对应 flashscore Set2 2-6）。"
+    },
+    {
+      "start": 0.23,
+      "end": 11.6,
+      "crosses_cut": "跨过 scene_cuts 的 3.43，是法里亚特写切到穆塞蒂特写（0.5s/2.5s 抽帧核过），两人都在，坐标句不涉及具体谁做了什么，不算旁白压错人。",
+      "narration": "北京时间八月二十号早上九点多，辛辛那提1/8决赛，世界第十五的穆塞蒂对阵资格赛突围的法里亚。",
+      "cx": 0.5,
+      "_why": "③坐标：开赛时刻按 test_开球时刻只说个大概不报到分 写成『九点多』（AD=1787188500 换算北京时间 09:15，落在10-39分档位）。窗口卡在 scene_cuts 的 11.6。"
+    },
+    {
+      "start": 11.6,
+      "end": 19.0,
+      "crosses_cut": "跨过 scene_cuts 的 16.13，两边都是同一局比赛的球场机位镜头（发球动作切到回合画面），不是换了时刻或换了人。",
+      "narration": "首盘开局，穆塞蒂率先破发，一路带到二比三领先。",
+      "cx": 0.5,
+      "_why": "④首盘早段：0.5~10.5s 记分条『FARIA 0 40/MUSETTI 2 15』（法里亚发球，穆塞蒂已经0-2领先），match_feed 显示这是首局法里亚发球被破（0-1，|B1|）后穆塞蒂连保到0-2；12.5s『FARIA 1 40』法里亚扳回一局，14.5~18.5s『FARIA 2 15/MUSETTI 3 30』确认2-3。窗口收在 19.0，提前于本段静态画面结束（scene_cuts 23.83），不跨切。"
+    },
+    {
+      "start": 27.87,
+      "end": 35.0,
+      "narration": "法里亚顽强反超到五比四，但穆塞蒂顶住了，连扳一局追平五比五。",
+      "cx": 0.5,
+      "_why": "⑤首盘中段（无对应画面的拉锯，靠旁白交代）：match_feed 显示 2-4/3-4 双方互保后，法里亚在穆塞蒂4-4的发球局完成破发反超到5-4——集锦里这一段没有对应画面（scene_cuts 23.83→27.87 是过渡镜头），画面直接跳到26.5s『FARIA 5 0/MUSETTI 5 15』（穆塞蒂已追平5-5）。这句旁白讲的是真实发生但缺画面的过程，收在27.87之后的静态画面上，不假装有对应镜头。"
+    },
+    {
+      "start": 43.37,
+      "end": 51.33,
+      "narration": "穆塞蒂随即又完成破发，六比五自己发球，一路拿下七比五，稳住首盘。",
+      "cx": 0.5,
+      "_why": "⑥首盘落幕：46.5~50.5s 记分条『FARIA 5/MUSETTI 6 40』，match_feed 该局（5-6法里亚发球被破）之后穆塞蒂自己发球（5-7局）0:15/0:30/0:40 直落三分锁定首盘（|B2|盘点）。60.5~62.5s 转播比分图形『FARIA 5/MUSETTI 7』验证首盘5-7。窗口卡在 scene_cuts 的 51.33。"
+    },
+    {
+      "start": 64.6,
+      "end": 75.0,
+      "narration": "次盘开局，法里亚一度四十比十五领先，两个局点都没能兑现——穆塞蒂顶住反复平分，硬生生把这一局逼成破发。",
+      "cx": 0.5,
+      "_why": "⑦次盘开局马拉松：64.5~78.5s 记分条静态『FARIA 5 0 30/MUSETTI 7 0 0』，这是次盘首局法里亚发球被破的那一局，match_feed 逐分：15:0,30:0,30:15,40:15,40:30,40:40,A:40,40:40,40:A|B1|——法里亚两度占先（局点）都没能兑现，最终被穆塞蒂破发。窗口收在75.0，留在这一段静态画面内，不跨到下一个真实剪辑点。"
+    },
+    {
+      "start": 79.43,
+      "end": 87.0,
+      "crosses_cut": "跨过 scene_cuts 的 83.03，但两边都是同一局比赛的连续画面（79.43~83.03 是过渡/反应镜头，83.03~91.33 回到正常机位），不是换了别的时刻。",
+      "narration": "穆塞蒂顺势拿下这一局，随后又保发一次，一路带到一比三领先。",
+      "cx": 0.5,
+      "_why": "⑧次盘中段：82.5~94.5s 记分条『FARIA 5 0/MUSETTI 7 2 15』（0-2，穆塞蒂拿下开局破发局后自己保发），96.5~106.5s 跳到『FARIA 5 1/MUSETTI 7 3』（1-3，法里亚保发一次、穆塞蒂再保发一次）。中间没有单独镜头的两局（1-2法里亚保发、1-3穆塞蒂保发）合并成一句带过。"
+    },
+    {
+      "start": 108.17,
+      "end": 115.0,
+      "crosses_cut": "跨过 scene_cuts 的 113.93，两边都是这一段比赛的连续镜头（法里亚反应+穆塞蒂发球准备），不是换了时刻。",
+      "narration": "穆塞蒂再度破发，一路带到五比二——次盘同样没有悬念。",
+      "cx": 0.5,
+      "_why": "⑨次盘收官：112.5~118.5s『FARIA 5 1 40/MUSETTI 7 5 30』，match_feed 显示1-4法里亚发球被破（|B1|）后穆塞蒂保发到1-5；120.5~132.5s 记分条继续读到『FARIA 5 2.../MUSETTI 7 5...』，法里亚保发一次（2-5）后穆塞蒂发球冲击比赛，一路到五比二——中间1-5到2-5那一局法里亚保发没有单独可用镜头，合并带过。"
+    },
+    {
+      "start": 144.17,
+      "end": 146.7,
+      "narration": "四次破发丢一局。",
+      "cx": 0.5,
+      "_why": "⑩收尾：延续②的比分punchline，用网前握手画面（144.5~146.5s）收在全场最硬的数据上——回应 thesis 核心（穆塞蒂4次破发、自己10个发球局只丢1局）。窗口卡在 scene_cuts 的 146.7，避开之后的阿尔卡拉斯花絮/BTS/出品卡那一串密集切点。"
+    }
+  ],
+  "push": {
+    "summary": "刚淘汰冠军还是输了",
+    "lead": "辛辛那提网球公开赛男单1/8决赛，世界第15的穆塞蒂7-5 6-2淘汰法里亚。法里亚这一路走得不容易——他是资格赛突围进的正赛，上一轮更是6-4 6-4淘汰了三天前刚拿下蒙特利尔大师赛冠军的谢尔顿，本场世界排名第79，正是他的生涯最高。可这一次，他撞上了更懂得在关键分上收网的穆塞蒂。首盘穆塞蒂率先破发，一路带到2-4领先；法里亚顽强追回，一度反超到5-4。关键时刻穆塞蒂连扳三局，5-5、6-5、7-5逆转拿下首盘。次盘没有悬念，穆塞蒂两次破发，6-2轻松锁定比赛。全场数据很说明问题：穆塞蒂4次破发法里亚，自己10个发球局却只丢1局；法里亚的二发始终是软肋，得分率只有38%（11/29），穆塞蒂在法里亚的二发上拿下了62%的分。穆塞蒂生涯最高世界第5，本场世界第15；法里亚生涯最高第79，本场即是。",
+    "auto": false,
+    "_no_auto_why": "先渲后审，手动 mode=push push=true。"
+  }
+}
