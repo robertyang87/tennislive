@@ -1,0 +1,173 @@
+# 转写核对表：pegula-cirstea-cincinnati-2026-r16
+
+源片 https://www.youtube.com/watch?v=ZDsRTupH2mg　采访段 258.0–538.5 秒（共 155 行）
+
+| # | 片内 | 跳到源片 | 英文 | 中文 | 判据 |
+|--:|:--|:--|:--|:--|:--|
+| 1 | 0:05.1 | [▶](https://youtu.be/ZDsRTupH2mg?t=263) | this time. | 这一次， |  |
+| 2 | 0:06.2 | [▶](https://youtu.be/ZDsRTupH2mg?t=264) | Pegula books a place in the last eight | 佩古拉锁定1/4决赛席位， | ✏️ 已订正 |
+| 3 | 0:08.9 | [▶](https://youtu.be/ZDsRTupH2mg?t=266) | in Cincy for the third time in five seasons. | 五个赛季里第三次打到这里。 |  |
+| 4 | 0:12.2 | [▶](https://youtu.be/ZDsRTupH2mg?t=270) | What a struggle. | 过程太不容易了。 |  |
+| 5 | 0:13.7 | [▶](https://youtu.be/ZDsRTupH2mg?t=271) | There'll be a warm exchange at the net. | 网前两人温暖地拥抱。 |  |
+| 6 | 0:17.0 | [▶](https://youtu.be/ZDsRTupH2mg?t=275) | Might be Cirstea's last ever appearance | 这可能是科斯蒂亚 | ✏️ 已订正 |
+| 7 | 0:20.1 | [▶](https://youtu.be/ZDsRTupH2mg?t=278) | in Cincinnati, but it's going to be one | 在辛辛那提的最后一次亮相， |  |
+| 8 | 0:23.4 | [▶](https://youtu.be/ZDsRTupH2mg?t=281) | that we will remember for quite a while. | 但会让人记很久。 |  |
+| 9 | 0:25.8 | [▶](https://youtu.be/ZDsRTupH2mg?t=283) | Pegula eventually gets over the line having | 佩古拉最终跨过了终点线， | ✏️ 已订正 |
+| 10 | 0:30.4 | [▶](https://youtu.be/ZDsRTupH2mg?t=288) | missed multiple opportunities. | 尽管此前错过了好几次机会。 |  |
+| 11 | 0:33.1 | [▶](https://youtu.be/ZDsRTupH2mg?t=291) | The fight of Cirstea, but Pegula prevails. | 拼到最后，赢的是佩古拉。 | ✏️ 已订正 |
+| 12 | 0:36.2 | [▶](https://youtu.be/ZDsRTupH2mg?t=294) | The number three seed is through 75 | 三号种子七比五拿下决胜盘， |  |
+| 13 | 0:38.4 | [▶](https://youtu.be/ZDsRTupH2mg?t=296) | in the third to the court. | 闯进下一轮。 |  |
+| 14 | 0:41.9 | [▶](https://youtu.be/ZDsRTupH2mg?t=299) | Jesse, you are just so tough, | 杰西，你实在是太顽强了， |  |
+| 15 | 0:45.9 | [▶](https://youtu.be/ZDsRTupH2mg?t=303) | so hard to to beat. | 太难被打败了。 |  |
+| 16 | 0:48.0 | [▶](https://youtu.be/ZDsRTupH2mg?t=306) | She threw everything she had at you | 她把所有招都用来对付你， |  |
+| 17 | 0:50.6 | [▶](https://youtu.be/ZDsRTupH2mg?t=308) | in essentially nothing to lose season, | 反正也没什么可失去的， |  |
+| 18 | 0:54.4 | [▶](https://youtu.be/ZDsRTupH2mg?t=312) | but here you are standing here. | 但站到最后的还是你。 |  |
+| 19 | 0:56.0 | [▶](https://youtu.be/ZDsRTupH2mg?t=314) | What did you do? | 你是怎么做到的？ |  |
+| 20 | 0:57.4 | [▶](https://youtu.be/ZDsRTupH2mg?t=315) | Yeah, I mean | 是啊，我是说， |  |
+| 21 | 0:57.8 | [▶](https://youtu.be/ZDsRTupH2mg?t=315) | that was really tough being up a set | 领先一盘之后真的很难熬， |  |
+| 22 | 0:59.8 | [▶](https://youtu.be/ZDsRTupH2mg?t=317) | and I think a break or I don't know what it | 好像还破发一次，记不清了， |  |
+| 23 | 1:02.4 | [▶](https://youtu.be/ZDsRTupH2mg?t=320) | was, but I was winning the whole time | 但那段时间我一直在赢， |  |
+| 24 | 1:04.0 | [▶](https://youtu.be/ZDsRTupH2mg?t=322) | and I had a feeling | 我隐约觉得， |  |
+| 25 | 1:05.6 | [▶](https://youtu.be/ZDsRTupH2mg?t=323) | that she was going to loosen up | 她会慢慢放开手脚， |  |
+| 26 | 1:07.0 | [▶](https://youtu.be/ZDsRTupH2mg?t=324) | and start hitting some and raise her level | 打出更好的球，提升水平， |  |
+| 27 | 1:08.6 | [▶](https://youtu.be/ZDsRTupH2mg?t=326) | and hit some better shots and she did. | 她确实做到了。 |  |
+| 28 | 1:10.3 | [▶](https://youtu.be/ZDsRTupH2mg?t=328) | I felt like I just lost the momentum | 我感觉自己在第二盘末尾 |  |
+| 29 | 1:11.8 | [▶](https://youtu.be/ZDsRTupH2mg?t=329) | at the end of that second, but credit to her. | 丢了节奏，但这要归功于她。 |  |
+| 30 | 1:13.5 | [▶](https://youtu.be/ZDsRTupH2mg?t=331) | She started playing, you know, | 她开始打得，你知道的， |  |
+| 31 | 1:14.4 | [▶](https://youtu.be/ZDsRTupH2mg?t=332) | I think much better, serving much better. | 好很多，发球也好很多。 |  |
+| 32 | 1:16.5 | [▶](https://youtu.be/ZDsRTupH2mg?t=334) | So, | 所以， | ✏️ 已订正 |
+| 33 | 1:16.8 | [▶](https://youtu.be/ZDsRTupH2mg?t=334) | and then it just felt like tricky conditions | 第三盘感觉条件变得很棘手， |  |
+| 34 | 1:18.4 | [▶](https://youtu.be/ZDsRTupH2mg?t=336) | in the third. | 很难适应。 |  |
+| 35 | 1:19.0 | [▶](https://youtu.be/ZDsRTupH2mg?t=336) | Honestly, it was weird. | 说实话，感觉有点怪。 |  |
+| 36 | 1:19.8 | [▶](https://youtu.be/ZDsRTupH2mg?t=337) | We were breaking a lot. | 我们互相破发了好多次。 |  |
+| 37 | 1:21.0 | [▶](https://youtu.be/ZDsRTupH2mg?t=339) | It was really windy. | 风真的很大。 |  |
+| 38 | 1:22.0 | [▶](https://youtu.be/ZDsRTupH2mg?t=340) | I felt like we were returning well. | 我感觉两人的接发都不错， |  |
+| 39 | 1:23.5 | [▶](https://youtu.be/ZDsRTupH2mg?t=341) | It was just really hard to kind | 所以真的很难 |  |
+| 40 | 1:24.6 | [▶](https://youtu.be/ZDsRTupH2mg?t=342) | of defend off the serve. | 靠发球去防守。 |  |
+| 41 | 1:25.7 | [▶](https://youtu.be/ZDsRTupH2mg?t=343) | Even when you hit a good serve, | 哪怕发出了一记好球， |  |
+| 42 | 1:27.0 | [▶](https://youtu.be/ZDsRTupH2mg?t=345) | I felt like with the wind, | 在风里我也感觉 |  |
+| 43 | 1:28.3 | [▶](https://youtu.be/ZDsRTupH2mg?t=346) | I was just a little tentative on some volleys | 有些截击球上有点犹豫， |  |
+| 44 | 1:30.2 | [▶](https://youtu.be/ZDsRTupH2mg?t=348) | and overheads and swing volleys, | 高压和摆浪截击也是， |  |
+| 45 | 1:31.6 | [▶](https://youtu.be/ZDsRTupH2mg?t=349) | and that can get really tough | 那样真的很难受， |  |
+| 46 | 1:32.8 | [▶](https://youtu.be/ZDsRTupH2mg?t=350) | and you start secondguessing yourself. | 会开始怀疑自己。 |  |
+| 47 | 1:34.4 | [▶](https://youtu.be/ZDsRTupH2mg?t=352) | But, I think I did a good job there | 不过我觉得自己在最后 |  |
+| 48 | 1:36.2 | [▶](https://youtu.be/ZDsRTupH2mg?t=354) | at the end to kind of just push myself | 做得不错，逼着自己 |  |
+| 49 | 1:37.9 | [▶](https://youtu.be/ZDsRTupH2mg?t=355) | a little bit to to be as aggressive as possible. | 尽可能地打得更主动一点。 |  |
+| 50 | 1:40.6 | [▶](https://youtu.be/ZDsRTupH2mg?t=358) | And it worked. | 而且真的奏效了。 |  |
+| 51 | 1:45.8 | [▶](https://youtu.be/ZDsRTupH2mg?t=363) | I don't think you mind me asking you | 我猜你不会介意 |  |
+| 52 | 1:48.5 | [▶](https://youtu.be/ZDsRTupH2mg?t=366) | something about Sorana. | 我问几句关于索拉娜的事。 | ✏️ 已订正 |
+| 53 | 1:50.6 | [▶](https://youtu.be/ZDsRTupH2mg?t=368) | She's been on tour for 22 years. | 她在巡回赛打了二十二年。 |  |
+| 54 | 1:52.6 | [▶](https://youtu.be/ZDsRTupH2mg?t=370) | The first time you played, | 你们第一次交手， |  |
+| 55 | 1:54.0 | [▶](https://youtu.be/ZDsRTupH2mg?t=372) | we're talking 17-year-old Jesse in Midland. | 还是在米德兰，十七岁的你。 |  |
+| 56 | 1:57.4 | [▶](https://youtu.be/ZDsRTupH2mg?t=375) | But to see her consistency from one | 但看着她这么多年 |  |
+| 57 | 1:59.9 | [▶](https://youtu.be/ZDsRTupH2mg?t=377) | of the most consistent players on tour, | 是巡回赛最稳定的选手之一， |  |
+| 58 | 2:01.7 | [▶](https://youtu.be/ZDsRTupH2mg?t=379) | I'm sure you respect what she's doing right | 我相信你尊重她 |  |
+| 59 | 2:03.6 | [▶](https://youtu.be/ZDsRTupH2mg?t=381) | now. | 现在在做的事。 |  |
+| 60 | 2:04.2 | [▶](https://youtu.be/ZDsRTupH2mg?t=382) | Oh, yeah, for sure. | 哦，那当然。 |  |
+| 61 | 2:05.0 | [▶](https://youtu.be/ZDsRTupH2mg?t=383) | I mean, she's someone that I have known | 我是说，我认识她 |  |
+| 62 | 2:06.6 | [▶](https://youtu.be/ZDsRTupH2mg?t=384) | since we were playing challengers | 还是打挑战赛的时候， |  |
+| 63 | 2:08.5 | [▶](https://youtu.be/ZDsRTupH2mg?t=386) | and I've seen her come up | 我看着她一路 |  |
+| 64 | 2:09.8 | [▶](https://youtu.be/ZDsRTupH2mg?t=387) | through the rankings | 打上排名榜， |  |
+| 65 | 2:10.4 | [▶](https://youtu.be/ZDsRTupH2mg?t=388) | and then get hurt and come back | 然后受伤又复出， |  |
+| 66 | 2:11.8 | [▶](https://youtu.be/ZDsRTupH2mg?t=389) | and then obviously now kind | 现在很明显 |  |
+| 67 | 2:13.0 | [▶](https://youtu.be/ZDsRTupH2mg?t=391) | of on a little bit of a farewell tour. | 算是打一场小小的告别巡演。 |  |
+| 68 | 2:14.6 | [▶](https://youtu.be/ZDsRTupH2mg?t=392) | We'll see depending | 接下来怎么样 |  |
+| 69 | 2:15.6 | [▶](https://youtu.be/ZDsRTupH2mg?t=393) | on how well she's doing. | 要看她自己打得怎么样了。 |  |
+| 70 | 2:16.6 | [▶](https://youtu.be/ZDsRTupH2mg?t=394) | She's doing pretty well. | 她现在打得还挺好的。 |  |
+| 71 | 2:17.8 | [▶](https://youtu.be/ZDsRTupH2mg?t=395) | But I know she said that, you know, | 但我知道她说过， |  |
+| 72 | 2:19.0 | [▶](https://youtu.be/ZDsRTupH2mg?t=397) | this wants to be her last year, | 她希望这是她最后一年， |  |
+| 73 | 2:20.3 | [▶](https://youtu.be/ZDsRTupH2mg?t=398) | but I've always had the utmost respect | 但我一直对她 |  |
+| 74 | 2:21.8 | [▶](https://youtu.be/ZDsRTupH2mg?t=399) | for her. | 抱着最高的敬意。 |  |
+| 75 | 2:22.2 | [▶](https://youtu.be/ZDsRTupH2mg?t=400) | She's always super professional, | 她一直特别职业， |  |
+| 76 | 2:24.3 | [▶](https://youtu.be/ZDsRTupH2mg?t=402) | super nice, just courteous, | 特别好相处，也很有礼貌， |  |
+| 77 | 2:26.4 | [▶](https://youtu.be/ZDsRTupH2mg?t=404) | and I feel like is is kind of the epitome | 我觉得她差不多就是 |  |
+| 78 | 2:28.6 | [▶](https://youtu.be/ZDsRTupH2mg?t=406) | of like a a professional tennis player | 一个职业网球运动员 |  |
+| 79 | 2:30.8 | [▶](https://youtu.be/ZDsRTupH2mg?t=408) | should be, and I've always | 该有的样子，我也一直 |  |
+| 80 | 2:32.3 | [▶](https://youtu.be/ZDsRTupH2mg?t=410) | had that to to be around, you know, | 很庆幸身边有这样的人， |  |
+| 81 | 2:34.2 | [▶](https://youtu.be/ZDsRTupH2mg?t=412) | since we've been playing with each other. | 因为我们打过很多次交手。 |  |
+| 82 | 2:35.6 | [▶](https://youtu.be/ZDsRTupH2mg?t=413) | So, I haven't played her in a really long time | 不过很久没跟她交手了， |  |
+| 83 | 2:37.2 | [▶](https://youtu.be/ZDsRTupH2mg?t=415) | as well. | 也是真的。 |  |
+| 84 | 2:39.1 | [▶](https://youtu.be/ZDsRTupH2mg?t=417) | So, beautifully said. | 这话说得真好。 |  |
+| 85 | 2:40.6 | [▶](https://youtu.be/ZDsRTupH2mg?t=418) | Yeah, it's been about five years | 是啊，距离你们上一次交手 |  |
+| 86 | 2:42.5 | [▶](https://youtu.be/ZDsRTupH2mg?t=420) | since the two of you have played. | 差不多已经五年了。 |  |
+| 87 | 2:43.9 | [▶](https://youtu.be/ZDsRTupH2mg?t=421) | Got to ask just a couple | 还得问你几个 |  |
+| 88 | 2:45.5 | [▶](https://youtu.be/ZDsRTupH2mg?t=423) | of personal questions just getting all up | 有点私人的问题， |  |
+| 89 | 2:47.4 | [▶](https://youtu.be/ZDsRTupH2mg?t=425) | in your business. | 打探一下你的生活。 |  |
+| 90 | 2:48.2 | [▶](https://youtu.be/ZDsRTupH2mg?t=426) | So, after every match, | 每次比赛结束以后， |  |
+| 91 | 2:50.0 | [▶](https://youtu.be/ZDsRTupH2mg?t=428) | you have a fascinating routine. | 你都有一套很有意思的流程。 |  |
+| 92 | 2:51.5 | [▶](https://youtu.be/ZDsRTupH2mg?t=429) | Is it | 是不是 |  |
+| 93 | 2:51.9 | [▶](https://youtu.be/ZDsRTupH2mg?t=429) | the same every time you open something, | 每次都一样，先打开东西， |  |
+| 94 | 2:54.8 | [▶](https://youtu.be/ZDsRTupH2mg?t=432) | you put something on your hand, | 在手上戴点什么， |  |
+| 95 | 2:56.0 | [▶](https://youtu.be/ZDsRTupH2mg?t=434) | you check your phone? | 然后看看手机？ |  |
+| 96 | 2:57.0 | [▶](https://youtu.be/ZDsRTupH2mg?t=435) | Do you | 你有没有 |  |
+| 97 | 2:57.4 | [▶](https://youtu.be/ZDsRTupH2mg?t=435) | have a consistent postmatch routine there | 一套固定的赛后流程， |  |
+| 98 | 3:00.0 | [▶](https://youtu.be/ZDsRTupH2mg?t=438) | at the bench? | 就在场边？ |  |
+| 99 | 3:01.0 | [▶](https://youtu.be/ZDsRTupH2mg?t=439) | Yes, I put my wedding ring back | 有的，我会先把婚戒 |  |
+| 100 | 3:02.6 | [▶](https://youtu.be/ZDsRTupH2mg?t=440) | on and I power up my phone | 戴回去，再打开手机， |  |
+| 101 | 3:06.0 | [▶](https://youtu.be/ZDsRTupH2mg?t=444) | and then I usually come and talk to you. | 然后一般就会过来跟你聊天。 |  |
+| 102 | 3:08.6 | [▶](https://youtu.be/ZDsRTupH2mg?t=446) | That's pretty much it. | 基本就这些。 |  |
+| 103 | 3:09.8 | [▶](https://youtu.be/ZDsRTupH2mg?t=447) | And honestly, | 说实话， |  |
+| 104 | 3:10.5 | [▶](https://youtu.be/ZDsRTupH2mg?t=448) | this is putting my ring on is out of habit | 戴戒指纯粹是习惯， |  |
+| 105 | 3:12.4 | [▶](https://youtu.be/ZDsRTupH2mg?t=450) | because I lose a lot of things. | 因为我特别爱丢东西。 |  |
+| 106 | 3:14.1 | [▶](https://youtu.be/ZDsRTupH2mg?t=452) | And I have actually lost this before. | 这枚戒指我之前真的丢过。 |  |
+| 107 | 3:15.9 | [▶](https://youtu.be/ZDsRTupH2mg?t=453) | And by an absolute miracle, | 说来是个奇迹， |  |
+| 108 | 3:17.6 | [▶](https://youtu.be/ZDsRTupH2mg?t=455) | story for another day, | 这个故事改天再讲， |  |
+| 109 | 3:18.9 | [▶](https://youtu.be/ZDsRTupH2mg?t=456) | I found it like in the street. | 我居然在街上把它找回来了。 |  |
+| 110 | 3:20.4 | [▶](https://youtu.be/ZDsRTupH2mg?t=458) | somebody found it. | 是有人捡到还给了我。 |  |
+| 111 | 3:21.4 | [▶](https://youtu.be/ZDsRTupH2mg?t=459) | And so my husband was not very happy | 所以我丈夫当时 |  |
+| 112 | 3:24.1 | [▶](https://youtu.be/ZDsRTupH2mg?t=462) | with that, as you can imagine. | 很不高兴，你能想象的。 |  |
+| 113 | 3:26.5 | [▶](https://youtu.be/ZDsRTupH2mg?t=464) | So I've become very habitual | 所以我现在已经很习惯， |  |
+| 114 | 3:28.6 | [▶](https://youtu.be/ZDsRTupH2mg?t=466) | with putting my wedding ring back | 会把婚戒戴回去， |  |
+| 115 | 3:29.8 | [▶](https://youtu.be/ZDsRTupH2mg?t=467) | on because he knows, everyone | 因为他知道，认识我的人 |  |
+| 116 | 3:31.9 | [▶](https://youtu.be/ZDsRTupH2mg?t=469) | that knows me knows I just lose stuff all | 都知道我总是丢三落四， |  |
+| 117 | 3:33.9 | [▶](https://youtu.be/ZDsRTupH2mg?t=471) | the time, | 一直如此， |  |
+| 118 | 3:35.1 | [▶](https://youtu.be/ZDsRTupH2mg?t=473) | except tennis matches. | 除了网球比赛不会输。 |  |
+| 119 | 3:36.4 | [▶](https://youtu.be/ZDsRTupH2mg?t=474) | One more quick thing. | 再问最后一个小问题。 |  |
+| 120 | 3:37.5 | [▶](https://youtu.be/ZDsRTupH2mg?t=475) | It's interesting. | 有点意思。 |  |
+| 121 | 3:43.8 | [▶](https://youtu.be/ZDsRTupH2mg?t=481) | I I've known you for a long time, | 我认识你这么久了， |  |
+| 122 | 3:44.9 | [▶](https://youtu.be/ZDsRTupH2mg?t=482) | but I have no clue what the answer | 但完全猜不到 |  |
+| 123 | 3:46.7 | [▶](https://youtu.be/ZDsRTupH2mg?t=484) | to this question will be. | 这个问题的答案。 |  |
+| 124 | 3:48.6 | [▶](https://youtu.be/ZDsRTupH2mg?t=486) | What's playing in your headphones | 你走上球场的时候， |  |
+| 125 | 3:50.9 | [▶](https://youtu.be/ZDsRTupH2mg?t=488) | when you walk out on court? | 耳机里放的是什么？ |  |
+| 126 | 3:52.2 | [▶](https://youtu.be/ZDsRTupH2mg?t=490) | Do you have a walk out song | 有没有固定的出场曲， |  |
+| 127 | 3:53.2 | [▶](https://youtu.be/ZDsRTupH2mg?t=491) | or does it change all the time? | 还是一直在换？ |  |
+| 128 | 3:55.1 | [▶](https://youtu.be/ZDsRTupH2mg?t=493) | It changes. | 一直在换。 |  |
+| 129 | 3:56.6 | [▶](https://youtu.be/ZDsRTupH2mg?t=494) | I feel like with usually like a week | 一般大概一两周 |  |
+| 130 | 3:58.4 | [▶](https://youtu.be/ZDsRTupH2mg?t=496) | or two it might stay the same. | 会维持不变。 |  |
+| 131 | 4:00.2 | [▶](https://youtu.be/ZDsRTupH2mg?t=498) | I don't know. | 我也说不好。 |  |
+| 132 | 4:02.6 | [▶](https://youtu.be/ZDsRTupH2mg?t=500) | Right now | 现在这段时间 |  |
+| 133 | 4:03.0 | [▶](https://youtu.be/ZDsRTupH2mg?t=500) | it's it's always pretty relaxing music | 放的一直是比较放松的音乐， |  |
+| 134 | 4:04.7 | [▶](https://youtu.be/ZDsRTupH2mg?t=502) | that like more viby, not super intense, | 氛围感更强，不会太激烈， |  |
+| 135 | 4:07.0 | [▶](https://youtu.be/ZDsRTupH2mg?t=505) | not super rap. | 也不是那种劲爆说唱。 |  |
+| 136 | 4:07.7 | [▶](https://youtu.be/ZDsRTupH2mg?t=505) | I listen to like a lot of R&B. | 我听挺多R&B的， |  |
+| 137 | 4:09.7 | [▶](https://youtu.be/ZDsRTupH2mg?t=507) | Sometimes it's afrobeat. | 有时候是非洲节拍。 |  |
+| 138 | 4:10.9 | [▶](https://youtu.be/ZDsRTupH2mg?t=508) | Sometimes it's Yeah. | 有时候是……对。 |  |
+| 139 | 4:12.2 | [▶](https://youtu.be/ZDsRTupH2mg?t=510) | Something really laidback. | 反正就是很放松的那种。 |  |
+| 140 | 4:13.7 | [▶](https://youtu.be/ZDsRTupH2mg?t=511) | So, this week I don't even know what it | 这周放的是什么 |  |
+| 141 | 4:16.6 | [▶](https://youtu.be/ZDsRTupH2mg?t=514) | I don't even know. | 我自己都说不上来。 |  |
+| 142 | 4:17.3 | [▶](https://youtu.be/ZDsRTupH2mg?t=515) | I think it's Amber Mark. | 好像是安柏·马克。 |  |
+| 143 | 4:19.7 | [▶](https://youtu.be/ZDsRTupH2mg?t=517) | I don't know if that's her name. | 也不确定是不是她的名字。 |  |
+| 144 | 4:20.6 | [▶](https://youtu.be/ZDsRTupH2mg?t=518) | I think that's her name. | 应该是这个名字。 |  |
+| 145 | 4:22.0 | [▶](https://youtu.be/ZDsRTupH2mg?t=520) | I don't know. She's not very well known yet. | 不确定，她现在还没名气。 |  |
+| 146 | 4:23.5 | [▶](https://youtu.be/ZDsRTupH2mg?t=521) | I'm waiting for her to blow up. | 我就等着她红起来。 |  |
+| 147 | 4:24.6 | [▶](https://youtu.be/ZDsRTupH2mg?t=522) | I should probably know her name | 我大概应该记住她的名字， |  |
+| 148 | 4:25.7 | [▶](https://youtu.be/ZDsRTupH2mg?t=523) | though if I'm waiting for that to happen. | 毕竟我都在等这一天了。 |  |
+| 149 | 4:27.2 | [▶](https://youtu.be/ZDsRTupH2mg?t=525) | But she's been really good | 但她真的写得很好， |  |
+| 150 | 4:28.4 | [▶](https://youtu.be/ZDsRTupH2mg?t=526) | and I've been listening to a lot of her. | 我最近听了她很多歌。 |  |
+| 151 | 4:30.6 | [▶](https://youtu.be/ZDsRTupH2mg?t=528) | Well, she will blow up | 那她肯定会红的， |  |
+| 152 | 4:31.7 | [▶](https://youtu.be/ZDsRTupH2mg?t=529) | since you just gave her a shout out. | 毕竟你刚给她打了广告。 |  |
+| 153 | 4:33.5 | [▶](https://youtu.be/ZDsRTupH2mg?t=531) | As much variety in her music | 她音乐里的多样性， |  |
+| 154 | 4:34.9 | [▶](https://youtu.be/ZDsRTupH2mg?t=532) | as in her game. | 和她球风里的一样丰富。 |  |
+| 155 | 4:35.6 | [▶](https://youtu.be/ZDsRTupH2mg?t=533) | Show some love for Jessica Pegula. | 把掌声送给佩古拉。 |  |
+
+## 还欠着的
+
+（无）
+
+听完之后：改对的写进 `en_fixed`；听下来本来就对的写进 `suspect_ok`（值写一句为什么），别默默留着——**一个常年挂着的待办和没有待办长得一模一样**。
+
+## 自动字幕的空档（≥2 秒连一个事件都没有）
+
+- **0.5–5.1 秒**（片内，4.6 秒空白，[跳过去](https://youtu.be/ZDsRTupH2mg?t=258)）　开场那几秒是赛点落地后的欢呼和鼓掌，解说还没开口——263.1 秒才接上「this time. Jessica Pegula books a place...」，这段沉默是庆祝的现场声，不是漏词。
+
+打开源片听这几秒：**有人说话就是漏了**，掌声／欢呼就不是。结论写进 spec 的 `caption_gaps_ok`（键 `起-止`，秒，一位小数）。
