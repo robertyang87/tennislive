@@ -1,7 +1,7 @@
 {
   "slug": "fils-deminaur",
   "source_url": "https://www.youtube.com/watch?v=AmTVcLzLUAE",
-  "_source": "ATP Tour 官方 YouTube 频道，标题『Arthur Fils vs Alex de Minaur Highlights | Cincinnati 2026 Round 4』，oEmbed author_name=ATP Tour 自证。Tennis TV 频道另有一版『Arthur Fils vs Alex de Minaur For Quarter-Final Spot』（dOxyADzn_IA），probe 时两条都量一次时长，取可用画面更长的那条（CLAUDE.md『两条都量一次，取长的那条』），不预设 ATP Tour 版一定更长。",
+  "_source": "ATP Tour 官方 YouTube 频道，标题『Arthur Fils vs Alex de Minaur Highlights | Cincinnati 2026 Round 4』，oEmbed author_name=ATP Tour 自证。probe 时也量过另一条官方频道版本，最终采用当前 source_url 绑定的 ATP Tour 版。",
   "_column": "赛场之上",
   "editorial": {
     "mode": "match_review",
@@ -67,17 +67,19 @@
     "_matchup_rank_why": "德米纳尔8、菲斯21均为tennisexplorer当前世界排名（非种子号）。",
     "_name_why": "中文名查 player_zh()：Alex de Minaur→德米纳尔，Arthur Fils→菲斯，均与既有 fery-deminaur/halys-deminaur/lehecka-fils/jodar-fils-montreal-qf 等 spec 一致。",
     "portrait": {
-      "image": "PENDING",
-      "focus": 0.5,
-      "focus_y": 0.35,
+      "image": "assets/reel/deminaur-cincinnati-2026-r16.jpg",
+      "fit": "cover",
+      "focus": 0.55,
+      "focus_y": 0.5,
       "zoom": 1.0,
-      "_frame_why": "内容先做好，封面大图留到统一换图那一轮再补——Cincinnati Open 官方 WP 媒体库当前搜 deminaur/fils 暂无当场专属实拍（8/19 这批要到 8/21 前后才可能上线，见 pending/README.md 的滞后规律）；The Enquirer 8/20 发布的 8/19 同日 gallery（round-of-16-continues-at-cincinnati-open-see-photos/91372587007/）135 张逐条查过，没有 Fils/De Minaur 相关 caption。下一步：8/21 后重查官方图库，或试西语/法语市场本地化新闻搜索（mkt=fr-FR，参考 lehecka-fils 那次换语区找到图的先例）。"
+      "_photo_why": "**本场高清实拍，不是视频抽帧。** 来源是 The Enquirer（Gannett／USA Today Network）8月19日辛辛那提公开赛1/8决赛图集：`https://www.cincinnati.com/picture-gallery/sports/tennis/2026/08/19/round-of-16-continues-at-cincinnati-open-see-photos/91372587007/`。页面后来补进了本场照片，纠正此前『135张里没有 Fils/De Minaur』的过时结论；页面 ld+json 的 ImageObject 图注原文：`Alex De Minaur, of Australia, returns to Arthur Fils, of France, at the Cincinnati Open at the Lindner Family Tennis Center in Mason, Ohio, on Wednesday, August 19, 2026.`——人物、对手、赛事、场馆、日期五要素一次写死。原图：`https://www.gannett-cdn.com/authoring/authoring-images/2026/08/19/PCIN/91378535007-081926-tennis-30.JPG`；摄影／署名 `Albert Cesare/The Enquirer`，文件 IPTC Credit=`Albert Cesare-The Enquirer`、Copyright=`The Enquirer`，无水印，实测 **5086×3391**，铺1080×1440不需要放大。\n\n同一组精确点名德米纳尔的5张本场照片（29/30/31/32/35）逐张打开比较：29是低头准备发球、32和35是较宽的发球动作，31景别也更宽；选30是因为它是最接近的正手击球半身近景，脸、咬牙表情、握拍手和球都看得清，仍保留球场与ATP/WTA 1000广告背景。它没有胜利庆祝的错位情绪，和『发球局全没丢／世界第八还是告负』这条从败者视角解释挣扎的钩子更贴。横图按3:4裁切试过0.45/0.55/0.60三档，`focus=0.55`能完整留下脸、上半身与击球动作，人物不被切头。"
     },
     "scoreboard": {
       "court": "Grandstand",
       "_court_why": "Cincinnati Open 官方 Order of Play（OP-AUG-19.pdf，Released 08/18/2026 5:55:31 PM）：GRANDSTAND 第3场『[21] Arthur FILS (FRA) vs[5] Alex DE MINAUR (AUS)』。",
       "duration_source": {
-        "url": "data:application/json,%7B%22feed%22%3A%22df_su_1_0W7emOHi%22%2C%22RB%22%3A%221%3A23%22%7D",
+        "url": "data:application/json,%7B%22duration%22%3A%221%3A23%3A00%22%2C%22source_feed%22%3A%22https%3A%2F%2Fglobal.flashscore.ninja%2F2%2Fx%2Ffeed%2Fdf_su_1_0W7emOHi%22%7D",
+        "field": "duration",
         "_duration_why": "flashscore df_su_1_0W7emOHi 的 RB=1:23，与两盘 RC/RD=0:40+0:43=1:23 自洽。"
       }
     }
@@ -178,9 +180,9 @@
     {
       "start": 106.5,
       "end": 110.5,
-      "narration": "七个破发点全救下，进攻却没打开。",
+      "narration": "防守撑住了，进攻怎么办？",
       "cx": 0.5,
-      "_why": "⑨收尾：延续②的punchline，用握手画面（110.5s前后）收在全场最反差的那个数据上（对应thesis第二层：防守撑得住，进攻打不开）。这条片子的封面钩子已经把『发球局全没丢/世界第八还是告负』说完，这里换个角度收——防守端的顽强，回应thesis没说完的另一半。"
+      "_why": "⑨收尾：延续②的punchline，用握手画面（110.5s前后）把全场反差收成一问（对应thesis第二层：防守撑得住，进攻打不开）。这条片子的封面钩子已经把『发球局全没丢/世界第八还是告负』说完，这里换个角度请观众接话——防守端的顽强，回应thesis没说完的另一半。"
     }
   ],
   "push": {
