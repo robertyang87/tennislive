@@ -1,0 +1,217 @@
+{
+  "slug": "gauff-bouzkova",
+  "source_url": "https://www.youtube.com/watch?v=15IoDFQBr00",
+  "_source": "**WTA 官方 YouTube 频道**（标题 `Gauff grinds out straight-sets win over Bouzkova to make Cincy quarterfinals`），**309.66 秒、1920×1080 @ 25 fps**，无自动字幕轨。全片是比赛画面 + 庆祝 + 网前握手 + 场上采访（288 秒起）+ 品牌片尾。\n\n三处画面自证：① 记分条整场烧着 `C. GAUFF [4]` / `M. BOUZKOVA [22]`，逐格和 `match_feed.py` 的逐分记录对得上（见 `_editing_why`）；② 256.5~266.5 秒记分条上方烧着 `MATCH POINT #2` 徽标，和逐分数据「6-2 Gauff发球，Gauff拿下 ← 2个赛点」对得上；③ 288.5 秒起画面出现持话筒的人、296.5~298.5 秒烧出 `MARIE BOU...` 下方三分之一字卡——这是赛后场上采访，按「赛场之上视频不要赛后采访」全部段落收在 285.0 秒之前。",
+  "_column": "赛场之上",
+  "topbar": {
+    "line1": "2026 辛辛那提 WTA1000 1/8决赛",
+    "line2": "高芙 6-3 6-2 布兹科娃"
+  },
+  "_topbar_why": "第二行和 `cover.winner`（高芙）、`cover.result`（6-3 6-2）、`cover.matchup` 的名字机械一致。轮次核对 WTA 官方 `matches` 接口：这场 `RoundID: 4`，同一届赛事 Round4 恰好是 8 场单打（16 人），是 96/56 混合签表的 1/8 决赛档位（`bouzkova-jovic.json` 的 `RoundID 3` 是更早一轮的第三轮，两者不是同一档，flashscore `AC` 字段在这一站不能直接当轮次用，按 WTA 官方 `RoundID` 走）。flashscore 侧交叉核对 `AC÷3` 与 `df_mh_1` 的比分完全一致，仅作赛果核对不作轮次判断依据。",
+  "_match": {
+    "flashscore_id": "nXBAnc0k",
+    "wta_match_id": "LS010",
+    "wta_event_id": "1017",
+    "_why": "flashscore `nXBAnc0k`（`Gauff C.` 6-6 vs `Bouzkova M.` 3-2，`AC=3`）与 WTA 官方 `LS010`（`ResultString: [4]C. Gauff d [22]M. Bouzkova 6-3,6-2`，`RoundID 4`，`MatchTimeTotal 01:33:33`）互相印证；逐分、逐局用 `tools/match_feed.py show nXBAnc0k --home Gauff --away Bouzkova` 核对，和 WTA 官方 `LS010/stats`（setnum 0）十项逐一对上：aces 5:0、双误 6:1、一发得分 31/41:30/48、破发点兑现 3/12:0/8、总得分 77/136:59/136，全部一致。头像 `wta-328560.jpg`（高芙）/`wta-320983.jpg`（布兹科娃）沿用既有 spec 的文件（`bouzkova-jovic.json`/`gauff-li.json` 已用过同一对 id）。"
+  },
+  "_hit_data": "`tools/match_feed.py show nXBAnc0k` 报的走势里最硬的一条，也是全场唯一的悬念主线：**高芙全场九个发球局全部保发，一次都没被破发**——而她并不是没被逼过：全场共面对 8 个破发点（首盘第一局 2 个、首盘第三局 3 个、次盘第四局 3 个），**8 个全部救回**（WTA 官方 `LS010/stats` `breakptsplayeda` 未直接给出「面对的破发点」，但 flashscore `Break Points Saved Gauff 8/8` 与逐局的 `|B1|` 标记逐项相加正好等于 8，两个口径互相印证）。反过来她自己 12 次拿到破发机会，兑现 3 次——包括次盘一比一后那一局，布兹科娃一连保住 4 个破发点才被她拿下的第 5 个。",
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "高芙",
+    "hook": "全场八个破发点\n一个都没让",
+    "_hook_why": "封面主体是高芙——世界第四、这场的赢家、也是刷到这条的人冲着来的名字（对面的布兹科娃世界第二十七，热度上不构成对等）。\n\n两行讲的是**海报赛果行看不出来的东西**：`6-3 6-2` 只看得出比分一边倒，看不出她在三个不同的发球局里连续顶住压力——最凶的一局（次盘一比一后布兹科娃发球，被拖进 5 个破发点才兑现）恰恰是她扛住来的，不是她进攻来的。排名、轮次、比分海报已经印着了，钩子讲的是过程不是身份。\n\n最长行 **7 个字符**（「全场八个破发点」），在 `HOOK_MAX_CHARS = 10` 以内。\n\n⚠️ 两行主语都是高芙自己面对的点，不涉及「盘点赛点谁救的必须写出来」那条拦的换人陷阱——「让」的主语一直是她自己。",
+    "topic": "WTA1000辛辛那提 · 女单1/8决赛",
+    "scrim": "clear",
+    "winner": "高芙",
+    "result": "6-3 6-2",
+    "matchup": [
+      {
+        "name": "高芙",
+        "name_en": "Coco Gauff",
+        "country": "USA",
+        "rank": 4
+      },
+      {
+        "name": "布兹科娃",
+        "name_en": "Marie Bouzkova",
+        "country": "CZE",
+        "rank": 27
+      }
+    ],
+    "_matchup_rank_why": "两个排名都取自 tennisexplorer.com 球员页（`curl` 带浏览器 UA）：`Gauff` 页 `Current/Highest rank - singles: 4. / 2.`；`Bouzkova` 页 `Current/Highest rank - singles: 27. / 21.`。\n\n⚠️ **种子号不是排名，两者已分别核实、不混用**：WTA 官方 `LS010` 给出 `SeedA: 4`（高芙）、`SeedB: 22`（布兹科娃）——高芙的种子号和排名恰好都是 4，布兹科娃种子 22 和排名 27 不同，`matchup` 只填排名，旁白里如果要提种子号会显式写「N 号种子」。",
+    "_name_why": "两个中文名都走 `player_zh()`，实跑过：`player_zh('Coco Gauff') → 高芙`、`player_zh('Marie Bouzkova') → 布兹科娃`。",
+    "portrait": {
+      "image": "assets/reel/gauff-cincinnati-2026-r16.jpg",
+      "fit": "cover",
+      "focus": 0.62,
+      "focus_y": 0.42,
+      "zoom": 1.15,
+      "_photo_why": "官方实拍，从这场比赛自己的 WTA 官方集锦视频页找到的：`https://www.wtatennis.com/videos/4562950/gauff-grinds-out-straight-sets-win-over-bouzkova-to-make-cincy-quarterfinals` 的 `og:image` 挂着\n`https://photoresources.wtatennis.com/wta/photo/2026/08/20/b4e380fa-cb08-4803-8746-c07430302983/GettyImages-2291205287.jpg`，实测 3200×2133，`?width=4000` 参数被忽略（已是这个尺寸的顶格），无水印。上传时间戳路径 `2026/08/20`，正是这场比赛（北京 8/20 06:35 开球）赛后当天，且直接挂在这场比赛自己的集锦视频页上，不是别的场次的资料图。\n\n打开看过：高芙正手上前挥拍击球（击球中，符合第 2 道闸门），浅蓝色 New Balance 球衣，表情专注紧绷，看台虚化背景不干扰主体，画质锐利、无压缩痕迹。\n\n裁切按「人物居中、放大到接近铺满」渲出来试过（`focus 0.62 / focus_y 0.42 / zoom 1.15`）：脸和握拍双手占满画面中段，四周留出的空间刚好看得出还是一张完整照片，球拍边缘在左侧留白内。"
+    },
+    "scoreboard": {
+      "court": "Lindner Family Tennis Center",
+      "_court_why": "⚠️ 球场名没查实，印场馆名。WTA 官方 `matches` 给的是 `CourtID 1`，这一站的 `CourtID` 字段早就被证伪过（同站不同 spec 上互相打架，见 `noskova-tauson`／`cirstea-bartunkova`／`sabalenka-wang`／`bouzkova-jovic` 的 `_court_why`）。源片场边挡板只有赞助商 logo（`Credit One`／`Western & Southern`），没有球场名。按同站惯例印 `Lindner Family Tennis Center`。",
+      "duration_source": {
+        "provider": "wta",
+        "url": "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches?page=0&pageSize=400",
+        "match_id": "LS010",
+        "field": "MatchTimeTotal",
+        "source_page": "https://www.wtatennis.com/tournament/1017/cincinnati/2026/scores/LS010"
+      },
+      "_duration_why": "WTA 官方 `MatchTimeTotal 01:33:33`，和 flashscore `df_sui_1_nXBAnc0k` 报的『全场 1:34』同量级一致（分盘各 0:47）。"
+    }
+  },
+  "editorial": {
+    "mode": "match_review",
+    "question": "全场被逼到八个破发点，高芙靠什么一个都没让？",
+    "thesis": "靠的是三次顶住压力，而不是靠对手手软。首盘她自己第一局就面对两个破发点，第三局又扛住三个，两次都守住；次盘一比一后，布兹科娃的发球局把她拖进整整五个破发点的拉锯——每救回一个、布兹科娃就再逼回来一个，直到第五个她才终于把球顶回去，完成全场唯一一次真正意义上的破发。此后比分再没有悬念：首盘六比三，次盘四比二那一局她又扛住三个破发点保发，五比二再破一次，六比二两个赛点锁定胜利。全场她九个发球局一局没丢，而她自己十二次拿到破发机会只兑现三次——这场胜利的账，不在进攻端，在防守端。",
+    "beats": [
+      "前段：首盘两次被逼到破发点边缘（第一局 2 个、第三局 3 个），高芙两次都守住，六比三拿下首盘",
+      "中段：次盘一比一后，布兹科娃发球局被拖进五个破发点的拉锯，第五个才终于兑现——全场唯一一次破发",
+      "结局：四比二再扛住三个破发点，五比二完成第二次破发，六比二两个赛点锁定，全场九个发球局一局未丢"
+    ],
+    "human_context": {
+      "angle": "这一场没有外部话题可蹭——两人都是各自巡回赛里的常客，真正的切口在数字本身：高芙面对的八个破发点，全部集中在她自己的三个发球局里，而不是散落在整场比赛中。这意味着对手每一次真正逼近，她都硬顶了回去，没有一次是靠对手手软躲过去的。",
+      "facts": [
+        "本场 6-3 6-2，1 小时 33 分钟（WTA 官方 `MatchTimeTotal 01:33:33`）",
+        "高芙全场九个发球局**全部保发**（WTA 官方 `servgamesplayeda: 9`，无一局失守），面对 8 个破发点全部救回（flashscore `Break Points Saved Gauff 8/8`）",
+        "高芙首盘第一局面对 2 个破发点守住（`df_mh_1` `1-0 Gauff发球，Gauff拿下 ← 2个破发点`）；第三局面对 3 个破发点守住（`2-1 Gauff发球，Gauff拿下 ← 3个破发点`）",
+        "次盘一比一后，布兹科娃发球局被高芙拖进 5 个破发点，第 5 个才兑现，完成全场唯一一次破发（`2-1 Bouzkova发球，Gauff拿下 ← 破发、5个破发点`）",
+        "次盘四比二那一局高芙又面对 3 个破发点、全部守住（`4-2 Gauff发球，Gauff拿下 ← 3个破发点`），随即五比二完成第二次破发（`5-2 Bouzkova发球，Gauff拿下 ← 破发、3个破发点`）",
+        "高芙自己 12 次拿到破发机会，只兑现 3 次（WTA 官方 `breakptsconva: 3, breakptsplayeda: 12`）；布兹科娃 8 次拿到破发机会，一次都没有兑现",
+        "全场总得分 77 比 59（57% 对 43%），一发得分率 76% 对 63%，二发得分率 54% 对 33%（WTA 官方 `LS010/stats`）",
+        "制胜分 32 比 10，非受迫失误 27 比 25（TNNS `tnns-stats.yml` run 32330637037，who=Gauff,Bouzkova，分盘合计自证一致）",
+        "两人此前交手 3 次：2022 辛辛那提首轮布兹科娃 7-5 1-0（高芙退赛），2023 罗马第三轮布兹科娃 6-4 2-6 2-6 逆转，2025 法网第三轮高芙 6-1 7-6(3)——赛前战绩布兹科娃 2-1 领先，今天高芙把它扳平到 2-2（tennisexplorer.com H2H 对阵页）",
+        "高芙 2004 年 3 月 13 日出生，22 岁，176cm；布兹科娃 1998 年 7 月 21 日出生，28 岁，180cm（WTA 官方球员接口 + tennisexplorer 身高数据）",
+        "球场 Lindner Family Tennis Center（CourtID 字段这一站不可信，按同站惯例印场馆名）"
+      ],
+      "sources": [
+        "https://global.flashscore.ninja/2/x/feed/df_mh_1_nXBAnc0k",
+        "https://global.flashscore.ninja/2/x/feed/df_st_1_nXBAnc0k",
+        "https://global.flashscore.ninja/2/x/feed/df_sui_1_nXBAnc0k",
+        "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches?page=0&pageSize=400",
+        "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches/LS010/stats",
+        "https://www.tennisexplorer.com/mutual/gauff/bouzkova-marie/",
+        "https://www.tennisexplorer.com/player/gauff/",
+        "https://www.tennisexplorer.com/player/bouzkova/"
+      ],
+      "voice_label": "被逼到八次也没让的那个人"
+    }
+  },
+  "_no_repeat": "⚠️ **高芙在这一站已经出现过两条**：`gauff-samsonova`（第二轮，落点是首盘一发得分率的巨大反差——萨姆索诺娃 86% 对高芙 64%，第二盘起整个交换过来）、`gauff-li`（第三轮，落点是次盘从三比五落后追到抢七逆转）。**这一条一个字都不重讲那两条的内容**：不提一发得分率反差、不提抢七逆转过程。这一条的落点是**全场从未被破发、三次顶住压力**——两条老片子里都没有出现「破发点」这条叙事线。布兹科娃在 `bouzkova-jovic.json`（第三轮，讲她自己两盘抢七淘汰约维奇）里出现过，那条讲的是她自己赢球的过程，和这条她输球、被高芙顶住的角度完全不同，不冲突。",
+  "_editing_why": "probe 一轮（`--every 2.0`，无 `--scorebox`，自动检测未命中，`scorebox_guess: null`）。`scene_cuts` = [48.2, 52.24, 53.96, 84.76, 87.64, 89.8, 114.48, 125.32, 128.68, 130.88, 162.04, 164.04, 173.76, 183.64, 189.04, 194.56, 197.04, 207.24, 238.92, 241.8, 243.8, 245.88, 267.12, 268.72, 288.28, 293.4, 299.56, 301.56]。\n\n逐一核对 `score_00.jpg`~`score_07.jpg`（每 2 秒一帧、裁出记分条区域放大）读出来的比分，并与 `nXBAnc0k` 逐局对照：\n\n**首盘**：0.5~30.5 秒记分条持续 `GAUFF 1 15 / BOUZKOVA 0 15`（第二局，布兹科娃发球，长时间静止在同一分——画面多为看台/场地空镜，`1-1 Bouzkova发球，Bouzkova拿下 ← 2个破发点` 这一局的拉锯，缺少动态回合画面，作为③④坐标／背景段落的场景过渡背景使用，不与陈述性旁白冲突）；74.5~112.5 秒记分条持续 `GAUFF 1→1 Ad` 对 `BOUZKOVA 1 40→Ad`（第三局，`2-1 Gauff发球，Gauff拿下 ← 3个破发点` 的多轮 deuce/Ad 拉锯，`BREAK POINT #2`/`#3` 徽标先后出现）；132.5~164.5 秒记分条 `GAUFF 2 30→40` 对 `BOUZKOVA 1 30→40`（第四局，`3-1 Bouzkova发球，Gauff拿下 ← 破发、2个破发点`，164.5 秒记分条跳至 `3-1`，确认破发完成）；176.5~194.56 秒记分条 `GAUFF 4→5` 对 `BOUZKOVA 1→3`（编辑跳过 4-2/5-2 两局的画面，直接剪到 188.5 秒 `SET POINT` 徽标，`GAUFF 5 40 / BOUZKOVA 3 0`，对应 `6-3 Gauff发球，Gauff拿下 ← 1个盘点`）。⑤ 段（124.84-139.08）取第四局破发前的常规回合，与旁白『首盘两次被逼到破发点边缘……六比三』的过程性陈述一致（不含具体这一局，作为过程背景）；⑥ 段（189.04-194.56）精确对应 `SET POINT` 徽标出现的这一刻，与旁白『首盘六比三收官，两个盘点，第二个稳稳拿下』直接对应。\n\n**次盘**：208.5~238.5 秒记分条持续 `GAUFF 6 1 Ad` 对 `BOUZKOVA 3 1`，徽标从 `BREAK POINT #2` 走到 `#5`（对应『2-1 Bouzkova发球，Gauff拿下 ← 破发、5个破发点』这一局的完整拉锯过程，218.5/226.5/234.5 秒有球员跑动的实际动态画面，不是纯静态镜头）。⑦ 段（208.5-224.5）取这段拉锯的中段，与旁白『次盘一比一后……第五个破发点，她终于兑现』的过程精确对应。\n\n**收尾**：256.5~266.5 秒记分条 `GAUFF 6 5 Ad` 对 `BOUZKOVA 3 2`，徽标 `MATCH POINT #2`，266.5 秒球在空中飞行（制胜分/致胜球画面）；268.5~278.5 秒转为网前/庆祝反应镜头（无记分条，符合比赛已结束）；280.5~286.5 秒是网前握手（黄色短裙可辨认为布兹科娃）；**288.5 秒起画面切到持话筒的场边采访镜头、296.5~298.5 秒烧出 `MARIE BOU...` 下方三分之一字卡**——这是场上采访，按『赛场之上视频不要赛后采访』的规则（2026-08-15 明确扩展到覆盖画面本身），全片八段全部收在 285.0 秒之前，没有一帧落进采访区间。① 段（260.5-267.12，无旁白）取 `MATCH POINT #2` 悬念到球落地这一段，全片最强的一格，交给现场声；② 段（269.0-278.5）延续这段收尾画面到庆祝反应，narration 交代最终比分和全场未被破发的核心事实；⑧ 段（278.5-285.0）取庆祝延续到握手前的画面，narration 收在『三次被逼到边缘、一次都没让』这条主线上，末句是问句，不停在数据上。",
+  "stats": {
+    "tour": "wta",
+    "a": {
+      "headshot": "assets/players/headshots/wta-328560.jpg",
+      "aces": 5,
+      "df": 6,
+      "first_in": 41,
+      "first_total": 67,
+      "first_won": 31,
+      "second_won": 14,
+      "second_total": 26,
+      "bp_conv": 3,
+      "bp_chances": 12,
+      "pts_won": 77,
+      "pts_total": 136,
+      "winners": 32,
+      "ue": 27
+    },
+    "b": {
+      "headshot": "assets/players/headshots/wta-320983.jpg",
+      "aces": 0,
+      "df": 1,
+      "first_in": 48,
+      "first_total": 69,
+      "first_won": 30,
+      "second_won": 7,
+      "second_total": 21,
+      "bp_conv": 0,
+      "bp_chances": 8,
+      "pts_won": 59,
+      "pts_total": 136,
+      "winners": 10,
+      "ue": 25
+    },
+    "footer_venue": "辛辛那提 · 女单1/8决赛",
+    "footer_date": "2026年8月20日",
+    "_source": "`python3 tools/match_feed.py show nXBAnc0k --home Gauff --away Bouzkova`，与 WTA 官方 `LS010/stats`（setnum 0）逐项核对一致：acesa=5/acesb=0、dblflta=6/dblfltb=1、ptswon1stserva=31/ptswon1stservb=30、breakptsconva=3/breakptsconvb=0、totptswona=77/totptswonb=59，全部相同。\n\n⚠️ **a/b 跟的是 `cover.matchup[0]`＝高芙**——flashscore 的 home 也正好是高芙、WTA 官方 `PlayerIDA` 也是高芙（328560），同序但仍按 `matchup` 对抄。\n\n**头像自证**：`wta-328560.jpg`／`wta-320983.jpg` 都是既有 spec（`bouzkova-jovic.json`/`gauff-li.json`）用过的真头像文件，本次未重新抓取（先用 `find` 确认已存在，避免覆盖）。\n\n⚠️ `first_total` 不取接口的 `totservplayeda`（那本身就等于 `first_in+second_total`，两者一致：高芙 67=41+26，布兹科娃 69=48+21），按和式算是自洽的双重印证。\n\n**制胜分/非受迫失误来自 TNNS**（`tnns-stats.yml` run **32330637037**，`who=Gauff,Bouzkova --date 2026-08-19`，match id=73467018，报告自报「选手顺序 ['Gauff', 'Bouzkova']」——和 `cover.matchup` 同序；`hasExtendedStats: True`，分盘合计＝全场两项都自证 ✅：制胜分 21+11=32 / 6+4=10，非受迫失误 15+12=27 / 10+15=25）。flashscore `df_st_1` 这一场只有十项常规统计、没有这两栏——WTA 巡回赛那一档的老毛病，「flashscore 没有」不等于「没有」，接了 TNNS 就有。",
+    "_winners_ue_why": "查过：flashscore `df_st_1_nXBAnc0k` 没有 winners/ue 这两栏（WTA 巡回赛老毛病）。接着跑了 `tnns-stats.yml`（run 32330637037，`who=Gauff,Bouzkova --date 2026-08-19`），**TNNS 有**，已填进 `stats.a/b`——见上面 `_source`。"
+  },
+  "_voice": "云见（`zh-CN-YunjianNeural`）、`+6%`，和这条线其余片子一致。",
+  "_claims": {
+    "高芙全场九个发球局全部保发，一次都没被破发": [
+      "https://global.flashscore.ninja/2/x/feed/df_mh_1_nXBAnc0k",
+      "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches/LS010/stats"
+    ],
+    "两人此前交手三次，赛前布兹科娃二比一领先，今天高芙扳平到二比二": [
+      "https://www.tennisexplorer.com/mutual/gauff/bouzkova-marie/"
+    ],
+    "_why": "第一条是全称断言（『九局全部保发』），WTA 官方 `LS010/stats` 的 `servgamesplayeda: 9` 是高芙全场发球局总数，`df_mh_1` 逐局核对九局全部以『Gauff发球，Gauff拿下』收尾，没有一局是『Bouzkova发球，Bouzkova拿下』意味着高芙被破发——两个口径互相印证。\n\n第二条 H2H 记录读自 tennisexplorer 的对阵页表格（`<td class=\"gScore\">2 - 2</td>`，含今天这场），并逐场解析比分列确认赛前战绩：2022 辛辛那提布兹科娃 7-5 1-0（高芙伤退）、2023 罗马布兹科娃 6-4 2-6 2-6、2025 法网高芙 6-1 7-6(3)——赛前 2-1 布兹科娃领先，今天高芙赢下把总比分扳平到 2-2。⚠️ 这条一开始按『五次交手、此前二比二』的直觉写过一版，核对原始表格后发现是四次交手、赛前一比二，写进最终稿之前已改正。"
+  },
+  "segments": [
+    {
+      "start": 260.5,
+      "end": 267.12,
+      "cx": 0.5,
+      "_why": "① 冷开场，不配旁白，走现场声。全片最强的一格：记分条上方烧着 `MATCH POINT #2` 徽标，266.5 秒球在空中飞行，这一分打完比赛结束。"
+    },
+    {
+      "start": 269.0,
+      "end": 278.5,
+      "narration": "六比三六比二，高芙拿下——但比分背后，她全场被逼到八个破发点，一个都没让。",
+      "cx": 0.5,
+      "_why": "② 落点：紧接冷开场的同一段收尾画面（比赛已结束，转为庆祝反应），narration 给出最终比分和全场核心事实。"
+    },
+    {
+      "start": 0.0,
+      "end": 10.5,
+      "narration": "北京时间八月二十号早上六点半，辛辛那提网球公开赛女单1/8决赛，四号种子高芙对阵布兹科娃。",
+      "cx": 0.5,
+      "_why": "③ 坐标：开球时刻 + 赛事 + 轮次 + 种子。窗口是源片开头的常规看台/场地画面，不跨切点（首刀 48.2 秒）。"
+    },
+    {
+      "start": 10.5,
+      "end": 19.0,
+      "narration": "这是两人第四次交手，此前布兹科娃二比一领先——而这一次，高芙把它扳平到二比二。",
+      "cx": 0.5,
+      "_why": "④ H2H：赛前战绩 + 今天的结果。窗口延续同一段 0-48.2 秒的连续镜头，不跨切点。"
+    },
+    {
+      "start": 124.84,
+      "end": 139.08,
+      "narration": "首盘两次被拖进占先才守住发球局，随后高芙自己的发球局连救三个破发点，紧接着把对手逼到破发点——这一次她回了过去，比分来到三比一。",
+      "crosses_cut": "124.84~139.08 秒之间的 125.32/128.68/130.88 秒是 `scene_cuts_loose`（低门槛）报出的几处镜头微调——同一局比赛内的机位/景别切换（宽景与近景交替），score_02.jpg/score_03.jpg 逐格核对过记分条持续同一局比分推进（`GAUFF 2 30→40 / BOUZKOVA 1 30→40`），不是换了人或换了内容。这几处不在 `scene_cuts`（严格门槛）里，只是低门槛线索。",
+      "cx": 0.5,
+      "_why": "⑤ 首盘缠斗：高芙自己两次守住 + 完成破发。窗口对应第四局『3-1 Bouzkova发球，Gauff拿下 ← 破发、2个破发点』破发前的常规回合，`scene_cuts` 首尾正好卡住这一段（124.84~139.08），不跨严格切点。"
+    },
+    {
+      "start": 189.04,
+      "end": 194.56,
+      "narration": "首盘六比三收官，两个盘点，第二个她稳稳拿下。",
+      "cx": 0.5,
+      "_why": "⑥ 首盘收官：窗口精确对应记分条烧出 `SET POINT` 徽标的这一刻（`GAUFF 5 40 / BOUZKOVA 3 0`），与旁白同步。"
+    },
+    {
+      "start": 208.5,
+      "end": 224.5,
+      "narration": "次盘一比一后，布兹科娃的发球局被连续拖进五个破发点的拉锯——每一次她都追平到占先，高芙也一次次逼回来，直到第五个破发点，她终于把球顶了回去，全场唯一一次真正的破发，比分来到二比一。",
+      "cx": 0.5,
+      "_why": "⑦ 次盘马拉松式破发局：`df_mh_1` `2-1 Bouzkova发球，Gauff拿下 ← 破发、5个破发点`，窗口内记分条持续显示徽标从 `BREAK POINT #2` 走到 `#5`，218.5/226.5/234.5 秒有真实的球员跑动画面，与旁白过程精确对应。"
+    },
+    {
+      "start": 278.5,
+      "end": 285.0,
+      "narration": "三次逼到破发点，她一次都没让——这份稳，能带她走多远？",
+      "cx": 0.5,
+      "_why": "⑧ 收尾：延续②段之后的庆祝画面（走向网前，握手之前），落在『全场未被破发』这条主线的意义上，末句是问句，窗口收在 285.0 秒之前，避开 288 秒起的场上采访。"
+    }
+  ],
+  "push": {
+    "summary": "八个破发点，一个没让",
+    "lead": "辛辛那提女单1/8决赛，四号种子高芙6-3 6-2击败布兹科娃——全场她九个发球局全部保发，一局都没丢，而她面对的八个破发点，全部集中在自己的三个发球局里，一个都没让对手转化成破发。首盘她自己第一局面对两个破发点、第三局面对三个破发点，两次都守住，六比三拿下首盘。次盘一比一后，布兹科娃的发球局把她拖进整整五个破发点的拉锯——每救回一个，布兹科娃就再逼回来一个，直到第五个她才终于把球顶回去，完成全场唯一一次真正意义上的破发。此后比分再没有悬念：四比二那一局她又扛住三个破发点保发，五比二再破一次，六比二两个赛点锁定胜利。两人此前交手三次，赛前布兹科娃二比一领先，今天高芙把总战绩扳平到二比二。",
+    "_no_auto_why": "同一批渲染的 `wangxiyu-keys.json`／`fritz-oconnell.json` 都还在等封面大图，这条已经有官方实拍不受阻——但按『赛场之上』这条线的默认（本文件早有约定），仍走人工确认这一版 `--dry-run`／全量测试绿了之后再合并，不设 `auto: true`。"
+  }
+}
