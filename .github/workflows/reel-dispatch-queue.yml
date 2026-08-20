@@ -1,0 +1,49 @@
+name: reel-dispatch-queue
+
+# A reviewed queue file is the only push-triggered bridge into match-reel.  The
+# helper compares the complete push range, rejects edits/deletes/multiple queue
+# files, validates every spec, and only then dispatches parallel render runs or
+# one serial publish run.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "data/reel-dispatch-queue/*.json"
+
+permissions:
+  contents: read
+  actions: write
+
+concurrency:
+  group: reel-dispatch-queue
+  cancel-in-progress: false
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # The helper needs both ends of the push.  Avoid fetching the repository's
+          # full, media-heavy history; the explicit fetch below obtains only `before`.
+          fetch-depth: 1
+          sparse-checkout: |
+            data
+            specs
+            tools
+
+      - name: Fetch the push base commit
+        env:
+          BEFORE: ${{ github.event.before }}
+        run: git fetch --no-tags --depth=1 origin "$BEFORE"
+
+      - name: Validate the queue and dispatch match-reel runs
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BEFORE: ${{ github.event.before }}
+          AFTER: ${{ github.sha }}
+        run: >-
+          python tools/dispatch_reel_queue.py
+          --before "$BEFORE"
+          --after "$AFTER"
