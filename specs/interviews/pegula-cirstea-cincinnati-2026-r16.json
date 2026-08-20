@@ -2,7 +2,7 @@
   "slug": "pegula-cirstea-cincinnati-2026-r16",
   "url": "https://www.youtube.com/watch?v=ZDsRTupH2mg",
   "start": 258.0,
-  "end": 538.5,
+  "end": 535.46,
   "opening": {
     "kind": "match_end",
     "lead_in": 38.8,
@@ -212,5 +212,6 @@
     "258.5-263.1": "开场那几秒是赛点落地后的欢呼和鼓掌，解说还没开口——263.1 秒才接上「this time. Jessica Pegula books a place...」，这段沉默是庆祝的现场声，不是漏词。"
   },
   "_verified_clean": "verify 报告：YouTube 自动字幕（en_fixed 之后）909 词 vs faster-whisper small.en 905 词，分歧 4.0%（闸门 12%）。逐处核过 30 行分歧，全部是 whisper 这个第二模型自己的听写误差，不是我们源头出了问题：\n· 专有名词类（占多数）：`cirstea`→`castella`／`castella's`、`sorana`→`saurana`、`pegula`→`jessica pergula`／`pergula` ——whisper 不认识这两个姓，YouTube 那份是对的（配合画面上球员名字条自证）。\n· 数字/拼写类：`eight`→`aid`、`75`→`seven five`、`postmatch`→`post match`、`walk out`→`walkout`、`secondguessing`→`second guessing`、`viby`→`vibey`、`afrobeat`→`afro beats`、`laidback`→`laid back`、`r b`→`rmb`（R&B 被 whisper 听成人民币缩写）——纯拼写/分词差异，不影响含义。\n· 两处看着像语义分歧、逐句核对后确认是 whisper 听错：`winning`→`waiting`——上下文是「领先一盘后很难熬……但那段时间我一直在赢（winning）」，whisper 的 waiting 在语法和语境里都讲不通；`mind me`→`might be`——原句「I don't think you mind me asking you something about Sorana」（你应该不介意我问你几句关于索拉娜的事），whisper 的 might be 同样讲不通。两处都保留 YouTube 原文的读法，zh 翻译未改动。\n· 虚词脱落（so/to/then/a/i 等被 whisper 漏听或多听）：不影响任何一行 zh。\ncaption gap：258.5–263.1s（片内 0.5–5.1s）whisper 在这段听到一个孤立的 `this`——审过缩略图墙，这几秒是赛点落地后的欢呼鼓掌、解说还没开口，263.1 秒才真正接上「this time. Jessica Pegula books a place...」；whisper 那个 `this` 大概率是把观众噪声的一个音节听成了词（single-word hallucination 是 whisper 在纯噪声段的常见失败模式），不是漏了一句真实台词。caption_gaps_ok 已按这个理由销账，没有改动窗口或 en_fixed。",
-  "transcript_verified": true
+  "transcript_verified": true,
+  "_window_why": "258.0–535.46。第一版 end 写的是 538.5，按「最后一条字幕事件 tStartMs 534.24 + dDurationMs 3.8s = 538.04」推的，留了一点余量——**和 `noskova-boulter-cincinnati-2026-r2` 那次是同一个错**：字幕事件的显示时长不是内容的边界，末尾没有字幕的那几秒（或者像这次，字幕还没消失但视频已经切走）不能拿来判断片尾板在不在窗口里。\n\n第一版成片（Release 上那份）136–282s 一带渲出来是干净的采访画面，但拉回本地逐帧核对才看见：**WTA 自己的『WTA』绿标甩入 + 转场到『SUBSCRIBE』紫色卡片，整个被收进了窗口**（信号是 `signalstats` 量出来的每帧平均亮度：279.24s 那帧还是 93.7，正常画面；279.28s 陡降到 25.1，一帧跳掉——绿标甩入的第一帧；281.28s 又一次陡降到 30 左右，转场到紫色 SUBSCRIBE 卡）。音轨同一段也对得上：279s 前是 −34~−38dB 的现场声，280–281s 是 **−91dB 数字静音**（转场本身没有声音）。\n\n最后一条字幕『Show some love for Jessica Pegula. / 把掌声送给佩古拉。』在切走之前已经完整显示过（clip 279.0s 那帧就读得到），所以收紧终点不会截断任何一句话，只是把字幕原本多留的显示余量和 WTA 自己的转场一起裁掉。\n\n收在 **535.46**：cover 固定 1.8 秒，`源片时刻 = 成片时刻 − 1.8`，clip 279.24（最后一帧真内容）→ 源片 535.44；端点取 535.46 留 0.02 秒余量，换算回去仍然卡在绿标甩入（clip 279.28 ≈ 源片 535.48）之前。"
 }
