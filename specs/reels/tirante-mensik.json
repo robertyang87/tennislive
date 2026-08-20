@@ -66,18 +66,19 @@
     "_matchup_rank_why": "蒂兰特50——tennisexplorer 球员页 `Current/Highest rank: 50. / 50.`，和 `tirante-landaluce` 已经核过的排名一致（同一周，未变）。\n门西克16——tennisexplorer 球员页 `Current/Highest rank: 16. / 12.`，生涯最高第12（2026年3月2日）。\n⚠️ ATP 官方签表 `mds.pdf` 里门西克是14号种子，**种子号不是排名，两个数不能混用**（CLAUDE.md早记过这条）：封面印的是tennisexplorer的当期排名16，不是种子号14。",
     "_name_why": "两个中文名都走 player_zh()：player_zh('Thiago Agustin Tirante') → 蒂兰特，player_zh('Jakub Mensik') → 门西克。和已发的 `djokovic-tirante`／`tirante-landaluce` 用的是同一个名字，没有手打。",
     "portrait": {
-      "image": "PENDING",
-      "focus": 0.5,
-      "focus_y": 0.3,
+      "image": "assets/reel/tirante-cincinnati-2026-r16.jpg",
+      "fit": "width",
+      "focus": 0.56,
+      "focus_y": 0.5,
       "zoom": 1.0,
-      "_frame_why": "⚠️ **还没有可用的官方高清实拍，留空占位，等图落地再补上重渲**（`cirstea-kalinskaya` 那条走过的同一条路：spec/旁白先全部写完并本地核对无误，只留这一格；render/push 要等真图落地）。\n\n查过的渠道，2026-08-20 03:55Z 复查一遍仍全部没有：① `cincinnatiopen.com` WP 媒体库 `?search=Tirante`/`?search=Mensik`、按日期过滤（`after=2026-08-19T18:00:00`）——最新一批实拍仍是8/17（前一轮兰达卢塞那场，`CincyOpen8.15.26BJ_*` 是8/15的旧号），8/19比赛结束（约UTC 19:26）之后新增的三张媒体库文件（`1000012621.jpeg`空场地、`1000012626.jpeg`合影、`IMG_4304.jpg`孩子）都不是这场球 ② AP News 搜索『Tirante tennis』——0条相关，只回默认分享图 ③ Infobae 关于这场胜利的专稿配的头图**打开源片核对发现是错的**：那张图里他穿白色K-Swiss+白头带，而这场比赛（源片72.5s全屏台标确认）他穿的是**湖水绿K-Swiss+白头带**（和`tirante-landaluce`已发spec核过的球衣一致）——实际是四天前德约科维奇那场的旧图（Cincinnati Open官方8/15发的`CincinnatiOpen_20260815_JM021551_LS2.jpg`同样是白色K-Swiss，两者像素级一致），Infobae配错图了 ④ 当地报纸 The Enquirer 8/19『Round of 16 continues』图集（135张，`91372587007`）——按姓名扫过135张caption，`Fritz/Zverev/Paul/Auger-Aliassime/Fils/Cobolli/Gauff/Nakashima`各有若干张，**Tirante/Mensik 零命中**（这场在3号场地，不是当地报纸覆盖的主球场）⑤ Cincinnati Open官方新闻稿（`?search=Mensik`）——还没有关于这场的专稿。**这是『还没发』，不是『没有』**——上一轮兰达卢塞那场的实拍也是打完次日才上线，这场8/19打的大概率还要再等。",
-      "_low_res_why": "尚无真实照片，`image` 留 `PENDING` 占位。本地临时替换成 `assets/players/headshots/atp-T0A1.png`（ATP官方头像，300×300）验证过 `--check-narration` 之外的每一处都能通过；提交时改回 `PENDING`，render/push 前必须换成真实高清照片。"
+      "_photo_why": "**本场赛后官方静态实拍，不是视频抽帧，也不是旧轮次照片。** 来源是蒂兰特本人认证 Instagram 账号 @thiagotirante 于本场结束后发布的四图组帖：`https://www.instagram.com/p/DcPPn9qCXn5/`。帖子时间戳为 2026-08-19 22:18:52 UTC（北京时间8月20日06:18），正文写明 `Gran triunfo en @cincytennis y estamos en cuartos`（在 Cincinnati Open 取得胜利、晋级1/4决赛）；因此人物、赛事、比赛日以及本轮获胜晋级1/4决赛均可由球员本人账号自证。采用组图第4张（媒体原文件名 `779624600_18638925940040656_2246749642641080224_n.jpg`）：蒂兰特身穿本场一致的湖水绿 K-Swiss 球衣和白头带，从球员通道走出，近景眼神和专注表情比另外三张远景动作照更适合作为封面；原图无文字、无水印。原帖未标注摄影师；摄影／版权据实记为 `Thiago Agustín Tirante official Instagram / Cincinnati Open；photographer not credited`。实测 JPEG **1080×721**。采用 `fit: width`，以同图模糊垫层补足3:4画幅，保留原生1080像素宽度，不把横图按高度强行放大；`focus=0.56`可完整保留头带、双眼、表情和胸前队徽。",
+      "_low_res_why": "球员认证账号发布的本场组图最高只提供 1080×721。它是目前可自证本场、无水印且禁止视频抽帧条件下最可靠的静态原图；赛事官方媒体库、AP Newsroom、The Enquirer 当日图集及 NurPhoto 本轮库均没有这场。为避免按3:4高度放大约2倍，封面采用 `fit: width` 保持原生1080像素宽度，上下由模糊垫层补足；不拿旧轮次高清图冒充。"
     },
     "scoreboard": {
       "court": "Tony Trabert Stadium 3",
       "_court_why": "源片72.5s和16.5s两处全屏台标都烧着『ROUND 4 | TONY TRABERT STADIUM 3』，转播自己写死，不用另查秩序册。",
       "duration_source": {
-        "url": "data:application/json,%7B%22duration%22%3A%222%3A16%3A00%22%2C%22source%22%3A%22flashscore%20df_su_1_hnSBzQGl%20RB%C3%B72%3A16%EF%BC%88RC%C3%B70%3A41%2BRD%C3%B70%3A47%2BRE%C3%B70%3A48%EF%BC%89%EF%BC%8C%E5%92%8C%E6%BA%90%E7%89%87%E5%85%A8%E5%B1%8F%E5%8F%B0%E6%A0%87%E7%9A%84%22%22ROUND%204%20%7C%20TONY%20TRABERT%20STADIUM%203%20%7C%200%3A41%22%E5%AD%97%E9%9D%A2%E4%B8%80%E8%87%B4%22%7D",
+        "url": "data:application/json,%7B%22duration%22%3A%222%3A16%3A00%22%2C%22source_feed%22%3A%22flashscore%20df_su_1_hnSBzQGl%20RB%3D2%3A16%EF%BC%9B%E5%88%86%E7%9B%98%200%3A41%2B0%3A47%2B0%3A48%EF%BC%9B%E5%AE%98%E6%96%B9%E9%9B%86%E9%94%A6%E5%8F%B0%E6%A0%87%E9%A6%96%E7%9B%98%200%3A41%22%7D",
         "field": "duration"
       },
       "_duration_why": "flashscore `df_su_1_hnSBzQGl`：RB÷2:16，三个分盘用时 RC(0:41)+RD(0:47)+RE(0:48)=2:16，自洽。**第二个独立源印证**：源片72.5s的全屏台标写着首盘用时『0:41』，和flashscore的RC÷0:41字面一致——两个源不是自己算的同一份数据（CLAUDE.md早记过flashscore的用时方向性偏长，这次台标正好核实了它是准的）。"

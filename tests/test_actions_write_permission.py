@@ -79,6 +79,7 @@ _PAGES_ENTRIES = (
 #: 又一次「查的东西和跑的东西不是一回事」。
 _DISPATCH_ENTRIES = (
     (r"orchestrate\.py", "tools/orchestrate.py"),
+    (r"dispatch_reel_queue\.py", "tools/dispatch_reel_queue.py"),
     (r"gh\s+workflow\s+run", "gh workflow run（直接写在 run: 里）"),
     (r"gh\s+api\b[^\n]*/dispatches", "gh api …/dispatches"),
 )

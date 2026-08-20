@@ -72,15 +72,16 @@
       "focus": 0.5,
       "focus_y": 0.35,
       "zoom": 1.0,
-      "_frame_why": "比赛刚在北京时间08-20 10:35打完（美东08-19 22:35），距今不到6小时。Cincinnati Open 官方 WP 媒体库当前搜 musetti/faria 只有2023~2025年的旧图，今天的批次最新一条是08-20T04:10（复用08-15旧图，不是本场实拍）；官方按惯例主批要到北京时间当晚才上线（见 pending/README.md）。AP News、The Enquirer 每日画廊今天都还没有本场相关内容（已查）。下一步：24小时后重查官方WP媒体库和 The Enquirer 当日画廊。"
+      "_frame_why": "⚠️ **截至北京时间2026-08-20深夜，仍没有可用的本场非视频静态原图，因此继续留在 pending，不 render、不 push。** 已穷尽并逐项排除：① 穆塞蒂认证账号 @lore_musetti 与赛事认证账号 @cincytennis 的本场协作帖 `DcPu-lLMIqO`，caption 精确写明 `7-5, 6-2 over Faria`，但媒体类型是 GraphVideo，640×1137 poster 的元数据明确标为 `video_default_cover_frame`，不能用；② @tennistv 本场同样只有视频，@atptour 最新静态是穆塞蒂—蒂亚福八强对阵合成海报，不是本场原图；③ Cincinnati Open 官方 WP 媒体库刚补出的8月19日三张逐张核过：穆塞蒂那张是白衣日场旧轮次（EXIF 11:23 UTC，早于本场夜场且球衣不符），另外两张是科博利与保罗；④ AP Newsroom 精确检索没有本场，穆塞蒂结果仍停在8月18日对郑迈克尔的旧轮次，法里亚也只到8月16日对谢尔顿；⑤ The Enquirer 1/8决赛135张、NurPhoto 173张、Getty、Alamy、Imago、Shutterstock、赛事新闻稿均无本场；⑥ 法里亚认证账号最新静态仍是上一轮对沃尔顿。LaPresse 的紫衣日场图同样是旧轮次。**不拿视频默认帧、合成海报或旧轮次高清图补位。**"
     },
     "scoreboard": {
       "court": "Tony Trabert Stadium 3",
       "_court_why": "Cincinnati Open 官方 Order of Play（OP-Aug18-11pm.pdf，Released 08/18/2026 10:42:08 PM）：TONY TRABERT STADIUM 3 组第5场『[Q] Jaime FARIA (POR) vs [10] Lorenzo MUSETTI (ITA)』。",
       "duration_source": {
-        "url": "data:application/json,%7B%22feed%22%3A%22df_su_1_hbzzZODa%22%2C%22RB%22%3A%221%3A16%22%7D",
-        "_duration_why": "flashscore df_su_1_hbzzZODa 的 RB=1:16，与两盘 RC/RD=0:44+0:32=1:16 自洽。"
-      }
+        "url": "data:application/json,%7B%22duration%22%3A%221%3A16%3A00%22%2C%22source_feed%22%3A%22flashscore%20df_su_1_hbzzZODa%20RB%3D1%3A16%EF%BC%9B%E5%88%86%E7%9B%98%200%3A44%2B0%3A32%3D1%3A16%22%7D",
+        "field": "duration"
+      },
+      "_duration_why": "flashscore df_su_1_hbzzZODa 的 RB=1:16，与两盘 RC/RD=0:44+0:32=1:16 自洽。"
     }
   },
   "stats": {
