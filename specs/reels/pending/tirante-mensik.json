@@ -1,0 +1,173 @@
+{
+  "slug": "tirante-mensik",
+  "source_url": "https://youtu.be/I92nfLuP8Vk",
+  "_source": "Cincinnati Open 官方 YouTube 频道单场集锦（`I92nfLuP8Vk`），probe 实测 120.72s / 1920×1080 / 59.94fps。oEmbed／标题自证官方来源：《Thiago Agustín Tirante vs Jakub Mensik | 2026 Cincinnati Open | Round Four》。\n\n画面自证：72.5s／16.5s 两处全屏台标烧着『ROUND 4 | TONY TRABERT STADIUM 3』，记分条从头到尾烧着 TIRANTE／MENSIK 姓氏，和 flashscore `hnSBzQGl` 逐分数据一一对得上（见 `_match`）。全片没有订阅卡片叠加层，末尾 120.5s 是握手后走向球童区的宽景，窗口不用避让片尾。",
+  "_column": "赛场之上",
+  "topbar": {
+    "line1": "2026 辛辛那提 ATP1000 1/8决赛",
+    "line2": "蒂兰特 5-7 6-4 6-4 门西克"
+  },
+  "_topbar_why": "第二行和 `cover.winner`（蒂兰特）、`cover.result`（5-7 6-4 6-4）、`cover.matchup` 机械一致。轮次由源片自己的全屏台标写死『ROUND 4』——Cincinnati Open 官方 YouTube 频道的轮次标签体系里『Round Four』对应『round of 16』（同一场比赛在 tennisexplorer 上明写 `<td title=\"round of 16\">R16</td>`，两个独立来源一致），也就是这场就是 1/8决赛。",
+  "editorial": {
+    "mode": "match_review",
+    "question": "刚淘汰德约科维奇的阿根廷人，这一次能不能再赢一位大师赛冠军？",
+    "thesis": "首盘蒂兰特发球局被破，5-7先失一盘；次盘他找到破发机会，6-4扳平总比分；决胜盘他一度4-0领先，门西克追回一个破发到4-2，但蒂兰特此后保发到底，6-4锁定胜局，两小时十六分钟拿下生涯第一个大师赛1/4决赛——本周他已经淘汰过德约科维奇，这一次赢下的是2025年迈阿密大师赛冠军门西克。",
+    "beats": [
+      "前段：首盘缠斗，蒂兰特发球局被破，5-7先失一盘",
+      "中段：次盘他完成破发，6-4扳平总比分；决胜盘一度4-0领先",
+      "结局：门西克追回一个破发到4-2，蒂兰特此后保发到底，6-4锁定生涯首个大师赛1/4决赛"
+    ],
+    "human_context": {
+      "angle": "这不只是一场普通的爆冷——两个人本周都在改写自己的纪录。蒂兰特四天前刚淘汰德约科维奇，本场是他生涯第一个大师赛1/4决赛；门西克则是2025年迈阿密大师赛冠军（决赛淘汰的正是德约科维奇），本赛季法网四强、职业生涯最高世界第12。一个刚淘汰过德约的人，这次又赢了一位淘汰过德约夺冠的人。",
+      "facts": [
+        "蒂兰特：25岁阿根廷人，2026年赛季从世界前100之外起步，本站四天前2-6 6-4 6-4逆转淘汰德约科维奇（本仓库已发 `djokovic-tirante`），前一轮又淘汰兰达卢塞（本仓库已发 `tirante-landaluce`），本场是他生涯第一个ATP大师赛1/4决赛（来源：ATP官方赛事快讯 `tennismajors.com` 报道标题《The week of his life: Tirante topples Mensik to reach a first Masters quarter-final》）",
+        "门西克：20岁捷克人，2025年迈阿密大师赛决赛淘汰德约科维奇夺冠——ATP官方写道『成为该系列史上第4位首个巡回赛冠军就拿在大师赛的球员』，2026年法网闯入四强，职业生涯最高世界第12（2026年3月）、本场赛前世界第16、14号种子（来源：atptour.com 球员页面）",
+        "全场总分蒂兰特94分、门西克90分，只差4分——184个总分里只差4分，比分远比总比分悬殊",
+        "蒂兰特下一轮（1/4决赛，北京时间8月21日上午10点半）迎战菲斯（来源：tennisexplorer 赛程页）"
+      ],
+      "sources": [
+        "https://www.tennismajors.com/atp/the-week-of-his-life-tirante-topples-mensik-to-reach-a-first-masters-quarter-final-858873.html",
+        "https://www.atptour.com/en/players/jakub-mensik/m0ni/overview",
+        "https://www.tennisexplorer.com/mutual/tirante-thiago-agustin/mensik-jakub/"
+      ]
+    }
+  },
+  "_no_repeat": "德约科维奇那场（`djokovic-tirante`）和兰达卢塞那场（`tirante-landaluce`）的过程一个字都不重讲——`_hit_data`/`human_context.facts` 里各只用一句带过（『四天前…逆转淘汰德约科维奇』『前一轮又淘汰兰达卢塞』），不复述那两场的比分、破发点或抢七细节。`tirante-landaluce` 的 push.summary 用过『淘汰德约的人又赢了一场』这个框架，这条不再用同一句式，落点换成『赢了一位淘汰过德约夺冠的人』——同一件事（淘汰德约）从『他做过』换成『对手也做过』，视角不重复。",
+  "_match": {
+    "flashscore_id": "hnSBzQGl",
+    "_why": "`match_feed.py show hnSBzQGl` 逐分核对：\n首盘：0-1起互有保发，最后一局（5-7，server=1即蒂兰特发球）被破，5-7门西克先下一城。\n次盘：4-4后蒂兰特完成破发（server=2即门西克发球局被破）到5-4，随即保发6-4，蒂兰特扳平总比分。\n决胜盘：开局蒂兰特连续两次破发（server=2各一次）冲到4-0，随后被门西克回破一次到4-2（server=1蒂兰特发球局被破），此后蒂兰特保发到底6-4锁定胜局。全场用时2:33→更正为2:16（flashscore `df_su_1_hnSBzQGl` RB÷2:16，RC÷0:41+RD÷0:47+RE÷0:48=2:16自洽，且RC÷0:41和源片72.5s全屏台标『ROUND 4 | TONY TRABERT STADIUM 3 | 0:41』字面一致，第二个独立源印证）。"
+  },
+  "_hit_data": "跑过 `match_stat_hooks.py hnSBzQGl --stats-block`：全场总分蒂兰特94、门西克90，只差4分（总分184），已经写进 `editorial.human_context.facts`。门西克6个双误（对蒂兰特2个）也核过，没有用作钩子——不确定是不是决胜盘承压的直接体现，机械挡不住这类归因，没写进正文。",
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "蒂兰特",
+    "hook": "决胜盘4-0开局\n首进大师赛1/4决赛",
+    "_hook_why": "上一行是过程里最戏剧性的那个数（决胜盘一度4-0领先，两个连续破发），下一行是这场球的落点（生涯第一个大师赛1/4决赛）——两行process+result，读到第二行就知道结果，符合『标题文案要让人看懂结果的』的要求。最长行『决胜盘4-0开局』8个字符，第二行『首进大师赛1/4决赛』10个字符，都在 HOOK_MAX_CHARS=10 以内。轮次一律用『1/4决赛』不写『八强』（`test_轮次要写半决赛不写四强`）。",
+    "_subject_why": "封面放蒂兰特：他是赢家，也是这一周热度的来源——四天前刚淘汰德约科维奇的阿根廷人。赛果行照旧印『赢家 比分 输家』（蒂兰特 5-7 6-4 6-4 门西克）。",
+    "_heat_why": "门西克世界第16，`matchup` 里有一个名次 ≤ HEAT_TOP_RANK(20) 的球员，`_players_are_worth_a_reel` 按名次自动放行；蒂兰特这一周的热度不需要再论证——四天前刚淘汰德约科维奇（本仓库已发 `djokovic-tirante`），这是他连续第三条『赛场之上』出现在这一周的辛辛那提签表里。",
+    "topic": "辛辛那提ATP1000 · 男单1/8决赛",
+    "winner": "蒂兰特",
+    "result": "5-7 6-4 6-4",
+    "matchup": [
+      {
+        "name": "蒂兰特",
+        "name_en": "Thiago Agustin Tirante",
+        "country": "ARG",
+        "rank": 50
+      },
+      {
+        "name": "门西克",
+        "name_en": "Jakub Mensik",
+        "country": "CZE",
+        "rank": 16
+      }
+    ],
+    "_matchup_rank_why": "蒂兰特50——tennisexplorer 球员页 `Current/Highest rank: 50. / 50.`，和 `tirante-landaluce` 已经核过的排名一致（同一周，未变）。\n门西克16——tennisexplorer 球员页 `Current/Highest rank: 16. / 12.`，生涯最高第12（2026年3月2日）。\n⚠️ ATP 官方签表 `mds.pdf` 里门西克是14号种子，**种子号不是排名，两个数不能混用**（CLAUDE.md早记过这条）：封面印的是tennisexplorer的当期排名16，不是种子号14。",
+    "_name_why": "两个中文名都走 player_zh()：player_zh('Thiago Agustin Tirante') → 蒂兰特，player_zh('Jakub Mensik') → 门西克。和已发的 `djokovic-tirante`／`tirante-landaluce` 用的是同一个名字，没有手打。",
+    "portrait": {
+      "image": "PENDING",
+      "focus": 0.5,
+      "focus_y": 0.3,
+      "zoom": 1.0,
+      "_frame_why": "⚠️ **还没有可用的官方高清实拍，留空占位，等图落地再补上重渲**（`cirstea-kalinskaya` 那条走过的同一条路：spec/旁白先全部写完并本地核对无误，只留这一格；render/push 要等真图落地）。\n\n查过的渠道，2026-08-20 03:55Z 复查一遍仍全部没有：① `cincinnatiopen.com` WP 媒体库 `?search=Tirante`/`?search=Mensik`、按日期过滤（`after=2026-08-19T18:00:00`）——最新一批实拍仍是8/17（前一轮兰达卢塞那场，`CincyOpen8.15.26BJ_*` 是8/15的旧号），8/19比赛结束（约UTC 19:26）之后新增的三张媒体库文件（`1000012621.jpeg`空场地、`1000012626.jpeg`合影、`IMG_4304.jpg`孩子）都不是这场球 ② AP News 搜索『Tirante tennis』——0条相关，只回默认分享图 ③ Infobae 关于这场胜利的专稿配的头图**打开源片核对发现是错的**：那张图里他穿白色K-Swiss+白头带，而这场比赛（源片72.5s全屏台标确认）他穿的是**湖水绿K-Swiss+白头带**（和`tirante-landaluce`已发spec核过的球衣一致）——实际是四天前德约科维奇那场的旧图（Cincinnati Open官方8/15发的`CincinnatiOpen_20260815_JM021551_LS2.jpg`同样是白色K-Swiss，两者像素级一致），Infobae配错图了 ④ 当地报纸 The Enquirer 8/19『Round of 16 continues』图集（135张，`91372587007`）——按姓名扫过135张caption，`Fritz/Zverev/Paul/Auger-Aliassime/Fils/Cobolli/Gauff/Nakashima`各有若干张，**Tirante/Mensik 零命中**（这场在3号场地，不是当地报纸覆盖的主球场）⑤ Cincinnati Open官方新闻稿（`?search=Mensik`）——还没有关于这场的专稿。**这是『还没发』，不是『没有』**——上一轮兰达卢塞那场的实拍也是打完次日才上线，这场8/19打的大概率还要再等。",
+      "_low_res_why": "尚无真实照片，`image` 留 `PENDING` 占位。本地临时替换成 `assets/players/headshots/atp-T0A1.png`（ATP官方头像，300×300）验证过 `--check-narration` 之外的每一处都能通过；提交时改回 `PENDING`，render/push 前必须换成真实高清照片。"
+    },
+    "scoreboard": {
+      "court": "Tony Trabert Stadium 3",
+      "_court_why": "源片72.5s和16.5s两处全屏台标都烧着『ROUND 4 | TONY TRABERT STADIUM 3』，转播自己写死，不用另查秩序册。",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%222%3A16%3A00%22%2C%22source%22%3A%22flashscore%20df_su_1_hnSBzQGl%20RB%C3%B72%3A16%EF%BC%88RC%C3%B70%3A41%2BRD%C3%B70%3A47%2BRE%C3%B70%3A48%EF%BC%89%EF%BC%8C%E5%92%8C%E6%BA%90%E7%89%87%E5%85%A8%E5%B1%8F%E5%8F%B0%E6%A0%87%E7%9A%84%22%22ROUND%204%20%7C%20TONY%20TRABERT%20STADIUM%203%20%7C%200%3A41%22%E5%AD%97%E9%9D%A2%E4%B8%80%E8%87%B4%22%7D",
+        "field": "duration"
+      },
+      "_duration_why": "flashscore `df_su_1_hnSBzQGl`：RB÷2:16，三个分盘用时 RC(0:41)+RD(0:47)+RE(0:48)=2:16，自洽。**第二个独立源印证**：源片72.5s的全屏台标写着首盘用时『0:41』，和flashscore的RC÷0:41字面一致——两个源不是自己算的同一份数据（CLAUDE.md早记过flashscore的用时方向性偏长，这次台标正好核实了它是准的）。"
+    }
+  },
+  "stats": {
+    "a": {
+      "aces": 8,
+      "df": 2,
+      "winners": 18,
+      "ue": 25,
+      "first_in": 45,
+      "first_won": 38,
+      "second_total": 40,
+      "second_won": 21,
+      "bp_conv": 3,
+      "bp_chances": 7,
+      "pts_won": 94,
+      "pts_total": 184,
+      "first_total": 85,
+      "headshot": "assets/players/headshots/atp-T0A1.png"
+    },
+    "b": {
+      "aces": 9,
+      "df": 6,
+      "winners": 22,
+      "ue": 36,
+      "first_in": 58,
+      "first_won": 46,
+      "second_total": 41,
+      "second_won": 18,
+      "bp_conv": 2,
+      "bp_chances": 4,
+      "pts_won": 90,
+      "pts_total": 184,
+      "first_total": 99,
+      "headshot": "assets/players/headshots/atp-M0NI.png"
+    },
+    "_source": "flashscore `hnSBzQGl` `df_st_1`，`a`=主队=蒂兰特、`b`=客队=门西克（`match_stat_hooks.py hnSBzQGl --stats-block` 直接输出，未做home/away调换——三盘比分BA/BC/BE=5,6,6对应蒂兰特、BB/BD/BF=7,4,4对应门西克，和`AE÷Tirante T. A.`（home）一致，不用换）。"
+  },
+  "_voice_why": "云见 zh-CN-YunjianNeural，+6%，和`djokovic-tirante`／`tirante-landaluce`同一把嗓子——同一站同一位主角连续第三条片子，音色保持一致。",
+  "push": {
+    "summary": "生涯首进大师赛1/4决赛",
+    "lead": "辛辛那提男单1/8决赛，25岁的蒂兰特5-7 6-4 6-4逆转14号种子门西克，生涯第一个大师赛1/4决赛，用时2小时16分。首盘他发球局被破，先失一盘；次盘他完成破发，6-4扳平总比分；决胜盘他一度4-0领先，门西克追回一个破发到4-2，蒂兰特此后保发到底，6-4锁定胜局。这一周他已经淘汰过德约科维奇，这一次赢下的是2025年迈阿密大师赛冠军门西克——全场总分94比90，只差4分，比分远比总比分悬殊。蒂兰特下一轮迎战菲斯。",
+    "auto": false,
+    "_no_auto_why": "先渲后审，手动 mode=push push=true。"
+  },
+  "_editing_why": "源片只有120.72秒，没有自动字幕（8档client全部拿不到，见`captions_debug.txt`）——纯靠画面和记分条叙事，没有解说原声可引用。\n\n球衣认人：蒂兰特=湖水绿K-Swiss+白头带（和`tirante-landaluce`那条一致），门西克=白色Adidas+白帽。72.5s／16.5s两处全屏台标都直接写出双方姓名，对着记分条逐帧核过，没有认错。",
+  "segments": [
+    {
+      "start": 99.5,
+      "end": 108.3,
+      "narration": "",
+      "_why": "①冷开场，不配旁白。99.5~108.3 覆盖发球拿下赛点、随后双臂张开欢庆、双手抱头如释重负的连续动作——全片最强的一格画面，靠现场声。scene_cuts 里 100.73/107.84 落在这个窗口内，是同一组连续庆祝反应的不同机位，不跨到别的人身上（自始至终只有蒂兰特一人在画面里）。"
+    },
+    {
+      "start": 0.0,
+      "end": 16.5,
+      "narration": "北京时间八月二十号凌晨一点多，辛辛那提大师赛男单1/8决赛，世界第五十的蒂兰特迎战世界第十六的门西克。首盘蒂兰特发球局被破，五比七先失一盘。",
+      "_why": "②坐标段+首盘结果。0.0~16.5 是同一组连续画面：蒂兰特发球面对两个盘点，16.5s全屏台标『ROUND 4 | TONY TRABERT STADIUM 3 | 0:41』确认首盘结束、用时41分钟。开球时刻按『不报到分』写『凌晨一点多』（AD÷1787159400→北京01:10，10~39分那一档）。"
+    },
+    {
+      "start": 42.39,
+      "end": 48.52,
+      "narration": "次盘四比四后，蒂兰特完成一次破发。",
+      "_why": "③a次盘破发。42.39~48.52一段回合，对应逐分数据次盘4-4后蒂兰特破发到5-4（门西克发球局被破）。"
+    },
+    {
+      "start": 55.0,
+      "end": 60.09,
+      "narration": "他随即保发，六比四扳平总比分。",
+      "_why": "③b次盘收官。55.0~60.09覆盖正手制胜分+握拳庆祝（58.5s记分条烧着『TIRANTE 5 6 / MENSIK 7 4』，二盘已经拿下6-4）。"
+    },
+    {
+      "start": 76.39,
+      "end": 92.5,
+      "narration": "决胜盘，蒂兰特接连破掉门西克的第一局和第三局发球局，一度四比零遥遥领先。门西克追回一个破发到四比二，但蒂兰特稳住了此后每一个发球局，六比四锁定胜局。",
+      "_why": "④决胜盘主体，改成逐局叙述。76.39~92.5（收在下一个切点92.5前，避开94.21那一刀）覆盖蒂兰特发球拿分、门西克在场边的画面，对应逐分数据决胜盘第1局(server=2,BREAK)、第3局(server=2,BREAK)蒂兰特破掉门西克两个发球局冲到4-0；第6局(4-1,server=1,BREAK)蒂兰特被回破到4-2；此后第7~10局(server交替，均无BREAK)蒂兰特稳住每个发球局6-4收官。旁白从纯结果改成带局数的过程叙述，配得上17秒窗口。"
+    },
+    {
+      "start": 108.3,
+      "end": 113.45,
+      "narration": "这周他已经淘汰过德约科维奇。",
+      "_why": "⑤context，延续①段之后紧接的庆祝反应镜头（108.3~113.45，紧跟冷开场那组画面，同一人同一组情绪，不跨到对手身上）。德约那场和兰达卢塞那场只一句带过，不重讲过程（见 `_no_repeat`）。窗口只有5.15秒，旁白收得很短，Mensik的迈阿密冠军事实挪到收尾段一起说。"
+    },
+    {
+      "start": 113.45,
+      "end": 120.5,
+      "narration": "这一次赢下的是淘汰过德约夺冠的门西克，下一个对手是菲斯，他还能走多远？",
+      "_why": "⑥收尾，落在网前握手（113.45~120.5，蒂兰特和门西克握手、转身走向球童区，收在源片120.72s之前留出0.22s给溶解底料，不会越界）。末屏那一问接回封面『首进大师赛1/4决赛』的下一步——菲斯是谁、他还能走多远，不是封面那一问的回声。"
+    }
+  ]
+}

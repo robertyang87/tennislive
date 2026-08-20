@@ -77,6 +77,28 @@ Gauff-Li／Nakashima-Medvedev 五场（含 WTA），**Musetti-Zheng 一张都没
 
 ## 现在住在这儿的
 
+- **`nakashima-borges`**（辛辛那提 ATP1000 1/8决赛，2026-08-19，中岛纳赛马
+  6-3 6-7(5) 6-3 逆转博尔热斯，两小时二十二分）——内容已经全部做完（editorial、
+  逐分核实、旁白、字幕预览、xhs 文案都过了 dry-run/check-narration/全量测试）。
+  赛事官方 WP 媒体库 `?search=nakashima`/`?search=borges` 只有旧照片，
+  按 `tiafoe-tien` 挖出的滞后规律，覆盖 8/19 这批大概率要到 8/21 前后才上线。
+  ⚠️ **已经找到候选**：The Enquirer 8/20 发布的 8/19 同日 gallery
+  （`round-of-16-continues-at-cincinnati-open-see-photos/91372587007/`）里有
+  三张这场的实拍（`Brandon Nakashima, of United States, returns to Nuno
+  Borges`，Albert Cesare/The Enquirer），URL 和取原图的方法记在
+  `cover.portrait._frame_why` 里——统一换图那一轮直接用，不用重新找。
+  - 下一步：确认候选图（四要素、清晰度、情绪）之后直接 `git mv` 回
+    `specs/reels/`，不用等赛事官方图库
+
+- **`tirante-mensik`**（辛辛那提 ATP1000 1/8决赛，2026-08-19，蒂兰特
+  5-7 6-4 6-4 逆转14号种子门西克，两小时十六分，生涯首进大师赛1/4决赛）——
+  内容已经全部做完（editorial、逐分核实、旁白、xhs 文案）。赛事官方 WP
+  媒体库 `?search=tirante` 仍然只有 8/15 的旧照片和一张 2025 年头像；
+  The Enquirer 8/19 同日 gallery（135 张）逐条查过，一张蒂兰特都没有。
+  - 下一步：等 8/21 前后赛事官方图库补上这批，或 Enquirer 隔天再发一批
+    gallery；也可以按 `mkt=es-ES`（阿根廷球员）试一次西语体育媒体渠道
+    （`lehecka-fils` 那次就是靠换语区找到的）
+
 - **`tiafoe-tien`**（辛辛那提 ATP1000 第三轮，2026-08-19，蒂亚福 6-4 4-6 6-4 胜
   勒纳·钱，两小时十分）——这场比赛就发生在 2026-08-19（当天），赛事官方图库照惯例要到
   次日 UTC 00:00~03:00 才批量上线，所以今天必然是空的。四类源逐条跑过：
