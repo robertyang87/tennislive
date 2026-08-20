@@ -67,10 +67,11 @@
     "_name_why": "两个中文名都走 player_zh()：player_zh('Rafael Jodar') → 霍达尔，player_zh('Flavio Cobolli') → 科博利。没有手打。",
     "portrait": {
       "image": "assets/reel/cobolli-cincinnati-2026-r16.jpg",
-      "focus": 0.46,
-      "focus_y": 0.3,
+      "focus": 0.42,
+      "focus_y": 0.42,
       "zoom": 1.0,
-      "_low_res_why": "2000×1333 铺 1080×1440 需要放大 1.08 倍，过不了 cover_photo_problem 的 1.00× 地板。认领这个取舍：赛事官方媒体库里能确认是这场（或紧邻这场，8/17~8/19 同一批）比赛中且情绪对题的握拳照只有这四张（CincyOpen8.17.26BJ_13/103/159/187），_103 是里面唯一的庆祝近景，换清晰度更高的备选（The Enquirer 8/19 那批 3000px+ 原图）就要退回『backhand 回球』或『错失一分』这类不带赢球情绪的画面——四道闸门第③道（冲击力/情绪对题）优先于第④道（清晰度）的并列判据。"
+      "_low_res_why": "3306×2147铺1080×1440，cover裁切所需的实际放大倍率约0.67（原图分辨率充足，用不到放大），过得了`cover_photo_problem`的1.00×地板，不再需要豁免。",
+      "_portrait_why": "⚠️ **2026-08-20 换成真正的『这场比赛现场图』**——原来那张（`CincyOpen8.17.26BJ_103.jpg`）虽然是科博利本人、姿态也对题，但文件日期是8/17，而这场对霍达尔的1/8决赛是**8/19**打的（tennisexplorer球员页逐场表：`19.08. Cincinnati Cobolli F. - Jodar R. R16`）——那张图实际来自更早一轮（很可能是8/17的第三轮布洛克斯那场），不是这场的现场图，判据宁可窄。\n\n现在这张来自The Enquirer 8/19『Round of 16 continues』专题图集（`cincinnati.com/picture-gallery/sports/tennis/2026/08/19/round-of-16-continues-at-cincinnati-open-see-photos/91372587007/`，135张按姓名扫过，含9张精确点名Cobolli与Jodar的照片），图注原文：\"Flavio Cobolli of Italy returns a hit to Rafael Jodar of Spain during the 16th round of the Cincinnati Open at the Lindner Family Tennis Center in Mason on August 19, 2026.\"——球员、对手、轮次、场馆、日期五要素一次齐全，Cara Owsley/The Enquirer署名。原图地址走`gcdn/authoring/`域名会406，换成`gannett-cdn.com/authoring/`同路径即拿到原图（3306×2147）。\n\n同一组9张里比过：一张（错失一分后沮丧低头）情绪和整场逆转夺胜的落点不符；两张俯拍发球构图漂亮但人物偏小、脸部占比不够；这张近景反手回球，眼神死死盯球、表情紧绷，On品牌短袖清楚可辨，和这场对上的球衣一致——近景特写、情绪外露，按闸门优先级选定这张。"
     },
     "_portrait_why": "2026-08-20 账号所有者第二次指示：『科博利这张照片用过，换一张』——原来那张 `cobolli-cincinnati-2026-r3.jpg` 是 `cobolli-blockx` 已经用过的同一个文件，这次换成 `cobolli-cincinnati-2026-r16.jpg`（不同文件、赛事官方 WordPress 媒体库 `cincinnatiopen.com/wp-json/wp/v2/media?search=Cobolli`，`CincyOpen8.17.26BJ_103.jpg`，握拳呐喊，2000×1333）。\n\n⚠️ 换图之前先解决了一次身份危机：这批候选（含已用过的那张）和 ATP 官方头像 `atp-C0E9.png`（深色卷发）、AP 通讯社给『Flavio Cobolli』打过标签的温网/法网照片（同样深色头发）、Wikimedia Commons 标注过的 2023 法网照片（深棕色头发）长得完全不一样——这几批候选是**寸头、浅棕/金发、蓝眼睛**。四个源两派互相打架，靠**这条片子自己的源片画面**裁决：拉回 `render.json` 的 `video_url`，在第①段（冷开场，源片 221.36~238.0s，转播字幕原话『For just the second time in his career, Flavio Cobolli is into the quarterfinals』那一刻）逐帧抽出庆祝反应，顶栏烧着『科博利 4-6 7-6(3) 6-3 霍达尔』——画面里那个人正是**寸头、浅棕发、蓝眼睛、浅蓝灰 On 圆领衫**这一派，和 `cobolli-blockx` 之前独立做过的同一种交叉核对（记分条 `BLOCKX 5/COBOLLI 7` 那一格，同一套装束）结论一致。所以 ATP 头像是旧照片（`cobolli-blockx` 的 `_portrait_why` 已经点出来过），AP／Wikimedia 那几张可能是本赛季更早（法网／温网，深发）时期的照片——判据是**这条片子自己的转播画面**，不是外部资料照片。\n\n四道闸门：①精准——赛事官方媒体库标注『Flavio Cobolli』，和源片画面交叉核对过是同一个人 ②在比赛中——握拳庆祝，背景是看台和场地 ③有冲击力——咬牙握拳、表情用力，『⭐⭐ 2026-08-18 优先近景特写／握拳咬牙优先于招手微笑』那条规矩的标准例子 ④清晰度——2000×1333，铺 1080×1440 是 1.08 倍（放大），过不了 1.00 倍地板，写在下面 `_low_res_why`。",
     "scoreboard": {
