@@ -28,6 +28,7 @@ jobs:
             .github
             data/reel-dispatch-queue
             specs/reels
+            src
             tests
             tools
       - uses: actions/setup-python@v5
@@ -35,6 +36,6 @@ jobs:
           python-version: "3.11"
           cache: pip
       - name: 安装 queue 校验依赖
-        run: pip install -q pytest pyyaml
+        run: pip install -q -e . pytest pyyaml
       - name: 校验 dispatch queue 合约
         run: pytest -q tests/test_dispatch_reel_queue.py
