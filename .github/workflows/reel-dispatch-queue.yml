@@ -2,7 +2,8 @@ name: reel-dispatch-queue
 
 # A reviewed queue file is the only push-triggered bridge into match-reel.  The
 # helper compares the complete push range, rejects edits/deletes/multiple queue
-# files, validates every spec, and only then dispatches one run per slug.
+# files, validates every spec, and only then dispatches parallel render runs or
+# one serial publish run.
 on:
   push:
     branches: [main]

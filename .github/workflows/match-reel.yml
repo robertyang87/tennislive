@@ -125,11 +125,12 @@ permissions:
   # **不会**创建 workflow run，见 `trigger_pages_build`。
   actions: write
 
-# 同一条片子只留一个在跑——并行两个 run 会互相覆盖 output/ 里的成片。
-# 分组名带 slug，不同片子互不影响。
+# 渲染按 slug 分组，不同片子可以并行，同一条的新 run 会取代旧 run。
+# 任何会发微信的 run 则共用一个全局组，而且绝不能取消已经开始发布的那一条：
+# copy.html／pushed.json／main 都是共享写点，只有串行才不会互相覆盖。
 concurrency:
-  group: match-reel-${{ github.event.inputs.slug }}
-  cancel-in-progress: true
+  group: ${{ (github.event.inputs.mode == 'push' || github.event.inputs.push == 'true') && 'match-reel-publish' || format('match-reel-{0}', github.event.inputs.slug) }}
+  cancel-in-progress: ${{ !(github.event.inputs.mode == 'push' || github.event.inputs.push == 'true') }}
 
 jobs:
   reel:
