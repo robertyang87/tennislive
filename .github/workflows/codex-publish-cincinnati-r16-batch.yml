@@ -1,0 +1,99 @@
+name: codex-publish-cincinnati-r16-batch
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/codex-publish-cincinnati-r16-batch.yml
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    steps:
+      - name: Publish six verified reels serially
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const workflow_id = 'match-reel.yml';
+            const slugs = [
+              'fritz-oconnell',
+              'tiafoe-auger-aliassime',
+              'fils-deminaur',
+              'musetti-faria',
+              'tirante-mensik',
+              'rybakina-shnaider'
+            ];
+            const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
+            const failures = [];
+
+            for (const slug of slugs) {
+              const before = await github.rest.actions.listWorkflowRuns({
+                owner, repo, workflow_id, branch: 'main',
+                event: 'workflow_dispatch', per_page: 50
+              });
+              const seen = new Set(before.data.workflow_runs.map(run => run.id));
+              const dispatchedAt = Date.now();
+
+              await github.rest.actions.createWorkflowDispatch({
+                owner, repo, workflow_id, ref: 'main',
+                inputs: {
+                  mode: 'push',
+                  slug,
+                  voice: 'zh-CN-YunjianNeural',
+                  rate: '+6%',
+                  push: 'true'
+                }
+              });
+
+              let run = null;
+              for (let attempt = 1; attempt <= 60; attempt += 1) {
+                await wait(5000);
+                const listed = await github.rest.actions.listWorkflowRuns({
+                  owner, repo, workflow_id, branch: 'main',
+                  event: 'workflow_dispatch', per_page: 20
+                });
+                run = listed.data.workflow_runs.find(candidate =>
+                  !seen.has(candidate.id) &&
+                  new Date(candidate.created_at).getTime() >= dispatchedAt - 5000
+                );
+                if (run) break;
+              }
+
+              if (!run) {
+                failures.push(`${slug}: dispatch run not found`);
+                continue;
+              }
+
+              core.info(`${slug}: run ${run.id} dispatched`);
+              let finished = null;
+              for (let attempt = 1; attempt <= 250; attempt += 1) {
+                const current = await github.rest.actions.getWorkflowRun({
+                  owner, repo, run_id: run.id
+                });
+                if (current.data.status === 'completed') {
+                  finished = current.data;
+                  break;
+                }
+                await wait(10000);
+              }
+
+              if (!finished) {
+                failures.push(`${slug}: run ${run.id} timed out`);
+              } else if (finished.conclusion !== 'success') {
+                failures.push(`${slug}: run ${run.id} ${finished.conclusion}`);
+              } else {
+                core.info(`${slug}: run ${run.id} published successfully`);
+              }
+            }
+
+            if (failures.length) {
+              core.setFailed(failures.join('\n'));
+            }
