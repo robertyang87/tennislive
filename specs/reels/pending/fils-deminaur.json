@@ -84,22 +84,6 @@
   },
   "stats": {
     "a": {
-      "aces": 2,
-      "df": 2,
-      "winners": 21,
-      "ue": 17,
-      "first_in": 40,
-      "first_won": 32,
-      "second_total": 17,
-      "second_won": 11,
-      "bp_conv": 2,
-      "bp_chances": 9,
-      "pts_won": 69,
-      "pts_total": 121,
-      "first_total": 57,
-      "headshot": "assets/players/headshots/atp-f0f1.png"
-    },
-    "b": {
       "aces": 4,
       "df": 3,
       "winners": 13,
@@ -113,9 +97,25 @@
       "pts_won": 52,
       "pts_total": 121,
       "first_total": 64,
-      "headshot": "assets/players/headshots/atp-dh58.png"
+      "headshot": "assets/players/headshots/atp-DH58.png"
     },
-    "_source": "flashscore df_st_1 分盘技术统计（setnum=0全场），match_stat_hooks/match_feed.py show 0W7emOHi 打印表。home(主队)=Fils，away(客队)=De Minaur，与 df_su_1 的 AE=Fils A./AF=De Minaur A. 一致，与 cover.matchup 顺序（德米纳尔在前）相反——stats.a 跟的是 home/away，不是 matchup 顺序，两处各自独立。first_total 按 first_in+second_total 算（Fils 40+17=57，De Minaur 37+27=64）。"
+    "b": {
+      "aces": 2,
+      "df": 2,
+      "winners": 21,
+      "ue": 17,
+      "first_in": 40,
+      "first_won": 32,
+      "second_total": 17,
+      "second_won": 11,
+      "bp_conv": 2,
+      "bp_chances": 9,
+      "pts_won": 69,
+      "pts_total": 121,
+      "first_total": 57,
+      "headshot": "assets/players/headshots/atp-F0F1.png"
+    },
+    "_source": "flashscore df_st_1 分盘技术统计（setnum=0全场），match_stat_hooks/match_feed.py show 0W7emOHi 打印表。flashscore 的 home(主队)=Fils、away(客队)=De Minaur，与 cover.matchup 顺序（德米纳尔在前）刚好相反——stats.a 对应 cover.matchup[0]（德米纳尔），stats.b 对应 matchup[1]（Fils），按 render_stat_card.py 的规矩（a 跟 matchup 顺序，不跟 home/away，见该文件第19行注释）手动对调过，⚠️ 这条 spec 早先的版本在这里把规矩记反了（写成『stats.a 跟 home/away 走』），是 CLAUDE.md 点名过的 tsitsipas-royer 那类错误，2026-08-20 复核 matchup/headshot 交叉核对（对照 lehecka-fils.json 的 F0F1=菲斯、halys-deminaur.json 的 DH58=德米纳尔）后改正。first_total 按 first_in+second_total 算（De Minaur 37+27=64，Fils 40+17=57）。"
   },
   "_voice_why": "默认云见音色 +6%，不设风格，参照本栏目基调。",
   "_editing_why": "probe.json 的 scene_cuts=[2.66,4.76,6.08,14.14,26.6,46.3,49.36,56.08,62.6,66.8,69.06,70.44,103.2,105.9,109.1,112.34]。112.34s 起是 ATP 官方 SUBSCRIBE/WATCH MORE 片尾卡（抽帧核过，120.5~126.5s 逐格都是同一张深蓝斜线卡），实际比赛画面到 110.5s 左右（握手）为止，112.34 之后全部不收。\n\n用 score_00/01.jpg 逐帧读记分条核过：40.5~44.5s FILS 3 30/DE MINAUR 2 40（第六局，德米纳尔发球拿下扳成3-3的最后一分）；58.5s FILS 3 0/DE MINAUR 3 0（三比三，进入第七局）；60.5~64.5s 记分条跳到 FILS 5.../DE MINAUR 3...再到 FILS 6/DE MINAUR 3（高亮剪辑跳过了平淡的第七局，直接接上5-3破发和6-3盘点那两个关键分——这两处之间就是 scene_cuts 里 56.08→62.6 那一段真实剪辑点）；70.5s 起记分条持续 FILS 6 5 40/DE MINAUR 3 4（次盘持续到5-4，这一局德米纳尔发球，长盘缠斗，40:30 那一分正是`_match._why`里德米纳尔救下菲斯第一个赛点的那一分），这个读数一路持续到 96.5s 附近，之后进入庆祝画面（100.5s 起近景/看台反应镜头，110.5s 网前握手）。\n\n开局到26.6s之间只是早盘缠斗（一比一到三比二上下），没有能单独摘出来讲的具体转折点，旁白按缠斗势头写，不逐分复述。次盘开局『德米纳尔连救五个破发点』那一局在66.5~70.5s 只有零星镜头闪过（人群、教练席反应），没有稳定连续的回合画面可用，所以这条 spec 只把这个事实放进 editorial.human_context 里当背景，没有单独切一段窗口去讲——按『别拿『比赛的形状』当『片子的形状』』，宁可少切一段也不硬凑一段没有对应画面的旁白。",
@@ -184,7 +184,7 @@
     }
   ],
   "push": {
-    "summary": "发球局全没丢，世界第八还是输了",
+    "summary": "发球局全没丢却告负",
     "lead": "辛辛那提男单1/8决赛，世界第21的菲斯6-3 6-4直落两盘击败世界第8的德米纳尔，用时1小时23分。首盘菲斯5-3完成破发，6-3拿下；次盘开局德米纳尔一局之内连救五个破发点才守住发球，可他全场只创造过两次破发点机会、一次都没兑现——菲斯全场保发局10/10，没有丢过一个发球局。菲斯次盘5-3自己发球拿到第一个赛点被德米纳尔救下，第二个赛点才锁定比赛。总分69比52，菲斯占优明显，但比分板上的6-3 6-4没有显得那么悬殊。德米纳尔本站此前两轮分别苦战淘汰费里和阿利斯。",
     "auto": false,
     "_no_auto_why": "先渲后审，手动 mode=push push=true。"
