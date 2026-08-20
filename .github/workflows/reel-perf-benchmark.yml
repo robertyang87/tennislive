@@ -1,0 +1,94 @@
+name: reel-perf-benchmark
+
+# PR #504 的一次性真实样本。拿到 probe/render 的墙钟数据后会从 PR 删除；
+# 用精确 head_ref 收口，别让别的 PR 因为这份测试意外下载一条 350 秒源片。
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/reel-perf-benchmark.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  probe-paul-cobolli:
+    if: github.head_ref == 'codex/render-under-10m-20260821'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            assets
+            data
+            specs
+            src
+            tools
+            output/benchmark/reel/paul-cobolli
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: 缓存 ffmpeg 包
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/apt-archives
+            ~/.cache/apt-lists
+          key: apt-pkgs-${{ runner.os }}-24.04-ffmpeg-fonts-v1
+      - name: 安装 probe 依赖
+        timeout-minutes: 8
+        run: |
+          source tools/ci_apt_install.sh
+          ensure_ffmpeg
+          apt_install_cached fonts-noto-color-emoji
+          pip install -q -e . "yt-dlp[default]" edge-tts
+          node --version
+      - name: 起 PO token provider
+        id: pot
+        continue-on-error: true
+        run: |
+          pip install -q bgutil-ytdlp-pot-provider
+          docker run --name bgutil-pot -d -p 4416:4416 brainicism/bgutil-ytdlp-pot-provider
+          for i in $(seq 1 25); do
+            if curl -sf http://127.0.0.1:4416/ping >/dev/null; then
+              echo "up=1" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            sleep 2
+          done
+      - name: 落 YouTube cookies（若仓库已配置）
+        id: cookies
+        env:
+          YT_COOKIES_TXT: ${{ secrets.YT_COOKIES_TXT }}
+        run: |
+          if [ -n "$YT_COOKIES_TXT" ]; then
+            printf '%s' "$YT_COOKIES_TXT" > "$RUNNER_TEMP/yt-cookies.txt"
+            echo "path=$RUNNER_TEMP/yt-cookies.txt" >> "$GITHUB_OUTPUT"
+          fi
+      - name: 真实样本 probe 并计时
+        env:
+          YT_COOKIES: ${{ steps.cookies.outputs.path }}
+          YT_POT_PROVIDER: ${{ steps.pot.outputs.up }}
+          TENNISLIVE_SOURCE_CACHE: ~/.cache/tennislive-sources
+        run: |
+          START=$SECONDS
+          python tools/build_match_reel.py probe \
+            --url "https://youtu.be/cDgz2GqKHgA" \
+            --every 2 \
+            --outdir output/benchmark/reel/paul-cobolli
+          echo "BENCHMARK_PROBE_SECONDS=$((SECONDS - START))"
+          python tools/pick_cover_frames.py \
+            --video output/benchmark/reel/paul-cobolli/source.mp4 \
+            --out output/benchmark/reel/paul-cobolli/cover_candidates \
+            --top 12 || true
+      - name: 上传 probe 产物（不含源片）
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: reel-perf-paul-cobolli-probe
+          path: |
+            output/benchmark/reel/paul-cobolli/**
+            !output/benchmark/reel/paul-cobolli/source.*
+            !output/benchmark/reel/paul-cobolli/*.part
+          retention-days: 3
