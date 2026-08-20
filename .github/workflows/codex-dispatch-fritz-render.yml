@@ -1,4 +1,4 @@
-name: codex-dispatch-fritz-render
+name: codex-dispatch-cincinnati-remaining
 
 on:
   push:
@@ -15,22 +15,53 @@ jobs:
   dispatch:
     runs-on: ubuntu-latest
     steps:
-      - name: Dispatch Fritz reel render
+      - name: Dispatch remaining renders and Rybakina data probes
         uses: actions/github-script@v7
         with:
           script: |
-            // final rerender with explicit first-set/second-set score wording
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const ref = 'codex/cincinnati-2026-08-20-remaining-reels';
+
+            for (const slug of [
+              'tiafoe-auger-aliassime',
+              'fils-deminaur',
+              'musetti-faria',
+              'tirante-mensik'
+            ]) {
+              await github.rest.actions.createWorkflowDispatch({
+                owner, repo, workflow_id: 'match-reel.yml', ref,
+                inputs: {
+                  mode: 'render',
+                  slug,
+                  voice: 'zh-CN-YunjianNeural',
+                  rate: '+6%',
+                  push: 'false'
+                }
+              });
+              core.info(`render dispatched: ${slug}`);
+            }
+
             await github.rest.actions.createWorkflowDispatch({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              workflow_id: 'match-reel.yml',
-              ref: 'codex/cincinnati-2026-08-20-remaining-reels',
+              owner, repo, workflow_id: 'tnns-stats.yml', ref,
               inputs: {
-                mode: 'render',
-                slug: 'fritz-oconnell',
-                voice: 'zh-CN-YunjianNeural',
-                rate: '+6%',
+                who: 'Shnaider,Rybakina',
+                date: '2026-08-19'
+              }
+            });
+            core.info('TNNS extended stats dispatched');
+
+            await github.rest.actions.createWorkflowDispatch({
+              owner, repo, workflow_id: 'match-reel.yml', ref,
+              inputs: {
+                mode: 'probe',
+                slug: 'rybakina-shnaider',
+                url: 'https://youtu.be/unHVYg1mznA',
+                every: '2',
+                home: 'Diana Shnaider',
+                away: 'Elena Rybakina',
+                year: '2026',
                 push: 'false'
               }
             });
-            core.info('Fritz render dispatched');
+            core.info('Rybakina-Shnaider source probe dispatched');
