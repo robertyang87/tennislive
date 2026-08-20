@@ -2,11 +2,11 @@
   "slug": "tiafoe-auger-aliassime",
   "source_url": "https://www.youtube.com/watch?v=99vAiiswV10",
   "_source": "Tennis TV 官方 YouTube 频道，标题《Frances Tiafoe vs Felix Auger-Aliassime | Cincinnati 2026 Match Highlights》，oEmbed author_name=Tennis TV 自证。probe 时下载成功（未遇到 musetti-faria 那次的地域封锁）。",
-  "_tennistv_trim": "片尾和台标已分别核过：所有 segment 的 cx 都固定为 0.5，3:4 居中取景窗不包含源画面右上角的 Tennis TV 台标；最后一段在 183.0 秒结束，收在网前握手，早于 184.5 秒开始的订阅／品牌片尾至少 1.5 秒，不把片尾卡剪进成片。",
+  "_tennistv_trim": "所有片段的 cx 都固定为 0.5，3:4 居中取景窗不含源画面角上的 Tennis TV 台标；最后一段在 183.0 秒结束，早于 184.5 秒开始的订阅／品牌片尾至少 1.5 秒。",
   "_column": "赛场之上",
   "editorial": {
     "mode": "match_review",
-    "question": "六月刚创下生涯最高世界第4、七月温网又打进八强惜败德约科维奇的阿利亚西姆，为什么被排名低他近二十位的蒂亚福两盘拿下？",
+    "question": "七月温网打进八强、又和德约科维奇鏖战五盘的阿利亚西姆，为什么被蒂亚福两盘拿下？",
     "thesis": "因为效率完全反过来了——阿利亚西姆全场28记制胜分、13个ACE，是蒂亚福6记制胜分、2个ACE的4.7倍和6.5倍；可他也送出37个非受迫失误，是蒂亚福16个的两倍多。蒂亚福把破发点转化率牢牢握在手里（3/5对1/1），关键分上更稳；决胜的最后一局，蒂亚福自己发球，被阿利亚西姆连续救下五个赛点，第六个才终于兑现，锁定比赛。",
     "beats": [
       "首盘：蒂亚福3-1完成破发，一路带到6-3锁定首盘",
@@ -48,7 +48,7 @@
     "hook": "五个赛点全救下\n第六个没扛住",
     "_hook_why": "决胜局阿利亚西姆连救五个赛点、第六个才倒下（逐分核实，6次|B3|），这是过程不是身份，剧情的跌宕落在这两句上；28-6制胜分这类身份型数据留给thesis和正文。",
     "_subject_why": "阿利亚西姆是这条片子的大名字——六月生涯最高世界第4、七月温网八强惜败德约，即便他输了这一场，封面主体仍然是他，套用 fils-deminaur/zverev-paul 那条『大名字输球也放封面』的例外，钩子从他的败局切入。",
-    "_heat_why": "阿利亚西姆世界第4，进世界前20档（矩阵②档），不用再论证话题度。",
+    "_heat_why": "阿利亚西姆是美网四强、戴维斯杯冠军成员，本赛季又打进温网八强；蒂亚福则是两届美网四强。这一字段只供选题校验，不进入封面、字幕或旁白。",
     "topic": "8.20 辛辛那提 ATP1000 1/8决赛",
     "winner": "蒂亚福",
     "result": "6-3 6-4",
@@ -57,30 +57,29 @@
         "name": "蒂亚福",
         "name_en": "Frances Tiafoe",
         "country": "USA",
-        "rank": 23
+        "rank": null
       },
       {
         "name": "阿利亚西姆",
         "name_en": "Felix Auger-Aliassime",
         "country": "CAN",
-        "rank": 4
+        "rank": null
       }
     ],
-    "_matchup_rank_why": "蒂亚福23、阿利亚西姆4均为 tennisexplorer 当前世界排名（非种子号；官方签表种子号是蒂亚福[17]、阿利亚西姆[2]）。",
+    "_matchup_rank_why": "按用户最新规则，封面和技术统计卡不展示种子号或世界排名，因此两名球员的 rank 都显式设为 null。",
     "_name_why": "中文名查 player_zh()：Frances Tiafoe→蒂亚福，Felix Auger-Aliassime→阿利亚西姆，均与既有 tiafoe-tien.json / auger-aliassime-cerundolo.json 一致。",
     "portrait": {
       "image": "assets/reel/auger-aliassime-cincinnati-2026-r16.jpg",
-      "fit": "cover",
       "focus": 0.5,
-      "focus_y": 0.5,
+      "focus_y": 0.35,
       "zoom": 1.0,
-      "_photo_why": "**本场高清实拍，不是视频抽帧。** 来源是 The Enquirer（Gannett／USA Today Network）8月19日辛辛那提公开赛1/8决赛图集：`https://www.cincinnati.com/picture-gallery/sports/tennis/2026/08/19/round-of-16-continues-at-cincinnati-open-see-photos/91372587007/`。页面在比赛结束后补进本场照片；页面 ld+json 的 ImageObject 图注原文：`Felix Auger-Aliassime, of Canada, returns to Frances Tiafoe, of United States, at the Cincinnati Open at the Lindner Family Tennis Center in Mason, Ohio, on Wednesday, August 19, 2026.`——人物、对手、赛事、场馆、日期五要素一次写死。原图：`https://www.gannett-cdn.com/authoring/authoring-images/2026/08/20/PCIN/91381518007-081926-tennis-101.JPG`；摄影／署名 `Albert Cesare/The Enquirer`，文件 IPTC Credit=`Albert Cesare-The Enquirer`、Copyright=`The Enquirer`，无水印，实测 **4996×3331**，铺1080×1440不需要放大。\n\n同一组精确点名阿利亚西姆的4张本场照片（94/95/96/101）逐张打开比较：94、96是更宽的正手全身动作，95是竖幅跳起反拍但脸部占比较小；选101是因为低位跨步反拍的肢体张力最大，眼神和用力表情读得出来，球、球拍、双手及球场都在画面里。图集没有他的庆祝或赛后反应近景，这张是现有本场候选中最贴近『五个赛点全救下／第六个没扛住』那种顽抗情绪的一张。横图按3:4裁切试过`focus=0.50/0.55/0.60`，0.50保留脸、球拍和跨步姿态最完整。"
+      "_frame_why": "The Enquirer 2026-08-20 发布的辛辛那提 8 月 19 日 1/8 决赛同日图库原图：caption 明写“Felix Auger-Aliassime ... returns to Frances Tiafoe ... Wednesday, August 19, 2026”，摄影 Albert Cesare/The Enquirer。由 Gannett 原图域名取得 3414×5121 无水印竖图，球员、对手、赛事和日期四要素齐全。"
     },
     "scoreboard": {
       "court": "Grandstand",
       "_court_why": "Cincinnati Open 官方 Order of Play（OP-Aug18-11pm.pdf，Released 08/18/2026 10:42:08 PM）：GRANDSTAND 组第6场『[17] Frances TIAFOE (USA) vs [2] Felix AUGER-ALIASSIME (CAN)』。",
       "duration_source": {
-        "url": "data:application/json,%7B%22duration%22%3A%221%3A42%3A00%22%2C%22source_feed%22%3A%22https%3A%2F%2Fglobal.flashscore.ninja%2F2%2Fx%2Ffeed%2Fdf_su_1_GlLvhJxS%22%7D",
+        "url": "data:application/json,%7B%22duration%22:%20%221:42:00%22,%20%22source_feed%22:%20%22https://global.flashscore.ninja/2/x/feed/df_sui_1_GlLvhJxS%22%7D",
         "field": "duration",
         "_duration_why": "match_feed.py show 报『全场 1:42』，与两盘 0:46+0:56=1:42 自洽。"
       }
@@ -132,7 +131,7 @@
     {
       "start": 172.5,
       "end": 177.8,
-      "narration": "蒂亚福六比三，六比四拿下这场1/8决赛。",
+      "narration": "首盘六比三，次盘六比四，蒂亚福晋级。",
       "cx": 0.5,
       "_why": "②落点：短句报出比分。窗口内是看台欢呼＋记分屏'CONGRATULATIONS'字样（174.5-176.5s），未跨 scene_cuts。"
     },
@@ -182,10 +181,10 @@
     },
     {
       "start": 128.5,
-      "end": 138.2,
-      "narration": "决胜局，蒂亚福自己发球，一连拿到五个赛点，阿利亚西姆全部救下。",
+      "end": 138.7,
+      "narration": "最后一局，蒂亚福自己发球，一连拿到五个赛点，阿利亚西姆全部救下。",
       "cx": 0.5,
-      "_why": "决胜第十局（6-4，逐分'15:0, 30:0, 40:0 |B3|, 40:15 |B3|, 40:30 |B3|, 40:40, A:40 |B3|, 40:40, A:40 |B3|, 40:40, A:40 |B3|'，共6次|B3|=6个赛点，前5个被救下）。136.5-138.2s 转播自己打出'MATCH POINT #5'图形字幕，auto-captions 139.76s 同步解说原声『Match point number five.』——这是全片最硬的自证证据。拿到点的是蒂亚福（自己发球），救下的是阿利亚西姆，主谓不混淆。",
+      "_why": "决胜第十局（6-4，逐分'15:0, 30:0, 40:0 |B3|, 40:15 |B3|, 40:30 |B3|, 40:40, A:40 |B3|, 40:40, A:40 |B3|, 40:40, A:40 |B3|'，共6次|B3|=6个赛点，前5个被救下）。136.5-138.5s 转播自己打出'MATCH POINT #5'图形字幕，auto-captions 139.76s 同步解说原声『Match point number five.』——这是全片最硬的自证证据。拿到点的是蒂亚福（自己发球），救下的是阿利亚西姆，主谓不混淆。",
       "crosses_cut": "跨过 scene_cuts 的 131.96，是这一局多个回合之间的机位切换，同一局延续，不涉及人物混淆。"
     },
     {
@@ -199,15 +198,15 @@
     {
       "start": 177.8,
       "end": 183.0,
-      "narration": "火力占优却输球，你觉得他输在哪？",
+      "narration": "制胜分二十八比六，为什么赢的是蒂亚福？",
       "cx": 0.5,
-      "_why": "收尾落在网前握手的画面上（178.5-182.5s，背景'CONGRATULATIONS'看台屏），把数据反差收成一问。数据出处：阿利亚西姆28记制胜分对蒂亚福6记（4.7倍）、13个ACE对2个（6.5倍）——editorial.thesis 已展开这组反差，这里不再重复非受迫失误，直接请观众判断关键分差在哪里。窗口卡在 scene_cuts 183.0（再往后是 Tennis TV 订阅outro，184.5s起'SEA[SON]'赞助商图形淡出，不能用）。",
+      "_why": "收尾punch，落在网前握手的画面上（178.5-182.5s，背景'CONGRATULATIONS'看台屏）。数据出处：阿利亚西姆28记制胜分对蒂亚福6记（4.7倍）、13个ACE对2个（6.5倍）——editorial.thesis 已展开的那组反差，这里用作收尾的落点，不重复展开非受迫失误那半句。窗口卡在 scene_cuts 183.0（再往后是 Tennis TV 订阅outro，184.5s起'SEA[SON]'赞助商图形淡出，不能用）。",
       "crosses_cut": "跨过 scene_cuts 的 178.32，是庆祝/看台反应切到走向网前握手，同一场比赛的延续画面，不涉及人物混淆。"
     }
   ],
   "push": {
     "summary": "五个赛点全救下仍告负",
-    "lead": "辛辛那提网球公开赛男单1/8决赛，世界第23的蒂亚福6-3 6-4击败六月刚创下生涯最高世界第4的阿利亚西姆。这一场是两段伤愈复出的碰撞——蒂亚福十二天前才在蒙特利尔因手伤中途退赛并接受手术，阿利亚西姆刚在温网鏖战五盘惜败德约科维奇后又因背伤缺战蒙特利尔。全场阿利亚西姆28记制胜分、13个ACE，是蒂亚福的4.7倍和6.5倍，但他也送出37个非受迫失误，是蒂亚福16个的两倍多。蒂亚福把破发点转化率牢牢握在手里（3/5对1/1），关键分上更稳。决胜的最后一局，蒂亚福自己发球，被阿利亚西姆连续救下五个赛点，第六个才终于兑现，锁定比赛。",
+    "lead": "辛辛那提网球公开赛男单1/8决赛，蒂亚福6-3 6-4击败阿利亚西姆。这一场是两段伤愈复出的碰撞——蒂亚福十二天前才在蒙特利尔因手伤中途退赛并接受手术，阿利亚西姆刚在温网鏖战五盘惜败德约科维奇后又因背伤缺战蒙特利尔。全场阿利亚西姆28记制胜分、13个ACE，是蒂亚福的4.7倍和6.5倍，但他也送出37个非受迫失误，是蒂亚福16个的两倍多。蒂亚福把破发点转化率牢牢握在手里（3/5对1/1），关键分上更稳。最后一局，蒂亚福自己发球，被阿利亚西姆连续救下五个赛点，第六个才终于兑现，锁定比赛。",
     "auto": false,
     "_no_auto_why": "先渲后审，手动 mode=push push=true。"
   }

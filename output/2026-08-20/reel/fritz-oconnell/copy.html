@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>8.20 赛场之上 | 两场比赛就打进1/8决赛</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>8.20 赛场之上 | 十个发球局一个没丢，弗里茨没让奥康奈尔的意外之旅更进一步
+
+辛辛那提男单1/8决赛，弗里茨6-4 6-3击败资格赛突围的奥康奈尔——全场他十个发球局全部保发，只被逼到过一次破发点，而且守住了；反过来他自己七次拿到破发机会，兑现两次。
+
+首盘二比二，奥康奈尔一口气救回三个破发点才保住发球局，比分缠斗到四比四；弗里茨随即回应，自己保发到五比四，紧接着在对手发球局逼出一个破发点、一个盘点，六比四拿下首盘。
+
+次盘双方一路互保战到四比三，一个破发点都没有出现——直到奥康奈尔的发球局被连续逼出三个破发点，第三个才终于兑现，五比三，弗里茨随即发球胜赛，六比三收官。全场制胜分23比10，非受迫失误23比18。
+
+两人此前交手三次，弗里茨全胜，但今天是两人第一次在硬地上交手，战绩来到四比零。
+
+而站在网对面的奥康奈尔，能走到这一轮本身就是个意外：次轮他一度领先鲁德，鲁德因背伤退赛，次盘退赛前一度领先2-1；第三轮丰塞卡又因腹部受伤直接退赛，他不战晋级。算上资格赛，他到今天只完整打过两场正赛——三十二岁的他，用这条路走到了辛辛那提1/8决赛。
+
+如果对手一路都在打满全场，今天这个比分会不一样吗？
+
+#网球时差 #弗里茨 #奥康奈尔 #辛辛那提网球公开赛 #ATP1000</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>网前这个握手，奥康奈尔从资格赛走到今天，配得上——但如果对手都打满全场，今天会不一样吗？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>

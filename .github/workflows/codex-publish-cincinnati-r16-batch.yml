@@ -1,0 +1,81 @@
+name: codex-publish-cincinnati-r16-batch
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - data/reel-publish-trigger/2026-08-21-cincinnati-r16.json
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    steps:
+      - name: Publish six verified reels serially
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -uo pipefail
+          slugs=(
+            fritz-oconnell
+            tiafoe-auger-aliassime
+            fils-deminaur
+            musetti-faria
+            tirante-mensik
+            rybakina-shnaider
+          )
+          failures=()
+
+          for slug in "${slugs[@]}"; do
+            before=$(mktemp)
+            if ! gh run list --repo "$GITHUB_REPOSITORY" \
+              --workflow match-reel.yml --branch main --event workflow_dispatch \
+              --limit 50 --json databaseId --jq '.[].databaseId' > "$before"; then
+              failures+=("$slug: could not snapshot existing runs")
+              rm -f "$before"
+              continue
+            fi
+
+            if ! gh workflow run match-reel.yml --repo "$GITHUB_REPOSITORY" \
+              --ref main -f mode=push -f "slug=$slug" \
+              -f voice=zh-CN-YunjianNeural -f rate='+6%' -f push=true; then
+              failures+=("$slug: dispatch failed")
+              rm -f "$before"
+              continue
+            fi
+
+            run_id=""
+            for attempt in $(seq 1 60); do
+              sleep 5
+              run_id=$(gh run list --repo "$GITHUB_REPOSITORY" \
+                --workflow match-reel.yml --branch main --event workflow_dispatch \
+                --limit 20 --json databaseId --jq '.[].databaseId' \
+                | grep -vxFf "$before" | head -1 || true)
+              [ -n "$run_id" ] && break
+            done
+            rm -f "$before"
+
+            if [ -z "$run_id" ]; then
+              failures+=("$slug: dispatch run not found")
+              continue
+            fi
+
+            echo "$slug: waiting for run $run_id"
+            if gh run watch "$run_id" --repo "$GITHUB_REPOSITORY" \
+              --exit-status --interval 10; then
+              echo "$slug: published successfully"
+            else
+              failures+=("$slug: run $run_id failed")
+            fi
+          done
+
+          if [ "${#failures[@]}" -gt 0 ]; then
+            printf '%s\n' "${failures[@]}" >&2
+            exit 1
+          fi
