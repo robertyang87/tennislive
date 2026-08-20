@@ -1,0 +1,205 @@
+{
+  "slug": "wangxiyu-keys",
+  "source_url": "https://youtu.be/LsQpz1DpYH0",
+  "_source": "WTA 官方 YouTube 频道单场集锦《Madison Keys vs. Wang Xiyu | 2026 Cincinnati Round of 16 | WTA Match Highlights》，7 分 22 秒（441.9s，1920×1080）。oEmbed 确认 `channel: WTA`。⚠️ 这条集锦除比赛画面外，299.6 秒起接了一段 Keys 的赛后场边采访（转写见 `captions.txt`）——`segments` 全部取自 0~254.36 秒，一秒都不碰采访那一段（含 B-roll 特写），按 2026-08-15 house rule『赛场之上视频不要赛后采访』。",
+  "_match": {
+    "flashscore_id": "vwgpk86s",
+    "wta_match_id": "LS009",
+    "wta_event_id": "1017",
+    "_why": "两个源核对一致：flashscore `vwgpk86s`（`Keys M.` vs `Wang Xiy.`，比分 7-6 6-4）、WTA 官方 `LS009`（`ResultString: [20]M. Keys d X. Wang 7-6(3),6-4`、`RoundID 4`、`MatchTimeTotal 01:50:50`，`PlayerIDA=316959` 凯斯 `PlayerIDB=326160` 王曦雨）。轮次：`tools/match_feed.py find --tour wta --event Cincinnati --who Keys` 独立标注为『1/8-finals』，和 `kostyuk-andreeva.json`（同一天同一批 1/8 决赛之一）用的是同一个 RoundID=4。"
+  },
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "王曦雨",
+    "hook": "开局连破带保2比0\n抢七三比七告负",
+    "_hook_why": "讲过程不讲身份。首盘一开始王曦雨破发拿下凯斯的开局发球局，随后自己保发，两比零领先（flashscore `df_mh_1` 逐分：`0-1 主队(凯斯)发球，客队(王曦雨)拿下 ← 1个破发点`，紧接 `0-2 客队(王曦雨)发球，客队(王曦雨)拿下`）；随后凯斯连追两局追成二比二平，一路缠斗到六比六，抢七凯斯拿下（`6-6` 之后的抢七比分是 7-3，即比分记法 `7-6(3)`）。两行各一句话、一层铺垫加一个动词收尾，没有插代词，符合『标题要通顺』那条规矩（CLAUDE.md 2026-08-20）。两行分别 9 字／7 字，在 solo 每行≤10 字符的上限内。",
+    "_subject_view_why": "封面放王曦雨：她是①中国球员（`_heat_why` 免justification），本条片子讲的是她这次辛辛那提之旅打到哪一步——凯斯是她这一轮的对手，不是这条片子的主体。WTA 官方赛后新闻稿也是从王曦雨这条线切入的（`Svitolina withdraws from Cincinnati; Wang Xiyu moves into last 16`，标题主语就是她）。",
+    "_heat_why": "①中国球员——王曦雨（CHN），不需要额外justification（CLAUDE.md『中国球员不用等一个额外的理由』）。补充：她本站是资格赛突围的非种子球员，这是她 2026 年继法网之后第二次把资格赛之旅带到最大级别赛事的1/8决赛，WTA 官方稿称这是她『自温网后重回硬地赛场取得的首批胜利』（原文 `earned her first wins on hard court since the tour switched back to the surface after Wimbledon`）。",
+    "topic": "WTA1000 辛辛那提 · 女单1/8决赛",
+    "portrait": {
+      "image": "PENDING",
+      "_photo_why": "⚠️ **封面大图还没有官方高清实拍，等到了再补。** 2026-08-20 用 `tools/find_cover_photo.py --player \"Xiyu Wang\" --event Cincinnati --site cincinnatiopen.com --date 2026-08-19` 四类源全查过：①WTA `photo-resources` 没有对得上的（WTA 一批只发几个人，这次没轮到）；②AP 通讯社没有对得上的（AP 一天只发几场）；③`cincinnati.com` 当地每日图集按比赛日出，当天的往往次日才上线；④`cincinnatiopen.com` 的 WordPress 媒体库 2026-08-19 当天已传 87 张，但按上线时刻推算（同站规律『当天那一辑在次日 UTC 00:00–03:00 之间』），覆盖这场晚场比赛（北京时间 08-20 早上 07:10 开球）的那一批还没上线；`?search=Xiyu Wang` 目前只命中一张 492×656 的官方头像小图，不能当封面用。另外 `tools/fetch_wta_cover_photo.py --tournament 1017 --year 2026 --city cincinnati --match LS009 --surnames keys wang --match-date 2026-08-19` 查过 WTA Match Reaction 赛后稿，比赛页 8 篇文章里没有一篇是这场——『Match Reaction 一般赛后一小时内上线，等会儿再试，别当成没有实拍』。**这是『还没发』不是『没有』**：按 2026-08-18 house rule『高清大图是前置条件，没有就等』，`_dry-run`/render/push 都要等真图落地之后再跑，这份 spec 目前只是草稿，不许提交渲染。之后按同一条命令重查，拿到图后把 `image`/`fit`/`focus`/`focus_y`/`zoom` 填实、删掉这条注释里的『还没有』字样。"
+    },
+    "scrim": "clear",
+    "matchup": [
+      {
+        "name": "凯斯",
+        "name_en": "Madison Keys",
+        "country": "USA",
+        "rank": 24
+      },
+      {
+        "name": "王曦雨",
+        "name_en": "Xiyu Wang",
+        "country": "CHN",
+        "rank": 108
+      }
+    ],
+    "_name_why": "两个中文名都走 `player_zh()`，实调过：`player_zh(\"Madison Keys\")` → 凯斯、`player_zh(\"Xiyu Wang\")` → 王曦雨（和 `wangxiyu-fernandez.json`／`wangxiyu-timofeeva.json` 一致）。排名取 WTA 官方 `players/ranked`（`metric=SINGLES`，`rankedAt 2026-08-10`）：凯斯第 24（1814分）、王曦雨第 108（743分，与两条老 spec 同一期数字）。凯斯是本站 20 号种子（WTA 官方 `SeedA=20`），王曦雨非种子（`EntryTypeB=\"Q\"`，资格赛突围）——种子号和排名不是一回事，这条片子只用当期排名，种子号只在正文里点一次。",
+    "winner": "凯斯",
+    "result": "7-6(3) 6-4",
+    "scoreboard": {
+      "court": "Lindner Family Tennis Center",
+      "_court_why": "球场名没查实，印场馆名——同站惯例（`kostyuk-andreeva`／`bouzkova-jovic`／`swiatek-parry`／`cirstea-kalinskaya` 等十余条 spec 的 `_court_why` 都记过：这一站的 `CourtID` 字段在多条已发 spec 之间互相打架，不可信）。WTA 官方 `matches` 给的是 `CourtID 2`，同一天同批 1/8 决赛里 LS008/LS010/LS011 都是 `CourtID 1`（对应 `svitolina-anisimova.json` 标定的 Centre Court），这场单独是 `CourtID 2`——但『2』这个码位在别的 spec 里分别读成过 Grandstand 和 Centre Court，两个互相矛盾，不外推。WTA 比赛页 Court 一栏本身也常年是 `-`。",
+      "duration_source": {
+        "provider": "wta",
+        "url": "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches?page=0&pageSize=400",
+        "match_id": "LS009",
+        "field": "MatchTimeTotal",
+        "source_page": "https://www.wtatennis.com/tournament/1017/cincinnati/2026/scores/LS009"
+      },
+      "_duration_why": "WTA 官方 `MatchTimeTotal 01:50:50`；分盘 `settime` 01:04:51（第一盘含抢七）+ 00:45:55（第二盘），两数相加 01:50:46，和总用时只差 4 秒，自洽。不用 flashscore 推算的用时（那条线本文档记过好几次偏长的教训），直接用这个已经自洽验证过的官方数字。"
+    }
+  },
+  "editorial": {
+    "mode": "match_review",
+    "question": "从资格赛一路杀进正赛的王曦雨，这次能把20号种子凯斯逼到什么地步？",
+    "thesis": "资格赛突围的非种子王曦雨（世界第108）先后淘汰安德莱斯库、14号种子库德梅托娃拿到正赛资格，又连过季莫费耶娃、30号种子费尔南德斯，再靠8号种子斯维托丽娜因伤退赛拿到1/8决赛——这是她继法网之后，今年第二次把资格赛之旅带到最大级别赛事的1/8决赛。这一次她没能更进一步：首盘一开始就破发保发建立两比零的领先，被20号种子凯斯一路追回并抢七拿下（7-3）；次盘凯斯开局又破发，一路建立四比二的领先，王曦雨把破发点找了回来追成四比四，但凯斯立刻回破锁定五比四并保发拿下整场比赛，7-6(3) 6-4。全场137分她只比对手少赢11分，非受迫失误（16个）反而比凯斯（25个）更少——转播原话：『她确实拼得很辛苦，但她拼下来了，直落两盘找到了出路。』",
+    "beats": [
+      "前段：首盘一开始，她破发保发建立两比零领先，凯斯随后连追两局追成二比二平，一路缠斗到六比六抢七，7-3拿下这一盘",
+      "中段：次盘凯斯开局又破发，一路把领先扩大到四比二，王曦雨把破发点找了回来追成四比四",
+      "结局：凯斯立刻回破，五比四反超，随后保发拿下整场比赛，7-6(3) 6-4"
+    ],
+    "human_context": {
+      "angle": "王曦雨（25岁）本届辛辛那提是从资格赛一路打进来的——这已经是她今年第二次让一场资格赛之旅走到最大级别赛事的1/8决赛：五月的法网，她赛前世界第148，资格赛三轮全胜后进正赛，一路连过对手，第四轮（1/8决赛）3-6 6-7(4)不敌18号种子科斯蒂亚，是她大满贯生涯最好成绩。这次辛辛那提，她同样从资格赛打到1/8决赛，最后不敌20号种子、当期世界第24的凯斯——凯斯在赛后广播评价里被指出『确实要拼命才能赢下这场』，而王曦雨的非受迫失误数据甚至比凯斯更干净。",
+      "facts": [
+        "凯斯当期世界第24（1814分）、20号种子；王曦雨当期世界第108（743分）、非种子（资格赛突围，`EntryTypeB=\"Q\"`），榜单日期2026-08-10（WTA官方 `players/ranked`，`metric=SINGLES`）",
+        "轮次1/8决赛：WTA官方 `RoundID=4`，`tools/match_feed.py find` 独立标注为『1/8-finals』",
+        "凯斯生于1995-02-17（本场时31岁）；王曦雨生于2001-03-28（25岁），WTA官方球员数据库",
+        "王曦雨本站战绩：资格赛两轮全胜（Q1胜Andreescu 6-0 6-4、Q2胜14号种子Kudermetova 6-3 6-2）进正赛；正赛R1胜季莫费耶娃6-0 3-0退赛（已在 `wangxiyu-timofeeva.json` 讲过）；R2胜30号种子费尔南德斯3-6 6-2 6-2（已在 `wangxiyu-fernandez.json` 讲过）；R3因8号种子斯维托丽娜赛前退赛(W/O)直接晋级到1/8决赛",
+        "斯维托丽娜退赛原因：右脚踝伤，在多伦多受伤，辛辛那提第二轮对阵瓦伦托娃的比赛（需要医疗暂停）中进一步加重。WTA官方新闻稿引斯维托丽娜本人原话：『I tried my best to recover, but the injury I sustained in Toronto and also pushed by the second round match』，医生建议她完全休息恢复",
+        "本场关键局：首盘王曦雨破发拿下凯斯开局发球局并自己保发，两比零领先；凯斯连追两局追成二比二平，此后双方一路缠斗到六比六，抢七凯斯7-3拿下；次盘凯斯开局即破发，一路建立四比二的领先，王曦雨破发点找了回来追成四比四，凯斯随即再破发锁定五比四，保发以六比四拿下整场比赛",
+        "全场技术统计（WTA官方 `LS009/stats` setnum 0）：ACE 5:2（凯斯:王曦雨）、双误4:2、一发进球率62%:63%、一发得分率83%(34/41):64%(29/45)、二发得分率48%(12/25):54%(14/26)、破发点凯斯3/8兑现·王曦雨2/5兑现、总得分54%(74/137):46%(63/137)——净差仅11分",
+        "TNNS制胜分/非受迫失误：凯斯24胜分/25非受迫失误，王曦雨18胜分/16非受迫失误——尽管落败，王曦雨的制胜分/非受迫失误比值（1.125）反而好于凯斯（0.96），非受迫失误比凯斯少9个",
+        "H2H：两人此前只交手过一次——2023年6月伊斯特本首轮，凯斯直落两盘获胜（草地）；这是两人第一次在硬地交手，凯斯将总比分扩大到2-0（flashscore `df_hh_1` Head-to-head matches区块仅列出这两场记录，无第三场）",
+        "2026年法网：王曦雨赛前世界第148，资格赛三轮全胜后进正赛，再连过对手，第四轮（1/8决赛）3-6 6-7(4)不敌18号种子科斯蒂亚——她大满贯生涯最好成绩。这次辛辛那提，她同样从资格赛一路打到1/8决赛",
+        "WTA官方稿原句：『Wang has navigated her way to the fourth round in Cincinnati from qualifying』，并称这是她『自温网后重回硬地赛场取得的首批胜利』（原文 `earned her first wins on hard court since the tour switched back to the surface after Wimbledon`）",
+        "转播原话（比赛结束后）：『She certainly had to work for it though. But work she did and found a route through in straight sets.』"
+      ],
+      "sources": [
+        "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches?page=0&pageSize=400",
+        "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches/LS009/stats",
+        "https://api.wtatennis.com/tennis/players/ranked?page=0&pageSize=100&type=rankSingles&sort=asc&name=&metric=SINGLES",
+        "https://api.wtatennis.com/tennis/players/ranked?page=1&pageSize=100&type=rankSingles&sort=asc&name=&metric=SINGLES",
+        "https://global.flashscore.ninja/2/x/feed/df_mh_1_vwgpk86s",
+        "https://global.flashscore.ninja/2/x/feed/df_hh_1_vwgpk86s",
+        "https://www.wtatennis.com/news/4561997/svitolina-withdraws-from-cincinnati-open-wang-xiyu-moves-last-16",
+        "https://en.wikipedia.org/wiki/2026_French_Open_%E2%80%93_Women%27s_singles"
+      ],
+      "voice_label": "开局连破带保两比零，最终还是抢七告负给了20号种子凯斯"
+    }
+  },
+  "topbar": {
+    "line1": "2026 辛辛那提 WTA1000 1/8决赛",
+    "line2": "凯斯 7-6(3) 6-4 王曦雨"
+  },
+  "_no_repeat": "王曦雨已经在 `wangxiyu-timofeeva.json`（R1，退赛那场，主体是她第一个发球局零比四十的九局连胜）和 `wangxiyu-fernandez.json`（R2，决胜盘零比四横扫）里出现过——两条都讲的是她怎么赢，这条讲的是她怎么输、以及这次辛辛那提之旅打到了1/8决赛。资格赛两场（胜Andreescu、胜14号种子Kudermetova）和R1/R2的具体过程不再重复展开，只用一句带过；新增的是：R3因斯维托丽娜伤退直接晋级（两条老片子都没提到）、法网1/8决赛的呼应、和这场对凯斯1/8决赛的完整过程与效率数据对比。",
+  "stats": {
+    "tour": "wta",
+    "a": {
+      "headshot": "assets/players/headshots/wta-316959.jpg",
+      "aces": 5,
+      "df": 4,
+      "first_in": 41,
+      "first_won": 34,
+      "first_total": 66,
+      "second_total": 25,
+      "second_won": 12,
+      "bp_conv": 3,
+      "bp_chances": 8,
+      "pts_won": 74,
+      "pts_total": 137,
+      "winners": 24,
+      "ue": 25
+    },
+    "b": {
+      "headshot": "assets/players/headshots/wta-326160.jpg",
+      "aces": 2,
+      "df": 2,
+      "first_in": 45,
+      "first_won": 29,
+      "first_total": 71,
+      "second_total": 26,
+      "second_won": 14,
+      "bp_conv": 2,
+      "bp_chances": 5,
+      "pts_won": 63,
+      "pts_total": 137,
+      "winners": 18,
+      "ue": 16
+    },
+    "_source": "全部十项来自 WTA 官方 `LS009/stats` setnum 0（`a`=凯斯 `PlayerIDA`、`b`=王曦雨 `PlayerIDB`，与 `cover.matchup` 同序）：acesa=5/acesb=2、dblflta=4/dblfltb=2、breakptsconva=3/breakptsconvb=2、breakptsplayeda=8/breakptsplayedb=5、totptswona=74/totptswonb=63。`first_in`＝`ptsplayed1stserv`（41/45），`first_total`＝`totservplayed`（66/71），`second_total`＝`first_total-first_in`（25/26），`first_won`＝`ptswon1stserv`（34/29），`second_won`＝`ptstotwonserv-ptswon1stserv`（12/14）。⚠️ 与 flashscore `vwgpk86s` 的 `df_mh_1` 逐分记录、`tools/match_stat_hooks.py` 输出交叉核对过总得分（74/63，全场137分），一致。",
+    "_winners_ue_why": "flashscore 没有这两项（WTA 巡回赛这一档常见的缺口），已按规矩跑 `tnns-stats.yml -f who=Keys,Wang -f date=2026-08-19`（run 32320612572，id=73467016）。TNNS `hasExtendedStats: True`，制胜分/非受迫失误自证过（分盘合计=全场：[16,8]=24 / [10,8]=18，✅✅；[17,8]=25 / [11,5]=16，✅✅）。日志给的选手顺序是 ['Keys','Wang']，正好和 `cover.matchup` 同序，`a`=凯斯(winners 24/ue 25)、`b`=王曦雨(winners 18/ue 16)，按顺序原样抄，没有互换。⚠️ 王曦雨制胜分只有凯斯的四分之三（18对24）却非受迫失误反而更少（16对25）——效率比凯斯更干净，是这条片子最硬的一条数据。"
+  },
+  "_hit_data": "核心数据点：全场137分里，凯斯只比王曦雨多赢了11分（74比63）——净差远小于两个6局盘的比分给人的印象。`tools/match_stat_hooks.py vwgpk86s --home \"Madison Keys\" --away \"Xiyu Wang\"` 把这条列为『总分差』候选，两个源（flashscore `df_mh_1`、WTA官方 `stats` 的 `totptswona/b`）互相印证。辅助数据点：TNNS制胜分/非受迫失误对比（凯斯24/25，王曦雨18/16）显示落败的一方反而打得更干净，非受迫失误比凯斯少9个。两项均来自权威官方源，共同支撑『落败但拼到最后』这条线。",
+  "_claims": "『自温网后重回硬地赛场取得的首批胜利』直接引自WTA官方赛后稿正文（`editorial.human_context.facts[10]`，官方编辑陈述，未做二次推算，同 `kostyuk-andreeva` 『本赛季第8场十佳胜利』的处置）。斯维托丽娜退赛原因经多源核对：WTA官方稿（引斯维托丽娜本人原话）与 justwomenssports、NBC Sports、greenwichtime等多家转载互证，一致指向右脚踝伤、多伦多受伤、辛辛那提R2对瓦伦托娃的比赛中加重。H2H『两人此前只交手过一次』经flashscore `df_hh_1` 核对（`Head-to-head matches` 区块仅列出本场和2023年伊斯特本两条记录，无第三场）。法网1/8决赛战绩另由维基百科《2026 French Open – Women's singles》交叉确认。",
+  "_editing_why": "probe 两轮：第一轮（`--every 2.0`，无 `--scorebox`）拿到 `scene_cuts` 和 `scorebox_guess`；第二轮带 `--scorebox 90,870,480,980` 拿到真实 `point_ends`。`scene_cuts` = [1.96, 15.96, 17.68, 20.08, 36.96, 60.24, 62.4, 91.92, 122.64, 125.64, 135.88, 139.76, 151.2, 166.68, 170.24, 197.72, 208.44, 221.24, 223.72, 226.8, 254.36, 269.28, 335.36, ...]。⚠️ **所有 `segments` 窗口都取自 0~254.36 秒，一秒不碰 299.6 秒起的赛后场边采访**（`captions.txt` 转写确认；269.28~297.96 秒是走向看台／收拾球包／握手的B-roll，仍在采访之前，安全）。\n\n逐一核对（`score_00.jpg`~`score_11.jpg` 每 2 秒一帧的记分条烧字读出来的）：0~18.5 秒是首盘第一局（凯斯发球，多次 40-40 平分后被王曦雨破发拿下，`0-1`）；20.5~58.5 秒是王曦雨第二个发球局，持续在 40-15 附近，最终保发到两比零（`0-2`）——③ 段（0.0-13.0）取的正是这段常规底线来回的前半段，**crosses_cut** 于 1.96 秒（score_00 核对 0.5 秒和 2.5 秒画面都是 40-40 平分的同一回合，只是镜头角度切换，不是换人换比赛）；④a/④b（36.96-45.0/45.0-53.5）落在同一局的中段（41~53 秒之间没有 scene_cuts 命中，干净），画面持续是这局的常规回合，与两段旁白讲的『资格赛淘汰四人』『斯维托丽娜退赛晋级』内容不直接对应（这两件事这条集锦里没有画面），作为场景过渡背景，不与画面冲突。\n\n62.4~94.5 秒：`score_01.jpg`/`score_02.jpg` 核对，这一整段画面持续显示『BREAK POINT #2，凯斯0-30，王曦雨2-40』——这是首盘第三局（凯斯发球，面对3个破发点，`1-2 主队发球，主队拿下 ← 3个破发点`），一次长回合/多次重放的高潮片段；⑤ 段（62.4-74.0）取这段前半部分，画面上凯斯正顶住压力保发，正好对应旁白『凯斯连追两局，追成二比二平』的过程（这一局是凯斯连追的第一局）。\n\n首盘随后经 `score_02.jpg`~`score_04.jpg` 核对：96.5~110.5 秒王曦雨发球局被破（凯斯追成 `2-2`，多帧无记分条叠加、疑似慢镜头特写）；112.5~118.5 秒凯斯发球保发拿到 `3-2`；此后双方缠斗，`score_04.jpg` 显示 160.5~168.5 秒已到 `6-5`（凯斯领先，王曦雨发球面对盘点），170.5~178.5 秒记分条切换为抢七点数格式（凯斯6:3领先抢七），180.5 秒画面切到看台鼓掌反应（凯斯拿下抢七、赢下首盘 7-6(3)），182.5~192.5 秒是换边／整理装备的过渡镜头；194.5~198.5 秒切入第二盘，198.5 秒已显示凯斯次盘 `2-0` 领先（首两局在集锦里被压缩跳过）。\n\n`score_05.jpg` 核对：200.5~210.5 秒是次盘第三局（王曦雨发球，凯斯回接），212.5~222.5 秒凯斯发球保发到 `3-2`；224.5~226.5 秒是看台反应镜头（`scene_cuts` 命中 223.72/226.8，此间凯斯的领先已扩大，编辑跳过了中间数局，直接从 3-2 剪到看台反应再切到 4-4）；⑥ 段（208.44-219.0）取的正是凯斯 2-0 到 3-2 建立领先的这段常规回合，与旁白『凯斯开局又破发，一路建立四比二的领先』的过程方向一致（画面显示的具体比分是集锦跳过中间局之后的近似区间，不是逐分精确对应）。\n\n228.5~257.92 秒（`score_05.jpg`~`score_06.jpg`）：记分条持续显示『4-4，凯斯40-0，BREAK POINT』——这是次盘第九局（王曦雨发球，凯斯寻求回破，`5-4 客队发球，主队拿下 ← 破发、2个破发点`），一段被拉长展示的关键破发局，258.5 秒转为『5-4，MATCH POINT』（凯斯已回破成功并进入发球胜赛局）；⑦ 段（226.8-234.5）取这段破发局前半部分，与旁白『凯斯立刻回破，五比四反超，随后保发拿下整场比赛』的过程一致；⑧ 段（234.5-244.5）与 ⑩ 段（244.5-254.36）延续同一段紧张的破发/发球胜赛局画面，作为『全场137分净差11分』和『今年第二次打进1/8决赛』两段陈述性/总结性旁白的背景，不与画面内容冲突（同一段紧张对峙的延长镜头，`kostyuk-andreeva.json` 的 milestone 段用过同样的处置手法）。\n\n① 段（265.44-269.28，无旁白）：`point_ends` 命中 265.44，紧接 `captions.txt` 里『265.84 Madison Keys makes it through to the quarterfinals』的解说开口时刻——`score_06.jpg` 核对 264.5~266.5 秒记分条仍是『7-5-40/6-4-30 MATCH POINT』，268.5 秒起切到看台鼓掌反应（`scene_cuts` 命中 269.28，段尾精确停在这里，不跨切点）；② 段（269.28-278.0）延续看台反应／庆祝镜头，narration 讲述最终比分与过程，转播同一时刻的原话『She certainly had to work for it though. But work she did』印证了这条片子的核心论点——王曦雨让这场球打得很艰难，即使最终落败。",
+  "segments": [
+    {
+      "start": 265.44,
+      "end": 269.28,
+      "_why": "① **冷开场，不配旁白，走现场声**。`point_ends` 命中 265.44 秒，紧接自动字幕『265.84 Madison Keys makes it through to the quarterfinals』的解说开口时刻，说明比赛就在这几秒内结束。contact sheet（`score_06.jpg`）核对：264.5~266.5 秒记分条仍显示『MATCH POINT』（凯斯7-5-40，王曦雨6-4-30），268.5 秒起切到看台鼓掌反应——段尾精确停在 `scene_cuts` 命中的 269.28 秒，不跨切点。CLAUDE.md「开场三格的顺序」：第①格是全片最强的画面，不是坐标；这条片子最强的画面就是比赛落定、看台瞬间爆发的那一刻。"
+    },
+    {
+      "start": 269.28,
+      "end": 278.0,
+      "narration": "开局连破带保，两比零领先——最终还是抢七三比七，输给了20号种子凯斯。",
+      "_why": "② 落点，直接把过程和结果讲清楚。窗口延续看台鼓掌反应／庆祝镜头（contact sheet 268.5-278.5 秒核对过，crowd shots，没有换比赛或插入非本场内容）。首盘走势核自 `df_mh_1` 逐分：`0-1 主队(凯斯)发球，客队(王曦雨)拿下 ← 1个破发点` 紧接 `0-2 客队(王曦雨)发球，客队(王曦雨)拿下`——王曦雨破发拿下凯斯开局发球局并自己保发，两比零领先；随后凯斯一路追回，六比六进入抢七，7-3（记法 7-6(3)）拿下这一盘。"
+    },
+    {
+      "start": 0.0,
+      "end": 13.0,
+      "narration": "北京时间八月二十号早上七点多，辛辛那提网球公开赛，女单1/8决赛——王曦雨迎战20号种子凯斯。",
+      "_why": "③ 坐标。开球时刻：flashscore 当日总表 `AD` 字段读到 Unix 1787181000，换算北京时间 2026-08-20 07:10（10~39 分钟落档『X点多』，早上时段）。窗口起点 0.0 秒跨过 `scene_cuts` 在 1.96 秒的一次镜头切换，`score_00.jpg` 核对：0.5 秒和 2.5 秒画面都是首盘第一局的 40-40 平分回合，只是镜头角度变化，没有换人或插入非比赛内容。终点 13.0 秒不跨切点（下一个 `scene_cuts` 是 15.96）。",
+      "crosses_cut": "0.5 秒和 2.5 秒的镜头角度切换，contact sheet 核对是同一局 40-40 平分的连续回合，不是换了比赛或换了人。"
+    },
+    {
+      "start": 36.96,
+      "end": 45.0,
+      "narration": "资格赛一路杀进正赛，她已经淘汰了包括30号种子费尔南德斯在内的四个对手。",
+      "_why": "④a 王曦雨本站战绩，一句带过（`wangxiyu-timofeeva.json`／`wangxiyu-fernandez.json` 已经讲过具体过程，这里不重复展开，见 `_no_repeat`）。窗口落在首盘第二局（王曦雨发球保发到两比零）的中段，`scene_cuts` 在 36.96 和 60.24 之间没有其它命中，窗口干净、不跨切点。这段集锦里没有资格赛画面，本段旁白只用本场常规回合作场景过渡背景，不与画面内容冲突。战绩数字核自 WTA官方 `matches` 接口（`RS048`/`RS024`/`LS077`/`LS038`）。"
+    },
+    {
+      "start": 45.0,
+      "end": 53.5,
+      "narration": "上一轮，8号种子斯维托丽娜因为脚踝伤退赛，她直接晋级到1/8决赛。",
+      "_why": "④b 上一轮（R3）斯维托丽娜退赛，两条老 spec 都没提到的新内容（见 `_no_repeat`）。窗口紧接 ④a，同样落在首盘第二局的常规回合内，不跨切点。事实核自 WTA官方 `matches`（`LS019: X. Wang d [8] E. Svitolina W/O`）和 WTA官方新闻稿（引斯维托丽娜本人原话，见 `editorial.human_context.facts[4]`）。"
+    },
+    {
+      "start": 62.4,
+      "end": 74.0,
+      "narration": "破发之后她又保发拿下一局，一度两比零领先；可凯斯连追两局，把比分追回到二比二平。",
+      "_why": "⑤ 首盘走势（2-0→2-2）。窗口落在首盘第三局（凯斯发球，面对3个破发点，`1-2 主队发球，主队拿下 ← 3个破发点`）——`score_01.jpg`/`score_02.jpg` 核对 62.5~94.5 秒记分条持续显示『BREAK POINT #2，凯斯0-30，王曦雨2-40』，这是凯斯顶住压力、连追两局中的第一局，画面正好对应旁白讲的这段拉锯。起点 62.4 秒是 `scene_cuts` 命中的镜头切换点，终点 74.0 秒不跨切点（下一个 `scene_cuts` 是 91.92）。"
+    },
+    {
+      "start": 208.44,
+      "end": 219.0,
+      "narration": "次盘凯斯开局又破发，一路建立四比二的领先——王曦雨把破发点找了回来，追成四比四。",
+      "_why": "⑥ 次盘走势（Keys建立4-2领先→Wang追成4-4）。窗口起点 208.44 秒是 `scene_cuts` 命中的切换点，`score_05.jpg` 核对 200.5~222.5 秒是次盘凯斯从2-0扩大到3-2领先的常规回合（集锦跳过了中间几局），终点 219.0 秒不跨切点（下一个 `scene_cuts` 是 221.24）。旁白讲到的『四比二』『追成四比四』是核自 `df_mh_1` 逐分的完整过程（`1-0 客队发球，主队拿下 ← 破发、3个破发点` … `4-4 主队发球，客队拿下 ← 1个破发点`），画面显示的是这段过程里凯斯建立领先阶段的代表性回合，不是逐分精确对应每一个数字。"
+    },
+    {
+      "start": 226.8,
+      "end": 234.5,
+      "narration": "凯斯立刻回破，五比四反超，随后保发拿下整场比赛，七比六六比四。",
+      "_why": "⑦ 决胜局（Keys回破5-4→保发6-4收官）。窗口起点 226.8 秒是 `scene_cuts` 命中的切换点，`score_05.jpg`/`score_06.jpg` 核对 228.5~257.92 秒记分条持续显示『4-4，凯斯40-0，BREAK POINT』，这是次盘第九局王曦雨发球、凯斯寻求回破的关键局（`5-4 客队发球，主队拿下 ← 破发、2个破发点`），画面正对应旁白『凯斯立刻回破』的这一刻。终点 234.5 秒不跨切点（下一个 `scene_cuts` 是 254.36）。"
+    },
+    {
+      "start": 234.5,
+      "end": 244.5,
+      "narration": "全场137分，凯斯只比她多赢了11分；非受迫失误她只有16个，反而比凯斯的25个更少。",
+      "_why": "⑧ 效率数据。窗口延续 ⑦ 段同一个紧张的破发局/发球胜赛局画面（`scene_cuts` 226.8 到 254.36 之间没有其它命中，干净），作为陈述性数据的背景，不与画面内容冲突（同一处置手法见 `kostyuk-andreeva.json` 的里程碑段）。数据核自 `tools/match_stat_hooks.py`（总分差 74-63=11）与 `tnns-stats.yml` run 32320612572（制胜分/非受迫失误），见 `_hit_data`/`stats._winners_ue_why`。"
+    },
+    {
+      "start": 244.5,
+      "end": 254.36,
+      "narration": "这是她今年第二次，从资格赛一路打到1/8决赛——下一次，会不会走得更远？",
+      "_why": "⑩ 收尾落在一问上（`test_收尾要落在一问上不能停在数据上`），而且开的是新门，不是封面那一问（『开局2比0，抢七告负』）的回声——它引入的是法网1/8决赛的呼应（`editorial.human_context.facts[9]`），一个封面和②段都没提过的新事实，问的是她的career trajectory，不是这次辛辛那提（她已经出局，这条问题不成立），避免了『这次还能走多远』这种自相矛盾的问法。窗口延续同一段紧张的破发局/发球胜赛局画面，终点 254.36 秒精确停在 `scene_cuts` 命中处，不跨入 ①段（265.44起）的match point时刻。"
+    }
+  ],
+  "push": {
+    "summary": "开局两比零仍告负",
+    "lead": "辛辛那提女单1/8决赛，资格赛突围的王曦雨（世界第108）先后淘汰四名对手、又因8号种子斯维托丽娜伤退直接晋级——这是她继法网之后，今年第二次把资格赛之旅带到最大级别赛事的1/8决赛。首盘她一开始就破发保发两比零领先，被20号种子凯斯（世界第24）一路追回并抢七拿下；次盘凯斯开局又破发建立四比二领先，王曦雨追成四比四，但凯斯立刻回破锁定五比四并保发收官，7-6(3) 6-4。全场137分她只比对手少赢11分，非受迫失误（16个）反而比凯斯（25个）更少——转播原话：她确实拼得很辛苦，但她拼下来了。",
+    "_no_auto_why": "封面大图还没有官方高清实拍（见 `cover.portrait._photo_why`），这条 spec 目前不许提交渲染/推送。等图落地、本次任务在同一个会话里手动走完 probe→render→merge→push 之后再补写这一栏的实际认领理由。"
+  }
+}
