@@ -1,6 +1,6 @@
 # 转写核对表：pegula-cirstea-cincinnati-2026-r16
 
-源片 https://www.youtube.com/watch?v=ZDsRTupH2mg　采访段 258.0–538.5 秒（共 155 行）
+源片 https://www.youtube.com/watch?v=ZDsRTupH2mg　采访段 258.0–535.5 秒（共 155 行）
 
 | # | 片内 | 跳到源片 | 英文 | 中文 | 判据 |
 |--:|:--|:--|:--|:--|:--|
