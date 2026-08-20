@@ -17,7 +17,8 @@
   "cover": {
     "eyebrow": "赛场之上",
     "layout": "solo",
-    "subject": "弗里茨",
+  "subject": "弗里茨",
+  "_heat_why": "弗里茨是2024年美网男单亚军、2024年ATP年终总决赛亚军，也是近年美国男子网球最具辨识度的头部球员之一；这一字段只供选题校验，不进入封面、字幕或旁白。",
     "hook": "连追三个破发点\n第三个才终于兑现",
     "_hook_why": "封面主体是弗里茨——世界第九、美国男单第一、也是赢的那个，主体和赢家不冲突。\n\n两行讲的是**海报赛果行看不出来的东西**：`6-4 6-3` 那一行看不出这场球全程一边倒（弗里茨全场未失一个发球局），也看不出唯一的悬念集中在次盘四比三那一局——三个破发点才拿下。排名、轮次、比分海报已经印着了，钩子没有重复。\n\n最长行 **8 个字符**（「第三个才终于兑现」），在 `HOOK_MAX_CHARS = 10` 以内。\n\n⚠️ **两行的主语都是弗里茨**，和封面主体、和海报赛果行的赢家是同一个人，读不岔。「兑现」的主语是他自己拿到的破发点，不存在 CLAUDE.md「盘点赛点谁救的必须写出来」拦的那种中途换人（那条拦的是『拿到／要到』的点被别人救走，这条是自己拿到、自己兑现）。\n\n⚠️ **对手奥康奈尔的资格赛突围 + 两站退赛红利晋级这条更抓人的线，没有放进钩子**——按『对手XXX\\n她/他还是……』这个句式（`boulter-volynets`/`chwalinska-gibson` 那批同样用过对手的失误/困境当铺垫），本来可以写，但那条线的分量重到需要展开讲清楚（鲁德退赛 + 丰塞卡退赛两件独立的事），压成钩子的一行会失真，所以放进 `editorial.human_context`，钩子留给这场球本身唯一的悬念。",
     "topic": "ATP1000辛辛那提 · 男单1/8决赛",
@@ -38,7 +39,7 @@
         "rank": null
       }
     ],
-    "_matchup_rank_why": "两个排名都取自 **tennisexplorer.com 球员页**（`curl` 带浏览器 UA，`WebFetch` 对这个站会被拦）：`Fritz Taylor` 页 `Current/Highest rank - singles: 9. / 4.`；`O'Connell Christopher` 页 `Current/Highest rank - singles: 129. / 53.`。两个数又在 H2H 对阵页（`tennisexplorer.com/mutual/fritz-f1aa7/o-connell-020b8/`）的选手信息表里各自独立重复了一遍，四处一致。\n\n⚠️ **不是种子号**：`protennislive.com/posting/2026/422/mds.pdf` 的 `Seeded Players` 表里弗里茨是种子号，本文件早记过『`Seeded Players` 那一栏 `Rank` 也是快照，和当期排名对不上』——这条一律走 tennisexplorer 的当期排名，不碰签表 PDF 里的那一栏。",
+  "_matchup_rank_why": "按用户最新规则，封面、技术统计卡、字幕、旁白和推送文案均不展示种子号或世界排名，因此两名球员的 `rank` 都显式设为 null。",
     "_name_why": "两个中文名都走 `player_zh()`，实跑过：`player_zh('Taylor Fritz') → 弗里茨`、`player_zh(\"Christopher O'Connell\") → 奥康奈尔`。",
     "portrait": {
       "image": "assets/reel/fritz-cincinnati-2026-r16.jpg",
