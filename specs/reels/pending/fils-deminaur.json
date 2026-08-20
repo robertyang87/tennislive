@@ -1,0 +1,127 @@
+{
+  "slug": "fils-deminaur",
+  "source_url": "https://www.youtube.com/watch?v=AmTVcLzLUAE",
+  "_source": "ATP Tour 官方 YouTube 频道，标题『Arthur Fils vs Alex de Minaur Highlights | Cincinnati 2026 Round 4』，oEmbed author_name=ATP Tour 自证。Tennis TV 频道另有一版『Arthur Fils vs Alex de Minaur For Quarter-Final Spot』（dOxyADzn_IA），probe 时两条都量一次时长，取可用画面更长的那条（CLAUDE.md『两条都量一次，取长的那条』），不预设 ATP Tour 版一定更长。",
+  "_column": "赛场之上",
+  "editorial": {
+    "mode": "match_review",
+    "question": "总分打平将近六四开，德米纳尔为什么还是直落两盘告负？",
+    "thesis": "全场发球局菲斯一次没丢（10/10保发），德米纳尔全场只创造过两次破发点机会，一次都没兑现——他没能找到反破菲斯的办法。真正让比分看起来没那么悬殊的，是他在自己发球局里的救球：面对九个破发点，他救下七个，第二盘开局那一局更是连救五个才守住发球局；菲斯第一次拿到赛点，也被他原地化解。可再顽强的防守换不来进攻——菲斯6-3 6-4锁定比赛，用两个赛点才走完最后一步。",
+    "beats": [
+      "首盘：菲斯5-3时完成破发，6-3拿下这一盘",
+      "次盘开局：德米纳尔自己的发球局连救五个破发点，惊险保发",
+      "次盘中段：菲斯4-3完成破发，5-3发球拿下第一个赛点被救，6-4第二个赛点锁定比赛"
+    ],
+    "human_context": {
+      "angle": "德米纳尔是这一周辛辛那提签表里最沉的名字之一——世界第八、过去两年半大半时间都留在前十，此前两轮分别淘汰费里和阿利斯，这一场却被排名低他十三位的菲斯直落两盘拿下。",
+      "facts": [
+        "总分菲斯69分、德米纳尔52分（57%比43%），但比分板只写着两盘6-3 6-4，没有显得那么悬殊（match_feed.py show 0W7emOHi）",
+        "菲斯全场发球局10/10保发，德米纳尔0/2破发点转化——他全场只创造过两次机会",
+        "德米纳尔全场9个破发点面对，救下7个；次盘第一局单独一局就面对5个破发点，全部救下守住发球",
+        "菲斯第一次拿到赛点（次盘5-3自己发球）被德米纳尔救下，第二个赛点才锁定比赛",
+        "德米纳尔本站此前两轮：淘汰费里（7-5 7-6(3)，本号已发 fery-deminaur）、淘汰阿利斯（1-6 6-3 7-6(4)，本号已发 halys-deminaur）——两场都是三盘苦战",
+        "菲斯生涯最高排名第14（2025年刷新），本场之前世界第21；德米纳尔生涯最高第5，本场世界第8"
+      ],
+      "sources": [
+        "https://www.tennisexplorer.com/player/fils/",
+        "https://www.tennisexplorer.com/player/de-minaur/"
+      ]
+    }
+  },
+  "_no_repeat": "同一栏目下 fery-deminaur.json / halys-deminaur.json 已经讲过德米纳尔前两轮淘汰费里、阿利斯的具体细节（雨断、抢七救赛点等）——这条只用一句带过『此前两轮分别淘汰费里和阿利斯』，不重讲那两场的比分细节或转折。",
+  "_match": {
+    "flashscore_id": "0W7emOHi",
+    "_why": "flashscore df_su_1_0W7emOHi：AC÷3¬BA÷6¬BB÷3¬RC÷0:40（Set1 菲斯6-德米纳尔3）¬BC÷6¬BD÷4¬RD÷0:43（Set2 菲斯6-德米纳尔4）¬RB÷1:23。df_mh_1_0W7emOHi 逐分记录：Set1 5-3菲斯完成破发（2个破发点）、6-3盘点转化；Set2 开局0-1德米纳尔一局内面对5个破发点全部救下、4-3菲斯完成破发、5-4德米纳尔救下菲斯第一个赛点、6-4菲斯第二个赛点锁定比赛。AD=1787167500（Unix 开赛时间）换算北京时间 2026-08-20 03:25。"
+  },
+  "_hit_data": "菲斯全场保发局100%（10/10）而德米纳尔0/2破发点转化，这个反差是全片最硬的数据，用在 editorial.thesis 和 cover.hook 里；总分69-52（57%对43%）用作辅助佐证。",
+  "topbar": {
+    "line1": "2026 辛辛那提 ATP1000 1/8决赛",
+    "line2": "菲斯 6-3 6-4 德米纳尔"
+  },
+  "_topbar_why": "赢家在前，比分与 cover.winner/result/matchup 一致。",
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "德米纳尔",
+    "hook": "发球局全没丢\n世界第八还是告负",
+    "_hook_why": "菲斯10/10保发、德米纳尔0/2破发点转化，这是全场最反直觉的数据——而输球的是排名更高的那一个，两句话对应thesis的两层：菲斯守得住，德米纳尔进攻端却打不开局面。",
+    "_subject_why": "德米纳尔是这条片子的大名字——世界第八、过去两年半大半时间留在前十、11个ATP冠军，即便他输了这一场，封面主体仍然是他，套用 djokovic-tirante / zverev-paul 那条『大名字输球也放封面』的例外，钩子从他的败局切入。",
+    "_heat_why": "德米纳尔是长期前十常客，本站前两轮分别淘汰费里和阿利斯打出连续苦战，这场对阵排名更低的菲斯意外告负，符合『热点长什么样：一条正在展开的故事线』——签表走到1/8决赛这一步，轮次本身就够格。",
+    "topic": "8.20 辛辛那提 ATP1000 1/8决赛",
+    "winner": "菲斯",
+    "result": "6-3 6-4",
+    "matchup": [
+      {
+        "name": "德米纳尔",
+        "name_en": "Alex de Minaur",
+        "country": "AUS",
+        "rank": 8
+      },
+      {
+        "name": "菲斯",
+        "name_en": "Arthur Fils",
+        "country": "FRA",
+        "rank": 21
+      }
+    ],
+    "_matchup_rank_why": "德米纳尔8、菲斯21均为tennisexplorer当前世界排名（非种子号）。",
+    "_name_why": "中文名查 player_zh()：Alex de Minaur→德米纳尔，Arthur Fils→菲斯，均与既有 fery-deminaur/halys-deminaur/lehecka-fils/jodar-fils-montreal-qf 等 spec 一致。",
+    "portrait": {
+      "image": "PENDING",
+      "focus": 0.5,
+      "focus_y": 0.35,
+      "zoom": 1.0,
+      "_frame_why": "内容先做好，封面大图留到统一换图那一轮再补——Cincinnati Open 官方 WP 媒体库当前搜 deminaur/fils 暂无当场专属实拍（8/19 这批要到 8/21 前后才可能上线，见 pending/README.md 的滞后规律）；The Enquirer 8/20 发布的 8/19 同日 gallery（round-of-16-continues-at-cincinnati-open-see-photos/91372587007/）135 张逐条查过，没有 Fils/De Minaur 相关 caption。下一步：8/21 后重查官方图库，或试西语/法语市场本地化新闻搜索（mkt=fr-FR，参考 lehecka-fils 那次换语区找到图的先例）。"
+    },
+    "scoreboard": {
+      "court": "Grandstand",
+      "_court_why": "Cincinnati Open 官方 Order of Play（OP-AUG-19.pdf，Released 08/18/2026 5:55:31 PM）：GRANDSTAND 第3场『[21] Arthur FILS (FRA) vs[5] Alex DE MINAUR (AUS)』。",
+      "duration_source": {
+        "url": "data:application/json,%7B%22feed%22%3A%22df_su_1_0W7emOHi%22%2C%22RB%22%3A%221%3A23%22%7D",
+        "_duration_why": "flashscore df_su_1_0W7emOHi 的 RB=1:23，与两盘 RC/RD=0:40+0:43=1:23 自洽。"
+      }
+    }
+  },
+  "stats": {
+    "a": {
+      "aces": 2,
+      "df": 2,
+      "winners": 21,
+      "ue": 17,
+      "first_in": 40,
+      "first_won": 32,
+      "second_total": 17,
+      "second_won": 11,
+      "bp_conv": 2,
+      "bp_chances": 9,
+      "pts_won": 69,
+      "pts_total": 121,
+      "first_total": 57,
+      "headshot": "assets/players/headshots/atp-f0f1.png"
+    },
+    "b": {
+      "aces": 4,
+      "df": 3,
+      "winners": 13,
+      "ue": 28,
+      "first_in": 37,
+      "first_won": 25,
+      "second_total": 27,
+      "second_won": 13,
+      "bp_conv": 0,
+      "bp_chances": 2,
+      "pts_won": 52,
+      "pts_total": 121,
+      "first_total": 64,
+      "headshot": "assets/players/headshots/atp-dh58.png"
+    },
+    "_source": "flashscore df_st_1 分盘技术统计（setnum=0全场），match_stat_hooks/match_feed.py show 0W7emOHi 打印表。home(主队)=Fils，away(客队)=De Minaur，与 df_su_1 的 AE=Fils A./AF=De Minaur A. 一致，与 cover.matchup 顺序（德米纳尔在前）相反——stats.a 跟的是 home/away，不是 matchup 顺序，两处各自独立。first_total 按 first_in+second_total 算（Fils 40+17=57，De Minaur 37+27=64）。"
+  },
+  "_voice_why": "默认云见音色 +6%，不设风格，参照本栏目基调。",
+  "push": {
+    "summary": "发球局全没丢，世界第八还是输了",
+    "lead": "辛辛那提男单1/8决赛，世界第21的菲斯6-3 6-4直落两盘击败世界第8的德米纳尔，用时1小时23分。首盘菲斯5-3完成破发，6-3拿下；次盘开局德米纳尔一局之内连救五个破发点才守住发球，可他全场只创造过两次破发点机会、一次都没兑现——菲斯全场保发局10/10，没有丢过一个发球局。菲斯次盘5-3自己发球拿到第一个赛点被德米纳尔救下，第二个赛点才锁定比赛。总分69比52，菲斯占优明显，但比分板上的6-3 6-4没有显得那么悬殊。德米纳尔本站此前两轮分别苦战淘汰费里和阿利斯。",
+    "auto": false,
+    "_no_auto_why": "先渲后审，手动 mode=push push=true。"
+  }
+}
