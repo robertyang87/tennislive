@@ -210,5 +210,7 @@
   ],
   "caption_gaps_ok": {
     "258.5-263.1": "开场那几秒是赛点落地后的欢呼和鼓掌，解说还没开口——263.1 秒才接上「this time. Jessica Pegula books a place...」，这段沉默是庆祝的现场声，不是漏词。"
-  }
+  },
+  "_verified_clean": "verify 报告：YouTube 自动字幕（en_fixed 之后）909 词 vs faster-whisper small.en 905 词，分歧 4.0%（闸门 12%）。逐处核过 30 行分歧，全部是 whisper 这个第二模型自己的听写误差，不是我们源头出了问题：\n· 专有名词类（占多数）：`cirstea`→`castella`／`castella's`、`sorana`→`saurana`、`pegula`→`jessica pergula`／`pergula` ——whisper 不认识这两个姓，YouTube 那份是对的（配合画面上球员名字条自证）。\n· 数字/拼写类：`eight`→`aid`、`75`→`seven five`、`postmatch`→`post match`、`walk out`→`walkout`、`secondguessing`→`second guessing`、`viby`→`vibey`、`afrobeat`→`afro beats`、`laidback`→`laid back`、`r b`→`rmb`（R&B 被 whisper 听成人民币缩写）——纯拼写/分词差异，不影响含义。\n· 两处看着像语义分歧、逐句核对后确认是 whisper 听错：`winning`→`waiting`——上下文是「领先一盘后很难熬……但那段时间我一直在赢（winning）」，whisper 的 waiting 在语法和语境里都讲不通；`mind me`→`might be`——原句「I don't think you mind me asking you something about Sorana」（你应该不介意我问你几句关于索拉娜的事），whisper 的 might be 同样讲不通。两处都保留 YouTube 原文的读法，zh 翻译未改动。\n· 虚词脱落（so/to/then/a/i 等被 whisper 漏听或多听）：不影响任何一行 zh。\ncaption gap：258.5–263.1s（片内 0.5–5.1s）whisper 在这段听到一个孤立的 `this`——审过缩略图墙，这几秒是赛点落地后的欢呼鼓掌、解说还没开口，263.1 秒才真正接上「this time. Jessica Pegula books a place...」；whisper 那个 `this` 大概率是把观众噪声的一个音节听成了词（single-word hallucination 是 whisper 在纯噪声段的常见失败模式），不是漏了一句真实台词。caption_gaps_ok 已按这个理由销账，没有改动窗口或 en_fixed。",
+  "transcript_verified": true
 }
