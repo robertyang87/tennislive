@@ -65,11 +65,11 @@
     "_matchup_rank_why": "中岛22、博尔热斯47均为tennisexplorer当前世界排名（非种子号，中岛官方种子27）。两人译名沿用已发的 nakashima-medvedev.json（『中岛』）与 borges-rublev.json（『博尔热斯』），不再另拟。",
     "_name_why": "中文名查 player_zh()：Brandon Nakashima→中岛布兰登（本号沿用既有的『中岛』短称），Nuno Borges→博尔热斯，与既有两条 spec 一致。",
     "portrait": {
-      "image": "PENDING",
+      "image": "assets/reel/nakashima-cincinnati-2026-r16.jpg",
       "focus": 0.5,
       "focus_y": 0.35,
       "zoom": 1.0,
-      "_frame_why": "内容先做好，封面大图留到统一换图那一轮再补——已探到候选（Enquirer 8/20发布的8/19现场实拍，『Brandon Nakashima, of United States, returns to Nuno Borges』，Albert Cesare/The Enquirer，https://www.cincinnati.com/gcdn/authoring/authoring-images/2026/08/20/PCIN/91380196007-081926-tennis-56.JPG，同批还有 -57/-58 两张。原图要把 www.cincinnati.com/gcdn/ 换成 www.gannett-cdn.com/ 才是无水印原图，带 Accept: image/* 头）。Cincinnati Open 官方 WP 媒体库当前搜 nakashima/borges 暂无当场专属实拍。"
+      "_frame_why": "The Enquirer 8/20 发布的 8/19 同日 gallery（round-of-16-continues-at-cincinnati-open-see-photos/91372587007/）：『Brandon Nakashima, of United States, returns to Nuno Borges』，Albert Cesare/The Enquirer，正手击球瞬间，脸部表情清晰（专注皱眉），球拍触球点入镜，6418×4279。同批还有两张：-56 是背身低反应球（脸不朝镜头，弃用）、-58 是『Borges returns to Nakashima』视角（拍的是博尔热斯不是本条封面主体，弃用）。原图 www.cincinnati.com/gcdn/authoring/... 要换成 www.gannett-cdn.com/authoring/...（带 Accept: image/* 头）才是无水印原图；三张图各自的 ID 前缀不同（91380196007/91380201007/91380191007），不能按序号推测 URL。Cincinnati Open 官方 WP 媒体库当前搜 nakashima/borges 仍无当场专属实拍。"
     },
     "scoreboard": {
       "court": "Tony Trabert Stadium 3",
@@ -82,22 +82,6 @@
   },
   "stats": {
     "a": {
-      "aces": 8,
-      "df": 2,
-      "winners": 28,
-      "ue": 36,
-      "first_in": 34,
-      "first_won": 25,
-      "second_total": 26,
-      "second_won": 13,
-      "bp_conv": 0,
-      "bp_chances": 4,
-      "pts_won": 94,
-      "pts_total": 203,
-      "first_total": 60,
-      "headshot": "assets/players/headshots/atp-bt72.png"
-    },
-    "b": {
       "aces": 27,
       "df": 3,
       "winners": 39,
@@ -111,9 +95,25 @@
       "pts_won": 109,
       "pts_total": 203,
       "first_total": 69,
-      "headshot": "assets/players/headshots/atp-n0ae.png"
+      "headshot": "assets/players/headshots/atp-N0AE.png"
     },
-    "_source": "flashscore df_st_1 分盘技术统计（setnum=0全场），match_stat_hooks/match_feed.py show QRQvF95T 打印表。home(主队)=Borges，away(客队)=Nakashima，与 df_su_1 的 AE=Borges N./AF=Nakashima B. 一致，且与 cover.matchup 顺序（Nakashima在前）相反——stats.a 跟的是 home/away，不是 matchup 顺序，两处各自独立，已按 CLAUDE.md『stats.a 跟的是 cover.matchup[0]』核对：这里 matchup[0]=中岛，而 stats.a=Borges（home），是有意为之的 home/away 映射，非填反——按 CLAUDE.md『a/b 跟的是 feed 的 home/away，不按 matchup 顺序填』这条最新更正版本执行（渲染层按 cover.winner 反查赢家再对齐，非直接假设 a=matchup[0]）。first_total 按 first_in+second_total 算（Borges 34+26=60，Nakashima 35+34=69）。"
+    "b": {
+      "aces": 8,
+      "df": 2,
+      "winners": 28,
+      "ue": 36,
+      "first_in": 34,
+      "first_won": 25,
+      "second_total": 26,
+      "second_won": 13,
+      "bp_conv": 0,
+      "bp_chances": 4,
+      "pts_won": 94,
+      "pts_total": 203,
+      "first_total": 60,
+      "headshot": "assets/players/headshots/atp-BT72.png"
+    },
+    "_source": "flashscore df_st_1 分盘技术统计（setnum=0全场），match_stat_hooks/match_feed.py show QRQvF95T 打印表。⚠️ **这一块原来把 a/b 填反了，2026-08-20 核对修正**：`tools/render_stat_card.py` 第19行白纸黑字写着『a 对应 cover.matchup[0]（版式顺序，不是赢家顺序）』——这里 matchup[0]=中岛（Nakashima），所以 stats.a 必须是中岛的数字，不是 flashscore 的 home（本场 home=Borges）。原来的注释声称存在一条『a/b 跟 home/away 走』的『最新更正版本』规矩，经查 CLAUDE.md 和代码都不存在这条规矩，是记反了之后又把错的记法理直气壮写进了注释——正是 CLAUDE.md 点名过的 `tsitsipas-royer` 那类错误。头像交叉核对：`atp-N0AE.png` 在 `nakashima-medvedev.json`/`nakashima-jodar-montreal-sf.json`/`shelton-nakashima-montreal-final.json` 里都确认是中岛；`atp-BT72.png` 在 `borges-rublev.json` 里确认是博尔热斯（帽子细节核对过）。现在 stats.a=中岛（27 ACE，对应 human_context.facts『27个ACE中岛一个人打出』）、stats.b=博尔热斯（8 ACE），与 cover.matchup 顺序一致。first_total 按 first_in+second_total 算（中岛 35+34=69，博尔热斯 34+26=60）。"
   },
   "_voice_why": "默认云见音色 +6%，不设风格，参照本栏目基调。",
   "push": {
@@ -129,9 +129,9 @@
     },
     {
       "start": 141.5,
-      "end": 144.6,
+      "end": 145.3,
       "narration": "十六个发球局，他一个没丢。",
-      "crosses_cut": "跨过143.28s——142.5s还是看台鼓掌，144.5s是双方网前握手，同一个match-over的连续画面，只是镜头从看台切回球场，不是换人。"
+      "crosses_cut": "跨过143.28s和146.16s——142.5s还是看台鼓掌，144.5s是双方网前握手，同一个match-over的连续画面，只是镜头从看台切回球场，不是换人；146.16s之后仍是握手/庆祝的延续镜头，离146.5s起的Tennis TV app宣传卡片轮播还有安全距离。"
     },
     {
       "start": 0.5,
@@ -145,7 +145,7 @@
     },
     {
       "start": 24.5,
-      "end": 33.0,
+      "end": 33.5,
       "narration": "首盘中岛纳赛马一路稳稳压制，三比零就完成破发，随后逐局守住优势，六比三拿下这一盘。"
     },
     {
@@ -156,7 +156,7 @@
     {
       "start": 60.5,
       "end": 69.0,
-      "narration": "抢七博尔热斯手感更好，七比五扳回一盘，原本能两盘结束的比赛，被他硬生生拖进了决胜盘。"
+      "narration": "抢七博尔热斯七比五扳回一盘，原本能两盘结束的比赛，被他硬生生拖进了决胜盘。"
     },
     {
       "start": 75.5,
@@ -171,7 +171,7 @@
     {
       "start": 127.0,
       "end": 136.5,
-      "narration": "第三个赛点，他才把比赛收了下来。中岛纳赛马这一路走得并不轻松——辛辛那提这一站，他还能走多远？"
+      "narration": "第三个赛点，他才把比赛收了下来。中岛纳赛马这一路并不轻松——辛辛那提这一站，他还能走多远？"
     }
   ],
   "topbar": {
