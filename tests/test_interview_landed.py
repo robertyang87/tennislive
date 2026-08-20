@@ -20,6 +20,27 @@ def _tool():
     return ci
 
 
+def test_ffprobe的csv输出带尾随逗号也解析得出来():
+    """2026-08-20 撞的：`pegula-cirstea-cincinnati-2026-r16` 那趟 render 在
+    最后一步（`check_interview_landed.check_film`）崩掉——`ffprobe`
+    对 `-of csv=p=0` 吐出 `291.880000,`（带一个尾随空字段），裸的
+    `float()` 直接 `ValueError`（run 32319565674）。
+
+    `check_reel_landed.py` 早为同一个坑加过 `_ffprobe_float()`（见
+    `test_match_reel.py::test_ffprobe的csv输出带尾随逗号也解析得出来`），
+    这个文件是姊妹工具，当时没跟着改。补上同名同形状的辅助函数。
+    """
+    ci = _tool()
+
+    # ① 正常的干净输出
+    assert ci._ffprobe_float("291.880000\n") == pytest.approx(291.88)
+    # ② 当天真炸的那个字符串——多一个尾随逗号（空字段）
+    assert ci._ffprobe_float("291.880000,\n") == pytest.approx(291.88)
+    # ③ 反向验证：换回没有这层保护的写法，②这个真实样本会崩
+    with pytest.raises(ValueError):
+        float("291.880000,\n".strip())
+
+
 def test_ass_has_dialogue认得Dialogue行(tmp_path):
     ci = _tool()
     ass = tmp_path / "x.ass"
