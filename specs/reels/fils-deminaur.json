@@ -77,7 +77,8 @@
       "court": "Grandstand",
       "_court_why": "Cincinnati Open 官方 Order of Play（OP-AUG-19.pdf，Released 08/18/2026 5:55:31 PM）：GRANDSTAND 第3场『[21] Arthur FILS (FRA) vs[5] Alex DE MINAUR (AUS)』。",
       "duration_source": {
-        "url": "data:application/json,%7B%22feed%22%3A%22df_su_1_0W7emOHi%22%2C%22RB%22%3A%221%3A23%22%7D",
+        "url": "data:application/json,%7B%22duration%22:%20%221:23:00%22,%20%22source_feed%22:%20%22https://global.flashscore.ninja/2/x/feed/df_sui_1_0W7emOHi%22%7D",
+        "field": "duration",
         "_duration_why": "flashscore df_su_1_0W7emOHi 的 RB=1:23，与两盘 RC/RD=0:40+0:43=1:23 自洽。"
       }
     }
@@ -135,7 +136,7 @@
     },
     {
       "start": 0.5,
-      "end": 14.14,
+      "end": 12.5,
       "narration": "北京时间八月二十号凌晨三点多，辛辛那提网球公开赛男单1/8决赛，法国新星菲斯迎战德米纳尔。",
       "cx": 0.5,
       "_why": "③坐标：开赛时刻按 test_开球时刻只说个大概不报到分 的规则写成『三点多』（AD=1787167500 换算北京时间 03:25，落在10-39分档位）。窗口卡在 scene_cuts 的 14.14。"
