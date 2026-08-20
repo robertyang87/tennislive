@@ -15,11 +15,10 @@ import re
 import stat
 import subprocess
 import sys
+from collections.abc import Callable, Sequence
 from dataclasses import dataclass
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
-from typing import Callable, Sequence
-
 
 ROOT = Path(__file__).resolve().parents[1]
 QUEUE_DIR = Path("data/reel-dispatch-queue")
@@ -139,6 +138,10 @@ def load_queue(
         slugs.append(slug)
     if len(set(slugs)) != len(slugs):
         raise QueueError("slugs must be unique")
+    if mode == "push" and len(slugs) != 1:
+        raise QueueError(
+            "push queues must contain exactly one slug so publishing stays serial"
+        )
 
     for slug in slugs:
         spec_path = repo_root / "specs" / "reels" / f"{slug}.json"
@@ -209,7 +212,11 @@ def discover_queue_file(
 
 
 def dispatch(request: QueueRequest, *, run: Run = subprocess.run) -> None:
-    """Dispatch one independent ``match-reel`` run per validated slug."""
+    """Dispatch parallel renders or one fail-closed, serial publish run."""
+    if request.mode == "push" and len(request.slugs) != 1:
+        raise QueueError(
+            "push queues must contain exactly one slug so publishing stays serial"
+        )
     push = "true" if request.mode == "push" else "false"
     for slug in request.slugs:
         command = [

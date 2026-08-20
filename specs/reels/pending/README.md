@@ -77,14 +77,12 @@ Gauff-Li／Nakashima-Medvedev 五场（含 WTA），**Musetti-Zheng 一张都没
 
 ## 现在住在这儿的
 
-- **`tirante-mensik`**（辛辛那提 ATP1000 1/8决赛，2026-08-19，蒂兰特
-  5-7 6-4 6-4 逆转14号种子门西克，两小时十六分，生涯首进大师赛1/4决赛）——
-  内容已经全部做完（editorial、逐分核实、旁白、xhs 文案）。赛事官方 WP
-  媒体库 `?search=tirante` 仍然只有 8/15 的旧照片和一张 2025 年头像；
-  The Enquirer 8/19 同日 gallery（135 张）逐条查过，一张蒂兰特都没有。
-  - 下一步：等 8/21 前后赛事官方图库补上这批，或 Enquirer 隔天再发一批
-    gallery；也可以按 `mkt=es-ES`（阿根廷球员）试一次西语体育媒体渠道
-    （`lehecka-fils` 那次就是靠换语区找到的）
+- **`musetti-faria`**（辛辛那提 ATP1000 1/8决赛，穆塞蒂 7-5 6-2 法里亚）——
+  内容已经写完，但截至北京时间 2026-08-20 深夜仍没有可用的本场静态原图。
+  球员／赛事协作帖和 Tennis TV 都只有视频；赛事媒体库、AP、The Enquirer、
+  NurPhoto、Getty、Alamy、Imago、Shutterstock 以及法里亚本人账号均逐项查过，
+  命中的要么是视频默认帧、合成海报，要么是旧轮次照片。继续留在 pending，
+  不拿视频帧或旧图补位。
 
 - **`tiafoe-tien`**（辛辛那提 ATP1000 第三轮，2026-08-19，蒂亚福 6-4 4-6 6-4 胜
   勒纳·钱，两小时十分）——这场比赛就发生在 2026-08-19（当天），赛事官方图库照惯例要到
@@ -155,7 +153,7 @@ Gauff-Li／Nakashima-Medvedev 五场（含 WTA），**Musetti-Zheng 一张都没
   `specs/reels/` 根目录，扫过全部工作流和工具确认过）。谁要接着写，
   `git mv` 回 `specs/reels/` 就行，草稿本身原封不动。
 
-## 曾经住在这儿、现在已经挪出去的
+## 已经转成正式 spec、现在位于 `specs/reels/` 根目录的
 
 - **`nakashima-borges`**（辛辛那提 ATP1000 1/8决赛，2026-08-19，中岛纳赛马
   6-3 6-7(5) 6-3 逆转博尔热斯，两小时二十二分）——**2026-08-20 挪出去了**。
@@ -228,3 +226,25 @@ Gauff-Li／Nakashima-Medvedev 五场（含 WTA），**Musetti-Zheng 一张都没
   Christopher O'Connell`，Albert Cesare/The Enquirer，5760×8640）。
   `--dry-run`/`--check-narration`/`preview_segments_local.py` 全部核过，
   已 `git mv` 回 `specs/reels/`。
+
+- **`fils-deminaur`**（辛辛那提 ATP1000 1/8决赛，菲斯 6-3 6-4 德米纳尔）——
+  **2026-08-20 挪出去了**。The Enquirer 8/19 同日 gallery 后来补进本场照片，
+  选用精确图注为德米纳尔对菲斯的 30 号图（Albert Cesare/The Enquirer，
+  5086×3391），原图、摄影署名和裁切理由均已写入 spec 与 credits。
+
+- **`tiafoe-auger-aliassime`**（辛辛那提 ATP1000 1/8决赛，蒂亚福 6-3 6-4
+  阿利亚西姆）——**2026-08-20 挪出去了**。同一组 The Enquirer gallery
+  找到精确点名本场的 101 号图（Albert Cesare/The Enquirer，4996×3331），
+  采用阿利亚西姆低位跨步反拍近景，原图与裁切理由均已核实。
+
+- **`tirante-mensik`**（辛辛那提 ATP1000 1/8决赛，蒂兰特 5-7 6-4 6-4
+  逆转门西克）——**2026-08-20 挪出去了**。蒂兰特本人认证 Instagram 在赛后
+  发布的本场四图组帖可由 caption 与时间戳自证；选用第 4 张通道近景。原帖最高
+  只有 1080×721，因此用 `fit: width` 保持原生宽度、同图模糊垫层补足 3:4，
+  不把低清横图强行放大，也不拿旧轮次高清图冒充。
+
+- **`rybakina-shnaider`**（辛辛那提 WTA1000 1/8决赛，莱巴金娜 6-4 6-4
+  施奈德）——**2026-08-20 直接补成正式 spec（未曾进入 pending）**。WTA 官方
+  本场集锦视频对象绑定了本场 CMS 静态缩略图，按官方原图参数取得 4000×2613
+  的比赛实拍；人物、赛事、日期和两位球员 ID 均由同一 CMS 对象绑定，摄影师
+  未署名则不猜姓名。

@@ -12,10 +12,10 @@ from pathlib import Path
 import pytest
 import yaml
 
-
 ROOT = Path(__file__).resolve().parents[1]
 TOOL_PATH = ROOT / "tools" / "dispatch_reel_queue.py"
 WORKFLOW_PATH = ROOT / ".github" / "workflows" / "reel-dispatch-queue.yml"
+MATCH_REEL_PATH = ROOT / ".github" / "workflows" / "match-reel.yml"
 
 
 def _load_tool():
@@ -102,6 +102,36 @@ def test_missing_copy_and_mismatched_spec_slug_fail_before_dispatch(tmp_path):
         queue.load_queue(path, repo_root=repo, today=date(2026, 8, 21))
 
 
+def test_push_queue_requires_exactly_one_slug(tmp_path):
+    repo, path, payload = _repo(tmp_path)
+    second_slug = "second-player"
+    spec_dir = repo / "specs" / "reels"
+    (spec_dir / f"{second_slug}.json").write_text(
+        json.dumps({"slug": second_slug}), encoding="utf-8"
+    )
+    (spec_dir / f"{second_slug}.xhs.txt").write_text("copy", encoding="utf-8")
+    payload.update({"mode": "push", "slugs": ["fritz-oconnell", second_slug]})
+    (repo / path).write_text(json.dumps(payload), encoding="utf-8")
+
+    with pytest.raises(queue.QueueError, match="exactly one slug"):
+        queue.load_queue(path, repo_root=repo, today=date(2026, 8, 21))
+
+
+def test_render_queue_accepts_multiple_existing_slugs(tmp_path):
+    repo, path, payload = _repo(tmp_path)
+    second_slug = "second-player"
+    spec_dir = repo / "specs" / "reels"
+    (spec_dir / f"{second_slug}.json").write_text(
+        json.dumps({"slug": second_slug}), encoding="utf-8"
+    )
+    (spec_dir / f"{second_slug}.xhs.txt").write_text("copy", encoding="utf-8")
+    payload["slugs"] = ["fritz-oconnell", second_slug]
+    (repo / path).write_text(json.dumps(payload), encoding="utf-8")
+
+    request = queue.load_queue(path, repo_root=repo, today=date(2026, 8, 21))
+    assert request.slugs == ("fritz-oconnell", second_slug)
+
+
 def test_push_diff_must_contain_exactly_one_added_queue_file(tmp_path):
     calls = []
 
@@ -137,8 +167,14 @@ def test_push_diff_must_contain_exactly_one_added_queue_file(tmp_path):
         queue.discover_queue_file(before, after, repo_root=tmp_path, run=added_and_modified)
 
 
-@pytest.mark.parametrize(("mode", "push"), [("render", "false"), ("push", "true")])
-def test_dispatch_uses_argument_arrays_and_mode_fixes_push(mode, push):
+@pytest.mark.parametrize(
+    ("mode", "push", "slugs"),
+    [
+        ("render", "false", ("first-player", "second-player")),
+        ("push", "true", ("first-player",)),
+    ],
+)
+def test_dispatch_uses_argument_arrays_and_mode_fixes_push(mode, push, slugs):
     calls = []
 
     def record(command, **kwargs):
@@ -149,10 +185,10 @@ def test_dispatch_uses_argument_arrays_and_mode_fixes_push(mode, push):
         mode=mode,
         ref="main",
         expected_date="2026-08-21",
-        slugs=("first-player", "second-player"),
+        slugs=slugs,
     )
     queue.dispatch(request, run=record)
-    assert len(calls) == 2
+    assert len(calls) == len(slugs)
     for (command, kwargs), slug in zip(calls, request.slugs):
         assert command == [
             "gh",
@@ -171,6 +207,17 @@ def test_dispatch_uses_argument_arrays_and_mode_fixes_push(mode, push):
         assert kwargs == {"check": True, "shell": False}
 
 
+def test_dispatch_rejects_bypassed_multi_slug_push_request():
+    request = queue.QueueRequest(
+        mode="push",
+        ref="main",
+        expected_date="2026-08-21",
+        slugs=("first-player", "second-player"),
+    )
+    with pytest.raises(queue.QueueError, match="exactly one slug"):
+        queue.dispatch(request)
+
+
 def test_workflow_only_runs_for_main_queue_pushes_with_minimum_permissions():
     workflow = yaml.load(WORKFLOW_PATH.read_text(encoding="utf-8"), Loader=yaml.BaseLoader)
     assert workflow["on"] == {
@@ -184,3 +231,13 @@ def test_workflow_only_runs_for_main_queue_pushes_with_minimum_permissions():
     body = WORKFLOW_PATH.read_text(encoding="utf-8")
     assert "github.event.before" in body and "github.sha" in body
     assert "python tools/dispatch_reel_queue.py" in body
+
+
+def test_match_reel_publish_runs_share_one_non_cancelling_concurrency_group():
+    body = MATCH_REEL_PATH.read_text(encoding="utf-8")
+    head = body[: body.index("jobs:")]
+    concurrency = head[head.index("concurrency:") :]
+    assert "match-reel-publish" in concurrency
+    assert "github.event.inputs.mode == 'push'" in concurrency
+    assert "github.event.inputs.push == 'true'" in concurrency
+    assert "cancel-in-progress: ${{ !(" in concurrency
