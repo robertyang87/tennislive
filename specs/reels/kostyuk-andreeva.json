@@ -1,0 +1,211 @@
+{
+  "slug": "kostyuk-andreeva",
+  "source_url": "https://youtu.be/FybIdMP7ZTg",
+  "_source": "WTA 官方 YouTube 频道单场集锦《Marta Kostyuk vs. Mirra Andreeva | 2026 Cincinnati Round of 16 | WTA Match Highlights》，5 分 8 秒（308s，1080p）。oEmbed／channel 字段确认 `channel: WTA`。",
+  "_match": {
+    "flashscore_id": "E9jrJ00m",
+    "wta_match_id": "LS011",
+    "wta_event_id": "1017",
+    "_why": "两个源核对一致：flashscore `E9jrJ00m`（`Kostyuk M.` vs `Andreeva M.`，比分 4-6 6-0 6-2）、WTA 官方 `LS011`（`ResultString: [10]M. Kostyuk d [5]M. Andreeva 4-6,6-0,6-2`、`RoundID 4`、`MatchTimeTotal 01:33:58`）。轮次：WTA 官方 `RoundID=4`＝1/8 决赛（Round of 16），`tools/match_feed.py find` 独立标注同一场为『1/8-finals』，两个源一致。"
+  },
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "科斯秋克",
+    "hook": "决胜局四十比零落后\n她照样把这盘拿了下来",
+    "_hook_why": "讲过程不讲身份。第三盘（决胜盘）安德烈耶娃发球保这一分的最后一局，从 40-0 领先（三个保发点）被科斯秋克一路追平并完成破发拿下整场比赛——WTA 官方赛后稿逐句写清了这个过程（『Serving to stay in the match, Andreeva started on the right foot... raced to a 40-0 advantage. But Kostyuk answered...』），逐分记录（flashscore `df_mh_1`）同样显示这一局是 `6-2` 那一局、客队（安德烈耶娃）发球、主队（科斯秋克）拿下、标记破发。钩子只写这一局的过程，不提『赛点』『破发点』这类需要先懂规则的术语，两行 8 字＋10 字，在 solo 每行≤10 字符的上限内。",
+    "_subject_view_why": "封面放科斯秋克：她是这场的赢家和本条故事的主体（从落后一盘、决胜局对手 40-0 领先的绝境里翻盘），WTA 官方赛后稿标题和全文都以她为主语（《Kostyuk continues year of firsts, rallying past Andreeva...》）。安德烈耶娃虽然排名更高（世界第 6 对科斯秋克第 11），但这场球讲的是『谁完成了逆转』，不是『谁排名更高』——按『封面放谁：谁把人拉进来』那条，这场的关注点在科斯秋克的翻盘，不在安德烈耶娃。今天（08-19）Cincinnati Open 官方媒体库和 WTA 官方赛后稿的头图都是科斯秋克本人本场实拍，安德烈耶娃这场的专属实拍照片截至发稿时官方媒体库还没有上传（最新一张是 08-17 的上一轮，见 `portrait._photo_why`），进一步支持选科斯秋克。",
+    "_heat_why": "科斯秋克当期世界第 11、安德烈耶娃当期世界第 6（榜单日期 2026-08-10，WTA 官方 `players/ranked`），两人都过热度闸②（世界前 20）。同时两人 2026 年已交手四次（布里斯班1/4决赛、马德里决赛、法网半决赛、这场辛辛那提1/8决赛），是巡回赛里少见的年度多次相遇——`_heat_why` 双重成立。",
+    "topic": "WTA1000 辛辛那提 · 女单1/8决赛",
+    "portrait": {
+      "image": "assets/reel/kostyuk-cincinnati-2026-r16.jpg",
+      "fit": "cover",
+      "focus": 0.41,
+      "focus_y": 0.47,
+      "zoom": 1.08,
+      "_photo_why": "WTA 官方 Match Reaction 赛后稿《Kostyuk continues year of firsts, rallying past Andreeva to reach Cincy quarters》（`/news/4562803/`，2026-08-19 发布，作者 Noah Poser）的头图，路径 `photo-resources/2026/08/19/de4b0eab-28c6-46af-8407-392668fe5b67/Marta_Kostyuk_-_Cincinnati_Open_2026_-_Day_9-DSC_6929.jpg`，同一张图也是官方集锦视频页《Kostyuk takes 12 of last 14 games to oust Andreeva in Cincinnati》的头图，`?width=4000` 拿到 4000×2542 原图（未放大）。\n\n打开看过：正手上网追击/大跨步救球，身体全力前扑，蓝色球场配蓝色球衣，球在画面中下方，头巾、专注表情清晰可见，动作感和运动张力都很强，没有水印、没有静态合影场景——过四道闸门（精准：本场本人官方稿头图；比赛中：正在击球；冲击力：全力冲刺救球＋专注表情；清晰度：4000×2542 相机原图）。\n\n裁切按『人物居中、放大到接近铺满』估的：横向范围（左脚到右侧伸展的手臂）目测约 0.17~0.65，中心约 0.41；纵向范围（头巾到前脚落地点）目测约 0.08~0.88，中心约 0.48，取 0.47。`zoom` 1.08——用 `render_cover_local.py` 渲出来核对过再定。"
+    },
+    "scrim": "clear",
+    "matchup": [
+      {
+        "name": "科斯秋克",
+        "name_en": "Marta Kostyuk",
+        "country": "UKR",
+        "rank": 11
+      },
+      {
+        "name": "米拉·安德烈耶娃",
+        "name_en": "Mirra Andreeva",
+        "country": "RUS",
+        "rank": 6
+      }
+    ],
+    "_name_why": "两个中文名都走 `player_zh()`，实调过：`player_zh(\"Marta Kostyuk\")` → 科斯秋克、`player_zh(\"Mirra Andreeva\")` → 米拉·安德烈耶娃。排名取 WTA 官方 `players/ranked`（`metric=SINGLES`，`rankedAt 2026-08-10`）：科斯秋克第 11（3830分）、安德烈耶娃第 6（5323分）。⚠️ 种子号（科斯秋克10号种子、安德烈耶娃5号种子，WTA 官方 `SeedA/SeedB`）和排名不是一回事，这条片子不提种子号，只用当期排名。",
+    "winner": "科斯秋克",
+    "result": "4-6 6-0 6-2",
+    "scoreboard": {
+      "court": "Lindner Family Tennis Center",
+      "_court_why": "球场名没有逐场核实，印场馆名——同站惯例（`swiatek-parry` 的 `_court_why` 记过 CourtID 字段在这一站不可信，这条沿用同一处置）。",
+      "duration_source": {
+        "provider": "wta",
+        "url": "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches?page=0&pageSize=400",
+        "match_id": "LS011",
+        "field": "MatchTimeTotal",
+        "source_page": "https://www.wtatennis.com/tournament/1017/cincinnati/2026/scores/LS011"
+      },
+      "_duration_why": "WTA 官方 `MatchTimeTotal 01:33:58`；分盘 `settime` 00:37:40 + 00:23:44 + 00:32:32，三数相加 93:56，和总用时 93:58 只差 2 秒（自洽）。⚠️ 不用 flashscore 推算的用时（那条线本文档记过好几次偏长的教训），直接用这个已经自洽验证过的官方数字。"
+    }
+  },
+  "editorial": {
+    "mode": "match_review",
+    "question": "决胜局，安德烈耶娃发球保这一分，一度四十比零领先——科斯秋克是怎么把这一局、这场球都拿下来的？",
+    "thesis": "10 号种子科斯秋克（世界第 11）先丢一盘，随后连扳两盘 6-0 6-2 逆转 5 号种子安德烈耶娃（世界第 6），历时 1 小时 33 分钟，第一次打进辛辛那提1/4决赛。这是她本赛季第 8 场击败世界前十球员的胜利，追平莱巴金娜和斯维托丽娜，并列本赛季 WTA 巡回赛（Mercedes-Benz 赞助）该项数据的并列第一。第二盘 6-0 是两人 2026 年四次交手里，首次有人打出光蛋局——她全场靠正手主导翻盘（25 记制胜分过半来自正手），并且在决胜局把安德烈耶娃逼到 40-0 却仍被逆转保发的绝境里完成了这场比赛最后的、也是最关键的一次破发。",
+    "beats": [
+      "前段：科斯秋克首盘发球一上来就丢，此后没能追回，4-6 先失一盘",
+      "中段：第二盘她的正手开始接管比赛，从 4-3（首盘）起持续发力，六局连下打出两人四次交手里第一个光蛋局",
+      "结局：决胜局她一度被逼到对手发球胜赛、40-0 领先的绝境，硬是把这一局逆转破发，锁定整场比赛"
+    ],
+    "human_context": {
+      "angle": "这不是一场普通的1/8决赛——这是两人 2026 年的第四次交手（布里斯班1/4决赛、马德里决赛、法网半决赛，现在是辛辛那提1/8决赛），科斯秋克（24岁，乌克兰）已经三次击败比自己小五岁的新星安德烈耶娃（19岁，俄罗斯，本赛季世界第 6），唯一一次告负是在法网半决赛。这场胜利同时被 WTA 官方稿框成一个里程碑：本赛季第 8 场十佳胜利，追平莱巴金娜和斯维托丽娜，并列巡回赛第一。",
+      "facts": [
+        "科斯秋克当期世界第 11、10 号种子；安德烈耶娃当期世界第 6、5 号种子（榜单日期 2026-08-10，WTA 官方 `players/ranked`，`metric=SINGLES`）",
+        "轮次 1/8 决赛：WTA 官方 `RoundID=4`，`tools/match_feed.py find` 独立标注为『1/8-finals』",
+        "H2H：科斯秋克此前 2 胜 1 负——布里斯班1/4决赛（2026-01-09）、马德里决赛（2026-05-02）均科斯秋克获胜，法网半决赛（2026-06-04，Court Philippe-Chatrier）安德烈耶娃获胜；本场（辛辛那提，2026-08-19）后科斯秋克 3-1 领先。⚠️ flashscore 官方头对头字段 `df_hh_1_E9jrJ00m` 里 `KL÷2:1` 就是这场辛辛那提比赛开打前的快照——赛前是 2 胜 1 负不是 3 胜 1 负，赢下这场之后才变成 3-1（自己核对时先写错过一次『此前 3 胜 1 负』，被『KL÷2:1』这个赛前快照数字纠正）",
+        "科斯秋克出生于 2002-06-28（24岁）；安德烈耶娃出生于 2007-04-29（19岁），WTA 官方球员数据库（`api.wtatennis.com/tennis/players/?name=`）",
+        "全场技术统计（WTA 官方 `LS011/stats` setnum 0）：ACE 7:1、双误 4:6、一发进球 61%:59%（`ptsplayed1stserv/totservplayed`）、破发点兑现 5/6:1/3、总得分 56%(77/137):44%(60/137)",
+        "WTA 官方赛后稿核心事实：科斯秋克本赛季第 8 场十佳（Top 10）胜利，追平莱巴金娜和斯维托丽娜，并列 WTA 巡回赛（Mercedes-Benz 赞助）该项数据第一；全场 25 记制胜分，过半来自正手，外加 7 个 ACE",
+        "第二盘 6-0（光蛋局）是两人 2026 年四次交手里，第一次有人在盘分上完全不失一局——WTA 官方稿原句『the first bagel by either player in the pair's four meetings』",
+        "决胜局关键分：科斯秋克在 3-1 领先时面临本场自己发球局的第二个破发点（此前只在首局面临过一次），靠一次 16 拍的防守相持逼出安德烈耶娃失误保发到 4-1；随后安德烈耶娃发球胜赛（保这一分即可继续比赛），一度 40-0 领先，科斯秋克连追四分并借对手双误、正手制胜分完成本场比赛最后一次破发，锁定胜局",
+        "科斯秋克赛后原话（WTA 官方稿引语）：『We want to get better... and some things just take time. It took me this much time to get to where I am right now. But I'm focusing on the process and I keep getting better. So I'm not that focused on the results or ranking or whatever. I just try to be consistent in everyday work.』",
+        "比赛用时 1 小时 33 分 58 秒（WTA 官方 `MatchTimeTotal`）",
+        "下一轮对手：高芙（4号种子）或布兹科娃（22号种子）胜者——布兹科娃对科斯秋克 H2H 2-0 领先，高芙对科斯秋克 H2H 3-2 领先但科斯秋克赢下了两人最近一次交手（2025年多哈）"
+      ],
+      "sources": [
+        "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches?page=0&pageSize=400",
+        "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches/LS011/stats",
+        "https://api.wtatennis.com/tennis/players/ranked?page=0&pageSize=30&type=rankSingles&sort=asc&name=&metric=SINGLES",
+        "https://api.wtatennis.com/tennis/players/?pageSize=5&name=Kostyuk",
+        "https://api.wtatennis.com/tennis/players/?pageSize=5&name=Andreeva",
+        "https://global.flashscore.ninja/2/x/feed/df_mh_1_E9jrJ00m",
+        "https://global.flashscore.ninja/2/x/feed/df_hh_1_E9jrJ00m",
+        "https://www.tennisexplorer.com/mutual/kostyuk-marta/andreeva-mirra/",
+        "https://www.wtatennis.com/news/4562803/kostyuk-continues-year-of-firsts-rallying-past-andreeva-to-reach-cincy-quarters",
+        "https://en.wikipedia.org/wiki/2026_French_Open_%E2%80%93_Women%27s_singles"
+      ],
+      "voice_label": "决胜局四十比零落后，她照样把这盘拿了下来"
+    }
+  },
+  "topbar": {
+    "line1": "2026 辛辛那提 WTA1000 1/8决赛",
+    "line2": "科斯秋克 4-6 6-0 6-2 米拉·安德烈耶娃"
+  },
+  "_no_repeat": "科斯秋克在 `swiatek-kostyuk.json` 里出现过（她对阵斯瓦泰克，讲的是首盘四次发球局全丢后逆转晋级），安德烈耶娃在 `fernandez-andreeva.json` 里出现过（她对阵费尔南德斯的另一场比赛）——两条都是不同对手、不同落点，不构成重复。这条讲的是科斯秋克与安德烈耶娃 2026 年四次交手的年度对决线和这一场决胜局的绝境翻盘，两条老片子都没碰过这个角度。",
+  "stats": {
+    "tour": "wta",
+    "a": {
+      "headshot": "assets/players/headshots/wta-326482.jpg",
+      "aces": 7,
+      "df": 4,
+      "first_in": 43,
+      "first_won": 31,
+      "first_total": 71,
+      "second_total": 28,
+      "second_won": 17,
+      "bp_conv": 5,
+      "bp_chances": 6,
+      "pts_won": 77,
+      "pts_total": 137,
+      "winners": 24,
+      "ue": 25
+    },
+    "b": {
+      "headshot": "assets/players/headshots/wta-331809.jpg",
+      "aces": 1,
+      "df": 6,
+      "first_in": 39,
+      "first_won": 24,
+      "first_total": 66,
+      "second_total": 27,
+      "second_won": 13,
+      "bp_conv": 1,
+      "bp_chances": 3,
+      "pts_won": 60,
+      "pts_total": 137,
+      "winners": 9,
+      "ue": 25
+    },
+    "_source": "全部十项来自 WTA 官方 `LS011/stats` setnum 0（`a`=科斯秋克 `PlayerIDA`、`b`=安德烈耶娃 `PlayerIDB`，与 `cover.matchup` 同序）：acesa=7/acesb=1、dblflta=4/dblfltb=6、breakptsconva=5/breakptsconvb=1、breakptsplayeda=6/breakptsplayedb=3、totptswona=77/totptswonb=60。`first_in`＝`ptsplayed1stserv`（43/39），`first_total`＝`totservplayed`（71/66），`second_total`＝`first_total-first_in`（28/27），`first_won`＝`ptswon1stserv`（31/24），`second_won`＝`ptstotwonserv-ptswon1stserv`（17/13）。⚠️ 与 flashscore `E9jrJ00m` 的 `df_mh_1` 逐分记录交叉核对过总得分（77/60，全场 137 分），一致。",
+    "_winners_ue_why": "flashscore 没有这两项（WTA 巡回赛这一档常见的缺口），已按规矩跑 `tnns-stats.yml -f who=Kostyuk,Andreeva -f date=2026-08-19`（run 32312233711，id=73466974）。TNNS `hasExtendedStats: True`，制胜分/非受迫失误自证过（分盘合计=全场：[7,10,7]=24 / [4,1,4]=9、[14,3,8]=25 / [7,8,10]=25，✅✅）。日志给的选手顺序是 ['Kostyuk','Andreeva']，正好和 `cover.matchup` 同序，`a`=科斯秋克(winners 24/ue 25)、`b`=安德烈耶娃(winners 9/ue 25)，按顺序原样抄，没有互换。⚠️ 安德烈耶娃制胜分只有科斯秋克的三分之一（9 对 24）却非受迫失误一样多（25 对 25）——效率差距悬殊，可作为正文的辅助数据点。"
+  },
+  "_hit_data": "核心事实『决胜局从 40-0 落后翻盘』：WTA 官方赛后稿逐句描述该局（Andreeva serving to stay in the match…raced to a 40-0 advantage. But Kostyuk answered…the break from 40-0 down）、flashscore `df_mh_1` 决胜局最后一局逐分记录（客队/安德烈耶娃发球拿下）互相印证，probe 之后再核对源片记分条补一道画面自证。辅助数据点：WTA 官方稿『本赛季第 8 场十佳胜利，追平莱巴金娜和斯维托丽娜，并列巡回赛第一』（官方编辑陈述，直接引用不做二次推算）；TNNS 制胜分对比（24 比 9）和非受迫失误持平（25 比 25）体现的效率差距。",
+  "_claims": "『本赛季第 8 场十佳胜利，追平莱巴金娜和斯维托丽娜，并列巡回赛第一』直接引自 WTA 官方赛后稿正文，未做二次核验（同 swiatek-parry 的判据：引用来源的编辑陈述本身，不是我方推算）。H2H『赛前 2-1，本场后 3-1，此前布里斯班1/4决赛和马德里决赛科斯秋克胜、法网半决赛安德烈耶娃胜』双源核对：flashscore 官方头对头字段（`df_hh_1_E9jrJ00m`，`KL÷2:1` 是这场赛前快照）、法网那场的轮次（半决赛）另由维基百科《2026 French Open – Women's singles》交叉确认（『Semifinals lost to Mirra Andreeva』）。",
+  "_editing_why": "probe（`--scorebox 90,870,515,980`，第二轮已带记分条）：`scene_cuts` = [2.12, 11.44, 13.16, 15.12, 25.2, 26.76, 27.92, 40.96, 43.52, 44.44, 46.44, 57.68, 63.48, 79.96, 85.16, 98.28, 111.36, 114.52, 115.56, 117.36, 129.24, 132.68, 143.16, 147.0, 148.8, 150.96, 165.6, 171.36, 174.12, 176.84, 185.4, 187.72, 189.72, 214.0, 217.4, 220.4, 229.28, 232.12, 235.72, 241.96, 250.84, 255.52, 264.68, 266.84, 268.12, 270.32, 281.0, 291.08, 296.44, 298.32, 300.28]；`point_ends`（记分条像素跳变检出的真实死球）= [11.44, 12.24, 13.12, 25.2, 26.0, 26.8, 43.52, 44.48, 62.24, 63.52, 81.76, 86.4~93.04（密集，安德烈耶娃 4-6 拿下首盘那几分）, 98.32, 115.6, 129.44, 130.24, 131.44, 147.84, 148.8, 169.12, 174.16, 187.76, 189.76, 196.24, 217.44, 220.4, 229.92, 242.0, 253.68, 266.88, 268.0, 282.56, 283.84~300.4（密集）]。\n\n**打开 `contact_00.jpg`~`contact_05.jpg` 逐屏核对过**（每 2 秒一帧）：0.5-11.44 秒是常规底线来回（③ 坐标段的画面背景，记分条 0:0）；14.5 秒是换边走位（非比赛画面，④ 段刻意从 15.12 秒切入避开）；26.5 秒是两人在网前站着（挑战/回顾镜头，⑤ 段从 27.92 秒切入避开）；28.5-40.5 秒恢复常规底线来回（⑤ 段窗口）。240.5 秒是换边/毛巾（非比赛），242.5-250.5 秒是常规底线来回（⑦ 段窗口，决胜局 4-1 那一局）；268.5-280.5 秒记分条持续挂出『MATCH POINT』字样、科斯秋克呈接发预备姿势（⑧ 段窗口，逐分记录核对是安德烈耶娃发球、决胜局 6-2 那一局，从 0-40 落后到科斯秋克连追四分完成本场最后一次破发）；282.5 秒画面切到科斯秋克近景反应特写（手扶下巴，情绪外露）——这是记分条消失、比赛结束后的第一个近景，① 段冷开场从这里起（281.0 秒，`scene_cuts` 命中的镜头切换点，早于近景反应 1.5 秒，覆盖『球落地→反应』的完整过程）；284.5-290.5 秒延续同一组近景反应特写（② 段窗口的大半段落在这里）；292.5-294.5 秒切到球网区域的宽景（双方走向球网、观众席可见），`scene_cuts` 命中 291.08——② 段窗口 284.72-292.24 秒因此跨过这一刀，`crosses_cut` 认领：292.5 秒宽景里科斯秋克仍是同一人（蓝色球衣），只是机位从近景切到网前宽景，不是换人；296.5 秒回到近景（挥拳庆祝），WTA 台标已出现在画面角落；298.5-306.5 秒是 YouTube／WTA 频道的『WATCH MORE / SUBSCRIBE』结尾卡片动画，不使用——⑩ 段窗口 292.24-296.44 秒精确停在这张结尾卡出现（298.32 秒）之前。\n\n**逐分核对**：④ 段『两人2026年第四次交手』的具体战绩（布里斯班/马德里科斯秋克胜、法网安德烈耶娃胜）来自 flashscore `df_hh_1_E9jrJ00m`（见 `editorial.human_context.facts[2]` 和 `_claims`）。⑤ 段『首盘一开始就被破发、此后没能追回』核自 `df_mh_1` 逐分：`0-1 主队发球，客队拿下 ← 1个破发点`（首局即被破，此后 Kostyuk 只守住了自己发球局，从未再拿到破发点转化，`4-6` 收官，中途仅在 `3-4` 那一局自己发球时救过一个破发点）。⑥ 段『第二盘正手接管、四次交手首个光蛋局』核自 `df_mh_1`（第二盘六局科斯秋克 100% 拿下）和 `editorial.human_context.facts[6]`（WTA 官方稿原句『the first bagel by either player in the pair's four meetings』）。⑦ 段『决胜局 4-1 那一局面对破发点』核自 `df_mh_1`：`4-1 主队发球，主队拿下 ← 1个破发点：0:15, 15:15, 15:30, 30:30, 30:40 |B1|, 40:40, A:40`——在此之前 `3-1 客队发球，主队拿下 ← 破发、2个破发点` 是科斯秋克本局的破发，锁定 3-1 领先；⑦ 段只narrate紧随其后的 4-1 保发局，不重复讲 3-1 那个破发（留给下一段的『把最后一局讲清楚』腾出篇幅）。⑧ 段『决胜局从 0-40 落后连赢四分完成破发』核自 `df_mh_1` 最后一局：`6-2 客队发球，主队拿下 ← 破发、1个破发点、1个赛点：0:15, 0:30, 0:40, 15:40, 30:40, 40:40, A:40`——[home(科斯秋克):away(安德烈耶娃)] 记法下，`0:40` 即安德烈耶娃发球局内 40-0 领先（三个保发点，此前她被破发两次，若此局再保发只是把这盘扳回 5-3，不构成任何一方的赛点/盘点），随后科斯秋克连追四分（`15:40→30:40→40:40→A:40`）完成破发并直接锁定整场比赛（这场之前已 5-2 领先，此局若破发即赢下 6-2）。⚠️ 与 WTA 官方赛后稿逐句描述（Andreeva『raced to a 40-0 advantage. But Kostyuk answered』）互相印证，两个源一致，故事没有夸大安德烈耶娃当时的处境（不是她的赛点，是科斯秋克在挽救对手保发局的过程中反过来完成了破发）。",
+  "segments": [
+    {
+      "start": 281.0,
+      "end": 284.72,
+      "_why": "① **冷开场，不配旁白，走现场声**。`scene_cuts` 在 281.0 秒命中一次镜头切换（`point_ends` 未在此处命中，说明比赛此前已在这个长镜头里结束——最后一分的死球点落在 282.56 秒，属于这段冷开场内部），contact sheet 核对：281.0-282.5 秒画面从宽景比赛镜头切到科斯秋克近景反应（手扶下巴、情绪外露），284.72 秒（`point_ends` 命中）收在同一组近景反应特写的中段，不提前切走。CLAUDE.md「开场三格的顺序」：第 ① 格是全片最强的画面，不是坐标；这条片子最强的画面就是从 0-40 落后到锁定比赛那一刻的直接情绪反应。"
+    },
+    {
+      "start": 284.72,
+      "end": 292.24,
+      "narration": "决胜局零比四十落后，科斯秋克照样四比六六比零六比二逆转拿下了这场比赛。",
+      "_why": "② 落点，直接把结果讲清楚。窗口延续同一组近景反应特写（contact sheet 284.5-290.5 秒核对过），⚠️ **crosses_cut**：`scene_cuts` 在 291.08 秒命中一次镜头切换（近景反应 → 网前宽景，292.5 秒画面），科斯秋克仍是同一人（蓝色球衣、深色马尾），只是机位从近景换成网前区域宽景，contact sheet 核对没有换人。终点 292.24 秒是给 ⑩ 段留出窗口，早于这次切换后的下一个 `point_ends`（293.04）。"
+    },
+    {
+      "start": 0.0,
+      "end": 11.44,
+      "narration": "北京时间八月二十号凌晨一点多，辛辛那提网球公开赛，女单1/8决赛——科斯秋克对阵安德烈耶娃。",
+      "_why": "③ 坐标。开球时刻：flashscore 当日总表 `AD` 字段读到北京时间 2026-08-20 约 01:10（10~39 分钟落档『X点多』）。窗口起点 0.0 秒跨过 `scene_cuts` 在 2.12 秒的一次镜头切换，contact sheet 核对：0.5 秒是发球近景，2.5 秒起切到常规底线对拉宽景，两边都是这场比赛的常规开局画面，没有换人或插入非比赛内容。终点 11.44 秒是 `scene_cuts` 命中的死球点，不跨切点。",
+      "crosses_cut": "0.5 秒发球近景切到 2.5 秒起的底线宽景，contact sheet 核对是同一场开局的两个机位，不是换了比赛或换了人。"
+    },
+    {
+      "start": 15.12,
+      "end": 25.2,
+      "narration": "这是两人2026年的第四次交手——此前科斯秋克两胜一负，唯一一次告负是在法网半决赛。",
+      "_why": "④ H2H。起点故意避开 14.5 秒那一格换边走位的非比赛画面（`scene_cuts` 13.16/15.12 两个切点夹住这段换边），从 15.12 秒（切点）起是恢复常规底线来回；终点 25.2 秒同时是 `scene_cuts` 和 `point_ends` 命中的死球点，不跨切点。战绩数字核自 flashscore `df_hh_1_E9jrJ00m`：布里斯班1/4决赛（2026-01-09）、马德里决赛（2026-05-02）均科斯秋克获胜，法网半决赛（2026-06-04）安德烈耶娃获胜——见 `editorial.human_context.facts[2]` 和 `_claims` 的完整核对记录。"
+    },
+    {
+      "start": 27.92,
+      "end": 40.96,
+      "narration": "首盘一开始就被破发，此后她一路守住了自己的发球局，却始终没能把这个破发点找回来——四比六，率先丢掉一盘。",
+      "_why": "⑤ 首盘走势。起点避开 26.5 秒那一格两人在网前站立的镜头（疑似挑战/回顾，`scene_cuts` 26.76/27.92 夹住），27.92 秒起恢复常规来回，40.96 秒是 `scene_cuts` 命中的死球点，不跨切点。`df_mh_1` 逐分核对：`0-1 主队发球，客队拿下 ← 1个破发点`（首局即被破），此后科斯秋克在 `3-4` 那一局自己发球时救过唯一一个破发点，其余全部守住自己发球局但从未再拿到破发点转化，最终 4-6 收官——旁白只写『没能把破发点找回来』，不虚构任何『追分』过程。"
+    },
+    {
+      "start": 220.4,
+      "end": 232.12,
+      "narration": "第二盘，她的正手彻底接管了比赛，一路六局连下——这是两人2026年四次交手里，第一次有人被打出光蛋局。",
+      "_why": "⑥ 第二盘光蛋局。窗口横跨 `scene_cuts` 的 229.28 秒（同一场决胜局前段这个长镜头内部的机位切换，主体仍是这两位球员的正常比赛画面，contact sheet 220.5-231.5 秒核对没有换人或非比赛画面），起点 220.4 秒是 `point_ends` 命中的死球点，终点 232.12 秒用 `scene_cuts` 而不是更早的 `point_ends`（229.92），换来的窗口余量正好覆盖旁白（本地估 9.84s，窗口 11.72s，余量 1.88s，在 `MAX_SILENT_GAP=4.0` 内且不至于太空）。『正手接管』引自 `editorial.human_context.facts[5]`（WTA 官方稿：全场 25 记制胜分过半来自正手）；『四次交手首个光蛋局』直接引自 WTA 官方稿原句『the first bagel by either player in the pair's four meetings』（`facts[6]`）。",
+      "crosses_cut": "229.28 秒是同一个长镜头内部的机位切换，contact sheet 220.5-231.5 秒逐帧核对过全程是这两位球员的常规比赛画面，没有换人。"
+    },
+    {
+      "start": 241.96,
+      "end": 250.84,
+      "narration": "决胜局四比一那一局，她一度面对破发点，却顶住压力，保发拿下这一局。",
+      "_why": "⑦ 决胜局中段。窗口用 `scene_cuts`（241.96/250.84）而不是更宽的 `point_ends` 区间（242.0-253.68），把余量收紧到贴近旁白（本地估 6.54s，窗口 8.88s，余量 2.34s），避免像milestone段那样太空。`df_mh_1` 逐分核对：`4-1 主队发球，主队拿下 ← 1个破发点：…30:40 |B1|, 40:40, A:40`——科斯秋克发球，一度被逼到 30-40（对手破发点），随后拿下两分保发，把比分带到 4-1。这一段只讲这一局，不重复讲紧邻它之前『3-1 破发』那一局（留给milestone／⑧两段的篇幅安排）。"
+    },
+    {
+      "start": 255.52,
+      "end": 264.68,
+      "narration": "而这场胜利，也是科斯秋克本赛季第八场十佳胜利——追平莱巴金娜和斯维托丽娜，并列巡回赛第一。",
+      "_why": "里程碑事实，直接引自 WTA 官方赛后稿《Kostyuk continues year of firsts, rallying past Andreeva to reach Cincy quarters》正文（`editorial.human_context.facts[5]`，官方编辑陈述，未做二次推算，同 swiatek-parry 那条『职业生涯第 30 次』的处置）。窗口落在 `scene_cuts` 的 255.52-264.68 秒这一段，contact sheet 核对 256.5-262.5 秒是常规比赛画面（决胜局进行中），作为这句季度里程碑陈述的背景画面，不与画面内容冲突。"
+    },
+    {
+      "start": 268.0,
+      "end": 281.0,
+      "narration": "最后一局，安德烈耶娃发球一度四十比零领先，只差一分就能保发——科斯秋克却连赢四分，把这一局、这场比赛都拿了下来。",
+      "_why": "⑧ 决胜局高潮，**crosses_cut**。窗口跨越 `scene_cuts` 的 270.32 秒（同一个长镜头内部机位切换，contact sheet 268.5-280.5 秒核对全程都是这两位球员的常规比赛画面，记分条持续挂出『MATCH POINT』字样，没有换人或插入非比赛画面）。`df_mh_1` 决胜局最后一局逐分：`6-2 客队发球，主队拿下 ← 破发、1个破发点、1个赛点：0:15, 0:30, 0:40, 15:40, 30:40, 40:40, A:40`——[科斯秋克:安德烈耶娃] 记法，`0:40` 即安德烈耶娃发球局内 40-0 领先（三个保发点，若保发只是把这盘扳回 5-3，不是她的赛点），科斯秋克随后连追四分（`15:40→30:40→40:40→A:40`）完成破发，因为赛前已 5-2 领先，这一分破发直接锁定 6-2 拿下整场比赛。旁白用『只差一分就能保发』而不是『赛点』，避免暗示这是安德烈耶娃的赛点——那不准确，破发/赛点的归属方是科斯秋克。WTA 官方赛后稿逐句印证同一过程（『Andreeva…raced to a 40-0 advantage. But Kostyuk answered』），两个源一致。"
+    },
+    {
+      "start": 292.24,
+      "end": 296.44,
+      "narration": "下一轮会是高芙还是布兹科娃？",
+      "_why": "⑩ 收尾落在一问上（`test_收尾要落在一问上不能停在数据上`），而且开的是新门，不是封面那一问（『决胜局 0-40 落后逆转』）的回声——封面钩子和 ① ② 两段已经把这个核心事实讲了两遍，末屏换到『下一轮打谁』这条前瞻线。事实核自 `editorial.human_context.facts[9]`：下一轮对手是高芙（4号种子）或布兹科娃（22号种子）胜者。窗口起点 292.24 秒紧接 ② 段末尾（不留缝、不跨切点，contact sheet 核对 292.5-294.5 秒是网前宽景，296.5 秒回到近景挥拳庆祝，都还是科斯秋克本人），终点 296.44 秒（`scene_cuts` 命中）精确停在 298.32 秒的『WATCH MORE / SUBSCRIBE』YouTube 结尾卡片动画出现之前，不使用那段收尾卡。这句很短（本地估 2.93s，窗口 4.2s，余量 1.27s），比原来那句陈述句更贴合这个窄窗口。"
+    }
+  ],
+  "push": {
+    "summary": "决胜局四十比零落后她逆转",
+    "lead": "辛辛那提女单1/8决赛，10 号种子科斯秋克（世界第 11）先丢一盘，连扳两盘 6-0 6-2 逆转 5 号种子安德烈耶娃（世界第 6），用时 1 小时 33 分钟。决胜局她一度被逼到对手发球胜赛、40-0 领先的绝境，硬是把这一局逆转破发、锁定整场比赛。第二盘 6-0 是两人 2026 年四次交手里首次有人打出光蛋局——她已经三次击败这位小自己五岁的新星，唯一一次告负在法网半决赛。WTA 官方稿：这是她本赛季第 8 场十佳胜利，追平莱巴金娜和斯维托丽娜，并列巡回赛第一。",
+    "_no_auto_why": "这条 spec 由本次任务在同一个会话里手动走完 probe→render→merge→push，会话结束前会直接跑 `mode=push push=true` 并确认 PushPlus 200，不依赖 `auto-push-reel` 的自动触发，避免两条路径重复发送。"
+  }
+}
