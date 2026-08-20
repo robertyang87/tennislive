@@ -1,5 +1,5 @@
-# rerender-after-score-subtitle-fix
-name: dispatch-anisimova-noskova-render
+# publish-after-merge
+name: dispatch-anisimova-noskova-push
 
 on:
   push:
@@ -14,7 +14,7 @@ jobs:
   dispatch:
     runs-on: ubuntu-latest
     steps:
-      - name: Dispatch match-reel render
+      - name: Dispatch match-reel push
         uses: actions/github-script@v7
         with:
           script: |
@@ -22,13 +22,13 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               workflow_id: "match-reel.yml",
-              ref: "agent/anisimova-noskova-2026-08-20",
+              ref: "main",
               inputs: {
-                mode: "render",
+                mode: "push",
                 slug: "anisimova-noskova",
                 voice: "zh-CN-YunjianNeural",
                 rate: "+6%",
-                push: "false"
+                push: "true"
               }
             });
-            core.info("Dispatched match-reel render for anisimova-noskova");
+            core.info("Dispatched match-reel push for anisimova-noskova");
