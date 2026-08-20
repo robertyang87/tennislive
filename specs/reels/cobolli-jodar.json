@@ -1,0 +1,184 @@
+{
+  "slug": "cobolli-jodar",
+  "source_url": "https://www.youtube.com/watch?v=YvaK-FwmnJQ",
+  "_source": "Tennis TV 官方 YouTube 频道单场集锦（`YvaK-FwmnJQ`），probe 实测 256.46s / 1920×1080 / 25fps。oEmbed 自证官方来源：标题《Rafael Jodar vs Flavio Cobolli Pure Entertainment | Cincinnati 2026 Highlights》，author_name=Tennis TV。244.5s 之后是 Tennis TV 自己的订阅卡片（`MORE / TAP TO / SUBSCRIBE`叠加层），不算比赛画面，窗口一律收在此之前。\n\n画面自证：记分条从头到尾烧着 `JODAR / COBOLLI`，球场地面刷 `P&G`、场边 `Credit One`/`Western & Southern Financial Group`/`Kroger`/`Old Spice`——辛辛那提赛事的赞助商阵容；自动字幕 230.48~244.96s 一段解说原话确认了赛果性质（见 `_claims`）。",
+  "_column": "赛场之上",
+  "_match": {
+    "flashscore_id": "feMBVwZi",
+    "_why": "`match_feed.py show feMBVwZi` 逐分+技术统计全量核对：\n首盘 1-0起，第 5 局（3-3→3-3打成客队拿下）出现 3 个破发点，第 9 局（5-3）主队（霍达尔）破发，第 10 局（5-4）客队（科博利）随即回破，最后一局（6-4）霍达尔再破一次并兑现盘点——首盘 6-4 霍达尔。\n次盘一路缠斗到 6-6（中途 3-4/4-4 各破一次，互不相让），抢七 3-7（`DC÷3, DD÷7`，同一条 feed 的分盘用时字段 `RD÷1:01` 印证这一盘更长）——次盘 6-7(3) 科博利。\n决胜盘：霍达尔 2-3 发球局被破（读作『2-4 主队发球，客队拿下 ← 1个破发点』），此后科博利保发到底、3-6 收官——决胜盘 3-6 科博利。全场用时 2:33。"
+  },
+  "topbar": {
+    "line1": "2026 辛辛那提 ATP1000 1/8决赛",
+    "line2": "科博利 4-6 7-6(3) 6-3 霍达尔"
+  },
+  "_topbar_why": "第二行和 `cover.winner`（科博利）、`cover.result`（4-6 7-6(3) 6-3）、`cover.matchup` 的名字机械一致。\n\n⚠️ **轮次核过，不是照抄上一条**：ATP 官方 `protennislive.com/posting/2026/422/mds.pdf`拿 pdfplumber 按坐标读列，用两条已发 spec 的真实轮次反标定列语义（`jodar-shapovalov`=第二轮，其score『7-5 4-6 7-5』出现在 x≈232 那一列；`jodar-tabilo`=第三轮，其 score『6-2 6-1』出现在 x≈303 那一列——两个坐标点确认『这一列印的是上一轮的比分』这条规律）。按此规律，霍达尔-科博利的比分『7-5(应为4-6) 6-1(应为7-6(3)) …』出现在 x≈374（QF 列），说明它是**上一轮（Round of 16）**的比分——即这场就是 1/8决赛，不是 QF。",
+  "editorial": {
+    "mode": "match_review",
+    "question": "先赢一盘的霍达尔，是怎么被拖下去的？",
+    "thesis": "首盘他自己完成了两次破发、拿到 6-4；真正的分水岭是次盘那盘抢七——拖到 6-6 才决出胜负的一盘，抢七却打成 3-7，一边倒。带着抢七失手的余温，决胜盘他自己发球的第 6 局（2-3）就被破掉，科博利此后一局没让，3-6 拿下决胜盘、两个半小时不到锁定这场，生涯第二次打进大师赛1/4决赛。",
+    "beats": [
+      "前段：首盘互有破发，霍达尔在最后一局兑现盘点，6-4 先下一城",
+      "中段：次盘缠斗到 6-6 进抢七，霍达尔只拿到 3 分，7-6(3) 科博利扳平",
+      "结局：决胜盘 2-3 霍达尔发球被破，科博利保发到底，3-6 收官，生涯第二次杀进大师赛1/4决赛"
+    ],
+    "human_context": {
+      "angle": "这不是霍达尔一个人的故事——他和科博利这个赛季都在往上冲。霍达尔过去一年从世界第 540 冲到十强边缘，这是他连续第二个大师赛打进1/8决赛（上一站蒙特利尔他打到了半决赛）；科博利则是今年的法网亚军，这场胜利是他生涯第二次打进大师赛1/4决赛，转播解说原话说这是『a big win』。",
+      "facts": [
+        "霍达尔：19 岁西班牙人，2024 年美网青少年组冠军，弗吉尼亚大学校队出身，2025 年 12 月才转职业；2026 年 4 月以来八站赛事七站打进1/4决赛及以上，含法网正赛、马德里/罗马/蒙特利尔三个大师赛；摩洛哥马拉喀什拿到生涯首冠、成为该站史上最年轻冠军；本月初华盛顿打进生涯首个 ATP500 决赛（来源：Cincinnati Open 官方赛前特稿《A new Rafa emerges》，2026-08-18）",
+        "同一篇特稿指出：霍达尔是本世纪只有三人（另两位是阿尔卡拉斯、谢尔顿）十九岁前后就能打进辛辛那提1/8决赛的球员之一",
+        "科博利：2026 年法网亚军，本场辛辛那提是他生涯第二次打进大师赛1/4决赛（Tennis TV 转播解说原话：『For just the second time in his career, Flavio Cobolli is into the quarterfinals of a Masters 1000』）",
+        "霍达尔本站此前两轮：第二轮救下赛点、决胜盘 1-5 落后逆转沙波瓦洛夫 7-5 4-6 7-5（已发 `jodar-shapovalov`）；第三轮 6-2 6-1 横扫 22 号种子塔比洛（已发 `jodar-tabilo`）",
+        "两人生涯首次交手（flashscore H2H 无此前记录）"
+      ],
+      "sources": [
+        "https://cincinnatiopen.com/news/a-new-rafa-emerges/",
+        "https://global.flashscore.ninja/2/x/feed/df_hh_1_feMBVwZi"
+      ],
+      "voice_label": null
+    }
+  },
+  "_no_repeat": "霍达尔伤停/资格赛这类来路已在别的片子讲过的不在这里重讲——这条不涉及那段历史，不用挂账。蒙特利尔半决赛负中岛这件事本条只一句带过（\"上一站蒙特利尔他打到了半决赛\"），不展开逐分——那段已经是 `nakashima-jodar-montreal-sf` 的内容。",
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "霍达尔",
+    "hook": "抢七只拿三分\n决胜盘再被破一次",
+    "_hook_why": "两行都是过程，不是身份：抢七 3-7、决胜盘那一次被破——两个可核的具体数字，不是排名/轮次这类顶栏已经印过的身份信息。最长行『决胜盘再被破一次』8 个字符，在 HOOK_MAX_CHARS=10 以内。不写读音会歧义的『N 分』做量词——用的是『三分』（抢七的分）和『一次』（破发的次数），没有『分』单独跟在数字后面撞『分钟』的风险。",
+    "_subject_why": "封面仍放**霍达尔**——他是这条线索的主角（本账号已发四条他的片子：蒙特利尔 1/4、蒙特利尔半决赛、辛辛那提第二/三轮），今天这场是他这段两连闯大师赛1/8决赛的收官，输赢不影响他是刷到这条的人认得的名字。科博利的名字和成就在 `push.lead` 与`editorial.human_context` 里给足篇幅，不在封面上抢位置。",
+    "_heat_why": "延续既有故事线，见 CLAUDE.md『有话题』一节点名的判据——不是查排名，是这个人身上正在发生的事：两连闯大师赛1/8决赛，本世纪只有他和阿尔卡拉斯、谢尔顿在十九岁前后做到过。",
+    "topic": "辛辛那提ATP1000 · 男单1/8决赛",
+    "winner": "科博利",
+    "result": "4-6 7-6(3) 6-3",
+    "matchup": [
+      {
+        "name": "霍达尔",
+        "name_en": "Rafael Jodar",
+        "country": "ESP",
+        "rank": 11
+      },
+      {
+        "name": "科博利",
+        "name_en": "Flavio Cobolli",
+        "country": "ITA",
+        "rank": 9
+      }
+    ],
+    "_matchup_rank_why": "两人排名沿用同一批片子（`jodar-tabilo`/`cobolli-blockx`）已经核过的tennisexplorer 10.08.2026 那期榜单：霍达尔 11、科博利 9——同一账号、同一周，不重新查一遍会自相矛盾。",
+    "_name_why": "两个中文名都走 player_zh()：player_zh('Rafael Jodar') → 霍达尔，player_zh('Flavio Cobolli') → 科博利。没有手打。",
+    "portrait": {
+      "image": "assets/reel/jodar-cincinnati-2026-r3.jpg",
+      "focus": 0.47,
+      "focus_y": 0.35,
+      "zoom": 1.0
+    },
+    "_portrait_why": "复用 `jodar-tabilo` 已经核实过的官方实拍（AS.com 赛后稿嵌图，3000×2000，球衣与本场源片比对过是同一人同一站——见那条 spec 的 `_frame_why`）。同一位球员、同一站赛事，不必重新走一遍找图流程。",
+    "scoreboard": {
+      "court": "Center Court",
+      "_court_why": "ATP 官方 Order of Play：`protennislive.com/posting/2026/422/op19.pdf`第 19 天（8/19）Center Court 栏目里这场排在第 2 场；球场地面没有刷球场名，转播也没打全屏台标，只有 OOP 这一条自证，照实标注为唯一来源。",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%222%3A33%3A00%22%2C%22source%22%3A%22flashscore%20df_su_1_feMBVwZi%20RB%C3%B72%3A33%EF%BC%88RC%C3%B70%3A53%2BRD%C3%B71%3A01%2BRE%C3%B70%3A39%EF%BC%89%22%7D",
+        "field": "duration"
+      },
+      "_duration_why": "flashscore `df_su_1_feMBVwZi`：RB÷2:33，三个分盘用时 RC(0:53)+RD(1:01)+RE(0:39)=2:33，自洽。只有这一个源，照实标注。"
+    }
+  },
+  "push": {
+    "summary": "抢七失手，决胜盘被逆转",
+    "lead": "辛辛那提男单1/8决赛，法网亚军科博利 4-6 7-6(3) 6-3 逆转世界第十一的霍达尔，生涯第二次打进大师赛1/4决赛，用时 2 小时 33 分。首盘霍达尔自己完成两次破发，6-4 先下一城；真正的转折在次盘——这一盘缠斗到六比六才进抢七，霍达尔只拿到 3 分，科博利 7-6(3) 扳平。带着抢七的余温，决胜盘二比三，霍达尔的发球局被破，科博利此后一局未让，3-6 锁定胜局。霍达尔本站已经拿下两场硬仗——第二轮决胜盘1-5 落后救下赛点逆转沙波瓦洛夫，第三轮横扫 22 号种子塔比洛；加上上一站蒙特利尔他也打到了半决赛，这是他连续第二次打进大师赛1/8决赛，本世纪只有阿尔卡拉斯、谢尔顿在十九岁前后做到过同样的事。",
+    "auto": false,
+    "_no_auto_why": "同一批片子走「渲完先审」流程，手动 mode=push push=true。"
+  },
+  "segments": [
+    {
+      "start": 221.36,
+      "end": 238.0,
+      "narration": "",
+      "_why": "①冷开场，不配旁白。221.36~243.32 是同一个连续镜头（无内部切点）：科博利表情从专注转为如释重负，随后欢庆——落点收在 238.0，留出前面一段的张力，不切到后面订阅卡片叠加层（244.5s 起）。自动字幕这一段原话：『For just the second time in his career, Flavio Cobolli is into the quarterfinals of a Masters 1000... It's a big win.』"
+    },
+    {
+      "start": 0.0,
+      "end": 15.84,
+      "narration": "北京时间八月十九号晚上十一点多，辛辛那提大师赛男单1/8决赛在中心球场打响——世界第十一的霍达尔，对阵法国网球公开赛亚军科博利，这是两人的生涯首次交手。",
+      "_why": "②坐标段，无内部切点（下一刀在 15.84 才到）。时刻按『不报到分』规则写（AD 只有一个源，1787152200→北京23:10，落在 10~39 分那一档，写『十一点多』）。"
+    },
+    {
+      "start": 47.96,
+      "end": 60.04,
+      "narration": "首盘两个人都在破发——霍达尔更胜一筹，最后一局连续兑现破发点和盘点，六比四先下一城。",
+      "_why": "③无内部切点。对应 flashscore 首盘点分：5-3 霍达尔破发、5-4 科博利回破、6-4 霍达尔再破一次并兑现盘点。"
+    },
+    {
+      "start": 93.28,
+      "end": 100.48,
+      "narration": "次盘同样难分难解，一路缠斗到六比六。",
+      "_why": "④无内部切点（收窄到 100.48 那一刀之前，原窗口 93.28~106.2 会跨过 100.48 那一刀——CLAUDE.md『别的每一段都要待在同一个镜头里』，窄一点更省事）。对应次盘 3-4/4-4 互破之后，各自保发到 6-6。"
+    },
+    {
+      "start": 127.92,
+      "end": 137.2,
+      "narration": "抢七是这一盘的分水岭，霍达尔只拿到三分，科博利七比三扳平，把比赛拖进决胜盘。",
+      "_why": "⑤无内部切点。对应 `DC÷3, DD÷7`（次盘抢七 7-3 科博利）。"
+    },
+    {
+      "start": 182.96,
+      "end": 193.8,
+      "narration": "决胜盘二比三，霍达尔的发球局被科博利破掉——这是他当天唯一一次被破发，整场也只有这一次。",
+      "_why": "⑥无内部切点。对应逐分『2-4 主队发球，客队拿下 ← 1个破发点』——霍达尔发球局（2-3 之后）被破，落到 2-4。全场霍达尔发球局仅此一次丢掉。"
+    },
+    {
+      "start": 197.84,
+      "end": 204.28,
+      "narration": "科博利此后一局未让，三比六锁定胜局。",
+      "_why": "⑦无内部切点（收窄到 197.84 之后，原窗口 195.2~204.28 会跨过 197.84 那一刀）。对应决胜盘 3-5→3-6，科博利保发到底收官。"
+    },
+    {
+      "start": 61.88,
+      "end": 71.0,
+      "narration": "这已经是霍达尔连续第二次打进大师赛1/8决赛，上一站蒙特利尔他同样闯到了半决赛。",
+      "_why": "⑧无内部切点（收窄到 61.88 之后，原窗口 60.04~71.0 会跨过 61.88 那一刀）。上一站蒙特利尔他打到半决赛（`nakashima-jodar-montreal-sf`），这一站辛辛那提打到 1/8决赛，两个大师赛连续深轮——本世纪只有阿尔卡拉斯、谢尔顿在十九岁前后做到过（来源：Cincinnati Open 官方特稿）。"
+    },
+    {
+      "start": 204.28,
+      "end": 219.08,
+      "narration": "而科博利，这是他生涯第二次杀进大师赛1/4决赛——转播解说说，这是一场重要的胜利，他也是今年的法网亚军。两个都在往上冲的年轻人，谁能先摸到更高的位置？",
+      "_why": "⑨无内部切点。对应自动字幕『For just the second time in his career...』那一段解说的时间点前后，画面延续同一组反应镜头。"
+    }
+  ],
+  "_tennistv_trim": "末段窗口在 204.28~219.08s 结束，离 Tennis TV 自己的订阅卡片叠加层（`_source` 记的 244.5s 起）还有 25.4 秒余量，整段没有一帧碰到片尾。\n\n台标烧在画面右上角，默认取景窗只取源片 1920px 里的 810px（3:4 竖版），居中裁切时台标本来就落在窗外；这条 spec 每一段都没有写 `cx`/`track`，维持默认居中，所以取景窗从未往右上角挪，台标不会被框进来。",
+  "stats": {
+    "a": {
+      "aces": 7,
+      "df": 3,
+      "winners": 26,
+      "ue": 48,
+      "first_in": 67,
+      "first_won": 46,
+      "second_total": 35,
+      "second_won": 16,
+      "bp_conv": 3,
+      "bp_chances": 8,
+      "pts_won": 106,
+      "pts_total": 217,
+      "first_total": 102,
+      "headshot": "assets/players/headshots/atp-J0DZ.png"
+    },
+    "b": {
+      "aces": 8,
+      "df": 3,
+      "winners": 33,
+      "ue": 51,
+      "first_in": 66,
+      "first_won": 44,
+      "second_total": 49,
+      "second_won": 27,
+      "bp_conv": 3,
+      "bp_chances": 6,
+      "pts_won": 111,
+      "pts_total": 217,
+      "first_total": 115,
+      "headshot": "assets/players/headshots/atp-C0E9.png"
+    },
+    "_source": "flashscore `df_st_1_feMBVwZi` 直接抄的，逐项没手填：`a`(霍达尔) aces=7 df=3 winners=26 ue=48 1stIn=67/(1stWon=46) 2ndTotal=35/(2ndWon=16) BP=3/8 pts=106/217；`b`(科博利) aces=8 df=3 winners=33 ue=51 1stIn=66/(1stWon=44) 2ndTotal=49/(2ndWon=27) BP=3/6 pts=111/217。\n\n⚠️ **home/away 有没有对应 `cover.matchup[0]`，拿三盘比分逐一核过，不是假设**：`df_su_1_feMBVwZi` 给 `BA÷6 BB÷4`（首盘 home 6 : away 4）、`BC÷6 BD÷7`（次盘 home 6 : away 7，含 `DC÷3 DD÷7` 抢七 3:7）、`BE÷3 BF÷6`（决胜盘 home 3 : away 6）——三盘都和已核实的真实赛果（霍达尔 6-4 3-6 3-6，输在抢七 3-7 和决胜盘 3-6）完全对上，**home=霍达尔，正好等于 `matchup[0]`，不用对调**。\n\n`first_total` 按 `first_in + second_total` 算（102=67+35、115=66+49），不取接口的`Service Points Won` 分母，理由同 `auger-aliassime-cerundolo`。\n\n两个头像都是复用：`atp-J0DZ.png`（霍达尔，见 `jodar-tabilo.json`）、`atp-C0E9.png`（科博利，见 `cobolli-blockx.json`），两处 matchup[0] 分别是霍达尔／科博利，头像跟着数字走，没有挂反。"
+  },
+  "_hit_data": "跑过 `match_stat_hooks.py --from-spec cobolli-jodar`，8 条候选里最硬的两条已经用在 `editorial`/`push` 正文里了——次盘抢七霍达尔只拿 3 分（`科博利一发得分率摆动 50%→76%→74%`同一份数据能佐证他抢七前后状态在往上走）、决胜盘 2-3 那次破发是霍达尔全场唯一一次被破（对应『霍达尔连续保发 4 个发球局』）。\n\n总分差候选（霍达尔 106 - 科博利 111，净差 5 分，科博利领先）留作补充：两小时半打了 217 分，赢家只多赢 5 分——说明这不是一场碾压，已经写进 `.xhs.txt` 正文。"
+}
