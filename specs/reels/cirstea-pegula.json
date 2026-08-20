@@ -1,0 +1,217 @@
+{
+  "slug": "cirstea-pegula",
+  "source_url": "https://www.youtube.com/watch?v=ZDsRTupH2mg",
+  "_source": "**WTA 官方 YouTube 频道**（标题 `Pegula holds off Cirstea in Cincinnati Round of 16 thriller`），**545.55 秒、1920×1080 @ 25 fps**，无自动字幕轨。全片是比赛画面 + 庆祝 + 网前握手 + 场上采访（288 秒起）+ 长段品牌片尾（延续到 545 秒）。\n\n三处画面自证：① 记分条整场烧着 `S. CIRSTEA [15]` / `J. PEGULA [3]`，逐格和 `match_feed.py` 的逐分记录对得上（见 `_editing_why`）；② 200.5~266.5 秒记分条上方轮流烧出 `MATCH POINT` / `MATCH POINT #2` / `BREAK POINT` / `MATCH POINT #4` 徽标，和逐分数据「5-7 Pegula发球，Pegula拿下 ← 1个破发点、4个赛点」逐个对得上；③ 288.5~298.5 秒画面出现持 WTA TOUR 话筒的采访者、佩古拉换上淡紫色 Adidas 外套接受采访——这是赛后场上采访，按「赛场之上视频不要赛后采访」全部段落收在 288 秒之前。",
+  "_column": "赛场之上",
+  "topbar": {
+    "line1": "2026 辛辛那提 WTA1000 1/8决赛",
+    "line2": "佩古拉 6-2 4-6 7-5 科斯蒂亚"
+  },
+  "_topbar_why": "第二行和 `cover.winner`（佩古拉）、`cover.result`（6-2 4-6 7-5）、`cover.matchup` 的名字机械一致。轮次核对 WTA 官方 `matches` 接口：这场 `RoundID: 4`——和同一天 `gauff-bouzkova.json` 核对过的同一个数字（该届赛事 Round4 恰好是 8 场单打／16 人）是同一档，是 1/8 决赛。flashscore 侧 `AC÷3` 与逐分数据比分完全一致，仅作赛果核对不作轮次判断依据。",
+  "_match": {
+    "flashscore_id": "M3yttngR",
+    "wta_match_id": "LS013",
+    "wta_event_id": "1017",
+    "_why": "flashscore `M3yttngR`（`Cirstea S.` 2-6-5 vs `Pegula J.` 6-4-7）与 WTA 官方 `LS013`（`ResultString: [3]J. Pegula d [15]S. Cirstea 6-2,4-6,7-5`，`RoundID 4`，`MatchTimeTotal 02:05:24`）互相印证，与 flashscore `df_sui_1` 报的『全场 2:06』同量级一致。逐分、逐局用 `tools/match_feed.py show M3yttngR --home Cirstea --away Pegula` 核对，和 WTA 官方 `LS013/stats`（setnum 0）多项核对一致：acesa=1/acesb=4、dblflta=4/dblfltb=2、breakptsconva=5/breakptsconvb=7，一致；`totptswona=91/totptswonb=102` 和 flashscore 的 `91/101`（总 192）差 1 分——两个源都是官方/半官方口径，未能定位这 1 分的差异出在哪一分，正文不使用精确到个位的总分数字，只用双方都一致的那些项（aces/df/破发点转化率/救回赛点数）。头像沿用既有文件：`wta-312469.jpg`（科斯蒂亚，`cirstea-kalinskaya.json`/`cirstea-bartunkova.json` 用过）、`wta-316956.jpg`（佩古拉，`shnaider-pegula.json` 用过）——先用 `find` 确认已存在，未重新抓取。"
+  },
+  "_hit_data": "`tools/match_feed.py show M3yttngR` 报的走势里最硬的一条，也是全场的落点：**决胜盘六比五，佩古拉发球胜赛，面对 1 个破发点、拿到 4 个赛点**——`Match points saved: Cirstea 3, Pegula 0`（WTA 官方 `df_st_1` 逐项统计栏），也就是说科斯蒂亚连续三次把佩古拉的赛点顶了回去，佩古拉的第四个才终于兑现。这不是一场一边倒的比赛：科斯蒂亚次盘四比六扳回一盘，决胜盘一路缠斗到五比五，才被佩古拉率先完成破发、随即又在自己的发球局里差点被回破——全场比分反复拉锯到最后一分。",
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "佩古拉",
+    "hook": "四个赛点\n她救回了三个",
+    "_hook_why": "封面主体是佩古拉——世界第三、这场的赢家，也是刷到这条的人更熟悉的名字（对面的科斯蒂亚世界第十九）。\n\n两行讲的是**海报赛果行看不出来的东西**：`6-2 4-6 7-5` 只看得出三盘各有胜负，看不出决胜盘六比五那一局佩古拉发球胜赛时，科斯蒂亚连续救回三个赛点——**主语是科斯蒂亚（对手）在救**，佩古拉在这个瞬间是被动的那一方，这正是这场球最悬的地方，而这个悬念是赛果行完全读不出来的。\n\n最长行 **7 个字符**（「四个赛点」+「她救回了三个」中「她救回了三个」7 字），在 `HOOK_MAX_CHARS = 10` 以内。\n\n⚠️ **「她」指科斯蒂亚，不指佩古拉**——按「盘点赛点谁救的必须写出来」的规矩，`救` 这个动作的主语必须写清楚是谁；这里紧接着上一行「四个赛点」（佩古拉拿到的），第二行「她救回了三个」的「她」承接的是对手在防守，读者顺着这两行读不会认错人（第一行没有主语，是纯粹陈述事件，不构成「谁的点」这个歧义）。",
+    "topic": "WTA1000辛辛那提 · 女单1/8决赛",
+    "scrim": "clear",
+    "winner": "佩古拉",
+    "result": "6-2 4-6 7-5",
+    "matchup": [
+      {
+        "name": "佩古拉",
+        "name_en": "Jessica Pegula",
+        "country": "USA",
+        "rank": 3
+      },
+      {
+        "name": "科斯蒂亚",
+        "name_en": "Sorana Cirstea",
+        "country": "ROU",
+        "rank": 19
+      }
+    ],
+    "_matchup_rank_why": "两个排名都取自 tennisexplorer.com 球员页（`curl` 带浏览器 UA）：`Pegula` 页 `Current/Highest rank - singles: 3. / 3.`；`Cirstea` 页 `Current/Highest rank - singles: 19. / 17.`。\n\n⚠️ **种子号不是排名，两者已分别核实、不混用**：WTA 官方 `LS013` 给出 `SeedA: 15`（科斯蒂亚）、`SeedB: 3`（佩古拉）——佩古拉的种子号和排名恰好都是 3，科斯蒂亚种子 15 和排名 19 不同，`matchup` 只填排名。",
+    "_name_why": "两个中文名都走 `player_zh()`，实跑过：`player_zh('Jessica Pegula') → 佩古拉`、`player_zh('Sorana Cirstea') → 科斯蒂亚`。",
+    "portrait": {
+      "image": "assets/reel/pegula-cincinnati-2026-r16.jpg",
+      "fit": "cover",
+      "focus": 0.55,
+      "focus_y": 0.42,
+      "zoom": 1.05,
+      "_photo_why": "官方实拍，当地报纸 The Enquirer（Gannett）当天图集：`cincinnati.com/picture-gallery/sports/tennis/2026/08/19/round-of-16-continues-at-cincinnati-open-see-photos/91372587007/`，图注原文「Jessica Pegula of the United States defeated Sorana Cîrstea of Romania during a Round of 16 match at the Cincinnati Open at the Lindner Family Tennis Center」——四要素齐全，直接对得上这场球。原图路径 `www.cincinnati.com/gcdn/...` 恒 406，换成 `www.gannett-cdn.com/...` 是无水印原图，实测 **3900×2600**，摄影师 Albert Cesare/The Enquirer。\n\n打开看过：佩古拉正手挥拍击球（击球中，符合第 2 道闸门），淡紫色 Adidas 球衣、白色遮阳帽，和源片里她全场的球衣一致；跳跃击球、表情用力，背景是场边 LED 广告墙（CreditOne / Secret），清晰锐利，无水印。\n\n裁切按「人物居中、放大到接近铺满」渲出来试过（`focus 0.55 / focus_y 0.42 / zoom 1.05`）：全身在框内，跳跃姿态和握拍手都完整，四周留白刚好，没有切到手脚或球拍。"
+    },
+    "scoreboard": {
+      "court": "Lindner Family Tennis Center",
+      "_court_why": "⚠️ 球场名没查实，印场馆名。WTA 官方 `matches` 给的是 `CourtID 2`，这一站的 `CourtID` 字段早就被证伪过（同站不同 spec 上互相打架，见 `noskova-tauson`／`cirstea-bartunkova`／`sabalenka-wang`／`bouzkova-jovic`／`gauff-bouzkova` 的 `_court_why`）。当地报纸的图注反而写出了场馆全名「Lindner Family Tennis Center」，和同站惯例一致，直接采用。",
+      "duration_source": {
+        "provider": "wta",
+        "url": "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches?page=0&pageSize=400",
+        "match_id": "LS013",
+        "field": "MatchTimeTotal",
+        "source_page": "https://www.wtatennis.com/tournament/1017/cincinnati/2026/scores/LS013"
+      },
+      "_duration_why": "WTA 官方 `MatchTimeTotal 02:05:24`，和 flashscore `df_sui_1_M3yttngR` 报的『全场 2:06』（分盘 0:26 / 0:43 / 0:57）同量级一致。"
+    }
+  },
+  "editorial": {
+    "mode": "match_review",
+    "question": "决胜盘六比五，四个赛点，科斯蒂亚是怎么救回前三个的？",
+    "thesis": "靠的是把佩古拉每一次逼近都拖回悬念里，而不是坐等对手犯错。首盘佩古拉迅速建立起五比二的领先、逼出三个盘点，六比二拿下；次盘科斯蒂亚顶了回来，四比四完成破发，六比四扳回一盘，把比赛拖进决胜盘。决胜盘双方一路互破，五比五之后佩古拉先完成破发、拿到六比五的领先——但轮到自己发球胜赛时，她却先面对科斯蒂亚的一个破发点，救下之后又连续把三个赛点都被科斯蒂亚顶了回去，直到第四个赛点，佩古拉才终于把球打了过去，七比五拿下这场耗时两小时零五分钟的比赛。",
+    "beats": [
+      "前段：首盘佩古拉迅速建立领先，五比二逼出三个盘点，六比二拿下首盘",
+      "中段：次盘科斯蒂亚完成破发，六比四扳回一盘，比赛拖进决胜盘；决胜盘五比五后佩古拉率先破发，六比五",
+      "结局：佩古拉发球胜赛，先救下一个破发点，随后连续四次拿到赛点，科斯蒂亚救回前三个，佩古拉的第四个才终于兑现，七比五"
+    ],
+    "human_context": {
+      "angle": "这一场没有外部话题可蹭，真正的切口在这场决胜盘最后一局的攻防转换本身——同一局比赛里，佩古拉先是发球方却先面对破发点（被逼到守），随后又立刻转攻，连续四次逼近终点（转守为攻）。这种一局之内的角色反转，比单纯的比分拉锯更能说明这场球有多胶着。",
+      "facts": [
+        "本场 6-2 4-6 7-5，2 小时 05 分钟（WTA 官方 `MatchTimeTotal 02:05:24`）",
+        "首盘佩古拉五比二逼出三个盘点，随即六比二拿下（`df_mh_1` `2-6 Pegula发球，Pegula拿下 ← 1个盘点`，加上此前五比二时的 40-0）",
+        "次盘四比四，科斯蒂亚完成破发，随即自己保发到五比四，六比四拿下（`df_mh_1` `4-4 Pegula发球，Cirstea拿下 ← 破发、1个破发点`）",
+        "决胜盘五比五后，佩古拉率先完成破发，六比五（`df_mh_1` `5-5 Pegula发球，Cirstea拿下 ← 破发、1个破发点` 之后的下一局 `5-6 Cirstea发球，Pegula拿下 ← 4个破发点`）",
+        "佩古拉发球胜赛的最后一局：先面对 1 个破发点并救下，随后拿到 4 个赛点，科斯蒂亚连续救回前 3 个，佩古拉的第 4 个才兑现（`df_mh_1` `5-7 Pegula发球，Pegula拿下 ← 1个破发点、4个赛点`；WTA 官方 `LS013/stats` `Match points saved: Cirstea 3, Pegula 0`）",
+        "全场破发点：佩古拉救回 5/10，科斯蒂亚救回 7/14；破发点兑现：佩古拉 7/14，科斯蒂亚 5/10（WTA 官方 `LS013/stats`）",
+        "Ace 1 比 4，双误 4 比 2，一发得分率 64% 对 67%（flashscore `df_st_1_M3yttngR`）",
+        "两人此前交手 3 次：2011 密德兰 ITF 科斯蒂亚 7-6 6-3、2015 密德兰 ITF 佩古拉 6-3 6-3、2021 马德里佩古拉 7-6 6-3——赛前战绩佩古拉 2-1 领先，今天她把总战绩扩大到 3-1，而科斯蒂亚唯一的那场胜利要追溯到十五年前（tennisexplorer.com H2H 对阵页）",
+        "佩古拉 1994 年出生，32 岁，170cm；科斯蒂亚 1990 年出生，36 岁，176cm（tennisexplorer 身高数据）",
+        "球场 Lindner Family Tennis Center（当地报纸 The Enquirer 图注自证；CourtID 字段这一站不可信）"
+      ],
+      "sources": [
+        "https://global.flashscore.ninja/2/x/feed/df_mh_1_M3yttngR",
+        "https://global.flashscore.ninja/2/x/feed/df_st_1_M3yttngR",
+        "https://global.flashscore.ninja/2/x/feed/df_sui_1_M3yttngR",
+        "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches?page=0&pageSize=400",
+        "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches/LS013/stats",
+        "https://www.tennisexplorer.com/mutual/cirstea/pegula/",
+        "https://www.tennisexplorer.com/player/pegula/",
+        "https://www.tennisexplorer.com/player/cirstea/"
+      ],
+      "voice_label": "把四个赛点熬到只剩一个的人"
+    }
+  },
+  "_no_repeat": "⚠️ **两位球员在这一站都已经出现过**：佩古拉在 `shnaider-pegula.json` 里出现过（讲的是她终结对施奈德的连败），角度和赢球过程都与这条无关，不冲突。科斯蒂亚已经出现过两条——`cirstea-kalinskaya`（讲她自己三盘逆转，对手抢七 5-0 退赛）、`cirstea-bartunkova`（讲她 1 小时 16 分钟的抢七马拉松式救回首盘），**两条都提到过「她三十六岁、今年是宣布的最后一个赛季、十七年前第一次在辛辛那提出场」**——这一条一个字都不重复这些内容，也不重讲另外两条各自的具体比分细节。这一条的落点是**决胜盘最后一局的四个赛点**，是她输掉的这一场，和前两条讲她赢球的角度完全不同。",
+  "_editing_why": "probe 两轮：第一轮（`--every 2.0`，无 `--scorebox`）拿到 `scene_cuts`；第二轮带 `--scorebox 90,870,470,980` 拿到 `point_ends`（但这个框在 300 秒之后的场上采访段落里对不上任何比赛画面，那一段全是主持人/科斯蒂亚的近景，`point_ends` 在 380~537 秒之间的几个零星值是采访/片尾画面里的误检，不对应任何比赛动作——已核实这条片子的比赛部分全部落在 0~266.52 秒内）。`scene_cuts` = [9.2, 15.44, 27.04, 30.6, 34.2, 36.56, 41.56, 48.0, 57.08, 84.96, 89.84, 106.2, 114.44, 122.4, 124.84, 139.08, 142.56, 149.4, 169.92, 182.52, 186.68, 201.24, 228.92, 231.04, 249.16, 255.16, 256.28, 263.12, 266.52, 271.4, 281.92, 297.24, …]。\n\n逐一核对 `score_00.jpg`~`score_09.jpg`（每 2 秒一帧、裁出记分条区域放大）读出来的比分，并与 `M3yttngR` 逐局对照：\n\n**首盘**：14.5~24.5 秒记分条 `CIRSTEA 2 0 / PEGULA 2 15`（两人各拿两局的早期拉锯）；28.5~34.5 秒 `CIRSTEA 2 0 / PEGULA 5 40`，`SET POINT` 徽标（佩古拉五比二、三个盘点，`2-6 Pegula发球，Pegula拿下 ← 1个盘点` 之前的领先阶段）。⑤ 段（27.04-36.56）取三盘点这一段，与旁白『首盘……五比二逼出三个盘点，随即拿下六比二』直接对应。\n\n**次盘**：84.96~94.0 秒记分条不含具体局分（这段是次盘中段常规回合，作为过程背景，不与旁白『次盘科斯蒂亚顶了回来……六比四扳回一盘』这句陈述性旁白冲突，和 `fritz-oconnell.json` 数据段的处置手法相同）。\n\n**决胜盘**：160.5~168.5 秒记分条 `CIRSTEA 2 6 5 Ad / PEGULA 6 4 5`，`BREAK POINT #4` 徽标（佩古拉发球 5-5 局内的第 4 个破发点，科斯蒂亚正在施压）；170.5~198.5 秒记分条走到 `CIRSTEA 2 6 5 / PEGULA 6 4 6 40`，`MATCH POINT` 徽标出现（佩古拉已经完成破发拿到六比五，随即发球到 40-0 建立首个赛点——这一段实际横跨了『5-6 Cirstea发球，Pegula拿下 ← 4个破发点』和『5-7 Pegula发球，Pegula拿下 ← 1个破发点、4个赛点』两局，是决胜盘最紧绷的连续段落）；200.5~232.5 秒记分条在 `MATCH POINT` → `MATCH POINT #2` → `BREAK POINT`（科斯蒂亚的 1 个破发点，`Ad` 落在她这边）之间反复横跳，两人多次交换占先；240.5~254.5 秒 `BREAK POINT` 持续（科斯蒂亚仍在施压，`40:40` 深水区）；256.5~264.5 秒徽标变为 `MATCH POINT #4`，`PEGULA … Ad`；266.5 秒球在空中飞行，随后转为庆祝反应画面（无记分条）。⑦ 段（201.24-217.0）取这段决胜盘最紧绷的拉锯中段，与旁白『决胜盘五比五后……比分被拖回悬念之中，一次次拉回占先』的过程精确对应；① 段（256.28-266.52，无旁白，crosses_cut 于 263.12——同一分连续对峙的镜头角度切换，contact sheet 核对是同一局比赛画面不是换了内容）取 `MATCH POINT #4` 悬念到球落地这一段，全片最强的一格，交给现场声。\n\n**收尾**：268.5~281.5 秒转为网前/庆祝反应镜头（模糊过渡，符合『刚结束、镜头甩动』的常见形态）；288.5 秒起画面切到持 WTA TOUR 话筒的采访者、佩古拉换上淡紫色外套——这是场上采访，按『赛场之上视频不要赛后采访』的规则，全片八段全部收在 288.0 秒之前，没有一帧落进采访区间。② 段（267.0-277.5）延续①段之后的收尾画面，narration 交代最终比分和『救回三个赛点、第四个才兑现』这条核心叙事；⑧ 段（277.5-288.0）取庆祝延续到握手前的画面，narration 收在两人 H2H 战绩上，末句是问句，不停在数据上。",
+  "stats": {
+    "tour": "wta",
+    "a": {
+      "headshot": "assets/players/headshots/wta-316956.jpg",
+      "aces": 4,
+      "df": 2,
+      "first_in": 64,
+      "first_total": 96,
+      "first_won": 43,
+      "second_won": 12,
+      "second_total": 32,
+      "bp_conv": 7,
+      "bp_chances": 14,
+      "pts_won": 102,
+      "pts_total": 193,
+      "winners": 32,
+      "ue": 37
+    },
+    "b": {
+      "headshot": "assets/players/headshots/wta-312469.jpg",
+      "aces": 1,
+      "df": 4,
+      "first_in": 53,
+      "first_total": 97,
+      "first_won": 34,
+      "second_won": 16,
+      "second_total": 44,
+      "bp_conv": 5,
+      "bp_chances": 11,
+      "pts_won": 91,
+      "pts_total": 193,
+      "winners": 16,
+      "ue": 29
+    },
+    "footer_venue": "辛辛那提 · 女单1/8决赛",
+    "footer_date": "2026年8月20日",
+    "_winners_ue_why": "TNNS run **32331918611**（`who=Pegula,Cirstea --date 2026-08-19`，match id 73466978），报告自报 `选手顺序 ['Cirstea', 'Pegula']`——制胜分 [16, 32]、非受迫失误 [29, 37]，`hasExtendedStats: True`，分盘合计与全场两项都自证 ✅（制胜分 4+6+6=16 / 11+11+10=32，非受迫失误 8+9+12=29 / 5+17+15=37）。⚠️ 只填这两项——TNNS 的一发分母和 `first_in + second_total` 对不上，而这张图画的是 `first_in / first_total`，要用和式才自洽。",
+    "_source": "**全部取自 WTA 官方 `LS013/stats`（setnum 0）**，不用 flashscore 的数字——两个源的总分对不上（flashscore 91/101/192，WTA 91/102/193），差 1 分且没能定位差在哪一分，所以整张卡统一用同一个源，不混用。\n\n⚠️ **`a`＝佩古拉，`b`＝科斯蒂亚，跟的是 `cover.matchup` 的顺序**——WTA 接口自己的 `PlayerIDA`（312469）是科斯蒂亚、`PlayerIDB`（316956）是佩古拉，和这里的 a/b 刚好相反，所以取数时要把 WTA 的 `*a` 字段填进这里的 `b`、`*b` 字段填进这里的 `a`：`acesb=4`→这里 a.aces=4，`acesa=1`→这里 b.aces=1，其余各项同理（dblflt/ptswon1stserv/ptsplayed1stserv/breakptsconv/breakptsplayed/totptswon）。\n\n⚠️ `first_total` 不取接口的 `totservplayeda/b`，按 `first_in + second_total` 算——两者本来就该相等，算完确实对上（佩古拉 96=64+32=`totservplayedb`；科斯蒂亚 97=53+44=`totservplayeda`），双重印证。`second_won` 取 `ptstotwonserv − ptswon1stserv`（佩古拉 55−43=12；科斯蒂亚 50−34=16）。\n\n**制胜分和非受迫失误来自 TNNS**，见 `_winners_ue_why`——flashscore `df_st_1` 这一场没有这两栏（WTA 巡回赛那一档的老毛病，「flashscore 没有」不等于「没有」）。"
+  },
+  "_voice": "云见（`zh-CN-YunjianNeural`）、`+6%`，和这条线其余片子一致。",
+  "_claims": {
+    "决胜盘六比五，佩古拉发球胜赛面对1个破发点并救下，随后连续四个赛点科斯蒂亚救回前三个": [
+      "https://global.flashscore.ninja/2/x/feed/df_mh_1_M3yttngR",
+      "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches/LS013/stats"
+    ],
+    "两人此前交手三次，赛前佩古拉二比一领先，今天她把总战绩扩大到三比一，科斯蒂亚唯一的胜利是十五年前": [
+      "https://www.tennisexplorer.com/mutual/cirstea/pegula/"
+    ],
+    "_why": "第一条核对了两个独立口径：flashscore 逐分记录『5-7 Pegula发球，Pegula拿下 ← 1个破发点、4个赛点』给出这一局的破发点和赛点次数，WTA 官方统计栏『Match points saved: Cirstea 3, Pegula 0』独立确认了『救回 3 个』这个具体数字——两者互相印证，不是同一个数据源重复引用。\n\n第二条 H2H 记录读自 tennisexplorer 的对阵页表格（今天之后『1 - 3』，倒推赛前是『1 - 2』佩古拉领先），并逐场核对了年份和比分：2011 密德兰科斯蒂亚赢、2015 密德兰佩古拉赢、2021 马德里佩古拉赢——2026 减 2011 等于 15 年，科斯蒂亚唯一一次赢球确实是十五年前的第一次交手。"
+  },
+  "segments": [
+    {
+      "start": 256.28,
+      "end": 269.76,
+      "crosses_cut": "256.28~269.76 秒之间的 263.12 秒和 266.52 秒都是同一分连续对峙里的镜头角度切换（宽景切近景切反应镜头），contact sheet 逐格核对：全程画面持续是同一局比赛（`MATCH POINT #4` 徽标始终挂着，球落地后转为庆祝反应），不是换了人或换了内容。",
+      "cx": 0.5,
+      "_why": "① 冷开场，不配旁白，走现场声。全片最强的一格：记分条上方烧着 `MATCH POINT #4` 徽标，266.5 秒球在空中飞行，269.76 秒是这一分真正结束（死球）的时刻——佩古拉连续四个赛点里终于兑现的那一个。窗口收在死球之后，不在球还在飞的时候切走。"
+    },
+    {
+      "start": 269.76,
+      "end": 280.0,
+      "narration": "六比二四比六七比五，佩古拉拿下——决胜盘五比六，科斯蒂亚扛住四个赛点中的三个，佩古拉第四个才终于兑现。",
+      "cx": 0.5,
+      "_why": "② 落点：紧接冷开场死球之后的收尾画面（比赛已结束，转为庆祝反应），narration 给出最终比分和全场核心悬念——救点数字来自 WTA 官方 `Match points saved`。窗口收在 280.0 秒——比赛已经结束，这一段是庆祝画面不是活球回合，落点不受『死球之后再切』约束。"
+    },
+    {
+      "start": 0.0,
+      "end": 13.04,
+      "narration": "北京时间八月二十号凌晨一点，辛辛那提网球公开赛女单1/8决赛在灯光球场打响，三号种子佩古拉对阵科斯蒂亚。",
+      "cx": 0.5,
+      "_why": "③ 坐标：开球时刻 + 赛事 + 轮次 + 种子。窗口是源片开头的常规看台/场地画面，收在 13.04 秒（死球时刻），不切在一分打完之前；跨过 9.2 秒那处镜头切换（同一段开场镜头的机位变化，不是换了内容）。"
+    },
+    {
+      "start": 15.44,
+      "end": 24.5,
+      "narration": "两人此前交手三次，佩古拉两胜一负——上一次交手要追溯到五年前的马德里。",
+      "cx": 0.5,
+      "_why": "④ H2H：赛前战绩。窗口延续同一段开场常规回合画面，不跨切点（15.44~27.04 之间无内部切点）。"
+    },
+    {
+      "start": 27.04,
+      "end": 40.24,
+      "narration": "首盘一开局佩古拉就顶住压力，一路建立领先，五比二逼出三个盘点，随即拿下六比二，只用了二十六分钟——比赛的天平从一开始就没有回摆。",
+      "crosses_cut": "27.04~40.24 秒之间的 30.6/34.2/36.56 秒都是这段三盘点拉锯里的镜头角度切换（宽景切近景），contact sheet 逐格核对：`SET POINT` 徽标持续挂着，画面一路是佩古拉五比二领先到六比二拿下首盘的连续过程，不是换了内容。",
+      "cx": 0.5,
+      "_why": "⑤ 首盘：窗口精确对应记分条烧出 `SET POINT` 徽标的这段（`CIRSTEA 2 0 / PEGULA 5 40`）一路到首盘结束，与旁白同步，收在 40.24 秒（死球时刻），不切在一分打完之前。"
+    },
+    {
+      "start": 84.96,
+      "end": 94.0,
+      "narration": "次盘科斯蒂亚，顶了回来——四比四时逼出破发点完成破发，六比四扳回一盘。",
+      "cx": 0.5,
+      "_why": "⑥ 次盘：陈述性旁白，背景是次盘中段常规回合画面，不与画面内容冲突（同 `fritz-oconnell.json` 数据段的处置手法）。"
+    },
+    {
+      "start": 201.24,
+      "end": 217.0,
+      "narration": "决胜盘五比五后，佩古拉先完成破发，六比五——科斯蒂亚随即在她的发球局里连续施压，逼出破发点，比分被拖回悬念之中，一次次拉回占先。",
+      "cx": 0.5,
+      "_why": "⑦ 决胜盘拉锯：窗口对应记分条在 `MATCH POINT`／`BREAK POINT` 徽标之间反复横跳的这段，与旁白『比分被拖回悬念之中』的过程精确对应。"
+    },
+    {
+      "start": 280.0,
+      "end": 288.0,
+      "narration": "四次交手，三胜一负——她上一次赢，还是十五年前的事。下一次还要等多久？",
+      "cx": 0.5,
+      "_why": "⑧ 收尾：延续②段之后的庆祝画面（走向网前，握手之前），落在两人 H2H 的时间跨度上，末句是问句，窗口收在 288.0 秒之前，避开场上采访。"
+    }
+  ],
+  "push": {
+    "summary": "四个赛点，她救回三个",
+    "lead": "辛辛那提女单1/8决赛，三号种子佩古拉6-2 4-6 7-5险胜科斯蒂亚——首盘佩古拉五比二逼出三个盘点，六比二拿下；次盘科斯蒂亚顶了回来，四比四完成破发，六比四扳回一盘，把比赛拖进决胜盘。决胜盘五比五后，佩古拉先完成破发，六比五，随即自己发球胜赛——却先面对科斯蒂亚的一个破发点，救下之后又连续拿到四个赛点，科斯蒂亚连续救回前三个，佩古拉的第四个才终于兑现，七比五拿下这场耗时两小时零五分钟的比赛。两人此前交手三次，佩古拉两胜一负，今天她把总战绩扩大到三比一，而科斯蒂亚唯一的那场胜利要追溯到十五年前。",
+    "_no_auto_why": "封面大图已经落地（当地报纸 The Enquirer 图集，见 `cover.portrait._photo_why`），不受 `cover_photo_problem` 拦截——但按『赛场之上』这条线的默认（本文件早有约定），仍走人工确认这一版 `--dry-run`／全量测试绿了之后再合并，不设 `auto: true`。"
+  }
+}
