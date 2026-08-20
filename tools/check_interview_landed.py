@@ -39,6 +39,15 @@ def sh(*args: str) -> str:
     return proc.stdout
 
 
+def _ffprobe_float(out: str) -> float:
+    """`-of csv=p=0` 拿单个字段，理论上应该是干净的一个数——**但不同 ffprobe
+    版本的 csv writer 行为不一样**，撞过某个构建吐出 `291.880000,` 带一个
+    尾随空字段，`float()` 直接崩（同一个坑 `check_reel_landed.py` 早修过，
+    这个文件是姊妹工具，没跟着改）。只取第一个逗号前的字段，多出来的空
+    尾巴丢掉。"""
+    return float(out.strip().split(",")[0])
+
+
 def outdir_for(slug: str) -> Path:
     # 采访片产物直接挂在 output/interviews/<slug>/ 下，**没有日期层**（和 reel 线
     # 的 output/<日期>/reel/<slug> 不同——两条线产物目录形状不一样，别照抄）。
@@ -66,12 +75,12 @@ def check_film(film: Path, spec: dict, ass: Path) -> int:
     bad += 0 if ok else 1
     print(f"[{'ok' if ok else '不合格'}] 分辨率 {w}×{h}（要 {CANVAS_W}×{CANVAS_H}）")
 
-    v_dur = float(sh("ffprobe", "-v", "error", "-select_streams", "v:0",
+    v_dur = _ffprobe_float(sh("ffprobe", "-v", "error", "-select_streams", "v:0",
                      "-show_entries", "stream=duration",
-                     "-of", "csv=p=0", str(film)).strip())
-    a_dur = float(sh("ffprobe", "-v", "error", "-select_streams", "a:0",
+                     "-of", "csv=p=0", str(film)))
+    a_dur = _ffprobe_float(sh("ffprobe", "-v", "error", "-select_streams", "a:0",
                      "-show_entries", "stream=duration",
-                     "-of", "csv=p=0", str(film)).strip())
+                     "-of", "csv=p=0", str(film)))
     ok = v_dur - a_dur < 1.0
     bad += 0 if ok else 1
     print(f"[{'ok' if ok else '不合格'}] 画面 {v_dur:.2f}s / 音轨 {a_dur:.2f}s"
