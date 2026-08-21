@@ -6,7 +6,7 @@
   "end": 137.5,
   "asr_model": "small.en",
   "whisper_model": "medium.en",
-  "transcript_verified": false,
+  "transcript_verified": true,
   "column": "赛后开麦",
   "interview_kind": "赛后场上采访",
   "event": "2026 辛辛那提 WTA1000 1/4决赛",
@@ -23,7 +23,6 @@
   ],
   "word_fix": {
     "Pagula": "Pegula",
-    "volume": "volleys",
     "sellers": "setters",
     "70s": "semis"
   },
@@ -47,7 +46,7 @@
     "打得很好",
     "但健康更重要",
     "所以我希望她会没事",
-    "一切都好",
+    "真的",
     "我们也希望她会没事",
     "如果伊莲娜正在听",
     "祝你早日康复",
@@ -70,7 +69,7 @@
     "好 男单要到八点半才上场",
     "还有些时间",
     "要不要和我打一会儿单打",
-    "顺便帮我练练截击",
+    "顺便帮我练练嗓门",
     "总得问问",
     "开玩笑的",
     "能帮我们签几个网球吗",
@@ -127,12 +126,15 @@
     "lead": "2026辛辛那提WTA1000 1/4决赛，莱巴金娜在首盘1-4落后时因伤退赛，斯瓦泰克晋级半决赛。赛后场上采访，她先说这不是任何人想看到的获胜方式，也坦言看着场上情况自己很焦虑。她希望莱巴金娜能赶上美网，还特意提到对方距离世界第一非常近。随后话题转回她自己的状态和半决赛对手佩古拉：她说两人过去多次打满三盘，佩古拉很适合硬地，这场比赛会是一项挑战。完整采访，保留英文原声，配中英字幕。"
   },
   "en_fixed": {
-    "20": "and everything.",
+    "20": "really.",
     "29": "a smile when you walk out on court,",
+    "38": "So I'm happy to be here playing good tennis",
+    "48": "you've played her a lot.",
     "52": "when we watch you play Jessie?",
     "55": "I feel like we've been on Tour for...",
     "56": "We've been playing many matches",
     "60": "Many three-setters.",
+    "65": "And yeah, it's going to be a good semi",
     "70": "Your defending champion.",
     "71": "Everyone, Iga Swiatek."
   },
@@ -144,5 +146,12 @@
   "suspect": {
     "40": "small.en 把 now/not 与 8:30 这一句听得不稳，需由 medium.en 和源片确认。",
     "65": "small.en 出现重复 it's，并把 semifinal 记成 semis，需交叉校验。"
-  }
+  },
+  "caption_gaps_ok": {
+    "62.2-64.4": "上一句“Yeah, I feel great”在61.42–62.22秒已经完整，下一句“I feel ready…”从64.36秒开始；medium.en 把下一句开头的“I feel”对齐进了这段停顿，但两侧字幕已覆盖原话，不是漏词。"
+  },
+  "suspect_ok": {
+    "40": "small.en 与 medium.en 对这句没有实词分歧；现场口语本身把8:30和until连在一起，保留原声转写。"
+  },
+  "_verified_clean": "run 32468772738（runner，--stage verify）：第一份 small.en 431词，第二份 medium.en 427词，去掉填词后分歧5.8%（闸门12%）；人工引语交叉校验0处未解决。20处分歧逐条核过：going to/gonna、got to/gotta、you know 等是缩读或填词；Pegula、Iga Swiatek 和 three-setters 以官方姓名、网球术语及赛后报道为准，两个模型都可能误拼；medium.en 补出 good tennis，已写入 en_fixed[38]；medium.en 把 small.en 的 and everything 听成 really，结合句法改为 en_fixed[20]=really；两个模型都听成 volume，因此撤回按网球语境猜的 volleys，中文字幕改为“练练嗓门”；Pegula 前的 you played 由 medium.en 纠正为 you've played，写入 en_fixed[48]；片尾报幕按官方姓名订正。唯一2.1秒空档是两句“I feel”之间的时间轴对齐偏差，台词本身已被相邻字幕完整覆盖，见 caption_gaps_ok。"
 }
