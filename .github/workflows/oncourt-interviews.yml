@@ -11,11 +11,6 @@ name: oncourt-interviews
 # 为什么跑在 Actions 而不是本地：沙箱下 YouTube 会对连续请求返 429，
 # 退避到 240 秒都拿不到；Actions 的出口没这个问题。
 on:
-  push:
-    branches:
-      - codex/swiatek-rybakina-cincinnati-2026-qf-interview
-    paths:
-      - .github/workflows/oncourt-interviews.yml
   # **2026-08-18 恢复定时。** 之前 7/31 停掉是因为「4551 条库存没有下游在读」；
   # 现在下游有了——`pick_oncourt_clips.py` 挑成片候选、`oncourt_feed.py` 推清单，
   # 都是这条库的直接消费者。没有定时采集，新采访永远进不来，成片候选永远是空的。
@@ -52,7 +47,6 @@ concurrency:
 
 jobs:
   collect:
-    if: github.event_name != 'push'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -226,116 +220,3 @@ jobs:
             cat /tmp/oncourt.log 2>/dev/null || echo '（没有日志）'
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
-
-  codex_preview:
-    if: github.event_name == 'push'
-    runs-on: ubuntu-latest
-    timeout-minutes: 20
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          sparse-checkout: |
-            assets
-            data
-            specs
-            src
-            tools
-
-      - name: 把本条采访产物目录加回稀疏范围
-        run: git sparse-checkout add output/interviews/swiatek-rybakina-cincinnati-2026-qf
-
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-          cache: pip
-
-      - name: 安装转写依赖
-        run: pip install -q -e . "yt-dlp[default]>=2026.7.4" faster-whisper
-
-      - name: 按正式渲染线准备 YouTube cookies
-        env:
-          YT_COOKIES_TXT: ${{ secrets.YT_COOKIES_TXT }}
-        run: |
-          if [ -n "$YT_COOKIES_TXT" ]; then
-            printf '%s\n' "$YT_COOKIES_TXT" > /tmp/yt-cookies.txt
-            echo "COOKIES=/tmp/yt-cookies.txt" >> "$GITHUB_ENV"
-          fi
-
-      - name: 用采访下载梯子转写并翻译完整采访
-        env:
-          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
-        run: |
-          python - <<'PY'
-          import json
-          import sys
-          import tempfile
-          from pathlib import Path
-
-          sys.path.insert(0, "tools")
-          import draft_interview_spec as draft
-          from build_interview_clip import yt_download
-          from faster_whisper import WhisperModel
-          from tennislive.research.brief import Chat
-
-          candidate = json.loads(Path("data/interview_clip_candidates.json").read_text())[0]
-          calendar = json.loads(Path("data/tour_calendar_2026.json").read_text())
-          with tempfile.TemporaryDirectory() as td:
-              audio = yt_download(candidate["url"], Path(td) / "audio.m4a", "ba", {})
-              model = WhisperModel("small.en", compute_type="int8")
-              segments, info = model.transcribe(
-                  str(audio), vad_filter=True, word_timestamps=True)
-              segments = list(segments)
-              rows = [{"t": round(s.start, 2), "text": s.text.strip()}
-                      for s in segments if s.text.strip()]
-          if not rows:
-              raise SystemExit("转写为空")
-          chat = Chat()
-          if not chat.ready:
-              raise SystemExit("没有 DEEPSEEK_API_KEY")
-          zh = draft.translate(rows, chat)
-          spec = draft.build_spec(candidate, zh, float(info.duration or 138.0), calendar)
-          spec["slug"] = "swiatek-rybakina-cincinnati-2026-qf"
-          spec["_asr_rows"] = rows
-          out = Path("specs/interviews/swiatek-rybakina-cincinnati-2026-qf.draft.json")
-          out.write_text(json.dumps(spec, ensure_ascii=False, indent=2), encoding="utf-8")
-
-          events = []
-          for s in segments:
-              words = [w for w in (s.words or []) if w.word.strip()]
-              if words:
-                  base = float(words[0].start)
-                  segs = [{"utf8": w.word.strip(),
-                           "tOffsetMs": round((float(w.start) - base) * 1000)}
-                          for w in words]
-                  end = float(words[-1].end)
-              elif s.text.strip():
-                  base = float(s.start)
-                  segs = [{"utf8": s.text.strip(), "tOffsetMs": 0}]
-                  end = float(s.end)
-              else:
-                  continue
-              events.append({
-                  "tStartMs": round(base * 1000),
-                  "dDurationMs": max(1, round((end - base) * 1000)),
-                  "segs": segs,
-              })
-          capdir = Path("output/interviews/swiatek-rybakina-cincinnati-2026-qf")
-          capdir.mkdir(parents=True, exist_ok=True)
-          cap = capdir / "cap_aufUQ6eSXSM.en.json3"
-          cap.write_text(json.dumps({"events": events}, ensure_ascii=False),
-                         encoding="utf-8")
-          print(f"生成 {len(rows)} 条双语字幕、{len(events)} 个时间轴事件 → {out} / {cap}")
-          PY
-
-      - name: 提交双语草稿到预览分支
-        run: |
-          git add specs/interviews/*.draft.json \
-            output/interviews/swiatek-rybakina-cincinnati-2026-qf/cap_aufUQ6eSXSM.en.json3
-          if git diff --cached --quiet; then
-            echo "没有生成草稿"
-            exit 1
-          fi
-          git config user.name "Codex"
-          git config user.email "noreply@openai.com"
-          git commit -m "interview: 生成斯瓦泰克赛后采访双语草稿"
-          git push origin "HEAD:${GITHUB_REF_NAME}"
