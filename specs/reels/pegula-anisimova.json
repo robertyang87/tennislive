@@ -1,0 +1,196 @@
+{
+  "slug": "pegula-anisimova",
+  "source_url": "https://youtu.be/GJb3f9i-D7E",
+  "_source": "WTA 官方 YouTube 单场集锦《Amanda Anisimova vs. Jessica Pegula | 2026 Cincinnati Quarterfinals | WTA Match Highlights》。2026-08-21 probe：424.76 秒、1920×1080、25fps；记分条、终局比分和赛后连续镜头共同确认本场为佩古拉 6-4 2-6 7-6(4) 阿尼西莫娃。采访从 298.32 秒开始，本 spec 最晚收在 288.56 秒，不使用采访画面或声音。",
+  "_column": "赛场之上",
+  "topbar": {
+    "line1": "2026 辛辛那提 WTA1000 1/4决赛",
+    "line2": "佩古拉 6-4 2-6 7-6(4) 阿尼西莫娃"
+  },
+  "_topbar_why": "WTA 官方比分页与 matches API（MatchID LS006）原文为 `[3] J. Pegula d [9] A. Anisimova 6-4,2-6,7-6(4)`；第二行与 cover.winner / result / matchup 机械一致，赢家在前。",
+  "editorial": {
+    "mode": "match_review",
+    "question": "决胜盘从三比零、五比三领先到六比五落后，佩古拉怎么把这场比赛抢回来？",
+    "thesis": "佩古拉6-4先拿首盘，阿尼西莫娃6-2扳平；决胜盘佩古拉3-0、5-3两度领先却被反超到5-6，最终保发拖入抢七，并在小分3-4后连赢四分，以7-4收官。全场用时2小时15分，佩古拉总得分只多一分。",
+    "beats": [
+      "首盘：佩古拉没有送出破发点，34分钟6-4先下一城",
+      "反扑：阿尼西莫娃第二盘连拿前四局，6-2扳平",
+      "决胜：佩古拉3-0、5-3领先后被反超到5-6，抢七3-4后连赢四分"
+    ],
+    "human_context": {
+      "angle": "这不是一场单向逆转，而是领先权三次换手：佩古拉决胜盘先到3-0和5-3，阿尼西莫娃追到6-5首次领先，最后只差一分的比赛由佩古拉在抢七末段连赢四分收走。",
+      "facts": [
+        "WTA 官方比分页：佩古拉6-4 2-6 7-6(4)获胜，晋级辛辛那提女单半决赛",
+        "WTA matches API：MatchID LS006，MatchTimeTotal为02:15:00，RoundID为Q，CourtID为1",
+        "WTA stats API：佩古拉全场95分、阿尼西莫娃94分",
+        "WTA逐分API：决胜盘抢七佩古拉在3-4之后连赢四分，以7-4结束比赛",
+        "源片赛后解说确认两人交手来到佩古拉6胜0负"
+      ],
+      "sources": [
+        "https://www.wtatennis.com/tournaments/1017/cincinnati/2026/scores/LS006",
+        "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches?page=0&pageSize=400",
+        "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches/LS006/stats",
+        "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches/LS006/point-by-point",
+        "https://youtu.be/GJb3f9i-D7E"
+      ]
+    }
+  },
+  "_match": {
+    "wta_match_id": "LS006",
+    "flashscore_id": "KS03RYT9",
+    "start_utc": "2026-08-20T17:10:02Z",
+    "_why": "WTA 官方逐分 API 首分时间为 2026-08-20T17:10:02Z，即北京时间 8 月 21 日 01:10；正式赛果、用时和统计一律以 WTA 官方接口为准，不采用自动 draft 中冲突的 Flashscore 总分和用时。"
+  },
+  "_hit_data": "采用 WTA 官方 95-94：189 分只差一分；抢七3-4后佩古拉连赢四分。自动 draft 的96-95与官方接口冲突，已废弃且不会进入文案。",
+  "stats": {
+    "tour": "wta",
+    "a": {
+      "headshot": "assets/players/headshots/wta-316956.jpg",
+      "aces": 3,
+      "df": 2,
+      "winners": 18,
+      "ue": 29,
+      "first_in": 56,
+      "first_won": 37,
+      "first_total": 94,
+      "second_total": 38,
+      "second_won": 21,
+      "bp_conv": 4,
+      "bp_chances": 7,
+      "pts_won": 95,
+      "pts_total": 189
+    },
+    "b": {
+      "headshot": "assets/players/headshots/wta-326384.jpg",
+      "aces": 4,
+      "df": 3,
+      "winners": 41,
+      "ue": 56,
+      "first_in": 57,
+      "first_won": 39,
+      "first_total": 95,
+      "second_total": 38,
+      "second_won": 19,
+      "bp_conv": 5,
+      "bp_chances": 5,
+      "pts_won": 94,
+      "pts_total": 189
+    },
+    "footer_venue": "P&G Stadium Court · 辛辛那提",
+    "footer_date": "2026.08.20",
+    "_winners_ue_why": "制胜分/非受迫失误来自仓库既有 `tnns-stats.yml`，run 32442185163，TNNS match id=73466972，`hasExtendedStats=True`。TNNS 报告顺序为 ['Anisimova','Pegula']：全场制胜分 [41,18]、非受迫失误 [56,29]；分盘分别为 Set1 [10,4]/[14,6]、Set2 [14,1]/[12,10]、Set3 [17,13]/[30,13]，两项分盘合计均与全场完全一致。这里按 cover.matchup 顺序反转填入：stats.a＝佩古拉 18/29，stats.b＝阿尼西莫娃 41/56；只从 TNNS 取这两项。",
+    "_source": "WTA 官方 `tournaments/1017/2026/matches/LS006/stats` 的全场汇总（setnum=0）提供 Ace、双误、一二发、破发点和总得分；制胜分/非受迫失误仅取 TNNS run 32442185163（见 `_winners_ue_why`）。stats.a 跟 cover.matchup[0]＝佩古拉，stats.b 跟 cover.matchup[1]＝阿尼西莫娃；头像沿用仓库已核验的 WTA 官方头像。first_total 按 first_in + second_total 计算：佩古拉 56+38=94，阿尼西莫娃 57+38=95。总得分 95:94、合计189分，与片尾旁白完全一致。"
+  },
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "佩古拉",
+    "hook": "五比三领先被反超\n抢七连拿四分晋级",
+    "_hook_why": "第一行交代决胜盘的险境，第二行给出过程和结果；每行8个字符，不缩小标题。",
+    "_subject_why": "佩古拉是获胜并晋级半决赛的一方，封面实拍也是她在本场获胜后的反应。",
+    "_heat_why": "两位都是现役世界前十：佩古拉世界第3，阿尼西莫娃世界第10；同时都是大满贯决赛球员。",
+    "topic": "辛辛那提WTA1000 · 女单1/4决赛",
+    "winner": "佩古拉",
+    "result": "6-4 2-6 7-6(4)",
+    "matchup": [
+      {"name": "佩古拉", "name_en": "Jessica Pegula", "country": "USA", "rank": 3},
+      {"name": "阿尼西莫娃", "name_en": "Amanda Anisimova", "country": "USA", "rank": 10}
+    ],
+    "_name_why": "中文名走 player_zh()：Jessica Pegula→佩古拉，Amanda Anisimova→阿尼西莫娃。排名取 WTA 官方 2026-08-21 singles ranking API。",
+    "portrait": {
+      "image": "assets/reel/pegula-anisimova-cincinnati-2026-qf.jpg",
+      "focus": 0.53,
+      "focus_y": 0.5,
+      "zoom": 1.0
+    },
+    "_portrait_why": "本场 WTA 官方高清实拍，不是旧图、不是视频抽帧。图片由 WTA 官方赛后稿《Pegula shrugs off injury scare to stay unbeaten against Anisimova, make Cincy semis》发布，文件名 `Jessica_Pegula_-_Cincinnati_Open_2026_-_Day_10-DSC_0096.jpg`，原图 4000×2502。画面中佩古拉穿浅紫色 Adidas 连衣裙、白色遮阳帽，仰头闭眼；与本场源片 268.5~290.5 秒的赛后连续镜头逐项一致，尤其 290.5 秒同为仰头庆祝。WTA 页面把这张图直接挂在本场赛后稿下，人物、日期、赛事、对手四要素齐全。素材版权未声明开放许可，记为 WTA copyrighted / rights unverified，不宣称自由授权。来源：https://photoresources.wtatennis.com/photo-resources/2026/08/20/95547b0e-490c-4ea3-92f8-6d75b1375e01/Jessica_Pegula_-_Cincinnati_Open_2026_-_Day_10-DSC_0096.jpg?width=4000",
+    "scoreboard": {
+      "court": "P&G Stadium Court",
+      "duration_source": {
+        "provider": "wta",
+        "url": "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches?page=0&pageSize=400",
+        "match_id": "LS006",
+        "field": "MatchTimeTotal",
+        "source_page": "https://www.wtatennis.com/tournaments/1017/cincinnati/2026/scores/LS006"
+      },
+      "_court_why": "WTA matches API 的 CourtID=1；Cincinnati Open 官方 Order of Play 将 CourtID 1 对应为 P&G Stadium Court。",
+      "_duration_why": "WTA matches API 的 MatchTimeTotal=02:15:00，海报显示2:15；源片赛后解说也明确说 `A 2-hour 15 match`。"
+    }
+  },
+  "_voice_why": "云见 zh-CN-YunjianNeural，+6%，与同批辛辛那提赛报一致。",
+  "push": {
+    "summary": "抢七连拿最后四分晋级",
+    "lead": "辛辛那提女单1/4决赛，佩古拉6-4 2-6 7-6(4)险胜阿尼西莫娃。决胜盘她从3-0、5-3领先被反超到5-6，保发拖入抢七；小分3-4后连赢四分，以7-4收官。两小时十五分钟、189分，赢家只多拿一分。",
+    "auto": false,
+    "_no_auto_why": "本次用户要求并行完成第二条成片，但没有明确要求第二条也推送微信；只渲染并审核，避免把科博利的推送授权扩张到另一条内容。"
+  },
+  "_editing_why": "佩古拉=白色遮阳帽+浅紫连衣裙；阿尼西莫娃=粉色遮阳帽+白色连衣裙。结构按爆点→坐标→三盘走势→抢七→落点排列。所有窗口以 probe.json 的 scene_cuts 收口；采访从298.32秒开始，本片最晚使用288.56秒。",
+  "segments": [
+    {
+      "start": 261.88,
+      "end": 276.8,
+      "narration": "",
+      "crosses_cut": "跨267.68秒是同一个赛点结束后的转播切换：决胜盘抢七最后一分切到佩古拉获胜反应，再接两人走向网前；前后都是本场收官。",
+      "_why": "①冷开场：决胜盘抢七最后一分、佩古拉反应和两人走向网前；不配旁白，留现场声。"
+    },
+    {
+      "start": 13.32,
+      "end": 22.68,
+      "narration": "北京时间八月二十一号凌晨一点多，辛辛那提WTA1000女单1/4决赛。",
+      "_why": "②坐标段。WTA逐分API首分时间17:10:02 UTC，换算北京时间8月21日01:10；口播按编辑规范把10到39分概括为“一点多”，不把逐分接口时间读成不必要的分钟精度。窗口在两个严格切点之间。"
+    },
+    {
+      "start": 32.4,
+      "end": 47.68,
+      "narration": "佩古拉先拿到破发，首盘没送出一个破发点。三十四分钟，她六比四先下一城。",
+      "_why": "③首盘。源片32.16起解说明确说佩古拉34分钟高效拿下首盘、没有送出破发点；38.5~46.5秒赛果图形显示4-6。"
+    },
+    {
+      "start": 99.44,
+      "end": 117.2,
+      "narration": "第二盘阿尼西莫娃反过来连拿前四局。佩古拉追回两局，但阿尼西莫娃六比二扳平。",
+      "crosses_cut": "跨113.96秒是第二盘收官后的常规机位切换：回合画面切到分盘图形；前后都在交代阿尼西莫娃6-2扳平，不换盘、不换人。",
+      "_why": "④次盘。104.88起解说点出阿尼西莫娃制胜分，114.08~116.16说她强势反扑、比赛一盘比一盘；114.5~116.5分盘图形显示4-6 / 6-2。"
+    },
+    {
+      "start": 120.36,
+      "end": 128.36,
+      "narration": "决胜盘开局，佩古拉，先连拿三局，三比零走在前面。",
+      "_why": "⑤决胜盘开局。116.5秒上一个图形已显示第三盘佩古拉3-0；WTA逐分确认前三局全由佩古拉拿下。"
+    },
+    {
+      "start": 166.84,
+      "end": 176.88,
+      "narration": "五比三以后，阿尼西莫娃先保发，再完成回破，把比分重新追到五平。",
+      "_why": "⑥反扑。WTA逐分确认阿尼西莫娃在4-5时保发，随后破掉佩古拉追到5-5；173.84起原声称赞她在最关键时刻留在比赛里。"
+    },
+    {
+      "start": 183.24,
+      "end": 199.92,
+      "narration": "她又保住发球局，六比五，整场第一次领先。接下来，佩古拉，必须保发。",
+      "crosses_cut": "跨185.32和192.04秒是同一段决胜盘走势的转播切换：回合、球员近景和比分提示连续交代阿尼西莫娃6-5首次领先，没有跳到别盘。",
+      "_why": "⑦反超。WTA逐分第11局由阿尼西莫娃保发到6-5；源片193.12起解说明确说她整场第一次领先。"
+    },
+    {
+      "start": 236.76,
+      "end": 244.16,
+      "narration": "六比六，抢七打到三比三。这一分，是全场最长的回合。",
+      "crosses_cut": "跨241.56秒是同一分结束后的反应切换；238.88原声说这是全场最长回合，242.32报决胜盘六平、抢七三平。",
+      "_why": "⑧抢七起点。画面与原声同时给出6-6、3-3以及全场最长回合。"
+    },
+    {
+      "start": 244.16,
+      "end": 261.88,
+      "narration": "阿尼西莫娃先拿到四比三。此后佩古拉连赢四分，七比四把比赛收下。",
+      "crosses_cut": "跨257.32秒是抢七同一段的回合与球员反应切换；WTA逐分确认3-4之后四分全部由佩古拉赢下。",
+      "_why": "⑨抢七收官。先让画面走到阿尼西莫娃4-3，再由旁白接回冷开场已经展示过的最后一分，形成闭环。"
+    },
+    {
+      "start": 276.8,
+      "end": 288.56,
+      "narration": "一百八十九个小分，佩古拉只多拿一个。六次交手全胜；下一场，她还能再走一步吗？",
+      "_why": "⑩落点。WTA stats API为95-94，共189分；源片277.92起确认交手6-0。画面是握手后的佩古拉独自向看台庆祝，严格早于采访；结尾落在半决赛的问题上，不停在数据。"
+    }
+  ]
+}
+
