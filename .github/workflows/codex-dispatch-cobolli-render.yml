@@ -13,7 +13,7 @@ permissions:
 
 jobs:
   dispatch:
-    if: github.event.head_commit.message == 'ci: dispatch corrected Cobolli render'
+    if: "${{ github.event.head_commit.message == 'ci: dispatch corrected Cobolli render' }}"
     runs-on: ubuntu-latest
     steps:
       - name: Dispatch corrected production render without WeChat push
