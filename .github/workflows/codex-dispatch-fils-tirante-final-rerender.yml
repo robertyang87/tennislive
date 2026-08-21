@@ -1,0 +1,28 @@
+name: codex-dispatch-fils-tirante-final-rerender
+
+on:
+  push:
+    branches:
+      - codex/fils-tirante-final-20260821
+    paths:
+      - .github/workflows/codex-dispatch-fils-tirante-final-rerender.yml
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  dispatch:
+    if: "${{ github.event.head_commit.message == 'ci: rerender approximate Fils kickoff' }}"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dispatch final corrected render
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh workflow run match-reel.yml \
+            --repo "$GITHUB_REPOSITORY" \
+            --ref codex/fils-tirante-final-20260821 \
+            -f mode=render \
+            -f slug=fils-tirante \
+            -f push=false
