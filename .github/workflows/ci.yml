@@ -114,6 +114,9 @@ jobs:
           sparse-checkout: |
             /*
             !/output/
+            /output/**/*.json
+            /output/**/*.md
+            /output/**/*.txt
             /output/interviews/
             !/output/interviews/**/*.mp4
       - uses: actions/setup-python@v5
