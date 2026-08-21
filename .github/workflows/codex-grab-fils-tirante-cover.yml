@@ -1,0 +1,108 @@
+name: codex-grab-fils-tirante-cover
+
+on:
+  push:
+    branches:
+      - codex/fils-tirante-final-20260821
+    paths:
+      - .github/workflows/codex-grab-fils-tirante-cover.yml
+
+permissions:
+  contents: write
+
+jobs:
+  grab-cover:
+    if: "${{ github.event.head_commit.message == 'ci: grab exact-match Fils-Tirante cover' }}"
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Cache and install ffmpeg
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/apt-archives
+            ~/.cache/apt-lists
+          key: apt-pkgs-${{ runner.os }}-24.04-frame-grab-v1
+
+      - name: Install dependencies
+        run: |
+          source tools/ci_apt_install.sh
+          ensure_ffmpeg
+          pip install -q -e . "yt-dlp[default]" pillow
+          node --version
+
+      - name: Start PO token provider
+        id: pot
+        continue-on-error: true
+        run: |
+          pip install -q bgutil-ytdlp-pot-provider
+          docker run --name bgutil-pot -d -p 4416:4416 brainicism/bgutil-ytdlp-pot-provider
+          for i in $(seq 1 25); do
+            if curl -sf http://127.0.0.1:4416/ping >/dev/null; then
+              echo "up=1" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            sleep 2
+          done
+          docker logs bgutil-pot 2>&1 | tail -20 || true
+
+      - name: Materialize YouTube cookies
+        id: cookies
+        env:
+          YT_COOKIES_TXT: ${{ secrets.YT_COOKIES_TXT }}
+        run: |
+          if [ -n "$YT_COOKIES_TXT" ]; then
+            printf '%s' "$YT_COOKIES_TXT" > "$RUNNER_TEMP/yt-cookies.txt"
+            echo "path=$RUNNER_TEMP/yt-cookies.txt" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Download official source and extract exact-match frame
+        env:
+          YT_COOKIES: ${{ steps.cookies.outputs.path }}
+          YT_POT_PROVIDER: ${{ steps.pot.outputs.up }}
+          PYTHONPATH: src
+        run: |
+          python - <<'PY'
+          import shutil
+          import subprocess
+          import sys
+          from pathlib import Path
+          from PIL import Image
+
+          sys.path.insert(0, "tools")
+          from grab_frames import download
+
+          work = Path("/tmp/fils-tirante-cover")
+          work.mkdir(parents=True, exist_ok=True)
+          video = download("https://youtu.be/iDT22qnj6UU", work)
+          dest = Path("assets/reel/fils-tirante-cincinnati-2026-qf.jpg")
+          dest.parent.mkdir(parents=True, exist_ok=True)
+          subprocess.run([
+              "ffmpeg", "-v", "error", "-ss", "327.2", "-i", str(video),
+              "-frames:v", "1", "-vf", "scale=1920:-2", "-q:v", "2",
+              "-y", str(dest),
+          ], check=True)
+          with Image.open(dest) as image:
+              print(f"[封面原帧] {dest} {image.width}x{image.height}")
+              if min(image.size) < 1080:
+                  raise SystemExit(f"封面短边不足1080：{image.size}")
+          for path in work.glob("source.*"):
+              if path.is_file():
+                  path.unlink()
+          PY
+
+      - name: Commit exact-match cover
+        run: |
+          git config user.name "Codex"
+          git config user.email "noreply@openai.com"
+          git add -- assets/reel/fils-tirante-cincinnati-2026-qf.jpg
+          python tools/check_staged_file_sizes.py
+          git diff --cached --quiet && { echo "没有新封面"; exit 1; }
+          git commit -m "assets: add exact-match Fils-Tirante quarterfinal cover"
+          git push origin "HEAD:codex/fils-tirante-final-20260821"
