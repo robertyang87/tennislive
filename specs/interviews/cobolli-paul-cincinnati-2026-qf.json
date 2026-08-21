@@ -12,9 +12,9 @@
   "_heat_why": "半决赛级别（打进这一站半决赛）——按 2026-08-12 定的规矩「半决赛级别的都要做，轮次本身就是够格的理由」，不用再看排名。这场赢完之后同一天官方图库照片（fritz-oconnell.json 用的赛事媒体库）也拍到了他，可见这一站正在被重点报道。",
   "opening": {
     "kind": "none",
-    "why": "⚠️ 待 storyboard 确认的初值。字幕从 t=0.16 就已经是被截掉半句开头的一句问候（\"...here. Flavio, great to see you.\"），全片再没有出现任何解说复盘比分/回顾比赛的句子——和已发的 match_end 那几条（源片先有解说报比分、随后主持人才接过话筒）形状不同。本地 8 档 client 都取不到这条视频的 storyboard，先按证据现有的样子认领为 none，等 runner 上 --stage subs 出 storyboard 后核对一遍再定稿。"
+    "why": "字幕从 t=0.16 就已经是被截掉半句开头的一句问候（\"...here. Flavio, great to see you.\"），全片再没有出现任何解说复盘比分/回顾比赛的句子——和已发的 match_end 那几条（源片先有解说报比分、随后主持人才接过话筒）形状不同。runner 上 --stage subs 已跑出 storyboard：真实片长确认 212.0 秒，字幕核对表 102 行、0 处空档，本地手搓的转写和 runner 现场取的完全一致（提交时报「没有变化」），没有新证据推翻 none 这个认领。"
   },
-  "_note": "初稿：本地拉的自动字幕（web_embedded client），未联网下载视频。start/end 和 opening 都待 runner 上 --stage subs 出 storyboard 后核对一遍再定稿。",
+  "_note": "start/end/opening 已经过 runner 上 --stage subs 的 storyboard 核对（真实片长 212.0 秒，0 处空档）；cover.frame_at 仍待渲完之后拉回成片肉眼核对（storyboard.jpg 是工作台产物，渲染前会被清理，没法本地留存对照）。",
   "en_fixed": {
     "48": "Flavio.",
     "56": "I just saw on the interview,",
@@ -33,7 +33,7 @@
   ],
   "cover": {
     "frame_at": 122.5,
-    "_why": "⚠️ 待 storyboard 确认的初值。字幕里在 112.16s 和 122.24s 各标了一次 `[laughter]`——122.5s 紧接在他说完「I love M&M's.」（第54行「我超爱M&M豆。」）之后，正是这条采访里最放松、最有画面感的一刻，和封面钩子讲的是同一件事。渲完要按 Release 拉回本地按 0.5 秒抽一格核对具体表情，storyboard 本地 8 档 client 都没拿到。",
+    "_why": "⚠️ 待渲完之后拉回成片肉眼核对的初值。字幕里在 112.16s 和 122.24s 各标了一次 `[laughter]`——122.5s 紧接在他说完「I love M&M's.」（第54行「我超爱M&M豆。」）之后，正是这条采访里最放松、最有画面感的一刻，和封面钩子讲的是同一件事。storyboard.jpg 是渲染前会被清理的工作台产物，不进仓库，没法本地留存对照；渲完按已定的办法核：成片走 Release，拉回本地按 0.5 秒抽一格看（源片时刻 = 成片时刻 − 1.8 + start），不对就在这一段里挪。",
     "title": [
       "一发越打越猛",
       "他说是M&M豆的功劳"

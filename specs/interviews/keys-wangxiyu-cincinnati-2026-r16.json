@@ -5,6 +5,8 @@
   "start": 263.0,
   "end": 437.0,
   "whisper_model": "medium.en",
+  "transcript_verified": true,
+  "_verified_clean": "runner 上 mode=render 跑出的第一份验证报告：第一份 YouTube 自动字幕 469 词，第二份 faster-whisper（medium.en）471 词，对不上 4.1%（闸门 12%）。逐条核过：绝大多数是纯 ASR 填充词/数字读法差异（going to/gonna、8/eight、o'clock/o 'clock 这类），不影响字幕内容。两处人名相关的分歧（either selk / maybe sarah baedek 对应萨卡里，arena sabalena / irina sabalenka 对应萨巴伦卡）两份转写都听错了，但 zh 译文本来就是按上下文（下一轮对手是萨卡里或萨巴伦卡）写的正确人名，不需要改 en_fixed。唯一一处空档（263.0-265.3）在 caption_gaps_ok 里已经认领过，报告里同一段落也确认了这一处，没有新发现。",
   "column": "赛后开麦",
   "interview_kind": "赛后场上采访",
   "event": "2026 辛辛那提 WTA1000 1/8决赛",
