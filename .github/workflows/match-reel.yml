@@ -237,7 +237,16 @@ jobs:
           path: |
             ~/.cache/apt-archives
             ~/.cache/apt-lists
-          key: apt-pkgs-${{ runner.os }}-24.04-ffmpeg-fonts-v1
+          # actions/cache 的主键是不可变的。原来这儿是一把固定钥匙：如果第一趟
+          # probe 只攒下 ffmpeg，后面的 render 即使把字体包补进目录，post step
+          # 也不能覆盖同名缓存，于是每一趟 render 仍要重新摸 apt 镜像。
+          #
+          # 和下面 TTS 内容缓存一样改成滚动键：先按稳定前缀恢复最近一份，跑完
+          # 再用本次 run_id 回写「旧缓存 + 这趟补齐的包」。这样一次 render
+          # 补齐字体后，下一趟才能真的吃到完整缓存。
+          key: apt-pkgs-${{ runner.os }}-24.04-ffmpeg-fonts-v2-${{ github.run_id }}
+          restore-keys: |
+            apt-pkgs-${{ runner.os }}-24.04-ffmpeg-fonts-v2-
       - name: 装 ffmpeg
         # push 模式一帧都不碰：`push_reel.py` 那条路里 ffmpeg / ffprobe /
         # subprocess **一个都没出现**，装它白花半分钟。
@@ -363,6 +372,32 @@ jobs:
         # 掐掉，和「装不上」长得一模一样。
         timeout-minutes: 10
         run: |
+          # 浏览器目录命中缓存后，先真启动一个空白页。启动成功同时证明：
+          # ① 当前 playwright 找得到正确版本的 Chromium；② runner 上所需动态库
+          # 已齐。此时再跑 `--with-deps` 只会重复碰 apt，白花几十秒到数分钟。
+          #
+          # 不能只看 actions/cache 的 cache-hit：restore-keys 命中的旧缓存也可能
+          # 正好可用，反过来「目录命中」也不保证动态库齐。真 launch 是行为判据；
+          # 失败才原样落回下面带超时、重试和 dpkg 收尾的安装路径。
+          if timeout 20 python - <<'PY'
+          from playwright.sync_api import sync_playwright
+
+          try:
+              with sync_playwright() as playwright:
+                  browser = playwright.chromium.launch(headless=True)
+                  page = browser.new_page()
+                  page.set_content("<p>chromium-ready</p>")
+                  assert page.locator("p").inner_text() == "chromium-ready"
+                  browser.close()
+          except Exception as exc:  # noqa: BLE001
+              print(f"[chromium] 缓存未就绪，走带依赖安装：{type(exc).__name__}: {exc}")
+              raise SystemExit(1)
+          PY
+          then
+            echo "[chromium] 缓存可直接启动，跳过带系统依赖的安装"
+            exit 0
+          fi
+
           # ⚠️ **`--with-deps` 会跑 apt，而这个仓库的 apt 会抽风。** CLAUDE.md 里那条
           # 「一次静静烧了 13 分 42 秒」的教训当时只套在显式的 `apt-get` 步骤上，
           # **漏了这一处**——而它既没超时也没重试，能一路烧到 job 的 15 分钟预算
