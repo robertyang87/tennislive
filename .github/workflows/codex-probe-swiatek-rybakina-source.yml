@@ -11,58 +11,67 @@ permissions:
   contents: read
 
 jobs:
-  search:
-    if: "${{ github.event.head_commit.message == 'ci: search Swiatek-Rybakina retirement footage' }}"
+  probe:
+    if: "${{ github.event.head_commit.message == 'ci: compare Swiatek-Rybakina footage tails' }}"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - name: Install yt-dlp
-        run: pip install -q --upgrade yt-dlp
-      - name: Search YouTube metadata
+      - name: Install tools
         run: |
+          pip install -q --upgrade yt-dlp
+          ffmpeg -version | head -1
+      - name: Download candidates and build tail sheets
+        run: |
+          mkdir -p probe
           python - <<'PY'
           import json
+          import pathlib
           import subprocess
 
-          queries = [
-              "Iga Swiatek vs Elena Rybakina Cincinnati 2026 highlights",
-              "Elena Rybakina injury retirement Swiatek Cincinnati 2026",
-              "Swiatek Rybakina Cincinnati quarterfinal 2026 WTA",
-              "Rybakina retires Swiatek left ankle Cincinnati",
-          ]
+          ids = ["1dkPejO-PCM", "rBQIf_-9v4Y", "ntKq8uBK5dM", "nPO6CwFZ3K8", "GiTIW-YDFKk"]
           rows = []
-          for query in queries:
+          for vid in ids:
+              out = pathlib.Path("probe") / f"{vid}.mp4"
               cmd = [
-                  "yt-dlp", "--flat-playlist", "--dump-single-json",
-                  "--playlist-end", "25", f"ytsearch25:{query}",
+                  "yt-dlp", "--no-playlist", "--retries", "3",
+                  "-f", "bv*[height<=720]+ba/b[height<=720]",
+                  "--merge-output-format", "mp4",
+                  "-o", str(out), f"https://youtu.be/{vid}",
               ]
               proc = subprocess.run(cmd, capture_output=True, text=True)
-              item = {"query": query, "returncode": proc.returncode,
-                      "stderr": proc.stderr[-4000:]}
-              if proc.returncode == 0:
-                  data = json.loads(proc.stdout)
-                  item["entries"] = [
-                      {
-                          "id": e.get("id"),
-                          "title": e.get("title"),
-                          "url": e.get("url"),
-                          "webpage_url": e.get("webpage_url"),
-                          "channel": e.get("channel"),
-                          "channel_id": e.get("channel_id"),
-                          "duration": e.get("duration"),
-                          "timestamp": e.get("timestamp"),
-                          "live_status": e.get("live_status"),
-                      }
-                      for e in (data.get("entries") or [])
-                  ]
-              rows.append(item)
-          with open("candidates.json", "w", encoding="utf-8") as fh:
-              json.dump(rows, fh, ensure_ascii=False, indent=2)
+              row = {"id": vid, "download_rc": proc.returncode,
+                     "stderr": proc.stderr[-4000:]}
+              if proc.returncode != 0:
+                  rows.append(row)
+                  continue
+              probe = subprocess.run(
+                  ["ffprobe", "-v", "error", "-show_entries",
+                   "format=duration:stream=width,height,r_frame_rate",
+                   "-of", "json", str(out)],
+                  capture_output=True, text=True, check=True)
+              meta = json.loads(probe.stdout)
+              row["probe"] = meta
+              duration = float(meta["format"]["duration"])
+              start = max(0.0, duration - 300.0)
+              sheet = pathlib.Path("probe") / f"{vid}-tail.jpg"
+              vf = "fps=1/4,scale=320:-2,tile=5x15:padding=4:margin=4"
+              frame = subprocess.run(
+                  ["ffmpeg", "-hide_banner", "-loglevel", "error",
+                   "-ss", f"{start:.3f}", "-i", str(out), "-t", "300",
+                   "-vf", vf, "-frames:v", "1", "-q:v", "3", str(sheet)],
+                  capture_output=True, text=True)
+              row["tail_start"] = start
+              row["sheet_rc"] = frame.returncode
+              row["sheet_stderr"] = frame.stderr[-2000:]
+              rows.append(row)
+              out.unlink()
+          (pathlib.Path("probe") / "probe.json").write_text(
+              json.dumps(rows, ensure_ascii=False, indent=2), encoding="utf-8")
           PY
       - uses: actions/upload-artifact@v4
         with:
-          name: swiatek-rybakina-source-candidates
-          path: candidates.json
+          name: swiatek-rybakina-footage-tails
+          path: probe
           retention-days: 7
