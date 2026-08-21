@@ -1,0 +1,68 @@
+name: codex-probe-swiatek-rybakina-source
+
+on:
+  push:
+    branches:
+      - codex/probe-swiatek-rybakina-20260821
+    paths:
+      - .github/workflows/codex-probe-swiatek-rybakina-source.yml
+
+permissions:
+  contents: read
+
+jobs:
+  search:
+    if: "${{ github.event.head_commit.message == 'ci: search Swiatek-Rybakina retirement footage' }}"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install yt-dlp
+        run: pip install -q --upgrade yt-dlp
+      - name: Search YouTube metadata
+        run: |
+          python - <<'PY'
+          import json
+          import subprocess
+
+          queries = [
+              "Iga Swiatek vs Elena Rybakina Cincinnati 2026 highlights",
+              "Elena Rybakina injury retirement Swiatek Cincinnati 2026",
+              "Swiatek Rybakina Cincinnati quarterfinal 2026 WTA",
+              "Rybakina retires Swiatek left ankle Cincinnati",
+          ]
+          rows = []
+          for query in queries:
+              cmd = [
+                  "yt-dlp", "--flat-playlist", "--dump-single-json",
+                  "--playlist-end", "25", f"ytsearch25:{query}",
+              ]
+              proc = subprocess.run(cmd, capture_output=True, text=True)
+              item = {"query": query, "returncode": proc.returncode,
+                      "stderr": proc.stderr[-4000:]}
+              if proc.returncode == 0:
+                  data = json.loads(proc.stdout)
+                  item["entries"] = [
+                      {
+                          "id": e.get("id"),
+                          "title": e.get("title"),
+                          "url": e.get("url"),
+                          "webpage_url": e.get("webpage_url"),
+                          "channel": e.get("channel"),
+                          "channel_id": e.get("channel_id"),
+                          "duration": e.get("duration"),
+                          "timestamp": e.get("timestamp"),
+                          "live_status": e.get("live_status"),
+                      }
+                      for e in (data.get("entries") or [])
+                  ]
+              rows.append(item)
+          with open("candidates.json", "w", encoding="utf-8") as fh:
+              json.dump(rows, fh, ensure_ascii=False, indent=2)
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: swiatek-rybakina-source-candidates
+          path: candidates.json
+          retention-days: 7
