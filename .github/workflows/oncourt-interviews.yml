@@ -80,7 +80,6 @@ jobs:
         run: pip install -q "yt-dlp[default]>=2026.7.4"
 
       - name: 采集
-        if: github.event.inputs.only != 'codex-swiatek-interview-preview'
         run: |
           # 默认日常增量（每源 60 条，约 1 分钟）。新内容永远在频道最前面，
           # 每天重刷 800 条历史既慢又没意义——手动派发时勾 full 才深扫。
@@ -90,7 +89,6 @@ jobs:
             | tee /tmp/oncourt.log
 
       - name: 用赛果反查缺口（顺带发现新频道）
-        if: github.event.inputs.only != 'codex-swiatek-interview-preview'
         run: |
           # 拿「赢了但没采访」的场次当种子，按「球员 + 赛事」直接搜。
           # 比通用查询强的地方在于能撞见标题不含 on-court/interview 的频道
@@ -105,7 +103,7 @@ jobs:
         # 只在周一跑：搜索有配额，每天跑没必要——新源不会天天出现。
         #
         # **只挂在早上那一轮上。** 一天跑两轮，不限定的话周一会搜两遍。
-        if: github.event.inputs.only != 'codex-swiatek-interview-preview' && github.event.schedule != '0 3 * * *'
+        if: github.event.schedule != '0 3 * * *'
         run: |
           # 星期几按**上海时间**算。早上那一轮是 21:00 UTC 起跑，UTC 还停在
           # 前一天——`date -u +%u` 判出来的「周一」其实是北京的周二。
@@ -117,7 +115,6 @@ jobs:
           fi
 
       - name: 比对赛果，算出「赢了但没采访」的缺口
-        if: github.event.inputs.only != 'codex-swiatek-interview-preview'
         run: |
           # 采集保证不了每场都有采访（源头就不是每场都发），所以把缺口
           # 明确列出来，别让它静默存在。抓不到赛果时退出码 2，
@@ -127,7 +124,6 @@ jobs:
             | tee -a /tmp/oncourt.log || echo "::warning::赛果抓取失败，本次没有缺口对照"
 
       - name: 筛出关键场次与中国球员，推到微信
-        if: github.event.inputs.only != 'codex-swiatek-interview-preview'
         id: feed
         # 推送失败必须保留真实 outcome，但不能阻断下一步把已经采集到的数据
         # 提交回仓库。提交后会再次按 outcome 让整个 run 红灯告警。
@@ -157,7 +153,6 @@ jobs:
           fi
 
       - name: 挑出该剪成片的候选（赛后开麦自动出片链的输入）
-        if: github.event.inputs.only != 'codex-swiatek-interview-preview'
         run: |
           # 在 oncourt_feed 的选题闸之上再加三道成片闸（oncourt 类型 / 未做过 /
           # 赛事还在打），写 data/interview_clip_candidates.json 给「自动建 spec →
