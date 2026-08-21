@@ -1,0 +1,63 @@
+name: codex-preview-swiatek-interview-draft
+
+on:
+  push:
+    branches:
+      - codex/swiatek-rybakina-cincinnati-2026-qf-interview
+    paths:
+      - .github/workflows/codex-preview-swiatek-interview-draft.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: codex-preview-swiatek-interview-draft
+  cancel-in-progress: false
+
+jobs:
+  draft:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            data
+            specs
+            src
+            tools
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: 安装转写依赖
+        run: pip install -q -e . "yt-dlp[default]>=2026.7.4" faster-whisper
+
+      - name: 准备 YouTube cookies
+        env:
+          YT_COOKIES_TXT: ${{ secrets.YT_COOKIES_TXT }}
+        run: |
+          if [ -n "$YT_COOKIES_TXT" ]; then
+            printf '%s\n' "$YT_COOKIES_TXT" > /tmp/yt-cookies.txt
+            echo "YT_COOKIES=/tmp/yt-cookies.txt" >> "$GITHUB_ENV"
+          fi
+
+      - name: 转写并翻译完整采访
+        env:
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+        run: |
+          python tools/draft_interview_spec.py --candidate 0 --write
+
+      - name: 提交双语草稿到预览分支
+        run: |
+          git add specs/interviews/*.draft.json
+          if git diff --cached --quiet; then
+            echo "没有生成草稿"
+            exit 1
+          fi
+          git config user.name "Codex"
+          git config user.email "noreply@openai.com"
+          git commit -m "interview: 生成斯瓦泰克赛后采访双语草稿"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
