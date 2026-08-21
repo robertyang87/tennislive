@@ -1,0 +1,214 @@
+{
+  "slug": "swiatek-rybakina-cincinnati-2026-qf",
+  "source_url": "https://www.youtube.com/watch?v=ntKq8uBK5dM",
+  "_source": "当前能找到的这场辛辛那提女单1/4决赛的最长连续实拍源之一，1280×720、60 fps、705.98 秒。逐秒素材墙核过：450 秒以后是本场连续转播画面；567.5–685.0 完整包含最后一个回合、莱巴金娜弯腰扶拍、走到场边、脱鞋检查左脚跟、理疗师进场、重新穿鞋回到底线、尝试一次发球、走向球网退赛和双方握手。29 分钟候选混入旧场次，另外两条是评论拼贴，均不采用。WTA 官方单场集锦在制作时尚未上线；若后续上线且包含同样完整的伤退过程，可替换为官方源而不改文案逻辑。",
+  "_column": "赛场之上。先让观众看见她尝试继续却停下，再倒回三十分钟前：一场只打了五局的1/4决赛，如何同时改写比赛、伤病和世界第一的窗口。",
+  "_editing_why": "用她治疗后只尝试一次发球的动作冷开，再倒回三十分钟前交代时间、排名、争夺世界第一的背景和五局技术统计；567.5 秒起进入完整伤退段落，四段首尾无缝相接、没有旁白，保留现场声。分段只是为了让竖裁跟随人物并降低单段编码风险，不删掉中间任何一步。完整顺序是：最后一个回合 → 弯腰扶拍 → 走向裁判椅 → 坐下脱鞋 → 检查和处理左脚跟 → 重新上场 → 只尝试一次发球 → 退赛握手。四秒以上无人旁白在这一段只应提示，不应判失败；这里的留白就是内容。",
+  "_voice": "云见（zh-CN-YunjianNeural），语速 +6%；伤退全过程不用旁白覆盖。",
+  "_claims": {
+    "比分和用时": "WTA 官方 2026 辛辛那提 matches 接口 LS007：斯瓦泰克 4-1 领先时莱巴金娜退赛，MatchTimeTotal 00:31:18；同场 stats 的 settime 00:26:17。",
+    "排名": "WTA 官方 players/ranked，榜单日期 2026-08-10：莱巴金娜世界第2（8316分），斯瓦泰克世界第5（5419分）。本站种子是2号和7号，种子号不等于排名。",
+    "伤势和退赛过程": "Reuters 与 AP 均报道为左脚跟/左踝附近不适，莱巴金娜在4-1、40-40后无法正常承重，接受理疗师检查，重新上场尝试一次发球后退赛。片源567.5–685.0逐秒画面与报道顺序一致。",
+    "技术统计": "flashscore MZoyoKQa 与 WTA LS007 stats 相互核对：斯瓦泰克22分、莱巴金娜14分；Ace 0-1，双误1-1，破发点1/1对0/1。TNNS id=73466988、workflow run 32451739274：制胜分4-5、非受迫失误4-8，分盘合计与全场一致。"
+  },
+  "_hit_data": "跑过tools/assemble_spec.py反查flashscore id=MZoyoKQa。候选：总分差斯瓦泰克22-14、净差8分；斯瓦泰克破发点1/1，莱巴金娜0/1；斯瓦泰克连续保发3个发球局；交手记录含本场斯瓦泰克11-7领先。片中只取总分差和TNNS制胜分/非受迫失误，避免给一场退赛堆太多完整比赛口径的数据。",
+  "editorial": {
+    "mode": "match_review",
+    "question": "一场只打了五局的1/4决赛，为什么最后一百多秒必须一刀不省？",
+    "thesis": "因为真正的事件不是四比一，而是四十平之后发生的连续动作：莱巴金娜打完一分后弯腰、无法正常给左脚跟承重，走到场边脱鞋接受检查；治疗结束她重新上场，却只试了一次发球，随后走向球网退赛。比赛层面的账很短：斯瓦泰克总分22比14、唯一一次破发机会就兑现；莱巴金娜制胜分反而5比4更多，但非受迫失误8比4。场外的分量更重——萨巴伦卡已经出局，她只要打进决赛，就有机会在美网开赛前第一次成为世界第一；本场伤退让这条登顶路径当场中断。",
+    "beats": [
+      "前段：北京时间早上七点前，世界第五斯瓦泰克对世界第二莱巴金娜；五局后斯瓦泰克4-1领先",
+      "中段：4-1、40-40，完整保留最后一个回合、弯腰、检查左脚跟和治疗",
+      "结局：莱巴金娜重新上场只试了一次发球，随后退赛握手；斯瓦泰克晋级对佩古拉"
+    ],
+    "human_context": {
+      "angle": "这不是一条用受伤制造猎奇的片子。镜头必须完整，正是为了让观众看见她确实尝试过继续，而不是用一张弯腰截图替她下结论。",
+      "facts": [
+        "WTA 官方：LS007，斯瓦泰克4-1领先时退赛，官方总用时31分18秒、盘内净打26分17秒",
+        "WTA 官方排名（2026-08-10）：莱巴金娜第2、斯瓦泰克第5；本站种子2号和7号",
+        "Reuters：莱巴金娜若打进决赛，仍可能第一次升到世界第一；本场退赛后斯瓦泰克半决赛对佩古拉",
+        "AP/Reuters：伤处在左脚跟/左踝附近，治疗后尝试一次发球，随后退赛；美网十天后开赛",
+        "TNNS：斯瓦泰克制胜分4、非受迫失误4；莱巴金娜制胜分5、非受迫失误8"
+      ],
+      "sources": [
+        "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches?states=C",
+        "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches/LS007/stats",
+        "https://api.wtatennis.com/tennis/players/ranked?page=0&pageSize=100&type=rankSingles&sort=asc&name=&metric=SINGLES",
+        "https://global.flashscore.ninja/2/x/feed/df_st_1_MZoyoKQa",
+        "https://www.reuters.com/sports/tennis/pegula-downs-anisimova-to-advance-cincinnati-open-semi-finals-2026-08-20/",
+        "https://www.ctinsider.com/sports/article/elena-rybakina-stops-playing-during-first-set-22397420.php"
+      ],
+      "voice_label": "四十平之后的完整一百一十七秒"
+    }
+  },
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "莱巴金娜",
+    "hook": "登顶只差两胜\n她只试了一次发球",
+    "_hook_why": "第一行交代她只需再赢两场打进决赛即可首次登顶的排名stakes，又避免把“世界第一”误读成她的当前排名；第二行落到治疗后尝试继续的动作，不重复赛果行。没有用庆祝照：这场没有正常完成，真正准确的情绪是她重新上场后意识到无法继续的表情。",
+    "_subject_why": "封面主体放莱巴金娜：用户明确要求突出她受伤及退赛的完整镜头，且她是世界第二、这条新闻的主体。",
+    "_heat_why": "两人均为世界前五；莱巴金娜若进决赛仍有首次登顶世界第一的机会，本场伤退又发生在美网开赛前十天。",
+    "topic": "WTA1000 辛辛那提 · 女单1/4决赛",
+    "portrait": {
+      "image": "assets/reel/rybakina-swiatek-cincinnati-2026-qf-lequipe.jpg",
+      "focus": 0.5,
+      "focus_y": 0.5,
+      "zoom": 1.0,
+      "_photo_why": "本场高清实拍，不是抽帧。L'Équipe本场赛后稿的头图，图片说明直接写Elena Rybakina因伤离开辛辛那提，摄影A. Réau/L'Équipe；稿件标题和正文明确是本场对斯瓦泰克的1/4决赛，并写到4-1时理疗师处理脚跟。源站最高档图为2048×1365；用同一图片服务按人物位置无损裁成1080×1440、quality=90，封面不再二次放大。照片是她抬头闭眼的受挫表情，衣着与源片本场一致，也正好对应伤退和错过登顶窗口的主题。来源：https://www.lequipe.fr/Tennis/Actualites/Iga-swiatek-en-demi-finales-a-cincinnati-apres-l-abandon-d-elena-rybakina/1712436"
+    },
+    "scrim": "clear",
+    "winner": "斯瓦泰克",
+    "result": "4-1",
+    "_result_why": "比分槽只放能拆开的盘分4-1；退赛在钩子、旁白和正文明确交代，避免比分解析器把中文当成盘分。",
+    "matchup": [
+      {
+        "name": "莱巴金娜",
+        "name_en": "Elena Rybakina",
+        "country": "KAZ",
+        "rank": 2
+      },
+      {
+        "name": "斯瓦泰克",
+        "name_en": "Iga Swiatek",
+        "country": "POL",
+        "rank": 5
+      }
+    ],
+    "_matchup_rank_why": "WTA 官方 players/ranked 榜单日期2026-08-10：莱巴金娜第2、斯瓦泰克第5。源片记分条的[2]/[7]是本站种子号，不是世界排名。",
+    "scoreboard": {
+      "court": "P&G Stadium Court",
+      "duration_source": {
+        "provider": "wta",
+        "url": "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches?states=C",
+        "match_id": "LS007",
+        "field": "MatchTimeTotal",
+        "source_page": "https://www.wtatennis.com/tournaments/1017/cincinnati/2026/scores/LS007"
+      },
+      "_duration_why": "WTA官方MatchTimeTotal=00:31:18；同场stats的settime=00:26:17。差5分01秒主要落在治疗和退赛流程，片中如实解释。球场地面P&G标识与本场CourtID=1互相印证。"
+    }
+  },
+  "topbar": {
+    "line1": "WTA1000 辛辛那提 1/4决赛",
+    "line2": "斯瓦泰克 4-1 莱巴金娜"
+  },
+  "stats": {
+    "tour": "wta",
+    "a": {
+      "headshot": "assets/players/headshots/wta-324166.jpg",
+      "aces": 1,
+      "df": 1,
+      "first_in": 10,
+      "first_won": 6,
+      "first_total": 18,
+      "second_total": 8,
+      "second_won": 3,
+      "bp_conv": 0,
+      "bp_chances": 1,
+      "pts_won": 14,
+      "pts_total": 36,
+      "winners": 5,
+      "ue": 8
+    },
+    "b": {
+      "headshot": "assets/players/headshots/wta-326408.jpg",
+      "aces": 0,
+      "df": 1,
+      "first_in": 12,
+      "first_won": 10,
+      "first_total": 18,
+      "second_total": 6,
+      "second_won": 3,
+      "bp_conv": 1,
+      "bp_chances": 1,
+      "pts_won": 22,
+      "pts_total": 36,
+      "winners": 4,
+      "ue": 4
+    },
+    "_source": "stats.a跟cover.matchup[0]莱巴金娜，stats.b跟斯瓦泰克。基础十二项来自flashscore MZoyoKQa，并与WTA LS007 stats逐项核对。制胜分/非受迫失误来自TNNS id=73466988、workflow run 32451739274；TNNS原顺序[Swiatek,Rybakina]为[4,5]/[4,8]，填进a/b时按cover顺序反过来。退赛场次的统计只覆盖已经完成的36分，不与完整三盘比赛横比。",
+    "footer_venue": "P&G Stadium Court · 辛辛那提",
+    "footer_date": "2026.08.21"
+  },
+  "segments": [
+    {
+      "start": 671.5,
+      "end": 679.3,
+      "cx": 0.5,
+      "_why": "冷开场：治疗后莱巴金娜回到底线，只尝试一次发球便停下；只留现场声。先抛出结果中的动作，再倒回三十分钟前。"
+    },
+    {
+      "start": 499.0,
+      "end": 513.5,
+      "cx": 0.5,
+      "narration": "她刚刚只试了一次发球，就停下了。把时间拨回三十分钟前：北京时间八月二十一日早上七点前，辛辛那提女单四分之一决赛。",
+      "_why": "承接冷开场再倒叙；坐标只报大概时段，不报到分。"
+    },
+    {
+      "start": 516.0,
+      "end": 531.5,
+      "cx": 0.5,
+      "narration": "世界第二莱巴金娜，对世界第五斯瓦泰克。萨巴伦卡已经出局；她只要再赢两场打进决赛，就能在美网开始前第一次成为世界第一。",
+      "_why": "排名来自WTA官方2026-08-10榜单；再赢两场即从1/4决赛打进决赛，交代她在本场伤退后错过的美网前登顶窗口，条件来自Reuters。"
+    },
+    {
+      "start": 533.0,
+      "end": 545.0,
+      "cx": 0.5,
+      "narration": "五局之后，斯瓦泰克四比一领先。总分二十二比十四；莱巴金娜制胜分五比四更多，非受迫失误却是八比四。",
+      "_why": "比分和总分由WTA/flashscore互证，制胜分与非受迫失误来自TNNS。"
+    },
+    {
+      "start": 550.0,
+      "end": 567.5,
+      "cx": 0.5,
+      "narration": "第六局，莱巴金娜发球。三十比四十，她救回破发点，追到四十平。接下来这一百多秒，完整保留。",
+      "_why": "把画面坐标钉到4-1、40-40，之后不再配旁白。"
+    },
+    {
+      "start": 567.5,
+      "end": 591.0,
+      "cx": 0.58,
+      "_why": "完整伤退①：四十平后的回合、莱巴金娜弯腰扶拍、无法正常给左脚跟承重。连续现场声，不配旁白。"
+    },
+    {
+      "start": 591.0,
+      "end": 614.0,
+      "cx": 0.42,
+      "_why": "完整伤退②：她走向裁判椅、坐下、脱鞋检查左脚跟。与前一段无缝相接。"
+    },
+    {
+      "start": 614.0,
+      "end": 654.0,
+      "cx": 0.36,
+      "_why": "完整伤退③：理疗师进场检查和处理左脚跟，全程保留。与前后两段无缝相接。"
+    },
+    {
+      "start": 654.0,
+      "end": 685.0,
+      "cx": 0.5,
+      "_why": "完整伤退④：重新穿鞋上场、尝试一次发球、停下来走向球网、退赛握手。到握手结束才切走。"
+    },
+    {
+      "start": 685.0,
+      "end": 694.0,
+      "cx": 0.5,
+      "narration": "WTA账上是三十一分十八秒，盘内净打二十六分十七秒。多出来的五分钟，就是这次治疗和离场。",
+      "_why": "官方总用时与settime相差5分01秒；画面是斯瓦泰克向观众致意。"
+    },
+    {
+      "start": 695.0,
+      "end": 705.5,
+      "fit": "contain",
+      "narration": "斯瓦泰克晋级，对佩古拉。莱巴金娜错过美网前登顶。她走回底线，试过继续。十天后，美网见吗？",
+      "_why": "把伤退和错过美网前登顶世界第一的机会闭环，再用她确实尝试继续的动作作为情绪落点；最后落在美网倒计时，不替医疗团队诊断。画面是签表更新。"
+    }
+  ],
+  "push": {
+    "summary": "只差两胜登顶，她却伤退",
+    "lead": "她距离职业生涯第一次世界第一，原本只差两场胜利。辛辛那提女单1/4决赛，世界第五斯瓦泰克4-1领先时，世界第二莱巴金娜在40-40后左脚跟无法正常承重。她没有立刻放弃：脱鞋接受检查和治疗，重新系紧鞋带走回底线，却只尝试一次发球，随后退赛握手。萨巴伦卡已经出局，她只要打进决赛，就能在美网开始前首次登顶；本场伤退让这条路径当场中断。视频把最后一个回合、弯腰、检查、治疗、回场和握手的一百多秒完整留下。技术统计图：斯瓦泰克总分22-14，破发点1/1；莱巴金娜制胜分5-4更多，但非受迫失误8-4。",
+    "auto": false,
+    "_no_auto_why": "制作分支只渲染、不发布；成片、封面和技术统计图QA通过并合入main后，按用户要求单独mode=push，避免未验先发。",
+    "_summary_why": "标题12字以内，把世界第一的机会与伤退结果连在一起。"
+  }
+}
