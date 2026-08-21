@@ -7,7 +7,7 @@ ScaledBorderAndShadow: yes
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: TL,Noto Sans CJK SC,68,&H00ECF3E7,&H000000FF,&H00181E14,&H00000000,1,0,0,0,100,100,0,0,1,3,0,8,150,150,1284,1
+Style: TL,Noto Sans CJK SC,68,&H00ECF3E7,&H000000FF,&H00181E14,&H00000000,1,0,0,0,100,100,0,0,1,3,0,8,150,150,1240,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
@@ -30,24 +30,25 @@ Dialogue: 0,0:00:53.71,0:00:54.97,TL,,0,0,0,,{\fs78}30{\fs68}比{\fs78}40{\fs68}
 Dialogue: 0,0:00:54.97,0:00:56.21,TL,,0,0,0,,她救回破发点
 Dialogue: 0,0:00:56.21,0:00:57.70,TL,,0,0,0,,追到{\fs78}40{\fs68}平
 Dialogue: 0,0:00:57.70,0:01:00.72,TL,,0,0,0,,接下来这{\fs78}100{\fs68}多秒 完整保留
-Dialogue: 0,0:01:24.00,0:01:27.00,TL,,0,0,0,,{\fs78}Couldn{\fs68}'{\fs78}t{\fs68} {\fs78}pick{\fs68} {\fs78}up{\fs68} {\fs78}the{\fs68} {\fs78}half{\fs68}-{\fs78}volley{\fs68}.\N半截击没能处理好
-Dialogue: 0,0:01:27.00,0:01:28.00,TL,,0,0,0,,{\fs78}What{\fs68} {\fs78}just{\fs68} {\fs78}happened{\fs68}?\N刚才发生了什么
-Dialogue: 0,0:01:28.00,0:01:31.00,TL,,0,0,0,,{\fs78}Yeah{\fs68}, {\fs78}I{\fs68} {\fs78}think{\fs68} {\fs78}she{\fs68} {\fs78}hurt{\fs68} {\fs78}her{\fs68} {\fs78}leg{\fs68} {\fs78}on{\fs68} {\fs78}that{\fs68} {\fs78}previous{\fs68} {\fs78}point{\fs68}.\N我想她是在上一分伤到了腿
-Dialogue: 0,0:01:31.00,0:01:32.00,TL,,0,0,0,,{\fs78}Her{\fs68} {\fs78}Achilles{\fs68}.\N是她的跟腱
-Dialogue: 0,0:01:34.00,0:01:39.00,TL,,0,0,0,,{\fs78}She{\fs68}'{\fs78}s{\fs68} {\fs78}got{\fs68} {\fs78}tape{\fs68} {\fs78}on{\fs68} {\fs78}her{\fs68} {\fs78}left{\fs68} {\fs78}ankle{\fs68}.\N她的左脚踝贴着胶布
-Dialogue: 0,0:01:39.00,0:01:44.00,TL,,0,0,0,,{\fs78}Rybakina{\fs68} {\fs78}has{\fs68} {\fs78}requested{\fs68} {\fs78}the{\fs68} {\fs78}physio{\fs68} {\fs78}mid{\fs68}-{\fs78}game{\fs68}, {\fs78}at{\fs68} {\fs78}4{\fs68} 比 {\fs78}1{\fs68}, {\fs78}deuce{\fs68}, {\fs78}serving{\fs68}.\N莱巴金娜在{\fs78}1{\fs68}比{\fs78}4{\fs68}平分的发球局请求理疗师入场
-Dialogue: 0,0:01:44.00,0:01:49.00,TL,,0,0,0,,{\fs78}You{\fs68} {\fs78}see{\fs68} {\fs78}the{\fs68} {\fs78}bit{\fs68} {\fs78}of{\fs68} {\fs78}tape{\fs68} {\fs78}on{\fs68} {\fs78}her{\fs68} {\fs78}left{\fs68} {\fs78}ankle{\fs68}, {\fs78}heel{\fs68}.\N可以看到她左脚踝和脚跟处的胶布
-Dialogue: 0,0:01:49.00,0:01:55.00,TL,,0,0,0,,{\fs78}Not{\fs68} {\fs78}moving{\fs68} {\fs78}comfortably{\fs68} {\fs78}at{\fs68} {\fs78}all{\fs68}.\N她走路明显很不舒服
-Dialogue: 0,0:02:13.00,0:02:17.00,TL,,0,0,0,,{\fs78}Her{\fs68} {\fs78}team{\fs68} {\fs78}has{\fs68} {\fs78}to{\fs68} {\fs78}look{\fs68} {\fs78}on{\fs68} {\fs78}here{\fs68}, {\fs78}but{\fs68} {\fs78}Brett{\fs68}, {\fs78}if{\fs68} {\fs78}it{\fs68} {\fs78}is{\fs68} {\fs78}the{\fs68} {\fs78}Achilles{\fs68}...\N她的团队只能在场边看着 但如果真是跟腱……
-Dialogue: 0,0:02:17.00,0:02:21.00,TL,,0,0,0,,{\fs78}Here{\fs68}'{\fs78}s{\fs68} {\fs78}the{\fs68} {\fs78}fact{\fs68}: {\fs78}Rybakina{\fs68} {\fs78}is{\fs68} {\fs78}two{\fs68} {\fs78}wins{\fs68} {\fs78}away{\fs68} {\fs78}from{\fs68} {\fs78}the{\fs68} {\fs78}No{\fs68}. {\fs78}1{\fs68} {\fs78}ranking{\fs68}.\N事实是 莱巴金娜距离世界第一只差两场胜利
-Dialogue: 0,0:02:21.00,0:02:26.00,TL,,0,0,0,,{\fs78}If{\fs68} {\fs78}she{\fs68} {\fs78}wins{\fs68} {\fs78}this{\fs68} {\fs78}and{\fs68} {\fs78}then{\fs68} {\fs78}wins{\fs68} {\fs78}the{\fs68} {\fs78}semi{\fs68},\N如果她赢下这场 再赢下半决赛
-Dialogue: 0,0:02:26.00,0:02:29.00,TL,,0,0,0,,{\fs78}she{\fs68} {\fs78}will{\fs68} {\fs78}supplant{\fs68} {\fs78}Sabalenka{\fs68} {\fs78}by{\fs68} {\fs78}exactly{\fs68} {\fs78}one{\fs68} {\fs78}point{\fs68}\N她将以恰好一分的优势取代萨巴伦卡
-Dialogue: 0,0:02:29.00,0:02:32.00,TL,,0,0,0,,{\fs78}and{\fs68} {\fs78}become{\fs68} {\fs78}the{\fs68} {\fs78}world{\fs68} {\fs78}No{\fs68}. {\fs78}1{\fs68} {\fs78}for{\fs68} {\fs78}the{\fs68} {\fs78}first{\fs68} {\fs78}time{\fs68}.\N并首次登上世界第一
-Dialogue: 0,0:02:32.00,0:02:35.00,TL,,0,0,0,,{\fs78}It{\fs68} {\fs78}doesn{\fs68}'{\fs78}t{\fs68} {\fs78}look{\fs68} {\fs78}great{\fs68} {\fs78}here{\fs68}. {\fs78}She{\fs68} {\fs78}hasn{\fs68}'{\fs78}t{\fs68} {\fs78}looked{\fs68} {\fs78}that{\fs68} {\fs78}comfortable{\fs68}.\N情况看起来不妙 她一直很不舒服
-Dialogue: 0,0:02:36.00,0:02:41.00,TL,,0,0,0,,{\fs78}She{\fs68} {\fs78}retired{\fs68} {\fs78}from{\fs68} {\fs78}a{\fs68} {\fs78}tournament{\fs68} {\fs78}just{\fs68} {\fs78}once{\fs68} {\fs78}earlier{\fs68} {\fs78}this{\fs68} {\fs78}year{\fs68}.\N她今年此前只退赛过一次
-Dialogue: 0,0:02:54.00,0:02:56.00,TL,,0,0,0,,{\fs78}No{\fs68} {\fs78}power{\fs68} {\fs78}on{\fs68} {\fs78}the{\fs68} {\fs78}serve{\fs68} {\fs78}at{\fs68} {\fs78}all{\fs68}.\N这次发球完全没有力量
-Dialogue: 0,0:02:56.00,0:02:58.00,TL,,0,0,0,,{\fs78}Yeah{\fs68}, {\fs78}that{\fs68}'{\fs78}s{\fs68} {\fs78}it{\fs68}. {\fs78}She{\fs68}'{\fs78}s{\fs68} {\fs78}done{\fs68}.\N是的 到此为止了 她打不了了
-Dialogue: 0,0:02:58.00,0:03:06.00,TL,,0,0,0,,{\fs78}She{\fs68}'{\fs78}s{\fs68} {\fs78}going{\fs68} {\fs78}to{\fs68} {\fs78}call{\fs68} {\fs78}it{\fs68}, {\fs78}and{\fs68} {\fs78}that{\fs68} {\fs78}is{\fs68} {\fs78}a{\fs68} {\fs78}shame{\fs68}.\N她要宣布退赛了 这太遗憾了
+Dialogue: 0,0:01:24.00,0:01:27.00,TL,,0,0,0,,{\fs46}Couldn't pick up the half-volley.{\fs68}\N半截击没能处理好
+Dialogue: 0,0:01:27.00,0:01:28.00,TL,,0,0,0,,{\fs46}What just happened?{\fs68}\N刚才发生了什么
+Dialogue: 0,0:01:28.00,0:01:31.00,TL,,0,0,0,,{\fs46}Yeah, I think she hurt her leg on that previous point.{\fs68}\N我想她是在上一分伤到了腿
+Dialogue: 0,0:01:31.00,0:01:32.00,TL,,0,0,0,,{\fs46}Her Achilles.{\fs68}\N是她的跟腱
+Dialogue: 0,0:01:34.00,0:01:39.00,TL,,0,0,0,,{\fs46}She's got tape on her left ankle.{\fs68}\N她的左脚踝贴着胶布
+Dialogue: 0,0:01:39.00,0:01:41.50,TL,,0,0,0,,{\fs46}Rybakina has requested the physio mid-game.{\fs68}\N莱巴金娜请求理疗师中途入场
+Dialogue: 0,0:01:41.50,0:01:44.00,TL,,0,0,0,,{\fs46}Four-one, deuce, and she's serving.{\fs68}\N比分{\fs78}1{\fs68}比{\fs78}4{\fs68}来到平分 还是她的发球局
+Dialogue: 0,0:01:44.00,0:01:49.00,TL,,0,0,0,,{\fs46}You see the bit of tape on her left ankle, heel.{\fs68}\N可以看到她左脚踝和脚跟处的胶布
+Dialogue: 0,0:01:49.00,0:01:55.00,TL,,0,0,0,,{\fs46}Not moving comfortably at all.{\fs68}\N她走路明显很不舒服
+Dialogue: 0,0:02:13.00,0:02:17.00,TL,,0,0,0,,{\fs46}Her team has to look on here, but Brett, if it is the Achilles...{\fs68}\N她的团队只能在场边看着 但如果真是跟腱……
+Dialogue: 0,0:02:17.00,0:02:21.00,TL,,0,0,0,,{\fs46}Here's the fact: Rybakina is two wins away from the No. 1 ranking.{\fs68}\N事实是 莱巴金娜距离世界第一只差两场胜利
+Dialogue: 0,0:02:21.00,0:02:26.00,TL,,0,0,0,,{\fs46}If she wins this and then wins the semi,{\fs68}\N如果她赢下这场 再赢下半决赛
+Dialogue: 0,0:02:26.00,0:02:29.00,TL,,0,0,0,,{\fs46}she will supplant Sabalenka by exactly one point{\fs68}\N她将以恰好一分的优势取代萨巴伦卡
+Dialogue: 0,0:02:29.00,0:02:32.00,TL,,0,0,0,,{\fs46}and become the world No. 1 for the first time.{\fs68}\N并首次登上世界第一
+Dialogue: 0,0:02:32.00,0:02:35.00,TL,,0,0,0,,{\fs46}It doesn't look great here. She hasn't looked that comfortable.{\fs68}\N情况看起来不妙 她一直很不舒服
+Dialogue: 0,0:02:36.00,0:02:41.00,TL,,0,0,0,,{\fs46}She retired from a tournament just once earlier this year.{\fs68}\N她今年此前只退赛过一次
+Dialogue: 0,0:02:54.00,0:02:56.00,TL,,0,0,0,,{\fs46}No power on the serve at all.{\fs68}\N这次发球完全没有力量
+Dialogue: 0,0:02:56.00,0:02:58.00,TL,,0,0,0,,{\fs46}Yeah, that's it. She's done.{\fs68}\N是的 到此为止了 她打不了了
+Dialogue: 0,0:02:58.00,0:03:06.00,TL,,0,0,0,,{\fs46}She's going to call it, and that is a shame.{\fs68}\N她要宣布退赛了 这太遗憾了
 Dialogue: 0,0:03:06.05,0:03:08.75,TL,,0,0,0,,{\fs78}WTA{\fs68}账上是{\fs78}31{\fs68}分{\fs78}18{\fs68}秒
 Dialogue: 0,0:03:08.75,0:03:11.28,TL,,0,0,0,,盘内净打{\fs78}26{\fs68}分{\fs78}17{\fs68}秒
 Dialogue: 0,0:03:11.28,0:03:12.58,TL,,0,0,0,,多出来的五分钟
