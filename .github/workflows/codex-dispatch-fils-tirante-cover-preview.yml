@@ -1,5 +1,4 @@
-name: codex-dispatch-fils-tirante-cover-preview
-# retry after replacing blocked ATP page with verified inline record
+name: codex-dispatch-fils-tirante-render
 
 on:
   push:
@@ -14,16 +13,16 @@ permissions:
 
 jobs:
   dispatch:
-    if: "${{ github.event.head_commit.message == 'ci: retry Fils cover after duration cache' }}"
+    if: "${{ github.event.head_commit.message == 'ci: render and QA Fils-Tirante' }}"
     runs-on: ubuntu-latest
     steps:
-      - name: Dispatch cover preview
+      - name: Dispatch full render
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh workflow run match-reel.yml \
             --repo "$GITHUB_REPOSITORY" \
             --ref codex/fils-tirante-final-20260821 \
-            -f mode=cover \
+            -f mode=render \
             -f slug=fils-tirante \
             -f push=false
