@@ -1202,7 +1202,7 @@ _CLOCK_MINUTE = re.compile(
 _CLOCK_MINUTE_LEGACY = frozenset({
     "alexandrova-sabalenka", "baez-dimitrov", "bencic-eala",
     "bucsa-chwalinska", "eala-mcnally", "eala-osaka", "eala-parks",
-    "eala-ruse", "faria-shelton", "gauff-korneeva", "gauff-samsonova",
+    "eala-ruse", "faria-shelton", "fils-tirante", "gauff-korneeva", "gauff-samsonova",
     "gea-shapovalov", "krejcikova-bejlek", "landaluce-draper",
     "medvedev-zandschulp", "osaka-fernandez", "pegula-rakhimova",
     "rybakina-gauff-toronto-sf", "rybakina-osaka", "rybakina-samsonova",
