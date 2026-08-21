@@ -11629,3 +11629,68 @@ def test_手动推送也要记下已推送否则自动闸会再发一次():
     # ⚠️ 不许带 always()：上一步红了就不该记
     assert "always()" not in block, (
         "这一步不许带 `always()`——推送红了还记标记，就是那个「假标记」。")
+
+
+def test_抓帧点不许贴着源片的最后一帧():
+    """来路：2026-08-21，`swiatek-rybakina-cincinnati-injury` 那条片子的源片是
+    一条 34.5 秒的 YouTube Shorts（探测报的整数位是「34.5s」，真实浮点值比它
+    略大）——probe 第一次真的撞上短素材，`contact_sheet` 在贴着 duration 的
+    那一格抓帧时 ffmpeg 直接非零退出：`[enc:mjpeg] Could not open encoder
+    before EOF`。
+
+    ⚠️ **这不是本文件别处那种「-t 落过末尾，ffmpeg 退出码 0 悄悄输出短一截」**——
+    这次是抓单帧的 `-ss ... -frames:v 1` 贴着 duration 时编码器直接报错退出，
+    是一个不同的失败形状，说明「贴着源片末尾」这类坑不止一种长相，得分别防。
+
+    ⚠️ **`duration=34.5` 这个整数边界本身反而复现不了这个 bug**——`_frange`
+    从 0.5 起按 1.0 累加不会有浮点误差，算出来的最后一格干干净净停在 33.5，
+    离 34.5 有整整一秒。真正会撞线的是**非整数**的 duration（比如 34.52，
+    ffprobe 探出来正好会被 `.1f` 显示成「34.5s」）——`_frange` 走到 34.5 时
+    `34.5 < 34.52` 成立，于是最后一格贴到只剩 0.02 秒余量，这才是线上那次
+    崩溃真正的形状。所以判据用 `3.52` 这个非整数边界，不用 `3.5`。
+    这一条本身也是「查了一场就写成了一类」的一个小实例：先按整数边界试过，
+    量出来发现**不复现**，才改用非整数边界重新量。
+
+    判据两层：① `sheet_stamps` 算出来的最后一格必须留出 `FRAME_END_MARGIN` 的
+    余量，不能贴到 duration 本身——这一层在本地能反向验证（去掉 margin，
+    `sheet_stamps(3.52, every=1.0)` 会把最后一格算到 3.5，只剩 0.02 秒余量）；
+    ② 真跑一次 `contact_sheet`，在这条边界附近的合成短片上确认端到端仍然
+    抓得出帧——ffmpeg 具体哪个版本会不会真的报错是环境相关的（这台沙箱的
+    ffmpeg 在 0.02 秒余量下没有复现线上那次崩溃），所以这一层只当**回归
+    冒烟测试**，不当「必须曾经炸过」的证据——真正的崩溃证据是线上那趟
+    run 的日志。
+    """
+    import shutil  # noqa: PLC0415
+    import subprocess  # noqa: PLC0415
+    import tempfile  # noqa: PLC0415
+
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import build_match_reel as reel  # noqa: PLC0415
+
+    assert shutil.which("ffmpeg"), "没有 ffmpeg，这条判据跑不了：apt install ffmpeg"
+
+    # ① 纯算术：非整数 duration 贴着一个整数秒边界，`_frange` 的累加正好在
+    # 这里够到它——这一层反向验证过（去掉 FRAME_END_MARGIN 会让它算到 3.5）
+    stamps = reel.sheet_stamps(3.52, every=1.0)
+    assert stamps, "空列表也是这条判据要防的一种坏——先确认它真的抓到帧"
+    assert max(stamps) <= 3.52 - reel.FRAME_END_MARGIN + 1e-9, (
+        f"最后一格 {max(stamps)} 贴到了 duration 3.52 附近，"
+        f"留的余量不够 FRAME_END_MARGIN={reel.FRAME_END_MARGIN}")
+
+    # ② 端到端冒烟：同样贴边界的合成短片，contact_sheet 走完整套（下载→
+    # ffprobe 量 duration→抓帧→拼墙）不许抛异常、不许出空文件
+    with tempfile.TemporaryDirectory() as td:
+        tmp = Path(td)
+        clip = tmp / "short.mp4"
+        subprocess.run(
+            ["ffmpeg", "-v", "error", "-y", "-f", "lavfi",
+             "-i", "testsrc2=size=320x240:rate=25:duration=3.52",
+             "-c:v", "libx264", "-preset", "ultrafast", str(clip)],
+            check=True)
+        outdir = tmp / "out"
+        sheets = reel.contact_sheet(clip, outdir, every=1.0)
+        assert sheets, "没有抓到任何帧——contact_sheet 本身就没跑起来"
+        frames = sorted((outdir / "frames").glob("*.jpg"))
+        assert frames, "帧目录是空的"
+        for f in frames:
+            assert f.stat().st_size > 0, f"{f} 是空文件——ffmpeg 没真的写出内容"
