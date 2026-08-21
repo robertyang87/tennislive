@@ -13,7 +13,7 @@ permissions:
 
 jobs:
   dispatch:
-    if: "${{ github.event.head_commit.message == 'ci: preview Fils-Tirante exact-match cover' }}"
+    if: "${{ github.event.head_commit.message == 'ci: retry Fils-Tirante cover preview after heat review' }}"
     runs-on: ubuntu-latest
     steps:
       - name: Dispatch cover preview
