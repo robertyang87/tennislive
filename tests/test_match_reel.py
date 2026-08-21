@@ -6815,6 +6815,12 @@ def test_双语字幕要真的排成两行(tmp_path):
     head, _, tail = rows[0].partition(nl)
     assert "title" in head and "生涯第一个巡回赛冠军" in tail, \
         f"英文和中文没落在各自那一行：{rows[0]}"
+    assert r"{\fs46}A first ever tour title" in head, \
+        f"双语字幕的英文仍按单行字幕放大，会折行把中文顶出画布：{rows[0]}"
+    assert r"{\fs78}" not in head, \
+        f"英文行里的逐词放大标签盖掉了双语小字号：{rows[0]}"
+    assert ",0,0,1240,," in rows[0], \
+        f"双语事件没有单独抬高，第二行仍可能被长英文挤出安全区：{rows[0]}"
     assert chr(92) + "{" not in rows[0], \
         f"换行符被当成拉丁词包了字号标签，画面上会多出个 N：{rows[0]}"
 
