@@ -35,11 +35,42 @@ jobs:
       - name: 安装转写依赖
         run: pip install -q -e . "yt-dlp[default]>=2026.7.4" faster-whisper
 
-      - name: 转写并翻译完整采访
+      - name: 用采访下载梯子转写并翻译完整采访
         env:
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
         run: |
-          python tools/draft_interview_spec.py --candidate 0 --write
+          python - <<'PY'
+          import json
+          import sys
+          import tempfile
+          from pathlib import Path
+
+          sys.path.insert(0, "tools")
+          import draft_interview_spec as draft
+          from build_interview_clip import yt_download
+          from faster_whisper import WhisperModel
+          from tennislive.research.brief import Chat
+
+          candidate = json.loads(Path("data/interview_clip_candidates.json").read_text())[0]
+          calendar = json.loads(Path("data/tour_calendar_2026.json").read_text())
+          with tempfile.TemporaryDirectory() as td:
+              audio = yt_download(candidate["url"], Path(td) / "audio.m4a", "ba", {})
+              model = WhisperModel("small.en", compute_type="int8")
+              segments, info = model.transcribe(str(audio), vad_filter=True)
+              rows = [{"t": round(s.start, 2), "text": s.text.strip()}
+                      for s in segments if s.text.strip()]
+          if not rows:
+              raise SystemExit("转写为空")
+          chat = Chat()
+          if not chat.ready:
+              raise SystemExit("没有 DEEPSEEK_API_KEY")
+          zh = draft.translate(rows, chat)
+          spec = draft.build_spec(candidate, zh, float(info.duration or 138.0), calendar)
+          spec["slug"] = "swiatek-rybakina-cincinnati-2026-qf"
+          out = Path("specs/interviews/swiatek-rybakina-cincinnati-2026-qf.draft.json")
+          out.write_text(json.dumps(spec, ensure_ascii=False, indent=2), encoding="utf-8")
+          print(f"生成 {len(rows)} 条双语字幕 → {out}")
+          PY
 
       - name: 提交双语草稿到预览分支
         run: |
