@@ -1,0 +1,27 @@
+name: codex-dispatch-pegula-anisimova-tnns
+
+on:
+  push:
+    branches:
+      - codex/pegula-anisimova-final-20260821
+    paths:
+      - .github/workflows/codex-dispatch-pegula-anisimova-tnns.yml
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  dispatch:
+    if: "${{ github.event.head_commit.message == 'ci: dispatch Pegula-Anisimova TNNS stats' }}"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dispatch existing TNNS stats collector
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh workflow run tnns-stats.yml \
+            --repo "$GITHUB_REPOSITORY" \
+            --ref main \
+            -f who=Pegula,Anisimova \
+            -f date=2026-08-20
