@@ -1,0 +1,27 @@
+name: codex-repush-swiatek-rybakina-bilingual
+
+on:
+  push:
+    branches:
+      - codex/repush-swiatek-rybakina-bilingual-20260821
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  dispatch:
+    if: "${{ github.event.head_commit.message == 'chore: dispatch swiatek-rybakina bilingual repush' }}"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dispatch reviewed WeChat repush
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh workflow run match-reel.yml \
+            --repo "${{ github.repository }}" \
+            --ref main \
+            -f mode=push \
+            -f slug=swiatek-rybakina-cincinnati-2026-qf \
+            -f push=true
+          echo "WeChat repush dispatch accepted for main"
