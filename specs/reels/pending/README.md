@@ -136,6 +136,25 @@ Gauff-Li／Nakashima-Medvedev 五场（含 WTA），**Musetti-Zheng 一张都没
   - 下一步：等下一批赛事图库上线（次日 UTC 00:00~03:00 那个窗口再晚几个小时）或
     英语媒体赛后稿出来再查
 
+- **`fils-tirante`**（辛辛那提 ATP1000 1/4决赛，2026-08-21，菲斯 6-3 6-2 终结
+  蒂兰特本周淘汰德约科维奇和门西克、首进大师赛1/4决赛的奇迹）——这场比赛
+  北京时间 2026-08-21 早上快九点才结束（当天），按赛事官方图库的滞后量
+  （批次要到次日 UTC 00:00~03:00 才上线，覆盖的还往往是再前一天的内容），
+  真正能覆盖今天这场的那一批大概率要到 8/22~8/23。已实测三条渠道，
+  暂时都还没有：①赛事 WP 媒体库 `--match-date 2026-08-20`（Cincinnati 本地
+  日历日）扫到 91~115 张新上传，命中的『Fils』相关 4 张（`Fils-relishing-
+  return-to-form1~4.jpg`）上传时刻早于这场比赛开球（是别的稿子配图，不是
+  这场的实拍）；②AP 通讯社、The Enquirer 同日图集两条渠道也都跑过，没有
+  对得上的；③赛事图库『day-N-best-of-photos』批次滞后覆盖窗口尚未推进到
+  这场。内容已经写完并本地全套验证过（`--dry-run`／`--check-narration`／
+  `preview_segments_local.py` 逐段核对过缩略图墙和逐分数据）——技术统计
+  数字块按 `cover.matchup`（菲斯在前）手动对调过 flashscore 的 home/away
+  顺序（home 是蒂兰特），这是 `tsitsipas-royer` 那类坑这次没有再犯的地方；
+  年龄、排名均走 tennisexplorer 当期数据，不采信 flashscore 当日总表里不
+  可靠的 `CA`/`CB` 字段。下一步：**8/22 前后**再查一次，找到之后 `git mv`
+  回 `specs/reels/`，`cover.portrait.image` 换成
+  `assets/reel/fils-cincinnati-2026-qf.jpg` 这类命名，其余内容不用动。
+
 - ⚠️ **`swiatek-sakkari.draft.json`——这一条是另一个理由，别按上面那套读**。
   这不是「等官方高清图」——它是另一位会话/流程留下的**在制品草稿**
   （`assemble_spec.py` 那批自动化 2026-08-18 22:31 UTC 写的，`_draft: true`，
