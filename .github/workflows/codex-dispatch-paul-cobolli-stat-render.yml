@@ -1,0 +1,28 @@
+name: codex-dispatch-paul-cobolli-stat-render
+
+on:
+  push:
+    branches:
+      - codex/paul-cobolli-stat-card-20260821
+    paths:
+      - .github/workflows/codex-dispatch-paul-cobolli-stat-render.yml
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  dispatch:
+    if: "${{ github.event.head_commit.message == 'ci: dispatch Paul-Cobolli stat render' }}"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dispatch reviewed render without publishing
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh workflow run match-reel.yml \
+            --repo "$GITHUB_REPOSITORY" \
+            --ref codex/paul-cobolli-stat-card-20260821 \
+            -f mode=render \
+            -f slug=paul-cobolli \
+            -f push=false
