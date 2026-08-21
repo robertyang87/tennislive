@@ -1,4 +1,5 @@
 name: codex-dispatch-fils-tirante-cover-preview
+# retry after replacing blocked ATP page with verified inline record
 
 on:
   push:
@@ -13,7 +14,7 @@ permissions:
 
 jobs:
   dispatch:
-    if: "${{ github.event.head_commit.message == 'ci: preview Fils winning-expression cover' }}"
+    if: "${{ github.event.head_commit.message == 'ci: retry Fils cover after duration cache' }}"
     runs-on: ubuntu-latest
     steps:
       - name: Dispatch cover preview
