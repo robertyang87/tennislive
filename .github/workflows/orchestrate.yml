@@ -27,7 +27,10 @@ on:
         description: "单次最多点几条 run（无人值守防错一片）"
         required: false
         type: number
-        default: 3
+        # ⚠️ 和 tools/orchestrate.py 的 DEFAULT_MAX 是同一个数（账号所有者
+        # 2026-08-18 定「最大任务放开到 8」）——两处不同的话，CLI 干跑按 8 排、
+        # 工作流真点 run 按 3 砍，后几场排到下一班白等 30 分钟。
+        default: 8
       no_assemble:
         description: "dispatch 后不跑 assemble 备料"
         required: false
@@ -37,6 +40,14 @@ on:
 permissions:
   contents: write   # apply 分支要把 data/orchestration_state.json 提交回仓库
   actions: write    # apply 分支 gh workflow run 派发别的生产工作流
+
+# 编排器一次只跑一班：两班并跑会各自读同一份 state、各自 dispatch 同一批候选
+# （同一场 probe 点两遍），再抢着提交 state 撞 push。
+# ⚠️ cancel-in-progress 必须是 false——上一班可能正在 dispatch + 写 state，
+# 掐掉它就是「点了 run 没记账」，下一班全部失忆重点。排队等，不掐。
+concurrency:
+  group: orchestrate
+  cancel-in-progress: false
 
 jobs:
   orchestrate:
@@ -58,8 +69,12 @@ jobs:
           python-version: "3.11"
           cache: pip
 
+      # ⚠️ `yt-dlp` 不能漏：detect_highlights 的探测就是靠它搜——漏装的话
+      # FileNotFoundError 一度被吞成空列表，每一班都安静地零候选，和「集锦
+      # 还没发」长得一模一样（现在 search() 会当场抛，但装上才是正解）。
+      # `[default]` 也不能省，它才带 yt-dlp-ejs，见 CLAUDE.md 装 yt-dlp 那条。
       - name: 装依赖
-        run: pip install -q -e .
+        run: pip install -q -e . "yt-dlp[default]"
 
       # ⚠️ apply 分支要自己写 GH_TOKEN：gh workflow run 派发别的 workflow 靠它。
       # checkout 那步用的 token 默认只读，不显式传 dispatch 会在第 N 秒报 403
@@ -68,6 +83,9 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          # ⚠️ pipefail 不能省：默认 shell 下 `python … | tee` 的退出码是 tee 的，
+          # 编排器崩了这一步照样绿——「脚本炸了」和「今天没候选」长得一模一样。
+          set -o pipefail
           ARGS=()
           if [ "${{ github.event_name }}" = "workflow_dispatch" ] && \
              [ "${{ github.event.inputs.apply }}" = "true" ]; then
@@ -94,5 +112,18 @@ jobs:
           else
             python tools/check_staged_file_sizes.py
             git commit -m "orchestrate: 记录已 dispatch 状态"
-            git push
+            # ⚠️ 裸 `git push` 一撞（别的 run 刚推过 main）整步就红，而 state
+            # **已经点完 run 了**——不落库的话下一班失忆重点。state 是纯文本
+            # JSON，`pull --rebase` 处理得动（frame-grab 那套 fetch+重放是给
+            # 二进制产物的，这里不用）；rebase 冲突就 abort 再试，最多 5 次。
+            for attempt in $(seq 1 5); do
+              if git push origin "HEAD:${{ github.ref_name }}"; then
+                exit 0
+              fi
+              echo "push 被拒（第 $attempt 次），rebase 到最新再试"
+              git pull --rebase origin "${{ github.ref_name }}" || git rebase --abort
+              sleep $((attempt * 5 + RANDOM % 10))
+            done
+            echo "::error::state 连续 5 次推送失败——已 dispatch 的 slug 没落库，下一班会重复点 run"
+            exit 1
           fi
