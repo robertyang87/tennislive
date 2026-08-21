@@ -107,6 +107,41 @@ def test_只给mode等于push不给push等于true要当场报错():
         "排在后面的话那一趟照样先干一遍活")
 
 
+def test_封面候选帧默认不跑要显式开cutout_candidates():
+    """`pick_cover_frames.py` 现在只在 `cutout_candidates=true` 时才跑。
+
+    2026-08-21 量出来的：最近 30 条 spec 全是 `layout: "solo"`，封面人物
+    2026-08-16 起硬性要求官方高清实拍、不许再 `frame_at` 抽帧——上一次真正
+    用这一步挑出的候选帧写进 spec 是 2026-08-19 的 `zhang-li`，之后没再用过。
+    可这一步一直在 `mode=probe` 里无条件跑，71 秒白烧。
+
+    这一步找的是 `versus.top/bottom`（`cutout` 版式的抠图人物）用的候选，
+    那条路没被这道闸管——所以不是删掉，是改成显式认领：默认跳过，
+    真要用 `cutout` 版式再手动开。
+
+    判据钉两头：**输入项默认是 false**（不许悄悄变成默认开），
+    **那一步的 `if:` 真的接了这个输入**（不许只加了输入没接上）。
+    """
+    text = WORKFLOW.read_text(encoding="utf-8")
+    body = _yaml_only(text)
+
+    m = re.search(
+        r"cutout_candidates:\n(?:.*\n)*?"
+        r"\s*type:\s*boolean\n"
+        r"\s*default:\s*(\S+)",
+        body,
+    )
+    assert m is not None, "没有 cutout_candidates 这个 boolean 输入"
+    assert m.group(1) == "false", (
+        f"默认值是 {m.group(1)!r}，不是 false——等于又变回无条件跑")
+
+    block = _step_block("probe — 封面候选帧", text)
+    cond = block.split("run:", 1)[0]
+    assert "inputs.mode == 'probe'" in cond, "起码要认 mode=probe"
+    assert "inputs.cutout_candidates == 'true'" in cond, (
+        f"这一步没接上 cutout_candidates，条件是：{cond}")
+
+
 def test_push模式按slug反查目录不按今天的日期(tmp_path):
     """`mode=push` 推的是**已经渲好、可能是好几天前的成片**，不是今天新出的。
 

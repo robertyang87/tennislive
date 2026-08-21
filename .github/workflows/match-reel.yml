@@ -62,6 +62,20 @@ on:
         description: "probe：记分条位置 x0,y0,x1,y1（源片像素）；给了就顺手量死球时刻"
         required: false
         default: ""
+      cutout_candidates:
+        # 默认关掉——2026-08-16 起「封面大图一律用官方高清实拍，`cover.portrait.
+        # frame_at` 不许再抽帧」定成硬闸之后，`solo` 版式的封面人物已经不走
+        # `pick_cover_frames.py` 这条路。量过：最近 30 条 spec 全是 solo，
+        # 上一次真正用它挑出的候选帧写进 spec 是 2026-08-19 的 `zhang-li`，
+        # 之后再没用过。这一步却一直在 probe 里无条件跑，一次 71 秒白烧。
+        #
+        # `versus.top/bottom`（VS 版式的抠图人物，`cutout` 版式）不受那道闸管，
+        # 官方图两边都拿不到时仍然要靠这一步从本场视频里抠——所以不删，
+        # 只改成显式认领：真要用 `cutout` 版式、且知道官方图会缺，手动开它。
+        description: "probe：要不要顺手扫封面候选帧（只有 VS 版式的 cutout 人物用得上，solo 版式不需要）"
+        required: false
+        type: boolean
+        default: false
       voice:
         description: "render：解说音色"
         required: false
@@ -724,16 +738,24 @@ jobs:
             --outdir "${{ steps.paths.outputs.outdir }}"
           ls -la "${{ steps.paths.outputs.outdir }}"
 
-      # 顺便把封面人物的候选帧也挑出来。**源片只在 runner 上有**——沙箱下不动
-      # YouTube，所以这一步不在这儿做，就只能拿 2 秒一格的缩略图墙用肉眼找正脸，
-      # 而那正是 `pick_cover_frames.py` 要替掉的活。
+      # 顺便把封面人物的候选帧也挑出来——**但只在 `cutout_candidates=true` 时**。
+      # 源片只在 runner 上有——沙箱下不动 YouTube，所以这一步不在这儿做，
+      # 就只能拿 2 秒一格的缩略图墙用肉眼找正脸，而那正是 `pick_cover_frames.py`
+      # 要替掉的活。
       # 挑帧判据（账号所有者定的）：正脸或稍微侧脸、上半身直立、表情读得出。
       # **挑完仍然要人打开看**：谁是谁、表情对不对题机器判不了，所以这里只出
       # 候选墙，不自动写进 spec。
       # 挑不出来**不算失败**（有些集锦通篇没有近景）——`|| true` 让它继续，
       # 缩略图墙那条老路还在。
+      #
+      # ⚠️ 默认不跑了。这一步找的是 `versus.top/bottom` 抠图人物（`cutout` 版式）
+      # 用的候选，不是 `cover.portrait`——后者 2026-08-16 起硬性要求官方高清
+      # 实拍、不许再抽帧。而现在几乎每条片子都是 `solo` 版式（量过：最近 30 条
+      # 全是，上一次真用它挑出候选写进 spec 是 2026-08-19 的 `zhang-li`），
+      # 所以这 71 秒常规就是白烧的。真要用 `cutout` 版式再显式开
+      # `cutout_candidates: true`。
       - name: probe — 封面候选帧
-        if: github.event.inputs.mode == 'probe'
+        if: github.event.inputs.mode == 'probe' && github.event.inputs.cutout_candidates == 'true'
         run: |
           OUT="${{ steps.paths.outputs.outdir }}"
           python tools/pick_cover_frames.py \
