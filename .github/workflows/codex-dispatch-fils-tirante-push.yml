@@ -1,0 +1,28 @@
+name: codex-dispatch-fils-tirante-push
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/codex-dispatch-fils-tirante-push.yml
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  dispatch:
+    if: "${{ github.event.head_commit.message == 'ci: push Fils-Tirante to WeChat' }}"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dispatch verified WeChat push
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh workflow run match-reel.yml \
+            --repo "$GITHUB_REPOSITORY" \
+            --ref main \
+            -f mode=push \
+            -f slug=fils-tirante \
+            -f push=true
