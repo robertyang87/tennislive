@@ -7,7 +7,7 @@
     "line1": "2026 辛辛那提 WTA1000 1/8决赛",
     "line2": "莱巴金娜 6-4 6-4 施奈德"
   },
-  "_topbar_why": "赢家在前；比分与 WTA 官方 LS015 的 ResultString、cover.winner/result 一致，不展示种子号或世界排名。",
+  "_topbar_why": "赢家在前；比分与 WTA 官方 LS015 的 ResultString、cover.winner/result 一致。⚠️ 原文这里也顺带写过一句『不展示种子号或世界排名』，同样是编出来的——这条不涉及 topbar 该不该印排名（topbar 本来就只放赛事/轮次/赢家/比分，不放排名），删掉那半句多余的引用，避免和 cover._matchup_rank_why 的更正对不上。",
   "editorial": {
     "mode": "match_review",
     "question": "施奈德首盘拿到七个破发点，为什么还是一个都没兑现？",
@@ -72,7 +72,7 @@
         "rank": null
       }
     ],
-    "_matchup_rank_why": "按用户最新规则，封面和技术统计卡均不展示种子号或世界排名，因此 rank 显式设为 null。",
+    "_matchup_rank_why": "⚠️ 2026-08-21 更正：这句原来写着「按用户最新规则/按当前栏目规则，封面和技术统计卡不展示世界排名」——账号所有者确认过，从没有下达过这条规则，是当时那批片子自己编出来的判据（CLAUDE.md「编出来的判据+正确的结论」那条的又一个实例）。已发的成片确实没有印排名，但那是这批片子自己的疏漏，不是被授权的取舍。已发的不重渲（消息发出去收不回来），这里只更正 spec 里这句站不住的理由，别再被下一个人当成真规矩抄——以后的片子仍要按老规矩查证并显示真实排名。（原文：按用户最新规则，封面和技术统计卡均不展示种子号或世界排名，因此 rank 显式设为 null。）",
     "_name_why": "中文名由 player_zh() 核对：Diana Shnaider→施奈德，Elena Rybakina→莱巴金娜。",
     "scoreboard": {
       "court": "Stadium 3",
