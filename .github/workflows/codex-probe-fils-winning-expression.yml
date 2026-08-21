@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   probe:
-    if: "${{ github.event.head_commit.message == 'ci: probe Fils winning-expression Short' }}"
+    if: "${{ github.event.head_commit.message == 'ci: retry Fils Short with exact 1080p format' }}"
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -61,30 +61,27 @@ jobs:
           YT_POT_PROVIDER: ${{ steps.pot.outputs.up }}
           PYTHONPATH: src
         run: |
+          OUT=/tmp/fils-winning-expression
+          mkdir -p "$OUT"
+          ARGS=(--js-runtimes node --extractor-args youtube:player_client=web)
+          [ -n "$YT_COOKIES" ] && ARGS+=(--cookies "$YT_COOKIES")
+          yt-dlp "${ARGS[@]}" -f 137 -o "$OUT/source.mp4" \
+            "https://youtube.com/shorts/iGBTbmQM2vk"
+          ffmpeg -v error -i "$OUT/source.mp4" \
+            -vf "fps=4,scale=1080:-2" -q:v 2 "$OUT/raw_%04d.jpg"
           python - <<'PY'
-          import subprocess
           import sys
           from pathlib import Path
           sys.path.insert(0, "tools")
-          from grab_frames import contact_sheet, download
-
+          from grab_frames import contact_sheet
           out = Path("/tmp/fils-winning-expression")
-          out.mkdir(parents=True, exist_ok=True)
-          video = download("https://youtube.com/shorts/iGBTbmQM2vk", out)
-          subprocess.run([
-              "ffmpeg", "-v", "error", "-i", str(video),
-              "-vf", "fps=4,scale=1080:-2", "-q:v", "2",
-              str(out / "raw_%04d.jpg"),
-          ], check=True)
           frames = []
           for i, path in enumerate(sorted(out.glob("raw_*.jpg"))):
               target = out / f"frame_{i * 0.25:05.2f}s.jpg"
               path.rename(target)
               frames.append(target)
           contact_sheet(frames, out / "contact.jpg", cols=6)
-          for path in out.glob("source.*"):
-              if path.is_file():
-                  path.unlink()
+          (out / "source.mp4").unlink()
           print(f"[候选] {len(frames)} 张")
           PY
       - uses: actions/upload-artifact@v4
