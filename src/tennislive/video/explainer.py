@@ -8632,6 +8632,13 @@ _ASS_SIZE = 68                      # → 一个汉字约 46.6px，占屏宽 4.3
 # 和 DejaVu 的完全不同）。差的不是字体，是西文本来就画得小。
 # 78/68 让数字墨高到汉字的 0.95，看着才是一家的。
 _ASS_NUM_SIZE = 78
+# 双语原声字幕里，英文是原文参照，中文才是主读行。不能继续套上面给单行字幕
+# 数字/西文用的 78px：一句正常长度的英文会自动折成两三行，把显式写在下一行的
+# 中文顶出画布。采访线已经量过 46px 是英文参照行的可读档，这里沿用同一口径。
+_ASS_BILINGUAL_EN_SIZE = 46
+# 两行双语比单行字幕高，只抬双语事件本身；单行中文旁白仍保持账号既有上锚。
+# 不能借用 spec 的 subtitle_top：那个字段专门描述源片自带记分条的位置特例。
+_ASS_BILINGUAL_MARGIN_V = 1240
 # 一个数字实际占多少个汉字宽（同字号下量的步进：40.1 / 68.0）。
 _ASS_LATIN_ADVANCE = 0.59
 _ASS_RUN = re.compile(r"[0-9A-Za-z]+")
@@ -8696,9 +8703,26 @@ def write_subtitles(cues: Sequence[tuple[float, float, str]], path: Path,
     #
     # 单行的 cue 一个字节都不变（`split("\\n")` 只有一段），所以解说片那条线
     # 不受影响——存量里 `subtitle_cues` 产出的每一条本来就是一行。
+    def is_bilingual(shown: str) -> bool:
+        rows = shown.split("\n")
+        return (len(rows) == 2
+                and bool(re.search(r"[A-Za-z]", rows[0]))
+                and bool(re.search(r"[\u3400-\u9fff]", rows[1])))
+
+    def ass_rows(shown: str) -> list[str]:
+        rows = shown.split("\n")
+        if is_bilingual(shown):
+            # 英文行不用 `_ass_text`：它会把每个拉丁词重新放大到 78px，外面套
+            # 一个小字号也会被里面的标签逐词覆盖。中文行仍走原逻辑，数字照常
+            # 放大；末尾还原 68px，避免样式泄到下一行。
+            return [f"{{\\fs{_ASS_BILINGUAL_EN_SIZE}}}{rows[0]}"
+                    f"{{\\fs{_ASS_SIZE}}}", _ass_text(rows[1])]
+        return [_ass_text(row) for row in rows]
+
     lines = [
-        f"Dialogue: 0,{_ass_stamp(start)},{_ass_stamp(end)},TL,,0,0,0,,"
-        + r"\N".join(_ass_text(row) for row in shown.split("\n"))
+        f"Dialogue: 0,{_ass_stamp(start)},{_ass_stamp(end)},TL,,0,0,"
+        f"{_ASS_BILINGUAL_MARGIN_V if is_bilingual(shown) else 0},,"
+        + r"\N".join(ass_rows(shown))
         for start, end, shown in cues
     ]
     path.write_text(_ass_header(height, margin_v) + "\n".join(lines) + "\n",
