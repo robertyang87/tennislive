@@ -5,6 +5,12 @@
   "start": 261.0,
   "end": 415.0,
   "whisper_model": "medium.en",
+  "transcript_verified": true,
+  "_verified_clean": "runner 上 mode=render 跑出的验证报告：第一份 YouTube 自动字幕 546 词，第二份 faster-whisper（medium.en）542 词，对不上 3.1%（闸门 12%）。16 处逐条核过：多数是虚词丢失（i/that's/and/them/it's 这类）和数字/间距读法差异（and our/an hour、2hour/two hour、semifinal/semi final）；`pigula`/`beula`/`pagoula`→`pagula`、`anisimo`→`anisimova` 是两份转写对 Pegula/Anisimova 姓氏的不同误听，zh 译文本来就用的正确人名，不用改。唯一需要动的一处是第 63 行『Next up, EGA or Elena.』——第二份独立听成『Iga』，和 _facts 里已经核过的事实（下一轮对手是斯瓦泰克或莱巴金娜）对得上，EGA 是自动字幕把『Iga』（斯瓦泰克的名字）听错了，官方拼法是 Iga Świątek；Elena（莱巴金娜本名）第一份本来就听对，不用改。空档处（263.8-268.6）第二份 ASR 只听出孤立一个词『An』，落在赛点落地到解说重新开口之间——caption_gaps_ok 里已经认领是欢呼过渡不是漏词；这个窗口在第一句台词（268.56 起）之前，不对应任何一行，没有地方可以挂 en_fixed，维持原判。",
+  "en_fixed": {
+    "63": "Next up, Iga or Elena."
+  },
+  "_en_fixed_why": "自动字幕把『Iga』（斯瓦泰克 Iga Świątek 的名字）听成『EGA』，第二份独立转写听成『Iga』——和已核实的事实（_facts：下一轮对手是斯瓦泰克或莱巴金娜）对得上，官方拼法是 Iga Świątek。『Elena』（莱巴金娜本名）第一份就听对了，不用动。⚠️ en_fixed 的键是 1-indexed（对应 review_sheet.md 的行号，不是 lines.json 的 0-based 数组下标）——第一版写成「62」，把上一行『and I think I started playing much better.』错误覆盖成了这句话，本地重跑 --stage subs 比对 lines.json 才发现，改成「63」。",
   "column": "赛后开麦",
   "interview_kind": "赛后场上采访",
   "event": "2026 辛辛那提 WTA1000 1/4决赛",
