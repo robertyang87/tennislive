@@ -1,0 +1,27 @@
+name: codex-dispatch-swiatek-rybakina-tnns
+
+on:
+  push:
+    branches:
+      - codex/probe-swiatek-rybakina-20260821
+    paths:
+      - .github/workflows/codex-dispatch-swiatek-rybakina-tnns.yml
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  dispatch:
+    if: "${{ github.event.head_commit.message == 'ci: fetch Swiatek Rybakina TNNS stats' }}"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dispatch TNNS stats lookup
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh workflow run tnns-stats.yml \
+            --repo "$GITHUB_REPOSITORY" \
+            --ref main \
+            -f who=Swiatek,Rybakina \
+            -f date=2026-08-20
