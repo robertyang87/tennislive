@@ -114,6 +114,24 @@ def test_仓库里不许留签名URL的凭据部分():
           "整个删掉那个字段的话，下一个人会以为它本来就没有源片。")
 
 
+def test_CI要批量检出签名扫描需要的文本产物():
+    """别让 sparse checkout 把 1900 多个小文件退化成逐个 ``git show``。
+
+    2026-08-21 的真实 PR run 里，签名 URL 扫描单项用了 369.93 秒；同一份
+    索引在 sparse checkout 直接包含 JSON/MD/TXT 后，完整扫描实测 0.41 秒。
+    根因不是正则，而是缺失文件逐个触发 Git blob 读取。这里锁住批量检出的
+    三种后缀；二进制成片仍然排除。
+    """
+    workflow = (ROOT / ".github/workflows/ci.yml").read_text("utf-8")
+    for pattern in (
+        "/output/**/*.json",
+        "/output/**/*.md",
+        "/output/**/*.txt",
+    ):
+        assert pattern in workflow, (
+            f"ci sparse-checkout 缺 {pattern}；签名 URL 扫描会退回逐文件 git show")
+
+
 def test_这条判据不许误伤对凭据形状的描述():
     """反向锚点：**这个仓库的注释就是教训的存放处**，里面必然写着当年那些串。
 
