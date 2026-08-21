@@ -48,6 +48,8 @@
       "headshot": "assets/players/headshots/wta-316956.jpg",
       "aces": 3,
       "df": 2,
+      "winners": 18,
+      "ue": 29,
       "first_in": 56,
       "first_won": 37,
       "first_total": 94,
@@ -62,6 +64,8 @@
       "headshot": "assets/players/headshots/wta-326384.jpg",
       "aces": 4,
       "df": 3,
+      "winners": 41,
+      "ue": 56,
       "first_in": 57,
       "first_won": 39,
       "first_total": 95,
@@ -74,8 +78,8 @@
     },
     "footer_venue": "P&G Stadium Court · 辛辛那提",
     "footer_date": "2026.08.20",
-    "_winners_ue_why": "截至2026-08-21已查现有 tnns-stats 历史运行，未有 Pegula–Anisimova 本场；直接运行 `tools/tnns_stats.py fetch --who Pegula --who Anisimova --date 2026-08-20` 时，Chromium 对 tnnslive.com / api.tnnslive.com 均报 ERR_EMPTY_RESPONSE，curl 命中 Cloudflare 403 challenge，尚未取得 match id 或 hasExtendedStats，不能据此写成‘本场无扩展统计’。Reuters 赛后稿只明确阿尼西莫娃56次非受迫失误，缺双方 winners/UE 的完整同源数据，因此不混填；发布前可在 GitHub runner 补跑 `tnns-stats.yml -f who=Pegula,Anisimova -f date=2026-08-20` 后再补齐。",
-    "_source": "WTA 官方 `tournaments/1017/2026/matches/LS006/stats` 的全场汇总（setnum=0）。stats.a 跟 cover.matchup[0]＝佩古拉，stats.b 跟 cover.matchup[1]＝阿尼西莫娃；头像沿用仓库已核验的 WTA 官方头像。first_total 按 first_in + second_total 计算：佩古拉 56+38=94，阿尼西莫娃 57+38=95。总得分 95:94、合计189分，与片尾旁白完全一致。"
+    "_winners_ue_why": "制胜分/非受迫失误来自仓库既有 `tnns-stats.yml`，run 32442185163，TNNS match id=73466972，`hasExtendedStats=True`。TNNS 报告顺序为 ['Anisimova','Pegula']：全场制胜分 [41,18]、非受迫失误 [56,29]；分盘分别为 Set1 [10,4]/[14,6]、Set2 [14,1]/[12,10]、Set3 [17,13]/[30,13]，两项分盘合计均与全场完全一致。这里按 cover.matchup 顺序反转填入：stats.a＝佩古拉 18/29，stats.b＝阿尼西莫娃 41/56；只从 TNNS 取这两项。",
+    "_source": "WTA 官方 `tournaments/1017/2026/matches/LS006/stats` 的全场汇总（setnum=0）提供 Ace、双误、一二发、破发点和总得分；制胜分/非受迫失误仅取 TNNS run 32442185163（见 `_winners_ue_why`）。stats.a 跟 cover.matchup[0]＝佩古拉，stats.b 跟 cover.matchup[1]＝阿尼西莫娃；头像沿用仓库已核验的 WTA 官方头像。first_total 按 first_in + second_total 计算：佩古拉 56+38=94，阿尼西莫娃 57+38=95。总得分 95:94、合计189分，与片尾旁白完全一致。"
   },
   "cover": {
     "eyebrow": "赛场之上",
