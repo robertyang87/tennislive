@@ -273,3 +273,48 @@ jobs:
       # 判据 `test_CI要把最慢的测试打进日志`（tests/test_workflow_alerts.py）。
       - name: 运行测试
         run: pytest -rs -n auto --dist loadfile --durations=25
+
+  codex_swiatek_interview_verify:
+    if: github.head_ref == 'codex/swiatek-rybakina-cincinnati-2026-qf-interview'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: codex/swiatek-rybakina-cincinnati-2026-qf-interview
+          sparse-checkout: |
+            assets
+            data
+            specs
+            src
+            tools
+      - name: 加回本条采访产物
+        run: git sparse-checkout add output/interviews/swiatek-rybakina-cincinnati-2026-qf
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: 安装交叉校验依赖
+        run: |
+          source tools/ci_apt_install.sh
+          apt_install_cached fonts-noto-cjk fonts-noto-core
+          ensure_ffmpeg
+          pip install -q -e . "yt-dlp[default]>=2026.7.4" faster-whisper
+      - name: 落 cookies
+        env:
+          YT_COOKIES_TXT: ${{ secrets.YT_COOKIES_TXT }}
+        run: |
+          if [ -n "$YT_COOKIES_TXT" ]; then
+            printf '%s' "$YT_COOKIES_TXT" > "$RUNNER_TEMP/yt-cookies.txt"
+            echo "COOKIES=$RUNNER_TEMP/yt-cookies.txt" >> "$GITHUB_ENV"
+          fi
+      - name: medium.en 交叉校验
+        run: |
+          PYTHONPATH=src python tools/build_interview_clip.py \
+            --spec specs/interviews/swiatek-rybakina-cincinnati-2026-qf.json \
+            --stage verify
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: swiatek-interview-verify
+          path: output/interviews/swiatek-rybakina-cincinnati-2026-qf/
+
