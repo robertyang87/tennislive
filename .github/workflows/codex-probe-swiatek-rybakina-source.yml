@@ -12,34 +12,60 @@ permissions:
 
 jobs:
   probe:
-    if: "${{ github.event.head_commit.message == 'ci: compare Swiatek-Rybakina footage tails' }}"
+    if: "${{ github.event.head_commit.message == 'ci: retry footage probe with PO token' }}"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - name: Install tools
+      - name: Install download stack
         run: |
-          pip install -q --upgrade yt-dlp
+          pip install -q --upgrade "yt-dlp[default]" bgutil-ytdlp-pot-provider
+          node --version
           ffmpeg -version | head -1
+      - name: Start PO token provider
+        run: |
+          docker run --name bgutil-pot -d -p 4416:4416 brainicism/bgutil-ytdlp-pot-provider
+          for i in $(seq 1 25); do
+            curl -sf http://127.0.0.1:4416/ping >/dev/null && exit 0
+            sleep 2
+          done
+          docker logs bgutil-pot
+          exit 1
+      - name: Write YouTube cookies
+        id: cookies
+        env:
+          YT_COOKIES_TXT: ${{ secrets.YT_COOKIES_TXT }}
+        run: |
+          if [ -n "$YT_COOKIES_TXT" ]; then
+            printf '%s' "$YT_COOKIES_TXT" > "$RUNNER_TEMP/yt-cookies.txt"
+            echo "path=$RUNNER_TEMP/yt-cookies.txt" >> "$GITHUB_OUTPUT"
+          fi
       - name: Download candidates and build tail sheets
+        env:
+          YT_COOKIES: ${{ steps.cookies.outputs.path }}
         run: |
           mkdir -p probe
           python - <<'PY'
           import json
+          import os
           import pathlib
           import subprocess
 
           ids = ["1dkPejO-PCM", "rBQIf_-9v4Y", "ntKq8uBK5dM", "nPO6CwFZ3K8", "GiTIW-YDFKk"]
+          cookie = os.environ.get("YT_COOKIES", "").strip()
           rows = []
           for vid in ids:
               out = pathlib.Path("probe") / f"{vid}.mp4"
               cmd = [
                   "yt-dlp", "--no-playlist", "--retries", "3",
+                  "--js-runtimes", "node",
                   "-f", "bv*[height<=720]+ba/b[height<=720]",
-                  "--merge-output-format", "mp4",
-                  "-o", str(out), f"https://youtu.be/{vid}",
+                  "--merge-output-format", "mp4", "-o", str(out),
               ]
+              if cookie:
+                  cmd += ["--cookies", cookie]
+              cmd += [f"https://youtu.be/{vid}"]
               proc = subprocess.run(cmd, capture_output=True, text=True)
               row = {"id": vid, "download_rc": proc.returncode,
                      "stderr": proc.stderr[-4000:]}
@@ -56,11 +82,11 @@ jobs:
               duration = float(meta["format"]["duration"])
               start = max(0.0, duration - 300.0)
               sheet = pathlib.Path("probe") / f"{vid}-tail.jpg"
-              vf = "fps=1/4,scale=320:-2,tile=5x15:padding=4:margin=4"
               frame = subprocess.run(
                   ["ffmpeg", "-hide_banner", "-loglevel", "error",
                    "-ss", f"{start:.3f}", "-i", str(out), "-t", "300",
-                   "-vf", vf, "-frames:v", "1", "-q:v", "3", str(sheet)],
+                   "-vf", "fps=1/4,scale=320:-2,tile=5x15:padding=4:margin=4",
+                   "-frames:v", "1", "-q:v", "3", str(sheet)],
                   capture_output=True, text=True)
               row["tail_start"] = start
               row["sheet_rc"] = frame.returncode
@@ -72,6 +98,6 @@ jobs:
           PY
       - uses: actions/upload-artifact@v4
         with:
-          name: swiatek-rybakina-footage-tails
+          name: swiatek-rybakina-footage-tails-po
           path: probe
           retention-days: 7
