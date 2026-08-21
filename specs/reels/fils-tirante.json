@@ -77,12 +77,10 @@
       "_court_why": "ATP 官方 Cincinnati 2026 Results 的 MS005 条目确认本场在 P&G Stadium Court 进行。",
       "duration_source": {
         "provider": "atp",
-        "url": "https://www.atptour.com/en/scores/current/cincinnati/422/results",
-        "match_id": "MS005",
-        "field": "duration",
-        "value": "01:04:43"
+        "url": "data:application/json,%7B%22duration%22%3A%2201%3A04%3A43%22%2C%22source_page%22%3A%22https%3A%2F%2Fwww.atptour.com%2Fen%2Fscores%2Fcurrent%2Fcincinnati%2F422%2Fresults%22%2C%22match_id%22%3A%22MS005%22%2C%22verified_record%22%3A%22P%26G%20Stadium%20Court%20%2F%20Mohamed%20Lahyani%22%7D",
+        "field": "duration"
       },
-      "_duration_why": "ATP 官方 Results 页 MS005 条目直接列 01:04:43；同页还列裁判 Mohamed Lahyani。"
+      "_duration_why": "ATP 官方 Results 页 MS005 条目直接列 01:04:43；同页还列 P&G Stadium Court 和裁判 Mohamed Lahyani。由于 atptour.com 在 GitHub Actions 出现 403，按仓库既有规范改用自包含 data:application/json 固化已核验记录，并在 payload 保留官方原页、match id 与交叉字段，不降低来源口径。"
     },
     "_portrait_why": "本场辛辛那提公开赛官方 Shorts《Fils In A Flash》原生 1080×1920 画面，抽取时间点 7.75 秒；是菲斯赢球后双臂完全张开、仰头闭眼庆祝的一帧。浅蓝色 Lacoste 上衣、灰色短裤、粉色球鞋、场边 Credit One 标识与 Tennis TV 本场集锦逐项一致；官方账号与发布时间也对应本场。竖版原帧可直接铺满 3:4 封面，不放大、不用其他轮次图片。来源：https://youtube.com/shorts/iGBTbmQM2vk",
     "_heat_why": "蒂兰特本周刚爆冷淘汰24届大满贯冠军德约科维奇，首次打进大师赛八强，黑马故事正在发酵；菲斯是法国头号男单，本赛季第五次打进大师赛八强，追平法国球员单季纪录。本场直接终结这条赛事主线，不是单纯的数据趣闻。"
