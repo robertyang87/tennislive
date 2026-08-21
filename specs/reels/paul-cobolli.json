@@ -33,9 +33,11 @@
   },
   "_no_repeat": "只用一句带过两年前同站交手和本周前三轮，不复述那些比赛的过程；主体只讲这场1/4决赛。",
   "_match": {
-    "_why": "score_00~08 缩略图墙逐格核对：24.5秒保罗1-0、62.5秒首盘6-2；124.5秒科博利第二盘3-1、238.5秒5-3并拿到局点，247~252秒收下第二盘6-3；320.5秒决胜盘保罗4-5，328.5秒15-40两个赛点，337.5秒双方走向网前握手。"
+    "_why": "score_00~08 缩略图墙逐格核对：24.5秒保罗1-0、62.5秒首盘6-2；124.5秒科博利第二盘3-1、238.5秒5-3并拿到局点，247~252秒收下第二盘6-3；320.5秒决胜盘保罗4-5，328.5秒15-40两个赛点，337.5秒双方走向网前握手。 Flashscore 场次 id=lMmTntdm；TNNS 真浏览器 run 32444154554 认到 id=73465916。",
+    "flashscore_id": "lMmTntdm",
+    "tnns_match_id": "73465916"
   },
-  "_hit_data": "这条先以源片画面可自证的四场三盘大战和末局两个赛点为主，不填未获得官方统计表的数据，避免把猜测写成统计。",
+  "_hit_data": "全场165分，科博利83比82只多1分；TNNS/Flashscore 都给出保罗28个制胜分、39次非受迫失误，科博利21个制胜分、30次非受迫失误。",
   "cover": {
     "eyebrow": "赛场之上",
     "layout": "solo",
@@ -48,16 +50,26 @@
     "winner": "科博利",
     "result": "2-6 6-3 6-4",
     "matchup": [
-      {"name": "科博利", "name_en": "Flavio Cobolli", "country": "ITA", "rank": null},
-      {"name": "保罗", "name_en": "Tommy Paul", "country": "USA", "rank": null}
+      {
+        "name": "科博利",
+        "name_en": "Flavio Cobolli",
+        "country": "ITA",
+        "rank": 10
+      },
+      {
+        "name": "保罗",
+        "name_en": "Tommy Paul",
+        "country": "USA",
+        "rank": 24
+      }
     ],
-    "_matchup_rank_why": "按当前栏目规则，封面和技术统计卡不展示世界排名，因此显式设为 null。",
+    "_matchup_rank_why": "排名沿用同一批辛辛那提内容已核验的 2026-08-10 当期榜单：科博利世界第10、保罗世界第24；不是签表种子号（科博利7号种子、保罗18号种子）。",
     "_name_why": "中文名走 player_zh()：Flavio Cobolli→科博利，Tommy Paul→保罗。",
     "portrait": {
       "image": "assets/reel/cobolli-paul-cincinnati-2026-qf.jpg",
       "focus": 0.5,
       "focus_y": 0.5,
-      "zoom": 1.0,
+      "zoom": 1,
       "_frame_why": "本场官方实拍，不是旧图也不是视频抽帧。来源是科博利本人认证账号 @flavio_cobbo 在赛后发布的 7 图帖第 7 张（https://www.instagram.com/p/DcR7LgTlmls/），原帖正文写 Cincinnati semis 并标注 @cincytennis；画面为科博利在蓝色辛辛那提硬地上握拳怒吼。交叉证据是 Emilee Chinn/Getty Images 的同一组相邻连拍 2291336864：Getty 图注明确写 Flavio Cobolli 对 Tommy Paul、Cincinnati 第 10 日、2026-08-20、Mason, Ohio，服装、球拍、场地线和庆祝动作逐项一致。封面使用球员本人发布的无水印 1080×1438 原图，不使用 Getty 带水印预览。素材权利未声明开放许可，记为 unverified，发布前由人工确认。",
       "_low_res_why": "球员本人官方帖原图为 1080×1438，铺 1080×1440 只需纵向补足 2 像素（约 0.14%）；这是相机实拍原图，不是压缩转播帧，人物五官、球衣纹理和球拍线均清楚。"
     },
@@ -111,13 +123,13 @@
       "_why": "⑤第二盘破发。124.8秒解说点出双误，124.5~128.5记分条烧着首盘6比2、第二盘1比3。"
     },
     {
-      "start": 237.0,
-      "end": 252.0,
+      "start": 237,
+      "end": 252,
       "narration": "五比三，科博利在自己的发球局拿下这一盘，六比三扳平总比分。",
       "_why": "⑥第二盘收官。238.5秒科博利5比3占先，247.1秒解说说他把这场1/4决赛彻底翻转，252秒切点进入决胜盘。"
     },
     {
-      "start": 270.0,
+      "start": 270,
       "end": 285.78,
       "narration": "决胜盘两个人继续拉锯，三比三之后每一局都变得更重。",
       "_why": "⑦决胜盘中段。270.5秒记分条三比三、保罗占先，连续长回合收在285.78松切点。"
@@ -134,5 +146,44 @@
       "narration": "连续第四场三盘大战，科博利又一次走了出来。",
       "_why": "⑨收尾。两人握手后，原声总结科博利本站每一场都打满三盘；342.86切到Tennis TV片尾前结束。"
     }
-  ]
+  ],
+  "stats": {
+    "tour": "atp",
+    "a": {
+      "headshot": "assets/players/headshots/atp-C0E9.png",
+      "aces": 10,
+      "df": 1,
+      "winners": 21,
+      "ue": 30,
+      "first_in": 45,
+      "first_won": 31,
+      "first_total": 84,
+      "second_total": 39,
+      "second_won": 25,
+      "bp_conv": 2,
+      "bp_chances": 8,
+      "pts_won": 83,
+      "pts_total": 165
+    },
+    "b": {
+      "headshot": "assets/players/headshots/atp-pl56.png",
+      "aces": 12,
+      "df": 3,
+      "winners": 28,
+      "ue": 39,
+      "first_in": 49,
+      "first_won": 37,
+      "first_total": 81,
+      "second_total": 32,
+      "second_won": 17,
+      "bp_conv": 2,
+      "bp_chances": 4,
+      "pts_won": 82,
+      "pts_total": 165
+    },
+    "footer_venue": "Grandstand Court · 辛辛那提",
+    "footer_date": "2026.08.20",
+    "_winners_ue_why": "TNNS 仓库既有真浏览器方案 run 32444154554，match id=73465916，hasExtendedStats=True。TNNS 顺序为 ['Paul','Cobolli']：全场制胜分 [28,21]、非受迫失误 [39,30]；分盘 W 为 [8,3]+[12,9]+[8,9]=[28,21]，UE 为 [9,10]+[12,8]+[18,12]=[39,30]，两项分盘之和均与全场完全一致。这里按 cover.matchup 顺序反转填入科博利21/30、保罗28/39。",
+    "_source": "Flashscore df_st_1_lMmTntdm 提供全场 Ace、双误、一二发、破发点和总得分；TNNS run 32444154554 独立复核制胜分/非受迫失误，双方数值与 Flashscore 完全一致。Flashscore home=Paul、away=Cobolli，而 cover.matchup=[Cobolli,Paul]，已整体反转。first_total 按 first_in+second_total：科博利45+39=84、保罗49+32=81；总得分83+82=165。"
+  }
 }
