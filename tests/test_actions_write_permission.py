@@ -107,6 +107,47 @@ def _yaml_only(text: str) -> str:
     return "\n".join(re.sub(r"#.*", "", l).rstrip() for l in lines)
 
 
+def _run_step_bodies(text: str) -> str:
+    """只拿 `jobs.*.steps[].run` 里的脚本文本，**不含 `on:` 触发器那一段**。
+
+    ⚠️ **2026-08-21 补的，起因是 `reel-queue-ci.yml` 被误判成「要 dispatch」。**
+    它的 `on.pull_request.paths` 里写着 `tools/dispatch_reel_queue.py`
+    ——那只是「这个文件变了就重跑这条 CI」的路径过滤器，这条工作流从头到尾
+    只跑了一句 `pytest -q tests/test_dispatch_reel_queue.py`，`permissions`
+    也老老实实只给了 `contents: read`，一次 dispatch 都没发出去。
+
+    可 `_DISPATCH_ENTRIES` 按**工具名**（不按调用语法）扫**整份**
+    `_yaml_only` 文本，这个路径过滤器和真正的调用长得一模一样——正是本文件
+    自己在 `_DISPATCH_ENTRIES` 上面那段注释里记的教训（`orchestrate.yml` 那次
+    是被注释误伤，这次是被 `on:` 触发器误伤，形状是同一个：**查的字符串和
+    真正会执行的那一句不是一回事**）。`_PAGES_ENTRIES`/`_DISPATCH_ENTRIES`
+    要问的是「这条工作流会不会跑到这一句」，触发器路径过滤器从不执行任何东西，
+    只有 `run:` 步骤会。
+
+    ⚠️ **同一条工作流还藏着第二层同形状的误伤**：它唯一的 `run:` 是
+    `pytest -q tests/test_dispatch_reel_queue.py`——**跑单元测试**，不是
+    直接调那个工具去真的 dispatch。而 `test_dispatch_reel_queue.py` 这个
+    文件名本身，字面上就包含 `dispatch_reel_queue.py` 这个子串（前面多了
+    `test_` 四个字），正则不带边界又中一次。**测试一个工具不等于调用它**，
+    `pytest` 起头、以 `test_*.py` 收尾的那种行整条丢掉，别只丢文件名。
+
+    `permissions`/`actions: write` 那半截判据不受影响，仍然扫整份
+    `_yaml_only(text)`——那是顶层配置块，不会被 `on:` 触发器污染。
+    """
+    import yaml  # noqa: PLC0415
+
+    wf = yaml.safe_load(text) or {}
+    out = []
+    for job in (wf.get("jobs") or {}).values():
+        for step in job.get("steps") or []:
+            for ln in str(step.get("run") or "").splitlines():
+                if re.search(r"^\s*(python3?\s+-m\s+)?pytest\b.*\btest_\w+\.py",
+                             ln):
+                    continue
+                out.append(ln)
+    return "\n".join(out)
+
+
 def test_给了actions_write的工作流都真的要点Pages():
     """两个方向一起钉：给了就必须用得着，用得着就必须给。"""
     files = sorted(WORKFLOWS.glob("*.yml"))
@@ -117,13 +158,16 @@ def test_给了actions_write的工作流都真的要点Pages():
     granted, needed = set(), {}
     pages_only = set()
     for path in files:
-        body = _yaml_only(path.read_text(encoding="utf-8"))
+        text = path.read_text(encoding="utf-8")
+        body = _yaml_only(text)
         if re.search(r"^\s*actions:\s*write", body, re.M):
             granted.add(path.name)
-        hits = [label for pat, label in _PAGES_ENTRIES if re.search(pat, body)]
+        run_body = _run_step_bodies(text)
+        hits = [label for pat, label in _PAGES_ENTRIES if re.search(pat, run_body)]
         if hits:
             pages_only.add(path.name)
-        hits += [label for pat, label in _DISPATCH_ENTRIES if re.search(pat, body)]
+        hits += [label for pat, label in _DISPATCH_ENTRIES
+                 if re.search(pat, run_body)]
         if hits:
             needed[path.name] = hits
 

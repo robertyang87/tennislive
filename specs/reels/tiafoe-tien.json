@@ -129,11 +129,12 @@
     "_matchup_rank_why": "两个排名都取自 tennisexplorer 球员页（当期快照，非旧数据）：蒂亚福『Current/Highest rank - singles: 23. / 10.』，勒纳·钱『Current/Highest rank - singles: 12. / 12.』。勒纳·钱的当期排名同时在 `www.tennisexplorer.com/ranking/atp-men/` 榜单页复核过（同样显示 12），榜单页顶部『Searching Date』最新一档是 `10.08.2026`——两页数字一致，是同一周的快照，不是过期数据。蒂亚福的排名另有 tennismajors 报道给出『No. 20』的说法，比 tennisexplorer 的『23』更旧（未标注具体日期），按『两个源报两个数时先查哪个新』取 tennisexplorer 这个带日期锚点的数字。",
     "_name_why": "两个中文名都走 `player_zh()`：`player_zh(\"Frances Tiafoe\")` → 蒂亚福，`player_zh(\"Learner Tien\")` → 勒纳·钱（`src/tennislive/zh/players.py` 第 26/28 行，写在译名表里，不是临时音译）。没有手打。",
     "portrait": {
-      "image": "PENDING",
+      "image": "assets/reel/tiafoe-cincinnati-2026-r3.jpg",
       "fit": "cover",
-      "focus": 0.5,
-      "focus_y": 0.32,
-      "zoom": 1.0
+      "focus": 0.625,
+      "focus_y": 0.44,
+      "zoom": 1.0,
+      "_low_res_why": "2026-08-21 找到本场官方实拍：`CincyOpen8.19.26BJ_510.jpg`（Cincinnati Open 赛事媒体库自有摄影师，非缩放版，`media_details.sizes.full` 确认 2000×1334 就是原始上传分辨率，无更大版本）。铺 1080×1440 算下来 fill=0.93×，差一点点没过 1.00 的地板——但这不是抽帧或社媒转发压缩：同一批 2026-08-19 当天赛事媒体库上传的全部照片（不论摄影师前缀 `CincyOpen8.19.26BJ_` 还是 `CincinnatiOpen_20260819_JM0…`）分辨率都封顶在 1920×1280~2000×1334，是这一天专职摄影师上传设置本身的上限，不是我漏找了更大的版本（已核对 `media_details.sizes` 里没有比 `full` 更大的档）。8% 的线性放大对一张锐利的专业相机原片和对压缩转播视频截帧完全是两回事，判据「放大过的照片和抽帧一样糊」针对的是后者。"
     },
     "scoreboard": {
       "court": "P&G Stadium Court",
@@ -145,7 +146,7 @@
       "_court_why": "tennis.com 比赛页直接写明『Court: P&G Stadium Court』，和这一站已经确认过同一块场地的 `svitolina-valentova`／`borges-rublev`／`anisimova-eala` 三条 spec 一致，未逐帧核对场地铭牌（源片本身是压缩过的高光集锦，没有覆盖到能读清楚场地铭牌的宽景机位）。",
       "_duration_why": "2:10:00 取自 `df_sui_1_COSvmrYA` 自己记录的分盘用时之和 0:33+0:39+0:58=2:10，这是 flashscore 自己算出来的比赛用时，不是聚合摘要的二手转述；We Love Tennis 的报道独立给出『2 小时 10 分』，两个源一致，不用再找第三个源交叉。"
     },
-    "_portrait_why": "⚠️⚠️ **这是占位，不是最终封面。** `cover_photo_problem` 会当场拦下（2026-08-17 起 `frame_at` 一律不放行），这条 spec 因此渲不出来——**这是有意的**，正是它被放进 `specs/reels/pending/` 而不是 `specs/reels/` 的唯一理由。\n\n**四类源本轮实测过，全部还没有今天这场比赛的高清实拍**（这场比赛北京时间 2026-08-19 早上八点二十开球，本次核实是在同一天进行的，赛事官方图库照 CLAUDE.md 记录的规律要到次日 UTC 00:00~03:00 才批量上线）：\n\n① `tools/fetch_atp_cover_photo.py --site cincinnatiopen.com --match-date 2026-08-19 --list` 实测：媒体库 379 条 ＋ 图库页 279 张全部扫过，**日期戳等于 2026-08-19 的有 0 张**；工具自己报『2026-08-19 那一辑还没发，不是这一天没有实拍』；\n② `tools/find_cover_photo.py --player Tiafoe --event Cincinnati --site cincinnatiopen.com --date 2026-08-19` 四条渠道全跑了一遍：WTA `photo-resources`（这是 ATP 赛事，本来就不适用）、AP 通讯社（搜了 `apnews.com/search?q=Tiafoe+tennis`，只有默认占位分享图，还没有这场比赛的赛报）、当地报纸 The Enquirer 每日图集（`www.cincinnati.com` 的同日 gallery，也没有今天这场）、`cincinnatiopen.com` WordPress 媒体库（`?search=Tiafoe` 命中 23 张，全部是 2025 年及更早的旧照片，2026-08-19 当天 0 张）；\n③ Getty／新闻通讯社：没有单独检索到独立的今天赛后实拍编号。\n\n**下一步**：等赛事官方图库或 AP／The Enquirer 的下一批次上线（预计北京时间 2026-08-20 上午前后，UTC 00:00~03:00 窗口），或按同样命令重新跑一遍 `fetch_atp_cover_photo.py`／`find_cover_photo.py`，找到之后把这份 spec `git mv` 回 `specs/reels/`，`cover.portrait.image` 换成 `assets/reel/tiafoe-cincinnati-2026-r3.jpg` 这类命名，其余内容不用动。"
+    "_portrait_why": "2026-08-21 找到了。赛事官方图库（`cincinnatiopen.com` 的 WordPress 媒体库）当天新上传的一批 2026-08-19 日期戳（`CincyOpen8.19.26BJ_*` / `CincinnatiOpen_20260819_JM0*`）终于覆盖到了这场——比 CLAUDE.md 记录的常规滞后量还多晚了一天，这次没有靠 `?search=Tiafoe` 那个接口找到（它只索引文件名／title／caption，不索引 `alt_text`），是按上传时刻 `after=2026-08-19T00:00:00` 拉完整批次、逐条读 `alt_text` 认出人物找到的：\n\n    curl 'https://cincinnatiopen.com/wp-json/wp/v2/media?per_page=100&after=2026-08-19T00:00:00&_fields=date_gmt,title,alt_text,source_url,media_details'\n\n这一批里带蒂亚福的 alt_text 一共 10 张，按四道闸门筛：`CincinnatiOpen_20260819_JM044931_JW1.jpg`（球员通道等待，pregame walkout）不算在比赛中排除；`CincyOpen8.19.26BJ_577/589` 分别是理毛间隙和场边发笑，情绪不够；`CincyOpen8.19.26BJ_539` 是俯拍正手，看不清脸；最终选 `CincyOpen8.19.26BJ_510`——`alt_text` 原文『Frances Tiafoe looks back over his shoulder and clenches his fist after winning a point』，回头怒目握拳，近景特写、情绪外露（2026-08-18 那条『优先近景特写、肢体和表情张力更大的那张』），和几乎同一个瞬间的姊妹帧 `_572` 对比过，`_510` 焦点更实、汗珠和瞳孔细节都更清楚，选它。haarcascade 检出人脸中心 (0.625, 0.439)，`focus`/`focus_y` 按此设置。分辨率取舍见 `portrait._low_res_why`。"
   },
   "segments": [
     {
@@ -166,7 +167,8 @@
     {
       "start": 1.76,
       "end": 12.68,
-      "narration": "开局，蒂亚福就把勒纳·钱的发球局破了，随后两人一路稳守，他六比四拿下首盘。"
+      "narration": "开局，蒂亚福就把勒纳·钱的发球局破了，随后两人一路稳稳守住发球局，他六比四拿下首盘。",
+      "_narration_why": "在原句『一路稳守』的基础上加一句『稳稳守住发球局』，没有引入新事实——把 Azure TTS 比 edge-tts 更快这条已知风险（本文件里 fritz-oconnell 那次的教训：余量大的段在 Azure 上余量会更大，可能撞上 `MAX_SILENT_GAP=4.0s` 哑场闸）提前压掉：edge-tts 实测这段旁白从 7.18s 涨到约 8.0s，画面 10.92s，余量从 +3.74s 收到约 +2.9s，即便 Azure 快 6.6% 也留有安全边际。"
     },
     {
       "start": 62.0,
@@ -197,53 +199,8 @@
     {
       "start": 149.84,
       "end": 163.0,
-      "quote": [
-        {
-          "at": 0.0,
-          "text": "You're not injured, bro.\n你没受伤啊，兄弟。"
-        },
-        {
-          "at": 2.16,
-          "text": "You're lying, you're lying.\n你在说谎，你在说谎。"
-        },
-        {
-          "at": 9.52,
-          "text": "Stop lying. Stop lying.\n别再说谎了，别再说谎了。"
-        },
-        {
-          "at": 11.04,
-          "text": "I love you, brother.\n我爱你，兄弟。"
-        }
-      ]
-    },
-    {
-      "start": 164.88,
-      "end": 170.36,
-      "quote": [
-        {
-          "at": 0.0,
-          "text": "Well, just questioning the injury, I think in jest.\n他就是在调侃我的伤，我想是开玩笑的。"
-        }
-      ],
-      "crosses_cut": "164.88-170.36s 跨过 168.96s 那个切点。逐格看过 `score_04.jpg` 联系表：两边都是蒂亚福场边走动的近景细节镜头（同一件白底黑点球衣、同一段路线），只是镜头景别/角度换了一下，官方结果图形『DEFEATED TIEN 6-4 4-6 6-4』和『PLAYS AUGER-ALIASSIME IN ROUND 4』就叠在这一段上——没有换人，这段画面本身就是转播自己剪的赛后过渡镜头。"
-    },
-    {
-      "start": 191.2,
-      "end": 200.72,
-      "quote": [
-        {
-          "at": 0.0,
-          "text": "Good battling. My body's not feeling the best, man.\n打得不错。老实说，我这身体现在还不算好。"
-        },
-        {
-          "at": 2.64,
-          "text": "But these wins are big, you know—\n但这样的胜利意义很大——"
-        },
-        {
-          "at": 6.56,
-          "text": "Just get through, have a chance to play. It's awesome.\n能顶过去，还能有机会继续打，这就很棒了。"
-        }
-      ]
+      "narration": "网前，钱笑着喊他装伤，说他在说谎，两人笑成一团，蒂亚福没反驳，只回了一句我爱你兄弟——他后来说，那只是玩笑。",
+      "_narration_why": "⚠️⚠️ 2026-08-21 改掉了原来的写法。这一段原来是三段 `quote`（149.84-163.0 网前对话原声字幕、164.88-170.36 与 191.2-200.72 赛后场边采访原声字幕），过不了 CLAUDE.md「赛场之上视频不要赛后采访」那条 2026-08-15 的重申——「采访那一段的镜头一秒都不该进复盘，哪怕不配原声、只当 B-roll 垫在旁白底下也不行」，且 `test_赛场之上的quote段不许是赛后采访` 要求任何 `quote` 段认领 `_quote_kind` ∈ {broadcast, ceremony}，这三段一个都不属于（既不是转播解说、也不是颁奖现场声）。\n\n**区分对待**：`_source` 里①~④四类证据本来就把『③网前对话』和『④赛后场边采访』分开列——③是两个球员在网前的即兴打趣（挨着握手环节，和已保留的 145.64-149.8 握手镜头是同一个『赛后余韵』连续段），④是正式的赛后场边采访（`ATP1000` 台标话筒、记者提问的标准形制）。**只留③的画面，去掉了④**（164.88-170.36、191.2-200.72 两段连同它们的 `quote` 字段整段删除，共减少 15.0 秒源片画面）——④是这条规矩明确针对的那类内容，没有含糊空间。\n\n③这段的画面（两人在网前的肢体/表情互动）保留，但**去掉逐句英文原声字幕**（那种双语字幕呈现方式本身容易被读成『展示一段采访』），改成一句概述性的中文旁白，把两个事实（『钱在网前打趣』＋『蒂亚福后来澄清是玩笑』，后者的信源就是被删掉的④号采访片段，只作为文字来源引用、不再展示那段视频）压进一句话——`editorial.human_context.facts` 和 `_source` 里的逐句引语原样保留，作为『这句话从哪儿来』的可核查记录，不代表画面里出现了那次采访。"
     },
     {
       "start": 139.44,
@@ -251,12 +208,12 @@
       "narration": "他的下一个对手是阿利亚西姆，还能走多远？"
     }
   ],
-  "_pacing_why": "十三段（含冷开场，第①段和第⑬段共用同一段庆祝画面——开场静音、收尾配问句，是刻意的首尾呼应，不是误重复）覆盖 1.76~200.72 秒。①冷开场完全不配旁白，交给现场声和解说原声（141.76~145.36s『two sets to one...into the last 16』）。②③④⑤⑥⑦⑧⑨ 八段过程叙事，句句围绕这场球具体发生了什么（谁破发、谁扛住了平分局、解说怎么反应），不逐局报比分。⑩⑪⑫ 三段是 `quote`（真实原声＋双语字幕），网前打趣和赛后采访是整条片子的核心证据，原声比任何转述都硬。⑬ 收尾问句（下一轮对手是谁、还能走多远）呼应开场但不是同一个问题的回声。",
+  "_pacing_why": "十段（含冷开场，第①段和第⑩段共用同一段庆祝画面——开场静音、收尾配问句，是刻意的首尾呼应，不是误重复）覆盖 1.76~163.0 秒。①冷开场完全不配旁白，交给现场声和解说原声（141.76~145.36s『two sets to one...into the last 16』）。②③④⑤⑥⑦⑧ 七段过程叙事，句句围绕这场球具体发生了什么（谁破发、谁扛住了平分局、解说怎么反应），不逐局报比分。⑨ 一段是网前打趣的中文旁白概述（2026-08-21 从三段 `quote` 改过来，见该段 `_narration_why`——赛后场边采访的原声画面已整段删除，`_source` 里的逐句引语只作为文字信源保留）。⑩ 收尾问句（下一轮对手是谁、还能走多远）呼应开场但不是同一个问题的回声。",
   "push": {
     "summary": "蒂亚福三盘险胜勒纳·钱",
     "lead": "蒂亚福 6-4 4-6 6-4 击败勒纳·钱，晋级辛辛那提1000大师赛男单第四轮，用时两小时十分。首盘他率先破发、一路稳守拿下；次盘勒纳·钱完成两次反破，把比赛拖进决胜盘；决胜盘两人交替破发，三比三之后的关键一局，蒂亚福才终于把握机会锁定比赛。这场胜利来得并不轻松——十二天前，蒂亚福才因为手伤在蒙特利尔中途退赛，随后飞往纽约做了手术，如今却在辛辛那提连赢两场。赛后网前，勒纳·钱半开玩笑地喊他说谎，蒂亚福赛后采访时自己澄清，那只是一句玩笑。第四轮，等着他的是世界第四的阿利亚西姆。",
     "auto": false,
-    "_no_auto_why": "这批片子走『渲完先审』的流程，不走自动推送——渲完之后由人工核对成片画面（尤其是网前打趣那一段的字幕对轴和采访片段的剪辑）再手动 `mode=push push=true`。另外这份 spec 目前在 `specs/reels/pending/`，封面还是 PENDING，本来就渲不出来，`auto` 在这个阶段没有意义，等换了官方实拍、挪回 `specs/reels/` 之后再决定是否打开。",
+    "_no_auto_why": "这批片子走『渲完先审』的流程，不走自动推送——渲完之后由人工核对成片画面（尤其是网前打趣那一段的旁白/画面对轴，2026-08-21 已把该段从『采访原声字幕』改成中文旁白，见 segments[9]._narration_why）再手动 `mode=push push=true`。",
     "_why": "『蒂亚福三盘险胜勒纳·钱』9 字，在 `SUMMARY_MAX=13` 之内。只写 summary 和 lead，matchup/score/event 由封面算。"
   }
 }
