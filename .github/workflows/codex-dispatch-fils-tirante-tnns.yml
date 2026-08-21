@@ -13,7 +13,7 @@ permissions:
 
 jobs:
   dispatch:
-    if: "${{ github.event.head_commit.message == 'ci: dispatch Fils-Tirante TNNS stats' }}"
+    if: "${{ github.event.head_commit.message == 'ci: retry Fils-Tirante TNNS stats on UTC date' }}"
     runs-on: ubuntu-latest
     steps:
       - name: Dispatch TNNS lookup
@@ -24,4 +24,4 @@ jobs:
             --repo "$GITHUB_REPOSITORY" \
             --ref main \
             -f who=Fils,Tirante \
-            -f date=2026-08-21
+            -f date=2026-08-20
