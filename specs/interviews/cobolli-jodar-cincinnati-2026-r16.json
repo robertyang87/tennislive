@@ -4,6 +4,9 @@
   "source_title": "Flavio Cobolli shares his mindset during his 2.5 hour match against Rafael Jodar | 2026 Cincinnati（@TennisChannel 官方频道）",
   "start": 0.0,
   "end": 185.5,
+  "whisper_model": "small.en",
+  "transcript_verified": true,
+  "_verified_clean": "runner 上第二趟 --stage verify 报告：第一份 YouTube 自动字幕 514 词，第二份 faster-whisper（small.en）486 词，对不上 11.3%（闸门 12%，第一趟 12.9% 超限的那处已经在 en_fixed/_note 里订正）。38 处逐条核过：绝大多数是 whisper（small.en，弱一档）丢虚词、数字读法差异（3/three、and two/2）、缩写展开（cuz/because）这类噪声；`to come through`→`and my dance`、`leave`→`live`、`tat's`→'hat's' 这几处 whisper 明显是在片尾噪声或不常见词上幻听，YouTube 那版语法通顺、和上下文对得上，不采信第二份。唯一真正动了的一处是 `thing`→`things`（第48行『one of the thing』漏了个 s），语法上复数才通，且第二份独立听成 things，两个信号同向，已写进 en_fixed——这是订正一个字母级的丢字，不是编内容，和第一趟那次『You have a great forehand, Flavio』的编造性质不一样。片尾『pat/petch』『—/thank you』两处不确定，YouTube 那版和已核实的 _facts（『帕特』）对得上，维持不改。自动字幕没有空档。",
   "interview_kind": "赛后场上采访",
   "column": "赛后开麦",
   "event": "2026 辛辛那提 ATP1000 1/8决赛",
@@ -18,9 +21,10 @@
   "en_fixed": {
     "1": "Thanks Beth. Got Flavio here.",
     "2": "Got Flavio here. Congratulations.",
+    "48": "But, I think also it's one of the things",
     "53": "You have a great forehand, Flavio."
   },
-  "_en_fixed_why": "自动字幕把「Flavio」听成「Fabio」（第1、2、53行）——真实姓名，官方拼法对得上视频标题本身（Flavio Cobolli）。第2行的『Got Fabio here.』不是内容重复，是工具把这句短子句（只停 0.76s）并句时把开头重复印了一遍（`--stage subs` 日志里那句『并短句：Got Fabio here.（只停 0.76s）』就是这个），原始字幕里『Got Fabio here』其实只说了一次（0.0s，和第1行合并显示）——但既然它被并出来单独又印了一遍在第2行画面上，同样要把名字改对。『You have a great forehand，X』只在第53行（源片113.68s）出现过一次，第一版误以为第48行也有同一句、其实是编错的，见上面 `_note`。",
+  "_en_fixed_why": "自动字幕把「Flavio」听成「Fabio」（第1、2、53行）——真实姓名，官方拼法对得上视频标题本身（Flavio Cobolli）。第2行的『Got Fabio here.』不是内容重复，是工具把这句短子句（只停 0.76s）并句时把开头重复印了一遍（`--stage subs` 日志里那句『并短句：Got Fabio here.（只停 0.76s）』就是这个），原始字幕里『Got Fabio here』其实只说了一次（0.0s，和第1行合并显示）——但既然它被并出来单独又印了一遍在第2行画面上，同样要把名字改对。『You have a great forehand，X』只在第53行（源片113.68s）出现过一次，第一版误以为第48行也有同一句、其实是编错的，见上面 `_note`。第48行原始字幕漏了个 s（『one of the thing』），第二份转写独立听成『things』，语法上也是复数才通——两个信号都指向同一处，补上这个 s（这条和第53行那次不一样：不是编内容，是订正一个字母级的丢字）。",
   "_facts": [
     "赛果取自 flashscore（feMBVwZi）：科博利 4-6 7-6(3) 6-3 逆转霍达尔，2026-08-19，辛辛那提 ATP1000 1/8决赛，全场用时约 2 小时 33 分（视频标题『2.5 hour match』与此吻合）。",
     "主持人在采访里说他『11 and two now in deciding sets』（决胜盘 11 胜 2 负）——这是转播方自己在直播中读给他听的统计数字，未独立核实（专业转播现场统计，不额外查证），照实译入字幕。",
