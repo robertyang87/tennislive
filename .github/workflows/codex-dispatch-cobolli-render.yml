@@ -1,0 +1,28 @@
+name: codex-dispatch-cobolli-render
+
+on:
+  push:
+    branches:
+      - codex/render-under-10m-20260821
+    paths:
+      - .github/workflows/codex-dispatch-cobolli-render.yml
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  dispatch:
+    if: github.event.head_commit.message == 'ci: dispatch corrected Cobolli render'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dispatch corrected production render without WeChat push
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh workflow run match-reel.yml \
+            --repo "$GITHUB_REPOSITORY" \
+            --ref "codex/render-under-10m-20260821" \
+            -f mode=render \
+            -f slug=paul-cobolli \
+            -f push=false
