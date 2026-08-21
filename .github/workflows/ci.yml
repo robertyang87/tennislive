@@ -20,6 +20,9 @@ on:
     paths-ignore:
       - "data/reel-dispatch-queue/**"
 
+permissions:
+  contents: write
+
 # **同一个 PR 上，新的一推就把旧的那趟掐掉。**
 #
 # 之前一趟都不掐：那半小时里推了十来次，于是十来趟 CI 同时在跑，而**只有最新
@@ -377,8 +380,8 @@ jobs:
 
       - name: 提交双语草稿到预览分支
         run: |
-          git add specs/interviews/*.draft.json \
-            output/interviews/swiatek-rybakina-cincinnati-2026-qf/cap_aufUQ6eSXSM.en.json3
+          git add specs/interviews/*.draft.json
+          git add -f output/interviews/swiatek-rybakina-cincinnati-2026-qf/cap_aufUQ6eSXSM.en.json3
           if git diff --cached --quiet; then
             echo "没有生成草稿"
             exit 1
