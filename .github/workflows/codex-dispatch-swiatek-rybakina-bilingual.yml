@@ -1,0 +1,27 @@
+name: codex-dispatch-swiatek-rybakina-bilingual
+
+on:
+  push:
+    branches:
+      - codex/swiatek-rybakina-bilingual-injury-20260821
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  dispatch:
+    if: github.event.head_commit.message == 'chore: dispatch swiatek-rybakina bilingual rerender'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dispatch reviewed render without publishing
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh workflow run match-reel.yml \
+            --repo "${{ github.repository }}" \
+            --ref "${{ github.ref_name }}" \
+            -f mode=render \
+            -f slug=swiatek-rybakina-cincinnati-2026-qf \
+            -f push=false
+          echo "render dispatch accepted for ${{ github.ref_name }}"
