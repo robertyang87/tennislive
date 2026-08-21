@@ -79,7 +79,10 @@ _PAGES_ENTRIES = (
 #: 又一次「查的东西和跑的东西不是一回事」。
 _DISPATCH_ENTRIES = (
     (r"orchestrate\.py", "tools/orchestrate.py"),
-    (r"dispatch_reel_queue\.py", "tools/dispatch_reel_queue.py"),
+    # ⚠️ **必须排除 `test_` 前缀**：`tests/test_dispatch_reel_queue.py` 这个
+    # 文件名本身，从下标 5 开始读就是裸的 `dispatch_reel_queue.py`——一个不带
+    # 词边界的子串正则会把「跑测试」误判成「真的在 dispatch」。
+    (r"(?<!test_)dispatch_reel_queue\.py", "tools/dispatch_reel_queue.py"),
     (r"gh\s+workflow\s+run", "gh workflow run（直接写在 run: 里）"),
     (r"gh\s+api\b[^\n]*/dispatches", "gh api …/dispatches"),
 )
@@ -107,6 +110,33 @@ def _yaml_only(text: str) -> str:
     return "\n".join(re.sub(r"#.*", "", l).rstrip() for l in lines)
 
 
+def _run_scripts(path: Path) -> str:
+    """这条工作流里**真正会执行的那些 `run:` 脚本**，拼成一份文本。
+
+    ⚠️ **`_PAGES_ENTRIES` / `_DISPATCH_ENTRIES` 只许扫这个，不许扫整份
+    `_yaml_only` 文本。** `reel-queue-ci.yml` 2026-08-20 就是这么误报的：
+    它的 `on.pull_request.paths` 里为了「这个文件变了就跑一下」写着
+    `"tools/dispatch_reel_queue.py"`——那是**触发条件**，这条工作流自己
+    一次 dispatch 都没发，job 里只跑了 `pytest -q
+    tests/test_dispatch_reel_queue.py`（测试那个脚本的逻辑，不是执行它）。
+    整份文本一起扫会把「提到过这个文件名」和「真的调用了它」混成一件事。
+
+    和 `test_interview_clip.py::_run_scripts` 是同一个函数，只是这份
+    接受 `Path` 而不是相对工作流名——两处各自维护是因为一个读单个工作流、
+    一个要跨着 32 个文件循环，共用一份还得先对齐参数形状，不值当。
+    """
+    import yaml  # noqa: PLC0415
+
+    wf = yaml.safe_load(path.read_text(encoding="utf-8"))
+    out: list[str] = []
+    for job in (wf.get("jobs") or {}).values():
+        for step in job.get("steps") or []:
+            for ln in str(step.get("run") or "").splitlines():
+                if not ln.lstrip().startswith("#"):
+                    out.append(ln)
+    return "\n".join(out)
+
+
 def test_给了actions_write的工作流都真的要点Pages():
     """两个方向一起钉：给了就必须用得着，用得着就必须给。"""
     files = sorted(WORKFLOWS.glob("*.yml"))
@@ -120,10 +150,14 @@ def test_给了actions_write的工作流都真的要点Pages():
         body = _yaml_only(path.read_text(encoding="utf-8"))
         if re.search(r"^\s*actions:\s*write", body, re.M):
             granted.add(path.name)
-        hits = [label for pat, label in _PAGES_ENTRIES if re.search(pat, body)]
+        # ⚠️ `hits` 只吃 `_run_scripts`，不吃整份 `body`——见 `_run_scripts`
+        # 的 docstring，`on.paths` 里的文件名不算「用得着」。
+        run_body = _run_scripts(path)
+        hits = [label for pat, label in _PAGES_ENTRIES if re.search(pat, run_body)]
         if hits:
             pages_only.add(path.name)
-        hits += [label for pat, label in _DISPATCH_ENTRIES if re.search(pat, body)]
+        hits += [label for pat, label in _DISPATCH_ENTRIES
+                 if re.search(pat, run_body)]
         if hits:
             needed[path.name] = hits
 
