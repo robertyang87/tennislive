@@ -44,6 +44,12 @@ import requests
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
+# jsDelivr 的主机名只有一处出处（tennislive/cdn.py，默认 gcore 镜像，
+# 可用 TENNISLIVE_JSDELIVR_HOST 覆盖）。这里不许再写死 cdn.jsdelivr.net——
+# 那个入口在国内备案被撤销后一律绕境外，写死等于把镜像开关废掉一半：
+# 海报/成片链接停在旧域名，而校验和钉版本早就按 .jsdelivr.net 认了，
+# 分叉不报错，只是国内取图慢。
+from tennislive.cdn import jsdelivr_base  # noqa: E402
 from tennislive.publish.pushplus import push  # noqa: E402
 from tennislive.render.hashtags import (  # noqa: E402
     MAX_HASHTAGS,
@@ -107,7 +113,7 @@ def video_url(outdir: Path, name: str) -> str:
     size = (outdir / name).stat().st_size
     path = f"{outdir.as_posix()}/{name}"
     if size <= JSDELIVR_MAX_BYTES:
-        return f"https://cdn.jsdelivr.net/gh/{REPO}@{BRANCH}/{path}"
+        return f"{jsdelivr_base(REPO, BRANCH)}/{path}"
     print(f"[链接] 成片 {size / 1e6:.1f} MB 超过 jsDelivr 的 20 MB 上限，改用 raw")
     return f"https://raw.githubusercontent.com/{REPO}/{BRANCH}/{path}"
 
@@ -591,12 +597,12 @@ def split_copy(copy_text: str) -> tuple[str, str]:
 
 def poster_url(outdir: Path, name: str = POSTER_NAME) -> str:
     """封面海报的图片链接。海报只有几百 KB，稳走 jsDelivr。"""
-    return f"https://cdn.jsdelivr.net/gh/{REPO}@{BRANCH}/{outdir.as_posix()}/{name}"
+    return f"{jsdelivr_base(REPO, BRANCH)}/{outdir.as_posix()}/{name}"
 
 
 def stat_card_url(outdir: Path, name: str = STAT_CARD_NAME) -> str:
     """数据统计对照图的图片链接，和海报同一条 CDN 路径规则（同样只有几百 KB）。"""
-    return f"https://cdn.jsdelivr.net/gh/{REPO}@{BRANCH}/{outdir.as_posix()}/{name}"
+    return f"{jsdelivr_base(REPO, BRANCH)}/{outdir.as_posix()}/{name}"
 
 
 def build_html(video_url: str, copy_url: str, lead: str, copy_text: str,
