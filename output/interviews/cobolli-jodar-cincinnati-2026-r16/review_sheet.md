@@ -51,7 +51,7 @@
 | 45 | 1:32.2 | [▶](https://youtu.be/ICU6DdkMbFA?t=92) | for for the next point, next next shot | 留给下一分 下一拍 |  |
 | 46 | 1:36.3 | [▶](https://youtu.be/ICU6DdkMbFA?t=96) | and sorry. | 抱歉 |  |
 | 47 | 1:39.8 | [▶](https://youtu.be/ICU6DdkMbFA?t=99) | I was praying for for some lucky there. | 我当时就盼着能有点运气 |  |
-| 48 | 1:44.7 | [▶](https://youtu.be/ICU6DdkMbFA?t=104) | But, I think also it's one of the thing | 但我觉得这也是 |  |
+| 48 | 1:44.7 | [▶](https://youtu.be/ICU6DdkMbFA?t=104) | But, I think also it's one of the things | 但我觉得这也是 | ✏️ 已订正 |
 | 49 | 1:47.0 | [▶](https://youtu.be/ICU6DdkMbFA?t=106) | that I do better. | 我做得比较好的一点 |  |
 | 50 | 1:48.1 | [▶](https://youtu.be/ICU6DdkMbFA?t=108) | So, when I can hit the forehand | 所以当我能打出正手 |  |
 | 51 | 1:50.2 | [▶](https://youtu.be/ICU6DdkMbFA?t=110) | with the right position, | 找准站位的时候 |  |
