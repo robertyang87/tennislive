@@ -51,10 +51,10 @@
 | 45 | 1:32.2 | [▶](https://youtu.be/ICU6DdkMbFA?t=92) | for for the next point, next next shot | 留给下一分 下一拍 |  |
 | 46 | 1:36.3 | [▶](https://youtu.be/ICU6DdkMbFA?t=96) | and sorry. | 抱歉 |  |
 | 47 | 1:39.8 | [▶](https://youtu.be/ICU6DdkMbFA?t=99) | I was praying for for some lucky there. | 我当时就盼着能有点运气 |  |
-| 48 | 1:44.7 | [▶](https://youtu.be/ICU6DdkMbFA?t=104) | You have a great forehand, Flavio. 11 and | 你的正手真的很棒 弗拉维奥 | ✏️ 已订正 |
-| 49 | 1:47.0 | [▶](https://youtu.be/ICU6DdkMbFA?t=106) | that I do better. | 这块我还能做得更好 |  |
-| 50 | 1:48.1 | [▶](https://youtu.be/ICU6DdkMbFA?t=108) | So, when I can hit the forehand | 所以当我能找到合适的站位 |  |
-| 51 | 1:50.2 | [▶](https://youtu.be/ICU6DdkMbFA?t=110) | with the right position, | 去打正手的时候 |  |
+| 48 | 1:44.7 | [▶](https://youtu.be/ICU6DdkMbFA?t=104) | But, I think also it's one of the thing | 但我觉得这也是 |  |
+| 49 | 1:47.0 | [▶](https://youtu.be/ICU6DdkMbFA?t=106) | that I do better. | 我做得比较好的一点 |  |
+| 50 | 1:48.1 | [▶](https://youtu.be/ICU6DdkMbFA?t=108) | So, when I can hit the forehand | 所以当我能打出正手 |  |
+| 51 | 1:50.2 | [▶](https://youtu.be/ICU6DdkMbFA?t=110) | with the right position, | 找准站位的时候 |  |
 | 52 | 1:51.5 | [▶](https://youtu.be/ICU6DdkMbFA?t=111) | I think I have a good forehand. | 我的正手是很不错的 |  |
 | 53 | 1:53.7 | [▶](https://youtu.be/ICU6DdkMbFA?t=113) | You have a great forehand, Flavio. | 你的正手真的很棒 弗拉维奥 | ✏️ 已订正 |
 | 54 | 1:55.8 | [▶](https://youtu.be/ICU6DdkMbFA?t=115) | 11 and two now in deciding sets. | 决胜盘你现在是十一胜两负 |  |
@@ -91,7 +91,7 @@
 | 85 | 2:59.5 | [▶](https://youtu.be/ICU6DdkMbFA?t=179) | Thanks for stopping by the desk. | 谢谢你来演播桌 |  |
 | 86 | 3:00.8 | [▶](https://youtu.be/ICU6DdkMbFA?t=180) | Best of luck going forward. | 祝你接下来一切顺利 |  |
 | 87 | 3:01.8 | [▶](https://youtu.be/ICU6DdkMbFA?t=181) | so much. | 非常感谢 |  |
-| 88 | 3:02.7 | [▶](https://youtu.be/ICU6DdkMbFA?t=182) | Send it back to Pat and Sam. | 画面交回给帕特他们 |  |
+| 88 | 3:02.7 | [▶](https://youtu.be/ICU6DdkMbFA?t=182) | Send it back to Pat and Sam. | 画面交回给帕特和萨姆 |  |
 
 ## 还欠着的
 
