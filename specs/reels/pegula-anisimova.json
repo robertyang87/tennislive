@@ -42,7 +42,41 @@
     "_why": "WTA 官方逐分 API 首分时间为 2026-08-20T17:10:02Z，即北京时间 8 月 21 日 01:10；正式赛果、用时和统计一律以 WTA 官方接口为准，不采用自动 draft 中冲突的 Flashscore 总分和用时。"
   },
   "_hit_data": "采用 WTA 官方 95-94：189 分只差一分；抢七3-4后佩古拉连赢四分。自动 draft 的96-95与官方接口冲突，已废弃且不会进入文案。",
-  "_no_stats_why": "WTA 官方 stats API 已核验95-94等技术统计；本片把唯一决定比赛的统计结论放在收尾旁白里，不另插一张重复数字的统计卡，以免打断决胜盘抢七的连续叙事。",
+  "stats": {
+    "tour": "wta",
+    "a": {
+      "headshot": "assets/players/headshots/wta-316956.jpg",
+      "aces": 3,
+      "df": 2,
+      "first_in": 56,
+      "first_won": 37,
+      "first_total": 94,
+      "second_total": 38,
+      "second_won": 21,
+      "bp_conv": 4,
+      "bp_chances": 7,
+      "pts_won": 95,
+      "pts_total": 189
+    },
+    "b": {
+      "headshot": "assets/players/headshots/wta-326384.jpg",
+      "aces": 4,
+      "df": 3,
+      "first_in": 57,
+      "first_won": 39,
+      "first_total": 95,
+      "second_total": 38,
+      "second_won": 19,
+      "bp_conv": 5,
+      "bp_chances": 5,
+      "pts_won": 94,
+      "pts_total": 189
+    },
+    "footer_venue": "P&G Stadium Court · 辛辛那提",
+    "footer_date": "2026.08.20",
+    "_winners_ue_why": "截至2026-08-21已查现有 tnns-stats 历史运行，未有 Pegula–Anisimova 本场；直接运行 `tools/tnns_stats.py fetch --who Pegula --who Anisimova --date 2026-08-20` 时，Chromium 对 tnnslive.com / api.tnnslive.com 均报 ERR_EMPTY_RESPONSE，curl 命中 Cloudflare 403 challenge，尚未取得 match id 或 hasExtendedStats，不能据此写成‘本场无扩展统计’。Reuters 赛后稿只明确阿尼西莫娃56次非受迫失误，缺双方 winners/UE 的完整同源数据，因此不混填；发布前可在 GitHub runner 补跑 `tnns-stats.yml -f who=Pegula,Anisimova -f date=2026-08-20` 后再补齐。",
+    "_source": "WTA 官方 `tournaments/1017/2026/matches/LS006/stats` 的全场汇总（setnum=0）。stats.a 跟 cover.matchup[0]＝佩古拉，stats.b 跟 cover.matchup[1]＝阿尼西莫娃；头像沿用仓库已核验的 WTA 官方头像。first_total 按 first_in + second_total 计算：佩古拉 56+38=94，阿尼西莫娃 57+38=95。总得分 95:94、合计189分，与片尾旁白完全一致。"
+  },
   "cover": {
     "eyebrow": "赛场之上",
     "layout": "solo",
@@ -155,3 +189,4 @@
     }
   ]
 }
+
