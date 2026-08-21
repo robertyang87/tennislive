@@ -22,6 +22,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           sparse-checkout: |
+            assets
             data
             specs
             src
@@ -34,6 +35,15 @@ jobs:
 
       - name: 安装转写依赖
         run: pip install -q -e . "yt-dlp[default]>=2026.7.4" faster-whisper
+
+      - name: 按正式渲染线准备 YouTube cookies
+        env:
+          YT_COOKIES_TXT: ${{ secrets.YT_COOKIES_TXT }}
+        run: |
+          if [ -n "$YT_COOKIES_TXT" ]; then
+            printf '%s\n' "$YT_COOKIES_TXT" > /tmp/yt-cookies.txt
+            echo "COOKIES=/tmp/yt-cookies.txt" >> "$GITHUB_ENV"
+          fi
 
       - name: 用采访下载梯子转写并翻译完整采访
         env:
