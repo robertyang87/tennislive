@@ -66,7 +66,7 @@
 | 60 | 1:57.8 | [▶](https://youtu.be/GJb3f9i-D7E?t=378) | of moving into the court a little bit | 更往场内压一点 |  |
 | 61 | 1:59.0 | [▶](https://youtu.be/GJb3f9i-D7E?t=380) | at the start of the third, | 决胜盘一开局就这么打 |  |
 | 62 | 1:59.7 | [▶](https://youtu.be/GJb3f9i-D7E?t=380) | and I think I started playing much better. | 感觉状态一下就上来了 |  |
-| 63 | 2:01.4 | [▶](https://youtu.be/GJb3f9i-D7E?t=382) | Next up, EGA or Elena. | 下一轮 斯瓦泰克或莱巴金娜 |  |
+| 63 | 2:01.4 | [▶](https://youtu.be/GJb3f9i-D7E?t=382) | Next up, Iga or Elena. | 下一轮 斯瓦泰克或莱巴金娜 | ✏️ 已订正 |
 | 64 | 2:03.5 | [▶](https://youtu.be/GJb3f9i-D7E?t=384) | A, will you watch tonight? | 你今晚会看这场球吗？ |  |
 | 65 | 2:04.7 | [▶](https://youtu.be/GJb3f9i-D7E?t=385) | and be you're one of the few players | 你可是少数 |  |
 | 66 | 2:06.1 | [▶](https://youtu.be/GJb3f9i-D7E?t=387) | who has been able to beat both of them | 两个人都赢过的球员 |  |
