@@ -14,14 +14,13 @@
     "kind": "none",
     "why": "字幕从 t=0.0 就是主持人在演播桌前的过渡句「Thanks Beth. Got Flavio here.」，直接进入访谈，没有解说复盘比分的过渡句——这是赛后就近在场边演播桌做的访谈（『Thanks for stopping by the desk』），不是传统的球场边线人贴身麦克风采访，但形状上仍然是『没有独立的解说复盘段落，直接开始问答』，和已发的 cobolli-paul 那条同一类，opening.kind 认领为 none。"
   },
-  "_note": "本地已跑过 --stage subs（喂本地下载的字幕文件），切出真实 88 行、最后一条字幕收在 184.9s（『Send it back to Pat and』，句子被截断，视频本身在这里结束）——end 定在 185.5 留一点尾巴。⚠️ 这是本地喂字幕文件跑的，不是 runner 上真源片给出的 storyboard，片尾有没有 Tennis Channel 的转场/角标仍要等 runner 上 --stage subs 真下载视频后核对。",
+  "_note": "本地已跑过 --stage subs（喂本地下载的字幕文件），切出真实 88 行、最后一条字幕『Send it back to Pat and Sam.』收在 185.02s——end 定在 185.5 留一点尾巴。⚠️ 这是本地喂字幕文件跑的，不是 runner 上真源片给出的 storyboard，片尾有没有 Tennis Channel 的转场/角标仍要等 runner 上 --stage subs 真下载视频后核对。\n\n⚠️⚠️ 2026-08-21 runner 上第一趟 `--stage verify` 报两份转写对不上 12.9%（闸门 12%），逐处核对时发现第48行原来的 `en_fixed`「You have a great forehand, Flavio. 11 and」是**我自己编的，不是原始字幕**——直接读 `cap_ICU6DdkMbFA.en.json3` 原始事件，104.72s 那一条明明白白写着『>> But, I think also it's one of the thing』，紧接 106.96s『that I do better.』，是科博利自己在接着讲『我该改进的地方』那段话，不是采访者插的话。『You have a great forehand, Flavio』这句真实只在 113.68s 出现过**一次**，紧接『11 and two now in deciding sets.』——第一版我把它误记成了出现两次，还把『11 and』这个残片错误地嫁接到了第48行。删掉那条假的 en_fixed，工具的自然切行本身就是对的（不用再手动订正第48行），第48-52行的中文全部按这份修正过的英文重写。这是本文件『编出来的判据+正确的结论』那一类坑的又一实例——只是这次编的不是中文判据，是**英文字幕本身**，而它一路混过了本地 --stage subs 的宽度/悬空检查（那两项检查不看内容对不对，只看排得下、断得开），直到跑到 runner 上和第二份独立转写一比对才现形。",
   "en_fixed": {
     "1": "Thanks Beth. Got Flavio here.",
     "2": "Got Flavio here. Congratulations.",
-    "48": "You have a great forehand, Flavio. 11 and",
     "53": "You have a great forehand, Flavio."
   },
-  "_en_fixed_why": "自动字幕把「Flavio」听成「Fabio」（第1、2、48、53行）——真实姓名，官方拼法对得上视频标题本身（Flavio Cobolli）。同一句『Got X here』／『You have a great forehand, X』在原始字幕里各自出现了两次（第1/2行、第48/53行），本地重跑 --stage subs 拿到真实 88 行切分后才发现第2、53行也要修，第一版只改了第1、48行。",
+  "_en_fixed_why": "自动字幕把「Flavio」听成「Fabio」（第1、2、53行）——真实姓名，官方拼法对得上视频标题本身（Flavio Cobolli）。第2行的『Got Fabio here.』不是内容重复，是工具把这句短子句（只停 0.76s）并句时把开头重复印了一遍（`--stage subs` 日志里那句『并短句：Got Fabio here.（只停 0.76s）』就是这个），原始字幕里『Got Fabio here』其实只说了一次（0.0s，和第1行合并显示）——但既然它被并出来单独又印了一遍在第2行画面上，同样要把名字改对。『You have a great forehand，X』只在第53行（源片113.68s）出现过一次，第一版误以为第48行也有同一句、其实是编错的，见上面 `_note`。",
   "_facts": [
     "赛果取自 flashscore（feMBVwZi）：科博利 4-6 7-6(3) 6-3 逆转霍达尔，2026-08-19，辛辛那提 ATP1000 1/8决赛，全场用时约 2 小时 33 分（视频标题『2.5 hour match』与此吻合）。",
     "主持人在采访里说他『11 and two now in deciding sets』（决胜盘 11 胜 2 负）——这是转播方自己在直播中读给他听的统计数字，未独立核实（专业转播现场统计，不额外查证），照实译入字幕。",
@@ -101,10 +100,10 @@
     "留给下一分 下一拍",
     "抱歉",
     "我当时就盼着能有点运气",
-    "你的正手真的很棒 弗拉维奥",
-    "这块我还能做得更好",
-    "所以当我能找到合适的站位",
-    "去打正手的时候",
+    "但我觉得这也是",
+    "我做得比较好的一点",
+    "所以当我能打出正手",
+    "找准站位的时候",
     "我的正手是很不错的",
     "你的正手真的很棒 弗拉维奥",
     "决胜盘你现在是十一胜两负",
@@ -141,6 +140,6 @@
     "谢谢你来演播桌",
     "祝你接下来一切顺利",
     "非常感谢",
-    "画面交回给帕特他们"
+    "画面交回给帕特和萨姆"
   ]
 }
