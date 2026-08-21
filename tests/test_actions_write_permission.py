@@ -79,7 +79,10 @@ _PAGES_ENTRIES = (
 #: 又一次「查的东西和跑的东西不是一回事」。
 _DISPATCH_ENTRIES = (
     (r"orchestrate\.py", "tools/orchestrate.py"),
-    (r"dispatch_reel_queue\.py", "tools/dispatch_reel_queue.py"),
+    # ⚠️ **必须排除 `test_` 前缀**：`tests/test_dispatch_reel_queue.py` 这个
+    # 文件名本身，从下标 5 开始读就是裸的 `dispatch_reel_queue.py`——一个不带
+    # 词边界的子串正则会把「跑测试」误判成「真的在 dispatch」。
+    (r"(?<!test_)dispatch_reel_queue\.py", "tools/dispatch_reel_queue.py"),
     (r"gh\s+workflow\s+run", "gh workflow run（直接写在 run: 里）"),
     (r"gh\s+api\b[^\n]*/dispatches", "gh api …/dispatches"),
 )
@@ -107,44 +110,30 @@ def _yaml_only(text: str) -> str:
     return "\n".join(re.sub(r"#.*", "", l).rstrip() for l in lines)
 
 
-def _run_step_bodies(text: str) -> str:
-    """只拿 `jobs.*.steps[].run` 里的脚本文本，**不含 `on:` 触发器那一段**。
+def _run_scripts(path: Path) -> str:
+    """这条工作流里**真正会执行的那些 `run:` 脚本**，拼成一份文本。
 
-    ⚠️ **2026-08-21 补的，起因是 `reel-queue-ci.yml` 被误判成「要 dispatch」。**
-    它的 `on.pull_request.paths` 里写着 `tools/dispatch_reel_queue.py`
-    ——那只是「这个文件变了就重跑这条 CI」的路径过滤器，这条工作流从头到尾
-    只跑了一句 `pytest -q tests/test_dispatch_reel_queue.py`，`permissions`
-    也老老实实只给了 `contents: read`，一次 dispatch 都没发出去。
+    ⚠️ **`_PAGES_ENTRIES` / `_DISPATCH_ENTRIES` 只许扫这个，不许扫整份
+    `_yaml_only` 文本。** `reel-queue-ci.yml` 2026-08-20 就是这么误报的：
+    它的 `on.pull_request.paths` 里为了「这个文件变了就跑一下」写着
+    `"tools/dispatch_reel_queue.py"`——那是**触发条件**，这条工作流自己
+    一次 dispatch 都没发，job 里只跑了 `pytest -q
+    tests/test_dispatch_reel_queue.py`（测试那个脚本的逻辑，不是执行它）。
+    整份文本一起扫会把「提到过这个文件名」和「真的调用了它」混成一件事。
 
-    可 `_DISPATCH_ENTRIES` 按**工具名**（不按调用语法）扫**整份**
-    `_yaml_only` 文本，这个路径过滤器和真正的调用长得一模一样——正是本文件
-    自己在 `_DISPATCH_ENTRIES` 上面那段注释里记的教训（`orchestrate.yml` 那次
-    是被注释误伤，这次是被 `on:` 触发器误伤，形状是同一个：**查的字符串和
-    真正会执行的那一句不是一回事**）。`_PAGES_ENTRIES`/`_DISPATCH_ENTRIES`
-    要问的是「这条工作流会不会跑到这一句」，触发器路径过滤器从不执行任何东西，
-    只有 `run:` 步骤会。
-
-    ⚠️ **同一条工作流还藏着第二层同形状的误伤**：它唯一的 `run:` 是
-    `pytest -q tests/test_dispatch_reel_queue.py`——**跑单元测试**，不是
-    直接调那个工具去真的 dispatch。而 `test_dispatch_reel_queue.py` 这个
-    文件名本身，字面上就包含 `dispatch_reel_queue.py` 这个子串（前面多了
-    `test_` 四个字），正则不带边界又中一次。**测试一个工具不等于调用它**，
-    `pytest` 起头、以 `test_*.py` 收尾的那种行整条丢掉，别只丢文件名。
-
-    `permissions`/`actions: write` 那半截判据不受影响，仍然扫整份
-    `_yaml_only(text)`——那是顶层配置块，不会被 `on:` 触发器污染。
+    和 `test_interview_clip.py::_run_scripts` 是同一个函数，只是这份
+    接受 `Path` 而不是相对工作流名——两处各自维护是因为一个读单个工作流、
+    一个要跨着 32 个文件循环，共用一份还得先对齐参数形状，不值当。
     """
     import yaml  # noqa: PLC0415
 
-    wf = yaml.safe_load(text) or {}
-    out = []
+    wf = yaml.safe_load(path.read_text(encoding="utf-8"))
+    out: list[str] = []
     for job in (wf.get("jobs") or {}).values():
         for step in job.get("steps") or []:
             for ln in str(step.get("run") or "").splitlines():
-                if re.search(r"^\s*(python3?\s+-m\s+)?pytest\b.*\btest_\w+\.py",
-                             ln):
-                    continue
-                out.append(ln)
+                if not ln.lstrip().startswith("#"):
+                    out.append(ln)
     return "\n".join(out)
 
 
@@ -162,7 +151,9 @@ def test_给了actions_write的工作流都真的要点Pages():
         body = _yaml_only(text)
         if re.search(r"^\s*actions:\s*write", body, re.M):
             granted.add(path.name)
-        run_body = _run_step_bodies(text)
+        # ⚠️ `hits` 只吃 `_run_scripts`，不吃整份 `body`——见 `_run_scripts`
+        # 的 docstring，`on.paths` 里的文件名不算「用得着」。
+        run_body = _run_scripts(path)
         hits = [label for pat, label in _PAGES_ENTRIES if re.search(pat, run_body)]
         if hits:
             pages_only.add(path.name)
