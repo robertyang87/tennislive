@@ -1420,6 +1420,16 @@ SHEET_BG = "0x11221b"
 #: 第一格不取第 0 秒——开头常是黑场或台标。反推时要把这半秒加回去。
 SHEET_LEAD = 0.5
 
+#: 抓帧点不能贴着源片的最后一帧。`-ss` 落在离 duration 很近的地方时，
+#: ffmpeg 的 mjpeg 编码器有时直接报错退出（不是本文件别处那种「悄悄输出
+#: 短一截」的沉默失败，是非零退出码）。2026-08-21 首次撞上：一条 34.5 秒的
+#: YouTube Shorts 素材，`_frange` 从 0.5 起按 1 秒累加，浮点误差把最后一格
+#: 累到贴住 duration 本身，ffmpeg 报
+#: `[enc:mjpeg] Could not open encoder before EOF`，整趟 probe 失败。
+#: 短素材本来就不常见（这条线大多数源片是几分钟的官方集锦），所以这个坑
+#: 一直没被踩到，直到第一条用 Shorts 当源片的片子。
+FRAME_END_MARGIN = 0.15
+
 
 def sheet_stamps(duration: float, *, every: float = 2.0,
                  start: float = 0.0, stop: float | None = None) -> list[float]:
@@ -1430,7 +1440,8 @@ def sheet_stamps(duration: float, *, every: float = 2.0,
     而它对不上的时候不吭声。
     """
     lo = start + SHEET_LEAD
-    hi = duration if stop is None else min(stop, duration)
+    safe_end = duration - FRAME_END_MARGIN
+    hi = safe_end if stop is None else min(stop, safe_end)
     return [round(t, 2) for t in _frange(lo, hi, every)]
 
 
