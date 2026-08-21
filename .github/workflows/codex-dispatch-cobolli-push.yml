@@ -1,0 +1,28 @@
+name: codex-dispatch-cobolli-push
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/codex-dispatch-cobolli-push.yml
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  dispatch:
+    if: "${{ github.event.head_commit.message == 'ci: dispatch Cobolli WeChat push' }}"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dispatch audited Cobolli WeChat push
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh workflow run match-reel.yml \
+            --repo "$GITHUB_REPOSITORY" \
+            --ref main \
+            -f mode=push \
+            -f slug=paul-cobolli \
+            -f push=true
