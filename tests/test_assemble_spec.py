@@ -471,8 +471,9 @@ def test_main写出草稿文件(tool, monkeypatch, tmp_path, capsys):
     monkeypatch.setattr(a, "assemble", lambda **kw: {
         "_draft": True, "slug": kw["slug"], "cover": {"matchup": []},
         "_notes": ["flashscore id：4CYI9Ick（给定）"]})
-    monkeypatch.setattr(a.Path, "resolve",
-                        classmethod(lambda cls: tmp_path.parent / "fake" / "assemble_spec.py"))
+    # ⚠️ DRAFT_DIR 是 import 时按 __file__ 算好的**绝对路径**——不改它的话，
+    # 这条测试会把 demo.draft.json 真写进仓库的 specs/reels/pending/。
+    monkeypatch.setattr(a, "DRAFT_DIR", tmp_path / "pending")
     monkeypatch.setattr(sys, "argv", [
         "assemble_spec.py", "--slug", "demo", "--home", "A E", "--away", "B R",
         "--write"])
@@ -480,6 +481,8 @@ def test_main写出草稿文件(tool, monkeypatch, tmp_path, capsys):
     assert rc == 0
     out = capsys.readouterr().out
     assert "草稿 →" in out
+    assert (tmp_path / "pending" / "demo.draft.json").is_file(), (
+        "--write 要把草稿真的落在 DRAFT_DIR（pending/）里")
 
 
 def test_main默认不落盘(tool, monkeypatch, tmp_path, capsys):
@@ -487,8 +490,7 @@ def test_main默认不落盘(tool, monkeypatch, tmp_path, capsys):
     monkeypatch.setattr(a, "assemble", lambda **kw: {
         "_draft": True, "slug": kw["slug"], "cover": {"matchup": []},
         "_notes": []})
-    monkeypatch.setattr(a.Path, "resolve",
-                        classmethod(lambda cls: tmp_path.parent / "fake" / "assemble_spec.py"))
+    monkeypatch.setattr(a, "DRAFT_DIR", tmp_path / "pending")
     monkeypatch.setattr(sys, "argv", [
         "assemble_spec.py", "--slug", "demo", "--home", "A E", "--away", "B R"])
     rc = a.main()
@@ -496,3 +498,17 @@ def test_main默认不落盘(tool, monkeypatch, tmp_path, capsys):
     out = capsys.readouterr().out
     assert "没落盘" in out and "草稿 →" not in out, (
         "默认必须只打印不写文件——手动控制要先看后写，别默认就把草稿落进仓库")
+    assert not (tmp_path / "pending").exists(), "默认不落盘，连草稿目录都不该建"
+
+
+def test_草稿目录钉在pending不许漏回specs正下方(tool):
+    """specs/reels/ 正下方被一批**非递归** `glob("*.json")` 的判据测试扫着，
+    `.draft.json` 会被 `*.json` 命中——2026-08-18 一份草稿把 main CI 红过
+    2 小时（specs/reels/pending/README.md 记着来路）。所以草稿只许落
+    pending/，而且存量一份都不许漏在外面。"""
+    a = tool
+    assert a.DRAFT_DIR.parts[-3:] == ("specs", "reels", "pending"), a.DRAFT_DIR
+    repo = Path(__file__).resolve().parents[1]
+    strays = sorted((repo / "specs" / "reels").glob("*.draft.json"))
+    assert not strays, (
+        f"specs/reels/ 正下方混进了草稿（会打红非递归 glob 的判据）：{strays}")

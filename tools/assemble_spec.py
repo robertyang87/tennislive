@@ -10,7 +10,12 @@
     find_turning_points                转折局候选
     draft_spec                         钩子/论点/beats/旁白/场外切口
 
-本工具把这五件批处理成 `specs/reels/<slug>.draft.json`，供人终审。
+本工具把这五件批处理成 `specs/reels/pending/<slug>.draft.json`，供人终审。
+
+⚠️ **草稿只许落在 `pending/`，不许落在 `specs/reels/` 正下方**：判据测试是
+**非递归**的 `Path("specs/reels").glob("*.json")`，`.draft.json` 会被 `*.json`
+命中——2026-08-18 一份落在正下方的草稿把 main CI 红了两小时（事故记录在
+`specs/reels/pending/README.md`）。`pending/` 已被那批判据豁免且有 README 合同。
 
 ⚠️ **只备料，不判稿**：窗口（segments 的 start/end/cx）仍由人从缩略图墙定——
 转折局是「第几盘第几局」，映射到视频秒要另写对照，选段错位质检未必拦得住，
@@ -30,7 +35,7 @@ stats 块缺必填项、狠数据算不出、没配 DeepSeek key——各自在 
     python tools/assemble_spec.py --slug eala-ruse --flashscore-id 4CYI9Ick \
         --home "Alexandra Eala" --away "Elena-Gabriela Ruse" ...
 
-产出 specs/reels/<slug>.draft.json，字段：
+产出 specs/reels/pending/<slug>.draft.json，字段：
     _draft: true          —— 草稿标记；validate_spec 只认 <slug>.json，不会误读
     _match.flashscore_id  —— 反查或给定
     cover.matchup         —— player_zh 译名 + 英文名
@@ -65,6 +70,10 @@ from draft_spec import draft_editorial  # noqa: E402
 
 TURNING_POINT_TOP = 5
 DRAFT_SUFFIX = ".draft.json"
+# 草稿落盘的目录。⚠️ 必须是 pending/ 子目录：`specs/reels/` 正下方被一批
+# **非递归** `glob("*.json")` 的判据测试扫着，`.draft.json` 会被 `*.json`
+# 命中——2026-08-18 已经把 main CI 红过 2 小时（见 pending/README.md）。
+DRAFT_DIR = Path(__file__).resolve().parent.parent / "specs" / "reels" / "pending"
 
 
 def _surname(full: str) -> str:
@@ -467,7 +476,7 @@ def main() -> int:
     ap.add_argument("--background", default="",
                     help="球员背景（排名/年龄/H2H/纪录/金句），有就喂给文案")
     ap.add_argument("--write", action="store_true",
-                    help="把草稿落盘到 specs/reels/<slug>.draft.json；不给就只打印")
+                    help="把草稿落盘到 specs/reels/pending/<slug>.draft.json；不给就只打印")
     args = ap.parse_args()
 
     draft = assemble(slug=args.slug, home=args.home, away=args.away,
@@ -483,9 +492,8 @@ def main() -> int:
         print("\n（干跑，没落盘。要写进仓库加 --write。）")
         return 0
 
-    outdir = Path(__file__).resolve().parent.parent / "specs" / "reels"
-    outdir.mkdir(parents=True, exist_ok=True)
-    out = outdir / f"{args.slug}{DRAFT_SUFFIX}"
+    DRAFT_DIR.mkdir(parents=True, exist_ok=True)
+    out = DRAFT_DIR / f"{args.slug}{DRAFT_SUFFIX}"
     out.write_text(json.dumps(draft, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"\n草稿 → {out}")
     print("\n窗口（segments）和封面（cover.portrait 官方实拍）留给终审补，"

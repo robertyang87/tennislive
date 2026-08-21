@@ -804,6 +804,7 @@ jobs:
             --captions "$OUT/captions.txt" \
             --cuts "$OUT/probe.json" \
             --source-url "${{ github.event.inputs.url }}" \
+            --cover \
             $ALIGN_ARGS \
             --write
 
@@ -1124,12 +1125,14 @@ jobs:
           # 只 add 本次的目录：一起 add output/ 会把别的选题的成片一并重放，
           # 并行跑的时候会来回覆盖（explainer 那条线上踩过）
           git add "$OUTDIR"
-          # 自动备料的草稿 spec 也要落库——assemble_spec --write 写到 specs/reels/，
-          # 不在 $OUTDIR 里，之前一直没被提交，终审在 git 里根本看不到草稿。
-          # 只 add 本 slug 的草稿，别把别人的一起带上；文件不存在（没备料/已提升
-          # 成正式 spec）就跳过。
-          if [ -f "specs/reels/${{ github.event.inputs.slug }}.draft.json" ]; then
-            git add "specs/reels/${{ github.event.inputs.slug }}.draft.json"
+          # 自动备料的草稿 spec 也要落库——assemble_spec --write 写到
+          # specs/reels/pending/（⚠️ 不是 specs/reels/ 正下方：那儿被非递归
+          # glob("*.json") 的判据扫着，一份草稿曾把 main CI 红过两小时，见
+          # specs/reels/pending/README.md），不在 $OUTDIR 里，不加这步终审在
+          # git 里根本看不到草稿。只 add 本 slug 的草稿，别把别人的一起带上；
+          # 文件不存在（没备料/已提升成正式 spec）就跳过。
+          if [ -f "specs/reels/pending/${{ github.event.inputs.slug }}.draft.json" ]; then
+            git add "specs/reels/pending/${{ github.event.inputs.slug }}.draft.json"
           fi
           if git diff --cached --quiet; then
             echo "没有变化"
