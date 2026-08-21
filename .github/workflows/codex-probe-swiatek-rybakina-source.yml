@@ -12,8 +12,9 @@ permissions:
 
 jobs:
   probe:
-    if: "${{ github.event.head_commit.message == 'ci: retry footage probe with ffmpeg' }}"
+    if: "${{ github.event.head_commit.message == 'ci: probe selected source second by second' }}"
     runs-on: ubuntu-latest
+    timeout-minutes: 12
     steps:
       - uses: actions/setup-python@v5
         with:
@@ -21,12 +22,8 @@ jobs:
       - name: Install download stack
         run: |
           pip install -q --upgrade "yt-dlp[default]" bgutil-ytdlp-pot-provider
-          node --version
-      - name: Install ffmpeg
-        run: |
           sudo apt-get update -qq
           sudo apt-get install -y -qq ffmpeg
-          ffmpeg -version | head -1
       - name: Start PO token provider
         run: |
           docker run --name bgutil-pot -d -p 4416:4416 brainicism/bgutil-ytdlp-pot-provider
@@ -45,63 +42,37 @@ jobs:
             printf '%s' "$YT_COOKIES_TXT" > "$RUNNER_TEMP/yt-cookies.txt"
             echo "path=$RUNNER_TEMP/yt-cookies.txt" >> "$GITHUB_OUTPUT"
           fi
-      - name: Download candidates and build tail sheets
+      - name: Download selected source and build one-second sheets
         env:
           YT_COOKIES: ${{ steps.cookies.outputs.path }}
         run: |
           mkdir -p probe
-          python - <<'PY'
-          import json
-          import os
-          import pathlib
-          import subprocess
-
-          ids = ["1dkPejO-PCM", "rBQIf_-9v4Y", "ntKq8uBK5dM", "nPO6CwFZ3K8", "GiTIW-YDFKk"]
-          cookie = os.environ.get("YT_COOKIES", "").strip()
-          rows = []
-          for vid in ids:
-              out = pathlib.Path("probe") / f"{vid}.mp4"
-              cmd = [
-                  "yt-dlp", "--no-playlist", "--retries", "3",
-                  "--js-runtimes", "node",
-                  "-f", "bv*[height<=720]+ba/b[height<=720]",
-                  "--merge-output-format", "mp4", "-o", str(out),
-              ]
-              if cookie:
-                  cmd += ["--cookies", cookie]
-              cmd += [f"https://youtu.be/{vid}"]
-              proc = subprocess.run(cmd, capture_output=True, text=True)
-              row = {"id": vid, "download_rc": proc.returncode,
-                     "stderr": proc.stderr[-4000:]}
-              if proc.returncode != 0:
-                  rows.append(row)
-                  continue
-              probe = subprocess.run(
-                  ["ffprobe", "-v", "error", "-show_entries",
-                   "format=duration:stream=width,height,r_frame_rate",
-                   "-of", "json", str(out)],
-                  capture_output=True, text=True, check=True)
-              meta = json.loads(probe.stdout)
-              row["probe"] = meta
-              duration = float(meta["format"]["duration"])
-              start = max(0.0, duration - 300.0)
-              sheet = pathlib.Path("probe") / f"{vid}-tail.jpg"
-              frame = subprocess.run(
-                  ["ffmpeg", "-hide_banner", "-loglevel", "error",
-                   "-ss", f"{start:.3f}", "-i", str(out), "-t", "300",
-                   "-vf", "fps=1/4,scale=320:-2,tile=5x15:padding=4:margin=4",
-                   "-frames:v", "1", "-q:v", "3", str(sheet)],
-                  capture_output=True, text=True)
-              row["tail_start"] = start
-              row["sheet_rc"] = frame.returncode
-              row["sheet_stderr"] = frame.stderr[-2000:]
-              rows.append(row)
-              out.unlink()
-          (pathlib.Path("probe") / "probe.json").write_text(
-              json.dumps(rows, ensure_ascii=False, indent=2), encoding="utf-8")
-          PY
+          ARGS=(
+            --no-playlist --retries 3 --js-runtimes node
+            -f 'bv*[height<=720]+ba/b[height<=720]'
+            --merge-output-format mp4
+            -o probe/source.mp4
+          )
+          [ -n "$YT_COOKIES" ] && ARGS+=(--cookies "$YT_COOKIES")
+          yt-dlp "${ARGS[@]}" 'https://youtu.be/ntKq8uBK5dM'
+          ffprobe -v error -show_entries format=duration:stream=width,height,r_frame_rate             -of json probe/source.mp4 > probe/source.json
+          for START in 450 500 550 600 650; do
+            END=$((START + 50))
+            [ "$END" -gt 706 ] && END=706
+            DUR=$((END - START))
+            ROWS=$(((DUR + 4) / 5))
+            ffmpeg -hide_banner -loglevel error -ss "$START" -i probe/source.mp4 -t "$DUR"               -vf "fps=1,scale=480:-2,tile=5x${ROWS}:padding=4:margin=4"               -frames:v 1 -q:v 3 "probe/${START}-${END}-1s.jpg"
+          done
+          ffmpeg -hide_banner -loglevel error -ss 500 -i probe/source.mp4             -vf 'scale=640:-2' -c:v libx264 -preset veryfast -crf 27             -c:a aac -b:a 96k -movflags +faststart probe/injury-review-500-end.mp4
+          rm probe/source.mp4
+          cat > probe/README.txt <<'EOF'
+          Source: ntKq8uBK5dM, 1280x720.
+          Each JPEG is row-major, five columns, one frame per source second.
+          For 550-600-1s.jpg: first tile = 550s, second = 551s, and so on.
+          injury-review-500-end.mp4 begins at source 500.000s.
+          EOF
       - uses: actions/upload-artifact@v4
         with:
-          name: swiatek-rybakina-footage-tails-po
+          name: swiatek-rybakina-selected-source-second-probe
           path: probe
           retention-days: 7
