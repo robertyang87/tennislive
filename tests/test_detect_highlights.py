@@ -65,6 +65,10 @@ def test_YouTube探空要退到TennisTV短集锦(monkeypatch):
     # 而真实的官方集锦标题本来就是 `… | Cincinnati 2026` 这个样子。
     monkeypatch.setattr(d, "search", lambda *a, **k: [
         ("Shang vs Sonego Highlights | Cincinnati 2026", "https://yt/a")])
+    # ⚠️ 终审（vet_candidate）现在要真跑一次 yt-dlp 拿元数据——测试里打桩成
+    # 「官方频道 / 时长合格 / 1080p」，不然这条测试会真发一次子进程。
+    monkeypatch.setattr(d, "probe_meta",
+                        lambda u, timeout=120: ("Tennis TV", 200.0, 1080.0))
     url, via = d.find_highlight("Juncheng Shang", "Lorenzo Sonego", "Cincinnati", 2026)
     assert (url, via) == ("https://yt/a", "youtube")
     assert not touched, "YouTube 已经探到了还去查 Tennis TV——会把完整版换成剪短版"
@@ -170,3 +174,136 @@ def test_生产路径要把赛事和年份传下去():
     assert "event" in names and "year" in names, (
         "find_highlight 没把赛事和年份传给 pick_highlight——那两道闸等于没装，"
         f"实际传的是 {names}")
+
+
+def test_yt_dlp没装要出声不许静默当成没搜到(monkeypatch):
+    """⚠️ orchestrate.yml 一度漏装 yt-dlp，`search()` 把 FileNotFoundError 吞成
+    []——于是编排器每一班都安静地零候选，**和「集锦还没发」长得一模一样**。
+    「没装」是环境错了要当场抛；「超时」才是正常态返回空。"""
+    import pytest
+
+    dh = _tool()
+
+    def _missing(*a, **k):
+        raise FileNotFoundError("yt-dlp")
+
+    monkeypatch.setattr(dh.subprocess, "run", _missing)
+    with pytest.raises(RuntimeError) as exc:
+        dh.search("eala pegula highlights")
+    msg = str(exc.value)
+    assert "yt-dlp 没装" in msg, "要说清是环境错了，不是「还没搜到」"
+    assert "yt-dlp[default]" in msg, "出路要写进报错（[default] 不能省）"
+
+    def _slow(*a, **k):
+        raise dh.subprocess.TimeoutExpired(cmd="yt-dlp", timeout=1)
+
+    monkeypatch.setattr(dh.subprocess, "run", _slow)
+    assert dh.search("eala pegula highlights") == [], "超时是正常态，返回空别抛"
+
+
+def test_搜索一次就把频道和时长带出来(monkeypatch):
+    """search 用同一次 `--print` 顺手带 channel/duration——flat 模式拿不到的
+    字段是 `NA`，要解析成 None（「不知道」），不是一个叫 NA 的频道。"""
+    dh = _tool()
+    stdout = ("A vs B Highlights ||| https://y/1 ||| Tennis TV ||| 224\n"
+              "C vs D Highlights ||| https://y/2 ||| NA ||| NA\n")
+    proc = type("P", (), {"returncode": 0, "stdout": stdout})()
+    monkeypatch.setattr(dh.subprocess, "run", lambda *a, **k: proc)
+    rows = dh.search("q")
+    assert rows[0] == ("A vs B Highlights", "https://y/1", "Tennis TV", 224.0)
+    assert rows[1] == ("C vs D Highlights", "https://y/2", None, None), (
+        "NA 要当成「不知道」（None），留给终审补一枪，不是一个值")
+
+
+def test_搬运号和合集在挑选那一步就拦():
+    """搜索带出来的 channel/duration**知道就当场筛**：搬运号（频道不在官方
+    白名单）、Day N 合集（超 12 分钟）都别等到终审才拒。赛事自己的官方频道
+    （Cincinnati Open 这类）也算官方——那一档每站一个名字，按赛事简称逐词认。"""
+    dh = _tool()
+    t = "Shang vs Sonego Highlights | Cincinnati 2026"
+    scraper = [(t, "https://y/s", "Tennis Clips 4K", 224.0)]
+    compilation = [(t, "https://y/c", "ATP Tour", 723.0)]
+    official = [(t, "https://y/ok", "ATP Tour", 224.0)]
+    tourney = [(t, "https://y/t", "Cincinnati Open", 224.0)]
+    unknown = [(t, "https://y/na", None, None)]
+    args = ("Juncheng Shang", "Lorenzo Sonego", "Cincinnati", 2026)
+    assert dh.pick_highlight(scraper, *args) is None, "搬运号要在挑选那一步就拦"
+    assert dh.pick_highlight(compilation, *args) is None, "12 分钟以上按合集拒"
+    assert dh.pick_highlight(official, *args) == "https://y/ok"
+    assert dh.pick_highlight(tourney, *args) == "https://y/t", (
+        "赛事自己的官方频道也算官方，别只认三大")
+    assert dh.pick_highlight(unknown, *args) == "https://y/na", (
+        "flat 模式拿不到频道（None）不当场拦——留给 vet_candidate 终审补一枪")
+
+
+def test_标题没有vs的不算单场集锦():
+    """`X vs Y` 是单场集锦的形状；球员特辑 / Best points 这类没有 ` vs `——
+    合集切不出连续窗口，根本不能当源片。"""
+    dh = _tool()
+    solo = [("Best of Shang and Sonego points | Cincinnati 2026 Highlights",
+             "https://y/solo")]
+    good = [("Shang vs Sonego Highlights | Cincinnati 2026", "https://y/1")]
+    args = ("Juncheng Shang", "Lorenzo Sonego", "Cincinnati", 2026)
+    assert dh.pick_highlight(solo, *args) is None, "没有 vs 的是合集/特辑"
+    assert dh.pick_highlight(good, *args) == "https://y/1"
+
+
+def test_终审1080p不够就等而且话要和没探到分开(monkeypatch):
+    """账号所有者 2026-08-18 定死：没有 1080p 就等。终审三态：
+    ok / reject（搬运号、合集）/ wait（720p、元数据探不到）。
+    ⚠️ 「有集锦但只有 NNNp，等 1080p」和「还没探到」必须是两句不同的话
+    ——一个是等，一个是没有，读日志的人要分得开。"""
+    dh = _tool()
+
+    monkeypatch.setattr(dh, "probe_meta",
+                        lambda u, timeout=120: ("Tennis TV", 200.0, 720.0))
+    verdict, why = dh.vet_candidate("https://y/1", "Cincinnati")
+    assert verdict == "wait"
+    assert "720" in why and "等 1080p" in why, "要说清拿到的是几 P、在等什么"
+    assert "还没探到" in why, "必须把「这不是还没探到」写进那句话"
+
+    monkeypatch.setattr(dh, "probe_meta",
+                        lambda u, timeout=120: ("ATP Tour", 224.0, 1080.0))
+    assert dh.vet_candidate("https://y/1", "Cincinnati")[0] == "ok"
+
+    monkeypatch.setattr(dh, "probe_meta",
+                        lambda u, timeout=120: ("Random Reuploads", 224.0, 1080.0))
+    verdict, why = dh.vet_candidate("https://y/1", "Cincinnati")
+    assert verdict == "reject" and "白名单" in why
+
+    monkeypatch.setattr(dh, "probe_meta",
+                        lambda u, timeout=120: ("ATP Tour", 900.0, 1080.0))
+    assert dh.vet_candidate("https://y/1", "Cincinnati")[0] == "reject", (
+        "12 分钟以上按 Day N 合集拒")
+
+    monkeypatch.setattr(dh, "probe_meta", lambda u, timeout=120: None)
+    verdict, why = dh.vet_candidate("https://y/1", "Cincinnati")
+    assert verdict == "wait" and "元数据探不到" in why, (
+        "「探不到元数据」和「元数据不合格」是两回事，话也要分开")
+
+
+def test_等1080p不许退到TennisTV剪短版但搬运号要退(monkeypatch):
+    """wait（只有 720p）→ 直接 (None, "")，**不退备选**：这一场明明有 YouTube
+    集锦、只是还不到 1080p，退到 Tennis TV 的 2 分半剪短版等于把「等 1080p」
+    这道硬门槛悄悄换成一条更短的路。reject（搬运号）→ 这条本身不能用，
+    照旧走备选链。"""
+    d = _tool()
+
+    touched = []
+    monkeypatch.setattr(d, "search", lambda *a, **k: [
+        ("Shang vs Sonego Highlights | Cincinnati 2026", "https://yt/a")])
+    monkeypatch.setattr(d, "tennistv_fallback",
+                        lambda h, a, **k: touched.append((h, a)) or "https://tennistv/x")
+
+    monkeypatch.setattr(d, "probe_meta",
+                        lambda u, timeout=120: ("Tennis TV", 200.0, 720.0))
+    assert d.find_highlight("Juncheng Shang", "Lorenzo Sonego",
+                            "Cincinnati", 2026) == (None, "")
+    assert not touched, "等 1080p 被悄悄换成了 2 分半的剪短版"
+
+    monkeypatch.setattr(d, "probe_meta",
+                        lambda u, timeout=120: ("Random Reuploads", 200.0, 1080.0))
+    assert d.find_highlight("Juncheng Shang", "Lorenzo Sonego",
+                            "Cincinnati", 2026) == ("https://tennistv/x",
+                                                    "tennistv-short")
+    assert touched, "搬运号那条本身不能用，备选链要照旧走"
