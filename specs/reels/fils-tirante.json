@@ -1,0 +1,193 @@
+{
+  "slug": "fils-tirante",
+  "source_url": "https://youtu.be/iDT22qnj6UU",
+  "_source": "Tennis TV 官方 YouTube 单场集锦『Arthur Fils vs Thiago Agustin Tirante for Semi-Final Spot | Cincinnati 2026 Highlights』。probe.json 验证源片 1920×1080、25fps、363.67093 秒；源片无赛后采访。画面记分条与 Flashscore 赛果、逐分和技术统计按 match id zuBGL3cl 交叉核过。自动生成 draft 曾把胜负方向写反，已弃用，本稿以菲斯 6-3 6-2 胜蒂兰特为准。",
+  "_tennistv_trim": "比赛和赛后画面截至 353.10 秒使用；353.62 秒起进入 Tennis TV 品牌片尾，正式 spec 禁止取用。所有窗口均早于片尾；源片没有采访。",
+  "_column": "赛场之上",
+  "editorial": {
+    "mode": "match_review",
+    "question": "连续赢下德约科维奇和门西克的蒂兰特，为什么这一场始终找不到反破机会？",
+    "thesis": "菲斯首盘3-3后先保发再破发，6-3拿下；次盘再两度破发，6-2收官。最硬的差距不是逆转，而是菲斯5个破发点兑现3个，蒂兰特全场没有拿到任何破发机会；总分菲斯59比36领先。",
+    "beats": [
+      "首盘3-3后，菲斯先保发到4-3，再在蒂兰特发球局的第二个破发点上兑现，5-3拉开并以6-3拿下首盘。",
+      "次盘菲斯2-1领先后再次加速，3-1时又拿到两个破发点，并在第二个机会上兑现，4-1掌握主动。",
+      "蒂兰特追回一局到2-5，却始终没有拿到一个破发点；菲斯用全场3/5的破发效率和59比36的总分优势直落两盘。"
+    ],
+    "human_context": {
+      "angle": "蒂兰特此前连续淘汰德约科维奇、兰达卢塞和门西克，首次打进大师赛1/4决赛；菲斯终结了这段黑马之旅，并将在半决赛对阵科博利。",
+      "facts": [
+        "菲斯6-3 6-2击败蒂兰特，晋级辛辛那提ATP1000男单半决赛。",
+        "菲斯5次破发机会兑现3次，蒂兰特全场没有拿到破发点。",
+        "总分菲斯59分、蒂兰特36分，相差23分。",
+        "菲斯半决赛对手为科博利。"
+      ],
+      "sources": [
+        "https://youtu.be/iDT22qnj6UU",
+        "https://www.atptour.com/en/scores/current/cincinnati/422/results",
+        "https://global.flashscore.ninja/2/x/feed/df_st_1_zuBGL3cl"
+      ]
+    }
+  },
+  "_match": {
+    "flashscore_id": "zuBGL3cl",
+    "start_beijing": "2026-08-21 08:40",
+    "_start_why": "Flashscore/ESPN 开赛时间换算为北京时间 2026-08-21 08:40；本版旁白未报到分，先保留为审核注记。",
+    "atp_match_id": "MS005",
+    "_duration_why": "ATP 官方 Cincinnati 2026 Results 的 MS005 条目直接列出 P&G Stadium、01:04:43 和裁判 Mohamed Lahyani；Reuters 的‘64分钟’是同一精度的概括，Flashscore 30+36=66分钟不再作为正式用时。"
+  },
+  "_hit_data": "菲斯3/5破发、蒂兰特0/0破发是最硬的差距，已用于editorial.thesis、cover.hook、片尾旁白和push.lead；总分59比36用于中后段量化比赛落差。",
+  "topbar": {
+    "line1": "2026 辛辛那提 ATP1000 1/4决赛",
+    "line2": "菲斯 6-3 6-2 蒂兰特"
+  },
+  "_topbar_why": "赢家菲斯在前；赛果和 cover.winner/result、editorial、push 文案一致。",
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "菲斯",
+    "hook": "没给对手破发点\n直落两盘进半决赛",
+    "_hook_why": "第一行是全场最硬的数据：蒂兰特破发点0/0；第二行给出明确赛果和晋级落点。",
+    "topic": "8.21 辛辛那提 ATP1000 1/4决赛",
+    "winner": "菲斯",
+    "result": "6-3 6-2",
+    "matchup": [
+      {
+        "name": "菲斯",
+        "name_en": "Arthur Fils",
+        "country": "FRA",
+        "rank": 21
+      },
+      {
+        "name": "蒂兰特",
+        "name_en": "Thiago Agustin Tirante",
+        "country": "ARG",
+        "rank": 50
+      }
+    ],
+    "_matchup_rank_why": "按用户最新硬要求，封面必须展示排名；采用2026-08-21本场比赛日/赛会稿口径锁定：菲斯世界第21、蒂兰特世界第50。该快照只服务本场封面，不当作球员长期排名。",
+    "portrait": {
+      "image": "assets/reel/fils-tirante-cincinnati-2026-qf.jpg",
+      "focus": 0.3,
+      "focus_y": 0.48,
+      "zoom": 1.0
+    },
+    "scoreboard": {
+      "court": "P&G Stadium Court",
+      "_court_why": "ATP 官方 Cincinnati 2026 Results 的 MS005 条目确认本场在 P&G Stadium Court 进行。",
+      "duration_source": {
+        "provider": "atp",
+        "url": "https://www.atptour.com/en/scores/current/cincinnati/422/results",
+        "match_id": "MS005",
+        "field": "duration",
+        "value": "01:04:43"
+      },
+      "_duration_why": "ATP 官方 Results 页 MS005 条目直接列 01:04:43；同页还列裁判 Mohamed Lahyani。"
+    },
+    "_portrait_why": "本场 Tennis TV 官方 YouTube 集锦原始 1920×1080 画面，抽取时间点 327.2 秒；是菲斯锁定胜局后的现场庆祝近景。人物穿本场浅蓝色 Lacoste 上衣，背景为 P&G Stadium Court 观众席，且带 Tennis TV 官方水印；已与本场 probe 的决胜分、握手和记分牌连续镜头人工核对，不是赛前照，也不是其他轮次图片。来源：https://youtu.be/iDT22qnj6UU"
+  },
+  "stats": {
+    "tour": "atp",
+    "a": {
+      "headshot": "assets/players/headshots/atp-F0F1.png",
+      "aces": 3,
+      "df": 0,
+      "winners": 14,
+      "ue": 18,
+      "first_in": 29,
+      "first_won": 24,
+      "first_total": 47,
+      "second_total": 18,
+      "second_won": 13,
+      "bp_conv": 3,
+      "bp_chances": 5,
+      "pts_won": 59,
+      "pts_total": 95
+    },
+    "b": {
+      "headshot": "assets/players/headshots/atp-T0A1.png",
+      "aces": 6,
+      "df": 1,
+      "winners": 11,
+      "ue": 22,
+      "first_in": 22,
+      "first_won": 15,
+      "first_total": 48,
+      "second_total": 26,
+      "second_won": 11,
+      "bp_conv": 0,
+      "bp_chances": 0,
+      "pts_won": 36,
+      "pts_total": 95
+    },
+    "footer_venue": "辛辛那提男单1/4决赛",
+    "footer_date": "2026年8月21日",
+    "_source": "Flashscore df_st_1_zuBGL3cl 全场技术统计。stats.a 跟 cover.matchup[0] 对应菲斯，stats.b 跟 cover.matchup[1] 对应蒂兰特；feed 的 home/away 顺序与此相反，已按 matchup 人工对调。first_total 按 first_in+second_total 复核：菲斯29+18=47，蒂兰特22+26=48；总分59+36=95。",
+    "_wechat_card_why": "本块为微信文章中的技术统计图片提供唯一数据源；正式渲染必须产出 stat_card.jpg，推送前必须人工确认文章正文已嵌入该图。"
+  },
+  "_voice_why": "沿用赛场之上默认音色；超过4秒的自然现场声只提示、不判失败。",
+  "_editing_why": "逐段窗口来自 probe 对 scene_cuts、记分条和字幕的人工复核。冷开场保留决胜分现场声；353.62秒起为片尾禁区。最后两段落在庆祝、握手和观众反应，不取品牌片尾。",
+  "segments": [
+    {
+      "start": 306.98,
+      "end": 325.7,
+      "fit": "crop",
+      "_why": "决胜分冷开场，保留现场声，不配旁白；324.64秒球出界、326秒后才进入近景庆祝，因此段尾收在325.70秒。"
+    },
+    {
+      "start": 103.36,
+      "end": 118.45,
+      "fit": "crop",
+      "narration": "辛辛那提大师赛男单1/4决赛，菲斯六比三、六比二击败蒂兰特，直落两盘。",
+      "_why": "赛果落点；103.36为切点，118.62进入下一镜头。"
+    },
+    {
+      "start": 118.62,
+      "end": 133.7,
+      "fit": "crop",
+      "narration": "蒂兰特这周先淘汰德约科维奇，又连过兰达卢塞和门西克，第一次打进大师赛1/4决赛。",
+      "_why": "交代对手分量和黑马背景；窗口止于133.86切点前。"
+    },
+    {
+      "start": 37.2,
+      "end": 52.75,
+      "fit": "crop",
+      "narration": "首盘三比三后，菲斯先保发到四比三；接着两次逼出破发点，第二次兑现，五比三拉开。",
+      "_why": "首盘唯一破发转折；窗口从37.20切点起，52.94切点前结束。"
+    },
+    {
+      "start": 239.7,
+      "end": 259.8,
+      "fit": "crop",
+      "narration": "次盘菲斯二比一领先后再次加速，三比一时又拿到两个破发点，第二个兑现，四比一，两盘主动权都在他手里。",
+      "_why": "次盘第二次破发；239.70为切点，260.02前结束。"
+    },
+    {
+      "start": 275.24,
+      "end": 292.65,
+      "fit": "crop",
+      "narration": "蒂兰特追回一局到二比五，但整场他只拿到三十六分，菲斯拿了五十九分，差了二十三分，翻盘空间已经不多。",
+      "_why": "从局分过渡到总分差；275.24为切点，292.84前结束。"
+    },
+    {
+      "start": 334.7,
+      "end": 348.65,
+      "fit": "crop",
+      "narration": "最直接的差距，是蒂兰特全场没拿到一个破发点；菲斯五次机会兑现三个。",
+      "_why": "庆祝与握手画面上收束核心统计；止于348.80切点前。"
+    },
+    {
+      "start": 348.8,
+      "end": 353.1,
+      "fit": "crop",
+      "narration": "半决赛对科博利，你看好谁？",
+      "_why": "收尾问题；353.10结束，避开353.62起的品牌片尾。"
+    }
+  ],
+  "push": {
+    "summary": "没给对手一个破发点",
+    "lead": "辛辛那提男单1/4决赛，菲斯6-3 6-2直落两盘击败蒂兰特。首盘3-3后菲斯先保发再破发，6-3拿下；次盘他继续压住对手发球局，6-2收官。全场菲斯5个破发点兑现3个，蒂兰特没有拿到任何破发机会；总分59比36。蒂兰特连续淘汰德约科维奇、兰达卢塞和门西克后的黑马之旅止步，菲斯半决赛将对阵科博利。",
+    "auto": false,
+    "_no_auto_why": "用户已明确要求：封面、完整渲染、视频 QA 和微信技术统计图全部核验通过后直接推送。这里仍保持 auto=false，避免 spec 合入 main 前抢跑；终审通过后由一次性人工 dispatch 执行 push。",
+    "_stats_image_required": "微信文章必须包含由本稿 stats 渲染的 stat_card.jpg；执行前检查文件存在、两名球员顺序与头像正确，并确认 build_html 已把统计图插入正文。"
+  }
+}
