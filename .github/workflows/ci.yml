@@ -273,3 +273,22 @@ jobs:
       # 判据 `test_CI要把最慢的测试打进日志`（tests/test_workflow_alerts.py）。
       - name: 运行测试
         run: pytest -rs -n auto --dist loadfile --durations=25
+
+  codex_swiatek_interview_preview_dispatch:
+    if: github.head_ref == 'codex/swiatek-rybakina-cincinnati-2026-qf-interview'
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      contents: read
+    steps:
+      - name: 派发最终 push=false 预览
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh workflow run interview-clip.yml \
+            --repo robertyang87/tennislive \
+            --ref codex/swiatek-rybakina-cincinnati-2026-qf-interview \
+            -f slug=swiatek-rybakina-cincinnati-2026-qf \
+            -f mode=render \
+            -f push=false
+
