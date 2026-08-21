@@ -77,6 +77,7 @@ jobs:
           zh = draft.translate(rows, chat)
           spec = draft.build_spec(candidate, zh, float(info.duration or 138.0), calendar)
           spec["slug"] = "swiatek-rybakina-cincinnati-2026-qf"
+          spec["_asr_rows"] = rows
           out = Path("specs/interviews/swiatek-rybakina-cincinnati-2026-qf.draft.json")
           out.write_text(json.dumps(spec, ensure_ascii=False, indent=2), encoding="utf-8")
           print(f"生成 {len(rows)} 条双语字幕 → {out}")
