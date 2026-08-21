@@ -1,0 +1,41 @@
+name: reel-queue-ci
+
+on:
+  pull_request:
+    paths:
+      - "data/reel-dispatch-queue/**"
+      - "specs/reels/**"
+      - "tools/dispatch_reel_queue.py"
+      - "tests/test_dispatch_reel_queue.py"
+      - ".github/workflows/reel-dispatch-queue.yml"
+      - ".github/workflows/reel-queue-ci.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: reel-queue-ci-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  queue-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            .github
+            data/reel-dispatch-queue
+            specs/reels
+            src
+            tests
+            tools
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: 安装 queue 校验依赖
+        run: pip install -q -e . pytest pyyaml
+      - name: 校验 dispatch queue 合约
+        run: pytest -q tests/test_dispatch_reel_queue.py

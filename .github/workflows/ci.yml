@@ -13,7 +13,12 @@ on:
     paths-ignore:
       - "output/**"
       - "*.md"
+  # queue 文件只是一份严格 schema 的一次性 dispatch 请求；它由下面专门的
+  # reel-queue-ci 在约一分钟内验。为这种纯数据改动跑 2300+ 个测试，实测要
+  # 12~17 分钟，还会占住渲染并发位。若同一个 PR 同时改了代码，仍会跑本 CI。
   pull_request:
+    paths-ignore:
+      - "data/reel-dispatch-queue/**"
 
 # **同一个 PR 上，新的一推就把旧的那趟掐掉。**
 #

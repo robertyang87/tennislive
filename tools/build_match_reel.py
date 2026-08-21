@@ -97,6 +97,7 @@ import time
 from contextlib import contextmanager
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
+from fractions import Fraction
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
@@ -948,21 +949,37 @@ def resolve_crop(source_w: int, source_h: int, crop_y: int | None = None,
 
 
 def resolve_fps(path: Path) -> tuple[str, float]:
-    """成片帧率 = 源片帧率。返回 (给 ffmpeg 的分数式, 浮点值)。
+    """普通源跟随原帧率，高帧率源按整数倍降到 24~30 fps。
 
     分数式要原样传给 `fps=`：29.97 写成 `30000/1001` 才是准的，写 `29.97`
-    会一点点漂。离谱的值（<10 或 >60）不认，退回 30 并说出来。
+    会一点点漂。50→25、59.94→29.97、60→30 都是整除抽帧，不会像把
+    25 硬改成 30 那样周期性补帧；像素量却能减半，这是高帧率源出片最稳的
+    时间杠杆。离谱的值（<10 或 >120）不认，退回 30 并说出来。
     """
     raw = run("ffprobe", "-v", "error", "-select_streams", "v:0",
               "-show_entries", "stream=r_frame_rate",
               "-of", "default=nw=1:nk=1", str(path)).stdout.strip()
     try:
         num, den = (raw.split("/") + ["1"])[:2]
-        value = float(num) / float(den)
+        source = Fraction(int(num), int(den))
+        value = float(source)
     except (ValueError, ZeroDivisionError):
         value = 0.0
-    if not 10.0 <= value <= 60.0:
+        source = Fraction(0, 1)
+    if not 10.0 <= value <= 120.0:
         print(f"[fps] 源片报的帧率是 {raw!r}，不合常理，退回 30")
+        return "30", 30.0
+    if value > 30.5:
+        divisor = max(2, round(value / 30.0))
+        target = source / divisor
+        target_value = float(target)
+        if 23.5 <= target_value <= 30.5:
+            expr = (str(target.numerator) if target.denominator == 1 else
+                    f"{target.numerator}/{target.denominator}")
+            print(f"[fps] 高帧率源整除降采样：{raw} / {divisor} → "
+                  f"{expr} = {target_value:.3f}")
+            return expr, target_value
+        print(f"[fps] 高帧率源 {raw} 找不到 24~30 fps 的整数除数，退回 30")
         return "30", 30.0
     print(f"[fps] 成片跟着源片走：{raw} = {value:.3f}")
     return raw, value
@@ -5006,16 +5023,12 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     idle_total = sum(max(0.0, segments[i].length - v) for i, v in spoken_of.items())
     total_secs = sum(seg.length for seg in segments)
     print(f"[查哑场] 没人说话合计 {idle_total:.1f}s / {total_secs:.1f}s"
-          f"（{idle_total / total_secs:.0%}），门槛：单段不超过 {MAX_SILENT_GAP}s")
+          f"（{idle_total / total_secs:.0%}），提示线：单段 {MAX_SILENT_GAP}s")
     idle = silent_stretches(segments, spoken_of)
     if idle:
-        raise ReelError(
-            "有几段大半时间屏幕上没有字——**不是字幕丢了，是没人在说话**：\n"
-            + "\n".join(idle)
-            + "\n\n两条出路：把这几段的旁白补长（事实从 spec 已有的事实出处里取），"
-              "或者把窗口收短（`end` 往前挪）。"
-              "\n⚠️ 1~3 秒的空是句子之间正常的换气，别填——门槛卡的是"
-              f" {MAX_SILENT_GAP}s 以上的整段哑场。")
+        print("[注意] 以下片段超过旁白留白提示线；现场声仍在，所以不阻断渲染：\n"
+              + "\n".join(idle)
+              + "\n若画面观感确实空，再补旁白或缩短窗口；数字静音仍由成片 QA 硬拦。")
 
     # 跟踪要**先整条镜头跟完再切**，所以排在切片之前统一算（见 track_shots）
     tracks = track_shots(sources, segments, source_w)
@@ -6070,9 +6083,9 @@ def main() -> int:
         # **风格做出来没有、有没有做过头**，报在这儿——语音还在临时目录里，
         # 这一刻是唯一能干净量到它的时候（成片混了现场声，量出来不可信）。
         print("\n".join(prosody))
-        if over or idle:
+        if over:
             return 1
-        print("\n[查旁白] 每段都装得下、也没有哑场，这条 spec 渲得过这道闸。")
+        print("\n[查旁白] 每段旁白都装得下；超 4 秒留白仅提示，不阻断渲染。")
         return 0
 
     if args.dry_run:
@@ -6187,8 +6200,8 @@ def main() -> int:
             if idle:
                 print(f"\n第 {[i + 1 for i in idle]} 段**估出来就是哑场**"
                       f"（单段门槛 {MAX_SILENT_GAP}s，估的误差 ±{SPEECH_EST_ERR}s）："
-                      "render 里那道闸**可能**会红——它用真语音量，"
-                      "离线估在这一头偏保守。先跑一次 mode=narration。\n"
+                      "render 会用真语音再提示一次，但不会因此失败；"
+                      "离线估在这一头偏保守。需要时先跑 mode=narration 看明细。\n"
                       "两条出路：把旁白补长（事实从 spec 已有的事实出处里取），"
                       "或者把窗口收短（`end` 往前挪）。")
             if sure:

@@ -526,11 +526,12 @@ def test_tts换字就重合成(monkeypatch, tmp_path):
     assert calls["n"] == 2, "换字必须重合成"
 
 
-def test_成片帧率跟着源片走(monkeypatch):
+def test_普通帧率跟源片高帧率整除降采样(monkeypatch):
     """硬定 30 而源片 25，就是每 5 帧补一帧、一秒卡五次。
 
     补出来的帧还查不出来：裁切位置每帧都在变，两帧的像素并不相同（成片 2099 帧
-    里逐帧比对，完全相同的 0 帧），只有比源片和成片的帧率才看得见。
+    里逐帧比对，完全相同的 0 帧），只有比源片和成片的帧率才看得见。高帧率则
+    整除抽帧：50→25、59.94→29.97、60→30，既不造帧又把编码像素量减半。
     """
     reel = _reel()
 
@@ -543,6 +544,13 @@ def test_成片帧率跟着源片走(monkeypatch):
     fake.out = "30000/1001\n"                       # 29.97 要保留分数式
     expr, value = reel.resolve_fps(Path("x.mp4"))
     assert expr == "30000/1001" and round(value, 2) == 29.97
+    fake.out = "50/1\n"
+    assert reel.resolve_fps(Path("x.mp4")) == ("25", 25.0)
+    fake.out = "60000/1001\n"
+    expr, value = reel.resolve_fps(Path("x.mp4"))
+    assert expr == "30000/1001" and round(value, 2) == 29.97
+    fake.out = "60/1\n"
+    assert reel.resolve_fps(Path("x.mp4")) == ("30", 30.0)
     fake.out = "0/0\n"                              # 报不出来就退回 30，别硬算
     assert reel.resolve_fps(Path("x.mp4")) == ("30", 30.0)
 
@@ -7543,7 +7551,7 @@ def test_推送的标题和正文出处是spec不是命令行():
                                  "一条末尾空着的消息")
 
 
-def test_一段里不许有整段的哑场():
+def test_一段里的长留白要提示但不再阻断渲染():
     """账号所有者 2026-08-02：「不是补全的问题，我是说有些没有字幕了，给漏掉了」
     「利用完整区域，整个里面去读一下」。
 
@@ -7570,7 +7578,7 @@ def test_一段里不许有整段的哑场():
     def seg(length, narration="一句话"):
         return SimpleNamespace(length=length, narration=narration)
 
-    # ① 已发那一版的真实数字必须被拦下来
+    # ① 已发那一版的真实数字必须被提示出来
     was = [seg(11.0), seg(11.5), seg(17.0), seg(10.5), seg(10.0)]
     spoken = {0: 4.56, 1: 5.18, 2: 11.68, 3: 5.47, 4: 5.71}
     caught = reel.silent_stretches(was, spoken)
@@ -7588,15 +7596,17 @@ def test_一段里不许有整段的哑场():
     assert reel.silent_stretches([seg(20.0, "")], {}) == [], (
         "整段没有旁白的被判成哑场了——那是留给现场声的，不是忘了写")
 
-    # ④ 闸要**排在编码之前**：它用的是 TTS 时长，一个源片都不用碰，
-    #    在这之前红掉省的是整趟渲染。
+    # ④ 提示要**排在编码之前**，让人尽早看见；但有现场声时不能因此失败。
     body = "\n".join(
         line for line in inspect.getsource(reel.render).splitlines()
         if not line.lstrip().startswith("#"))
     assert "silent_stretches(" in body, "render 里没接这道闸"
     assert body.index("silent_stretches(") < body.index("cut_segment("), (
-        "哑场那道闸排在分段编码之后了——它一个源片都不用碰，"
-        "应该和「旁白超长」那道一起排在编码之前")
+        "长留白提示排在分段编码之后了——它一个源片都不用碰，应该提前报")
+    after_idle = body.split("idle = silent_stretches(segments, spoken_of)", 1)[1]
+    before_encode = after_idle.split("tracks = track_shots", 1)[0]
+    assert "raise ReelError" not in before_encode, (
+        "超过 4 秒的旁白留白仍会阻断 render；有现场声时它只能提示")
 
 
 # 发在这条规矩之前的那一条，**只许减不许加**。它是那次翻车的现场，留着当锚点：
