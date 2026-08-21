@@ -1,0 +1,70 @@
+name: prepare and render Swiatek Rybakina Cincinnati
+
+on:
+  push:
+    branches:
+      - codex/swiatek-rybakina-cincinnati-20260821
+    paths:
+      - .github/workflows/codex-prepare-swiatek-rybakina.yml
+
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: codex/swiatek-rybakina-cincinnati-20260821
+      - name: Fetch exact-match cover photo
+        run: |
+          mkdir -p assets/reel
+          curl --fail --location --retry 4 --retry-all-errors \
+            -A 'Mozilla/5.0' \
+            -e 'https://www.lequipe.fr/' \
+            'https://www.lequipe.fr/_medias/img-photo-jpg/elena-rybakina-quitte-cincinnati-sur-blessure-a-reau-l-equipe/1500000002557459/850:0,1450:800-1080-1440-90/14a8b.jpg' \
+            -o assets/reel/rybakina-swiatek-cincinnati-2026-qf-lequipe.jpg
+          file assets/reel/rybakina-swiatek-cincinnati-2026-qf-lequipe.jpg
+          python - <<'PY'
+          from pathlib import Path
+          import struct
+          path = Path("assets/reel/rybakina-swiatek-cincinnati-2026-qf-lequipe.jpg")
+          data = path.read_bytes()
+          if not data.startswith(b"\xff\xd8"):
+              raise SystemExit("not a JPEG")
+          i = 2
+          wh = None
+          while i + 9 < len(data):
+              if data[i] != 0xFF:
+                  i += 1
+                  continue
+              marker = data[i + 1]
+              i += 2
+              if marker in (0xD8, 0xD9):
+                  continue
+              size = struct.unpack(">H", data[i:i+2])[0]
+              if marker in range(0xC0, 0xC4):
+                  h, w = struct.unpack(">HH", data[i+3:i+7])
+                  wh = (w, h)
+                  break
+              i += size
+          print("cover dimensions:", wh)
+          if wh != (1080, 1440):
+              raise SystemExit(f"unexpected dimensions: {wh}")
+          PY
+      - name: Commit cover and start render
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name "Codex"
+          git config user.email "noreply@openai.com"
+          git add assets/reel/rybakina-swiatek-cincinnati-2026-qf-lequipe.jpg
+          git commit -m "assets: add exact-match Rybakina Cincinnati cover"
+          git push origin HEAD:codex/swiatek-rybakina-cincinnati-20260821
+          gh workflow run match-reel.yml \
+            --ref codex/swiatek-rybakina-cincinnati-20260821 \
+            -f mode=render \
+            -f slug=swiatek-rybakina-cincinnati-2026-qf \
+            -f push=false
