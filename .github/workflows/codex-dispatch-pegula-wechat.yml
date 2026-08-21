@@ -1,0 +1,32 @@
+name: codex-dispatch-pegula-wechat
+
+on:
+  push:
+    branches:
+      - codex/dispatch-pegula-wechat-20260821
+    paths:
+      - .github/workflows/codex-dispatch-pegula-wechat.yml
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  dispatch:
+    if: "${{ github.event.head_commit.message == 'ci: dispatch Pegula-Anisimova WeChat push' }}"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dispatch reviewed reel push on main
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh workflow run match-reel.yml \
+            --repo "$GITHUB_REPOSITORY" \
+            --ref main \
+            -f mode=push \
+            -f slug=pegula-anisimova \
+            -f push=true \
+            -f matchup='佩古拉 vs 阿尼西莫娃' \
+            -f score='6-4 2-6 7-6(4)' \
+            -f summary='抢七连拿最后四分晋级' \
+            -f push_lead='辛辛那提女单1/4决赛，佩古拉6-4 2-6 7-6(4)险胜阿尼西莫娃。决胜盘她从3-0、5-3领先被反超到5-6，保发拖入抢七；小分3-4后连赢四分，以7-4收官。两小时十五分钟、189分，赢家只多拿一分。'
