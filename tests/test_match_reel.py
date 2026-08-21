@@ -881,11 +881,6 @@ _NO_SLATE_YET = {
     # （run 31138555626 第 30 步 success），开场那段旁白给了赛事和轮次、
     # **一个时刻都没给**（既没有「北京时间」也没有几点几分）。
     "shang-darderi-montreal-2026",
-    # 同上：`paul-cobolli` 已经推过微信（`dd6196b4 reel: paul-cobolli 已推送`），
-    # 开场那段旁白给了赛事和轮次、只写了「凌晨」——按「开球时刻只说个大概」
-    # 那条规矩这本来是对的写法，但一个数字都没有，连这条测试自己放宽过的
-    # 「N 点多」都够不着。已发的片子不为措辞重渲。
-    "paul-cobolli",
 }
 
 # 收尾没落在一问上、而且**已经发出去了**的。只许减不许加，底下有自检。
@@ -894,9 +889,6 @@ _ENDING_LEGACY = {
     "eala-parks",
     # `shang-darderi-montreal-2026` 收在「四比五，他救下两个赛点。」这句数据上。
     "shang-darderi-montreal-2026",
-    # `paul-cobolli` 已经推过微信（`dd6196b4`），收在「连续第四场三盘大战，
-    # 科博利又一次走了出来。」这句数据上。
-    "paul-cobolli",
 }
 
 
@@ -8155,7 +8147,6 @@ _LEGACY_TENNISTV = {
     "fritz-jodar-final", "gea-shapovalov", "hewitt-washington",
     "hijikata-monfils", "kovacevic-khachanov",
     "landaluce-draper", "medvedev-zandschulp", "nakashima-jodar-montreal-sf",
-    "paul-cobolli",
     "shang-darderi-montreal-2026", "shang-vallejo", "shelton-fonseca",
     "shelton-nakashima-montreal-final", "shelton-tien-montreal-sf",
     "tirante-fritz", "tsitsipas-royer", "wang-samsonova", "wong-brooksby",

@@ -695,7 +695,7 @@ _STATS_LEGACY = frozenset({
     "eala-zheng", "fernandez-andreeva", "fonseca-ruud", "fritz-jodar-final",
     "gauff-korneeva", "gauff-sakkari", "gea-shapovalov", "landaluce-draper",
     "medvedev-zandschulp", "nishikori-shang", "noskova-mcnally",
-    "osaka-fernandez", "osaka-mertens", "paul-cobolli",
+    "osaka-fernandez", "osaka-mertens",
     "pegula-rakhimova", "potapova-venus",
     "rybakina-gauff-toronto-sf", "rybakina-kasatkina", "rybakina-li",
     "rybakina-samsonova", "shang-darderi-montreal-2026", "shang-rublev",
