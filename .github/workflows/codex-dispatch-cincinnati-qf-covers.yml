@@ -17,6 +17,7 @@ jobs:
     timeout-minutes: 5
     steps:
       - name: Render both exact-match onsite covers without publishing
+        # Attempt 2: source images are already pre-cropped to 1080x1440; no extra zoom.
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
