@@ -1193,14 +1193,11 @@ def _resolve_media_url(url: str) -> str:
         raise ReelError(str(exc)) from exc
 
 
-def download(url: str, dest: Path, *, archival: bool = False) -> Path:
+def download(url: str, dest: Path) -> Path:
     """取**最高清晰度**：先试 1080p 的 avc1（码率最高的那档），退到 bestvideo。
 
     `YT_COOKIES` 指向一个 cookies.txt 就带上——机房 IP 被挡的时候，
     一份登录过的 cookie 是唯一稳定的解。
-
-    `archival=True` ＝ spec 里认领过这条源本来就低清（`archival: {源键: 理由}`）。
-    它只影响两件事：缓存命中时按哪条地板复查高度、低清兜底那份**存不存缓存**。
     """
     dest.parent.mkdir(parents=True, exist_ok=True)
     if dest.is_file() and dest.stat().st_size > 0:
@@ -1209,28 +1206,9 @@ def download(url: str, dest: Path, *, archival: bool = False) -> Path:
 
     cached = _cached_source(url, dest.suffix or ".mp4")
     if cached is not None and cached.is_file() and cached.stat().st_size > 0:
-        # ⚠️ **命中不等于能用——缓存里可能躺着一份低清的。** 缓存键只有 URL，
-        # 而同一条 URL 在不同一趟里能下到不同的高度（PO token / n challenge
-        # 没打通时 yt-dlp 会退到低画质那档）。一旦一趟瞬时的降档把 480p 写进
-        # 缓存，**之后每一趟都命中这份低清**，红在 resolve_crop 的
-        # 「高 ≥ 700」上，报错还指向「换 client 重下」——而重下根本走不到，
-        # 缓存把坏结果固化了（和「播放页存进缓存」是同一个形状）。
-        # 所以命中之后先 ffprobe 复查高度，不够就当未命中、把旧缓存删掉。
-        floor = MIN_ARCHIVAL_H if archival else MIN_SOURCE_H
-        try:
-            cw, ch = probe_size(cached)
-        except (ReelError, ValueError):
-            cw = ch = 0
-        if ch >= floor:
-            shutil.copy2(cached, dest)
-            print(f"[缓存] 命中，没有重下"
-                  f"（{dest.stat().st_size / 1e6:.1f} MB，{cw}×{ch}）")
-            return dest
-        cached.unlink(missing_ok=True)
-        if ch:
-            print(f"[缓存] 缓存里是 {ch}p（{cw}×{ch}，低于地板 {floor}），弃用重下")
-        else:
-            print("[缓存] 缓存里那份 ffprobe 读不出视频流，弃用重下")
+        shutil.copy2(cached, dest)
+        print(f"[缓存] 命中，没有重下（{dest.stat().st_size / 1e6:.1f} MB）")
+        return dest
 
     # **页面地址不一定就是下载地址。** Tennis TV 的 `library/short-highlights`
     # 那批标着 `data-entitlement="free"` 的单场短集锦（2 分半、1080p）要先过一次
@@ -1377,15 +1355,7 @@ def download(url: str, dest: Path, *, archival: bool = False) -> Path:
               "在这儿长得一模一样，\n"
               "        分得清的是 spec（`archival` 认领）。渲的时候 resolve_crop "
               "会拿着认领去判，没认领照旧红。")
-        # ⚠️ **低清兜底默认不写缓存。** 一次瞬时的降档（PO token 那一环偶发
-        # 没打通）一旦存进去，之后每一趟都按 URL 命中这份低清——
-        # 一次事故变成永久故障，而日志上只是一句正常的「命中」。
-        # 认领过 `archival` 的才存：那是素材本来的样子，缓存它是对的。
-        if archival:
-            _keep_source(url, dest)
-        else:
-            print("[缓存] 低画质那份不进缓存（没认领 archival）——"
-                  "免得一次降档把之后每一趟都钉死在低清上")
+        _keep_source(url, dest)
         return dest
 
     raise ReelError(
@@ -1959,9 +1929,9 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
 # `test_真字段表要盖住每条spec里出现过的字段` 拿 `specs/reels/*.json` 里实际
 # 出现过的字段名去对，少一个就红。
 _REAL_FIELDS: dict[str, tuple[str, ...]] = {
-    "spec": ("archival", "conform", "cover", "crop_y", "crop_zoom",
+    "spec": ("archival", "body_video_only", "conform", "cover", "crop_y", "crop_zoom",
              "mixed_fps", "primary",
-             "push", "rate", "segments", "silent_source", "slug",
+             "preview_kind", "push", "rate", "segments", "silent_source", "slug",
              "source_audio", "source_url", "sources", "stats", "subtitle_top",
              "topbar", "voice", "editorial"),
     "cover": ("event_badge", "eyebrow", "hook", "layout", "matchup", "meta",
@@ -4712,6 +4682,13 @@ def validate_spec(spec: dict) -> list[Segment]:
     # ⚠️ `spec_sources` 挪到最前面了：整改合同现在按**素材构成**判要不要填
     # （见 `_editorial_contract_required`），得先知道这条 spec 用了谁的画面。
     # 它只读 spec 的两个键、不碰任何文件，放最前面不花钱。
+    if "body_video_only" in spec and not isinstance(spec["body_video_only"], bool):
+        raise ReelError("`body_video_only` 只能是 true/false；它决定平台封面是否进入正片")
+    if spec.get("body_video_only") and str(
+            (spec.get("cover") or {}).get("narration") or "").strip():
+        raise ReelError(
+            "`body_video_only: true` 时封面不进正片，不能再写 cover.narration——"
+            "否则这句配音没有画面可落。把钩子放进第一段 narration。")
     urls = spec_sources(spec)
     if not urls:
         raise ReelError("spec 里一个源都没有")
@@ -4908,9 +4885,6 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     validate_spec(spec)
     _preflight_cutout(spec)
     urls = spec_sources(spec)
-    # 认领过 `archival` 的源，下载那层要知道：缓存复查按 400 的地板、
-    # 低清兜底那份才许进缓存。别在 download 里重读 spec——它没有 spec。
-    claimed_archival = archival_claims(spec)
     sources: dict[str, Path] = {}
     for key, url in urls.items():
         path = outdir / (f"source_{key}.mp4" if key else "source.mp4")
@@ -4918,7 +4892,7 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
             path = source_override
         if not path.is_file():
             with stage(f"下载源片 {key or '(主源)'}"):
-                path = download(url, path, archival=key in claimed_archival)
+                path = download(url, path)
         sources[key] = path
     conform_sources(sources, spec, outdir)
     check_sources_match(sources, spec)
@@ -4990,9 +4964,19 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
 
     segments = parse_segments(spec, sources, primary)
     _check_segments_fit(segments, sources)
-    # 封面那句先合出来——**封面停多久由它决定**，所以排在渲封面之前。
-    cover_voice, cover_marks = synth_cover(spec, outdir, voice, rate)
-    cover_secs = cover_length(cover_voice)
+    # 平台海报和正片正文是两件事。`body_video_only` 给「开球之前」这种全视频
+    # 前瞻用：海报照常生成给微信/视频号展示，但第一帧直接从比赛素材起，不再把
+    # 海报冻成 1.2 秒静帧塞进正文。这里把时长账的源头直接置零，后面的旁白、
+    # 字幕、顶栏和 QA 全部沿用同一个 `cover_secs`，不能各自猜一次偏移。
+    body_video_only = bool(spec.get("body_video_only", False))
+    if body_video_only:
+        cover_voice, cover_marks = None, []
+        cover_secs = 0.0
+        print("[正文纯视频] 平台封面照常生成，但不插入正片；时间轴从首段素材 0.00s 起")
+    else:
+        # 封面那句先合出来——**封面停多久由它决定**，所以排在渲封面之前。
+        cover_voice, cover_marks = synth_cover(spec, outdir, voice, rate)
+        cover_secs = cover_length(cover_voice)
     # 片尾那句同理：**片尾停多久由它决定**（`outro_length`），所以也要排在
     # 渲那一页之前。两句都在这儿合掉，TTS 一共 6 秒上下、一个源片像素都不碰
     # ——「TTS 和旁白超长那道闸，挪到编码之前」是同一个道理。
@@ -5086,10 +5070,23 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     # 不留的那个是片尾页。写死 `index == len(segments) - 1` 会让最后一个分段
     # 少 0.18 秒底料，溶解就落到流的末尾之外——2026-08-02 那两趟
     # 「段落 114.46s、成片 12.44s」正是这么来的，**而日志里一个字都不会说**。
-    lengths = [cover_secs] + [seg.length for seg in segments] + [outro_secs]
-    parts: list[Path] = [build_cover(sources, primary, spec,
-                                 outdir / "part_cover.mp4", source_w,
-                                 cover_secs, tail=SEG_FADE)]
+    # 海报无论如何都要渲：`poster.jpg` 是平台封面。区别只在 `part_cover.mp4`
+    # 是否进入拼接。纯视频正文把这份临时视频删掉，`parts` / `lengths` 同时不加，
+    # 避免「画面删了，配音和字幕还整体晚 1.2 秒」这种最难肉眼定位的错位。
+    if body_video_only:
+        cover_part = build_cover(
+            sources, primary, spec, outdir / "part_cover.mp4", source_w,
+            COVER_SECONDS, tail=0.0)
+    else:
+        cover_part = build_cover(
+            sources, primary, spec, outdir / "part_cover.mp4", source_w,
+            cover_secs, tail=SEG_FADE)
+    lengths = ([] if body_video_only else [cover_secs]) + [
+        seg.length for seg in segments] + [outro_secs]
+    parts: list[Path] = [] if body_video_only else [cover_part]
+    if body_video_only:
+        cover_part.unlink(missing_ok=True)
+
     def _encode_one(item):
         index, seg = item
         dest = outdir / f"part_{index:02d}.mp4"
@@ -5275,7 +5272,8 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
         pulse_at = [float(t) for t in raw_pulse] if isinstance(raw_pulse, list) else []
         topbar_ass = write_topbar_ass(
             topbar, cover_secs, match_end, outdir / "topbar.ass", pulse_at=pulse_at)
-        print(f"顶栏 {topbar_ass.name}：封面后 {cover_secs:.2f}s 起，"
+        where = "首帧" if body_video_only else f"封面后 {cover_secs:.2f}s"
+        print(f"顶栏 {topbar_ass.name}：{where} 起，"
               f"比赛画面结束 {match_end:.2f}s 止；片尾不挂顶栏"
               + (f"，{len(pulse_at)} 处关键分脉冲" if pulse_at else ""))
     # 成片这一步的**画质不降**：`crf 18` 原样保留。
@@ -5313,6 +5311,7 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     (outdir / "render.json").write_text(json.dumps({
         "cover_seconds": round(cover_secs, 3),
         "cover_narrated": cover_voice is not None,
+        "cover_in_body": not body_video_only,
         # **片尾也跟着口播走，光看 spec 同样算不出来**（那句话是常量，但它有多长
         # 取决于音色和语速）。`check_reel_landed.py` 拿「画面总长 − 段落总长
         # − 片尾 ＝ 封面」对片长，少了这一项那条恒等式会**恒假**，而一条常年红的
@@ -5926,20 +5925,37 @@ def topbar_filtergraph(cover_secs: float, segments_secs: float,
     fontsdir = _escape(Path(__file__).resolve().parents[1] / "assets" / "fonts")
     topbar_path = _escape(topbar_ass)
     subtitles_path = _escape(subtitles_ass)
+    if cover_secs <= 0:
+        # `trim=start=0:end=0` 得到的空流不能可靠地喂给 concat；纯视频正文没有
+        # 封面这一段，就从滤镜图的拓扑里真正拿掉它，而不是保留一个零长占位。
+        timeline = (
+            "[0:v]split=2[match_src][outro_src];"
+            f"[match_src]trim=start=0:end={match_end:.3f},"
+            "setpts=PTS-STARTPTS,"
+            f"scale={VIDEO_W}:{VIDEO_H}:force_original_aspect_ratio=increase,"
+            f"crop={VIDEO_W}:{VIDEO_H},"
+            f"drawbox=x=0:y=0:w=iw:h={TOPBAR_H}:color=black@0.45:t=fill,"
+            "setsar=1[match_canvas];"
+            f"[outro_src]trim=start={match_end:.3f},setpts=PTS-STARTPTS[outro];"
+            "[match_canvas][outro]concat=n=2:v=1:a=0,setpts=PTS-STARTPTS[base];")
+    else:
+        timeline = (
+            f"[0:v]split=3[cover_src][match_src][outro_src];"
+            f"[cover_src]trim=start=0:end={cover_secs:.3f},"
+            "setpts=PTS-STARTPTS[cover];"
+            f"[match_src]trim=start={cover_secs:.3f}:end={match_end:.3f},"
+            "setpts=PTS-STARTPTS,"
+            f"scale={VIDEO_W}:{VIDEO_H}:force_original_aspect_ratio=increase,"
+            f"crop={VIDEO_W}:{VIDEO_H},"
+            f"drawbox=x=0:y=0:w=iw:h={TOPBAR_H}:color=black@0.45:t=fill,"
+            "setsar=1[match_canvas];"
+            f"[outro_src]trim=start={match_end:.3f},setpts=PTS-STARTPTS[outro];"
+            "[cover][match_canvas][outro]concat=n=3:v=1:a=0,"
+            "setpts=PTS-STARTPTS[base];")
     return (
-        f"[0:v]split=3[cover_src][match_src][outro_src];"
-        f"[cover_src]trim=start=0:end={cover_secs:.3f},"
-        "setpts=PTS-STARTPTS[cover];"
-        f"[match_src]trim=start={cover_secs:.3f}:end={match_end:.3f},"
-        "setpts=PTS-STARTPTS,"
-        f"scale={VIDEO_W}:{VIDEO_H}:force_original_aspect_ratio=increase,"
-        f"crop={VIDEO_W}:{VIDEO_H},"
-        f"drawbox=x=0:y=0:w=iw:h={TOPBAR_H}:color=black@0.45:t=fill,"
-        "setsar=1[match_canvas];"
-        f"[outro_src]trim=start={match_end:.3f},setpts=PTS-STARTPTS[outro];"
-        "[cover][match_canvas][outro]concat=n=3:v=1:a=0,setpts=PTS-STARTPTS[base];"
-        f"[base]subtitles={topbar_path}:fontsdir={fontsdir},"
-        f"subtitles={subtitles_path}:fontsdir={fontsdir}[out]"
+        timeline
+        + f"[base]subtitles={topbar_path}:fontsdir={fontsdir},"
+          f"subtitles={subtitles_path}:fontsdir={fontsdir}[out]"
     )
 
 

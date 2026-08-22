@@ -114,7 +114,8 @@ def cover_seconds(film: Path) -> float | None:
     if meta.is_file():
         data = json.loads(meta.read_text(encoding="utf-8"))
         secs = float(data["cover_seconds"])
-        how = "跟着配音" if data.get("cover_narrated") else "定长"
+        how = ("不进正文" if data.get("cover_in_body") is False else
+               "跟着配音" if data.get("cover_narrated") else "定长")
         print(f"封面 {secs:.2f}s（render.json，{how}）")
         return secs
     # **拿不到就跳过片长这一项，不要拿常量硬判。**
