@@ -14,6 +14,8 @@
   },
   "_video_eq_why": "转载源把对比度和饱和度推得过重，暗部细节被压住；正文先轻抬亮度和 gamma，再把对比度／饱和度收回。参数只作用于采访转载，WTA 官方 `lead_in` 不继承。最终以海报和成片里的肤色、蓝色球衣及黑位层次复核。",
   "whisper_model": "medium.en",
+  "whisper_vad_filter": false,
+  "_whisper_vad_why": "这条采访 47–72 秒有持续看台欢呼。默认 VAD 两次运行分别把其中约 22 词和 47 词整段当噪声删掉，交叉校验分歧从 13.8% 漂到 21.2%，不是源文本变化而是语音活动检测误杀；关掉 VAD，让第二份 ASR 对完整音轨转写，再按真实词差核。",
   "column": "赛后开麦",
   "interview_kind": "赛后场上采访",
   "event": "2026 辛辛那提 WTA1000 女单1/4决赛",
@@ -106,12 +108,6 @@
     "36": "You guys are the best. That was a good one."
   },
   "_en_fixed_why": "第 7 行自动字幕把主持人的固定说法 `as a player` 听成不合语法的 `of a player`；第二份 ASR 也听成 `of`，但语法和主持人语境都只支持 `as a player`，保留人工订正。第 36 行 55–60 秒看台欢呼盖过一个词，切行结果留下 `You guys are the That was a good one.`；交叉校验报告里的自动字幕原始词流明确保留 `You guys are the best. That was a good one.`，第二份则漏掉整段，按完整句订正。第 26 行 `You're through to another Masters 1000.` 虽然口语上省略了轮次，但不能仅凭上下文擅自补 `semifinal`；第一版补词后还触发英文超宽闸，已恢复源字幕。",
-  "transcript_disagree_ok": {
-    "rate": 0.138,
-    "why": "逐处看过 runner 的 `transcript_diff.md`：超出 12% 的主要原因是 medium.en 在 51–62 秒看台欢呼段连续漏掉 `I don't know who was saying I'm in love with... / You guys are the best... / And it's the right Coco`，而不是给出相反文本；这段自动字幕和画面口型、她随后捂脸及主持人 `You're making me blush` 的反应能互相印证。其余分歧是时态／缩写（`needed`/`need`、`Marta is a`/`Marta's`、`played`/`was playing`）、官方姓名被听坏（Sara→Sarah、Gauff→Gough）和收尾 `in store`→`the score`；自动字幕在上下文和专名上更可靠。第 7 行第二份反而听成不合语法的 `of a player`，保留人工订正 `as a player`；第 36 行第二份漏掉整段，但自动字幕原始词流明确有 `You guys are the best. That was a good one.`，确认 en_fixed 正确。"
-  },
-  "transcript_verified": true,
-  "_verified_clean": "第一份 YouTube 自动字幕 349 词，第二份 faster-whisper medium.en 313 词，去掉犹豫音后分歧 13.8%；0 处待听、0 处字幕空档。18 处分歧逐条核过，真正拉高比例的是看台欢呼压住了第二份 ASR，使它漏掉约 22 个连续词；自动字幕在该段保留了完整现场互动。其余均为虚词、时态或专名听误，没有新增需要改写的正文。",
   "_facts": [
     "赛果：WTA 官方比赛集锦确认高芙 6-2 6-2 击败科斯秋克，70 分钟晋级 2026 辛辛那提 WTA1000 女单四强。",
     "下一轮：高芙将在半决赛对阵萨拉·贝莱克；采访最后一问也直接点名 Sara，她说对手已经赢下几场不可思议的比赛，自己期待这个挑战。",
