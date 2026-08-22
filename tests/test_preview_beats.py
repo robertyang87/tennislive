@@ -204,6 +204,30 @@ def test_poster_beat产出的时长要包含tail(tmp_path):
 # ---------- 入口逻辑（load_preview_spec / assemble / 委托） ----------
 
 
+def test_preview工作流优先读独立spec且只把产物推回触发分支():
+    workflow = Path(".github/workflows/preview-reel.yml").read_text(encoding="utf-8")
+    assert 'SPEC="specs/previews/${{ github.event.inputs.slug }}.json"' in workflow
+    assert 'COPY="specs/previews/${{ github.event.inputs.slug }}.xhs.txt"' in workflow
+    assert '--spec "$SPEC"' in workflow, "QA 不能退回读取同名 reels 老 spec"
+    assert "print(m.group(0) if m else \"\")" in workflow, "发布日期必须是完整 YYYY-MM-DD"
+    assert 'git push origin HEAD:"$GITHUB_REF_NAME"' in workflow
+    assert "git push origin HEAD:main" not in workflow, "预览产物不能绕过 PR 直写 main"
+
+
+def test_preview工作流的sparse块只能写目录名():
+    """checkout 会把这个 YAML 字符串原样交给 git，块内的 # 不是注释。"""
+    import yaml  # noqa: PLC0415
+
+    workflow = yaml.safe_load(
+        Path(".github/workflows/preview-reel.yml").read_text(encoding="utf-8"))
+    checkout = workflow["jobs"]["render"]["steps"][0]
+    sparse = checkout["with"]["sparse-checkout"]
+    lines = [line.strip() for line in sparse.splitlines() if line.strip()]
+    assert "output/preview" in lines
+    assert all("#" not in line for line in lines)
+    assert all(not (set("*?[]\\") & set(line)) for line in lines)
+
+
 def test_load_preview_spec独立目录优先(monkeypatch, tmp_path):
     import preview_beats as pb  # noqa: PLC0415
 

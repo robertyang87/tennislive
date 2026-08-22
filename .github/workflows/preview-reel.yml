@@ -72,6 +72,9 @@ jobs:
           # 不写 sparse-checkout-cone-mode（默认 cone 模式）：它会**自动带上根目录
           # 的 pyproject.toml**——`pip install -e .` 靠它，漏了就是
           # 「does not appear to be a Python project」（第一次验证就是这么红的）。
+          # ⚠️ 只检出 `output/preview`，不要裸的 `output`；后者会把 1 GB+
+          # 历史产物全部拉下来。这里的块会原样传给 `git sparse-checkout set`，
+          # 因此说明文字必须放在块外，块内只能留目录名。
           sparse-checkout: |
             assets
             data
@@ -80,13 +83,6 @@ jobs:
             src
             tests
             tools
-            # ⚠️ **只要 `output/preview` 这一格，不要裸的 `output`。** 后者会把
-            # 一 GB 多的历史产物全拉下来，checkout 白等一分半（daily 量到 1:31、
-            # match-reel 2:44）。这条工作流只写 `output/preview/<slug>`，前缀固定，
-            # 静态列出来就够，不用像 match-reel 那样等算出目录再 `sparse-checkout add`。
-            # ⚠️ **不能只做一半**：漏掉这一格的话 `git add` 只警告并退出 0，
-            # 产物静默丢掉，而那是跑完之后才发现的。判据
-            # `test_不碰产物的工作流不许把output拉下来`。
             output/preview
 
       - uses: actions/setup-python@v5
@@ -104,12 +100,7 @@ jobs:
           path: |
             ~/.cache/apt-archives
             ~/.cache/apt-lists
-          # 滚动键：actions/cache 的主键不可变，固定键会把第一趟存下的
-          # 半份缓存永远钉死，后面补装的包写不回去——形状照抄
-          # match-reel.yml「缓存 apt 包」那一步（那儿有完整注释）。
-          key: apt-pkgs-${{ runner.os }}-24.04-preview-reel-v2-${{ github.run_id }}
-          restore-keys: |
-            apt-pkgs-${{ runner.os }}-24.04-preview-reel-v2-
+          key: apt-pkgs-${{ runner.os }}-24.04-preview-reel-v1
       - name: 装 ffmpeg
         timeout-minutes: 15
         run: |
@@ -221,8 +212,11 @@ jobs:
       - name: 查成片本身合不合格
         if: github.event.inputs.dry_run != 'true'
         run: |
+          SPEC="specs/previews/${{ github.event.inputs.slug }}.json"
+          [ -f "$SPEC" ] || SPEC="specs/reels/${{ github.event.inputs.slug }}.json"
           python tools/check_reel_landed.py \
             --slug "${{ github.event.inputs.slug }}" \
+            --spec "$SPEC" \
             --film "output/preview/${{ github.event.inputs.slug }}/${{ github.event.inputs.slug }}.mp4"
 
       # 成片一律走 Release 不进 git（match-reel 同款）。预览线产物目录独立：
@@ -274,9 +268,14 @@ jobs:
         run: |
           DATE=$(python3 - <<'PY'
           import json, re
-          spec = json.load(open("specs/reels/${{ github.event.inputs.slug }}.json", encoding="utf-8"))
+          from pathlib import Path
+          slug = "${{ github.event.inputs.slug }}"
+          path = Path("specs/previews") / f"{slug}.json"
+          if not path.is_file():
+              path = Path("specs/reels") / f"{slug}.json"
+          spec = json.loads(path.read_text(encoding="utf-8"))
           m = re.search(r"(\d{4})-(\d{2})-(\d{2})", str(spec.get("_fixture") or ""))
-          print(m.group(1) if m else "")
+          print(m.group(0) if m else "")
           PY
           )
           [ -n "$DATE" ] || { echo "::error::从 _fixture 取不到日期"; exit 1; }
@@ -291,7 +290,8 @@ jobs:
           # 一直是这么给的。判据 `test_会发微信的工作流都要能触发Pages`。
           GITHUB_TOKEN: ${{ github.token }}
         run: |
-          COPY="specs/reels/${{ github.event.inputs.slug }}.xhs.txt"
+          COPY="specs/previews/${{ github.event.inputs.slug }}.xhs.txt"
+          [ -f "$COPY" ] || COPY="specs/reels/${{ github.event.inputs.slug }}.xhs.txt"
           test -f "$COPY" || { echo "::error::找不到 $COPY"; exit 1; }
           python tools/push_reel.py --stage page \
             --outdir "output/preview/${{ github.event.inputs.slug }}" \
@@ -311,7 +311,9 @@ jobs:
           git add "$OUTDIR"
           python tools/check_staged_file_sizes.py
           git commit -m "preview: ${{ github.event.inputs.slug }}" || echo "没有可提交的"
-          git push origin HEAD:main
+          # workflow_dispatch 跑在哪个 ref，就把产物写回哪个 ref。预览分支不能
+          # 穿过 PR 直接落 main；否则既绕开审查，也会让旧成片和新成片难以区分。
+          git push origin HEAD:"$GITHUB_REF_NAME"
 
       - name: 推送到微信（可选）
         if: github.event.inputs.push == 'true'
@@ -320,7 +322,8 @@ jobs:
           PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
           TENNISLIVE_ASSET_REV: ${{ github.sha }}
         run: |
-          COPY="specs/reels/${{ github.event.inputs.slug }}.xhs.txt"
+          COPY="specs/previews/${{ github.event.inputs.slug }}.xhs.txt"
+          [ -f "$COPY" ] || COPY="specs/reels/${{ github.event.inputs.slug }}.xhs.txt"
           python tools/push_reel.py \
             --outdir "output/preview/${{ github.event.inputs.slug }}" \
             --date "${{ steps.date.outputs.date }}" \
