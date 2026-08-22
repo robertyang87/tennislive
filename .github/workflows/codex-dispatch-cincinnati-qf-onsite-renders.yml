@@ -1,11 +1,11 @@
-name: codex-dispatch-cincinnati-qf-covers
+name: codex-dispatch-cincinnati-qf-onsite-renders
 
 on:
   push:
     branches:
       - feature/us-open-men-2026-preview
     paths:
-      - .github/workflows/codex-dispatch-cincinnati-qf-covers.yml
+      - .github/workflows/codex-dispatch-cincinnati-qf-onsite-renders.yml
 
 permissions:
   actions: write
@@ -16,21 +16,20 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - name: Render both exact-match onsite covers without publishing
-        # Attempt 2: source images are already pre-cropped to 1080x1440; no extra zoom.
+      - name: Re-render both exact-match onsite covers without publishing
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
         run: |
           gh workflow run match-reel.yml --repo "$GH_REPO" \
             --ref feature/us-open-men-2026-preview \
-            -f mode=cover -f slug=bejlek-keys-cincinnati-2026-qf \
-            -f push=false &
+            -f mode=render -f slug=bejlek-keys-cincinnati-2026-qf \
+            -f voice=zh-CN-YunjianNeural -f rate=+6% -f push=false &
           first_pid=$!
           gh workflow run match-reel.yml --repo "$GH_REPO" \
             --ref feature/us-open-men-2026-preview \
-            -f mode=cover -f slug=fritz-nakashima-cincinnati-2026-qf \
-            -f push=false &
+            -f mode=render -f slug=fritz-nakashima-cincinnati-2026-qf \
+            -f voice=zh-CN-YunjianNeural -f rate=+6% -f push=false &
           second_pid=$!
           wait "$first_pid"
           wait "$second_pid"
