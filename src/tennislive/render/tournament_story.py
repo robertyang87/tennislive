@@ -650,6 +650,62 @@ STORIES = (
         kind="player",
         source_label="WTA 官方档案",
     ),
+    # 手动专题，不进自动选题：aliases 只收专题词，不和上面的球员卡争
+    # "coco gauff"。这条讲的不是她的生涯，而是 2026 辛辛那提采访里一句
+    # "right Coco" 怎样被评论区接到另一条新闻上。
+    TournamentStory(
+        slug="gauff-right-coco",
+        aliases=("right coco", "gauff right coco"),
+        title="高芙的「right Coco」",
+        location="辛辛那提 · 美国",
+        level="WTA 1000",
+        surface="赛后采访澄清",
+        founded="2026.08.22",
+        hero_fact=(
+            "高芙确实说了“right Coco”，但截至 2026 年 8 月 22 日，"
+            "没有可核实证据显示她借这句话评价或影射克耶高斯事件。"
+        ),
+        facts=(
+            "现场看台喊的是 O.T. Genasis 2014 年歌曲《CoCo》的歌词；歌里的"
+            "“CoCo”指可卡因，球迷把它改作对 Coco Gauff 名字的双关。",
+            "这不是高芙临时才知道的梗：2023 年美网决赛后的新闻发布会上，"
+            "她已经解释过这首歌的“CoCo”并不是自己的名字。",
+            "克耶高斯事件在 8 月 19 日进入新闻，高芙采访在 8 月 22 日；"
+            "这个时间差解释了网友联想，却不能把联想升级成本人表态。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2026-08-22",
+                player="科科·高芙",
+                age="22 岁",
+                headline="“And it's the right Coco”",
+                detail=(
+                    "辛辛那提女单 1/4 决赛后，她回应看台口号、笑着说完这句，"
+                    "随即说“算了，下一个问题”；全段没有提到克耶高斯。"
+                ),
+                source_url=(
+                    "https://www.wtatennis.com/news/4564649/"
+                    "gauff-charges-into-cincinnati-semis-behind-renewed-confidence-and-aggressive-net-play"
+                ),
+            ),
+        ),
+        venue="公开证据核查 · 不把网友推断写成本人表态",
+        image=Path(__file__).resolve().parents[3]
+        / "assets" / "reel" / "gauff-kostyuk-cincinnati-2026-qf.jpg",
+        image_credit="WTA 官方视频页 / Getty Images · 2026 辛辛那提女单 1/4 决赛，高芙",
+        source_url=(
+            "https://www.wtatennis.com/news/4564649/"
+            "gauff-charges-into-cincinnati-semis-behind-renewed-confidence-and-aggressive-net-play"
+        ),
+        image_source_url="https://www.wtatennis.com/videos/4564634",
+        kind="player",
+        source_label="WTA / 公开社交账号 / Reuters / 2023 美网发布会",
+        evidence_urls=(
+            "https://www.asapsports.com/show_interview.php?id=190805",
+            "https://www.reuters.com/sports/tennis/australian-tennis-player-kyrgios-provisionally-suspended-after-testing-positive-2026-08-19/",
+            "https://www.wtatennis.com/news/2779541/why-coco-gauff-always-roots-for-nick-kyrgios",
+        ),
+    ),
     TournamentStory(
         slug="djokovic",
         aliases=("novak djokovic",),
