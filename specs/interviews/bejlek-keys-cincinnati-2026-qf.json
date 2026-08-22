@@ -5,6 +5,8 @@
   "start": 0.0,
   "end": 112.9,
   "whisper_model": "medium.en",
+  "transcript_verified": true,
+  "_verified_clean": "runner 上 mode=render 跑出的验证报告：第一份 YouTube 自动字幕 336 词，第二份 faster-whisper（medium.en）317 词，对不上 8.3%（闸门 12%）。8 处逐条核过：`aryna`→`irina`、`marta kostyuk's`→`marda kostiuk`、`marta`→`marda` 是第二份对人名的听误（正确拼法 Aryna Sabalenka／Marta Kostyuk，第一份本来就听对了，`zh` 也是照这两个名字翻的，不用改）；`semi final in`→`semifinal and`、`i will`→`i'll`、`believed`→`believe` 是分词/时态这类无害差异；`so i just keep believing`→`playing` 落在她整段回答『相信自己』的语境里，前后文（『probably to believe』『i believe much more than i ever believed in myself』）都在讲相信，第一份『believing』更贴合上下文，维持原判；`how does it feel i mean you see you see me right now`→`—` 是第二份漏听的一整句，第一份完整听到了，不算分歧的另一方错。没有一处需要动 `en_fixed`。",
   "column": "赛后开麦",
   "interview_kind": "赛后场上采访",
   "event": "2026 辛辛那提 WTA1000 1/4决赛",
