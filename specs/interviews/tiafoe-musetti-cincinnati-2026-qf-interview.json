@@ -20,7 +20,22 @@
   "event": "2026 辛辛那提 ATP1000 1/4决赛",
   "opening": {
     "kind": "none",
-    "why": "Tennis TV 场上采访独立视频，从主持人迎上前恭喜开始（0.56s『Francis, congratulations.』），源片里没有比赛画面，也没有借集锦接片头——采访本体加顶栏（对阵/比分）已经把『这是哪一场』交代清楚。"
+    "why": "Tennis TV 场上采访独立视频，从主持人迎上前恭喜开始（0.56s『Francis, congratulations.』），源片里没有比赛画面——比赛结尾从另一条 Tennis TV 官方集锦借了 `lead_in` 接在最前面。"
+  },
+  "lead_in": {
+    "url": "https://youtu.be/CLXw7um5Y4o",
+    "start": 333.44,
+    "end": 354.0,
+    "crop_shift_x": -0.06,
+    "_crop_why": "同一个 Tennis TV 转播模板，台标一样贴在右上角——和采访正片、nakashima-fritz 那条同一个 -0.06。`lead_in` 的裁切参数不沿用顶层，这里单独写。",
+    "why": "账号所有者给的链接：Tennis TV 官方集锦《Frances Tiafoe vs Lorenzo Musetti Entertaining Battle | Cincinnati 2026 Match Highlights》（366.0 秒，@TennisTV，和这场比赛同一场）。抽帧核对过（output/2026-08-22/frames/tiafoe-musetti-cin2026-hl/frame_0330s.jpg ~ frame_0357s.jpg，每 3 秒一帧）：330s 记分板显示 `MUSETTI 15 6 5 / TIAFOE 40 7 6`（穆塞蒂发球，40-15）；333s 场边记分条已经打出 `MATCH POINT #4`，蒂亚福低头喘气；342s 他闭眼深呼吸，比分和赛点已经拿下；345-354s 是他庆祝、走向网前、和穆塞蒂握手致意的连续画面。357s 起是 Tennis TV 自己的品牌片尾卡（frame_0357s.jpg，`WATCH MORE / TAP TO SUBSCRIBE`），354s 那一帧仍是真实握手画面，收在 354.0 留出安全margin——先交代比赛结束，再接采访。",
+    "_subs_why": "账号所有者 2026-08-22：『迪亚夫（蒂亚福）的赛后采访要加上这个视频后半段获胜后的画面加解说（配上中英文字幕）』。转写来自这条源片自己的官方自动字幕（`cap_CLXw7um5Y4o.en.json3`，yt-dlp `--write-auto-subs` 一次拉到），沙箱下不动这条源的音视频流，没有第二个模型交叉校验，如实记在这儿。两处订正：`Francis Thafo`→`Tiafoe`（ASR 对姓氏的听误，和 body 部分的译名一致）、`City`→`Cincinnati`（同样是地名被截断的 ASR 听误，这场赛事全程都在辛辛那提，没有第二个候选）。『76.』这一句只按实际听到的转写（『seven-six』），没有再猜『seven-five』——ASR 没给出那半句，宁可留白也不编。",
+    "subs": [
+      {"a": 333.44, "b": 337.16, "en": "Fourth match point.", "zh": "第四个赛点"},
+      {"a": 341.76, "b": 346.32, "en": "Now this one does the trick, seven-six.", "zh": "这一次拿下了七比六"},
+      {"a": 346.32, "b": 349.44, "en": "It is Tiafoe moving on to the", "zh": "蒂亚福就此挺进"},
+      {"a": 349.44, "b": 353.76, "en": "semifinals here in Cincinnati.", "zh": "辛辛那提半决赛"}
+    ]
   },
   "zh": [
     "弗朗西斯 恭喜你",
