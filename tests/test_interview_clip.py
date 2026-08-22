@@ -4777,29 +4777,19 @@ def test_lead_in那道闸排在下载之前():
             f"lead_in 那道闸排在 `{later}` 后面了——它只读 spec，该在第 0.2 秒就报")
 
 
-def test_lead_in不带subs时不烧字幕():
-    """没写 `lead_in.subs` 就是静音 B-roll——赛点、比分牌、庆祝是转播自己拍下
-    的画面（画面自证），不配文字不影响看懂发生了什么。`subtitles=` 必须是
-    **条件分支**，不能写死成一律不烧（那是 2026-08-22 之前的老规矩，账号所有者
-    要求「原声解说也要有中英文字幕」之后翻了面，见下一条）。"""
-    src = (ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8")
-    body = _code_only(src.split("def _lead_in_segment(")[1].split("\ndef ")[0])
-    assert "if subs" in body, "subtitles 那一支必须是条件分支，不能一律不烧"
-    assert "subtitles=" in body, "写了 `lead_in.subs` 就该有能烧字幕的那条路"
+def _lead_in_topbar_spec(**lead_extra):
+    """`_lead_in_segment` 要烧顶栏，`spec` 顶层就得给全 `header_lines` 要的
+    那几个字段（event / push.matchup / push.score / winner / interview_kind）
+    ——四条 lead_in 顶栏测试共用同一份最小合法 spec，别各写一遍必分叉。"""
+    return {"slug": "x", "url": "https://youtu.be/interview",
+            "event": "2026 测试站 WTA1000 1/4决赛",
+            "interview_kind": "赛后场上采访", "winner": "甲",
+            "push": {"matchup": "甲 vs 乙", "score": "6-3 6-4"},
+            "lead_in": {"url": "https://youtu.be/highlights", "start": 2.0,
+                        "end": 9.0, "why": "测试", **lead_extra}}
 
 
-def test_lead_in带subs时真烧出双语字幕不带顶栏(tmp_path, monkeypatch):
-    """账号所有者：「前半段视频里原声解说也要有中英文字幕」。写了
-    `lead_in.subs` 就要真的烧出来——真跑一遍 `_lead_in_segment`，检查
-    ① 生成的 `.ass` 里有 EN/ZH 两行内容，和给的 en/zh 对得上；
-    ② **不带顶栏事件**——顶栏印的是这条片子自己的对阵比分，片头这几秒讲的是
-    上一场的收尾，两件事印在一起会让人以为比分是这几秒的。"""
-    from tools import build_interview_clip as m
-
-    assert __import__("shutil").which("ffmpeg"), "没有 ffmpeg：apt install ffmpeg"
-
-    src_dir = tmp_path / "lead"
-    src_dir.mkdir()
+def _fake_lead_source(src_dir: Path) -> Path:
     fake_source = src_dir / "fake_lead_source.mp4"
     subprocess.run(
         ["ffmpeg", "-v", "error", "-y",
@@ -4807,21 +4797,95 @@ def test_lead_in带subs时真烧出双语字幕不带顶栏(tmp_path, monkeypatc
          "-f", "lavfi", "-i", "sine=frequency=300:sample_rate=48000",
          "-t", "20", "-c:v", "libx264", "-crf", "23",
          "-c:a", "aac", str(fake_source)], check=True)
-    monkeypatch.setattr(m, "yt_download", lambda url, dest, fmt, spec: fake_source)
+    return fake_source
 
-    spec = {"slug": "x", "url": "https://youtu.be/interview",
-            "lead_in": {"url": "https://youtu.be/highlights", "start": 2.0,
-                        "end": 9.0, "why": "测试",
-                        "subs": [{"a": 3.0, "b": 5.0, "en": "What a shot",
-                                  "zh": "这一拍真漂亮"}]}}
+
+def test_lead_in不带subs时仍要烧顶栏():
+    """账号所有者 2026-08-22：「前面也要带上顶的，不然的话不知道是什么比赛。
+    除了封面不用，其他后面都要带上顶。」没写 `lead_in.subs` 只是没有台词
+    （静音 B-roll），**顶栏照旧要印**——`wants_topbar(spec)` 那条老规矩管到
+    这儿，不因为没有对白就被绕开。`subtitles=` 因此不再是「有 subs 才有」
+    的单一条件分支，而是「有 subs，或者顶栏要印」两条路都要有。"""
+    src = (ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8")
+    body = _code_only(src.split("def _lead_in_segment(")[1].split("\ndef ")[0])
+    assert "elif wants_topbar(spec)" in body, "没有 subs 时要有单独烧顶栏那一支"
+    assert body.count("subtitles=") >= 2, "有 subs 和没 subs 各自要有能烧字幕的那条路"
+
+
+def test_lead_in带subs时字幕和顶栏都要烧出来(tmp_path, monkeypatch):
+    """账号所有者 2026-08-22：「前面也要带上顶的，不然的话不知道是什么比赛。
+    除了封面不用，其他后面都要带上顶。」写了 `lead_in.subs` 就要真的烧出来
+    ——真跑一遍 `_lead_in_segment`，检查
+    ① 生成的 `.ass` 里有 EN/ZH 两行内容，和给的 en/zh 对得上；
+    ② **也带着顶栏事件**——`lead_in` 借的是这条采访自己这场球的比赛结尾
+    （`check_lead_in` 的 docstring 早写明白了），顶栏印的对阵比分跟这几秒的
+    赛点、庆祝、握手是同一场，印上去是补全「这是哪一场」，不是编造。"""
+    from tools import build_interview_clip as m
+
+    assert __import__("shutil").which("ffmpeg"), "没有 ffmpeg：apt install ffmpeg"
+
+    src_dir = tmp_path / "lead"
+    src_dir.mkdir()
+    monkeypatch.setattr(m, "yt_download",
+                         lambda url, dest, fmt, spec: _fake_lead_source(src_dir))
+
+    spec = _lead_in_topbar_spec(subs=[
+        {"a": 3.0, "b": 5.0, "en": "What a shot", "zh": "这一拍真漂亮"}])
     lead = m._lead_in_segment(spec, src_dir)
     assert lead is not None and lead.is_file()
 
     ass_text = (src_dir / "_lead.ass").read_text(encoding="utf-8")
     assert "What a shot" in ass_text
     assert "这一拍真漂亮" in ass_text
-    assert not re.search(r"Dialogue:.*,HEAD[AB],", ass_text), (
-        "片头这几秒不该有顶栏事件——讲的是上一场，顶栏印的是这条片子自己的比分")
+    assert re.search(r"Dialogue:.*,HEAD[AB],", ass_text), (
+        "片头这几秒该带顶栏——讲的是这条采访自己这场球的比赛结尾")
+
+
+def test_lead_in不带subs时真烧出顶栏(tmp_path, monkeypatch):
+    """不能只靠 grep 源码字符串证明「有这条分支」——真跑一遍
+    `_lead_in_segment`，确认没有 `subs` 时真的产出了带 HEADA/HEADB、
+    没有 EN/ZH 的 `.ass`，而且顶栏从 0 开始盖住整段 `lead_in`。"""
+    from tools import build_interview_clip as m
+
+    assert __import__("shutil").which("ffmpeg"), "没有 ffmpeg：apt install ffmpeg"
+
+    src_dir = tmp_path / "lead"
+    src_dir.mkdir()
+    monkeypatch.setattr(m, "yt_download",
+                         lambda url, dest, fmt, spec: _fake_lead_source(src_dir))
+
+    spec = _lead_in_topbar_spec()  # 没有 subs
+    lead = m._lead_in_segment(spec, src_dir)
+    assert lead is not None and lead.is_file()
+
+    ass_text = (src_dir / "_lead.ass").read_text(encoding="utf-8")
+    assert re.search(r"Dialogue:.*,HEAD[AB],", ass_text)
+    assert "Dialogue: 0,0:00:00.00" in ass_text, "顶栏该从 0 开始盖住整段"
+    assert not re.search(r"Dialogue:.*,(EN|ZH),", ass_text), (
+        "没有台词，不该凭空多出 EN/ZH 事件")
+
+
+def test_lead_in关掉顶栏时不带subs也真的不烧字幕(tmp_path, monkeypatch):
+    """`topbar: false` 显式关掉时（要求写 `_no_topbar_why`），没有 subs 的
+    `lead_in` 要回到最早那种什么都不烧的样子——「顶栏默认要印」这条新规矩
+    不能把「关掉了」变成「关不掉」。"""
+    from tools import build_interview_clip as m
+
+    assert __import__("shutil").which("ffmpeg"), "没有 ffmpeg：apt install ffmpeg"
+
+    src_dir = tmp_path / "lead"
+    src_dir.mkdir()
+    monkeypatch.setattr(m, "yt_download",
+                         lambda url, dest, fmt, spec: _fake_lead_source(src_dir))
+
+    spec = {"slug": "x", "url": "https://youtu.be/interview",
+            "topbar": False, "_no_topbar_why": "测试用，故意关掉",
+            "lead_in": {"url": "https://youtu.be/highlights", "start": 2.0,
+                        "end": 9.0, "why": "测试"}}
+    lead = m._lead_in_segment(spec, src_dir)
+    assert lead is not None and lead.is_file()
+    assert not (src_dir / "_lead.ass").exists(), (
+        "顶栏关掉又没有 subs，不该生成 ass 文件")
 
 
 def test_lead_in进拼接清单排在正片之前():
@@ -4841,6 +4905,10 @@ def test_lead_in片段和正片拼得起来(tmp_path, monkeypatch):
     验证：① 有 `lead_in` 时不是 `None`，尺寸/时长对得上；② 和 `body` 那组
     完全一样的编码参数拼接不丢流（同 `test_采访片的片尾要和正片拼得起来`
     那条判据）；③ 没有 `lead_in` 时返回 `None`。
+
+    ⚠️ spec 走 `_lead_in_topbar_spec()`（默认顶栏开）——这是没有 `subs`
+    时**生产环境的真实路径**（顶栏默认要印），不是把顶栏关掉之后测一条
+    产品上不会走的路。顺带确认多烧一层顶栏字幕之后画幅/编码参数没被带偏。
     """
     from tools import build_interview_clip as m
 
@@ -4848,18 +4916,10 @@ def test_lead_in片段和正片拼得起来(tmp_path, monkeypatch):
 
     src_dir = tmp_path / "lead"
     src_dir.mkdir()
-    fake_source = src_dir / "fake_lead_source.mp4"
-    subprocess.run(
-        ["ffmpeg", "-v", "error", "-y",
-         "-f", "lavfi", "-i", "testsrc2=size=1280x720:rate=30",
-         "-f", "lavfi", "-i", "sine=frequency=300:sample_rate=48000",
-         "-t", "20", "-c:v", "libx264", "-crf", "23",
-         "-c:a", "aac", str(fake_source)], check=True)
-    monkeypatch.setattr(m, "yt_download", lambda url, dest, fmt, spec: fake_source)
+    monkeypatch.setattr(m, "yt_download",
+                         lambda url, dest, fmt, spec: _fake_lead_source(src_dir))
 
-    spec = {"slug": "x", "url": "https://youtu.be/interview",
-            "lead_in": {"url": "https://youtu.be/highlights", "start": 2.0,
-                        "end": 9.0, "why": "测试"}}
+    spec = _lead_in_topbar_spec()  # 没有 subs，走默认顶栏那条路
     lead = m._lead_in_segment(spec, src_dir)
     assert lead is not None and lead.is_file()
 
