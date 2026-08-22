@@ -43,7 +43,14 @@ concurrency:
 jobs:
   push:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    # **35 是按复制页探活的账算的，不是拍的**：实测 Pages 最坏一次发布用了
+    # 14 分钟（CLAUDE.md「等待窗口结构性地短于 Pages 的发布时间」那一族），
+    # 探活预算 = attempts × (delay + 15s 请求超时)，推送步骤下面把它调到
+    # 60 × 40s——**故意比 job 超时还长**，让「什么时候放弃」只有 job 超时
+    # 这一个权威：真等不到时 job 被掐成 cancelled，告警那步靠
+    # `failure() || cancelled()` 接住。20 分钟的老预算离 14 分钟的实测最坏
+    # 只剩几分钟余量，其余步骤再抖一下就误伤。
+    timeout-minutes: 35
     env:
       PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
     steps:
@@ -133,6 +140,12 @@ jobs:
           # 而微信的图片缓存按**路径**算——URL 停在 @main 的话推出去的还是
           # 上一版那张海报，而且不吭声。
           TENNISLIVE_ASSET_REV: ${{ github.sha }}
+          # 复制页探活给足：默认 30×20s=10 分钟，而实测 Pages 最坏发布过
+          # 14 分钟——「等不到」和「没等够」长得一模一样，而两边代价完全不
+          # 对称（多等只是空转，等不够就是整条推送作废）。60×40s 故意超过
+          # job 的 35 分钟：放弃只由 job 超时说了算，见顶上 timeout 那段注释。
+          TENNISLIVE_COPYPAGE_ATTEMPTS: "60"
+          TENNISLIVE_COPYPAGE_RETRY_SECONDS: "40"
         run: |
           python tools/push_reel.py \
             --outdir "${{ steps.gate.outputs.outdir }}" \
@@ -155,7 +168,10 @@ jobs:
           git push origin main
 
       - name: 失败时告警
-        if: failure()
+        # ⚠️ **超时被掐的 run 是 cancelled，不是 failure**——只写 `failure()`
+        # 的话，恰恰是「Pages 一直没发出来、等满 35 分钟被掐」这一种最该告警
+        # 的失败静默溜走，而它和「没什么可发」在通知层面长得一模一样。
+        if: failure() || cancelled()
         run: |
           RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           {

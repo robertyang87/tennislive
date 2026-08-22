@@ -1193,11 +1193,14 @@ def _resolve_media_url(url: str) -> str:
         raise ReelError(str(exc)) from exc
 
 
-def download(url: str, dest: Path) -> Path:
+def download(url: str, dest: Path, *, archival: bool = False) -> Path:
     """取**最高清晰度**：先试 1080p 的 avc1（码率最高的那档），退到 bestvideo。
 
     `YT_COOKIES` 指向一个 cookies.txt 就带上——机房 IP 被挡的时候，
     一份登录过的 cookie 是唯一稳定的解。
+
+    `archival=True` ＝ spec 里认领过这条源本来就低清（`archival: {源键: 理由}`）。
+    它只影响两件事：缓存命中时按哪条地板复查高度、低清兜底那份**存不存缓存**。
     """
     dest.parent.mkdir(parents=True, exist_ok=True)
     if dest.is_file() and dest.stat().st_size > 0:
@@ -1206,9 +1209,28 @@ def download(url: str, dest: Path) -> Path:
 
     cached = _cached_source(url, dest.suffix or ".mp4")
     if cached is not None and cached.is_file() and cached.stat().st_size > 0:
-        shutil.copy2(cached, dest)
-        print(f"[缓存] 命中，没有重下（{dest.stat().st_size / 1e6:.1f} MB）")
-        return dest
+        # ⚠️ **命中不等于能用——缓存里可能躺着一份低清的。** 缓存键只有 URL，
+        # 而同一条 URL 在不同一趟里能下到不同的高度（PO token / n challenge
+        # 没打通时 yt-dlp 会退到低画质那档）。一旦一趟瞬时的降档把 480p 写进
+        # 缓存，**之后每一趟都命中这份低清**，红在 resolve_crop 的
+        # 「高 ≥ 700」上，报错还指向「换 client 重下」——而重下根本走不到，
+        # 缓存把坏结果固化了（和「播放页存进缓存」是同一个形状）。
+        # 所以命中之后先 ffprobe 复查高度，不够就当未命中、把旧缓存删掉。
+        floor = MIN_ARCHIVAL_H if archival else MIN_SOURCE_H
+        try:
+            cw, ch = probe_size(cached)
+        except (ReelError, ValueError):
+            cw = ch = 0
+        if ch >= floor:
+            shutil.copy2(cached, dest)
+            print(f"[缓存] 命中，没有重下"
+                  f"（{dest.stat().st_size / 1e6:.1f} MB，{cw}×{ch}）")
+            return dest
+        cached.unlink(missing_ok=True)
+        if ch:
+            print(f"[缓存] 缓存里是 {ch}p（{cw}×{ch}，低于地板 {floor}），弃用重下")
+        else:
+            print("[缓存] 缓存里那份 ffprobe 读不出视频流，弃用重下")
 
     # **页面地址不一定就是下载地址。** Tennis TV 的 `library/short-highlights`
     # 那批标着 `data-entitlement="free"` 的单场短集锦（2 分半、1080p）要先过一次
@@ -1355,7 +1377,15 @@ def download(url: str, dest: Path) -> Path:
               "在这儿长得一模一样，\n"
               "        分得清的是 spec（`archival` 认领）。渲的时候 resolve_crop "
               "会拿着认领去判，没认领照旧红。")
-        _keep_source(url, dest)
+        # ⚠️ **低清兜底默认不写缓存。** 一次瞬时的降档（PO token 那一环偶发
+        # 没打通）一旦存进去，之后每一趟都按 URL 命中这份低清——
+        # 一次事故变成永久故障，而日志上只是一句正常的「命中」。
+        # 认领过 `archival` 的才存：那是素材本来的样子，缓存它是对的。
+        if archival:
+            _keep_source(url, dest)
+        else:
+            print("[缓存] 低画质那份不进缓存（没认领 archival）——"
+                  "免得一次降档把之后每一趟都钉死在低清上")
         return dest
 
     raise ReelError(
@@ -4878,6 +4908,9 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     validate_spec(spec)
     _preflight_cutout(spec)
     urls = spec_sources(spec)
+    # 认领过 `archival` 的源，下载那层要知道：缓存复查按 400 的地板、
+    # 低清兜底那份才许进缓存。别在 download 里重读 spec——它没有 spec。
+    claimed_archival = archival_claims(spec)
     sources: dict[str, Path] = {}
     for key, url in urls.items():
         path = outdir / (f"source_{key}.mp4" if key else "source.mp4")
@@ -4885,7 +4918,7 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
             path = source_override
         if not path.is_file():
             with stage(f"下载源片 {key or '(主源)'}"):
-                path = download(url, path)
+                path = download(url, path, archival=key in claimed_archival)
         sources[key] = path
     conform_sources(sources, spec, outdir)
     check_sources_match(sources, spec)

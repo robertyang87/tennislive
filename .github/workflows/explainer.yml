@@ -103,7 +103,12 @@ jobs:
           path: |
             ~/.cache/apt-archives
             ~/.cache/apt-lists
-          key: apt-pkgs-${{ runner.os }}-24.04-explainer-v1
+          # 滚动键：actions/cache 的主键不可变，固定键会把第一趟存下的
+          # 半份缓存永远钉死，后面补装的包写不回去——形状照抄
+          # match-reel.yml「缓存 apt 包」那一步（那儿有完整注释）。
+          key: apt-pkgs-${{ runner.os }}-24.04-explainer-v2-${{ github.run_id }}
+          restore-keys: |
+            apt-pkgs-${{ runner.os }}-24.04-explainer-v2-
       - name: 安装中文字体（幻灯需要）
         timeout-minutes: 15
         run: |

@@ -56,7 +56,12 @@ jobs:
           path: |
             ~/.cache/apt-archives
             ~/.cache/apt-lists
-          key: apt-pkgs-${{ runner.os }}-24.04-frame-grab-v1
+          # 滚动键：actions/cache 的主键不可变，固定键会把第一趟存下的
+          # 半份缓存永远钉死，后面补装的包写不回去——形状照抄
+          # match-reel.yml「缓存 apt 包」那一步（那儿有完整注释）。
+          key: apt-pkgs-${{ runner.os }}-24.04-frame-grab-v2-${{ github.run_id }}
+          restore-keys: |
+            apt-pkgs-${{ runner.os }}-24.04-frame-grab-v2-
       - name: 安装依赖
         timeout-minutes: 15
         run: |
@@ -82,7 +87,7 @@ jobs:
             brainicism/bgutil-ytdlp-pot-provider
           for i in $(seq 1 25); do
             if curl -sf http://127.0.0.1:4416/ping >/dev/null; then
-              echo "provider 起来了（第 $           次探活）"
+              echo "provider 起来了（第 $i 次探活）"
               echo "up=1" >> "$GITHUB_OUTPUT"; exit 0
             fi
             sleep 2

@@ -148,7 +148,14 @@ jobs:
                 title:"⚠️ 网球比分数据源全部失效",
                 content:("ESPN/SofaScore/Flashscore/WtaLive 连同最后备用 TNNS 全部不可用，请查看：<a href=\"" + $url + "\">Actions 日志</a>"),
                 template:"html"}')"
-            curl -sS --fail -m 20 -X POST https://www.pushplus.plus/send \
+            # --retry 3 --retry-all-errors：这条 POST 是这趟告警唯一真正发消息的
+            # 动作，一次网络抖动就把整条告警吞成一行 ::warning::——而「告警线的
+            # 正常状态就是安静」，丢一条告警和没出事长得一模一样。PushPlus 的
+            # send 按 token+content 幂等性弱，但重发同一条告警最多是收到两遍，
+            # 远好过一遍都收不到（和 pushplus.py 里「只重试没送到」不同：这里
+            # 是纯文字告警，重复的代价可忽略）。
+            curl -sS --fail -m 20 --retry 3 --retry-all-errors \
+              -X POST https://www.pushplus.plus/send \
               -H "Content-Type: application/json" \
               -d "$BODY" \
               || echo "::warning::数据源告警的 PushPlus 通知发送失败"

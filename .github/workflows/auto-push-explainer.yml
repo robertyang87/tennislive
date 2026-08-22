@@ -41,7 +41,11 @@ concurrency:
 jobs:
   push:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    # **25 是按复制页探活的账算的**：这条线的探活窗口是 26×30s ≈ 13 分钟
+    # （盖住实测 Pages 最慢那次 9:30 还留余量，见 CLAUDE.md「等待窗口结构性地
+    # 短于 Pages 的发布时间」），加上 checkout / 装依赖 / 发送本身，20 分钟
+    # 只剩几分钟余量，runner 一抖就把一条**已经等到复制页**的推送掐在半路。
+    timeout-minutes: 25
     env:
       PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
       # ⚠️ **PUSHPLUS_SECRET_KEY 是故意不配的**（账号所有者 2026-08-05：
@@ -133,7 +137,9 @@ jobs:
           git push origin main
 
       - name: 失败时告警
-        if: failure()
+        # ⚠️ **超时被掐的 run 是 cancelled，不是 failure**——只写 `failure()`
+        # 的话，「等 Pages 等满预算被掐」这一种最该告警的失败会静默溜走。
+        if: failure() || cancelled()
         run: |
           RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           {
