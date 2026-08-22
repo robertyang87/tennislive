@@ -57,7 +57,9 @@
       "bp_conv": 3,
       "bp_chances": 10,
       "pts_won": 107,
-      "pts_total": 214
+      "pts_total": 214,
+      "winners": 23,
+      "ue": 28
     },
     "b": {
       "headshot": "assets/players/headshots/wta-316959.jpg",
@@ -71,12 +73,14 @@
       "bp_conv": 3,
       "bp_chances": 10,
       "pts_won": 107,
-      "pts_total": 214
+      "pts_total": 214,
+      "winners": 41,
+      "ue": 47
     },
     "footer_venue": "P&G Stadium Court · 辛辛那提",
     "footer_date": "2026.08.21",
     "_source": "WTA 官方 `tournaments/1017/2026/matches/LS004/stats` 的 setnum=0。stats.a=cover.matchup[0]=贝莱克，stats.b=cover.matchup[1]=凯斯；first_total 直接取 totservplayed，second_total=first_total-first_in，second_won=ptstotwonserv-first_won。",
-    "_winners_ue_why": "WTA 官方 stats 与 flashscore 本场 feed 都没有制胜分/非受迫失误字段；这两项不进入预览版统计卡，也不从自动字幕或二手稿反推。最终发布前若 TNNS 浏览器流程返回 hasExtendedStats=true，再只补这两项。"
+    "_winners_ue_why": "跑过 tnns-stats.yml（who=Bejlek,Keys，date=2026-08-21，run 32560391088）：hasExtendedStats=true，选手顺序['Bejlek','Keys']与cover.matchup一致，分盘合计=全场自证通过（Set1[6,15]+Set2[5,10]+Set3[12,16]=[23,41]✅，Set1[8,14]+Set2[10,16]+Set3[10,17]=[28,47]✅）：a(贝莱克)=winners 23/ue 28，b(凯斯)=winners 41/ue 47。"
   },
   "cover": {
     "eyebrow": "赛场之上",
