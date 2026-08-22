@@ -6158,6 +6158,9 @@ _LEGACY_QUALIFIER_NAMES = {
     "eala-svitolina.json", "wong-brooksby.json", "wong-gea.json",
     "zheng-lanlana.json", "eala-fernandez.xhs.txt", "eala-svitolina.xhs.txt",
     "wong-brooksby.xhs.txt", "wong-gea.xhs.txt", "zheng-lanlana.xhs.txt",
+    # bejlek-keys-cincinnati-2026-qf：已经推过微信（reel 和 interview-clip
+    # 两条都有 pushed.json），消息发出去收不回来，不为措辞重渲。
+    "bejlek-keys-cincinnati-2026-qf.json", "bejlek-keys-cincinnati-2026-qf.xhs.txt",
 }
 
 
