@@ -1,0 +1,35 @@
+name: codex-dispatch-cincinnati-qf-renders
+
+on:
+  push:
+    branches:
+      - feature/us-open-men-2026-preview
+    paths:
+      - .github/workflows/codex-dispatch-cincinnati-qf-renders.yml
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Dispatch both non-publishing renders in parallel
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          gh workflow run match-reel.yml --repo "$GH_REPO" \
+            --ref feature/us-open-men-2026-preview \
+            -f mode=render -f slug=bejlek-keys-cincinnati-2026-qf \
+            -f voice=zh-CN-YunjianNeural -f rate=+6% -f push=false &
+          first_pid=$!
+          gh workflow run match-reel.yml --repo "$GH_REPO" \
+            --ref feature/us-open-men-2026-preview \
+            -f mode=render -f slug=fritz-nakashima-cincinnati-2026-qf \
+            -f voice=zh-CN-YunjianNeural -f rate=+6% -f push=false &
+          second_pid=$!
+          wait "$first_pid"
+          wait "$second_pid"
