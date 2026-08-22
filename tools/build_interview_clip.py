@@ -2751,6 +2751,38 @@ def check_lead_in(spec: dict) -> None:
             f"{slug} 的 `lead_in` 没写 `why`——说清收的是哪一段（起点、画面里发生"
             "了什么、为什么要从这条源片接，而不是 `spec['url']` 自己的画面），\n"
             "写不出来就说明还没打开源片看过。")
+    # `subs` 可选：这几秒是**原声解说**，不是我们自己的旁白——没写就是静音
+    # B-roll（画面自证，见上面的 docstring）。写了就要按正片那套字幕规矩过：
+    # 时刻落在窗口内、按时间排好、英文/中文都不能是空的。**宽度/收尾那两条
+    # 硬规矩交给 `write_ass` 在真正烧字幕那一刻去查**——这儿只管形状，
+    # 不重复一遍 `zh_problems`（判据只有一处，别写两遍必分叉）。
+    subs = lead.get("subs")
+    if subs is not None:
+        if not isinstance(subs, list) or not subs:
+            raise SystemExit(f"{slug} 的 `lead_in.subs` 必须是非空数组。")
+        prev_b = start
+        for i, cue in enumerate(subs, 1):
+            if not isinstance(cue, dict):
+                raise SystemExit(f"{slug} 的 `lead_in.subs[{i}]` 必须是对象（a/b/en/zh）。")
+            a, b = cue.get("a"), cue.get("b")
+            if (not isinstance(a, (int, float)) or not isinstance(b, (int, float))
+                    or b <= a):
+                raise SystemExit(
+                    f"{slug} 的 `lead_in.subs[{i}]` 的 a/b 是 {a!r}/{b!r}——"
+                    "必须是数字，且 b 大于 a。")
+            if a < prev_b:
+                raise SystemExit(
+                    f"{slug} 的 `lead_in.subs[{i}]` 起点 {a} 早于上一条的终点 "
+                    f"{prev_b}——两条字幕在时间轴上叠住了。")
+            if a < start or b > end:
+                raise SystemExit(
+                    f"{slug} 的 `lead_in.subs[{i}]`（{a}~{b}）落在 `lead_in` 窗口"
+                    f"（{start}~{end}）之外——原声解说的字幕不能比片头本身还长。")
+            if not str(cue.get("en", "")).strip():
+                raise SystemExit(f"{slug} 的 `lead_in.subs[{i}]` 没写 `en`。")
+            if not str(cue.get("zh", "")).strip():
+                raise SystemExit(f"{slug} 的 `lead_in.subs[{i}]` 没写 `zh`。")
+            prev_b = b
 
 
 # 规矩之前发出去的六条，**只许减不许加**，而且有自检（见
@@ -2932,11 +2964,17 @@ def _lead_in_segment(spec: dict, outdir: Path) -> Path | None:
     """片头那一段——从另一条源片剪来的比赛结尾，接在封面之后、正片之前。
 
     走的是和 `body` 完全一样的裁切／缩放／叠加链（同一块品牌深绿底、同一个
-    画布尺寸、同一套编码参数），这样 `-f concat -c copy` 才拼得上；唯独不带
-    `subtitles=` 那一节——**这几秒不烧字幕、不印顶栏**：赛点、比分牌、庆祝
-    是转播自己拍下来的画面（画面自证），不是我们要翻译校验的对话，硬凑一段
-    没核对过的转写反而是这个仓库最想拦住的事。转写和翻译只做在 `body`
-    （真正的采访）那一段上。
+    画布尺寸、同一套编码参数），这样 `-f concat -c copy` 才拼得上；**不印
+    顶栏**（`write_ass` 传 `spec=None`，`wants_topbar` 那一支根本不走）——
+    片头这几秒讲的是上一场的收尾，顶栏印的是这条片子自己的对阵比分，两件事
+    印在一起会让人以为比分是这几秒的。
+
+    **原声解说要不要烧字幕，看 `lead_in.subs` 写没写。** 没写就是静音 B-roll：
+    赛点、比分牌、庆祝是转播自己拍下来的画面（画面自证），配不配文字不影响
+    看懂发生了什么。写了 `subs`（逐句 `a`/`b`/`en`/`zh`），就按正片那套字幕
+    规矩（宽度、收尾、不留标点）烧上去——账号所有者要求「原声解说也要有
+    中英文字幕」之后补的；转写这几句用的是这条源片自己的官方字幕
+    （`probe` 阶段落的 `captions.txt`），不是凭印象编的。
 
     ⚠️ **裁切参数各自独立写在 `lead_in` 块里，不沿用 `spec` 顶层那几个**——
     两条源片往往是不同机位、不同转播商剪的，`crop_ratio`/`crop_keep_top`/
@@ -2954,7 +2992,7 @@ def _lead_in_segment(spec: dict, outdir: Path) -> Path | None:
     # `source_lead.mp4` 两条都不命中（`source.*` 要求「source」后面紧跟一个
     # 点，`_lead.mp4` 才吃后一条），会静静地跟着成片一起进仓库。
     src = yt_download(lead["url"], outdir / "_lead_source.mp4",
-                      "bv*[height<=720]+ba/b[height<=720]", spec)
+                      "bv*[height<=1080]+ba/b[height<=1080]", spec)
     dur = lead["end"] - lead["start"]
     ratio = lead.get("crop_ratio", CROP_RATIO)
     vh = int(CANVAS_W / ratio)
@@ -2965,10 +3003,18 @@ def _lead_in_segment(spec: dict, outdir: Path) -> Path | None:
     flip = "hflip," if lead.get("mirrored") else ""
     keep = float(lead.get("crop_keep_top", 1.0))
     shift = float(lead.get("crop_shift_x", 0.0))
+    subs = lead.get("subs")
+    tail = "[out]"
+    if subs:
+        ass = outdir / "_lead.ass"
+        lines = [{"a": cue["a"], "b": cue["b"], "en": cue["en"]} for cue in subs]
+        zh = [cue["zh"] for cue in subs]
+        write_ass(lines, zh, lead["start"], ass, spec=None)
+        tail = (f"[v];[v]subtitles={ass}:fontsdir={ROOT / 'assets/fonts'}[out]")
     chain = (
         f"color=c={_BG_COLOUR}:s={CANVAS_W}x{CANVAS_H}:d={dur}:r=25[bg];"
         f"[0:v]{flip}{logo}{_crop_expr(ratio, keep, shift)},scale={CANVAS_W}:{vh}[fg];"
-        f"[bg][fg]overlay=0:{VIDEO_TOP}[out]"
+        f"[bg][fg]overlay=0:{VIDEO_TOP}{tail}"
     )
     dest = outdir / "_lead.mp4"
     subprocess.run(
@@ -2985,7 +3031,7 @@ def _lead_in_segment(spec: dict, outdir: Path) -> Path | None:
 def render(spec: dict, ass: Path, outdir: Path) -> Path:
     check_takeaway(spec)
     src = yt_download(spec["url"], outdir / "source.mp4",
-                      "bv*[height<=720]+ba/b[height<=720]", spec)
+                      "bv*[height<=1080]+ba/b[height<=1080]", spec)
     out = outdir / f"{spec['slug']}.mp4"
     dur = spec["end"] - spec["start"]
     ratio = spec.get("crop_ratio", CROP_RATIO)
@@ -3288,7 +3334,7 @@ def main() -> int:
         if not spec.get("cover"):
             raise SystemExit(f"{args.spec} 没有 `cover` 块，没什么可预览的。")
         src = yt_download(spec["url"], outdir / "source.mp4",
-                          "bv*[height<=720]+ba/b[height<=720]", spec)
+                          "bv*[height<=1080]+ba/b[height<=1080]", spec)
         logo = ""
         if box := spec.get("logo_box"):
             logo = ("removelogo=filename="

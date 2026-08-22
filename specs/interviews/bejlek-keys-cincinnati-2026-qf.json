@@ -80,7 +80,17 @@
     "url": "https://youtu.be/QuM0ytM-wlg",
     "start": 258.0,
     "end": 281.5,
-    "why": "WTA 官方集锦 258.0-261.5s 记分板打出 MATCH POINT，262.0s 前后她正手制胜分落地（解说原话「What a shot and what a way to win it」，源片 262.4s），随后全场起立欢呼、她转身振臂庆祝；276.5-281.5s是网前握手和转身朝观众挥手致意——「先交代比赛结束，再接采访」，一整段连续的赛后画面，不烧字幕（现场解说和这几秒的画面基本重复，没有字幕也看得懂发生了什么；真正需要翻译的对话都在 body 那一段）。"
+    "why": "WTA 官方集锦 258.0-261.5s 记分板打出 MATCH POINT，262.0s 前后她正手制胜分落地（解说原话「What a shot and what a way to win it」，源片 262.4s），随后全场起立欢呼、她转身振臂庆祝；276.5-281.5s是网前握手和转身朝观众挥手致意——「先交代比赛结束，再接采访」，一整段连续的赛后画面。原声解说的中英文字幕见 `subs`。",
+    "_subs_why": "转写来自 WTA 官方集锦自带字幕（probe 落的 captions.txt，块级时间戳），逐块核过；`Bailey`/`Savaleno` 是 ASR 对人名的听误，订正回 Bejlek/Sabalenka（和 body 的 zh 保持同一个译名）。窗口卡在 281.5（现有 lead_in.end），最后一句收在「is knocked out in the quarterfinals」——「quarterfinals」是已核实的事实（WTA 官方接口确认这是 1/4决赛），没有再往后收到 281.5s 之后那句「wins only the second quarterfinal of her career」，那句话没有独立信源核实过，不放进字幕。轮次按仓库规矩写「1/4决赛」，不写「八强」。",
+    "subs": [
+      {"a": 262.40, "b": 266.08, "en": "What a shot and what a way to win it for", "zh": "这一拍打得实在漂亮"},
+      {"a": 266.08, "b": 268.88, "en": "Sara Bejlek follows up the win over", "zh": "贝莱克乘胜追击"},
+      {"a": 268.88, "b": 271.36, "en": "Sabalenka with a remarkable performance", "zh": "淘汰萨巴伦卡之后再显神勇"},
+      {"a": 271.36, "b": 274.16, "en": "in a third set of high drama of more", "zh": "决胜盘跌宕起伏"},
+      {"a": 274.16, "b": 276.56, "en": "than 70 minutes.", "zh": "打了七十多分钟"},
+      {"a": 276.56, "b": 279.04, "en": "Madison Keys, who loves Cincinnati,", "zh": "凯斯很喜欢辛辛那提"},
+      {"a": 279.04, "b": 281.5, "en": "Ohio, is knocked out in the quarterfinals.", "zh": "还是止步1/4决赛"}
+    ]
   },
   "_facts": [
     "赛果：WTA 官方接口 `[20]M. Keys` 对阵 `S. Bejlek`，`ResultString: S. Bejlek d [20]M. Keys 3-6,6-4,7-6(5)`，2026-08-21 辛辛那提 WTA1000 正赛 1/4决赛，1 号场地，用时 2 小时 39 分（MatchID LS004，flashscore 交叉核对分盘用时 0:42/0:45/1:12 一致）。",
