@@ -16,6 +16,12 @@
   "whisper_model": "medium.en",
   "whisper_vad_filter": false,
   "_whisper_vad_why": "这条采访 47–72 秒有持续看台欢呼。默认 VAD 两次运行分别把其中约 22 词和 47 词整段当噪声删掉，交叉校验分歧从 13.8% 漂到 21.2%，不是源文本变化而是语音活动检测误杀；关掉 VAD，让第二份 ASR 对完整音轨转写，再按真实词差核。",
+  "transcript_disagree_ok": {
+    "rate": 0.178,
+    "why": "关闭 VAD 后两份转写为 349 vs 306 词，分歧率 17.8%，0 个字幕空档。逐项复核后，主要差异是 51–62 秒看台持续欢呼时第二份 ASR 漏掉 `yeah shout out ... You guys are the best` 和 `I was ... next question` 两段，并未生成相互冲突的文本；其余是 needed/need、cuz/because、semifinals/semi finals 等词形差异，以及 Sara/Sarah、Marta/mark to、Gauff/got、in store/the sword 这类可由官方姓名、上下文和清晰原声判定的识别错误。YouTube 原始字幕词流保留了被漏掉的欢呼段，画面反应也连续吻合，故按逐处人工核验结果接受本次 17.8%，不放宽全局 18% 硬上限。"
+  },
+  "transcript_verified": true,
+  "_verified_clean": "关闭 VAD 后交叉转写 349 vs 306 词，分歧率 17.8%，0 个字幕空档；高分歧集中在 51–62 秒看台欢呼覆盖人声的两段整句漏识别，其余均已按官方姓名、语法、上下文与可听原声逐项核过。",
   "column": "赛后开麦",
   "interview_kind": "赛后场上采访",
   "event": "2026 辛辛那提 WTA1000 女单1/4决赛",
