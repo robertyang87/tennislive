@@ -6,6 +6,7 @@
 
 from __future__ import annotations
 
+import json
 import sys
 from pathlib import Path
 
@@ -75,3 +76,100 @@ def test_promote补winner和push(tool):
     assert spec["winner"] == "兹维列夫"
     assert spec["push"]["matchup"] == "兹维列夫 vs 阿特马内"
     assert spec["zh"] == ["a"], "草稿已有的 zh 要保留"
+
+
+def test_promote保留给终审的注解键(tool):
+    """`_zh_draft` / `_notes` 是写给终审的（机器译文参考、cap_asr 没有说话人
+    标记的提醒）。旧版一刀剥掉全部 `_` 键，提示就这么丢过——只许剥
+    `_draft` 这个状态标记。"""
+    draft = {"_draft": True, "slug": "s", "zh": [],
+             "_zh_draft": ["机器译文"], "_notes": ["提醒"],
+             "_interviewee_en": "Alexander Zverev"}
+    spec = tool.promote(draft, ("兹维列夫", "阿特马内", "兹维列夫 vs 阿特马内"))
+    assert "_draft" not in spec
+    assert spec["_zh_draft"] == ["机器译文"]
+    assert spec["_notes"] == ["提醒"]
+    assert spec["_interviewee_en"] == "Alexander Zverev"
+
+
+def test_受访者的姓从草稿里读不再从标题猜(tool, capsys):
+    """draft_interview_spec 已经拿名册认过人（`_interviewee_en`），promote
+    再从标题猜一遍就是两处各写一遍必分叉——而且标题猜那条在真实标题上
+    几乎全错（受访者在开头、赛事名在结尾）。老草稿没有这个键才退回猜，
+    **退路要出声**。"""
+    got = tool._draft_surname(
+        {"_interviewee_en": "Karen Khachanov",
+         "source_title": "Karen Khachanov on-court interview | Hopman Cup 2018"},
+        "x.draft.json")
+    assert got == "khachanov", "主路读 _interviewee_en，标题里的 Hopman/Cup 不该掺和"
+    # 老草稿：退回标题猜 + 出声
+    tool._draft_surname(
+        {"source_title": "Cincinnati 2026 R3 Zverev Interview"}, "old.draft.json")
+    err = capsys.readouterr().err
+    assert "老草稿" in err and "warning" in err, \
+        "退路必须出声，不然查不到对手时没人怀疑姓认错了"
+
+
+def test_没有草稿时不抓赛果(tool, monkeypatch, tmp_path):
+    """**先看有没有草稿，再去抓赛果**。反过来（旧版）等于每一趟定时都白抓
+    一轮网络赛果，而绝大多数趟根本没有草稿。"""
+    specs = tmp_path / "specs" / "interviews"
+    specs.mkdir(parents=True)
+    monkeypatch.setattr(tool, "SPECS", specs)
+
+    def _boom():
+        raise AssertionError("没有草稿还去抓赛果")
+
+    monkeypatch.setattr(tool, "_collect_digests", _boom)
+    assert tool.promote_all(write=False) == ([], [])
+
+
+def test_按天找人停在他第一次出现的那天(tool, monkeypatch, tmp_path):
+    """今天他输了、前天他赢过——**不许翻到前天那场去提升**：那是另一场比赛，
+    对阵整个错掉而且不吭声。判据：停在他第一次出现的那天，那天不是赢家
+    就跳过。"""
+    specs = tmp_path / "specs" / "interviews"
+    specs.mkdir(parents=True)
+    (specs / "zverev-cincinnati-2026-r3.draft.json").write_text(json.dumps({
+        "_draft": True, "slug": "zverev-cincinnati-2026-r3",
+        "_interviewee_en": "Alexander Zverev", "_zh_draft": ["a"],
+        "source_title": "Cincinnati 2026 R3 Alexander Zverev Interview"}),
+        encoding="utf-8")
+    monkeypatch.setattr(tool, "SPECS", specs)
+
+    class _Today:
+        results = [_match("Atmane T.", "Zverev A.", winner_idx=0)]  # 今天他输了
+
+    class _Earlier:
+        results = [_match("Zverev A.", "Nobody X.", winner_idx=0)]  # 前天他赢过
+
+    monkeypatch.setattr(tool, "_collect_digests", lambda: [_Today(), _Earlier()])
+    promoted, skipped = tool.promote_all(write=False)
+    assert promoted == [], "不许翻到更早那天他赢的另一场"
+    assert any("不是赢家" in s for s in skipped), skipped
+
+
+def test_promote_all写盘时保留注解并删草稿(tool, monkeypatch, tmp_path):
+    specs = tmp_path / "specs" / "interviews"
+    specs.mkdir(parents=True)
+    draft_p = specs / "zverev-cincinnati-2026-r3.draft.json"
+    draft_p.write_text(json.dumps({
+        "_draft": True, "slug": "zverev-cincinnati-2026-r3", "zh": [],
+        "_interviewee_en": "Alexander Zverev", "_zh_draft": ["机器译文"],
+        "source_title": "Cincinnati 2026 R3 Alexander Zverev Interview"}),
+        encoding="utf-8")
+    monkeypatch.setattr(tool, "SPECS", specs)
+
+    class _Digest:
+        results = [_match("Zverev A.", "Atmane T.", winner_idx=0)]
+
+    monkeypatch.setattr(tool, "_collect_digests", lambda: [_Digest()])
+    monkeypatch.setattr(tool, "player_zh", lambda en: {
+        "Zverev A.": "兹维列夫", "Atmane T.": "阿特马内"}.get(en, en))
+    promoted, skipped = tool.promote_all(write=True)
+    assert promoted and not skipped, (promoted, skipped)
+    assert not draft_p.exists(), "提升后草稿要删掉"
+    spec = json.loads((specs / "zverev-cincinnati-2026-r3.json").read_text())
+    assert spec["winner"] == "兹维列夫"
+    assert spec["push"]["matchup"] == "兹维列夫 vs 阿特马内"
+    assert spec["_zh_draft"] == ["机器译文"], "注解键要跟着进正式 spec"

@@ -72,13 +72,10 @@ permissions:
 # 而这条线的推送在**同一趟 run 里**（不像 match-reel 拆到了 auto-push-reel），
 # 复制页那段最长要等 `60 × 40s = 40 分钟`（下面「推送到微信」那一步的
 # `TENNISLIVE_COPYPAGE_ATTEMPTS/RETRY_SECONDS`），所以一趟
-# `mode=render push=true` 可能一直占着这个组到 job 的 `timeout-minutes: 45`
+# `mode=render push=true` 可能一直占着这个组到 job 的 `timeout-minutes: 65`
 # 为止——期间任何同 slug 的 dispatch 都会顶掉它。
-#
-# ⚠️ 45 分钟是**硬顶**，别读成「反正等得起」：render 本身约 9 分钟，
-# 加上最坏 40 分钟的复制页探活就已经越过它了（9 + 40 = 49 > 45）。
-# 这个矛盾**不是这次改出来的**（两个数都是原有的），但 concurrency 让它
-# 更容易被撞见，所以记在这儿。
+# （原来是 45 分钟——render 约 9 分钟 + 探活最坏 40 分钟 = 49 > 45，
+# **结构性越顶**，已按这笔账调到 65，见 job 上那段注释。）
 #
 # ⚠️⚠️ **由此新开了一个窗口，掐掉的时机很要命**：这条线是「提交成片」
 # 之后才「推送到微信」，中间隔着那最长 40 分钟的等待。在这段里被同 slug
@@ -94,8 +91,32 @@ concurrency:
 jobs:
   render:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    # 65 分钟：`mode=render push=true` 的最坏路径是 render 本身约 9 分钟
+    # ＋ 复制页探活最长 60×40s＝40 分钟，再留提交/重试的余量。原来的 45 分钟
+    # **结构性地不够**（9 + 40 = 49 > 45），砍掉的时机正好落在「成片已提交、
+    # 微信一个字没发」那一段——auto-push-interview.yml 为同一笔账把 60 调成
+    # 70，这条线当时没跟上。
+    timeout-minutes: 65
     steps:
+      # `mode=push` 的**唯一目的**就是发微信（顶上那张三阶段表写着
+      # 「push＝只发微信」），可真正发消息那一步的 `if:` 认的是 `inputs.push`。
+      # 只传 `mode=push` 的那趟会 20 来秒跑完、绿的——什么都不装、什么都不发。
+      #
+      # **它和「发出去了」长得一模一样**：run 是绿的，日志里没有任何一行说
+      # 「本次没有推送」——被跳过的步骤根本不进日志。`match-reel.yml` 2026-08-05
+      # 在同一个组合上栽过（run 30969384140，27 秒、绿、什么都没发），闸也是
+      # 从那儿照抄的（注释也抄）。
+      #
+      # 装在最前面：`mode=push` 且 `push!=true` 是一个**没有意义的组合**，
+      # 跑完什么也不产。第 5 秒报错，比绿着回来强。
+      - name: mode=push 就必须 push=true
+        if: github.event.inputs.mode == 'push' && github.event.inputs.push != 'true'
+        run: |
+          echo "::error::mode=push 的唯一目的就是发微信，但 push 还是 false——"
+          echo "::error::这一趟会什么都不做就收工，**绿着回来，什么都没发**。"
+          echo "::error::要发就同时给 mode=push 和 push=true。"
+          exit 1
+
       - uses: actions/checkout@v4
         with:
           # **别把 output/ 拉下来。** 它有 2.26 GB，而这条工作流只碰自己那一格。
@@ -147,7 +168,13 @@ jobs:
           path: |
             ~/.cache/apt-archives
             ~/.cache/apt-lists
-          key: apt-pkgs-${{ runner.os }}-24.04-interview-clip-v1
+          # actions/cache 的主键是不可变的：固定钥匙的话，第一趟只攒下一部分包，
+          # 后面的 run 即使把缺的包补进目录，post step 也不能覆盖同名缓存，
+          # 于是每一趟仍要重新摸 apt 镜像。照 match-reel.yml 改成滚动键：
+          # 先按稳定前缀恢复最近一份，跑完再用本次 run_id 回写（注释也抄）。
+          key: apt-pkgs-${{ runner.os }}-24.04-interview-clip-v2-${{ github.run_id }}
+          restore-keys: |
+            apt-pkgs-${{ runner.os }}-24.04-interview-clip-v2-
       - name: 装系统依赖
         timeout-minutes: 15
         if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover'
@@ -175,6 +202,8 @@ jobs:
         # `apt-get` 这个字面量。2026-08-05 补等 dpkg 锁那段之后它才被照出来。
         # 12 分钟 = 2×240 秒 + 60 秒等锁 + pip 那几行的余量。
         timeout-minutes: 12
+        env:
+          MODE: ${{ github.event.inputs.mode }}
         run: |
           # ⚠️ **`edge-tts` 是解读卡的口播要的**，别再漏。这条线在解读卡之前
           # 一个字都不合语音（片尾走的是母版转码），所以这一行原来没有它——
@@ -182,7 +211,13 @@ jobs:
           # `_takeaway_voice` 的退路把它吞成一句「口播合不出来，退回静音卡」，
           # 于是成片里那张卡是**数字静音（−91 dB）**，run 照样绿。
           # 判据 `test_会合语音的工作流都要装edge_tts` 自己推导，不维护白名单。
-          pip install -q -e ".[visualqa]" "yt-dlp[default]" playwright faster-whisper edge-tts
+          #
+          # **faster-whisper 只有 render 用**（`--stage verify` 的第二份 ASR）。
+          # `cover` 只下源片抽帧渲海报，从不转写——原来两档一起装，cover 那趟
+          # 白拖一个大包；「只挑工作不挑准备等于没挑」在依赖粒度上同样成立。
+          EXTRA_ASR=""
+          if [ "$MODE" = "render" ]; then EXTRA_ASR="faster-whisper"; fi
+          pip install -q -e ".[visualqa]" "yt-dlp[default]" playwright edge-tts $EXTRA_ASR
           # ⚠️ **`--with-deps` 会跑 apt，而这个仓库的 apt 会抽风。** CLAUDE.md 里那条
           # 「一次静静烧了 13 分 42 秒」的教训当时只套在显式的 `apt-get` 步骤上，
           # **漏了这一处**——而它既没超时也没重试，能一路烧到 job 的 15 分钟预算
@@ -258,7 +293,10 @@ jobs:
           path: |
             ~/.cache/apt-archives
             ~/.cache/apt-lists
-          key: apt-pkgs-${{ runner.os }}-24.04-interview-clip-subs-v1
+          # 滚动键 + restore-keys，理由同上面 render/cover 那份缓存的注释。
+          key: apt-pkgs-${{ runner.os }}-24.04-interview-clip-subs-v2-${{ github.run_id }}
+          restore-keys: |
+            apt-pkgs-${{ runner.os }}-24.04-interview-clip-subs-v2-
       - name: 装依赖（只取字幕）
         timeout-minutes: 15
         if: github.event.inputs.mode == 'subs'
@@ -291,13 +329,19 @@ jobs:
       # 让失败发生在第 5 秒，不是第 90 秒：用到什么就先 import 一次。
       - name: 开跑前预检
         if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover'
+        env:
+          MODE: ${{ github.event.inputs.mode }}
         run: |
           PYTHONPATH=src python - <<'PY'
-          import shutil, sys
+          import os, shutil, sys
           from playwright.sync_api import sync_playwright
           sys.path.insert(0, "tools")
           from build_interview_clip import _chromium
-          import faster_whisper  # noqa: F401
+          # 转写校验（第二份 ASR）只在 render 那条路上跑，装依赖那一步也只在
+          # render 装它——预检要和「装了什么」一致，不然 cover 那趟会死在一个
+          # 它根本不用的包上。
+          if os.environ.get("MODE") == "render":
+              import faster_whisper  # noqa: F401
           # 解读卡的口播。⚠️ 缺了它**不会让 render 失败**——`_takeaway_voice`
           # 的退路会把它吞成「口播合不出来，退回静音卡」，成片里那张卡是数字
           # 静音，而账号所有者对这张卡的要求原话就是「但要有配音」。
@@ -559,6 +603,8 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
 
       - name: 提交成片
+        env:
+          MODE: ${{ github.event.inputs.mode }}
         run: |
           # **中间物一个都别留。** 只列 `source.mp4` 是不够的——第七趟出片时
           # 跟着进仓库的还有 `_audio.m4a`（6.6 MB，verify 下的音轨）、
@@ -587,7 +633,12 @@ jobs:
           # 每条片子再塞一张，代价会加在此后每一条工作流的 checkout 上。
           # 要看就本地 `--stage subs` 重生成（几百 KB 的 storyboard，不用 ffmpeg）；
           # 挑帧的理由留在 spec 的 `cover._why` 里，那才是持久的那一份。
-          rm -f "$D"/storyboard.jpg
+          # ⚠️ **`mode=subs` 那趟不删**：storyboard 正是 subs 的产物之一——
+          # 人挑帧要看的就是它，而它只从 artifact 走（`.gitignore` 里
+          # `output/**/storyboard.jpg` 挡着，不会进仓库）。这一步排在
+          # upload-artifact **之前**，subs 那趟删掉它，artifact 里就只剩
+          # 字幕行，挑帧的人两手空空——「工作台」被自己的清理步骤收走了。
+          if [ "$MODE" != "subs" ]; then rm -f "$D"/storyboard.jpg; fi
           git config user.name "Claude"
           git config user.email "noreply@anthropic.com"
           # 用 `$D`，别把这个路径再写一遍——下面重放那几行清的、放回来的、
@@ -651,6 +702,40 @@ jobs:
           echo "::error::连续 10 次推送失败；本条采访没有落库，别把它当成已发"
           exit 1
 
+      # **叫醒自动推送——render 提交自己永远触发不了它。** 上一步的 push 用的
+      # 是仓库自带的 GITHUB_TOKEN，GitHub 明文规定这种 push 不创建 workflow run
+      # （防递归；`pages.yml` 那条记的同一条规则）。量过的代价：50 份
+      # render.json / 0 份 pushed.json——auto-push-interview 的 on:push 从上线起
+      # 一次都没为 render 醒来过。`workflow_dispatch` 正是那条禁令明文列出的
+      # 例外，所以渲完点一下。
+      #
+      # 三个条件缺一不可：
+      #   mode=render        —— 只有出片才有新东西可发（subs/cover/push 都没有）
+      #   push != 'true'     —— 本趟自己要发的话，叫醒它就是同一条消息发两遍
+      #                         的竞态（本趟的推送要等复制页最长 40 分钟，而
+      #                         auto-push 那头看不到任何「正在发」的标记）
+      #   ref_name == main   —— 分支上的产物 Pages 取不到，auto-push 那头也有
+      #                         同一道闸，这儿先省一趟白跑
+      #
+      # ⚠️ 发不出去（比如并发限流）不许把整趟 render 打红——成片已经落库了，
+      # 兜底是 auto-push-interview 手动 dispatch 一次（slug 留空扫全部也行）。
+      - name: 叫醒自动推送
+        if: >-
+          github.event.inputs.mode == 'render' &&
+          github.event.inputs.push != 'true' &&
+          github.ref_name == 'main'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SLUG: ${{ github.event.inputs.slug }}
+        run: |
+          if gh workflow run auto-push-interview.yml --ref main -f "slug=$SLUG"; then
+            echo "[自动推送] 已叫醒 auto-push-interview（slug=$SLUG）——"
+            echo "  ⚠️ 204 只是信号：真发没发出去要看那条 run 自己的日志。"
+          else
+            echo "::warning::叫不醒 auto-push-interview——成片已落库，"
+            echo "::warning::请手动 dispatch 一次 auto-push-interview（slug=$SLUG）。"
+          fi
+
       # **「触发成功」不算推了，这一步 success 才算。** 而且它必须排在提交之后：
       # GitHub Pages 只服务 main，复制页没进 main 就取不到，按钮会被摘掉
       # （`drop_dead_copy_button` 发送前探一次）。这条在别的线上踩过四次。
@@ -682,6 +767,39 @@ jobs:
             --date "$(TZ=Asia/Shanghai date +%F)" \
             --lead "${{ github.event.inputs.push_lead || steps.push_meta.outputs.lead }}" \
             --copy "$COPY"
+
+      # **发完记一笔，而且必须进仓库**（照 auto-push-interview.yml 同名步骤
+      # 抄的，注释也抄）。`pushed.json` 是「已经发过」的唯一判据——原来只有
+      # 自动推送那条路会记，这条手动路发完**什么都不留**，于是 spec 开着
+      # `push.auto` 的采访在这儿手动发过之后，下一次合并照样会被
+      # auto-push-interview 判成「没推过」再发一遍，而微信那条消息收不回来。
+      # ⚠️ **必须排在发微信之后**：反过来的话，推送失败会留下一个「已经发过」
+      # 的假标记，这条采访从此再也发不出去，而且不吭声。这一步没有自己的
+      # 状态函数，隐式 `success()`——上一步没发出去它就不会跑，顺序天然成立。
+      # 记不进去也不算这一趟失败（消息已经发了），但要红出来让人看见。
+      - name: 记下已经推送过
+        if: github.event.inputs.push == 'true'
+        run: |
+          D="output/interviews/${{ github.event.inputs.slug }}"
+          python tools/auto_push_interview_gate.py \
+            --record "$D" \
+            --run "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
+            --now "$(date -u +%FT%TZ)"
+          git config user.name "Claude"
+          git config user.email "noreply@anthropic.com"
+          git add "$D"
+          python tools/check_staged_file_sizes.py
+          git commit -m "interview: ${{ github.event.inputs.slug }} 已推送"
+          # 标记是新文件、别的 run 不会碰同名路径（concurrency 按 slug 分组），
+          # rebase 在这儿是安全的；真撞上冲突就放弃这一次、下一轮重试。
+          for attempt in 1 2 3; do
+            if git push origin "HEAD:${{ github.ref_name }}"; then exit 0; fi
+            git pull --rebase origin "${{ github.ref_name }}" || { git rebase --abort || true; }
+            sleep $((attempt * 3 + RANDOM % 5))
+          done
+          echo "::error::pushed.json 没推上去——消息**已经发出去了**，别再手动补发；"
+          echo "::error::请手动把 $D/pushed.json 提交进 main，不然自动推送那头会再发一遍。"
+          exit 1
 
       # ⚠️ artifact 里**没有成片 mp4 是正常的**：2026-08-13 起成片一律传
       # Release 后 `rm` 掉（见「成片发到 Release」那一步），要看成片去

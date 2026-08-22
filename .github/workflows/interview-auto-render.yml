@@ -3,15 +3,28 @@ name: interview-auto-render
 # 「赛后开麦」自动出片的最后一环：把草稿提升成正式 spec（补 winner/matchup，
 # 查赛果），然后 dispatch render——每 slug 一个 run，interview-clip 的
 # concurrency 按 slug 分组，**不同采访天然并行**（好多比赛差不多时间结束）。
-# render 完 `auto-push-interview` 盯 render.json 自动推微信。
+#
+# ⚠️ **推微信不是「auto-push-interview 盯 render.json 自动触发」**——这句话
+# 2026-08-21 之前写在这儿，而它从来没成立过：render 的成片提交用的是
+# GITHUB_TOKEN，GitHub 防递归不给这种 push 创建 workflow run（铁证：50 份
+# render.json / 0 份 pushed.json）。真话是：interview-clip 渲完自己
+# `gh workflow run auto-push-interview.yml -f slug=…` 叫醒推送，
+# 那头的五道闸（push.auto 认领 / 没推过 / 海报在仓库里…）照过。
+#
+# ⚠️ **只 dispatch 终审补齐了的 spec。** render 有三道人工编辑闸
+# （opening / transcript_verified / takeaway），字段不全的 spec 投出去必死在
+# 闸上、还会被永久记成「已 dispatch」——swiatek-shnaider-tor2026-qf 就这么
+# 卡死过。判定在 `tools/pick_interview_renders.py`，和闸共用同一张豁免表。
 #
 # 前两环在 oncourt-interviews.yml：采集（定时）→ 候选（pick_oncourt_clips）→
 # 自动建草稿（draft_interview_spec，并行 2）。这条只做「提升 + dispatch」。
 
 on:
   schedule:
-    # 每 30 分钟：终审随时提升草稿，这里随时接住 dispatch。
-    - cron: "*/30 * * * *"
+    # 13/43 分：终审随时补齐 spec，这里随时接住 dispatch。避开 :00/:30——
+    # GitHub 在整点半点最容易延迟或丢弃（daily 当年留下的经验，knowledge-adhoc
+    # 的 08:37 也是这么定的）。
+    - cron: "13,43 * * * *"
   workflow_dispatch:
 
 permissions:
@@ -37,53 +50,137 @@ jobs:
             tests
             tools
 
+      # **没活就早退，别装依赖。** 这条每 30 分钟跑一趟，而大多数趟什么都
+      # 没有——`pick_interview_renders` 和它 import 的 `build_interview_clip`
+      # 顶层只有标准库，系统 python3 就跑得动（git ls-files 读 index，也不用
+      # 检出 output/）。stale 告警也在这儿出：**「投了」只是信号，render.json
+      # 才是产物**——投出去 3 小时还没产物的要喊出来，不能安静地躺在状态文件里。
+      - name: 没活就早退
+        id: gate
+        run: |
+          set -o pipefail
+          # 用 find 不用 `ls *.glob`：没有草稿时 ls 退出码 2，在
+          # `set -e -o pipefail` 下会把整步打红——而「没有草稿」是常态。
+          DRAFTS=$(find specs/interviews -maxdepth 1 -name '*.draft.json' | wc -l)
+          python3 tools/pick_interview_renders.py > /tmp/todo.txt 2> /tmp/waiting.txt
+          cat /tmp/todo.txt
+          cat /tmp/waiting.txt >&2
+          READY=$(tail -n +2 /tmp/todo.txt | grep -c . || true)
+          python3 tools/pick_interview_renders.py --stale | tee /tmp/stale.txt
+          if grep -q "（投于" /tmp/stale.txt; then
+            {
+              echo "## ⚠️ 有采访投出去超过 3 小时还没有 render.json"
+              echo ""
+              tail -n +2 /tmp/stale.txt | sed 's/^  /- /'
+            } >> "$GITHUB_STEP_SUMMARY"
+          fi
+          if [ -s /tmp/waiting.txt ]; then
+            {
+              echo "## ⏳ 等终审补齐（不 dispatch）"
+              echo ""
+              tail -n +2 /tmp/waiting.txt | sed 's/^  /- /'
+            } >> "$GITHUB_STEP_SUMMARY"
+          fi
+          if [ "$DRAFTS" -eq 0 ] && [ "$READY" -eq 0 ]; then
+            echo "[早退] 没有草稿要提升、没有 spec 要 dispatch——不装依赖了。"
+            echo "work=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "work=true" >> "$GITHUB_OUTPUT"
+          fi
+
       - uses: actions/setup-python@v5
+        if: steps.gate.outputs.work == 'true'
         with:
           python-version: "3.11"
           cache: pip
 
       - name: 装依赖
+        if: steps.gate.outputs.work == 'true'
         run: pip install -q -e .
 
       - name: 提升草稿为正式 spec（查赛果补 winner/matchup）
+        if: steps.gate.outputs.work == 'true'
         run: |
+          set -o pipefail
           # 只提升「赛果里查得到对手」的草稿；查不到的留在草稿等终审
           # （宁可漏推不误推——顶栏对阵印错比晚一点糟）。
           python tools/promote_interview_draft.py --write \
             | tee /tmp/promote.log
 
       - name: 提交提升结果
+        if: steps.gate.outputs.work == 'true'
         run: |
-          if git diff --quiet -- specs/interviews; then
+          git config user.name "Claude"
+          git config user.email "noreply@anthropic.com"
+          # 先 add 再判：提升会**新建**正式 spec（未跟踪文件），裸的
+          # `git diff --quiet` 看不见它们——只在删草稿那半边出声，而
+          # 「删了草稿、新 spec 没提交」正是最坏的中间态。
+          git add specs/interviews
+          if git diff --cached --quiet; then
             echo "没有草稿被提升。"
-          else
-            git config user.name "Claude"
-            git config user.email "noreply@anthropic.com"
-            git add specs/interviews
-            python tools/check_staged_file_sizes.py
-            git commit -m "interview: 自动提升赛后开麦 spec 草稿"
-            git push origin "HEAD:${GITHUB_REF_NAME}"
+            exit 0
           fi
+          python tools/check_staged_file_sizes.py
+          git commit -m "interview: 自动提升赛后开麦 spec 草稿"
+          for attempt in 1 2 3 4 5; do
+            if git push origin "HEAD:${GITHUB_REF_NAME}"; then
+              exit 0
+            fi
+            echo "push 被拒（第 $attempt 次），rebase 到最新再试"
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}"
+            sleep $((attempt * 3 + RANDOM % 5))
+          done
+          echo "::error::提升结果推不上去——草稿还在，下一趟会重来"
+          exit 1
 
       - name: dispatch 未 render 的正式 spec（每 slug 一个 run，并行）
+        if: steps.gate.outputs.work == 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # 扫 specs/interviews/*.json（正式 spec），对照
-          # data/interview_render_dispatched.json（已 dispatch 的 slug）——
-          # 只 dispatch 新的。每 slug 一个 `gh workflow run`，GitHub Actions
-          # 按 interview-clip 的 concurrency（按 slug）天然并行。
-          python tools/pick_interview_renders.py --mark | tee /tmp/todo.txt
-          tail -n +2 /tmp/todo.txt | while read -r slug; do
-            [ -z "$slug" ] && continue
+          set -o pipefail
+          # 重新扫一遍（上一步可能刚提升出新 spec）；stdout 第二行起是名单。
+          # ⚠️ 不能用 `… | while read`——管道里的 while 在子 shell 里跑，
+          # 循环里记下的任何状态都传不出来。用 mapfile。
+          python tools/pick_interview_renders.py | tee /tmp/todo.txt
+          mapfile -t SLUGS < <(tail -n +2 /tmp/todo.txt | grep -v '^$' || true)
+          FAILED=()
+          for slug in "${SLUGS[@]}"; do
             echo "[dispatch] interview-clip render $slug"
-            gh workflow run interview-clip.yml --ref main -f "slug=$slug" -f mode=render
+            if gh workflow run interview-clip.yml --ref main -f "slug=$slug" -f mode=render; then
+              # **投一条记一条，先投后记。** 反过来（先把整批记进状态再逐条
+              # dispatch）的下场踩过：dispatch 失败的那条挂着「已投」的标记，
+              # 从此再也不会被投，而且不吭声。
+              python tools/pick_interview_renders.py --mark-one "$slug"
+            else
+              FAILED+=("$slug")
+            fi
           done
-          git add data/interview_render_dispatched.json
-          if ! git diff --cached --quiet; then
-            git config user.name "Claude"
-            git config user.email "noreply@anthropic.com"
-            python tools/check_staged_file_sizes.py
-            git commit -m "data: interview render dispatch 记录"
-            git push origin "HEAD:${GITHUB_REF_NAME}"
+          if [ "${#FAILED[@]}" -gt 0 ]; then
+            {
+              echo "## ⚠️ 有采访 dispatch 失败（没记状态，下一趟会重投）"
+              echo ""
+              for s in "${FAILED[@]}"; do echo "- $s"; done
+            } >> "$GITHUB_STEP_SUMMARY"
+            echo "::warning::${#FAILED[@]} 条 dispatch 失败：${FAILED[*]}"
           fi
+          git add data/interview_render_dispatched.json
+          if git diff --cached --quiet; then
+            echo "状态没有变化。"
+            exit 0
+          fi
+          git config user.name "Claude"
+          git config user.email "noreply@anthropic.com"
+          python tools/check_staged_file_sizes.py
+          git commit -m "data: interview render dispatch 记录"
+          for attempt in 1 2 3 4 5; do
+            if git push origin "HEAD:${GITHUB_REF_NAME}"; then
+              exit 0
+            fi
+            echo "push 被拒（第 $attempt 次），rebase 到最新再试"
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}"
+            sleep $((attempt * 3 + RANDOM % 5))
+          done
+          echo "::error::dispatch 状态推不上去——这批 slug 下一趟会被重投"
+          echo "::error::（interview-clip 的 concurrency 按 slug 去重，代价是把正在跑的那趟掐了重跑）"
+          exit 1
