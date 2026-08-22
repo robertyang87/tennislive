@@ -603,6 +603,8 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
 
       - name: 提交成片
+        env:
+          MODE: ${{ github.event.inputs.mode }}
         run: |
           # **中间物一个都别留。** 只列 `source.mp4` 是不够的——第七趟出片时
           # 跟着进仓库的还有 `_audio.m4a`（6.6 MB，verify 下的音轨）、
@@ -636,7 +638,7 @@ jobs:
           # `output/**/storyboard.jpg` 挡着，不会进仓库）。这一步排在
           # upload-artifact **之前**，subs 那趟删掉它，artifact 里就只剩
           # 字幕行，挑帧的人两手空空——「工作台」被自己的清理步骤收走了。
-          if [ "${{ github.event.inputs.mode }}" != "subs" ]; then rm -f "$D"/storyboard.jpg; fi
+          if [ "$MODE" != "subs" ]; then rm -f "$D"/storyboard.jpg; fi
           git config user.name "Claude"
           git config user.email "noreply@anthropic.com"
           # 用 `$D`，别把这个路径再写一遍——下面重放那几行清的、放回来的、
