@@ -14,6 +14,7 @@
 """
 
 import ast
+import hashlib
 import json
 import inspect
 import os
@@ -911,7 +912,7 @@ def test_挂账的冷开场清单只许减不许加():
         )
 
 
-def test_冷开场里的结局必须在正文重新兑现():
+def test_冷开场里的结局必须在正文重新兑现(tmp_path):
     """冷开场放过最后一球，不等于正文可以停在赛点还没打完的时候。
 
     蒂亚福—穆塞蒂第一版正文收在 330.88 秒：穆塞蒂刚救完两个赛点，真正的
@@ -919,57 +920,143 @@ def test_冷开场里的结局必须在正文重新兑现():
     但故事没有闭合。判据钉的是**源片时间线有没有重新走到冷开场末尾**，不是
     旁白关键词，所以最后几秒只有现场欢呼也不会被误报成哑场。
     """
-    from tools.build_match_reel import ending_payoff_problem
+    reel = _reel()
 
     broken = {
         "slug": "new-match-review",
         "editorial": {"mode": "match_review"},
         "segments": [
-            {"start": 333.16, "end": 347.24, "narration": "", "quote": ["赢了"]},
+            {"start": 333.16, "end": 347.24, "narration": "", "quote": ["赢了"],
+             "_ending_payoff_required": True},
             {"start": 15.38, "end": 23.34, "narration": "坐标"},
             {"start": 321.54, "end": 330.88, "narration": ""},
         ],
     }
-    msg = ending_payoff_problem(broken)
+    msg = reel.ending_payoff_problem(broken)
     assert msg and "冷开场是预告，不是结尾的替身" in msg
 
+    # 只补一个时间更晚的握手，不能靠更大的 end 冒充「完整赛点已重放」。
+    handshake_only = json.loads(json.dumps(broken))
+    handshake_only["segments"].append(
+        {"start": 348.0, "end": 350.64, "narration": ""})
+    msg = reel.ending_payoff_problem(handshake_only)
+    assert msg and "完整重放" in msg
+
+    # 完整窗口可以拆段；闸看正文窗口的并集，不强迫剪辑只能写成一个 segment。
     fixed = json.loads(json.dumps(broken))
-    fixed["segments"].append(
-        {"start": 330.88, "end": 350.64, "narration": "", "quote": ["赢了"]})
-    assert ending_payoff_problem(fixed) is None
+    fixed["segments"].extend([
+        {"start": 330.88, "end": 340.0, "narration": ""},
+        {"start": 340.0, "end": 350.64, "narration": ""},
+    ])
+    assert reel.ending_payoff_problem(fixed) is None
+
+    # 真实存量里有 9.4~12.4 秒的小倒序，旧的「至少倒 20 秒」会漏掉。
+    low_gap = {
+        "slug": "low-gap", "editorial": {"mode": "match_review"},
+        "segments": [
+            {"start": 178.0, "end": 189.8, "narration": ""},
+            {"start": 165.6, "end": 171.0, "narration": ""},
+            {"start": 100.0, "end": 160.0, "narration": ""},
+        ],
+    }
+    msg = reel.ending_payoff_problem(low_gap)
+    assert msg and "_ending_payoff_required" in msg
+    low_gap["segments"][0]["_ending_payoff_required"] = False
+    msg = reel.ending_payoff_problem(low_gap)
+    assert msg and "冷开场是预告" in msg
+
+    # 省略 source 要和 parse_segments 一样归到主源；不同源的时间码不能互比。
+    omitted_primary = json.loads(json.dumps(low_gap))
+    omitted_primary["sources"] = {"main": "https://example.com/main.mp4"}
+    omitted_primary["segments"][1]["source"] = "main"
+    assert reel.ending_payoff_problem(omitted_primary)
+    cross_source = {
+        "slug": "two-cameras", "editorial": {"mode": "match_review"},
+        "sources": {"main": "https://example.com/main.mp4",
+                    "other": "https://example.com/other.mp4"},
+        "segments": [
+            {"source": "main", "start": 100.0, "end": 110.0, "narration": ""},
+            {"source": "other", "start": 0.0, "end": 20.0, "narration": ""},
+        ],
+    }
+    assert reel.ending_payoff_problem(cross_source) is None
 
     # 真实返工也要过，防止只修了测试样例、Tiafoe spec 仍停在两个赛点之后。
     tiafoe = json.loads(Path(
         "specs/reels/tiafoe-musetti-cincinnati-2026-qf.json"
     ).read_text("utf-8"))
-    assert ending_payoff_problem(tiafoe) is None
+    assert tiafoe["segments"][0]["_ending_payoff_required"] is True
+    assert reel.ending_payoff_problem(tiafoe) is None
     assert tiafoe["segments"][-1]["end"] >= tiafoe["segments"][0]["end"]
+
+    # 钉生产入口，不只钉 helper：把真实返工最后一段拿掉，validate_spec 当场红。
+    broken_tiafoe = json.loads(json.dumps(tiafoe))
+    broken_tiafoe["segments"].pop()
+    with pytest.raises(reel.ReelError, match="冷开场是预告"):
+        reel.validate_spec(broken_tiafoe)
+
+    broken_path = tmp_path / "tiafoe-broken.json"
+    broken_path.write_text(json.dumps(broken_tiafoe, ensure_ascii=False), "utf-8")
+    proc = subprocess.run([
+        sys.executable, "tools/build_match_reel.py", "render",
+        "--spec", str(broken_path), "--outdir", str(tmp_path / "out"), "--dry-run",
+    ], text=True, capture_output=True, check=False)
+    assert proc.returncode != 0
+    assert "冷开场是预告" in (proc.stdout + proc.stderr)
+    assert not (tmp_path / "out").exists(), "硬闸应在创建产物目录之前失败"
 
 
 def test_结局未兑现的旧片挂账只许减不许加():
-    """旧片豁免必须真的仍命中同一个缺陷；写错 slug 不能变成恒真绿灯。"""
-    from tools.build_match_reel import (
-        ENDING_PAYOFF_GAP,
-        ENDING_PAYOFF_TOL,
-        LEGACY_MISSING_ENDING_PAYOFF,
-    )
-
-    assert LEGACY_MISSING_ENDING_PAYOFF == {
-        "cobolli-jodar", "jodar-fils-montreal-qf",
-        "shang-darderi-montreal-2026",
-    }, "这张表只许减不许加；新片必须把正文结局补完整"
-    for slug in sorted(LEGACY_MISSING_ENDING_PAYOFF):
+    """挂账只准全仓盘点跳过；同 slug 重跑仍必须红，不能豁免新问题。"""
+    reel = _reel()
+    expected = {
+        "baez-dimitrov", "bejlek-keys-cincinnati-2026-qf",
+        "bucsa-chwalinska", "cirstea-bartunkova", "cobolli-jodar",
+        "fonseca-ruud", "fritz-nakashima-cincinnati-2026-qf",
+        "gauff-kostyuk-cincinnati-2026-qf", "jodar-fils-montreal-qf",
+        "landaluce-draper", "nakashima-borges", "noskova-tauson",
+        "shang-darderi-montreal-2026", "shelton-tien-montreal-sf",
+        "wangxiyu-keys", "zverev-paul",
+    }
+    assert reel.LEGACY_MISSING_ENDING_PAYOFF == expected, (
+        "这是硬闸落地当天的存量基线；合并后只许修好并减少，不能给新片加名字")
+    for slug in sorted(expected):
         path = Path("specs/reels") / f"{slug}.json"
         assert path.is_file(), f"{slug} 已经不存在，可以销账"
         spec = json.loads(path.read_text("utf-8"))
-        segs = spec["segments"]
-        first, second = segs[0], segs[1]
-        assert float(first["start"]) >= float(second["start"]) + ENDING_PAYOFF_GAP
-        source = str(first.get("source") or "")
-        body = [s for s in segs[1:]
-                if not s.get("image") and str(s.get("source") or "") == source]
-        assert float(body[-1]["end"]) + ENDING_PAYOFF_TOL < float(first["end"]), (
-            f"{slug} 的正文已经重新兑现结局，可以从挂账表删掉")
+        assert reel.ending_payoff_problem(spec), (
+            f"{slug} 已经不再命中结尾问题，可以从挂账表删掉")
+        assert reel.ending_payoff_problem(
+            spec, allow_published_legacy=True) is None
+
+    # 旧片里 120 条倒序冷开场早于 true/false 声明。名单要和仓库里的真实缺口
+    # 一一对应；新 spec 没声明时不会因为盘点开了 allow 开关就被顺手吞掉。
+    undeclared = reel.LEGACY_UNDECLARED_ENDING_PAYOFF
+    digest = hashlib.sha256("\n".join(sorted(undeclared)).encode()).hexdigest()
+    assert len(undeclared) == 120 and digest == (
+        "d4728f1db023e480471c6a1825f70105f6e88181704c917e0ebfd47f6279f98a"
+    ), "这是落闸当天的存量基线；只能补声明并减少，不能给新片加名字"
+    specs = _reel_specs()
+    found = {
+        slug for slug, spec in specs.items()
+        if "没声明" in str(reel.ending_payoff_problem(spec) or "")
+    }
+    assert found == undeclared, "挂账名单和仓库里真正没声明的冷开场分叉了"
+    for slug in sorted(undeclared):
+        spec = specs[slug]
+        assert reel.ending_payoff_problem(spec)
+        assert reel.ending_payoff_problem(
+            spec, allow_published_legacy=True) is None
+
+    unlisted = {
+        "slug": "brand-new-unlisted", "editorial": {"mode": "match_review"},
+        "segments": [
+            {"start": 100.0, "end": 110.0, "narration": ""},
+            {"start": 0.0, "end": 20.0, "narration": ""},
+        ],
+    }
+    assert "没声明" in reel.ending_payoff_problem(
+        unlisted, allow_published_legacy=True)
 
 
 # 这七条发在「开场先给坐标」这条规矩之前。**只许减不许加**——加新片子要么
@@ -4749,9 +4836,11 @@ def test_dry_run秒级返回且一个字节都不下载(tmp_path):
     # ⚠️ **底稿要挑一条今天还渲得出来的。** 原来用的是 `wong-lehecka`，而
     # 「赛场之上 solo 封面必须有 `cover.scoreboard`」这条规矩（#368）是在它发出去
     # 之后才立的——底稿一旦过不了形状闸，这条测试量的就不再是「dry-run 快不快」，
-    # 而是「底稿旧不旧」。见 `_LEGACY_NO_SCOREBOARD`。
+    # 而是「底稿旧不旧」。后来换的 `boisson-krueger` 又早于结局冷开场声明闸，
+    # 同样不再能当干净底稿。蒂亚福这条已经显式声明并完整重放结局。
     spec = _json.loads(
-        Path("specs/reels/boisson-krueger.json").read_text(encoding="utf-8"))
+        Path("specs/reels/tiafoe-musetti-cincinnati-2026-qf.json").read_text(
+            encoding="utf-8"))
     spec["source_url"] = "http://0.0.0.0/绝对下不动.mp4"
     path = tmp_path / "fake.json"
     path.write_text(_json.dumps(spec, ensure_ascii=False), encoding="utf-8")
@@ -8822,7 +8911,8 @@ def test_每条spec的旁白都还估得下():
             denied.add(slug)
             continue
         spec = _with_legacy_soft_cover(slug, _with_legacy_scoreboard(slug, spec))
-        for index, secs, room in reel.narration_estimates(reel.validate_spec(spec)):
+        for index, secs, room in reel.narration_estimates(reel.validate_spec(
+                spec, allow_published_legacy=True)):
             checked += 1
             if room < -reel.SPEECH_EST_ERR:
                 broken.append(f"{slug} 第 {index + 1} 段：画面 "
@@ -9775,8 +9865,10 @@ def test_文案的闸要在dry_run里就报不许等渲完():
     assert re.search(r"return 1", block), "tag 超标只打字不返回 1，等于没拦"
 
     # 行为：真跑一次，两个方向
-    spec = next(p for p in sorted(Path("specs/reels").glob("*.json"))
-                if p.with_suffix(".xhs.txt").is_file())
+    # 不再拿字母序第一条：它是规则落地前的存量冷开场，生产 dry-run 按设计会红。
+    # 用已经显式声明并完整兑现结局的干净底稿，才是在单独测文案闸。
+    spec = Path("specs/reels/tiafoe-musetti-cincinnati-2026-qf.json")
+    assert spec.with_suffix(".xhs.txt").is_file()
     copy = spec.with_suffix(".xhs.txt")
     original = copy.read_text(encoding="utf-8")
     env = {**os.environ, "PYTHONPATH": "src:tools"}

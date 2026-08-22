@@ -4688,72 +4688,270 @@ def cover_photo_problem(spec: dict) -> str | None:
         "清晰，但要在 credits 里写明放大了多少」说的就是这种情况。")
 
 
-# 这三条在 2026-08-22 以前已经发布：它们把源片后段拿来做冷开场，正文却停在
-# 冷开场之前。已发消息收不回来，所以只挂账；新片和再次重渲的片子不再放行。
-# **只许减不许加**，自检在 `test_冷开场里的结局必须在正文重新兑现`。
+# 这些 spec 在 2026-08-22 的硬闸落地前就已经存在：它们从源片后段抽冷开场，
+# 正文却停在结局之前。名单只给**全仓存量审计**用，不是渲染豁免——`render`、
+# `--dry-run`、`--check-narration` 都走默认的严格校验，同 slug 再跑也会当场失败。
+# **合并后只许减不许加**；修好一条就销一条，不能拿名单给新问题开绿灯。
 LEGACY_MISSING_ENDING_PAYOFF = frozenset({
+    "baez-dimitrov",
+    "bejlek-keys-cincinnati-2026-qf",
+    "bucsa-chwalinska",
+    "cirstea-bartunkova",
     "cobolli-jodar",
+    "fonseca-ruud",
+    "fritz-nakashima-cincinnati-2026-qf",
+    "gauff-kostyuk-cincinnati-2026-qf",
     "jodar-fils-montreal-qf",
+    "landaluce-draper",
+    "nakashima-borges",
+    "noskova-tauson",
     "shang-darderi-montreal-2026",
+    "shelton-tien-montreal-sf",
+    "wangxiyu-keys",
+    "zverev-paul",
 })
 
-# 第一段比第二段在同一源片里晚至少 20 秒，才把它认作「从后面抽来的冷开场」。
-# 20 秒和测试里 `_COLD_OPEN_HEAD_SECONDS` 是同一个量级：正常相邻窗口不会隔这么远，
-# 最后一球／赛点拿来预告则往往隔一两分钟。0.25 秒给转场切点留约 6 帧容差。
-ENDING_PAYOFF_GAP = 20.0
+# 同一天扫描出的另一笔存量：这些倒序冷开场早于显式声明字段，机器不能替人猜
+# 它究竟是「最后一球预告」还是普通后段高光。这里把**尚待人工分类**的 slug
+# 钉死，避免为了让全仓盘点继续跑就把“没声明的一律放过”写成永久漏洞。
+# 生产校验完全不读这个豁免；同 slug 重渲照样必须先补 true/false。合并后也只许减。
+LEGACY_UNDECLARED_ENDING_PAYOFF = frozenset({
+    "alexandrova-sabalenka",
+    "altmaier-musetti",
+    "anisimova-bartunkova",
+    "anisimova-eala",
+    "anisimova-noskova",
+    "arango-venus",
+    "auger-aliassime-cerundolo",
+    "baez-dimitrov",
+    "bartunkova-charaeva",
+    "bejlek-pliskova",
+    "bejlek-sabalenka",
+    "bencic-eala",
+    "bencic-townsend",
+    "boisson-krueger",
+    "borges-rublev",
+    "boulter-volynets",
+    "bouzkova-jovic",
+    "bucsa-chwalinska",
+    "cirstea-bartunkova",
+    "cirstea-kalinskaya",
+    "cirstea-pegula",
+    "cobolli-blockx",
+    "cobolli-jodar",
+    "djokovic-tirante",
+    "eala-anisimova",
+    "eala-mcnally",
+    "eala-parks",
+    "eala-ruse",
+    "faria-shelton",
+    "fernandez-andreeva",
+    "fery-deminaur",
+    "fils-deminaur",
+    "fils-tirante",
+    "fonseca-ruud",
+    "fonseca-van-de-zandschulp",
+    "fritz-merida",
+    "fritz-michelsen",
+    "fritz-oconnell",
+    "gauff-bouzkova",
+    "gauff-korneeva",
+    "gauff-li",
+    "gauff-sakkari",
+    "gauff-samsonova",
+    "halys-deminaur",
+    "hijikata-monfils",
+    "jodar-fils-montreal-qf",
+    "jodar-shapovalov",
+    "jodar-tabilo",
+    "kenin-lys",
+    "kostyuk-andreeva",
+    "kovacevic-khachanov",
+    "krejcikova-bejlek",
+    "landaluce-draper",
+    "lehecka-fils",
+    "maria-yastremska",
+    "musetti-faria",
+    "nakashima-borges",
+    "nakashima-medvedev",
+    "navarro-kalinina",
+    "noskova-boulter",
+    "noskova-tauson",
+    "osaka-fernandez",
+    "osaka-mertens",
+    "ostapenko-frech",
+    "parry-mertens",
+    "paul-cobolli",
+    "pegula-anisimova",
+    "pegula-navarro",
+    "pegula-rakhimova",
+    "pegula-waltert",
+    "rybakina-frech",
+    "rybakina-gauff-toronto-sf",
+    "rybakina-li",
+    "rybakina-osaka",
+    "rybakina-samsonova",
+    "rybakina-shnaider",
+    "sabalenka-gibson",
+    "sabalenka-wang",
+    "shang-darderi-montreal-2026",
+    "shelton-fonseca",
+    "shelton-nakashima-montreal-final",
+    "shelton-tien-montreal-sf",
+    "shnaider-chwalinska",
+    "shnaider-pegula",
+    "snigur-keys",
+    "sonmez-anisimova",
+    "sonmez-kasatkina",
+    "stearns-tauson",
+    "svitolina-alexandrova",
+    "svitolina-anisimova",
+    "svitolina-valentova",
+    "swiatek-arango",
+    "swiatek-golubic",
+    "swiatek-kostyuk",
+    "swiatek-parry",
+    "swiatek-rybakina-cincinnati-2026-qf",
+    "swiatek-rybakina-toronto-final",
+    "swiatek-sakkari",
+    "swiatek-shnaider",
+    "swiatek-svitolina-toronto-sf",
+    "tiafoe-auger-aliassime",
+    "tirante-landaluce",
+    "tirante-mensik",
+    "townsend-osorio",
+    "townsend-rybakina",
+    "trungelliti-medvedev",
+    "tsitsipas-auger-aliassime",
+    "tsitsipas-royer",
+    "wang-vandewinkel",
+    "wang-vekic",
+    "wang-xinyu-story",
+    "wangxiyu-fernandez",
+    "wangxiyu-keys",
+    "wangxiyu-timofeeva",
+    "williams-sisters-cincinnati",
+    "zhang-day",
+    "zhang-li",
+    "zverev-atmane",
+    "zverev-norrie",
+    "zverev-paul",
+})
+
+# 0.25 秒给转场切点留约 6 帧容差；除此之外不设任意的 20 秒门槛。真实 spec 里
+# `wang-vandewinkel` / `bejlek-sabalenka` / `svitolina-valentova` 的第 1、2 段只倒了
+# 9.4~12.4 秒，但第 3 段以后才真正回到比赛前段——只看第 2 段会把它们漏掉。
 ENDING_PAYOFF_TOL = 0.25
 
 
-def ending_payoff_problem(spec: dict) -> str | None:
+def ending_payoff_problem(
+    spec: dict, *, primary: str | None = None,
+    allow_published_legacy: bool = False,
+) -> str | None:
     """拦住「冷开场剧透了结局，正文却在兑现前结束」。
 
-    冷开场可以预告最后一球，但它只是预告，不能替正文收尾。机械判据刻意很窄：
-    只看 `match_review`，且第一段在同一源片里比第二段晚至少 20 秒；这种结构就是
-    从后段抽来的冷开场。正文最后一段必须重新走到冷开场的末尾（允许 0.25 秒
-    切点容差），否则观众按时间顺序看到的最后一幕仍是「赛点还没打完」。
+    判据只在**同一条源片的时间轴**里工作：第 1 段比后续任一同源片段晚，就说明
+    正文发生过倒叙；最后一个同源片段必须重新走到冷开场末尾。第 2 段可能仍是
+    赛后落点，所以不能把它当正文起点；多源 spec 的省略 `source` 也必须像
+    `parse_segments` 一样归到真实主源，不能拿两条源的时间码互相比较。
+
+    每一条这种冷开场都要显式写 `_ending_payoff_required: true|false`——有没有
+    `quote`、有没有中文旁白都不能替机器回答画面语义。写 true 时，正文的同源
+    窗口并集必须真正覆盖整段冷开场；这样只在后面补一段握手、靠更大的 `end`
+    蒙混过关也会失败。false 是人工确认「这只是后段高光，不是结局预告」，仍然
+    要守正文最终走到其后的基础闸。
 
     这道闸不靠旁白关键词，也不要求现场声之外必须有人说话；它只核故事时间线
     有没有把已经承诺的结局兑现，所以不会把有完整观众声的静默庆祝误判成哑场。
+
+    `allow_published_legacy` 只给全仓离线盘点读取旧 spec；所有生产调用都用默认
+    false。名单因此不会让同 slug 的修改或重新渲染逃过这道闸。
     """
     if (spec.get("editorial") or {}).get("mode") != "match_review":
         return None
     slug = str(spec.get("slug") or "")
-    if slug in LEGACY_MISSING_ENDING_PAYOFF:
+    if allow_published_legacy and slug in (
+            LEGACY_MISSING_ENDING_PAYOFF | LEGACY_UNDECLARED_ENDING_PAYOFF):
         return None
     raw = spec.get("segments") or []
-    if len(raw) < 2:
+    if len(raw) < 2 or raw[0].get("image"):
         return None
-    first, second = raw[0], raw[1]
-    if first.get("image") or second.get("image"):
-        return None
+    first = raw[0]
     try:
         first_start = float(first["start"])
         first_end = float(first["end"])
-        second_start = float(second["start"])
     except (KeyError, TypeError, ValueError):
         return None                    # 字段形状由 parse_segments 报更准确的错
-    if first_start < second_start + ENDING_PAYOFF_GAP:
+    if first_end <= first_start:
         return None
-    source = str(first.get("source") or "")
-    body = [seg for seg in raw[1:]
-            if not seg.get("image") and str(seg.get("source") or "") == source]
-    if not body:
+
+    if primary is None:
+        declared = spec.get("sources")
+        primary = (str(next(iter(declared)))
+                   if isinstance(declared, dict) and declared else "")
+
+    def _source(seg: dict) -> str:
+        # 和 parse_segments 的 `s.get("source", primary)` 保持同一语义；
+        # 不能写 `or primary`，显式空键和没写 source 不是一回事。
+        return str(seg.get("source", primary))
+
+    source = _source(first)
+    body: list[tuple[int, float, float]] = []
+    for index, seg in enumerate(raw[1:], 1):
+        if seg.get("image") or _source(seg) != source:
+            continue
+        try:
+            start, end = float(seg["start"]), float(seg["end"])
+        except (KeyError, TypeError, ValueError):
+            continue                  # parse_segments 随后给字段形状的准确报错
+        if end > start:
+            body.append((index, start, end))
+    if not body or min(start for _, start, _ in body) + ENDING_PAYOFF_TOL >= first_start:
+        return None                    # 同源正文没有倒叙，不是这道闸管的结构
+
+    if "_ending_payoff_required" not in first:
+        return (
+            "第 1 段是从后段抽来的冷开场，却没声明 "
+            "`_ending_payoff_required`。\n"
+            "它如果包含最后一球、结果确认或庆祝就写 true，正文必须完整重放；"
+            "只是后段高光、不承担结局就写 false。不能让机器靠字幕关键词猜。")
+    exact = first.get("_ending_payoff_required", False)
+    if not isinstance(exact, bool):
+        return "第 1 段的 `_ending_payoff_required` 只能写 true 或 false。"
+
+    body_end = body[-1][2]
+    if body_end + ENDING_PAYOFF_TOL < first_end:
+        return (
+            f"正文收在源片 {body_end:.2f}s，但冷开场已经预告到 {first_end:.2f}s："
+            "结局只在开头出现，正文没有重新兑现。\n"
+            "把完整制胜分、结果确认和第一波庆祝作为最后一段再放一次；"
+            "**冷开场是预告，不是结尾的替身**。片尾前必须让观众按时间顺序看见"
+            "这场比赛真的结束。")
+
+    if not exact:
         return None
-    try:
-        body_end = float(body[-1]["end"])
-    except (KeyError, TypeError, ValueError):
-        return None
-    if body_end + ENDING_PAYOFF_TOL >= first_end:
-        return None
+
+    # 按源片时间排序合并窗口，确认 [first_start, first_end] 没有被跳过。
+    # 单看最后一个 end 会把「直接补一段更晚的握手」误当成完整制胜分。
+    covered = first_start
+    for _, start, end in sorted(body, key=lambda item: (item[1], item[2])):
+        if end + ENDING_PAYOFF_TOL < covered:
+            continue
+        if start > covered + ENDING_PAYOFF_TOL:
+            break
+        covered = max(covered, end)
+        if covered + ENDING_PAYOFF_TOL >= first_end:
+            return None
     return (
-        f"正文收在源片 {body_end:.2f}s，但冷开场已经预告到 {first_end:.2f}s："
-        "结局只在开头出现，正文没有重新兑现。\n"
-        "把完整制胜分、结果确认和第一波庆祝作为最后一段再放一次；"
-        "**冷开场是预告，不是结尾的替身**。片尾前必须让观众按时间顺序看见"
-        "这场比赛真的结束。")
+        f"冷开场要求正文完整重放源片 {first_start:.2f}–{first_end:.2f}s，"
+        f"但正文只连续覆盖到 {covered:.2f}s。\n"
+        "不能只补更晚的握手／反应来让时间码变大；完整制胜分、结果确认和"
+        "第一波庆祝必须真的出现在正文里。")
 
 
-def validate_spec(spec: dict) -> list[Segment]:
+def validate_spec(
+    spec: dict, *, allow_published_legacy: bool = False,
+) -> list[Segment]:
     """**只看 spec，不碰源片**——所以它能在开跑的第一秒跑完。
 
     这里拦下来的每一类错，原来都要先付一次 392 MB 的下载才报出来：
@@ -4789,7 +4987,9 @@ def validate_spec(spec: dict) -> list[Segment]:
     _players_are_worth_a_reel(spec)
     _hook_lines_fit_the_title(spec)
     _solo_scoreboard_shape(spec)
-    ending = ending_payoff_problem(spec)
+    ending = ending_payoff_problem(
+        spec, primary=next(iter(urls)),
+        allow_published_legacy=allow_published_legacy)
     if ending:
         raise ReelError(ending)
     photo = cover_photo_problem(spec)
