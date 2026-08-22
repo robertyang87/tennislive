@@ -24,13 +24,10 @@ jobs:
         run: python -m pip install --disable-pip-version-check "yt-dlp[default]"
       - name: Write YouTube cookies
         env:
-          YT_COOKIES_B64: ${{ secrets.YT_COOKIES_B64 }}
-          YT_COOKIES: ${{ secrets.YT_COOKIES }}
+          YT_COOKIES_TXT: ${{ secrets.YT_COOKIES_TXT }}
         run: |
-          if [ -n "$YT_COOKIES_B64" ]; then
-            printf '%s' "$YT_COOKIES_B64" | base64 -d > /tmp/yt-cookies.txt
-          elif [ -n "$YT_COOKIES" ]; then
-            printf '%s' "$YT_COOKIES" > /tmp/yt-cookies.txt
+          if [ -n "$YT_COOKIES_TXT" ]; then
+            printf '%s' "$YT_COOKIES_TXT" > /tmp/yt-cookies.txt
           else
             : > /tmp/yt-cookies.txt
           fi
