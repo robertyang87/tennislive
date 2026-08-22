@@ -911,6 +911,67 @@ def test_挂账的冷开场清单只许减不许加():
         )
 
 
+def test_冷开场里的结局必须在正文重新兑现():
+    """冷开场放过最后一球，不等于正文可以停在赛点还没打完的时候。
+
+    蒂亚福—穆塞蒂第一版正文收在 330.88 秒：穆塞蒂刚救完两个赛点，真正的
+    制胜分 333.16–347.24 只在开头出现。容器、音轨、片尾全都完整，机器照样绿；
+    但故事没有闭合。判据钉的是**源片时间线有没有重新走到冷开场末尾**，不是
+    旁白关键词，所以最后几秒只有现场欢呼也不会被误报成哑场。
+    """
+    from tools.build_match_reel import ending_payoff_problem
+
+    broken = {
+        "slug": "new-match-review",
+        "editorial": {"mode": "match_review"},
+        "segments": [
+            {"start": 333.16, "end": 347.24, "narration": "", "quote": ["赢了"]},
+            {"start": 15.38, "end": 23.34, "narration": "坐标"},
+            {"start": 321.54, "end": 330.88, "narration": ""},
+        ],
+    }
+    msg = ending_payoff_problem(broken)
+    assert msg and "冷开场是预告，不是结尾的替身" in msg
+
+    fixed = json.loads(json.dumps(broken))
+    fixed["segments"].append(
+        {"start": 330.88, "end": 350.64, "narration": "", "quote": ["赢了"]})
+    assert ending_payoff_problem(fixed) is None
+
+    # 真实返工也要过，防止只修了测试样例、Tiafoe spec 仍停在两个赛点之后。
+    tiafoe = json.loads(Path(
+        "specs/reels/tiafoe-musetti-cincinnati-2026-qf.json"
+    ).read_text("utf-8"))
+    assert ending_payoff_problem(tiafoe) is None
+    assert tiafoe["segments"][-1]["end"] >= tiafoe["segments"][0]["end"]
+
+
+def test_结局未兑现的旧片挂账只许减不许加():
+    """旧片豁免必须真的仍命中同一个缺陷；写错 slug 不能变成恒真绿灯。"""
+    from tools.build_match_reel import (
+        ENDING_PAYOFF_GAP,
+        ENDING_PAYOFF_TOL,
+        LEGACY_MISSING_ENDING_PAYOFF,
+    )
+
+    assert LEGACY_MISSING_ENDING_PAYOFF == {
+        "cobolli-jodar", "jodar-fils-montreal-qf",
+        "shang-darderi-montreal-2026",
+    }, "这张表只许减不许加；新片必须把正文结局补完整"
+    for slug in sorted(LEGACY_MISSING_ENDING_PAYOFF):
+        path = Path("specs/reels") / f"{slug}.json"
+        assert path.is_file(), f"{slug} 已经不存在，可以销账"
+        spec = json.loads(path.read_text("utf-8"))
+        segs = spec["segments"]
+        first, second = segs[0], segs[1]
+        assert float(first["start"]) >= float(second["start"]) + ENDING_PAYOFF_GAP
+        source = str(first.get("source") or "")
+        body = [s for s in segs[1:]
+                if not s.get("image") and str(s.get("source") or "") == source]
+        assert float(body[-1]["end"]) + ENDING_PAYOFF_TOL < float(first["end"]), (
+            f"{slug} 的正文已经重新兑现结局，可以从挂账表删掉")
+
+
 # 这七条发在「开场先给坐标」这条规矩之前。**只许减不许加**——加新片子要么
 # 带着坐标来，要么显式往这份清单里写一笔，让「又忘了交代」变成一次看得见的决定。
 _NO_SLATE_YET = {

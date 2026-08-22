@@ -4688,6 +4688,71 @@ def cover_photo_problem(spec: dict) -> str | None:
         "清晰，但要在 credits 里写明放大了多少」说的就是这种情况。")
 
 
+# 这三条在 2026-08-22 以前已经发布：它们把源片后段拿来做冷开场，正文却停在
+# 冷开场之前。已发消息收不回来，所以只挂账；新片和再次重渲的片子不再放行。
+# **只许减不许加**，自检在 `test_冷开场里的结局必须在正文重新兑现`。
+LEGACY_MISSING_ENDING_PAYOFF = frozenset({
+    "cobolli-jodar",
+    "jodar-fils-montreal-qf",
+    "shang-darderi-montreal-2026",
+})
+
+# 第一段比第二段在同一源片里晚至少 20 秒，才把它认作「从后面抽来的冷开场」。
+# 20 秒和测试里 `_COLD_OPEN_HEAD_SECONDS` 是同一个量级：正常相邻窗口不会隔这么远，
+# 最后一球／赛点拿来预告则往往隔一两分钟。0.25 秒给转场切点留约 6 帧容差。
+ENDING_PAYOFF_GAP = 20.0
+ENDING_PAYOFF_TOL = 0.25
+
+
+def ending_payoff_problem(spec: dict) -> str | None:
+    """拦住「冷开场剧透了结局，正文却在兑现前结束」。
+
+    冷开场可以预告最后一球，但它只是预告，不能替正文收尾。机械判据刻意很窄：
+    只看 `match_review`，且第一段在同一源片里比第二段晚至少 20 秒；这种结构就是
+    从后段抽来的冷开场。正文最后一段必须重新走到冷开场的末尾（允许 0.25 秒
+    切点容差），否则观众按时间顺序看到的最后一幕仍是「赛点还没打完」。
+
+    这道闸不靠旁白关键词，也不要求现场声之外必须有人说话；它只核故事时间线
+    有没有把已经承诺的结局兑现，所以不会把有完整观众声的静默庆祝误判成哑场。
+    """
+    if (spec.get("editorial") or {}).get("mode") != "match_review":
+        return None
+    slug = str(spec.get("slug") or "")
+    if slug in LEGACY_MISSING_ENDING_PAYOFF:
+        return None
+    raw = spec.get("segments") or []
+    if len(raw) < 2:
+        return None
+    first, second = raw[0], raw[1]
+    if first.get("image") or second.get("image"):
+        return None
+    try:
+        first_start = float(first["start"])
+        first_end = float(first["end"])
+        second_start = float(second["start"])
+    except (KeyError, TypeError, ValueError):
+        return None                    # 字段形状由 parse_segments 报更准确的错
+    if first_start < second_start + ENDING_PAYOFF_GAP:
+        return None
+    source = str(first.get("source") or "")
+    body = [seg for seg in raw[1:]
+            if not seg.get("image") and str(seg.get("source") or "") == source]
+    if not body:
+        return None
+    try:
+        body_end = float(body[-1]["end"])
+    except (KeyError, TypeError, ValueError):
+        return None
+    if body_end + ENDING_PAYOFF_TOL >= first_end:
+        return None
+    return (
+        f"正文收在源片 {body_end:.2f}s，但冷开场已经预告到 {first_end:.2f}s："
+        "结局只在开头出现，正文没有重新兑现。\n"
+        "把完整制胜分、结果确认和第一波庆祝作为最后一段再放一次；"
+        "**冷开场是预告，不是结尾的替身**。片尾前必须让观众按时间顺序看见"
+        "这场比赛真的结束。")
+
+
 def validate_spec(spec: dict) -> list[Segment]:
     """**只看 spec，不碰源片**——所以它能在开跑的第一秒跑完。
 
@@ -4724,6 +4789,9 @@ def validate_spec(spec: dict) -> list[Segment]:
     _players_are_worth_a_reel(spec)
     _hook_lines_fit_the_title(spec)
     _solo_scoreboard_shape(spec)
+    ending = ending_payoff_problem(spec)
+    if ending:
+        raise ReelError(ending)
     photo = cover_photo_problem(spec)
     if photo:
         raise ReelError(photo)
