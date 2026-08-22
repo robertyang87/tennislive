@@ -1282,6 +1282,29 @@ def test_横着挪窗口能把右上角的台标裁掉(tmp_path):
         "封面和成片两条路都要读 `crop_shift_x`，漏一个就只裁一半"
 
 
+def test_转载源色彩校正显式且片头不继承():
+    """镜像转载还可能把对比度／饱和度推重；正文、封面要同调，官方片头独立。"""
+    from tools.build_interview_clip import _video_eq_filter
+
+    assert _video_eq_filter({}) == "", "存量 spec 没写时一个像素都不能变"
+    grade = _video_eq_filter({"video_eq": {
+        "contrast": 0.9, "brightness": 0.04, "saturation": 0.82, "gamma": 1.02}})
+    assert grade == "eq=contrast=0.9:brightness=0.04:saturation=0.82:gamma=1.02,"
+
+    for bad in ({"video_eq": {}},
+                {"video_eq": {"contrast": "0.9"}},
+                {"video_eq": {"saturation": 3.1}},
+                {"video_eq": {"temperature": 6500}}):
+        with pytest.raises(SystemExit, match="video_eq"):
+            _video_eq_filter(bad)
+
+    src_txt = (ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8")
+    assert src_txt.count("_video_eq_filter(spec)") == 2, \
+        "封面和采访正文必须走同一组色彩校正"
+    assert '_video_eq_filter(lead, "lead_in")' in src_txt, \
+        "跨视频片头只能读取自己的 video_eq，不能继承转载正文"
+
+
 def test_关掉顶栏要显式认领而且默认不许变(tmp_path):
     """账号所有者 2026-08-14（德约科维奇重返辛辛那提那条）：「不要顶部的比赛
     信息提示栏」。理由不是版式口味——**顶栏印的那句话在那条片子上不成立**：
