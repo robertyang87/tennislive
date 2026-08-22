@@ -1282,6 +1282,29 @@ def test_横着挪窗口能把右上角的台标裁掉(tmp_path):
         "封面和成片两条路都要读 `crop_shift_x`，漏一个就只裁一半"
 
 
+def test_转载源色彩校正显式且片头不继承():
+    """镜像转载还可能把对比度／饱和度推重；正文、封面要同调，官方片头独立。"""
+    from tools.build_interview_clip import _video_eq_filter
+
+    assert _video_eq_filter({}) == "", "存量 spec 没写时一个像素都不能变"
+    grade = _video_eq_filter({"video_eq": {
+        "contrast": 0.9, "brightness": 0.04, "saturation": 0.82, "gamma": 1.02}})
+    assert grade == "eq=contrast=0.9:brightness=0.04:saturation=0.82:gamma=1.02,"
+
+    for bad in ({"video_eq": {}},
+                {"video_eq": {"contrast": "0.9"}},
+                {"video_eq": {"saturation": 3.1}},
+                {"video_eq": {"temperature": 6500}}):
+        with pytest.raises(SystemExit, match="video_eq"):
+            _video_eq_filter(bad)
+
+    src_txt = (ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8")
+    assert src_txt.count("_video_eq_filter(spec)") == 2, \
+        "封面和采访正文必须走同一组色彩校正"
+    assert '_video_eq_filter(lead, "lead_in")' in src_txt, \
+        "跨视频片头只能读取自己的 video_eq，不能继承转载正文"
+
+
 def test_关掉顶栏要显式认领而且默认不许变(tmp_path):
     """账号所有者 2026-08-14（德约科维奇重返辛辛那提那条）：「不要顶部的比赛
     信息提示栏」。理由不是版式口味——**顶栏印的那句话在那条片子上不成立**：
@@ -4678,15 +4701,71 @@ def test_认领开头那道闸排在下载之前():
 # 剪一段接在封面之后、正片之前。
 
 
-def test_没有lead_in时check_lead_in是空操作():
-    """最常见的情形——绝大多数采访片压根不用这条路（`@wta` 那种尾巴自带采访
-    的集锦不需要借别的源片），`check_lead_in` 对它们必须什么都不做。"""
+def test_不需要跨视频片头时check_lead_in是空操作():
+    """正文源自己带比赛结尾，或发布会／演播室，不需要跨视频借片头；存量债在
+    挂账表里也先放行。`check_lead_in` 对这些情形必须什么都不做。"""
     import tools.build_interview_clip as clip
 
     clip.check_lead_in({"slug": "x"})            # 没有 lead_in，不许抛
     for p in _iv_specs():
         d = json.loads(p.read_text("utf-8"))
-        clip.check_lead_in(d)                     # 存量没有一条用这条路，全过
+        clip.check_lead_in(d)                     # 新规和存量挂账一起全过
+
+
+def test_独立赛后场上采访必须有同场比赛结尾片头():
+    """账号所有者 2026-08-22：「把获胜后的画面和解说加在前面，以后都要这么
+    操作。」所以 `opening.kind: none` 不能再成为独立场上采访从第一问开场的出口。
+
+    两头都钉：新 slug 少 `lead_in` 必须被拦；同样的 `none` 用在发布会则不误杀，
+    正文源已经是 `match_end` 的场上采访也不需要重复接一段。
+    """
+    import tools.build_interview_clip as clip
+
+    独立场上采访 = {
+        "slug": "new-oncourt-interview",
+        "interview_kind": "赛后场上采访",
+        "opening": {"kind": "none", "why": "独立采访从主持人第一问开始"},
+    }
+    with pytest.raises(SystemExit, match="必须用 `lead_in`"):
+        clip.check_lead_in(独立场上采访)
+
+    带同场片头 = dict(独立场上采访, lead_in={
+        "url": "https://youtu.be/official-highlight",
+        "start": 100.0,
+        "end": 118.0,
+        "why": "同场官方集锦：最后一分、庆祝和原声解说",
+    })
+    clip.check_lead_in(带同场片头)
+
+    clip.check_lead_in({
+        "slug": "new-presser",
+        "interview_kind": "赛后新闻发布会",
+        "opening": {"kind": "none", "why": "发布会背板和记者提问"},
+    })
+    clip.check_lead_in({
+        "slug": "new-oncourt-with-own-ending",
+        "interview_kind": "赛后场上采访",
+        "opening": {"kind": "match_end", "lead_in": 14.0,
+                    "why": "正文源自己从最后一分开始"},
+    })
+
+
+def test_独立场上采访缺片头的旧债只许减不许加():
+    """挂账表每个 slug 都必须真实存在，而且仍然是 `opening:none`、无 `lead_in`
+    的场上采访。补好片头却忘了销账，或拼错名字让豁免指向空气，都要失败；新片
+    则由上一条行为测试证明无法借这张表自动放行。"""
+    import tools.build_interview_clip as clip
+
+    paths = {p.stem: p for p in _iv_specs()}
+    ghosts = clip._LEGACY_ONCOURT_NO_LEAD_IN - paths.keys()
+    assert not ghosts, f"独立场上采访片头挂账里有不存在的 slug：{ghosts}"
+
+    for slug in sorted(clip._LEGACY_ONCOURT_NO_LEAD_IN):
+        d = json.loads(paths[slug].read_text("utf-8"))
+        assert d.get("interview_kind") == "赛后场上采访", f"{slug} 已经不是场上采访"
+        assert (d.get("opening") or {}).get("kind") == "none", (
+            f"{slug} 已经不是 opening:none，应从片头挂账移除")
+        assert not d.get("lead_in"), f"{slug} 已经补了 lead_in，应从片头挂账移除"
 
 
 def test_lead_in四要素必须认领():
