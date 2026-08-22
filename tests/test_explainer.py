@@ -79,22 +79,22 @@ def test_right_coco片头复用的是已校正三比四采访段():
                 / "intro_right_coco.mp4").exists()
 
 
-def test_right_coco两张社媒截图只保留相关正文():
-    """原图是 1179×2556 的整屏手机截图，入片只能是正文裁块。"""
+def test_right_coco只保留获准的双关评论正文():
+    """用户明确撤回 IMG_4121：成片和资产目录都不能再带那张截图。"""
     from PIL import Image
 
     root = _REPO / "assets" / "explainer" / "gauff-right-coco"
     with Image.open(root / "comment_double_meaning.jpg") as im:
         assert im.size == (970, 65)
-    with Image.open(root / "comment_kyrgios_claim.jpg") as im:
-        assert im.size == (1100, 580)
+    assert not (root / "comment_kyrgios_claim.jpg").exists()
 
     credits = json.loads((root / "credits.json").read_text(encoding="utf-8"))
     assert "仅裁相关正文" in credits["comment_double_meaning.jpg"]["description"] or (
         "只保留" in credits["comment_double_meaning.jpg"]["description"]
     )
-    assert "状态栏" in credits["comment_kyrgios_claim.jpg"]["description"]
-    assert "其他评论" in credits["comment_kyrgios_claim.jpg"]["description"]
+    assert "comment_kyrgios_claim.jpg" not in credits
+    first = _beats("gauff-right-coco")[0]
+    assert first.image == "assets/reel/gauff-kostyuk-cincinnati-2026-qf.jpg"
 
 
 def test_hawkeye_beats_are_grounded_in_verified_facts():

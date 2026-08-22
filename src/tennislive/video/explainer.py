@@ -2362,8 +2362,8 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             "接着笑着补了一句，And it's the right Coco。全段她没有提克耶高斯。"
             "可评论区很快把主语补成了他，说这句是在影射本周那条禁赛新闻。"
             "注意，从这里开始，出现的是网友解释，不是高芙本人的原话。",
-            "assets/explainer/gauff-right-coco/comment_kyrgios_claim.jpg",
-            "账号所有者提供 · 小红书评论区截图 · 2026-08-22（仅裁相关正文）",
+            "assets/reel/gauff-kostyuk-cincinnati-2026-qf.jpg",
+            "WTA 官方视频页 / Getty Images · 2026 辛辛那提女单 1/4 决赛，高芙",
             (
                 "原话只有“right Coco”",
                 "全段没有点名克耶高斯",
