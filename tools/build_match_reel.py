@@ -3050,6 +3050,15 @@ def _still_to_clip(still: Path, dest: Path, seconds: float = COVER_SECONDS) -> P
 
     静音轨是**占位**：封面那句旁白和其他段一样，在最后混音那一步按 `adelay=0`
     叠上去。这儿要是也塞一路音频，就成了「补位的静音盖住真音轨」那个老毛病。
+
+    ⚠️ **`-pix_fmt yuv420p` 不保证 `color_range=tv`。** 采访片那条线
+    2026-08-22 出过一次：封面是 JPEG 静图，`-pix_fmt yuv420p` 只管 4:2:0
+    色度采样、不管量程，ffmpeg 的 mjpeg 解码器会把 JPEG 天生的满量程
+    （full-range）带出来，libx264 照样能把 `full_range=1` 写进 SPS 的
+    VUI——视频号在满量程标记的流上抓不出封面帧，画面本身却播放正常。
+    这条线当时实测拉下来的成片没有中招（封面段量出来是干净的 `tv`），
+    但命令形状和出事那条一模一样，不等它真的漂了才补——显式钉死，
+    别指望 ffmpeg 自己推断对。
     """
     with stage("封面编码"):
         run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
@@ -3058,7 +3067,7 @@ def _still_to_clip(still: Path, dest: Path, seconds: float = COVER_SECONDS) -> P
             "-t", f"{seconds:.3f}",
             "-vf", f"fps={FPS_EXPR},setsar=1",
             "-c:v", "libx264", "-preset", PART_PRESET, "-crf", PART_CRF,
-            "-pix_fmt", "yuv420p",
+            "-pix_fmt", "yuv420p", "-color_range", "tv",
             "-c:a", "aac", "-b:a", "160k", "-ar", AUDIO_RATE,
             "-shortest", str(dest))
     return dest
