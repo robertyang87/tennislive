@@ -13,7 +13,7 @@ jobs:
   dispatch:
     runs-on: ubuntu-latest
     steps:
-      - name: Dispatch interview subtitle probe on the PR branch
+      - name: Dispatch interview transcript verification on the PR branch
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -21,5 +21,5 @@ jobs:
             --repo "$GITHUB_REPOSITORY" \
             --ref "$GITHUB_HEAD_REF" \
             -f slug=gauff-kostyuk-cincinnati-2026-qf \
-            -f mode=subs \
+            -f mode=render \
             -f push=false
