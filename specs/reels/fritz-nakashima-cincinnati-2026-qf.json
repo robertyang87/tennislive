@@ -105,11 +105,11 @@
     "scoreboard": {
       "court": "P&G Stadium Court",
       "duration_source": {
-        "url": "data:application/json,%7B%22duration%22%3A%222%3A16%22%2C%22source_feed%22%3A%22https%3A%2F%2Fglobal.flashscore.ninja%2F2%2Fx%2Ffeed%2Fdf_sui_1_thAXTt8b%22%7D",
+        "url": "data:application/json,%7B%22duration%22%3A%222%3A16%3A00%22%2C%22source_feed%22%3A%22https%3A%2F%2Fglobal.flashscore.ninja%2F2%2Fx%2Ffeed%2Fdf_sui_1_thAXTt8b%22%7D",
         "field": "duration"
       },
       "_court_why": "Cincinnati Open官方比赛日签表将本场列在P&G Stadium Court；源片场边广告与同场地转播一致。",
-      "_duration_why": "Flashscore全场用时2:16，分盘52+43+41分钟正好等于136分钟，自洽。"
+      "_duration_why": "Flashscore全场用时2:16，分盘52+43+41分钟正好等于136分钟，自洽。duration_source 写成完整的2:16:00，避免海报解析器把两段式2:16误判成2分钟16秒。"
     }
   },
   "_voice_why": "云见 zh-CN-YunjianNeural，+6%。用短句把三盘讲清，赛点和庆祝完整保留Tennis TV原声。",
