@@ -5028,12 +5028,10 @@ def test_装ffmpeg和字体一律先试本地缓存不能只靠重试():
         "判据的主语像是没了")
 
 
-#: interview-clip.yml 的两把固定键（那个文件归另一条并行分支管，这一批不动它）。
-#: **只许减不许加**：新加一条 apt 缓存必须直接用滚动键，别往这张表里塞。
-_LEGACY_FIXED_APT_KEYS = {
-    ("interview-clip.yml", "apt-pkgs-${{ runner.os }}-24.04-interview-clip-v1"),
-    ("interview-clip.yml", "apt-pkgs-${{ runner.os }}-24.04-interview-clip-subs-v1"),
-}
+#: interview-clip.yml 的两把固定键已经在另一条并行分支上换成了滚动键
+#: （v1 → v2，键里带 `run_id`）——这张表因此空了。**只许减不许加**：
+#: 新加一条 apt 缓存必须直接用滚动键，别往这张表里塞。
+_LEGACY_FIXED_APT_KEYS: set[tuple[str, str]] = set()
 
 
 def test_apt缓存键一律滚动固定键存下半份就永远补不进新包():
