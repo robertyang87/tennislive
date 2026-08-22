@@ -926,6 +926,13 @@ _NO_SLATE_YET = {
     # （run 31138555626 第 30 步 success），开场那段旁白给了赛事和轮次、
     # **一个时刻都没给**（既没有「北京时间」也没有几点几分）。
     "shang-darderi-montreal-2026",
+    # 同上：`tiafoe-musetti-cincinnati-2026-qf` 2026-08-22T05:02:40Z 已经
+    # 推过微信（run 32553267109，另一个并发会话发的），开场旁白给了「北京时间
+    # 8月22日7点05分」——三样都有，只是钟点写成了阿拉伯数字「7」而不是中文数字，
+    # 这条判据只认中文数字，所以判成「没给时刻」。真正的毛病是「报到了分钟」，
+    # 归 `_CLOCK_MINUTE_LEGACY`（tests/test_reel_editorial.py）认领，这儿只是
+    # 连带撞上；已发不为措辞重渲，两处一起挂账。
+    "tiafoe-musetti-cincinnati-2026-qf",
 }
 
 # 收尾没落在一问上、而且**已经发出去了**的。只许减不许加，底下有自检。
@@ -6158,6 +6165,9 @@ _LEGACY_QUALIFIER_NAMES = {
     "eala-svitolina.json", "wong-brooksby.json", "wong-gea.json",
     "zheng-lanlana.json", "eala-fernandez.xhs.txt", "eala-svitolina.xhs.txt",
     "wong-brooksby.xhs.txt", "wong-gea.xhs.txt", "zheng-lanlana.xhs.txt",
+    # bejlek-keys-cincinnati-2026-qf：已经推过微信（reel 和 interview-clip
+    # 两条都有 pushed.json），消息发出去收不回来，不为措辞重渲。
+    "bejlek-keys-cincinnati-2026-qf.json", "bejlek-keys-cincinnati-2026-qf.xhs.txt",
 }
 
 
