@@ -36,6 +36,7 @@ import os
 import re
 import shutil
 import subprocess
+import tempfile
 import dataclasses
 from dataclasses import dataclass
 from pathlib import Path
@@ -2287,7 +2288,188 @@ from .rulebook_cards import (
     word_in_the_book,
 )
 
+_GAUFF_RIGHT_COCO_TIMELINE = """
+<svg viewBox="0 0 900 660" xmlns="http://www.w3.org/2000/svg">
+  <rect x="52" y="42" width="796" height="572" rx="34"
+        fill="rgba(5,27,19,.88)" stroke="rgba(55,226,154,.35)" stroke-width="3"/>
+  <line x1="154" y1="142" x2="154" y2="516" stroke="#37e29a" stroke-width="5"/>
+  <g font-family="Noto Sans CJK SC, sans-serif">
+    <circle cx="154" cy="152" r="18" fill="#c6f65a"/>
+    <text x="212" y="137" fill="#c6f65a" font-size="28" font-weight="800">2023.09</text>
+    <text x="212" y="180" fill="#eef7f1" font-size="34" font-weight="850">高芙已解释过歌词原意</text>
+    <text x="212" y="217" fill="#a8bbb1" font-size="25" font-weight="650">“CoCo”并不是在唱她的名字</text>
+
+    <circle cx="154" cy="332" r="18" fill="#ffb86c"/>
+    <text x="212" y="317" fill="#ffb86c" font-size="28" font-weight="800">2026.08.19</text>
+    <text x="212" y="360" fill="#eef7f1" font-size="34" font-weight="850">克耶高斯事件进入新闻</text>
+    <text x="212" y="397" fill="#a8bbb1" font-size="25" font-weight="650">这是一条独立发生的新闻线</text>
+
+    <circle cx="154" cy="512" r="18" fill="#37e29a"/>
+    <text x="212" y="497" fill="#37e29a" font-size="28" font-weight="800">2026.08.22</text>
+    <text x="212" y="540" fill="#eef7f1" font-size="34" font-weight="850">“right Coco”出现在采访</text>
+    <text x="212" y="577" fill="#a8bbb1" font-size="25" font-weight="650">网友把两条线连在一起</text>
+  </g>
+  <rect x="552" y="76" width="242" height="58" rx="29" fill="rgba(198,246,90,.12)"
+        stroke="#c6f65a" stroke-width="2"/>
+  <text x="673" y="114" text-anchor="middle" fill="#c6f65a" font-size="27"
+        font-weight="850" font-family="Noto Sans CJK SC, sans-serif">相邻 ≠ 指向</text>
+</svg>
+"""
+
+_GAUFF_PUBLIC_SOCIAL_AUDIT = """
+<svg viewBox="0 0 900 660" xmlns="http://www.w3.org/2000/svg">
+  <rect x="52" y="42" width="796" height="572" rx="34"
+        fill="rgba(5,27,19,.9)" stroke="rgba(55,226,154,.35)" stroke-width="3"/>
+  <g font-family="Noto Sans CJK SC, sans-serif">
+    <text x="450" y="105" text-anchor="middle" fill="#c6f65a" font-size="27"
+          font-weight="800">截至 2026.08.22 · 可公开核查范围</text>
+    <g transform="translate(105 145)">
+      <rect width="690" height="92" rx="22" fill="rgba(255,255,255,.055)"/>
+      <text x="34" y="58" fill="#eef7f1" font-size="34" font-weight="900">X</text>
+      <text x="126" y="55" fill="#eef7f1" font-size="28" font-weight="760">未见针对该事件的公开表态</text>
+      <circle cx="646" cy="46" r="14" fill="#37e29a"/>
+    </g>
+    <g transform="translate(105 258)">
+      <rect width="690" height="92" rx="22" fill="rgba(255,255,255,.055)"/>
+      <text x="34" y="57" fill="#eef7f1" font-size="31" font-weight="900">Instagram</text>
+      <text x="240" y="55" fill="#eef7f1" font-size="27" font-weight="760">公开主页未见相关发帖</text>
+      <circle cx="646" cy="46" r="14" fill="#37e29a"/>
+    </g>
+    <g transform="translate(105 371)">
+      <rect width="690" height="92" rx="22" fill="rgba(255,255,255,.055)"/>
+      <text x="34" y="57" fill="#eef7f1" font-size="31" font-weight="900">Threads</text>
+      <text x="210" y="55" fill="#eef7f1" font-size="27" font-weight="760">当天活动与该事件无关</text>
+      <circle cx="646" cy="46" r="14" fill="#37e29a"/>
+    </g>
+    <text x="450" y="524" text-anchor="middle" fill="#eef7f1" font-size="29"
+          font-weight="850">准确口径：未发现可核实的直接表态</text>
+    <text x="450" y="566" text-anchor="middle" fill="#9fb4aa" font-size="23"
+          font-weight="650">限公开可见内容；登录受限的 Stories / 点赞不作全量断言</text>
+  </g>
+</svg>
+"""
+
 _SCRIPTS: dict[str, tuple[tuple, ...]] = {
+    # 这条不是替任何一方作道德判断，而是把证据等级分开：原话、旧语境、
+    # 时间线、公开账号和网友推断各自只承担它能证明的那一格。尤其不能为了
+    # “澄清”而写成两人从无交集——WTA 2022 年的官方文章明明记录过交往。
+    "gauff-right-coco": (
+        (
+            "comments",
+            "评论区",
+            "一句话 被评论区改了主语",
+            "先看原话。看台有人喊，I'm in love with the Coco。高芙说，我喜欢这一句；"
+            "接着笑着补了一句，And it's the right Coco。全段她没有提克耶高斯。"
+            "可评论区很快把主语补成了他，说这句是在影射本周那条禁赛新闻。"
+            "注意，从这里开始，出现的是网友解释，不是高芙本人的原话。",
+            "assets/explainer/gauff-right-coco/comment_kyrgios_claim.jpg",
+            "账号所有者提供 · 小红书评论区截图 · 2026-08-22（仅裁相关正文）",
+            (
+                "原话只有“right Coco”",
+                "全段没有点名克耶高斯",
+                "把两者相连的是评论区",
+            ),
+        ),
+        (
+            "pun",
+            "这个梗",
+            "双关是真的 影射还没证据",
+            "双关本身是真的。I'm in love with the CoCo，来自 O.T. Genasis 二〇一四年的歌曲"
+            "《CoCo》；歌里的 CoCo 指可卡因。看台把这句歌词借过来，是因为 Coco 也是高芙的名字。"
+            "所以，她笑这句双关，有完整的现场语境。双关成立，不等于克耶高斯就自动成了被影射的人。",
+            "assets/explainer/gauff-right-coco/comment_double_meaning.jpg",
+            "账号所有者提供 · 小红书评论区截图 · 2026-08-22（仅裁相关正文）",
+            (
+                "《CoCo》发行于 2014 年",
+                "歌词里的 CoCo 指可卡因",
+                "看台把歌词借给了 Coco Gauff",
+            ),
+        ),
+        (
+            "before",
+            "三年前",
+            "她早就知道歌词原意",
+            "更关键的是，这个梗并不是三天前才进入高芙的语境。二〇二三年美网决赛后的"
+            "新闻发布会上，有人问她为什么不想听这首歌。她当时就解释，自己知道歌里的"
+            "CoCo 并不是她的名字。也就是说，同一个双关在克耶高斯这次新闻发生前三年，"
+            "已经由高芙本人公开说过。",
+            "assets/players/coco-gauff.jpg",
+            "Hameltion / Wikimedia Commons · CC BY-SA 4.0 · 2023 华盛顿公开赛，高芙",
+            (
+                "2023 美网发布会已有同一语境",
+                "她知道歌词里的 CoCo 不是名字",
+                "这条旧证据早于本周新闻三年",
+            ),
+        ),
+        (
+            "timeline",
+            "时间线",
+            "三天时间差 制造了联想",
+            "那为什么这次所有人会想到克耶高斯？因为两条新闻挨得太近。八月十九日，"
+            "克耶高斯因境外检测呈可卡因阳性而被临时禁赛的消息公开。八月二十二日，"
+            "高芙在辛辛那提说出 right Coco。三天时间差足以制造联想；"
+            "但时间相邻，只能解释网友为什么会想到，不能证明她本人就在指谁。",
+            "",
+            "示意图 · 网球时差绘制；事件日期据 Reuters 与采访原片",
+            (
+                "8 月 19 日 · 克耶高斯新闻",
+                "8 月 22 日 · 高芙现场采访",
+                "时间相邻 ≠ 本人指向",
+            ),
+            _GAUFF_RIGHT_COCO_TIMELINE,
+        ),
+        (
+            "social",
+            "社媒核查",
+            "公开账号 没找到她的表态",
+            "再查本人账号。截至八月二十二日，可公开看到的 X、Instagram 和 Threads 页面里，"
+            "没有发现她针对这起事件的发帖、回复或转发。Threads 当天确实有活动，"
+            "但她回复的是一位八十岁球迷，与这件事无关。Instagram 的 Stories 和点赞受登录限制，"
+            "所以最准确的说法是：未发现可公开核实的直接表态，不把它夸大成绝对不存在。",
+            "",
+            "示意图 · 网球时差绘制；公开主页核查截至 2026-08-22",
+            (
+                "X · 未见相关公开表态",
+                "Instagram · 公开主页未见相关发帖",
+                "Threads · 当天活动与事件无关",
+            ),
+            _GAUFF_PUBLIC_SOCIAL_AUDIT,
+        ),
+        (
+            "history",
+            "也别改写过去",
+            "过去有互动 也不等于这次表态",
+            "完整澄清还要补一层不那么顺耳的事实：两人过去确实有职业圈互动。"
+            "WTA 二〇二二年的官方文章记录，高芙说自己年少时克耶高斯对她很友善；"
+            "二〇二四年美网，他也采访过她。不能为了澄清，把这些公开记录抹成两人毫无交集。"
+            "但过去有过互动，同样不能证明她评价了这次事件。",
+            "assets/reel/gauff-kostyuk-cincinnati-2026-qf.jpg",
+            "WTA 官方视频页 / Getty Images · 2026 辛辛那提女单 1/4 决赛，高芙",
+            (
+                "两人过去确有职业圈公开互动",
+                "不能澄清成“从无交集”",
+                "过去互动 ≠ 本周事件表态",
+            ),
+        ),
+        (
+            "verdict",
+            "核查结论",
+            "网友让他躺枪 不是高芙点名",
+            "所以结论只有三句。第一，现场是歌曲和名字的双关。第二，克耶高斯是网友结合"
+            "本周新闻加进去的人。第三，截至核查日，没有可验证证据显示高芙点名、站队，"
+            "或者替他开脱。最稳妥的表述是：克耶高斯在网友解读里躺枪，"
+            "不是高芙本人已经作出表态。推断可以讨论，但别把推断写成事实。",
+            "assets/reel/gauff-kostyuk-cincinnati-2026-qf.jpg",
+            "WTA 官方视频页 / Getty Images · 2026 辛辛那提女单 1/4 决赛，高芙",
+            (
+                "现场双关 · 可以确认",
+                "影射克耶高斯 · 没有证据",
+                "点名／站队／开脱 · 均未发现",
+            ),
+            "",
+            "遇到这种热梗，你会先看原话，还是先看评论区？",
+        ),
+    ),
     # 账号所有者 2026-08-05：「**要精确且深入浅出让人易懂**」。
     #
     # 「精确」落在 `docs/equal-pay-research.md` 第六之三节那张核验状态表上：
@@ -6264,6 +6446,13 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
 # 这个洞。判据落在 test_每条片子的标签都放满五个。
 _DEFAULT_TAGS = ("网球", "网球时差", "网球冷知识", "网球科普", "网球运动")
 _CAPTIONS: dict[str, dict] = {
+    "gauff-right-coco": {
+        "hook": (
+            "现场原话里没有克耶高斯——把他加进来的是评论区。\n"
+            "更关键的是：同一首歌的双关，高芙在 2023 年美网发布会上就已经解释过。"
+        ),
+        "tags": ("网球", "网球时差", "高芙", "rightCoco", "网球有故事"),
+    },
     "wang-sabalenka": {
         "hook": (
             "四年前的澳网次轮，王欣瑜在罗德·拉沃尔球场 6-1 拿走了萨巴伦卡的第一盘——\n"
@@ -6622,6 +6811,29 @@ def column_of(slug: str) -> Column:
 # beat one makes the viewer work out the subject for themselves. Every deck
 # now opens on the question it answers, said out loud and set large.
 _OPENINGS: dict[str, dict] = {
+    "gauff-right-coco": {
+        "topic": "高芙的「right Coco」",
+        "question": "评论区为何想到克耶高斯？",
+        "narration": "评论区为何想到克耶高斯？先听高芙说完这句话，"
+                     "再把双关、时间线和本人表态分开。",
+        # 这张是本场 WTA 官方视频页的 6023×4015 原图；封面只问“评论区为何
+        # 联想”，不把克耶高斯的脸放进来，避免把待核查的联系做成视觉事实。
+        "image": "assets/reel/gauff-kostyuk-cincinnati-2026-qf.jpg",
+        "credit": "WTA 官方视频页 / Getty Images · 2026 辛辛那提女单 1/4 决赛，高芙",
+        # 直接复用已经纠正镜像、色彩和对比度并烧好双语字幕的“赛后开麦”成片。
+        # 82–101 秒完整保留：看台口号 → “right Coco” → 她笑着说下一个问题。
+        "intro_url": (
+            "https://github.com/robertyang87/tennislive/releases/download/"
+            "interview-gauff-kostyuk-cincinnati-2026-qf/"
+            "gauff-kostyuk-cincinnati-2026-qf.mp4"
+        ),
+        "intro_start": 82.0,
+        "intro_end": 101.0,
+        "intro_cx": 0.5,
+        # intro 本身就是 1080×1440，显式走 3:4 才不会二次裁窄。
+        "canvas": "3:4",
+        "tags": ("网球", "网球时差", "高芙", "rightCoco", "网球有故事"),
+    },
     "equal-pay": {
         # 台头先亮硬事实，不描述格式（`nadal-academy` 那条踩过：
         # 「七个人，七条来时路」是在讲片子长什么样，读者一个字信息都没拿到）。
@@ -9119,10 +9331,56 @@ def generate_explainer_video(
     # 冷开场实拍片段是可选的：`_OPENINGS[slug]["intro"]` 给一个仓库相对路径，
     # 就在片头前接一段真视频（比如上一轮的制胜分+庆祝）。绝大多数「开球之前」
     # 仍是纯幻灯片，这里不写就是 None，行为和以前完全一样。
-    intro_rel = (_OPENINGS.get(story.slug) or {}).get("intro")
+    opening = _OPENINGS.get(story.slug) or {}
+    intro_rel = opening.get("intro")
+    intro_url = opening.get("intro_url")
+    if intro_rel and intro_url:
+        raise ExplainerVideoError("片头只能写 intro 或 intro_url，不能两处同时认领")
+    intro_tmp: tempfile.TemporaryDirectory[str] | None = None
     intro = (_REPO / intro_rel) if intro_rel else None
     if intro is not None and not intro.is_file():
         raise ExplainerVideoError(f"开场实拍片段找不到：{intro}")
+    if intro_url:
+        # 正式采访成片已经在 Release；澄清片只需要其中 19 秒。把同一段 mp4
+        # 再塞进 git 会同时违反“成片走 Release”和“别复制死重量”两条，所以
+        # 渲染时下载、精确切段，assemble 完马上清理临时目录。
+        import requests  # noqa: PLC0415
+
+        intro_tmp = tempfile.TemporaryDirectory(prefix=f"tennislive-{story.slug}-")
+        temp_root = Path(intro_tmp.name)
+        full_source = temp_root / "source.mp4"
+        intro = temp_root / "intro.mp4"
+        try:
+            with requests.get(str(intro_url), stream=True, timeout=(15, 180)) as response:
+                response.raise_for_status()
+                with full_source.open("wb") as fh:
+                    for chunk in response.iter_content(chunk_size=1024 * 1024):
+                        if chunk:
+                            fh.write(chunk)
+            if full_source.stat().st_size < 1024:
+                raise ExplainerVideoError(f"片头远端文件异常小：{intro_url}")
+            start = float(opening.get("intro_start", 0.0))
+            end = opening.get("intro_end")
+            duration = float(end) - start if end is not None else None
+            if start < 0 or (duration is not None and duration <= 0):
+                raise ExplainerVideoError(
+                    f"片头区间不合法：start={start}, end={end}"
+                )
+            cmd = ["ffmpeg", "-y", "-hide_banner", "-loglevel", "error"]
+            if start:
+                cmd += ["-ss", f"{start:.3f}"]
+            cmd += ["-i", str(full_source)]
+            if duration is not None:
+                cmd += ["-t", f"{duration:.3f}"]
+            cmd += [
+                "-c:v", "libx264", "-crf", "18", "-preset", "medium",
+                "-c:a", "aac", "-b:a", "160k", "-movflags", "+faststart",
+                str(intro),
+            ]
+            subprocess.run(cmd, check=True, capture_output=True)
+        except (OSError, requests.RequestException, subprocess.CalledProcessError) as exc:
+            intro_tmp.cleanup()
+            raise ExplainerVideoError(f"远端片头下载或切段失败：{exc}") from exc
     # 冷开场叠一条和幻灯片一样的台头——见 `_render_intro_badge` 的 docstring。
     # 渲不出来（缺 Chromium）不拖垮整条片子，退回没有台头的样子。
     intro_badge = None
@@ -9164,15 +9422,19 @@ def generate_explainer_video(
     # 见 `assemble_explainer_video` 里那条注释——单条实拍片头常常不止一个
     # 镜头，这个数是折中值，不是每一帧都精确跟踪的结果。
     intro_cx = (_OPENINGS.get(story.slug) or {}).get("intro_cx", 0.5)
-    return assemble_explainer_video(
-        slides, audios, outdir / "explainer.mp4",
-        captions=[seg.narration for seg in segments],
-        intro=intro,
-        intro_badge=intro_badge,
-        intro_cx=intro_cx,
-        outro=outro,
-        canvas_h=canvas_h,
-    )
+    try:
+        return assemble_explainer_video(
+            slides, audios, outdir / "explainer.mp4",
+            captions=[seg.narration for seg in segments],
+            intro=intro,
+            intro_badge=intro_badge,
+            intro_cx=intro_cx,
+            outro=outro,
+            canvas_h=canvas_h,
+        )
+    finally:
+        if intro_tmp is not None:
+            intro_tmp.cleanup()
 
 
 def _build_outro_clip(
