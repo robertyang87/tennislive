@@ -3119,7 +3119,12 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
          "-map", "[out]", "-map", "0:a:0?",
          "-c:v", "libx264", "-preset", "medium", "-crf", "20",
          "-r", "25", "-pix_fmt", "yuv420p",
-         "-c:a", "aac", "-b:a", "128k", "-ar", "48000", "-ac", "2", str(body)],
+         "-c:a", "aac", "-b:a", "128k", "-ar", "48000", "-ac", "2",
+         # `+faststart` 在这儿只管 `len(parts) == 1` 那条兜底路径——
+         # `body.replace(out)` 是纯改名，不会再走一遍编码，`out` 的 moov
+         # 位置就定在这一步。真正管到大多数片子的是下面最终 concat 那一行，
+         # 见那儿的注释。
+         "-movflags", "+faststart", str(body)],
         check=True, timeout=1800)
 
     # 片尾品牌页。账号所有者 2026-08-05：「每个视频最后都加一页并配上关注的
@@ -3152,11 +3157,23 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
     if len(parts) == 1:
         body.replace(out)
         return _record_film_seconds(out, outdir)
+    # ⚠️ **不给 `+faststart`，`moov` 会落在文件末尾——账号所有者
+    # 2026-08-22 报的「视频号封面显示不出来」根子就在这儿。** ffmpeg 的
+    # concat + `-c copy` 是一次完整的 remux（新写一份 moov，不是简单地把
+    # 三个文件粘起来），moov 摆在哪儿由**这一步自己的** movflags 决定，
+    # 跟上游那几段各自有没有 faststart 没关系。拉一条已发的成片实测过：
+    # `ftyp free mdat[60.5MB] moov` ——moov 排在 6 千万字节之后。**视频号
+    # 这类平台生成封面要靠范围请求先读 moov**（里面才有编码信息和帧位置），
+    # moov 在文件尾就等于「不下载完整个文件读不到」，封面自然出不来——这条线
+    # 是这个仓库里**唯一没接 `+faststart`** 的成片编码路径，`build_match_reel.py`
+    # 和 `explainer.py` 早就在用。加上这一行之后合成小样本验过：
+    # `ftyp moov free mdat`，moov 挪到了最前面。
     lst = outdir / "_concat.txt"
     lst.write_text("".join(f"file '{p.name}'\n" for p in parts), encoding="utf-8")
     subprocess.run(["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
                     "-f", "concat", "-safe", "0", "-i", str(lst),
-                    "-c", "copy", str(out)], check=True, timeout=600)
+                    "-c", "copy", "-movflags", "+faststart", str(out)],
+                   check=True, timeout=600)
     for tmp in (*parts, lst):
         tmp.unlink(missing_ok=True)
     return _record_film_seconds(out, outdir)
