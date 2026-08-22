@@ -489,14 +489,24 @@ def test_清理之后还有大文件要报错退出():
     assert "exit 1" in cleanup, "报了错却不退出，等于没拦"
 
 
-def test_提交重试耗尽必须失败且只重放本条成片():
-    """所有 push 都失败却继续微信步骤，会把一个 404 链接发出去。"""
+def test_提交重试耗尽必须失败且重放按提交的diff来():
+    """所有 push 都失败却继续微信步骤，会把一个 404 链接发出去。
+
+    重放的范围**不许写死在 OUTDIR**：同一个提交里 OUTDIR 之外的文件
+    （probe 自动备料写的 `specs/reels/<slug>.draft.json`）会在
+    `reset --hard` 之后**静默丢失**——按 `rendered^..rendered` 的 diff 重放，
+    这次提交动过什么就搬回什么，草稿以后挪位置也自动兼容。
+    """
     text = WORKFLOW.read_text(encoding="utf-8")
     commit = text.split("- name: 提交产物", 1)[1].split("- name:", 1)[0]
 
     assert 'if git push origin "HEAD:$BRANCH"; then' in commit
     assert "exit 0" in commit
-    assert 'git checkout rendered -- "$OUTDIR"' in commit
+    # 重放按这次提交的 diff 来（新增/修改那半），不按写死的目录来
+    assert "git diff --name-only -z --diff-filter=d rendered^ rendered" in commit
+    assert 'git checkout rendered -- "$OUTDIR"' not in commit, (
+        "重放又退回写死 OUTDIR——同一个提交里 OUTDIR 之外的文件（草稿 spec）"
+        "会在撞车重放时被 reset --hard 静默抹掉")
     assert "git checkout rendered -- output/" not in commit
     assert "::error::连续" in commit
     assert commit.rfind("exit 1") > commit.rfind("done")
@@ -1439,6 +1449,26 @@ def test_cookies模式不产任何产物():
     check = _step_block("cookies — 只验", text)
     assert "--download-sections" in check
     assert "stat -c%s" in check and "exit 1" in check
+
+
+def test_push模式不许跑清理那一步():
+    """**mode=push 的 OUTDIR 是历史日期目录，清理的体积兜底会把存量成片当漏网。**
+
+    push 模式按 slug 反查 `output/*/reel/<slug>/render.json` 落在哪个日期目录
+    （见 `test_push模式按slug反查目录不按今天的日期`），而 2026-08-13 之前发的
+    片子成片还留在 git 里（历史清理「存量不动，只改增量」）。稀疏检出把那一格
+    add 回来之后，「丢掉不进仓库的中间物」末尾那个**递归**的 8 MB 兜底会把
+    这些合法的存量 mp4 当成「漏网的大文件」`exit 1`——红在写复制页之前，
+    把唯一受支持的手动推送路径杀掉。而 push 那条路本来**一个中间物都不产**
+    （只写复制页、提交、发微信），清理对它没有任何事可做。
+    """
+    text = WORKFLOW.read_text(encoding="utf-8")
+    cleanup = _step_block("丢掉不进仓库的中间物", text)
+    assert "mode != 'push'" in cleanup, (
+        "清理那一步没排除 mode=push——它的递归体积兜底会把 push 模式反查到的"
+        "历史目录里的存量成片当成漏网文件 exit 1，杀掉手动推送")
+    # 原有的两个排除不许被顺手挤掉（narration / cookies 同样零中间物）
+    assert "mode != 'narration'" in cleanup and "mode != 'cookies'" in cleanup
 
 
 def test_推送正文里印文案且只印一遍():
@@ -4391,7 +4421,7 @@ def test_spec形状校验排在下载之前():
 
     validate_at = body.index("validate_spec(spec)")
     preflight_at = body.index("_preflight_cutout(spec)")
-    download_at = body.index("download(url, path)")
+    download_at = body.index("download(url, path, archival=")
     assert validate_at < download_at, "spec 形状校验排到下载后面了"
     assert preflight_at < download_at, "缺依赖的预检排到下载后面了"
 
@@ -4998,6 +5028,53 @@ def test_装ffmpeg和字体一律先试本地缓存不能只靠重试():
         "判据的主语像是没了")
 
 
+#: interview-clip.yml 的两把固定键（那个文件归另一条并行分支管，这一批不动它）。
+#: **只许减不许加**：新加一条 apt 缓存必须直接用滚动键，别往这张表里塞。
+_LEGACY_FIXED_APT_KEYS = {
+    ("interview-clip.yml", "apt-pkgs-${{ runner.os }}-24.04-interview-clip-v1"),
+    ("interview-clip.yml", "apt-pkgs-${{ runner.os }}-24.04-interview-clip-subs-v1"),
+}
+
+
+def test_apt缓存键一律滚动固定键存下半份就永远补不进新包():
+    """actions/cache 的**主键不可变**：固定键第一趟存下什么，以后就永远是什么。
+
+    坑长这样：第一趟只攒下 ffmpeg，后面哪趟把字体包补进目录，post step 也
+    **不能覆盖同名缓存**——于是那些趟仍要重新摸 apt 镜像，而「缓存 apt 包」
+    这一步的全部意义就是**别碰那个会抽风的镜像**（2026-08-19 一天三条工作流
+    零字节进度各烧 300 秒）。match-reel.yml 当天换成滚动键（run_id 进 key ＋
+    restore-keys 按前缀捞回上一份），其余六条还是 v1 固定键——同一个坑六个
+    入口。**这条判据自己扫全部工作流，不维护名单**：以后新加一条带 apt 缓存
+    的工作流，它会替人记得。
+
+    豁免表 `_LEGACY_FIXED_APT_KEYS` 只有 interview-clip 的两把（那个文件归
+    另一条并行分支管），**只许减不许加**，而且自带自检：表里的键必须真的还在、
+    真的还是固定键——写错一个名字，豁免就成了一盏恒真的绿灯。
+    """
+    seen_fixed: set[tuple[str, str]] = set()
+    checked = 0
+    for path in sorted(WORKFLOW.parent.glob("*.yml")):
+        body = _yaml_only(path.read_text(encoding="utf-8"))
+        for m in re.finditer(r"^\s*key: (apt-pkgs-[^\n]+?)\s*$", body, re.M):
+            key = m.group(1)
+            checked += 1
+            if (path.name, key) in _LEGACY_FIXED_APT_KEYS:
+                seen_fixed.add((path.name, key))
+                continue
+            assert "${{ github.run_id }}" in key, (
+                f"{path.name} 的 apt 缓存键是固定的：{key}——主键不可变，"
+                "后面补装的包永远写不回去。照 match-reel.yml 的形状换滚动键")
+            prefix = key.split("${{ github.run_id }}")[0]
+            assert re.search(r"restore-keys: \|\n\s*" + re.escape(prefix), body), (
+                f"{path.name} 的滚动键没配 restore-keys 前缀 {prefix}——"
+                "没有它每一趟都是冷缓存，滚动键就白滚了")
+    assert checked >= 9, f"只扫到 {checked} 把 apt 缓存键，判据的主语像是没了"
+    assert seen_fixed == _LEGACY_FIXED_APT_KEYS, (
+        "豁免表和现实对不上："
+        f"{sorted(_LEGACY_FIXED_APT_KEYS - seen_fixed)} 已经不在或已改成滚动键"
+        "——从表里删掉，别留一盏恒真的绿灯")
+
+
 def test_共享的apt安装脚本形状要对():
     """`tools/ci_apt_install.sh` 是给工作流 `source` 的，形状变了要在这儿先炸，
     不要等下一次真跑 CI 才发现。
@@ -5319,6 +5396,110 @@ def test_查旁白那条路装的依赖要真的够():
         assert mod in checked or mod in sys.stdlib_module_names, (
             f"voice_prosody 要 {mod}，而 narration 那一支的预检没查它——"
             "缺了它音高表会静静退成一片「量不了」")
+
+
+def test_cookies和probe装依赖走轻装而TTS缓存只给会合语音的两档():
+    """probe / cookies 两档各装各的，别把 rembg（176 MB 模型）和 playwright 铺进去。
+
+    和「push 模式只装主依赖」「narration 只装合语音那几样」同一个理由：装全套
+    不只是慢（31 秒），更是把失败面铺大——那几个包里任何一个装不上，都会让一条
+    **本来只是验 cookie / 探测**的 run 挂掉。cookies 只拿 yt-dlp 下 30 秒试块，
+    probe 要 yt-dlp + ffmpeg + cv2（cutout 只有「封面候选帧」那一步用，而它由
+    `cutout_candidates` 控制）。
+
+    另外两头，都是缓存口径：
+    ① srckey / 缓存源片要排除 cookies——它不走 `download()`（自己往
+      `$RUNNER_TEMP` 下试块），恢复源片缓存对它是纯开销，结束时还把这份缓存
+      重传一遍挤 10 GB LRU 池；
+    ② TTS 缓存只给真会合语音的两档（render / narration）——probe、cover、
+      cookies 一个字都不合成，而滚动键（run_id 进 key）每趟都会存一份新条目，
+      白占池子把 Chromium（150 MB）和抠图模型（176 MB）往外挤，被挤掉的样子
+      只是「今天 CI 怎么慢了点」。
+    """
+    text = WORKFLOW.read_text(encoding="utf-8")
+    install = _step_block("装依赖", text)
+
+    # cookies 分支：主依赖 + yt-dlp[default]，别的一个都不装
+    ck = install[install.index('= "cookies" ]'):]
+    ck = ck[:ck.index("exit 0")]
+    assert "yt-dlp[default]" in ck, (
+        "cookies 分支必须装 yt-dlp[default]——少了 yt-dlp-ejs，n challenge 解不了，"
+        "报出来像「cookie 过期了」")
+    for heavy in ("webrender", "cutout", "playwright", "edge-tts"):
+        assert heavy not in ck, f"cookies 分支装了它用不上的 {heavy}"
+
+    # probe 分支：visualqa + yt-dlp[default] + cv2 预检；cutout 按需
+    pb = install[install.index('= "probe" ]'):]
+    pb = pb[:pb.index("exit 0")]
+    assert "[visualqa]" in pb and "yt-dlp[default]" in pb
+    assert "visualqa,cutout" in pb and "cutout_candidates" in pb, (
+        "probe 的 cutout 只在封面候选帧那趟才要，而那一趟由 cutout_candidates 控制")
+    assert "import cv2" in pb, "probe 分支没预检 cv2——装少了要到下完源片才炸"
+    assert "webrender" not in pb, "probe 不渲 HTML 封面，playwright 用不上"
+
+    # 全量那行必须还在（render / cover 走它），且排在所有轻装分支后面
+    full_at = install.index('".[webrender,visualqa,cutout]"')
+    assert full_at > install.index('= "cookies" ]')
+    assert full_at > install.index('= "probe" ]')
+
+    # ① 源片缓存那两步都要排除 cookies（连同 push / narration）
+    for name in ("算出源片缓存的键", "缓存源片（同一条片子只下一次）"):
+        excluded = _excluded_modes(_step_block(name, text))
+        missing = {"push", "narration", "cookies"} - excluded
+        assert not missing, f"「{name}」的 if 少排除了 {sorted(missing)}"
+
+    # ② TTS 缓存放行的模式恰好是 render / narration，一个不多一个不少
+    tts = _step_block("缓存 TTS（同文旁白跨趟不重合成）", text)
+    head = tts.split("uses:", 1)[0]
+    allowed = set(re.findall(r"inputs\.mode\s*==\s*'([a-z-]+)'", head))
+    assert allowed == {"render", "narration"}, (
+        f"TTS 缓存放行的是 {sorted(allowed)}，该恰好是 render / narration")
+    assert not _excluded_modes(tts), (
+        "TTS 缓存该用 == 白名单——用 != 黑名单的话，以后加一档新模式它会静默放进来")
+
+
+def test_dry_run闸在runner上排在重准备之前且拉回probe产物():
+    """`--dry-run` 0.2 秒能拦的错，runner 上不许等到装完 Chromium、下完源片才红。
+
+    「本地先跑 dry-run」靠的是人记得——而这个仓库为「靠人记得」栽过的次数
+    本文件数不过来。这一步让 runner 自己也拦一遍：spec 形状错、选段硬伤、
+    文案超限、旁白一定装不下，全死在第 30 秒，不是第 5 分钟。
+
+    判据钉三头：
+    ① 放行的模式**恰好**是读 spec 的那三档（render / cover / narration）——
+      probe 常常还没有 spec，cookies / push 不读 spec；
+    ② probe 产物要按 slug 从 HEAD 里拉回来（稀疏检出把 output/ 挡在外面，
+      不拉的话 dry-run 的 probe 层是哑的，而「没查」和「查过没问题」在日志上
+      长得一模一样——所以查不到还必须出声）；
+    ③ **位置**：排在缓存 Chromium / 缓存源片 / 起 PO token provider 之前——
+      排在后面的话，拦住了也已经白付了那几分钟的准备。
+    """
+    text = WORKFLOW.read_text(encoding="utf-8")
+    gate = _step_block("dry-run — 先把 spec 的形状错拦在编码之前", text)
+
+    # ① == 白名单，恰好三档
+    head = gate.split("run:", 1)[0]
+    allowed = set(re.findall(r"inputs\.mode\s*==\s*'([a-z-]+)'", head))
+    assert allowed == {"render", "cover", "narration"}, (
+        f"dry-run 闸放行的是 {sorted(allowed)}，该恰好是 render/cover/narration")
+    assert not _excluded_modes(gate), "该用 == 白名单，不是 != 黑名单"
+
+    # ② 真调 --dry-run；probe 产物按 slug 拉回，查不到要出声
+    assert "--dry-run" in gate, "这一步没调 --dry-run，名不副实"
+    assert "git ls-tree" in gate and "sparse-checkout add" in gate, (
+        "没把这条 slug 的 probe 产物从 HEAD 拉回来——probe 层会是哑的")
+    assert re.search(r"/reel/\$\{SLUG\}/probe\\\.json", gate), (
+        "拉的不是这条 slug 自己的 probe.json——按 slug 收窄，别把整棵 output/ 抬回来")
+    assert "::warning::" in gate, (
+        "查不到 probe 时不出声——「没查」和「查过没问题」在日志上就长一样了")
+
+    # ③ 位置：排在三样重准备之前
+    yml = _yaml_only(text)
+    gate_at = yml.index("- name: dry-run — 先把 spec 的形状错拦在编码之前")
+    for later in ("- name: 缓存 Chromium",
+                  "- name: 缓存源片（同一条片子只下一次）",
+                  "- name: 起 PO token provider"):
+        assert gate_at < yml.index(later), f"dry-run 闸排到「{later}」后面去了"
 
 
 def test_挂代理CA要排在导入edge_tts之前(tmp_path, monkeypatch, capsys):
@@ -6336,7 +6517,7 @@ def test_破发点盘点赛点一律写拿到不写要到():
 
 
 def test_重放不许把已经删掉的成片救活():
-    """push 撞车之后的重放路径**只加不减**，于是走了 Release、已经 `rm` 掉的
+    """push 撞车之后的重放路径**只加不减**的话，走了 Release、已经 `rm` 掉的
     成片会被 `reset --hard` 从 origin 上放回来，再也删不掉。
 
     run 30727483963 的日志把这件事写得清清楚楚：第一次提交是对的——
@@ -6344,17 +6525,23 @@ def test_重放不许把已经删掉的成片救活():
     重放之后那条 delete 没了。结果仓库里躺着 2 分 39 秒的旧片，而真正发出去的
     是 Release 上 3 分 53 秒的那一版。**两个地址两条片子，谁也没说哪个是哪个。**
 
-    `git checkout <ref> -- <dir>` 只恢复 ref 里**存在**的文件，不会删掉 ref 里
-    没有的——所以重放前要先把这个目录清空。
+    老修法是 `rm -rf "$OUTDIR"` 先清场再整目录 checkout——**减法的范围写死在
+    OUTDIR**，和「只重放 OUTDIR 会把草稿 spec 静默丢掉」是同一个洞的两面。
+    现在删除由这次提交的 diff 自己说：`--diff-filter=D` 列出该提交删掉的
+    每一个文件，`git rm` 把 `reset --hard` 刚救活的那份再删掉并进索引。
     """
     text = WORKFLOW.read_text(encoding="utf-8")
     block = text[text.index("push 被拒（第 $attempt 次）"):]
     block = block[:block.index("sleep $((attempt")]
-    assert 'rm -rf "$OUTDIR"' in block, (
-        "重放之前没清空 outdir——`git checkout <ref> -- <dir>` 不会删文件，"
-        "上一句 reset --hard 放回来的旧成片会一直留着")
-    assert block.index('rm -rf "$OUTDIR"') < block.index("git checkout rendered"), \
-        "清空要排在 checkout 之前，否则等于什么都没做"
+    assert "--diff-filter=D rendered^ rendered" in block, (
+        "重放没把「这次提交删掉的文件」再删一遍——reset --hard 救活的旧成片"
+        "会一直留在仓库里（run 30727483963）")
+    assert "git rm" in block and "--ignore-unmatch" in block, (
+        "删除那半要走 git rm 进索引；--ignore-unmatch 兜住"
+        "「新 origin 上本来就没有它」那一支，别让重试红在一个已经了结的删除上")
+    assert "--sparse" in block, (
+        "稀疏检出下 git rm 不带 --sparse 动不了 cone 外的索引条目——"
+        "静默陷阱和「裸 git add 只警告不报错」同族")
 
 
 def test_片长不设上限而且每条spec都要报走Release(tmp_path, capsys):
@@ -6560,7 +6747,14 @@ def test_查旁白那条路不许碰源片也不许写产物():
     assert "narration" in [o.strip() for o in opts.split(",")], (
         f"mode 里够不着 narration：{opts}")
     blocks = re.split(r"\n(?=      - (?:name|uses):)", jobs)
-    step = [b for b in blocks if "mode == 'narration'" in b]
+    # ⚠️ 选块要按「整行 if 恰好就是 narration」认：TTS 缓存那一步的 if 是
+    # `mode == 'render' || mode == 'narration'`（复合条件），裸子串 `mode ==
+    # 'narration'` 会把它一起数进来，这条就误报「narration 的步骤有 2 个」。
+    step = [
+        b for b in blocks
+        if re.search(r"^        if: github\.event\.inputs\.mode == 'narration'\s*$",
+                     b, re.M)
+    ]
     assert len(step) == 1, f"narration 的步骤有 {len(step)} 个"
     assert "--check-narration" in step[0]
     # 它什么都不产，所以清理/上传/提交都要放它过
@@ -6650,6 +6844,94 @@ def test_同一条源片不许下第二次(tmp_path, monkeypatch, capsys):
     reel.download(url, tmp_path / "f" / "source.mp4")   # 不许抛
     assert len(calls) == 1
     assert "存不进去" in capsys.readouterr().out, "存不进去要出声，别悄悄退回重下"
+
+
+def test_低清源片不许固化进缓存(tmp_path, monkeypatch, capsys):
+    """**一次瞬时的降档，不许变成永久故障。**
+
+    缓存键只有 URL，而同一条 URL 在不同一趟里能下到不同的高度（PO token /
+    n challenge 偶发没打通时 yt-dlp 会退到低画质那档）。原来低清兜底那份
+    **照样 `_keep_source`**、命中那支**从不复查高度**——于是一趟偶发的 480p
+    写进缓存之后，之后每一趟都命中它、红在 `resolve_crop` 的「高 ≥ 700」上，
+    报错还指向「换 client 重下」，而重下根本走不到：缓存把坏结果固化了
+    （和 `test_直链下到的网页不许当成源片还存进缓存` 是同一个形状，
+    只是那次固化的是网页、这次是低清）。
+
+    判据**真造文件、真走 `download()`**，四层：
+
+    1. 低清兜底（没认领 archival）**不写缓存**，而且要出声
+    2. 认领了 `archival` 的才写——那是素材本来的样子，缓存它是对的
+    3. 命中之后按认领挑地板复查：480p 对 archival（地板 400）是命中
+    4. 同一份 480p 对没认领的（地板 700）要**弃用重下**并删掉旧缓存，
+       重下拿到高清后缓存自愈
+    """
+    import subprocess  # noqa: PLC0415
+
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import build_match_reel as reel  # noqa: PLC0415
+
+    calls: list[str] = []
+    quality = {"h": 480}
+
+    def _fake_ytdlp(args, **kw):
+        calls.append(args[-1])
+        out = Path(args[args.index("-o") + 1])
+        # 文件大小就是「高度」——缓存复制/改名都保得住它，
+        # 于是 probe_size 对缓存里那份读到的正是当年下它时的高度
+        out.write_bytes(b"\0" * quality["h"])
+        return subprocess.CompletedProcess(args, 0, "", "")
+
+    monkeypatch.setattr(reel.shutil, "which", lambda _n: "/usr/bin/yt-dlp")
+    monkeypatch.setattr(reel.subprocess, "run", _fake_ytdlp)
+    monkeypatch.setattr(reel, "probe_size",
+                        lambda p: (854, Path(p).stat().st_size))
+    monkeypatch.setenv(reel._SOURCE_CACHE_ENV, str(tmp_path / "cache"))
+    url = "https://www.youtube.com/watch?v=CCCCCCCCCCC"
+    cached = reel._cached_source(url, ".mp4")
+    assert quality["h"] < reel.MIN_SOURCE_H, "fixture 前提变了：480 不再算低清"
+
+    # ① 低清兜底不进缓存（没认领 archival）
+    got = reel.download(url, tmp_path / "a" / "source.mp4")
+    assert got.stat().st_size == 480, "低清兜底那份该照旧交付（判它的是 resolve_crop）"
+    assert not cached.is_file(), (
+        "480p 的兜底被写进了缓存——下一趟起每次都命中这份低清，"
+        "一次瞬时降档从此固化")
+    assert "不进缓存" in capsys.readouterr().out, "不写缓存要出声，别静默"
+
+    # ② 认领了 archival 的才写（那是素材本来的样子）
+    n = len(calls)
+    reel.download(url, tmp_path / "b" / "source.mp4", archival=True)
+    assert len(calls) > n, "认领过的这一趟该真下"
+    assert cached.is_file() and cached.stat().st_size == 480, (
+        "认领了 archival 的低清素材该进缓存——它不是事故")
+    capsys.readouterr()
+
+    # ③ 命中复查按认领挑地板：480 ≥ MIN_ARCHIVAL_H(400)，对 archival 是命中
+    assert reel.MIN_ARCHIVAL_H <= 480 < reel.MIN_SOURCE_H, "fixture 前提变了"
+    n = len(calls)
+    reel.download(url, tmp_path / "b2" / "source.mp4", archival=True)
+    assert len(calls) == n, "archival 命中 480p 缓存却还在重下"
+    assert "命中" in capsys.readouterr().out
+
+    # ④ 同一份 480p 对没认领的要弃用重下，重下到高清后缓存自愈
+    quality["h"] = 1080
+    n = len(calls)
+    reel.download(url, tmp_path / "c" / "source.mp4")
+    out = capsys.readouterr().out
+    assert len(calls) == n + 1, "该弃用缓存重下一次"
+    assert "弃用重下" in out and "480" in out, (
+        f"弃用旧缓存要把「缓存里是几 p」说出来：{out!r}")
+    assert cached.is_file() and cached.stat().st_size == 1080, (
+        "重下拿到高清之后缓存该自愈成好的那份")
+    n = len(calls)
+    reel.download(url, tmp_path / "d" / "source.mp4")
+    assert len(calls) == n, "自愈之后第二次该命中，不该再下"
+
+    # ⑤ render 那头要真的把认领传下来——download 的 archival 形参没人传就等于没有
+    #    （「算得对」和「算出来被用上了」是两件事；行为那半在上面四层里）
+    body = Path("tools/build_match_reel.py").read_text(encoding="utf-8")
+    assert "archival=key in claimed_archival" in body, (
+        "render() 没把 archival 认领传给 download()——形参成了摆设")
 
 
 def test_只扫一段时切点要换算回源片的绝对秒数(tmp_path):
@@ -11447,7 +11729,7 @@ def test_签名源那道闸排在下载之前():
     # ② render() 里形状校验排在下载前面
     render_body = src[src.index("def render("):]
     render_body = render_body[:render_body.index("\ndef ", 1)]
-    assert render_body.index("validate_spec(spec)") < render_body.index("download(url, path)"), (
+    assert render_body.index("validate_spec(spec)") < render_body.index("download(url, path, archival="), (
         "spec 形状校验排到下载后面了——这道闸跟着一起失效")
 
     # ③ validate_spec 真的走到 spec_sources；dry-run 真的走到 validate_spec
@@ -11672,6 +11954,57 @@ def test_手动推送也要记下已推送否则自动闸会再发一次():
         "这一步不许带 `always()`——推送红了还记标记，就是那个「假标记」。")
 
 
+def test_记推送标记撞车要重试而真失败不许吞():
+    """**这一步的失败＝「微信已发、标记没落库」，两头都要堵。**
+
+    ① 原来只 `git pull --rebase` + `git push` 各一次——排在微信**已经发出去**
+    之后的一次推送，撞上并行提交就红，红完标记没落库：下一次 `render.json`
+    被合并，自动闸把这条当「没发过」**再发一条微信**，而消息收不回来。
+    pushed.json 是纯文本，rebase 必然干净，所以照「提交产物」那个循环重试。
+
+    ② 原来 `git commit -m … || exit 0` 把**一切** commit 失败（钩子炸了、
+    磁盘满、身份没配上）都吞成绿——只有「没有变化」这一种配 exit 0，
+    要用 `git diff --cached --quiet` 显式放行，别拿 `||` 一勺烩。
+    """
+    text = WORKFLOW.read_text(encoding="utf-8")
+    block = _step_block("记下已经推送过", text)
+    # ① 重试循环 + 耗尽必须红着退出（照 test_提交重试耗尽必须失败 的形状）
+    assert "for attempt in $(seq 1 5)" in block, (
+        "标记那一步没有撞车重试——单推一次撞上并行提交就把「已发未记」留给自动闸")
+    assert "git pull --rebase origin main" in block, "重试之间没有 rebase，重推必然还是被拒"
+    assert block.rfind("exit 1") > block.rfind("done"), (
+        "重试耗尽没有红着退出——静默吞掉的样子和「记上了」一模一样")
+    assert "::error::" in block, "耗尽要出声说清「微信已发、标记要人工补」"
+    # ② commit 失败不许被 `|| exit 0` 吞掉
+    assert "|| exit 0" not in block, (
+        "`git commit … || exit 0` 会把真正的 commit 失败也吞成绿——"
+        "只有「没有变化」配 exit 0")
+    assert "git diff --cached --quiet" in block, (
+        "「没有变化」要用 `git diff --cached --quiet` 显式放行，不是靠 `||`")
+
+
+def test_push模式重发要显式仓库里有pushed标记就拦():
+    """**人工重跑一次 mode=push 就是重复发一条微信，而消息收不回来。**
+
+    自动那条路有「pushed.json 在仓库里就不再发」的闸（`auto_push_gate`），
+    手动 `mode=push` 一直没有对应物——手滑重跑、忘了已经发过，都会把同一条
+    消息再推一遍。现在预检先查标记，拦下并说清出路（删掉 pushed.json 再来，
+    让重发是一次**显式的决定**）。
+
+    ⚠️ 判据钉「`git ls-files` 查 pushed.json」：稀疏检出下 `test -f` 恒假
+    （auto_push_gate 那次栽的），而且只在工作区、没提交的标记本来不算数。
+    """
+    text = WORKFLOW.read_text(encoding="utf-8")
+    block = _step_block("push 模式先确认成片真的落地了", text)
+    assert 'git ls-files -- "$OUTDIR/pushed.json"' in block, (
+        "push 预检没查 pushed.json（或者不是用 git ls-files 查的）——"
+        "手动重跑 mode=push 会把同一条微信再发一遍")
+    assert 'test -f "$OUTDIR/pushed.json"' not in block, (
+        "查标记不许用 test -f：稀疏检出下工作区那份恒不在，闸等于没装")
+    gate = block.index("pushed.json")
+    assert "exit 1" in block[gate:gate + 600], "查到标记却不拦，等于只是提了一嘴"
+
+
 def test_抓帧点不许贴着源片的最后一帧():
     """来路：2026-08-21，`swiatek-rybakina-cincinnati-injury` 那条片子的源片是
     一条 34.5 秒的 YouTube Shorts（探测报的整数位是「34.5s」，真实浮点值比它
@@ -11735,3 +12068,67 @@ def test_抓帧点不许贴着源片的最后一帧():
         assert frames, "帧目录是空的"
         for f in frames:
             assert f.stat().st_size > 0, f"{f} 是空文件——ffmpeg 没真的写出内容"
+
+
+def test_推送链接的CDN主机只有一处出处不许再写死cdn域名(tmp_path, monkeypatch):
+    """push_reel 里三处拼 jsDelivr 链接的地方（成片 video_url / 海报 poster_url /
+    数据图 stat_card_url）原来都写死 `cdn.jsdelivr.net`——而 CLAUDE.md
+    「CDN 主机名一个地方定」那节早把主机收进了 `tennislive/cdn.py`
+    （默认 gcore 镜像，`TENNISLIVE_JSDELIVR_HOST` 可覆盖）。写死的三处等于把
+    镜像开关废掉一半：校验和钉版本按 `.jsdelivr.net` 认（照常绿），链接却停在
+    旧域名——**分叉不报错，只是国内取图慢**。
+
+    两头钉，反向验证过两个方向、红在不同的断言行：
+    ① 行为：三个 URL 构建器的主机必须跟着 `TENNISLIVE_JSDELIVR_HOST` 走
+      （把 poster_url 退回写死的域名 → 这一头红）；
+    ② 代码：push_reel.py 的 AST 里不许再出现含 `cdn.jsdelivr.net` 的字符串
+      常量（往代码里塞一个 `_X = "cdn.jsdelivr.net"` → 只有这一头红，
+      证明它不被 ① 覆盖）。⚠️ 用 AST 不用文本扫——教训注释里正写着这个
+      域名（本文件反复栽过「判据扫得太宽，被自己的注释误伤」）；docstring
+      也是记教训的地方，所以摘掉再扫。
+    """
+    import ast  # noqa: PLC0415
+
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import push_reel  # noqa: PLC0415
+
+    # ① 行为：主机跟着环境变量走。conftest 的 autouse fixture 不管这个变量，
+    #    所以显式设/删两档各验一次。
+    monkeypatch.setenv("TENNISLIVE_JSDELIVR_HOST", "fastly.jsdelivr.net")
+    outdir = tmp_path / "output" / "2026-08-21" / "reel" / "demo"
+    outdir.mkdir(parents=True)
+    (outdir / "demo.mp4").write_bytes(b"0" * 1024)  # 远小于 20 MB → 走 jsDelivr 支
+    for built in (
+        push_reel.video_url(outdir, "demo.mp4"),
+        push_reel.poster_url(outdir),
+        push_reel.stat_card_url(outdir),
+    ):
+        assert built.startswith("https://fastly.jsdelivr.net/gh/"), (
+            f"链接没跟着 TENNISLIVE_JSDELIVR_HOST 走：{built}\n"
+            "多半是有人把主机名又写死回了 push_reel.py——"
+            "主机只有一处出处：tennislive/cdn.py 的 jsdelivr_base()")
+
+    monkeypatch.delenv("TENNISLIVE_JSDELIVR_HOST")
+    from tennislive.cdn import jsdelivr_host  # noqa: PLC0415
+    default = jsdelivr_host()
+    assert push_reel.poster_url(outdir).startswith(f"https://{default}/gh/"), (
+        "不设环境变量时要落回 cdn.py 的默认镜像，而不是另一个写死的域名")
+
+    # ② 代码：摘掉 docstring 之后，AST 里的字符串常量不许含 cdn.jsdelivr.net。
+    src = Path("tools/push_reel.py").read_text(encoding="utf-8")
+    tree = ast.parse(src)
+    doc_ids: set[int] = set()
+    for node in ast.walk(tree):
+        body = getattr(node, "body", None)
+        if (body and isinstance(node, (ast.Module, ast.FunctionDef,
+                                       ast.AsyncFunctionDef, ast.ClassDef))
+                and isinstance(body[0], ast.Expr)
+                and isinstance(body[0].value, ast.Constant)
+                and isinstance(body[0].value.value, str)):
+            doc_ids.add(id(body[0].value))
+    bad = [n.lineno for n in ast.walk(tree)
+           if isinstance(n, ast.Constant) and isinstance(n.value, str)
+           and "cdn.jsdelivr.net" in n.value and id(n) not in doc_ids]
+    assert not bad, (
+        f"push_reel.py 第 {bad} 行又把 cdn.jsdelivr.net 写进了代码——"
+        "主机名只许从 tennislive.cdn.jsdelivr_base() 来")

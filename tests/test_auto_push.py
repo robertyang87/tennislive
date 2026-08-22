@@ -381,3 +381,66 @@ def test_记已推送要排在发微信之后():
     assert body.index("--stage page") < body.index("--record")
     send = body.index("TENNISLIVE_ASSET_REV")
     assert send < body.index("--record"), "记已推送排到了发微信前面"
+
+
+def test_自动推送的超时盖得住Pages最坏而且被掐也要告警():
+    """三头一起钉，缺一头都是「等待窗口结构性地短于 Pages 的发布时间」重演。
+
+    ① **job 超时要盖住复制页探活的账**：实测 Pages 最坏一次发布 14 分钟，
+      reel 这条 20 分钟的老预算只剩几分钟余量；explainer 的探活窗口本身就是
+      26×30s ≈ 13 分钟，20 分钟同样贴着边。
+    ② **探活的环境变量要真的被 push_reel 读**，而且值不许超过代码里的钳位
+      （`min(60, …)` / `min(60.0, …)`）——超了会被**静默钳掉**，工作流里写的
+      数和真实生效的数从此对不上，正是 `_push` 键名写错那一族的形状。
+    ③ **超时被掐的 run 是 cancelled 不是 failure**：告警只挂 `failure()` 的话，
+      恰恰是「等满预算被掐」这种最该告警的失败静默溜走。
+    """
+    reel = WORKFLOW.read_text(encoding="utf-8")
+    reel_body = _yaml_only(reel)
+    expl = Path(".github/workflows/auto-push-explainer.yml").read_text(
+        encoding="utf-8")
+    expl_body = _yaml_only(expl)
+
+    # ① 超时下限（只许更宽，不许悄悄缩回去）
+    reel_timeout = int(re.search(r"timeout-minutes: (\d+)", reel_body).group(1))
+    assert reel_timeout >= 35, f"auto-push-reel 超时 {reel_timeout} < 35"
+    expl_timeout = int(re.search(r"timeout-minutes: (\d+)", expl_body).group(1))
+    assert expl_timeout >= 25, f"auto-push-explainer 超时 {expl_timeout} < 25"
+
+    # ② 探活环境变量：名字要和 push_reel 里读的一致，值不许超过钳位
+    push_reel_src = Path("tools/push_reel.py").read_text(encoding="utf-8")
+    m = re.search(r'TENNISLIVE_COPYPAGE_ATTEMPTS"?,', push_reel_src)
+    assert m, "push_reel 不再读 TENNISLIVE_COPYPAGE_ATTEMPTS——工作流里配了也白配"
+    attempts_cap = int(re.search(
+        r"min\((\d+), int\(os\.environ\.get\(\"TENNISLIVE_COPYPAGE_ATTEMPTS",
+        push_reel_src).group(1))
+    delay_cap = float(re.search(
+        r"min\((\d+(?:\.\d+)?), float\(os\.environ\.get\(\s*\n?"
+        r"\s*\"TENNISLIVE_COPYPAGE_RETRY_SECONDS", push_reel_src).group(1))
+    attempts = int(re.search(
+        r'TENNISLIVE_COPYPAGE_ATTEMPTS: "(\d+)"', reel_body).group(1))
+    delay = float(re.search(
+        r'TENNISLIVE_COPYPAGE_RETRY_SECONDS: "(\d+(?:\.\d+)?)"',
+        reel_body).group(1))
+    assert attempts <= attempts_cap, (
+        f"工作流写 {attempts} 次，而 push_reel 的钳位是 {attempts_cap}——"
+        "多出来的会被静默钳掉，两个数从此对不上")
+    assert delay <= delay_cap, f"间隔 {delay}s 超过钳位 {delay_cap}s，会被静默钳掉"
+    # 探活总窗口要真的盖住实测最坏（14 分钟），否则调超时是白调
+    assert attempts * delay >= 14 * 60, (
+        f"探活窗口 {attempts}×{delay}s = {attempts * delay / 60:.0f} 分钟，"
+        "盖不住实测 Pages 最坏的 14 分钟")
+    # 这两个变量要挂在**发微信那一步**的 env 里（挂错步骤等于没配）
+    send_step = reel_body[reel_body.index("- name: 推送到微信"):]
+    send_step = send_step[:send_step.index("- name: ", 10)]
+    assert "TENNISLIVE_COPYPAGE_ATTEMPTS" in send_step, (
+        "探活变量没挂在「推送到微信」那一步的 env 里")
+
+    # ③ 两条告警都要接住 cancelled
+    for name, body in (("auto-push-reel", reel_body),
+                       ("auto-push-explainer", expl_body)):
+        alarm = body[body.index("- name: 失败时告警"):]
+        if_line = re.search(r"if: (.+)", alarm).group(1)
+        assert "failure()" in if_line and "cancelled()" in if_line, (
+            f"{name} 的告警条件是 `{if_line}`——超时被掐是 cancelled，"
+            "只挂 failure() 会让最该告警的那一种静默溜走")

@@ -140,7 +140,12 @@ jobs:
           path: |
             ~/.cache/apt-archives
             ~/.cache/apt-lists
-          key: apt-pkgs-${{ runner.os }}-24.04-ci-v1
+          # 滚动键：actions/cache 的主键不可变，固定键会把第一趟存下的
+          # 半份缓存永远钉死，后面补装的包写不回去——形状照抄
+          # match-reel.yml「缓存 apt 包」那一步（那儿有完整注释）。
+          key: apt-pkgs-${{ runner.os }}-24.04-ci-v2-${{ github.run_id }}
+          restore-keys: |
+            apt-pkgs-${{ runner.os }}-24.04-ci-v2-
       # `fonts-noto-core` 不是可选项：字幕切行要**量** Noto Sans 的实际字宽，
       # 少了它 fontconfig 悄悄回退到 DejaVu（宽 8%），量出来的行宽和渲出来的
       # 对不上。代码里缺字体直接报错不回退，所以漏装这个包 CI 会红而不是假绿。
