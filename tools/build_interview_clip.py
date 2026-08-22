@@ -1318,7 +1318,19 @@ def highlight_en(text: str, phrases: list[str]) -> tuple[str, set[str]]:
 
 
 def write_ass(lines: list[dict], zh: list[str], clip_start: float, path: Path,
-              spec: dict | None = None) -> None:
+              spec: dict | None = None, *, duration: float | None = None) -> None:
+    """`lines`/`zh` 可以是空的——**顶栏可以单独烧，不必绑着对白**。
+
+    账号所有者 2026-08-22：「前面也要带上顶的，不然的话不知道是什么比赛。
+    除了封面不用，其他后面都要带上顶。」`lead_in` 那种没有 `subs`（静音
+    B-roll）的片段，原来因为「没有台词」就整段没有 `subtitles=` 滤镜、
+    顶栏跟着一起没了——这里补上：`lines` 为空时，`duration` 给出顶栏该
+    盖住多长（调用方通常就是这一段的 `end - start`），`ev` 只有 HEADA/HEADB
+    两条事件，没有 EN/ZH。
+
+    `duration` 只在 `lines` 为空时用得上；`lines` 非空时顶栏的收尾仍然按
+    最后一句台词的时刻算（和原来一样），`duration` 会被忽略。
+    """
     if len(zh) != len(lines):
         raise SystemExit(
             f"中文 {len(zh)} 行、英文 {len(lines)} 行，对不上。"
@@ -1343,30 +1355,43 @@ def write_ass(lines: list[dict], zh: list[str], clip_start: float, path: Path,
     if spec is not None and wants_topbar(spec):
         # 顶栏一直挂着：整条片子从头到尾都要能回答「这是哪一场」。
         # 刷到中段的人没看过封面，而封面只有 1.8 秒。
-        a, b = _ts(0.0), _ts(lines[-1]["b"] - clip_start)
+        if lines:
+            topbar_end = lines[-1]["b"] - clip_start
+        elif duration is not None:
+            topbar_end = duration
+        else:
+            raise SystemExit(
+                f"{spec.get('slug', '?')} 没有字幕行却要顶栏——`duration` 没给，"
+                "顶栏该盖住多长没地方推。没有台词时调用方要显式传 `duration=`"
+                "（通常就是这一段的 `end - start`）。")
+        a, b = _ts(0.0), _ts(topbar_end)
         header_lines(spec)                    # 先过宽度闸
         head_a, head_b = header_ass(spec)
         ev.append(f"Dialogue: 0,{a},{b},HEADA,,0,0,0,,{head_a}")
         ev.append(f"Dialogue: 0,{a},{b},HEADB,,0,0,0,,{head_b}")
-    # **只在写了才管，没写就是零行为改动。** 没有这个字段的存量 spec
-    # 一个字都不受影响——已发的片子不为了措辞重渲，见 CLAUDE.md。
-    phrases = (spec or {}).get("highlight_en") or []
-    unmatched = set(phrases)
-    for seg, cn in zip(lines, zh):
-        en = seg["en"].replace("&gt;&gt;", "").replace(">>", "").strip()
-        a, b = _ts(seg["a"] - clip_start), _ts(seg["b"] - clip_start)
-        if phrases:
-            en, hit = highlight_en(en, phrases)
-            unmatched -= hit
-        # 英文在上、中文在下，两行同起同落
-        ev.append(f"Dialogue: 0,{a},{b},EN,,0,0,0,,{en}")
-        ev.append(f"Dialogue: 0,{a},{b},ZH,,0,0,0,,{cn}")
-    if unmatched:
-        raise SystemExit(
-            "`highlight_en` 里这几个短语，字幕里一处都没找到：\n  "
-            + "\n  ".join(sorted(unmatched))
-            + "\n多半是打错字，或者 `en_fixed`／`word_fix` 后来改了原文。"
-            "按词边界找的，短语必须逐字（含大小写）出现在某一行英文字幕里。")
+    # 没有台词就到此为止——`highlight_en` 是给对白上色的，没有对白就没什么
+    # 可高亮，硬跑下去只会拿一份空 `lines` 去比对 `spec.highlight_en`，
+    # 把顶栏都没配文案这件事误判成「短语一个都没匹配上」。
+    if lines:
+        # **只在写了才管，没写就是零行为改动。** 没有这个字段的存量 spec
+        # 一个字都不受影响——已发的片子不为了措辞重渲，见 CLAUDE.md。
+        phrases = (spec or {}).get("highlight_en") or []
+        unmatched = set(phrases)
+        for seg, cn in zip(lines, zh):
+            en = seg["en"].replace("&gt;&gt;", "").replace(">>", "").strip()
+            a, b = _ts(seg["a"] - clip_start), _ts(seg["b"] - clip_start)
+            if phrases:
+                en, hit = highlight_en(en, phrases)
+                unmatched -= hit
+            # 英文在上、中文在下，两行同起同落
+            ev.append(f"Dialogue: 0,{a},{b},EN,,0,0,0,,{en}")
+            ev.append(f"Dialogue: 0,{a},{b},ZH,,0,0,0,,{cn}")
+        if unmatched:
+            raise SystemExit(
+                "`highlight_en` 里这几个短语，字幕里一处都没找到：\n  "
+                + "\n  ".join(sorted(unmatched))
+                + "\n多半是打错字，或者 `en_fixed`／`word_fix` 后来改了原文。"
+                "按词边界找的，短语必须逐字（含大小写）出现在某一行英文字幕里。")
     path.write_text(_ASS_HEAD + "\n".join(ev) + "\n", encoding="utf-8")
 
 
@@ -2964,10 +2989,18 @@ def _lead_in_segment(spec: dict, outdir: Path) -> Path | None:
     """片头那一段——从另一条源片剪来的比赛结尾，接在封面之后、正片之前。
 
     走的是和 `body` 完全一样的裁切／缩放／叠加链（同一块品牌深绿底、同一个
-    画布尺寸、同一套编码参数），这样 `-f concat -c copy` 才拼得上；**不印
-    顶栏**（`write_ass` 传 `spec=None`，`wants_topbar` 那一支根本不走）——
-    片头这几秒讲的是上一场的收尾，顶栏印的是这条片子自己的对阵比分，两件事
-    印在一起会让人以为比分是这几秒的。
+    画布尺寸、同一套编码参数），这样 `-f concat -c copy` 才拼得上。
+
+    **顶栏默认要印**（`wants_topbar(spec)` 那条老规矩），账号所有者
+    2026-08-22：「前面也要带上顶的，不然的话不知道是什么比赛。除了封面
+    不用，其他后面都要带上顶。」
+
+    ⚠️ **这里原来的理由是错的，一并订正**：旧注释写着「片头这几秒讲的是
+    上一场的收尾，和这条片子自己的比分是两件事」——`check_lead_in` 的
+    docstring 早就写明白了，`lead_in` 借的不是别的比赛，是**这条采访自己
+    这场球**的比赛结尾（`spec["url"]` 那份录像里没有比赛画面，所以从官方
+    逐场集锦借几秒接上）。顶栏印的对阵和比分，跟片头这几秒的赛点、庆祝、
+    握手是同一场——印上去不是编造，是补全「这是哪一场」。
 
     **原声解说要不要烧字幕，看 `lead_in.subs` 写没写。** 没写就是静音 B-roll：
     赛点、比分牌、庆祝是转播自己拍下来的画面（画面自证），配不配文字不影响
@@ -2975,6 +3008,11 @@ def _lead_in_segment(spec: dict, outdir: Path) -> Path | None:
     规矩（宽度、收尾、不留标点）烧上去——账号所有者要求「原声解说也要有
     中英文字幕」之后补的；转写这几句用的是这条源片自己的官方字幕
     （`probe` 阶段落的 `captions.txt`），不是凭印象编的。
+
+    ⚠️ **没有 `subs` 时，顶栏也要单独烧一份 ASS**——`write_ass` 现在认
+    空的 `lines`（见它的 docstring），拿 `duration=dur` 顶上「该盖住多长」。
+    只有 `wants_topbar(spec)` 显式关掉时（`topbar: false` + `_no_topbar_why`）
+    才会跳过整个 `subtitles=` 滤镜，回到最早那种什么都不烧的样子。
 
     ⚠️ **裁切参数各自独立写在 `lead_in` 块里，不沿用 `spec` 顶层那几个**——
     两条源片往往是不同机位、不同转播商剪的，`crop_ratio`/`crop_keep_top`/
@@ -3009,7 +3047,13 @@ def _lead_in_segment(spec: dict, outdir: Path) -> Path | None:
         ass = outdir / "_lead.ass"
         lines = [{"a": cue["a"], "b": cue["b"], "en": cue["en"]} for cue in subs]
         zh = [cue["zh"] for cue in subs]
-        write_ass(lines, zh, lead["start"], ass, spec=None)
+        write_ass(lines, zh, lead["start"], ass, spec=spec)
+        tail = (f"[v];[v]subtitles={ass}:fontsdir={ROOT / 'assets/fonts'}[out]")
+    elif wants_topbar(spec):
+        # 没有台词，但顶栏默认要印——单独烧一份只有 HEADA/HEADB 的 ASS，
+        # 盖住整段 `lead_in` 的时长（`dur`，见上面 `dur = lead["end"] - lead["start"]`）。
+        ass = outdir / "_lead.ass"
+        write_ass([], [], lead["start"], ass, spec=spec, duration=dur)
         tail = (f"[v];[v]subtitles={ass}:fontsdir={ROOT / 'assets/fonts'}[out]")
     chain = (
         f"color=c={_BG_COLOUR}:s={CANVAS_W}x{CANVAS_H}:d={dur}:r=25[bg];"
