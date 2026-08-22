@@ -6,6 +6,13 @@
   "end": 102.5,
   "mirrored": true,
   "_mirrored_why": "转载源把转播画面水平镜像了，话筒字样和场地标识均为反向；采访正文渲染时整段翻回正常方向。`lead_in` 是 WTA 官方集锦，没有镜像，不随顶层参数翻转。",
+  "video_eq": {
+    "contrast": 0.90,
+    "brightness": 0.04,
+    "saturation": 0.82,
+    "gamma": 1.02
+  },
+  "_video_eq_why": "转载源把对比度和饱和度推得过重，暗部细节被压住；正文先轻抬亮度和 gamma，再把对比度／饱和度收回。参数只作用于采访转载，WTA 官方 `lead_in` 不继承。最终以海报和成片里的肤色、蓝色球衣及黑位层次复核。",
   "whisper_model": "medium.en",
   "column": "赛后开麦",
   "interview_kind": "赛后场上采访",
@@ -55,7 +62,7 @@
     "但她展现了很好的体育精神",
     "这点很难得",
     "今晚对你来说很精彩",
-    "你又一次打进1000赛四强",
+    "你又一次闯进1000赛",
     "你在1000赛总是打得很好",
     "这类赛事有什么特别之处",
     "能让你打出最好的自己？",
@@ -96,10 +103,9 @@
   ],
   "en_fixed": {
     "7": "Shows how classy you are as a player.",
-    "26": "You're through to another Masters 1000 semifinal.",
     "36": "You guys are the best. That was a good one."
   },
-  "_en_fixed_why": "第 7 行自动字幕把主持人的固定说法 `as a player` 听成不合语法的 `of a player`；第 26 行漏掉了句尾 `semifinal`，否则 `You're through to another Masters 1000.` 句子残缺，且后文明确在问晋级半决赛；第 36 行 55–60 秒看台欢呼盖过一个词，自动字幕留下 `You guys are the That was a good one.`，按完整句补成 `You guys are the best. That was a good one.`。三处都要等第二份 ASR 报告逐一复核后才设 `transcript_verified`。",
+  "_en_fixed_why": "第 7 行自动字幕把主持人的固定说法 `as a player` 听成不合语法的 `of a player`；第 36 行 55–60 秒看台欢呼盖过一个词，自动字幕留下 `You guys are the That was a good one.`，按完整句补成 `You guys are the best. That was a good one.`。两处都要等第二份 ASR 报告逐一复核后才设 `transcript_verified`。第 26 行 `You're through to another Masters 1000.` 虽然口语上省略了轮次，但不能仅凭上下文擅自补 `semifinal`；第一版补词后还触发英文超宽闸，现恢复源字幕，等第二份 ASR 再判。",
   "_facts": [
     "赛果：WTA 官方比赛集锦确认高芙 6-2 6-2 击败科斯秋克，70 分钟晋级 2026 辛辛那提 WTA1000 女单四强。",
     "下一轮：高芙将在半决赛对阵萨拉·贝莱克；采访最后一问也直接点名 Sara，她说对手已经赢下几场不可思议的比赛，自己期待这个挑战。",
