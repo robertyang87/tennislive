@@ -2602,6 +2602,47 @@ def _crop_expr(ratio: float, keep: float = 1.0, shift: float = 0.0) -> str:
     return f"crop={w}:{h}:{off}:0"
 
 
+_VIDEO_EQ_LIMITS = {
+    "contrast": (-2.0, 2.0),
+    "brightness": (-1.0, 1.0),
+    "saturation": (0.0, 3.0),
+    "gamma": (0.1, 10.0),
+}
+
+
+def _video_eq_filter(spec: dict, label: str = "spec") -> str:
+    """把源片的显式色彩校正变成 ffmpeg `eq` 滤镜，没写时一个像素不变。
+
+    转载源偶尔会为了规避识别同时做镜像和重度调色。`mirrored` 只管方向，
+    `video_eq` 只管亮度／对比度／饱和度／gamma；两者分开记，免得为了修色
+    把 WTA 官方 `lead_in` 也误伤。跨视频片头要调色时，参数必须写在
+    `lead_in.video_eq`，和裁切参数一样不继承正文。
+    """
+    cfg = spec.get("video_eq")
+    if cfg is None:
+        return ""
+    if not isinstance(cfg, dict) or not cfg:
+        raise SystemExit(f"{label}.video_eq 必须是非空对象。")
+    unknown = sorted(set(cfg) - set(_VIDEO_EQ_LIMITS))
+    if unknown:
+        raise SystemExit(
+            f"{label}.video_eq 有不认识的字段：{', '.join(unknown)}；"
+            f"只支持 {', '.join(_VIDEO_EQ_LIMITS)}。")
+    parts = []
+    for key, (lo, hi) in _VIDEO_EQ_LIMITS.items():
+        if key not in cfg:
+            continue
+        value = cfg[key]
+        if isinstance(value, bool) or not isinstance(value, (int, float)):
+            raise SystemExit(f"{label}.video_eq.{key} 必须是数字，不是 {value!r}。")
+        value = float(value)
+        if not lo <= value <= hi:
+            raise SystemExit(
+                f"{label}.video_eq.{key} = {value:g} 超出 ffmpeg eq 的范围 {lo:g}～{hi:g}。")
+        parts.append(f"{key}={value:g}")
+    return "eq=" + ":".join(parts) + ","
+
+
 def cover_poster(spec: dict, src: Path, outdir: Path, logo: str = "") -> Path:
     """从源片抽一帧渲成 `poster.jpg`。**`render` 和 `--stage cover` 共用这一份。**
 
@@ -2617,6 +2658,7 @@ def cover_poster(spec: dict, src: Path, outdir: Path, logo: str = "") -> Path:
     subprocess.run(["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
                     "-ss", str(spec["cover"]["frame_at"]), "-i", str(src),
                     "-vf", (("hflip," if spec.get("mirrored") else "") + logo
+                            + _video_eq_filter(spec)
                             + _crop_expr(spec.get("crop_ratio", CROP_RATIO),
                                          float(spec.get("crop_keep_top", 1.0)),
                                          float(spec.get("crop_shift_x", 0.0)))),
@@ -2753,6 +2795,27 @@ _LEGACY_NO_OPENING = frozenset({
 })
 
 
+#: 账号所有者 2026-08-22（看完高芙这条独立采访转载）又把上面的默认补完整：
+#: 「把获胜后的画面和解说加在前面，**以后都要这么操作**」。
+#:
+#: `opening.kind: none` 只说明采访正文那条源里没有比赛画面，不能再被当成
+#: 「那就从第一问开」的出口。对**赛后场上采访**，这时必须另找同场官方集锦，
+#: 用 `lead_in` 接最后一分、庆祝和原声解说；发布会、演播室和赛前专访不属于
+#: 这条规则。下面是规则落地前仍未补完的九条债，只许随着逐条补片头而减少。
+#: 新 slug 不在表里，少 `lead_in` 会在下载前直接失败。
+_LEGACY_ONCOURT_NO_LEAD_IN = frozenset({
+    "cobolli-jodar-cincinnati-2026-r16",
+    "cobolli-paul-cincinnati-2026-qf",
+    "deminaur-fery-cincinnati-2026-r3",
+    "faria-shelton-cincinnati-2026-r2",
+    "fils-lehecka-cincinnati-2026-r3",
+    "jodar-tabilo-cincinnati-2026-r3",
+    "mensik-hijikata-cincinnati-2026-r3",
+    "nakashima-medvedev-cincinnati-2026-r3",
+    "zverev-atmane-cincinnati-2026-r3",
+})
+
+
 def check_lead_in(spec: dict) -> None:
     """跨视频接一段片头——比赛结尾不在 `spec["url"]` 自己的窗口里，是**另一条
     源片**（通常是官方逐场集锦）单独剪一段接在最前面。
@@ -2763,11 +2826,25 @@ def check_lead_in(spec: dict) -> None:
     互不冲突——用了 `lead_in` 的片子，`opening.kind` 通常仍然写 `"none"`
     （`spec["url"]` 自己确实没有比赛画面，只是不需要再收，片头已经从别处补上）。
 
-    没写 `lead_in` 时这个函数是空操作——不是每条采访都用得上这条路：
-    `@wta` 那种 320 秒以上、尾巴自带采访的集锦，压根不需要借别的源片。
+    `opening.kind: "match_end"` 时，正文源自己已经带比赛结尾，不需要再借一条；
+    发布会、演播室等也不用。反过来，**赛后场上采访**若认领 `opening.kind: none`，
+    就等于明确说正文源没有比赛结尾，此时 `lead_in` 是必填，不再允许从第一问开。
     """
     lead = spec.get("lead_in")
     if lead is None:
+        slug = spec.get("slug", "?")
+        opening = spec.get("opening") if isinstance(spec.get("opening"), dict) else {}
+        needs_cross_source_end = (
+            spec.get("interview_kind") == "赛后场上采访"
+            and opening.get("kind") == "none"
+        )
+        if needs_cross_source_end and slug not in _LEGACY_ONCOURT_NO_LEAD_IN:
+            raise SystemExit(
+                f"{slug} 是独立的赛后场上采访，`opening.kind` 又是 `none`，"
+                "说明正文源没有比赛结尾；必须用 `lead_in` 从同场官方集锦接入"
+                "最后一分、庆祝和原声解说，再接采访。\n"
+                "发布会／演播室不受这条规则影响；已有旧片债只能从"
+                " `_LEGACY_ONCOURT_NO_LEAD_IN` 逐条移除，不能加入新 slug。")
         return
     slug = spec.get("slug", "?")
     if not isinstance(lead, dict):
@@ -3054,6 +3131,7 @@ def _lead_in_segment(spec: dict, outdir: Path) -> Path | None:
         m = logo_mask(src, box, outdir / "_lead_logo_mask.png", bool(lead.get("mirrored")))
         logo = f"removelogo=filename={m},"
     flip = "hflip," if lead.get("mirrored") else ""
+    grade = _video_eq_filter(lead, "lead_in")
     keep = float(lead.get("crop_keep_top", 1.0))
     shift = float(lead.get("crop_shift_x", 0.0))
     subs = lead.get("subs")
@@ -3072,7 +3150,7 @@ def _lead_in_segment(spec: dict, outdir: Path) -> Path | None:
         tail = (f"[v];[v]subtitles={ass}:fontsdir={ROOT / 'assets/fonts'}[out]")
     chain = (
         f"color=c={_BG_COLOUR}:s={CANVAS_W}x{CANVAS_H}:d={dur}:r=25[bg];"
-        f"[0:v]{flip}{logo}{_crop_expr(ratio, keep, shift)},scale={CANVAS_W}:{vh}[fg];"
+        f"[0:v]{flip}{logo}{grade}{_crop_expr(ratio, keep, shift)},scale={CANVAS_W}:{vh}[fg];"
         f"[bg][fg]overlay=0:{VIDEO_TOP}{tail}"
     )
     dest = outdir / "_lead.mp4"
@@ -3107,6 +3185,7 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
         m = logo_mask(src, box, outdir / "_logo_mask.png", bool(spec.get("mirrored")))
         logo = f"removelogo=filename={m},"
     flip = "hflip," if spec.get("mirrored") else ""
+    grade = _video_eq_filter(spec)
     keep = float(spec.get("crop_keep_top", 1.0))
     # ⚠️ **两个调用点都要传。** 漏一个的表现是「成片裁对了、封面没裁」
     # ——两张图分开看都正常，只有并排才发现台标还在封面上。
@@ -3119,7 +3198,7 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
         # `timeout=1800` 才被杀掉。
         f"color=c={_BG_COLOUR}:s={CANVAS_W}x{CANVAS_H}:d={dur}:r=25[bg];"
         # 前景：横向收边到 crop_ratio，再铺满画布宽度
-        f"[0:v]{flip}{logo}{_crop_expr(ratio, keep, shift)},scale={CANVAS_W}:{vh}[fg];"
+        f"[0:v]{flip}{logo}{grade}{_crop_expr(ratio, keep, shift)},scale={CANVAS_W}:{vh}[fg];"
         f"[bg][fg]overlay=0:{VIDEO_TOP}[v];"
         # `fontsdir` 指向**仓库里的字体目录**（得意黑的 ttf 在那儿）。
         # 系统字体照旧走 fontconfig，思源黑体不受影响——`fontsdir` 是**追加**
