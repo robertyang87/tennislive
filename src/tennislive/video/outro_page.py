@@ -281,7 +281,11 @@ def render_clip(
              "-map", "[vout]", "-map", "[aout]",
              "-t", f"{total:.3f}",
              "-c:v", "libx264", "-preset", preset, "-crf", crf,
-             "-pix_fmt", "yuv420p",
+             # 2026-08-22：`-pix_fmt yuv420p` 不保证 `color_range=tv`——
+             # 详见采访片 `_still_segment` 那份注释（那次是 JPEG 封面漏出
+             # 满量程标记，视频号读不出封面帧）。这一屏同样是静图渲出来的，
+             # 显式钉死，别指望 ffmpeg 自己推断对。
+             "-pix_fmt", "yuv420p", "-color_range", "tv",
              # ⚠️ **声道数也要跟调用方一致。** 采访片走 `concat` demuxer +
              # `-c copy`，那条路对流参数最挑：帧率、采样率、**声道数**差一项
              # 就静默丢流，成片从某一秒起没声音，而 ffmpeg 不报错。
@@ -344,7 +348,8 @@ def build_with_voice(
         subprocess.run(
             ["ffmpeg", "-y", "-hide_banner", "-loglevel", "error", "-i", str(MASTER),
              "-r", str(fps_expr or int(fps)),
-             "-c:v", "libx264", "-preset", preset, "-crf", crf, "-pix_fmt", "yuv420p",
+             "-c:v", "libx264", "-preset", preset, "-crf", crf,
+             "-pix_fmt", "yuv420p", "-color_range", "tv",
              "-c:a", "aac", "-b:a", audio_bitrate, "-ar", audio_rate,
              "-ac", str(audio_channels), str(dest)],
             check=True)
