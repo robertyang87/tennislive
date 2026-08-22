@@ -1,0 +1,29 @@
+name: codex-publish-cincinnati-qf-reels
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/codex-publish-cincinnati-qf-reels.yml
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Publish the two QA-approved Cincinnati quarterfinal reels
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          gh workflow run match-reel.yml --repo "$GH_REPO" \
+            --ref main \
+            -f mode=push -f slug=bejlek-keys-cincinnati-2026-qf -f push=true
+          gh workflow run match-reel.yml --repo "$GH_REPO" \
+            --ref main \
+            -f mode=push -f slug=fritz-nakashima-cincinnati-2026-qf -f push=true
