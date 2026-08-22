@@ -2713,6 +2713,46 @@ _LEGACY_NO_OPENING = frozenset({
 })
 
 
+def check_lead_in(spec: dict) -> None:
+    """跨视频接一段片头——比赛结尾不在 `spec["url"]` 自己的窗口里，是**另一条
+    源片**（通常是官方逐场集锦）单独剪一段接在最前面。
+
+    和 `opening` 管的不是同一件事：`opening` 描述 `spec["url"]` 自己那份画面
+    怎么开头（没有 `lead_in` 时，答案一律是「从第一个问题起」或「发布会」）；
+    这条描述的是**从另一个视频借几秒画面**，插在封面之后、正片之前。两个字段
+    互不冲突——用了 `lead_in` 的片子，`opening.kind` 通常仍然写 `"none"`
+    （`spec["url"]` 自己确实没有比赛画面，只是不需要再收，片头已经从别处补上）。
+
+    没写 `lead_in` 时这个函数是空操作——不是每条采访都用得上这条路：
+    `@wta` 那种 320 秒以上、尾巴自带采访的集锦，压根不需要借别的源片。
+    """
+    lead = spec.get("lead_in")
+    if lead is None:
+        return
+    slug = spec.get("slug", "?")
+    if not isinstance(lead, dict):
+        raise SystemExit(f"{slug} 的 `lead_in` 必须是一个对象（url/start/end/why）。")
+    if not str(lead.get("url", "")).strip():
+        raise SystemExit(f"{slug} 的 `lead_in` 缺 `url`——片头从哪条源片接，没人说。")
+    start, end = lead.get("start"), lead.get("end")
+    if (not isinstance(start, (int, float)) or not isinstance(end, (int, float))
+            or end <= start):
+        raise SystemExit(
+            f"{slug} 的 `lead_in.start`/`end` 是 {start!r}/{end!r}——必须是数字，"
+            "且 end 大于 start。")
+    dur = end - start
+    if not 0 < dur <= _OPENING_LEAD_MAX:
+        raise SystemExit(
+            f"{slug} 的 `lead_in` 长 {dur:.1f} 秒，必须在 0～{_OPENING_LEAD_MAX} 秒之间"
+            "——这是「先交代比赛结束」的片头，不是集锦，收多了就变成另一个栏目"
+            "（「赛场之上」）。")
+    if not str(lead.get("why", "")).strip():
+        raise SystemExit(
+            f"{slug} 的 `lead_in` 没写 `why`——说清收的是哪一段（起点、画面里发生"
+            "了什么、为什么要从这条源片接，而不是 `spec['url']` 自己的画面），\n"
+            "写不出来就说明还没打开源片看过。")
+
+
 # 规矩之前发出去的六条，**只许减不许加**，而且有自检（见
 # `test_没有解读卡的老片子只许减不许加`）：表里每个 slug 必须真的存在、
 # 而且真的还没有 `takeaway`——写错一个名字，豁免就成了一盏恒真的绿灯。
@@ -2871,15 +2911,75 @@ def ours_ratio(spec: dict) -> tuple[float, float]:
 
     片尾那 3 秒也算：它是我们自己渲的画面。但它是**固定的**，所以指望它撑起
     占比是不行的——片子越长它越不顶用，这也正是这个比例该有的行为。
+
+    ⚠️ `lead_in`（跨视频借来的比赛结尾）**不算我们的**——它和 `body` 一样是
+    借来的转播画面，只是出处不同一条源片。分母要把它算进去，不然占比会算
+    偏高：借来的画面越多，这个比例本该越低。
     """
     sys.path.insert(0, str(ROOT / "src"))
     from tennislive.video import outro_page  # noqa: PLC0415
 
     tk = spec.get("takeaway") or {}
+    lead = spec.get("lead_in")
+    lead_secs = (lead["end"] - lead["start"]) if lead else 0.0
     ours = (COVER_SECONDS * bool(spec.get("cover"))
             + sum(takeaway_seconds(tk[k]) for k in ("open", "close") if tk.get(k))
             + outro_page.min_length())
-    return ours, ours + (spec["end"] - spec["start"])
+    return ours, ours + lead_secs + (spec["end"] - spec["start"])
+
+
+def _lead_in_segment(spec: dict, outdir: Path) -> Path | None:
+    """片头那一段——从另一条源片剪来的比赛结尾，接在封面之后、正片之前。
+
+    走的是和 `body` 完全一样的裁切／缩放／叠加链（同一块品牌深绿底、同一个
+    画布尺寸、同一套编码参数），这样 `-f concat -c copy` 才拼得上；唯独不带
+    `subtitles=` 那一节——**这几秒不烧字幕、不印顶栏**：赛点、比分牌、庆祝
+    是转播自己拍下来的画面（画面自证），不是我们要翻译校验的对话，硬凑一段
+    没核对过的转写反而是这个仓库最想拦住的事。转写和翻译只做在 `body`
+    （真正的采访）那一段上。
+
+    ⚠️ **裁切参数各自独立写在 `lead_in` 块里，不沿用 `spec` 顶层那几个**——
+    两条源片往往是不同机位、不同转播商剪的，`crop_ratio`/`crop_keep_top`/
+    `crop_shift_x`/`mirrored`/`logo_box` 没道理是同一个数，写两处才不会一条
+    源片的画面被另一条源片的裁切窗口切歪。
+
+    没有 `lead_in` 时返回 `None`——`render()` 据此决定要不要把它塞进 `parts`。
+    """
+    lead = spec.get("lead_in")
+    if lead is None:
+        return None
+    # ⚠️ **文件名要带 `_` 前缀，不能叫 `source_lead.mp4`。** 工作流的清理步骤
+    # 按 `rm -f "$D"/source.*` 清主源片、按 `rm -rf "$D"/_*` 清所有 `_` 开头的
+    # 中间物——两条都是**按文件名的前缀/通配匹配**，不是「删掉源片这一类东西」。
+    # `source_lead.mp4` 两条都不命中（`source.*` 要求「source」后面紧跟一个
+    # 点，`_lead.mp4` 才吃后一条），会静静地跟着成片一起进仓库。
+    src = yt_download(lead["url"], outdir / "_lead_source.mp4",
+                      "bv*[height<=720]+ba/b[height<=720]", spec)
+    dur = lead["end"] - lead["start"]
+    ratio = lead.get("crop_ratio", CROP_RATIO)
+    vh = int(CANVAS_W / ratio)
+    logo = ""
+    if box := lead.get("logo_box"):
+        m = logo_mask(src, box, outdir / "_lead_logo_mask.png", bool(lead.get("mirrored")))
+        logo = f"removelogo=filename={m},"
+    flip = "hflip," if lead.get("mirrored") else ""
+    keep = float(lead.get("crop_keep_top", 1.0))
+    shift = float(lead.get("crop_shift_x", 0.0))
+    chain = (
+        f"color=c={_BG_COLOUR}:s={CANVAS_W}x{CANVAS_H}:d={dur}:r=25[bg];"
+        f"[0:v]{flip}{logo}{_crop_expr(ratio, keep, shift)},scale={CANVAS_W}:{vh}[fg];"
+        f"[bg][fg]overlay=0:{VIDEO_TOP}[out]"
+    )
+    dest = outdir / "_lead.mp4"
+    subprocess.run(
+        ["ffmpeg", "-y", "-ss", str(lead["start"]), "-t", str(dur), "-i", str(src),
+         "-filter_complex", chain,
+         "-map", "[out]", "-map", "0:a:0?",
+         "-c:v", "libx264", "-preset", "medium", "-crf", "20",
+         "-r", "25", "-pix_fmt", "yuv420p",
+         "-c:a", "aac", "-b:a", "128k", "-ar", "48000", "-ac", "2", str(dest)],
+        check=True, timeout=600)
+    return dest
 
 
 def render(spec: dict, ass: Path, outdir: Path) -> Path:
@@ -2949,6 +3049,8 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
         parts.append(_still_segment(cover_poster(spec, src, outdir, logo),
                                     COVER_SECONDS, outdir / "_cover.mp4"))
     parts += _takeaway_segments(spec, outdir, "open")
+    if (lead := _lead_in_segment(spec, outdir)) is not None:
+        parts.append(lead)
     parts.append(body)
     parts += _takeaway_segments(spec, outdir, "close")
     if (outro := _build_outro(outdir)) is not None:
@@ -3096,6 +3198,7 @@ def main() -> int:
     # 「这条片子怎么开头」是写 spec 那一刻就该定下来的事，让它在第 0.2 秒报，
     # 而不是等九分钟的 render 出片之后再由人看出来「怎么一上来就有人在说话」。
     check_opening(spec)
+    check_lead_in(spec)
     outdir = OUTDIR / spec["slug"]
     outdir.mkdir(parents=True, exist_ok=True)
     ass = outdir / f"{spec['slug']}.ass"
