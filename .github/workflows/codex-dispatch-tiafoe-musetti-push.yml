@@ -1,0 +1,28 @@
+name: codex-dispatch-tiafoe-musetti-push
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/codex-dispatch-tiafoe-musetti-push.yml
+permissions:
+  actions: write
+  contents: read
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Push landed Tiafoe-Musetti reel to WeChat
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          gh workflow run match-reel.yml --repo "$GH_REPO" \
+            --ref main \
+            -f mode=push \
+            -f slug=tiafoe-musetti-cincinnati-2026-qf \
+            -f url='https://youtu.be/CLXw7um5Y4o?is=RBC1BsR6pztpaWKs' \
+            -f every=2 \
+            -f cutout_candidates=false \
+            -f push=true
