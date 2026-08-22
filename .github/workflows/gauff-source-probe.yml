@@ -31,28 +31,32 @@ jobs:
           else
             : > /tmp/yt-cookies.txt
           fi
-      - name: Search fresh official and broadcast uploads
+      - name: Probe exact repost and print full transcript
+        env:
+          URL: https://www.youtube.com/watch?v=0a1H0eg1dyE
         run: |
           COOKIE_ARGS=()
           if [ -s /tmp/yt-cookies.txt ]; then COOKIE_ARGS=(--cookies /tmp/yt-cookies.txt); fi
-          FORMAT='%(upload_date)s | %(channel)s | %(id)s | %(duration_string)s | %(title)s'
-          for QUERY in \
-            'ytsearch30:Coco Gauff Kostyuk Cincinnati interview 2026' \
-            'ytsearch30:Coco Gauff Cincinnati post match interview 2026' \
-            'ytsearch30:Coco Gauff Cincinnati press conference 2026'
-          do
-            echo "SEARCH_BEGIN=$QUERY"
-            yt-dlp --no-warnings --js-runtimes node "${COOKIE_ARGS[@]}" \
-              --flat-playlist --skip-download --print "$FORMAT" "$QUERY" || true
-            echo "SEARCH_END=$QUERY"
-          done
-          for CHANNEL in \
-            'https://www.youtube.com/@CincyTennis/videos' \
-            'https://www.youtube.com/@TennisChannel/videos' \
-            'https://www.youtube.com/@WTA/videos'
-          do
-            echo "CHANNEL_BEGIN=$CHANNEL"
-            yt-dlp --no-warnings --js-runtimes node "${COOKIE_ARGS[@]}" \
-              --flat-playlist --playlist-end 40 --print "$FORMAT" "$CHANNEL" || true
-            echo "CHANNEL_END=$CHANNEL"
-          done
+          yt-dlp --no-warnings --js-runtimes node "${COOKIE_ARGS[@]}" --skip-download \
+            --print 'TITLE=%(title)s' --print 'CHANNEL=%(channel)s' \
+            --print 'DURATION=%(duration)s' --print 'UPLOAD_DATE=%(upload_date)s' \
+            --print 'RESOLUTION=%(width)sx%(height)s' --print 'DESCRIPTION=%(description)s' "$URL"
+          yt-dlp --no-warnings --js-runtimes node "${COOKIE_ARGS[@]}" \
+            --skip-download --write-auto-subs --sub-langs en --sub-format json3 \
+            -o '/tmp/cap_%(id)s' "$URL"
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          files = sorted(Path('/tmp').glob('cap_*.en.json3'))
+          if not files:
+              raise SystemExit('NO_ENGLISH_AUTO_SUBS')
+          data = json.loads(files[-1].read_text(encoding='utf-8'))
+          print('TRANSCRIPT_BEGIN')
+          for event in data.get('events', []):
+              t = event.get('tStartMs', 0) / 1000
+              text = ''.join(seg.get('utf8', '') for seg in event.get('segs') or []).strip()
+              if text:
+                  print(f'{t:7.2f} {text}')
+          print('TRANSCRIPT_END')
+          PY
