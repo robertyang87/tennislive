@@ -15,17 +15,15 @@ on:
   # 现在下游有了——`pick_oncourt_clips.py` 挑成片候选、`oncourt_feed.py` 推清单，
   # 都是这条库的直接消费者。没有定时采集，新采访永远进不来，成片候选永远是空的。
   schedule:
-  # **每天两轮**，不是每周。「赢球后的采访」等一周就没意义了——
-  # 赛事一周打完，周推的话决赛采访最晚要等七天才到手。
+  # **每 3 小时一轮**（原来每天两轮）。这条现在是「赛后开麦」自动出片链的
+  # 第一环——采集 → 候选 → 草稿，后面 interview-auto-render 每半小时接一次；
+  # 采集一天只醒两次的话，一条比赛日下午打完的采访要等到深夜才建草稿，
+  # 而这条线的规矩是「上一个比赛日的不做了」——等一晚等出来的常常是过期候选。
+  # 每 3 小时把「打完 → 草稿在手」的最坏等待压到 3 小时。
   #
-  # cron 一律是 UTC，北京时间要自己减八小时；**减完跨了零点就要连日期一起挪**。
-  #
-  # 两轮的分工按**赛区落在 UTC 的哪一段**来定，不是随手挑两个整点：
-  #   北京 05:00（21:00 UTC）——欧洲白天和傍晚场都打完并上传了
-  #   北京 11:00（03:00 UTC）——补美洲晚场。美东夜场常在 01:00–04:00 UTC
-  #                             才结束，上一轮跑的时候它还没打完
-  - cron: "0 21 * * *"   # 北京 05:00（次日）
-  - cron: "0 3 * * *"    # 北京 11:00（当日）
+  # 分钟取 7，避开 :00/:30——GitHub 在整点半点最容易延迟或丢弃
+  # （daily 当年留下的经验，knowledge-adhoc 的 08:37 也是这么定的）。
+  - cron: "7 */3 * * *"
   workflow_dispatch:
     inputs:
       only:
@@ -52,18 +50,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          # **别把 output/ 拉下来。** HEAD 上它就有 1.36 GB（.git 1.77 GiB），
-          # checkout 因此每次要一分半上下（daily 那条量到 1:31，match-reel 2:44），
-          # 而**这条工作流一个字节都不碰 output/**。稀疏检出把它挡在外面，
-          # 剩下的全部加起来 161 MB。cone 模式下根目录的文件总是带上。
-          #
-          # ⚠️ 这里没有 `git sparse-checkout add`——因为它不写产物。会写
-          # `output/` 的那几条要在算出目录之后把自己那一格 add 回来，
-          # 见 match-reel.yml。照抄这一段之前先确认你这条真的不写产物。
+          # **别把整棵 output/ 拉下来。** HEAD 上它就有 1.36 GB（.git 1.77 GiB），
+          # checkout 因此每次要一分半上下（daily 那条量到 1:31，match-reel 2:44）。
+          # 这条工作流**只写 `output/interviews/`**（自动建草稿落的第一份转写
+          # cap_asr.json3，现在只有几 MB 文本）——目录是固定的，按仓库的老规矩
+          # 直接列进 sparse-checkout（「目录固定 → 直接列，不用 add」），
+          # 其余 output/ 照旧挡在外面。cone 模式下根目录的文件总是带上。
           sparse-checkout: |
             assets
             data
             docs
+            output/interviews
             specs
             src
             tests
@@ -81,6 +78,10 @@ jobs:
 
       - name: 采集
         run: |
+          # **pipefail 必须开**：这一步是 `python | tee`，不开的话 bash 报的是
+          # tee 的退出码——采集崩了整步照样绿（「筛出关键场次」那一步就这么
+          # 骗过一次，这里是同一个形状）。
+          set -o pipefail
           # 默认日常增量（每源 60 条，约 1 分钟）。新内容永远在频道最前面，
           # 每天重刷 800 条历史既慢又没意义——手动派发时勾 full 才深扫。
           python tools/collect_oncourt_interviews.py \
@@ -100,18 +101,16 @@ jobs:
         # 注册表里最有价值的几个源全是手搜出来的（Eurosport 78 条、
         # United Cup 84、Hopman Cup 118），它们不在任何官方清单上。
         # 新的还会不断冒出来，搬运号尤其如此，所以把发现本身自动化。
-        # 只在周一跑：搜索有配额，每天跑没必要——新源不会天天出现。
-        #
-        # **只挂在早上那一轮上。** 一天跑两轮，不限定的话周一会搜两遍。
-        if: github.event.schedule != '0 3 * * *'
+        # 只在周一跑一次：搜索有配额，每天跑没必要——新源不会天天出现。
         run: |
-          # 星期几按**上海时间**算。早上那一轮是 21:00 UTC 起跑，UTC 还停在
-          # 前一天——`date -u +%u` 判出来的「周一」其实是北京的周二。
-          # 这就是仓库里那条「产物在哪个日期目录下按上海时间算」的同一个坑。
-          if [ "$(TZ=Asia/Shanghai date +%u)" = "1" ] || [ -n "${{ github.event.inputs.only }}" ]; then
+          # 星期几按**上海时间**算（「产物在哪个日期目录下按上海时间算」同一个坑）。
+          # cron 现在是每 3 小时一轮（`7 */3 * * *`），只看星期几的话周一会搜
+          # 八遍——再钉一个钟点：只认 21:07 UTC 那一轮（北京周一 05:07，
+          # 沿用原来「早上那一轮」的位置）。手动 dispatch 带 only 时照旧放行。
+          if [ -n "${{ github.event.inputs.only }}" ] || { [ "$(TZ=Asia/Shanghai date +%u)" = "1" ] && [ "$(date -u +%H)" = "21" ]; }; then
             python tools/discover_oncourt_sources.py --min 2 | tee -a /tmp/oncourt.log || true
           else
-            echo "非周一（上海时间 $(TZ=Asia/Shanghai date '+%F %A')），跳过来源发现。"
+            echo "非周一 21 时那一轮（上海 $(TZ=Asia/Shanghai date '+%F %A')，UTC $(date -u +%H) 时），跳过来源发现。"
           fi
 
       - name: 比对赛果，算出「赢了但没采访」的缺口
@@ -161,17 +160,40 @@ jobs:
           python tools/pick_oncourt_clips.py --write \
             | tee -a /tmp/oncourt.log
 
+      # ⚠️ **YT_COOKIES 要的是文件路径，不是内容。** 原来这儿直接
+      # `YT_COOKIES: ${{ secrets.YT_COOKIES_TXT }}` 把 Netscape 文本整段塞进
+      # 环境变量——draft_interview_spec 里那句 `os.path.isfile(cookies)` 恒假，
+      # cookies 一次都没带上过，而 YouTube 候选的下载失败读起来像「被限流」。
+      # 照 interview-clip.yml 的「落 cookies」那套：先写成文件，再传路径。
+      - name: 落 cookies（配了 Secret 才有）
+        id: oncourt_cookies
+        env:
+          YT_COOKIES_TXT: ${{ secrets.YT_COOKIES_TXT }}
+        run: |
+          if [ -n "$YT_COOKIES_TXT" ]; then
+            printf '%s' "$YT_COOKIES_TXT" > "$RUNNER_TEMP/yt-cookies.txt"
+            echo "path=$RUNNER_TEMP/yt-cookies.txt" >> "$GITHUB_OUTPUT"
+            echo "已写入 cookies（$(wc -l < "$RUNNER_TEMP/yt-cookies.txt") 行）"
+          else
+            echo "没有配 YT_COOKIES_TXT，裸下试试"
+          fi
+
       - name: 自动建赛后开麦 spec 草稿（转写 + 翻译）
         env:
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
-          YT_COOKIES: ${{ secrets.YT_COOKIES_TXT }}
+          YT_COOKIES: ${{ steps.oncourt_cookies.outputs.path }}
         run: |
+          # **pipefail 必须开**：主命令是 `python | tee`，不开的话草稿建崩了
+          # 这一步照样绿——而「草稿没建成」和「今天没有候选」在下游看起来
+          # 一模一样（interview-auto-render 只会看到没有草稿可提升）。
+          set -o pipefail
           # 对**全部**候选并行建草稿：yt-dlp 下音频 → faster-whisper small.en 转写 →
-          # DeepSeek 翻译 → specs/interviews/<slug>.draft.json。⚠️ 必须并行——
-          # 好多比赛差不多时间结束，一条一条跑（下音频+whisper+翻译约 1-3 分钟）
-          # N 场就是 N 倍时间；`--max-parallel 2` 把总时间压成「最慢那一场 × 2」，
-          # 也别开太大（whisper 吃 CPU，runner 4 核，2 保守）。候选为空就跳过
-          # （连 faster-whisper 都不装）。
+          # DeepSeek 翻译 → specs/interviews/<slug>.draft.json ＋
+          # output/interviews/<slug>/cap_asr.json3（第一份转写，--stage subs 的输入）。
+          # ⚠️ 必须并行——好多比赛差不多时间结束，一条一条跑（下音频+whisper+翻译
+          # 约 1-3 分钟）N 场就是 N 倍时间；`--max-parallel 2` 把总时间压成
+          # 「最慢那一场 × 2」，也别开太大（whisper 吃 CPU，runner 4 核，2 保守）。
+          # 候选为空就跳过（连 faster-whisper 都不装）。
           n=$(python -c "import json;print(len(json.load(open('data/interview_clip_candidates.json'))))" 2>/dev/null || echo 0)
           if [ "$n" = "0" ]; then
             echo "没有成片候选，跳过自动建 spec。"
@@ -185,14 +207,20 @@ jobs:
         run: |
           # 只碰这几个文件。并行的生成任务互相覆盖过整棵 output/，
           # 这里从一开始就把范围钉死。
-          if git diff --quiet -- data/oncourt_interviews.json data/oncourt_feed_sent.json data/interview_clip_candidates.json specs/interviews; then
+          #
+          # **先 add 再判**：自动建草稿产出的是**新建**的未跟踪文件
+          # （specs/interviews/*.draft.json、output/interviews/<slug>/cap_asr.json3），
+          # 裸的 `git diff --quiet` 看不见它们——原来的写法会在「只有新草稿、
+          # 没有老文件变化」的那一轮打印「没有新增」直接退出，整轮转写翻译
+          # 就这么静默丢掉（interview-auto-render 的提交步踩过一模一样的坑）。
+          git config user.name "Claude"
+          git config user.email "noreply@anthropic.com"
+          git add data/oncourt_interviews.json data/oncourt_feed_sent.json data/interview_clip_candidates.json specs/interviews output/interviews
+          if git diff --cached --quiet; then
             echo "没有新增，不提交。"
             exit 0
           fi
           n=$(python -c "import json;print(len(json.load(open('data/oncourt_interviews.json'))['items']))")
-          git config user.name "Claude"
-          git config user.email "noreply@anthropic.com"
-          git add data/oncourt_interviews.json data/oncourt_feed_sent.json data/interview_clip_candidates.json specs/interviews
           python tools/check_staged_file_sizes.py
           git commit -m "data: 场上赛后采访采集（累计 ${n} 条）+ 成片候选 + 采访 spec 草稿"
           for i in 1 2 3 4; do

@@ -56,6 +56,7 @@ from __future__ import annotations
 
 import argparse
 import difflib
+import hashlib
 import io
 import json
 import re
@@ -1369,7 +1370,12 @@ def write_ass(lines: list[dict], zh: list[str], clip_start: float, path: Path,
     path.write_text(_ASS_HEAD + "\n".join(ev) + "\n", encoding="utf-8")
 
 
-COVER_SECONDS = 1.8      # 和「赛场之上」一致：够读完两行钩子，又不至于让人等
+# ⚠️ 「和赛场之上一致」这半句 2026-08-21 起过期了：reel 那条线的
+# `COVER_SECONDS` 已经一路降到 **1.2**（封面默认还跟着 `cover.narration` 走，
+# 常量只是退路）。这条线的 1.8 是自己的取舍——采访片封面没有配音，1.2 秒
+# 读不完两行钩子。改这个数之前先看已发成片的封面实测，别照抄 reel。
+COVER_SECONDS = 1.8      # 够读完两行钩子，又不至于让人等
+
 
 # ── 解读卡（落点卡 / 收尾卡）────────────────────────────────────────────
 #
@@ -1577,6 +1583,42 @@ def _second_model(spec: dict) -> str:
     「这两份到底是谁跟谁比」的地方。
     """
     return spec.get("whisper_model", DEFAULT_WHISPER)
+
+
+VERIFY_FP = "verify_fingerprint.json"
+
+
+def transcript_fingerprint(spec: dict, lines: list[dict], outdir: Path) -> str:
+    """这份转写此刻长什么样——`--stage verify` 过没过，凭它认。
+
+    **为什么要有它**：`verify_transcript` 一趟要下音频、跑 3.5~5 分钟的
+    whisper，而 `mode=render` 每一趟都先跑它——**转写一个字没变时，那 5 分钟
+    量出来的是上一次已经量过的同一份**，不产生新信息（CLAUDE.md「同一件事
+    重复验证几遍」那条说的正是这种）。verify 通过后把指纹落在
+    `verify_fingerprint.json`（进仓库，清理步骤按后缀/前缀删不到它）；
+    下一趟 verify 时指纹没变 **且** 人已核过（`transcript_verified: true`）
+    才跳过——**两个条件缺一不可**：只看指纹的话，一条从没人核过的转写也会
+    被「上次 verify 跑过」放行。
+
+    进指纹的每一样都是「变了就该重验」的：
+
+    - `cap_*.json3` 的字节——第一份转写的源。换源片/重拉字幕都会变
+    - 切出来的每一行 `en`——`word_fix`/`en_fixed`/去语气词/改 start·end
+      全都落在这上面（`en_fixed` 另外单独进一份，防「行数变了恰好互相抵消」）
+    - 第一份/第二份用的模型名——换了 `whisper_model`，上一次的核对
+      证明不了新配置
+    """
+    h = hashlib.sha256()
+    for cap in sorted(outdir.glob("cap_*.json3")):
+        h.update(cap.name.encode("utf-8"))
+        h.update(cap.read_bytes())
+    for seg in lines:
+        h.update(seg["en"].encode("utf-8"))
+        h.update(b"\n")
+    h.update(json.dumps(spec.get("en_fixed") or {}, sort_keys=True,
+                        ensure_ascii=False).encode("utf-8"))
+    h.update(f"{spec.get('asr_model', '')}|{_second_model(spec)}".encode())
+    return h.hexdigest()
 
 
 def verify_transcript(spec: dict, lines: list[dict], outdir: Path) -> Path:
@@ -3104,7 +3146,31 @@ def main() -> int:
               f"   销账写进 `caption_gaps_ok`，键是 `{gap_key(a, b)}`")
 
     if args.stage == "verify":
+        # **转写没变、人也核过的，不再重跑 5 分钟的 whisper。** 指纹的账和
+        # 两个条件为什么缺一不可，见 `transcript_fingerprint` 的 docstring。
+        # 跳过要出声——「跳过了」和「跑过了」在日志上不许长得一样。
+        fp_path = outdir / VERIFY_FP
+        fp = transcript_fingerprint(spec, lines, outdir)
+        recorded = ""
+        if fp_path.is_file():
+            try:
+                recorded = json.loads(
+                    fp_path.read_text(encoding="utf-8")).get("sha256", "")
+            except (OSError, ValueError):
+                recorded = ""  # 读不了当成没记过，照常全跑
+        if spec.get("transcript_verified") is True and recorded == fp:
+            print(f"[verify] 转写指纹没变（{fp[:12]}…）且已人工核过"
+                  "（transcript_verified: true），跳过第二份 ASR。"
+                  "改一行 en_fixed / 换字幕源 / 换模型都会让指纹变、重新全跑。")
+            return 0
         verify_transcript(spec, lines, outdir)
+        # **只在 verify 走完（没抛）之后落指纹**：分歧超闸抛 SystemExit 时
+        # 不许留下「这份验过了」的标记——那正是「记已推送要排在发微信之后」
+        # 的同一条顺序规矩。
+        fp_path.write_text(json.dumps({"sha256": fp}, indent=1) + "\n",
+                           encoding="utf-8")
+        print(f"[verify] 指纹已落 {fp_path.name}（{fp[:12]}…）——"
+              "下次转写没变且 transcript_verified 已置上时跳过 whisper。")
         return 0
 
     if args.stage == "cover":

@@ -28,8 +28,25 @@ on:
     # 只盯 render.json：它是「这条采访渲完了」的产物，而且**成片本身不在这儿**
     # ——2026-08-13 起采访成片一律传 Release，链接就记在 render.json 的
     # `video_url` 里。盯 mp4 会一条都盯不到。
+    #
+    # ⚠️ **on:push 这条路对 render 的常规提交是死的**：interview-clip 的成片
+    # 提交用的是仓库自带的 GITHUB_TOKEN，而 GitHub 明文规定这种 push 不创建
+    # workflow run（防递归——`pages.yml` 那条早记过同一条规则）。量过：
+    # 50 份 render.json / 0 份 pushed.json，也就是这条触发器从上线起一次都
+    # 没为 render 醒来过。留着它当兜底（人手推的 render.json 还能触发），
+    # **主路是下面的 workflow_dispatch**——interview-clip 渲完自己来叫醒。
     paths:
       - "output/interviews/*/render.json"
+  # 主路：interview-clip「提交成片」之后 `gh workflow run … -f slug=<slug>`
+  # 叫醒这条（workflow_dispatch 正是 GITHUB_TOKEN 防递归那条禁令**明文列出的
+  # 例外**）。slug 留空＝扫仓库里全部 render.json——五道闸把已推过/没认领的
+  # 都拦掉，「一趟最多一条」保证不会批量误发。
+  workflow_dispatch:
+    inputs:
+      slug:
+        description: "只查这一条采访（留空＝扫全部，闸照过）"
+        required: false
+        default: ""
 
 permissions:
   contents: write
@@ -46,10 +63,22 @@ concurrency:
 jobs:
   push:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    # 70 分钟：下面「推送到微信」那一步等复制页最长 60×40s＝40 分钟，job 的
+    # 预算必须明显盖过它——原来的 60 分钟离得太近，等待窗口一走满、再加几分钟
+    # 提交/重试，砍掉的时机正好落在「复制页已提交、微信一个字没发」那一段。
+    timeout-minutes: 70
     env:
       PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
     steps:
+      # dispatch 可以选分支，而这条路的产物只在 main 上成立（Pages 只服务
+      # main、海报链接钉 commit）——别的分支一律当场红，不许静静跑完。
+      - name: dispatch 只认 main
+        if: github.event_name == 'workflow_dispatch' && github.ref_name != 'main'
+        run: |
+          echo "::error::自动推送只在 main 上跑——复制页和海报在分支上永远 404，"
+          echo "::error::而微信那条消息发出去收不回来。请在 main 上重新 dispatch。"
+          exit 1
+
       - uses: actions/checkout@v4
         with:
           # 只取 HEAD 和它的父提交：算「这次改了哪些文件」要 diff 一次，
@@ -83,7 +112,30 @@ jobs:
 
       - name: 挑出该自动发的那一条
         id: gate
+        env:
+          # 值走 env 不直接拼进脚本正文——`${{ }}` 的文本替换和 bash 的引号
+          # 解析互相踩踏那条坑，这个仓库在 probe_tnns 上栽过。
+          DISPATCH_SLUG: ${{ github.event.inputs.slug }}
         run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            if [ -n "$DISPATCH_SLUG" ]; then
+              # 主路：interview-clip 渲完点名叫醒。五道闸在工具里照过。
+              python tools/auto_push_interview_gate.py --slug "$DISPATCH_SLUG"
+            else
+              # 没点名就扫仓库里全部产物。`git ls-files` 读 index，不受稀疏
+              # 检出影响（output/ 不在工作区照样列得全）。已推过/没认领的
+              # 会被闸逐条跳过，真剩下超过一条时「一趟最多一条」当场红。
+              CHANGED=$(git ls-files 'output/interviews/*/render.json')
+              if [ -z "$CHANGED" ]; then
+                echo "[自动推送] 仓库里一份 render.json 都没有。"
+                exit 0
+              fi
+              # shellcheck disable=SC2086
+              python tools/auto_push_interview_gate.py --changed $CHANGED
+            fi
+            exit 0
+          fi
+          # ↓ on:push 那条兜底路（人手推的 render.json 才走得到，见触发器注释）
           # **拿 `HEAD^` 比，别拿 `github.event.before`。** 这是浅克隆
           # （fetch-depth: 2），`before` 那个 sha 可能根本不在本地——`git diff`
           # 会失败，而失败在这儿的表现是「这次没有该发的采访」，**和真的没有
@@ -187,7 +239,10 @@ jobs:
           git push origin main
 
       - name: 失败时告警
-        if: failure()
+        # `cancelled()` 也要接住：这条 job 唯一会被砍的时点是等复制页那 40 分钟
+        # 走满 timeout——那正是「复制页已提交、微信一个字没发」的一段，
+        # 只写 failure() 的话它静静消失，没人知道该补一趟 mode=push。
+        if: failure() || cancelled()
         run: |
           RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           {
