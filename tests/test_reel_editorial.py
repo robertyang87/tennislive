@@ -1212,6 +1212,10 @@ _CLOCK_MINUTE_LEGACY = frozenset({
     "swiatek-shnaider", "townsend-osorio", "townsend-rybakina",
     "trungelliti-medvedev", "wang-vandewinkel", "wang-vekic",
     "wangxiyu-fernandez", "wong-gea", "zhang-day", "zhang-ostapenko",
+    # `tiafoe-musetti-cincinnati-2026-qf` 2026-08-22T05:02:40Z 已经推过微信
+    # （run 32553267109，另一个并发会话发的）：开场写着「北京时间8月22日
+    # 7点05分」，报到了分钟。已发不为措辞重渲，挂账。
+    "tiafoe-musetti-cincinnati-2026-qf",
 })
 
 
