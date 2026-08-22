@@ -4725,6 +4725,45 @@ def test_lead_in四要素必须认领():
             pytest.fail(f"这一种没拦住：{label}")
 
 
+def test_lead_in的subs字段要认全():
+    """`lead_in.subs` 可选，但写了就要按形状过：a/b 是数字且 b>a、时刻落在
+    `lead_in` 窗口内、前后不重叠、en/zh 都不能是空的。"""
+    import tools.build_interview_clip as clip
+
+    base = {"url": "https://youtu.be/x", "start": 200.0, "end": 213.8, "why": "a"}
+
+    没写 = {"slug": "新片", "lead_in": dict(base)}
+    clip.check_lead_in(没写)          # 不许抛——subs 是可选的
+
+    好 = {"slug": "新片", "lead_in": dict(base, subs=[
+        {"a": 201.0, "b": 203.0, "en": "Match point.", "zh": "赛点"},
+        {"a": 203.0, "b": 205.0, "en": "What a shot.", "zh": "多漂亮的一击"},
+    ])}
+    clip.check_lead_in(好)            # 不许抛
+
+    坏 = [
+        (dict(base, subs=[]), "空数组"),
+        (dict(base, subs="a string"), "不是数组"),
+        (dict(base, subs=[{"a": 201.0, "en": "x", "zh": "x"}]), "缺 b"),
+        (dict(base, subs=[{"a": 203.0, "b": 201.0, "en": "x", "zh": "x"}]),
+         "b 小于 a"),
+        (dict(base, subs=[{"a": 100.0, "b": 205.0, "en": "x", "zh": "x"}]),
+         "起点早于 lead_in.start"),
+        (dict(base, subs=[{"a": 201.0, "b": 300.0, "en": "x", "zh": "x"}]),
+         "终点晚于 lead_in.end"),
+        (dict(base, subs=[{"a": 201.0, "b": 203.0, "zh": "x"}]), "缺 en"),
+        (dict(base, subs=[{"a": 201.0, "b": 203.0, "en": "x"}]), "缺 zh"),
+        (dict(base, subs=[
+            {"a": 201.0, "b": 204.0, "en": "x", "zh": "x"},
+            {"a": 203.0, "b": 205.0, "en": "y", "zh": "y"},
+        ]), "两条字幕在时间轴上叠住了"),
+    ]
+    for lead, label in 坏:
+        with pytest.raises(SystemExit):
+            clip.check_lead_in({"slug": "新片", "lead_in": lead})
+            pytest.fail(f"这一种没拦住：{label}")
+
+
 def test_lead_in那道闸排在下载之前():
     """⚠️ 和 `opening` 那道闸同一个理由：这条只读 spec，该在第 0.2 秒就报，
     不能等九分钟的 render 下完两条源片才发现哪个字段忘了填。"""
@@ -4738,13 +4777,51 @@ def test_lead_in那道闸排在下载之前():
             f"lead_in 那道闸排在 `{later}` 后面了——它只读 spec，该在第 0.2 秒就报")
 
 
-def test_lead_in片段不烧字幕不印顶栏():
-    """这几秒是转播自己拍下的赛点／比分牌／庆祝——画面自证，不是我们要核对
-    过的对话。`_lead_in_segment` 的滤镜链里不许出现 `subtitles=`，那是
-    `body` 专属的一步（真正核对过转写的那一段才配烧字幕）。"""
+def test_lead_in不带subs时不烧字幕():
+    """没写 `lead_in.subs` 就是静音 B-roll——赛点、比分牌、庆祝是转播自己拍下
+    的画面（画面自证），不配文字不影响看懂发生了什么。`subtitles=` 必须是
+    **条件分支**，不能写死成一律不烧（那是 2026-08-22 之前的老规矩，账号所有者
+    要求「原声解说也要有中英文字幕」之后翻了面，见下一条）。"""
     src = (ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8")
     body = _code_only(src.split("def _lead_in_segment(")[1].split("\ndef ")[0])
-    assert "subtitles=" not in body, "跨视频片头不该烧字幕——那几秒没核对过转写"
+    assert "if subs" in body, "subtitles 那一支必须是条件分支，不能一律不烧"
+    assert "subtitles=" in body, "写了 `lead_in.subs` 就该有能烧字幕的那条路"
+
+
+def test_lead_in带subs时真烧出双语字幕不带顶栏(tmp_path, monkeypatch):
+    """账号所有者：「前半段视频里原声解说也要有中英文字幕」。写了
+    `lead_in.subs` 就要真的烧出来——真跑一遍 `_lead_in_segment`，检查
+    ① 生成的 `.ass` 里有 EN/ZH 两行内容，和给的 en/zh 对得上；
+    ② **不带顶栏事件**——顶栏印的是这条片子自己的对阵比分，片头这几秒讲的是
+    上一场的收尾，两件事印在一起会让人以为比分是这几秒的。"""
+    from tools import build_interview_clip as m
+
+    assert __import__("shutil").which("ffmpeg"), "没有 ffmpeg：apt install ffmpeg"
+
+    src_dir = tmp_path / "lead"
+    src_dir.mkdir()
+    fake_source = src_dir / "fake_lead_source.mp4"
+    subprocess.run(
+        ["ffmpeg", "-v", "error", "-y",
+         "-f", "lavfi", "-i", "testsrc2=size=1280x720:rate=30",
+         "-f", "lavfi", "-i", "sine=frequency=300:sample_rate=48000",
+         "-t", "20", "-c:v", "libx264", "-crf", "23",
+         "-c:a", "aac", str(fake_source)], check=True)
+    monkeypatch.setattr(m, "yt_download", lambda url, dest, fmt, spec: fake_source)
+
+    spec = {"slug": "x", "url": "https://youtu.be/interview",
+            "lead_in": {"url": "https://youtu.be/highlights", "start": 2.0,
+                        "end": 9.0, "why": "测试",
+                        "subs": [{"a": 3.0, "b": 5.0, "en": "What a shot",
+                                  "zh": "这一拍真漂亮"}]}}
+    lead = m._lead_in_segment(spec, src_dir)
+    assert lead is not None and lead.is_file()
+
+    ass_text = (src_dir / "_lead.ass").read_text(encoding="utf-8")
+    assert "What a shot" in ass_text
+    assert "这一拍真漂亮" in ass_text
+    assert not re.search(r"Dialogue:.*,HEAD[AB],", ass_text), (
+        "片头这几秒不该有顶栏事件——讲的是上一场，顶栏印的是这条片子自己的比分")
 
 
 def test_lead_in进拼接清单排在正片之前():
