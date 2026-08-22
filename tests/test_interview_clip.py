@@ -5136,6 +5136,59 @@ def test_render两处最终编码都带faststart():
         "都在）走的就是这条路")
 
 
+def test_still_segment的封面编码不许带满量程标记(tmp_path):
+    """账号所有者 2026-08-22：「视频号里看不到封面」。
+
+    根子：`_still_segment` 喂给 ffmpeg 的是一张标准 JFIF JPEG（`poster.jpg`
+    本来就是），JPEG 天生满量程（full-range），`-pix_fmt yuv420p` 只管
+    4:2:0 色度采样、不管量程——ffmpeg 的 mjpeg 解码器会把满量程标记带出来，
+    libx264 照样能把它写进 SPS 的 VUI，读回来就是 `color_range=pc`（ffprobe
+    报的 pix_fmt 也会跟着变成 `yuvj420p`）。视频号在这种满量程标记的流上
+    抓不出封面帧，画面本身却播放正常——症状和这次一模一样。
+
+    拉一条已经推送过的真实成片（`nakashima-fritz-cincinnati-2026-qf`）下来
+    逐字节核对过：封面那 1.2 秒确实是 `color_range=pc`，和从真实视频剪出来
+    的正片段（`tv`）不是一回事。
+
+    ⚠️ **反向验证在这台沙箱上没能复现**：把 `-color_range tv` 摘掉、原样
+    重跑这条命令十几次，得到的一直是干净的 `tv`——没能在本地触发和 runner
+    上同一次的那个条件（大概率是 ffmpeg 版本或线程调度的细节）。**但已经
+    直接核实了产物是脏的**，所以这条判据仍然值得留：它锁住「显式钉死量程，
+    不指望 ffmpeg 自己推断对」这个意图，防止以后有人嫌这行多余把它删掉。
+    真正确认修复生效的判据是重渲之后拉回真实成片核对（见 PR 描述）。
+    """
+    assert __import__("shutil").which("ffmpeg"), "没有 ffmpeg：apt install ffmpeg"
+
+    from PIL import Image
+
+    from tools import build_interview_clip as m
+
+    # 存一张标准 JFIF JPEG——真实 poster.jpg 就是这么来的（PIL 默认写 JFIF，
+    # JPEG 本身就是满量程，这是这个坑能触发的前提，不能换成 PNG 去测）。
+    poster = tmp_path / "poster.jpg"
+    Image.new("RGB", (1080, 1440), (30, 90, 60)).save(poster, format="JPEG", quality=88)
+
+    dest = m._still_segment(poster, 1.2, tmp_path / "cover.mp4")
+    assert dest.is_file()
+
+    probe = subprocess.run(
+        ["ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries",
+         "stream=pix_fmt,color_range", "-of", "csv=p=0:s=,", str(dest)],
+        check=True, capture_output=True, text=True).stdout.strip()
+    pix_fmt, color_range = probe.split(",")
+    assert pix_fmt == "yuv420p" and color_range == "tv", (
+        f"封面编码带着满量程标记：pix_fmt={pix_fmt}, color_range={color_range}\n"
+        "视频号会在这种流上抓不出封面帧。要求显式 `-color_range tv`，"
+        "别指望 ffmpeg 自己从解码结果里推断对。")
+
+    src = (Path(m.__file__)).read_text(encoding="utf-8")
+    still_body = src.split("def _still_segment(")[1].split("\ndef ")[0]
+    assert '"-color_range", "tv"' in still_body, (
+        "`_still_segment` 的命令里没有显式 -color_range tv——"
+        "上面那句断言就算恰好绿了，也只是这台沙箱这次凑巧没触发那个坑，"
+        "不代表 runner 上不会再犯。")
+
+
 def test_ours_ratio把lead_in算进分母不算我们的():
     """`lead_in` 是借来的转播画面，跟 `body` 同一个性质，不该算进「我们自己
     的画面」；但它确实拉长了片子，分母要跟着涨，不然占比会算得偏高。"""

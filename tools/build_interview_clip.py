@@ -2301,6 +2301,21 @@ def _still_segment(png: Path, secs: float, dest: Path,
     不报错。这句话在这个文件里已经写过两遍了——所以现在只剩一处能写错。
 
     音轨不是可选的：只有画面的段拼进来，`concat` 会把整条音轨丢掉。
+
+    ⚠️⚠️ **`-pix_fmt yuv420p` 不保证 `color_range=tv`。** 账号所有者
+    2026-08-22：「视频号里看不到封面」。查下来：`poster.jpg` 是标准 JFIF
+    JPEG，JPEG 本身是满量程（full-range）色域，ffmpeg 的 mjpeg 解码器会把
+    这个 `color_range=pc` 标记带出来——即使编码目标写着 `yuv420p`（那只管
+    4:2:0 色度采样，不管量程），libx264 仍可能把满量程写进 SPS 的 VUI，
+    ffprobe 读出来就是 `yuvj420p`。拉一条真实成片下来逐字节核过：封面那
+    1.2 秒真的是 `color_range=pc`，跟从真实视频剪出来的正片段（`tv`）不是
+    一回事——而**视频号在满量程标记的流上，抓封面帧这一步会失败，画面本身
+    却播放正常**，症状和这次一模一样。
+    ⚠️ 本地把这条命令原样重跑了十几次都得到干净的 `tv`——没能在这台沙箱上
+    100% 复现 runner 上那次的触发条件（大概率是 ffmpeg 版本或线程调度的
+    细节），**但已经直接核实了产物是脏的**，而且加 `-color_range tv` 之后
+    不论重跑多少次结果都是干净的。**判据是产物，不是「猜没猜中根因」**：
+    这里选择显式钉死量程，不再指望 ffmpeg 自己从解码结果里推断对。
     """
     a_in = (["-i", str(audio)] if audio
             else ["-f", "lavfi", "-t", str(secs), "-i", "anullsrc=r=48000:cl=stereo"])
@@ -2311,7 +2326,7 @@ def _still_segment(png: Path, secs: float, dest: Path,
          # 不补的话 `-shortest` 会按音轨截掉画面，卡就少了那口气。
          "-af", f"apad=whole_dur={secs}",
          "-c:v", "libx264", "-preset", "medium", "-crf", "20",
-         "-r", "25", "-pix_fmt", "yuv420p",
+         "-r", "25", "-pix_fmt", "yuv420p", "-color_range", "tv",
          "-c:a", "aac", "-b:a", "128k", "-ar", "48000", "-ac", "2",
          "-shortest", str(dest)], check=True, timeout=600)
     return dest
@@ -3140,11 +3155,13 @@ def _lead_in_segment(spec: dict, outdir: Path) -> Path | None:
     )
     dest = outdir / "_lead.mp4"
     subprocess.run(
+        # `-color_range tv` 显式钉死——理由见 `_still_segment` 那份注释，
+        # 这儿是同一份「参数逐项一致」，别让这一段单独漂
         ["ffmpeg", "-y", "-ss", str(lead["start"]), "-t", str(dur), "-i", str(src),
          "-filter_complex", chain,
          "-map", "[out]", "-map", "0:a:0?",
          "-c:v", "libx264", "-preset", "medium", "-crf", "20",
-         "-r", "25", "-pix_fmt", "yuv420p",
+         "-r", "25", "-pix_fmt", "yuv420p", "-color_range", "tv",
          "-c:a", "aac", "-b:a", "128k", "-ar", "48000", "-ac", "2", str(dest)],
         check=True, timeout=600)
     return dest
@@ -3197,7 +3214,8 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
          # 而且**它不报错**，只是不生效。
          "-map", "[out]", "-map", "0:a:0?",
          "-c:v", "libx264", "-preset", "medium", "-crf", "20",
-         "-r", "25", "-pix_fmt", "yuv420p",
+         # `-color_range tv` 显式钉死——理由见 `_still_segment` 那份注释。
+         "-r", "25", "-pix_fmt", "yuv420p", "-color_range", "tv",
          "-c:a", "aac", "-b:a", "128k", "-ar", "48000", "-ac", "2",
          # `+faststart` 在这儿只管 `len(parts) == 1` 那条兜底路径——
          # `body.replace(out)` 是纯改名，不会再走一遍编码，`out` 的 moov
