@@ -1865,7 +1865,7 @@ _ACADEMY_SPAN_DIAGRAM = _academy_span_diagram()
 #
 # ⚠️ 加进来之前先问一句：这条片子**验过了吗**。加进来之后它就不再经过人的手，
 # 而微信那条消息发出去收不回来。
-AUTO_PUSH_SLUGS: frozenset[str] = frozenset()
+AUTO_PUSH_SLUGS: frozenset[str] = frozenset({"gauff-right-coco"})
 
 
 #: 同工同酬这条的四张图。**这条选题的画面天生是数字，照片给不了**——
