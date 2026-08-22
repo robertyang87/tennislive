@@ -30,6 +30,73 @@ def _beats(slug):
     return [s for s in explainer_script(find_story_by_slug(slug)) if s.kind != "cover"]
 
 
+def test_right_coco澄清把原话网友推断和旧互动分开():
+    """澄清不能靠抹掉不顺耳的旧事实，也不能把‘没搜到’夸成绝对不存在。"""
+    from tennislive.video.explainer import _OPENINGS
+
+    story = find_story_by_slug("gauff-right-coco")
+    assert story is not None
+    beats = _beats(story.slug)
+    joined = "".join(s.narration for s in beats)
+
+    # 现场原话和网友加进去的对象必须明确分层。
+    assert "全段她没有提克耶高斯" in joined
+    assert "网友解释，不是高芙本人的原话" in joined
+    assert "影射还没证据" in beats[1].title
+
+    # 2023 的旧语境早于 2026 事件，是排除“只能在影射本周新闻”的关键证据。
+    assert "二〇二三年美网" in joined
+    assert "发生前三年" in joined
+    assert "八月十九日" in joined and "八月二十二日" in joined
+
+    # 社媒结论只说公开范围内未发现；受限内容不冒充查过。
+    assert "未发现可公开核实的直接表态" in joined
+    assert "Stories 和点赞受登录限制" in joined
+
+    # 不许为了澄清改写成“两人毫无交集”。旧互动照实交代，再与本次事件切开。
+    assert "过去确实有职业圈互动" in joined
+    assert "不能为了澄清" in joined
+    assert "过去有过互动，同样不能证明她评价了这次事件" in joined
+
+    # 封面也把联想归给评论区，不能把待核查的联系写成高芙主动发问。
+    assert _OPENINGS[story.slug]["question"].startswith("评论区")
+    assert "她为何影射" not in _OPENINGS[story.slug]["question"]
+
+
+def test_right_coco片头复用的是已校正三比四采访段():
+    """用户点名要复用采访画面；不能退成静态截图，也不能再走镜像转载源。"""
+    from tennislive.video.explainer import _OPENINGS
+
+    spec = _OPENINGS["gauff-right-coco"]
+    assert spec["canvas"] == "3:4"
+    assert "interview-gauff-kostyuk-cincinnati-2026-qf" in spec["intro_url"]
+    assert spec["intro_start"] == 82.0
+    assert spec["intro_end"] == 101.0
+    assert spec["intro_end"] - spec["intro_start"] == 19.0
+    # 短段只在渲染时从既有 Release 切，仓库里不再复制第二份 mp4。
+    assert "intro" not in spec
+    assert not (_REPO / "assets" / "explainer" / "gauff-right-coco"
+                / "intro_right_coco.mp4").exists()
+
+
+def test_right_coco只保留获准的双关评论正文():
+    """用户明确撤回 IMG_4121：成片和资产目录都不能再带那张截图。"""
+    from PIL import Image
+
+    root = _REPO / "assets" / "explainer" / "gauff-right-coco"
+    with Image.open(root / "comment_double_meaning.jpg") as im:
+        assert im.size == (970, 65)
+    assert not (root / "comment_kyrgios_claim.jpg").exists()
+
+    credits = json.loads((root / "credits.json").read_text(encoding="utf-8"))
+    assert "仅裁相关正文" in credits["comment_double_meaning.jpg"]["description"] or (
+        "只保留" in credits["comment_double_meaning.jpg"]["description"]
+    )
+    assert "comment_kyrgios_claim.jpg" not in credits
+    first = _beats("gauff-right-coco")[0]
+    assert first.image == "assets/reel/gauff-kostyuk-cincinnati-2026-qf.jpg"
+
+
 def test_hawkeye_beats_are_grounded_in_verified_facts():
     story = find_story_by_slug("hawkeye")
     segments = _beats("hawkeye")
