@@ -97,5 +97,7 @@
     "event": "",
     "summary": "他自己都不敢信这份赛程",
     "lead": "2026 辛辛那提 ATP1000 1/4决赛，27 号种子中岛布兰登 7-6 4-6 6-3 逆转 6 号种子弗里茨，第三盘从 2-3 落后连赢四局锁定胜局，两人本赛季前两次交手都是弗里茨获胜（达拉斯决赛、华盛顿半决赛），这场终于扳回一城。赛后场上采访，主持人问他：「如果温网之后告诉你，你会打进华盛顿半决赛、蒙特利尔决赛，现在还有辛辛那提半决赛，你会怎么回？」他说：「我不会相信你的。这几个星期经历了很多，很多情绪起伏，但最后我对这个状态非常满意，也真心为自己感到骄傲。」下一轮迎战 17 号种子蒂亚福，全美国德比。"
-  }
+  },
+  "transcript_verified": true,
+  "_verified_clean": "两份转写对不上 **0.8%**（闸门 12%），**0 处空档**。第一份 ASR（faster-whisper medium.en）254 词，第二份 faster-whisper（small.en）258 词，分歧逐处看过：\n\n- `—` → `you know`、`—` → `yeah`：第二份多听出两个填词，虚词对齐噪音，不影响文本\n- `in` → `and`：介词/连词的听误，不在任何一行 en_fixed 覆盖的位置\n- **`cincy` → `since the`**：唯一值得看的一处。第一份（medium.en）在『Montreal final and now **Cincy** semi-final』这个位置听到 `Cincy`，第二份（small.en）听成 `since the`——而 `since the semi-final` 接在 `Montreal final and now` 后面语法不通，`Cincy semi-final` 正好续上主持人前面列的三站（Washington 半决赛／Montreal 决赛／现在这一站），和这条片子的 en_fixed[27] 一致，两个模型的分歧反而印证了较大的 medium.en 模型听得更准。\n\n没有一处需要新增 en_fixed。"
 }
