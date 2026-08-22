@@ -1,0 +1,68 @@
+name: gauff-source-probe
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/gauff-source-probe.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install probe dependency
+        run: python -m pip install --disable-pip-version-check "yt-dlp[default]"
+      - name: Write YouTube cookies
+        env:
+          YT_COOKIES_B64: ${{ secrets.YT_COOKIES_B64 }}
+          YT_COOKIES: ${{ secrets.YT_COOKIES }}
+        run: |
+          if [ -n "$YT_COOKIES_B64" ]; then
+            printf '%s' "$YT_COOKIES_B64" | base64 -d > /tmp/yt-cookies.txt
+          elif [ -n "$YT_COOKIES" ]; then
+            printf '%s' "$YT_COOKIES" > /tmp/yt-cookies.txt
+          else
+            : > /tmp/yt-cookies.txt
+          fi
+      - name: Probe official WTA upload and print transcript tail
+        env:
+          URL: https://www.youtube.com/watch?v=32CDNGwIsnQ
+        run: |
+          COOKIE_ARGS=()
+          if [ -s /tmp/yt-cookies.txt ]; then COOKIE_ARGS=(--cookies /tmp/yt-cookies.txt); fi
+          yt-dlp --no-warnings --js-runtimes node "${COOKIE_ARGS[@]}" \
+            --skip-download --print 'TITLE=%(title)s' --print 'CHANNEL=%(channel)s' \
+            --print 'DURATION=%(duration)s' --print 'UPLOAD_DATE=%(upload_date)s' "$URL"
+          yt-dlp --no-warnings --js-runtimes node "${COOKIE_ARGS[@]}" \
+            --skip-download --write-auto-subs --sub-langs en --sub-format json3 \
+            -o '/tmp/cap_%(id)s' "$URL"
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          files = sorted(Path('/tmp').glob('cap_*.en.json3'))
+          if not files:
+              raise SystemExit('NO_ENGLISH_AUTO_SUBS')
+          data = json.loads(files[-1].read_text(encoding='utf-8'))
+          rows = []
+          for event in data.get('events', []):
+              t = event.get('tStartMs', 0) / 1000
+              text = ''.join(seg.get('utf8', '') for seg in event.get('segs') or []).strip()
+              if text:
+                  rows.append((t, text))
+          print('TRANSCRIPT_TAIL_BEGIN')
+          for t, text in rows:
+              if t >= 180:
+                  print(f'{t:7.2f} {text}')
+          print('TRANSCRIPT_TAIL_END')
+          PY
