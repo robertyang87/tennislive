@@ -2780,6 +2780,28 @@ _LEGACY_NO_OPENING = frozenset({
 })
 
 
+#: 账号所有者 2026-08-22（看完高芙这条独立采访转载）又把上面的默认补完整：
+#: 「把获胜后的画面和解说加在前面，**以后都要这么操作**」。
+#:
+#: `opening.kind: none` 只说明采访正文那条源里没有比赛画面，不能再被当成
+#: 「那就从第一问开」的出口。对**赛后场上采访**，这时必须另找同场官方集锦，
+#: 用 `lead_in` 接最后一分、庆祝和原声解说；发布会、演播室和赛前专访不属于
+#: 这条规则。下面是规则落地前已经建好的十条债，只许随着逐条补片头而减少。
+#: 新 slug 不在表里，少 `lead_in` 会在下载前直接失败。
+_LEGACY_ONCOURT_NO_LEAD_IN = frozenset({
+    "cobolli-jodar-cincinnati-2026-r16",
+    "cobolli-paul-cincinnati-2026-qf",
+    "deminaur-fery-cincinnati-2026-r3",
+    "faria-shelton-cincinnati-2026-r2",
+    "fils-lehecka-cincinnati-2026-r3",
+    "jodar-tabilo-cincinnati-2026-r3",
+    "mensik-hijikata-cincinnati-2026-r3",
+    "nakashima-medvedev-cincinnati-2026-r3",
+    "tiafoe-musetti-cincinnati-2026-qf-interview",
+    "zverev-atmane-cincinnati-2026-r3",
+})
+
+
 def check_lead_in(spec: dict) -> None:
     """跨视频接一段片头——比赛结尾不在 `spec["url"]` 自己的窗口里，是**另一条
     源片**（通常是官方逐场集锦）单独剪一段接在最前面。
@@ -2790,11 +2812,25 @@ def check_lead_in(spec: dict) -> None:
     互不冲突——用了 `lead_in` 的片子，`opening.kind` 通常仍然写 `"none"`
     （`spec["url"]` 自己确实没有比赛画面，只是不需要再收，片头已经从别处补上）。
 
-    没写 `lead_in` 时这个函数是空操作——不是每条采访都用得上这条路：
-    `@wta` 那种 320 秒以上、尾巴自带采访的集锦，压根不需要借别的源片。
+    `opening.kind: "match_end"` 时，正文源自己已经带比赛结尾，不需要再借一条；
+    发布会、演播室等也不用。反过来，**赛后场上采访**若认领 `opening.kind: none`，
+    就等于明确说正文源没有比赛结尾，此时 `lead_in` 是必填，不再允许从第一问开。
     """
     lead = spec.get("lead_in")
     if lead is None:
+        slug = spec.get("slug", "?")
+        opening = spec.get("opening") if isinstance(spec.get("opening"), dict) else {}
+        needs_cross_source_end = (
+            spec.get("interview_kind") == "赛后场上采访"
+            and opening.get("kind") == "none"
+        )
+        if needs_cross_source_end and slug not in _LEGACY_ONCOURT_NO_LEAD_IN:
+            raise SystemExit(
+                f"{slug} 是独立的赛后场上采访，`opening.kind` 又是 `none`，"
+                "说明正文源没有比赛结尾；必须用 `lead_in` 从同场官方集锦接入"
+                "最后一分、庆祝和原声解说，再接采访。\n"
+                "发布会／演播室不受这条规则影响；已有旧片债只能从"
+                " `_LEGACY_ONCOURT_NO_LEAD_IN` 逐条移除，不能加入新 slug。")
         return
     slug = spec.get("slug", "?")
     if not isinstance(lead, dict):
