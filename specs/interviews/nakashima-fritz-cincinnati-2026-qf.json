@@ -14,7 +14,16 @@
   "event": "2026 辛辛那提 ATP1000 1/4决赛",
   "opening": {
     "kind": "none",
-    "why": "Tennis TV 场上采访独立视频，从主持人迎上前恭喜开始（0.0s『Brandon, congratulations.』），源片里没有比赛画面，也没有另借集锦接片头——采访本体加顶栏（对阵/比分）已经把『这是哪一场』交代清楚。"
+    "why": "Tennis TV 场上采访独立视频，从主持人迎上前恭喜开始（0.0s『Brandon, congratulations.』），源片自己里没有比赛画面——比赛结尾从另一条 Tennis TV 官方集锦借了 `lead_in` 接在最前面。"
+  },
+  "lead_in": {
+    "url": "https://youtu.be/t4eOVbP8Tdc",
+    "start": 321.0,
+    "end": 340.0,
+    "crop_shift_x": -0.06,
+    "_crop_why": "同一个 Tennis TV 转播模板，台标一样贴在右上角——裁切窗口 [0.75,0.875] 那一段实测截图（/tmp/nak_hl_crop_boundary_check.png，crop 自 frame_0339s.jpg）里台标已经压到窗口右沿，和采访正片同一个 -0.06 才躲得开。`lead_in` 的裁切参数不沿用顶层，这里单独写。",
+    "why": "Tennis TV 官方集锦《Taylor Fritz & Brandon Nakashima Battle For Semi-Final Spot! | Cincinnati 2026 Highlights》（351.0 秒，@TennisTV，和这场比赛同一场）。抽帧核对过（output/2026-08-22/frames/nakashima-fritz-cin2026-hl/frame_0321s.jpg ~ frame_0339s.jpg，每 3 秒一帧）：321-324s 记分板打出 `FRITZ 6⁹ 6 3 15 / NAKASHIMA 7 4 5 40`——中岛布兰登发球胜赛局（已赢下第一盘 7-6(9)、输掉第二盘 4-6，这一分若拿下就是决胜盘 6-3 拿下整场，和 flashscore/官方赛果一致）；327s 他抬头望向天空、张着嘴，球已经落地，他赢了；330s 全场起立鼓掌；333-339s 他和弗里茨网前握手、转身朝观众伸手致意。342s 起是 Tennis TV 自己的『WATCH MORE / TAP TO SUBSCRIBE』片尾卡（frame_0342s.jpg），收在 340.0 躲开它——先交代比赛结束，再接采访。",
+    "_subs_why": "没写 `subs`：这条源沙箱里下不动、听不到音轨（YouTube 一直被挡，见上面 `_asr_why`），只核对过画面。没听过就不编翻译——画面本身（比分、反应、握手）已经把『比赛怎么结束的』交代清楚，不需要靠解说词。"
   },
   "zh": [
     "布兰登 恭喜你",
