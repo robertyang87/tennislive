@@ -1,6 +1,3 @@
-Warning: truncated output (original token count: 52024)
-Total output lines: 3535
-
 #!/usr/bin/env python3
 """把一条官方集锦尾巴上的**场上采访**剪出来，烧上中英双语字幕。
 
@@ -1690,7 +1687,136 @@ def verify_transcript(spec: dict, lines: list[dict], outdir: Path) -> Path:
     from faster_whisper import WhisperModel  # noqa: PLC0415
 
     # 走同一个下载口：`-o` 是模板不是保证，落到别的后缀要认出来。
-    # 这一步实测是通的（最佳音轨就是 m4a），但**别留一条没有这…2024 tokens truncated…ort = [f"# 自动字幕的空档：{spec['slug']}", "",
+    # 这一步实测是通的（最佳音轨就是 m4a），但**别留一条没有这层保险的路**。
+    audio = yt_download(spec["url"], outdir / "_audio.m4a", "ba", spec)
+
+    model = WhisperModel(_second_model(spec), compute_type="int8")
+    segs, _ = model.transcribe(str(audio), language="en", word_timestamps=True,
+                               vad_filter=spec.get("whisper_vad_filter", True))
+    mine = [(w.start, w.word.strip()) for s in segs for w in (s.words or [])
+            if spec["start"] <= w.start <= spec["end"]]
+    (outdir / "whisper.json").write_text(
+        json.dumps(mine, ensure_ascii=False, indent=1), encoding="utf-8")
+
+    rate, theirs, ours, sm = disagree_rate(
+        " ".join(seg["en"] for seg in lines), " ".join(w for _, w in mine))
+
+    # **第一份是谁，要照实写。** 这条线原来只有一个源，所以这儿写死了「YouTube
+    # 自动字幕」；接进 Tennis TV 之后第一份其实是本地跑的 ASR（spec 的 `asr_model`），
+    # 标签再写 YouTube 就是**主动给出一个错答案**——将来有人回头查这份报告，
+    # 会以为它比的是两个不同来源，而那正是这道闸唯一要证明的事。
+    first = _first_source_label(spec)
+    report = [f"# 转写交叉校验：{spec['slug']}", "",
+              f"- 第一份：{first} **{len(theirs)}** 词",
+              f"- 第二份：faster-whisper（{_second_model(spec)}）"
+              f"**{len(ours)}** 词",
+              f"- **对不上 {rate:.1%}**（闸门 {TRANSCRIPT_MAX_DISAGREE:.0%}）", "",
+              # **报告要说清它到底量了什么。** 词数是去掉填词之后的，
+              # 不写这一句的话，回头有人拿它跟视频里数出来的词数对，会以为报告错了。
+              f"⚠️ 上面两个词数和分歧率都是**去掉 "
+              f"{'/'.join(sorted(_COMPARE_FILLERS))} 这类填词之后**算的："
+              "这些词 whisper 系统性地会丢，跟源可不可信无关，留着只会把"
+              "「说话人有多磕巴」量成「两份转写对不上」。", "",
+              f"## 分歧逐处（左＝{first}，右＝第二份）", ""]
+    for tag, i1, i2, j1, j2 in sm.get_opcodes():
+        if tag == "equal":
+            continue
+        report.append(f"- `{' '.join(theirs[i1:i2]) or '—'}` → "
+                      f"`{' '.join(ours[j1:j2]) or '—'}`")
+    path = outdir / "transcript_diff.md"
+    path.write_text("\n".join(report) + "\n", encoding="utf-8")
+    # **报告要打进日志，不能只落在 artifact 里。** 这一步只有 runner 上跑得动，
+    # 而 artifact 得下载才看得到——沙箱到 github.com 是 403，等于拿不到。
+    # 于是「跑成功了」和「我知道它比出了什么」之间差了一整趟往返。
+    print("\n".join(report))
+    print(f"转写分歧 {rate:.1%} → {path}")
+    # 空档单独探一次。**放在分歧率之前**：分歧率超标会抛，而空档那份报告
+    # 恰恰是这一趟最贵的产出（要下音频、要跑模型），抛之前先把它印出来。
+    probe_gap_speech(spec, caption_gaps(spec, outdir), mine, outdir)
+    if rate > TRANSCRIPT_MAX_DISAGREE:
+        _check_disagree_claim(spec, rate, path)
+    return path
+
+
+# 认领最多只能拉到这儿。再高就不是「虚词多」能解释的了，必然有整段对不上。
+TRANSCRIPT_DISAGREE_CEILING = 0.18
+
+
+def _check_disagree_claim(spec: dict, rate: float, path: Path) -> None:
+    """分歧率超闸时，**允许显式认领**，但认领要留下判据。
+
+    照 `mixed_fps` / `silent_source` 那套：一律红会把长采访整个挡在门外，
+    一律放行又回到「兜底出事的时候不吭声」。认领这一步是让这个取舍留下判据。
+
+    **为什么长采访会超**：这个指标按词比，而 whisper 会把 `um` / `uh` /
+    `you know` / 结巴重复整个丢掉，YouTube 全留着。演播室那条实测
+    YouTube 1229 词、whisper 1105 词——**光是这 124 个词就占 10.1%**，
+    而总分歧才 12.4%。也就是说超出闸门的部分几乎全是「whisper 更简」，
+    不是「英文有错」。片子越长、越口语，这个偏差越大。
+
+    **没有去改 `TRANSCRIPT_MAX_DISAGREE`**：那个数护着所有片子，
+    而沙箱里跑不了 whisper（IP 被 YouTube 挡），没法拿存量重新标定。
+    改一个动不了的数，等于把所有片子的闸一起放松，还验不了后果。
+
+    认领要写清两样，缺一不可：
+
+    - `rate`：**当时量到的那个数**。它把认领钉在这一次的观测上——
+      以后真的变差了（比如换了源、加了段落），实测超过认领值，闸重新响。
+      不写这个的话，「认领过一次」就成了永久豁免
+    - `why`：为什么这些分歧不影响发出去的英文。逐处看过才写得出来
+    """
+    claim = spec.get("transcript_disagree_ok") or {}
+    declared, why = claim.get("rate"), str(claim.get("why") or "").strip()
+    if not (isinstance(declared, int | float) and why):
+        raise SystemExit(
+            f"两份转写对不上 {rate:.1%}，超过闸门 {TRANSCRIPT_MAX_DISAGREE:.0%}。"
+            f"**不出片。** 逐处看 {path}，把确认过的写进 spec 的 `en_fixed`。\n"
+            "逐处看完、确认剩下的分歧不影响发出去的英文（长采访多半是 whisper "
+            "把虚词丢了），就在 spec 里显式认领：\n"
+            f'  "transcript_disagree_ok": {{"rate": {rate:.3f}, "why": "逐处看过：……"}}')
+    if rate > declared:
+        raise SystemExit(
+            f"分歧 {rate:.1%} 比认领的 {declared:.1%} 还高——认领是钉在当时那次观测上的，"
+            "现在变差了。重新逐处看过再更新 `transcript_disagree_ok.rate`。")
+    if rate > TRANSCRIPT_DISAGREE_CEILING:
+        raise SystemExit(
+            f"分歧 {rate:.1%} 超过认领的天花板 {TRANSCRIPT_DISAGREE_CEILING:.0%}。"
+            "这个量级不是虚词能解释的，必然有整段对不上——认领挡不住，去查源。")
+    print(f"[转写] 分歧 {rate:.1%} 超过闸门 {TRANSCRIPT_MAX_DISAGREE:.0%}，"
+          f"但 spec 里认领了（≤{declared:.1%}）：{why[:60]}…")
+
+
+def probe_gap_speech(spec: dict, gaps: list[tuple[float, float]],
+                     en_words: list[tuple[float, str]], outdir: Path) -> Path | None:
+    """把每个空档摊开：**第二份 ASR 在这几秒里听到了什么。**
+
+    用的是 `verify_transcript` **已经跑完的那一份**（spec 的 `whisper_model`，
+    带词时间戳），不下第二个模型、不切音频、不多跑一遍——这几秒的答案本来就在
+    那份结果里。
+
+    两种结果的含义**不一样，报告里必须分开写**：
+
+    - **有词** → 第一份漏了，而且漏的是英语。补进 `en_fixed` 就行
+    - **没有词** → ⚠️ **这不等于「没人说话」**。`small.en` 这一档是英语专用模型，
+      对着非英语同样给空白；而空档最可能的成因恰恰是球员换了母语
+      （伊埃拉那 3.2 秒面对的就是菲律宾球迷）。两种情况在这份输出里
+      **长得一模一样**，机器分不出来——所以这一档一律交给人听，
+      结论写进 `caption_gaps_ok`。
+
+    ⚠️ 报告要**两种情况都出声**。只在「发现漏词」时出声的检查，没法证明
+    它真的看过——而这条线上「什么都没听出来」才是需要人接手的那一档。
+
+    ⚠️ **两份转写各是谁，一律从 spec 读，不许写死。** 表头原来印着
+    `small.en`、发现漏词那一支原来写着「YouTube 漏了英语」——而萨巴伦卡那条
+    第二份是 `medium.en`、第一份根本不是 YouTube（Brightcove 源没有自动字幕轨，
+    第一份也是我们自己跑的）。**闸跑的是对的，报告印的是错的**，
+    而这份报告存在的全部理由就是告诉人「这几秒是拿谁跟谁比出来的」。
+    """
+    if not gaps:
+        print("自动字幕没有空档。")
+        return None
+    clip0 = spec["start"]
+    report = [f"# 自动字幕的空档：{spec['slug']}", "",
               f"阈值 {CAPTION_GAP_SECS:.0f} 秒；空档 **{len(gaps)}** 处。", "",
               f"第一份是 {_first_source_label(spec)}，第二份 ASR 是 "
               f"`{_second_model(spec)}`（英语专用）。**它什么都没听出来，"
