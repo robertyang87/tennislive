@@ -7,13 +7,6 @@ name: explainer-video
 # 仓库里只提交幻灯 / 文案 / render.json 这些轻产物——账号所有者：
 # 「包括后续所有的视频，制作的视频。都走统一的 Release 路线」。
 on:
-  # 一次性渲染桥：当前环境不能发 workflow_dispatch。只在这个分支新增下方
-  # trigger 文件时跑一趟，产物落库后连同 trigger 一起移除。
-  push:
-    branches:
-      - codex/gauff-kostyuk-cincinnati-2026-qf
-    paths:
-      - .github/workflows/gauff-right-coco-render.trigger
   workflow_dispatch:
     inputs:
       slug:
@@ -56,7 +49,7 @@ permissions:
 # 所以让新的顶掉旧的。不同 slug 不受影响：分组名里带着 slug，多条「开球之前」
 # 可以同一天并行生成，各写各的 output/<日期>/explainer/<slug>/。
 concurrency:
-  group: explainer-video-${{ github.event.inputs.slug || 'gauff-right-coco' }}
+  group: explainer-video-${{ github.event.inputs.slug || 'hawkeye' }}
   cancel-in-progress: true
 
 jobs:
@@ -221,7 +214,7 @@ jobs:
         run: |
           OUT_DATE=$(TZ=Asia/Shanghai date +%F)
           SLUG="${{ github.event.inputs.slug }}"
-          if [ -z "$SLUG" ]; then SLUG="gauff-right-coco"; fi
+          if [ -z "$SLUG" ]; then SLUG="hawkeye"; fi
           OUT_DIR="output/$OUT_DATE/explainer/$SLUG"
           echo "outdir=$OUT_DIR" >> "$GITHUB_OUTPUT"
           # Release 那一步的 tag 从它拼（explainer-<slug>）——和这儿的默认值
