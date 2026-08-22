@@ -2248,8 +2248,19 @@ def test_字幕带的背景不再从模糊视频派生():
         "见 `_BG_COLOUR` 那段注释记的两轮教训。")
     assert "eq=brightness" not in body and "eq=saturation" not in body, (
         "滤镜链里又出现了 eq= 调色——同上，垫底层现在是纯色，不需要再调色。")
-    assert body.count("_BG_COLOUR") == 2, "`_BG_COLOUR` 该只有一处定义、一处引用"
-    assert "c={_BG_COLOUR}" in body, "滤镜链没有引用 `_BG_COLOUR`"
+    # ⚠️ 这条原来断言「只出现两次」（一处定义、一处引用），`_lead_in_segment`
+    # 加了跨视频片头之后**多了一处合法的第二次引用**——它和 `body` 的垫底层
+    # 该是同一个颜色，走同一个 `_BG_COLOUR` 才对，不是又写一遍十六进制。
+    # 所以判据改成**推导**，不再写死一个会过期的数字：十六进制字面量本身
+    # 只许出现一次（定义那一行），凡是 `color=c=` 垫底源都要走 `_BG_COLOUR`
+    # 这个名字——多少处引用都行，只要没人抄一遍字面量。
+    assert body.count('"0x06140f"') == 1, (
+        "背景色的十六进制字面量出现了不止一次——该走 `_BG_COLOUR` 这个名字，"
+        "不是各处各写一遍")
+    colour_lines = [ln for ln in body.splitlines() if "color=c=" in ln]
+    assert colour_lines, "滤镜链里没有引用 `_BG_COLOUR`"
+    for ln in colour_lines:
+        assert "{_BG_COLOUR}" in ln, f"这一行垫底色没有走 `_BG_COLOUR`：{ln.strip()}"
     # ⚠️ 这条不能只测「d= 有没有起作用」（那是下一条测试干的事），必须真查
     # **这条链自己**有没有写 `d=`——`test_垫底纯色层要卡时长否则overlay会
     # 空跑到超时` 那条本地另起了一段一模一样的滤镜串来验证 ffmpeg 的行为，
@@ -4655,6 +4666,176 @@ def test_认领开头那道闸排在下载之前():
         assert body.index("check_opening(") < body.index(later), (
             f"认领开头那道闸排在 `{later}` 后面了——它只读 spec，"
             "该在第 0.2 秒就报")
+
+
+# ── 跨视频片头（`lead_in`）───────────────────────────────────────────────
+#
+# `opening.kind: "match_end"` 那套是同一条源片里、比赛结尾接着采访的连续
+# 转播（`tirante-djokovic-cincinnati-2026-r2` 那种）。有些采访是**赛事方
+# 自己单独发布的**（Cincinnati Open 官方频道），源片里根本没有比赛画面——
+# 比赛结尾要从另一条源片（通常是 `@wta` 官方集锦）单独借一段接过来。
+# `lead_in` 就是这条路：认领 url/start/end/why，`render()` 据此多下一条源片、
+# 剪一段接在封面之后、正片之前。
+
+
+def test_没有lead_in时check_lead_in是空操作():
+    """最常见的情形——绝大多数采访片压根不用这条路（`@wta` 那种尾巴自带采访
+    的集锦不需要借别的源片），`check_lead_in` 对它们必须什么都不做。"""
+    import tools.build_interview_clip as clip
+
+    clip.check_lead_in({"slug": "x"})            # 没有 lead_in，不许抛
+    for p in _iv_specs():
+        d = json.loads(p.read_text("utf-8"))
+        clip.check_lead_in(d)                     # 存量没有一条用这条路，全过
+
+
+def test_lead_in四要素必须认领():
+    """有 `lead_in` 时，url/start/end/why 一样都不能少，`end` 必须大于
+    `start`，时长要落在 `_OPENING_LEAD_MAX` 之内——和 `opening.lead_in`
+    共用同一条上界：这仍然是「先交代比赛结束」的片头，收多了就变成
+    「赛场之上」了。
+    """
+    import tools.build_interview_clip as clip
+
+    ok = {"slug": "新片", "lead_in": {
+        "url": "https://youtu.be/QuM0ytM-wlg", "start": 200.0, "end": 213.8,
+        "why": "赛点落地＋比分牌揭晓，从 WTA 官方集锦接过来"}}
+    clip.check_lead_in(ok)          # 不许抛
+
+    坏 = [
+        ({"slug": "新片", "lead_in": "https://youtu.be/x"}, "不是对象"),
+        ({"slug": "新片", "lead_in": {"start": 200.0, "end": 213.8, "why": "a"}},
+         "缺 url"),
+        ({"slug": "新片", "lead_in": {"url": "https://youtu.be/x", "end": 213.8,
+                                      "why": "a"}}, "缺 start"),
+        ({"slug": "新片", "lead_in": {"url": "https://youtu.be/x", "start": 213.8,
+                                      "end": 200.0, "why": "a"}}, "end 小于 start"),
+        ({"slug": "新片", "lead_in": {"url": "https://youtu.be/x", "start": 200.0,
+                                      "end": 200.0, "why": "a"}}, "end 等于 start"),
+        ({"slug": "新片", "lead_in": {"url": "https://youtu.be/x", "start": 0.0,
+                                      "end": clip._OPENING_LEAD_MAX + 1}},
+         "没 why"),
+        ({"slug": "新片", "lead_in": {"url": "https://youtu.be/x", "start": 0.0,
+                                      "end": clip._OPENING_LEAD_MAX + 1,
+                                      "why": "a"}}, "超上界"),
+    ]
+    for spec, label in 坏:
+        with pytest.raises(SystemExit):
+            clip.check_lead_in(spec)
+            pytest.fail(f"这一种没拦住：{label}")
+
+
+def test_lead_in那道闸排在下载之前():
+    """⚠️ 和 `opening` 那道闸同一个理由：这条只读 spec，该在第 0.2 秒就报，
+    不能等九分钟的 render 下完两条源片才发现哪个字段忘了填。"""
+    src = (ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8")
+    body = src.split("def main(")[1]
+    body = "\n".join(ln for ln in body.splitlines()
+                     if not ln.lstrip().startswith("#"))
+    assert "check_lead_in(" in body, "`main()` 里没有调 `check_lead_in`"
+    for later in ("fetch_words(", "storyboard_sheet(", "segment("):
+        assert body.index("check_lead_in(") < body.index(later), (
+            f"lead_in 那道闸排在 `{later}` 后面了——它只读 spec，该在第 0.2 秒就报")
+
+
+def test_lead_in片段不烧字幕不印顶栏():
+    """这几秒是转播自己拍下的赛点／比分牌／庆祝——画面自证，不是我们要核对
+    过的对话。`_lead_in_segment` 的滤镜链里不许出现 `subtitles=`，那是
+    `body` 专属的一步（真正核对过转写的那一段才配烧字幕）。"""
+    src = (ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8")
+    body = _code_only(src.split("def _lead_in_segment(")[1].split("\ndef ")[0])
+    assert "subtitles=" not in body, "跨视频片头不该烧字幕——那几秒没核对过转写"
+
+
+def test_lead_in进拼接清单排在正片之前():
+    """`render()` 里 `_lead_in_segment` 的结果必须在 `parts.append(body)`
+    之前进清单——「先交代比赛结束，再接采访」，顺序反了这句话就不成立。"""
+    src = (ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8")
+    render_body = src.split("def render(")[1].split("\ndef ")[0]
+    lead_at = render_body.index("_lead_in_segment(spec, outdir)")
+    body_at = render_body.index("parts.append(body)")
+    assert lead_at < body_at, "跨视频片头排在了正片之后，顺序反了"
+
+
+def test_lead_in片段和正片拼得起来(tmp_path, monkeypatch):
+    """**真跑一遍 `_lead_in_segment`，再和一段「正片」`-c copy` 拼起来。**
+
+    喂一段合成的 testsrc 当「源片」（monkeypatch `yt_download`，不碰网络），
+    验证：① 有 `lead_in` 时不是 `None`，尺寸/时长对得上；② 和 `body` 那组
+    完全一样的编码参数拼接不丢流（同 `test_采访片的片尾要和正片拼得起来`
+    那条判据）；③ 没有 `lead_in` 时返回 `None`。
+    """
+    from tools import build_interview_clip as m
+
+    assert __import__("shutil").which("ffmpeg"), "没有 ffmpeg：apt install ffmpeg"
+
+    src_dir = tmp_path / "lead"
+    src_dir.mkdir()
+    fake_source = src_dir / "fake_lead_source.mp4"
+    subprocess.run(
+        ["ffmpeg", "-v", "error", "-y",
+         "-f", "lavfi", "-i", "testsrc2=size=1280x720:rate=30",
+         "-f", "lavfi", "-i", "sine=frequency=300:sample_rate=48000",
+         "-t", "20", "-c:v", "libx264", "-crf", "23",
+         "-c:a", "aac", str(fake_source)], check=True)
+    monkeypatch.setattr(m, "yt_download", lambda url, dest, fmt, spec: fake_source)
+
+    spec = {"slug": "x", "url": "https://youtu.be/interview",
+            "lead_in": {"url": "https://youtu.be/highlights", "start": 2.0,
+                        "end": 9.0, "why": "测试"}}
+    lead = m._lead_in_segment(spec, src_dir)
+    assert lead is not None and lead.is_file()
+
+    probe = subprocess.run(
+        ["ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries",
+         "stream=width,height", "-of", "csv=p=0:s=x", str(lead)],
+        check=True, capture_output=True, text=True).stdout.strip()
+    assert probe == f"{m.CANVAS_W}x{m.CANVAS_H}", f"画幅不是 {m.CANVAS_W}x{m.CANVAS_H}：{probe}"
+
+    body = tmp_path / "body.mp4"
+    subprocess.run(
+        ["ffmpeg", "-v", "error", "-y",
+         "-f", "lavfi", "-i", f"color=c=navy:s={m.CANVAS_W}x{m.CANVAS_H}:r=25",
+         "-f", "lavfi", "-i", "sine=frequency=200:sample_rate=48000",
+         "-t", "6", "-c:v", "libx264", "-preset", "medium", "-crf", "20",
+         "-r", "25", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "128k",
+         "-ar", "48000", "-ac", "2", str(body)], check=True)
+
+    lst = tmp_path / "cc.txt"
+    lst.write_text(f"file '{lead}'\nfile '{body}'\n", encoding="utf-8")
+    joined = tmp_path / "joined.mp4"
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", "0",
+                    "-i", str(lst), "-c", "copy", str(joined)], check=True)
+
+    def _dur(stream):
+        return float(subprocess.run(
+            ["ffprobe", "-v", "error", "-select_streams", stream,
+             "-show_entries", "stream=duration", "-of", "csv=p=0", str(joined)],
+            check=True, capture_output=True,
+            text=True).stdout.strip().rstrip(","))
+
+    assert abs(_dur("v:0") - 13.0) < 0.3, (
+        f"拼出来只有 {_dur('v:0'):.2f}s，要的是 7(lead)+6(body)=13s")
+    assert abs(_dur("a:0") - _dur("v:0")) < 0.4, (
+        f"音轨 {_dur('a:0'):.2f}s vs 画面 {_dur('v:0'):.2f}s——concat 丢了一条流")
+
+    # 没有 lead_in 就该是 None，别凭空冒出一段
+    assert m._lead_in_segment({"slug": "x"}, tmp_path) is None
+
+
+def test_ours_ratio把lead_in算进分母不算我们的():
+    """`lead_in` 是借来的转播画面，跟 `body` 同一个性质，不该算进「我们自己
+    的画面」；但它确实拉长了片子，分母要跟着涨，不然占比会算得偏高。"""
+    from tools import build_interview_clip as m
+
+    base = {"slug": "x", "start": 0.0, "end": 60.0}
+    ours0, total0 = m.ours_ratio(base)
+
+    with_lead = dict(base, lead_in={"url": "u", "start": 0.0, "end": 15.0, "why": "w"})
+    ours1, total1 = m.ours_ratio(with_lead)
+
+    assert ours1 == ours0, "lead_in 不该算进「我们自己的画面」"
+    assert abs(total1 - (total0 + 15.0)) < 1e-6, "lead_in 的 15 秒没有算进分母"
 
 
 def test_封面顶栏要和解说片那份台头是同一套值():
