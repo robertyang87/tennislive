@@ -39,7 +39,13 @@
 用法：
 
     auto_push_interview_gate.py --changed <改动的文件…>   # 列出该发的那一条
+    auto_push_interview_gate.py --slug <slug>             # 手动/被叫醒时只查这一条
     auto_push_interview_gate.py --record <outdir> --run <运行地址>   # 发完记一笔
+
+⚠️ `--slug` 不是绕闸的近路：它只是把「这次改了哪些文件」换成
+「就查这一条的 render.json」，**五道闸一道不少**——render 提交是 GITHUB_TOKEN
+推的、不触发 on:push（GitHub 防递归），所以 interview-clip 渲完要用
+`workflow_dispatch -f slug=…` 把这条工作流叫醒，闸在这儿照样把关。
 """
 
 from __future__ import annotations
@@ -116,8 +122,8 @@ def wants_auto_push(repo: Path, slug: str, outdir: Path) -> None:
     # auto:true、目录里又没有 pushed.json——不拦的话会凑成「一次 N 条」把真该
     # 发的一起拦死。用 tracked() 不用 is_file()：稀疏检出下两者分家。
     if not tracked(repo, outdir / "render.json"):
-        raise Skip(f"{slug}：{outdir}/render.json 已不在仓库里"
-                   "（这次合并删掉的旧产物），不是新渲的片子")
+        raise Skip(f"{slug}：{outdir}/render.json 不在仓库里——要么是这次合并"
+                   "删掉的旧产物，要么这条采访根本还没 render 过")
     spec, copy_path = _spec_paths(repo, slug)
     if not spec.is_file():
         raise Skip(f"{slug}：没有 {spec}，不知道该发什么")
@@ -222,6 +228,8 @@ def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--changed", nargs="*", default=[],
                     help="这次合并改动的文件（仓库相对路径）")
+    ap.add_argument("--slug", default="",
+                    help="只查这一条（workflow_dispatch 那条路），五道闸照过")
     ap.add_argument("--record", default="",
                     help="发完之后在这个 outdir 里记一笔")
     ap.add_argument("--run", default="", help="--record：这次运行的地址")
@@ -236,7 +244,19 @@ def main(argv: list[str] | None = None) -> int:
         record(Path(args.record), args.run, args.now)
         return 0
 
-    found = pick(args.changed, repo)
+    changed = args.changed
+    if args.slug:
+        if args.changed:
+            # 两个入口一起给，没有一种读法是对的——宁可当场红。
+            print("::error::--slug 和 --changed 不能同时给")
+            raise SystemExit(2)
+        # 复用 `pick` 那条路：把 slug 折成它的 render.json 路径，
+        # `candidate` 解回 slug、`wants_auto_push` 过五道闸——**不另写一条
+        # 只属于 dispatch 的判定**，写两处必分叉，而分叉的样子是
+        # 「叫醒的那条路少一道闸」。
+        changed = [f"output/interviews/{args.slug}/render.json"]
+
+    found = pick(changed, repo)
     if found:
         _emit(*found)
     return 0

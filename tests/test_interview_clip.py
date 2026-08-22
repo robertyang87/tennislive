@@ -126,6 +126,9 @@ def _if_holds(expr, *, mode: str, push: str = "false") -> bool:
     py = (str(expr)
           .replace("github.event.inputs.mode", repr(mode))
           .replace("github.event.inputs.push", repr(push))
+          # 「叫醒自动推送」那一步的 if 里有 ref_name——这套模拟按「跑在
+          # main 上」求值：分支上的行为(那一步跳过)不在这套判据的主语里。
+          .replace("github.ref_name", repr("main"))
           .replace("&&", " and ").replace("||", " or "))
     if py.strip() == "always()":
         return True

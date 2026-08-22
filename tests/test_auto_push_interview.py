@@ -356,7 +356,7 @@ def test_删除的render_json不算候选(repo: Path, capsys):
     _git(repo, "-c", "user.email=a@b", "-c", "user.name=c",
          "commit", "-qm", "清理旧产物")
     assert gate.pick(CHANGED, repo) is None
-    assert "已不在仓库里" in capsys.readouterr().out, "跳过要说出为什么"
+    assert "不在仓库里" in capsys.readouterr().out, "跳过要说出为什么"
 
 
 def test_同一批里删一条活一条要发活的那条(repo: Path):
@@ -467,15 +467,113 @@ def test_上海日期不靠tzdata():
 def test_自动推送只在main上跑():
     """GitHub Pages 只服务 main（复制页在分支上永远 404），而海报链接钉在
     commit sha 上——未合并的 commit 有被 GC 的风险。
+
+    ⚠️ **这条判据 2026-08-21 换过主语。** 第一版断言「不许有
+    workflow_dispatch」，而它的前提当天被量死了：render 的提交是
+    GITHUB_TOKEN 推的，GitHub 明文规定这种 push **不创建 workflow run**
+    （防递归）——于是 on:push 从上线起一次都没为 render 醒来过（铁证：
+    50 份 render.json / 0 份 pushed.json）。dispatch 从「多余的手动入口」
+    变成了**唯一走得通的主路**（interview-clip 渲完来叫醒），前提没了就得
+    换判据。「只在 main 上跑」这半句没变，只是落点换成两头：
+    push 触发限 main + dispatch 第一步有 main 守卫。
     """
-    body = _yaml_only(WORKFLOW.read_text(encoding="utf-8"))
+    raw = WORKFLOW.read_text(encoding="utf-8")
+    body = _yaml_only(raw)
     trigger = body.split("permissions:")[0]
     assert "branches: [main]" in trigger, "没限定 main"
     assert "output/interviews/*/render.json" in trigger, (
         "触发路径不是采访产物的形状")
-    assert "workflow_dispatch" not in trigger, (
-        "别再给它开手动入口——手动推送走 interview-clip mode=push，"
-        "那条路有完整的预检和参数")
+    assert "workflow_dispatch" in trigger, (
+        "dispatch 入口没了——render 的提交是 GITHUB_TOKEN 推的、触发不了 "
+        "on:push，没有 dispatch 这条工作流对 render 是全死的")
+    # dispatch 可以选分支，所以要有守卫：不在 main 上当场红，不许静静跑完
+    guard = re.search(
+        r"github\.event_name == 'workflow_dispatch' &&\s*"
+        r"github\.ref_name != 'main'", body)
+    assert guard, "dispatch 没有 main 守卫——分支上的复制页和海报永远 404"
+    # 守卫要排在 checkout 之前：白拉一次仓库只是慢，守卫排后面则是先干活再拦
+    assert body.index("github.ref_name != 'main'") < body.index(
+        "actions/checkout"), "main 守卫要排在 checkout 之前"
+
+
+def test_dispatch两条路都过工具里那套闸():
+    """dispatch 点名（--slug）和不点名（git ls-files 扫全部）都必须把判定
+    交给 `auto_push_interview_gate.py`——闸写进 YAML 就测不了了。
+    on:push 那条兜底路照旧拿 HEAD^ 比（浅克隆下 event.before 可能不在本地）。
+    """
+    body = _yaml_only(WORKFLOW.read_text(encoding="utf-8"))
+    gate_step = body[body.index("挑出该自动发的那一条"):body.index("把这一格放进稀疏范围")]
+    assert "--slug" in gate_step, "点名那条路没接 --slug"
+    assert "git ls-files 'output/interviews/*/render.json'" in gate_step, (
+        "不点名那条路要扫仓库里全部 render.json（ls-files 读 index，"
+        "不受稀疏检出影响）——闸会把已推过/没认领的逐条拦掉")
+    assert "HEAD^ HEAD" in gate_step, "on:push 兜底路不见了"
+
+
+def test_render完要叫醒自动推送():
+    """render 的成片提交用的是 GITHUB_TOKEN，**永远触发不了** on:push
+    （GitHub 防递归）；不叫醒的话 auto-push-interview 对 render 是全死的
+    ——量过的铁证：50 份 render.json / 0 份 pushed.json。
+    `workflow_dispatch` 正是那条禁令明文列出的例外，所以渲完点一下。
+    """
+    body = _yaml_only(
+        Path(".github/workflows/interview-clip.yml").read_text(encoding="utf-8"))
+    m = re.search(r"gh workflow run auto-push-interview\.yml[^\n]*", body)
+    assert m, "interview-clip 渲完没有叫醒 auto-push-interview"
+    line = m.group(0)
+    assert "--ref main" in line, "要点名 main 上那份工作流文件"
+    assert "slug=" in line, "叫醒时要把 slug 递过去，省一趟全库扫描"
+    # 位置：要排在「提交成片」之后——成片没落库就叫醒，那头扫到的是旧东西
+    assert body.index("- name: 提交成片") < body.index("- name: 叫醒自动推送"), (
+        "叫醒排在提交成片之前")
+    # 条件三头都要有：只有 render 有新东西可发；本趟自己发（push=true）就不许
+    # 再叫醒（同一条消息发两遍的竞态）；分支上的产物 Pages 取不到
+    blk = body.split("- name: 叫醒自动推送")[1].split("- name:")[0]
+    assert "github.event.inputs.mode == 'render'" in blk
+    assert "github.event.inputs.push != 'true'" in blk, (
+        "本趟自己要发还叫醒自动推送——那头看不到任何「正在发」的标记，"
+        "会把同一条消息再发一遍")
+    assert "github.ref_name == 'main'" in blk
+
+
+def test_gate的slug入口走同一条pick路(repo: Path, monkeypatch, capsys):
+    """`--slug` 不是绕闸的近路：它只是把入参折成那条 render.json 的路径，
+    照走 `pick` → 五道闸。判据两头：合格的这条要 found=true 落进
+    GITHUB_OUTPUT；已推过的同一条要被「已经推过」那道闸拦下（拦得住才说明
+    真的走的是同一条路，不是另写了一份少闸的判定）。
+    """
+    _spec(repo, {"auto": True})
+    _commit_all(repo)
+    out_file = repo / "gh_out"
+    monkeypatch.setenv("GITHUB_OUTPUT", str(out_file))
+    assert gate.main(["--slug", "demo", "--repo", str(repo)]) == 0
+    text = out_file.read_text(encoding="utf-8")
+    assert "slug=demo" in text and "found=true" in text
+
+    # 同一条记上 pushed.json 之后，--slug 必须被「已经推过」拦下
+    (repo / "output/interviews/demo" / gate.MARKER).write_text(
+        json.dumps({"at": "t", "run": "r"}), encoding="utf-8")
+    _commit_all(repo)
+    out_file.unlink()
+    assert gate.main(["--slug", "demo", "--repo", str(repo)]) == 0
+    captured = capsys.readouterr().out
+    assert "已经推过了" in captured, "--slug 绕过了「已经推过」那道闸"
+    assert not out_file.exists(), "被拦下的那条不许往 GITHUB_OUTPUT 写 found"
+
+
+def test_gate的slug入口对没render过的条目要出声(repo: Path, capsys):
+    """点名一条根本没 render 过的 slug：不许炸、不许假绿地报 found，
+    要打出「render.json 不在仓库里」让人看见点错了名。"""
+    assert gate.main(["--slug", "ghost", "--repo", str(repo)]) == 0
+    out = capsys.readouterr().out
+    assert "[跳过]" in out and "render.json 不在仓库里" in out
+
+
+def test_gate的slug和changed不能同时给(repo: Path):
+    """两个入口一起给没有一种读法是对的——宁可当场红。"""
+    with pytest.raises(SystemExit) as exc:
+        gate.main(["--slug", "demo", "--changed", "x", "--repo", str(repo)])
+    assert exc.value.code == 2
 
 
 def test_自动推送不许取消正在跑的():
