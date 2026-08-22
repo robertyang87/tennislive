@@ -4960,6 +4960,103 @@ def test_lead_in片段和正片拼得起来(tmp_path, monkeypatch):
     assert m._lead_in_segment({"slug": "x"}, tmp_path) is None
 
 
+def _top_level_boxes(path: Path) -> list[str]:
+    """列出 mp4 文件顶层 box 的类型，按出现顺序——`moov` 排在 `mdat` 前面
+    才是 faststart，排在后面就是账号所有者 2026-08-22 报的「视频号封面显示
+    不出来」那个坑：平台靠范围请求先读 moov，moov 在文件尾就等于读不到。"""
+    import struct
+
+    order = []
+    with path.open("rb") as f:
+        f.seek(0, 2)
+        total = f.tell()
+        f.seek(0)
+        offset = 0
+        while offset < total:
+            f.seek(offset)
+            header = f.read(8)
+            if len(header) < 8:
+                break
+            size, box_type = struct.unpack(">I4s", header)
+            if size == 1:
+                size = struct.unpack(">Q", f.read(8))[0]
+            order.append(box_type.decode(errors="replace"))
+            if size == 0:
+                break
+            offset += size
+    return order
+
+
+def test_成片的moov要排在mdat前面视频号才能读到封面(tmp_path):
+    """账号所有者 2026-08-22：「赛后开麦的视频在视频号里封面显示不出来」。
+
+    拉一条已发的成片实测过：`ftyp free mdat[60.5MB] moov`——moov 排在
+    六千万字节之后。concat demuxer + `-c copy` 是一次完整 remux（新写一份
+    moov，不是简单地把几个文件粘起来），moov 摆在哪儿只看**这一步自己**的
+    `-movflags`，跟上游那几段各自有没有 faststart 没关系——所以补丁必须打在
+    `render()` 里真正产出 `out` 的那条 ffmpeg 命令上，不是随便找个地方加一次
+    编码就行。
+
+    这里不摸 `render()` 本身（它要下源片、起 Chromium、连 TTS，装不进一条
+    单元测试），只验证**同样的命令形状**（`concat demuxer + -c copy +
+    -movflags +faststart`）在真实 ffmpeg 上确实把 moov 挪到了前面，
+    并且反向验证：去掉这个 flag，moov 确实又跑回文件尾——证明这条判据
+    真的在测这件事，不是找了个碰巧一直成立的断言。
+    """
+    def _make(dest: Path, colour: str) -> Path:
+        subprocess.run(
+            ["ffmpeg", "-v", "error", "-y",
+             "-f", "lavfi", "-i", f"color=c={colour}:s=320x240:d=1:r=25",
+             "-f", "lavfi", "-i", "sine=frequency=300:sample_rate=48000",
+             "-t", "1", "-c:v", "libx264", "-preset", "ultrafast",
+             "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "128k",
+             "-ar", "48000", "-ac", "2", str(dest)], check=True)
+        return dest
+
+    a = _make(tmp_path / "a.mp4", "navy")
+    b = _make(tmp_path / "b.mp4", "maroon")
+    lst = tmp_path / "list.txt"
+    lst.write_text(f"file '{a.name}'\nfile '{b.name}'\n", encoding="utf-8")
+
+    fixed = tmp_path / "fixed.mp4"
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", "0",
+                    "-i", str(lst), "-c", "copy", "-movflags", "+faststart",
+                    str(fixed)], check=True, cwd=tmp_path)
+    fixed_boxes = _top_level_boxes(fixed)
+    assert fixed_boxes.index("moov") < fixed_boxes.index("mdat"), (
+        f"加了 +faststart，moov 还是排在 mdat 后面：{fixed_boxes}")
+
+    # 反向验证：去掉这个 flag，同一条命令的 moov 确实又落回了文件尾——
+    # 证明上面那条断言不是碰巧成立，而是真的在测 +faststart 起作用。
+    broken = tmp_path / "broken.mp4"
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", "0",
+                    "-i", str(lst), "-c", "copy", str(broken)],
+                   check=True, cwd=tmp_path)
+    broken_boxes = _top_level_boxes(broken)
+    assert broken_boxes.index("moov") > broken_boxes.index("mdat"), (
+        "反向验证失败：不给 +faststart 时 moov 竟然也在 mdat 前面，"
+        "说明上面那条断言测不出这个坑")
+
+
+def test_render两处最终编码都带faststart():
+    """`render()` 里真正产出 `out` 的只有两条路——`len(parts)==1` 时
+    `body.replace(out)` 是纯改名不会再编码一次，所以 `body` 自己那趟编码
+    也要带 `+faststart`；`len(parts)>1` 时靠最终 concat 那趟。两处都要带，
+    漏一处就是「大多数片子修好了，某种边界情况又漏气」。"""
+    src = (ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8")
+    render_body = _code_only(src.split("def render(")[1].split("\ndef ")[0])
+
+    body_encode = render_body.split('str(body)]')[0]
+    assert '"-movflags", "+faststart"' in body_encode, (
+        "body 自己那趟编码没带 +faststart——len(parts)==1 时它会被直接改名"
+        "成 out，那条路会漏气")
+
+    final_concat = render_body.split('str(body)]')[1]
+    assert '"-movflags", "+faststart"' in final_concat, (
+        "最终 concat 那趟没带 +faststart——大多数片子（cover/takeaway/outro"
+        "都在）走的就是这条路")
+
+
 def test_ours_ratio把lead_in算进分母不算我们的():
     """`lead_in` 是借来的转播画面，跟 `body` 同一个性质，不该算进「我们自己
     的画面」；但它确实拉长了片子，分母要跟着涨，不然占比会算得偏高。"""
