@@ -30,20 +30,27 @@ jobs:
             curl -fsS http://127.0.0.1:4416/ping && break
             sleep 1
           done
-      - name: Restore YouTube cookies
-        env:
-          YOUTUBE_COOKIES: ${{ secrets.YOUTUBE_COOKIES }}
-        run: |
-          if [ -n "$YOUTUBE_COOKIES" ]; then
-            printf '%s' "$YOUTUBE_COOKIES" > cookies.txt
-          fi
-      - name: Download true on-court interview and official highlight
+      - name: Download sources
         run: |
           mkdir -p analysis
-          COOKIE_ARGS=()
-          if [ -s cookies.txt ]; then COOKIE_ARGS=(--cookies cookies.txt); fi
-          yt-dlp "${COOKIE_ARGS[@]}" --extractor-args "youtube:player_client=mweb"             -f "bv*[height<=1080]+ba/b[height<=1080]/b" --merge-output-format mp4             -o "analysis/interview.%(ext)s" "https://www.youtube.com/watch?v=lvFHKAXntQM"
-          yt-dlp "${COOKIE_ARGS[@]}" --extractor-args "youtube:player_client=mweb"             -f "bv*[height<=1080]+ba/b[height<=1080]/b" --merge-output-format mp4             -o "analysis/highlight.%(ext)s" "https://www.youtube.com/watch?v=C8_5ag2DYn0"
+          SUCCESS=0
+          for CLIENT in web_safari web mweb tv android_vr tv_embedded web_embedded; do
+            echo "TRY CLIENT=$CLIENT" | tee -a analysis/download.log
+            if yt-dlp --impersonate chrome --extractor-args "youtube:player_client=$CLIENT" \
+              -f "bv*[height<=1080]+ba/b[height<=1080]/b" --merge-output-format mp4 \
+              -o "analysis/interview.%(ext)s" "https://www.youtube.com/watch?v=lvFHKAXntQM" \
+              2>&1 | tee -a analysis/download.log; then
+              SUCCESS=1
+              break
+            fi
+          done
+          if [ "$SUCCESS" != 1 ]; then
+            echo "ALL_CLIENTS_FAILED" | tee -a analysis/download.log
+            exit 1
+          fi
+          yt-dlp --impersonate chrome --extractor-args "youtube:player_client=mweb" \
+            -f "bv*[height<=1080]+ba/b[height<=1080]/b" --merge-output-format mp4 \
+            -o "analysis/highlight.%(ext)s" "https://www.youtube.com/watch?v=C8_5ag2DYn0"
       - name: Transcribe and inspect
         run: |
           python - <<'PY'
@@ -51,7 +58,7 @@ jobs:
           from pathlib import Path
           model=WhisperModel("small.en", device="cpu", compute_type="int8")
           for stem in ("interview","highlight"):
-              p=next(Path("analysis").glob(stem+".*"))
+              p=next(Path("analysis").glob(stem+".mp4"))
               segs,info=model.transcribe(str(p), beam_size=5, vad_filter=True)
               with open("analysis/"+stem+".txt","w") as f:
                   for s in segs:
