@@ -1,66 +1,24 @@
 name: codex-search-pegula-interview
-
 on:
   push:
     branches: [main]
-    paths:
-      - ".github/workflows/codex-search-pegula-interview.yml"
-  workflow_dispatch:
-
+    paths: [".github/workflows/codex-search-pegula-interview.yml"]
 permissions:
   contents: read
-
-concurrency:
-  group: codex-search-pegula-interview
-  cancel-in-progress: true
-
 jobs:
-  analyze:
+  fetch-direct:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v4
-      - name: Install media tools
-        run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y -qq ffmpeg
-          python -m pip install -q "yt-dlp[default]" faster-whisper bgutil-ytdlp-pot-provider
-          docker run --name bgutil-pot -d -p 4416:4416 brainicism/bgutil-ytdlp-pot-provider
-          for i in {1..30}; do
-            curl -fsS http://127.0.0.1:4416/ping && break
-            sleep 1
-          done
-      - name: Download true on-court interview and official highlight
+      - name: Fetch locally signed Pegula source
+        env:
+          SOURCE_URL: 'https://rr3---sn-qja5m5-53.googlevideo.com/videoplayback?expire=1787492889&ei=uaWKaur7NPHeybgPh9LMSA&ip=2a09%3Abac5%3A636a%3A1800%3A%3A264%3Ab0&id=o-ANIfbWSU2vGsAXWZVeZKOamHYZWqN9bcfHaYYVJ5b2GA&itag=18&source=youtube&requiressl=yes&xpc=EgVo2aDSNQ%3D%3D&cps=284&met=1787471289%2C&mh=ZO&mm=31%2C29&mn=sn-qja5m5-53%2Csn-qja5mc-54&ms=au%2Crdu&mv=m&mvi=3&pl=42&rms=au%2Cau&initcwndbps=2115000&bui=AR3QkAkI9XYGaiRtQyqwwC-poI7QMvXJMQ7EhYInCHJFFLDpLs3hihmOz7idgOoMCxHsvI1bBcQ5b5lB&spc=KBGBcpgNoUtcn7kZRo5JfHNXSk9daBbMyU8lrmstAZnMGVR599mHlNtgdsaJbum75KV9lrmyW8pkvl_WE4TBIzGtseniog&vprv=1&svpuc=1&mime=video%2Fmp4&ns=uB1Aa6zmo_O0NTTewwLJC0oX&rqh=1&cnr=14&ratebypass=yes&dur=97.152&lmt=1697827906083398&mt=1787470842&fvip=5&fexp=51565116&c=MWEB&sefc=1&txp=5318224&n=deJcqC7-1b49nQ&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cxpc%2Cbui%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Cns%2Crqh%2Ccnr%2Cratebypass%2Cdur%2Clmt&sig=AE0s2JYwRQIgTOTiXLiR1N-tDd1Rg5ylgBO8Gx_YIQe8eXc_2kWot5oCIQDxr_AjblwwKXsC8X30Ed1vK8OfJG9Ry7EbL8kSo9wYHQ%3D%3D&lsparams=cps%2Cmet%2Cmh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Crms%2Cinitcwndbps&lsig=APaTxxMwRQIgegk4TR2EbhXmP5jGIuTgIeoDfL2s_nh73_39BLdffYwCIQCcY0WzaFc8syPpU4wZXGEp-oSYRwtd_8CbbA5gTCa_lQ%3D%3D&pot=Mlf4dWsdN7jAlfg19D1GJYV8V2YAbOhqGgmBDVLcpI-KPiJhQ3v8ZgviAz7q2q_njUXAxGssX2mJBHwivYNVlcMOC9FaVPgcRZV4isoKJt8xmKyBmYst0pU%3D'
         run: |
           mkdir -p analysis
-          COMMON=(--js-runtimes node --remote-components ejs:github --extractor-args youtube:player_client=mweb)
-          yt-dlp "${COMMON[@]}" -f "137+140/18" --merge-output-format mp4 \
-            -o "analysis/interview.%(ext)s" "https://www.youtube.com/watch?v=lvFHKAXntQM"
-          yt-dlp "${COMMON[@]}" -f "bv*[height<=1080]+ba/b[height<=1080]/b" --merge-output-format mp4 \
-            -o "analysis/highlight.%(ext)s" "https://www.youtube.com/watch?v=C8_5ag2DYn0"
-      - name: Transcribe and inspect
-        run: |
-          python - <<'PY'
-          from faster_whisper import WhisperModel
-          from pathlib import Path
-          model=WhisperModel("small.en", device="cpu", compute_type="int8")
-          for stem in ("interview","highlight"):
-              p=Path("analysis")/(stem+".mp4")
-              segs,info=model.transcribe(str(p), beam_size=5, vad_filter=True)
-              with open("analysis/"+stem+".txt","w") as f:
-                  for s in segs:
-                      line=f"{s.start:.2f}\t{s.end:.2f}\t{s.text.strip()}"
-                      print(stem.upper(), line)
-                      f.write(line+"\n")
-          PY
-          for stem in interview highlight; do
-            dur=$(ffprobe -v error -show_entries format=duration -of csv=p=0 analysis/$stem.mp4)
-            ffmpeg -y -i analysis/$stem.mp4 -vf "fps=16/$dur,scale=480:-1,tile=4x4" -frames:v 1 analysis/$stem-contact.jpg
-            ffprobe -v error -show_entries format=duration:stream=codec_name,width,height -of json analysis/$stem.mp4 > analysis/$stem-probe.json
-          done
+          curl -L --retry 5 --fail --max-time 180 "$SOURCE_URL" -o analysis/interview.mp4
+          ffprobe -v error -show_entries format=duration:stream=codec_name,width,height -of json analysis/interview.mp4 | tee analysis/probe.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: pegula-oncourt-analysis
+          name: pegula-oncourt-direct
           path: analysis/
           retention-days: 3
