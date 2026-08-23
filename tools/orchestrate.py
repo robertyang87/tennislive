@@ -275,14 +275,68 @@ def _already_specced(slug: str) -> Path | None:
     return None
 
 
+def _specced_surname_pairs() -> dict[frozenset[str], Path]:
+    """扫一遍 `specs/reels/*.json`，从 `cover.matchup` 里认出「这两个姓已经
+    有人做过」——**不按文件名**，按比赛双方的姓（不分先后）。
+
+    ⚠️ **`_already_specced` 只按裸 slug（`slug_for(m)` 生成的
+    `<home姓>-<away姓>`）比对，而人工 spec 的文件名几乎从不长这样**——
+    这个仓库自己的命名习惯是赢家在前（不是 home/away 顺序），还常常带赛事
+    轮次后缀（`-cincinnati-2026-sf` 这类）。2026-08-23 干跑就实测撞上了：
+    `gauff-bejlek-cincinnati-2026-sf.json` 刚合并进 main，`--dry-run` 还是
+    把「贝莱克 vs 高芙」报成一条全新候选（`slug_for` 拼出来的是
+    `bejlek-gauff`，和真实文件名一个字都对不上）。`--apply` 真跑起来的话，
+    这就是一次白白的重复 dispatch——而且不报错，看起来和「这是条新比赛」
+    一模一样。
+
+    所以再加一层**按姓的集合**去比对，姓来自 `cover.matchup[].name_en`
+    ——`name` 那一栏是中文（"高芙"这种），`_surname()` 是按英文名的空格/
+    缩写规则写的，拿中文喂它只会取整个中文名当"姓"，没用也不会错判，
+    干脆只认 `name_en`。只扫 `specs/reels/`——`pending/` 那两处仍然靠
+    `_already_specced` 的精确文件名，草稿本来就该按 orchestrator 自己
+    生成的 slug 存放。
+    """
+    out: dict[frozenset[str], Path] = {}
+    for p in sorted(SPECS_DIR.glob("*.json")):
+        try:
+            spec = json.loads(p.read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, OSError):
+            continue
+        matchup = (spec.get("cover") or {}).get("matchup") or []
+        surnames = set()
+        for m in matchup:
+            if not isinstance(m, dict):
+                continue
+            sn = _surname(str(m.get("name_en") or "")).lower()
+            if sn:
+                surnames.add(sn)
+        if len(surnames) == 2:
+            out[frozenset(surnames)] = p
+    return out
+
+
 def dispatch_plan(cands: list[dict], state: dict) -> list[dict]:
     """过滤已 dispatch 的和已有 spec 的，返回「真正要点 run」的那几条。
 
     去重键是 slug ＋ 比赛日期（state 条目里的 `date`）：同 slug 但日期差了
     不止一天，就是**同对手再交手**（或同姓撞 slug），不许被老条目永久压住
     ——老版本按裸 slug 永久去重，`date` 字段写了从来没读过。
+
+    ⚠️ **按姓的集合再查一遍，不止查裸 slug。** `_already_specced` 只认
+    orchestrator 自己生成的那个 slug（home 姓-away 姓），而人工/AI 会话
+    起的文件名几乎从不长这样——赢家在前、常带赛事轮次后缀。裸 slug 查不到
+    不等于真没人做过，`_specced_surname_pairs()` 从每条 spec 的
+    `cover.matchup` 里认人，跟文件名怎么起无关。
+
+    ⚠️ **这一层不比对日期**（`_specced_surname_pairs` 没有日期可比——spec
+    本身不存这个字段）。风险是这两位球员真的**短期内又打了一场**会被误判
+    成"已经做过"而漏掉——但这个风险比"重复 dispatch 同一场"小得多（同一
+    对手短期内再碰头本来就罕见），而且和上面 `_same_match_day` 那句
+    "读不出日期按同一场处置，宁可漏点一条，别重复点 run"是同一个偏向，
+    不是这次新引入的判断。
     """
     done = state.get("dispatched", {})
+    specced_pairs = _specced_surname_pairs()
     fresh = []
     for c in cands:
         entry = done.get(c["slug"])
@@ -291,6 +345,13 @@ def dispatch_plan(cands: list[dict], state: dict) -> list[dict]:
         spec = _already_specced(c["slug"])
         if spec is not None:
             print(f"  [{c['slug']}] 已有 spec（{spec}），人工大概已经做过，跳过")
+            continue
+        pair = frozenset({_surname(c.get("home", "")).lower(),
+                          _surname(c.get("away", "")).lower()})
+        by_pair = specced_pairs.get(pair) if len(pair) == 2 else None
+        if by_pair is not None:
+            print(f"  [{c['slug']}] 这两位选手已经有 spec（{by_pair}，"
+                  "文件名不一样但是同一对球员），跳过")
             continue
         fresh.append(c)
     return fresh

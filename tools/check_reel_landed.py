@@ -228,6 +228,95 @@ def evidence_windows(spec: dict, cover: float) -> list[tuple[float, float]]:
     return out
 
 
+def stat_card_headshot_problem(
+        spec: dict, reels_dir: Path,
+        self_path: Path | None = None) -> tuple[bool, str] | None:
+    """`stats.a/b.headshot` 是不是挂错了名字——**推送前的最后一道关卡**。
+
+    `sonmez-anisimova` / `tsitsipas-royer` 两次真事故都是同一个形状：
+    `stats.a` 该跟 `cover.matchup[0]`，结果按 flashscore/TNNS 的原始顺序填，
+    于是数据图把赢球的那个人印成了对手的数字。渲染、`--dry-run`、全量测试、
+    `check_reel_landed`（改之前）**一律不出声**——图上每个数单看都对，只有
+    把名字和数字对起来才看得出来。
+
+    仓库里已经有一条 CI 测试干这件事（`test_数据图的头像和matchup里的名字
+    必须是同一个人`），但它只在全量测试里跑，**这道推送前的最后关卡从来没有
+    这一项**——`tsitsipas-royer` 那次错误的成片已经发出去了，账号所有者
+    是从"同一张头像在另一条 spec 里挂了不同的中文名"这个巧合发现的，不是
+    任何一道闸拦下来的。这里把同一份判据也接到这道关卡上，多一道防线。
+
+    ⚠️ **判据自己从 `specs/reels/` 推，不维护名单**（和那条 CI 测试同一个
+    做法）：同一张头像文件在别的 spec 里挂过哪个中文名，这里就必须还是
+    那个名。**新球员第一次出现时这道闸是哑的**（没有第二处可比）——这是它
+    天然的边界，不是漏做；这种情况只报一句提醒，让人推送前自己核对一眼，
+    别把"没有矛盾"读成"验证过了"。
+
+    ⚠️ **双打头像（`headshot` 是列表）跳过**——同一张 Venus Williams 的
+    单人照，单打 spec 挂"大威廉姆斯"、双打 spec 挂团队标签"威廉姆斯姐妹"，
+    两个名字都对，不是填反了。
+
+    ⚠️ **`self_path` 不能省。** 这个函数在 `check_reel_landed.py` 里跑的时候，
+    正在查的这条 spec **早就已经提交进仓库了**（render 必须先有 spec）——
+    扫 `reels_dir` 会扫到它自己，"第一次出现"永远变成"我在扫我自己"，
+    `first_seen` 从此恒为哑（真出过一次这个 bug：写完当场量了一遍
+    164 条已发 spec，`first_seen` 全是 0——不是巧合，是自己把自己算成了
+    "已经见过"）。传了 `self_path` 就在扫描时跳过它，让"没有第二处可比"
+    这句话真的成立。
+    """
+    stats = spec.get("stats") or {}
+    matchup = spec.get("cover", {}).get("matchup") or []
+    names = [m.get("name") for m in matchup if isinstance(m, dict)]
+    if len(names) != 2:
+        return None
+    this_shots: dict[str, str] = {}
+    for key, idx in (("a", 0), ("b", 1)):
+        shot = (stats.get(key) or {}).get("headshot")
+        if isinstance(shot, str) and shot and names[idx]:
+            this_shots[Path(shot).name] = names[idx]
+    if not this_shots:
+        return None
+
+    self_resolved = self_path.resolve() if self_path else None
+    seen: dict[str, set[str]] = {}
+    for path in sorted(reels_dir.glob("*.json")):
+        if self_resolved is not None and path.resolve() == self_resolved:
+            continue
+        other = json.loads(path.read_text(encoding="utf-8"))
+        o_stats = other.get("stats") or {}
+        o_names = [m.get("name") for m in
+                   (other.get("cover", {}).get("matchup") or [])
+                   if isinstance(m, dict)]
+        if len(o_names) != 2:
+            continue
+        for key, idx in (("a", 0), ("b", 1)):
+            shot = (o_stats.get(key) or {}).get("headshot")
+            if isinstance(shot, str) and shot and o_names[idx]:
+                seen.setdefault(Path(shot).name, set()).add(o_names[idx])
+
+    clashes, first_seen = [], []
+    for filename, name in this_shots.items():
+        prior = seen.get(filename, set())
+        others = prior - {name}
+        if others:
+            clashes.append(f"{filename} 在别的 spec 里挂过「{'/'.join(sorted(others))}」"
+                           f"，这条挂的是「{name}」")
+        elif not prior:
+            first_seen.append(f"{filename}（配的是「{name}」）")
+
+    msg = []
+    if clashes:
+        msg.append("[不合格] 数据图头像挂错了名字（十有八九是 stats.a/b 填反，"
+                   "a 必须对应 cover.matchup[0]）：\n  "
+                   + "\n  ".join(clashes))
+    if first_seen:
+        msg.append("[注意] 这几张头像是第一次出现，没有第二处可比对——"
+                   "推送前打开 stat_card.jpg 自己核一眼，左边那张脸是不是"
+                   "左边那个名字：\n  " + "\n  ".join(first_seen))
+    if not msg:
+        return None
+    return bool(clashes), "\n".join(msg)
+
+
 def dead_seconds(levels: list[float], after: int,
                  evidence: list[tuple[float, float]],
                  ) -> tuple[list[int], list[int]]:
@@ -271,6 +360,16 @@ def main() -> int:
     cover = cover_seconds(film)
 
     bad = voiced_by(film, spec)
+
+    headshot = stat_card_headshot_problem(
+        spec, root / "specs" / "reels", self_path=spec_path)
+    if headshot:
+        is_clash, headshot_msg = headshot
+        print(f"\n{headshot_msg}")
+        # 只有真的挂错（和别的 spec 矛盾）才算不合格；「第一次出现，没得比」
+        # 只是提醒人核一眼，不拦——不然会把每一个新球员的首秀都判成不合格
+        if is_clash:
+            bad += 1
 
     size = sh("ffprobe", "-v", "error", "-select_streams", "v:0",
               "-show_entries", "stream=width,height",
