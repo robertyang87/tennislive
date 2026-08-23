@@ -17,17 +17,32 @@ jobs:
     steps:
       - name: Install yt-dlp
         run: pipx install yt-dlp
-      - name: Search public video sources
+      - name: Inspect reference sources
+        run: |
+          for URL in \
+            "https://youtu.be/x3eYH8OiHBM" \
+            "https://youtu.be/no_1M2K_CZU" \
+            "https://youtu.be/C8_5ag2DYn0"; do
+            yt-dlp --skip-download --print "REFERENCE | %(id)s | %(title)s | %(uploader)s | %(channel_url)s | %(duration_string)s | %(upload_date)s | %(webpage_url)s" "$URL"
+          done
+      - name: Search newest public video sources
         run: |
           set +e
           for QUERY in \
             "Jessica Pegula Iga Swiatek Cincinnati 2026 on court interview" \
             "Jessica Pegula Cincinnati 2026 post match interview" \
             "Pegula Swiatek Cincinnati Open 2026 interview" \
-            "Jessica Pegula crazy match today Cincinnati" \
-            "Jessica Pegula vs Iga Swiatek Cincinnati 2026 highlights"; do
+            "Jessica Pegula Tennis Xtra Cincinnati 2026" \
+            "Jessica Pegula crazy match today Cincinnati"; do
             echo "QUERY: $QUERY"
-            yt-dlp --flat-playlist --playlist-end 20 \
+            yt-dlp --flat-playlist --playlist-end 30 \
               --print "%(id)s | %(title)s | %(uploader)s | %(duration_string)s | %(upload_date)s | %(webpage_url)s" \
-              "ytsearch20:$QUERY"
+              "ytsearchdate30:$QUERY"
           done
+      - name: Inspect latest uploads from the Gauff interview source channel
+        run: |
+          CHANNEL_URL="$(yt-dlp --skip-download --print "%(channel_url)s" "https://youtu.be/x3eYH8OiHBM")"
+          echo "CHANNEL_URL=$CHANNEL_URL"
+          yt-dlp --flat-playlist --playlist-end 50 \
+            --print "%(id)s | %(title)s | %(uploader)s | %(duration_string)s | %(upload_date)s | %(webpage_url)s" \
+            "$CHANNEL_URL/videos"
