@@ -40,6 +40,8 @@ on:
 
 permissions:
   contents: write
+  # 草稿矩阵全部落库后立即叫醒提升/渲染，不再等下一班最多 10 分钟的 schedule。
+  actions: write
 
 concurrency:
   group: oncourt-interviews
@@ -259,6 +261,14 @@ jobs:
           python-version: "3.11"
           cache: pip
 
+      - name: 缓存第一份 ASR 模型
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface/hub
+          key: faster-whisper-${{ runner.os }}-small.en
+          restore-keys: |
+            faster-whisper-${{ runner.os }}-
+
       - name: 缓存单场转写的 apt 包（字体）
         uses: actions/cache@v4
         with:
@@ -330,3 +340,23 @@ jobs:
           done
           echo "::error::本场草稿无法落库；其他 matrix 场次不受影响"
           exit 1
+
+  # matrix 的不同比赛继续并行；等本批最后一条草稿落库后只叫醒一次提升器，
+  # 由它一次扫齐并按 slug dispatch 多条 interview-clip（仍然并行渲染）。
+  # 原来只靠每 10 分钟 schedule，哪怕链接和草稿已经齐了也会白等 0~10 分钟。
+  kick-render:
+    needs: draft
+    if: always() && needs.draft.result != 'skipped'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: 立即提升并派发本批赛后开麦
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh workflow run interview-auto-render.yml --ref main; then
+            echo "[dispatch] 已立即叫醒 interview-auto-render；不等下一班 schedule"
+          else
+            echo "::error::草稿已落库，但 interview-auto-render 派发失败"
+            exit 1
+          fi

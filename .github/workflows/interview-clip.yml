@@ -38,6 +38,10 @@ on:
         description: "推送正文那一句（留空用文案第一行）"
         required: false
         default: ""
+      received_at:
+        description: "生产可用的视频链接与正式 spec 被确认/派发的 UTC 时刻；自动链路必传"
+        required: false
+        default: ""
 
 permissions:
   contents: write
@@ -98,6 +102,16 @@ jobs:
     # 70，这条线当时没跟上。
     timeout-minutes: 65
     steps:
+      - name: 10 分钟成片时钟起点
+        id: production_clock
+        if: github.event.inputs.mode == 'render'
+        env:
+          RECEIVED_AT: ${{ github.event.inputs.received_at }}
+        run: |
+          START="${RECEIVED_AT:-$(date -u +%FT%TZ)}"
+          echo "received_at=$START" >> "$GITHUB_OUTPUT"
+          echo "[production-sla] link/spec accepted at $START; owned MP4 budget = 600s"
+
       # `mode=push` 的**唯一目的**就是发微信（顶上那张三阶段表写着
       # 「push＝只发微信」），可真正发消息那一步的 `if:` 认的是 `inputs.push`。
       # 只传 `mode=push` 的那趟会 20 来秒跑完、绿的——什么都不装、什么都不发。
@@ -150,6 +164,44 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+
+      # 第二份 ASR 是开麦链路最大单项：最新成功样本 5m44s。模型本身过去每趟
+      # 都从 Hugging Face 重下；这既不增加校验信息，也把成片推到 10m09s。
+      # 按模型名缓存，small.en / medium.en 仍是两份独立模型，精度闸不变。
+      - name: 算第二份 ASR 模型
+        id: second_asr
+        if: github.event.inputs.mode == 'render'
+        env:
+          SLUG: ${{ github.event.inputs.slug }}
+        run: |
+          MODEL=$(python - <<'PY'
+          import json, os
+          from pathlib import Path
+          spec = json.loads(Path(f"specs/interviews/{os.environ['SLUG']}.json").read_text())
+          print(spec.get("whisper_model", "small.en"))
+          PY
+          )
+          echo "model=$MODEL" >> "$GITHUB_OUTPUT"
+          echo "第二份 ASR 模型：$MODEL"
+
+      - name: 缓存第二份 ASR 模型
+        if: github.event.inputs.mode == 'render'
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface/hub
+          key: faster-whisper-${{ runner.os }}-${{ steps.second_asr.outputs.model }}
+          restore-keys: |
+            faster-whisper-${{ runner.os }}-
+
+      # match-reel 已经缓存同一版 Playwright Chromium；采访线以前仍每趟重装。
+      # 共用键和目录，命中后下面真 launch 一次，成功就不再碰 apt。
+      - name: 缓存 Chromium
+        if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover'
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-chromium-${{ runner.os }}-${{ hashFiles('pyproject.toml') }}
+          restore-keys: playwright-chromium-${{ runner.os }}-
 
       # 两个字体包都不能漏，而且**漏了的表现不一样，都不报错**：
       # - `fonts-noto-cjk`：少了它 libass 用回退字体，中文那行变豆腐块
@@ -274,7 +326,21 @@ jobs:
             echo "::error::装 Chromium 两次都没成功"
             return 1
           }
-          pw_retry
+          if timeout 20 python - <<'PY'
+          from playwright.sync_api import sync_playwright
+          with sync_playwright() as playwright:
+              browser = playwright.chromium.launch(headless=True)
+              page = browser.new_page()
+              page.set_content("<p>chromium-ready</p>")
+              assert page.locator("p").inner_text() == "chromium-ready"
+              browser.close()
+          PY
+          then
+            echo "[chromium] 缓存可直接启动，跳过带系统依赖的安装"
+          else
+            echo "[chromium] 缓存未就绪，走带依赖安装"
+            pw_retry
+          fi
           node --version
 
       # **取字幕这一阶段的准备，比出片少一大半。** 它不下媒体、不转写、不渲封面、
@@ -479,8 +545,21 @@ jobs:
           COOKIES: ${{ steps.cookies.outputs.path }}
         run: |
           set -o pipefail
-          SPEC="specs/interviews/${{ github.event.inputs.slug }}.json"
-          PYTHONPATH=src python tools/build_interview_clip.py --spec "$SPEC" --stage render
+          SLUG="${{ github.event.inputs.slug }}"
+          SPEC="specs/interviews/$SLUG.json"
+          OUTDIR="output/interviews/$SLUG"
+          # 600 秒是性能目标，不是发布硬闸。内容完整与质检优先；超线由
+          # `finish` 记 FAIL / warning，但后续 L2 与自动发布继续执行。
+          RENDER_STARTED=$(date -u +%FT%TZ)
+          PYTHONPATH=src python tools/build_interview_clip.py \
+            --spec "$SPEC" --stage render
+          python tools/video_sla.py finish \
+            --received-at "${{ steps.production_clock.outputs.received_at }}" \
+            --render-started-at "$RENDER_STARTED" \
+            --artifact "$OUTDIR/$SLUG.mp4" \
+            --metadata "$OUTDIR/render.json" \
+            --pipeline interview-clip --slug "$SLUG" \
+            --summary "$GITHUB_STEP_SUMMARY"
 
       # **查产物，不查信号。** 步骤 success 不等于成片存在——探一下文件和时长。
       # 2026-08-15 起升级成完整 L2 成片落地闸（docs/qa-contract.md §三）：

@@ -197,12 +197,16 @@ jobs:
           mapfile -t SLUGS < <(tail -n +2 /tmp/todo.txt | grep -v '^$' || true)
           FAILED=()
           for slug in "${SLUGS[@]}"; do
+            # 正式 spec、同场片头和来源核验都齐了，到这里才是“生产链接已接收”。
+            # 这个时刻一路传给成片，不允许 render job 装完依赖后重新起表。
+            RECEIVED_AT=$(date -u +%FT%TZ)
             echo "[dispatch] interview-clip render $slug"
-            if gh workflow run interview-clip.yml --ref main -f "slug=$slug" -f mode=render; then
+            if gh workflow run interview-clip.yml --ref main \
+              -f "slug=$slug" -f mode=render -f "received_at=$RECEIVED_AT"; then
               # **投一条记一条，先投后记。** 反过来（先把整批记进状态再逐条
               # dispatch）的下场踩过：dispatch 失败的那条挂着「已投」的标记，
               # 从此再也不会被投，而且不吭声。
-              python tools/pick_interview_renders.py --mark-one "$slug"
+              python tools/pick_interview_renders.py --mark-one "$slug" --at "$RECEIVED_AT"
             else
               FAILED+=("$slug")
             fi

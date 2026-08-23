@@ -214,12 +214,14 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("--mark-one", default="",
                     help="这条 slug dispatch 成功了，记进状态（投一条记一条）")
+    ap.add_argument("--at", default="",
+                    help="配合 --mark-one：写入这次 dispatch 的 UTC 时刻")
     ap.add_argument("--stale", action="store_true",
                     help="列出投了超过 %d 小时还没有 render.json 的" % STALE_HOURS)
     args = ap.parse_args()
 
     if args.mark_one:
-        mark_one(args.mark_one)
+        mark_one(args.mark_one, now=args.at)
         print(f"已记：{args.mark_one}")
         return 0
 

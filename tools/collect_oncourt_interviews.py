@@ -704,11 +704,15 @@ def main() -> int:
                          "只在重建基线或新增源时用——日常跑不需要。")
     ap.add_argument("--daily-depth", type=int, default=DAILY_DEPTH,
                     help=f"日常模式每源扫多少条（默认 {DAILY_DEPTH}）")
+    ap.add_argument("--max-parallel", type=int, default=4,
+                    help="不同来源并行扫描数（默认 4；保守限流，不随来源数无限涨）")
     ap.add_argument("--include-ceremony", action="store_true",
                     help="连颁奖礼致辞、冠军演讲一起收（默认只收场上接受采访那一类）")
     ap.add_argument("--include-maybe", action="store_true",
                     help="连分不出场合的也收（上海 Reacts After、马德里西语那批）")
     args = ap.parse_args()
+    if not 1 <= args.max_parallel <= 8:
+        ap.error("--max-parallel 必须在 1..8；再高会把源站限流风险放大")
 
     cfg = load_sources()
     rules = compile_rules(cfg)
@@ -757,12 +761,25 @@ def main() -> int:
     skipped: list[tuple[str, str, str]] = []
     any_fetched = False
 
-    for src in sources:
+    # 不同来源是彼此独立的 IO（yt-dlp 子进程 / WTA / Tennis TV 请求）。旧版逐个
+    # 扫，2026-08-23 最新一轮仅“采集”就用了 16m15s，后面的候选 matrix 明明能
+    # 并行却一直等在这里。4 路把墙钟压成最慢一组，同时比 8/16 路更不容易触发
+    # YouTube 限流。executor.map 保留注册表顺序，下面报告与去重仍是确定性的。
+    def _fetch_one(src: dict) -> tuple[dict, list[dict], str, str]:
         fetch = {"tennistv": scan_tennistv, "wta": scan_wta,
                  "bilibili": scan_bilibili}.get(src.get("fetch"), scan)
         depth = src.get("scan_depth", 150) if args.full else min(
             args.daily_depth, src.get("scan_depth", 150))
         rows, status = fetch(src["url"], depth)
+        # 记请求真正返回的时刻，不等其余来源全扫完再伪装成“刚发现”。这个值
+        # 后续可用来单独量发现→生产准备延迟，和 render 的 received_at 不混。
+        fetched_at = datetime.now(timezone.utc).isoformat()
+        return src, rows, status, fetched_at
+
+    with ThreadPoolExecutor(max_workers=min(args.max_parallel, len(sources))) as pool:
+        fetched_sources = list(pool.map(_fetch_one, sources))
+
+    for src, rows, status, fetched_at in fetched_sources:
         if rows:
             any_fetched = True
 
@@ -844,7 +861,7 @@ def main() -> int:
                 # YouTube 的 flat-playlist 经常不给 upload_date。实时 Feed 不能因此
                 # 把几千条无日期历史库存都当成今天；至少钉住首次发现时间，供
                 # oncourt_feed 的「当前比赛日」硬窗口使用。
-                "discovered_at": datetime.now(timezone.utc).isoformat(),
+                "discovered_at": fetched_at,
                 # 搬运号的条目要一路带着标记，别在下游混进官方源里。
                 **({"unofficial": True} if src.get("unofficial") else {}),
             }
