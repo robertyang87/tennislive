@@ -8,94 +8,33 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
   group: codex-search-pegula-interview
   cancel-in-progress: true
 
 jobs:
-  analyze:
+  search:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
-      - name: Install tools
+      - name: Install yt-dlp
+        run: pipx install yt-dlp
+      - name: Inspect newest Cincinnati Open uploads
         run: |
-          pip install -q "yt-dlp[default]" faster-whisper bgutil-ytdlp-pot-provider
-          sudo apt-get update -qq
-          sudo apt-get install -y -qq ffmpeg
-      - name: Start PO token provider
+          yt-dlp --flat-playlist --playlist-end 40 \
+            --print "%(id)s | %(title)s | %(duration_string)s | %(webpage_url)s" \
+            "https://www.youtube.com/channel/UCtRsUWSlnmATu1X-wORUTqA/videos"
+      - name: Search newest mirrors and exact quotes
         run: |
-          docker run --name bgutil-pot -d -p 4416:4416 brainicism/bgutil-ytdlp-pot-provider
-          for i in $(seq 1 25); do
-            curl -sf http://127.0.0.1:4416/ping >/dev/null && exit 0
-            sleep 2
+          for QUERY in \
+            "Jessica Pegula after her victory over Swiatek Cincinnati final" \
+            "Jessica Pegula on court interview after beating Iga Swiatek semifinals" \
+            "Jessica Pegula always rooting for American tennis Coco Cincinnati" \
+            "Jessica Pegula crazy match today on court Cincinnati"; do
+            echo "QUERY: $QUERY"
+            yt-dlp --flat-playlist --playlist-end 50 \
+              --print "%(id)s | %(title)s | %(uploader)s | %(duration_string)s | %(webpage_url)s" \
+              "ytsearch50:$QUERY"
           done
-          docker logs bgutil-pot 2>&1 | tail -30
-          exit 1
-      - name: Materialize YouTube cookies
-        id: cookies
-        env:
-          YT_COOKIES_TXT: ${{ secrets.YT_COOKIES_TXT }}
-        run: |
-          if [ -n "$YT_COOKIES_TXT" ]; then
-            printf '%s' "$YT_COOKIES_TXT" > "$RUNNER_TEMP/yt-cookies.txt"
-            echo "args=--cookies $RUNNER_TEMP/yt-cookies.txt" >> "$GITHUB_OUTPUT"
-          else
-            echo "args=" >> "$GITHUB_OUTPUT"
-          fi
-      - name: Download candidate sources with client ladder
-        env:
-          COOKIE_ARGS: ${{ steps.cookies.outputs.args }}
-        run: |
-          set -o pipefail
-          mkdir -p scratch/pegula-source-analysis
-          download_video() {
-            URL="$1"; OUT="$2"
-            for CLIENT in web mweb tv android_vr tv_simply android,ios web_embedded; do
-              rm -f "${OUT}".*
-              echo "trying client=$CLIENT url=$URL"
-              if yt-dlp $COOKIE_ARGS --js-runtimes node \
-                --extractor-args "youtube:player_client=$CLIENT" --no-playlist \
-                -f "bv*[height<=1080]+ba/b[height<=1080]" --merge-output-format mp4 \
-                -o "${OUT}.%(ext)s" "$URL"; then
-                test -s "${OUT}.mp4" && return 0
-              fi
-            done
-            return 1
-          }
-          download_video "https://www.youtube.com/watch?v=aBmFP3cU4Vs" "/tmp/pegula-interview"
-          download_video "https://www.youtube.com/watch?v=C8_5ag2DYn0" "/tmp/pegula-highlight"
-      - name: Probe and build contact sheets
-        run: |
-          ffprobe -v error -show_entries format=duration:stream=index,codec_name,width,height,r_frame_rate \
-            -of json /tmp/pegula-interview.mp4 > scratch/pegula-source-analysis/interview-probe.json
-          ffprobe -v error -show_entries format=duration:stream=index,codec_name,width,height,r_frame_rate \
-            -of json /tmp/pegula-highlight.mp4 > scratch/pegula-source-analysis/highlight-probe.json
-          ffmpeg -y -i /tmp/pegula-interview.mp4 \
-            -vf "fps=1/24,scale=480:-1,tile=4x4" -frames:v 1 \
-            scratch/pegula-source-analysis/interview-contact.jpg
-          ffmpeg -y -ss 180 -i /tmp/pegula-highlight.mp4 \
-            -vf "fps=1/8,scale=480:-1,tile=4x4" -frames:v 1 \
-            scratch/pegula-source-analysis/highlight-contact.jpg
-      - name: Transcribe candidate interview
-        run: |
-          python - <<'PY'
-          from faster_whisper import WhisperModel
-          model = WhisperModel("small.en", device="cpu", compute_type="int8")
-          segments, info = model.transcribe("/tmp/pegula-interview.mp4", beam_size=5, vad_filter=True)
-          with open("scratch/pegula-source-analysis/interview-transcript.txt", "w", encoding="utf-8") as f:
-              f.write(f"language={info.language} probability={info.language_probability:.4f}\n")
-              for s in segments:
-                  line = f"[{s.start:.2f} --> {s.end:.2f}] {s.text.strip()}"
-                  print(line)
-                  f.write(line + "\n")
-          PY
-      - name: Commit analysis evidence
-        run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git add scratch/pegula-source-analysis
-          git commit -m "chore: inspect Pegula Tennis Channel source"
-          git push
