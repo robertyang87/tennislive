@@ -17,6 +17,7 @@
 from __future__ import annotations
 
 import argparse
+import os
 import re
 import subprocess
 import sys
@@ -46,6 +47,12 @@ MAX_HIGHLIGHT_SECONDS = 12 * 60
 # 账号所有者 2026-08-18 定死：「视频一定要选 1080p 及以上的清晰度，
 # 如果没有的话就等」——不分巡回赛、不分渠道的硬门槛。
 MIN_SOURCE_HEIGHT = 1080
+
+
+def _cookie_args() -> list[str]:
+    """Actions secret 落成文件后统一传给搜索和元数据探测。"""
+    path = (os.environ.get("YT_COOKIES") or "").strip()
+    return ["--cookies", path] if path and Path(path).is_file() else []
 
 
 def query_for(home: str, away: str, event: str, year: int) -> str:
@@ -88,6 +95,7 @@ def search(query: str, per: int = 6, timeout: int = 120) -> list[tuple]:
     try:
         proc = subprocess.run(
             ["yt-dlp", "--flat-playlist",
+             *_cookie_args(),
              "--print", "%(title)s ||| %(webpage_url)s ||| %(channel)s ||| %(duration)s",
              f"ytsearch{max(1, min(per, 20))}:{query}"],
             capture_output=True, text=True, timeout=timeout)
@@ -116,14 +124,22 @@ def search(query: str, per: int = 6, timeout: int = 120) -> list[tuple]:
 
 def channel_ok(channel: str | None, event: str = "") -> bool:
     """频道在不在官方白名单：三大官方（`OFFICIAL_CHANNELS`）＋赛事自己的
-    官方频道（频道名含赛事简称的每个词，如 `Cincinnati Open`）。"""
+    官方频道（频道名就是赛事简称，如 `Cincinnati Open`）。
+
+    Merely *containing* the event word is not proof: ``Cincinnati Tennis Fan``
+    must not inherit official status from the word Cincinnati.
+    """
     c = (channel or "").strip().lower()
     if not c:
         return False
     if c in OFFICIAL_CHANNELS:
         return True
-    ev = [w for w in short_event(event or "").lower().split() if w]
-    return bool(ev) and all(w in c for w in ev)
+    tokens = lambda value: {  # noqa: E731
+        w for w in re.findall(r"[a-z0-9]+", short_event(value).lower())
+        if w not in {"official", "channel", "tv", "youtube"}
+    }
+    ev, channel_name = tokens(event or ""), tokens(channel)
+    return bool(ev) and channel_name == ev
 
 
 def pick_highlight(results: list[tuple], home: str, away: str,
@@ -187,6 +203,7 @@ def probe_meta(url: str, timeout: int = 120) -> tuple | None:
     （CLAUDE.md「记得带 --js-runtimes node」）。
     """
     cmd = ["yt-dlp", "--skip-download", "--js-runtimes", "node",
+           *_cookie_args(),
            "--print", "%(channel)s ||| %(duration)s ||| %(height)s", url]
     for _ in range(2):
         try:

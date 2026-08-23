@@ -13,26 +13,29 @@
 也就是说这条线的每一次推送都得人合完 PR 之后记得回来点一次 dispatch——
 **而它是时效最紧的一条**（赛后采访过一夜就没人看了）。
 
-**闸一道都不少，和 reel 那条完全同口径**，因为微信那条消息发出去收不回来：
+**发布闸一道都不能少**，因为微信那条消息发出去收不回来：
 
 1. **路径形状**必须是 `output/interviews/<slug>/render.json`
-2. spec 里必须显式写 `"push": {"auto": true}` ——**默认关**，
-   和 `mixed_fps` / `silent_source` 一个形状：认领这一步把「想清楚了」和
-   「凑合一下」分开
-3. 这条**没推过**：`<outdir>/pushed.json` 在仓库里就说明发过了。
+2. 新自动 spec 必须有 L0 来源身份签名，且 L2 `qc_attestation.json` 与当前
+   spec、match_id、最终成片 hash/bytes 完全一致
+3. spec 写了 `"push": {"auto": true}`；新草稿在来源和赛果都通过后默认写入，
+   老 spec 仍逐条显式认领
+4. 这条**没推过**：独立发布账本的同一成片键没有 sending/sent/uncertain；
+   旧 `<outdir>/pushed.json` 仍兼容拦截。
    查产物，不查信号——「工作流跑过一次」证明不了消息发出去了。
    ⚠️ 查的是 **`git ls-files`，不是 `test -f`**：这个脚本排在
    `git sparse-checkout add` **之前**，`output/` 那一格不在工作区，
    按文件存不存在判**恒为假**，那道闸等于没装
-4. **海报在仓库里**：`<outdir>/poster.jpg` 是推送正文的第一屏，没有它这条
+5. **海报在仓库里**：`<outdir>/poster.jpg` 是推送正文的第一屏，没有它这条
    消息只剩两个按钮。见 `wants_auto_push` 里那一段——这条线现在
    **一张海报都没有**，所以它上来就会把所有存量拦下，那是对的
-5. 一趟**最多一条**。一次合并带进来两条成片就一条都不发，报出来让人手动。
+6. 一趟**最多一条**。常规主路按 slug dispatch，因此不同比赛由不同 run 并行；
+   兜底 push 事件若一次混入多条则一条都不发，避免批量误发。
    批量自动发微信，错一次就是错一片
 
-**共用的部分是 import 来的，不是抄的。** `Skip` / `tracked` / `MARKER` /
-`record` 跟哪条线无关，从 `auto_push_gate` 直接拿——「一个数写两处必分叉」。
-真正分叉的只有路径形状和 spec 目录，那两样本来就该两条线各写各的。
+**共用的基础判据是 import 来的。** `Skip` / `tracked` / 旧 `MARKER` 从
+`auto_push_gate` 直接拿；采访的 `record` 故意独立，因为发布历史必须放在
+`data/interview_publish_ledger/`，不能再被重渲替换 output 目录擦掉。
 ⚠️ `auto_push_gate.candidate()` 把 reel 的形状写死在函数体里、`pick()` 又
 直接调它，所以复用不到 `pick` 那一层；能不能参数化成一份代码见 PR 正文。
 
@@ -40,10 +43,12 @@
 
     auto_push_interview_gate.py --changed <改动的文件…>   # 列出该发的那一条
     auto_push_interview_gate.py --slug <slug>             # 手动/被叫醒时只查这一条
-    auto_push_interview_gate.py --record <outdir> --run <运行地址>   # 发完记一笔
+    auto_push_interview_gate.py --reserve <outdir> --slug X --run <运行地址>
+    auto_push_interview_gate.py --record <outdir> --slug X --run <运行地址>
+    auto_push_interview_gate.py --uncertain <outdir> --slug X --run <运行地址>
 
 ⚠️ `--slug` 不是绕闸的近路：它只是把「这次改了哪些文件」换成
-「就查这一条的 render.json」，**五道闸一道不少**——render 提交是 GITHUB_TOKEN
+「就查这一条的 render.json」，**六道闸一道不少**——render 提交是 GITHUB_TOKEN
 推的、不触发 on:push（GitHub 防递归），所以 interview-clip 渲完要用
 `workflow_dispatch -f slug=…` 把这条工作流叫醒，闸在这儿照样把关。
 """
@@ -51,6 +56,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import re
@@ -60,12 +66,9 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-# **共用的四样，import 不抄。** 它们一个字都不涉及「哪条线」：
-# `Skip` 是「跳过要说出为什么」这条约定本身，`tracked` 是稀疏检出下唯一
-# 靠得住的存在性判据，`MARKER` 是已推送标记的文件名，`record` 是写它的那一笔。
-# 抄第二份的下场是可预见的：改了 reel 那头的标记名，这头静默失配，
-# 于是同一条片子被发第二次。
-from auto_push_gate import MARKER, Skip, record, tracked  # noqa: E402
+# **共用三样，import 不抄。** `Skip`、`tracked`、旧 `MARKER` 不涉及哪条线；
+# 新发布账本则是采访线自己的权威状态，不能继续写在可被重渲覆盖的 outdir。
+from auto_push_gate import MARKER, Skip, tracked  # noqa: E402
 
 # `output/interviews/eala-parks-toronto-2026/render.json`
 # ⚠️ **没有日期那一层**，和 reel 的 `output/<日期>/reel/<slug>/` 差的就是这个。
@@ -77,6 +80,142 @@ from auto_push_gate import MARKER, Skip, record, tracked  # noqa: E402
 _RENDER_JSON = re.compile(r"^output/interviews/([^/]+)/render\.json$")
 
 SPEC_DIR = Path("specs/interviews")
+LEDGER_DIR = Path("data/interview_publish_ledger")
+
+
+def _tracked_bytes(repo: Path, path: Path) -> bytes:
+    """稀疏检出下读取仓库版本；工作区有文件时也只认当前字节。"""
+    rel = path.relative_to(repo) if path.is_absolute() else path
+    local = repo / rel
+    if local.is_file():
+        return local.read_bytes()
+    import subprocess
+    proc = subprocess.run(
+        ["git", "-C", str(repo), "show", f"HEAD:{rel.as_posix()}"],
+        capture_output=True, check=False)
+    if proc.returncode:
+        raise Skip(f"{rel} 在索引里但读取不到仓库内容")
+    return proc.stdout
+
+
+def _tracked_json(repo: Path, path: Path) -> dict:
+    try:
+        return json.loads(_tracked_bytes(repo, path))
+    except (ValueError, UnicodeDecodeError) as exc:
+        raise Skip(f"{path} 不是有效 JSON") from exc
+
+
+def _sha256_bytes(data: bytes) -> str:
+    return hashlib.sha256(data).hexdigest()
+
+
+def _ledger_path(repo: Path, slug: str) -> Path:
+    return repo / LEDGER_DIR / f"{slug}.json"
+
+
+def _load_ledger(repo: Path, slug: str) -> dict:
+    path = _ledger_path(repo, slug)
+    if not path.is_file():
+        return {"slug": slug, "channel": "pushplus", "attempts": []}
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError) as exc:
+        raise Skip(f"{path} 损坏，不能在未知发布状态下继续") from exc
+    data.setdefault("attempts", [])
+    return data
+
+
+def validate_qc(repo: Path, slug: str, outdir: Path) -> str:
+    """L3 发布前复核 L0/L2 凭证与当前 spec/render 完全对应。返回成片哈希。"""
+    qc_path = outdir / "qc_attestation.json"
+    if not tracked(repo, qc_path):
+        raise Skip(f"{slug}：没有受跟踪的 qc_attestation.json，技术渲染成功不等于质检通过")
+    qc_bytes = _tracked_bytes(repo, qc_path)
+    try:
+        qc = json.loads(qc_bytes)
+    except (ValueError, UnicodeDecodeError) as exc:
+        raise Skip(f"{slug}：qc_attestation.json 不是有效 JSON") from exc
+    if qc.get("status") != "pass" or qc.get("slug") != slug:
+        raise Skip(f"{slug}：QC 凭证状态/slug 不匹配")
+
+    spec_path, _ = _spec_paths(repo, slug)
+    spec_bytes = spec_path.read_bytes()
+    if qc.get("spec_sha256") != _sha256_bytes(spec_bytes):
+        raise Skip(f"{slug}：spec 在质检后发生过变化，必须重新渲染并质检")
+    spec = json.loads(spec_bytes)
+    from interview_source_gate import (  # noqa: PLC0415
+        SourceContractError,
+        validate_source_contract,
+    )
+    try:
+        source_sha = validate_source_contract(spec)
+    except SourceContractError as exc:
+        raise Skip(f"{slug}：L0 内容身份失效（{exc}）") from exc
+    if qc.get("source_attestation_sha256") != source_sha:
+        raise Skip(f"{slug}：QC 绑定的来源身份与当前 spec 不一致")
+    if qc.get("match_id") != (spec.get("match") or {}).get("id"):
+        raise Skip(f"{slug}：QC 的 match_id 与当前比赛不一致")
+    checks = qc.get("checks") or {}
+    expected_body = len(spec.get("zh") or [])
+    expected_lead = len(((spec.get("lead_in") or {}).get("subs") or []))
+    if not expected_body or checks.get("bilingual_body_cues") != expected_body:
+        raise Skip(f"{slug}：QC 没有逐 cue 证明采访正文中英字幕完整")
+    if (not expected_lead or checks.get("bilingual_lead_cues") != expected_lead
+            or not qc.get("lead_ass_sha256")):
+        raise Skip(f"{slug}：QC 没有逐 cue 证明获胜画面原解说的中英字幕完整")
+
+    render = _tracked_json(repo, outdir / "render.json")
+    if render.get("qc_attestation_sha256") != _sha256_bytes(qc_bytes):
+        raise Skip(f"{slug}：render.json 指向的不是当前 QC 凭证")
+    film_hash = str(qc.get("film_sha256") or "")
+    if not film_hash or render.get("film_sha256") != film_hash:
+        raise Skip(f"{slug}：render.json 与 QC 不是同一份成片")
+    if int(render.get("video_bytes") or 0) != int(qc.get("film_bytes") or 0):
+        raise Skip(f"{slug}：Release 文件大小与 QC 成片不一致")
+    if not render.get("video_url"):
+        raise Skip(f"{slug}：render.json 没有 Release video_url")
+    return film_hash
+
+
+def _publication_key(slug: str, film_hash: str) -> str:
+    return f"pushplus:{slug}:{film_hash}"
+
+
+def _write_ledger(repo: Path, slug: str, outdir: Path, *, status: str,
+                  run_url: str, now: str) -> Path:
+    film_hash = validate_qc(repo, slug, outdir)
+    key = _publication_key(slug, film_hash)
+    ledger = _load_ledger(repo, slug)
+    attempts = ledger["attempts"]
+    current = next((row for row in attempts if row.get("key") == key), None)
+    if current is None:
+        current = {"key": key, "film_sha256": film_hash}
+        attempts.append(current)
+    current.update({"status": status, "at": now, "run": run_url})
+    path = _ledger_path(repo, slug)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(ledger, ensure_ascii=False, indent=2) + "\n",
+                    encoding="utf-8")
+    print(f"[自动推送] 发布账本 {status}：{path}（{film_hash[:12]}…）")
+    return path
+
+
+def reserve(repo: Path, slug: str, outdir: Path, run_url: str, now: str) -> Path:
+    """发送前先记 sending；进程中断后保持未知，绝不盲目重发。"""
+    return _write_ledger(repo, slug, outdir, status="sending",
+                         run_url=run_url, now=now)
+
+
+def record(repo: Path, slug: str, outdir: Path, run_url: str, now: str) -> Path:
+    """PushPlus 正常返回后把同一幂等键改成 sent。"""
+    return _write_ledger(repo, slug, outdir, status="sent",
+                         run_url=run_url, now=now)
+
+
+def uncertain(repo: Path, slug: str, outdir: Path, run_url: str, now: str) -> Path:
+    """已预占后任务失败：状态不明，阻断自动重发。"""
+    return _write_ledger(repo, slug, outdir, status="uncertain",
+                         run_url=run_url, now=now)
 
 
 def shanghai_today() -> str:
@@ -116,7 +255,7 @@ def _spec_paths(repo: Path, slug: str) -> tuple[Path, Path]:
 
 
 def wants_auto_push(repo: Path, slug: str, outdir: Path) -> None:
-    """五道闸，过不了就 `Skip`（带理由）。"""
+    """发布门禁，过不了就 ``Skip``（带理由）。"""
     # **render.json 必须还在仓库里。** 工作流那头已经用 --diff-filter=AM 滤掉了
     # 删除项，这儿再兜一层：被删的旧产物不是新渲完的片子，它的 spec 往往还写着
     # auto:true、目录里又没有 pushed.json——不拦的话会凑成「一次 N 条」把真该
@@ -138,6 +277,20 @@ def wants_auto_push(repo: Path, slug: str, outdir: Path) -> None:
     if not push_is_auto(copy_path):
         raise Skip(f"{slug}：spec 里没写 push.auto=true，不自动发"
                    f"（要开：在 {spec.name} 的 push 块里加一行 \"auto\": true）")
+    film_hash = validate_qc(repo, slug, outdir)
+
+    # 新的权威状态在 data/ 下，渲染回放只会替换 output/interviews/<slug>，
+    # 再也擦不掉发布历史。同一成片一旦 sending/sent/uncertain 都不自动重发：
+    # sending/uncertain 需要先查原 run/平台回执，不能靠重试猜。
+    ledger = _load_ledger(repo, slug)
+    key = _publication_key(slug, film_hash)
+    previous = next((row for row in ledger.get("attempts", [])
+                     if row.get("key") == key
+                     and row.get("status") in {"sending", "sent", "uncertain"}), None)
+    if previous:
+        raise Skip(
+            f"{slug}：发布账本已有 {previous.get('status')}（{previous.get('at', '时间未记')}，"
+            f"{previous.get('run', '运行地址未记')}），不自动重复发送")
     marker = outdir / MARKER
     if tracked(repo, marker):
         # 稀疏检出下这个文件可能不在工作区，读不到内容也要能拦住——
@@ -229,19 +382,33 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--changed", nargs="*", default=[],
                     help="这次合并改动的文件（仓库相对路径）")
     ap.add_argument("--slug", default="",
-                    help="只查这一条（workflow_dispatch 那条路），五道闸照过")
+                    help="只查这一条（workflow_dispatch 那条路），发布门禁照过")
     ap.add_argument("--record", default="",
-                    help="发完之后在这个 outdir 里记一笔")
+                    help="发完之后更新独立发布账本（值为 outdir）")
+    ap.add_argument("--reserve", default="",
+                    help="发送前在独立发布账本预占 sending（值为 outdir）")
+    ap.add_argument("--uncertain", default="",
+                    help="预占后失败，更新为 uncertain（值为 outdir）")
     ap.add_argument("--run", default="", help="--record：这次运行的地址")
     ap.add_argument("--now", default="", help="--record：时间戳")
     ap.add_argument("--repo", default=".", help="仓库根目录")
     args = ap.parse_args(argv)
 
     repo = Path(args.repo)
-    if args.record:
-        # 记一笔的写法和 reel 那条**必须一模一样**（同一个 `record`），
-        # 否则两条线的 `pushed.json` 会长出两种形状，而读它的是同一段代码。
-        record(Path(args.record), args.run, args.now)
+    state_actions = [bool(args.reserve), bool(args.record), bool(args.uncertain)]
+    if sum(state_actions) > 1:
+        print("::error::--reserve / --record / --uncertain 只能给一个")
+        return 2
+    if any(state_actions):
+        raw = args.reserve or args.record or args.uncertain
+        outdir = Path(raw)
+        slug = args.slug or outdir.name
+        if args.reserve:
+            reserve(repo, slug, outdir, args.run, args.now)
+        elif args.uncertain:
+            uncertain(repo, slug, outdir, args.run, args.now)
+        else:
+            record(repo, slug, outdir, args.run, args.now)
         return 0
 
     changed = args.changed
@@ -251,7 +418,7 @@ def main(argv: list[str] | None = None) -> int:
             print("::error::--slug 和 --changed 不能同时给")
             raise SystemExit(2)
         # 复用 `pick` 那条路：把 slug 折成它的 render.json 路径，
-        # `candidate` 解回 slug、`wants_auto_push` 过五道闸——**不另写一条
+        # `candidate` 解回 slug、`wants_auto_push` 过发布门禁——**不另写一条
         # 只属于 dispatch 的判定**，写两处必分叉，而分叉的样子是
         # 「叫醒的那条路少一道闸」。
         changed = [f"output/interviews/{args.slug}/render.json"]

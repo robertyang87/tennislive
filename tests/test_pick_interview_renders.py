@@ -26,16 +26,40 @@ _TOOLS = Path(__file__).resolve().parents[1] / "tools"
 
 def _complete_body() -> dict:
     """能过 render 三道编辑闸的最小 spec 形状（和 `missing_for_render` 同口径）。"""
-    return {
-        "opening": {"kind": "none", "why": "测试用"},
+    from interview_source_gate import finalize_source_contract
+
+    spec = {
+        "slug": "fixture",
+        "url": "https://example.test/oncourt",
+        "requested_content_type": "on_court",
+        "interview_kind": "赛后场上采访",
+        "source_verification": {
+            "status": "verified", "detected_type": "on_court",
+            "method": "human_visual_verdict",
+            "source_url": "https://example.test/oncourt",
+            "evidence": [{"kind": "visual_verdict", "by": "test"}],
+        },
+        "match": {
+            "id": "2026:test:qf:winner", "event": "测试赛", "round": "四分之一决赛",
+            "winner": "赢家", "loser": "输家", "participants": ["赢家", "输家"],
+        },
+        "opening": {"kind": "match_end", "lead_in": 10.0,
+                    "why": "正文源开头含同场赛点和现场解说"},
         "zh": ["第一行"],
         "transcript_verified": True,
         "takeaway": {"close": {"point": "x"}},
         "cover": {"frame_at": 1.0},
     }
+    return finalize_source_contract(spec)
 
 
 def _write_spec(specs: Path, slug: str, body: dict, *, xhs: bool = True) -> None:
+    body = json.loads(json.dumps(body))
+    body["slug"] = slug
+    if body.get("match"):
+        body["match"]["id"] = f"2026:test:qf:{slug}"
+        from interview_source_gate import finalize_source_contract
+        body = finalize_source_contract(body)
     (specs / f"{slug}.json").write_text(
         json.dumps(body, ensure_ascii=False), encoding="utf-8")
     if xhs:
@@ -137,6 +161,19 @@ def test_stale判产物不判信号(tool, monkeypatch):
     assert "old-rendered" not in stale, "render.json 落库了就不是 stale——判产物"
 
 
+def test_stale自动释放回dispatch队列而新任务不重复(tool, monkeypatch):
+    now = datetime(2026, 8, 21, 12, 0, tzinfo=timezone.utc)
+    old = (now - timedelta(hours=4)).strftime("%FT%TZ")
+    fresh = (now - timedelta(minutes=20)).strftime("%FT%TZ")
+    tool.mark_one("b-todo", now=old)
+    ready, _ = tool.todo_slugs(now=now)
+    assert "b-todo" in ready, "超过 3 小时无产物要自动重投，不能只报警等人"
+
+    tool.mark_one("b-todo", now=fresh)
+    ready, _ = tool.todo_slugs(now=now)
+    assert "b-todo" not in ready, "刚投出的还在跑，不许并发重复 dispatch"
+
+
 def test_stdout第二行起是名单等终审走stderr(tool, monkeypatch, capsys):
     """workflow 拿 `tail -n +2` 切 stdout 当 dispatch 名单——等终审的一旦混进
     stdout，就会把一条不齐的 spec 投出去，正是这次修的卡死。"""
@@ -146,4 +183,4 @@ def test_stdout第二行起是名单等终审走stderr(tool, monkeypatch, capsys
     lines = out.splitlines()
     assert lines[0].startswith("待 dispatch")
     assert lines[1:] == ["b-todo"], f"stdout 第二行起必须只有名单：{lines!r}"
-    assert "等终审补齐" in err and "d-bare" in err
+    assert "等自动补齐 / 例外复核" in err and "d-bare" in err

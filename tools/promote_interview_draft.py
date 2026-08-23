@@ -33,6 +33,7 @@ sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "tools"))
 
 from tennislive.zh import player_zh  # noqa: E402
+from interview_source_gate import finalize_source_contract  # noqa: E402
 
 SPECS = ROOT / "specs" / "interviews"
 
@@ -54,6 +55,19 @@ def _surname_en(full: str) -> str:
     return last.casefold()
 
 
+def _highlight_search_name(full: str) -> str:
+    """把赛果 feed 的 ``Surname X.`` 变成集锦搜索可识别的姓。
+
+    ``detect_highlights`` 会取参数最后一个词当姓；把 ``Atmane T.`` 原样传入
+    会错误地搜索 ``T``。全名则保留，缩写式只保留第一个词。
+    """
+    words = (full or "").strip().split()
+    if not words:
+        return ""
+    last = re.sub(r"[.]", "", words[-1])
+    return words[0] if len(last) == 1 else " ".join(words)
+
+
 def _draft_surname(draft: dict, fname: str) -> str:
     """草稿 → 受访者的姓（小写）。主路读 `_interviewee_en`；老草稿没有就退回
     标题猜——**退路要出声**：标题猜在真实标题上几乎全错，靠它查不到对手时
@@ -71,48 +85,137 @@ def _draft_surname(draft: dict, fname: str) -> str:
     return surname
 
 
-def _player_in_results(digest, surname: str) -> bool:
+def _first_initial(full: str) -> str:
+    """Return the given-name initial for either ``First Surname`` or ``Surname F.``."""
+    words = re.sub(r"[.]", "", (full or "")).strip().split()
+    if len(words) < 2:
+        return ""
+    return (words[-1] if len(words[-1]) == 1 else words[0])[:1].casefold()
+
+
+def _player_matches(feed_name: str, surname: str, full_name: str = "") -> bool:
+    """Match a result-side player without collapsing every same-surname player."""
+    if _surname_en(feed_name) != surname:
+        return False
+    wanted_initial = _first_initial(full_name)
+    got_initial = _first_initial(feed_name)
+    return not wanted_initial or not got_initial or wanted_initial == got_initial
+
+
+def _event_tokens(value: str) -> set[str]:
+    words = re.findall(r"[a-z0-9]+", (value or "").casefold())
+    generic = {
+        "atp", "wta", "tennis", "open", "masters", "master", "championship",
+        "championships", "presented", "by", "the",
+    }
+    return {w for w in words if w not in generic and len(w) > 1}
+
+
+def _round_key(value: str) -> str:
+    value = (value or "").casefold().replace("-", " ")
+    # Order matters: semifinal contains "final".
+    if re.search(r"semi\s*final|semifinal|半决赛|sf\b", value):
+        return "sf"
+    if re.search(r"quarter\s*final|quarterfinal|四分之一|qf\b", value):
+        return "qf"
+    if re.search(r"(?<!semi)(?<!quarter)final|决赛|\bf\b", value):
+        return "f"
+    for n, words in ((4, "fourth"), (3, "third"), (2, "second"), (1, "first")):
+        if re.search(rf"\br\s*{n}\b|\b{words}\s+round\b|第{n}轮", value):
+            return f"r{n}"
+    m = re.search(r"round\s+of\s+(128|64|32|16)|\br(128|64|32|16)\b", value)
+    if m:
+        return f"r{m.group(1) or m.group(2)}"
+    return ""
+
+
+def _matching_results(digest, surname: str, draft: dict | None = None) -> list:
+    """Return results compatible with player, event and round identity.
+
+    Missing feed metadata is tolerated for old sources/tests. Present metadata is
+    authoritative: a Montreal result cannot satisfy a Cincinnati interview merely
+    because the winner has the same surname.
+    """
+    match = (draft or {}).get("match") or {}
+    full_name = (draft or {}).get("_interviewee_en") or match.get("interviewee_en") or ""
+    candidates = []
+    for result in digest.results:
+        home = result.home[0] if result.home else None
+        away = result.away[0] if result.away else None
+        if home is None or away is None:
+            continue
+        if (_player_matches(home.name, surname, full_name)
+                or _player_matches(away.name, surname, full_name)):
+            candidates.append(result)
+
+    wanted_event = _event_tokens(match.get("event_search") or "")
+    event_aware = [r for r in candidates if getattr(getattr(r, "tournament", None), "name", "")]
+    if wanted_event and event_aware:
+        candidates = [
+            r for r in event_aware
+            if wanted_event <= _event_tokens(r.tournament.name)
+            or _event_tokens(r.tournament.name) <= wanted_event
+        ]
+
+    wanted_round = _round_key(match.get("round") or "")
+    round_aware = [r for r in candidates if getattr(r, "round_name", "")]
+    if wanted_round and round_aware:
+        candidates = [r for r in round_aware if _round_key(r.round_name) == wanted_round]
+    return candidates
+
+
+def _player_in_results(digest, surname: str, draft: dict | None = None) -> bool:
     """这位球员出现在这份赛果里吗（不管输赢）。
 
     找对手要**在他真出现的那一天**里判输赢，不能「这天不是赢家就翻更早的
     天」——翻下去撞到的会是他早些轮次赢的那场，对阵整个错掉而且不吭声。
     """
-    for m in digest.results:
-        home = m.home[0] if m.home else None
-        away = m.away[0] if m.away else None
-        if home is None or away is None:
-            continue
-        if _surname_en(home.name) == surname or _surname_en(away.name) == surname:
-            return True
-    return False
+    return bool(_matching_results(digest, surname, draft))
 
 
-def find_opponent(digest, surname: str) -> tuple[str, str, str] | None:
-    """在赛果里找这位球员的比赛 → (赢家中文, 对手中文, 对阵中文)。找不到 None。
+def find_match_details(digest, surname: str, draft: dict | None = None) -> dict | None:
+    """在赛果里找本场胜负双方，保留中英文供同场集锦自动搜索。找不到 None。
 
     `surname` 是受访者的姓（小写）。在 results 里按姓匹配两侧，另一侧就是
     对手。受访者必须是赢家（赛后采访都是赢球后）——不是赢家就返回 None。
     """
-    for m in digest.results:
-        home = m.home[0] if m.home else None
-        away = m.away[0] if m.away else None
-        if home is None or away is None:
-            continue
-        if _surname_en(home.name) != surname and _surname_en(away.name) != surname:
-            continue
+    candidates = _matching_results(digest, surname, draft)
+    if len(candidates) != 1:
+        # Zero means identity mismatch; >1 means the evidence is ambiguous. Both
+        # stop here rather than silently choosing the feed's first row.
+        return None
+    for m in candidates:
+        home = m.home[0]
+        away = m.away[0]
         winners = m.winner_players() or []
         if not winners:
             continue
         win_name = winners[0].name
-        if _surname_en(win_name) != surname:
+        full_name = ((draft or {}).get("_interviewee_en")
+                     or ((draft or {}).get("match") or {}).get("interviewee_en") or "")
+        if not _player_matches(win_name, surname, full_name):
             return None  # 受访者不是赢家？赛后采访不会这样，但别猜
-        loser = away if _surname_en(home.name) == surname else home
-        return (player_zh(win_name), player_zh(loser.name),
-                f"{player_zh(win_name)} vs {player_zh(loser.name)}")
+        loser = away if _player_matches(home.name, surname, full_name) else home
+        win_zh, lose_zh = player_zh(win_name), player_zh(loser.name)
+        return {
+            "winner": win_zh,
+            "loser": lose_zh,
+            "matchup": f"{win_zh} vs {lose_zh}",
+            "winner_en": _highlight_search_name(win_name),
+            "loser_en": _highlight_search_name(loser.name),
+        }
     return None
 
 
-def promote(draft: dict, opponent: tuple[str, str, str]) -> dict:
+def find_opponent(digest, surname: str, draft: dict | None = None) -> tuple[str, str, str] | None:
+    """兼容旧调用：返回 (赢家中文, 对手中文, 对阵中文)。"""
+    found = find_match_details(digest, surname, draft)
+    if not found:
+        return None
+    return found["winner"], found["loser"], found["matchup"]
+
+
+def promote(draft: dict, opponent: tuple[str, str, str], details: dict | None = None) -> dict:
     """草稿 + 对手 → 正式 spec（补 winner/push，剥 `_draft` 标记）。
 
     ⚠️ **注解键（`_zh_draft` / `_notes` / `_interviewee_en`…）要留着**：
@@ -123,8 +226,76 @@ def promote(draft: dict, opponent: tuple[str, str, str]) -> dict:
     win, lose, matchup = opponent
     spec = {k: v for k, v in draft.items() if k != "_draft"}
     spec["winner"] = win
-    spec["push"] = {"matchup": matchup}
-    return spec
+    # “质检通过即推送”是这条线的默认行为，不再要求人补一个极易忘记的开关。
+    # 真正的发布资格由 L0 来源身份 + L2 qc_attestation + 独立发布账本共同控制；
+    # auto 只是说明这条业务线愿意自动发，不能绕过任何质量门禁。
+    spec["push"] = {
+        **(spec.get("push") or {}),
+        "matchup": matchup,
+        "summary": (spec.get("push") or {}).get("summary") or f"{win}赢球后的场上采访",
+        "lead": (spec.get("push") or {}).get("lead") or
+                f"{spec.get('event', '')}，{win}击败{lose}后的完整场上采访。",
+        "auto": True,
+    }
+    match = spec.setdefault("match", {})
+    match.update({
+        "winner": win,
+        "loser": lose,
+        "participants": [win, lose],
+        "status": "result_verified",
+    })
+    if details:
+        # 草稿来自官方采访标题，受访者英文全名通常比赛果 feed 的缩写名准确。
+        match["winner_en"] = (match.get("interviewee_en")
+                              or details.get("winner_en") or "")
+        match["loser_en"] = details.get("loser_en") or ""
+    # 草稿期已经有 match_id；没有就不能自动生产，同一比赛不能靠 slug 猜。
+    if not match.get("id"):
+        raise ValueError("草稿缺 match.id，不能证明来源和赛果是同一场")
+    if not match.get("event"):
+        match["event"] = spec.get("event") or ""
+    if not match.get("round"):
+        match["round"] = "unknown"
+
+    duration = max(0.0, float(spec.get("end") or 0) - float(spec.get("start") or 0))
+    if not spec.get("cover"):
+        spec["cover"] = {
+            "frame_at": round(max(1.0, min(duration * 0.55, duration - 1.0)), 1),
+            "title": [f"{win}赢球之后", "第一时间说了什么？"],
+            "sub": f"{match.get('event', '')} {match.get('round', '')} 赛后场上采访".strip(),
+            "tag": f"{match.get('event', '')} · {win}".strip(" ·"),
+            "_why": "自动初选采访中段近景；L2 封面抽帧仍需检查清晰度和睁眼。",
+        }
+    if not spec.get("takeaway"):
+        spec["takeaway"] = {
+            "close": {
+                "point": f"{win}赢球后的第一反应",
+                "ask": f"你怎么看{win}这场比赛的表现？",
+            }
+        }
+    # 进入自动线的来源都是“采访产品”本身；把正文明确认领成独立采访，后续
+    # lead-in 搜索器必须另配同场官方集锦末段 + 原解说双语字幕才能放行。
+    # WTA 的“集锦尾部含采访”尚无逐条起点证明，已在 L0 留在 review queue，
+    # 不会走到这里拿五分钟集锦冒充采访正文。
+    verification = spec.get("source_verification") or {}
+    if not spec.get("opening") and verification.get("method") in {
+            "tennistv_structured_feed", "official_explicit_oncourt",
+            "human_visual_verdict"}:
+        spec["opening"] = {
+            "kind": "none",
+            "why": "正文是独立场上采访产品；比赛结束画面必须从同场官方集锦以 lead_in 接入。",
+        }
+    return finalize_source_contract(spec)
+
+
+def xhs_copy(spec: dict) -> str:
+    """生成可以直接进入自动推送链的基础文案；只写已核实赛果和素材性质。"""
+    match = spec["match"]
+    return (
+        f"{match['winner']}击败{match['loser']}后，在球场内接受了现场采访。\n\n"
+        f"这版保留完整问答，并在开头加入同场获胜后的比赛画面、现场解说和"
+        f"中英文字幕。\n\n#网球 #赛后采访 #赛后开麦\n"
+    )
 
 
 def _collect_digests() -> list:
@@ -176,6 +347,11 @@ def promote_all(*, write: bool = False) -> tuple[list[str], list[str]]:
         if not (draft.get("_zh_draft") or draft.get("zh")):
             skipped.append(f"{f.name}: 连译文草稿都没有（翻译没成），等终审")
             continue
+        verification = draft.get("source_verification") or {}
+        if verification.get("status") != "verified" or \
+                verification.get("detected_type") != "on_court":
+            skipped.append(f"{f.name}: 来源身份尚未确认是本场 on_court（不提升）")
+            continue
         surname = _draft_surname(draft, f.name)
         if not surname:
             skipped.append(f"{f.name}: 认不出受访者（等终审）")
@@ -183,23 +359,28 @@ def promote_all(*, write: bool = False) -> tuple[list[str], list[str]]:
         # 从最新那天往回找：**停在他第一次出现的那天**。那天他不是赢家就不提升
         # ——继续往更早翻只会翻到他早些轮次赢的另一场，对阵整个错掉
         opp = None
+        details = None
         seen = False
         for dg in digests:
-            if not _player_in_results(dg, surname):
+            if not _player_in_results(dg, surname, draft):
                 continue
             seen = True
-            opp = find_opponent(dg, surname)
+            details = find_match_details(dg, surname, draft)
+            opp = ((details["winner"], details["loser"], details["matchup"])
+                   if details else None)
             break
         if opp is None:
-            why = ("在赛果里他最近那场不是赢家（赛后采访不该这样，人别认错了）"
+            why = ("赛果身份有歧义或他最近那场不是赢家（不自动猜比赛/对手）"
                    if seen else f"在近 {DIGEST_DAYS_BACK + 1} 天赛果里找不到 {surname}")
             skipped.append(f"{f.name}: {why}（等终审）")
             continue
-        spec = promote(draft, opp)
+        spec = promote(draft, opp, details)
         if write:
             out = SPECS / f"{spec['slug']}.json"
             out.write_text(json.dumps(spec, ensure_ascii=False, indent=2),
                            encoding="utf-8")
+            (SPECS / f"{spec['slug']}.xhs.txt").write_text(
+                xhs_copy(spec), encoding="utf-8")
             f.unlink()
             promoted.append(f"{f.name} → {out.name}")
         else:

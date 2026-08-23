@@ -1646,6 +1646,19 @@ def transcript_fingerprint(spec: dict, lines: list[dict], outdir: Path) -> str:
     return h.hexdigest()
 
 
+def transcript_auto_verified(spec: dict, lines: list[dict], outdir: Path) -> bool:
+    """双 ASR 已在本次内容指纹上无红旗通过，自动生产无需再等人工布尔开关。"""
+    path = outdir / VERIFY_FP
+    if not path.is_file():
+        return False
+    try:
+        recorded = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return False
+    return (recorded.get("status") == "pass"
+            and recorded.get("sha256") == transcript_fingerprint(spec, lines, outdir))
+
+
 def verify_transcript(spec: dict, lines: list[dict], outdir: Path) -> Path:
     """拿**独立的第二份 ASR** 校 YouTube 那份，把分歧摊出来。
 
@@ -2694,6 +2707,25 @@ _OPENING_KINDS = {
 }
 
 
+def check_source_contract(spec: dict) -> str:
+    """L0：在任何下载、转写或渲染之前确认“本场真实场上采访”。"""
+    from interview_source_gate import (  # noqa: PLC0415
+        SourceContractError,
+        validate_source_contract,
+    )
+
+    try:
+        attestation = validate_source_contract(spec)
+    except SourceContractError as exc:
+        raise SystemExit(
+            f"{spec.get('slug', '?')} 没通过 L0 内容身份门禁：{exc}\n"
+            "只允许本场、获胜后、仍在球场内的现场话筒采访；演播室、发布会、"
+            "颁奖致辞和 unknown 都不能替代。找不到就停在待复核队列，不制作不推送。"
+        ) from exc
+    print(f"[L0] 本场 on-court 来源身份通过（{attestation[:12]}…）")
+    return attestation
+
+
 def check_opening(spec: dict) -> None:
     """这条片子怎么开头，**必须显式认领**，没有默认值。
 
@@ -2868,8 +2900,37 @@ def check_lead_in(spec: dict) -> None:
             f"{slug} 的 `lead_in` 没写 `why`——说清收的是哪一段（起点、画面里发生"
             "了什么、为什么要从这条源片接，而不是 `spec['url']` 自己的画面），\n"
             "写不出来就说明还没打开源片看过。")
-    # `subs` 可选：这几秒是**原声解说**，不是我们自己的旁白——没写就是静音
-    # B-roll（画面自证，见上面的 docstring）。写了就要按正片那套字幕规矩过：
+    if spec.get("requested_content_type") == "on_court":
+        verification = lead.get("verification")
+        if not isinstance(verification, dict):
+            raise SystemExit(
+                f"{slug} 的 `lead_in` 缺同场来源 verification——新自动采访必须证明"
+                "片头是同场官方 1080p 单场集锦，不能只填一条看起来像的 URL。")
+        match = spec.get("match") or {}
+        expected = {
+            "match_id": match.get("id"),
+            "winner_en": match.get("winner_en"),
+            "loser_en": match.get("loser_en"),
+            "event_search": match.get("event_search"),
+            "year": match.get("year"),
+        }
+        wrong = [key for key, value in expected.items()
+                 if not value or verification.get(key) != value]
+        if wrong:
+            raise SystemExit(
+                f"{slug} 的 `lead_in.verification` 与当前比赛不一致：{', '.join(wrong)}")
+        if verification.get("method") != "official_exact_match_highlight":
+            raise SystemExit(f"{slug} 的片头不是 official_exact_match_highlight 核验路径。")
+        if float(verification.get("height") or 0) < 1080:
+            raise SystemExit(f"{slug} 的片头来源不足 1080p，不制作，等高清源。")
+        if not str(verification.get("channel") or "").strip():
+            raise SystemExit(f"{slug} 的片头没有记录官方频道，不能回查来源。")
+        if not lead.get("subs"):
+            raise SystemExit(
+                f"{slug} 的正式场上采访片头缺 `lead_in.subs`——获胜画面的原声解说"
+                "必须配中英文字幕；不能用无字幕 B-roll 降级发布。")
+    # 老片/non-formal 的 `subs` 可选；正式 on_court 上面已经提升为必填。写了就要
+    # 按正片那套字幕规矩过：
     # 时刻落在窗口内、按时间排好、英文/中文都不能是空的。**宽度/收尾那两条
     # 硬规矩交给 `write_ass` 在真正烧字幕那一刻去查**——这儿只管形状，
     # 不重复一遍 `zh_problems`（判据只有一处，别写两遍必分叉）。
@@ -3398,6 +3459,9 @@ def main() -> int:
     localca.trust_local_proxy_ca()
 
     spec = json.loads(Path(args.spec).read_text(encoding="utf-8"))
+    # L0 必须排在全部准备工作之前。技术成片再漂亮，也不能把演播室采访冒充成
+    # 用户要的“本场场上采访”。
+    check_source_contract(spec)
     # **排在最前面，每一趟都过。** 它只读 spec、不联网、不下源片——
     # 「这条片子怎么开头」是写 spec 那一刻就该定下来的事，让它在第 0.2 秒报，
     # 而不是等九分钟的 render 出片之后再由人看出来「怎么一上来就有人在说话」。
@@ -3474,7 +3538,13 @@ def main() -> int:
         # **只在 verify 走完（没抛）之后落指纹**：分歧超闸抛 SystemExit 时
         # 不许留下「这份验过了」的标记——那正是「记已推送要排在发微信之后」
         # 的同一条顺序规矩。
-        fp_path.write_text(json.dumps({"sha256": fp}, indent=1) + "\n",
+        fp_path.write_text(json.dumps({
+            "sha256": fp,
+            "status": "pass",
+            "method": "dual_asr",
+            "first_model": spec.get("asr_model") or "provider_captions",
+            "second_model": _second_model(spec),
+        }, indent=1) + "\n",
                            encoding="utf-8")
         print(f"[verify] 指纹已落 {fp_path.name}（{fp[:12]}…）——"
               "下次转写没变且 transcript_verified 已置上时跳过 whisper。")
@@ -3511,11 +3581,15 @@ def main() -> int:
         # **没验过的转写不许出片。** 这不是提醒，是闸：英语素材发错一次，
         # 赔上的是整条线的可信度。`transcript_verified` 只有在人看过
         # `transcript_diff.md`、把确认过的写进 `en_fixed` 之后才该置上。
-        if not spec.get("transcript_verified"):
+        auto_verified = transcript_auto_verified(spec, lines, outdir)
+        if not spec.get("transcript_verified") and not auto_verified:
             raise SystemExit(
-                f"{args.spec} 没有 `transcript_verified: true`。\n"
-                "先跑 --stage verify 出交叉校验报告，逐处核对，把确认过的英文写进 "
-                "`en_fixed`，再置上这个标记。")
+                f"{args.spec} 既没有人工 `transcript_verified: true`，也没有当前"
+                "内容指纹对应的双 ASR pass attestation。\n"
+                "先跑 --stage verify；无红旗会自动落 verify_fingerprint.json，"
+                "有分歧/空档才进入例外复核。")
+        if auto_verified and not spec.get("transcript_verified"):
+            print("[转写] 当前内容指纹已由双 ASR 自动核验通过，无需人工布尔开关。")
         # 标记置上了，可疑行却还挂着账——那说明标记是顺手打的，不是核完打的。
         if todo := _unresolved_suspects(spec):
             raise SystemExit(

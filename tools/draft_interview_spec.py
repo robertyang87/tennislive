@@ -14,10 +14,9 @@ deminaur-fery）是**人工**做的：发现素材 → 手写 spec（url/start/e
    `output/interviews/<slug>/cap_asr.json3`——**那是这条 spec 唯一的第一份转写**，
    写进 TemporaryDirectory 就随目录一起销毁了（2026-08-21 之前正是这么丢的，
    而丢了之后 `--stage subs` 对非 YouTube 源直接 SystemExit「没有自动字幕轨」）
-2. **翻译**：DeepSeek 逐条翻中文 → 草稿的 `_zh_draft`。⚠️ **不写进 `zh`**：
-   `zh` 必须和 `--stage subs` 切出的行一一对齐（`write_ass` 有「中文 N 行、
-   英文 M 行对不上」的闸），而 whisper 的分段和切行的分行**不是同一套边界**。
-   机器译文只当终审的参考，真正的 `zh` 由终审按切行结果重翻/对齐
+2. **切行 + 翻译**：第一份 ASR 必须落词级时间码，先调用正式出片同一个
+   `segment()` 切成最终英文行，再让 DeepSeek 逐行翻译并直接写入 `zh`。
+   这样中文与 ASS 的英文 cue 天然同源；双 ASR 出现红旗时才进入例外复核
 3. **建草稿**：写 `specs/interviews/<slug>.draft.json`（transcript_verified 留
    false——真正的双模型核对由 render 时的 `verify_transcript` 跑第二份完成）
 
@@ -195,11 +194,27 @@ def transcribe(url: str, workdir: Path, model: str = ASR_MODEL) -> tuple[list[di
         cmd += ["--cookies", cookies]
     subprocess.run(cmd, check=True, capture_output=True, timeout=DOWNLOAD_TIMEOUT)
     model_inst = WhisperModel(model, compute_type="int8")
-    segments, info = model_inst.transcribe(str(out_mp3), vad_filter=True)
+    segments, info = model_inst.transcribe(
+        str(out_mp3), vad_filter=True, word_timestamps=True)
     dur = float(getattr(info, "duration", 0.0) or 0.0)
-    rows = [{"t": round(s.start, 2), "end": round(s.end, 2),
-             "text": s.text.strip()}
-            for s in segments if s.text.strip()]
+    rows: list[dict] = []
+    for segment in segments:
+        words = list(getattr(segment, "words", None) or [])
+        if words:
+            rows.extend({
+                "t": round(float(w.start), 2),
+                "end": round(float(w.end), 2),
+                "text": str(w.word).strip(),
+            } for w in words if str(w.word).strip())
+            continue
+        # 极少数模型/音频不给词级时间码；按词长把该 segment 均匀摊开，
+        # 仍然保持“一条一个词”，绝不把整句塞成一个超宽、不可切的 token。
+        tokens = str(segment.text or "").strip().split()
+        span = max(0.01, float(segment.end) - float(segment.start))
+        for i, token in enumerate(tokens):
+            a = float(segment.start) + span * i / max(len(tokens), 1)
+            b = float(segment.start) + span * (i + 1) / max(len(tokens), 1)
+            rows.append({"t": round(a, 2), "end": round(b, 2), "text": token})
     return rows, dur
 
 
@@ -216,7 +231,8 @@ def translate(rows: list[dict], chat) -> list[str]:
         batch = rows[i:i + 25]
         src = "\n".join(f"{j}. {r['text']}" for j, r in enumerate(batch))
         sys_prompt = ("你是网球短视频「赛后开麦」的双语字幕翻译。把每条英文转写成"
-                      "地道中文**口语**，一条一行，别加编号，别翻译语气词以外的东西。")
+                      "地道中文口语，一条一行，不加编号，不在行尾加标点，不臆测"
+                      "原文没有的信息。")
         user = f"逐条翻译成中文：\n{src}"
         res = chat.ask(sys_prompt, user,
                        schema={"type": "object",
@@ -248,6 +264,11 @@ def build_spec(candidate: dict, zh_draft: list[str], duration: float,
             f"标题里认不出受访者：{title!r}。名册＝PLAYER_ZH + top500——"
             "新面孔先把英文全名补进 player_names_top500.json 再来，别猜。")
     ev, year, rnd = _event_year_round(title, cal)
+    event_search = next(
+        (str(it.get("en") or ev) for it in cal
+         if isinstance(it, dict) and re.search(it.get("pat", "$^"), title, re.I)),
+        ev,
+    )
     slug = f"{_surname_slug(who)}-{ev}-{year}-{rnd}"
     return {
         "_draft": True,
@@ -257,21 +278,37 @@ def build_spec(candidate: dict, zh_draft: list[str], duration: float,
         "start": 0.0,
         "end": round(duration, 1),
         "asr_model": ASR_MODEL,
+        # 第一份是 small.en；第二份必须换模型，否则“交叉验证”会恒为 0 分歧。
+        "whisper_model": "medium.en",
         "column": "赛后开麦",
+        "requested_content_type": "on_court",
         "interview_kind": "赛后场上采访",
         "event": f"{year} {candidate.get('event_zh') or ev}",
         "winner": "",  # promote 从赛果补
         "_interviewee_en": who,  # promote 按它查赛果，别再从标题猜第二遍
-        "zh": [],  # 终审按 --stage subs 切出的行填，和 _zh_draft 不是一套边界
+        # _build_one 现在先用与正式出片相同的 segment() 切行，再逐行翻译，
+        # 所以机器译文就是正式行，不再制造“有译文但永远等人工重排”的断链。
+        "zh": zh_draft,
         "_zh_draft": zh_draft,
-        "_zh_draft_note": "whisper 分段的机器译文，只当参考；终审时按 --stage subs "
-                          "切出的行重翻/对齐（行数不一样，直接抄必对不上）",
+        "_zh_draft_note": "已按 build_interview_clip.segment 的正式字幕行逐行翻译；"
+                          "双 ASR 或实体核验出现红旗时才进入例外复核。",
         "transcript_verified": False,
+        "transcript_verification": "auto_pending",
         "_candidate_id": candidate.get("id"),
-        "_notes": ["自动草稿：转写 + 机器译文已备；cap_asr.json3 没有 `>> ` 说话人"
+        "source_verification": candidate.get("source_verification") or {},
+        "match": {
+            "id": candidate.get("match_id") or "",
+            "event": candidate.get("event_zh") or ev,
+            "event_search": event_search,
+            "year": int(year),
+            "round": candidate.get("round_zh") or rnd,
+            "interviewee_en": who,
+            "status": "candidate",
+        },
+        "_notes": ["自动草稿：正式切行 + 机器译文已备；cap_asr.json3 没有 `>> ` 说话人"
                    "标记（whisper 不分说话人），终审切行前自己按内容补；"
                    "双模型核对（verify_transcript）由 render 时跑第二份完成；"
-                   "cover/takeaway/_facts/zh 留终审"],
+                   "出现模型分歧或实体红旗才转人工复核"],
     }
 
 
@@ -298,7 +335,15 @@ def _build_one(c: dict, chat, cal: list[dict], *, write: bool) -> tuple[str, boo
             rows, duration = transcribe(c["url"], Path(td))
             if not rows:
                 return c.get("title", "?"), False, "转写是空的"
-            zh_draft = translate(rows, chat)
+            # 用正式出片同一套切行器生成英文行，再按这些精确行号翻译。
+            # 旧版翻译 whisper 原始 segments，正式出片却重新 segment，导致 zh
+            # 行数天然对不上、每一条都必须人工返工，自动化在这里结构性断链。
+            from build_interview_clip import segment  # noqa: PLC0415
+            lines = segment([(r["t"], r["text"]) for r in rows], 0.0, duration)
+            if not lines:
+                return c.get("title", "?"), False, "正式切行结果是空的"
+            zh_draft = translate(
+                [{"t": row["a"], "text": row["en"]} for row in lines], chat)
         spec = build_spec(c, zh_draft, duration, cal)
         if not write:
             return spec["slug"], True, "干跑（不写草稿也不写 cap_asr.json3）"
@@ -329,6 +374,8 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("--candidate", type=int, default=-1,
                     help="从候选文件里选第几条（默认 -1＝全部）")
+    ap.add_argument("--candidate-id", default="",
+                    help="按候选 id 精确处理一条（matrix job 使用；不受列表顺序变化影响）")
     ap.add_argument("--max-parallel", type=int, default=2,
                     help="并行处理几条候选（whisper 转写是 CPU 密集，runner 4 核，"
                          "默认 2 保守，别把 runner 打满 OOM）")
@@ -342,6 +389,11 @@ def main() -> int:
         return 2
     if args.candidate >= 0:
         cands = [cands[args.candidate]]
+    if args.candidate_id:
+        cands = [c for c in cands if str(c.get("id")) == args.candidate_id]
+        if not cands:
+            print(f"找不到候选 id={args.candidate_id}")
+            return 2
 
     from tennislive.research.brief import Chat  # noqa: PLC0415
     chat = Chat()
@@ -370,7 +422,9 @@ def main() -> int:
 
     done = sum(1 for _, ok, _ in results if ok)
     print(f"完成 {done}/{len(results)} 条。")
-    return 0
+    # 单条失败不拖垮同批其他比赛，但这次 run 必须红出来。旧版永远返回 0，
+    # workflow 的 pipefail 也救不了它，候选会无草稿地静默滞留。
+    return 0 if done == len(results) else 1
 
 
 if __name__ == "__main__":

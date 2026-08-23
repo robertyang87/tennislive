@@ -492,7 +492,8 @@ jobs:
           OUT="output/interviews/${{ github.event.inputs.slug }}/${{ github.event.inputs.slug }}.mp4"
           test -s "$OUT" || { echo "成片不存在或是空的：$OUT"; exit 1; }
           PYTHONPATH=src python tools/check_interview_landed.py \
-            --slug "${{ github.event.inputs.slug }}" --film "$OUT"
+            --slug "${{ github.event.inputs.slug }}" --film "$OUT" \
+            --write-attestation
 
       # **采访成片一律发到 Release，不进 git。**（2026-08-13 起）
       #
@@ -570,18 +571,22 @@ jobs:
           [ "$CODE" = "206" ] || [ "$CODE" = "200" ] || {
             echo "::error::Release 附件 $URL 探不到（$CODE）"; exit 1; }
           echo "Release 附件可取：$URL"
-          python - "$OUTDIR/render.json" "$URL" "$SZ" <<'PY'
+          python - "$OUTDIR/render.json" "$OUTDIR/qc_attestation.json" "$URL" "$SZ" <<'PY'
+          import hashlib
           import json
           import sys
           from pathlib import Path
-          path, url, size = Path(sys.argv[1]), sys.argv[2], int(sys.argv[3])
+          path, qc_path, url, size = Path(sys.argv[1]), Path(sys.argv[2]), sys.argv[3], int(sys.argv[4])
           # 这条线原来不写 render.json，所以要允许它还不存在
           data = json.loads(path.read_text(encoding="utf-8")) if path.is_file() else {}
+          qc = json.loads(qc_path.read_text(encoding="utf-8"))
           data["video_url"] = url
           data["video_bytes"] = size
+          data["film_sha256"] = qc["film_sha256"]
+          data["qc_attestation_sha256"] = hashlib.sha256(qc_path.read_bytes()).hexdigest()
           path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n",
                           encoding="utf-8")
-          print("render.json 记下 video_url")
+          print("render.json 记下 video_url + QC 成片哈希")
           PY
           rm -f "$CLIP"
 
@@ -761,6 +766,39 @@ jobs:
             echo "::warning::请手动 dispatch 一次 auto-push-interview（slug=$SLUG）。"
           fi
 
+      - name: 推送前通过 L0/L2/幂等门禁
+        if: github.event.inputs.push == 'true'
+        run: |
+          [ "${{ github.ref_name }}" = "main" ] || {
+            echo "::error::微信推送只允许 main：Pages、QC 和发布账本必须基于主干不可变产物"; exit 1; }
+          GITHUB_OUTPUT=/tmp/interview-push-gate.out \
+            python tools/auto_push_interview_gate.py \
+              --slug "${{ github.event.inputs.slug }}"
+          grep -q '^found=true$' /tmp/interview-push-gate.out || {
+            echo "::error::这条采访没有通过自动发布门禁，不发送"; exit 1; }
+
+      - name: 预占发布账本（发送前）
+        id: manual_reserve
+        if: github.event.inputs.push == 'true'
+        run: |
+          SLUG="${{ github.event.inputs.slug }}"
+          D="output/interviews/$SLUG"
+          RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          python tools/auto_push_interview_gate.py --reserve "$D" --slug "$SLUG" \
+            --run "$RUN_URL" --now "$(date -u +%FT%TZ)"
+          git config user.name "Claude"
+          git config user.email "noreply@anthropic.com"
+          git add --sparse "data/interview_publish_ledger/$SLUG.json"
+          python tools/check_staged_file_sizes.py
+          git commit -m "interview: 预占推送 $SLUG"
+          for attempt in 1 2 3 4 5; do
+            if git push origin main; then exit 0; fi
+            git pull --rebase origin main || { git rebase --abort || true; }
+            sleep $((attempt * 3 + RANDOM % 5))
+          done
+          echo "::error::发送前账本未落库，不发送"
+          exit 1
+
       # **「触发成功」不算推了，这一步 success 才算。** 而且它必须排在提交之后：
       # GitHub Pages 只服务 main，复制页没进 main 就取不到，按钮会被摘掉
       # （`drop_dead_copy_button` 发送前探一次）。这条在别的线上踩过四次。
@@ -783,6 +821,9 @@ jobs:
           TENNISLIVE_COPYPAGE_RETRY_SECONDS: "40"
         run: |
           COPY="specs/interviews/${{ github.event.inputs.slug }}.xhs.txt"
+          # render/cover 的 poster 是本趟刚提交的；workflow 启动时的 github.sha
+          # 还没有它。钉当前 HEAD，避免手动 push=true 把海报 URL 指向旧提交 404。
+          export TENNISLIVE_ASSET_REV="$(git rev-parse HEAD)"
           PYTHONPATH=src python tools/push_reel.py \
             --outdir "output/interviews/${{ github.event.inputs.slug }}" \
             --matchup "${{ steps.push_meta.outputs.matchup }}" \
@@ -808,11 +849,12 @@ jobs:
           D="output/interviews/${{ github.event.inputs.slug }}"
           python tools/auto_push_interview_gate.py \
             --record "$D" \
+            --slug "${{ github.event.inputs.slug }}" \
             --run "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
             --now "$(date -u +%FT%TZ)"
           git config user.name "Claude"
           git config user.email "noreply@anthropic.com"
-          git add "$D"
+          git add --sparse "data/interview_publish_ledger/${{ github.event.inputs.slug }}.json"
           python tools/check_staged_file_sizes.py
           git commit -m "interview: ${{ github.event.inputs.slug }} 已推送"
           # 标记是新文件、别的 run 不会碰同名路径（concurrency 按 slug 分组），
@@ -822,9 +864,23 @@ jobs:
             git pull --rebase origin "${{ github.ref_name }}" || { git rebase --abort || true; }
             sleep $((attempt * 3 + RANDOM % 5))
           done
-          echo "::error::pushed.json 没推上去——消息**已经发出去了**，别再手动补发；"
-          echo "::error::请手动把 $D/pushed.json 提交进 main，不然自动推送那头会再发一遍。"
+          echo "::error::sent 状态没推上去——消息**已经发出去了**，别再手动补发；"
+          echo "::error::发送前的 sending 状态已在 main，会阻断自动重发；请核对本 run 后再修账本。"
           exit 1
+
+      - name: 已预占后失败则标记状态不明
+        if: failure() && steps.manual_reserve.outcome == 'success'
+        continue-on-error: true
+        run: |
+          SLUG="${{ github.event.inputs.slug }}"
+          D="output/interviews/$SLUG"
+          python tools/auto_push_interview_gate.py --uncertain "$D" --slug "$SLUG" \
+            --run "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
+            --now "$(date -u +%FT%TZ)"
+          git add --sparse "data/interview_publish_ledger/$SLUG.json"
+          git commit -m "interview: $SLUG 推送状态待核实" || exit 0
+          git pull --rebase origin main || { git rebase --abort || true; }
+          git push origin main
 
       # ⚠️ artifact 里**没有成片 mp4 是正常的**：2026-08-13 起成片一律传
       # Release 后 `rm` 掉（见「成片发到 Release」那一步），要看成片去
