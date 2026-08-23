@@ -2104,24 +2104,86 @@ def _ci_sparse_block() -> list[str]:
     return []
 
 
-def test_ci能看到赛后开麦的转写产物():
+def test_ci能看到赛后开麦的转写产物(tmp_path):
     """CI 是 sparse-checkout，**默认不含 `output/`**（那目录 1 GB+）。
 
     `test_spec里的人工引语和en_fixed是自洽的` 要读 `lines.json`，
     没有它就永远 skip——而常年不变的 skip 和常年不变的 fail 是同一个毛病。
+
+    ⚠️ **2026-08-23：判据从「扫字面行」换成「真跑一遍 sparse-checkout」。**
+    旧版本只检查块里有没有 `output/interviews` 这一行字符串——`ci.yml` 那天
+    从「只带 interviews 那一格」换成「全仓库带 json/md/txt/ass、只排除
+    二进制」（根因见 ci.yml 里那段注释：`_read()` 对不在磁盘上的文件逐个
+    `git show`，而这仓库是 `--filter=blob:none` 的部分克隆，每次都要向
+    GitHub 单独取一次 blob，513 秒里 81% 烧在这上面），新块里已经没有
+    字面的 `output/interviews` 这一行了，旧判据会红——但它想守住的事
+    （转写产物摆在磁盘上、mp4 不在）**依然成立，只是换了个更宽的机制**。
+
+    真跑一遍能验的是**实际行为**，不是某一行字符串在不在——所以这次不再
+    手翻一份 gitignore 语义的匹配器（试过，`/*` 这类锚定模式在 git 真实的
+    非 cone 稀疏检出里会递归覆盖子目录，简化版正则模拟不出这个行为，
+    写错了比没有更危险），改成**真造一个仓库、真按这份 pattern 走一遍
+    checkout**，直接问工作树「这几个文件在不在」。
     """
+    import subprocess  # noqa: PLC0415
+
     block = _ci_sparse_block()
-    lines = [ln.strip() for ln in block]
-    assert not block or any("output/interviews" in ln and not ln.startswith("!")
-                            for ln in lines), \
-        "ci.yml 用了 sparse-checkout 却没带上 output/interviews，spec 测试会永远 skip"
-    # **而 mp4 要挡在外面。** 这个目录已经 331 MB，其中 5 个 mp4 占 328 MB，
-    # 测试要读的 md / json / ass / jpg 加起来约 3 MB——每一趟 CI 都在拉 328 MB
-    # 它从不打开的视频。cone 模式挑不掉后缀，所以这儿必须是非 cone 模式。
-    if block:
-        assert any(ln.startswith("!") and ln.endswith(".mp4") for ln in lines), (
-            "成片 mp4 没被挡在 sparse 范围外——CI 每趟白拉 328 MB。"
-            "（这正是本文件当年那句「等条数多起来要改成非 cone 模式按后缀挑」）")
+    if not block:
+        pytest.skip("ci.yml 没有 sparse-checkout 块，这条判据无从谈起")
+
+    src = tmp_path / "src"
+    src.mkdir()
+    layout = {
+        "output/interviews/foo/lines.json": "{}",
+        "output/interviews/foo/lines.md": "x",
+        "output/interviews/foo/clip.mp4": "binary-stand-in",
+        "output/2026-08-20/reel/bar/render.json": "{}",
+        "output/2026-08-20/reel/bar/poster.jpg": "binary-stand-in",
+        "specs/reels/foo.json": "{}",
+        "pyproject.toml": "x",
+    }
+    for rel, content in layout.items():
+        p = src / rel
+        p.parent.mkdir(parents=True, exist_ok=True)
+        p.write_text(content, encoding="utf-8")
+
+    def _git(*args, cwd):
+        r = subprocess.run(["git", *args], cwd=cwd, capture_output=True,
+                           text=True, env={"GIT_CONFIG_NOSYSTEM": "1",
+                                            "HOME": str(tmp_path)})
+        assert r.returncode == 0, f"git {' '.join(args)} 失败：{r.stderr}"
+        return r.stdout
+
+    _git("init", "-q", cwd=src)
+    _git("config", "user.email", "t@t", cwd=src)
+    _git("config", "user.name", "t", cwd=src)
+    _git("add", "-A", cwd=src)
+    _git("commit", "-q", "-m", "init", cwd=src)
+    branch = _git("symbolic-ref", "--short", "HEAD", cwd=src).strip()
+
+    dst = tmp_path / "dst"
+    _git("clone", "-q", str(src), str(dst), cwd=tmp_path)
+    _git("config", "core.sparseCheckoutCone", "false", cwd=dst)
+    subprocess.run(["git", "sparse-checkout", "init"], cwd=dst,
+                   capture_output=True, env={"GIT_CONFIG_NOSYSTEM": "1",
+                                              "HOME": str(tmp_path)})
+    (dst / ".git" / "info" / "sparse-checkout").write_text(
+        "\n".join(block) + "\n", encoding="utf-8")
+    _git("checkout", "-q", branch, cwd=dst)
+
+    got = {rel for rel in layout if (dst / rel).is_file()}
+    should_have = {"output/interviews/foo/lines.json",
+                   "output/interviews/foo/lines.md",
+                   "output/2026-08-20/reel/bar/render.json",
+                   "specs/reels/foo.json", "pyproject.toml"}
+    should_not_have = {"output/interviews/foo/clip.mp4",
+                       "output/2026-08-20/reel/bar/poster.jpg"}
+    assert should_have <= got, (
+        f"真跑一遍 ci.yml 的 sparse-checkout 之后，这些该在磁盘上的文件不在：\n  "
+        + "\n  ".join(sorted(should_have - got)))
+    assert not (should_not_have & got), (
+        f"这些二进制不该被带进 CI 的检出，却在磁盘上：\n  "
+        + "\n  ".join(sorted(should_not_have & got)))
 
 
 def test_ci的sparse块里不许有注释():
