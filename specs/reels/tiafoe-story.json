@@ -107,7 +107,7 @@
       "quote": [
         {
           "at": 0.68,
-          "text": "And it goes! What a shot to choose there from TFO.\n球一出界 蒂亚福选的这一拍就是全场唯一答案"
+          "text": "And it goes! What a shot to choose there from TFO.\n球出界，这拍就是唯一答案"
         },
         {
           "at": 13.24,
@@ -130,8 +130,16 @@
       "end": 92.7,
       "source": "father",
       "narration": "",
-      "quote": "It's just unbelievable. I dreamt for this, but it came quicker than I expected. Being a little kid, he wanted this moment so bad, and he would be insanely happy. And now — he's living it.\n简直难以置信。我梦想过这一天，只是它来得比我以为的快。他还是个孩子的时候，就那么渴望这一刻，如果做到了他会高兴疯掉。而现在——他真的活成了这样。",
-      "_why": "③父亲的真实声音。这段是r_father源片78.5-90.5秒路采原声的转写清理版——去掉了ASR的口吃重复（\"and I'm well\"／\"he's now he's living it\"），以及一段引用不清的\"who is this little guy\"插话（指向一张没看清内容的老照片，来源无法确认具体所指，为准确起见删去），保留可核实、完整、连贯的核心情感：一个父亲说他小时候梦想过这一刻，现在这一刻真的发生了。视觉是78.5-84.5秒父亲本人接受路采（举着话筒）的真实画面。这是全片最重的情感落点，不加中文旁白盖过原声。",
+      "quote": [
+        {"at": 0.43, "text": "It's just unbelievable.\n简直难以置信。"},
+        {"at": 2.64, "text": "I dreamt for this,\n我梦想过这一天，"},
+        {"at": 4.00, "text": "but it came quicker than I expected.\n只是它来得比我以为的快。"},
+        {"at": 10.92, "text": "Being a little kid,\n他还是个孩子的时候，"},
+        {"at": 12.65, "text": "he wanted this moment so bad,\n就那么渴望这一刻，"},
+        {"at": 14.17, "text": "and he would be insanely happy.\n如果做到了他会高兴疯掉。"},
+        {"at": 16.12, "text": "And now — he's living it.\n而现在，他真的活成了这样。"}
+      ],
+      "_why": "③父亲的真实声音。这段是r_father源片78.5-90.5秒路采原声的转写清理版——去掉了ASR的口吃重复（\"and I'm well\"／\"he's now he's living it\"），以及一段引用不清的\"who is this little guy\"插话（指向一张没看清内容的老照片，来源无法确认具体所指，为准确起见删去），保留可核实、完整、连贯的核心情感：一个父亲说他小时候梦想过这一刻，现在这一刻真的发生了。视觉是78.5-84.5秒父亲本人接受路采（举着话筒）的真实画面。这是全片最重的情感落点，不加中文旁白盖过原声。改成按条声明的双语字幕（`at`钉在r_father源片74.93/77.14/85.42/87.15/88.67/90.62秒对应的真实转写时刻上，减段起点74.5），每条都是「英文一行+中文一行」同屏显示——原来写成单个字符串会走narration那条自动切分的路，按逐词加`{\\fs78}`/`{\\fs68}`的强调标签渲染英文（那是给中文夹外语词用的），中文译文又被切成独立的一串顺序块跟在英文后面播完才出现，观众看英文的十几秒里屏幕上完全没有中文——这条改动让每一句英文原声出现的同时就配好对应的中文翻译，不再分成两段先后播。",
       "crosses_cut": "跨81.85、84.78、89.82秒，是路采期间镜头在受访者（父亲）和现场反应镜头之间的常规切换，音轨是同一段连续采访录音，人物未变。"
     },
     {
