@@ -714,6 +714,19 @@ def main() -> int:
     allow = compile_allow(cfg)
     deny = compile_deny(cfg)
     deny_ids = set(cfg.get("deny_ids", []))
+    # 人工看图结论比标题/频道规则更硬。旧版只把 oncourt verdict 当“应该在库里”
+    # 的正向证据，却没有把 press/ceremony/other 从库存中清出去；于是两条已经
+    # 明确判错的素材仍带着 kind=oncourt 供下游选片。每轮都把非 oncourt 结论
+    # 合并进出口黑名单，同时清理历史库存，规则才既管未来也管现在。
+    try:
+        verdicts = json.loads(VERDICTS.read_text(encoding="utf-8")).get("verdicts") or {}
+    except (OSError, ValueError):
+        verdicts = {}
+    rejected_by_verdict = {
+        vid for vid, verdict in verdicts.items()
+        if verdict.get("verdict") not in ("oncourt", "unknown")
+    }
+    deny_ids |= rejected_by_verdict
     # `allow_ids` 是 `deny_ids` 的对称面，只对 `review_each` 的源起作用：
     # 那类源默认不收，看过画面确认在场上的才逐条放行。
     allow_ids = set(cfg.get("allow_ids", []))
@@ -732,6 +745,9 @@ def main() -> int:
 
     store = load_store()
     known = store["items"]
+    purged = sorted(set(known) & rejected_by_verdict)
+    for vid in purged:
+        known.pop(vid, None)
     new_items: dict[str, dict] = {}
     report: list[tuple[str, str, int, int, int, int]] = []
     dropped: list[tuple[str, str]] = []
@@ -835,7 +851,7 @@ def main() -> int:
     # `| head -30` 就会把进程 SIGPIPE 掉，报告看着跑完了，产物根本没写。
     # 查产物不查信号——那次就是被完整的报告骗了。
     wrote = False
-    if not args.dry_run and any_fetched:
+    if not args.dry_run and (any_fetched or purged):
         known.update(new_items)
         STORE.parent.mkdir(parents=True, exist_ok=True)
         with STORE.open("w", encoding="utf-8") as fh:
@@ -852,6 +868,10 @@ def main() -> int:
                 with VERDICTS.open("w", encoding="utf-8") as fh:
                     json.dump(data, fh, ensure_ascii=False, indent=2)
                     fh.write("\n")
+
+    if purged:
+        print(f"[库存清理] 按人工 verdict 移除 {len(purged)} 条非场上采访："
+              + "、".join(purged))
 
     # 报告：成功的和失败的都列出来。只在成功时出声的检查，没法证明它真的看过。
     mode = "全量（重扫历史）" if args.full else f"日常（每源 {args.daily_depth} 条）"

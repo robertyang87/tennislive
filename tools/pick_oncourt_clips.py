@@ -34,16 +34,52 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "tools"))
 
+from draft_interview_spec import interviewee_en  # noqa: E402
+from interview_source_gate import candidate_verification  # noqa: E402
 from oncourt_feed import load_cn, pick  # noqa: E402
 
 LIB = ROOT / "data" / "oncourt_interviews.json"
 CAL = ROOT / "data" / "tour_calendar_2026.json"
 OUT = ROOT / "data" / "interview_clip_candidates.json"
+REVIEW_QUEUE = ROOT / "data" / "interview_source_review_queue.json"
 SPECS = ROOT / "specs" / "interviews"
 
 # 赛事「还在打」的余量：开始前 1 天（时差）到结束后 3 天（集锦/采访晚两天上）
 PAD_BEFORE = datetime.timedelta(days=1)
 PAD_AFTER = datetime.timedelta(days=3)
+
+_ROUND_ID = {
+    "决赛": "f", "半决赛": "sf", "四分之一决赛": "qf",
+    "第四轮": "r4", "第三轮": "r3", "第二轮": "r2", "第一轮": "r1",
+    "资格赛": "q",
+}
+
+
+def _key_part(value: str) -> str:
+    # Event labels are intentionally Chinese in this pipeline.  ASCII-only cleanup
+    # turned every one of them into ``unknown`` and collapsed unrelated tournaments.
+    value = re.sub(r"[^\w]+", "-", value.casefold(), flags=re.UNICODE).strip("-_")
+    return value or "unknown"
+
+
+def match_id_for(item: dict, event_zh: str, today: datetime.date) -> str:
+    """在不知道对手前也稳定的逐场 ID：年 + 赛事 + 轮次 + 受访赢家。
+
+    同一位球员在同一赛事同一轮只会有一场单打；比拿视频 ID 当主键更重要的
+    是，多家来源发同一场采访时它们必须折叠到同一个生产任务。
+    """
+    who = interviewee_en(item.get("title", ""))
+    if not who:
+        return ""
+    year_m = re.search(r"\b(20\d\d)\b", f"{item.get('title', '')} {item.get('url', '')}")
+    year = year_m.group(1) if year_m else str(today.year)
+    rnd = _ROUND_ID.get(item.get("round_zh") or "", "")
+    # Winner + event is not a match identity: the same player can win six times at
+    # one event.  An unknown round would collapse all of those interviews into one
+    # task and later let a result lookup guess the opponent.  Keep it in review.
+    if not rnd:
+        return ""
+    return f"{year}:{_key_part(event_zh)}:{rnd}:{_key_part(who)}"
 
 
 def _video_id(url: str) -> str:
@@ -106,15 +142,22 @@ def event_window(item: dict, today: datetime.date,
     return None, False
 
 
-def candidates(*, today: datetime.date | None = None) -> list[dict]:
-    """三道闸过滤后的成片候选，按 oncourt_feed 的排序（中国球员优先、决赛>半决赛>八强）。"""
+def candidate_sets(*, today: datetime.date | None = None) -> tuple[list[dict], list[dict]]:
+    """返回（可自动生产，待内容身份复核）。同场多来源只保留最硬的一条。"""
     today = today or datetime.date.today()
     lib = json.loads(LIB.read_text(encoding="utf-8"))["items"]
     _players, *rules = load_cn()  # load_cn 返回 (players, full, sur, excl)，pick 要后三个
     done = done_urls()
     cal = load_calendar()
 
-    out = []
+    verified: dict[str, tuple[int, dict]] = {}
+    pending: list[dict] = []
+    method_rank = {
+        "human_visual_verdict": 0,
+        "tennistv_structured_feed": 1,
+        "official_explicit_oncourt": 2,
+        "wta_highlight_tail": 3,
+    }
     for it in pick(lib, rules):  # 先过 oncourt_feed 的「关键轮次 OR 中国球员」闸
         if it.get("kind") != "oncourt":
             continue
@@ -129,17 +172,40 @@ def candidates(*, today: datetime.date | None = None) -> list[dict]:
         event_zh, in_win = event_window(it, today, cal)
         if not in_win:
             continue
-        out.append({
+        source_verification = candidate_verification(it)
+        match_id = match_id_for(it, event_zh or "", today)
+        row = {
             "id": it.get("id", vid),
             "url": it.get("url", ""),
             "title": it.get("title", ""),
             "source": it.get("source", ""),
+            "duration_s": it.get("duration_s"),
             "round_zh": it.get("round_zh"),
             "cn_player": (it.get("cn_player") or {}).get("zh"),
             "cn_beaten": (it.get("cn_beaten") or {}).get("zh"),
             "event_zh": event_zh,
-        })
-    return out
+            "match_id": match_id,
+            "source_verification": source_verification,
+        }
+        if source_verification.get("status") != "verified" or not match_id:
+            if not match_id:
+                row["source_verification"] = {
+                    **source_verification,
+                    "status": "pending",
+                    "reason": "标题无法从球员名册确认受访赢家，不能建立同场 match_id",
+                }
+            pending.append(row)
+            continue
+        rank = method_rank[source_verification["method"]]
+        previous = verified.get(match_id)
+        if previous is None or rank < previous[0]:
+            verified[match_id] = (rank, row)
+    return [v[1] for v in verified.values()], pending
+
+
+def candidates(*, today: datetime.date | None = None) -> list[dict]:
+    """兼容旧调用：只返回过 L0 来源身份预检的生产候选。"""
+    return candidate_sets(today=today)[0]
 
 
 def main() -> int:
@@ -148,7 +214,7 @@ def main() -> int:
                     help="写 data/interview_clip_candidates.json")
     args = ap.parse_args()
 
-    cands = candidates()
+    cands, pending = candidate_sets()
     print(f"{len(cands)} 条成片候选：")
     for c in cands:
         who = c["cn_player"] or c["round_zh"] or "?"
@@ -158,7 +224,10 @@ def main() -> int:
     if args.write:
         OUT.write_text(json.dumps(cands, ensure_ascii=False, indent=2),
                        encoding="utf-8")
+        REVIEW_QUEUE.write_text(json.dumps(pending, ensure_ascii=False, indent=2),
+                                encoding="utf-8")
         print(f"\n候选 → {OUT}")
+        print(f"待内容身份复核 {len(pending)} 条 → {REVIEW_QUEUE}")
     return 0
 
 

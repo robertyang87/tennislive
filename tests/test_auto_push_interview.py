@@ -1,4 +1,4 @@
-"""赛后开麦「合进 main 就自动发微信」的五道闸。
+"""赛后开麦「合进 main 就自动发微信」的六道发布闸。
 
 **这条线 2026-08-14 之前一条自动推送都没有**，而且不是配漏了，是
 **结构性够不着**：`auto-push-reel` 的路径正则写着
@@ -9,7 +9,7 @@
 
 所以这份测试有两件事要盯，缺一不可：
 
-1. **五道闸各自真的在拦**（每道都反向验证：不只验「该发的发了」，
+1. **发布闸各自真的在拦**（每道都反向验证：不只验「该发的发了」，
    更要验「不该发的一条都没发」）；
 2. **路径正则真的匹配得到这条线的目录形状**——用仓库里**真实的**产物路径验，
    不拿手搓的字符串。手搓的只能证明「我写的正则符合我以为的形状」，
@@ -19,6 +19,7 @@
 from __future__ import annotations
 
 import json
+import hashlib
 import re
 import subprocess
 import sys
@@ -50,6 +51,65 @@ def _git(repo: Path, *args: str) -> None:
                    check=True, capture_output=True)
 
 
+def _write_interview(repo: Path, slug: str, push: dict | None) -> Path:
+    """造一条带 L0 来源签名、L2 QC 凭证和 Release 指纹的可发布采访。"""
+    from interview_source_gate import finalize_source_contract
+
+    spec: dict = {
+        "slug": slug,
+        "column": "赛后开麦",
+        "url": f"https://example.test/{slug}/oncourt",
+        "requested_content_type": "on_court",
+        "interview_kind": "赛后场上采访",
+        "zh": ["正文中文"],
+        "lead_in": {
+            "url": f"https://example.test/{slug}/highlight", "start": 10.0, "end": 14.0,
+            "subs": [{"a": 10.0, "b": 12.0, "en": "Match point", "zh": "赛点"}],
+        },
+        "source_verification": {
+            "status": "verified", "detected_type": "on_court",
+            "method": "human_visual_verdict",
+            "source_url": f"https://example.test/{slug}/oncourt",
+            "evidence": [{"kind": "visual_verdict", "by": "test"}],
+        },
+        "match": {
+            "id": f"2026:test:qf:{slug}", "event": "测试赛", "round": "四分之一决赛",
+            "winner": "赢家", "loser": "输家", "participants": ["赢家", "输家"],
+        },
+    }
+    if push is not None:
+        spec["push"] = push
+    finalize_source_contract(spec)
+
+    spec_dir = repo / "specs/interviews"
+    spec_dir.mkdir(parents=True, exist_ok=True)
+    spec_path = spec_dir / f"{slug}.json"
+    spec_path.write_text(json.dumps(spec, ensure_ascii=False), encoding="utf-8")
+    (spec_dir / f"{slug}.xhs.txt").write_text("文案", encoding="utf-8")
+
+    outdir = repo / f"output/interviews/{slug}"
+    outdir.mkdir(parents=True, exist_ok=True)
+    film_hash = hashlib.sha256(f"{slug}-film".encode()).hexdigest()
+    film_bytes = 12345
+    qc_path = outdir / "qc_attestation.json"
+    qc_path.write_text(json.dumps({
+        "status": "pass", "slug": slug, "match_id": spec["match"]["id"],
+        "source_attestation_sha256": spec["source_verification"]["attestation_sha256"],
+        "spec_sha256": hashlib.sha256(spec_path.read_bytes()).hexdigest(),
+        "lead_ass_sha256": hashlib.sha256(f"{slug}-lead-ass".encode()).hexdigest(),
+        "film_sha256": film_hash, "film_bytes": film_bytes,
+        "checks": {"bilingual_body_cues": 1, "bilingual_lead_cues": 1},
+    }), encoding="utf-8")
+    (outdir / "render.json").write_text(json.dumps({
+        "video_url": f"https://example.test/{slug}.mp4",
+        "video_bytes": film_bytes,
+        "film_sha256": film_hash,
+        "qc_attestation_sha256": hashlib.sha256(qc_path.read_bytes()).hexdigest(),
+    }), encoding="utf-8")
+    (outdir / "poster.jpg").write_bytes(b"\xff\xd8\xff not-a-real-jpeg")
+    return outdir
+
+
 @pytest.fixture()
 def repo(tmp_path: Path) -> Path:
     """一个最小的**真 git 仓库**：一条 spec、一份文案、一个渲好的 outdir。
@@ -63,14 +123,7 @@ def repo(tmp_path: Path) -> Path:
     特意把它留着），所以这个 fixture 也得有——这样「该发的照发」那几条
     验的才是它们各自那道闸，而不是被海报闸拦下。
     """
-    (tmp_path / "specs/interviews").mkdir(parents=True)
-    (tmp_path / "specs/interviews/demo.xhs.txt").write_text(
-        "文案", encoding="utf-8")
-    outdir = tmp_path / "output/interviews/demo"
-    outdir.mkdir(parents=True)
-    (outdir / "render.json").write_text(
-        json.dumps({"video_url": "https://example/x.mp4"}), encoding="utf-8")
-    (outdir / "poster.jpg").write_bytes(b"\xff\xd8\xff not-a-real-jpeg")
+    _write_interview(tmp_path, "demo", {})
     _git(tmp_path, "init", "-q")
     # render.json 提交进仓库——现实里它就是先由 interview-clip 提交、随 PR
     # 进 main 的；「已删除的产物不算候选」那道闸查的是 git ls-files，
@@ -87,13 +140,7 @@ def _commit_all(repo: Path) -> None:
 
 
 def _spec(repo: Path, push: dict | None, slug: str = "demo") -> None:
-    # 采访 spec 的栏目名在**顶层 `column`**，不是 `cover.eyebrow`——
-    # 两条线放在不同字段，`push_reel.column_of` 在那儿收口。
-    body: dict = {"column": "赛后开麦"}
-    if push is not None:
-        body["push"] = push
-    (repo / f"specs/interviews/{slug}.json").write_text(
-        json.dumps(body, ensure_ascii=False), encoding="utf-8")
+    _write_interview(repo, slug, push)
 
 
 def _second_interview(repo: Path, slug: str = "demo2") -> Path:
@@ -103,14 +150,7 @@ def _second_interview(repo: Path, slug: str = "demo2") -> Path:
     候选筛掉，于是「一趟带进来两条」那类测试只剩一个候选、恒绿——一道
     真闸就这么被另一道闸悄悄遮住了。收在一处，别在每个测试里各写一遍。
     """
-    _spec(repo, {"auto": True}, slug=slug)
-    (repo / f"specs/interviews/{slug}.xhs.txt").write_text(
-        "文案", encoding="utf-8")
-    outdir = repo / f"output/interviews/{slug}"
-    outdir.mkdir(parents=True)
-    (outdir / "render.json").write_text("{}", encoding="utf-8")
-    (outdir / "poster.jpg").write_bytes(b"\xff\xd8\xff not-a-real-jpeg")
-    return outdir
+    return _write_interview(repo, slug, {"auto": True})
 
 
 CHANGED = ["output/interviews/demo/render.json"]
@@ -234,8 +274,8 @@ def test_已经推过的不许再发一次(repo: Path, capsys):
     一口气改了 17 份。没有这道闸，已经发过的采访会被再发一次。
     """
     _spec(repo, {"auto": True})
-    gate.record(repo / "output/interviews/demo",
-                "https://example/run/1", "2026-08-14T00:00:00Z")
+    reel_gate.record(repo / "output/interviews/demo",
+                     "https://example/run/1", "2026-08-14T00:00:00Z")
     _commit_all(repo)
     assert gate.pick(CHANGED, repo) is None
     out = capsys.readouterr().out
@@ -250,7 +290,7 @@ def test_没提交的标记不算数(repo: Path):
     而且不吭声。反过来说，这也正是它必须查 `git ls-files` 的另一半理由。
     """
     _spec(repo, {"auto": True})
-    gate.record(repo / "output/interviews/demo", "run", "now")
+    reel_gate.record(repo / "output/interviews/demo", "run", "now")
     # 故意不提交
     assert gate.pick(CHANGED, repo) is not None
 
@@ -264,7 +304,7 @@ def test_稀疏检出下也要拦得住(repo: Path):
     要求照样拦得住。反向验证过：退回 `is_file()` 当场红。
     """
     _spec(repo, {"auto": True})
-    marker = gate.record(repo / "output/interviews/demo", "run", "now")
+    marker = reel_gate.record(repo / "output/interviews/demo", "run", "now")
     _commit_all(repo)
     marker.unlink()  # ← 稀疏检出之后工作区里就是没有它
     assert gate.pick(CHANGED, repo) is None
@@ -307,6 +347,32 @@ def test_海报在就照发(repo: Path):
     picked = gate.pick(CHANGED, repo)
     assert picked is not None, "海报好好地在仓库里，却被拦下了"
     assert picked[0] == "demo"
+
+
+def test_render必须绑定当前QC凭证(repo: Path, capsys):
+    """旧 render 不能配一份后来替换的 pass QC 冒充同一轮质检。"""
+    _spec(repo, {"auto": True})
+    qc = repo / "output/interviews/demo/qc_attestation.json"
+    data = json.loads(qc.read_text(encoding="utf-8"))
+    data["checks"]["note"] = "replaced-after-release"
+    qc.write_text(json.dumps(data), encoding="utf-8")
+    assert gate.pick(CHANGED, repo) is None
+    assert "当前 QC 凭证" in capsys.readouterr().out
+
+
+def test_QC必须逐cue证明冷开场解说双语完整(repo: Path, capsys):
+    _spec(repo, {"auto": True})
+    outdir = repo / "output/interviews/demo"
+    qc_path = outdir / "qc_attestation.json"
+    qc = json.loads(qc_path.read_text(encoding="utf-8"))
+    qc["checks"]["bilingual_lead_cues"] = 0
+    qc_path.write_text(json.dumps(qc), encoding="utf-8")
+    render_path = outdir / "render.json"
+    render = json.loads(render_path.read_text(encoding="utf-8"))
+    render["qc_attestation_sha256"] = hashlib.sha256(qc_path.read_bytes()).hexdigest()
+    render_path.write_text(json.dumps(render), encoding="utf-8")
+    assert gate.pick(CHANGED, repo) is None
+    assert "获胜画面原解说" in capsys.readouterr().out
 
 
 def test_稀疏检出下海报也要认得出(repo: Path):
@@ -352,6 +418,7 @@ def test_删除的render_json不算候选(repo: Path, capsys):
     又没有 pushed.json，不拦的话会凑成「一次 N 条」把真该发的一起拦死。
     """
     _spec(repo, {"auto": True})
+    _commit_all(repo)
     _git(repo, "rm", "-rq", "output/interviews/demo")
     _git(repo, "-c", "user.email=a@b", "-c", "user.name=c",
          "commit", "-qm", "清理旧产物")
@@ -388,9 +455,8 @@ def test_工作流的diff要滤掉删除项():
 
 # ------------------------------------------------- 共用的部分：import，不抄
 
-def test_共用的那几样是import来的不是抄的():
-    """`Skip` / `tracked` / `MARKER` / `record` 跟哪条线无关，两条路必须是
-    **同一个对象**。
+def test_共用基础判据但采访发布账本独立():
+    """路径存在性和旧标记继续共用；发布状态改为 output 外的独立账本。
 
     判据用 `is`，不是「行为一样」：抄一份的话行为一开始当然一样，
     分叉是后来发生的，而分叉的样子是——改了 reel 那头的标记名，这头静默
@@ -399,8 +465,9 @@ def test_共用的那几样是import来的不是抄的():
     """
     assert gate.Skip is reel_gate.Skip
     assert gate.tracked is reel_gate.tracked
-    assert gate.record is reel_gate.record
+    assert gate.record is not reel_gate.record
     assert gate.MARKER == reel_gate.MARKER == "pushed.json"
+    assert gate.LEDGER_DIR == Path("data/interview_publish_ledger")
 
 
 def test_两条线分叉的只有路径形状和spec目录():
@@ -412,6 +479,30 @@ def test_两条线分叉的只有路径形状和spec目录():
     assert gate.SPEC_DIR == Path("specs/interviews")
     assert reel_gate.SPEC_DIR == Path("specs/reels")
     assert gate.SPEC_DIR != reel_gate.SPEC_DIR
+
+
+def test_发布账本预占后阻断自动重发(repo: Path, capsys):
+    """发送前先记 sending；进程随后崩溃也不能把同一成片盲发第二次。"""
+    _spec(repo, {"auto": True})
+    outdir = repo / "output/interviews/demo"
+    ledger = gate.reserve(repo, "demo", outdir, "https://example/run/1", "2026-08-23T00:00:00Z")
+    _commit_all(repo)
+    assert json.loads(ledger.read_text())["attempts"][0]["status"] == "sending"
+    assert gate.pick(CHANGED, repo) is None
+    assert "sending" in capsys.readouterr().out
+
+
+def test_发布成功和状态不明都绑定同一成片指纹(repo: Path):
+    _spec(repo, {"auto": True})
+    outdir = repo / "output/interviews/demo"
+    gate.reserve(repo, "demo", outdir, "run", "t1")
+    ledger = gate.record(repo, "demo", outdir, "run", "t2")
+    row = json.loads(ledger.read_text())["attempts"][0]
+    assert row["status"] == "sent" and row["key"].startswith("pushplus:demo:")
+    ledger = gate.uncertain(repo, "demo", outdir, "run", "t3")
+    rows = json.loads(ledger.read_text())["attempts"]
+    assert len(rows) == 1 and rows[0]["status"] == "uncertain", \
+        "同一成片只允许一个幂等键，状态转换不能追加成多次发送"
 
 
 # ------------------------------------------------- 标题日期：算一次，两处共用
@@ -538,7 +629,7 @@ def test_render完要叫醒自动推送():
 
 def test_gate的slug入口走同一条pick路(repo: Path, monkeypatch, capsys):
     """`--slug` 不是绕闸的近路：它只是把入参折成那条 render.json 的路径，
-    照走 `pick` → 五道闸。判据两头：合格的这条要 found=true 落进
+    照走 `pick` → 发布门禁。判据两头：合格的这条要 found=true 落进
     GITHUB_OUTPUT；已推过的同一条要被「已经推过」那道闸拦下（拦得住才说明
     真的走的是同一条路，不是另写了一份少闸的判定）。
     """
@@ -710,5 +801,6 @@ def test_只add自己那一格():
     assert adds, "工作流里一句 git add 都没有？"
     for line in adds:
         assert "--sparse" in line, f"稀疏检出下 git add 要带 --sparse：{line}"
-        assert "steps.gate.outputs.outdir" in line, (
-            f"add 的不是本次那一格：{line}")
+        assert ("steps.gate.outputs.outdir" in line
+                or "data/interview_publish_ledger/${{ steps.gate.outputs.slug }}.json" in line), (
+            f"add 的不是本次产物或本次独立账本：{line}")

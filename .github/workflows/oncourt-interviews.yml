@@ -1,6 +1,6 @@
 name: oncourt-interviews
 
-# 场上赛后采访的持续采集。每天两轮，把新出现的视频并进
+# 场上赛后采访的持续采集。每 30 分钟一轮，把新出现的视频并进
 # data/oncourt_interviews.json，供英语学习选材用。
 #
 # 只收一类：**赛后直接在场上接受采访**（主持人拿麦上场问、球员站着答）。
@@ -15,15 +15,17 @@ on:
   # 现在下游有了——`pick_oncourt_clips.py` 挑成片候选、`oncourt_feed.py` 推清单，
   # 都是这条库的直接消费者。没有定时采集，新采访永远进不来，成片候选永远是空的。
   schedule:
-  # **每 3 小时一轮**（原来每天两轮）。这条现在是「赛后开麦」自动出片链的
+  # **每 30 分钟一轮**（原来每天两轮）。这条现在是「赛后开麦」自动出片链的
   # 第一环——采集 → 候选 → 草稿，后面 interview-auto-render 每半小时接一次；
   # 采集一天只醒两次的话，一条比赛日下午打完的采访要等到深夜才建草稿，
   # 而这条线的规矩是「上一个比赛日的不做了」——等一晚等出来的常常是过期候选。
-  # 每 3 小时把「打完 → 草稿在手」的最坏等待压到 3 小时。
+  # 每 30 分钟把「打完 → 候选矩阵启动」的最坏等待压到半小时。
   #
   # 分钟取 7，避开 :00/:30——GitHub 在整点半点最容易延迟或丢弃
   # （daily 当年留下的经验，knowledge-adhoc 的 08:37 也是这么定的）。
-  - cron: "7 */3 * * *"
+  # 每 30 分钟追一轮新赛果后的采访。不同比赛在下面 matrix 中各占一个 runner，
+  # 不再让第 N 场等待前 N-1 场转写完成。
+  - cron: "7,37 * * * *"
   workflow_dispatch:
     inputs:
       only:
@@ -45,6 +47,8 @@ concurrency:
 
 jobs:
   collect:
+    outputs:
+      candidate_ids: ${{ steps.matrix.outputs.candidate_ids }}
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -160,48 +164,17 @@ jobs:
           python tools/pick_oncourt_clips.py --write \
             | tee -a /tmp/oncourt.log
 
-      # ⚠️ **YT_COOKIES 要的是文件路径，不是内容。** 原来这儿直接
-      # `YT_COOKIES: ${{ secrets.YT_COOKIES_TXT }}` 把 Netscape 文本整段塞进
-      # 环境变量——draft_interview_spec 里那句 `os.path.isfile(cookies)` 恒假，
-      # cookies 一次都没带上过，而 YouTube 候选的下载失败读起来像「被限流」。
-      # 照 interview-clip.yml 的「落 cookies」那套：先写成文件，再传路径。
-      - name: 落 cookies（配了 Secret 才有）
-        id: oncourt_cookies
-        env:
-          YT_COOKIES_TXT: ${{ secrets.YT_COOKIES_TXT }}
+      - name: 生成逐场并行矩阵
+        id: matrix
         run: |
-          if [ -n "$YT_COOKIES_TXT" ]; then
-            printf '%s' "$YT_COOKIES_TXT" > "$RUNNER_TEMP/yt-cookies.txt"
-            echo "path=$RUNNER_TEMP/yt-cookies.txt" >> "$GITHUB_OUTPUT"
-            echo "已写入 cookies（$(wc -l < "$RUNNER_TEMP/yt-cookies.txt") 行）"
-          else
-            echo "没有配 YT_COOKIES_TXT，裸下试试"
-          fi
-
-      - name: 自动建赛后开麦 spec 草稿（转写 + 翻译）
-        env:
-          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
-          YT_COOKIES: ${{ steps.oncourt_cookies.outputs.path }}
-        run: |
-          # **pipefail 必须开**：主命令是 `python | tee`，不开的话草稿建崩了
-          # 这一步照样绿——而「草稿没建成」和「今天没有候选」在下游看起来
-          # 一模一样（interview-auto-render 只会看到没有草稿可提升）。
-          set -o pipefail
-          # 对**全部**候选并行建草稿：yt-dlp 下音频 → faster-whisper small.en 转写 →
-          # DeepSeek 翻译 → specs/interviews/<slug>.draft.json ＋
-          # output/interviews/<slug>/cap_asr.json3（第一份转写，--stage subs 的输入）。
-          # ⚠️ 必须并行——好多比赛差不多时间结束，一条一条跑（下音频+whisper+翻译
-          # 约 1-3 分钟）N 场就是 N 倍时间；`--max-parallel 2` 把总时间压成
-          # 「最慢那一场 × 2」，也别开太大（whisper 吃 CPU，runner 4 核，2 保守）。
-          # 候选为空就跳过（连 faster-whisper 都不装）。
-          n=$(python -c "import json;print(len(json.load(open('data/interview_clip_candidates.json'))))" 2>/dev/null || echo 0)
-          if [ "$n" = "0" ]; then
-            echo "没有成片候选，跳过自动建 spec。"
-          else
-            pip install -q faster-whisper 2>&1 | tail -1
-            python tools/draft_interview_spec.py --max-parallel 2 --write \
-              | tee -a /tmp/oncourt.log
-          fi
+          IDS=$(python - <<'PY'
+          import json
+          rows = json.load(open('data/interview_clip_candidates.json', encoding='utf-8'))
+          print(json.dumps([str(row['id']) for row in rows], separators=(',', ':')))
+          PY
+          )
+          echo "candidate_ids=$IDS" >> "$GITHUB_OUTPUT"
+          echo "本轮逐场任务：$IDS"
 
       - name: 提交新增条目
         run: |
@@ -215,7 +188,8 @@ jobs:
           # 就这么静默丢掉（interview-auto-render 的提交步踩过一模一样的坑）。
           git config user.name "Claude"
           git config user.email "noreply@anthropic.com"
-          git add data/oncourt_interviews.json data/oncourt_feed_sent.json data/interview_clip_candidates.json specs/interviews output/interviews
+          git add data/oncourt_interviews.json data/oncourt_feed_sent.json \
+            data/interview_clip_candidates.json data/interview_source_review_queue.json
           if git diff --cached --quiet; then
             echo "没有新增，不提交。"
             exit 0
@@ -248,3 +222,101 @@ jobs:
             cat /tmp/oncourt.log 2>/dev/null || echo '（没有日志）'
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
+
+  # 一场比赛一个 runner：下载/ASR/翻译互不抢 4 核 CPU，一场失败也不会取消其余。
+  # 同一 candidate id 单飞；不同比赛最多 4 路并行。
+  draft:
+    needs: collect
+    # feed 推送告警发生在候选已提交之后；即使那一步把 collect 标红，也不能让
+    # 已发现的比赛错过转写窗口。只有矩阵本身为空才不启动。
+    if: >-
+      always()
+      && needs.collect.outputs.candidate_ids != ''
+      && needs.collect.outputs.candidate_ids != '[]'
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        candidate_id: ${{ fromJSON(needs.collect.outputs.candidate_ids) }}
+    concurrency:
+      group: interview-draft-${{ matrix.candidate_id }}
+      cancel-in-progress: false
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            assets
+            data
+            output/interviews
+            specs
+            src
+            tools
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: 安装单场转写依赖
+        timeout-minutes: 15
+        run: |
+          source tools/ci_apt_install.sh
+          apt_install_cached fonts-noto-core
+          pip install -q -e . faster-whisper "yt-dlp[default]>=2026.7.4"
+
+      - name: 启动 YouTube PO token provider
+        continue-on-error: true
+        timeout-minutes: 3
+        run: |
+          pip install -q bgutil-ytdlp-pot-provider
+          docker run --name bgutil-pot -d -p 4416:4416 \
+            brainicism/bgutil-ytdlp-pot-provider
+          for i in $(seq 1 25); do
+            curl -fsS http://127.0.0.1:4416/ping >/dev/null && exit 0
+            sleep 2
+          done
+          docker logs bgutil-pot 2>&1 | tail -20 || true
+          echo "::warning::PO token provider 未就绪；继续用 cookies/client 梯子尝试"
+          exit 1
+
+      - name: 落 cookies（配了 Secret 才有）
+        id: cookies
+        env:
+          YT_COOKIES_TXT: ${{ secrets.YT_COOKIES_TXT }}
+        run: |
+          if [ -n "$YT_COOKIES_TXT" ]; then
+            printf '%s' "$YT_COOKIES_TXT" > "$RUNNER_TEMP/yt-cookies.txt"
+            echo "path=$RUNNER_TEMP/yt-cookies.txt" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: 单场生成精确行号草稿
+        env:
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          YT_COOKIES: ${{ steps.cookies.outputs.path }}
+        run: |
+          set -o pipefail
+          python tools/draft_interview_spec.py \
+            --candidate-id '${{ matrix.candidate_id }}' --max-parallel 1 --write \
+            | tee /tmp/draft.log
+
+      - name: 提交本场草稿
+        run: |
+          git config user.name "Claude"
+          git config user.email "noreply@anthropic.com"
+          git add specs/interviews output/interviews
+          if git diff --cached --quiet; then
+            echo "::error::候选 ${{ matrix.candidate_id }} 返回成功却没有草稿产物"
+            exit 1
+          fi
+          python tools/check_staged_file_sizes.py
+          MSG="interview: 自动建立单场草稿 ${{ matrix.candidate_id }}"
+          git commit -m "$MSG"
+          for attempt in 1 2 3 4 5; do
+            if git push origin "HEAD:${GITHUB_REF_NAME}"; then exit 0; fi
+            git pull --rebase origin "${GITHUB_REF_NAME}" || { git rebase --abort || true; }
+            sleep $((attempt * 3 + RANDOM % 5))
+          done
+          echo "::error::本场草稿无法落库；其他 matrix 场次不受影响"
+          exit 1

@@ -232,6 +232,9 @@ def test_搬运号和合集在挑选那一步就拦():
     assert dh.pick_highlight(official, *args) == "https://y/ok"
     assert dh.pick_highlight(tourney, *args) == "https://y/t", (
         "赛事自己的官方频道也算官方，别只认三大")
+    spoof = [(t, "https://y/spoof", "Cincinnati Tennis Fan", 224.0)]
+    assert dh.pick_highlight(spoof, *args) is None, (
+        "频道名只要含赛事词就算官方会被搬运号轻易伪装")
     assert dh.pick_highlight(unknown, *args) == "https://y/na", (
         "flat 模式拿不到频道（None）不当场拦——留给 vet_candidate 终审补一枪")
 

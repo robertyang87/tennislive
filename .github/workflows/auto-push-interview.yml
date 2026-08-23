@@ -10,10 +10,9 @@ name: auto-push-interview
 # 不是配漏了。量出来的代价：18 条 spec 里 0 条写了 `push.auto`、18 个产物
 # 目录里 0 个 `pushed.json`——而赛后开麦是时效最紧的一条，过一夜就没人看了。
 #
-# ⚠️ **默认什么都不会发。** 要开，在 `specs/interviews/<slug>.json` 的 `push`
-# 块里加一行 `"auto": true`；没这一行的采访，这条工作流看一眼就跳过并说明
-# 原因。五道闸（路径形状 / 显式认领 / 没推过 / 海报在仓库里 / 一趟最多一条）
-# 全在 `tools/auto_push_interview_gate.py` 里——写进 YAML 就测不了了。
+# 新自动 spec 在 L0 来源与赛果都通过后默认写 `push.auto:true`，实现“质检通过
+# 即推送”。但开关不能绕过 L0 身份、L2 QC 凭证、成片指纹、独立发布账本、海报
+# 和单条兜底闸；判据全在 `tools/auto_push_interview_gate.py`，不散写进 YAML。
 #
 # ⚠️ **海报那道现在会拦下所有存量，那是对的。** 2026-08-13 那次 purge 从全史
 # 抹掉了 output/ 下所有 jpg，`git ls-files 'output/interviews/*/poster*'`
@@ -39,7 +38,7 @@ on:
       - "output/interviews/*/render.json"
   # 主路：interview-clip「提交成片」之后 `gh workflow run … -f slug=<slug>`
   # 叫醒这条（workflow_dispatch 正是 GITHUB_TOKEN 防递归那条禁令**明文列出的
-  # 例外**）。slug 留空＝扫仓库里全部 render.json——五道闸把已推过/没认领的
+  # 例外**）。slug 留空＝扫仓库里全部 render.json——发布闸把已推过/没认领的
   # 都拦掉，「一趟最多一条」保证不会批量误发。
   workflow_dispatch:
     inputs:
@@ -57,7 +56,9 @@ permissions:
 # 同一条采访只留一个在跑。**不许 cancel-in-progress**：取消一个已经发出
 # POST 的 run，只会让「发没发出去」变成未知，而 pushed.json 那一笔可能没记上。
 concurrency:
-  group: auto-push-interview
+  # 同一 slug 单飞，避免同一成片重复发；不同比赛不再被一个最长 40 分钟的
+  # Pages 等待全局串住，可以各自完成质检后并行推送。
+  group: auto-push-interview-${{ github.event.inputs.slug || 'scan' }}
   cancel-in-progress: false
 
 jobs:
@@ -119,7 +120,7 @@ jobs:
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             if [ -n "$DISPATCH_SLUG" ]; then
-              # 主路：interview-clip 渲完点名叫醒。五道闸在工具里照过。
+              # 主路：interview-clip 渲完点名叫醒。六道发布闸在工具里照过。
               python tools/auto_push_interview_gate.py --slug "$DISPATCH_SLUG"
             else
               # 没点名就扫仓库里全部产物。`git ls-files` 读 index，不受稀疏
@@ -196,6 +197,31 @@ jobs:
             git push origin main
           fi
 
+      # 发送前先把独立发布账本提交进 main。状态为 sending 时任何重试都会被 gate
+      # 拦住；即使 POST 成功后 runner 崩溃，也不会因为 output 里的 pushed.json
+      # 被重渲覆盖而再发一遍。不同 slug 各写一份 ledger 文件，可并行提交。
+      - name: 预占发布账本（发送前）
+        id: reserve
+        if: steps.gate.outputs.found == 'true'
+        run: |
+          RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          python tools/auto_push_interview_gate.py \
+            --reserve "${{ steps.gate.outputs.outdir }}" \
+            --slug "${{ steps.gate.outputs.slug }}" \
+            --run "$RUN_URL" --now "$(date -u +%FT%TZ)"
+          git config user.name "Claude"
+          git config user.email "noreply@anthropic.com"
+          git add --sparse "data/interview_publish_ledger/${{ steps.gate.outputs.slug }}.json"
+          python tools/check_staged_file_sizes.py
+          git commit -m "interview: 预占推送 ${{ steps.gate.outputs.slug }}"
+          for attempt in 1 2 3 4 5; do
+            if git push origin main; then exit 0; fi
+            git pull --rebase origin main || { git rebase --abort || true; }
+            sleep $((attempt * 3 + RANDOM % 5))
+          done
+          echo "::error::发送前账本没有落进 main，不允许发送"
+          exit 1
+
       - name: 推送到微信
         if: steps.gate.outputs.found == 'true'
         env:
@@ -230,12 +256,34 @@ jobs:
         run: |
           python tools/auto_push_interview_gate.py \
             --record "${{ steps.gate.outputs.outdir }}" \
+            --slug "${{ steps.gate.outputs.slug }}" \
             --run "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
             --now "$(date -u +%FT%TZ)"
-          git add --sparse "${{ steps.gate.outputs.outdir }}"
+          git add --sparse "data/interview_publish_ledger/${{ steps.gate.outputs.slug }}.json"
           python tools/check_staged_file_sizes.py
           git commit -m "interview: ${{ steps.gate.outputs.slug }} 已自动推送"
-          git pull --rebase origin main
+          for attempt in 1 2 3 4 5; do
+            if git push origin main; then exit 0; fi
+            git pull --rebase origin main || { git rebase --abort || true; }
+            sleep $((attempt * 3 + RANDOM % 5))
+          done
+          echo "::error::消息已发出，但 sent 状态没推上去；sending 会阻断重发"
+          exit 1
+
+      - name: 已预占后失败则标记状态不明
+        if: failure() && steps.reserve.outcome == 'success'
+        continue-on-error: true
+        run: |
+          python tools/auto_push_interview_gate.py \
+            --uncertain "${{ steps.gate.outputs.outdir }}" \
+            --slug "${{ steps.gate.outputs.slug }}" \
+            --run "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
+            --now "$(date -u +%FT%TZ)"
+          git config user.name "Claude"
+          git config user.email "noreply@anthropic.com"
+          git add --sparse "data/interview_publish_ledger/${{ steps.gate.outputs.slug }}.json"
+          git commit -m "interview: ${{ steps.gate.outputs.slug }} 推送状态待核实" || exit 0
+          git pull --rebase origin main || { git rebase --abort || true; }
           git push origin main
 
       - name: 失败时告警

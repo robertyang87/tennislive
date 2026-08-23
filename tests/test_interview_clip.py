@@ -126,6 +126,12 @@ def _if_holds(expr, *, mode: str, push: str = "false") -> bool:
     py = (str(expr)
           .replace("github.event.inputs.mode", repr(mode))
           .replace("github.event.inputs.push", repr(push))
+          # 正常成功路径下，失败回收步不会执行。发布账本加入了这种清理步，
+          # 它不属于 mode 分流的主语，但扫描所有 step 时仍要能求值。
+          .replace("failure()", "False")
+          .replace("cancelled()", "False")
+          .replace("always()", "True")
+          .replace("steps.manual_reserve.outcome", repr("success"))
           # 「叫醒自动推送」那一步的 if 里有 ref_name——这套模拟按「跑在
           # main 上」求值：分支上的行为(那一步跳过)不在这套判据的主语里。
           .replace("github.ref_name", repr("main"))

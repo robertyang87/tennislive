@@ -1,6 +1,6 @@
 # 无人值守流水线：耗时 / 并行 / 稳定性 / 自愈 现状盘点
 
-2026-08-17 盘查。目标（账号所有者）：完全自动化，多场并行，时效性高不能卡住，
+2026-08-23 复盘并执行整改。目标（账号所有者）：自动化，多场并行，时效性高不能卡住，
 稳定性高，能自我修复。
 
 ## 1. 一条片子的时间账（实测）
@@ -28,6 +28,9 @@ match-reel run 实测耗时（按 mode 分）：
 | 编排器「探测集锦」 | ✅ 已并行（2026-08-17 改） | ThreadPoolExecutor，N 场探测时间压成最慢那一场 |
 | 编排器「dispatch run」 | ⚠️ 串行 | gh workflow run 每场 1~2s，N 场串行 ~N×2s，可接受 |
 | 同一 slug 的 probe/render | ⚠️ 串行（设计如此） | concurrency cancel-in-progress，防互相覆盖 output |
+| 赛后开麦候选转写 | ✅ 逐场 matrix | `oncourt-interviews` 一场一个 runner，`max-parallel: 4` |
+| 赛后开麦冷开场搜索/翻译 | ✅ 并行 | `attach_interview_lead_in.py` ThreadPoolExecutor，默认 4 |
+| 赛后开麦 render / publish | ✅ 按 slug 并行 | 两条 workflow 的 concurrency 都按 slug 分组 |
 
 **关键结论**：多场并行的**瓶颈不在流水线**（probe/render 天然并行），而在
 **编排器 dispatch 之前的那段探测**——已经并行化了。剩下的串行点都是「本来就该
@@ -56,6 +59,18 @@ match-reel run 实测耗时（按 mode 分）：
 
 **已修（2026-08-17）**：
 - 编排器探测集锦并行化（ThreadPoolExecutor）
+
+**已修（2026-08-23，赛后开麦）**：
+- 每 30 分钟扫描，候选同时写生产清单和来源待复核清单。
+- L0 先证明“本场获胜后的场上话筒采访”；发布会、演播室、unknown 不制作。
+- 多比赛逐场 matrix 并行转写；词级时间码与正式切行器同源后逐行翻译。
+- 独立采访自动配同场官方集锦末段、原声解说和中英字幕，找不到不降级。
+- L2 生成绑定 spec/source/正文 ASS/冷开场 ASS/film 的 QC attestation；正文和
+  原解说都逐 cue 核对中英字幕，通过即自动推送。
+- 同姓球员的赛果匹配同时核对名字首字母、赛事和轮次；仍有歧义就停产，不猜首条。
+- 发送前独立 ledger 预占，成功/状态不明都有持久记录，重渲不能擦除。
+- render dispatch 超过 3 小时仍无 `render.json` 会自动释放重投并刷新时刻；
+  最近刚投出的仍保持单飞，不会因 10 分钟扫描重复启动。
 
 **待修（按优先级）**：
 1. **probe 失败自愈**：编排器 state 要区分「已 dispatch」和「dispatch 但失败了」。

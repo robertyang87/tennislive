@@ -69,15 +69,18 @@ def test_build_spec草稿结构(tool):
     assert spec["slug"] == "zverev-cincinnati-2026-r3"
     assert spec["start"] == 0.0 and spec["end"] == 53.7
     assert spec["asr_model"] == "small.en"
+    assert spec["whisper_model"] == "medium.en"
     assert spec["column"] == "赛后开麦"
     assert spec["_interviewee_en"] == "Alexander Zverev", \
         "promote 按它查赛果，不能再让 promote 从标题猜第二遍"
-    # ⚠️ 机器译文放 `_zh_draft`，`zh` 必须空着：zh 要和 --stage subs 切出的
-    # 行一一对齐（write_ass 有行数闸），whisper 分段和切行不是一套边界，
-    # 直接抄进 zh 就是一条「看着补齐了、render 必炸」的假完整 spec
-    assert spec["zh"] == []
+    # _build_one 已先用正式 segment() 切行再翻译，机器译文与 render 行号同源，
+    # 不再人为留空制造必经人工接力。
+    assert spec["zh"] == ["萨沙 恭喜你", "这场打得很过瘾"]
     assert spec["_zh_draft"] == ["萨沙 恭喜你", "这场打得很过瘾"]
     assert spec["transcript_verified"] is False, "双模型核对由 render 的 verify_transcript 完成"
+    assert spec["transcript_verification"] == "auto_pending"
+    assert spec["requested_content_type"] == "on_court"
+    assert spec["interview_kind"] == "赛后场上采访"
     assert spec["_candidate_id"] == "VID1"
 
 
