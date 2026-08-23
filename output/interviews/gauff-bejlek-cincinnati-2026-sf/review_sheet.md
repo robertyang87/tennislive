@@ -28,7 +28,7 @@
 | 22 | 0:37.7 | [▶](https://youtu.be/x3eYH8OiHBM?t=37) | He's someone I think that works so hard | 我觉得他一直非常努力 |  |
 | 23 | 0:40.3 | [▶](https://youtu.be/x3eYH8OiHBM?t=40) | and definitely deserves it. | 绝对配得上这个结果 |  |
 | 24 | 0:41.7 | [▶](https://youtu.be/x3eYH8OiHBM?t=41) | And obviously Taylor, Brandon making it | 弗里茨和布兰登·中岛 | ✏️ 已订正 |
-| 25 | 0:43.9 | [▶](https://youtu.be/x3eYH8OiHBM?t=43) | in the quarters and semis, and Ben winning | 分别打进八强和四强 | ✏️ 已订正 |
+| 25 | 0:43.9 | [▶](https://youtu.be/x3eYH8OiHBM?t=43) | in the quarters and semis, and Ben winning | 分别打进1/4决赛和半决赛 | ✏️ 已订正 |
 | 26 | 0:45.9 | [▶](https://youtu.be/x3eYH8OiHBM?t=45) | in Montreal. | 谢尔顿则在蒙特利尔夺冠 |  |
 | 27 | 0:46.4 | [▶](https://youtu.be/x3eYH8OiHBM?t=46) | And that's not even speaking on the women. | 这还没开始说女球员呢 |  |
 | 28 | 0:48.7 | [▶](https://youtu.be/x3eYH8OiHBM?t=48) | Obviously Jess and me in the final. | 决赛里有杰西和我 | ✏️ 已订正 |
