@@ -1,0 +1,33 @@
+name: codex-search-pegula-interview
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/codex-search-pegula-interview.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  search:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Install yt-dlp
+        run: pipx install yt-dlp
+      - name: Search public video sources
+        run: |
+          set +e
+          for QUERY in \
+            "Jessica Pegula Iga Swiatek Cincinnati 2026 on court interview" \
+            "Jessica Pegula Cincinnati 2026 post match interview" \
+            "Pegula Swiatek Cincinnati Open 2026 interview" \
+            "Jessica Pegula crazy match today Cincinnati" \
+            "Jessica Pegula vs Iga Swiatek Cincinnati 2026 highlights"; do
+            echo "QUERY: $QUERY"
+            yt-dlp --flat-playlist --playlist-end 20 \
+              --print "%(id)s | %(title)s | %(uploader)s | %(duration_string)s | %(upload_date)s | %(webpage_url)s" \
+              "ytsearch20:$QUERY"
+          done
