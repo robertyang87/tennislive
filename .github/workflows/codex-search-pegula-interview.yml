@@ -17,7 +17,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Install tools
-        run: pip install -q "yt-dlp[default]" faster-whisper
+        run: pip install -q "yt-dlp[default]" faster-whisper bgutil-ytdlp-pot-provider
+      - name: Start PO token provider
+        run: |
+          docker run --name bgutil-pot -d -p 4416:4416 brainicism/bgutil-ytdlp-pot-provider
+          for i in $(seq 1 25); do
+            curl -sf http://127.0.0.1:4416/ping >/dev/null && exit 0
+            sleep 2
+          done
+          docker logs bgutil-pot 2>&1 | tail -30
+          exit 1
       - name: Materialize YouTube cookies
         id: cookies
         env:
@@ -37,7 +46,7 @@ jobs:
           mkdir -p scratch/pegula-source-analysis
           download_video() {
             URL="$1"; OUT="$2"
-            for CLIENT in web android_vr tv_simply android,ios web_embedded; do
+            for CLIENT in web mweb tv android_vr tv_simply android,ios web_embedded; do
               rm -f "${OUT}".*
               echo "trying client=$CLIENT url=$URL"
               if yt-dlp $COOKIE_ARGS --js-runtimes node \
