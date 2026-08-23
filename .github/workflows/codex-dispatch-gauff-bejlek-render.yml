@@ -26,6 +26,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          # 第二份 ASR 的逐处分歧已经在 spec 里核对并认领，重跑完整预览。
           gh workflow run interview-clip.yml --ref main \
             -f slug=gauff-bejlek-cincinnati-2026-sf \
             -f mode=render \
