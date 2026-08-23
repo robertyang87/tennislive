@@ -6,6 +6,10 @@
   "end": 106.3,
   "whisper_model": "medium.en",
   "transcript_verified": true,
+  "transcript_disagree_ok": {
+    "rate": 0.131,
+    "why": "逐处看过两份转写与官方页面完整文稿：第二份 whisper 主要漏掉 `No. No.`、男球员玩笑和 `I love Jess` 前后的整段口语，并把 Frances／Ben／Jess／Gauff、double、y'all can cheer 等清晰原声误听成 Francis／been／justice／Golf、dump、I'll get here；`cannot`／`can not`、`going to`／`gonna` 只是写法差异。烧进画面的英文采用已逐句核过并订正人名的官方字幕，不受这些第二模型误识别影响。"
+  },
   "_verified_clean": "逐句对照 Cincinnati Open 官方 YouTube 页面可见的完整转写文稿核过；保留高芙的自我修正和玩笑语气，自动字幕里 Francis／Golf 等人名、girl when women／f see／Jess is in me／a d. 等明显识别错误已按清晰语境与官方姓名订正。结尾收至主持人完整说完 `Coco Gauff, everybody. Let's hear it for her.`，不在句中截断；runner 仍会在出片前跑第二份 ASR 交叉校验。",
   "column": "赛后开麦",
   "interview_kind": "赛后场上采访",
