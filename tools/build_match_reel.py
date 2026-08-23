@@ -4424,22 +4424,31 @@ def check_sources_match(paths: dict[str, Path], spec: dict | None = None) -> Non
     不认领就红。原来是一律红——那会把「让当事人自己说」这类素材整个挡在门外
     （采访多是 30，赛事集锦多是 25/50）；一律放行又回到「兜底出事的时候不吭声」。
     认领这一步的作用就是**让这个取舍留下判据**，而不是让它悄悄发生。
+
+    ⚠️ **判"不一样"要按数值比，不能按 ffprobe 的原始字符串比**。`resolve_fps`
+    对 25.0 有时报 `"25/1"`、有时报 `"25"`（不同容器/remux 路径写法不同），两个
+    字符串不相等，但代进 `fps=` 滤镜的效果完全相同——0 重采样。按字符串比会把
+    这种情况误判成"帧率不一样"，逼人写一句撒谎的 `mixed_fps`（明明没有重采样，
+    却要编一句"重采样看不出来"）。`tiafoe-story` 的 qf2026（"25"）对 sf2026
+    （"25/1"）就撞过这个假阳性。
     """
     if len(paths) < 2:
         return
-    seen = {k: (*probe_size(p), resolve_fps(p)[0]) for k, p in paths.items()}
+    seen = {k: (*probe_size(p), *resolve_fps(p)) for k, p in paths.items()}
     ref_key = next(iter(seen))
-    rw, rh, rf = seen[ref_key]
+    rw, rh, rf, rfv = seen[ref_key]
     rows = "\n  ".join(f"{k or '(主源)'}: {w}×{h} @ {f}"
-                       for k, (w, h, f) in seen.items())
-    bad_size = [k for k, (w, h, _) in seen.items() if (w, h) != (rw, rh)]
+                       for k, (w, h, f, _) in seen.items())
+    bad_size = [k for k, (w, h, _, _) in seen.items() if (w, h) != (rw, rh)]
     if bad_size:
         raise ReelError(
             f"这些源片和主源 {ref_key or '(主源)'} 的尺寸对不上，裁切会静默裁错："
             f"{bad_size}\n  " + rows +
             "\n尺寸没有出路——换一条同尺寸的源片。")
     declared = (spec or {}).get("mixed_fps") or {}
-    bad_fps = [k for k, (_, _, f) in seen.items() if f != rf and k not in declared]
+    bad_fps = [k for k, (_, _, _, fv) in seen.items()
+               if not math.isclose(fv, rfv, rel_tol=1e-6, abs_tol=1e-6)
+               and k not in declared]
     if bad_fps:
         raise ReelError(
             f"这些源片的帧率和主源 {ref_key or '(主源)'}（{rf}）不一样：{bad_fps}\n  "
@@ -4450,7 +4459,7 @@ def check_sources_match(paths: dict[str, Path], spec: dict | None = None) -> Non
             '  "mixed_fps": {"' + bad_fps[0] + '": "30 fps；这条只用来放采访的'
             '说话头，重采样看不出来"}')
     for key, why in declared.items():
-        if key in seen and seen[key][2] != rf:
+        if key in seen and not math.isclose(seen[key][3], rfv, rel_tol=1e-6, abs_tol=1e-6):
             print(f"[fps] {key} 是 {seen[key][2]}，重采样到主源的 {rf}——{why}")
 
 
