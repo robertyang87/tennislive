@@ -378,6 +378,31 @@ jobs:
             echo "没有配 YT_COOKIES_TXT，裸下试试"
           fi
 
+      # 2026-08-23：同一条公开视频在 runner 上会先于格式选择就被 YouTube
+      # 拦成「Sign in to confirm you're not a bot」。只装 yt-dlp-ejs 不够；
+      # web/mweb 的媒体流还需要 GVS PO token。match-reel / frame-grab 已经走
+      # 这套 provider，这里补齐，避免采访线对同一来源静默退到不可下载客户端。
+      - name: 启动 YouTube PO token provider
+        if: github.event.inputs.mode != 'push'
+        timeout-minutes: 3
+        run: |
+          pip install -q bgutil-ytdlp-pot-provider
+          docker run --name bgutil-pot -d -p 4416:4416 \
+            brainicism/bgutil-ytdlp-pot-provider
+          READY=0
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:4416/ping; then
+              READY=1
+              break
+            fi
+            sleep 1
+          done
+          [ "$READY" = 1 ] || {
+            docker logs bgutil-pot 2>&1 | tail -30 || true
+            echo "::error::PO token provider 没有就绪"
+            exit 1
+          }
+
       # **切行这一步现在也只能在 runner 上跑。** 沙箱原来还取得到字幕（见顶上
       # 那段注释），2026-08-02 起整个 extractor 都吃 `Sign in to confirm you're
       # not a bot`——两条视频、两种取法都一样，是 IP 不是单条视频。而 cookie
