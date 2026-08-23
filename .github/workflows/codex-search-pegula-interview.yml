@@ -17,31 +17,23 @@ jobs:
     steps:
       - name: Install yt-dlp
         run: pipx install yt-dlp
-      - name: Inspect reference sources through flat search
+      - name: Inspect latest Cincinnati Open uploads
         run: |
-          set +e
-          for ID in x3eYH8OiHBM no_1M2K_CZU C8_5ag2DYn0; do
-            yt-dlp --flat-playlist --playlist-end 5 \
-              --print "REFERENCE | %(id)s | %(title)s | %(uploader)s | %(uploader_id)s | %(channel_id)s | %(duration_string)s | %(upload_date)s | %(webpage_url)s" \
-              "ytsearch5:$ID"
-          done
-      - name: Search newest public video sources
+          yt-dlp --flat-playlist --playlist-end 100 \
+            --print "%(id)s | %(title)s | %(uploader)s | %(duration_string)s | %(upload_date)s | %(webpage_url)s" \
+            "https://www.youtube.com/channel/UCtRsUWSlnmATu1X-wORUTqA/videos"
+      - name: Search public video sources
         run: |
           set +e
           for QUERY in \
             "Jessica Pegula Iga Swiatek Cincinnati 2026 on court interview" \
             "Jessica Pegula Cincinnati 2026 post match interview" \
             "Pegula Swiatek Cincinnati Open 2026 interview" \
-            "Jessica Pegula Tennis Xtra Cincinnati 2026" \
-            "Jessica Pegula crazy match today Cincinnati"; do
+            "Jessica Pegula Cincinnati Open after victory Swiatek" \
+            "Cincinnati Open Jessica Pegula final 2026"; do
             echo "QUERY: $QUERY"
             yt-dlp --flat-playlist --playlist-end 50 \
               --print "%(id)s | %(title)s | %(uploader)s | %(duration_string)s | %(upload_date)s | %(webpage_url)s" \
-              "ytsearchdate50:$QUERY"
+              "ytsearch50:$QUERY"
           done
-      - name: Search the known interview source by video ID and player
-        run: |
-          set +e
-          yt-dlp --flat-playlist --playlist-end 50 \
-            --print "%(id)s | %(title)s | %(uploader)s | %(uploader_id)s | %(duration_string)s | %(upload_date)s | %(webpage_url)s" \
-            "ytsearchdate50:Tennis Xtra Jessica Pegula"
+          true
