@@ -413,8 +413,11 @@ def test_每条dispatch成功立即落盘(monkeypatch, tmp_path):
     c1, c2 = _fake_cand("a-b", "A B", "C D"), _fake_cand("e-f", "E F", "G H")
     monkeypatch.setattr(o, "build_digest", lambda today: object())
     monkeypatch.setattr(o, "candidates", lambda dig: [c1, c2])
-    fake_dh = type("M", (), {"find_highlight": staticmethod(
-        lambda h, a, e, y: ("https://yt/x", "youtube"))})()
+    fake_dh = type("M", (), {
+        "HighlightSourceError": RuntimeError,
+        "find_highlight": staticmethod(
+            lambda h, a, e, y: ("https://yt/x", "youtube")),
+    })()
     monkeypatch.setitem(sys.modules, "detect_highlights", fake_dh)
 
     def fake_run(cmd, check=True, **kw):
@@ -445,9 +448,12 @@ def test_探不到源的候选不占配额(monkeypatch, tmp_path):
     c1, c2 = _fake_cand("a-b", "A B", "C D"), _fake_cand("e-f", "E F", "G H")
     monkeypatch.setattr(o, "build_digest", lambda today: object())
     monkeypatch.setattr(o, "candidates", lambda dig: [c1, c2])
-    fake_dh = type("M", (), {"find_highlight": staticmethod(
-        lambda h, a, e, y: (None, "") if h == "A B"
-        else ("https://yt/2", "youtube"))})()
+    fake_dh = type("M", (), {
+        "HighlightSourceError": RuntimeError,
+        "find_highlight": staticmethod(
+            lambda h, a, e, y: (None, "") if h == "A B"
+            else ("https://yt/2", "youtube")),
+    })()
     monkeypatch.setitem(sys.modules, "detect_highlights", fake_dh)
     calls = []
     monkeypatch.setattr(sp, "run",
@@ -456,6 +462,43 @@ def test_探不到源的候选不占配额(monkeypatch, tmp_path):
     assert o.main() == 0
     assert any("slug=e-f" in str(x) for cmd in calls for x in cmd), (
         "探得到源的那条被探不到的白占了配额（--max 1 全给了探空的 a-b）")
+    saved = json.loads(state_file.read_text(encoding="utf-8"))
+    assert "e-f" in saved["dispatched"] and "a-b" not in saved["dispatched"]
+
+
+def test_单场资源故障不阻塞其他比赛但整班要失败告警(monkeypatch, tmp_path, capsys):
+    """源站错不能伪装成「还没发」，也不能让同批其他比赛失去时效性。"""
+    import json
+    import subprocess as sp
+    o = _tool()
+    state_file = tmp_path / "state.json"
+    monkeypatch.setattr(o, "STATE_PATH", state_file)
+    monkeypatch.setattr(o, "SPECS_DIR", tmp_path / "specs")
+    bad = _fake_cand("a-b", "A B", "C D")
+    good = _fake_cand("e-f", "E F", "G H")
+    monkeypatch.setattr(o, "build_digest", lambda today: object())
+    monkeypatch.setattr(o, "candidates", lambda dig: [bad, good])
+
+    class SourceError(RuntimeError):
+        pass
+
+    fake_dh = type("M", (), {
+        "HighlightSourceError": SourceError,
+        "find_highlight": staticmethod(
+            lambda h, a, e, y: (_ for _ in ()).throw(SourceError("HTTP 429"))
+            if h == "A B" else ("https://yt/2", "youtube")),
+    })()
+    monkeypatch.setitem(sys.modules, "detect_highlights", fake_dh)
+    calls = []
+    monkeypatch.setattr(sp, "run", lambda cmd, check=True, **kw: calls.append(cmd))
+    monkeypatch.setattr(sys, "argv", ["orchestrate.py", "--apply"])
+
+    assert o.main() == 2, "有源站错误时整班要返回非零，工作流才能告警"
+    out = capsys.readouterr().out
+    assert "a-b] 资源探测故障" in out and "HTTP 429" in out
+    assert "a-b] 集锦还没探到" not in out, "故障不能伪装成资源尚未发布"
+    assert any("slug=e-f" in str(x) for cmd in calls for x in cmd), (
+        "一场源站错不该阻塞同批其他可用比赛")
     saved = json.loads(state_file.read_text(encoding="utf-8"))
     assert "e-f" in saved["dispatched"] and "a-b" not in saved["dispatched"]
 
@@ -491,6 +534,28 @@ def test_编排工作流并发锁pipefail和state推送重试():
     assert "set -o pipefail" in body
     assert "git pull --rebase origin" in body
     assert "seq 1 5" in body, "push 被拒要 rebase 重试，不是一撞就红"
+
+
+def test_定时编排每十分钟真apply且失败也提交已派发state():
+    import re
+    body = _wf_text("orchestrate.yml")
+    cron = re.search(r'cron:\s*"([^"]+)"', body).group(1)
+    minutes = sorted(int(x) for x in cron.split()[0].split(","))
+    gaps = [b - a for a, b in zip(minutes, minutes[1:])]
+    gaps.append(60 - minutes[-1] + minutes[0])
+    assert max(gaps) <= 10, f"赛果探测最坏间隔仍有 {max(gaps)} 分钟，吃满出片 SLA"
+    scan = _step_block("扫赛果/赛程并报告候选", "orchestrate.yml")
+    assert 'github.event_name }}" = "schedule"' in scan
+    assert "ARGS+=(--apply)" in scan, "定时班次仍然只 dry-run，不会启动任何制作"
+    state = _step_block("提交 state（定时或手动 apply）", "orchestrate.yml")
+    assert "if: always()" in state and "github.event_name == 'schedule'" in state, (
+        "部分比赛源站失败时，已成功派发的 state 仍要落库，避免下一班重复制作")
+
+
+def test_自动编排失败要通知微信():
+    block = _step_block("扫描或派发失败时通知", "orchestrate.yml")
+    assert "failure() || cancelled()" in block
+    assert "PUSHPLUS_TOKEN" in block and "pushplus.plus/send" in block
 
 
 def test_工作流max默认值和CLI是同一个数():
@@ -539,3 +604,22 @@ def test_草稿提交路径指向pending不指向specs正下方():
     assert ("specs/reels/${{ github.event.inputs.slug }}.draft.json"
             not in body), (
         "还有引用指着 specs/reels/ 正下方的草稿路径——那儿会把 main CI 打红")
+
+
+def test_probe自动抓到的官方封面也要随草稿提交():
+    block = _step_block("提交产物")
+    assert 'assets/reel/${{ github.event.inputs.slug }}-cover.jpg' in block
+    assert 'git add "$COVER_ASSET"' in block, (
+        "assemble_spec 抓到的官方头图在 OUTDIR/pending 之外；不单独 add，"
+        "草稿会引用一张 runner 消失后不存在的图片")
+
+
+def test_场上采访每十五分钟探一次新资源():
+    import re
+    body = _wf_text("oncourt-interviews.yml")
+    cron = re.search(r'cron:\s*"([^"]+)"', body).group(1)
+    minutes = sorted(int(x) for x in cron.split()[0].split(","))
+    gaps = [b - a for a, b in zip(minutes, minutes[1:])]
+    gaps.append(60 - minutes[-1] + minutes[0])
+    assert max(gaps) <= 15, (
+        "采访采集本身就等 30 分钟，再叠加草稿/渲染/发布，很容易超过一小时")

@@ -49,6 +49,10 @@ MAX_HIGHLIGHT_SECONDS = 12 * 60
 MIN_SOURCE_HEIGHT = 1080
 
 
+class HighlightSourceError(RuntimeError):
+    """集锦搜索源不可用，而不是“搜索正常但还没有结果”。"""
+
+
 def _cookie_args() -> list[str]:
     """Actions secret 落成文件后统一传给搜索和元数据探测。"""
     path = (os.environ.get("YT_COOKIES") or "").strip()
@@ -84,10 +88,10 @@ def _dur(v: str | None) -> float | None:
 def search(query: str, per: int = 6, timeout: int = 120) -> list[tuple]:
     """yt-dlp 的 ytsearch 拿 (title, url, channel, duration) 列表。
 
-    空结果/超时都返回 []——「没搜到」是正常态（集锦还没传），不该把整条探测
-    带崩。⚠️ **yt-dlp 没装不是正常态，要单独出声并抛**：「没装」探出来的空和
-    「集锦还没发」长得一模一样，吞掉它的话编排器每一班都安静地零候选
-    （orchestrate.yml 一度漏装 yt-dlp，就是这么静默空转的）。
+    正常空结果返回 []；超时、yt-dlp 非零退出和没安装都抛
+    `HighlightSourceError`——它们是「搜索源不可用」，不是「集锦还没传」。
+    编排器会让其他比赛继续探测/派发，再把整班标红并告警，既不互相阻塞，
+    也不把基础设施故障伪装成安静的空结果。
 
     channel/duration 用同一次 `--print` 顺手带出来（flat 模式拿不到的字段是
     `NA`，解析成 None，留给 `vet_candidate` 对最终候选单独补一枪）。
@@ -100,14 +104,20 @@ def search(query: str, per: int = 6, timeout: int = 120) -> list[tuple]:
              f"ytsearch{max(1, min(per, 20))}:{query}"],
             capture_output=True, text=True, timeout=timeout)
     except FileNotFoundError:
-        raise RuntimeError(
+        raise HighlightSourceError(
             "yt-dlp 没装——这不是「集锦还没发」，是环境错了：探测会每一班都"
             "安静地零候选。工作流里要 pip install \"yt-dlp[default]\""
             "（[default] 不能省，见 CLAUDE.md 装 yt-dlp 那条）。") from None
-    except subprocess.TimeoutExpired:
-        return []
+    except subprocess.TimeoutExpired as exc:
+        raise HighlightSourceError(
+            f"YouTube 搜索超过 {timeout}s——这是源站/网络故障，不是「集锦还没发」"
+        ) from exc
     if proc.returncode != 0:
-        return []
+        detail = (proc.stderr or "").strip().splitlines()
+        tail = detail[-1][:300] if detail else "无 stderr"
+        raise HighlightSourceError(
+            f"YouTube 搜索失败（yt-dlp exit {proc.returncode}: {tail}）——"
+            "这是源站/网络故障，不是「集锦还没发」")
     out = []
     for line in proc.stdout.strip().split("\n"):
         if " ||| " not in line:
@@ -274,15 +284,19 @@ def tennistv_fallback(home: str, away: str, *, pages: int = 3) -> str | None:
             TAG_SHORT_HIGHLIGHTS, is_real_short_highlight, rows, video_url,
         )
         items = rows(tag_ids=str(TAG_SHORT_HIGHLIGHTS), pages=pages)
-    except (Exception, SystemExit):
-        # 探测这一步「没探到」是正常态，**不许把整条编排带崩**——和上面
-        # `search()` 吞掉超时是同一个理由。
+    except (Exception, SystemExit) as exc:
+        # 备选源失败不拖垮整批，但必须写 source-warning；否则它和
+        # 「最近几页正常查完、没有这一场」长得一模一样。主路 YouTube 的
+        # 故障由 HighlightSourceError 触发整班告警，Tennis TV 只作 ATP 备选，
+        # 这里保留降级而不让 WTA 因一个不适用的备选源变红。
         #
         # ⚠️ **`SystemExit` 要单独列出来**：它继承的是 `BaseException` 不是
         # `Exception`，光写 `except Exception` 接不住。而 `tennistv_catalog._get`
         # 在接口回 HTML（参数名写错会 400）时抛的正是 `SystemExit`——那是给
         # 命令行准备的「说人话再退出」，被当成库用的时候就成了一颗炸弹。
         # 判据抓到过这个洞。
+        print(f"  [source-warning] Tennis TV 备选源不可用（{type(exc).__name__}: "
+              f"{exc}）——这不是『最近几页没有这一场』", file=sys.stderr)
         return None
     for item in items:
         if not is_real_short_highlight(item):

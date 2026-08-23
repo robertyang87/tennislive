@@ -70,7 +70,7 @@ POST 成功改为 `sent`；预占后任务失败改为 `uncertain`。三种状�
 ## 五、落地顺序（按"先止血后统一"）
 
 1. ✅ Interview L0/L1/L2/L3 已接通；旧的发布会/other 污染条目已从主库清除并加入 deny。
-2. ✅ Interview 扫描改为每 30 分钟；一场一个 matrix runner，最多四场并行。
+2. ✅ Interview 扫描改为每 15 分钟；一场一个 matrix runner，最多四场并行。
 3. ✅ 冷开场从同场官方 1080p 单场集锦末段提取原解说，并按原 cue 生成中英字幕；
    多场最多四路并行，找不到精确同场素材的 spec 保持 waiting，不降级凑数。
 4. 待做：把 explainer 的 L0/L1 和发布 ledger 提升到同一强度。

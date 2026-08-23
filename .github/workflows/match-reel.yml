@@ -139,12 +139,13 @@ permissions:
   # **不会**创建 workflow run，见 `trigger_pages_build`。
   actions: write
 
-# 渲染按 slug 分组，不同片子可以并行，同一条的新 run 会取代旧 run。
-# 任何会发微信的 run 则共用一个全局组，而且绝不能取消已经开始发布的那一条：
-# copy.html／pushed.json／main 都是共享写点，只有串行才不会互相覆盖。
+# probe/render 按 slug 分组，不同片子可以并行，同一条的新 run 会取代旧 run。
+# 只有 mode=push 的轻量发布 run 共用一个全局组，而且绝不能取消已经开始发布的
+# 那一条：copy.html／pushed.json／main 都是共享写点，只有不可撤回的发送阶段串行。
+# render push=true 不在这里串行：它质检落库后会另派一趟 mode=push。
 concurrency:
-  group: ${{ (github.event.inputs.mode == 'push' || github.event.inputs.push == 'true') && 'match-reel-publish' || format('match-reel-{0}', github.event.inputs.slug) }}
-  cancel-in-progress: ${{ !(github.event.inputs.mode == 'push' || github.event.inputs.push == 'true') }}
+  group: ${{ github.event.inputs.mode == 'push' && 'match-reel-publish' || format('match-reel-{0}', github.event.inputs.slug) }}
+  cancel-in-progress: ${{ github.event.inputs.mode != 'push' }}
 
 jobs:
   reel:
@@ -1225,6 +1226,12 @@ jobs:
           if [ -f "specs/reels/pending/${{ github.event.inputs.slug }}.draft.json" ]; then
             git add "specs/reels/pending/${{ github.event.inputs.slug }}.draft.json"
           fi
+          # assemble_spec --cover 把 WTA 官方赛后稿头图写到 assets/reel/，不在
+          # OUTDIR 或 pending/ 里。漏 add 会让草稿引用一张 runner 消失后不存在的图。
+          COVER_ASSET="assets/reel/${{ github.event.inputs.slug }}-cover.jpg"
+          if [ -f "$COVER_ASSET" ]; then
+            git add "$COVER_ASSET"
+          fi
           if git diff --cached --quiet; then
             echo "没有变化"
             exit 0
@@ -1271,6 +1278,29 @@ jobs:
           echo "::error::连续 10 次推送失败；成片仍在 artifact 中，未发送微信死链"
           exit 1
 
+      # push=true 的 render 不在本 job 里直接 POST：那会让 job 级发布锁把多场
+      # render 也全部串行。到这里代表 dry-run、成片 L2、Release 探活、提交全过，
+      # 再派一趟只做发布的 mode=push；这些轻量 run 在 match-reel-publish 组串行。
+      - name: render 质检落库后自动派发微信推送
+        if: github.event.inputs.mode == 'render' && github.event.inputs.push == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          SENT=0
+          for attempt in 1 2 3; do
+            if gh workflow run match-reel.yml --ref main \
+              -f mode=push \
+              -f slug="${{ github.event.inputs.slug }}" \
+              -f push=true; then
+              SENT=1
+              break
+            fi
+            echo "第 $attempt 次派发 push-only 没成，稍后重试"
+            sleep $((attempt * 5))
+          done
+          [ "$SENT" = 1 ] || {
+            echo "::error::成片已质检并落库，但 push-only 连续三次派发失败"; exit 1; }
+
       # 推送**必须排在提交之后**——正文里的成片链接和复制页链接都指向仓库里的
       # 文件，还没提交上去就是 404。这一段的注释一直写着「推送是最后一步：
       # 前面提交完成片才有可下载的链接」，而它本人一直排在提交**前面**：
@@ -1279,7 +1309,7 @@ jobs:
       #
       # 「触发成功」不算推了，**这一步 success 才算**。
       - name: 推送到微信（可选）
-        if: github.event.inputs.push == 'true' && (github.event.inputs.mode == 'render' || github.event.inputs.mode == 'push')
+        if: github.event.inputs.push == 'true' && github.event.inputs.mode == 'push'
         env:
           GITHUB_TOKEN: ${{ github.token }}
           PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
@@ -1314,7 +1344,7 @@ jobs:
       # `auto_push_gate` 的注释和 CLAUDE.md 都专门写过这个顺序。
       # 所以这一步不带 `always()`：上一步红了就不该记。
       - name: 记下已经推送过
-        if: github.event.inputs.push == 'true' && (github.event.inputs.mode == 'render' || github.event.inputs.mode == 'push')
+        if: github.event.inputs.push == 'true' && github.event.inputs.mode == 'push'
         run: |
           python tools/auto_push_gate.py \
             --record "${{ steps.paths.outputs.outdir }}" \

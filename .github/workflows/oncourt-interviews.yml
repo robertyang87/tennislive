@@ -1,6 +1,6 @@
 name: oncourt-interviews
 
-# 场上赛后采访的持续采集。每 30 分钟一轮，把新出现的视频并进
+# 场上赛后采访的持续采集。每 15 分钟一轮，把新出现的视频并进
 # data/oncourt_interviews.json，供英语学习选材用。
 #
 # 只收一类：**赛后直接在场上接受采访**（主持人拿麦上场问、球员站着答）。
@@ -15,17 +15,17 @@ on:
   # 现在下游有了——`pick_oncourt_clips.py` 挑成片候选、`oncourt_feed.py` 推清单，
   # 都是这条库的直接消费者。没有定时采集，新采访永远进不来，成片候选永远是空的。
   schedule:
-  # **每 30 分钟一轮**（原来每天两轮）。这条现在是「赛后开麦」自动出片链的
-  # 第一环——采集 → 候选 → 草稿，后面 interview-auto-render 每半小时接一次；
+  # **每 15 分钟一轮**（原来每天两轮）。这条现在是「赛后开麦」自动出片链的
+  # 第一环——采集 → 候选 → 草稿，后面 interview-auto-render 每 10 分钟接一次；
   # 采集一天只醒两次的话，一条比赛日下午打完的采访要等到深夜才建草稿，
   # 而这条线的规矩是「上一个比赛日的不做了」——等一晚等出来的常常是过期候选。
-  # 每 30 分钟把「打完 → 候选矩阵启动」的最坏等待压到半小时。
+  # 每 15 分钟把「采访上线 → 候选矩阵启动」的最坏等待压到一刻钟。
   #
   # 分钟取 7，避开 :00/:30——GitHub 在整点半点最容易延迟或丢弃
   # （daily 当年留下的经验，knowledge-adhoc 的 08:37 也是这么定的）。
-  # 每 30 分钟追一轮新赛果后的采访。不同比赛在下面 matrix 中各占一个 runner，
+  # 每 15 分钟追一轮新赛果后的采访。不同比赛在下面 matrix 中各占一个 runner，
   # 不再让第 N 场等待前 N-1 场转写完成。
-  - cron: "7,37 * * * *"
+  - cron: "7,22,37,52 * * * *"
   workflow_dispatch:
     inputs:
       only:
@@ -258,6 +258,16 @@ jobs:
         with:
           python-version: "3.11"
           cache: pip
+
+      - name: 缓存单场转写的 apt 包（字体）
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/apt-archives
+            ~/.cache/apt-lists
+          key: interview-draft-apt-${{ runner.os }}-${{ hashFiles('tools/ci_apt_install.sh') }}
+          restore-keys: |
+            interview-draft-apt-${{ runner.os }}-
 
       - name: 安装单场转写依赖
         timeout-minutes: 15
