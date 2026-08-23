@@ -10,7 +10,7 @@ jobs:
   dispatch-render:
     runs-on: ubuntu-latest
     steps:
-      - name: Render and push verified Pegula open-mic video
+      - name: Render and push width-checked Pegula open-mic video
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
