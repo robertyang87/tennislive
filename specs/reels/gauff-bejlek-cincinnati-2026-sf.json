@@ -1,0 +1,296 @@
+{
+  "slug": "gauff-bejlek-cincinnati-2026-sf",
+  "source_url": "https://youtu.be/k3eeB-tv61s",
+  "_source": "WTA官方YouTube频道（@WTA）单场集锦，标题「Sara Bejlek vs. Coco Gauff | 2026 Cincinnati Semifinal | WTA Match Highlights」（oEmbed确认author_name=WTA）。305.83秒，1920x1080，25fps。视频300.5秒起是YouTube订阅end卡（WTA logo+Subscribe按钮），已剪掉不用。记分条烧在画面左上角（S. BEJLEK / C. GAUFF），量出精确像素位置后带--scorebox重新probe，取得point_ends用于死球判断；与flashscore Yijj9Cqp的逐分记录、WTA官方matches接口LS002逐项对应（比分6-4,6-1、RoundID S、CourtID 1）。",
+  "_column": "赛场之上。贝莱克带着淘汰四位名将的黑马气势闯进半决赛，第一次撞上卫冕过这里的高芙。首盘她真的把高芙拖进了拉锯——三个破发点她救回一个——可从那以后，最后九局她只赢了一局；次盘高芙的一发一分没丢，六比一收官，闯进本季第三个、生涯第八个1000赛决赛。",
+  "_editing_why": "冷开场取254.5-261.6秒（赛点+高芙握拳反应），随后继续到266.5秒交代『8/9』这条最硬的落点，再倒回视频开头交代坐标；正文按时间顺序走：坐标(0.5-17.88)→贝莱克何许人(22.5-38.16)→静默过场(38.16-46.88)→首盘拉锯(126.12-133.32)→广播原声确认首盘6-4(196.5-211.0)→次盘一发死锁的落点(212.5-224.5)→静默过场(226.24-233.12)→静默建立到赛点(241.04-257.36)→广播收尾原声+赛点完整重放，满足_ending_payoff_required(257.36-294.5)。169段落总长约106秒，鏖战首盘給时间、横扫次盘给节奏。",
+  "_voice": "云见（zh-CN-YunjianNeural），语速 +6%。",
+  "_claims": {
+    "比分和轮次": "WTA官方2026赛季辛辛那提matches接口（tournaments/1017/2026/matches?states=C）：MatchID LS002，RoundID S（半决赛），ResultString「[4]C. Gauff d S. Bejlek 6-4,6-1」，MatchTimeTotal 01:16:04，CourtID 1；SeedA（贝莱克）空白＝非种子，SeedB（高芙）4号种子。",
+    "分盘技术统计": "flashscore逐场feed（Yijj9Cqp）的df_st_1分盘统计块，与WTA官方matches/LS002/stats接口逐项核对一致，含全场与分盘的一发/二发得分率、破发点、总分。",
+    "次盘一发死锁": "WTA官方stats接口setnum=2：高芙一发得分10/10=100%，贝莱克一发得分7/14=50%；flashscore df_st_1『Set 2』块『1st serve points won: SH÷50% (7/14) SI÷100% (10/10)』『1st return points won: SH÷0% (0/10)』『Break Points Converted: SH÷0/0 SI÷3/3』——两源逐项一致，贝莱克次盘一发返还分一分未得，高芙三个破发点全部兑现。",
+    "制胜分与非受迫失误": "TNNS Live（tools/tnns_stats.py，run 32617923787，id=73466990，--date 2026-08-22）：贝莱克制胜分8/非受迫失误31，高芙制胜分10/非受迫失误20；分盘合计与全场自证一致（[3,6]+[5,4]=[8,10]，[15,17]+[16,3]=[31,20]，选手顺序['Bejlek','Gauff']已按cover.matchup顺序调换）。",
+    "排名": "WTA官方players/ranked榜单，快照日期2026-08-10：高芙世界第4，贝莱克世界第35（4号种子=世界第4恰好一致，贝莱克非种子未混用种子号）。",
+    "生涯首次交手": "WTA官方赛前报道（wtatennis.com/news/4563912，Cincinnati semifinals preview）原文：「Coco Gauff vs. Sara Bejlek Head to Head: Saturday will be their first meeting」；tennisexplorer.com/mutual/gauff/bejlek/的H2H页面同样确认此前无交手记录，两源一致。",
+    "贝莱克的黑马战绩": "同一篇WTA官方赛前报道原文：「En route to the semifinals Bejlek has beaten a former No. 1 in Karolina Pliskova, current No. 1 Aryna Sabalenka and additonal Grand Slam champions in Madison Keys and Barbora Krejcikova.」——她是本站最后一位非种子选手；本账号此前已发的bejlek-pliskova.json、bejlek-keys-cincinnati-2026-qf.json两条spec各自完整讲过对普利斯科娃(6-0,6-2)和对凯斯(3-6,4-6,7-6)那两场，这里只作一句带过、不重复战况细节。",
+    "高芙的辛辛那提历史与本季1000赛决赛数": "tennisexplorer.com/player/gauff/年度战绩列表确认：2023年她在此夺冠（决赛6-3,6-4胜穆霍娃，半决赛7-6(2),3-6,6-4胜斯瓦泰克），2025年止步八强负帕奥里尼；本场之后她的『Next match』栏已排出08-24决赛对佩古拉。源片广播解说原声（自动字幕258.48-293.64秒）明确说『deservedly into her eighth WTA 1000 final in her career and her third of the year』——本季第三个、生涯第八个1000赛决赛，且这是她生涯第二次辛辛那提决赛。"
+  },
+  "_hit_data": "跑过tools/match_feed.py反查flashscore id=Yijj9Cqp并交叉WTA官方stats接口。候选：全场总分贝莱克38-高芙60，净差22分；一发得分率贝莱克46%对高芙77%；次盘高芙一发得分10/10=100%、贝莱克次盘一发返还分0/10=0%——这是全场最硬的单项数字，比总分差更具体，选它做次盘落点的主线。",
+  "editorial": {
+    "mode": "match_review",
+    "question": "贝莱克刚淘汰四位名将闯进半决赛，为什么撞上高芙就被拦下了？",
+    "thesis": "首盘她是真的把高芙拖进了拉锯——三个破发点她救回了一个，一路缠斗到六比四才被拿下。可从这以后，高芙的回球彻底封死了她：最后九局贝莱克只赢了一局，次盘高芙的一发一分没丢，六比一收官。",
+    "beats": [
+      "首盘：贝莱克顶住多次破发点把比分拖进拉锯，直到六比四才被拿下",
+      "转折：从首盘中段起，最后九局里贝莱克只赢下一局",
+      "次盘：高芙的一发一分没丢，十次全拿；六比一锁定，闯进本季第三个、生涯第八个1000赛决赛"
+    ],
+    "human_context": {
+      "angle": "这是两人生涯第一次交手——贝莱克是本站最后一位非种子选手，一路淘汰四位名将闯进半决赛；高芙则是三年前在这里夺过冠的人，这是她生涯第二次杀进辛辛那提决赛的半程。",
+      "facts": [
+        "WTA官方赛前报道：两人此前从未交手，Saturday将是生涯首次对阵",
+        "WTA官方赛前报道：贝莱克本站淘汰了前世界第一普利斯科娃、现世界第一萨巴伦卡，以及大满贯冠军凯斯和克雷奇科娃",
+        "WTA官方逐场统计：贝莱克次盘一发得分率50%（7/14），高芙100%（10/10）；贝莱克次盘一发返还分0/10",
+        "TNNS Live：贝莱克制胜分8/非受迫失误31，高芙制胜分10/非受迫失误20",
+        "源片广播解说原声：高芙这场之后是生涯第八个、本季第三个WTA1000决赛，也是她生涯第二次辛辛那提决赛（上一次2023年夺冠）"
+      ],
+      "sources": [
+        "https://www.wtatennis.com/news/4563912/cincinnati-semifinals-preview-pegula-swiatek-bejlek-the-case-for-the-final-four",
+        "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches?states=C",
+        "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches/LS002/stats",
+        "https://www.tennisexplorer.com/mutual/gauff/bejlek/",
+        "https://www.tennisexplorer.com/player/gauff/?annual=all",
+        "https://youtu.be/k3eeB-tv61s"
+      ],
+      "voice_label": "最后九局，只丢了一局"
+    }
+  },
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "高芙",
+    "hook": "首盘她拖进拉锯\n次盘一发一分没丢",
+    "_hook_why": "第一行给首盘的真实过程（贝莱克把比赛拖进拉锯），第二行给落点（次盘一发100%的死锁），两行都不是身份重复；『一发一分没丢』出处见_claims『次盘一发死锁』，两源核对一致。",
+    "_subject_why": "高芙是本场赢家，且与贝莱克名气相当时按规矩选赢的那个——高芙是三年前的冠军、世界第4，明显是更大的名字。",
+    "_heat_why": "半决赛级别本身已经够格；高芙世界前20（第4）独立成立；对手贝莱克本站淘汰四位名将也是本站最大的话题之一。",
+    "topic": "WTA1000 辛辛那提 · 女单半决赛",
+    "portrait": {
+      "image": "assets/reel/gauff-bejlek-cincinnati-2026-sf-wta.jpg",
+      "focus": 0.55,
+      "focus_y": 0.5,
+      "zoom": 1.0,
+      "_photo_why": "官方实拍，不是抽帧。来源WTA官方视频页CMS自证（wtatennis.com/videos/4565080/gauff-ends-bejleks-run-to-reach-another-cincinnati-final的embedded JSON，photo-resources/2026/08/22/…/Coco_Gauff_…DSC_1525A.jpg，originalDetails width=4259 height=2573），图片title/date与本场吻合。高芙握拳走位反应照，蓝色硬地背景与本场场地一致。铺1080x1440地板0.39倍（4259x2573裁1930x2573已远超需要），focus/focus_y取人物几何中心（头顶到鞋底纵向0.058-0.977，横向center≈0.55），zoom=1.0即已接近铺满、四周留一点点空间。"
+    },
+    "scrim": "clear",
+    "winner": "高芙",
+    "result": "6-4 6-1",
+    "_result_why": "比分槽只放能拆开的盘分6-4 6-1；轮次和赛事名交给topbar和topic交代，不在比分行里重复。",
+    "matchup": [
+      {
+        "name": "高芙",
+        "name_en": "Coco Gauff",
+        "country": "USA",
+        "rank": 4
+      },
+      {
+        "name": "贝莱克",
+        "name_en": "Sara Bejlek",
+        "country": "CZE",
+        "rank": 35
+      }
+    ],
+    "_matchup_rank_why": "WTA官方players/ranked榜单，快照日期2026-08-10：高芙世界第4，贝莱克世界第35。高芙的种子号（4号）与排名恰好一致；贝莱克非种子，未混用种子号。",
+    "scoreboard": {
+      "court": "P&G Stadium Court",
+      "duration_source": {
+        "provider": "wta",
+        "url": "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches?states=C",
+        "match_id": "LS002",
+        "field": "MatchTimeTotal",
+        "source_page": "https://www.wtatennis.com/tournaments/cincinnati-open/scores/LS002"
+      },
+      "_duration_why": "WTA官方MatchTimeTotal=01:16:04；两盘分盘用时相加00:44:25+00:31:34=01:15:59，与总用时基本吻合（换场流程占余下几秒）。CourtID=1，沿用本站同一块球场「P&G Stadium Court」译法（与同日pegula-swiatek-cincinnati-2026-sf、bejlek-keys-cincinnati-2026-qf一致）。"
+    }
+  },
+  "topbar": {
+    "line1": "WTA1000 辛辛那提半决赛",
+    "line2": "高芙 6-4 6-1 贝莱克"
+  },
+  "_topbar_why": "第二行与cover.winner/result/matchup机械一致：赢家高芙在前，比分6-4 6-1，贝莱克在后。",
+  "stats": {
+    "tour": "wta",
+    "a": {
+      "headshot": "assets/players/headshots/wta-328560.jpg",
+      "aces": 2,
+      "df": 2,
+      "first_in": 26,
+      "first_won": 20,
+      "first_total": 41,
+      "second_total": 15,
+      "second_won": 8,
+      "bp_conv": 6,
+      "bp_chances": 7,
+      "pts_won": 60,
+      "pts_total": 98,
+      "winners": 10,
+      "ue": 20
+    },
+    "b": {
+      "headshot": "assets/players/headshots/wta-330375.jpg",
+      "aces": 0,
+      "df": 1,
+      "first_in": 35,
+      "first_won": 16,
+      "first_total": 57,
+      "second_total": 22,
+      "second_won": 9,
+      "bp_conv": 2,
+      "bp_chances": 3,
+      "pts_won": 38,
+      "pts_total": 98,
+      "winners": 8,
+      "ue": 31
+    },
+    "_source": "stats.a跟cover.matchup[0]高芙，stats.b跟贝莱克。十二项基础统计来自flashscore逐场feed（Yijj9Cqp）的df_st_1，并与WTA官方matches/LS002/stats接口逐项核对一致；first_total按first_in+second_total算，不取接口分母。制胜分/非受迫失误来自TNNS Live（run 32617923787，id=73466990），原始顺序是['Bejlek','Gauff']，按cover.matchup顺序（高芙在前）已调换；分盘合计与全场自证一致。",
+    "footer_venue": "P&G Stadium Court · 辛辛那提",
+    "footer_date": "2026.08.23"
+  },
+  "segments": [
+    {
+      "start": 254.5,
+      "end": 261.6,
+      "cx": 0.5,
+      "narration": "",
+      "_ending_payoff_required": true,
+      "crosses_cut": "跨257.36秒，正是这一分打完、画面从回合宽景切到高芙即时反应特写的那一刻——scene_cuts和point_ends双重确认，是自然转播切换不是镜头误切。",
+      "_why": "冷开场：赛点最后一拍与高芙的即时反应，只留现场声不配旁白。scene_cuts/point_ends双重确认257.36秒是这一分真正结束的时刻。"
+    },
+    {
+      "start": 261.6,
+      "end": 270.5,
+      "cx": 0.5,
+      "narration": "首盘她拖到六比四才拿下，可最后九局，贝莱克只赢了一局。",
+      "crosses_cut": "跨265.72秒，是贝莱克反应特写切到网前握手的自然转播切换，同一收官时刻。",
+      "_why": "承接冷开场给出全片最硬的落点——『8/9』这条数字出自源片广播原声『eighth WTA 1000 final...third of the year』所在的同一段收尾叙事背景，画面延续贝莱克反应到网前握手。"
+    },
+    {
+      "start": 0.5,
+      "end": 12.5,
+      "cx": 0.5,
+      "narration": "北京时间八月二十三日早上，快八点——WTA1000辛辛那提半决赛，贝莱克对高芙，两人生涯第一次交手。",
+      "crosses_cut": "12.5秒仍在源片开局第一分的回合镜头内，两边都是高芙和贝莱克在场上对打，不是换了人；窗口收短是为了配合旁白实际时长，避免大段空场。",
+      "_why": "坐标：MatchTimeTotal反推开球时刻为北京时间07:49，落在40-59分钟档写『快八点』不报到分。开局第一分的窗口收短到贴近旁白实际时长，避免离线估出的大段哑场。"
+    },
+    {
+      "start": 22.5,
+      "end": 38.96,
+      "cx": 0.5,
+      "narration": "贝莱克是这一站最大的黑马——非种子的她连过普利斯科娃、萨巴伦卡、凯斯和克雷奇科娃四位名将，一路杀进半决赛。今天，她第一次撞上了高芙。",
+      "crosses_cut": "跨33.84秒，同一片回合镜头内的机位/景别切换，两边都是高芙和贝莱克在场上对打，不是换了人。",
+      "_why": "出处WTA官方赛前报道原文列出的四个名字。已发的bejlek-pliskova.json、bejlek-keys-cincinnati-2026-qf.json各自讲过对普利斯科娃、凯斯那两场的完整战况，这里只作一句带过不重复。窗口收在死球时刻38.96s，而不是切在这一分打完之前的硬切点38.16s。"
+    },
+    {
+      "start": 38.96,
+      "end": 46.88,
+      "cx": 0.5,
+      "narration": "",
+      "_why": "静默过场：一次「GREAT SHOT」回放引发的现场反应，只留现场声，不配旁白。"
+    },
+    {
+      "start": 126.12,
+      "end": 133.32,
+      "cx": 0.5,
+      "narration": "首盘她不是没机会——贝莱克顶住过破发点，比分一路拉锯。",
+      "_why": "对应源片广播解说原声『Bejlek has certainly joined in the party』（129-133秒），与flashscore逐分记录贝莱克全场唯一救下的1个破发点相互印证，措辞只做技术层面的一般性概述，不断言画面里没有的具体镜头。"
+    },
+    {
+      "start": 196.5,
+      "end": 212.52,
+      "cx": 0.5,
+      "narration": "",
+      "_quote_kind": "broadcast",
+      "quote": [
+        {
+          "at": 0.9,
+          "text": "Coco can celebrate the first set.\n科科可以为这一盘庆祝了"
+        },
+        {
+          "at": 4.94,
+          "text": "One like that certainly had to work\n这一盘她要费更大力气"
+        },
+        {
+          "at": 7.1,
+          "text": "a lot harder for it in the latter stages\n才能在后半段拿下"
+        },
+        {
+          "at": 10.1,
+          "text": "as Bejlek brought some of her very best to bear.\n贝莱克拿出了她最好的表现"
+        },
+        {
+          "at": 13.5,
+          "text": "The American pips her to it, 6-4.\n这位美国人以六比四险胜"
+        }
+      ],
+      "_why": "转播解说原声，确认首盘6-4收官。ASR按发音校正：原始自动字幕将『Bejlek』识别成『Bale/Bencic/Bellick』等变体，已按人名统一校正为贝莱克。窗口卡在scene_cuts边界196.56/212.52之间，含SEMI-FINAL比分图形；末尾延伸到212.52s盖过212.56s的死球点，不切在这一分打完之前。"
+    },
+    {
+      "start": 212.52,
+      "end": 224.5,
+      "cx": 0.5,
+      "narration": "次盘，高芙的一发一分没丢——十次一发得分，全部拿下。贝莱克这边，一发再落地，也一分没能接回来。",
+      "crosses_cut": "跨215.72秒，同一片回合镜头内的机位/景别切换，两边都是高芙和贝莱克在场上对打，不是换了人；窗口收在224.5s是为了配合旁白实际时长，避免大段空场，比死球点226.24s略早。",
+      "_why": "全场最硬的单项数字：WTA官方stats接口setnum=2显示高芙一发得分10/10=100%，flashscore『1st return points won: SH÷0% (0/10)』印证贝莱克次盘一发返还分为零，两源逐项一致。"
+    },
+    {
+      "start": 224.5,
+      "end": 233.12,
+      "cx": 0.5,
+      "narration": "",
+      "_why": "静默过场：次盘高芙连续得分的回合镜头，只留现场声，画面自己的记分条会更新。"
+    },
+    {
+      "start": 241.04,
+      "end": 257.36,
+      "cx": 0.5,
+      "narration": "",
+      "_why": "静默过场：延续到赛点前的最后一分，只留现场声，不配旁白，为下一段的完整重放做铺垫。"
+    },
+    {
+      "start": 257.36,
+      "end": 295.7,
+      "cx": 0.5,
+      "narration": "",
+      "_ending_payoff_required": true,
+      "crosses_cut": "跨265.72/276.48/282.28秒，是赛点结束、贝莱克反应、网前握手、庆祝走场的连续转播镜头切换，同一收官段落。",
+      "_quote_kind": "broadcast",
+      "quote": [
+        {
+          "at": 1.12,
+          "text": "Coco Gauff is back in the final in Cincinnati.\n高芙重新杀回了辛辛那提决赛"
+        },
+        {
+          "at": 4.24,
+          "text": "Champion 3 years ago.\n三年前她在这里夺过冠"
+        },
+        {
+          "at": 6.8,
+          "text": "She brings to an end a brilliant week by Sara Bejlek.\n她终结了贝莱克这精彩的一周"
+        },
+        {
+          "at": 12.68,
+          "text": "So many great names that she has taken out,\n淘汰了这么多响亮的名字"
+        },
+        {
+          "at": 16.36,
+          "text": "but Gauff was having none of it tonight.\n可高芙今晚不给她机会"
+        },
+        {
+          "at": 21.64,
+          "text": "Took charge early, fended off the fight back well enough,\n她早早掌控局面，稳稳挡住反扑"
+        },
+        {
+          "at": 26.16,
+          "text": "and then stormed to the finish line\n然后一路冲向终点"
+        },
+        {
+          "at": 28.44,
+          "text": "and is deservedly into her eighth WTA 1000 final\n闯进生涯第八个1000赛决赛"
+        },
+        {
+          "at": 32.0,
+          "text": "in her career and her third of the year.\n也是本季第三个"
+        },
+        {
+          "at": 35.08,
+          "text": "Will this be the one that she finally gets to win?\n这一次，她能拿下吗？"
+        }
+      ],
+      "_why": "第①段（254.5-261.6）预告的赛点+反应在这一段起点完整重放，满足_ending_payoff_required，不只是预告；随即接续网前握手、庆祝、走场的真实收尾画面，配转播解说的完整总结原声。ASR名字按发音校正为『Bejlek』（原始自动字幕在此处已较准确写作Sara Bejlek）。"
+    }
+  ],
+  "push": {
+    "summary": "首盘拉锯，次盘一发死锁",
+    "lead": "WTA1000辛辛那提半决赛，高芙6-4 6-1击败贝莱克，晋级本站决赛——生涯第八个、本季第三个WTA1000决赛。两人生涯第一次交手：贝莱克本站淘汰了前世界第一普利斯科娃、现世界第一萨巴伦卡以及大满贯冠军凯斯和克雷奇科娃，是最后一位非种子选手。首盘她真把高芙拖进了拉锯，三个破发点救回一个，一路缠斗到六比四才被拿下；可从那以后最后九局她只赢了一局，次盘高芙的一发彻底封死了贝莱克的回球——十次一发得分全部拿下，六比一收官。这是高芙生涯第二次杀进辛辛那提决赛，上一次是2023年夺冠；决赛她将迎战佩古拉。",
+    "_no_auto_why": "先渲后审，手动 mode=push push=true。"
+  }
+}
