@@ -615,10 +615,10 @@ def test_多源对不上时尺寸没有出路帧率要认领(monkeypatch):
     import pytest  # noqa: PLC0415
 
     reel = _reel()
-    table = {"a": (1920, 1080, "25/1"), "b": (1920, 1080, "30/1"),
-             "c": (1280, 720, "25/1")}
+    table = {"a": (1920, 1080, "25/1", 25.0), "b": (1920, 1080, "30/1", 30.0),
+             "c": (1280, 720, "25/1", 25.0)}
     monkeypatch.setattr(reel, "probe_size", lambda p: table[p.stem][:2])
-    monkeypatch.setattr(reel, "resolve_fps", lambda p: (table[p.stem][2], 0.0))
+    monkeypatch.setattr(reel, "resolve_fps", lambda p: table[p.stem][2:])
     p = {k: Path(f"{k}.mp4") for k in table}
 
     with pytest.raises(reel.ReelError, match="尺寸没有出路"):
@@ -638,6 +638,30 @@ def test_多源对不上时尺寸没有出路帧率要认领(monkeypatch):
                                  {"mixed_fps": {"zz": "写错了键"}})
     # 一条源片时什么都不查
     reel.check_sources_match({"a": p["a"]}, {})
+
+
+def test_帧率相同但ffprobe写法不同不算不一样(monkeypatch):
+    """`resolve_fps` 对同一个数值有时报 `"25/1"`、有时报 `"25"`（不同容器/remux
+    路径写法不同）——`tiafoe-story` 的 qf2026 就撞过这个假阳性。25 和 25/1
+    代进 `fps=` 滤镜是**同一件事，零重采样**，不该被判成"帧率不一样"逼人写一句
+    撒谎的 `mixed_fps`（没有重采样却编一句"重采样看不出来"）。
+    """
+    import pytest  # noqa: PLC0415
+
+    reel = _reel()
+    table = {"a": (1920, 1080, "25/1", 25.0), "d": (1920, 1080, "25", 25.0)}
+    monkeypatch.setattr(reel, "probe_size", lambda p: table[p.stem][:2])
+    monkeypatch.setattr(reel, "resolve_fps", lambda p: table[p.stem][2:])
+    p = {k: Path(f"{k}.mp4") for k in table}
+
+    # 数值相同，写法不同——不许红，不用认领
+    reel.check_sources_match({"a": p["a"], "d": p["d"]}, {})
+
+    # 反面锚点：数值真不一样时，这条判据仍然要拦住（不是被我改宽了）
+    table["e"] = (1920, 1080, "30/1", 30.0)
+    p["e"] = Path("e.mp4")
+    with pytest.raises(reel.ReelError, match="mixed_fps"):
+        reel.check_sources_match({"a": p["a"], "e": p["e"]}, {})
 
 
 def test_默认不横摇():
