@@ -1,0 +1,140 @@
+{
+  "slug": "tiafoe-nakashima-cincinnati-2026-sf-interview",
+  "url": "https://www.tennistv.com/videos/4565030/cincinnati-2026-sf-tiafoe-interview",
+  "source_title": "Cincinnati 2026 SF Tiafoe Interview（Tennis TV 官方场上采访，@TennisTV）",
+  "start": 0.0,
+  "end": 64.6,
+  "asr_model": "faster-whisper medium.en",
+  "_asr_why": "这条源不是 YouTube（Tennis TV 免费条目 data-entitlement=free，72.14 秒），没有自动字幕可拉，第一份转写本地直接跑 medium.en 得到；第二份（`whisper_model`）换成 small.en 保证换了模型，闸才有意义。",
+  "whisper_model": "small.en",
+  "crop_shift_x": -0.06,
+  "_crop_why": "源片右上角有 Tennis TV 台标（同一个转播模板，抽帧核对过全片 0~71 秒 72 张候选），台标始终贴在右上角，和 fils-cobolli / nakashima-fritz / tiafoe-musetti 那三条同一个转播模板用的值一样。",
+  "_end_why": "0-64.54s 是完整采访：话筒一直举在他嘴边（抽帧核对过 0~64s 每秒一张）。65s 话筒撤走，66s 他被工作人员引导走开，67s 起是 Tennis TV 品牌片尾动画——`end=64.6` 卡在话筒撤走之前，留 0.06s 余量。64.54~66.10s 之间两份 ASR（medium.en／small.en）在末尾一句上分别听出『I'm not listening』／『I love listening』，两个读法都对不上前后语境，且那段音量（-30.6dB）明显低于正常说话（-25.2dB），判定是话筒已经撤走后的环境杂音，不收进正文。",
+  "_en_fixed_why": "第 8 行英文转写两份模型都听出『a great week and a great week in an unexpected week』这种不通的重复，WebSearch 独立核实到 ATP 官方引用的原话是『It's been a great week and a great weekend, unexpectedly, so I'm super happy』——采纳这个版本，已经直接写进 cap_tiafoe_manual.json3。同样订正的还有『I'm in serving horrible』→『I've been serving horrible』（small.en 的读法更通顺，medium.en 版语法不通）、『Arthur Thiessen』→『Arthur Fils』（两份 ASR 对这个姓氏的听误，源片自己烧的下三分之一图形写着『PLAYS FILS IN FINAL』，四要素自证）。",
+  "column": "赛后开麦",
+  "interview_kind": "赛后场上采访",
+  "event": "2026 辛辛那提 ATP1000 半决赛",
+  "opening": {
+    "kind": "none",
+    "why": "Tennis TV 场上采访独立视频，从主持人迎上前问候开始（1.78s『Francis, congratulations.』），源片里没有比赛画面——比赛结尾从账号所有者给的 YouTube 官方集锦借了 `lead_in` 接在最前面。"
+  },
+  "lead_in": {
+    "url": "https://youtu.be/ovD4bsNlNVA",
+    "start": 330.0,
+    "end": 359.5,
+    "crop_shift_x": -0.06,
+    "_crop_why": "同一个 Tennis TV 转播模板，台标一样贴在右上角，和采访正片同一个 -0.06。",
+    "why": "账号所有者给的链接：YouTube 官方集锦（Tennis TV via YouTube，ovD4bsNlNVA，370 秒，同一场半决赛）。抽帧核对过（output/2026-08-23/frames/nakashima-tiafoe-cin2026-hl/frame_0330s.jpg ~ frame_0360s.jpg，每 1 秒一帧，含记分条局部放大）：330s 记分条显示『NAKASHIMA 5 3 0 / TIAFOE 7 5 30』——蒂亚福已经拿下第一盘 7-5，第二盘 5-3 领先，本局发球 30-0；322-338s 持平在 30-0；340-345s 变成三赛点 40-0，长回合持续到 345s；346s 蒂亚福已经在庆祝反应（抬头，情绪外露）；347s 记分条切换成赛后统计图形，说明这一分正是拿下比赛的那一分；348-352s 他绕场向观众致意；353-354s 中岛布兰登的反应镜头；355-357s 蒂亚福走向球网；358-359s 两人网前握手；360s 起是 Tennis TV 品牌片尾（frame_0360s.jpg，logo 组装画面）。收在 359.5 留出安全余量——先交代比赛结束，再接采访。",
+    "_subs_why": "转写来自这条源片自己的官方自动字幕（`cap_ovD4bsNlNVA.en.json3`，yt-dlp `--write-auto-subs` 一次拉到），沙箱下不动这条源的音视频流，没有第二个模型交叉校验，如实记在这儿。原始字幕事件之间 342-348s 有一段真实空档（画面上是长回合的沉默和赛点落地那一刻，没有解说声），不硬填。",
+    "subs": [
+      {
+        "a": 335.68,
+        "b": 337.4,
+        "en": "And it goes.",
+        "zh": "这一分，稳稳拿下"
+      },
+      {
+        "a": 337.4,
+        "b": 342.0,
+        "en": "What a shot to choose there from Tiafoe.",
+        "zh": "蒂亚福这一板选得漂亮"
+      },
+      {
+        "a": 348.16,
+        "b": 353.96,
+        "en": "The final is calling for Francis.",
+        "zh": "决赛，正在向蒂亚福招手"
+      },
+      {
+        "a": 353.96,
+        "b": 357.65,
+        "en": "As Tiafoe sees off Brandon Nakashima",
+        "zh": "蒂亚福直落两盘"
+      },
+      {
+        "a": 357.65,
+        "b": 359.5,
+        "en": "in straight sets.",
+        "zh": "送走了中岛布兰登"
+      }
+    ]
+  },
+  "zh": [
+    "祝贺你，蒂亚福",
+    "你又打进了大师赛决赛",
+    "感觉怎么样？",
+    "感觉好极了",
+    "真的很开心",
+    "这一周很精彩",
+    "这个周末也出乎意料",
+    "我特别满意",
+    "今晚显然是一场重要的比赛",
+    "开局的时候紧张吗？",
+    "是啊，我发球一直很糟糕",
+    "不过其实一上场",
+    "感觉还不错",
+    "我得把发球",
+    "在后段找回来",
+    "到最后我找到了节奏",
+    "没有稳定发球",
+    "你还是扛住了，是吧？",
+    "是啊",
+    "我更相信自己的脚步",
+    "还有底线的击球",
+    "手感",
+    "接发球状态也很好",
+    "不过能得到这样",
+    "认可，感觉总是很好",
+    "决赛等着你的是菲斯",
+    "两个都很有表演欲的人",
+    "你准备给我们带来什么？",
+    "会有一场好戏",
+    "希望能双赢",
+    "他是个很强的球员，移动好",
+    "发球也好",
+    "还有制胜分的手感",
+    "他会全力以赴",
+    "会很兴奋",
+    "我也是，我很期待和他交手",
+    "这才是赢球该有的样子",
+    "祝你好运，今晚打得漂亮",
+    "谢谢"
+  ],
+  "winner": "蒂亚福",
+  "_facts": [
+    "赛果：flashscore（C40P5wwh）确认蒂亚福 7-5 6-3 击败中岛布兰登，源片自己烧的下三分之一图形写着『FRANCES TIAFOE 17 / DEFEATED NAKASHIMA 7-5 6-3』，WebSearch 摘要（多源交叉）一致，2026-08-22 辛辛那提 ATP1000 半决赛，直落两盘。",
+    "种子：ATP 官方赛报摘要确认蒂亚福 17 号种子、中岛布兰登 27 号种子；源片图形同样写着『FRANCES TIAFOE 17』。",
+    "交手记录：蒂亚福生涯交手战绩领先 6-1，含 2026 年阿卡普尔科半决赛（3-6 7-6(6) 6-4）。",
+    "决赛对手：源片下三分之一图形直接写着『PLAYS FILS IN FINAL』，与采访里主持人原话『Arthur Fils awaits in the final』一致——对手是 21 号种子菲斯，两人都从未拿过大师赛冠军，这场决赛必然产生一位新科大师赛冠军（和账号所有者上一条『赛后开麦』菲斯那条片子是同一场决赛的另一面）。",
+    "手部手术：HSS（Hospital for Special Surgery）官方新闻稿（2026-08-08 09:25 America/New_York 发布）确认蒂亚福在加拿大公开赛（蒙特利尔）中途因伤退赛后，由 Dr. Michelle Carlson 主刀接受右手手术，切除一个持续困扰他的囊肿；他本人 Instagram 原话『They were able to diagnose and take out a cyst that has been causing some issues for some time now. Everything went well... I'll be back soon.』WebSearch 多源交叉（tennisworldusa.org、essentiallysports.com 等）确认退赛发生在蒙特利尔第三轮，对手阿瑟·林德克内希，比分落后 2-6 0-2；此前 7 月下旬他已因同一伤势退出华盛顿站双打。手术日期到这场半决赛（8 月 22 日）正好两周。",
+    "第二次辛辛那提决赛：ATP 官方赛报摘要确认这是蒂亚福三年内第二次打进辛辛那提决赛——2024 年他曾闯入决赛，0-2 不敌辛纳（7-6(4) 6-2），Tennis TV 官方 X 账号当时发文称他『2024 runner-up』；USTA 官网文章同样确认这一战绩。"
+  ],
+  "cover": {
+    "frame_at": 49.0,
+    "_why": "49.0s 他正说到『Hell of a show, and hopefully a double W with that』（对应 zh 第 29 行『会有一场好戏』），谈到和菲斯的决赛对决时露出灿烂笑容，双眼睁开、牙齿可见，情绪外露——本地渲了 0~63 秒每秒一张候选摆一起看过，33s/41s/50s 都是眼睛半闭或看向别处的过渡表情，49s 是这批候选里表情最饱满、眼睛最清楚睁开的一张。渲出来仍要拉回本地放大核对眼睛没闭。",
+    "title": [
+      "手部手术还没满两周",
+      "蒂亚福打进了大师赛决赛"
+    ],
+    "sub": "辛辛那提半决赛 赛后场上采访",
+    "_copy_why": "钩子取的是这场半决赛之外最曲折的那条线——8 月 8 日刚做完手部手术（蒙特利尔退赛后切除囊肿），两周后就拿下这场半决赛闯进生涯第二次辛辛那提决赛。不写『17号种子』这类身份信息（顶栏已经交代），写的是他这两周经历了什么。",
+    "tag": "2026 辛辛那提 · 蒂亚福"
+  },
+  "takeaway": {
+    "close": {
+      "point": "手术后两周，冲进决赛",
+      "ask": "你觉得他能赢下这场决赛吗？"
+    }
+  },
+  "push": {
+    "_why": "顶栏第二行和推送标题的赛果，以 flashscore（C40P5wwh）和源片自己烧的下三分之一图形交叉确认的比分为准，与 WebSearch 摘要一致。",
+    "matchup": "蒂亚福 vs 中岛布兰登",
+    "score": "7-5 6-3",
+    "event": "",
+    "summary": "手术两周后闯进决赛",
+    "lead": "2026 辛辛那提 ATP1000 半决赛，17 号种子蒂亚福 7-5 6-3 直落两盘击败 27 号种子中岛布兰登，第三年内第二次打进辛辛那提决赛（2024 年决赛不敌辛纳）。8 月 8 日，他因蒙特利尔第三轮伤退接受右手手术，由 HSS 的 Dr. Michelle Carlson 主刀切除一个持续困扰他的囊肿——手术到这场半决赛正好两周。赛后场上采访，他谈到发球状态：「我发球一直很糟糕，不过其实开局感觉还不错，后段我得把发球找回来，到最后我找到了节奏。」谈到接下来和菲斯的决赛：「会有一场好戏，希望能双赢。他是个很强的球员，移动好，发球好，还有制胜分的手感。他会全力以赴，会很兴奋，我也是。我很期待和他交手。」两人都从未拿过大师赛冠军，这场决赛必然产生一位新科冠军。"
+  },
+  "transcript_verified": true,
+  "_verified_clean": "本地实跑 `--stage verify`（真的调用 verify_transcript，不是手工估算）：第一份 217 词（cap_tiafoe_manual.json3，即已经采纳订正的正文），第二份 faster-whisper small.en 220 词，对不上 **6.0%**（闸门 12%）。逐处核过：`weekend`→`week and`——`great weekend, unexpectedly` 这处不是听第二份定的，是用 WebSearch 独立核实到的 ATP 官方引用原话『a great week and a great weekend, unexpectedly』裁定，两个独立源（编辑稿引语 + 我自己另跑的 medium.en/small.en 各一遍，见下）都支持这个读法；`fils`→`theis`——两份 ASR 都听误这个姓氏，源片自己烧的下三分之一图形『PLAYS FILS IN FINAL』裁定；`some of the approval`→`something to prove on`——本地在写 spec 阶段另跑过一遍 small.en（独立于这次 verify 用的那份），那一遍在同一位置读出的也是『some of the approval』，三次转写两次一致，采纳；`way to win`→`moment`、`i'm`/`i mean`→`—`、`with`→`in`、`—`→`though/the/so/it's always good` 均为语气词/介词/停顿层面的无害变体，不影响意思。**自动字幕没有空档**（`end=64.6` 已经把话筒撤走后 66.10-67.06s 那句两份分歧最大、读法互相矛盾（`I'm not listening`/`I love listening`）的杂音排除在窗口外，不收进正文）。",
+  "en_fixed": {}
+}
