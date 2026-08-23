@@ -1,0 +1,42 @@
+name: codex-dispatch-gauff-bejlek-render
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/codex-dispatch-gauff-bejlek-render.yml"
+  workflow_dispatch:
+
+permissions:
+  actions: write
+  contents: write
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            data
+            tools
+
+      - name: Dispatch preview render
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh workflow run interview-clip.yml --ref main \
+            -f slug=gauff-bejlek-cincinnati-2026-sf \
+            -f mode=render \
+            -f push=false
+
+      - name: Record dispatch
+        run: |
+          python tools/pick_interview_renders.py \
+            --mark-one gauff-bejlek-cincinnati-2026-sf
+          git config user.name "Codex"
+          git config user.email "noreply@openai.com"
+          git add data/interview_render_dispatched.json
+          git commit -m "data: mark Gauff Bejlek interview render dispatched"
+          git pull --rebase origin main
+          git push origin main
