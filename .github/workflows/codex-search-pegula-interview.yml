@@ -17,13 +17,13 @@ jobs:
     steps:
       - name: Install yt-dlp
         run: pipx install yt-dlp
-      - name: Inspect reference sources
+      - name: Inspect reference sources through flat search
         run: |
-          for URL in \
-            "https://youtu.be/x3eYH8OiHBM" \
-            "https://youtu.be/no_1M2K_CZU" \
-            "https://youtu.be/C8_5ag2DYn0"; do
-            yt-dlp --skip-download --print "REFERENCE | %(id)s | %(title)s | %(uploader)s | %(channel_url)s | %(duration_string)s | %(upload_date)s | %(webpage_url)s" "$URL"
+          set +e
+          for ID in x3eYH8OiHBM no_1M2K_CZU C8_5ag2DYn0; do
+            yt-dlp --flat-playlist --playlist-end 5 \
+              --print "REFERENCE | %(id)s | %(title)s | %(uploader)s | %(uploader_id)s | %(channel_id)s | %(duration_string)s | %(upload_date)s | %(webpage_url)s" \
+              "ytsearch5:$ID"
           done
       - name: Search newest public video sources
         run: |
@@ -35,14 +35,13 @@ jobs:
             "Jessica Pegula Tennis Xtra Cincinnati 2026" \
             "Jessica Pegula crazy match today Cincinnati"; do
             echo "QUERY: $QUERY"
-            yt-dlp --flat-playlist --playlist-end 30 \
+            yt-dlp --flat-playlist --playlist-end 50 \
               --print "%(id)s | %(title)s | %(uploader)s | %(duration_string)s | %(upload_date)s | %(webpage_url)s" \
-              "ytsearchdate30:$QUERY"
+              "ytsearchdate50:$QUERY"
           done
-      - name: Inspect latest uploads from the Gauff interview source channel
+      - name: Search the known interview source by video ID and player
         run: |
-          CHANNEL_URL="$(yt-dlp --skip-download --print "%(channel_url)s" "https://youtu.be/x3eYH8OiHBM")"
-          echo "CHANNEL_URL=$CHANNEL_URL"
+          set +e
           yt-dlp --flat-playlist --playlist-end 50 \
-            --print "%(id)s | %(title)s | %(uploader)s | %(duration_string)s | %(upload_date)s | %(webpage_url)s" \
-            "$CHANNEL_URL/videos"
+            --print "%(id)s | %(title)s | %(uploader)s | %(uploader_id)s | %(duration_string)s | %(upload_date)s | %(webpage_url)s" \
+            "ytsearchdate50:Tennis Xtra Jessica Pegula"
