@@ -5,7 +5,7 @@
   "_column": "赛场之上",
   "topbar": {
     "line1": "2026 辛辛那提 ATP1000 第三轮",
-    "line2": "中岛 6-7(3) 7-6(4) 6-1 梅德韦杰夫"
+    "line2": "中岛布兰登 6-7(3) 7-6(4) 6-1 梅德韦杰夫"
   },
   "_topbar_why": "第二行和 `cover.winner`（中岛）、`cover.result`（6-7(3) 7-6(4) 6-1）、`cover.matchup` 的两个名字机械一致。\n\n⚠️⚠️ **`7-6(4)` 是核对之后改过的数，任务简报原文写的是 `7-6(3)`——这里把证据摆出来，按数据走**（CLAUDE.md「他说的和数据对不上——摆证据，然后按数据走，别停下来等」）：\n\n① **画面自证，两处独立读到同一个数**：源片 174.5 秒（第二盘刚结束）记分条 `NAKASHIMA 6³ 7` / `MEDVEDEV 7 6⁴`；源片 220.5 秒（全场结束）记分条 `NAKASHIMA 6³ 7 6` / `MEDVEDEV 7 6⁴ 1`——**两处都是上标 4**，不是 3。裁出来放大读过，字形清楚（`4` 和 `3` 在这套图形字体里不会认混）。\n② **点由点数据独立复算，同样是 7-4**：`/tmp/nak_med_pbp.txt`（题目给的缓存）第二盘抢七 11 分逐点重放——服务方按 ABBAABBAABB 标准轮转（G 值 2,1,1,2,2,1,1,2,2,1,1，和真实规则完全吻合），比分推进 0-1→1-1→1-2→2-2→3-2→4-2→4-3→4-4→5-4→6-4→**7-4**，中岛（home）拿下最后一分收官。\n两个独立来源（转播图形、官方逐分数据）互相印证，第一盘的 `7-6(3)` 两边同样一致（未改动）。\n\n⚠️ 这一步是**可逆**动作（写 spec，没有渲染没有推送），而且证据链完整——按 CLAUDE.md 的判据「摆证据 + 按数据走，别等」，不停下来问。",
   "editorial": {
@@ -49,17 +49,17 @@
   "cover": {
     "eyebrow": "赛场之上",
     "layout": "solo",
-    "subject": "中岛",
+    "subject": "中岛布兰登",
     "hook": "对手十次双误\n他还是拿下了世界第六",
     "_hook_why": "两行都是过程/反差，不是身份——排名、轮次、比分顶栏和比分板上已经印着了。第一行 6 个字符、第二行 10 个字符，都在 `HOOK_MAX_CHARS = 10` 以内。\n\n⚠️ **不写「N个盘点，一个没兑现」**：这个形状这一批已经用得很满（`landaluce-draper` / `trungelliti-medvedev` / `cirstea-bartunkova` / 等等，见 `_no_repeat`），这一条首盘确实有五比二、四个盘点的情节，但只留在 `editorial.beats` 里当过程，不进钩子。\n\n⚠️ **不写「制胜分/非受迫失误」**：那是 `paul-vallejo` 已经用过的headline 形状，这一条同一对数据只进 `human_context.facts`。",
     "_subject_why": "封面放**中岛**，不是名气更大的梅德韦杰夫。按 CLAUDE.md 的判据表：一边是大名字、另一边不是的时候通常放大名字，**除非主体本身就是这条片子要讲的爆冷／逆转的那个人**——这一条正是后一种：`editorial.thesis` 通篇讲的是中岛怎么在三次告负之后第一次赢下这个对手，故事的主语是他，不是梅德韦杰夫的崩盘本身。钩子第二行「他还是拿下了世界第六」里的「他」也是中岛，主体和钩子指向同一个人。",
     "_heat_why": "梅德韦杰夫世界第6，够得着 `HEAT_TOP_RANK = 20`，闸本身不需要认领也能过。写这一句是编辑记录：他是三届大满贯决赛（含2021美网冠军）、曾经的世界第一，刷到这条的人不需要额外理由就认得这个名字；而封面放的是中岛——这一条真正的看点是他而不是对手，见 `_subject_why`。",
     "topic": "辛辛那提ATP1000 · 男单第三轮",
-    "winner": "中岛",
+    "winner": "中岛布兰登",
     "result": "6-7(3) 7-6(4) 6-1",
     "matchup": [
       {
-        "name": "中岛",
+        "name": "中岛布兰登",
         "name_en": "Brandon Nakashima",
         "country": "USA",
         "rank": 21
@@ -72,7 +72,7 @@
       }
     ],
     "_matchup_rank_why": "两个人的名次直接取任务简报里已经核实过的当周快照（中岛世界第21、梅德韦杰夫世界第6），不再重新查证——`mds.pdf` 的 `Seeded Players` 表另有一组数字（中岛31、梅德韦杰夫6），**那一栏是定种子那周的快照，不是当期排名**（CLAUDE.md 记过这个坑：十几个种子里对不上当期排名的占多数），梅德韦杰夫那个『6』只是巧合地两边一致，中岛的『31』不能用。\n\n⚠️国籍：梅德韦杰夫以中立身份参赛（flashscore 的 `CC`/`FU` 字段写 World），所以 `country` 写 `null`——和 `medvedev-zandschulp.json` 里的处理一致。",
-    "_name_why": "两个中文名都走 `player_zh()`：`player_zh(\"Brandon Nakashima\")` → 中岛布兰登，`player_zh(\"Daniil Medvedev\")` → 梅德韦杰夫（**不是**『梅德维杰夫』，容易手滑打错）。\n\n⚠️ **matchup/topbar/narration 里中岛统一写成「中岛」**（短姓氏形式），不是完整的「中岛布兰登」——这不是另一种译法，是跟着这个账号已经发过的两条同一球员的片子（`nakashima-jodar-montreal-sf.json` / `shelton-nakashima-montreal-final.json`）里已经确立的显示惯例走，同一个人不能这条片子叫全名、那条片子叫短名。",
+    "_name_why": "两个中文名都走 `player_zh()`：`player_zh(\"Brandon Nakashima\")` → 中岛布兰登，`player_zh(\"Daniil Medvedev\")` → 梅德韦杰夫（**不是**『梅德维杰夫』，容易手滑打错）。\n\n⚠️ **matchup/topbar/narration 里中岛统一写成「中岛」**（短姓氏形式），不是完整的「中岛布兰登」——这不是另一种译法，是跟着这个账号已经发过的两条同一球员的片子（`nakashima-jodar-montreal-sf.json` / `shelton-nakashima-montreal-final.json`）里已经确立的显示惯例走，同一个人不能这条片子叫全名、那条片子叫短名。\n\n⚠️2026-08-23 更正：Brandon Nakashima 的中文名一律走仓库译名表 `player_zh()`（=中岛布兰登，新华社译名），不再沿用此前几条片子里手动统一成的短称「中岛」——那个「短称是本号既有惯例」的理由本身就是错的，`player_zh()`从一开始给出的就是「中岛布兰登」，短称是手改出来的，不是译名表的产物。已发的片子成片、复制页、推送文案不重渲/不改（消息发出去收不回来），本条只把 spec 里 `cover.subject/winner/matchup[].name` 三处改回译名表的正确输出，供后续同名片子核对时不再错上加错。",
     "portrait": {
       "image": "assets/reel/nakashima-cincinnati-2026-r3.jpg",
       "fit": "cover",

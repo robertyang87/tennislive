@@ -5,7 +5,7 @@
   "_column": "赛场之上",
   "topbar": {
     "line1": "2026 辛辛那提 ATP1000 1/4决赛",
-    "line2": "中岛 7-6(9) 4-6 6-3 弗里茨"
+    "line2": "中岛布兰登 7-6(9) 4-6 6-3 弗里茨"
   },
   "_topbar_why": "Flashscore完整赛果与Tennis TV片尾记分条一致：中岛7-6(9) 4-6 6-3获胜。第二行与 cover.winner / result / matchup 机械一致，赢家在前；不能采用 match_feed find 只展示前两盘的摘要。",
   "editorial": {
@@ -82,26 +82,36 @@
   "cover": {
     "eyebrow": "赛场之上",
     "layout": "solo",
-    "subject": "中岛",
+    "subject": "中岛布兰登",
     "hook": "总分九十七平\n最后四局全拿走",
     "_hook_why": "第一行给反差，第二行给决胜盘真正的收官方式；两行各7/8个字符，不重复比分和赢家。",
     "_subject_why": "中岛是获胜并晋级半决赛的一方；这条片子要解释的是他如何在火力数据落后时赢下关键分。",
     "_heat_why": "弗里茨是世界第9、美国男单头部球员；中岛本月已打进蒙特利尔大师赛决赛，本场后连续两站进入大师赛四强，故事线正在展开。",
     "topic": "辛辛那提ATP1000 · 男单1/4决赛",
-    "winner": "中岛",
+    "winner": "中岛布兰登",
     "result": "7-6(9) 4-6 6-3",
     "matchup": [
-      {"name": "中岛", "name_en": "Brandon Nakashima", "country": "USA", "rank": 22},
-      {"name": "弗里茨", "name_en": "Taylor Fritz", "country": "USA", "rank": 9}
+      {
+        "name": "中岛布兰登",
+        "name_en": "Brandon Nakashima",
+        "country": "USA",
+        "rank": 22
+      },
+      {
+        "name": "弗里茨",
+        "name_en": "Taylor Fritz",
+        "country": "USA",
+        "rank": 9
+      }
     ],
-    "_name_why": "中文名沿用仓库既有短称：Brandon Nakashima→中岛，Taylor Fritz→弗里茨。比赛日官方资料列世界排名中岛22、弗里茨9；27和6是种子号，不混写。",
-  "portrait": {
-    "image": "assets/reel/nakashima-fritz-cincinnati-2026-qf.jpg",
-    "focus": 0.5,
-    "focus_y": 0.5,
-    "zoom": 1.0
-  },
-  "_portrait_why": "2026-08-21本场辛辛那提1/4决赛现场摄影，2000×2000；中岛身穿本场白色Fila比赛服正面击球，脸、球拍和蓝色P&G Stadium Court均清楚，不再使用第三轮照片。摄影：Dave Keaton；来源：https://wheb.iheart.com/featured/lend-a-helping-can/content/2026-08-21-photos-2026-cincinnati-open-quarterfinals-fritz-vs-nakashima/",
+    "_name_why": "中文名沿用仓库既有短称：Brandon Nakashima→中岛，Taylor Fritz→弗里茨。比赛日官方资料列世界排名中岛22、弗里茨9；27和6是种子号，不混写。\n\n⚠️2026-08-23 更正：Brandon Nakashima 的中文名一律走仓库译名表 `player_zh()`（=中岛布兰登，新华社译名），不再沿用此前几条片子里手动统一成的短称「中岛」——那个「短称是本号既有惯例」的理由本身就是错的，`player_zh()`从一开始给出的就是「中岛布兰登」，短称是手改出来的，不是译名表的产物。已发的片子成片、复制页、推送文案不重渲/不改（消息发出去收不回来），本条只把 spec 里 `cover.subject/winner/matchup[].name` 三处改回译名表的正确输出，供后续同名片子核对时不再错上加错。",
+    "portrait": {
+      "image": "assets/reel/nakashima-fritz-cincinnati-2026-qf.jpg",
+      "focus": 0.5,
+      "focus_y": 0.5,
+      "zoom": 1.0
+    },
+    "_portrait_why": "2026-08-21本场辛辛那提1/4决赛现场摄影，2000×2000；中岛身穿本场白色Fila比赛服正面击球，脸、球拍和蓝色P&G Stadium Court均清楚，不再使用第三轮照片。摄影：Dave Keaton；来源：https://wheb.iheart.com/featured/lend-a-helping-can/content/2026-08-21-photos-2026-cincinnati-open-quarterfinals-fritz-vs-nakashima/",
     "scoreboard": {
       "court": "P&G Stadium Court",
       "duration_source": {
@@ -129,8 +139,14 @@
       "_ending_payoff_required": true,
       "_quote_kind": "broadcast",
       "quote": [
-        {"at": 7.7, "text": "Game, set and match, Brandon Nakashima.\n比赛结束 中岛赢了"},
-        {"at": 11.46, "text": "A semifinalist in Cincinnati.\n他晋级辛辛那提四强"}
+        {
+          "at": 7.7,
+          "text": "Game, set and match, Brandon Nakashima.\n比赛结束 中岛赢了"
+        },
+        {
+          "at": 11.46,
+          "text": "A semifinalist in Cincinnati.\n他晋级辛辛那提四强"
+        }
       ],
       "crosses_cut": "跨327.38秒，是完整赛点结束后切到中岛抬头庆祝；同一赛点的自然转播切换。",
       "_why": "①冷开场。319.34秒从赛点回合的发球起点进入，不从中段截断；完整保留赛点、`is a semifinalist in Cincinnati`和全场欢呼，不压中文旁白。英文原声按YouTube字幕时刻校正后配中英双语字幕。"

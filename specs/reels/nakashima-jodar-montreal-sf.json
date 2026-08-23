@@ -33,7 +33,7 @@
   "_column": "赛场之上。讲一场对决，封面 solo 版式印赛果（带国旗），赢家在前。",
   "topbar": {
     "line1": "ATP1000 蒙特利尔 半决赛",
-    "line2": "中岛 7-6(3) 6-4 霍达尔"
+    "line2": "中岛布兰登 7-6(3) 6-4 霍达尔"
   },
   "_topbar_why": "match_feed.py find --tour atp --event montreal --who jodar 标签『Semi-finals』。比分 7-6(3) 6-4 由画面记分条（0.5s 起『JODAR 6³4/NAKASHIMA 7 5 AD』）和 match_feed 逐分记录（首盘满12局6-6进抢七，次盘中岛4-6拿下）双重印证。",
   "editorial": {
@@ -63,12 +63,12 @@
   "cover": {
     "eyebrow": "赛场之上",
     "layout": "solo",
-    "subject": "中岛",
+    "subject": "中岛布兰登",
     "hook": "霍达尔连救四个赛点\n中岛在第五次机会上才把这场半决赛收官",
     "_hook_why": "第一句是过程（match_feed『Match points saved 霍达尔4』直接自证），第二句是落点（第五次机会+半决赛+收官）。两句都是可核实的硬事实。",
     "topic": "蒙特利尔ATP1000 · 男单半决赛",
     "scrim": "clear",
-    "winner": "中岛",
+    "winner": "中岛布兰登",
     "result": "7-6(3) 6-4",
     "matchup": [
       {
@@ -78,7 +78,7 @@
         "rank": null
       },
       {
-        "name": "中岛",
+        "name": "中岛布兰登",
         "name_en": "Brandon Nakashima",
         "country": "USA",
         "rank": null
@@ -101,7 +101,8 @@
       },
       "_court_why": "半决赛按惯例排在主赛场，场边广告板可见『Rogers』（同一个冠名赞助商），和 shelton-fonseca/shelton-mensik 已核实过的『Rogers Court』一致，未单独逐帧核对场地铭牌。",
       "_duration_why": "2:04:00 取自 match_feed（fqlRb8xp）分盘用时之和 0:56+1:08=2:04，和 ATP 官方赛后稿『two hours and four minutes』完全一致——两个独立信源吻合，见 `_match.用时`。"
-    }
+    },
+    "_name_why": "⚠️2026-08-23 更正：Brandon Nakashima 的中文名一律走仓库译名表 `player_zh()`（=中岛布兰登，新华社译名），不再沿用此前几条片子里手动统一成的短称「中岛」——那个「短称是本号既有惯例」的理由本身就是错的，`player_zh()`从一开始给出的就是「中岛布兰登」，短称是手改出来的，不是译名表的产物。已发的片子成片、复制页、推送文案不重渲/不改（消息发出去收不回来），本条只把 spec 里 `cover.subject/winner/matchup[].name` 三处改回译名表的正确输出，供后续同名片子核对时不再错上加错。"
   },
   "segments": [
     {
@@ -167,19 +168,35 @@
     "tour": "atp",
     "a": {
       "headshot": "assets/players/headshots/atp-J0DZ.png",
-      "aces": 4, "df": 5, "winners": 21, "ue": 29,
-      "first_in": 57, "first_total": 96, "first_won": 39,
-      "second_won": 20, "second_total": 39,
-      "bp_conv": 0, "bp_chances": 6,
-      "pts_won": 79, "pts_total": 173
+      "aces": 4,
+      "df": 5,
+      "winners": 21,
+      "ue": 29,
+      "first_in": 57,
+      "first_total": 96,
+      "first_won": 39,
+      "second_won": 20,
+      "second_total": 39,
+      "bp_conv": 0,
+      "bp_chances": 6,
+      "pts_won": 79,
+      "pts_total": 173
     },
     "b": {
       "headshot": "assets/players/headshots/atp-N0AE.png",
-      "aces": 6, "df": 0, "winners": 28, "ue": 28,
-      "first_in": 48, "first_total": 77, "first_won": 39,
-      "second_won": 18, "second_total": 29,
-      "bp_conv": 1, "bp_chances": 11,
-      "pts_won": 94, "pts_total": 173
+      "aces": 6,
+      "df": 0,
+      "winners": 28,
+      "ue": 28,
+      "first_in": 48,
+      "first_total": 77,
+      "first_won": 39,
+      "second_won": 18,
+      "second_total": 29,
+      "bp_conv": 1,
+      "bp_chances": 11,
+      "pts_won": 94,
+      "pts_total": 173
     },
     "footer_venue": "蒙特利尔",
     "footer_date": "2026-08-12",
