@@ -6,9 +6,18 @@
 
 from __future__ import annotations
 
+from datetime import datetime, timezone
+
 import pytest
 
-from tools.oncourt_feed import KEY_ROUNDS, cn_hit, load_cn, parse_round, pick
+from tools.oncourt_feed import (
+    KEY_ROUNDS,
+    cn_hit,
+    current_matchday_rows,
+    load_cn,
+    parse_round,
+    pick,
+)
 
 
 @pytest.fixture(scope="module")
@@ -60,6 +69,26 @@ def test_unparseable_round_is_not_a_key_match():
     """解析不出轮次就不算关键场次——宁可漏推也不误推。"""
     assert rnd("Wawrinka is honoured in Estoril") is None
     assert rnd("Wawrinka is honoured in Estoril") not in KEY_ROUNDS
+
+
+def test_realtime_feed_only_keeps_the_current_shanghai_matchday():
+    """实时 Feed 不能把无日期的历史库存当成今天的新采访。
+
+    2026-08-22 16:00 UTC 在上海已经是 8 月 23 日；边界前一分钟仍属 22 日。
+    YouTube 没有发布时间时，采集器写下的 discovered_at 是可靠兜底。
+    """
+    rows = [
+        {"id": "published-today", "published": "2026-08-22T16:00:00Z"},
+        {"id": "discovered-today", "discovered_at": "2026-08-23T10:30:00+00:00"},
+        {"id": "yesterday", "published": "2026-08-22T15:59:59Z"},
+        {"id": "undated-history"},
+        {"id": "bad-date", "published": "not-a-date"},
+    ]
+    now = datetime(2026, 8, 23, 12, tzinfo=timezone.utc)
+    assert {row["id"] for row in current_matchday_rows(rows, now)} == {
+        "published-today",
+        "discovered-today",
+    }
 
 
 # 中国球员：受访者 vs 被打败的对手

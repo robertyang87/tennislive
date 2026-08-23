@@ -113,6 +113,7 @@ import sys
 import time
 import urllib.parse
 from concurrent.futures import ThreadPoolExecutor
+from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -840,6 +841,10 @@ def main() -> int:
                 "source": src["name"],
                 "tier": src.get("tier", ""),
                 "kind": kind,
+                # YouTube 的 flat-playlist 经常不给 upload_date。实时 Feed 不能因此
+                # 把几千条无日期历史库存都当成今天；至少钉住首次发现时间，供
+                # oncourt_feed 的「当前比赛日」硬窗口使用。
+                "discovered_at": datetime.now(timezone.utc).isoformat(),
                 # 搬运号的条目要一路带着标记，别在下游混进官方源里。
                 **({"unofficial": True} if src.get("unofficial") else {}),
             }

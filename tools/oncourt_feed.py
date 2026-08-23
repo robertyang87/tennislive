@@ -59,12 +59,15 @@ import os
 import re
 import sys
 from collections import defaultdict
+from datetime import datetime, timezone
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 ROOT = Path(__file__).resolve().parent.parent
 STORE = ROOT / "data" / "oncourt_interviews.json"
 CN = ROOT / "data" / "cn_players.json"
 SENT = ROOT / "data" / "oncourt_feed_sent.json"
+MATCHDAY_TZ = ZoneInfo("Asia/Shanghai")
 
 # 轮次写法，按"越具体越先匹配"排。半决赛必须排在决赛前面——
 # `Semi-Finals` 里含 `Final`，顺序反了半决赛会被判成决赛。
@@ -298,6 +301,37 @@ def pick(items: dict, rules, only_cn: bool = False, include_doubles: bool = Fals
     return out
 
 
+def current_matchday_rows(rows: list[dict], now: datetime | None = None) -> list[dict]:
+    """只保留当前比赛日发现或发布的条目。
+
+    PushPlus 清单是实时提醒，不是历史补档通道。旧库里有几千条没有时间戳的
+    存量；把它们当成「今天新发现」会一次推出数百条，既超过 PushPlus 正文
+    上限，也违背「上一个比赛日不做」的选题规则。因此无时间戳的旧条目默认
+    不进入实时 Feed；需要审历史时显式用 ``--all``。
+
+    日期沿用仓库产物的上海时区口径。优先用源站发布时间，拿不到时使用采集器
+    写入的 ``discovered_at``。时间戳损坏时宁可不推，也不把历史库存误当今天。
+    """
+    ref = now or datetime.now(timezone.utc)
+    if ref.tzinfo is None:
+        ref = ref.replace(tzinfo=timezone.utc)
+    today = ref.astimezone(MATCHDAY_TZ).date()
+    out = []
+    for row in rows:
+        raw = row.get("published") or row.get("discovered_at")
+        if not raw:
+            continue
+        try:
+            stamp = datetime.fromisoformat(str(raw).replace("Z", "+00:00"))
+        except ValueError:
+            continue
+        if stamp.tzinfo is None:
+            stamp = stamp.replace(tzinfo=timezone.utc)
+        if stamp.astimezone(MATCHDAY_TZ).date() == today:
+            out.append(row)
+    return out
+
+
 def tag_of(row: dict) -> str:
     """卡片上那一小行的标签：中国球员显示名字，否则显示轮次。
 
@@ -456,10 +490,13 @@ def main() -> int:
     items = json.loads(STORE.read_text(encoding="utf-8"))["items"]
     _players, *rules = load_cn()
     n_doubles, n_team = [0], [0]
-    rows = pick(items, rules, only_cn=args.only_cn,
-                include_doubles=args.include_doubles,
-                include_team=args.include_team,
-                n_doubles=n_doubles, n_team=n_team)
+    selected = pick(items, rules, only_cn=args.only_cn,
+                    include_doubles=args.include_doubles,
+                    include_team=args.include_team,
+                    n_doubles=n_doubles, n_team=n_team)
+    # 默认只推当前比赛日。--all 是显式的历史审阅入口；--seed 也必须覆盖
+    # 全库存，否则旧的无时间戳条目永远不会被真正建立基线。
+    rows = selected if (args.all or args.seed) else current_matchday_rows(selected)
 
     sent = set()
     if SENT.exists() and not args.all:
@@ -480,7 +517,9 @@ def main() -> int:
     if args.out:
         Path(args.out).write_text(html_body, encoding="utf-8")
 
-    print(f"库内 {len(items)} 条 -> 符合条件 {len(rows)} 条 -> 未推送过 {len(fresh)} 条")
+    scope = "全部历史" if (args.all or args.seed) else "当前比赛日"
+    print(f"库内 {len(items)} 条 -> 选题闸 {len(selected)} 条 -> {scope} {len(rows)} 条"
+          f" -> 未推送过 {len(fresh)} 条")
     if n_doubles[0]:
         print(f"  （已滤掉双打 {n_doubles[0]} 条，要的话加 --include-doubles）")
     if n_team[0]:
