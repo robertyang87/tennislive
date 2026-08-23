@@ -14,6 +14,7 @@ permissions:
 jobs:
   dispatch:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
         with:
@@ -34,9 +35,10 @@ jobs:
         run: |
           python tools/pick_interview_renders.py \
             --mark-one gauff-bejlek-cincinnati-2026-sf
-          git config user.name "Codex"
-          git config user.email "noreply@openai.com"
+          git config user.name "Claude"
+          git config user.email "noreply@anthropic.com"
           git add data/interview_render_dispatched.json
+          python tools/check_staged_file_sizes.py
           git commit -m "data: mark Gauff Bejlek interview render dispatched"
           git pull --rebase origin main
           git push origin main
