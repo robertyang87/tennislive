@@ -15,65 +15,41 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  analyze:
+  fetch-mirror:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v4
-      - name: Install media tools
-        run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y -qq ffmpeg
-          python -m pip install -q "yt-dlp[default]" faster-whisper bgutil-ytdlp-pot-provider
-          docker run --name bgutil-pot -d -p 4416:4416 brainicism/bgutil-ytdlp-pot-provider
-          for i in {1..30}; do
-            curl -fsS http://127.0.0.1:4416/ping && break
-            sleep 1
-          done
-      - name: Download sources
+      - name: Find a healthy Piped mirror
         run: |
           mkdir -p analysis
           SUCCESS=0
-          for CLIENT in web_safari web mweb tv android_vr tv_embedded web_embedded; do
-            echo "TRY CLIENT=$CLIENT" | tee -a analysis/download.log
-            if yt-dlp --impersonate chrome --extractor-args "youtube:player_client=$CLIENT" \
-              -f "bv*[height<=1080]+ba/b[height<=1080]/b" --merge-output-format mp4 \
-              -o "analysis/interview.%(ext)s" "https://www.youtube.com/watch?v=lvFHKAXntQM" \
-              2>&1 | tee -a analysis/download.log; then
-              SUCCESS=1
-              break
+          for HOST in \
+            pipedapi.kavin.rocks pipedapi.tokhmi.xyz pipedapi.moomoo.me \
+            pipedapi.syncpundit.io api-piped.mha.fi api.watch.pluto.lat \
+            piped-backend.seitan-ayoub.lol pipedapi.owo.si api.piped.minionflo.net \
+            pipedapi.nezumi.party pipedapi.ducks.party pipedapi.ngn.tf \
+            pipedapi.coldforge.xyz piped-api.codespace.cz \
+            pipedapi.reallyaweso.me pipedapi.phoenixthrush.com; do
+            echo "TRY $HOST" | tee -a analysis/proxy.log
+            if curl -L --connect-timeout 5 --max-time 30 -fsS \
+              "https://$HOST/streams/lvFHKAXntQM" -o analysis/streams.json; then
+              TITLE=$(jq -r '.title // empty' analysis/streams.json)
+              URL=$(jq -r '[.videoStreams[]? | select(.videoOnly==false and .format=="MPEG_4")][0].url // [.videoStreams[]? | select(.videoOnly==false)][0].url // empty' analysis/streams.json)
+              echo "TITLE=$TITLE URL_LENGTH=${#URL}" | tee -a analysis/proxy.log
+              if [ -n "$URL" ]; then
+                curl -L --connect-timeout 10 --max-time 180 -fsS "$URL" -o analysis/interview.mp4
+                SUCCESS=1
+                break
+              fi
             fi
           done
-          if [ "$SUCCESS" != 1 ]; then
-            echo "ALL_CLIENTS_FAILED" | tee -a analysis/download.log
-            exit 1
-          fi
-          yt-dlp --impersonate chrome --extractor-args "youtube:player_client=mweb" \
-            -f "bv*[height<=1080]+ba/b[height<=1080]/b" --merge-output-format mp4 \
-            -o "analysis/highlight.%(ext)s" "https://www.youtube.com/watch?v=C8_5ag2DYn0"
-      - name: Transcribe and inspect
+          test "$SUCCESS" = 1
+      - name: Probe source
         run: |
-          python - <<'PY'
-          from faster_whisper import WhisperModel
-          from pathlib import Path
-          model=WhisperModel("small.en", device="cpu", compute_type="int8")
-          for stem in ("interview","highlight"):
-              p=next(Path("analysis").glob(stem+".mp4"))
-              segs,info=model.transcribe(str(p), beam_size=5, vad_filter=True)
-              with open("analysis/"+stem+".txt","w") as f:
-                  for s in segs:
-                      line=f"{s.start:.2f}\t{s.end:.2f}\t{s.text.strip()}"
-                      print(stem.upper(), line)
-                      f.write(line+"\n")
-          PY
-          for stem in interview highlight; do
-            dur=$(ffprobe -v error -show_entries format=duration -of csv=p=0 analysis/$stem.mp4)
-            ffmpeg -y -i analysis/$stem.mp4 -vf "fps=16/$dur,scale=480:-1,tile=4x4" -frames:v 1 analysis/$stem-contact.jpg
-            ffprobe -v error -show_entries format=duration:stream=codec_name,width,height -of json analysis/$stem.mp4 > analysis/$stem-probe.json
-          done
+          ffprobe -v error -show_entries format=duration:stream=codec_name,width,height -of json analysis/interview.mp4 | tee analysis/interview-probe.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: pegula-oncourt-analysis
+          name: pegula-oncourt-mirror
           path: analysis/
           retention-days: 3
