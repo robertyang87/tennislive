@@ -1,0 +1,94 @@
+{
+  "schema_version": 1,
+  "status": "pass",
+  "story_slug": "usopen",
+  "standards": {
+    "license_policy": "record-only: credit/license are logged (unknown/unverified when missing) and never a fail condition; pre-publish rights review is a human step",
+    "photo_count_max": 64,
+    "photo_source_uniqueness": "same photo/source may appear only once",
+    "page_visual": "every page requires one distinct verified photo",
+    "non_cover_visual": "distinct exact-event photo; infographic may only be an overlay",
+    "rule_explainer": "topic-specific diagram plus verified photo required",
+    "player_crop": "head-safe object position",
+    "production_labels": "internal generation labels are forbidden",
+    "story_ordinals": "semantic icons replace ordinal markers",
+    "year_markers": "calendar years must use four digits",
+    "canned_story_labels": "fixed teaching-style labels are forbidden",
+    "max_text_block_chars": 82,
+    "max_card_text_chars": 520,
+    "card_size": [
+      1080,
+      1440
+    ],
+    "max_card_bytes": 950000
+  },
+  "photo_uses": 1,
+  "photo_sources": [
+    "https://commons.wikimedia.org/wiki/File:Arthur_Ashe_Stadium_2010.jpg"
+  ],
+  "resolved_visuals": [],
+  "pages": [
+    {
+      "kind": "knowledge",
+      "visual": "verified-photo",
+      "text_chars": 109,
+      "longest_text_block": 49,
+      "photo_count": 1,
+      "photo_sources": [
+        "https://commons.wikimedia.org/wiki/File:Arthur_Ashe_Stadium_2010.jpg"
+      ]
+    },
+    {
+      "kind": "story",
+      "visual": "narrative-timeline",
+      "text_chars": 260,
+      "longest_text_block": 49,
+      "photo_count": 0,
+      "photo_sources": []
+    },
+    {
+      "kind": "explainer",
+      "visual": "tournament-explainer",
+      "text_chars": 206,
+      "longest_text_block": 46,
+      "photo_count": 0,
+      "photo_sources": []
+    },
+    {
+      "kind": "today",
+      "visual": "history-timeline",
+      "text_chars": 207,
+      "longest_text_block": 49,
+      "photo_count": 0,
+      "photo_sources": []
+    }
+  ],
+  "rendered_cards": [
+    {
+      "file": "card_00_knowledge.jpg",
+      "width": 1080,
+      "height": 1440,
+      "bytes": 828563
+    },
+    {
+      "file": "card_01_story.jpg",
+      "width": 1080,
+      "height": 1440,
+      "bytes": 284003
+    },
+    {
+      "file": "card_02_explainer.jpg",
+      "width": 1080,
+      "height": 1440,
+      "bytes": 238610
+    },
+    {
+      "file": "card_03_today.jpg",
+      "width": 1080,
+      "height": 1440,
+      "bytes": 217571
+    }
+  ],
+  "errors": [],
+  "warnings": []
+}
