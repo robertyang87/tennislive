@@ -1,0 +1,26 @@
+name: codex-push-gauff-bejlek-wechat
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/codex-push-gauff-bejlek-wechat.yml"
+  workflow_dispatch:
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Dispatch approved WeChat push
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh workflow run interview-clip.yml --ref main \
+            -f slug=gauff-bejlek-cincinnati-2026-sf \
+            -f mode=push \
+            -f push=true
