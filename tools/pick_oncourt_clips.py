@@ -55,6 +55,23 @@ _ROUND_ID = {
 }
 
 
+def production_resource_problem(item: dict) -> str:
+    """说明这条已验明身份的采访为什么还不能进入无人值守生产。
+
+    L0 内容身份和媒体可取得性是两份合同。Tennis TV 的结构化 feed 能证明
+    ``interviews + QF/SF + 短时长`` 是场上采访，但 ``freemium`` 仍要求注册
+    会话。当前自动线没有该会话，反复 dispatch 只会得到 CDN 拒绝的临时 manifest。
+    """
+    if str(item.get("id") or "").startswith("tennistv:"):
+        entitlement = str(item.get("entitlement") or "").strip().lower()
+        if entitlement != "free":
+            return (
+                f"Tennis TV entitlement={entitlement or 'unknown'}；当前无人值守链路"
+                "没有注册会话，只允许 free 条目，不能把反复 403 当自动重试"
+            )
+    return ""
+
+
 def _key_part(value: str) -> str:
     # Event labels are intentionally Chinese in this pipeline.  ASCII-only cleanup
     # turned every one of them into ``unknown`` and collapsed unrelated tournaments.
@@ -186,7 +203,15 @@ def candidate_sets(*, today: datetime.date | None = None) -> tuple[list[dict], l
             "event_zh": event_zh,
             "match_id": match_id,
             "source_verification": source_verification,
+            **({"entitlement": it.get("entitlement")} if it.get("entitlement") else {}),
         }
+        if resource_problem := production_resource_problem(it):
+            row["production_readiness"] = {
+                "status": "pending",
+                "reason": resource_problem,
+            }
+            pending.append(row)
+            continue
         if source_verification.get("status") != "verified" or not match_id:
             if not match_id:
                 row["source_verification"] = {

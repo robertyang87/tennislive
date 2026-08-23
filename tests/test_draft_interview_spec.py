@@ -8,6 +8,7 @@
 from __future__ import annotations
 
 import json
+import subprocess
 import sys
 from pathlib import Path
 
@@ -130,3 +131,15 @@ def test_同slug不许静默覆盖(tool, monkeypatch, tmp_path):
     # 正式 spec 也算占用（提升过的不许被新草稿顶名）
     (specs / "zverev-cincinnati-2026-r3-2.json").write_text("{}")
     assert tool._claim_slug("zverev-cincinnati-2026-r3") == "zverev-cincinnati-2026-r3-3"
+
+
+def test_下载失败要带yt_dlp尾部原因不许只报CalledProcessError(tool, monkeypatch, tmp_path):
+    class _Failed:
+        returncode = 1
+        stdout = ""
+        stderr = "HTTP Error 403: Forbidden from signed manifest"
+
+    monkeypatch.setattr(subprocess, "run", lambda *_a, **_k: _Failed())
+    monkeypatch.setattr("tennislive.video.official.media_url", lambda url: url)
+    with pytest.raises(RuntimeError, match="HTTP Error 403.*signed manifest"):
+        tool.transcribe("https://example.test/interview", tmp_path)
