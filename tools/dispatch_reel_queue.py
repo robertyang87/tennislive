@@ -211,7 +211,12 @@ def discover_queue_file(
     return Path(fields[1])
 
 
-def dispatch(request: QueueRequest, *, run: Run = subprocess.run) -> None:
+def dispatch(
+    request: QueueRequest,
+    *,
+    run: Run = subprocess.run,
+    now: datetime | None = None,
+) -> None:
     """Dispatch parallel production renders or one fail-closed publish run.
 
     Production render requests carry ``push=true``.  ``match-reel`` still groups the
@@ -225,6 +230,11 @@ def dispatch(request: QueueRequest, *, run: Run = subprocess.run) -> None:
     # 账号所有者：质检通过就推，不再等待第二份人工 push 队列。render 和 push
     # 都传 true；match-reel 自己把重渲（并行）与发送（串行）拆成两趟。
     push = "true"
+    # One batch gets one clock edge. Different slugs render in parallel, so each one
+    # is measured from the same moment the reviewed production queue was accepted.
+    received_at = (now or datetime.now(timezone.utc)).astimezone(timezone.utc).strftime(
+        "%Y-%m-%dT%H:%M:%SZ"
+    )
     for slug in request.slugs:
         command = [
             "gh",
@@ -239,6 +249,8 @@ def dispatch(request: QueueRequest, *, run: Run = subprocess.run) -> None:
             f"mode={request.mode}",
             "-f",
             f"push={push}",
+            "-f",
+            f"received_at={received_at}",
         ]
         print(f"[dispatch] match-reel {request.mode} {slug} push={push}")
         run(command, check=True, shell=False)

@@ -1,7 +1,7 @@
 # 无人值守流水线：耗时 / 并行 / 稳定性 / 自愈 现状盘点
 
-2026-08-23 复盘并执行整改。目标（账号所有者）：自动化，多场并行，时效性高不能卡住，
-稳定性高，能自我修复。
+2026-08-23 复盘并执行整改；2026-08-24 增补 10 分钟成片 SLO。目标（账号所有者）：
+自动化，多场并行，时效性高不能卡住，稳定性高，能自我修复。
 
 ## 1. 一条片子的时间账（实测）
 
@@ -15,9 +15,30 @@ match-reel run 实测耗时（按 mode 分）：
 | probe | 下源片 + 缩略图墙 + 切点 + 字幕 + 备料草稿 | 128~409s |
 | render | 分段 + TTS + 混音 + 编码 | 271~831s（片长越长效） |
 
-机器串行下限（单场、正常长度）：probe ~4 分 + render ~6 分 + 质检合并 ~1 分 ≈ 11 分。
-符合 docs/thirty-minute-pipeline.md 的账。**长片（306s 源片）render 涨到 14~17 分**，
-30 分钟目标对长片结构性达不到（已记在半小时协议里）。
+2026-08-23 的两条线上基线（GitHub Actions 公共 run 的 step 时间）：
+
+| 生产线 | 样本 | 链接/任务接收 → MP4 落盘 | 最大单项 |
+|---|---|---:|---:|
+| 赛场之上 | run 32648021397，131.6s 成片 | **约 7m10s** | render step 5m11s |
+| 赛后开麦 | run 32629170762 | **约 10m09s** | 第二份 ASR 5m44s |
+
+第二条已经越过 600 秒，根因不是编码画质，而是每趟重下 faster-whisper 模型，且
+采访线没有复用已有 Chromium 缓存。本轮已按模型名缓存 Hugging Face 目录，并与
+match-reel 共用 Playwright Chromium 缓存；不改 ASR 模型、不降编码 preset/CRF。
+
+### 10 分钟口径
+
+- 起点：生产可用的视频链接与正式 spec 已确认、dispatch 的 UTC 时刻。自动链路用
+  `received_at` 原样传到 render；手动没传时从 runner 第一秒起算，不能装完依赖再起表。
+- 终点：我们自己的非空 MP4 已落盘。Release、git 提交、Pages、微信属于发布 SLO，
+  不混进成片耗时。
+- 产物：`render.json.production_sla` 记录起止时刻、总秒数、准备秒数、render 秒数、
+  600 秒目标和 `met`；Actions summary 同步显示 PASS/FAIL。
+- 超线策略：**告警但不一刀切**。内容完整、L2 质检合格的片子继续自动发布；warning
+  留作下一轮定点性能修复，不能因慢而丢片或砍内容。
+
+原来的 probe / 备料 / 编辑闭环仍单独计发现与准备延迟，不能拿 10 分钟生产 SLO
+掩盖。长片（306s 源片）历史 render 仍可能到 14~17 分，是明确的超线性能债。
 
 ## 2. 并行性：哪里并行、哪里串行
 
@@ -29,6 +50,7 @@ match-reel run 实测耗时（按 mode 分）：
 | 编排器「dispatch run」 | ⚠️ 串行 | gh workflow run 每场 1~2s，N 场串行 ~N×2s，可接受 |
 | 同一 slug 的 probe/render | ⚠️ 串行（设计如此） | concurrency cancel-in-progress，防互相覆盖 output |
 | 赛后开麦候选转写 | ✅ 逐场 matrix | `oncourt-interviews` 每 15 分钟扫描，一场一个 runner，`max-parallel: 4` |
+| 赛后开麦多来源扫描 | ✅ 4 路有界并行 | 最新串行采集 16m15s；不同来源并行、结果仍按注册表顺序处理，参数硬限 1..8 |
 | 赛后开麦冷开场搜索/翻译 | ✅ 并行 | `attach_interview_lead_in.py` ThreadPoolExecutor，默认 4 |
 | 赛后开麦 render / publish | ✅ 按 slug 并行 | 两条 workflow 的 concurrency 都按 slug 分组 |
 
@@ -82,6 +104,15 @@ match-reel run 实测耗时（按 mode 分）：
 - probe 生成的 WTA 官方封面随草稿提交，不再留下失效引用。
 - 批量生产 render 默认 `push=true`；多场按 slug 并行，L2 质检落库后自动派
   push-only，全局只串行微信 POST 和发布账本。
+
+**2026-08-24 10 分钟成片整改**：
+- match-reel / interview-clip 共用 `received_at → production_sla` 计时合同；调度器
+  传原始时刻，成片工具合并写入 `render.json`，超线出 warning、不阻断发布。
+- 赛后开麦缓存第二份 ASR 模型和 Chromium，针对 10m09s 样本的 5m44s 最大项下刀，
+  不改转写模型、不降画质。
+- 草稿 matrix 完成后立即 dispatch `interview-auto-render`，取消 0~10 分钟空等；
+  多个正式采访仍按 slug 并行 render。
+- 场上采访来源从逐个串行改成 4 路有界并行；保留注册表顺序与 1..8 防限流上限。
 
 **仍待修（按优先级）**：
 1. **赛场之上草稿 → 正式 spec 的语义闭环**：probe 会自动产出 pending 草稿，

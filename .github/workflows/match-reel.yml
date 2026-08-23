@@ -91,6 +91,10 @@ on:
         required: false
         type: boolean
         default: false
+      received_at:
+        description: "生产可用的视频链接被确认/派发的 UTC 时刻；自动链路必传，手动留空则从本 job 第一秒起算"
+        required: false
+        default: ""
       # ⚠️ 下面这几个输入**一律不给默认值**。它们装的是「这一条片子的文案」，
       # 而默认值只能是**上一条片子的文案**——不传就顶着别人的话发出去，
       # 而且**不报错**。2026-08-01 郑钦文那条赛前前瞻就是这么发错的：
@@ -155,6 +159,19 @@ jobs:
     # 判据 test_job级超时要兜得住各步骤自己声明的最坏预算之和。
     timeout-minutes: 45
     steps:
+      # 600 秒只算「生产输入已齐 → 我们自己的 MP4 落盘」。发布/Pages 是另一条
+      # SLO，不得反过来污染成片耗时；自动 dispatch 把确认链接的时刻传进来，
+      # 手动 dispatch 没传时从 runner 的第一步开始，不能等装完依赖再偷偷起表。
+      - name: 10 分钟成片时钟起点
+        id: production_clock
+        if: github.event.inputs.mode == 'render'
+        env:
+          RECEIVED_AT: ${{ github.event.inputs.received_at }}
+        run: |
+          START="${RECEIVED_AT:-$(date -u +%FT%TZ)}"
+          echo "received_at=$START" >> "$GITHUB_OUTPUT"
+          echo "[production-sla] link accepted at $START; owned MP4 budget = 600s"
+
       # **`push=true` 只能跑在 main 上，而且要在第一步就拦住。**
       #
       # GitHub Pages 只服务 main。复制页提交在特性分支上，那个 URL 永远是 404，
@@ -940,13 +957,25 @@ jobs:
           YT_POT_PROVIDER: ${{ steps.pot.outputs.up }}
         run: |
           SPEC="specs/reels/${{ github.event.inputs.slug }}.json"
+          OUTDIR="${{ steps.paths.outputs.outdir }}"
+          SLUG="${{ github.event.inputs.slug }}"
           test -f "$SPEC" || { echo "::error::找不到 $SPEC"; exit 1; }
+          # 600 秒是性能目标，不是内容闸。超线照样做完、照样过 L2 和发布；
+          # `finish` 会在产物与 job summary 留 FAIL + warning，供后续定点修复。
+          RENDER_STARTED=$(date -u +%FT%TZ)
           python tools/build_match_reel.py render \
             --spec "$SPEC" \
             --voice "${{ github.event.inputs.voice }}" \
             --rate "${{ github.event.inputs.rate }}" \
-            --outdir "${{ steps.paths.outputs.outdir }}"
-          ls -la "${{ steps.paths.outputs.outdir }}"
+            --outdir "$OUTDIR"
+          python tools/video_sla.py finish \
+            --received-at "${{ steps.production_clock.outputs.received_at }}" \
+            --render-started-at "$RENDER_STARTED" \
+            --artifact "$OUTDIR/$SLUG.mp4" \
+            --metadata "$OUTDIR/render.json" \
+            --pipeline match-reel --slug "$SLUG" \
+            --summary "$GITHUB_STEP_SUMMARY"
+          ls -la "$OUTDIR"
 
       # 复制页**必须写在提交之前**。它由 GitHub Pages 提供，没进仓库就是 404。
       # 之前这一句藏在推送那一步里，而推送排在提交之后——文件只活在 runner 的

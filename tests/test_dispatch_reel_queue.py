@@ -187,7 +187,11 @@ def test_dispatch_uses_argument_arrays_and_mode_fixes_push(mode, push, slugs):
         expected_date="2026-08-21",
         slugs=slugs,
     )
-    queue.dispatch(request, run=record)
+    queue.dispatch(
+        request,
+        run=record,
+        now=datetime(2026, 8, 24, 1, 2, 3, tzinfo=timezone.utc),
+    )
     assert len(calls) == len(slugs)
     for (command, kwargs), slug in zip(calls, request.slugs):
         assert command == [
@@ -203,6 +207,8 @@ def test_dispatch_uses_argument_arrays_and_mode_fixes_push(mode, push, slugs):
             f"mode={mode}",
             "-f",
             f"push={push}",
+            "-f",
+            "received_at=2026-08-24T01:02:03Z",
         ]
         assert kwargs == {"check": True, "shell": False}
 
