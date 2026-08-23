@@ -68,6 +68,7 @@ jobs:
           sparse-checkout: |
             .github
             assets
+            data/explainer_publish_ledger
             src
             tools
 
@@ -106,16 +107,30 @@ jobs:
         if: steps.gate.outputs.found == 'true'
         run: git sparse-checkout add "${{ steps.gate.outputs.outdir }}"
 
+      - name: 预占发布账本（发送前）
+        # sending 必须在不可撤回 POST 之前落进 main；runner 在 POST 后崩溃时，
+        # 下一趟会被账本挡住，不靠猜测盲发第二条。
+        id: reserve
+        if: steps.gate.outputs.found == 'true'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          python tools/auto_push_explainer_gate.py --reserve "${{ steps.gate.outputs.outdir }}" \
+            --run "$RUN_URL" --now "$(date -u +%FT%TZ)"
+          git config user.name "Claude"
+          git config user.email "noreply@anthropic.com"
+          git add --sparse "data/explainer_publish_ledger/${{ steps.gate.outputs.slug }}.json"
+          git commit -m "explainer: 预占推送 ${{ steps.gate.outputs.slug }}"
+          git pull --rebase origin main
+          git push origin main
+
       - name: 推送到微信
         if: steps.gate.outputs.found == 'true'
         env:
           GITHUB_TOKEN: ${{ github.token }}
-          # **钉 commit，别停在 @main。** 同一条片子重渲，卡片路径一模一样，
-          # 而微信的图片缓存按**路径**算——URL 停在 @main 的话推出去的还是
-          # 上一版那些卡，而且不吭声。
           TENNISLIVE_ASSET_REV: ${{ github.sha }}
-        run: |
-          tennislive publish pushplus --dir "${{ steps.gate.outputs.outdir }}"
+        run: tennislive publish pushplus --dir "${{ steps.gate.outputs.outdir }}"
 
       # **发完必须记一笔，而且必须进仓库。** 这是「已经发过」的唯一判据——
       # 「工作流跑成功过」证明不了消息发出去了，而重发就是让人再收一条一样的。
@@ -130,10 +145,26 @@ jobs:
             --record "${{ steps.gate.outputs.outdir }}" \
             --run "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
             --now "$(date -u +%FT%TZ)"
-          git add --sparse "${{ steps.gate.outputs.outdir }}"
+          git add --sparse "${{ steps.gate.outputs.outdir }}" \
+            "data/explainer_publish_ledger/${{ steps.gate.outputs.slug }}.json"
           python tools/check_staged_file_sizes.py
           git commit -m "explainer: ${{ steps.gate.outputs.slug }} 已自动推送"
           git pull --rebase origin main
+          git push origin main
+
+      - name: 已预占后失败则标记状态不明
+        if: failure() && steps.reserve.outcome == 'success'
+        continue-on-error: true
+        run: |
+          python tools/auto_push_explainer_gate.py \
+            --uncertain "${{ steps.gate.outputs.outdir }}" \
+            --run "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
+            --now "$(date -u +%FT%TZ)"
+          git config user.name "Claude"
+          git config user.email "noreply@anthropic.com"
+          git add --sparse "data/explainer_publish_ledger/${{ steps.gate.outputs.slug }}.json"
+          git commit -m "explainer: ${{ steps.gate.outputs.slug }} 推送状态待核实" || exit 0
+          git pull --rebase origin main || { git rebase --abort || true; }
           git push origin main
 
       - name: 失败时告警

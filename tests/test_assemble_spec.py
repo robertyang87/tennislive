@@ -54,6 +54,28 @@ def test_facts_text把狠数据拼成行():
     assert mod.facts_text([]) == ""
 
 
+def test_逐局表提取最终盘分并拦模型编错比分():
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("assemble_spec", _TOOLS / "assemble_spec.py")
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    games = [
+        {"set": "Set 1", "home_games": "1", "away_games": "0"},
+        {"set": "Set 1", "home_games": "4", "away_games": "6"},
+        {"set": "Set 2", "home_games": "6", "away_games": "1"},
+        {"set": "Set 3", "home_games": "6", "away_games": "1"},
+    ]
+    scores = mod.final_set_scores(games)
+    assert scores == [(4, 6), (6, 1), (6, 1)]
+    assert "4-6 6-1 6-1" in mod.score_fact(scores, "斯瓦泰克", "萨卡里")
+    wrong = {"thesis": "她最终以6-4、3-6、6-4险胜", "narration": []}
+    assert "不一致" in mod.editorial_score_problem(wrong, scores)
+    right = {"thesis": "她最终以4-6、6-1、6-1逆转", "narration": []}
+    assert mod.editorial_score_problem(right, scores) is None
+    reversed_right = {"thesis": "对手视角是6-4、1-6、1-6", "narration": []}
+    assert mod.editorial_score_problem(reversed_right, scores) is None
+
+
 def test_matchup_order按flashscore的home归位(monkeypatch):
     """核心判据：stats.a 跟 flashscore 的 home，而 render_stat_card 的 a 跟
     matchup[0]——所以 matchup 顺序必须跟 flashscore 的 home/away，不是命令行。
@@ -216,6 +238,26 @@ def test_build_background聚合H2H近况排名热点(tool, monkeypatch):
     assert "中文热搜：郑钦文状态怎么了（微博热搜）" in text
     assert "总分差" not in text, "狠数据只进 facts，不进 background——背景是「这个人」，不是「这个比分」"
     assert not notes, f"四个源都成功，不该有失败 note：{notes}"
+
+
+def test_build_background读取生产ZhHot对象而不只认测试字典(tool, monkeypatch):
+    """真实 ``fetch_zh_hot`` 返回 ``ZhHot`` dataclass。
+
+    旧测试只塞 dict，导致生产对象走到 ``h.get`` 必炸，草稿里的中文热点背景长期
+    静默降级。用真实类型钉住边界，不能再让测试桩和生产接口分叉。
+    """
+    from tennislive.research.zh_trends import ZhHot
+
+    a = tool
+    monkeypatch.setattr(a, "fetch_zh_hot", lambda **kw: type("H", (), {
+        "hits": [ZhHot(source="微博热搜", word="伊埃拉晋级",
+                       rank=8, heat="热", url="https://example.test/hot",
+                       terms=("eala",), matched=("伊埃拉",))],
+        "scanned": 232,
+    })())
+    text, notes = a.build_background("Alexandra Eala", "Jessica Pegula", [])
+    assert "中文热搜：伊埃拉晋级（微博热搜）" in text
+    assert not any("AttributeError" in note for note in notes)
 
 
 def test_build_background排名源挂了不拖垮(tool, monkeypatch):

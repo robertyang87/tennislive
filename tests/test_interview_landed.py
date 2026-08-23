@@ -41,6 +41,13 @@ def test_ffprobe的csv输出带尾随逗号也解析得出来():
         float("291.880000,\n".strip())
 
 
+def test_音轨峰值解析能识别数字静音():
+    ci = _tool()
+    assert ci._max_volume_db("[Parsed] max_volume: -3.2 dB") == pytest.approx(-3.2)
+    assert ci._max_volume_db("[Parsed] max_volume: -inf dB") == float("-inf")
+    assert ci._max_volume_db("没有这项") is None
+
+
 def test_ass_has_dialogue认得Dialogue行(tmp_path):
     ci = _tool()
     ass = tmp_path / "x.ass"

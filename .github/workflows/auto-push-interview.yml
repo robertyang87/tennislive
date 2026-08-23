@@ -91,6 +91,7 @@ jobs:
           # 产物静默丢掉。
           sparse-checkout: |
             .github
+            data/interview_publish_ledger
             specs
             src
             tools

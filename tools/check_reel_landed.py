@@ -21,10 +21,12 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import math
 import subprocess
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 
 # 成片画布。**赛场之上从 9:16 改成 3:4 之后这儿漏改了**，于是每跑一次都报
@@ -38,6 +40,58 @@ COVER_SECONDS = 1.2
 # 纯数字静音在 volumedetect 里是 -91 dB。真现场声（球声、观众）远高于此，
 # 门槛放在 -60：宽到不会误报，又能拦住「静音盖住真音轨」
 SILENCE_FLOOR_DB = -60.0
+
+
+def _sha256(path: Path) -> str:
+    h = hashlib.sha256()
+    with path.open("rb") as fh:
+        for block in iter(lambda: fh.read(1024 * 1024), b""):
+            h.update(block)
+    return h.hexdigest()
+
+
+def write_attestation(film: Path, spec_path: Path, spec: dict) -> Path:
+    """L2 全绿后把检查结果绑定到当前 spec 和当前成片。
+
+    ``render.json`` 只是“渲染曾经走到末尾”的信号，不能证明随后运行的 L2
+    检查通过，更不能证明 Release 上的字节就是被检查的那一份。采访线已经用
+    这份不可变凭证封住了该缺口，赛场之上也必须同口径：自动发布只认
+    ``qc_attestation.json``，并复核 spec/字幕/成片的 hash 和大小。
+    """
+    outdir = film.parent
+    ass = outdir / "subtitles.ass"
+    if not ass.is_file():
+        raise SystemExit(f"[不合格] 找不到烧片时使用的字幕文件 {ass}")
+    payload = {
+        "status": "pass",
+        "checked_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "slug": str(spec.get("slug") or film.stem),
+        "spec_sha256": _sha256(spec_path),
+        "ass_sha256": _sha256(ass),
+        "film_sha256": _sha256(film),
+        "film_bytes": film.stat().st_size,
+        "checks": {
+            "canvas": [VIDEO_W, VIDEO_H],
+            "silence_floor_db": SILENCE_FLOOR_DB,
+            "ending_payoff": "pass",
+            "audio_tail_max_s": 1.0,
+        },
+    }
+    path = outdir / "qc_attestation.json"
+    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
+                    encoding="utf-8")
+
+    meta_path = outdir / "render.json"
+    data = json.loads(meta_path.read_text(encoding="utf-8")) if meta_path.is_file() else {}
+    data.update({
+        "film_sha256": payload["film_sha256"],
+        "film_bytes": payload["film_bytes"],
+        "qc_attestation_sha256": _sha256(path),
+    })
+    meta_path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n",
+                         encoding="utf-8")
+    print(f"[QC] 发布凭证 -> {path}（film {payload['film_sha256'][:12]}…）")
+    return path
 
 
 def seg_film_seconds(s: dict) -> float:
@@ -355,6 +409,12 @@ def main() -> int:
         print("        注意目录按**上海日期**算，沙箱是 UTC——查错日期看起来"
               "就像「还没落库」")
         return 1
+    # 先撤销旧绿灯，再开始本轮检查。这样中途 ffprobe/解码异常退出也不会让上一版
+    # 的 pass 凭证留在目录里；只有走到末尾 0 项不合格才重新创建。
+    stale = film.parent / "qc_attestation.json"
+    if stale.exists():
+        stale.unlink()
+        print(f"[QC] 本轮重验开始，先撤销旧凭证 {stale}")
     spec = json.loads(spec_path.read_text(encoding="utf-8"))
     print(f"成片 {film}（{film.stat().st_size / 1e6:.1f} MB）")
     cover = cover_seconds(film)
@@ -464,6 +524,13 @@ def main() -> int:
         print(f"[{'ok' if ok else '不合格'}] 无解说段 {start:.1f}s（源 {src:.1f}s）"
               f"现场声最响 {worst:.1f} dB")
 
+    if bad == 0:
+        write_attestation(film, spec_path, spec)
+    else:
+        # 重渲/重验失败时，不能让上一版的 pass 凭证继续躺着被提交。成片已经
+        # 变了但信号文件没变，是最危险的“旧绿灯照新产物”。
+        # 旧凭证已在本轮开始时撤销；这里保留明确的失败结论。
+        print("[QC] 本轮不生成发布凭证")
     print(f"\n共 {bad} 项不合格")
     return 0 if bad == 0 else 1
 

@@ -7,6 +7,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 import subprocess
@@ -37,6 +38,32 @@ def _git(repo: Path, *args: str) -> None:
                    check=True, capture_output=True)
 
 
+def _qc_product(repo: Path, slug: str) -> None:
+    """造一份和生产链同形的 L2 凭证；render.json 本身不再等于质检通过。"""
+    spec = repo / f"specs/reels/{slug}.json"
+    outdir = repo / f"output/2026-08-03/reel/{slug}"
+    outdir.mkdir(parents=True, exist_ok=True)
+    ass = outdir / "subtitles.ass"
+    ass.write_text("Dialogue: 0,0:00:00.00,0:00:01.00,Default,,0,0,0,,字幕\n",
+                   encoding="utf-8")
+    film = b"checked-film-bytes"
+    qc = outdir / "qc_attestation.json"
+    qc.write_text(json.dumps({
+        "status": "pass",
+        "slug": slug,
+        "spec_sha256": hashlib.sha256(spec.read_bytes()).hexdigest(),
+        "ass_sha256": hashlib.sha256(ass.read_bytes()).hexdigest(),
+        "film_sha256": hashlib.sha256(film).hexdigest(),
+        "film_bytes": len(film),
+    }), encoding="utf-8")
+    (outdir / "render.json").write_text(json.dumps({
+        "video_url": f"https://example.test/{slug}.mp4",
+        "video_bytes": len(film),
+        "film_sha256": hashlib.sha256(film).hexdigest(),
+        "qc_attestation_sha256": hashlib.sha256(qc.read_bytes()).hexdigest(),
+    }), encoding="utf-8")
+
+
 @pytest.fixture()
 def repo(tmp_path: Path) -> Path:
     """一个最小的**真 git 仓库**：一条 spec、一份文案、一个渲好的 outdir。
@@ -50,9 +77,10 @@ def repo(tmp_path: Path) -> Path:
     """
     (tmp_path / "specs/reels").mkdir(parents=True)
     (tmp_path / "specs/reels/demo.xhs.txt").write_text("文案", encoding="utf-8")
+    _spec(tmp_path, None)
     outdir = tmp_path / "output/2026-08-03/reel/demo"
     outdir.mkdir(parents=True)
-    (outdir / "render.json").write_text("{}", encoding="utf-8")
+    _qc_product(tmp_path, "demo")
     (outdir / "poster.jpg").write_bytes(b"\xff\xd8\xff not-a-real-jpeg")
     _git(tmp_path, "init", "-q")
     # render.json 提交进仓库——现实里它就是先由 render 工作流提交、随 PR
@@ -80,17 +108,20 @@ def _second_reel(repo: Path, slug: str = "demo2") -> Path:
     (repo / f"specs/reels/{slug}.xhs.txt").write_text("文案", encoding="utf-8")
     outdir = repo / f"output/2026-08-03/reel/{slug}"
     outdir.mkdir(parents=True)
-    (outdir / "render.json").write_text("{}", encoding="utf-8")
+    _qc_product(repo, slug)
     (outdir / "poster.jpg").write_bytes(b"\xff\xd8\xff not-a-real-jpeg")
     return outdir
 
 
 def _spec(repo: Path, push: dict | None, slug: str = "demo") -> None:
-    body: dict = {"cover": {"eyebrow": "赛场之上"}}
+    body: dict = {"slug": slug, "cover": {"eyebrow": "赛场之上"}}
     if push is not None:
         body["push"] = push
     (repo / f"specs/reels/{slug}.json").write_text(
         json.dumps(body, ensure_ascii=False), encoding="utf-8")
+    outdir = repo / f"output/2026-08-03/reel/{slug}"
+    if outdir.exists():
+        _qc_product(repo, slug)
 
 
 CHANGED = ["output/2026-08-03/reel/demo/render.json"]
@@ -120,6 +151,40 @@ def test_写了auto才发(repo: Path):
     picked = gate.pick(CHANGED, repo)
     assert picked is not None, "写了 auto 还是不发，那这个开关根本没接上"
     assert picked[0] == "demo"
+
+
+def test_只有render信号没有L2凭证不发布(repo: Path, capsys):
+    _spec(repo, {"auto": True})
+    qc = repo / "output/2026-08-03/reel/demo/qc_attestation.json"
+    qc.unlink()
+    _git(repo, "rm", "-q", "--cached", str(qc.relative_to(repo)))
+    assert gate.pick(CHANGED, repo) is None
+    out = capsys.readouterr().out
+    assert "render.json 是渲染信号" in out and "不能代替 L2" in out
+
+
+def test_质检后改spec或字幕都不能发布(repo: Path, capsys):
+    _spec(repo, {"auto": True})
+    spec = repo / "specs/reels/demo.json"
+    spec.write_text(spec.read_text(encoding="utf-8") + "\n", encoding="utf-8")
+    assert gate.pick(CHANGED, repo) is None
+    assert "spec 在质检后发生过变化" in capsys.readouterr().out
+
+    _spec(repo, {"auto": True})
+    ass = repo / "output/2026-08-03/reel/demo/subtitles.ass"
+    ass.write_text(ass.read_text(encoding="utf-8") + "偷改字幕\n", encoding="utf-8")
+    assert gate.pick(CHANGED, repo) is None
+    assert "字幕在质检后发生过变化" in capsys.readouterr().out
+
+
+def test_Release字节数和质检成片不同不发布(repo: Path, capsys):
+    _spec(repo, {"auto": True})
+    render = repo / "output/2026-08-03/reel/demo/render.json"
+    data = json.loads(render.read_text(encoding="utf-8"))
+    data["video_bytes"] += 1
+    render.write_text(json.dumps(data), encoding="utf-8")
+    assert gate.pick(CHANGED, repo) is None
+    assert "Release 文件大小与 QC 成片不一致" in capsys.readouterr().out
 
 
 def test_auto写成字符串要报错(repo: Path):
@@ -283,6 +348,7 @@ def test_删除的render_json不算候选(repo: Path, capsys):
     真该发的一起拦死。2026-08-12 zheng-lanlana 的合并差点踩到：同一批
     改动里带着三份被顶替旧版的删除。"""
     _spec(repo, {"auto": True})
+    _commit_all(repo)
     _git(repo, "rm", "-rq", "output/2026-08-03/reel/demo")
     _git(repo, "-c", "user.email=a@b", "-c", "user.name=c",
          "commit", "-qm", "清理旧产物")

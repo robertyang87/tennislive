@@ -43,12 +43,13 @@ permissions:
   # 草稿矩阵全部落库后立即叫醒提升/渲染，不再等下一班最多 10 分钟的 schedule。
   actions: write
 
-concurrency:
-  group: oncourt-interviews
-  cancel-in-progress: false
-
 jobs:
   collect:
+    # 只串行共享采集状态/候选 lease；上一批 draft 做 ASR 时，下一轮资源扫描
+    # 可以继续。claim 在 collect 结束前提交，后继 collect 会跳过同一 match_id。
+    concurrency:
+      group: oncourt-interviews-collect
+      cancel-in-progress: false
     outputs:
       candidate_ids: ${{ steps.matrix.outputs.candidate_ids }}
     runs-on: ubuntu-latest
@@ -191,7 +192,8 @@ jobs:
           git config user.name "Claude"
           git config user.email "noreply@anthropic.com"
           git add data/oncourt_interviews.json data/oncourt_feed_sent.json \
-            data/interview_clip_candidates.json data/interview_source_review_queue.json
+            data/interview_clip_candidates.json data/interview_source_review_queue.json \
+            data/oncourt_scan_state.json data/interview_candidate_claims.json
           if git diff --cached --quiet; then
             echo "没有新增，不提交。"
             exit 0
@@ -354,7 +356,11 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          if gh workflow run interview-auto-render.yml --ref main; then
+          # 这个 job 不 checkout（它只 dispatch），所以 cwd 不是 Git 仓库。
+          # gh 缺 --repo 会先执行 git remote、当场报 not a git repository；
+          # 草稿明明落库了却永远等下一班 schedule。显式给仓库后无需 checkout。
+          if gh workflow run interview-auto-render.yml \
+            --repo "$GITHUB_REPOSITORY" --ref main; then
             echo "[dispatch] 已立即叫醒 interview-auto-render；不等下一班 schedule"
           else
             echo "::error::草稿已落库，但 interview-auto-render 派发失败"

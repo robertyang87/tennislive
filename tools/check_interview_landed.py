@@ -26,6 +26,8 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
+import re
 import subprocess
 import sys
 from datetime import datetime, timezone
@@ -33,6 +35,7 @@ from pathlib import Path
 
 CANVAS_W, CANVAS_H = 1080, 1440
 MAX_AV_DELTA = 0.30
+SILENCE_FLOOR_DB = -60.0
 
 
 def sh(*args: str) -> str:
@@ -49,6 +52,23 @@ def _ffprobe_float(out: str) -> float:
     这个文件是姊妹工具，没跟着改）。只取第一个逗号前的字段，多出来的空
     尾巴丢掉。"""
     return float(out.strip().split(",")[0])
+
+
+def _max_volume_db(stderr: str) -> float | None:
+    """解析 volumedetect；全数字静音的 ``-inf`` 也必须能被判成不合格。"""
+    found = re.search(r"max_volume:\s*(-inf|-?[\d.]+)\s*dB", stderr)
+    if not found:
+        return None
+    return float("-inf") if found.group(1) == "-inf" else float(found.group(1))
+
+
+def audio_peak_db(film: Path) -> float | None:
+    proc = subprocess.run(
+        ["ffmpeg", "-hide_banner", "-i", str(film), "-vn", "-af", "volumedetect",
+         "-f", "null", os.devnull], capture_output=True, text=True, check=False)
+    if proc.returncode:
+        return None
+    return _max_volume_db(proc.stderr)
 
 
 def outdir_for(slug: str) -> Path:
@@ -132,6 +152,15 @@ def check_film(film: Path, spec: dict, ass: Path) -> int:
     print(f"[{'ok' if ok else '不合格'}] 画面 {v_dur:.2f}s / 音轨 {a_dur:.2f}s"
           f"（绝对差必须 ≤ {MAX_AV_DELTA:.2f}s）")
 
+    # “有音轨、时长也对”仍可能整条是 anullsrc。赛场之上真实出过 -91 dB 的
+    # 成片：ffprobe、码率和时长全部正常，只有波形能看出声音被补位静音盖掉。
+    peak = audio_peak_db(film)
+    ok = peak is not None and peak > SILENCE_FLOOR_DB
+    bad += 0 if ok else 1
+    peak_text = "探测失败" if peak is None else f"{peak:.1f} dBFS"
+    print(f"[{'ok' if ok else '不合格'}] 音轨峰值 {peak_text}"
+          f"（必须高于 {SILENCE_FLOOR_DB:.0f} dBFS，防整条数字静音）")
+
     ok = ass_has_dialogue(ass)
     bad += 0 if ok else 1
     print(f"[{'ok' if ok else '不合格'}] 字幕 {'有 Dialogue' if ok else '空 / 无'}")
@@ -185,6 +214,7 @@ def write_attestation(film: Path, spec_path: Path, spec: dict,
         "checks": {
             "canvas": [CANVAS_W, CANVAS_H],
             "max_av_delta_s": MAX_AV_DELTA,
+            "silence_floor_db": SILENCE_FLOOR_DB,
             "bilingual_body_cues": len(_ass_body_events(ass)["EN"]),
             "bilingual_lead_cues": len(_ass_body_events(outdir / "_lead.ass")["EN"]),
         },

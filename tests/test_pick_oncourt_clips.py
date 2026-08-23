@@ -51,6 +51,21 @@ def test_tennistv只有free资源进入无人值守生产(tool):
     assert tool.production_resource_problem({"id": "youtube:abc"}) == ""
 
 
+def test_candidate_claim_lease_prevents_duplicate_and_expires_for_retry(tool, monkeypatch, tmp_path):
+    claims = tmp_path / "claims.json"
+    monkeypatch.setattr(tool, "CLAIMS", claims)
+    t0 = datetime.datetime(2026, 8, 24, 10, tzinfo=datetime.timezone.utc)
+    row = {"id": "video-1", "match_id": "2026:event:qf:player", "url": "https://x/1"}
+
+    tool.claim_candidates([row], now=t0)
+    active = tool.load_active_claims(now=t0 + datetime.timedelta(minutes=10))
+    assert row["match_id"] in active
+    assert active[row["match_id"]]["status"] == "queued"
+    # draft 崩溃没机会回写状态时，leash 超时即自动恢复可重试。
+    assert tool.load_active_claims(
+        now=t0 + tool.CANDIDATE_LEASE + datetime.timedelta(seconds=1)) == {}
+
+
 def test_event_window窗口内入选窗口外排除(tool):
     # 辛辛那提 2026 窗口 08-16/08-23，今天 08-18 → 在窗口内
     assert tool.event_window({"title": "De Minaur Interview | Cincinnati 2026",

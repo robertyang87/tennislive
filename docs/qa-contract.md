@@ -57,12 +57,17 @@ spec、L0 来源签名、正文 ASS、冷开场 ASS 和最终 MP4 的 SHA-256。
 `lead_in.subs` 完全一致；顶栏有字不能冒充双语字幕。音画绝对时长差必须 ≤0.30 秒，
 不能再用单向比较放过音轨比画面更长的成片。
 
+Reel 的 L2 同样写不可变 `qc_attestation.json`，绑定正式 spec、正文 ASS 和最终
+MP4 的 hash/bytes；每次复检前先删除旧凭证。发布时重新计算当前文件并核对 Release
+资源，旧 `render.json` 或替换后的成片都不能冒充本次质检成功。Interview 还会用
+`volumedetect` 拒绝“有音轨但全程数字静音”的假通过。
+
 ## 四、L3 发布闸：QC 通过即自动推送，但必须幂等
 
-三条线共用 `publish pushplus` 出口。Interview 在发送前复核当前 spec hash、L0
-来源签名、match_id、film hash/bytes 与 L2 attestation 完全一致；随后先把
-`pushplus:<slug>:<film_sha256>` 以 `sending` 写入
-`data/interview_publish_ledger/<slug>.json` 并提交到 main，才允许 POST。
+三条线共用 `publish pushplus` 出口。发送前复核当前 spec hash、film hash/bytes 与
+L2 attestation 完全一致；Interview 还要复核 L0 来源签名和 match_id。随后先把
+`pushplus:<slug>:<film_sha256>` 以 `sending` 写入各自的
+`data/{reel,interview,explainer}_publish_ledger/<slug>.json` 并提交到 main，才允许 POST。
 
 POST 成功改为 `sent`；预占后任务失败改为 `uncertain`。三种状态都会阻断盲目
 重发，必须先查原 run/平台回执。发布历史在 `data/`，重渲替换 output 目录也擦不掉。
@@ -73,7 +78,7 @@ POST 成功改为 `sent`；预占后任务失败改为 `uncertain`。三种状�
 2. ✅ Interview 扫描改为每 15 分钟；一场一个 matrix runner，最多四场并行。
 3. ✅ 冷开场从同场官方 1080p 单场集锦末段提取原解说，并按原 cue 生成中英字幕；
    多场最多四路并行，找不到精确同场素材的 spec 保持 waiting，不降级凑数。
-4. 待做：把 explainer 的 L0/L1 和发布 ledger 提升到同一强度。
+4. ✅ 三条线发布 ledger 已统一；explainer 的 L0/L1 仍需提升到同一强度。
 
 ## 六、封面与文案（内容质量的统一要求）
 
