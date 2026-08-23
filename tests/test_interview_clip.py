@@ -2119,6 +2119,18 @@ def test_ci能看到赛后开麦的转写产物(tmp_path):
     字面的 `output/interviews` 这一行了，旧判据会红——但它想守住的事
     （转写产物摆在磁盘上、mp4 不在）**依然成立，只是换了个更宽的机制**。
 
+    ⚠️⚠️ **同一天补的第二刀：`.json3` 一开始漏了。** 老块把
+    `output/interviews/` 整段收进来（只排除 `.mp4`），`cap_*.json3`
+    （yt-dlp 拉下来的原始字幕缓存）本来就在检出范围里；换成按后缀收窄后
+    第一版只写了 `.json/.md/.txt/.ass`，`.json3` 后缀对不上 `*.json`，
+    这条判据当时没测到——直到那条 PR 自己真实跑了一趟 CI，才从 pytest
+    的 skip 明细里看出 23 条转写校验测试从"通过"退化成了"跳过"。
+    现在这份 layout 里专门放了一份 `.json3`，反向验证过：把 sparse-checkout
+    块里那行 `/output/**/*.json3` 删掉，`should_have` 那条断言立刻精确报出
+    「`cap_abc123.en.json3` 不在」——和真实 CI 那次露馅的形状一模一样。
+    另一半（mp4/jpg 不该被带进来）复用的是这条测试本来就有的
+    `should_not_have`，早先加宽整个模式集时已经反向验证过。
+
     真跑一遍能验的是**实际行为**，不是某一行字符串在不在——所以这次不再
     手翻一份 gitignore 语义的匹配器（试过，`/*` 这类锚定模式在 git 真实的
     非 cone 稀疏检出里会递归覆盖子目录，简化版正则模拟不出这个行为，
@@ -2136,6 +2148,7 @@ def test_ci能看到赛后开麦的转写产物(tmp_path):
     layout = {
         "output/interviews/foo/lines.json": "{}",
         "output/interviews/foo/lines.md": "x",
+        "output/interviews/foo/cap_abc123.en.json3": '{"events": []}',
         "output/interviews/foo/clip.mp4": "binary-stand-in",
         "output/2026-08-20/reel/bar/render.json": "{}",
         "output/2026-08-20/reel/bar/poster.jpg": "binary-stand-in",
@@ -2174,6 +2187,7 @@ def test_ci能看到赛后开麦的转写产物(tmp_path):
     got = {rel for rel in layout if (dst / rel).is_file()}
     should_have = {"output/interviews/foo/lines.json",
                    "output/interviews/foo/lines.md",
+                   "output/interviews/foo/cap_abc123.en.json3",
                    "output/2026-08-20/reel/bar/render.json",
                    "specs/reels/foo.json", "pyproject.toml"}
     should_not_have = {"output/interviews/foo/clip.mp4",
