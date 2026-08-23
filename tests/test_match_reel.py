@@ -1248,18 +1248,55 @@ def test_收尾要落在一问上不能停在数据上():
     失手：`wong-lehecka` 原来停在「排名差九十六位，生涯排名最高胜。」
 
     ⚠️ 判据只看**最后一段**的末尾，不数问号个数——中间抛几问是写稿的选择。
+
+    ⚠️ 2026-08-23 补的一条：**真正的末拍也可能是 `quote`（原声），不只是
+    `narration`。** `gauff-bejlek-cincinnati-2026-sf` 的最后一段是转播原声，
+    中文那半行是「这一次，她能拿下吗？」——一个真问句，而且是当事人／转播
+    自己说出来的，比我们替她问一句更硬（本文件「让当事人自己说」那条早就
+    偏爱这个写法）。老逻辑只扫 `narration`，量出来它落在再前一段（一句
+    陈述）上，误判成了「停在数据上」。
+
+    所以判据放宽成 **OR**：末尾一问只要落在「最后一句 narration」或者
+    「真正的最后一段（不管是 narration 还是 quote）」任意一处，就算数。
+    只加不减——已经靠 narration 过关的片子不受影响（`fritz-jodar-final` /
+    `tiafoe-musetti-cincinnati-2026-qf` 的末段都是 quote 且不带问句，但它们
+    的末句 narration 本来就问着，OR 两头有一头成立就够）。
     """
     bad, offenders = [], set()
     for slug, spec in _reel_specs().items():
+        segs = spec["segments"]
         # `.get`：原声段（`quote`）根本没有 narration 这个键
-        nars = [s.get("narration", "") for s in spec["segments"]]
+        nars = [s.get("narration", "") for s in segs]
         nars = [n for n in nars if n]
-        if not nars:
+        last_narration = nars[-1] if nars else ""
+
+        true_last_text = ""
+        last_seg = segs[-1] if segs else {}
+        nar = str(last_seg.get("narration", "")).strip()
+        if nar:
+            true_last_text = nar
+        else:
+            quote = last_seg.get("quote")
+            if isinstance(quote, str) and quote.strip():
+                true_last_text = quote.strip()
+            elif isinstance(quote, list) and quote:
+                entry = quote[-1]
+                text = entry.get("text", "") if isinstance(entry, dict) else str(entry)
+                # `text` 是「英文\n中文」，末尾一问只看中文那半行
+                zh = str(text).split("\n")[-1].strip()
+                true_last_text = zh or str(text).strip()
+
+        if not last_narration and not true_last_text:
             continue
-        if "？" not in nars[-1][-30:]:
+
+        ends_in_question = (
+            ("？" in last_narration[-30:]) or ("？" in true_last_text[-30:])
+        )
+        if not ends_in_question:
             offenders.add(slug)
             if slug not in _ENDING_LEGACY:
-                bad.append(f"{slug}: …{nars[-1][-26:]}")
+                shown = true_last_text or last_narration
+                bad.append(f"{slug}: …{shown[-26:]}")
     assert not bad, (
         "这些片子的收尾停在数据上，没有落在一问上：\n  " + "\n  ".join(bad))
 
