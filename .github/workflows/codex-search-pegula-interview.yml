@@ -7,12 +7,12 @@ permissions:
   actions: write
   contents: read
 jobs:
-  dispatch-subs:
+  dispatch-render:
     runs-on: ubuntu-latest
     steps:
-      - name: Generate Pegula subtitle lines after lead-in fix
+      - name: Render and push verified Pegula open-mic video
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh workflow run interview-clip.yml -R ${{ github.repository }} --ref main \
-            -f slug=pegula-swiatek-cincinnati-2026-sf -f mode=subs
+            -f slug=pegula-swiatek-cincinnati-2026-sf -f mode=render -f push=true
