@@ -10,7 +10,7 @@ jobs:
   dispatch-subs:
     runs-on: ubuntu-latest
     steps:
-      - name: Generate Pegula subtitle lines
+      - name: Generate Pegula subtitle lines after lead-in fix
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
