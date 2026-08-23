@@ -1,0 +1,59 @@
+name: pipeline-health
+
+on:
+  schedule:
+    - cron: "47 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: pipeline-health
+  cancel-in-progress: true
+
+jobs:
+  health:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            data/interview_publish_ledger/*.json
+            data/reel_publish_ledger/*.json
+            data/explainer_publish_ledger/*.json
+            output/**/render.json
+            tools/pipeline_health.py
+          sparse-checkout-cone-mode: false
+
+      - name: 汇总最近运行、慢步骤、SLA 与发布账本
+        id: health
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python3 tools/pipeline_health.py --limit 10 --step-runs 3
+
+      - name: 趋势异常时推送微信告警
+        if: steps.health.outputs.alert == 'true'
+        env:
+          PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
+          MESSAGE: ${{ steps.health.outputs.message }}
+        run: |
+          echo "::warning::$MESSAGE"
+          if [ -z "$PUSHPLUS_TOKEN" ]; then
+            echo "::warning::没有 PUSHPLUS_TOKEN，只保留 Actions 告警"
+            exit 0
+          fi
+          BODY=$(jq -nc --arg token "$PUSHPLUS_TOKEN" --arg message "$MESSAGE" \
+            --arg url "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
+            '{token:$token,title:"⚠️ 网球视频流水线趋势异常",content:($message + "<br><a href=\"" + $url + "\">健康报告</a>"),template:"html"}')
+          RESP=$(curl -sS --fail -m 20 --retry 3 --retry-all-errors \
+            -X POST https://www.pushplus.plus/send -H "Content-Type: application/json" -d "$BODY")
+          echo "PushPlus 返回：$RESP"
+          echo "$RESP" | jq -e '.code == 200' >/dev/null || {
+            echo "::error::PushPlus 明确拒绝了健康告警"; exit 1; }
+
+      - name: 监控自身失败时留出明确故障
+        if: failure()
+        run: echo "::error::pipeline-health 自身失败；当前流水线健康状态不可观测"

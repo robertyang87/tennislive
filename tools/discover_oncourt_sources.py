@@ -34,6 +34,7 @@ import json
 import re
 import subprocess
 import sys
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -105,21 +106,34 @@ def queries() -> list[str]:
     return qs
 
 
-def sweep(qs: list[str], per: int) -> tuple[collections.Counter, dict, dict]:
+def _search(q: str, per: int) -> tuple[str, list[str], str]:
+    """单个搜索任务；状态与空结果分开，便于并行后仍能报超时。"""
+    try:
+        proc = subprocess.run(
+            ["yt-dlp", "--flat-playlist",
+             "--print", "%(channel)s ||| %(channel_url)s ||| %(title)s",
+             f"ytsearch{per}:{q}"],
+            capture_output=True, text=True, timeout=90, check=False)
+    except subprocess.TimeoutExpired:
+        return q, [], "timeout"
+    if proc.returncode and not proc.stdout.strip():
+        return q, [], "error"
+    return q, proc.stdout.strip().split("\n"), "ok"
+
+
+def sweep(qs: list[str], per: int, max_parallel: int = 4) -> tuple[collections.Counter, dict, dict]:
     hits: collections.Counter = collections.Counter()
     url: dict[str, str] = {}
     sample: dict[str, str] = {}
-    for q in qs:
-        try:
-            proc = subprocess.run(
-                ["yt-dlp", "--flat-playlist",
-                 "--print", "%(channel)s ||| %(channel_url)s ||| %(title)s",
-                 f"ytsearch{per}:{q}"],
-                capture_output=True, text=True, timeout=160)
-        except subprocess.TimeoutExpired:
-            print(f"  （超时跳过：{q[:40]}）", file=sys.stderr)
+    # 查询彼此独立，旧版串行 20+ 组，某一组超时会让周扫多等
+    # 160s。4 路保持温和配额，executor.map 保证样例选择结果可重现。
+    with ThreadPoolExecutor(max_workers=min(max_parallel, len(qs))) as pool:
+        results = list(pool.map(lambda q: _search(q, per), qs))
+    for q, lines, status in results:
+        if status != "ok":
+            print(f"  （{status} 跳过：{q[:40]}）", file=sys.stderr)
             continue
-        for line in proc.stdout.strip().split("\n"):
+        for line in lines:
             parts = line.split(" ||| ")
             if len(parts) < 3 or not HIT.search(parts[2]):
                 continue
@@ -136,12 +150,16 @@ def main() -> int:
     ap.add_argument("--min", type=int, default=1, help="至少命中几条才列出（默认 1）")
     ap.add_argument("--per", type=int, default=10, help="每个查询取几条（默认 10）")
     ap.add_argument("--json", help="把候选写成 JSON")
+    ap.add_argument("--max-parallel", type=int, default=4,
+                    help="搜索查询并行数（默认 4，范围 1..8）")
     args = ap.parse_args()
+    if not 1 <= args.max_parallel <= 8:
+        ap.error("--max-parallel 必须在 1..8")
 
     known_urls, known_names = registry_channels()
     qs = queries()
     print(f"用 {len(qs)} 组查询词搜索…（注册表已有 {len(known_names)} 个源）\n")
-    hits, url, sample = sweep(qs, args.per)
+    hits, url, sample = sweep(qs, args.per, args.max_parallel)
 
     new = []
     for ch, n in hits.most_common():

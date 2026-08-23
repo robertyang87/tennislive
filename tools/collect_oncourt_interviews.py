@@ -113,18 +113,23 @@ import sys
 import time
 import urllib.parse
 from concurrent.futures import ThreadPoolExecutor
-from datetime import datetime, timezone
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 SOURCES = ROOT / "data" / "oncourt_sources.json"
 STORE = ROOT / "data" / "oncourt_interviews.json"
 VERDICTS = ROOT / "data" / "oncourt_verify.json"
+CALENDAR = ROOT / "data" / "tour_calendar_2026.json"
+SCAN_STATE = ROOT / "data" / "oncourt_scan_state.json"
 
 # yt-dlp 单源超时。频道扫 400 条时会比较久。
-TIMEOUT = 300
-# 429 退避阶梯。实测连续第 4 次才成功过，别只重试一次。
-BACKOFF = [0, 20, 45, 90]
+# 日常只扫 60 条，不能沿用「全量 800 条」的 300s 单次超时。
+# 否则一个坏句柄即使和其他源并行，也能独占 worker 近 20 分钟。
+DAILY_TIMEOUT = 75
+FULL_TIMEOUT = 300
+# 429 只做有界重试；下一轮定时任务本身就是后续重试。
+BACKOFF = [0, 5, 15]
 
 FIELD_SEP = " ||| "
 
@@ -133,6 +138,16 @@ FIELD_SEP = " ||| "
 # 60 条足够覆盖一天的更新：即使大满贯期间，单个频道一天也发不到 60 条。
 # 重建基线或新增源时加 --full 才走深的那套。
 DAILY_DEPTH = 60
+
+# B 站每个查询必须留 20s，34 个中国球员全扫的理论下限就是
+# 12 分钟。日常每轮固定扫前 4 位，再从其余名单轮转 4 位：单轮仍只有 8 个
+# 球员查询，但约两小时覆盖整张表，而不是为了提速永久放弃名单后 26 位。
+BILI_DAILY_ALWAYS = 4
+BILI_DAILY_ROTATING = 4
+
+# WTA ID 是单调递增的。首次/全量回扫 900，日常从上次成功的
+# top 继续，并重叠 120 个 ID 容纳迟到上架或单页抖动。
+WTA_CURSOR_OVERLAP = 120
 
 # tennistv 的 `videoType=interviews` 里混着发布会，用时长切开：
 # 场上采访 40 秒–4 分钟，发布会 6 分钟起。这个界是从 Tennis TV 那批
@@ -281,7 +296,78 @@ def load_store() -> dict:
         return json.load(fh)
 
 
-def scan_tennistv(url: str, _depth: int) -> tuple[list[dict], str]:
+def _load_scan_state() -> dict:
+    try:
+        data = json.loads(SCAN_STATE.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return {"version": 1, "sources": {}}
+    if not isinstance(data, dict):
+        return {"version": 1, "sources": {}}
+    data.setdefault("version", 1)
+    data.setdefault("sources", {})
+    return data
+
+
+def _write_scan_state(data: dict) -> None:
+    """原子替换扫描游标，避免 runner 被终止时留下半个 JSON。"""
+    SCAN_STATE.parent.mkdir(parents=True, exist_ok=True)
+    tmp = SCAN_STATE.with_suffix(".tmp")
+    tmp.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    tmp.replace(SCAN_STATE)
+
+
+def _event_dates(row: dict, year: int) -> tuple[date, date] | None:
+    try:
+        start = date(year, int(row["start"][:2]), int(row["start"][3:]))
+        end = date(year, int(row["end"][:2]), int(row["end"][3:]))
+    except (KeyError, TypeError, ValueError):
+        return None
+    return start, end
+
+
+def tennistv_daily_urls(url: str, *, today: date | None = None) -> list[str]:
+    """日常只读库页和当前赛期的 ATP 赛事页。
+
+    注册表为重建基线保留了 2025/2026 约 57 个 URL，全部串行 curl
+    是采集超时的主因。库页保底最新 20 条，赛事页只在开赛前 1 天
+    到结束后 3 天深扫；``--full`` 才读全部历史 URL。
+    """
+    urls = [u.strip() for u in url.split(",") if u.strip()]
+    library = [u for u in urls if "/library/interviews" in u]
+    today = today or datetime.now(timezone.utc).date()
+    try:
+        raw = json.loads(CALENDAR.read_text(encoding="utf-8"))
+        events = raw if isinstance(raw, list) else raw.get("events") or []
+    except (OSError, ValueError):
+        # 赛历坏了时优先保覆盖，不在这里静默漏赛事页。
+        return [u for u in urls if f"_{today.year}/" in u] or urls
+
+    active_patterns = []
+    for event in events:
+        if event.get("tour") not in ("atp", "both"):
+            continue
+        dates = _event_dates(event, today.year)
+        if not dates:
+            continue
+        start, end = dates
+        if start - timedelta(days=1) <= today <= end + timedelta(days=3):
+            try:
+                active_patterns.append(re.compile(event.get("pat") or "a^", re.IGNORECASE))
+            except re.error:
+                continue
+
+    selected = list(library)
+    for u in urls:
+        if f"_{today.year}/" not in u:
+            continue
+        slug = urllib.parse.urlparse(u).path.rsplit("/", 1)[-1].replace("-", " ")
+        if any(rx.search(slug) for rx in active_patterns):
+            selected.append(u)
+    # 去重但保留注册表顺序。
+    return list(dict.fromkeys(selected))
+
+
+def scan_tennistv(url: str, _depth: int, *, full: bool = False) -> tuple[list[dict], str]:
     """tennistv.com 的媒体库——不是 YouTube，得单独抓。
 
     这是唯一系统性覆盖 **ATP 250** 场上采访的来源。实测 20 条里 16 条
@@ -321,7 +407,8 @@ def scan_tennistv(url: str, _depth: int) -> tuple[list[dict], str]:
     （`citi-open-2025` 通，`citi-open-2026` 404）。ID 没有公开索引页
     （索引是 JS 渲染的），所以维护在注册表的 url 字段里，逗号分隔。
     """
-    urls = [u.strip() for u in url.split(",") if u.strip()]
+    urls = ([u.strip() for u in url.split(",") if u.strip()]
+            if full else tennistv_daily_urls(url))
     raw = ""
     for u in urls:
         try:
@@ -369,7 +456,7 @@ def scan_tennistv(url: str, _depth: int) -> tuple[list[dict], str]:
         })
     if not rows:
         return [], "no-entries"
-    return rows, "ok"
+    return rows, f"ok（扫 {len(urls)} 个页）"
 
 
 # slug 里 `_digital-download_m50936` 这一截是 WTA 发行系统的资产编号，
@@ -390,6 +477,11 @@ WTA_SWEEP_BACK = 900
 WTA_SWEEP_JOBS = 12
 # 未发布的 ID 不返回 404，而是回退到站点通名——**软 404，得按标题认**。
 _WTA_MISS_TITLE = "Women's Tennis Association - Official"
+_WTA_CURSOR_PENDING: dict | None = None
+
+
+class WtaFetchError(RuntimeError):
+    """WTA 详情页没有成功返回；不能当成「这个 ID 不是采访」。"""
 
 
 def _wta_page(vid: str) -> str | None:
@@ -403,10 +495,13 @@ def _wta_page(vid: str) -> str | None:
         proc = subprocess.run(
             ["curl", "-sS", "--compressed", "--max-time", "25",
              "-H", "User-Agent: Mozilla/5.0", f"https://www.wtatennis.com/videos/{vid}"],
-            capture_output=True, text=True, timeout=45)
-    except subprocess.TimeoutExpired:
-        return None      # 超时是「没问过」，不是「不存在」
-    return proc.stdout or None
+            capture_output=True, text=True, timeout=45, check=False)
+    except subprocess.TimeoutExpired as exc:
+        raise WtaFetchError(f"{vid}: timeout") from exc
+    if proc.returncode != 0 or not proc.stdout:
+        tail = (proc.stderr or "no response").strip()[-240:]
+        raise WtaFetchError(f"{vid}: {tail}")
+    return proc.stdout
 
 
 def _wta_item(vid: str) -> dict | None:
@@ -462,7 +557,24 @@ def _wta_row(it: dict) -> dict:
     }
 
 
-def scan_wta(url: str, _depth: int) -> tuple[list[dict], str]:
+def _wta_todo(top: int, *, full: bool, last_top: int | None) -> tuple[list[str], bool]:
+    """返回当轮 ID 和是否出现游标断档。
+
+    日常增量保留 120 ID 重叠。如 runner 停了很多天，差距大于
+    900 时优先扫最新 900 保证时效，并在状态中明报 gap，历史补档
+    由 ``--full`` 处理，不把一次定时任拖成几千请求。
+    """
+    if full or last_top is None or last_top <= 0:
+        low, gap = max(1, top - WTA_SWEEP_BACK), False
+    elif (top < last_top - WTA_CURSOR_OVERLAP
+          or top - last_top > WTA_SWEEP_BACK):
+        low, gap = max(1, top - WTA_SWEEP_BACK), True
+    else:
+        low, gap = max(1, last_top - WTA_CURSOR_OVERLAP + 1), False
+    return [str(v) for v in range(low, top + 1)], gap
+
+
+def scan_wta(url: str, _depth: int, *, full: bool = False) -> tuple[list[dict], str]:
     """wtatennis.com 的视频——WTA 那边对应 tennistv.com 的东西。
 
     两步：先读列表页拿到**当前最新的 ID**，再从那儿往回扫 `WTA_SWEEP_BACK`
@@ -503,10 +615,39 @@ def scan_wta(url: str, _depth: int) -> tuple[list[dict], str]:
         return [], "error: 列表页一个视频链接都没取到"
 
     top = max(int(v) for v in seen)
-    todo = sorted({str(v) for v in range(top - WTA_SWEEP_BACK, top + 1)} | listed)
+    state = _load_scan_state().get("sources", {}).get("wta", {})
+    try:
+        last_top = int(state.get("last_top"))
+    except (TypeError, ValueError):
+        last_top = None
+    incremental, cursor_gap = _wta_todo(top, full=full, last_top=last_top)
+    todo = sorted(set(incremental) | listed, key=int)
+
+    def _probe(vid: str) -> tuple[dict | None, bool]:
+        try:
+            return _wta_item(vid), False
+        except WtaFetchError:
+            return None, True
+
     with ThreadPoolExecutor(WTA_SWEEP_JOBS) as ex:
-        items = [it for it in ex.map(_wta_item, todo) if it]
-    return [_wta_row(it) for it in items], f"ok（扫 {len(todo)} 个 ID）"
+        probed = list(ex.map(_probe, todo))
+    items = [it for it, _failed in probed if it]
+    failed = sum(failed for _it, failed in probed)
+
+    # 只有完整成功才推进游标；否则下一轮仍会带重叠区重试。
+    global _WTA_CURSOR_PENDING
+    _WTA_CURSOR_PENDING = None if failed else {
+        "last_top": top,
+        "updated_at": datetime.now(timezone.utc).isoformat(),
+        "overlap": WTA_CURSOR_OVERLAP,
+        **({"gap_detected": True} if cursor_gap else {}),
+    }
+    state_kind = "全量" if full or last_top is None else "增量"
+    suffix = f"，失败 {failed}" if failed else ""
+    if cursor_gap:
+        suffix += "，检测到游标断档（最新优先）"
+    status = "ok" if not failed else "partial"
+    return [_wta_row(it) for it in items], f"{status}（{state_kind}扫 {len(todo)} 个 ID{suffix}）"
 
 
 # ---------------------------------------------------------------- 哔哩哔哩
@@ -582,7 +723,21 @@ def _bili_row(r: dict) -> dict:
     }
 
 
-def scan_bilibili(url: str, _depth: int) -> tuple[list[dict], str]:
+def _bili_daily_players(players: list[dict], *, now: datetime | None = None) -> list[dict]:
+    """头部每轮必扫，其余按 15 分钟时间片循环，且不依赖持久游标。"""
+    if len(players) <= BILI_DAILY_ALWAYS + BILI_DAILY_ROTATING:
+        return players
+    fixed = players[:BILI_DAILY_ALWAYS]
+    rotating = players[BILI_DAILY_ALWAYS:]
+    now = now or datetime.now(timezone.utc)
+    slot = int(now.timestamp() // (15 * 60))
+    start = (slot * BILI_DAILY_ROTATING) % len(rotating)
+    picked = [rotating[(start + i) % len(rotating)]
+              for i in range(min(BILI_DAILY_ROTATING, len(rotating)))]
+    return fixed + picked
+
+
+def scan_bilibili(url: str, _depth: int, *, full: bool = False) -> tuple[list[dict], str]:
     """B 站搜索——**中国球员那一档在别处根本拿不到的东西**。
 
     为什么值得单开一路：2026 华盛顿王欣瑜首轮赢球，做了场上采访
@@ -615,7 +770,10 @@ def scan_bilibili(url: str, _depth: int) -> tuple[list[dict], str]:
     words = list(_bili_keywords())
     if CN_PLAYERS.exists():
         with CN_PLAYERS.open(encoding="utf-8") as fh:
-            words += [f"{p['zh']} 采访" for p in json.load(fh)["players"]]
+            players = json.load(fh)["players"]
+            if not full:
+                players = _bili_daily_players(players)
+            words += [f"{p['zh']} 采访" for p in players]
 
     if not _bili_alive():
         return [], "rate-limited"
@@ -645,6 +803,7 @@ def scan(url: str, depth: int) -> tuple[list[dict], str]:
     唯一能分开它们的信息全在 stderr 里。
     """
     last_err = ""
+    timeout = FULL_TIMEOUT if depth > DAILY_DEPTH else DAILY_TIMEOUT
     for wait in BACKOFF:
         if wait:
             time.sleep(wait)
@@ -658,10 +817,10 @@ def scan(url: str, depth: int) -> tuple[list[dict], str]:
                     ),
                     url,
                 ],
-                capture_output=True, text=True, timeout=TIMEOUT,
+                capture_output=True, text=True, timeout=timeout,
             )
         except subprocess.TimeoutExpired:
-            last_err = f"超时（{TIMEOUT}s）"
+            last_err = f"超时（{timeout}s）"
             continue
 
         err = proc.stderr or ""
@@ -695,6 +854,8 @@ def scan(url: str, depth: int) -> tuple[list[dict], str]:
 
 
 def main() -> int:
+    global _WTA_CURSOR_PENDING
+    _WTA_CURSOR_PENDING = None
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--dry-run", action="store_true", help="只打印，不写 data/oncourt_interviews.json")
@@ -770,7 +931,10 @@ def main() -> int:
                  "bilibili": scan_bilibili}.get(src.get("fetch"), scan)
         depth = src.get("scan_depth", 150) if args.full else min(
             args.daily_depth, src.get("scan_depth", 150))
-        rows, status = fetch(src["url"], depth)
+        if src.get("fetch") in {"tennistv", "wta", "bilibili"}:
+            rows, status = fetch(src["url"], depth, full=args.full)
+        else:
+            rows, status = fetch(src["url"], depth)
         # 记请求真正返回的时刻，不等其余来源全扫完再伪装成“刚发现”。这个值
         # 后续可用来单独量发现→生产准备延迟，和 render 的 received_at 不混。
         fetched_at = datetime.now(timezone.utc).isoformat()
@@ -890,6 +1054,14 @@ def main() -> int:
                 with VERDICTS.open("w", encoding="utf-8") as fh:
                     json.dump(data, fh, ensure_ascii=False, indent=2)
                     fh.write("\n")
+
+    # WTA 游标和采访库是两份产物：这轮即使没找到采访，只要
+    # 901/121 个详情请求完整成功，也必须推进 top，否则下轮又白扫。
+    # dry-run 不改任何持久状态。
+    if not args.dry_run and _WTA_CURSOR_PENDING:
+        scan_state = _load_scan_state()
+        scan_state["sources"]["wta"] = _WTA_CURSOR_PENDING
+        _write_scan_state(scan_state)
 
     if purged:
         print(f"[库存清理] 按人工 verdict 移除 {len(purged)} 条非场上采访："

@@ -310,6 +310,22 @@ def test_稀疏检出下也要拦得住(repo: Path):
     assert gate.pick(CHANGED, repo) is None
 
 
+def test_稀疏检出下独立发布账本也不能失忆(repo: Path, capsys):
+    """ledger 在 Git 里、但 data/ 没被检出时，必须从 HEAD 读取并阻断重发。
+
+    只用 ``Path.is_file()`` 会把这种状态当成无账本；采访 output 又可能被重渲，
+    旧 pushed.json 不可靠，于是同一份成片会被再次推到微信。
+    """
+    _spec(repo, {"auto": True})
+    outdir = repo / "output/interviews/demo"
+    ledger = gate.reserve(repo, "demo", outdir, "run-1", "2026-08-23T00:00:00Z")
+    _commit_all(repo)
+    ledger.unlink()  # 模拟 workflow 的 sparse checkout 没把 data/ 那格落到工作区
+
+    assert gate.pick(CHANGED, repo) is None
+    assert "sending" in capsys.readouterr().out
+
+
 # ---------------------------------------------------------------- 闸 4：海报
 
 def test_海报不在仓库里就不发(repo: Path, capsys):

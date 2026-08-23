@@ -42,11 +42,13 @@ LIB = ROOT / "data" / "oncourt_interviews.json"
 CAL = ROOT / "data" / "tour_calendar_2026.json"
 OUT = ROOT / "data" / "interview_clip_candidates.json"
 REVIEW_QUEUE = ROOT / "data" / "interview_source_review_queue.json"
+CLAIMS = ROOT / "data" / "interview_candidate_claims.json"
 SPECS = ROOT / "specs" / "interviews"
 
 # 赛事「还在打」的余量：开始前 1 天（时差）到结束后 3 天（集锦/采访晚两天上）
 PAD_BEFORE = datetime.timedelta(days=1)
 PAD_AFTER = datetime.timedelta(days=3)
+CANDIDATE_LEASE = datetime.timedelta(minutes=45)
 
 _ROUND_ID = {
     "决赛": "f", "半决赛": "sf", "四分之一决赛": "qf",
@@ -122,6 +124,70 @@ def done_urls() -> set[str]:
     return out
 
 
+def _utc(value: str) -> datetime.datetime | None:
+    try:
+        parsed = datetime.datetime.fromisoformat(value.replace("Z", "+00:00"))
+    except (TypeError, ValueError, AttributeError):
+        return None
+    if parsed.tzinfo is None:
+        parsed = parsed.replace(tzinfo=datetime.timezone.utc)
+    return parsed.astimezone(datetime.timezone.utc)
+
+
+def load_active_claims(*, now: datetime.datetime | None = None) -> dict[str, dict]:
+    """读取未过期的候选 lease。
+
+    下一轮采集可以与上一轮转写并行，但不能把同一 match_id
+    再排一次。lease 只管「正在做」：45 分钟后自动释放，任务崩溃
+    不会把候选永久卡死；成功后则由 ``done_urls`` 永久去重。
+    """
+    now = now or datetime.datetime.now(datetime.timezone.utc)
+    if now.tzinfo is None:
+        now = now.replace(tzinfo=datetime.timezone.utc)
+    try:
+        data = json.loads(CLAIMS.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return {}
+    rows = data.get("claims") if isinstance(data, dict) else {}
+    out = {}
+    for match_id, row in (rows or {}).items():
+        claimed = _utc(row.get("claimed_at")) if isinstance(row, dict) else None
+        if claimed and now - claimed < CANDIDATE_LEASE:
+            out[match_id] = row
+    return out
+
+
+def claim_candidates(rows: list[dict], *, now: datetime.datetime | None = None) -> dict:
+    """为本轮 matrix 候选领取可超时的 queued lease。"""
+    now = now or datetime.datetime.now(datetime.timezone.utc)
+    if now.tzinfo is None:
+        now = now.replace(tzinfo=datetime.timezone.utc)
+    try:
+        raw = json.loads(CLAIMS.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        raw = {"version": 1, "claims": {}}
+    claims = raw.setdefault("claims", {})
+    # 过期记录不影响重试，但保留尝试次数便于追故障。
+    stamp = now.astimezone(datetime.timezone.utc).isoformat()
+    for row in rows:
+        match_id = row.get("match_id")
+        if not match_id:
+            continue
+        previous = claims.get(match_id) or {}
+        claims[match_id] = {
+            "status": "queued",
+            "claimed_at": stamp,
+            "candidate_id": row.get("id"),
+            "url": row.get("url"),
+            "attempts": int(previous.get("attempts") or 0) + 1,
+        }
+    CLAIMS.parent.mkdir(parents=True, exist_ok=True)
+    tmp = CLAIMS.with_suffix(".tmp")
+    tmp.write_text(json.dumps(raw, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    tmp.replace(CLAIMS)
+    return raw
+
+
 def load_calendar() -> list[dict]:
     data = json.loads(CAL.read_text(encoding="utf-8"))
     if isinstance(data, list):
@@ -166,6 +232,7 @@ def candidate_sets(*, today: datetime.date | None = None) -> tuple[list[dict], l
     _players, *rules = load_cn()  # load_cn 返回 (players, full, sur, excl)，pick 要后三个
     done = done_urls()
     cal = load_calendar()
+    active_claims = load_active_claims()
 
     verified: dict[str, tuple[int, dict]] = {}
     pending: list[dict] = []
@@ -212,6 +279,10 @@ def candidate_sets(*, today: datetime.date | None = None) -> tuple[list[dict], l
             }
             pending.append(row)
             continue
+        if match_id and match_id in active_claims:
+            # 已有上一轮 draft 在跑。这不是已完成，不写进 pending；
+            # lease 过期后自动重试。
+            continue
         if source_verification.get("status") != "verified" or not match_id:
             if not match_id:
                 row["source_verification"] = {
@@ -251,8 +322,10 @@ def main() -> int:
                        encoding="utf-8")
         REVIEW_QUEUE.write_text(json.dumps(pending, ensure_ascii=False, indent=2),
                                 encoding="utf-8")
+        claim_candidates(cands)
         print(f"\n候选 → {OUT}")
         print(f"待内容身份复核 {len(pending)} 条 → {REVIEW_QUEUE}")
+        print(f"本轮已领取 {len(cands)} 条（45 分钟失败自动释放）→ {CLAIMS}")
     return 0
 
 

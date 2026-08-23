@@ -245,6 +245,85 @@ def test_daily_depth_is_much_shallower_than_baseline_depths():
     assert DAILY_DEPTH >= 40, "太小会漏掉赛事高峰期一天的更新"
 
 
+def test_wta_daily_scan_uses_cursor_overlap_instead_of_900_every_time():
+    """WTA 首轮深扫建游标，后续只扫新 ID + 120 重叠。"""
+    from tools.collect_oncourt_interviews import WTA_CURSOR_OVERLAP, _wta_todo
+
+    first, gap = _wta_todo(5000, full=False, last_top=None)
+    assert len(first) == 901 and not gap
+    daily, gap = _wta_todo(5030, full=False, last_top=5000)
+    assert daily[0] == str(5000 - WTA_CURSOR_OVERLAP + 1)
+    assert daily[-1] == "5030"
+    assert len(daily) == WTA_CURSOR_OVERLAP + 30
+    assert not gap
+    # 停跑多日时不让定时任爆成几千请求，但明报 gap。
+    stale, gap = _wta_todo(7000, full=False, last_top=5000)
+    assert len(stale) == 901 and gap
+
+
+def test_tennistv_daily_only_scans_library_and_active_event(monkeypatch, tmp_path):
+    import datetime
+
+    import tools.collect_oncourt_interviews as ci
+
+    cal = tmp_path / "cal.json"
+    cal.write_text(json.dumps({"events": [
+        {"tour": "atp", "start": "08-16", "end": "08-23", "pat": "cincinnati"},
+        {"tour": "atp", "start": "03-25", "end": "04-05", "pat": "miami"},
+    ]}), encoding="utf-8")
+    monkeypatch.setattr(ci, "CALENDAR", cal)
+    urls = ("https://www.tennistv.com/library/interviews,"
+            "https://www.tennistv.com/tournaments/422_2026/cincinnati,"
+            "https://www.tennistv.com/tournaments/403_2026/miami,"
+            "https://www.tennistv.com/tournaments/422_2025/cincinnati")
+    got = ci.tennistv_daily_urls(urls, today=datetime.date(2026, 8, 24))
+    assert got == [
+        "https://www.tennistv.com/library/interviews",
+        "https://www.tennistv.com/tournaments/422_2026/cincinnati",
+    ]
+
+
+def test_bilibili_daily_caps_player_queries_but_full_keeps_all(monkeypatch, tmp_path):
+    import tools.collect_oncourt_interviews as ci
+
+    players = tmp_path / "players.json"
+    players.write_text(json.dumps({"players": [
+        {"zh": f"球员{i}", "en": f"Player {i}"} for i in range(20)
+    ]}), encoding="utf-8")
+    monkeypatch.setattr(ci, "CN_PLAYERS", players)
+    monkeypatch.setattr(ci, "BILI_GAP_S", 0)
+    monkeypatch.setattr(ci, "_bili_keywords", lambda: ["通用词"])
+    monkeypatch.setattr(ci, "_bili_alive", lambda: True)
+    asked = []
+    monkeypatch.setattr(ci, "_bili_search", lambda word: asked.append(word) or [])
+
+    ci.scan_bilibili("https://example.test", 60, full=False)
+    expected = ci.BILI_DAILY_ALWAYS + ci.BILI_DAILY_ROTATING
+    assert len(asked) == 1 + expected
+    asked.clear()
+    ci.scan_bilibili("https://example.test", 150, full=True)
+    assert len(asked) == 21
+
+
+def test_bilibili_daily_keeps_headliners_and_rotates_the_rest():
+    import datetime as dt
+
+    import tools.collect_oncourt_interviews as ci
+
+    players = [{"zh": f"球员{i}"} for i in range(20)]
+    start = dt.datetime(2026, 8, 24, 0, 0, tzinfo=dt.timezone.utc)
+    first = ci._bili_daily_players(players, now=start)
+    second = ci._bili_daily_players(players, now=start + dt.timedelta(minutes=15))
+    assert first[:4] == players[:4] == second[:4], "头部球员必须每轮都扫"
+    assert first[4:] != second[4:], "后排球员要轮转，不能永远只扫名单前八位"
+    seen = set()
+    for offset in range(4):
+        rows = ci._bili_daily_players(
+            players, now=start + dt.timedelta(minutes=15 * offset))
+        seen.update(row["zh"] for row in rows)
+    assert seen == {row["zh"] for row in players}, "四轮应覆盖这张20人测试名单"
+
+
 def test_discovery_dedup_recognises_the_same_channel_in_both_url_forms():
     """注册表里同一频道有 @句柄 和 /channel/ID 两种写法，去重要认得出。
 

@@ -115,11 +115,15 @@ def _ledger_path(repo: Path, slug: str) -> Path:
 
 def _load_ledger(repo: Path, slug: str) -> dict:
     path = _ledger_path(repo, slug)
-    if not path.is_file():
+    # 自动推送工作流在 gate 阶段是稀疏检出。ledger 即使已经在 Git index/HEAD
+    # 里，也可能根本没有落到工作区；只用 is_file() 会把已发送记录当成不存在，
+    # 同一条采访因此再次进入发送。和 pushed.json / poster.jpg 一样，先问 Git，
+    # 再用 _tracked_bytes() 从 HEAD 读取未检出的内容。
+    if not tracked(repo, path):
         return {"slug": slug, "channel": "pushplus", "attempts": []}
     try:
-        data = json.loads(path.read_text(encoding="utf-8"))
-    except (OSError, ValueError) as exc:
+        data = json.loads(_tracked_bytes(repo, path))
+    except (OSError, ValueError, UnicodeDecodeError) as exc:
         raise Skip(f"{path} 损坏，不能在未知发布状态下继续") from exc
     data.setdefault("attempts", [])
     return data

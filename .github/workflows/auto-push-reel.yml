@@ -63,6 +63,7 @@ jobs:
           # 之后 `git sparse-checkout add` 回来。
           sparse-checkout: |
             .github
+            data/reel_publish_ledger
             specs
             src
             tools
@@ -132,6 +133,24 @@ jobs:
             git push origin main
           fi
 
+      - name: 预占发布账本（发送前）
+        id: reserve
+        if: steps.gate.outputs.found == 'true'
+        run: |
+          RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          python tools/auto_push_gate.py --reserve "${{ steps.gate.outputs.outdir }}" \
+            --run "$RUN_URL" --now "$(date -u +%FT%TZ)"
+          git config user.name "Claude"
+          git config user.email "noreply@anthropic.com"
+          git add --sparse "data/reel_publish_ledger/${{ steps.gate.outputs.slug }}.json"
+          git commit -m "reel: 预占推送 ${{ steps.gate.outputs.slug }}"
+          for attempt in 1 2 3 4 5; do
+            if git push origin main; then exit 0; fi
+            git pull --rebase origin main || { git rebase --abort || true; }
+            sleep $((attempt * 3 + RANDOM % 5))
+          done
+          echo "::error::发送前账本没有落进 main，不允许发送"; exit 1
+
       - name: 推送到微信
         if: steps.gate.outputs.found == 'true'
         env:
@@ -161,10 +180,25 @@ jobs:
             --record "${{ steps.gate.outputs.outdir }}" \
             --run "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
             --now "$(date -u +%FT%TZ)"
-          git add --sparse "${{ steps.gate.outputs.outdir }}"
+          git add --sparse "${{ steps.gate.outputs.outdir }}" \
+            "data/reel_publish_ledger/${{ steps.gate.outputs.slug }}.json"
           python tools/check_staged_file_sizes.py
           git commit -m "reel: ${{ steps.gate.outputs.slug }} 已自动推送"
           git pull --rebase origin main
+          git push origin main
+
+      - name: 已预占后失败则标记状态不明
+        if: failure() && steps.reserve.outcome == 'success'
+        continue-on-error: true
+        run: |
+          python tools/auto_push_gate.py --uncertain "${{ steps.gate.outputs.outdir }}" \
+            --run "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
+            --now "$(date -u +%FT%TZ)"
+          git config user.name "Claude"
+          git config user.email "noreply@anthropic.com"
+          git add --sparse "data/reel_publish_ledger/${{ steps.gate.outputs.slug }}.json"
+          git commit -m "reel: ${{ steps.gate.outputs.slug }} 推送状态待核实" || exit 0
+          git pull --rebase origin main || { git rebase --abort || true; }
           git push origin main
 
       - name: 失败时告警

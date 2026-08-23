@@ -7,22 +7,24 @@ run 30755226229）。43 秒不值得优化，真正的成本是**人的往返**�
 合并、再记得回来点一次 dispatch。这个脚本要省掉的是最后那一下。
 
 **而它是这条链上唯一新增的风险点**，因为微信那条消息发出去收不回来。
-所以判据全部收在这儿（不写进 YAML，那儿测不了），五道闸一道都不能省：
+所以判据全部收在这儿（不写进 YAML，那儿测不了），六道闸一道都不能省：
 
 1. **路径形状**必须是 `output/<日期>/reel/<slug>/render.json`
-2. spec 里必须显式写 `"push": {"auto": true}` ——**默认关**，
+2. **L2 不可变凭证**必须与当前 spec、烧片字幕、成片 hash/bytes 以及 Release
+   文件大小完全一致；`render.json` 只是流程信号，不能冒充“质检通过”
+3. spec 里必须显式写 `"push": {"auto": true}` ——**默认关**，
    和 `mixed_fps` / `silent_source` 一个形状：认领这一步把「想清楚了」和
    「凑合一下」分开
-3. 这条**没推过**：`<outdir>/pushed.json` 在仓库里就说明发过了。
+4. 这条**没推过**：`<outdir>/pushed.json` 在仓库里就说明发过了。
    查产物，不查信号——「工作流跑过一次」证明不了消息发出去了。
    ⚠️ 查的是 **`git ls-files`，不是 `test -f`**，两个原因缺一不可：
    ① 这条工作流是稀疏检出的，判断时 `output/` 那一格**还没加回工作区**，
    按文件存不存在判**恒为假**——那道闸等于没装，会重复发；
    ② 只活在工作区里的标记本来就不算数（同一个毛病在复制页上踩过两次：
    日志印着链接、步骤 success、人点开 404）
-4. **海报在仓库里**：`<outdir>/poster.jpg` 是推送正文的第一屏，没有它这条
+5. **海报在仓库里**：`<outdir>/poster.jpg` 是推送正文的第一屏，没有它这条
    消息只剩两个按钮，看不出这是谁打谁。见 `wants_auto_push` 里那一段
-5. 一趟**最多一条**。一次合并带进来两条成片就一条都不发，报出来让人手动。
+6. 一趟**最多一条**。一次合并带进来两条成片就一条都不发，报出来让人手动。
    批量自动发微信，错一次就是错一片
 
 判据在 `tests/test_auto_push.py`，每一道都反向验证过。
@@ -36,6 +38,7 @@ run 30755226229）。43 秒不值得优化，真正的成本是**人的往返**�
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import re
@@ -43,12 +46,15 @@ import subprocess
 import sys
 from pathlib import Path
 
+from publication_ledger import blocking_attempt, write as write_ledger
+
 # `output/2026-08-03/reel/eala-pegula/render.json`
 _RENDER_JSON = re.compile(
     r"^output/(\d{4}-\d\d-\d\d)/reel/([^/]+)/render\.json$")
 
 SPEC_DIR = Path("specs/reels")
 MARKER = "pushed.json"
+LEDGER_COLUMN = "reel"
 
 
 class Skip(Exception):
@@ -88,8 +94,69 @@ def _spec_paths(repo: Path, slug: str) -> tuple[Path, Path]:
             repo / SPEC_DIR / f"{slug}.xhs.txt")
 
 
+def _tracked_bytes(repo: Path, path: Path) -> bytes:
+    """读取待发布的仓库版本；兼容 output 未被 sparse checkout 检出的场景。"""
+    rel = path.relative_to(repo) if path.is_absolute() else path
+    local = repo / rel
+    if local.is_file():
+        return local.read_bytes()
+    proc = subprocess.run(
+        ["git", "-C", str(repo), "show", f"HEAD:{rel.as_posix()}"],
+        capture_output=True, check=False)
+    if proc.returncode:
+        raise Skip(f"{rel} 在索引里但读取不到仓库内容")
+    return proc.stdout
+
+
+def _tracked_json(repo: Path, path: Path) -> dict:
+    try:
+        return json.loads(_tracked_bytes(repo, path))
+    except (ValueError, UnicodeDecodeError) as exc:
+        raise Skip(f"{path} 不是有效 JSON") from exc
+
+
+def _sha256_bytes(data: bytes) -> str:
+    return hashlib.sha256(data).hexdigest()
+
+
+def validate_qc(repo: Path, slug: str, outdir: Path) -> str:
+    """发布前复核：L2 检查、spec、字幕、Release 字节必须是同一份产物。"""
+    qc_path = outdir / "qc_attestation.json"
+    if not tracked(repo, qc_path):
+        raise Skip(f"{slug}：没有受跟踪的 qc_attestation.json；render.json 是渲染信号，"
+                   "不能代替 L2 成片质检")
+    qc_bytes = _tracked_bytes(repo, qc_path)
+    try:
+        qc = json.loads(qc_bytes)
+    except (ValueError, UnicodeDecodeError) as exc:
+        raise Skip(f"{slug}：qc_attestation.json 不是有效 JSON") from exc
+    if qc.get("status") != "pass" or qc.get("slug") != slug:
+        raise Skip(f"{slug}：QC 凭证状态/slug 不匹配")
+
+    spec_path, _ = _spec_paths(repo, slug)
+    if qc.get("spec_sha256") != _sha256_bytes(spec_path.read_bytes()):
+        raise Skip(f"{slug}：spec 在质检后发生过变化，必须重新渲染并质检")
+    ass_path = outdir / "subtitles.ass"
+    if not tracked(repo, ass_path):
+        raise Skip(f"{slug}：烧片使用的 subtitles.ass 不在仓库里")
+    if qc.get("ass_sha256") != _sha256_bytes(_tracked_bytes(repo, ass_path)):
+        raise Skip(f"{slug}：字幕在质检后发生过变化，必须重新渲染并质检")
+
+    render = _tracked_json(repo, outdir / "render.json")
+    if render.get("qc_attestation_sha256") != _sha256_bytes(qc_bytes):
+        raise Skip(f"{slug}：render.json 指向的不是当前 QC 凭证")
+    film_hash = str(qc.get("film_sha256") or "")
+    if not film_hash or render.get("film_sha256") != film_hash:
+        raise Skip(f"{slug}：render.json 与 QC 不是同一份成片")
+    if int(render.get("video_bytes") or 0) != int(qc.get("film_bytes") or 0):
+        raise Skip(f"{slug}：Release 文件大小与 QC 成片不一致")
+    if not render.get("video_url"):
+        raise Skip(f"{slug}：render.json 没有 Release video_url")
+    return film_hash
+
+
 def wants_auto_push(repo: Path, slug: str, outdir: Path) -> None:
-    """五道闸，过不了就 `Skip`（带理由）。"""
+    """六道闸，过不了就 `Skip`（带理由）。"""
     # **render.json 必须还在仓库里。** 工作流那头已经用 --diff-filter=AM 滤掉了
     # 删除项，这儿再兜一层：被删的旧产物（清理被顶替的版本）不是新渲完的片子，
     # 它的 spec 往往还写着 auto:true、目录里又没有 pushed.json——不拦的话会
@@ -104,6 +171,10 @@ def wants_auto_push(repo: Path, slug: str, outdir: Path) -> None:
     if not copy_path.is_file():
         raise Skip(f"{slug}：没有文案 {copy_path}")
 
+    # 必须在 auto 开关之前复核产物身份。否则一个只写了 render.json 的失败/半成品
+    # 会被当成“已渲完”；而微信消息发出后不可撤回。
+    film_hash = validate_qc(repo, slug, outdir)
+
     # 复用 push_reel 那份读法，别在这儿另解一遍 JSON——「一个数写两处必分叉」。
     sys.path.insert(0, str(Path(__file__).resolve().parent))
     from push_reel import POSTER_NAME, push_is_auto  # noqa: PLC0415
@@ -111,6 +182,11 @@ def wants_auto_push(repo: Path, slug: str, outdir: Path) -> None:
     if not push_is_auto(copy_path):
         raise Skip(f"{slug}：spec 里没写 push.auto=true，不自动发"
                    f"（要开：在 {spec.name} 的 push 块里加一行 \"auto\": true）")
+    previous = blocking_attempt(repo, LEDGER_COLUMN, slug, film_hash)
+    if previous:
+        raise Skip(f"{slug}：持久发布账本已有 {previous.get('status')}（"
+                   f"{previous.get('at', '时间未记')}，{previous.get('run', '地址未记')}），"
+                   "不自动重复发送")
     marker = outdir / MARKER
     if tracked(repo, marker):
         # 稀疏检出下这个文件可能不在工作区，读不到内容也要能拦住——
@@ -205,20 +281,38 @@ def record(outdir: Path, run_url: str, now: str) -> Path:
     return marker
 
 
+def ledger_status(repo: Path, outdir: Path, status: str, run_url: str, now: str) -> Path:
+    slug = outdir.name
+    film_hash = validate_qc(repo, slug, outdir)
+    if status == "sending":
+        previous = blocking_attempt(repo, LEDGER_COLUMN, slug, film_hash)
+        if previous:
+            raise SystemExit(f"{slug} 已有 {previous.get('status')} 发布记录，禁止盲目重发")
+    return write_ledger(repo, LEDGER_COLUMN, slug, film_hash, status=status,
+                        run_url=run_url, now=now)
+
+
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--changed", nargs="*", default=[],
                     help="这次合并改动的文件（仓库相对路径）")
     ap.add_argument("--record", default="",
                     help="发完之后在这个 outdir 里记一笔")
+    ap.add_argument("--reserve", default="", help="发送前持久预占 sending")
+    ap.add_argument("--uncertain", default="", help="发送失败后记状态不明")
     ap.add_argument("--run", default="", help="--record：这次运行的地址")
     ap.add_argument("--now", default="", help="--record：时间戳")
     ap.add_argument("--repo", default=".", help="仓库根目录")
     args = ap.parse_args(argv)
 
     repo = Path(args.repo)
-    if args.record:
-        record(Path(args.record), args.run, args.now)
+    action = args.reserve or args.record or args.uncertain
+    if action:
+        outdir = Path(action)
+        status = "sending" if args.reserve else "sent" if args.record else "uncertain"
+        ledger_status(repo, outdir, status, args.run, args.now)
+        if args.record:
+            record(outdir, args.run, args.now)  # 兼容历史消费者
         return 0
 
     found = pick(args.changed, repo)

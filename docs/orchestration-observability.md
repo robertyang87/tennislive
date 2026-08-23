@@ -58,6 +58,11 @@ match-reel 共用 Playwright Chromium 缓存；不改 ASR 模型、不降编码 
 防覆盖、dispatch 后逐条写 state，以及不可撤回的微信发送。生产 render 质检落库后
 另派轻量 `mode=push`，所以发布锁不再把前面的 6–14 分钟渲染一起串行。
 
+扫描本身也做了增量化：WTA 首次建立游标，后续只扫新 ID 并保留 120 条重叠窗口；
+Tennis TV 日常只扫 library 和当前赛事页；Bilibili 每班固定覆盖中国球员优先队列前四名，
+再轮转四名，约两小时覆盖完整注册表；YouTube 单来源 75 秒超时。采集锁只保护一次扫描，
+不会再被后续数分钟 ASR 占住；候选用 45 分钟可过期 lease 防止相邻班重复转写。
+
 ## 3. 稳定性：哪些地方会静默失败
 
 | 风险点 | 现状 | 会静默吗 |
@@ -113,6 +118,13 @@ match-reel 共用 Playwright Chromium 缓存；不改 ASR 模型、不降编码 
 - 草稿 matrix 完成后立即 dispatch `interview-auto-render`，取消 0~10 分钟空等；
   多个正式采访仍按 slug 并行 render。
 - 场上采访来源从逐个串行改成 4 路有界并行；保留注册表顺序与 1..8 防限流上限。
+- WTA/Tennis TV/Bilibili 改为持久增量扫描；扫描失败不推进游标，既减少重复网络开销，
+  又不会因一次源站故障漏掉内容。新来源发现也改为四路并行。
+- 新增每小时 `pipeline-health`：统计最近十次失败率、中位耗时、连续失败、最慢步骤、
+  600 秒 SLO 和卡在 `sending` 的发布。SLO 超线只写 Actions warning；故障/账本告警
+  限定时间窗，避免每小时重复轰炸微信。
+- 三条发布线统一使用 `data/*_publish_ledger` 的 `sending → sent/uncertain` 状态机；
+  发送前先持久预占，runner 在 POST 后失联也不会盲目重发。
 
 **仍待修（按优先级）**：
 1. **赛场之上草稿 → 正式 spec 的语义闭环**：probe 会自动产出 pending 草稿，
