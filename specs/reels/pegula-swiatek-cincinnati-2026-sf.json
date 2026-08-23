@@ -1,0 +1,276 @@
+{
+  "slug": "pegula-swiatek-cincinnati-2026-sf",
+  "source_url": "https://www.youtube.com/watch?v=C8_5ag2DYn0",
+  "_source": "WTA官方YouTube频道单场集锦（频道 WTA，标题「Jessica Pegula vs. Iga Swiatek | 2026 Cincinnati Semifinal | WTA Match Highlights」），308.36秒，1920x1080。视频尾部300.5秒起是YouTube订阅end卡（WTA logo+Subscribe按钮），已剪掉不用。逐分与比分板对照过（记分条烧在画面左上角，MATCH POINT/SET POINT/BREAK POINT标记清晰可读），与flashscore lfwx3BtC的逐分记录、WTA官方matches接口LS003一一对应。",
+  "_column": "赛场之上。斯瓦泰克带着上周多伦多冠军和十连胜、以卫冕冠军身份杀进半决赛，却被佩古拉挡在决赛门外——用冷开场先给结果（赛点+庆祝），再倒回全场交代三盘的走势，决胜盘从一比三落后到破发扳平、最终锁定六比四收官。",
+  "_editing_why": "冷开场取263.0-277.0秒（赛点、佩古拉握拳庆祝、握手），随后倒回视频开头交代坐标与背景；三盘正文按时间顺序（首盘拉锯、次盘斯瓦泰克扳回、决胜盘佩古拉逆转）走完；58.5-106.5秒是一段长时间平分拉锯的发球局，只留现场声不加旁白（画面本身已经足够）；末段277.0-298.5秒接续冷开场未播完的庆祝与颁奖前奏，给出「第二次辛辛那提决赛/尚无本土1000冠军」的收尾。",
+  "_voice": "云见（zh-CN-YunjianNeural），语速 +6%。",
+  "_claims": {
+    "比分和轮次": "WTA官方2026赛季辛辛那提matches接口（tournaments/1017/2026/matches?states=C）：MatchID LS003，RoundID S（半决赛），ResultString「[3]J. Pegula d [7]I. Swiatek 7-5,4-6,6-4」，MatchTimeTotal 02:47:53，CourtID 1。",
+    "分盘技术统计": "flashscore逐场feed（lfwx3BtC）的df_st_1分盘统计块，含发球/破发点/总分等12项，与WTA官方matches/LS003/stats接口逐项核对一致。",
+    "制胜分与非受迫失误": "TNNS Live（tools/tnns_stats.py，id=73466992）：Pegula 制胜分29/非受迫失误51，Swiatek 制胜分36/非受迫失误55；分盘合计与全场自证一致（[7,16]+[12,11]+[10,9]=[29,36]，[21,26]+[19,16]+[11,13]=[51,55]）。",
+    "排名": "WTA官方players/ranked榜单，快照日期2026-08-10：佩古拉世界第3，斯瓦泰克世界第5（本站种子分别是3号和7号，种子号不等于排名）。",
+    "斯瓦泰克十连胜与卫冕冠军": "WTA官方赛前报道（wtatennis.com/news/4563912，Cincinnati semifinals preview）：斯瓦泰克为卫冕冠军、上周刚夺得多伦多冠军，本场之前赛程状态正佳；同一篇报道确认双方硬地交手佩古拉近5次赢4次，最近一次硬地交手是2024年美网1/4决赛（6-2 6-4）。",
+    "交手记录": "tennisexplorer.com/mutual/pegula-jessica/swiatek-iga/：含本场在内生涯交手6胜7负（斯瓦泰克领先），本场之前是7比5（斯瓦泰克领先）。",
+    "佩古拉的辛辛那提决赛历史与美国本土1000冠军": "源片自动字幕（WTA官方集锦解说原声）267.68-296.16秒：「Only Jessica Pegula for the second time in her career will feature in the final here in Cincy... Instead, Pegula keeps alive dream of a first ever Thousand title in the United States.」——确认这是她生涯第二次打进辛辛那提决赛，且她现有的WTA1000冠军均不在美国本土。搜索交叉核实：她2024年辛辛那提决赛负于萨巴伦卡（3-6 5-7），生涯4座WTA1000冠军为两个加拿大公开赛、一个瓜达拉哈拉、一个武汉。"
+  },
+  "_hit_data": "跑过tools/assemble_spec.py反查flashscore id=lfwx3BtC。候选：总分佩古拉117-112斯瓦泰克，净差5分；佩古拉一发得分率摆动52%→67%→76%；决胜盘从一比三落后到破发扳平、再到五比四关键破发、六比四锁定，是全片最硬的转折——比总分差更有戏剧性，选它做主线。",
+  "editorial": {
+    "mode": "match_review",
+    "question": "斯瓦泰克带着卫冕冠军的身份和十连胜杀进半决赛，为什么被佩古拉拦在了决赛门外？",
+    "thesis": "关键不在整场谁更强，而在决胜盘——佩古拉一度一比三落后，随即破发扳平，比分拉锯到四比四后她逼出关键的一次破发，五比四，随后一分未失的发球局锁定六比四。首盘同样是拉锯战：开局五个发球局全部被破，谁也没能保发，直到佩古拉率先守住自己的发球局才把比分带开。",
+    "beats": [
+      "首盘：开局五个发球局全被破，佩古拉率先止住失守，一路拉锯到七比五先下一盘",
+      "次盘：斯瓦泰克找回状态，几度救下破发点后反破成功，四比六扳回一盘",
+      "决胜盘：佩古拉一比三落后，破发扳平后拉锯到四比四，随即完成关键破发，六比四锁定胜局，终结斯瓦泰克十连胜与卫冕之路"
+    ],
+    "human_context": {
+      "angle": "这不是一场爆冷——两人都是世界前五，斯瓦泰克带着上周多伦多冠军和十连胜、以卫冕冠军身份而来，佩古拉是最近这段时间在硬地上真正克制她的少数人之一。",
+      "facts": [
+        "WTA官方赛前报道：斯瓦泰克卫冕冠军身份出战，上周刚夺多伦多冠军，正处赛季状态最佳阶段",
+        "WTA官方赛前报道：两人硬地交手佩古拉近5次赢4次，最近一次是2024美网1/4决赛6-2 6-4",
+        "WTA官方逐场统计：佩古拉总分117-112领先，破发点转化7/18，斯瓦泰克6/12",
+        "TNNS Live：佩古拉制胜分29/非受迫失误51，斯瓦泰克制胜分36/非受迫失误55",
+        "源片解说原声：这是佩古拉生涯第二次打进辛辛那提决赛（上一次2024年负于萨巴伦卡），她现有的4座WTA1000冠军没有一座在美国本土拿下"
+      ],
+      "sources": [
+        "https://www.wtatennis.com/news/4563912/cincinnati-semifinals-preview-pegula-swiatek-bejlek-the-case-for-the-final-four",
+        "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches?states=C",
+        "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches/LS003/stats",
+        "https://www.tennisexplorer.com/mutual/pegula-jessica/swiatek-iga/",
+        "https://www.youtube.com/watch?v=C8_5ag2DYn0"
+      ],
+      "voice_label": "决胜盘的绝地反击"
+    }
+  },
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "佩古拉",
+    "hook": "决胜盘1-3落后\n拦下十连胜卫冕冠军",
+    "_hook_why": "第一行给过程（决胜盘一度落后），第二行给落点（拦下的是十连胜+卫冕冠军），两行都不是单纯的身份重复；具体比分1-3是决胜盘真实出现过的game分，出处见_claims逐分记录。",
+    "_subject_why": "佩古拉是本场赢家，且与斯瓦泰克名气相当时按规矩选赢的那个；封面用的官方实拍也正是WTA官方发布这条集锦时自己配的头图。",
+    "_heat_why": "两人均为世界前五，半决赛级别本身已经够格；斯瓦泰克卫冕冠军+十连胜+上周多伦多冠军的身份，本场关注度显然很高。",
+    "topic": "WTA1000 辛辛那提 · 女单半决赛",
+    "portrait": {
+      "image": "assets/reel/pegula-swiatek-cincinnati-2026-sf-wta.jpg",
+      "focus": 0.44,
+      "focus_y": 0.29,
+      "zoom": 1.25,
+      "_photo_why": "本场官方实拍，不是抽帧。来源The Enquirer/Gannett（www.cincinnati.com 2026-08-22 图集 photos-2026-atp-wta-cincinnati-open-semifinals，原图挂在 gannett-cdn.com，无水印），图注原文：\"Jessica Pegula, of United States, reacts after defeating Iga Swiatek, of Poland, during the Cincinnati Open at the Lindner Family Tennis Center in Mason, Ohio, on Saturday, August 22, 2026.\"——赢球后的握拳反应，正面、竖版构图，原图3008x4512。铺1080x1440地板1.55倍。换用理由：原WTA头图是正手截击的比赛中动作照，缺庆祝表情；这张是赛后反应，正面近景，视觉冲击力更强。"
+    },
+    "scrim": "clear",
+    "winner": "佩古拉",
+    "result": "7-5 4-6 6-4",
+    "_result_why": "比分槽只放能拆开的盘分7-5 4-6 6-4；轮次和赛事名交给topbar和topic交代，不在比分行里重复。",
+    "matchup": [
+      {
+        "name": "佩古拉",
+        "name_en": "Jessica Pegula",
+        "country": "USA",
+        "rank": 3
+      },
+      {
+        "name": "斯瓦泰克",
+        "name_en": "Iga Swiatek",
+        "country": "POL",
+        "rank": 5
+      }
+    ],
+    "_matchup_rank_why": "WTA官方players/ranked榜单，快照日期2026-08-10：佩古拉世界第3，斯瓦泰克世界第5。本站种子号3和7不等于世界排名，未采用。",
+    "scoreboard": {
+      "court": "P&G Stadium Court",
+      "duration_source": {
+        "provider": "wta",
+        "url": "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches?states=C",
+        "match_id": "LS003",
+        "field": "MatchTimeTotal",
+        "source_page": "https://www.wtatennis.com/tournaments/cincinnati-open/scores/LS003"
+      },
+      "_duration_why": "WTA官方MatchTimeTotal=02:47:53；三盘分盘用时相加01:03:36+00:58:49+00:45:24=02:47:49，与总用时基本吻合（换场等流程占余下几秒）。CourtID=1与本站QF/其余半决赛同一块球场，沿用「P&G Stadium Court」译法。"
+    }
+  },
+  "topbar": {
+    "line1": "WTA1000 辛辛那提半决赛",
+    "line2": "佩古拉 7-5 4-6 6-4 斯瓦泰克"
+  },
+  "_topbar_why": "第二行与cover.winner/result/matchup机械一致：赢家佩古拉在前，比分7-5 4-6 6-4，斯瓦泰克在后。",
+  "stats": {
+    "tour": "wta",
+    "a": {
+      "headshot": "assets/players/headshots/wta-316956.jpg",
+      "aces": 4,
+      "df": 2,
+      "first_in": 58,
+      "first_won": 37,
+      "first_total": 101,
+      "second_total": 43,
+      "second_won": 18,
+      "bp_conv": 7,
+      "bp_chances": 18,
+      "pts_won": 117,
+      "pts_total": 229,
+      "winners": 29,
+      "ue": 51
+    },
+    "b": {
+      "headshot": "assets/players/headshots/wta-326408.jpg",
+      "aces": 1,
+      "df": 7,
+      "first_in": 90,
+      "first_won": 53,
+      "first_total": 128,
+      "second_total": 38,
+      "second_won": 13,
+      "bp_conv": 6,
+      "bp_chances": 12,
+      "pts_won": 112,
+      "pts_total": 229,
+      "winners": 36,
+      "ue": 55
+    },
+    "_source": "stats.a跟cover.matchup[0]佩古拉，stats.b跟斯瓦泰克。十二项基础统计来自flashscore逐场feed（lfwx3BtC）的df_st_1，并与WTA官方matches/LS003/stats接口逐项核对一致；first_total按first_in+second_total算，不取接口分母。制胜分/非受迫失误来自TNNS Live（id=73466992），原始顺序本就是[Pegula,Swiatek]，与cover顺序一致未做调换；分盘合计与全场自证一致。",
+    "footer_venue": "P&G Stadium Court · 辛辛那提",
+    "footer_date": "2026.08.23"
+  },
+  "segments": [
+    {
+      "start": 263.0,
+      "end": 269.5,
+      "cx": 0.5,
+      "_ending_payoff_required": true,
+      "_why": "冷开场：赛点、佩古拉的制胜分与随即而来的握拳庆祝，只留现场声，不配旁白。这一段包含最后一球和第一波庆祝，正文第17段（245.5-269.5）会按时间顺序把这一区间完整重放一遍，不只是预告。"
+    },
+    {
+      "start": 269.5,
+      "end": 279.0,
+      "cx": 0.5,
+      "narration": "十连胜，卫冕冠军——斯瓦泰克带着这些走进辛辛那提，却倒在了半决赛。",
+      "_why": "承接冷开场给出落点/反差，不重复画面已经在说的「谁赢了」，转而点出被拦下的是谁。窗口放宽到9.5秒，配合旁白实际时长。"
+    },
+    {
+      "start": 4.5,
+      "end": 14.5,
+      "cx": 0.5,
+      "narration": "北京时间八月二十三日凌晨四点，WTA1000辛辛那提半决赛——佩古拉对斯瓦泰克。",
+      "_why": "坐标只报大概时段，开球时刻04:00整落在0-9分钟档，写「凌晨四点」不报到分。倒回视频最开始的几个来回。"
+    },
+    {
+      "start": 14.5,
+      "end": 22.5,
+      "cx": 0.5,
+      "narration": "开局几个发球局连续被破，你破我一次，我破你一次。",
+      "_why": "逐分核实：开局前5局连续5次破发（1-0/1-1/2-1/2-2/3-2），第6局佩古拉才第一次保发到4-2。窗口收紧到旁白实际时长附近，避免长时间空场。"
+    },
+    {
+      "start": 22.5,
+      "end": 36.5,
+      "cx": 0.5,
+      "narration": "",
+      "_why": "现场声段：延续开局的拉锯，一路打到佩古拉率先保发、四比二，故意不配旁白，画面自己的记分条会更新到4-2。"
+    },
+    {
+      "start": 36.5,
+      "end": 46.0,
+      "cx": 0.5,
+      "narration": "斯瓦泰克顶着被逼到平分的压力，硬是把自己的发球局守了下来，追到四比三。",
+      "_why": "逐分：4-3局是客队（斯瓦泰克）发球保发，画面里她的发球局多次回到平分（Ad反复出现），叙述与画面一致，不具体断言哪一分是破发点以免和画面细节冲突。"
+    },
+    {
+      "start": 46.0,
+      "end": 58.5,
+      "cx": 0.5,
+      "narration": "",
+      "_why": "现场声段：延续这一局的拉锯，故意不配旁白。"
+    },
+    {
+      "start": 58.5,
+      "end": 106.5,
+      "cx": 0.5,
+      "narration": "",
+      "_why": "现场声撑得住的段落：4-3打到4-4（斯瓦泰克逼出两个破发点破发），画面自己的记分条持续更新，故意不配旁白。"
+    },
+    {
+      "start": 106.5,
+      "end": 117.5,
+      "cx": 0.5,
+      "narration": "斯瓦泰克一度反超到五比四，佩古拉，先守住了发球扳平，又逼出两个破发点，拉到六比五。",
+      "_why": "逐分：4-5斯瓦泰克保发反超，5-5佩古拉保发扳平，6-5佩古拉逼出2个破发点破发。"
+    },
+    {
+      "start": 117.5,
+      "end": 136.5,
+      "cx": 0.5,
+      "narration": "",
+      "_why": "现场声段：延续第一盘后半段的拉锯，画面记分条会走到6-5，故意不配旁白。"
+    },
+    {
+      "start": 136.5,
+      "end": 145.5,
+      "cx": 0.5,
+      "narration": "佩古拉自己的发球局，四十比三十拿下盘点——七比五，先下一盘。",
+      "_why": "逐分：7-5局是佩古拉自己发球，点序40:30带一个盘点标记，画面里SET POINT字样与之对应。"
+    },
+    {
+      "start": 145.5,
+      "end": 158.5,
+      "cx": 0.5,
+      "narration": "",
+      "_why": "现场声段：首盘结束、换边前的画面（SEMI-FINAL比分图形），故意不配旁白。"
+    },
+    {
+      "start": 172.5,
+      "end": 181.0,
+      "cx": 0.5,
+      "narration": "次盘开局，双方各自救回好几个破发点，谁也没能真正破掉对方。",
+      "_why": "逐分：0-1/1-1/1-2三局各救回1/2/3个破发点，双方都在顶住压力。"
+    },
+    {
+      "start": 181.0,
+      "end": 198.5,
+      "cx": 0.5,
+      "narration": "",
+      "_why": "现场声段：延续这段拉锯到2-4，斯瓦泰克逼出两个破发点破掉佩古拉，故意不配旁白。"
+    },
+    {
+      "start": 208.5,
+      "end": 218.5,
+      "cx": 0.5,
+      "narration": "佩古拉一度追平到四比四，斯瓦泰克顶住反扑，连下两局，四比六扳回一盘。",
+      "_why": "逐分：3-4佩古拉破发追分，4-4佩古拉保发追平，4-5斯瓦泰克保发反超，4-6斯瓦泰克逼出破发点+盘点拿下整盘。"
+    },
+    {
+      "start": 218.5,
+      "end": 226.5,
+      "cx": 0.5,
+      "narration": "",
+      "_why": "现场声段：次盘结束、换边前的画面，故意不配旁白。"
+    },
+    {
+      "start": 228.5,
+      "end": 245.5,
+      "cx": 0.5,
+      "narration": "决胜盘，佩古拉一度一比三落后。她马上破发扳平，拉锯到四比四后，又逼出关键的一次破发，把比分带到五比四——最后一个发球局一分未让，六比四锁定胜局。",
+      "_why": "逐分完整链路：0-1/1-1/1-2/1-3（斯瓦泰克破发，1-3落后）/2-3（佩古拉立刻破发扳平）/3-3/3-4/4-4/5-4（佩古拉破发，4个破发点后拿下）/6-4（佩古拉保发，1个赛点）。视频本身在2-3附近直接跳切到5-4的比赛点，具体破发过程未必逐帧可见，旁白只做技术层面的准确概述，不断言画面里没有的具体镜头。"
+    },
+    {
+      "start": 245.5,
+      "end": 269.5,
+      "cx": 0.5,
+      "narration": "",
+      "_why": "现场声段：正文按时间顺序把冷开场（第1段263.0-269.5）预告过的赛点和第一波庆祝完整重放一遍，不只是预告，满足_ending_payoff_required；不配旁白，让现场声和转播原声carry这一段。"
+    },
+    {
+      "start": 277.0,
+      "end": 294.5,
+      "cx": 0.5,
+      "narration": "这是佩古拉生涯第二次打进辛辛那提决赛——上一次是二〇二四年，她负于萨巴伦卡。她现有的四座WTA1000冠军，没有一座是在美国本土拿下的。这一次，她能补上吗？",
+      "_why": "源片解说原声（自动字幕267.68-296.16秒）明确说这是她生涯第二次辛辛那提决赛，且提到她还没拿过美国本土的1000冠军；2024年负于萨巴伦卡另行搜索交叉核实。用继续庆祝/走向颁奖台前奏的画面收尾，不复用冷开场已经播过的263-269.5秒。窗口收紧到旁白实际时长附近。"
+    }
+  ],
+  "push": {
+    "summary": "拦下卫冕冠军的十连胜",
+    "lead": "WTA1000辛辛那提半决赛，佩古拉7-5 4-6 6-4逆转斯瓦泰克，晋级本站决赛。斯瓦泰克带着上周多伦多冠军和十连胜、以卫冕冠军身份出战，首盘开局五个发球局全部被破，佩古拉率先止住失守拉到七比五先下一盘；次盘斯瓦泰克找回状态四比六扳平；决胜盘佩古拉一度一比三落后，随即破发扳平，拉锯到四比四后逼出关键一破，六比四锁定胜局——同时终结了斯瓦泰克的十连胜与卫冕之路。这是佩古拉生涯第二次打进辛辛那提决赛,上一次她负于萨巴伦卡；现有的四座WTA1000冠军里，还没有一座是在美国本土拿下的。",
+    "_no_auto_why": "先渲后审，手动 mode=push push=true。"
+  }
+}
