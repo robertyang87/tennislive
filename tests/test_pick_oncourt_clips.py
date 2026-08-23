@@ -43,6 +43,29 @@ def test_video_id归一化跨来源(tool):
     assert tool._video_id("") == ""
 
 
+def test_tennistv只有free资源进入无人值守生产(tool):
+    base = {"id": "tennistv:4563954"}
+    assert tool.production_resource_problem({**base, "entitlement": "free"}) == ""
+    problem = tool.production_resource_problem({**base, "entitlement": "freemium"})
+    assert "freemium" in problem and "注册会话" in problem
+    assert tool.production_resource_problem({"id": "youtube:abc"}) == ""
+
+
+def test_candidate_claim_lease_prevents_duplicate_and_expires_for_retry(tool, monkeypatch, tmp_path):
+    claims = tmp_path / "claims.json"
+    monkeypatch.setattr(tool, "CLAIMS", claims)
+    t0 = datetime.datetime(2026, 8, 24, 10, tzinfo=datetime.timezone.utc)
+    row = {"id": "video-1", "match_id": "2026:event:qf:player", "url": "https://x/1"}
+
+    tool.claim_candidates([row], now=t0)
+    active = tool.load_active_claims(now=t0 + datetime.timedelta(minutes=10))
+    assert row["match_id"] in active
+    assert active[row["match_id"]]["status"] == "queued"
+    # draft 崩溃没机会回写状态时，leash 超时即自动恢复可重试。
+    assert tool.load_active_claims(
+        now=t0 + tool.CANDIDATE_LEASE + datetime.timedelta(seconds=1)) == {}
+
+
 def test_event_window窗口内入选窗口外排除(tool):
     # 辛辛那提 2026 窗口 08-16/08-23，今天 08-18 → 在窗口内
     assert tool.event_window({"title": "De Minaur Interview | Cincinnati 2026",
@@ -68,6 +91,18 @@ def test_event_window年份藏url也要排除(tool):
         TODAY, _cal()) == (None, False)
 
 
+def test_轮次未知不能建立逐场ID(tool, monkeypatch):
+    monkeypatch.setattr(tool, "interviewee_en", lambda title: "Jessica Pegula")
+    row = {"title": "Jessica Pegula On-Court Interview | Cincinnati 2026"}
+    assert tool.match_id_for(row, "辛辛那提大师赛", TODAY) == "", (
+        "同一球员一站会赢多场；缺轮次时不能把整站折成一场再猜对手")
+
+    row["round_zh"] = "四分之一决赛"
+    got = tool.match_id_for(row, "辛辛那提大师赛", TODAY)
+    assert got == "2026:辛辛那提大师赛:qf:jessica-pegula"
+    assert ":unknown:" not in got, "中文赛事名不能被 ASCII 清洗器压成 unknown"
+
+
 def test_candidates三道闸(tool, monkeypatch, tmp_path):
     """kind 不对 / 已做过 / 窗口外 / & 双打，各挡一条。"""
     done = tmp_path / "done.json"
@@ -80,9 +115,9 @@ def test_candidates三道闸(tool, monkeypatch, tmp_path):
 
     lib = tmp_path / "lib.json"
     lib.write_text(json.dumps({"items": {
-        "good": {"kind": "oncourt", "url": "https://youtu.be/GOOD2026",
-                 "title": "On-Court Interview | Quarterfinal | Cincinnati 2026",
-                 "source": "X"},
+        "good": {"id": "GOOD2026", "kind": "oncourt", "url": "https://youtu.be/GOOD2026",
+                 "title": "Alexander Zverev On-Court Interview | Quarterfinal | Cincinnati 2026",
+                 "round_zh": "四分之一决赛", "source": "Cincinnati Open"},
         "ceremony": {"kind": "ceremony", "url": "https://youtu.be/CER",
                      "title": "Finalist Speech | Cincinnati 2026", "source": "X"},
         "done_already": {"kind": "oncourt", "url": "https://youtu.be/ALREADYDONE",

@@ -1,0 +1,191 @@
+{
+  "slug": "tiafoe-story",
+  "_note": "**网球有故事** · 蒂亚福。用户2026-08-23直接指定：要用真实视频剪辑做（不用图卡），且结尾用预测收尾、不等辛辛那提决赛真实结果——2026-08-23决赛（对菲斯）当时还没打完，等结果会拖到北京时间次日凌晨，用户明确要求跳过等待。所以全片不含决赛画面，落点收在「他能不能做到」这一问上。",
+  "sources": {
+    "sf2026": "https://www.youtube.com/watch?v=ovD4bsNlNVA",
+    "qf2026": "https://youtu.be/CLXw7um5Y4o?is=RBC1BsR6pztpaWKs",
+    "father": "https://www.youtube.com/watch?v=setraNSmB7A",
+    "2024final": "https://www.youtube.com/watch?v=htsVOPFaaQ8",
+    "halle2026": "https://www.youtube.com/watch?v=4RcFzhgXnCc"
+  },
+  "primary": "sf2026",
+  "_source": "五条源，成片跟主源sf2026走25fps。sf2026/qf2026是2026辛辛那提ATP1000这次晋级决赛路上的官方单场集锦（Tennis TV，1920x1080/25，已由tiafoe-nakashima-cincinnati-2026-sf.json / tiafoe-musetti-cincinnati-2026-qf.json probe过）；father是本地DC地区新闻台2022年美网四强前的专题（1920x1080/29.97，含真实父亲路采原声和童年打网球画面）；2024final是Tennis TV官方2024辛辛那提决赛集锦《Jannik Sinner vs Frances Tiafoe For The Crown》（1920x1080/25，他两年前在这里输掉的那场决赛）；halle2026是Tennis TV官方2026哈雷决赛集锦《Taylor Fritz vs Frances Tiafoe For The Title》（1920x1080/25，他今年六月拿下生涯首个ATP500冠军那场）。",
+  "mixed_fps": {
+    "father": "29.97，源片是2022年电视台专题，非当前赛事。29.97不是25的整数倍，但这条只用两小段（起源事实配童年画面 + 父亲静态路采），画面运动量低，隔帧丢失不易察觉——和hewitt-washington的iv源（30→25）同一个判断。"
+  },
+  "_column": "这条是「网球有故事」，不是「赛场之上」——讲的是蒂亚福这个人的来路（父亲、起步、2024年的输球、2026年的东山再起），不是逐分讲某一场比赛。sf2026/qf2026的完整逐分过程已经在各自的赛场之上分片里讲过（tiafoe-musetti-cincinnati-2026-qf.json / tiafoe-nakashima-cincinnati-2026-sf.json），这条只取其中最能承担情绪落点的一两个镜头，不重复逐分。",
+  "_editorial_why": "`_editorial_contract_required`按素材构成判定，不看栏目——sources全是第三方源片，所以即使是「网球有故事」也要填这份合同（2026-08-14起）。mode按代码要求写死match_review，字段本身讲的是这条片子自己的复盘问题/论点/节点，不是说它是一条赛场之上。",
+  "editorial": {
+    "mode": "match_review",
+    "question": "两年前，蒂亚福在辛辛那提决赛输给了辛纳——这一次，他能把冠军带走吗？",
+    "thesis": "蒂亚福花了两年时间把2024年辛辛那提决赛的遗憾走成了2026年的再一次决赛：起点是父亲把网球带进他的生活，转折是2024年那场没能拿下的决赛，证明是2026年六月在哈雷拿下生涯首个ATP500、终结对弗里茨十年不胜——而无论今晚结果如何，这场决赛本身已经是大师赛历史上第一次两位黑人球员打进决赛。",
+    "beats": [
+      "起点：五岁那年，父亲把网球带进他的生活",
+      "转折：2024年辛辛那提决赛，他输给了辛纳，7-6 6-2",
+      "证明：2026年六月哈雷夺冠，终结对弗里茨十年0-7的交手纪录，生涯首个ATP500",
+      "回归：2026年辛辛那提，他再次杀进决赛",
+      "现在：无论谁夺冠，这都是大师赛历史上第一次两位黑人球员打进决赛"
+    ],
+    "human_context": {
+      "angle": "这条片子不讲这次决赛怎么打，讲蒂亚福从2024年输掉辛辛那提决赛，到今天再次站上这里的两年——中间的转折点是他六月在哈雷证明了自己能赢下重要的决赛，而这次决赛本身也已经是网球历史上的第一次。",
+      "facts": [
+        "蒂亚福父母均为塞拉利昂移民，父亲Constant在马里兰JTCC网球中心工地打工、完工后留任驻场维护员",
+        "蒂亚福五岁那年在父亲带领下第一次接触网球",
+        "2024年辛辛那提大师赛决赛，蒂亚福0-1不敌辛纳，7-6(4) 6-2",
+        "2026年6月哈雷（ATP500）决赛，蒂亚福6-4 6-4击败弗里茨夺冠，生涯首个ATP500冠军，终结此前对弗里茨十年0-7的交手纪录",
+        "2026年8月辛辛那提，蒂亚福1/4决赛胜穆塞蒂、半决赛胜中岛布兰登，第二次晋级辛辛那提决赛，对手菲斯",
+        "菲斯父亲Jean-Philippe Fils为海地裔；无论2026辛辛那提决赛谁夺冠，都是ATP大师赛历史上第一次两位黑人球员打进决赛"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/2024_Cincinnati_Open_%E2%80%93_Men%27s_singles",
+        "https://spyscape.com/article/true-superhero-frances-tiafoes-amazing-childhood",
+        "https://www.atptour.com/en/news/fritz-tiafoe-halle-2026-final",
+        "https://www.espn.com/tennis/story/_/id/49135289/frances-tiafoe-beats-taylor-fritz-win-all-american-halle-final",
+        "https://www.essentiallysports.com/tennis-news-who-are-arthur-filss-parents-meet-anne-and-jean-philippe-fils/"
+      ]
+    }
+  },
+  "_claims": {
+    "生涯第二次辛辛那提决赛，两年前2024年输给辛纳7-6(4) 6-2": [
+      "https://en.wikipedia.org/wiki/2024_Cincinnati_Open_%E2%80%93_Men%27s_singles"
+    ],
+    "父母均为塞拉利昂移民，父亲Constant在JTCC网球中心工地打工、完工后留任驻场维护员": [
+      "https://spyscape.com/article/true-superhero-frances-tiafoes-amazing-childhood",
+      "https://www.olympics.com/en/news/tennis-frances-tiafoe-son-sierra-leonean-immigrants-2024-us-open"
+    ],
+    "2026年6月哈雷（Terra Wortmann Open）夺冠，6-4 6-4胜弗里茨，生涯首个ATP500冠军，终结对弗里茨十年0-7的交手纪录": [
+      "https://www.atptour.com/en/news/fritz-tiafoe-halle-2026-final",
+      "https://www.espn.com/tennis/story/_/id/49135289/frances-tiafoe-beats-taylor-fritz-win-all-american-halle-final"
+    ],
+    "2026辛辛那提决赛是ATP大师赛历史上第一次两位黑人球员打进决赛（菲斯父亲Jean-Philippe Fils为海地裔）": [
+      "https://www.espn.com/tennis/story/_/id/49135289/frances-tiafoe-beats-taylor-fritz-win-all-american-halle-final",
+      "https://www.essentiallysports.com/tennis-news-who-are-arthur-filss-parents-meet-anne-and-jean-philippe-fils/"
+    ]
+  },
+  "_facts": [
+    "蒂亚福1998-01-20生，父母均来自塞拉利昂；父亲Constant（Frances Sr.）在马里兰JTCC网球中心工地打工，完工后留任驻场维护员，一家人住进场馆内的小屋。",
+    "五岁那年在父亲带领下第一次接触网球（本条片子r_father源片记者原话：\"was only five years old when he first picked up a racket after his father, Francis senior, introduced him to the sport\"）。",
+    "生涯最高排名世界第10（2023-06-19）。",
+    "2024年辛辛那提大师赛决赛：0-1不敌辛纳，7-6(4) 6-2，这是他生涯第一次打进大师赛决赛。",
+    "2026年6月，哈雷（Terra Wortmann Open，ATP500）决赛6-4 6-4击败弗里茨夺冠，生涯首个ATP500冠军，也是十年来首次赢下弗里茨（此前交手0-7）。",
+    "2026年8月辛辛那提：1/4决赛7-6(2) 7-5胜穆塞蒂，半决赛7-5 6-3胜中岛布兰登（4-5落后连救三个盘点），第二次晋级辛辛那提决赛，对手为菲斯（Arthur Fils）。",
+    "菲斯（法国，22岁）父亲Jean-Philippe Fils为海地裔、母亲Anne为法国人；这是菲斯生涯首个大师赛决赛。",
+    "无论2026辛辛那提决赛谁夺冠，都是ATP大师赛历史上第一次两位黑人球员打进决赛（多家媒体报道，ATP官方原话），冠军也将成为史上第三位拿到大师赛冠军的黑人球员，前两位是Ben Shelton（两次）和Jo-Wilfried Tsonga。"
+  ],
+  "cover": {
+    "eyebrow": "网球有故事",
+    "layout": "solo",
+    "subject": "蒂亚福",
+    "hook": "两年前，输给辛纳\n今天，他回来了",
+    "_hook_why": "两行各8/7个字符，在solo封面HOOK_MAX_CHARS=10的硬限之内。上一行是两年前的伤（输给辛纳），下一行是当下的落点（回到决赛）——过程+落点的形状，不点破对手是谁、也不提排名，把身份留给topic和封面上印着的subject名字。",
+    "narration": "两年前，他输给了辛纳。今天，他回来了。",
+    "_narration_why": "封面停多久跟着这句配音走，念的就是钩子的口语版本，不另排字幕（同一句话，一不一样）。",
+    "topic": "蒂亚福 · 第二次辛辛那提决赛",
+    "portrait": {
+      "image": "assets/reel/tiafoe-halle-2026-trophy-ap.jpg",
+      "focus": 0.5,
+      "focus_y": 0.42,
+      "zoom": 1.0,
+      "_photo_why": "AP通讯社实拍，2026-06-21哈雷决赛夺冠瞬间。AP官方说明：\"El estadounidense Frances Tiafoe celebra con el trofeo tras vencer a su compatriota Taylor Fritz en la final del torneo de Halle el domingo 21 de junio del 2026\"（美国人蒂亚福击败同胞弗里茨夺得哈雷冠军后与奖杯合影）。**画面自证**：奖杯铭牌上印着\"2026 Winner / Frances Tiafoe / ATP 500 / 33. TERRA WORTMANN OPEN\"，球场围栏印着TERRA WORTMANN OPEN，与哈雷赛事一致。原图5731x3821，围绕人物+奖杯裁至1822x2430（3:4），铺1080x1440地板0.59x，不放大。选这张而不是本周辛辛那提QF/SF已经用过的两张封面（tiafoe-musetti-cincinnati-2026-qf-lequipe.jpg / tiafoe-nakashima-cincinnati-2026-sf-atp.jpg，均为「赛场之上」已发封面），一是避免同一周同一账号封面撞脸，二是这条片子讲的是整个来路，捧杯的真实笑容和奖杯铭牌上的年份/名字，比本周任何一张比赛中/反应照更贴合「网球有故事」的落点——他知道怎么把决赛打赢。近景，情绪外露（真实笑容），符合优先近景特写的选图顺序。"
+    }
+  },
+  "push": {
+    "summary": "两年后，重回决赛",
+    "lead": "两年前，蒂亚福在辛辛那提大师赛决赛输给辛纳，7-6 6-2，冠军奖杯没有留在他手里。今年六月，他在哈雷夺得生涯首个ATP500冠军，终结了对弗里茨十年未胜的纪录。今晚，他又一次站上辛辛那提的决赛球场——对手是菲斯，法国新星，同样第一次打进大师赛决赛。无论谁夺冠，这都是网球史上第一次，两位黑人球员同时打进大师赛决赛：蒂亚福的父母来自塞拉利昂，菲斯的父亲来自海地。两年前，他从这里空手离开。这一次，他准备好了吗？",
+    "auto": false,
+    "_no_auto_why": "沿用当期惯例先做预览，不自动触发发布；合并后手动push=true推送。"
+  },
+  "_tennistv_trim": "四条源（sf2026/qf2026/2024final/halle2026）都是Tennis TV官方单场集锦，片尾和台标各自处理如下（对照各源probe落库的contact_*.jpg缩略图墙逐格看过）：\n① 台标：四条源右上或左上角都烧着一个小号TennisTV图标水印（sf2026/qf2026在左上角，2024final/halle2026在右上角），本片3:4取景窗只从1920里取810px、没有一段设`cx`偏向任何一侧边缘（全部走默认居中），810px的中段结构性地落不到任一角落，水印在窗外。\n② 片尾（各源的Tennis TV订阅卡起点，均已用完整段落收口在此之前）：\n  - sf2026：360.5秒起（tiafoe-nakashima-cincinnati-2026-sf.json probe实测），本片两处引用（①冷开场、⑥兑现结局）都收在355.0秒，余量5.5秒。\n  - qf2026：355.58秒起（scene_cuts实测值，和tiafoe-musetti-cincinnati-2026-qf.json同一个数），本片⑧收尾段收在354.0秒，余量1.58秒；⑦开场段0.0-14.0秒远离末尾。\n  - 2024final：480.32秒起（本条片子2026-08-23自己probe实测），④第二句收在479.4秒，余量0.92秒。\n  - halle2026：477.5秒起（本条片子2026-08-23自己probe实测），⑤收在475.0秒，余量2.5秒。",
+  "_editing_why": "结构：①冷开场（sf2026半决赛赛点+夺得决赛资格的现场声，不配中文旁白，`_ending_payoff_required=true`）→②起源（父亲带他五岁接触网球，配童年画面）→③父亲真实原声引语（不翻译成中文旁白，双语字幕）→④2024年的伤（同一座球场，输给辛纳）→⑤哈雷的证明（2026年六月拿下生涯首个ATP500，终结对弗里茨十年不胜）→⑥兑现①的结局（正文按时间顺序重新交代同一段半决赛结局，覆盖①的完整窗口）→⑦现在的历史意义（两位黑人球员史上第一次打进大师赛决赛，换qf2026源避免和⑥的sf2026再产生新的冷开场歧义）→⑧收尾预测（qf2026夺冠瞬间的真实庆祝，配一句预测式问句）。全片不含2026辛辛那提决赛本身的画面——决赛在制作时尚未打完，账号所有者要求不等结果，直接以预测收尾。",
+  "segments": [
+    {
+      "start": 335.08,
+      "end": 355.0,
+      "source": "sf2026",
+      "narration": "",
+      "_ending_payoff_required": true,
+      "quote": [
+        {
+          "at": 0.68,
+          "text": "And it goes! What a shot to choose there from TFO.\n球出界，这拍就是唯一答案"
+        },
+        {
+          "at": 13.24,
+          "text": "The final is calling for Francis.\n决赛，在等着弗朗西斯"
+        }
+      ],
+      "_why": "①冷开场，不配中文旁白。复用tiafoe-nakashima-cincinnati-2026-sf.json已验证的窗口和真实转写：半决赛赛点、蒂亚福反应、解说确认晋级决赛。这条片子讲的不是这场半决赛怎么打的，是「他又一次走到了决赛门口」——这一格画面就是最强的开场。它包含制胜分、结果确认和第一波庆祝，所以`_ending_payoff_required=true`：正文第⑦段会用完全相同的335.08-355.0窗口重新兑现这段结局，且是正文里最后一个sf2026片段，覆盖到冷开场末尾。",
+      "crosses_cut": "跨339.96、346.48秒，是决胜分收官、蒂亚福反应、走向网前的连续画面，同一个人（白色头带，Tennis TV转播）。"
+    },
+    {
+      "start": 66.0,
+      "end": 74.0,
+      "source": "father",
+      "narration": "蒂亚福五岁那年，第一次拿起球拍——是父亲，把这项运动带进了他的生活。",
+      "_why": "②起源。r_father源片记者原话（63.81-69.07秒）：\"Francis Tiafoe was only five years old when he first picked up a racket after his father, Francis senior, introduced him to the sport.\"——窗口从66.0秒起，对应的正是童年打网球镜头（红衣男孩挥拍），避开63.5-66秒那一小段是成年蒂亚福（连帽衫，2022年演播室采访）的画面——旁白讲五岁起步时，画面不该是成年的他。",
+      "crosses_cut": "跨67.33秒，源片B-roll剪辑点，前后均为童年/少年打网球或家庭合影的历史画面，不是场次切换。"
+    },
+    {
+      "start": 74.5,
+      "end": 92.7,
+      "source": "father",
+      "narration": "",
+      "quote": [
+        {"at": 0.43, "text": "It's just unbelievable.\n简直难以置信。"},
+        {"at": 2.64, "text": "I dreamt for this,\n我梦想过这一天，"},
+        {"at": 4.00, "text": "but it came quicker than I expected.\n只是它来得比我以为的快。"},
+        {"at": 10.92, "text": "Being a little kid,\n他还是个孩子的时候，"},
+        {"at": 12.65, "text": "he wanted this moment so bad,\n就那么渴望这一刻，"},
+        {"at": 14.17, "text": "and he would be insanely happy.\n如果做到了他会高兴疯掉。"},
+        {"at": 16.12, "text": "And now — he's living it.\n而现在，他真的活成了这样。"}
+      ],
+      "_why": "③父亲的真实声音。这段是r_father源片78.5-90.5秒路采原声的转写清理版——去掉了ASR的口吃重复（\"and I'm well\"／\"he's now he's living it\"），以及一段引用不清的\"who is this little guy\"插话（指向一张没看清内容的老照片，来源无法确认具体所指，为准确起见删去），保留可核实、完整、连贯的核心情感：一个父亲说他小时候梦想过这一刻，现在这一刻真的发生了。视觉是78.5-84.5秒父亲本人接受路采（举着话筒）的真实画面。这是全片最重的情感落点，不加中文旁白盖过原声。改成按条声明的双语字幕（`at`钉在r_father源片74.93/77.14/85.42/87.15/88.67/90.62秒对应的真实转写时刻上，减段起点74.5），每条都是「英文一行+中文一行」同屏显示——原来写成单个字符串会走narration那条自动切分的路，按逐词加`{\\fs78}`/`{\\fs68}`的强调标签渲染英文（那是给中文夹外语词用的），中文译文又被切成独立的一串顺序块跟在英文后面播完才出现，观众看英文的十几秒里屏幕上完全没有中文——这条改动让每一句英文原声出现的同时就配好对应的中文翻译，不再分成两段先后播。",
+      "crosses_cut": "跨81.85、84.78、89.82秒，是路采期间镜头在受访者（父亲）和现场反应镜头之间的常规切换，音轨是同一段连续采访录音，人物未变。"
+    },
+    {
+      "start": 440.7,
+      "end": 446.0,
+      "source": "2024final",
+      "narration": "两年前，同一座球场，他也曾站上这里的决赛——",
+      "_why": "④2024年的伤，第一句。scene_cuts确认440.64为切点，画面是辛纳庆祝制胜分那一刻（记分条SINNER 7 6/TIAFOE 6 2），不跨切点，死球之后再切。"
+    },
+    {
+      "start": 469.0,
+      "end": 479.4,
+      "source": "2024final",
+      "narration": "那一次，七比六、六比二，他把冠军留给了辛纳。",
+      "_why": "④2024年的伤，第二句。颁奖典礼画面——469.0秒起是网前致意与颁奖流程，471-474秒是冠军奖杯展示；本段不单独出现蒂亚福的特写镜头（本场原始集锦的颁奖段落以冠军辛纳为主镜头），但叙事没有误指——旁白只陈述「他把冠军留给了辛纳」这一事实，没有声称画面里某一帧是蒂亚福本人。480.32秒后是Tennis TV订阅卡片，本段479.4秒收口，留0.9秒以上余量。",
+      "crosses_cut": "跨472.24秒，同一场颁奖典礼的连续镜头（冠军奖杯展示与亚军颁奖），不是场次切换。"
+    },
+    {
+      "start": 463.0,
+      "end": 475.0,
+      "source": "halle2026",
+      "narration": "两年后的六月，在哈雷，他把这座奖杯举了起来——十年没赢过的对手弗里茨，这次终于被他拿下，生涯第一个ATP500冠军。",
+      "_why": "⑤哈雷的证明。462.84为切点，本段463.0起避免跨切；下一个切点475.64，本段475.0收口留0.64秒余量，477.5秒后是Tennis TV订阅卡片。画面：462-465秒庆祝与情绪释放（他情绪外露，擦脸），468-474秒举起冠军奖杯——和封面AP实拍的同一座奖杯、同一场决赛。"
+    },
+    {
+      "start": 335.08,
+      "end": 355.0,
+      "source": "sf2026",
+      "narration": "半决赛，他一度四比五落后，面临三个盘点——全部救下，七比五、六比三，重新杀回了辛辛那提决赛。",
+      "_why": "⑥兑现①的冷开场结局。窗口和①完全相同（335.08-355.0），正文里按时间顺序重新交代同一段结局，且是全片最后一个sf2026片段，覆盖到冷开场末尾——满足`_ending_payoff_required=true`的要求。中文旁白只占前十秒左右，后半段真实解说声（含①里出现过的\"The final is calling for Francis\"）继续在原声里，不重复烧字幕。",
+      "crosses_cut": "跨339.96、346.48秒，与①冷开场同一物理窗口，见①的说明。"
+    },
+    {
+      "start": 0.0,
+      "end": 14.0,
+      "source": "qf2026",
+      "narration": "而这一次，无论谁笑到最后都已经是历史——大师赛历史上，第一次有两位黑人球员打进决赛：蒂亚福的父母来自塞拉利昂，菲斯的父亲来自海地。",
+      "crosses_cut": "跨10.36秒的切点，两段都是本场1/4决赛开局阶段的连续回合宽景，画面性质不变（球员对拉、记分条持续推进），不是镜头/场次切换。",
+      "_why": "⑦现在的历史意义。取qf2026开场（不用sf2026，因为①⑥已经把sf2026的\"结局覆盖\"用满，这里换一个源避免同一源在⑥之后又出现更早的时间点，产生新的\"冷开场\"歧义）。画面是本周辛辛那提1/4决赛的真实回合，narration讲的是「今天」这件事本身，不是这一分的比赛细节。事实来源见_claims/editorial.human_context。"
+    },
+    {
+      "start": 340.0,
+      "end": 354.0,
+      "source": "qf2026",
+      "narration": "两年前，他从这里离开时，手里没有奖杯。今晚，他又一次站上这里的决赛——这一次，蒂亚福能把奖杯留在辛辛那提吗？",
+      "_why": "⑧收尾预测。复用1/4决赛夺得赛点、掷拍庆祝、拥抱穆塞蒂的真实画面（scene_cuts确认336.4-355.58为连续一镜，不跨切点），354.0秒收口，离355.58秒的Tennis TV endscreen（probe.json的scene_cuts实测值，和tiafoe-musetti-cincinnati-2026-qf.json用的是同一个数）还有1.58秒余量。落点是预测式问句，不是陈述——不猜比分，只问结果；无论今天决赛已经打完还是仍在进行，这句话都成立。用户明确要求结尾用预测收尾、不等真实决赛结果。"
+    }
+  ]
+}

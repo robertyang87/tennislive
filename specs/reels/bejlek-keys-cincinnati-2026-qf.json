@@ -1,0 +1,207 @@
+{
+  "slug": "bejlek-keys-cincinnati-2026-qf",
+  "source_url": "https://youtu.be/QuM0ytM-wlg",
+  "_source": "WTA 官方 YouTube 单场集锦《Sara Bejlek vs. Madison Keys | 2026 Cincinnati Quarterfinal | WTA Match Highlights》。2026-08-22 probe：305.99 秒、1920×1080、25fps；片尾从 295.88 秒开始转入 WTA 品牌动画，本片最晚收在 295.88 秒。",
+  "_column": "赛场之上",
+  "topbar": {
+    "line1": "2026 辛辛那提 WTA1000 1/4决赛",
+    "line2": "贝莱克 3-6 6-4 7-6(5) 凯斯"
+  },
+  "_topbar_why": "WTA 官方比分页与 matches API（MatchID LS004）原文为 `S. Bejlek d [20]M. Keys 3-6,6-4,7-6(5)`；第二行与 cover.winner / result / matchup 机械一致，赢家在前。",
+  "editorial": {
+    "mode": "match_review",
+    "question": "全场总分一百零七比一百零七，贝莱克究竟把胜负抢在了哪几分？",
+    "thesis": "这场两小时三十七分的三盘战，两人总得分、破发次数和破发机会都完全相同；区别只在领先权四次易手之后，贝莱克在决胜盘抢七2-4落后时没有再让比赛滑走，最后六分拿下五分，以7-5结束抢七。",
+    "beats": [
+      "首盘：凯斯开局3-0，6-3先下一城",
+      "次盘：凯斯又到3-1，贝莱克追平后以6-4扳回",
+      "决胜盘：贝莱克4-1领先被追到4-4，抢七2-4落后后拿下最后六分中的五分"
+    ],
+    "human_context": {
+      "angle": "同一场球出现两组完全相同的数字：双方总得分107-107，破发点也都是3/10。真正的故事不是谁全场压制谁，而是谁在最后一次领先权易手时没有再交出去。",
+      "facts": [
+        "WTA 官方比分页：贝莱克3-6 6-4 7-6(5)逆转凯斯，比赛用时02:37:37",
+        "WTA 官方 stats API：双方总得分107-107，破发点转化同为3/10",
+        "凯斯首盘3-0开局并6-3拿下；次盘又3-1领先，贝莱克6-4扳平",
+        "决胜盘贝莱克4-1领先后被追平，抢七2-4落后后拿下最后六分中的五分",
+        "贝莱克当期世界第35、凯斯世界第24；凯斯是本站20号种子，种子号不是排名",
+        "贝莱克此前连续淘汰23号种子克雷伊奇科娃、16号种子亚历山德罗娃和头号种子萨巴伦卡，本场后首次打进WTA1000四强"
+      ],
+      "sources": [
+        "https://www.youtube.com/watch?v=QuM0ytM-wlg",
+        "https://www.wtatennis.com/tournaments/1017/cincinnati/2026/scores/LS004",
+        "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches?page=0&pageSize=400",
+        "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches/LS004/stats",
+        "https://uk.sports.yahoo.com/news/giant-killer-bejlek-overhauls-keys-202323691.html"
+      ]
+    }
+  },
+  "_match": {
+    "wta_match_id": "LS004",
+    "flashscore_id": "AqhoF8Y9",
+    "start_utc": "2026-08-21T17:08:01Z",
+    "_why": "WTA 官方 matches API 确认轮次Q、CourtID=1、结果和总用时；逐分接口只把首分时间用作开球坐标，后续缓存不完整，不用来证明三盘走势。"
+  },
+  "_hit_data": "采用 WTA 官方数据：总分107-107、破发点同为3/10。逐盘关键差异是首盘凯斯37-28、次盘贝莱克34-27、决胜盘贝莱克45-43；正文只使用总分打平和抢七末段，不把逐盘总分堆成流水账。",
+  "stats": {
+    "tour": "wta",
+    "a": {
+      "headshot": "assets/players/headshots/wta-330375.jpg",
+      "aces": 4,
+      "df": 4,
+      "first_in": 66,
+      "first_won": 46,
+      "first_total": 102,
+      "second_total": 36,
+      "second_won": 17,
+      "bp_conv": 3,
+      "bp_chances": 10,
+      "pts_won": 107,
+      "pts_total": 214,
+      "winners": 23,
+      "ue": 28
+    },
+    "b": {
+      "headshot": "assets/players/headshots/wta-316959.jpg",
+      "aces": 2,
+      "df": 6,
+      "first_in": 63,
+      "first_won": 45,
+      "first_total": 112,
+      "second_total": 49,
+      "second_won": 23,
+      "bp_conv": 3,
+      "bp_chances": 10,
+      "pts_won": 107,
+      "pts_total": 214,
+      "winners": 41,
+      "ue": 47
+    },
+    "footer_venue": "P&G Stadium Court · 辛辛那提",
+    "footer_date": "2026.08.21",
+    "_source": "WTA 官方 `tournaments/1017/2026/matches/LS004/stats` 的 setnum=0。stats.a=cover.matchup[0]=贝莱克，stats.b=cover.matchup[1]=凯斯；first_total 直接取 totservplayed，second_total=first_total-first_in，second_won=ptstotwonserv-first_won。",
+    "_winners_ue_why": "跑过 tnns-stats.yml（who=Bejlek,Keys，date=2026-08-21，run 32560391088）：hasExtendedStats=true，选手顺序['Bejlek','Keys']与cover.matchup一致，分盘合计=全场自证通过（Set1[6,15]+Set2[5,10]+Set3[12,16]=[23,41]✅，Set1[8,14]+Set2[10,16]+Set3[10,17]=[28,47]✅）：a(贝莱克)=winners 23/ue 28，b(凯斯)=winners 41/ue 47。"
+  },
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "贝莱克",
+    "hook": "总分一百零七平\n抢七二比四后翻盘",
+    "_hook_why": "第一行抛出最反直觉的数据，第二行给真正决定胜负的过程；两行各7/8个字符，不复述海报已经印出的赛果。",
+    "_subject_why": "贝莱克是获胜并首次晋级WTA1000四强的一方，也是这条连续爆冷故事线的主体。",
+    "_heat_why": "凯斯是2025澳网冠军、2019辛辛那提冠军；贝莱克前一轮刚淘汰世界第一萨巴伦卡，这是一条正在连续展开的爆冷线。",
+    "topic": "辛辛那提WTA1000 · 女单1/4决赛",
+    "winner": "贝莱克",
+    "result": "3-6 6-4 7-6(5)",
+    "matchup": [
+      {"name": "贝莱克", "name_en": "Sara Bejlek", "country": "CZE", "rank": 35},
+      {"name": "凯斯", "name_en": "Madison Keys", "country": "USA", "rank": 24}
+    ],
+    "_name_why": "中文名走 player_zh()：Sara Bejlek→贝莱克，Madison Keys→凯斯。排名取 WTA 官方 2026-08-10 singles ranking：贝莱克35、凯斯24；凯斯的20是种子号，不写成排名。",
+  "portrait": {
+    "image": "assets/reel/bejlek-keys-cincinnati-2026-qf.jpg",
+    "focus": 0.5,
+    "focus_y": 0.5,
+    "zoom": 1.0
+  },
+  "_portrait_why": "辛辛那提赛会官网于2026-08-21发布的本场1/4决赛现场实拍，2000×1333；贝莱克赢球后在P&G Stadium Court举拍庆祝，正脸、粉色比赛服和场地均与本场一致，不再沿用上一轮照片。来源：https://cincinnatiopen.com/news/czech-please-bejlek-breaks-out-in-cincy/",
+    "scoreboard": {
+      "court": "P&G Stadium Court",
+      "duration_source": {
+        "provider": "wta",
+        "url": "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches?page=0&pageSize=400",
+        "match_id": "LS004",
+        "field": "MatchTimeTotal",
+        "source_page": "https://www.wtatennis.com/tournaments/1017/cincinnati/2026/scores/LS004"
+      },
+      "_court_why": "WTA matches API 的 CourtID=1；同日官方赛程将 CourtID 1 对应为 P&G Stadium Court。",
+      "_duration_why": "WTA 官方 MatchTimeTotal=02:37:37，海报显示2:37；不用 flashscore 的逐盘取整合计2:39。"
+    }
+  },
+  "_voice_why": "云见 zh-CN-YunjianNeural，+6%。短句先给反差，再按三盘顺序推进；关键分结束后主动留出现场声。",
+  "push": {
+    "summary": "总分107平，贝莱克晋级",
+    "lead": "辛辛那提女单1/4决赛，贝莱克3-6 6-4 7-6(5)逆转凯斯，首次晋级WTA1000四强。凯斯首盘3-0开局、次盘又3-1领先；贝莱克扳回一盘后，决胜盘4-1领先又被追平，抢七2-4落后时拿下最后六分中的五分。两小时三十七分，双方总得分107-107、破发点同为3/10。",
+    "auto": false,
+    "_no_auto_why": "用户明确要求只做预览，不触发发布；保持手动复核链路。"
+  },
+  "_editing_why": "贝莱克=亮粉色球衣、金发；凯斯=酒红色球衣、深色帽。结构为完整赛点原声冷开（英文解说配中英字幕）→107平反差→坐标→凯斯首盘制胜分→三盘领先权易手→完整抢七推进→庆祝提问。关键回合从发球/接发起点开始，保留落点、球员反应和观众声；片尾品牌动画从295.88秒开始，严格不用。",
+  "segments": [
+    {
+      "start": 253.96,
+      "end": 276.56,
+      "narration": "",
+      "_ending_payoff_required": true,
+      "_quote_kind": "broadcast",
+      "quote": [
+        {"at": 8.44, "text": "What a shot!\n好球！"},
+        {"at": 9.7, "text": "What a way to win it for Sara Bejlek.\n贝莱克用这样的方式拿下比赛"},
+        {"at": 12.12, "text": "She follows up the win over Sabalenka\n继击败萨巴伦卡后"},
+        {"at": 14.92, "text": "with a remarkable performance\n她又打出不可思议的表现"},
+        {"at": 17.4, "text": "in a third set of high drama\n鏖战跌宕起伏的决胜盘"},
+        {"at": 20.2, "text": "for more than 70 minutes.\n这盘打了七十多分钟"}
+      ],
+      "crosses_cut": "跨262.04和272.44秒，是完整赛点回合切到贝莱克张开双臂庆祝，再切到赛后近景；同一收官时刻的自然转播切换。",
+      "_why": "①冷开场。253.96秒从赛点回合的接发起点进入，不从最后两拍截断；完整保留直线制胜分、观众爆发和解说说完 `more than 70 minutes`。英文原声按YouTube字幕时刻校正后配中英双语字幕，不压中文旁白。"
+    },
+    {
+      "start": 276.56,
+      "end": 284.92,
+      "narration": "贝莱克三盘逆转凯斯。两个人各拿一百零七分，赢家一分没多。",
+      "_why": "②先给结果和矛盾。画面是握手后贝莱克独自走向观众、举拍致意；与冷开赛点不重复。为让冷开英文解说说完，窗口压到8.36秒并同步缩短中文旁白。"
+    },
+    {
+      "start": 0.0,
+      "end": 13.88,
+      "narration": "北京时间八月二十二号凌晨一点多，辛辛那提女单四分之一决赛。世界第三十五的贝莱克，对阵世界第二十四的凯斯。",
+      "_why": "③坐标。WTA逐分首分时间17:08:01 UTC，换算北京时间8月22日01:08；窗口是本场开场底线回合，到严格切点13.88秒收口。"
+    },
+    {
+      "start": 16.4,
+      "end": 32.08,
+      "narration": "",
+      "_why": "④首盘精彩球。完整保留凯斯调动后把球送到边线的回合、英文解说 `beautifully judged` 和现场掌声；先让观众看到凯斯为何能掌控首盘，再进入比分复盘。"
+    },
+    {
+      "start": 78.76,
+      "end": 88.12,
+      "narration": "凯斯开局连拿三局。贝莱克救过盘点，还是三比六先丢一盘。",
+      "crosses_cut": "跨82.04和85.88秒，都是首盘5-3时同一个盘末局里的回合、近景与盘点机位切换。",
+      "_why": "⑤首盘。记分条从2-5追到3-5，凯斯在第二个盘点拿下首盘；旁白只讲3-0起跑和6-3落点。"
+    },
+    {
+      "start": 140.4,
+      "end": 172.92,
+      "narration": "第二盘凯斯又三比一领先。贝莱克追到三平，再把五比四的优势兑现，六比四扳回一盘。",
+      "crosses_cut": "跨142.64、151.4和157.32秒，从第二盘末段的关键回合进入5-4盘点，再切到贝莱克近景和拿盘庆祝；全程仍是本盘收官。",
+      "_why": "⑥次盘反扑。窗口前移到140.4秒，完整保留盘末关键回合、贝莱克拿盘和原声 `Super Sara takes the second`；旁白先交代3-1到3平的过程，后半段让击球声、掌声和庆祝接管。"
+    },
+    {
+      "start": 198.16,
+      "end": 211.0,
+      "narration": "决胜盘，她先破发，很快拉到四比一。比赛看起来终于倒向了贝莱克。",
+      "_why": "⑦决胜盘前段。198.5秒记分条是1-0、40-15破发点，之后集锦跳到她建立两局以上优势；官方逐局确认她从1-0破到2-0并领先4-1。"
+    },
+    {
+      "start": 211.0,
+      "end": 228.64,
+      "narration": "但凯斯立刻追了回来，四比一追到四平。贝莱克的领先，再一次被清空。",
+      "crosses_cut": "跨214.28秒，是凯斯在4-2阶段拿到破发点的宽景切到近景；随后是凯斯握拳、贝莱克失望反应，同一轮转折。",
+      "_why": "⑧最大回摆。记分条明确显示凯斯在2-4时拿到破发点；逐局记录确认她连追三局到4-4。"
+    },
+    {
+      "start": 231.88,
+      "end": 253.96,
+      "narration": "抢七，贝莱克二比四落后。此后六分，她拿下五分，七比五把比赛抢了回来。",
+      "crosses_cut": "跨243.76、246.6、249.36和251.72秒，都是决胜盘抢七从开局、2-2、2-4推进到6-5赛点的回合、反应和机位切换。",
+      "_why": "⑨最后转折。231.88秒从抢七前段完整回合进入，保留双方各自得分与场内反应，再走到贝莱克2-4落后、6-5赛点；最后一分已经在冷开完整展示，不重复使用。"
+    },
+    {
+      "start": 284.92,
+      "end": 295.88,
+      "narration": "从第一次WTA1000八强，到第一次四强，她只隔了一场。总分一样，你觉得她赢在了哪几分？",
+      "crosses_cut": "跨288.8和292.08秒，是贝莱克向看台致意切到球场大全景和最终比分图形；295.88秒前仍是本场内容。",
+      "_why": "⑩收尾。庆祝和最终比分把故事闭环，最后落在一个可讨论的问题上；295.88秒后WTA品牌片尾不用。"
+    }
+  ]
+}

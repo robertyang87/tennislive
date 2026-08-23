@@ -83,13 +83,6 @@ jobs:
           # Unit tests need source, workflow contracts, data and curated assets,
           # but must not download every previously published card/video.
           #
-          # 例外是 output/interviews：「赛后开麦」那条线的转写产物
-          #（lines.json / .ass / 核对表，几百 KB）。少了它 test_interview_clip
-          # 里的 spec 测试**永远 skip**——而「一个常年不变的 skip 数字和一个
-          # 常年不变的 fail 数字一样，都是没人真的看过」。
-          # ⚠️ 成片 mp4 也落在这个目录下，等条数多起来要改成非 cone 模式按
-          # 后缀挑，别让 CI 每次拉几十兆。
-          #
           # `.claude` 是会话启动钩子（几 KB）。**判据的主语要在 CI 的检出里
           # 真的存在**——漏掉它，`test_session_start_hook.py` 五条全部
           # `FileNotFoundError`（run 30971701644）。这和「测试不许拿 `output/`
@@ -102,12 +95,54 @@ jobs:
           # `fatal: specify directories rather than patterns`。说明只能写在
           # 块外面（就是这儿）。判据落在 `test_ci的sparse块里不许有注释`。
           #
-          # **非 cone 模式**：上面那句「等条数多起来要改成非 cone 模式按后缀挑」
-          # 到期了——`output/interviews` 已经 **331 MB，其中 5 个 mp4 占 328 MB**，
-          # 而测试真正要读的 md / json / ass / jpg 加起来**约 3 MB**。cone 模式
-          # 只能按目录选，挑不掉后缀，所以每一趟 CI 都在拉 328 MB 它从不打开的
-          # 视频。模式集在合成仓库上验过（根文件和常规目录全在、interviews 的
-          # 文本产物在、mp4 和其余 output 都不在）。
+          # ⚠️⚠️⚠️ **2026-08-23：`output/**/*.json` 等五类文本产物换成了
+          # 全仓覆盖，不再只挑 `output/interviews/` 那一格。** 根因是
+          # `tests/test_no_signed_urls.py::test_仓库里不许留签名URL的凭据部分`——
+          # 它要扫全部被跟踪的 `output/**/*.json|md|txt`，CI 的稀疏检出只带
+          # 了 `output/interviews/`，其余约 1750 个文件不在磁盘上，`_read()`
+          # 退回逐个 `git show :<path>`。**这个仓库是 `--filter=blob:none`
+          # 的部分克隆**，每一次 `git show` 对不在本地的 blob 都要向 GitHub
+          # 发一次单独的网络取回——实测约 400~600ms/次，513 秒（占那趟 CI
+          # 总时长的 81%）就是这么烧掉的。用同样的部分克隆+稀疏检出配置在
+          # 沙箱里复现过：`git show` 逐个取，1751 个文件投影约 1000 秒，和
+          # CI 实测的 513 秒是同一个量级。
+          #
+          # 试过在测试里把 `git show` 换成批量的 `git cat-file --batch` 或者
+          # `git fetch origin <oid...>`——`cat-file --batch` 会反复触发
+          # `gc.auto` 后台打包、比逐个 `git show` 还慢；`git fetch` 批量取
+          # 遇到坏 OID 就整批失败（`did not send all necessary objects`），
+          # 两条都不够稳。**真正的根治是让 `git checkout` 自己的批量对象
+          # 获取机制去做这件事**——它下载一批 blob 只用一次网络往返，
+          # 不是文件数份。所以把 `output/**/*.json`（以及 `.md`/`.txt`/
+          # `.ass`，都是这条判据要扫、或者 `test_interview_clip` 那批转写
+          # 测试要读的类型）整体收进检出范围，**只排除体积大的二进制**
+          # （mp4/jpg/jpeg/png/webp/gif）。
+          #
+          # ⚠️ **`.json3` 是单独补的第五类，而且是这次改动本身漏掉后才发现的。**
+          # 老的 `output/interviews/` 那一格是不分后缀整段收进来的（只排除
+          # `.mp4`），`cap_*.json3`（yt-dlp 拉下来的原始字幕缓存，
+          # `tests/test_interview_clip.py` 的 `_KEEP_SUFFIX` 里就登记着它是
+          # 长期产物不是中间物）本来就在检出范围里。换成按后缀收窄之后第一版
+          # 只写了 `.json/.md/.txt/.ass`——`.json3` 后缀不匹配 `*.json`，
+          # 于是这条 PR 自己的第一趟真实 CI 跑出来当场露馅：23 条本来会真的
+          # 读 `cap_*.json3` 校验的测试（`test_真实那条片子只报出该报的那一处`、
+          # `test_销掉的空档得真的是空档` 这一批）从"通过"退化成了"跳过"——
+          # `pytest -rs` 的短摘要里多出两行新的 skip 理由，和本地全量跑对比
+          # 才看出差了 24 条（102 skipped 本地 vs 126 skipped CI，差额刚好等于
+          # 这两类新增 skip 的合计）。**这正是「查产物,不查信号」的又一次**：
+          # CI 那趟本身是绿的，conclusion=success，光看结论完全看不出来这是
+          # 一次覆盖率倒退——把 pytest 自己打出来的 skip 明细和本地跑的明细
+          # 逐行对一遍，才抓到这个后缀漏了
+          #
+          # 量过代价（补上 `.json3` 之后重新量的，上一版「2.3 MB」那个数
+          # 是只统计了极小一部分文件、没量过就写进注释的错值，见 CLAUDE.md
+          # 「没量过的推断写进注释」那条）：这五类文本产物全仓库合计
+          # **2612 个文件、23.46 MB**（对比 `output/` 整体 945 MB）——检出
+          # 时间没有可感知的变化（PR #547 那趟真实 CI 的 checkout 步骤只
+          # 用了 13 秒，和这条改动之前的历史 checkout 耗时同一个量级）。
+          # 模式集在合成仓库上验过（根文件和常规目录全在、目标文件一个不缺、
+          # 二进制一个没混进来）。
+          #
           # ⚠️ 非 cone 模式下**根文件不会自动带上**，所以第一行的 `/*` 不能少——
           # 少了它 `pyproject.toml` 都不在，`pip install -e .` 当场炸。
           sparse-checkout-cone-mode: false
@@ -117,8 +152,8 @@ jobs:
             /output/**/*.json
             /output/**/*.md
             /output/**/*.txt
-            /output/interviews/
-            !/output/interviews/**/*.mp4
+            /output/**/*.ass
+            /output/**/*.json3
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
@@ -143,7 +178,12 @@ jobs:
           path: |
             ~/.cache/apt-archives
             ~/.cache/apt-lists
-          key: apt-pkgs-${{ runner.os }}-24.04-ci-v1
+          # 滚动键：actions/cache 的主键不可变，固定键会把第一趟存下的
+          # 半份缓存永远钉死，后面补装的包写不回去——形状照抄
+          # match-reel.yml「缓存 apt 包」那一步（那儿有完整注释）。
+          key: apt-pkgs-${{ runner.os }}-24.04-ci-v2-${{ github.run_id }}
+          restore-keys: |
+            apt-pkgs-${{ runner.os }}-24.04-ci-v2-
       # `fonts-noto-core` 不是可选项：字幕切行要**量** Noto Sans 的实际字宽，
       # 少了它 fontconfig 悄悄回退到 DejaVu（宽 8%），量出来的行宽和渲出来的
       # 对不上。代码里缺字体直接报错不回退，所以漏装这个包 CI 会红而不是假绿。

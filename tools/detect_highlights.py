@@ -17,6 +17,7 @@
 from __future__ import annotations
 
 import argparse
+import os
 import re
 import subprocess
 import sys
@@ -30,6 +31,33 @@ from oncourt_hunt import short_event  # noqa: E402
 HIGHLIGHT_HINTS = re.compile(
     r"highlight|集锦|extended|full match|全场|highlights", re.I)
 
+# 单场集锦的标题形状：`X vs Y …`。Day N 合集、球员特辑、Best points 这类
+# 没有 ` vs `——合集切不出连续窗口，根本不能当源片（CLAUDE.md「合集不算一条源」）。
+VS_RE = re.compile(r"\bvs\b", re.I)
+
+# 官方频道白名单（小写比对）。三大官方之外还认**赛事自己的官方频道**
+# （频道名里含赛事简称的每个词，如 `Cincinnati Open`）——那一档每站一个名字，
+# 列不成常量，见 `channel_ok`。搬运号一律不收（CLAUDE.md「搬运号不算」）。
+OFFICIAL_CHANNELS = frozenset({"atp tour", "tennis tv", "wta"})
+
+# 超过 12 分钟按「Day N 合集 / 多场混剪」拒：官方单场集锦是 2~8 分钟，
+# 12 分钟档的全是把好几场拼在一起的当日汇总（实测 Day 5 合集 12:03）。
+MAX_HIGHLIGHT_SECONDS = 12 * 60
+
+# 账号所有者 2026-08-18 定死：「视频一定要选 1080p 及以上的清晰度，
+# 如果没有的话就等」——不分巡回赛、不分渠道的硬门槛。
+MIN_SOURCE_HEIGHT = 1080
+
+
+class HighlightSourceError(RuntimeError):
+    """集锦搜索源不可用，而不是“搜索正常但还没有结果”。"""
+
+
+def _cookie_args() -> list[str]:
+    """Actions secret 落成文件后统一传给搜索和元数据探测。"""
+    path = (os.environ.get("YT_COOKIES") or "").strip()
+    return ["--cookies", path] if path and Path(path).is_file() else []
+
 
 def query_for(home: str, away: str, event: str, year: int) -> str:
     """拼搜索词：两个球员姓 + 赛事简称 + 年份 + highlights。
@@ -41,32 +69,94 @@ def query_for(home: str, away: str, event: str, year: int) -> str:
     return f"{surname(home)} {surname(away)} {short_event(event)} {year} highlights"
 
 
-def search(query: str, per: int = 6, timeout: int = 120) -> list[tuple[str, str]]:
-    """yt-dlp 的 ytsearch 拿 (title, url) 列表。空结果/超时都返回 []——「没搜到」
-    是正常态（集锦还没传），不该把整条探测带崩。"""
+def _opt(v: str | None) -> str | None:
+    """yt-dlp `--print` 对缺字段吐 `NA`，当成「不知道」而不是一个值。"""
+    v = (v or "").strip()
+    return v if v and v != "NA" else None
+
+
+def _dur(v: str | None) -> float | None:
+    v = _opt(v)
+    if v is None:
+        return None
+    try:
+        return float(v)
+    except ValueError:
+        return None
+
+
+def search(query: str, per: int = 6, timeout: int = 120) -> list[tuple]:
+    """yt-dlp 的 ytsearch 拿 (title, url, channel, duration) 列表。
+
+    正常空结果返回 []；超时、yt-dlp 非零退出和没安装都抛
+    `HighlightSourceError`——它们是「搜索源不可用」，不是「集锦还没传」。
+    编排器会让其他比赛继续探测/派发，再把整班标红并告警，既不互相阻塞，
+    也不把基础设施故障伪装成安静的空结果。
+
+    channel/duration 用同一次 `--print` 顺手带出来（flat 模式拿不到的字段是
+    `NA`，解析成 None，留给 `vet_candidate` 对最终候选单独补一枪）。
+    """
     try:
         proc = subprocess.run(
             ["yt-dlp", "--flat-playlist",
-             "--print", "%(title)s ||| %(webpage_url)s",
+             *_cookie_args(),
+             "--print", "%(title)s ||| %(webpage_url)s ||| %(channel)s ||| %(duration)s",
              f"ytsearch{max(1, min(per, 20))}:{query}"],
             capture_output=True, text=True, timeout=timeout)
-    except (subprocess.TimeoutExpired, FileNotFoundError):
-        return []
+    except FileNotFoundError:
+        raise HighlightSourceError(
+            "yt-dlp 没装——这不是「集锦还没发」，是环境错了：探测会每一班都"
+            "安静地零候选。工作流里要 pip install \"yt-dlp[default]\""
+            "（[default] 不能省，见 CLAUDE.md 装 yt-dlp 那条）。") from None
+    except subprocess.TimeoutExpired as exc:
+        raise HighlightSourceError(
+            f"YouTube 搜索超过 {timeout}s——这是源站/网络故障，不是「集锦还没发」"
+        ) from exc
     if proc.returncode != 0:
-        return []
+        detail = (proc.stderr or "").strip().splitlines()
+        tail = detail[-1][:300] if detail else "无 stderr"
+        raise HighlightSourceError(
+            f"YouTube 搜索失败（yt-dlp exit {proc.returncode}: {tail}）——"
+            "这是源站/网络故障，不是「集锦还没发」")
     out = []
     for line in proc.stdout.strip().split("\n"):
         if " ||| " not in line:
             continue
-        title, url = line.split(" ||| ", 1)
-        out.append((title.strip(), url.strip()))
+        parts = line.split(" ||| ")
+        if len(parts) < 2:
+            continue
+        title, url = parts[0].strip(), parts[1].strip()
+        channel = _opt(parts[2]) if len(parts) > 2 else None
+        duration = _dur(parts[3]) if len(parts) > 3 else None
+        out.append((title, url, channel, duration))
     return out
 
 
-def pick_highlight(results: list[tuple[str, str]], home: str, away: str,
+def channel_ok(channel: str | None, event: str = "") -> bool:
+    """频道在不在官方白名单：三大官方（`OFFICIAL_CHANNELS`）＋赛事自己的
+    官方频道（频道名就是赛事简称，如 `Cincinnati Open`）。
+
+    Merely *containing* the event word is not proof: ``Cincinnati Tennis Fan``
+    must not inherit official status from the word Cincinnati.
+    """
+    c = (channel or "").strip().lower()
+    if not c:
+        return False
+    if c in OFFICIAL_CHANNELS:
+        return True
+    tokens = lambda value: {  # noqa: E731
+        w for w in re.findall(r"[a-z0-9]+", short_event(value).lower())
+        if w not in {"official", "channel", "tv", "youtube"}
+    }
+    ev, channel_name = tokens(event or ""), tokens(channel)
+    return bool(ev) and channel_name == ev
+
+
+def pick_highlight(results: list[tuple], home: str, away: str,
                    event: str = "", year: int | None = None) -> str | None:
     """从搜索结果里挑一条像本场集锦的。判据**宁可窄**：标题要带集锦关键词、
-    带两位球员的姓，**而且是这一站这一年的**——都满足才收（「没搜到」好过「拿错」）。
+    带两位球员的姓、带 ` vs `（单场的形状），**而且是这一站这一年的**——
+    都满足才收（「没搜到」好过「拿错」）。
 
     ⚠️ **`event` / `year` 这两道是 2026-08-16 补的，补之前它真的拿错过一条。**
     实跑「商竣程 vs 索内戈 / Cincinnati / 2026」，它探回来的是
@@ -81,22 +171,94 @@ def pick_highlight(results: list[tuple[str, str]], home: str, away: str,
 
     两个不给的时候退回老行为（只查姓 + 关键词），因为**这个函数的老调用方
     不知道赛事**；生产路径 `find_highlight()` 一律把两个都传进来。
+
+    条目可以是 (title, url) 或 (title, url, channel, duration)——搜索现在
+    顺手带 channel/duration，**知道就当场筛**（搬运号 / Day N 合集），
+    不知道（flat 模式给 NA）留给 `vet_candidate` 对最终候选补一枪。
     """
     hn = (home or "").strip().split()[-1].lower()
     an = (away or "").strip().split()[-1].lower()
     # 赛事名可能是多词的（`Hong Kong`），逐词都要在标题里——`short_event` 已经
     # 把赞助商前缀剥掉了，剩下的就是地名。
     ev = [w for w in short_event(event or "").lower().split() if w]
-    for title, url in results:
+    for item in results:
+        title, url = item[0], item[1]
+        channel = item[2] if len(item) > 2 else None
+        duration = item[3] if len(item) > 3 else None
         t = title.lower()
         if not (HIGHLIGHT_HINTS.search(t) and hn in t and an in t):
             continue
+        if not VS_RE.search(title):
+            continue                      # 没有 ` vs ` 的是合集/特辑，不是单场
         if ev and not all(w in t for w in ev):
             continue
         if year is not None and str(year) not in t:
             continue
+        if channel is not None and not channel_ok(channel, event):
+            continue                      # 认得出频道而不是官方 → 搬运号
+        if duration is not None and duration > MAX_HIGHLIGHT_SECONDS:
+            continue                      # 12 分钟以上按合集拒
         return url
     return None
+
+
+def probe_meta(url: str, timeout: int = 120) -> tuple | None:
+    """对最终候选跑一次 `yt-dlp --print`，拿 (channel, duration, height)。
+
+    flat-playlist 搜索拿不到 height（channel/duration 也可能是 NA），所以
+    选中之后要单独补一枪。⚠️ 会间歇性撞「Sign in to confirm you're not a
+    bot」，重试一次通常就过（CLAUDE.md「要重试才算查过」）；两次都失败返回
+    None——「探不到元数据」和「元数据不合格」是两回事，调用方分开处置。
+    ⚠️ `--js-runtimes node` 不能省：runner 上不带它拿不到格式表
+    （CLAUDE.md「记得带 --js-runtimes node」）。
+    """
+    cmd = ["yt-dlp", "--skip-download", "--js-runtimes", "node",
+           *_cookie_args(),
+           "--print", "%(channel)s ||| %(duration)s ||| %(height)s", url]
+    for _ in range(2):
+        try:
+            proc = subprocess.run(cmd, capture_output=True, text=True,
+                                  timeout=timeout)
+        except (subprocess.TimeoutExpired, FileNotFoundError):
+            continue
+        if proc.returncode != 0:
+            continue
+        line = proc.stdout.strip().split("\n")[-1] if proc.stdout.strip() else ""
+        if " ||| " not in line:
+            continue
+        parts = line.split(" ||| ")
+        return (_opt(parts[0]), _dur(parts[1]),
+                _dur(parts[2]) if len(parts) > 2 else None)
+    return None
+
+
+def vet_candidate(url: str, event: str = "") -> tuple[str, str]:
+    """终审最终候选：官方频道 / 时长 / 1080p。返回 (verdict, 一句人话)。
+
+    verdict 三态，处置各不相同：
+      ok      —— 用它
+      reject  —— 这条本身不能用（搬运号 / 合集），照旧走备选链
+      wait    —— **有集锦但先不用**（只有 720p / 元数据探不到），下一班再探。
+                 ⚠️ 「有集锦但只有 NNNp，等 1080p」和「还没探到」必须是两句
+                 不同的话——一个是等，一个是没有，读日志的人要分得开。
+    """
+    meta = probe_meta(url)
+    if meta is None:
+        return "wait", (f"  [vet] {url} 元数据探不到（重试过一次）——"
+                        "先不用，下一班再探（这不是「还没探到集锦」）")
+    channel, duration, height = meta
+    if channel is not None and not channel_ok(channel, event):
+        return "reject", (f"  [vet] {url} 频道「{channel}」不在官方白名单，"
+                          "搬运号不用（三大官方 / 赛事官方频道才算）")
+    if duration is not None and duration > MAX_HIGHLIGHT_SECONDS:
+        return "reject", (f"  [vet] {url} 时长 {duration:.0f}s 超过 "
+                          f"{MAX_HIGHLIGHT_SECONDS}s，像 Day N 合集不是单场集锦")
+    if height is None or height < MIN_SOURCE_HEIGHT:
+        got = f"{height:.0f}p" if height is not None else "读不出分辨率"
+        return "wait", (f"  [vet] {url} **有集锦但只有 {got}，等 1080p**"
+                        "——这不是「还没探到」，是「先不用」（账号所有者 "
+                        "2026-08-18：没有 1080p 就等），下一班再探")
+    return "ok", ""
 
 
 def tennistv_fallback(home: str, away: str, *, pages: int = 3) -> str | None:
@@ -122,15 +284,19 @@ def tennistv_fallback(home: str, away: str, *, pages: int = 3) -> str | None:
             TAG_SHORT_HIGHLIGHTS, is_real_short_highlight, rows, video_url,
         )
         items = rows(tag_ids=str(TAG_SHORT_HIGHLIGHTS), pages=pages)
-    except (Exception, SystemExit):
-        # 探测这一步「没探到」是正常态，**不许把整条编排带崩**——和上面
-        # `search()` 吞掉超时是同一个理由。
+    except (Exception, SystemExit) as exc:
+        # 备选源失败不拖垮整批，但必须写 source-warning；否则它和
+        # 「最近几页正常查完、没有这一场」长得一模一样。主路 YouTube 的
+        # 故障由 HighlightSourceError 触发整班告警，Tennis TV 只作 ATP 备选，
+        # 这里保留降级而不让 WTA 因一个不适用的备选源变红。
         #
         # ⚠️ **`SystemExit` 要单独列出来**：它继承的是 `BaseException` 不是
         # `Exception`，光写 `except Exception` 接不住。而 `tennistv_catalog._get`
         # 在接口回 HTML（参数名写错会 400）时抛的正是 `SystemExit`——那是给
         # 命令行准备的「说人话再退出」，被当成库用的时候就成了一颗炸弹。
         # 判据抓到过这个洞。
+        print(f"  [source-warning] Tennis TV 备选源不可用（{type(exc).__name__}: "
+              f"{exc}）——这不是『最近几页没有这一场』", file=sys.stderr)
         return None
     for item in items:
         if not is_real_short_highlight(item):
@@ -151,11 +317,24 @@ def find_highlight(home: str, away: str, event: str, year: int,
 
     ⚠️ **优先级链只有这一处实现。** 编排器和命令行都走它——写两处必分叉，
     而分叉的样子是「手动跑说探到了，自动班次说没探到」。
+
+    挑中的 YouTube 候选要过 `vet_candidate` 终审（官方频道/时长/1080p）：
+    reject（搬运号/合集）→ 这条本身不能用，照旧走备选链；
+    **wait（720p / 元数据探不到）→ 直接返回 (None, "")，不退备选**——
+    这一场明明有 YouTube 集锦、只是还不到 1080p，退到 Tennis TV 的 2 分半
+    剪短版等于把「等 1080p」这道硬门槛悄悄换成一条更短的路；cron 30 分钟
+    一班，等下一班就好。
     """
     url = pick_highlight(search(query_for(home, away, event, year), per=per),
                          home, away, event, year)
     if url:
-        return url, "youtube"
+        verdict, why = vet_candidate(url, event)
+        if verdict == "ok":
+            return url, "youtube"
+        print(why)
+        if verdict == "wait":
+            return None, ""
+        # verdict == "reject" → 继续走备选链
     url = tennistv_fallback(home, away)
     return (url, "tennistv-short") if url else (None, "")
 
@@ -174,7 +353,16 @@ def main() -> int:
     q = query_for(args.home, args.away, args.event, args.year)
     print(f"搜索词：{q}")
     if args.no_fallback:
-        url, via = pick_highlight(search(q, per=args.per), args.home, args.away), "youtube"
+        # 和生产路径同一套闸（event/year/vet），只是不退备选——别让 CLI
+        # 这条路悄悄放过生产路径会拦的候选。
+        url = pick_highlight(search(q, per=args.per), args.home, args.away,
+                             args.event, args.year)
+        if url:
+            verdict, why = vet_candidate(url, args.event)
+            if verdict != "ok":
+                print(why)
+                url = None
+        via = "youtube"
     else:
         url, via = find_highlight(args.home, args.away, args.event, args.year,
                                   per=args.per)

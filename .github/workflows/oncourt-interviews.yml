@@ -1,6 +1,6 @@
 name: oncourt-interviews
 
-# 场上赛后采访的持续采集。每天两轮，把新出现的视频并进
+# 场上赛后采访的持续采集。每 15 分钟一轮，把新出现的视频并进
 # data/oncourt_interviews.json，供英语学习选材用。
 #
 # 只收一类：**赛后直接在场上接受采访**（主持人拿麦上场问、球员站着答）。
@@ -15,17 +15,17 @@ on:
   # 现在下游有了——`pick_oncourt_clips.py` 挑成片候选、`oncourt_feed.py` 推清单，
   # 都是这条库的直接消费者。没有定时采集，新采访永远进不来，成片候选永远是空的。
   schedule:
-  # **每天两轮**，不是每周。「赢球后的采访」等一周就没意义了——
-  # 赛事一周打完，周推的话决赛采访最晚要等七天才到手。
+  # **每 15 分钟一轮**（原来每天两轮）。这条现在是「赛后开麦」自动出片链的
+  # 第一环——采集 → 候选 → 草稿，后面 interview-auto-render 每 10 分钟接一次；
+  # 采集一天只醒两次的话，一条比赛日下午打完的采访要等到深夜才建草稿，
+  # 而这条线的规矩是「上一个比赛日的不做了」——等一晚等出来的常常是过期候选。
+  # 每 15 分钟把「采访上线 → 候选矩阵启动」的最坏等待压到一刻钟。
   #
-  # cron 一律是 UTC，北京时间要自己减八小时；**减完跨了零点就要连日期一起挪**。
-  #
-  # 两轮的分工按**赛区落在 UTC 的哪一段**来定，不是随手挑两个整点：
-  #   北京 05:00（21:00 UTC）——欧洲白天和傍晚场都打完并上传了
-  #   北京 11:00（03:00 UTC）——补美洲晚场。美东夜场常在 01:00–04:00 UTC
-  #                             才结束，上一轮跑的时候它还没打完
-  - cron: "0 21 * * *"   # 北京 05:00（次日）
-  - cron: "0 3 * * *"    # 北京 11:00（当日）
+  # 分钟取 7，避开 :00/:30——GitHub 在整点半点最容易延迟或丢弃
+  # （daily 当年留下的经验，knowledge-adhoc 的 08:37 也是这么定的）。
+  # 每 15 分钟追一轮新赛果后的采访。不同比赛在下面 matrix 中各占一个 runner，
+  # 不再让第 N 场等待前 N-1 场转写完成。
+  - cron: "7,22,37,52 * * * *"
   workflow_dispatch:
     inputs:
       only:
@@ -40,30 +40,34 @@ on:
 
 permissions:
   contents: write
-
-concurrency:
-  group: oncourt-interviews
-  cancel-in-progress: false
+  # 草稿矩阵全部落库后立即叫醒提升/渲染，不再等下一班最多 10 分钟的 schedule。
+  actions: write
 
 jobs:
   collect:
+    # 只串行共享采集状态/候选 lease；上一批 draft 做 ASR 时，下一轮资源扫描
+    # 可以继续。claim 在 collect 结束前提交，后继 collect 会跳过同一 match_id。
+    concurrency:
+      group: oncourt-interviews-collect
+      cancel-in-progress: false
+    outputs:
+      candidate_ids: ${{ steps.matrix.outputs.candidate_ids }}
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
         with:
-          # **别把 output/ 拉下来。** HEAD 上它就有 1.36 GB（.git 1.77 GiB），
-          # checkout 因此每次要一分半上下（daily 那条量到 1:31，match-reel 2:44），
-          # 而**这条工作流一个字节都不碰 output/**。稀疏检出把它挡在外面，
-          # 剩下的全部加起来 161 MB。cone 模式下根目录的文件总是带上。
-          #
-          # ⚠️ 这里没有 `git sparse-checkout add`——因为它不写产物。会写
-          # `output/` 的那几条要在算出目录之后把自己那一格 add 回来，
-          # 见 match-reel.yml。照抄这一段之前先确认你这条真的不写产物。
+          # **别把整棵 output/ 拉下来。** HEAD 上它就有 1.36 GB（.git 1.77 GiB），
+          # checkout 因此每次要一分半上下（daily 那条量到 1:31，match-reel 2:44）。
+          # 这条工作流**只写 `output/interviews/`**（自动建草稿落的第一份转写
+          # cap_asr.json3，现在只有几 MB 文本）——目录是固定的，按仓库的老规矩
+          # 直接列进 sparse-checkout（「目录固定 → 直接列，不用 add」），
+          # 其余 output/ 照旧挡在外面。cone 模式下根目录的文件总是带上。
           sparse-checkout: |
             assets
             data
             docs
+            output/interviews
             specs
             src
             tests
@@ -81,6 +85,10 @@ jobs:
 
       - name: 采集
         run: |
+          # **pipefail 必须开**：这一步是 `python | tee`，不开的话 bash 报的是
+          # tee 的退出码——采集崩了整步照样绿（「筛出关键场次」那一步就这么
+          # 骗过一次，这里是同一个形状）。
+          set -o pipefail
           # 默认日常增量（每源 60 条，约 1 分钟）。新内容永远在频道最前面，
           # 每天重刷 800 条历史既慢又没意义——手动派发时勾 full 才深扫。
           python tools/collect_oncourt_interviews.py \
@@ -100,18 +108,16 @@ jobs:
         # 注册表里最有价值的几个源全是手搜出来的（Eurosport 78 条、
         # United Cup 84、Hopman Cup 118），它们不在任何官方清单上。
         # 新的还会不断冒出来，搬运号尤其如此，所以把发现本身自动化。
-        # 只在周一跑：搜索有配额，每天跑没必要——新源不会天天出现。
-        #
-        # **只挂在早上那一轮上。** 一天跑两轮，不限定的话周一会搜两遍。
-        if: github.event.schedule != '0 3 * * *'
+        # 只在周一跑一次：搜索有配额，每天跑没必要——新源不会天天出现。
         run: |
-          # 星期几按**上海时间**算。早上那一轮是 21:00 UTC 起跑，UTC 还停在
-          # 前一天——`date -u +%u` 判出来的「周一」其实是北京的周二。
-          # 这就是仓库里那条「产物在哪个日期目录下按上海时间算」的同一个坑。
-          if [ "$(TZ=Asia/Shanghai date +%u)" = "1" ] || [ -n "${{ github.event.inputs.only }}" ]; then
+          # 星期几按**上海时间**算（「产物在哪个日期目录下按上海时间算」同一个坑）。
+          # cron 现在是每 3 小时一轮（`7 */3 * * *`），只看星期几的话周一会搜
+          # 八遍——再钉一个钟点：只认 21:07 UTC 那一轮（北京周一 05:07，
+          # 沿用原来「早上那一轮」的位置）。手动 dispatch 带 only 时照旧放行。
+          if [ -n "${{ github.event.inputs.only }}" ] || { [ "$(TZ=Asia/Shanghai date +%u)" = "1" ] && [ "$(date -u +%H)" = "21" ]; }; then
             python tools/discover_oncourt_sources.py --min 2 | tee -a /tmp/oncourt.log || true
           else
-            echo "非周一（上海时间 $(TZ=Asia/Shanghai date '+%F %A')），跳过来源发现。"
+            echo "非周一 21 时那一轮（上海 $(TZ=Asia/Shanghai date '+%F %A')，UTC $(date -u +%H) 时），跳过来源发现。"
           fi
 
       - name: 比对赛果，算出「赢了但没采访」的缺口
@@ -161,38 +167,38 @@ jobs:
           python tools/pick_oncourt_clips.py --write \
             | tee -a /tmp/oncourt.log
 
-      - name: 自动建赛后开麦 spec 草稿（转写 + 翻译）
-        env:
-          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
-          YT_COOKIES: ${{ secrets.YT_COOKIES_TXT }}
+      - name: 生成逐场并行矩阵
+        id: matrix
         run: |
-          # 对**全部**候选并行建草稿：yt-dlp 下音频 → faster-whisper small.en 转写 →
-          # DeepSeek 翻译 → specs/interviews/<slug>.draft.json。⚠️ 必须并行——
-          # 好多比赛差不多时间结束，一条一条跑（下音频+whisper+翻译约 1-3 分钟）
-          # N 场就是 N 倍时间；`--max-parallel 2` 把总时间压成「最慢那一场 × 2」，
-          # 也别开太大（whisper 吃 CPU，runner 4 核，2 保守）。候选为空就跳过
-          # （连 faster-whisper 都不装）。
-          n=$(python -c "import json;print(len(json.load(open('data/interview_clip_candidates.json'))))" 2>/dev/null || echo 0)
-          if [ "$n" = "0" ]; then
-            echo "没有成片候选，跳过自动建 spec。"
-          else
-            pip install -q faster-whisper 2>&1 | tail -1
-            python tools/draft_interview_spec.py --max-parallel 2 --write \
-              | tee -a /tmp/oncourt.log
-          fi
+          IDS=$(python - <<'PY'
+          import json
+          rows = json.load(open('data/interview_clip_candidates.json', encoding='utf-8'))
+          print(json.dumps([str(row['id']) for row in rows], separators=(',', ':')))
+          PY
+          )
+          echo "candidate_ids=$IDS" >> "$GITHUB_OUTPUT"
+          echo "本轮逐场任务：$IDS"
 
       - name: 提交新增条目
         run: |
           # 只碰这几个文件。并行的生成任务互相覆盖过整棵 output/，
           # 这里从一开始就把范围钉死。
-          if git diff --quiet -- data/oncourt_interviews.json data/oncourt_feed_sent.json data/interview_clip_candidates.json specs/interviews; then
+          #
+          # **先 add 再判**：自动建草稿产出的是**新建**的未跟踪文件
+          # （specs/interviews/*.draft.json、output/interviews/<slug>/cap_asr.json3），
+          # 裸的 `git diff --quiet` 看不见它们——原来的写法会在「只有新草稿、
+          # 没有老文件变化」的那一轮打印「没有新增」直接退出，整轮转写翻译
+          # 就这么静默丢掉（interview-auto-render 的提交步踩过一模一样的坑）。
+          git config user.name "Claude"
+          git config user.email "noreply@anthropic.com"
+          git add data/oncourt_interviews.json data/oncourt_feed_sent.json \
+            data/interview_clip_candidates.json data/interview_source_review_queue.json \
+            data/oncourt_scan_state.json data/interview_candidate_claims.json
+          if git diff --cached --quiet; then
             echo "没有新增，不提交。"
             exit 0
           fi
           n=$(python -c "import json;print(len(json.load(open('data/oncourt_interviews.json'))['items']))")
-          git config user.name "Claude"
-          git config user.email "noreply@anthropic.com"
-          git add data/oncourt_interviews.json data/oncourt_feed_sent.json data/interview_clip_candidates.json specs/interviews
           python tools/check_staged_file_sizes.py
           git commit -m "data: 场上赛后采访采集（累计 ${n} 条）+ 成片候选 + 采访 spec 草稿"
           for i in 1 2 3 4; do
@@ -220,3 +226,143 @@ jobs:
             cat /tmp/oncourt.log 2>/dev/null || echo '（没有日志）'
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
+
+  # 一场比赛一个 runner：下载/ASR/翻译互不抢 4 核 CPU，一场失败也不会取消其余。
+  # 同一 candidate id 单飞；不同比赛最多 4 路并行。
+  draft:
+    needs: collect
+    # feed 推送告警发生在候选已提交之后；即使那一步把 collect 标红，也不能让
+    # 已发现的比赛错过转写窗口。只有矩阵本身为空才不启动。
+    if: >-
+      always()
+      && needs.collect.outputs.candidate_ids != ''
+      && needs.collect.outputs.candidate_ids != '[]'
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        candidate_id: ${{ fromJSON(needs.collect.outputs.candidate_ids) }}
+    concurrency:
+      group: interview-draft-${{ matrix.candidate_id }}
+      cancel-in-progress: false
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            assets
+            data
+            output/interviews
+            specs
+            src
+            tools
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: 缓存第一份 ASR 模型
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface/hub
+          key: faster-whisper-${{ runner.os }}-small.en
+          restore-keys: |
+            faster-whisper-${{ runner.os }}-
+
+      - name: 缓存单场转写的 apt 包（字体）
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/apt-archives
+            ~/.cache/apt-lists
+          key: interview-draft-apt-${{ runner.os }}-${{ hashFiles('tools/ci_apt_install.sh') }}
+          restore-keys: |
+            interview-draft-apt-${{ runner.os }}-
+
+      - name: 安装单场转写依赖
+        timeout-minutes: 15
+        run: |
+          source tools/ci_apt_install.sh
+          apt_install_cached fonts-noto-core
+          pip install -q -e . faster-whisper "yt-dlp[default]>=2026.7.4"
+
+      - name: 启动 YouTube PO token provider
+        continue-on-error: true
+        timeout-minutes: 3
+        run: |
+          pip install -q bgutil-ytdlp-pot-provider
+          docker run --name bgutil-pot -d -p 4416:4416 \
+            brainicism/bgutil-ytdlp-pot-provider
+          for i in $(seq 1 25); do
+            curl -fsS http://127.0.0.1:4416/ping >/dev/null && exit 0
+            sleep 2
+          done
+          docker logs bgutil-pot 2>&1 | tail -20 || true
+          echo "::warning::PO token provider 未就绪；继续用 cookies/client 梯子尝试"
+          exit 1
+
+      - name: 落 cookies（配了 Secret 才有）
+        id: cookies
+        env:
+          YT_COOKIES_TXT: ${{ secrets.YT_COOKIES_TXT }}
+        run: |
+          if [ -n "$YT_COOKIES_TXT" ]; then
+            printf '%s' "$YT_COOKIES_TXT" > "$RUNNER_TEMP/yt-cookies.txt"
+            echo "path=$RUNNER_TEMP/yt-cookies.txt" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: 单场生成精确行号草稿
+        env:
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          YT_COOKIES: ${{ steps.cookies.outputs.path }}
+        run: |
+          set -o pipefail
+          python tools/draft_interview_spec.py \
+            --candidate-id '${{ matrix.candidate_id }}' --max-parallel 1 --write \
+            | tee /tmp/draft.log
+
+      - name: 提交本场草稿
+        run: |
+          git config user.name "Claude"
+          git config user.email "noreply@anthropic.com"
+          git add specs/interviews output/interviews
+          if git diff --cached --quiet; then
+            echo "::error::候选 ${{ matrix.candidate_id }} 返回成功却没有草稿产物"
+            exit 1
+          fi
+          python tools/check_staged_file_sizes.py
+          MSG="interview: 自动建立单场草稿 ${{ matrix.candidate_id }}"
+          git commit -m "$MSG"
+          for attempt in 1 2 3 4 5; do
+            if git push origin "HEAD:${GITHUB_REF_NAME}"; then exit 0; fi
+            git pull --rebase origin "${GITHUB_REF_NAME}" || { git rebase --abort || true; }
+            sleep $((attempt * 3 + RANDOM % 5))
+          done
+          echo "::error::本场草稿无法落库；其他 matrix 场次不受影响"
+          exit 1
+
+  # matrix 的不同比赛继续并行；等本批最后一条草稿落库后只叫醒一次提升器，
+  # 由它一次扫齐并按 slug dispatch 多条 interview-clip（仍然并行渲染）。
+  # 原来只靠每 10 分钟 schedule，哪怕链接和草稿已经齐了也会白等 0~10 分钟。
+  kick-render:
+    needs: draft
+    if: always() && needs.draft.result != 'skipped'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: 立即提升并派发本批赛后开麦
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # 这个 job 不 checkout（它只 dispatch），所以 cwd 不是 Git 仓库。
+          # gh 缺 --repo 会先执行 git remote、当场报 not a git repository；
+          # 草稿明明落库了却永远等下一班 schedule。显式给仓库后无需 checkout。
+          if gh workflow run interview-auto-render.yml \
+            --repo "$GITHUB_REPOSITORY" --ref main; then
+            echo "[dispatch] 已立即叫醒 interview-auto-render；不等下一班 schedule"
+          else
+            echo "::error::草稿已落库，但 interview-auto-render 派发失败"
+            exit 1
+          fi

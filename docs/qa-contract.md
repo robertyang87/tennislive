@@ -1,20 +1,30 @@
 # 统一 QA 契约
 
 > 三条生产线（赛场之上 / 赛后开麦 / 网球有故事）**必须对着同一份契约验收**。
-> 之前每线各有一套闸，形状不同、覆盖不同——interview 没有 spec 前置闸、没有
-> 成片质检工具，于是 spec 错要等整条渲完才爆；explainer 有产物质检但没有
-> `validate_spec` 等价物；只有 reel 三层齐全。**统一它们，是为了让
+> 之前每线各有一套闸，形状不同、覆盖不同。2026-08-23 已给 interview 补上
+> L0 内容身份、L1 前置、L2 成片凭证和 L3 独立发布账本。**统一它们，是为了让
 > "生产失败"提前到 0.2 秒、"验证不过"有同一把尺。**
 
-## 一、三层闸（每条线都必须有，缺一层就是缺口）
+## 一、四层闸（每条线都必须有，缺一层就是缺口）
 
 | 层 | 时机 | 统一判据 | reel | interview | explainer |
 |---|---|---|---|---|---|
-| **L1 spec 前置闸** | 渲染前，0.2 秒 | spec 形状：字段、段落引用、窗口、闸级认领（见 §二） | ✅ `validate_spec` | ❌ | ❌ |
-| **L2 成片落地闸** | 渲染后，推送前 | 产物本身：分辨率/音画等长/字幕有字/无静音段/来源可回查（见 §三） | ✅ `check_reel_landed` | ❌ | ✅ `check_explainer_landed` |
-| **L3 发布闸** | 推送前 | 链接可探、复制页在 main、流水号留档（见 §四） | ✅ | ✅ | ✅ |
+| **L0 内容身份闸** | 进入生产前 | 请求类型、实际内容类型、来源证据、同场 match_id 必须一致 | 来源/赛果窄匹配 | ✅ `interview_source_gate` | 来源/事实引用 |
+| **L1 spec 前置闸** | 渲染前，0.2 秒 | spec 形状：字段、段落引用、窗口、闸级认领（见 §二） | ✅ `validate_spec` | ✅ `check_source_contract` + opening/lead-in/takeaway | ⚠️ 分散在 builder |
+| **L2 成片落地闸** | 渲染后，推送前 | 产物本身：分辨率/音画等长/双语正文/来源可回查（见 §三） | ✅ `check_reel_landed` | ✅ `check_interview_landed` | ✅ `check_explainer_landed` |
+| **L3 发布闸** | 推送前 | QC 凭证、链接、复制页、幂等状态留档（见 §四） | ✅ | ✅ 独立 ledger | ✅ |
 
-**验收**：新加一条生产线，必须把 L1/L2/L3 三层都接上，否则不许并进编排器。
+**验收**：新加一条生产线，必须把 L0/L1/L2/L3 四层都接上，否则不许并进编排器。
+
+### Interview 的 L0 不变量
+
+- `requested_content_type` 固定为机器枚举 `on_court`，展示字段固定为“赛后场上采访”。
+- 只有人工画面结论、Tennis TV 结构化 interviews、已注册官方源的明确
+  `on-court interview` 能进入生产。WTA 集锦片尾即使已知含采访，只要逐条采访
+  起点尚未证明，就只能进复核队列，不能把五分钟集锦从 0 秒当采访正文转写。
+- 发布会、演播室、颁奖致辞、unknown 全部进入待复核队列；找不到就不制作、不推送。
+- `source_verification` 与赛事、轮次、胜负双方和 `match.id` 一起签名；正式 spec
+  任一身份字段变化都会让签名失效，必须重新核验。
 
 ## 二、L1 spec 前置闸：统一的"要么有 X、要么说清为什么"
 
@@ -27,8 +37,9 @@
 | 自动推送 | `push.auto: true` | `push._no_auto_why` | `test_赛场之上要么开自动推送要么说清走哪条路` |
 | 栏目登记 | `column`/`cover.eyebrow` | 报错（栏目名必须登记） | `test_栏目名不能只活在代码里` |
 
-⚠️ **interview 和 explainer 目前这三项一条都没有**——统一的第一步就是给它们补上
-同样的闸（测试级，不是 runtime），把它们也纳入同一个「显式认领」体系。
+interview 的自动推送不再靠人补容易忘记的开关：草稿在赛果和 L0 都通过后默认
+`push.auto: true`；发布资格仍由 L0、L2 attestation 和 L3 ledger 决定，开关不能
+绕过质量门禁。explainer 的认领项仍需继续统一。
 
 ## 三、L2 成片落地闸：统一的核心不变量
 
@@ -40,24 +51,34 @@
 4. **响度有形状**：逐秒扫，中段大片空必须被抓出来（只抽几个点会漏）
 5. **来源可回查**：文案里的数字/排名/全称断言能回到 `_facts`/`_claims` 的出处
 
-⚠️ interview 现在**没有任何 L2 工具**，只有 CI 里的测试闸（封面引用/顶栏宽度/
-双语字幕）。要补一个 `check_interview_landed.py`，核心五条照抄，再加采访专属的
-"封面引的话必须在片子里"。
+Interview 的 L2 会写 `output/interviews/<slug>/qc_attestation.json`，其中绑定
+spec、L0 来源签名、正文 ASS、冷开场 ASS 和最终 MP4 的 SHA-256。采访正文及
+获胜画面的原解说都必须 EN/ZH 逐 cue 同时间码，数量分别与 `spec.zh`、
+`lead_in.subs` 完全一致；顶栏有字不能冒充双语字幕。音画绝对时长差必须 ≤0.30 秒，
+不能再用单向比较放过音轨比画面更长的成片。
 
-## 四、L3 发布闸：统一（已有，别动）
+Reel 的 L2 同样写不可变 `qc_attestation.json`，绑定正式 spec、正文 ASS 和最终
+MP4 的 hash/bytes；每次复检前先删除旧凭证。发布时重新计算当前文件并核对 Release
+资源，旧 `render.json` 或替换后的成片都不能冒充本次质检成功。Interview 还会用
+`volumedetect` 拒绝“有音轨但全程数字静音”的假通过。
 
-三条线共用 `publish pushplus` 出口：复制页写在提交前、发前探 URL、流水号留档、
-`mode=push 必须 push=true`。**这层已经统一，不要另起炉灶。**
+## 四、L3 发布闸：QC 通过即自动推送，但必须幂等
+
+三条线共用 `publish pushplus` 出口。发送前复核当前 spec hash、film hash/bytes 与
+L2 attestation 完全一致；Interview 还要复核 L0 来源签名和 match_id。随后先把
+`pushplus:<slug>:<film_sha256>` 以 `sending` 写入各自的
+`data/{reel,interview,explainer}_publish_ledger/<slug>.json` 并提交到 main，才允许 POST。
+
+POST 成功改为 `sent`；预占后任务失败改为 `uncertain`。三种状态都会阻断盲目
+重发，必须先查原 run/平台回执。发布历史在 `data/`，重渲替换 output 目录也擦不掉。
 
 ## 五、落地顺序（按"先止血后统一"）
 
-1. **补 interview 的 L2**：写 `check_interview_landed.py`（核心五条 + 采访专属），
-   接进 interview-clip.yml——消灭"采访片渲完没人验"的最大缺口。
-2. **补 interview / explainer 的 L1**：给两条线加 spec 前置闸（dry-run 0.2 秒报
-   形状错），消灭"渲完才爆"。
-3. **统一字段认领**：interview / explainer 接进 `_no_stats_why` / `_hit_data` /
-   `push.auto` 体系（测试级闸 + 豁免表）。
-4. 都齐了，编排器（无人值守 + 多场并行）才能放心并线。
+1. ✅ Interview L0/L1/L2/L3 已接通；旧的发布会/other 污染条目已从主库清除并加入 deny。
+2. ✅ Interview 扫描改为每 15 分钟；一场一个 matrix runner，最多四场并行。
+3. ✅ 冷开场从同场官方 1080p 单场集锦末段提取原解说，并按原 cue 生成中英字幕；
+   多场最多四路并行，找不到精确同场素材的 spec 保持 waiting，不降级凑数。
+4. ✅ 三条线发布 ledger 已统一；explainer 的 L0/L1 仍需提升到同一强度。
 
 ## 六、封面与文案（内容质量的统一要求）
 
@@ -74,7 +95,7 @@
 
 ## 七、判据
 
-- 三条线的 workflow 里都出现 L1/L2/L3 对应步骤（位置判据，仿 `test_复制页那道闸
+- 三条线的 workflow 里都出现 L0/L1/L2/L3 对应步骤（位置判据，仿 `test_复制页那道闸
   装在发的那一步`）。
 - 三条线的 spec 都过同一套「要么有 X、要么说清为什么」测试（`test_reel_editorial.py`
   那套推广到 interview/explainer）。

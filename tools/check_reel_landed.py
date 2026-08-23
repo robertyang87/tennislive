@@ -21,10 +21,12 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import math
 import subprocess
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 
 # 成片画布。**赛场之上从 9:16 改成 3:4 之后这儿漏改了**，于是每跑一次都报
@@ -38,6 +40,58 @@ COVER_SECONDS = 1.2
 # 纯数字静音在 volumedetect 里是 -91 dB。真现场声（球声、观众）远高于此，
 # 门槛放在 -60：宽到不会误报，又能拦住「静音盖住真音轨」
 SILENCE_FLOOR_DB = -60.0
+
+
+def _sha256(path: Path) -> str:
+    h = hashlib.sha256()
+    with path.open("rb") as fh:
+        for block in iter(lambda: fh.read(1024 * 1024), b""):
+            h.update(block)
+    return h.hexdigest()
+
+
+def write_attestation(film: Path, spec_path: Path, spec: dict) -> Path:
+    """L2 全绿后把检查结果绑定到当前 spec 和当前成片。
+
+    ``render.json`` 只是“渲染曾经走到末尾”的信号，不能证明随后运行的 L2
+    检查通过，更不能证明 Release 上的字节就是被检查的那一份。采访线已经用
+    这份不可变凭证封住了该缺口，赛场之上也必须同口径：自动发布只认
+    ``qc_attestation.json``，并复核 spec/字幕/成片的 hash 和大小。
+    """
+    outdir = film.parent
+    ass = outdir / "subtitles.ass"
+    if not ass.is_file():
+        raise SystemExit(f"[不合格] 找不到烧片时使用的字幕文件 {ass}")
+    payload = {
+        "status": "pass",
+        "checked_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "slug": str(spec.get("slug") or film.stem),
+        "spec_sha256": _sha256(spec_path),
+        "ass_sha256": _sha256(ass),
+        "film_sha256": _sha256(film),
+        "film_bytes": film.stat().st_size,
+        "checks": {
+            "canvas": [VIDEO_W, VIDEO_H],
+            "silence_floor_db": SILENCE_FLOOR_DB,
+            "ending_payoff": "pass",
+            "audio_tail_max_s": 1.0,
+        },
+    }
+    path = outdir / "qc_attestation.json"
+    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
+                    encoding="utf-8")
+
+    meta_path = outdir / "render.json"
+    data = json.loads(meta_path.read_text(encoding="utf-8")) if meta_path.is_file() else {}
+    data.update({
+        "film_sha256": payload["film_sha256"],
+        "film_bytes": payload["film_bytes"],
+        "qc_attestation_sha256": _sha256(path),
+    })
+    meta_path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n",
+                         encoding="utf-8")
+    print(f"[QC] 发布凭证 -> {path}（film {payload['film_sha256'][:12]}…）")
+    return path
 
 
 def seg_film_seconds(s: dict) -> float:
@@ -228,6 +282,95 @@ def evidence_windows(spec: dict, cover: float) -> list[tuple[float, float]]:
     return out
 
 
+def stat_card_headshot_problem(
+        spec: dict, reels_dir: Path,
+        self_path: Path | None = None) -> tuple[bool, str] | None:
+    """`stats.a/b.headshot` 是不是挂错了名字——**推送前的最后一道关卡**。
+
+    `sonmez-anisimova` / `tsitsipas-royer` 两次真事故都是同一个形状：
+    `stats.a` 该跟 `cover.matchup[0]`，结果按 flashscore/TNNS 的原始顺序填，
+    于是数据图把赢球的那个人印成了对手的数字。渲染、`--dry-run`、全量测试、
+    `check_reel_landed`（改之前）**一律不出声**——图上每个数单看都对，只有
+    把名字和数字对起来才看得出来。
+
+    仓库里已经有一条 CI 测试干这件事（`test_数据图的头像和matchup里的名字
+    必须是同一个人`），但它只在全量测试里跑，**这道推送前的最后关卡从来没有
+    这一项**——`tsitsipas-royer` 那次错误的成片已经发出去了，账号所有者
+    是从"同一张头像在另一条 spec 里挂了不同的中文名"这个巧合发现的，不是
+    任何一道闸拦下来的。这里把同一份判据也接到这道关卡上，多一道防线。
+
+    ⚠️ **判据自己从 `specs/reels/` 推，不维护名单**（和那条 CI 测试同一个
+    做法）：同一张头像文件在别的 spec 里挂过哪个中文名，这里就必须还是
+    那个名。**新球员第一次出现时这道闸是哑的**（没有第二处可比）——这是它
+    天然的边界，不是漏做；这种情况只报一句提醒，让人推送前自己核对一眼，
+    别把"没有矛盾"读成"验证过了"。
+
+    ⚠️ **双打头像（`headshot` 是列表）跳过**——同一张 Venus Williams 的
+    单人照，单打 spec 挂"大威廉姆斯"、双打 spec 挂团队标签"威廉姆斯姐妹"，
+    两个名字都对，不是填反了。
+
+    ⚠️ **`self_path` 不能省。** 这个函数在 `check_reel_landed.py` 里跑的时候，
+    正在查的这条 spec **早就已经提交进仓库了**（render 必须先有 spec）——
+    扫 `reels_dir` 会扫到它自己，"第一次出现"永远变成"我在扫我自己"，
+    `first_seen` 从此恒为哑（真出过一次这个 bug：写完当场量了一遍
+    164 条已发 spec，`first_seen` 全是 0——不是巧合，是自己把自己算成了
+    "已经见过"）。传了 `self_path` 就在扫描时跳过它，让"没有第二处可比"
+    这句话真的成立。
+    """
+    stats = spec.get("stats") or {}
+    matchup = spec.get("cover", {}).get("matchup") or []
+    names = [m.get("name") for m in matchup if isinstance(m, dict)]
+    if len(names) != 2:
+        return None
+    this_shots: dict[str, str] = {}
+    for key, idx in (("a", 0), ("b", 1)):
+        shot = (stats.get(key) or {}).get("headshot")
+        if isinstance(shot, str) and shot and names[idx]:
+            this_shots[Path(shot).name] = names[idx]
+    if not this_shots:
+        return None
+
+    self_resolved = self_path.resolve() if self_path else None
+    seen: dict[str, set[str]] = {}
+    for path in sorted(reels_dir.glob("*.json")):
+        if self_resolved is not None and path.resolve() == self_resolved:
+            continue
+        other = json.loads(path.read_text(encoding="utf-8"))
+        o_stats = other.get("stats") or {}
+        o_names = [m.get("name") for m in
+                   (other.get("cover", {}).get("matchup") or [])
+                   if isinstance(m, dict)]
+        if len(o_names) != 2:
+            continue
+        for key, idx in (("a", 0), ("b", 1)):
+            shot = (o_stats.get(key) or {}).get("headshot")
+            if isinstance(shot, str) and shot and o_names[idx]:
+                seen.setdefault(Path(shot).name, set()).add(o_names[idx])
+
+    clashes, first_seen = [], []
+    for filename, name in this_shots.items():
+        prior = seen.get(filename, set())
+        others = prior - {name}
+        if others:
+            clashes.append(f"{filename} 在别的 spec 里挂过「{'/'.join(sorted(others))}」"
+                           f"，这条挂的是「{name}」")
+        elif not prior:
+            first_seen.append(f"{filename}（配的是「{name}」）")
+
+    msg = []
+    if clashes:
+        msg.append("[不合格] 数据图头像挂错了名字（十有八九是 stats.a/b 填反，"
+                   "a 必须对应 cover.matchup[0]）：\n  "
+                   + "\n  ".join(clashes))
+    if first_seen:
+        msg.append("[注意] 这几张头像是第一次出现，没有第二处可比对——"
+                   "推送前打开 stat_card.jpg 自己核一眼，左边那张脸是不是"
+                   "左边那个名字：\n  " + "\n  ".join(first_seen))
+    if not msg:
+        return None
+    return bool(clashes), "\n".join(msg)
+
+
 def dead_seconds(levels: list[float], after: int,
                  evidence: list[tuple[float, float]],
                  ) -> tuple[list[int], list[int]]:
@@ -266,11 +409,27 @@ def main() -> int:
         print("        注意目录按**上海日期**算，沙箱是 UTC——查错日期看起来"
               "就像「还没落库」")
         return 1
+    # 先撤销旧绿灯，再开始本轮检查。这样中途 ffprobe/解码异常退出也不会让上一版
+    # 的 pass 凭证留在目录里；只有走到末尾 0 项不合格才重新创建。
+    stale = film.parent / "qc_attestation.json"
+    if stale.exists():
+        stale.unlink()
+        print(f"[QC] 本轮重验开始，先撤销旧凭证 {stale}")
     spec = json.loads(spec_path.read_text(encoding="utf-8"))
     print(f"成片 {film}（{film.stat().st_size / 1e6:.1f} MB）")
     cover = cover_seconds(film)
 
     bad = voiced_by(film, spec)
+
+    headshot = stat_card_headshot_problem(
+        spec, root / "specs" / "reels", self_path=spec_path)
+    if headshot:
+        is_clash, headshot_msg = headshot
+        print(f"\n{headshot_msg}")
+        # 只有真的挂错（和别的 spec 矛盾）才算不合格；「第一次出现，没得比」
+        # 只是提醒人核一眼，不拦——不然会把每一个新球员的首秀都判成不合格
+        if is_clash:
+            bad += 1
 
     size = sh("ffprobe", "-v", "error", "-select_streams", "v:0",
               "-show_entries", "stream=width,height",
@@ -365,6 +524,13 @@ def main() -> int:
         print(f"[{'ok' if ok else '不合格'}] 无解说段 {start:.1f}s（源 {src:.1f}s）"
               f"现场声最响 {worst:.1f} dB")
 
+    if bad == 0:
+        write_attestation(film, spec_path, spec)
+    else:
+        # 重渲/重验失败时，不能让上一版的 pass 凭证继续躺着被提交。成片已经
+        # 变了但信号文件没变，是最危险的“旧绿灯照新产物”。
+        # 旧凭证已在本轮开始时撤销；这里保留明确的失败结论。
+        print("[QC] 本轮不生成发布凭证")
     print(f"\n共 {bad} 项不合格")
     return 0 if bad == 0 else 1
 

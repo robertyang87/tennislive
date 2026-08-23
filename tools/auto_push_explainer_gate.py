@@ -19,6 +19,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import os
 import re
 import sys
@@ -26,6 +27,9 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from auto_push_gate import MARKER, Skip, record, tracked  # noqa: E402
+from publication_ledger import blocking_attempt, write as write_ledger  # noqa: E402
+
+LEDGER_COLUMN = "explainer"
 
 # `output/2026-08-04/explainer/nadal-academy/narration.json`
 #
@@ -71,11 +75,41 @@ def wants_auto_push(repo: Path, slug: str, outdir: Path) -> None:
             f"（要开：把 \"{slug}\" 加进 src/tennislive/video/explainer.py "
             f"的 AUTO_PUSH_SLUGS）")
 
+    fingerprint = _fingerprint(repo, outdir)
+    previous = blocking_attempt(repo, LEDGER_COLUMN, slug, fingerprint)
+    if previous:
+        raise Skip(f"{slug}：持久发布账本已有 {previous.get('status')}（"
+                   f"{previous.get('at', '时间未记')}），不重复发送")
+
     marker = outdir / MARKER
     if tracked(repo, marker):
         # 稀疏检出下这个文件可能不在工作区，读不到内容也要拦得住——
         # **拦住是主要的，时间和运行地址是加餐**。
         raise Skip(f"{slug}：已经推过了（{marker} 在仓库里），不重复发")
+
+
+def _fingerprint(repo: Path, outdir: Path) -> str:
+    path = outdir / "narration.json"
+    if path.is_file():
+        raw = path.read_bytes()
+    else:
+        rel = path.relative_to(repo)
+        import subprocess
+        proc = subprocess.run(["git", "-C", str(repo), "show", f"HEAD:{rel}"],
+                              capture_output=True, check=False)
+        if proc.returncode:
+            raise Skip(f"{path} 读取不到，不能建立发布幂等键")
+        raw = proc.stdout
+    return hashlib.sha256(raw).hexdigest()
+
+
+def ledger_status(repo: Path, outdir: Path, status: str, run_url: str, now: str) -> Path:
+    slug = outdir.name
+    fingerprint = _fingerprint(repo, outdir)
+    if status == "sending" and blocking_attempt(repo, LEDGER_COLUMN, slug, fingerprint):
+        raise SystemExit(f"{slug} 已有发布记录，禁止盲目重发")
+    return write_ledger(repo, LEDGER_COLUMN, slug, fingerprint, status=status,
+                        run_url=run_url, now=now)
 
 
 def pick(changed: list[str], repo: Path) -> tuple[str, Path] | None:
@@ -116,16 +150,24 @@ def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--changed", nargs="*", default=[])
     ap.add_argument("--record", default="")
+    ap.add_argument("--reserve", default="")
+    ap.add_argument("--uncertain", default="")
     ap.add_argument("--run", default="")
     ap.add_argument("--now", default="")
     ap.add_argument("--repo", default=".")
     args = ap.parse_args(argv)
 
-    if args.record:
-        record(Path(args.record), args.run, args.now)
+    repo = Path(args.repo)
+    action = args.reserve or args.record or args.uncertain
+    if action:
+        outdir = Path(action)
+        status = "sending" if args.reserve else "sent" if args.record else "uncertain"
+        ledger_status(repo, outdir, status, args.run, args.now)
+        if args.record:
+            record(outdir, args.run, args.now)
         return 0
 
-    found = pick(args.changed, Path(args.repo))
+    found = pick(args.changed, repo)
     if found:
         _emit(*found)
     return 0

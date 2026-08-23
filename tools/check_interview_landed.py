@@ -24,12 +24,18 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
+import os
+import re
 import subprocess
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 
 CANVAS_W, CANVAS_H = 1080, 1440
+MAX_AV_DELTA = 0.30
+SILENCE_FLOOR_DB = -60.0
 
 
 def sh(*args: str) -> str:
@@ -48,6 +54,23 @@ def _ffprobe_float(out: str) -> float:
     return float(out.strip().split(",")[0])
 
 
+def _max_volume_db(stderr: str) -> float | None:
+    """解析 volumedetect；全数字静音的 ``-inf`` 也必须能被判成不合格。"""
+    found = re.search(r"max_volume:\s*(-inf|-?[\d.]+)\s*dB", stderr)
+    if not found:
+        return None
+    return float("-inf") if found.group(1) == "-inf" else float(found.group(1))
+
+
+def audio_peak_db(film: Path) -> float | None:
+    proc = subprocess.run(
+        ["ffmpeg", "-hide_banner", "-i", str(film), "-vn", "-af", "volumedetect",
+         "-f", "null", os.devnull], capture_output=True, text=True, check=False)
+    if proc.returncode:
+        return None
+    return _max_volume_db(proc.stderr)
+
+
 def outdir_for(slug: str) -> Path:
     # 采访片产物直接挂在 output/interviews/<slug>/ 下，**没有日期层**（和 reel 线
     # 的 output/<日期>/reel/<slug> 不同——两条线产物目录形状不一样，别照抄）。
@@ -62,6 +85,49 @@ def ass_has_dialogue(ass: Path) -> bool:
         if line.strip().startswith("Dialogue:"):
             return True
     return False
+
+
+def _ass_body_events(ass: Path) -> dict[str, list[tuple[str, str, str]]]:
+    """只取正文 EN/ZH；HEADA/HEADB/观点卡不能冒充双语字幕。"""
+    out: dict[str, list[tuple[str, str, str]]] = {"EN": [], "ZH": []}
+    if not ass.is_file():
+        return out
+    for line in ass.read_text(encoding="utf-8", errors="replace").splitlines():
+        if not line.startswith("Dialogue:"):
+            continue
+        fields = line.split(",", 9)
+        if len(fields) != 10:
+            continue
+        style = fields[3].strip()
+        if style in out:
+            out[style].append((fields[1].strip(), fields[2].strip(), fields[9].strip()))
+    return out
+
+
+def bilingual_body_ok(ass: Path, spec: dict) -> tuple[bool, str]:
+    """正文英文和中文必须逐 cue 同时出现，数量与 spec.zh 一致。"""
+    events = _ass_body_events(ass)
+    en, zh = events["EN"], events["ZH"]
+    en_times = [(a, b) for a, b, text in en if text]
+    zh_times = [(a, b) for a, b, text in zh if text]
+    expected = len(spec.get("zh") or [])
+    ok = bool(en_times) and en_times == zh_times and len(en_times) == expected
+    return ok, (f"EN {len(en_times)} / ZH {len(zh_times)} / spec.zh {expected}，"
+                f"逐 cue 时间 {'一致' if en_times == zh_times else '不一致'}")
+
+
+def bilingual_lead_ok(ass: Path, spec: dict) -> tuple[bool, str]:
+    """冷开场的原解说也必须逐 cue 中英成对，不能只验采访正文。"""
+    expected = len(((spec.get("lead_in") or {}).get("subs") or []))
+    if expected == 0:
+        return False, "spec.lead_in.subs 为空"
+    events = _ass_body_events(ass)
+    en, zh = events["EN"], events["ZH"]
+    en_times = [(a, b) for a, b, text in en if text]
+    zh_times = [(a, b) for a, b, text in zh if text]
+    ok = en_times == zh_times and len(en_times) == expected
+    return ok, (f"EN {len(en_times)} / ZH {len(zh_times)} / lead_in.subs {expected}，"
+                f"逐 cue 时间 {'一致' if en_times == zh_times else '不一致'}")
 
 
 def check_film(film: Path, spec: dict, ass: Path) -> int:
@@ -81,14 +147,32 @@ def check_film(film: Path, spec: dict, ass: Path) -> int:
     a_dur = _ffprobe_float(sh("ffprobe", "-v", "error", "-select_streams", "a:0",
                      "-show_entries", "stream=duration",
                      "-of", "csv=p=0", str(film)))
-    ok = v_dur - a_dur < 1.0
+    ok = abs(v_dur - a_dur) <= MAX_AV_DELTA
     bad += 0 if ok else 1
     print(f"[{'ok' if ok else '不合格'}] 画面 {v_dur:.2f}s / 音轨 {a_dur:.2f}s"
-          f"（音轨比画面短过 1s 就是结尾没声音）")
+          f"（绝对差必须 ≤ {MAX_AV_DELTA:.2f}s）")
+
+    # “有音轨、时长也对”仍可能整条是 anullsrc。赛场之上真实出过 -91 dB 的
+    # 成片：ffprobe、码率和时长全部正常，只有波形能看出声音被补位静音盖掉。
+    peak = audio_peak_db(film)
+    ok = peak is not None and peak > SILENCE_FLOOR_DB
+    bad += 0 if ok else 1
+    peak_text = "探测失败" if peak is None else f"{peak:.1f} dBFS"
+    print(f"[{'ok' if ok else '不合格'}] 音轨峰值 {peak_text}"
+          f"（必须高于 {SILENCE_FLOOR_DB:.0f} dBFS，防整条数字静音）")
 
     ok = ass_has_dialogue(ass)
     bad += 0 if ok else 1
     print(f"[{'ok' if ok else '不合格'}] 字幕 {'有 Dialogue' if ok else '空 / 无'}")
+
+    ok, detail = bilingual_body_ok(ass, spec)
+    bad += 0 if ok else 1
+    print(f"[{'ok' if ok else '不合格'}] 正文双语字幕 {detail}")
+
+    lead_ass = film.parent / "_lead.ass"
+    ok, detail = bilingual_lead_ok(lead_ass, spec)
+    bad += 0 if ok else 1
+    print(f"[{'ok' if ok else '不合格'}] 冷开场原解说双语字幕 {detail}")
 
     meta = film.parent / "render.json"
     if meta.is_file():
@@ -99,6 +183,47 @@ def check_film(film: Path, spec: dict, ass: Path) -> int:
         print(f"[{'ok' if ok else '不合格'}] 片长 vs render.json film_seconds"
               f"（实测 {v_dur:.2f}s / 记录 {rec:.2f}s）")
     return bad
+
+
+def _sha256(path: Path) -> str:
+    h = hashlib.sha256()
+    with path.open("rb") as fh:
+        for block in iter(lambda: fh.read(1024 * 1024), b""):
+            h.update(block)
+    return h.hexdigest()
+
+
+def write_attestation(film: Path, spec_path: Path, spec: dict,
+                      ass: Path, outdir: Path) -> Path:
+    """L0/L2 全绿后落不可变发布凭证；自动推送只认这份凭证。"""
+    from interview_source_gate import validate_source_contract  # noqa: PLC0415
+
+    source_attestation = validate_source_contract(spec)
+    payload = {
+        "status": "pass",
+        "checked_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "slug": spec["slug"],
+        "match_id": spec["match"]["id"],
+        "requested_content_type": spec["requested_content_type"],
+        "source_attestation_sha256": source_attestation,
+        "spec_sha256": _sha256(spec_path),
+        "ass_sha256": _sha256(ass),
+        "lead_ass_sha256": _sha256(outdir / "_lead.ass"),
+        "film_sha256": _sha256(film),
+        "film_bytes": film.stat().st_size,
+        "checks": {
+            "canvas": [CANVAS_W, CANVAS_H],
+            "max_av_delta_s": MAX_AV_DELTA,
+            "silence_floor_db": SILENCE_FLOOR_DB,
+            "bilingual_body_cues": len(_ass_body_events(ass)["EN"]),
+            "bilingual_lead_cues": len(_ass_body_events(outdir / "_lead.ass")["EN"]),
+        },
+    }
+    path = outdir / "qc_attestation.json"
+    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
+                    encoding="utf-8")
+    print(f"[QC] 发布凭证 → {path}（film {payload['film_sha256'][:12]}…）")
+    return path
 
 
 def check_offline(spec: dict, outdir: Path) -> int:
@@ -130,6 +255,8 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("--slug", required=True)
     ap.add_argument("--film", help="本地成片路径（给就量分辨率/音画，不给只查证据）")
+    ap.add_argument("--write-attestation", action="store_true",
+                    help="全部检查通过后写 qc_attestation.json")
     args = ap.parse_args()
 
     outdir = outdir_for(args.slug)
@@ -147,6 +274,18 @@ def main() -> int:
             return 1
         print(f"成片 {film}（{film.stat().st_size / 1e6:.1f} MB）")
         bad = check_film(film, spec, ass)
+        if bad == 0 and args.write_attestation:
+            from interview_source_gate import (  # noqa: PLC0415
+                SourceContractError,
+                validate_source_contract,
+            )
+            try:
+                validate_source_contract(spec)
+            except SourceContractError as exc:
+                print(f"[不合格] L0 内容身份：{exc}")
+                bad += 1
+            else:
+                write_attestation(film, spec_path, spec, ass, outdir)
     else:
         print(f"[离线模式] 没给 --film，只查仓库证据（{outdir}）")
         bad = check_offline(spec, outdir)

@@ -1,0 +1,184 @@
+{
+  "slug": "gauff-kostyuk-cincinnati-2026-qf",
+  "source_url": "https://www.youtube.com/watch?v=32CDNGwIsnQ",
+  "_source": "WTA 官方 YouTube 单场集锦《Coco Gauff vs. Marta Kostyuk | 2026 Cincinnati Quarterfinal | WTA Match Highlights》。2026-08-22 probe：308.55 秒、1920×1080、25fps；298.48 秒后转入 WTA 品牌订阅动画（WATCH MORE / SUBSCRIBE 卡片），本片最晚收在 298.48 秒。",
+  "_column": "赛场之上",
+  "topbar": {
+    "line1": "2026 辛辛那提 WTA1000 1/4决赛",
+    "line2": "高芙 6-2 6-2 科斯秋克"
+  },
+  "_topbar_why": "WTA 官方 matches API（MatchID LS005）原文为 `[4]C. Gauff d [10]M. Kostyuk 6-2,6-2`；第二行与 cover.winner / result / matchup 机械一致，赢家在前。",
+  "editorial": {
+    "mode": "match_review",
+    "question": "制胜分只差一个，科斯秋克究竟输在了哪儿？",
+    "thesis": "全场制胜分几乎打平（高芙11、科斯秋克10），但科斯秋克的非受迫失误几乎是高芙的两倍（38比21，两盘各19次），她自己的8个发球局被破了6个——这场6-2 6-2背后不是高芙压制了对手，是科斯秋克自己送走了这场球。",
+    "beats": [
+      "开局：科斯秋克独自把第二局拖入平分又占先，还是被高芙拿下——先丢一次发球",
+      "首盘：高芙越打越顺，一路拿到六比二",
+      "次盘：高芙一度四比零遥遥领先，科斯秋克连保两局追到四比二，仍无法阻止高芙六比二收官"
+    ],
+    "human_context": {
+      "angle": "TNNS官方技术统计给出一个反直觉的数字：两人制胜分只差一个，但科斯秋克的非受迫失误几乎是高芙的两倍。真正决定比赛的不是高芙打出了多少神仙球，是科斯秋克自己送出了多少分。",
+      "facts": [
+        "WTA官方比分页：高芙6-2 6-2击败科斯秋克，总用时1小时10分钟",
+        "TNNS官方技术统计（run 32550810496验证）：制胜分高芙11、科斯秋克10；非受迫失误高芙21、科斯秋克38（两盘各19次）",
+        "科斯秋克8个发球局被破6次，高芙的8个发球局仅被破2次",
+        "赛前H2H高芙4胜2负领先，本场后扩大为5胜2负",
+        "高芙当期世界第4，科斯秋克世界第11（本站10号种子）",
+        "高芙2023年夺过辛辛那提冠军，这是她生涯第二次打进这里的半决赛"
+      ],
+      "sources": [
+        "https://www.youtube.com/watch?v=32CDNGwIsnQ",
+        "https://www.wtatennis.com/tournament/1017/cincinnati/2026/scores/LS005",
+        "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches?states=C",
+        "https://www.wtatennis.com/videos/4564634/gauff-breaks-six-times-to-beat-kostyuk-reach-second-cincinnati-semifinal",
+        "https://www.tennisexplorer.com/mutual/gauff/kostyuk/",
+        "https://en.wikipedia.org/wiki/Cincinnati_Open"
+      ]
+    }
+  },
+  "_match": {
+    "wta_match_id": "LS005",
+    "flashscore_id": "MB5mLCPQ",
+    "start_utc": "2026-08-22T00:19:44Z",
+    "_why": "WTA matches API 给出 MatchTimeStamp（结束时刻 2026-08-22T01:29:54.953Z）与 MatchTimeTotal（01:10:10）；start_utc 按两者相减推算，非逐分接口首分时间——这场逐分缓存不完整，不用来证明分盘走势。CourtID=1 对应 P&G Stadium Court。"
+  },
+  "_hit_data": "TNNS官方统计（tnns-stats.yml run 32550810496，选手顺序['Gauff','Kostyuk']已核对与cover.matchup一致，分盘合计=全场自证通过）：制胜分11比10、非受迫失误21比38。flashscore辅证：科斯秋克8个double fault（多数在首盘）、8个发球局被破6个、总分62比41。正文只用总分近平和失误翻倍两个反差，不把逐盘统计堆成流水账。",
+  "stats": {
+    "tour": "wta",
+    "a": {
+      "headshot": "assets/players/headshots/wta-328560.jpg",
+      "aces": 1,
+      "df": 3,
+      "first_in": 23,
+      "first_won": 18,
+      "first_total": 43,
+      "second_total": 20,
+      "second_won": 9,
+      "bp_conv": 6,
+      "bp_chances": 11,
+      "pts_won": 62,
+      "pts_total": 103,
+      "winners": 11,
+      "ue": 21
+    },
+    "b": {
+      "headshot": "assets/players/headshots/wta-326482.jpg",
+      "aces": 2,
+      "df": 8,
+      "first_in": 27,
+      "first_won": 18,
+      "first_total": 60,
+      "second_total": 33,
+      "second_won": 7,
+      "bp_conv": 2,
+      "bp_chances": 3,
+      "pts_won": 41,
+      "pts_total": 103,
+      "winners": 10,
+      "ue": 38
+    },
+    "footer_venue": "P&G Stadium Court · 辛辛那提",
+    "footer_date": "2026.08.21",
+    "_source": "flashscore（tools/match_feed.py show MB5mLCPQ）：aces a=1/b=2、df a=3/b=8、first_in(1st serve pts won分母) a=23/b=27、first_won a=18/b=18、second_total(2nd serve pts won分母) a=20/b=33、second_won a=9/b=7、first_total=first_in+second_total：a 23+20=43、b 27+33=60，与Service Points Won分母互相印证（27/43、25/60）；bp_conv/bp_chances取Return Break Points Converted：a 6/11、b 2/3；pts_won/pts_total取Total Points Won：a 62/103、b 41/103。stats.a=cover.matchup[0]=高芙，stats.b=cover.matchup[1]=科斯秋克。",
+    "_winners_ue_why": "flashscore本场没有这两项（WTA巡回赛常见缺口）。已按规矩跑tnns-stats.yml（who=Gauff,Kostyuk，date=2026-08-21，run 32550810496）。日志选手顺序['Gauff','Kostyuk']与cover.matchup一致，不用对调；分盘合计=全场自证通过（Set1[4,7]+Set2[7,3]=[11,10]✅，Set1[9,19]+Set2[12,19]=[21,38]✅）：a(高芙)=winners 11/ue 21，b(科斯秋克)=winners 10/ue 38。"
+  },
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "高芙",
+    "hook": "制胜分只差一个\n对手却送两倍失误",
+    "_hook_why": "第一行抛出反直觉的近平数据，第二行揭示真正的差距在非受迫失误；两行7/8个字符，不复述海报已经印出的赛果。",
+    "_subject_why": "高芙是获胜的一方，也是这条“制胜分近平却大胜”反差故事的主体；世界第4，热度按②世界前20直接过闸。",
+    "topic": "辛辛那提WTA1000 · 女单1/4决赛",
+    "winner": "高芙",
+    "result": "6-2 6-2",
+    "matchup": [
+      {"name": "高芙", "name_en": "Coco Gauff", "country": "USA", "rank": 4},
+      {"name": "科斯秋克", "name_en": "Marta Kostyuk", "country": "UKR", "rank": 11}
+    ],
+    "_name_why": "中文名走 player_zh()：Coco Gauff→高芙，Marta Kostyuk→科斯秋克。排名取WTA官方2026-08-10 singles ranking：高芙4、科斯秋克11；科斯秋克的10号种子不写成排名。",
+    "portrait": {
+      "image": "assets/reel/gauff-kostyuk-cincinnati-2026-qf.jpg",
+      "focus": 0.54,
+      "focus_y": 0.5,
+      "zoom": 1.0
+    },
+    "_portrait_why": "WTA官方视频页（videos/4564634）og:image头图，来源Getty（GettyImages-2291485988），2026-08-22上传，originalDetails 6023×4015；页面meta description确认『Coco Gauff cruised to victory Friday night, defeating Marta Kostyuk 6-2, 6-2』与本场完全一致。正手上网延展，浅蓝Secret/Fifth Third Bank场边广告与辛辛那提蓝色场地吻合，非资料图。",
+    "scoreboard": {
+      "court": "P&G Stadium Court",
+      "duration_source": {
+        "provider": "wta",
+        "url": "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches?states=C",
+        "match_id": "LS005",
+        "field": "MatchTimeTotal",
+        "source_page": "https://www.wtatennis.com/tournament/1017/cincinnati/2026/scores/LS005"
+      },
+      "_court_why": "WTA matches API 的 CourtID=1，与同期bejlek-keys那场核过的P&G Stadium Court一致。",
+      "_duration_why": "WTA官方MatchTimeTotal=01:10:10，海报显示1:10；未见flashscore给出等价的逐盘用时合计，故只用WTA这一个来源。"
+    }
+  },
+  "_voice_why": "云见 zh-CN-YunjianNeural，+6%。②段直接抛出近平的制胜分制造悬念，中段按首盘/次盘顺序推进，⑦段末尾用非受迫失误数字收束、呼应②段留下的悬念，不在中途重复同一组数字。",
+  "push": {
+    "summary": "制胜分近平，高芙晋级",
+    "lead": "辛辛那提女单1/4决赛，高芙6-2 6-2击败科斯秋克，晋级生涯第二个辛辛那提半决赛。两人制胜分只差一个（11比10），但科斯秋克的非受迫失误几乎是高芙的两倍（38比21），8个发球局被破6个。用时1小时10分钟，高芙对科斯秋克的生涯战绩扩大到5胜2负。",
+    "auto": true
+  },
+  "_editing_why": "高芙=浅蓝New Balance球衣、深色扎发；科斯秋克=浅蓝白边球衣、白色发带。结构为冷开场（英文解说配中英字幕，覆盖赛点、双方反应、网前拥抱）→制胜分近平的悬念钩子（配夺冠画面收尾+最终比分图形）→坐标→开局破发拉锯→首盘收官→次盘科斯秋克扑救未果→次盘拉锯到收官并回收悬念。关键回合保留发球/接发起点，片尾WTA品牌动画从298.48秒开始，严格不用。",
+  "segments": [
+    {
+      "start": 265.04,
+      "end": 289.36,
+      "narration": "",
+      "_ending_payoff_required": true,
+      "_quote_kind": "broadcast",
+      "quote": [
+        {"at": 9.84, "text": "Straight through into the semi-finals of Cincinnati, yet again.\n又一次，她直落两盘打进辛辛那提半决赛"},
+        {"at": 15.44, "text": "The former champion too strong tonight for Kostyuk.\n这位2023年的冠军，今晚让科斯秋克毫无还手之力"},
+        {"at": 20.72, "text": "A nice embrace, though — they get on well off the court, as well as on.\n网前这个拥抱很暖，场下场上她们私交都不错"}
+      ],
+      "crosses_cut": "跨272.6、279.68和288.76秒，是赛点落地切到高芙反应、科斯秋克反应、网前拥抱的自然转播切换，同一收官时刻的连续呈现。",
+      "_why": "①冷开场。265.04秒从MATCH POINT标记出现前的接发起点进入，完整保留赛点回合、双方反应与网前拥抱；英文原声按captions.txt时刻校正后配中英双语字幕，不压中文旁白。"
+    },
+    {
+      "start": 289.36,
+      "end": 298.48,
+      "narration": "六比二，六比二。两人的制胜分只差一个——高芙十一，科斯秋克十。",
+      "_why": "②先抛悬念。画面接续冷开场，是观众挥手致意、庆祝到最终比分图形『GAUFF 6 6 KOSTYUK 2 2』，与冷开场不重复；298.48秒后是WTA品牌动画，严格不用。"
+    },
+    {
+      "start": 0.0,
+      "end": 10.0,
+      "narration": "北京时间八月二十二号早上八点多，辛辛那提女单四分之一决赛。世界第四的高芙，对阵十号种子科斯秋克。",
+      "crosses_cut": "跨2.68秒，是全景定场镜头切到跟拍回合镜头，属于集锦本身的开场剪辑。",
+      "_why": "③坐标。用MatchTimeStamp减MatchTimeTotal推算的开球时刻（北京时间08:19）；窗口是本场集锦最早出现的底线回合，收在10秒。"
+    },
+    {
+      "start": 48.32,
+      "end": 58.5,
+      "narration": "开局，科斯秋克独自把这一局拖进平分又占先，还是被高芙拿了下来——一上来就先丢一次发球。",
+      "_why": "④开局破发。记分条从占先打到BREAK POINT标记持续挂出，48.32秒处于这个拉锯尾段；科斯秋克随后独自走向椅子，是这个破发局的落点。"
+    },
+    {
+      "start": 123.12,
+      "end": 134.32,
+      "narration": "首盘她越打越顺，六个发球局稳稳保住五个，还三次破掉科斯秋克的发球局，一路拿到六比二先下一城。",
+      "crosses_cut": "跨127.32秒，从SET POINT标记的回合切到高芙握拳、双方近景反应，是同一收官时刻的连续呈现。",
+      "_why": "⑤首盘收官。SET POINT标记与握拳庆祝确认这一盘6-2结束；随后的『COCO GAUFF 6 / MARTA KOSTYUK 2』换盘图形不重复使用。"
+    },
+    {
+      "start": 172.84,
+      "end": 180.0,
+      "narration": "次盘她拼得更狠，一次救球整个人扑倒在地，还是没能挡住高芙的攻势。",
+      "crosses_cut": "跨177.36秒，是扑救倒地切到起身回位，同一分的连续反应。",
+      "_why": "⑥次盘的挣扎。科斯秋克倒地救球的画面配合解说『floored by the effort』，交代她在丢分之外也在拼；不做成单纯的失误堆叠。"
+    },
+    {
+      "start": 201.32,
+      "end": 222.44,
+      "narration": "她一度四比零遥遥领先，科斯秋克连保两局，把比分追到四比二——但高芙很快又把这盘拿了回来，六比二结束战斗。两盘下来，科斯秋克一共送出三十八次非受迫失误，几乎是高芙的两倍。拉开比分的，真会是那零点几个制胜分吗？",
+      "crosses_cut": "跨206.64和215.84秒，是次盘中段发球局的回合与反应切换，官方逐局记录确认为四比零到四比二再到六比二的真实走势。",
+      "_why": "⑦次盘拉锯与收束。承接④设下的破发主题，用官方逐局记录确认的比分走向讲清次盘怎么打；结尾把②留下的『制胜分只差一个』悬念，用非受迫失误的真实数字收回来，不在中途重复这组数字。"
+    }
+  ]
+}

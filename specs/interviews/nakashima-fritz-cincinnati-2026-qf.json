@@ -1,0 +1,117 @@
+{
+  "slug": "nakashima-fritz-cincinnati-2026-qf",
+  "url": "https://www.tennistv.com/videos/4564520/cincinnati-2026-qf-nakashima-interview",
+  "source_title": "Nakashima stuns Fritz to reach SFs（Tennis TV 官方场上采访，@TennisTV）",
+  "start": 0.0,
+  "end": 74.5,
+  "asr_model": "faster-whisper medium.en",
+  "_asr_why": "这条源不是 YouTube（免费条目 data-entitlement=free，79.0 秒），没有自动字幕可拉，第一份转写本地直接跑 medium.en 得到；第二份（`whisper_model`）换成 small.en 保证换了模型，闸才有意义。",
+  "whisper_model": "small.en",
+  "crop_shift_x": -0.06,
+  "_crop_why": "源片右上角有 Tennis TV 台标（截图 t=20.0s 可见），居中 4:3 窗口保留 x 0.125–0.875 会把台标左沿（0.823）框进来——挪 -0.06 躲开，和霍达尔那条同一个转播模板用的值一样。",
+  "column": "赛后开麦",
+  "interview_kind": "赛后场上采访",
+  "event": "2026 辛辛那提 ATP1000 1/4决赛",
+  "opening": {
+    "kind": "none",
+    "why": "Tennis TV 场上采访独立视频，从主持人迎上前恭喜开始（0.0s『Brandon, congratulations.』），源片自己里没有比赛画面——比赛结尾从另一条 Tennis TV 官方集锦借了 `lead_in` 接在最前面。"
+  },
+  "lead_in": {
+    "url": "https://youtu.be/t4eOVbP8Tdc",
+    "start": 321.0,
+    "end": 339.7,
+    "crop_shift_x": -0.06,
+    "_crop_why": "同一个 Tennis TV 转播模板，台标一样贴在右上角——裁切窗口 [0.75,0.875] 那一段实测截图（/tmp/nak_hl_crop_boundary_check.png，crop 自 frame_0339s.jpg）里台标已经压到窗口右沿，和采访正片同一个 -0.06 才躲得开。`lead_in` 的裁切参数不沿用顶层，这里单独写。",
+    "why": "Tennis TV 官方集锦《Taylor Fritz & Brandon Nakashima Battle For Semi-Final Spot! | Cincinnati 2026 Highlights》（351.0 秒，@TennisTV，和这场比赛同一场）。抽帧核对过（output/2026-08-22/frames/nakashima-fritz-cin2026-hl/frame_0321s.jpg ~ frame_0339s.jpg，每 3 秒一帧）：321-324s 记分板打出 `FRITZ 6⁹ 6 3 15 / NAKASHIMA 7 4 5 40`——中岛布兰登发球胜赛局（已赢下第一盘 7-6(9)、输掉第二盘 4-6，这一分若拿下就是决胜盘 6-3 拿下整场，和 flashscore/官方赛果一致）；327s 他抬头望向天空、张着嘴，球已经落地，他赢了；330s 全场起立鼓掌；333-339s 他和弗里茨网前握手、转身朝观众伸手致意。⚠️ 结尾按 0.5 秒粒度补抽过一轮（output/2026-08-22/frames/nakashima-fritz-cin2026-hl-tail/），339.5s 仍是真实握手画面、340.5s 已经是 Tennis TV 品牌卡动画、341.5s 是完整的『THE BEST SEAT IN TENNIS』卡（342s 那张原来核对过的是它后面接的『WATCH MORE / TAP TO SUBSCRIBE』卡）——收在 339.7 才有安全余量，原来写的 340.0 离转场只差不到一秒。",
+    "_subs_why": "账号所有者 2026-08-22：『前面的解说没有配中英文字幕啊，以后都要配上』。转写来自这条源片自己的官方自动字幕（`cap_t4eOVbP8Tdc.en.json3`，yt-dlp `--write-auto-subs` 直接拉的，第一次撞 429 重试一次就过——沙箱下不动这条源的音视频流，只有字幕接口走得通，所以没有第二个模型交叉校验，这一点如实记在这儿）。三处订正：`Nakushima`→`Nakashima`（同一段字幕自己在 315.68s 处准确拼过一次这个名字，320s 后的重复只是 ASR 的听误）；`>> game` 的说话人切换标记（`isSpeakerChange`）保留但不写进画面；最后一句『and he wins this all American clash.』的显示时长按新的 339.7 截断，词本身没有删改。",
+    "subs": [
+      {"a": 327.04, "b": 330.04, "en": "Game.", "zh": "拿下了"},
+      {"a": 330.80, "b": 335.48, "en": "is a semi finalist in Cincinnati.", "zh": "晋级辛辛那提半决赛"},
+      {"a": 336.72, "b": 339.7, "en": "and he wins this all American clash.", "zh": "拿下了这场全美国德比"}
+    ]
+  },
+  "zh": [
+    "布兰登 恭喜你",
+    "是这样 我觉得你",
+    "在最后阶段打得很有胆量",
+    "你一直在放手打正手",
+    "是什么让你有底气",
+    "去这么做 抓住那个时刻？",
+    "是啊 我想是这些比赛",
+    "给了我很多信心",
+    "打到决胜时刻",
+    "打到第三盘的关键分",
+    "我就想完全信任自己的打法",
+    "为自己结束这场球的方式骄傲",
+    "你学到了什么",
+    "是从你最近",
+    "在华盛顿那场比赛里？",
+    "是啊",
+    "华盛顿那场 我感觉",
+    "底线相持打得不太好",
+    "击球没有打透",
+    "所以今天我更想",
+    "把正手打得更狠一点",
+    "反手也保持稳定",
+    "我想",
+    "这就是我能撑下来的原因",
+    "如果温网结束后我告诉你",
+    "你会打进华盛顿半决赛",
+    "蒙特利尔决赛 辛辛那提半决赛",
+    "你会怎么回我？",
+    "我不会相信你的",
+    "这几个星期经历了很多",
+    "很多情绪起伏",
+    "在场上待了很长时间",
+    "但最后我对这个状态",
+    "非常满意 也真心",
+    "为自己感到骄傲",
+    "接下来这个周末",
+    "你还有什么机会？",
+    "又一次机会",
+    "再多赢几场球",
+    "我会尽力 好好恢复一下",
+    "看看能打成什么样",
+    "打得漂亮 干得好",
+    "好 谢谢"
+  ],
+  "en_fixed": {
+    "26": "you'd play Washington semi-finals,",
+    "27": "Montreal final and now Cincy semi-final,"
+  },
+  "winner": "中岛布兰登",
+  "_facts": [
+    "赛果：Tennis TV 采访画面自带的记分板原样烧着『BRANDON NAKASHIMA 27 · DEFEATED FRITZ 7-6 4-6 6-3』（截自 t=20.0s 那一帧），种子号 27 和分盘比分与 flashscore（thAXTt8b）、WebSearch 摘要（atptour.com 报道）三处一致：中岛布兰登 7-6(9) 4-6 6-3 逆转 6 号种子弗里茨，2026-08-21 辛辛那提 ATP1000 1/4决赛，用时 2 小时 13 分，第三盘从 2-3 落后连赢四局锁定胜局。⚠️ 抢七里的『(9)』只经过 WebSearch 一处确认，没有再核第二个源，写文案时按『抢七很胶着』处理，不把这个具体数字当成钉死的事实去强调。",
+    "flashscore 逐场统计（thAXTt8b）：总得分双方 97-97 打平；弗里茨 22 个 Ace / 41 制胜分 / 34 非受迫失误，一发 52/90（58%）；中岛布兰登 13 个 Ace / 25 制胜分 / 25 非受迫失误，一发 60/104（58%）——中岛布兰登制胜分和 Ace 都更少，却在总分持平的情况下拿下了比赛，没有写进正文，留作参考。",
+    "交手记录：WebSearch 摘要（atptour.com）确认这场之前弗里茨在今年达拉斯决赛（2 月）和 20 天前的华盛顿半决赛两次击败中岛布兰登，这场中岛布兰登扳回一城，H2H 改写为 2-5（弗里茨领先）——采访里他自己也提到『华盛顿那场我从底线打得不太好』，和这条 H2H 背景吻合。",
+    "背景（采访原话就是这条片子最硬的证据）：主持人直接问『如果温网结束后告诉你，你会打进华盛顿半决赛、蒙特利尔决赛、现在还有辛辛那提半决赛，你会怎么回？』——他答『我不会相信你的』。这条线本身已经是完整的叙事，不需要另外去查证蒙特利尔决赛的细节（本仓库已发 nakashima-shelton-mtl2026-final / shelton-nakashima-mtl2026-final，那场他 6-3 7-6(4) 负于谢尔顿，是他生涯第一个大师赛决赛）。",
+    "下一轮：半决赛对阵 17 号种子蒂亚福（蒂亚福 7-6(2) 7-5 逆转 10 号种子穆塞蒂），全美国德比——WebSearch 摘要提到这是 2010 年（罗迪克/费什）以来第一次两位美国男选手同时打进辛辛那提四强，这条没有再核实第二个源，先不写进正文，只留在这里备查。"
+  ],
+  "cover": {
+    "frame_at": 60.0,
+    "_why": "60.0s 他正说到『with my level and yeah just really proud』（对应 zh 第 34/35 行『非常满意 也真心 / 为自己感到骄傲』），抬头正视镜头，眼睛睁开、表情投入，没有话筒或阴影挡脸——storyboard 逐帧看过一遍（2/10/20/30/40/50/60/70 秒），20.0s 那张记分板叠在画面上会盖住构图、70.0s 侧脸幅度更大，60.0s 是这批候选里表情和取景都最合适的一张。渲出来仍要拉回本地放大核对眼睛没闭。",
+    "title": [
+      "温网之后",
+      "他自己都不敢信这份赛程"
+    ],
+    "sub": "辛辛那提1/4决赛 赛后场上采访",
+    "_copy_why": "钩子取的是主持人和他的原话——『如果温网后告诉你会打进华盛顿半决赛、蒙特利尔决赛、现在还有辛辛那提半决赛，你会怎么回？』他说『我不会相信你的』。这是过程不是身份：不写『27 号种子』『世界第几』（顶栏已经交代），写的是他自己都意外的这段连续闯关。",
+    "tag": "2026 辛辛那提 · 中岛布兰登"
+  },
+  "takeaway": {
+    "close": {
+      "point": "他说这份赛程连自己都不敢信",
+      "ask": "你多久没让自己意外过？"
+    }
+  },
+  "push": {
+    "_why": "顶栏第二行和推送标题的赛果，以采访画面自带的记分板（BRANDON NAKASHIMA 27 · DEFEATED FRITZ 7-6 4-6 6-3）为准，和 flashscore（thAXTt8b）一致；抢七第一盘的『(9)』只有 WebSearch 一处来源，正文和顶栏一律只写到 7-6，不单独强调那个具体数字。",
+    "matchup": "中岛布兰登 vs 弗里茨",
+    "score": "7-6 4-6 6-3",
+    "event": "",
+    "summary": "他自己都不敢信这份赛程",
+    "lead": "2026 辛辛那提 ATP1000 1/4决赛，27 号种子中岛布兰登 7-6 4-6 6-3 逆转 6 号种子弗里茨，第三盘从 2-3 落后连赢四局锁定胜局，两人本赛季前两次交手都是弗里茨获胜（达拉斯决赛、华盛顿半决赛），这场终于扳回一城。赛后场上采访，主持人问他：「如果温网之后告诉你，你会打进华盛顿半决赛、蒙特利尔决赛，现在还有辛辛那提半决赛，你会怎么回？」他说：「我不会相信你的。这几个星期经历了很多，很多情绪起伏，但最后我对这个状态非常满意，也真心为自己感到骄傲。」下一轮迎战 17 号种子蒂亚福，全美国德比。"
+  },
+  "transcript_verified": true,
+  "_verified_clean": "两份转写对不上 **0.8%**（闸门 12%），**0 处空档**。第一份 ASR（faster-whisper medium.en）254 词，第二份 faster-whisper（small.en）258 词，分歧逐处看过：\n\n- `—` → `you know`、`—` → `yeah`：第二份多听出两个填词，虚词对齐噪音，不影响文本\n- `in` → `and`：介词/连词的听误，不在任何一行 en_fixed 覆盖的位置\n- **`cincy` → `since the`**：唯一值得看的一处。第一份（medium.en）在『Montreal final and now **Cincy** semi-final』这个位置听到 `Cincy`，第二份（small.en）听成 `since the`——而 `since the semi-final` 接在 `Montreal final and now` 后面语法不通，`Cincy semi-final` 正好续上主持人前面列的三站（Washington 半决赛／Montreal 决赛／现在这一站），和这条片子的 en_fixed[27] 一致，两个模型的分歧反而印证了较大的 medium.en 模型听得更准。\n\n没有一处需要新增 en_fixed。"
+}

@@ -113,6 +113,8 @@ from tennislive.video.explainer import (  # noqa: E402
     _BAND_COLOR,
     _ASS_MARGIN_H,
     _ASS_MARGIN_V,
+    _SUB_MAX,
+    _sub_width,
     readable,
     speakable,
     all_single_char_segments,
@@ -1193,11 +1195,14 @@ def _resolve_media_url(url: str) -> str:
         raise ReelError(str(exc)) from exc
 
 
-def download(url: str, dest: Path) -> Path:
+def download(url: str, dest: Path, *, archival: bool = False) -> Path:
     """取**最高清晰度**：先试 1080p 的 avc1（码率最高的那档），退到 bestvideo。
 
     `YT_COOKIES` 指向一个 cookies.txt 就带上——机房 IP 被挡的时候，
     一份登录过的 cookie 是唯一稳定的解。
+
+    `archival=True` ＝ spec 里认领过这条源本来就低清（`archival: {源键: 理由}`）。
+    它只影响两件事：缓存命中时按哪条地板复查高度、低清兜底那份**存不存缓存**。
     """
     dest.parent.mkdir(parents=True, exist_ok=True)
     if dest.is_file() and dest.stat().st_size > 0:
@@ -1206,9 +1211,28 @@ def download(url: str, dest: Path) -> Path:
 
     cached = _cached_source(url, dest.suffix or ".mp4")
     if cached is not None and cached.is_file() and cached.stat().st_size > 0:
-        shutil.copy2(cached, dest)
-        print(f"[缓存] 命中，没有重下（{dest.stat().st_size / 1e6:.1f} MB）")
-        return dest
+        # ⚠️ **命中不等于能用——缓存里可能躺着一份低清的。** 缓存键只有 URL，
+        # 而同一条 URL 在不同一趟里能下到不同的高度（PO token / n challenge
+        # 没打通时 yt-dlp 会退到低画质那档）。一旦一趟瞬时的降档把 480p 写进
+        # 缓存，**之后每一趟都命中这份低清**，红在 resolve_crop 的
+        # 「高 ≥ 700」上，报错还指向「换 client 重下」——而重下根本走不到，
+        # 缓存把坏结果固化了（和「播放页存进缓存」是同一个形状）。
+        # 所以命中之后先 ffprobe 复查高度，不够就当未命中、把旧缓存删掉。
+        floor = MIN_ARCHIVAL_H if archival else MIN_SOURCE_H
+        try:
+            cw, ch = probe_size(cached)
+        except (ReelError, ValueError):
+            cw = ch = 0
+        if ch >= floor:
+            shutil.copy2(cached, dest)
+            print(f"[缓存] 命中，没有重下"
+                  f"（{dest.stat().st_size / 1e6:.1f} MB，{cw}×{ch}）")
+            return dest
+        cached.unlink(missing_ok=True)
+        if ch:
+            print(f"[缓存] 缓存里是 {ch}p（{cw}×{ch}，低于地板 {floor}），弃用重下")
+        else:
+            print("[缓存] 缓存里那份 ffprobe 读不出视频流，弃用重下")
 
     # **页面地址不一定就是下载地址。** Tennis TV 的 `library/short-highlights`
     # 那批标着 `data-entitlement="free"` 的单场短集锦（2 分半、1080p）要先过一次
@@ -1355,7 +1379,15 @@ def download(url: str, dest: Path) -> Path:
               "在这儿长得一模一样，\n"
               "        分得清的是 spec（`archival` 认领）。渲的时候 resolve_crop "
               "会拿着认领去判，没认领照旧红。")
-        _keep_source(url, dest)
+        # ⚠️ **低清兜底默认不写缓存。** 一次瞬时的降档（PO token 那一环偶发
+        # 没打通）一旦存进去，之后每一趟都按 URL 命中这份低清——
+        # 一次事故变成永久故障，而日志上只是一句正常的「命中」。
+        # 认领过 `archival` 的才存：那是素材本来的样子，缓存它是对的。
+        if archival:
+            _keep_source(url, dest)
+        else:
+            print("[缓存] 低画质那份不进缓存（没认领 archival）——"
+                  "免得一次降档把之后每一趟都钉死在低清上")
         return dest
 
     raise ReelError(
@@ -1420,6 +1452,16 @@ SHEET_BG = "0x11221b"
 #: 第一格不取第 0 秒——开头常是黑场或台标。反推时要把这半秒加回去。
 SHEET_LEAD = 0.5
 
+#: 抓帧点不能贴着源片的最后一帧。`-ss` 落在离 duration 很近的地方时，
+#: ffmpeg 的 mjpeg 编码器有时直接报错退出（不是本文件别处那种「悄悄输出
+#: 短一截」的沉默失败，是非零退出码）。2026-08-21 首次撞上：一条 34.5 秒的
+#: YouTube Shorts 素材，`_frange` 从 0.5 起按 1 秒累加，浮点误差把最后一格
+#: 累到贴住 duration 本身，ffmpeg 报
+#: `[enc:mjpeg] Could not open encoder before EOF`，整趟 probe 失败。
+#: 短素材本来就不常见（这条线大多数源片是几分钟的官方集锦），所以这个坑
+#: 一直没被踩到，直到第一条用 Shorts 当源片的片子。
+FRAME_END_MARGIN = 0.15
+
 
 def sheet_stamps(duration: float, *, every: float = 2.0,
                  start: float = 0.0, stop: float | None = None) -> list[float]:
@@ -1430,7 +1472,8 @@ def sheet_stamps(duration: float, *, every: float = 2.0,
     而它对不上的时候不吭声。
     """
     lo = start + SHEET_LEAD
-    hi = duration if stop is None else min(stop, duration)
+    safe_end = duration - FRAME_END_MARGIN
+    hi = safe_end if stop is None else min(stop, safe_end)
     return [round(t, 2) for t in _frange(lo, hi, every)]
 
 
@@ -3009,6 +3052,15 @@ def _still_to_clip(still: Path, dest: Path, seconds: float = COVER_SECONDS) -> P
 
     静音轨是**占位**：封面那句旁白和其他段一样，在最后混音那一步按 `adelay=0`
     叠上去。这儿要是也塞一路音频，就成了「补位的静音盖住真音轨」那个老毛病。
+
+    ⚠️ **`-pix_fmt yuv420p` 不保证 `color_range=tv`。** 采访片那条线
+    2026-08-22 出过一次：封面是 JPEG 静图，`-pix_fmt yuv420p` 只管 4:2:0
+    色度采样、不管量程，ffmpeg 的 mjpeg 解码器会把 JPEG 天生的满量程
+    （full-range）带出来，libx264 照样能把 `full_range=1` 写进 SPS 的
+    VUI——视频号在满量程标记的流上抓不出封面帧，画面本身却播放正常。
+    这条线当时实测拉下来的成片没有中招（封面段量出来是干净的 `tv`），
+    但命令形状和出事那条一模一样，不等它真的漂了才补——显式钉死，
+    别指望 ffmpeg 自己推断对。
     """
     with stage("封面编码"):
         run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
@@ -3017,7 +3069,7 @@ def _still_to_clip(still: Path, dest: Path, seconds: float = COVER_SECONDS) -> P
             "-t", f"{seconds:.3f}",
             "-vf", f"fps={FPS_EXPR},setsar=1",
             "-c:v", "libx264", "-preset", PART_PRESET, "-crf", PART_CRF,
-            "-pix_fmt", "yuv420p",
+            "-pix_fmt", "yuv420p", "-color_range", "tv",
             "-c:a", "aac", "-b:a", "160k", "-ar", AUDIO_RATE,
             "-shortest", str(dest))
     return dest
@@ -3883,6 +3935,13 @@ def probe_dry_run(spec: dict, segments: list["Segment"]) -> bool:
     | 溶解底料跨切点 | 同上 | 只报 |
     | 段尾切在一分打完之前 | `point_ends` | 只报 |
     | 这条源片的死球时刻整个没量过 | `point_ends`／`scorebox_guess` | 只报，**见下** |
+    | 源片分辨率不到 1080p | `height` | **硬**，2026-08-23 补的，见下 |
+
+    ⚠️ **1080p 那条 2026-08-18 就定了，实现晚了五天。** 「视频一定要选
+    1080p 及以上的清晰度，如果没有的话就等」是账号所有者说得最重的一条，
+    `probe.json` 早就记着 `height`，可这条闸一直没写——`--dry-run` 对
+    720p 的源片完全不吭声。补的时候只查 `segments` 真正引用到的源，
+    不碰封面（那边有自己独立的「官方高清实拍」闸，两件事分开）。
 
     ⚠️ **最后这一条是 2026-08-19 补的**（账号所有者：「剪辑的时候要等死球了
     再去切下一段视频，切记」）。`bouzkova-jovic` 那条 probe 时 `--scorebox`
@@ -3996,6 +4055,33 @@ def probe_dry_run(spec: dict, segments: list["Segment"]) -> bool:
                 "（可能没有常驻记分条，或者门槛卡严了）——段尾只能靠"
                 "缩略图墙用眼睛定")
 
+    # ⑤ **源片分辨率不到 1080p——硬闸。** 账号所有者 2026-08-18：「视频一定要
+    #    选 1080p 及以上的清晰度，如果没有的话就等」。`probe.json` 早就记着
+    #    `height` 字段，可这句话落地之后一直只停在「挑源时人自己看一眼
+    #    `%(height)s`」——**判据算出来了，就是没有一处真的去比它**。
+    #    和这个仓库反复栽过的「规矩写对了，实现是空的」是同一个形状
+    #    （`is_registered`／`Match.tour`／`_cut_person` 那几处），只是这次
+    #    是复盘时发现的，还没来得及先出一条错的。
+    #
+    #    ⚠️ **只查真正会被剪进片子的源**（`segments` 引用到的，`seg.image`
+    #    那种静图段落跳过），不查 `_cover_frame_spots`——封面走的是完全独立
+    #    的「官方高清实拍」硬闸（`cover_photo_problem`），和源片分辨率是
+    #    两件事，混在一起会把没写 `frame_at` 的正常封面段落误判成缺分辨率。
+    for source_key in sorted(checked_sources):
+        probe = probes.get(urls.get(source_key, ""))
+        if probe is None:
+            continue
+        height = probe.get("height")
+        if height is None:
+            continue
+        if int(height) < 1080:
+            label = source_key or "(主源)"
+            hard.append(
+                f"  源 {label}：{probe.get('width')}x{height}，低于 1080p——"
+                "「视频一定要选 1080p 及以上的清晰度，如果没有的话就等」，"
+                "不是拿这一版将就的退路。换一条更高清的源，或者等官方"
+                "发布更清晰的版本再回来。")
+
     if mid:
         mid.sort(reverse=True)          # 越靠中间越可疑，排前面
         print(f"\n[查选段] {len(mid)} 处窗口中途换了镜头（**只报不拦**，"
@@ -4013,13 +4099,10 @@ def probe_dry_run(spec: dict, segments: list["Segment"]) -> bool:
     if unchecked:
         print(f"  ⚠️ 这几条源片的切点没查成：{unchecked}")
     if hard:
-        print("\n[查选段] 下面这些**过不去**——"
-              "ffmpeg 的 `-ss`/`-t` 越界不报错，只安安静静出一段短的，"
-              "而后面每一句旁白和字幕都跟着整体错位：")
+        print("\n[查选段] 下面这些**过不去**：")
         print("\n".join(hard))
-        print("  把 `end` 往前收，或者换一条更长的源片。")
         return True
-    print("  选段这一层没有硬伤（片长）。**挑段仍然要看缩略图墙**——"
+    print("  选段这一层没有硬伤（片长、分辨率）。**挑段仍然要看缩略图墙**——"
           "「近端是谁」「情绪对不对题」机器判不了。")
     return False
 
@@ -4341,22 +4424,31 @@ def check_sources_match(paths: dict[str, Path], spec: dict | None = None) -> Non
     不认领就红。原来是一律红——那会把「让当事人自己说」这类素材整个挡在门外
     （采访多是 30，赛事集锦多是 25/50）；一律放行又回到「兜底出事的时候不吭声」。
     认领这一步的作用就是**让这个取舍留下判据**，而不是让它悄悄发生。
+
+    ⚠️ **判"不一样"要按数值比，不能按 ffprobe 的原始字符串比**。`resolve_fps`
+    对 25.0 有时报 `"25/1"`、有时报 `"25"`（不同容器/remux 路径写法不同），两个
+    字符串不相等，但代进 `fps=` 滤镜的效果完全相同——0 重采样。按字符串比会把
+    这种情况误判成"帧率不一样"，逼人写一句撒谎的 `mixed_fps`（明明没有重采样，
+    却要编一句"重采样看不出来"）。`tiafoe-story` 的 qf2026（"25"）对 sf2026
+    （"25/1"）就撞过这个假阳性。
     """
     if len(paths) < 2:
         return
-    seen = {k: (*probe_size(p), resolve_fps(p)[0]) for k, p in paths.items()}
+    seen = {k: (*probe_size(p), *resolve_fps(p)) for k, p in paths.items()}
     ref_key = next(iter(seen))
-    rw, rh, rf = seen[ref_key]
+    rw, rh, rf, rfv = seen[ref_key]
     rows = "\n  ".join(f"{k or '(主源)'}: {w}×{h} @ {f}"
-                       for k, (w, h, f) in seen.items())
-    bad_size = [k for k, (w, h, _) in seen.items() if (w, h) != (rw, rh)]
+                       for k, (w, h, f, _) in seen.items())
+    bad_size = [k for k, (w, h, _, _) in seen.items() if (w, h) != (rw, rh)]
     if bad_size:
         raise ReelError(
             f"这些源片和主源 {ref_key or '(主源)'} 的尺寸对不上，裁切会静默裁错："
             f"{bad_size}\n  " + rows +
             "\n尺寸没有出路——换一条同尺寸的源片。")
     declared = (spec or {}).get("mixed_fps") or {}
-    bad_fps = [k for k, (_, _, f) in seen.items() if f != rf and k not in declared]
+    bad_fps = [k for k, (_, _, _, fv) in seen.items()
+               if not math.isclose(fv, rfv, rel_tol=1e-6, abs_tol=1e-6)
+               and k not in declared]
     if bad_fps:
         raise ReelError(
             f"这些源片的帧率和主源 {ref_key or '(主源)'}（{rf}）不一样：{bad_fps}\n  "
@@ -4367,7 +4459,7 @@ def check_sources_match(paths: dict[str, Path], spec: dict | None = None) -> Non
             '  "mixed_fps": {"' + bad_fps[0] + '": "30 fps；这条只用来放采访的'
             '说话头，重采样看不出来"}')
     for key, why in declared.items():
-        if key in seen and seen[key][2] != rf:
+        if key in seen and not math.isclose(seen[key][3], rfv, rel_tol=1e-6, abs_tol=1e-6):
             print(f"[fps] {key} 是 {seen[key][2]}，重采样到主源的 {rf}——{why}")
 
 
@@ -4438,6 +4530,67 @@ def _hook_lines_fit_the_title(spec: dict) -> None:
         "别去调字号。\n"
         "钩子只有两行的位置，讲的是「这场球发生了什么」的那一下；"
         "排名、轮次、比分海报上已经印着了，不用在这儿重说一遍。")
+
+
+def _quote_lines_fit_the_frame(spec: dict) -> None:
+    """`quote` 里手写的换行行，没有一处替它检查过宽度——直到 2026-08-22
+    fils-cobolli 那条撞上：冷开场原声双语字幕的中文行手写成 24 字
+    （sub_width 23.4，远超 `_SUB_MAX=16`），渲出来贴着左右 150px 安全边距
+    几乎溢出画面，而且**一处报错都没有**——`--dry-run`、`--check-narration`、
+    `check_reel_landed`、全量测试全绿，是把成片从 Release 拉回来逐帧核对
+    才看见的，白付一整趟渲染（checkout+装依赖+下源片+编码+发布，四分多钟）。
+
+    根子是 `narration` 驱动的字幕走 `_best_break`/`_sub_width` 自动断行，
+    天生卡在这条线以内；`quote` 是手写的整行文本，`explicit_quote_cues`
+    只按 `at` 时间戳切、`write_subtitles` 按行分别过 `_ass_text` 渲染，
+    从没人替它量过宽度。而 libass 的 `WrapStyle:0` 自动换行靠的是空格
+    ——英文长句有空格，超宽也能自己断成两行（这次实测过，两行各自留了
+    足够边距）；中文没有空格，超宽的那一行没有断点，只能整行画出去。
+
+    ⚠️ **只查没有空格的行**。带空格的行 libass 自己断得开，`_sub_width`
+    超了不代表会溢出——错拦这类会逼着下一个人把一句本来没事的英文台词
+    硬拆两半。判据宁可窄，不可宽。
+
+    ⚠️ **这不是一次性的失误，是这条产品线反复复发的一类缺陷。** 闸装上当天
+    拿它扫了一遍 `specs/reels/*.json`，另外 **4 条已发布的成片**同样超着
+    （`osaka-mertens` 41 字 vs 上限 16，超了一倍还多）——它们和 fils-cobolli
+    那次是同一个根子，只是当时都没被发现。已发的不重渲（消息发出去收不回来），
+    挂进 `_LEGACY_QUOTE_OVERFLOW`，只许减不许加。
+    """
+    slug = str(spec.get("slug", ""))
+    for i, seg in enumerate(spec.get("segments") or []):
+        if not isinstance(seg, dict):
+            continue
+        raw = seg.get("quote")
+        if not isinstance(raw, list):
+            continue
+        for item in raw:
+            text = item["text"] if isinstance(item, dict) else str(item)
+            for row in str(text).split("\n"):
+                row = row.strip()
+                if not row or " " in row:
+                    continue
+                width = _sub_width(row)
+                if width > _SUB_MAX:
+                    if slug in _LEGACY_QUOTE_OVERFLOW:
+                        continue
+                    raise ReelError(
+                        f"第 {i + 1} 段 quote 里手写的这一行超宽会溢出画面：\n"
+                        f"  「{row}」（{len(row)} 字，sub_width {width:.1f}，"
+                        f"上限 {_SUB_MAX}）\n"
+                        "libass 对没有空格的行没法自动换行——超宽的行会贴着"
+                        "左右 150px 安全边距溢出，且不报错，要渲完拉回成片"
+                        "逐帧看才发现。把这行改短，或者自己用 `\\n` 拆成两行"
+                        "（每行都要重新过一遍这道闸）。")
+
+
+#: 已经发布、不会重渲的 4 条——**只许减不许加**，自检在
+#: `test_quote超宽豁免表只许减不许加`：表里每个 slug 必须真的存在、
+#: 而且真的还超着，写错一个名字豁免就成了一盏恒真的绿灯。
+_LEGACY_QUOTE_OVERFLOW = frozenset({
+    "alexandrova-sabalenka", "gauff-kostyuk-cincinnati-2026-qf",
+    "osaka-mertens", "swiatek-kostyuk",
+})
 
 
 def versus_width() -> int:
@@ -4647,7 +4800,270 @@ def cover_photo_problem(spec: dict) -> str | None:
         "清晰，但要在 credits 里写明放大了多少」说的就是这种情况。")
 
 
-def validate_spec(spec: dict) -> list[Segment]:
+# 这些 spec 在 2026-08-22 的硬闸落地前就已经存在：它们从源片后段抽冷开场，
+# 正文却停在结局之前。名单只给**全仓存量审计**用，不是渲染豁免——`render`、
+# `--dry-run`、`--check-narration` 都走默认的严格校验，同 slug 再跑也会当场失败。
+# **合并后只许减不许加**；修好一条就销一条，不能拿名单给新问题开绿灯。
+LEGACY_MISSING_ENDING_PAYOFF = frozenset({
+    "baez-dimitrov",
+    "bejlek-keys-cincinnati-2026-qf",
+    "bucsa-chwalinska",
+    "cirstea-bartunkova",
+    "cobolli-jodar",
+    "fonseca-ruud",
+    "fritz-nakashima-cincinnati-2026-qf",
+    "gauff-kostyuk-cincinnati-2026-qf",
+    "jodar-fils-montreal-qf",
+    "landaluce-draper",
+    "nakashima-borges",
+    "noskova-tauson",
+    "shang-darderi-montreal-2026",
+    "shelton-tien-montreal-sf",
+    "wangxiyu-keys",
+    "zverev-paul",
+})
+
+# 同一天扫描出的另一笔存量：这些倒序冷开场早于显式声明字段，机器不能替人猜
+# 它究竟是「最后一球预告」还是普通后段高光。这里把**尚待人工分类**的 slug
+# 钉死，避免为了让全仓盘点继续跑就把“没声明的一律放过”写成永久漏洞。
+# 生产校验完全不读这个豁免；同 slug 重渲照样必须先补 true/false。合并后也只许减。
+LEGACY_UNDECLARED_ENDING_PAYOFF = frozenset({
+    "alexandrova-sabalenka",
+    "altmaier-musetti",
+    "anisimova-bartunkova",
+    "anisimova-eala",
+    "anisimova-noskova",
+    "arango-venus",
+    "auger-aliassime-cerundolo",
+    "baez-dimitrov",
+    "bartunkova-charaeva",
+    "bejlek-pliskova",
+    "bejlek-sabalenka",
+    "bencic-eala",
+    "bencic-townsend",
+    "boisson-krueger",
+    "borges-rublev",
+    "boulter-volynets",
+    "bouzkova-jovic",
+    "bucsa-chwalinska",
+    "cirstea-bartunkova",
+    "cirstea-kalinskaya",
+    "cirstea-pegula",
+    "cobolli-blockx",
+    "cobolli-jodar",
+    "djokovic-tirante",
+    "eala-anisimova",
+    "eala-mcnally",
+    "eala-parks",
+    "eala-ruse",
+    "faria-shelton",
+    "fernandez-andreeva",
+    "fery-deminaur",
+    "fils-deminaur",
+    "fils-tirante",
+    "fonseca-ruud",
+    "fonseca-van-de-zandschulp",
+    "fritz-merida",
+    "fritz-michelsen",
+    "fritz-oconnell",
+    "gauff-bouzkova",
+    "gauff-korneeva",
+    "gauff-li",
+    "gauff-sakkari",
+    "gauff-samsonova",
+    "halys-deminaur",
+    "hijikata-monfils",
+    "jodar-fils-montreal-qf",
+    "jodar-shapovalov",
+    "jodar-tabilo",
+    "kenin-lys",
+    "kostyuk-andreeva",
+    "kovacevic-khachanov",
+    "krejcikova-bejlek",
+    "landaluce-draper",
+    "lehecka-fils",
+    "maria-yastremska",
+    "musetti-faria",
+    "nakashima-borges",
+    "nakashima-medvedev",
+    "navarro-kalinina",
+    "noskova-boulter",
+    "noskova-tauson",
+    "osaka-fernandez",
+    "osaka-mertens",
+    "ostapenko-frech",
+    "parry-mertens",
+    "paul-cobolli",
+    "pegula-anisimova",
+    "pegula-navarro",
+    "pegula-rakhimova",
+    "pegula-waltert",
+    "rybakina-frech",
+    "rybakina-gauff-toronto-sf",
+    "rybakina-li",
+    "rybakina-osaka",
+    "rybakina-samsonova",
+    "rybakina-shnaider",
+    "sabalenka-gibson",
+    "sabalenka-wang",
+    "shang-darderi-montreal-2026",
+    "shelton-fonseca",
+    "shelton-nakashima-montreal-final",
+    "shelton-tien-montreal-sf",
+    "shnaider-chwalinska",
+    "shnaider-pegula",
+    "snigur-keys",
+    "sonmez-anisimova",
+    "sonmez-kasatkina",
+    "stearns-tauson",
+    "svitolina-alexandrova",
+    "svitolina-anisimova",
+    "svitolina-valentova",
+    "swiatek-arango",
+    "swiatek-golubic",
+    "swiatek-kostyuk",
+    "swiatek-parry",
+    "swiatek-rybakina-cincinnati-2026-qf",
+    "swiatek-rybakina-toronto-final",
+    "swiatek-sakkari",
+    "swiatek-shnaider",
+    "swiatek-svitolina-toronto-sf",
+    "tiafoe-auger-aliassime",
+    "tirante-landaluce",
+    "tirante-mensik",
+    "townsend-osorio",
+    "townsend-rybakina",
+    "trungelliti-medvedev",
+    "tsitsipas-auger-aliassime",
+    "tsitsipas-royer",
+    "wang-vandewinkel",
+    "wang-vekic",
+    "wang-xinyu-story",
+    "wangxiyu-fernandez",
+    "wangxiyu-keys",
+    "wangxiyu-timofeeva",
+    "williams-sisters-cincinnati",
+    "zhang-day",
+    "zhang-li",
+    "zverev-atmane",
+    "zverev-norrie",
+    "zverev-paul",
+})
+
+# 0.25 秒给转场切点留约 6 帧容差；除此之外不设任意的 20 秒门槛。真实 spec 里
+# `wang-vandewinkel` / `bejlek-sabalenka` / `svitolina-valentova` 的第 1、2 段只倒了
+# 9.4~12.4 秒，但第 3 段以后才真正回到比赛前段——只看第 2 段会把它们漏掉。
+ENDING_PAYOFF_TOL = 0.25
+
+
+def ending_payoff_problem(
+    spec: dict, *, primary: str | None = None,
+    allow_published_legacy: bool = False,
+) -> str | None:
+    """拦住「冷开场剧透了结局，正文却在兑现前结束」。
+
+    判据只在**同一条源片的时间轴**里工作：第 1 段比后续任一同源片段晚，就说明
+    正文发生过倒叙；最后一个同源片段必须重新走到冷开场末尾。第 2 段可能仍是
+    赛后落点，所以不能把它当正文起点；多源 spec 的省略 `source` 也必须像
+    `parse_segments` 一样归到真实主源，不能拿两条源的时间码互相比较。
+
+    每一条这种冷开场都要显式写 `_ending_payoff_required: true|false`——有没有
+    `quote`、有没有中文旁白都不能替机器回答画面语义。写 true 时，正文的同源
+    窗口并集必须真正覆盖整段冷开场；这样只在后面补一段握手、靠更大的 `end`
+    蒙混过关也会失败。false 是人工确认「这只是后段高光，不是结局预告」，仍然
+    要守正文最终走到其后的基础闸。
+
+    这道闸不靠旁白关键词，也不要求现场声之外必须有人说话；它只核故事时间线
+    有没有把已经承诺的结局兑现，所以不会把有完整观众声的静默庆祝误判成哑场。
+
+    `allow_published_legacy` 只给全仓离线盘点读取旧 spec；所有生产调用都用默认
+    false。名单因此不会让同 slug 的修改或重新渲染逃过这道闸。
+    """
+    if (spec.get("editorial") or {}).get("mode") != "match_review":
+        return None
+    slug = str(spec.get("slug") or "")
+    if allow_published_legacy and slug in (
+            LEGACY_MISSING_ENDING_PAYOFF | LEGACY_UNDECLARED_ENDING_PAYOFF):
+        return None
+    raw = spec.get("segments") or []
+    if len(raw) < 2 or raw[0].get("image"):
+        return None
+    first = raw[0]
+    try:
+        first_start = float(first["start"])
+        first_end = float(first["end"])
+    except (KeyError, TypeError, ValueError):
+        return None                    # 字段形状由 parse_segments 报更准确的错
+    if first_end <= first_start:
+        return None
+
+    if primary is None:
+        declared = spec.get("sources")
+        primary = (str(next(iter(declared)))
+                   if isinstance(declared, dict) and declared else "")
+
+    def _source(seg: dict) -> str:
+        # 和 parse_segments 的 `s.get("source", primary)` 保持同一语义；
+        # 不能写 `or primary`，显式空键和没写 source 不是一回事。
+        return str(seg.get("source", primary))
+
+    source = _source(first)
+    body: list[tuple[int, float, float]] = []
+    for index, seg in enumerate(raw[1:], 1):
+        if seg.get("image") or _source(seg) != source:
+            continue
+        try:
+            start, end = float(seg["start"]), float(seg["end"])
+        except (KeyError, TypeError, ValueError):
+            continue                  # parse_segments 随后给字段形状的准确报错
+        if end > start:
+            body.append((index, start, end))
+    if not body or min(start for _, start, _ in body) + ENDING_PAYOFF_TOL >= first_start:
+        return None                    # 同源正文没有倒叙，不是这道闸管的结构
+
+    if "_ending_payoff_required" not in first:
+        return (
+            "第 1 段是从后段抽来的冷开场，却没声明 "
+            "`_ending_payoff_required`。\n"
+            "它如果包含最后一球、结果确认或庆祝就写 true，正文必须完整重放；"
+            "只是后段高光、不承担结局就写 false。不能让机器靠字幕关键词猜。")
+    exact = first.get("_ending_payoff_required", False)
+    if not isinstance(exact, bool):
+        return "第 1 段的 `_ending_payoff_required` 只能写 true 或 false。"
+
+    body_end = body[-1][2]
+    if body_end + ENDING_PAYOFF_TOL < first_end:
+        return (
+            f"正文收在源片 {body_end:.2f}s，但冷开场已经预告到 {first_end:.2f}s："
+            "结局只在开头出现，正文没有重新兑现。\n"
+            "把完整制胜分、结果确认和第一波庆祝作为最后一段再放一次；"
+            "**冷开场是预告，不是结尾的替身**。片尾前必须让观众按时间顺序看见"
+            "这场比赛真的结束。")
+
+    if not exact:
+        return None
+
+    # 按源片时间排序合并窗口，确认 [first_start, first_end] 没有被跳过。
+    # 单看最后一个 end 会把「直接补一段更晚的握手」误当成完整制胜分。
+    covered = first_start
+    for _, start, end in sorted(body, key=lambda item: (item[1], item[2])):
+        if end + ENDING_PAYOFF_TOL < covered:
+            continue
+        if start > covered + ENDING_PAYOFF_TOL:
+            break
+        covered = max(covered, end)
+        if covered + ENDING_PAYOFF_TOL >= first_end:
+            return None
+    return (
+        f"冷开场要求正文完整重放源片 {first_start:.2f}–{first_end:.2f}s，"
+        f"但正文只连续覆盖到 {covered:.2f}s。\n"
+        "不能只补更晚的握手／反应来让时间码变大；完整制胜分、结果确认和"
+        "第一波庆祝必须真的出现在正文里。")
+
+
+def validate_spec(
+    spec: dict, *, allow_published_legacy: bool = False,
+) -> list[Segment]:
     """**只看 spec，不碰源片**——所以它能在开跑的第一秒跑完。
 
     这里拦下来的每一类错，原来都要先付一次 392 MB 的下载才报出来：
@@ -4682,7 +5098,13 @@ def validate_spec(spec: dict) -> list[Segment]:
     _absolute_claims_need_a_source(spec)
     _players_are_worth_a_reel(spec)
     _hook_lines_fit_the_title(spec)
+    _quote_lines_fit_the_frame(spec)
     _solo_scoreboard_shape(spec)
+    ending = ending_payoff_problem(
+        spec, primary=next(iter(urls)),
+        allow_published_legacy=allow_published_legacy)
+    if ending:
+        raise ReelError(ending)
     photo = cover_photo_problem(spec)
     if photo:
         raise ReelError(photo)
@@ -4867,6 +5289,9 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     validate_spec(spec)
     _preflight_cutout(spec)
     urls = spec_sources(spec)
+    # 认领过 `archival` 的源，下载那层要知道：缓存复查按 400 的地板、
+    # 低清兜底那份才许进缓存。别在 download 里重读 spec——它没有 spec。
+    claimed_archival = archival_claims(spec)
     sources: dict[str, Path] = {}
     for key, url in urls.items():
         path = outdir / (f"source_{key}.mp4" if key else "source.mp4")
@@ -4874,7 +5299,7 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
             path = source_override
         if not path.is_file():
             with stage(f"下载源片 {key or '(主源)'}"):
-                path = download(url, path)
+                path = download(url, path, archival=key in claimed_archival)
         sources[key] = path
     conform_sources(sources, spec, outdir)
     check_sources_match(sources, spec)

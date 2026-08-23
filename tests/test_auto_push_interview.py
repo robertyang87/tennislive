@@ -1,4 +1,4 @@
-"""赛后开麦「合进 main 就自动发微信」的五道闸。
+"""赛后开麦「合进 main 就自动发微信」的六道发布闸。
 
 **这条线 2026-08-14 之前一条自动推送都没有**，而且不是配漏了，是
 **结构性够不着**：`auto-push-reel` 的路径正则写着
@@ -9,7 +9,7 @@
 
 所以这份测试有两件事要盯，缺一不可：
 
-1. **五道闸各自真的在拦**（每道都反向验证：不只验「该发的发了」，
+1. **发布闸各自真的在拦**（每道都反向验证：不只验「该发的发了」，
    更要验「不该发的一条都没发」）；
 2. **路径正则真的匹配得到这条线的目录形状**——用仓库里**真实的**产物路径验，
    不拿手搓的字符串。手搓的只能证明「我写的正则符合我以为的形状」，
@@ -19,6 +19,7 @@
 from __future__ import annotations
 
 import json
+import hashlib
 import re
 import subprocess
 import sys
@@ -50,6 +51,65 @@ def _git(repo: Path, *args: str) -> None:
                    check=True, capture_output=True)
 
 
+def _write_interview(repo: Path, slug: str, push: dict | None) -> Path:
+    """造一条带 L0 来源签名、L2 QC 凭证和 Release 指纹的可发布采访。"""
+    from interview_source_gate import finalize_source_contract
+
+    spec: dict = {
+        "slug": slug,
+        "column": "赛后开麦",
+        "url": f"https://example.test/{slug}/oncourt",
+        "requested_content_type": "on_court",
+        "interview_kind": "赛后场上采访",
+        "zh": ["正文中文"],
+        "lead_in": {
+            "url": f"https://example.test/{slug}/highlight", "start": 10.0, "end": 14.0,
+            "subs": [{"a": 10.0, "b": 12.0, "en": "Match point", "zh": "赛点"}],
+        },
+        "source_verification": {
+            "status": "verified", "detected_type": "on_court",
+            "method": "human_visual_verdict",
+            "source_url": f"https://example.test/{slug}/oncourt",
+            "evidence": [{"kind": "visual_verdict", "by": "test"}],
+        },
+        "match": {
+            "id": f"2026:test:qf:{slug}", "event": "测试赛", "round": "四分之一决赛",
+            "winner": "赢家", "loser": "输家", "participants": ["赢家", "输家"],
+        },
+    }
+    if push is not None:
+        spec["push"] = push
+    finalize_source_contract(spec)
+
+    spec_dir = repo / "specs/interviews"
+    spec_dir.mkdir(parents=True, exist_ok=True)
+    spec_path = spec_dir / f"{slug}.json"
+    spec_path.write_text(json.dumps(spec, ensure_ascii=False), encoding="utf-8")
+    (spec_dir / f"{slug}.xhs.txt").write_text("文案", encoding="utf-8")
+
+    outdir = repo / f"output/interviews/{slug}"
+    outdir.mkdir(parents=True, exist_ok=True)
+    film_hash = hashlib.sha256(f"{slug}-film".encode()).hexdigest()
+    film_bytes = 12345
+    qc_path = outdir / "qc_attestation.json"
+    qc_path.write_text(json.dumps({
+        "status": "pass", "slug": slug, "match_id": spec["match"]["id"],
+        "source_attestation_sha256": spec["source_verification"]["attestation_sha256"],
+        "spec_sha256": hashlib.sha256(spec_path.read_bytes()).hexdigest(),
+        "lead_ass_sha256": hashlib.sha256(f"{slug}-lead-ass".encode()).hexdigest(),
+        "film_sha256": film_hash, "film_bytes": film_bytes,
+        "checks": {"bilingual_body_cues": 1, "bilingual_lead_cues": 1},
+    }), encoding="utf-8")
+    (outdir / "render.json").write_text(json.dumps({
+        "video_url": f"https://example.test/{slug}.mp4",
+        "video_bytes": film_bytes,
+        "film_sha256": film_hash,
+        "qc_attestation_sha256": hashlib.sha256(qc_path.read_bytes()).hexdigest(),
+    }), encoding="utf-8")
+    (outdir / "poster.jpg").write_bytes(b"\xff\xd8\xff not-a-real-jpeg")
+    return outdir
+
+
 @pytest.fixture()
 def repo(tmp_path: Path) -> Path:
     """一个最小的**真 git 仓库**：一条 spec、一份文案、一个渲好的 outdir。
@@ -63,14 +123,7 @@ def repo(tmp_path: Path) -> Path:
     特意把它留着），所以这个 fixture 也得有——这样「该发的照发」那几条
     验的才是它们各自那道闸，而不是被海报闸拦下。
     """
-    (tmp_path / "specs/interviews").mkdir(parents=True)
-    (tmp_path / "specs/interviews/demo.xhs.txt").write_text(
-        "文案", encoding="utf-8")
-    outdir = tmp_path / "output/interviews/demo"
-    outdir.mkdir(parents=True)
-    (outdir / "render.json").write_text(
-        json.dumps({"video_url": "https://example/x.mp4"}), encoding="utf-8")
-    (outdir / "poster.jpg").write_bytes(b"\xff\xd8\xff not-a-real-jpeg")
+    _write_interview(tmp_path, "demo", {})
     _git(tmp_path, "init", "-q")
     # render.json 提交进仓库——现实里它就是先由 interview-clip 提交、随 PR
     # 进 main 的；「已删除的产物不算候选」那道闸查的是 git ls-files，
@@ -87,13 +140,7 @@ def _commit_all(repo: Path) -> None:
 
 
 def _spec(repo: Path, push: dict | None, slug: str = "demo") -> None:
-    # 采访 spec 的栏目名在**顶层 `column`**，不是 `cover.eyebrow`——
-    # 两条线放在不同字段，`push_reel.column_of` 在那儿收口。
-    body: dict = {"column": "赛后开麦"}
-    if push is not None:
-        body["push"] = push
-    (repo / f"specs/interviews/{slug}.json").write_text(
-        json.dumps(body, ensure_ascii=False), encoding="utf-8")
+    _write_interview(repo, slug, push)
 
 
 def _second_interview(repo: Path, slug: str = "demo2") -> Path:
@@ -103,14 +150,7 @@ def _second_interview(repo: Path, slug: str = "demo2") -> Path:
     候选筛掉，于是「一趟带进来两条」那类测试只剩一个候选、恒绿——一道
     真闸就这么被另一道闸悄悄遮住了。收在一处，别在每个测试里各写一遍。
     """
-    _spec(repo, {"auto": True}, slug=slug)
-    (repo / f"specs/interviews/{slug}.xhs.txt").write_text(
-        "文案", encoding="utf-8")
-    outdir = repo / f"output/interviews/{slug}"
-    outdir.mkdir(parents=True)
-    (outdir / "render.json").write_text("{}", encoding="utf-8")
-    (outdir / "poster.jpg").write_bytes(b"\xff\xd8\xff not-a-real-jpeg")
-    return outdir
+    return _write_interview(repo, slug, {"auto": True})
 
 
 CHANGED = ["output/interviews/demo/render.json"]
@@ -234,8 +274,8 @@ def test_已经推过的不许再发一次(repo: Path, capsys):
     一口气改了 17 份。没有这道闸，已经发过的采访会被再发一次。
     """
     _spec(repo, {"auto": True})
-    gate.record(repo / "output/interviews/demo",
-                "https://example/run/1", "2026-08-14T00:00:00Z")
+    reel_gate.record(repo / "output/interviews/demo",
+                     "https://example/run/1", "2026-08-14T00:00:00Z")
     _commit_all(repo)
     assert gate.pick(CHANGED, repo) is None
     out = capsys.readouterr().out
@@ -250,7 +290,7 @@ def test_没提交的标记不算数(repo: Path):
     而且不吭声。反过来说，这也正是它必须查 `git ls-files` 的另一半理由。
     """
     _spec(repo, {"auto": True})
-    gate.record(repo / "output/interviews/demo", "run", "now")
+    reel_gate.record(repo / "output/interviews/demo", "run", "now")
     # 故意不提交
     assert gate.pick(CHANGED, repo) is not None
 
@@ -264,10 +304,26 @@ def test_稀疏检出下也要拦得住(repo: Path):
     要求照样拦得住。反向验证过：退回 `is_file()` 当场红。
     """
     _spec(repo, {"auto": True})
-    marker = gate.record(repo / "output/interviews/demo", "run", "now")
+    marker = reel_gate.record(repo / "output/interviews/demo", "run", "now")
     _commit_all(repo)
     marker.unlink()  # ← 稀疏检出之后工作区里就是没有它
     assert gate.pick(CHANGED, repo) is None
+
+
+def test_稀疏检出下独立发布账本也不能失忆(repo: Path, capsys):
+    """ledger 在 Git 里、但 data/ 没被检出时，必须从 HEAD 读取并阻断重发。
+
+    只用 ``Path.is_file()`` 会把这种状态当成无账本；采访 output 又可能被重渲，
+    旧 pushed.json 不可靠，于是同一份成片会被再次推到微信。
+    """
+    _spec(repo, {"auto": True})
+    outdir = repo / "output/interviews/demo"
+    ledger = gate.reserve(repo, "demo", outdir, "run-1", "2026-08-23T00:00:00Z")
+    _commit_all(repo)
+    ledger.unlink()  # 模拟 workflow 的 sparse checkout 没把 data/ 那格落到工作区
+
+    assert gate.pick(CHANGED, repo) is None
+    assert "sending" in capsys.readouterr().out
 
 
 # ---------------------------------------------------------------- 闸 4：海报
@@ -307,6 +363,32 @@ def test_海报在就照发(repo: Path):
     picked = gate.pick(CHANGED, repo)
     assert picked is not None, "海报好好地在仓库里，却被拦下了"
     assert picked[0] == "demo"
+
+
+def test_render必须绑定当前QC凭证(repo: Path, capsys):
+    """旧 render 不能配一份后来替换的 pass QC 冒充同一轮质检。"""
+    _spec(repo, {"auto": True})
+    qc = repo / "output/interviews/demo/qc_attestation.json"
+    data = json.loads(qc.read_text(encoding="utf-8"))
+    data["checks"]["note"] = "replaced-after-release"
+    qc.write_text(json.dumps(data), encoding="utf-8")
+    assert gate.pick(CHANGED, repo) is None
+    assert "当前 QC 凭证" in capsys.readouterr().out
+
+
+def test_QC必须逐cue证明冷开场解说双语完整(repo: Path, capsys):
+    _spec(repo, {"auto": True})
+    outdir = repo / "output/interviews/demo"
+    qc_path = outdir / "qc_attestation.json"
+    qc = json.loads(qc_path.read_text(encoding="utf-8"))
+    qc["checks"]["bilingual_lead_cues"] = 0
+    qc_path.write_text(json.dumps(qc), encoding="utf-8")
+    render_path = outdir / "render.json"
+    render = json.loads(render_path.read_text(encoding="utf-8"))
+    render["qc_attestation_sha256"] = hashlib.sha256(qc_path.read_bytes()).hexdigest()
+    render_path.write_text(json.dumps(render), encoding="utf-8")
+    assert gate.pick(CHANGED, repo) is None
+    assert "获胜画面原解说" in capsys.readouterr().out
 
 
 def test_稀疏检出下海报也要认得出(repo: Path):
@@ -352,11 +434,12 @@ def test_删除的render_json不算候选(repo: Path, capsys):
     又没有 pushed.json，不拦的话会凑成「一次 N 条」把真该发的一起拦死。
     """
     _spec(repo, {"auto": True})
+    _commit_all(repo)
     _git(repo, "rm", "-rq", "output/interviews/demo")
     _git(repo, "-c", "user.email=a@b", "-c", "user.name=c",
          "commit", "-qm", "清理旧产物")
     assert gate.pick(CHANGED, repo) is None
-    assert "已不在仓库里" in capsys.readouterr().out, "跳过要说出为什么"
+    assert "不在仓库里" in capsys.readouterr().out, "跳过要说出为什么"
 
 
 def test_同一批里删一条活一条要发活的那条(repo: Path):
@@ -388,9 +471,8 @@ def test_工作流的diff要滤掉删除项():
 
 # ------------------------------------------------- 共用的部分：import，不抄
 
-def test_共用的那几样是import来的不是抄的():
-    """`Skip` / `tracked` / `MARKER` / `record` 跟哪条线无关，两条路必须是
-    **同一个对象**。
+def test_共用基础判据但采访发布账本独立():
+    """路径存在性和旧标记继续共用；发布状态改为 output 外的独立账本。
 
     判据用 `is`，不是「行为一样」：抄一份的话行为一开始当然一样，
     分叉是后来发生的，而分叉的样子是——改了 reel 那头的标记名，这头静默
@@ -399,8 +481,9 @@ def test_共用的那几样是import来的不是抄的():
     """
     assert gate.Skip is reel_gate.Skip
     assert gate.tracked is reel_gate.tracked
-    assert gate.record is reel_gate.record
+    assert gate.record is not reel_gate.record
     assert gate.MARKER == reel_gate.MARKER == "pushed.json"
+    assert gate.LEDGER_DIR == Path("data/interview_publish_ledger")
 
 
 def test_两条线分叉的只有路径形状和spec目录():
@@ -412,6 +495,30 @@ def test_两条线分叉的只有路径形状和spec目录():
     assert gate.SPEC_DIR == Path("specs/interviews")
     assert reel_gate.SPEC_DIR == Path("specs/reels")
     assert gate.SPEC_DIR != reel_gate.SPEC_DIR
+
+
+def test_发布账本预占后阻断自动重发(repo: Path, capsys):
+    """发送前先记 sending；进程随后崩溃也不能把同一成片盲发第二次。"""
+    _spec(repo, {"auto": True})
+    outdir = repo / "output/interviews/demo"
+    ledger = gate.reserve(repo, "demo", outdir, "https://example/run/1", "2026-08-23T00:00:00Z")
+    _commit_all(repo)
+    assert json.loads(ledger.read_text())["attempts"][0]["status"] == "sending"
+    assert gate.pick(CHANGED, repo) is None
+    assert "sending" in capsys.readouterr().out
+
+
+def test_发布成功和状态不明都绑定同一成片指纹(repo: Path):
+    _spec(repo, {"auto": True})
+    outdir = repo / "output/interviews/demo"
+    gate.reserve(repo, "demo", outdir, "run", "t1")
+    ledger = gate.record(repo, "demo", outdir, "run", "t2")
+    row = json.loads(ledger.read_text())["attempts"][0]
+    assert row["status"] == "sent" and row["key"].startswith("pushplus:demo:")
+    ledger = gate.uncertain(repo, "demo", outdir, "run", "t3")
+    rows = json.loads(ledger.read_text())["attempts"]
+    assert len(rows) == 1 and rows[0]["status"] == "uncertain", \
+        "同一成片只允许一个幂等键，状态转换不能追加成多次发送"
 
 
 # ------------------------------------------------- 标题日期：算一次，两处共用
@@ -467,15 +574,113 @@ def test_上海日期不靠tzdata():
 def test_自动推送只在main上跑():
     """GitHub Pages 只服务 main（复制页在分支上永远 404），而海报链接钉在
     commit sha 上——未合并的 commit 有被 GC 的风险。
+
+    ⚠️ **这条判据 2026-08-21 换过主语。** 第一版断言「不许有
+    workflow_dispatch」，而它的前提当天被量死了：render 的提交是
+    GITHUB_TOKEN 推的，GitHub 明文规定这种 push **不创建 workflow run**
+    （防递归）——于是 on:push 从上线起一次都没为 render 醒来过（铁证：
+    50 份 render.json / 0 份 pushed.json）。dispatch 从「多余的手动入口」
+    变成了**唯一走得通的主路**（interview-clip 渲完来叫醒），前提没了就得
+    换判据。「只在 main 上跑」这半句没变，只是落点换成两头：
+    push 触发限 main + dispatch 第一步有 main 守卫。
     """
-    body = _yaml_only(WORKFLOW.read_text(encoding="utf-8"))
+    raw = WORKFLOW.read_text(encoding="utf-8")
+    body = _yaml_only(raw)
     trigger = body.split("permissions:")[0]
     assert "branches: [main]" in trigger, "没限定 main"
     assert "output/interviews/*/render.json" in trigger, (
         "触发路径不是采访产物的形状")
-    assert "workflow_dispatch" not in trigger, (
-        "别再给它开手动入口——手动推送走 interview-clip mode=push，"
-        "那条路有完整的预检和参数")
+    assert "workflow_dispatch" in trigger, (
+        "dispatch 入口没了——render 的提交是 GITHUB_TOKEN 推的、触发不了 "
+        "on:push，没有 dispatch 这条工作流对 render 是全死的")
+    # dispatch 可以选分支，所以要有守卫：不在 main 上当场红，不许静静跑完
+    guard = re.search(
+        r"github\.event_name == 'workflow_dispatch' &&\s*"
+        r"github\.ref_name != 'main'", body)
+    assert guard, "dispatch 没有 main 守卫——分支上的复制页和海报永远 404"
+    # 守卫要排在 checkout 之前：白拉一次仓库只是慢，守卫排后面则是先干活再拦
+    assert body.index("github.ref_name != 'main'") < body.index(
+        "actions/checkout"), "main 守卫要排在 checkout 之前"
+
+
+def test_dispatch两条路都过工具里那套闸():
+    """dispatch 点名（--slug）和不点名（git ls-files 扫全部）都必须把判定
+    交给 `auto_push_interview_gate.py`——闸写进 YAML 就测不了了。
+    on:push 那条兜底路照旧拿 HEAD^ 比（浅克隆下 event.before 可能不在本地）。
+    """
+    body = _yaml_only(WORKFLOW.read_text(encoding="utf-8"))
+    gate_step = body[body.index("挑出该自动发的那一条"):body.index("把这一格放进稀疏范围")]
+    assert "--slug" in gate_step, "点名那条路没接 --slug"
+    assert "git ls-files 'output/interviews/*/render.json'" in gate_step, (
+        "不点名那条路要扫仓库里全部 render.json（ls-files 读 index，"
+        "不受稀疏检出影响）——闸会把已推过/没认领的逐条拦掉")
+    assert "HEAD^ HEAD" in gate_step, "on:push 兜底路不见了"
+
+
+def test_render完要叫醒自动推送():
+    """render 的成片提交用的是 GITHUB_TOKEN，**永远触发不了** on:push
+    （GitHub 防递归）；不叫醒的话 auto-push-interview 对 render 是全死的
+    ——量过的铁证：50 份 render.json / 0 份 pushed.json。
+    `workflow_dispatch` 正是那条禁令明文列出的例外，所以渲完点一下。
+    """
+    body = _yaml_only(
+        Path(".github/workflows/interview-clip.yml").read_text(encoding="utf-8"))
+    m = re.search(r"gh workflow run auto-push-interview\.yml[^\n]*", body)
+    assert m, "interview-clip 渲完没有叫醒 auto-push-interview"
+    line = m.group(0)
+    assert "--ref main" in line, "要点名 main 上那份工作流文件"
+    assert "slug=" in line, "叫醒时要把 slug 递过去，省一趟全库扫描"
+    # 位置：要排在「提交成片」之后——成片没落库就叫醒，那头扫到的是旧东西
+    assert body.index("- name: 提交成片") < body.index("- name: 叫醒自动推送"), (
+        "叫醒排在提交成片之前")
+    # 条件三头都要有：只有 render 有新东西可发；本趟自己发（push=true）就不许
+    # 再叫醒（同一条消息发两遍的竞态）；分支上的产物 Pages 取不到
+    blk = body.split("- name: 叫醒自动推送")[1].split("- name:")[0]
+    assert "github.event.inputs.mode == 'render'" in blk
+    assert "github.event.inputs.push != 'true'" in blk, (
+        "本趟自己要发还叫醒自动推送——那头看不到任何「正在发」的标记，"
+        "会把同一条消息再发一遍")
+    assert "github.ref_name == 'main'" in blk
+
+
+def test_gate的slug入口走同一条pick路(repo: Path, monkeypatch, capsys):
+    """`--slug` 不是绕闸的近路：它只是把入参折成那条 render.json 的路径，
+    照走 `pick` → 发布门禁。判据两头：合格的这条要 found=true 落进
+    GITHUB_OUTPUT；已推过的同一条要被「已经推过」那道闸拦下（拦得住才说明
+    真的走的是同一条路，不是另写了一份少闸的判定）。
+    """
+    _spec(repo, {"auto": True})
+    _commit_all(repo)
+    out_file = repo / "gh_out"
+    monkeypatch.setenv("GITHUB_OUTPUT", str(out_file))
+    assert gate.main(["--slug", "demo", "--repo", str(repo)]) == 0
+    text = out_file.read_text(encoding="utf-8")
+    assert "slug=demo" in text and "found=true" in text
+
+    # 同一条记上 pushed.json 之后，--slug 必须被「已经推过」拦下
+    (repo / "output/interviews/demo" / gate.MARKER).write_text(
+        json.dumps({"at": "t", "run": "r"}), encoding="utf-8")
+    _commit_all(repo)
+    out_file.unlink()
+    assert gate.main(["--slug", "demo", "--repo", str(repo)]) == 0
+    captured = capsys.readouterr().out
+    assert "已经推过了" in captured, "--slug 绕过了「已经推过」那道闸"
+    assert not out_file.exists(), "被拦下的那条不许往 GITHUB_OUTPUT 写 found"
+
+
+def test_gate的slug入口对没render过的条目要出声(repo: Path, capsys):
+    """点名一条根本没 render 过的 slug：不许炸、不许假绿地报 found，
+    要打出「render.json 不在仓库里」让人看见点错了名。"""
+    assert gate.main(["--slug", "ghost", "--repo", str(repo)]) == 0
+    out = capsys.readouterr().out
+    assert "[跳过]" in out and "render.json 不在仓库里" in out
+
+
+def test_gate的slug和changed不能同时给(repo: Path):
+    """两个入口一起给没有一种读法是对的——宁可当场红。"""
+    with pytest.raises(SystemExit) as exc:
+        gate.main(["--slug", "demo", "--changed", "x", "--repo", str(repo)])
+    assert exc.value.code == 2
 
 
 def test_自动推送不许取消正在跑的():
@@ -612,5 +817,6 @@ def test_只add自己那一格():
     assert adds, "工作流里一句 git add 都没有？"
     for line in adds:
         assert "--sparse" in line, f"稀疏检出下 git add 要带 --sparse：{line}"
-        assert "steps.gate.outputs.outdir" in line, (
-            f"add 的不是本次那一格：{line}")
+        assert ("steps.gate.outputs.outdir" in line
+                or "data/interview_publish_ledger/${{ steps.gate.outputs.slug }}.json" in line), (
+            f"add 的不是本次产物或本次独立账本：{line}")

@@ -7,6 +7,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 import subprocess
@@ -37,6 +38,32 @@ def _git(repo: Path, *args: str) -> None:
                    check=True, capture_output=True)
 
 
+def _qc_product(repo: Path, slug: str) -> None:
+    """造一份和生产链同形的 L2 凭证；render.json 本身不再等于质检通过。"""
+    spec = repo / f"specs/reels/{slug}.json"
+    outdir = repo / f"output/2026-08-03/reel/{slug}"
+    outdir.mkdir(parents=True, exist_ok=True)
+    ass = outdir / "subtitles.ass"
+    ass.write_text("Dialogue: 0,0:00:00.00,0:00:01.00,Default,,0,0,0,,字幕\n",
+                   encoding="utf-8")
+    film = b"checked-film-bytes"
+    qc = outdir / "qc_attestation.json"
+    qc.write_text(json.dumps({
+        "status": "pass",
+        "slug": slug,
+        "spec_sha256": hashlib.sha256(spec.read_bytes()).hexdigest(),
+        "ass_sha256": hashlib.sha256(ass.read_bytes()).hexdigest(),
+        "film_sha256": hashlib.sha256(film).hexdigest(),
+        "film_bytes": len(film),
+    }), encoding="utf-8")
+    (outdir / "render.json").write_text(json.dumps({
+        "video_url": f"https://example.test/{slug}.mp4",
+        "video_bytes": len(film),
+        "film_sha256": hashlib.sha256(film).hexdigest(),
+        "qc_attestation_sha256": hashlib.sha256(qc.read_bytes()).hexdigest(),
+    }), encoding="utf-8")
+
+
 @pytest.fixture()
 def repo(tmp_path: Path) -> Path:
     """一个最小的**真 git 仓库**：一条 spec、一份文案、一个渲好的 outdir。
@@ -50,9 +77,10 @@ def repo(tmp_path: Path) -> Path:
     """
     (tmp_path / "specs/reels").mkdir(parents=True)
     (tmp_path / "specs/reels/demo.xhs.txt").write_text("文案", encoding="utf-8")
+    _spec(tmp_path, None)
     outdir = tmp_path / "output/2026-08-03/reel/demo"
     outdir.mkdir(parents=True)
-    (outdir / "render.json").write_text("{}", encoding="utf-8")
+    _qc_product(tmp_path, "demo")
     (outdir / "poster.jpg").write_bytes(b"\xff\xd8\xff not-a-real-jpeg")
     _git(tmp_path, "init", "-q")
     # render.json 提交进仓库——现实里它就是先由 render 工作流提交、随 PR
@@ -80,17 +108,20 @@ def _second_reel(repo: Path, slug: str = "demo2") -> Path:
     (repo / f"specs/reels/{slug}.xhs.txt").write_text("文案", encoding="utf-8")
     outdir = repo / f"output/2026-08-03/reel/{slug}"
     outdir.mkdir(parents=True)
-    (outdir / "render.json").write_text("{}", encoding="utf-8")
+    _qc_product(repo, slug)
     (outdir / "poster.jpg").write_bytes(b"\xff\xd8\xff not-a-real-jpeg")
     return outdir
 
 
 def _spec(repo: Path, push: dict | None, slug: str = "demo") -> None:
-    body: dict = {"cover": {"eyebrow": "赛场之上"}}
+    body: dict = {"slug": slug, "cover": {"eyebrow": "赛场之上"}}
     if push is not None:
         body["push"] = push
     (repo / f"specs/reels/{slug}.json").write_text(
         json.dumps(body, ensure_ascii=False), encoding="utf-8")
+    outdir = repo / f"output/2026-08-03/reel/{slug}"
+    if outdir.exists():
+        _qc_product(repo, slug)
 
 
 CHANGED = ["output/2026-08-03/reel/demo/render.json"]
@@ -120,6 +151,40 @@ def test_写了auto才发(repo: Path):
     picked = gate.pick(CHANGED, repo)
     assert picked is not None, "写了 auto 还是不发，那这个开关根本没接上"
     assert picked[0] == "demo"
+
+
+def test_只有render信号没有L2凭证不发布(repo: Path, capsys):
+    _spec(repo, {"auto": True})
+    qc = repo / "output/2026-08-03/reel/demo/qc_attestation.json"
+    qc.unlink()
+    _git(repo, "rm", "-q", "--cached", str(qc.relative_to(repo)))
+    assert gate.pick(CHANGED, repo) is None
+    out = capsys.readouterr().out
+    assert "render.json 是渲染信号" in out and "不能代替 L2" in out
+
+
+def test_质检后改spec或字幕都不能发布(repo: Path, capsys):
+    _spec(repo, {"auto": True})
+    spec = repo / "specs/reels/demo.json"
+    spec.write_text(spec.read_text(encoding="utf-8") + "\n", encoding="utf-8")
+    assert gate.pick(CHANGED, repo) is None
+    assert "spec 在质检后发生过变化" in capsys.readouterr().out
+
+    _spec(repo, {"auto": True})
+    ass = repo / "output/2026-08-03/reel/demo/subtitles.ass"
+    ass.write_text(ass.read_text(encoding="utf-8") + "偷改字幕\n", encoding="utf-8")
+    assert gate.pick(CHANGED, repo) is None
+    assert "字幕在质检后发生过变化" in capsys.readouterr().out
+
+
+def test_Release字节数和质检成片不同不发布(repo: Path, capsys):
+    _spec(repo, {"auto": True})
+    render = repo / "output/2026-08-03/reel/demo/render.json"
+    data = json.loads(render.read_text(encoding="utf-8"))
+    data["video_bytes"] += 1
+    render.write_text(json.dumps(data), encoding="utf-8")
+    assert gate.pick(CHANGED, repo) is None
+    assert "Release 文件大小与 QC 成片不一致" in capsys.readouterr().out
 
 
 def test_auto写成字符串要报错(repo: Path):
@@ -283,6 +348,7 @@ def test_删除的render_json不算候选(repo: Path, capsys):
     真该发的一起拦死。2026-08-12 zheng-lanlana 的合并差点踩到：同一批
     改动里带着三份被顶替旧版的删除。"""
     _spec(repo, {"auto": True})
+    _commit_all(repo)
     _git(repo, "rm", "-rq", "output/2026-08-03/reel/demo")
     _git(repo, "-c", "user.email=a@b", "-c", "user.name=c",
          "commit", "-qm", "清理旧产物")
@@ -381,3 +447,66 @@ def test_记已推送要排在发微信之后():
     assert body.index("--stage page") < body.index("--record")
     send = body.index("TENNISLIVE_ASSET_REV")
     assert send < body.index("--record"), "记已推送排到了发微信前面"
+
+
+def test_自动推送的超时盖得住Pages最坏而且被掐也要告警():
+    """三头一起钉，缺一头都是「等待窗口结构性地短于 Pages 的发布时间」重演。
+
+    ① **job 超时要盖住复制页探活的账**：实测 Pages 最坏一次发布 14 分钟，
+      reel 这条 20 分钟的老预算只剩几分钟余量；explainer 的探活窗口本身就是
+      26×30s ≈ 13 分钟，20 分钟同样贴着边。
+    ② **探活的环境变量要真的被 push_reel 读**，而且值不许超过代码里的钳位
+      （`min(60, …)` / `min(60.0, …)`）——超了会被**静默钳掉**，工作流里写的
+      数和真实生效的数从此对不上，正是 `_push` 键名写错那一族的形状。
+    ③ **超时被掐的 run 是 cancelled 不是 failure**：告警只挂 `failure()` 的话，
+      恰恰是「等满预算被掐」这种最该告警的失败静默溜走。
+    """
+    reel = WORKFLOW.read_text(encoding="utf-8")
+    reel_body = _yaml_only(reel)
+    expl = Path(".github/workflows/auto-push-explainer.yml").read_text(
+        encoding="utf-8")
+    expl_body = _yaml_only(expl)
+
+    # ① 超时下限（只许更宽，不许悄悄缩回去）
+    reel_timeout = int(re.search(r"timeout-minutes: (\d+)", reel_body).group(1))
+    assert reel_timeout >= 35, f"auto-push-reel 超时 {reel_timeout} < 35"
+    expl_timeout = int(re.search(r"timeout-minutes: (\d+)", expl_body).group(1))
+    assert expl_timeout >= 25, f"auto-push-explainer 超时 {expl_timeout} < 25"
+
+    # ② 探活环境变量：名字要和 push_reel 里读的一致，值不许超过钳位
+    push_reel_src = Path("tools/push_reel.py").read_text(encoding="utf-8")
+    m = re.search(r'TENNISLIVE_COPYPAGE_ATTEMPTS"?,', push_reel_src)
+    assert m, "push_reel 不再读 TENNISLIVE_COPYPAGE_ATTEMPTS——工作流里配了也白配"
+    attempts_cap = int(re.search(
+        r"min\((\d+), int\(os\.environ\.get\(\"TENNISLIVE_COPYPAGE_ATTEMPTS",
+        push_reel_src).group(1))
+    delay_cap = float(re.search(
+        r"min\((\d+(?:\.\d+)?), float\(os\.environ\.get\(\s*\n?"
+        r"\s*\"TENNISLIVE_COPYPAGE_RETRY_SECONDS", push_reel_src).group(1))
+    attempts = int(re.search(
+        r'TENNISLIVE_COPYPAGE_ATTEMPTS: "(\d+)"', reel_body).group(1))
+    delay = float(re.search(
+        r'TENNISLIVE_COPYPAGE_RETRY_SECONDS: "(\d+(?:\.\d+)?)"',
+        reel_body).group(1))
+    assert attempts <= attempts_cap, (
+        f"工作流写 {attempts} 次，而 push_reel 的钳位是 {attempts_cap}——"
+        "多出来的会被静默钳掉，两个数从此对不上")
+    assert delay <= delay_cap, f"间隔 {delay}s 超过钳位 {delay_cap}s，会被静默钳掉"
+    # 探活总窗口要真的盖住实测最坏（14 分钟），否则调超时是白调
+    assert attempts * delay >= 14 * 60, (
+        f"探活窗口 {attempts}×{delay}s = {attempts * delay / 60:.0f} 分钟，"
+        "盖不住实测 Pages 最坏的 14 分钟")
+    # 这两个变量要挂在**发微信那一步**的 env 里（挂错步骤等于没配）
+    send_step = reel_body[reel_body.index("- name: 推送到微信"):]
+    send_step = send_step[:send_step.index("- name: ", 10)]
+    assert "TENNISLIVE_COPYPAGE_ATTEMPTS" in send_step, (
+        "探活变量没挂在「推送到微信」那一步的 env 里")
+
+    # ③ 两条告警都要接住 cancelled
+    for name, body in (("auto-push-reel", reel_body),
+                       ("auto-push-explainer", expl_body)):
+        alarm = body[body.index("- name: 失败时告警"):]
+        if_line = re.search(r"if: (.+)", alarm).group(1)
+        assert "failure()" in if_line and "cancelled()" in if_line, (
+            f"{name} 的告警条件是 `{if_line}`——超时被掐是 cancelled，"
+            "只挂 failure() 会让最该告警的那一种静默溜走")

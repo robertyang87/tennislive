@@ -170,7 +170,7 @@ def test_push_diff_must_contain_exactly_one_added_queue_file(tmp_path):
 @pytest.mark.parametrize(
     ("mode", "push", "slugs"),
     [
-        ("render", "false", ("first-player", "second-player")),
+        ("render", "true", ("first-player", "second-player")),
         ("push", "true", ("first-player",)),
     ],
 )
@@ -187,7 +187,11 @@ def test_dispatch_uses_argument_arrays_and_mode_fixes_push(mode, push, slugs):
         expected_date="2026-08-21",
         slugs=slugs,
     )
-    queue.dispatch(request, run=record)
+    queue.dispatch(
+        request,
+        run=record,
+        now=datetime(2026, 8, 24, 1, 2, 3, tzinfo=timezone.utc),
+    )
     assert len(calls) == len(slugs)
     for (command, kwargs), slug in zip(calls, request.slugs):
         assert command == [
@@ -203,6 +207,8 @@ def test_dispatch_uses_argument_arrays_and_mode_fixes_push(mode, push, slugs):
             f"mode={mode}",
             "-f",
             f"push={push}",
+            "-f",
+            "received_at=2026-08-24T01:02:03Z",
         ]
         assert kwargs == {"check": True, "shell": False}
 
@@ -233,11 +239,32 @@ def test_workflow_only_runs_for_main_queue_pushes_with_minimum_permissions():
     assert "python tools/dispatch_reel_queue.py" in body
 
 
-def test_match_reel_publish_runs_share_one_non_cancelling_concurrency_group():
+def test_match_reel只串行不可撤回发布不串行多场渲染():
     body = MATCH_REEL_PATH.read_text(encoding="utf-8")
     head = body[: body.index("jobs:")]
     concurrency = head[head.index("concurrency:") :]
     assert "match-reel-publish" in concurrency
     assert "github.event.inputs.mode == 'push'" in concurrency
-    assert "github.event.inputs.push == 'true'" in concurrency
-    assert "cancel-in-progress: ${{ !(" in concurrency
+    assert "github.event.inputs.push == 'true'" not in concurrency, (
+        "push=true 的生产 render 被全局发布锁串行了；多场应该按 slug 并行，"
+        "质检落库后再派 push-only 串行发送")
+    assert "cancel-in-progress: ${{ github.event.inputs.mode != 'push' }}" in concurrency
+
+
+def test_render质检落库后自动派push_only且本趟不直接发送():
+    body = MATCH_REEL_PATH.read_text(encoding="utf-8")
+    assert body.index("- name: 查成片本身合不合格") < body.index(
+        "- name: 成片发到 Release（不进 git）"
+    ) < body.index("- name: 提交产物") < body.index(
+        "- name: render 质检落库后自动派发微信推送"
+    ), "自动派发必须在 L2、Release 探活和提交全部成功之后，不能只看 render 成功信号"
+    dispatch = body[body.index("- name: render 质检落库后自动派发微信推送") :]
+    dispatch = dispatch[: dispatch.index("- name: ", 10)]
+    assert "mode == 'render'" in dispatch and "inputs.push == 'true'" in dispatch
+    assert "gh workflow run match-reel.yml" in dispatch
+    assert "-f mode=push" in dispatch and "-f push=true" in dispatch
+
+    send = body[body.index("- name: 推送到微信（可选）") :]
+    send = send[: send.index("- name: ", 10)]
+    assert "inputs.mode == 'push'" in send and "mode == 'render'" not in send, (
+        "render 本趟又直接 POST，会和 push-only 重复发送；本趟只负责质检落库和派发")

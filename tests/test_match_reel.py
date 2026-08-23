@@ -14,6 +14,7 @@
 """
 
 import ast
+import hashlib
 import json
 import inspect
 import os
@@ -105,6 +106,41 @@ def test_只给mode等于push不给push等于true要当场报错():
     assert guard < page, (
         f"闸排在第 {guard} 步、写复制页在第 {page} 步——"
         "排在后面的话那一趟照样先干一遍活")
+
+
+def test_封面候选帧默认不跑要显式开cutout_candidates():
+    """`pick_cover_frames.py` 现在只在 `cutout_candidates=true` 时才跑。
+
+    2026-08-21 量出来的：最近 30 条 spec 全是 `layout: "solo"`，封面人物
+    2026-08-16 起硬性要求官方高清实拍、不许再 `frame_at` 抽帧——上一次真正
+    用这一步挑出的候选帧写进 spec 是 2026-08-19 的 `zhang-li`，之后没再用过。
+    可这一步一直在 `mode=probe` 里无条件跑，71 秒白烧。
+
+    这一步找的是 `versus.top/bottom`（`cutout` 版式的抠图人物）用的候选，
+    那条路没被这道闸管——所以不是删掉，是改成显式认领：默认跳过，
+    真要用 `cutout` 版式再手动开。
+
+    判据钉两头：**输入项默认是 false**（不许悄悄变成默认开），
+    **那一步的 `if:` 真的接了这个输入**（不许只加了输入没接上）。
+    """
+    text = WORKFLOW.read_text(encoding="utf-8")
+    body = _yaml_only(text)
+
+    m = re.search(
+        r"cutout_candidates:\n(?:.*\n)*?"
+        r"\s*type:\s*boolean\n"
+        r"\s*default:\s*(\S+)",
+        body,
+    )
+    assert m is not None, "没有 cutout_candidates 这个 boolean 输入"
+    assert m.group(1) == "false", (
+        f"默认值是 {m.group(1)!r}，不是 false——等于又变回无条件跑")
+
+    block = _step_block("probe — 封面候选帧", text)
+    cond = block.split("run:", 1)[0]
+    assert "inputs.mode == 'probe'" in cond, "起码要认 mode=probe"
+    assert "inputs.cutout_candidates == 'true'" in cond, (
+        f"这一步没接上 cutout_candidates，条件是：{cond}")
 
 
 def test_push模式按slug反查目录不按今天的日期(tmp_path):
@@ -454,14 +490,24 @@ def test_清理之后还有大文件要报错退出():
     assert "exit 1" in cleanup, "报了错却不退出，等于没拦"
 
 
-def test_提交重试耗尽必须失败且只重放本条成片():
-    """所有 push 都失败却继续微信步骤，会把一个 404 链接发出去。"""
+def test_提交重试耗尽必须失败且重放按提交的diff来():
+    """所有 push 都失败却继续微信步骤，会把一个 404 链接发出去。
+
+    重放的范围**不许写死在 OUTDIR**：同一个提交里 OUTDIR 之外的文件
+    （probe 自动备料写的 `specs/reels/<slug>.draft.json`）会在
+    `reset --hard` 之后**静默丢失**——按 `rendered^..rendered` 的 diff 重放，
+    这次提交动过什么就搬回什么，草稿以后挪位置也自动兼容。
+    """
     text = WORKFLOW.read_text(encoding="utf-8")
     commit = text.split("- name: 提交产物", 1)[1].split("- name:", 1)[0]
 
     assert 'if git push origin "HEAD:$BRANCH"; then' in commit
     assert "exit 0" in commit
-    assert 'git checkout rendered -- "$OUTDIR"' in commit
+    # 重放按这次提交的 diff 来（新增/修改那半），不按写死的目录来
+    assert "git diff --name-only -z --diff-filter=d rendered^ rendered" in commit
+    assert 'git checkout rendered -- "$OUTDIR"' not in commit, (
+        "重放又退回写死 OUTDIR——同一个提交里 OUTDIR 之外的文件（草稿 spec）"
+        "会在撞车重放时被 reset --hard 静默抹掉")
     assert "git checkout rendered -- output/" not in commit
     assert "::error::连续" in commit
     assert commit.rfind("exit 1") > commit.rfind("done")
@@ -569,10 +615,10 @@ def test_多源对不上时尺寸没有出路帧率要认领(monkeypatch):
     import pytest  # noqa: PLC0415
 
     reel = _reel()
-    table = {"a": (1920, 1080, "25/1"), "b": (1920, 1080, "30/1"),
-             "c": (1280, 720, "25/1")}
+    table = {"a": (1920, 1080, "25/1", 25.0), "b": (1920, 1080, "30/1", 30.0),
+             "c": (1280, 720, "25/1", 25.0)}
     monkeypatch.setattr(reel, "probe_size", lambda p: table[p.stem][:2])
-    monkeypatch.setattr(reel, "resolve_fps", lambda p: (table[p.stem][2], 0.0))
+    monkeypatch.setattr(reel, "resolve_fps", lambda p: table[p.stem][2:])
     p = {k: Path(f"{k}.mp4") for k in table}
 
     with pytest.raises(reel.ReelError, match="尺寸没有出路"):
@@ -592,6 +638,30 @@ def test_多源对不上时尺寸没有出路帧率要认领(monkeypatch):
                                  {"mixed_fps": {"zz": "写错了键"}})
     # 一条源片时什么都不查
     reel.check_sources_match({"a": p["a"]}, {})
+
+
+def test_帧率相同但ffprobe写法不同不算不一样(monkeypatch):
+    """`resolve_fps` 对同一个数值有时报 `"25/1"`、有时报 `"25"`（不同容器/remux
+    路径写法不同）——`tiafoe-story` 的 qf2026 就撞过这个假阳性。25 和 25/1
+    代进 `fps=` 滤镜是**同一件事，零重采样**，不该被判成"帧率不一样"逼人写一句
+    撒谎的 `mixed_fps`（没有重采样却编一句"重采样看不出来"）。
+    """
+    import pytest  # noqa: PLC0415
+
+    reel = _reel()
+    table = {"a": (1920, 1080, "25/1", 25.0), "d": (1920, 1080, "25", 25.0)}
+    monkeypatch.setattr(reel, "probe_size", lambda p: table[p.stem][:2])
+    monkeypatch.setattr(reel, "resolve_fps", lambda p: table[p.stem][2:])
+    p = {k: Path(f"{k}.mp4") for k in table}
+
+    # 数值相同，写法不同——不许红，不用认领
+    reel.check_sources_match({"a": p["a"], "d": p["d"]}, {})
+
+    # 反面锚点：数值真不一样时，这条判据仍然要拦住（不是被我改宽了）
+    table["e"] = (1920, 1080, "30/1", 30.0)
+    p["e"] = Path("e.mp4")
+    with pytest.raises(reel.ReelError, match="mixed_fps"):
+        reel.check_sources_match({"a": p["a"], "e": p["e"]}, {})
 
 
 def test_默认不横摇():
@@ -866,6 +936,153 @@ def test_挂账的冷开场清单只许减不许加():
         )
 
 
+def test_冷开场里的结局必须在正文重新兑现(tmp_path):
+    """冷开场放过最后一球，不等于正文可以停在赛点还没打完的时候。
+
+    蒂亚福—穆塞蒂第一版正文收在 330.88 秒：穆塞蒂刚救完两个赛点，真正的
+    制胜分 333.16–347.24 只在开头出现。容器、音轨、片尾全都完整，机器照样绿；
+    但故事没有闭合。判据钉的是**源片时间线有没有重新走到冷开场末尾**，不是
+    旁白关键词，所以最后几秒只有现场欢呼也不会被误报成哑场。
+    """
+    reel = _reel()
+
+    broken = {
+        "slug": "new-match-review",
+        "editorial": {"mode": "match_review"},
+        "segments": [
+            {"start": 333.16, "end": 347.24, "narration": "", "quote": ["赢了"],
+             "_ending_payoff_required": True},
+            {"start": 15.38, "end": 23.34, "narration": "坐标"},
+            {"start": 321.54, "end": 330.88, "narration": ""},
+        ],
+    }
+    msg = reel.ending_payoff_problem(broken)
+    assert msg and "冷开场是预告，不是结尾的替身" in msg
+
+    # 只补一个时间更晚的握手，不能靠更大的 end 冒充「完整赛点已重放」。
+    handshake_only = json.loads(json.dumps(broken))
+    handshake_only["segments"].append(
+        {"start": 348.0, "end": 350.64, "narration": ""})
+    msg = reel.ending_payoff_problem(handshake_only)
+    assert msg and "完整重放" in msg
+
+    # 完整窗口可以拆段；闸看正文窗口的并集，不强迫剪辑只能写成一个 segment。
+    fixed = json.loads(json.dumps(broken))
+    fixed["segments"].extend([
+        {"start": 330.88, "end": 340.0, "narration": ""},
+        {"start": 340.0, "end": 350.64, "narration": ""},
+    ])
+    assert reel.ending_payoff_problem(fixed) is None
+
+    # 真实存量里有 9.4~12.4 秒的小倒序，旧的「至少倒 20 秒」会漏掉。
+    low_gap = {
+        "slug": "low-gap", "editorial": {"mode": "match_review"},
+        "segments": [
+            {"start": 178.0, "end": 189.8, "narration": ""},
+            {"start": 165.6, "end": 171.0, "narration": ""},
+            {"start": 100.0, "end": 160.0, "narration": ""},
+        ],
+    }
+    msg = reel.ending_payoff_problem(low_gap)
+    assert msg and "_ending_payoff_required" in msg
+    low_gap["segments"][0]["_ending_payoff_required"] = False
+    msg = reel.ending_payoff_problem(low_gap)
+    assert msg and "冷开场是预告" in msg
+
+    # 省略 source 要和 parse_segments 一样归到主源；不同源的时间码不能互比。
+    omitted_primary = json.loads(json.dumps(low_gap))
+    omitted_primary["sources"] = {"main": "https://example.com/main.mp4"}
+    omitted_primary["segments"][1]["source"] = "main"
+    assert reel.ending_payoff_problem(omitted_primary)
+    cross_source = {
+        "slug": "two-cameras", "editorial": {"mode": "match_review"},
+        "sources": {"main": "https://example.com/main.mp4",
+                    "other": "https://example.com/other.mp4"},
+        "segments": [
+            {"source": "main", "start": 100.0, "end": 110.0, "narration": ""},
+            {"source": "other", "start": 0.0, "end": 20.0, "narration": ""},
+        ],
+    }
+    assert reel.ending_payoff_problem(cross_source) is None
+
+    # 真实返工也要过，防止只修了测试样例、Tiafoe spec 仍停在两个赛点之后。
+    tiafoe = json.loads(Path(
+        "specs/reels/tiafoe-musetti-cincinnati-2026-qf.json"
+    ).read_text("utf-8"))
+    assert tiafoe["segments"][0]["_ending_payoff_required"] is True
+    assert reel.ending_payoff_problem(tiafoe) is None
+    assert tiafoe["segments"][-1]["end"] >= tiafoe["segments"][0]["end"]
+
+    # 钉生产入口，不只钉 helper：把真实返工最后一段拿掉，validate_spec 当场红。
+    broken_tiafoe = json.loads(json.dumps(tiafoe))
+    broken_tiafoe["segments"].pop()
+    with pytest.raises(reel.ReelError, match="冷开场是预告"):
+        reel.validate_spec(broken_tiafoe)
+
+    broken_path = tmp_path / "tiafoe-broken.json"
+    broken_path.write_text(json.dumps(broken_tiafoe, ensure_ascii=False), "utf-8")
+    proc = subprocess.run([
+        sys.executable, "tools/build_match_reel.py", "render",
+        "--spec", str(broken_path), "--outdir", str(tmp_path / "out"), "--dry-run",
+    ], text=True, capture_output=True, check=False)
+    assert proc.returncode != 0
+    assert "冷开场是预告" in (proc.stdout + proc.stderr)
+    assert not (tmp_path / "out").exists(), "硬闸应在创建产物目录之前失败"
+
+
+def test_结局未兑现的旧片挂账只许减不许加():
+    """挂账只准全仓盘点跳过；同 slug 重跑仍必须红，不能豁免新问题。"""
+    reel = _reel()
+    expected = {
+        "baez-dimitrov", "bejlek-keys-cincinnati-2026-qf",
+        "bucsa-chwalinska", "cirstea-bartunkova", "cobolli-jodar",
+        "fonseca-ruud", "fritz-nakashima-cincinnati-2026-qf",
+        "gauff-kostyuk-cincinnati-2026-qf", "jodar-fils-montreal-qf",
+        "landaluce-draper", "nakashima-borges", "noskova-tauson",
+        "shang-darderi-montreal-2026", "shelton-tien-montreal-sf",
+        "wangxiyu-keys", "zverev-paul",
+    }
+    assert reel.LEGACY_MISSING_ENDING_PAYOFF == expected, (
+        "这是硬闸落地当天的存量基线；合并后只许修好并减少，不能给新片加名字")
+    for slug in sorted(expected):
+        path = Path("specs/reels") / f"{slug}.json"
+        assert path.is_file(), f"{slug} 已经不存在，可以销账"
+        spec = json.loads(path.read_text("utf-8"))
+        assert reel.ending_payoff_problem(spec), (
+            f"{slug} 已经不再命中结尾问题，可以从挂账表删掉")
+        assert reel.ending_payoff_problem(
+            spec, allow_published_legacy=True) is None
+
+    # 旧片里 120 条倒序冷开场早于 true/false 声明。名单要和仓库里的真实缺口
+    # 一一对应；新 spec 没声明时不会因为盘点开了 allow 开关就被顺手吞掉。
+    undeclared = reel.LEGACY_UNDECLARED_ENDING_PAYOFF
+    digest = hashlib.sha256("\n".join(sorted(undeclared)).encode()).hexdigest()
+    assert len(undeclared) == 120 and digest == (
+        "d4728f1db023e480471c6a1825f70105f6e88181704c917e0ebfd47f6279f98a"
+    ), "这是落闸当天的存量基线；只能补声明并减少，不能给新片加名字"
+    specs = _reel_specs()
+    found = {
+        slug for slug, spec in specs.items()
+        if "没声明" in str(reel.ending_payoff_problem(spec) or "")
+    }
+    assert found == undeclared, "挂账名单和仓库里真正没声明的冷开场分叉了"
+    for slug in sorted(undeclared):
+        spec = specs[slug]
+        assert reel.ending_payoff_problem(spec)
+        assert reel.ending_payoff_problem(
+            spec, allow_published_legacy=True) is None
+
+    unlisted = {
+        "slug": "brand-new-unlisted", "editorial": {"mode": "match_review"},
+        "segments": [
+            {"start": 100.0, "end": 110.0, "narration": ""},
+            {"start": 0.0, "end": 20.0, "narration": ""},
+        ],
+    }
+    assert "没声明" in reel.ending_payoff_problem(
+        unlisted, allow_published_legacy=True)
+
+
 # 这七条发在「开场先给坐标」这条规矩之前。**只许减不许加**——加新片子要么
 # 带着坐标来，要么显式往这份清单里写一笔，让「又忘了交代」变成一次看得见的决定。
 _NO_SLATE_YET = {
@@ -881,6 +1098,13 @@ _NO_SLATE_YET = {
     # （run 31138555626 第 30 步 success），开场那段旁白给了赛事和轮次、
     # **一个时刻都没给**（既没有「北京时间」也没有几点几分）。
     "shang-darderi-montreal-2026",
+    # 同上：`tiafoe-musetti-cincinnati-2026-qf` 2026-08-22T05:02:40Z 已经
+    # 推过微信（run 32553267109，另一个并发会话发的），开场旁白给了「北京时间
+    # 8月22日7点05分」——三样都有，只是钟点写成了阿拉伯数字「7」而不是中文数字，
+    # 这条判据只认中文数字，所以判成「没给时刻」。真正的毛病是「报到了分钟」，
+    # 归 `_CLOCK_MINUTE_LEGACY`（tests/test_reel_editorial.py）认领，这儿只是
+    # 连带撞上；已发不为措辞重渲，两处一起挂账。
+    "tiafoe-musetti-cincinnati-2026-qf",
 }
 
 # 收尾没落在一问上、而且**已经发出去了**的。只许减不许加，底下有自检。
@@ -1048,18 +1272,55 @@ def test_收尾要落在一问上不能停在数据上():
     失手：`wong-lehecka` 原来停在「排名差九十六位，生涯排名最高胜。」
 
     ⚠️ 判据只看**最后一段**的末尾，不数问号个数——中间抛几问是写稿的选择。
+
+    ⚠️ 2026-08-23 补的一条：**真正的末拍也可能是 `quote`（原声），不只是
+    `narration`。** `gauff-bejlek-cincinnati-2026-sf` 的最后一段是转播原声，
+    中文那半行是「这一次，她能拿下吗？」——一个真问句，而且是当事人／转播
+    自己说出来的，比我们替她问一句更硬（本文件「让当事人自己说」那条早就
+    偏爱这个写法）。老逻辑只扫 `narration`，量出来它落在再前一段（一句
+    陈述）上，误判成了「停在数据上」。
+
+    所以判据放宽成 **OR**：末尾一问只要落在「最后一句 narration」或者
+    「真正的最后一段（不管是 narration 还是 quote）」任意一处，就算数。
+    只加不减——已经靠 narration 过关的片子不受影响（`fritz-jodar-final` /
+    `tiafoe-musetti-cincinnati-2026-qf` 的末段都是 quote 且不带问句，但它们
+    的末句 narration 本来就问着，OR 两头有一头成立就够）。
     """
     bad, offenders = [], set()
     for slug, spec in _reel_specs().items():
+        segs = spec["segments"]
         # `.get`：原声段（`quote`）根本没有 narration 这个键
-        nars = [s.get("narration", "") for s in spec["segments"]]
+        nars = [s.get("narration", "") for s in segs]
         nars = [n for n in nars if n]
-        if not nars:
+        last_narration = nars[-1] if nars else ""
+
+        true_last_text = ""
+        last_seg = segs[-1] if segs else {}
+        nar = str(last_seg.get("narration", "")).strip()
+        if nar:
+            true_last_text = nar
+        else:
+            quote = last_seg.get("quote")
+            if isinstance(quote, str) and quote.strip():
+                true_last_text = quote.strip()
+            elif isinstance(quote, list) and quote:
+                entry = quote[-1]
+                text = entry.get("text", "") if isinstance(entry, dict) else str(entry)
+                # `text` 是「英文\n中文」，末尾一问只看中文那半行
+                zh = str(text).split("\n")[-1].strip()
+                true_last_text = zh or str(text).strip()
+
+        if not last_narration and not true_last_text:
             continue
-        if "？" not in nars[-1][-30:]:
+
+        ends_in_question = (
+            ("？" in last_narration[-30:]) or ("？" in true_last_text[-30:])
+        )
+        if not ends_in_question:
             offenders.add(slug)
             if slug not in _ENDING_LEGACY:
-                bad.append(f"{slug}: …{nars[-1][-26:]}")
+                shown = true_last_text or last_narration
+                bad.append(f"{slug}: …{shown[-26:]}")
     assert not bad, (
         "这些片子的收尾停在数据上，没有落在一问上：\n  " + "\n  ".join(bad))
 
@@ -1404,6 +1665,26 @@ def test_cookies模式不产任何产物():
     check = _step_block("cookies — 只验", text)
     assert "--download-sections" in check
     assert "stat -c%s" in check and "exit 1" in check
+
+
+def test_push模式不许跑清理那一步():
+    """**mode=push 的 OUTDIR 是历史日期目录，清理的体积兜底会把存量成片当漏网。**
+
+    push 模式按 slug 反查 `output/*/reel/<slug>/render.json` 落在哪个日期目录
+    （见 `test_push模式按slug反查目录不按今天的日期`），而 2026-08-13 之前发的
+    片子成片还留在 git 里（历史清理「存量不动，只改增量」）。稀疏检出把那一格
+    add 回来之后，「丢掉不进仓库的中间物」末尾那个**递归**的 8 MB 兜底会把
+    这些合法的存量 mp4 当成「漏网的大文件」`exit 1`——红在写复制页之前，
+    把唯一受支持的手动推送路径杀掉。而 push 那条路本来**一个中间物都不产**
+    （只写复制页、提交、发微信），清理对它没有任何事可做。
+    """
+    text = WORKFLOW.read_text(encoding="utf-8")
+    cleanup = _step_block("丢掉不进仓库的中间物", text)
+    assert "mode != 'push'" in cleanup, (
+        "清理那一步没排除 mode=push——它的递归体积兜底会把 push 模式反查到的"
+        "历史目录里的存量成片当成漏网文件 exit 1，杀掉手动推送")
+    # 原有的两个排除不许被顺手挤掉（narration / cookies 同样零中间物）
+    assert "mode != 'narration'" in cleanup and "mode != 'cookies'" in cleanup
 
 
 def test_推送正文里印文案且只印一遍():
@@ -3003,7 +3284,9 @@ def test_快速预览的开关要在工作流里够得着():
                   if "push_reel.py" in b and "--stage page" not in b]
     assert push_steps, "找不到推送那一步，判据失效了"
     for block in push_steps:
-        assert "mode == 'render'" in block, "推送那一步没钉死在 render 上"
+        assert "mode == 'push'" in block, (
+            "推送 POST 没钉死在 push-only 上——cover 不能发，render 只负责"
+            "质检落库并另派轻量发布任务")
 
     # ⚠️ **「入口够得着」和「路够短」都对，它还是会红**——这一版就是这么栽的
     # （run 155）：封面走 HTML 渲染 + 抠图，要 Chromium、中文字体、rembg 模型，
@@ -4020,6 +4303,9 @@ def test_今日赛程没有发布出口了():
     """
     for path in sorted(Path(".github/workflows").glob("*.yml")):
         body = _yaml_only(path.read_text(encoding="utf-8"))
+        # GitHub 事件名 schedule 只说明「这条工作流由 cron 触发」，不是已经停掉的
+        # 「今日赛程」内容 scope。按裸字符串扫会把任何定时编排工作流误伤。
+        body = body.replace('${{ github.event_name }}" = "schedule"', "")
         assert "tennislive schedule" not in body, (
             f"{path.name} 又在自动产今日赛程了")
         assert '/schedule"' not in body and "= \"schedule\"" not in body, (
@@ -4356,7 +4642,7 @@ def test_spec形状校验排在下载之前():
 
     validate_at = body.index("validate_spec(spec)")
     preflight_at = body.index("_preflight_cutout(spec)")
-    download_at = body.index("download(url, path)")
+    download_at = body.index("download(url, path, archival=")
     assert validate_at < download_at, "spec 形状校验排到下载后面了"
     assert preflight_at < download_at, "缺依赖的预检排到下载后面了"
 
@@ -4436,6 +4722,57 @@ def test_dry_run要拿probe查选段(tmp_path):
     # 认领必须按 URL：喂一份**别的 URL** 的 probe，不许拿它的切点来判
     assert reel.probes_for_spec({"source_url": other["url"]})[0].keys() != {
         probe["url"]}, "按 URL 认领的口径不对"
+
+
+def test_源片分辨率不到1080p要硬拦():
+    """账号所有者 2026-08-18：「视频一定要选 1080p 及以上的清晰度，如果没有
+    的话就等」——这是这个仓库里说得最重的一条门槛，`probe.json` 从探测那一刻
+    起就记着 `height`，可这条闸一直没写：`--dry-run` 对 720p 的源片一声不吭。
+
+    只查 `segments` 真正引用到的源，别碰封面（`cover_photo_problem` 管的是
+    另一件事——官方高清实拍 vs 抽帧，和源片分辨率无关）。
+    """
+    reel = _reel()
+    spec = {
+        "slug": "t", "source_url": "https://x.invalid/720p.mp4",
+        "segments": [{"start": 10.0, "end": 20.0, "narration": "一句话"}],
+        "cover": {"portrait": {"image": "assets/x.jpg"}},
+    }
+    low = {"url": spec["source_url"], "width": 1280, "height": 720,
+           "duration": 30.0, "scene_cuts": [], "point_ends": []}
+
+    import io  # noqa: PLC0415
+    from contextlib import redirect_stdout  # noqa: PLC0415
+
+    monkey = pytest.MonkeyPatch()
+    try:
+        monkey.setattr(reel, "probes_for_spec", lambda _s: ({low["url"]: low}, []))
+        segs = reel.parse_segments(spec, {"": Path("x")}, "")
+        buf = io.StringIO()
+        with redirect_stdout(buf):
+            hard = reel.probe_dry_run(spec, segs)
+        out = buf.getvalue()
+        assert hard is True, f"720p 源片没被拦下：{out}"
+        assert "1280x720" in out and "低于 1080p" in out, f"没报出分辨率：{out}"
+
+        # 反面锚点：1080p 和 4K 都要放行，缺 height 字段也不许误报
+        for height, expect_hard in ((1080, False), (2160, False)):
+            hi = {**low, "height": height}
+            monkey.setattr(reel, "probes_for_spec", lambda _s, hi=hi: ({hi["url"]: hi}, []))
+            buf = io.StringIO()
+            with redirect_stdout(buf):
+                got = reel.probe_dry_run(spec, segs)
+            assert got is expect_hard, f"{height}p 判错了：{buf.getvalue()}"
+
+        no_height = {k: v for k, v in low.items() if k != "height"}
+        monkey.setattr(reel, "probes_for_spec",
+                        lambda _s, nh=no_height: ({nh["url"]: nh}, []))
+        buf = io.StringIO()
+        with redirect_stdout(buf):
+            got = reel.probe_dry_run(spec, segs)
+        assert got is False, f"没探到分辨率不该被当成不合格：{buf.getvalue()}"
+    finally:
+        monkey.undo()
 
 
 def test_没量过死球的源片要把猜到的候选翻出来提醒(tmp_path):
@@ -4616,9 +4953,11 @@ def test_dry_run秒级返回且一个字节都不下载(tmp_path):
     # ⚠️ **底稿要挑一条今天还渲得出来的。** 原来用的是 `wong-lehecka`，而
     # 「赛场之上 solo 封面必须有 `cover.scoreboard`」这条规矩（#368）是在它发出去
     # 之后才立的——底稿一旦过不了形状闸，这条测试量的就不再是「dry-run 快不快」，
-    # 而是「底稿旧不旧」。见 `_LEGACY_NO_SCOREBOARD`。
+    # 而是「底稿旧不旧」。后来换的 `boisson-krueger` 又早于结局冷开场声明闸，
+    # 同样不再能当干净底稿。蒂亚福这条已经显式声明并完整重放结局。
     spec = _json.loads(
-        Path("specs/reels/boisson-krueger.json").read_text(encoding="utf-8"))
+        Path("specs/reels/tiafoe-musetti-cincinnati-2026-qf.json").read_text(
+            encoding="utf-8"))
     spec["source_url"] = "http://0.0.0.0/绝对下不动.mp4"
     path = tmp_path / "fake.json"
     path.write_text(_json.dumps(spec, ensure_ascii=False), encoding="utf-8")
@@ -4963,6 +5302,51 @@ def test_装ffmpeg和字体一律先试本地缓存不能只靠重试():
         "判据的主语像是没了")
 
 
+#: interview-clip.yml 的两把固定键已经在另一条并行分支上换成了滚动键
+#: （v1 → v2，键里带 `run_id`）——这张表因此空了。**只许减不许加**：
+#: 新加一条 apt 缓存必须直接用滚动键，别往这张表里塞。
+_LEGACY_FIXED_APT_KEYS: set[tuple[str, str]] = set()
+
+
+def test_apt缓存键一律滚动固定键存下半份就永远补不进新包():
+    """actions/cache 的**主键不可变**：固定键第一趟存下什么，以后就永远是什么。
+
+    坑长这样：第一趟只攒下 ffmpeg，后面哪趟把字体包补进目录，post step 也
+    **不能覆盖同名缓存**——于是那些趟仍要重新摸 apt 镜像，而「缓存 apt 包」
+    这一步的全部意义就是**别碰那个会抽风的镜像**（2026-08-19 一天三条工作流
+    零字节进度各烧 300 秒）。match-reel.yml 当天换成滚动键（run_id 进 key ＋
+    restore-keys 按前缀捞回上一份），其余六条还是 v1 固定键——同一个坑六个
+    入口。**这条判据自己扫全部工作流，不维护名单**：以后新加一条带 apt 缓存
+    的工作流，它会替人记得。
+
+    豁免表 `_LEGACY_FIXED_APT_KEYS` 只有 interview-clip 的两把（那个文件归
+    另一条并行分支管），**只许减不许加**，而且自带自检：表里的键必须真的还在、
+    真的还是固定键——写错一个名字，豁免就成了一盏恒真的绿灯。
+    """
+    seen_fixed: set[tuple[str, str]] = set()
+    checked = 0
+    for path in sorted(WORKFLOW.parent.glob("*.yml")):
+        body = _yaml_only(path.read_text(encoding="utf-8"))
+        for m in re.finditer(r"^\s*key: (apt-pkgs-[^\n]+?)\s*$", body, re.M):
+            key = m.group(1)
+            checked += 1
+            if (path.name, key) in _LEGACY_FIXED_APT_KEYS:
+                seen_fixed.add((path.name, key))
+                continue
+            assert "${{ github.run_id }}" in key, (
+                f"{path.name} 的 apt 缓存键是固定的：{key}——主键不可变，"
+                "后面补装的包永远写不回去。照 match-reel.yml 的形状换滚动键")
+            prefix = key.split("${{ github.run_id }}")[0]
+            assert re.search(r"restore-keys: \|\n\s*" + re.escape(prefix), body), (
+                f"{path.name} 的滚动键没配 restore-keys 前缀 {prefix}——"
+                "没有它每一趟都是冷缓存，滚动键就白滚了")
+    assert checked >= 9, f"只扫到 {checked} 把 apt 缓存键，判据的主语像是没了"
+    assert seen_fixed == _LEGACY_FIXED_APT_KEYS, (
+        "豁免表和现实对不上："
+        f"{sorted(_LEGACY_FIXED_APT_KEYS - seen_fixed)} 已经不在或已改成滚动键"
+        "——从表里删掉，别留一盏恒真的绿灯")
+
+
 def test_共享的apt安装脚本形状要对():
     """`tools/ci_apt_install.sh` 是给工作流 `source` 的，形状变了要在这儿先炸，
     不要等下一次真跑 CI 才发现。
@@ -5284,6 +5668,110 @@ def test_查旁白那条路装的依赖要真的够():
         assert mod in checked or mod in sys.stdlib_module_names, (
             f"voice_prosody 要 {mod}，而 narration 那一支的预检没查它——"
             "缺了它音高表会静静退成一片「量不了」")
+
+
+def test_cookies和probe装依赖走轻装而TTS缓存只给会合语音的两档():
+    """probe / cookies 两档各装各的，别把 rembg（176 MB 模型）和 playwright 铺进去。
+
+    和「push 模式只装主依赖」「narration 只装合语音那几样」同一个理由：装全套
+    不只是慢（31 秒），更是把失败面铺大——那几个包里任何一个装不上，都会让一条
+    **本来只是验 cookie / 探测**的 run 挂掉。cookies 只拿 yt-dlp 下 30 秒试块，
+    probe 要 yt-dlp + ffmpeg + cv2（cutout 只有「封面候选帧」那一步用，而它由
+    `cutout_candidates` 控制）。
+
+    另外两头，都是缓存口径：
+    ① srckey / 缓存源片要排除 cookies——它不走 `download()`（自己往
+      `$RUNNER_TEMP` 下试块），恢复源片缓存对它是纯开销，结束时还把这份缓存
+      重传一遍挤 10 GB LRU 池；
+    ② TTS 缓存只给真会合语音的两档（render / narration）——probe、cover、
+      cookies 一个字都不合成，而滚动键（run_id 进 key）每趟都会存一份新条目，
+      白占池子把 Chromium（150 MB）和抠图模型（176 MB）往外挤，被挤掉的样子
+      只是「今天 CI 怎么慢了点」。
+    """
+    text = WORKFLOW.read_text(encoding="utf-8")
+    install = _step_block("装依赖", text)
+
+    # cookies 分支：主依赖 + yt-dlp[default]，别的一个都不装
+    ck = install[install.index('= "cookies" ]'):]
+    ck = ck[:ck.index("exit 0")]
+    assert "yt-dlp[default]" in ck, (
+        "cookies 分支必须装 yt-dlp[default]——少了 yt-dlp-ejs，n challenge 解不了，"
+        "报出来像「cookie 过期了」")
+    for heavy in ("webrender", "cutout", "playwright", "edge-tts"):
+        assert heavy not in ck, f"cookies 分支装了它用不上的 {heavy}"
+
+    # probe 分支：visualqa + yt-dlp[default] + cv2 预检；cutout 按需
+    pb = install[install.index('= "probe" ]'):]
+    pb = pb[:pb.index("exit 0")]
+    assert "[visualqa]" in pb and "yt-dlp[default]" in pb
+    assert "visualqa,cutout" in pb and "cutout_candidates" in pb, (
+        "probe 的 cutout 只在封面候选帧那趟才要，而那一趟由 cutout_candidates 控制")
+    assert "import cv2" in pb, "probe 分支没预检 cv2——装少了要到下完源片才炸"
+    assert "webrender" not in pb, "probe 不渲 HTML 封面，playwright 用不上"
+
+    # 全量那行必须还在（render / cover 走它），且排在所有轻装分支后面
+    full_at = install.index('".[webrender,visualqa,cutout]"')
+    assert full_at > install.index('= "cookies" ]')
+    assert full_at > install.index('= "probe" ]')
+
+    # ① 源片缓存那两步都要排除 cookies（连同 push / narration）
+    for name in ("算出源片缓存的键", "缓存源片（同一条片子只下一次）"):
+        excluded = _excluded_modes(_step_block(name, text))
+        missing = {"push", "narration", "cookies"} - excluded
+        assert not missing, f"「{name}」的 if 少排除了 {sorted(missing)}"
+
+    # ② TTS 缓存放行的模式恰好是 render / narration，一个不多一个不少
+    tts = _step_block("缓存 TTS（同文旁白跨趟不重合成）", text)
+    head = tts.split("uses:", 1)[0]
+    allowed = set(re.findall(r"inputs\.mode\s*==\s*'([a-z-]+)'", head))
+    assert allowed == {"render", "narration"}, (
+        f"TTS 缓存放行的是 {sorted(allowed)}，该恰好是 render / narration")
+    assert not _excluded_modes(tts), (
+        "TTS 缓存该用 == 白名单——用 != 黑名单的话，以后加一档新模式它会静默放进来")
+
+
+def test_dry_run闸在runner上排在重准备之前且拉回probe产物():
+    """`--dry-run` 0.2 秒能拦的错，runner 上不许等到装完 Chromium、下完源片才红。
+
+    「本地先跑 dry-run」靠的是人记得——而这个仓库为「靠人记得」栽过的次数
+    本文件数不过来。这一步让 runner 自己也拦一遍：spec 形状错、选段硬伤、
+    文案超限、旁白一定装不下，全死在第 30 秒，不是第 5 分钟。
+
+    判据钉三头：
+    ① 放行的模式**恰好**是读 spec 的那三档（render / cover / narration）——
+      probe 常常还没有 spec，cookies / push 不读 spec；
+    ② probe 产物要按 slug 从 HEAD 里拉回来（稀疏检出把 output/ 挡在外面，
+      不拉的话 dry-run 的 probe 层是哑的，而「没查」和「查过没问题」在日志上
+      长得一模一样——所以查不到还必须出声）；
+    ③ **位置**：排在缓存 Chromium / 缓存源片 / 起 PO token provider 之前——
+      排在后面的话，拦住了也已经白付了那几分钟的准备。
+    """
+    text = WORKFLOW.read_text(encoding="utf-8")
+    gate = _step_block("dry-run — 先把 spec 的形状错拦在编码之前", text)
+
+    # ① == 白名单，恰好三档
+    head = gate.split("run:", 1)[0]
+    allowed = set(re.findall(r"inputs\.mode\s*==\s*'([a-z-]+)'", head))
+    assert allowed == {"render", "cover", "narration"}, (
+        f"dry-run 闸放行的是 {sorted(allowed)}，该恰好是 render/cover/narration")
+    assert not _excluded_modes(gate), "该用 == 白名单，不是 != 黑名单"
+
+    # ② 真调 --dry-run；probe 产物按 slug 拉回，查不到要出声
+    assert "--dry-run" in gate, "这一步没调 --dry-run，名不副实"
+    assert "git ls-tree" in gate and "sparse-checkout add" in gate, (
+        "没把这条 slug 的 probe 产物从 HEAD 拉回来——probe 层会是哑的")
+    assert re.search(r"/reel/\$\{SLUG\}/probe\\\.json", gate), (
+        "拉的不是这条 slug 自己的 probe.json——按 slug 收窄，别把整棵 output/ 抬回来")
+    assert "::warning::" in gate, (
+        "查不到 probe 时不出声——「没查」和「查过没问题」在日志上就长一样了")
+
+    # ③ 位置：排在三样重准备之前
+    yml = _yaml_only(text)
+    gate_at = yml.index("- name: dry-run — 先把 spec 的形状错拦在编码之前")
+    for later in ("- name: 缓存 Chromium",
+                  "- name: 缓存源片（同一条片子只下一次）",
+                  "- name: 起 PO token provider"):
+        assert gate_at < yml.index(later), f"dry-run 闸排到「{later}」后面去了"
 
 
 def test_挂代理CA要排在导入edge_tts之前(tmp_path, monkeypatch, capsys):
@@ -5944,6 +6432,9 @@ _LEGACY_QUALIFIER_NAMES = {
     "eala-svitolina.json", "wong-brooksby.json", "wong-gea.json",
     "zheng-lanlana.json", "eala-fernandez.xhs.txt", "eala-svitolina.xhs.txt",
     "wong-brooksby.xhs.txt", "wong-gea.xhs.txt", "zheng-lanlana.xhs.txt",
+    # bejlek-keys-cincinnati-2026-qf：已经推过微信（reel 和 interview-clip
+    # 两条都有 pushed.json），消息发出去收不回来，不为措辞重渲。
+    "bejlek-keys-cincinnati-2026-qf.json", "bejlek-keys-cincinnati-2026-qf.xhs.txt",
 }
 
 
@@ -6301,7 +6792,7 @@ def test_破发点盘点赛点一律写拿到不写要到():
 
 
 def test_重放不许把已经删掉的成片救活():
-    """push 撞车之后的重放路径**只加不减**，于是走了 Release、已经 `rm` 掉的
+    """push 撞车之后的重放路径**只加不减**的话，走了 Release、已经 `rm` 掉的
     成片会被 `reset --hard` 从 origin 上放回来，再也删不掉。
 
     run 30727483963 的日志把这件事写得清清楚楚：第一次提交是对的——
@@ -6309,17 +6800,23 @@ def test_重放不许把已经删掉的成片救活():
     重放之后那条 delete 没了。结果仓库里躺着 2 分 39 秒的旧片，而真正发出去的
     是 Release 上 3 分 53 秒的那一版。**两个地址两条片子，谁也没说哪个是哪个。**
 
-    `git checkout <ref> -- <dir>` 只恢复 ref 里**存在**的文件，不会删掉 ref 里
-    没有的——所以重放前要先把这个目录清空。
+    老修法是 `rm -rf "$OUTDIR"` 先清场再整目录 checkout——**减法的范围写死在
+    OUTDIR**，和「只重放 OUTDIR 会把草稿 spec 静默丢掉」是同一个洞的两面。
+    现在删除由这次提交的 diff 自己说：`--diff-filter=D` 列出该提交删掉的
+    每一个文件，`git rm` 把 `reset --hard` 刚救活的那份再删掉并进索引。
     """
     text = WORKFLOW.read_text(encoding="utf-8")
     block = text[text.index("push 被拒（第 $attempt 次）"):]
     block = block[:block.index("sleep $((attempt")]
-    assert 'rm -rf "$OUTDIR"' in block, (
-        "重放之前没清空 outdir——`git checkout <ref> -- <dir>` 不会删文件，"
-        "上一句 reset --hard 放回来的旧成片会一直留着")
-    assert block.index('rm -rf "$OUTDIR"') < block.index("git checkout rendered"), \
-        "清空要排在 checkout 之前，否则等于什么都没做"
+    assert "--diff-filter=D rendered^ rendered" in block, (
+        "重放没把「这次提交删掉的文件」再删一遍——reset --hard 救活的旧成片"
+        "会一直留在仓库里（run 30727483963）")
+    assert "git rm" in block and "--ignore-unmatch" in block, (
+        "删除那半要走 git rm 进索引；--ignore-unmatch 兜住"
+        "「新 origin 上本来就没有它」那一支，别让重试红在一个已经了结的删除上")
+    assert "--sparse" in block, (
+        "稀疏检出下 git rm 不带 --sparse 动不了 cone 外的索引条目——"
+        "静默陷阱和「裸 git add 只警告不报错」同族")
 
 
 def test_片长不设上限而且每条spec都要报走Release(tmp_path, capsys):
@@ -6525,7 +7022,14 @@ def test_查旁白那条路不许碰源片也不许写产物():
     assert "narration" in [o.strip() for o in opts.split(",")], (
         f"mode 里够不着 narration：{opts}")
     blocks = re.split(r"\n(?=      - (?:name|uses):)", jobs)
-    step = [b for b in blocks if "mode == 'narration'" in b]
+    # ⚠️ 选块要按「整行 if 恰好就是 narration」认：TTS 缓存那一步的 if 是
+    # `mode == 'render' || mode == 'narration'`（复合条件），裸子串 `mode ==
+    # 'narration'` 会把它一起数进来，这条就误报「narration 的步骤有 2 个」。
+    step = [
+        b for b in blocks
+        if re.search(r"^        if: github\.event\.inputs\.mode == 'narration'\s*$",
+                     b, re.M)
+    ]
     assert len(step) == 1, f"narration 的步骤有 {len(step)} 个"
     assert "--check-narration" in step[0]
     # 它什么都不产，所以清理/上传/提交都要放它过
@@ -6615,6 +7119,94 @@ def test_同一条源片不许下第二次(tmp_path, monkeypatch, capsys):
     reel.download(url, tmp_path / "f" / "source.mp4")   # 不许抛
     assert len(calls) == 1
     assert "存不进去" in capsys.readouterr().out, "存不进去要出声，别悄悄退回重下"
+
+
+def test_低清源片不许固化进缓存(tmp_path, monkeypatch, capsys):
+    """**一次瞬时的降档，不许变成永久故障。**
+
+    缓存键只有 URL，而同一条 URL 在不同一趟里能下到不同的高度（PO token /
+    n challenge 偶发没打通时 yt-dlp 会退到低画质那档）。原来低清兜底那份
+    **照样 `_keep_source`**、命中那支**从不复查高度**——于是一趟偶发的 480p
+    写进缓存之后，之后每一趟都命中它、红在 `resolve_crop` 的「高 ≥ 700」上，
+    报错还指向「换 client 重下」，而重下根本走不到：缓存把坏结果固化了
+    （和 `test_直链下到的网页不许当成源片还存进缓存` 是同一个形状，
+    只是那次固化的是网页、这次是低清）。
+
+    判据**真造文件、真走 `download()`**，四层：
+
+    1. 低清兜底（没认领 archival）**不写缓存**，而且要出声
+    2. 认领了 `archival` 的才写——那是素材本来的样子，缓存它是对的
+    3. 命中之后按认领挑地板复查：480p 对 archival（地板 400）是命中
+    4. 同一份 480p 对没认领的（地板 700）要**弃用重下**并删掉旧缓存，
+       重下拿到高清后缓存自愈
+    """
+    import subprocess  # noqa: PLC0415
+
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import build_match_reel as reel  # noqa: PLC0415
+
+    calls: list[str] = []
+    quality = {"h": 480}
+
+    def _fake_ytdlp(args, **kw):
+        calls.append(args[-1])
+        out = Path(args[args.index("-o") + 1])
+        # 文件大小就是「高度」——缓存复制/改名都保得住它，
+        # 于是 probe_size 对缓存里那份读到的正是当年下它时的高度
+        out.write_bytes(b"\0" * quality["h"])
+        return subprocess.CompletedProcess(args, 0, "", "")
+
+    monkeypatch.setattr(reel.shutil, "which", lambda _n: "/usr/bin/yt-dlp")
+    monkeypatch.setattr(reel.subprocess, "run", _fake_ytdlp)
+    monkeypatch.setattr(reel, "probe_size",
+                        lambda p: (854, Path(p).stat().st_size))
+    monkeypatch.setenv(reel._SOURCE_CACHE_ENV, str(tmp_path / "cache"))
+    url = "https://www.youtube.com/watch?v=CCCCCCCCCCC"
+    cached = reel._cached_source(url, ".mp4")
+    assert quality["h"] < reel.MIN_SOURCE_H, "fixture 前提变了：480 不再算低清"
+
+    # ① 低清兜底不进缓存（没认领 archival）
+    got = reel.download(url, tmp_path / "a" / "source.mp4")
+    assert got.stat().st_size == 480, "低清兜底那份该照旧交付（判它的是 resolve_crop）"
+    assert not cached.is_file(), (
+        "480p 的兜底被写进了缓存——下一趟起每次都命中这份低清，"
+        "一次瞬时降档从此固化")
+    assert "不进缓存" in capsys.readouterr().out, "不写缓存要出声，别静默"
+
+    # ② 认领了 archival 的才写（那是素材本来的样子）
+    n = len(calls)
+    reel.download(url, tmp_path / "b" / "source.mp4", archival=True)
+    assert len(calls) > n, "认领过的这一趟该真下"
+    assert cached.is_file() and cached.stat().st_size == 480, (
+        "认领了 archival 的低清素材该进缓存——它不是事故")
+    capsys.readouterr()
+
+    # ③ 命中复查按认领挑地板：480 ≥ MIN_ARCHIVAL_H(400)，对 archival 是命中
+    assert reel.MIN_ARCHIVAL_H <= 480 < reel.MIN_SOURCE_H, "fixture 前提变了"
+    n = len(calls)
+    reel.download(url, tmp_path / "b2" / "source.mp4", archival=True)
+    assert len(calls) == n, "archival 命中 480p 缓存却还在重下"
+    assert "命中" in capsys.readouterr().out
+
+    # ④ 同一份 480p 对没认领的要弃用重下，重下到高清后缓存自愈
+    quality["h"] = 1080
+    n = len(calls)
+    reel.download(url, tmp_path / "c" / "source.mp4")
+    out = capsys.readouterr().out
+    assert len(calls) == n + 1, "该弃用缓存重下一次"
+    assert "弃用重下" in out and "480" in out, (
+        f"弃用旧缓存要把「缓存里是几 p」说出来：{out!r}")
+    assert cached.is_file() and cached.stat().st_size == 1080, (
+        "重下拿到高清之后缓存该自愈成好的那份")
+    n = len(calls)
+    reel.download(url, tmp_path / "d" / "source.mp4")
+    assert len(calls) == n, "自愈之后第二次该命中，不该再下"
+
+    # ⑤ render 那头要真的把认领传下来——download 的 archival 形参没人传就等于没有
+    #    （「算得对」和「算出来被用上了」是两件事；行为那半在上面四层里）
+    body = Path("tools/build_match_reel.py").read_text(encoding="utf-8")
+    assert "archival=key in claimed_archival" in body, (
+        "render() 没把 archival 认领传给 download()——形参成了摆设")
 
 
 def test_只扫一段时切点要换算回源片的绝对秒数(tmp_path):
@@ -6815,6 +7407,12 @@ def test_双语字幕要真的排成两行(tmp_path):
     head, _, tail = rows[0].partition(nl)
     assert "title" in head and "生涯第一个巡回赛冠军" in tail, \
         f"英文和中文没落在各自那一行：{rows[0]}"
+    assert r"{\fs46}A first ever tour title" in head, \
+        f"双语字幕的英文仍按单行字幕放大，会折行把中文顶出画布：{rows[0]}"
+    assert r"{\fs78}" not in head, \
+        f"英文行里的逐词放大标签盖掉了双语小字号：{rows[0]}"
+    assert ",0,0,1240,," in rows[0], \
+        f"双语事件没有单独抬高，第二行仍可能被长英文挤出安全区：{rows[0]}"
     assert chr(92) + "{" not in rows[0], \
         f"换行符被当成拉丁词包了字号标签，画面上会多出个 N：{rows[0]}"
 
@@ -8430,7 +9028,8 @@ def test_每条spec的旁白都还估得下():
             denied.add(slug)
             continue
         spec = _with_legacy_soft_cover(slug, _with_legacy_scoreboard(slug, spec))
-        for index, secs, room in reel.narration_estimates(reel.validate_spec(spec)):
+        for index, secs, room in reel.narration_estimates(reel.validate_spec(
+                spec, allow_published_legacy=True)):
             checked += 1
             if room < -reel.SPEECH_EST_ERR:
                 broken.append(f"{slug} 第 {index + 1} 段：画面 "
@@ -8912,6 +9511,100 @@ def test_成片要记下是哪条路配的音():
         "voiced_by 的返回值没有接进 bad——又是「算出来了没人用」"
 
 
+def test_推送前也要查数据图头像挂没挂错名字(tmp_path):
+    """`sonmez-anisimova` / `tsitsipas-royer` 两次真事故——数据图把赢球的
+    那个人印成了对手的数字，图上每个数单看都对，只有把名字和数字对起来才
+    看得出来。CI 里有一条测试干这件事（`test_数据图的头像和matchup里的名字
+    必须是同一个人`），但**这道推送前的最后关卡从来没有这一项**——
+    `tsitsipas-royer` 那条错的成片是真的发出去了，而 `check_reel_landed`
+    全绿。
+
+    ⚠️ 只有「和别的 spec 矛盾」才算不合格；「第一次出现，没有第二处可比」
+    只报一句提醒，不拦——不然每一个新球员的首秀都会被判成不合格。
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import check_reel_landed as chk  # noqa: PLC0415
+
+    reels = tmp_path / "specs" / "reels"
+    reels.mkdir(parents=True)
+
+    def _write(slug, names, a_shot, b_shot):
+        (reels / f"{slug}.json").write_text(json.dumps({
+            "cover": {"matchup": [{"name": names[0]}, {"name": names[1]}]},
+            "stats": {"a": {"headshot": a_shot}, "b": {"headshot": b_shot}},
+        }), encoding="utf-8")
+
+    # 已经落库的一条：wta-1.jpg 挂着"甲"，wta-2.jpg 挂着"乙"
+    _write("existing", ["甲", "乙"], "assets/headshots/wta-1.jpg",
+           "assets/headshots/wta-2.jpg")
+
+    # ① 新的一条把 a/b 填反了——同一张 wta-1.jpg 这次挂"乙"，和已有的矛盾
+    reversed_spec = {
+        "cover": {"matchup": [{"name": "乙"}, {"name": "甲"}]},
+        "stats": {"a": {"headshot": "assets/headshots/wta-1.jpg"},
+                  "b": {"headshot": "assets/headshots/wta-2.jpg"}},
+    }
+    got = chk.stat_card_headshot_problem(reversed_spec, reels)
+    assert got is not None and got[0] is True, f"填反了却没拦住：{got}"
+    assert "不合格" in got[1] and "wta-1.jpg" in got[1]
+
+    # ② 新的一条填对了——同样引用 wta-1.jpg/wta-2.jpg，名字和已有的一致
+    correct_spec = {
+        "cover": {"matchup": [{"name": "甲"}, {"name": "乙"}]},
+        "stats": {"a": {"headshot": "assets/headshots/wta-1.jpg"},
+                  "b": {"headshot": "assets/headshots/wta-2.jpg"}},
+    }
+    assert chk.stat_card_headshot_problem(correct_spec, reels) is None, \
+        "填对了不该报"
+
+    # ③ 全新的头像，没有第二处可比——只报提醒，不算不合格
+    fresh_spec = {
+        "cover": {"matchup": [{"name": "丙"}, {"name": "丁"}]},
+        "stats": {"a": {"headshot": "assets/headshots/wta-99.jpg"},
+                  "b": {"headshot": "assets/headshots/wta-98.jpg"}},
+    }
+    got = chk.stat_card_headshot_problem(fresh_spec, reels)
+    assert got is not None and got[0] is False, f"第一次出现不该算不合格：{got}"
+    assert "注意" in got[1] and "第一次出现" in got[1]
+
+    # ④ 双打（headshot 是列表）跳过——不是"填反了"，是团队照
+    doubles_spec = {
+        "cover": {"matchup": [{"name": "甲组"}, {"name": "乙组"}]},
+        "stats": {"a": {"headshot": ["assets/headshots/wta-1.jpg",
+                                      "assets/headshots/wta-3.jpg"]},
+                  "b": {"headshot": ["assets/headshots/wta-2.jpg",
+                                      "assets/headshots/wta-4.jpg"]}},
+    }
+    assert chk.stat_card_headshot_problem(doubles_spec, reels) is None, \
+        "双打头像不该被当成填反了"
+
+    # ⑤ **`self_path` 不传，"我在扫我自己"会把"第一次出现"永远判成哑的。**
+    # `check_reel_landed.py` 查的那条 spec 早就已经提交进仓库了——真实场景
+    # 里它自己就在 `reels_dir` 里，不排除的话 `seen` 永远至少包含它自己，
+    # `first_seen` 从此恒假。这条钉住"传了 self_path 就该排除自己"。
+    self_file = reels / "fresh.json"
+    self_file.write_text(json.dumps(fresh_spec), encoding="utf-8")
+    # 不传 self_path：扫描会撞见自己刚写下的 fresh.json，把自己当成了
+    # "已有先例"——`prior` 因此非空，`first_seen` 那条分支走不到，
+    # 整个函数悄悄返回 None，**提醒消失了，而且不报错**
+    without_self = chk.stat_card_headshot_problem(fresh_spec, reels)
+    assert without_self is None, (
+        "这一步是在钉住那个坑本身：不排除自己时，扫描会把这条 spec 自己"
+        f"算成先例，'第一次出现'的提醒会静悄悄地消失：{without_self}")
+    with_self = chk.stat_card_headshot_problem(
+        fresh_spec, reels, self_path=self_file)
+    assert with_self is not None and with_self[0] is False, \
+        f"排除自己之后应该正确报'第一次出现'：{with_self}"
+    assert "第一次出现" in with_self[1]
+
+    # **它真的被接进总数里，而且只在真矛盾时才计**——同一个「算出来了没人用」
+    body = inspect.getsource(chk.main)
+    assert re.search(r"stat_card_headshot_problem\(", body), \
+        "stat_card_headshot_problem 没被调用——又是「算出来了没人用」"
+    assert re.search(r"if\s+is_clash:\s*\n\s*bad\s*\+=\s*1", body), \
+        "没把真矛盾接进 bad，或者把「第一次出现」的提醒也算成了不合格"
+
+
 def test_ffprobe的csv输出带尾随逗号也解析得出来():
     """2026-08-19 撞的：`ensure_ffmpeg` 第一版装的是 BtbN/FFmpeg-Builds 的
     `latest` 标签——那是**每天跟着 master 重新构建**的快照，不是钉死的版本。
@@ -9383,8 +10076,10 @@ def test_文案的闸要在dry_run里就报不许等渲完():
     assert re.search(r"return 1", block), "tag 超标只打字不返回 1，等于没拦"
 
     # 行为：真跑一次，两个方向
-    spec = next(p for p in sorted(Path("specs/reels").glob("*.json"))
-                if p.with_suffix(".xhs.txt").is_file())
+    # 不再拿字母序第一条：它是规则落地前的存量冷开场，生产 dry-run 按设计会红。
+    # 用已经显式声明并完整兑现结局的干净底稿，才是在单独测文案闸。
+    spec = Path("specs/reels/tiafoe-musetti-cincinnati-2026-qf.json")
+    assert spec.with_suffix(".xhs.txt").is_file()
     copy = spec.with_suffix(".xhs.txt")
     original = copy.read_text(encoding="utf-8")
     env = {**os.environ, "PYTHONPATH": "src:tools"}
@@ -11406,7 +12101,7 @@ def test_签名源那道闸排在下载之前():
     # ② render() 里形状校验排在下载前面
     render_body = src[src.index("def render("):]
     render_body = render_body[:render_body.index("\ndef ", 1)]
-    assert render_body.index("validate_spec(spec)") < render_body.index("download(url, path)"), (
+    assert render_body.index("validate_spec(spec)") < render_body.index("download(url, path, archival="), (
         "spec 形状校验排到下载后面了——这道闸跟着一起失效")
 
     # ③ validate_spec 真的走到 spec_sources；dry-run 真的走到 validate_spec
@@ -11629,3 +12324,183 @@ def test_手动推送也要记下已推送否则自动闸会再发一次():
     # ⚠️ 不许带 always()：上一步红了就不该记
     assert "always()" not in block, (
         "这一步不许带 `always()`——推送红了还记标记，就是那个「假标记」。")
+
+
+def test_记推送标记撞车要重试而真失败不许吞():
+    """**这一步的失败＝「微信已发、标记没落库」，两头都要堵。**
+
+    ① 原来只 `git pull --rebase` + `git push` 各一次——排在微信**已经发出去**
+    之后的一次推送，撞上并行提交就红，红完标记没落库：下一次 `render.json`
+    被合并，自动闸把这条当「没发过」**再发一条微信**，而消息收不回来。
+    pushed.json 是纯文本，rebase 必然干净，所以照「提交产物」那个循环重试。
+
+    ② 原来 `git commit -m … || exit 0` 把**一切** commit 失败（钩子炸了、
+    磁盘满、身份没配上）都吞成绿——只有「没有变化」这一种配 exit 0，
+    要用 `git diff --cached --quiet` 显式放行，别拿 `||` 一勺烩。
+    """
+    text = WORKFLOW.read_text(encoding="utf-8")
+    block = _step_block("记下已经推送过", text)
+    # ① 重试循环 + 耗尽必须红着退出（照 test_提交重试耗尽必须失败 的形状）
+    assert "for attempt in $(seq 1 5)" in block, (
+        "标记那一步没有撞车重试——单推一次撞上并行提交就把「已发未记」留给自动闸")
+    assert "git pull --rebase origin main" in block, "重试之间没有 rebase，重推必然还是被拒"
+    assert block.rfind("exit 1") > block.rfind("done"), (
+        "重试耗尽没有红着退出——静默吞掉的样子和「记上了」一模一样")
+    assert "::error::" in block, "耗尽要出声说清「微信已发、标记要人工补」"
+    # ② commit 失败不许被 `|| exit 0` 吞掉
+    assert "|| exit 0" not in block, (
+        "`git commit … || exit 0` 会把真正的 commit 失败也吞成绿——"
+        "只有「没有变化」配 exit 0")
+    assert "git diff --cached --quiet" in block, (
+        "「没有变化」要用 `git diff --cached --quiet` 显式放行，不是靠 `||`")
+
+
+def test_push模式重发要显式仓库里有pushed标记就拦():
+    """**人工重跑一次 mode=push 就是重复发一条微信，而消息收不回来。**
+
+    自动那条路有「pushed.json 在仓库里就不再发」的闸（`auto_push_gate`），
+    手动 `mode=push` 一直没有对应物——手滑重跑、忘了已经发过，都会把同一条
+    消息再推一遍。现在预检先查标记，拦下并说清出路（删掉 pushed.json 再来，
+    让重发是一次**显式的决定**）。
+
+    ⚠️ 判据钉「`git ls-files` 查 pushed.json」：稀疏检出下 `test -f` 恒假
+    （auto_push_gate 那次栽的），而且只在工作区、没提交的标记本来不算数。
+    """
+    text = WORKFLOW.read_text(encoding="utf-8")
+    block = _step_block("push 模式先确认成片真的落地了", text)
+    assert 'git ls-files -- "$OUTDIR/pushed.json"' in block, (
+        "push 预检没查 pushed.json（或者不是用 git ls-files 查的）——"
+        "手动重跑 mode=push 会把同一条微信再发一遍")
+    assert 'test -f "$OUTDIR/pushed.json"' not in block, (
+        "查标记不许用 test -f：稀疏检出下工作区那份恒不在，闸等于没装")
+    gate = block.index("pushed.json")
+    assert "exit 1" in block[gate:gate + 600], "查到标记却不拦，等于只是提了一嘴"
+
+
+def test_抓帧点不许贴着源片的最后一帧():
+    """来路：2026-08-21，`swiatek-rybakina-cincinnati-injury` 那条片子的源片是
+    一条 34.5 秒的 YouTube Shorts（探测报的整数位是「34.5s」，真实浮点值比它
+    略大）——probe 第一次真的撞上短素材，`contact_sheet` 在贴着 duration 的
+    那一格抓帧时 ffmpeg 直接非零退出：`[enc:mjpeg] Could not open encoder
+    before EOF`。
+
+    ⚠️ **这不是本文件别处那种「-t 落过末尾，ffmpeg 退出码 0 悄悄输出短一截」**——
+    这次是抓单帧的 `-ss ... -frames:v 1` 贴着 duration 时编码器直接报错退出，
+    是一个不同的失败形状，说明「贴着源片末尾」这类坑不止一种长相，得分别防。
+
+    ⚠️ **`duration=34.5` 这个整数边界本身反而复现不了这个 bug**——`_frange`
+    从 0.5 起按 1.0 累加不会有浮点误差，算出来的最后一格干干净净停在 33.5，
+    离 34.5 有整整一秒。真正会撞线的是**非整数**的 duration（比如 34.52，
+    ffprobe 探出来正好会被 `.1f` 显示成「34.5s」）——`_frange` 走到 34.5 时
+    `34.5 < 34.52` 成立，于是最后一格贴到只剩 0.02 秒余量，这才是线上那次
+    崩溃真正的形状。所以判据用 `3.52` 这个非整数边界，不用 `3.5`。
+    这一条本身也是「查了一场就写成了一类」的一个小实例：先按整数边界试过，
+    量出来发现**不复现**，才改用非整数边界重新量。
+
+    判据两层：① `sheet_stamps` 算出来的最后一格必须留出 `FRAME_END_MARGIN` 的
+    余量，不能贴到 duration 本身——这一层在本地能反向验证（去掉 margin，
+    `sheet_stamps(3.52, every=1.0)` 会把最后一格算到 3.5，只剩 0.02 秒余量）；
+    ② 真跑一次 `contact_sheet`，在这条边界附近的合成短片上确认端到端仍然
+    抓得出帧——ffmpeg 具体哪个版本会不会真的报错是环境相关的（这台沙箱的
+    ffmpeg 在 0.02 秒余量下没有复现线上那次崩溃），所以这一层只当**回归
+    冒烟测试**，不当「必须曾经炸过」的证据——真正的崩溃证据是线上那趟
+    run 的日志。
+    """
+    import shutil  # noqa: PLC0415
+    import subprocess  # noqa: PLC0415
+    import tempfile  # noqa: PLC0415
+
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import build_match_reel as reel  # noqa: PLC0415
+
+    assert shutil.which("ffmpeg"), "没有 ffmpeg，这条判据跑不了：apt install ffmpeg"
+
+    # ① 纯算术：非整数 duration 贴着一个整数秒边界，`_frange` 的累加正好在
+    # 这里够到它——这一层反向验证过（去掉 FRAME_END_MARGIN 会让它算到 3.5）
+    stamps = reel.sheet_stamps(3.52, every=1.0)
+    assert stamps, "空列表也是这条判据要防的一种坏——先确认它真的抓到帧"
+    assert max(stamps) <= 3.52 - reel.FRAME_END_MARGIN + 1e-9, (
+        f"最后一格 {max(stamps)} 贴到了 duration 3.52 附近，"
+        f"留的余量不够 FRAME_END_MARGIN={reel.FRAME_END_MARGIN}")
+
+    # ② 端到端冒烟：同样贴边界的合成短片，contact_sheet 走完整套（下载→
+    # ffprobe 量 duration→抓帧→拼墙）不许抛异常、不许出空文件
+    with tempfile.TemporaryDirectory() as td:
+        tmp = Path(td)
+        clip = tmp / "short.mp4"
+        subprocess.run(
+            ["ffmpeg", "-v", "error", "-y", "-f", "lavfi",
+             "-i", "testsrc2=size=320x240:rate=25:duration=3.52",
+             "-c:v", "libx264", "-preset", "ultrafast", str(clip)],
+            check=True)
+        outdir = tmp / "out"
+        sheets = reel.contact_sheet(clip, outdir, every=1.0)
+        assert sheets, "没有抓到任何帧——contact_sheet 本身就没跑起来"
+        frames = sorted((outdir / "frames").glob("*.jpg"))
+        assert frames, "帧目录是空的"
+        for f in frames:
+            assert f.stat().st_size > 0, f"{f} 是空文件——ffmpeg 没真的写出内容"
+
+
+def test_推送链接的CDN主机只有一处出处不许再写死cdn域名(tmp_path, monkeypatch):
+    """push_reel 里三处拼 jsDelivr 链接的地方（成片 video_url / 海报 poster_url /
+    数据图 stat_card_url）原来都写死 `cdn.jsdelivr.net`——而 CLAUDE.md
+    「CDN 主机名一个地方定」那节早把主机收进了 `tennislive/cdn.py`
+    （默认 gcore 镜像，`TENNISLIVE_JSDELIVR_HOST` 可覆盖）。写死的三处等于把
+    镜像开关废掉一半：校验和钉版本按 `.jsdelivr.net` 认（照常绿），链接却停在
+    旧域名——**分叉不报错，只是国内取图慢**。
+
+    两头钉，反向验证过两个方向、红在不同的断言行：
+    ① 行为：三个 URL 构建器的主机必须跟着 `TENNISLIVE_JSDELIVR_HOST` 走
+      （把 poster_url 退回写死的域名 → 这一头红）；
+    ② 代码：push_reel.py 的 AST 里不许再出现含 `cdn.jsdelivr.net` 的字符串
+      常量（往代码里塞一个 `_X = "cdn.jsdelivr.net"` → 只有这一头红，
+      证明它不被 ① 覆盖）。⚠️ 用 AST 不用文本扫——教训注释里正写着这个
+      域名（本文件反复栽过「判据扫得太宽，被自己的注释误伤」）；docstring
+      也是记教训的地方，所以摘掉再扫。
+    """
+    import ast  # noqa: PLC0415
+
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import push_reel  # noqa: PLC0415
+
+    # ① 行为：主机跟着环境变量走。conftest 的 autouse fixture 不管这个变量，
+    #    所以显式设/删两档各验一次。
+    monkeypatch.setenv("TENNISLIVE_JSDELIVR_HOST", "fastly.jsdelivr.net")
+    outdir = tmp_path / "output" / "2026-08-21" / "reel" / "demo"
+    outdir.mkdir(parents=True)
+    (outdir / "demo.mp4").write_bytes(b"0" * 1024)  # 远小于 20 MB → 走 jsDelivr 支
+    for built in (
+        push_reel.video_url(outdir, "demo.mp4"),
+        push_reel.poster_url(outdir),
+        push_reel.stat_card_url(outdir),
+    ):
+        assert built.startswith("https://fastly.jsdelivr.net/gh/"), (
+            f"链接没跟着 TENNISLIVE_JSDELIVR_HOST 走：{built}\n"
+            "多半是有人把主机名又写死回了 push_reel.py——"
+            "主机只有一处出处：tennislive/cdn.py 的 jsdelivr_base()")
+
+    monkeypatch.delenv("TENNISLIVE_JSDELIVR_HOST")
+    from tennislive.cdn import jsdelivr_host  # noqa: PLC0415
+    default = jsdelivr_host()
+    assert push_reel.poster_url(outdir).startswith(f"https://{default}/gh/"), (
+        "不设环境变量时要落回 cdn.py 的默认镜像，而不是另一个写死的域名")
+
+    # ② 代码：摘掉 docstring 之后，AST 里的字符串常量不许含 cdn.jsdelivr.net。
+    src = Path("tools/push_reel.py").read_text(encoding="utf-8")
+    tree = ast.parse(src)
+    doc_ids: set[int] = set()
+    for node in ast.walk(tree):
+        body = getattr(node, "body", None)
+        if (body and isinstance(node, (ast.Module, ast.FunctionDef,
+                                       ast.AsyncFunctionDef, ast.ClassDef))
+                and isinstance(body[0], ast.Expr)
+                and isinstance(body[0].value, ast.Constant)
+                and isinstance(body[0].value.value, str)):
+            doc_ids.add(id(body[0].value))
+    bad = [n.lineno for n in ast.walk(tree)
+           if isinstance(n, ast.Constant) and isinstance(n.value, str)
+           and "cdn.jsdelivr.net" in n.value and id(n) not in doc_ids]
+    assert not bad, (
+        f"push_reel.py 第 {bad} 行又把 cdn.jsdelivr.net 写进了代码——"
+        "主机名只许从 tennislive.cdn.jsdelivr_base() 来")

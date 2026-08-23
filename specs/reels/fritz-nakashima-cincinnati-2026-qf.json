@@ -1,0 +1,214 @@
+{
+  "slug": "fritz-nakashima-cincinnati-2026-qf",
+  "source_url": "https://youtu.be/t4eOVbP8Tdc",
+  "_source": "Tennis TV 官方 YouTube 单场集锦《Taylor Fritz & Brandon Nakashima Battle For Semi-Final Spot! | Cincinnati 2026 Highlights》。2026-08-22 probe：350.60 秒、1920×1080、25fps；342.46秒起为YouTube endscreen，本片最晚收在340.54秒。",
+  "_column": "赛场之上",
+  "topbar": {
+    "line1": "2026 辛辛那提 ATP1000 1/4决赛",
+    "line2": "中岛布兰登 7-6(9) 4-6 6-3 弗里茨"
+  },
+  "_topbar_why": "Flashscore完整赛果与Tennis TV片尾记分条一致：中岛7-6(9) 4-6 6-3获胜。第二行与 cover.winner / result / matchup 机械一致，赢家在前；不能采用 match_feed find 只展示前两盘的摘要。",
+  "editorial": {
+    "mode": "match_review",
+    "question": "总分完全相同、制胜分还少十六个，中岛为什么能赢？",
+    "thesis": "弗里茨全场Ace和制胜分都占优，总得分却只打成97-97。胜负落在决胜盘：弗里茨先破到3-2，中岛下一局在0-30落后时立即回破，并从2-3连下四局；这盘中岛15个一发只丢一分，弗里茨14个二发只赢四分。",
+    "beats": [
+      "首盘：十二个发球局无人被破，中岛抢七11-9在第五个盘点拿下",
+      "次盘：弗里茨在1-1后率先破发，守住优势6-4扳平",
+      "决胜盘：弗里茨先破到3-2，中岛立即回破并连下最后四局"
+    ],
+    "human_context": {
+      "angle": "这不是火力更强的一方获胜：弗里茨22个Ace对13个、41个制胜分对25个，仍然输掉比赛。中岛把差距压缩到关键分，再在决胜盘对方二发掉速时连续收走四局。",
+      "facts": [
+        "中岛7-6(9) 4-6 6-3击败弗里茨，比赛用时2小时16分",
+        "全场总得分97-97；弗里茨Ace 22-13、制胜分41-25领先",
+        "首盘双方六个发球局全部保住，中岛抢七11-9在第五个盘点拿下",
+        "决胜盘弗里茨先破到3-2，中岛下一局在0-30落后时立即回破，随后连下四局",
+        "决胜盘中岛一发得分14/15；弗里茨二发得分4/14，中岛二发接发拿到10/14",
+        "比赛日弗里茨世界第9、6号种子；中岛世界第22、27号种子，排名与种子号分开记录"
+      ],
+      "sources": [
+        "https://www.youtube.com/watch?v=t4eOVbP8Tdc",
+        "https://cincinnatiopen.com/tournament/daily-draw-sheet/",
+        "https://www.freemalaysiatoday.com/category/sports/2026/08/22/nakashima-rallies-past-fritz-to-reach-back-to-back-masters-semis"
+      ]
+    }
+  },
+  "_match": {
+    "flashscore_id": "thAXTt8b",
+    "start_local_beijing": "2026-08-22T03:20:00+08:00",
+    "_why": "`tools/match_feed.py show thAXTt8b --home Fritz --away Nakashima` 给出三盘逐局、全场统计和用时2:16；Flashscore开球时间换算北京时间为8月22日03:20。"
+  },
+  "_hit_data": "全场总分97-97；弗里茨Ace 22-13、制胜分41-25仍告负。决胜盘中岛一发14/15，弗里茨二发4/14；正文选择这组能解释最后四局的数据，不使用接口中决胜盘弗里茨一发接发得分率-13%的异常值。",
+  "stats": {
+    "tour": "atp",
+    "a": {
+      "headshot": "assets/players/headshots/atp-N0AE.png",
+      "aces": 13,
+      "df": 4,
+      "winners": 25,
+      "ue": 25,
+      "first_in": 60,
+      "first_won": 51,
+      "first_total": 104,
+      "second_total": 44,
+      "second_won": 19,
+      "bp_conv": 2,
+      "bp_chances": 3,
+      "pts_won": 97,
+      "pts_total": 194
+    },
+    "b": {
+      "headshot": "assets/players/headshots/atp-FB98.png",
+      "aces": 22,
+      "df": 3,
+      "winners": 41,
+      "ue": 34,
+      "first_in": 52,
+      "first_won": 43,
+      "first_total": 90,
+      "second_total": 38,
+      "second_won": 20,
+      "bp_conv": 2,
+      "bp_chances": 6,
+      "pts_won": 97,
+      "pts_total": 194
+    },
+    "footer_venue": "P&G Stadium Court · 辛辛那提",
+    "footer_date": "2026.08.21",
+    "_source": "全部来自 `python3 tools/match_feed.py show thAXTt8b --home Fritz --away Nakashima` 的 Match 全场统计。工具顺序是弗里茨(home)在前、中岛(away)在后；本 spec 的 cover.matchup 赢家中岛在前，因此反转映射：stats.a=中岛、stats.b=弗里茨。first_total=first_in+second_total；双方总分97+97=194。",
+    "_winners_ue_why": "Flashscore本场提供完整Winners/Unforced errors：中岛25/25、弗里茨41/34，已按cover.matchup顺序反转填入，并与分盘合计核对。"
+  },
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "中岛布兰登",
+    "hook": "总分九十七平\n最后四局全拿走",
+    "_hook_why": "第一行给反差，第二行给决胜盘真正的收官方式；两行各7/8个字符，不重复比分和赢家。",
+    "_subject_why": "中岛是获胜并晋级半决赛的一方；这条片子要解释的是他如何在火力数据落后时赢下关键分。",
+    "_heat_why": "弗里茨是世界第9、美国男单头部球员；中岛本月已打进蒙特利尔大师赛决赛，本场后连续两站进入大师赛四强，故事线正在展开。",
+    "topic": "辛辛那提ATP1000 · 男单1/4决赛",
+    "winner": "中岛布兰登",
+    "result": "7-6(9) 4-6 6-3",
+    "matchup": [
+      {
+        "name": "中岛布兰登",
+        "name_en": "Brandon Nakashima",
+        "country": "USA",
+        "rank": 22
+      },
+      {
+        "name": "弗里茨",
+        "name_en": "Taylor Fritz",
+        "country": "USA",
+        "rank": 9
+      }
+    ],
+    "_name_why": "中文名沿用仓库既有短称：Brandon Nakashima→中岛，Taylor Fritz→弗里茨。比赛日官方资料列世界排名中岛22、弗里茨9；27和6是种子号，不混写。\n\n⚠️2026-08-23 更正：Brandon Nakashima 的中文名一律走仓库译名表 `player_zh()`（=中岛布兰登，新华社译名），不再沿用此前几条片子里手动统一成的短称「中岛」——那个「短称是本号既有惯例」的理由本身就是错的，`player_zh()`从一开始给出的就是「中岛布兰登」，短称是手改出来的，不是译名表的产物。已发的片子成片、复制页、推送文案不重渲/不改（消息发出去收不回来），本条只把 spec 里 `cover.subject/winner/matchup[].name` 三处改回译名表的正确输出，供后续同名片子核对时不再错上加错。",
+    "portrait": {
+      "image": "assets/reel/nakashima-fritz-cincinnati-2026-qf.jpg",
+      "focus": 0.5,
+      "focus_y": 0.5,
+      "zoom": 1.0
+    },
+    "_portrait_why": "2026-08-21本场辛辛那提1/4决赛现场摄影，2000×2000；中岛身穿本场白色Fila比赛服正面击球，脸、球拍和蓝色P&G Stadium Court均清楚，不再使用第三轮照片。摄影：Dave Keaton；来源：https://wheb.iheart.com/featured/lend-a-helping-can/content/2026-08-21-photos-2026-cincinnati-open-quarterfinals-fritz-vs-nakashima/",
+    "scoreboard": {
+      "court": "P&G Stadium Court",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%222%3A16%3A00%22%2C%22source_feed%22%3A%22https%3A%2F%2Fglobal.flashscore.ninja%2F2%2Fx%2Ffeed%2Fdf_sui_1_thAXTt8b%22%7D",
+        "field": "duration"
+      },
+      "_court_why": "Cincinnati Open官方比赛日签表将本场列在P&G Stadium Court；源片场边广告与同场地转播一致。",
+      "_duration_why": "Flashscore全场用时2:16，分盘52+43+41分钟正好等于136分钟，自洽。duration_source 写成完整的2:16:00，避免海报解析器把两段式2:16误判成2分钟16秒。"
+    }
+  },
+  "_voice_why": "云见 zh-CN-YunjianNeural，+6%。用短句把三盘讲清，赛点和庆祝完整保留Tennis TV原声。",
+  "push": {
+    "summary": "总分97平，中岛连拿四局",
+    "lead": "辛辛那提男单1/4决赛，中岛7-6(9) 4-6 6-3击败弗里茨。首盘无人被破，中岛抢七11-9在第五个盘点拿下；弗里茨第二盘6-4扳平，决胜盘又先破到3-2，中岛却立即回破并连下最后四局。全场总分97-97，弗里茨22个Ace、41个制胜分仍告负；决胜盘中岛一发14/15，弗里茨二发仅4/14。",
+    "auto": false,
+    "_no_auto_why": "用户明确要求只做预览，不触发发布；保持手动复核链路。"
+  },
+  "_editing_why": "中岛=白色球衣和白帽；弗里茨=蓝色球衣和白头带。结构为完整赛点原声冷开（英文解说配中英字幕）→97平反差→坐标→首盘超长回合与抢七→弗里茨次盘关键接发破发→决胜盘先破与立即回破→最后四局→技术解释和提问。精彩球和决定性回合均从发球/接发起点开始，保留落点、球员反应和观众声；342.46秒起的endscreen严格不用。",
+  "_tennistv_trim": "340.54秒收口，避开342.46秒起的YouTube endscreen。",
+  "segments": [
+    {
+      "start": 319.34,
+      "end": 333.62,
+      "narration": "",
+      "_ending_payoff_required": true,
+      "_quote_kind": "broadcast",
+      "quote": [
+        {
+          "at": 7.7,
+          "text": "Game, set and match, Brandon Nakashima.\n比赛结束 中岛赢了"
+        },
+        {
+          "at": 11.46,
+          "text": "A semifinalist in Cincinnati.\n他晋级辛辛那提四强"
+        }
+      ],
+      "crosses_cut": "跨327.38秒，是完整赛点结束后切到中岛抬头庆祝；同一赛点的自然转播切换。",
+      "_why": "①冷开场。319.34秒从赛点回合的发球起点进入，不从中段截断；完整保留赛点、`is a semifinalist in Cincinnati`和全场欢呼，不压中文旁白。英文原声按YouTube字幕时刻校正后配中英双语字幕。"
+    },
+    {
+      "start": 333.62,
+      "end": 340.54,
+      "narration": "全场两个人各拿九十七分，赢的却是中岛。",
+      "crosses_cut": "跨336.42秒，是两位球员走向球网切到握手；都属于本场收官连续画面。",
+      "_why": "②先抛反差。画面从中岛庆祝转到握手，340.54秒收口，给endscreen留足安全距离。"
+    },
+    {
+      "start": 0.0,
+      "end": 12.8,
+      "narration": "北京时间八月二十二号凌晨三点多，辛辛那提男单四分之一决赛。世界第九弗里茨，对阵世界第二十二的中岛。",
+      "_why": "③坐标。Flashscore开球时间换算北京时间03:20，按口播规范概括为三点多；窗口是本场开场回合，到严格切点12.8秒收口。"
+    },
+    {
+      "start": 51.92,
+      "end": 100.74,
+      "narration": "",
+      "crosses_cut": "跨94.74和96.92秒，是超长底线回合结束后切到球员反应，再进入记分确认；属于同一精彩球的完整收束。",
+      "_why": "④首盘精彩球。保留近五十秒的完整多拍回合、英文解说 `Oh, what a rally`、观众升温和球员反应；不加中文旁白，让对拉本身承担留存。"
+    },
+    {
+      "start": 121.84,
+      "end": 137.16,
+      "narration": "首盘十二个发球局，谁都没被破。抢七打到九平，中岛在第五个盘点上，十一比九拿下。",
+      "_why": "⑤首盘。窗口从抢七7平推进到9-10，再到记分条确认中岛7-6(9)；正式scene_cuts内部没有换场，近景切换只落在loose cuts。"
+    },
+    {
+      "start": 143.7,
+      "end": 164.12,
+      "narration": "第二盘一比一之后，弗里茨率先破发，并守住这一个优势，六比四扳平。",
+      "crosses_cut": "跨149.72秒，是弗里茨高质量接发后切到下一分；随后集锦连续推进到他兑现破发。",
+      "_why": "⑥次盘转折。用弗里茨的高质量接发和真正破发回合替代只放盘点结果；英文解说也明确落在 `what a return` 与 `find a way to break early`，画面和旁白共同交代6-4的起点。"
+    },
+    {
+      "start": 247.56,
+      "end": 263.22,
+      "narration": "决胜盘两比二，弗里茨先破发，三比二领先。先动手的人，还是他。",
+      "_why": "⑦决胜盘第一次转折。窗口从2-2、弗里茨40-30进入3-2，随后是弗里茨近景；两头都命中严格切点。"
+    },
+    {
+      "start": 263.22,
+      "end": 281.12,
+      "narration": "可下一局，弗里茨三十比零领先还是没保住。中岛立即回破，三比三，比赛从这里换了方向。",
+      "crosses_cut": "跨270.72和277.52秒，是同一局里弗里茨发球、回合结束和中岛回破后的反应机位切换。",
+      "_why": "⑧核心转折。逐局记录确认弗里茨在3-2发球局30-0领先后被追到破发；画面记分条从3-2推进到3-3。"
+    },
+    {
+      "start": 295.7,
+      "end": 305.94,
+      "narration": "中岛保发到四比三，随后再破一次。弗里茨连续两个发球局失守，三比五。",
+      "_why": "⑨收官加速。窗口从3-4、15-40的破发点推进到3-5，中岛近景后在严格切点305.94秒进入发球胜赛局。"
+    },
+    {
+      "start": 305.94,
+      "end": 319.34,
+      "narration": "决胜盘，中岛十五个一发只丢一分；弗里茨十四个二发只赢四分。你觉得，胜负是不是就藏在这里？",
+      "crosses_cut": "跨315.88秒，是中岛3-5发球胜赛局里的回合切到球员近景；下一分仍是赛点前的连续比赛。",
+      "_why": "⑩解释和提问。用可核实的一发/二发数据解释最后四局，不臆测球路；窗口停在赛点前，最后一分已由冷开展示，不重复。"
+    }
+  ]
+}

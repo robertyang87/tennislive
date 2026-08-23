@@ -10,7 +10,12 @@
     find_turning_points                转折局候选
     draft_spec                         钩子/论点/beats/旁白/场外切口
 
-本工具把这五件批处理成 `specs/reels/<slug>.draft.json`，供人终审。
+本工具把这五件批处理成 `specs/reels/pending/<slug>.draft.json`，供人终审。
+
+⚠️ **草稿只许落在 `pending/`，不许落在 `specs/reels/` 正下方**：判据测试是
+**非递归**的 `Path("specs/reels").glob("*.json")`，`.draft.json` 会被 `*.json`
+命中——2026-08-18 一份落在正下方的草稿把 main CI 红了两小时（事故记录在
+`specs/reels/pending/README.md`）。`pending/` 已被那批判据豁免且有 README 合同。
 
 ⚠️ **只备料，不判稿**：窗口（segments 的 start/end/cx）仍由人从缩略图墙定——
 转折局是「第几盘第几局」，映射到视频秒要另写对照，选段错位质检未必拦得住，
@@ -30,7 +35,7 @@ stats 块缺必填项、狠数据算不出、没配 DeepSeek key——各自在 
     python tools/assemble_spec.py --slug eala-ruse --flashscore-id 4CYI9Ick \
         --home "Alexandra Eala" --away "Elena-Gabriela Ruse" ...
 
-产出 specs/reels/<slug>.draft.json，字段：
+产出 specs/reels/pending/<slug>.draft.json，字段：
     _draft: true          —— 草稿标记；validate_spec 只认 <slug>.json，不会误读
     _match.flashscore_id  —— 反查或给定
     cover.matchup         —— player_zh 译名 + 英文名
@@ -65,6 +70,10 @@ from draft_spec import draft_editorial  # noqa: E402
 
 TURNING_POINT_TOP = 5
 DRAFT_SUFFIX = ".draft.json"
+# 草稿落盘的目录。⚠️ 必须是 pending/ 子目录：`specs/reels/` 正下方被一批
+# **非递归** `glob("*.json")` 的判据测试扫着，`.draft.json` 会被 `*.json`
+# 命中——2026-08-18 已经把 main CI 红过 2 小时（见 pending/README.md）。
+DRAFT_DIR = Path(__file__).resolve().parent.parent / "specs" / "reels" / "pending"
 
 
 def _surname(full: str) -> str:
@@ -128,6 +137,65 @@ def facts_text(hit_data: list[dict]) -> str:
     return "\n".join(f"- {c.get('label', '')}: {c.get('detail', '')}" for c in hit_data)
 
 
+def final_set_scores(games: list[dict]) -> list[tuple[int, int]]:
+    """从逐局表取每盘最后一局的终场比分，保持盘的出现顺序。
+
+    ``df_mh_1`` 的每局都带该局结束后的 ``home_games/away_games``。自动文案旧版
+    只把总分差等统计喂给模型，却没把最基本的最终比分喂进去；真实草稿因此把
+    4-6 6-1 6-1 编成了 6-4 3-6 6-4。这里从已经拉过的逐局表机械提取，避免
+    再发一份网络请求，也不给模型猜比分的空间。
+    """
+    latest: dict[str, tuple[int, int]] = {}
+    order: list[str] = []
+    for game in games:
+        key = str(game.get("set") or "").strip()
+        if not key:
+            continue
+        try:
+            score = (int(game["home_games"]), int(game["away_games"]))
+        except (KeyError, TypeError, ValueError):
+            continue
+        if key not in latest:
+            order.append(key)
+        latest[key] = score
+    return [latest[key] for key in order]
+
+
+def score_fact(scores: list[tuple[int, int]], home_zh: str, away_zh: str) -> str:
+    if not scores:
+        return ""
+    rendered = " ".join(f"{home}-{away}" for home, away in scores)
+    return f"比赛最终比分（Flashscore 主队 {home_zh} 在前、客队 {away_zh} 在后）：{rendered}"
+
+
+_SCORE_PAIR = re.compile(r"(?<!\d)([0-7])\s*[-:：]\s*([0-7])(?!\d)")
+
+
+def editorial_score_problem(editorial: dict, scores: list[tuple[int, int]]) -> str | None:
+    """拦住模型在 thesis/单句旁白里编出一整套错误盘分。
+
+    单个 ``3-3`` 可能是局分，不能据此报错；只有同一字段写出至少完整盘数时才
+    当作最终比分声明。允许主客两种书写方向，其余完整序列一律退回待修，不进入
+    后续窗口和自动发布链。
+    """
+    if len(scores) < 2:
+        return None
+    allowed = {tuple(scores), tuple((b, a) for a, b in scores)}
+    texts = [str(editorial.get("thesis") or "")]
+    texts.extend(str(x) for x in (editorial.get("narration") or []) if x)
+    for text in texts:
+        found = [(int(a), int(b)) for a, b in _SCORE_PAIR.findall(text)]
+        if len(found) < len(scores):
+            continue
+        windows = {tuple(found[i:i + len(scores)])
+                   for i in range(len(found) - len(scores) + 1)}
+        if windows.isdisjoint(allowed):
+            expected = " ".join(f"{a}-{b}" for a, b in scores)
+            claimed = " ".join(f"{a}-{b}" for a, b in found)
+            return f"模型写出的完整盘分 {claimed} 与逐局表 {expected} 不一致"
+    return None
+
+
 def _rank_line(name_en: str, lookup: dict[str, int]) -> str:
     """查即时世界排名，拼「X 世界第 N」。查不到（前 150 外/榜上没有）返回空串。"""
     r = lookup.get(norm_name(name_en))
@@ -144,10 +212,25 @@ def _hot_line(hits, home: str, away: str) -> str:
     away_zh = player_zh(away).casefold()
     home_s = _surname(home).casefold()
     away_s = _surname(away).casefold()
+
+    def field(row, name: str, default):
+        """同时读生产 dataclass 和测试/旧缓存里的 dict。
+
+        ``fetch_zh_hot`` 的真实返回项是 ``ZhHot``，不是 dict。旧实现只在单测的
+        dict 桩上通过，线上每次都会在 ``h.get`` 抛 ``AttributeError``，于是中文
+        热点背景稳定降级。边界处兼容两种序列化形状，调用方不再猜生产对象类型。
+        """
+        if isinstance(row, dict):
+            return row.get(name, default)
+        return getattr(row, name, default)
+
     for h in hits:
-        hay = (" ".join(h.get("terms", ())) + " " + h.get("word", "")).casefold()
+        terms = field(h, "terms", ()) or ()
+        word = str(field(h, "word", "") or "")
+        source = str(field(h, "source", "") or "")
+        hay = (" ".join(terms) + " " + word).casefold()
         if any(n and n in hay for n in (home_zh, away_zh, home_s, away_s)):
-            return f"中文热搜：{h.get('word')}（{h.get('source')}）"
+            return f"中文热搜：{word}（{source}）"
     return ""
 
 
@@ -210,6 +293,8 @@ def assemble(*, slug: str, home: str, away: str, event: str, year: int,
              background: str = "") -> dict:
     background_param = background
     notes: list[str] = []
+    feed_home_zh, feed_away_zh = player_zh(home), player_zh(away)
+    authoritative_scores: list[tuple[int, int]] = []
     draft: dict = {
         "_draft": True,
         "slug": slug,
@@ -237,6 +322,7 @@ def assemble(*, slug: str, home: str, away: str, event: str, year: int,
         # 而 render_stat_card 的 a 跟 cover.matchup[0]，顺序不一致数据图会
         # 把赢家印成输家（CLAUDE.md 记过的坑）。
         ordered = matchup_order(home, away, mid)
+        feed_home_zh, feed_away_zh = ordered[0][1], ordered[1][1]
         if [x[1] for x in ordered] != [player_zh(home), player_zh(away)]:
             notes.append("matchup 按 flashscore home/away 重排："
                          + " vs ".join(x[1] for x in ordered))
@@ -275,7 +361,9 @@ def assemble(*, slug: str, home: str, away: str, event: str, year: int,
 
         # ④ 转折局候选。
         try:
-            ranked = rank_games(points(mid))
+            match_games = points(mid)
+            authoritative_scores = final_set_scores(match_games)
+            ranked = rank_games(match_games)
             draft["_turning_points"] = [
                 {"label": _label(g, player_zh(home), player_zh(away)),
                  "density": g["density"], "tags": g["tags"]}
@@ -304,26 +392,38 @@ def assemble(*, slug: str, home: str, away: str, event: str, year: int,
             notes.extend(bg_notes)
             notes.append("背景聚合：H2H/近况/排名/中文热点已备齐（年龄/纪录/金句"
                          "要 human_context 调研补，见 spec 合同）")
+        editorial_facts = facts_text(hit)
+        exact_score = score_fact(authoritative_scores, feed_home_zh, feed_away_zh)
+        if exact_score:
+            editorial_facts = f"- {exact_score}\n{editorial_facts}".rstrip()
         draft["editorial"] = draft_editorial(
             chat, home=home, away=away, event=event, year=year,
-            fixture=fixture, facts=facts_text(hit), background=background)
+            fixture=fixture, facts=editorial_facts, background=background)
         if draft["editorial"] is None:
             draft.pop("editorial", None)
             notes.append("⚠️ 文案这一步没成（模型或网络），editorial 留空")
         else:
+            score_problem = editorial_score_problem(
+                draft["editorial"], authoritative_scores)
+            if score_problem:
+                draft.pop("editorial", None)
+                notes.append(f"⚠️ {score_problem}；已撤下 editorial，禁止错误比分进入成片")
             # 推送文案（summary/lead）也自动起草——「草稿渲完直接合并推微信」的
             # 推送内容缺口。给不给都是编辑决定，草稿阶段先备好。
-            try:
-                from draft_spec import draft_push
-                push = draft_push(chat, editorial=draft["editorial"],
-                                  facts=facts_text(hit))
-                if push and push.get("summary"):
-                    draft["push"] = push
-                    notes.append("推送文案（summary/lead）已起草")
-                else:
-                    notes.append("⚠️ 推送文案起草没成，留终审")
-            except Exception as exc:  # noqa: BLE001
-                notes.append(f"⚠️ 推送文案没成（{type(exc).__name__}: {exc}）")
+            if "editorial" not in draft:
+                notes.append("⚠️ editorial 因比分不一致已撤下，推送文案与窗口同步跳过")
+            else:
+                try:
+                    from draft_spec import draft_push
+                    push = draft_push(chat, editorial=draft["editorial"],
+                                      facts=editorial_facts)
+                    if push and push.get("summary"):
+                        draft["push"] = push
+                        notes.append("推送文案（summary/lead）已起草")
+                    else:
+                        notes.append("⚠️ 推送文案起草没成，留终审")
+                except Exception as exc:  # noqa: BLE001
+                    notes.append(f"⚠️ 推送文案没成（{type(exc).__name__}: {exc}）")
 
     # ⑥ 窗口（机械对齐优先：逐分+比分板 → 骨架）。给了 pbp + scoreboard 才跑——
     #    这是「配音不脱节」的正路（docs/scoreboard-alignment.md）：逐分数据是内容、
@@ -375,7 +475,7 @@ def assemble(*, slug: str, home: str, away: str, event: str, year: int,
 
     # ⑥′ 窗口起草（DeepSeek 读字幕+切点）。只在「没走机械对齐」且给了 captions +
     #    cuts（probe 产物）时才跑——probe 之前这两个文件不存在，跳过并在 notes 出声。
-    if captions_path and cuts_path and "segments" not in draft:
+    if captions_path and cuts_path and "segments" not in draft and draft.get("editorial"):
         try:
             from draft_segments import _read_captions, _read_cuts, draft_segments
             caps = _read_captions(Path(captions_path))
@@ -467,7 +567,7 @@ def main() -> int:
     ap.add_argument("--background", default="",
                     help="球员背景（排名/年龄/H2H/纪录/金句），有就喂给文案")
     ap.add_argument("--write", action="store_true",
-                    help="把草稿落盘到 specs/reels/<slug>.draft.json；不给就只打印")
+                    help="把草稿落盘到 specs/reels/pending/<slug>.draft.json；不给就只打印")
     args = ap.parse_args()
 
     draft = assemble(slug=args.slug, home=args.home, away=args.away,
@@ -483,9 +583,8 @@ def main() -> int:
         print("\n（干跑，没落盘。要写进仓库加 --write。）")
         return 0
 
-    outdir = Path(__file__).resolve().parent.parent / "specs" / "reels"
-    outdir.mkdir(parents=True, exist_ok=True)
-    out = outdir / f"{args.slug}{DRAFT_SUFFIX}"
+    DRAFT_DIR.mkdir(parents=True, exist_ok=True)
+    out = DRAFT_DIR / f"{args.slug}{DRAFT_SUFFIX}"
     out.write_text(json.dumps(draft, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"\n草稿 → {out}")
     print("\n窗口（segments）和封面（cover.portrait 官方实拍）留给终审补，"

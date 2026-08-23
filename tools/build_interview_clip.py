@@ -56,6 +56,7 @@ from __future__ import annotations
 
 import argparse
 import difflib
+import hashlib
 import io
 import json
 import re
@@ -1317,7 +1318,19 @@ def highlight_en(text: str, phrases: list[str]) -> tuple[str, set[str]]:
 
 
 def write_ass(lines: list[dict], zh: list[str], clip_start: float, path: Path,
-              spec: dict | None = None) -> None:
+              spec: dict | None = None, *, duration: float | None = None) -> None:
+    """`lines`/`zh` 可以是空的——**顶栏可以单独烧，不必绑着对白**。
+
+    账号所有者 2026-08-22：「前面也要带上顶的，不然的话不知道是什么比赛。
+    除了封面不用，其他后面都要带上顶。」`lead_in` 那种没有 `subs`（静音
+    B-roll）的片段，原来因为「没有台词」就整段没有 `subtitles=` 滤镜、
+    顶栏跟着一起没了——这里补上：`lines` 为空时，`duration` 给出顶栏该
+    盖住多长（调用方通常就是这一段的 `end - start`），`ev` 只有 HEADA/HEADB
+    两条事件，没有 EN/ZH。
+
+    `duration` 只在 `lines` 为空时用得上；`lines` 非空时顶栏的收尾仍然按
+    最后一句台词的时刻算（和原来一样），`duration` 会被忽略。
+    """
     if len(zh) != len(lines):
         raise SystemExit(
             f"中文 {len(zh)} 行、英文 {len(lines)} 行，对不上。"
@@ -1342,34 +1355,52 @@ def write_ass(lines: list[dict], zh: list[str], clip_start: float, path: Path,
     if spec is not None and wants_topbar(spec):
         # 顶栏一直挂着：整条片子从头到尾都要能回答「这是哪一场」。
         # 刷到中段的人没看过封面，而封面只有 1.8 秒。
-        a, b = _ts(0.0), _ts(lines[-1]["b"] - clip_start)
+        if lines:
+            topbar_end = lines[-1]["b"] - clip_start
+        elif duration is not None:
+            topbar_end = duration
+        else:
+            raise SystemExit(
+                f"{spec.get('slug', '?')} 没有字幕行却要顶栏——`duration` 没给，"
+                "顶栏该盖住多长没地方推。没有台词时调用方要显式传 `duration=`"
+                "（通常就是这一段的 `end - start`）。")
+        a, b = _ts(0.0), _ts(topbar_end)
         header_lines(spec)                    # 先过宽度闸
         head_a, head_b = header_ass(spec)
         ev.append(f"Dialogue: 0,{a},{b},HEADA,,0,0,0,,{head_a}")
         ev.append(f"Dialogue: 0,{a},{b},HEADB,,0,0,0,,{head_b}")
-    # **只在写了才管，没写就是零行为改动。** 没有这个字段的存量 spec
-    # 一个字都不受影响——已发的片子不为了措辞重渲，见 CLAUDE.md。
-    phrases = (spec or {}).get("highlight_en") or []
-    unmatched = set(phrases)
-    for seg, cn in zip(lines, zh):
-        en = seg["en"].replace("&gt;&gt;", "").replace(">>", "").strip()
-        a, b = _ts(seg["a"] - clip_start), _ts(seg["b"] - clip_start)
-        if phrases:
-            en, hit = highlight_en(en, phrases)
-            unmatched -= hit
-        # 英文在上、中文在下，两行同起同落
-        ev.append(f"Dialogue: 0,{a},{b},EN,,0,0,0,,{en}")
-        ev.append(f"Dialogue: 0,{a},{b},ZH,,0,0,0,,{cn}")
-    if unmatched:
-        raise SystemExit(
-            "`highlight_en` 里这几个短语，字幕里一处都没找到：\n  "
-            + "\n  ".join(sorted(unmatched))
-            + "\n多半是打错字，或者 `en_fixed`／`word_fix` 后来改了原文。"
-            "按词边界找的，短语必须逐字（含大小写）出现在某一行英文字幕里。")
+    # 没有台词就到此为止——`highlight_en` 是给对白上色的，没有对白就没什么
+    # 可高亮，硬跑下去只会拿一份空 `lines` 去比对 `spec.highlight_en`，
+    # 把顶栏都没配文案这件事误判成「短语一个都没匹配上」。
+    if lines:
+        # **只在写了才管，没写就是零行为改动。** 没有这个字段的存量 spec
+        # 一个字都不受影响——已发的片子不为了措辞重渲，见 CLAUDE.md。
+        phrases = (spec or {}).get("highlight_en") or []
+        unmatched = set(phrases)
+        for seg, cn in zip(lines, zh):
+            en = seg["en"].replace("&gt;&gt;", "").replace(">>", "").strip()
+            a, b = _ts(seg["a"] - clip_start), _ts(seg["b"] - clip_start)
+            if phrases:
+                en, hit = highlight_en(en, phrases)
+                unmatched -= hit
+            # 英文在上、中文在下，两行同起同落
+            ev.append(f"Dialogue: 0,{a},{b},EN,,0,0,0,,{en}")
+            ev.append(f"Dialogue: 0,{a},{b},ZH,,0,0,0,,{cn}")
+        if unmatched:
+            raise SystemExit(
+                "`highlight_en` 里这几个短语，字幕里一处都没找到：\n  "
+                + "\n  ".join(sorted(unmatched))
+                + "\n多半是打错字，或者 `en_fixed`／`word_fix` 后来改了原文。"
+                "按词边界找的，短语必须逐字（含大小写）出现在某一行英文字幕里。")
     path.write_text(_ASS_HEAD + "\n".join(ev) + "\n", encoding="utf-8")
 
 
-COVER_SECONDS = 1.8      # 和「赛场之上」一致：够读完两行钩子，又不至于让人等
+# ⚠️ 「和赛场之上一致」这半句 2026-08-21 起过期了：reel 那条线的
+# `COVER_SECONDS` 已经一路降到 **1.2**（封面默认还跟着 `cover.narration` 走，
+# 常量只是退路）。这条线的 1.8 是自己的取舍——采访片封面没有配音，1.2 秒
+# 读不完两行钩子。改这个数之前先看已发成片的封面实测，别照抄 reel。
+COVER_SECONDS = 1.8      # 够读完两行钩子，又不至于让人等
+
 
 # ── 解读卡（落点卡 / 收尾卡）────────────────────────────────────────────
 #
@@ -1577,6 +1608,55 @@ def _second_model(spec: dict) -> str:
     「这两份到底是谁跟谁比」的地方。
     """
     return spec.get("whisper_model", DEFAULT_WHISPER)
+
+
+VERIFY_FP = "verify_fingerprint.json"
+
+
+def transcript_fingerprint(spec: dict, lines: list[dict], outdir: Path) -> str:
+    """这份转写此刻长什么样——`--stage verify` 过没过，凭它认。
+
+    **为什么要有它**：`verify_transcript` 一趟要下音频、跑 3.5~5 分钟的
+    whisper，而 `mode=render` 每一趟都先跑它——**转写一个字没变时，那 5 分钟
+    量出来的是上一次已经量过的同一份**，不产生新信息（CLAUDE.md「同一件事
+    重复验证几遍」那条说的正是这种）。verify 通过后把指纹落在
+    `verify_fingerprint.json`（进仓库，清理步骤按后缀/前缀删不到它）；
+    下一趟 verify 时指纹没变 **且** 人已核过（`transcript_verified: true`）
+    才跳过——**两个条件缺一不可**：只看指纹的话，一条从没人核过的转写也会
+    被「上次 verify 跑过」放行。
+
+    进指纹的每一样都是「变了就该重验」的：
+
+    - `cap_*.json3` 的字节——第一份转写的源。换源片/重拉字幕都会变
+    - 切出来的每一行 `en`——`word_fix`/`en_fixed`/去语气词/改 start·end
+      全都落在这上面（`en_fixed` 另外单独进一份，防「行数变了恰好互相抵消」）
+    - 第一份/第二份用的模型名——换了 `whisper_model`，上一次的核对
+      证明不了新配置
+    """
+    h = hashlib.sha256()
+    for cap in sorted(outdir.glob("cap_*.json3")):
+        h.update(cap.name.encode("utf-8"))
+        h.update(cap.read_bytes())
+    for seg in lines:
+        h.update(seg["en"].encode("utf-8"))
+        h.update(b"\n")
+    h.update(json.dumps(spec.get("en_fixed") or {}, sort_keys=True,
+                        ensure_ascii=False).encode("utf-8"))
+    h.update(f"{spec.get('asr_model', '')}|{_second_model(spec)}".encode())
+    return h.hexdigest()
+
+
+def transcript_auto_verified(spec: dict, lines: list[dict], outdir: Path) -> bool:
+    """双 ASR 已在本次内容指纹上无红旗通过，自动生产无需再等人工布尔开关。"""
+    path = outdir / VERIFY_FP
+    if not path.is_file():
+        return False
+    try:
+        recorded = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return False
+    return (recorded.get("status") == "pass"
+            and recorded.get("sha256") == transcript_fingerprint(spec, lines, outdir))
 
 
 def verify_transcript(spec: dict, lines: list[dict], outdir: Path) -> Path:
@@ -2234,6 +2314,21 @@ def _still_segment(png: Path, secs: float, dest: Path,
     不报错。这句话在这个文件里已经写过两遍了——所以现在只剩一处能写错。
 
     音轨不是可选的：只有画面的段拼进来，`concat` 会把整条音轨丢掉。
+
+    ⚠️⚠️ **`-pix_fmt yuv420p` 不保证 `color_range=tv`。** 账号所有者
+    2026-08-22：「视频号里看不到封面」。查下来：`poster.jpg` 是标准 JFIF
+    JPEG，JPEG 本身是满量程（full-range）色域，ffmpeg 的 mjpeg 解码器会把
+    这个 `color_range=pc` 标记带出来——即使编码目标写着 `yuv420p`（那只管
+    4:2:0 色度采样，不管量程），libx264 仍可能把满量程写进 SPS 的 VUI，
+    ffprobe 读出来就是 `yuvj420p`。拉一条真实成片下来逐字节核过：封面那
+    1.2 秒真的是 `color_range=pc`，跟从真实视频剪出来的正片段（`tv`）不是
+    一回事——而**视频号在满量程标记的流上，抓封面帧这一步会失败，画面本身
+    却播放正常**，症状和这次一模一样。
+    ⚠️ 本地把这条命令原样重跑了十几次都得到干净的 `tv`——没能在这台沙箱上
+    100% 复现 runner 上那次的触发条件（大概率是 ffmpeg 版本或线程调度的
+    细节），**但已经直接核实了产物是脏的**，而且加 `-color_range tv` 之后
+    不论重跑多少次结果都是干净的。**判据是产物，不是「猜没猜中根因」**：
+    这里选择显式钉死量程，不再指望 ffmpeg 自己从解码结果里推断对。
     """
     a_in = (["-i", str(audio)] if audio
             else ["-f", "lavfi", "-t", str(secs), "-i", "anullsrc=r=48000:cl=stereo"])
@@ -2244,7 +2339,7 @@ def _still_segment(png: Path, secs: float, dest: Path,
          # 不补的话 `-shortest` 会按音轨截掉画面，卡就少了那口气。
          "-af", f"apad=whole_dur={secs}",
          "-c:v", "libx264", "-preset", "medium", "-crf", "20",
-         "-r", "25", "-pix_fmt", "yuv420p",
+         "-r", "25", "-pix_fmt", "yuv420p", "-color_range", "tv",
          "-c:a", "aac", "-b:a", "128k", "-ar", "48000", "-ac", "2",
          "-shortest", str(dest)], check=True, timeout=600)
     return dest
@@ -2520,6 +2615,47 @@ def _crop_expr(ratio: float, keep: float = 1.0, shift: float = 0.0) -> str:
     return f"crop={w}:{h}:{off}:0"
 
 
+_VIDEO_EQ_LIMITS = {
+    "contrast": (-2.0, 2.0),
+    "brightness": (-1.0, 1.0),
+    "saturation": (0.0, 3.0),
+    "gamma": (0.1, 10.0),
+}
+
+
+def _video_eq_filter(spec: dict, label: str = "spec") -> str:
+    """把源片的显式色彩校正变成 ffmpeg `eq` 滤镜，没写时一个像素不变。
+
+    转载源偶尔会为了规避识别同时做镜像和重度调色。`mirrored` 只管方向，
+    `video_eq` 只管亮度／对比度／饱和度／gamma；两者分开记，免得为了修色
+    把 WTA 官方 `lead_in` 也误伤。跨视频片头要调色时，参数必须写在
+    `lead_in.video_eq`，和裁切参数一样不继承正文。
+    """
+    cfg = spec.get("video_eq")
+    if cfg is None:
+        return ""
+    if not isinstance(cfg, dict) or not cfg:
+        raise SystemExit(f"{label}.video_eq 必须是非空对象。")
+    unknown = sorted(set(cfg) - set(_VIDEO_EQ_LIMITS))
+    if unknown:
+        raise SystemExit(
+            f"{label}.video_eq 有不认识的字段：{', '.join(unknown)}；"
+            f"只支持 {', '.join(_VIDEO_EQ_LIMITS)}。")
+    parts = []
+    for key, (lo, hi) in _VIDEO_EQ_LIMITS.items():
+        if key not in cfg:
+            continue
+        value = cfg[key]
+        if isinstance(value, bool) or not isinstance(value, (int, float)):
+            raise SystemExit(f"{label}.video_eq.{key} 必须是数字，不是 {value!r}。")
+        value = float(value)
+        if not lo <= value <= hi:
+            raise SystemExit(
+                f"{label}.video_eq.{key} = {value:g} 超出 ffmpeg eq 的范围 {lo:g}～{hi:g}。")
+        parts.append(f"{key}={value:g}")
+    return "eq=" + ":".join(parts) + ","
+
+
 def cover_poster(spec: dict, src: Path, outdir: Path, logo: str = "") -> Path:
     """从源片抽一帧渲成 `poster.jpg`。**`render` 和 `--stage cover` 共用这一份。**
 
@@ -2535,6 +2671,7 @@ def cover_poster(spec: dict, src: Path, outdir: Path, logo: str = "") -> Path:
     subprocess.run(["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
                     "-ss", str(spec["cover"]["frame_at"]), "-i", str(src),
                     "-vf", (("hflip," if spec.get("mirrored") else "") + logo
+                            + _video_eq_filter(spec)
                             + _crop_expr(spec.get("crop_ratio", CROP_RATIO),
                                          float(spec.get("crop_keep_top", 1.0)),
                                          float(spec.get("crop_shift_x", 0.0)))),
@@ -2568,6 +2705,25 @@ _OPENING_KINDS = {
     "match_end": "从比赛结束那一刻起——赛点落地 ＋ 转播报出赛果／分量，然后接采访",
     "none": "源片里根本没有比赛画面（发布会、演播室专访），收不到",
 }
+
+
+def check_source_contract(spec: dict) -> str:
+    """L0：在任何下载、转写或渲染之前确认“本场真实场上采访”。"""
+    from interview_source_gate import (  # noqa: PLC0415
+        SourceContractError,
+        validate_source_contract,
+    )
+
+    try:
+        attestation = validate_source_contract(spec)
+    except SourceContractError as exc:
+        raise SystemExit(
+            f"{spec.get('slug', '?')} 没通过 L0 内容身份门禁：{exc}\n"
+            "只允许本场、获胜后、仍在球场内的现场话筒采访；演播室、发布会、"
+            "颁奖致辞和 unknown 都不能替代。找不到就停在待复核队列，不制作不推送。"
+        ) from exc
+    print(f"[L0] 本场 on-court 来源身份通过（{attestation[:12]}…）")
+    return attestation
 
 
 def check_opening(spec: dict) -> None:
@@ -2669,6 +2825,142 @@ _LEGACY_NO_OPENING = frozenset({
     "swiatek-rybakina-tor2026-final-presser", "swiatek-shnaider-tor2026-qf",
     "tirante-djokovic-cincinnati-2026-r2",
 })
+
+
+#: 账号所有者 2026-08-22（看完高芙这条独立采访转载）又把上面的默认补完整：
+#: 「把获胜后的画面和解说加在前面，**以后都要这么操作**」。
+#:
+#: `opening.kind: none` 只说明采访正文那条源里没有比赛画面，不能再被当成
+#: 「那就从第一问开」的出口。对**赛后场上采访**，这时必须另找同场官方集锦，
+#: 用 `lead_in` 接最后一分、庆祝和原声解说；发布会、演播室和赛前专访不属于
+#: 这条规则。下面是规则落地前仍未补完的九条债，只许随着逐条补片头而减少。
+#: 新 slug 不在表里，少 `lead_in` 会在下载前直接失败。
+_LEGACY_ONCOURT_NO_LEAD_IN = frozenset({
+    "cobolli-jodar-cincinnati-2026-r16",
+    "cobolli-paul-cincinnati-2026-qf",
+    "deminaur-fery-cincinnati-2026-r3",
+    "faria-shelton-cincinnati-2026-r2",
+    "fils-lehecka-cincinnati-2026-r3",
+    "jodar-tabilo-cincinnati-2026-r3",
+    "mensik-hijikata-cincinnati-2026-r3",
+    "nakashima-medvedev-cincinnati-2026-r3",
+    "zverev-atmane-cincinnati-2026-r3",
+})
+
+
+def check_lead_in(spec: dict) -> None:
+    """跨视频接一段片头——比赛结尾不在 `spec["url"]` 自己的窗口里，是**另一条
+    源片**（通常是官方逐场集锦）单独剪一段接在最前面。
+
+    和 `opening` 管的不是同一件事：`opening` 描述 `spec["url"]` 自己那份画面
+    怎么开头（没有 `lead_in` 时，答案一律是「从第一个问题起」或「发布会」）；
+    这条描述的是**从另一个视频借几秒画面**，插在封面之后、正片之前。两个字段
+    互不冲突——用了 `lead_in` 的片子，`opening.kind` 通常仍然写 `"none"`
+    （`spec["url"]` 自己确实没有比赛画面，只是不需要再收，片头已经从别处补上）。
+
+    `opening.kind: "match_end"` 时，正文源自己已经带比赛结尾，不需要再借一条；
+    发布会、演播室等也不用。反过来，**赛后场上采访**若认领 `opening.kind: none`，
+    就等于明确说正文源没有比赛结尾，此时 `lead_in` 是必填，不再允许从第一问开。
+    """
+    lead = spec.get("lead_in")
+    if lead is None:
+        slug = spec.get("slug", "?")
+        opening = spec.get("opening") if isinstance(spec.get("opening"), dict) else {}
+        needs_cross_source_end = (
+            spec.get("interview_kind") == "赛后场上采访"
+            and opening.get("kind") == "none"
+        )
+        if needs_cross_source_end and slug not in _LEGACY_ONCOURT_NO_LEAD_IN:
+            raise SystemExit(
+                f"{slug} 是独立的赛后场上采访，`opening.kind` 又是 `none`，"
+                "说明正文源没有比赛结尾；必须用 `lead_in` 从同场官方集锦接入"
+                "最后一分、庆祝和原声解说，再接采访。\n"
+                "发布会／演播室不受这条规则影响；已有旧片债只能从"
+                " `_LEGACY_ONCOURT_NO_LEAD_IN` 逐条移除，不能加入新 slug。")
+        return
+    slug = spec.get("slug", "?")
+    if not isinstance(lead, dict):
+        raise SystemExit(f"{slug} 的 `lead_in` 必须是一个对象（url/start/end/why）。")
+    if not str(lead.get("url", "")).strip():
+        raise SystemExit(f"{slug} 的 `lead_in` 缺 `url`——片头从哪条源片接，没人说。")
+    start, end = lead.get("start"), lead.get("end")
+    if (not isinstance(start, (int, float)) or not isinstance(end, (int, float))
+            or end <= start):
+        raise SystemExit(
+            f"{slug} 的 `lead_in.start`/`end` 是 {start!r}/{end!r}——必须是数字，"
+            "且 end 大于 start。")
+    dur = end - start
+    if not 0 < dur <= _OPENING_LEAD_MAX:
+        raise SystemExit(
+            f"{slug} 的 `lead_in` 长 {dur:.1f} 秒，必须在 0～{_OPENING_LEAD_MAX} 秒之间"
+            "——这是「先交代比赛结束」的片头，不是集锦，收多了就变成另一个栏目"
+            "（「赛场之上」）。")
+    if not str(lead.get("why", "")).strip():
+        raise SystemExit(
+            f"{slug} 的 `lead_in` 没写 `why`——说清收的是哪一段（起点、画面里发生"
+            "了什么、为什么要从这条源片接，而不是 `spec['url']` 自己的画面），\n"
+            "写不出来就说明还没打开源片看过。")
+    if spec.get("requested_content_type") == "on_court":
+        verification = lead.get("verification")
+        if not isinstance(verification, dict):
+            raise SystemExit(
+                f"{slug} 的 `lead_in` 缺同场来源 verification——新自动采访必须证明"
+                "片头是同场官方 1080p 单场集锦，不能只填一条看起来像的 URL。")
+        match = spec.get("match") or {}
+        expected = {
+            "match_id": match.get("id"),
+            "winner_en": match.get("winner_en"),
+            "loser_en": match.get("loser_en"),
+            "event_search": match.get("event_search"),
+            "year": match.get("year"),
+        }
+        wrong = [key for key, value in expected.items()
+                 if not value or verification.get(key) != value]
+        if wrong:
+            raise SystemExit(
+                f"{slug} 的 `lead_in.verification` 与当前比赛不一致：{', '.join(wrong)}")
+        if verification.get("method") != "official_exact_match_highlight":
+            raise SystemExit(f"{slug} 的片头不是 official_exact_match_highlight 核验路径。")
+        if float(verification.get("height") or 0) < 1080:
+            raise SystemExit(f"{slug} 的片头来源不足 1080p，不制作，等高清源。")
+        if not str(verification.get("channel") or "").strip():
+            raise SystemExit(f"{slug} 的片头没有记录官方频道，不能回查来源。")
+        if not lead.get("subs"):
+            raise SystemExit(
+                f"{slug} 的正式场上采访片头缺 `lead_in.subs`——获胜画面的原声解说"
+                "必须配中英文字幕；不能用无字幕 B-roll 降级发布。")
+    # 老片/non-formal 的 `subs` 可选；正式 on_court 上面已经提升为必填。写了就要
+    # 按正片那套字幕规矩过：
+    # 时刻落在窗口内、按时间排好、英文/中文都不能是空的。**宽度/收尾那两条
+    # 硬规矩交给 `write_ass` 在真正烧字幕那一刻去查**——这儿只管形状，
+    # 不重复一遍 `zh_problems`（判据只有一处，别写两遍必分叉）。
+    subs = lead.get("subs")
+    if subs is not None:
+        if not isinstance(subs, list) or not subs:
+            raise SystemExit(f"{slug} 的 `lead_in.subs` 必须是非空数组。")
+        prev_b = start
+        for i, cue in enumerate(subs, 1):
+            if not isinstance(cue, dict):
+                raise SystemExit(f"{slug} 的 `lead_in.subs[{i}]` 必须是对象（a/b/en/zh）。")
+            a, b = cue.get("a"), cue.get("b")
+            if (not isinstance(a, (int, float)) or not isinstance(b, (int, float))
+                    or b <= a):
+                raise SystemExit(
+                    f"{slug} 的 `lead_in.subs[{i}]` 的 a/b 是 {a!r}/{b!r}——"
+                    "必须是数字，且 b 大于 a。")
+            if a < prev_b:
+                raise SystemExit(
+                    f"{slug} 的 `lead_in.subs[{i}]` 起点 {a} 早于上一条的终点 "
+                    f"{prev_b}——两条字幕在时间轴上叠住了。")
+            if a < start or b > end:
+                raise SystemExit(
+                    f"{slug} 的 `lead_in.subs[{i}]`（{a}~{b}）落在 `lead_in` 窗口"
+                    f"（{start}~{end}）之外——原声解说的字幕不能比片头本身还长。")
+            if not str(cue.get("en", "")).strip():
+                raise SystemExit(f"{slug} 的 `lead_in.subs[{i}]` 没写 `en`。")
+            if not str(cue.get("zh", "")).strip():
+                raise SystemExit(f"{slug} 的 `lead_in.subs[{i}]` 没写 `zh`。")
+            prev_b = b
 
 
 # 规矩之前发出去的六条，**只许减不许加**，而且有自检（见
@@ -2829,21 +3121,117 @@ def ours_ratio(spec: dict) -> tuple[float, float]:
 
     片尾那 3 秒也算：它是我们自己渲的画面。但它是**固定的**，所以指望它撑起
     占比是不行的——片子越长它越不顶用，这也正是这个比例该有的行为。
+
+    ⚠️ `lead_in`（跨视频借来的比赛结尾）**不算我们的**——它和 `body` 一样是
+    借来的转播画面，只是出处不同一条源片。分母要把它算进去，不然占比会算
+    偏高：借来的画面越多，这个比例本该越低。
     """
     sys.path.insert(0, str(ROOT / "src"))
     from tennislive.video import outro_page  # noqa: PLC0415
 
     tk = spec.get("takeaway") or {}
+    lead = spec.get("lead_in")
+    lead_secs = (lead["end"] - lead["start"]) if lead else 0.0
     ours = (COVER_SECONDS * bool(spec.get("cover"))
             + sum(takeaway_seconds(tk[k]) for k in ("open", "close") if tk.get(k))
             + outro_page.min_length())
-    return ours, ours + (spec["end"] - spec["start"])
+    return ours, ours + lead_secs + (spec["end"] - spec["start"])
+
+
+def _lead_in_segment(spec: dict, outdir: Path) -> Path | None:
+    """片头那一段——从另一条源片剪来的比赛结尾，接在封面之后、正片之前。
+
+    走的是和 `body` 完全一样的裁切／缩放／叠加链（同一块品牌深绿底、同一个
+    画布尺寸、同一套编码参数），这样 `-f concat -c copy` 才拼得上。
+
+    **顶栏默认要印**（`wants_topbar(spec)` 那条老规矩），账号所有者
+    2026-08-22：「前面也要带上顶的，不然的话不知道是什么比赛。除了封面
+    不用，其他后面都要带上顶。」
+
+    ⚠️ **这里原来的理由是错的，一并订正**：旧注释写着「片头这几秒讲的是
+    上一场的收尾，和这条片子自己的比分是两件事」——`check_lead_in` 的
+    docstring 早就写明白了，`lead_in` 借的不是别的比赛，是**这条采访自己
+    这场球**的比赛结尾（`spec["url"]` 那份录像里没有比赛画面，所以从官方
+    逐场集锦借几秒接上）。顶栏印的对阵和比分，跟片头这几秒的赛点、庆祝、
+    握手是同一场——印上去不是编造，是补全「这是哪一场」。
+
+    **原声解说要不要烧字幕，看 `lead_in.subs` 写没写。** 没写就是静音 B-roll：
+    赛点、比分牌、庆祝是转播自己拍下来的画面（画面自证），配不配文字不影响
+    看懂发生了什么。写了 `subs`（逐句 `a`/`b`/`en`/`zh`），就按正片那套字幕
+    规矩（宽度、收尾、不留标点）烧上去——账号所有者要求「原声解说也要有
+    中英文字幕」之后补的；转写这几句用的是这条源片自己的官方字幕
+    （`probe` 阶段落的 `captions.txt`），不是凭印象编的。
+
+    ⚠️ **没有 `subs` 时，顶栏也要单独烧一份 ASS**——`write_ass` 现在认
+    空的 `lines`（见它的 docstring），拿 `duration=dur` 顶上「该盖住多长」。
+    只有 `wants_topbar(spec)` 显式关掉时（`topbar: false` + `_no_topbar_why`）
+    才会跳过整个 `subtitles=` 滤镜，回到最早那种什么都不烧的样子。
+
+    ⚠️ **裁切参数各自独立写在 `lead_in` 块里，不沿用 `spec` 顶层那几个**——
+    两条源片往往是不同机位、不同转播商剪的，`crop_ratio`/`crop_keep_top`/
+    `crop_shift_x`/`mirrored`/`logo_box` 没道理是同一个数，写两处才不会一条
+    源片的画面被另一条源片的裁切窗口切歪。
+
+    没有 `lead_in` 时返回 `None`——`render()` 据此决定要不要把它塞进 `parts`。
+    """
+    lead = spec.get("lead_in")
+    if lead is None:
+        return None
+    # ⚠️ **文件名要带 `_` 前缀，不能叫 `source_lead.mp4`。** 工作流的清理步骤
+    # 按 `rm -f "$D"/source.*` 清主源片、按 `rm -rf "$D"/_*` 清所有 `_` 开头的
+    # 中间物——两条都是**按文件名的前缀/通配匹配**，不是「删掉源片这一类东西」。
+    # `source_lead.mp4` 两条都不命中（`source.*` 要求「source」后面紧跟一个
+    # 点，`_lead.mp4` 才吃后一条），会静静地跟着成片一起进仓库。
+    src = yt_download(lead["url"], outdir / "_lead_source.mp4",
+                      "bv*[height<=1080]+ba/b[height<=1080]", spec)
+    dur = lead["end"] - lead["start"]
+    ratio = lead.get("crop_ratio", CROP_RATIO)
+    vh = int(CANVAS_W / ratio)
+    logo = ""
+    if box := lead.get("logo_box"):
+        m = logo_mask(src, box, outdir / "_lead_logo_mask.png", bool(lead.get("mirrored")))
+        logo = f"removelogo=filename={m},"
+    flip = "hflip," if lead.get("mirrored") else ""
+    grade = _video_eq_filter(lead, "lead_in")
+    keep = float(lead.get("crop_keep_top", 1.0))
+    shift = float(lead.get("crop_shift_x", 0.0))
+    subs = lead.get("subs")
+    tail = "[out]"
+    if subs:
+        ass = outdir / "_lead.ass"
+        lines = [{"a": cue["a"], "b": cue["b"], "en": cue["en"]} for cue in subs]
+        zh = [cue["zh"] for cue in subs]
+        write_ass(lines, zh, lead["start"], ass, spec=spec)
+        tail = (f"[v];[v]subtitles={ass}:fontsdir={ROOT / 'assets/fonts'}[out]")
+    elif wants_topbar(spec):
+        # 没有台词，但顶栏默认要印——单独烧一份只有 HEADA/HEADB 的 ASS，
+        # 盖住整段 `lead_in` 的时长（`dur`，见上面 `dur = lead["end"] - lead["start"]`）。
+        ass = outdir / "_lead.ass"
+        write_ass([], [], lead["start"], ass, spec=spec, duration=dur)
+        tail = (f"[v];[v]subtitles={ass}:fontsdir={ROOT / 'assets/fonts'}[out]")
+    chain = (
+        f"color=c={_BG_COLOUR}:s={CANVAS_W}x{CANVAS_H}:d={dur}:r=25[bg];"
+        f"[0:v]{flip}{logo}{grade}{_crop_expr(ratio, keep, shift)},scale={CANVAS_W}:{vh}[fg];"
+        f"[bg][fg]overlay=0:{VIDEO_TOP}{tail}"
+    )
+    dest = outdir / "_lead.mp4"
+    subprocess.run(
+        # `-color_range tv` 显式钉死——理由见 `_still_segment` 那份注释，
+        # 这儿是同一份「参数逐项一致」，别让这一段单独漂
+        ["ffmpeg", "-y", "-ss", str(lead["start"]), "-t", str(dur), "-i", str(src),
+         "-filter_complex", chain,
+         "-map", "[out]", "-map", "0:a:0?",
+         "-c:v", "libx264", "-preset", "medium", "-crf", "20",
+         "-r", "25", "-pix_fmt", "yuv420p", "-color_range", "tv",
+         "-c:a", "aac", "-b:a", "128k", "-ar", "48000", "-ac", "2", str(dest)],
+        check=True, timeout=600)
+    return dest
 
 
 def render(spec: dict, ass: Path, outdir: Path) -> Path:
     check_takeaway(spec)
     src = yt_download(spec["url"], outdir / "source.mp4",
-                      "bv*[height<=720]+ba/b[height<=720]", spec)
+                      "bv*[height<=1080]+ba/b[height<=1080]", spec)
     out = outdir / f"{spec['slug']}.mp4"
     dur = spec["end"] - spec["start"]
     ratio = spec.get("crop_ratio", CROP_RATIO)
@@ -2858,6 +3246,7 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
         m = logo_mask(src, box, outdir / "_logo_mask.png", bool(spec.get("mirrored")))
         logo = f"removelogo=filename={m},"
     flip = "hflip," if spec.get("mirrored") else ""
+    grade = _video_eq_filter(spec)
     keep = float(spec.get("crop_keep_top", 1.0))
     # ⚠️ **两个调用点都要传。** 漏一个的表现是「成片裁对了、封面没裁」
     # ——两张图分开看都正常，只有并排才发现台标还在封面上。
@@ -2870,7 +3259,7 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
         # `timeout=1800` 才被杀掉。
         f"color=c={_BG_COLOUR}:s={CANVAS_W}x{CANVAS_H}:d={dur}:r=25[bg];"
         # 前景：横向收边到 crop_ratio，再铺满画布宽度
-        f"[0:v]{flip}{logo}{_crop_expr(ratio, keep, shift)},scale={CANVAS_W}:{vh}[fg];"
+        f"[0:v]{flip}{logo}{grade}{_crop_expr(ratio, keep, shift)},scale={CANVAS_W}:{vh}[fg];"
         f"[bg][fg]overlay=0:{VIDEO_TOP}[v];"
         # `fontsdir` 指向**仓库里的字体目录**（得意黑的 ttf 在那儿）。
         # 系统字体照旧走 fontconfig，思源黑体不受影响——`fontsdir` 是**追加**
@@ -2886,8 +3275,14 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
          # 而且**它不报错**，只是不生效。
          "-map", "[out]", "-map", "0:a:0?",
          "-c:v", "libx264", "-preset", "medium", "-crf", "20",
-         "-r", "25", "-pix_fmt", "yuv420p",
-         "-c:a", "aac", "-b:a", "128k", "-ar", "48000", "-ac", "2", str(body)],
+         # `-color_range tv` 显式钉死——理由见 `_still_segment` 那份注释。
+         "-r", "25", "-pix_fmt", "yuv420p", "-color_range", "tv",
+         "-c:a", "aac", "-b:a", "128k", "-ar", "48000", "-ac", "2",
+         # `+faststart` 在这儿只管 `len(parts) == 1` 那条兜底路径——
+         # `body.replace(out)` 是纯改名，不会再走一遍编码，`out` 的 moov
+         # 位置就定在这一步。真正管到大多数片子的是下面最终 concat 那一行，
+         # 见那儿的注释。
+         "-movflags", "+faststart", str(body)],
         check=True, timeout=1800)
 
     # 片尾品牌页。账号所有者 2026-08-05：「每个视频最后都加一页并配上关注的
@@ -2907,6 +3302,8 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
         parts.append(_still_segment(cover_poster(spec, src, outdir, logo),
                                     COVER_SECONDS, outdir / "_cover.mp4"))
     parts += _takeaway_segments(spec, outdir, "open")
+    if (lead := _lead_in_segment(spec, outdir)) is not None:
+        parts.append(lead)
     parts.append(body)
     parts += _takeaway_segments(spec, outdir, "close")
     if (outro := _build_outro(outdir)) is not None:
@@ -2918,11 +3315,23 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
     if len(parts) == 1:
         body.replace(out)
         return _record_film_seconds(out, outdir)
+    # ⚠️ **不给 `+faststart`，`moov` 会落在文件末尾——账号所有者
+    # 2026-08-22 报的「视频号封面显示不出来」根子就在这儿。** ffmpeg 的
+    # concat + `-c copy` 是一次完整的 remux（新写一份 moov，不是简单地把
+    # 三个文件粘起来），moov 摆在哪儿由**这一步自己的** movflags 决定，
+    # 跟上游那几段各自有没有 faststart 没关系。拉一条已发的成片实测过：
+    # `ftyp free mdat[60.5MB] moov` ——moov 排在 6 千万字节之后。**视频号
+    # 这类平台生成封面要靠范围请求先读 moov**（里面才有编码信息和帧位置），
+    # moov 在文件尾就等于「不下载完整个文件读不到」，封面自然出不来——这条线
+    # 是这个仓库里**唯一没接 `+faststart`** 的成片编码路径，`build_match_reel.py`
+    # 和 `explainer.py` 早就在用。加上这一行之后合成小样本验过：
+    # `ftyp moov free mdat`，moov 挪到了最前面。
     lst = outdir / "_concat.txt"
     lst.write_text("".join(f"file '{p.name}'\n" for p in parts), encoding="utf-8")
     subprocess.run(["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
                     "-f", "concat", "-safe", "0", "-i", str(lst),
-                    "-c", "copy", str(out)], check=True, timeout=600)
+                    "-c", "copy", "-movflags", "+faststart", str(out)],
+                   check=True, timeout=600)
     for tmp in (*parts, lst):
         tmp.unlink(missing_ok=True)
     return _record_film_seconds(out, outdir)
@@ -3050,10 +3459,14 @@ def main() -> int:
     localca.trust_local_proxy_ca()
 
     spec = json.loads(Path(args.spec).read_text(encoding="utf-8"))
+    # L0 必须排在全部准备工作之前。技术成片再漂亮，也不能把演播室采访冒充成
+    # 用户要的“本场场上采访”。
+    check_source_contract(spec)
     # **排在最前面，每一趟都过。** 它只读 spec、不联网、不下源片——
     # 「这条片子怎么开头」是写 spec 那一刻就该定下来的事，让它在第 0.2 秒报，
     # 而不是等九分钟的 render 出片之后再由人看出来「怎么一上来就有人在说话」。
     check_opening(spec)
+    check_lead_in(spec)
     outdir = OUTDIR / spec["slug"]
     outdir.mkdir(parents=True, exist_ok=True)
     ass = outdir / f"{spec['slug']}.ass"
@@ -3104,7 +3517,37 @@ def main() -> int:
               f"   销账写进 `caption_gaps_ok`，键是 `{gap_key(a, b)}`")
 
     if args.stage == "verify":
+        # **转写没变、人也核过的，不再重跑 5 分钟的 whisper。** 指纹的账和
+        # 两个条件为什么缺一不可，见 `transcript_fingerprint` 的 docstring。
+        # 跳过要出声——「跳过了」和「跑过了」在日志上不许长得一样。
+        fp_path = outdir / VERIFY_FP
+        fp = transcript_fingerprint(spec, lines, outdir)
+        recorded = ""
+        if fp_path.is_file():
+            try:
+                recorded = json.loads(
+                    fp_path.read_text(encoding="utf-8")).get("sha256", "")
+            except (OSError, ValueError):
+                recorded = ""  # 读不了当成没记过，照常全跑
+        if spec.get("transcript_verified") is True and recorded == fp:
+            print(f"[verify] 转写指纹没变（{fp[:12]}…）且已人工核过"
+                  "（transcript_verified: true），跳过第二份 ASR。"
+                  "改一行 en_fixed / 换字幕源 / 换模型都会让指纹变、重新全跑。")
+            return 0
         verify_transcript(spec, lines, outdir)
+        # **只在 verify 走完（没抛）之后落指纹**：分歧超闸抛 SystemExit 时
+        # 不许留下「这份验过了」的标记——那正是「记已推送要排在发微信之后」
+        # 的同一条顺序规矩。
+        fp_path.write_text(json.dumps({
+            "sha256": fp,
+            "status": "pass",
+            "method": "dual_asr",
+            "first_model": spec.get("asr_model") or "provider_captions",
+            "second_model": _second_model(spec),
+        }, indent=1) + "\n",
+                           encoding="utf-8")
+        print(f"[verify] 指纹已落 {fp_path.name}（{fp[:12]}…）——"
+              "下次转写没变且 transcript_verified 已置上时跳过 whisper。")
         return 0
 
     if args.stage == "cover":
@@ -3119,7 +3562,7 @@ def main() -> int:
         if not spec.get("cover"):
             raise SystemExit(f"{args.spec} 没有 `cover` 块，没什么可预览的。")
         src = yt_download(spec["url"], outdir / "source.mp4",
-                          "bv*[height<=720]+ba/b[height<=720]", spec)
+                          "bv*[height<=1080]+ba/b[height<=1080]", spec)
         logo = ""
         if box := spec.get("logo_box"):
             logo = ("removelogo=filename="
@@ -3138,11 +3581,15 @@ def main() -> int:
         # **没验过的转写不许出片。** 这不是提醒，是闸：英语素材发错一次，
         # 赔上的是整条线的可信度。`transcript_verified` 只有在人看过
         # `transcript_diff.md`、把确认过的写进 `en_fixed` 之后才该置上。
-        if not spec.get("transcript_verified"):
+        auto_verified = transcript_auto_verified(spec, lines, outdir)
+        if not spec.get("transcript_verified") and not auto_verified:
             raise SystemExit(
-                f"{args.spec} 没有 `transcript_verified: true`。\n"
-                "先跑 --stage verify 出交叉校验报告，逐处核对，把确认过的英文写进 "
-                "`en_fixed`，再置上这个标记。")
+                f"{args.spec} 既没有人工 `transcript_verified: true`，也没有当前"
+                "内容指纹对应的双 ASR pass attestation。\n"
+                "先跑 --stage verify；无红旗会自动落 verify_fingerprint.json，"
+                "有分歧/空档才进入例外复核。")
+        if auto_verified and not spec.get("transcript_verified"):
+            print("[转写] 当前内容指纹已由双 ASR 自动核验通过，无需人工布尔开关。")
         # 标记置上了，可疑行却还挂着账——那说明标记是顺手打的，不是核完打的。
         if todo := _unresolved_suspects(spec):
             raise SystemExit(

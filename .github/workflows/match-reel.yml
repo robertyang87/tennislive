@@ -62,6 +62,20 @@ on:
         description: "probe：记分条位置 x0,y0,x1,y1（源片像素）；给了就顺手量死球时刻"
         required: false
         default: ""
+      cutout_candidates:
+        # 默认关掉——2026-08-16 起「封面大图一律用官方高清实拍，`cover.portrait.
+        # frame_at` 不许再抽帧」定成硬闸之后，`solo` 版式的封面人物已经不走
+        # `pick_cover_frames.py` 这条路。量过：最近 30 条 spec 全是 solo，
+        # 上一次真正用它挑出的候选帧写进 spec 是 2026-08-19 的 `zhang-li`，
+        # 之后再没用过。这一步却一直在 probe 里无条件跑，一次 71 秒白烧。
+        #
+        # `versus.top/bottom`（VS 版式的抠图人物，`cutout` 版式）不受那道闸管，
+        # 官方图两边都拿不到时仍然要靠这一步从本场视频里抠——所以不删，
+        # 只改成显式认领：真要用 `cutout` 版式、且知道官方图会缺，手动开它。
+        description: "probe：要不要顺手扫封面候选帧（只有 VS 版式的 cutout 人物用得上，solo 版式不需要）"
+        required: false
+        type: boolean
+        default: false
       voice:
         description: "render：解说音色"
         required: false
@@ -77,6 +91,10 @@ on:
         required: false
         type: boolean
         default: false
+      received_at:
+        description: "生产可用的视频链接被确认/派发的 UTC 时刻；自动链路必传，手动留空则从本 job 第一秒起算"
+        required: false
+        default: ""
       # ⚠️ 下面这几个输入**一律不给默认值**。它们装的是「这一条片子的文案」，
       # 而默认值只能是**上一条片子的文案**——不传就顶着别人的话发出去，
       # 而且**不报错**。2026-08-01 郑钦文那条赛前前瞻就是这么发错的：
@@ -125,18 +143,35 @@ permissions:
   # **不会**创建 workflow run，见 `trigger_pages_build`。
   actions: write
 
-# 渲染按 slug 分组，不同片子可以并行，同一条的新 run 会取代旧 run。
-# 任何会发微信的 run 则共用一个全局组，而且绝不能取消已经开始发布的那一条：
-# copy.html／pushed.json／main 都是共享写点，只有串行才不会互相覆盖。
+# probe/render 按 slug 分组，不同片子可以并行，同一条的新 run 会取代旧 run。
+# 只有 mode=push 的轻量发布 run 共用一个全局组，而且绝不能取消已经开始发布的
+# 那一条：copy.html／pushed.json／main 都是共享写点，只有不可撤回的发送阶段串行。
+# render push=true 不在这里串行：它质检落库后会另派一趟 mode=push。
 concurrency:
-  group: ${{ (github.event.inputs.mode == 'push' || github.event.inputs.push == 'true') && 'match-reel-publish' || format('match-reel-{0}', github.event.inputs.slug) }}
-  cancel-in-progress: ${{ !(github.event.inputs.mode == 'push' || github.event.inputs.push == 'true') }}
+  group: ${{ github.event.inputs.mode == 'push' && 'match-reel-publish' || format('match-reel-{0}', github.event.inputs.slug) }}
+  cancel-in-progress: ${{ github.event.inputs.mode != 'push' }}
 
 jobs:
   reel:
     runs-on: ubuntu-latest
-    timeout-minutes: 40
+    # 45 = 各步骤声明的最坏预算之和（43：dry-run 闸的 3 分钟是新加的一笔）
+    # 加两分钟余量——步骤自己还在正常重试时不许被 job 级的壳先砍掉，
+    # 判据 test_job级超时要兜得住各步骤自己声明的最坏预算之和。
+    timeout-minutes: 45
     steps:
+      # 600 秒只算「生产输入已齐 → 我们自己的 MP4 落盘」。发布/Pages 是另一条
+      # SLO，不得反过来污染成片耗时；自动 dispatch 把确认链接的时刻传进来，
+      # 手动 dispatch 没传时从 runner 的第一步开始，不能等装完依赖再偷偷起表。
+      - name: 10 分钟成片时钟起点
+        id: production_clock
+        if: github.event.inputs.mode == 'render'
+        env:
+          RECEIVED_AT: ${{ github.event.inputs.received_at }}
+        run: |
+          START="${RECEIVED_AT:-$(date -u +%FT%TZ)}"
+          echo "received_at=$START" >> "$GITHUB_OUTPUT"
+          echo "[production-sla] link accepted at $START; owned MP4 budget = 600s"
+
       # **`push=true` 只能跑在 main 上，而且要在第一步就拦住。**
       #
       # GitHub Pages 只服务 main。复制页提交在特性分支上，那个 URL 永远是 404，
@@ -237,7 +272,16 @@ jobs:
           path: |
             ~/.cache/apt-archives
             ~/.cache/apt-lists
-          key: apt-pkgs-${{ runner.os }}-24.04-ffmpeg-fonts-v1
+          # actions/cache 的主键是不可变的。原来这儿是一把固定钥匙：如果第一趟
+          # probe 只攒下 ffmpeg，后面的 render 即使把字体包补进目录，post step
+          # 也不能覆盖同名缓存，于是每一趟 render 仍要重新摸 apt 镜像。
+          #
+          # 和下面 TTS 内容缓存一样改成滚动键：先按稳定前缀恢复最近一份，跑完
+          # 再用本次 run_id 回写「旧缓存 + 这趟补齐的包」。这样一次 render
+          # 补齐字体后，下一趟才能真的吃到完整缓存。
+          key: apt-pkgs-${{ runner.os }}-24.04-ffmpeg-fonts-v2-${{ github.run_id }}
+          restore-keys: |
+            apt-pkgs-${{ runner.os }}-24.04-ffmpeg-fonts-v2-
       - name: 装 ffmpeg
         # push 模式一帧都不碰：`push_reel.py` 那条路里 ffmpeg / ffprobe /
         # subprocess **一个都没出现**，装它白花半分钟。
@@ -320,6 +364,36 @@ jobs:
             echo "narration 模式：只装合语音要的，查旁白那条路的 import 已验过"
             exit 0
           fi
+          # **cookies 模式装得最少**：它只拿 yt-dlp 真下 30 秒媒体流验 cookie
+          # 活不活，不渲、不抠、不合语音——rembg 拖着 176 MB 模型的 onnxruntime、
+          # opencv、playwright 全用不上。装全套只是把失败面铺大：那几个包里
+          # 任何一个装不上，都会让一条**只是验 cookie**的 run 挂掉。
+          if [ "${{ github.event.inputs.mode }}" = "cookies" ]; then
+            pip install -q -e . "yt-dlp[default]"
+            node --version
+            echo "cookies 模式：只装 yt-dlp（[default] 不能省，见下面那段注释）"
+            exit 0
+          fi
+          # **probe 也不渲不抠**：下源片（yt-dlp）、拼缩略图墙（ffmpeg）、
+          # 认死球/切点（cv2 → visualqa）、备料（requests → 主依赖）。
+          # webrender（playwright）和 cutout（rembg + onnxruntime，一百多 MB）
+          # 是 render/cover 的封面链路用的——probe 唯一会碰 cutout 的是
+          # 「封面候选帧」那一步，而它只在 `cutout_candidates=true` 时才跑，
+          # 所以 cutout 也只在那时候装。
+          if [ "${{ github.event.inputs.mode }}" = "probe" ]; then
+            if [ "${{ github.event.inputs.cutout_candidates }}" = "true" ]; then
+              pip install -q -e ".[visualqa,cutout]"
+            else
+              pip install -q -e ".[visualqa]"
+            fi
+            pip install -q "yt-dlp[default]"
+            # 真验一次这条路要的东西，**不许 `|| true`**：装少了要在第 5 秒炸，
+            # 而不是下完几百 MB 源片之后死在拼墙/认切点那一步。
+            python -c "import cv2, numpy, requests"
+            node --version
+            echo "probe 模式：装 visualqa + yt-dlp，探测那条路的 import 已验过"
+            exit 0
+          fi
           # `cutout` 那份是 rembg：封面人物走「本场抽帧抠图」，抠背景要它。
           # **同一个坑第四次**——playwright、Chromium、cv2 三次都是本地装着、
           # runner 上没有，而且都死在下完 64MB 源片之后。这次连预检一起加了
@@ -337,6 +411,39 @@ jobs:
           # 两样都查，缺一样就退回 edge-tts。
           pip install -q azure-cognitiveservices-speech
           node --version
+
+      # **`--dry-run` 0.2 秒能拦的错，别让它等到装完 Chromium、下完源片才红。**
+      # spec 形状错、选段硬伤、文案超限、旁白一定装不下——这四类在本地都该被
+      # dry-run 拦住，但「本地跑过」靠的是人记得；这一步让 runner 自己也拦一遍，
+      # 死在第 30 秒而不是第 5 分钟（「返工比慢更贵」那条的 runner 侧半截）。
+      # ⚠️ 只给要读 spec 的三档（render / cover / narration）——probe 那档
+      # 常常还没有 spec（它自己就是来备料写草稿的），cookies / push 不读 spec。
+      - name: dry-run — 先把 spec 的形状错拦在编码之前
+        if: >-
+          github.event.inputs.mode == 'render'
+          || github.event.inputs.mode == 'cover'
+          || github.event.inputs.mode == 'narration'
+        timeout-minutes: 3
+        run: |
+          SLUG="${{ github.event.inputs.slug }}"
+          SPEC="specs/reels/${SLUG}.json"
+          test -f "$SPEC" || { echo "::error::找不到 $SPEC"; exit 1; }
+          # dry-run 的 probe 层按**源片 URL** 认领 output/*/reel/*/probe.json，
+          # 而稀疏检出把 output/ 挡在外面（554 MB）——不拉回来的话这一层是哑的，
+          # 「没查」和「查过没问题」在日志上长得一模一样。只 add 这条 slug 自己
+          # 的那几格（probe.json 连着缩略图墙，几 MB），别把整棵 output/ 抬回来。
+          DIRS=$(git ls-tree -r --name-only HEAD -- output 2>/dev/null \
+            | grep -E "^output/[^/]+/reel/${SLUG}/probe\.json$" \
+            | xargs -r -n1 dirname | sort -u)
+          if [ -n "$DIRS" ]; then
+            git sparse-checkout add $DIRS
+            echo "拉回 probe 产物：$DIRS"
+          else
+            echo "::warning::仓库里还没有 output/*/reel/${SLUG}/probe.json——"
+            echo "::warning::dry-run 的 probe 层（切点/死球/片长）这趟是哑的，先跑一趟 mode=probe"
+          fi
+          python tools/build_match_reel.py render --dry-run \
+            --spec "$SPEC" --outdir /tmp/dryrun
 
       - name: 缓存 Chromium
         if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover'
@@ -363,6 +470,32 @@ jobs:
         # 掐掉，和「装不上」长得一模一样。
         timeout-minutes: 10
         run: |
+          # 浏览器目录命中缓存后，先真启动一个空白页。启动成功同时证明：
+          # ① 当前 playwright 找得到正确版本的 Chromium；② runner 上所需动态库
+          # 已齐。此时再跑 `--with-deps` 只会重复碰 apt，白花几十秒到数分钟。
+          #
+          # 不能只看 actions/cache 的 cache-hit：restore-keys 命中的旧缓存也可能
+          # 正好可用，反过来「目录命中」也不保证动态库齐。真 launch 是行为判据；
+          # 失败才原样落回下面带超时、重试和 dpkg 收尾的安装路径。
+          if timeout 20 python - <<'PY'
+          from playwright.sync_api import sync_playwright
+
+          try:
+              with sync_playwright() as playwright:
+                  browser = playwright.chromium.launch(headless=True)
+                  page = browser.new_page()
+                  page.set_content("<p>chromium-ready</p>")
+                  assert page.locator("p").inner_text() == "chromium-ready"
+                  browser.close()
+          except Exception as exc:  # noqa: BLE001
+              print(f"[chromium] 缓存未就绪，走带依赖安装：{type(exc).__name__}: {exc}")
+              raise SystemExit(1)
+          PY
+          then
+            echo "[chromium] 缓存可直接启动，跳过带系统依赖的安装"
+            exit 0
+          fi
+
           # ⚠️ **`--with-deps` 会跑 apt，而这个仓库的 apt 会抽风。** CLAUDE.md 里那条
           # 「一次静静烧了 13 分 42 秒」的教训当时只套在显式的 `apt-get` 步骤上，
           # **漏了这一处**——而它既没超时也没重试，能一路烧到 job 的 15 分钟预算
@@ -441,9 +574,11 @@ jobs:
       #
       # 按 URL 算之后，同一条源片的主键在整条片子的生命周期里**一直命中**，
       # 一次都不用重传。判据在 `test_源片缓存的键要按URL算`。
+      # ⚠️ cookies 模式也不走 download()（它自己往 $RUNNER_TEMP 下 30 秒试块），
+      # 恢复源片缓存对它是纯开销，还会在结束时把这份缓存重传一遍挤 10 GB 池子。
       - name: 算出源片缓存的键
         id: srckey
-        if: github.event.inputs.mode != 'push' && github.event.inputs.mode != 'narration'
+        if: github.event.inputs.mode != 'push' && github.event.inputs.mode != 'narration' && github.event.inputs.mode != 'cookies'
         env:
           URL_INPUT: ${{ github.event.inputs.url }}
           SLUG: ${{ github.event.inputs.slug }}
@@ -483,7 +618,7 @@ jobs:
           echo "hash=$(cat "$RUNNER_TEMP/srckey")" >> "$GITHUB_OUTPUT"
 
       - name: 缓存源片（同一条片子只下一次）
-        if: github.event.inputs.mode != 'push' && github.event.inputs.mode != 'narration'
+        if: github.event.inputs.mode != 'push' && github.event.inputs.mode != 'narration' && github.event.inputs.mode != 'cookies'
         uses: actions/cache@v4
         with:
           path: ~/.cache/tennislive-sources
@@ -495,8 +630,12 @@ jobs:
       # 集合只会越跑越全。所以用**滚动键**（run_id 进 key）：每趟 restore-keys
       # 按 slug 前缀捞回上一趟攒下的全部音频，跑完把「旧 + 新增」一起存成新键。
       # 只改封面/字幕重渲时，旁白 text 没变 → 每段都命中内容 hash → 一分不重合成。
+      # ⚠️ 只给真会合语音的两档（render / narration）。probe、cover、cookies
+      # 一个字都不合成，恢复了也是空转；更贵的是**滚动键每趟都存一份新条目**
+      # （run_id 进 key），白占 10 GB LRU 池，把 Chromium（150 MB）和抠图模型
+      # （176 MB）往外挤——被挤掉的样子只是「今天 CI 怎么慢了点」。
       - name: 缓存 TTS（同文旁白跨趟不重合成）
-        if: github.event.inputs.mode != 'push'
+        if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'narration'
         uses: actions/cache@v4
         with:
           path: ~/.cache/tennislive-tts
@@ -559,6 +698,16 @@ jobs:
         run: |
           OUTDIR="${{ steps.paths.outputs.outdir }}"
           REEL="$OUTDIR/${{ github.event.inputs.slug }}.mp4"
+          # **重发要显式。** pushed.json 在仓库里就说明这条已经发过了——人工
+          # 再跑一次 mode=push 会把同一条消息再发一遍，而微信消息收不回来。
+          # ⚠️ 查 `git ls-files` 不查 `test -f`：稀疏检出下工作区那份不可靠
+          # （「查 pushed.json 要用 ls-files」这条 auto_push_gate 早栽过），
+          # 而且只在工作区、没提交的标记本来就不算数。
+          if [ -n "$(git ls-files -- "$OUTDIR/pushed.json")" ]; then
+            echo "::error::$OUTDIR/pushed.json 已在仓库里——这条已经推送过了。"
+            echo "::error::确要重发，先把 pushed.json 从仓库删掉再来（让重发是一次显式的决定）。"
+            exit 1
+          fi
           URL=$(python -c "
           import json, pathlib, sys
           p = pathlib.Path('$OUTDIR/render.json')
@@ -593,10 +742,13 @@ jobs:
         # 字节都不碰」）。它却一直在这儿等 PO token provider 起来——实测 11 秒，
         # 而整趟 narration 只有 1 分 37 秒。又一次「加新能力时新入口没继承前提」：
         # narration 这一档是后加的，这行 `if` 没跟着改。
+        # cookies 模式同理：它只验 cookie 本身（不恢复源片缓存、不下源片），
+        # PO token provider 对它是纯等待。
         # 判据在 `test_不下源片的模式不许等PO_token`。
         if: >-
           github.event.inputs.mode != 'push'
           && github.event.inputs.mode != 'narration'
+          && github.event.inputs.mode != 'cookies'
         continue-on-error: true
         run: |
           pip install -q bgutil-ytdlp-pot-provider
@@ -604,7 +756,7 @@ jobs:
             brainicism/bgutil-ytdlp-pot-provider
           for i in $(seq 1 25); do
             if curl -sf http://127.0.0.1:4416/ping >/dev/null; then
-              echo "provider 起来了（第 $           次探活）"
+              echo "provider 起来了（第 $i 次探活）"
               echo "up=1" >> "$GITHUB_OUTPUT"
               exit 0
             fi
@@ -643,7 +795,7 @@ jobs:
             ARGS="--cookies $YT_COOKIES"
             echo "带 cookie 试（$(wc -l < "$YT_COOKIES") 行）"
           else
-            echo "::warning::没有 YT_COOKIES_TXT，这次只验 PO token + client 梯子"
+            echo "::warning::没有 YT_COOKIES_TXT，这次只验 client 梯子（cookies 模式不起 PO token provider）"
           fi
           rm -rf "$RUNNER_TEMP/ytcheck" && mkdir -p "$RUNNER_TEMP/ytcheck"
           yt-dlp $ARGS --js-runtimes node --download-sections "*0-3" \
@@ -689,16 +841,24 @@ jobs:
             --outdir "${{ steps.paths.outputs.outdir }}"
           ls -la "${{ steps.paths.outputs.outdir }}"
 
-      # 顺便把封面人物的候选帧也挑出来。**源片只在 runner 上有**——沙箱下不动
-      # YouTube，所以这一步不在这儿做，就只能拿 2 秒一格的缩略图墙用肉眼找正脸，
-      # 而那正是 `pick_cover_frames.py` 要替掉的活。
+      # 顺便把封面人物的候选帧也挑出来——**但只在 `cutout_candidates=true` 时**。
+      # 源片只在 runner 上有——沙箱下不动 YouTube，所以这一步不在这儿做，
+      # 就只能拿 2 秒一格的缩略图墙用肉眼找正脸，而那正是 `pick_cover_frames.py`
+      # 要替掉的活。
       # 挑帧判据（账号所有者定的）：正脸或稍微侧脸、上半身直立、表情读得出。
       # **挑完仍然要人打开看**：谁是谁、表情对不对题机器判不了，所以这里只出
       # 候选墙，不自动写进 spec。
       # 挑不出来**不算失败**（有些集锦通篇没有近景）——`|| true` 让它继续，
       # 缩略图墙那条老路还在。
+      #
+      # ⚠️ 默认不跑了。这一步找的是 `versus.top/bottom` 抠图人物（`cutout` 版式）
+      # 用的候选，不是 `cover.portrait`——后者 2026-08-16 起硬性要求官方高清
+      # 实拍、不许再抽帧。而现在几乎每条片子都是 `solo` 版式（量过：最近 30 条
+      # 全是，上一次真用它挑出候选写进 spec 是 2026-08-19 的 `zhang-li`），
+      # 所以这 71 秒常规就是白烧的。真要用 `cutout` 版式再显式开
+      # `cutout_candidates: true`。
       - name: probe — 封面候选帧
-        if: github.event.inputs.mode == 'probe'
+        if: github.event.inputs.mode == 'probe' && github.event.inputs.cutout_candidates == 'true'
         run: |
           OUT="${{ steps.paths.outputs.outdir }}"
           python tools/pick_cover_frames.py \
@@ -747,6 +907,7 @@ jobs:
             --captions "$OUT/captions.txt" \
             --cuts "$OUT/probe.json" \
             --source-url "${{ github.event.inputs.url }}" \
+            --cover \
             $ALIGN_ARGS \
             --write
 
@@ -796,13 +957,25 @@ jobs:
           YT_POT_PROVIDER: ${{ steps.pot.outputs.up }}
         run: |
           SPEC="specs/reels/${{ github.event.inputs.slug }}.json"
+          OUTDIR="${{ steps.paths.outputs.outdir }}"
+          SLUG="${{ github.event.inputs.slug }}"
           test -f "$SPEC" || { echo "::error::找不到 $SPEC"; exit 1; }
+          # 600 秒是性能目标，不是内容闸。超线照样做完、照样过 L2 和发布；
+          # `finish` 会在产物与 job summary 留 FAIL + warning，供后续定点修复。
+          RENDER_STARTED=$(date -u +%FT%TZ)
           python tools/build_match_reel.py render \
             --spec "$SPEC" \
             --voice "${{ github.event.inputs.voice }}" \
             --rate "${{ github.event.inputs.rate }}" \
-            --outdir "${{ steps.paths.outputs.outdir }}"
-          ls -la "${{ steps.paths.outputs.outdir }}"
+            --outdir "$OUTDIR"
+          python tools/video_sla.py finish \
+            --received-at "${{ steps.production_clock.outputs.received_at }}" \
+            --render-started-at "$RENDER_STARTED" \
+            --artifact "$OUTDIR/$SLUG.mp4" \
+            --metadata "$OUTDIR/render.json" \
+            --pipeline match-reel --slug "$SLUG" \
+            --summary "$GITHUB_STEP_SUMMARY"
+          ls -la "$OUTDIR"
 
       # 复制页**必须写在提交之前**。它由 GitHub Pages 提供，没进仓库就是 404。
       # 之前这一句藏在推送那一步里，而推送排在提交之后——文件只活在 runner 的
@@ -932,8 +1105,14 @@ jobs:
           PY
           rm -f "$REEL"
 
+      # ⚠️ **mode=push 不许走这一步。** push 那条路一个中间物都不产（复制页 +
+      # 发微信而已），而它的 OUTDIR 是按 slug 反查出来的**历史日期目录**——
+      # 2026-08-13 之前发的片子成片还在 git 里（存量不动，只改增量），稀疏检出
+      # 把那格 add 回来之后，末尾那个**递归**的 8 MB 兜底会把这些合法的存量
+      # mp4 当成「漏网的大文件」`exit 1`，在写复制页之前就把唯一受支持的
+      # 手动推送路径杀掉。清理是给 probe/cover/render 这几条**产中间物**的路的。
       - name: 丢掉不进仓库的中间物
-        if: github.event.inputs.mode != 'narration' && github.event.inputs.mode != 'cookies'
+        if: github.event.inputs.mode != 'narration' && github.event.inputs.mode != 'cookies' && github.event.inputs.mode != 'push'
         run: |
           OUTDIR="${{ steps.paths.outputs.outdir }}"
           # 源片 50MB 上下，逐帧图几百张——都不进仓库，只留缩略图墙和成片。
@@ -1067,12 +1246,20 @@ jobs:
           # 只 add 本次的目录：一起 add output/ 会把别的选题的成片一并重放，
           # 并行跑的时候会来回覆盖（explainer 那条线上踩过）
           git add "$OUTDIR"
-          # 自动备料的草稿 spec 也要落库——assemble_spec --write 写到 specs/reels/，
-          # 不在 $OUTDIR 里，之前一直没被提交，终审在 git 里根本看不到草稿。
-          # 只 add 本 slug 的草稿，别把别人的一起带上；文件不存在（没备料/已提升
-          # 成正式 spec）就跳过。
-          if [ -f "specs/reels/${{ github.event.inputs.slug }}.draft.json" ]; then
-            git add "specs/reels/${{ github.event.inputs.slug }}.draft.json"
+          # 自动备料的草稿 spec 也要落库——assemble_spec --write 写到
+          # specs/reels/pending/（⚠️ 不是 specs/reels/ 正下方：那儿被非递归
+          # glob("*.json") 的判据扫着，一份草稿曾把 main CI 红过两小时，见
+          # specs/reels/pending/README.md），不在 $OUTDIR 里，不加这步终审在
+          # git 里根本看不到草稿。只 add 本 slug 的草稿，别把别人的一起带上；
+          # 文件不存在（没备料/已提升成正式 spec）就跳过。
+          if [ -f "specs/reels/pending/${{ github.event.inputs.slug }}.draft.json" ]; then
+            git add "specs/reels/pending/${{ github.event.inputs.slug }}.draft.json"
+          fi
+          # assemble_spec --cover 把 WTA 官方赛后稿头图写到 assets/reel/，不在
+          # OUTDIR 或 pending/ 里。漏 add 会让草稿引用一张 runner 消失后不存在的图。
+          COVER_ASSET="assets/reel/${{ github.event.inputs.slug }}-cover.jpg"
+          if [ -f "$COVER_ASSET" ]; then
+            git add "$COVER_ASSET"
           fi
           if git diff --cached --quiet; then
             echo "没有变化"
@@ -1089,27 +1276,59 @@ jobs:
             if git push origin "HEAD:$BRANCH"; then
               exit 0
             fi
-            echo "push 被拒（第 $attempt 次），把本条成片重放到最新的 $BRANCH 上"
+            echo "push 被拒（第 $attempt 次），把本次提交动过的文件重放到最新的 $BRANCH 上"
             git fetch origin "$BRANCH"
             git branch -f rendered HEAD
             git reset --hard "origin/$BRANCH"
-            # **先把这个目录清空再放回来。** `git checkout <ref> -- <dir>` 只会
-            # 恢复 ref 里**存在**的文件，不会删掉 ref 里没有的——而上一句
-            # `reset --hard` 刚把 origin/main 上那份旧成片放了回来。于是走了
-            # Release 的那一版明明已经 `rm` 掉、第一次提交也确实带着
-            # `delete mode ... eala-osaka.mp4`，重放一次就**被救活了**
-            # （run 30727483963：第一次提交对，push 撞车，重放之后那条 delete
-            # 没了，仓库里留下 2 分 39 秒的旧片，而真片子在 Release 上）。
-            # 「陈图留在仓库里，看着像本期的一部分」——同一个毛病换了个入口。
-            rm -rf "$OUTDIR"
-            git checkout rendered -- "$OUTDIR"
-            git add -A "$OUTDIR"
+            # **重放按「这次提交真正改了什么」算，不按写死的目录算。**
+            # 老写法 `rm -rf $OUTDIR && git checkout rendered -- $OUTDIR` 有两个洞：
+            # ① 只重放 OUTDIR——同一个提交里 OUTDIR 之外的文件（比如 probe
+            #    自动备料写的 specs/reels/<slug>.draft.json）被 reset --hard
+            #    抹掉之后**静默丢失**；草稿哪天挪个位置，这里还得跟着改，
+            #    而漏改不吭声。
+            # ② 「重放只加不减」的老毛病靠 rm -rf 补（run 30727483963：走了
+            #    Release、已经 rm 掉的旧成片被 reset --hard 救活）——而 rm 的
+            #    范围同样写死在 OUTDIR，跟 ① 一个形状。
+            # 两条 diff 把这次提交动过的每一个文件原样搬回来：
+            #   小写 d ＝ 排除删除（新增/修改的那些），checkout 恢复内容并进索引；
+            #   大写 D ＝ 该提交删掉的那些（走了 Release 的旧成片），git rm 把
+            #   reset --hard 刚救活的那份再删掉并进索引。--sparse：稀疏检出下
+            #   照样能动索引；--ignore-unmatch：新 origin 上已经没有它也不红。
+            # 循环每一轮都重新 `git branch -f rendered HEAD`，所以
+            # `rendered^..rendered` 永远正好是本次这一个提交。
+            git diff --name-only -z --diff-filter=d rendered^ rendered \
+              | xargs -0 -r git checkout rendered --
+            git diff --name-only -z --diff-filter=D rendered^ rendered \
+              | xargs -0 -r git rm -q -f --ignore-unmatch --sparse --
             python tools/check_staged_file_sizes.py
             git diff --cached --quiet || git commit -m "$MSG"
             sleep $((attempt * 5 + RANDOM % 10))
           done
           echo "::error::连续 10 次推送失败；成片仍在 artifact 中，未发送微信死链"
           exit 1
+
+      # push=true 的 render 不在本 job 里直接 POST：那会让 job 级发布锁把多场
+      # render 也全部串行。到这里代表 dry-run、成片 L2、Release 探活、提交全过，
+      # 再派一趟只做发布的 mode=push；这些轻量 run 在 match-reel-publish 组串行。
+      - name: render 质检落库后自动派发微信推送
+        if: github.event.inputs.mode == 'render' && github.event.inputs.push == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          SENT=0
+          for attempt in 1 2 3; do
+            if gh workflow run match-reel.yml --ref main \
+              -f mode=push \
+              -f slug="${{ github.event.inputs.slug }}" \
+              -f push=true; then
+              SENT=1
+              break
+            fi
+            echo "第 $attempt 次派发 push-only 没成，稍后重试"
+            sleep $((attempt * 5))
+          done
+          [ "$SENT" = 1 ] || {
+            echo "::error::成片已质检并落库，但 push-only 连续三次派发失败"; exit 1; }
 
       # 推送**必须排在提交之后**——正文里的成片链接和复制页链接都指向仓库里的
       # 文件，还没提交上去就是 404。这一段的注释一直写着「推送是最后一步：
@@ -1118,8 +1337,27 @@ jobs:
       # 之所以一直没被发现，是因为这一步以前从没真的跑成功过。
       #
       # 「触发成功」不算推了，**这一步 success 才算**。
+      - name: 推送前预占持久发布账本
+        id: publish_reserve
+        if: github.event.inputs.push == 'true' && github.event.inputs.mode == 'push'
+        run: |
+          python tools/auto_push_gate.py \
+            --reserve "${{ steps.paths.outputs.outdir }}" \
+            --run "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
+            --now "$(date -u +%FT%TZ)"
+          git config user.name "Claude"
+          git config user.email "noreply@anthropic.com"
+          git add --sparse "data/reel_publish_ledger/${{ github.event.inputs.slug }}.json"
+          git commit -m "reel: 预占推送 ${{ github.event.inputs.slug }}"
+          for attempt in $(seq 1 5); do
+            if git push origin main; then exit 0; fi
+            git pull --rebase origin main || { git rebase --abort || true; }
+            sleep $((attempt * 3 + RANDOM % 5))
+          done
+          echo "::error::发送前账本没有落进 main，不允许发送"; exit 1
+
       - name: 推送到微信（可选）
-        if: github.event.inputs.push == 'true' && (github.event.inputs.mode == 'render' || github.event.inputs.mode == 'push')
+        if: github.event.inputs.push == 'true' && github.event.inputs.mode == 'push'
         env:
           GITHUB_TOKEN: ${{ github.token }}
           PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
@@ -1154,7 +1392,7 @@ jobs:
       # `auto_push_gate` 的注释和 CLAUDE.md 都专门写过这个顺序。
       # 所以这一步不带 `always()`：上一步红了就不该记。
       - name: 记下已经推送过
-        if: github.event.inputs.push == 'true' && (github.event.inputs.mode == 'render' || github.event.inputs.mode == 'push')
+        if: github.event.inputs.push == 'true' && github.event.inputs.mode == 'push'
         run: |
           python tools/auto_push_gate.py \
             --record "${{ steps.paths.outputs.outdir }}" \
@@ -1162,8 +1400,44 @@ jobs:
             --now "$(date -u +%FT%TZ)"
           git config user.name "Claude"
           git config user.email "noreply@anthropic.com"
-          git add --sparse "${{ steps.paths.outputs.outdir }}"
+          git add --sparse "${{ steps.paths.outputs.outdir }}" \
+            "data/reel_publish_ledger/${{ github.event.inputs.slug }}.json"
           python tools/check_staged_file_sizes.py
-          git commit -m "reel: ${{ github.event.inputs.slug }} 已推送" || exit 0
+          # ⚠️ 只放过「没有变化」这一种。原来是 `git commit … || exit 0`——
+          # 它把**一切** commit 失败（钩子炸了、磁盘满、身份没配上）都吞成绿，
+          # 而这一步的失败意味着「微信已发、标记没落库」，自动闸之后会把这条
+          # 当「没发过」再发一遍。
+          if git diff --cached --quiet; then
+            echo "标记没有变化（已经记过），不用再提交"; exit 0
+          fi
+          git commit -m "reel: ${{ github.event.inputs.slug }} 已推送"
+          # ⚠️ 撞车重试不能省：这一步排在微信**已经发出去**之后，单推一次撞上
+          # 并行提交就红，红完标记没落库——下一次 render.json 被合并就是一条
+          # 重复的微信消息。pushed.json 是纯文本，rebase 必然干净（和「提交
+          # 产物」那个循环不同：那边有二进制要重放，这边没有）。
           git pull --rebase origin main
+          for attempt in $(seq 1 5); do
+            if git push origin main; then exit 0; fi
+            echo "push 被拒（第 $attempt 次），rebase 之后重试"
+            git pull --rebase origin main
+            sleep $((attempt * 5 + RANDOM % 10))
+          done
+          echo "::error::「已推送」标记连续 5 次推不上去。微信**已经发出去了**，"
+          echo "::error::标记必须补进仓库（tools/auto_push_gate.py --record 后提交），"
+          echo "::error::否则自动闸会把这条片子当成「没发过」再发一次。"
+          exit 1
+
+      - name: 已预占后失败则标记推送状态不明
+        if: failure() && steps.publish_reserve.outcome == 'success'
+        continue-on-error: true
+        run: |
+          python tools/auto_push_gate.py \
+            --uncertain "${{ steps.paths.outputs.outdir }}" \
+            --run "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
+            --now "$(date -u +%FT%TZ)"
+          git config user.name "Claude"
+          git config user.email "noreply@anthropic.com"
+          git add --sparse "data/reel_publish_ledger/${{ github.event.inputs.slug }}.json"
+          git commit -m "reel: ${{ github.event.inputs.slug }} 推送状态待核实" || exit 0
+          git pull --rebase origin main || { git rebase --abort || true; }
           git push origin main

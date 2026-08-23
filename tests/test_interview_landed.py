@@ -41,6 +41,13 @@ def test_ffprobe的csv输出带尾随逗号也解析得出来():
         float("291.880000,\n".strip())
 
 
+def test_音轨峰值解析能识别数字静音():
+    ci = _tool()
+    assert ci._max_volume_db("[Parsed] max_volume: -3.2 dB") == pytest.approx(-3.2)
+    assert ci._max_volume_db("[Parsed] max_volume: -inf dB") == float("-inf")
+    assert ci._max_volume_db("没有这项") is None
+
+
 def test_ass_has_dialogue认得Dialogue行(tmp_path):
     ci = _tool()
     ass = tmp_path / "x.ass"
@@ -74,3 +81,37 @@ def test_check_offline缺啥记啥(tmp_path, capsys):
     assert bad == 2, f"ass 无 + zh 空应记 2，实际 {bad}"
     out = capsys.readouterr().out
     assert "不合格" in out
+
+
+def test_bilingual_body只认正文同时间码双语不认顶栏(tmp_path):
+    ci = _tool()
+    ass = tmp_path / "x.ass"
+    ass.write_text(
+        "Dialogue: 0,0:00:00.00,0:00:10.00,HEADA,,0,0,0,,栏目顶栏\n"
+        "Dialogue: 0,0:00:01.00,0:00:03.00,EN,,0,0,0,,Question\n"
+        "Dialogue: 0,0:00:01.00,0:00:03.00,ZH,,0,0,0,,问题\n",
+        encoding="utf-8")
+    ok, detail = ci.bilingual_body_ok(ass, {"zh": ["问题"]})
+    assert ok, detail
+
+    ass.write_text(
+        "Dialogue: 0,0:00:00.00,0:00:10.00,HEADA,,0,0,0,,栏目顶栏\n",
+        encoding="utf-8")
+    ok, _ = ci.bilingual_body_ok(ass, {"zh": ["问题"]})
+    assert not ok, "顶栏有字不能冒充正文中英字幕"
+
+
+def test_冷开场原解说也必须逐cue中英成对(tmp_path):
+    ci = _tool()
+    ass = tmp_path / "_lead.ass"
+    ass.write_text(
+        "Dialogue: 0,0:00:01.00,0:00:03.00,EN,,0,0,0,,Match point\n"
+        "Dialogue: 0,0:00:01.00,0:00:03.00,ZH,,0,0,0,,赛点\n",
+        encoding="utf-8")
+    spec = {"lead_in": {"subs": [{"en": "Match point", "zh": "赛点"}]}}
+    assert ci.bilingual_lead_ok(ass, spec)[0]
+
+    ass.write_text(
+        "Dialogue: 0,0:00:01.00,0:00:03.00,EN,,0,0,0,,Match point\n",
+        encoding="utf-8")
+    assert not ci.bilingual_lead_ok(ass, spec)[0], "只有英文不能通过冷开场双语质检"

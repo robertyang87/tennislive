@@ -126,6 +126,15 @@ def _if_holds(expr, *, mode: str, push: str = "false") -> bool:
     py = (str(expr)
           .replace("github.event.inputs.mode", repr(mode))
           .replace("github.event.inputs.push", repr(push))
+          # 正常成功路径下，失败回收步不会执行。发布账本加入了这种清理步，
+          # 它不属于 mode 分流的主语，但扫描所有 step 时仍要能求值。
+          .replace("failure()", "False")
+          .replace("cancelled()", "False")
+          .replace("always()", "True")
+          .replace("steps.manual_reserve.outcome", repr("success"))
+          # 「叫醒自动推送」那一步的 if 里有 ref_name——这套模拟按「跑在
+          # main 上」求值：分支上的行为(那一步跳过)不在这套判据的主语里。
+          .replace("github.ref_name", repr("main"))
           .replace("&&", " and ").replace("||", " or "))
     if py.strip() == "always()":
         return True
@@ -1279,6 +1288,29 @@ def test_横着挪窗口能把右上角的台标裁掉(tmp_path):
         "封面和成片两条路都要读 `crop_shift_x`，漏一个就只裁一半"
 
 
+def test_转载源色彩校正显式且片头不继承():
+    """镜像转载还可能把对比度／饱和度推重；正文、封面要同调，官方片头独立。"""
+    from tools.build_interview_clip import _video_eq_filter
+
+    assert _video_eq_filter({}) == "", "存量 spec 没写时一个像素都不能变"
+    grade = _video_eq_filter({"video_eq": {
+        "contrast": 0.9, "brightness": 0.04, "saturation": 0.82, "gamma": 1.02}})
+    assert grade == "eq=contrast=0.9:brightness=0.04:saturation=0.82:gamma=1.02,"
+
+    for bad in ({"video_eq": {}},
+                {"video_eq": {"contrast": "0.9"}},
+                {"video_eq": {"saturation": 3.1}},
+                {"video_eq": {"temperature": 6500}}):
+        with pytest.raises(SystemExit, match="video_eq"):
+            _video_eq_filter(bad)
+
+    src_txt = (ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8")
+    assert src_txt.count("_video_eq_filter(spec)") == 2, \
+        "封面和采访正文必须走同一组色彩校正"
+    assert '_video_eq_filter(lead, "lead_in")' in src_txt, \
+        "跨视频片头只能读取自己的 video_eq，不能继承转载正文"
+
+
 def test_关掉顶栏要显式认领而且默认不许变(tmp_path):
     """账号所有者 2026-08-14（德约科维奇重返辛辛那提那条）：「不要顶部的比赛
     信息提示栏」。理由不是版式口味——**顶栏印的那句话在那条片子上不成立**：
@@ -2078,24 +2110,100 @@ def _ci_sparse_block() -> list[str]:
     return []
 
 
-def test_ci能看到赛后开麦的转写产物():
+def test_ci能看到赛后开麦的转写产物(tmp_path):
     """CI 是 sparse-checkout，**默认不含 `output/`**（那目录 1 GB+）。
 
     `test_spec里的人工引语和en_fixed是自洽的` 要读 `lines.json`，
     没有它就永远 skip——而常年不变的 skip 和常年不变的 fail 是同一个毛病。
+
+    ⚠️ **2026-08-23：判据从「扫字面行」换成「真跑一遍 sparse-checkout」。**
+    旧版本只检查块里有没有 `output/interviews` 这一行字符串——`ci.yml` 那天
+    从「只带 interviews 那一格」换成「全仓库带 json/md/txt/ass、只排除
+    二进制」（根因见 ci.yml 里那段注释：`_read()` 对不在磁盘上的文件逐个
+    `git show`，而这仓库是 `--filter=blob:none` 的部分克隆，每次都要向
+    GitHub 单独取一次 blob，513 秒里 81% 烧在这上面），新块里已经没有
+    字面的 `output/interviews` 这一行了，旧判据会红——但它想守住的事
+    （转写产物摆在磁盘上、mp4 不在）**依然成立，只是换了个更宽的机制**。
+
+    ⚠️⚠️ **同一天补的第二刀：`.json3` 一开始漏了。** 老块把
+    `output/interviews/` 整段收进来（只排除 `.mp4`），`cap_*.json3`
+    （yt-dlp 拉下来的原始字幕缓存）本来就在检出范围里；换成按后缀收窄后
+    第一版只写了 `.json/.md/.txt/.ass`，`.json3` 后缀对不上 `*.json`，
+    这条判据当时没测到——直到那条 PR 自己真实跑了一趟 CI，才从 pytest
+    的 skip 明细里看出 23 条转写校验测试从"通过"退化成了"跳过"。
+    现在这份 layout 里专门放了一份 `.json3`，反向验证过：把 sparse-checkout
+    块里那行 `/output/**/*.json3` 删掉，`should_have` 那条断言立刻精确报出
+    「`cap_abc123.en.json3` 不在」——和真实 CI 那次露馅的形状一模一样。
+    另一半（mp4/jpg 不该被带进来）复用的是这条测试本来就有的
+    `should_not_have`，早先加宽整个模式集时已经反向验证过。
+
+    真跑一遍能验的是**实际行为**，不是某一行字符串在不在——所以这次不再
+    手翻一份 gitignore 语义的匹配器（试过，`/*` 这类锚定模式在 git 真实的
+    非 cone 稀疏检出里会递归覆盖子目录，简化版正则模拟不出这个行为，
+    写错了比没有更危险），改成**真造一个仓库、真按这份 pattern 走一遍
+    checkout**，直接问工作树「这几个文件在不在」。
     """
+    import subprocess  # noqa: PLC0415
+
     block = _ci_sparse_block()
-    lines = [ln.strip() for ln in block]
-    assert not block or any("output/interviews" in ln and not ln.startswith("!")
-                            for ln in lines), \
-        "ci.yml 用了 sparse-checkout 却没带上 output/interviews，spec 测试会永远 skip"
-    # **而 mp4 要挡在外面。** 这个目录已经 331 MB，其中 5 个 mp4 占 328 MB，
-    # 测试要读的 md / json / ass / jpg 加起来约 3 MB——每一趟 CI 都在拉 328 MB
-    # 它从不打开的视频。cone 模式挑不掉后缀，所以这儿必须是非 cone 模式。
-    if block:
-        assert any(ln.startswith("!") and ln.endswith(".mp4") for ln in lines), (
-            "成片 mp4 没被挡在 sparse 范围外——CI 每趟白拉 328 MB。"
-            "（这正是本文件当年那句「等条数多起来要改成非 cone 模式按后缀挑」）")
+    if not block:
+        pytest.skip("ci.yml 没有 sparse-checkout 块，这条判据无从谈起")
+
+    src = tmp_path / "src"
+    src.mkdir()
+    layout = {
+        "output/interviews/foo/lines.json": "{}",
+        "output/interviews/foo/lines.md": "x",
+        "output/interviews/foo/cap_abc123.en.json3": '{"events": []}',
+        "output/interviews/foo/clip.mp4": "binary-stand-in",
+        "output/2026-08-20/reel/bar/render.json": "{}",
+        "output/2026-08-20/reel/bar/poster.jpg": "binary-stand-in",
+        "specs/reels/foo.json": "{}",
+        "pyproject.toml": "x",
+    }
+    for rel, content in layout.items():
+        p = src / rel
+        p.parent.mkdir(parents=True, exist_ok=True)
+        p.write_text(content, encoding="utf-8")
+
+    def _git(*args, cwd):
+        r = subprocess.run(["git", *args], cwd=cwd, capture_output=True,
+                           text=True, env={"GIT_CONFIG_NOSYSTEM": "1",
+                                            "HOME": str(tmp_path)})
+        assert r.returncode == 0, f"git {' '.join(args)} 失败：{r.stderr}"
+        return r.stdout
+
+    _git("init", "-q", cwd=src)
+    _git("config", "user.email", "t@t", cwd=src)
+    _git("config", "user.name", "t", cwd=src)
+    _git("add", "-A", cwd=src)
+    _git("commit", "-q", "-m", "init", cwd=src)
+    branch = _git("symbolic-ref", "--short", "HEAD", cwd=src).strip()
+
+    dst = tmp_path / "dst"
+    _git("clone", "-q", str(src), str(dst), cwd=tmp_path)
+    _git("config", "core.sparseCheckoutCone", "false", cwd=dst)
+    subprocess.run(["git", "sparse-checkout", "init"], cwd=dst,
+                   capture_output=True, env={"GIT_CONFIG_NOSYSTEM": "1",
+                                              "HOME": str(tmp_path)})
+    (dst / ".git" / "info" / "sparse-checkout").write_text(
+        "\n".join(block) + "\n", encoding="utf-8")
+    _git("checkout", "-q", branch, cwd=dst)
+
+    got = {rel for rel in layout if (dst / rel).is_file()}
+    should_have = {"output/interviews/foo/lines.json",
+                   "output/interviews/foo/lines.md",
+                   "output/interviews/foo/cap_abc123.en.json3",
+                   "output/2026-08-20/reel/bar/render.json",
+                   "specs/reels/foo.json", "pyproject.toml"}
+    should_not_have = {"output/interviews/foo/clip.mp4",
+                       "output/2026-08-20/reel/bar/poster.jpg"}
+    assert should_have <= got, (
+        f"真跑一遍 ci.yml 的 sparse-checkout 之后，这些该在磁盘上的文件不在：\n  "
+        + "\n  ".join(sorted(should_have - got)))
+    assert not (should_not_have & got), (
+        f"这些二进制不该被带进 CI 的检出，却在磁盘上：\n  "
+        + "\n  ".join(sorted(should_not_have & got)))
 
 
 def test_ci的sparse块里不许有注释():
@@ -2245,8 +2353,19 @@ def test_字幕带的背景不再从模糊视频派生():
         "见 `_BG_COLOUR` 那段注释记的两轮教训。")
     assert "eq=brightness" not in body and "eq=saturation" not in body, (
         "滤镜链里又出现了 eq= 调色——同上，垫底层现在是纯色，不需要再调色。")
-    assert body.count("_BG_COLOUR") == 2, "`_BG_COLOUR` 该只有一处定义、一处引用"
-    assert "c={_BG_COLOUR}" in body, "滤镜链没有引用 `_BG_COLOUR`"
+    # ⚠️ 这条原来断言「只出现两次」（一处定义、一处引用），`_lead_in_segment`
+    # 加了跨视频片头之后**多了一处合法的第二次引用**——它和 `body` 的垫底层
+    # 该是同一个颜色，走同一个 `_BG_COLOUR` 才对，不是又写一遍十六进制。
+    # 所以判据改成**推导**，不再写死一个会过期的数字：十六进制字面量本身
+    # 只许出现一次（定义那一行），凡是 `color=c=` 垫底源都要走 `_BG_COLOUR`
+    # 这个名字——多少处引用都行，只要没人抄一遍字面量。
+    assert body.count('"0x06140f"') == 1, (
+        "背景色的十六进制字面量出现了不止一次——该走 `_BG_COLOUR` 这个名字，"
+        "不是各处各写一遍")
+    colour_lines = [ln for ln in body.splitlines() if "color=c=" in ln]
+    assert colour_lines, "滤镜链里没有引用 `_BG_COLOUR`"
+    for ln in colour_lines:
+        assert "{_BG_COLOUR}" in ln, f"这一行垫底色没有走 `_BG_COLOUR`：{ln.strip()}"
     # ⚠️ 这条不能只测「d= 有没有起作用」（那是下一条测试干的事），必须真查
     # **这条链自己**有没有写 `d=`——`test_垫底纯色层要卡时长否则overlay会
     # 空跑到超时` 那条本地另起了一段一模一样的滤镜串来验证 ffmpeg 的行为，
@@ -4652,6 +4771,519 @@ def test_认领开头那道闸排在下载之前():
         assert body.index("check_opening(") < body.index(later), (
             f"认领开头那道闸排在 `{later}` 后面了——它只读 spec，"
             "该在第 0.2 秒就报")
+
+
+# ── 跨视频片头（`lead_in`）───────────────────────────────────────────────
+#
+# `opening.kind: "match_end"` 那套是同一条源片里、比赛结尾接着采访的连续
+# 转播（`tirante-djokovic-cincinnati-2026-r2` 那种）。有些采访是**赛事方
+# 自己单独发布的**（Cincinnati Open 官方频道），源片里根本没有比赛画面——
+# 比赛结尾要从另一条源片（通常是 `@wta` 官方集锦）单独借一段接过来。
+# `lead_in` 就是这条路：认领 url/start/end/why，`render()` 据此多下一条源片、
+# 剪一段接在封面之后、正片之前。
+
+
+def test_不需要跨视频片头时check_lead_in是空操作():
+    """正文源自己带比赛结尾，或发布会／演播室，不需要跨视频借片头；存量债在
+    挂账表里也先放行。`check_lead_in` 对这些情形必须什么都不做。"""
+    import tools.build_interview_clip as clip
+
+    clip.check_lead_in({"slug": "x"})            # 没有 lead_in，不许抛
+    for p in _iv_specs():
+        d = json.loads(p.read_text("utf-8"))
+        clip.check_lead_in(d)                     # 新规和存量挂账一起全过
+
+
+def test_独立赛后场上采访必须有同场比赛结尾片头():
+    """账号所有者 2026-08-22：「把获胜后的画面和解说加在前面，以后都要这么
+    操作。」所以 `opening.kind: none` 不能再成为独立场上采访从第一问开场的出口。
+
+    两头都钉：新 slug 少 `lead_in` 必须被拦；同样的 `none` 用在发布会则不误杀，
+    正文源已经是 `match_end` 的场上采访也不需要重复接一段。
+    """
+    import tools.build_interview_clip as clip
+
+    独立场上采访 = {
+        "slug": "new-oncourt-interview",
+        "interview_kind": "赛后场上采访",
+        "opening": {"kind": "none", "why": "独立采访从主持人第一问开始"},
+    }
+    with pytest.raises(SystemExit, match="必须用 `lead_in`"):
+        clip.check_lead_in(独立场上采访)
+
+    带同场片头 = dict(独立场上采访, lead_in={
+        "url": "https://youtu.be/official-highlight",
+        "start": 100.0,
+        "end": 118.0,
+        "why": "同场官方集锦：最后一分、庆祝和原声解说",
+    })
+    clip.check_lead_in(带同场片头)
+
+    clip.check_lead_in({
+        "slug": "new-presser",
+        "interview_kind": "赛后新闻发布会",
+        "opening": {"kind": "none", "why": "发布会背板和记者提问"},
+    })
+    clip.check_lead_in({
+        "slug": "new-oncourt-with-own-ending",
+        "interview_kind": "赛后场上采访",
+        "opening": {"kind": "match_end", "lead_in": 14.0,
+                    "why": "正文源自己从最后一分开始"},
+    })
+
+
+def test_独立场上采访缺片头的旧债只许减不许加():
+    """挂账表每个 slug 都必须真实存在，而且仍然是 `opening:none`、无 `lead_in`
+    的场上采访。补好片头却忘了销账，或拼错名字让豁免指向空气，都要失败；新片
+    则由上一条行为测试证明无法借这张表自动放行。"""
+    import tools.build_interview_clip as clip
+
+    paths = {p.stem: p for p in _iv_specs()}
+    ghosts = clip._LEGACY_ONCOURT_NO_LEAD_IN - paths.keys()
+    assert not ghosts, f"独立场上采访片头挂账里有不存在的 slug：{ghosts}"
+
+    for slug in sorted(clip._LEGACY_ONCOURT_NO_LEAD_IN):
+        d = json.loads(paths[slug].read_text("utf-8"))
+        assert d.get("interview_kind") == "赛后场上采访", f"{slug} 已经不是场上采访"
+        assert (d.get("opening") or {}).get("kind") == "none", (
+            f"{slug} 已经不是 opening:none，应从片头挂账移除")
+        assert not d.get("lead_in"), f"{slug} 已经补了 lead_in，应从片头挂账移除"
+
+
+def test_lead_in四要素必须认领():
+    """有 `lead_in` 时，url/start/end/why 一样都不能少，`end` 必须大于
+    `start`，时长要落在 `_OPENING_LEAD_MAX` 之内——和 `opening.lead_in`
+    共用同一条上界：这仍然是「先交代比赛结束」的片头，收多了就变成
+    「赛场之上」了。
+    """
+    import tools.build_interview_clip as clip
+
+    ok = {"slug": "新片", "lead_in": {
+        "url": "https://youtu.be/QuM0ytM-wlg", "start": 200.0, "end": 213.8,
+        "why": "赛点落地＋比分牌揭晓，从 WTA 官方集锦接过来"}}
+    clip.check_lead_in(ok)          # 不许抛
+
+    坏 = [
+        ({"slug": "新片", "lead_in": "https://youtu.be/x"}, "不是对象"),
+        ({"slug": "新片", "lead_in": {"start": 200.0, "end": 213.8, "why": "a"}},
+         "缺 url"),
+        ({"slug": "新片", "lead_in": {"url": "https://youtu.be/x", "end": 213.8,
+                                      "why": "a"}}, "缺 start"),
+        ({"slug": "新片", "lead_in": {"url": "https://youtu.be/x", "start": 213.8,
+                                      "end": 200.0, "why": "a"}}, "end 小于 start"),
+        ({"slug": "新片", "lead_in": {"url": "https://youtu.be/x", "start": 200.0,
+                                      "end": 200.0, "why": "a"}}, "end 等于 start"),
+        ({"slug": "新片", "lead_in": {"url": "https://youtu.be/x", "start": 0.0,
+                                      "end": clip._OPENING_LEAD_MAX + 1}},
+         "没 why"),
+        ({"slug": "新片", "lead_in": {"url": "https://youtu.be/x", "start": 0.0,
+                                      "end": clip._OPENING_LEAD_MAX + 1,
+                                      "why": "a"}}, "超上界"),
+    ]
+    for spec, label in 坏:
+        with pytest.raises(SystemExit):
+            clip.check_lead_in(spec)
+            pytest.fail(f"这一种没拦住：{label}")
+
+
+def test_lead_in的subs字段要认全():
+    """`lead_in.subs` 可选，但写了就要按形状过：a/b 是数字且 b>a、时刻落在
+    `lead_in` 窗口内、前后不重叠、en/zh 都不能是空的。"""
+    import tools.build_interview_clip as clip
+
+    base = {"url": "https://youtu.be/x", "start": 200.0, "end": 213.8, "why": "a"}
+
+    没写 = {"slug": "新片", "lead_in": dict(base)}
+    clip.check_lead_in(没写)          # 不许抛——subs 是可选的
+
+    好 = {"slug": "新片", "lead_in": dict(base, subs=[
+        {"a": 201.0, "b": 203.0, "en": "Match point.", "zh": "赛点"},
+        {"a": 203.0, "b": 205.0, "en": "What a shot.", "zh": "多漂亮的一击"},
+    ])}
+    clip.check_lead_in(好)            # 不许抛
+
+    坏 = [
+        (dict(base, subs=[]), "空数组"),
+        (dict(base, subs="a string"), "不是数组"),
+        (dict(base, subs=[{"a": 201.0, "en": "x", "zh": "x"}]), "缺 b"),
+        (dict(base, subs=[{"a": 203.0, "b": 201.0, "en": "x", "zh": "x"}]),
+         "b 小于 a"),
+        (dict(base, subs=[{"a": 100.0, "b": 205.0, "en": "x", "zh": "x"}]),
+         "起点早于 lead_in.start"),
+        (dict(base, subs=[{"a": 201.0, "b": 300.0, "en": "x", "zh": "x"}]),
+         "终点晚于 lead_in.end"),
+        (dict(base, subs=[{"a": 201.0, "b": 203.0, "zh": "x"}]), "缺 en"),
+        (dict(base, subs=[{"a": 201.0, "b": 203.0, "en": "x"}]), "缺 zh"),
+        (dict(base, subs=[
+            {"a": 201.0, "b": 204.0, "en": "x", "zh": "x"},
+            {"a": 203.0, "b": 205.0, "en": "y", "zh": "y"},
+        ]), "两条字幕在时间轴上叠住了"),
+    ]
+    for lead, label in 坏:
+        with pytest.raises(SystemExit):
+            clip.check_lead_in({"slug": "新片", "lead_in": lead})
+            pytest.fail(f"这一种没拦住：{label}")
+
+
+def test_lead_in那道闸排在下载之前():
+    """⚠️ 和 `opening` 那道闸同一个理由：这条只读 spec，该在第 0.2 秒就报，
+    不能等九分钟的 render 下完两条源片才发现哪个字段忘了填。"""
+    src = (ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8")
+    body = src.split("def main(")[1]
+    body = "\n".join(ln for ln in body.splitlines()
+                     if not ln.lstrip().startswith("#"))
+    assert "check_lead_in(" in body, "`main()` 里没有调 `check_lead_in`"
+    for later in ("fetch_words(", "storyboard_sheet(", "segment("):
+        assert body.index("check_lead_in(") < body.index(later), (
+            f"lead_in 那道闸排在 `{later}` 后面了——它只读 spec，该在第 0.2 秒就报")
+
+
+def _lead_in_topbar_spec(**lead_extra):
+    """`_lead_in_segment` 要烧顶栏，`spec` 顶层就得给全 `header_lines` 要的
+    那几个字段（event / push.matchup / push.score / winner / interview_kind）
+    ——四条 lead_in 顶栏测试共用同一份最小合法 spec，别各写一遍必分叉。"""
+    return {"slug": "x", "url": "https://youtu.be/interview",
+            "event": "2026 测试站 WTA1000 1/4决赛",
+            "interview_kind": "赛后场上采访", "winner": "甲",
+            "push": {"matchup": "甲 vs 乙", "score": "6-3 6-4"},
+            "lead_in": {"url": "https://youtu.be/highlights", "start": 2.0,
+                        "end": 9.0, "why": "测试", **lead_extra}}
+
+
+def _fake_lead_source(src_dir: Path) -> Path:
+    fake_source = src_dir / "fake_lead_source.mp4"
+    subprocess.run(
+        ["ffmpeg", "-v", "error", "-y",
+         "-f", "lavfi", "-i", "testsrc2=size=1280x720:rate=30",
+         "-f", "lavfi", "-i", "sine=frequency=300:sample_rate=48000",
+         "-t", "20", "-c:v", "libx264", "-crf", "23",
+         "-c:a", "aac", str(fake_source)], check=True)
+    return fake_source
+
+
+def test_lead_in不带subs时仍要烧顶栏():
+    """账号所有者 2026-08-22：「前面也要带上顶的，不然的话不知道是什么比赛。
+    除了封面不用，其他后面都要带上顶。」没写 `lead_in.subs` 只是没有台词
+    （静音 B-roll），**顶栏照旧要印**——`wants_topbar(spec)` 那条老规矩管到
+    这儿，不因为没有对白就被绕开。`subtitles=` 因此不再是「有 subs 才有」
+    的单一条件分支，而是「有 subs，或者顶栏要印」两条路都要有。"""
+    src = (ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8")
+    body = _code_only(src.split("def _lead_in_segment(")[1].split("\ndef ")[0])
+    assert "elif wants_topbar(spec)" in body, "没有 subs 时要有单独烧顶栏那一支"
+    assert body.count("subtitles=") >= 2, "有 subs 和没 subs 各自要有能烧字幕的那条路"
+
+
+def test_lead_in带subs时字幕和顶栏都要烧出来(tmp_path, monkeypatch):
+    """账号所有者 2026-08-22：「前面也要带上顶的，不然的话不知道是什么比赛。
+    除了封面不用，其他后面都要带上顶。」写了 `lead_in.subs` 就要真的烧出来
+    ——真跑一遍 `_lead_in_segment`，检查
+    ① 生成的 `.ass` 里有 EN/ZH 两行内容，和给的 en/zh 对得上；
+    ② **也带着顶栏事件**——`lead_in` 借的是这条采访自己这场球的比赛结尾
+    （`check_lead_in` 的 docstring 早写明白了），顶栏印的对阵比分跟这几秒的
+    赛点、庆祝、握手是同一场，印上去是补全「这是哪一场」，不是编造。"""
+    from tools import build_interview_clip as m
+
+    assert __import__("shutil").which("ffmpeg"), "没有 ffmpeg：apt install ffmpeg"
+
+    src_dir = tmp_path / "lead"
+    src_dir.mkdir()
+    monkeypatch.setattr(m, "yt_download",
+                         lambda url, dest, fmt, spec: _fake_lead_source(src_dir))
+
+    spec = _lead_in_topbar_spec(subs=[
+        {"a": 3.0, "b": 5.0, "en": "What a shot", "zh": "这一拍真漂亮"}])
+    lead = m._lead_in_segment(spec, src_dir)
+    assert lead is not None and lead.is_file()
+
+    ass_text = (src_dir / "_lead.ass").read_text(encoding="utf-8")
+    assert "What a shot" in ass_text
+    assert "这一拍真漂亮" in ass_text
+    assert re.search(r"Dialogue:.*,HEAD[AB],", ass_text), (
+        "片头这几秒该带顶栏——讲的是这条采访自己这场球的比赛结尾")
+
+
+def test_lead_in不带subs时真烧出顶栏(tmp_path, monkeypatch):
+    """不能只靠 grep 源码字符串证明「有这条分支」——真跑一遍
+    `_lead_in_segment`，确认没有 `subs` 时真的产出了带 HEADA/HEADB、
+    没有 EN/ZH 的 `.ass`，而且顶栏从 0 开始盖住整段 `lead_in`。"""
+    from tools import build_interview_clip as m
+
+    assert __import__("shutil").which("ffmpeg"), "没有 ffmpeg：apt install ffmpeg"
+
+    src_dir = tmp_path / "lead"
+    src_dir.mkdir()
+    monkeypatch.setattr(m, "yt_download",
+                         lambda url, dest, fmt, spec: _fake_lead_source(src_dir))
+
+    spec = _lead_in_topbar_spec()  # 没有 subs
+    lead = m._lead_in_segment(spec, src_dir)
+    assert lead is not None and lead.is_file()
+
+    ass_text = (src_dir / "_lead.ass").read_text(encoding="utf-8")
+    assert re.search(r"Dialogue:.*,HEAD[AB],", ass_text)
+    assert "Dialogue: 0,0:00:00.00" in ass_text, "顶栏该从 0 开始盖住整段"
+    assert not re.search(r"Dialogue:.*,(EN|ZH),", ass_text), (
+        "没有台词，不该凭空多出 EN/ZH 事件")
+
+
+def test_lead_in关掉顶栏时不带subs也真的不烧字幕(tmp_path, monkeypatch):
+    """`topbar: false` 显式关掉时（要求写 `_no_topbar_why`），没有 subs 的
+    `lead_in` 要回到最早那种什么都不烧的样子——「顶栏默认要印」这条新规矩
+    不能把「关掉了」变成「关不掉」。"""
+    from tools import build_interview_clip as m
+
+    assert __import__("shutil").which("ffmpeg"), "没有 ffmpeg：apt install ffmpeg"
+
+    src_dir = tmp_path / "lead"
+    src_dir.mkdir()
+    monkeypatch.setattr(m, "yt_download",
+                         lambda url, dest, fmt, spec: _fake_lead_source(src_dir))
+
+    spec = {"slug": "x", "url": "https://youtu.be/interview",
+            "topbar": False, "_no_topbar_why": "测试用，故意关掉",
+            "lead_in": {"url": "https://youtu.be/highlights", "start": 2.0,
+                        "end": 9.0, "why": "测试"}}
+    lead = m._lead_in_segment(spec, src_dir)
+    assert lead is not None and lead.is_file()
+    assert not (src_dir / "_lead.ass").exists(), (
+        "顶栏关掉又没有 subs，不该生成 ass 文件")
+
+
+def test_lead_in进拼接清单排在正片之前():
+    """`render()` 里 `_lead_in_segment` 的结果必须在 `parts.append(body)`
+    之前进清单——「先交代比赛结束，再接采访」，顺序反了这句话就不成立。"""
+    src = (ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8")
+    render_body = src.split("def render(")[1].split("\ndef ")[0]
+    lead_at = render_body.index("_lead_in_segment(spec, outdir)")
+    body_at = render_body.index("parts.append(body)")
+    assert lead_at < body_at, "跨视频片头排在了正片之后，顺序反了"
+
+
+def test_lead_in片段和正片拼得起来(tmp_path, monkeypatch):
+    """**真跑一遍 `_lead_in_segment`，再和一段「正片」`-c copy` 拼起来。**
+
+    喂一段合成的 testsrc 当「源片」（monkeypatch `yt_download`，不碰网络），
+    验证：① 有 `lead_in` 时不是 `None`，尺寸/时长对得上；② 和 `body` 那组
+    完全一样的编码参数拼接不丢流（同 `test_采访片的片尾要和正片拼得起来`
+    那条判据）；③ 没有 `lead_in` 时返回 `None`。
+
+    ⚠️ spec 走 `_lead_in_topbar_spec()`（默认顶栏开）——这是没有 `subs`
+    时**生产环境的真实路径**（顶栏默认要印），不是把顶栏关掉之后测一条
+    产品上不会走的路。顺带确认多烧一层顶栏字幕之后画幅/编码参数没被带偏。
+    """
+    from tools import build_interview_clip as m
+
+    assert __import__("shutil").which("ffmpeg"), "没有 ffmpeg：apt install ffmpeg"
+
+    src_dir = tmp_path / "lead"
+    src_dir.mkdir()
+    monkeypatch.setattr(m, "yt_download",
+                         lambda url, dest, fmt, spec: _fake_lead_source(src_dir))
+
+    spec = _lead_in_topbar_spec()  # 没有 subs，走默认顶栏那条路
+    lead = m._lead_in_segment(spec, src_dir)
+    assert lead is not None and lead.is_file()
+
+    probe = subprocess.run(
+        ["ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries",
+         "stream=width,height", "-of", "csv=p=0:s=x", str(lead)],
+        check=True, capture_output=True, text=True).stdout.strip()
+    assert probe == f"{m.CANVAS_W}x{m.CANVAS_H}", f"画幅不是 {m.CANVAS_W}x{m.CANVAS_H}：{probe}"
+
+    body = tmp_path / "body.mp4"
+    subprocess.run(
+        ["ffmpeg", "-v", "error", "-y",
+         "-f", "lavfi", "-i", f"color=c=navy:s={m.CANVAS_W}x{m.CANVAS_H}:r=25",
+         "-f", "lavfi", "-i", "sine=frequency=200:sample_rate=48000",
+         "-t", "6", "-c:v", "libx264", "-preset", "medium", "-crf", "20",
+         "-r", "25", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "128k",
+         "-ar", "48000", "-ac", "2", str(body)], check=True)
+
+    lst = tmp_path / "cc.txt"
+    lst.write_text(f"file '{lead}'\nfile '{body}'\n", encoding="utf-8")
+    joined = tmp_path / "joined.mp4"
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", "0",
+                    "-i", str(lst), "-c", "copy", str(joined)], check=True)
+
+    def _dur(stream):
+        return float(subprocess.run(
+            ["ffprobe", "-v", "error", "-select_streams", stream,
+             "-show_entries", "stream=duration", "-of", "csv=p=0", str(joined)],
+            check=True, capture_output=True,
+            text=True).stdout.strip().rstrip(","))
+
+    assert abs(_dur("v:0") - 13.0) < 0.3, (
+        f"拼出来只有 {_dur('v:0'):.2f}s，要的是 7(lead)+6(body)=13s")
+    assert abs(_dur("a:0") - _dur("v:0")) < 0.4, (
+        f"音轨 {_dur('a:0'):.2f}s vs 画面 {_dur('v:0'):.2f}s——concat 丢了一条流")
+
+    # 没有 lead_in 就该是 None，别凭空冒出一段
+    assert m._lead_in_segment({"slug": "x"}, tmp_path) is None
+
+
+def _top_level_boxes(path: Path) -> list[str]:
+    """列出 mp4 文件顶层 box 的类型，按出现顺序——`moov` 排在 `mdat` 前面
+    才是 faststart，排在后面就是账号所有者 2026-08-22 报的「视频号封面显示
+    不出来」那个坑：平台靠范围请求先读 moov，moov 在文件尾就等于读不到。"""
+    import struct
+
+    order = []
+    with path.open("rb") as f:
+        f.seek(0, 2)
+        total = f.tell()
+        f.seek(0)
+        offset = 0
+        while offset < total:
+            f.seek(offset)
+            header = f.read(8)
+            if len(header) < 8:
+                break
+            size, box_type = struct.unpack(">I4s", header)
+            if size == 1:
+                size = struct.unpack(">Q", f.read(8))[0]
+            order.append(box_type.decode(errors="replace"))
+            if size == 0:
+                break
+            offset += size
+    return order
+
+
+def test_成片的moov要排在mdat前面视频号才能读到封面(tmp_path):
+    """账号所有者 2026-08-22：「赛后开麦的视频在视频号里封面显示不出来」。
+
+    拉一条已发的成片实测过：`ftyp free mdat[60.5MB] moov`——moov 排在
+    六千万字节之后。concat demuxer + `-c copy` 是一次完整 remux（新写一份
+    moov，不是简单地把几个文件粘起来），moov 摆在哪儿只看**这一步自己**的
+    `-movflags`，跟上游那几段各自有没有 faststart 没关系——所以补丁必须打在
+    `render()` 里真正产出 `out` 的那条 ffmpeg 命令上，不是随便找个地方加一次
+    编码就行。
+
+    这里不摸 `render()` 本身（它要下源片、起 Chromium、连 TTS，装不进一条
+    单元测试），只验证**同样的命令形状**（`concat demuxer + -c copy +
+    -movflags +faststart`）在真实 ffmpeg 上确实把 moov 挪到了前面，
+    并且反向验证：去掉这个 flag，moov 确实又跑回文件尾——证明这条判据
+    真的在测这件事，不是找了个碰巧一直成立的断言。
+    """
+    def _make(dest: Path, colour: str) -> Path:
+        subprocess.run(
+            ["ffmpeg", "-v", "error", "-y",
+             "-f", "lavfi", "-i", f"color=c={colour}:s=320x240:d=1:r=25",
+             "-f", "lavfi", "-i", "sine=frequency=300:sample_rate=48000",
+             "-t", "1", "-c:v", "libx264", "-preset", "ultrafast",
+             "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "128k",
+             "-ar", "48000", "-ac", "2", str(dest)], check=True)
+        return dest
+
+    a = _make(tmp_path / "a.mp4", "navy")
+    b = _make(tmp_path / "b.mp4", "maroon")
+    lst = tmp_path / "list.txt"
+    lst.write_text(f"file '{a.name}'\nfile '{b.name}'\n", encoding="utf-8")
+
+    fixed = tmp_path / "fixed.mp4"
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", "0",
+                    "-i", str(lst), "-c", "copy", "-movflags", "+faststart",
+                    str(fixed)], check=True, cwd=tmp_path)
+    fixed_boxes = _top_level_boxes(fixed)
+    assert fixed_boxes.index("moov") < fixed_boxes.index("mdat"), (
+        f"加了 +faststart，moov 还是排在 mdat 后面：{fixed_boxes}")
+
+    # 反向验证：去掉这个 flag，同一条命令的 moov 确实又落回了文件尾——
+    # 证明上面那条断言不是碰巧成立，而是真的在测 +faststart 起作用。
+    broken = tmp_path / "broken.mp4"
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", "0",
+                    "-i", str(lst), "-c", "copy", str(broken)],
+                   check=True, cwd=tmp_path)
+    broken_boxes = _top_level_boxes(broken)
+    assert broken_boxes.index("moov") > broken_boxes.index("mdat"), (
+        "反向验证失败：不给 +faststart 时 moov 竟然也在 mdat 前面，"
+        "说明上面那条断言测不出这个坑")
+
+
+def test_render两处最终编码都带faststart():
+    """`render()` 里真正产出 `out` 的只有两条路——`len(parts)==1` 时
+    `body.replace(out)` 是纯改名不会再编码一次，所以 `body` 自己那趟编码
+    也要带 `+faststart`；`len(parts)>1` 时靠最终 concat 那趟。两处都要带，
+    漏一处就是「大多数片子修好了，某种边界情况又漏气」。"""
+    src = (ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8")
+    render_body = _code_only(src.split("def render(")[1].split("\ndef ")[0])
+
+    body_encode = render_body.split('str(body)]')[0]
+    assert '"-movflags", "+faststart"' in body_encode, (
+        "body 自己那趟编码没带 +faststart——len(parts)==1 时它会被直接改名"
+        "成 out，那条路会漏气")
+
+    final_concat = render_body.split('str(body)]')[1]
+    assert '"-movflags", "+faststart"' in final_concat, (
+        "最终 concat 那趟没带 +faststart——大多数片子（cover/takeaway/outro"
+        "都在）走的就是这条路")
+
+
+def test_still_segment的封面编码不许带满量程标记(tmp_path):
+    """账号所有者 2026-08-22：「视频号里看不到封面」。
+
+    根子：`_still_segment` 喂给 ffmpeg 的是一张标准 JFIF JPEG（`poster.jpg`
+    本来就是），JPEG 天生满量程（full-range），`-pix_fmt yuv420p` 只管
+    4:2:0 色度采样、不管量程——ffmpeg 的 mjpeg 解码器会把满量程标记带出来，
+    libx264 照样能把它写进 SPS 的 VUI，读回来就是 `color_range=pc`（ffprobe
+    报的 pix_fmt 也会跟着变成 `yuvj420p`）。视频号在这种满量程标记的流上
+    抓不出封面帧，画面本身却播放正常——症状和这次一模一样。
+
+    拉一条已经推送过的真实成片（`nakashima-fritz-cincinnati-2026-qf`）下来
+    逐字节核对过：封面那 1.2 秒确实是 `color_range=pc`，和从真实视频剪出来
+    的正片段（`tv`）不是一回事。
+
+    ⚠️ **反向验证在这台沙箱上没能复现**：把 `-color_range tv` 摘掉、原样
+    重跑这条命令十几次，得到的一直是干净的 `tv`——没能在本地触发和 runner
+    上同一次的那个条件（大概率是 ffmpeg 版本或线程调度的细节）。**但已经
+    直接核实了产物是脏的**，所以这条判据仍然值得留：它锁住「显式钉死量程，
+    不指望 ffmpeg 自己推断对」这个意图，防止以后有人嫌这行多余把它删掉。
+    真正确认修复生效的判据是重渲之后拉回真实成片核对（见 PR 描述）。
+    """
+    assert __import__("shutil").which("ffmpeg"), "没有 ffmpeg：apt install ffmpeg"
+
+    from PIL import Image
+
+    from tools import build_interview_clip as m
+
+    # 存一张标准 JFIF JPEG——真实 poster.jpg 就是这么来的（PIL 默认写 JFIF，
+    # JPEG 本身就是满量程，这是这个坑能触发的前提，不能换成 PNG 去测）。
+    poster = tmp_path / "poster.jpg"
+    Image.new("RGB", (1080, 1440), (30, 90, 60)).save(poster, format="JPEG", quality=88)
+
+    dest = m._still_segment(poster, 1.2, tmp_path / "cover.mp4")
+    assert dest.is_file()
+
+    probe = subprocess.run(
+        ["ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries",
+         "stream=pix_fmt,color_range", "-of", "csv=p=0:s=,", str(dest)],
+        check=True, capture_output=True, text=True).stdout.strip()
+    pix_fmt, color_range = probe.split(",")
+    assert pix_fmt == "yuv420p" and color_range == "tv", (
+        f"封面编码带着满量程标记：pix_fmt={pix_fmt}, color_range={color_range}\n"
+        "视频号会在这种流上抓不出封面帧。要求显式 `-color_range tv`，"
+        "别指望 ffmpeg 自己从解码结果里推断对。")
+
+    src = (Path(m.__file__)).read_text(encoding="utf-8")
+    still_body = src.split("def _still_segment(")[1].split("\ndef ")[0]
+    assert '"-color_range", "tv"' in still_body, (
+        "`_still_segment` 的命令里没有显式 -color_range tv——"
+        "上面那句断言就算恰好绿了，也只是这台沙箱这次凑巧没触发那个坑，"
+        "不代表 runner 上不会再犯。")
+
+
+def test_ours_ratio把lead_in算进分母不算我们的():
+    """`lead_in` 是借来的转播画面，跟 `body` 同一个性质，不该算进「我们自己
+    的画面」；但它确实拉长了片子，分母要跟着涨，不然占比会算得偏高。"""
+    from tools import build_interview_clip as m
+
+    base = {"slug": "x", "start": 0.0, "end": 60.0}
+    ours0, total0 = m.ours_ratio(base)
+
+    with_lead = dict(base, lead_in={"url": "u", "start": 0.0, "end": 15.0, "why": "w"})
+    ours1, total1 = m.ours_ratio(with_lead)
+
+    assert ours1 == ours0, "lead_in 不该算进「我们自己的画面」"
+    assert abs(total1 - (total0 + 15.0)) < 1e-6, "lead_in 的 15 秒没有算进分母"
 
 
 def test_封面顶栏要和解说片那份台头是同一套值():

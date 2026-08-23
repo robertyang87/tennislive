@@ -211,13 +211,30 @@ def discover_queue_file(
     return Path(fields[1])
 
 
-def dispatch(request: QueueRequest, *, run: Run = subprocess.run) -> None:
-    """Dispatch parallel renders or one fail-closed, serial publish run."""
+def dispatch(
+    request: QueueRequest,
+    *,
+    run: Run = subprocess.run,
+    now: datetime | None = None,
+) -> None:
+    """Dispatch parallel production renders or one fail-closed publish run.
+
+    Production render requests carry ``push=true``.  ``match-reel`` still groups the
+    expensive render phase by slug, then dispatches a separate push-only run after L2
+    QC and artifact commit; only that irreversible publish phase is globally serial.
+    """
     if request.mode == "push" and len(request.slugs) != 1:
         raise QueueError(
             "push queues must contain exactly one slug so publishing stays serial"
         )
-    push = "true" if request.mode == "push" else "false"
+    # 账号所有者：质检通过就推，不再等待第二份人工 push 队列。render 和 push
+    # 都传 true；match-reel 自己把重渲（并行）与发送（串行）拆成两趟。
+    push = "true"
+    # One batch gets one clock edge. Different slugs render in parallel, so each one
+    # is measured from the same moment the reviewed production queue was accepted.
+    received_at = (now or datetime.now(timezone.utc)).astimezone(timezone.utc).strftime(
+        "%Y-%m-%dT%H:%M:%SZ"
+    )
     for slug in request.slugs:
         command = [
             "gh",
@@ -232,6 +249,8 @@ def dispatch(request: QueueRequest, *, run: Run = subprocess.run) -> None:
             f"mode={request.mode}",
             "-f",
             f"push={push}",
+            "-f",
+            f"received_at={received_at}",
         ]
         print(f"[dispatch] match-reel {request.mode} {slug} push={push}")
         run(command, check=True, shell=False)

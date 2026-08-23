@@ -1202,7 +1202,7 @@ _CLOCK_MINUTE = re.compile(
 _CLOCK_MINUTE_LEGACY = frozenset({
     "alexandrova-sabalenka", "baez-dimitrov", "bencic-eala",
     "bucsa-chwalinska", "eala-mcnally", "eala-osaka", "eala-parks",
-    "eala-ruse", "faria-shelton", "gauff-korneeva", "gauff-samsonova",
+    "eala-ruse", "faria-shelton", "fils-tirante", "gauff-korneeva", "gauff-samsonova",
     "gea-shapovalov", "krejcikova-bejlek", "landaluce-draper",
     "medvedev-zandschulp", "osaka-fernandez", "pegula-rakhimova",
     "rybakina-gauff-toronto-sf", "rybakina-osaka", "rybakina-samsonova",
@@ -1212,6 +1212,10 @@ _CLOCK_MINUTE_LEGACY = frozenset({
     "swiatek-shnaider", "townsend-osorio", "townsend-rybakina",
     "trungelliti-medvedev", "wang-vandewinkel", "wang-vekic",
     "wangxiyu-fernandez", "wong-gea", "zhang-day", "zhang-ostapenko",
+    # `tiafoe-musetti-cincinnati-2026-qf` 2026-08-22T05:02:40Z 已经推过微信
+    # （run 32553267109，另一个并发会话发的）：开场写着「北京时间8月22日
+    # 7点05分」，报到了分钟。已发不为措辞重渲，挂账。
+    "tiafoe-musetti-cincinnati-2026-qf",
 })
 
 
@@ -1300,3 +1304,132 @@ def test_几成几的豁免表只许减不许加():
     assert not stale, (
         f"这几条已经不写「几成几」了，从表里删掉：{sorted(stale)}"
         f"——这张表只许减不许加")
+
+
+def _quote_overflow_offenders():
+    """{slug: [超宽的行, ...]}——`quote` 里手写的、没有空格、`_sub_width`
+    超过 `_SUB_MAX` 的行。和 `_quote_lines_fit_the_frame` 用同一套判定，
+    但这里不看豁免表，为的是能把豁免表自己的自检也建在它上面。
+    """
+    reel = _build_match_reel()
+    out = {}
+    for slug, spec in _specs():
+        hits = []
+        for seg in spec.get("segments") or []:
+            if not isinstance(seg, dict):
+                continue
+            raw = seg.get("quote")
+            if not isinstance(raw, list):
+                continue
+            for item in raw:
+                text = item["text"] if isinstance(item, dict) else str(item)
+                for row in str(text).split("\n"):
+                    row = row.strip()
+                    if not row or " " in row:
+                        continue
+                    if reel._sub_width(row) > reel._SUB_MAX:
+                        hits.append(row)
+        if hits:
+            out[slug] = hits
+    return out
+
+
+def test_quote里手写的行不许超宽溢出画面():
+    """2026-08-22 fils-cobolli 那条撞上的：冷开场原声双语字幕的中文行手写成
+    24 字（`_sub_width` 23.4，上限 16），libass 对没有空格的中文没法自动
+    换行，超宽的行直接贴着左右 150px 安全边距溢出，而且**一处报错都没有**
+    ——`--dry-run`／`--check-narration`／`check_reel_landed`／全量测试全绿，
+    是把成片从 Release 拉回来逐帧核对才发现的，白付一整趟渲染。
+
+    `narration` 驱动的字幕走 `_best_break`/`_sub_width` 自动断行，天生卡在
+    这条线以内；`quote` 是手写整行，`explicit_quote_cues` 只按 `at` 切、
+    `write_subtitles` 逐行渲染，从没人替它量过宽度——这条闸补的就是这个洞，
+    装在 `validate_spec` 里，`--dry-run` 0.2 秒就报，不用等一整趟渲染。
+
+    ⚠️ 扫全部已发 spec 当天就抓到另外 4 条同样超着的（`osaka-mertens` 41 字，
+    超了一倍还多）——这不是一次性的失误，是这条产品线反复复发的一类缺陷。
+    已发不重渲，挂进 `_LEGACY_QUOTE_OVERFLOW`。
+    """
+    reel = _build_match_reel()
+    offenders = _quote_overflow_offenders()
+    fresh = {k: v for k, v in offenders.items()
+             if k not in reel._LEGACY_QUOTE_OVERFLOW}
+    assert not fresh, (
+        f"这几条 quote 里手写的行会溢出画面（超过 {reel._SUB_MAX} 的 "
+        f"sub_width 上限）：{fresh}。libass 对没有空格的行没法自动换行，"
+        f"这类行会贴着左右 150px 安全边距整行画出去。把行改短，或者自己用 "
+        f"`\\n` 拆成两行。")
+    assert len(list(_specs())) >= 40, "一条 spec 都没扫到，判据的主语像是没了"
+
+
+def test_quote超宽豁免表只许减不许加():
+    """表里每个 slug 必须真的存在、而且真的还超着——写错一个名字，
+    豁免就成了一盏恒真的绿灯。
+    """
+    reel = _build_match_reel()
+    offenders = _quote_overflow_offenders()
+    for slug in sorted(reel._LEGACY_QUOTE_OVERFLOW):
+        assert (SPEC_DIR / f"{slug}.json").is_file(), \
+            f"{slug} 这条 spec 已经没了，把它从豁免表里删掉"
+    stale = reel._LEGACY_QUOTE_OVERFLOW - set(offenders)
+    assert not stale, (
+        f"这几条已经不超宽了，从豁免表里删掉：{sorted(stale)}"
+        f"——这张表只许减不许加")
+
+
+def test_quote宽度闸只拦没有空格的行不许误伤带空格的长句():
+    """带空格的行（比如长英文句子）libass 自己能在空格处断，`_sub_width`
+    超了不代表会溢出——fils-cobolli 那条的英文行（`_sub_width` 45.3，远超
+    16）渲出来两侧都留了 200px 以上的边距，就是靠这个自动换行。
+
+    误拦这类会逼着下一个人把一句本来没事的英文台词硬拆两半，判据宁可窄，
+    不可宽——这条钉住「拦的只是没有空格的行」这个边界。
+    """
+    reel = _build_match_reel()
+    long_english = ("It is Fils into the final here in Cincinnati. "
+                    "He breaks new ground.")
+    assert reel._sub_width(long_english) > reel._SUB_MAX, \
+        "这句英文本来就该超过 sub_width 上限，不然这条测试测不出东西"
+    spec = {"segments": [{"quote": [{"at": 0.0, "text": long_english}]}]}
+    reel._quote_lines_fit_the_frame(spec)  # 不许抛——带空格的行不拦
+
+
+def test_quote宽度闸真的拦得住原始那句_也真的放行改后的():
+    """反向验证：拦住 fils-cobolli 原始那句 24 字，放行改后的 14 字版本。"""
+    reel = _build_match_reel()
+    bad_text = ("It is Fils into the final here in Cincinnati. "
+               "He breaks new ground.\n菲斯，闯进了辛辛那提的决赛"
+               "——这是他生涯的新高度")
+    bad_spec = {"segments": [{"quote": [{"at": 5.48, "text": bad_text}]}]}
+    try:
+        reel._quote_lines_fit_the_frame(bad_spec)
+        raise AssertionError("原始那句 24 字应该被拦住，却放行了")
+    except reel.ReelError:
+        pass
+
+    fixed_text = ("It is Fils into the final here in Cincinnati. "
+                 "He breaks new ground.\n菲斯，闯进决赛——生涯新高度")
+    fixed_spec = {"segments": [{"quote": [{"at": 5.48, "text": fixed_text}]}]}
+    reel._quote_lines_fit_the_frame(fixed_spec)  # 不许抛
+
+
+def test_quote宽度闸真的接在validate_spec里不是白写了没人调():
+    """`test_没有名字是凭空来的`那次的教训：源码文本断言只能证明写出来了，
+    不能证明跑得起来。反向验证——把调用从 `validate_spec` 里拆掉，
+    这条测试必须能抓到（不直接测 `validate_spec` 好不好懂就不做这个反向
+    验证了，改成一条纯粹的静态钉法：AST 里 `validate_spec` 函数体必须真的
+    出现 `_quote_lines_fit_the_frame` 这个调用）。
+    """
+    import ast
+    import textwrap
+    reel = _build_match_reel()
+    source = textwrap.dedent(inspect.getsource(reel.validate_spec))
+    tree = ast.parse(source)
+    calls = {
+        node.func.id
+        for node in ast.walk(tree)
+        if isinstance(node, ast.Call) and isinstance(node.func, ast.Name)
+    }
+    assert "_quote_lines_fit_the_frame" in calls, (
+        "validate_spec 函数体里已经不调用 _quote_lines_fit_the_frame 了——"
+        "这条闸写出来了，但没有接进 dry-run 会走的那条路")

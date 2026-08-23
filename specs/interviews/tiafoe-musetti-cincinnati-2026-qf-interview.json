@@ -1,0 +1,119 @@
+{
+  "slug": "tiafoe-musetti-cincinnati-2026-qf-interview",
+  "url": "https://www.tennistv.com/videos/4564601/cincinnati-2026-qf-tiafoe-interview",
+  "source_title": "Tiafoe sets up Nakashima showdown（Tennis TV 官方场上采访，@TennisTV）",
+  "start": 0.0,
+  "end": 65.5,
+  "asr_model": "faster-whisper medium.en",
+  "_asr_why": "这条源不是 YouTube（免费条目 data-entitlement=free，72.0 秒），没有自动字幕可拉，第一份转写本地直接跑 medium.en 得到；第二份（`whisper_model`）换成 small.en 保证换了模型，闸才有意义。",
+  "whisper_model": "small.en",
+  "crop_shift_x": -0.06,
+  "_crop_why": "源片右上角有 Tennis TV 台标（同一个转播模板），居中 4:3 窗口保留 x 0.125–0.875 会把台标框进来——挪 -0.06 躲开，和霍达尔那条、这一批 nakashima-fritz 那条用的是同一个值。",
+  "word_fix": {"max": "match", "his": "its"},
+  "_word_fix_why": "① `max`→`match`：出现两处（`first max point`／`Every max is his own story`），ASR 对 `match` 的常见听误，两处都符合『赛点／每场比赛』语境，全片只出现这两次，全局替换安全。② `his`→`its`：`Every match is his own story, his own journey` 语法上说不通（谈的是『比赛』这个抽象概念，不是某个人），`its own story, its own journey` 是常见网球套话（『每场球各有各的经过』），`his`/`its` 发音接近，全片 `his` 只出现在这两处，全局替换安全。",
+  "en_fixed": {
+    "15": "and that's what I did tonight."
+  },
+  "_en_fixed_why": "第 15 行第一份（medium.en）听成『and that's what I did not.』——语法说不通（『我做的』后面拖一个孤立的 not，跟他赢球的事实也矛盾）。本地跑了第二份交叉核对（faster-whisper small.en），这一段独立听成『and that's what I did **tonight**.』——`He's gonna make you beat him and that's what I did tonight.` 完整通顺，`tonight` 和 `not` 发音接近，是同一处的听误，两个模型分别听错了两个不同的词，但小模型给出的补全能拼出一句完整的话，采纳它。",
+  "column": "赛后开麦",
+  "interview_kind": "赛后场上采访",
+  "event": "2026 辛辛那提 ATP1000 1/4决赛",
+  "opening": {
+    "kind": "none",
+    "why": "Tennis TV 场上采访独立视频，从主持人迎上前恭喜开始（0.56s『Francis, congratulations.』），源片里没有比赛画面——比赛结尾从另一条 Tennis TV 官方集锦借了 `lead_in` 接在最前面。"
+  },
+  "lead_in": {
+    "url": "https://youtu.be/CLXw7um5Y4o",
+    "start": 333.44,
+    "end": 354.0,
+    "crop_shift_x": -0.06,
+    "_crop_why": "同一个 Tennis TV 转播模板，台标一样贴在右上角——和采访正片、nakashima-fritz 那条同一个 -0.06。`lead_in` 的裁切参数不沿用顶层，这里单独写。",
+    "why": "账号所有者给的链接：Tennis TV 官方集锦《Frances Tiafoe vs Lorenzo Musetti Entertaining Battle | Cincinnati 2026 Match Highlights》（366.0 秒，@TennisTV，和这场比赛同一场）。抽帧核对过（output/2026-08-22/frames/tiafoe-musetti-cin2026-hl/frame_0330s.jpg ~ frame_0357s.jpg，每 3 秒一帧）：330s 记分板显示 `MUSETTI 15 6 5 / TIAFOE 40 7 6`（穆塞蒂发球，40-15）；333s 场边记分条已经打出 `MATCH POINT #4`，蒂亚福低头喘气；342s 他闭眼深呼吸，比分和赛点已经拿下；345-354s 是他庆祝、走向网前、和穆塞蒂握手致意的连续画面。357s 起是 Tennis TV 自己的品牌片尾卡（frame_0357s.jpg，`WATCH MORE / TAP TO SUBSCRIBE`），354s 那一帧仍是真实握手画面，收在 354.0 留出安全margin——先交代比赛结束，再接采访。",
+    "_subs_why": "账号所有者 2026-08-22：『迪亚夫（蒂亚福）的赛后采访要加上这个视频后半段获胜后的画面加解说（配上中英文字幕）』。转写来自这条源片自己的官方自动字幕（`cap_CLXw7um5Y4o.en.json3`，yt-dlp `--write-auto-subs` 一次拉到），沙箱下不动这条源的音视频流，没有第二个模型交叉校验，如实记在这儿。两处订正：`Francis Thafo`→`Tiafoe`（ASR 对姓氏的听误，和 body 部分的译名一致）、`City`→`Cincinnati`（同样是地名被截断的 ASR 听误，这场赛事全程都在辛辛那提，没有第二个候选）。『76.』这一句只按实际听到的转写（『seven-six』），没有再猜『seven-five』——ASR 没给出那半句，宁可留白也不编。",
+    "subs": [
+      {"a": 333.44, "b": 337.16, "en": "Fourth match point.", "zh": "第四个赛点"},
+      {"a": 341.76, "b": 346.32, "en": "Now this one does the trick, seven-six.", "zh": "这一次拿下了七比六"},
+      {"a": 346.32, "b": 349.44, "en": "It is Tiafoe moving on to the", "zh": "蒂亚福就此挺进"},
+      {"a": 349.44, "b": 353.76, "en": "semifinals here in Cincinnati.", "zh": "辛辛那提半决赛"}
+    ]
+  },
+  "zh": [
+    "弗朗西斯 恭喜你",
+    "这一带打雷了",
+    "今晚球场上也是电光四射",
+    "跟我们说说最后几局",
+    "你是怎么控制住情绪的",
+    "我觉得那分赛点打得不错",
+    "反手打丢了",
+    "反手发力太猛",
+    "对手接了一拍 然后我被破发了",
+    "但我马上打了一局 破回来了",
+    "最后那一刻也是这样",
+    "他真的是个厉害的选手",
+    "我们都在这个位置打了挺久",
+    "他会逼着你去赢下他",
+    "而这就是我今晚做到的",
+    "你在这场比赛里",
+    "战术上想清楚了什么",
+    "才走到这一步？",
+    "我就是想着去赢下这场球",
+    "整个赛季都很长",
+    "大家其实都差那么一点点",
+    "都在摸索怎么突破",
+    "谁在关键时刻更敢打",
+    "谁就能拿下",
+    "今晚我击球状态很好",
+    "底线相持这块",
+    "我一直打得不错",
+    "所以就靠这个撑下来",
+    "你以前打进过这里的决赛",
+    "这段经历对你接下来",
+    "有多大帮助？",
+    "每场比赛都是独立的故事",
+    "各走各的路",
+    "能再进一次半决赛就很开心",
+    "希望还能有机会打进决赛",
+    "接下来我就是全力去拼",
+    "给自己争取一个机会",
+    "我能做的就是这些",
+    "真棒"
+  ],
+  "caption_gaps_ok": {
+    "11.3-14.3": "他说完『赛点那分打得不错』之后停顿了将近 3 秒才接『反手打丢了』——现场自发采访，回忆具体细节时常见的停顿，不是漏听。",
+    "20.3-22.7": "『打了一局破回来了』之后又停了约 2.4 秒才接『最后那一刻也是这样』——同样是回忆比赛细节时的自然停顿。"
+  },
+  "winner": "蒂亚福",
+  "_facts": [
+    "赛果：flashscore（tfDDNanI）确认蒂亚福 2-1 胜穆塞蒂，用时约 2 小时 17 分（WebSearch 摘要，atptour.com 报道），逆转穆塞蒂拿下第三盘（从落后局面连赢四局锁定胜局），2026-08-21 辛辛那提 ATP1000 1/4决赛。",
+    "flashscore 逐场统计（tfDDNanI）：穆塞蒂（a）4 个 Ace、17 制胜分、22 非受迫失误，一发 49/94；蒂亚福（b）4 个 Ace、36 制胜分、38 非受迫失误，一发 36/81（44%）——和 WebSearch 摘要『只有 44% 一发进球率，却只丢了 5 分在一发得分上』吻合，双方制胜分/失误都比对方多，是一场高风险高回报的对攻，没有写进正文，留作参考。",
+    "背景（采访主持人的原话，就是这条片子最硬的证据）：『You've been to the final here before.』——WebSearch 确认蒂亚福是 2024 辛辛那提亚军，决赛 7-6(4) 6-2 负于辛纳；这次是他 2024 年之后第一次杀回辛辛那提 1/4 决赛。他自己回应『每场比赛都是独立的故事』，没有正面回应这段旧账。",
+    "下一轮：半决赛对阵中岛布兰登（27 号种子，逆转弗里茨），全美国德比——WebSearch 摘要提到这是 2010 年（罗迪克/费什）以来第一次两位美国男选手同时打进辛辛那提四强，这条没有再核实第二个源，先不写进正文，只留在这里备查。"
+  ],
+  "cover": {
+    "frame_at": 10.0,
+    "_why": "10.0s 他正说到『I thought I played a great first match point』（对应 zh 第 6 行），夜场灯光下满脸是汗，抬头看向斜前方，正在开口说话，眼睛睁开、表情投入——storyboard 逐帧看过一遍（2/10/20/30/40/50/60 秒），10.0s 和 30.0s 都合格，10.0s 神情更抓人（30.0s 略偏侧脸）。渲出来仍要拉回本地放大核对眼睛没闭。",
+    "title": [
+      "两年前他在这里丢了冠军",
+      "这次他说 各走各的路"
+    ],
+    "sub": "辛辛那提1/4决赛 赛后场上采访",
+    "_copy_why": "钩子接的是主持人那句『你以前打进过这里的决赛』（2024 辛辛那提亚军，负于辛纳）和他的回应『每场比赛都是独立的故事，各走各的路』——不提旧账，只讲这一场。",
+    "tag": "2026 辛辛那提 · 蒂亚福"
+  },
+  "takeaway": {
+    "close": {
+      "point": "他说每场比赛都是自己的故事",
+      "ask": "你还困在上一次的结果里吗？"
+    }
+  },
+  "push": {
+    "_why": "顶栏第二行和推送标题的赛果，以 flashscore（tfDDNanI）和 WebSearch 摘要（atptour.com）交叉核实的比分为准。",
+    "matchup": "蒂亚福 vs 穆塞蒂",
+    "score": "7-6(2) 7-5",
+    "event": "",
+    "summary": "两年前丢了冠军",
+    "lead": "2026 辛辛那提 ATP1000 1/4决赛，17 号种子蒂亚福 7-6(2) 7-5 逆转 10 号种子穆塞蒂，第三盘落后时连赢四局锁定胜局。赛后场上采访，主持人先问他最后几局怎么控制住情绪，他说『反手打丢了、被破发，但我马上打了一局破回来了』。随后主持人提起旧账——蒂亚福是 2024 年辛辛那提亚军（决赛负于辛纳），问这段经历对接下来有多大帮助，他回应：『每场比赛都是独立的故事，各走各的路。能再打进一次半决赛我就很开心，希望还能有机会打进决赛。』下一轮迎战中岛布兰登，全美国德比。"
+  },
+  "transcript_verified": true,
+  "_verified_clean": "两份转写对不上 **9.5%**（闸门 12%），**0 处未销账空档**（两处 caption_gaps_ok 都在下面核实过）。第一份 ASR（faster-whisper medium.en）241 词，第二份 faster-whisper（small.en）243 词。\n\n⭐ **最要紧的一处，改写了 en_fixed[15]**：本地额外单独重跑了一遍 small.en 并打印出 25–30.5 秒的逐词时间戳（因为分歧列表只给词序，看不出具体是哪个位置）。第一份在这一处听成『and that's what I did **not**.』（语法不通），第二份独立听成『and that's what I did **tonight**.』——`He's gonna make you beat him and that's what I did tonight.` 完整通顺，`tonight`/`not` 发音接近、是同一处听误。原来 en_fixed[15] 只是把 `not` 硬删掉拼成『and that's what I did.』，现在改成采纳第二份给出的『and that's what I did tonight.』，语义更完整，`zh[14]` 同步改成『而这就是我今晚做到的』。\n\n**两处 caption_gaps_ok 复核**：第二份分别在 11.3–14.3s、20.3–22.7s 报告『漏了英语』（`missed`、`break back and so`）——查过第一份（medium.en）原始词表，这两个词其实都在，只是卡在窗口边界外（`Missed` 在 14.34s、`So` 在 22.68s），是两个模型的分帧/切词时间点有几十到几百毫秒的差异，不是内容缺失，`zh` 第 7、11 行本来就翻了这两句。两处原来写的『回忆细节时的自然停顿』这个解释成立，不用改。\n\n**其余分歧逐条看过，全是虚词/口吃对齐噪音**（`managed`→`manage`、`pick up`→`pickup`、`the`→`a`……），以及 `match`→`max`／`match is its`→`max every every magazine's` 这两处——两份模型在同一处都听成 `max`，反而印证了 `word_fix` 里 `max→match`／`his→its` 那条判断（这个仓库的注释里那个道理是对的：读音接近的位置，两个独立模型给出同一个『错』读法，恰恰说明源音本身含糊，按上下文补全比逐字信更靠谱）。`we're all just at one percent` 那处第二份整段听成 `rugs`（明显劣化，忽略）。"
+}

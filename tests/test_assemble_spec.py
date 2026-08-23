@@ -54,6 +54,28 @@ def test_facts_text把狠数据拼成行():
     assert mod.facts_text([]) == ""
 
 
+def test_逐局表提取最终盘分并拦模型编错比分():
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("assemble_spec", _TOOLS / "assemble_spec.py")
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    games = [
+        {"set": "Set 1", "home_games": "1", "away_games": "0"},
+        {"set": "Set 1", "home_games": "4", "away_games": "6"},
+        {"set": "Set 2", "home_games": "6", "away_games": "1"},
+        {"set": "Set 3", "home_games": "6", "away_games": "1"},
+    ]
+    scores = mod.final_set_scores(games)
+    assert scores == [(4, 6), (6, 1), (6, 1)]
+    assert "4-6 6-1 6-1" in mod.score_fact(scores, "斯瓦泰克", "萨卡里")
+    wrong = {"thesis": "她最终以6-4、3-6、6-4险胜", "narration": []}
+    assert "不一致" in mod.editorial_score_problem(wrong, scores)
+    right = {"thesis": "她最终以4-6、6-1、6-1逆转", "narration": []}
+    assert mod.editorial_score_problem(right, scores) is None
+    reversed_right = {"thesis": "对手视角是6-4、1-6、1-6", "narration": []}
+    assert mod.editorial_score_problem(reversed_right, scores) is None
+
+
 def test_matchup_order按flashscore的home归位(monkeypatch):
     """核心判据：stats.a 跟 flashscore 的 home，而 render_stat_card 的 a 跟
     matchup[0]——所以 matchup 顺序必须跟 flashscore 的 home/away，不是命令行。
@@ -216,6 +238,26 @@ def test_build_background聚合H2H近况排名热点(tool, monkeypatch):
     assert "中文热搜：郑钦文状态怎么了（微博热搜）" in text
     assert "总分差" not in text, "狠数据只进 facts，不进 background——背景是「这个人」，不是「这个比分」"
     assert not notes, f"四个源都成功，不该有失败 note：{notes}"
+
+
+def test_build_background读取生产ZhHot对象而不只认测试字典(tool, monkeypatch):
+    """真实 ``fetch_zh_hot`` 返回 ``ZhHot`` dataclass。
+
+    旧测试只塞 dict，导致生产对象走到 ``h.get`` 必炸，草稿里的中文热点背景长期
+    静默降级。用真实类型钉住边界，不能再让测试桩和生产接口分叉。
+    """
+    from tennislive.research.zh_trends import ZhHot
+
+    a = tool
+    monkeypatch.setattr(a, "fetch_zh_hot", lambda **kw: type("H", (), {
+        "hits": [ZhHot(source="微博热搜", word="伊埃拉晋级",
+                       rank=8, heat="热", url="https://example.test/hot",
+                       terms=("eala",), matched=("伊埃拉",))],
+        "scanned": 232,
+    })())
+    text, notes = a.build_background("Alexandra Eala", "Jessica Pegula", [])
+    assert "中文热搜：伊埃拉晋级（微博热搜）" in text
+    assert not any("AttributeError" in note for note in notes)
 
 
 def test_build_background排名源挂了不拖垮(tool, monkeypatch):
@@ -471,8 +513,9 @@ def test_main写出草稿文件(tool, monkeypatch, tmp_path, capsys):
     monkeypatch.setattr(a, "assemble", lambda **kw: {
         "_draft": True, "slug": kw["slug"], "cover": {"matchup": []},
         "_notes": ["flashscore id：4CYI9Ick（给定）"]})
-    monkeypatch.setattr(a.Path, "resolve",
-                        classmethod(lambda cls: tmp_path.parent / "fake" / "assemble_spec.py"))
+    # ⚠️ DRAFT_DIR 是 import 时按 __file__ 算好的**绝对路径**——不改它的话，
+    # 这条测试会把 demo.draft.json 真写进仓库的 specs/reels/pending/。
+    monkeypatch.setattr(a, "DRAFT_DIR", tmp_path / "pending")
     monkeypatch.setattr(sys, "argv", [
         "assemble_spec.py", "--slug", "demo", "--home", "A E", "--away", "B R",
         "--write"])
@@ -480,6 +523,8 @@ def test_main写出草稿文件(tool, monkeypatch, tmp_path, capsys):
     assert rc == 0
     out = capsys.readouterr().out
     assert "草稿 →" in out
+    assert (tmp_path / "pending" / "demo.draft.json").is_file(), (
+        "--write 要把草稿真的落在 DRAFT_DIR（pending/）里")
 
 
 def test_main默认不落盘(tool, monkeypatch, tmp_path, capsys):
@@ -487,8 +532,7 @@ def test_main默认不落盘(tool, monkeypatch, tmp_path, capsys):
     monkeypatch.setattr(a, "assemble", lambda **kw: {
         "_draft": True, "slug": kw["slug"], "cover": {"matchup": []},
         "_notes": []})
-    monkeypatch.setattr(a.Path, "resolve",
-                        classmethod(lambda cls: tmp_path.parent / "fake" / "assemble_spec.py"))
+    monkeypatch.setattr(a, "DRAFT_DIR", tmp_path / "pending")
     monkeypatch.setattr(sys, "argv", [
         "assemble_spec.py", "--slug", "demo", "--home", "A E", "--away", "B R"])
     rc = a.main()
@@ -496,3 +540,17 @@ def test_main默认不落盘(tool, monkeypatch, tmp_path, capsys):
     out = capsys.readouterr().out
     assert "没落盘" in out and "草稿 →" not in out, (
         "默认必须只打印不写文件——手动控制要先看后写，别默认就把草稿落进仓库")
+    assert not (tmp_path / "pending").exists(), "默认不落盘，连草稿目录都不该建"
+
+
+def test_草稿目录钉在pending不许漏回specs正下方(tool):
+    """specs/reels/ 正下方被一批**非递归** `glob("*.json")` 的判据测试扫着，
+    `.draft.json` 会被 `*.json` 命中——2026-08-18 一份草稿把 main CI 红过
+    2 小时（specs/reels/pending/README.md 记着来路）。所以草稿只许落
+    pending/，而且存量一份都不许漏在外面。"""
+    a = tool
+    assert a.DRAFT_DIR.parts[-3:] == ("specs", "reels", "pending"), a.DRAFT_DIR
+    repo = Path(__file__).resolve().parents[1]
+    strays = sorted((repo / "specs" / "reels").glob("*.draft.json"))
+    assert not strays, (
+        f"specs/reels/ 正下方混进了草稿（会打红非递归 glob 的判据）：{strays}")
