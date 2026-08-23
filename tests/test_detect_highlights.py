@@ -179,7 +179,7 @@ def test_生产路径要把赛事和年份传下去():
 def test_yt_dlp没装要出声不许静默当成没搜到(monkeypatch):
     """⚠️ orchestrate.yml 一度漏装 yt-dlp，`search()` 把 FileNotFoundError 吞成
     []——于是编排器每一班都安静地零候选，**和「集锦还没发」长得一模一样**。
-    「没装」是环境错了要当场抛；「超时」才是正常态返回空。"""
+    「没装」和「超时」都是环境/源站错，要当场抛；只有正常空结果才返回空。"""
     import pytest
 
     dh = _tool()
@@ -198,7 +198,20 @@ def test_yt_dlp没装要出声不许静默当成没搜到(monkeypatch):
         raise dh.subprocess.TimeoutExpired(cmd="yt-dlp", timeout=1)
 
     monkeypatch.setattr(dh.subprocess, "run", _slow)
-    assert dh.search("eala pegula highlights") == [], "超时是正常态，返回空别抛"
+    with pytest.raises(dh.HighlightSourceError) as exc:
+        dh.search("eala pegula highlights")
+    assert "源站/网络故障" in str(exc.value) and "集锦还没发" in str(exc.value), (
+        "搜索超时不能伪装成正常空结果；要明确区分源站故障和集锦未发布")
+
+
+def test_yt_dlp非零退出也不许静默当空结果(monkeypatch):
+    dh = _tool()
+    proc = type("P", (), {"returncode": 1, "stdout": "", "stderr": "HTTP 429"})()
+    monkeypatch.setattr(dh.subprocess, "run", lambda *a, **k: proc)
+    import pytest
+    with pytest.raises(dh.HighlightSourceError) as exc:
+        dh.search("q")
+    assert "HTTP 429" in str(exc.value) and "不是「集锦还没发」" in str(exc.value)
 
 
 def test_搜索一次就把频道和时长带出来(monkeypatch):

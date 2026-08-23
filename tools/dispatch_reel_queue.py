@@ -212,12 +212,19 @@ def discover_queue_file(
 
 
 def dispatch(request: QueueRequest, *, run: Run = subprocess.run) -> None:
-    """Dispatch parallel renders or one fail-closed, serial publish run."""
+    """Dispatch parallel production renders or one fail-closed publish run.
+
+    Production render requests carry ``push=true``.  ``match-reel`` still groups the
+    expensive render phase by slug, then dispatches a separate push-only run after L2
+    QC and artifact commit; only that irreversible publish phase is globally serial.
+    """
     if request.mode == "push" and len(request.slugs) != 1:
         raise QueueError(
             "push queues must contain exactly one slug so publishing stays serial"
         )
-    push = "true" if request.mode == "push" else "false"
+    # 账号所有者：质检通过就推，不再等待第二份人工 push 队列。render 和 push
+    # 都传 true；match-reel 自己把重渲（并行）与发送（串行）拆成两趟。
+    push = "true"
     for slug in request.slugs:
         command = [
             "gh",

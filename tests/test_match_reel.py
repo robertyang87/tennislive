@@ -3260,7 +3260,9 @@ def test_快速预览的开关要在工作流里够得着():
                   if "push_reel.py" in b and "--stage page" not in b]
     assert push_steps, "找不到推送那一步，判据失效了"
     for block in push_steps:
-        assert "mode == 'render'" in block, "推送那一步没钉死在 render 上"
+        assert "mode == 'push'" in block, (
+            "推送 POST 没钉死在 push-only 上——cover 不能发，render 只负责"
+            "质检落库并另派轻量发布任务")
 
     # ⚠️ **「入口够得着」和「路够短」都对，它还是会红**——这一版就是这么栽的
     # （run 155）：封面走 HTML 渲染 + 抠图，要 Chromium、中文字体、rembg 模型，
@@ -4277,6 +4279,9 @@ def test_今日赛程没有发布出口了():
     """
     for path in sorted(Path(".github/workflows").glob("*.yml")):
         body = _yaml_only(path.read_text(encoding="utf-8"))
+        # GitHub 事件名 schedule 只说明「这条工作流由 cron 触发」，不是已经停掉的
+        # 「今日赛程」内容 scope。按裸字符串扫会把任何定时编排工作流误伤。
+        body = body.replace('${{ github.event_name }}" = "schedule"', "")
         assert "tennislive schedule" not in body, (
             f"{path.name} 又在自动产今日赛程了")
         assert '/schedule"' not in body and "= \"schedule\"" not in body, (

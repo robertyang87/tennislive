@@ -448,16 +448,21 @@ def main() -> int:
     # **走 `find_highlight`，不要自己拼「搜一次然后挑一条」**——优先级链
     # （主路 YouTube → 备选 Tennis TV 免费短集锦）只有那一处实现，写两处必分叉，
     # 而分叉的样子是「手动跑说探到了，自动班次说没探到」。
-    from detect_highlights import find_highlight
+    from detect_highlights import HighlightSourceError, find_highlight
 
     # ⚠️ **探测并行，dispatch 串行。** 探测是 IO 密集（yt-dlp 搜索 + Tennis TV
     # 翻页，一场可能几秒到十几秒），多场串行探测会线性累加，比赛时效性高的
     # 时候这就是延迟。并行探测把 N 场的探测时间压成「最慢那一场」。
     # dispatch 保持串行——gh workflow run 本身快（1~2 秒），而且要顺序写 state、
     # 顺序点 run，并行 dispatch 反而容易撞 concurrency 和 state 写入。
-    def _probe(c: dict) -> tuple[dict, str | None, str]:
-        url, via = find_highlight(c["home"], c["away"], c["event"], c["year"])
-        return c, url, via
+    def _probe(c: dict) -> tuple[dict, str | None, str, str]:
+        try:
+            url, via = find_highlight(c["home"], c["away"], c["event"], c["year"])
+            return c, url, via, ""
+        except HighlightSourceError as exc:
+            # 一场源站错误不许取消同批其他场次：探测仍然并行跑完，能做的照做；
+            # 但错误也不能伪装成「没资源」，循环末返回非零让工作流告警。
+            return c, None, "", str(exc)
 
     with ThreadPoolExecutor(max_workers=min(8, len(reel_todo))) as pool:
         results = list(pool.map(_probe, reel_todo))
@@ -465,7 +470,12 @@ def main() -> int:
     # ⚠️ **配额切片要排在「真的会 dispatch」的过滤之后**——老版本先切
     # `[:max]` 再逐条跳过探不到源的，探不到的白占配额，探得到的反而排不进。
     dispatchable: list[tuple[dict, str, str]] = []
-    for c, url, via in results:
+    probe_errors: list[tuple[dict, str]] = []
+    for c, url, via, error in results:
+        if error:
+            probe_errors.append((c, error))
+            print(f"  [{c['slug']}] 资源探测故障：{error}")
+            continue
         if not url:
             print(f"  [{c['slug']}] 集锦还没探到，跳过，下次再探")
             continue
@@ -499,6 +509,11 @@ def main() -> int:
         # key。probe 工作流里已经有「自动备料写 spec 草稿」一步（有 captions + key
         # + 能写盘），编排器只负责 dispatch probe 并把 home/away/event/year 传进去。
     print(f"已点 {len(dispatched)} 条 run 并记入 state。")
+    if probe_errors:
+        slugs = "、".join(c["slug"] for c, _ in probe_errors)
+        print(f"资源探测故障共 {len(probe_errors)} 场（{slugs}）；"
+              "其他场次已继续处理，本班返回失败以触发告警。")
+        return 2
     return 0
 
 

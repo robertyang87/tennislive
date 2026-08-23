@@ -23,37 +23,41 @@ match-reel run 实测耗时（按 mode 分）：
 
 | 环节 | 并行/串行 | 证据 |
 |---|---|---|
-| probe/render 跑起来 | ✅ **天然并行** | `concurrency: group: match-reel-${{slug}}`，不同 slug 互不阻塞 |
+| probe/render 跑起来 | ✅ **天然并行** | `concurrency: group: match-reel-${{slug}}`，即使 render 请求 `push=true` 也不占发布锁 |
 | 不同栏目（reel/interview/explainer） | ✅ 并行 | 各是独立 workflow |
 | 编排器「探测集锦」 | ✅ 已并行（2026-08-17 改） | ThreadPoolExecutor，N 场探测时间压成最慢那一场 |
 | 编排器「dispatch run」 | ⚠️ 串行 | gh workflow run 每场 1~2s，N 场串行 ~N×2s，可接受 |
 | 同一 slug 的 probe/render | ⚠️ 串行（设计如此） | concurrency cancel-in-progress，防互相覆盖 output |
-| 赛后开麦候选转写 | ✅ 逐场 matrix | `oncourt-interviews` 一场一个 runner，`max-parallel: 4` |
+| 赛后开麦候选转写 | ✅ 逐场 matrix | `oncourt-interviews` 每 15 分钟扫描，一场一个 runner，`max-parallel: 4` |
 | 赛后开麦冷开场搜索/翻译 | ✅ 并行 | `attach_interview_lead_in.py` ThreadPoolExecutor，默认 4 |
 | 赛后开麦 render / publish | ✅ 按 slug 并行 | 两条 workflow 的 concurrency 都按 slug 分组 |
 
-**关键结论**：多场并行的**瓶颈不在流水线**（probe/render 天然并行），而在
-**编排器 dispatch 之前的那段探测**——已经并行化了。剩下的串行点都是「本来就该
-串行」的（同 slug 不能并发、dispatch 要顺序写 state）。
+**关键结论**：多场的搜索、probe、render 都已并行。只有三类动作串行：同 slug
+防覆盖、dispatch 后逐条写 state，以及不可撤回的微信发送。生产 render 质检落库后
+另派轻量 `mode=push`，所以发布锁不再把前面的 6–14 分钟渲染一起串行。
 
 ## 3. 稳定性：哪些地方会静默失败
 
 | 风险点 | 现状 | 会静默吗 |
 |---|---|---|
-| 集锦探测超时/没搜到 | `search()` 返回 []，`tennistv_fallback` 吞 SystemExit | 出声（日志） |
-| 探测到**错的**集锦（别的站/别的场） | `pick_highlight` 判据「宁可窄」，但拿错仍可能 | ⚠️ 静默——流水线无一步拦，只有人看才发现 |
-| probe 跑起来后失败（下载失败/无字幕） | 编排器已标记「已 dispatch」，不会重试 | ❌ 静默，且不重试 |
-| cron 失败 / dispatch 0 条 | 无告警 | ❌ 静默——日志有，但没人被叫回来 |
-| 封面抓不到官方实拍 | `fetch_cover` 返回非 0，草稿留空出声 | 出声，但 render 前闸会拦 |
+| YouTube 正常空结果 | 返回 []，打印“尚未发布”，下一班重探 | 不静默 |
+| YouTube 超时/429/非零退出 | 抛 `HighlightSourceError`；其他比赛继续，整班最终红灯 + PushPlus | 不再冒充空结果 |
+| Tennis TV 备选源异常 | 保持降级，但打印 `source-warning`（WTA 不因不适用的 ATP 备选源变红） | 不静默 |
+| 探测到**错的**集锦（别的站/别的场） | 标题同时卡双方、赛事、年份、单场形状、官方频道、≤12 分钟、1080p | ⚠️ 仍缺下载后的比分板/球员名 L0 复核 |
+| probe 跑起来后失败（下载失败/无字幕） | 失败步骤把 slug 从 state 摘掉，下班重探重发 | 已自愈 |
+| cron / 资源探测 / dispatch 失败 | run 红灯并 PushPlus 通知；成功派发的 state 用 `always()` 先落库 | 不静默 |
+| 封面抓到却未落库 | 官方头图现在随草稿单独 `git add` | 已修 |
+| 封面抓不到官方实拍 | 草稿留空出声，render 前 `cover_photo_problem` 硬拦 | 不降级发糊图 |
 
 ## 4. 自愈：失败会不会自己重来
 
 | 场景 | 会不会自愈 | 缺口 |
 |---|---|---|
 | 集锦还没上传（探测没搜到） | ✅ 会 | 探测失败**不记 state**，下次 cron 重探 |
-| probe 失败（下到一半/无字幕） | ❌ 不会 | 编排器已记「已 dispatch」，永不重试 |
+| probe 失败（下到一半/无字幕） | ✅ 会 | 失败 run 摘 state，下一班重探 |
 | render 失败 | ⚠️ 部分 | concurrency cancel 了旧 run 不重跑，要人手动 re-run |
-| cron 本身失败 | ❌ 不会 | 无告警，要人去看 run 列表 |
+| cron 本身失败 | ✅ 会再跑 + 立即告警 | 10 分钟后下一班；当班 PushPlus 报故障 |
+| render 质检通过 | ✅ 自动继续 | 成片/Release/提交成功后派 `mode=push`；发布任务全局串行 |
 
 ## 5. 已修 / 待修清单
 
@@ -61,7 +65,7 @@ match-reel run 实测耗时（按 mode 分）：
 - 编排器探测集锦并行化（ThreadPoolExecutor）
 
 **已修（2026-08-23，赛后开麦）**：
-- 每 30 分钟扫描，候选同时写生产清单和来源待复核清单。
+- 每 15 分钟扫描，候选同时写生产清单和来源待复核清单。
 - L0 先证明“本场获胜后的场上话筒采访”；发布会、演播室、unknown 不制作。
 - 多比赛逐场 matrix 并行转写；词级时间码与正式切行器同源后逐行翻译。
 - 独立采访自动配同场官方集锦末段、原声解说和中英字幕，找不到不降级。
@@ -72,12 +76,20 @@ match-reel run 实测耗时（按 mode 分）：
 - render dispatch 超过 3 小时仍无 `render.json` 会自动释放重投并刷新时刻；
   最近刚投出的仍保持单飞，不会因 10 分钟扫描重复启动。
 
-**待修（按优先级）**：
-1. **probe 失败自愈**：编排器 state 要区分「已 dispatch」和「dispatch 但失败了」。
-   目前 `mark_dispatched` 只记成功，probe 失败后不会重试。改法：probe 工作流
-   失败时把 slug 从 state 摘掉（或 state 记「最后一次 dispatch 的 run 状态」），
-   下次 cron 就能重探重发。
-2. **失败告警**：cron 失败 / dispatch 0 条 / probe 失败，推到微信或至少写进
-   job summary 并标红（CLAUDE.md「出了问题当场解决，别等人来问」）。
-3. **探测拿错的兜底**：pick_highlight 已经「宁可窄」，但「拿错」这最后一层没有
-   闸。可考虑 probe 后校验源片记分条上的球员名，对不上就报废重探。
+**2026-08-23 本轮新增整改**：
+- `orchestrate` 从“定时只 dry-run”改为每 10 分钟真 `--apply`，最多八场。
+- YouTube 源站错误与正常空结果分型；单场错误不阻塞其他比赛，整班仍告警。
+- probe 生成的 WTA 官方封面随草稿提交，不再留下失效引用。
+- 批量生产 render 默认 `push=true`；多场按 slug 并行，L2 质检落库后自动派
+  push-only，全局只串行微信 POST 和发布账本。
+
+**仍待修（按优先级）**：
+1. **赛场之上草稿 → 正式 spec 的语义闭环**：probe 会自动产出 pending 草稿，
+   但草稿的比分/赢家/顶栏/结构化资料来源/冷开场兑现仍不足以安全通过 L1。
+   不能把“模型写出 JSON”直接当终审；需要像 interview 的 promote 工具一样，
+   从赛果和来源证据机械补齐，再用视觉/比分板验证窗口，过 L1 才进入 render。
+2. **下载后 L0 同场身份闸**：OCR/视觉读取片中双方和赛事，与候选签名核对；
+   标题窄匹配仍不能百分之百防官方频道错挂/合集错段。
+3. **render 失败自动重试的边界**：网络/Release 5xx 可有限重试；spec/画面质量失败
+   必须保持红灯，不应盲重跑。
+4. **ATP 当场高清封面自动源**：WTA 已能抓官方赛后稿头图，ATP 仍缺同强度通路。
