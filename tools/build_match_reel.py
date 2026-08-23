@@ -113,6 +113,8 @@ from tennislive.video.explainer import (  # noqa: E402
     _BAND_COLOR,
     _ASS_MARGIN_H,
     _ASS_MARGIN_V,
+    _SUB_MAX,
+    _sub_width,
     readable,
     speakable,
     all_single_char_segments,
@@ -4490,6 +4492,67 @@ def _hook_lines_fit_the_title(spec: dict) -> None:
         "排名、轮次、比分海报上已经印着了，不用在这儿重说一遍。")
 
 
+def _quote_lines_fit_the_frame(spec: dict) -> None:
+    """`quote` 里手写的换行行，没有一处替它检查过宽度——直到 2026-08-22
+    fils-cobolli 那条撞上：冷开场原声双语字幕的中文行手写成 24 字
+    （sub_width 23.4，远超 `_SUB_MAX=16`），渲出来贴着左右 150px 安全边距
+    几乎溢出画面，而且**一处报错都没有**——`--dry-run`、`--check-narration`、
+    `check_reel_landed`、全量测试全绿，是把成片从 Release 拉回来逐帧核对
+    才看见的，白付一整趟渲染（checkout+装依赖+下源片+编码+发布，四分多钟）。
+
+    根子是 `narration` 驱动的字幕走 `_best_break`/`_sub_width` 自动断行，
+    天生卡在这条线以内；`quote` 是手写的整行文本，`explicit_quote_cues`
+    只按 `at` 时间戳切、`write_subtitles` 按行分别过 `_ass_text` 渲染，
+    从没人替它量过宽度。而 libass 的 `WrapStyle:0` 自动换行靠的是空格
+    ——英文长句有空格，超宽也能自己断成两行（这次实测过，两行各自留了
+    足够边距）；中文没有空格，超宽的那一行没有断点，只能整行画出去。
+
+    ⚠️ **只查没有空格的行**。带空格的行 libass 自己断得开，`_sub_width`
+    超了不代表会溢出——错拦这类会逼着下一个人把一句本来没事的英文台词
+    硬拆两半。判据宁可窄，不可宽。
+
+    ⚠️ **这不是一次性的失误，是这条产品线反复复发的一类缺陷。** 闸装上当天
+    拿它扫了一遍 `specs/reels/*.json`，另外 **4 条已发布的成片**同样超着
+    （`osaka-mertens` 41 字 vs 上限 16，超了一倍还多）——它们和 fils-cobolli
+    那次是同一个根子，只是当时都没被发现。已发的不重渲（消息发出去收不回来），
+    挂进 `_LEGACY_QUOTE_OVERFLOW`，只许减不许加。
+    """
+    slug = str(spec.get("slug", ""))
+    for i, seg in enumerate(spec.get("segments") or []):
+        if not isinstance(seg, dict):
+            continue
+        raw = seg.get("quote")
+        if not isinstance(raw, list):
+            continue
+        for item in raw:
+            text = item["text"] if isinstance(item, dict) else str(item)
+            for row in str(text).split("\n"):
+                row = row.strip()
+                if not row or " " in row:
+                    continue
+                width = _sub_width(row)
+                if width > _SUB_MAX:
+                    if slug in _LEGACY_QUOTE_OVERFLOW:
+                        continue
+                    raise ReelError(
+                        f"第 {i + 1} 段 quote 里手写的这一行超宽会溢出画面：\n"
+                        f"  「{row}」（{len(row)} 字，sub_width {width:.1f}，"
+                        f"上限 {_SUB_MAX}）\n"
+                        "libass 对没有空格的行没法自动换行——超宽的行会贴着"
+                        "左右 150px 安全边距溢出，且不报错，要渲完拉回成片"
+                        "逐帧看才发现。把这行改短，或者自己用 `\\n` 拆成两行"
+                        "（每行都要重新过一遍这道闸）。")
+
+
+#: 已经发布、不会重渲的 4 条——**只许减不许加**，自检在
+#: `test_quote超宽豁免表只许减不许加`：表里每个 slug 必须真的存在、
+#: 而且真的还超着，写错一个名字豁免就成了一盏恒真的绿灯。
+_LEGACY_QUOTE_OVERFLOW = frozenset({
+    "alexandrova-sabalenka", "gauff-kostyuk-cincinnati-2026-qf",
+    "osaka-mertens", "swiatek-kostyuk",
+})
+
+
 def versus_width() -> int:
     """标题可用宽度，报错信息里要用。放在这儿是为了不在模块顶层 import
     `versus_poster`——它会拖进 webcards / explainer 那一串，而 dry-run 用不上。
@@ -4995,6 +5058,7 @@ def validate_spec(
     _absolute_claims_need_a_source(spec)
     _players_are_worth_a_reel(spec)
     _hook_lines_fit_the_title(spec)
+    _quote_lines_fit_the_frame(spec)
     _solo_scoreboard_shape(spec)
     ending = ending_payoff_problem(
         spec, primary=next(iter(urls)),
