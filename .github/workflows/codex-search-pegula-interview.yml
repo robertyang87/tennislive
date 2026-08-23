@@ -8,32 +8,68 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
-  search:
+  analyze:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20
     steps:
-      - name: Install yt-dlp
-        run: pipx install yt-dlp
-      - name: Inspect latest Cincinnati Open uploads
+      - uses: actions/checkout@v4
+      - name: Install tools
         run: |
-          yt-dlp --flat-playlist --playlist-end 100 \
-            --print "%(id)s | %(title)s | %(uploader)s | %(duration_string)s | %(upload_date)s | %(webpage_url)s" \
-            "https://www.youtube.com/channel/UCtRsUWSlnmATu1X-wORUTqA/videos"
-      - name: Search public video sources
+          pip install -q "yt-dlp[default]" faster-whisper
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
+      - name: Materialize YouTube cookies
+        id: cookies
+        env:
+          YT_COOKIES_TXT: ${{ secrets.YT_COOKIES_TXT }}
         run: |
-          set +e
-          for QUERY in \
-            "Jessica Pegula Iga Swiatek Cincinnati 2026 on court interview" \
-            "Jessica Pegula Cincinnati 2026 post match interview" \
-            "Pegula Swiatek Cincinnati Open 2026 interview" \
-            "Jessica Pegula Cincinnati Open after victory Swiatek" \
-            "Cincinnati Open Jessica Pegula final 2026"; do
-            echo "QUERY: $QUERY"
-            yt-dlp --flat-playlist --playlist-end 50 \
-              --print "%(id)s | %(title)s | %(uploader)s | %(duration_string)s | %(upload_date)s | %(webpage_url)s" \
-              "ytsearch50:$QUERY"
-          done
-          true
+          if [ -n "$YT_COOKIES_TXT" ]; then
+            printf '%s' "$YT_COOKIES_TXT" > "$RUNNER_TEMP/yt-cookies.txt"
+            echo "args=--cookies $RUNNER_TEMP/yt-cookies.txt" >> "$GITHUB_OUTPUT"
+          else
+            echo "args=" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Download and inspect candidate sources
+        env:
+          COOKIE_ARGS: ${{ steps.cookies.outputs.args }}
+        run: |
+          mkdir -p scratch/pegula-source-analysis
+          yt-dlp $COOKIE_ARGS --no-playlist \
+            -f "bv*[height<=1080]+ba/b[height<=1080]" --merge-output-format mp4 \
+            -o "/tmp/pegula-interview.%(ext)s" "https://www.youtube.com/watch?v=lvFHKAXntQM"
+          yt-dlp $COOKIE_ARGS --no-playlist \
+            -f "bv*[height<=1080]+ba/b[height<=1080]" --merge-output-format mp4 \
+            -o "/tmp/pegula-highlight.%(ext)s" "https://www.youtube.com/watch?v=C8_5ag2DYn0"
+          ffprobe -v error -show_entries format=duration:stream=index,codec_name,width,height,r_frame_rate \
+            -of json /tmp/pegula-interview.mp4 > scratch/pegula-source-analysis/interview-probe.json
+          ffprobe -v error -show_entries format=duration:stream=index,codec_name,width,height,r_frame_rate \
+            -of json /tmp/pegula-highlight.mp4 > scratch/pegula-source-analysis/highlight-probe.json
+          ffmpeg -y -i /tmp/pegula-interview.mp4 \
+            -vf "fps=1/8,scale=480:-1,tile=4x4" -frames:v 1 \
+            scratch/pegula-source-analysis/interview-contact.jpg
+          ffmpeg -y -ss 180 -i /tmp/pegula-highlight.mp4 \
+            -vf "fps=1/8,scale=480:-1,tile=4x4" -frames:v 1 \
+            scratch/pegula-source-analysis/highlight-contact.jpg
+      - name: Transcribe candidate interview
+        run: |
+          python - <<'PY'
+          from faster_whisper import WhisperModel
+          model = WhisperModel("medium.en", device="cpu", compute_type="int8")
+          segments, info = model.transcribe("/tmp/pegula-interview.mp4", beam_size=5, vad_filter=True)
+          with open("scratch/pegula-source-analysis/interview-transcript.txt", "w", encoding="utf-8") as f:
+              f.write(f"language={info.language} probability={info.language_probability:.4f}\n")
+              for s in segments:
+                  line = f"[{s.start:.2f} --> {s.end:.2f}] {s.text.strip()}"
+                  print(line)
+                  f.write(line + "\n")
+          PY
+      - name: Commit analysis evidence
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add scratch/pegula-source-analysis
+          git commit -m "chore: inspect Pegula interview candidate source"
+          git push
