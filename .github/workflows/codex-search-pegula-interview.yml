@@ -10,6 +10,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: codex-search-pegula-interview
+  cancel-in-progress: true
+
 jobs:
   analyze:
     runs-on: ubuntu-latest
@@ -79,7 +83,7 @@ jobs:
         run: |
           python - <<'PY'
           from faster_whisper import WhisperModel
-          model = WhisperModel("medium.en", device="cpu", compute_type="int8")
+          model = WhisperModel("small.en", device="cpu", compute_type="int8")
           segments, info = model.transcribe("/tmp/pegula-interview.mp4", beam_size=5, vad_filter=True)
           with open("scratch/pegula-source-analysis/interview-transcript.txt", "w", encoding="utf-8") as f:
               f.write(f"language={info.language} probability={info.language_probability:.4f}\n")
