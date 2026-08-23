@@ -7,12 +7,12 @@ permissions:
   actions: write
   contents: read
 jobs:
-  dispatch-render:
+  dispatch-push:
     runs-on: ubuntu-latest
     steps:
-      - name: Render and push final-applause-safe Pegula open-mic video
+      - name: Push verified Pegula open-mic video to WeChat
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh workflow run interview-clip.yml -R ${{ github.repository }} --ref main \
-            -f slug=pegula-swiatek-cincinnati-2026-sf -f mode=render -f push=true
+          gh workflow run auto-push-interview.yml -R ${{ github.repository }} --ref main \
+            -f slug=pegula-swiatek-cincinnati-2026-sf
