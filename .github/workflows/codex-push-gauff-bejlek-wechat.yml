@@ -20,6 +20,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          # Retry after publishing copy passed the five-tag guard.
           gh workflow run interview-clip.yml -R robertyang87/tennislive --ref main \
             -f slug=gauff-bejlek-cincinnati-2026-sf \
             -f mode=push \
