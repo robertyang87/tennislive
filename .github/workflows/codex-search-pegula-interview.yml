@@ -4,15 +4,32 @@ on:
     branches: [main]
     paths: [".github/workflows/codex-search-pegula-interview.yml"]
 permissions:
-  actions: write
   contents: read
 jobs:
-  dispatch-subs:
+  captions:
     runs-on: ubuntu-latest
     steps:
-      - name: Generate Pegula subtitle lines
-        env:
-          GH_TOKEN: ${{ github.token }}
+      - name: Install caption tools
         run: |
-          gh workflow run interview-clip.yml -R ${{ github.repository }} --ref main \
-            -f slug=pegula-swiatek-cincinnati-2026-sf -f mode=subs
+          pip install -q "yt-dlp[default]" bgutil-ytdlp-pot-provider
+          docker run --name bgutil-pot -d -p 4416:4416 brainicism/bgutil-ytdlp-pot-provider
+          for i in {1..30}; do curl -fsS http://127.0.0.1:4416/ping && break; sleep 1; done
+      - name: Restore cookies
+        env:
+          YT_COOKIES_TXT: ${{ secrets.YT_COOKIES_TXT }}
+        run: printf '%s' "$YT_COOKIES_TXT" > cookies.txt
+      - name: Print final WTA commentary captions
+        run: |
+          yt-dlp --cookies cookies.txt --js-runtimes node --write-auto-subs \
+            --sub-langs en-orig --sub-format json3 --skip-download \
+            -o "cap.%(ext)s" "https://www.youtube.com/watch?v=C8_5ag2DYn0"
+          python - <<'PY'
+          import json,glob
+          p=glob.glob("cap*.json3")[0]
+          d=json.load(open(p))
+          for e in d.get("events",[]):
+              a=e.get("tStartMs",0)/1000
+              if a < 250: continue
+              t="".join(s.get("utf8","") for s in e.get("segs",[])).strip().replace("\n"," ")
+              if t: print(f"{a:.2f} | {t}")
+          PY
