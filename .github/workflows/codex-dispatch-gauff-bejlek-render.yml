@@ -26,7 +26,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # 字幕已过宽度闸；封面改用逐帧核过的睁眼微笑画面，重跑完整预览。
+          # 全片已过 L2；封面按实际高清海报复核改到 80.4 秒，覆盖最终预览。
           gh workflow run interview-clip.yml --ref main \
             -f slug=gauff-bejlek-cincinnati-2026-sf \
             -f mode=render \
