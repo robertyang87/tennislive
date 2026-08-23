@@ -43,6 +43,14 @@ def test_video_id归一化跨来源(tool):
     assert tool._video_id("") == ""
 
 
+def test_tennistv只有free资源进入无人值守生产(tool):
+    base = {"id": "tennistv:4563954"}
+    assert tool.production_resource_problem({**base, "entitlement": "free"}) == ""
+    problem = tool.production_resource_problem({**base, "entitlement": "freemium"})
+    assert "freemium" in problem and "注册会话" in problem
+    assert tool.production_resource_problem({"id": "youtube:abc"}) == ""
+
+
 def test_event_window窗口内入选窗口外排除(tool):
     # 辛辛那提 2026 窗口 08-16/08-23，今天 08-18 → 在窗口内
     assert tool.event_window({"title": "De Minaur Interview | Cincinnati 2026",

@@ -184,15 +184,22 @@ def transcribe(url: str, workdir: Path, model: str = ASR_MODEL) -> tuple[list[di
     except Exception:  # noqa: BLE001 —— 非 Tennis TV 源直接原样下
         dl_url = url
 
-    from faster_whisper import WhisperModel  # noqa: PLC0415
-
     out_mp3 = workdir / "audio.mp3"
     cmd = ["yt-dlp", "-f", "bestaudio", "-x", "--audio-format", "mp3",
            "-o", str(out_mp3).replace(".mp3", ".%(ext)s"), dl_url]
     cookies = os.environ.get("YT_COOKIES")
     if cookies and os.path.isfile(cookies):
         cmd += ["--cookies", cookies]
-    subprocess.run(cmd, check=True, capture_output=True, timeout=DOWNLOAD_TIMEOUT)
+    proc = subprocess.run(
+        cmd, check=False, capture_output=True, text=True, timeout=DOWNLOAD_TIMEOUT
+    )
+    if proc.returncode:
+        tail = (proc.stderr or proc.stdout or "（没有 yt-dlp 输出）").strip()[-1800:]
+        raise RuntimeError(
+            f"yt-dlp 音频下载失败（exit {proc.returncode}）：{tail}"
+        )
+    from faster_whisper import WhisperModel  # noqa: PLC0415
+
     model_inst = WhisperModel(model, compute_type="int8")
     segments, info = model_inst.transcribe(
         str(out_mp3), vad_filter=True, word_timestamps=True)
