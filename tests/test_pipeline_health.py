@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from tools.pipeline_health import WorkflowHealth, elapsed, render_report
+from tools.pipeline_health import DEFAULT_WORKFLOWS, WorkflowHealth, elapsed, render_report
 
 
 def test_elapsed_uses_real_timestamps():
@@ -19,6 +19,11 @@ def test_healthy_trend_does_not_alert():
     rows = [WorkflowHealth("match-reel.yml", 10, 9, 1, 430, 0)]
     _report, alerts = render_report(rows, [], (10, 0, 430), [])
     assert alerts == []
+
+
+def test_health_monitor_covers_every_auto_publish_column():
+    assert {"auto-push-reel.yml", "auto-push-interview.yml",
+            "auto-push-explainer.yml"} <= set(DEFAULT_WORKFLOWS)
 
 
 def test_stale_publication_is_reported():

@@ -26,6 +26,7 @@ DEFAULT_WORKFLOWS = (
     "match-reel.yml",
     "auto-push-interview.yml",
     "auto-push-reel.yml",
+    "auto-push-explainer.yml",
 )
 
 
