@@ -15,26 +15,57 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  search:
+  analyze:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 30
     steps:
-      - name: Install yt-dlp
-        run: pipx install yt-dlp
-      - name: Inspect newest Cincinnati Open uploads
+      - uses: actions/checkout@v4
+      - name: Install media tools
         run: |
-          yt-dlp --flat-playlist --playlist-end 40 \
-            --print "%(id)s | %(title)s | %(duration_string)s | %(webpage_url)s" \
-            "https://www.youtube.com/channel/UCtRsUWSlnmATu1X-wORUTqA/videos"
-      - name: Search newest mirrors and exact quotes
-        run: |
-          for QUERY in \
-            "Jessica Pegula after her victory over Swiatek Cincinnati final" \
-            "Jessica Pegula on court interview after beating Iga Swiatek semifinals" \
-            "Jessica Pegula always rooting for American tennis Coco Cincinnati" \
-            "Jessica Pegula crazy match today on court Cincinnati"; do
-            echo "QUERY: $QUERY"
-            yt-dlp --flat-playlist --playlist-end 50 \
-              --print "%(id)s | %(title)s | %(uploader)s | %(duration_string)s | %(webpage_url)s" \
-              "ytsearch50:$QUERY"
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
+          python -m pip install -q "yt-dlp[default]" faster-whisper bgutil-ytdlp-pot-provider
+          docker run --name bgutil-pot -d -p 4416:4416 brainicism/bgutil-ytdlp-pot-provider
+          for i in {1..30}; do
+            curl -fsS http://127.0.0.1:4416/ping && break
+            sleep 1
           done
+      - name: Restore YouTube cookies
+        env:
+          YOUTUBE_COOKIES: ${{ secrets.YOUTUBE_COOKIES }}
+        run: |
+          if [ -n "$YOUTUBE_COOKIES" ]; then
+            printf '%s' "$YOUTUBE_COOKIES" > cookies.txt
+          fi
+      - name: Download true on-court interview and official highlight
+        run: |
+          mkdir -p analysis
+          COOKIE_ARGS=()
+          if [ -s cookies.txt ]; then COOKIE_ARGS=(--cookies cookies.txt); fi
+          yt-dlp "${COOKIE_ARGS[@]}" --extractor-args "youtube:player_client=mweb"             -f "bv*[height<=1080]+ba/b[height<=1080]/b" --merge-output-format mp4             -o "analysis/interview.%(ext)s" "https://www.youtube.com/watch?v=lvFHKAXntQM"
+          yt-dlp "${COOKIE_ARGS[@]}" --extractor-args "youtube:player_client=mweb"             -f "bv*[height<=1080]+ba/b[height<=1080]/b" --merge-output-format mp4             -o "analysis/highlight.%(ext)s" "https://www.youtube.com/watch?v=C8_5ag2DYn0"
+      - name: Transcribe and inspect
+        run: |
+          python - <<'PY'
+          from faster_whisper import WhisperModel
+          from pathlib import Path
+          model=WhisperModel("small.en", device="cpu", compute_type="int8")
+          for stem in ("interview","highlight"):
+              p=next(Path("analysis").glob(stem+".*"))
+              segs,info=model.transcribe(str(p), beam_size=5, vad_filter=True)
+              with open("analysis/"+stem+".txt","w") as f:
+                  for s in segs:
+                      line=f"{s.start:.2f}\t{s.end:.2f}\t{s.text.strip()}"
+                      print(stem.upper(), line)
+                      f.write(line+"\n")
+          PY
+          for stem in interview highlight; do
+            dur=$(ffprobe -v error -show_entries format=duration -of csv=p=0 analysis/$stem.mp4)
+            ffmpeg -y -i analysis/$stem.mp4 -vf "fps=16/$dur,scale=480:-1,tile=4x4" -frames:v 1 analysis/$stem-contact.jpg
+            ffprobe -v error -show_entries format=duration:stream=codec_name,width,height -of json analysis/$stem.mp4 > analysis/$stem-probe.json
+          done
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pegula-oncourt-analysis
+          path: analysis/
+          retention-days: 3
