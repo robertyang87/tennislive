@@ -3935,6 +3935,13 @@ def probe_dry_run(spec: dict, segments: list["Segment"]) -> bool:
     | 溶解底料跨切点 | 同上 | 只报 |
     | 段尾切在一分打完之前 | `point_ends` | 只报 |
     | 这条源片的死球时刻整个没量过 | `point_ends`／`scorebox_guess` | 只报，**见下** |
+    | 源片分辨率不到 1080p | `height` | **硬**，2026-08-23 补的，见下 |
+
+    ⚠️ **1080p 那条 2026-08-18 就定了，实现晚了五天。** 「视频一定要选
+    1080p 及以上的清晰度，如果没有的话就等」是账号所有者说得最重的一条，
+    `probe.json` 早就记着 `height`，可这条闸一直没写——`--dry-run` 对
+    720p 的源片完全不吭声。补的时候只查 `segments` 真正引用到的源，
+    不碰封面（那边有自己独立的「官方高清实拍」闸，两件事分开）。
 
     ⚠️ **最后这一条是 2026-08-19 补的**（账号所有者：「剪辑的时候要等死球了
     再去切下一段视频，切记」）。`bouzkova-jovic` 那条 probe 时 `--scorebox`
@@ -4048,6 +4055,33 @@ def probe_dry_run(spec: dict, segments: list["Segment"]) -> bool:
                 "（可能没有常驻记分条，或者门槛卡严了）——段尾只能靠"
                 "缩略图墙用眼睛定")
 
+    # ⑤ **源片分辨率不到 1080p——硬闸。** 账号所有者 2026-08-18：「视频一定要
+    #    选 1080p 及以上的清晰度，如果没有的话就等」。`probe.json` 早就记着
+    #    `height` 字段，可这句话落地之后一直只停在「挑源时人自己看一眼
+    #    `%(height)s`」——**判据算出来了，就是没有一处真的去比它**。
+    #    和这个仓库反复栽过的「规矩写对了，实现是空的」是同一个形状
+    #    （`is_registered`／`Match.tour`／`_cut_person` 那几处），只是这次
+    #    是复盘时发现的，还没来得及先出一条错的。
+    #
+    #    ⚠️ **只查真正会被剪进片子的源**（`segments` 引用到的，`seg.image`
+    #    那种静图段落跳过），不查 `_cover_frame_spots`——封面走的是完全独立
+    #    的「官方高清实拍」硬闸（`cover_photo_problem`），和源片分辨率是
+    #    两件事，混在一起会把没写 `frame_at` 的正常封面段落误判成缺分辨率。
+    for source_key in sorted(checked_sources):
+        probe = probes.get(urls.get(source_key, ""))
+        if probe is None:
+            continue
+        height = probe.get("height")
+        if height is None:
+            continue
+        if int(height) < 1080:
+            label = source_key or "(主源)"
+            hard.append(
+                f"  源 {label}：{probe.get('width')}x{height}，低于 1080p——"
+                "「视频一定要选 1080p 及以上的清晰度，如果没有的话就等」，"
+                "不是拿这一版将就的退路。换一条更高清的源，或者等官方"
+                "发布更清晰的版本再回来。")
+
     if mid:
         mid.sort(reverse=True)          # 越靠中间越可疑，排前面
         print(f"\n[查选段] {len(mid)} 处窗口中途换了镜头（**只报不拦**，"
@@ -4065,13 +4099,10 @@ def probe_dry_run(spec: dict, segments: list["Segment"]) -> bool:
     if unchecked:
         print(f"  ⚠️ 这几条源片的切点没查成：{unchecked}")
     if hard:
-        print("\n[查选段] 下面这些**过不去**——"
-              "ffmpeg 的 `-ss`/`-t` 越界不报错，只安安静静出一段短的，"
-              "而后面每一句旁白和字幕都跟着整体错位：")
+        print("\n[查选段] 下面这些**过不去**：")
         print("\n".join(hard))
-        print("  把 `end` 往前收，或者换一条更长的源片。")
         return True
-    print("  选段这一层没有硬伤（片长）。**挑段仍然要看缩略图墙**——"
+    print("  选段这一层没有硬伤（片长、分辨率）。**挑段仍然要看缩略图墙**——"
           "「近端是谁」「情绪对不对题」机器判不了。")
     return False
 

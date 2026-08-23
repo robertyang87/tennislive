@@ -355,6 +355,43 @@ def test_已有spec的候选跳过并出声(monkeypatch, tmp_path, capsys):
     assert "已有 spec" in out, "跳过不出声的样子和「没扫到」一模一样"
 
 
+def test_文件名和slug对不上但球员相同也要跳过(monkeypatch, tmp_path, capsys):
+    """2026-08-23 干跑实测撞上的：`gauff-bejlek-cincinnati-2026-sf.json` 刚
+    合并进 main，`--dry-run` 还是把「贝莱克 vs 高芙」报成一条全新候选——
+    `slug_for` 拼出来的是 `bejlek-gauff`（home 姓在前），文件名是赢家在前
+    还带轮次后缀，`_already_specced` 按裸 slug 精确匹配根本查不到。
+
+    真跑起来（`--apply`）就是一次白白的重复 dispatch，而且不报错，
+    看起来和「这是条新比赛」一模一样。判据是**按姓的集合**去比对
+    `cover.matchup`，不管文件名怎么起。
+    """
+    import json  # noqa: PLC0415
+    o = _tool()
+    specs = tmp_path / "reels"
+    specs.mkdir(parents=True)
+    (specs / "gauff-bejlek-cincinnati-2026-sf.json").write_text(json.dumps({
+        "cover": {"matchup": [{"name": "高芙", "name_en": "Coco Gauff"},
+                              {"name": "贝莱克", "name_en": "Sara Bejlek"}]},
+    }), encoding="utf-8")
+    monkeypatch.setattr(o, "SPECS_DIR", specs)
+
+    cand = _fake_cand("bejlek-gauff", "Sara Bejlek", "Coco Gauff")
+    fresh = o.dispatch_plan([cand], {"dispatched": {}})
+    assert fresh == [], "同一对球员，只是文件名和 slug 顺序不一样，应该跳过"
+    out = capsys.readouterr().out
+    assert "同一对球员" in out, "跳过不出声的样子和「没扫到」一模一样"
+
+    # 反面锚点：真的是另外两个人，不能被误伤
+    other = _fake_cand("swiatek-pegula", "Iga Swiatek", "Jessica Pegula")
+    fresh = o.dispatch_plan([other], {"dispatched": {}})
+    assert fresh == [other], "不同球员不该被这层新加的检查误伤"
+
+    # `home`/`away` 缺失时（老测试喂的最小候选字典）不该崩，也不该误判
+    minimal = {"slug": "e-f", "date": "2026-08-21"}
+    fresh = o.dispatch_plan([minimal], {"dispatched": {}})
+    assert fresh == [minimal], "候选缺 home/away 时这层新检查要能优雅地放行"
+
+
 def _fake_cand(slug, home, away):
     return {"slug": slug, "column": "reel", "score": 80, "heat": "世界前20",
             "level": "W1000", "round": "Final", "home": home, "away": away,
