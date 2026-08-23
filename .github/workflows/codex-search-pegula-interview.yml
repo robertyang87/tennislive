@@ -31,10 +31,10 @@ jobs:
             pipedapi.coldforge.xyz piped-api.codespace.cz \
             pipedapi.reallyaweso.me pipedapi.phoenixthrush.com; do
             echo "TRY $HOST" | tee -a analysis/proxy.log
-            if curl -L --connect-timeout 5 --max-time 30 -fsS \
+            if curl -k -L --connect-timeout 5 --max-time 30 -fsS \
               "https://$HOST/streams/lvFHKAXntQM" -o analysis/streams.json; then
-              TITLE=$(jq -r '.title // empty' analysis/streams.json)
-              URL=$(jq -r '[.videoStreams[]? | select(.videoOnly==false and .format=="MPEG_4")][0].url // [.videoStreams[]? | select(.videoOnly==false)][0].url // empty' analysis/streams.json)
+              TITLE=$(jq -r '.title // empty' analysis/streams.json 2>/dev/null || true)
+              URL=$(jq -r '[.videoStreams[]? | select(.videoOnly==false and .format=="MPEG_4")][0].url // [.videoStreams[]? | select(.videoOnly==false)][0].url // empty' analysis/streams.json 2>/dev/null || true)
               echo "TITLE=$TITLE URL_LENGTH=${#URL}" | tee -a analysis/proxy.log
               if [ -n "$URL" ]; then
                 curl -L --connect-timeout 10 --max-time 180 -fsS "$URL" -o analysis/interview.mp4
