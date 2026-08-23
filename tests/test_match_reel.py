@@ -4695,6 +4695,57 @@ def test_dry_run要拿probe查选段(tmp_path):
         probe["url"]}, "按 URL 认领的口径不对"
 
 
+def test_源片分辨率不到1080p要硬拦():
+    """账号所有者 2026-08-18：「视频一定要选 1080p 及以上的清晰度，如果没有
+    的话就等」——这是这个仓库里说得最重的一条门槛，`probe.json` 从探测那一刻
+    起就记着 `height`，可这条闸一直没写：`--dry-run` 对 720p 的源片一声不吭。
+
+    只查 `segments` 真正引用到的源，别碰封面（`cover_photo_problem` 管的是
+    另一件事——官方高清实拍 vs 抽帧，和源片分辨率无关）。
+    """
+    reel = _reel()
+    spec = {
+        "slug": "t", "source_url": "https://x.invalid/720p.mp4",
+        "segments": [{"start": 10.0, "end": 20.0, "narration": "一句话"}],
+        "cover": {"portrait": {"image": "assets/x.jpg"}},
+    }
+    low = {"url": spec["source_url"], "width": 1280, "height": 720,
+           "duration": 30.0, "scene_cuts": [], "point_ends": []}
+
+    import io  # noqa: PLC0415
+    from contextlib import redirect_stdout  # noqa: PLC0415
+
+    monkey = pytest.MonkeyPatch()
+    try:
+        monkey.setattr(reel, "probes_for_spec", lambda _s: ({low["url"]: low}, []))
+        segs = reel.parse_segments(spec, {"": Path("x")}, "")
+        buf = io.StringIO()
+        with redirect_stdout(buf):
+            hard = reel.probe_dry_run(spec, segs)
+        out = buf.getvalue()
+        assert hard is True, f"720p 源片没被拦下：{out}"
+        assert "1280x720" in out and "低于 1080p" in out, f"没报出分辨率：{out}"
+
+        # 反面锚点：1080p 和 4K 都要放行，缺 height 字段也不许误报
+        for height, expect_hard in ((1080, False), (2160, False)):
+            hi = {**low, "height": height}
+            monkey.setattr(reel, "probes_for_spec", lambda _s, hi=hi: ({hi["url"]: hi}, []))
+            buf = io.StringIO()
+            with redirect_stdout(buf):
+                got = reel.probe_dry_run(spec, segs)
+            assert got is expect_hard, f"{height}p 判错了：{buf.getvalue()}"
+
+        no_height = {k: v for k, v in low.items() if k != "height"}
+        monkey.setattr(reel, "probes_for_spec",
+                        lambda _s, nh=no_height: ({nh["url"]: nh}, []))
+        buf = io.StringIO()
+        with redirect_stdout(buf):
+            got = reel.probe_dry_run(spec, segs)
+        assert got is False, f"没探到分辨率不该被当成不合格：{buf.getvalue()}"
+    finally:
+        monkey.undo()
+
+
 def test_没量过死球的源片要把猜到的候选翻出来提醒(tmp_path):
     """`point_ends` 空着有两种成因，长得一模一样：**没给** `--scorebox`，
     或者给了但记分条检出真的是空的。`bouzkova-jovic` 那条是前一种——
@@ -9429,6 +9480,100 @@ def test_成片要记下是哪条路配的音():
     body = inspect.getsource(chk.main)
     assert re.search(r"bad\s*=\s*voiced_by\(", body), \
         "voiced_by 的返回值没有接进 bad——又是「算出来了没人用」"
+
+
+def test_推送前也要查数据图头像挂没挂错名字(tmp_path):
+    """`sonmez-anisimova` / `tsitsipas-royer` 两次真事故——数据图把赢球的
+    那个人印成了对手的数字，图上每个数单看都对，只有把名字和数字对起来才
+    看得出来。CI 里有一条测试干这件事（`test_数据图的头像和matchup里的名字
+    必须是同一个人`），但**这道推送前的最后关卡从来没有这一项**——
+    `tsitsipas-royer` 那条错的成片是真的发出去了，而 `check_reel_landed`
+    全绿。
+
+    ⚠️ 只有「和别的 spec 矛盾」才算不合格；「第一次出现，没有第二处可比」
+    只报一句提醒，不拦——不然每一个新球员的首秀都会被判成不合格。
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import check_reel_landed as chk  # noqa: PLC0415
+
+    reels = tmp_path / "specs" / "reels"
+    reels.mkdir(parents=True)
+
+    def _write(slug, names, a_shot, b_shot):
+        (reels / f"{slug}.json").write_text(json.dumps({
+            "cover": {"matchup": [{"name": names[0]}, {"name": names[1]}]},
+            "stats": {"a": {"headshot": a_shot}, "b": {"headshot": b_shot}},
+        }), encoding="utf-8")
+
+    # 已经落库的一条：wta-1.jpg 挂着"甲"，wta-2.jpg 挂着"乙"
+    _write("existing", ["甲", "乙"], "assets/headshots/wta-1.jpg",
+           "assets/headshots/wta-2.jpg")
+
+    # ① 新的一条把 a/b 填反了——同一张 wta-1.jpg 这次挂"乙"，和已有的矛盾
+    reversed_spec = {
+        "cover": {"matchup": [{"name": "乙"}, {"name": "甲"}]},
+        "stats": {"a": {"headshot": "assets/headshots/wta-1.jpg"},
+                  "b": {"headshot": "assets/headshots/wta-2.jpg"}},
+    }
+    got = chk.stat_card_headshot_problem(reversed_spec, reels)
+    assert got is not None and got[0] is True, f"填反了却没拦住：{got}"
+    assert "不合格" in got[1] and "wta-1.jpg" in got[1]
+
+    # ② 新的一条填对了——同样引用 wta-1.jpg/wta-2.jpg，名字和已有的一致
+    correct_spec = {
+        "cover": {"matchup": [{"name": "甲"}, {"name": "乙"}]},
+        "stats": {"a": {"headshot": "assets/headshots/wta-1.jpg"},
+                  "b": {"headshot": "assets/headshots/wta-2.jpg"}},
+    }
+    assert chk.stat_card_headshot_problem(correct_spec, reels) is None, \
+        "填对了不该报"
+
+    # ③ 全新的头像，没有第二处可比——只报提醒，不算不合格
+    fresh_spec = {
+        "cover": {"matchup": [{"name": "丙"}, {"name": "丁"}]},
+        "stats": {"a": {"headshot": "assets/headshots/wta-99.jpg"},
+                  "b": {"headshot": "assets/headshots/wta-98.jpg"}},
+    }
+    got = chk.stat_card_headshot_problem(fresh_spec, reels)
+    assert got is not None and got[0] is False, f"第一次出现不该算不合格：{got}"
+    assert "注意" in got[1] and "第一次出现" in got[1]
+
+    # ④ 双打（headshot 是列表）跳过——不是"填反了"，是团队照
+    doubles_spec = {
+        "cover": {"matchup": [{"name": "甲组"}, {"name": "乙组"}]},
+        "stats": {"a": {"headshot": ["assets/headshots/wta-1.jpg",
+                                      "assets/headshots/wta-3.jpg"]},
+                  "b": {"headshot": ["assets/headshots/wta-2.jpg",
+                                      "assets/headshots/wta-4.jpg"]}},
+    }
+    assert chk.stat_card_headshot_problem(doubles_spec, reels) is None, \
+        "双打头像不该被当成填反了"
+
+    # ⑤ **`self_path` 不传，"我在扫我自己"会把"第一次出现"永远判成哑的。**
+    # `check_reel_landed.py` 查的那条 spec 早就已经提交进仓库了——真实场景
+    # 里它自己就在 `reels_dir` 里，不排除的话 `seen` 永远至少包含它自己，
+    # `first_seen` 从此恒假。这条钉住"传了 self_path 就该排除自己"。
+    self_file = reels / "fresh.json"
+    self_file.write_text(json.dumps(fresh_spec), encoding="utf-8")
+    # 不传 self_path：扫描会撞见自己刚写下的 fresh.json，把自己当成了
+    # "已有先例"——`prior` 因此非空，`first_seen` 那条分支走不到，
+    # 整个函数悄悄返回 None，**提醒消失了，而且不报错**
+    without_self = chk.stat_card_headshot_problem(fresh_spec, reels)
+    assert without_self is None, (
+        "这一步是在钉住那个坑本身：不排除自己时，扫描会把这条 spec 自己"
+        f"算成先例，'第一次出现'的提醒会静悄悄地消失：{without_self}")
+    with_self = chk.stat_card_headshot_problem(
+        fresh_spec, reels, self_path=self_file)
+    assert with_self is not None and with_self[0] is False, \
+        f"排除自己之后应该正确报'第一次出现'：{with_self}"
+    assert "第一次出现" in with_self[1]
+
+    # **它真的被接进总数里，而且只在真矛盾时才计**——同一个「算出来了没人用」
+    body = inspect.getsource(chk.main)
+    assert re.search(r"stat_card_headshot_problem\(", body), \
+        "stat_card_headshot_problem 没被调用——又是「算出来了没人用」"
+    assert re.search(r"if\s+is_clash:\s*\n\s*bad\s*\+=\s*1", body), \
+        "没把真矛盾接进 bad，或者把「第一次出现」的提醒也算成了不合格"
 
 
 def test_ffprobe的csv输出带尾随逗号也解析得出来():
