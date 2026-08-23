@@ -26,7 +26,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # 第二份 ASR 已核对；冷开场长句已拆到 3:4 单行宽度内，重跑完整预览。
+          # 字幕已过宽度闸；封面改用逐帧核过的睁眼微笑画面，重跑完整预览。
           gh workflow run interview-clip.yml --ref main \
             -f slug=gauff-bejlek-cincinnati-2026-sf \
             -f mode=render \
