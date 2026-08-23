@@ -1,0 +1,238 @@
+{
+  "slug": "tiafoe-nakashima-cincinnati-2026-sf",
+  "source_url": "https://www.youtube.com/watch?v=ovD4bsNlNVA",
+  "_source": "Tennis TV 官方 YouTube 单场集锦《All-American Brandon Nakashima vs Frances Tiafoe Tussle! | Cincinnati 2026 Semi-Final Highlights》。2026-08-23 probe：369.73 秒、1920×1080、25fps；360.5秒起为Tennis TV endscreen（订阅提示），本片最晚收在359.68秒。",
+  "_column": "赛场之上",
+  "topbar": {
+    "line1": "2026 辛辛那提 ATP1000 半决赛",
+    "line2": "蒂亚福 7-5 6-3 中岛布兰登"
+  },
+  "_topbar_why": "Flashscore完整赛果（flashscore_id C40P5wwh）与Tennis TV片尾记分条一致：蒂亚福7-5 6-3获胜。第二行与cover.winner/result/matchup机械一致，赢家在前。",
+  "editorial": {
+    "mode": "match_review",
+    "question": "四比五发球，面对三个盘点——蒂亚福怎么全身而退的？",
+    "thesis": "蒂亚福在首盘4-5落后发球时连救三个盘点（若丢，中岛布兰登将6-4先下一城），随即立刻回破、再拿一局锁定7-5；次盘他自己一局未失，反而两次破掉对手的发球，6-3锁定胜局，把两人的交手战绩改写成9胜1负。",
+    "beats": [
+      "首盘拉锯，四次破发你来我往",
+      "4-5落后发球，三个盘点全部救下",
+      "救下之后立刻回破，再拿一局锁定首盘7-5",
+      "次盘自己一局不丢，两次接发破发锁定比赛"
+    ],
+    "human_context": {
+      "angle": "蒂亚福把对中岛布兰登的交手战绩继续甩开——生涯第十次交手，第九场胜利。但比分背后，首盘他曾经离出局只差一步。",
+      "facts": [
+        "蒂亚福7-5 6-3淘汰中岛布兰登，晋级辛辛那提男单决赛",
+        "首盘4-5落后发球，蒂亚福连救三个盘点（此局若丢，中岛布兰登将以6-4先赢首盘），随后立刻回破，再拿一局7-5锁定首盘",
+        "次盘蒂亚福自己四个发球局全部保住，两次接发破掉中岛布兰登的发球，6-3锁定比赛，最后一分同样来自接发破发",
+        "全场蒂亚福制胜分30-23、总得分77-66领先，一发得分率77%对62%的差距更大",
+        "这是两人生涯第十次交手，蒂亚福赢下第九场"
+      ],
+      "sources": [
+        "https://youtu.be/ovD4bsNlNVA",
+        "https://www.tennisexplorer.com/mutual/tiafoe/nakashima-68876/",
+        "https://cincinnatiopen.com/tournament/daily-draw-sheet/"
+      ]
+    }
+  },
+  "_match": {
+    "flashscore_id": "C40P5wwh",
+    "start_local_beijing": "2026-08-23T07:15:00+08:00",
+    "_why": "`tools/match_feed.py show C40P5wwh --home Nakashima --away Tiafoe`给出两盘逐局、全场统计和用时1:43；flashscore当日feed(f_2_0)记录AD=1787440500（Unix秒），换算北京时间为8月23日07:15:00，比赛结束AO=1787446740即08:59，用时1:44，与工具报的1:43自洽。"
+  },
+  "_hit_data": "全场蒂亚福制胜分30-23、总得分77-66领先，一发得分率77%(30/39)对62%(21/34)拉开更大差距；次盘蒂亚福四个发球局全部保住（0破发点面对），却两次接发破掉中岛布兰登的发球——这组数据解释了比分为何是7-5 6-3而不是更接近的战线。不使用bp_conv/bp_chances的比例（主队2/9、客队5/10），因为决胜的关键不是破发点转化率而是谁的发球局更稳。",
+  "stats": {
+    "tour": "atp",
+    "a": {
+      "headshot": "assets/players/headshots/atp-TD51.png",
+      "aces": 7,
+      "df": 5,
+      "winners": 30,
+      "ue": 28,
+      "first_in": 39,
+      "first_won": 30,
+      "first_total": 75,
+      "second_total": 36,
+      "second_won": 16,
+      "bp_conv": 5,
+      "bp_chances": 10,
+      "pts_won": 77,
+      "pts_total": 143
+    },
+    "b": {
+      "headshot": "assets/players/headshots/atp-N0AE.png",
+      "aces": 9,
+      "df": 2,
+      "winners": 23,
+      "ue": 29,
+      "first_in": 34,
+      "first_won": 21,
+      "first_total": 68,
+      "second_total": 34,
+      "second_won": 16,
+      "bp_conv": 2,
+      "bp_chances": 9,
+      "pts_won": 66,
+      "pts_total": 143
+    },
+    "footer_venue": "P&G Stadium Court · 辛辛那提",
+    "footer_date": "2026.08.23",
+    "_source": "全部来自`python3 tools/match_feed.py show C40P5wwh --home Nakashima --away Tiafoe`的Match全场统计。工具顺序是Nakashima(home)在前、Tiafoe(away)在后；本spec的cover.matchup赢家蒂亚福在前，因此反转映射：stats.a=蒂亚福(away)、stats.b=中岛布兰登(home)。first_total=first_in+second_total；双方总分77+66=143。",
+    "_winners_ue_why": "Flashscore本场提供完整Winners/Unforced errors：蒂亚福30/28、中岛布兰登23/29，已按cover.matchup顺序映射并与分盘合计核对（两人总分143一致）。"
+  },
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "蒂亚福",
+    "hook": "三个盘点\n他全部救下",
+    "_hook_why": "原来的「四比五发球，三个盘点全救下」需要读者先懂比分记法才能看懂谁在危险中——读者反馈「让人看不懂」。改成「三个盘点，他全部救下」，跟CLAUDE.md 里已经验证过的写法（`shang-rublev` 的『五个赛点，一个没给』）同一个句式：只讲危机（盘点数）和结果（全部救下），不需要先解析比分才能懂。两行各4/5个字符，字号能拉到上限。",
+    "_subject_why": "蒂亚福是获胜并晋级决赛的一方，这条片子解释他如何在首盘濒临出局时全身而退。",
+    "_heat_why": "蒂亚福是美国头部球员，本场辛辛那提ATP1000男单半决赛胜者直接晋级决赛；对中岛布兰登的交手战绩改写为9胜1负，故事线正在展开。",
+    "topic": "辛辛那提ATP1000 · 男单半决赛",
+    "winner": "蒂亚福",
+    "result": "7-5 6-3",
+    "matchup": [
+      {
+        "name": "蒂亚福",
+        "name_en": "Frances Tiafoe",
+        "country": "USA",
+        "rank": 23
+      },
+      {
+        "name": "中岛布兰登",
+        "name_en": "Brandon Nakashima",
+        "country": "USA",
+        "rank": 22
+      }
+    ],
+    "_name_why": "中文名沿用仓库译名表：Frances Tiafoe→蒂亚福，Brandon Nakashima→中岛布兰登（新华社译名，见player_names_top500.json）。⚠️同一周的fritz-nakashima-cincinnati-2026-qf.json全篇误写作简称`中岛`，该spec已发不重渲；本条按译名表使用正确全名，不跟着错的对齐。世界排名沿用同一周fritz-nakashima spec核实的数据：蒂亚福23、中岛布兰登22。",
+    "portrait": {
+      "image": "assets/reel/tiafoe-nakashima-cincinnati-2026-sf-atp.jpg",
+      "focus": 0.5,
+      "focus_y": 0.3,
+      "zoom": 1.05,
+      "_photo_why": "本场官方实拍，不是抽帧。来源The Enquirer/Gannett（www.cincinnati.com 2026-08-22图集`photos-2026-atp-wta-cincinnati-open-semifinals`，原图挂在gannett-cdn.com，无水印），是蒂亚福赛后正面反应照，指向看台，竖版构图，原图3755x5633。铺1080x1440地板1.09倍，人物居中偏上取景以保留庆祝表情。"
+    },
+    "scoreboard": {
+      "court": "P&G Stadium Court",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%221%3A43%3A00%22%2C%22source_feed%22%3A%22https%3A%2F%2Fglobal.flashscore.ninja%2F2%2Fx%2Ffeed%2Fdf_sui_1_C40P5wwh%22%7D",
+        "field": "duration"
+      },
+      "_court_why": "Cincinnati Open官方签表将本场半决赛列在P&G Stadium Court，源片场边广告与场地颜色和同场地转播一致。",
+      "_duration_why": "Flashscore全场用时1:43，分盘1:04+0:39正好等于103分钟，自洽。duration_source写成完整的1:43:00，避免海报解析器把两段式1:43误判成1分钟43秒。"
+    }
+  },
+  "_voice_why": "云见 zh-CN-YunjianNeural，+6%。用短句交代首盘的救球与次盘的稳守，赛点、庆祝和赛后解说完整保留Tennis TV原声。",
+  "push": {
+    "summary": "四比五落后，救下三盘点",
+    "lead": "辛辛那提男单半决赛，蒂亚福7-5 6-3淘汰中岛布兰登，晋级决赛。首盘4-5落后发球，蒂亚福连救三个盘点——此局若丢，中岛布兰登将6-4先下首盘；他随即立刻回破，再拿一局7-5锁定。次盘蒂亚福自己四个发球局全部保住，反而两次接发破掉对手的发球，6-3锁定比赛，最后一分同样来自接发破发。全场蒂亚福制胜分30-23、总得分77-66领先；这是两人生涯第十次交手，蒂亚福赢下第九场。",
+    "auto": false,
+    "_no_auto_why": "沿用当期惯例先做预览，不自动触发发布；合并后手动 push=true 推送。"
+  },
+  "_editing_why": "蒂亚福=白色球衣；中岛布兰登=白色球衣带深色肩块（两人本场球衣接近，认人以记分条发球指示和转播近景为准）。结构为完整赛点原声冷开（英文解说配中英字幕）→反差punchline→坐标→首盘开局对拉与四次破发→4-5落后连救三个盘点→回破锁定7-5→次盘开局→深盘拉锯与首个破发→稳守发球局与再破→决胜一局的铺垫（在冷开场之前收口，赛点本身不重复展示）。360.5秒起的Tennis TV endscreen严格不用。",
+  "segments": [
+    {
+      "start": 335.08,
+      "end": 355.0,
+      "narration": "",
+      "_ending_payoff_required": true,
+      "_quote_kind": "broadcast",
+      "quote": [
+        {
+          "at": 0.68,
+          "text": "And it goes! What a shot to choose there from TFO.\n球一出界 蒂亚福选的这一拍就是全场唯一答案"
+        },
+        {
+          "at": 13.24,
+          "text": "The final is calling for Francis.\n决赛，在等着弗朗西斯"
+        }
+      ],
+      "crosses_cut": "跨337.52、339.96、346.48秒，是决胜分回合结束、蒂亚福反应、解说确认赢家的连续收官画面。",
+      "_why": "①冷开场。335.08秒从决胜分回合的发球起点进入；完整保留赛点、`the final is calling for Francis`和全场欢呼，不压中文旁白。英文原声按YouTube字幕时刻校正后配中英双语字幕。"
+    },
+    {
+      "start": 355.0,
+      "end": 359.68,
+      "narration": "蒂亚福直落两盘，送走中岛布兰登。",
+      "_why": "②先给结果。画面延续冷开场的庆祝，359.68秒收口，给360.5秒起的endscreen留足安全距离。"
+    },
+    {
+      "start": 0.0,
+      "end": 15.44,
+      "narration": "北京时间八月二十三日清晨七点多，辛辛那提ATP1000男单半决赛。世界第二十三的蒂亚福，对阵世界第二十二的中岛布兰登——胜者直接晋级决赛。",
+      "_why": "③坐标。flashscore开球时间换算北京时间07:15，按口播规范概括为清晨七点多；窗口是本场开场回合，到严格切点15.44秒收口。"
+    },
+    {
+      "start": 15.44,
+      "end": 72.48,
+      "narration": "",
+      "crosses_cut": "跨20.92、24.56、41.84秒，是首盘开局多个高质量回合的连续切换；55.6秒蒂亚福率先完成破发，属于同一段开局攻防。",
+      "_why": "④首盘开局。保留完整回合、英文解说`good point / fantastic return`和蒂亚福率先破发的现场声，不加中文旁白，让开局的攻防本身承担留存。"
+    },
+    {
+      "start": 72.48,
+      "end": 84.92,
+      "narration": "开局两人互不相让，四次破发轮流交换，比分很快又被追平——真正的转折，还在后面。",
+      "crosses_cut": "跨84.92秒本身是段尾，段内不再跨其它严格切点。",
+      "_why": "⑤首盘拉锯。逐分记录显示首盘前六局出现四次破发（1-2、2-2、2-3、3-3），窗口内记分条从1-2一路推进到2-3附近，画面自证换手频繁。"
+    },
+    {
+      "start": 157.76,
+      "end": 172.72,
+      "narration": "五比四，蒂亚福发球一度连续丢分。中岛布兰登握有三个盘点——只要转换成功，首盘就直接六比四拿下。蒂亚福却把三个全部救了回来。",
+      "crosses_cut": "跨161.0、168.04秒，是同一个漫长发球局里多次平分和占先的连续画面。",
+      "_why": "⑥核心转折。逐分记录确认蒂亚福在4-5落后发球时面对3个破发点、同时也是3个盘点（此局告负则中岛布兰登6-4先赢首盘），画面记分条从5-40/4-40的平分一路显示到5-AD/4的多次占先，全部被蒂亚福救下。"
+    },
+    {
+      "start": 172.72,
+      "end": 188.0,
+      "narration": "救下盘点的下一局，蒂亚福立刻回破，五比六反超。蒂亚福趁热打铁再拿一局——七比五，首盘就这样从悬崖边被拉了回来。",
+      "crosses_cut": "跨180.44、183.04秒，是回破后球员反应、换边和记分确认的连续画面。",
+      "_why": "⑦首盘收官。窗口从174.5秒中岛布兰登发球被破（记分条5-6）推进到190秒前后的收官反应，194.6秒的比分板图形直接确认首盘7-5，赢家蒂亚福。"
+    },
+    {
+      "start": 194.6,
+      "end": 208.32,
+      "narration": "次盘中岛布兰登先声夺人，二比一领先——这一次，他能把优势守住吗？答案很快揭晓，他没能守住。",
+      "crosses_cut": "跨没有额外的严格切点，是次盘前几局的连续攻防画面。",
+      "_why": "⑧次盘开局。逐分记录确认次盘前三局是home、away、home各自保发，200.5秒前后画面记分条正显示次盘2-1，中岛布兰登暂时领先。"
+    },
+    {
+      "start": 221.4,
+      "end": 259.68,
+      "narration": "",
+      "crosses_cut": "跨239.44秒，是同一个漫长发球局里多次占先的连续画面。",
+      "_why": "⑨深盘拉锯。中岛布兰登发球在二比二后陷入漫长平分和占先（画面记分条持续显示5-2/7-2 AD），保留原声和观众声，不加中文旁白，让这一局的胶着本身承担留存。"
+    },
+    {
+      "start": 259.68,
+      "end": 273.56,
+      "narration": "蒂亚福把这一局拿了下来，三比二反超——次盘的走向，从这里开始改变，他没有再给中岛布兰登机会。",
+      "crosses_cut": "跨273.56、277.24、279.4、289.88、292.36秒，是破发确认后连续几个保发局的画面切换。",
+      "_why": "⑩次盘第一次破发与稳守。262.5秒记分条确认破发（2-3），此后290.5秒前后再度确认中岛布兰登又保发一局（3-5），蒂亚福自己四个发球局全部保住，逐分记录里对他没有出现任何破发点。"
+    },
+    {
+      "start": 298.28,
+      "end": 304.64,
+      "narration": "蒂亚福随后没有再丢掉自己的发球局。",
+      "_why": "⑩之一。262.5秒破发后，蒂亚福连续保发到3-5；这一段短窗只交代这个结果，不占用后面决胜局的篇幅。",
+      "crosses_cut": "跨302.84秒，是同一分结束后从底线宽景切到蒂亚福走位的近景，同一个人（白色头带、Tennis TV球衣），比分持续推进不是换场次。"
+    },
+    {
+      "start": 304.64,
+      "end": 320.52,
+      "narration": "决胜一局，中岛布兰登发球守三比五——他必须先保住这一局，否则比赛就将在这里终结。蒂亚福这一整场一发得分率高达百分之七十七，比对手高出十五个百分点。",
+      "crosses_cut": "跨没有额外的严格切点，是决胜一局逐分推进到早段的连续画面。",
+      "_why": "⑩之二。逐分记录确认这是最后一局：中岛布兰登发球，蒂亚福随后拿到破发点并转换成赛点，窗口停在早段，不重复冷开场已展示的最后一拍。"
+    },
+    {
+      "start": 335.08,
+      "end": 355.0,
+      "narration": "蒂亚福把这一次接发变成了赛点，稳稳拿下——直落两盘，他挺进辛辛那提决赛。两人生涯交手十次，蒂亚福已经赢下九次——中岛布兰登，还要多久才能翻过这一页？",
+      "_ending_payoff_required": true,
+      "crosses_cut": "跨337.52、339.96、346.48秒，是冷开场画面按时间顺序在正文里再放一次：赛点回合的收束、蒂亚福的反应和全场庆祝的连续画面。",
+      "_why": "⑫正文兑现结局。冷开场只是预告，这里按时间顺序用中文旁白重新交代同一段结局——制胜分、结果确认和第一波庆祝，与冷开场①完整重叠335.08–355.00秒，收口正好对上冷开场的末尾，不再拖到endscreen前。"
+    }
+  ],
+  "_tennistv_trim": "359.68秒收口，避开360.5秒起的Tennis TV endscreen（订阅提示卡）。"
+}
