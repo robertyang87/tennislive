@@ -143,6 +143,22 @@ def test_官方源标题明确颁奖致辞可进入生产():
     assert got["detected_type"] == "ceremony"
 
 
+def test_亚军致辞和冠军致辞同一道闸():
+    """同一场颁奖典礼上，亚军和冠军站在同一个台上讲话——Cincinnati Open
+    官方频道给两人的标题是同一套写法但不含「champion」，正则要单独认
+    「runner-up speech」，连字符可有可无（Pegula 那条带连字符，Tiafoe
+    那条不带）。亚军致辞不是低一档的素材，落不进这条正则就会被误判成
+    「标题没写明确」而卡进待复核队列。"""
+    for title in (
+        "Pegula runner-up speech - Cincinnati 2026",
+        "Frances Tiafoe Runner Up Speech | 2026 Cincinnati Open",
+    ):
+        got = gate.candidate_verification(_ceremony_item(title=title), verdicts={})
+        assert got["status"] == "verified", title
+        assert got["method"] == "official_explicit_ceremony", title
+        assert got["detected_type"] == "ceremony", title
+
+
 def test_人工判成颁奖致辞也能进入生产():
     """标题不满足任何正则时，人工看过画面记进 oncourt_verify.json 同样能让
     ceremony 走到 verified——跟 on_court 的 human_visual_verdict 是同一条路，

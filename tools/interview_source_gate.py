@@ -62,11 +62,16 @@ APPROVED_METHODS = {
 
 _EXPLICIT_ONCOURT = re.compile(r"\bon[\s-]?court\s+interview\b", re.I)
 # 官方频道给颁奖典礼致辞常用的几种标题写法：champion(ship) speech / trophy
-# ceremony / trophy presentation / winner's speech / victory speech。
-# 不认宽泛的 "speech" 或 "ceremony" 单字——那会连发布会开场白也放进来。
+# ceremony / trophy presentation / winner's speech / victory speech /
+# runner-up speech。同一场颁奖典礼上，亚军和冠军站在同一个台上讲话——
+# Cincinnati Open 官方频道给两人的标题是同一套写法（`Pegula runner-up
+# speech - Cincinnati 2026`，同一个账号，紧跟着 `Gauff champion speech`
+# 那条发布），亚军致辞不是低一档的素材，不该被这条正则漏掉。
+# 不认宽泛的 "speech" 或 "ceremony" 单字——那会连发布会开场白也放进来；
+# "runner-up" 的连字符可有可无（Tiafoe 那条标题就没写连字符）。
 _EXPLICIT_CEREMONY = re.compile(
     r"\b(champion(?:ship)?\s+speech|trophy\s+(?:ceremony|presentation)"
-    r"|winner'?s?\s+speech|victory\s+speech)\b",
+    r"|winner'?s?\s+speech|victory\s+speech|runner[\s-]?up\s+speech)\b",
     re.I,
 )
 
