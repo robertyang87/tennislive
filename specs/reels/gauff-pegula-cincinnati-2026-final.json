@@ -1,0 +1,223 @@
+{
+  "slug": "gauff-pegula-cincinnati-2026-final",
+  "source_url": "https://youtu.be/Z2_awLHqcww",
+  "_source": "WTA官方YouTube频道单场集锦《Coco Gauff vs. Jessica Pegula | 2026 Cincinnati Final | WTA Match Highlights》（oEmbed确认author_name=WTA）。flashscore逐分/技术统计（tools/match_feed.py show nL3a3dK7）与WTA官方接口（api.wtatennis.com/tennis/tournaments/1017/2026/matches/LS001/stats）双源核对一致：高芙6-2 6-4击败佩古拉，全场用时1小时14分29秒。probe确认：1920×1080/25fps。",
+  "_column": "赛场之上",
+  "topbar": {
+    "line1": "2026 辛辛那提 WTA1000 决赛",
+    "line2": "高芙 6-2 6-4 佩古拉"
+  },
+  "_topbar_why": "轮次由WTA官方接口RoundID=F确认。第二行与cover的winner/result/matchup机械一致，赢家在前。",
+  "editorial": {
+    "mode": "match_review",
+    "question": "高芙全场制胜分比佩古拉还少两个，她凭什么六比二六比四拿下这场决赛？",
+    "thesis": "她赢的不是靠制胜分——全场10比12，比佩古拉还少两个；真正的武器是回球压力：佩古拉一发被高芙接发拿下过半分数（54%对33%），全场只创造出2个破发点机会，而高芙自己拿到6个、兑现5个。次盘被追到四比五时，她的非受迫失误反而比首盘更少（9个对首盘15个），顶住那阵压力之后一个爱局破发锁定冠军。",
+    "beats": [
+      "首盘开局连下五局，佩古拉一发被压制，五比零濒临被横扫",
+      "佩古拉保发上板，随即完成一次破发追到五比二",
+      "高芙立刻回破，六比二拿下首盘",
+      "次盘高芙再次四比一领先，佩古拉连追三局到四比五",
+      "高芙顶住压力，一个爱局破发六比四锁定冠军"
+    ],
+    "human_context": {
+      "angle": "这是高芙生涯第二座辛辛那提冠军（上一座2023年），也是她第四座WTA1000单打冠军；十天前她刚在多伦多半决赛输给莱巴金娜，这一站算是把状态找了回来。佩古拉这边同样值得讲：这是她第二次打进辛辛那提决赛，2024年那次决赛负于萨巴伦卡，这一次同样功亏一篑，但她本季已经打到过澳网四强、生涯最高排名到过世界第三——不是一个陪跑的角色，两人这场决赛之后生涯交手正好战成五比五平。",
+      "facts": [
+        "WTA官方接口（api.wtatennis.com/tennis/tournaments/1017/2026/matches/LS001/stats，setnum=0）：aces高芙2/佩古拉0，双误1/1，一发得分率高芙67%(18/27)对佩古拉46%(18/39)，二发得分率55%(12/22)对50%(11/22)，破发点兑现5/6对2/2，一发回球得分率高芙54%(21/39)对佩古拉33%(9/27)，总分62比48（共110分）；与flashscore（tools/match_feed.py show nL3a3dK7）逐项一致（flashscore『1st serve points won』一处显示70%(19/27)与WTA官方18/27=67%差1个点，见stats._source的let/count误差说明，本卡以WTA官方为准）",
+        "TNNS Live单场统计（run 32679100293，id=73466994，选手顺序['Gauff','Pegula']）：制胜分[10,12]，非受迫失误[24,31]；分盘Set1制胜分[6,3]/UE[15,16]，Set2制胜分[4,9]/UE[9,15]——分盘合计与全场自证一致。高芙次盘非受迫失误（9个）比首盘（15个）更少，正是佩古拉连追三局期间她反而更稳的直接证据",
+        "flashscore分盘用时：Set1 0:35、Set2 0:40，与WTA官方MatchTimeTotal=01:14:29基本吻合",
+        "逐分记录（tools/match_feed.py show nL3a3dK7）：首盘5-2高芙发球局被佩古拉破（1个破发点兑现），随即6-2局佩古拉发球被高芙破（1个破发点、1个盘点兑现）拿下首盘；次盘5-4高芙发球局被佩古拉破（1个破发点兑现）追到4-5，随即6-4局佩古拉发球被高芙破（1个破发点、1个赛点兑现，且这一局15:0/30:0/40:0——佩古拉未得一分）锁定冠军",
+        "维基百科Coco Gauff页WTA1000titles导航栏：此前3座WTA1000单打冠军（2023 Cincinnati、2024 China Open、2025 Wuhan），加上本场为生涯第4座；infobox已更新『2026: Wimbledon semifinal, Cincinnati champion』",
+        "WTA官方视频标题《Gauff Races To Second Cincinnati Crown Against Pegula》+ 同页相关视频文案『Gauff takes down Pegula to become two-time Cincinnati champion』，双重确认为其生涯第二座辛辛那提冠军",
+        "tennisexplorer H2H记录（mutual/gauff/pegula）：本场之前两人交手9次战至4胜5负佩古拉领先，本场后战至5胜5负——高芙拿下了最近4次交手中的3场（2024 WTA Finals、2025 Wuhan决赛、2026 Wimbledon 1/4决赛、本场，唯一一负是2025 WTA Finals）",
+        "rybakina-gauff-toronto-sf.json（本仓库已发）：高芙2026-08-13在多伦多半决赛5-7 6-2 6-2负于莱巴金娜，本场（08-23/24）距那场失利约10天",
+        "维基百科Jessica Pegula页：生涯11座单打冠军，最高世界第3（2022年10月），唯一一次大满贯单打决赛是2024年美网（亚军）；本场为其生涯第二次辛辛那提决赛，此前2024年决赛负于萨巴伦卡",
+        "WTA官方排名（api.wtatennis.com/tennis/players/ranked，rankedAt=2026-08-10）：佩古拉世界第3、高芙世界第4"
+      ],
+      "sources": [
+        "https://youtu.be/Z2_awLHqcww",
+        "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches/LS001/stats",
+        "https://www.wtatennis.com/tournament/1017/cincinnati/2026/scores/LS001",
+        "https://www.wtatennis.com/videos/4565389/gauff-races-to-second-cincinnati-crown-against-pegula",
+        "https://www.tennisexplorer.com/mutual/gauff/pegula/",
+        "https://en.wikipedia.org/wiki/Coco_Gauff",
+        "https://en.wikipedia.org/wiki/Jessica_Pegula"
+      ]
+    }
+  },
+  "_match": {
+    "flashscore_id": "nL3a3dK7",
+    "start_utc": "2026-08-23T23:10:00Z",
+    "_why": "flashscore当日总表AD字段（Unix时间戳1787526600=2026-08-23T23:10:00Z，取整到分）；北京时间=UTC+8=2026-08-24T07:10，10分落在『0-9分』区间边界之后（10-39分区间），按规矩说大概时间『七点多』。与WTA官方MatchTimeTotal=01:14:29反推吻合：起始23:10Z+1:14:29≈00:24:29Z，和LastUpdated=2026-08-24T00:23:24Z只差约1分钟（收官后处理延迟），互相印证。"
+  },
+  "_hit_data": "WTA官方/flashscore两个源都没有制胜分和非受迫失误字段（WTA巡回赛级别的系统性缺口），已跑TNNS Live补齐：制胜分高芙10比佩古拉12、非受迫失误高芙24比佩古拉31，且分盘合计自证一致（run 32679100293）。高芙以更少制胜分、更少非受迫失误拿下比赛，是这条片子的核心数据支点。",
+  "stats": {
+    "tour": "wta",
+    "a": {
+      "headshot": "assets/players/headshots/wta-328560.jpg",
+      "aces": 2,
+      "df": 1,
+      "first_in": 27,
+      "first_won": 18,
+      "first_total": 49,
+      "second_total": 22,
+      "second_won": 12,
+      "bp_conv": 5,
+      "bp_chances": 6,
+      "pts_won": 62,
+      "pts_total": 110,
+      "winners": 10,
+      "ue": 24
+    },
+    "b": {
+      "headshot": "assets/players/headshots/wta-316956.jpg",
+      "aces": 0,
+      "df": 1,
+      "first_in": 39,
+      "first_won": 18,
+      "first_total": 61,
+      "second_total": 22,
+      "second_won": 11,
+      "bp_conv": 2,
+      "bp_chances": 2,
+      "pts_won": 48,
+      "pts_total": 110,
+      "winners": 12,
+      "ue": 31
+    },
+    "footer_venue": "辛辛那提",
+    "footer_date": "2026.08.23",
+    "_source": "WTA官方接口（api.wtatennis.com/tennis/tournaments/1017/2026/matches/LS001/stats，setnum=0）字段自洽：first_in取ptsplayed1stserv（一发落地数）、first_total取totservplayed（总发球分）、first_won取ptswon1stserv（一发赢分）——first_in/first_total=27/49=55%、39/61=64%，与flashscore『1st serve percentage 55%/64%』一致；second_total=totservplayed-ptsplayed1stserv=49-27=22（a）/61-39=22（b）；second_won=totptswonserv-ptswon1stserv=30-18=12（a）/29-18=11（b），second_won/second_total=12/22=55%、11/22=50%，与flashscore『2nd serve points won』完全一致。⚠️first_won/first_in=18/27=67%（a）与flashscore自己显示的『1st serve points won 70%(19/27)』差1个点——WTA官方totptswonserv=30恰好等于first_won+second_won=18+12=30、而非19+12=31，说明flashscore那处19是显示端的let/count误差，本卡按WTA官方的18采信，Service Points Won（30/49、29/61）两源完全一致。breakptsconva/b=5/2，breakptsplayeda/b=6/2；totptswona/b=62/48（共110分）。stats.a=cover.matchup[0]=高芙（赢家），stats.b=cover.matchup[1]=佩古拉。",
+    "_winners_ue_why": "flashscore与WTA官方均无Winners/Unforced errors字段（WTA巡回赛级别的系统性缺口），已按CLAUDE.md规范跑TNNS Live（tools/tnns_stats.py，run 32679100293，id=73466994）取得：高芙10/24，佩古拉12/31，分盘Set1[6,3]/[15,16]、Set2[4,9]/[9,15]相加与全场自证一致。选手顺序日志明确['Gauff','Pegula']，与stats.a/b对应关系一致。"
+  },
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "高芙",
+    "hook": "制胜分比对手还少两个\n她还是赢了这一场",
+    "_hook_why": "第一行给出反常识的数据反差（10比12，比对手还少），第二行揭晓结果——不复述封面已经印出的完整赛果（6-2 6-4）也不复述topbar.line1已印的轮次（『决赛』），把『怎么赢的』这个悬念留给旁白讲清楚。两行分别为10字和8字，都在≤10字的门槛内（原第二行『她还是赢了这场决赛』因含『决赛』撞上topbar，`test_钩子不许复述赛果条和顶栏印着的东西`报错，改成『这一场』）。",
+    "_subject_why": "高芙是获胜方，也是这场夺冠故事的主体——生涯第二座辛辛那提冠军、第四座WTA1000单打冠军。按规矩『决赛/半决赛级别的都要做，轮次本身就够格』，这是决赛，优先级最高；高芙世界第4、佩古拉世界第3，双双清晰过热度门槛，不需要另写_heat_why论证。",
+    "topic": "辛辛那提WTA1000 · 女单决赛",
+    "_heat_why": "决赛本身就是最高等级的理由（『半决赛级别的都要做，轮次本身就够格』对决赛更成立）。高芙世界第4、佩古拉世界第3，两人都在世界前20（远超②档门槛），且都是这条线本季反复追拍过的球员（gauff-bejlek-cincinnati-2026-sf/gauff-kostyuk-cincinnati-2026-qf/rybakina-gauff-toronto-sf/pegula-swiatek-cincinnati-2026-sf等已发），不需要另行认领热度。",
+    "winner": "高芙",
+    "result": "6-2 6-4",
+    "matchup": [
+      {
+        "name": "高芙",
+        "name_en": "Coco Gauff",
+        "country": "USA",
+        "rank": 4
+      },
+      {
+        "name": "佩古拉",
+        "name_en": "Jessica Pegula",
+        "country": "USA",
+        "rank": 3
+      }
+    ],
+    "_name_why": "中文名走player_zh()：Coco Gauff→高芙，Jessica Pegula→佩古拉；与player_names_top500.json一致。排名取WTA官方接口（api.wtatennis.com/tennis/players/ranked，rankedAt=2026-08-10，本环境能查到的最新一期）：高芙第4，佩古拉第3。",
+    "portrait": {
+      "image": "assets/reel/gauff-pegula-cincinnati-2026-final.jpg",
+      "focus": 0.42,
+      "focus_y": 0.36,
+      "zoom": 1.3
+    },
+    "_portrait_why": "WTA官方实拍，来自赛后新发的Match Reaction专稿《Gauff joins Serena, Azarenka as two-time Cincinnati champion》（wtatennis.com/news/4565399/…，article页内嵌CMS，photoresources.wtatennis.com/photo-resources/2026/08/24/0c60d8a8-adcd-4092-939e-25ea583d4b01/Coco_Gauff_-_Cincinnati_Open_2026_-_Day_13-DSC_7243.jpg?width=4000），下载版4000×2759，Day_13（赛后次日）拍摄——正是账号所有者要求的捧杯照。画面：高芙双手抱着辛辛那提冠军奖杯（奖杯上CINCINNATI OPEN徽章清晰可辨），正脸朝镜头，笑容灿烂，背景鲜花与CINCINNATI字样看台横幅，浅蓝New Balance比赛服与源片记分条一致。按『捧杯优先级比击球中的照片优先级高，如果有捧杯的话』选用，替换掉此前查找时（那时这篇专稿尚未发布）暂用的近景庆祝候选（Day_12-DSC_2486A，握拳贴脸）。裁剪本地render_cover_local.py渲了两版对比：v1（focus 0.5/focus_y 0.42/zoom 1.5）奖杯只剩杯口一角，捧杯的意思读不出来；v2（focus 0.42/focus_y 0.36/zoom 1.3）奖杯完整轮廓和徽章都在画幅内、脸和笑容依然是视觉主体——采用v2。",
+    "scoreboard": {
+      "court": "P&G Stadium Court",
+      "duration_source": {
+        "provider": "wta",
+        "url": "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches?states=C",
+        "match_id": "LS001",
+        "field": "MatchTimeTotal",
+        "source_page": "https://www.wtatennis.com/tournament/1017/cincinnati/2026/scores/LS001"
+      },
+      "_court_why": "probe逐帧核对（contact/score缩略图墙）未找到本条集锦自带的显式球场名文字图形——这条WTA官方剪辑开场即已在比赛中，没有像fils-tiafoe那条Tennis TV源那样的换边全屏台标。改用CourtID交叉核实：WTA官方接口本场CourtID=1，与同一届赛事另外两条已发spec（pegula-swiatek-cincinnati-2026-sf.json的CourtID=1、fils-tiafoe-cincinnati-2026-final.json经转播台标直接确认）共享同一个CourtID→P&G Stadium Court映射；且本场画面里的双层看台+顶棚结构（contact_02.jpg 136.5s可见）与该球场已确认画面一致。中等强度自证，不如直接台标文字硬，但同一届赛事内CourtID到场地名的映射已有两次独立确认，不是凭印象猜的。",
+      "_duration_why": "WTA官方MatchTimeTotal=01:14:29；flashscore分盘用时Set1 0:35+Set2 0:40=1:15，基本吻合（换场流程占余下几十秒）。反推起始时刻：23:10:00Z+1:14:29≈00:24:29Z，与WTA官方LastUpdated=2026-08-24T00:23:24Z只差约1分钟（收官后处理延迟），互相印证起止时刻。"
+    }
+  },
+  "_voice_why": "开场三格：①冷开场（挥手谢场，静音靠现场声）②落点一句话呼应封面钩子（制胜分更少却赢下比赛）③坐标（北京时间+赛事+轮次）。之后按时间顺序推进，**每一拍尽量讲清楚『怎么赢/怎么输的』而不是只报比分**：首盘开局（接发得分率超过70%，压制佩古拉一发）→首盘中段佩古拉死守发球局避免被横扫（画面自证：深比分/占先的挣扎）→首盘收官（继续破发压力，四个破发点兑现三个，六比二收官）→次盘开局（一发得分率从首盘50%飙到92%，发球质量的跃升）→次盘佩古拉的回球找回节奏、一路追到四比五，但高芙这一盘的非受迫失误反而比首盘更少（TNNS：15→9，压力越大打得越干净）→次盘收官（关键一局15:0/30:0/40:0，佩古拉发球一分未得，高芙一个爱局破发锁定冠军）→转播原声宣布『生涯第12冠、辛辛那提第2冠』→收尾兑现冷开场（H2H战至五比五平，末尾一问）。每段窗口都卡在scene_cuts上，跨切点的两段（41.84-115.68、174.8-236.6）全程都是同一场比赛的连续镜头，没有换人或换内容的风险。",
+  "push": {
+    "summary": "生涯第二座辛辛那提",
+    "lead": "辛辛那提WTA1000女单决赛，高芙6-2 6-4击败佩古拉，第二次捧起辛辛那提冠军、生涯第四座WTA1000单打冠军。全场高芙制胜分10个反而比佩古拉的12个更少，但非受迫失误只有24个（佩古拉31个），破发点6次机会兑现5次。次盘被追到四比五后，她顶住压力一个爱局破发锁定冠军。",
+    "auto": true
+  },
+  "_editing_why": "probe后逐张核对score_NN.jpg/contact_NN.jpg：高芙浅蓝New Balance比赛服，佩古拉浅紫色比赛服，全程未混淆。0.5-38.5s（contact_00/score_00）确认高芙连下五局压制佩古拉发球局；80.5-118.5s（score_02）确认佩古拉在5-0落后时把发球局从平分拖到占先才勉强保住（避免被横扫）；120.5-140.5s（contact_02/score_03）确认SET POINT图形与随后的全屏换场卡片『FINAL COCO GAUFF[4] 6 / JESSICA PEGULA[3] 2』，确认首盘6-2；142.5-198.5s（score_03/04）确认次盘开局高芙继续压制；200.5-238.5s（score_05）确认比分从3-1经由未展示的中间几局（视频编辑跳过了未入选的保发局）跳到5-4，随后236.5-246.5s（score_06）出现CHAMPIONSHIP POINT图形（高芙5-4 40-0）；248.5-283.5s（contact_04）确认高芙庆祝、网前握手、向观众挥手致意，284.5s起转入WTA outro，源片全长293.73s、片尾没有留任何品牌卡以外的内容，段落窗口最晚收在277.92s（scene_cuts倒数第三个切点），离源片结尾还留16秒左右余量，没有一段窗口碰到outro。冷开场（第1段，269.84-272.0s）落在255.64~277.92s这一段连续镜头内部（scene_cuts两侧就是255.64和277.92，中间没有再切）——正文最后一段（第11段，255.64-277.92s）重新完整覆盖这一整段，把挥手谢场的画面再放一遍，不是只在冷开场露一次。四处跨切点的段落（第5段75.0-115.68s、第6段115.68-141.88s、第7段141.88-174.8s、第8段195.0-236.6s）全程都是同一场常规回合/记分卡镜头，没有换成别的人物或别的内容，不存在指错人风险。",
+  "segments": [
+    {
+      "start": 269.84,
+      "end": 272.0,
+      "_ending_payoff_required": true,
+      "_why": "冷开场：高芙赢球后向全场观众挥手致意的瞬间（contact_04.jpg 270.5s起，双臂展开、正对观众看台），全片视觉冲击力最强的一格，不配旁白，靠现场欢呼声。这段落在255.64~277.92s这个连续镜头内部（scene_cuts里这一段两侧的切点是255.64和277.92，中间没有再切），属于『后段冷开场』——正文最后一段（第11段）会重新完整覆盖255.64~277.92s、把这段挥手画面再放一遍，不是只在这里露一次就转场。"
+    },
+    {
+      "start": 272.0,
+      "end": 277.92,
+      "narration": "六个破发点，她抓住了五个。",
+      "_why": "落点：不复述封面钩子（那句已经在说『制胜分更少却赢了』），②句改讲一个新事实——回答『怎么赢的』这半个悬念：破发点转化率（stats.a.bp_chances=6/bp_conv=5，全场总数，和第5段『首盘4个破发点兑现3个』不是同一个数）。测试`test_开场旁白不许复读封面钩子`原来对旧文案报0.85相似度（几乎逐字复读钩子），换成这句后字符序列和钩子几乎没有重叠。画面延续冷开场同一个挥手致意镜头。"
+    },
+    {
+      "start": 12.36,
+      "end": 20.0,
+      "narration": "北京时间八月二十四号早上七点多，辛辛那提网球公开赛，女单决赛。",
+      "_why": "坐标：开球时刻取_match.start_utc（2026-08-23T23:10Z→北京07:10，10分落10-39区间只说『点多』不报到分）+赛事+轮次。画面用早段常规回合——12.36~41.84s之间scene_cuts里没有再切（同一个连续镜头），窗口收在20.0减少哑场余量，不算跨切点。"
+    },
+    {
+      "start": 20.0,
+      "end": 41.84,
+      "narration": "开局她死死咬住佩古拉的一发——接发得分率超过百分之七十，把佩古拉的发球局变成了负担。",
+      "_why": "首盘开局，带技战术：WTA官方接口Set1（setnum=1）『1st Return points won』高芙71%(15/21)——这是她开局连下五局的真正机制，不是笼统的『状态火热』。captions.txt第2-6行『Wonderful play...how well Pigula built that. She got in and yet Goff with a stunning flick pass...four games to love』（32.96-42.72s）落在窗口尾部，印证局面。窗口两端20.0/41.84：41.84是scene_cuts切点，20.0是压缩坐标段余量后的收口，不算跨切点。"
+    },
+    {
+      "start": 75.0,
+      "end": 115.68,
+      "crosses_cut": "75.0~115.68s之间scene_cuts里有83.44/86.44两处切点，全部落在contact_01已核对过的区间内——全程是同一片场地上高芙与佩古拉的常规回合镜头交替（浅蓝/浅紫两件比赛服清晰可辨），没有切到看台特写、发布会或任何别的人物，不存在指错人的风险。",
+      "narration": "五比零，佩古拉一度濒临被横扫——这个发球局她从平分一路拖到占先，才勉强留住这一盘的希望。",
+      "_why": "首盘中段：score_02.jpg（80.5~118.5s）逐帧确认比分停在5-0，佩古拉发球面临BREAK POINT图形，反复在40分附近拉锯直到116.5~118.5s才拿到Ad保住发球局——这是画面自证的深比分挣扎，不是推测。captions.txt第7-11行『superb defense from G. Taking it all that Pigula could muster there. Storming through this first set. Pagula already having a serve to try and stay in it』（58.64-66.88s）与这段拉锯完全对应。"
+    },
+    {
+      "start": 115.68,
+      "end": 141.88,
+      "crosses_cut": "115.68~141.88s之间scene_cuts里有126.0/129.76/132.4三处切点，全部落在contact_02已核对过的区间内——全程是同一片场地上高芙与佩古拉的常规回合镜头、以及136.5s那张全屏换场图形交替，没有切到看台特写、发布会或任何别的人物，不存在指错人的风险。",
+      "narration": "但那个发球局只是延缓，没能扭转——高芙很快再次破发，六比二拿下首盘，这一盘她一共兑现了四个破发点里的三个。",
+      "_why": "首盘收官，带技战术：WTA官方接口Set1『Break Points Converted』高芙3/4——她开局的破发压力延续到了收官这一局，不是靠佩古拉自己失误。captions.txt第15-23行『That's the way she went into the forehand. Got set point...The center's gone. It's gone to G...she's a set away from a second title in Cincinnati』（113.12-140.4s）落在窗口内；contact_02.jpg 136.5s全屏换场图形『FINAL COCO GAUFF[4] 6 / JESSICA PEGULA[3] 2』确认首盘比分。窗口两端115.68/141.88都是scene_cuts的切点。"
+    },
+    {
+      "start": 141.88,
+      "end": 174.8,
+      "crosses_cut": "141.88~174.8s之间scene_cuts里有144.0/159.2/170.72三处切点，全部落在score_03/04已核对过的区间内——全程是同一片场地上两人的常规回合/记分卡镜头交替，没有切到看台特写、发布会或任何别的人物，不存在指错人的风险。",
+      "narration": "次盘她的一发彻底换了一个档——一发得分率从首盘的百分之五十飙到百分之九十二，佩古拉几乎接不到她的发球。",
+      "_why": "次盘开局，带技战术：WTA官方接口『1st Serve Points Won』高芙首盘50%(7/14)→次盘92%(12/13)——巨大的跃升，这才是她次盘能再次拉开身位的机制，不是靠佩古拉状态下滑。score_03.jpg（142.5~158.5s）确认次盘从6-0/0-0开局、高芙首个发球局15-0起步；score_04.jpg（160.5~172.5s）确认这局她40-15拿下。窗口两端141.88/174.8都是scene_cuts的切点。"
+    },
+    {
+      "start": 195.0,
+      "end": 236.6,
+      "crosses_cut": "195.0~236.6s之间scene_cuts里有202.16/204.88/214.68/219.84/229.28五处切点，全部落在score_04/05已核对过的区间内——全程是同一片场地上两人的常规回合/记分卡镜头交替，没有切到看台特写、发布会或任何别的人物，不存在指错人的风险。",
+      "narration": "佩古拉的回球慢慢找回了节奏，一路追到四比五——但高芙这一盘的非受迫失误反而比首盘更少，压力越大，她打得越干净。",
+      "_why": "次盘中段的转折，带技战术：TNNS Live（run 32679100293）分盘数据——高芙非受迫失误首盘15个、次盘只有9个，压力上升时她反而更稳，正是她能顶住佩古拉反扑的机制。score_04/05.jpg逐帧确认比分从3-1经中间几局（视频未展示的保发局）推进到5-4；WTA官方接口Set2『1st Return points won』佩古拉33%(6/18)、高芙自己也降到33%(6/18)（对比首盘71%），互相印证这一盘回球对攻的胶着程度。"
+    },
+    {
+      "start": 236.6,
+      "end": 246.72,
+      "narration": "关键的这一局，佩古拉的发球局一分未得——十五比零，三十比零，四十比零，高芙一个爱局破发锁定了冠军。",
+      "_why": "次盘收官，带技战术：逐分记录（tools/match_feed.py show nL3a3dK7）Set2第10局『6-4 客队发球，主队拿下 ← 破发、1个破发点、1个赛点』，点序15:0/30:0/40:0——佩古拉在这一局一分未得。score_06.jpg（240.5~246.5s）CHAMPIONSHIP POINT图形『GAUFF 6-5-40 / PEGULA 2-4-0』确认这正是那一局。窗口两端236.6/246.72都是scene_cuts的切点。"
+    },
+    {
+      "start": 246.72,
+      "end": 255.64,
+      "_quote_kind": "broadcast",
+      "quote": [
+        {
+          "at": 0.32,
+          "text": "It is the first title of the year for Coco Gauff. It is her second in Cincinnati, and it is the 12th singles title of her tremendous career.\n这是高芙本年度的第一个冠军，\n也是她在辛辛那提的第二冠，\n生涯第十二个单打冠军。"
+        }
+      ],
+      "_why": "转播原声宣告：captions.txt第38-41行『It is the first title of the year for Coco Golf. It is her second in Cincinnati and it is the 12th singles title of her tremendous career』（247.04-255.28s），ASR把姓氏『Gauff』听成『Golf』，字幕按发音校正。与维基百科WTA1000titles导航栏（3座WTA1000单打冠军+本场=第4座；2023年首次夺得辛辛那提）、WTA官方视频标题《Second Cincinnati Crown》互相印证『第二个辛辛那提冠军』。窗口两端246.72/255.64都是scene_cuts的切点。"
+    },
+    {
+      "start": 255.64,
+      "end": 277.92,
+      "narration": "两人生涯交手战至五比五平——高芙拿下了最近四次交手里的三场。下一次相遇，又会是谁笑到最后？",
+      "_why": "结局兑现：完整覆盖冷开场（第1段，269.84~272.0s）所在的整个连续镜头（255.64~277.92s之间scene_cuts没有再切），把网前握手、挥手谢场这段画面重新、完整地放一遍——不是只在冷开场露一次就转场。收尾不复述封面/落点已经讲过的『制胜分更少却获胜』，落在两人生涯交手战至五五平这个更大的落点上（tennisexplorer mutual/gauff/pegula：此前9次交手4胜5负佩古拉领先，本场后战至5胜5平，且高芙拿下了最近4次里的3场）；末尾问句开一扇新门（下一次交手谁笑到最后），和封面钩子讲的『制胜分更少却获胜』完全不是同一件事，不构成回声。"
+    }
+  ]
+}
