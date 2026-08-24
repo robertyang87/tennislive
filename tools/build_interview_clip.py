@@ -3138,6 +3138,43 @@ def check_takeaway(spec: dict) -> None:
     print(f"[解读卡] 自有画面 {ours:.1f}s / 全片 {total:.1f}s ＝ {pct:.1%}{note}")
 
 
+_COPY_PAGE_LEGACY: frozenset[str] = frozenset()
+"""规矩生效之前已经渲完的 slug——只许减不许加，表自带自检。当前是空集，
+这条闸是补上去的（见下），发现时没有一条已发的 spec 撞上它。"""
+
+
+def check_copy_page(spec: dict) -> None:
+    """小红书正文这道闸。**排在下载之前**——缺一个文件不该等九分钟的
+    render 出片、又等 `mode=push` 那一趟才在第 27 步炸出来。
+
+    `fils-tiafoe-cin2026-final` 和 `gauff-pegula-cin2026-final` 都撞过这个
+    坑：`push.summary`/`push.lead`（喂 WeChat 卡片头部）写完了，
+    `specs/interviews/<slug>.xhs.txt`（小红书正文，`mode=push` 的
+    `--stage page` 靠 `test -f "$COPY"` 认它）却没写——render 阶段完全不读
+    这个文件，L2 也不查，于是两条片子都渲完、L2 全绿、`mode=push` 却死在
+    「写复制页」那一步：`##[error]找不到 specs/interviews/…xhs.txt`。
+    **同一个错犯了两次，就不再是意外，是这条线缺了一道闸。**
+
+    只查文件在不在，不查内容——内容是「贴近比赛事实、有吸引力」那类判断题，
+    机械挡不住（本仓库反复记过的道理），能落地的只有「这个文件到底存不存在」。
+    """
+    slug = spec.get("slug", "")
+    if slug in _COPY_PAGE_LEGACY:
+        print(f"[小红书正文] {slug} 在豁免名单里（规矩之前发的），跳过")
+        return
+    copy_path = ROOT / "specs" / "interviews" / f"{slug}.xhs.txt"
+    if not copy_path.is_file():
+        raise SystemExit(
+            f"缺 {copy_path.relative_to(ROOT)}——`mode=push` 会死在「写复制页」"
+            "那一步（`test -f \"$COPY\"`），而 render 和 L2 都不查这个文件，"
+            "所以它能一路绿到推送那一刻才炸。\n"
+            "写一份小红书正文（参照仓库里别的 `specs/interviews/*.xhs.txt`："
+            "钩子引语 + 📍🎾🎤 三行 + 一段能核的赛果背景 + 几个编号小节"
+            "〈英文原话 + 中文翻译 + 一句框架〉+ 收尾一问 + 话题标签），"
+            "别只写 spec 里的 `push.lead`——两处不是同一份内容，"
+            "正文要有旁白之外的信息增量。")
+
+
 def ours_ratio(spec: dict) -> tuple[float, float]:
     """(我们自己的画面秒数, 全片秒数)。**封面、两张解读卡、片尾算我们的。**
 
@@ -3489,6 +3526,7 @@ def main() -> int:
     # 而不是等九分钟的 render 出片之后再由人看出来「怎么一上来就有人在说话」。
     check_opening(spec)
     check_lead_in(spec)
+    check_copy_page(spec)
     outdir = OUTDIR / spec["slug"]
     outdir.mkdir(parents=True, exist_ok=True)
     ass = outdir / f"{spec['slug']}.ass"

@@ -4939,6 +4939,44 @@ def test_lead_in那道闸排在下载之前():
             f"lead_in 那道闸排在 `{later}` 后面了——它只读 spec，该在第 0.2 秒就报")
 
 
+# ── 小红书正文（`.xhs.txt`）─────────────────────────────────────────────
+#
+# `fils-tiafoe-cin2026-final` 和 `gauff-pegula-cin2026-final` 都渲完、L2 全绿，
+# `mode=push` 却死在「写复制页」那一步——`specs/interviews/<slug>.xhs.txt`
+# 从来没写过，而 render 和 L2 都不查这个文件。同一个错犯了两次。
+
+
+def test_没有小红书正文那道闸要当场报错(tmp_path, monkeypatch):
+    """`check_copy_page` 只查文件在不在，不查内容——内容是判断题，
+    机械挡不住，能落地的只有「这个文件到底存不存在」。"""
+    import tools.build_interview_clip as clip
+
+    monkeypatch.setattr(clip, "ROOT", tmp_path)
+    (tmp_path / "specs" / "interviews").mkdir(parents=True)
+
+    with pytest.raises(SystemExit, match=r"xhs\.txt"):
+        clip.check_copy_page({"slug": "没写过小红书正文的这条"})
+
+    (tmp_path / "specs" / "interviews" / "有正文的这条.xhs.txt").write_text(
+        "占位内容", encoding="utf-8")
+    clip.check_copy_page({"slug": "有正文的这条"})   # 不许抛
+
+
+def test_小红书正文那道闸排在下载之前():
+    """⚠️ 和 `opening`／`lead_in` 那两道闸同一个理由：这条只查文件存不存在，
+    该在第 0.2 秒就报，不能等九分钟的 render 出片、又等 `mode=push` 那一趟
+    才在推送前一步炸出来。"""
+    src = (ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8")
+    body = src.split("def main(")[1]
+    body = "\n".join(ln for ln in body.splitlines()
+                     if not ln.lstrip().startswith("#"))
+    assert "check_copy_page(" in body, "`main()` 里没有调 `check_copy_page`"
+    for later in ("fetch_words(", "storyboard_sheet(", "segment("):
+        assert body.index("check_copy_page(") < body.index(later), (
+            f"小红书正文那道闸排在 `{later}` 后面了——它只查文件存不存在，"
+            "该在第 0.2 秒就报")
+
+
 def _lead_in_topbar_spec(**lead_extra):
     """`_lead_in_segment` 要烧顶栏，`spec` 顶层就得给全 `header_lines` 要的
     那几个字段（event / push.matchup / push.score / winner / interview_kind）
