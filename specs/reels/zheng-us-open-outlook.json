@@ -1,226 +1,201 @@
 {
   "slug": "zheng-us-open-outlook",
-  "_source": "网球有故事，讲郑钦文这次美网资格赛的完整前景——不是单场预测。用户 2026-08-24 明确要求：「不要做单场这个比赛的预估，就做郑钦文这次美网资格赛的前景的预估，包括她这几轮的潜在对手，以及她之前打过资格赛的历史作为回顾的开场，然后串起来整个资格赛的前瞻，以及对她的一些期许和愿望。做一层完整视频的，不用卡片，用历史视频和叙事的方法说出来，以及和她对手的一些视频做起来。」\n三条真实源片：ao22（2022 澳网正赛第一轮 萨斯诺维奇 vs 郑钦文，官方 Extended Highlights，她生涯第一次打大满贯资格赛并且过关之后的第一场大满贯正赛胜利）、zheng（复用 zheng-lanlana 已探过的 2026 华盛顿站首轮负伊埃拉，作为『现在』的通用比赛画面）、mar26（2026 多伦多站首轮 马里诺负森梅兹，WTA 官方，唯一一段真实的『对手』素材——她是第三轮分支候选里故事最完整、也是唯一有可用近期真实比赛视频的一位）。",
-  "_fixture": "2026 美网女单资格赛，郑钦文（14 号种子）所在小签区第一轮同一时段（北京时间今晚 23:00 / 当地 11:00，flashscore 四场并列同一时刻，属于资格赛当日场次批量开拍，不是精确到分钟的单场时刻）：\n· 郑钦文 vs 尤晓迪（她这一区）\n· 布雷尔 vs 马烨欣（郑钦文潜在第二轮对手所在的一场）\n· 普里丹基纳 vs 法雷、马里诺 vs 费罗（这两场的胜者对阵的胜者，会在第三轮遇到郑钦文这一路的胜者）\n四场均未开打（flashscore RW=0），核实于 2026-08-24 抓取的 f_2_0 当日 feed。",
+  "_source": "2026-08-24重制。原版后半段讲尤晓迪、布雷尔、马烨欣、费罗时仍播放郑钦文对伊埃拉，并漏掉普里丹基纳/法雷。本版按用户要求补全郑钦文受伤、手术、复出再伤、连续缺席、第二次复出、跌出前100和错过美网正赛直接入围的背景；每位潜在对手均使用本人比赛画面并同步上屏姓名、排名、经历或技术特点。",
+  "_fixture": "2026美网女单资格赛：郑钦文[14]对尤晓迪；第二轮潜在对手为布雷尔[PR]或马烨欣；决胜轮另一侧完整分支为普里丹基纳/法雷与马里诺[PR]/费罗[30]。按US Open官方资格赛签表核验。",
   "_claims": {
-    "zheng_rank": "郑钦文当前世界排名 127 位——WTA 官方排名 PDF（wtafiles.wtatennis.com/pdf/rankings/Singles_Numeric.pdf，2026-08-24 抓取）与用户提供的 TNNS 截图一致；api.wtatennis.com/tennis/players/ranked 接口同日返回 121（points 相同、rank 不同，疑似缓存了不同周），两个源不一致时取和 TNNS 截图、和 PDF 一致的那个数",
-    "you_xiaodi_rank": "尤晓迪世界第 198 位——同一份 WTA 官方 PDF",
-    "you_xiaodi_luan": "尤晓迪 2026 年 4 月 5 日拿下 WTA100 六安站冠军，6-4 6-7(2) 6-4 胜兰采勒，生涯第一个这个级别的冠军，排名从 247 跳到 193，凭此重新拿到大满贯资格赛资格（三年来第一次）——网易体育 https://m.163.com/dy/article/KPPOERJ605562RNI.html",
-    "burel_rank": "布雷尔世界第 417 位——同一份 WTA 官方 PDF",
-    "burel_career_high": "布雷尔生涯最高世界第 42 位，2024-06-10 达到——维基百科 Clara Burel 词条 + WTA 官方球员页 wtatennis.com/players/325320/clara-burel",
-    "burel_acl": "2025-04-23，她在法国对土耳其的比莉·简·金杯（Fed Cup）对阵中，1-0 领先阿克苏时右膝十字韧带撕裂退赛；术后康复约七个月，原计划 2026 年初复出又被第二次伤病推迟——evrimagaci.org/tpg/clara-burel-faces-seasonending-injury-in-bjk-cup-319718 + en.tennistemple.com/actu/burels-2025-season-is-likely-over/DXR3",
-    "burel_pr": "2026 美网资格赛，她以保护排名（Protected Ranking）140 位报名进入，不是她本人当时的真实世界排名——维基百科 2026 US Open women's singles qualifying 词条（标注 PR）+ WTA 官方 wtatennis.com/news/4553891",
-    "burel_you_opponent": "布雷尔资格赛第一轮的对手正是马烨欣——同一份维基百科词条，与 flashscore 当日 feed 独立核对一致",
-    "ma_yexin_rank": "马烨欣世界第 181 位——同一份 WTA 官方 PDF（页面文本 'MA, YE-XIN CHN 434 分'）",
-    "ma_yexin_final": "马烨欣 2025 年闯进个人生涯第一个 WTA125 级别决赛（景山站）——维基百科 Ma Yexin 词条",
-    "marino_rank": "马里诺世界第 380 位——同一份 WTA 官方 PDF",
-    "marino_retire": "马里诺 2013 年 2 月，22 岁时因抑郁症和网络暴力宣布退役——Yahoo Sports 当年报道 sports.yahoo.com/blogs/tennis-busted-racquet/rebecca-marino-quits-tennis-because-bullying-social-media-175955476--ten.html + Tennis Canada 回顾 tenniscanada.com/news/pro-tennis/2023/video-rebecca-marinos-inspirational-tennis-journey，两个独立源一致",
-    "marino_return": "2018 年 1 月正式复出（安塔利亚站），2022 年 7 月 11 日重返前 100（十年来第一次），复出后生涯最高排名第 63 位（2022 年 12 月）——同上 Tennis Canada + WTA 官方球员页",
-    "marino_age": "马里诺 1990-12-16 出生，2026 年 8 月已 35 岁——WTA 官方球员页 wtatennis.com/players/313485/rebecca-marino；她本人的多伦多这场集锦里解说也提到「35-year-old wild card」，与生日算出的年龄一致",
-    "marino_toronto_loss": "2026 多伦多站资格赛/正赛第一轮，马里诺 5-7 4-6 负于森梅兹，为森梅兹本人加拿大境内首胜——源片 mar26 自带的官方字幕逐句核对（收尾解说原话：'Sönmez takes victory for the first time in Canada' / 'Strong play from Sönmez. Straight sets win 7-5, 6-4'）",
-    "ferro_rank": "费罗世界第 146 位——同一份 WTA 官方 PDF",
-    "ferro_career_high": "费罗生涯最高世界第 39 位，2021-03-08 达到——维基百科 Fiona Ferro 词条",
-    "ferro_slump": "2025 年 2 月，她的排名一度跌到第 368 位——同上维基百科词条",
-    "ferro_oeiras": "2026-04-26，她在葡萄牙 Oeiras 站拿下 WTA125 冠军（6-3 0-6 6-1 胜库德尔梅托娃），是她近六年来最大的一个冠军、生涯第一个 WTA125 冠军——en.tennistemple.com/actu/fiona-ferro-claims-oeiras-wta-125-title-first/zRa8 + tennismajors.com 报道",
-    "marino_ferro_opponent": "第三轮分支的另一场：马里诺 vs 费罗，与 flashscore 当日 feed 一致",
-    "ao22_qualifying_final": "2022 澳网资格赛决赛轮，郑钦文（13 号种子）对本玉真唯（28 号种子），6-3 6-7(3) 6-3，两小时二十五分钟——WTA 官方报道 wtatennis.com/news/2447429/zheng-qinwen-baptiste-bronzetti-qualify-for-australian-open + wtatennis.com/news/2446288/hontama-zheng-qinwen-set-australian-open-qualifying-clash，两篇独立报道印证同一个比分",
-    "ao22_r1": "过关之后，2022 澳网正赛第一轮，郑钦文 6-3 1-6 7-6(5) 胜萨斯诺维奇，耗时近两个半小时——新华社英文 english.news.cn/20220117/249459cff48944daa13a980701b757a9/c.html，比分与源片 ao22 结尾记分板（SASNOVICH 3 0 6 / ZHENG 6 1 7）一致",
-    "ao22_first_slam": "这是郑钦文生涯第一次大满贯正赛（不只是第一次澳网）——维基百科 2022 Australian Open – Women's singles 词条原句「This event marked the first major main draw appearance for future world No. 4 and Olympic gold medalist Zheng Qinwen」+ WTA 官方报道原句「Zheng, who was contesting her first Grand Slam qualifying event, will make her main draw debut」，两个独立源都明确说的是大满贯首秀不只是澳网首秀"
+    "draw": "https://www.usopen.org/en_US/scores/draws/2026_WQ_draw.pdf",
+    "zheng": "WTA官方球员页：当前第127、2026年11胜13负、生涯最高第4、右手持拍：https://www.wtatennis.com/players/328120/qinwen-zheng",
+    "injury": "右肘疼痛始于2024温网前；2025年7月关节镜手术并退出当年美网；北京复出后第三轮因疼痛退赛，随后缺席武汉、全运会和2026澳网；2026多哈再次复出：https://www.wtatennis.com/news/4462015/what-zheng-qinwen-learned-from-the-year-she-had-to-stop-and-heal 与 https://www.news.cn/sports/20260210/910d8988991944d9918319f650e6b592/c.html",
+    "doha": "多哈复出首战4-6 6-1 6-2胜肯宁，20记ACE、43个制胜分：https://www.wtatennis.com/news/4447178/i-want-to-come-back-really-strong-with-20-aces-qinwen-zheng-makes-potent-return-in-doha",
+    "ao22": "2022澳网是郑钦文第一次大满贯资格赛；连过三轮后进入正赛并赢下首场大满贯正赛：https://www.wtatennis.com/news/2447429/zheng-qinwen-baptiste-bronzetti-qualify-for-australian-open",
+    "opponents": "对手排名与持拍信息来自各自WTA官方球员页；尤晓迪2026六安W100冠军，布雷尔生涯最高42并以保护排名140参赛，马烨欣2025首次进WTA125决赛，普里丹基纳生涯最高168，法雷2026年32胜13负，马里诺强项为发球和正手且偏爱硬地，费罗打法快速多变且最喜欢正手。"
   },
   "editorial": {
     "mode": "match_review",
-    "question": "郑钦文这次美网资格赛，能走多远？",
-    "thesis": "这不是一次孤立的低谷：2022 年她就用同一条路径（三轮资格赛）第一次走进大满贯正赛并首战告捷；这一次资格赛签表上摆着的几条潜在对手线——尤晓迪、布雷尔、马里诺、费罗——每一条讲的也都是同一件事，从谷底往回爬。把这些线并排摆出来，比单独猜一场比分更接近『她这次资格赛前景』这个问题真正的答案。",
+    "question": "奥运冠军郑钦文，为什么必须从美网资格赛重新开始？",
+    "thesis": "从奥运金牌和世界第四，到手术、复出再伤、第二次复出后跌到第127并错过正赛直接入围，她必须像19岁时那样再赢三场，把名字一分一分打回正赛。",
     "beats": [
-      "回顾：2022 年澳网，她第一次打大满贯资格赛，决赛轮苦战两个半小时过关，随即在正赛第一轮抢七拿下生涯首场大满贯正赛胜利",
-      "现状：手术、复出、连续几站资格赛/正赛失利之后，她第二次站上大满贯资格赛的起点，今晚对手是同样在往回爬的尤晓迪",
-      "签表：赢下今晚，第二轮可能碰上布雷尔（十字韧带撕裂、靠保护排名进场）或马烨欣（去年首进 125 级决赛）；再往前，第三轮候选里有马里诺（抑郁症和网络暴力退役后八年长跑式回归）和费罗（排名跌到 368 后才拿回一个冠军）",
-      "落点：从资格赛打进大满贯正赛，这条路她四年前走过一次；这一次的结果，今晚才刚刚开始写"
+      "2022澳网：19岁的郑钦文连过三轮资格赛，随即赢下个人首场大满贯正赛",
+      "巴黎奥运夺金后遭遇右肘手术，北京复出再伤，连续缺席，再到多哈第二次复出",
+      "2026年11胜13负、世界第127，未能直接进入美网正赛",
+      "三道门：尤晓迪；布雷尔/马烨欣；普里丹基纳、法雷、马里诺、费罗所在的完整分支",
+      "荣誉不能替她赢下现在的一分，但她曾经走通过这条路"
     ],
     "human_context": {
-      "angle": "不是单场对阵预览，而是把整条资格赛路径上会遇到的人物群像串起来——签表上排在郑钦文这一路的四个潜在对手，每个人自己也在打一场『从谷底回来』的比赛，这条共同的线是本号找到的、不是套用固定模板",
+      "angle": "把资格赛讲成郑钦文从巅峰被伤病推回起点、再靠自己往上爬的故事；对手不再是旁白里的空名字，而是有本人比赛和屏幕信息的真实关卡。",
       "facts": [
-        "郑钦文 2022 澳网资格赛决赛轮 6-3 6-7(3) 6-3 胜本玉真唯，随即在正赛第一轮 6-3 1-6 7-6(5) 胜萨斯诺维奇，是她生涯第一次大满贯正赛（不只是第一次澳网）",
-        "布雷尔 2025-04-23 在比莉·简·金杯赛场上十字韧带撕裂退赛，这次美网资格赛以保护排名 140 位报名，对手正是马烨欣",
-        "马里诺 2013 年 22 岁时因抑郁症和网络暴力宣布退役，2018 年复出，2026 年 8 月已 35 岁，刚在多伦多站资格赛/正赛首轮 5-7 4-6 负于森梅兹",
-        "费罗生涯最高世界第 39，2025 年 2 月跌到第 368，2026-04-26 才拿下复出以来第一个冠军（WTA125 里斯本 Oeiras 站）"
+        "巴黎奥运金牌和生涯最高第4，是受伤前已经到达的高度",
+        "第一次复出在北京因右肘疼痛中止，第二次复出是在2026多哈",
+        "当前第127、赛季11胜13负，未能直接进入美网正赛",
+        "官方签表中的七位潜在对手全部纳入，不再漏掉普里丹基纳和法雷"
       ],
       "sources": [
-        "https://www.wtatennis.com/news/2447429/zheng-qinwen-baptiste-bronzetti-qualify-for-australian-open",
-        "https://en.wikipedia.org/wiki/2026_US_Open_%E2%80%93_Women%27s_singles_qualifying",
-        "https://www.tenniscanada.com/news/pro-tennis/2023/video-rebecca-marinos-inspirational-tennis-journey",
-        "https://en.tennistemple.com/actu/fiona-ferro-claims-oeiras-wta-125-title-first/zRa8"
+        "https://www.usopen.org/en_US/scores/draws/2026_WQ_draw.pdf",
+        "https://www.wtatennis.com/players/328120/qinwen-zheng",
+        "https://www.news.cn/sports/20260210/910d8988991944d9918319f650e6b592/c.html",
+        "https://www.wtatennis.com/news/4447178/i-want-to-come-back-really-strong-with-20-aces-qinwen-zheng-makes-potent-return-in-doha"
       ]
     },
-    "_why": "画面全部来自三条第三方源片（ao22/zheng/mar26），触发 `_editorial_contract_required`——闸不看栏目（网球有故事同样要填）。这条片子本来就不是单场比赛复盘，而是『资格赛前景』这个更宽的问题，所以 question/thesis/beats 按这个问题写，不是硬套某一场已打完的比赛的走势/转折/结局——四个 beats 仍然覆盖『前段（回顾）→ 中段（现状+签表）→ 结局/回应（落点）』这个骨架，只是单位从『一场球』换成了『一条资格赛路径』。"
+    "_why": "全片使用12条人物相关实拍源；结构覆盖历史起点、巅峰、伤病折返、当前处境与完整签表，最后回到同一条资格赛路径。"
   },
-  "_no_repeat": "已发布的 zheng-lanlana（2026-08-12 推送，pushed.json 在库）已经完整讲过：右肘手术（2025-07-18）、北京复出尝试失败、多哈正式复出（2026-02）、法网首轮不敌赫瓦林斯卡、复出战绩 11 胜 13 负、多伦多资格赛首轮负塔拉鲁迪（2026-08-01）——那条片子的落点就是这条线，而且封面用的就是 2024 巴黎奥运夺金那张照片、开场两拍就是『半决赛赢斯瓦泰克，决赛赢维基奇』『亚洲第一枚奥运网球单打金牌』。这条片子里这些**一个字都不重讲**：只用一句『中间隔着一次手术，一次复出——这条路她已经走了一年多』一句带过（看不懂『为什么她在打资格赛』所必需的最小来路），也不再用奥运夺金那段视频。这条片子真正讲的是 zheng-lanlana 没讲过的部分：2022 年那次资格赛的具体过程（对手、比分、耗时），以及这一次资格赛真实签表上的潜在对手是谁、他们各自的故事。",
+  "_no_repeat": "本次是用户明确要求的重制版。即使旧片提过部分伤病，也必须完整交代『受伤—手术—复出再伤—连续缺席—第二次复出—跌出前100—无缘直接入围』，否则观众无法理解奥运冠军为何出现在资格赛。",
   "sources": {
     "ao22": "https://www.youtube.com/watch?v=5uQjN643oTc",
-    "zheng": "https://www.youtube.com/watch?v=_z06v_b8bIM",
-    "mar26": "https://www.youtube.com/watch?v=XFkMv2dKTxg"
+    "paris": "https://www.youtube.com/watch?v=DfWrAu8ALPo",
+    "injury": "https://www.youtube.com/watch?v=GAABEkffI-0",
+    "doha": "https://www.youtube.com/watch?v=eHOa2YOca2M",
+    "current": "https://www.youtube.com/watch?v=phPIgfJKNfo",
+    "you": "https://www.youtube.com/watch?v=IwfxMUd2fNQ",
+    "burel": "https://www.youtube.com/watch?v=V02nBQ2xXNE",
+    "ma": "https://www.youtube.com/watch?v=82HaURwk8g0",
+    "pridankina": "https://www.youtube.com/watch?v=v_e_aaHNnds",
+    "falei": "https://www.youtube.com/watch?v=NZBUp7GZYlY",
+    "marino": "https://www.youtube.com/watch?v=XFkMv2dKTxg",
+    "ferro": "https://www.youtube.com/watch?v=_D59qX6MMc0"
   },
   "_sources_why": {
-    "ao22": "Australian Open 官方 YouTube 频道 · 「Aliaksandra Sasnovich v Qinwen Zheng Extended Highlights (1R) | Australian Open 2022」，435.77 秒，1920x1080，25fps。画面自证：记分板持续显示 SASNOVICH / ZHENG，场地印 MELBOURNE，赞助商栏 Kia / Rolex / Emirates 是当年澳网的标准配置，结尾记分板 SASNOVICH 3-0-6 / ZHENG 6-1-7 与 _claims.ao22_r1 的比分一致。",
-    "zheng": "复用 zheng-lanlana.json 已经探过并验证的同一条源片（WTA 官方 · 2026 华盛顿站首轮 伊埃拉 d. 郑钦文），probe.json 早已在库（output/2026-08-01/reel/zheng-lanlana-src-zheng/probe.json），duration 309.568435，scene_cuts 已知。这条片子只当『她现在』的通用比赛画面用（叙事和画面不字面对应，和 hewitt-washington / zheng-lanlana 同一个做法），窗口全部选在 zheng-lanlana 没用过的空档，避免逐帧重复。",
-    "mar26": "WTA 官方 YouTube 频道 · 「Rebecca Marino vs. Zeynep Sonmez | 2026 Toronto Round 1 | WTA Match Highlights」，309.48 秒，1920x1080，25fps。画面自证：记分板 MARINO / SONMEZ，场地印 TORONTO，源片自带官方字幕逐句核对了终场比分和『Sönmez 加拿大境内首胜』这个事实。马里诺穿浅蓝/青色（teal），森梅兹穿粉色（pink）——终场森梅兹在看台土耳其球迷簇拥下庆祝那几帧（274.5s 起）确认了这套颜色对应关系，之后的窗口挑选都按这个对应走。"
+    "ao22": "Australian Open官方，2022澳网郑钦文正赛首胜，承担历史开场与结尾。",
+    "paris": "Olympic Games官方，郑钦文2024巴黎奥运女单夺金本人画面。",
+    "injury": "2025北京郑钦文对诺斯科娃因右肘疼痛退赛的现场视频，只讲第一次复出再伤与后续伤停。",
+    "doha": "WTA官方，2026多哈郑钦文对肯宁，第二次复出首战本人画面。",
+    "current": "WTA官方，2026雅典郑钦文本人比赛，只讲第二次复出后的当前状态。",
+    "you": "2026六安W100决赛尤晓迪本人比赛。",
+    "burel": "WTA官方，2026雅西布雷尔本人比赛。",
+    "ma": "2026武宁W100马烨欣本人比赛。",
+    "pridankina": "WTA官方，2026雅西普里丹基纳本人比赛。",
+    "falei": "2026华沙WTA125法雷本人比赛。",
+    "marino": "WTA官方，2026多伦多马里诺本人比赛。",
+    "ferro": "WTA官方，2026拉巴特费罗本人比赛。"
   },
   "mixed_fps": {},
-  "_beats": "十七拍，分四段：\n【回顾开场，ao22】① 决胜盘抢七的紧张（不配旁白）→ ② 这是她生涯第一次赢下大满贯正赛 → ③ 赢这场之前先过了三轮资格赛 → ④ 决赛轮对本玉真唯，两个半小时的拉锯 → ⑤ 过关之后对萨斯诺维奇，抢七拿下\n【回到今晚，zheng 复用素材】⑥ 这是她生涯第二次打大满贯资格赛（一句带过手术复出，不重讲）→ ⑦ 今晚北京时间十一点开拍，赢三轮回正赛 → ⑧ 第一轮对手尤晓迪，同样在往回爬（六安站冠军）→ ⑨ 赢下今晚，下一轮等着布雷尔／马烨欣的胜者\n【第二三轮潜在对手】⑩ 布雷尔：生涯最高第 42，十字韧带撕裂，保护排名进场 → ⑪ 马烨欣：去年闯进第一个 125 级决赛 → ⑫ 再往前一轮，可能碰上马里诺或费罗，两人都在从谷底爬回来\n【马里诺真实素材，mar26】⑬ 2013 年抑郁症和网络暴力逼她退役，2018 年才回来，35 岁还在打 → ⑭ 这场多伦多站首轮她刚输给森梅兹\n【费罗，回到 zheng 复用素材】⑮ 今晚那一边的对手是费罗 → ⑯ 排名跌到过 368，四月才拿回一个冠军\n【收尾，回到 ao22】⑰ 四年前那个决胜局也是这样一分一分咬下来的——美网正赛签表上会不会有她的名字？",
+  "_beats": "十九拍：2022资格赛和正赛首胜；巴黎奥运巅峰；手术、北京复出再伤、连续缺席、多哈第二次复出；世界第127与11胜13负；三轮资格赛七位潜在对手逐一用本人比赛呈现；片尾回到2022澳网，落在『把名字打回来』。",
   "cover": {
     "eyebrow": "网球有故事",
     "layout": "solo",
     "subject": "郑钦文",
-    "hook": "这条路，她走过一次\n今晚，她想再走一次",
-    "narration": "这条路，她走过一次，今晚，她想再走一次。",
-    "_narration_why": "封面停多久跟着这句配音走，念的就是海报上印的那句钩子，不另排字幕。这句和收尾那问『美网正赛的签表上，会不会有她的名字？』字集不重合——封面陈述『她做过一次』，收尾问的是『这次结果如何』，两件事。",
+    "hook": "从奥运冠军\n到美网资格赛",
+    "narration": "从奥运冠军，到美网资格赛。她为什么又回到了起点？",
+    "_narration_why": "用准确的身份反差提出全片问题。",
     "topic": "郑钦文的美网资格赛之路",
     "portrait": {
       "image": "assets/players/zheng-qinwen-athens-2026-r1.jpg",
       "focus": 0.42,
       "focus_y": 0.28,
       "zoom": 1.35,
-      "_why": "官方高清实拍（4000x2666，WTA 图库，2026 雅典站首轮胜布萨斯-马内伊罗，握拳庆祝近景），不是抽帧——满足『封面大图一律用官方高清实拍』的硬闸。选它不是选奥运那张（zheng-qinwen.jpg 已经是 zheng-lanlana 的封面，同一个账号不该让同一张脸出现在两条『网球有故事』片子的封面上）。\n情绪对题：这条片子讲的是『她正在往回爬、正在拼』，这张图里她咬着牙、握拳、正在比赛中——不是庆祝夺冠的松弛表情，是这条片子基调需要的『用力』那一档（CLAUDE.md『同一批候选都过了前三道闸门时，选肢体和表情张力更大的那张』）。\nfocus_y=0.28 把她的脸留在画面上半，focus=0.42 稍微偏左给右侧的留白呼吸；zoom=1.35 让她的头肩占满画布大半，四周仍留一点边——按『人物放到正中间，放大到接近铺满，四周留一定空间』的要求渲了三档（1.2/1.35/1.5）比对，1.35 是头肩最大又不切到手臂的一档。"
+      "_why": "WTA官方2026雅典高清实拍，咬牙握拳的比赛状态与重新把名字打回来一致。"
     },
     "scrim": "clear"
   },
   "push": {
-    "summary": "她的美网资格赛之路",
-    "lead": "郑钦文今晚北京时间十一点从美网资格赛第一轮打起，对手尤晓迪。这是她生涯第二次打大满贯资格赛——上一次是 2022 年澳网，她连过三轮资格赛，第一次站上大满贯正赛就赢了球。赢下今晚，下一轮可能碰上布雷尔或马烨欣；再往前，等在第三轮的可能是马里诺——她 2013 年因抑郁症和网络暴力退役，2018 年才回来，今年 35 岁还在打；也可能是费罗，排名跌到过 368，四月才拿回复出以来第一个冠军。四年前，她也是这样一路走出资格赛的。这一次，她还能再走一次吗？",
-    "auto": true,
-    "_why": "solo 封面没有 versus/result 的退路，push.summary 必须显式给。summary 9 字（SUMMARY_MAX=13 以内）。lead 只引用 _claims 里已核验的事实，收在和封面／片尾呼应但不逐字重复的问句上。"
+    "summary": "她要把名字打回正赛",
+    "lead": "两年前，郑钦文站上巴黎奥运最高领奖台；现在，世界第127的她必须从美网资格赛连赢三场。右肘手术后，她在北京复出又因疼痛退赛，连续错过多项赛事；多哈第二次复出后，赛季11胜13负，也错过了美网正赛直接入围。七位潜在对手，每一道门都是真实关卡。四年前，她曾从澳网资格赛一路走进正赛；这一次，她要把自己的名字一分一分打回来。",
+    "auto": false,
+    "_why": "多源素材必须先探测并完成整片人物错配验收，通过后才开启自动推送。"
   },
   "segments": [
     {
-      "start": 396.88,
-      "end": 405.0,
-      "source": "ao22",
-      "fit": "crop",
-      "narration": "",
+      "start": 396.88, "end": 405.0, "source": "ao22", "fit": "crop", "narration": "",
       "_ending_payoff_required": false,
-      "_why": "决胜盘抢七，比分板显示 MATCH POINTS 提示，单一镜头（scene_cuts 396.88/413.2 之间），不配旁白——全片最强的一格画面放在最前面。\n`_ending_payoff_required=false`：这段只是从后段抽来的**紧张感**（抢七拉锯），不是结局本身——它没有出现最后一球、比分确认或庆祝，那些留在下一段（405–413.2）里按时间顺序真正兑现。false 之后这道闸仍然要求同源正文的最后一段（见 413.2–419.0）必须真的走到这段末尾（405.0s）之后，已经满足。"
+      "_why": "2022澳网决胜盘抢七，保留现场声冷开场；结局由片尾同源握手兑现。"
     },
     {
-      "start": 405.0,
-      "end": 413.2,
-      "source": "ao22",
-      "fit": "crop",
-      "narration": "这是她生涯第一次，赢下大满贯正赛的一场球。"
+      "start": 405.0, "end": 416.5, "source": "ao22", "fit": "crop",
+      "narration": "十九岁，第一次参加大满贯资格赛。连赢三场，再赢正赛首轮——她第一次把名字写进大满贯。"
     },
     {
-      "start": 0.5,
-      "end": 10.4,
-      "source": "ao22",
-      "fit": "crop",
-      "narration": "赢这场之前，她先连过三轮资格赛，决赛轮鏖战两个半小时才闯了进来。",
-      "_why": "原来的窗口 4.5–18.5 从 14.5s 起记分条翻出来是「SASNOVICH／ZHENG」——那正是这条视频本身讲的 R1 对萨斯诺维奇那场，不是资格赛决赛轮对本玉真唯，画面会和旁白正面打架。改窗口卡在 0.5–10.4（探测器标的切点，逐帧看过前 12.5s 记分条一直没出现，纯净宽景），并把对手名字从旁白里去掉——本玉真唯这个名字只留在 _claims 和小红书正文里，不靠这段画面自证。"
+      "start": 18.0, "end": 27.5, "source": "paris", "fit": "crop",
+      "narration": "两年后，她已是巴黎奥运冠军，最高世界第四。很少有人想到，她还会回到资格赛起点。",
+      "crosses_cut": "官方夺金短片内的同一事件蒙太奇，均为郑钦文奥运夺金。"
     },
     {
-      "start": 102.5,
-      "end": 113.0,
-      "source": "ao22",
-      "fit": "crop",
-      "narration": "过关之后，是她第一次站上大满贯正赛，对手萨斯诺维奇——六比三、一比六、七比六，她赢了。",
-      "_why": "101.84–168.44 之间的宽景段落，102.5–118.5 逐帧看过是连续宽景，无插入镜头。"
+      "start": 0.5, "end": 10.5, "source": "injury", "fit": "crop",
+      "narration": "右肘疼痛从二零二四年温网前开始。她硬撑到二零二五年七月手术，也退出了当年美网。",
+      "inset": {"image": "assets/beatcards/zheng-us-open/zheng-injury.png", "corner": "tr", "width": 0.72},
+      "crosses_cut": "北京复出后右肘疼痛相关现场，服务同一伤病事实。"
     },
     {
-      "start": 413.2,
-      "end": 419.0,
-      "source": "ao22",
-      "fit": "crop",
-      "narration": "那一年，她十九岁。",
-      "_why": "网前握手、走下场，413.2–428.76 是同一个镜头，收在 419.0 避开 428.76 之后的转播赞助商片尾卡。\n**位置放在这里（同源 ao22 段落列表里的最后一个）是为了满足『冷开场后必须重新兑现』那道闸**：它按源片时间码比较，不管中间穿插了多少别的段落——只要这是全片里最后一个 source=ao22 的段落，且它的 end(419.0) 超过第 1 段的 end(405.0)，闸就判定『结局已经在正文里真的走到过』。年龄按 WTA 官方球员页生日 2002-10-08 推算，2022 年 1 月她 19 岁。"
+      "start": 10.5, "end": 21.0, "source": "injury", "fit": "crop",
+      "narration": "两个月后北京第一次复出。赢了两场，右肘却再次疼到退赛。归来，变成又一次停下。",
+      "inset": {"image": "assets/beatcards/zheng-us-open/zheng-injury.png", "corner": "tr", "width": 0.72},
+      "crosses_cut": "本人疼痛、治疗与退赛的同一段现场记录。"
     },
     {
-      "start": 13.96,
-      "end": 25.0,
-      "source": "zheng",
-      "fit": "crop",
-      "narration": "这是她生涯第二次，打大满贯资格赛。中间隔着一次手术，一次复出——这条路她已经走了一年多。",
-      "_why": "zheng-lanlana 没用过的窗口（复用同一条源片时避免逐帧重复）；probe 的 scene_cuts 里 13.96/32.44 相邻，单一镜头。这句只一句带过手术复出，详情已经在 zheng-lanlana 里讲过，见 _no_repeat。"
+      "start": 21.0, "end": 29.0, "source": "injury", "fit": "crop",
+      "narration": "武汉、全运会、二零二六澳网，她接连缺席。直到二月多哈，她才第二次回到赛场。",
+      "inset": {"image": "assets/beatcards/zheng-us-open/zheng-injury.png", "corner": "tr", "width": 0.72},
+      "crosses_cut": "继续使用本人北京伤病现场呈现伤停节点。"
     },
     {
-      "start": 33.44,
-      "end": 41.5,
-      "source": "zheng",
-      "fit": "crop",
-      "narration": "北京时间今晚十一点，资格赛第一轮拉开。赢三轮，她就能回到大满贯正赛。",
-      "_why": "开赛时刻按『只说个大概』处理：flashscore 四场资格赛同一时刻批量开拍，是当日场次批量时间不是精确到分钟的单场时刻，所以只说『十一点』不加『多』（分钟落在 0-9 分那一档）。"
+      "start": 14.0, "end": 24.0, "source": "doha", "fit": "crop",
+      "narration": "第二次复出首战，她轰出二十记ACE、四十三个制胜分逆转肯宁：郑钦文还没有结束。",
+      "inset": {"image": "assets/beatcards/zheng-us-open/zheng-doha.png", "corner": "tr", "width": 0.68},
+      "crosses_cut": "WTA官方同场集锦，均来自郑钦文对肯宁。"
     },
     {
-      "start": 51.04,
-      "end": 63.0,
-      "source": "zheng",
-      "fit": "crop",
-      "narration": "对手尤晓迪，同样在打资格赛——四月，她刚拿下六安站冠军，生涯第一个这个级别的冠军，才把自己打回大满贯资格赛的门槛。"
+      "start": 20.0, "end": 31.0, "source": "current", "fit": "crop",
+      "narration": "可复出，不等于回到从前。二零二六年十一胜十三负，跌到世界第一百二十七，也错过美网正赛直接入围。",
+      "inset": {"image": "assets/beatcards/zheng-us-open/zheng-rank.png", "corner": "tr", "width": 0.68},
+      "crosses_cut": "WTA官方2026雅典本人比赛，只呈现第二次复出后的当前状态。"
     },
     {
-      "start": 84.32,
-      "end": 93.28,
-      "source": "zheng",
-      "fit": "crop",
-      "narration": "赢下今晚这一场，下一轮等着她的，是布雷尔和马烨欣的胜者。"
+      "start": 44.0, "end": 52.0, "source": "current", "fit": "crop",
+      "narration": "所以这一次，没有奥运冠军的捷径。三轮，三道门，必须全部赢下来。",
+      "inset": {"image": "assets/beatcards/zheng-us-open/zheng-rank.png", "corner": "tr", "width": 0.68},
+      "crosses_cut": "继续使用郑钦文2026本人比赛承接当前处境。"
     },
     {
-      "start": 70.0,
-      "end": 82.0,
-      "source": "zheng",
-      "fit": "crop",
-      "narration": "布雷尔，法国人，生涯最高排名四十二，去年四月十字韧带撕裂退赛。这次靠保护排名一百四十位，才进了资格赛。",
-      "_why": "51.04–84.32 是一个较长的连续宽景镜头，这一段和上面『对手尤晓迪』那段各取一截，都在同一镜头内部、互不重叠。"
+      "start": 420.0, "end": 432.0, "source": "you", "fit": "crop",
+      "narration": "第一道门，尤晓迪。世界第一百九十八，四月刚拿六安W100冠军；决赛打满三小时零八分。她擅长把比赛拖进苦战。",
+      "inset": {"image": "assets/beatcards/zheng-us-open/you.png", "corner": "tr", "width": 0.72},
+      "crosses_cut": "六安W100决赛本人实拍，同一场内部切镜。"
     },
     {
-      "start": 107.32,
-      "end": 115.76,
-      "source": "zheng",
-      "fit": "crop",
-      "narration": "马烨欣，中国人，去年闯进个人第一个一百二十五级别赛事的决赛。",
-      "_why": "原来的窗口 93.28–101.0 会走到 96.5~104.5s 那块换边全屏图形——上面大字印着「ROUND 1 / ALEXANDRA EALA 4 / ZHENG 6」，这段旁白讲的是马烨欣，画面上却挂着伊埃拉的全名，对不上。改用 107.32–115.76 这个切点框住的下一镜头（纯宽景回合，逐帧看过没有任何文字图形）。"
+      "start": 15.0, "end": 25.0, "source": "burel", "fit": "crop",
+      "narration": "第二轮可能是布雷尔。她最高世界第四十二，右膝十字韧带重伤后，靠保护排名一百四十回到这里。",
+      "inset": {"image": "assets/beatcards/zheng-us-open/burel.png", "corner": "tr", "width": 0.68},
+      "crosses_cut": "WTA官方布雷尔本人比赛。"
     },
     {
-      "start": 241.84,
-      "end": 254.0,
-      "source": "zheng",
-      "fit": "crop",
-      "narration": "再往前一轮，如果她能一路走到第三轮——等在那儿的，可能是马里诺，也可能是费罗。这两个人，都在从谷底往回爬。"
+      "start": 20.0, "end": 30.0, "source": "ma", "fit": "crop",
+      "narration": "也可能是马烨欣。世界第一百八十一，去年首次打进WTA一百二十五级别决赛，也在争一张中国球员的正赛门票。",
+      "inset": {"image": "assets/beatcards/zheng-us-open/ma.png", "corner": "tr", "width": 0.68},
+      "crosses_cut": "2026武宁W100马烨欣本人比赛。"
     },
     {
-      "start": 91.08,
-      "end": 105.0,
-      "source": "mar26",
-      "fit": "crop",
-      "narration": "2013年，二十二岁的马里诺，因为抑郁症和网络暴力宣布退役。五年后，2018年，她重新回到球场。到今年，她三十五岁，还在打。",
-      "_why": "宽景回合，不需要单独辨认谁是谁；91.08/109.52 相邻切点内单一镜头。"
+      "start": 70.0, "end": 77.0, "source": "current", "fit": "crop",
+      "narration": "真正的决胜轮，还要从另一半签表里等出一个人。这里原版漏掉了两位。",
+      "crosses_cut": "郑钦文本人比赛只作签表转场，不替代随后对手画面。"
     },
     {
-      "start": 155.12,
-      "end": 160.4,
-      "source": "mar26",
-      "fit": "crop",
-      "narration": "多伦多首轮，她刚负森梅兹，七比五、六比四。",
-      "_why": "马里诺（浅蓝/青色）发球的近景，155.12/160.4 相邻切点内单一镜头，颜色对应见 _sources_why.mar26。"
+      "start": 18.0, "end": 24.5, "source": "pridankina", "fit": "crop",
+      "narration": "二十岁的普里丹基纳，生涯最高第一百六十八，右手持拍。",
+      "inset": {"image": "assets/beatcards/zheng-us-open/pridankina.png", "corner": "tr", "width": 0.68},
+      "crosses_cut": "WTA官方普里丹基纳本人比赛。"
     },
     {
-      "start": 279.12,
-      "end": 284.52,
-      "source": "zheng",
-      "fit": "crop",
-      "narration": "今晚，另一边的对手是费罗。"
+      "start": 120.0, "end": 127.0, "source": "falei", "fit": "crop",
+      "narration": "她先要对法雷。世界第二百二十二，但本赛季已经拿下三十二场胜利。",
+      "inset": {"image": "assets/beatcards/zheng-us-open/falei.png", "corner": "tr", "width": 0.68},
+      "crosses_cut": "2026华沙WTA125法雷本人比赛。"
     },
     {
-      "start": 284.52,
-      "end": 293.5,
-      "source": "zheng",
-      "fit": "crop",
-      "narration": "排名曾经跌到三百六十八，今年四月才拿到复出以来第一个冠军——同样一位从谷底往回爬的人。"
+      "start": 91.08, "end": 100.0, "source": "marino", "fit": "crop",
+      "narration": "另一场有三十五岁的马里诺。身高一米八三，发球和正手是武器，最喜欢硬地。",
+      "inset": {"image": "assets/beatcards/zheng-us-open/marino.png", "corner": "tr", "width": 0.68}
     },
     {
-      "start": 165.72,
-      "end": 175.0,
-      "source": "zheng",
-      "fit": "crop",
-      "narration": "四年前那个决胜局，她也是这样，一分一分咬下来的。美网正赛的签表上，会不会有她的名字？",
-      "_why": "zheng-lanlana 没用过的窗口，165.72/188.08 相邻切点内单一镜头，收尾不再回到 ao22（把 ao22 的『最后一个同源段落必须走到冷开场末尾』这个结构留在片子前段，不在收尾处再引入新的 ao22 段落打乱它）。收尾问句和封面钩子字集不重合，见 cover._narration_why。"
+      "start": 16.0, "end": 24.0, "source": "ferro", "fit": "crop",
+      "narration": "她的对手费罗，世界第一百四十一。速度快、变化多，正手是最喜欢的一拍。",
+      "inset": {"image": "assets/beatcards/zheng-us-open/ferro.png", "corner": "tr", "width": 0.68},
+      "crosses_cut": "WTA官方费罗本人比赛。"
+    },
+    {
+      "start": 102.5, "end": 111.5, "source": "ao22", "fit": "crop",
+      "narration": "七个人，不是七个空名字。每个人都带着自己的伤、自己的武器、自己的理由，守在三道门后。"
+    },
+    {
+      "start": 413.2, "end": 428.0, "source": "ao22", "fit": "crop",
+      "narration": "四年前，她从资格赛走进大满贯。四年后，金牌和世界第四都不能替她赢下这一分。伤病把她送回起点，但起点不是终点。这一次，她能把郑钦文这个名字，一分一分打回正赛吗？"
     }
   ]
 }

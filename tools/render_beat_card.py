@@ -49,6 +49,8 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
 SMILEY = REPO / "assets" / "fonts" / "SmileySans-Oblique.woff2"
+SMILEY_TTF = REPO / "assets" / "fonts" / "SmileySans-Oblique.ttf"
+NOTO_BOLD = REPO / "assets" / "fonts" / "NotoSansSC-Bold-sub.ttf"
 
 # 渲染宽度。inset 贴上去按 `width`（画布占比）缩，这里 2× 出图保字的锐度——
 # 0.40×1080=432px 的槽位，864px 出图正好 2×。
@@ -94,13 +96,53 @@ def build_html(value: str = "", label: str = "", title: str = "") -> str:
             paint-order: stroke fill;
             text-shadow: 0 3px 12px rgba(0, 0, 0, 0.55); }}
   .title {{ font-size: 62px; font-weight: 700; color: #e7f3ec;
-            line-height: 1.3; white-space: nowrap;
+            line-height: 1.3; white-space: pre-line;
             -webkit-text-stroke: 4px rgba(6, 14, 11, 0.92);
             paint-order: stroke fill;
             text-shadow: 0 3px 14px rgba(0, 0, 0, 0.55); }}
 </style>
 <div id="card">{body}</div>
 """
+
+
+def _render_with_pillow(html: str, out: Path) -> Path:
+    """Chromium 不可用时的等价兜底；仍然是透明底、描边字的贴纸。"""
+    import re  # noqa: PLC0415
+    from PIL import Image, ImageDraw, ImageFont  # noqa: PLC0415
+
+    value = re.search(r'<div class="value">(.*?)</div>', html, re.S)
+    label = re.search(r'<div class="label">(.*?)</div>', html, re.S)
+    title = re.search(r'<div class="title">(.*?)</div>', html, re.S)
+    unescape = html_mod.unescape
+    lines: list[tuple[str, int, str, int]] = []
+    if value:
+        lines.append((unescape(value.group(1)), 150, "#b8e986", 7))
+        if label:
+            lines.append((unescape(label.group(1)), 44, "#e7f3ec", 3))
+    elif title:
+        lines.extend((line, 62, "#e7f3ec", 4)
+                     for line in unescape(title.group(1)).splitlines())
+    fonts = [ImageFont.truetype(str(SMILEY_TTF if size == 150 else NOTO_BOLD), size)
+             for _, size, _, _ in lines]
+    probe = Image.new("RGBA", (CARD_W, 800), (0, 0, 0, 0))
+    draw = ImageDraw.Draw(probe)
+    heights = []
+    for (line, _, _, stroke), font in zip(lines, fonts, strict=True):
+        box = draw.textbbox((0, 0), line, font=font, stroke_width=stroke)
+        heights.append(box[3] - box[1])
+    gap = 14 if value else 18
+    height = 68 + sum(heights) + gap * max(0, len(lines) - 1)
+    image = Image.new("RGBA", (CARD_W, height), (0, 0, 0, 0))
+    draw = ImageDraw.Draw(image)
+    y = 34
+    for (line, _, color, stroke), font, line_h in zip(lines, fonts, heights, strict=True):
+        box = draw.textbbox((0, 0), line, font=font, stroke_width=stroke)
+        x = (CARD_W - (box[2] - box[0])) // 2
+        draw.text((x, y), line, font=font, fill=color,
+                  stroke_width=stroke, stroke_fill=(6, 14, 11, 235))
+        y += line_h + gap
+    image.save(out)
+    return out
 
 
 def render(html: str, out: Path) -> Path:
@@ -126,7 +168,9 @@ def render(html: str, out: Path) -> Path:
                         executable_path=exe, args=["--no-sandbox"])
                     break
             if browser is None:
-                raise default_error
+                result = _render_with_pillow(html, out)
+                page.unlink(missing_ok=True)
+                return result
         # 2× 物理像素出图：卡是按内容收缩的，贴进 inset 槽位时可能被放大——
         # 密度翻倍之后 0.40 画布宽的槽位也仍然是缩小着贴，字不发软
         tab = browser.new_page(viewport={"width": CARD_W, "height": 640},
@@ -144,7 +188,7 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--value", default="", help="数据卡的大数字，如 0/3")
     ap.add_argument("--label", default="", help="数据卡的小标签，如 第一盘 破发点")
-    ap.add_argument("--title", default="", help="转折卡的短语，如 第一盘 决胜时刻")
+    ap.add_argument("--title", default="", help="转折卡的短语；可用换行分两行呈现")
     ap.add_argument("--out", required=True)
     args = ap.parse_args()
     out = render(build_html(args.value, args.label, args.title), Path(args.out))

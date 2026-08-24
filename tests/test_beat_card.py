@@ -33,6 +33,12 @@ def test_文本要转义():
     assert "a&lt;b&gt;&amp;c" in html
 
 
+def test_多行标题保留换行并靠_css_换行():
+    html = build_html(title="尤晓迪｜世界第198\n六安W100冠军｜右手持拍")
+    assert "尤晓迪｜世界第198\n六安W100冠军｜右手持拍" in html
+    assert "white-space: pre-line" in html
+
+
 def test_渲出来的卡底透明卡身实在(tmp_path):
     """真渲一张——「写了」不等于「跑过」。四角 alpha 必须是 0（贴纸），
     卡身（文字本身，2026-08-11 撤掉背景板之后不再是一整块实色）必须真的
