@@ -99,6 +99,59 @@
     "亚瑟·菲斯。"
   ],
   "_zh_why": "presenter 那几行（第 1-6、47-51 行）不是菲斯自己的话——从「好，轮到我了」（第 7 行）到「明年我还会回来」（第 46 行）才是他本人的致辞。第 2 行「Sir」没有译出：这是司仪口播的花絮词，没有证据表明菲斯有这个头衔，字面硬翻会是一句荒谬的敬语，按房规「宁可留白也不编」不替它坐实。第 4/5 行「Mr. / Bob Moran.」segment() 切在了姓名中间，中文跟着切在姓名中间（鲍勃 / ·莫兰），不比英文更别扭。第 10 行「Francis」是菲斯对蒂亚福的非正式称呼（他本名 Frances 但公开场合常被这么叫），译成「弗朗西斯」而不是姓氏「蒂亚福」，跟他实际称呼保持一致。",
+  "lead_in": {
+    "url": "https://youtu.be/5eniSK6BDZU",
+    "start": 410.2,
+    "end": 449.64,
+    "crop_shift_x": -0.06,
+    "_crop_why": "同一个 Tennis TV 转播模板，台标贴在右上角——本地用 PIL 模拟裁切窗口核对过（frame_0410s.jpg）：默认居中窗口 [0.125,0.875] 会切进 Tennis TV 球标和「T」；shift -0.06 之后窗口变成 [0.065,0.815]，台标完全在窗口外，还多让出了完整的比分板。",
+    "why": "Tennis TV 官方单场集锦《Arthur Fils vs Frances Tiafoe for Maiden Masters TITLE 🏆 | Cincinnati 2026 Highlights》（同一条源片，「赛场之上」姊妹片 fils-tiafoe-cincinnati-2026-final 已核验并推送，source_url 一致）。窗口 410.2-449.64 卡在两个真实的 scene_cuts 上（probe.json：…395.76, 398.72, 401.48, 402.84, 410.2, 425.4, 439.08, 449.64…）：410.2 起是决胜盘 4-0 菲斯发球胜赛局（frame_0410s.jpg 记分板 FILS 6 1 4 40／TIAFOE 3 6 0 30，菲斯发球），随后蒂亚福 0-5 发球保命，420s 已是 AD——菲斯赛点（frame_0420s.jpg：TIAFOE 发球，FILS 6 1 5 AD／TIAFOE 3 6 0），425s 菲斯已经在场上鼓掌庆祝（frame_0425s.jpg），447-449s 两人并肩走下场、往颁奖区走（frame_0447s.jpg／frame_0449s.jpg，均已抽帧核对，无 Tennis TV 转场卡混入）。449.64 是下一个 scene_cut，之后画面切进颁奖典礼、MC 的『Ladies and gentlemen, your champion』——这句已经是本条 spec 正文自己的开场（zh[0]/zh[1]），所以片头收在 449.64，不重复。",
+    "_subs_why": "转写来自这条源片自己的官方自动字幕（`cap_5eniSK6BDZU.en.json3`，yt-dlp `--write-auto-subs` 本地直接拉的，沙箱下不动这条源的完整音视频流，字幕接口走得通）。『feast』『piece』一律订正回『Fils』（和正文 `word_fix` 同一个 ASR 听误模式，这条源片里反复出现：utter feast/makes feast/Frenchman takes down 等，模式一致）；『Big Foe』/『TFO』订正回『Tiafoe』。第 3 条『piece』只有一个词、无法组成完整句子——按照 nakashima-fritz `lead_in.subs` 的先例（那条把单字『Game.』原样保留翻译），这里同样保留为独立的一声惊呼『Fils!』，不硬凑成一整句。410.24-418.76 与 428.24-440.44 两段原始字幕行较长，按行宽预算（952px）拆成短句，拆点选在原始事件的自然分行处（412.24/415.20/434.64），不是随意切断。",
+    "subs": [
+      {
+        "a": 410.24,
+        "b": 412.24,
+        "en": "Fired up, Fils,",
+        "zh": "菲斯憋着一股劲，"
+      },
+      {
+        "a": 412.24,
+        "b": 415.2,
+        "en": "and a game away from",
+        "zh": "距离生涯最大的冠军，"
+      },
+      {
+        "a": 415.2,
+        "b": 418.76,
+        "en": "the biggest title of his career.",
+        "zh": "只差一局了。"
+      },
+      {
+        "a": 426.4,
+        "b": 428.24,
+        "en": "Fils!",
+        "zh": "菲斯！"
+      },
+      {
+        "a": 428.24,
+        "b": 434.64,
+        "en": "Quite scintillating in Cincinnati.",
+        "zh": "辛辛那提这一战堪称精彩——"
+      },
+      {
+        "a": 434.64,
+        "b": 440.44,
+        "en": "It is the biggest title of his young career.",
+        "zh": "这是他生涯最大的冠军。"
+      },
+      {
+        "a": 445.68,
+        "b": 449.64,
+        "en": "As the Frenchman takes down Tiafoe.",
+        "zh": "这位法国人击败了蒂亚福。"
+      }
+    ]
+  },
   "suspect_ok": {
     "31": "「Eva and Lapo, Hank」——`Lapo` 已核实是 Lapo Becherini（菲斯的体能教练，WebSearch 独立确认），`Eva`／`Hank` 我没找到公开资料能对上具体是谁。沙箱下不动这条源片的音轨，听不了；按 ASR 原样音译（伊娃／汉克），不替他们编身份或头衔——这三个名字都只是队内感谢名单，不影响事实核心。"
   },
