@@ -1,0 +1,212 @@
+{
+  "slug": "tiafoe-fils-cin2026-final-runnerup",
+  "url": "https://youtu.be/TKKYxnscKSQ",
+  "source_title": "Frances Tiafoe Runner-Up Speech | 2026 Cincinnati Open（@CincyProTennis 官方频道）",
+  "start": 0.0,
+  "end": 150.24,
+  "column": "赛后开麦",
+  "event": "2026 辛辛那提 ATP1000 决赛",
+  "interview_kind": "赛后捧杯致辞",
+  "requested_content_type": "ceremony",
+  "winner": "菲斯",
+  "source_verification": {
+    "source_id": "tiafoe-runner-up-speech-cin2026",
+    "source_url": "https://youtu.be/TKKYxnscKSQ",
+    "source": "Cincinnati Open",
+    "title": "Frances Tiafoe Runner-Up Speech | 2026 Cincinnati Open",
+    "status": "verified",
+    "detected_type": "ceremony",
+    "method": "official_explicit_ceremony",
+    "evidence": [
+      {
+        "kind": "official_explicit_title",
+        "title": "Frances Tiafoe Runner-Up Speech | 2026 Cincinnati Open"
+      }
+    ],
+    "match_id": "2026:cincinnati:final:arthur-fils",
+    "attestation_sha256": "fb83af68d966caab777b9f0cacd379e0138fe524228e15ce8f4d908db74b391c"
+  },
+  "match": {
+    "id": "2026:cincinnati:final:arthur-fils",
+    "event": "辛辛那提大师赛",
+    "round": "决赛",
+    "winner": "菲斯",
+    "loser": "蒂亚福",
+    "participants": [
+      "菲斯",
+      "蒂亚福"
+    ]
+  },
+  "opening": {
+    "kind": "none",
+    "why": "整条视频从 16.0 秒起就是颁奖典礼台上——主持人邀请蒂亚福讲话，随后是他自己的亚军致辞，没有一帧是球场内的回合或赛点画面，源片本身就是官方剪的纯颁奖片段。"
+  },
+  "word_fix": {
+    "thous": "1000"
+  },
+  "en_fixed": {},
+  "lead_in": {
+    "url": "https://youtu.be/5eniSK6BDZU",
+    "start": 410.2,
+    "end": 449.64,
+    "crop_shift_x": -0.06,
+    "_crop_why": "同一个 Tennis TV 转播模板，台标贴在右上角——本地用 PIL 模拟裁切窗口核对过（frame_0410s.jpg）：默认居中窗口 [0.125,0.875] 会切进 Tennis TV 球标和「T」；shift -0.06 之后窗口变成 [0.065,0.815]，台标完全在窗口外，还多让出了完整的比分板。——和 fils-tiafoe-cin2026-final.json 用的是同一条源片、同一份 PIL 模拟结果，原样复用。",
+    "why": "Tennis TV 官方单场集锦《Arthur Fils vs Frances Tiafoe for Maiden Masters TITLE 🏆 | Cincinnati 2026 Highlights》（同一条源片，「赛场之上」姊妹片 fils-tiafoe-cincinnati-2026-final 已核验并推送，source_url 一致）。窗口 410.2-449.64 卡在两个真实的 scene_cuts 上（probe.json：…395.76, 398.72, 401.48, 402.84, 410.2, 425.4, 439.08, 449.64…）：410.2 起是决胜盘 4-0 菲斯发球胜赛局（frame_0410s.jpg 记分板 FILS 6 1 4 40／TIAFOE 3 6 0 30，菲斯发球），随后蒂亚福 0-5 发球保命，420s 已是 AD——菲斯赛点（frame_0420s.jpg：TIAFOE 发球，FILS 6 1 5 AD／TIAFOE 3 6 0），425s 菲斯已经在场上鼓掌庆祝（frame_0425s.jpg），447-449s 两人并肩走下场、往颁奖区走（frame_0447s.jpg／frame_0449s.jpg，均已抽帧核对，无 Tennis TV 转场卡混入）。449.64 是下一个 scene_cut，之后画面切进颁奖典礼、MC 的『Ladies and gentlemen, your champion』——这句已经是本条 spec 正文自己的开场（zh[0]/zh[1]），所以片头收在 449.64，不重复。——这条片子讲的是蒂亚福自己的亚军致辞，他开口第一句就在恭喜菲斯，所以片头同样先给出这场球最后一分（菲斯的赛点）怎么打完的画面，再接蒂亚福自己的话；和 fils-tiafoe-cin2026-final.json 共用同一段已核验的窗口（同一条源片 Tennis TV 官方单场集锦 5eniSK6BDZU，同一个 scene_cuts 边界 410.2-449.64）。",
+    "_subs_why": "转写来自这条源片自己的官方自动字幕（`cap_5eniSK6BDZU.en.json3`，yt-dlp `--write-auto-subs` 本地直接拉的，沙箱下不动这条源的完整音视频流，字幕接口走得通）。『feast』『piece』一律订正回『Fils』（和正文 `word_fix` 同一个 ASR 听误模式，这条源片里反复出现：utter feast/makes feast/Frenchman takes down 等，模式一致）；『Big Foe』/『TFO』订正回『Tiafoe』。第 3 条『piece』只有一个词、无法组成完整句子——按照 nakashima-fritz `lead_in.subs` 的先例（那条把单字『Game.』原样保留翻译），这里同样保留为独立的一声惊呼『Fils!』，不硬凑成一整句。410.24-418.76 与 428.24-440.44 两段原始字幕行较长，按行宽预算（952px）拆成短句，拆点选在原始事件的自然分行处（412.24/415.20/434.64），不是随意切断。——同一条源片，subs 内容原样复用。",
+    "subs": [
+      {
+        "a": 410.24,
+        "b": 412.24,
+        "en": "Fired up, Fils,",
+        "zh": "菲斯憋着一股劲，"
+      },
+      {
+        "a": 412.24,
+        "b": 415.2,
+        "en": "and a game away from",
+        "zh": "距离生涯最大的冠军，"
+      },
+      {
+        "a": 415.2,
+        "b": 418.76,
+        "en": "the biggest title of his career.",
+        "zh": "只差一局了。"
+      },
+      {
+        "a": 426.4,
+        "b": 428.24,
+        "en": "Fils!",
+        "zh": "菲斯！"
+      },
+      {
+        "a": 428.24,
+        "b": 434.64,
+        "en": "Quite scintillating in Cincinnati.",
+        "zh": "辛辛那提这一战堪称精彩——"
+      },
+      {
+        "a": 434.64,
+        "b": 440.44,
+        "en": "It is the biggest title of his young career.",
+        "zh": "这是他生涯最大的冠军。"
+      },
+      {
+        "a": 445.68,
+        "b": 449.64,
+        "en": "As the Frenchman takes down Tiafoe.",
+        "zh": "这位法国人击败了蒂亚福。"
+      }
+    ]
+  },
+  "zh": [
+    "弗朗西斯，我们想",
+    "听你说几句话。",
+    "怎么样，辛辛那提？",
+    "大家好吗？",
+    "呃，首先，",
+    "我想恭喜亚瑟。",
+    "这一周你打得太棒了，兄弟。",
+    "你的第一个大师赛冠军。",
+    "恭喜你。",
+    "也恭喜你的团队，真的。",
+    "然后，当然，",
+    "我要谢谢现场的球迷。",
+    "这一周你们一直都在，",
+    "说真的，太让人感动了。",
+    "你们这么支持我，",
+    "我真的很感激这份爱。",
+    "我整晚都听着「一、二、三、",
+    "Foe」，这一整周都是这样。",
+    "太疯狂了，兄弟。",
+    "但还是要再谢一声。",
+    "谢谢鲍勃·莫兰，",
+    "这项运动最好的总监之一。",
+    "特别为球员着想的一家人，",
+    "一切都以球员为先。",
+    "能认识你，真的很开心。",
+    "我特别高兴你现在也在管",
+    "男子这边的赛事了，",
+    "不只是查尔斯顿。",
+    "也要谢谢纳瓦罗一家。",
+    "我是说，",
+    "巡回赛里最好的场地之一。",
+    "这一点毫无疑问。",
+    "你们真的很棒，杰夫。",
+    "然后，当然，我还要",
+    "谢谢我的团队。",
+    "马克布莱恩，差点叫成菲尔，",
+    "抱歉，罗布。",
+    "我这理疗师换得太勤了，",
+    "抱歉，兄弟。",
+    "罗布、A-Rod、肯尼、",
+    "扎克来了，泰也来了，",
+    "这一周来了好多朋友。",
+    "真的很感谢大家，",
+    "这一周太疯狂了。",
+    "嗯，",
+    "这是我们打进的第二个决赛。",
+    "说实话，我一度以为自己",
+    "都打不了这站比赛，",
+    "结果还打进了决赛。",
+    "这个结果收下了，很期待",
+    "一周后在纽约的比赛。",
+    "大家伙，",
+    "也请继续支持美国网球。",
+    "弗朗西斯，再过来",
+    "跟我一起，最后一次。",
+    "辛辛那提，一、二、三。",
+    "就是这样。",
+    "好，我们再请出——"
+  ],
+  "suspect_ok": {
+    "21": "「Shout out Bob Moran.」——已核实是 Bob Moran，2024 年起同时担任辛辛那提公开赛和查尔斯顿公开赛（Credit One Charleston Open）两站赛事总监，Beemok Sports & Entertainment 总裁（WebSearch 独立确认：Ben Rothenberg 专访、Beemok 官网团队页 beemok.com/team/bob-moran）。同一场颁奖典礼，fils-tiafoe-cin2026-final.json 已核实过同一个人。",
+    "27": "「on the men's side now / and not just in Charleston」——蒂亚福这句是在呼应 Bob Moran 长期只管查尔斯顿（WTA 女子赛事），2024 年起才把辛辛那提（含男子赛事）也接了过来——WebSearch 独立确认（Beemok 官网：Moran 自 1999 年起在查尔斯顿工作，2024 年成为辛辛那提公开赛赛事总监）。",
+    "28": "「on the men's side now / and not just in Charleston」——蒂亚福这句是在呼应 Bob Moran 长期只管查尔斯顿（WTA 女子赛事），2024 年起才把辛辛那提（含男子赛事）也接了过来——WebSearch 独立确认（Beemok 官网：Moran 自 1999 年起在查尔斯顿工作，2024 年成为辛辛那提公开赛赛事总监）。",
+    "29": "「Shout out the Navaro family as well.」——已核实是 Navarro 家族，本仓库 pegula-gauff-cin2026-final-runnerup.json 已核实过：Ben Navarro 通过 Beemok Capital 同时拥有辛辛那提公开赛和查尔斯顿公开赛的所有权，Kelly Navarro 是他的妻子（WebSearch 独立确认，Wikipedia『Ben Navarro』）。",
+    "33": "「You guys are stand up, Jeff.」——`Jeff` 没有查到公开资料能确认具体是谁（Navarro 家族或 Beemok 高管里没有查到姓 Jeff 且和这场颁奖典礼相关的人），沙箱下不动这条源片音轨，听不了。按 ASR 原样音译保留，不替他编身份——这是队内感谢名单里的一个名字，不影响事实核心。",
+    "36": "「Mark, Brian, I was going to say Phil.」——`Mark` 已核实是 Mark Kovacs，蒂亚福 2026 赛季新聘的教练（WebSearch 独立确认多篇 2026 年报道：The Tennis Gazette『Frances Tiafoe discloses the real reason why he switched coaches for the 2026 season』、Ben Rothenberg『Hard Conversations and Hard Science, With Frances Tiafoe』，均点名 Mark Kovacs 在 2026 澳网前接替 David Witt）。`Brian`／`Phil` 没有查到公开资料能对上具体是谁，按 ASR 原样音译保留。",
+    "37": "「Sorry, Rob. ... Rob, A-Rod, Kenny, Zack, who came, Ty, who came」——这几个名字（Rob／A-Rod／Kenny／Zack／Ty）没有查到公开资料能确认具体身份，蒂亚福自己的话里说『我这理疗师换得太勤了』，暗示这是团队内部理疗师／体能师／朋友的感谢名单，不是正式公开的团队成员列表。沙箱下不动这条源片音轨，听不了。按 ASR 原样音译保留，不替他们编身份或头衔——不影响事实核心。",
+    "40": "「Sorry, Rob. ... Rob, A-Rod, Kenny, Zack, who came, Ty, who came」——这几个名字（Rob／A-Rod／Kenny／Zack／Ty）没有查到公开资料能确认具体身份，蒂亚福自己的话里说『我这理疗师换得太勤了』，暗示这是团队内部理疗师／体能师／朋友的感谢名单，不是正式公开的团队成员列表。沙箱下不动这条源片音轨，听不了。按 ASR 原样音译保留，不替他们编身份或头衔——不影响事实核心。",
+    "41": "「Sorry, Rob. ... Rob, A-Rod, Kenny, Zack, who came, Ty, who came」——这几个名字（Rob／A-Rod／Kenny／Zack／Ty）没有查到公开资料能确认具体身份，蒂亚福自己的话里说『我这理疗师换得太勤了』，暗示这是团队内部理疗师／体能师／朋友的感谢名单，不是正式公开的团队成员列表。沙箱下不动这条源片音轨，听不了。按 ASR 原样音译保留，不替他们编身份或头衔——不影响事实核心。"
+  },
+  "caption_gaps_ok": {
+    "26.4-28.5": "夹在两条正文之间：26.44 秒『What's going on?』结束，28.48 秒『Um, you know, first thing first』才接上——原始 json3 在这段没有噪声标记，是蒂亚福开场问候之后的一次自然停顿换气。⚠️ 只核对了原始字幕的事件间隔，没有实际听音轨（沙箱下不动这条视频的完整音视频流）。",
+    "40.2-43.2": "紧跟在『And, and your team for sure.』（对亚瑟团队的祝贺）之后，『And then, of course, I got to thank the fans.』（转入感谢球迷）之前——raw json3 在这段前后都没有掌声/欢呼标记，是蒂亚福两个感谢对象之间的自然停顿换气，不是漏词。⚠️ 这一段没有括号标记佐证，只能靠上下文（两句话之间的自然转折）推断，标注为较弱的销账——沙箱下不动这条视频的完整音视频流，无法实际听音轨核实。",
+    "54.3-60.2": "48.47 秒起 raw json3 有一条 `[applause]`，覆盖到这段空档的前半，54.28 秒『I really appreciate the love.』说完之后掌声延续，60.24 秒『I go to sleep hearing』才接回——两头夹着掌声，是『你们这么支持我』那句话之后观众鼓掌的自然反应。⚠️ 同样只核对了字幕标记，没有实际听音轨。",
+    "93.3-100.6": "这段空档最长，raw json3 在 93.32 秒『You guys are stand up, Jeff.』之后没有紧跟的噪声标记，100.64 秒『And then』才重新起头——按上下文推断是蒂亚福在感谢完查尔斯顿／辛辛那提两家赞助方之后，停顿组织语言、准备转入感谢团队这一段。⚠️ 这一段没有掌声/欢呼标记佐证，只能靠上下文推断是停顿而非漏词，标注为较弱的销账——沙箱下不动这条视频的完整音视频流，无法实际听音轨核实。",
+    "138.7-141.5": "136.32 秒『T.』结尾（蒂亚福自己的致辞收尾句），141.52 秒『Francis, come on over』——是主持人重新接过话筒，说话人切换前的自然停顿。⚠️ 只核对了原始字幕的事件间隔，没有实际听音轨。"
+  },
+  "_facts": [
+    "赛果：菲斯 6-3 1-6 6-0 击败蒂亚福，2026 辛辛那提 ATP1000 决赛——同一场比赛，本仓库 `fils-tiafoe-cin2026-final.json` 已三处交叉核实（WebSearch 摘要、tennismajors.com 赛后专稿、flashscore 原始 feed 逐盘一致）。",
+    "蒂亚福『second final we had』指的是他生涯第二次打进辛辛那提公开赛决赛：2024 年辛辛那提决赛他负于辛纳，比分 7-6(4) 6-2——ESPN『Arthur Fils beats Frances Tiafoe in 3 sets to win Cincinnati Open』一文提及『Fils wins his first Masters 1000 title』并引述历史，另 Wikipedia『2024 Cincinnati Open – Men's singles』独立确认同一结果。2025 年辛辛那提决赛是阿尔卡拉斯胜辛纳（辛纳因伤退赛），蒂亚福没有进入那一届决赛（Olympics.com『Carlos Alcaraz wins 2025 Cincinnati Open after Jannik Sinner retires in final』）——所以 2024／2026 正是蒂亚福生涯仅有的两次辛辛那提决赛，『第二个决赛』字面成立。",
+    "蒂亚福『didn't even think I was going to play this event』指的是：辛辛那提开赛前不到一周，他刚做完右手一处囊肿切除手术——起因是在蒙特利尔（加拿大公开赛）三轮赛对阵林德克内希时因伤退赛（当时比分 2-6 0-2）。术后带伤出战辛辛那提却一路打进决赛——多篇独立报道交叉确认：Sportskeeda『Frances Tiafoe undergoes surgery after hand injury leads to Canadian Open heartbreak』、Yardbarker『Frances Tiafoe undergoes surgery after Canadian Open setback puts US Open preparations at risk』、HSS 官方新闻『Frances Tiafoe Undergoes Hand Surgery Performed by HSS Surgeon Dr. Michelle Carlson』。",
+    "『Bob Moran』2024 年起同时担任辛辛那提公开赛和查尔斯顿公开赛两站赛事总监，Beemok Sports & Entertainment 总裁——出处同上（Beemok 官网团队页、Ben Rothenberg 专访）。",
+    "蒂亚福的教练 Mark（Kovacs）是 2026 澳网前新加入的，接替此前的 David Witt——出处 The Tennis Gazette、Ben Rothenberg『Hard Conversations and Hard Science, With Frances Tiafoe』，均独立确认这一次教练变动的时间点。"
+  ],
+  "push": {
+    "_why": "matchup/score 严格按赢家在前写（菲斯 vs 蒂亚福，6-3 1-6 6-0）——这是这次会话在佩古拉那条 spec 上踩过一次的坑（`push.matchup`/`push.score` 若为了呼应『这条片子的主体是他』把蒂亚福排在前面、比分也倒过来写，视频顶栏渲染时会把 `spec['winner']` 固定放在最前面、`score` 按『数字更大的那个上色』，两者不联动，会拼出『蒂亚福 3-6 6-1 0-6 菲斯』还把倒过来的败绩数字标绿——是『a/b 填反』那类错误的同一个形状）。『这是蒂亚福的视角』留给 cover/lead 的文字去交代，不靠翻转比分记法。summary 10 字，接的是他致辞里最具体的一句自陈（一度以为打不了这站，结果打进决赛）；lead 把比分、历史背景（他生涯第二次辛辛那提决赛）和致辞里最有画面感的两句话分开说，比分放在最前面不剧透致辞内容。auto=true——渲完就要过`auto_push_interview_gate.wants_auto_push` 这道闸，不写就发不出去。",
+    "auto": true,
+    "matchup": "菲斯 vs 蒂亚福",
+    "score": "6-3 1-6 6-0",
+    "event": "",
+    "summary": "他一度以为打不了这站",
+    "lead": "2026 辛辛那提 ATP1000 决赛，17 号种子菲斯 6-3 1-6 6-0 击败蒂亚福，捧起生涯首个大师赛冠军——这是蒂亚福生涯第二次辛辛那提决赛（2024 年他也曾闯进决赛，负于辛纳）。开赛前不到一周，他刚因伤在蒙特利尔退赛并做完右手囊肿切除手术，一度以为自己打不了这一站。亚军致辞里他先由衷恭喜对手：「你的第一个大师赛冠军，恭喜你，也恭喜你的团队，真的。」聊到这一路走来，他说：「说实话，我一度以为自己都打不了这站比赛，结果还打进了决赛——这个结果我们收下了。」"
+  },
+  "cover": {
+    "frame_at": 30.0,
+    "_why": "30.0 秒——沙箱下不动这条源片的完整音视频流，取不到缩略图墙（8 档 client 全部尝试过，均被 YouTube 挡或报 DRM protected），这一帧待 frame-grab 在 runner 上跑完之后按 CLAUDE.md『封面帧一律不许睁眼』『优先近景特写、情绪外露』两条重新核对挑选——先占位在他开口致辞、恭喜对手那一段（28.48-40.20 秒）附近，真正定帧要看抽帧结果。",
+    "title": [
+      "他一度以为",
+      "自己打不了这一站"
+    ],
+    "sub": "蒂亚福辛辛那提亚军致辞",
+    "_copy_why": "钩子取致辞里最具体、最有反差的一句自陈——开赛前刚做完手部手术，一度以为打不了这站，结果却打进了决赛。这条片子的正文是颁奖致辞不是比赛集锦，所以封面钩子负责把『这一路多不容易』讲出来，正文才有空间讲致辞本身。sub 补上封面钩子没提到的硬事实（亚军致辞），不重复比分。",
+    "tag": "2026 辛辛那提决赛 · 蒂亚福"
+  },
+  "takeaway": {
+    "close": {
+      "point": "他一度以为打不了这站",
+      "ask": "美网在即，他能走多远？"
+    }
+  }
+}
