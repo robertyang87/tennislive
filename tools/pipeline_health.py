@@ -29,6 +29,9 @@ DEFAULT_WORKFLOWS = (
     "auto-push-explainer.yml",
 )
 
+SUCCESS_CONCLUSIONS = frozenset({"success", "skipped", "neutral"})
+CANCELLED_CONCLUSION = "cancelled"
+
 
 def instant(value: str | None) -> datetime | None:
     if not value:
@@ -69,10 +72,16 @@ class WorkflowHealth:
     median_seconds: float
     consecutive_failures: int
     latest_failure_recent: bool = False
+    cancellations: int = 0
+
+    @property
+    def evaluated_runs(self) -> int:
+        """Runs that reached an actionable conclusion instead of being superseded."""
+        return max(0, self.runs - self.cancellations)
 
     @property
     def failure_rate(self) -> float:
-        return self.failures / self.runs if self.runs else 0.0
+        return self.failures / self.evaluated_runs if self.evaluated_runs else 0.0
 
 
 def workflow_health(api: GitHubAPI, workflow: str, limit: int,
@@ -81,31 +90,63 @@ def workflow_health(api: GitHubAPI, workflow: str, limit: int,
     payload = api.get(
         f"actions/workflows/{encoded}/runs?status=completed&per_page={limit}")
     runs = (payload.get("workflow_runs") or [])[:limit]
-    durations = [v for row in runs
-                 if (v := elapsed(row.get("created_at"), row.get("updated_at"))) is not None]
     conclusions = [str(row.get("conclusion") or "") for row in runs]
-    bad = [c for c in conclusions if c not in {"success", "skipped", "neutral"}]
+
+    # match-reel intentionally uses cancel-in-progress for the same slug: a reviewed
+    # replacement render supersedes the older one. GitHub records that expected
+    # control-flow outcome as "cancelled"; it is not a renderer failure and must not
+    # inflate the failure rate, failure streak, duration, or slow-step diagnosis.
+    evaluated = [
+        (row, conclusion)
+        for row, conclusion in zip(runs, conclusions)
+        if conclusion != CANCELLED_CONCLUSION
+    ]
+    evaluated_conclusions = [conclusion for _row, conclusion in evaluated]
+    durations = [
+        value
+        for row, _conclusion in evaluated
+        if (value := elapsed(row.get("created_at"), row.get("updated_at"))) is not None
+    ]
+    bad = [
+        conclusion
+        for conclusion in evaluated_conclusions
+        if conclusion not in SUCCESS_CONCLUSIONS
+    ]
     streak = 0
-    for conclusion in conclusions:
-        if conclusion in {"success", "skipped", "neutral"}:
+    for conclusion in evaluated_conclusions:
+        if conclusion in SUCCESS_CONCLUSIONS:
             break
         streak += 1
-    latest_age = (elapsed(runs[0].get("updated_at"),
-                          datetime.now(timezone.utc).isoformat())
-                  if runs else None)
+
+    latest_evaluated = evaluated[0] if evaluated else None
+    latest_age = (
+        elapsed(
+            latest_evaluated[0].get("updated_at"),
+            datetime.now(timezone.utc).isoformat(),
+        )
+        if latest_evaluated
+        else None
+    )
     health = WorkflowHealth(
-        name=workflow, runs=len(runs),
-        successes=sum(c == "success" for c in conclusions), failures=len(bad),
+        name=workflow,
+        runs=len(runs),
+        successes=sum(c == "success" for c in evaluated_conclusions),
+        failures=len(bad),
         median_seconds=statistics.median(durations) if durations else 0.0,
         consecutive_failures=streak,
-        # 健康检查每小时跑一次。只有“上一小时刚发生”的失败趋势发微信，
-        # 同一批旧失败继续留在 summary，但不会每小时重复轰炸。
+        # 健康检查每小时跑一次。只有“上一小时刚发生”的真实失败趋势发微信，
+        # 同一批旧失败继续留在 summary，但不会每小时重复轰炸。cancelled 是
+        # 同一 slug 被新版替代的正常控制流，既不触发也不遮住后面的真实失败。
         latest_failure_recent=bool(
-            runs and conclusions and conclusions[0] not in {"success", "skipped", "neutral"}
-            and latest_age is not None and 0 <= latest_age <= 3600),
+            latest_evaluated
+            and latest_evaluated[1] not in SUCCESS_CONCLUSIONS
+            and latest_age is not None
+            and 0 <= latest_age <= 3600
+        ),
+        cancellations=sum(c == CANCELLED_CONCLUSION for c in conclusions),
     )
     steps: list[dict] = []
-    for run in runs[:step_runs]:
+    for run, _conclusion in evaluated[:step_runs]:
         jobs = api.get(f"actions/runs/{run['id']}/jobs?per_page=100").get("jobs") or []
         for job in jobs:
             for step in job.get("steps") or []:
@@ -186,14 +227,34 @@ def stale_publications(now: datetime | None = None, hours: float = 1.5) -> list[
 def render_report(health: list[WorkflowHealth], steps: list[dict],
                   sla: tuple[int, int, float], stale: list[str]) -> tuple[str, list[str]]:
     alerts: list[str] = []
-    lines = ["## 自动视频流水线健康度", "", "| 工作流 | 样本 | 成功 | 失败率 | 中位耗时 | 连续失败 |",
-             "|---|---:|---:|---:|---:|---:|"]
+    lines = [
+        "## 自动视频流水线健康度",
+        "",
+        "| 工作流 | 样本 | 成功 | 取消 | 失败率 | 中位耗时 | 连续失败 |",
+        "|---|---:|---:|---:|---:|---:|---:|",
+    ]
     for row in health:
-        lines.append(f"| {row.name} | {row.runs} | {row.successes} | {row.failure_rate:.0%} | "
-                     f"{row.median_seconds/60:.1f}m | {row.consecutive_failures} |")
-        if (row.runs >= 3 and row.latest_failure_recent
+        lines.append(
+            f"| {row.name} | {row.runs} | {row.successes} | {row.cancellations} | "
+            f"{row.failure_rate:.0%} | {row.median_seconds/60:.1f}m | "
+            f"{row.consecutive_failures} |"
+        )
+        if (row.evaluated_runs >= 3 and row.latest_failure_recent
                 and (row.failure_rate >= .40 or row.consecutive_failures >= 3)):
-            alerts.append(f"{row.name}：近 {row.runs} 次失败率 {row.failure_rate:.0%}，连续失败 {row.consecutive_failures}")
+            cancelled_note = (
+                f"（另有 {row.cancellations} 次被新版取消，未计为失败）"
+                if row.cancellations else ""
+            )
+            alerts.append(
+                f"{row.name}：近 {row.runs} 次中有效 {row.evaluated_runs} 次"
+                f"失败率 {row.failure_rate:.0%}，连续失败 "
+                f"{row.consecutive_failures}{cancelled_note}"
+            )
+    lines += [
+        "",
+        "_失败率、中位耗时和连续失败均排除 `cancelled`；"
+        "同一 slug 被新版取代的旧渲染单列为取消。_",
+    ]
     n, misses, median = sla
     lines += ["", f"- 600 秒成片：最近 {n} 条中 {misses} 条超线，中位 {median:.0f}s。"
               "超线只告警，不阻断 L2、发布或微信推送。"]
