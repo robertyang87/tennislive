@@ -348,6 +348,11 @@ SEG_FADE = 0.18
 # 字卡/角标的入场动效：淡入时长（秒）和上浮距离（px）。见 _overlay_chain。
 INSET_IN_SECS = 0.45
 INSET_RISE_PX = 36
+# Story-text is read, not "popped".  Its restrained motion is deliberately
+# quicker and smaller than a stat sticker so the typography feels attached to
+# the footage rather than arriving as another UI card.
+EDITORIAL_IN_SECS = 0.28
+EDITORIAL_RISE_PX = 14
 # **每一段的音轨都要压到同一个采样率**。`concat` + `-c copy` 只认第一个文件的
 # 流参数：封面那段的 anullsrc 是 48k，而各分段跟着源片走 44.1k，于是 44.1k 的
 # AAC 帧被当成 48k 播——整条现场声快 8.8%，音轨在画面还剩 5.7 秒时就播完了
@@ -1979,6 +1984,32 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
                   {"tl", "tr", "bl", "br"}]
     if bad_corner:
         raise ReelError(f"第 {bad_corner} 段的 `inset.corner` 只能是 tl/tr/bl/br")
+    bad_motion = [i + 1 for i, s in enumerate(segments) if s.inset
+                  and str(s.inset.get("motion", "")) not in {"", "editorial"}]
+    if bad_motion:
+        raise ReelError(
+            f"第 {bad_motion} 段的 `inset.motion` 只能留空或写 editorial")
+    # A story-text lock-up has a narrower contract than a generic sticker.
+    # These limits keep it out of the platform chrome, stop it becoming a
+    # second subtitle block, and make the intended quiet motion non-optional.
+    bad_story_text = []
+    for i, seg in enumerate(segments):
+        ins = seg.inset or {}
+        if str(ins.get("kind", "")) != "story_text":
+            continue
+        width = float(ins.get("width", 0) or 0)
+        show_for = float(ins.get("show_for", 0) or 0)
+        pad = float(ins.get("pad", 0) or 0)
+        if (not 0.48 <= width <= 0.60
+                or not 2.8 <= show_for <= 4.2
+                or pad < 0.065
+                or str(ins.get("motion", "")) != "editorial"):
+            bad_story_text.append(i + 1)
+    if bad_story_text:
+        raise ReelError(
+            f"第 {bad_story_text} 段的 story_text 不符合屏幕文案设计合同："
+            "width 0.48~0.60、show_for 2.8~4.2、pad>=0.065，"
+            "且 motion 必须为 editorial")
     unknown = sorted({s.source for s in segments} - set(sources))
     if unknown:
         raise ReelError(
@@ -2466,7 +2497,12 @@ def _overlay_chain(base: str, ins: dict) -> str:
     if ins.get("animate", True) is False:
         return (f"{base};[1:v]scale={width}:-2[ins];"
                 f"[base][ins]overlay={x}:{y}[vout]")
-    d, rise = INSET_IN_SECS, INSET_RISE_PX
+    # `motion: editorial` is the story-information typography system: a
+    # 0.28-second, 14px lift.  Beat/stat stickers keep the more visible legacy
+    # motion.  Do not silently make every old inset adopt the new personality.
+    editorial = str(ins.get("motion", "")) == "editorial"
+    d = EDITORIAL_IN_SECS if editorial else INSET_IN_SECS
+    rise = EDITORIAL_RISE_PX if editorial else INSET_RISE_PX
     show_for = float(ins.get("show_for", 0) or 0)
     fade_out = ""
     if show_for > d:

@@ -2638,6 +2638,16 @@ def test_角标把两件事放进同一帧():
     with pytest.raises(reel.ReelError, match="corner"):
         reel.parse_segments(corner, {"r1": Path("a.mp4")}, "r1")
 
+    story_text = {"cover": {}, "segments": [
+        {"start": 1, "end": 7, "source": "r1",
+         "inset": {"image": art, "corner": "tr", "kind": "story_text",
+                   "width": 0.56, "pad": 0.085, "show_for": 3.8,
+                   "motion": "editorial"}}]}
+    assert reel.parse_segments(story_text, {"r1": Path("a.mp4")}, "r1")
+    story_text["segments"][0]["inset"]["show_for"] = 6.0
+    with pytest.raises(reel.ReelError, match="story_text"):
+        reel.parse_segments(story_text, {"r1": Path("a.mp4")}, "r1")
+
     # 没有角标时滤镜图不变形，只是把 [base] 改名
     assert reel._overlay_chain("[0:v]x[base]", {}) == "[0:v]x[vout]"
     chain = reel._overlay_chain("[0:v]x[base]", {"image": art, "corner": "br"})
