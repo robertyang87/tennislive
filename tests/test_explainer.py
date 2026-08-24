@@ -97,6 +97,27 @@ def test_right_coco只保留获准的双关评论正文():
     assert first.image == "assets/reel/gauff-kostyuk-cincinnati-2026-qf.jpg"
 
 
+def test_科斯秋克冠军试金石只讲法网起连续四次且四张都是当站捧杯照():
+    """传播钩子可以狠，但样本范围、四次赛果与视觉证据不能被标题吞掉。"""
+    from tennislive.video.explainer import _OPENINGS
+
+    story = find_story_by_slug("kostyuk-champion-test")
+    assert story is not None
+    beats = _beats(story.slug)
+    assert len(beats) == 4
+    assert [s.kind for s in beats] == ["paris", "london", "toronto", "cincinnati"]
+    assert all(s.image for s in beats)
+    assert all("捧杯" in s.credit for s in beats)
+
+    joined = "".join(s.narration for s in beats)
+    for score in ("六比一、六比三", "六比四、六比四", "三比六、六比一、六比二", "六比二、六比二"):
+        assert score in joined
+    assert "澳网首轮击败她的雅克莫并没有夺冠" in joined
+    assert "从法网开始连续四次" in joined
+    assert beats[-1].question == "下一次，还会应验吗？"
+    assert _OPENINGS[story.slug]["question"] == "击败科斯秋克的人，都夺冠？"
+
+
 def test_hawkeye_beats_are_grounded_in_verified_facts():
     story = find_story_by_slug("hawkeye")
     segments = _beats("hawkeye")

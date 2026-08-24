@@ -706,6 +706,63 @@ STORIES = (
             "https://www.wtatennis.com/news/2779541/why-coco-gauff-always-roots-for-nick-kyrgios",
         ),
     ),
+    # 手动热点专题：只描述 2026 法网起连续四次输球的共同结果，不把样本
+    # 外推成整个赛季或职业生涯的“定律”。澳网雅克莫是明确反例，必须留在
+    # hero/facts 里，避免传播标题把有趣巧合讲成虚假因果。
+    TournamentStory(
+        slug="kostyuk-champion-test",
+        aliases=("kostyuk champion test", "kostyuk curse"),
+        title="科斯秋克：冠军试金石",
+        location="巴黎 · 伦敦 · 多伦多 · 辛辛那提",
+        level="WTA 2026",
+        surface="连续四站的冠军巧合",
+        founded="2026.06—08",
+        hero_fact=(
+            "从 2026 年法网起，科斯秋克连续四次输球；击败她的安德烈耶娃、"
+            "诺斯科娃、斯瓦泰克和高芙，最终都赢下了当站冠军。"
+        ),
+        facts=(
+            "法网半决赛，安德烈耶娃 6-1、6-3 击败科斯秋克，随后赢下生涯首座大满贯。",
+            "温网半决赛，诺斯科娃 6-4、6-4 击败科斯秋克，随后首次打进大满贯决赛即夺冠。",
+            "多伦多第四轮，斯瓦泰克 3-6、6-1、6-2 逆转科斯秋克，随后结束冠军荒。",
+            "辛辛那提八强，高芙 6-2、6-2 击败科斯秋克，随后拿下 2026 赛季首冠。",
+            "准确范围是“法网起连续四次”；澳网首轮击败科斯秋克的雅克莫并未夺冠。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2026-08-23",
+                player="科科·高芙",
+                age="22 岁",
+                headline="第四次应验",
+                detail=(
+                    "辛辛那提八强只让科斯秋克拿到四局，决赛再以 6-2、6-4"
+                    "击败佩古拉，拿到当季第一冠。"
+                ),
+                source_url=(
+                    "https://www.wtatennis.com/news/4565399/"
+                    "gauff-joins-serena-azarenka-as-two-time-cincinnati-champion"
+                ),
+            ),
+        ),
+        venue="最近四次输球 · 四位对手最终全部夺冠",
+        image=Path(__file__).resolve().parents[3]
+        / "assets" / "reel" / "kostyuk-cincinnati-2026-r16.jpg",
+        image_credit="WTA 官方赛后稿 / Getty Images · 2026 辛辛那提，科斯秋克",
+        source_url=(
+            "https://www.wtatennis.com/news/4565399/"
+            "gauff-joins-serena-azarenka-as-two-time-cincinnati-champion"
+        ),
+        image_source_url="https://www.wtatennis.com/news/4555601/around-torontos-grounds-swiateks-newest-book-kostyuks-super-strength-mccoco",
+        kind="player",
+        source_label="WTA 官方赛果与赛后稿",
+        evidence_urls=(
+            "https://www.wtatennis.com/news/4515090/mirras-moment-andreeva-conquers-roland-garros-for-first-grand-slam-title",
+            "https://www.wtatennis.com/news/4532966/i-can-play-with-the-best-noskova-breaks-through-to-first-grand-slam-final-at-wimbledon",
+            "https://www.wtatennis.com/news/4559201/swiatek-ends-yearlong-title-drought-in-toronto-after-sweeping-past-rybakina-in-straight-sets",
+            "https://www.wtatennis.com/news/4564649/gauff-charges-into-cincinnati-semis-behind-renewed-confidence-and-aggressive-net-play",
+            "https://www.wtatennis.com/news/4436266/jacquemot-springs-historic-upset-of-kostyuk-at-australian-open",
+        ),
+    ),
     TournamentStory(
         slug="djokovic",
         aliases=("novak djokovic",),
