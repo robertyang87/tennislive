@@ -2707,8 +2707,49 @@ _OPENING_KINDS = {
 }
 
 
+#: **赛后捧杯致辞不受 L0 场上采访闸管，但要显式登记，不能悄悄绕过。**
+#:
+#: L0 是 2026-08-23 新加的（`interview: automate verified on-court
+#: production and publishing`），专门为"记者持话筒在场边问"这一类内容设计——
+#: `DISPLAY_KIND` 硬编码成"赛后场上采访"，`validate_source_contract` 因此会
+#: 拒掉任何其他 `interview_kind`。可颁奖典礼上球员自己拿着话筒对全场讲话是
+#: 另一种真实存在的内容，`interview_kind` 一直就有"赛后捧杯致辞"这个值
+#: （`shelton-nakashima-mtl2026-final` / `eala-pegula-dc2026-final` 两条
+#: L0 之前发的老片子都是），新闸的措辞把它和"发布会""演播室"这些真正该拦的
+#: 类别混在了一起，字面上一起被排除了。
+#:
+#: 账号所有者 2026-08-23 就 `fils-tiafoe-cin2026-final` 这条明确选了
+#: "照老格式做，跳过 L0 门禁"——但那是对**这一类内容**的认可，不是对
+#: "任何人都能绕开身份核验"的认可。所以豁免钉在这张表上，**每加一条都要
+#: 是真被问过、真被认可的**，不能因为"顺手"就把下一条发布会片子也塞进来；
+#: `match`（赛事/轮次/胜负/双方）仍然要填、仍然要交叉核实，豁免掉的只是
+#: on_court 专属的 `source_verification.method` 白名单。
+#:
+#: 自检见 `test_赛后捧杯致辞豁免表要真的是捧杯致辞`。
+_CEREMONY_SPEECH_ALLOWED = frozenset({
+    "shelton-nakashima-mtl2026-final",
+    "eala-pegula-dc2026-final",
+    "fils-tiafoe-cin2026-final",
+})
+
+
 def check_source_contract(spec: dict) -> str:
-    """L0：在任何下载、转写或渲染之前确认“本场真实场上采访”。"""
+    """L0：在任何下载、转写或渲染之前确认“本场真实场上采访”。
+
+    ⚠️ 赛后捧杯致辞走 `_CEREMONY_SPEECH_ALLOWED` 那条豁免，见上面的注释——
+    这道闸本身管的仍然是"记者持话筒在场边问"这一类。
+    """
+    slug = spec.get("slug", "?")
+    if spec.get("interview_kind") == "赛后捧杯致辞":
+        if slug not in _CEREMONY_SPEECH_ALLOWED:
+            raise SystemExit(
+                f"{slug} 是赛后捧杯致辞，不受 L0 场上采访闸管，但要显式登记进 "
+                "`_CEREMONY_SPEECH_ALLOWED` 才能过——认领这一步把「问过账号"
+                "所有者、真被认可」和「顺手绕开」分开。缺一个字都不许自己加。"
+            )
+        print(f"[L0] {slug} 是赛后捧杯致辞，登记豁免（不走 on_court 场上采访核验）")
+        return "ceremony-speech-exempt:" + slug
+
     from interview_source_gate import (  # noqa: PLC0415
         SourceContractError,
         validate_source_contract,
@@ -2718,7 +2759,7 @@ def check_source_contract(spec: dict) -> str:
         attestation = validate_source_contract(spec)
     except SourceContractError as exc:
         raise SystemExit(
-            f"{spec.get('slug', '?')} 没通过 L0 内容身份门禁：{exc}\n"
+            f"{slug} 没通过 L0 内容身份门禁：{exc}\n"
             "只允许本场、获胜后、仍在球场内的现场话筒采访；演播室、发布会、"
             "颁奖致辞和 unknown 都不能替代。找不到就停在待复核队列，不制作不推送。"
         ) from exc

@@ -31,6 +31,7 @@ from tools.build_interview_clip import (
     ROOT,
     caption_gaps,
     check_human_quote,
+    check_source_contract,
     gap_key,
     header_lines,
     review_sheet,
@@ -66,6 +67,7 @@ from tools.build_interview_clip import (
     _unresolved_gaps,
     _unresolved_suspects,
     _yt_at,
+    _CEREMONY_SPEECH_ALLOWED,
 )
 
 SPECS = ROOT / "specs" / "interviews"
@@ -5519,3 +5521,36 @@ def test_那张TennisTV豁免表自己也要是真的():
             f"{slug} 的源片不是 Tennis TV，不该在这张表里"
         assert spec.get("crop_shift_x") is None and not spec.get("logo_box"), \
             f"{slug} 已经把台标挪出去了，从豁免表里删掉"
+
+
+def test_赛后捧杯致辞豁免表要真的是捧杯致辞():
+    """`_CEREMONY_SPEECH_ALLOWED` 的自检，跟 TennisTV 那张表同一个理由：
+    表里每个 slug 必须真的存在、真的是 `interview_kind: "赛后捧杯致辞"`——
+    写错一个名字，L0 那道闸对它就是哑的，任何 `interview_kind` 都能借道过去。
+
+    ⚠️ **这张表只许加经过确认的，不许因为"顺手"就塞新条目**——和「只许减
+    不许加」的老片子豁免表方向相反：`shelton-nakashima-mtl2026-final` /
+    `eala-pegula-dc2026-final` 是 L0 之前发的老片子，`fils-tiafoe-cin2026-
+    final` 是账号所有者 2026-08-23 当场认可的新片子，往后每加一条都要是
+    真被问过、真被认可的那一种。这条测试拦不住"顺手加"，只拦"加错了名字/
+    加了个根本不是捧杯致辞的条目"——判断力那部分靠人。
+    """
+    seen = {p.stem: json.loads(p.read_text(encoding="utf-8")) for p in _specs()}
+    assert seen, "一条 spec 都没扫到——判据的主语没了"
+    for slug in sorted(_CEREMONY_SPEECH_ALLOWED):
+        assert slug in seen, f"豁免表里的 {slug} 不存在，这一条豁免是空的"
+        spec = seen[slug]
+        assert spec.get("interview_kind") == "赛后捧杯致辞", \
+            f"{slug} 的 interview_kind 不是「赛后捧杯致辞」，不该在这张表里"
+        assert check_source_contract(spec).startswith("ceremony-speech-exempt:"), \
+            f"{slug} 走了 check_source_contract 却没有真的命中豁免这条路"
+
+
+def test_不在豁免表里的捧杯致辞过不了L0():
+    """反向验证：`interview_kind` 写「赛后捧杯致辞」但 slug 没登记进豁免表，
+    必须当场报错——这是拦「下一次顺手加一条」的那道闸，跟上面那条自检
+    各管一头，缺一个都拦不住"表和实现悄悄分家"。
+    """
+    spec = {"slug": "not-a-real-authorized-slug", "interview_kind": "赛后捧杯致辞"}
+    with pytest.raises(SystemExit, match="登记进"):
+        check_source_contract(spec)
