@@ -1,0 +1,217 @@
+{
+  "slug": "pegula-gauff-cin2026-final-runnerup",
+  "url": "https://youtu.be/pIRDCAcGpz0",
+  "source_title": "Pegula runner-up speech - Cincinnati 2026（@CincyProTennis 官方频道）",
+  "start": 0.0,
+  "end": 194.64,
+  "column": "赛后开麦",
+  "event": "2026 辛辛那提 WTA1000 决赛",
+  "interview_kind": "赛后捧杯致辞",
+  "requested_content_type": "ceremony",
+  "winner": "高芙",
+  "source_verification": {
+    "source_id": "pegula-runner-up-speech-cin2026",
+    "source_url": "https://youtu.be/pIRDCAcGpz0",
+    "source": "Cincinnati Open",
+    "title": "Pegula runner-up speech - Cincinnati 2026",
+    "status": "verified",
+    "detected_type": "ceremony",
+    "method": "official_explicit_ceremony",
+    "evidence": [
+      {
+        "kind": "official_explicit_title",
+        "title": "Pegula runner-up speech - Cincinnati 2026"
+      }
+    ],
+    "match_id": "2026:cincinnati:final:coco-gauff",
+    "attestation_sha256": "f6a76cd38273558394f05032b19f1f300e3bef38829b2cc2ee56e2ad3da272a5"
+  },
+  "match": {
+    "id": "2026:cincinnati:final:coco-gauff",
+    "event": "辛辛那提大师赛",
+    "round": "决赛",
+    "winner": "高芙",
+    "loser": "佩古拉",
+    "participants": [
+      "高芙",
+      "佩古拉"
+    ]
+  },
+  "opening": {
+    "kind": "none",
+    "why": "整条视频从 2.6 秒起就是颁奖典礼台上——佩古拉手持亚军奖杯致辞，没有一帧是球场内的回合或赛点画面，源片本身就是官方剪的纯颁奖片段。"
+  },
+  "lead_in": {
+    "url": "https://youtu.be/T91ALFK3ke4",
+    "start": 155.0,
+    "end": 176.9,
+    "crop_shift_x": -0.117,
+    "_crop_why": "记分板贴在源片左下角（左边缘几乎顶到 x=0），默认居中窗口 [0.125,0.875] 会切掉「CHAMPIONSHIP POINT」标签和两位球员的名字（本地用 PIL 模拟裁切窗口核对过：centered 只剩数字、名字被切掉）。shift=-0.117（未超 CROP_SHIFT_MAX=0.125）把窗口整体左移，记分板完整入镜——和 gauff-pegula-cin2026-final.json 的 lead_in 用的是同一份 PIL 模拟结果（同一条源片、同一个窗口），155/160/165/170/174/176 秒六个取样点都核过，两位球员没有被切出画面。",
+    "why": "Cincinnati Open 官方 YouTube 频道单场集锦（videoId T91ALFK3ke4，标题「Coco Gauff vs Jessica Pegula | 2026 Cincinnati Open | Final」，和这条亚军致辞同一个频道发布）。frame-grab 逐秒核对过（run 32681463361，本仓库另一条 spec 已经做过这份研究）：148-153 秒是更早的一分（记分板显示 6-3/2-1，和决胜分数不符），154 秒是集锦剪辑的转场混叠帧，155 秒起记分板跳到「CHAMPIONSHIP POINT · C. GAUFF 6 5 40 / J. PEGULA 2 4 0」并保持到 163 秒——这是真正锁定比赛的那一分；164 秒高芙已经双臂高举庆祝；166-172 秒她跑向看台和球迷互动；174-176 秒两人在网前拥抱，176 秒是这条集锦视频的最后一帧。窗口收在 155.0-176.9：这场球是怎么结束的，佩古拉自己的致辞第一句就在回应这一刻（「Gosh, you were like a backboard today」），所以片头先给出这一分的画面，再接她自己的话。",
+    "_subs_why": "转写来自这条源片自己的官方自动字幕（`cap_T91ALFK3ke4.en.json3`，沙箱下不动这条视频的完整音视频流，字幕接口走得通）。ASR 把「Pegula」听成「Pigula」、「Gauff」听成「Goff」／「Cocoa Golf」——解说员反复提到的名字，属于明显 ASR 听误，按原样订正翻译。三条 cue 覆盖冠军点＋庆祝之后解说给出的总结句，这句陈述本身没有找到第二个独立源核实（只出自这条视频自己的解说原声），所以只用作冷开场里的背景陈述，不写进 push/cover 的硬断言。155-164.9 秒（冠军点本身＋最初的庆祝）没有配字幕——那一段是叫喊和现场声，没有可转写的完整句子。",
+    "subs": [
+      {
+        "a": 164.9,
+        "b": 168.24,
+        "en": "It is the first title of the year for Gauff.",
+        "zh": "这是她今年的第一个冠军，"
+      },
+      {
+        "a": 168.24,
+        "b": 172.0,
+        "en": "It is her second in Cincinnati",
+        "zh": "也是她在辛辛那提的第二冠，"
+      },
+      {
+        "a": 172.0,
+        "b": 176.9,
+        "en": "and the 12th singles title of her career.",
+        "zh": "职业生涯第十二个单打冠军。"
+      }
+    ]
+  },
+  "word_fix": {},
+  "en_fixed": {},
+  "suspect_ok": {
+    "32": "「Mark Knowles, Spencer,」——`Mark Knowles` 已核实是佩古拉的联合主教练之一，与 Mark Merklein 分工搭档（WebSearch 独立确认多篇 2026 年报道，含 tennis.com「Mark Knowles, co-coach of Jessica Pegula」）。`Spencer` 没有查到公开资料能确认是谁——不在任何已核实的团队成员名单里（教练 Mark Knowles/Mark Merklein、理疗师 Sebastian Cozzarin、体能师 John Opfer 均已查证），沙箱下不动这条源片音轨，听不了。按 ASR 原样音译保留，不替他编身份或头衔——这几个名字是队内感谢名单，不影响事实核心。",
+    "33": "「Seba, thank you guys」——`Seba` 已核实是 Sebastian Cozzarin 的昵称，佩古拉团队的理疗师（WebSearch 独立确认）。",
+    "41": "「And to Mark and John,」下一行「my other coach and my trainer back home」——`Mark` 是 Mark Merklein（佩古拉另一位联合教练，和第 32 行在场致辞的 Mark Knowles 是两个人）、`John` 是 John Opfer（她在家那边的体能师）。两人身份均 WebSearch 独立确认（多篇 2026 年报道同时点名两位教练 Mark Knowles/Mark Merklein 和体能师 John Opfer）。",
+    "59": "「Thanks to Bob.」——已核实是 Bob Moran，辛辛那提公开赛赛事总监，2024 年起任职（WTA 官方资料页、Wikipedia）。同一届赛事、同一位赛事总监，`gauff-pegula-cin2026-final.json` 的颁奖致辞谢的也是他（WebSearch 独立确认过一次，两条 spec 同一场颁奖典礼共用同一份核实）。",
+    "67": "「And thanks Pam and everyone」——已核实是 Pam Whytcross，WTA 现场裁判督导（wtatennis.com/players/230026/pam-whytcross）。同一场颁奖典礼，`gauff-pegula-cin2026-final.json` 已核实过同一个人。",
+    "50": "「Credit One, to Kelly and Ben Navarro」——已核实 Ben Navarro 是美国商人，通过 Beemok Capital 旗下机构同时拥有辛辛那提公开赛和查尔斯顿公开赛（Credit One Charleston Open）的所有权；Kelly Navarro 是他的妻子（也是网球选手 Emma Navarro 的母亲）——WebSearch 独立确认（Wikipedia「Ben Navarro」、EssentiallySports「Who Are Emma Navarro's Parents」）。"
+  },
+  "push": {
+    "_why": "matchup/score 按赢家在前写（高芙 vs 佩古拉，6-2 6-4）——⚠️ 一度想把佩古拉排在前面呼应『这条片子的主体是她』，查过 `header_runs`/`_score_runs` 的实现才发现这样做会出事：视频顶栏是按 `spec['winner']` 把赢家名字**固定放在最前面**、`push.score` 的每一段再按『数字更大的那个上色』，两者不联动——如果 score 写成佩古拉视角的『2-6 4-6』，顶栏会拼成『高芙 2-6 4-6 佩古拉』并把 6/6 这两个数标绿，等于把佩古拉的败绩数字印在高芙名下、还标成她赢的那两下，是『a/b 填反』那类错误的同一个形状。matchup 的词序本身不参与顶栏渲染（只用来校验 winner 在里面），但和 score 摆在一起写反了同样会在推送文案里读成『佩古拉 2-6 4-6 高芙』——照样是错的。所以两处都按标准赢家在前写，『这是她的视角』留给 cover/lead 的文字去交代，不靠翻转比分记法。summary 9 字，接的是她自己讲的那句自嘲（两年两次亚军）；lead 把比分、历史背景（她两年内第二次在这里屈居亚军）和致辞里最具体的两句话分开说，比分放在最前面不剧透致辞内容。auto=true——已经渲完、L2 落地闸通过、海报进仓库，赛后开麦时效紧，`mode=push` 手动派发也要过这道闸，不写就发不出去（`auto_push_interview_gate.wants_auto_push`）。",
+    "auto": true,
+    "matchup": "高芙 vs 佩古拉",
+    "score": "6-2 6-4",
+    "event": "",
+    "summary": "佩古拉两年两次亚军",
+    "lead": "2026 辛辛那提 WTA1000 女单决赛，3 号种子佩古拉 2-6 4-6 不敌 4 号种子高芙——两年内第二次在这里屈居亚军（2024 年决赛她也曾负于萨巴伦卡，3-6 5-7）。捧杯致辞里她先由衷夸对手：「你今天简直就是一堵回球墙，我都不觉得自己打得差，只是觉得你发挥得实在太出色了。」聊到手里这座亚军奖杯，她自嘲：「我现在有点郁闷，这已经是我第二次拿这个了，我想要那个更大的奖杯，不过没关系——这个也很漂亮。」"
+  },
+  "cover": {
+    "frame_at": 165.0,
+    "_why": "165.0 秒——致辞进行到中段，佩古拉双手捧着亚军奖杯，双眼睁开、含泪带笑，是全片情绪最饱满又不失真实的一帧。抽帧核对过整段候选（frame-grab run，每 3 秒一帧，0-189 秒）：51/57/72/90 秒她眼神偏下、看着奖杯，不是正对镜头；144 秒表情偏平静克制；165 秒眼睛完全睁开、嘴角带笑，168 秒又是眯眼皱眉的瞬间——165 秒是这一小段里唯一「睁眼＋有笑意」的帧，按 CLAUDE.md「封面帧一律不许闭眼」「优先近景特写、情绪外露」两条挑的。",
+    "title": [
+      "她说：我现在有点郁闷",
+      "这已经是我第二次拿这个了"
+    ],
+    "sub": "佩古拉两年两次辛辛那提亚军",
+    "_copy_why": "钩子取致辞里最具体、最有画面感的一句自嘲——两次捧起亚军奖杯，她自己先笑称「有点郁闷」。这条片子的正文是颁奖致辞不是比赛集锦，所以封面钩子负责把「这是什么心情」讲出来，正文才有空间讲致辞本身。sub 补上封面钩子没提到的硬事实（两年两次亚军），不重复比分。",
+    "tag": "2026 辛辛那提决赛 · 佩古拉"
+  },
+  "takeaway": {
+    "close": {
+      "point": "两年两次亚军，她说这个奖杯也很漂亮",
+      "ask": "下一次，她还会不会站在这里？"
+    }
+  },
+  "caption_gaps_ok": {
+    "49.8-52.6": "自动字幕在这一段没有事件，raw json3 里前面紧接着一条 `[applause]`（47.815 秒起，覆盖到这段空档），后一句「I'm a little upset I have two of these now」在 52.64 秒重新起头——两头夹着掌声标记，是主持人／观众鼓掌打断，不是漏词。⚠️ 只核对了原始字幕的括号标记，没有实际听音轨（沙箱下不动这条视频的完整音视频流）。",
+    "99.2-101.5": "同上，raw json3 在 101.526 秒有一条 `[applause]`，紧接着 101.5 秒后正文继续「And next I want to thank」——两头夹着掌声标记。⚠️ 同样只核对了字幕括号标记，没有实际听音轨。",
+    "153.3-156.0": "同上，raw json3 在 151.306 秒有一条 `[cheering and applause]`，覆盖到这段空档，之后 156.04 秒正文继续「And yeah, it makes it so much fun to」——两头夹着欢呼／掌声标记。⚠️ 同样只核对了字幕括号标记，没有实际听音轨。"
+  },
+  "_facts": [
+    "赛果：高芙 6-2 6-4 击败佩古拉，2026 辛辛那提 WTA1000 女单决赛——同一场比赛，本仓库 `gauff-pegula-cin2026-final.json` 已三处交叉核实（WebSearch 摘要、flashscore 原始 feed match id nL3a3dK7、官方 YouTube 单场集锦片尾记分板 `C. GAUFF 6 5 40 / J. PEGULA 2 4 0`）。",
+    "佩古拉「I'm a little upset I have two of these now」指的是她生涯第二座辛辛那提亚军奖杯：2024 年辛辛那提决赛她负于萨巴伦卡，比分 6-3 7-5（萨巴伦卡视角，即佩古拉视角 3-6 5-7）——Wikipedia『2024 Cincinnati Open – Women's singles』和 WTA 官方比赛页（wtatennis.com/tournaments/1017/cincinnati/2024/scores/LS001）两处独立确认，均写明 Sabalenka def. Pegula 6–3, 7–5。加上这次负于高芙的2026 决赛，正是「两次」。",
+    "颁奖嘉宾『Bob』『Pam』分别是鲍勃·莫兰（Bob Moran，辛辛那提公开赛赛事总监，2024 年起任职）和帕姆·惠特克罗斯（Pam Whytcross，WTA 现场裁判督导）——出处同『gauff-pegula-cin2026-final.json』已核验的同一份资料（WTA 官方球员/裁判资料页、Wikipedia），同一场颁奖典礼、同一批嘉宾。",
+    "『Credit One，谢谢凯莉和本·纳瓦罗』——Ben Navarro 是美国商人，通过 Beemok Capital 同时拥有辛辛那提公开赛和查尔斯顿公开赛（Credit One Charleston Open）的所有权；Kelly Navarro 是他的妻子，也是网球选手 Emma Navarro 的母亲——出处 Wikipedia『Ben Navarro』、EssentiallySports『Who Are Emma Navarro's Parents』。",
+    "佩古拉的教练团队：Mark Knowles、Mark Merklein 两位联合教练（2024 年初加入），理疗师 Sebastian Cozzarin（『Seba』），体能师 John Opfer——出处 tennis.com『Mark Knowles, co-coach of Jessica Pegula』、The Tribune『Knowles and Merklein teaming up coaching』等多篇 2026 年报道交叉确认。致辞里『Spencer』没有查到能对应的公开资料，按 ASR 原样音译保留，不替他编身份。"
+  ],
+  "_zh_why": "93 行逐行核对过 `output/interviews/pegula-gauff-cin2026-final-runnerup/lines.json`（`--stage subs` 的真实切行结果），不是凭记忆写的——中间一版草稿在写完之后重新逐行比对过，内容对得上。语气词行（第 9 行『Uh』→『呃，』）按仓库既有惯例保留（`eala-mcnally-toronto-2026-r3-presser-full.json` 等多条已发 spec 都有同类单字语气词翻译，`strip_hesitation_lines` 本来就不动整行只剩语气词的那种）。⚠️ **第一版逐行核对完之后，本地真跑了一遍 `--stage subs`，14 行中文超宽**（可用 952px，最宽的一行 1470px）——这是「先按字面翻译，没有对照真实断行宽度」的老毛病，14 行全部拿 `_zh_width()` 直接量过重写，不是估的。",
+  "zh": [
+    "首先我想恭喜高芙",
+    "和她的团队。",
+    "天呐，你就是一堵回球墙。",
+    "打你真的很难受。",
+    "我都不觉得自己打得差，",
+    "只是觉得你",
+    "发挥得实在太出色了。",
+    "所以，恭喜你。",
+    "呃，",
+    "士气这么好，",
+    "正好冲着美网去。",
+    "而且，我们彼此太了解了，",
+    "太熟悉了。",
+    "我都看不清你人在哪儿。",
+    "我们真的太了解彼此，",
+    "而且我非常尊敬你。",
+    "能和你同场竞技，",
+    "一起训练，",
+    "一起打这些赛事，我很享受。",
+    "从你刚上巡回赛那会儿起，",
+    "这段旅程一直很疯狂，",
+    "至少我看着你走过来是这样。",
+    "真的很了不起。",
+    "恭喜你和你的团队，",
+    "祝你未来一切顺利。",
+    "谢谢。",
+    "我现在有点郁闷，第二次了。",
+    "我想要更大的那个，没事。",
+    "这个也很漂亮。",
+    "接下来我想谢谢",
+    "这周一直陪着我的团队。",
+    "马克·诺尔斯、斯宾塞，",
+    "还有塞巴，谢谢你们",
+    "这一周的支持。",
+    "这十二天，或者说",
+    "这几周我们相处，很开心。",
+    "真的很有意思。",
+    "这几场比赛我肯定没少让你们",
+    "操心。",
+    "谢谢你们一直陪着我扛过来。",
+    "还有马克和约翰，",
+    "我另一位教练和体能师，",
+    "我的丈夫、家人和狗狗们，",
+    "它们也来过这儿一小段时间，",
+    "陪我加油。",
+    "也谢谢家里",
+    "一直为我加油的每一个人。",
+    "这两周真的很棒，",
+    "能再打进决赛，是种荣幸。",
+    "接下来我想谢谢",
+    "谢谢 Credit One、凯莉和本。",
+    "你们对我一直特别好，",
+    "不只是在这儿，在查尔斯顿",
+    "我去打你们那站比赛也一样。",
+    "谢谢你们",
+    "在网球上投入这么多，",
+    "把这项运动",
+    "带到全国各地。",
+    "真的很了不起。",
+    "谢谢鲍勃。",
+    "我们都特别喜欢你。",
+    "你真的很棒。",
+    "所有球员都喜欢有你在身边。",
+    "谢谢你",
+    "临时给我弄了一杯浓缩咖啡。",
+    "我确实还需要再来一杯，",
+    "不过没关系。",
+    "也谢谢帕姆和所有",
+    "为这场赛事付出的志愿者。",
+    "说真的，",
+    "这儿的志愿者都特别好，",
+    "所有工作人员，从捡球的孩子",
+    "到检查我们证件的人，",
+    "还有安排用车的人。",
+    "你们都太棒了。",
+    "这让打球",
+    "在这儿打球很有意思，真的。",
+    "我是真的很喜欢在这儿打球。",
+    "这里有一种",
+    "很温馨的感觉，",
+    "在辛辛那提打球我很喜欢。",
+    "最后同样重要的是，谢谢",
+    "所有到场的球迷。",
+    "你们是我们遇到过",
+    "最好的球迷之一。",
+    "真心的，你们真的是。",
+    "我觉得我在这儿签的名",
+    "比其他任何地方都多。",
+    "这对我们来说真的很有意思。",
+    "谢谢你们",
+    "到场支持我们。",
+    "谢谢大家。",
+    "我们……"
+  ]
+}
