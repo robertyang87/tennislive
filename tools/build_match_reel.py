@@ -6560,9 +6560,17 @@ def main() -> int:
             # 块就被删——第一版印在外面，十一段全报「文件不在」（run 30901516117）。
             # 和 `_word_splits` 一样：里面算，外面印。
             prosody = prosody_report(segments, voices, spoken)
+            # **片尾那句这条路一直没被碰过。** `outro_length()` 靠 `_speech_tail_end`
+            # 分辨「说完了」和「文件到头了」——2026-08-24 gauff-pegula 那次真出过
+            # bug（两层静音叠加，片尾整整一秒数字静音），而它只在 render 里才会被
+            # 撞见：`--check-narration` 只 `synthesize()` 了编号的那些段，从没碰过
+            # `synth_outro`/`outro_length`。同一类风险（TTS 尾音渐弱被算错）以后
+            # 再出现，本该在这 1 分半的本地路里就看见，不该再等一趟 7 分钟的 render。
+            outro_voice, _outro_marks = synth_outro(Path(tmp), args.voice, args.rate)
+            outro_secs = outro_length(outro_voice)
         total = sum(s.length for s in segments)
         print(f"[查旁白] {len(spoken)} 段有旁白，画面共 {total:.1f}s"
-              f"（音色 {args.voice} {args.rate}）")
+              f"（音色 {args.voice} {args.rate}），片尾 {outro_secs:.2f}s")
         for index, secs in sorted(spoken.items()):
             room = segments[index].length - secs
             flag = ("超出" if room < -0.12 else "很紧" if room < 0.3
