@@ -2,7 +2,7 @@
 
 - 第一份：YouTube 自动字幕 **726** 词
 - 第二份：faster-whisper（small.en）**712** 词
-- **对不上 3.6%**（闸门 12%）
+- **对不上 3.4%**（闸门 12%）
 
 ⚠️ 上面两个词数和分歧率都是**去掉 erm/uh/uhh/um/umm 这类填词之后**算的：这些词 whisper 系统性地会丢，跟源可不可信无关，留着只会把「说话人有多磕巴」量成「两份转写对不上」。
 
@@ -11,18 +11,18 @@
 - `gauff` → `god`
 - `where` → `—`
 - `if all` → `how`
+- `so` → `—`
 - `—` → `an`
-- `—` → `of`
+- `—` → `i'd`
 - `jaci` → `jc`
 - `kylin` → `kylan`
 - `after the` → `—`
 - `their` → `—`
+- `this` → `—`
 - `it's` → `—`
-- `would` → `—`
 - `you know` → `—`
 - `and` → `—`
-- `like jess said` → `just at`
-- `navarros` → `navaros`
+- `jess said` → `just at`
 - `valet` → `ballet`
 - `valet` → `ballet`
 - `it` → `—`
