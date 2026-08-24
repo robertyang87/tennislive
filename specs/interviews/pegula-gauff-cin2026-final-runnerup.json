@@ -81,10 +81,10 @@
     "50": "「Credit One, to Kelly and Ben Navarro」——已核实 Ben Navarro 是美国商人，通过 Beemok Capital 旗下机构同时拥有辛辛那提公开赛和查尔斯顿公开赛（Credit One Charleston Open）的所有权；Kelly Navarro 是他的妻子（也是网球选手 Emma Navarro 的母亲）——WebSearch 独立确认（Wikipedia「Ben Navarro」、EssentiallySports「Who Are Emma Navarro's Parents」）。"
   },
   "push": {
-    "_why": "matchup 把佩古拉排在前面——这条片子的主体是她，画面、旁白、正文全程都是她的视角；score 跟着 matchup 的顺序写成她的比分在前（2-6 4-6），拼海报时代码按 spec['winner'] 找到高芙、自动高亮，不看 matchup 词序，所以顺序不影响谁被判成赢家。summary 9 字，接的是她自己讲的那句自嘲（两年两次亚军）；lead 把比分、历史背景（她两年内第二次在这里屈居亚军）和致辞里最具体的两句话分开说，比分放在最前面不剧透致辞内容。auto=true——已经渲完、L2 落地闸通过、海报进仓库，赛后开麦时效紧，`mode=push` 手动派发也要过这道闸，不写就发不出去（`auto_push_interview_gate.wants_auto_push`）。",
+    "_why": "matchup/score 按赢家在前写（高芙 vs 佩古拉，6-2 6-4）——⚠️ 一度想把佩古拉排在前面呼应『这条片子的主体是她』，查过 `header_runs`/`_score_runs` 的实现才发现这样做会出事：视频顶栏是按 `spec['winner']` 把赢家名字**固定放在最前面**、`push.score` 的每一段再按『数字更大的那个上色』，两者不联动——如果 score 写成佩古拉视角的『2-6 4-6』，顶栏会拼成『高芙 2-6 4-6 佩古拉』并把 6/6 这两个数标绿，等于把佩古拉的败绩数字印在高芙名下、还标成她赢的那两下，是『a/b 填反』那类错误的同一个形状。matchup 的词序本身不参与顶栏渲染（只用来校验 winner 在里面），但和 score 摆在一起写反了同样会在推送文案里读成『佩古拉 2-6 4-6 高芙』——照样是错的。所以两处都按标准赢家在前写，『这是她的视角』留给 cover/lead 的文字去交代，不靠翻转比分记法。summary 9 字，接的是她自己讲的那句自嘲（两年两次亚军）；lead 把比分、历史背景（她两年内第二次在这里屈居亚军）和致辞里最具体的两句话分开说，比分放在最前面不剧透致辞内容。auto=true——已经渲完、L2 落地闸通过、海报进仓库，赛后开麦时效紧，`mode=push` 手动派发也要过这道闸，不写就发不出去（`auto_push_interview_gate.wants_auto_push`）。",
     "auto": true,
-    "matchup": "佩古拉 vs 高芙",
-    "score": "2-6 4-6",
+    "matchup": "高芙 vs 佩古拉",
+    "score": "6-2 6-4",
     "event": "",
     "summary": "佩古拉两年两次亚军",
     "lead": "2026 辛辛那提 WTA1000 女单决赛，3 号种子佩古拉 2-6 4-6 不敌 4 号种子高芙——两年内第二次在这里屈居亚军（2024 年决赛她也曾负于萨巴伦卡，3-6 5-7）。捧杯致辞里她先由衷夸对手：「你今天简直就是一堵回球墙，我都不觉得自己打得差，只是觉得你发挥得实在太出色了。」聊到手里这座亚军奖杯，她自嘲：「我现在有点郁闷，这已经是我第二次拿这个了，我想要那个更大的奖杯，不过没关系——这个也很漂亮。」"
