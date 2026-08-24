@@ -171,7 +171,8 @@
   },
   "winner": "高芙",
   "push": {
-    "_why": "matchup/score 与 winner 一致；summary 10 字，接的是这条片子最硬的个人成就事实（她生涯第二座辛辛那提冠军）；lead 把比分、历史意义（56 年来首个全美女单决赛）和致辞里最动人的一句原话分开说，比分放在最前面不剧透致辞内容。",
+    "_why": "matchup/score 与 winner 一致；summary 10 字，接的是这条片子最硬的个人成就事实（她生涯第二座辛辛那提冠军）；lead 把比分、历史意义（56 年来首个全美女单决赛）和致辞里最动人的一句原话分开说，比分放在最前面不剧透致辞内容。auto=true——已经渲完、L2 落地闸通过、海报进仓库，赛后开麦时效紧，`mode=push` 手动派发也要过这道闸，不写就发不出去（`auto_push_interview_gate.wants_auto_push`）。",
+    "auto": true,
     "matchup": "高芙 vs 佩古拉",
     "score": "6-2 6-4",
     "event": "",
