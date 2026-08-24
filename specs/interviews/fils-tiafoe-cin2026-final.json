@@ -169,7 +169,8 @@
     "颁奖嘉宾鲍勃·莫兰（Bob Moran）2024 年起担任辛辛那提公开赛赛事总监——出处 tennis.com 对他的专访标题与 ATP 官网报道。"
   ],
   "push": {
-    "_why": "matchup/score 与 winner 一致；summary 12 字，接的是这条片子最硬的事实（法国 12 年等来新科大师赛冠军）；lead 把比分、纪录和致辞里的两句原话分开说，比分放在最前面不剧透致辞内容。",
+    "_why": "matchup/score 与 winner 一致；summary 12 字，接的是这条片子最硬的事实（法国 12 年等来新科大师赛冠军）；lead 把比分、纪录和致辞里的两句原话分开说，比分放在最前面不剧透致辞内容。auto=true——已经渲完、L2 落地闸通过、海报进仓库，赛后开麦时效紧，`mode=push` 手动派发也要过这道闸，不写就发不出去（`auto_push_interview_gate.wants_auto_push`）。",
+    "auto": true,
     "matchup": "菲斯 vs 蒂亚福",
     "score": "6-3 1-6 6-0",
     "event": "",
