@@ -7812,6 +7812,52 @@ def _data_uri(path: Path) -> str:
     return f"data:{mime};base64," + base64.b64encode(path.read_bytes()).decode()
 
 
+def _assert_photo_integrity(path: Path) -> None:
+    """Reject truncated photos and large flat placeholder bands before render.
+
+    ``Image.complete`` in Chromium only proves that the JPEG decoder reached the
+    end of *the file*.  It cannot catch a bad preprocessing export whose top is
+    a real photo and whose lower half has already been replaced by a grey canvas.
+    That exact failure reached the Andreeva trophy card once: every browser and
+    test considered the JPEG valid, but to a viewer it plainly looked half
+    loaded.
+
+    A real photograph can contain sky, court or a studio wall; JPEG texture and
+    lighting still leave measurable variation.  A generated placeholder band
+    is different: the outer 40% is virtually one RGB value.  Sampling a small
+    thumbnail makes this gate cheap enough to run before every explainer render.
+    """
+    from PIL import Image as _Image
+    from PIL import ImageStat as _ImageStat
+
+    try:
+        with _Image.open(path) as probe:
+            probe.verify()
+        with _Image.open(path) as source:
+            source.load()
+            sample = source.convert("RGB")
+            sample.thumbnail((160, 160))
+    except Exception as exc:  # noqa: BLE001
+        raise ExplainerVideoError(f"图片无法完整解码：{path}") from exc
+
+    width, height = sample.size
+    if width < 32 or height < 32:
+        raise ExplainerVideoError(f"图片尺寸异常小：{path}（{width}×{height}）")
+
+    band_h = max(8, int(height * 0.40))
+    bands = {
+        "顶部": sample.crop((0, 0, width, band_h)),
+        "底部": sample.crop((0, height - band_h, width, height)),
+    }
+    for edge, band in bands.items():
+        variation = max(_ImageStat.Stat(band).stddev)
+        if variation < 1.5:
+            raise ExplainerVideoError(
+                f"图片{edge} 40% 几乎是整块纯色，像加载/裁切未完成：{path}。"
+                "请换回完整原图；不要用纯灰、纯黑或纯白画布补齐照片。"
+            )
+
+
 def _slide_html(
     index: int, segment: ExplainerSegment, *, theme: str = "dark", topic: str = "",
     column: str = DEFAULT_COLUMN,
@@ -8156,6 +8202,15 @@ def render_explainer_slides(
     from ..render.webcards import _chromium_executable
 
     outdir.mkdir(parents=True, exist_ok=True)
+    checked: set[Path] = set()
+    for segment in segments:
+        if not segment.image:
+            continue
+        image_path = _REPO / segment.image
+        if image_path not in checked:
+            _assert_photo_integrity(image_path)
+            checked.add(image_path)
+
     paths: list[Path] = []
     with sync_playwright() as p:
         try:

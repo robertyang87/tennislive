@@ -15,7 +15,9 @@ from tennislive.video.explainer import (
     W,
     _REPO,
     _SCRIPTS,
+    _assert_photo_integrity,
     ExplainerSegment,
+    ExplainerVideoError,
     _slide_html,
     explainer_script,
 )
@@ -116,6 +118,30 @@ def test_科斯秋克冠军试金石只讲法网起连续四次且四张都是�
     assert "从法网开始连续四次" in joined
     assert beats[-1].question == "下一次，还会应验吗？"
     assert _OPENINGS[story.slug]["question"] == "击败科斯秋克的人，都夺冠？"
+
+
+def test_解说片照片不能用大块纯色画布伪装成已完整加载(tmp_path):
+    """浏览器能解码不等于照片完整；大块灰底必须在渲染前被硬闸拦住。"""
+    from PIL import Image
+
+    broken = tmp_path / "half-loaded.jpg"
+    image = Image.new("RGB", (600, 800), (128, 128, 128))
+    for y in range(320):
+        for x in range(600):
+            image.putpixel((x, y), ((x + y) % 255, (x * 2) % 255, y % 255))
+    image.save(broken, quality=90)
+
+    with pytest.raises(ExplainerVideoError, match="纯色|加载|裁切"):
+        _assert_photo_integrity(broken)
+
+    fixed = (
+        _REPO
+        / "assets"
+        / "explainer"
+        / "kostyuk-champion-test"
+        / "andreeva_roland_garros_2026_trophy.jpg"
+    )
+    _assert_photo_integrity(fixed)
 
 
 def test_hawkeye_beats_are_grounded_in_verified_facts():
