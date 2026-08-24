@@ -2467,9 +2467,14 @@ def _overlay_chain(base: str, ins: dict) -> str:
         return (f"{base};[1:v]scale={width}:-2[ins];"
                 f"[base][ins]overlay={x}:{y}[vout]")
     d, rise = INSET_IN_SECS, INSET_RISE_PX
+    show_for = float(ins.get("show_for", 0) or 0)
+    fade_out = ""
+    if show_for > d:
+        out_d = min(0.35, max(0.15, show_for - d))
+        fade_out = f",fade=t=out:st={show_for - out_d:.3f}:d={out_d:.3f}:alpha=1"
     y_expr = f"'if(lt(t,{d}),{y}+{rise}*pow(1-t/{d},2),{y})'"
     return (f"{base};[1:v]scale={width}:-2,loop=loop=-1:size=1,format=rgba,"
-            f"fade=t=in:st=0:d={d}:alpha=1[ins];"
+            f"fade=t=in:st=0:d={d}:alpha=1{fade_out}[ins];"
             f"[base][ins]overlay={x}:{y_expr}[vout]")
 
 

@@ -70,3 +70,16 @@ def test_字卡入场要淡入上浮而且能关掉(tmp_path):
     r2, g2, _ = _pixel(out2, 0.04, probe_xy)
     assert g2 - r2 > 100, (
         f"animate:false 该保持老行为——第一帧卡就在（R={r2} G={g2}）")
+
+
+def test_信息带可以限时出现并淡出(tmp_path):
+    src, card = _mk_source(tmp_path), _mk_card(tmp_path)
+    probe_xy = (229, 156)
+    seg = Segment(0.0, 3.0, 0.5, "", track=False,
+                  inset={"image": str(card), "corner": "tl", "show_for": 1.5})
+    out = tmp_path / "timed.mp4"
+    cut_segment(src, seg, out, 1920)
+    r1, g1, _ = _pixel(out, 0.9, probe_xy)
+    assert g1 - r1 > 100, "限时信息带在展示窗口内应完全可见"
+    r2, g2, _ = _pixel(out, 2.0, probe_xy)
+    assert g2 - r2 < 40, "限时信息带在 show_for 之后应淡出"

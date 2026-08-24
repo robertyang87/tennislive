@@ -71,6 +71,7 @@
     "injury": "30 fps；这条源只用于郑钦文北京退赛时疼痛、治疗与离场的短镜头，不承担击球技术分析。成片按主源25 fps统一重采样，保留当事现场比用无关25 fps比赛代替更重要。"
   },
   "_beats": "十九拍：2022资格赛和正赛首胜；巴黎奥运巅峰；手术、北京复出再伤、连续缺席、多哈第二次复出；世界第127与11胜13负；三轮资格赛七位潜在对手逐一用本人比赛呈现；片尾回到2022澳网，落在『把名字打回来』。",
+  "_screen_text_design": "人物与节点信息统一为右上角半透明信息带：标签/主标题/一条证据三级层级，固定宽高；每段只展示前4.8秒并淡出，避免整段压住比赛与底部字幕。",
   "cover": {
     "eyebrow": "网球有故事",
     "layout": "solo",
@@ -112,55 +113,55 @@
     {
       "start": 0.5, "end": 10.5, "source": "injury", "fit": "crop",
       "narration": "右肘疼痛从二零二四年温网前开始。她硬撑到二零二五年七月手术，也退出了当年美网。",
-      "inset": {"image": "assets/beatcards/zheng-us-open/zheng-injury.png", "corner": "tr", "width": 0.72},
+      "inset": {"image": "assets/beatcards/zheng-us-open/info-surgery.png", "corner": "tr", "width": 0.62, "show_for": 4.8},
       "crosses_cut": "北京复出后右肘疼痛相关现场，服务同一伤病事实。"
     },
     {
       "start": 10.5, "end": 21.0, "source": "injury", "fit": "crop",
       "narration": "两个月后北京第一次复出。赢了两场，右肘却再次疼到退赛。归来，变成又一次停下。",
-      "inset": {"image": "assets/beatcards/zheng-us-open/zheng-injury.png", "corner": "tr", "width": 0.72},
+      "inset": {"image": "assets/beatcards/zheng-us-open/info-reinjury.png", "corner": "tr", "width": 0.62, "show_for": 4.8},
       "crosses_cut": "本人疼痛、治疗与退赛的同一段现场记录。"
     },
     {
       "start": 21.0, "end": 29.5, "source": "injury", "fit": "crop",
       "narration": "武汉、全运会、二零二六澳网，她接连缺席。直到二月多哈，她才第二次回到赛场。",
-      "inset": {"image": "assets/beatcards/zheng-us-open/zheng-injury.png", "corner": "tr", "width": 0.72},
+      "inset": {"image": "assets/beatcards/zheng-us-open/info-absence.png", "corner": "tr", "width": 0.62, "show_for": 4.8},
       "crosses_cut": "继续使用本人北京伤病现场呈现伤停节点。"
     },
     {
       "start": 14.0, "end": 24.0, "source": "doha", "fit": "crop",
       "narration": "第二次复出首战，她轰出二十记ACE、四十三个制胜分逆转肯宁：郑钦文还没有结束。",
-      "inset": {"image": "assets/beatcards/zheng-us-open/zheng-doha.png", "corner": "tr", "width": 0.68},
+      "inset": {"image": "assets/beatcards/zheng-us-open/info-doha.png", "corner": "tr", "width": 0.62, "show_for": 4.8},
       "crosses_cut": "WTA官方同场集锦，均来自郑钦文对肯宁。"
     },
     {
       "start": 20.0, "end": 31.0, "source": "current", "fit": "crop",
       "narration": "可复出，不等于回到从前。二零二六年十一胜十三负，跌到世界第一百二十七，也错过美网正赛直接入围。",
-      "inset": {"image": "assets/beatcards/zheng-us-open/zheng-rank.png", "corner": "tr", "width": 0.68},
+      "inset": {"image": "assets/beatcards/zheng-us-open/info-rank.png", "corner": "tr", "width": 0.62, "show_for": 4.8},
       "crosses_cut": "WTA官方2026雅典本人比赛，只呈现第二次复出后的当前状态。"
     },
     {
       "start": 44.0, "end": 52.0, "source": "current", "fit": "crop",
       "narration": "所以这一次，没有奥运冠军的捷径。三轮，三道门，必须全部赢下来。",
-      "inset": {"image": "assets/beatcards/zheng-us-open/zheng-rank.png", "corner": "tr", "width": 0.68},
+      "inset": {"image": "assets/beatcards/zheng-us-open/info-gates.png", "corner": "tr", "width": 0.62, "show_for": 4.8},
       "crosses_cut": "继续使用郑钦文2026本人比赛承接当前处境。"
     },
     {
       "start": 420.0, "end": 432.0, "source": "you", "fit": "crop",
       "narration": "第一道门，尤晓迪。世界第一百九十八，四月刚拿六安W100冠军；决赛打满三小时零八分。她擅长把比赛拖进苦战。",
-      "inset": {"image": "assets/beatcards/zheng-us-open/you.png", "corner": "tr", "width": 0.72},
+      "inset": {"image": "assets/beatcards/zheng-us-open/info-you.png", "corner": "tr", "width": 0.62, "show_for": 4.8},
       "crosses_cut": "六安W100决赛本人实拍，同一场内部切镜。"
     },
     {
       "start": 15.0, "end": 25.0, "source": "burel", "fit": "crop",
       "narration": "第二轮可能是布雷尔。她最高世界第四十二，右膝十字韧带重伤后，靠保护排名一百四十回到这里。",
-      "inset": {"image": "assets/beatcards/zheng-us-open/burel.png", "corner": "tr", "width": 0.68},
+      "inset": {"image": "assets/beatcards/zheng-us-open/info-burel.png", "corner": "tr", "width": 0.62, "show_for": 4.8},
       "crosses_cut": "WTA官方布雷尔本人比赛。"
     },
     {
-      "start": 420.0, "end": 430.0, "source": "ma", "fit": "crop",
+      "start": 900.0, "end": 910.0, "source": "ma", "fit": "crop",
       "narration": "也可能是马烨欣。世界第一百八十一，去年首次打进WTA一百二十五级别决赛，也在争一张中国球员的正赛门票。",
-      "inset": {"image": "assets/beatcards/zheng-us-open/ma.png", "corner": "tr", "width": 0.68},
+      "inset": {"image": "assets/beatcards/zheng-us-open/info-ma.png", "corner": "tr", "width": 0.62, "show_for": 4.8},
       "crosses_cut": "2025荆山W125决赛马烨欣本人比赛。"
     },
     {
@@ -171,24 +172,24 @@
     {
       "start": 18.0, "end": 24.5, "source": "pridankina", "fit": "crop",
       "narration": "二十岁的普里丹基纳，生涯最高第一百六十八，右手持拍。",
-      "inset": {"image": "assets/beatcards/zheng-us-open/pridankina.png", "corner": "tr", "width": 0.68},
+      "inset": {"image": "assets/beatcards/zheng-us-open/info-pridankina.png", "corner": "tr", "width": 0.62, "show_for": 4.8},
       "crosses_cut": "WTA官方普里丹基纳本人比赛。"
     },
     {
       "start": 120.0, "end": 127.0, "source": "falei", "fit": "crop",
       "narration": "她先要对法雷。世界第二百二十二，但本赛季已经拿下三十二场胜利。",
-      "inset": {"image": "assets/beatcards/zheng-us-open/falei.png", "corner": "tr", "width": 0.68},
+      "inset": {"image": "assets/beatcards/zheng-us-open/info-falei.png", "corner": "tr", "width": 0.62, "show_for": 4.8},
       "crosses_cut": "2026华沙WTA125法雷本人比赛。"
     },
     {
       "start": 91.08, "end": 100.0, "source": "marino", "fit": "crop",
       "narration": "另一场有三十五岁的马里诺。身高一米八三，发球和正手是武器，最喜欢硬地。",
-      "inset": {"image": "assets/beatcards/zheng-us-open/marino.png", "corner": "tr", "width": 0.68}
+      "inset": {"image": "assets/beatcards/zheng-us-open/info-marino.png", "corner": "tr", "width": 0.62, "show_for": 4.8}
     },
     {
       "start": 16.0, "end": 24.0, "source": "ferro", "fit": "crop",
       "narration": "她的对手费罗，世界第一百四十一。速度快、变化多，正手是最喜欢的一拍。",
-      "inset": {"image": "assets/beatcards/zheng-us-open/ferro.png", "corner": "tr", "width": 0.68},
+      "inset": {"image": "assets/beatcards/zheng-us-open/info-ferro.png", "corner": "tr", "width": 0.62, "show_for": 4.8},
       "crosses_cut": "WTA官方费罗本人比赛。"
     },
     {
