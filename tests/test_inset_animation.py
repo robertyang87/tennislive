@@ -13,7 +13,14 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 
-from build_match_reel import INSET_IN_SECS, Segment, cut_segment  # noqa: E402
+from build_match_reel import (  # noqa: E402
+    EDITORIAL_IN_SECS,
+    EDITORIAL_RISE_PX,
+    INSET_IN_SECS,
+    Segment,
+    _overlay_chain,
+    cut_segment,
+)
 
 
 def _mk_source(tmp: Path) -> Path:
@@ -83,3 +90,13 @@ def test_信息带可以限时出现并淡出(tmp_path):
     assert g1 - r1 > 100, "限时信息带在展示窗口内应完全可见"
     r2, g2, _ = _pixel(out, 2.0, probe_xy)
     assert g2 - r2 < 40, "限时信息带在 show_for 之后应淡出"
+
+
+def test_编辑型屏幕文字用更克制的动效():
+    chain = _overlay_chain(
+        "[0:v]x[base]",
+        {"image": "card.png", "corner": "tr", "motion": "editorial"},
+    )
+    assert f"d={EDITORIAL_IN_SECS}" in chain
+    assert f"+{EDITORIAL_RISE_PX}*" in chain
+    assert f"d={INSET_IN_SECS}" not in chain
