@@ -1,0 +1,196 @@
+{
+  "slug": "fils-tiafoe-cin2026-final",
+  "url": "https://youtu.be/lN59W0eQ0AU",
+  "source_title": "Arthur Fils Champion Speech | 2026 Cincinnati Open（@CincyProTennis 官方频道）",
+  "start": 0.0,
+  "end": 150.0,
+  "column": "赛后开麦",
+  "event": "2026 辛辛那提 ATP1000 决赛",
+  "interview_kind": "赛后捧杯致辞",
+  "requested_content_type": "ceremony",
+  "source_verification": {
+    "source_id": "fils-champion-speech-cin2026",
+    "source_url": "https://youtu.be/lN59W0eQ0AU",
+    "source": "Cincinnati Open",
+    "title": "Arthur Fils Champion Speech | 2026 Cincinnati Open",
+    "status": "verified",
+    "detected_type": "ceremony",
+    "method": "official_explicit_ceremony",
+    "evidence": [
+      {
+        "kind": "official_explicit_title",
+        "title": "Arthur Fils Champion Speech | 2026 Cincinnati Open"
+      }
+    ],
+    "match_id": "2026:cincinnati:final:arthur-fils",
+    "attestation_sha256": "dd9213b006077c68df5184be11e55711693ed6ca221014cc4a6d0e9f970231ca"
+  },
+  "match": {
+    "id": "2026:cincinnati:final:arthur-fils",
+    "event": "辛辛那提大师赛",
+    "round": "决赛",
+    "winner": "菲斯",
+    "loser": "蒂亚福",
+    "participants": [
+      "菲斯",
+      "蒂亚福"
+    ]
+  },
+  "opening": {
+    "kind": "none",
+    "why": "整条视频从 0.00 秒起就是颁奖典礼台上：司仪介绍冠军、递交奖杯、菲斯致辞、司仪收尾——没有一帧是球场内的回合或赛点画面，源片本身就是官方剪的纯颁奖片。"
+  },
+  "winner": "菲斯",
+  "word_fix": {
+    "Feast": "Fils",
+    "Fees": "Fils"
+  },
+  "zh": [
+    "女士们，先生们，",
+    "你们的冠军是——亚瑟·菲斯。",
+    "为亚瑟颁发这尊奖杯的，",
+    "鲍勃",
+    "·莫兰。",
+    "亚瑟，我们想听你说几句。",
+    "好，轮到我了。",
+    "大家好。",
+    "首先，我想先说说你，",
+    "弗朗西斯。",
+    "说真的，能站在这里",
+    "跟你打这场决赛，真好。",
+    "你知道吗，我小时候，",
+    "经常在电视上看你打球。",
+    "你是那种",
+    "会让我专门打开电视看的人。",
+    "所以，能打出这么多",
+    "精彩的对攻，我特别开心。",
+    "当然，也要恭喜你的团队。",
+    "真的，",
+    "你们做得太出色了。",
+    "谢谢你们，恭喜。",
+    "现在我想谢谢现场的观众。",
+    "就算今天你们没有为我",
+    "加油，这一周也太精彩了。",
+    "现在我想谢谢我的团队。",
+    "真的，你们太了不起了。",
+    "我不知道还能说什么，只能说",
+    "谢谢。",
+    "太谢谢你们了。",
+    "谢谢伊娃、拉波、汉克。",
+    "在欧洲，我们下了很大功夫，",
+    "而且还没有结束。",
+    "你知道吗，这段时间",
+    "我一直带着爸爸满世界跑。",
+    "他现在不在这儿。",
+    "我拿到了奖杯，但我还是想",
+    "跟他说一声谢谢。",
+    "谢谢我所有的家人。",
+    "他们都在欧洲。",
+    "谢谢你们。",
+    "最后，",
+    "谢谢辛辛那提，",
+    "谢谢这项赛事。",
+    "这一周太精彩了，",
+    "明年我还会回来。",
+    "亚瑟，请你站到这儿来，",
+    "把奖杯高高举起。",
+    "有请——2026 年",
+    "辛辛那提公开赛男单冠军，",
+    "亚瑟·菲斯。"
+  ],
+  "_zh_why": "presenter 那几行（第 1-6、47-51 行）不是菲斯自己的话——从「好，轮到我了」（第 7 行）到「明年我还会回来」（第 46 行）才是他本人的致辞。第 2 行「Sir」没有译出：这是司仪口播的花絮词，没有证据表明菲斯有这个头衔，字面硬翻会是一句荒谬的敬语，按房规「宁可留白也不编」不替它坐实。第 4/5 行「Mr. / Bob Moran.」segment() 切在了姓名中间，中文跟着切在姓名中间（鲍勃 / ·莫兰），不比英文更别扭。第 10 行「Francis」是菲斯对蒂亚福的非正式称呼（他本名 Frances 但公开场合常被这么叫），译成「弗朗西斯」而不是姓氏「蒂亚福」，跟他实际称呼保持一致。",
+  "lead_in": {
+    "url": "https://youtu.be/5eniSK6BDZU",
+    "start": 410.2,
+    "end": 449.64,
+    "crop_shift_x": -0.06,
+    "_crop_why": "同一个 Tennis TV 转播模板，台标贴在右上角——本地用 PIL 模拟裁切窗口核对过（frame_0410s.jpg）：默认居中窗口 [0.125,0.875] 会切进 Tennis TV 球标和「T」；shift -0.06 之后窗口变成 [0.065,0.815]，台标完全在窗口外，还多让出了完整的比分板。",
+    "why": "Tennis TV 官方单场集锦《Arthur Fils vs Frances Tiafoe for Maiden Masters TITLE 🏆 | Cincinnati 2026 Highlights》（同一条源片，「赛场之上」姊妹片 fils-tiafoe-cincinnati-2026-final 已核验并推送，source_url 一致）。窗口 410.2-449.64 卡在两个真实的 scene_cuts 上（probe.json：…395.76, 398.72, 401.48, 402.84, 410.2, 425.4, 439.08, 449.64…）：410.2 起是决胜盘 4-0 菲斯发球胜赛局（frame_0410s.jpg 记分板 FILS 6 1 4 40／TIAFOE 3 6 0 30，菲斯发球），随后蒂亚福 0-5 发球保命，420s 已是 AD——菲斯赛点（frame_0420s.jpg：TIAFOE 发球，FILS 6 1 5 AD／TIAFOE 3 6 0），425s 菲斯已经在场上鼓掌庆祝（frame_0425s.jpg），447-449s 两人并肩走下场、往颁奖区走（frame_0447s.jpg／frame_0449s.jpg，均已抽帧核对，无 Tennis TV 转场卡混入）。449.64 是下一个 scene_cut，之后画面切进颁奖典礼、MC 的『Ladies and gentlemen, your champion』——这句已经是本条 spec 正文自己的开场（zh[0]/zh[1]），所以片头收在 449.64，不重复。",
+    "_subs_why": "转写来自这条源片自己的官方自动字幕（`cap_5eniSK6BDZU.en.json3`，yt-dlp `--write-auto-subs` 本地直接拉的，沙箱下不动这条源的完整音视频流，字幕接口走得通）。『feast』『piece』一律订正回『Fils』（和正文 `word_fix` 同一个 ASR 听误模式，这条源片里反复出现：utter feast/makes feast/Frenchman takes down 等，模式一致）；『Big Foe』/『TFO』订正回『Tiafoe』。第 3 条『piece』只有一个词、无法组成完整句子——按照 nakashima-fritz `lead_in.subs` 的先例（那条把单字『Game.』原样保留翻译），这里同样保留为独立的一声惊呼『Fils!』，不硬凑成一整句。410.24-418.76 与 428.24-440.44 两段原始字幕行较长，按行宽预算（952px）拆成短句，拆点选在原始事件的自然分行处（412.24/415.20/434.64），不是随意切断。",
+    "subs": [
+      {
+        "a": 410.24,
+        "b": 412.24,
+        "en": "Fired up, Fils,",
+        "zh": "菲斯憋着一股劲，"
+      },
+      {
+        "a": 412.24,
+        "b": 415.2,
+        "en": "and a game away from",
+        "zh": "距离生涯最大的冠军，"
+      },
+      {
+        "a": 415.2,
+        "b": 418.76,
+        "en": "the biggest title of his career.",
+        "zh": "只差一局了。"
+      },
+      {
+        "a": 426.4,
+        "b": 428.24,
+        "en": "Fils!",
+        "zh": "菲斯！"
+      },
+      {
+        "a": 428.24,
+        "b": 434.64,
+        "en": "Quite scintillating in Cincinnati.",
+        "zh": "辛辛那提这一战堪称精彩——"
+      },
+      {
+        "a": 434.64,
+        "b": 440.44,
+        "en": "It is the biggest title of his young career.",
+        "zh": "这是他生涯最大的冠军。"
+      },
+      {
+        "a": 445.68,
+        "b": 449.64,
+        "en": "As the Frenchman takes down Tiafoe.",
+        "zh": "这位法国人击败了蒂亚福。"
+      }
+    ]
+  },
+  "suspect_ok": {
+    "31": "「Eva and Lapo, Hank」——`Lapo` 已核实是 Lapo Becherini（菲斯的体能教练，WebSearch 独立确认），`Eva`／`Hank` 我没找到公开资料能对上具体是谁。沙箱下不动这条源片的音轨，听不了；按 ASR 原样音译（伊娃／汉克），不替他们编身份或头衔——这三个名字都只是队内感谢名单，不影响事实核心。"
+  },
+  "caption_gaps_ok": {
+    "6.0-8.6": "夹在两条噪声标记中间：3.93 秒 `[cheering]`，8.56 秒才接回 `To present Arthur with that Rookwood`——这 2.6 秒全落在欢呼区间里，中间没有任何语音事件。",
+    "21.7-24.2": "同上形状：19.65 秒 `[cheering]`，24.16 秒菲斯自己开口 `Okay, my turn now.`——这 2.5 秒是他走向话筒时台下的持续欢呼。",
+    "50.5-52.6": "48.47 秒 `[applause]`，52.64 秒接回 `Of course, congrats to the team as well.`——这 2.1 秒是「精彩的对攻」那句话之后的掌声。",
+    "72.1-77.3": "70.08 秒 `[applause and cheering]`，77.29 秒仍是 `[applause]`，77.92 秒才回到语音 `Um,`——这 5.2 秒是「这一周也太精彩了」那句话之后持续最久的一段欢呼／掌声，中间没有任何语音事件断在里面。"
+  },
+  "_facts": [
+    "赛果：菲斯 6-3 1-6 6-0 击败蒂亚福，2026 辛辛那提 ATP1000 决赛——三处交叉核实：WebSearch 摘要、tennismajors.com 赛后专稿、flashscore 原始 feed（`AG÷2 AT÷2 BA÷6 BC÷1 BE÷6` 对 `BB÷3 BD÷6 BF÷0`，逐盘一致）。",
+    "菲斯 22 岁成为史上最年轻的法国大师赛冠军，终结法国 2014 年特松加多伦多夺冠以来长达 12 年的等待，是继 Guy Forget／Cedric Pioline／Sebastien Grosjean／特松加之后第 7 位夺得大师赛的法国男子——出处 tennismajors.com 赛后专稿，同一事实另有 Bastille Post／Yahoo Sports／TNT Sports 转载印证。",
+    "夺冠后排名升至生涯新高世界第 11——tennismajors.com 与另一条 WebSearch 独立摘要重复确认同一个数字。",
+    "颁奖典礼上的实物奖杯叫「Rookwood Cup」（洛克伍德杯），是辛辛那提公开赛自 2010 年起沿用的冠军奖杯，由 Rookwood Pottery 陶艺工坊烧制——出处 rookwood.com 官方产品页，画面里那尊白陶奖杯与页面描述吻合。",
+    "颁奖嘉宾鲍勃·莫兰（Bob Moran）2024 年起担任辛辛那提公开赛赛事总监——出处 tennis.com 对他的专访标题与 ATP 官网报道。"
+  ],
+  "push": {
+    "_why": "matchup/score 与 winner 一致；summary 12 字，接的是这条片子最硬的事实（法国 12 年等来新科大师赛冠军）；lead 把比分、纪录和致辞里的两句原话分开说，比分放在最前面不剧透致辞内容。",
+    "matchup": "菲斯 vs 蒂亚福",
+    "score": "6-3 1-6 6-0",
+    "event": "",
+    "summary": "法国12年首位大师赛冠军",
+    "lead": "2026 辛辛那提 ATP1000 决赛，17 号种子菲斯首盘 6-3 拿下，次盘被蒂亚福 1-6 打崩，决胜盘他甩回一个 6-0，锁定生涯首个大师赛冠军——22 岁的他是史上最年轻的法国大师赛冠军，终结法国自 2014 年特松加多伦多夺冠以来长达 12 年的等待。捧杯致辞里他先谢蒂亚福：「小时候我常在电视上看你打球，你是那种会让我专门打开电视看的人。」再谢一路陪着他奔波、却没能到场看这场决赛的父亲：「我拿到了奖杯，但我还是想跟他说一声谢谢。」"
+  },
+  "cover": {
+    "frame_at": 144.0,
+    "_why": "144.0 秒——决赛结束后颁奖典礼尾声，菲斯双手高举，一手擎着 Rookwood Cup、一手握拳，笑容完全展开、眼睛睁着看向奖杯，前景观众鼓掌、举着手机拍照，画面自证「捧杯瞬间」——按 CLAUDE.md「捧杯优先级比击球中的照片优先级高」以及「优先近景特写、情绪外露」两条一起满足。抽帧核对过整段 0-149 秒，143-149 秒是同一段庆祝的延续（144.0 手臂刚举满、表情最清楚；145-146 秒奖杯挡住了半张脸），选 144.0。",
+    "title": [
+      "次盘1比6惨败",
+      "决胜盘他甩回一个6比0"
+    ],
+    "sub": "22岁菲斯 法国12年来首位大师赛冠军",
+    "_copy_why": "钩子取赛场上最戏剧性的那次反转（次盘 1-6 几乎被打崩、决胜盘他把整盘 6-0 甩回去）——这条片子的正文是颁奖致辞不是比赛集锦，所以封面钩子负责把「这场球到底多惊险」讲出来，正文才有空间讲致辞本身。sub 补上封面钩子没提到的硬事实（年龄、纪录），不重复比分。",
+    "tag": "2026 辛辛那提决赛 · 菲斯"
+  },
+  "takeaway": {
+    "close": {
+      "point": "菲斯结束了法国12年的等待",
+      "ask": "他能守住这个位置多久？"
+    }
+  }
+}
