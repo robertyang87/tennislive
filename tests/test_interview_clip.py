@@ -31,6 +31,7 @@ from tools.build_interview_clip import (
     ROOT,
     caption_gaps,
     check_human_quote,
+    check_source_contract,
     gap_key,
     header_lines,
     review_sheet,
@@ -5519,3 +5520,55 @@ def test_那张TennisTV豁免表自己也要是真的():
             f"{slug} 的源片不是 Tennis TV，不该在这张表里"
         assert spec.get("crop_shift_x") is None and not spec.get("logo_box"), \
             f"{slug} 已经把台标挪出去了，从豁免表里删掉"
+
+
+def test_没有真实核验的捧杯致辞照样过不了L0():
+    """`check_source_contract` 不再靠一张豁免表放行——`interview_kind` 写着
+    「赛后捧杯致辞」但没有真的经过 `interview_source_gate` 核验的 spec，
+    照样要在下载/转写/渲染之前被拦下。它拦的是「跳过真实核验」这个动作
+    本身，跟 `interview_kind` 写的是哪一种无关：两版一起验才拦得住
+    "捧杯致辞被单独放过"这个回归。
+    """
+    for kind in ("赛后场上采访", "赛后捧杯致辞"):
+        spec = {"slug": "not-a-real-verified-slug", "interview_kind": kind}
+        with pytest.raises(SystemExit, match="L0 内容身份门禁"):
+            check_source_contract(spec)
+
+
+def test_真实核验过的捧杯致辞能通过L0():
+    """反向验证：`interview_source_gate` 给出的 ceremony 契约，`check_source_contract`
+    要真的放行——跟上面那条各管一头，缺一个都拦不住「wrapper 悄悄又变回
+    硬编码只认 on_court」，或者反过来「ceremony 一律被挡」。
+
+    走的是和 `specs/interviews/fils-tiafoe-cin2026-final.json` 同一条路：
+    受信官方频道（`data/oncourt_sources.json` 已登记）+ 标题明确写着
+    冠军致辞，`candidate_verification` 应该直接给出 `verified`，不用人工判词。
+    """
+    from tools.interview_source_gate import candidate_verification, finalize_source_contract
+
+    verification = candidate_verification({
+        "id": "test-ceremony-vid",
+        "url": "https://youtu.be/test-ceremony",
+        "title": "Some Player Champion Speech | Some Event",
+        "source": "Cincinnati Open",
+    }, verdicts={})
+    assert verification["status"] == "verified" and verification["detected_type"] == "ceremony"
+
+    spec = {
+        "slug": "test-ceremony-slug",
+        "url": "https://youtu.be/test-ceremony",
+        "requested_content_type": "ceremony",
+        "interview_kind": "赛后捧杯致辞",
+        "source_verification": verification,
+        "match": {
+            "id": "2026:test:final:some-player",
+            "event": "测试赛事",
+            "round": "决赛",
+            "winner": "某球员",
+            "loser": "另一位",
+            "participants": ["某球员", "另一位"],
+        },
+    }
+    finalize_source_contract(spec)
+    attestation = check_source_contract(spec)
+    assert len(attestation) == 64

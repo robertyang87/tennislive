@@ -2708,7 +2708,28 @@ _OPENING_KINDS = {
 
 
 def check_source_contract(spec: dict) -> str:
-    """L0：在任何下载、转写或渲染之前确认“本场真实场上采访”。"""
+    """L0：在任何下载、转写或渲染之前确认这是一条被验证过身份的赛后内容。
+
+    ⚠️ **赛后捧杯致辞是这道闸认的第二种类型，不是绕开它的例外。**
+    2026-08-23 的 `interview: automate verified on-court production and
+    publishing` 一开始把 L0 硬编码成只认「记者持话筒在场边问」（`on_court`）；
+    可颁奖典礼上球员自己拿着话筒对全场讲话是同一个栏目下另一种真实存在的
+    内容——账号所有者原话「颁奖致辞就是赛后开麦场上采访的一种形式而已，
+    都要做」。所以 `interview_source_gate.REQUESTED_KINDS` 现在有两个合法
+    类型（`on_court` / `ceremony`），`validate_source_contract` 按 spec
+    自己声明的 `requested_content_type` 走对应那一套核验；两种类型都要求
+    `source_verification`／`match` 真实、可交叉核实、和赛果签在一起，
+    没有哪一种是靠一张豁免表跳过去的。见 `interview_source_gate.py`。
+
+    ⚠️ **`tools/` 要自己确保在 `sys.path` 上，不能指望调用方顺手插过**——
+    和 `_ytdlp_ladder()` 那条注释是同一个坑：直接 `python
+    tools/build_interview_clip.py` 跑时这条 import 从不出错，但测试里这个
+    模块是按 `tools.build_interview_clip` 这个包名导入的，`tools/` 本身不在
+    `sys.path` 上，除非另一个测试文件恰好先插过它——那是巧合，不是必然。
+    """
+    import sys  # noqa: PLC0415
+
+    sys.path.insert(0, str(ROOT / "tools"))
     from interview_source_gate import (  # noqa: PLC0415
         SourceContractError,
         validate_source_contract,
@@ -2719,10 +2740,11 @@ def check_source_contract(spec: dict) -> str:
     except SourceContractError as exc:
         raise SystemExit(
             f"{spec.get('slug', '?')} 没通过 L0 内容身份门禁：{exc}\n"
-            "只允许本场、获胜后、仍在球场内的现场话筒采访；演播室、发布会、"
-            "颁奖致辞和 unknown 都不能替代。找不到就停在待复核队列，不制作不推送。"
+            "只允许本场、获胜后、仍在球场内的现场话筒采访，或本场颁奖典礼上"
+            "的捧杯致辞；演播室、发布会和 unknown 都不能替代。找不到就停在"
+            "待复核队列，不制作不推送。"
         ) from exc
-    print(f"[L0] 本场 on-court 来源身份通过（{attestation[:12]}…）")
+    print(f"[L0] 本场来源身份通过（{attestation[:12]}…）")
     return attestation
 
 
