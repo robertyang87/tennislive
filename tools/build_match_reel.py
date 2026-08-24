@@ -701,6 +701,43 @@ def audio_peak_db(path: Path) -> float | None:
     return float(found.group(1)) if found else None
 
 
+def _speech_tail_end(path: Path, floor_db: float = -50.0,
+                      min_silence: float = 0.15) -> float | None:
+    """这段语音真正说完的时刻——不是文件末尾。
+
+    `outro_length()` 原来拿 `probe_duration(voice_path)` 当「口播说了多久」，
+    可 TTS 合出来的 mp3 常常自带一截尾音渐弱到近乎无声，`probe_duration`
+    把这一截也算进「口播」，`OUTRO_TAIL` 又在它后面**再**叠一层 0.45s——
+    两层静音叠加，check_reel_landed 的数字静音闸就会在片尾整整一秒钟里
+    读不到一点声音（run 32681014183 / 32684580629，gauff-pegula 那条
+    **两次独立渲染，逐秒响度表一字不差**——TTS 走了内容哈希缓存，说明这不是
+    某一次合成的运气差，是这句 `OUTRO_NARRATION` 配这把嗓子这个语速的
+    固定尾音，不重渲就能复现）。
+
+    用 `silencedetect` 找到「最后一次开始静音、而且一直静到文件结束」的
+    那个时刻，当成真正的口播终点；文件末尾不是静音就返回 `None`，调用方
+    退回 `probe_duration` 的老行为——不许比原来更保守。
+
+    ⚠️ **别只看「最后一段静音有没有配对的 `silence_end`」**——这台机器的
+    ffmpeg 版本连贴着文件末尾的那段静音也会打出一行 `silence_end`（真实值
+    卡在文件末尾附近），不是「流截断、没来得及打印」那种没有配对的形状。
+    真正的判据是**那段静音的结束点离文件末尾还有多远**，不是有没有配对。
+    """
+    out = run("ffmpeg", "-hide_banner", "-i", str(path), "-af",
+              f"silencedetect=noise={floor_db}dB:d={min_silence}",
+              "-f", "null", os.devnull).stderr
+    starts = [float(m) for m in re.findall(r"silence_start:\s*(-?[\d.]+)", out)]
+    ends = [float(m) for m in re.findall(r"silence_end:\s*(-?[\d.]+)", out)]
+    if not starts:
+        return None
+    if len(starts) > len(ends):
+        return starts[-1]  # 最后一段静音没打出 end，说明它一路静到了流的尽头
+    total = probe_duration(path)
+    if total - ends[-1] < 0.2:  # 打了 end，但那个 end 紧贴着文件末尾
+        return starts[-1]
+    return None  # 最后一段静音后面还有声音，文件末尾不是静音
+
+
 def point_end_candidates(source: Path, scorebox: str) -> list[float]:
     """量一遍死球时刻，写进 `probe.json`——**趁源片还在**。
 
@@ -3422,8 +3459,15 @@ def outro_length(voice_path: Path) -> float:
     换一把嗓子或改语速，口播那头会变；改动效节奏，另一头会变。**取 max 才
     两头都不会被截断**——写死一个数的话，其中一头一变就会悄悄切掉尾巴，
     而 ffmpeg 对这种越界从来不吭声。
+
+    ⚠️ 「口播说了多久」不能直接拿 `probe_duration`（文件总长）：TTS 合出来的
+    尾音常带一截渐弱到近乎无声的静默，`probe_duration` 会把它也算进「口播」，
+    `OUTRO_TAIL` 又在后面**再**叠一层——两层静音叠加，check_reel_landed 的
+    数字静音闸能在片尾整整一秒钟里读不到声音（见 `_speech_tail_end` 的
+    docstring）。所以先用 `_speech_tail_end` 找真正说完的那一刻，找不到
+    （文件末尾本来就不是静音）才退回 `probe_duration`。
     """
-    spoken = probe_duration(voice_path)
+    spoken = _speech_tail_end(voice_path) or probe_duration(voice_path)
     spoken_need = round(spoken + OUTRO_TAIL, 3)
     motion_need = outro_page.min_length()
     length = round(max(spoken_need, motion_need), 3)

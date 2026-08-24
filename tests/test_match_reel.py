@@ -7927,6 +7927,53 @@ def test_片尾口播说的话画面上要印得全():
         "读者听到的和看到的会是两句话")
 
 
+def test_口播尾音渐弱不许被算成片尾要停多久(tmp_path):
+    """gauff-pegula-cincinnati-2026-final 两次独立渲染，片尾逐秒响度表
+    一字不差（run 32681014183 / 32684580629）——`OUTRO_NARRATION` 走 TTS
+    内容哈希缓存，说明这不是某一次合成的运气差，是这句文案配这把嗓子这个
+    语速固定带出来的一截渐弱到近乎无声的尾音。
+
+    `outro_length()` 原来直接拿 `probe_duration()`（文件总长）当「口播说了
+    多久」，把这截尾音也算进「口播」，`OUTRO_TAIL` 又在它后面**再**叠一层
+    0.45s——两层静音叠加，check_reel_landed 的数字静音闸在片尾整整一秒钟
+    读不到声音。真造两个 mp3 验：一个尾音渐弱到静音（模拟真实 TTS 的衰减
+    尾巴），一个从头响到尾（没有尾音可裁，退回老行为）。
+    """
+    import shutil  # noqa: PLC0415
+    import subprocess  # noqa: PLC0415
+
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import build_match_reel as reel  # noqa: PLC0415
+
+    assert shutil.which("ffmpeg"), "没有 ffmpeg，这条判据跑不了：apt install ffmpeg"
+
+    def _ff(*args):
+        subprocess.run(["ffmpeg", "-v", "error", "-y", *args], check=True)
+
+    tail_off, tail_on = (tmp_path / n for n in ("tail_off.mp3", "tail_on.mp3"))
+    # 3 秒响的调子接上 1.5 秒数字静音——真正说完是在第 3 秒，不是文件末尾
+    _ff("-f", "lavfi", "-i", "sine=frequency=440:duration=3",
+        "-f", "lavfi", "-i", "anullsrc=r=24000:cl=mono",
+        "-filter_complex", "[0][1]concat=n=2:v=0:a=1[out]",
+        "-t", "4.5", "-map", "[out]", str(tail_off))
+    # 从头响到尾，没有尾音要裁
+    _ff("-f", "lavfi", "-i", "sine=frequency=440:duration=3", str(tail_on))
+
+    end = reel._speech_tail_end(tail_off)
+    assert end is not None and 2.8 < end < 3.2, (
+        f"该在第 3 秒附近找到真正说完的时刻，量到 {end}")
+    assert reel._speech_tail_end(tail_on) is None, (
+        "整段都有声音，不该凭空裁出一个尾巴——找不到就该退回 None，"
+        "不许比 probe_duration 那条老路更保守")
+
+    # `outro_length()` 要真的用上这个更短的时刻，不是算出来没人接
+    naive = reel.OUTRO_TAIL + reel.probe_duration(tail_off)
+    fixed = reel.outro_length(tail_off)
+    assert fixed < naive - 1.0, (
+        f"outro_length 该按真正说完的时刻算，不是文件总长——"
+        f"量到 {fixed:.2f}s，该比按总长算的 {naive:.2f}s 短至少 1 秒")
+
+
 def test_屏幕上的数字不许把字吃掉():
     """账号所有者：「有些字幕没有补全」。
 
