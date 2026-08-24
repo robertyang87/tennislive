@@ -753,15 +753,45 @@ def _tracked_slugs(pattern: str) -> set[str]:
     return {line.split("/")[2] for line in out.stdout.split() if line}
 
 
-def test_推过而没记下的采访不许开自动推送():
-    """**这条线上唯一能造成重发的动作，就是给「推过、却没有 `pushed.json`」
-    的那些开 `auto`。**
+def _ledger_slugs() -> set[str]:
+    """`data/interview_publish_ledger/<slug>.json` 里被 git 跟踪的 slug 集合。
 
-    闸 3（没推过）查的是 `pushed.json`。自动推送 2026-08-14 才上线，在那之前
-    每一次推送都是人手动 dispatch，**没有任何东西记下「发过了」**——所以那道闸
-    对存量是哑的，只能在 spec 这头拦。判据是产物：复制页是推送流程写的，
-    `copy.html` 在仓库里就说明这条走过那条路（`swiatek-shnaider-tor2026-qf`
-    没有，它只到 `--stage subs`）。
+    和 `_tracked_slugs` 是同一个理由（sparse checkout、`git ls-files` 不用
+    `glob`），但路径形状不同——账本不挂在 `output/interviews/<slug>/` 下面，
+    是 `data/interview_publish_ledger/<slug>.json` 这一层，slug 是文件名去掉
+    后缀，不是路径第三段。
+    """
+    out = subprocess.run(
+        ["git", "ls-files", "data/interview_publish_ledger/*.json"],
+        capture_output=True, text=True, check=True)
+    return {Path(line).stem for line in out.stdout.split() if line}
+
+
+def test_推过而没记下的采访不许开自动推送():
+    """**这条线上唯一能造成重发的动作，就是给「推过、却没有记下」的那些开 `auto`。**
+
+    闸 3（没推过）查的是**发布账本**（`data/interview_publish_ledger/<slug>.json`，
+    `auto_push_interview_gate.LEDGER_DIR`）——不是 `pushed.json`。判据是产物：
+    复制页是推送流程写的，`copy.html` 在仓库里就说明这条走过那条路
+    （`swiatek-shnaider-tor2026-qf` 没有，它只到 `--stage subs`）。
+
+    ⚠️ **这条测试自己就是「主语没了就得换判据」的一个实例，2026-08-24 抓到的
+    ——但只对了一半，第一版把范围收窄错了。** 原来判「没推过」只查
+    `output/interviews/<slug>/pushed.json`，而 `fils-tiafoe-cin2026-final`／
+    `gauff-pegula-cin2026-final` 这次会话真推送成功、账本里都有
+    `status: "sent"` 的记录，却因为没有 `pushed.json` 被判成「推过而没记下」——
+    `auto_push_interview_gate.py` 自己的 docstring 写着「独立发布账本的同一
+    成片键没有 sending/sent/uncertain；旧 `<outdir>/pushed.json` **仍兼容拦截**」，
+    权威信号已经是账本，只查 `pushed.json` 落后了一步。**第一版的修法把它改成
+    只查账本**，本地全量当场抓出反例：`gauff-kostyuk-cincinnati-2026-qf` 只有
+    `pushed.json`（`{"at": "2026-08-22T12:26:23Z", "run": "…32572945050"}`，
+    真实的发送记录）、没有账本文件，被新判据当成「没推过」——**同一个错误的
+    镜像版，这次是把还在被真实产线（`wants_auto_push` 里 `marker = outdir /
+    MARKER` 那一段）当场认可的旧标记当成不存在了**。查 `wants_auto_push` 的
+    实现才看清楚：它是**两条都查、任一条命中就算已推过**（`tracked(marker)` +
+    账本），不是账本取代了 `pushed.json`——「仍兼容拦截」那句话说的就是并集，
+    不是账本优先、`pushed.json` 归零。判据因此是两个集合的并集，不能收窄成
+    其中一个。
 
     ⚠️ **主语是算出来的，不是一张手写名单。** 原来这儿冻着一份 17 条的
     `_ALREADY_PUSHED` 外加一条「名单要完整」的自检，**一天之内被 CI 抓红六次**，
@@ -774,11 +804,11 @@ def test_推过而没记下的采访不许开自动推送():
     记住来修：出片那个提交本来就不该负责往一张测试文件里的名单添名字。
 
     ⚠️ **而那张名单还锁死了这套机制本身。** 一条新采访开 `auto` 推成功之后，
-    工作流先提交 `copy.html`（`--stage page`）、发完微信再提交 `pushed.json`
-    （`--record`）——于是它同时有了两样。名单那版的自检会要求把它补进名单，
-    而补进去之后另一条又要求它 `auto is not True`：**两条互斥，从第一条自动
-    推送成功那天起谁也满足不了。** 减掉 `pushed.json` 那一半就自然放行——
-    标记一落库，闸 3 接管，`auto` 留着完全正常，正是这套机制该有的样子。
+    工作流先提交 `copy.html`（`--stage page`）、发完微信再落发布账本——于是它
+    同时有了两样。名单那版的自检会要求把它补进名单，而补进去之后另一条又要求
+    它 `auto is not True`：**两条互斥，从第一条自动推送成功那天起谁也满足不了。**
+    减掉旧标记那一半就自然放行——标记一落库，闸 3 接管，`auto` 留着完全正常，
+    正是这套机制该有的样子。
     """
     published = _tracked_slugs("output/interviews/*/copy.html")
     # **判据自己的判据。** 主语没了（目录改名、glob 写错、`output/` 真被清空）
@@ -786,7 +816,8 @@ def test_推过而没记下的采访不许开自动推送():
     assert len(published) >= 10, (
         f"只数到 {len(published)} 条有复制页的采访，判据失效了")
 
-    suspects = sorted(published - _tracked_slugs("output/interviews/*/pushed.json"))
+    already_recorded = _ledger_slugs() | _tracked_slugs("output/interviews/*/pushed.json")
+    suspects = sorted(published - already_recorded)
     orphan, checked = [], 0
     for slug in suspects:
         spec = Path("specs/interviews") / f"{slug}.json"
@@ -796,8 +827,8 @@ def test_推过而没记下的采访不许开自动推送():
         checked += 1
         push = json.loads(spec.read_text(encoding="utf-8")).get("push") or {}
         assert push.get("auto") is not True, (
-            f"{slug} 推过微信了，而仓库里没有它的 pushed.json——闸 3 拦不住，"
-            "开了 auto 就是把同一条消息再发一遍，而消息收不回来")
+            f"{slug} 推过微信了，而仓库里既没有它的发布账本也没有 pushed.json"
+            "——闸 3 拦不住，开了 auto 就是把同一条消息再发一遍，而消息收不回来")
     if orphan:
         # 产物在、spec 没了。它开不了 auto（没有 spec 可写），所以不算错；
         # 但**要说一声**——不然「跳过了 N 条」和「查过 N 条」在日志上一样。
