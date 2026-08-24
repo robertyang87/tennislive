@@ -6687,6 +6687,57 @@ def test_轮次要写半决赛不写四强():
     assert set(offenders) <= _LEGACY_QUALIFIER_NAMES, "清单里有已经修好的条目？"
 
 
+def test_零封的局不许翻译成爱局():
+    """账号所有者 2026-08-24：「以后 love game 不要翻译成中文。记录下来」。
+
+    来路：`gauff-pegula-cincinnati-2026-final` 已发的旁白和小红书正文里，
+    「一局对手一分未得」被字面直译成了**「爱局」**——`love` 在网球计分里是
+    「零」，不是「爱」，读起来像在说一个浪漫的局，和术语毫无关系。逐分
+    （15:0/30:0/40:0）本身已经把「零封」讲清楚了，不需要再造一个字面翻译的
+    标签。**要收尾用一个词，选「零封」，别选任何带「爱」字的直译。**
+
+    只查会发出去的字段（旁白 / 封面 / 推送 / 小红书正文），和
+    `test_轮次要写半决赛不写四强` 同一套 `outward()`——`_why` 这类写给下一个人
+    看的注解允许提到「爱局」这个反例本身，不算违规。
+    """
+    import re  # noqa: PLC0415
+
+    bad = re.compile(r"爱局")
+
+    def outward(spec: dict):
+        for seg in spec.get("segments") or []:
+            yield seg.get("narration", "")
+        for key, value in (spec.get("cover") or {}).items():
+            if key.startswith("_"):
+                continue
+            for item in ([value] if isinstance(value, str)
+                         else list(value.values()) if isinstance(value, dict)
+                         else []):
+                if isinstance(item, str):
+                    yield item
+                elif isinstance(item, list):
+                    yield from (x for x in item if isinstance(x, str))
+        for key, value in (spec.get("push") or {}).items():
+            if not key.startswith("_") and isinstance(value, str):
+                yield value
+
+    offenders = {}
+    for path in sorted(Path("specs/reels").glob("*.json")):
+        hits = sorted({m.group(0) for text in outward(
+            json.loads(path.read_text(encoding="utf-8"))) for m in bad.finditer(text)})
+        if hits:
+            offenders[path.name] = hits
+    for path in sorted(Path("specs/reels").glob("*.xhs.txt")):
+        hits = sorted({m.group(0)
+                       for m in bad.finditer(path.read_text(encoding="utf-8"))})
+        if hits:
+            offenders[path.name] = hits
+
+    assert not offenders, (
+        f"这些地方把 love game 字面直译成了「爱局」：{offenders}。"
+        "改成「零封」，或者直接靠前面的逐分（15:0/30:0/40:0）讲清楚，不用另造标签。")
+
+
 #: 规矩之前就发出去的片子。账号所有者 2026-08-06：「**历史视频就不要那个管了**」
 #: 「**保证以后正常就行**」——微信那条消息收不回来，不为一个动词重渲。
 #: **只许减不许加**，而且下面有自检：写错一个名字，豁免就成了一盏恒真的绿灯。
