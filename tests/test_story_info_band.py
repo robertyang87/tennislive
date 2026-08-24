@@ -12,13 +12,13 @@ def test_story_info_band_is_typography_not_a_large_panel(tmp_path):
     out = render("第一关", "尤晓迪", "六安W100冠军 · 擅长苦战",
                  tmp_path / "band.png", metric="世界第198", variant="player")
     with Image.open(out) as image:
-        assert image.size == (1200, 292)
+        assert image.size == (1200, 340)
         assert image.mode == "RGBA"
         assert image.getpixel((0, 0))[3] == 0
         alpha = image.getchannel("A")
         opaque = sum(alpha.histogram()[25:])
         assert opaque > 10_000, "文字锁定渲空了"
-        assert opaque / (image.width * image.height) < 0.34, (
+        assert opaque / (image.width * image.height) < 0.40, (
             "不许退回覆盖大半画面的实色圆角板")
 
 

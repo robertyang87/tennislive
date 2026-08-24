@@ -35,14 +35,20 @@ BOLD = REPO / "assets" / "fonts" / "NotoSansSC-Bold-sub.ttf"
 REGULAR = REPO / "assets" / "fonts" / "NotoSansSC-Regular-sub.ttf"
 DISPLAY = REPO / "assets" / "fonts" / "SmileySans-Oblique.ttf"
 
-# 0.56 * 1080 = 605px in the finished reel. 1200px therefore gives almost a
-# true 2x source while leaving enough room for the longest opponent name.
-WIDTH, HEIGHT = 1200, 292
-ACCENT = (184, 233, 134, 255)
-WHITE = (247, 250, 248, 255)
-MUTED = (220, 231, 225, 255)
-INK = (5, 14, 11, 238)
-SHADOW = (0, 0, 0, 150)
+# 0.60 * 1080 = 648px in the finished reel. 1200px therefore gives a crisp
+# source while leaving enough room for the longest opponent name.
+WIDTH, HEIGHT = 1200, 340
+
+# Court blue + tennis-ball yellow is a more recognisable tennis palette than
+# the first muted sage treatment.  The two chromatic colours have fixed jobs:
+# blue introduces the label, yellow marks the fact worth remembering.  They
+# never compete inside the same text level.
+COURT_BLUE = (91, 218, 255, 255)
+TENNIS_YELLOW = (225, 255, 74, 255)
+WHITE = (255, 253, 244, 255)
+MUTED = (218, 231, 235, 255)
+INK = (4, 18, 36, 242)
+SHADOW = (0, 0, 0, 165)
 VARIANTS = {"timeline", "player", "stat", "chapter"}
 
 
@@ -90,6 +96,18 @@ def _font(path: Path, size: int) -> ImageFont.FreeTypeFont:
     return ImageFont.truetype(str(path), size)
 
 
+def _fit_font(path: Path, preferred: int, minimum: int, text: str,
+              max_width: int, *, stroke: int = 0) -> ImageFont.FreeTypeFont:
+    """Keep a one-line field inside its lane without silently wrapping it."""
+    probe = ImageDraw.Draw(Image.new("L", (1, 1), 0))
+    for size in range(preferred, minimum - 1, -2):
+        font = _font(path, size)
+        box = probe.textbbox((0, 0), text, font=font, stroke_width=stroke)
+        if box[2] - box[0] <= max_width:
+            return font
+    return _font(path, minimum)
+
+
 def _draw_text(draw: ImageDraw.ImageDraw, xy: tuple[int, int], text: str,
                *, font: ImageFont.FreeTypeFont, fill: tuple[int, ...],
                stroke: int) -> None:
@@ -113,40 +131,56 @@ def render(kicker: str, headline: str, detail: str, out: Path, *,
     # heavy rectangular backing the account owner explicitly rejected.
     rail_layer = Image.new("RGBA", image.size, (0, 0, 0, 0))
     rail = ImageDraw.Draw(rail_layer)
-    rail.rounded_rectangle((20, 32, 31, 252), radius=6, fill=ACCENT)
-    glow = rail_layer.filter(ImageFilter.GaussianBlur(9))
+    rail.rounded_rectangle((18, 30, 37, 312), radius=9,
+                           fill=TENNIS_YELLOW)
+    rail.rounded_rectangle((18, 30, 37, 112), radius=9, fill=COURT_BLUE)
+    glow = rail_layer.filter(ImageFilter.GaussianBlur(11))
     image.alpha_composite(glow)
     image.alpha_composite(rail_layer)
     draw = ImageDraw.Draw(image)
 
-    x = 62
-    kicker_font = _font(BOLD, 35)
-    headline_size = 92 if variant == "stat" else 84
-    headline_font = _font(DISPLAY if variant in {"stat", "chapter"} else BOLD,
-                          headline_size)
-    metric_font = _font(DISPLAY, 52)
-    detail_font = _font(REGULAR, 40)
+    x = 70
+    kicker_font = _fit_font(BOLD, 56, 48, kicker, WIDTH - x - 28,
+                            stroke=3)
+    metric_font = _fit_font(DISPLAY, 76, 66, metric, 400, stroke=4)
+    metric_width = 0
+    if metric:
+        metric_box = draw.textbbox((0, 0), metric, font=metric_font,
+                                   stroke_width=4)
+        metric_width = metric_box[2] - metric_box[0]
+    headline_size = 144 if variant == "stat" else (132 if variant == "chapter"
+                                                    else 130)
+    headline_path = DISPLAY if variant in {"stat", "chapter"} else BOLD
+    headline_room = WIDTH - x - 28
+    if metric:
+        headline_room -= metric_width + 42
+    headline_font = _fit_font(headline_path, headline_size, 104, headline,
+                              headline_room, stroke=6)
+    detail_font = _fit_font(REGULAR, 60, 50, detail, WIDTH - x - 112,
+                            stroke=4)
 
-    _draw_text(draw, (x, 18), kicker, font=kicker_font,
-               fill=ACCENT, stroke=2)
-    headline_y = 72
-    headline_fill = ACCENT if variant == "stat" else WHITE
+    _draw_text(draw, (x, 14), kicker, font=kicker_font,
+               fill=COURT_BLUE, stroke=3)
+    headline_y = 77
+    headline_fill = TENNIS_YELLOW if variant == "stat" else WHITE
     _draw_text(draw, (x, headline_y), headline, font=headline_font,
-               fill=headline_fill, stroke=5)
+               fill=headline_fill, stroke=6)
 
     if metric:
         box = draw.textbbox((x, headline_y), headline, font=headline_font,
-                            stroke_width=5)
-        metric_x = min(box[2] + 34, WIDTH - 330)
-        _draw_text(draw, (metric_x, headline_y + 25), metric,
-                   font=metric_font, fill=ACCENT, stroke=3)
+                            stroke_width=6)
+        metric_x = box[2] + 34
+        _draw_text(draw, (metric_x, headline_y + 31), metric,
+                   font=metric_font, fill=TENNIS_YELLOW, stroke=4)
 
     # The short hairline connects the evidence line to the headline without
     # enclosing either in a UI-looking panel.
-    draw.rounded_rectangle((x, 218, x + 54, 223), radius=2,
-                           fill=(184, 233, 134, 225))
-    _draw_text(draw, (x + 72, 198), detail, font=detail_font,
-               fill=MUTED, stroke=3)
+    draw.rounded_rectangle((x, 274, x + 72, 281), radius=3,
+                           fill=(225, 255, 74, 235))
+    draw.rounded_rectangle((x, 274, x + 22, 281), radius=3,
+                           fill=(91, 218, 255, 245))
+    _draw_text(draw, (x + 94, 246), detail, font=detail_font,
+               fill=MUTED, stroke=4)
 
     image.save(out)
     return out
@@ -163,7 +197,7 @@ def main() -> int:
     args = ap.parse_args()
     out = render(args.kicker, args.headline, args.detail, Path(args.out),
                  metric=args.metric, variant=args.variant)
-    print(f"已渲 {out}（{WIDTH}×{HEIGHT}，RGBA，无大底板）")
+    print(f"已渲 {out}（{WIDTH}×{HEIGHT}，大字版 RGBA，无大底板）")
     return 0
 
 
