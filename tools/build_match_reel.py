@@ -1556,17 +1556,27 @@ def contact_sheet(path: Path, outdir: Path, *, every: float = 2.0,
     # 只看一段时，缩略图仍然烧**源片的绝对秒数**——挑段的人照着它写 spec，
     # 换算一次就是一次切偏的机会。
     stamps = sheet_stamps(duration, every=every, start=start, stop=stop)
+    # ⚠️ 帧的顺序从这个列表来，**不从 `sorted(glob)` 来**。
+    # 原来写的是 `f{index:03d}.jpg` + `sorted(frames.glob("*.jpg"))`——
+    # 超过 1000 帧之后文件名变成四位，而按字典序 `f1000.jpg` 排在 `f100.jpg`
+    # 后面、`f101.jpg` 前面，于是整墙的顺序被打散。**它一个字都不报**：
+    # 墙照样出得来、每一格照样烧着自己的时间码，只是第 N 张墙上装的不是
+    # 第 N 段时间——而 `sheet_stamps()` 反推「这一秒在第几张第几格」时假定
+    # 的是顺序排列，于是预览和挑段全部指到别的画面上。
+    # 2.4 小时的源片（2893 格）就会踩到；短片子永远踩不到，所以它躺了很久。
+    picked: list[Path] = []
     for index, t in enumerate(stamps):
+        frame = frames / f"f{index:05d}.jpg"
         run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
             "-ss", f"{t:.2f}", "-i", str(path), "-frames:v", "1",
             "-vf", ((f"crop={crop}," if crop else "")
                     + f"scale={tile_w}:-2,"
                     f"drawtext=text='{t:.1f}s':x=8:y=8:fontsize=26:"
                     f"fontcolor=white:box=1:boxcolor=black@0.65:boxborderw=6"),
-            "-q:v", "3", str(frames / f"f{index:03d}.jpg"))
+            "-q:v", "3", str(frame))
+        picked.append(frame)
     sheets: list[Path] = []
     per_sheet = columns * SHEET_ROWS
-    picked = sorted(frames.glob("*.jpg"))
     for n in range(0, len(picked), per_sheet):
         chunk = picked[n:n + per_sheet]
         listing = outdir / f"_sheet{n // per_sheet}.txt"
