@@ -199,7 +199,16 @@ jobs:
           apt_install_cached fonts-noto-cjk fonts-noto-core fonts-noto-color-emoji
           ensure_ffmpeg
       - name: 安装依赖
-        run: pip install -q -e ".[dev,webrender,visualqa]"
+        # ⚠️ `yt-dlp` 单列，不是随手加的：`test_问格式表的模板要是ytdlp真认得的
+        # 语法` 要拿 yt-dlp **自己的模板求值器**离线验一次 `--print` 模板，
+        # 而模板写错的样子是渲成 `NA`——在下游眼里就是「读不出格式表」，和
+        # 「这台机器看不全格式表」长得一模一样，会把人引去追一个不存在的
+        # PO token 问题。CI 上不装它，那条判据只会永远 skip，而
+        # **一条常年跳过的检查和常年红是同一个毛病**。
+        # 顺带把 `test_yt_download按格式落文件` 那条也从「这台机器没装 yt-dlp」
+        # 的 skip 里捞回来——它在 CI 上一直没跑过。
+        # ⚠️ `[default]` 不能省（`test_装yt_dlp一律要带default`）。
+        run: pip install -q -e ".[dev,webrender,visualqa]" "yt-dlp[default]"
       # 与 daily.yml 同环境：装上 Chromium 测真实 HTML 渲染路径，
       # Pillow 兜底路径由 test_cards_fallback_matches_deck_policy 显式覆盖
       - name: 缓存 Chromium（HTML 卡片渲染）

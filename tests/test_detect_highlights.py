@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import os
 import sys
 from pathlib import Path
 
@@ -389,7 +390,18 @@ def test_问格式表的模板要是ytdlp真认得的语法():
 
     拿 yt-dlp 自己的模板求值器离线验一次（不联网，不碰 YouTube）。
     """
-    from yt_dlp import YoutubeDL  # noqa: PLC0415
+    # ⚠️ **CI 上不许 skip。** 本地没装 yt-dlp 的机器跳过没关系，但 CI 是这条
+    # 判据唯一必然会跑的地方——在那儿变成 skip 就等于没有这条判据，而
+    # 「一条常年跳过的检查和常年红是同一个毛病」。`ci.yml` 因此显式装了
+    # yt-dlp；哪天有人把它从那行里拿掉，这里要当场红，不是安静跳过。
+    import pytest  # noqa: PLC0415
+
+    try:
+        from yt_dlp import YoutubeDL  # noqa: PLC0415
+    except ImportError:  # pragma: no cover —— 只在没装 yt-dlp 的本地机器上走到
+        if os.environ.get("CI"):
+            raise
+        pytest.skip("这台机器没装 yt-dlp（CI 上装了，那儿不许跳过）")
 
     d = _tool()
     tmpl = [a for a in _print_template(d) if "formats" in a]
