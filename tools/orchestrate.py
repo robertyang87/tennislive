@@ -358,7 +358,20 @@ def dispatch_plan(cands: list[dict], state: dict) -> list[dict]:
 
 
 def mark_dispatched(state: dict, dispatched: list[dict]) -> None:
+    """记已 dispatch 的 slug，**并记一个不过期的「最近一次真的点过 run」**。
+
+    ⚠️ `last_dispatch_at` 是给监控用的，不是给去重用的。为什么单独记：
+    `dispatched` 里的条目 `STATE_TTL_DAYS` 天后会被 `load_state` 清掉，于是
+    「从来没点过」和「点过但都过期了」在 state 上长得一模一样——而这两件事
+    差着一整条产线。2026-08-25 量出来 orchestrate 定时跑了 330 趟、趟趟
+    success，state 却始终是 `{"dispatched": {}}`：**它每一趟都成功地什么都
+    没做，而没有任何东西能看见这件事**（`pipeline_health` 盯的是工作流绿不绿，
+    而绿正是它坏掉的样子）。这个字段就是那个「看得见」。
+    """
     STATE_PATH.parent.mkdir(parents=True, exist_ok=True)
+    if dispatched:
+        state["last_dispatch_at"] = datetime.now(timezone.utc).strftime(
+            "%Y-%m-%dT%H:%M:%SZ")
     for c in dispatched:
         state.setdefault("dispatched", {})[c["slug"]] = {
             "column": c["column"],

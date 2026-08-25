@@ -49,3 +49,64 @@ def test_oncourt_only_serializes_collect_and_commits_cursor_and_claims():
     assert "group: oncourt-interviews-collect" in collect
     assert "data/oncourt_scan_state.json" in collect
     assert "data/interview_candidate_claims.json" in collect
+
+
+# ── 编排器产出率：这一项测的是**产出**，不是绿不绿（2026-08-25）──────────────
+#
+# 来路：`orchestrate` 定时跑了 330 趟，`conclusion` 趟趟 `success`，而
+# `data/orchestration_state.json` 至今是 `{"dispatched": {}}`——一条 run 都没
+# 点过。本文件原来只统计工作流的成功率和耗时，于是它给这条线打的是满分：
+# **绿正是它坏掉的样子，它每一趟都成功地什么都没做。**
+# 和 `sla_health` 那次幸存者偏差（只统计渲成了的趟）是同一个病高一层。
+
+def test_健康报表要盯编排器有没有产出不是绿不绿(tmp_path):
+    from datetime import datetime, timezone  # noqa: PLC0415
+
+    from tools.pipeline_health import orchestrator_productivity  # noqa: PLC0415
+
+    now = datetime(2026, 8, 25, 12, 0, tzinfo=timezone.utc)
+
+    # ① 从来没点过（今天线上的真实状态）→ 报「从来没有」并告警
+    never = tmp_path / "never.json"
+    never.write_text('{"dispatched": {}}', encoding="utf-8")
+    assert orchestrator_productivity(now, never) == (None, None)
+    report, alerts = render_report([], [], (0, 0, 0.0), [],
+                                   orchestrator_productivity(now, never))
+    assert "从来没有真正点过" in report
+    assert any("从来没点过 run" in a for a in alerts)
+
+    # ② 刚点过 → 不告警
+    fresh = tmp_path / "fresh.json"
+    fresh.write_text('{"dispatched": {}, "last_dispatch_at": '
+                     '"2026-08-25T11:00:00Z"}', encoding="utf-8")
+    at, hours = orchestrator_productivity(now, fresh)
+    assert at == "2026-08-25T11:00:00Z" and abs(hours - 1.0) < 1e-6
+    report, alerts = render_report([], [], (0, 0, 0.0), [], (at, hours))
+    assert "最近一次点 run" in report
+    assert not any("编排器" in a for a in alerts), "刚点过就告警会变成告警风暴"
+
+    # ③ 哑了一整天 → 告警。⚠️ 门槛不能只验 ① —— 只有 ① 的话，把这一支整个
+    #    删掉测试照样绿，而「哑了三天」正是这条线真正会出现的样子。
+    stale = tmp_path / "stale.json"
+    stale.write_text('{"dispatched": {}, "last_dispatch_at": '
+                     '"2026-08-22T12:00:00Z"}', encoding="utf-8")
+    at, hours = orchestrator_productivity(now, stale)
+    assert hours == 72.0
+    _, alerts = render_report([], [], (0, 0, 0.0), [], (at, hours))
+    assert any("没点过 run" in a for a in alerts)
+
+    # ④ **不许拿 `dispatched` 里有没有条目来判**：条目 7 天就过期清掉，
+    #    「从来没点过」和「点过但都过期了」在它上面分不开。
+    expired = tmp_path / "expired.json"
+    expired.write_text('{"dispatched": {"a-b": {"date": "2026-08-25"}}}',
+                       encoding="utf-8")
+    assert orchestrator_productivity(now, expired) == (None, None), \
+        "有条目就当成「点过」了——那正是这个字段要分开的两种情况"
+
+
+def test_健康报表真的把编排器那一项传进去了():
+    """⚠️ 「写了不等于跑过」：函数写对了、`main()` 不传，报表上永远看不见。"""
+    body = Path("tools/pipeline_health.py").read_text("utf-8")
+    call = body[body.index("report, alerts = render_report("):]
+    assert "orchestrator_productivity()" in call[:260], \
+        "main() 没把编排器产出率传给 render_report——这一项等于没装"
