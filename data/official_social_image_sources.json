@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "sources": [
+    {
+      "provider": "official-weibo",
+      "account": "美国网球公开赛",
+      "profile_url": "https://weibo.com/u/6342912608",
+      "public_mirror": "https://www.sina.cn/news/detail/{numeric_status_id}.html",
+      "priority": 1,
+      "notes": "中国球员赛后图组优先；将 sinaimg rendition 改为 /large/ 获取公开原图"
+    },
+    {
+      "provider": "official-x",
+      "account": "US Open Tennis",
+      "profile_url": "https://x.com/usopen",
+      "priority": 2,
+      "notes": "发现 pbs.twimg.com/media 后强制 name=orig；页面受限时记录 blocked，不绕过登录"
+    },
+    {
+      "provider": "official-instagram",
+      "account": "US Open",
+      "profile_url": "https://www.instagram.com/usopen/",
+      "priority": 3,
+      "notes": "从公开 carousel/Reel 页面元数据选择最大 rendition；页面受限时记录 blocked"
+    },
+    {
+      "provider": "usopen-cms",
+      "account": "US Open",
+      "profile_url": "https://www.usopen.org/en_US/news/photos.html",
+      "priority": 4,
+      "notes": "用于当届赛事证明、图片 ID 与摄影师署名；优先与社媒 4000px 版本合并来源"
+    }
+  ]
+}

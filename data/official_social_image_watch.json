@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "watches": [
+    {
+      "id": "2026-usopen-q1-zheng-you",
+      "slug": "zheng-you-us-open-2026-q1",
+      "enabled": true,
+      "event": "2026 US Open qualifying",
+      "players": ["Zheng Qinwen", "You Xiaodi"],
+      "evidence_groups": [
+        ["Zheng Qinwen", "Qinwen Zheng", "郑钦文"],
+        ["You Xiaodi", "Xiaodi You", "尤晓迪", "defeats You"]
+      ],
+      "chinese_player_priority": true,
+      "minimum_long_edge": 1600,
+      "trigger": {
+        "type": "video-ready-cover-pending",
+        "spec": "specs/reels/zheng-you-us-open-2026-q1.json",
+        "render_manifest": "output/2026-08-25/reel/zheng-you-us-open-2026-q1/render.json"
+      },
+      "result_file": "data/official_social_image_results/2026-usopen-q1-zheng-you.json",
+      "asset_dir": "assets/reel/official-social",
+      "active_from": "2026-08-24T00:00:00Z",
+      "active_until": "2026-08-28T23:59:59Z",
+      "sources": [
+        {
+          "provider": "official-weibo",
+          "account": "美国网球公开赛",
+          "url": "https://weibo.com/6342912608/5335796288587293",
+          "verified_for_match": true
+        },
+        {
+          "provider": "official-x",
+          "account": "US Open Tennis",
+          "url": "https://x.com/usopen",
+          "discover_posts": true,
+          "max_posts": 8
+        },
+        {
+          "provider": "official-instagram",
+          "account": "US Open",
+          "url": "https://www.instagram.com/usopen/",
+          "discover_posts": true,
+          "max_posts": 8
+        },
+        {
+          "provider": "usopen-cms",
+          "account": "US Open",
+          "url": "https://www.usopen.org/en_US/news/articles/2026-08-24/photos_from_day_1_of_mens_and_womens_qualifying_at_the_2026_us_open.html"
+        }
+      ]
+    }
+  ]
+}
