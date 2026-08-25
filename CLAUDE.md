@@ -5647,6 +5647,101 @@ CLAUDE.md 早有一条「示意图的触发条件是照片讲不清，不是照�
 账正好反过来（本场抽帧裁出来的人 0.61× 缩小最锐，官方棚拍图 1.55× 放大最软），
 见下面「⚠️ 上面这条只管『整帧铺满』，不管『抠出来的人』」。判据宁可窄，不可宽。
 
+#### ⭐⭐ 大满贯那半边：**美网有自己的图片接口**，页面永远是 JS 壳（2026-08-25 实测）
+
+WTA / ATP 那两条路对大满贯**都不成立**——`photoresources.wtatennis.com` 不收大满贯
+（8 月下旬只有辛辛那提），赛事官网的 WordPress 图库是巡回赛站点才有的东西。
+美网另有一套，**这一轮才挖出来，别再重找**：
+
+    ① 接口表   https://www.usopen.org/en_US/json/gen/config_web.json
+    ② 按球员   …/relatedcontent/rest/v2/uso_v1/en/tag?tags=<playerId>&type=photo&count=200
+    ③ 按日期   …/relatedcontent/rest/v2/uso_v1/en/content/byType/photo?count=200&skip=<n>
+    ④ playerId https://www.usopen.org/en_US/scores/feeds/2026/players/players.json
+               （郑钦文 wta328120、锦织圭 atpn552、安德莱斯库 wta325088、迪米特洛夫 atpd875）
+    ⑤ 图本身   https://photo-assets.usopen.org/images/pics/large/<前缀>_<名>.jpg
+               前缀 t_(缩略) b_(640) c_(960) **f_(1280，就是顶)**
+
+⚠️ **`usopen.org` 的每一个路径都返回同一份 4084 字节的 JS 壳**——`images.usopen.org`、
+`photo-assets.usopen.org` 的目录也一样。只看页面必然得出「这站没有图库」这个错结论，
+而它和「真的没有」长得一模一样。**答案在 `config_web.json` 的接口表里。**
+
+⚠️ **1280×720 是这个赛事的出版上限，不是「没找够」。** 试过十二个前缀
+（`a_ d_ e_ g_ h_ i_ o_ s_ x_ l_ m_ n_`）、六个目录（`xlarge/ orig/ original/ full/
+raw/ huge/`）、三种参数（`?width=4000` / `?w=4000` / `?resize=4000`）——前两组全 404，
+第三组返回 200 但**尺寸一个像素没变**（只换了一次 JPEG 编码，字节数和高频能量会变，
+**别被变大的字节数骗成「拿到大图了」**）。所以大满贯的封面**默认要写 `_low_res_why`**，
+那不是偷懒，是这条渠道的天花板。
+
+⚠️ **②那条按球员 tag 查给的是确定的答案，可以当「真空」的证据用**：郑钦文全部 263 条里
+2026 年**只有两条**，都是 8/24 资格赛（一条比赛中握拳、一条场外签名）。
+「按人查完只有 N 条」比「我搜不到」硬得多。
+
+##### ⭐⭐ 而**稳定**拿美网高清图的那条不是官方接口，是 **USA TODAY 的每日图集**
+
+账号所有者 2026-08-25：「**那你帮我稳定找到美网的高清图片**」。上面那条官方接口
+是**保底**（每场都有、每个人都有），可它封顶 1280×720，铺 1080×1440 只有 0.50×——
+每张都要写 `_low_res_why`，不能算「找到高清图」。真正的主路在 Gannett 那条上：
+
+    python3 tools/find_cover_photo.py --player Alcaraz --event "US Open" --date 2025-09-07
+
+| 这一档 | 美网有没有 | 实测 | 铺 1080×1440 |
+|---|---|---|---|
+| ⭐⭐ **USA TODAY 每日图集** | ✅ 决赛周两辑都有 | **2187 ~ 6283px** | **1.01 ~ 2.91×** |
+| 美网官方图片接口 | ✅ 每场都有（保底） | 1280×720 封顶 | 0.50× |
+| AP 通讯社 | ⚠️ **正赛开打前是零** | —— | —— |
+| WTA `photo-resources` | ❌ 大满贯不进 | —— | —— |
+
+⚠️ **USA TODAY 自己派摄影师去法拉盛**，别指望 `lohud`（那是威郡本地报）。
+说明四要素全齐（`Carlos Alcaraz (ESP) holds the trophy after defeating Jannik
+Sinner (ITA) in the final of mens singles at Billie Jean King National Tennis
+Center.`），署名是 `Robert Deutsch, Imagn Images` 这种，属于四类源第 ③ 档。
+
+⚠️⚠️ **这条渠道原来「整个扫不到」，而它和「美网没有图集」长得一模一样。**
+两处各错一半，两处都不吭声：
+
+- **图集正则写死成 `sports/<年>/`**。Gannett 的路径里赛事名那几段**可有可无**：
+  辛辛那提是 `sports/2026/08/17/…`，美网是 `sports/**tennis**/2025/09/07/…` 和
+  `sports/**tennis/open**/2025/09/06/…`——**美网那一整类一条都扫不到**
+- **`_LOCAL_PAPERS` 里没有能被 `--event "US Open"` 命中的条目**，于是这一档
+  直接「没跑」
+
+⚠️ **正则放宽之后同一天会翻出别的项目**（2025-09-06 那天两辑，另一辑是棒球，
+不筛就拿回 49 张卡尔·里普肯）。按赛事 slug 筛，**但筛掉几辑要报出数来**——
+两头各有一个坑：「非空 ≠ 对题」和「扫得太窄和真的没有长得一模一样」。
+
+⚠️⚠️ **`gannett-cdn.com` 会 406，而那是限流不是「这张图没了」。** 实测同一个 URL
+一分钟内 406 → 200，同一辑里上一分钟还 200 的另一张变成 406——**失败的是哪几张
+一直在换**；12 张连着取只有 4 张成功，1~5 秒的退避重试一次都没救回来（窗口比那长）。
+所以判据是「**换一张再试**」不是「重试这一张」：封面只要一张，一辑三十几张候选，
+走一遍必然拿得到。**别把 406 读成「这张图不存在」然后退回抽帧。**
+
+⚠️ **「AP 对美网是零」是个真的零。** 它的美网前瞻稿配的全是别站资料图（温网、
+蒙特利尔、印第安维尔斯），一张美网都没有——正赛开打之后才会有本场图。
+⚠️ 顺带修了一个静默失效：AP 那道赛事闸原来比的是 `event.split()[0]`，而
+「US Open」的第一个词是 **`us`**——「United States」「Australian」里都有它，
+于是这道闸**对美网整个失效**，拿回来六张全是别站的，看起来却像正常命中。
+现在比整个赛事名，两边都抹掉非字母数字（AP 有时写 `U.S. Open`）。
+
+##### ❌ `usta.veritone.com` 走不通：要账号，而我们没有（2026-08-25 探到底）
+
+它是 USTA 架在 Veritone 上的 **Digital Media Hub**（媒体资产分发门户），
+不是公开图库。和 usopen.org 同一个形状——所有路径回同一份 5310 字节的 SPA 壳，
+接口在 bundle 里：
+
+| 探什么 | 结果 |
+|---|---|
+| 接口主机 | `https://crxextapi.pd.dmh.veritone.com`（`/assets-api` `/cms-api` `/identities-api` `/orders-api`） |
+| **`/assets-api/v1/search`** | **401 Not Authorized**——接口是真的，要令牌 |
+| `/identities-api/v1/session/anonymous` / `/guest` | 404 |
+| `/identities-api/v1/session` | 405 |
+| 登录 | `session/createIncoming` + `userAuthenticationService: "aiware"`，要真账号 |
+| bundle 里那个 Contentful space（`9f7tranrpc7k`） | DMH 产品自己的 CMS（导航条、菜单），**不是照片** |
+
+⚠️ **账号所有者 2026-08-25：「没有账号」**——所以这条路当前是死的，别再探。
+真哪天有账号了，流程是通的（真浏览器登录拿 Bearer token → `/assets-api/v1/search`），
+**但它带着 `/orders-api`**：这类门户的资产通常是按授权申请下发的，
+授权那一关要单独看，不能直接当成公开官方图用。
+
 #### ⭐ 官方高清图上哪儿拿：WTA 这条两步就到（2026-08-16 实测）
 
     ① 有赛后稿   python3 tools/fetch_wta_cover_photo.py --tournament <id> \

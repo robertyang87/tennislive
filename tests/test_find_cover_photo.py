@@ -19,6 +19,7 @@
 """
 from __future__ import annotations
 
+import json
 import sys
 from pathlib import Path
 
@@ -101,6 +102,36 @@ def test_AP按人筛还不够赛事也要对上(monkeypatch):
     assert not any("Shelton" in r["caption"] for r in both + only_player)
 
 
+def test_AP的赛事名要整个比不能只比第一个词(monkeypatch):
+    """⚠️⚠️ **这道闸一度只比赛事名的第一个词，于是它对「US Open」整个失效**——
+    `"US Open".split()[0]` 是 `us`，而「United States」「Australian」「because」
+    里都有它。2026-08-25 实测 `--event "US Open"`：AP 那一档拿回来六张，
+    温网、马德里、法网各有，**一张美网都没有**，而它和「这一档没图」在输出里
+    长得一模一样（CLAUDE.md「非空 ≠ 对题」）。
+
+    ⚠️ 另一头：AP 有时写「U.S. Open」，所以两边都要抹掉非字母数字再比——
+    只做前一半的话，真到了美网又会一张都筛不出来，变成反方向的静默失效。
+
+    ⚠️ 顺带记下当天量到的事实（免得下次把这个零读成 bug）：**AP 的美网前瞻稿
+    配的全是别站的资料图**（温网、蒙特利尔、印第安维尔斯），所以正赛开打之前
+    这一档对美网**本来就该是零**——那是一个真的空，不是筛狠了。
+    """
+    page = _fake_page([
+        ("aa", "Aryna Sabalenka returns the ball to Naomi Osaka in their fourth "
+               "round match at the Wimbledon Tennis Championships in London. (AP Photo/X)"),
+        ("bb", "Aryna Sabalenka poses with the trophy after winning the U.S. Open "
+               "women's singles final in New York. (AP Photo/Y)"),
+    ])
+    index = '<a href="https://apnews.com/article/us-open-tennis-sabalenka-abc123">x</a>'
+    monkeypatch.setattr(
+        fc, "_get",
+        lambda url, timeout=30: page if "/article/" in url else index)
+
+    got = fc.sweep_ap("Sabalenka", "US Open")
+    assert len(got) == 1, [r["caption"][:70] for r in got]
+    assert "U.S. Open" in got[0]["caption"], "写成「U.S. Open」的那张要认得出"
+
+
 def test_当地报纸不许再把域名写死在代码里():
     """这一档原来把 `cincinnati.com` 写死，**于是它在别的站上根本不会跑**——
     而跳过的样子和查空一模一样（同一个坑 08-17 在 `--site` 上刚栽过一次）。
@@ -118,3 +149,88 @@ def test_当地报纸不许再把域名写死在代码里():
     import inspect  # noqa: PLC0415
     sig = inspect.signature(fc.sweep_local_paper)
     assert "paper" in sig.parameters, "报纸域名必须是参数，不能从模块常量拿"
+
+
+def test_图集正则要认得出赛事名那几段():
+    """⚠️⚠️ **这条正则一度写死成 `sports/<年>/`，于是美网那一整类图集被漏掉。**
+
+    2026-08-25 查美网时撞上的：Gannett 的图集路径里，赛事名那几段是**可有可无**
+    的，实测同时存在三种深度——
+
+        /picture-gallery/sports/2026/08/17/photos-cincinnati-open-round-3/<id>/
+        /picture-gallery/sports/tennis/2025/09/07/carlos-alcaraz-…/<id>/
+        /picture-gallery/sports/tennis/open/2025/09/06/aryna-sabalenka-…/<id>/
+
+    老正则只认第一种。**而漏掉的样子和「这一天没有图集」一模一样**——按它扫，
+    美网决赛那两辑（实测原图 6000×4000）一条都翻不出来，然后就会得出
+    「当地报纸这一档对美网没有」这个错结论。
+
+    ⚠️ 另一头也要钉：日期那一段必须还锚着。放成 `.*` 的话
+    `/picture-gallery/` 底下任何一条链接都会被收进来，「非空 ≠ 对题」。
+    """
+    real = [
+        "/picture-gallery/sports/2026/08/17/photos-cincinnati-open-round-3/12345678007/",
+        "/picture-gallery/sports/tennis/2025/09/07/carlos-alcaraz-2025-us-open/86032600007/",
+        "/picture-gallery/sports/tennis/open/2025/09/06/aryna-sabalenka-us-open/86019978007/",
+    ]
+    for path in real:
+        assert fc._GALLERY_RE.findall(f'<a href="{path}">x</a>'), f"扫不到 {path}"
+
+    # 反面：不带日期的栏目页不许被当成图集
+    for wrong in ["/picture-gallery/sports/tennis/",
+                  "/story/sports/tennis/2025/09/07/carlos-alcaraz/86032600007/"]:
+        assert not fc._GALLERY_RE.findall(f'<a href="{wrong}">x</a>'), f"不该扫到 {wrong}"
+
+    # 只许有一个出处——两处各写一遍必分叉（索引页和 sitemap 各扫一次）
+    src = (ROOT / "tools" / "find_cover_photo.py").read_text(encoding="utf-8")
+    code = "\n".join(l for l in src.splitlines() if not l.lstrip().startswith("#"))
+    assert code.count("picture-gallery/sports/(?:") == 1, (
+        "图集正则又抄成了两份——索引页和 sitemap 必须共用同一个")
+
+
+def test_美网也要有一份当地报纸():
+    """美网这一站落在 `lohud`（威郡本地报）名下是查不到图的——**USA TODAY 自己
+    派摄影师去法拉盛**，2025 决赛周那两辑实测原图 6000×4000 / 6283×4189，
+    比 WTA `photo-resources` 那档（4000px）还高一档。
+
+    ⚠️ 判据钉的是「`--event "US Open"` 查得到一份报纸」，不是钉死某个域名：
+    查不到的话这一档会**整个不跑**，而它在输出里和「查空」长得一模一样
+    （同一个坑在 `--site` 和写死 `cincinnati.com` 上各栽过一次）。
+    """
+    hit = [dom for city, dom in fc._LOCAL_PAPERS.items() if city in "us open"]
+    assert hit, "`--event \"US Open\"` 在 _LOCAL_PAPERS 里查不到报纸，这一档会静默不跑"
+
+
+def test_报纸那一档筛掉的辑数要报出来(monkeypatch):
+    """⚠️ 正则放宽之后，同一天翻到的图集**不止这项运动**：USA TODAY 2025-09-06
+    那天两辑里只有一辑是网球，另一辑是棒球（卡尔·里普肯），不筛就拿回 49 张
+    不对题的图——「非空 ≠ 对题」。
+
+    但筛掉的必须**报出数来**（CLAUDE.md「打印被丢弃的原因和数量」），否则
+    「筛窄了」和「这一天真的只有这些」又分不开。
+
+    ⚠️ 判据**真跑一遍这个函数**，不查源码里有没有那几个字：第一版是查文本的，
+    把 `notes` 整个换成 `[]` 它照样绿——「查源码文本的断言只能防有人把它删了，
+    防不住它从来没工作过」。
+    """
+    tennis = "/picture-gallery/sports/tennis/2025/09/06/aryna-sabalenka-us-open/86019978007/"
+    ball = "/picture-gallery/sports/mlb/2025/09/06/cal-ripken-2131/85997145007/"
+
+    def fake_get(url, timeout=0):
+        if "/sitemap/" in url or "/search/" in url:
+            return f'<a href="{tennis}">a</a><a href="{ball}">b</a>'
+        who = "Aryna Sabalenka" if "sabalenka" in url else "Cal Ripken"
+        return ('<script type=application/ld+json>'
+                + json.dumps({"image": [{"url": "https://www.usatoday.com/gcdn/x.jpg",
+                                         "caption": f"{who} at it", "copyrightHolder": "USA TODAY"}]})
+                + "</script>")
+
+    monkeypatch.setattr(fc, "_get", fake_get)
+    got = fc.sweep_local_paper("www.usatoday.com", "US Open", None, "2025-09-06")
+    caps = [r["caption"] for r in got["rows"]]
+    assert caps and all("Sabalenka" in c for c in caps), f"棒球那辑没筛掉：{caps}"
+    assert any("2 辑" in n and "1 辑" in n for n in got["notes"]), (
+        f"筛掉一辑却没报出来：{got['notes']}")
+
+    # 原图域名要换过（`www.usatoday.com/gcdn/` 恒 406）
+    assert all(r["url"].startswith("https://www.gannett-cdn.com/") for r in got["rows"])
