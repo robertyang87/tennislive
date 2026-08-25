@@ -33,7 +33,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 from tennislive.digest import build_digest  # noqa: E402
 from tennislive.models import MatchStatus  # noqa: E402
 from tennislive.render.rating import (  # noqa: E402
-    TOUR_FOCUS_LEVELS, _level_of, is_upset, match_score)
+    TOUR_FOCUS_LEVELS, UPSET_LOSER_MAX_RANK, _level_of, is_upset, match_score)
 from tennislive.zh import player_name_en  # noqa: E402
 from tennislive.zh.terms import round_zh  # noqa: E402
 
@@ -159,9 +159,46 @@ def hot_enough(m) -> str:
         return "热点名单"
     if (round_zh(m.round_name) or "") in {"决赛", "半决赛"}:
         return "半决赛及以上"
-    if m.status.is_final and is_upset(m):
+    if m.status.is_final and _upset_worth_telling(m):
         return "爆冷"
     return ""
+
+
+def _upset_worth_telling(m) -> bool:
+    """`is_upset` 之上再要一条：**输的那个人得排得进前 30**。
+
+    ⚠️ 来路是量出来的，不是拍的。2026-08-25 拿 8 天真实赛果扫了一遍
+    `hot_enough` 判成「爆冷」的场次，**6 场里 5 场只靠 `is_upset` 的种子支
+    中**——而那条支路（`l.seed and not w.seed`）一个名次差都不要求：
+
+        #92 胜 #88（差 4 位）   #29 胜 #23（差 6 位）
+        #50 胜 #36（差 14 位）  #92 胜 #72（差 20 位）   ? 胜 #86
+
+    这些是巡回赛首轮的常态，不是冷门。`is_upset` 自己的 docstring 就写着
+    「标准太松会让"爆冷"标签泛滥失去意义」——种子支恰好绕过了它为此设的
+    那道 30 位线。而账号所有者 2026-08-15 点名否掉过同一个形状：
+    「博尔特这种没有话题啊，排名也不高没必要做」（#71 对 #89 首轮），
+    2026-08-16 又明说**「他是种子」不许当 `_heat_why`**。
+
+    **门槛不是新发明的**：`UPSET_LOSER_MAX_RANK` 就是 `is_upset` 名次支
+    本来就在用的那个 30，这里只是让种子支也守同一条线。那 6 场样本里
+    名次落在 25 和 36 之间是一道干净的缝——留下的两场（输家 #23 的凯斯、
+    输家 #25 的波塔波娃）都是真做得出片子的，被拦的四场都不是。
+
+    ⚠️ **排名读不出来时按「不算爆冷」处置。** 「没依据」不该变成「放行」
+    ——这条支路的噪音正是这么来的。而排名整条断掉的情形不会静默：
+    `_report_rank_coverage` 会当场把覆盖率喊出来（0% 时还带 ::warning::）。
+
+    ⚠️ **只收紧调度侧，`rating.is_upset` 一个字没动**——内容雷达的评分还按
+    老口径用它，这里问的是更窄的一个问题：这条值不值得做成一条片子。
+    """
+    if not is_upset(m):
+        return False
+    losers = m.loser_players() or []
+    if not losers:
+        return False
+    rank = getattr(losers[0], "rank", None)
+    return rank is not None and rank <= UPSET_LOSER_MAX_RANK
 
 
 def _match_date(m) -> str:

@@ -214,7 +214,8 @@ def probe_meta(url: str, timeout: int = 120) -> tuple | None:
     """
     cmd = ["yt-dlp", "--skip-download", "--js-runtimes", "node",
            *_cookie_args(),
-           "--print", "%(channel)s ||| %(duration)s ||| %(height)s", url]
+           "--print", "%(channel)s ||| %(duration)s ||| %(height)s"
+                      " ||| %(formats.:.height)s", url]
     for _ in range(2):
         try:
             proc = subprocess.run(cmd, capture_output=True, text=True,
@@ -227,9 +228,33 @@ def probe_meta(url: str, timeout: int = 120) -> tuple | None:
         if " ||| " not in line:
             continue
         parts = line.split(" ||| ")
-        return (_opt(parts[0]), _dur(parts[1]),
-                _dur(parts[2]) if len(parts) > 2 else None)
+        ladder = _ladder(parts[3]) if len(parts) > 3 else []
+        # ⚠️ **取整条格式表的最高档，不是默认选中那一档。**
+        # `%(height)s` 报的是默认 format 选择器挑中的那一档；换个 player
+        # client（有没有 cookies、有没有 PO token 都会换）挑法就变，同一条
+        # 视频能报出完全不同的数。而这道闸问的是「这条源**有没有** 1080p」，
+        # 那是格式表的属性，不是选中项的属性。取 max 两头都不亏：真有 1080p
+        # 就认得出，格式表本来就被截断了 max 也还是低档，不会假装有。
+        best = max(ladder) if ladder else None
+        sel = _dur(parts[2]) if len(parts) > 2 else None
+        height = best if best is not None else sel
+        return (_opt(parts[0]), _dur(parts[1]), height, ladder)
     return None
+
+
+def _ladder(v: str | None) -> list[float]:
+    """`%(formats.:.height)s` 打出来的那串高度，解成一列数。
+
+    yt-dlp 把列表渲成 `[360, 720, 1080]` 或 `[None, 360, ...]`（纯音频没有
+    height）。**解不出来返回空列表，不抛**——它是诊断料，不许把探测带崩。
+    """
+    out: list[float] = []
+    for tok in re.findall(r"\d+(?:\.\d+)?", _opt(v) or ""):
+        try:
+            out.append(float(tok))
+        except ValueError:
+            continue
+    return out
 
 
 def vet_candidate(url: str, event: str = "") -> tuple[str, str]:
@@ -246,7 +271,8 @@ def vet_candidate(url: str, event: str = "") -> tuple[str, str]:
     if meta is None:
         return "wait", (f"  [vet] {url} 元数据探不到（重试过一次）——"
                         "先不用，下一班再探（这不是「还没探到集锦」）")
-    channel, duration, height = meta
+    channel, duration, height = meta[0], meta[1], meta[2]
+    ladder = meta[3] if len(meta) > 3 else []
     if channel is not None and not channel_ok(channel, event):
         return "reject", (f"  [vet] {url} 频道「{channel}」不在官方白名单，"
                           "搬运号不用（三大官方 / 赛事官方频道才算）")
@@ -255,9 +281,19 @@ def vet_candidate(url: str, event: str = "") -> tuple[str, str]:
                           f"{MAX_HIGHLIGHT_SECONDS}s，像 Day N 合集不是单场集锦")
     if height is None or height < MIN_SOURCE_HEIGHT:
         got = f"{height:.0f}p" if height is not None else "读不出分辨率"
+        # ⚠️ **把整条格式表打出来，别只报一个数。** 2026-08-25 撞到的：同一条
+        # 视频（`Tvnwn11S4zo`），runner 上两趟相隔 35 分钟都报 360p，而沙箱
+        # 同一时段读到 1080p——**「这条源真的只有 360p」和「我们这台机器只看得
+        # 见 360p」在一个数上长得一模一样**，而两者的处置完全相反（一个是等，
+        # 一个是这条链断了）。格式表分得开：只有 [360] 是被截断，
+        # [144,240,360,720,1080] 里挑出 360 才是选择器的问题。
+        rung = ("、".join(f"{h:.0f}p" for h in sorted(set(ladder)))
+                if ladder else "读不出格式表")
         return "wait", (f"  [vet] {url} **有集锦但只有 {got}，等 1080p**"
                         "——这不是「还没探到」，是「先不用」（账号所有者 "
-                        "2026-08-18：没有 1080p 就等），下一班再探")
+                        f"2026-08-18：没有 1080p 就等），下一班再探。"
+                        f"整条格式表：{rung}"
+                        "（只有低档 = 这台机器看不全，不是源片只有这些）")
     return "ok", ""
 
 

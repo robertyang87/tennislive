@@ -288,9 +288,48 @@ def test_调度侧热度预筛拦住无名对局():
         "霍达尔是 Rafael Jodar；Fils 是菲斯，按音译猜会认错人")
     assert o.hot_enough(_match2(round_name="Semifinals")) == "半决赛及以上"
     upset = _match2(home="Sonay Kartal", away="Marketa Vondrousova",
-                    h_country="GBR", a_country="CZE", a_seed=6, winner=0,
-                    round_name="Round of 64")
+                    h_country="GBR", a_country="CZE", a_rank=25, a_seed=6,
+                    winner=0, round_name="Round of 64")
     assert o.hot_enough(upset) == "爆冷", "非种子掀翻种子要走爆冷那个出口"
+
+
+def test_爆冷这条出口要求输的那个人排得进前30():
+    """种子支（`l.seed and not w.seed`）一个名次差都不要求，于是巡回赛首轮的
+    常态被判成「爆冷」。2026-08-25 拿 8 天真实赛果量过：`hot_enough` 判成爆冷
+    的 6 场里 **5 场只有种子支中**，名次差 4 / 6 / 14 / 20 位——
+    `#29 胜 #23`、`#92 胜 #88` 这种。账号所有者 2026-08-15 点名否掉过同一个
+    形状（「博尔特这种没有话题啊，排名也不高没必要做」），2026-08-16 又明说
+    「他是种子」不许当 `_heat_why`。
+
+    门槛复用 `is_upset` 名次支本来就在用的那个 30，不另发明一个数。
+    """
+    o = _tool()
+
+    def _seed_fall(w_rank, l_rank):
+        # 输的那个是 6 号种子、赢的那个没种子 —— is_upset 的种子支必中
+        return _match2(home="Winner Name", away="Loser Name",
+                       h_rank=w_rank, a_rank=l_rank, a_seed=6, winner=0,
+                       round_name="Round of 64")
+
+    from tennislive.render.rating import is_upset
+    # 判据自己的判据：这两场**都**过得了 is_upset 的种子支——被拦下只能是
+    # 因为新加的名次线，不是因为它们本来就不算冷门。
+    keeps, drops = _seed_fall(208, 25), _seed_fall(50, 36)
+    assert is_upset(keeps) and is_upset(drops), "两场都要先自证种子支中了"
+
+    assert o.hot_enough(keeps) == "爆冷", "输家排进前 30（波塔波娃 #25）要留住"
+    assert o.hot_enough(drops) == "", (
+        "输家 #36、只差 14 位（帕里胜韦基奇那种）不算爆冷——"
+        "这正是 2026-08-25 量到的那 5 场噪音")
+
+    # 排名读不出来时按「不算爆冷」处置：「没依据」不许变成「放行」。
+    blind = _match2(home="Winner Name", away="Loser Name",
+                    a_seed=6, winner=0, round_name="Round of 64")
+    assert is_upset(blind), "fixture 要先自证种子支中了"
+    assert o.hot_enough(blind) == "", "排名读不出来就没有依据说它是爆冷"
+
+    # 只收紧调度侧：rating.is_upset 一个字没动，内容雷达那边照旧。
+    assert is_upset(drops), "rating.is_upset 不许被这条改动连坐"
 
 
 def test_调度侧热度线和渲染侧那道闸是同一个数():
