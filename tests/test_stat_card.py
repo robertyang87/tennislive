@@ -20,6 +20,13 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 import render_stat_card as sc  # noqa: E402
 
 
+def test_截图前必须等头像完整解码():
+    """大头像固定等 400ms 会留下“上半张脸、下半块底色”的半解码截图。"""
+    body = inspect.getsource(sc.render)
+    assert "img.decode()" in body
+    assert body.index("img.decode()") < body.index("tab.screenshot")
+
+
 def test_hi_lo_pct_frac四种方向都算对():
     """`_stat_row` 是这张图唯一的判优逻辑，四种类型各自的方向要分别验证：
     hi 大的赢、lo 小的赢、pct/frac 比率大的赢，平手一律不点亮任何一侧。"""
