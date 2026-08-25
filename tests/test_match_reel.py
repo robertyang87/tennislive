@@ -8089,6 +8089,20 @@ def test_屏幕上的数字不许把字吃掉():
             "一个没写完的数")
 
 
+def test_旁白里的百分号要在dry_run前拦住():
+    """屏幕可以写 49%，中文配音原文必须写「百分之四十九」。"""
+    reel = _reel()
+    spec = json.loads(
+        Path("specs/reels/zheng-you-us-open-2026-q1.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    spec["segments"][2]["narration"] = "拿下了她四十九%的发球分。"
+
+    with pytest.raises(reel.ReelError, match="百分之四十九"):
+        reel.validate_spec(spec)
+
+
 def test_百分之要换成百分号不许换成一百分之():
     """`swiatek-arango` 渲完抽帧才看见的：屏幕上写着「一发得分率是100分之100」。
 
