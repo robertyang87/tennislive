@@ -819,9 +819,15 @@ def main() -> int:
         poster = poster_url(outdir)
     else:
         print(f"[封面] {outdir / POSTER_NAME} 不在，这次推送没有海报那一屏")
-    # 数据统计对照图是可选的一屏——只有 spec 里写了 `stats` 字段才会渲出
-    # `stat_card.jpg`（render() 末尾那道显式认领的逻辑）。大多数存量片子没有
-    # 这个文件，那就安静地不出现这一屏，不报错也不当成缺陷。
+    # 账号所有者 2026-08-25 定：赛场之上的微信推送必须带全场技术统计图。
+    # 这道闸放在真正发送之前，查产物而不是查 spec：即使上游误删了 `stats`
+    # 字段，也不能让一条缺数据图的消息静默发出去。其他栏目仍按原规则可选。
+    if column == "赛场之上" and not (outdir / STAT_CARD_NAME).is_file():
+        raise SystemExit(
+            f"赛场之上推微信必须带全场技术统计图：缺少 "
+            f"{outdir / STAT_CARD_NAME}。补齐 spec.stats 和双方头像、重新 render 后再推。"
+        )
+    # 非赛场之上栏目仍是可选的一屏；有文件就带上。
     stat_card = ""
     if (outdir / STAT_CARD_NAME).is_file():
         stat_card = stat_card_url(outdir)
