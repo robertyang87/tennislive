@@ -1105,6 +1105,20 @@ _NO_SLATE_YET = {
     # 归 `_CLOCK_MINUTE_LEGACY`（tests/test_reel_editorial.py）认领，这儿只是
     # 连带撞上；已发不为措辞重渲，两处一起挂账。
     "tiafoe-musetti-cincinnati-2026-qf",
+    # 同上：`zheng-you-us-open-2026-q1` 2026-08-25T01:53:09Z 已经推过微信
+    # （run 32799209180，`pushed.json` 在仓库里）。开场那段旁白给了「北京时间
+    # 八月二十五号凌晨」和「美网资格赛女单首轮」——北京时间、日期、轮次三样有
+    # 两样半，**唯独没给钟点**，所以撞在「开球时刻」这一条上。
+    # ⚠️ 而补录时顺手核出来的比这条判据说的更糟：**那个日期本身就偏了**。
+    # 开球是**北京 8/24 23:15**（美东 8/24 11:15，US Open 资格赛当日 11:00 ET
+    # 第一场的档期），结束是北京 8/25 00:43——旁白那句「八月二十五号凌晨」
+    # 描述的是**收场**那一侧，不是开球。两条独立自证：flashscore `AD`→`AO`
+    # 差 88 分钟，和 US Open 官方 feed 的 `duration: "1:28"` 分秒不差；
+    # 而 11:15 ET 正落在资格赛当日的首场档期上。
+    # （按 CLAUDE.md「开球时刻只说个大概」那条，正确写法是「夜里十一点多」。）
+    # 挂进来同样不是原谅，是记账——已发的片子不为措辞重渲，音轨和字幕都烧
+    # 进去了；这一条只管以后新写的 spec 不再这么写。
+    "zheng-you-us-open-2026-q1",
 }
 
 # 收尾没落在一问上、而且**已经发出去了**的。只许减不许加，底下有自检。
@@ -1113,6 +1127,10 @@ _ENDING_LEGACY = {
     "eala-parks",
     # `shang-darderi-montreal-2026` 收在「四比五，他救下两个赛点。」这句数据上。
     "shang-darderi-montreal-2026",
+    # `zheng-you-us-open-2026-q1` 收在「……零次被破发，是这场胜利最硬的答案。」
+    # 这句数据上。它 2026-08-25T01:53:09Z 已经推过微信（run 32799209180），
+    # 收尾那句烧在音轨和字幕里，不为措辞重渲。
+    "zheng-you-us-open-2026-q1",
 }
 
 
@@ -1127,11 +1145,10 @@ def test_赛场之上开场要给出北京时间赛事和轮次():
     """
     import re  # noqa: PLC0415
 
+    offenders, bad = set(), []
     for path in sorted(Path("specs/reels").glob("*.json")):
         spec = json.loads(path.read_text("utf-8"))
         if (spec.get("cover") or {}).get("eyebrow") != "赛场之上":
-            continue
-        if path.stem in _NO_SLATE_YET:
             continue
         # **不再要求它必须是第 0 段。** 账号所有者 2026-08-02 定了冷开场：
         # 「还是走之前先出获胜后的动作和表情，然后再介绍比赛过程」——坐标于是
@@ -1153,18 +1170,38 @@ def test_赛场之上开场要给出北京时间赛事和轮次():
                 break
             opening += seg.get("narration", "")
             used += float(seg["end"]) - float(seg["start"])
-        assert opening.strip(), f"{path.stem} 整条片子一句中文旁白都没有"
-        assert "北京时间" in opening, f"{path.stem} 开场没说是北京时间：{opening}"
         # ⚠️ **`两` 必须在这个字集里。** 两点钟中文只说「两点」，没人说「二点」——
         # 而第一版的字集里只有「二」，于是「凌晨两点十分」被判成**没给开球时刻**。
         # 这是一条**假阴性**：它不会告诉你「我拦错了」，只会逼下一个人把对的
         # 写法改成错的（判据宁可窄，不可宽——但窄不等于漏掉唯一正确的那个写法）。
-        assert re.search(r"[一二三四五六七八九十两〇零百]+\s*[点时]", opening), \
-            f"{path.stem} 开场没给开球时刻：{opening}"
-        assert re.search(r"[月][一二三四五六七八九十]+[号日]", opening), \
-            f"{path.stem} 开场没给日期：{opening}"
-        assert re.search(r"(强|轮|决赛|资格赛)", opening), \
-            f"{path.stem} 开场没给轮次：{opening}"
+        why = None
+        if not opening.strip():
+            why = "整条片子一句中文旁白都没有"
+        elif "北京时间" not in opening:
+            why = f"开场没说是北京时间：{opening}"
+        elif not re.search(r"[一二三四五六七八九十两〇零百]+\s*[点时]", opening):
+            why = f"开场没给开球时刻：{opening}"
+        elif not re.search(r"[月][一二三四五六七八九十]+[号日]", opening):
+            why = f"开场没给日期：{opening}"
+        elif not re.search(r"(强|轮|决赛|资格赛)", opening):
+            why = f"开场没给轮次：{opening}"
+        if why is None:
+            continue
+        offenders.add(path.stem)
+        if path.stem not in _NO_SLATE_YET:
+            bad.append(f"{path.stem} {why}")
+
+    assert not bad, "这些「赛场之上」开场没交代坐标：\n  " + "\n  ".join(bad)
+
+    # ⚠️ **豁免表要自证它豁免的是真的还在违规。** 这张表的注释从第一天起就
+    # 写着「只许减不许加」，**而在 2026-08-25 之前没有任何东西去证明这一点**
+    # ——名字写错、或者那条片子后来补上了坐标，它都会变成一盏永远亮着的绿灯，
+    # 而绿灯和「真的守住了」长得一模一样。同一个形状这个仓库栽过
+    # （`_LEGACY_AMBIGUOUS_POINT` 那次），`_ENDING_LEGACY` 早就配了这一段。
+    stale = _NO_SLATE_YET - offenders
+    assert not stale, (
+        f"{sorted(stale)} 已经不违规了（或者名字写错了），从豁免表里删掉——"
+        "这张表只许减不许加")
 
 
 def test_音频那套不许接进出片流程():
