@@ -6765,10 +6765,35 @@ def main() -> int:
         # 就是在写 spec 那一刻把返工挡住。
         return 1 if hard else 0
 
-    render(spec, outdir,
-           voice=args.voice, rate=args.rate,
-           source_override=Path(args.source) if args.source else None,
-           cover_only=args.cover_only)
+    # **每一趟都要在台账上留一行，成功失败都留。** 原来只有成功那一趟留得下
+    # 痕迹：`report_timings()` 是 `render()` 的最后一行，中途抛异常就走不到；
+    # `production_sla` 写在 `render.json` 里，而 `render.json` 是渲成了才写的。
+    # 于是统计口径天生只有成功那一半——2026-08-24 当天 `output/2026-08-24/reel/`
+    # 下 4 份 render.json **全是 `met: true`**，而 match-reel 同一天真实跑了
+    # 二十多趟、好几趟白烧（详见 `tools/pipeline_timing.py` 的模块 docstring）。
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    import pipeline_timing  # noqa: PLC0415
+
+    started = time.perf_counter()
+    outcome, error = "success", None
+    try:
+        render(spec, outdir,
+               voice=args.voice, rate=args.rate,
+               source_override=Path(args.source) if args.source else None,
+               cover_only=args.cover_only)
+    except BaseException as exc:
+        outcome, error = type(exc).__name__, str(exc)[:500]
+        raise
+    finally:
+        # 成功那一趟 `render()` 末尾已经打过这张表，别打第二遍；失败那一趟它
+        # 走不到，在这儿补——**「跑到哪一步、花在哪儿」正是失败时最想知道的**。
+        if outcome != "success":
+            report_timings()
+        pipeline_timing.write(outdir, pipeline_timing.build_record(
+            pipeline="match-reel", slug=Path(args.spec).stem,
+            mode="cover" if args.cover_only else "render",
+            outcome=outcome, error=error, stages=list(_TIMINGS),
+            elapsed_seconds=time.perf_counter() - started))
     return 0
 
 
