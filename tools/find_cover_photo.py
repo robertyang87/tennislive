@@ -31,6 +31,29 @@ CLAUDE.md「封面大图一律用官方高清实拍」那条的配套工具。�
 这一档在别的站上**根本不会跑**，而它跳过的样子和查空一模一样。现在按城市查
 `_LOCAL_PAPERS`，查不到就明说没跑。
 
+## ⭐⭐ 美网要「稳定」拿到高清图，走这一条：**USA TODAY 的每日图集**
+
+账号所有者 2026-08-25：「**那你帮我稳定找到美网的高清图片**」。四条渠道逐条
+量下来，美网这一站能当主路的只有一条，而它一开始**整个扫不到**（正则和
+`_LOCAL_PAPERS` 两处各错一半，见下面那两个常量的注释）：
+
+| 这一档 | 美网有没有 | 实测尺寸 | 铺 1080×1440 |
+|---|---|---|---|
+| ⭐⭐ **USA TODAY 每日图集** | ✅ **决赛周两辑都有** | **2187 ~ 6283px** | **1.01 ~ 2.91×** |
+| 美网官方图片接口 | ✅ **每场都有（保底）** | 1280×720 **封顶** | 0.50×，要写 `_low_res_why` |
+| AP 通讯社 | ⚠️ **正赛开打前是零** | —— | 见下 |
+| WTA `photo-resources` | ❌ 大满贯不进 WTA 图库 | —— | —— |
+
+    python3 tools/find_cover_photo.py --player Alcaraz --event "US Open" --date 2025-09-07
+
+⚠️ **「AP 对美网是零」是一个真的零，别读成 bug**：2026-08-25 量过，AP 的美网
+前瞻稿**配的全是别站的资料图**（温网、蒙特利尔、印第安维尔斯），一张美网都没有
+——正赛开打之后它才会有本场图。
+
+⚠️ **官方接口那一档是保底不是主路**：它每场都有、每个球员都有（阿尔卡拉斯
+1523 条、萨巴伦卡 2110 条），但 `f_` 前缀就是顶，1280×720。**先走 USA TODAY，
+它没有这一场再退回官方接口并写 `_low_res_why`。**
+
 ## 查得通的渠道（都实测过）
 
 1. **WTA `photo-resources`**——文件名自带四要素
@@ -163,6 +186,7 @@ CLAUDE.md「封面大图一律用官方高清实拍」那条的配套工具。�
 from __future__ import annotations
 
 import argparse
+import datetime as _dt
 import html as html_mod
 import json
 import re
@@ -188,6 +212,29 @@ _PHOTO_RE = re.compile(
 _CDN = "https://photoresources.wtatennis.com/"
 
 # 扫 WTA 那一头要走的入口。**单条视频页比列表页多带图**，所以列表页只是起点。
+# ⭐⭐ **大满贯那一档：美网有自己的图片接口。**
+#
+# WTA / ATP 那两条路对大满贯**都不成立**——`photoresources.wtatennis.com`
+# 不收大满贯（8 月下旬只有辛辛那提），赛事官网的 WordPress 图库是巡回赛
+# 站点才有的东西（`discover` 敲过 11 个官网，只有辛辛那提开着 WP REST）。
+#
+# ⚠️ **`usopen.org` 的每一个路径都返回同一份 4084 字节的 JS 壳**——
+# `images.usopen.org`、`photo-assets.usopen.org` 的目录也一样。只看页面
+# 必然得出「这站没有图库」，而**那个错结论和「真的没有」长得一模一样**。
+# 答案在 `/en_US/json/gen/config_web.json` 的接口表里。
+#
+# ⚠️ **1280×720 是这个赛事的出版上限，不是「没找够」。** 试过十二个前缀
+# （`a_ d_ e_ g_ h_ i_ o_ s_ x_ l_ m_ n_`）、六个目录（`xlarge/ orig/
+# original/ full/ raw/ huge/`）、三种参数（`?width=4000` / `?w=4000` /
+# `?resize=4000`）——前两组全 404，第三组**返回 200 但尺寸一个像素没变**
+# （只换了一次 JPEG 编码，字节数会变大，**别被那个数骗成「拿到大图了」**）。
+# 新闻条目和照片条目是同一套四档，也证实了这一点。
+# 所以大满贯封面**默认就要写 `_low_res_why`**。
+_USO = "https://www.usopen.org"
+_USO_REST = _USO + "/relatedcontent/rest/v2/uso_v1/en"
+_USO_PLAYERS = _USO + "/en_US/scores/feeds/{year}/players/players.json"
+_USO_PREFIX = {"small": "t_", "medium": "b_", "large": "c_", "xlarge": "f_"}
+
 _WTA_PAGES = (
     "https://www.wtatennis.com/videos/highlights",
     "https://www.wtatennis.com/videos",
@@ -279,6 +326,21 @@ def sweep_wta(player: str | None, event: str | None, day: str | None) -> list[di
 
 _GANNETT_CDN = "https://www.gannett-cdn.com/"
 
+#: ⚠️⚠️ **这个正则一度写死成 `sports/<年>/`，于是整类图集被漏掉。**
+#: 2026-08-25 查美网时撞上的：Gannett 的图集路径在赛事名那一段是**可有可无的**，
+#: 实测同时存在三种形状——
+#:
+#:     /picture-gallery/sports/2026/08/17/photos-cincinnati-open-round-3/<id>/
+#:     /picture-gallery/sports/**tennis**/2025/09/07/carlos-alcaraz-.../<id>/
+#:     /picture-gallery/sports/**tennis/open**/2025/09/06/aryna-sabalenka-.../<id>/
+#:
+#: 老正则只认第一种，于是**美网那一整类一条都扫不到**，而它报出来的样子
+#: 和「这一天没有图集」一模一样（CLAUDE.md「扫得太窄和真的没有长得一模一样」）。
+#: 中间那几段允许 0~3 层，日期那一段仍然锚死——不锚的话 `/picture-gallery/` 底下
+#: 任何一条链接都会被收进来。判据 `test_图集正则要认得出赛事名那几段`。
+_GALLERY_RE = re.compile(
+    r"/picture-gallery/sports/(?:[a-z0-9-]+/){0,3}\d{4}/\d{2}/\d{2}/[a-z0-9-]+/\d+/")
+
 #: ⭐ **办赛城市 → 当地那份 Gannett／USA TODAY 网络的报纸。**
 #:
 #: 这条渠道原来把 `cincinnati.com` **写死**在代码里，也就是说它只对辛辛那提
@@ -304,6 +366,9 @@ _LOCAL_PAPERS = {
     "phoenix": "www.azcentral.com",
     "newport": "www.providencejournal.com",
     "new york": "www.lohud.com",                 # 美网这一带的 Gannett 报
+    # ⚠️ 美网别指望 lohud（那是威郡本地报，不派人去法拉盛）——USA TODAY 自己
+    #    派摄影师，2025 决赛周那两辑实测 **6000×4000**，比 WTA 那档还大一档。
+    "us open": "www.usatoday.com",
 }
 
 
@@ -312,19 +377,30 @@ def gannett_original(url: str) -> str:
 
     ⚠️ `https://www.cincinnati.com/gcdn/authoring/…` 和
     `https://www.usatoday.com/gcdn/…` **恒 406**（带不带 Referer 都一样）；
-    换成 `https://www.gannett-cdn.com/authoring/…` 才是无水印原图（实测 4813×3209）。
-    取的时候还要带 `Accept: image/*`。
+    换成 `https://www.gannett-cdn.com/authoring/…` 才是无水印原图（实测 4813×3209，
+    美网那两辑到 **6283×4189**）。取的时候还要带 `Accept: image/*`。
+
+    ⚠️⚠️ **换完域名之后仍然会撞 406，而那是限流不是「这张图没了」。**
+    2026-08-25 实测：同一个 URL 一分钟内 406 → 200，而同一辑里上一分钟还 200 的
+    另一张变成了 406——**失败的是哪几张一直在换**。12 张连着取只有 4 张成功，
+    而且 1~5 秒的退避重试一次都没救回来（窗口比那长）。
+    所以判据是「**换一张再试**」，不是「重试这一张」：封面只要一张，一辑有三十几
+    张候选，走一遍必然拿得到。**别把 406 读成「这张图不存在」然后退回抽帧。**
     """
     return re.sub(r"^https://[a-z0-9.-]+/gcdn/", _GANNETT_CDN, url)
 
 
 def sweep_local_paper(paper: str, event: str | None, player: str | None,
-                      day: str | None) -> list[dict]:
-    """扫当地报纸的每日图集：说明自带四要素，原图 4800px 级。
+                      day: str | None) -> dict:
+    """扫当地报纸的每日图集：说明自带四要素，原图 4800~6000px 级。
 
     `paper` 是报纸域名（`www.cincinnati.com`）——**以前这个值写死在代码里**，
     于是这条渠道只对辛辛那提成立；现在从 `_LOCAL_PAPERS` 查或者用 `--paper` 给。
     `day` 给 `2026-08-16` 这种；不给就把索引页上翻得到的图集都看一遍。
+
+    返回 `{"rows": [...], "notes": [...]}`。⚠️ **`notes` 不是装饰**：这一档
+    一天能翻出十几辑（USA TODAY 2025-09-06 那天连棒球带网球一起），按赛事名
+    筛掉的那些必须报出数来——CLAUDE.md「打印被丢弃的原因和数量」。
     """
     site = f"https://{paper.lstrip('https://').lstrip('/')}"
     query = (event or "tennis").replace(" ", "%20")
@@ -332,7 +408,7 @@ def sweep_local_paper(paper: str, event: str | None, player: str | None,
     galleries: list[str] = []
     try:
         idx = _get(f"{site}/search/?q=photos%20{query}", timeout=40)
-        galleries += re.findall(r"/picture-gallery/sports/\d{4}/\d{2}/\d{2}/[a-z0-9-]+/\d+/", idx)
+        galleries += _GALLERY_RE.findall(idx)
     except Exception:                                           # noqa: BLE001
         pass
     if days:
@@ -341,15 +417,34 @@ def sweep_local_paper(paper: str, event: str | None, player: str | None,
                  "october november december").split()[int(m) - 1]
         try:
             sm = _get(f"{site}/sitemap/{y}/{month}/{int(d)}/", timeout=40)
-            galleries += re.findall(
-                r"/picture-gallery/sports/\d{4}/\d{2}/\d{2}/[a-z0-9-]+/\d+/", sm)
+            galleries += _GALLERY_RE.findall(sm)
         except Exception:                                       # noqa: BLE001
             pass
 
+    notes: list[str] = []
+    found = sorted(set(galleries))
+    if days:
+        found = [g for g in found if f"/{days[0].replace('-', '/')}/" in g]
+
+    # ⚠️ **同一天的图集不止这项运动。** 正则放宽到认得出 `sports/tennis/…`
+    # 之后，USA TODAY 2025-09-06 那天一次翻出 5 辑，网球只占 1 辑，其余是棒球
+    # ——不筛的话拿回来 49 张卡尔·里普肯。按赛事 slug 筛，**但要报出筛掉几辑**：
+    # 「非空 ≠ 对题」和「扫得太窄和真的没有长得一模一样」这两个坑各在一头。
+    picked = found
+    if event and found:
+        slug = re.sub(r"[^a-z0-9]+", "-", event.lower()).strip("-")
+        hit = [g for g in found if slug and slug in g]
+        if hit:
+            picked = hit
+            if len(hit) < len(found):
+                notes.append(f"这一天翻到 {len(found)} 辑，按「{slug}」筛剩 "
+                             f"{len(hit)} 辑（其余是别的项目）")
+        else:
+            notes.append(f"这一天翻到 {len(found)} 辑，**没有一辑的名字里带"
+                         f"「{slug}」**——下面这些是同日全部图集，自己看对不对题")
+
     out: list[dict] = []
-    for path in sorted(set(galleries)):
-        if days and f"/{days[0].replace('-', '/')}/" not in path:
-            continue
+    for path in picked:
         try:
             html = _get(site + path, timeout=60)
         except Exception:                                       # noqa: BLE001
@@ -376,7 +471,7 @@ def sweep_local_paper(paper: str, event: str | None, player: str | None,
                         "credit": img.get("copyrightHolder"),
                         "url": gannett_original(img["url"]),
                     })
-    return out
+    return {"rows": out, "notes": notes}
 
 
 _AP = "https://apnews.com"
@@ -397,6 +492,117 @@ def ap_original(dims_url: str) -> str | None:
         dims_url.replace("&amp;", "&")).query)
     got = (q.get("url") or [None])[0]
     return got if got and got.startswith("http") else None
+
+
+def usopen_player_ids(player: str, year: str) -> list[dict]:
+    """把球员名解析成美网的 `playerId`（`wta328120` / `atpn552` 这种）。
+
+    ⚠️ **返回全部同姓命中，不替调用方挑一个。** 同一站两个中国选手都姓 Wang
+    时挑错人，在产物上和挑对了长得一模一样（CLAUDE.md 那条老坑）。
+    """
+    try:
+        raw = json.loads(_get(_USO_PLAYERS.format(year=year), timeout=40))
+    except Exception:                                           # noqa: BLE001
+        return []
+    people = raw.get("players") if isinstance(raw, dict) else raw
+    want = player.lower().strip()
+    out = []
+    for p in people or []:
+        first = (p.get("first_name") or "").strip()
+        last = (p.get("last_name") or "").strip()
+        full = f"{first} {last}".strip()
+        if not p.get("id"):
+            continue
+        # ⚠️ **按词集匹配，不按词序。** players.json 是「名 姓」
+        # （`Qinwen Zheng`），而中文习惯和 flashscore 都写「姓 名」——
+        # 用 `want in full` 会把 `Zheng Qinwen` 判成查无此人，而那个空结果
+        # 和「这一年还没发图」长得一模一样（2026-08-25 第一版就是这么错的）。
+        toks = [t for t in re.split(r"[\s,]+", want) if t]
+        low = full.lower()
+        if (want == last.lower()
+                or (toks and all(t in low for t in toks))):
+            out.append({"id": p["id"], "name": full,
+                        "country": p.get("nation_code") or p.get("country") or ""})
+    return out
+
+
+def sweep_usopen(player: str | None, date: str | None, year: str) -> dict:
+    """美网官方图片接口。**这一档是保底：每场都有，但封顶 1280×720。**
+
+    两条路：给了球员就按 `playerId` 的 tag 查（**结果是确定的**，可以拿来当
+    「真空」的证据用——郑钦文全部 263 条里 2026 年只有两条，8/24 资格赛的
+    握拳和场外签名各一张）；没给就按日期扫 `byType/photo`。
+
+    文件名自带日期戳（`USTA<资产号>_<YYYYMMDD>_<摄影师机身>.jpg`），
+    `description` 里四要素 ＋ 署名全齐，例如：
+
+        「Qinwen Zheng reacts during a women's qualifying singles match during
+         Fan Week as part of the 2026 US Open at USTA Billie Jean King National
+         Tennis Center on Monday, August 24, 2026 in Flushing, NY.
+         (Photo by David Nemec/USTA)」
+    """
+    def rows_of(payload: str) -> list[dict]:
+        try:
+            body = json.loads(payload)
+        except Exception:                                       # noqa: BLE001
+            return []
+        out = []
+        for it in body.get("content") or []:
+            imgs = (it.get("images") or [{}])[0]
+            stamp = it.get("displayDate") or it.get("sortDate") or 0
+            try:
+                day = _dt.datetime.utcfromtimestamp(stamp / 1000).strftime("%Y-%m-%d")
+            except Exception:                                   # noqa: BLE001
+                day = ""
+            out.append({"cms": it.get("cmsId") or "", "date": day,
+                        "title": it.get("title") or "",
+                        "caption": it.get("description") or "",
+                        "credit": imgs.get("credit") or "",
+                        "url": imgs.get("xlarge") or imgs.get("large") or ""})
+        return out, body.get("totalRows")
+
+    found: list[dict] = []
+    notes: list[str] = []
+    who = usopen_player_ids(player, year) if player else []
+    if player and not who:
+        notes.append(f"players.json 里没有叫 {player!r} 的人——"
+                     f"**先怀疑查询词**（要姓或姓名，不是 slug），再怀疑没有照片")
+    for person in who:
+        try:
+            payload = _get(f"{_USO_REST}/tag?tags={person['id']}"
+                           f"&type=photo&count=200&skip=0", timeout=40)
+        except Exception as exc:                                # noqa: BLE001
+            notes.append(f"{person['name']}（{person['id']}）取不到：{exc}")
+            continue
+        rows, total = rows_of(payload)
+        mine = [r for r in rows if r["date"].startswith(year)]
+        notes.append(f"{person['name']}（{person['id']}，{person['country']}）"
+                     f"：全部 {total} 条，其中 {year} 年 {len(mine)} 条")
+        found.extend(mine)
+    if not player:
+        for skip in (0, 200, 400):
+            try:
+                payload = _get(f"{_USO_REST}/content/byType/photo"
+                               f"?count=200&skip={skip}", timeout=40)
+            except Exception:                                   # noqa: BLE001
+                break
+            rows, _ = rows_of(payload)
+            found.extend(rows)
+    if date:
+        found = [r for r in found if r["date"] == date]
+    seen, uniq = set(), []
+    for r in found:
+        if r["cms"] in seen:
+            continue
+        seen.add(r["cms"])
+        uniq.append(r)
+    uniq.sort(key=lambda r: r["date"], reverse=True)
+    return {"rows": uniq, "notes": notes}
+
+
+def _event_key(text: str) -> str:
+    """赛事名归一：抹掉非字母数字，`U.S. Open` 和 `US Open` 都变成 `usopen`。"""
+    return re.sub(r"[^a-z0-9]+", "", text.lower())
 
 
 def sweep_ap(player: str | None, event: str | None, limit: int = 8) -> list[dict]:
@@ -482,7 +688,14 @@ def sweep_ap(player: str | None, event: str | None, limit: int = 8) -> list[dict
             # 多伦多半决赛（两张，还是斯瓦泰克赢的那场）——**每一张都是她，
             # 每一张都不是这一场**。这正是 Getty 那条「看见就先查说明」的同一个坑，
             # 只不过 AP 把说明直接给了，所以能机筛。
-            if event and event.split()[0].lower() not in cap.lower():
+            # ⚠️⚠️ **这里一度写的是 `event.split()[0]`，而它对「US Open」
+            # 退化成了「us」——「United States」「Australian」里都有，
+            # 于是这道闸对美网整个失效。** 2026-08-25 实测：`--event "US Open"`
+            # 拿回来六张，温网、马德里、法网各有，**一张美网都没有**，
+            # 而它和「这一档没图」在输出里长得一模一样。
+            # 现在比**整个赛事名**，两边都抹掉非字母数字（AP 有时写「U.S. Open」，
+            # 抹完两边都是 usopen）。
+            if event and _event_key(event) not in _event_key(cap):
                 continue
             out.append({"article": url, "caption": cap, "url": orig})
     return out
@@ -640,6 +853,8 @@ def main() -> int:
                                     "_LOCAL_PAPERS 查；查不到就跳过这一档并说明）")
     ap.add_argument("--discover", help="**新赛事的第一条命令**：敲一遍这个赛事"
                                        "官网有没有照片接口，别再手搓 curl")
+    ap.add_argument("--year", default="2026",
+                    help="美网那一档按哪一年查（默认 2026）")
     args = ap.parse_args()
 
     if args.discover:
@@ -684,6 +899,34 @@ def main() -> int:
         print(f"  {r['caption'][:160]}")
         print(f"     {r['url']}")
 
+    # ⭐⭐ **大满贯这一档：只有美网有，而且它是保底——每场都有，但封顶 1280×720。**
+    # 上面 WTA 那一档**不收大满贯**，下面赛事官网那一档要 WordPress，
+    # 而美网不是 WordPress 站。所以这三档对美网只有这一条走得通。
+    is_uso = bool(args.event and "us open" in args.event.lower())
+    if is_uso:
+        print("\n=== 美网官方图片接口（保底：每场都有；⚠️ 封顶 1280×720）")
+        res = sweep_usopen(args.player, args.date, args.year)
+        for n in res["notes"]:
+            print(f"  · {n}")
+        rows = res["rows"]
+        if not rows:
+            print("  没有对得上的。⚠️ 分清两件事：**「还没发」**（夜场的官方图约 24 "
+                  "小时才上线）和**「真的没有」**——上面那行「全部 N 条，其中 <年> "
+                  "M 条」就是判据，M=0 才是这一年真没有。")
+        for r in rows[:10]:
+            print(f"  {r['date']}  {r['title'][:46]}")
+            print(f"     {r['caption'][:150]}")
+            print(f"     {r['credit']} · {r['url']}")
+        if rows:
+            print("  ⚠️ `xlarge`（`f_` 前缀）就是顶，1280×720，铺 1080×1440 只有 "
+                  "0.50×——**这一档的图默认要写 `cover.portrait._low_res_why`**。"
+                  "十二个前缀、六个目录、三种 `?width=` 参数都试过（第三组返回 200 "
+                  "但尺寸一个像素没变），别再重探。")
+    else:
+        print("\n=== 美网官方图片接口　⚠️ **这一档没跑**")
+        print("  `--event` 里没有 `US Open`。大满贯不进 WTA/ATP 图库，"
+              "美网另有自己的接口——查美网请传 --event \"US Open\"。")
+
     # ⚠️ 这一档以前把 `cincinnati.com` 写死在代码里，也就是**只对辛辛那提成立**。
     # 现在按办赛城市查 `_LOCAL_PAPERS`，查不到就明说这一档没跑——
     # 跳过的那一档和查空的那一档在输出里长得一模一样（上面 `--site` 那次的教训）。
@@ -695,7 +938,10 @@ def main() -> int:
                 break
     if paper:
         print(f"\n=== {paper} 每日图集（说明自带四要素，原图 4800px 级）")
-        enq = sweep_local_paper(paper, args.event, args.player, args.date)
+        got = sweep_local_paper(paper, args.event, args.player, args.date)
+        enq = got["rows"]
+        for note in got["notes"]:
+            print(f"  ⚠️ {note}")
         if not enq:
             print("  没有对得上的。⚠️ 这一辑**按比赛日出**，当天的往往次日才上线；"
                   "而且它和赛事图库一样偏主球场——**有这条渠道不等于有这个人**。")
@@ -762,6 +1008,7 @@ def main() -> int:
     # 的人要照抄这份清单，不许写成「四类源都翻过」——没跑的那一档不算翻过。
     ran = ["WTA photo-resources", "AP 通讯社"]
     skipped = []
+    (ran if is_uso else skipped).append("美网官方图片接口")
     (ran if paper else skipped).append("当地报纸每日图集")
     (ran if args.site else skipped).append("赛事官网 WordPress 媒体库")
     print("\n=== 这一趟查了什么")
