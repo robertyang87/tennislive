@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>8.25 赛场之上 | 七记ACE，也有七次双误</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>美网资格赛女单首轮，郑钦文6-3、6-2击败尤晓迪，拿下重返美网的第一关。
+
+这场球最鲜明的不是“全面稳定”，而是“关键分稳定”。郑钦文的一发一旦落区，29分赢下26分，得分率达到90%；但她全场同时送出7次双误，其中6次集中在第二盘。一发进球率也从首盘的稳定表现降到第二盘47%，复出后的发球上限和波动，在一场球里同时出现。
+
+技战术上，郑钦文的思路很直接：大力发球争取免费分，再用正手抢第一拍。尤晓迪缺少同等级的发球杀伤，更多通过顶深回球、延长底线回合，等待郑钦文主动进攻时犯错。可郑钦文在接发端同样占优，拿下尤晓迪55个发球分里的27分，最终6次破发机会兑现4次。
+
+真正的转折出现在第二盘4-2。尤晓迪在郑钦文发球局先后拿到4个破发点，只要兑现一个，比分就会重新咬住；郑钦文却把4个全部救回，保发到5-2。随后她在尤晓迪发球局再度施压，赛点上等到对手正手失误，6-2结束比赛。
+
+全场郑钦文轰出7记ACE，也有7次双误；一发得分率90%，二发得分率只有46%。但她自己面对的4个破发点全部救回，整场没有丢掉一个发球局。这是状态仍有起伏的证据，也是她为什么能两盘过关的答案。
+
+比赛用时1小时28分钟，郑钦文总得分65比45领先。美网资格赛还要连赢三场才能进入正赛，这只是第一关。
+
+#网球时差 #美网 #郑钦文 #尤晓迪 #网球</textarea>
+    </section>
+    
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
