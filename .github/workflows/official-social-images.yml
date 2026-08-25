@@ -20,13 +20,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          # HEAD 上 `output/` 一个多 G，全量 checkout 每次白等一分半，
-          # 而**这条工作流一个字节都不碰它**。照 assets.yml 那段挡在外面。
-          # ⚠️ 这里没有 `git sparse-checkout add`——它不写 `output/`；
-          # 它写的 data/ assets/ specs/ 都已经在下面这张单子里了。
+          # **别把 output/ 拉下来**——这条工作流一个字节都不碰它，而全量 checkout
+          # 要多等一分半。照 assets.yml 那段；它也不写产物，所以不需要
+          # `git sparse-checkout add`。判据 `test_不碰产物的工作流不许把output拉下来`。
           sparse-checkout: |
             assets
             data
+            docs
             specs
             src
             tests
@@ -59,13 +59,12 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           if git status --short -- data/official_social_image_results assets/reel/official-social specs/reels | grep -q .; then
-            # ⚠️ 名字/邮箱必须是 Claude / noreply@anthropic.com：GitHub 认不出的
-            # 邮箱会把提交标成 Unverified（`test_提交产物的工作流一律用Claude的身份`）。
             git config user.name "Claude"
             git config user.email "noreply@anthropic.com"
             git add data/official_social_image_results assets/reel/official-social specs/reels
-            # ⚠️ 会 git commit 就要挂体积闸：渲完一整趟才被 GitHub 拒收
-            # （单文件 >100 MiB 服务端硬拒）是最贵的失败。
+            # 体积闸：这一步会往仓库里塞官方原图（4000px 级），而 GitHub 单文件
+            # 100 MiB 是服务端硬拒——在 push 那一刻才被拒是最贵的失败。
+            # 判据 `test_every_workflow_that_commits_generated_files_has_a_size_gate`。
             python tools/check_staged_file_sizes.py
             git commit -m "assets: land monitored official cover photo"
             git pull --rebase origin main
