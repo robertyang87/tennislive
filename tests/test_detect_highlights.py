@@ -323,3 +323,99 @@ def test_等1080p不许退到TennisTV剪短版但搬运号要退(monkeypatch):
                             "Cincinnati", 2026) == ("https://tennistv/x",
                                                     "tennistv-short")
     assert touched, "搬运号那条本身不能用，备选链要照旧走"
+
+
+def test_分辨率取整条格式表的最高档不是默认选中那一档(monkeypatch):
+    """⚠️ 来路：2026-08-25 同一条视频（`Tvnwn11S4zo`），**runner 上两趟相隔
+    35 分钟都报 360p，而沙箱同时段读到 1080p**——比赛 5 小时前就打完了，
+    不是转码没跟上。
+
+    `%(height)s` 报的是**默认 format 选择器挑中的那一档**，而挑法随 player
+    client 变（有没有 cookies、有没有 PO token 都会换客户端）。这道闸问的是
+    「这条源**有没有** 1080p」——那是格式表的属性，不是选中项的属性。
+
+    取 max 两头都不亏：真有 1080p 就认得出；格式表本来就被截断了，max 也还是
+    低档，不会假装有。
+    """
+    d = _tool()
+
+    calls = []
+
+    def _fake(cmd, capture_output, text, timeout):
+        calls.append(cmd)
+
+        class R:
+            returncode = 0
+            stdout = ("WTA ||| 379.0 ||| 360 ||| [144, 240, 360, 720, 1080]\n")
+        return R()
+
+    monkeypatch.setattr(d.subprocess, "run", _fake)
+    meta = d.probe_meta("https://youtu.be/x")
+    assert meta[2] == 1080.0, (
+        "选中项是 360、格式表里有 1080——要按格式表判，不然这条源永远等不到")
+    assert meta[3] == [144.0, 240.0, 360.0, 720.0, 1080.0]
+    # 判据自己的判据：格式表真的是问出来的，不是猜的
+    assert any("%(formats.:.height)s" in " ".join(c) for c in calls), (
+        "没把格式表打进 --print 的话，上面那个 1080 是从哪来的？")
+
+
+def test_分辨率不够时要把整条格式表打出来(monkeypatch):
+    """**「这条源真的只有 360p」和「我们这台机器只看得见 360p」在一个数上
+    长得一模一样**，而两者处置完全相反：一个是等下一班，一个是这条链断了。
+    格式表分得开——只有 [360] 是被截断，[144…1080] 里挑出 360 才是选择器问题。
+    """
+    d = _tool()
+
+    monkeypatch.setattr(d, "probe_meta",
+                        lambda u, timeout=120: ("WTA", 300.0, 360.0,
+                                                [144.0, 360.0]))
+    verdict, why = d.vet_candidate("https://youtu.be/x", "Monterrey")
+    assert verdict == "wait"
+    assert "144p、360p" in why, f"格式表没打出来：{why}"
+
+    # 读不出格式表也要说清楚，别打一个空串让人以为「表是空的」
+    monkeypatch.setattr(d, "probe_meta",
+                        lambda u, timeout=120: ("WTA", 300.0, 360.0, []))
+    _v, why2 = d.vet_candidate("https://youtu.be/x", "Monterrey")
+    assert "读不出格式表" in why2, why2
+
+
+def test_问格式表的模板要是ytdlp真认得的语法():
+    """⚠️ **判据自己的判据。** 上面两条测试喂的是我自己拼的假 stdout——它们
+    证明「解析对」，证不了「yt-dlp 真会这么打」。模板写错的样子是
+    `%(formats.:.height)s` 原样出现在输出里（或者整段渲成 NA），而那在
+    `_ladder` 眼里就是「读不出格式表」——**和「这台机器看不全」长得一模一样**，
+    于是我们会去追一个不存在的 PO token 问题。
+
+    拿 yt-dlp 自己的模板求值器离线验一次（不联网，不碰 YouTube）。
+    """
+    from yt_dlp import YoutubeDL  # noqa: PLC0415
+
+    d = _tool()
+    tmpl = [a for a in _print_template(d) if "formats" in a]
+    assert tmpl, "probe_meta 的 --print 里没有格式表那一段"
+
+    ydl = YoutubeDL({"quiet": True, "simulate": True})
+    info = {"channel": "WTA", "duration": 379.0, "height": 360,
+            "formats": [{"height": None}, {"height": 144}, {"height": 360},
+                        {"height": 720}, {"height": 1080}]}
+    out = ydl.evaluate_outtmpl("".join(tmpl), info)
+    parts = out.split(" ||| ")
+    assert d._ladder(parts[-1]) == [144.0, 360.0, 720.0, 1080.0], (
+        f"yt-dlp 渲出来的是 {out!r}，`_ladder` 解不出整条格式表")
+
+
+def _print_template(d) -> list[str]:
+    """从 `probe_meta` 的源码里把 `--print` 后面那几段字符串抠出来。
+
+    ⚠️ 用 AST 不用正则：这个模块的注释和 docstring 里反复写着
+    `%(formats.:.height)s`（那正是记教训的地方），按文本扫会扫到注释，
+    而「把坑记下来」不该被当成「代码里有这一段」。
+    """
+    import ast  # noqa: PLC0415
+    import inspect  # noqa: PLC0415
+
+    tree = ast.parse(inspect.getsource(d.probe_meta))
+    return [n.value for n in ast.walk(tree)
+            if isinstance(n, ast.Constant) and isinstance(n.value, str)
+            and "%(" in n.value]
