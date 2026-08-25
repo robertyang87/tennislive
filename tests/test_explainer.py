@@ -3611,7 +3611,22 @@ def test_封面不许再压一层居中的阴影(tmp_path):
 
     repo = Path(__file__).resolve().parents[1]
     white = repo / "assets" / "_scrim_probe_white.png"
-    Image.new("RGB", (2000, 1500), (255, 255, 255)).save(white)
+    # ⚠️ **这张探针图不能是纯白的**，虽然「纯白」才是量压暗曲线最自然的底。
+    # 2026-08-24 `96301d2` 加了一道闸：图片顶部/底部 40% 的 stddev < 1.5 就判
+    # 「像加载/裁切未完成」（拦的是拿纯灰纯白画布补齐的半张照片，是对的）。
+    # 而纯白画布的 stddev 恒等于 0，**这条判据自己造的探针图第一个撞上它**——
+    # main 因此连红了 8 个提交、14 个小时。
+    #
+    # 改成横向 248→255 的浅渐变：band stddev 2.00 过闸，而**量的那一条
+    # （最左 3% 列）几乎不受影响**——基线 alpha 0.0275，对「正中 ≤ 0.20」
+    # 这一头绰绰有余；对「底部 ≥ 0.40」那一头只会更宽松，而真把底部那段
+    # 压暗拆掉时读数是 0.0275，照样离 0.40 很远，判据没有被削弱。
+    #
+    # **别再「顺手」改回 `Image.new(..., (255,255,255))`**——那会立刻把 CI 打红。
+    import numpy as _np
+    _w, _h = 2000, 1500
+    _ramp = _np.tile(_np.linspace(248, 255, _w).astype("uint8"), (_h, 1))
+    Image.fromarray(_np.dstack([_ramp] * 3), "RGB").save(white)
     seg = ExplainerSegment(
         kind="cover", label="网球冷知识", title="这一屏只用来量压暗曲线",
         narration="", image=f"assets/{white.name}",
