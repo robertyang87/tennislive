@@ -19,6 +19,18 @@ jobs:
     timeout-minutes: 8
     steps:
       - uses: actions/checkout@v4
+        with:
+          # HEAD 上 `output/` 一个多 G，全量 checkout 每次白等一分半，
+          # 而**这条工作流一个字节都不碰它**。照 assets.yml 那段挡在外面。
+          # ⚠️ 这里没有 `git sparse-checkout add`——它不写 `output/`；
+          # 它写的 data/ assets/ specs/ 都已经在下面这张单子里了。
+          sparse-checkout: |
+            assets
+            data
+            specs
+            src
+            tests
+            tools
 
       - uses: actions/setup-python@v5
         with:
@@ -47,9 +59,14 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           if git status --short -- data/official_social_image_results assets/reel/official-social specs/reels | grep -q .; then
-            git config user.name "tennislive-bot"
-            git config user.email "tennislive-bot@users.noreply.github.com"
+            # ⚠️ 名字/邮箱必须是 Claude / noreply@anthropic.com：GitHub 认不出的
+            # 邮箱会把提交标成 Unverified（`test_提交产物的工作流一律用Claude的身份`）。
+            git config user.name "Claude"
+            git config user.email "noreply@anthropic.com"
             git add data/official_social_image_results assets/reel/official-social specs/reels
+            # ⚠️ 会 git commit 就要挂体积闸：渲完一整趟才被 GitHub 拒收
+            # （单文件 >100 MiB 服务端硬拒）是最贵的失败。
+            python tools/check_staged_file_sizes.py
             git commit -m "assets: land monitored official cover photo"
             git pull --rebase origin main
             git push
