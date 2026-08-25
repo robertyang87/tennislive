@@ -7988,6 +7988,62 @@ def test_片尾口播说的话画面上要印得全():
         "读者听到的和看到的会是两句话")
 
 
+def test_渲染失败也要在耗时台账上留一行():
+    """**只统计成功那一趟，等于统计不到真正贵的那部分。**
+
+    2026-08-24 复盘量出来的：那天 `output/2026-08-24/reel/` 下 4 份
+    `render.json` **全是 `met: true`**、中位 346s，`pipeline_health.sla_health()`
+    看过去一片绿；而同一天 `match-reel` 真实跑了二十多趟——
+    `gauff-pegula-cincinnati-2026-final` 渲了三趟（两趟白烧、约 14.5 分钟机器
+    时间），`zheng-us-open-outlook` 从早到晚渲推了五轮。
+
+    根子是两样计时**都只在成功那一趟才落地**：`report_timings()` 是 `render()`
+    的最后一行，中途抛异常就走不到；`production_sla` 写在 `render.json` 里，
+    而 `render.json` 是渲成了才写的。又一次「只在成功时出声的检查，没法证明
+    它真的看过」。
+
+    判据钉两头（**只测行为拦不住位置错**，这条本文件反复栽过）：
+
+    1. **行为**：失败那一行要记得下 outcome、死在哪一步、每一步花了多久；
+       报表要把「渲了几趟、白烧多少」摆出来——那正是今天那份报表缺的数
+    2. **位置**：写台账那句必须在 `finally:` 里（在 `try` 里就又只剩成功那半），
+       而且失败那一支要补打 `report_timings()`，不然耗时明细照旧丢掉
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import pipeline_timing  # noqa: PLC0415
+
+    # ① 行为：失败那一行留得住「死在哪一步」
+    bad = pipeline_timing.build_record(
+        pipeline="match-reel", slug="demo", mode="render", outcome="ReelError",
+        error="数字静音", stages=[("下载源片", 100.9), ("分段编码", 47.0)],
+        elapsed_seconds=439.0)
+    assert bad["outcome"] == "ReelError"
+    assert bad["last_stage"] == "分段编码", (
+        "失败那一行没记住走到哪一步——死在「下载源片」和死在「成片编码」"
+        "浪费的机器时间差一个量级，混在一起统计什么都看不出来")
+    # 同名步骤（每段切片那种）要合并，否则十几行淹掉重点
+    assert bad["stage_seconds"]["下载源片"] == 100.9
+
+    ok = pipeline_timing.build_record(
+        pipeline="match-reel", slug="demo", mode="render", outcome="success",
+        stages=[("下载源片", 100.0)], elapsed_seconds=396.0)
+    report = pipeline_timing.summarize([ok, bad])
+    assert "失败 1 趟" in report, f"报表把失败那一半吞了：\n{report}"
+    assert "白烧" in report and "2 趟" in report, (
+        f"报表没算「这条片子渲了几趟、白烧多少」——那正是今天缺的那个数：\n{report}")
+
+    # ② 位置：写台账在 finally 里，且失败那一支补打了耗时明细
+    src = Path("tools/build_match_reel.py").read_text(encoding="utf-8")
+    tail = src[src.index("    started = time.perf_counter()\n    outcome"):]
+    finally_at = tail.index("finally:")
+    assert "pipeline_timing.write(" in tail[finally_at:], (
+        "写台账那句不在 finally 里——那它就又只在成功那一趟才执行，"
+        "而这条判据要拦的恰恰是「统计口径只剩成功那一半」")
+    assert "report_timings()" in tail[finally_at:tail.index("pipeline_timing.write(")], (
+        "失败那一支没补打 report_timings()——`render()` 末尾那次走不到，"
+        "耗时明细照旧丢在最想看它的时候")
+
+
 def test_口播尾音渐弱不许被算成片尾要停多久(tmp_path):
     """gauff-pegula-cincinnati-2026-final 两次独立渲染，片尾逐秒响度表
     一字不差（run 32681014183 / 32684580629）——`OUTRO_NARRATION` 走 TTS
