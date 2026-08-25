@@ -5194,6 +5194,20 @@ def validate_spec(
     if photo:
         raise ReelError(photo)
     segments = parse_segments(spec, urls, next(iter(urls)))
+    raw_percent = [
+        (index, seg.narration)
+        for index, seg in enumerate(segments, 1)
+        if re.search(r"[%％]", seg.narration)
+    ]
+    if raw_percent:
+        detail = "\n".join(
+            f"- 第 {index} 段：{text}" for index, text in raw_percent
+        )
+        raise ReelError(
+            "旁白里不能直接写 `%` / `％`：中文配音会把符号读坏。"
+            "请写成「百分之四十九」；字幕渲染仍会显示成 `49%`。\n"
+            f"{detail}"
+        )
     check_archival_fit(spec, segments)
     return segments
 
