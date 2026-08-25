@@ -414,6 +414,45 @@ def assemble_draft(c: dict, *, skip: bool = False) -> list[str]:
                 "——不影响 probe，终审时手动补"]
 
 
+def _report_rank_coverage(dig) -> None:
+    """把「这一轮打分到底有没有排名这一维」打出来。
+
+    ⚠️ **来路：排名整条取不到，而它一个字都不吭声。** 2026-08-25 量出来
+    `sources/rankings.py` 走的 ESPN 接口 runner 和沙箱都 403，于是每个球员的
+    `rank` 都是 `None`——而 `match_score()` 的热度分档（`top_rank<=10`/`<=30`）
+    和爆冷判定（`w.rank - l.rank >= 30`）全靠它。**打分是瞎的，而候选列表照样
+    打印得整整齐齐**，跟正常那天长得一模一样。
+
+    `fetch_rankings` 失败时只有一句 `logger.warning`，而这条线上没人读日志——
+    「只在成功时出声的检查，没法证明它真的看过」的又一个面。这一行是那个
+    「看得见」：0% 就是在瞎打分，该当场知道。
+    """
+    # ⚠️ **这是仪器，不是闸**：喂进来什么形状都不许把编排器带崩
+    #（和 `tools/pipeline_timing.py` 同一条——会让生产失败的埋点，
+    # 下一个人一定会把它拆掉）。
+    tot = hit = 0
+    by: dict[str, list[int]] = {}
+    matches = []
+    for attr in ("results", "live", "schedule"):
+        matches += list(getattr(dig, attr, None) or [])
+    for m in matches:
+        for p in list(getattr(m, "home", None) or []) + list(getattr(m, "away", None) or []):
+            tot += 1
+            tour = getattr(getattr(m, "tour", None), "value", "?")
+            row = by.setdefault(tour, [0, 0])
+            row[1] += 1
+            if p.rank is not None:
+                hit += 1
+                row[0] += 1
+    if not tot:
+        return
+    detail = "，".join(f"{k} {v[0]}/{v[1]}" for k, v in sorted(by.items()))
+    print(f"[排名] 覆盖 {hit}/{tot} 名球员（{detail}）")
+    if not hit:
+        print("::warning::一个球员都没有排名——`match_score` 的热度分档和爆冷"
+              "判定这一轮全是瞎的，候选顺序不可信。先查 sources/rankings.py。")
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("--apply", action="store_true",
@@ -427,6 +466,7 @@ def main() -> int:
     args = ap.parse_args()
 
     dig = build_digest(_beijing_today())
+    _report_rank_coverage(dig)
     cands = candidates(dig)
     if args.column:
         cands = [c for c in cands if c["column"] == args.column]

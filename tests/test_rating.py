@@ -21,7 +21,7 @@ from tennislive.render.rating import (
     top_results,
 )
 from tennislive.render.titles import daily_lead_match, flash_headline, title_candidates
-from tennislive.sources.rankings import RankEntry, Rankings, _parse, rank_map
+from tennislive.sources.rankings import RankEntry, Rankings, rank_map
 
 from conftest import make_match
 
@@ -512,29 +512,20 @@ def test_lead_story_score_does_not_reward_an_upset():
     assert all("爆冷" not in reason and "冷门" not in reason for reason in upset_reasons)
 
 
-def test_rankings_parse_and_map():
-    data = {
-        "rankings": [
-            {
-                "type": "atp",
-                "ranks": [
-                    {
-                        "current": 1, "previous": 2, "points": 10000.0, "trend": "+1",
-                        "athlete": {"id": "3623", "displayName": "Jannik Sinner"},
-                    },
-                    {
-                        "current": 2, "previous": 1, "points": 9000.0, "trend": "-1",
-                        "athlete": {"id": "1", "displayName": "Zhizhen Zhang"},
-                    },
-                ],
-            }
-        ]
-    }
-    entries = _parse(data)
-    assert entries[0].name == "Jannik Sinner" and entries[0].move == 1
+def test_rankings_map_matches_both_word_orders_and_abbreviations():
+    """⚠️ **主语换过一次**：原来这里测的是 ESPN 那个 `_parse`，而
+    `site.api.espn.com/.../rankings` 2026-08-25 起 runner 和沙箱都 403，
+    整个解析器连同它的数据形状一起删了——留着就是一条测一个不存在的东西的
+    测试。现在测的是它真正要保证的那件事：**榜单查得到，而且认得出
+    flashscore 那种 `Sinner J.` 的缩写形状**（一份真实 digest 里 72% 的名字
+    是这个形状，ATP 那半边 127/128）。
+    """
+    entries = [RankEntry(rank=1, name="Jannik Sinner", surname="Sinner", given="Jannik"),
+               RankEntry(rank=2, name="Zhizhen Zhang")]   # 没有结构化姓名的老形状
     lookup = rank_map(Rankings(atp=entries))
     assert lookup["jannik sinner"] == 1
-    assert lookup["zhang zhizhen"] == 2  # 反转词序也能命中
+    assert lookup["zhang zhizhen"] == 2       # 反转词序也能命中（老行为不许丢）
+    assert lookup["sinner j"] == 1            # 缩写形状——ATP 那半边全靠它
 
 
 def test_headline_stats_targets_cover_the_headline_even_without_editorial_heat():
