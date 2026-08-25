@@ -107,7 +107,9 @@ def attach(spec: dict, chat) -> dict:
     meta = probe_meta(url)
     if not meta or not meta[1]:
         raise RuntimeError("同场集锦时长读取失败")
-    channel, duration, height = meta
+    # ⚠️ 按下标取，别解包——`probe_meta` 2026-08-25 多返回了一项格式表
+    # （诊断用），解包会当场 ValueError，而这条路只有真跑采访片才走得到。
+    channel, duration, height = meta[0], meta[1], meta[2]
     with tempfile.TemporaryDirectory() as td:
         cues = parse_json3(_download_subtitles(url, Path(td)))
     window = select_window(cues, float(duration))
