@@ -692,3 +692,35 @@ def test_编排器点过run要留一个不过期的时刻(tmp_path, monkeypatch)
     assert reloaded["dispatched"] == {}, "过期清理没生效，这条判据的前提没了"
     assert reloaded.get("last_dispatch_at"), \
         "TTL 清理把 last_dispatch_at 一起清掉了——它必须不过期"
+
+
+def test_排名一个都没补上要当场喊出来(capsys):
+    """⚠️ 排名整条取不到时，**候选列表照样打印得整整齐齐**，和正常那天长得
+    一模一样——而 `match_score()` 的热度分档和爆冷判定这一轮全是瞎的。
+    `fetch_rankings` 失败只有一句没人读的 `logger.warning`。这一行是那个
+    「看得见」。
+    """
+    o = _tool()
+
+    class _Dig:
+        def __init__(self, matches):
+            self.results, self.live, self.schedule = matches, [], []
+
+    from tennislive.models import Player  # noqa: PLC0415
+
+    def _m(ranks):
+        m = _match2()
+        m.home = [Player(name="A", rank=ranks[0])]
+        m.away = [Player(name="B", rank=ranks[1])]
+        return m
+
+    o._report_rank_coverage(_Dig([_m((1, 5)), _m((None, None))]))
+    out = capsys.readouterr().out
+    assert "[排名] 覆盖 2/4" in out, f"没报覆盖率：{out!r}"
+    assert "::warning::" not in out, "补上了一部分还告警，会变成告警风暴"
+
+    o._report_rank_coverage(_Dig([_m((None, None))]))
+    out = capsys.readouterr().out
+    assert "[排名] 覆盖 0/2" in out
+    assert "::warning::" in out and "瞎的" in out, \
+        f"一个都没补上却不吭声——那正是这一行存在的理由：{out!r}"
