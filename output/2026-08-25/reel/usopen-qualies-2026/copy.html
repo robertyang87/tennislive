@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>8.25 网球有故事 | 冠军们今年在打资格赛</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>有网球杂志把今年这届美网资格赛叫作「史上星光最盛的一届」。翻开签表，这话不夸张。
+
+资格赛的规矩很简单：连赢三场，才拿得到打正赛的资格。输一场，这一届就结束了。它不看你以前拿过什么。
+
+郑钦文在这张签表上。巴黎奥运会女单冠军，现在世界第121。首轮她6-3 6-2拿下同胞尤晓迪，下一轮对法国人布雷尔。
+
+男子这半边，站着锦织圭。2014年他在这片球场打进决赛，半决赛赢的是当时的世界第一德约科维奇——6-4 1-6 7-6 6-3，两小时52分钟。他是第一个打进大满贯单打决赛的亚洲男子。今年他36岁，世界第477。四月他宣布，这个赛季打完就退役。这是他最后一届美网，而美网给他的是一张资格赛外卡——免掉的只是报名那道门槛，三场球一场都不能少。
+
+同一张签表上还有迪米特洛夫，生涯最高世界第3；还有托米奇，18岁那年打进温网1/4决赛，生涯最高第17。
+
+女子这边另一个名字是安德莱斯库。2019年她在这片球场拿到美网冠军，决赛赢的是小威廉姆斯，6-3 7-5，那年她19岁。今年首轮她6-1 6-2，只用了67分钟。
+
+这条路她两个月前刚走通过一次。温网资格赛决胜轮，在罗汉普顿——温网的资格赛在那儿打，离全英俱乐部五公里——第二盘她两次被破发追平，对手前后拿到五个盘点，她一个都没让；抢七一度1-3落后，接下来七分她拿了六分。6-3 7-6，两小时零两分，她把自己打回了大满贯正赛。
+
+中国球员这次有8个人在资格赛：郑钦文、布云朝克特、袁悦、张之臻、朱琳、马烨欣、尤晓迪、郭涵煜。
+
+资格赛是网球里最不认名气的地方。奖杯不算数，19岁那年做过什么也不算数。它只认三场球——这一次，谁能走完？
+
+#网球时差 #美网 #郑钦文 #锦织圭 #网球有故事</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>资格赛只认三场球——谁能走完？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
