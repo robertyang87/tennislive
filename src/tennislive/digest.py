@@ -136,7 +136,7 @@ def apply_rankings(rankings, matches: list[Match]) -> None:
     漏了回填就会出现「郑钦文没有排名」——名字后面空着，排序时也拿不到
     「top 选手」这一维。
     """
-    from .sources.rankings import norm_name, rank_map
+    from .sources.rankings import abbrev_key, norm_name, rank_map
 
     # 按巡回赛分表查找，避免 ATP/WTA 同名误匹配
     lookups = {"ATP": rank_map(rankings.atp), "WTA": rank_map(rankings.wta)}
@@ -144,6 +144,12 @@ def apply_rankings(rankings, matches: list[Match]) -> None:
         lookup = lookups.get(m.tour.value, {})
         for p in m.home + m.away:
             if p.rank is None:
-                key = norm_name(p.name)
-                if key in lookup:
-                    p.rank = lookup[key]
+                # ⚠️ **缩写那条不能省。** 2026-08-25 量的：一份真实 digest
+                # 里 348 名球员有 251 名（72%）叫 `Gauff C.` 这种形状，ATP
+                # 那半边更是 127/128 全是缩写——只查全名的话，换了能用的
+                # 排名源之后 ATP 的 rank 照样全是 None，**而它看起来完全
+                # 像修好了**。
+                for key in (norm_name(p.name), abbrev_key(p.name)):
+                    if key and key in lookup:
+                        p.rank = lookup[key]
+                        break
