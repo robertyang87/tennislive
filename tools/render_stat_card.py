@@ -603,7 +603,17 @@ def render(spec: dict, out: Path) -> Path:
         browser = _launch_browser(pw)
         tab = browser.new_page(viewport={"width": W, "height": H}, device_scale_factor=2)
         tab.goto(page.resolve().as_uri())
-        tab.wait_for_timeout(400)
+        # 头像是 data URI，文件稍大时 Chromium 会先把首批扫描线画出来，
+        # `img.complete` 也可能已经为真；固定等 400ms 会截到“上半张脸 + 下半块
+        # 背景色”的半解码状态。截图前逐张 await decode()，拿到完整像素再落图。
+        tab.wait_for_function(
+            "Array.from(document.images).every(img => img.complete && img.naturalWidth > 0)",
+            timeout=15_000,
+        )
+        tab.evaluate(
+            "() => Promise.all(Array.from(document.images).map(img => img.decode()))"
+        )
+        tab.wait_for_timeout(100)
         tab.screenshot(path=str(out), type="jpeg", quality=95)
         content_h = tab.evaluate("document.body.scrollHeight")
         if content_h > H:
