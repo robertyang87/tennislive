@@ -1,0 +1,77 @@
+name: official-social-images
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: official-social-images
+  cancel-in-progress: true
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: 安装图片发现器
+        run: pip install -q -e .
+
+      - name: 扫描官方微博、X、Instagram 与 US Open CMS
+        run: >-
+          python tools/collect_official_social_images.py
+          --watch-file data/official_social_image_watch.json
+          --output artifacts/official-social-images
+
+      - name: 保存候选原图、来源链和清晰度判定
+        uses: actions/upload-artifact@v4
+        with:
+          name: official-social-images-${{ github.run_id }}
+          path: artifacts/official-social-images
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: 找到合格原图后落库并自动结束该监控任务
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if git status --short -- data/official_social_image_results assets/reel/official-social specs/reels | grep -q .; then
+            git config user.name "tennislive-bot"
+            git config user.email "tennislive-bot@users.noreply.github.com"
+            git add data/official_social_image_results assets/reel/official-social specs/reels
+            git commit -m "assets: land monitored official cover photo"
+            git pull --rebase origin main
+            git push
+            git show --name-only --format= HEAD -- data/official_social_image_results \
+              | while read -r result; do
+                  [ -n "$result" ] || continue
+                  slug="$(jq -r '.slug // empty' "$result")"
+                  [ -n "$slug" ] || continue
+                  gh workflow run match-reel.yml --ref main -f mode=cover -f slug="$slug"
+                  echo "已触发 $slug 的封面专用渲染。"
+                done
+          else
+            echo "本轮未找到新的合格原图，监控任务保持开启。"
+          fi
+
+      - name: 写入运行摘要
+        if: always()
+        run: |
+          echo "## 官方比赛图片监测" >> "$GITHUB_STEP_SUMMARY"
+          if [ -s artifacts/official-social-images/index.json ]; then
+            jq -r '.[] | "- " + .watch_id + "：" + .status + "；候选 " + (.candidates | length | tostring) + " 张"' \
+              artifacts/official-social-images/index.json >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "- 当前没有处于监测时段的比赛，或采集未完成。" >> "$GITHUB_STEP_SUMMARY"
+          fi
