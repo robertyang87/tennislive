@@ -12657,6 +12657,79 @@ def test_抓帧点不许贴着源片的最后一帧():
             assert f.stat().st_size > 0, f"{f} 是空文件——ffmpeg 没真的写出内容"
 
 
+def test_缩略图墙的格子顺序不许靠文件名排序(tmp_path, monkeypatch):
+    """来路：2026-08-25，`usq-2026-kei14`（锦织圭 2014 美网半决赛，8677 秒、
+    2893 格）。`preview_segments_local.py` 按我写的窗口 2959~2968s 摆出来的
+    格子，烧着的却是 **5418.5 / 5421.5 / 5424.5s**；而同一批里 223 秒的
+    `dimitrov` 一格都没错。
+
+    真因是 `contact_sheet` 里这一对：帧写成 `f{index:03d}.jpg`，拼墙前
+    `sorted(frames.glob("*.jpg"))`。**过了一千帧文件名变成四位，而字典序里
+    `f1000.jpg` 排在 `f100.jpg` 和 `f101.jpg` 中间**，于是整墙的顺序被打散。
+    拿真产物验过，三张墙的第一格逐个对上：
+
+        sheet 32 → 帧 1781 → 5343.5s     sheet 95 → 帧 957 → 2871.5s
+        sheet 96 → 帧 987  → 2961.5s
+
+    ⚠️ **它一个字都不报**：墙照样出得来、每一格照样烧着自己那一秒的时间码、
+    张数和格数也都对——错的只有「第几张墙上装的是哪一段时间」。而
+    `sheet_stamps()` 反推「这一秒在第几张第几格」时假定的正是顺序排列，
+    于是预览、挑段、`_editing_why` 里记的那些秒数会整条指到别的画面上，
+    **而那和「这一段我看过了」长得一模一样**。
+
+    ⚠️ **短片子永远踩不到**：要 1000 格才够得着，按 every=2.0 算是 33 分钟以上
+    的源片。这条线绝大多数源片是三五分钟的官方集锦，所以它躺了很久。
+
+    判据钉的是**顺序**，不是文件名的位数：拼墙拿到的那串帧，烧上去的秒数
+    必须严格递增、而且和 `sheet_stamps()` 算出来的那一串逐个相同。把实现
+    退回 `f{index:03d}` + `sorted(glob)`，这条当场红（反向验证过）。
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import build_match_reel as reel  # noqa: PLC0415
+
+    duration = 1500.0          # every=1.0 → 1499 格，足够越过一千那道坎
+    stamps = reel.sheet_stamps(duration, every=1.0)
+    assert len(stamps) > 1000, (
+        f"样本只有 {len(stamps)} 格，够不着一千那道坎——这条判据会恒真")
+
+    stamp_of: dict[str, float] = {}
+    listings: list[list[str]] = []
+
+    def fake_run(*args):
+        args = [str(a) for a in args]
+        if "-frames:v" in args and "-f" not in args:
+            out = Path(args[-1])
+            vf = next(a for a in args if "drawtext" in a)
+            secs = float(re.search(r"drawtext=text='([\d.]+)s'", vf).group(1))
+            out.parent.mkdir(parents=True, exist_ok=True)
+            out.write_bytes(b"x")
+            stamp_of[out.name] = secs
+            return
+        if "concat" in args:                       # 拼墙那一次
+            listing = Path(args[args.index("-i") + 1])
+            listings.append([
+                line.split("'")[1].rsplit("/", 1)[-1]
+                for line in listing.read_text(encoding="utf-8").splitlines()
+                if line.strip()])
+            Path(args[-1]).write_bytes(b"x")
+            return
+        raise AssertionError(f"没预料到的 ffmpeg 调用：{args[:6]}")
+
+    monkeypatch.setattr(reel, "run", fake_run)
+    monkeypatch.setattr(reel, "probe_duration", lambda _p: duration)
+
+    sheets = reel.contact_sheet(tmp_path / "src.mp4", tmp_path / "out", every=1.0)
+    assert sheets, "一张墙都没拼出来"
+
+    order = [stamp_of[name] for sheet in listings for name in sheet]
+    assert len(order) == len(stamps), (
+        f"拼进墙里的格数 {len(order)} 和 sheet_stamps 算的 {len(stamps)} 对不上")
+    assert order == stamps, (
+        "墙上的格子不是按时间顺序排的——第一处对不上：" + next(
+            f"第 {i} 格烧着 {a}s，应该是 {b}s"
+            for i, (a, b) in enumerate(zip(order, stamps)) if a != b))
+
+
 def test_推送链接的CDN主机只有一处出处不许再写死cdn域名(tmp_path, monkeypatch):
     """push_reel 里三处拼 jsDelivr 链接的地方（成片 video_url / 海报 poster_url /
     数据图 stat_card_url）原来都写死 `cdn.jsdelivr.net`——而 CLAUDE.md
