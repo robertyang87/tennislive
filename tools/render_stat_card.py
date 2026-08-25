@@ -350,6 +350,26 @@ def _add_tb_parens(sets_html: str) -> str:
     return re.sub(r'(<span class="tb">)(\d+)(</span>)', r"\1(\2)\3", sets_html)
 
 
+def _headshot_style(raw: dict, where: str) -> str:
+    """按球员校准头像的视觉尺度；默认值保持所有历史产物不变。"""
+    try:
+        zoom = float(raw.get("headshot_zoom", 1))
+        focus_x = float(raw.get("headshot_focus_x", 50))
+        focus_y = float(raw.get("headshot_focus_y", 18))
+    except (TypeError, ValueError) as exc:
+        raise SystemExit(f"{where} 的头像缩放/焦点必须是数字。") from exc
+    if not 1 <= zoom <= 3:
+        raise SystemExit(f"{where}.headshot_zoom 必须在 1 到 3 之间。")
+    if not 0 <= focus_x <= 100 or not 0 <= focus_y <= 100:
+        raise SystemExit(f"{where}.headshot_focus_x/y 必须在 0 到 100 之间。")
+    if zoom == 1 and focus_x == 50 and focus_y == 18:
+        return ""
+    return (
+        f' style="object-position:{focus_x:g}% {focus_y:g}%;'
+        f'transform:scale({zoom:g});transform-origin:{focus_x:g}% {focus_y:g}%"'
+    )
+
+
 def build(spec: dict) -> str:
     cover = spec["cover"]
     stats = spec.get("stats")
@@ -414,8 +434,9 @@ def build(spec: dict) -> str:
                 for p in headshot) + "</div>"
         else:
             headshot_uri = _data_uri(REPO_ROOT / headshot)
+            image_style = _headshot_style(raw, where)
             portrait_html = (f'<div class="h2h-ring{ring_cls}">'
-                              f'<img src="{headshot_uri}" alt=""></div>')
+                              f'<img src="{headshot_uri}" alt=""{image_style}></div>')
         return f"""<div class="h2h-side">
   {portrait_html}
   <div class="h2h-cn">{html.escape(meta["name"])}{rank_html}</div>

@@ -27,6 +27,17 @@ def test_截图前必须等头像完整解码():
     assert body.index("img.decode()") < body.index("tab.screenshot")
 
 
+def test_单打头像可单独校准缩放和视觉焦点():
+    """官方头像可能一边是半身照、一边是大头照；允许按球员收紧构图，
+    但默认值不能改变所有历史统计图。"""
+    assert sc._headshot_style(
+        {"headshot_zoom": 2, "headshot_focus_x": 50, "headshot_focus_y": 12},
+        "stats.a",
+    ) == (' style="object-position:50% 12%;transform:scale(2);'
+          'transform-origin:50% 12%"')
+    assert sc._headshot_style({}, "stats.b") == ""
+
+
 def test_hi_lo_pct_frac四种方向都算对():
     """`_stat_row` 是这张图唯一的判优逻辑，四种类型各自的方向要分别验证：
     hi 大的赢、lo 小的赢、pct/frac 比率大的赢，平手一律不点亮任何一侧。"""
