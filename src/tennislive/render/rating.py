@@ -373,10 +373,26 @@ def lead_story_candidates(digest: Digest) -> list[LeadStorySelection]:
     return ordered
 
 
+# 「爆冷」两道线，各管一头，别混着用：
+#   LOSER_MAX_RANK —— 输的那个人要排得进这条线，读者才认得出他是谁；
+#   MIN_RANK_GAP   —— 名次差要够大，才算掀翻。
+# ⚠️ 两个数**碰巧都是 30**，写成两个常量是为了改一个不会连坐另一个
+#（原来是两个裸的 30 挤在同一行 if 里，读的人分不出哪个管哪头）。
+UPSET_LOSER_MAX_RANK = 30
+UPSET_MIN_RANK_GAP = 30
+
+
 def is_upset(m: Match) -> bool:
     """冷门（从严）：种子落马，或 Top30 被排名低 30+ 位的选手掀翻.
 
     250 赛里排名差 30 位是常态，标准太松会让"爆冷"标签泛滥失去意义。
+
+    ⚠️ **前两条种子支路不带名次差要求**，所以它比 docstring 承诺的"从严"松
+    得多——2026-08-25 拿 8 天真实数据量过：`hot_enough` 判成"爆冷"的 6 场里
+    **5 场只有种子支中**，名次差分别是 4 / 6 / 14 / 20 位（`#92 胜 #88`、
+    `#29 胜 #23` 这种）。这里**不动**（内容雷达的评分还按老口径用它），
+    收紧发生在调度侧 `orchestrate.hot_enough`——那儿的职责是"这条值不值得
+    做成片子"，比"这场算不算冷门"窄。
     """
     if m.winner is None:
         return False
@@ -389,7 +405,8 @@ def is_upset(m: Match) -> bool:
         return True
     if l.seed and w.seed and w.seed - l.seed >= 8:
         return True
-    if w.rank and l.rank and l.rank <= 30 and w.rank - l.rank >= 30:
+    if (w.rank and l.rank and l.rank <= UPSET_LOSER_MAX_RANK
+            and w.rank - l.rank >= UPSET_MIN_RANK_GAP):
         return True
     return False
 
