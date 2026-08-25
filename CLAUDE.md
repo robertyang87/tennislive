@@ -5647,6 +5647,55 @@ CLAUDE.md 早有一条「示意图的触发条件是照片讲不清，不是照�
 账正好反过来（本场抽帧裁出来的人 0.61× 缩小最锐，官方棚拍图 1.55× 放大最软），
 见下面「⚠️ 上面这条只管『整帧铺满』，不管『抠出来的人』」。判据宁可窄，不可宽。
 
+#### ⭐⭐ 大满贯那半边：**美网有自己的图片接口**，页面永远是 JS 壳（2026-08-25 实测）
+
+WTA / ATP 那两条路对大满贯**都不成立**——`photoresources.wtatennis.com` 不收大满贯
+（8 月下旬只有辛辛那提），赛事官网的 WordPress 图库是巡回赛站点才有的东西。
+美网另有一套，**这一轮才挖出来，别再重找**：
+
+    ① 接口表   https://www.usopen.org/en_US/json/gen/config_web.json
+    ② 按球员   …/relatedcontent/rest/v2/uso_v1/en/tag?tags=<playerId>&type=photo&count=200
+    ③ 按日期   …/relatedcontent/rest/v2/uso_v1/en/content/byType/photo?count=200&skip=<n>
+    ④ playerId https://www.usopen.org/en_US/scores/feeds/2026/players/players.json
+               （郑钦文 wta328120、锦织圭 atpn552、安德莱斯库 wta325088、迪米特洛夫 atpd875）
+    ⑤ 图本身   https://photo-assets.usopen.org/images/pics/large/<前缀>_<名>.jpg
+               前缀 t_(缩略) b_(640) c_(960) **f_(1280，就是顶)**
+
+⚠️ **`usopen.org` 的每一个路径都返回同一份 4084 字节的 JS 壳**——`images.usopen.org`、
+`photo-assets.usopen.org` 的目录也一样。只看页面必然得出「这站没有图库」这个错结论，
+而它和「真的没有」长得一模一样。**答案在 `config_web.json` 的接口表里。**
+
+⚠️ **1280×720 是这个赛事的出版上限，不是「没找够」。** 试过十二个前缀
+（`a_ d_ e_ g_ h_ i_ o_ s_ x_ l_ m_ n_`）、六个目录（`xlarge/ orig/ original/ full/
+raw/ huge/`）、三种参数（`?width=4000` / `?w=4000` / `?resize=4000`）——前两组全 404，
+第三组返回 200 但**尺寸一个像素没变**（只换了一次 JPEG 编码，字节数和高频能量会变，
+**别被变大的字节数骗成「拿到大图了」**）。所以大满贯的封面**默认要写 `_low_res_why`**，
+那不是偷懒，是这条渠道的天花板。
+
+⚠️ **②那条按球员 tag 查给的是确定的答案，可以当「真空」的证据用**：郑钦文全部 263 条里
+2026 年**只有两条**，都是 8/24 资格赛（一条比赛中握拳、一条场外签名）。
+「按人查完只有 N 条」比「我搜不到」硬得多。
+
+##### ❌ `usta.veritone.com` 走不通：要账号，而我们没有（2026-08-25 探到底）
+
+它是 USTA 架在 Veritone 上的 **Digital Media Hub**（媒体资产分发门户），
+不是公开图库。和 usopen.org 同一个形状——所有路径回同一份 5310 字节的 SPA 壳，
+接口在 bundle 里：
+
+| 探什么 | 结果 |
+|---|---|
+| 接口主机 | `https://crxextapi.pd.dmh.veritone.com`（`/assets-api` `/cms-api` `/identities-api` `/orders-api`） |
+| **`/assets-api/v1/search`** | **401 Not Authorized**——接口是真的，要令牌 |
+| `/identities-api/v1/session/anonymous` / `/guest` | 404 |
+| `/identities-api/v1/session` | 405 |
+| 登录 | `session/createIncoming` + `userAuthenticationService: "aiware"`，要真账号 |
+| bundle 里那个 Contentful space（`9f7tranrpc7k`） | DMH 产品自己的 CMS（导航条、菜单），**不是照片** |
+
+⚠️ **账号所有者 2026-08-25：「没有账号」**——所以这条路当前是死的，别再探。
+真哪天有账号了，流程是通的（真浏览器登录拿 Bearer token → `/assets-api/v1/search`），
+**但它带着 `/orders-api`**：这类门户的资产通常是按授权申请下发的，
+授权那一关要单独看，不能直接当成公开官方图用。
+
 #### ⭐ 官方高清图上哪儿拿：WTA 这条两步就到（2026-08-16 实测）
 
     ① 有赛后稿   python3 tools/fetch_wta_cover_photo.py --tournament <id> \
