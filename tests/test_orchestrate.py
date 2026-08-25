@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 import sys
 from pathlib import Path
 
@@ -623,3 +624,71 @@ def test_场上采访每十五分钟探一次新资源():
     gaps.append(60 - minutes[-1] + minutes[0])
     assert max(gaps) <= 15, (
         "采访采集本身就等 30 分钟，再叠加草稿/渲染/发布，很容易超过一小时")
+
+
+# ── 无人值守链的两条「哑掉不吭声」判据（2026-08-25）─────────────────────────
+#
+# 来路：orchestrate 定时跑了 **330 趟，趟趟 success**，而
+# `data/orchestration_state.json` 至今是 `{"dispatched": {}}`——一条 run 都没
+# 点过，169 条 spec 没有一条是它产的。真因印在每一趟日志里：
+#     [vet] <url> 元数据探不到（重试过一次）——先不用，下一班再探
+#     [<slug>] 集锦还没探到，跳过，下次再探
+# 同一条 URL 在沙箱里探得到（官方频道 / 379s / 1080p，三项全过），也就是候选
+# 和集锦都在，**只有 runner 看不见**。`detect_highlights._cookie_args()` 本来就
+# 读 `YT_COOKIES`，只是从来没人给它。
+
+def _orchestrate_yml() -> str:
+    return Path(".github/workflows/orchestrate.yml").read_text("utf-8")
+
+
+def _yaml_only(text: str) -> str:
+    """去掉整行注释再扫。
+
+    ⚠️ 这个仓库的工作流注释正是记教训的地方——上面那段就写着 `YT_COOKIES`
+    和「集锦还没探到」，连注释一起扫会把「把坑记下来」判成「已经接上了」。
+    """
+    return "\n".join(ln for ln in text.splitlines()
+                     if not ln.lstrip().startswith("#"))
+
+
+def test_编排器要拿得到YouTube的钥匙否则探集锦每一班都静默零候选():
+    body = _yaml_only(_orchestrate_yml())
+    assert "YT_COOKIES_TXT" in body, (
+        "orchestrate.yml 没有落 cookies 那一步——探集锦元数据会被 YouTube 的"
+        "机房 IP 封锁挡住，而挡住的样子是「集锦还没探到，下次再探」，"
+        "和「真的还没发布」分不开。330 趟 0 产出就是这么来的。")
+    assert "YT_COOKIES:" in body, (
+        "cookies 写到磁盘上了却没传给扫描那一步——"
+        "detect_highlights._cookie_args() 读的是 `YT_COOKIES` 环境变量。")
+    # ⚠️ **位置也要钉**：cookies 必须落在扫描之前，否则那一步拿到的是空串，
+    # 而空串和「没配 Secret」的行为一模一样——又一次「写了不等于跑过」。
+    assert body.index("YT_COOKIES_TXT") < body.index("扫赛果/赛程并报告候选"), \
+        "落 cookies 那一步排在扫描之后了，扫描那一刻还拿不到路径"
+
+
+def test_编排器点过run要留一个不过期的时刻(tmp_path, monkeypatch):
+    """`last_dispatch_at` 是给监控用的：`dispatched` 里的条目 7 天后会被清掉，
+    于是「从来没点过」和「点过但都过期了」在 state 上长得一模一样——而这两件事
+    差着一整条产线。"""
+    o = _tool()
+
+    path = tmp_path / "state.json"
+    monkeypatch.setattr(o, "STATE_PATH", path)
+
+    state = {"dispatched": {}}
+    o.mark_dispatched(state, [])
+    assert "last_dispatch_at" not in json.loads(path.read_text("utf-8")), \
+        "一条都没点却记了时刻——那就成了一盏恒亮的绿灯"
+
+    o.mark_dispatched(state, [{"slug": "a-b", "column": "reel", "score": 60,
+                               "date": "2026-08-25"}])
+    saved = json.loads(path.read_text("utf-8"))
+    assert saved.get("last_dispatch_at"), "真点了 run 却没留下时刻"
+
+    # 条目过期之后这个时刻必须还在——否则监控又分不出上面那两种情况
+    saved["dispatched"]["a-b"]["date"] = "2000-01-01"
+    path.write_text(json.dumps(saved, ensure_ascii=False), encoding="utf-8")
+    reloaded = o.load_state()
+    assert reloaded["dispatched"] == {}, "过期清理没生效，这条判据的前提没了"
+    assert reloaded.get("last_dispatch_at"), \
+        "TTL 清理把 last_dispatch_at 一起清掉了——它必须不过期"

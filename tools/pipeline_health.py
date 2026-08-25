@@ -166,6 +166,44 @@ def sla_health(limit: int = 20) -> tuple[int, int, float]:
     return len(recent), misses, statistics.median(values) if values else 0.0
 
 
+ORCHESTRATOR_STATE = Path("data/orchestration_state.json")
+# 一天没点过就该问一句。选 24 小时而不是更短：真的连着几小时没有够格的候选
+# 是常态（资格赛周、赛事间歇），而**一整天一条都没点**在正常赛季里不合理。
+ORCHESTRATOR_SILENT_HOURS = 24.0
+
+
+def orchestrator_productivity(
+        now: datetime | None = None,
+        path: Path | None = None) -> tuple[str | None, float | None]:
+    """编排器最近一次**真的点过 run** 是多久以前。返回 (时刻, 过了几小时)。
+
+    ⚠️ **这一项测的是产出，不是绿不绿——而这正是本文件此前整个看不见的那一半。**
+    2026-08-25 量出来：`orchestrate` 定时跑了 330 趟，`conclusion` 趟趟
+    `success`，而 `data/orchestration_state.json` 至今是 `{"dispatched": {}}`
+    ——**一条 run 都没点过**，169 条 spec 没有一条是它产的。本文件原来只统计
+    工作流的成功率和耗时，于是它给这条线打的分是满分：**绿正是它坏掉的样子，
+    它每一趟都成功地什么都没做。**
+
+    这跟 `sla_health` 那次幸存者偏差（只统计渲成了的趟）是同一个病高一层：
+    「只在成功时出声的检查，没法证明它真的看过」。
+
+    读不到 / 没有这个字段 → `(None, None)`，调用方按「从来没点过」处置。
+    ⚠️ 不能拿 `dispatched` 里有没有条目判——那些条目 `STATE_TTL_DAYS` 天就
+    过期清掉了，「从来没点过」和「点过但都过期了」在它上面分不开。
+    """
+    now = now or datetime.now(timezone.utc)
+    path = path or ORCHESTRATOR_STATE
+    try:
+        state = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return None, None
+    at = instant(str(state.get("last_dispatch_at") or "")) \
+        if state.get("last_dispatch_at") else None
+    if at is None:
+        return None, None
+    return state["last_dispatch_at"], (now - at).total_seconds() / 3600
+
+
 def stale_publications(now: datetime | None = None, hours: float = 1.5) -> list[str]:
     now = now or datetime.now(timezone.utc)
     stale: list[str] = []
@@ -184,7 +222,9 @@ def stale_publications(now: datetime | None = None, hours: float = 1.5) -> list[
 
 
 def render_report(health: list[WorkflowHealth], steps: list[dict],
-                  sla: tuple[int, int, float], stale: list[str]) -> tuple[str, list[str]]:
+                  sla: tuple[int, int, float], stale: list[str],
+                  orchestrator: tuple[str | None, float | None] | None = None,
+                  ) -> tuple[str, list[str]]:
     alerts: list[str] = []
     lines = ["## 自动视频流水线健康度", "", "| 工作流 | 样本 | 成功 | 失败率 | 中位耗时 | 连续失败 |",
              "|---|---:|---:|---:|---:|---:|"]
@@ -199,6 +239,18 @@ def render_report(health: list[WorkflowHealth], steps: list[dict],
               "超线只告警，不阻断 L2、发布或微信推送。"]
     # SLA miss 只留 Actions warning/summary，不发微信：metadata 不变时每小时扫到
     # 的仍是同一批 miss，拿它做 PushPlus alert 会形成告警风暴。
+    if orchestrator is not None:
+        at, hours = orchestrator
+        if at is None:
+            lines += ["", "- **编排器：从来没有真正点过一条 run。**"
+                      "全绿不等于有产出——这条线的每一趟都成功地什么都没做。"]
+            alerts.append("编排器从来没点过 run：自动选题链是哑的，"
+                          "所有片子都要人从头带")
+        else:
+            lines += ["", f"- 编排器最近一次点 run：{at}（{hours:.1f} 小时前）。"]
+            if hours > ORCHESTRATOR_SILENT_HOURS:
+                alerts.append(f"编排器已 {hours:.0f} 小时没点过 run"
+                              f"（阈值 {ORCHESTRATOR_SILENT_HOURS:.0f}h）")
     if stale:
         alerts.extend(stale)
         lines += ["", "### 发布账本待核实", *[f"- {item}" for item in stale]]
@@ -232,7 +284,8 @@ def main(argv: list[str] | None = None) -> int:
         row, these_steps = workflow_health(api, workflow, args.limit, args.step_runs)
         health.append(row); steps.extend(these_steps)
     sla = sla_health()
-    report, alerts = render_report(health, steps, sla, stale_publications())
+    report, alerts = render_report(health, steps, sla, stale_publications(),
+                                   orchestrator_productivity())
     print(report, end="")
     if args.summary:
         with open(args.summary, "a", encoding="utf-8") as fh:
