@@ -71,12 +71,44 @@ jobs:
       - name: 装依赖
         run: pip install -q -e . "yt-dlp[default]"
 
+      # ⚠️ **没有这一步，整条无人值守链是哑的，而且它绿着哑。**
+      # 2026-08-25 量出来：orchestrate 定时跑了 330 趟，趟趟 success，而
+      # `data/orchestration_state.json` 至今是 `{"dispatched": {}}`——一条 run
+      # 都没点过。日志里每趟都写着真因：
+      #     [vet] <url> 元数据探不到（重试过一次）——先不用，下一班再探
+      #     [<slug>] 集锦还没探到，跳过，下次再探
+      # 而同一条 URL 在沙箱里探得到（官方频道 / 379s / 1080p，三项全过）。
+      # 也就是候选和集锦都在，**只有 runner 看不见**——YouTube 对机房 IP 的老病
+      # （CLAUDE.md「昨日一分」栽的是同一个：十个源里五个 YouTube 系全 error，
+      # 11 天 66 趟只出 3 条片，最后整条线被停掉）。
+      # match-reel.yml 早有解法，`detect_highlights.py` 也**本来就读 `YT_COOKIES`**，
+      # 只是从来没人给它。同一天 `mode=cookies` 自检在 runner 上实测
+      # 「YouTube 下载可用。」，证明这把钥匙是活的。
+      # ⚠️ 只接 cookies，**不起 PO token provider**：这条线一天跑 144 趟，每趟多
+      # 一次 docker pull ＋ 最多 50 秒探活是实打实的开销，而它要的只是元数据
+      # （`--flat-playlist --print`），不取媒体流。接了还不够再说。
+      - name: 落 cookies（配了 Secret 才有）
+        id: cookies
+        env:
+          YT_COOKIES_TXT: ${{ secrets.YT_COOKIES_TXT }}
+        run: |
+          if [ -n "$YT_COOKIES_TXT" ]; then
+            printf '%s' "$YT_COOKIES_TXT" > "$RUNNER_TEMP/yt-cookies.txt"
+            echo "path=$RUNNER_TEMP/yt-cookies.txt" >> "$GITHUB_OUTPUT"
+            echo "已写入 cookies（$(wc -l < "$RUNNER_TEMP/yt-cookies.txt") 行）"
+          else
+            echo "::warning::未配置 YT_COOKIES_TXT——探集锦元数据会被 YouTube 挡住，"
+            echo "::warning::而挡住的样子是「集锦还没探到」，和「真的还没发」分不开。"
+          fi
+
       # ⚠️ apply 分支要自己写 GH_TOKEN：gh workflow run 派发别的 workflow 靠它。
       # checkout 那步用的 token 默认只读，不显式传 dispatch 会在第 N 秒报 403
       # （permission 不够），和「没匹配到候选」长得不一样。
       - name: 扫赛果/赛程并报告候选
         env:
           GH_TOKEN: ${{ github.token }}
+          # detect_highlights._cookie_args() 读这个；没配就是空串，行为不变。
+          YT_COOKIES: ${{ steps.cookies.outputs.path }}
         run: |
           # ⚠️ pipefail 不能省：默认 shell 下 `python … | tee` 的退出码是 tee 的，
           # 编排器崩了这一步照样绿——「脚本炸了」和「今天没候选」长得一模一样。
