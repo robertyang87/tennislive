@@ -45,6 +45,8 @@ import json
 import re
 import urllib.error
 import urllib.request
+from collections.abc import Iterable
+from concurrent.futures import ThreadPoolExecutor
 
 NINJA = "https://local-global.flashscore.ninja/2/x/feed/"
 HEADERS = {
@@ -82,6 +84,14 @@ class StatsError(RuntimeError):
     pass
 
 
+# 快做链通常命中昨天/今天/明天，先扫这三页；如果上游赛果的时刻缺失、源站
+# 晚挂集锦或编排班次积压，再向前补扫一周。2026-08-26 的
+# Medvedev–Damm（Winston-Salem R2）就是三页之外的真实样本：源片已经上线，
+# 但只扫三页会把可用的技术统计误报成「没有这场」。
+DEFAULT_MATCH_OFFSETS = (-1, 0, 1, -2, -3, -4, -5, -6, -7)
+FAST_MATCH_OFFSETS = frozenset({-1, 0, 1})
+
+
 def feed(name: str) -> str:
     req = urllib.request.Request(NINJA + name, headers=HEADERS)
     try:
@@ -100,25 +110,57 @@ def _fields(record: str) -> dict[str, str]:
     return out
 
 
-def find_match(names: list[str]) -> tuple[str, str, str]:
-    """在昨天/今天/明天三份赛果喂料里找同时出现两个名字的那一场。
+def find_match(
+    names: list[str], *, offsets: Iterable[int] = DEFAULT_MATCH_OFFSETS
+) -> tuple[str, str, str]:
+    """在近期赛果喂料里找同时出现两个名字的那一场。
 
-    只扫「今天」会漏掉北京时间凌晨打完的比赛——它在 Flashscore 那边算昨天。
+    常见的昨天/今天/明天优先，未命中再回看一周。单页网络故障不应该取消其余
+    页的查找；但所有页都取不到时必须报源站故障，不能伪装成「没有比赛」。
     """
     want = [n.casefold() for n in names]
     scanned = 0
-    for offset in (-1, 0, 1):
-        body = feed(f"f_2_{offset}_2_en_1")
-        for record in body.split("~AA÷")[1:]:
-            scanned += 1
-            row = _fields("AA÷" + record)
-            home = row.get("AE", "")
-            away = row.get("AF", "")
-            blob = f"{home} {away}".casefold()
-            if all(w in blob for w in want):
-                return row.get("AA", ""), home, away
+    tried: list[int] = []
+    failures: list[str] = []
+    ordered = list(offsets)
+    batches = [
+        [offset for offset in ordered if offset in FAST_MATCH_OFFSETS],
+        [offset for offset in ordered if offset not in FAST_MATCH_OFFSETS],
+    ]
+    for batch in (b for b in batches if b):
+        # 同一批日期互不依赖，并发拉取把源站超时的最坏墙钟从 N×45s 压到 45s。
+        # 先跑常见三页，只有没命中才补扫一周，正常快做不会多打六个请求。
+        with ThreadPoolExecutor(max_workers=len(batch)) as pool:
+            bodies = list(pool.map(
+                lambda offset: _feed_result(offset), batch))
+        for offset, body, error in bodies:
+            tried.append(offset)
+            if error:
+                failures.append(f"{offset}: {error}")
+                continue
+            for record in body.split("~AA÷")[1:]:
+                scanned += 1
+                row = _fields("AA÷" + record)
+                home = row.get("AE", "")
+                away = row.get("AF", "")
+                blob = f"{home} {away}".casefold()
+                if all(w in blob for w in want):
+                    return row.get("AA", ""), home, away
+    if tried and len(failures) == len(tried):
+        raise StatsError("近期赛果喂料全部读取失败：" + "；".join(failures))
     # 空结果先自证是真空：报出扫了多少场
-    raise StatsError(f"昨天/今天/明天共 {scanned} 场里没有同时出现 {names} 的比赛")
+    raise StatsError(
+        f"近期 offsets={tried} 共 {scanned} 场里没有同时出现 {names} 的比赛"
+        + (f"（另有 {len(failures)} 页读取失败）" if failures else "")
+    )
+
+
+def _feed_result(offset: int) -> tuple[int, str, str]:
+    """线程边界：异常变成数据，由 ``find_match`` 汇总后区分空结果/源站故障。"""
+    try:
+        return offset, feed(f"f_2_{offset}_2_en_1"), ""
+    except StatsError as exc:
+        return offset, "", str(exc)
 
 
 def parse_stats(body: str) -> list[dict]:
