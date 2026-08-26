@@ -15,6 +15,8 @@ validate_spec 够得着的地方**」（bejlek-pliskova 那次）。所以：
 - `check_spec_wording()` 给 build_match_reel 的入口和 promote_reel_draft 用，
   按 slug 查同一批豁免表；新 spec 违规在 dry-run 第 0.2 秒就红，
   不是等下一次人类 push 把 main CI 打红
+- `check_interview_copy_wording()` 给 promote_interview_draft 用——采访线的
+  转正入口，零豁免（只跑在新草稿上），面窄一档（不扫 zh 引语译文）
 - ⚠️ 三种扫描面**故意不合并**：每一面都是当年按「误伤了什么」收窄过的
   （详见各判据的 docstring），合并等于把三条判据一起放宽或收紧
 
@@ -186,6 +188,66 @@ def save_subject_flag(text: str, names: list[str]) -> list[str]:
         if hit and not any(n in after[:hit.start()] for n in names):
             bad.append(f"…{m.group(0)}｜{after[:26]}…")
     return bad
+
+
+def interview_outward_texts(spec: dict) -> list[str]:
+    """采访线会发出去的「我们的话」：push / takeaway / cover 里非注解的字符串。
+
+    ⚠️ **不扫 `zh` 字幕行**：那是受访者说的话的译文，措辞判据管的是我们的
+    文案——硬扫会逼人改动引语（他真说了「七成」就只能照实译，改成
+    「百分之七十」是译法偏好，不是判据；specs/interviews 存量里那几处
+    一成/两成正是这么来的）。译文的写法偏好归翻译教材管，不落硬闸。
+    """
+    texts: list[str] = []
+    for key, value in (spec.get("push") or {}).items():
+        if not key.startswith("_") and isinstance(value, str):
+            texts.append(value)
+    for card in (spec.get("takeaway") or {}).values():
+        if isinstance(card, dict):
+            texts += [v for k, v in card.items()
+                      if not k.startswith("_") and isinstance(v, str)]
+    for key, value in (spec.get("cover") or {}).items():
+        if key.startswith("_"):
+            continue
+        if isinstance(value, str):
+            texts.append(value)
+        elif isinstance(value, list):
+            texts += [x for x in value if isinstance(x, str)]
+    return texts
+
+
+def check_interview_copy_wording(spec: dict,
+                                 xhs_text: str | None = None) -> list[str]:
+    """采访线转正入口的措辞判据——**零豁免**。
+
+    这条闸只跑在新草稿转正那一刻（promote_interview_draft），老 spec 不再过
+    promote，所以不需要豁免表；也因此每一条报出来的都该当场改，不该挂账。
+    面比 reel 侧窄：只扫「我们的话」（push/takeaway/cover/小红书正文），
+    不扫 zh 引语译文（见 interview_outward_texts 的 docstring）。
+    盘点主语那条（save_subject_flag）没进来：它要人名表，而采访文案的模板
+    不叙述逐分——真出现了归终审，别为扫不到的面硬凑判据。
+    """
+    texts = interview_outward_texts(spec) + ([xhs_text] if xhs_text else [])
+    problems: list[str] = []
+    for pattern, label, fix in (
+            (PERCENT_IDIOM, "百分比写成了「几成几」",
+             "旁白写「百分之三十四」，正文可写 34%"),
+            (RALLY_SECONDS, "把单分的长度写成了秒",
+             "说打了多少拍；拿不到拍数就换个说法"),
+            (CLOCK_MINUTE, "开球时刻报到了分钟",
+             "只说个大概（X 点多 / 快 X 点），时段词留着"),
+            (QUALIFIER_ROUND, "轮次写了强字",
+             "写 半决赛 / 1/4 决赛 / 1/8 决赛，再往前写「第几轮」"),
+            (LOVE_GAME, "love game 被字面直译成了「爱局」", "写「零封」"),
+            (YAODAO_POINT, "写了「要到…点」",
+             "破发点/盘点/赛点一律写「拿到」"),
+            (BILINGUAL_MENTION, "文案里提了字幕这类制作规格",
+             "读者关心这场球发生了什么，不关心我们用什么字幕方案做的"
+             "（2026-08-19 的规矩）"),
+    ):
+        if hits := _hits(pattern, texts):
+            problems.append(f"{label}：{hits}——{fix}")
+    return problems
 
 
 def check_spec_wording(spec: dict, slug: str,

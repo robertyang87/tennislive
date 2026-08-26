@@ -22,6 +22,7 @@ sys.path.insert(0, str(Path("tools").resolve()))
 from tools.spec_wording import (  # noqa: E402
     CLOCK_MINUTE_LEGACY,
     RALLY_SECONDS_LEGACY,
+    check_interview_copy_wording,
     check_spec_wording,
 )
 
@@ -123,6 +124,73 @@ def test_出片入口在load_spec之后模式分发之前执法(tmp_path):
         assert "强字" in str(exc)
     else:
         raise AssertionError("正文里的强字轮次没被拦下")
+
+
+def _bad_interview_spec() -> dict:
+    return {
+        "push": {"summary": "他打进四强后的场上采访",
+                 "lead": "中英双语字幕，全程。一发只进了三成四。",
+                 "_note": "注解里的爱局不算数"},
+        "takeaway": {"close": {
+            "point": "十一点十分开球，这一分打了三十八秒",
+            "ask": "要到三个破发点还输，怎么看？",
+            "_why": "注解不扫"}},
+        "cover": {"title": ["爱局收尾之后", "他说了什么？"],
+                  "sub": "赛后场上采访",
+                  "_why": "注解不扫"},
+        "zh": ["他自己说拿到七成的一发。"],  # 引语译文，故意不在扫描面里
+    }
+
+
+def test_采访线转正的措辞判据一次全抓出来():
+    problems = check_interview_copy_wording(
+        _bad_interview_spec(), "完整视频保留中英字幕。")
+    joined = "\n".join(problems)
+    for needle in ("几成几", "写成了秒", "报到了分钟", "强字", "爱局",
+                   "要到", "制作规格"):
+        assert needle in joined, f"「{needle}」那一类没抓出来：\n{joined}"
+    # zh 引语译文故意不在面里：他真说了「七成」只能照实译（见
+    # interview_outward_texts 的 docstring）——注解键同理
+    assert "七成" not in joined
+    assert "注解" not in joined
+
+
+def test_采访线干净的文案一条不报():
+    spec = {"push": {"summary": "伊埃拉赢球后的场上采访",
+                     "lead": "辛辛那提，伊埃拉击败对手后的完整场上采访。"},
+            "takeaway": {"close": {"point": "赢球后的第一反应",
+                                   "ask": "你怎么看这场比赛的表现？"}},
+            "cover": {"title": ["她赢球之后", "第一时间说了什么？"]}}
+    assert check_interview_copy_wording(
+        spec, "她击败对手后在球场内接受了采访。\n\n#网球\n") == []
+
+
+def test_采访草稿转正那一刻也要过全套措辞判据():
+    """原来那儿只拦 BILINGUAL_MENTION 一条——模型/模板写回 push/takeaway 的
+    几成几、强字轮次同样绕过 CI（自动链直推 main）。跳过不炸：草稿留在
+    原地等终审，别把一批草稿的提升整个带崩。"""
+    body = Path("tools/promote_interview_draft.py").read_text("utf-8")
+    assert "check_interview_copy_wording" in body
+    i = body.index("spec = promote(draft, opp, details)")
+    seat = body.index("check_interview_copy_wording(spec, copy_text)")
+    assert i < seat, "措辞判据要跑在 promote 出正式 spec 之后"
+    assert seat < body.index("if write:"), "要拦在写盘之前——写完再拦等于没拦"
+    block = body[seat:body.index("if write:")]
+    assert "skipped.append" in block and "continue" in block, (
+        "违规要跳过这一条草稿（等终审），不是抛异常把整批提升带崩")
+    assert "BILINGUAL_MENTION.search" not in body, (
+        "旧的单条拦截该被全套判据取代——两份并存必分叉")
+
+
+def test_采访模板产出的文案本身要过全套判据():
+    """上一条是源码扫描（防「把规格话术写回模板」），这条真调模板：
+    xhs_copy 的产出直接过 check_interview_copy_wording——源码扫描只认
+    BILINGUAL 那几个词，模板哪天写进「几成几」「四强」之类，只有这条抓得到。"""
+    sys.path.insert(0, str(Path("tools").resolve()))
+    from promote_interview_draft import xhs_copy  # noqa: PLC0415
+
+    spec = {"match": {"winner": "伊埃拉", "loser": "帕克斯"}}
+    assert check_interview_copy_wording({}, xhs_copy(spec)) == []
 
 
 def test_模型草稿转正那一刻也要过措辞判据():
