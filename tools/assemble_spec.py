@@ -378,6 +378,37 @@ def _rank_line(name_en: str, lookup: dict[str, int]) -> str:
     return f"{player_zh(name_en)} 世界第 {r}" if r is not None else ""
 
 
+def upset_cover_brief(matchup: list[dict], scores: list[tuple[int, int]]) -> dict | None:
+    """爆冷封面优先讲明星输家的情绪，而不是默认只追赢家庆祝。
+
+    沿用选题层的爆冷口径：赢家排名比输家低至少 30 位；“明星球员”收窄为
+    世界前 20。缺排名或赛果不完整时不猜，返回 None。
+    """
+    if len(matchup) != 2 or not scores:
+        return None
+    a_sets = sum(a > b for a, b in scores)
+    b_sets = sum(b > a for a, b in scores)
+    if a_sets == b_sets:
+        return None
+    winner_idx = 0 if a_sets > b_sets else 1
+    loser_idx = 1 - winner_idx
+    winner, loser = matchup[winner_idx], matchup[loser_idx]
+    try:
+        winner_rank, loser_rank = int(winner["rank"]), int(loser["rank"])
+    except (KeyError, TypeError, ValueError):
+        return None
+    if loser_rank > 20 or winner_rank - loser_rank < 30:
+        return None
+    return {
+        "reason": f"爆冷：世界第{winner_rank}击败世界第{loser_rank}",
+        "preferred_subject": loser.get("name") or loser.get("name_en"),
+        "preferred_moment": "本场失利后失落、落寞或难以置信的高清近景",
+        "fallback_subject": winner.get("name") or winner.get("name_en"),
+        "fallback_moment": "本场获胜后庆祝的高清近景",
+        "requirements": ["必须是本场", "优先官方原图", "不得用旧赛资料图"],
+    }
+
+
 def _hot_line(hits, home: str, away: str) -> str:
     """中文热搜里撞上这两位球员的，拼一句。撞不上返回空串。
 
@@ -509,6 +540,18 @@ def assemble(*, slug: str, home: str, away: str, event: str, year: int,
                      "都依赖它，这三块本轮跳过。用 tools/match_feed.py find 拿到 id "
                      "后补进 _match.flashscore_id 重跑。")
 
+    # 封面选人要在抓图前就有排名。爆冷场不是默认追赢家：世界前 20 被低至少
+    # 30 位的对手淘汰时，优先找明星输家赛后失落的当场高清近景。
+    try:
+        current_ranks = fetch_rankings()
+        lookup = {**rank_map(current_ranks.atp), **rank_map(current_ranks.wta)}
+        for player in draft["cover"]["matchup"]:
+            rank = lookup.get(norm_name(player.get("name_en", "")))
+            if rank is not None:
+                player["rank"] = rank
+    except Exception as exc:  # noqa: BLE001 —— 排名失败不能拖垮整份草稿
+        notes.append(f"⚠️ 封面排名没成（{type(exc).__name__}: {exc}）")
+
     if mid:
         # ② stats 块（数据图）。
         try:
@@ -548,6 +591,13 @@ def assemble(*, slug: str, home: str, away: str, event: str, year: int,
             notes.append(f"转折局候选 {len(ranked)} 局，取前 {TURNING_POINT_TOP}")
         except Exception as exc:  # noqa: BLE001
             notes.append(f"⚠️ 转折局没成（{type(exc).__name__}: {exc}）")
+
+    cover_brief = upset_cover_brief(
+        draft.get("cover", {}).get("matchup", []), authoritative_scores)
+    if cover_brief:
+        draft["_cover_brief"] = cover_brief
+        notes.append(
+            "爆冷封面：优先明星输家赛后失落高清近景；找不到再退赢家庆祝照")
 
     # ⑤ 文案（DeepSeek）。facts 用上面算出的狠数据候选喂，background 自动聚合
     #    H2H + 近况 + 排名 + 中文热点（账号所有者：「不光只是 H2H，还有前几轮的
