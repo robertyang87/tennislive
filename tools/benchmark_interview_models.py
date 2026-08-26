@@ -2,7 +2,7 @@
 """Shadow-teach DeepSeek/MiniMax on a published 赛后开麦 film.
 
 The benchmark is deliberately read-only: it downloads one immutable public release,
-extracts six evidence frames, and writes only ``--outdir``.  It never edits a spec,
+extracts seven evidence frames, and writes only ``--outdir``.  It never edits a spec,
 renders, dispatches a workflow, calls PushPlus, or writes publication ledgers.
 """
 
@@ -37,7 +37,7 @@ FRAME_EVIDENCE = (
     (10, "同场冷开场：庆祝/解说"),
     (28, "正文：颁奖致辞开始"),
     (70, "正文：颁奖致辞"),
-    (85, "正文中的封面候选：只用本图评 cover"),
+    (84, "正文中的封面候选：只用本图评 cover；人物正面且双眼清晰睁开"),
     (165, "正文：颁奖致辞与双语字幕"),
     (270, "正文末段/收尾：检查字幕与画面"),
 )

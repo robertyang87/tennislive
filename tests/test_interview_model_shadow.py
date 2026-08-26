@@ -180,14 +180,28 @@ def test_interview影子工作流只读且不发布():
     assert "actions/cache@v4" in body
     assert "apt-archives" in body
     assert "assets/explainer/nadal-academy/faces" in body
+    for venue in (
+        "canada-iga-stadium-centre-court.jpg",
+        "cincinnati-centre-court-full.jpg",
+        "indianwells-centre-court.jpg",
+        "madrid-centre-court.jpg",
+        "miami-centre-court.jpg",
+        "montecarlo-centre-court.jpg",
+        "paris-bercy-centre-court.jpg",
+        "rome-foro-italico-centre-court.jpg",
+        "shanghai-qizhong-centre-court.jpg",
+    ):
+        assert f"assets/venues/{venue}" in body
     assert "\n            assets\n" not in body
+    assert "\n            assets/venues\n" not in body
     assert "branches: [main]" in body
 
 
 def test_minimax影子帧明确分开冷开场正文和封面候选():
     bench = load("benchmark_interview_models")
     assert len(bench.FRAME_EVIDENCE) == 7
-    assert bench.FRAME_EVIDENCE[4] == (85, "正文中的封面候选：只用本图评 cover")
+    assert bench.FRAME_EVIDENCE[4] == (
+        84, "正文中的封面候选：只用本图评 cover；人物正面且双眼清晰睁开")
     prompt_source = (TOOLS / "benchmark_interview_models.py").read_text(encoding="utf-8")
     assert "图片1不是封面" in prompt_source
     assert "content_type 只看图片3-6" in prompt_source
