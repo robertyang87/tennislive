@@ -19,11 +19,11 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from analyze_reel_visuals import (  # noqa: E402
     apply_story,
-    ask_minimax,
     captions,
     clean_report,
     select_contact_sheets,
     translate_quotes,
+    verified_minimax_report,
 )
 from draft_spec import draft_editorial, draft_push  # noqa: E402
 from reel_quality_reference import BENCHMARK_SLUG, benchmark  # noqa: E402
@@ -127,7 +127,9 @@ def minimax_score(report: dict, problems: list[str]) -> tuple[int, list[str]]:
                    if stamp < start - 0.5 or stamp > end + 0.5]
         if outside:
             score -= 30
-            issues.append(f"{name} 理由引用窗口外时间：{outside}")
+            issue = f"{name} 理由引用窗口外时间：{outside}"
+            if issue not in issues:
+                issues.append(issue)
     return max(0, min(score, 100)), issues
 
 
@@ -177,9 +179,12 @@ def run(outdir: Path) -> dict:
         "cover": {"portrait": {"image": str(portrait)}},
     }
     key = os.environ.get("MINIMAX_API_KEY", "").strip()
-    raw = ask_minimax(visual_draft, frames, portrait, probe, key) if key else None
-    visual_report, visual_problems = clean_report(
-        raw, visual_draft, float(probe["duration"]))
+    if key:
+        visual_report, visual_problems = verified_minimax_report(
+            visual_draft, frames, portrait, probe, key)
+    else:
+        visual_report, visual_problems = clean_report(
+            None, visual_draft, float(probe["duration"]))
     mini_score, mini_issues = minimax_score(visual_report, visual_problems)
 
     candidate = None

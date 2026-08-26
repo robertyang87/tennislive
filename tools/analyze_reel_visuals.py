@@ -29,6 +29,12 @@ ENDPOINT = "https://api.minimaxi.com/v1/chat/completions"
 MODEL = "MiniMax-M3"
 MIN_CONFIDENCE = 0.80
 ALLOWED_MOMENTS = {"match_point", "winning_shot", "winner_celebration", "aftermath"}
+REPAIRABLE_VISUAL_ERRORS = (
+    "没返回可解析的 JSON", "缺 cold_open", "缺 ending", "时间/置信度无法解析",
+    "窗口 ", "必须是 3-30 秒", "不是赛点/制胜分/庆祝/余波",
+    "没有写可复核的画面证据", "理由引用窗口外时间", "没有完整覆盖 cold_open",
+    "缺 cover 视觉证据", "封面没有写可复核的同场/人物/情绪证据",
+)
 
 
 def select_contact_sheets(paths: list[Path], limit: int = 4) -> list[Path]:
@@ -75,7 +81,8 @@ def _image(path: Path) -> dict:
 
 
 def ask_minimax(draft: dict, frames: list[Path], cover: Path | None,
-                probe: dict, key: str) -> dict | None:
+                probe: dict, key: str, *, previous: dict | None = None,
+                validation_problems: list[str] | None = None) -> dict | None:
     match = draft.get("_match") or {}
     brief = draft.get("_cover_brief") or {}
     prompt = f"""你是网球短视频的视觉事实审核员。图片 1 到 {len(frames)} 是同一条
@@ -109,6 +116,19 @@ ending 必须完整覆盖 cold_open 的时间窗口，保证正文末尾重新�
 不要因为赢家庆祝更好认就擅自换人。看不清就降低 confidence，不得编。
 {model_instructions("minimax")}
 """
+    if previous is not None and validation_problems:
+        prompt += f"""
+
+你上一次的 JSON 没有通过机械校验：
+{json.dumps(validation_problems, ensure_ascii=False)}
+上一次输出：
+{json.dumps(previous, ensure_ascii=False)}
+
+只修正这些可由图片时间码与给定切点证明的问题，再返回一份完整 JSON。若理由所需的
+庆祝、握手或其他决定性证据发生在原 end 之后，必须把 end 延长到覆盖该证据的相邻
+切点；不要保留较短窗口，也不要在理由里提及任何窗口外时间，包括为了说明排除了它。
+无法用当前图片证明时如实返回 false/低置信度，绝不能为了过闸猜测。
+"""
     content: list[dict] = [{"type": "text", "text": prompt}]
     content.extend(_image(path) for path in frames)
     if cover is not None:
@@ -134,6 +154,31 @@ ending 必须完整覆盖 cold_open 的时间窗口，保证正文末尾重新�
         found = re.search(r"\{.*\}", text, re.S)
         parsed = json.loads(found.group(0)) if found else None
     return parsed if isinstance(parsed, dict) else None
+
+
+def verified_minimax_report(draft: dict, frames: list[Path], cover: Path | None,
+                            probe: dict, key: str,
+                            *, max_attempts: int = 2) -> tuple[dict, list[str]]:
+    """给 MiniMax 一次带机械反馈的自修复机会，硬闸本身绝不放宽。"""
+    duration = float(probe.get("duration") or 0)
+    raw: dict | None = None
+    report: dict = {}
+    problems: list[str] = []
+    attempts = max(1, min(int(max_attempts), 2))
+    for attempt in range(1, attempts + 1):
+        raw = ask_minimax(
+            draft, frames, cover, probe, key,
+            previous=raw if attempt > 1 else None,
+            validation_problems=problems if attempt > 1 else None,
+        )
+        report, problems = clean_report(raw, draft, duration)
+        report["model_attempts"] = attempt
+        repairable = problems and all(
+            any(marker in problem for marker in REPAIRABLE_VISUAL_ERRORS)
+            for problem in problems)
+        if not repairable:
+            break
+    return report, problems
 
 
 def clean_report(raw: dict | None, draft: dict, duration: float) -> tuple[dict, list[str]]:
@@ -319,8 +364,8 @@ def main() -> int:
         print("[reuse] MiniMax 已对同一批视觉字节给出 pass；只重试双语原声")
     else:
         try:
-            raw = ask_minimax(draft, frames, cover, probe, key)
-            report, problems = clean_report(raw, draft, duration)
+            report, problems = verified_minimax_report(
+                draft, frames, cover, probe, key)
         except Exception as exc:  # noqa: BLE001
             report = {
                 "model": MODEL,

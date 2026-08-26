@@ -109,6 +109,87 @@ def test_visual_gate理由引用窗口外画面就不能pass(tmp_path):
     assert any("cold_open 理由引用窗口外时间" in problem for problem in problems)
 
 
+def test_visual_gate把机械错误回传给minimax且最多自修复一次(tmp_path, monkeypatch):
+    visual = load("analyze_reel_visuals")
+    cover = tmp_path / "cover.jpg"
+    cover.write_bytes(b"photo")
+    draft = {
+        "_match": {"winner": "菲斯"},
+        "cover": {"portrait": {"image": str(cover)}},
+    }
+    invalid = {
+        "cold_open": {"start": 317.72, "end": 329.84, "kind": "match_point",
+                      "winner_visible": True, "reason": "330.5s 开始庆祝",
+                      "confidence": .9},
+        "ending": {"start": 317.5, "end": 329.84, "kind": "aftermath",
+                   "winner_visible": True, "reason": "332.5s 完成握手",
+                   "confidence": .9},
+        "cover": {"same_match": True, "subject": "菲斯",
+                  "moment": "winner_celebration", "wrong_or_old": False,
+                  "reason": "本场赢家", "confidence": .9},
+    }
+    repaired = {
+        **invalid,
+        "cold_open": {**invalid["cold_open"], "end": 333.08,
+                      "reason": "317.72s 赛点开始，332.5s 完成握手"},
+        "ending": {**invalid["ending"], "end": 333.08,
+                   "reason": "317.5s 开始收官，332.5s 完成握手"},
+    }
+    calls = []
+
+    def fake_ask(*args, **kwargs):
+        calls.append(kwargs)
+        return invalid if len(calls) == 1 else repaired
+
+    monkeypatch.setattr(visual, "ask_minimax", fake_ask)
+    report, problems = visual.verified_minimax_report(
+        draft, [], cover, {"duration": 340}, "secret")
+
+    assert problems == []
+    assert report["status"] == "pass"
+    assert report["model_attempts"] == 2
+    assert len(calls) == 2
+    assert calls[0]["previous"] is None
+    assert calls[1]["previous"] == invalid
+    assert any("引用窗口外时间" in problem
+               for problem in calls[1]["validation_problems"])
+
+
+def test_visual_gate低置信度属于证据失败不得靠重问刷高(tmp_path, monkeypatch):
+    visual = load("analyze_reel_visuals")
+    cover = tmp_path / "cover.jpg"
+    cover.write_bytes(b"photo")
+    draft = {
+        "_match": {"winner": "菲斯"},
+        "cover": {"portrait": {"image": str(cover)}},
+    }
+    uncertain = {
+        "cold_open": {"start": 317.72, "end": 329.84, "kind": "match_point",
+                      "winner_visible": True, "reason": "赛点与庆祝",
+                      "confidence": .5},
+        "ending": {"start": 317.5, "end": 329.84, "kind": "aftermath",
+                   "winner_visible": True, "reason": "完整收官",
+                   "confidence": .9},
+        "cover": {"same_match": True, "subject": "菲斯",
+                  "moment": "winner_celebration", "wrong_or_old": False,
+                  "reason": "本场赢家", "confidence": .9},
+    }
+    calls = []
+
+    def fake_ask(*args, **kwargs):
+        calls.append(kwargs)
+        return uncertain
+
+    monkeypatch.setattr(visual, "ask_minimax", fake_ask)
+    report, problems = visual.verified_minimax_report(
+        draft, [], cover, {"duration": 340}, "secret")
+
+    assert report["status"] == "waiting"
+    assert report["model_attempts"] == 1
+    assert any("置信度" in problem for problem in problems)
+    assert len(calls) == 1
+
+
 def test_visual_story写双语原声冷开场并在末尾完整兑现():
     visual = load("analyze_reel_visuals")
     draft = {

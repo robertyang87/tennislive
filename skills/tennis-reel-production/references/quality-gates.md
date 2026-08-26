@@ -11,3 +11,5 @@ Promote only with: complete structured result and winner-perspective score; sche
 Full completion requires five independently verifiable stages: formal spec, completed render, passed QC, successful PushPlus response, and committed `pushed.json`.
 
 Temporary credential/API/network/artifact errors are retryable. Fabricated facts, invalid score direction, wrong person, old cover, low confidence, malformed schema, or failed deterministic QC are blocking and must not be overridden.
+
+A model-format or evidence-window failure may receive one bounded self-correction attempt with exact deterministic feedback. The corrected answer must pass the same gates; a second failure remains blocking.
