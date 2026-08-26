@@ -267,7 +267,11 @@ def clean_report(raw: dict | None, draft: dict, duration: float) -> tuple[dict, 
                      (draft.get("_match") or {}).get("winner") or "").strip()
         if wanted and str(cover.get("subject") or "").strip() != wanted:
             problems.append(f"封面人物应为 {wanted}，模型识别为 {cover.get('subject') or '空'}")
-        wanted_moment = "loser_disappointed" if brief else "winner_celebration"
+        # 默认仍是赢家庆祝；只有终审在 _cover_brief 明确认领时，才允许
+        # 同场官方高清动作照等其他情绪，人物/同场/置信度三道闸照旧。
+        wanted_moment = str(brief.get("preferred_moment") or "").strip()
+        if not wanted_moment:
+            wanted_moment = "loser_disappointed" if brief else "winner_celebration"
         if str(cover.get("moment") or "") != wanted_moment:
             problems.append(f"封面情绪应为 {wanted_moment}，现在是 {cover.get('moment')}")
 
