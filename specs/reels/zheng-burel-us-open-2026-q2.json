@@ -29,7 +29,7 @@
     "layout": "solo",
     "subject": "郑钦文",
     "hook": "世界第410\n真有这么弱？",
-    "topic": "美网资格赛 Q2",
+    "topic": "美网资格赛 · 第二轮",
     "scoreboard": {
       "court": "Court 17",
       "duration_source": {
@@ -260,51 +260,19 @@
   },
   "segments": [
     {
-      "start": 161.53,
-      "end": 181.63,
+      "start": 140.59,
+      "end": 164.46,
       "narration": "",
       "_ending_payoff_required": true,
       "_quote_kind": "broadcast",
       "quote": [
         {
-          "at": 1.03,
-          "text": "Junking the twotime US Open quarter\n郑钦文，这位两届美网八强"
-        },
-        {
-          "at": 4.07,
-          "text": "finalist\n选手"
-        },
-        {
-          "at": 5.59,
-          "text": "is one win away from the final round\n距离决赛只差一场胜利"
-        },
-        {
-          "at": 8.31,
-          "text": "here\n在这里"
-        },
-        {
-          "at": 9.91,
-          "text": "comes through in straits against Clara\n直落两盘战胜克拉拉"
-        },
-        {
-          "at": 12.23,
-          "text": "Burell\n布雷尔"
-        },
-        {
-          "at": 13.75,
-          "text": "and will take on the 20year-old Melena\n接下来将迎战20岁的梅莱娜"
-        },
-        {
-          "at": 17.43,
-          "text": "Predankina\n普雷丹金娜"
-        },
-        {
-          "at": 19.19,
-          "text": "tomorrow. Job well done for her today.\n明天。她今天表现出色。"
+          "at": 0.29,
+          "text": "Just taking the ball shorter and shorter there, allowing them to step in, take control.\n回球越来越短，\n让郑钦文向前接管这一分。"
         }
       ],
       "fit": "crop",
-      "_why": "MiniMax 视觉证据：161.53s–181.63s完整覆盖最后一分后的收官：162.5s郑钦文走上看台并举手回应观众，164.5s–166.5s观众持续鼓掌，168.5s–176.5s她向看台致意，178.5s–180.5s回到场边休息区；画面中赢家持续可见，服装为白背心和薄荷绿短裙。；英文原声来自 captions.txt。"
+      "_why": "MiniMax视觉证据确认该窗口完整覆盖赛点回合、MATCH POINT标识与赛后握手；英文原声来自captions.txt，结尾重放同一决定性事件。"
     },
     {
       "start": 18.15,
@@ -361,11 +329,12 @@
       "_why": "按用户要求在结尾交代第三轮对手、排名、年龄和晋级形势。"
     },
     {
-      "start": 161.53,
-      "end": 190.44,
-      "narration": "世界排名第410位的布雷尔，为什么绝不能按这个数字去判断实力？",
+      "start": 140.59,
+      "end": 164.46,
+      "narration": "",
       "fit": "crop",
-      "_why": "正文重新兑现冷开场的完整结局：161.53s–190.44s完全覆盖cold_open。162.5s郑钦文走向看台举手庆祝，164.5s–166.5s观众鼓掌，168.5s–176.5s她与看台互动，178.5s–180.5s回到场边，186.5s–188.5s仍在收拾装备，郑钦文始终可见。"
+      "crosses_cut": "完整重放冷开场的赛点回合、制胜后反应与握手，兑现片头。",
+      "_why": "结尾回到决定性一分，只保留球场与英文转播原声，无旁白，让胜利动作完成情绪收束。"
     }
   ],
   "_notes": [
@@ -388,20 +357,20 @@
     "visual_status": "pass",
     "retryable": false,
     "cold_open": {
-      "start": 161.53,
-      "end": 181.63,
-      "kind": "winner_celebration",
+      "start": 140.59,
+      "end": 164.46,
+      "kind": "match_point",
       "winner_visible": true,
-      "reason": "161.53s–181.63s完整覆盖最后一分后的收官：162.5s郑钦文走上看台并举手回应观众，164.5s–166.5s观众持续鼓掌，168.5s–176.5s她向看台致意，178.5s–180.5s回到场边休息区；画面中赢家持续可见，服装为白背心和薄荷绿短裙。",
-      "confidence": 0.95
+      "reason": "140.59s起为关键分前夕，148.5s–160.5s为最后一分的对拉；160.5s画面出现MATCH POINT，162.5s郑钦文走向球网握手，完整覆盖决定性一分与赛后确认。",
+      "confidence": 0.88
     },
     "ending": {
-      "start": 161.53,
-      "end": 190.44,
-      "kind": "winner_celebration",
+      "start": 140.59,
+      "end": 164.46,
+      "kind": "match_point",
       "winner_visible": true,
-      "reason": "161.53s–190.44s完全覆盖cold_open。162.5s郑钦文走向看台举手庆祝，164.5s–166.5s观众鼓掌，168.5s–176.5s她与看台互动，178.5s–180.5s回到场边，186.5s–188.5s仍在收拾装备，郑钦文始终可见。",
-      "confidence": 0.96
+      "reason": "完全覆盖冷开场：最后一分、MATCH POINT标识、郑钦文赛后反应与握手均在140.59s–164.46s窗口内。",
+      "confidence": 0.88
     },
     "cover": {
       "same_match": true,
@@ -431,7 +400,8 @@
   },
   "_segments_source": " + MiniMax 冷开场/结尾视觉闸",
   "topbar": {
-    "line1": "2026 美网资格赛 Q2",
+    "line1": "2026 美网资格赛 第二轮",
     "line2": "郑钦文 6-1 7-5 布雷尔"
-  }
+  },
+  "_editing_why": "赛点冷开场→赛果与资格赛原因→布雷尔的伤病和青少年履历→莱巴金娜、佩古拉两场代表战→两盘走势与数据→排名论点→决胜轮普里丹金娜→重放赛点兑现。"
 }
