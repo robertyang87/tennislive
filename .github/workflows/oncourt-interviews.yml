@@ -43,6 +43,15 @@ permissions:
   # 草稿矩阵全部落库后立即叫醒提升/渲染，不再等下一班最多 10 分钟的 schedule。
   actions: write
 
+# ⚠️ 每 15 分钟一班而没有并发锁的话，慢班次（转写/翻译拖长）会和下一班
+# 重叠，两班同时改 data/oncourt_*.json 那批共享 JSON——rebase 撞内容冲突，
+# 推送循环整个死掉（orchestrate 的 state 2026-08-26 就是这么丢的）。这批
+# 数据文件只有本工作流自己写，锁住自撞冲突就结构性不存在了。
+# cancel-in-progress 必须是 false：掐掉正在采集/建草稿的那班就是丢一轮数据。
+concurrency:
+  group: oncourt-interviews
+  cancel-in-progress: false
+
 jobs:
   collect:
     # 只串行共享采集状态/候选 lease；上一批 draft 做 ASR 时，下一轮资源扫描
@@ -201,15 +210,14 @@ jobs:
           n=$(python -c "import json;print(len(json.load(open('data/oncourt_interviews.json'))['items']))")
           python tools/check_staged_file_sizes.py
           git commit -m "data: 场上赛后采访采集（累计 ${n} 条）+ 成片候选 + 采访 spec 草稿"
-          for i in 1 2 3 4; do
-            # --autostash：提交后工作树可能有未跟踪产物（自动建 spec 的临时文件），
-            # 没有它 `git pull --rebase` 会报 unstaged changes 直接失败（真踩过）。
-            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" \
-              && git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0
-            sleep $((2 ** i))
-          done
-          echo "::error::推送失败"
-          exit 1
+          # 原来的手搓循环没有 `git rebase --abort`：rebase 一撞冲突就停在
+          # 半路，后面每次重试都报 "rebase in progress"，循环被毒死。共享
+          # 脚本带 abort（tools/git_push_retry.sh 顶部注释记着这一族）。
+          source tools/git_push_retry.sh
+          if ! push_with_rebase_retry "${GITHUB_REF_NAME}" 4; then
+            echo "::error::推送失败"
+            exit 1
+          fi
 
       - name: 推送失败后确认数据已保留并告警
         if: steps.feed.outcome == 'failure'
@@ -335,13 +343,11 @@ jobs:
           python tools/check_staged_file_sizes.py
           MSG="interview: 自动建立单场草稿 ${{ matrix.candidate_id }}"
           git commit -m "$MSG"
-          for attempt in 1 2 3 4 5; do
-            if git push origin "HEAD:${GITHUB_REF_NAME}"; then exit 0; fi
-            git pull --rebase origin "${GITHUB_REF_NAME}" || { git rebase --abort || true; }
-            sleep $((attempt * 3 + RANDOM % 5))
-          done
-          echo "::error::本场草稿无法落库；其他 matrix 场次不受影响"
-          exit 1
+          source tools/git_push_retry.sh
+          if ! push_with_rebase_retry "${GITHUB_REF_NAME}" 5; then
+            echo "::error::本场草稿无法落库；其他 matrix 场次不受影响"
+            exit 1
+          fi
 
   # matrix 的不同比赛继续并行；等本批最后一条草稿落库后只叫醒一次提升器，
   # 由它一次扫齐并按 slug dispatch 多条 interview-clip（仍然并行渲染）。

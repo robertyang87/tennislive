@@ -265,6 +265,25 @@ jobs:
           name: knowledge-adhoc-failure-${{ github.run_number }}
           path: ${{ steps.gen.outputs.outdir }}*
 
+      # 素材预检失败时 CLI 把被拒候选写进了 data/story_state.json 的
+      # `__visual_backoff__`（明天的排序把它们降到队尾，别再拿同样的坏候选
+      # 烧掉当天的名额——2026-08-18~08-24 九天里六天同因拦停就是这么来的）。
+      # 这份记忆只有提交回仓库才算数：生成步骤红了，下面「提交内容到仓库」
+      # 整个跳过，不单独补一步的话退避只活在 runner 上，明天照旧拦停。
+      - name: 失败也提交素材退避
+        if: failure()
+        run: |
+          git config user.name "Claude"
+          git config user.email "noreply@anthropic.com"
+          git add data/story_state.json
+          if git diff --cached --quiet; then
+            echo "退避没有变化，不提交"
+            exit 0
+          fi
+          git commit -m "knowledge: 素材预检被拒的候选记入退避"
+          source tools/git_push_retry.sh
+          push_with_rebase_retry "${{ github.ref_name }}" 5
+
       - name: 提交内容到仓库
         run: |
           git config user.name "Claude"
@@ -276,8 +295,12 @@ jobs:
           else
             python tools/check_staged_file_sizes.py
             git commit -m "content: 知识帖(ad-hoc) $GENERATED_SLUG"
-            git pull --rebase origin "${{ github.ref_name }}"
-            git push origin "${{ github.ref_name }}"
+            # 裸 push 不带重试的话，撞上别的自动任务刚推过 main，当天的
+            # 知识帖就整趟白渲（tools/git_push_retry.sh 顶部注释）。
+            source tools/git_push_retry.sh
+            if ! push_with_rebase_retry "${{ github.ref_name }}" 5; then
+              exit 1
+            fi
           fi
 
       - name: 上传内容包 artifact
