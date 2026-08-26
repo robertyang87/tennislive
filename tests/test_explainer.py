@@ -353,6 +353,42 @@ def test_every_story_has_a_renderable_script():
         )
 
 
+def test_一屏不许既配图又画示意图否则示意图被静默丢掉():
+    """`_slide_html` 是**照片优先**：有 image 就走照片那一支，diagram 一眼都不看。
+
+    起草瓦林卡那条时中过：`champion` 那一屏我既挂了 2016 年的捧杯照，又挂了
+    「三次大满贯决赛」那张表——渲出来只有照片，那张表**一次都没露过面**，
+    而且渲染成功、全量测试全绿、`_slide_html` 一个字都不报。写它花的力气和
+    它产生的效果，中间隔着一个谁也看不见的 if。
+
+    和「缺图的那一屏」正好是一对：那条拦的是「什么都没给，它悄悄套别人的图」，
+    这条拦的是「给了两样，它悄悄扔掉一样」。两种都是**兜底出事的时候不吭声**。
+
+    修法不是让渲染器去合成两者（一屏挤不下一张照片加一张表），是在这儿拦住：
+    想两样都要，就拆成两屏。
+    """
+    for slug in _SCRIPTED:
+        for seg in explainer_script(find_story_by_slug(slug)):
+            assert not (seg.image and seg.diagram), (
+                f"{slug}/{seg.kind} 同时挂了配图和示意图，而渲染器照片优先，"
+                f"这张示意图渲不出来：{seg.title}\n"
+                "要么去掉一样，要么拆成两屏。"
+            )
+
+    # 判据自己的判据：渲染器**确实**照片优先，所以上面那条不是杞人忧天。
+    # 这一半哪天不成立了（比如渲染器改成两样都画），上面那条就该跟着撤。
+    from tennislive.video.explainer import ExplainerSegment
+
+    both = ExplainerSegment(
+        kind="cause", label="试", title="两样都给",
+        narration="随便一句",
+        image="assets/explainer/hawkeye/ball_mark.jpg",
+        diagram='<svg id="mine"></svg>',
+    )
+    doc = _slide_html(0, both)
+    assert 'id="mine"' not in doc, "渲染器已经会画示意图了，上面那条判据可以撤了"
+
+
 def test_缺图的那一屏要报错而不是套用别的选题的图():
     """一屏既没配图也没画示意图时，渲染器原来会**悄悄**摆上鹰眼那张示意图。
 

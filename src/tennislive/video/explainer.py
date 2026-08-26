@@ -1868,6 +1868,11 @@ _ACADEMY_SPAN_DIAGRAM = _academy_span_diagram()
 AUTO_PUSH_SLUGS: frozenset[str] = frozenset({
     "gauff-right-coco",
     "kostyuk-champion-test",
+    # 2026-08-26 验过才加进来的（上面那句「加进来之前先问一句：这条片子验过了吗」）：
+    # run 33000045583 success，工作流自带的两道闸都过了（这一版是谁配的音、
+    # 这一版的字有没有真烧进产物）；成片从 Release 拉回本地量过——226.8 秒、
+    # 1080×1920、音画差 0.038 秒、十屏逐屏抽帧看过、全程 −22~−27 dB 没有哑场。
+    "wawrinka-wildcard",
 })
 
 
@@ -2351,6 +2356,121 @@ _GAUFF_PUBLIC_SOCIAL_AUDIT = """
   </g>
 </svg>
 """
+
+# 「八张外卡去了哪儿」——**照片讲不清的那一类**：外卡是一份名单，
+# 没有任何一帧能拍下「名单上没有谁」。⚠️ 一屏只留一个强调色：只有最后那一行
+# （空着的那一格）给品牌绿，八个拿到的人一律中性——这一屏的内容是那个空位。
+# ⚠️ 名单照抄美网官方两篇稿子（8/18 七张 ＋ 8/22 第八张），不删不改，
+# 「五个美国年轻人」是主办方的常规做法，如实摆出来让人自己看。
+_WAWRINKA_EIGHT_WC_DIAGRAM = """
+<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="40" text-anchor="middle" fill="#f4fbf7"
+        font-size="36" font-weight="800">美网男单正赛，八张外卡</text>
+  <text x="450" y="76" text-anchor="middle" fill="#cfe6d8"
+        font-size="22" font-weight="700">8 月 18 日公布七张，8 月 22 日补上第八张</text>
+  <text x="450" y="108" text-anchor="middle" fill="#c6f65a"
+        font-size="23" font-weight="800">其中两张是换来的，美网自己能给的只有六张</text>
+
+  <rect x="48" y="132" width="804" height="152" rx="14"
+        fill="rgba(207,230,216,.07)" stroke="rgba(207,230,216,.30)" stroke-width="2"/>
+  <text x="72" y="166" fill="#cfe6d8" font-size="22" font-weight="700">交换名额 · 不是美网挑的</text>
+  <text x="72" y="208" fill="#f4fbf7" font-size="27" font-weight="800">孟菲尔斯（法国）</text>
+  <text x="392" y="208" fill="#cfe6d8" font-size="23" font-weight="700">← 和法网互换</text>
+  <text x="72" y="246" fill="#f4fbf7" font-size="27" font-weight="800">波皮林（澳大利亚）</text>
+  <text x="392" y="246" fill="#cfe6d8" font-size="23" font-weight="700">← 和澳网互换</text>
+  <text x="72" y="274" fill="#cfe6d8" font-size="20" font-weight="700">美网让出这两张，换回美国人打法网、澳网的名额</text>
+
+  <rect x="48" y="300" width="804" height="150" rx="14" fill="rgba(143,214,168,.16)"/>
+  <text x="72" y="334" fill="#cfe6d8" font-size="22" font-weight="700">美网自己的六张</text>
+  <text x="72" y="376" fill="#f4fbf7" font-size="27" font-weight="800">迈克尔·郑　马丁·达姆　肯尼迪</text>
+  <text x="72" y="414" fill="#f4fbf7" font-size="27" font-weight="800">戈尔兹尼　沃尔夫　基普森</text>
+  <text x="72" y="440" fill="#c6f65a" font-size="21" font-weight="800">六张，全是美国人</text>
+
+  <rect x="48" y="466" width="804" height="100" rx="14"
+        fill="rgba(198,246,90,.10)" stroke="#c6f65a" stroke-width="2" stroke-dasharray="8 6"/>
+  <text x="450" y="506" text-anchor="middle" fill="#c6f65a" font-size="27" font-weight="800">
+    瑞士没有这种交换协议
+  </text>
+  <text x="450" y="544" text-anchor="middle" fill="#f4fbf7" font-size="24" font-weight="700">
+    2016 年在这块场地夺冠的那个人，一条通道都不在
+  </text>
+</svg>
+"""
+
+
+_WAWRINKA_THREE_DAYS_DIAGRAM = """
+<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="40" text-anchor="middle" fill="#f4fbf7"
+        font-size="36" font-weight="800">八天，名单上换了一个名字</text>
+  <text x="450" y="76" text-anchor="middle" fill="#cfe6d8"
+        font-size="22" font-weight="700">瓦林卡没报资格赛，外卡是唯一一条路</text>
+  <text x="450" y="110" text-anchor="middle" fill="#c6f65a"
+        font-size="24" font-weight="800">不是名单选中了他，是名单空出了一格</text>
+
+  <line x1="112" y1="142" x2="112" y2="536" stroke="rgba(207,230,216,.22)" stroke-width="4"/>
+
+  <circle cx="112" cy="168" r="13" fill="rgba(207,230,216,.28)"/>
+  <text x="156" y="160" fill="#f4fbf7" font-size="27" font-weight="800">8 月 18 日</text>
+  <text x="156" y="194" fill="#cfe6d8" font-size="24" font-weight="700">先公布七张，没有他</text>
+
+  <circle cx="112" cy="262" r="13" fill="rgba(207,230,216,.28)"/>
+  <text x="156" y="254" fill="#f4fbf7" font-size="27" font-weight="800">8 月 22 日</text>
+  <text x="156" y="288" fill="#cfe6d8" font-size="24" font-weight="700">第八张给了基普森，还是没有他</text>
+  <text x="156" y="318" fill="#ffd166" font-size="23" font-weight="800">网上开始有人质疑这个决定</text>
+
+  <circle cx="112" cy="386" r="13" fill="rgba(207,230,216,.28)"/>
+  <text x="156" y="378" fill="#f4fbf7" font-size="27" font-weight="800">8 月 25 日</text>
+  <text x="156" y="412" fill="#cfe6d8" font-size="24" font-weight="700">他自己发长文告别纽约</text>
+  <text x="156" y="442" fill="#cfe6d8" font-size="23" font-weight="700">「永远感激，永远纽约」</text>
+
+  <circle cx="112" cy="512" r="15" fill="#c6f65a"/>
+  <text x="156" y="504" fill="#c6f65a" font-size="27" font-weight="800">8 月 26 日</text>
+  <text x="156" y="538" fill="#f4fbf7" font-size="24" font-weight="700">基普森因伤退赛，位置转给他</text>
+</svg>
+"""
+
+
+# ⚠️ **表里只摆记录，不写「不是 2014 美网」那种纠正**——账号所有者
+# 2026-08-26：「不要在内容里写不是 2014」「我记错了，这不是要在内容里说的」。
+# 三行摆在一起，读者自己看得出哪座是哪座，不用替他更正一遍。
+_WAWRINKA_FINALS_DIAGRAM = """
+<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="44" text-anchor="middle" fill="#f4fbf7"
+        font-size="36" font-weight="800">三次大满贯决赛，三次都赢</text>
+  <text x="450" y="82" text-anchor="middle" fill="#cfe6d8"
+        font-size="22" font-weight="700">而每一次，对面站着的都是当时的世界第一</text>
+
+  <g fill="#cfe6d8" font-size="22" font-weight="700">
+    <text x="60"  y="132">哪一年，哪一站</text>
+    <text x="392" y="132">决赛对手</text>
+    <text x="700" y="132">对手当时排名</text>
+  </g>
+  <line x1="60" y1="148" x2="840" y2="148" stroke="rgba(207,230,216,.22)" stroke-width="2"/>
+
+  <rect x="60" y="172" width="780" height="94" rx="12" fill="rgba(143,214,168,.16)"/>
+  <text x="80"  y="216" fill="#f4fbf7" font-size="30" font-weight="800">2014 澳网</text>
+  <text x="80"  y="250" fill="#cfe6d8" font-size="23" font-weight="700">墨尔本</text>
+  <text x="392" y="228" fill="#f4fbf7" font-size="30" font-weight="800">纳达尔</text>
+  <text x="700" y="228" fill="#c6f65a" font-size="34" font-weight="800">世界第 1</text>
+
+  <rect x="60" y="286" width="780" height="94" rx="12" fill="rgba(143,214,168,.16)"/>
+  <text x="80"  y="330" fill="#f4fbf7" font-size="30" font-weight="800">2015 法网</text>
+  <text x="80"  y="364" fill="#cfe6d8" font-size="23" font-weight="700">巴黎</text>
+  <text x="392" y="342" fill="#f4fbf7" font-size="30" font-weight="800">德约科维奇</text>
+  <text x="700" y="342" fill="#c6f65a" font-size="34" font-weight="800">世界第 1</text>
+
+  <rect x="60" y="400" width="780" height="94" rx="12" fill="rgba(143,214,168,.16)"/>
+  <text x="80"  y="444" fill="#f4fbf7" font-size="30" font-weight="800">2016 美网</text>
+  <text x="80"  y="478" fill="#cfe6d8" font-size="23" font-weight="700">纽约</text>
+  <text x="392" y="456" fill="#f4fbf7" font-size="30" font-weight="800">德约科维奇</text>
+  <text x="700" y="456" fill="#c6f65a" font-size="34" font-weight="800">世界第 1</text>
+
+  <text x="450" y="556" text-anchor="middle" fill="#cfe6d8" font-size="24" font-weight="700">
+    四巨头最强的那些年，他把头号种子拉下来三次
+  </text>
+</svg>
+"""
+
 
 _SCRIPTS: dict[str, tuple[tuple, ...]] = {
     # 这条不是替任何一方作道德判断，而是把证据等级分开：原话、旧语境、
@@ -6503,6 +6623,191 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             "他还有三天满二十岁。你觉得这一场，会打满三盘吗？",
         ),
     ),
+    # 2026-08-26。**这条的骨架是三个日期，不是一场球**：8/22 最后一张外卡给了
+    # 别人，8/25 他把告别的话说完，8/26 那个位置回到他手里。所以第 ① 屏就是
+    # 那条时间线——CLAUDE.md「最硬的那个事实放第 ① 屏」。
+    # ⚠️ 基普森因伤退赛这件事**中性叙述**：他是让出位置的那个人，不是这条片子
+    # 的反派，画面上一次都不出现他的脸（CLAUDE.md「放谁的脸就是在指认谁」）。
+    # 2026-08-26。⚠️ **这条讲的是那出闹剧，不是一个人的生平**：八张外卡一张
+    # 都没有他，他自己发文告别了，才等到别人受伤退赛补上。所以第 ① 屏就是
+    # 那张名单（CLAUDE.md「最硬的那个事实放第 ① 屏」）。
+    # ⚠️ **调侃的是流程，不是人**：五个美国年轻人拿外卡是主办方的常规做法，
+    # 名单照抄官方稿不删不改；基普森因伤退赛中性叙述，画面上一次都不出现
+    # 他的脸（CLAUDE.md「放谁的脸就是在指认谁」）。荒诞让事实自己说。
+    "wawrinka-wildcard": (
+        (
+            "eight-cards",
+            "八张外卡",
+            "美网自己能给的，只有六张",
+            "先看这份名单。八月十八号七张，八月二十二号补上第八张。"
+            "可这八张里有两张，根本不是美网自己挑的——"
+            "孟菲尔斯和波皮林走的是交换名额：美网让出这两张，"
+            "换回美国球员打法网和澳网的名额。"
+            "剩下六张才是美网真正能决定的，而六张全给了美国人。"
+            "瑞士没有这样的协议，瓦林卡也没报资格赛。"
+            "他不在任何一条通道里。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "两张是交换名额，换回美国人打法网澳网",
+                "美网自己那六张，全给了美国人",
+                "瑞士没有互换协议，瓦林卡不在任何通道里",
+            ),
+            _WAWRINKA_EIGHT_WC_DIAGRAM,
+        ),
+        (
+            "eight-days",
+            "八天",
+            "瓦林卡说完再见，位置才空出来",
+            "接下来的八天，是这出戏真正的部分。"
+            "二十二号那张给了基普森之后，网上开始有人质疑这个决定。"
+            "二十五号，瓦林卡自己发了一篇长文告别纽约，"
+            "最后一句是「永远感激，永远纽约」——所有人都当这是道别了。"
+            "第二天，基普森因伤退赛，美网把那个位置转给了他。"
+            "官网当天连发两篇：前一篇标题还是「授予外卡」，"
+            "后一篇已经变成「他将回来打最后一届美网」。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "8 月 22 日第八张给别人，有人质疑",
+                "8 月 25 日他先说完了再见",
+                "8 月 26 日别人退赛，位置才空出来",
+            ),
+            _WAWRINKA_THREE_DAYS_DIAGRAM,
+        ),
+        (
+            "champion",
+            "他是谁",
+            "十年前，瓦林卡在这儿赢了冠军",
+            "被绕开的这个人，是二〇一六年的美网冠军。"
+            "那年决赛，他六比七、六比四、七比五、六比三击败德约科维奇，"
+            "而德约科维奇当时是世界第一。"
+            "同一块场地，十年。",
+            "assets/explainer/wawrinka-wildcard/uso_2016_trophy.jpg",
+            "美网官网 usopen.org 官方图 · 2016 年 9 月 11 日纽约，"
+            "瓦林卡在满地彩带中抱着美网男单奖杯",
+            (
+                "2016 美网决赛胜德约科维奇",
+                "6-7 6-4 7-5 6-3，对面是世界第 1",
+                "十年前的这座球场，他站在最高处",
+            ),
+        ),
+        (
+            "three-finals",
+            "三座奖杯",
+            "三次决赛，对面都是世界第一",
+            "而且这不是一次好运。"
+            "他一共只进过三次大满贯决赛，三次全部拿下——"
+            "每一次，对面站着的都是当时的世界第一。"
+            "二〇一四年澳网胜纳达尔，二〇一五年法网、二〇一六年美网两次胜德约科维奇。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "2014 澳网 · 2015 法网 · 2016 美网",
+                "三进大满贯决赛，三次全赢",
+                "对手：纳达尔、德约科维奇 ×2",
+            ),
+            _WAWRINKA_FINALS_DIAGRAM,
+        ),
+        (
+            "letter",
+            "那段话",
+            "从瑞士的小农村，到纽约",
+            "他二十五号写的那段话值得原样读一遍。"
+            "「我第一次从瑞士的一个小农村来到纽约，觉得什么都太大了。」"
+            "「可一年又一年，纽约变成我最喜欢的地方之一。"
+            "这座城市考验过我，也推过我一把。」"
+            "「在这座不夜城拿下美网，会永远是我人生里最好的时刻之一。」"
+            "配图是他自己挑的，其中一张是夺冠之后，"
+            "他站在曼哈顿的一处楼顶举着奖杯自拍。",
+            "assets/explainer/wawrinka-wildcard/x_rockefeller_2016.jpg",
+            "瓦林卡本人 X 账号 2026 年 8 月 25 日告别长文配图 · "
+            "2016 年美网夺冠后在曼哈顿一处楼顶举奖杯自拍，身后是帝国大厦",
+            (
+                "「第一次到纽约，觉得什么都太大」",
+                "「在不夜城夺冠，永远是最好的时刻」",
+                "图是他自己挑的告别配图",
+            ),
+        ),
+        (
+            "australian-open",
+            "一月墨尔本",
+            "赛事总监上场，陪瓦林卡碰了杯啤酒",
+            "今年前三个大满贯，每一个都给了他一场像样的告别。"
+            "一月的墨尔本，四十岁的他打进第三轮，"
+            "是一九七八年以来第一个做到这件事的四十岁以上男子球员。"
+            "输给弗里茨那场之后他没有直接走：澳网的赛事总监走上场来，"
+            "两个人在场地中央举起啤酒碰了一下，满场的人站着看他喝完。",
+            "assets/explainer/wawrinka-wildcard/ao_2026_beer.jpg",
+            "AP Photo/Asanka Brendon Ratnayake · 2026 年 1 月 24 日墨尔本，"
+            "澳网第三轮负于弗里茨之后，瓦林卡和赛事总监在场上举起啤酒",
+            (
+                "40 岁，1978 年后首个 40+ 进第三轮",
+                "输球之后，赛事总监上场碰啤酒",
+                "满场站着看他喝完",
+            ),
+        ),
+        (
+            "roland-garros",
+            "五月巴黎",
+            "三巨头都发来了视频",
+            "五月的巴黎，是最正式的一场。"
+            "他在西蒙娜-马蒂厄球场首轮出局，全场没有散。"
+            "赛事总监毛瑞斯莫走上来抱住他，大屏幕开始放录像，"
+            "费德勒、纳达尔、德约科维奇、辛纳、阿尔卡拉斯、孟菲尔斯一个个出现。"
+            "三次大满贯决赛他赢过的那两个人，这一天都在屏幕上跟他告别。"
+            "他说：很难，很难在这里说再见——"
+            "就是因为罗兰加洛斯，我才想当网球运动员的。",
+            "assets/explainer/wawrinka-wildcard/rg_2026_ovation.jpg",
+            "法网官网 rolandgarros.com 官方图 · 2026 年 5 月 25 日巴黎，"
+            "瓦林卡法网首轮出局后站在满场起立的观众前",
+            (
+                "赛事总监毛瑞斯莫上场抱住他",
+                "费德勒、纳达尔、德约都发来视频",
+                "「因为罗兰加洛斯，我才想打网球」",
+            ),
+        ),
+        (
+            "wimbledon",
+            "六月伦敦",
+            "四盘全是抢七，全场站着送瓦林卡",
+            "六月的伦敦，他在一号球场碰上贝雷蒂尼，"
+            "四盘全部打进抢七，四个小时二十分钟。"
+            "先赢下第一盘，第二盘那个抢七打到十八比十六——"
+            "中间他手里握过六个盘点，一个都没保住，后面三盘全输在抢七里。"
+            "走下球场的时候，整个一号球场站了起来。"
+            "法网给过他外卡，温网也给过他外卡。只剩纽约。",
+            "assets/explainer/wawrinka-wildcard/wimbledon_2026_walkoff.jpg",
+            "AELTC · wimbledon.com 官方图 · 2026 年 6 月 30 日伦敦，"
+            "温网首轮负于贝雷蒂尼之后，瓦林卡背着球包走下一号球场，全场起立鼓掌",
+            (
+                "四盘全打进抢七，4 小时 20 分",
+                "第二盘 18-16，六个盘点没保住",
+                "法网、温网都给过外卡——只差纽约",
+            ),
+        ),
+        (
+            "last",
+            "最后一站",
+            "41 岁，世界第 127，还剩一场",
+            "他今年三月满四十一岁，现在世界第一百二十七位，"
+            "二〇〇二年转的职业，打到今天二十四年。"
+            "十六个巡回赛单打冠军，最后一个停在二〇一七年；"
+            "那之后两次膝盖手术，二〇二一年又做了两次足部手术。"
+            "去年十二月他写下一句：每一本书都需要一个结尾。"
+            "现在这本书只剩纽约这一页。",
+            "assets/explainer/wawrinka-wildcard/ao_2026_forehand.jpg",
+            "AP Photo/Asanka Brendon Ratnayake · 2026 年 1 月 24 日墨尔本，"
+            "澳网男单第三轮对弗里茨，瓦林卡正手击球",
+            (
+                "41 岁，世界第 127，转职业 24 年",
+                "16 个单打冠军，末冠停在 2017",
+                "「每一本书都需要一个结尾」",
+            ),
+            "",
+            "东道主的外卡，该先给本国的年轻人，还是给在这儿夺过冠的人？",
+        ),
+    ),
 }
 
 
@@ -6517,6 +6822,16 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
 # 这个洞。判据落在 test_每条片子的标签都放满五个。
 _DEFAULT_TAGS = ("网球", "网球时差", "网球冷知识", "网球科普", "网球运动")
 _CAPTIONS: dict[str, dict] = {
+    "wawrinka-wildcard": {
+        "hook": (
+            "美网八张男单外卡里，有两张根本不是美网自己能给的——孟菲尔斯和波皮林"
+            "走的是和法网、澳网的互换名额。美网真正能决定的六张，全给了美国人。\n"
+            "瑞士没有这种协议。2016 年在这块场地上夺冠的那个人，一条通道都不在。\n"
+            "8 月 25 日他发文告别纽约；第二天，拿到第八张的人因伤退赛，位置才空出来。"
+        ),
+        "tags": ("网球", "网球时差", "瓦林卡", "美网", "外卡"),
+    },
+
     "gauff-right-coco": {
         "hook": (
             "现场原话里没有克耶高斯——把他加进来的是评论区。\n"
@@ -6889,6 +7204,34 @@ def column_of(slug: str) -> Column:
 # beat one makes the viewer work out the subject for themselves. Every deck
 # now opens on the question it answers, said out loud and set large.
 _OPENINGS: dict[str, dict] = {
+    "wawrinka-wildcard": {
+        "topic": "美网外卡的这出戏",
+        # ⚠️ 13 个字符排一行 88.8px，过 `_COVER_MIN_ONE_LINE_PX = 84`。
+        # 账号所有者 2026-08-26 两次点这条标题：先是「看不出最后又获得」，
+        # 改成「八张外卡，瓦林卡怎么进的？」之后又说「标题不行」「应该讲出
+        # 外卡风波的波折」。前一版只问结果，看不出中间那八天。
+        # 现在「说完再见」是波折本身，「才来」是反转，一句话装下两拍。
+        # 用「没有」不用「绕开」：后者暗示故意，而没有任何证据说美网是故意的
+        # ——调侃的是这个流程有多荒诞，不是指控谁（CLAUDE.md 那条封面语义）。
+        "question": "瓦林卡说完再见，外卡才来？",
+        # ⚠️ 首句 18 字 ≈ 3.4 秒，落在 5 秒的决定窗口里。原来那句先报日期
+        # 再报结论（29 字），把最硬的那个事实压到了第二句后面。
+        "narration": "美网发了八张外卡，一张都没给瓦林卡。"
+                     "而二〇一六年在这块场地上夺冠的，正是他。"
+                     "更要命的是，八张里有两张根本不是美网自己能给的。"
+                     "他没报资格赛，那条路本来就断了。"
+                     "八天之后，名单上空出一格，他才补了进来。"
+                     "瓦林卡说完再见，外卡才来？",
+        # ⚠️ 封面故意不用 2016 那张捧杯——那张讲的是「赢」，而封面问的是
+        # 「他被留在名单外」。CLAUDE.md「先问情绪对不对题，在都对题的几张里
+        # 再挑近景那张」：这张 2026 法网谢场是今年的、是告别的、也是近景。
+        # 原图 7471×4981，横向裁成 3:4 得 3735×4981，一个像素都不用放大。
+        "image": "assets/explainer/wawrinka-wildcard/roland_garros_2026.jpg",
+        "credit": "AP Photo/Thibault Camus · 2026 年 5 月 25 日巴黎，"
+                  "法网男单首轮打完，瓦林卡手按胸口向全场致意",
+        "tags": ("网球", "网球时差", "瓦林卡", "美网", "外卡"),
+    },
+
     "gauff-right-coco": {
         "topic": "高芙的「right Coco」",
         "question": "评论区为何想到克耶高斯？",
