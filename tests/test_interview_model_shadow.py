@@ -111,15 +111,15 @@ def test_deepseek事实包外情节不能靠其他项拿高分():
     assert any("事实包" in issue for issue in issues)
 
 
-def test_deepseek球网对面是忠实语义但卫冕和下一站仍属编造():
+def test_deepseek球场另一边是忠实语义但赛程结论仍不得编造():
     bench = load("benchmark_interview_models")
     result = good_deepseek(bench)
-    result["translations"][0]["zh"] = "我不想看到你站在球网对面"
+    result["translations"][0]["zh"] = "我不喜欢看到你在球场另一边"
     score, issues = bench.deepseek_score(result)
     assert score == 100
     assert issues == []
 
-    result["push"]["lead"] += "她成功卫冕，下一站将冲击大满贯。"
+    result["push"]["lead"] += "她连续两年蝉联卫冕，下一站将冲击大满贯。"
     score, issues = bench.deepseek_score(result)
     assert score < 85
     assert any("事实包" in issue for issue in issues)
@@ -179,6 +179,8 @@ def test_interview影子工作流只读且不发布():
     assert "timeout-minutes: 15" in body
     assert "actions/cache@v4" in body
     assert "apt-archives" in body
+    assert "assets/explainer/nadal-academy/faces" in body
+    assert "\n            assets\n" not in body
     assert "branches: [main]" in body
 
 
