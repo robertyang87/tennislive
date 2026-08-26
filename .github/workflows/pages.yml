@@ -1,42 +1,46 @@
 name: pages
 
-# **只发复制页，不发整个仓库。**
-#
-# Pages 默认把整个仓库当站点，而这个仓库 `output/` 有 **2.26 GB**——量出来的构成：
-#
-#   mp4  1367.8 MB (60.6%)   png 480.5 MB (21.3%)   jpg 399.1 MB (17.7%)
-#   html   0.66 MB (0.03%)  ← Pages 真正要服务的只有这个
-#
-# 图片和视频走 jsDelivr / raw，**Pages 一个字节都用不到**；它们被卷进来只是因为
-# Pages 发布的是整个仓库。于是每次重建都在为 0.03% 的内容搬 100% 的东西。
-#
-# 账单是实测的：整站重建 5:50 / 7:14 / 8:12 / 9:30，还被后续提交取消过两次
-# （见 CLAUDE.md「等待窗口结构性地短于 Pages 的发布时间」）。代价落在推送上——
-# 2026-08-03 冠军版那条：**推送步骤 6 分 44 秒，其中 6 分半在等 Pages**，
-# 而真正发微信只要几秒。账号所有者：「赶紧修这个问题，白白等这么久时间」。
-#
-# ⚠️ **URL 一个字不变**，这是这个方案的前提：
-#     `_site/output/<date>/<slug>/copy.html` → `/output/<date>/<slug>/copy.html`
-# 已经发出去的微信链接照常能开——**那些消息收不回来，链接死了就是死了**。
-#
-# ⚠️ **要在仓库设置里把 Pages 的 Source 改成 "GitHub Actions" 这条才生效。**
-# 改之前它会失败（`deploy-pages` 拿不到部署权限），那是预期的，不是 bug。
-
+# 复制页与手机状态看板共用同一个 Pages 部署，避免两套工作流互相覆盖站点。
+# output 中的视频/图片不进入 artifact；只稀疏检出 HTML 和小型状态证据。
 on:
   push:
     branches: [main]
-    paths: ["output/**/*.html"]
+    paths:
+      - "output/**/*.html"
+      - "output/**/render.json"
+      - "dashboard/**"
+      - "tools/build_dashboard_snapshot.py"
+      - "data/orchestration_state.json"
+      - "data/reel-dispatch-queue/*.json"
+      - "data/*_publish_ledger/*.json"
+      - "specs/**/*.json"
+      - ".github/workflows/pages.yml"
+  workflow_run:
+    workflows:
+      - orchestrate
+      - oncourt-interviews
+      - official-social-images
+      - source-health
+      - probe
+      - reel-dispatch-queue
+      - match-reel
+      - interview-auto-render
+      - explainer
+      - auto-push-reel
+      - auto-push-interview
+      - auto-push-explainer
+      - pipeline-health
+    types: [completed]
   workflow_dispatch:
 
 permissions:
   contents: read
+  actions: read
   pages: write
   id-token: write
 
 concurrency:
   group: pages
-  # **不取消在跑的那次。** 被取消的那次可能正带着某条刚发出去的复制页，
-  # 而推送那头正在探它可不可达——取消等于让那颗按钮消失。
   cancel-in-progress: false
 
 jobs:
@@ -47,34 +51,40 @@ jobs:
       name: github-pages
       url: ${{ steps.deploy.outputs.page_url }}
     steps:
-      # 稀疏检出**按模式**（非 cone），只把 html 拉下来——整个 output/ 是 2.26 GB，
-      # 而这里要的 0.66 MB。cone 模式只能按目录选，选不出「所有 html」。
       - uses: actions/checkout@v4
         with:
           sparse-checkout: |
             output/**/*.html
+            output/**/render.json
+            dashboard
+            tools/build_dashboard_snapshot.py
+            data/orchestration_state.json
+            data/reel-dispatch-queue/*.json
+            data/*_publish_ledger/*.json
+            specs/**/*.json
           sparse-checkout-cone-mode: false
 
-      - name: 收齐复制页
+      - name: 收齐复制页与 dashboard
         run: |
           set -o pipefail
-          mkdir -p _site
-          # **路径原样保留**——URL 就是路径，改一个字符就是把已发出去的链接弄死。
+          mkdir -p _site/dashboard
           find output -name '*.html' -print0 | while IFS= read -r -d '' f; do
             mkdir -p "_site/$(dirname "$f")"
             cp "$f" "_site/$f"
           done
-          # 没有它 Jekyll 会逐个文件处理一遍。这个仓库原来就没有 `.nojekyll`。
+          cp dashboard/index.html dashboard/styles.css dashboard/app.js _site/dashboard/
           touch _site/.nojekyll
-          n=$(find _site -name '*.html' | wc -l)
-          # **空结果先自证是真空**：稀疏检出的模式写错了的话，这儿会是 0，
-          # 而「0 个页面」和「部署成功」在日志上长得一模一样——那会把整站清空。
+          n=$(find _site/output -name '*.html' 2>/dev/null | wc -l)
           if [ "$n" -eq 0 ]; then
-            echo "一个 html 都没收到——稀疏检出的模式写错了？工作区里有："
-            ls -la
+            echo "一个复制页都没收到——稀疏检出可能失效，拒绝覆盖现有站点"
             exit 1
           fi
-          echo "收齐 $n 个页面，合计 $(du -sh _site | cut -f1)"
+          echo "收齐 $n 个复制页，并加入手机 dashboard"
+
+      - name: 生成无密钥状态快照
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python3 tools/build_dashboard_snapshot.py --root . --output _site/dashboard/snapshot.json
 
       - uses: actions/upload-pages-artifact@v3
         with:
