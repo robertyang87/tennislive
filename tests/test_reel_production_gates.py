@@ -396,6 +396,23 @@ def test_deepseek基准评分要求硬事实和三段故事():
     assert issues == []
 
 
+def test_deepseek基准有明确缺项时绝不能仍显示满分():
+    bench = load("benchmark_reel_models")
+    editorial = {
+        "hook": ["排名低十一位", "赢下三种场地"],
+        "question": "菲斯为什么能连续击败科博利？",
+        "thesis": "6-3 6-4背后，是22比3的制胜分差。",
+        "beats": ["首盘6-3", "次盘6-4", "全场22比3"],
+        "narration": ["首盘六比三。", "次盘六比四。", "制胜分二十二比三。"],
+        "human_context": "他们从室内硬地打到红土和室外硬地。",
+    }
+    push = {"summary": "菲斯晋级",
+            "lead": "菲斯以6比3、6比4取胜，全场制胜分22比3。"}
+    score, issues = bench.deepseek_score(editorial, push)
+    assert score == 90
+    assert any("三次交手" in issue for issue in issues)
+
+
 def test_模型练手拒绝把提示词示例抄成比赛事实():
     bench = load("benchmark_reel_models")
     editorial = {
@@ -504,6 +521,13 @@ def test_deepseek草稿确定性规范化所有配音字段百分比():
         "narration": ["科博利百分之七十三的一发得分率不够。"],
         "human_context": "抢七胜率百分之一百",
     }
+
+
+def test_deepseek草稿移除中文词间会让tts异常停顿的空格():
+    draft = load("draft_spec")
+    assert draft.normalize_editorial_for_speech(
+        "今天 他击出22记制胜分，ATP 1000首进决赛。"
+    ) == "今天他击出22记制胜分，ATP 1000首进决赛。"
 
 
 def test_模型练手拒绝minimax拿窗口外画面当证据():
