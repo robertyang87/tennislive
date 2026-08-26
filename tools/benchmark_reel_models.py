@@ -9,6 +9,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import sys
 from pathlib import Path
 
@@ -80,7 +81,12 @@ def deepseek_score(editorial: dict | None, push: dict | None) -> tuple[int, list
         score += 10
     else:
         issues.append("推送标题/导语不完整或标题超过 20 字")
-    return min(score, 100), issues
+    leaked = ("决胜盘", "四比一", "连丢四局", "五比四", "多拿五分")
+    hits = [value for value in leaked if value in text]
+    if hits:
+        score -= 60
+        issues.append(f"写入事实包不存在的示例情节：{','.join(hits)}")
+    return max(0, min(score, 100)), issues
 
 
 def interval_overlap(predicted: dict, expected: tuple[float, float]) -> float:
@@ -106,7 +112,18 @@ def minimax_score(report: dict, problems: list[str]) -> tuple[int, list[str]]:
         score += 20
     else:
         issues.append("封面没有同时认对本场、菲斯和赢家庆祝情绪")
-    return min(score, 100), issues
+    for name in ("cold_open", "ending"):
+        item = report.get(name) or {}
+        start, end = float(item.get("start") or 0), float(item.get("end") or 0)
+        cited = [float(value) for value in re.findall(
+            r"(?<![\d.])(\d{2,3}(?:\.\d+)?)\s*(?:s|秒)",
+            str(item.get("reason") or ""))]
+        outside = [stamp for stamp in cited
+                   if stamp < start - 0.5 or stamp > end + 0.5]
+        if outside:
+            score -= 30
+            issues.append(f"{name} 理由引用窗口外时间：{outside}")
+    return max(0, min(score, 100)), issues
 
 
 def _body_segments(base: dict, narration: list[str]) -> list[dict]:

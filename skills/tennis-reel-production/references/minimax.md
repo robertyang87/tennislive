@@ -6,6 +6,8 @@ Return JSON only with `cold_open`, `ending`, and `cover`. Each video window must
 
 Choose a 3–30 second payoff, never an ordinary rally. Make ending fully cover cold open within 0.25 seconds. Confirm the winner is visible. Check face, clothing, court, scoreboard, and event marks for same-match cover evidence. Follow the provided upset cover-subject rule exactly. Require confidence of at least 0.80.
 
+Every timestamp cited in a reason must fall inside that item's returned `start`/`end` window. Evidence outside the claimed window cannot justify the selection.
+
 Published positive reference: in `fils-cobolli-cincinnati-2026-sf`, cold open 317.72–329.50 and ending 317.50–329.50 contain match point, winner Fils celebrating, loser reaction, and English broadcast confirmation; the cover is a same-match winner celebration. Learn only the criteria; never reuse these names or timecodes for another source.
 
 Reject ordinary rallies, payoff only at the beginning, partial replay, uncertain/wrong people, old reference photos, or unsupported high confidence.

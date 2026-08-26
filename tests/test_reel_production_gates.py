@@ -232,6 +232,40 @@ def test_deepseek基准评分要求硬事实和三段故事():
     assert issues == []
 
 
+def test_模型练手拒绝把提示词示例抄成比赛事实():
+    bench = load("benchmark_reel_models")
+    editorial = {
+        "hook": ["三次交手", "一次没赢"],
+        "question": "决胜盘四比一领先还能输掉？",
+        "thesis": "6-3 6-4背后，是22比3的制胜分差。",
+        "beats": ["首盘", "次盘", "三次交手"],
+        "narration": ["首盘菲斯先破局。", "次盘差距扩大到二十二比三。",
+                      "三场比赛，科博利一次都没赢。"],
+        "human_context": "他们从青年组打到大师赛。",
+    }
+    push = {"summary": "三次交手一次没赢",
+            "lead": "菲斯两盘取胜，制胜分22比3，三次交手继续保持全胜。"}
+    score, issues = bench.deepseek_score(editorial, push)
+    assert score < 80
+    assert any("事实包不存在" in issue for issue in issues)
+
+
+def test_模型练手拒绝minimax拿窗口外画面当证据():
+    bench = load("benchmark_reel_models")
+    report = {
+        "visual_status": "pass",
+        "cold_open": {"start": 317.72, "end": 329.84,
+                      "reason": "330.5-332.5s 才看见握手"},
+        "ending": {"start": 317.5, "end": 329.84,
+                   "reason": "317.5-329.8s 完整收官"},
+        "cover": {"subject": "菲斯", "moment": "winner_celebration",
+                  "same_match": True},
+    }
+    score, issues = bench.minimax_score(report, [])
+    assert score < 85
+    assert any("窗口外时间" in issue for issue in issues)
+
+
 def test_orchestrate把轮次球场国别排名和SLO起点传进probe():
     body = (TOOLS / "orchestrate.py").read_text(encoding="utf-8")
     for value in ("round=", "court=", "home_country=", "away_country=",
