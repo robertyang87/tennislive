@@ -3,6 +3,15 @@ name: reel-model-benchmark
 # 只做影子练习和对比报告：不提交、不 dispatch render、不调用 PushPlus。
 on:
   workflow_dispatch: {}
+  push:
+    branches: [main]
+    paths:
+      - "skills/tennis-reel-production/**"
+      - "tools/draft_spec.py"
+      - "tools/analyze_reel_visuals.py"
+      - "tools/benchmark_reel_models.py"
+      - "tools/reel_skill.py"
+      - ".github/workflows/reel-model-benchmark.yml"
 
 permissions:
   contents: read

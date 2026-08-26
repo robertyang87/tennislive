@@ -192,6 +192,8 @@ def test_模型练手工作流只读且绝不发布():
     assert "PUSHPLUS_TOKEN" not in body
     assert "git push" not in body
     assert "gh workflow run" not in body
+    assert "push:" in body
+    assert "branches: [main]" in body
 
 
 def test_制作skill确实注入deepseek和minimax而不是只写文档():
