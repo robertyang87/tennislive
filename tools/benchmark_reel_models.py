@@ -25,7 +25,7 @@ from analyze_reel_visuals import (  # noqa: E402
     translate_quotes,
     verified_minimax_report,
 )
-from draft_spec import draft_editorial, draft_push  # noqa: E402
+from draft_spec import arithmetic_claim_problem, draft_editorial, draft_push  # noqa: E402
 from reel_quality_reference import BENCHMARK_SLUG, benchmark  # noqa: E402
 from reel_timing import speech_seconds  # noqa: E402
 from tennislive.research.brief import Chat  # noqa: E402
@@ -92,6 +92,10 @@ def deepseek_score(editorial: dict | None, push: dict | None) -> tuple[int, list
     if "%" in text or "％" in text:
         score -= 30
         issues.append("配音字段含百分号，必须改写成中文百分比")
+    arithmetic_problem = arithmetic_claim_problem({"editorial": editorial, "push": push})
+    if arithmetic_problem:
+        score -= 60
+        issues.append(arithmetic_problem)
     return max(0, score), issues
 
 
