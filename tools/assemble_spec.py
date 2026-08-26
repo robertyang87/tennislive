@@ -68,7 +68,7 @@ from tennislive.research.brief import Chat  # noqa: E402
 from tennislive.zh import player_zh  # noqa: E402
 from tennislive.sources.rankings import fetch_rankings, norm_name, rank_map  # noqa: E402
 from tennislive.research.zh_trends import fetch_zh_hot  # noqa: E402
-from draft_spec import draft_editorial  # noqa: E402
+from draft_spec import arithmetic_claim_problem, draft_editorial  # noqa: E402
 from reel_facts import verified_match_fact  # noqa: E402
 from reel_timing import speech_seconds  # noqa: E402
 
@@ -672,7 +672,8 @@ def assemble(*, slug: str, home: str, away: str, event: str, year: int,
             points_problem = editorial_total_points_problem(
                 draft["editorial"], draft.get("stats", {}),
                 draft.get("cover", {}).get("matchup", []), authoritative_scores)
-            problem = score_problem or points_problem
+            problem = score_problem or points_problem or arithmetic_claim_problem(
+                draft["editorial"])
             if problem:
                 # 数字方向是机械事实，先把具体错误喂回模型重写一次；仍错就撤稿。
                 corrected_facts = (f"{editorial_facts}\n- 上一稿错误：{problem}。"
@@ -685,7 +686,8 @@ def assemble(*, slug: str, home: str, away: str, event: str, year: int,
                                  or editorial_total_points_problem(
                                      retry or {}, draft.get("stats", {}),
                                      draft.get("cover", {}).get("matchup", []),
-                                     authoritative_scores))
+                                     authoritative_scores)
+                                 or arithmetic_claim_problem(retry or {}))
                 if retry and not retry_problem:
                     draft["editorial"] = retry
                     notes.append(f"文案事实校验发现首稿错误（{problem}），重写后通过")
@@ -705,10 +707,11 @@ def assemble(*, slug: str, home: str, away: str, event: str, year: int,
                     push = draft_push(chat, editorial=draft["editorial"],
                                       facts=editorial_facts)
                     if push and push.get("summary"):
-                        push_problem = editorial_total_points_problem(
+                        push_problem = (editorial_total_points_problem(
                             push, draft.get("stats", {}),
                             draft.get("cover", {}).get("matchup", []),
                             authoritative_scores)
+                            or arithmetic_claim_problem(push))
                         if push_problem:
                             notes.append(
                                 f"⚠️ 推送文案{push_problem}；已撤下 push，禁止发送")
