@@ -293,8 +293,12 @@ def xhs_copy(spec: dict) -> str:
     match = spec["match"]
     return (
         f"{match['winner']}击败{match['loser']}后，在球场内接受了现场采访。\n\n"
-        f"这版保留完整问答，并在开头加入同场获胜后的比赛画面、现场解说和"
-        f"中英文字幕。\n\n#网球 #赛后采访 #赛后开麦\n"
+        # ⚠️ 别把字幕/制作规格写进文案：账号所有者 2026-08-19「以后不要再在
+        # 文案里说中英文字幕相关的文案」——每条片子都有的制作规格不是这一条
+        # 的内容（test_interview_clip 那张 78 文件的豁免表就是这么攒出来的，
+        # 只许减不许加；这个模板再写就是给它添新账）。
+        f"这版保留完整问答，并在开头加入同场获胜后的比赛画面和现场解说。"
+        f"\n\n#网球 #赛后采访 #赛后开麦\n"
     )
 
 
@@ -375,12 +379,25 @@ def promote_all(*, write: bool = False) -> tuple[list[str], list[str]]:
             skipped.append(f"{f.name}: {why}（等终审）")
             continue
         spec = promote(draft, opp, details)
+        # 文案里不许提字幕这类制作规格（2026-08-19 的规矩；那张 78 个文件的
+        # 豁免表只许减不许加）。模板是确定性的，这道闸拦的是「哪天有人把
+        # 规格话术写回模板/推送字段」——它红一次好过豁免表长一格。
+        copy_text = xhs_copy(spec)
+        outward = copy_text + "\n" + "\n".join(
+            str(v) for k, v in (spec.get("push") or {}).items()
+            if not k.startswith("_") and isinstance(v, str))
+        from spec_wording import BILINGUAL_MENTION  # noqa: PLC0415
+        if BILINGUAL_MENTION.search(outward):
+            skipped.append(
+                f"{f.name}: 文案里提了字幕这类制作规格（模板或 push 字段被"
+                f"写回了规格话术），不提升")
+            continue
         if write:
             out = SPECS / f"{spec['slug']}.json"
             out.write_text(json.dumps(spec, ensure_ascii=False, indent=2),
                            encoding="utf-8")
             (SPECS / f"{spec['slug']}.xhs.txt").write_text(
-                xhs_copy(spec), encoding="utf-8")
+                copy_text, encoding="utf-8")
             f.unlink()
             promoted.append(f"{f.name} → {out.name}")
         else:

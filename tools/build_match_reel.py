@@ -2158,6 +2158,23 @@ def _reject_dead_voice_keys(spec: dict) -> None:
         "（`_` 开头一律当注解，读都不读）")
 
 
+def enforce_spec_wording(spec: dict, spec_path: Path) -> None:
+    """会发出去的措辞判据，单一出处在 tools/spec_wording.py。
+
+    ⚠️ 故意**不并进 validate_spec**：它要 slug（查豁免表）和小红书正文，
+    而 validate_spec 的一批调用方（preview 工具、benchmark）只有裸 spec；
+    改签名把它们全牵动。promote_reel_draft 那头自己调 check_spec_wording。
+    """
+    from spec_wording import check_spec_wording  # noqa: PLC0415
+
+    xhs = spec_path.with_suffix(".xhs.txt")
+    problems = check_spec_wording(
+        spec, spec_path.stem,
+        xhs.read_text(encoding="utf-8") if xhs.is_file() else None)
+    if problems:
+        raise ReelError("会发出去的措辞不合规矩：\n  - " + "\n  - ".join(problems))
+
+
 def load_spec(path: Path) -> dict:
     spec = json.loads(path.read_text(encoding="utf-8"))
     for key in ("segments", "cover"):
@@ -6560,6 +6577,13 @@ def main() -> int:
         return 0
 
     spec = load_spec(Path(args.spec))
+    # 会发出去的措辞判据（tools/spec_wording.py，单一出处）。原来只活在
+    # pytest 里，而自动出片链用 GITHUB_TOKEN 直推 main、不触发 CI——模型/
+    # 自动产的 spec 从生成到发进微信一次都没被扫过，已经漏出去过一条
+    # （tiafoe-musetti-cincinnati-2026-qf 带着「7点05分」推送）。放在
+    # load_spec 之后、模式分发之前：dry-run / check-narration / render
+    # 三条路一个 seat 全过，0.2 秒就红。豁免表按 slug 查，老 spec 照旧绿。
+    enforce_spec_wording(spec, Path(args.spec))
     if args.check_narration:
         # **一个源片字节都不碰。** 这道闸比的是「TTS 时长 vs spec 里的段长」，
         # 两样都不需要源片；而跑一趟 render 去问同一个问题，在通过的情况下会

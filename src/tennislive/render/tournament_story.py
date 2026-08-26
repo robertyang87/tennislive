@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 import unicodedata
 from dataclasses import dataclass
-from datetime import date
+from datetime import date, timedelta
 from pathlib import Path
 
 from ..digest import Digest
@@ -3997,6 +3997,91 @@ def adhoc_knowledge_published_on(today: date) -> bool:
     return _load_state().get(ADHOC_KNOWLEDGE_KEY) == today.isoformat()
 
 
+# 素材预检退避（2026-08-26）。来路：knowledge-adhoc 2026-08-18~08-24 九天里
+# 六天红在同一句「知识帖素材预检失败：候选故事均没有完整高质量图片包」——
+# 预检被拒**没有任何记忆**，第二天同样的排序端出同样的坏候选（trivia-queue、
+# trivia-rufus 反复被同两条 year/visual 判据拒掉），每日知识栏目约一半天数
+# 静默停更。被拒的 slug 记一个短退避，候选排序把退避中的**降到队尾**——
+# 不剔除：池子真空了还轮得到它，而素材包修好之后它自己就回来了。
+VISUAL_BACKOFF_KEY = "__visual_backoff__"
+# 3 天：素材包不会自己修好（同一批 curated 图第二天还是那批），但会有人
+# 顺着失败告警去补图/换图——退避太长会把修好的选题多压一周。
+VISUAL_BACKOFF_DAYS = 3
+
+
+def mark_visual_backoff(slugs, today: date) -> None:
+    """记下这些 slug 今天没过素材预检；顺手清掉早已过期的旧条目。"""
+    slugs = [s for s in slugs if s]
+    if not slugs:
+        return
+    state = _load_state()
+    backoff = dict(state.get(VISUAL_BACKOFF_KEY) or {})
+    for slug in slugs:
+        backoff[slug] = today.isoformat()
+    cutoff = today - timedelta(days=VISUAL_BACKOFF_DAYS * 2)
+    kept = {}
+    for slug, day_str in backoff.items():
+        try:
+            if date.fromisoformat(str(day_str)) >= cutoff:
+                kept[slug] = day_str
+        except ValueError:
+            continue
+    state[VISUAL_BACKOFF_KEY] = kept
+    STATE_PATH.parent.mkdir(parents=True, exist_ok=True)
+    STATE_PATH.write_text(
+        json.dumps(state, ensure_ascii=False, indent=1), encoding="utf-8"
+    )
+
+
+def clear_visual_backoff(slug: str) -> None:
+    """预检通过/发布成功就把退避摘掉——素材包显然已经够格了。"""
+    state = _load_state()
+    backoff = dict(state.get(VISUAL_BACKOFF_KEY) or {})
+    if slug not in backoff:
+        return
+    del backoff[slug]
+    state[VISUAL_BACKOFF_KEY] = backoff
+    STATE_PATH.parent.mkdir(parents=True, exist_ok=True)
+    STATE_PATH.write_text(
+        json.dumps(state, ensure_ascii=False, indent=1), encoding="utf-8"
+    )
+
+
+def mark_visual_backoff_from_report(outdir, today: date) -> list[str]:
+    """从 generate 落的 visual_sources.json 读被拒候选并记退避，返回记了谁。
+
+    拒绝名单的唯一出处就是这份报告——成功换题和整趟失败两条路它都在
+    （`rejected_candidates`），别再另攒一份名单（一个数写两处必分叉）。
+    读不到/坏 JSON 按「这一趟没有拒绝记录」处置，不抛：这条路跑在失败
+    收尾上，抛异常会把真正的失败原因盖掉。
+    """
+    try:
+        report = json.loads(
+            (Path(outdir) / "visual_sources.json").read_text("utf-8"))
+    except (OSError, ValueError):
+        return []
+    slugs = [r.get("story_slug")
+             for r in (report.get("rejected_candidates") or [])
+             if r.get("story_slug")]
+    if slugs:
+        mark_visual_backoff(slugs, today)
+    return slugs
+
+
+def visual_backoff_active(slug: str, today: date,
+                          state: dict | None = None) -> bool:
+    backoff = ((state if state is not None else _load_state())
+               .get(VISUAL_BACKOFF_KEY) or {})
+    day_str = backoff.get(slug)
+    if not day_str:
+        return False
+    try:
+        last = date.fromisoformat(str(day_str))
+    except ValueError:
+        return False
+    return (today - last).days < VISUAL_BACKOFF_DAYS
+
+
 def _norm(text: str) -> str:
     """去音符 + casefold，与 ESPN 无音符英文名对得上（Świątek → swiatek）."""
     return "".join(
@@ -4541,7 +4626,16 @@ def tournament_story_candidates(digest: Digest) -> list[TournamentStory]:
     by_slug = {story.slug: story for story in STORIES}
     ranked = [record for record in story_ranking(digest) if record.get("rank")]
     ranked.sort(key=lambda record: record["rank"])
-    return [by_slug[record["story_slug"]] for record in ranked]
+    # 素材预检退避中的候选降到队尾（保持各自相对顺序）：生成端只试前
+    # TENNISLIVE_VISUAL_CANDIDATES 个候选，昨天刚被素材闸拒过的排在最前
+    # 就是把当天的尝试名额白白烧在一个已知会拒的选题上——连续六天同因
+    # 拦停就是这么来的。不剔除：真轮到它说明池子已经空了，试一次不亏。
+    state = _load_state()
+    fresh = [r for r in ranked
+             if not visual_backoff_active(r["story_slug"], digest.today, state)]
+    backing_off = [r for r in ranked
+                   if visual_backoff_active(r["story_slug"], digest.today, state)]
+    return [by_slug[record["story_slug"]] for record in [*fresh, *backing_off]]
 
 
 WISHLIST_PATH = Path(__file__).resolve().parents[3] / "data" / "story_wishlist.json"
