@@ -43,14 +43,11 @@ permissions:
   # 草稿矩阵全部落库后立即叫醒提升/渲染，不再等下一班最多 10 分钟的 schedule。
   actions: write
 
-# ⚠️ 每 15 分钟一班而没有并发锁的话，慢班次（转写/翻译拖长）会和下一班
-# 重叠，两班同时改 data/oncourt_*.json 那批共享 JSON——rebase 撞内容冲突，
-# 推送循环整个死掉（orchestrate 的 state 2026-08-26 就是这么丢的）。这批
-# 数据文件只有本工作流自己写，锁住自撞冲突就结构性不存在了。
-# cancel-in-progress 必须是 false：掐掉正在采集/建草稿的那班就是丢一轮数据。
-concurrency:
-  group: oncourt-interviews
-  cancel-in-progress: false
+# ⚠️ 这里**故意没有 workflow 级并发锁**（test_oncourt_only_serializes_collect
+# _and_commits_cursor_and_claims 钉着）：draft 矩阵里的长 ASR 会把整条 run 拖
+# 到十几分钟，workflow 级锁会让它阻住下一轮资源扫描。共享 JSON 的提交只发生
+# 在 collect job，那儿有自己的 job 级锁（group: oncourt-interviews-collect），
+# 自撞冲突已经被它挡住了。
 
 jobs:
   collect:

@@ -11894,5 +11894,9 @@ reel-auto-ready / official-social-images / pipeline-health / source-health /
 auto-push-* / pages 近期运行全部健康；interview-clip 的 47% 失败率**全是
 发布门禁在正常拦截**（没有废片发出去，按「闸拦下来和真出错分开数」的口径
 不是故障）；orchestrate 长时间不 dispatch 是候选侧真空（集锦没发/已有 spec），
-不是 dispatcher 坏了。oncourt-interviews 原来没有 concurrency 组（15 分钟一班
-自己和自己重叠），这次补上了。
+不是 dispatcher 坏了。
+⚠️ 顺带一个我当场犯的错：给 oncourt-interviews 补 workflow 级并发锁——被
+`test_oncourt_only_serializes_collect_and_commits_cursor_and_claims` 当场打红。
+**它是故意不锁整条 workflow 的**（draft 矩阵的长 ASR 会阻住下一轮扫描），
+共享 JSON 的提交只在 collect job，那儿早有 job 级锁。判据救回了一次
+「按直觉改别人想清楚过的设计」。
