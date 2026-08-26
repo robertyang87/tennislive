@@ -2148,6 +2148,95 @@ STORIES = STORIES + (
         source_url="https://en.wikipedia.org/wiki/List_of_Wimbledon_ladies%27_singles_champions",
     ),
     _trivia_story(
+        slug="wawrinka-wildcard",
+        # 标题连着品牌语一起进小红书的 20 字上限（`🎾8.26 网球有故事｜` 占 9.5）。
+        # 「他告完别，外卡回来了」10 字，刚好装得下。
+        title="他告完别，外卡回来了",
+        subtitle="网球观察 · 告别篇",
+        identity="最后一次纽约",
+        # ⚠️ chips[2] 会变成 `founded`，故事卡的时间轴把它抠数字当起点年份用。
+        # 所以这一格不许出现数字（写「第 127」会被抠成 127 年），用非数字标签。
+        chips=("告别赛季", "三天反转", "最后一站"),
+        hero=(
+            "2016 年美网冠军瓦林卡今年是告别赛季。2026 年 8 月 22 日，美网把男单"
+            "正赛最后一张外卡给了美国球员基普森；8 月 25 日瓦林卡在社交媒体上"
+            "写下一段告别的话；8 月 26 日基普森因伤退赛，美网把那个位置转给了他。"
+        ),
+        facts=(
+            "他没有报名美网资格赛，所以 8 月 22 日那张外卡发出去之后，"
+            "他进正赛的路就断了。当时有人批评美网这个决定——他是三届大满贯冠军，"
+            "而且正在告别赛季。8 月 26 日美网宣布基普森因伤退赛，"
+            "把这个位置转给了瓦林卡；美网官方稿写明：这将是他最后一次在纽约打球。",
+            "他一共只进过三次大满贯决赛，三次全赢，而且每一次对面都是当时的"
+            "世界第一：2014 年澳网决赛胜纳达尔，2015 年法网决赛和 2016 年美网决赛"
+            "两次胜德约科维奇。他也是历史上仅有的三名球员之一，"
+            "在大满贯赛场上赢过纳达尔、德约科维奇、费德勒和穆雷这四个人。",
+            "拿下美网之后他没能卫冕：2017 年做了两次膝盖手术并因此缺席那一届美网，"
+            "2021 年又做了两次足部手术。生涯 16 个巡回赛单打冠军，"
+            "最后一个停在 2017 年；最高排到世界第三，现在是第 127 位。"
+            "他 2002 年转职业，2026 年 3 月满 41 岁。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2016-09-11",
+                player="瓦林卡",
+                age="31 岁",
+                headline="美网决赛胜德约科维奇夺冠",
+                detail=(
+                    "生涯第三座大满贯，也是他第三次在大满贯决赛里击败当时的世界第一。"
+                    "他还和费德勒一起拿过 2008 年北京奥运会男双金牌，"
+                    "并帮助瑞士拿下队史唯一一座戴维斯杯。"
+                ),
+                source_url=(
+                    "https://apnews.com/article/"
+                    "us-open-stan-wawrinka-f8bc64e570a0d6c48d695b3c2f1de629"
+                ),
+            ),
+            ChampionMoment(
+                date="2025-12-19",
+                player="瓦林卡",
+                age="40 岁",
+                headline="宣布 2026 年是最后一个赛季",
+                detail=(
+                    "他写道：每一本书都需要一个结尾，现在该写我职业生涯的最后一章了，"
+                    "2026 年是我在巡回赛的最后一年。"
+                ),
+                source_url=(
+                    "https://apnews.com/article/"
+                    "stan-wawrinka-retire-564b07848766648bc83255648870b2ba"
+                ),
+            ),
+            ChampionMoment(
+                date="2026-08-26",
+                player="瓦林卡",
+                age="41 岁",
+                headline="外卡回到他手里，最后一次打纽约",
+                detail=(
+                    "8 月 22 日美网把正赛最后一张外卡给了世界第 116 位的基普森；"
+                    "8 月 25 日瓦林卡发出告别帖；8 月 26 日基普森因伤退赛，"
+                    "美网把那个位置转给了他。"
+                ),
+                source_url=(
+                    "https://www.usopen.org/en_US/news/articles/2026-08-26/"
+                    "former_champion_stan_wawrinka_awarded_wild_card_for_2026_us_open.html"
+                ),
+            ),
+        ),
+        image_keys=(),
+        source_label="AP 通讯社 · 美网官方新闻稿",
+        image_credit="AP Photo/Thibault Camus",
+        source_url=(
+            "https://apnews.com/article/"
+            "us-open-stan-wawrinka-f8bc64e570a0d6c48d695b3c2f1de629"
+        ),
+        evidence_urls=(
+            "https://www.usopen.org/en_US/news/articles/2026-08-26/"
+            "former_champion_stan_wawrinka_awarded_wild_card_for_2026_us_open.html",
+            "https://apnews.com/article/"
+            "stan-wawrinka-retire-564b07848766648bc83255648870b2ba",
+        ),
+    ),
+    _trivia_story(
         slug="thiem-football",
         # 标题连着品牌语一起进小红书的 20 字上限（`🎾7.26 网球有故事｜` 占 9.5）。
         # 原来写「美网冠军去踢第八级联赛」是 20.5 字，会被截断——而截掉的正好是

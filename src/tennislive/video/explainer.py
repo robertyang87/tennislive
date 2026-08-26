@@ -2352,6 +2352,82 @@ _GAUFF_PUBLIC_SOCIAL_AUDIT = """
 </svg>
 """
 
+# 「这三天发生了什么」——**照片讲不清的那一类**：外卡是一次文件动作，
+# 没有任何一帧能拍下「名单上换了个名字」。所以画成一条时间轴，
+# 三个日期各占一格。⚠️ 一屏只留一个强调色：只有第三格（位置回到他手里）
+# 给品牌绿，前两格一律中性——那两天他还在名单外面。
+_WAWRINKA_THREE_DAYS_DIAGRAM = """
+<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="44" text-anchor="middle" fill="#f4fbf7"
+        font-size="36" font-weight="800">三天，名单上换了一个名字</text>
+  <text x="450" y="82" text-anchor="middle" fill="#cfe6d8"
+        font-size="22" font-weight="700">2026 年 8 月 · 美网男单正赛最后一张外卡</text>
+
+  <line x1="118" y1="128" x2="118" y2="508" stroke="rgba(207,230,216,.22)" stroke-width="4"/>
+
+  <circle cx="118" cy="170" r="15" fill="rgba(207,230,216,.30)"/>
+  <text x="164" y="160" fill="#f4fbf7" font-size="31" font-weight="800">8 月 22 日</text>
+  <text x="164" y="200" fill="#cfe6d8" font-size="26" font-weight="700">最后一张外卡给了基普森</text>
+  <text x="164" y="236" fill="#cfe6d8" font-size="26" font-weight="700">美国人，世界第 116</text>
+
+  <circle cx="118" cy="308" r="15" fill="rgba(207,230,216,.30)"/>
+  <text x="164" y="298" fill="#f4fbf7" font-size="31" font-weight="800">8 月 25 日</text>
+  <text x="164" y="338" fill="#cfe6d8" font-size="26" font-weight="700">瓦林卡写下一段告别的话</text>
+  <text x="164" y="374" fill="#cfe6d8" font-size="26" font-weight="700">谢纽约，谢美网，谢球迷</text>
+
+  <circle cx="118" cy="446" r="17" fill="#c6f65a"/>
+  <text x="164" y="436" fill="#c6f65a" font-size="31" font-weight="800">8 月 26 日</text>
+  <text x="164" y="476" fill="#f4fbf7" font-size="26" font-weight="700">基普森因伤退赛</text>
+  <text x="164" y="512" fill="#f4fbf7" font-size="26" font-weight="700">那个位置转给了瓦林卡</text>
+
+  <text x="450" y="566" text-anchor="middle" fill="#cfe6d8" font-size="24" font-weight="700">
+    他没有报名资格赛，这是他进正赛的唯一一条路
+  </text>
+</svg>
+"""
+
+# 三次大满贯决赛——**照片讲不清**：三场球隔着三年、三块场地，
+# 一张照片只能证明其中一场。要看见的是那一列重复出现的「世界第 1」，
+# 那是一张表，不是一个瞬间。
+_WAWRINKA_FINALS_DIAGRAM = """
+<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="44" text-anchor="middle" fill="#f4fbf7"
+        font-size="36" font-weight="800">三次大满贯决赛，三次都赢</text>
+  <text x="450" y="82" text-anchor="middle" fill="#cfe6d8"
+        font-size="22" font-weight="700">而每一次，对面站着的都是当时的世界第一</text>
+
+  <g fill="#cfe6d8" font-size="22" font-weight="700">
+    <text x="60"  y="132">哪一年，哪一站</text>
+    <text x="392" y="132">决赛对手</text>
+    <text x="700" y="132">对手当时排名</text>
+  </g>
+  <line x1="60" y1="148" x2="840" y2="148" stroke="rgba(207,230,216,.22)" stroke-width="2"/>
+
+  <rect x="60" y="172" width="780" height="94" rx="12" fill="rgba(143,214,168,.16)"/>
+  <text x="80"  y="216" fill="#f4fbf7" font-size="30" font-weight="800">2014 澳网</text>
+  <text x="80"  y="250" fill="#cfe6d8" font-size="23" font-weight="700">墨尔本</text>
+  <text x="392" y="228" fill="#f4fbf7" font-size="30" font-weight="800">纳达尔</text>
+  <text x="700" y="228" fill="#c6f65a" font-size="34" font-weight="800">世界第 1</text>
+
+  <rect x="60" y="286" width="780" height="94" rx="12" fill="rgba(143,214,168,.16)"/>
+  <text x="80"  y="330" fill="#f4fbf7" font-size="30" font-weight="800">2015 法网</text>
+  <text x="80"  y="364" fill="#cfe6d8" font-size="23" font-weight="700">巴黎</text>
+  <text x="392" y="342" fill="#f4fbf7" font-size="30" font-weight="800">德约科维奇</text>
+  <text x="700" y="342" fill="#c6f65a" font-size="34" font-weight="800">世界第 1</text>
+
+  <rect x="60" y="400" width="780" height="94" rx="12" fill="rgba(143,214,168,.16)"/>
+  <text x="80"  y="444" fill="#f4fbf7" font-size="30" font-weight="800">2016 美网</text>
+  <text x="80"  y="478" fill="#cfe6d8" font-size="23" font-weight="700">纽约</text>
+  <text x="392" y="456" fill="#f4fbf7" font-size="30" font-weight="800">德约科维奇</text>
+  <text x="700" y="456" fill="#c6f65a" font-size="34" font-weight="800">世界第 1</text>
+
+  <text x="450" y="556" text-anchor="middle" fill="#cfe6d8" font-size="24" font-weight="700">
+    他也是仅有的三个人之一：大满贯赢过四巨头全部四个人
+  </text>
+</svg>
+"""
+
+
 _SCRIPTS: dict[str, tuple[tuple, ...]] = {
     # 这条不是替任何一方作道德判断，而是把证据等级分开：原话、旧语境、
     # 时间线、公开账号和网友推断各自只承担它能证明的那一格。尤其不能为了
@@ -6503,6 +6579,117 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             "他还有三天满二十岁。你觉得这一场，会打满三盘吗？",
         ),
     ),
+    # 2026-08-26。**这条的骨架是三个日期，不是一场球**：8/22 最后一张外卡给了
+    # 别人，8/25 他把告别的话说完，8/26 那个位置回到他手里。所以第 ① 屏就是
+    # 那条时间线——CLAUDE.md「最硬的那个事实放第 ① 屏」。
+    # ⚠️ 基普森因伤退赛这件事**中性叙述**：他是让出位置的那个人，不是这条片子
+    # 的反派，画面上一次都不出现他的脸（CLAUDE.md「放谁的脸就是在指认谁」）。
+    "wawrinka-wildcard": (
+        (
+            "three-days",
+            "三天",
+            "瓦林卡说完再见，第二天位置回来了",
+            "先把这三天摆出来。八月二十二号，美网公布正赛最后一张外卡，"
+            "给了美国球员基普森，世界第一百一十六位。"
+            "瓦林卡没有报名资格赛，所以这张外卡发出去，他进正赛的路就断了。"
+            "当时有人批评美网这个决定——他是三届大满贯冠军，今年又是他的告别赛季。"
+            "八月二十五号，他在社交媒体上写下一段话，谢纽约，谢美网，谢每一个球迷。"
+            "读起来就是道别。"
+            "八月二十六号，美网宣布基普森因伤退赛，那个位置转给了瓦林卡。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "8 月 22 日，最后一张外卡给了别人",
+                "8 月 25 日，他写下一段告别的话",
+                "8 月 26 日，那个位置回到他手里",
+            ),
+            _WAWRINKA_THREE_DAYS_DIAGRAM,
+        ),
+        (
+            "letter",
+            "那段话",
+            "从瑞士的小农村，到纽约",
+            "他写的那段话，值得原样读一遍。"
+            "『我第一次从瑞士的一个小农村来到纽约，觉得什么都太大了。"
+            "这座城市，这些声音，这股劲头，这些人群，这些灯光。』"
+            "『可是一年又一年，纽约慢慢变成我最喜欢的地方之一。』"
+            "『这座城市考验过我，也推过我一把。"
+            "我在这儿经历过职业生涯里最强烈的那些情绪。』"
+            "『在这座不夜城拿下美网，会永远是我人生里最好的时刻之一。』",
+            "assets/explainer/wawrinka-wildcard/usopen_2016_final.jpg",
+            "AP Photo/Darron Cummings · 2016 年 9 月 11 日纽约，"
+            "美网男单决赛对德约科维奇，瓦林卡赢下一分后握拳",
+            (
+                "「第一次到纽约，觉得什么都太大」",
+                "「这座城市考验过我，也推过我」",
+                "图为 2016 年美网决赛",
+            ),
+        ),
+        (
+            "finals",
+            "三次决赛",
+            "三个大满贯，对面都是世界第一",
+            "他一共只进过三次大满贯决赛，三次全赢了。"
+            "而且每一次，对面站着的都是当时的世界第一。"
+            "二〇一四年澳网决赛，纳达尔。二〇一五年法网决赛，德约科维奇。"
+            "二〇一六年美网决赛，还是德约科维奇。"
+            "他也是历史上仅有的三个人之一，在大满贯赛场上赢过纳达尔、"
+            "德约科维奇、费德勒和穆雷这四个人。"
+            "另外，二〇〇八年北京奥运会男双金牌是他和费德勒一起拿的；"
+            "瑞士队史唯一一座戴维斯杯，也有他一份。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "2014 澳网决赛，胜纳达尔",
+                "2015 法网、2016 美网，胜德约",
+                "三次决赛，对面都是世界第 1",
+            ),
+            _WAWRINKA_FINALS_DIAGRAM,
+        ),
+        (
+            "cost",
+            "这些年",
+            "最后一个冠军，停在 2017 年",
+            "在纽约捧起奖杯之后，他没能卫冕。"
+            "二〇一七年，他做了两次膝盖手术，缺席了那一届美网。"
+            "二〇二一年，他又做了两次足部手术。"
+            "他的最后一个巡回赛单打冠军，就停在二〇一七年。"
+            "生涯十六个单打冠军，最高排到世界第三，现在是第一百二十七位。"
+            "今年三月他满了四十一岁，二〇〇二年转的职业——"
+            "也就是说，他打职业已经打了二十四年。",
+            "assets/explainer/wawrinka-wildcard/ao_2026_forehand.jpg",
+            "AP Photo/Asanka Brendon Ratnayake · 2026 年 1 月 24 日墨尔本，"
+            "澳网男单第三轮对弗里茨，瓦林卡正手击球",
+            (
+                "2017 两次膝盖手术，没能卫冕",
+                "2021 又做了两次足部手术",
+                "16 个单打冠军，末冠停在 2017",
+            ),
+        ),
+        (
+            "farewell",
+            "一路在告别",
+            "墨尔本举啤酒，巴黎按着胸口",
+            "去年十二月他写下一句话："
+            "『每一本书都需要一个结尾。现在，该写我职业生涯的最后一章了。"
+            "二〇二六年是我在巡回赛的最后一年。』"
+            "这个赛季他一直在告别。一月的墨尔本，第三轮输给弗里茨之后，"
+            "他拿着话筒，举起一罐啤酒。五月的巴黎，首轮打完，"
+            "他一只手按着胸口，向全场致意。"
+            "八月的纽约，他本来不在名单上——现在在了。"
+            "而这一届，是他最后一次在纽约打球。",
+            "assets/explainer/wawrinka-wildcard/ao_2026_beer.jpg",
+            "AP Photo/Asanka Brendon Ratnayake · 2026 年 1 月 24 日墨尔本，"
+            "澳网第三轮负于弗里茨之后，瓦林卡拿着话筒举起一罐啤酒",
+            (
+                "「每一本书都需要一个结尾」",
+                "1 月墨尔本，输完举起一罐啤酒",
+                "5 月巴黎，一只手按着胸口",
+            ),
+            "",
+            "外卡该给正在告别的老将，还是给本国排名最高的年轻人？",
+        ),
+    ),
 }
 
 
@@ -6517,6 +6704,16 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
 # 这个洞。判据落在 test_每条片子的标签都放满五个。
 _DEFAULT_TAGS = ("网球", "网球时差", "网球冷知识", "网球科普", "网球运动")
 _CAPTIONS: dict[str, dict] = {
+    "wawrinka-wildcard": {
+        "hook": (
+            "8 月 22 日，美网把男单正赛最后一张外卡给了别人；三天后，"
+            "瓦林卡写下一段告别的话。\n"
+            "8 月 26 日，拿到那张外卡的人因伤退赛，位置回到了他手里——"
+            "而这是他最后一次在纽约打球。"
+        ),
+        "tags": ("网球", "网球时差", "瓦林卡", "美网", "网球有故事"),
+    },
+
     "gauff-right-coco": {
         "hook": (
             "现场原话里没有克耶高斯——把他加进来的是评论区。\n"
@@ -6889,6 +7086,25 @@ def column_of(slug: str) -> Column:
 # beat one makes the viewer work out the subject for themselves. Every deck
 # now opens on the question it answers, said out loud and set large.
 _OPENINGS: dict[str, dict] = {
+    "wawrinka-wildcard": {
+        "topic": "瓦林卡的最后一次纽约",
+        "question": "瓦林卡告完别，怎么又上场？",
+        "narration": "二〇一六年他在纽约夺冠，决赛赢的是当时的世界第一。"
+                     "十年之后，他排名掉到一百二十七，今年是他最后一个赛季。"
+                     "八月二十二号，美网把正赛最后一张外卡给了别人。"
+                     "三天之后，他写下一段告别的话。"
+                     "瓦林卡告完别，怎么又上场？",
+        # ⚠️ 封面故意不用 2016 年那张握拳吼——那张情绪最强，可它讲的是「赢」，
+        # 而这一屏问的是「他已经道过别了」。CLAUDE.md「先问情绪对不对题，
+        # 在都对题的几张里再挑近景那张」：这张 2026 法网谢场是今年的、
+        # 是告别的、也是近景（肩以上占掉大半画幅），三头都占住。
+        # 原图 7471×4981，横向裁成 3:4 得 3735×4981，一个像素都不用放大。
+        "image": "assets/explainer/wawrinka-wildcard/roland_garros_2026.jpg",
+        "credit": "AP Photo/Thibault Camus · 2026 年 5 月 25 日巴黎，"
+                  "法网男单首轮打完，瓦林卡手按胸口向全场致意",
+        "tags": ("网球", "网球时差", "瓦林卡", "美网", "网球有故事"),
+    },
+
     "gauff-right-coco": {
         "topic": "高芙的「right Coco」",
         "question": "评论区为何想到克耶高斯？",
