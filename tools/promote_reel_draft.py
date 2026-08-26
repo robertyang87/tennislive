@@ -124,11 +124,20 @@ def promote(draft: dict) -> dict:
     human = editorial.get("human_context")
     angle = (str(human.get("angle") or "").strip()
              if isinstance(human, dict) else str(human or "").strip())
+    researched_facts = (human.get("facts") or []) if isinstance(human, dict) else []
+    researched_sources = (human.get("sources") or []) if isinstance(human, dict) else []
     editorial["mode"] = "match_review"
     editorial["human_context"] = {
         "angle": angle or str(editorial["thesis"]).strip(),
-        "facts": [exact_fact, *hit_facts[:4]],
-        "sources": urls,
+        # 人工终审补进来的对手履历/参赛背景是正文事实，不应在草稿提升时丢失。
+        "facts": list(dict.fromkeys(
+            [exact_fact, *hit_facts[:4],
+             *(str(item).strip() for item in researched_facts if str(item).strip())]
+        )),
+        "sources": list(dict.fromkeys(
+            [*urls,
+             *(str(item).strip() for item in researched_sources if str(item).strip())]
+        )),
     }
 
     cover = dict(draft["cover"])
