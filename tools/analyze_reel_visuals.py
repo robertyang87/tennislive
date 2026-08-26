@@ -335,6 +335,24 @@ def english_name_only_edit(source: str, edited: str,
     return changed
 
 
+def wrap_zh_subtitle(text: str, limit: int = 14) -> str:
+    """给无空格中文字幕显式断行；libass 不能替中文长行自动换行。"""
+    lines: list[str] = []
+    for raw in text.splitlines() or [text]:
+        rest = raw.strip()
+        while len(rest) > 16:
+            # 优先在安全宽度内的中文标点后断；没有标点就按 14 字硬断。
+            cut = max((rest.rfind(mark, 6, limit + 1) + 1
+                       for mark in "，。；：！？、"), default=0)
+            if cut < 6:
+                cut = limit
+            lines.append(rest[:cut].strip())
+            rest = rest[cut:].strip()
+        if rest:
+            lines.append(rest)
+    return "\n".join(lines)
+
+
 def translate_quotes(chat: Chat, lines: list[str],
                      player_names: list[str] | None = None) -> list[tuple[str, str]] | None:
     if not lines or not chat.ready:
@@ -359,7 +377,7 @@ def translate_quotes(chat: Chat, lines: list[str],
         english = str(item.get("en") or "").strip()
         if not english_name_only_edit(source, english, names):
             return None
-        zh = str(item.get("zh") or "").strip()
+        zh = wrap_zh_subtitle(str(item.get("zh") or "").strip())
         if not zh:
             return None
         out.append((english, zh))
