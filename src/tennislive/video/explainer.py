@@ -1868,6 +1868,11 @@ _ACADEMY_SPAN_DIAGRAM = _academy_span_diagram()
 AUTO_PUSH_SLUGS: frozenset[str] = frozenset({
     "gauff-right-coco",
     "kostyuk-champion-test",
+    # 2026-08-26 验过才加进来的（上面那句「加进来之前先问一句：这条片子验过了吗」）：
+    # run 33000045583 success，工作流自带的两道闸都过了（这一版是谁配的音、
+    # 这一版的字有没有真烧进产物）；成片从 Release 拉回本地量过——226.8 秒、
+    # 1080×1920、音画差 0.038 秒、十屏逐屏抽帧看过、全程 −22~−27 dB 没有哑场。
+    "wawrinka-wildcard",
 })
 
 
