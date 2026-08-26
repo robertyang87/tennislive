@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import json
 import sys
+from io import BytesIO
 from pathlib import Path
 
 import pytest
@@ -74,6 +75,97 @@ def test_逐局表提取最终盘分并拦模型编错比分():
     assert mod.editorial_score_problem(right, scores) is None
     reversed_right = {"thesis": "对手视角是6-4、1-6、1-6", "narration": []}
     assert mod.editorial_score_problem(reversed_right, scores) is None
+
+
+def test_总分方向机械事实与medvedev_damm回归(tool):
+    stats = {"a": {"pts_won": 56}, "b": {"pts_won": 67}}
+    matchup = [{"name": "梅德韦杰夫"}, {"name": "小马丁·达姆"}]
+    scores = [(5, 7), (3, 6)]
+    fact = tool.total_points_fact(stats, matchup)
+    assert "小马丁·达姆比梅德韦杰夫多 11 分" in fact
+    wrong = {
+        "thesis": "梅德韦杰夫总分多拿11分，却连丢两盘",
+        "narration": ["总分领先也没能挽回败局"],
+    }
+    assert "方向写反" in tool.editorial_total_points_problem(
+        wrong, stats, matchup, scores)
+    right = {
+        "thesis": "小马丁·达姆全场多拿11分，以5-7、3-6获胜",
+        "narration": ["梅德韦杰夫56比67落后11分"],
+    }
+    assert tool.editorial_total_points_problem(right, stats, matchup, scores) is None
+
+
+def test_总分领先者也是赢家时拦无主语领先却输(tool):
+    stats = {"a": {"pts_won": 56}, "b": {"pts_won": 67}}
+    matchup = [{"name": "梅德韦杰夫"}, {"name": "小马丁·达姆"}]
+    content = {"lead": "全场多拿11分，却最终输掉比赛"}
+    assert "也是比赛赢家" in tool.editorial_total_points_problem(
+        content, stats, matchup, [(5, 7), (3, 6)])
+
+
+def test_无字幕时从probe切点生成不跨镜头窗口(tool, tmp_path):
+    probe = tmp_path / "probe.json"
+    probe.write_text(json.dumps({
+        "duration": 158.4,
+        "scene_cuts": [2.07, 14.0, 29.83, 33.8, 45.53, 49.9, 57.73,
+                       69.13, 78.8, 81.77, 85.57, 91.7, 95.63, 104.03,
+                       107.93, 111.27, 128.07, 132.17, 136.67, 149.5],
+    }), encoding="utf-8")
+    narration = [
+        "第一段旁白需要装得下。", "第二段旁白也不能跨切点。", "最后是比赛结果。"]
+    segments = tool.scene_cut_segments(str(probe), narration)
+    assert [s["narration"] for s in segments] == narration
+    assert all(segments[i]["end"] <= segments[i + 1]["start"]
+               for i in range(len(segments) - 1))
+    cuts = json.loads(probe.read_text(encoding="utf-8"))["scene_cuts"]
+    assert not any(s["start"] < cut < s["end"] for s in segments for cut in cuts)
+
+
+def test_tennistv封面从本场官方页请求4000宽原图(tool, tmp_path):
+    from PIL import Image
+
+    buf = BytesIO()
+    Image.new("RGB", (4000, 2666), "#123456").save(buf, format="JPEG")
+    calls = []
+
+    class Response:
+        def __init__(self, *, text="", content=b""):
+            self.text = text
+            self.content = content
+
+        def raise_for_status(self):
+            return None
+
+    def get(url, **kwargs):
+        calls.append(url)
+        if "tennistv.com" in url:
+            return Response(text=(
+                '<span itemprop="thumbnailUrl" content="https://resources.prod.'
+                'atpmedia.pulselive.com/photo/Winston-Salem-Damm.jpg?'
+                'height=268&amp;width=451">'))
+        return Response(content=buf.getvalue())
+
+    out = tmp_path / "cover.jpg"
+    note = tool.fetch_tennistv_cover(
+        "https://www.tennistv.com/videos/1/demo", "Winston-Salem", out, get=get)
+    assert out.is_file()
+    assert "4000×2666" in note
+    assert calls[-1].endswith("width=4000") and "height=" not in calls[-1]
+
+
+def test_tennistv封面拒绝别站资料图(tool, tmp_path):
+    class Response:
+        text = ('<span itemprop="thumbnailUrl" content="https://resources.prod.'
+                'atpmedia.pulselive.com/photo/2026-Washington-Damm.jpg?width=451">')
+
+        def raise_for_status(self):
+            return None
+
+    with pytest.raises(ValueError, match="拒绝资料图"):
+        tool.fetch_tennistv_cover(
+            "https://www.tennistv.com/videos/1/demo", "Winston-Salem",
+            tmp_path / "cover.jpg", get=lambda *a, **kw: Response())
 
 
 def test_matchup_order按flashscore的home归位(monkeypatch):
