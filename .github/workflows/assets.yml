@@ -12,6 +12,10 @@ on:
         description: "可选：assets/reel/ 下的文件名"
         required: false
         type: string
+      headshot_name:
+        description: "可选：抓一位 WTA 官方头像（英文全名）"
+        required: false
+        type: string
 
 permissions:
   contents: write
@@ -43,11 +47,17 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install requests pillow
-      - if: ${{ inputs.image_url == '' }}
+      - if: ${{ inputs.image_url == '' && inputs.headshot_name == '' }}
         run: python tools/fetch_flags.py
       # 个别图片抓取失败（Commons 限流/无合规候选）不阻断提交已成功的部分
-      - if: ${{ inputs.image_url == '' }}
+      - if: ${{ inputs.image_url == '' && inputs.headshot_name == '' }}
         run: python tools/fetch_venues.py || echo "::warning::some assets failed to fetch"
+      - name: Fetch one official WTA headshot
+        if: ${{ inputs.headshot_name != '' }}
+        env:
+          HEADSHOT_NAME: ${{ inputs.headshot_name }}
+        run: |
+          PYTHONPATH=src python tools/fetch_official_headshot.py wta "$HEADSHOT_NAME"
       - name: Fetch one verified official WTA photo
         if: ${{ inputs.image_url != '' }}
         env:
