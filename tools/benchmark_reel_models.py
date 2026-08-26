@@ -61,7 +61,7 @@ def deepseek_score(editorial: dict | None, push: dict | None) -> tuple[int, list
     text = json.dumps(editorial, ensure_ascii=False)
     anchors = [
         ("22比3", ("22比3", "二十二比三")),
-        ("三次交手", ("三次", "3次", "三场", "3场")),
+        ("三次交手", ("三次", "3次", "三场", "3场", "三战", "3战")),
     ]
     hit = 0
     for label, variants in anchors:
@@ -89,7 +89,7 @@ def deepseek_score(editorial: dict | None, push: dict | None) -> tuple[int, list
     score = min(score, 100)
     leaked = ("决胜盘", "四比一", "连丢四局", "五比四", "多拿五分",
               "第四次交手", "四次交手", "4次交手", "半小时",
-              "四种场地", "今日再胜", "四连胜")
+              "四种场地", "今日再胜", "四连胜", "第10次", "第十次")
     hits = [value for value in leaked if value in text]
     if hits:
         score -= 60

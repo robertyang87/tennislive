@@ -321,7 +321,8 @@ def translate_quotes(chat: Chat, lines: list[str],
               f"已核实参赛者英文名：{json.dumps(names, ensure_ascii=False)}。"
               "必须保留英文原话和顺序；仅当 ASR 把上述球员姓名听成近音普通词时，"
               "可按名单纠正该姓名，除此之外不得改写英文。不得补比分/人物/赛况。"
-              "只输出 JSON：lines:[{en,zh}]，顺序不变。")
+              "只输出 JSON：lines:[{en,zh}]，顺序不变。"
+              + model_instructions("deepseek"))
     data = chat.ask(system, json.dumps(lines, ensure_ascii=False),
                     schema=TRANSLATION_SCHEMA, max_tokens=1200)
     got = data.get("lines") if isinstance(data, dict) else None

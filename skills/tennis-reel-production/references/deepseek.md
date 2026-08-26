@@ -14,6 +14,8 @@ Treat the current match as already included when the H2H packet lists it among t
 
 Check every derived numerical relationship before returning JSON. If the packet says 56–45 total points, the difference is 11, never 9. A claim can be false even when each individual number appears in the fact packet; subtraction, totals, percentages, streak counts, and meeting counts must agree with one another.
 
+Preserve what each number measures. A player ranked No. 10 or an opponent who is world No. 10 must never become “the tenth meeting”, “the tenth time facing the top 10”, or any other unsupported ordinal/count.
+
 For bilingual broadcast subtitles, preserve the English wording and line order. Because the source is ASR, correct an obvious phonetic player-name error only when the replacement exactly matches the verified participant list. Do not change any other English word, and do not preserve a known name transcription error such as `feast` when the verified player is `Fils`.
 
 Write percentages in every voice-bound editorial field as spoken Chinese, such as “百分之八十二”, never `82%` or `82％`. PushPlus display copy may retain the symbol.
