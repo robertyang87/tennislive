@@ -84,6 +84,31 @@ def test_visual_gate均匀查看整条片而不是只看开头四张(tmp_path):
     ]
 
 
+def test_visual_gate理由引用窗口外画面就不能pass(tmp_path):
+    visual = load("analyze_reel_visuals")
+    cover = tmp_path / "cover.jpg"
+    cover.write_bytes(b"photo")
+    draft = {
+        "_match": {"winner": "菲斯"},
+        "_cover_brief": {"preferred_subject": "菲斯"},
+        "cover": {"portrait": {"image": str(cover)}},
+    }
+    raw = {
+        "cold_open": {"start": 317.72, "end": 329.84, "kind": "match_point",
+                      "winner_visible": True, "reason": "332.5s 才看见握手",
+                      "confidence": .9},
+        "ending": {"start": 317.5, "end": 333.08, "kind": "aftermath",
+                   "winner_visible": True, "reason": "332.5s 完成握手",
+                   "confidence": .9},
+        "cover": {"same_match": True, "subject": "菲斯",
+                  "moment": "winner_celebration", "wrong_or_old": False,
+                  "reason": "本场赢家", "confidence": .9},
+    }
+    report, problems = visual.clean_report(raw, draft, 340)
+    assert report["status"] == "waiting"
+    assert any("cold_open 理由引用窗口外时间" in problem for problem in problems)
+
+
 def test_visual_story写双语原声冷开场并在末尾完整兑现():
     visual = load("analyze_reel_visuals")
     draft = {
@@ -266,6 +291,21 @@ def test_模型练手拒绝配音字段里的百分号():
     score, issues = bench.deepseek_score(editorial, push)
     assert score < 80
     assert any("百分号" in issue for issue in issues)
+
+
+def test_deepseek草稿确定性规范化所有配音字段百分比():
+    draft = load("draft_spec")
+    editorial = {
+        "beats": ["一发得分率82%"],
+        "narration": ["科博利73％的一发得分率不够。"],
+        "human_context": "抢七胜率100%",
+    }
+    clean = draft.normalize_editorial_for_speech(editorial)
+    assert clean == {
+        "beats": ["一发得分率百分之八十二"],
+        "narration": ["科博利百分之七十三的一发得分率不够。"],
+        "human_context": "抢七胜率百分之一百",
+    }
 
 
 def test_模型练手拒绝minimax拿窗口外画面当证据():
