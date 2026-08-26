@@ -10,6 +10,8 @@ Every number, set, game state, and score phrase in the output must appear in the
 
 Make every meeting ordinal and head-to-head claim agree with the packet. For example, a packet saying this is the third meeting and the leader is 3–0 must never become “the fourth meeting”.
 
+Treat the current match as already included when the H2H packet lists it among the dated meetings. Do not add “today's win” a second time, turn 3–0 into a fourth win, or confuse the number of meetings with the number of distinct surface/format categories.
+
 Write percentages in every voice-bound editorial field as spoken Chinese, such as “百分之八十二”, never `82%` or `82％`. PushPlus display copy may retain the symbol.
 
 Published positive reference: `fils-cobolli-cincinnati-2026-sf` combines the verified 6–3, 6–4 result, a 22–3 winners contrast, and a 3–0 head-to-head reversal in chronological beats. It adds player context briefly, avoids generic praise, and returns to the opening tension. Learn only the structure; never copy those names, numbers, score, conclusion, or facts into another match.

@@ -71,7 +71,7 @@ def test_visual_gate要求结尾覆盖冷开场且封面选对爆冷输家(tmp_p
     assert any("loser_disappointed" in p for p in problems)
 
 
-def test_visual_gate均匀查看整条片而不是只看开头四张(tmp_path):
+def test_visual_gate覆盖全片且保留最后两张收官证据(tmp_path):
     visual = load("analyze_reel_visuals")
     paths = []
     for index in range(9):
@@ -80,7 +80,22 @@ def test_visual_gate均匀查看整条片而不是只看开头四张(tmp_path):
         paths.append(path)
     chosen = visual.select_contact_sheets(paths)
     assert [path.name for path in chosen] == [
-        "contact_00.jpg", "contact_03.jpg", "contact_05.jpg", "contact_08.jpg"
+        "contact_00.jpg", "contact_03.jpg", "contact_06.jpg",
+        "contact_07.jpg", "contact_08.jpg",
+    ]
+
+
+def test_visual_gate十二张样片不能漏掉赛点所在倒数第二张(tmp_path):
+    visual = load("analyze_reel_visuals")
+    paths = []
+    for index in range(12):
+        path = tmp_path / f"contact_{index:02d}.jpg"
+        path.write_bytes(str(index).encode())
+        paths.append(path)
+    chosen = visual.select_contact_sheets(paths)
+    assert [path.name for path in chosen] == [
+        "contact_00.jpg", "contact_04.jpg", "contact_09.jpg",
+        "contact_10.jpg", "contact_11.jpg",
     ]
 
 
@@ -372,6 +387,22 @@ def test_模型练手拒绝配音字段里的百分号():
     score, issues = bench.deepseek_score(editorial, push)
     assert score < 80
     assert any("百分号" in issue for issue in issues)
+
+
+def test_模型练手拒绝把已计入h2h的本场又加一次():
+    bench = load("benchmark_reel_models")
+    editorial = {
+        "hook": ["排名低十一", "却三次全胜"],
+        "question": "为何菲斯三次都赢？",
+        "thesis": "22比3的制胜分决定胜负。",
+        "beats": ["首盘6-3", "次盘6-4", "全场22比3"],
+        "human_context": "此前3胜0负，今日再胜，完成四种场地连胜。",
+        "narration": ["首盘六比三。", "次盘六比四。", "制胜分二十二比三。"],
+    }
+    push = {"summary": "菲斯晋级", "lead": "菲斯以6-3、6-4取胜，制胜分22比3。"}
+    score, issues = bench.deepseek_score(editorial, push)
+    assert score < 80
+    assert any("今日再胜" in issue and "四种场地" in issue for issue in issues)
 
 
 def test_deepseek草稿确定性规范化所有配音字段百分比():
