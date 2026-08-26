@@ -1,0 +1,87 @@
+name: finalize-reel
+
+# 人工终审补齐背景、选段与官方封面后：重跑视觉硬闸，提升正式 spec，
+# 再把渲染交还给 match-reel 的既有 QC + 自动推送链。
+on:
+  workflow_dispatch:
+    inputs:
+      slug:
+        description: "pending 草稿 slug"
+        required: true
+        type: string
+      out_date:
+        description: "probe 产物日期 YYYY-MM-DD"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  finalize:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            assets
+            specs
+            src
+            tools
+            pyproject.toml
+      - name: Pull this reel's visual evidence
+        env:
+          SLUG: ${{ inputs.slug }}
+          OUT_DATE: ${{ inputs.out_date }}
+        run: |
+          OUT="output/$OUT_DATE/reel/$SLUG"
+          git sparse-checkout add "$OUT"
+          test -f "$OUT/probe.json" || { echo "::error::找不到 $OUT/probe.json"; exit 1; }
+          test -f "specs/reels/pending/$SLUG.draft.json" || {
+            echo "::error::找不到 pending 草稿"; exit 1; }
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install evidence dependencies
+        run: |
+          pip install -q -e .
+          pip install -q pillow requests
+      - name: MiniMax visual gate
+        env:
+          MINIMAX_API_KEY: ${{ secrets.MINIMAX_API_KEY }}
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          SLUG: ${{ inputs.slug }}
+          OUT_DATE: ${{ inputs.out_date }}
+        run: |
+          python tools/analyze_reel_visuals.py             --draft "specs/reels/pending/$SLUG.draft.json"             --outdir "output/$OUT_DATE/reel/$SLUG"             --write
+      - name: Promote verified draft
+        env:
+          SLUG: ${{ inputs.slug }}
+        run: |
+          python tools/promote_reel_draft.py             --draft "specs/reels/pending/$SLUG.draft.json"             --write
+          test -f "specs/reels/$SLUG.json" || {
+            echo "::error::视觉或生产证据未过闸，正式 spec 未生成"; exit 1; }
+      - name: Commit formal spec
+        env:
+          SLUG: ${{ inputs.slug }}
+          OUT_DATE: ${{ inputs.out_date }}
+        run: |
+          git config user.name "Claude"
+          git config user.email "noreply@anthropic.com"
+          git add "specs/reels/$SLUG.json" "specs/reels/$SLUG.xhs.txt"
+          git add -u specs/reels/pending
+          git add "output/$OUT_DATE/reel/$SLUG"
+          git diff --cached --quiet && { echo "::error::没有可提交的正式 spec"; exit 1; }
+          python tools/check_staged_file_sizes.py
+          git commit -m "reel: finalize $SLUG"
+          git pull --rebase origin main
+          git push origin HEAD:main
+      - name: Dispatch render
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SLUG: ${{ inputs.slug }}
+        run: |
+          gh workflow run match-reel.yml --ref main             -f mode=render             -f slug="$SLUG"
+          echo "[dispatch] render $SLUG"
