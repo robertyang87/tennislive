@@ -33,11 +33,11 @@
     "scoreboard": {
       "court": "Court 17",
       "duration_source": {
-        "url": "data:application/json,%7B%22duration%22%3A%221%3A34%22%2C%22source%22%3A%22structured%20match%20statistics%22%7D",
+        "url": "data:application/json,%7B%22duration%22%3A%221%3A34%3A00%22%2C%22source%22%3A%22Flashscore%20structured%20match%20statistics%22%7D",
         "field": "duration"
       },
       "_court_why": "赛果源结构化 court 字段",
-      "_duration_why": "比赛统计结构化全场时长"
+      "_duration_why": "Flashscore结构化全场时长1:34；封面解析器按H:MM:SS读取，因此规范为1:34:00。"
     }
   },
   "_production": {
@@ -88,7 +88,11 @@
       "bp_chances": 10,
       "pts_won": 71,
       "pts_total": 122,
-      "first_total": 61
+      "first_total": 61,
+      "headshot": "assets/players/wta-328120-zheng-qinwen.png",
+      "headshot_zoom": 2,
+      "headshot_focus_x": 50,
+      "headshot_focus_y": 12
     },
     "b": {
       "aces": 2,
@@ -103,7 +107,8 @@
       "bp_chances": 3,
       "pts_won": 51,
       "pts_total": 122,
-      "first_total": 61
+      "first_total": 61,
+      "headshot": "assets/players/headshots/wta-325320.jpg"
     }
   },
   "_hit_data": [
