@@ -104,6 +104,19 @@ def test_总分领先者也是赢家时拦无主语领先却输(tool):
         content, stats, matchup, [(5, 7), (3, 6)])
 
 
+def test_自动草稿的推送文案默认开启质检后自动发送():
+    """用户定的全局规则：不是“先审后发”，而是 QC 通过就发。
+
+    这条检查钉住生成器的赋值点，避免以后重构 push 起草时把 auto 漏掉，
+    导致 render 全绿却静默跳过微信推送。
+    """
+    body = (_TOOLS / "assemble_spec.py").read_text(encoding="utf-8")
+    push_block = body.split("from draft_spec import draft_push", 1)[1].split(
+        "# ⑥ 窗口", 1)[0]
+    assert 'push["auto"] = True' in push_block
+    assert "默认开启 QC 后自动推送" in push_block
+
+
 def test_无字幕时从probe切点生成不跨镜头窗口(tool, tmp_path):
     probe = tmp_path / "probe.json"
     probe.write_text(json.dumps({
