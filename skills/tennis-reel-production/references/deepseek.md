@@ -18,6 +18,8 @@ Preserve what each number measures. A player ranked No. 10 or an opponent who is
 
 For bilingual broadcast subtitles, preserve the English wording and line order. Because the source is ASR, correct an obvious phonetic player-name error only when the replacement exactly matches the verified participant list. Do not change any other English word, and do not preserve a known name transcription error such as `feast` when the verified player is `Fils`.
 
+Apply a reviewed ASR name-alias correction deterministically before translation, and only when its canonical player is present in the verified participant list. DeepSeek then translates the corrected English without deciding whether an alias is valid. Keep the alias table narrow and evidence-backed; never use a global ordinary-word replacement.
+
 Write percentages in every voice-bound editorial field as spoken Chinese, such as “百分之八十二”, never `82%` or `82％`. PushPlus display copy may retain the symbol.
 
 Published positive reference: `fils-cobolli-cincinnati-2026-sf` combines the verified 6–3, 6–4 result, a 22–3 winners contrast, and a 3–0 head-to-head reversal in chronological beats. It adds player context briefly, avoids generic praise, and returns to the opening tension. Learn only the structure; never copy those names, numbers, score, conclusion, or facts into another match.

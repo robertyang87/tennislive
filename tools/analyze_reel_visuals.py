@@ -287,6 +287,25 @@ TRANSLATION_SCHEMA = {
     "required": ["lines"], "additionalProperties": False,
 }
 
+VERIFIED_ASR_NAME_ALIASES = {
+    "fils": ("feast", "face", "peace"),
+    "cobolli": ("kabali",),
+}
+
+
+def correct_verified_asr_names(source: str, player_names: list[str]) -> str:
+    """只在参赛名单命中时应用人工核实过的 ASR 人名近音别名。"""
+    corrected = source
+    for full_name in player_names:
+        words = re.findall(r"[A-Za-z]+", full_name)
+        if not words:
+            continue
+        surname = words[-1]
+        for alias in VERIFIED_ASR_NAME_ALIASES.get(surname.casefold(), ()):
+            corrected = re.sub(
+                rf"\b{re.escape(alias)}\b", surname, corrected, flags=re.I)
+    return corrected
+
 
 def english_name_only_edit(source: str, edited: str,
                            player_names: list[str]) -> bool:
@@ -317,19 +336,20 @@ def translate_quotes(chat: Chat, lines: list[str],
     if not lines or not chat.ready:
         return None
     names = [str(name).strip() for name in (player_names or []) if str(name).strip()]
+    prepared = [correct_verified_asr_names(line, names) for line in lines]
     system = ("把网球英文转播解说逐句译成简洁自然的中文字幕。英文来自 ASR，"
               f"已核实参赛者英文名：{json.dumps(names, ensure_ascii=False)}。"
               "必须保留英文原话和顺序；仅当 ASR 把上述球员姓名听成近音普通词时，"
               "可按名单纠正该姓名，除此之外不得改写英文。不得补比分/人物/赛况。"
               "只输出 JSON：lines:[{en,zh}]，顺序不变。"
               + model_instructions("deepseek"))
-    data = chat.ask(system, json.dumps(lines, ensure_ascii=False),
+    data = chat.ask(system, json.dumps(prepared, ensure_ascii=False),
                     schema=TRANSLATION_SCHEMA, max_tokens=1200)
     got = data.get("lines") if isinstance(data, dict) else None
-    if not isinstance(got, list) or len(got) != len(lines):
+    if not isinstance(got, list) or len(got) != len(prepared):
         return None
     out = []
-    for source, item in zip(lines, got, strict=True):
+    for source, item in zip(prepared, got, strict=True):
         if not isinstance(item, dict):
             return None
         english = str(item.get("en") or "").strip()

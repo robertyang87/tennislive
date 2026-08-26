@@ -244,6 +244,17 @@ def test_英文原声只允许按已核实名单纠正asr人名():
         "It is feast into the final", "It is the final", names)
 
 
+def test_已核实asr别名只在对应球员确实参赛时确定性纠正():
+    visual = load("analyze_reel_visuals")
+    source = "It is feast into the final here in Cincinnati."
+    assert visual.correct_verified_asr_names(
+        source, ["Arthur Fils", "Flavio Cobolli"]
+    ) == "It is Fils into the final here in Cincinnati."
+    assert visual.correct_verified_asr_names(
+        source, ["Jannik Sinner", "Carlos Alcaraz"]
+    ) == source
+
+
 def test_双语字幕调用也实际加载制作skill并纠正核实人名():
     visual = load("analyze_reel_visuals")
     captured = {}
