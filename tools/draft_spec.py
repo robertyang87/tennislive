@@ -30,6 +30,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 
 from tennislive.research.brief import Chat  # noqa: E402
+from reel_skill import model_instructions  # noqa: E402
 
 SCHEMA = {
     "type": "object",
@@ -74,7 +75,7 @@ SYSTEM = """你是网球短视频账号「网球时差」的编辑，给「赛�
 
 只输出一个 json 对象，字段：hook（2 行，每行 ≤10 字符）、question、thesis、
 beats（3 段）、human_context（场外切口：金句/纪录/复仇/告别，一段话）、
-narration（每段一句，对应 beats）。"""
+narration（每段一句，对应 beats）。""" + model_instructions("deepseek")
 
 
 def draft_editorial(chat: Chat, *, home: str, away: str, event: str, year: int,
@@ -103,7 +104,7 @@ _PUSH_SYSTEM = """你是网球短视频账号「网球时差」的推送编辑�
 - `summary`：推送标题，**≤20 字位**（全角 1 字、半角 0.5），一句话把「谁赢了、多硬」
   说清，像「兹维列夫两盘抢七险胜」。别写排名身份（海报已经印着）。
 - `lead`：正文第一段，2-4 句，说清这场球的具体过程 + 一个数字反差，别空话。
-- 只写给到的素材里有的事实，别编比分、别编球员说的话。"""
+- 只写给到的素材里有的事实，别编比分、别编球员说的话。""" + model_instructions("deepseek")
 
 
 def draft_push(chat: Chat, *, editorial: dict, facts: str = "") -> dict | None:

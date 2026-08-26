@@ -236,15 +236,20 @@ def candidates(digest) -> list[dict]:
             "score": score,
             "heat": heat,
             "level": _level_of(m),
-            "round": m.round_name or "",
+            "round": round_zh(m.round_name) or m.round_name or "",
             # ⚠️ 缩写名还原成全名再往下传——detect_highlights 的搜索词和
             # assemble 的译名都要全名，缩写（Kovacevic A.）直接拿去搜会搜错。
             "home": player_name_en(m.home[0].name),
             "away": player_name_en(m.away[0].name),
+            "home_country": m.home[0].country or "",
+            "away_country": m.away[0].country or "",
+            "home_rank": m.home[0].rank,
+            "away_rank": m.away[0].rank,
             "status": str(m.status),
             # T0 探测的搜索词要用：赛事名（剥赞助商前缀）+ 年份。
             "event": m.tournament.name,
             "year": m.start_utc.year if m.start_utc else date.today().year,
+            "court": m.court or "",
             # 去重用的比赛日：state 里按它分辨「同一场」和「同对手再交手」。
             "date": _match_date(m),
         })
@@ -587,7 +592,17 @@ def main() -> int:
         # --no-assemble 就不传这几个，probe 只出缩略图墙不备料——手动控制开关。
         if not args.no_assemble:
             cmd += ["-f", f"home={c['home']}", "-f", f"away={c['away']}",
-                    "-f", f"event={c['event']}", "-f", f"year={c['year']}"]
+                    "-f", f"event={c['event']}", "-f", f"year={c['year']}",
+                    "-f", f"round={c.get('round', '')}",
+                    "-f", f"court={c.get('court', '')}",
+                    "-f", f"home_country={c.get('home_country', '')}",
+                    "-f", f"away_country={c.get('away_country', '')}"]
+            if c.get("home_rank") is not None:
+                cmd += ["-f", f"home_rank={c['home_rank']}"]
+            if c.get("away_rank") is not None:
+                cmd += ["-f", f"away_rank={c['away_rank']}"]
+            cmd += ["-f", "received_at=" + datetime.now(timezone.utc).strftime(
+                "%Y-%m-%dT%H:%M:%SZ")]
         print(f"[dispatch] {' '.join(cmd)}")
         subprocess.run(cmd, check=True)
         # ⚠️ **每条 dispatch 成功立即落盘**，不是循环完再记：第 N 条 gh 失败时

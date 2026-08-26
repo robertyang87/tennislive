@@ -69,6 +69,8 @@ from tennislive.zh import player_zh  # noqa: E402
 from tennislive.sources.rankings import fetch_rankings, norm_name, rank_map  # noqa: E402
 from tennislive.research.zh_trends import fetch_zh_hot  # noqa: E402
 from draft_spec import draft_editorial  # noqa: E402
+from reel_facts import verified_match_fact  # noqa: E402
+from reel_timing import speech_seconds  # noqa: E402
 
 TURNING_POINT_TOP = 5
 DRAFT_SUFFIX = ".draft.json"
@@ -277,8 +279,6 @@ def scene_cut_segments(cuts_path: str, narration: list[str]) -> list[dict]:
     不猜具体比分发生在哪一秒，也不跨镜头硬切：按时间三等分选各区间里最长的
     单镜头，窗口只承担通用赛况旁白。逐分+比分板对齐仍是更高优先级路径。
     """
-    from build_match_reel import speech_seconds  # noqa: PLC0415
-
     probe = json.loads(Path(cuts_path).read_text(encoding="utf-8"))
     duration = float(probe.get("duration") or 0)
     cuts = sorted({float(x) for x in (probe.get("scene_cuts") or [])
@@ -491,6 +491,10 @@ def build_background(home: str, away: str, hit_data: list[dict]) -> tuple[str, l
 
 def assemble(*, slug: str, home: str, away: str, event: str, year: int,
              fixture: str, flashscore_id: str | None,
+             round_name: str = "", court: str = "",
+             home_country: str = "", away_country: str = "",
+             home_rank: int | None = None, away_rank: int | None = None,
+             received_at: str = "",
              captions_path: str | None = None,
              cuts_path: str | None = None,
              pbp_path: str | None = None,
@@ -508,9 +512,19 @@ def assemble(*, slug: str, home: str, away: str, event: str, year: int,
         "_column": "reel",
         "cover": {
             "matchup": [
-                {"name": player_zh(home), "name_en": home},
-                {"name": player_zh(away), "name_en": away},
+                {"name": player_zh(home), "name_en": home,
+                 "country": home_country or None, "rank": home_rank},
+                {"name": player_zh(away), "name_en": away,
+                 "country": away_country or None, "rank": away_rank},
             ],
+        },
+        "_production": {
+            "kind": "orchestrated_reel",
+            "received_at": received_at,
+            "event": event,
+            "year": year,
+            "round": round_name,
+            "court": court,
         },
     }
     # source_url 是 render 的硬要求（load_spec 里「既没有 sources 也没有
@@ -533,8 +547,13 @@ def assemble(*, slug: str, home: str, away: str, event: str, year: int,
         if [x[1] for x in ordered] != [player_zh(home), player_zh(away)]:
             notes.append("matchup 按 flashscore home/away 重排："
                          + " vs ".join(x[1] for x in ordered))
+        supplied = {
+            norm_name(home): {"country": home_country or None, "rank": home_rank},
+            norm_name(away): {"country": away_country or None, "rank": away_rank},
+        }
         draft["cover"]["matchup"] = [
-            {"name": zh, "name_en": en} for en, zh in ordered]
+            {"name": zh, "name_en": en, **supplied.get(norm_name(en), {})}
+            for en, zh in ordered]
     else:
         notes.append("⚠️ 没反查到 flashscore id——stats 块 / 狠数据 / 转折局"
                      "都依赖它，这三块本轮跳过。用 tools/match_feed.py find 拿到 id "
@@ -547,7 +566,7 @@ def assemble(*, slug: str, home: str, away: str, event: str, year: int,
         lookup = {**rank_map(current_ranks.atp), **rank_map(current_ranks.wta)}
         for player in draft["cover"]["matchup"]:
             rank = lookup.get(norm_name(player.get("name_en", "")))
-            if rank is not None:
+            if rank is not None and player.get("rank") is None:
                 player["rank"] = rank
     except Exception as exc:  # noqa: BLE001 —— 排名失败不能拖垮整份草稿
         notes.append(f"⚠️ 封面排名没成（{type(exc).__name__}: {exc}）")
@@ -591,6 +610,21 @@ def assemble(*, slug: str, home: str, away: str, event: str, year: int,
             notes.append(f"转折局候选 {len(ranked)} 局，取前 {TURNING_POINT_TOP}")
         except Exception as exc:  # noqa: BLE001
             notes.append(f"⚠️ 转折局没成（{type(exc).__name__}: {exc}）")
+
+    match_fact = verified_match_fact(
+        draft.get("cover", {}).get("matchup", []), authoritative_scores,
+        str(mid or ""))
+    if match_fact:
+        draft["_match"] = match_fact
+        draft["cover"].update({
+            "winner": match_fact["winner"],
+            "result": match_fact["winner_result"],
+        })
+        notes.append(
+            f"赛果事实闸：{match_fact['winner']} "
+            f"{match_fact['winner_result']} {match_fact['loser']}（赢家视角）")
+    elif mid:
+        notes.append("⚠️ 逐局数据不足以确定赢家和逐盘比分；不生成正式 spec")
 
     cover_brief = upset_cover_brief(
         draft.get("cover", {}).get("matchup", []), authoritative_scores)
@@ -722,7 +756,6 @@ def assemble(*, slug: str, home: str, away: str, event: str, year: int,
                         cuts = []
                 try:
                     from align_points import finalize_windows
-                    from build_match_reel import speech_seconds
                     segs = finalize_windows(segs, cuts, speech_seconds=speech_seconds)
                     notes.append(f"窗口收口：按旁白时长 + {len(cuts)} 个切点收")
                 except Exception as exc:  # noqa: BLE001
@@ -847,6 +880,16 @@ def main() -> int:
     ap.add_argument("--away", required=True, help="英文全名，如 Elena-Gabriela Ruse")
     ap.add_argument("--event", default="")
     ap.add_argument("--year", type=int, default=0)
+    ap.add_argument("--round", dest="round_name", default="",
+                    help="赛果源给出的轮次；自动 formal/topbar 不从标题猜")
+    ap.add_argument("--court", default="",
+                    help="赛果源给出的场地；缺失时正式提升停在 waiting")
+    ap.add_argument("--home-country", default="")
+    ap.add_argument("--away-country", default="")
+    ap.add_argument("--home-rank", type=int, default=None)
+    ap.add_argument("--away-rank", type=int, default=None)
+    ap.add_argument("--received-at", default="",
+                    help="orchestrate 确认生产输入的 UTC 时刻；用于过期闸和 SLO")
     ap.add_argument("--fixture", default="", help="赛前信息，进文案 prompt")
     ap.add_argument("--flashscore-id", default=None,
                     help="已知 flashscore id 就跳过反查")
@@ -871,6 +914,11 @@ def main() -> int:
     draft = assemble(slug=args.slug, home=args.home, away=args.away,
                      event=args.event, year=args.year, fixture=args.fixture,
                      flashscore_id=args.flashscore_id,
+                     round_name=args.round_name, court=args.court,
+                     home_country=args.home_country,
+                     away_country=args.away_country,
+                     home_rank=args.home_rank, away_rank=args.away_rank,
+                     received_at=args.received_at,
                      captions_path=args.captions, cuts_path=args.cuts,
                      pbp_path=args.pbp, scoreboard_path=args.scoreboard,
                      cover=args.cover, source_url=args.source_url,

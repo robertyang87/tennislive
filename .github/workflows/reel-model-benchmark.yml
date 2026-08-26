@@ -1,0 +1,46 @@
+name: reel-model-benchmark
+
+# 只做影子练习和对比报告：不提交、不 dispatch render、不调用 PushPlus。
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout: |
+            assets
+            output/2026-08-23/reel/fils-cobolli-cincinnati-2026-sf
+            specs
+            src
+            tools
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: 安装只读基准依赖
+        run: pip install -q -e .
+
+      - name: DeepSeek + MiniMax 复做已发布样片并对比
+        env:
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          MINIMAX_API_KEY: ${{ secrets.MINIMAX_API_KEY }}
+        run: python tools/benchmark_reel_models.py --outdir /tmp/reel-model-benchmark
+
+      - name: 上传候选 spec 与逐项对比报告
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: reel-model-benchmark-${{ github.run_number }}
+          path: /tmp/reel-model-benchmark
+          retention-days: 30
