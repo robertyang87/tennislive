@@ -117,6 +117,24 @@ def test_自动草稿的推送文案默认开启质检后自动发送():
     assert "默认开启 QC 后自动推送" in push_block
 
 
+def test_爆冷封面优先明星输家失落近景(tool):
+    matchup = [
+        {"name": "梅德韦杰夫", "name_en": "Daniil Medvedev", "rank": 8},
+        {"name": "小马丁·达姆", "name_en": "Martin Damm", "rank": 92},
+    ]
+    brief = tool.upset_cover_brief(matchup, [(5, 7), (3, 6)])
+    assert brief["preferred_subject"] == "梅德韦杰夫"
+    assert "失落" in brief["preferred_moment"]
+    assert brief["fallback_subject"] == "小马丁·达姆"
+
+
+def test_普通比赛不误套爆冷明星封面(tool):
+    close_rank = [{"name": "甲", "rank": 8}, {"name": "乙", "rank": 21}]
+    assert tool.upset_cover_brief(close_rank, [(4, 6), (6, 3), (4, 6)]) is None
+    non_star = [{"name": "甲", "rank": 55}, {"name": "乙", "rank": 100}]
+    assert tool.upset_cover_brief(non_star, [(4, 6), (6, 3), (4, 6)]) is None
+
+
 def test_无字幕时从probe切点生成不跨镜头窗口(tool, tmp_path):
     probe = tmp_path / "probe.json"
     probe.write_text(json.dumps({
