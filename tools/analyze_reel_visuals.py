@@ -467,6 +467,11 @@ def main() -> int:
                  for item in ((draft.get("cover") or {}).get("matchup") or [])]
         translations = translate_quotes(
             chat, [text for _, text in selected], player_names=names)
+        # 翻译接口偶尔返回带说明文字而不是严格逐句 JSON；视觉证据无需重跑，
+        # 只对同一批源站英文字幕再给一次机会。
+        if translations is None and selected and chat.ready:
+            translations = translate_quotes(
+                chat, [text for _, text in selected], player_names=names)
         if translations is None:
             report["status"] = "waiting"
             if not selected:
