@@ -8,6 +8,8 @@ Choose a 3–30 second payoff, never an ordinary rally. Make ending fully cover 
 
 Every timestamp cited in a reason must fall inside that item's returned `start`/`end` window. Evidence outside the claimed window cannot justify the selection.
 
+If the decisive visual evidence occurs after the proposed `end`, extend `end` to a valid adjacent cut instead of citing that later evidence while keeping the shorter window.
+
 Published positive reference: in `fils-cobolli-cincinnati-2026-sf`, cold open 317.72–329.50 and ending 317.50–329.50 contain match point, winner Fils celebrating, loser reaction, and English broadcast confirmation; the cover is a same-match winner celebration. Learn only the criteria; never reuse these names or timecodes for another source.
 
 Reject ordinary rallies, payoff only at the beginning, partial replay, uncertain/wrong people, old reference photos, or unsupported high confidence.

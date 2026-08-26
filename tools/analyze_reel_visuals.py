@@ -172,6 +172,13 @@ def clean_report(raw: dict | None, draft: dict, duration: float) -> tuple[dict, 
             problems.append(f"{name} 置信度 {confidence:.2f} 低于 {MIN_CONFIDENCE:.2f}")
         if not str(item.get("reason") or "").strip():
             problems.append(f"{name} 没有写可复核的画面证据")
+        cited = [float(value) for value in re.findall(
+            r"(?<![\d.])(\d{2,3}(?:\.\d+)?)\s*(?:s|秒)",
+            str(item.get("reason") or ""))]
+        outside = [stamp for stamp in cited
+                   if stamp < start - 0.5 or stamp > end + 0.5]
+        if outside:
+            problems.append(f"{name} 理由引用窗口外时间：{outside}")
         report[name] = {**item, "start": start, "end": end,
                         "confidence": confidence}
 
