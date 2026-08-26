@@ -30,7 +30,8 @@
       }
     ],
     "winner": "小马丁·达姆",
-    "result": "5-7 3-6",
+    "result": "7-5 6-3",
+    "_result_why": "⚠️ 2026-08-26 修正：原来写的是「5-7 3-6」——matchup[0] 是明星输家梅德韦杰夫，比分照着他的视角抄了，而 cover.result/topbar 的合同是赢家视角（达姆 7-5 6-3 胜）。已推送的成片带着反的比分板（图形上宣称梅德韦杰夫赢了 7-5 6-3），消息收不回来、不重渲；这次修正只保证以后重渲/引用是对的。判据 reel_facts.result_direction_problem 从此在 dry-run 就拦这一类。push.summary 冻结不动。",
     "scoreboard": {
       "court": "Stadium Court",
       "duration_source": {
@@ -43,11 +44,11 @@
   },
   "topbar": {
     "line1": "ATP250 温斯顿-塞勒姆 第二轮",
-    "line2": "小马丁·达姆 5-7 3-6 梅德韦杰夫"
+    "line2": "小马丁·达姆 7-5 6-3 梅德韦杰夫"
   },
   "stats": {
     "tour": "atp",
-    "_source": "Flashscore 完整比赛统计表 df_st_1_YJMDWfvf；a 严格对应 cover.matchup[0] 梅德韦杰夫，b 对应 cover.matchup[1] 达姆。总分 56+67=123 与双方 pts_total 一致；一发分母按 first_in+second_total 复算为 57/66，不把百分比反推取整。赛事官方赛后稿独立核验比分 5-7、3-6，并核验达姆一发 31/36（只丢 5 分）。",
+    "_source": "Flashscore 完整比赛统计表 df_st_1_YJMDWfvf；a 严格对应 cover.matchup[0] 梅德韦杰夫，b 对应 cover.matchup[1] 达姆。总分 56+67=123 与双方 pts_total 一致；一发分母按 first_in+second_total 复算为 57/66，不把百分比反推取整。赛事官方赛后稿独立核验比分（**梅德韦杰夫视角** 5-7、3-6，即达姆 7-5 6-3 胜——cover.result 是赢家视角，别照这两个数抄），并核验达姆一发 31/36（只丢 5 分）。",
     "_winners_ue_why": "Flashscore 本场完整 Match 格式表没有 Winners/Unforced errors 两行；当前任务不触发额外 TNNS 工作流，正式成片只使用两项官方来源可交叉核验的发球、破发点与总分数据，不把缺失字段写成 0。",
     "a": {
       "headshot": "assets/players/headshots/atp-MM58.png",
@@ -87,7 +88,7 @@
     "question": "世界第八输给排名远低的新人，这样的球你见过几次？",
     "thesis": "梅德韦杰夫总分落后11分，破发点零兑现，两盘完败。",
     "beats": [
-      "比分5-7 3-6",
+      "比分5-7 3-6（梅德韦杰夫视角；赢家视角是7-5 6-3）",
       "总得分56对67，少11分",
       "破发点0/2，对手2/3"
     ],

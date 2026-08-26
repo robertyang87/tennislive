@@ -566,3 +566,82 @@ def test_orchestrate把轮次球场国别排名和SLO起点传进probe():
     for value in ("round=", "court=", "home_country=", "away_country=",
                   "home_rank=", "away_rank=", "received_at="):
         assert value in body
+
+
+def test_没有match块的反向比分也要拦得住():
+    """medvedev-damm（2026-08-26 已推送）：cover.result/topbar 写成输家视角
+    「5-7 3-6」，图形上宣称输的人赢了。verified_result_problem 只在
+    _match.status == result_verified 时才跑——手写 spec 的 _match 全空就整套
+    静默跳过。这一道不依赖 _match：完赛盘里赢家零盘、输家两盘以上必错。"""
+    facts = load("reel_facts")
+    bad = {"cover": {"winner": "小马丁·达姆", "result": "5-7 3-6"}}
+    problem = facts.result_direction_problem(bad)
+    assert problem and "一个完赛盘都没拿" in problem
+    # 正常形状一个都不许误伤
+    for ok in ("7-5 6-3",              # 赢家视角
+               "4-6 6-4 6-2",          # 丢一盘
+               "6-7(4) 6-1 5-0 Ret.",  # 退赛（未完盘 + 标记）
+               "6-0 4-0 退赛"):
+        assert not facts.result_direction_problem(
+            {"cover": {"winner": "X", "result": ok}}), ok
+
+
+def test_反向比分在渲染入口就红不等到发出去():
+    """闸装在 _topbar_lines（validate_spec 调它，dry-run 0.2 秒就走到）。
+    真调一次：查源码只能防「有人把它删了」，防不住「它从来没工作过」。"""
+    sys.path.insert(0, str(TOOLS))
+    import build_match_reel as reel  # noqa: PLC0415
+
+    spec = {"slug": "fresh-auto-spec",
+            "cover": {"eyebrow": "赛场之上", "winner": "小马丁·达姆",
+                      "result": "5-7 3-6"},
+            "topbar": {"line1": "ATP250 温斯顿-塞勒姆 第二轮",
+                       "line2": "小马丁·达姆 5-7 3-6 梅德韦杰夫"}}
+    with pytest.raises(reel.ReelError, match="一个完赛盘都没拿"):
+        reel._topbar_lines(spec)
+
+
+def test_全库spec的封面赛果都是赢家视角():
+    """自己推导不维护名单：medvedev-damm 的 spec 已改回赢家视角（成片
+    已发不重渲），从此谁再把输家视角写进 cover.result，这条当场红。"""
+    import glob  # noqa: PLC0415
+    import json  # noqa: PLC0415
+
+    facts = load("reel_facts")
+    checked, hits = 0, []
+    for f in glob.glob(str(ROOT / "specs" / "reels" / "*.json")):
+        spec = json.loads(Path(f).read_text(encoding="utf-8"))
+        if (spec.get("cover") or {}).get("result"):
+            checked += 1
+        if facts.result_direction_problem(spec):
+            hits.append(Path(f).name)
+    assert checked >= 100, f"只校到 {checked} 条——主语没了"
+    assert hits == [], f"这些 spec 的封面赛果不是赢家视角：{hits}"
+
+
+def test_大满贯官方频道认得出来():
+    """大满贯集锦不上三大巡回赛频道，而赛事频道匹配是「频道名＝赛事名」
+    精确等值——US Open 的频道叫 US Open Tennis Championships，等值必拒，
+    美网一开打整条自动链对它盲。显式白名单放行官方，搬运号照旧拒。"""
+    det = load("detect_highlights")
+    assert det.channel_ok("US Open Tennis Championships", "US Open")
+    assert det.channel_ok("Wimbledon", "Wimbledon Championships")
+    assert det.channel_ok("Roland-Garros", "French Open")
+    assert det.channel_ok("Australian Open TV", "Australian Open")
+    # 搬运号不许继承官方身份（channel_ok 的老判据，别被白名单放宽）
+    assert not det.channel_ok("US Open Tennis Fan", "US Open")
+    assert not det.channel_ok("Cincinnati Tennis Fan", "Cincinnati Open")
+
+
+def test_段数够不等于内容够_正片时长有下界():
+    """medvedev-damm：3 段合计 16 秒的成片推送出去了。5-10 段的闸挡不住
+    5 段 × 3 秒的退化形状；账号所有者 2026-08-12「集锦的长度可以不要太短，
+    视频一定要交代清楚具体关键点」。40 秒远低于已发语料最短正片（约 69 秒）。"""
+    promote = load("promote_reel_draft")
+    thin = {"segments": [{"start": i * 10.0, "end": i * 10.0 + 5.0}
+                         for i in range(6)]}
+    reasons = promote.waiting_reasons(thin)
+    assert any("低于 40 秒" in r for r in reasons), reasons
+    rich = {"segments": [{"start": i * 20.0, "end": i * 20.0 + 12.0}
+                         for i in range(6)]}
+    assert not any("低于 40 秒" in r for r in promote.waiting_reasons(rich))
