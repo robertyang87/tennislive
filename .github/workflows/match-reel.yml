@@ -87,7 +87,7 @@ on:
         required: false
         default: "+6%"
       push:
-        description: "render 完成后推送到微信"
+        description: "render 完成后强制推送到微信（通常不用勾；spec 的 push.auto=true 会在质检通过后自动推送）"
         required: false
         type: boolean
         default: false
@@ -1303,11 +1303,30 @@ jobs:
           echo "::error::连续 10 次推送失败；成片仍在 artifact 中，未发送微信死链"
           exit 1
 
-      # push=true 的 render 不在本 job 里直接 POST：那会让 job 级发布锁把多场
-      # render 也全部串行。到这里代表 dry-run、成片 L2、Release 探活、提交全过，
-      # 再派一趟只做发布的 mode=push；这些轻量 run 在 match-reel-publish 组串行。
+      # **表单的 push 默认是 false，不能拿它当自动发布开关。** 自动编排生成的
+      # spec 已经用 `push.auto=true` 表达「质检通过即推送」；如果这里仍只看表单，
+      # runner 即使把成片、L2、Release、提交全部做完，也会把派发步骤静默标成
+      # skipped。medvedev-damm 的 run 32933062102 就是这个形状。
+      #
+      # 复用 auto_push_gate 的完整发布门禁（QC/spec/字幕/成片 hash、Release 字节、
+      # 海报、持久账本、pushed.json），不在 YAML 里另写一份简化判断。特性分支
+      # 不跑：它的成片还没进 main，等合并后的 auto-push-reel 接手。
+      - name: render 质检落库后读取 spec 自动推送规则
+        id: render_auto_gate
+        if: github.event.inputs.mode == 'render' && github.ref_name == 'main'
+        run: |
+          python tools/auto_push_gate.py \
+            --changed "${{ steps.paths.outputs.outdir }}/render.json"
+
+      # render 不在本 job 里直接 POST：那会让 job 级发布锁把多场 render 也全部
+      # 串行。到这里代表 dry-run、成片 L2、Release 探活、提交全过；spec 自动认领
+      # 或表单显式强制推送任一成立，就派一趟只做发布的 mode=push。这些轻量 run
+      # 在 match-reel-publish 组串行。
       - name: render 质检落库后自动派发微信推送
-        if: github.event.inputs.mode == 'render' && github.event.inputs.push == 'true'
+        if: >-
+          github.event.inputs.mode == 'render' &&
+          (github.event.inputs.push == 'true' ||
+           steps.render_auto_gate.outputs.found == 'true')
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
