@@ -244,6 +244,25 @@ def test_英文原声只允许按已核实名单纠正asr人名():
         "It is feast into the final", "It is the final", names)
 
 
+def test_双语字幕调用也实际加载制作skill并纠正核实人名():
+    visual = load("analyze_reel_visuals")
+    captured = {}
+
+    class FakeChat:
+        ready = True
+
+        def ask(self, system, user, *, schema, max_tokens):
+            captured["system"] = system
+            return {"lines": [{"en": "It is Fils into the final",
+                               "zh": "菲斯闯进决赛"}]}
+
+    got = visual.translate_quotes(
+        FakeChat(), ["It is feast into the final"],
+        player_names=["Arthur Fils", "Flavio Cobolli"])
+    assert got == [("It is Fils into the final", "菲斯闯进决赛")]
+    assert "tennis-reel-production" in captured["system"]
+
+
 def _ready_draft(tmp_path: Path) -> dict:
     photo = tmp_path / "cover.jpg"
     photo.write_bytes(b"photo")
@@ -416,6 +435,23 @@ def test_模型练手拒绝把已计入h2h的本场又加一次():
     score, issues = bench.deepseek_score(editorial, push)
     assert score < 80
     assert any("今日再胜" in issue and "四种场地" in issue for issue in issues)
+
+
+def test_模型练手拒绝把世界第十偷换成第十次交手():
+    bench = load("benchmark_reel_models")
+    editorial = {
+        "hook": ["排名反差", "三战全胜"],
+        "question": "为何世界第十过不了菲斯？",
+        "thesis": "菲斯第10次直面前十，靠22比3的制胜分取胜。",
+        "beats": ["首盘6比3", "次盘6比4", "三战全胜"],
+        "human_context": "三种场地，菲斯保持3比0。",
+        "narration": ["首盘六比三。", "次盘六比四。", "制胜分二十二比三。"],
+    }
+    push = {"summary": "菲斯晋级",
+            "lead": "菲斯以6比3、6比4取胜，制胜分22比3，三战全胜。"}
+    score, issues = bench.deepseek_score(editorial, push)
+    assert score < 80
+    assert any("第10次" in issue for issue in issues)
 
 
 def test_deepseek算术闸拒绝数字都真实但差值算错():
