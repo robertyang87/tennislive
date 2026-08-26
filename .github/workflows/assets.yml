@@ -43,9 +43,11 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install requests pillow
-      - run: python tools/fetch_flags.py
+      - if: ${{ inputs.image_url == '' }}
+        run: python tools/fetch_flags.py
       # 个别图片抓取失败（Commons 限流/无合规候选）不阻断提交已成功的部分
-      - run: python tools/fetch_venues.py || echo "::warning::some assets failed to fetch"
+      - if: ${{ inputs.image_url == '' }}
+        run: python tools/fetch_venues.py || echo "::warning::some assets failed to fetch"
       - name: Fetch one verified official WTA photo
         if: ${{ inputs.image_url != '' }}
         env:
@@ -88,5 +90,11 @@ jobs:
           git diff --cached --quiet && echo "no changes" && exit 0
           python tools/check_staged_file_sizes.py
           git commit -m "assets: flags and licensed venue/player images for story cards"
-          git pull --rebase origin main
-          git push
+          for attempt in 1 2 3 4 5; do
+            git pull --rebase origin main
+            git push && exit 0
+            echo "::warning::push race on attempt $attempt"
+            sleep $((attempt * 3))
+          done
+          echo "::error::连续 5 次 push 失败"
+          exit 1
