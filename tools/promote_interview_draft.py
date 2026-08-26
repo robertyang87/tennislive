@@ -379,18 +379,16 @@ def promote_all(*, write: bool = False) -> tuple[list[str], list[str]]:
             skipped.append(f"{f.name}: {why}（等终审）")
             continue
         spec = promote(draft, opp, details)
-        # 文案里不许提字幕这类制作规格（2026-08-19 的规矩；那张 78 个文件的
-        # 豁免表只许减不许加）。模板是确定性的，这道闸拦的是「哪天有人把
-        # 规格话术写回模板/推送字段」——它红一次好过豁免表长一格。
+        # 会发出去的措辞判据（tools/spec_wording.py 单一出处，零豁免——这条
+        # 闸只跑在新草稿上，老 spec 不再过 promote）。原来这儿只拦字幕规格
+        # 话术一条；模型/模板写回 push/takeaway 的几成几、强字轮次、报到分
+        # 同样绕过 CI（自动链直推 main），所以采访线的转正入口也要过全套。
+        # 红一次好过豁免表长一格；跳过不炸，草稿留在原地等终审。
         copy_text = xhs_copy(spec)
-        outward = copy_text + "\n" + "\n".join(
-            str(v) for k, v in (spec.get("push") or {}).items()
-            if not k.startswith("_") and isinstance(v, str))
-        from spec_wording import BILINGUAL_MENTION  # noqa: PLC0415
-        if BILINGUAL_MENTION.search(outward):
+        from spec_wording import check_interview_copy_wording  # noqa: PLC0415
+        if problems := check_interview_copy_wording(spec, copy_text):
             skipped.append(
-                f"{f.name}: 文案里提了字幕这类制作规格（模板或 push 字段被"
-                f"写回了规格话术），不提升")
+                f"{f.name}: 措辞不合规矩（{'；'.join(problems)}），不提升")
             continue
         if write:
             out = SPECS / f"{spec['slug']}.json"
