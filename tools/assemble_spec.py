@@ -534,7 +534,11 @@ def assemble(*, slug: str, home: str, away: str, event: str, year: int,
             else:
                 notes.append("⚠️ 封面没抓到（稿子没挂或没有实拍），portrait 留空，"
                              "render 前 cover_photo_problem 闸会要求认领 frame_at/_frame_why")
-        except Exception as exc:  # noqa: BLE001 —— 封面失败不拖垮整份草稿
+        # `fetch_match_pbp.find_match` 用 SystemExit 表示「WTA 窗口里没这场」。
+        # ATP 比赛（2026-08-26 Medvedev–Damm）必然走到这里；SystemExit 不属于
+        # Exception，旧代码因此在**草稿已经备好之后**把整个 probe job 杀掉。
+        # 没有 WTA 官方封面只是可预期降级，不能抹掉 spec、字幕和缩略图产物。
+        except (Exception, SystemExit) as exc:  # noqa: BLE001
             notes.append(f"⚠️ 封面抓取没成（{type(exc).__name__}: {exc}）——"
                          "portrait 留空，终审或 render 前再补")
 

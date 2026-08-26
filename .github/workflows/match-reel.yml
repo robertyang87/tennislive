@@ -1204,38 +1204,34 @@ jobs:
       - name: probe 失败摘 state（自愈）
         if: failure() && github.event.inputs.mode == 'probe'
         run: |
-          # ⚠️ `SLUG=…` 只是个 shell 变量，**不进子进程的环境**——底下那段 python 里
-          # `os.environ["SLUG"]` 会 KeyError。它挂在 `failure()` 上，平时根本走不到，
-          # 所以从写下来那天起一直没出声；2026-08-18 run 32086089179 第一次真走到
-          # （probe 死在装 ffmpeg）就炸了，**自愈那一步自己也失败了**。
-          # 要么 export、要么走 `env:`——这里用 export。
-          export SLUG="${{ github.event.inputs.slug }}"
-          python - <<'PY'
-          import json, pathlib, os
-          p = pathlib.Path("data/orchestration_state.json")
-          if not p.is_file():
-              print("没有 orchestration_state.json，无需摘")
-              raise SystemExit(0)
-          state = json.loads(p.read_text(encoding="utf-8"))
-          disp = state.get("dispatched", {})
-          if os.environ["SLUG"] in disp:
-              del disp[os.environ["SLUG"]]
-              p.write_text(json.dumps(state, ensure_ascii=False, indent=2),
-                           encoding="utf-8")
-              print(f"已把 {os.environ['SLUG']} 从 orchestration_state 摘掉，"
-                    "下次 cron 会重新探测 + dispatch")
-          else:
-              print(f"{os.environ['SLUG']} 不在 state 里，无需摘")
-          PY
+          # workflow_dispatch 的 checkout 固定在**派发瞬间的 SHA**。编排器是先点
+          # 下游 run、再提交 state，所以失败 job 看到的旧文件里常常还没有 claim：
+          # run 32917592471 就打印「medvedev-damm 不在 state」，几秒后 main 却
+          # 把它记成已做过，形成永不重试的死锁。每轮都从远端最新分支重新起步，
+          # 再摘 claim；push 被其他产物抢先时重新读最新 state 重算，不拿旧 JSON
+          # 做 rebase 猜测。
+          SLUG="${{ github.event.inputs.slug }}"
+          BRANCH="${{ github.ref_name }}"
           git config user.name "Claude"
           git config user.email "noreply@anthropic.com"
-          git add data/orchestration_state.json
-          if git diff --cached --quiet; then
-            echo "state 没有变化，不提交"
-          else
+          for attempt in $(seq 1 10); do
+            git fetch origin "$BRANCH"
+            git switch --detach "origin/$BRANCH"
+            python tools/release_orchestration_claim.py --slug "$SLUG"
+            git add data/orchestration_state.json
+            if git diff --cached --quiet; then
+              echo "远端最新 state 没有 claim，无需提交"
+              exit 0
+            fi
             git commit -m "orchestrate: probe 失败，摘掉 $SLUG 的 dispatch 标记"
-            git push origin "HEAD:${{ github.ref_name }}" || echo "::warning::state 摘除提交失败（不影响本次失败告警）"
-          fi
+            if git push origin "HEAD:$BRANCH"; then
+              exit 0
+            fi
+            echo "state 被其他 run 抢先更新（第 $attempt 次），重新读取远端最新值"
+            sleep $((attempt * 3 + RANDOM % 5))
+          done
+          echo "::error::连续 10 次都没能释放 $SLUG；它会继续卡在已 dispatch"
+          exit 1
 
       - name: 提交产物
         if: github.event.inputs.mode != 'narration' && github.event.inputs.mode != 'cookies'

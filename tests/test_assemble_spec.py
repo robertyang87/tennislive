@@ -508,6 +508,36 @@ def test_assemble封面没抓到留空出声(tool, monkeypatch):
     assert any("封面没抓到" in n for n in draft["_notes"]), "抓不到要出声"
 
 
+def test_ATP比赛查不到WTA封面不许杀掉整份草稿(tool, monkeypatch):
+    """Medvedev–Damm #1206 的真实回归：WTA find_match 用 SystemExit 报空。
+
+    这发生在 spec 已经完成文案/窗口之后，必须只记 note，不能让进程退出、跳过
+    pending 草稿提交。ATP 没有 WTA 官方赛后稿头图是正常降级，不是生产失败。
+    """
+    a = tool
+    monkeypatch.setattr(a, "resolve_match_id", lambda h, aw: None)
+    monkeypatch.setattr(a, "Chat", lambda: type("C", (), {"ready": False})())
+    fake_pbp = type("M", (), {"find_match": staticmethod(
+        lambda *args, **kwargs: (_ for _ in ()).throw(
+            SystemExit("WTA 窗口里没有 medvedev/damm")))})()
+    monkeypatch.setitem(sys.modules, "fetch_match_pbp", fake_pbp)
+    monkeypatch.setitem(sys.modules, "requests",
+                        type("requests", (), {"Session": staticmethod(lambda: object())})())
+
+    draft = a.assemble(
+        slug="medvedev-damm", home="Daniil Medvedev", away="Martin Damm",
+        event="Winston-Salem", year=2026, fixture="", flashscore_id=None,
+        cover=True, source_url=(
+            "https://www.tennistv.com/videos/4566516/"
+            "winston-salem-2026-r2-medvedev-damm-short-highlights"),
+    )
+
+    assert draft["slug"] == "medvedev-damm"
+    assert draft["source_url"].startswith("https://www.tennistv.com/")
+    assert any("SystemExit" in note and "封面抓取没成" in note
+               for note in draft["_notes"])
+
+
 def test_main写出草稿文件(tool, monkeypatch, tmp_path, capsys):
     a = tool
     monkeypatch.setattr(a, "assemble", lambda **kw: {
