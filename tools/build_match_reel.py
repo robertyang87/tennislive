@@ -6175,11 +6175,17 @@ def _topbar_lines(spec: dict) -> tuple[str, str] | None:
     豁免只给 `_LEGACY_NO_TOPBAR` 里那些**已经发出去的**片子：已发的不为版式
     重渲，而那张表有自检，写错名字会红。
     """
-    from reel_facts import verified_result_problem
+    from reel_facts import result_direction_problem, verified_result_problem
 
     verified_problem = verified_result_problem(spec)
     if verified_problem:
         raise ReelError(verified_problem)
+    # ⚠️ 上面那道闸只在 _match.status == result_verified 时才咬——手写/半手写
+    # spec 的 _match 全空就整套跳过，medvedev-damm 的反向比分正是这么发出去的。
+    # 这一道不依赖 _match，只读 cover 自己（判据和零误伤扫描见函数 docstring）。
+    direction_problem = result_direction_problem(spec)
+    if direction_problem:
+        raise ReelError(direction_problem)
     raw = spec.get("topbar")
     if raw is None:
         column = str((spec.get("cover") or {}).get("eyebrow", "")).strip()
