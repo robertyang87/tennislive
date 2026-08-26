@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import argparse
 import base64
+from difflib import SequenceMatcher
 import hashlib
 import json
 import os
@@ -287,11 +288,40 @@ TRANSLATION_SCHEMA = {
 }
 
 
-def translate_quotes(chat: Chat, lines: list[str]) -> list[tuple[str, str]] | None:
+def english_name_only_edit(source: str, edited: str,
+                           player_names: list[str]) -> bool:
+    """英文原声只允许把 ASR 误听词替换成事实包里的球员姓名。"""
+    if edited.strip() == source.strip():
+        return True
+    allowed = {word.casefold() for name in player_names
+               for word in re.findall(r"[A-Za-z]+", name)}
+    if not allowed:
+        return False
+    before = re.findall(r"[A-Za-z]+", source.casefold())
+    after = re.findall(r"[A-Za-z]+", edited.casefold())
+    changed = False
+    for tag, _, _, after_start, after_end in SequenceMatcher(
+            None, before, after).get_opcodes():
+        if tag == "equal":
+            continue
+        replacement = after[after_start:after_end]
+        if tag == "delete" or not replacement or any(
+                word not in allowed for word in replacement):
+            return False
+        changed = True
+    return changed
+
+
+def translate_quotes(chat: Chat, lines: list[str],
+                     player_names: list[str] | None = None) -> list[tuple[str, str]] | None:
     if not lines or not chat.ready:
         return None
-    system = ("把网球英文转播解说逐句译成简洁自然的中文字幕。不得改写英文，"
-              "不得补比分/人物/赛况。只输出 JSON：lines:[{en,zh}]，顺序不变。")
+    names = [str(name).strip() for name in (player_names or []) if str(name).strip()]
+    system = ("把网球英文转播解说逐句译成简洁自然的中文字幕。英文来自 ASR，"
+              f"已核实参赛者英文名：{json.dumps(names, ensure_ascii=False)}。"
+              "必须保留英文原话和顺序；仅当 ASR 把上述球员姓名听成近音普通词时，"
+              "可按名单纠正该姓名，除此之外不得改写英文。不得补比分/人物/赛况。"
+              "只输出 JSON：lines:[{en,zh}]，顺序不变。")
     data = chat.ask(system, json.dumps(lines, ensure_ascii=False),
                     schema=TRANSLATION_SCHEMA, max_tokens=1200)
     got = data.get("lines") if isinstance(data, dict) else None
@@ -299,12 +329,15 @@ def translate_quotes(chat: Chat, lines: list[str]) -> list[tuple[str, str]] | No
         return None
     out = []
     for source, item in zip(lines, got, strict=True):
-        if not isinstance(item, dict) or str(item.get("en") or "").strip() != source:
+        if not isinstance(item, dict):
+            return None
+        english = str(item.get("en") or "").strip()
+        if not english_name_only_edit(source, english, names):
             return None
         zh = str(item.get("zh") or "").strip()
         if not zh:
             return None
-        out.append((source, zh))
+        out.append((english, zh))
     return out
 
 
@@ -405,7 +438,10 @@ def main() -> int:
         selected = [(at, text) for at, text in rows
                     if cold["start"] <= at < cold["end"]]
         chat = Chat()
-        translations = translate_quotes(chat, [text for _, text in selected])
+        names = [str(item.get("name_en") or "").strip()
+                 for item in ((draft.get("cover") or {}).get("matchup") or [])]
+        translations = translate_quotes(
+            chat, [text for _, text in selected], player_names=names)
         if translations is None:
             report["status"] = "waiting"
             if not selected:

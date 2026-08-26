@@ -62,7 +62,6 @@ def deepseek_score(editorial: dict | None, push: dict | None) -> tuple[int, list
     anchors = [
         ("22比3", ("22比3", "二十二比三")),
         ("三次交手", ("三次", "3次", "三场", "3场")),
-        ("6-3 6-4", ("6-3", "六比三")),
     ]
     hit = 0
     for label, variants in anchors:
@@ -70,6 +69,12 @@ def deepseek_score(editorial: dict | None, push: dict | None) -> tuple[int, list
             hit += 1
         else:
             issues.append(f"没有使用基准事实：{label}")
+    first_set = any(value in text for value in ("6-3", "6比3", "六比三"))
+    second_set = any(value in text for value in ("6-4", "6比4", "六比四"))
+    if first_set and second_set:
+        hit += 1
+    else:
+        issues.append("没有完整使用基准事实：6-3 6-4")
     score += hit * 10
     clichés = ("精彩比赛", "顽强斗志", "还能走多远")
     if not any(value in text for value in clichés):
@@ -214,15 +219,22 @@ def run(outdir: Path) -> dict:
         cold = visual_report["cold_open"]
         selected = [(at, text) for at, text in rows
                     if float(cold["start"]) <= at < float(cold["end"])]
-        translations = translate_quotes(chat, [text for _, text in selected])
+        player_names = [str(item.get("name_en") or "").strip()
+                        for item in (base.get("cover", {}).get("matchup") or [])]
+        translations = translate_quotes(
+            chat, [text for _, text in selected], player_names=player_names)
         if translations:
-            apply_story(candidate, visual_report, rows, translations)
-            try:
-                from build_match_reel import validate_spec
-                validate_spec(candidate)
-                dry_run = {"status": "pass", "reason": "validate_spec 全部通过"}
-            except Exception as exc:  # noqa: BLE001
-                dry_run = {"status": "fail", "reason": f"{type(exc).__name__}: {exc}"}
+            if not any(re.search(r"\bFils\b", english, re.I)
+                       for english, _ in translations):
+                dry_run = {"status": "fail", "reason": "冷开场 ASR 人名未纠正为 Fils"}
+            else:
+                apply_story(candidate, visual_report, rows, translations)
+                try:
+                    from build_match_reel import validate_spec
+                    validate_spec(candidate)
+                    dry_run = {"status": "pass", "reason": "validate_spec 全部通过"}
+                except Exception as exc:  # noqa: BLE001
+                    dry_run = {"status": "fail", "reason": f"{type(exc).__name__}: {exc}"}
         else:
             dry_run = {"status": "fail", "reason": "冷开场双语原声翻译未通过"}
 
