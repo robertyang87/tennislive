@@ -32,7 +32,16 @@ FILM_URL = (
     "https://github.com/robertyang87/tennislive/releases/download/"
     f"interview-{BENCHMARK_SLUG}/{BENCHMARK_SLUG}.mp4"
 )
-FRAME_TIMES = (1, 10, 28, 70, 165, 270)
+FRAME_EVIDENCE = (
+    (1, "同场冷开场：冠军点"),
+    (10, "同场冷开场：庆祝/解说"),
+    (28, "正文：颁奖致辞开始"),
+    (70, "正文：颁奖致辞"),
+    (85, "正文中的封面候选：只用本图评 cover"),
+    (165, "正文：颁奖致辞与双语字幕"),
+    (270, "正文末段/收尾：检查字幕与画面"),
+)
+FRAME_TIMES = tuple(stamp for stamp, _role in FRAME_EVIDENCE)
 MINIMAX_ENDPOINT = "https://api.minimaxi.com/v1/chat/completions"
 MINIMAX_MODEL = "MiniMax-M3"
 
@@ -110,7 +119,9 @@ def ask_deepseek(chat: Chat) -> dict | None:
     system = (
         "你是网球短视频《赛后开麦》的影子编辑。严格逐句翻译三条发言，并根据"
         "事实包生成一张收尾卡和 PushPlus 文案。英文和顺序不可改；说话人不可改；"
-        "不能使用事实包以外的信息。只输出 schema 要求的 JSON。"
+        "不能使用事实包以外的信息。takeaway 的 point 与 ask 合计最多 34 个字符；"
+        "再次夺冠不等于卫冕，事实包没有下一站或大满贯时不得补写。"
+        "只输出 schema 要求的 JSON。"
         + model_instructions("deepseek")
     )
     user = json.dumps({"quotes": QUOTES, "facts": FACTS}, ensure_ascii=False)
@@ -140,7 +151,7 @@ def deepseek_score(result: dict | None) -> tuple[int, list[str]]:
     zh_rows = [str(row.get("zh") or "") for row in rows or []
                if isinstance(row, dict)]
     anchors = [
-        (0, (("球网", "另一边"),)),
+        (0, (("球网", "另一边"), ("球网", "对面"))),
         (1, (("停车场", "哭", "一年"),)),
         (2, (("两次", "房间", "支持"), ("2次", "房间", "支持"))),
     ]
@@ -179,7 +190,8 @@ def deepseek_score(result: dict | None) -> tuple[int, list[str]]:
         issues.append("PushPlus lead 没有先写完整赛果再落到采访角度")
 
     all_text = json.dumps(result, ensure_ascii=False)
-    forbidden = ("三盘", "决胜盘", "美网冠军", "世界第一", "复仇", "伤病")
+    forbidden = ("三盘", "决胜盘", "美网冠军", "世界第一", "复仇", "伤病",
+                 "卫冕", "大满贯", "下一站")
     if not any(x in all_text for x in forbidden):
         score += 10
     else:
@@ -211,11 +223,14 @@ def _image(path: Path) -> dict:
 
 
 def ask_minimax(frames: list[Path], key: str) -> dict | None:
-    mapping = [f"图片 {i + 1} = 成片 {stamp}s" for i, stamp in enumerate(FRAME_TIMES)]
-    prompt = f"""你是《赛后开麦》视觉事实审核员。以下六张图来自同一条已发布成片：
+    mapping = [f"图片 {i + 1} = 成片 {stamp}s；{role}"
+               for i, (stamp, role) in enumerate(FRAME_EVIDENCE)]
+    prompt = f"""你是《赛后开麦》视觉事实审核员。以下七张图来自同一条已发布成片：
 {chr(10).join(mapping)}
 
 已核事实只用于核对，不可冒充视觉证据：2026 辛辛那提决赛，高芙击败佩古拉。
+严格分段取证：content_type 只看图片3-6的正文；same_match_lead_in 比较图片1-2与
+图片3-6；cover 只看图片5。图片1不是封面，不能拿它的场景评 cover。
 请只返回 JSON：
 {{
   "content_type": {{"value": "on_court|ceremony|press|studio|unknown", "reason": "可见证据", "confidence": 0到1}},
@@ -223,7 +238,7 @@ def ask_minimax(frames: list[Path], key: str) -> dict | None:
   "same_match_lead_in": {{"value": true/false, "reason": "人物/记分牌/服装/赛事证据", "confidence": 0到1}},
   "mirrored": {{"value": true/false, "reason": "可读文字或标志证据", "confidence": 0到1}},
   "bilingual_subtitles": {{"value": true/false, "reason": "英文和中文是否同时可读", "confidence": 0到1}},
-  "cover": {{"subject": "中文名", "same_program": true/false, "frontal": true/false, "eyes_open": true/false, "clear": true/false, "reason": "图片1证据", "confidence": 0到1}}
+  "cover": {{"subject": "中文名", "same_program": true/false, "frontal": true/false, "eyes_open": true/false, "clear": true/false, "reason": "图片5的赛事标志/人物/姿态证据", "confidence": 0到1}}
 }}
 看不清就返回 false/unknown 和低置信度，不能为过闸猜测。
 {model_instructions("minimax")}
