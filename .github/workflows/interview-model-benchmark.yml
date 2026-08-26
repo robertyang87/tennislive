@@ -1,0 +1,62 @@
+name: interview-model-benchmark
+
+# 只读影子练习：不改 spec、不 render、不 dispatch、不调用 PushPlus。
+on:
+  workflow_dispatch: {}
+  push:
+    branches: [main]
+    paths:
+      - "skills/tennis-interview-production/**"
+      - "tools/interview_skill.py"
+      - "tools/draft_interview_spec.py"
+      - "tools/benchmark_interview_models.py"
+      - "specs/interviews/gauff-pegula-cin2026-final.json"
+      - ".github/workflows/interview-model-benchmark.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout: |
+            skills
+            specs/interviews/gauff-pegula-cin2026-final.json
+            src
+            tools
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: 安装只读基准依赖
+        run: pip install -q -e .
+
+      - name: 下载已发布成片作为只读基准
+        run: >-
+          curl --fail --location --retry 3 --output /tmp/interview-benchmark.mp4
+          https://github.com/robertyang87/tennislive/releases/download/interview-gauff-pegula-cin2026-final/gauff-pegula-cin2026-final.mp4
+
+      - name: DeepSeek + MiniMax 复做并逐项对比
+        env:
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          MINIMAX_API_KEY: ${{ secrets.MINIMAX_API_KEY }}
+        run: >-
+          python tools/benchmark_interview_models.py
+          --film /tmp/interview-benchmark.mp4
+          --outdir /tmp/interview-model-benchmark
+
+      - name: 上传评分、模型原始结果与证据帧
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: interview-model-benchmark-${{ github.run_number }}
+          path: /tmp/interview-model-benchmark
+          retention-days: 30
