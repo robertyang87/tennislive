@@ -103,7 +103,8 @@ def ask_minimax(draft: dict, frames: list[Path], cover: Path | None,
 
 硬规则：冷开场必须是制胜分、赛点、赢家庆祝或紧接赛后的余波，不能选普通回合；
 ending 必须完整覆盖 cold_open 的时间窗口，保证正文末尾重新兑现结局；时间码只能
-来自图上烧录的时间和相邻切点，不能猜。封面要核对人物、比分字样、赛事标识、
+来自图上烧录的时间和相邻切点，不能猜；reason 引用的每个时间点都必须落在自己
+返回的 start/end 窗口内。封面要核对人物、比分字样、赛事标识、
 服装/场景；无法证明“本场”就 same_match=false。爆冷时严格按封面选人规则，
 不要因为赢家庆祝更好认就擅自换人。看不清就降低 confidence，不得编。
 {model_instructions("minimax")}

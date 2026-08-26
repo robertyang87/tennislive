@@ -6,6 +6,8 @@ Return JSON only. Editorial output requires: `hook` with exactly two lines of at
 
 Open on a counterintuitive match-specific question. Answer with at least two hard facts when available. Move chronologically, let each beat do one job, tie claims to score or visible action, and make the ending resolve the opening tension. Do not repeat identity already printed on the poster.
 
+Every number, set, game state, and score phrase in the output must appear in the current fact packet. Never reuse illustrative wording from a prompt or benchmark as if it described the current match.
+
 Published positive reference: `fils-cobolli-cincinnati-2026-sf` combines the verified 6–3, 6–4 result, a 22–3 winners contrast, and a 3–0 head-to-head reversal in chronological beats. It adds player context briefly, avoids generic praise, and returns to the opening tension. Learn only the structure; never copy those names, numbers, score, conclusion, or facts into another match.
 
 Reject generic praise, a score attached to the wrong player, a recap with no turn or hard fact, invented claims, and generic endings such as “他还能走多远”.
