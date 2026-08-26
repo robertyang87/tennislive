@@ -81,12 +81,16 @@ def deepseek_score(editorial: dict | None, push: dict | None) -> tuple[int, list
         score += 10
     else:
         issues.append("推送标题/导语不完整或标题超过 20 字")
+    score = min(score, 100)
     leaked = ("决胜盘", "四比一", "连丢四局", "五比四", "多拿五分")
     hits = [value for value in leaked if value in text]
     if hits:
         score -= 60
         issues.append(f"写入事实包不存在的示例情节：{','.join(hits)}")
-    return max(0, min(score, 100)), issues
+    if "%" in text or "％" in text:
+        score -= 30
+        issues.append("配音字段含百分号，必须改写成中文百分比")
+    return max(0, score), issues
 
 
 def interval_overlap(predicted: dict, expected: tuple[float, float]) -> float:
