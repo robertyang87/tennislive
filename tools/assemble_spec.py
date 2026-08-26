@@ -49,11 +49,13 @@ stats 块缺必填项、狠数据算不出、没配 DeepSeek key——各自在 
 from __future__ import annotations
 
 import argparse
+import html
 import json
 import re
 import sys
 from datetime import date
 from pathlib import Path
+from urllib.parse import parse_qsl, urlencode, urlparse, urlunparse
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
@@ -194,6 +196,166 @@ def editorial_score_problem(editorial: dict, scores: list[tuple[int, int]]) -> s
             claimed = " ".join(f"{a}-{b}" for a, b in found)
             return f"模型写出的完整盘分 {claimed} 与逐局表 {expected} 不一致"
     return None
+
+
+def total_points_fact(stats: dict, matchup: list[dict]) -> str:
+    """把总得分的方向写成不可误读的一句话，避免模型只看到 ``净差 11`` 猜反。"""
+    try:
+        a = int(stats["a"]["pts_won"])
+        b = int(stats["b"]["pts_won"])
+        a_name = str(matchup[0]["name"])
+        b_name = str(matchup[1]["name"])
+    except (KeyError, IndexError, TypeError, ValueError):
+        return ""
+    if a == b:
+        return f"全场总得分：{a_name} {a}，{b_name} {b}，两人持平"
+    leader, trailer = (a_name, b_name) if a > b else (b_name, a_name)
+    return (f"全场总得分：{a_name} {a}，{b_name} {b}；{leader}比{trailer}"
+            f"多 {abs(a - b)} 分。禁止写成{trailer}总分领先")
+
+
+def editorial_total_points_problem(
+    content: dict, stats: dict, matchup: list[dict], scores: list[tuple[int, int]],
+) -> str | None:
+    """拦住总分领先者写反，包括无主语的「多拿 N 分却输了」。
+
+    #1207 的真实草稿同时出现「56 比 67 落后 11 分」和「总分领先」。仅检查
+    数字是否出现不够，必须把球员、领先方向和比赛胜负一起机械核对。
+    """
+    try:
+        a = int(stats["a"]["pts_won"])
+        b = int(stats["b"]["pts_won"])
+        names = [str(matchup[0]["name"]), str(matchup[1]["name"])]
+    except (KeyError, IndexError, TypeError, ValueError):
+        return None
+    if a == b:
+        return None
+    leader_idx = 0 if a > b else 1
+    trailer_idx = 1 - leader_idx
+    leader, trailer = names[leader_idx], names[trailer_idx]
+
+    def _texts(value):
+        if isinstance(value, dict):
+            for nested in value.values():
+                yield from _texts(nested)
+        elif isinstance(value, (list, tuple)):
+            for nested in value:
+                yield from _texts(nested)
+        elif value is not None:
+            yield str(value)
+
+    texts = list(_texts(content))
+    trailer_leads = re.compile(
+        rf"{re.escape(trailer)}.{{0,24}}(?:总分.{{0,6}}领先|多拿\s*{abs(a-b)}\s*分|"
+        rf"净胜\s*{abs(a-b)}\s*分)"
+    )
+    leader_trails = re.compile(
+        rf"{re.escape(leader)}.{{0,24}}(?:总分.{{0,6}}落后|少拿\s*{abs(a-b)}\s*分)"
+    )
+    for text in texts:
+        if trailer_leads.search(text) or leader_trails.search(text):
+            return f"总得分方向写反：应为{leader}领先{trailer} {abs(a-b)}分"
+
+    # 若总分领先者同时赢下比赛，「多拿 N 分却输了」这种无主语钩子也一定错。
+    if scores:
+        a_sets = sum(x > y for x, y in scores)
+        b_sets = sum(y > x for x, y in scores)
+        winner_idx = 0 if a_sets > b_sets else 1 if b_sets > a_sets else None
+        if winner_idx == leader_idx:
+            upside_down = re.compile(
+                rf"(?:多拿\s*{abs(a-b)}\s*分|总分.{{0,6}}领先|净胜\s*{abs(a-b)}\s*分)"
+                r".{0,18}(?:却|反而).{0,8}(?:输|落败|出局)"
+            )
+            if any(upside_down.search(text) for text in texts):
+                return f"总分领先者{leader}也是比赛赢家，不能写成“领先却输球”"
+    return None
+
+
+def scene_cut_segments(cuts_path: str, narration: list[str]) -> list[dict]:
+    """无字幕时从 probe 的完整镜头表机械选可容纳旁白的高光窗口。
+
+    不猜具体比分发生在哪一秒，也不跨镜头硬切：按时间三等分选各区间里最长的
+    单镜头，窗口只承担通用赛况旁白。逐分+比分板对齐仍是更高优先级路径。
+    """
+    from build_match_reel import speech_seconds  # noqa: PLC0415
+
+    probe = json.loads(Path(cuts_path).read_text(encoding="utf-8"))
+    duration = float(probe.get("duration") or 0)
+    cuts = sorted({float(x) for x in (probe.get("scene_cuts") or [])
+                   if 0 < float(x) < duration})
+    lines = [str(x).strip() for x in narration if str(x).strip()]
+    if duration <= 0 or not lines:
+        return []
+    bounds = [0.0, *cuts, duration]
+    scenes = [(bounds[i], bounds[i + 1]) for i in range(len(bounds) - 1)]
+    picked: list[tuple[float, float]] = []
+    last_end = -1.0
+    for index, line in enumerate(lines):
+        need = speech_seconds(line) + 0.8
+        lo = duration * index / len(lines)
+        hi = duration * (index + 1) / len(lines)
+        candidates = [s for s in scenes if s[0] >= last_end and
+                      s[1] - s[0] >= need]
+        in_band = [s for s in candidates if (s[0] + s[1]) / 2 >= lo and
+                   (s[0] + s[1]) / 2 <= hi]
+        pool = in_band or candidates
+        if not pool:
+            return []
+        target = (lo + hi) / 2
+        scene = min(pool, key=lambda s: (abs((s[0] + s[1]) / 2 - target),
+                                         -(s[1] - s[0])))
+        picked.append(scene)
+        last_end = scene[1]
+    segments = []
+    for line, (start, end) in zip(lines, picked, strict=True):
+        need = speech_seconds(line) + 0.8
+        center = (start + end) / 2
+        seg_start = max(start + 0.05, center - need / 2)
+        seg_end = min(end - 0.05, seg_start + need)
+        seg_start = max(start + 0.05, seg_end - need)
+        segments.append({
+            "start": round(seg_start, 2), "end": round(seg_end, 2),
+            "narration": line, "fit": "crop",
+            "_why": "无字幕源：按 probe 镜头切点选单镜头高光窗口；不跨切点",
+        })
+    return segments
+
+
+def fetch_tennistv_cover(source_url: str, out: Path, *, get=None) -> str:
+    """从 Tennis TV 本场官方页面取其关联头图，并请求 4000px 原图。"""
+    if "tennistv.com" not in urlparse(source_url).netloc.casefold():
+        raise ValueError("不是 Tennis TV 链接")
+    if get is None:
+        import requests  # noqa: PLC0415
+        get = requests.get
+    page_response = get(
+        source_url, headers={"User-Agent": "tennislive/0.1"}, timeout=30)
+    page_response.raise_for_status()
+    page = html.unescape(str(page_response.text))
+    patterns = [
+        r'itemprop=["\']thumbnailUrl["\'][^>]+content=["\']([^"\']+)',
+        r'property=["\']og:image["\'][^>]+content=["\']([^"\']+)',
+    ]
+    image_url = next((m.group(1) for pattern in patterns
+                      if (m := re.search(pattern, page, re.IGNORECASE))), "")
+    if not image_url.startswith("https://"):
+        raise ValueError("Tennis TV 页面没有官方头图")
+    parsed = urlparse(image_url)
+    query = dict(parse_qsl(parsed.query, keep_blank_values=True))
+    query.pop("height", None)
+    query["width"] = "4000"
+    image_url = urlunparse(parsed._replace(query=urlencode(query)))
+    response = get(image_url, headers={"User-Agent": "tennislive/0.1"}, timeout=30)
+    response.raise_for_status()
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_bytes(response.content)
+    from PIL import Image, ImageOps  # noqa: PLC0415
+    with Image.open(out) as raw:
+        width, height = ImageOps.exif_transpose(raw).size
+    if width < 1080 or height < 1440:
+        out.unlink(missing_ok=True)
+        raise ValueError(f"Tennis TV 头图只有 {width}×{height}，撑不满封面")
+    return f"Tennis TV 本场官方页面头图（ATP Media，{width}×{height}）"
 
 
 def _rank_line(name_en: str, lookup: dict[str, int]) -> str:
@@ -396,6 +558,10 @@ def assemble(*, slug: str, home: str, away: str, event: str, year: int,
         exact_score = score_fact(authoritative_scores, feed_home_zh, feed_away_zh)
         if exact_score:
             editorial_facts = f"- {exact_score}\n{editorial_facts}".rstrip()
+        points_fact = total_points_fact(
+            draft.get("stats", {}), draft.get("cover", {}).get("matchup", []))
+        if points_fact:
+            editorial_facts = f"- {points_fact}\n{editorial_facts}".rstrip()
         draft["editorial"] = draft_editorial(
             chat, home=home, away=away, event=event, year=year,
             fixture=fixture, facts=editorial_facts, background=background)
@@ -405,21 +571,50 @@ def assemble(*, slug: str, home: str, away: str, event: str, year: int,
         else:
             score_problem = editorial_score_problem(
                 draft["editorial"], authoritative_scores)
-            if score_problem:
-                draft.pop("editorial", None)
-                notes.append(f"⚠️ {score_problem}；已撤下 editorial，禁止错误比分进入成片")
+            points_problem = editorial_total_points_problem(
+                draft["editorial"], draft.get("stats", {}),
+                draft.get("cover", {}).get("matchup", []), authoritative_scores)
+            problem = score_problem or points_problem
+            if problem:
+                # 数字方向是机械事实，先把具体错误喂回模型重写一次；仍错就撤稿。
+                corrected_facts = (f"{editorial_facts}\n- 上一稿错误：{problem}。"
+                                   "本次必须按上面的精确比分和总得分方向重写")
+                retry = draft_editorial(
+                    chat, home=home, away=away, event=event, year=year,
+                    fixture=fixture, facts=corrected_facts, background=background)
+                retry_problem = (editorial_score_problem(
+                    retry or {}, authoritative_scores)
+                                 or editorial_total_points_problem(
+                                     retry or {}, draft.get("stats", {}),
+                                     draft.get("cover", {}).get("matchup", []),
+                                     authoritative_scores))
+                if retry and not retry_problem:
+                    draft["editorial"] = retry
+                    notes.append(f"文案事实校验发现首稿错误（{problem}），重写后通过")
+                else:
+                    problem = retry_problem or problem
+                    draft.pop("editorial", None)
+                    notes.append(f"⚠️ {problem}；重写仍未通过，已撤下 editorial")
             # 推送文案（summary/lead）也自动起草——「草稿渲完直接合并推微信」的
             # 推送内容缺口。给不给都是编辑决定，草稿阶段先备好。
             if "editorial" not in draft:
-                notes.append("⚠️ editorial 因比分不一致已撤下，推送文案与窗口同步跳过")
+                notes.append("⚠️ editorial 因事实不一致已撤下，推送文案与窗口同步跳过")
             else:
                 try:
                     from draft_spec import draft_push
                     push = draft_push(chat, editorial=draft["editorial"],
                                       facts=editorial_facts)
                     if push and push.get("summary"):
-                        draft["push"] = push
-                        notes.append("推送文案（summary/lead）已起草")
+                        push_problem = editorial_total_points_problem(
+                            push, draft.get("stats", {}),
+                            draft.get("cover", {}).get("matchup", []),
+                            authoritative_scores)
+                        if push_problem:
+                            notes.append(
+                                f"⚠️ 推送文案{push_problem}；已撤下 push，禁止发送")
+                        else:
+                            draft["push"] = push
+                            notes.append("推送文案（summary/lead）已起草并通过事实校验")
                     else:
                         notes.append("⚠️ 推送文案起草没成，留终审")
                 except Exception as exc:  # noqa: BLE001
@@ -499,48 +694,79 @@ def assemble(*, slug: str, home: str, away: str, event: str, year: int,
                     notes.append("⚠️ 窗口起草没成（模型或全被闸拦掉），segments 留空")
         except Exception as exc:  # noqa: BLE001 —— 窗口起草失败不拖垮整份草稿
             notes.append(f"⚠️ 窗口起草没成（{type(exc).__name__}: {exc}）")
-    else:
-        notes.append("⚠️ 没给 captions/cuts（probe 还没落库），窗口起草跳过——"
-                     "等 probe 完成后再补跑")
+    elif "segments" not in draft:
+        notes.append("⚠️ 没给 captions 或字幕不可读，字幕窗口起草跳过")
+
+    # ⑥″ Tennis TV 短集锦常常根本没有字幕轨。probe 已经给了完整镜头表时，
+    # 不应把这当作永久人工阻塞：选三个互不跨切点、足够装下旁白的高光镜头。
+    # 这条只做通用赛况画面，优先级低于逐分对齐和字幕语义窗口。
+    if cuts_path and "segments" not in draft and draft.get("editorial"):
+        try:
+            segs = scene_cut_segments(
+                cuts_path, (draft.get("editorial") or {}).get("narration", []))
+            if segs:
+                draft["segments"] = segs
+                draft["_segments_source"] = "probe.scene_cuts（无字幕机械兜底）"
+                notes.append(f"无字幕窗口兜底 {len(segs)} 段：全部单镜头且装得下旁白")
+            else:
+                notes.append("⚠️ probe 镜头都短于旁白，无法生成无字幕窗口")
+        except Exception as exc:  # noqa: BLE001
+            notes.append(f"⚠️ 无字幕窗口兜底没成（{type(exc).__name__}: {exc}）")
 
     # ⑦ 封面官方实拍（可选，--cover 触发）。WTA 场次才有这条官方路：英文名
     #    反查 WTA MatchID → 抓赛后稿头图。抓得到就写 cover.portrait.image，
     #    抓不到（稿子没挂/没实拍）就留空出声——封面是 cover_photo_problem 硬闸
     #    管的，抓错比不抓更糟，宁可留空让 render 前闸走抽帧认领。
     if cover:
-        try:
-            import requests
-            from datetime import timedelta
-
-            from fetch_match_pbp import find_match as wta_find_match
-            from fetch_wta_cover_photo import fetch_cover
-            session = requests.Session()
-            today = date.today()
-            event_id, wyear, match_id, _row = wta_find_match(
-                session, [_surname(home), _surname(away)],
-                today - timedelta(days=2), today)
-            # city slug：WTA 官网赛事 URL 用城市小写（多伦多=toronto、
-            # 辛辛那提=cincinnati）。⚠️ 之前硬编码 "cincinnati"，换别的赛事就
-            # 会抓错站——用 event 小写拼，覆盖所有 WTA 场次。
-            city_slug = (event or "").strip().lower().replace(" ", "-")
-            out = Path(f"assets/reel/{slug}-cover.jpg")
-            code, note = fetch_cover(str(event_id), str(wyear), city_slug,
-                                     match_id, [_surname(home), _surname(away)],
-                                     out, today)
-            notes.append(f"封面官方实拍：{note}")
-            if code == 0:
+        cover_done = False
+        if source_url and "tennistv.com" in urlparse(source_url).netloc.casefold():
+            try:
+                out = Path(f"assets/reel/{slug}-cover.jpg")
+                note = fetch_tennistv_cover(source_url, out)
                 draft.setdefault("cover", {})["portrait"] = {
-                    "image": str(out), "_portrait_why": "WTA 官方赛后稿头图，自动抓取"}
-            else:
-                notes.append("⚠️ 封面没抓到（稿子没挂或没有实拍），portrait 留空，"
-                             "render 前 cover_photo_problem 闸会要求认领 frame_at/_frame_why")
-        # `fetch_match_pbp.find_match` 用 SystemExit 表示「WTA 窗口里没这场」。
-        # ATP 比赛（2026-08-26 Medvedev–Damm）必然走到这里；SystemExit 不属于
-        # Exception，旧代码因此在**草稿已经备好之后**把整个 probe job 杀掉。
-        # 没有 WTA 官方封面只是可预期降级，不能抹掉 spec、字幕和缩略图产物。
-        except (Exception, SystemExit) as exc:  # noqa: BLE001
-            notes.append(f"⚠️ 封面抓取没成（{type(exc).__name__}: {exc}）——"
-                         "portrait 留空，终审或 render 前再补")
+                    "image": str(out),
+                    "_portrait_why": "Tennis TV 本场官方页面关联的 ATP Media 高清图",
+                }
+                notes.append(f"封面官方实拍：{note}")
+                cover_done = True
+            except Exception as exc:  # noqa: BLE001
+                notes.append(f"⚠️ Tennis TV 官方头图没成（{type(exc).__name__}: {exc}）")
+        if cover_done:
+            pass
+        else:
+            try:
+                import requests
+                from datetime import timedelta
+
+                from fetch_match_pbp import find_match as wta_find_match
+                from fetch_wta_cover_photo import fetch_cover
+                session = requests.Session()
+                today = date.today()
+                event_id, wyear, match_id, _row = wta_find_match(
+                    session, [_surname(home), _surname(away)],
+                    today - timedelta(days=2), today)
+                # city slug：WTA 官网赛事 URL 用城市小写（多伦多=toronto、
+                # 辛辛那提=cincinnati）。⚠️ 之前硬编码 "cincinnati"，换别的赛事就
+                # 会抓错站——用 event 小写拼，覆盖所有 WTA 场次。
+                city_slug = (event or "").strip().lower().replace(" ", "-")
+                out = Path(f"assets/reel/{slug}-cover.jpg")
+                code, note = fetch_cover(str(event_id), str(wyear), city_slug,
+                                         match_id, [_surname(home), _surname(away)],
+                                         out, today)
+                notes.append(f"封面官方实拍：{note}")
+                if code == 0:
+                    draft.setdefault("cover", {})["portrait"] = {
+                        "image": str(out), "_portrait_why": "WTA 官方赛后稿头图，自动抓取"}
+                else:
+                    notes.append("⚠️ 封面没抓到（稿子没挂或没有实拍），portrait 留空，"
+                                 "render 前 cover_photo_problem 闸会要求认领 frame_at/_frame_why")
+            # `fetch_match_pbp.find_match` 用 SystemExit 表示「WTA 窗口里没这场」。
+            # ATP 比赛（2026-08-26 Medvedev–Damm）必然走到这里；SystemExit 不属于
+            # Exception，旧代码因此在**草稿已经备好之后**把整个 probe job杀掉。
+            # 没有 WTA 官方封面只是可预期降级，不能抹掉 spec、字幕和缩略图产物。
+            except (Exception, SystemExit) as exc:  # noqa: BLE001
+                notes.append(f"⚠️ 封面抓取没成（{type(exc).__name__}: {exc}）——"
+                             "portrait 留空，终审或 render 前再补")
 
     draft["_notes"] = notes
     return draft
