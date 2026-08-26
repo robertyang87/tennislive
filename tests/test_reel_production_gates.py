@@ -405,6 +405,32 @@ def test_模型练手拒绝把已计入h2h的本场又加一次():
     assert any("今日再胜" in issue and "四种场地" in issue for issue in issues)
 
 
+def test_deepseek算术闸拒绝数字都真实但差值算错():
+    draft = load("draft_spec")
+    wrong = {"beats": ["总得分五十六比四十五只领先九分。"]}
+    right = {"beats": ["总得分五十六比四十五领先十一分。"]}
+    assert "相差11分" in draft.arithmetic_claim_problem(wrong)
+    assert draft.arithmetic_claim_problem(right) is None
+
+
+def test_模型练手不能靠错误算术拿满分():
+    bench = load("benchmark_reel_models")
+    editorial = {
+        "hook": ["三次交手", "一次没赢"],
+        "question": "为什么世界第十还是过不了这一关？",
+        "thesis": "6-3 6-4背后，是22比3的制胜分差。",
+        "beats": ["首盘", "总得分五十六比四十五只领先九分", "三次交手"],
+        "narration": ["首盘菲斯先破局。", "次盘差距扩大到二十二比三。",
+                      "三场比赛，科博利一次都没赢。"],
+        "human_context": "他们从青年组打到大师赛。",
+    }
+    push = {"summary": "三次交手一次没赢",
+            "lead": "菲斯两盘取胜，制胜分22比3，三次交手继续保持全胜。"}
+    score, issues = bench.deepseek_score(editorial, push)
+    assert score < 80
+    assert any("算术关系错误" in issue for issue in issues)
+
+
 def test_deepseek草稿确定性规范化所有配音字段百分比():
     draft = load("draft_spec")
     editorial = {

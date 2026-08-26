@@ -109,6 +109,52 @@ def normalize_editorial_for_speech(value):
     return value
 
 
+_CLAIM_NUMBER = r"(?:\d{1,3}|[零〇一二三四五六七八九十百两]{1,6})"
+_LEAD_CLAIM = re.compile(
+    rf"(?P<a>{_CLAIM_NUMBER})\s*比\s*(?P<b>{_CLAIM_NUMBER})"
+    rf".{{0,16}}?(?:只|仅)?(?:领先|多拿?|净胜)\s*(?P<delta>{_CLAIM_NUMBER})\s*分"
+)
+
+
+def _claim_integer(value: str) -> int:
+    if value.isdigit():
+        return int(value)
+    digits = {"零": 0, "〇": 0, "一": 1, "二": 2, "两": 2, "三": 3,
+              "四": 4, "五": 5, "六": 6, "七": 7, "八": 8, "九": 9}
+    total = current = 0
+    for char in value:
+        if char in digits:
+            current = digits[char]
+        elif char in {"十", "百"}:
+            total += (current or 1) * {"十": 10, "百": 100}[char]
+            current = 0
+    return total + current
+
+
+def arithmetic_claim_problem(content) -> str | None:
+    """拒绝“56 比 45 只领先 9 分”一类数字都真但关系为假的文案。"""
+    def texts(value):
+        if isinstance(value, dict):
+            for nested in value.values():
+                yield from texts(nested)
+        elif isinstance(value, (list, tuple)):
+            for nested in value:
+                yield from texts(nested)
+        elif value is not None:
+            yield str(value)
+
+    for text in texts(content):
+        for found in _LEAD_CLAIM.finditer(text):
+            left = _claim_integer(found.group("a"))
+            right = _claim_integer(found.group("b"))
+            claimed = _claim_integer(found.group("delta"))
+            expected = abs(left - right)
+            if claimed != expected:
+                return (f"算术关系错误：{found.group('a')}比{found.group('b')}"
+                        f"相差{expected}分，不是{found.group('delta')}分")
+    return None
+
+
 def draft_editorial(chat: Chat, *, home: str, away: str, event: str, year: int,
                     fixture: str, facts: str = "", background: str = "") -> dict | None:
     user = (
