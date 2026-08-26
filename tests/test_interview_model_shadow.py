@@ -151,6 +151,8 @@ def test_interview影子工作流只读且不发布():
     assert "source tools/ci_apt_install.sh" in body
     assert "ensure_ffmpeg" in body
     assert "timeout-minutes: 15" in body
+    assert "actions/cache@v4" in body
+    assert "apt-archives" in body
     assert "branches: [main]" in body
 
 
