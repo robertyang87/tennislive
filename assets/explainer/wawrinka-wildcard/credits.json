@@ -13,20 +13,6 @@
       4981
     ]
   },
-  "usopen_2016_final.jpg": {
-    "source": "AP 通讯社，经 apnews.com 文章页",
-    "file": "assets.apnews.com/8a/18/cd9ecdffa1723bb5e85a2384d175/143c5a23bf5a40b69f0ebb57d0c358e8",
-    "page": "https://apnews.com/article/us-open-stan-wawrinka-f8bc64e570a0d6c48d695b3c2f1de629",
-    "description": "2016 年 9 月 11 日纽约，美网男单决赛对德约科维奇，瓦林卡赢下一分后握拳张嘴吼。粉红球衣，背景是阿瑟·阿什的看台和 AMERICAN EXPRESS 广告板——赛事和场地由画面自证。",
-    "date": "2016-09-11（AP 图注写死）",
-    "author": "Darron Cummings / AP",
-    "licence": "AP 版权图，未取得授权（unverified）；发布前由人工判断",
-    "note": "原图 4123×3104，横向以 0.45 为中心裁成 3:4 得 2328×3104。\n这一屏讲他写给纽约的那段话，所以配纽约的画面；**年份写进要点**（「图为 2016 年美网决赛」）——CLAUDE.md「旧照片只在它本身就是当年的论据时保留，并把年份写在画面上」。",
-    "size": [
-      2328,
-      3104
-    ]
-  },
   "ao_2026_forehand.jpg": {
     "source": "AP 通讯社，经 apnews.com 文章页",
     "file": "assets.apnews.com/e3/c0/9dbc949171dd4d6a008e7daccd63/2c1ac64e2d7b4653bc0f48be07bcbad0",
@@ -53,6 +39,34 @@
     "size": [
       5000,
       3333
+    ]
+  },
+  "uso_2016_trophy.jpg": {
+    "source": "美网官网 usopen.org 官方图库",
+    "file": "https://photo-assets.usopen.org/images/pics/large/f_Wawrinka-1_50th.jpg",
+    "page": "https://www.usopen.org/en_US/news/articles/2026-08-26/2016_champion_stan_wawrinka_will_return_for_final_us_open.html",
+    "description": "2016 年 9 月 11 日纽约，美网男单决赛胜德约科维奇之后，瓦林卡在满地银色彩带里双手抱着美网冠军奖杯。这一屏讲「被绕开的这个人是 2016 年的美网冠军」，所以配他捧那座奖杯的画面。",
+    "date": "2016-09-11（这场决赛的日期；美网官网这个图库不写拍摄日）",
+    "author": "美网官网未署名（unverified）",
+    "licence": "美网官方图库，未取得授权（unverified）；发布前由人工判断",
+    "note": "⚠️ **f_ 前缀是这个图库的顶格，1280×720 就是天花板**——十二个前缀（a_ d_ e_ g_ h_ i_ o_ s_ x_ l_ m_ n_）、六个目录（xlarge/ orig/ original/ full/ raw/ huge/）、三种参数（?width=4000 / ?w=4000 / ?resize=4000）全试过：前两组 404，第三组返回 200 但**尺寸一个像素没变**（只换了一次 JPEG 编码，字节数会变，别被变大的字节数骗成拿到大图了）。\n比例 1.778 > 1.2，卡片走信箱式 contain，铺 1080 宽是 **0.84 倍缩小**——所以这一档在这儿够用；同样这张图**不能当封面**（铺满 1080×1440 是 0.50 倍放大）。\nmd5 abaeae9919cc 和线上那份逐字节相同（2026-08-26 复核过）。",
+    "size": [
+      1280,
+      720
+    ]
+  },
+  "x_rockefeller_2016.jpg": {
+    "source": "瓦林卡本人 X 账号 @stanwawrinka，2026-08-25 告别长文的四张配图之一",
+    "file": "https://pbs.twimg.com/media/HQkuM1ZWIAEuIJ9?format=jpg&name=4096x4096",
+    "page": "https://x.com/stanwawrinka",
+    "description": "他一手举着手机自拍、一手举着美网男单奖杯，站在曼哈顿的一处楼顶，身后是帝国大厦，远处能看到世贸中心一号楼。这一屏读他写给纽约的那段话，配图用他自己挑的这张。",
+    "date": "2026-08-25 发布（画面本身是 2016 年夺冠之后拍的）",
+    "author": "未署名（unverified）——他自己发的，原始摄影师页面上没写",
+    "licence": "版权归原摄影方，未取得授权（unverified）；发布前由人工判断",
+    "note": "⚠️ **「洛克菲勒中心」是推的，不是画面自证的，所以文案里没写。**画面能核实的只有帝国大厦和世贸一号楼，看不出楼顶是哪一栋——CLAUDE.md「编出来的判据 + 正确的结论」说的正是这种：结论也许没错，可没有人会去查一个写得像自证的理由。\n比例 1.437 > 1.2，卡片走 contain。原样入库不裁：这一屏要看的是「一手手机一手奖杯」这个姿态，裁 3:4 会把手机或奖杯切掉一个。\n`?name=4096x4096` 是这条媒体的顶格（2048×1425）；不带这个参数拿到的是缩略图。\nmd5 3e42c9a3b48c 和线上那份逐字节相同（2026-08-26 复核过）。",
+    "size": [
+      2048,
+      1425
     ]
   }
 }
