@@ -321,8 +321,15 @@ def scene_cut_segments(cuts_path: str, narration: list[str]) -> list[dict]:
     return segments
 
 
-def fetch_tennistv_cover(source_url: str, out: Path, *, get=None) -> str:
-    """从 Tennis TV 本场官方页面取其关联头图，并请求 4000px 原图。"""
+def fetch_tennistv_cover(
+    source_url: str, event: str, out: Path, *, get=None,
+) -> str:
+    """从 Tennis TV 页面取赛事匹配的官方头图，并请求 4000px 原图。
+
+    Tennis TV 会给新比赛挂旧站资料图：Medvedev–Damm 页实际挂的是
+    ``2026-Washington-Damm.jpg``。高清、官方都不等于本场；文件名不含当前赛事
+    的关键词就拒绝，不能让「资料图」冒充「本场实拍」。
+    """
     if "tennistv.com" not in urlparse(source_url).netloc.casefold():
         raise ValueError("不是 Tennis TV 链接")
     if get is None:
@@ -340,6 +347,13 @@ def fetch_tennistv_cover(source_url: str, out: Path, *, get=None) -> str:
                       if (m := re.search(pattern, page, re.IGNORECASE))), "")
     if not image_url.startswith("https://"):
         raise ValueError("Tennis TV 页面没有官方头图")
+    event_tokens = [x for x in re.split(r"[^a-z0-9]+", event.casefold())
+                    if len(x) >= 3]
+    image_key = urlparse(image_url).path.casefold()
+    if event_tokens and not all(token in image_key for token in event_tokens):
+        raise ValueError(
+            f"Tennis TV 头图不是本场赛事（{Path(urlparse(image_url).path).name}"
+            f" 不匹配 {event}），拒绝资料图")
     parsed = urlparse(image_url)
     query = dict(parse_qsl(parsed.query, keep_blank_values=True))
     query.pop("height", None)
@@ -722,7 +736,7 @@ def assemble(*, slug: str, home: str, away: str, event: str, year: int,
         if source_url and "tennistv.com" in urlparse(source_url).netloc.casefold():
             try:
                 out = Path(f"assets/reel/{slug}-cover.jpg")
-                note = fetch_tennistv_cover(source_url, out)
+                note = fetch_tennistv_cover(source_url, event, out)
                 draft.setdefault("cover", {})["portrait"] = {
                     "image": str(out),
                     "_portrait_why": "Tennis TV 本场官方页面关联的 ATP Media 高清图",

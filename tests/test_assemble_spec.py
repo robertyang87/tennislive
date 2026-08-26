@@ -142,15 +142,30 @@ def test_tennistv封面从本场官方页请求4000宽原图(tool, tmp_path):
         if "tennistv.com" in url:
             return Response(text=(
                 '<span itemprop="thumbnailUrl" content="https://resources.prod.'
-                'atpmedia.pulselive.com/photo/a.jpg?height=268&amp;width=451">'))
+                'atpmedia.pulselive.com/photo/Winston-Salem-Damm.jpg?'
+                'height=268&amp;width=451">'))
         return Response(content=buf.getvalue())
 
     out = tmp_path / "cover.jpg"
     note = tool.fetch_tennistv_cover(
-        "https://www.tennistv.com/videos/1/demo", out, get=get)
+        "https://www.tennistv.com/videos/1/demo", "Winston-Salem", out, get=get)
     assert out.is_file()
     assert "4000×2666" in note
     assert calls[-1].endswith("width=4000") and "height=" not in calls[-1]
+
+
+def test_tennistv封面拒绝别站资料图(tool, tmp_path):
+    class Response:
+        text = ('<span itemprop="thumbnailUrl" content="https://resources.prod.'
+                'atpmedia.pulselive.com/photo/2026-Washington-Damm.jpg?width=451">')
+
+        def raise_for_status(self):
+            return None
+
+    with pytest.raises(ValueError, match="拒绝资料图"):
+        tool.fetch_tennistv_cover(
+            "https://www.tennistv.com/videos/1/demo", "Winston-Salem",
+            tmp_path / "cover.jpg", get=lambda *a, **kw: Response())
 
 
 def test_matchup_order按flashscore的home归位(monkeypatch):
