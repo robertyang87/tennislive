@@ -120,7 +120,8 @@ def ask_deepseek(chat: Chat) -> dict | None:
         "你是网球短视频《赛后开麦》的影子编辑。严格逐句翻译三条发言，并根据"
         "事实包生成一张收尾卡和 PushPlus 文案。英文和顺序不可改；说话人不可改；"
         "不能使用事实包以外的信息。takeaway 的 point 与 ask 合计最多 34 个字符；"
-        "再次夺冠不等于卫冕，事实包没有下一站或大满贯时不得补写。"
+        "再次夺冠不等于卫冕；2023 与 2026 不是连续两年，不得写蝉联；"
+        "事实包没有下一站或大满贯时不得补写。"
         "只输出 schema 要求的 JSON。"
         + model_instructions("deepseek")
     )
@@ -151,7 +152,8 @@ def deepseek_score(result: dict | None) -> tuple[int, list[str]]:
     zh_rows = [str(row.get("zh") or "") for row in rows or []
                if isinstance(row, dict)]
     anchors = [
-        (0, (("球网", "另一边"), ("球网", "对面"))),
+        (0, (("球场", "另一边"), ("球场", "对面"),
+             ("球网", "另一边"), ("球网", "对面"))),
         (1, (("停车场", "哭", "一年"),)),
         (2, (("两次", "房间", "支持"), ("2次", "房间", "支持"))),
     ]
@@ -191,7 +193,7 @@ def deepseek_score(result: dict | None) -> tuple[int, list[str]]:
 
     all_text = json.dumps(result, ensure_ascii=False)
     forbidden = ("三盘", "决胜盘", "美网冠军", "世界第一", "复仇", "伤病",
-                 "卫冕", "大满贯", "下一站")
+                 "卫冕", "蝉联", "连续两年", "大满贯", "下一站")
     if not any(x in all_text for x in forbidden):
         score += 10
     else:

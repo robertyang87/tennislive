@@ -26,6 +26,7 @@ jobs:
           fetch-depth: 1
           filter: blob:none
           sparse-checkout: |
+            assets/explainer/nadal-academy/faces
             skills
             specs/interviews/gauff-pegula-cin2026-final.json
             src
