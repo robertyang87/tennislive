@@ -9405,9 +9405,10 @@ def write_subtitles(cues: Sequence[tuple[float, float, str]], path: Path,
     # 不受影响——存量里 `subtitle_cues` 产出的每一条本来就是一行。
     def is_bilingual(shown: str) -> bool:
         rows = shown.split("\n")
-        return (len(rows) == 2
+        return (len(rows) >= 2
                 and bool(re.search(r"[A-Za-z]", rows[0]))
-                and bool(re.search(r"[\u3400-\u9fff]", rows[1])))
+                and any(re.search(r"[\u3400-\u9fff]", row)
+                        for row in rows[1:]))
 
     def ass_rows(shown: str) -> list[str]:
         rows = shown.split("\n")
@@ -9415,8 +9416,9 @@ def write_subtitles(cues: Sequence[tuple[float, float, str]], path: Path,
             # 英文行不用 `_ass_text`：它会把每个拉丁词重新放大到 78px，外面套
             # 一个小字号也会被里面的标签逐词覆盖。中文行仍走原逻辑，数字照常
             # 放大；末尾还原 68px，避免样式泄到下一行。
-            return [f"{{\\fs{_ASS_BILINGUAL_EN_SIZE}}}{rows[0]}"
-                    f"{{\\fs{_ASS_SIZE}}}", _ass_text(rows[1])]
+            return ([f"{{\\fs{_ASS_BILINGUAL_EN_SIZE}}}{rows[0]}"
+                     f"{{\\fs{_ASS_SIZE}}}"]
+                    + [_ass_text(row) for row in rows[1:]])
         return [_ass_text(row) for row in rows]
 
     lines = [

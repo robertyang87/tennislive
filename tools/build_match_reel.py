@@ -1785,7 +1785,11 @@ def _quote_cues(raw: object) -> tuple[str, ...]:
     out = []
     for x in raw:
         if isinstance(x, dict):
-            out.append({"at": float(x["at"]), "text": str(x["text"]).strip()})
+            cue = {"at": float(x["at"]), "text": str(x["text"]).strip()}
+            for key in ("end", "duration"):
+                if key in x:
+                    cue[key] = float(x[key])
+            out.append(cue)
         elif str(x).strip():
             out.append(str(x).strip())
     return tuple(out)
@@ -1804,7 +1808,7 @@ def explicit_quote_cues(lines: tuple, span: float,
     """按条声明的原声字幕。两种写法，可以混着用：
 
     - `"上英\\n下中"` —— 时长按各条的字数摊到整段上（短段够用）
-    - `{"at": 段内秒数, "text": "上英\\n下中"}` —— **钉在真实时刻上**
+    - `{"at": 段内秒数, "end": 结束秒数, "text": "上英\\n下中"}` —— **钉在真实时刻上，并可显式收尾**
 
     ⚠️ **一整段几十秒的原声必须用 `at`。** 按字数摊的前提是「说话密度均匀」，
     而真实解说有停顿、有留白：夺冠那一段 67 秒里十几条，摊出来能差好几秒，
@@ -1830,8 +1834,26 @@ def explicit_quote_cues(lines: tuple, span: float,
             raise ReelError(f"quote 的 `at` 超出这一段（0–{span:.2f}s）：{bad}")
         for index, item in enumerate(stamped):
             start = offset + at_list[index]
-            end = (offset + at_list[index + 1]) if index + 1 < len(stamped) \
-                else offset + span
+            if "end" in item and "duration" in item:
+                raise ReelError("quote 的同一条字幕不能同时写 end 和 duration")
+            if "end" in item:
+                end = offset + float(item["end"])
+            elif "duration" in item:
+                end = start + float(item["duration"])
+            else:
+                end = (offset + at_list[index + 1]) if index + 1 < len(stamped) \
+                    else offset + span
+            segment_end = offset + span
+            next_start = (offset + at_list[index + 1]
+                          if index + 1 < len(stamped) else segment_end)
+            if not start < end <= segment_end:
+                raise ReelError(
+                    f"quote 字幕结束时间不在有效范围：start={start-offset:.2f}s, "
+                    f"end={end-offset:.2f}s, 段长={span:.2f}s")
+            if end > next_start:
+                raise ReelError(
+                    f"quote 字幕会和下一条重叠：end={end-offset:.2f}s, "
+                    f"next={next_start-offset:.2f}s")
             out.append((start, end, readable(str(item["text"]))))
         return out
     weights = [max(1, len(str(t).replace("\n", ""))) for t in lines]
