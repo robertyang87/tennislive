@@ -1019,7 +1019,8 @@ def test_冷开场里的结局必须在正文重新兑现(tmp_path):
     with pytest.raises(reel.ReelError, match="冷开场是预告"):
         reel.validate_spec(broken_tiafoe)
 
-    broken_path = tmp_path / "tiafoe-broken.json"
+    # 同 slug 命名：让措辞豁免继承底稿，红要红在「冷开场是预告」上
+    broken_path = tmp_path / "tiafoe-musetti-cincinnati-2026-qf.json"
     broken_path.write_text(json.dumps(broken_tiafoe, ensure_ascii=False), "utf-8")
     proc = subprocess.run([
         sys.executable, "tools/build_match_reel.py", "render",
@@ -4122,7 +4123,9 @@ def test_测试里不许import没声明的包():
     local |= {p.stem for p in Path("src/tennislive").glob("*.py")}
     # `tests/` 下的也算本地——`conftest` 就是（`make_match` 那个共用夹具）。
     local |= {p.stem for p in Path("tests").glob("*.py")}
-    local |= {"tennislive", "tests"}
+    # `from tools.X import` 是既有写法（test_release_orchestration_claim就在用），
+    # CI 上也走得通——包名本身要放行。
+    local |= {"tennislive", "tests", "tools"}
     allowed = set(_sys.stdlib_module_names) | declared | local
 
     tree = ast.parse(Path("tests/test_match_reel.py").read_text(encoding="utf-8"))
@@ -5006,7 +5009,9 @@ def test_dry_run秒级返回且一个字节都不下载(tmp_path):
         Path("specs/reels/tiafoe-musetti-cincinnati-2026-qf.json").read_text(
             encoding="utf-8"))
     spec["source_url"] = "http://0.0.0.0/绝对下不动.mp4"
-    path = tmp_path / "fake.json"
+    # 临时文件用底稿自己的 slug 命名：措辞豁免按 slug 查（spec_wording），
+    # 这条底稿挂着「7点05分」的账，换名克隆就丢豁免、dry-run 会红在措辞上
+    path = tmp_path / "tiafoe-musetti-cincinnati-2026-qf.json"
     path.write_text(_json.dumps(spec, ensure_ascii=False), encoding="utf-8")
     outdir = tmp_path / "out"
 
@@ -6475,14 +6480,9 @@ def test_成片一律走Release不进git():
 # 规矩定下来**之前**已经发出去的九个文件。已发的片子不为了措辞重渲
 # （那条规矩在别处），所以它们挂在这儿——**只许减不许加**：新写的 spec 要么
 # 用新叫法，要么显式把自己加进来，让「又用了强字」变成一次看得见的决定。
-_LEGACY_QUALIFIER_NAMES = {
-    "eala-svitolina.json", "wong-brooksby.json", "wong-gea.json",
-    "zheng-lanlana.json", "eala-fernandez.xhs.txt", "eala-svitolina.xhs.txt",
-    "wong-brooksby.xhs.txt", "wong-gea.xhs.txt", "zheng-lanlana.xhs.txt",
-    # bejlek-keys-cincinnati-2026-qf：已经推过微信（reel 和 interview-clip
-    # 两条都有 pushed.json），消息发出去收不回来，不为措辞重渲。
-    "bejlek-keys-cincinnati-2026-qf.json", "bejlek-keys-cincinnati-2026-qf.xhs.txt",
-}
+from tools.spec_wording import (  # noqa: E402
+    QUALIFIER_ROUND_LEGACY as _LEGACY_QUALIFIER_NAMES,
+)
 
 
 # 规矩定下来**之前**已经发出去的封面。已发的片子不为了这个重渲，所以它们
@@ -6689,30 +6689,13 @@ def test_轮次要写半决赛不写四强():
     同一个错在这个仓库里犯过三次（工作流输入的旧默认值、push-reel 里的 ffmpeg、
     查 `-e .` 那条）。
     """
-    import re  # noqa: PLC0415
-
-    bad = re.compile(r"[四八]强|十六强|三十二强|(?<!\d)(?:16|32|64)\s*强")
-
-    def outward(spec: dict):
-        for seg in spec.get("segments") or []:
-            yield seg.get("narration", "")
-        for key, value in (spec.get("cover") or {}).items():
-            if key.startswith("_"):
-                continue
-            for item in ([value] if isinstance(value, str)
-                         else list(value.values()) if isinstance(value, dict)
-                         else []):
-                if isinstance(item, str):
-                    yield item
-                elif isinstance(item, list):
-                    yield from (x for x in item if isinstance(x, str))
-        # ⚠️ **这儿原来读的是 `_push`，而 push_reel 读的是 `push`。**
-        # `_` 开头的按本仓库的约定是写给下一个人的注解，只有三条 spec 有；
-        # 真正会发进微信的 `push.summary` / `push.lead` 有十一条，**一条都没被
-        # 扫到**。docstring 明明写着「推送那几栏」——判据的主语错了，而它绿着。
-        for key, value in (spec.get("push") or {}).items():
-            if not key.startswith("_") and isinstance(value, str):
-                yield value
+    # 正则/扫描面的单一出处在 tools/spec_wording.py（validate_spec 和
+    # promote_reel_draft 用同一份——自动链在发布前也执行这批判据）。
+    # ⚠️ outward_deep 必须包含 push 的非注解字段：第一版这儿读的是
+    # `_push`，真正发进微信的 `push.summary`/`push.lead` 一条都没被
+    # 扫到——判据的主语错了，而它绿着。
+    from tools.spec_wording import QUALIFIER_ROUND as bad  # noqa: PLC0415
+    from tools.spec_wording import outward_deep as outward  # noqa: PLC0415
 
     offenders = {}
     for path in sorted(Path("specs/reels").glob("*.json")):
@@ -6747,26 +6730,8 @@ def test_零封的局不许翻译成爱局():
     `test_轮次要写半决赛不写四强` 同一套 `outward()`——`_why` 这类写给下一个人
     看的注解允许提到「爱局」这个反例本身，不算违规。
     """
-    import re  # noqa: PLC0415
-
-    bad = re.compile(r"爱局")
-
-    def outward(spec: dict):
-        for seg in spec.get("segments") or []:
-            yield seg.get("narration", "")
-        for key, value in (spec.get("cover") or {}).items():
-            if key.startswith("_"):
-                continue
-            for item in ([value] if isinstance(value, str)
-                         else list(value.values()) if isinstance(value, dict)
-                         else []):
-                if isinstance(item, str):
-                    yield item
-                elif isinstance(item, list):
-                    yield from (x for x in item if isinstance(x, str))
-        for key, value in (spec.get("push") or {}).items():
-            if not key.startswith("_") and isinstance(value, str):
-                yield value
+    from tools.spec_wording import LOVE_GAME as bad  # noqa: PLC0415
+    from tools.spec_wording import outward_deep as outward  # noqa: PLC0415
 
     offenders = {}
     for path in sorted(Path("specs/reels").glob("*.json")):
@@ -6788,7 +6753,7 @@ def test_零封的局不许翻译成爱局():
 #: 规矩之前就发出去的片子。账号所有者 2026-08-06：「**历史视频就不要那个管了**」
 #: 「**保证以后正常就行**」——微信那条消息收不回来，不为一个动词重渲。
 #: **只许减不许加**，而且下面有自检：写错一个名字，豁免就成了一盏恒真的绿灯。
-_LEGACY_YAODAO = {"zverev-griekspoor.json", "zverev-griekspoor.xhs.txt"}
+from tools.spec_wording import YAODAO_LEGACY as _LEGACY_YAODAO  # noqa: E402
 
 
 def test_小红书正文不许用markdown():
@@ -6852,22 +6817,8 @@ def test_破发点盘点赛点一律写拿到不写要到():
     ⚠️ 和上面那条一样**只查会发出去的字段**：`_why` / `_facts` 里正引着账号
     所有者这句原话和当年那个错写法，连注解一起扫就是把「记下来」判成「又犯了」。
     """
-    import re  # noqa: PLC0415
-
-    # 「要到」和「点」之间最多隔一个数量词（「三个」「一口气三个」），再远就
-    # 多半不是同一件事了。
-    bad = re.compile(r"要到[^。！？\n]{0,8}?(破发点|盘点|赛点|局点)")
-
-    def outward(spec: dict):
-        for seg in spec.get("segments") or []:
-            yield seg.get("narration", "")
-        for key, value in (spec.get("cover") or {}).items():
-            if key.startswith("_") or not isinstance(value, str):
-                continue
-            yield value
-        for key, value in (spec.get("push") or {}).items():
-            if not key.startswith("_") and isinstance(value, str):
-                yield value
+    from tools.spec_wording import YAODAO_POINT as bad  # noqa: PLC0415
+    from tools.spec_wording import outward_flat as outward  # noqa: PLC0415
 
     offenders = {}
     for path in sorted(Path("specs/reels").glob("*.json")):
@@ -9275,7 +9226,8 @@ def test_dry_run要把装不下的旁白当场报出来(tmp_path):
     spec = json.loads(spec_path.read_text("utf-8"))
 
     def dry_run(data) -> subprocess.CompletedProcess:
-        path = tmp_path / "spec.json"
+        # 底稿 slug 命名：措辞豁免按 slug 查，换名克隆会红在措辞不红在旁白
+        path = tmp_path / "gea-shapovalov.json"
         path.write_text(json.dumps(data, ensure_ascii=False), "utf-8")
         return subprocess.run(
             [sys.executable, str(reel_path), "render", "--spec", str(path),
@@ -10339,30 +10291,24 @@ def test_盘点赛点谁救的必须写出来():
     第一版把「面对…救下」也扫进来，当场误伤 `gea-shapovalov`——
     又一次「判据宁可窄，不可宽」。
     """
-    own = re.compile(r"(要到|拿到|得到|握有)[^。！？\n]{0,12}?"
-                     r"([一二三四五六七八九十\d]+)\s*个?(盘点|赛点|破发点)")
-    save = re.compile(r"(救|保住)")
+    # 正则和判定的单一出处在 tools/spec_wording.py（validate_spec 和
+    # promote_reel_draft 用同一份）。
+    from tools.spec_wording import OWN_POINT as own  # noqa: PLC0415
+    from tools.spec_wording import (  # noqa: PLC0415
+        save_subject_flag,
+        spec_player_names,
+    )
     bad, checked = [], 0
     for path in sorted(Path("specs/reels").glob("*.json")):
         spec = json.loads(path.read_text(encoding="utf-8"))
-        cover = spec.get("cover") or {}
-        names = [w.get("name", "") for w in (cover.get("matchup") or [])
-                 if isinstance(w, dict)]
-        names += [cover.get("subject", ""), cover.get("winner", "")]
-        versus = cover.get("versus") or {}
-        for side in ("top", "bottom"):
-            names += list((versus.get(side) or {}).get("names") or [])
-        names = [n for n in names if n]
+        names = spec_player_names(spec)
         text = "".join(s.get("narration", "") for s in spec["segments"])
         copy = path.with_suffix(".xhs.txt")
         if copy.is_file():
             text += "\n" + copy.read_text(encoding="utf-8")
-        for m in own.finditer(text):
-            checked += 1
-            after = text[m.end():m.end() + 26]
-            hit = save.search(after)
-            if hit and not any(n in after[:hit.start()] for n in names):
-                bad.append(f"{path.stem}: …{m.group(0)}｜{after[:26]}…")
+        checked += sum(1 for _ in own.finditer(text))
+        bad += [f"{path.stem}: {frag}"
+                for frag in save_subject_flag(text, names)]
     assert not bad, (
         "「拿到 N 个盘点」之后接「救/保住」，中间没有写出是谁在救——"
         "读者会把主语接成拿到点的那个人：\n  " + "\n  ".join(bad))
@@ -10371,12 +10317,7 @@ def test_盘点赛点谁救的必须写出来():
 
     # 行为：正反两个方向
     def _flag(text: str, names: list[str]) -> bool:
-        for m in own.finditer(text):
-            after = text[m.end():m.end() + 26]
-            hit = save.search(after)
-            if hit and not any(n in after[:hit.start()] for n in names):
-                return True
-        return False
+        return bool(save_subject_flag(text, names))
 
     who = ["商竣程", "卢布列夫"]
     assert _flag("卢布列夫拿到三个盘点。三个都没能救下来。", who), "该拦的没拦住"

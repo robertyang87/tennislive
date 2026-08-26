@@ -171,13 +171,23 @@ def promote(draft: dict) -> dict:
 
     from build_match_reel import validate_spec  # noqa: PLC0415
     validate_spec(spec)
+    # 会发出去的措辞判据（tools/spec_wording.py，单一出处）：几成几、写秒、
+    # 报到分、强字轮次、爱局、要到、盘点主语。模型/自动产的文案在这儿第一次
+    # 过它——不拦的话要等下一次人类 push 才在 main CI 上红，而那时已经发了。
+    from spec_wording import check_spec_wording  # noqa: PLC0415
+    problems = check_spec_wording(spec, spec["slug"], xhs_copy(spec))
+    if problems:
+        raise ValueError("措辞不合规矩（改文案再来）：" + "；".join(problems))
     return spec
 
 
 def xhs_copy(spec: dict) -> str:
     push = spec["push"]
     return (f"{push['lead']}\n\n"
-            "完整视频保留制胜分、现场英文解说与中英字幕。\n\n"
+            # ⚠️ 别把字幕/制作规格写进文案：账号所有者 2026-08-19「以后不要
+            # 再在文案里说中英文字幕相关的文案」——读者关心这场球，不关心
+            # 我们用什么字幕方案做的（spec_wording 的 BILINGUAL_MENTION 拦着）。
+            "完整视频保留制胜分和现场原声。\n\n"
             "#网球 #赛场之上 #网球时差\n")
 
 

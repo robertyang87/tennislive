@@ -11900,3 +11900,35 @@ auto-push-* / pages 近期运行全部健康；interview-clip 的 47% 失败率*
 **它是故意不锁整条 workflow 的**（draft 矩阵的长 ASR 会阻住下一轮扫描），
 共享 JSON 的提交只在 collect job，那儿早有 job 级锁。判据救回了一次
 「按直觉改别人想清楚过的设计」。
+
+### ⭐⭐ 同一轮的下半场：模型内容线（DeepSeek 文案 / MiniMax 视觉）的执法缺口
+
+账号所有者点名重点看「codex 教 deepseek 和 minimax 自动化做视频的内容」。
+教材本身（`skills/tennis-reel-production/` / `skills/tennis-interview-production/`）
+核过一遍，#593~#611 那批教训都编进去了（算术自洽、证据窗口、口语百分比、
+ASR 译名别名、冷开场覆盖、影子门槛），**教材没大问题；问题在执法**：
+
+**措辞判据原来只活在 pytest 里，而自动链直推 main 不触发 CI——模型产的
+spec 从生成到发进微信一次都没被这批判据扫过。** 证据两条：
+`tiafoe-musetti-cincinnati-2026-qf` 带着「7点05分」（开球报到分）被并发会话
+自动推送、事后只能挂豁免表；装闸当天又在 `specs/reels/pending/` 抓到现行
+（`musetti-zheng` 的「十六强」，已改成 1/8 决赛）。
+
+修法照本文件自己的教条（「只读 spec 就能判的规矩，出处必须在 validate_spec
+够得着的地方」）：八条措辞判据（几成几/单分写秒/开球报到分/强字轮次/爱局/
+要到/盘点主语/文案提字幕规格）连同豁免表收进 **`tools/spec_wording.py`
+单一出处**，三方共用——pytest 全库扫描照旧（含表自检），
+`build_match_reel.enforce_spec_wording` 在 load_spec 之后、模式分发之前
+一个 seat 拦 dry-run/check-narration/render 三条路，`promote_reel_draft` 在
+模型草稿转正那一刻拦。171 条存量 spec 全绿（和 pytest 现状逐条对过账）。
+
+⚠️ 顺手抓的第三个：**两个 promote 模板自己就是违规工厂**——
+`promote_reel_draft` 的小红书模板写着「…与中英字幕」、`promote_interview_draft`
+写着「…和中英文字幕」，正是 2026-08-19「文案里不要说中英文字幕相关」那条
+点名要去掉的制作规格话术（interview 那张 78 文件的豁免表就是这么攒出来的）。
+模板已改，reel 侧 `BILINGUAL_MENTION` 零豁免拦在 check_spec_wording，
+interview 侧 promote 落一道模板自检。
+
+⚠️ **「还能走多远」这类教材禁句故意没落成机械闸**：19 条已发 spec 都在用，
+它是教材对模型的偏好（影子评分管），不是账号所有者的规矩——
+别把两种口径混在一张豁免表里。
