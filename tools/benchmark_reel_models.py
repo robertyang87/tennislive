@@ -83,7 +83,8 @@ def deepseek_score(editorial: dict | None, push: dict | None) -> tuple[int, list
         issues.append("推送标题/导语不完整或标题超过 20 字")
     score = min(score, 100)
     leaked = ("决胜盘", "四比一", "连丢四局", "五比四", "多拿五分",
-              "第四次交手", "四次交手", "4次交手", "半小时")
+              "第四次交手", "四次交手", "4次交手", "半小时",
+              "四种场地", "今日再胜", "四连胜")
     hits = [value for value in leaked if value in text]
     if hits:
         score -= 60

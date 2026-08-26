@@ -37,12 +37,23 @@ REPAIRABLE_VISUAL_ERRORS = (
 )
 
 
-def select_contact_sheets(paths: list[Path], limit: int = 4) -> list[Path]:
-    """均匀覆盖整条源片，不能只把开头四张图交给视觉模型。"""
+def select_contact_sheets(paths: list[Path], limit: int = 5) -> list[Path]:
+    """覆盖全片并保留最后两张，避免把赛点与赛后余波拆开。"""
     ordered = sorted(paths)
+    limit = max(1, limit)
     if len(ordered) <= limit:
         return ordered
-    indices = [round(i * (len(ordered) - 1) / (limit - 1)) for i in range(limit)]
+    tail_count = min(2, limit)
+    early_slots = limit - tail_count
+    early_end = len(ordered) - tail_count - 1
+    if early_slots <= 0:
+        indices = list(range(len(ordered) - tail_count, len(ordered)))
+    elif early_slots == 1:
+        indices = [0]
+    else:
+        indices = [round(i * early_end / (early_slots - 1))
+                   for i in range(early_slots)]
+    indices.extend(range(len(ordered) - tail_count, len(ordered)))
     return [ordered[index] for index in dict.fromkeys(indices)]
 
 

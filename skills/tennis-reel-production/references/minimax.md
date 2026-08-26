@@ -6,6 +6,8 @@ Return JSON only with `cold_open`, `ending`, and `cover`. Each video window must
 
 Choose a 3–30 second payoff, never an ordinary rally. Make ending fully cover cold open within 0.25 seconds. Confirm the winner is visible. Check face, clothing, court, scoreboard, and event marks for same-match cover evidence. Follow the provided upset cover-subject rule exactly. Require confidence of at least 0.80.
 
+When contact sheets are sampled from a longer source, preserve the final two sheets together in addition to broad full-video coverage. The deciding point is often on the penultimate sheet while the handshake or outro is on the last; supplying only the last sheet is incomplete evidence.
+
 Every timestamp cited in a reason must fall inside that item's returned `start`/`end` window. Evidence outside the claimed window cannot justify the selection.
 
 If the decisive visual evidence occurs after the proposed `end`, extend `end` to a valid adjacent cut instead of citing that later evidence while keeping the shorter window.
