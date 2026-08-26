@@ -28,7 +28,7 @@ def good_deepseek(bench):
         ],
         "takeaway": {
             "point": "去年停车场哭 今年一年大不同",
-            "ask": "带着这份支持，她下一站会打出什么？",
+            "ask": "你最记得她哪一句话？",
         },
         "push": {
             "summary": "高芙一年走出停车场",
@@ -111,6 +111,32 @@ def test_deepseek事实包外情节不能靠其他项拿高分():
     assert any("事实包" in issue for issue in issues)
 
 
+def test_deepseek球网对面是忠实语义但卫冕和下一站仍属编造():
+    bench = load("benchmark_interview_models")
+    result = good_deepseek(bench)
+    result["translations"][0]["zh"] = "我不想看到你站在球网对面"
+    score, issues = bench.deepseek_score(result)
+    assert score == 100
+    assert issues == []
+
+    result["push"]["lead"] += "她成功卫冕，下一站将冲击大满贯。"
+    score, issues = bench.deepseek_score(result)
+    assert score < 85
+    assert any("事实包" in issue for issue in issues)
+
+
+def test_deepseek候选必须真的通过收尾卡34字机械闸():
+    bench = load("benchmark_interview_models")
+    base = __import__("json").loads(bench.BENCHMARK_SPEC.read_text(encoding="utf-8"))
+    assert bench.dry_run_candidate(base, good_deepseek(bench))["status"] == "pass"
+
+    result = good_deepseek(bench)
+    result["takeaway"]["point"] = "去年她在停车场流泪今年终于再次站上冠军领奖台感慨万千"
+    dry = bench.dry_run_candidate(base, result)
+    assert dry["status"] == "fail"
+    assert "超过 34" in dry["reason"]
+
+
 def test_minimax影子基准必须给完整视觉证据():
     bench = load("benchmark_interview_models")
     score, issues = bench.minimax_score(good_minimax())
@@ -154,6 +180,16 @@ def test_interview影子工作流只读且不发布():
     assert "actions/cache@v4" in body
     assert "apt-archives" in body
     assert "branches: [main]" in body
+
+
+def test_minimax影子帧明确分开冷开场正文和封面候选():
+    bench = load("benchmark_interview_models")
+    assert len(bench.FRAME_EVIDENCE) == 7
+    assert bench.FRAME_EVIDENCE[4] == (85, "正文中的封面候选：只用本图评 cover")
+    prompt_source = (TOOLS / "benchmark_interview_models.py").read_text(encoding="utf-8")
+    assert "图片1不是封面" in prompt_source
+    assert "content_type 只看图片3-6" in prompt_source
+    assert "cover 只看图片5" in prompt_source
 
 
 def test_interview影子脚本不含生产副作用入口():
