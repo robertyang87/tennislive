@@ -349,6 +349,21 @@ def test_workflow只有正式ready才从probe派发render():
     assert "[waiting]" in step
 
 
+def test_match_reel_dispatch表单绝不超过github的25项硬限制():
+    body = (ROOT / ".github/workflows/match-reel.yml").read_text(encoding="utf-8")
+    inputs = body.split("    inputs:\n", 1)[1].split("\npermissions:", 1)[0]
+    names = [
+        line.strip()[:-1]
+        for line in inputs.splitlines()
+        if line.startswith("      ")
+        and not line.startswith("        ")
+        and line.rstrip().endswith(":")
+    ]
+    assert len(names) <= 25, names
+    assert "every" not in names
+    assert '--every "2"' in body
+
+
 def test_模型练手工作流只读且绝不发布():
     body = (ROOT / ".github/workflows/reel-model-benchmark.yml").read_text(
         encoding="utf-8")
