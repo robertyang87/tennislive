@@ -42,10 +42,6 @@ on:
         description: "源片地址（probe 必填；render 从 spec 里读）"
         required: false
         default: ""
-      every:
-        description: "probe：每几秒抓一帧"
-        required: false
-        default: "2"
       clip_from:
         # **合集里取一场时用。** WTA 的单场集锦不是每场都发，Day N 合集才是
         # 全覆盖的（王欣瑜对卡萨金娜只在 61 分钟的 Day 2 合集里，章节
@@ -859,9 +855,11 @@ jobs:
           YT_COOKIES: ${{ steps.cookies.outputs.path }}
           YT_POT_PROVIDER: ${{ steps.pot.outputs.up }}
         run: |
+          # 自动链从未覆盖 every；固定 2 秒既保留原生产默认，又让表单保持在
+          # GitHub workflow_dispatch 最多 25 个 inputs 的硬限制内。
           python tools/build_match_reel.py probe \
             --url "${{ github.event.inputs.url }}" \
-            --every "${{ github.event.inputs.every }}" \
+            --every "2" \
             --from "${{ github.event.inputs.clip_from }}" \
             --to "${{ github.event.inputs.clip_to }}" \
             --scorebox "${{ github.event.inputs.scorebox }}" \
