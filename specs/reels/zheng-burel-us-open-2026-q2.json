@@ -276,11 +276,17 @@
       "quote": [
         {
           "at": 0.29,
-          "text": "Just taking the ball shorter and shorter there, allowing them to step in, take control.\n回球越来越短，\n让郑钦文向前接管这一分。"
+          "end": 1.89,
+          "text": "Just taking the ball shorter and shorter there,\n回球越来越短。"
+        },
+        {
+          "at": 1.89,
+          "end": 3.89,
+          "text": "allowing them to step in, take control.\n让郑钦文向前接管这一分。"
         }
       ],
       "fit": "crop",
-      "_why": "MiniMax视觉证据确认该窗口完整覆盖赛点回合、MATCH POINT标识与赛后握手；英文原声来自captions.txt，结尾重放同一决定性事件。"
+      "_why": "MiniMax视觉证据确认该窗口覆盖赛点回合、MATCH POINT标识与赛后握手；英文原声按captions.txt拆成两条双语字幕，0.29–3.89秒随真实解说结束，不再延长到整段末尾。"
     },
     {
       "start": 18.15,
@@ -361,7 +367,8 @@
     "终检修正：第三轮对手段窗口由181.63–193.20前移为181.00–192.57，保持11.57秒，避开源片192秒附近1秒数字静音。",
     "CI修正：开场补北京时间坐标；第三轮对手统一按译名表为普里丹基纳；结尾落在问句；stats补来源。",
     "CI修正：按US Open官方Order of Play补齐北京时间开球时刻——8月26日晚11点。",
-    "音频终检修正：论点段与第三轮对手段保持17.17秒/14.11秒不变，连续前移至159.22–176.39、176.39–190.50，避开源片约191秒的转播数字静音。"
+    "音频终检修正：论点段与第三轮对手段保持17.17秒/14.11秒不变，连续前移至159.22–176.39、176.39–190.50，避开源片约191秒的转播数字静音。",
+    "字幕终检修正：冷开场英文原声拆为两条同步双语字幕，英文46px、中文68px；末条在段内3.89秒显式结束，防止常驻至片段末尾。"
   ],
   "_visual_evidence": {
     "model": "MiniMax-M3",
