@@ -37,7 +37,10 @@ jobs:
           cache: pip
 
       - name: 安装证据抽帧工具
-        run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+        timeout-minutes: 15
+        run: |
+          source tools/ci_apt_install.sh
+          ensure_ffmpeg
 
       - name: 安装只读基准依赖
         run: pip install -q -e .
