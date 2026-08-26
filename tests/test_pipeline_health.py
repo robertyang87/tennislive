@@ -1,6 +1,12 @@
 from pathlib import Path
 
-from tools.pipeline_health import DEFAULT_WORKFLOWS, WorkflowHealth, elapsed, render_report
+from tools.pipeline_health import (
+    DEFAULT_WORKFLOWS,
+    WorkflowHealth,
+    elapsed,
+    notification_transition,
+    render_report,
+)
 
 
 def test_elapsed_uses_real_timestamps():
@@ -110,3 +116,46 @@ def test_健康报表真的把编排器那一项传进去了():
     call = body[body.index("report, alerts = render_report("):]
     assert "orchestrator_productivity()" in call[:260], \
         "main() 没把编排器产出率传给 render_report——这一项等于没装"
+
+
+def test_健康工作流真的检出编排状态并跨run保存微信状态():
+    body = Path(".github/workflows/pipeline-health.yml").read_text("utf-8")
+    checkout = body.split("actions/checkout@v4", 1)[1].split("- name:", 1)[0]
+    assert "data/orchestration_state.json" in checkout, (
+        "脚本会读编排状态，但 sparse checkout 没检出它——"
+        "读不到和从来没 dispatch 会长得一样，并且每小时误报一次")
+    assert "actions/cache/restore@v4" in body
+    assert "actions/cache/save@v4" in body
+    assert "steps.health.outputs.notify == 'true'" in body
+
+
+def test_微信只在异常变化和真正恢复时发一次(tmp_path):
+    state = tmp_path / "alert.json"
+
+    notify, title, message = notification_transition(
+        ["编排器已 25 小时没点过 run（阈值 24h）"], state)
+    assert notify and "趋势异常" in title and "25 小时" in message
+
+    # 时间每小时增长不是新故障，不能再轰一条微信。
+    notify, _title, _message = notification_transition(
+        ["编排器已 26 小时没点过 run（阈值 24h）"], state)
+    assert not notify
+
+    # 加入一类真正不同的异常要重新通知。
+    notify, title, message = notification_transition([
+        "编排器已 27 小时没点过 run（阈值 24h）",
+        "match-reel.yml：近 10 次失败率 50%，连续失败 3",
+    ], state)
+    assert notify and "趋势异常" in title and "match-reel" in message
+
+    # 全部恢复只发一次；下一班仍健康时不重复发恢复消息。
+    notify, title, message = notification_transition([], state)
+    assert notify and "恢复正常" in title and "此前异常已解除" in message
+    assert notification_transition([], state)[0] is False
+
+
+def test_持久故障超过一小时仍是active而不是假恢复():
+    row = WorkflowHealth("match-reel.yml", 10, 5, 5, 400, 4,
+                         latest_failure=True)
+    _report, alerts = render_report([row], [], (0, 0, 0), [])
+    assert any("match-reel.yml" in item for item in alerts)

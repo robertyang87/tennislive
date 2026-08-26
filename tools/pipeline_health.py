@@ -8,6 +8,7 @@ L0/L2/L3 门禁决定。API 本身不可用则返回非零，因为“监控失�
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import statistics
@@ -68,7 +69,7 @@ class WorkflowHealth:
     failures: int
     median_seconds: float
     consecutive_failures: int
-    latest_failure_recent: bool = False
+    latest_failure: bool = False
 
     @property
     def failure_rate(self) -> float:
@@ -90,19 +91,15 @@ def workflow_health(api: GitHubAPI, workflow: str, limit: int,
         if conclusion in {"success", "skipped", "neutral"}:
             break
         streak += 1
-    latest_age = (elapsed(runs[0].get("updated_at"),
-                          datetime.now(timezone.utc).isoformat())
-                  if runs else None)
     health = WorkflowHealth(
         name=workflow, runs=len(runs),
         successes=sum(c == "success" for c in conclusions), failures=len(bad),
         median_seconds=statistics.median(durations) if durations else 0.0,
         consecutive_failures=streak,
-        # 健康检查每小时跑一次。只有“上一小时刚发生”的失败趋势发微信，
-        # 同一批旧失败继续留在 summary，但不会每小时重复轰炸。
-        latest_failure_recent=bool(
-            runs and conclusions and conclusions[0] not in {"success", "skipped", "neutral"}
-            and latest_age is not None and 0 <= latest_age <= 3600),
+        # 是否重复发微信由跨 run 的 active_keys 判断；这里必须保持“仍异常”，
+        # 直到一趟成功 run 真正把它恢复，不能按一小时后自动过期。
+        latest_failure=bool(
+            conclusions and conclusions[0] not in {"success", "skipped", "neutral"}),
     )
     steps: list[dict] = []
     for run in runs[:step_runs]:
@@ -214,9 +211,10 @@ def stale_publications(now: datetime | None = None, hours: float = 1.5) -> list[
             for row in ledger.get("attempts") or []:
                 at = instant(row.get("at"))
                 age = (now - at).total_seconds() / 3600 if at else 0.0
-                # 只在首次越过阈值后的一个小时窗口通知；更老的 sending 已经在
-                # 首次窗口报过，避免永久悬挂的一条账本每小时重复推微信。
-                if row.get("status") == "sending" and hours < age <= hours + 1:
+                # 保持异常为 active，直到台账真的离开 sending。微信去重由
+                # notification_transition 负责；若在这里按一小时窗口让它消失，
+                # 下一班会把“时间过去了”误报成“已经恢复”。
+                if row.get("status") == "sending" and hours < age:
                     stale.append(f"{directory}/{slug}: sending 已持续 {age:.1f}h")
     return stale
 
@@ -231,7 +229,9 @@ def render_report(health: list[WorkflowHealth], steps: list[dict],
     for row in health:
         lines.append(f"| {row.name} | {row.runs} | {row.successes} | {row.failure_rate:.0%} | "
                      f"{row.median_seconds/60:.1f}m | {row.consecutive_failures} |")
-        if (row.runs >= 3 and row.latest_failure_recent
+        # 告警列表表达“当前仍然异常”，不能只活一小时。否则持久化去重会在
+        # 第二小时把同一个未修故障当成恢复。是否重复发微信在报告之外判断。
+        if (row.runs >= 3 and row.latest_failure
                 and (row.failure_rate >= .40 or row.consecutive_failures >= 3)):
             alerts.append(f"{row.name}：近 {row.runs} 次失败率 {row.failure_rate:.0%}，连续失败 {row.consecutive_failures}")
     n, misses, median = sla
@@ -267,6 +267,67 @@ def render_report(health: list[WorkflowHealth], steps: list[dict],
     return "\n".join(lines) + "\n", alerts
 
 
+def alert_keys(alerts: list[str]) -> list[str]:
+    """把会随时间变化的告警文案压成可持久化的语义键。
+
+    编排器的“25 小时”每班都会增长、sending 的年龄也一样；这些数字变化不算
+    新故障。工作流失败率/连续失败只会在有新 run 时改变，保留数值，让恶化或
+    改善中的异常能再通知一次。
+    """
+    keys: set[str] = set()
+    for item in alerts:
+        if item.startswith("编排器"):
+            keys.add("orchestrator")
+        elif ": sending 已持续" in item:
+            keys.add("publication:" + item.split(": sending 已持续", 1)[0])
+        elif "：近 " in item and "失败率" in item:
+            keys.add("workflow:" + item)
+        else:
+            digest = hashlib.sha256(item.encode("utf-8")).hexdigest()[:16]
+            keys.add("other:" + digest)
+    return sorted(keys)
+
+
+def notification_transition(
+        alerts: list[str], state_path: Path,
+        now: datetime | None = None) -> tuple[bool, str, str]:
+    """只在首次异常、异常集合变化或全部恢复时通知，并写下一班的状态。
+
+    状态由 workflow 的跨 run cache 保存，不提交进 main，避免健康检查每小时
+    制造一次仓库提交。损坏/缺失的 cache 按首次运行处置。
+    """
+    try:
+        previous = json.loads(state_path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        previous = {}
+    before = sorted(str(v) for v in previous.get("active_keys") or [])
+    current = alert_keys(alerts)
+    message = "；".join(alerts).replace("\n", " ")[:1800]
+
+    notify = current != before and bool(current or before)
+    if current:
+        title = "⚠️ 网球视频流水线趋势异常"
+        notification = message
+    elif before:
+        title = "✅ 网球视频流水线恢复正常"
+        old = str(previous.get("message") or "此前报告的流水线异常")
+        notification = ("此前异常已解除：" + old)[:1800]
+    else:
+        title, notification = "", ""
+
+    state_path.parent.mkdir(parents=True, exist_ok=True)
+    saved = {
+        "active_keys": current,
+        "message": message,
+        "checked_at": (now or datetime.now(timezone.utc)).strftime(
+            "%Y-%m-%dT%H:%M:%SZ"),
+    }
+    temp = state_path.with_suffix(state_path.suffix + ".tmp")
+    temp.write_text(json.dumps(saved, ensure_ascii=False, indent=2), encoding="utf-8")
+    temp.replace(state_path)
+    return notify, title, notification
+
+
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--repo", default=os.environ.get("GITHUB_REPOSITORY", ""))
@@ -275,6 +336,7 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--limit", type=int, default=10)
     ap.add_argument("--step-runs", type=int, default=3)
     ap.add_argument("--summary", default=os.environ.get("GITHUB_STEP_SUMMARY", ""))
+    ap.add_argument("--alert-state", default=os.environ.get("PIPELINE_ALERT_STATE", ""))
     args = ap.parse_args(argv)
     if not args.repo or not args.token:
         raise SystemExit("需要 --repo/GITHUB_REPOSITORY 与 --token/GITHUB_TOKEN")
@@ -291,10 +353,19 @@ def main(argv: list[str] | None = None) -> int:
         with open(args.summary, "a", encoding="utf-8") as fh:
             fh.write(report)
     output = os.environ.get("GITHUB_OUTPUT")
+    if args.alert_state:
+        notify, title, message = notification_transition(
+            alerts, Path(args.alert_state))
+    else:
+        notify = bool(alerts)
+        title = "⚠️ 网球视频流水线趋势异常" if alerts else ""
+        message = "；".join(alerts).replace("\n", " ")[:1800]
     if output:
         with open(output, "a", encoding="utf-8") as fh:
             fh.write(f"alert={'true' if alerts else 'false'}\n")
-            fh.write("message=" + "；".join(alerts).replace("\n", " ")[:1800] + "\n")
+            fh.write(f"notify={'true' if notify else 'false'}\n")
+            fh.write("title=" + title.replace("\n", " ") + "\n")
+            fh.write("message=" + message + "\n")
     for item in alerts:
         print(f"::warning::{item}")
     sla_n, sla_misses, _ = sla

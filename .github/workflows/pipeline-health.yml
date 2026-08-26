@@ -21,6 +21,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           sparse-checkout: |
+            data/orchestration_state.json
             data/interview_publish_ledger/*.json
             data/reel_publish_ledger/*.json
             data/explainer_publish_ledger/*.json
@@ -28,16 +29,29 @@ jobs:
             tools/pipeline_health.py
           sparse-checkout-cone-mode: false
 
+      # 每趟用唯一 key 保存一份很小的 JSON；restore-keys 会拿同分支最近一份。
+      # 不把它提交进 main：健康检查每小时跑，监控状态不该制造 24 个提交/天。
+      - name: 恢复微信告警状态
+        uses: actions/cache/restore@v4
+        with:
+          path: ${{ runner.temp }}/pipeline-health-alert.json
+          key: pipeline-health-alert-v2-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: |
+            pipeline-health-alert-v2-
+
       - name: 汇总最近运行、慢步骤、SLA 与发布账本
         id: health
         env:
           GITHUB_TOKEN: ${{ github.token }}
-        run: python3 tools/pipeline_health.py --limit 10 --step-runs 3
+        run: |
+          python3 tools/pipeline_health.py --limit 10 --step-runs 3 \
+            --alert-state "$RUNNER_TEMP/pipeline-health-alert.json"
 
       - name: 趋势异常时推送微信告警
-        if: steps.health.outputs.alert == 'true'
+        if: steps.health.outputs.notify == 'true'
         env:
           PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
+          TITLE: ${{ steps.health.outputs.title }}
           MESSAGE: ${{ steps.health.outputs.message }}
         run: |
           echo "::warning::$MESSAGE"
@@ -47,12 +61,21 @@ jobs:
           fi
           BODY=$(jq -nc --arg token "$PUSHPLUS_TOKEN" --arg message "$MESSAGE" \
             --arg url "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
-            '{token:$token,title:"⚠️ 网球视频流水线趋势异常",content:($message + "<br><a href=\"" + $url + "\">健康报告</a>"),template:"html"}')
+            --arg title "$TITLE" \
+            '{token:$token,title:$title,content:($message + "<br><a href=\"" + $url + "\">健康报告</a>"),template:"html"}')
           RESP=$(curl -sS --fail -m 20 --retry 3 --retry-all-errors \
             -X POST https://www.pushplus.plus/send -H "Content-Type: application/json" -d "$BODY")
           echo "PushPlus 返回：$RESP"
           echo "$RESP" | jq -e '.code == 200' >/dev/null || {
             echo "::error::PushPlus 明确拒绝了健康告警"; exit 1; }
+
+      # 推送失败时不保存新状态，下一班会重试；成功或无需通知才推进状态。
+      - name: 保存微信告警状态
+        if: success()
+        uses: actions/cache/save@v4
+        with:
+          path: ${{ runner.temp }}/pipeline-health-alert.json
+          key: pipeline-health-alert-v2-${{ github.run_id }}-${{ github.run_attempt }}
 
       - name: 监控自身失败时留出明确故障
         if: failure()
