@@ -6,6 +6,48 @@ Flashscore 的逐盘数据固定是 home/away 顺序；封面和顶栏固定是�
 
 from __future__ import annotations
 
+import re
+
+#: 完赛盘：任一方 ≥6 局。抢七注脚 (N) 先剥掉再切。
+_SET_TOKEN = re.compile(r"(\d+)-(\d+)")
+_RETIRED = re.compile(r"ret\.?|退赛|w\.?/?o\.?|walkover|不战而胜", re.I)
+
+
+def result_direction_problem(spec: dict) -> str | None:
+    """封面赛果是不是真的赢家视角——不依赖 `_match` 的机械下界。
+
+    来路：medvedev-damm（2026-08-26，模型线第一条自动成片）把 cover.result /
+    topbar 写成了**输家视角**「5-7 3-6」（matchup[0] 是明星输家梅德韦杰夫，
+    比分照着他的视角抄了）——图形上等于宣称输的那个人赢了，而同一帧里烧死的
+    转播记分条写的是反的。`verified_result_problem` 拦不住它：那道闸只在
+    `_match.status == "result_verified"` 时才跑，手写/半手写 spec 的 `_match`
+    全空就整套静默跳过，QC 照过、照发。
+
+    判据故意收得很窄：完赛盘（任一方 ≥6 局）里输家拿了两盘以上而赢家一盘
+    没拿——赢家视角的比分不可能长这样。171 条存量扫过，唯一命中的正是
+    medvedev-damm，零误伤。退赛不判（五盘三胜里领先方退赛时，赢家可以一个
+    完赛盘都没拿），但退赛的 result 本来就要带 Ret./退赛 标记（存量如此）。
+    """
+    cover = spec.get("cover") or {}
+    result = str(cover.get("result") or "")
+    if not result or not str(cover.get("winner") or "").strip():
+        return None
+    if _RETIRED.search(result):
+        return None
+    sets = _SET_TOKEN.findall(re.sub(r"\(\d+\)", "", result))
+    done = [(int(a), int(b)) for a, b in sets if max(int(a), int(b)) >= 6]
+    won = sum(a > b for a, b in done)
+    lost = sum(b > a for a, b in done)
+    if lost >= 2 and won == 0:
+        return (
+            f"cover.result「{result}」里赢家 {cover.get('winner')} 一个完赛盘"
+            f"都没拿——赢家视角的比分不可能这样，多半是把 home/away 或"
+            f"matchup[0]（明星输家）的视角照抄了；medvedev-damm 那次就是"
+            f"这么把反的比分板推上微信的。真是退赛导致的形状，"
+            f"要在 result 里带上 Ret./退赛"
+        )
+    return None
+
 
 def verified_match_fact(
     matchup: list[dict], scores: list[tuple[int, int]], flashscore_id: str,

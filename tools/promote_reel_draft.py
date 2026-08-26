@@ -68,6 +68,18 @@ def waiting_reasons(draft: dict) -> list[str]:
         reasons.append("第 1 段不是英文原声+中英字幕的无旁白冷开场")
     elif segments[0].get("_ending_payoff_required") is not True:
         reasons.append("冷开场没有声明必须在结尾兑现")
+    # 段数够不等于内容够：5 段 × 3 秒照样是一条讲不清任何走向的片子。
+    # medvedev-damm（3 段合计 16 秒，绕过 promote 直进 specs/）推送之后
+    # 补的下界；账号所有者 2026-08-12：「集锦的长度可以不要太短，视频一定要
+    # 交代清楚具体关键点」。40 秒远低于已发语料的最短正片（约 69 秒），
+    # 只拦退化形状，不拦任何正常剪法。
+    total_secs = sum(
+        max(0.0, float(s.get("end") or 0) - float(s.get("start") or 0))
+        for s in segments if isinstance(s, dict))
+    if segments and total_secs < 40.0:
+        reasons.append(
+            f"正片合计只有 {total_secs:.1f} 秒，讲不清一场球的走向"
+            f"（低于 40 秒下界；已发语料最短约 69 秒）")
     production = draft.get("_production") or {}
     received_at = str(production.get("received_at") or "").strip()
     try:

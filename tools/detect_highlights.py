@@ -38,7 +38,19 @@ VS_RE = re.compile(r"\bvs\b", re.I)
 # 官方频道白名单（小写比对）。三大官方之外还认**赛事自己的官方频道**
 # （频道名里含赛事简称的每个词，如 `Cincinnati Open`）——那一档每站一个名字，
 # 列不成常量，见 `channel_ok`。搬运号一律不收（CLAUDE.md「搬运号不算」）。
-OFFICIAL_CHANNELS = frozenset({"atp tour", "tennis tv", "wta"})
+#
+# ⚠️ 四大满贯要**显式列**：大满贯集锦不上三大巡回赛频道（版权归赛事自己），
+# 而 `channel_ok` 的赛事频道匹配是「频道名＝赛事名」**精确等值**——feed 里
+# 赛事叫 US Open / French Open，频道却叫 US Open Tennis Championships /
+# Roland-Garros，等值必拒 → 美网一开打整条自动链对它盲。四个频道名
+# 2026-08-26 逐个 curl 过 og:title（@usopen / @Wimbledon / @rolandgarros /
+# @AustralianOpenTV）。不改等值匹配本身：放宽成子集会让
+# `US Open Tennis Fan` 这类搬运号继承官方身份。
+OFFICIAL_CHANNELS = frozenset({
+    "atp tour", "tennis tv", "wta",
+    "us open tennis championships", "wimbledon",
+    "roland-garros", "roland garros", "australian open tv",
+})
 
 # 超过 12 分钟按「Day N 合集 / 多场混剪」拒：官方单场集锦是 2~8 分钟，
 # 12 分钟档的全是把好几场拼在一起的当日汇总（实测 Day 5 合集 12:03）。
