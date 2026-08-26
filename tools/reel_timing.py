@@ -5,8 +5,9 @@ from __future__ import annotations
 SPEECH_PER_CHAR = 0.166
 SPEECH_PER_PUNCT = 0.32
 SPEECH_TAIL = 0.45
-SPEECH_PUNCT = frozenset("，。！？、；：—…,.!?;:")
-SPEECH_QUIET = frozenset("“”‘’\"'（）()《》「」 \t\n")
+# Keep these as strings: the renderer's calibration tests concatenate them.
+SPEECH_PUNCT = "，。！？、；：—…,.!?;:"
+SPEECH_QUIET = "“”‘’\"'（）()《》「」 \t\n"
 
 
 def speech_seconds(text: str) -> float:
