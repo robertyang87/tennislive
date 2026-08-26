@@ -609,8 +609,10 @@ def assemble(*, slug: str, home: str, away: str, event: str, year: int,
                     problem = retry_problem or problem
                     draft.pop("editorial", None)
                     notes.append(f"⚠️ {problem}；重写仍未通过，已撤下 editorial")
-            # 推送文案（summary/lead）也自动起草——「草稿渲完直接合并推微信」的
-            # 推送内容缺口。给不给都是编辑决定，草稿阶段先备好。
+            # 推送文案（summary/lead）也自动起草。自动编排产出的新片默认认领
+            # `push.auto=true`：render 的 QC 全绿后直接叫醒 auto-push-reel，
+            # 不再停在人工审片。只有用户对某一条明确要求「不要发布」时，才在
+            # 正式 spec 里删掉 auto 并写 `_no_auto_why`；不能让默认值静默回到关。
             if "editorial" not in draft:
                 notes.append("⚠️ editorial 因事实不一致已撤下，推送文案与窗口同步跳过")
             else:
@@ -627,8 +629,10 @@ def assemble(*, slug: str, home: str, away: str, event: str, year: int,
                             notes.append(
                                 f"⚠️ 推送文案{push_problem}；已撤下 push，禁止发送")
                         else:
+                            push["auto"] = True
                             draft["push"] = push
-                            notes.append("推送文案（summary/lead）已起草并通过事实校验")
+                            notes.append(
+                                "推送文案已通过事实校验；默认开启 QC 后自动推送")
                     else:
                         notes.append("⚠️ 推送文案起草没成，留终审")
                 except Exception as exc:  # noqa: BLE001
