@@ -47,6 +47,7 @@ sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "tools"))
 
 from oncourt_feed import parse_round  # noqa: E402
+from interview_skill import model_instructions  # noqa: E402
 
 CANDIDATES = ROOT / "data" / "interview_clip_candidates.json"
 SPECS = ROOT / "specs" / "interviews"
@@ -239,7 +240,8 @@ def translate(rows: list[dict], chat) -> list[str]:
         src = "\n".join(f"{j}. {r['text']}" for j, r in enumerate(batch))
         sys_prompt = ("你是网球短视频「赛后开麦」的双语字幕翻译。把每条英文转写成"
                       "地道中文口语，一条一行，不加编号，不在行尾加标点，不臆测"
-                      "原文没有的信息。")
+                      "原文没有的信息。英文原文与顺序不可改写；主持人与球员的说话人"
+                      "边界不可互换。" + model_instructions("deepseek"))
         user = f"逐条翻译成中文：\n{src}"
         res = chat.ask(sys_prompt, user,
                        schema={"type": "object",
