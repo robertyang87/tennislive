@@ -1,0 +1,130 @@
+name: reel-auto-ready
+
+# probe 当下缺官方图/视觉证据时，草稿明确留在 pending。赛后官方图片经常晚到；
+# 这条轻量班次只重试仍有机会补齐的 pending，证据全绿后提升并立即 dispatch render。
+on:
+  schedule:
+    - cron: "6,16,26,36,46,56 * * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: reel-auto-ready
+  cancel-in-progress: false
+
+jobs:
+  ready:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout: |
+            assets
+            data
+            specs
+            src
+            tools
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: 安装生产闸依赖
+        run: pip install -q -e .
+
+      - name: 重试 pending 的官方封面、视觉证据和正式提升
+        env:
+          MINIMAX_API_KEY: ${{ secrets.MINIMAX_API_KEY }}
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+        run: |
+          : > /tmp/reel-ready
+          shopt -s nullglob
+          for DRAFT in specs/reels/pending/*.draft.json; do
+            SLUG=$(jq -r '.slug' "$DRAFT")
+            KIND=$(jq -r '._production.kind // ""' "$DRAFT")
+            if [ "$KIND" != "orchestrated_reel" ]; then
+              echo "[skip] $SLUG 不是 orchestrate 自动草稿，不接管历史/人工 pending"
+              continue
+            fi
+            RECEIVED=$(jq -r '._production.received_at // ""' "$DRAFT")
+            if ! python - "$RECEIVED" <<'PY'
+          import sys
+          from datetime import datetime, timedelta, timezone
+
+          try:
+              stamp = datetime.fromisoformat(sys.argv[1].replace("Z", "+00:00"))
+              assert stamp.tzinfo is not None
+          except (AssertionError, ValueError):
+              raise SystemExit(1)
+          raise SystemExit(datetime.now(timezone.utc) - stamp > timedelta(hours=20))
+          PY
+            then
+              echo "[expired] $SLUG 已超过 20 小时或缺 received_at，不再追旧比赛"
+              continue
+            fi
+            PROBE=$(git ls-tree -r --name-only HEAD \
+              | grep -E "^output/[^/]+/reel/${SLUG}/probe.json$" | tail -n 1 || true)
+            if [ -z "$PROBE" ]; then
+              echo "[waiting] $SLUG 没有已落库 probe 证据"
+              continue
+            fi
+            OUTDIR=${PROBE%/probe.json}
+            git sparse-checkout add "$OUTDIR"
+
+            python tools/refresh_reel_cover.py --draft "$DRAFT" --write
+
+            PORTRAIT=$(jq -r '.cover.portrait.image // ""' "$DRAFT")
+            REVIEWED=$(jq -r '._visual_evidence.cover_image // "__missing__"' "$DRAFT")
+            VISUAL_STATUS=$(jq -r '._visual_evidence.visual_status // ""' "$DRAFT")
+            RETRYABLE=$(jq -r '._visual_evidence.retryable // false' "$DRAFT")
+            # 同一批图片不反复收费问模型；没有报告（含瞬时 API 失败）或官方图
+            # 刚补上/换过时才重新审核。
+            if [ "$REVIEWED" = "__missing__" ] || [ "$PORTRAIT" != "$REVIEWED" ] \
+              || [ "$VISUAL_STATUS" = "error" ] || [ "$RETRYABLE" = "true" ]; then
+              python tools/analyze_reel_visuals.py \
+                --draft "$DRAFT" --outdir "$OUTDIR" --write
+            else
+              echo "[skip] $SLUG 的同一批视觉证据已经审核过"
+            fi
+            python tools/promote_reel_draft.py --draft "$DRAFT" --write
+            if [ -f "specs/reels/$SLUG.json" ] && [ ! -f "$DRAFT" ]; then
+              echo "$SLUG" >> /tmp/reel-ready
+            fi
+          done
+
+      - name: 落库 ready spec（waiting 不制造空提交）
+        run: |
+          git config user.name "Claude"
+          git config user.email "noreply@anthropic.com"
+          git add specs/reels assets/reel
+          if git diff --cached --quiet; then
+            echo "没有新证据/正式 spec"
+            exit 0
+          fi
+          python tools/check_staged_file_sizes.py
+          git commit -m "reel: 自动补齐视觉证据并提升正式 spec"
+          for attempt in 1 2 3 4 5; do
+            if git push origin main; then exit 0; fi
+            git pull --rebase origin main || { git rebase --abort || true; }
+            sleep $((attempt * 4))
+          done
+          echo "::error::ready spec 连续 5 次推不上 main；没有 dispatch render"
+          exit 1
+
+      - name: 正式 spec 落库后逐条并行派发 render
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          while read -r SLUG; do
+            [ -n "$SLUG" ] || continue
+            gh workflow run match-reel.yml --ref main \
+              -f mode=render -f slug="$SLUG" -f received_at="$(date -u +%FT%TZ)"
+            echo "[dispatch] render $SLUG"
+          done < /tmp/reel-ready

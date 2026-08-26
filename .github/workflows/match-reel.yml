@@ -128,6 +128,30 @@ on:
         description: "赛事年份（probe 后自动备料用，如 2026）"
         required: false
         default: ""
+      round:
+        description: "赛果源轮次（自动顶栏使用，不从标题猜）"
+        required: false
+        default: ""
+      court:
+        description: "赛果源球场（自动封面比分板使用；缺失则留 waiting）"
+        required: false
+        default: ""
+      home_country:
+        description: "主队 IOC 三字国别"
+        required: false
+        default: ""
+      away_country:
+        description: "客队 IOC 三字国别"
+        required: false
+        default: ""
+      home_rank:
+        description: "主队即时世界排名"
+        required: false
+        default: ""
+      away_rank:
+        description: "客队即时世界排名"
+        required: false
+        default: ""
       summary:
         description: "一句话概括赛果（顶掉「对阵 + 比分」）：只留最硬的那个结果。整句标题不超过 20 个字位，讲不完的写进 push_lead"
         required: false
@@ -148,7 +172,10 @@ permissions:
 # 那一条：copy.html／pushed.json／main 都是共享写点，只有不可撤回的发送阶段串行。
 # render push=true 不在这里串行：它质检落库后会另派一趟 mode=push。
 concurrency:
-  group: ${{ github.event.inputs.mode == 'push' && 'match-reel-publish' || format('match-reel-{0}', github.event.inputs.slug) }}
+  # probe 最后一跳会自动派发同 slug 的 render。两者若共用旧的 slug-only 组，
+  # render 一启动就会把尚未结束的 probe 取消，表现成“正式 spec 已落库但链路红”。
+  # 同 mode 仍然只保留最新一趟；不同 mode 各写自己的产物阶段，可以顺序衔接。
+  group: ${{ github.event.inputs.mode == 'push' && 'match-reel-publish' || format('match-reel-{0}-{1}', github.event.inputs.slug, github.event.inputs.mode) }}
   cancel-in-progress: ${{ github.event.inputs.mode != 'push' }}
 
 jobs:
@@ -891,6 +918,7 @@ jobs:
         if: github.event.inputs.mode == 'probe' && github.event.inputs.home != ''
         env:
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          MINIMAX_API_KEY: ${{ secrets.MINIMAX_API_KEY }}
         run: |
           OUT="${{ steps.paths.outputs.outdir }}"
           SLUG="${{ github.event.inputs.slug }}"
@@ -898,17 +926,53 @@ jobs:
           if [ -f "$OUT/pbp.json" ] && [ -f "$OUT/scoreboard.json" ]; then
             ALIGN_ARGS="--pbp $OUT/pbp.json --scoreboard $OUT/scoreboard.json"
           fi
+          META_ARGS=()
+          if [ -n "${{ github.event.inputs.home_rank }}" ]; then
+            META_ARGS+=(--home-rank "${{ github.event.inputs.home_rank }}")
+          fi
+          if [ -n "${{ github.event.inputs.away_rank }}" ]; then
+            META_ARGS+=(--away-rank "${{ github.event.inputs.away_rank }}")
+          fi
           PYTHONPATH=src python tools/assemble_spec.py \
             --slug "$SLUG" \
             --home "${{ github.event.inputs.home }}" \
             --away "${{ github.event.inputs.away }}" \
             --event "${{ github.event.inputs.event }}" \
             --year "${{ github.event.inputs.year }}" \
+            --round "${{ github.event.inputs.round }}" \
+            --court "${{ github.event.inputs.court }}" \
+            --home-country "${{ github.event.inputs.home_country }}" \
+            --away-country "${{ github.event.inputs.away_country }}" \
+            --received-at "${{ github.event.inputs.received_at }}" \
             --captions "$OUT/captions.txt" \
             --cuts "$OUT/probe.json" \
             --source-url "${{ github.event.inputs.url }}" \
             --cover \
             $ALIGN_ARGS \
+            "${META_ARGS[@]}" \
+            --write
+
+      # MiniMax 不是“看过就算”：它要把冷开场、结尾兑现和封面人物/情绪写成
+      # 可复核证据；DeepSeek 只翻译这一窗口里真实存在的英文转播字幕。任何一项
+      # 不确定都会把草稿留在 pending，不进入 render。
+      - name: probe — 视觉事实闸 + 双语原声冷开场
+        if: github.event.inputs.mode == 'probe' && github.event.inputs.home != ''
+        env:
+          MINIMAX_API_KEY: ${{ secrets.MINIMAX_API_KEY }}
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+        run: |
+          python tools/analyze_reel_visuals.py \
+            --draft "specs/reels/pending/${{ github.event.inputs.slug }}.draft.json" \
+            --outdir "${{ steps.paths.outputs.outdir }}" \
+            --write
+
+      # 只有全部生产证据齐全且 build_match_reel.validate_spec 真通过，才把 pending
+      # 提升成正式 spec。脚本对 waiting 返回 0：这不是故障，而是明确“不生产”。
+      - name: probe — 提升通过硬闸的正式 spec
+        if: github.event.inputs.mode == 'probe' && github.event.inputs.home != ''
+        run: |
+          python tools/promote_reel_draft.py \
+            --draft "specs/reels/pending/${{ github.event.inputs.slug }}.draft.json" \
             --write
 
       # 只下源片 + 出海报就停：不分段、不合语音、不编码。改一档 scale / cx /
@@ -1251,6 +1315,15 @@ jobs:
           if [ -f "specs/reels/pending/${{ github.event.inputs.slug }}.draft.json" ]; then
             git add "specs/reels/pending/${{ github.event.inputs.slug }}.draft.json"
           fi
+          # 全部证据过闸时 pending 会被提升并删除；正式 spec + 推送文案必须和
+          # probe 产物同一提交落库，后面的 render 只认这两个正式文件。
+          if [ -f "specs/reels/${{ github.event.inputs.slug }}.json" ]; then
+            git add "specs/reels/${{ github.event.inputs.slug }}.json"
+          fi
+          if [ -f "specs/reels/${{ github.event.inputs.slug }}.xhs.txt" ]; then
+            git add "specs/reels/${{ github.event.inputs.slug }}.xhs.txt"
+          fi
+          git add -u "specs/reels/pending" 2>/dev/null || true
           # assemble_spec --cover 把 WTA 官方赛后稿头图写到 assets/reel/，不在
           # OUTDIR 或 pending/ 里。漏 add 会让草稿引用一张 runner 消失后不存在的图。
           COVER_ASSET="assets/reel/${{ github.event.inputs.slug }}-cover.jpg"
@@ -1302,6 +1375,31 @@ jobs:
           done
           echo "::error::连续 10 次推送失败；成片仍在 artifact 中，未发送微信死链"
           exit 1
+
+      # probe 只有在正式 spec 已由严格提升器落进 main 后才继续。pending/waiting
+      # 是正常结果，不 dispatch；ready 则立即并行进入 render，不等下一班定时任务。
+      - name: probe 正式 spec 就绪后自动派发 render
+        if: github.event.inputs.mode == 'probe' && github.ref_name == 'main'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          SPEC="specs/reels/${{ github.event.inputs.slug }}.json"
+          if [ ! -f "$SPEC" ]; then
+            echo "[waiting] 严格生产证据未齐；本次不 dispatch render"
+            exit 0
+          fi
+          python - "$SPEC" <<'PY'
+          import json, sys
+          spec = json.load(open(sys.argv[1], encoding="utf-8"))
+          assert (spec.get("_production") or {}).get("status") == "ready_for_render"
+          assert (spec.get("push") or {}).get("auto") is True
+          print("正式 spec + 自动推送合同已确认")
+          PY
+          gh workflow run match-reel.yml --ref main \
+            -f mode=render \
+            -f slug="${{ github.event.inputs.slug }}" \
+            -f received_at="${{ github.event.inputs.received_at }}"
+          echo "[dispatch] render ${{ github.event.inputs.slug }}"
 
       # **表单的 push 默认是 false，不能拿它当自动发布开关。** 自动编排生成的
       # spec 已经用 `push.auto=true` 表达「质检通过即推送」；如果这里仍只看表单，

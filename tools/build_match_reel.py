@@ -3911,15 +3911,18 @@ def silent_stretches(segments, spoken_of: dict[int, float]) -> list[str]:
 # ⚠️ **换后端就要重拟合，别只挪 `SPEECH_EST_ERR`。** 哪个后端算数写在
 # `SPEECH_FITTED_BACKEND` 上，判据按它挑产物——拿另一个后端渲的成片来校今天
 # 的模型，得到的偏差是后端差，不是模型差。
-_SPEECH_PUNCT = "，。！？、；：—…,.!?;:"
-_SPEECH_QUIET = "“”‘’\"'（）()《》「」 \t\n"
 #: 下面这组系数是拿**哪个 TTS 后端**渲出来的成片拟合的。`render.json` 的
 #: `narration_backend` 和它对不上的产物，不能拿来校这个模型（差的是后端不是
 #: 模型）。换后端要连这个名字一起改，判据会跟着换一批样本。
 SPEECH_FITTED_BACKEND = "azure"
-SPEECH_PER_CHAR = 0.166
-SPEECH_PER_PUNCT = 0.32
-SPEECH_TAIL = 0.45
+from reel_timing import (  # noqa: E402
+    SPEECH_PER_CHAR,
+    SPEECH_PER_PUNCT,
+    SPEECH_TAIL,
+    SPEECH_PUNCT as _SPEECH_PUNCT,
+    SPEECH_QUIET as _SPEECH_QUIET,
+    speech_seconds,
+)
 # 实测最坏的一段被低估 1.44s，取整留一点：小于这个数的差额不算数。
 # ⚠️ 2026-08-08：`fonseca-ruud` 第 11 段「五比三，丰塞卡发球——拿下这一局，
 # 比赛就结束。」（18 字 5 处标点，含一处破折号）真语音只说 4.22s，比离线估的
@@ -3953,21 +3956,6 @@ SPEECH_TAIL = 0.45
 # 天然比它快，落差会随着句子变长而放大。493 段实测中位数仍贴近 0（不是模型
 # 系统性偏差），按闸的本意调到刚好盖住这条。
 SPEECH_EST_ERR = 1.64
-
-
-def speech_seconds(text: str) -> float:
-    """离线估这句话合出来有多长（秒）。不合语音、不联网。
-
-    句读单独计一项是因为**停顿不按字数走**：短句里它占的比例最大——
-    「那一年她二十一岁。从那儿到今天，一共两年。」18 个字带 3 个句读，
-    实测 4.94 秒，合下来只有 3.6 字/秒，而长段能到 6 字/秒开外。
-    """
-    body = "".join(c for c in text if c not in _SPEECH_QUIET)
-    punct = sum(1 for c in body if c in _SPEECH_PUNCT)
-    chars = len(body) - punct
-    if not chars and not punct:
-        return 0.0
-    return chars * SPEECH_PER_CHAR + punct * SPEECH_PER_PUNCT + SPEECH_TAIL
 
 
 #: 死球之后留给结果和反应的尾巴（`find_point_ends.py --tail` 的默认值）。
@@ -6170,6 +6158,11 @@ def _topbar_lines(spec: dict) -> tuple[str, str] | None:
     豁免只给 `_LEGACY_NO_TOPBAR` 里那些**已经发出去的**片子：已发的不为版式
     重渲，而那张表有自检，写错名字会红。
     """
+    from reel_facts import verified_result_problem
+
+    verified_problem = verified_result_problem(spec)
+    if verified_problem:
+        raise ReelError(verified_problem)
     raw = spec.get("topbar")
     if raw is None:
         column = str((spec.get("cover") or {}).get("eyebrow", "")).strip()
