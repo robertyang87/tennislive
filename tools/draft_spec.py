@@ -24,6 +24,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -80,6 +81,34 @@ beats（3 段）、human_context（场外切口：金句/纪录/复仇/告别，
 narration（每段一句，对应 beats）。""" + model_instructions("deepseek")
 
 
+def _spoken_integer(value: int) -> str:
+    digits = "零一二三四五六七八九"
+    if value < 10:
+        return digits[value]
+    if value < 20:
+        return "十" + (digits[value % 10] if value % 10 else "")
+    if value < 100:
+        return digits[value // 10] + "十" + (digits[value % 10] if value % 10 else "")
+    if value == 100:
+        return "一百"
+    return "".join(digits[int(char)] for char in str(value))
+
+
+def normalize_editorial_for_speech(value):
+    """Remove symbols known to break Chinese TTS from every editorial field."""
+    if isinstance(value, dict):
+        return {key: normalize_editorial_for_speech(item) for key, item in value.items()}
+    if isinstance(value, list):
+        return [normalize_editorial_for_speech(item) for item in value]
+    if isinstance(value, str):
+        return re.sub(
+            r"(?<!\d)(\d{1,3})\s*[%％]",
+            lambda found: "百分之" + _spoken_integer(int(found.group(1))),
+            value,
+        )
+    return value
+
+
 def draft_editorial(chat: Chat, *, home: str, away: str, event: str, year: int,
                     fixture: str, facts: str = "", background: str = "") -> dict | None:
     user = (
@@ -89,7 +118,8 @@ def draft_editorial(chat: Chat, *, home: str, away: str, event: str, year: int,
         f"球员信息背景（排名/年龄/国籍/H2H/纪录/金句，有就用，别编）：\n"
         f"{background or '（没有）'}\n"
     )
-    return chat.ask(SYSTEM, user, schema=SCHEMA, max_tokens=2000)
+    draft = chat.ask(SYSTEM, user, schema=SCHEMA, max_tokens=2000)
+    return normalize_editorial_for_speech(draft) if isinstance(draft, dict) else draft
 
 
 _PUSH_SCHEMA = {
