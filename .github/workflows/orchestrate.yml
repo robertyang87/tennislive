@@ -143,17 +143,41 @@ jobs:
             echo "state 没有变化，不提交"
           else
             python tools/check_staged_file_sizes.py
+            # ⚠️ 别在这儿用 `git pull --rebase` 重试：冲突就发生在 state 这个
+            # 文件本身（match-reel 的失败自愈 release_orchestration_claim、或
+            # 相邻班次都会改它），rebase 对同一个 JSON 的内容冲突无解——abort
+            # 之后什么都没变，重试只会撞同一个冲突。2026-08-26 run #360 连撞
+            # 5 次，state 丢失，下一班重复 dispatch。所以每次重试都拿远端最新
+            # 当底做 JSON 级三方合并、在 FETCH_HEAD 上重建提交（和 match-reel
+            # 释放 claim 用的「重取远端重放修改」是同一个模式）。三份快照要在
+            # commit 之前留：base=开跑时 HEAD 上那份、ours=本趟写出的这份。
+            BASE_STATE="$RUNNER_TEMP/state_base.json"
+            OURS_STATE="$RUNNER_TEMP/state_ours.json"
+            THEIRS_STATE="$RUNNER_TEMP/state_theirs.json"
+            git show HEAD:data/orchestration_state.json > "$BASE_STATE" 2>/dev/null \
+              || echo '{"dispatched":{}}' > "$BASE_STATE"
+            cp data/orchestration_state.json "$OURS_STATE"
             git commit -m "orchestrate: 记录已 dispatch 状态"
-            # ⚠️ 裸 `git push` 一撞（别的 run 刚推过 main）整步就红，而 state
-            # **已经点完 run 了**——不落库的话下一班失忆重点。state 是纯文本
-            # JSON，`pull --rebase` 处理得动（frame-grab 那套 fetch+重放是给
-            # 二进制产物的，这里不用）；rebase 冲突就 abort 再试，最多 5 次。
             for attempt in $(seq 1 5); do
               if git push origin "HEAD:${{ github.ref_name }}"; then
                 exit 0
               fi
-              echo "push 被拒（第 $attempt 次），rebase 到最新再试"
-              git pull --rebase origin "${{ github.ref_name }}" || git rebase --abort
+              echo "push 被拒（第 $attempt 次），拿远端最新做 JSON 级三方合并再试"
+              git fetch origin "${{ github.ref_name }}"
+              git show FETCH_HEAD:data/orchestration_state.json > "$THEIRS_STATE" 2>/dev/null \
+                || echo '{"dispatched":{}}' > "$THEIRS_STATE"
+              python tools/merge_orchestration_state.py \
+                --base "$BASE_STATE" --ours "$OURS_STATE" \
+                --theirs "$THEIRS_STATE" --out data/orchestration_state.json
+              # --mixed：HEAD 挪到远端最新、工作树原地不动；只 add state 这
+              # 一个文件，别的陈旧工作树文件不会混进提交。
+              git reset --mixed FETCH_HEAD
+              git add data/orchestration_state.json
+              if git diff --cached --quiet; then
+                echo "远端已包含本趟全部 dispatch 记录，不用再提交"
+                exit 0
+              fi
+              git commit -m "orchestrate: 记录已 dispatch 状态"
               sleep $((attempt * 5 + RANDOM % 10))
             done
             echo "::error::state 连续 5 次推送失败——已 dispatch 的 slug 没落库，下一班会重复点 run"

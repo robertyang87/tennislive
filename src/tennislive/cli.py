@@ -118,10 +118,22 @@ def cmd_knowledge_adhoc(args) -> int:
     from .render.knowledge import generate_knowledge_package
     from .render.terminal import console
     from .render.tournament_story import (
+        VISUAL_BACKOFF_DAYS,
+        clear_visual_backoff,
         find_story_by_slug,
         mark_adhoc_knowledge_published,
         mark_story_used,
+        mark_visual_backoff_from_report,
     )
+
+    def _backoff_rejected(outdir: Path, today) -> None:
+        """把这一趟被素材闸拒掉的候选记进退避——没有这一步，明天的排序
+        还会把同样的坏候选端到最前面（2026-08-18~08-24 六天同因拦停）。"""
+        slugs = mark_visual_backoff_from_report(outdir, today)
+        if slugs:
+            console.print(
+                f"[yellow]素材预检拒掉的候选已记入 {VISUAL_BACKOFF_DAYS} 天退避："
+                f"{'、'.join(slugs)}[/yellow]")
 
     story = None
     if args.slug:
@@ -154,6 +166,10 @@ def cmd_knowledge_adhoc(args) -> int:
         generated = generate_knowledge_package(digest, outdir, theme=args.theme, story=story)
     except Exception as e:  # noqa: BLE001 - surface the real reason before failing
         console.print(f"[red]知识帖生成失败：{e}[/red]")
+        # ⚠️ 失败也要记退避，而且 data/story_state.json 要由工作流的失败
+        # 分支提交回仓库（knowledge-adhoc.yml「失败也提交素材退避」那步）
+        # ——不落库的话这份记忆只活在 runner 上，明天照旧同因拦停。
+        _backoff_rejected(outdir, digest.today)
         detail_path = outdir / "visual_sources.json"
         if detail_path.is_file():
             console.print(f"[yellow]失败详情（{detail_path}）：[/yellow]")
@@ -164,6 +180,10 @@ def cmd_knowledge_adhoc(args) -> int:
         console.print(f"[red]知识帖生成失败：{reason}[/red]")
         return 2
 
+    # 成功换题时，被拒的候选同样记退避（拒绝是事实，跟这一趟最终成没成无关）；
+    # 选中的这条如果曾在退避里，摘掉——素材包显然已经够格了。
+    _backoff_rejected(outdir, digest.today)
+    clear_visual_backoff(generated.slug)
     mark_story_used(generated.slug, digest.today)
     # A deliberate/hotspot ad-hoc post claims today's knowledge slot so the
     # daily digest won't auto-select a second, unrelated knowledge post on top

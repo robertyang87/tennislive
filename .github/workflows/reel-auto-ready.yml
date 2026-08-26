@@ -110,13 +110,11 @@ jobs:
           fi
           python tools/check_staged_file_sizes.py
           git commit -m "reel: 自动补齐视觉证据并提升正式 spec"
-          for attempt in 1 2 3 4 5; do
-            if git push origin main; then exit 0; fi
-            git pull --rebase origin main || { git rebase --abort || true; }
-            sleep $((attempt * 4))
-          done
-          echo "::error::ready spec 连续 5 次推不上 main；没有 dispatch render"
-          exit 1
+          source tools/git_push_retry.sh
+          if ! push_with_rebase_retry main 5; then
+            echo "::error::ready spec 连续 5 次推不上 main；没有 dispatch render"
+            exit 1
+          fi
 
       - name: 正式 spec 落库后逐条并行派发 render
         env:

@@ -1057,19 +1057,15 @@ def test_制胜分豁免表只许减不许加():
 # （只有大满贯官方的 `RallyCount` 有），所以这条的正确处置往往是**换一个说法**
 # ——说这一分怎么结束的、全场站起来鼓掌，而不是硬凑一个秒数。
 
-_RALLY_SECONDS = re.compile(
-    r"(?:一分|这一分|那一分|一个球|这个球|回合|破发点|赛点|盘点)"
-    r"[^。！？\n]{0,10}?(?:打了|持续了?|来回了?|僵持了?)\s*"
-    # ⚠️ 中间要允许「超过/将近/足足」这类修饰词—— 写的是
-    # 「破发点持续了**超过**三十秒」，不留这个口子它就漏掉，而那句是同一个毛病。
-    r"(?:超过|将近|接近|足足|整整)?\s*"
-    r"[〇零一二三四五六七八九十百\d]+\s*秒")
+# ⚠️ 正则和豁免表的单一出处在 tools/spec_wording.py——validate_spec 和
+# promote_reel_draft 用同一份（2026-08-26 起自动链在发布前也执行这批判据，
+# 不再等下一次人类 push 才在 main CI 上红）。这儿只留扫全库的循环和表自检。
+from tools.spec_wording import RALLY_SECONDS as _RALLY_SECONDS  # noqa: E402
 
 # 已发出去的，收不回来。**只许减不许加。**
-_RALLY_SECONDS_LEGACY = frozenset({
-    "zverev-norrie",                 # 钩子＋推送标题：「一分打了三十八秒」
-    "swiatek-svitolina-toronto-sf",  # 正文：「破发点持续了超过三十秒」
-})
+from tools.spec_wording import (  # noqa: E402
+    RALLY_SECONDS_LEGACY as _RALLY_SECONDS_LEGACY,
+)
 
 
 def _rally_seconds_offenders():
@@ -1142,19 +1138,12 @@ def test_打多少拍的豁免表只许减不许加():
 # ⚠️ 正则要求「成」**前面紧挨着一个数词**，所以「改成 / 完成 / 变成 / 裁成 /
 # 判成 / 一发成功率」都不会被误伤（改、完、变、裁、判、发都不是数词）；
 # 「成功 / 成为 / 成立 / 成绩 / 成片 / 成长」再用后向排除挡一层。
-_PERCENT_IDIOM = re.compile(r"[一二三四五六七八九两]成(?![功为立绩片长])")
+from tools.spec_wording import PERCENT_IDIOM as _PERCENT_IDIOM  # noqa: E402
 
 # 这条规矩之前就发出去的，收不回来。**只许减不许加**，底下的判据会自检。
-_PERCENT_IDIOM_LEGACY = frozenset({
-    "baez-dimitrov", "bartunkova-charaeva", "cirstea-bartunkova",
-    "eala-osaka", "eala-pegula-final", "eala-ruse", "eala-zheng",
-    "fonseca-ruud", "hijikata-monfils", "kenin-lys", "kovacevic-khachanov",
-    "medvedev-zandschulp", "navarro-kalinina", "noskova-mcnally",
-    "ostapenko-frech", "parry-mertens", "potapova-venus", "shang-vallejo",
-    "sonmez-anisimova", "swiatek-rybakina-toronto-final", "townsend-osorio",
-    "townsend-rybakina", "wang-pareja", "wang-vandewinkel", "wang-vekic",
-    "wangxiyu-timofeeva", "zhang-sabalenka", "zverev-griekspoor",
-})
+from tools.spec_wording import (  # noqa: E402
+    PERCENT_IDIOM_LEGACY as _PERCENT_IDIOM_LEGACY,
+)
 
 
 def _percent_idiom_offenders():
@@ -1193,30 +1182,12 @@ def _percent_idiom_offenders():
 #: 排在别人后面的那几场，真实开球可能晚一个多小时，而旁白白纸黑字写着
 #: 「十一点十分开球」。**说法一改成大概时刻，这句话就永远字面为真**，
 #: 不管源给的是哪一个口径。
-_CLOCK_MINUTE = re.compile(
-    r"(?:零点|[一二三四五六七八九十]{1,3}点)\s*[零〇一二三四五六七八九十]{1,4}\s*分"
-    r"|(?<!\d)\d{1,2}\s*点\s*\d{1,2}\s*分"
-)
+from tools.spec_wording import CLOCK_MINUTE as _CLOCK_MINUTE  # noqa: E402
 
 #: 这条规矩之前发出去的，**只许减不许加**（表自带自检）。
-_CLOCK_MINUTE_LEGACY = frozenset({
-    "alexandrova-sabalenka", "baez-dimitrov", "bencic-eala",
-    "bucsa-chwalinska", "eala-mcnally", "eala-osaka", "eala-parks",
-    "eala-ruse", "faria-shelton", "fils-tirante", "gauff-korneeva", "gauff-samsonova",
-    "gea-shapovalov", "krejcikova-bejlek", "landaluce-draper",
-    "medvedev-zandschulp", "osaka-fernandez", "pegula-rakhimova",
-    "rybakina-gauff-toronto-sf", "rybakina-osaka", "rybakina-samsonova",
-    "sabalenka-gibson", "shang-vallejo", "shelton-fonseca", "shelton-mensik",
-    "shelton-tien-montreal-sf", "snigur-keys", "sonmez-kasatkina",
-    "svitolina-alexandrova", "svitolina-anisimova", "swiatek-arango",
-    "swiatek-shnaider", "townsend-osorio", "townsend-rybakina",
-    "trungelliti-medvedev", "wang-vandewinkel", "wang-vekic",
-    "wangxiyu-fernandez", "wong-gea", "zhang-day", "zhang-ostapenko",
-    # `tiafoe-musetti-cincinnati-2026-qf` 2026-08-22T05:02:40Z 已经推过微信
-    # （run 32553267109，另一个并发会话发的）：开场写着「北京时间8月22日
-    # 7点05分」，报到了分钟。已发不为措辞重渲，挂账。
-    "tiafoe-musetti-cincinnati-2026-qf",
-})
+from tools.spec_wording import (  # noqa: E402
+    CLOCK_MINUTE_LEGACY as _CLOCK_MINUTE_LEGACY,
+)
 
 
 def _clock_minute_offenders():

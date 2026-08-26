@@ -122,8 +122,13 @@ jobs:
           git config user.email "noreply@anthropic.com"
           git add --sparse "data/explainer_publish_ledger/${{ steps.gate.outputs.slug }}.json"
           git commit -m "explainer: 预占推送 ${{ steps.gate.outputs.slug }}"
-          git pull --rebase origin main
-          git push origin main
+          # 裸 push 不带重试：撞上别的自动任务刚推过 main 这一趟就红，而
+          # auto-push 失败没有任何东西会重触发（tools/git_push_retry.sh）。
+          source tools/git_push_retry.sh
+          if ! push_with_rebase_retry main 5; then
+            echo "::error::发送前账本没有落进 main，不允许发送"
+            exit 1
+          fi
 
       - name: 推送到微信
         if: steps.gate.outputs.found == 'true'
@@ -149,8 +154,11 @@ jobs:
             "data/explainer_publish_ledger/${{ steps.gate.outputs.slug }}.json"
           python tools/check_staged_file_sizes.py
           git commit -m "explainer: ${{ steps.gate.outputs.slug }} 已自动推送"
-          git pull --rebase origin main
-          git push origin main
+          source tools/git_push_retry.sh
+          if ! push_with_rebase_retry main 5; then
+            echo "::error::消息已发出，但 sent 状态没推上去；sending 会阻断重发"
+            exit 1
+          fi
 
       - name: 已预占后失败则标记状态不明
         if: failure() && steps.reserve.outcome == 'success'
@@ -164,8 +172,8 @@ jobs:
           git config user.email "noreply@anthropic.com"
           git add --sparse "data/explainer_publish_ledger/${{ steps.gate.outputs.slug }}.json"
           git commit -m "explainer: ${{ steps.gate.outputs.slug }} 推送状态待核实" || exit 0
-          git pull --rebase origin main || { git rebase --abort || true; }
-          git push origin main
+          source tools/git_push_retry.sh
+          push_with_rebase_retry main 5
 
       - name: 失败时告警
         # ⚠️ **超时被掐的 run 是 cancelled，不是 failure**——只写 `failure()`

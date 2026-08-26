@@ -566,14 +566,33 @@ def test_编排工作流并发锁pipefail和state推送重试():
     """三样各拦一类静默坏：并发锁（两班并跑同一批候选点两遍 run）、
     pipefail（`python | tee` 的退出码是 tee 的，编排器崩了照样绿）、
     state 推送重试（裸 git push 一撞就红，而 run 已经点完、state 不落库
-    下一班全部失忆重点）。"""
+    下一班全部失忆重点）。
+
+    ⚠️ 重试**不许**用 `git pull --rebase`：冲突就发生在 state 这个文件本身
+    （match-reel 的失败自愈 release_orchestration_claim、相邻班次都改它），
+    rebase 对同一个 JSON 的内容冲突无解——abort 之后什么都没变，重试只会撞
+    同一个冲突。2026-08-26 run #360 连撞 5 次，state 丢失，下一班重复
+    dispatch。重试要走 JSON 级三方合并（tools/merge_orchestration_state.py）
+    并在 FETCH_HEAD 上重建提交。"""
     body = _wf_text("orchestrate.yml")
     assert "group: orchestrate" in body
     assert "cancel-in-progress: false" in body, (
         "掐掉正在 dispatch 的那班就是「点了 run 没记账」")
     assert "set -o pipefail" in body
-    assert "git pull --rebase origin" in body
-    assert "seq 1 5" in body, "push 被拒要 rebase 重试，不是一撞就红"
+    assert "seq 1 5" in body, "push 被拒要重试，不是一撞就红"
+    state = _step_block("提交 state（定时或手动 apply）", "orchestrate.yml")
+    assert "merge_orchestration_state.py" in state, (
+        "state 推送重试没走三方合并——rebase 撞 state 自己的内容冲突时"
+        "重试全灭，run 已点、state 丢，下一班重复 dispatch")
+    assert "--base" in state and "--ours" in state and "--theirs" in state, (
+        "三方合并三份快照缺一不可：少 base 分不出「本趟新增」和「远端已删」，"
+        "会把 match-reel 刚 release 的 claim 复活")
+    assert "git pull --rebase" not in _yaml_only(state), (
+        "state 那一步又写回了 `git pull --rebase`——对同一个 JSON 的内容冲突"
+        "它无解，见 docstring 里 run #360 的来路")
+    assert "git reset --mixed FETCH_HEAD" in state, (
+        "合并完要在远端最新之上重建提交；不 reset 的话旧提交还在，"
+        "push 照样非快进被拒")
 
 
 def test_定时编排每十分钟真apply且失败也提交已派发state():

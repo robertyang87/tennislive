@@ -173,16 +173,14 @@ jobs:
           fi
           python tools/check_staged_file_sizes.py
           git commit -m "interview: 自动提升赛后开麦 spec 草稿"
-          for attempt in 1 2 3 4 5; do
-            if git push origin "HEAD:${GITHUB_REF_NAME}"; then
-              exit 0
-            fi
-            echo "push 被拒（第 $attempt 次），rebase 到最新再试"
-            git pull --rebase --autostash origin "${GITHUB_REF_NAME}"
-            sleep $((attempt * 3 + RANDOM % 5))
-          done
-          echo "::error::提升结果推不上去——草稿还在，下一趟会重来"
-          exit 1
+          # 重试收在共享脚本里：原来这儿的 `git pull --rebase` 没带
+          # `|| abort`，`bash -e` 下 rebase 一失败整步立刻死，循环一次
+          # 都轮不到（tools/git_push_retry.sh 顶部注释记着这一族）。
+          source tools/git_push_retry.sh
+          if ! push_with_rebase_retry "${GITHUB_REF_NAME}" 5; then
+            echo "::error::提升结果推不上去——草稿还在，下一趟会重来"
+            exit 1
+          fi
 
       - name: dispatch 未 render 的正式 spec（每 slug 一个 run，并行）
         if: steps.gate.outputs.work == 'true'
@@ -228,14 +226,9 @@ jobs:
           git config user.email "noreply@anthropic.com"
           python tools/check_staged_file_sizes.py
           git commit -m "data: interview render dispatch 记录"
-          for attempt in 1 2 3 4 5; do
-            if git push origin "HEAD:${GITHUB_REF_NAME}"; then
-              exit 0
-            fi
-            echo "push 被拒（第 $attempt 次），rebase 到最新再试"
-            git pull --rebase --autostash origin "${GITHUB_REF_NAME}"
-            sleep $((attempt * 3 + RANDOM % 5))
-          done
-          echo "::error::dispatch 状态推不上去——这批 slug 下一趟会被重投"
-          echo "::error::（interview-clip 的 concurrency 按 slug 去重，代价是把正在跑的那趟掐了重跑）"
-          exit 1
+          source tools/git_push_retry.sh
+          if ! push_with_rebase_retry "${GITHUB_REF_NAME}" 5; then
+            echo "::error::dispatch 状态推不上去——这批 slug 下一趟会被重投"
+            echo "::error::（interview-clip 的 concurrency 按 slug 去重，代价是把正在跑的那趟掐了重跑）"
+            exit 1
+          fi

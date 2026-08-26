@@ -1,0 +1,255 @@
+"""会发出去的措辞判据——**单一出处**，validate_spec、promote 和 pytest 共用。
+
+来路（2026-08-26 内容自动化盘点）：这批措辞规矩原来只活在 pytest 里
+（tests/test_reel_editorial.py / tests/test_match_reel.py），而自动出片链
+（orchestrate 备料 → reel-auto-ready 提升 → match-reel 渲染 → auto-push 发布）
+用 GITHUB_TOKEN 直推 main，**不触发 CI**——模型/自动产的 spec 从生成到发进
+微信，一次都没被这些判据扫过。已经漏过一条：`tiafoe-musetti-cincinnati-2026-qf`
+带着「7点05分」（开球报到分）被并发会话自动推送出去，事后只能挂进豁免表。
+
+CLAUDE.md 的教条本来就是「**凡是只读 spec 就能判的规矩，出处必须在
+validate_spec 够得着的地方**」（bejlek-pliskova 那次）。所以：
+
+- 正则、豁免表、扫描面全收在这儿——测试 import 这里的，别再各抄一份
+  （「一个数写两处必分叉」）
+- `check_spec_wording()` 给 build_match_reel 的入口和 promote_reel_draft 用，
+  按 slug 查同一批豁免表；新 spec 违规在 dry-run 第 0.2 秒就红，
+  不是等下一次人类 push 把 main CI 打红
+- ⚠️ 三种扫描面**故意不合并**：每一面都是当年按「误伤了什么」收窄过的
+  （详见各判据的 docstring），合并等于把三条判据一起放宽或收紧
+
+豁免表照旧**只许减不许加**，自检仍在 pytest 那头（要扫全库才能自检）。
+"""
+
+from __future__ import annotations
+
+import re
+
+# ── 正则（每条的来路见同名测试的 docstring）─────────────────────────────
+
+#: 百分比写「几成几」。「成」前面必须紧挨数词，后向排除 功/为/立/绩/片/长。
+PERCENT_IDIOM = re.compile(r"[一二三四五六七八九两]成(?![功为立绩片长])")
+
+#: 单分的长度写成秒（「一分打了三十八秒」）。时长/一局的分钟数不在管辖内。
+RALLY_SECONDS = re.compile(
+    r"(?:一分|这一分|那一分|一个球|这个球|回合|破发点|赛点|盘点)"
+    r"[^。！？\n]{0,10}?(?:打了|持续了?|来回了?|僵持了?)\s*"
+    r"(?:超过|将近|接近|足足|整整)?\s*"
+    r"[〇零一二三四五六七八九十百\d]+\s*秒")
+
+#: 开球时刻报到分（「十一点十分」）。那个分钟多半是整批开赛时刻，不是这一场的。
+CLOCK_MINUTE = re.compile(
+    r"(?:零点|[一二三四五六七八九十]{1,3}点)\s*[零〇一二三四五六七八九十]{1,4}\s*分"
+    r"|(?<!\d)\d{1,2}\s*点\s*\d{1,2}\s*分")
+
+#: 「四强/八强/十六强」这类强字轮次。写 半决赛 / 1/4 决赛 / 第几轮。
+QUALIFIER_ROUND = re.compile(r"[四八]强|十六强|三十二强|(?<!\d)(?:16|32|64)\s*强")
+
+#: love game 的字面直译。要用一个词就写「零封」。
+LOVE_GAME = re.compile(r"爱局")
+
+#: 「要到 N 个破发点」——点一律写「拿到」。中间最多隔一个数量词。
+YAODAO_POINT = re.compile(r"要到[^。！？\n]{0,8}?(破发点|盘点|赛点|局点)")
+
+#: 盘点主语：「拿到/要到/得到/握有 N 个点」之后 26 字内出现「救/保住」而
+#: 中间没有点出是谁在救——读者会把主语接成拿到点的那个人。
+OWN_POINT = re.compile(r"(要到|拿到|得到|握有)[^。！？\n]{0,12}?"
+                       r"([一二三四五六七八九十\d]+)\s*个?(盘点|赛点|破发点)")
+SAVE_VERB = re.compile(r"(救|保住)")
+
+#: 文案里不许提字幕这类制作规格（账号所有者 2026-08-19：「以后不要再在文案里
+#: 说中英文字幕相关的文案」）。每条片子都有的规格不是这一条的内容——
+#: interview 线为它攒了一张 78 个文件的豁免表；reel 语料量过是干净的（0 条），
+#: 所以这条在 reel 侧**零豁免**，拦的是「promote 模板把规格话术写回来」那一类。
+BILINGUAL_MENTION = re.compile(r"中英双语|中英文字幕|中英字幕|双语字幕")
+
+# ── 豁免表：规矩生效前已经发出去的，消息收不回来。只许减不许加 ─────────────
+
+PERCENT_IDIOM_LEGACY = frozenset({
+    "baez-dimitrov", "bartunkova-charaeva", "cirstea-bartunkova",
+    "eala-osaka", "eala-pegula-final", "eala-ruse", "eala-zheng",
+    "fonseca-ruud", "hijikata-monfils", "kenin-lys", "kovacevic-khachanov",
+    "medvedev-zandschulp", "navarro-kalinina", "noskova-mcnally",
+    "ostapenko-frech", "parry-mertens", "potapova-venus", "shang-vallejo",
+    "sonmez-anisimova", "swiatek-rybakina-toronto-final", "townsend-osorio",
+    "townsend-rybakina", "wang-pareja", "wang-vandewinkel", "wang-vekic",
+    "wangxiyu-timofeeva", "zhang-sabalenka", "zverev-griekspoor",
+})
+
+RALLY_SECONDS_LEGACY = frozenset({
+    "zverev-norrie",                 # 钩子＋推送标题：「一分打了三十八秒」
+    "swiatek-svitolina-toronto-sf",  # 正文：「破发点持续了超过三十秒」
+})
+
+CLOCK_MINUTE_LEGACY = frozenset({
+    "alexandrova-sabalenka", "baez-dimitrov", "bencic-eala",
+    "bucsa-chwalinska", "eala-mcnally", "eala-osaka", "eala-parks",
+    "eala-ruse", "faria-shelton", "fils-tirante", "gauff-korneeva", "gauff-samsonova",
+    "gea-shapovalov", "krejcikova-bejlek", "landaluce-draper",
+    "medvedev-zandschulp", "osaka-fernandez", "pegula-rakhimova",
+    "rybakina-gauff-toronto-sf", "rybakina-osaka", "rybakina-samsonova",
+    "sabalenka-gibson", "shang-vallejo", "shelton-fonseca", "shelton-mensik",
+    "shelton-tien-montreal-sf", "snigur-keys", "sonmez-kasatkina",
+    "svitolina-alexandrova", "svitolina-anisimova", "swiatek-arango",
+    "swiatek-shnaider", "townsend-osorio", "townsend-rybakina",
+    "trungelliti-medvedev", "wang-vandewinkel", "wang-vekic",
+    "wangxiyu-fernandez", "wong-gea", "zhang-day", "zhang-ostapenko",
+    # `tiafoe-musetti-cincinnati-2026-qf` 2026-08-22T05:02:40Z 已经推过微信
+    # （run 32553267109，另一个并发会话发的）：开场写着「北京时间8月22日
+    # 7点05分」，报到了分钟。已发不为措辞重渲，挂账。
+    "tiafoe-musetti-cincinnati-2026-qf",
+})
+
+#: 这两张按**文件名**记（spec 和 xhs 各自算一条），照原判据的口径。
+QUALIFIER_ROUND_LEGACY = frozenset({
+    "eala-svitolina.json", "wong-brooksby.json", "wong-gea.json",
+    "zheng-lanlana.json", "eala-fernandez.xhs.txt", "eala-svitolina.xhs.txt",
+    "wong-brooksby.xhs.txt", "wong-gea.xhs.txt", "zheng-lanlana.xhs.txt",
+    # bejlek-keys-cincinnati-2026-qf：已经推过微信（reel 和 interview-clip
+    # 两条都有 pushed.json），消息发出去收不回来，不为措辞重渲。
+    "bejlek-keys-cincinnati-2026-qf.json", "bejlek-keys-cincinnati-2026-qf.xhs.txt",
+})
+
+YAODAO_LEGACY = frozenset({"zverev-griekspoor.json", "zverev-griekspoor.xhs.txt"})
+
+# ── 三种扫描面（故意不合并，见模块 docstring）──────────────────────────────
+
+
+def voiced_texts(spec: dict) -> list[str]:
+    """钩子 + push 字符串 + 旁白 + 顶栏——「几成几/写秒/报到分」那三条的面。"""
+    texts = [str((spec.get("cover") or {}).get("hook") or "")]
+    texts += [str(v) for v in (spec.get("push") or {}).values()
+              if isinstance(v, str)]
+    texts += [str(s.get("narration") or "") for s in spec.get("segments") or []
+              if isinstance(s, dict)]
+    texts += [str(v) for v in (spec.get("topbar") or {}).values()
+              if isinstance(v, str)]
+    return texts
+
+
+def outward_deep(spec: dict):
+    """旁白 + cover 里非注解的字符串（含嵌套 dict/list）+ push——轮次/爱局的面。"""
+    for seg in spec.get("segments") or []:
+        if isinstance(seg, dict):
+            yield seg.get("narration", "")
+    for key, value in (spec.get("cover") or {}).items():
+        if key.startswith("_"):
+            continue
+        for item in ([value] if isinstance(value, str)
+                     else list(value.values()) if isinstance(value, dict)
+                     else []):
+            if isinstance(item, str):
+                yield item
+            elif isinstance(item, list):
+                yield from (x for x in item if isinstance(x, str))
+    for key, value in (spec.get("push") or {}).items():
+        if not key.startswith("_") and isinstance(value, str):
+            yield value
+
+
+def outward_flat(spec: dict):
+    """旁白 + cover 顶层字符串 + push——「要到」那条的面（更窄，照原判据）。"""
+    for seg in spec.get("segments") or []:
+        if isinstance(seg, dict):
+            yield seg.get("narration", "")
+    for key, value in (spec.get("cover") or {}).items():
+        if key.startswith("_") or not isinstance(value, str):
+            continue
+        yield value
+    for key, value in (spec.get("push") or {}).items():
+        if not key.startswith("_") and isinstance(value, str):
+            yield value
+
+
+def _hits(pattern: re.Pattern, texts) -> list[str]:
+    return sorted({m.group(0) for t in texts for m in pattern.finditer(t or "")})
+
+
+def spec_player_names(spec: dict) -> list[str]:
+    """盘点主语判据要认的人名：matchup / subject / winner / versus 两格。"""
+    cover = spec.get("cover") or {}
+    names = [w.get("name", "") for w in (cover.get("matchup") or [])
+             if isinstance(w, dict)]
+    names += [cover.get("subject", ""), cover.get("winner", "")]
+    versus = cover.get("versus") or {}
+    for side in ("top", "bottom"):
+        names += list((versus.get(side) or {}).get("names") or [])
+    return [n for n in names if n]
+
+
+def save_subject_flag(text: str, names: list[str]) -> list[str]:
+    """「拿到 N 个点…救/保住」而中间没写出是谁在救的那些片段。"""
+    bad = []
+    for m in OWN_POINT.finditer(text):
+        after = text[m.end():m.end() + 26]
+        hit = SAVE_VERB.search(after)
+        if hit and not any(n in after[:hit.start()] for n in names):
+            bad.append(f"…{m.group(0)}｜{after[:26]}…")
+    return bad
+
+
+def check_spec_wording(spec: dict, slug: str,
+                       xhs_text: str | None = None) -> list[str]:
+    """给一条 spec（可带小红书正文）跑全部措辞判据，返回没被豁免的违规。
+
+    豁免按 slug／文件名查同一批表——已发的老 spec 重新 dry-run 照旧绿；
+    新 spec 违规当场红，不用等下一次人类 push 把 main CI 打红。
+    """
+    problems: list[str] = []
+    voiced = voiced_texts(spec) + ([xhs_text] if xhs_text else [])
+
+    if slug not in PERCENT_IDIOM_LEGACY:
+        if hits := _hits(PERCENT_IDIOM, voiced):
+            problems.append(
+                f"百分比写成了「几成几」：{hits}——旁白写「百分之三十四」"
+                f"（TTS 读得对，字幕烧成「百分之34」），正文可写 34%")
+    if slug not in RALLY_SECONDS_LEGACY:
+        if hits := _hits(RALLY_SECONDS, voiced):
+            problems.append(
+                f"把单分的长度写成了秒：{hits}——说打了多少拍；拿不到拍数"
+                f"就别写长度，换个说法（这一分怎么结束的、全场什么反应）")
+    if slug not in CLOCK_MINUTE_LEGACY:
+        if hits := _hits(CLOCK_MINUTE, voiced):
+            problems.append(
+                f"开球时刻报到了分钟：{hits}——0–9 分说「X 点」、10–39 分说"
+                f"「X 点多」、40–59 分说「快 X+1 点」，时段词（凌晨/晚上）留着；"
+                f"那个分钟多半是整批开赛时刻，不是这一场的")
+
+    spec_name, xhs_name = f"{slug}.json", f"{slug}.xhs.txt"
+    if spec_name not in QUALIFIER_ROUND_LEGACY:
+        if hits := _hits(QUALIFIER_ROUND, outward_deep(spec)):
+            problems.append(
+                f"轮次写了强字：{hits}——写 半决赛 / 1/4 决赛 / 1/8 决赛，"
+                f"再往前写「第几轮」")
+    if xhs_text and xhs_name not in QUALIFIER_ROUND_LEGACY:
+        if hits := _hits(QUALIFIER_ROUND, [xhs_text]):
+            problems.append(f"小红书正文的轮次写了强字：{hits}")
+
+    if hits := _hits(LOVE_GAME, list(outward_deep(spec)) +
+                     ([xhs_text] if xhs_text else [])):
+        problems.append(
+            f"love game 被字面直译成了「爱局」：{hits}——写「零封」，"
+            f"或者靠逐分（15:0/30:0/40:0）讲清楚，不另造标签")
+
+    if spec_name not in YAODAO_LEGACY:
+        if hits := _hits(YAODAO_POINT, outward_flat(spec)):
+            problems.append(f"写了「要到…点」：{hits}——破发点/盘点/赛点"
+                            f"一律写「拿到」")
+    if xhs_text and xhs_name not in YAODAO_LEGACY:
+        if hits := _hits(YAODAO_POINT, [xhs_text]):
+            problems.append(f"小红书正文写了「要到…点」：{hits}——一律写「拿到」")
+
+    text = "".join(str(s.get("narration", ""))
+                   for s in spec.get("segments") or [] if isinstance(s, dict))
+    if xhs_text:
+        text += "\n" + xhs_text
+    if bad := save_subject_flag(text, spec_player_names(spec)):
+        problems.append(
+            "「拿到 N 个盘点」之后接「救/保住」，没写出是谁在救——读者会把"
+            "主语接成拿到点的那个人：" + "；".join(bad))
+
+    if hits := _hits(BILINGUAL_MENTION, voiced):
+        problems.append(
+            f"文案里提了字幕这类制作规格：{hits}——读者关心这场球发生了什么，"
+            f"不关心我们用什么字幕方案做的（2026-08-19 的规矩）")
+    return problems

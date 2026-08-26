@@ -435,8 +435,11 @@ def test_发完要把已推送记进仓库():
     """
     body = _yaml_only(WORKFLOW.read_text(encoding="utf-8"))
     record = body[body.index("--record"):]
-    assert "git commit" in record and "git push" in record, (
-        "记了 pushed.json 却没提交，下一次触发会再发一遍")
+    # push 走共享重试脚本（tools/git_push_retry.sh，2026-08-26 收的）：
+    # 裸 push 撞上别的自动任务刚推过 main 就红，而这一步红掉的样子是
+    # 「微信已发、标记没落库」——下一次触发会再发一遍。
+    assert "git commit" in record and "push_with_rebase_retry" in record, (
+        "记了 pushed.json 却没提交/没推——下一次触发会再发一遍")
 
 
 def test_记已推送要排在发微信之后():
