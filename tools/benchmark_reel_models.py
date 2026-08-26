@@ -41,12 +41,12 @@ def deepseek_score(editorial: dict | None, push: dict | None) -> tuple[int, list
     narration = editorial.get("narration") or []
     if isinstance(hooks, list) and len(hooks) == 2 and all(
             1 <= len(str(line).strip()) <= 10 for line in hooks):
-        score += 15
+        score += 10
     else:
         issues.append("hook 不是两行且每行 1-10 字")
     if all(str(editorial.get(field) or "").strip()
            for field in ("question", "thesis", "human_context")):
-        score += 15
+        score += 10
     else:
         issues.append("question/thesis/human_context 不完整")
     if (isinstance(beats, list) and isinstance(narration, list)
@@ -86,6 +86,10 @@ def deepseek_score(editorial: dict | None, push: dict | None) -> tuple[int, list
         score += 10
     else:
         issues.append("推送标题/导语不完整或标题超过 20 字")
+    # The positive checks add up to exactly 100.  Keep that invariant explicit:
+    # an answer with a recorded deficiency must never still be displayed as 100
+    # merely because an earlier version of the rubric had surplus points that
+    # were hidden by ``min(score, 100)``.
     score = min(score, 100)
     leaked = ("决胜盘", "四比一", "连丢四局", "五比四", "多拿五分",
               "第四次交手", "四次交手", "4次交手", "半小时",

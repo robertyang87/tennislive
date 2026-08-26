@@ -101,11 +101,15 @@ def normalize_editorial_for_speech(value):
     if isinstance(value, list):
         return [normalize_editorial_for_speech(item) for item in value]
     if isinstance(value, str):
-        return re.sub(
+        value = re.sub(
             r"(?<!\d)(\d{1,3})\s*[%％]",
             lambda found: "百分之" + _spoken_integer(int(found.group(1))),
             value,
         )
+        # Models occasionally insert an English-style word space between two
+        # Chinese words (for example ``今天 他``).  It is audible as an
+        # unnatural pause in TTS and should not survive into narration.
+        return re.sub(r"(?<=[\u3400-\u9fff])\s+(?=[\u3400-\u9fff])", "", value)
     return value
 
 
