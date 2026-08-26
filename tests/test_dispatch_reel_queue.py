@@ -256,11 +256,23 @@ def test_render质检落库后自动派push_only且本趟不直接发送():
     assert body.index("- name: 查成片本身合不合格") < body.index(
         "- name: 成片发到 Release（不进 git）"
     ) < body.index("- name: 提交产物") < body.index(
+        "- name: render 质检落库后读取 spec 自动推送规则"
+    ) < body.index(
         "- name: render 质检落库后自动派发微信推送"
     ), "自动派发必须在 L2、Release 探活和提交全部成功之后，不能只看 render 成功信号"
+
+    gate = body[body.index("- name: render 质检落库后读取 spec 自动推送规则") :]
+    gate = gate[: gate.index("- name: ", 10)]
+    assert "mode == 'render'" in gate and "github.ref_name == 'main'" in gate, (
+        "spec 自动推送门禁只能在 main 的 render 落库后运行；特性分支要等合并触发")
+    assert "auto_push_gate.py" in gate and "--changed" in gate, (
+        "render 自动推送必须复用完整发布门禁，不能在 YAML 里另写一份简化判断")
+
     dispatch = body[body.index("- name: render 质检落库后自动派发微信推送") :]
     dispatch = dispatch[: dispatch.index("- name: ", 10)]
     assert "mode == 'render'" in dispatch and "inputs.push == 'true'" in dispatch
+    assert "steps.render_auto_gate.outputs.found == 'true'" in dispatch, (
+        "表单默认 push=false 不能压掉 spec 的 push.auto=true；质检通过后必须自动派发")
     assert "gh workflow run match-reel.yml" in dispatch
     assert "-f mode=push" in dispatch and "-f push=true" in dispatch
 
