@@ -182,6 +182,17 @@ def test_采访草稿转正那一刻也要过全套措辞判据():
         "旧的单条拦截该被全套判据取代——两份并存必分叉")
 
 
+def test_采访模板产出的文案本身要过全套判据():
+    """上一条是源码扫描（防「把规格话术写回模板」），这条真调模板：
+    xhs_copy 的产出直接过 check_interview_copy_wording——源码扫描只认
+    BILINGUAL 那几个词，模板哪天写进「几成几」「四强」之类，只有这条抓得到。"""
+    sys.path.insert(0, str(Path("tools").resolve()))
+    from promote_interview_draft import xhs_copy  # noqa: PLC0415
+
+    spec = {"match": {"winner": "伊埃拉", "loser": "帕克斯"}}
+    assert check_interview_copy_wording({}, xhs_copy(spec)) == []
+
+
 def test_模型草稿转正那一刻也要过措辞判据():
     """promote 是模型文案进入可发布池的门；不拦的话要等下一次人类 push 才在
     main CI 上红，而那时已经渲染/发布了。"""
