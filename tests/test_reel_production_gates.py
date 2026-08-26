@@ -231,6 +231,19 @@ def test_visual_story写双语原声冷开场并在末尾完整兑现():
     assert out["segments"][-1]["end"] >= out["segments"][0]["end"]
 
 
+def test_英文原声只允许按已核实名单纠正asr人名():
+    visual = load("analyze_reel_visuals")
+    names = ["Arthur Fils", "Flavio Cobolli"]
+    assert visual.english_name_only_edit(
+        "It is feast into the final", "It is Fils into the final", names)
+    assert visual.english_name_only_edit(
+        "It is Fils into the final", "It is Fils into the final", names)
+    assert not visual.english_name_only_edit(
+        "It is feast into the final", "It is Fils into the semifinal", names)
+    assert not visual.english_name_only_edit(
+        "It is feast into the final", "It is the final", names)
+
+
 def _ready_draft(tmp_path: Path) -> dict:
     photo = tmp_path / "cover.jpg"
     photo.write_bytes(b"photo")
