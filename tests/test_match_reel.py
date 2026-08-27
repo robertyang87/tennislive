@@ -12942,9 +12942,13 @@ def test_记分条回贴盖住居中窗口裁掉的残条(tmp_path, capsys):
     左缘裁到——`score_inset` 从同一帧把整条板抠出来贴回画面带左下，正好盖住
     残条。判据**真跑 ffmpeg 量像素**，不查滤镜串：
 
-    合成源片在板的位置画两截色块——绿 [104,360]、红 [360,616]（y∈[888,978]）。
-    居中窗口左缘 312：不回贴时画面左下只有红（绿整截在窗外，这就是残条的
-    形状）；回贴后同一片采样区必须是**绿**——那截绿只有从贴上去的板里来。
+    合成源片在板的位置画三截色块——绿 [104,360]、红 [360,616]、蓝 [616,736]
+    （y∈[888,978]；蓝模拟**深盘长出来的比分列**——美网每完成一盘板右缘
+    +39px）。居中窗口左缘 312：不回贴时画面左下只有红（绿整截在窗外，这就是
+    残条的形状）；回贴后同一片采样区必须是**绿**——那截绿只有从贴上去的板里来。
+    box 写到 736（最宽状态）时蓝必须跟着进来；box 只写到 616（按当前帧量的）
+    时蓝被贴片盖住、整个消失——这正是「尽量把五盘大战的比分能包括进来」
+    要防的静默丢列。
 
     反向验证过：把 cut_segment 的 box 分支拆掉 → 「回贴后该看见板的左半」红；
     把 overlay 落点的 BAND_TOP 拿掉 → 同一条红（贴错了行盖不住采样区）。
@@ -12961,7 +12965,8 @@ def test_记分条回贴盖住居中窗口裁掉的残条(tmp_path, capsys):
         ["ffmpeg", "-y", "-v", "error", "-f", "lavfi", "-i",
          "color=c=white:s=1920x1080:r=25,"
          "drawbox=x=104:y=888:w=256:h=90:color=green:t=fill,"
-         "drawbox=x=360:y=888:w=256:h=90:color=red:t=fill",
+         "drawbox=x=360:y=888:w=256:h=90:color=red:t=fill,"
+         "drawbox=x=616:y=888:w=120:h=90:color=blue:t=fill",
          "-t", "0.6", "-pix_fmt", "yuv420p", str(src)], check=True)
 
     def _mean_rgb(frame: Path, box: tuple[int, int, int, int]):
@@ -12974,30 +12979,44 @@ def test_记分条回贴盖住居中窗口裁掉的残条(tmp_path, capsys):
         # 采样区（画布坐标）：x∈[60,180] 落在贴回来的板的**左半**——
         # 居中窗口自己看不见那一截（它对应源片 x<312 之外的 [176,320]）。
         probe_box = (60, 885, 180, 935)
-        for inset_on in (True, False):
+        # 蓝列（源片 [616,736]）在最宽 box 的贴片里落在
+        # [(616−104)×0.833, (736−104)×0.833] ≈ [427,527]
+        deep_box = (440, 885, 515, 935)
+        for case in ("narrow", "wide", "off"):
+            box = {"narrow": (104, 888, 616, 978),
+                   "wide": (104, 888, 736, 978),
+                   "off": None}[case]
             seg = reel.Segment(start=0.0, end=0.4, cx=0.5, narration="",
-                               track=False,
-                               score_inset=(104, 888, 616, 978)
-                               if inset_on else None)
-            out = tmp_path / f"seg_{inset_on}.mp4"
+                               track=False, score_inset=box)
+            out = tmp_path / f"seg_{case}.mp4"
             reel.cut_segment(src, seg, out, 1920)
-            frame = tmp_path / f"f_{inset_on}.png"
+            frame = tmp_path / f"f_{case}.png"
             subprocess.run(
                 ["ffmpeg", "-y", "-v", "error", "-i", str(out),
                  "-frames:v", "1", str(frame)], check=True)
             r, g, b = _mean_rgb(frame, probe_box)
-            if inset_on:
-                assert g > 90 and r < 80, (
-                    f"回贴后该看见板的左半（绿），量到 RGB=({r:.0f},{g:.0f},"
-                    f"{b:.0f})——残条没被整条板盖住")
-                # 贴的只有板那一块：右边的画面不许被糊到
-                r2, g2, b2 = _mean_rgb(frame, (560, 885, 680, 935))
-                assert min(r2, g2, b2) > 200, (
-                    f"板右侧该还是主窗口的白，量到 ({r2:.0f},{g2:.0f},{b2:.0f})")
-            else:
+            if case == "off":
                 assert r > 150 and g < 90, (
                     f"不回贴的对照组该只剩红色残条，量到 RGB=({r:.0f},{g:.0f},"
                     f"{b:.0f})——对照组不成立的话，上面那半张绿的证明不了回贴")
+                continue
+            assert g > 90 and r < 80, (
+                f"{case}: 回贴后该看见板的左半（绿），量到 RGB=({r:.0f},"
+                f"{g:.0f},{b:.0f})——残条没被整条板盖住")
+            rd, gd, bd = _mean_rgb(frame, deep_box)
+            if case == "wide":
+                assert bd > 90 and rd < 80, (
+                    f"box 按最宽状态写时，深盘那几列（蓝）必须跟着贴进来，"
+                    f"量到 RGB=({rd:.0f},{gd:.0f},{bd:.0f})")
+                r2, g2, b2 = _mean_rgb(frame, (620, 885, 700, 935))
+                assert min(r2, g2, b2) > 200, (
+                    f"贴片右侧该还是主窗口的白，量到 ({r2:.0f},{g2:.0f},{b2:.0f})")
+            else:
+                assert min(rd, gd, bd) > 200, (
+                    f"box 按当前帧量（616）时深盘的列被贴片盖住整个消失"
+                    f"（这儿该是贴片带进来的白），量到 ({rd:.0f},{gd:.0f},"
+                    f"{bd:.0f})——这条断言画的就是那个静默丢列的样子，"
+                    "它是「box 要按最宽状态写」的证据，不是要修的 bug")
 
         # 窗口左缘没越过板左缘时**跳过回贴并出声**（贴了反而叠重影）
         seg = reel.Segment(start=0.0, end=0.4, cx=0.36, narration="",
@@ -13067,3 +13086,7 @@ def test_score_inset的形状校验和scorebox的死键闸(capsys):
     assert "[score]" in out and "[3]" in out, (
         "没开回贴的段要在 --dry-run 里点名——漏开的样子是画面左下留一截残条，"
         "而渲染和质检对它一声不吭")
+    assert "最宽状态" in out, (
+        "带式 + scorebox 要在 --dry-run 里提醒「按板的最宽状态写」——"
+        "账号所有者：「尽量把五盘大战的比分能包括进来」；按当前帧量的 box "
+        "会把深盘长出来的列静默裁掉，而那一天没有任何闸会出声")
