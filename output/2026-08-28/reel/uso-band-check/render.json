@@ -1,0 +1,43 @@
+{
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 3.998,
+  "layout": "band",
+  "segments_seconds": 193.16,
+  "topbar": {
+    "line1": "2026 美网资格赛 第二轮",
+    "line2": "郑钦文 6-1 7-5 布雷尔",
+    "start": 1.2,
+    "end": 194.36
+  },
+  "film_seconds": 198.365,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "azure",
+  "narration_seconds": {
+    "1": 8.496,
+    "2": 7.296,
+    "3": 7.056,
+    "4": 10.464,
+    "5": 10.248,
+    "6": 11.76,
+    "7": 13.968
+  },
+  "production_sla": {
+    "version": 1,
+    "pipeline": "match-reel",
+    "slug": "uso-band-check",
+    "received_at": "2026-08-27T17:59:38Z",
+    "artifact_ready_at": "2026-08-27T18:06:09Z",
+    "elapsed_seconds": 391.435,
+    "budget_seconds": 600,
+    "met": true,
+    "render_seconds": 238.435,
+    "pre_render_seconds": 153.0
+  },
+  "film_sha256": "e74449a9820f327276105fa576343018ea907fc8585bb1a5d937ff99c677fff1",
+  "film_bytes": 97309212,
+  "qc_attestation_sha256": "75c3a9f5f9af40651f68ac5cc863b7d8f5610704f393c9f063ca0e0549d52184",
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-uso-band-check/uso-band-check.mp4",
+  "video_bytes": 97309212
+}
