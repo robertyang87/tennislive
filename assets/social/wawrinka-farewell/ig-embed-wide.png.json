@@ -1,0 +1,21 @@
+{
+  "url": "https://www.instagram.com/p/DcdvcjaAHLh/embed/captioned/",
+  "captured_at": "2026-08-27T11:05:43Z",
+  "page_title": "Instagram",
+  "selector": "",
+  "waited_for": "",
+  "fallback_full_viewport": true,
+  "viewport": [
+    500,
+    1400
+  ],
+  "device_scale_factor": 3,
+  "mobile": true,
+  "user_agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1",
+  "bytes": 1667886,
+  "sha256": "d7385f09bd7ca7db7cbd284eadcb6df92c69b65f2d800301f261a4a679c8360a",
+  "chromium": "/home/runner/.cache/ms-playwright/chromium-1234/chrome-linux64/chrome",
+  "revision": 1,
+  "why": "和 `ig-embed` 是**同一个页面、同一套手机 UA**，只把视口从 393 放到 500。为什么要这一张：393 那版量下来内容 1179×1360，铺进 1080×1440 之后底边落在 1305px，而字幕上锚在 1284——**过不了 `evidence_card_overlaps_subtitle`**。而那 1360 里一格都裁不掉：正文最后一行「Forever grateful. Forever New York」就在 1345，裁短就把旁白引的那句话裁没了。\n视口放宽之后照片按比例长高、而**正文换行变少**（正文高度大致和视口宽度成反比），总高/宽因此降下来。按 393 那版实测拟合，500 宽估出来约 1.06，而闸要求 ≤1.111。⚠️ 这是**估的**——两张都截回来，打开看过、量过再决定片子里用哪一张。",
+  "request_file": "data/social_shot_requests/wawrinka-farewell.json"
+}
