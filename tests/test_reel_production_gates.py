@@ -708,9 +708,7 @@ def test_自动产的spec静音悬案按硬闸算_手写只报():
     auto = {"_production": {"status": "ready_for_render"}}
     hard, soft = reel.silence_findings(auto, [seg], probes, urls)
     assert hard and not soft, (hard, soft)
-    hand_hard, hand_soft = reel.silence_findings({}, [seg], probes, urls)
-    # 同一个洞：手写 spec 报出来但不拦（这一例旁白最长估也盖不住——必红仍是硬的
-    # ——所以换一个「大概率」的形状验手写那半）
+    # 必红的对手写 spec 也是硬的；「大概率」那一档才分严格度，用下面这形状验
     prob_seg = reel.Segment(start=0.0, end=12.0, cx=None,
                             narration="六比一。", source="")
     prob_probes = {"URL": {"silent_audio": [[10.0, 11.5]]}}
