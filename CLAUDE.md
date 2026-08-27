@@ -12087,3 +12087,39 @@ zheng-burel 的三连打回里两次是渲后数字静音闸（run 33000830101�
 ⚠️ 剩下的返工大头（编辑/来源类打回要等会话来改）的解法是「QC 判据自动回喂
 模型修一轮」——#599/#601 已给备料阶段做过同款，推广到渲后 QC 是下一步，
 动它要避开教学线会话正在改的 promote/finalize 链。
+
+#### ⭐⭐ 上面那句「下一步」2026-08-27 做掉了：render 红了判据自动回喂，修一轮再自渲
+
+耗时审计定案之后账号所有者一句「那帮我处理吧」。链路本身每一跳早就是自触发的
+（probe 末尾 dispatch render、finalize 末尾 dispatch render、render 末尾
+dispatch push），**唯一没有自动闭环的就是「render 红了」这一站**：QC 打回之后
+什么都不发生，等一个会话来注意到——zheng-burel 那条 QC 18:47 打回、19:25 才有
+修复提交，**空转 38 分钟**，而三次打回里两次的修法完全是机械的。
+
+现在 `tools/repair_reel_spec.py` ＋ match-reel.yml 的 `if: failure()` 修复步
+把这一站闭上：dry-run / render / QC 三步的输出 tee 进
+`/tmp/render-findings.log`（**pipefail 不能省**，不带它 tee 会把失败吞成绿），
+render 红了就把判据原话回喂 DeepSeek 修一轮 → 机械复检 → commit → 重新
+dispatch render。**有界**在五层，缺一层都是往内容里放开一个口子：
+
+| 层 | 边界 |
+|---|---|
+| 谁 | 只动自动 spec（`_production.status == "ready_for_render"`），手写的留给会话 |
+| 什么 | 只许两类编辑：段窗口 start/end；旁白**只删不改写**（逐字符子序列判定——模型不可能借「修一下」发明新事实）。quote 段一个字段都不许动（双语字幕钉在真实时刻上） |
+| 判据 | 先过内容类过滤（`CONTENT_CLASS` 只认 `[不合格]`/必红/装不下这类**失败专属**标记——裸的「不合格」会把「render 全绿、死在后面 push 步」那种 run 的绿日志喂给模型，「共 0 项不合格」里就有这三个字） |
+| 几轮 | 最多 **2 轮**（`_production.qc_repair_attempts` 写进 spec 跨 run 生效），修不好还给会话 |
+| 落盘 | 修完先过**同一套生产闸**（dry-run 子进程 = validate_spec + 措辞 seat + probe 层含静音预判），闸红一个字节都不写 |
+
+⚠️ **修复步的顺序钉死：先 commit 再 dispatch。** render 组是
+cancel-in-progress——新 run 一启动就把本 run（正在失败的这趟）掐掉，commit
+排在 dispatch 后面就会跟着一起死，修订静默丢失。
+
+⚠️ 工具**永远 exit 0**（skip/waiting 是正常结果），工作流靠 `git diff` 判断
+有没有真的修出一版；判据
+`test_判据回喂只删不改写…` 等四条，删字判定 / 本地闸不落盘 / tee 接线三个方向
+分别反向验证过。job 级 timeout 45 → 53（新步骤声明 8 分钟最坏预算，
+`test_job级超时要兜得住…` 的账要跟着平）。
+
+⚠️ **故意没动 promote/finalize 那一带**（教学线会话在改）：修复环只挂在
+render 失败之后，输入是判据文本，输出是 spec 的窗口/删字修订——和 #599
+（MiniMax 机械证据自修）、#601（DeepSeek 算术反馈重试）同形状，推广到渲后。

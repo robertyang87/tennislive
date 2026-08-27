@@ -177,10 +177,10 @@ concurrency:
 jobs:
   reel:
     runs-on: ubuntu-latest
-    # 45 = 各步骤声明的最坏预算之和（43：dry-run 闸的 3 分钟是新加的一笔）
-    # 加两分钟余量——步骤自己还在正常重试时不许被 job 级的壳先砍掉，
-    # 判据 test_job级超时要兜得住各步骤自己声明的最坏预算之和。
-    timeout-minutes: 45
+    # 53 = 各步骤声明的最坏预算之和（51：dry-run 闸 3 分钟 + 判据回喂修复步
+    # 8 分钟是后加的两笔）加两分钟余量——步骤自己还在正常重试时不许被 job 级
+    # 的壳先砍掉，判据 test_job级超时要兜得住各步骤自己声明的最坏预算之和。
+    timeout-minutes: 53
     steps:
       # 600 秒只算「生产输入已齐 → 我们自己的 MP4 落盘」。发布/Pages 是另一条
       # SLO，不得反过来污染成片耗时；自动 dispatch 把确认链接的时刻传进来，
@@ -449,6 +449,10 @@ jobs:
           || github.event.inputs.mode == 'narration'
         timeout-minutes: 3
         run: |
+          # tee 进 /tmp/render-findings.log：render 红了之后「判据回喂模型修一轮」
+          # 那一步要拿这份**确定性的原话**当输入（tools/repair_reel_spec.py）。
+          # pipefail 不能省——GitHub 的 bash -e 默认不带它，tee 会把失败吞成绿。
+          set -o pipefail
           SLUG="${{ github.event.inputs.slug }}"
           SPEC="specs/reels/${SLUG}.json"
           test -f "$SPEC" || { echo "::error::找不到 $SPEC"; exit 1; }
@@ -467,7 +471,7 @@ jobs:
             echo "::warning::dry-run 的 probe 层（切点/死球/片长）这趟是哑的，先跑一趟 mode=probe"
           fi
           python tools/build_match_reel.py render --dry-run \
-            --spec "$SPEC" --outdir /tmp/dryrun
+            --spec "$SPEC" --outdir /tmp/dryrun 2>&1 | tee -a /tmp/render-findings.log
 
       - name: 缓存 Chromium
         if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover'
@@ -1025,12 +1029,15 @@ jobs:
           test -f "$SPEC" || { echo "::error::找不到 $SPEC"; exit 1; }
           # 600 秒是性能目标，不是内容闸。超线照样做完、照样过 L2 和发布；
           # `finish` 会在产物与 job summary 留 FAIL + warning，供后续定点修复。
+          # tee + pipefail：失败原话（TTS 装不下 / 哑场 / ReelError）要留给
+          # 「判据回喂模型修一轮」那一步当输入，见 dry-run 步的同款注释。
+          set -o pipefail
           RENDER_STARTED=$(date -u +%FT%TZ)
           python tools/build_match_reel.py render \
             --spec "$SPEC" \
             --voice "${{ github.event.inputs.voice }}" \
             --rate "${{ github.event.inputs.rate }}" \
-            --outdir "$OUTDIR"
+            --outdir "$OUTDIR" 2>&1 | tee -a /tmp/render-findings.log
           python tools/video_sla.py finish \
             --received-at "${{ steps.production_clock.outputs.received_at }}" \
             --render-started-at "$RENDER_STARTED" \
@@ -1073,9 +1080,13 @@ jobs:
       - name: 查成片本身合不合格
         if: github.event.inputs.mode == 'render'
         run: |
+          # tee + pipefail：QC 的「[不合格] …」原话要留给「判据回喂模型修一轮」
+          # 那一步当输入，见 dry-run 步的同款注释。
+          set -o pipefail
           python tools/check_reel_landed.py \
             --slug "${{ github.event.inputs.slug }}" \
-            --film "${{ steps.paths.outputs.outdir }}/${{ github.event.inputs.slug }}.mp4"
+            --film "${{ steps.paths.outputs.outdir }}/${{ github.event.inputs.slug }}.mp4" \
+            2>&1 | tee -a /tmp/render-findings.log
 
       # **成片一律走 GitHub Release，不进 git。**
       #
@@ -1441,6 +1452,45 @@ jobs:
           done
           [ "$SENT" = 1 ] || {
             echo "::error::成片已质检并落库，但 push-only 连续三次派发失败"; exit 1; }
+
+      # ⭐ render 红了不再干等会话来修：把 tee 捕获的判据原话回喂 DeepSeek
+      # 有界修一轮（只动自动 spec 的窗口/旁白删字，最多 2 轮，全部边界见
+      # tools/repair_reel_spec.py 的 docstring）。修出来的 spec 先过同一套
+      # 本地闸（工具内部跑 dry-run 子进程）才会落盘，所以这里只看 git diff。
+      #
+      # **顺序钉死：先 commit，再 dispatch。** render 组是 cancel-in-progress
+      # （见顶部 concurrency）——新 run 一启动就会把本 run 掐掉，commit 排在
+      # dispatch 后面就会跟着一起死，修订静默丢失。
+      - name: render 红了把判据回喂模型修一轮（只动自动 spec）
+        if: >-
+          failure() && github.event.inputs.mode == 'render'
+          && github.ref_name == 'main'
+        timeout-minutes: 8
+        env:
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          SLUG="${{ github.event.inputs.slug }}"
+          SPEC="specs/reels/${SLUG}.json"
+          test -f /tmp/render-findings.log || { echo "[skip] 没捕获到判据文本（失败在 tee 之前，多半是环境错）"; exit 0; }
+          test -f "$SPEC" || { echo "[skip] 找不到 $SPEC"; exit 0; }
+          python tools/repair_reel_spec.py \
+            --spec "$SPEC" \
+            --findings /tmp/render-findings.log \
+            --outdir "${{ steps.paths.outputs.outdir }}" \
+            --write
+          git diff --quiet -- "$SPEC" && { echo "[skip] 本轮没有修出可落盘的版本"; exit 0; }
+          git config user.name "Claude"
+          git config user.email "noreply@anthropic.com"
+          git add "$SPEC"
+          git commit -m "reel: qc-repair $SLUG（判据回喂自动修一轮）"
+          source tools/git_push_retry.sh
+          push_with_rebase_retry main || exit 1
+          gh workflow run match-reel.yml --ref main \
+            -f mode=render \
+            -f slug="$SLUG" \
+            -f received_at="${{ github.event.inputs.received_at }}"
+          echo "[repair] 修订已进 main，已重新派发 render"
 
       # 推送**必须排在提交之后**——正文里的成片链接和复制页链接都指向仓库里的
       # 文件，还没提交上去就是 404。这一段的注释一直写着「推送是最后一步：
