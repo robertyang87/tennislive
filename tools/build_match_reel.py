@@ -144,6 +144,9 @@ CROP_W = 810
 # 裁切窗口在源片里的纵向落点。横幅源片恒为 0（窗口高度就是源片高度，没得挪）；
 # **竖版源片才用得上**——那种源片宽度顶满、要在高度上取一段，见 `resolve_crop`。
 CROP_Y = 0
+# 版式：full=全出血（现行默认），band=带式（spec 顶层 `"layout": "band"`）。
+# `resolve_crop()` 在 render 开跑时按 spec 改写；带式的账见下面那组 BAND_* 常量。
+LAYOUT = "full"
 # **成片是 3:4（1080×1440），不是 9:16。** 定这个画幅的理由是「尽可能多保住主体」：
 #
 # - 小红书的视频**静态展示就是 3:4**。9:16 的成片在信息流里会被裁掉上下两条，
@@ -159,6 +162,30 @@ VIDEO_H = CARD_H                    # 1080 宽下 3:4 的高 = 1440
 # 卡底（1680）往上 156px。这里整幅画布就是那张卡，所以同样是「卡底往上 156」，
 # 换算过来是 1440-156=1284。**保的是同一个物理位置**——量出来的那组数没变。
 _REEL_MARGIN_V = VIDEO_H - (CARD_TOP + CARD_H - _ASS_MARGIN_V)
+
+# ⭐ 带式版式（spec 顶层 `"layout": "band"`）。账号所有者 2026-08-27 为美网定的：
+# 「字幕和顶栏可以放到画面外，保持 3:4」——外框仍是 1080×1440（海报、推送、
+# 平台显示全不变），里面拆三条带：顶带放顶栏、中间放 6:5 的宽画面、底带放字幕。
+#
+# 为什么是 6:5：美网世界 feed 的记分条浮在左下 x∈[104,~733]（右缘随盘数
+# +39px/列右移，五盘第五盘外推 ~733），球场近端右边线 ~1370——1296px 的窗口
+# （左缘 ~98）是「整条记分条 + 整个球场」都装下的最矮画幅。全部实测和各档
+# 对比图在 docs/us-open-scoreboard-aspect.md，别按感觉调这几个数。
+#
+# 不写 layout 的 spec 走原全出血路径，一个字节都不变——巡回赛片子零影响。
+BAND_PIC_RATIO = 6 / 5      # 画面带的源片窗口画幅（宽:高）
+BAND_TOP = 132              # 顶带高：TOPBAR_H=126 + 6px 呼吸，顶栏原样落进带里
+BAND_PIC_H = 900            # 6:5 窗口缩到 1080 宽的高（1080 ÷ 6×5）
+BAND_BG = "0x0D1016"        # 带底色：近黑偏蓝，接美网深蓝但不抢画面
+# 带式的默认窗口中心。全出血默认 0.5（源片正中）；带式的全部意义是把左下那条
+# 记分条装进画面，居中会把它裁在 x=312——残条又回来了，而那正是这套版式要杀的
+# 东西。0.385×1920−648=91.2：板左缘实测 101~104，留 ~10px 余量；窗口右缘
+# 91+1296=1387，球场近端右边线 ~1370 也留有余量——两头都不贴死。
+# 个别段构图要另定照旧写 seg.cx，人说了算。
+BAND_DEFAULT_CX = 0.385
+# 带式下字幕锚进底带：画面带底边 132+900=1032，再留 32px 呼吸 → 1064。
+# 单行 68px 到 ~1132；双语 quote 两行到 ~1225，仍在平台底部 UI 区之上。
+BAND_MARGIN_V = BAND_TOP + BAND_PIC_H + 32
 
 # 可选的比赛信息顶栏。它只给「赛场之上」需要持续交代比赛背景的片子启用：
 # 封面仍然完整铺满，比赛画面从封面之后开始放进这个独立的信息带，片尾品牌页
@@ -969,8 +996,8 @@ def check_archival_fit(spec: dict, segments: list["Segment"]) -> None:
 
 
 def resolve_crop(source_w: int, source_h: int, crop_y: int | None = None,
-                 archival: str = "") -> None:
-    """在源片里取**最大的 3:4 窗口**，太小的源片直接拒掉。
+                 archival: str = "", layout: str = "full") -> None:
+    """在源片里取**最大的 3:4 窗口**（带式版式取 6:5 窗口），太小的源片直接拒掉。
 
     **下到 360p 也算「下载成功」**——yt-dlp 退到低画质那一档时不会报错，
     看起来一切正常，直到 `crop=810:1080` 撞上 640×360 的源片才炸在第一段切片上
@@ -987,7 +1014,8 @@ def resolve_crop(source_w: int, source_h: int, crop_y: int | None = None,
     居中会把台标留在画面里。黄泽林那条量出来是 345（渲了 310/345/380 三档比
     出来的：310 台标还在、记分条被切掉一行，380 白丢 35px）。
     """
-    global CROP_H, CROP_W, CROP_Y
+    global CROP_H, CROP_W, CROP_Y, LAYOUT
+    LAYOUT = layout or "full"
     floor = MIN_ARCHIVAL_H if archival else MIN_SOURCE_H
     if source_h < floor:
         raise ReelError(
@@ -1003,6 +1031,23 @@ def resolve_crop(source_w: int, source_h: int, crop_y: int | None = None,
     if archival:
         print(f"[存档] 主源 {source_w}×{source_h} 低于常规下限 {MIN_SOURCE_H}，"
               f"按认领放行：{archival}")
+    if LAYOUT == "band":
+        # 带式：高度顶满、窗口 6:5。竖版/太窄的源片装不下这个窗口——带式是给
+        # 16:9 转播源设计的（画面带里要同时装记分条和整个球场），窄源片直接拒，
+        # 别静默退回全出血（退回去的样子和「忘了写 layout」一模一样）。
+        CROP_H = source_h // 2 * 2
+        CROP_W = int(round(CROP_H * BAND_PIC_RATIO)) // 2 * 2
+        CROP_Y = 0
+        if CROP_W > source_w:
+            raise ReelError(
+                f"带式版式要在源片里取 6:5 窗口（{CROP_W}×{CROP_H}），"
+                f"而源片只有 {source_w}×{source_h} 宽。"
+                "带式是给 16:9 横幅转播源设计的——竖版或窄源片用不了，"
+                "把 spec 顶层的 `\"layout\": \"band\"` 拿掉走全出血。")
+        print(f"[裁切] 源片 {source_w}×{source_h} → 带式 6:5 窗口 "
+              f"{CROP_W}×{CROP_H}（画面带 {VIDEO_W}×{BAND_PIC_H}，"
+              f"顶带 {BAND_TOP}px / 底带 {VIDEO_H - BAND_TOP - BAND_PIC_H}px）")
+        return
     if source_w * 4 >= source_h * 3:          # 比 3:4 宽：高度顶满
         CROP_H = source_h // 2 * 2
         CROP_W = int(round(CROP_H * 3 / 4)) // 2 * 2
@@ -2063,6 +2108,21 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
                   {"tl", "tr", "bl", "br"}]
     if bad_corner:
         raise ReelError(f"第 {bad_corner} 段的 `inset.corner` 只能是 tl/tr/bl/br")
+    layout = spec.get("layout")
+    if layout not in (None, "band"):
+        raise ReelError(
+            f'spec.layout 只认 "band"（带式版式：顶栏和字幕放进上下带，'
+            f"画面 6:5 装下整条记分条），拿到的是 {layout!r}。"
+            "不写就是原来的全出血 3:4。")
+    if layout == "band":
+        bad_contain = [i + 1 for i, s in enumerate(segments)
+                       if s.fit == "contain"]
+        if bad_contain:
+            raise ReelError(
+                f"第 {bad_contain} 段写了 `fit: contain`，和带式版式不兼容——"
+                "带式的画面带本来就是 6:5 宽画幅（源片的 67% 宽），"
+                "「两个人分得很开」那种画面它本来就装得下；"
+                "构图要挪窗口就写 seg.cx，别用 contain。")
     bad_motion = [i + 1 for i, s in enumerate(segments) if s.inset
                   and str(s.inset.get("motion", "")) not in {"", "editorial"}]
     if bad_motion:
@@ -2109,7 +2169,7 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
 # 出现过的字段名去对，少一个就红。
 _REAL_FIELDS: dict[str, tuple[str, ...]] = {
     "spec": ("archival", "conform", "cover", "crop_y", "crop_zoom",
-             "mixed_fps", "primary",
+             "layout", "mixed_fps", "primary",
              "outro", "push", "rate", "segments", "silent_source", "slug",
              "source_audio", "source_url", "sources", "stats", "subtitle_top",
              "topbar", "voice", "editorial"),
@@ -2505,7 +2565,10 @@ def track_shots(sources: dict[str, Path], segments: list["Segment"],
     """
     runs: list[list[int]] = []
     for index, seg in enumerate(segments):
-        trackable = seg.fit != "contain" and seg.track
+        # 带式版式一律不摇：那个窗口占源片 67% 宽、主体本来就不容易出画，
+        # 而记分条钉在源片左下——窗口一跟着运动质心走，板就被摇出画面，
+        # 这套版式存在的理由（板全程在画面里）当场没了。
+        trackable = seg.fit != "contain" and seg.track and LAYOUT != "band"
         prev = segments[runs[-1][-1]] if runs else None
         joins = (runs and trackable
                  and abs(seg.start - prev.end) < 1e-3
@@ -2549,11 +2612,15 @@ def track_shots(sources: dict[str, Path], segments: list["Segment"],
     #
     # 摇的段有 `path` 时用不上这个值；**拿不到 path 时它就是兜底**，见下面。
     fixed = [s for s in segments if s.fit != "contain" and s.cx is None]
+    # 带式的默认不居中：那套版式的全部意义是把左下的记分条装进画面，
+    # 居中会把它裁在窗口左缘外——见 BAND_DEFAULT_CX 上面的账。
+    default_cx = BAND_DEFAULT_CX if LAYOUT == "band" else 0.5
     for seg in fixed:
-        seg.cx = 0.5
+        seg.cx = default_cx
     still = [s for s in fixed if not s.track]
     if still:
-        print(f"    [fixed] {len(still)} 段不摇，窗口取源片正中 cx=0.500")
+        where = ("窗口含住左下记分条" if LAYOUT == "band" else "窗口取源片正中")
+        print(f"    [fixed] {len(still)} 段不摇，{where} cx={default_cx:.3f}")
     for members in runs:
         start = segments[members[0]].start
         end = segments[members[-1]].end
@@ -2584,7 +2651,11 @@ def _overlay_chain(base: str, ins: dict) -> str:
     pad = int(round(float(ins.get("pad", 0.043)) * VIDEO_W))
     corner = str(ins.get("corner", "tl"))
     x = f"{pad}" if corner in ("tl", "bl") else f"W-w-{pad}"
-    y = f"{pad}" if corner in ("tl", "tr") else f"H-h-{pad}"
+    # 带式版式下角标要贴**画面带**的四角，不是画布的四角：画布顶角是顶栏的带、
+    # 底角是字幕的带，贴上去就压在顶栏/字幕上。纵向边距各加一条带的高度。
+    top_off = BAND_TOP if LAYOUT == "band" else 0
+    bot_off = (VIDEO_H - BAND_TOP - BAND_PIC_H) if LAYOUT == "band" else 0
+    y = f"{top_off + pad}" if corner in ("tl", "tr") else f"H-h-{bot_off + pad}"
     # **入场动效默认开**（`"animate": false` 关）：0.45s 淡入 + 36px 上浮。
     # 来路：抖音七批诊断里六批点名「动态文字/卡片要有动感」，这是其中唯一
     # 纯机械可加的一档。克制版——不做「跳出来」，和一屏一个强调色同一个审美。
@@ -2649,6 +2720,29 @@ def cut_still_segment(seg: Segment, dest: Path, tail: float = 0.0) -> Path:
     return dest
 
 
+def default_margin_v() -> int:
+    """字幕上锚的默认值：全出血在画面内老位置（1284），带式锚进底带（1064）。
+
+    spec 的 `subtitle_top` 照旧最大——那是「源片自己烧了记分条要让开」的口子，
+    这里只管没写的时候落在哪。
+    """
+    return BAND_MARGIN_V if LAYOUT == "band" else _REEL_MARGIN_V
+
+
+def _canvas_fit() -> str:
+    """把裁好的窗口铺上画布的那半截滤镜（末尾带逗号）。
+
+    全出血：直接缩满 1080×1440。带式：缩进画面带（1080×900）再用带底色 pad
+    出上下两条带——顶带给顶栏、底带给字幕，两样都不再压在画面上。
+    **写成一份**是因为 crop 和 track 两条路都要它：写两处必分叉，而分叉的样子
+    是「摇的段是全出血、不摇的段是带式」，同一条片子里两种版式。
+    """
+    if LAYOUT == "band":
+        return (f"scale={VIDEO_W}:{BAND_PIC_H}:flags=lanczos,"
+                f"pad={VIDEO_W}:{VIDEO_H}:0:{BAND_TOP}:color={BAND_BG},")
+    return f"scale={VIDEO_W}:{VIDEO_H}:flags=lanczos,"
+
+
 def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
                 path: list[tuple[float, int]] | None = None,
                 tail: float = 0.0) -> Path:
@@ -2702,18 +2796,18 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
             print(f"    [track] {seg.start:.1f}s 段 {len(path)} 个点，横摇 {span}px")
             chain = (f"sendcmd=f={_escape(cmds)},"
                      f"crop@c={CROP_W}:{CROP_H}:{path[0][1]}:0,"
-                     f"scale={VIDEO_W}:{VIDEO_H}:flags=lanczos,"
+                     f"{_canvas_fit()}"
                      f"{sp}fps={FPS_EXPR},setsar=1")
         else:
             # **声明了要摇却没拿到路径**，是退回固定中心——但要出声。
             # 不吭声的话，「跟踪抽帧失败」和「本来就不摇」在日志上一模一样，
             # 而这一段之所以写 `track: true`，正是因为固定中心装不下主体。
-            if seg.track:
+            if seg.track and LAYOUT != "band":
                 print(f"    [track] ⚠️ {seg.start:.1f}s 段声明了 track 但没跟出"
                       f"路径，退回固定中心 cx={seg.cx:.3f}——"
                       "主体如果在横向移动，这一段的构图要自己看一眼")
             chain = (f"crop={CROP_W}:{CROP_H}:{x}:{CROP_Y},"
-                     f"scale={VIDEO_W}:{VIDEO_H}:flags=lanczos,"
+                     f"{_canvas_fit()}"
                      f"{sp}fps={FPS_EXPR},setsar=1")
     # 所有 -i 必须排在滤镜/输出选项前面，否则 ffmpeg 会把 -vf 当成下一个输入的
     # 选项直接报错。源片是纯视频轨（人从网盘传来的那份就是），所以补一条静音轨
@@ -5638,7 +5732,8 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     FPS_EXPR, FPS = resolve_fps(source)
     print(f"源片 {source_w}×{source_h}，{probe_duration(source):.1f}s")
     resolve_crop(source_w, source_h, spec.get("crop_y"),
-                 archival_claims(spec).get(primary, ""))
+                 archival_claims(spec).get(primary, ""),
+                 layout=spec.get("layout") or "full")
     portrait = source_w * 4 < source_h * 3
 
     segments = parse_segments(spec, sources, primary)
@@ -5895,11 +5990,14 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
         voice_labels.append("[voutro]")
         print(f"[片尾] 口播落在 {offset:.2f}s，画面上已印着同样的话，不另排字幕")
 
-    margin_v = int(spec.get("subtitle_top", _REEL_MARGIN_V))
+    # 带式版式的字幕默认锚进底带（画面带之下），全出血维持老位置。
+    # `subtitle_top` 的人工覆盖照旧最大——那是「源片自己烧了记分条要让开」的口子。
+    default_margin = default_margin_v()
+    margin_v = int(spec.get("subtitle_top", default_margin))
     ass = write_subtitles(cues, outdir / "subtitles.ass",
                           height=VIDEO_H, margin_v=margin_v)
-    moved = "" if margin_v == _REEL_MARGIN_V else (
-        f"，比默认抬高 {_REEL_MARGIN_V - margin_v}px 让开源片自己的记分条")
+    moved = "" if margin_v == default_margin else (
+        f"，比默认抬高 {default_margin - margin_v}px 让开源片自己的记分条")
     print(f"字幕 {len(cues)} 行 → {ass.name}（画布 {VIDEO_W}×{VIDEO_H}，"
           f"上锚 MarginV={margin_v}{moved}，"
           f"左右 {_ASS_MARGIN_H}）")
@@ -5980,6 +6078,9 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
         # − 片尾 ＝ 封面」对片长，少了这一项那条恒等式会**恒假**，而一条常年红的
         # 检查和没有检查是同一个毛病。
         "outro_seconds": round(outro_secs, 3),
+        # 版式要落进产物：查成片的人从这儿知道字幕/顶栏该在带里还是画面上，
+        # 不用回头翻 spec（改 spec 不重渲是常事，产物记的才是渲的那一版）。
+        "layout": spec.get("layout") or "full",
         "segments_seconds": round(sum(s.length for s in segments), 3),
         "topbar": ({"line1": topbar[0], "line2": topbar[1],
                     "start": round(cover_secs, 3),
@@ -6607,8 +6708,12 @@ def topbar_filtergraph(cover_secs: float, segments_secs: float,
         "setpts=PTS-STARTPTS,"
         f"scale={VIDEO_W}:{VIDEO_H}:force_original_aspect_ratio=increase,"
         f"crop={VIDEO_W}:{VIDEO_H},"
-        f"drawbox=x=0:y=0:w=iw:h={TOPBAR_H}:color=black@0.45:t=fill,"
-        "setsar=1[match_canvas];"
+        # 全出血：顶栏压在画面上，垫一层半透明黑保住可读性。
+        # 带式：顶带本来就是实色（BAND_BG），再画这层会在 y=126~132 露出
+        # 一道两色接缝（drawbox 高 126、顶带高 132，差 6px）。
+        + ("" if LAYOUT == "band" else
+           f"drawbox=x=0:y=0:w=iw:h={TOPBAR_H}:color=black@0.45:t=fill,")
+        + "setsar=1[match_canvas];"
         f"[outro_src]trim=start={match_end:.3f},setpts=PTS-STARTPTS[outro];"
         "[cover][match_canvas][outro]concat=n=3:v=1:a=0,setpts=PTS-STARTPTS[base];"
         f"[base]subtitles={topbar_path}:fontsdir={fontsdir},"

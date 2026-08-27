@@ -12795,3 +12795,132 @@ def test_握手后只许接固定品牌片尾():
     assert spec.get("outro", True) is not False, (
         "这条片握手后仍要保留固定“网球时差”品牌片尾")
 
+
+
+def test_带式版式的段真的落在画面带里(tmp_path):
+    """spec 顶层 `"layout": "band"`（美网记分条那轮定的，账见
+    docs/us-open-scoreboard-aspect.md）：外框仍 1080×1440，段落改裁 6:5
+    （1296×1080）缩进画面带（1080×900、y=132 起），上下由带底色补齐——
+    顶带给顶栏、底带给字幕，两样都不再压在画面上。
+
+    **真跑一遍 cut_segment**（合成 1920×1080 纯白源片），两种版式都量像素：
+
+    - band：顶带(y 30~100)和底带(y 1150~1350)近黑、画面带(y 560~640)是白的。
+      查像素不查滤镜串——把 pad 换成别的写法照样得红
+    - 默认（不写 layout）：同一批坐标全是白的。**全出血一个字节不许变**，
+      这半张是回归钉：巡回赛片子不许被这次改动碰到
+
+    反向验证过：把 `_canvas_fit()` 的 band 分支拆掉 → band 那半红在「上下带
+    该近黑」；把默认分支也改成 band → full 那半红在「全出血被改了」。
+    """
+    import shutil  # noqa: PLC0415
+
+    import numpy as np  # noqa: PLC0415
+    from PIL import Image  # noqa: PLC0415
+
+    assert shutil.which("ffmpeg"), "没有 ffmpeg，这条判据跑不了：apt install ffmpeg"
+    reel = _reel()
+    src = tmp_path / "white.mp4"
+    subprocess.run(
+        ["ffmpeg", "-y", "-v", "error", "-f", "lavfi", "-i",
+         "color=c=white:s=1920x1080:r=25", "-t", "0.6",
+         "-pix_fmt", "yuv420p", str(src)], check=True)
+    saved = (reel.CROP_W, reel.CROP_H, reel.CROP_Y, reel.LAYOUT)
+    try:
+        for layout in ("band", "full"):
+            reel.resolve_crop(1920, 1080, None, "", layout=layout)
+            seg = reel.Segment(start=0.0, end=0.4, cx=None, narration="",
+                               track=False)
+            seg.cx = reel.BAND_DEFAULT_CX if layout == "band" else 0.5
+            out = tmp_path / f"seg_{layout}.mp4"
+            reel.cut_segment(src, seg, out, 1920)
+            frame = tmp_path / f"f_{layout}.png"
+            subprocess.run(
+                ["ffmpeg", "-y", "-v", "error", "-i", str(out),
+                 "-frames:v", "1", str(frame)], check=True)
+            im = Image.open(frame).convert("L")
+            assert im.size == (1080, 1440), f"{layout}: 画布变了 {im.size}"
+            t = np.asarray(im.crop((0, 30, 1080, 100))).mean()
+            m = np.asarray(im.crop((0, 560, 1080, 640))).mean()
+            b = np.asarray(im.crop((0, 1150, 1080, 1350))).mean()
+            assert m > 200, f"{layout}: 画面带该是白的，量到 {m:.0f}"
+            if layout == "band":
+                assert t < 60 and b < 60, (
+                    f"band: 上下带该是带底色（近黑），量到 顶 {t:.0f} / 底 {b:.0f}"
+                    "——pad 没画出来，字幕和顶栏就还压在画面上")
+            else:
+                assert t > 200 and b > 200, (
+                    f"full: 全出血被改了（顶 {t:.0f} / 底 {b:.0f}）——"
+                    "不写 layout 的巡回赛片子一个字节都不许变")
+    finally:
+        reel.CROP_W, reel.CROP_H, reel.CROP_Y, reel.LAYOUT = saved
+
+
+def test_带式的字幕锚顶栏角标都进带_全出血原样(monkeypatch):
+    """带式版式的三个「放到画面外/画面内」的落位，各钉一头（都反向验证过）：
+
+    - 字幕默认锚：band 进底带（BAND_MARGIN_V=1064），full 仍是画面内 1284。
+      `subtitle_top` 的人工覆盖不在这条判据里——那条口子归 render 里的读取
+    - 顶栏滤镜：band 不画那层半透明 drawbox（顶带已是实色，画了会在
+      y=126~132 露一道两色接缝）；full 照画（顶栏压在画面上要它保可读性）
+    - inset 角标：band 贴**画面带**的四角（纵向各让开一条带），full 贴画布四角
+    """
+    reel = _reel()
+    ins = {"image": "i.png", "corner": "tl", "animate": False}
+    ins_bl = {"image": "i.png", "corner": "bl", "animate": False}
+    pad = int(round(0.043 * reel.VIDEO_W))
+    band_bot = reel.VIDEO_H - reel.BAND_TOP - reel.BAND_PIC_H
+
+    monkeypatch.setattr(reel, "LAYOUT", "band")
+    assert reel.default_margin_v() == reel.BAND_MARGIN_V
+    assert reel.BAND_MARGIN_V == reel.BAND_TOP + reel.BAND_PIC_H + 32
+    assert reel.BAND_TOP >= reel.TOPBAR_H, "顶栏落不进顶带"
+    g = reel.topbar_filtergraph(1.2, 10.0, Path("t.ass"), Path("s.ass"))
+    assert "drawbox" not in g, "带式的顶带已是实色，再画 drawbox 会露两色接缝"
+    assert f"overlay={pad}:{reel.BAND_TOP + pad}" in reel._overlay_chain(
+        "[0:v]null[base]", ins), "band 的 tl 角标要贴画面带顶角，不是画布顶角"
+    assert f"H-h-{band_bot + pad}" in reel._overlay_chain(
+        "[0:v]null[base]", ins_bl), "band 的 bl 角标要贴画面带底角"
+
+    monkeypatch.setattr(reel, "LAYOUT", "full")
+    assert reel.default_margin_v() == reel._REEL_MARGIN_V
+    g2 = reel.topbar_filtergraph(1.2, 10.0, Path("t.ass"), Path("s.ass"))
+    assert "drawbox" in g2, "全出血的顶栏要那层半透明黑保可读性"
+    assert f"overlay={pad}:{pad}" in reel._overlay_chain(
+        "[0:v]null[base]", ins), "全出血的角标落位不许被带式改动牵动"
+
+
+def test_layout只认band且band不和contain混():
+    """spec.layout 的值域和兼容性，`--dry-run`（parse_segments）就拦：
+
+    - 只认 "band"；写错值当场报，别静默当成全出血渲出去（那样「写错了」和
+      「没写」长得一模一样）
+    - band × `fit: contain` 拒掉：带式的画面带本来就是 6:5 宽画幅，contain
+      要解决的「两个人分得很开」它本来就装得下
+    - band 要求源片装得下 6:5 窗口（resolve_crop 那道，方形/竖版源直接拒）
+    """
+    import pytest  # noqa: PLC0415
+
+    reel = _reel()
+    base_seg = [{"start": 1, "end": 7, "source": "r1"}]
+    ok = {"cover": {}, "layout": "band", "segments": list(base_seg)}
+    assert reel.parse_segments(ok, {"r1": Path("a.mp4")}, "r1")
+
+    with pytest.raises(reel.ReelError, match="layout"):
+        reel.parse_segments({"cover": {}, "layout": "wide",
+                             "segments": list(base_seg)},
+                            {"r1": Path("a.mp4")}, "r1")
+
+    with pytest.raises(reel.ReelError, match="contain"):
+        reel.parse_segments(
+            {"cover": {}, "layout": "band",
+             "segments": [{"start": 1, "end": 7, "source": "r1",
+                           "fit": "contain"}]},
+            {"r1": Path("a.mp4")}, "r1")
+
+    saved = (reel.CROP_W, reel.CROP_H, reel.CROP_Y, reel.LAYOUT)
+    try:
+        with pytest.raises(reel.ReelError, match="6:5"):
+            reel.resolve_crop(1080, 1080, None, "", layout="band")
+    finally:
+        reel.CROP_W, reel.CROP_H, reel.CROP_Y, reel.LAYOUT = saved
