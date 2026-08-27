@@ -569,7 +569,87 @@ def test_deepseek旁白prompt带着断句和比分写法的规矩():
     draft = load("draft_spec")
     for rule in ("子句 ≤ 16 字", "比分一律写汉字", "顿号只连并列的词",
                  "≤ 35 字"):
-        assert rule in draft.SYSTEM, rule
+        assert rule in draft.system_prompt(), rule
+
+
+def test_import草稿工具不许要求教材在盘上():
+    """2026-08-27 reel-auto-ready 栽的：`draft_spec` 原来在 import 那一刻就拼
+    SYSTEM prompt、读 `skills/…/SKILL.md`，而那条工作流的稀疏检出没有 skills——
+    `refresh_reel_cover` 只想借 `assemble_spec` 两个小函数，整条 import 链炸在
+    教材缺席上，第一条真实的 pending 草稿一次都没被重试过。
+
+    判据：教材读不到时 import 必须照样成功，**真要起草时**才当场响。"""
+    import importlib
+
+    import pytest
+
+    sys.path.insert(0, str(TOOLS))
+    import draft_spec
+    import reel_skill
+
+    def boom(role):
+        raise FileNotFoundError("教材不在盘上（模拟稀疏检出没有 skills/）")
+
+    orig = reel_skill.model_instructions
+    reel_skill.model_instructions = boom
+    try:
+        module = importlib.reload(draft_spec)   # 不许炸
+        module.system_prompt.cache_clear()
+        module.push_system_prompt.cache_clear()
+        with pytest.raises(FileNotFoundError):
+            module.system_prompt()              # 真要用了才响
+    finally:
+        reel_skill.model_instructions = orig
+        module = importlib.reload(draft_spec)
+        module.system_prompt.cache_clear()
+        module.push_system_prompt.cache_clear()
+
+
+def test_跑教材工具的工作流都要检出skills目录():
+    """`analyze_reel_visuals` 在**调用时**要读生产 skill 给 MiniMax/DeepSeek 拼
+    prompt——工作流的稀疏检出漏了 `skills`，失败要等跑到那一步才炸。哪些工具
+    需要教材从 import 图自己推（直接或间接沾 `reel_skill` 的都算，宁可保守：
+    几个 markdown 的检出成本是零），不维护名单。"""
+    import ast
+    import re
+
+    tool_files = {p.stem: p for p in TOOLS.glob("*.py")}
+
+    def imported(name: str) -> set[str]:
+        mods: set[str] = set()
+        for node in ast.walk(ast.parse(tool_files[name].read_text("utf-8"))):
+            if isinstance(node, ast.Import):
+                mods |= {a.name.split(".")[0] for a in node.names}
+            elif isinstance(node, ast.ImportFrom) and node.module:
+                mods.add(node.module.split(".")[0])
+        return mods
+
+    graph = {name: imported(name) & (set(tool_files) | {"reel_skill"})
+             for name in tool_files}
+
+    def needs_skill(name: str, seen: frozenset = frozenset()) -> bool:
+        if name == "reel_skill":
+            return True
+        if name in seen or name not in graph:
+            return False
+        return any(needs_skill(m, seen | {name}) for m in graph[name])
+
+    needy = {n for n in tool_files if needs_skill(n)}
+    # 判据自己的判据：推导空了要出声，不许变一盏恒真的绿灯
+    assert {"draft_spec", "assemble_spec", "analyze_reel_visuals",
+            "refresh_reel_cover"} <= needy, needy
+
+    checked = 0
+    for wf in (ROOT / ".github/workflows").glob("*.yml"):
+        body = wf.read_text("utf-8")
+        used = {m.group(1) for m in re.finditer(r"tools/(\w+)\.py", body)}
+        if not (used & needy) or "sparse-checkout" not in body:
+            continue   # 不跑这些工具，或全量检出（自然带 skills）
+        checked += 1
+        assert re.search(r"^\s+skills\s*$", body, re.M), (
+            f"{wf.name} 跑 {sorted(used & needy)}，稀疏检出却没有 skills——"
+            "import 现在是安全的，但真起草/审视觉证据那一刻要读教材")
+    assert checked >= 2, "一个工作流都没校到，判据的主语丢了"
 
 
 def test_模型练手拒绝minimax拿窗口外画面当证据():

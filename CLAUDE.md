@@ -12465,3 +12465,35 @@ orchestrate.yml -f apply=true -f max=N` 一趟就能把积压的候选踢出去�
 孤成一行`、`test_超宽子句报出来让人在标点处断开`、`test_原声字幕的中文行不带
 标点上屏英文行原样`、`test_deepseek草稿把连字符比分规范成汉字几比几`——
 七个方向分别反向验证过，各红在自己的断言行。
+
+### ⚠️⚠️ 2026-08-27 第一条真 pending 草稿把 reel-auto-ready 炸了：import 一个工具不许要求教材在盘上
+
+上面「字幕机器味清理」合并后顺手核 chwalinska-parks 那条链（probe ✓ →
+草稿 ✓ → 卡在 promote 等证据），发现 reel-auto-ready 06:46 的班次
+**33 秒 failure**——而它前面 12 趟全绿。日志一行就够：
+
+    FileNotFoundError: missing production skill resource: skills/tennis-reel-production/SKILL.md
+
+链条是 `refresh_reel_cover` → `assemble_spec` → `draft_spec`，而 `draft_spec`
+在 **import 那一刻**就拼 SYSTEM prompt、读 SKILL.md；reel-auto-ready 的稀疏
+检出没有 `skills`。⚠️ **前 12 趟全绿不是它对，是 pending 一直是空的**——
+`for DRAFT in …` 循环没跑过，import 链一次都没走到；#616 清完僵尸草稿之后
+第一条真草稿一来就炸。「查了 12 趟全绿」和「这条路通」不是一回事，
+走不到的路怎么查都是绿的。
+
+两半修法（缺一半都不算修）：
+
+- **`draft_spec` 的 SYSTEM/_PUSH prompt 拖到第一次要用才拼**（`system_prompt()`
+  / `push_system_prompt()`，lru_cache）：import 一个工具不许要求磁盘上有教材；
+  真要起草时教材缺席，仍然当场响。判据 `test_import草稿工具不许要求教材在盘上`
+- **稀疏检出补 `skills`**（reel-auto-ready + orchestrate）：`analyze_reel_visuals`
+  在**调用时**真的要读 skill 给 MiniMax 拼 prompt，lazy 救不了那一步。
+  判据 `test_跑教材工具的工作流都要检出skills目录` **从 import 图自己推**
+  （直接或间接沾 `reel_skill` 的工具都算，宁可保守——几个 markdown 的检出
+  成本是零），不维护名单；装上当场把 orchestrate.yml 也抓了出来
+  （它在函数里 `from assemble_spec import assemble`，真装配那一刻要教材）
+
+⚠️ 顺带两条同一趟日志里的好消息：#629 的 nudge 在生产里真的干活了
+（「orchestrate.yml 已 108 分钟没班（schedule 被 GitHub 丢弃了），已代点一趟」），
+而且它挂在失败步之后照样跑到（`if: always()` 那一支的价值）；schedule 丢弃
+在 06:46（窗口外）仍然发生——「17:00–03:00 最饿」是实测的重灾区，不是边界。
