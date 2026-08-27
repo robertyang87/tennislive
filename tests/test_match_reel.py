@@ -1419,14 +1419,33 @@ def test_闪避的钥匙要补齐否则片尾没声音():
     和「补位的静音盖住真音轨」是同一族——兜底和默认值出事的时候都不吭声。
 
     合成信号上验过闪避没变：有旁白 -38.1 dB、旁白说完 -24.0 dB。
+
+    ⚠️ **2026-08-27 换过一次判据，因为主语没了。** 原来它在源码里找字面的
+    `[bed][vk]sidechaincompress=`，而配乐落地之后主路多了一档
+    （`[ambient][vk]…`），那个串一个字都不剩——测试当场 `ValueError`，
+    **而 apad 本身好好的**。这正是 CLAUDE.md「主语没了就得换判据，留着它
+    就是一条常年红」说的那件事。
+
+    换判据的时候顺手让它比原来更硬：**不扫源码文本，直接生成滤镜图来查**。
+    查文本只能防「有人把它删了」，防不住「它从来没工作过」；而且两种形状
+    （配乐/不配乐）现在都得走一遍——配乐那一档的主路是新加的，正是最容易
+    把 apad 接掉的地方。
     """
+    reel = _reel()
+    graphs = {
+        "不配乐": reel.duck_filtergraph(["[1:a]adelay=0|0[v0]"], ["[v0]"]),
+        "配乐": reel.duck_filtergraph(["[1:a]adelay=0|0[v0]"], ["[v0]"],
+                                      reel.music_filter({}, 2, 10.0)),
+    }
+    for what, graph in graphs.items():
+        i = graph.index("[vk]sidechaincompress=")
+        assert "[vk0]apad[vk]" in graph[:i], (
+            f"{what}那一档：闪避的钥匙没有 apad——旁白一说完，现场声会跟着断，"
+            "片尾整段没声音")
+        # 钥匙是**补过的**那一路，主路里不许混进 [vk0]（那等于没补）
+        assert "[vk0]" not in graph[i - 12:i], f"{what}那一档接的是没补过的钥匙"
+
     src = Path("tools/build_match_reel.py").read_text(encoding="utf-8")
-    # 认的是**真正接进滤镜图的那一处**（`[bed][vk]sidechaincompress=`），
-    # 不是注释里提到它的那几行——按第一次出现找会撞上注释，判据就废了。
-    i = src.index("[bed][vk]sidechaincompress=")
-    head = src[max(0, i - 1200):i]
-    assert "[vk0]apad[vk]" in head, (
-        "闪避的钥匙没有 apad——旁白一说完，现场声会跟着断，片尾整段没声音")
     # 报错要说出路：判据本身也得留在源码里，别只活在测试里
     assert "任一路 EOF" in src, "为什么要 apad 没有留下判据，下次会有人删掉"
 

@@ -1,0 +1,35 @@
+{
+  "title": "Road In The Forest",
+  "artist": "Andrewkn",
+  "license": "CC0 1.0",
+  "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "source": "https://freesound.org/people/Andrewkn/sounds/439553",
+  "downloaded_from": "https://cdn.freesound.org/previews/439/439553_7038073-hq.mp3",
+  "discovered_via": "https://api.openverse.org/v1/audio/?q=ambient+piano+emotional&license=cc0",
+  "tags": [
+    "ambient",
+    "atmospheric",
+    "chill",
+    "drone",
+    "emotional",
+    "instrumental",
+    "melodic"
+  ],
+  "duration_seconds": 444.0,
+  "bytes": 10143023,
+  "sha256": "cbf15dcea6e528c8470a8de619bb942c0b7658ba4fcf8e20fa8ea873da1e70ec",
+  "measured": {
+    "mean_db": -24.8,
+    "max_db": -6.5,
+    "integrated_lufs": -21.9,
+    "lra_lu": 7.8,
+    "speech_band_below_fullband_db": 1.4
+  },
+  "_why": "「网球有故事」这条线 2026-08-27 才开始配乐（账号所有者点名「还有背景音乐」），这是第一首。挑它的判据全是量出来的：①CC0 1.0，freesound 落地页记在 source；②标签自带 instrumental，没有人声跟旁白抢；③444 秒，而片子约 211 秒——**不用循环**，也就没有接缝（这条线连画面接缝都要求溶解）；④三个候选里 LRA 最低（7.8 LU vs 8.7 / 9.2），铺底要的就是不忽大忽小；⑤平均 −24.8 dB 和转播现场声一个量级，gain 落在正常范围。",
+  "_caveat": "⚠️ **两条老实话。** ①它的能量**落在语音带里**（300~3400Hz 只比全带低 1.4 dB，而候选里 parallel-universe 低 4.2 dB）——旁白段有闪避压着不要紧，**`quote` 段不闪避**（原声开到 BED_LOUD），所以那几段要用耳朵核一遍。②这份是 freesound 的 hq 预览转码，不是上传的母版；CC0 不限制这么用，但 sha256 对的是这一份。",
+  "_not_chosen": {
+    "parallel-universe (Andrewkn, CC0, 225.7s)": "语音带避得最好（−4.2 dB），但只比片长多 14 秒，窗口一动就不够",
+    "morningdue-piano (Bigvegie, CC0, 250.5s)": "母带很轻（mean −33.8 dB），LRA 8.7",
+    "forgiveness / late-spring": "182.7s / 164.7s，**比片子短**，要循环才够，接缝会听得见"
+  }
+}
