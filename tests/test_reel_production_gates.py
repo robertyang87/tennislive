@@ -727,3 +727,138 @@ def test_自动产的spec静音悬案按硬闸算_手写只报():
     assert '"silent_audio": silent_audio,' in body
     dry = body[body.index("def probe_dry_run"):body.index("def _cover_frame_spots")]
     assert "silence_findings(spec, segments, probes, urls)" in dry
+
+
+def test_判据回喂只删不改写_quote段和越权字段整体丢弃():
+    """QC 回喂修复的头号红线：模型不许借「修一下」发明新事实。旁白只认
+    「按顺序删字符」（子序列），改写/换词/新增一个字都整体丢弃；quote 段的
+    双语字幕钉在真实时刻上，一个字段都不许动。"""
+    repairer = load("repair_reel_spec")
+    assert repairer.deletion_only("三个赛点摆在她面前，她只兑现了最后一个。",
+                                  "三个赛点，她只兑现了最后一个。")
+    assert not repairer.deletion_only("她赢了这一局。", "她拿下了这一局。")
+
+    spec = {"segments": [
+        {"source": "", "start": 10.0, "end": 20.0,
+         "narration": "第一句。", "quote": ["x"]},
+        {"source": "", "start": 30.0, "end": 44.0,
+         "narration": "三个赛点摆在她面前，她只兑现了最后一个。"},
+    ]}
+    revised, detail = repairer.apply_bounded(
+        spec, [{}, {"end": 41.5, "narration": "三个赛点，她只兑现了最后一个。"}])
+    assert revised is not None, detail
+    assert revised["segments"][1]["end"] == 41.5
+    assert revised["segments"][0] == spec["segments"][0]
+
+    for patch, marker in [
+        ([{"end": 19.0}, {}], "quote"),                       # 动 quote 段
+        ([{}, {"narration": "她拿下了这一局。"}], "只删不改写"),  # 改写
+        ([{}, {"speed": 0.5}], "越权"),                        # 越权字段
+        ([{}, {"narration": ""}], "删空"),                     # 删空旁白
+        ([{}], "段数"),                                        # 段数不符
+        ([{}, {}], "一处都没改"),                              # 空修订
+    ]:
+        bad, why = repairer.apply_bounded(spec, patch)
+        assert bad is None and marker in why, (patch, why)
+
+
+def test_判据回喂只认自动spec最多两轮_环境错和绿日志不喂模型(tmp_path):
+    """四个 skip 口，每个都是一层边界：手写 spec 不自动改；两轮修不好就还给
+    会话；环境错（下载/apt）改 spec 修不了；**「共 0 项不合格」的绿日志**
+    （render 全绿、死在后面 commit/push 步的 run）不许被裸的「不合格」三个字
+    误认成内容失败。"""
+    import json as _json
+    repairer = load("repair_reel_spec")
+    spec_path = tmp_path / "x.json"
+
+    spec_path.write_text(_json.dumps({"slug": "x", "segments": []}), "utf-8")
+    assert "不是自动 spec" in repairer.repair(
+        spec_path, "[不合格] 数字静音", tmp_path, write=False)
+
+    spec_path.write_text(_json.dumps({
+        "slug": "x", "segments": [],
+        "_production": {"status": "ready_for_render", "qc_repair_attempts": 2},
+    }), "utf-8")
+    assert "已自动修过 2 轮" in repairer.repair(
+        spec_path, "[不合格] 数字静音", tmp_path, write=False)
+
+    spec_path.write_text(_json.dumps({
+        "slug": "x", "segments": [],
+        "_production": {"status": "ready_for_render"},
+    }), "utf-8")
+    assert "环境错" in repairer.repair(
+        spec_path, "ERROR: apt-get install timed out\n共 0 项不合格",
+        tmp_path, write=False)
+    assert not repairer.CONTENT_CLASS.search("共 0 项不合格")
+    assert repairer.CONTENT_CLASS.search("[不合格] 封面之后还有 1 秒是数字静音")
+
+
+def test_判据回喂修完先过本地闸才落盘(tmp_path, monkeypatch):
+    """模型输出过了有界套用，还要过**同一套生产闸**（dry-run 子进程）才写回；
+    闸红就一个字节都不落盘。反向验证：把 local_gate 的失败吞掉，第二段断言
+    当场红。"""
+    import json as _json
+    repairer = load("repair_reel_spec")
+
+    class FakeChat:
+        ready = True
+        channel = "fake"
+
+        def ask(self, system, user, *, schema, max_tokens=0):
+            return {"fixable": True, "note": "收窗口避开静音区",
+                    "segments": [{"end": 41.5}]}
+
+    import tennislive.research.brief as brief
+    monkeypatch.setattr(brief, "Chat", FakeChat)
+
+    spec = {
+        "slug": "x",
+        "_production": {"status": "ready_for_render", "qc_repair_attempts": 1},
+        "segments": [{"source": "", "start": 30.0, "end": 44.0,
+                      "narration": "三个赛点摆在她面前。"}],
+    }
+    spec_path = tmp_path / "x.json"
+    spec_path.write_text(_json.dumps(spec, ensure_ascii=False), "utf-8")
+
+    monkeypatch.setattr(repairer, "local_gate", lambda s, slug: "哑场闸红了")
+    out = repairer.repair(spec_path, "[不合格] 数字静音", tmp_path, write=True)
+    assert "仍过不了本地闸" in out and "不落盘" in out
+    assert _json.loads(spec_path.read_text("utf-8")) == spec  # 一个字节没动
+
+    monkeypatch.setattr(repairer, "local_gate", lambda s, slug: None)
+    out = repairer.repair(spec_path, "[不合格] 数字静音", tmp_path, write=True)
+    assert "[repaired]" in out, out
+    written = _json.loads(spec_path.read_text("utf-8"))
+    assert written["segments"][0]["end"] == 41.5
+    assert written["_production"]["qc_repair_attempts"] == 2
+    assert "收窗口避开静音区" in written["_production"]["qc_repair_note"]
+
+
+def test_render红了的回喂步先commit再dispatch_三步都tee了判据():
+    """工作流接线三头：① dry-run/render/QC 三步都把判据 tee 进同一份日志
+    （且带 pipefail——不带的话 tee 会把失败吞成绿）；② 修复步挂在
+    failure() 上、只认 mode=render + main；③ **先 commit 再 dispatch**——
+    render 组是 cancel-in-progress，新 run 一启动就掐掉本 run，顺序反了
+    修订就静默丢失。"""
+    body = (ROOT / ".github/workflows/match-reel.yml").read_text(encoding="utf-8")
+    for name, stop in [
+        ("dry-run — 先把 spec 的形状错拦在编码之前", "缓存 Chromium"),
+        ("render — 出成片", "写复制页"),
+        ("查成片本身合不合格", "成片发到 Release"),
+    ]:
+        step = body.split(name, 1)[1].split(stop, 1)[0]
+        assert "set -o pipefail" in step, name
+        assert "tee -a /tmp/render-findings.log" in step, name
+
+    step = body.split("render 红了把判据回喂模型修一轮", 1)[1].split(
+        "推送前预占持久发布账本", 1)[0]
+    assert "failure()" in step
+    assert "github.event.inputs.mode == 'render'" in step
+    assert "github.ref_name == 'main'" in step
+    assert "repair_reel_spec.py" in step
+    assert "git_push_retry.sh" in step
+    assert step.index("git commit") < step.index("gh workflow run match-reel.yml")
+    assert "-f mode=render" in step
+    # received_at 要跟着转发：SLO 的表从确认链接那一刻起算，修一轮重渲不是
+    # 重新接单——丢了它，production_sla 会把返工那趟当成一条新且飞快的生产
+    assert "-f received_at=" in step
