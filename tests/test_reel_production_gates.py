@@ -859,3 +859,6 @@ def test_render红了的回喂步先commit再dispatch_三步都tee了判据():
     assert "git_push_retry.sh" in step
     assert step.index("git commit") < step.index("gh workflow run match-reel.yml")
     assert "-f mode=render" in step
+    # received_at 要跟着转发：SLO 的表从确认链接那一刻起算，修一轮重渲不是
+    # 重新接单——丢了它，production_sla 会把返工那趟当成一条新且飞快的生产
+    assert "-f received_at=" in step
