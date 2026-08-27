@@ -645,3 +645,87 @@ def test_段数够不等于内容够_正片时长有下界():
     rich = {"segments": [{"start": i * 20.0, "end": i * 20.0 + 12.0}
                          for i in range(6)]}
     assert not any("低于 40 秒" in r for r in promote.waiting_reasons(rich))
+
+
+def _reel():
+    sys.path.insert(0, str(TOOLS))
+    import build_match_reel as reel  # noqa: PLC0415
+    return reel
+
+
+def test_源片静音区间趁probe量出来(tmp_path):
+    """zheng-burel（run 33000830101）：段窗口尾部撞上源片静音秒，QC 在渲染
+    5 分钟后才报，整趟 8 分半白烧。修法和 point_ends 同款：趁源片还在时量，
+    写进 probe.json。真跑 ffmpeg——查源码只能防「有人把它删了」。"""
+    import subprocess  # noqa: PLC0415
+
+    reel = _reel()
+    src = tmp_path / "s.mp4"
+    subprocess.run(
+        ["ffmpeg", "-y", "-v", "error",
+         "-f", "lavfi", "-i", "testsrc2=duration=6:size=64x64:rate=10",
+         "-f", "lavfi", "-i",
+         "aevalsrc='if(between(t,2,4),0,0.4*sin(2*PI*440*t))':d=6",
+         "-c:v", "libx264", "-preset", "ultrafast", "-c:a", "aac",
+         "-shortest", str(src)], check=True)
+    spans = reel.silent_audio_spans(src)
+    assert spans and len(spans) == 1, spans
+    lo, hi = spans[0]
+    assert 1.5 <= lo <= 2.5 and 3.5 <= hi <= 4.5, spans
+    # 没有音轨 → None（「没音轨」和「量过为空」不能长一样）
+    mute = tmp_path / "m.mp4"
+    subprocess.run(
+        ["ffmpeg", "-y", "-v", "error", "-f", "lavfi",
+         "-i", "testsrc2=duration=2:size=64x64:rate=10",
+         "-c:v", "libx264", "-preset", "ultrafast", str(mute)], check=True)
+    assert reel.silent_audio_spans(mute) is None
+
+
+def test_静音风险的账_zheng_burel那一类要预判出来():
+    reel = _reel()
+    # 失败版第 8 段的真实数字：窗口 181.0–192.57，源片静音区约 191.3–192.5，
+    # 旁白离线估 ~9.7s。当晚它是「大概率红」——真的红了，白烧一趟渲染。
+    risks = reel.silence_risk(181.0, 192.57, 9.66, [[191.3, 192.5]])
+    assert len(risks) == 1
+    _lo, _hi, certain, probable = risks[0]
+    assert probable >= 0.5, "当晚白烧的那一类必须被标成「大概率红」"
+    assert certain < 2.0, "旁白最长估能盖住大半——不该标成必红"
+    # 无旁白段（quote/纯画面）的音频就是现场声本身：撞上 3 秒静音是必红
+    (_l, _h, certain2, _p), = reel.silence_risk(10.0, 20.0, None, [[12.0, 15.0]])
+    assert certain2 >= 2.0
+    # 旁白完全盖得住的：一条都不报（别刷屏——哑场那道闸的老教训）
+    assert reel.silence_risk(0.0, 12.0, 11.0, [[3.0, 4.0]]) == []
+
+
+def test_自动产的spec静音悬案按硬闸算_手写只报():
+    """自动 spec 的另一头是模型，改一句旁白比烧一趟渲染便宜——「大概率红」
+    也按硬算；手写 spec 守住「哑场离线估只提醒不拍板」的老规矩，只报。"""
+    reel = _reel()
+    seg = reel.Segment(start=181.0, end=192.57, cx=None,
+                       narration="六比一。")   # 估 ~1s，远盖不到窗口尾
+    probes = {"URL": {"silent_audio": [[190.5, 192.5]]}}
+    urls = {"": "URL"}
+    auto = {"_production": {"status": "ready_for_render"}}
+    hard, soft = reel.silence_findings(auto, [seg], probes, urls)
+    assert hard and not soft, (hard, soft)
+    hand_hard, hand_soft = reel.silence_findings({}, [seg], probes, urls)
+    # 同一个洞：手写 spec 报出来但不拦（这一例旁白最长估也盖不住——必红仍是硬的
+    # ——所以换一个「大概率」的形状验手写那半）
+    prob_seg = reel.Segment(start=0.0, end=12.0, cx=None,
+                            narration="六比一。", source="")
+    prob_probes = {"URL": {"silent_audio": [[10.0, 11.5]]}}
+    h2, s2 = reel.silence_findings({}, [prob_seg], prob_probes, urls)
+    assert not h2 and s2, (h2, s2)
+    h3, s3 = reel.silence_findings(auto, [prob_seg], prob_probes, urls)
+    assert h3 and not s3, (h3, s3)
+    # 老 probe（没有 silent_audio 键）→「还没量过」只提示，不硬拦
+    h4, s4 = reel.silence_findings({}, [seg], {"URL": {}}, urls)
+    assert not h4 and any("还没量过" in s for s in s4)
+    # 源片没音轨（None）→ 这儿不报（silent_source 认领那道闸管）
+    h5, s5 = reel.silence_findings({}, [seg], {"URL": {"silent_audio": None}}, urls)
+    assert not h5 and not s5
+    # 接线：probe 落库这个键，dry-run 真的调 silence_findings
+    body = Path("tools/build_match_reel.py").read_text("utf-8")
+    assert '"silent_audio": silent_audio,' in body
+    dry = body[body.index("def probe_dry_run"):body.index("def _cover_frame_spots")]
+    assert "silence_findings(spec, segments, probes, urls)" in dry
