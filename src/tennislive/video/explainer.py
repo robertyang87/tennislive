@@ -247,7 +247,7 @@ _MASTERS_FORMAT_DIAGRAM = """
 
   <line x1="70" y1="250" x2="830" y2="250" stroke="rgba(159,180,170,.35)" stroke-width="2"/>
 
-  <text x="70" y="308" fill="#9fb4aa" font-size="27" font-weight="700">正赛签表</text>
+  <text x="70" y="296" fill="#9fb4aa" font-size="27" font-weight="700">正赛签表</text>
   <text x="248" y="312" fill="#e7f3ec" font-size="44" font-weight="800">56</text>
   <text x="320" y="312" fill="#9fb4aa" font-size="36" font-weight="700">&#8594;</text>
   <text x="378" y="312" fill="#c6f65a" font-size="44" font-weight="800">96</text>
@@ -496,7 +496,7 @@ _SHOT_CLOCK_DIAGRAM = """
   <line x1="70" y1="250" x2="830" y2="250" stroke="rgba(159,180,170,.35)" stroke-width="2"/>
 
   <!-- 2026 ATP: automatic, and it starts at the point, not at the call -->
-  <text x="70" y="308" fill="#e7f3ec" font-size="27" font-weight="800">2026 · ATP</text>
+  <text x="70" y="296" fill="#e7f3ec" font-size="27" font-weight="800">2026 · ATP</text>
   <circle cx="150" cy="364" r="11" fill="#c6f65a"/>
   <text x="150" y="342" text-anchor="middle" fill="#c6f65a"
         font-size="22" font-weight="700">一分结束</text>
@@ -929,7 +929,7 @@ _PR_GAP_DIAGRAM = """
         stroke="rgba(231,243,236,.38)" stroke-width="2"/>
   <text x="291" y="236" fill="#e7f3ec" font-size="30" font-weight="800">10.7 周</text>
 
-  <text x="60" y="322" fill="#9fb4aa" font-size="27" font-weight="700">中网结束 → 多哈复出</text>
+  <text x="60" y="308" fill="#9fb4aa" font-size="27" font-weight="700">中网结束 → 多哈复出</text>
   <rect x="60" y="340" width="357" height="86" rx="12" fill="rgba(231,243,236,.18)"
         stroke="rgba(231,243,236,.38)" stroke-width="2"/>
   <text x="437" y="396" fill="#e7f3ec" font-size="30" font-weight="800">18.1 周</text>
@@ -1445,7 +1445,7 @@ _PR_USE_DIAGRAM = """
     <text x="80" y="174" fill="#c6f65a">进正赛</text>
     <rect x="60" y="204" width="360" height="52" rx="10" fill="rgba(198,246,90,.26)"
           stroke="#c6f65a" stroke-width="2"/>
-    <text x="80" y="238" fill="#c6f65a">进资格赛</text>
+    <text x="80" y="228" fill="#c6f65a">进资格赛</text>
     <rect x="60" y="268" width="360" height="52" rx="10" fill="rgba(198,246,90,.26)"
           stroke="#c6f65a" stroke-width="2"/>
     <text x="80" y="302" fill="#c6f65a">占特殊豁免位</text>
@@ -1457,7 +1457,7 @@ _PR_USE_DIAGRAM = """
     <text x="500" y="174" fill="#9fb4aa">当种子</text>
     <line x1="496" y1="166" x2="824" y2="166" stroke="rgba(159,180,170,.75)" stroke-width="2"/>
     <rect x="480" y="204" width="360" height="52" rx="10" fill="rgba(231,243,236,.16)"/>
-    <text x="500" y="238" fill="#9fb4aa">排幸运落败者顺位</text>
+    <text x="500" y="228" fill="#9fb4aa">排幸运落败者顺位</text>
     <line x1="496" y1="230" x2="824" y2="230" stroke="rgba(159,180,170,.75)" stroke-width="2"/>
   </g>
 
@@ -1707,7 +1707,7 @@ _SE_HOUR_DIAGRAM = """
   <rect x="60" y="396" width="12" height="60" rx="3" fill="#c6f65a"/>
   <path d="M82 426 L640 426" stroke="rgba(198,246,90,.45)" stroke-width="2"
         fill="none" stroke-dasharray="8 8"/>
-  <text x="656" y="438" fill="#c6f65a" font-size="36" font-weight="800">1 小时</text>
+  <text x="656" y="420" fill="#c6f65a" font-size="36" font-weight="800">1 小时</text>
   <text x="60" y="498" fill="#9fb4aa" font-size="26" font-weight="700">赢下那场决定性的球之后</text>
 </svg>
 """
@@ -1730,7 +1730,7 @@ _ACADEMY_COUNT_DIAGRAM = """
     <rect x="640" y="140" width="60" height="44" rx="8"/>
   </g>
   <text x="740" y="172" fill="#e7f3ec" font-size="32" font-weight="800">6</text>
-  <text x="300" y="222" fill="#9fb4aa" font-size="26" font-weight="700">学院发公告：史上第一次</text>
+  <text x="300" y="212" fill="#9fb4aa" font-size="26" font-weight="700">学院发公告：史上第一次</text>
 
   <line x1="300" y1="266" x2="820" y2="266" stroke="rgba(231,243,236,.18)" stroke-width="2"/>
 
@@ -1895,7 +1895,7 @@ _PAY_COVER_DIAGRAM = """
 
   <text x="120" y="150" fill="#9fb4aa" font-size="32" font-weight="700">男选手</text>
   <rect x="120" y="176" width="660" height="86" rx="14" fill="rgba(231,243,236,.62)"/>
-  <text x="150" y="238" fill="#0f2a1c" font-size="52" font-weight="800">23760</text>
+  <text x="150" y="228" fill="#0f2a1c" font-size="52" font-weight="800">23760</text>
 
   <text x="120" y="340" fill="#c6f65a" font-size="32" font-weight="700">女选手</text>
   <rect x="120" y="366" width="313" height="86" rx="14" fill="#c6f65a"/>
@@ -2217,7 +2217,7 @@ _BALL_HURT_DIAGRAM = """
   <rect x="60" y="140" width="780" height="112" rx="14"
         fill="rgba(198,246,90,.14)" stroke="#c6f65a" stroke-width="2"/>
   <text x="86" y="182" fill="#c6f65a" font-size="30" font-weight="800">阿尔卡拉斯</text>
-  <text x="86" y="222" fill="#e7f3ec" font-size="27" font-weight="700">
+  <text x="86" y="212" fill="#e7f3ec" font-size="27" font-weight="700">
     4 月 14 日巴塞罗那首轮赛后伤腕，诊断腱鞘炎</text>
   <text x="814" y="182" text-anchor="end" fill="#c6f65a"
         font-size="27" font-weight="800">缺席 法网 · 女王 · 温网</text>
@@ -2226,7 +2226,7 @@ _BALL_HURT_DIAGRAM = """
 
   <rect x="60" y="276" width="780" height="72" rx="12"
         fill="rgba(231,243,236,.08)" stroke="rgba(231,243,236,.26)" stroke-width="2"/>
-  <text x="86" y="322" fill="#e7f3ec" font-size="29" font-weight="800">德约科维奇</text>
+  <text x="86" y="308" fill="#e7f3ec" font-size="29" font-weight="800">德约科维奇</text>
   <text x="814" y="322" text-anchor="end" fill="#a9bcb2"
         font-size="27" font-weight="700">右手腕</text>
 
@@ -2374,8 +2374,8 @@ _WAWRINKA_EIGHT_WC_DIAGRAM = """
   <rect x="48" y="132" width="804" height="152" rx="14"
         fill="rgba(207,230,216,.07)" stroke="rgba(207,230,216,.30)" stroke-width="2"/>
   <text x="72" y="166" fill="#cfe6d8" font-size="22" font-weight="700">交换名额 · 不是美网挑的</text>
-  <text x="72" y="208" fill="#f4fbf7" font-size="27" font-weight="800">孟菲尔斯（法国）</text>
-  <text x="392" y="208" fill="#cfe6d8" font-size="23" font-weight="700">← 和法网互换</text>
+  <text x="72" y="200" fill="#f4fbf7" font-size="27" font-weight="800">孟菲尔斯（法国）</text>
+  <text x="392" y="200" fill="#cfe6d8" font-size="23" font-weight="700">← 和法网互换</text>
   <text x="72" y="246" fill="#f4fbf7" font-size="27" font-weight="800">波皮林（澳大利亚）</text>
   <text x="392" y="246" fill="#cfe6d8" font-size="23" font-weight="700">← 和澳网互换</text>
   <text x="72" y="274" fill="#cfe6d8" font-size="20" font-weight="700">美网让出这两张，换回美国人打法网、澳网的名额</text>
@@ -2425,7 +2425,7 @@ _WAWRINKA_THREE_DAYS_DIAGRAM = """
 
   <circle cx="112" cy="512" r="15" fill="#c6f65a"/>
   <text x="156" y="504" fill="#c6f65a" font-size="27" font-weight="800">8 月 26 日</text>
-  <text x="156" y="538" fill="#f4fbf7" font-size="24" font-weight="700">基普森因伤退赛，位置转给他</text>
+  <text x="156" y="516" fill="#f4fbf7" font-size="24" font-weight="700">基普森因伤退赛，位置转给他</text>
 </svg>
 """
 
@@ -2433,39 +2433,60 @@ _WAWRINKA_THREE_DAYS_DIAGRAM = """
 # ⚠️ **表里只摆记录，不写「不是 2014 美网」那种纠正**——账号所有者
 # 2026-08-26：「不要在内容里写不是 2014」「我记错了，这不是要在内容里说的」。
 # 三行摆在一起，读者自己看得出哪座是哪座，不用替他更正一遍。
+# ⚠️ **这一屏原来写的是「三次大满贯决赛，三次都赢」，那是假的**（账号所有者
+# 2026-08-27 指出）。瓦林卡打过**四次**大满贯决赛，第四次是 2017 法网决赛
+# 2-6 3-6 1-6 负于纳达尔——「一共只进过三次」「三次全赢」是**全称断言**，
+# 一个反例就倒，而反例就在他自己的生涯统计里。两个独立源核过：
+#   维基生涯统计   https://en.wikipedia.org/wiki/Stan_Wawrinka_career_statistics
+#                  四次决赛 3 胜 1 负，负的那次列着 2017 RG / Nadal / 2-6 3-6 1-6
+#   2017 法网男单  https://en.wikipedia.org/wiki/2017_French_Open_%E2%80%93_Men%27s_singles
+#                  纳达尔 6-2 6-3 6-1 夺第十冠；同页种子表：1 穆雷 2 德约 3 瓦林卡 4 纳达尔
+# ⚠️ **「对面都是世界第一」只对他赢下的那三次成立**——第四次决赛纳达尔是 4 号种子，
+# 那年的世界第一是穆雷。所以表里第四行压暗、排名写「世界第 4」，把范围亮出来，
+# 而不是把它藏掉：藏掉就又变成一句一个反例就倒的话。
+# ⚠️ 注脚的落点钉在 y=572（实际像素 920×572/900 ＝ 585px）——再往下就撞进
+# 「④ 三座奖杯」那颗序号药丸，本文件「viewBox 的高度也有上限」记过这个坑，
+# 这一轮我又踩了一次（先写成 600 ＝ 613px，渲出来注脚被药丸盖住半句）。
 _WAWRINKA_FINALS_DIAGRAM = """
-<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">
+<svg viewBox="0 0 900 640" xmlns="http://www.w3.org/2000/svg">
   <text x="450" y="44" text-anchor="middle" fill="#f4fbf7"
-        font-size="36" font-weight="800">三次大满贯决赛，三次都赢</text>
+        font-size="36" font-weight="800">四次大满贯决赛，赢下三次</text>
   <text x="450" y="82" text-anchor="middle" fill="#cfe6d8"
-        font-size="22" font-weight="700">而每一次，对面站着的都是当时的世界第一</text>
+        font-size="22" font-weight="700">赢下的那三次，对面站着的都是当时的世界第一</text>
 
   <g fill="#cfe6d8" font-size="22" font-weight="700">
-    <text x="60"  y="132">哪一年，哪一站</text>
-    <text x="392" y="132">决赛对手</text>
-    <text x="700" y="132">对手当时排名</text>
+    <text x="60"  y="124">哪一年，哪一站</text>
+    <text x="392" y="124">决赛对手</text>
+    <text x="700" y="124">对手当时排名</text>
   </g>
-  <line x1="60" y1="148" x2="840" y2="148" stroke="rgba(207,230,216,.22)" stroke-width="2"/>
+  <line x1="60" y1="140" x2="840" y2="140" stroke="rgba(207,230,216,.22)" stroke-width="2"/>
 
-  <rect x="60" y="172" width="780" height="94" rx="12" fill="rgba(143,214,168,.16)"/>
-  <text x="80"  y="216" fill="#f4fbf7" font-size="30" font-weight="800">2014 澳网</text>
-  <text x="80"  y="250" fill="#cfe6d8" font-size="23" font-weight="700">墨尔本</text>
-  <text x="392" y="228" fill="#f4fbf7" font-size="30" font-weight="800">纳达尔</text>
-  <text x="700" y="228" fill="#c6f65a" font-size="34" font-weight="800">世界第 1</text>
+  <rect x="60" y="162" width="780" height="80" rx="12" fill="rgba(143,214,168,.16)"/>
+  <text x="80"  y="200" fill="#f4fbf7" font-size="30" font-weight="800">2014 澳网</text>
+  <text x="80"  y="228" fill="#cfe6d8" font-size="21" font-weight="700">墨尔本 · 夺冠</text>
+  <text x="392" y="212" fill="#f4fbf7" font-size="30" font-weight="800">纳达尔</text>
+  <text x="700" y="212" fill="#c6f65a" font-size="34" font-weight="800">世界第 1</text>
 
-  <rect x="60" y="286" width="780" height="94" rx="12" fill="rgba(143,214,168,.16)"/>
-  <text x="80"  y="330" fill="#f4fbf7" font-size="30" font-weight="800">2015 法网</text>
-  <text x="80"  y="364" fill="#cfe6d8" font-size="23" font-weight="700">巴黎</text>
-  <text x="392" y="342" fill="#f4fbf7" font-size="30" font-weight="800">德约科维奇</text>
-  <text x="700" y="342" fill="#c6f65a" font-size="34" font-weight="800">世界第 1</text>
+  <rect x="60" y="258" width="780" height="80" rx="12" fill="rgba(143,214,168,.16)"/>
+  <text x="80"  y="296" fill="#f4fbf7" font-size="30" font-weight="800">2015 法网</text>
+  <text x="80"  y="324" fill="#cfe6d8" font-size="21" font-weight="700">巴黎 · 夺冠</text>
+  <text x="392" y="308" fill="#f4fbf7" font-size="30" font-weight="800">德约科维奇</text>
+  <text x="700" y="308" fill="#c6f65a" font-size="34" font-weight="800">世界第 1</text>
 
-  <rect x="60" y="400" width="780" height="94" rx="12" fill="rgba(143,214,168,.16)"/>
-  <text x="80"  y="444" fill="#f4fbf7" font-size="30" font-weight="800">2016 美网</text>
-  <text x="80"  y="478" fill="#cfe6d8" font-size="23" font-weight="700">纽约</text>
-  <text x="392" y="456" fill="#f4fbf7" font-size="30" font-weight="800">德约科维奇</text>
-  <text x="700" y="456" fill="#c6f65a" font-size="34" font-weight="800">世界第 1</text>
+  <rect x="60" y="354" width="780" height="80" rx="12" fill="rgba(143,214,168,.16)"/>
+  <text x="80"  y="392" fill="#f4fbf7" font-size="30" font-weight="800">2016 美网</text>
+  <text x="80"  y="420" fill="#cfe6d8" font-size="21" font-weight="700">纽约 · 夺冠</text>
+  <text x="392" y="404" fill="#f4fbf7" font-size="30" font-weight="800">德约科维奇</text>
+  <text x="700" y="404" fill="#c6f65a" font-size="34" font-weight="800">世界第 1</text>
 
-  <text x="450" y="556" text-anchor="middle" fill="#cfe6d8" font-size="24" font-weight="700">
+  <rect x="60" y="450" width="780" height="80" rx="12" fill="rgba(207,230,216,.07)"
+        stroke="rgba(207,230,216,.22)" stroke-width="2"/>
+  <text x="80"  y="488" fill="#cfe6d8" font-size="30" font-weight="800">2017 法网</text>
+  <text x="80"  y="516" fill="#cfe6d8" font-size="21" font-weight="700">巴黎 · 负</text>
+  <text x="392" y="500" fill="#cfe6d8" font-size="30" font-weight="800">纳达尔</text>
+  <text x="700" y="500" fill="#cfe6d8" font-size="34" font-weight="800">世界第 4</text>
+
+  <text x="450" y="572" text-anchor="middle" fill="#cfe6d8" font-size="24" font-weight="700">
     四巨头最强的那些年，他把头号种子拉下来三次
   </text>
 </svg>
@@ -6695,17 +6716,19 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
         (
             "three-finals",
             "三座奖杯",
-            "三次决赛，对面都是世界第一",
+            "三次夺冠，对面都是世界第一",
             "而且这不是一次好运。"
-            "他一共只进过三次大满贯决赛，三次全部拿下——"
-            "每一次，对面站着的都是当时的世界第一。"
-            "二〇一四年澳网胜纳达尔，二〇一五年法网、二〇一六年美网两次胜德约科维奇。",
+            "他打过四次大满贯决赛，赢下的那三次，"
+            "对面站着的都是当时的世界第一。"
+            "二〇一四年澳网胜纳达尔，二〇一五年法网、二〇一六年美网两次胜德约科维奇。"
+            "唯一输掉的那一次是二〇一七年法网，对手也是纳达尔，"
+            "而那一年的世界第一是穆雷。",
             "",
             "示意图 · 网球时差绘制",
             (
                 "2014 澳网 · 2015 法网 · 2016 美网",
-                "三进大满贯决赛，三次全赢",
-                "对手：纳达尔、德约科维奇 ×2",
+                "四次决赛三次夺冠，对手都是世界第一",
+                "唯一告负：2017 法网负纳达尔",
             ),
             _WAWRINKA_FINALS_DIAGRAM,
         ),
@@ -6755,7 +6778,7 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             "他在西蒙娜-马蒂厄球场首轮出局，全场没有散。"
             "赛事总监毛瑞斯莫走上来抱住他，大屏幕开始放录像，"
             "费德勒、纳达尔、德约科维奇、辛纳、阿尔卡拉斯、孟菲尔斯一个个出现。"
-            "三次大满贯决赛他赢过的那两个人，这一天都在屏幕上跟他告别。"
+            "大满贯决赛里他赢过的那两个人，这一天都在屏幕上跟他告别。"
             "他说：很难，很难在这里说再见——"
             "就是因为罗兰加洛斯，我才想当网球运动员的。",
             "assets/explainer/wawrinka-wildcard/rg_2026_ovation.jpg",
