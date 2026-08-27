@@ -743,6 +743,34 @@ def _speech_tail_end(path: Path, floor_db: float = -50.0,
     return None  # 最后一段静音后面还有声音，文件末尾不是静音
 
 
+def silent_audio_spans(path: Path, floor_db: float = -60.0,
+                       min_silence: float = 0.8) -> list[list[float]] | None:
+    """源片音轨里 ≥`min_silence` 秒、响度 ≤`floor_db` 的静音区间。没音轨返回 None。
+
+    来路：zheng-burel（run 33000830101）第 8 段的窗口尾部撞上源片片尾板前的
+    静音区，旁白恰好差一秒没盖住——QC 的数字静音闸在渲染 5 分钟之后才报，
+    整趟 8 分半白烧；而随后的「修复」提交 segments 一字没动，只是旁白改长了
+    恰好把洞盖住（那 1 秒的静音位置是从 QC 逐秒响度表反推的，**推的不是量的**
+    ——这个函数落地之后，下一次 probe 就有实测区间可对）。
+
+    和 `point_ends` 同一个道理：**趁源片还在的时候量**（渲完就删），写进
+    probe.json，`--dry-run` 拿旁白离线估去对（见 `silence_findings`）。
+    门槛对齐 `check_reel_landed.SILENCE_FLOOR_DB`（-60）：QC 渲后按逐秒
+    max ≤ -60 数静音秒，这儿量的是同一种东西的源头；0.8s 是为了抓得住
+    「一个整秒」而不被亚秒的剪辑缝刷屏。
+    """
+    if not _has_audio(path):
+        return None
+    out = run("ffmpeg", "-hide_banner", "-i", str(path), "-vn", "-af",
+              f"silencedetect=noise={floor_db}dB:d={min_silence}",
+              "-f", "null", os.devnull).stderr
+    starts = [float(m) for m in re.findall(r"silence_start:\s*(-?[\d.]+)", out)]
+    ends = [float(m) for m in re.findall(r"silence_end:\s*(-?[\d.]+)", out)]
+    if len(starts) > len(ends):
+        ends.append(probe_duration(path))   # 贴着文件末尾的静音没打 end
+    return [[round(a, 2), round(b, 2)] for a, b in zip(starts, ends)]
+
+
 def point_end_candidates(source: Path, scorebox: str) -> list[float]:
     """量一遍死球时刻，写进 `probe.json`——**趁源片还在**。
 
@@ -4047,6 +4075,89 @@ def probes_for_spec(spec: dict) -> tuple[dict[str, dict], list[str]]:
 CUT_EDGE_TOL = 0.15
 
 
+def silence_risk(seg_start: float, seg_end: float, speech_est: float | None,
+                 spans) -> list[tuple[float, float, float, float]]:
+    """一段窗口撞上源片静音区的账：`[(源lo, 源hi, 必红秒数, 大概率红秒数)]`。
+
+    - `speech_est`＝这一段旁白的离线估（含 lead_pause）；None＝没有旁白
+      （quote 段和纯画面段的音频就是现场声本身，静音区整个漏出来）
+    - **必红**＝静音区里连「旁白按最长估（+SPEECH_EST_ERR）」都盖不住的部分
+      ——SPEECH_EST_ERR 是那批实测的最坏偏差，超出它就没有任何合成结果救得回
+    - **大概率红**＝按点估盖不住的部分。点估的中位误差贴近 0
+      （`test_离线估旁白长度要对得上真产物` 钉着），所以这一档是掷硬币偏输
+    - 完全盖得住的不出现在返回值里——别拿它刷屏（哑场那道闸的老教训）
+    """
+    out: list[tuple[float, float, float, float]] = []
+    covered_pt = float(speech_est) if speech_est else 0.0
+    covered_max = covered_pt + (SPEECH_EST_ERR if speech_est else 0.0)
+    for span in spans or []:
+        lo, hi = max(float(span[0]), seg_start), min(float(span[1]), seg_end)
+        if hi - lo < 0.5:
+            continue
+        off_lo, off_hi = lo - seg_start, hi - seg_start
+        certain = max(0.0, off_hi - max(off_lo, covered_max))
+        probable = max(0.0, off_hi - max(off_lo, covered_pt))
+        if probable <= 0:
+            continue
+        out.append((lo, hi, certain, probable))
+    return out
+
+
+def silence_findings(spec: dict, segments, probes: dict,
+                     urls: dict) -> tuple[list[str], list[str]]:
+    """段窗口撞源片静音区的判定，返回 `(硬, 软)`。probe_dry_run 的第 ⑥ 条。
+
+    严格程度按谁在另一头分：**自动产的 spec**（`_production.status ==
+    "ready_for_render"`）连「大概率红」也算硬——那一头是模型，这儿改一句旁白
+    或收一下窗口比烧一趟 8 分半的渲染便宜得多；**手写的 spec 只报不拦**，
+    守住「哑场离线估只提醒、不拍板」的老规矩（f7b2501 那次软化）。
+    「必红」（旁白按最长估也盖不住 ≥2 秒——足够压满一个 QC 计数的整秒）
+    对谁都是硬的：那是确定性的渲后失败，让它跑完渲染只是多付 8 分钟学费。
+    """
+    hard: list[str] = []
+    soft: list[str] = []
+    strict = (spec.get("_production") or {}).get("status") == "ready_for_render"
+    ests = {i: est for i, est, _room in narration_estimates(segments)}
+    unmeasured: set[str] = set()
+    for index, seg in enumerate(segments):
+        if seg.image:
+            continue
+        probe = probes.get(urls.get(seg.source, ""))
+        if probe is None:
+            continue
+        if "silent_audio" not in probe:
+            # 老 probe 没量过——「没量」和「量过为空」不能长一样（每源报一次）
+            if seg.source not in unmeasured:
+                unmeasured.add(seg.source)
+                soft.append(f"  源 {seg.source or '(主源)'}：音频静音区间还没量过"
+                            "（老 probe）——重跑一轮 probe 就有")
+            continue
+        spans = probe.get("silent_audio")
+        if spans is None:
+            continue    # 源片没有音轨——silent_source 认领那道闸管，别重复报
+        spoken = ests.get(index)
+        for lo, hi, certain, probable in silence_risk(
+                seg.start, seg.end, spoken, spans):
+            where = (f"第 {index + 1} 段 {seg.start:.1f}–{seg.end:.1f}s："
+                     f"源片 {lo:.1f}–{hi:.1f}s 是静音（≤-60dB）")
+            if certain >= 2.0:
+                hard.append(
+                    f"  {where}，旁白按最长估也盖不住 {certain:.1f}s——渲后"
+                    "数字静音闸**必红**。收窗口避开静音区，或把这段旁白写长")
+            else:
+                head = (f"  {where}，离线估旁白只说到段内 {spoken:.1f}s"
+                        if spoken else f"  {where}，这一段没有旁白")
+                msg = (f"{head}，大概率漏出 {probable:.1f}s 数字静音——渲后"
+                       "静音闸大概率红（zheng-burel 那次就是这一类，先白烧了"
+                       "一趟 8 分半的渲染才知道）。收窗口或把旁白写长")
+                if strict:
+                    hard.append(msg + "。自动产的 spec 按硬闸算：在这儿改一句"
+                                      "比烧一趟渲染便宜")
+                else:
+                    soft.append(msg)
+    return hard, soft
+
+
 def probe_dry_run(spec: dict, segments: list["Segment"]) -> bool:
     """拿已落库的 probe.json 查选段。返回 True 表示**有硬错**。
 
@@ -4058,6 +4169,7 @@ def probe_dry_run(spec: dict, segments: list["Segment"]) -> bool:
     | 段尾切在一分打完之前 | `point_ends` | 只报 |
     | 这条源片的死球时刻整个没量过 | `point_ends`／`scorebox_guess` | 只报，**见下** |
     | 源片分辨率不到 1080p | `height` | **硬**，2026-08-23 补的，见下 |
+    | 段窗口撞源片静音区、旁白盖不住 | `silent_audio` | 必红的对谁都硬；大概率红的**自动 spec 硬、手写只报**（`silence_findings`） |
 
     ⚠️ **1080p 那条 2026-08-18 就定了，实现晚了五天。** 「视频一定要选
     1080p 及以上的清晰度，如果没有的话就等」是账号所有者说得最重的一条，
@@ -4203,6 +4315,11 @@ def probe_dry_run(spec: dict, segments: list["Segment"]) -> bool:
                 "「视频一定要选 1080p 及以上的清晰度，如果没有的话就等」，"
                 "不是拿这一版将就的退路。换一条更高清的源，或者等官方"
                 "发布更清晰的版本再回来。")
+
+    # ⑥ 段窗口撞源片静音区——省掉「渲 8 分半才被 QC 静音闸判死」那一类返工。
+    s_hard, s_soft = silence_findings(spec, segments, probes, urls)
+    hard.extend(s_hard)
+    soft.extend(s_soft)
 
     if mid:
         mid.sort(reverse=True)          # 越靠中间越可疑，排前面
@@ -6580,6 +6697,19 @@ def main() -> int:
         if not str(args.scorebox).strip():
             scorebox_guess = suggest_scorebox(source)
         ends = point_end_candidates(source, args.scorebox)
+        # **音频静音区间也趁源片还在的时候量**（见 silent_audio_spans 的来路）。
+        # 三种结果都要出声：「没音轨」「量过为空」「有区间」在 probe.json 里
+        # 分别是 None / [] / [[a,b]...]，读的人不用猜。
+        silent_audio = silent_audio_spans(source)
+        if silent_audio is None:
+            print("[静音] 源片没有音轨（或量不出来）——silent_source 那道闸会管")
+        elif silent_audio:
+            print("[静音] 源片音频的静音区间（≥0.8s，≤-60dB）："
+                  + "  ".join(f"{a:.1f}–{b:.1f}" for a, b in silent_audio)
+                  + "\n  段窗口别裸压上去：旁白盖不住的部分渲后就是数字静音"
+                    "（--dry-run 会按旁白离线估预判这一层）")
+        else:
+            print("[静音] 量过：源片音频没有 ≥0.8s 的静音区间")
         (outdir / "probe.json").write_text(json.dumps({
             "url": args.url, "width": w, "height": h, "duration": duration,
             "fps": fps_expr, "fps_value": round(fps, 3),
@@ -6589,6 +6719,9 @@ def main() -> int:
             # 的那一趟，这里都是 None——和 `point_ends` 一样别把「没猜」和
             # 「猜了没有」混成一回事。
             "scorebox_guess": scorebox_guess,
+            # 源片音频的静音区间（None=没音轨；[]=量过没有）。dry-run 拿它
+            # 预判「段窗口撞静音、旁白盖不住」那一类渲后必红（silence_findings）。
+            "silent_audio": silent_audio,
             # 只看了一段就记下来——**下一个人拿 probe.json 排窗口时，
             # 「切点少」和「只扫了一段」长得一模一样**。
             "clip_from": clip_from or None,
