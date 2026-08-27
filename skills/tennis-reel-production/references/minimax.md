@@ -6,7 +6,7 @@ Return JSON only with `cold_open`, `ending`, and `cover`. Each video window must
 
 Choose a 3–30 second payoff, never an ordinary rally. Make ending fully cover cold open within 0.25 seconds. Confirm the winner is visible. Check face, clothing, court, scoreboard, and event marks for same-match cover evidence. Follow the provided upset cover-subject rule exactly. Require confidence of at least 0.80.
 
-Treat a completed handshake as a terminal story beat. If the accepted ending includes the handshake, cut at the first clean boundary immediately after it; never append narration, a second replay, an outro, or unrelated post-match footage. When the cold open and ending use the same match-point sequence, prefer ending the cold open before the handshake and reserve the full handshake for the final payoff.
+Treat a completed handshake as a terminal story beat. If the accepted ending includes the handshake, cut at the first clean boundary immediately after it; never append narration, a second replay, an outro, or unrelated post-match footage. When the cold open and ending use the same match-point sequence, prefer ending the cold open before the handshake and reserve the full handshake for the final payoff. Set top-level `outro` to `false` for this case so the deterministic renderer does not append its generic brand page after the accepted handshake ending.
 
 When contact sheets are sampled from a longer source, preserve the final two sheets together in addition to broad full-video coverage. The deciding point is often on the penultimate sheet while the handshake or outro is on the last; supplying only the last sheet is incomplete evidence.
 
