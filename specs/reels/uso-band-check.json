@@ -1,0 +1,424 @@
+{
+  "slug": "uso-band-check",
+  "_column": "reel",
+  "cover": {
+    "matchup": [
+      {
+        "name": "郑钦文",
+        "name_en": "Qinwen Zheng",
+        "country": "CHN",
+        "rank": 121
+      },
+      {
+        "name": "布雷尔",
+        "name_en": "Clara Burel",
+        "country": "FRA",
+        "rank": 410
+      }
+    ],
+    "winner": "郑钦文",
+    "result": "6-1 7-5",
+    "portrait": {
+      "image": "assets/reel/zheng-burel-us-open-2026-q2-cover.jpg",
+      "focus": 0.43,
+      "focus_y": 0.48,
+      "zoom": 1.08,
+      "_low_res_why": "用户明确选择US Open官方同场视频近景替代旧动作照；1920×1080横帧裁成3:4需放大1.44倍，以赛点后的微笑握拳情绪优先，并在最终海报上人工核验面部清晰度。",
+      "_why": "US Open官方本场集锦162秒赛后近景；郑钦文赢球后微笑握拳，白色上衣与薄荷绿裙装、Court 17场地和本场比分均可核验。原帧1920×1080，按3:4裁切后人物面部与胜后情绪均比旧动作照更突出。"
+    },
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "郑钦文",
+    "hook": "世界第410\n真有这么弱？",
+    "topic": "美网资格赛 · 第二轮",
+    "scoreboard": {
+      "court": "Court 17",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%221%3A34%3A00%22%2C%22source%22%3A%22Flashscore%20structured%20match%20statistics%22%7D",
+        "field": "duration"
+      },
+      "_court_why": "赛果源结构化 court 字段",
+      "_duration_why": "Flashscore结构化全场时长1:34；封面解析器按H:MM:SS读取，因此规范为1:34:00。"
+    }
+  },
+  "_production": {
+    "kind": "orchestrated_reel",
+    "received_at": "2026-08-26T17:57:25Z",
+    "event": "美网资格赛",
+    "year": 2026,
+    "round": "Q2",
+    "court": "Court 17",
+    "status": "ready_for_render"
+  },
+  "source_url": "https://youtu.be/iCRfxcIFAoo?is=7QI7xbEXBisHEj8q",
+  "_match": {
+    "status": "result_verified",
+    "source": "flashscore_points",
+    "source_id": "WUx6rEHM",
+    "flashscore_id": "WUx6rEHM",
+    "participants": [
+      "郑钦文",
+      "布雷尔"
+    ],
+    "set_scores_home_away": [
+      [
+        6,
+        1
+      ],
+      [
+        7,
+        5
+      ]
+    ],
+    "winner": "郑钦文",
+    "loser": "布雷尔",
+    "winner_result": "6-1 7-5",
+    "loser_result": "1-6 5-7"
+  },
+  "stats": {
+    "a": {
+      "aces": 4,
+      "df": 8,
+      "winners": 21,
+      "ue": 33,
+      "first_in": 28,
+      "first_won": 21,
+      "second_total": 33,
+      "second_won": 18,
+      "bp_conv": 5,
+      "bp_chances": 10,
+      "pts_won": 71,
+      "pts_total": 122,
+      "first_total": 61,
+      "headshot": "assets/players/wta-328120-zheng-qinwen.png",
+      "headshot_zoom": 2,
+      "headshot_focus_x": 50,
+      "headshot_focus_y": 12
+    },
+    "b": {
+      "aces": 2,
+      "df": 5,
+      "winners": 4,
+      "ue": 17,
+      "first_in": 35,
+      "first_won": 22,
+      "second_total": 26,
+      "second_won": 7,
+      "bp_conv": 2,
+      "bp_chances": 3,
+      "pts_won": 51,
+      "pts_total": 122,
+      "first_total": 61,
+      "headshot": "assets/players/headshots/wta-325320.jpg"
+    },
+    "_source": "Flashscore 本场 WUx6rEHM 的 df_st_1（发球、破发点、总得分）与比赛技术统计（制胜分、非受迫失误）；a=郑钦文、b=布雷尔，双方总分均以122分为分母。"
+  },
+  "_hit_data": [
+    {
+      "label": "总分差",
+      "detail": "郑钦文 71 - 布雷尔 51，净差 20 分，郑钦文 领先",
+      "diff": 20,
+      "source": "flashscore df_mh_1（总分）"
+    },
+    {
+      "label": "郑钦文 一发得分率摆动",
+      "detail": "第1盘83% → 第2盘69%",
+      "swing": 14,
+      "source": "flashscore df_st_1（分盘一发得分率）"
+    },
+    {
+      "label": "郑钦文 破发点兑现",
+      "detail": "5/10（50%）",
+      "source": "flashscore df_st_1（破发点）"
+    },
+    {
+      "label": "布雷尔 破发点兑现",
+      "detail": "2/3（67%）",
+      "source": "flashscore df_st_1（破发点）"
+    },
+    {
+      "label": "郑钦文 连续保发",
+      "detail": "6 个发球局",
+      "source": "flashscore df_mh_1（逐局）"
+    },
+    {
+      "label": "交手记录",
+      "detail": "Zheng Q. 1 : 0 Burel C.（含本场） · 硬地 1:0",
+      "source": "flashscore df_hh_1"
+    },
+    {
+      "label": "近况",
+      "detail": "Zheng Q. 最近 5 场 2 胜（WWLLL）；Burel C. 最近 5 场 3 胜（LWLWW）",
+      "source": "flashscore df_hh_1 Last matches"
+    }
+  ],
+  "_durations": [
+    [
+      "Set 1",
+      "0:33"
+    ],
+    [
+      "Set 2",
+      "1:01"
+    ],
+    [
+      "全场",
+      "1:34"
+    ]
+  ],
+  "_turning_points": [
+    {
+      "label": "【Set 2】6-5  布雷尔发球，郑钦文拿下  密度3  ← 3个破发点、破发成功",
+      "density": 3,
+      "tags": [
+        "3个破发点",
+        "破发成功"
+      ]
+    },
+    {
+      "label": "【Set 2】7-5  郑钦文发球，郑钦文拿下  密度3  ← 1个赛点",
+      "density": 3,
+      "tags": [
+        "1个赛点"
+      ]
+    },
+    {
+      "label": "【Set 1】1-1  布雷尔发球，布雷尔拿下  密度2  ← 2个破发点",
+      "density": 2,
+      "tags": [
+        "2个破发点"
+      ]
+    },
+    {
+      "label": "【Set 1】6-1  郑钦文发球，郑钦文拿下  密度2  ← 1个盘点",
+      "density": 2,
+      "tags": [
+        "1个盘点"
+      ]
+    },
+    {
+      "label": "【Set 2】4-3  布雷尔发球，郑钦文拿下  密度2  ← 2个破发点、破发成功",
+      "density": 2,
+      "tags": [
+        "2个破发点",
+        "破发成功"
+      ]
+    }
+  ],
+  "editorial": {
+    "hook": [
+      "世界第410",
+      "真有这么弱？"
+    ],
+    "question": "世界排名第410位的布雷尔，为什么绝不能按这个数字去判断实力？",
+    "thesis": "这不是世界第121位击败一个普通的第410位，而是两名被伤病和积分周期压低排名的高水平球员在大满贯资格赛相遇。布雷尔的排名是伤病快照，不是能力上限；郑钦文首盘完全控制，次盘在对手站稳后完成收官。",
+    "beats": [
+      "郑钦文因右肘手术长期缺阵，报名时排名在正赛直接入围线之外，只能从资格赛重新攒比赛与积分。",
+      "布雷尔最高排名第42位，膝伤让她休战12个月；她曾是青少年世界第一，2018年美网青少年决赛负于王曦雨。",
+      "布雷尔2022年从美网资格赛突围，正赛首轮以6-4 6-4击败当届温网冠军莱巴金娜；2024年澳网还击败过世界第5佩古拉。",
+      "郑钦文首盘6-1迅速建立控制，次盘被追入胶着后7-5收尾；制胜分21-4、总得分71-51，但33次非受迫失误说明复出状态仍有波动。",
+      "资格赛决胜轮将对阵20岁的普里丹基纳，后者世界第186，前两轮均直落两盘晋级。"
+    ],
+    "human_context": {
+      "angle": "布雷尔的世界第410位是伤病留下的排名快照，不代表她的真实上限；郑钦文自己也因右肘手术跌出直接入围线，因此这场资格赛本质上是两名高水平伤愈球员的重建之战。",
+      "facts": [
+        "郑钦文以6-1 7-5击败布雷尔。",
+        "郑钦文 71 - 布雷尔 51，净差 20 分，郑钦文 领先",
+        "第1盘83% → 第2盘69%",
+        "5/10（50%）",
+        "2/3（67%）",
+        "WTA官方：郑钦文曾排名世界第4；右肘手术后从2025年7月至2026年2月之间只参加一站比赛，报名美网资格赛时排名第125位，未进入正赛直接入围名单。",
+        "WTA官方：布雷尔最高排名第42位；2024年4月遭遇前交叉韧带伤势并休战12个月，本届美网资格赛以保护排名第140位参赛。",
+        "WTA与ITF官方：布雷尔2018年登顶青少年世界第一，进入澳网和美网青少年女单决赛，并夺得青年奥运会银牌与ITF青少年大师赛冠军。",
+        "US Open官方：2018年美网青少年女单决赛，王曦雨以7-6(4) 6-2击败布雷尔。",
+        "WTA官方：布雷尔2022年从美网资格赛突围，正赛首轮以6-4 6-4击败当届温网冠军莱巴金娜，最终打进第三轮。",
+        "WTA官方：布雷尔2024年澳网以6-4 6-2击败世界第5佩古拉，收获个人首胜Top10。",
+        "2026美网女单资格赛签表：郑钦文决胜轮对阵20岁的埃琳娜·普里丹基纳；后者世界第186，前两轮分别6-1 6-3和6-2 6-4获胜。",
+        "US Open官方赛程：本场为2026年8月26日Stadium 17首场，纽约时间上午11点开球，即北京时间8月26日晚11点。"
+      ],
+      "sources": [
+        "https://youtu.be/iCRfxcIFAoo?is=7QI7xbEXBisHEj8q",
+        "https://www.flashscore.com/match/tennis/WUx6rEHM/#/match-summary",
+        "https://www.wtatennis.com/news/4553891/andreescu-zheng-kenin-liutova-headline-us-open-qualifying-entries",
+        "https://www.wtatennis.com/news/4565851/zheng-defeats-you-pareja-advances-in-us-open-qualifying",
+        "https://www.usopen.org/en_US/news/articles/2018-09-09/xiyu_wang_claims_girls_singles_title_at_us_open.html",
+        "https://www.itftennis.com/en/news-and-media/articles/burel-crowned-2018-itf-junior-masters-girls-champion/",
+        "https://www.wtatennis.com/news/3860643/burel-stuns-pegula-at-australian-open-for-first-top-10-win",
+        "https://www.usopen.org/en_US/scores/draws/2026_WQ_draw.pdf",
+        "https://www.wtatennis.com/players/330905/elena-pridankina/stats",
+        "https://www.wtatennis.com/news/4567086/zheng-montgomery-roll-into-final-us-open-qualifying-round",
+        "https://www.usopen.org/en_US/scores/2026/schedule/pdf/schedulePDF4.pdf"
+      ]
+    },
+    "narration": [
+      "北京时间八月二十六日晚十一点，美网资格赛第二轮，郑钦文六比一、七比五击败布雷尔，闯进决胜轮。",
+      "她因右肘手术长期缺阵，排名跌出正赛直接入围线，只能从资格赛重新出发。",
+      "布雷尔也不是普通的世界第四百一十：她最高到过第四十二位，膝伤让她休战十二个月。",
+      "二零一八年，她登顶青少年世界第一，打进澳网和美网青少年决赛；美网决赛输给王曦雨，随后又拿下青少年大师赛冠军。",
+      "二零二二年她从美网资格赛突围，正赛首轮两盘击败当届温网冠军莱巴金娜；二零二四年澳网，又击败世界第五佩古拉。",
+      "首盘六比一，是郑钦文的控制；次盘打到七比五，是布雷尔站稳后的抵抗。郑钦文制胜分二十一比四，但也有三十三次非受迫失误。",
+      "排名是伤痕，不是上限。决胜轮，郑钦文将对阵二十岁的普里丹基纳，世界第一百八十六，前两轮一盘未失。距离正赛只差这一关，郑钦文能直通吗？"
+    ],
+    "mode": "match_review"
+  },
+  "push": {
+    "summary": "世界第410，真有这么弱？",
+    "lead": "郑钦文6-1、7-5击败布雷尔，距离美网正赛只差一场。世界第410的布雷尔曾排名第42、登顶青少年世界第一，还击败过莱巴金娜和佩古拉；决胜轮郑钦文将面对前两轮未失一盘的普里丹基纳。"
+  },
+  "segments": [
+    {
+      "start": 140.59,
+      "end": 162.5,
+      "narration": "",
+      "_ending_payoff_required": true,
+      "_quote_kind": "broadcast",
+      "quote": [
+        {
+          "at": 0.29,
+          "end": 1.89,
+          "text": "Just taking the ball shorter and shorter there,\n回球越来越短。"
+        },
+        {
+          "at": 1.89,
+          "end": 3.89,
+          "text": "allowing them to step in, take control.\n让郑钦文向前接管这一分。"
+        }
+      ],
+      "fit": "crop",
+      "_why": "MiniMax视觉证据确认该窗口覆盖完整赛点回合、MATCH POINT标识与郑钦文胜后反应；冷开场在走向球网前结束，把握手留给最终收束。英文原声按captions.txt拆成两条双语字幕，0.29–3.89秒随真实解说结束。"
+    },
+    {
+      "start": 18.15,
+      "end": 32.88,
+      "narration": "北京时间八月二十六日晚十一点，美网资格赛第二轮，郑钦文六比一、七比五击败布雷尔，闯进决胜轮。",
+      "_why": "官方英文解说在这一段总结首盘6-1，画面属于本场连续回合；旁白先交代赛果和轮次坐标。"
+    },
+    {
+      "start": 32.88,
+      "end": 47.68,
+      "narration": "她因右肘手术长期缺阵，排名跌出正赛直接入围线，只能从资格赛重新出发。",
+      "crosses_cut": "窗口内均为本场第一盘连续画面，用于承载参赛背景，不冒充具体得分。",
+      "_why": "回答用户最关心的『为什么打资格赛』。"
+    },
+    {
+      "start": 47.68,
+      "end": 58.81,
+      "narration": "布雷尔也不是普通的世界第四百一十：她最高到过第四十二位，膝伤让她休战十二个月。",
+      "_why": "同场回合承载对手当前排名为何失真的背景。"
+    },
+    {
+      "start": 58.81,
+      "end": 92.11,
+      "narration": "二零一八年，她登顶青少年世界第一，打进澳网和美网青少年决赛；美网决赛输给王曦雨，随后又拿下青少年大师赛冠军。",
+      "crosses_cut": "窗口内均为本场底线回合和球员近景，服务同一人物履历解释。",
+      "_why": "交代布雷尔强势青少年履历，并准确点出2018美网决赛负于王曦雨。"
+    },
+    {
+      "start": 92.11,
+      "end": 116.08,
+      "narration": "二零二二年她从美网资格赛突围，正赛首轮两盘击败当届温网冠军莱巴金娜；二零二四年澳网，又击败世界第五佩古拉。",
+      "crosses_cut": "窗口含本场精彩回合与慢镜，均用于说明布雷尔并非普通低排名球员。",
+      "_why": "两场最有辨识度的成年组代表战，回答用户要求的知名战。"
+    },
+    {
+      "start": 116.08,
+      "end": 140.59,
+      "narration": "首盘六比一，是郑钦文的控制；次盘打到七比五，是布雷尔站稳后的抵抗。郑钦文制胜分二十一比四，但也有三十三次非受迫失误。",
+      "crosses_cut": "窗口内为第二盘后段连续回合，接近赛点前的比赛走势。",
+      "_why": "用比分与技术统计讲清两盘不同走势，不把胜利写成无波动碾压。"
+    },
+    {
+      "start": 0,
+      "end": 18.15,
+      "narration": "排名是伤痕，不是上限。决胜轮，郑钦文将对阵二十岁的普里丹基纳，世界第一百八十六，前两轮一盘未失。距离正赛只差这一关，郑钦文能直通吗？",
+      "crosses_cut": "窗口为本场赛点前的比赛画面，用于提前交代核心判断和决胜轮对手；不使用任何握手后的镜头。",
+      "_why": "把排名判断与下一轮信息放到赛点之前，保证最后一次握手之后不再追加正文或重复回放。"
+    },
+    {
+      "start": 140.59,
+      "end": 171.25,
+      "narration": "",
+      "fit": "crop",
+      "crosses_cut": "完整覆盖决定性赛点、胜后反应与双方握手；171.25秒握手已经释放，随即切入固定品牌片尾。",
+      "_why": "全片最终以赛点至握手完整收束；0.1秒成片抽帧证明170.60秒仍在接触，终点微调到171.25秒以保留握手释放，之后只接固定品牌片尾。"
+    }
+  ],
+  "_notes": [
+    "flashscore id：WUx6rEHM（按球员姓反查）",
+    "制胜分/非受迫失误：这场有，已填进 stats",
+    "狠数据候选 7 条",
+    "转折局候选 11 局，取前 5",
+    "赛果事实闸：郑钦文 6-1 7-5 布雷尔（赢家视角）",
+    "文案通道 deepseek · deepseek-v4-pro",
+    "背景聚合：H2H/近况/排名/中文热点已备齐（年龄/纪录/金句要 human_context 调研补，见 spec 合同）",
+    "推送文案已通过事实校验；默认开启 QC 后自动推送",
+    "窗口起草 2 段",
+    "封面返工：按用户选择改用US Open官方本场集锦162秒赛后近景，1920×1080；郑钦文微笑握拳，人物更居中，竖裁后的情绪与面部清晰度优于旧动作照。",
+    "对手背景与资格赛原因均来自WTA、US Open、ITF官方资料；成年代表战选2022莱巴金娜与2024佩古拉。",
+    "第三轮对手：Elena Pridankina，20岁、WTA第186；2026美网资格赛前两轮均直落两盘。",
+    "终检修正：第三轮对手段窗口由181.63–193.20前移为181.00–192.57，保持11.57秒，避开源片192秒附近1秒数字静音。",
+    "CI修正：开场补北京时间坐标；第三轮对手统一按译名表为普里丹基纳；结尾落在问句；stats补来源。",
+    "CI修正：按US Open官方Order of Play补齐北京时间开球时刻——8月26日晚11点。",
+    "音频终检修正：论点段与第三轮对手段保持17.17秒/14.11秒不变，连续前移至159.22–176.39、176.39–190.50，避开源片约191秒的转播数字静音。",
+    "字幕终检修正：冷开场英文原声拆为两条同步双语字幕，英文46px、中文68px；末条在段内3.89秒显式结束，防止常驻至片段末尾。",
+    "收尾终检修正：下一轮对手与核心判断提前到赛点之前；冷开场止于走向球网前，片尾完整呈现赛点和握手，握手完成即结束，不再追加赛后画面或重复回放。",
+    "CI收尾问句修正：赛点前最后一句改为“距离正赛只差这一关，郑钦文能直通吗？”，握手之后仍保持无旁白、无画面。",
+    "渲染终检修正：本场以双方握手作为故事终点，关闭通用品牌片尾；握手后不再追加品牌页或口播。",
+    "握手终点复核：旧版全片缩略图墙证明164.46秒早于实际握手；最终段延长到170.60秒，完整保留握手，随后只接固定“网球时差”品牌片尾。",
+    "握手逐帧终检：#1264在170.60秒转场时双方仍接触；最终终点微调到171.25秒，握手释放后立即进入固定品牌片尾。"
+  ],
+  "_visual_evidence": {
+    "model": "MiniMax-M3",
+    "status": "pass",
+    "visual_status": "pass",
+    "retryable": false,
+    "cold_open": {
+      "start": 140.59,
+      "end": 162.5,
+      "kind": "match_point",
+      "winner_visible": true,
+      "reason": "140.59s起为赛点前夕，148.5s–160.5s为最后一分对拉，160.5s出现MATCH POINT，郑钦文胜后反应清楚；冷开场在162.5s走向球网前结束，握手保留到片尾。",
+      "confidence": 0.88
+    },
+    "ending": {
+      "start": 140.59,
+      "end": 171.25,
+      "kind": "match_point",
+      "winner_visible": true,
+      "reason": "片尾完整覆盖冷开场的最后一分与MATCH POINT标识。旧版2秒缩略图墙先把握手区定位在168.5–172.5秒；#1264成片0.1秒抽帧进一步证明170.60秒仍在接触，因此延长到171.25秒，保留握手释放但不保留172.5秒后的走开画面。",
+      "confidence": 0.92
+    },
+    "cover": {
+      "same_match": true,
+      "subject": "郑钦文",
+      "moment": "celebration",
+      "wrong_or_old": false,
+      "reason": "封面直接取自US Open官方频道本场集锦162秒：前一秒画面仍显示MATCH POINT与Zheng/Burel比分，随后郑钦文以白色上衣、薄荷绿裙装微笑握拳；人物、服装、场地与赛点连续镜头一致，因此同场身份明确。",
+      "confidence": 0.97
+    },
+    "problems": [],
+    "model_attempts": 2,
+    "input_sha256": "dccdf8667a3d6afad8200076a6ee5768b5ae2cc356a2030ce43d9eca5ac65bca",
+    "inputs": [
+      "contact_00.jpg",
+      "contact_01.jpg",
+      "contact_02.jpg",
+      "contact_03.jpg"
+    ],
+    "cover_image": "assets/reel/zheng-burel-us-open-2026-q2-cover.jpg"
+  },
+  "_cover_brief": {
+    "preferred_subject": "郑钦文",
+    "preferred_moment": "celebration",
+    "source_type": "US Open官方同场高清视频帧",
+    "source_page": "https://youtu.be/iCRfxcIFAoo",
+    "source_proof": "US Open官方频道视频标题为Qinwen Zheng vs. Clara Burel Highlights | 2026 US Open Qualifying Round 2；162秒前后连续覆盖赛点、胜后微笑握拳和6-1、7-5赛果，抽取帧为1920×1080。Getty同场怒吼照更强，但公开预览带水印且无授权，因此不用。"
+  },
+  "_segments_source": " + MiniMax 冷开场/结尾视觉闸",
+  "topbar": {
+    "line1": "2026 美网资格赛 第二轮",
+    "line2": "郑钦文 6-1 7-5 布雷尔"
+  },
+  "_editing_why": "赛点冷开场（不提前展示握手）→赛果与资格赛原因→布雷尔的伤病和青少年履历→莱巴金娜、佩古拉两场代表战→两盘走势与数据→排名论点及决胜轮普里丹基纳→完整赛点与握手释放（止于171.25秒）→固定品牌片尾；握手后不再出现比赛内容。",
+  "layout": "band"
+}
