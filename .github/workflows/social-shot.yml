@@ -11,6 +11,16 @@ name: social-shot
 # ⚠️ **撞上登录墙就报错不交图**，判据在工具里（exit 2）。
 
 on:
+  # ⚠️ **push 这条不是冗余**：`workflow_dispatch` 只有当工作流文件已经在**默认
+  # 分支**上时才 dispatch 得动（不在就是 404），而截图往往是在特性分支上做片子
+  # 的过程中才需要的。所以另留一条声明式的入口：把要截的东西写进
+  # `data/social_shot_requests/<slug>.json` 推上来，这条就在**当前分支**上跑。
+  #
+  # 顺带它比 dispatch 更该是主路——**请求文件本身就是这张图的来路**，
+  # 谁、什么时候、按什么选择器截的，都跟着仓库走，不用回头翻 run 的表单。
+  push:
+    paths:
+      - "data/social_shot_requests/**"
   workflow_dispatch:
     inputs:
       slug:
@@ -48,8 +58,9 @@ permissions:
   contents: write
 
 concurrency:
-  # 按 slug+name 分组：不同截图互不掐，同一张重截会取代上一趟
-  group: social-shot-${{ inputs.slug }}-${{ inputs.name }}
+  # push 触发时 inputs 是空的，所以把 ref 也编进分组名——否则两条分支上
+  # 的请求会互相掐掉。
+  group: social-shot-${{ github.ref }}-${{ inputs.slug }}-${{ inputs.name }}
   cancel-in-progress: true
 
 jobs:
@@ -143,7 +154,8 @@ jobs:
           }
           pw_retry
 
-      - name: 截图
+      - name: 截图（dispatch 那条路：表单说了截什么）
+        if: github.event_name == 'workflow_dispatch'
         run: >-
           python tools/capture_social_shot.py
           --url "${{ inputs.url }}"
@@ -154,7 +166,14 @@ jobs:
           --height "${{ inputs.height }}"
           --wait-ms "${{ inputs.wait_ms }}"
 
+      - name: 截图（push 那条路：请求文件说了截什么）
+        if: github.event_name == 'push'
+        run: python tools/run_social_shot_requests.py
+
       - name: 落库
+        # `always()`：一趟可能截好几张，一张撞上登录墙不该让**已经截好的那几张**
+        # 也提交不了。工具那头逐张 try、最后按有没有失败定退出码，产物已经落在盘上。
+        if: always()
         run: |
           if git status --short -- assets/social | grep -q .; then
             git config user.name "Claude"
@@ -177,8 +196,8 @@ jobs:
         if: always()
         run: |
           echo "## 社交媒体截图" >> "$GITHUB_STEP_SUMMARY"
-          echo "- 目标：${{ inputs.url }}" >> "$GITHUB_STEP_SUMMARY"
-          proof="assets/social/${{ inputs.slug }}/${{ inputs.name }}.png.json"
+          echo "- 触发：${{ github.event_name }}" >> "$GITHUB_STEP_SUMMARY"
+          proof="$(ls -1 assets/social/*/*.png.json 2>/dev/null | tail -1)"
           if [ -s "$proof" ]; then
             jq -r '"- 页面标题：" + .page_title,
                    "- 抓取时刻：" + .captured_at,

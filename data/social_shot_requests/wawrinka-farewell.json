@@ -1,0 +1,26 @@
+{
+  "slug": "wawrinka-farewell",
+  "_why": "「网球有故事·瓦林卡」这条片子要两张原始文书当整屏证据段：他自己那篇告别长文的原帖，和美网官网改了标题的那篇公告。两件事旁白都讲得到，而**原始文书比我们转述一遍硬得多**——这也是对标那条片子里唯一的非比赛画面。",
+  "shots": [
+    {
+      "name": "x-farewell",
+      "url": "https://x.com/stanwawrinka/status/2092254457358643314",
+      "selector": "article",
+      "width": 1000,
+      "height": 1600,
+      "wait_ms": 9000,
+      "revision": 1,
+      "_why": "2026-08-25 14:15:09Z 他本人发的告别长文。推文 id 是从 x.com/stanwawrinka 的服务端渲染载荷里抠出来的（该页 250 KB，正文就在里面），正文开头 `When I first arrived in New York from a small farming village in Switzerland, everything felt too big` 和图卡版引用的那段逐字对得上。"
+    },
+    {
+      "name": "uso-announcement",
+      "url": "https://www.usopen.org/en_US/news/articles/2026-08-26/2016_champion_stan_wawrinka_will_return_for_final_us_open.html",
+      "selector": "article",
+      "width": 1100,
+      "height": 1500,
+      "wait_ms": 9000,
+      "revision": 1,
+      "_why": "美网官网 8 月 26 日那篇《2016 champion Stan Wawrinka will return for final US Open》。它是「八天」那一拍的落点——同一天官网连发两篇，前一篇标题还是「授予外卡」。⚠️ 这个站对 requests 只回 4084 字节的 JS 壳，必须真浏览器渲染。"
+    }
+  ]
+}
