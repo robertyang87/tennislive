@@ -5627,14 +5627,22 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     # 封面那句先合出来——**封面停多久由它决定**，所以排在渲封面之前。
     cover_voice, cover_marks = synth_cover(spec, outdir, voice, rate)
     cover_secs = cover_length(cover_voice)
-    # 片尾那句同理：**片尾停多久由它决定**（`outro_length`），所以也要排在
-    # 渲那一页之前。两句都在这儿合掉，TTS 一共 6 秒上下、一个源片像素都不碰
-    # ——「TTS 和旁白超长那道闸，挪到编码之前」是同一个道理。
-    outro_voice, outro_marks = synth_outro(outdir, voice, rate)
-    outro_secs = outro_length(outro_voice)
+    # 默认保留品牌片尾；但当比赛本身已经以双方握手形成完整收束时，spec 可用
+    # `"outro": false` 明确要求握手后立即结束。这个开关必须同时控制画面、口播、
+    # 长度账和最后一段的溶解底料，不能只跳过其中一层。
+    outro_enabled = spec.get("outro", True) is not False
+    if outro_enabled:
+        outro_voice, outro_marks = synth_outro(outdir, voice, rate)
+        outro_secs = outro_length(outro_voice)
+    else:
+        outro_voice, outro_marks = None, []
+        outro_secs = 0.0
+        print("[片尾] spec 明确关闭品牌页；最后一个比赛段落即为成片终点")
     total = sum(s.length for s in segments) + cover_secs + outro_secs
+    tail_desc = (f"、片尾 {outro_secs:.2f}s" if outro_enabled
+                 else "、无品牌片尾")
     print(f"{len(segments)} 段，画面共 {total:.1f}s"
-          f"（含封面 {cover_secs:.2f}s、片尾 {outro_secs:.2f}s）")
+          f"（含封面 {cover_secs:.2f}s{tail_desc}）")
     if total > 120:
         print(f"[注意] 超过两分钟（{total:.1f}s），按要求应当再砍")
 
@@ -5714,23 +5722,22 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     # **每一段都多切 SEG_FADE 秒留给下一个接缝，最后一段不留**——长度账见
     # `dissolve_filtergraph`。多出来的那几秒从来不单独播，它只在溶解里当底。
     #
-    # ⚠️ **片尾页接上之后，「最后一段」换人了。** 末段不留尾巴的规则是
-    # `dissolve_filtergraph` 的长度账要求的（末段那个 f 正好被吃掉，总长才等于
-    # Σ Lᵢ）。片尾页排在所有分段之后，所以现在**每一个分段都要留尾巴**，
-    # 不留的那个是片尾页。写死 `index == len(segments) - 1` 会让最后一个分段
-    # 少 0.18 秒底料，溶解就落到流的末尾之外——2026-08-02 那两趟
-    # 「段落 114.46s、成片 12.44s」正是这么来的，**而日志里一个字都不会说**。
-    lengths = [cover_secs] + [seg.length for seg in segments] + [outro_secs]
+    # 品牌页开启时，它是末段，所有比赛段都要留溶解底料；关闭时，最后一个
+    # 比赛段本身就是末段，不能再向握手之后多切 SEG_FADE 秒。
+    lengths = [cover_secs] + [seg.length for seg in segments]
+    if outro_enabled:
+        lengths.append(outro_secs)
     parts: list[Path] = [build_cover(sources, primary, spec,
                                  outdir / "part_cover.mp4", source_w,
                                  cover_secs, tail=SEG_FADE)]
     def _encode_one(item):
         index, seg = item
         dest = outdir / f"part_{index:02d}.mp4"
+        tail = SEG_FADE if (outro_enabled or index < len(segments) - 1) else 0.0
         if seg.image:
-            return index, cut_still_segment(seg, dest, tail=SEG_FADE)
+            return index, cut_still_segment(seg, dest, tail=tail)
         return index, cut_segment(sources[seg.source], seg, dest,
-                                  source_w, tracks.get(index), tail=SEG_FADE)
+                                  source_w, tracks.get(index), tail=tail)
 
     # **分段编码并行**：各段独立、各写各的文件、`-ss` 输入寻址后互不干扰。
     # 线程池够用——ffmpeg 是独立进程，`subprocess.run` 会放掉 GIL，瓶颈在
@@ -5743,7 +5750,8 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     else:
         encoded = [_encode_one(e) for e in enumerate(segments)]
     parts += [p for _, p in sorted(encoded, key=lambda t: t[0])]
-    parts.append(build_outro(outdir, outro_secs, tail=0.0))
+    if outro_enabled:
+        parts.append(build_outro(outdir, outro_secs, tail=0.0))
 
     silent = outdir / "_video.mp4"
     with stage("拼接"):
@@ -5861,11 +5869,12 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     # 「关注」二字之外，**每个字都已经在屏幕上了，而且比字幕大得多**。
     # 再排一行字幕只会压在那句小字上，把这一页弄脏。
     # 「静音刷是默认状态」这条在这儿是满足的：静音的人照样读得到全部信息。
-    mix_inputs.extend(["-i", str(outro_voice)])
-    filters.append(f"[{len(mix_inputs)//2}:a]adelay={int(offset*1000)}|"
-                   f"{int(offset*1000)}[voutro]")
-    voice_labels.append("[voutro]")
-    print(f"[片尾] 口播落在 {offset:.2f}s，画面上已印着同样的话，不另排字幕")
+    if outro_enabled:
+        mix_inputs.extend(["-i", str(outro_voice)])
+        filters.append(f"[{len(mix_inputs)//2}:a]adelay={int(offset*1000)}|"
+                       f"{int(offset*1000)}[voutro]")
+        voice_labels.append("[voutro]")
+        print(f"[片尾] 口播落在 {offset:.2f}s，画面上已印着同样的话，不另排字幕")
 
     margin_v = int(spec.get("subtitle_top", _REEL_MARGIN_V))
     ass = write_subtitles(cues, outdir / "subtitles.ass",
