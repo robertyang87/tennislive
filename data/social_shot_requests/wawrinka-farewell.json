@@ -21,6 +21,16 @@
       "wait_ms": 9000,
       "revision": 1,
       "_why": "美网官网 8 月 26 日那篇《2016 champion Stan Wawrinka will return for final US Open》。它是「八天」那一拍的落点——同一天官网连发两篇，前一篇标题还是「授予外卡」。⚠️ 这个站对 requests 只回 4084 字节的 JS 壳，必须真浏览器渲染。"
+    },
+    {
+      "name": "uso-headline",
+      "url": "https://www.usopen.org/en_US/news/articles/2026-08-26/2016_champion_stan_wawrinka_will_return_for_final_us_open.html",
+      "selector": "",
+      "width": 1100,
+      "height": 1250,
+      "wait_ms": 9000,
+      "revision": 1,
+      "_why": "同一篇公告的**首屏**（不给选择器＝按视口截，标题在这儿）。片子里用的是这一张，不是那张整篇的 `uso-announcement`——理由是**画面要和旁白对得上**：整篇那张往下第五段写着 `Ranked 117`，而这条片子的旁白说的是「世界第一百二十七位」。\n⚠️ 127 是对的，两个独立源：美网**自己的**选手数据 feed （usopen.org/en_US/scores/feeds/2026/players/players.json → `singles_rank: '127'`）和 tennisexplorer 的当期页（Current rank 127，生涯最高 3，41 岁 1985-03-28）。官网那篇稿子的正文数字是个孤证，和赛事自己的数据 feed 对不上——**按数据走**，同时别把那一行放进画面。"
     }
   ]
 }
