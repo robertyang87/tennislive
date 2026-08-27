@@ -44,6 +44,7 @@
       "sources": [
         "https://www.usopen.org/en_US/news/articles/2026-08-26/2016_champion_stan_wawrinka_will_return_for_final_us_open.html",
         "https://x.com/stanwawrinka",
+        "https://www.instagram.com/p/DcdvcjaAHLh/",
         "https://apnews.com/article/stan-wawrinka-retire-564b07848766648bc83255648870b2ba",
         "https://www.rolandgarros.com/en-us/article/2026-edition-roland-garros-wrap-mon-may-25",
         "https://www.wimbledon.com/en_GB/news/wimbledon_2026_wawrinka_berrettini_r1"
@@ -162,10 +163,10 @@
       "_why": "窗口从 619.0 收到 615.0：原来这一段一句话把帖子的内容也说完了，而**帖子本身是拿得到的原始文书**——那句话该让给它自己那一屏。收短只是把 end 往回挪，仍然在同一个镜头里（原窗口本来就是一刀不剪的）。"
     },
     {
-      "image": "assets/social/wawrinka-farewell/x-farewell-crop.png",
+      "image": "assets/social/wawrinka-farewell/ig-embed-520-crop.png",
       "seconds": 5.6,
       "narration": "最后一句是——永远感激，永远纽约。",
-      "_why": "**整屏切走看证据**，不贴在比赛画面上（账号所有者 2026-08-12：不要在比赛视频上贴图）。对标那条片子里唯一的非比赛画面，也正是他自己那篇告别帖的截图——**原始文书比我们转述一遍硬得多**。\n这一屏自己证两件事：认证号 @stanwawrinka（是他本人发的）、正文最后一行 `Forever grateful. Forever New York`（旁白引的就是这一句）。\n⚠️ **是裁过的**（`x-farewell-crop.png`，连续一刀，裁法和理由在旁边的 .json）——整屏那版在成片里量出来只有 0.71 倍、正文读不了，而且**字幕正好压在时间戳行上**。裁完 0.897 倍，卡片和字幕不再重叠。\n⚠️ 裁掉时间戳之后这一屏**不再自证日期**，所以「八月二十五号」由上一段说、出处在 `_facts`；原来那句「五十五万人看过这条」撤掉了——**画面上没有的数就不说**。\n截图是 runner 上真打开页面截的（`social-shot.yml`），url／抓取时刻／页面标题／sha256 在 `x-farewell.png.json`。"
+      "_why": "**整屏切走看证据**，不贴在比赛画面上（账号所有者 2026-08-12：不要在比赛视频上贴图）。对标那条片子里唯一的非比赛画面，也正是他自己那篇告别帖的截图——**原始文书比我们转述一遍硬得多**。\n这一屏自己证两件事：账号名 `stanwawrinka85`（Instagram 自己渲的作者行，是他本人发的）、正文最后一行 `Forever grateful. Forever New York`（旁白引的就是这一句）。\n⚠️ **换成 Instagram 了**（账号所有者 2026-08-27：「最好用 Instagram」「去 Instagram 截图啊」）。同一篇告别长文他在 X 和 Instagram 都发了，正文逐字相同；Instagram 那条的 shortcode `DcdvcjaAHLh` 是拿 **Instagram 自己的 oembed** 核过的，不是从哪篇报道里抄的链接。\n⚠️ **手机版这条要求没能照字面做，理由是量出来的**：`/embed/captioned/` 这一页**没有 `<meta name=\"viewport\">`**，Chromium 的手机模拟因此一律按默认 980 CSS px 排版再缩到视口——不管视口给 393 还是 500，那 980 px 宽的版面最后都要铺进画布的 1015 px，**放大倍率恒为 1.04**。实测正文墨高上了画布只剩 **10.2px**（393 那版）和 **9.5px**（500 那版），而这条线在用的证据卡是 19.7px——**差一倍，读不了**。关掉手机模拟之后布局宽度就等于视口宽度，520 CSS px 这版放大 1.95 倍，正文墨高 **19.5px**，和 X 那张打平。两版都截回来量过才定的，四张 IG 截图连同各自的旁证都留在 `assets/social/wawrinka-farewell/`。\n⚠️ **是裁过的**（连续一刀，裁法和裁掉了什么在 `ig-embed-520-crop.png.json`）：从「View more on Instagram」裁到「View all 1,795 comments」，裁掉了顶栏、那张照片和 embed 自己的评论输入框。**照片是被高度挤掉的**——整页高宽比 2.69，而 `evidence_card_overlaps_subtitle` 那道闸要 ≤1.111。裁完 1560×1470，铺进画布 0.651 倍、底边 1198px，字幕在 1284，两不相干。\n⚠️ 这一屏**不自证日期**（顶栏和时间戳都不在画面上），所以「八月二十五号」由上一段说、出处在 `_facts`；点赞数一个字都不提——同一条帖子十七分钟里从 62,394 涨到 62,417，**画面上会变的数不写进配音**。\n⚠️ **X 那三张截图留着不动**（`x-farewell*.png`、`uso-*.png`）：它们是真的、旁证齐、已经进过一版成片。换的是片子里用哪一张，不是把已经截好的证据删掉。\n截图是 runner 上真打开页面截的（`social-shot.yml`），url／抓取时刻／页面标题／sha256 在 `ig-embed-520.png.json`。"
     },
     {
       "start": 704.6,
