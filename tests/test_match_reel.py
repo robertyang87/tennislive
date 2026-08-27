@@ -2095,7 +2095,12 @@ def test_裁切窗口恒定取源片正中():
     src = Path("tools/build_match_reel.py").read_text(encoding="utf-8")
     assert not hasattr(reel, "auto_center"), "自动定心还在"
     assert not hasattr(reel, "court_center") and not hasattr(reel, "_court_axis")
-    assert "seg.cx = 0.5" in src, "不摇的段没有取正中"
+    # 2026-08-27 起默认值按版式分：全出血仍是正中 0.5（这条判据守的东西没变），
+    # 带式是 BAND_DEFAULT_CX（0.385，把左下记分条含进窗口——那是**常量**，
+    # 不是自动定心回来了：三版自动定心仍然全删着，上面两个 hasattr 钉着）。
+    assert 'BAND_DEFAULT_CX if LAYOUT == "band" else 0.5' in src, (
+        "不摇的段没有取正中（全出血 0.5 / 带式 BAND_DEFAULT_CX 两个都是常量）")
+    assert reel.BAND_DEFAULT_CX == 0.385, "带式默认窗口的账见 BAND_DEFAULT_CX 注释"
 
 
 def test_海报进仓库且推送第一屏是它():
@@ -3101,8 +3106,14 @@ def test_源片自己烧了记分条时字幕要让开():
     """
     reel = _reel()
     src = Path(reel.__file__).read_text(encoding="utf-8")
-    assert 'spec.get("subtitle_top", _REEL_MARGIN_V)' in src, (
+    # 默认值从 2026-08-27 起按版式分（带式锚进底带），但 `subtitle_top` 的
+    # 人工覆盖必须还在——那正是这条判据守的东西。两头都钉：
+    # 读取仍然带 spec 覆盖，而默认值真的走 default_margin_v()（不许绕过它
+    # 另写一个死数，那会把带式那半默认悄悄断掉）。
+    assert 'spec.get("subtitle_top", default_margin)' in src, (
         "字幕上锚不能只有一个写死的值——竖版源片会撞上它自己的记分条")
+    assert "default_margin = default_margin_v()" in src, (
+        "字幕默认锚要从 default_margin_v() 来（按版式分），不许另写死一个数")
     # 抬高了要说出来：默认值和实际值不一样却不吭声，下次没人知道它被挪过
     assert "比默认抬高" in src, "抬了字幕却不打印，产物上看不出是有意的还是漂了"
 
