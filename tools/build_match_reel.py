@@ -177,12 +177,15 @@ BAND_PIC_RATIO = 6 / 5      # 画面带的源片窗口画幅（宽:高）
 BAND_TOP = 132              # 顶带高：TOPBAR_H=126 + 6px 呼吸，顶栏原样落进带里
 BAND_PIC_H = 900            # 6:5 窗口缩到 1080 宽的高（1080 ÷ 6×5）
 BAND_BG = "0x0D1016"        # 带底色：近黑偏蓝，接美网深蓝但不抢画面
-# 带式的默认窗口中心。全出血默认 0.5（源片正中）；带式的全部意义是把左下那条
-# 记分条装进画面，居中会把它裁在 x=312——残条又回来了，而那正是这套版式要杀的
-# 东西。0.385×1920−648=91.2：板左缘实测 101~104，留 ~10px 余量；窗口右缘
-# 91+1296=1387，球场近端右边线 ~1370 也留有余量——两头都不贴死。
-# 个别段构图要另定照旧写 seg.cx，人说了算。
-BAND_DEFAULT_CX = 0.385
+# ⚠️ 带式的窗口也**居中**（默认 cx=0.5，和全出血同一个值）。第一版把默认
+# 窗口左移到 0.385 去「含住」左下的记分条，账号所有者当场纠正：「不要偏离
+# 中心的」——球场被推到窗内 66%，左边三分之一全是看台和裁判椅。居中之后
+# 记分条会被窗口左缘裁到（板 [104,616]、居中窗口左缘 312），所以带式的
+# 记分条走**回贴**：`score_inset` 从同一帧把整条板抠出来（spec 的 `scorebox`
+# 给坐标），按画面带的缩放比贴回左下——贴的位置正好盖住残条，逐帧天然同步。
+# 近景镜头实测板也在同一位置（92.5/94.5s 两格放大核过），所以混着近景的段
+# 照样能开；板真的会消失的段（回放/采访切走）别开，残条警告会替人看着。
+#
 # 带式下字幕锚进底带：画面带底边 132+900=1032，再留 32px 呼吸 → 1064。
 # 单行 68px 到 ~1132；双语 quote 两行到 ~1225，仍在平台底部 UI 区之上。
 BAND_MARGIN_V = BAND_TOP + BAND_PIC_H + 32
@@ -1770,6 +1773,15 @@ class Segment:
     # seconds 合成（0..seconds），窗口类检查（切点/越界/死球）一律跳过——
     # 它没有源片窗口可查。
     image: str = ""
+    # **记分条回贴（只在带式版式）**：解析好的抠图坐标 (x0, y0, x1, y1)，
+    # None＝这一段不贴。带式的窗口居中（「不要偏离中心的」），美网那条浮在
+    # 左下的板会被窗口左缘裁掉——开了这个的段从同一帧把整条板抠出来、按画面
+    # 带的缩放比贴回左下，正好盖住残条，比分逐帧天然同步。spec 里写
+    # `"score_inset": true`（用 spec 顶层 `scorebox` 的坐标）或 `{"x2": N}`
+    # （这一段打到更深的盘、板右缘长过了 scorebox 的 x1 时单独放宽——
+    # 每列 +39px 的账见 docs/us-open-scoreboard-aspect.md）。
+    # ⚠️ 板真的会消失的段（回放/采访切走）别开：那时贴回来的是一块球场。
+    score_inset: tuple[int, int, int, int] | None = None
 
     @property
     def length(self) -> float:
@@ -1791,6 +1803,18 @@ def seg_seconds(s: dict) -> float:
         return round(float(s["seconds"]), 3)
     speed = float(s.get("speed") or 1.0)
     return round((float(s["end"]) - float(s["start"])) / speed, 3)
+
+
+def _scorebox4(box) -> tuple[int, int, int, int] | None:
+    """spec 顶层 `scorebox` 的形状校验：[x0, y0, x1, y1]（源片像素坐标），
+    全为非负数且 x0<x1、y0<y1。合格返回整数四元组，不合格返回 None——
+    报错的措辞由调用方按上下文写（spec 级和段级各说各的话）。"""
+    if (isinstance(box, (list, tuple)) and len(box) == 4
+            and all(isinstance(v, (int, float)) and not isinstance(v, bool)
+                    and v >= 0 for v in box)
+            and box[0] < box[2] and box[1] < box[3]):
+        return (int(box[0]), int(box[1]), int(box[2]), int(box[3]))
+    return None
 
 
 def _seg_mute(s: dict, index: int) -> bool:
@@ -2057,13 +2081,46 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
     真人看下来的结论就是「固定中心的感觉更好」，所以横摇改成**按段显式打开**
     （`"track": true`），只留给主机位的宽景回合。
     """
+    def _seg_score_inset(s: dict, i: int) -> tuple[int, int, int, int] | None:
+        raw = s.get("score_inset")
+        if raw is None or raw is False:
+            return None
+        if spec.get("layout") != "band":
+            raise ReelError(
+                f"第 {i + 1} 段写了 score_inset，但它只在带式版式"
+                f'（spec 顶层 `"layout": "band"`）里有意义——全出血下记分条的'
+                "处置见 docs/us-open-scoreboard-aspect.md（cx 排除那条路）。")
+        box = _scorebox4(spec.get("scorebox"))
+        if box is None:
+            raise ReelError(
+                f"第 {i + 1} 段开了 score_inset，spec 顶层却没有合格的 "
+                f"`scorebox`（拿到 {spec.get('scorebox')!r}）。写 "
+                "[x0, y0, x1, y1]（源片像素坐标）——probe 的 scorebox_guess "
+                "直接抄，别按感觉量。")
+        if raw is True:
+            return box
+        if isinstance(raw, dict) and set(raw) == {"x2"}:
+            x2 = raw["x2"]
+            if not (isinstance(x2, (int, float)) and not isinstance(x2, bool)
+                    and x2 > box[0]):
+                raise ReelError(
+                    f"第 {i + 1} 段 score_inset 的 x2 要是大于板左缘 "
+                    f"{box[0]} 的数（拿到 {x2!r}）——它是这一段的板右缘："
+                    "美网的板每打完一盘右缘 +39px，深盘的段单独放宽。")
+            return (box[0], box[1], int(x2), box[3])
+        raise ReelError(
+            f"第 {i + 1} 段的 score_inset 只认 true（用 spec 的 scorebox）"
+            '或 {"x2": N}（这一段打到更深的盘、板更宽时单独放宽右缘），'
+            f"拿到的是 {raw!r}。")
+
     def _one(s: dict, i: int) -> Segment:
         if s.get("image"):
             # 整屏证据段：只认 image/seconds/narration/voice（外加 `_` 注解）。
             # 窗口类字段一概不许——它没有源片窗口，写了就是没被读的死键。
             stray = sorted(set(s) & {"start", "end", "source", "track",
-                                     "quote", "inset", "speed", "mute",
-                                     "cx", "crop_zoom", "fit", "crosses_cut"})
+                                     "quote", "inset", "speed", "mute", "cx",
+                                     "crop_zoom", "fit", "crosses_cut",
+                                     "score_inset"})
             if stray:
                 raise ReelError(f"第 {i + 1} 段是整屏证据段（image），"
                                 f"不认这些窗口类字段：{stray}")
@@ -2087,7 +2144,8 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
                        *_seg_voice(s, i),
                        s.get("inset") or None,
                        _seg_speed(s, i),
-                       _seg_mute(s, i))
+                       _seg_mute(s, i),
+                       score_inset=_seg_score_inset(s, i))
 
     segments = [_one(s, i) for i, s in enumerate(spec["segments"])]
     gone_ev = [(i + 1, s.image) for i, s in enumerate(segments)
@@ -2123,6 +2181,26 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
                 "带式的画面带本来就是 6:5 宽画幅（源片的 67% 宽），"
                 "「两个人分得很开」那种画面它本来就装得下；"
                 "构图要挪窗口就写 seg.cx，别用 contain。")
+    scorebox = spec.get("scorebox")
+    if scorebox is not None:
+        if layout != "band":
+            raise ReelError(
+                "spec.scorebox 只配合带式版式（layout: band）的 score_inset "
+                "回贴用——全出血不读它，写了就是个不吭声的死键。")
+        if _scorebox4(scorebox) is None:
+            raise ReelError(
+                f"scorebox 要写 [x0, y0, x1, y1]（源片像素坐标，x0<x1、"
+                f"y0<y1、全为非负数——probe 的 scorebox_guess 直接抄），"
+                f"拿到的是 {scorebox!r}。")
+        # 带式窗口居中（「不要偏离中心的」），浮在左下的板会被窗口左缘裁掉；
+        # 没开回贴的段要么是回放/切走（对的），要么是漏了（画面上留一截残条）。
+        # 只报不拦：机器分不出这两种，但漏了的样子在 --dry-run 里要看得见。
+        no_inset = [i + 1 for i, s in enumerate(spec["segments"])
+                    if not s.get("image") and not s.get("score_inset")]
+        if no_inset:
+            print(f"    [score] 第 {no_inset} 段没开 score_inset——带式的居中"
+                  "窗口会把记分条裁出残条；回放/切走的段不开是对的，"
+                  "比赛画面的段要写 true（或深盘段写 {\"x2\": N}）")
     bad_motion = [i + 1 for i, s in enumerate(segments) if s.inset
                   and str(s.inset.get("motion", "")) not in {"", "editorial"}]
     if bad_motion:
@@ -2170,16 +2248,16 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
 _REAL_FIELDS: dict[str, tuple[str, ...]] = {
     "spec": ("archival", "conform", "cover", "crop_y", "crop_zoom",
              "layout", "mixed_fps", "primary",
-             "outro", "push", "rate", "segments", "silent_source", "slug",
-             "source_audio", "source_url", "sources", "stats", "subtitle_top",
-             "topbar", "voice", "editorial"),
+             "outro", "push", "rate", "scorebox", "segments", "silent_source",
+             "slug", "source_audio", "source_url", "sources", "stats",
+             "subtitle_top", "topbar", "voice", "editorial"),
     "cover": ("event_badge", "eyebrow", "hook", "layout", "matchup", "meta",
               "narration", "portrait", "portrait_above", "result", "round",
               "score", "scoreboard", "scrim", "split", "sub", "subject",
               "tier", "topic", "versus", "winner"),
     "segment": ("crosses_cut", "crop_zoom", "cx", "end", "fit", "image",
-                "inset", "mute", "narration", "quote", "seconds", "source",
-                "speed", "start", "track", "voice"),
+                "inset", "mute", "narration", "quote", "score_inset",
+                "seconds", "source", "speed", "start", "track", "voice"),
 }
 
 
@@ -2612,15 +2690,11 @@ def track_shots(sources: dict[str, Path], segments: list["Segment"],
     #
     # 摇的段有 `path` 时用不上这个值；**拿不到 path 时它就是兜底**，见下面。
     fixed = [s for s in segments if s.fit != "contain" and s.cx is None]
-    # 带式的默认不居中：那套版式的全部意义是把左下的记分条装进画面，
-    # 居中会把它裁在窗口左缘外——见 BAND_DEFAULT_CX 上面的账。
-    default_cx = BAND_DEFAULT_CX if LAYOUT == "band" else 0.5
     for seg in fixed:
-        seg.cx = default_cx
+        seg.cx = 0.5
     still = [s for s in fixed if not s.track]
     if still:
-        where = ("窗口含住左下记分条" if LAYOUT == "band" else "窗口取源片正中")
-        print(f"    [fixed] {len(still)} 段不摇，{where} cx={default_cx:.3f}")
+        print(f"    [fixed] {len(still)} 段不摇，窗口取源片正中 cx=0.500")
     for members in runs:
         start = segments[members[0]].start
         end = segments[members[-1]].end
@@ -2768,6 +2842,9 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
     # 目标帧率补帧。放在 fps 之后的话补出来的帧又被拉开，节奏就不是整数倍了。
     # sendcmd/crop@c 排在它前面，所以跟踪命令的时刻仍然是**源片时间**。
     sp = "" if seg.speed == 1 else f"setpts=PTS/{seg.speed:g},"
+    # labeled=True 的链自己带 `;` 和输入标签（首个滤镜隐式吃 [0:v]），
+    # 拼 -filter_complex 时不能再往前面塞 `[0:v]`。
+    labeled = False
     if seg.fit == "contain":
         # 整幅铺进来会只占屏高的三成（1080 宽的 16:9 才 608 高），上下两条死黑，
         # 「冲击力先折一半」。所以两件事一起做：
@@ -2785,9 +2862,17 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
             f"scale={VIDEO_W}:-2:flags=lanczos[fgs];"
             f"[bgb][fgs]overlay=(W-w)/2:(H-h)/2,{sp}fps={FPS_EXPR},setsar=1"
         )
+        labeled = True
     else:
         x = int(round(seg.cx * source_w - CROP_W / 2))
         x = max(0, min(x, source_w - CROP_W))
+        box = seg.score_inset
+        if box and x <= box[0]:
+            # 窗口左缘没越过板左缘 → 整条板本来就在画面里，回贴反而会
+            # 叠一层重影。跳过要出声：不然「贴了」和「不用贴」在日志上一样。
+            print(f"    [score] {seg.start:.1f}s 段窗口左缘 {x} ≤ 板左缘 "
+                  f"{box[0]}，整条板本来就在画面里，跳过回贴")
+            box = None
         if path:
             cmds = dest.with_suffix(".cmds")
             cmds.write_text("".join(f"{t:.3f} crop@c x {v};\n" for t, v in path),
@@ -2806,9 +2891,41 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
                 print(f"    [track] ⚠️ {seg.start:.1f}s 段声明了 track 但没跟出"
                       f"路径，退回固定中心 cx={seg.cx:.3f}——"
                       "主体如果在横向移动，这一段的构图要自己看一眼")
-            chain = (f"crop={CROP_W}:{CROP_H}:{x}:{CROP_Y},"
-                     f"{_canvas_fit()}"
-                     f"{sp}fps={FPS_EXPR},setsar=1")
+            if box:
+                # **记分条回贴**（带式专用，parse_segments 把非带式拦在门外）：
+                # 同一帧劈两路——[wm] 照常裁居中窗口铺进画面带；[wb] 按
+                # scorebox 抠整条板、乘同一个缩放比（VIDEO_W/CROP_W）、
+                # 贴回画面带左下。竖向不用换算落点以外的任何东西：CROP_Y=0
+                # 且两路同比缩放，贴上去的每一行和主窗口的同一行**逐像素
+                # 对齐**（y=BAND_TOP+round(y0×比)），横向残条则被整条板盖住
+                # （窗口左缘 x > 板左缘 x0 时，残宽 (x1−x) < 贴宽 (x1−x0)，
+                # 恒成立）。取自同一帧，比分逐帧天然同步。
+                # 慢放的 setpts 放在 overlay 之后：两路都还是源片时间轴，
+                # 合完再一起拉慢，和 contain 那条路同一个形状。
+                x0, y0, x1, y1 = box
+                ratio = VIDEO_W / CROP_W
+                # 贴片尺寸**向上**取偶：向下取会在贴片右/下边留一条 1px 的残线
+                # （贴片盖不满它要盖的那一片），多出来的半像素只是把板拉伸
+                # 千分之几，看不见。
+                sw = max(2, -(-int(round((x1 - x0) * ratio)) // 2) * 2)
+                sh = max(2, -(-int(round((y1 - y0) * ratio)) // 2) * 2)
+                oy = BAND_TOP + int(round(y0 * ratio))
+                print(f"    [score] {seg.start:.1f}s 段回贴记分条 "
+                      f"[{x0},{y0},{x1},{y1}] → 画面带 (0,{oy})，"
+                      f"盖住窗口左缘裁掉的 {x - x0}px")
+                chain = (
+                    f"split=2[wm][wb];"
+                    f"[wm]crop={CROP_W}:{CROP_H}:{x}:{CROP_Y},"
+                    f"{_canvas_fit().rstrip(',')}[m];"
+                    f"[wb]crop={x1 - x0}:{y1 - y0}:{x0}:{y0},"
+                    f"scale={sw}:{sh}:flags=lanczos[b];"
+                    f"[m][b]overlay=0:{oy},{sp}fps={FPS_EXPR},setsar=1"
+                )
+                labeled = True
+            else:
+                chain = (f"crop={CROP_W}:{CROP_H}:{x}:{CROP_Y},"
+                         f"{_canvas_fit()}"
+                         f"{sp}fps={FPS_EXPR},setsar=1")
     # 所有 -i 必须排在滤镜/输出选项前面，否则 ffmpeg 会把 -vf 当成下一个输入的
     # 选项直接报错。源片是纯视频轨（人从网盘传来的那份就是），所以补一条静音轨
     # 进去——后面混音那步要求每段都有音频流。
@@ -2859,7 +2976,7 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
             # 而且不报错——只有按时间片量响度才看得出错位。所以走 atempo。
             "-filter_complex",
             _overlay_chain(
-                (chain + "[base]") if seg.fit == "contain"
+                (chain + "[base]") if labeled
                 else f"[0:v]{chain}[base]", ins)
             + (f";[0:a:0]{_seg_audio_chain(seg)}[aout]"
                if has_audio and (seg.speed != 1 or seg.mute) else ""),
