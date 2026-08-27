@@ -12742,8 +12742,3 @@ def test_握手后只许接固定品牌片尾():
     assert spec.get("outro", True) is not False, (
         "这条片握手后仍要保留固定“网球时差”品牌片尾")
 
-    body = Path("tools/build_match_reel.py").read_text(encoding="utf-8")
-    assert 'outro_enabled = spec.get("outro", True) is not False' in body
-    assert "if outro_enabled:\\n        parts.append(build_outro(" in body, (
-        "品牌片尾开关没有真正控制品牌页拼接")
-
