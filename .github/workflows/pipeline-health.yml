@@ -7,7 +7,8 @@ on:
 
 permissions:
   contents: read
-  actions: read
+  # read 是看板用的；write 是「顺手叫醒挨饿班次」那一步 gh workflow run 要的
+  actions: write
 
 concurrency:
   group: pipeline-health
@@ -80,3 +81,14 @@ jobs:
       - name: 监控自身失败时留出明确故障
         if: failure()
         run: echo "::error::pipeline-health 自身失败；当前流水线健康状态不可观测"
+
+      - name: 顺手叫醒挨饿的编排/提升班次
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # schedule 会被 GitHub 丢弃，详见 tools/nudge_stale_ticks.sh 顶注。
+          # 监控班次自己也挨饿，但它每次醒来都能顺手把生产班次叫起来。
+          source tools/nudge_stale_ticks.sh
+          nudge_if_stale orchestrate.yml 20 -f apply=true
+          nudge_if_stale reel-auto-ready.yml 20

@@ -232,3 +232,13 @@ jobs:
             echo "::error::（interview-clip 的 concurrency 按 slug 去重，代价是把正在跑的那趟掐了重跑）"
             exit 1
           fi
+
+      - name: 顺手叫醒挨饿的编排/提升班次
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # schedule 会被 GitHub 丢弃，详见 tools/nudge_stale_ticks.sh 顶注。
+          source tools/nudge_stale_ticks.sh
+          nudge_if_stale orchestrate.yml 20 -f apply=true
+          nudge_if_stale reel-auto-ready.yml 20

@@ -91,3 +91,13 @@ jobs:
           else
             echo "- 当前没有处于监测时段的比赛，或采集未完成。" >> "$GITHUB_STEP_SUMMARY"
           fi
+
+      - name: 顺手叫醒挨饿的编排/提升班次
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # schedule 会被 GitHub 丢弃，详见 tools/nudge_stale_ticks.sh 顶注。
+          source tools/nudge_stale_ticks.sh
+          nudge_if_stale orchestrate.yml 20 -f apply=true
+          nudge_if_stale reel-auto-ready.yml 20
