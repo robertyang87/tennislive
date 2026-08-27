@@ -269,3 +269,29 @@ def test_翻过面的那条不加背景音乐不许自己回来():
     assert "music" in reel._REAL_FIELDS["spec"], "`music` 掉出真字段表了"
     assert callable(reel.music_problem) and callable(reel.music_filter)
     assert reel.MUSIC_UNDER_BED_DB > 0, "低于现场声多少 dB 这道闸没了"
+
+
+def test_配乐从中间起用要把跳过的那一截减掉(tmp_path, ffmpeg):
+    """`start_at` 是「从曲子的第几秒开始用」。**能用的长度要减掉它**——
+    从第 20 秒起用一首 30 秒的曲子，只剩 10 秒。
+
+    第一版忘了减，于是一首「够长」的曲子会在片子中途断掉而这道闸说没问题：
+    `amix` 的 `dropout_transition=0` 只保证音乐没了的时候现场声不会突然提音，
+    **它不会告诉你音乐没了**。又一次「兜底出事的时候不吭声」。
+    """
+    track = tmp_path / "m.m4a"
+    _ff("-f", "lavfi", "-i", "sine=frequency=220:duration=30",
+        "-c:a", "aac", str(track))
+    base = {"file": str(track), "title": "t", "artist": "a",
+            "license": "CC0 1.0", "source": "https://example.com/x"}
+
+    # 从头用：30 秒够 25 秒的片子
+    assert not reel.music_problem({"music": base}, film_seconds=25.0)
+    # 从第 20 秒起用：只剩 10 秒，25 秒的片子不够
+    bad = reel.music_problem({"music": {**base, "start_at": 20}}, film_seconds=25.0)
+    assert "只剩" in bad and "20" in bad, bad
+    # 而 8 秒的片子够
+    assert not reel.music_problem({"music": {**base, "start_at": 20}}, film_seconds=8.0)
+    # start_at 也要是个合法的数
+    assert "不能是负数" in reel.music_problem({"music": {**base, "start_at": -1}})
+    assert "不是数字" in reel.music_problem({"music": {**base, "start_at": "早点"}})

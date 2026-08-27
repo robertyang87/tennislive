@@ -581,10 +581,23 @@ def music_problem(spec: dict, *, film_seconds: float | None = None) -> str:
         if value < 0:
             return f"`music.{key}` 不能是负数"
 
+    try:
+        start_at = float(music.get("start_at", 0.0))
+    except (TypeError, ValueError):
+        return f"`music.start_at` 不是数字：{music.get('start_at')!r}"
+    if start_at < 0:
+        return "`music.start_at` 不能是负数"
+
     if film_seconds is not None:
         have = probe_duration(Path(path))
-        if have and have + 0.05 < film_seconds:
-            return (f"配乐只有 {have:.1f}s，而片子要 {film_seconds:.1f}s。\n"
+        # ⚠️ **要减掉 `start_at`**：从第 300 秒起用一首 444 秒的曲子，能用的只剩
+        # 144 秒。第一版忘了减，于是一首「够长」的曲子会在片子中途断掉，而这道
+        # 闸说没问题——`amix` 那头 `dropout_transition=0` 只保证它不突然提音，
+        # 不会告诉你音乐没了。
+        if have and have - start_at + 0.05 < film_seconds:
+            usable = f"{have:.1f}s" if start_at <= 0 else (
+                f"{have:.1f}s，从 {start_at:g}s 起只剩 {have - start_at:.1f}s")
+            return (f"配乐只有 {usable}，而片子要 {film_seconds:.1f}s。\n"
                     "  **不给它自动循环**：循环会在接缝上留一道听得见的跳，"
                     "而这条线连画面接缝都要求溶解。换一首够长的。")
     return ""
