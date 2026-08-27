@@ -1,0 +1,95 @@
+{
+  "slug": "wawrinka-farewell",
+  "_why": "账号所有者 2026-08-27：「**最好截取手机版的**」「**最好用 Instagram**」「**去 Instagram 截图啊**」。\n那篇告别长文他在 X 和 Instagram 都发了，正文逐字相同——Instagram 那条的shortcode 是 `DcdvcjaAHLh`，**拿 Instagram 自己的 oembed 核过**（`/api/v1/oembed/?url=…`，返回的 title 就是那段正文，和 X 那条对得上），不是从哪篇报道里抄一个链接就当真。\n手机版的理由不只是「像手机」：一条社媒帖子在手机上本来就是**竖的**，截出来直接贴合 3:4 的画布；桌面版是宽的，进片子之前必然要裁一刀，而裁一刀就要交代裁掉了什么（X 那张就是这么裁的）。\n⚠️ 原来那三张 X／美网官网的截图**留着不动**：它们是真的、旁证齐、已经进过一版成片。换 Instagram 是换**片子里用哪一张**，不是把已经截好的证据删掉。",
+  "shots": [
+    {
+      "name": "x-farewell",
+      "url": "https://x.com/stanwawrinka/status/2092254457358643314",
+      "selector": "article",
+      "width": 1000,
+      "height": 1600,
+      "wait_ms": 9000,
+      "revision": 1,
+      "_why": "2026-08-25 14:15:09Z 他本人发的告别长文。推文 id 是从 x.com/stanwawrinka 的服务端渲染载荷里抠出来的（该页 250 KB，正文就在里面），正文开头 `When I first arrived in New York from a small farming village in Switzerland, everything felt too big` 和图卡版引用的那段逐字对得上。"
+    },
+    {
+      "name": "uso-announcement",
+      "url": "https://www.usopen.org/en_US/news/articles/2026-08-26/2016_champion_stan_wawrinka_will_return_for_final_us_open.html",
+      "selector": "article",
+      "width": 1100,
+      "height": 1500,
+      "wait_ms": 9000,
+      "revision": 1,
+      "_why": "美网官网 8 月 26 日那篇《2016 champion Stan Wawrinka will return for final US Open》。它是「八天」那一拍的落点——同一天官网连发两篇，前一篇标题还是「授予外卡」。⚠️ 这个站对 requests 只回 4084 字节的 JS 壳，必须真浏览器渲染。"
+    },
+    {
+      "name": "uso-headline",
+      "url": "https://www.usopen.org/en_US/news/articles/2026-08-26/2016_champion_stan_wawrinka_will_return_for_final_us_open.html",
+      "selector": "",
+      "width": 1100,
+      "height": 1250,
+      "wait_ms": 9000,
+      "revision": 1,
+      "_why": "同一篇公告的**首屏**（不给选择器＝按视口截，标题在这儿）。片子里用的是这一张，不是那张整篇的 `uso-announcement`——理由是**画面要和旁白对得上**：整篇那张往下第五段写着 `Ranked 117`，而这条片子的旁白说的是「世界第一百二十七位」。\n⚠️ 127 是对的，两个独立源：美网**自己的**选手数据 feed （usopen.org/en_US/scores/feeds/2026/players/players.json → `singles_rank: '127'`）和 tennisexplorer 的当期页（Current rank 127，生涯最高 3，41 岁 1985-03-28）。官网那篇稿子的正文数字是个孤证，和赛事自己的数据 feed 对不上——**按数据走**，同时别把那一行放进画面。"
+    },
+    {
+      "name": "ig-post",
+      "url": "https://www.instagram.com/p/DcdvcjaAHLh/",
+      "selector": "article",
+      "mobile": true,
+      "wait_ms": 9000,
+      "hide": [
+        "div[role='dialog']",
+        "div[role='presentation']"
+      ],
+      "revision": 1,
+      "_why": "他自己那条 Instagram 原帖，手机视口。⚠️ Instagram 对未登录访客会盖登录浮层——`hide` 只挡得住浮层，真被墙掉的话工具会 exit 2 不交图（登录框的截图和帖子的截图在文件系统里没有区别）。"
+    },
+    {
+      "name": "ig-embed",
+      "url": "https://www.instagram.com/p/DcdvcjaAHLh/embed/captioned/",
+      "selector": "",
+      "mobile": true,
+      "width": 393,
+      "height": 1600,
+      "wait_ms": 9000,
+      "revision": 1,
+      "_why": "同一条帖子的**公开 embed** 版（`/embed/captioned/` 带正文），不用登录。这是 `ig-post` 撞上登录墙时的退路——两张都截回来，打开看过再决定片子里用哪一张。视口给到 1600 高是为了让整段正文渲得开。"
+    },
+    {
+      "name": "ig-embed-wide",
+      "url": "https://www.instagram.com/p/DcdvcjaAHLh/embed/captioned/",
+      "selector": "",
+      "mobile": true,
+      "width": 500,
+      "height": 1400,
+      "wait_ms": 9000,
+      "revision": 1,
+      "_why": "和 `ig-embed` 是**同一个页面、同一套手机 UA**，只把视口从 393 放到 500。为什么要这一张：393 那版量下来内容 1179×1360，铺进 1080×1440 之后底边落在 1305px，而字幕上锚在 1284——**过不了 `evidence_card_overlaps_subtitle`**。而那 1360 里一格都裁不掉：正文最后一行「Forever grateful. Forever New York」就在 1345，裁短就把旁白引的那句话裁没了。\n视口放宽之后照片按比例长高、而**正文换行变少**（正文高度大致和视口宽度成反比），总高/宽因此降下来。按 393 那版实测拟合，500 宽估出来约 1.06，而闸要求 ≤1.111。⚠️ 这是**估的**——两张都截回来，打开看过、量过再决定片子里用哪一张。"
+    },
+    {
+      "name": "ig-embed-520",
+      "url": "https://www.instagram.com/p/DcdvcjaAHLh/embed/captioned/",
+      "selector": "",
+      "mobile": false,
+      "width": 520,
+      "height": 1400,
+      "scale": 3,
+      "wait_ms": 9000,
+      "revision": 1,
+      "_why": "和上面两张是**同一个 embed 页面**，只有一处不同：**不走手机模拟**（`mobile: false`）。\n⚠️ 这不是放弃手机版，是因为手机模拟正好把这一页读坏了，量出来的：\n  这个 embed 页面**没有 `<meta name=\"viewport\">`**（拿 requests 取回 478 KB 的 HTML 全文搜过，一个都没有）。没有它，Chromium 的手机模拟会退回**默认 980 CSS px 的布局视口再缩到视口宽**——也就是说不管视口给 393 还是 500，正文永远按 980 px 排版。\n  代价是可量的：整块 980 CSS px 宽的版面最后要铺进画布的 1015 px（`1080×0.94`），**放大倍率恒为 1.04**，正文 14 px 的字上了画布还是 14 px 上下——实测 `ig-embed` 的正文墨高 12 px（1179 宽）、乘 0.861 之后只剩 **10.2 px**；作对照，片子里在用的那张 X 截图是 **19.7 px**，**差一倍**。而视口从 393 放到 500 一点忙都帮不上（那只改清晰度，不改版面宽度）——`ig-embed-wide` 量出来正文墨高 14 px、宽 1500，乘 0.677 之后 **9.5 px，反而更小**。\n  关掉手机模拟之后布局宽度就等于视口宽度，520 → 放大 1015/520 = **1.95×**，正文墨高估出来约 19 px，和那张 X 截图（19.7）打平。\n⚠️ 用户代理跟着换成桌面版了（工具里 UA 和 `is_mobile` 是同一套预设，不拆）——**对这一页没有影响**：`/embed/captioned/` 是同一份静态 HTML，上面那次手机 UA 取回来的 478 KB 和这次是同一个页面，它的版式只由宽度决定。\n⚠️ **照片进不了这张卡**，这是明知的取舍：520 宽的时候整页连照片有 1000 CSS px 高，高宽比 1.94，闸要 ≤1.111。所以片子里那张要从**点赞图标那一行**裁到正文末尾——爱心/评论/转发/收藏那排图标 ＋「62,394 likes」＋ 加粗的 `stanwawrinka85` ＋ 整段正文，Instagram 的身份靠这几样自证，不靠那张照片。裁掉了什么写进那张图自己的旁证里。"
+    },
+    {
+      "name": "ig-embed-600",
+      "url": "https://www.instagram.com/p/DcdvcjaAHLh/embed/captioned/",
+      "selector": "",
+      "mobile": false,
+      "width": 600,
+      "height": 1300,
+      "scale": 3,
+      "wait_ms": 9000,
+      "revision": 1,
+      "_why": "和上面两张是**同一个 embed 页面**，只有一处不同：**不走手机模拟**（`mobile: false`）。\n⚠️ 这不是放弃手机版，是因为手机模拟正好把这一页读坏了，量出来的：\n  这个 embed 页面**没有 `<meta name=\"viewport\">`**（拿 requests 取回 478 KB 的 HTML 全文搜过，一个都没有）。没有它，Chromium 的手机模拟会退回**默认 980 CSS px 的布局视口再缩到视口宽**——也就是说不管视口给 393 还是 500，正文永远按 980 px 排版。\n  代价是可量的：整块 980 CSS px 宽的版面最后要铺进画布的 1015 px（`1080×0.94`），**放大倍率恒为 1.04**，正文 14 px 的字上了画布还是 14 px 上下——实测 `ig-embed` 的正文墨高 12 px（1179 宽）、乘 0.861 之后只剩 **10.2 px**；作对照，片子里在用的那张 X 截图是 **19.7 px**，**差一倍**。而视口从 393 放到 500 一点忙都帮不上（那只改清晰度，不改版面宽度）——`ig-embed-wide` 量出来正文墨高 14 px、宽 1500，乘 0.677 之后 **9.5 px，反而更小**。\n  关掉手机模拟之后布局宽度就等于视口宽度，600 → 放大 1015/600 = **1.69×**，正文墨高估出来约 16.6 px。留这一张当退路：520 那版的正文换行更多、整块更高，万一高宽比过不了 `evidence_card_overlaps_subtitle`（要 ≤1.111），600 这版矮一截。\n⚠️ 用户代理跟着换成桌面版了（工具里 UA 和 `is_mobile` 是同一套预设，不拆）——**对这一页没有影响**：`/embed/captioned/` 是同一份静态 HTML，上面那次手机 UA 取回来的 478 KB 和这次是同一个页面，它的版式只由宽度决定。\n⚠️ **照片进不了这张卡**，这是明知的取舍：520 宽的时候整页连照片有 1000 CSS px 高，高宽比 1.94，闸要 ≤1.111。所以片子里那张要从**点赞图标那一行**裁到正文末尾——爱心/评论/转发/收藏那排图标 ＋「62,394 likes」＋ 加粗的 `stanwawrinka85` ＋ 整段正文，Instagram 的身份靠这几样自证，不靠那张照片。裁掉了什么写进那张图自己的旁证里。"
+    }
+  ]
+}

@@ -1419,14 +1419,33 @@ def test_闪避的钥匙要补齐否则片尾没声音():
     和「补位的静音盖住真音轨」是同一族——兜底和默认值出事的时候都不吭声。
 
     合成信号上验过闪避没变：有旁白 -38.1 dB、旁白说完 -24.0 dB。
+
+    ⚠️ **2026-08-27 换过一次判据，因为主语没了。** 原来它在源码里找字面的
+    `[bed][vk]sidechaincompress=`，而配乐落地之后主路多了一档
+    （`[ambient][vk]…`），那个串一个字都不剩——测试当场 `ValueError`，
+    **而 apad 本身好好的**。这正是 CLAUDE.md「主语没了就得换判据，留着它
+    就是一条常年红」说的那件事。
+
+    换判据的时候顺手让它比原来更硬：**不扫源码文本，直接生成滤镜图来查**。
+    查文本只能防「有人把它删了」，防不住「它从来没工作过」；而且两种形状
+    （配乐/不配乐）现在都得走一遍——配乐那一档的主路是新加的，正是最容易
+    把 apad 接掉的地方。
     """
+    reel = _reel()
+    graphs = {
+        "不配乐": reel.duck_filtergraph(["[1:a]adelay=0|0[v0]"], ["[v0]"]),
+        "配乐": reel.duck_filtergraph(["[1:a]adelay=0|0[v0]"], ["[v0]"],
+                                      reel.music_filter({}, 2, 10.0)),
+    }
+    for what, graph in graphs.items():
+        i = graph.index("[vk]sidechaincompress=")
+        assert "[vk0]apad[vk]" in graph[:i], (
+            f"{what}那一档：闪避的钥匙没有 apad——旁白一说完，现场声会跟着断，"
+            "片尾整段没声音")
+        # 钥匙是**补过的**那一路，主路里不许混进 [vk0]（那等于没补）
+        assert "[vk0]" not in graph[i - 12:i], f"{what}那一档接的是没补过的钥匙"
+
     src = Path("tools/build_match_reel.py").read_text(encoding="utf-8")
-    # 认的是**真正接进滤镜图的那一处**（`[bed][vk]sidechaincompress=`），
-    # 不是注释里提到它的那几行——按第一次出现找会撞上注释，判据就废了。
-    i = src.index("[bed][vk]sidechaincompress=")
-    head = src[max(0, i - 1200):i]
-    assert "[vk0]apad[vk]" in head, (
-        "闪避的钥匙没有 apad——旁白一说完，现场声会跟着断，片尾整段没声音")
     # 报错要说出路：判据本身也得留在源码里，别只活在测试里
     assert "任一路 EOF" in src, "为什么要 apad 没有留下判据，下次会有人删掉"
 
@@ -8963,12 +8982,30 @@ _LEGACY_TENNISTV = {
     "baez-dimitrov", "djokovic-tirante", "eala-svitolina", "fonseca-ruud",
     "fritz-jodar-final", "gea-shapovalov", "hewitt-washington",
     "hijikata-monfils", "kovacevic-khachanov",
-    "landaluce-draper", "medvedev-zandschulp", "nakashima-jodar-montreal-sf",
+    # ⚠️ `landaluce-draper` 2026-08-27 从这张表里**减掉**了（表本来就只许减不许加）。
+    # 它的 `_source` 白纸黑字写着「ATP Tour 官方 YouTube 频道（@ATPTour，
+    # **注意不是 Tennis TV 频道**，两者都是官方源但不同频道）」——也就是说
+    # 它从来没用过 Tennis TV，当初进这张表是被裸子串匹配误伤的。
+    # `_TENNISTV_NEGATED` 一装上，表的自检当场把它点了出来。
+    "medvedev-zandschulp", "nakashima-jodar-montreal-sf",
     "shang-darderi-montreal-2026", "shang-vallejo", "shelton-fonseca",
     "shelton-nakashima-montreal-final", "shelton-tien-montreal-sf",
     "tirante-fritz", "tsitsipas-royer", "wang-samsonova", "wong-brooksby",
     "wong-gea", "wong-lehecka", "zverev-griekspoor",
 }
+
+
+#: 「**不是** Tennis TV」这一类否定说法。**先把它们剔掉再判**——
+#: `wawrinka-farewell-story` 的 `_source` 里写着「四条源片都不是 Tennis TV，
+#: 不涉及那条『片尾和台标要剪掉』的规矩」，而裸的子串匹配把这句**交代清楚**
+#: 判成了「又用了 Tennis TV」。本文件里「判据扫得太宽，被自己的注释误伤」
+#: 记过五次，这是第六次——只不过这次误伤它的不是注释，是一句否定句。
+#:
+#: ⚠️ **只剔掉被否定的那一处**：一条 spec 完全可以写「r1 不是 Tennis TV，
+#: r2 是」，剔完之后 r2 那一处照样留在文本里，闸照样咬得住。
+_TENNISTV_NEGATED = re.compile(
+    r"(?:都|全)?(?:不是|不属于|没有用|不用|不走|不涉及|非)"
+    r"[^。；\n]{0,16}?Tennis\s?TV")
 
 
 def _uses_tennistv(spec: dict) -> bool:
@@ -8977,8 +9014,13 @@ def _uses_tennistv(spec: dict) -> bool:
     ⚠️ **只看 `_source` 和 `_editing_why` 这两栏**（我们自己写的来路交代），
     不扫整份 spec——`_no_repeat` 里会点名别的片子，那些片子的名字里带 Tennis TV
     就会把这一条误判成「也用了 Tennis TV」。判据宁可窄，不可宽。
+
+    ⚠️ **否定句先剔掉**，见 `_TENNISTV_NEGATED`：把「这条不是 Tennis TV」判成
+    「这条是 Tennis TV」，会逼下一个人要么写一句他根本不需要的 `_tennistv_trim`，
+    要么干脆不写这句交代——两条路都比没有这道闸糟。
     """
     blob = " ".join(str(spec.get(k) or "") for k in ("_source", "_editing_why"))
+    blob = _TENNISTV_NEGATED.sub("", blob)
     return "Tennis TV" in blob or "TennisTV" in blob
 
 
@@ -9007,6 +9049,16 @@ def test_用TennisTV的源片要说清片尾和台标怎么剪掉():
             "——写错一个名字，豁免就成了一盏恒真的绿灯")
         assert _uses_tennistv(specs[slug]), (
             f"{slug} 已经不是 Tennis TV 的源片了，从 `_LEGACY_TENNISTV` 里删掉")
+
+    # **判据自己的判据**：否定句不许被判成「用了」，肯定句不许被漏掉。
+    # 只钉前一头的话，把 `_TENNISTV_NEGATED` 放宽成 `.*Tennis TV` 会把整条闸
+    # 变成一盏恒真的绿灯；只钉后一头，误伤那次又会回来。
+    assert not _uses_tennistv(
+        {"_source": "四条源片都不是 Tennis TV，不涉及那条片尾和台标的规矩"})
+    assert _uses_tennistv({"_source": "Tennis TV 官方频道的单场集锦"})
+    assert _uses_tennistv(
+        {"_source": "r1 不是 Tennis TV；r2 是 Tennis TV 的短集锦"}), (
+        "只被否定掉的那一处该剔掉，另一处是肯定的，闸必须还咬得住")
 
     fresh = sorted(
         slug for slug, spec in specs.items()

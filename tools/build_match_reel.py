@@ -325,6 +325,35 @@ BED_LOUD = 0.72   # 没人说话时的现场声
 # 乘 0.05 落在 -41~-46 dB——比旁白（约 -22 dB）低约 20 dB（听感是底噪级的
 # 「空气」），又稳稳高于 check_reel_landed 的 SILENCE_FLOOR_DB（-60）。
 MUTE_FLOOR = 0.05
+# **背景音乐**（`spec.music`）。2026-08-27 之前这条线是**明令不加**的，
+# 那条规矩写在 `docs/columns.md` / `docs/copy-pipeline-spec.md` /
+# `docs/short-video-benchmark-strategy.md` 三处，来路是 2026-08-06 那次平台
+# 判罚（「疑似对他人/网络素材简易加工，二次创作部分信息增量不足，如素材简单
+# 增加标题、字幕或简易配音」）——**当时把音乐划出去是对的**：一条全靠别人画面
+# 的片子，再铺一层音乐，正好落在「简易加工」那句话上。
+#
+# 账号所有者 2026-08-27 定「网球有故事」的标准时点名「**还有背景音乐**」，
+# 所以这条规矩翻面了。⚠️ **翻的是「加不加」，不是「靠什么撑住这条片子」**：
+# 音乐是**铺在现场声底下的一层**，不是现场声的替代品。所以
+#
+#   - 音乐要被旁白闪避（和现场声走同一个压缩器，见 `duck_filtergraph`）
+#   - 音乐必须**量出来**比现场声低 `MUSIC_UNDER_BED_DB`（render 时真的量，
+#     不是照着 gain 猜——两个信号的响度取决于各自母带做得多响）
+#   - `silent_source` 的片子**一律不许配乐**：没有现场声时音乐就成了唯一的
+#     底，那正是当年被判的那个形状
+#   - 授权四件套（标题/作者/许可/出处）必填，缺一条当场报错
+MUSIC_GAIN_DEFAULT = 0.09
+#: gain 的硬顶。**它不是听感上限，是别让 gain 变成一个可以一路往上拧的旋钮**
+#: ——真正说了算的是下面那条量出来的 `MUSIC_UNDER_BED_DB`。
+MUSIC_GAIN_MAX = 0.35
+#: 音乐要比现场声低多少（dB，量出来的）。8 dB 是**合规底线不是品味**：
+#: 2.5 倍的幅度差，听感上音乐明确是次要的那一层。品味上应该更低——默认 gain
+#: 落下来一般在 12~16 dB，这道闸只拦「音乐盖过了现场声」那一档。
+MUSIC_UNDER_BED_DB = 8.0
+#: 进出的淡入淡出（秒）。开头不淡入的话音乐会和封面一起「啪」地进来；
+#: 结尾不淡出的话它会在片尾板上被切断。
+MUSIC_FADE_IN = 2.0
+MUSIC_FADE_OUT = 4.0
 # **段与段之间要淡入淡出，不能硬切。** 账号所有者：「音频和视频切换或转场的时候，
 # 要有淡入淡出，而不是要突然一下从这里切过来，就是感觉给人的观感不好，或者听感
 # 不好。」画面和**现场声**都要——现场声硬切时球场的底噪会「啪」地换一个，
@@ -347,6 +376,26 @@ MUTE_FLOOR = 0.05
 # 看得出是转场而不是变慢。旁白**不参与**——它是拼接之后另混上去的，每句话自己
 # 有起止，淡它等于把开头几个字吞掉。
 SEG_FADE = 0.18
+
+
+def source_tail(speed: float = 1.0) -> float:
+    """这一段为了溶解底料，要**在源片上**多消耗几秒。
+
+    ⚠️ **它不等于 `SEG_FADE`，除非这一段不变速。** `cut_segment` 的 `-t` 给的是
+    **输出**时长（`seg.length + tail`），而 `setpts=PTS/speed` 排在它前面——
+    所以真实的源片消耗是 `(seg.length + tail) × speed`，也就是
+    `(end - start) + SEG_FADE × speed`。
+
+    这个差在两个方向上不对称，而这正是快放当年被挡在门外的原因：
+
+        慢放 speed<1  源片侧的尾巴**比 SEG_FADE 短** → 按 SEG_FADE 判只会偏保守
+        快放 speed>1  源片侧的尾巴**比 SEG_FADE 长** → 按 SEG_FADE 判会**漏报**
+
+    漏报的样子是「dry-run 说没事，成片的接缝里多叠进一个镜头」——又是那种
+    本地绿、产物坏的形状。所以两处检查（`segments_over_source_end` 的越界闸、
+    `segments_straddling_cuts` 的 ghost 检查）一律走这个函数，别各写各的。
+    """
+    return SEG_FADE * speed
 # 字卡/角标的入场动效：淡入时长（秒）和上浮距离（px）。见 _overlay_chain。
 INSET_IN_SECS = 0.45
 INSET_RISE_PX = 36
@@ -405,7 +454,8 @@ def dissolve_filtergraph(lengths: list[float], fade: float) -> str:
     return ";".join(vparts + aparts)
 
 
-def duck_filtergraph(filters: list[str], voice_labels: list[str]) -> str:
+def duck_filtergraph(filters: list[str], voice_labels: list[str],
+                     music_chain: str = "") -> str:
     """闪避的滤镜图：没人说话时现场声开到 `BED_LOUD`，解说一进来就压下去。
 
     **`[vk0]apad[vk]` 那一段不能省，而且不能只当它是个细节。**
@@ -435,15 +485,199 @@ def duck_filtergraph(filters: list[str], voice_labels: list[str]) -> str:
     抽成函数是为了让判据能**真跑一次混音**：查源码文本的断言只能防「有人把它
     删了」，防不住「它从来没工作过」。
     """
+    # **配乐进的是压缩器的主路，不是 sidechain。** 也就是说它和现场声一起
+    # 被旁白压下去——这正是「音乐是铺在现场声底下的一层」那句话的实现。
+    #
+    # ⚠️ 往主路加一条音轨**不会改变闪避的行为**：`sidechaincompress` 的
+    # threshold/ratio/attack/release 全部作用在 **sidechain**（`[vk]`，
+    # 也就是旁白）上，增益衰减再施加到主路。所以这一条接进来之后，
+    # 「有旁白时压多少」一个 dB 都没变——反向验证过（合成信号量的）。
+    # `music_chain` 是 `music_filter()` 吐出来的整条链（`[N:a]…[mus]`），
+    # **不进 `filters`**——那个列表的长度是旁白 amix 的输入数，混进一条
+    # 音乐会让它多数一路，而 ffmpeg 只会报一句「找不到输入」。
+    ambient = "[bed]"
+    pre = ""
+    if music_chain:
+        # `dropout_transition=0`：音乐比片子短的时候（`music_problem` 已经
+        # 拦过，这儿是兜底）amix 不许在音乐断掉那一刻给现场声来一次提音，
+        # 那一下听起来像「音量突然跳了」而不是「音乐结束了」。
+        pre = (f"{music_chain};"
+               f"[bed][mus]amix=inputs=2:normalize=0:"
+               f"dropout_transition=0[ambient];")
+        ambient = "[ambient]"
     return (
-        f"[0:a]volume={BED_LOUD}[bed];{';'.join(filters)};"
+        f"[0:a]volume={BED_LOUD}[bed];{pre}{';'.join(filters)};"
         f"{''.join(voice_labels)}amix=inputs={len(filters)}:normalize=0[voice];"
         f"[voice]asplit=2[vk0][vm];"
         f"[vk0]apad[vk];"
-        f"[bed][vk]sidechaincompress=threshold=0.02:ratio=12:"
+        f"{ambient}[vk]sidechaincompress=threshold=0.02:ratio=12:"
         f"attack=15:release=450:makeup=1[duck];"
         f"[duck][vm]amix=inputs=2:normalize=0:dropout_transition=0[out]"
     )
+
+
+#: 配乐的授权四件套。**缺一条当场报错，不许写「unknown」糊过去**——
+#: 一首说不清出处的曲子发出去，赔上的是整个账号，而 CLAUDE.md 里
+#: 「授权照实记」那条本来就是这个意思。
+MUSIC_CREDIT_FIELDS = ("title", "artist", "license", "source")
+
+
+def evidence_card_overlaps_subtitle(spec: dict) -> str:
+    """整屏证据段的卡片底边不许压到字幕上。返回一句话或空串。
+
+    `cut_still_segment` 把卡**居中**铺进 1080×1440（最多占 94%×88%），而字幕是
+    **上锚**在 `_REEL_MARGIN_V`。两个数各管各的，于是够高的卡会直接盖住字幕。
+
+    ⚠️ **它是一整类，不是一次手滑**：卡一旦是被**高度**卡住的（细长的竖图），
+    铺出来必然是 1267 高、顶边 86、底边 **1353**——而字幕在 1284。也就是说
+    **任何竖图证据卡都会压字幕**，跟具体是哪张图无关。
+
+    来路：`wawrinka-farewell-story` 第一版把那篇告别帖的整屏截图
+    （1132×1788）当证据卡，渲出来「最后一句是——永远感激，永远纽约」这行字幕
+    **正好压在时间戳行上**——旁白引的那句证据，被引它的那行字盖住了。
+    四道本地闸一道都没响：`--dry-run` 只看 spec 的形状、`--check-narration`
+    只量长度、预览工具**跳过整屏证据段**（它没有源片窗口）、`check_reel_landed`
+    量的是画布和响度。**只有把成片拉回来抽帧才看得见。**
+
+    出路是**把图裁矮**（顺带它会被放得更大、更读得清），不是挪字幕——
+    `subtitle_top` 是整条片子的，为一屏改它会把其余二十七段的字幕一起抬走。
+
+    装闸这天拿 `specs/` 扫过：11 张证据卡**零命中**，所以不需要豁免表。
+    """
+    margin = int(spec.get("subtitle_top", _REEL_MARGIN_V))
+    for index, seg in enumerate(spec.get("segments") or (), 1):
+        if not isinstance(seg, dict) or not seg.get("image"):
+            continue
+        path = Path(str(seg["image"]))
+        if not path.is_file():
+            continue          # 图不在归 parse_segments 报，别在这儿抢
+        try:
+            from PIL import Image  # noqa: PLC0415
+            width, height = Image.open(path).size
+        except Exception:  # noqa: BLE001 — 读不出尺寸不该把 dry-run 带崩
+            continue
+        scale = min(VIDEO_W * 0.94 / width, VIDEO_H * 0.88 / height)
+        fitted = int(height * scale)
+        bottom = (VIDEO_H - fitted) // 2 + fitted
+        if bottom <= margin:
+            continue
+        # 裁到多高才不压：底边 = (H-h)/2 + h ≤ margin → h ≤ 2*margin - H
+        room = 2 * margin - VIDEO_H
+        want = int(width * room / (VIDEO_W * 0.94))
+        return (
+            f"第 {index} 段那张证据卡 {width}×{height} 铺进画布之后底边落在 "
+            f"{bottom}px，而字幕上锚在 {margin}px——**字幕会压在卡上**。\n"
+            f"  卡是居中铺的、字幕是上锚的，两个数各管各的；竖图尤其躲不开"
+            f"（被高度卡住时底边恒为 {(VIDEO_H - int(VIDEO_H * 0.88)) // 2 + int(VIDEO_H * 0.88)}px）。\n"
+            f"  出路是**把图裁矮**：这个宽度下高度要 ≤ 约 {want}px"
+            f"（裁矮之后它还会被放得更大、更读得清）。\n"
+            f"  别去改 `subtitle_top` —— 那是整条片子的，为一屏改它会把其余"
+            f"每一段的字幕一起抬走。")
+    return ""
+
+
+def music_problem(spec: dict, *, film_seconds: float | None = None) -> str:
+    """`spec.music` 的**形状**闸：没写就没事，写了就得写全。返回一句话或空串。
+
+    ⚠️ **只做形状和时长，不做电平**。「音乐会不会盖过现场声」要**量**两条真
+    音轨才知道（母带做得多响，同一个 gain 出来的响度能差十几 dB），那一关在
+    `render()` 里、拿真产物判——见 `music_level_problem`。这里做的是能在
+    `--dry-run` 0.2 秒里跑完的那部分。
+
+    ⚠️ **`silent_source` 和配乐互斥，这条是合规闸不是品味闸。** 源片没有现场
+    声时，音乐就成了整条片子唯一的底——而 2026-08-06 那次判罚点名的正是
+    「素材简单增加标题、字幕或简易配音」。有现场声、音乐铺在它底下，是另一
+    回事；没有现场声、音乐顶上来，就是那句话本身。
+    """
+    music = spec.get("music")
+    if music is None:
+        return ""
+    if not isinstance(music, dict):
+        return "`music` 要写成一个对象（file/title/artist/license/source…）"
+
+    if spec.get("silent_source"):
+        return ("这条 spec 写着 `silent_source`（源片没有现场声），"
+                "**不许再配乐**：音乐会成为整条片子唯一的底，而那正是 "
+                "2026-08-06 平台判罚点名的「素材简单增加标题、字幕或简易配音」。\n"
+                "  配乐只在「铺在真实现场声底下」这一种用法下成立。")
+
+    path = str(music.get("file") or "").strip()
+    if not path:
+        return "`music.file` 是空的——配乐要指到一个真的音频文件"
+    if not Path(path).is_file():
+        return f"配乐文件不在：{path}"
+
+    missing = [k for k in MUSIC_CREDIT_FIELDS if not str(music.get(k) or "").strip()]
+    if missing:
+        return (f"`music` 缺授权信息：{'、'.join(missing)}。"
+                f"四件套（{'、'.join(MUSIC_CREDIT_FIELDS)}）一条都不能少——"
+                "一首说不清出处的曲子发出去，赔上的是整个账号。")
+    src = str(music.get("source")).strip()
+    if not src.startswith(("http://", "https://")):
+        return f"`music.source` 要是一条能打开的链接，现在是 {src!r}"
+
+    try:
+        gain = float(music.get("gain", MUSIC_GAIN_DEFAULT))
+    except (TypeError, ValueError):
+        return f"`music.gain` 不是数字：{music.get('gain')!r}"
+    if not 0 < gain <= MUSIC_GAIN_MAX:
+        return (f"`music.gain`={gain:g} 超出 0 ~ {MUSIC_GAIN_MAX:g}。"
+                "⚠️ 往上拧这个数不是让音乐「更清楚」的办法——真正说了算的是 "
+                f"render 时量出来的那道闸（音乐要比现场声低 "
+                f"{MUSIC_UNDER_BED_DB:g} dB）。")
+
+    for key in ("fade_in", "fade_out"):
+        try:
+            value = float(music.get(key, MUSIC_FADE_IN if key == "fade_in"
+                                    else MUSIC_FADE_OUT))
+        except (TypeError, ValueError):
+            return f"`music.{key}` 不是数字：{music.get(key)!r}"
+        if value < 0:
+            return f"`music.{key}` 不能是负数"
+
+    try:
+        start_at = float(music.get("start_at", 0.0))
+    except (TypeError, ValueError):
+        return f"`music.start_at` 不是数字：{music.get('start_at')!r}"
+    if start_at < 0:
+        return "`music.start_at` 不能是负数"
+
+    if film_seconds is not None:
+        have = probe_duration(Path(path))
+        # ⚠️ **要减掉 `start_at`**：从第 300 秒起用一首 444 秒的曲子，能用的只剩
+        # 144 秒。第一版忘了减，于是一首「够长」的曲子会在片子中途断掉，而这道
+        # 闸说没问题——`amix` 那头 `dropout_transition=0` 只保证它不突然提音，
+        # 不会告诉你音乐没了。
+        if have and have - start_at + 0.05 < film_seconds:
+            usable = f"{have:.1f}s" if start_at <= 0 else (
+                f"{have:.1f}s，从 {start_at:g}s 起只剩 {have - start_at:.1f}s")
+            return (f"配乐只有 {usable}，而片子要 {film_seconds:.1f}s。\n"
+                    "  **不给它自动循环**：循环会在接缝上留一道听得见的跳，"
+                    "而这条线连画面接缝都要求溶解。换一首够长的。")
+    return ""
+
+
+def music_filter(music: dict, index: int, film_seconds: float) -> str:
+    """把第 `index` 路输入做成一条铺底的音乐。返回滤镜串，输出标签 `[mus]`。
+
+    `atrim` 那一刀不能省：音乐比片子长是常态，不裁的话 `amix` 的默认
+    `duration=longest` 会让整条输出跟着音乐走，成片末尾多出一截黑屏配乐
+    （`-shortest` 兜得住，但那是靠兜底而不是靠算对）。
+    """
+    gain = float(music.get("gain", MUSIC_GAIN_DEFAULT))
+    fade_in = float(music.get("fade_in", MUSIC_FADE_IN))
+    fade_out = float(music.get("fade_out", MUSIC_FADE_OUT))
+    start = max(0.0, float(music.get("start_at", 0.0)))
+    out_at = max(0.0, film_seconds - fade_out)
+    parts = [f"volume={gain:g}"]
+    if fade_in > 0:
+        parts.append(f"afade=t=in:st=0:d={fade_in:g}")
+    if fade_out > 0:
+        parts.append(f"afade=t=out:st={out_at:.3f}:d={fade_out:g}")
+    parts.append(f"atrim=0:{film_seconds:.3f}")
+    parts.append("asetpts=N/SR/TB")
+    seek = f"atrim=start={start:g},asetpts=N/SR/TB," if start > 0 else ""
+    return f"[{index}:a]{seek}{','.join(parts)}[mus]"
 
 
 # 分段和封面都是**中间产物**：拼完之后整片还要以 crf 18 重编一次。在这里编到
@@ -706,6 +940,55 @@ def audio_peak_db(path: Path) -> float | None:
     # 量不出来**不能当成静音**（那会把一个探测失败变成一次硬报错），
     # 但也不能当成正常——返回 None 走「没有音轨」那条路，它自己会出声。
     return float(found.group(1)) if found else None
+
+
+def audio_mean_db(path: Path) -> float | None:
+    """整条音轨的**平均**响度（dBFS）。量不出来返回 None。
+
+    和 `audio_peak_db` 分开是有理由的：峰值回答「这条轨是不是数字静音」，
+    平均回答「这条轨听起来有多响」。判「音乐会不会盖过现场声」要的是后者
+    ——一记球声的峰值和四分钟钢琴的峰值可以一样高，而听感差着十几 dB。
+    """
+    out = run("ffmpeg", "-hide_banner", "-i", str(path), "-vn",
+              "-af", "volumedetect", "-f", "null", os.devnull).stderr
+    found = re.search(r"mean_volume:\s*(-?[\d.]+) dB", out)
+    return float(found.group(1)) if found else None
+
+
+def music_level_problem(music: dict, live: Path) -> tuple[str, str]:
+    """**量出来**的那道闸：音乐必须比现场声低 `MUSIC_UNDER_BED_DB`。
+
+    返回 `(报错或空串, 一行日志)`——两个都要，因为**这一关合格也得出声**：
+    「音乐压得够低」和「这一步根本没跑」在成片上长得一模一样，而本仓库
+    「只在失败时出声的检查，没法证明它成功过」记过同一个形状。
+
+    为什么不能拿 `gain` 判：`gain` 是个乘数，而两条轨各自的母带响度差得动
+    十几 dB——同一个 0.09，配一首 −24 dB 的钢琴和一首 −9 dB 的合成器，
+    出来完全是两回事。所以量**两条真音轨**，再把各自的增益按 dB 加上去：
+    音量缩放在 dB 上是线性的，这一步是精确的，不是估的。
+    """
+    gain = float(music.get("gain", MUSIC_GAIN_DEFAULT))
+    mus_raw = audio_mean_db(Path(str(music["file"])))
+    live_raw = audio_mean_db(live)
+    if mus_raw is None or live_raw is None:
+        # 量不出来**不许当成合格**，也不许当成不合格——说清楚是哪一头没量到。
+        which = "配乐" if mus_raw is None else "现场声"
+        return ("", f"[配乐] ⚠️ {which}的平均响度量不出来，这一关没判成")
+    mus = mus_raw + 20 * math.log10(gain) if gain > 0 else float("-inf")
+    live_db = live_raw + 20 * math.log10(BED_LOUD)
+    under = live_db - mus
+    line = (f"[配乐] 现场声 {live_db:.1f} dB，配乐 {mus:.1f} dB"
+            f"（原曲 {mus_raw:.1f} dB × gain {gain:g}），"
+            f"低 {under:.1f} dB（要 ≥ {MUSIC_UNDER_BED_DB:g}）")
+    if under < MUSIC_UNDER_BED_DB:
+        want = gain * 10 ** ((under - MUSIC_UNDER_BED_DB) / 20)
+        return (f"配乐盖过现场声了：只低 {under:.1f} dB，"
+                f"要求至少 {MUSIC_UNDER_BED_DB:g} dB。\n"
+                f"  这不是品味，是合规底线——现场声是这条片子的内容，"
+                f"音乐是铺在它底下的一层。\n"
+                f"  把 `music.gain` 从 {gain:g} 调到 {want:.3f} 以下就够了。",
+                line)
+    return "", line
 
 
 def _speech_tail_end(path: Path, floor_db: float = -50.0,
@@ -1703,9 +1986,11 @@ class Segment:
     # 旁白预算、字幕偏移、溶解长度账全按成片时长走（`length` 属性自动换算）。
     # 现场声跟着 atempo 放慢（保音高），赛点慢放里球声和欢呼是拖长的，不是变调。
     # ⚠️ 慢放段里 `quote` 的 `at` 是**成片段内秒数**：从 captions.txt 的源片
-    # 时间戳换算时要除以 speed。只认 0.4 ≤ speed < 1，快放的账没算（见
-    # `_seg_speed`）。来路：账号所有者点名「画面剪辑和速度快慢放等等」，
-    # 头部账号的赛点/冲击瞬间几乎都上慢放。
+    # 时间戳换算时要除以 speed。⚠️ **2026-08-27 起快放也认**（0.4~2.5）——
+    # 在那之前挡着它的不是滤镜是账：溶解底料按 `SEG_FADE×speed` 消耗源片，
+    # 而两处检查都按裸的 `SEG_FADE` 判，慢放时偏保守无害、**快放时会漏报**。
+    # 见 `source_tail()` 和 `_seg_speed()`。来路：账号所有者点名「画面剪辑和
+    # 速度快慢放等等」，头部账号的赛点/冲击瞬间几乎都上慢放。
     speed: float = 1.0
     # **这一段把源片的声音压到地板**（`"mute": true`）。给**配乐宣传片**这类
     # 源准备：它的音轨是制作方铺的音乐，不是现场声——切成 2~3 秒的段再拼，
@@ -1761,13 +2046,25 @@ def _seg_mute(s: dict, index: int) -> bool:
                     f"不是 {raw!r}——字符串在这儿两种读法都说得通，所以一律报错")
 
 
-def _seg_speed(s: dict, index: int) -> float:
-    """`speed` 只认慢放（0.4 ≤ speed < 1），默认 1。
+#: 变速的两头。慢放到 0.4（再慢就成了逐帧回放，网球的连续动作会散架）；
+#: 快放到 2.5（再快人眼跟不上球，而这条线的画面主体是人和球）。
+#: ⚠️ 这两个数是**编辑上界**，不是技术上界——`atempo` 认 [0.5, 100]，
+#: `setpts` 什么都认。放宽之前先渲一版看，别只改常数。
+SPEED_MIN = 0.4
+SPEED_MAX = 2.5
 
-    为什么不放开快放：溶解底料和 ghost 检查按「段尾之后 `SEG_FADE` 秒」的
-    **源片**窗口算账，慢放时真实的源片消耗是 `SEG_FADE×speed`，比账面小，
-    检查只会偏保守；**快放时真实消耗比账面大**，`--dry-run` 的 ghost 检查会
-    漏报「溶解底料跨切点」。要开快放，先把那两笔账改成按速度算，别只删这道闸。
+
+def _seg_speed(s: dict, index: int) -> float:
+    """`speed`：慢放 0.4~1，快放 1~2.5，默认 1。
+
+    ⚠️ **快放 2026-08-27 才放开**，在那之前只认慢放。挡着它的不是滤镜，是账：
+    溶解底料和 ghost 检查原来按「段尾之后 `SEG_FADE` 秒」的**源片**窗口算，
+    而真实的源片消耗是 `SEG_FADE×speed`——慢放时比账面小（检查偏保守，无害），
+    **快放时比账面大，于是 ghost 检查会漏报「溶解底料跨切点」**。
+    现在两处都走 `source_tail(speed)`，这笔账按速度算，快放才敢开。
+
+    来路：账号所有者 2026-08-27「还有快慢播放的结合」——慢放此前已经落地，
+    快放这一半一直欠着。
     """
     raw = s.get("speed")
     if raw is None:
@@ -1778,11 +2075,13 @@ def _seg_speed(s: dict, index: int) -> float:
         raise ReelError(f"第 {index + 1} 段的 speed 不是数字：{raw!r}") from None
     if v == 1.0:
         return 1.0
-    if not 0.4 <= v < 1.0:
+    if not SPEED_MIN <= v <= SPEED_MAX:
         raise ReelError(
-            f"第 {index + 1} 段 speed={v:g}：只认 0.4 ≤ speed < 1（慢放）。\n"
-            "  快放的账还没算（ghost 检查按 SEG_FADE 源片秒算消耗，快放会被"
-            "低估、漏报跨切点）；不变速就删掉这个键。")
+            f"第 {index + 1} 段 speed={v:g}：只认 "
+            f"{SPEED_MIN:g} ≤ speed ≤ {SPEED_MAX:g}"
+            f"（<1 慢放，>1 快放）。\n"
+            "  两头是**编辑上界**不是技术上界：再慢连续动作会散架，"
+            "再快人眼跟不上球。不变速就删掉这个键。")
     return v
 
 
@@ -2109,7 +2408,7 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
 # 出现过的字段名去对，少一个就红。
 _REAL_FIELDS: dict[str, tuple[str, ...]] = {
     "spec": ("archival", "conform", "cover", "crop_y", "crop_zoom",
-             "mixed_fps", "primary",
+             "mixed_fps", "music", "primary",
              "outro", "push", "rate", "segments", "silent_source", "slug",
              "source_audio", "source_url", "sources", "stats", "subtitle_top",
              "topbar", "voice", "editorial"),
@@ -2337,14 +2636,17 @@ def segments_straddling_cuts(
                 "cuts": inside, "narration": label,
             })
         elif index != last:
+            # ⚠️ **尾巴的长度按这一段的速度算**，见 `source_tail()`：快放时
+            # 源片侧的消耗比 `SEG_FADE` 长，按常数判会漏报。
+            tail = source_tail(_seg_speed(seg, index))
             ghost = [c for c in by_url[url]
-                     if seg["end"] <= c < seg["end"] + SEG_FADE]
+                     if seg["end"] <= c < seg["end"] + tail]
             if ghost:
                 tail_cuts.append({
                     "index": index, "source": name, "end": seg["end"],
                     "cuts": ghost,
                     # 切点落在溶解的哪个位置：越靠后，叠进来的那一层越淡
-                    "opacity": max(0.0, 1 - (min(ghost) - seg["end"]) / SEG_FADE),
+                    "opacity": max(0.0, 1 - (min(ghost) - seg["end"]) / tail),
                 })
     return straddling, unchecked, tail_cuts
 
@@ -5366,6 +5668,16 @@ def validate_spec(
     photo = cover_photo_problem(spec)
     if photo:
         raise ReelError(photo)
+    # 配乐的**形状**在这儿就判得了（授权四件套、文件在不在、gain 范围、
+    # 和 silent_source 互斥）。电平那一关要量两条真音轨，归 render——
+    # 见 `music_level_problem`。⚠️ 这儿**不传 film_seconds**：封面长度要合完
+    # 语音才知道，dry-run 拿不到；时长那一刀在 render 里补。
+    music = music_problem(spec)
+    if music:
+        raise ReelError(music)
+    card = evidence_card_overlaps_subtitle(spec)
+    if card:
+        raise ReelError(card)
     segments = parse_segments(spec, urls, next(iter(urls)))
     raw_percent = [
         (index, seg.narration)
@@ -5510,7 +5822,7 @@ def segments_over_source_end(segments: list[Segment],
         if seg.image:
             continue                      # 整屏证据段不消耗源片
         limit = durations.get(seg.source)
-        need = seg.end + SEG_FADE
+        need = seg.end + source_tail(seg.speed)
         if limit is None or need <= limit + 0.05:
             continue
         over.append(f"  第 {index + 1} 段：{seg.start:.1f}–{seg.end:.1f}s"
@@ -5905,6 +6217,29 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
           f"左右 {_ASS_MARGIN_H}）")
 
     mixed = outdir / "_audio.m4a"
+    # **配乐**：一条铺在现场声底下的音轨，和现场声一起被旁白闪避。
+    # 长度按**画面的实际总长**算（`silent` 已经拼完了，直接量它），不拿
+    # 「封面 + 段落 + 片尾」再加一遍——一个数写两处必分叉，而分叉的样子是
+    # 「音乐比片子早结束半秒」或者「成片末尾多出一截黑屏配乐」。
+    music_spec = spec.get("music")
+    music_chain = ""
+    if music_spec:
+        film_seconds = probe_duration(silent) or 0.0
+        shape = music_problem(spec, film_seconds=film_seconds)
+        if shape:
+            raise ReelError(shape)
+        bad, line = music_level_problem(music_spec, silent)
+        print(line)
+        if bad:
+            raise ReelError(bad)
+        music_chain = music_filter(music_spec, len(mix_inputs) // 2 + 1,
+                                   film_seconds)
+        mix_inputs.extend(["-i", str(music_spec["file"])])
+        print(f"[配乐] {music_spec['title']}／{music_spec['artist']}"
+              f"（{music_spec['license']}）铺满 {film_seconds:.1f}s，"
+              f"淡入 {float(music_spec.get('fade_in', MUSIC_FADE_IN)):g}s／"
+              f"淡出 {float(music_spec.get('fade_out', MUSIC_FADE_OUT)):g}s")
+
     with stage("混音"):
         if filters:
             # 闪避，不是一路压死：没人说话的时候现场声开到 BED_LOUD，解说一进来
@@ -5912,11 +6247,24 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
             # 要么盖住解说，要么整条片子的球声都听不见，两头不讨好。
             run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
                 "-i", str(silent), *mix_inputs,
-                "-filter_complex", duck_filtergraph(filters, voice_labels),
+                "-filter_complex", duck_filtergraph(
+                    filters, voice_labels, music_chain),
                 # 这一步只是把解说混进现场声，产物是个 m4a——画面在这儿是
                 # 拿来给 `-shortest` 定长度的，**必须 copy**。原来没写 `-c:v`，
                 # 默认动作是把整条 1080×1920 重新 x264 编一遍，编完写进 m4a、
                 # 下一步再整个丢掉。（改前/改后的实测见提交说明。）
+                "-map", "0:v:0", "-map", "[out]", "-c:v", "copy",
+                "-c:a", "aac", "-b:a", "192k", "-ar", AUDIO_RATE,
+                "-shortest", str(mixed))
+        elif music_chain:
+            # 整条片子一句旁白都没有（全 quote／全现场声）而又要配乐：
+            # 没有可闪避的对象，直接把音乐叠在现场声上。**不许悄悄不铺**——
+            # spec 写了 music 而成片里没有，是这条线最难查的一种错。
+            run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+                "-i", str(silent), *mix_inputs, "-filter_complex",
+                f"[0:a]volume={BED_LOUD}[bed];{music_chain};"
+                f"[bed][mus]amix=inputs=2:normalize=0:"
+                f"dropout_transition=0[out]",
                 "-map", "0:v:0", "-map", "[out]", "-c:v", "copy",
                 "-c:a", "aac", "-b:a", "192k", "-ar", AUDIO_RATE,
                 "-shortest", str(mixed))

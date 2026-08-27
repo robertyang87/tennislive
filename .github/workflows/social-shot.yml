@@ -1,0 +1,208 @@
+name: social-shot
+
+# 把一条社交媒体帖子／官网公告**真的截一张图**下来，提交进 `assets/social/<slug>/`。
+#
+# 为什么非 runner 不可：这台沙箱的 Chromium 过不了出网代理（CLAUDE.md 记过，
+# `--proxy-server` 和 playwright 的 `proxy=` 都试过，一律 ERR_CONNECTION_RESET），
+# 而这几个站（x.com、usopen.org）返回的都是 JS 壳，`requests` 拿不到渲染后的正文。
+#
+# ⚠️ **只截真页面。** 自己画一个长得像帖子的卡是伪造记录，不是证据——
+# 工具那头 `tools/capture_social_shot.py` 顶注写着同一句。
+# ⚠️ **撞上登录墙就报错不交图**，判据在工具里（exit 2）。
+
+on:
+  # ⚠️ **push 这条不是冗余**：`workflow_dispatch` 只有当工作流文件已经在**默认
+  # 分支**上时才 dispatch 得动（不在就是 404），而截图往往是在特性分支上做片子
+  # 的过程中才需要的。所以另留一条声明式的入口：把要截的东西写进
+  # `data/social_shot_requests/<slug>.json` 推上来，这条就在**当前分支**上跑。
+  #
+  # 顺带它比 dispatch 更该是主路——**请求文件本身就是这张图的来路**，
+  # 谁、什么时候、按什么选择器截的，都跟着仓库走，不用回头翻 run 的表单。
+  push:
+    paths:
+      - "data/social_shot_requests/**"
+  workflow_dispatch:
+    inputs:
+      slug:
+        description: "落在 assets/social/<slug>/ 下面"
+        required: true
+      url:
+        description: "要截的页面"
+        required: true
+      name:
+        description: "文件名（不带后缀）"
+        required: true
+        default: "shot"
+      selector:
+        description: "裁到这一块的 CSS 选择器（X 的一条推文是 article）"
+        required: false
+        default: ""
+      hide:
+        description: "截图前隐藏掉的选择器，逗号分隔（cookie 横幅这类）"
+        required: false
+        default: ""
+      width:
+        description: "视口宽"
+        required: false
+        default: "1000"
+      height:
+        description: "视口高"
+        required: false
+        default: "1400"
+      wait_ms:
+        description: "渲染等待毫秒"
+        required: false
+        default: "6000"
+
+permissions:
+  contents: write
+
+concurrency:
+  # push 触发时 inputs 是空的，所以把 ref 也编进分组名——否则两条分支上
+  # 的请求会互相掐掉。
+  group: social-shot-${{ github.ref }}-${{ inputs.slug }}-${{ inputs.name }}
+  cancel-in-progress: true
+
+jobs:
+  shot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # **别把 output/ 拉下来**——这条工作流一个字节都不碰它。
+          # 它只写 assets/social，而那一格在下面这张表里。
+          # 判据 `test_不碰产物的工作流不许把output拉下来`。
+          sparse-checkout: |
+            assets
+            data
+            docs
+            specs
+            src
+            tests
+            tools
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: 装 playwright
+        run: pip install -q -e . playwright
+
+      - name: 装 Chromium
+        # 10 而不是 9：等 dpkg 锁最多再花 60 秒（见下面 pw_wait_apt），
+        # 而 2×240 秒本来就贴着 9 分钟。第 2 次眼看要成却被步骤预算
+        # 掐掉，和「装不上」长得一模一样。
+        timeout-minutes: 10
+        run: |
+          # ⚠️ **`--with-deps` 会跑 apt，而这个仓库的 apt 会抽风。** CLAUDE.md 里那条
+          # 「一次静静烧了 13 分 42 秒」的教训当时只套在显式的 `apt-get` 步骤上，
+          # **漏了这一处**——而它既没超时也没重试，能一路烧到 job 的 15 分钟预算
+          # 用完（run 30973785219：卡在这一步 13 分钟，其余步骤全在 1 分钟内跑完）。
+          #
+          # 正常 5~60 秒（命中缓存时是空操作）。240 秒是 4~48 倍的余量，
+          # 只有真挂死才会两次都吃满。⚠️ **别把这个数调小**：第一版 apt 重试
+          # 写 3×100 秒当场把 CI 弄红了，因为 apt 一直在推进、只是慢——
+          # **把「慢」误判成「挂死」，重试就从救场变成三倍的浪费**。
+          # ⚠️ **第一次超时会毒死第二次，所以重试之前必须等 dpkg 锁松开。**
+          # `timeout` 杀掉的是 `playwright install` 那层壳，**它派生的 apt-get
+          # 活了下来并攥着 `/var/lib/dpkg/lock-frontend`**。run 31003290962 的
+          # 日志一清二楚：第 1 次 240 秒被杀，15 秒后第 2 次**两秒**就死在
+          # `held by process 4285 (apt-get)`——也就是说「重试」根本没重试成，
+          # 它只是第一次超时的一个必然后果。
+          #
+          # ⚠️ 用 `pgrep -x`（**按可执行名精确匹配**），不是 `pgrep -f`。
+          # CLAUDE.md 里那条「`until ! pgrep -f 'X'` 会匹配到它自己」说的就是
+          # `-f` 扫整条命令行；这个循环跑在 bash 里，名字对不上 apt-get/dpkg，
+          # 不会把自己数进去。也不用 fuser/lsof——runner 上不保证装着。
+          pw_wait_apt() {
+            for _ in $(seq 1 22); do
+              if ! pgrep -x apt-get >/dev/null && ! pgrep -x dpkg >/dev/null; then
+                return 0
+              fi
+              sleep 5
+            done
+            echo "::warning::等了 110 秒 dpkg 锁还没松开——下一次尝试八成会在两秒内死在 Could not get lock，不是 apt 装不上"
+            # ⚠️⚠️ 2026-08-19（run 32211814483，tnns-stats）：等满 110 秒，锁**仍然**
+            # 没松——被 `timeout` 杀掉的那层壳没能把信号传给它派生出来的
+            # apt-get（这正是上面那条注释说的「派生的 apt-get 活了下来」），
+            # 那个孤儿这次不是挂死，是在镜像上慢慢下一个字体包，110 秒不够它
+            # 下完。而这一层已经贴着步骤预算的上限（`test_等dpkg锁的预算够长
+            # 又不许撑爆步骤预算` 钉的 110~120 秒）——**再往上加等待时间不是
+            # 出路**：上一次从 60 秒加到 110 秒就是这么来的，这次撞上同一个
+            # 天花板，说明「多等一会」这条路已经走到头了。
+            #
+            # 我们不需要保住那个孤儿的进度：它已经下进
+            # `/var/cache/apt/archives` 的包，下一次重试照样会复用（ci.yml
+            # 那条注释早说过）。所以**主动结束它，不再指望它自己让开**——
+            # 这比继续加大等待预算快得多，也不会撞步骤超时。
+            sudo pkill -9 apt-get 2>/dev/null || true
+            sudo pkill -9 dpkg 2>/dev/null || true
+            sudo dpkg --configure -a 2>/dev/null || true
+          }
+          pw_retry() {
+            for i in 1 2; do
+              timeout 240 python -m playwright install --with-deps chromium && return 0
+              echo "::warning::装 Chromium 第 $i 次没跑完（多半卡在 --with-deps 的 apt）"
+              # 等锁，别拿 sleep 猜。顺带：被杀掉那次已经把一部分包下进了
+              # /var/cache/apt/archives，所以第 2 次是接着下，不是从头来。
+              pw_wait_apt
+            done
+            echo "::error::装 Chromium 两次都没成功"
+            return 1
+          }
+          pw_retry
+
+      - name: 截图（dispatch 那条路：表单说了截什么）
+        if: github.event_name == 'workflow_dispatch'
+        run: >-
+          python tools/capture_social_shot.py
+          --url "${{ inputs.url }}"
+          --out "assets/social/${{ inputs.slug }}/${{ inputs.name }}.png"
+          --selector "${{ inputs.selector }}"
+          --hide "${{ inputs.hide }}"
+          --width "${{ inputs.width }}"
+          --height "${{ inputs.height }}"
+          --wait-ms "${{ inputs.wait_ms }}"
+
+      - name: 截图（push 那条路：请求文件说了截什么）
+        if: github.event_name == 'push'
+        run: python tools/run_social_shot_requests.py
+
+      - name: 落库
+        # `always()`：一趟可能截好几张，一张撞上登录墙不该让**已经截好的那几张**
+        # 也提交不了。工具那头逐张 try、最后按有没有失败定退出码，产物已经落在盘上。
+        if: always()
+        run: |
+          if git status --short -- assets/social | grep -q .; then
+            git config user.name "Claude"
+            git config user.email "noreply@anthropic.com"
+            git add assets/social
+            # 体积闸：截图是 2 倍缩放的 PNG，可以很大，而 GitHub 单文件
+            # 100 MiB 是服务端硬拒——在 push 那一刻才被拒是最贵的失败。
+            # 判据 `test_every_workflow_that_commits_generated_files_has_a_size_gate`。
+            python tools/check_staged_file_sizes.py
+            git commit -m "assets: 社交媒体截图 ${{ inputs.slug }}/${{ inputs.name }}"
+            # 这条工作流可以在任意分支上手动跑（样板片就是在特性分支上抓的图），
+            # 所以推回**当前 ref**，不是写死 main。
+            source tools/git_push_retry.sh
+            push_with_rebase_retry "${GITHUB_REF_NAME}" 5
+          else
+            echo "没有新截图（工具那头已经报过原因）。"
+          fi
+
+      - name: 写入运行摘要
+        if: always()
+        run: |
+          echo "## 社交媒体截图" >> "$GITHUB_STEP_SUMMARY"
+          echo "- 触发：${{ github.event_name }}" >> "$GITHUB_STEP_SUMMARY"
+          proof="$(ls -1 assets/social/*/*.png.json 2>/dev/null | tail -1)"
+          if [ -s "$proof" ]; then
+            jq -r '"- 页面标题：" + .page_title,
+                   "- 抓取时刻：" + .captured_at,
+                   "- 裁法：" + (if .fallback_full_viewport then "⚠️ 整屏兜底" else "按选择器 " + .selector end),
+                   "- sha256：" + .sha256' "$proof" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "- ❌ 没有产出截图，看上一步的日志。" >> "$GITHUB_STEP_SUMMARY"
+          fi
