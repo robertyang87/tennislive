@@ -2091,7 +2091,7 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
 _REAL_FIELDS: dict[str, tuple[str, ...]] = {
     "spec": ("archival", "conform", "cover", "crop_y", "crop_zoom",
              "mixed_fps", "primary",
-             "push", "rate", "segments", "silent_source", "slug",
+             "outro", "push", "rate", "segments", "silent_source", "slug",
              "source_audio", "source_url", "sources", "stats", "subtitle_top",
              "topbar", "voice", "editorial"),
     "cover": ("event_badge", "eyebrow", "hook", "layout", "matchup", "meta",
