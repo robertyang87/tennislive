@@ -58,6 +58,9 @@ jobs:
             tools
             data
             specs
+            # orchestrate 经 assemble_spec 沾到生产 skill；教材是几个 markdown，
+            # 检出成本是零，缺了它失败要等真起草那一刻才炸（2026-08-27 那课）
+            skills
 
       - uses: actions/setup-python@v5
         with:
