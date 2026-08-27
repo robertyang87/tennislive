@@ -12733,3 +12733,29 @@ def test_推送链接的CDN主机只有一处出处不许再写死cdn域名(tmp_
     assert not bad, (
         f"push_reel.py 第 {bad} 行又把 cdn.jsdelivr.net 写进了代码——"
         "主机名只许从 tennislive.cdn.jsdelivr_base() 来")
+
+def test_握手作为终点时品牌片尾必须真的关闭():
+    """郑钦文–布雷尔第一次返工只改了 segments，但渲染器仍在握手后自动接品牌页。
+
+    用户说“都已经握手了，后面的就不要了”，这里的“后面”包括确定性渲染器
+    自动追加的 outro，不只是 spec 里的比赛片段。开关要同时控制长度账、画面、
+    口播和最后一个比赛段的溶解底料。
+    """
+    spec = json.loads(Path(
+        "specs/reels/zheng-burel-us-open-2026-q2.json"
+    ).read_text(encoding="utf-8"))
+    assert spec.get("outro") is False, (
+        "这条片以握手为终点，不能再接通用品牌页")
+
+    body = Path("tools/build_match_reel.py").read_text(encoding="utf-8")
+    assert 'outro_enabled = spec.get("outro", True) is not False' in body
+    assert "if outro_enabled:\n        lengths.append(outro_secs)" in body, (
+        "关片尾时长度账仍把品牌页算进去")
+    assert (
+        "SEG_FADE if (outro_enabled or index < len(segments) - 1) else 0.0"
+        in body
+    ), "关片尾时最后一个比赛段还会向握手之后多切溶解底料"
+    assert (
+        "if outro_enabled:\n        parts.append(build_outro(" in body
+    ), "品牌页仍被无条件追加"
+
