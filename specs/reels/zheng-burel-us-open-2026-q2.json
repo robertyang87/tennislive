@@ -20,10 +20,10 @@
     "result": "6-1 7-5",
     "portrait": {
       "image": "assets/reel/zheng-burel-us-open-2026-q2-cover.jpg",
-      "focus": 0.48,
-      "focus_y": 0.42,
+      "focus": 0.43,
+      "focus_y": 0.48,
       "zoom": 1.08,
-      "_why": "WTA官方本场Q2赛后稿头图，Brad Penner/USTA拍摄；原图4352×2901，文章正文明确对应郑钦文6-1 7-5布雷尔，可按3:4裁切为高清赛场近景。"
+      "_why": "US Open官方本场集锦162秒赛后近景；郑钦文赢球后微笑握拳，白色上衣与薄荷绿裙装、Court 17场地和本场比分均可核验。原帧1920×1080，按3:4裁切后人物面部与胜后情绪均比旧动作照更突出。"
     },
     "eyebrow": "赛场之上",
     "layout": "solo",
@@ -353,7 +353,7 @@
     "背景聚合：H2H/近况/排名/中文热点已备齐（年龄/纪录/金句要 human_context 调研补，见 spec 合同）",
     "推送文案已通过事实校验；默认开启 QC 后自动推送",
     "窗口起草 2 段",
-    "封面：WTA官方本场Q2赛后稿原图 Zheng-Q2-Brad-Penner.jpg，4352×2901，Brad Penner/USTA；同场证据由文章赛果与Getty事件组双重确认。",
+    "封面返工：按用户选择改用US Open官方本场集锦162秒赛后近景，1920×1080；郑钦文微笑握拳，人物更居中，竖裁后的情绪与面部清晰度优于旧动作照。",
     "对手背景与资格赛原因均来自WTA、US Open、ITF官方资料；成年代表战选2022莱巴金娜与2024佩古拉。",
     "第三轮对手：Elena Pridankina，20岁、WTA第186；2026美网资格赛前两轮均直落两盘。",
     "终检修正：第三轮对手段窗口由181.63–193.20前移为181.00–192.57，保持11.57秒，避开源片192秒附近1秒数字静音。",
@@ -391,14 +391,14 @@
     "cover": {
       "same_match": true,
       "subject": "郑钦文",
-      "moment": "other",
+      "moment": "celebration",
       "wrong_or_old": false,
-      "reason": "候选封面是郑钦文在美网硬地比赛中挥拍的动作照，人物面容、白背心薄荷绿短裙及蓝绿色球场与视频内郑钦文的服装和场景一致；视频168.5s–176.5s的赛事转场字样明确为US Open Women's Qualifying 2nd Round，视频比分牌列出QINWEN ZHENG、CLARA BUREL及6-1、7-5；因此与本场郑钦文6-1 7-5布雷尔一致。",
-      "confidence": 0.94
+      "reason": "封面直接取自US Open官方频道本场集锦162秒：前一秒画面仍显示MATCH POINT与Zheng/Burel比分，随后郑钦文以白色上衣、薄荷绿裙装微笑握拳；人物、服装、场地与赛点连续镜头一致，因此同场身份明确。",
+      "confidence": 0.97
     },
     "problems": [],
     "model_attempts": 2,
-    "input_sha256": "3ed739a677c6ba07e8306fbdac2f67423845ddf578240b541c62f194d3181069",
+    "input_sha256": "dccdf8667a3d6afad8200076a6ee5768b5ae2cc356a2030ce43d9eca5ac65bca",
     "inputs": [
       "contact_00.jpg",
       "contact_01.jpg",
@@ -409,10 +409,10 @@
   },
   "_cover_brief": {
     "preferred_subject": "郑钦文",
-    "preferred_moment": "other",
-    "source_type": "WTA官方同场高清动作照",
-    "source_page": "https://www.wtatennis.com/news/4567086/zheng-montgomery-roll-into-final-us-open-qualifying-round",
-    "source_proof": "WTA赛后稿正文明确本场郑钦文6-1 7-5布雷尔；原图文件名Zheng-Q2-Brad-Penner.jpg，摄影Brad Penner/USTA，4352×2901。Getty同场事件组有庆祝照但公开预览带水印且无授权，因此不用。"
+    "preferred_moment": "celebration",
+    "source_type": "US Open官方同场高清视频帧",
+    "source_page": "https://youtu.be/iCRfxcIFAoo",
+    "source_proof": "US Open官方频道视频标题为Qinwen Zheng vs. Clara Burel Highlights | 2026 US Open Qualifying Round 2；162秒前后连续覆盖赛点、胜后微笑握拳和6-1、7-5赛果，抽取帧为1920×1080。Getty同场怒吼照更强，但公开预览带水印且无授权，因此不用。"
   },
   "_segments_source": " + MiniMax 冷开场/结尾视觉闸",
   "topbar": {
