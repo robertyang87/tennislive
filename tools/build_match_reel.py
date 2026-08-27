@@ -522,6 +522,60 @@ def duck_filtergraph(filters: list[str], voice_labels: list[str],
 MUSIC_CREDIT_FIELDS = ("title", "artist", "license", "source")
 
 
+def evidence_card_overlaps_subtitle(spec: dict) -> str:
+    """整屏证据段的卡片底边不许压到字幕上。返回一句话或空串。
+
+    `cut_still_segment` 把卡**居中**铺进 1080×1440（最多占 94%×88%），而字幕是
+    **上锚**在 `_REEL_MARGIN_V`。两个数各管各的，于是够高的卡会直接盖住字幕。
+
+    ⚠️ **它是一整类，不是一次手滑**：卡一旦是被**高度**卡住的（细长的竖图），
+    铺出来必然是 1267 高、顶边 86、底边 **1353**——而字幕在 1284。也就是说
+    **任何竖图证据卡都会压字幕**，跟具体是哪张图无关。
+
+    来路：`wawrinka-farewell-story` 第一版把那篇告别帖的整屏截图
+    （1132×1788）当证据卡，渲出来「最后一句是——永远感激，永远纽约」这行字幕
+    **正好压在时间戳行上**——旁白引的那句证据，被引它的那行字盖住了。
+    四道本地闸一道都没响：`--dry-run` 只看 spec 的形状、`--check-narration`
+    只量长度、预览工具**跳过整屏证据段**（它没有源片窗口）、`check_reel_landed`
+    量的是画布和响度。**只有把成片拉回来抽帧才看得见。**
+
+    出路是**把图裁矮**（顺带它会被放得更大、更读得清），不是挪字幕——
+    `subtitle_top` 是整条片子的，为一屏改它会把其余二十七段的字幕一起抬走。
+
+    装闸这天拿 `specs/` 扫过：11 张证据卡**零命中**，所以不需要豁免表。
+    """
+    margin = int(spec.get("subtitle_top", _REEL_MARGIN_V))
+    for index, seg in enumerate(spec.get("segments") or (), 1):
+        if not isinstance(seg, dict) or not seg.get("image"):
+            continue
+        path = Path(str(seg["image"]))
+        if not path.is_file():
+            continue          # 图不在归 parse_segments 报，别在这儿抢
+        try:
+            from PIL import Image  # noqa: PLC0415
+            width, height = Image.open(path).size
+        except Exception:  # noqa: BLE001 — 读不出尺寸不该把 dry-run 带崩
+            continue
+        scale = min(VIDEO_W * 0.94 / width, VIDEO_H * 0.88 / height)
+        fitted = int(height * scale)
+        bottom = (VIDEO_H - fitted) // 2 + fitted
+        if bottom <= margin:
+            continue
+        # 裁到多高才不压：底边 = (H-h)/2 + h ≤ margin → h ≤ 2*margin - H
+        room = 2 * margin - VIDEO_H
+        want = int(width * room / (VIDEO_W * 0.94))
+        return (
+            f"第 {index} 段那张证据卡 {width}×{height} 铺进画布之后底边落在 "
+            f"{bottom}px，而字幕上锚在 {margin}px——**字幕会压在卡上**。\n"
+            f"  卡是居中铺的、字幕是上锚的，两个数各管各的；竖图尤其躲不开"
+            f"（被高度卡住时底边恒为 {(VIDEO_H - int(VIDEO_H * 0.88)) // 2 + int(VIDEO_H * 0.88)}px）。\n"
+            f"  出路是**把图裁矮**：这个宽度下高度要 ≤ 约 {want}px"
+            f"（裁矮之后它还会被放得更大、更读得清）。\n"
+            f"  别去改 `subtitle_top` —— 那是整条片子的，为一屏改它会把其余"
+            f"每一段的字幕一起抬走。")
+    return ""
+
+
 def music_problem(spec: dict, *, film_seconds: float | None = None) -> str:
     """`spec.music` 的**形状**闸：没写就没事，写了就得写全。返回一句话或空串。
 
@@ -1932,9 +1986,11 @@ class Segment:
     # 旁白预算、字幕偏移、溶解长度账全按成片时长走（`length` 属性自动换算）。
     # 现场声跟着 atempo 放慢（保音高），赛点慢放里球声和欢呼是拖长的，不是变调。
     # ⚠️ 慢放段里 `quote` 的 `at` 是**成片段内秒数**：从 captions.txt 的源片
-    # 时间戳换算时要除以 speed。只认 0.4 ≤ speed < 1，快放的账没算（见
-    # `_seg_speed`）。来路：账号所有者点名「画面剪辑和速度快慢放等等」，
-    # 头部账号的赛点/冲击瞬间几乎都上慢放。
+    # 时间戳换算时要除以 speed。⚠️ **2026-08-27 起快放也认**（0.4~2.5）——
+    # 在那之前挡着它的不是滤镜是账：溶解底料按 `SEG_FADE×speed` 消耗源片，
+    # 而两处检查都按裸的 `SEG_FADE` 判，慢放时偏保守无害、**快放时会漏报**。
+    # 见 `source_tail()` 和 `_seg_speed()`。来路：账号所有者点名「画面剪辑和
+    # 速度快慢放等等」，头部账号的赛点/冲击瞬间几乎都上慢放。
     speed: float = 1.0
     # **这一段把源片的声音压到地板**（`"mute": true`）。给**配乐宣传片**这类
     # 源准备：它的音轨是制作方铺的音乐，不是现场声——切成 2~3 秒的段再拼，
@@ -5619,6 +5675,9 @@ def validate_spec(
     music = music_problem(spec)
     if music:
         raise ReelError(music)
+    card = evidence_card_overlaps_subtitle(spec)
+    if card:
+        raise ReelError(card)
     segments = parse_segments(spec, urls, next(iter(urls)))
     raw_percent = [
         (index, seg.narration)

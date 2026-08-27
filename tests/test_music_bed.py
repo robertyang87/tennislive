@@ -295,3 +295,64 @@ def test_配乐从中间起用要把跳过的那一截减掉(tmp_path, ffmpeg):
     # start_at 也要是个合法的数
     assert "不能是负数" in reel.music_problem({"music": {**base, "start_at": -1}})
     assert "不是数字" in reel.music_problem({"music": {**base, "start_at": "早点"}})
+
+
+def test_整屏证据卡的底边不许压到字幕上(tmp_path):
+    """卡是**居中**铺进画布的，字幕是**上锚**的——两个数各管各的，于是够高的卡
+    会直接盖住字幕。
+
+    ⚠️ **这是一整类，不是一次手滑**：卡一旦被**高度**卡住（细长的竖图），
+    铺出来必然是 1267 高、底边 1353，而字幕在 1284。**任何竖图证据卡都会压字幕**。
+
+    来路：`wawrinka-farewell-story` 第一版拿那篇告别帖的整屏截图
+    （1132×1788）当证据卡，渲出来「最后一句是——永远感激，永远纽约」这行字幕
+    **正好压在时间戳行上**——旁白引的那句证据，被引它的那行字盖住了。
+    **四道本地闸一道都没响**：dry-run 只看形状、check-narration 只量长度、
+    预览工具跳过整屏证据段（它没有源片窗口）、check_reel_landed 量画布和响度。
+    只有把成片拉回来抽帧才看得见——所以这条判据是那次返工换来的。
+    """
+    from PIL import Image  # noqa: PLC0415
+
+    def card(w: int, h: int) -> str:
+        p = tmp_path / f"c{w}x{h}.png"
+        Image.new("RGB", (w, h), (250, 250, 250)).save(p)
+        return str(p)
+
+    # 高得被 88% 那道高度卡住 → 底边恒 1353，压在 1284 的字幕上
+    bad = reel.evidence_card_overlaps_subtitle(
+        {"segments": [{"image": card(1132, 1788), "seconds": 7, "narration": "x"}]})
+    assert "字幕会压在卡上" in bad and "1353" in bad
+    assert "裁矮" in bad, "报错没说出路"
+    assert "subtitle_top" in bad, "报错没拦住「改字幕位置」那条歪路"
+
+    # 裁矮之后过
+    assert not reel.evidence_card_overlaps_subtitle(
+        {"segments": [{"image": card(1132, 845), "seconds": 7, "narration": "x"}]})
+    # 宽图本来就不会撞
+    assert not reel.evidence_card_overlaps_subtitle(
+        {"segments": [{"image": card(1944, 684), "seconds": 5, "narration": "x"}]})
+    # 没有 image 的段一概不管
+    assert not reel.evidence_card_overlaps_subtitle(
+        {"segments": [{"start": 1, "end": 5, "narration": "x"}]})
+
+
+def test_仓库里每一张证据卡都躲开了字幕():
+    """装闸那天扫过 `specs/`：11 张证据卡零命中，所以这条闸**没有豁免表**。
+
+    这一条是那句话的判据——哪天有人加了一张压字幕的卡，它会当场红，
+    而不是等成片渲出来、拉回本地、抽帧才看见。
+    """
+    import json  # noqa: PLC0415
+
+    checked = 0
+    for spec_path in sorted(Path("specs/reels").glob("*.json")):
+        spec = json.loads(spec_path.read_text(encoding="utf-8"))
+        cards = [s for s in (spec.get("segments") or [])
+                 if isinstance(s, dict) and s.get("image")]
+        if not cards:
+            continue
+        checked += len(cards)
+        bad = reel.evidence_card_overlaps_subtitle(spec)
+        assert not bad, f"{spec_path.name}：{bad}"
+    # 判据自己的判据：一张都没扫到就说明主语没了（图挪走了/字段改名了）
+    assert checked >= 10, f"只校到 {checked} 张证据卡，这条判据多半已经落空了"
