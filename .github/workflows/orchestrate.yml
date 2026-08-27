@@ -205,3 +205,14 @@ jobs:
               -d "$BODY" \
               || echo "::warning::自动编排故障的 PushPlus 通知发送失败"
           fi
+
+      # schedule 事件在平台高峰会被 GitHub 丢弃（实测 40 分钟~5 小时一趟），
+      # 各条 cron 的挨饿互相错开——每一班顺手叫醒别的挨饿班次，实际频率
+      # 变成全部 cron 班次的并集。判据 test_挨饿的定时班次要互相叫醒。
+      - name: 顺手叫醒挨饿的提升班次
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          source tools/nudge_stale_ticks.sh
+          nudge_if_stale reel-auto-ready.yml 20

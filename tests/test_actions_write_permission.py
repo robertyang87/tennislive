@@ -85,6 +85,9 @@ _DISPATCH_ENTRIES = (
     (r"(?<!test_)dispatch_reel_queue\.py", "tools/dispatch_reel_queue.py"),
     (r"gh\s+workflow\s+run", "gh workflow run（直接写在 run: 里）"),
     (r"gh\s+api\b[^\n]*/dispatches", "gh api …/dispatches"),
+    # 「顺手叫醒挨饿班次」经 tools/nudge_stale_ticks.sh 间接 dispatch——
+    # `gh workflow run` 在被 source 的脚本里，run: 正文里只看得见这个函数名
+    (r"\bnudge_if_stale\b", "tools/nudge_stale_ticks.sh 的 nudge_if_stale"),
 )
 
 
