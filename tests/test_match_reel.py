@@ -8221,6 +8221,59 @@ def test_硬地的地要读四声():
             "——字幕时间轴按字位映射，长度一变整段就漂")
 
 
+def test_年份里的圈零要换成零否则合成器认不出这是年份():
+    """账号所有者 2026-08-27：「tts 里 2002 年读音错误」。
+
+    旁白按仓库惯例写「二〇〇二年」（`〇` 是 U+3007）。量出来问题不在写法对不对，
+    在**合成器认不认得它是个年份**——同一把嗓子同一语速，只换这一个字，切词
+    完全变了（edge-tts 的 WordBoundary，实测）：
+
+        二〇〇二年   二｜〇｜〇｜二年   ← 「二年」被黏成一个词    二零零二年   整体
+        二〇二四     二｜〇｜二｜四    ← 四个孤立字             二零二四     整体
+        一九九九年   一九九九年（本来就整体）——**它没有 〇**
+
+    末行是反证：唯一不带 `〇` 的年份本来就被整体识别，所以是 `〇` 把年份打散的。
+    而 **2002 是唯一一个把「二年」黏成一个词的**，那正是「两年」那个量词短语的
+    形状——账号所有者点的正是这一年。
+
+    判据钉三头，缺一头都是恒真：
+    ① 交给合成器的那份不许再有 `〇`；② **屏幕上那份不许动**；
+    ③ **字数必须一样**——和「硬地→硬帝」同一个前提，字幕时间轴按字位从合成那份
+    映射回显示那份，长度一变整段就漂。
+
+    ⚠️ 非年份的 `〇` 一并换掉是安全的：这个仓库里 `〇` 只当数字零用（年份、赛季、
+    比分），而 `六比〇`→`六比零` 实测字节数一模一样，没有回归。
+    """
+    from tennislive.video.explainer import readable, speakable  # noqa: PLC0415
+
+    for line in ("他二〇〇二年转的职业。", "整个二〇二二赛季报销。",
+                 "一九八九、二〇二四。", "六比二、六比〇，七十一分钟。"):
+        said, shown = speakable(line), readable(line)
+        assert "〇" not in said, (
+            f"{line!r} 交给合成器的还带着 〇，年份会被打散成孤立字")
+        assert said.count("零") == shown.count("〇") + shown.count("零"), (
+            f"{line!r} 换得不干净")
+        assert "〇" in shown, f"{line!r} 屏幕上那一份被改掉了，只能改配音那份"
+        assert len(said) == len(shown), (
+            f"{line!r} 两份字数不一样（{len(said)} vs {len(shown)}）"
+            "——字幕时间轴按字位映射，长度一变整段就漂")
+
+    # 判据自己的判据：这条规矩要真的盖住存量，不是只对我编的例句成立
+    import json  # noqa: PLC0415
+    from pathlib import Path  # noqa: PLC0415
+
+    seen = 0
+    for f in sorted(Path("specs/reels").glob("*.json")):
+        spec = json.loads(f.read_text(encoding="utf-8"))
+        for seg in spec.get("segments", []):
+            text = seg.get("narration") or ""
+            if "〇" in text:
+                seen += 1
+                assert "〇" not in speakable(text), f"{f.name} 没换干净"
+    # 存量里 reel 这条线用 〇 的段落不多，但一条都不许漏；真降到 0 说明主语没了
+    assert seen >= 1, "没有一条 spec 的旁白带 〇 了——这条判据的主语没了，该换判据"
+
+
 def test_封面那一路的溶解底料不许在委托链上掉队():
     """`build_cover` 有**两个** return，两个都委托给 `build_versus_poster`：
     上面那个是 solo（网球有故事），下面那个是 VS（赛场之上／开球之前）。
