@@ -564,8 +564,10 @@ def test_配音把比分读成几比几而不是几杠几():
     """
     from tennislive.video.explainer import speakable
 
-    assert speakable("辛纳 6-3、6-2、5-1 领先") == "辛纳 6 比 3、6 比 2、5 比 1 领先"
-    assert speakable("70-68 拿下第五盘") == "70 比 68 拿下第五盘"
+    # 「比」两边不加空格：TTS 读起来一样，屏幕上「7 比 5」松松垮垮全是机器味
+    # （medvedev-damm 那条已发成片的比分板字幕就是这么印的）。
+    assert speakable("辛纳 6-3、6-2、5-1 领先") == "辛纳 6比3、6比2、5比1 领先"
+    assert speakable("70-68 拿下第五盘") == "70比68 拿下第五盘"
     assert speakable("2016-2026 共十届，2020 年停办") == "2016-2026 共十届，2020 年停办"
 
     # No deck may reach the voice with a bare score hyphen still in it.
@@ -1506,11 +1508,79 @@ def test_字幕补上耳朵那一份():
     assert lines, "一句话都没切出来"
     for _, _, shown in lines:
         assert len(shown) <= E._SUB_MAX, f"这行顶到边了：{shown}"
-    # 比分要和耳朵对上：屏幕上是 6-4，念出来和字幕里都是「6 比 4」。
-    assert any("6 比 4" in shown for _, _, shown in lines), lines
+    # 比分要和耳朵对上：屏幕上是 6-4，念出来和字幕里都是「6比4」——
+    # 「比」两边不加空格，没有人把比分写成「6 比 4」。
+    assert any("6比4" in shown for _, _, shown in lines), lines
     # 相邻两行在原文里首尾相接——中间掉字的话，时间轴也会跟着错位。
     for (_, end, _), (start, _, _) in zip(lines, lines[1:]):
         assert start == end
+
+
+def test_顿号连的并列项和半截短句都并进一行():
+    """zheng-burel 那条切出「郑钦文6比1｜7比5击败布雷尔｜闯进决胜轮」三连闪屏，
+    「2018年，」独占 0.9 秒一屏——机器味全在这类碎行上。
+
+    两条合并规矩：顿号连的是**并列项**，装得下就整组一行（步骤 3a）；
+    句内 ≤6 字的半截话并进邻行（3b，`_SUB_MERGE_SHORT`——原来的门槛是
+    「短到读不到」的 <5，「2018年」这种 5 字半句够不着）。跨句合并照旧
+    只认 ≤2 的地板（「字幕也要保持断句的完整性，不要多也不要少」）。
+    """
+    from tennislive.video import explainer as E
+
+    def shown(text):
+        return [s for _, _, s in E.subtitle_lines(E.readable(text))]
+
+    # 顿号并列成组；逗号后那句和整组装不下一行，各自成行
+    assert shown("郑钦文6-1、7-5击败布雷尔，闯进决胜轮。") == [
+        "郑钦文6比1 7比5击败布雷尔", "闯进决胜轮"]
+    # 两边都不短（各 7 字）**只有**顿号并列这条规矩会合——短句合并够不着它
+    assert shown("上半区斯瓦泰克、下半区萨巴伦卡。") == [
+        "上半区斯瓦泰克 下半区萨巴伦卡"]
+    # 5 个字的「2018年」不再独占一屏
+    assert shown("2018年，她登顶青少年世界第一。") == [
+        "2018年 她登顶青少年世界第1"]
+    # 比分并列成组 + 比分不空格（medvedev-damm 那条的两个毛病一起钉住）
+    assert shown("达姆7-5、6-3爆冷，总分67比56。") == [
+        "达姆7比5 6比3爆冷", "总分67比56"]
+    # 跨句（句号那一档）照旧不合并——两句不同的话不许挤在同一屏
+    assert shown("先看一眼签表。这是澳网女单签表的一角。") == [
+        "先看一眼签表", "这是澳网女单签表的一角"]
+
+
+def test_超宽子句报出来让人在标点处断开():
+    """两个标点之间宽过一行字幕（16 格）的子句只能从词语边界硬切——切得再好
+    也比在标点处断开差一截。`overwide_clauses` 把它们报出来（dry-run 的软提醒，
+    只报不拦：硬切是兜底不是错误，做成硬闸会把一批已发的好 spec 挡住）。"""
+    from pathlib import Path
+
+    from tennislive.video import explainer as E
+
+    long_clause = "格里克斯普尔一口气要到三个破发点之后又亲手全部还了回去"
+    assert E.overwide_clauses(f"开局那一局，{long_clause}。") == [f"{long_clause}。"]
+    assert E.overwide_clauses("郑钦文6-1、7-5击败布雷尔，闯进决胜轮。") == []
+    # 接线：dry-run 真的调它（写出来没人用是这个仓库的常客）
+    body = Path("tools/build_match_reel.py").read_text("utf-8")
+    assert "overwide_clauses(readable(" in body
+
+
+def test_断行不许把人名孤成一行():
+    """「正赛首轮两盘击败当届温网冠军｜莱巴金娜」——四个字的人名孤成一行只停
+    一秒（zheng-burel 已发成片）。「军」在 `_SUB_AFTER` 里，边界分压过了一切。
+
+    修法两半：量词边界（数目字＋盘/局/轮才算，「三个盘点」的「盘」前面是
+    「个」，不算——无条件加分会把「盘点」劈开）＋ 孤行罚分（罚不满一个边界档：
+    别的边界赢过它，只剩它时孤行仍好过把词劈开）。
+    """
+    from tennislive.video import explainer as E
+
+    def shown(text):
+        return [s for _, _, s in E.subtitle_lines(E.readable(text))]
+
+    assert shown("正赛首轮两盘击败当届温网冠军莱巴金娜") == [
+        "正赛首轮两盘", "击败当届温网冠军莱巴金娜"]
+    # 「三个盘点」不许从「盘」后断开
+    for line in shown("决胜盘他浪费了三个盘点之后被连破两局"):
+        assert not line.endswith("个盘"), line
 
 
 def test_没有词边界也要有字幕(tmp_path):

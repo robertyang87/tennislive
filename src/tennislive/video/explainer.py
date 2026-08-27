@@ -8737,7 +8737,7 @@ def speakable(text: str) -> str:
 
     Written as "5-1", edge-tts reads the hyphen out loud — "五杠一" — which
     is wrong for every tennis score we have ever narrated. Scores are spoken
-    "5 比 1", so convert them before synthesis rather than spelling them out
+    "5比1", so convert them before synthesis rather than spelling them out
     by hand in each deck: the slides keep the compact "6-2 5-7 6-3" that
     reads well on screen, and only the audio changes.
 
@@ -8936,11 +8936,16 @@ def word_split_report(
 def readable(text: str) -> str:
     """旁白照着念出来的样子——给字幕用，不给 TTS 用。
 
-    字幕要和耳朵里听到的对上，所以比分同样写成「6 比 4」。但 `speakable` 里那处
+    字幕要和耳朵里听到的对上，所以比分同样写成「6比4」。但 `speakable` 里那处
     挑→选是**给合成器纠音**的，屏幕上必须还是「挑球」。两者只差这一个字，
     字数一样，所以按字位算出来的时间轴对两边都成立。
+
+    ⚠️ 「比」两边**不加空格**。原来写成「6 比 4」，烧上屏就是
+    `7{\\fs68} 比 {\\fs78}5` 这种松松垮垮的一串——没有人把比分写成「7 比 5」，
+    一眼就是机器味（medvedev-damm 那条已发成片就是这么印的）。TTS 读
+    「7比5」和「7 比 5」一个样，空格只影响画面。
     """
-    return re.sub(r"(?<!\d)(\d{1,3})\s*[-–—−]\s*(\d{1,3})(?!\d)", r"\1 比 \2", text)
+    return re.sub(r"(?<!\d)(\d{1,3})\s*[-–—−]\s*(\d{1,3})(?!\d)", r"\1比\2", text)
 
 
 # 一行字幕最多多宽。这个数是从**左右要空出多少**倒推的，不是拍出来的：
@@ -8959,6 +8964,9 @@ _SUB_TRIM = SUB_TRIM
 _SUB_DROP = SUB_DROP
 # 比这还短的一行会一闪而过（时间轴给的最短是 0.4 秒），并到邻行去。
 _SUB_MIN = 5
+# 句内合并的门槛比它再宽一格：一边不超过 6 个字就并（「2018年，她登顶…」）。
+# _SUB_MIN 管「短到读不到」，这个管「短到读起来是半截话」；跨句合并不吃这一档。
+_SUB_MERGE_SHORT = 6
 
 
 _DIGIT = {"〇": "0", "零": "0", "一": "1", "二": "2", "三": "3", "四": "4",
@@ -9129,6 +9137,12 @@ def _sub_width(text: str) -> float:
 # 和、与不在里面：一行以连词收尾，等于把话吊在半空。
 _SUB_AFTER = "的了着过们是在有到后前上下里外位家员者岁军"
 _SUB_BEFORE = "但而又也都就还所因然现那这其第把被让给从对向为以并却更最"
+# 量词只在跟着数目字时才算边界（「两盘｜击败…」「首轮｜…」「第三局｜…」）。
+# ⚠️ **不能直接进 _SUB_AFTER**：无条件加分会把「三个盘点」从「盘」后劈开
+# （「…三个盘｜点之后…」），比它要修的毛病更糟。数目字这一个前提就把
+# 「盘点」「局点」「轮到」全挡在外面——那几个词的「盘/局/轮」前面从来不是数。
+_SUB_AFTER_MEASURE = "盘局轮"
+_SUB_MEASURE_NUMERAL = "0123456789〇零一二三四五六七八九十两首次第"
 # 有边界可断时，允许把行切得短一些（6 格）；纯属数字数切的，还是要够满。
 _SUB_MIN_AT_BOUNDARY = 6
 
@@ -9141,7 +9155,11 @@ def _break_bonus(text: str, i: int) -> int:
     if before.isalnum() and ord(before) < 0x2E80 \
             and after.isalnum() and ord(after) < 0x2E80:
         return -1  # 西文／数字串中间不能断，「ATP」不该变成「AT／P」
-    return int(before in _SUB_AFTER) + int(after in _SUB_BEFORE)
+    bonus = int(before in _SUB_AFTER) + int(after in _SUB_BEFORE)
+    if (before in _SUB_AFTER_MEASURE and i >= 2
+            and text[i - 2] in _SUB_MEASURE_NUMERAL):
+        bonus += 1
+    return bonus
 
 
 def _sub_display(chunk: str) -> str:
@@ -9167,6 +9185,13 @@ def _best_break(text: str) -> int:
     先看有没有像词语边界的地方（哪怕切出来的上一行短一点），没有才退回
     「装满为止」。反过来做过一版——先装满、边界只加一点分——切出来的是
     「代表亚洲国家的男子球员唯一一次打进大／满贯单打决赛」。
+
+    ⚠️ **断完剩不到 _SUB_MIN 个字的候选要罚一档**：那半截会独占一屏一闪而过。
+    zheng-burel 那条就是这么切出「正赛首轮两盘击败当届温网冠军｜莱巴金娜」的
+    ——「军」在 _SUB_AFTER 里，边界分压过了一切，四个字的人名孤成一行只停
+    1 秒。罚 95 分＝**降不满一个边界档**：别的词语边界（这条里是「两盘｜」）
+    能赢过它，而它仍然赢过硬切——只剩它一个边界时，孤行好过把词劈开
+    （「…温网冠｜军莱巴金娜」比孤行的人名更糟）。
     """
     best, best_score = 0, -1e9
     for i in range(1, len(text)):
@@ -9179,24 +9204,19 @@ def _best_break(text: str) -> int:
         if width < _SUB_MIN_AT_BOUNDARY:
             continue
         score = bonus * 100 + i
+        if _sub_len(text[i:]) < _SUB_MIN:
+            score -= 95
         if score > best_score:
             best, best_score = i, score
     return best or min(len(text) - 1, _SUB_MAX)
 
 
-def subtitle_lines(text: str) -> list[tuple[int, int, str]]:
-    """把一段旁白切成一行行字幕，并记下每行在原文里的起止字位。
+def _clause_spans(text: str) -> list[tuple[int, int]]:
+    """按标点切子句，标点跟在自己那一句后面。
 
-    先按标点切成子句，再把子句拼成不超宽的行——**断点优先落在标点上**。
-    早先的版本是数满 18 个字就一刀切下去，切出来的是「代表亚洲国家打／进大满贯」
-    「赢得 ATP 单／打冠军」：字数是对的，词被劈成了两半，读起来磕一下。
-
-    字位要留着：时间轴是按「念到第几个字」算出来的，切完就丢掉位置的话，
-    只能按行数平均分时间，长句短句都占一样久，字幕就会和声音脱开。
+    破折号占两个字，整体留在上一行——「他自己形／容是勉强撑着」就是从这儿
+    来的：把「——」当成普通字符跳过，这一句里就一个可断的地方都没有了。
     """
-    # 1) 按标点切子句，标点跟在自己那一句后面。破折号占两个字，整体留在上一行——
-    #    「他自己形／容是勉强撑着」就是从这儿来的：把「——」当成普通字符跳过，
-    #    这一句里就一个可断的地方都没有了。
     clauses: list[tuple[int, int]] = []
     start = i = 0
     while i < len(text):
@@ -9211,6 +9231,37 @@ def subtitle_lines(text: str) -> list[tuple[int, int, str]]:
         i += 1
     if start < len(text):
         clauses.append((start, len(text)))
+    return clauses
+
+
+def overwide_clauses(text: str) -> list[str]:
+    """两个标点之间宽过一行字幕（_SUB_MAX 格）的子句——写稿时的软提醒。
+
+    这类子句装不进一行，只能靠 `_best_break` 从词语边界硬切；边界找得再好也
+    比在标点处断开差一截。dry-run 拿它提醒写旁白的人（和给模型写旁白的
+    prompt 同一个口径：两个标点之间 ≤16 字），**只报不拦**——硬切是兜底，
+    不是错误，做成硬闸会把一批已发的好 spec 挡在门外。
+    """
+    return [
+        text[a:b]
+        for a, b in _clause_spans(text)
+        if _sub_width(_sub_display(text[a:b])) > _SUB_MAX
+    ]
+
+
+def subtitle_lines(text: str) -> list[tuple[int, int, str]]:
+    """把一段旁白切成一行行字幕，并记下每行在原文里的起止字位。
+
+    先按标点切成子句，再把子句拼成不超宽的行——**断点优先落在标点上**。
+    早先的版本是数满 18 个字就一刀切下去，切出来的是「代表亚洲国家打／进大满贯」
+    「赢得 ATP 单／打冠军」：字数是对的，词被劈成了两半，读起来磕一下。
+
+    字位要留着：时间轴是按「念到第几个字」算出来的，切完就丢掉位置的话，
+    只能按行数平均分时间，长句短句都占一样久，字幕就会和声音脱开。
+    """
+    # 1) 按标点切子句（见 _clause_spans——它还有第二个消费者 overwide_clauses，
+    #    写两处必分叉）。
+    clauses = _clause_spans(text)
 
     # 2) 超宽的子句自己再断，断在像词语边界的地方。
     #    宽度要按**真正画出来的那份**算，也就是换成阿拉伯数字、去掉标点之后的。
@@ -9256,26 +9307,37 @@ def subtitle_lines(text: str) -> list[tuple[int, int, str]]:
     # 它正是账号所有者指出的那种「多了」：读者会看到半句话。
     _MERGE_ACROSS_SENTENCE_MAX = 2
 
+    # 3a) 顿号连的是**并列项**（「6比1、7比5」「周三、周四」），拆成两行等于把
+    #     一组东西砍成两半——zheng-burel 那条就是「郑钦文6比1｜7比5击败布雷尔」
+    #     各闪一屏。装得下就先拼回去，**先于**下面按长短的合并跑：让并列项
+    #     自己成组，别被一个恰好更短的邻句抢走。（被 _best_break 再切过的片段
+    #     末尾不是顿号，自然不进这一支。）
+    merged: list[tuple[int, int]] = []
+    for a, b in pieces:
+        if (merged and text[merged[-1][1] - 1] == "、"
+                and shown_width(merged[-1][0], b) <= _SUB_MAX):
+            merged[-1] = (merged[-1][0], b)
+        else:
+            merged.append((a, b))
+    pieces = merged
+
+    # 3b) 句内的短句并进邻行。门槛 _SUB_MERGE_SHORT=6：原来只并「短到会一闪
+    #     而过」的（< _SUB_MIN=5），于是「2018年，」这种 5 个字的半句仍然独占
+    #     0.9 秒一屏——它不是读不到，是**读起来是半截话**。6 以下都值得并；
+    #     跨句合并照旧只认 ≤2 的地板（账号所有者：「字幕也要保持断句的完整性，
+    #     不要多也不要少」）。
     lines: list[tuple[int, int]] = []
     for a, b in pieces:
-        too_short = (
-            _sub_len(text[a:b]) < _SUB_MIN                      # 这一句太短
-            or (lines and _sub_len(text[lines[-1][0]:lines[-1][1]]) < _SUB_MIN)
-        )                                                       # 上一行太短
-        if (
-            lines
-            and too_short
-            and shown_width(lines[-1][0], b) <= _SUB_MAX
-            and (
-                not _crosses_sentence(lines[-1][1], a)
-                or min(_sub_len(text[a:b]),
-                       _sub_len(text[lines[-1][0]:lines[-1][1]]))
-                <= _MERGE_ACROSS_SENTENCE_MAX
-            )
-        ):
-            lines[-1] = (lines[-1][0], b)
-        else:
-            lines.append((a, b))
+        if lines:
+            prev_a, prev_b = lines[-1]
+            short = min(_sub_len(text[a:b]), _sub_len(text[prev_a:prev_b]))
+            fits = shown_width(prev_a, b) <= _SUB_MAX
+            limit = (_MERGE_ACROSS_SENTENCE_MAX
+                     if _crosses_sentence(prev_b, a) else _SUB_MERGE_SHORT)
+            if fits and short <= limit:
+                lines[-1] = (prev_a, b)
+                continue
+        lines.append((a, b))
 
     out = []
     for a, b in lines:

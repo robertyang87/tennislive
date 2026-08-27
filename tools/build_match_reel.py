@@ -114,7 +114,9 @@ from tennislive.video.explainer import (  # noqa: E402
     _ASS_MARGIN_H,
     _ASS_MARGIN_V,
     _SUB_MAX,
+    _sub_display,
     _sub_width,
+    overwide_clauses,
     readable,
     speakable,
     all_single_char_segments,
@@ -1831,6 +1833,23 @@ def _quote_text(raw: object) -> str:
     return str(raw).strip()
 
 
+_QUOTE_CJK = re.compile(r"[㐀-鿿]")
+
+
+def _quote_display(text: str) -> str:
+    """原声字幕画出来的那一份：中文行照全站规矩去标点（只留？！），英文行原样。
+
+    「屏幕上不写标点」是全站规矩（`video/subtitle_text.py`），可 bilingual quote
+    一直把 spec 里的文本原样烧上屏——中文行带着句号（「回球越来越短。」），
+    和同一条片子里旁白字幕（从来不带）摆在一起是两种样子。英文行不动：
+    那是他真说的话，标点是语法的一部分，撇号逗号都得在——这条线发的是
+    英语学习素材（见「烧进画面的英文里不许有语气词」那节，英文按行单独管）。
+    """
+    shown = [drop_punctuation(line) if _QUOTE_CJK.search(line) else line.strip()
+             for line in text.split("\n")]
+    return "\n".join(line for line in shown if line) or text
+
+
 def explicit_quote_cues(lines: tuple, span: float,
                         offset: float) -> list[tuple[float, float, str]]:
     """按条声明的原声字幕。两种写法，可以混着用：
@@ -1882,14 +1901,14 @@ def explicit_quote_cues(lines: tuple, span: float,
                 raise ReelError(
                     f"quote 字幕会和下一条重叠：end={end-offset:.2f}s, "
                     f"next={next_start-offset:.2f}s")
-            out.append((start, end, readable(str(item["text"]))))
+            out.append((start, end, _quote_display(readable(str(item["text"])))))
         return out
     weights = [max(1, len(str(t).replace("\n", ""))) for t in lines]
     total = sum(weights)
     at = offset
     for text, weight in zip(lines, weights):
         dur = span * weight / total
-        out.append((at, at + dur, readable(str(text))))
+        out.append((at, at + dur, _quote_display(readable(str(text)))))
         at += dur
     return out
 
@@ -6947,6 +6966,21 @@ def main() -> int:
         density_hint = narration_density_hint(segments)
         if density_hint:
             print(f"\n{density_hint}")
+        # **子句超过一行字幕的宽度，只报不拦。** 这类子句装不进 16 格的一行，
+        # 只能靠 `_best_break` 从词语边界硬切——切得再好也比在标点处断开差一截，
+        # 而「哪儿停、停多久」百分之百由标点决定（标点是配音的节拍谱）。
+        # 不做硬闸：硬切是兜底不是错误，存量里合格的长句会被一条常年红挡住。
+        wide_report = [
+            f"  第 {i + 1} 段「{clause}」"
+            f"（{_sub_width(_sub_display(clause)):.0f} 格）"
+            for i, seg in enumerate(segments)
+            if seg.narration.strip() and not seg.quote
+            for clause in overwide_clauses(readable(seg.narration))
+        ]
+        if wide_report:
+            print(f"\n[断句] {len(wide_report)} 个子句宽过一行字幕"
+                  f"（{_SUB_MAX} 格），会从词语边界硬切——最好加个逗号断开：")
+            print("\n".join(wide_report))
         # **这条命令查的是数，查不了画面。** 「这一段配的话和画面搭不搭」
         # 「近端是谁」——只有眼睛判得了，而判它要的东西（缩略图墙）**也已经
         # 提交进仓库了**。不在这儿指一句的话，下一个人仍然会去渲一趟四分钟的
