@@ -347,6 +347,26 @@ MUTE_FLOOR = 0.05
 # 看得出是转场而不是变慢。旁白**不参与**——它是拼接之后另混上去的，每句话自己
 # 有起止，淡它等于把开头几个字吞掉。
 SEG_FADE = 0.18
+
+
+def source_tail(speed: float = 1.0) -> float:
+    """这一段为了溶解底料，要**在源片上**多消耗几秒。
+
+    ⚠️ **它不等于 `SEG_FADE`，除非这一段不变速。** `cut_segment` 的 `-t` 给的是
+    **输出**时长（`seg.length + tail`），而 `setpts=PTS/speed` 排在它前面——
+    所以真实的源片消耗是 `(seg.length + tail) × speed`，也就是
+    `(end - start) + SEG_FADE × speed`。
+
+    这个差在两个方向上不对称，而这正是快放当年被挡在门外的原因：
+
+        慢放 speed<1  源片侧的尾巴**比 SEG_FADE 短** → 按 SEG_FADE 判只会偏保守
+        快放 speed>1  源片侧的尾巴**比 SEG_FADE 长** → 按 SEG_FADE 判会**漏报**
+
+    漏报的样子是「dry-run 说没事，成片的接缝里多叠进一个镜头」——又是那种
+    本地绿、产物坏的形状。所以两处检查（`segments_over_source_end` 的越界闸、
+    `segments_straddling_cuts` 的 ghost 检查）一律走这个函数，别各写各的。
+    """
+    return SEG_FADE * speed
 # 字卡/角标的入场动效：淡入时长（秒）和上浮距离（px）。见 _overlay_chain。
 INSET_IN_SECS = 0.45
 INSET_RISE_PX = 36
@@ -1761,13 +1781,25 @@ def _seg_mute(s: dict, index: int) -> bool:
                     f"不是 {raw!r}——字符串在这儿两种读法都说得通，所以一律报错")
 
 
-def _seg_speed(s: dict, index: int) -> float:
-    """`speed` 只认慢放（0.4 ≤ speed < 1），默认 1。
+#: 变速的两头。慢放到 0.4（再慢就成了逐帧回放，网球的连续动作会散架）；
+#: 快放到 2.5（再快人眼跟不上球，而这条线的画面主体是人和球）。
+#: ⚠️ 这两个数是**编辑上界**，不是技术上界——`atempo` 认 [0.5, 100]，
+#: `setpts` 什么都认。放宽之前先渲一版看，别只改常数。
+SPEED_MIN = 0.4
+SPEED_MAX = 2.5
 
-    为什么不放开快放：溶解底料和 ghost 检查按「段尾之后 `SEG_FADE` 秒」的
-    **源片**窗口算账，慢放时真实的源片消耗是 `SEG_FADE×speed`，比账面小，
-    检查只会偏保守；**快放时真实消耗比账面大**，`--dry-run` 的 ghost 检查会
-    漏报「溶解底料跨切点」。要开快放，先把那两笔账改成按速度算，别只删这道闸。
+
+def _seg_speed(s: dict, index: int) -> float:
+    """`speed`：慢放 0.4~1，快放 1~2.5，默认 1。
+
+    ⚠️ **快放 2026-08-27 才放开**，在那之前只认慢放。挡着它的不是滤镜，是账：
+    溶解底料和 ghost 检查原来按「段尾之后 `SEG_FADE` 秒」的**源片**窗口算，
+    而真实的源片消耗是 `SEG_FADE×speed`——慢放时比账面小（检查偏保守，无害），
+    **快放时比账面大，于是 ghost 检查会漏报「溶解底料跨切点」**。
+    现在两处都走 `source_tail(speed)`，这笔账按速度算，快放才敢开。
+
+    来路：账号所有者 2026-08-27「还有快慢播放的结合」——慢放此前已经落地，
+    快放这一半一直欠着。
     """
     raw = s.get("speed")
     if raw is None:
@@ -1778,11 +1810,13 @@ def _seg_speed(s: dict, index: int) -> float:
         raise ReelError(f"第 {index + 1} 段的 speed 不是数字：{raw!r}") from None
     if v == 1.0:
         return 1.0
-    if not 0.4 <= v < 1.0:
+    if not SPEED_MIN <= v <= SPEED_MAX:
         raise ReelError(
-            f"第 {index + 1} 段 speed={v:g}：只认 0.4 ≤ speed < 1（慢放）。\n"
-            "  快放的账还没算（ghost 检查按 SEG_FADE 源片秒算消耗，快放会被"
-            "低估、漏报跨切点）；不变速就删掉这个键。")
+            f"第 {index + 1} 段 speed={v:g}：只认 "
+            f"{SPEED_MIN:g} ≤ speed ≤ {SPEED_MAX:g}"
+            f"（<1 慢放，>1 快放）。\n"
+            "  两头是**编辑上界**不是技术上界：再慢连续动作会散架，"
+            "再快人眼跟不上球。不变速就删掉这个键。")
     return v
 
 
@@ -2337,14 +2371,17 @@ def segments_straddling_cuts(
                 "cuts": inside, "narration": label,
             })
         elif index != last:
+            # ⚠️ **尾巴的长度按这一段的速度算**，见 `source_tail()`：快放时
+            # 源片侧的消耗比 `SEG_FADE` 长，按常数判会漏报。
+            tail = source_tail(_seg_speed(seg, index))
             ghost = [c for c in by_url[url]
-                     if seg["end"] <= c < seg["end"] + SEG_FADE]
+                     if seg["end"] <= c < seg["end"] + tail]
             if ghost:
                 tail_cuts.append({
                     "index": index, "source": name, "end": seg["end"],
                     "cuts": ghost,
                     # 切点落在溶解的哪个位置：越靠后，叠进来的那一层越淡
-                    "opacity": max(0.0, 1 - (min(ghost) - seg["end"]) / SEG_FADE),
+                    "opacity": max(0.0, 1 - (min(ghost) - seg["end"]) / tail),
                 })
     return straddling, unchecked, tail_cuts
 
@@ -5510,7 +5547,7 @@ def segments_over_source_end(segments: list[Segment],
         if seg.image:
             continue                      # 整屏证据段不消耗源片
         limit = durations.get(seg.source)
-        need = seg.end + SEG_FADE
+        need = seg.end + source_tail(seg.speed)
         if limit is None or need <= limit + 0.05:
             continue
         over.append(f"  第 {index + 1} 段：{seg.start:.1f}–{seg.end:.1f}s"

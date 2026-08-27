@@ -11,7 +11,10 @@
   溶解长度账全走它，一个口径
 - 现场声跟着 atempo 放慢（保音高）。**裸 map 的原声不会报错，只会画面慢了
   声音没慢**——只有按时间片量响度才看得出来，所以判据必须真渲一段
-- 只认慢放（0.4 ≤ speed < 1）：快放的 ghost 检查账没算，闸上拦住
+- 变速两头（0.4 ≤ speed ≤ 2.5）：**快放 2026-08-27 才放开**，在那之前挡着它的
+  不是滤镜是账——溶解底料的**源片**消耗是 `SEG_FADE×speed`，慢放时比 `SEG_FADE`
+  短（检查偏保守，无害），快放时比它长（ghost 检查会漏报跨切点）。现在两处
+  检查都走 `source_tail(speed)`，快放才敢开
 """
 
 from __future__ import annotations
@@ -28,12 +31,18 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 import check_reel_landed  # noqa: E402
 from build_match_reel import (  # noqa: E402
     FPS,
+    SEG_FADE,
+    SPEED_MAX,
+    SPEED_MIN,
     ReelError,
     Segment,
     cut_segment,
     parse_segments,
     sample_track,
     seg_seconds,
+    segments_over_source_end,
+    segments_straddling_cuts,
+    source_tail,
 )
 
 
@@ -53,19 +62,68 @@ def test_length是成片时长而且三处口径一致():
     assert check_reel_landed.spec_segments_seconds(spec) == pytest.approx(total)
 
 
-def test_速度闸只认慢放():
+def test_速度闸慢放快放都认两头都拦():
     def parse_one(**extra):
         spec = {"segments": [{"start": 0.0, "end": 2.0, **extra}]}
         return parse_segments(spec, {"": Path("x.mp4")}, "")
 
     assert parse_one()[0].speed == 1.0
     assert parse_one(speed=0.5)[0].speed == 0.5
-    with pytest.raises(ReelError, match="快放"):
-        parse_one(speed=1.5)
+    # **快放 2026-08-27 放开**（账号所有者「还有快慢播放的结合」）。
+    assert parse_one(speed=1.5)[0].speed == 1.5
+    assert parse_one(speed=SPEED_MAX)[0].speed == SPEED_MAX
+    assert parse_one(speed=SPEED_MIN)[0].speed == SPEED_MIN
+    # 两头照旧要拦——放开不等于没有闸。
+    with pytest.raises(ReelError, match="2.5"):
+        parse_one(speed=SPEED_MAX + 0.1)
     with pytest.raises(ReelError, match="0.4"):
-        parse_one(speed=0.3)
+        parse_one(speed=SPEED_MIN - 0.1)
     with pytest.raises(ReelError, match="不是数字"):
         parse_one(speed="一半")
+
+
+def test_源片侧的溶解底料就是SEG_FADE乘速度():
+    """`source_tail()` 的单元账。行为那两条在下一个测试里，分开是**故意的**：
+    合在一起时这三行会先红，把行为断言挡住。"""
+    assert source_tail(1.0) == SEG_FADE
+    assert source_tail(0.5) == pytest.approx(SEG_FADE * 0.5)
+    assert source_tail(2.0) == pytest.approx(SEG_FADE * 2.0)
+
+
+def test_溶解底料的源片消耗要按速度算否则快放会漏报():
+    """这是**放开快放的前提**，不是附带的一条。
+
+    `cut_segment` 的 `-t` 给的是**输出**时长（`length + tail`），而
+    `setpts=PTS/speed` 排在它前面——所以真实的源片消耗是
+    `(end-start) + SEG_FADE×speed`。两处检查（越界闸、ghost 检查）原来按
+    常数 `SEG_FADE` 算：慢放时偏保守（无害），**快放时偏小，于是漏报**。
+
+    两个方向都钉：快放要报出来，慢放不许被误伤。
+    """
+    # ⚠️ `source_tail()` 本身的单元断言**故意不放在这条里**——放前面的话它会先红，
+    # 把底下两条行为断言挡住，我就证明不了「行为那两条真的咬得住」。
+    # 见 `test_源片侧的溶解底料就是SEG_FADE乘速度`。
+
+    # ── ① 越界闸：源片刚好够 1 倍速，快放就不够了 ──────────────────
+    dur = {"": 10.0 + SEG_FADE}          # 正好够 1 倍速那一段的底料
+    plain = Segment(6.0, 10.0, 0.5, "")
+    fast = Segment(6.0, 10.0, 0.5, "", speed=2.0)
+    assert not segments_over_source_end([plain], dur), "1 倍速正好够，不许误报"
+    assert segments_over_source_end([fast], dur), (
+        "2 倍速要多消耗一倍底料，源片不够了却没报——"
+        "这正是快放当年被挡在门外的那笔账")
+
+    # ── ② ghost 检查：切点落在 1 倍速尾巴之外、2 倍速尾巴之内 ──────
+    cut_at = 10.0 + SEG_FADE * 1.5       # 1 倍速够不着，2 倍速够得着
+    probes = [{"url": "u", "scene_cuts": [cut_at]}]
+    def straddle(speed):
+        spec = {"sources": {"s": "u"},
+                "segments": [{"start": 6.0, "end": 10.0, "source": "s",
+                              **({"speed": speed} if speed != 1 else {})},
+                             {"start": 20.0, "end": 24.0, "source": "s"}]}
+        return segments_straddling_cuts(spec, probes)[2]
+    assert not straddle(1.0), "1 倍速的尾巴够不到这个切点，不许误报"
+    assert straddle(2.0), "2 倍速的尾巴盖住了这个切点，必须报出来"
 
 
 def test_跟踪采样按源片窗口不按成片时长():
