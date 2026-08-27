@@ -28,6 +28,9 @@ jobs:
             assets
             data
             specs
+            # analyze_reel_visuals / promote 的重起草在调用时要读生产 skill
+            # 拼 prompt；漏了它，失败要等第一条真 pending 草稿才炸（2026-08-27）
+            skills
             src
             tools
 

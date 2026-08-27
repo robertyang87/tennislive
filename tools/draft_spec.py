@@ -23,6 +23,7 @@ point_ends 提死球），不靠 DeepSeek：它是纯文本模型，没有视觉
 from __future__ import annotations
 
 import argparse
+import functools
 import json
 import re
 import sys
@@ -47,7 +48,7 @@ SCHEMA = {
     "additionalProperties": False,
 }
 
-SYSTEM = """你是网球短视频账号「网球时差」的编辑，给「赛场之上」栏目起草文案。
+_SYSTEM_RULES = """你是网球短视频账号「网球时差」的编辑，给「赛场之上」栏目起草文案。
 
 账号的硬规矩（照做，别发挥）：
 
@@ -88,7 +89,20 @@ SYSTEM = """你是网球短视频账号「网球时差」的编辑，给「赛�
 
 只输出一个 json 对象，字段：hook（2 行，每行 ≤10 字符）、question、thesis、
 beats（3 段）、human_context（场外切口：金句/纪录/复仇/告别，一段话）、
-narration（每段一句，对应 beats）。""" + model_instructions("deepseek")
+narration（每段一句，对应 beats）。"""
+
+
+@functools.lru_cache(maxsize=None)
+def system_prompt() -> str:
+    """SYSTEM prompt 拼上生产 skill——**拖到第一次要用才读盘**。
+
+    2026-08-27 reel-auto-ready 栽的：它的稀疏检出没有 `skills/`，而这份 prompt
+    原来在 **import 那一刻**就去读 SKILL.md——`refresh_reel_cover` 只想借
+    `assemble_spec` 里两个和模型无关的小函数，整条 import 链就炸在教材缺席上，
+    第一条真实的 pending 草稿因此一次都没被重试过。**import 一个工具不许要求
+    磁盘上有教材**；真要起草时教材缺席，这儿仍然当场响。
+    """
+    return _SYSTEM_RULES + model_instructions("deepseek")
 
 
 def _spoken_integer(value: int) -> str:
@@ -188,7 +202,7 @@ def draft_editorial(chat: Chat, *, home: str, away: str, event: str, year: int,
         f"球员信息背景（排名/年龄/国籍/H2H/纪录/金句，有就用，别编）：\n"
         f"{background or '（没有）'}\n"
     )
-    draft = chat.ask(SYSTEM, user, schema=SCHEMA, max_tokens=2000)
+    draft = chat.ask(system_prompt(), user, schema=SCHEMA, max_tokens=2000)
     return normalize_editorial_for_speech(draft) if isinstance(draft, dict) else draft
 
 
@@ -201,12 +215,18 @@ _PUSH_SCHEMA = {
     "required": ["summary", "lead"],
 }
 
-_PUSH_SYSTEM = """你是网球短视频账号「网球时差」的推送编辑，给一条「赛场之上」片子写推送。
+_PUSH_RULES = """你是网球短视频账号「网球时差」的推送编辑，给一条「赛场之上」片子写推送。
 
 - `summary`：推送标题，**≤20 字位**（全角 1 字、半角 0.5），一句话把「谁赢了、多硬」
   说清，像「兹维列夫两盘抢七险胜」。别写排名身份（海报已经印着）。
 - `lead`：正文第一段，2-4 句，说清这场球的具体过程 + 一个数字反差，别空话。
-- 只写给到的素材里有的事实，别编比分、别编球员说的话。""" + model_instructions("deepseek")
+- 只写给到的素材里有的事实，别编比分、别编球员说的话。"""
+
+
+@functools.lru_cache(maxsize=None)
+def push_system_prompt() -> str:
+    """和 `system_prompt` 同一条理由：教材拖到要用才读盘。"""
+    return _PUSH_RULES + model_instructions("deepseek")
 
 
 def draft_push(chat: Chat, *, editorial: dict, facts: str = "") -> dict | None:
@@ -223,7 +243,7 @@ def draft_push(chat: Chat, *, editorial: dict, facts: str = "") -> dict | None:
         f"旁白：\n{narration}\n"
         f"狠数据：\n{facts or '（没有）'}\n"
     )
-    return chat.ask(_PUSH_SYSTEM, user, schema=_PUSH_SCHEMA, max_tokens=800)
+    return chat.ask(push_system_prompt(), user, schema=_PUSH_SCHEMA, max_tokens=800)
 
 
 def main() -> int:
