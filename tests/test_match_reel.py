@@ -8963,12 +8963,30 @@ _LEGACY_TENNISTV = {
     "baez-dimitrov", "djokovic-tirante", "eala-svitolina", "fonseca-ruud",
     "fritz-jodar-final", "gea-shapovalov", "hewitt-washington",
     "hijikata-monfils", "kovacevic-khachanov",
-    "landaluce-draper", "medvedev-zandschulp", "nakashima-jodar-montreal-sf",
+    # ⚠️ `landaluce-draper` 2026-08-27 从这张表里**减掉**了（表本来就只许减不许加）。
+    # 它的 `_source` 白纸黑字写着「ATP Tour 官方 YouTube 频道（@ATPTour，
+    # **注意不是 Tennis TV 频道**，两者都是官方源但不同频道）」——也就是说
+    # 它从来没用过 Tennis TV，当初进这张表是被裸子串匹配误伤的。
+    # `_TENNISTV_NEGATED` 一装上，表的自检当场把它点了出来。
+    "medvedev-zandschulp", "nakashima-jodar-montreal-sf",
     "shang-darderi-montreal-2026", "shang-vallejo", "shelton-fonseca",
     "shelton-nakashima-montreal-final", "shelton-tien-montreal-sf",
     "tirante-fritz", "tsitsipas-royer", "wang-samsonova", "wong-brooksby",
     "wong-gea", "wong-lehecka", "zverev-griekspoor",
 }
+
+
+#: 「**不是** Tennis TV」这一类否定说法。**先把它们剔掉再判**——
+#: `wawrinka-farewell-story` 的 `_source` 里写着「四条源片都不是 Tennis TV，
+#: 不涉及那条『片尾和台标要剪掉』的规矩」，而裸的子串匹配把这句**交代清楚**
+#: 判成了「又用了 Tennis TV」。本文件里「判据扫得太宽，被自己的注释误伤」
+#: 记过五次，这是第六次——只不过这次误伤它的不是注释，是一句否定句。
+#:
+#: ⚠️ **只剔掉被否定的那一处**：一条 spec 完全可以写「r1 不是 Tennis TV，
+#: r2 是」，剔完之后 r2 那一处照样留在文本里，闸照样咬得住。
+_TENNISTV_NEGATED = re.compile(
+    r"(?:都|全)?(?:不是|不属于|没有用|不用|不走|不涉及|非)"
+    r"[^。；\n]{0,16}?Tennis\s?TV")
 
 
 def _uses_tennistv(spec: dict) -> bool:
@@ -8977,8 +8995,13 @@ def _uses_tennistv(spec: dict) -> bool:
     ⚠️ **只看 `_source` 和 `_editing_why` 这两栏**（我们自己写的来路交代），
     不扫整份 spec——`_no_repeat` 里会点名别的片子，那些片子的名字里带 Tennis TV
     就会把这一条误判成「也用了 Tennis TV」。判据宁可窄，不可宽。
+
+    ⚠️ **否定句先剔掉**，见 `_TENNISTV_NEGATED`：把「这条不是 Tennis TV」判成
+    「这条是 Tennis TV」，会逼下一个人要么写一句他根本不需要的 `_tennistv_trim`，
+    要么干脆不写这句交代——两条路都比没有这道闸糟。
     """
     blob = " ".join(str(spec.get(k) or "") for k in ("_source", "_editing_why"))
+    blob = _TENNISTV_NEGATED.sub("", blob)
     return "Tennis TV" in blob or "TennisTV" in blob
 
 
@@ -9007,6 +9030,16 @@ def test_用TennisTV的源片要说清片尾和台标怎么剪掉():
             "——写错一个名字，豁免就成了一盏恒真的绿灯")
         assert _uses_tennistv(specs[slug]), (
             f"{slug} 已经不是 Tennis TV 的源片了，从 `_LEGACY_TENNISTV` 里删掉")
+
+    # **判据自己的判据**：否定句不许被判成「用了」，肯定句不许被漏掉。
+    # 只钉前一头的话，把 `_TENNISTV_NEGATED` 放宽成 `.*Tennis TV` 会把整条闸
+    # 变成一盏恒真的绿灯；只钉后一头，误伤那次又会回来。
+    assert not _uses_tennistv(
+        {"_source": "四条源片都不是 Tennis TV，不涉及那条片尾和台标的规矩"})
+    assert _uses_tennistv({"_source": "Tennis TV 官方频道的单场集锦"})
+    assert _uses_tennistv(
+        {"_source": "r1 不是 Tennis TV；r2 是 Tennis TV 的短集锦"}), (
+        "只被否定掉的那一处该剔掉，另一处是肯定的，闸必须还咬得住")
 
     fresh = sorted(
         slug for slug, spec in specs.items()
