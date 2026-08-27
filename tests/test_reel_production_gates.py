@@ -545,6 +545,33 @@ def test_deepseek草稿移除中文词间会让tts异常停顿的空格():
     ) == "今天他击出22记制胜分，ATP 1000首进决赛。"
 
 
+def test_deepseek草稿把连字符比分规范成汉字几比几():
+    """medvedev-damm 的旁白写着「达姆7-5、6-3爆冷」——TTS 把连字符读出声，
+    显示端还印成「7 比 5」的松散一串。prompt 要求模型直接写「七比五」，
+    这条是执法：模型没照做也在源头救回来。两侧最多两位数（局分/盘分/抢七），
+    四位年份区间不是比分。"""
+    draft = load("draft_spec")
+    assert draft.normalize_editorial_for_speech(
+        "达姆7-5、6-3爆冷，总分67比56。"
+    ) == "达姆七比五、六比三爆冷，总分67比56。"
+    assert draft.normalize_editorial_for_speech(
+        "抢七10-8拿下"
+    ) == "抢七十比八拿下"
+    assert draft.normalize_editorial_for_speech(
+        "2016-2026 共十届，2020 年停办"
+    ) == "2016-2026 共十届，2020 年停办"
+
+
+def test_deepseek旁白prompt带着断句和比分写法的规矩():
+    """断句的机器味一半靠拆行代码兜底，另一半要在源头教模型：子句 ≤16 字
+    （一行字幕的宽度）、比分写汉字、顿号只连并列项。prompt 被删了这半就
+    只剩兜底。"""
+    draft = load("draft_spec")
+    for rule in ("子句 ≤ 16 字", "比分一律写汉字", "顿号只连并列的词",
+                 "≤ 35 字"):
+        assert rule in draft.SYSTEM, rule
+
+
 def test_模型练手拒绝minimax拿窗口外画面当证据():
     bench = load("benchmark_reel_models")
     report = {
