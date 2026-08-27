@@ -38,6 +38,25 @@ A screenshot enters the film as a full-screen evidence segment, not as a corner 
 
 Crop to the block that carries the claim, and record why anything visible was cropped away. If a page contradicts the narration on a checkable fact, resolve the fact first; only then decide what appears on screen.
 
+Two things decide whether the card is usable, and both are measured before the render, not after.
+
+**Height.** The card is centred and fits inside 94% × 88% of the canvas; the subtitle is
+top-anchored. A width-limited card clears the subtitle only when `height / width ≤ 1.111`.
+A tall page therefore never fits whole — decide what to drop and record that the drop was
+forced, not preferred.
+
+**Legibility.** On-canvas glyph height is `page CSS size × 1015 ÷ layout CSS width`.
+The screenshot's pixel count appears nowhere in that expression: a sharper capture of the
+same layout renders exactly the same text size. To enlarge the text, narrow the layout so
+the page rewraps. Beware mobile emulation on a page with no `<meta name="viewport">` —
+the engine falls back to a 980 CSS px layout and scales it down, so no viewport width
+changes the layout width, and the text can never grow. Check the page for that tag; when
+it is absent, capture in desktop mode at a narrow viewport instead. Verify by resizing the
+crop to its real on-canvas scale and reading it; the full-size crop always looks fine.
+
+Nothing that changes between captures — a like count, a view count — belongs in the
+narration, for the same reason nothing cropped away does.
+
 ## Cuts
 
 Dissolve, never cut to black. Cut after the ball is dead, not mid-rally, when the source kept the whole point. Keep a segment inside one shot unless the spec says why crossing is right. Trim a broadcaster's end card and keep its bug out of the crop window.
