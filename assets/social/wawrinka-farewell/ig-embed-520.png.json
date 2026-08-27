@@ -1,0 +1,21 @@
+{
+  "url": "https://www.instagram.com/p/DcdvcjaAHLh/embed/captioned/",
+  "captured_at": "2026-08-27T11:16:38Z",
+  "page_title": "Instagram",
+  "selector": "",
+  "waited_for": "",
+  "fallback_full_viewport": true,
+  "viewport": [
+    520,
+    1400
+  ],
+  "device_scale_factor": 3,
+  "mobile": false,
+  "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+  "bytes": 1953979,
+  "sha256": "9a1d6e3b2f0cb562c71cc9a54f87b736a7336ec9050ac5c1e1687ce0db33d803",
+  "chromium": "/home/runner/.cache/ms-playwright/chromium-1234/chrome-linux64/chrome",
+  "revision": 1,
+  "why": "和上面两张是**同一个 embed 页面**，只有一处不同：**不走手机模拟**（`mobile: false`）。\n⚠️ 这不是放弃手机版，是因为手机模拟正好把这一页读坏了，量出来的：\n  这个 embed 页面**没有 `<meta name=\"viewport\">`**（拿 requests 取回 478 KB 的 HTML 全文搜过，一个都没有）。没有它，Chromium 的手机模拟会退回**默认 980 CSS px 的布局视口再缩到视口宽**——也就是说不管视口给 393 还是 500，正文永远按 980 px 排版。\n  代价是可量的：整块 980 CSS px 宽的版面最后要铺进画布的 1015 px（`1080×0.94`），**放大倍率恒为 1.04**，正文 14 px 的字上了画布还是 14 px 上下——实测 `ig-embed` 的正文墨高 12 px（1179 宽）、乘 0.861 之后只剩 **10.2 px**；作对照，片子里在用的那张 X 截图是 **19.7 px**，**差一倍**。而视口从 393 放到 500 一点忙都帮不上（那只改清晰度，不改版面宽度）——`ig-embed-wide` 量出来正文墨高 14 px、宽 1500，乘 0.677 之后 **9.5 px，反而更小**。\n  关掉手机模拟之后布局宽度就等于视口宽度，520 → 放大 1015/520 = **1.95×**，正文墨高估出来约 19 px，和那张 X 截图（19.7）打平。\n⚠️ 用户代理跟着换成桌面版了（工具里 UA 和 `is_mobile` 是同一套预设，不拆）——**对这一页没有影响**：`/embed/captioned/` 是同一份静态 HTML，上面那次手机 UA 取回来的 478 KB 和这次是同一个页面，它的版式只由宽度决定。\n⚠️ **照片进不了这张卡**，这是明知的取舍：520 宽的时候整页连照片有 1000 CSS px 高，高宽比 1.94，闸要 ≤1.111。所以片子里那张要从**点赞图标那一行**裁到正文末尾——爱心/评论/转发/收藏那排图标 ＋「62,394 likes」＋ 加粗的 `stanwawrinka85` ＋ 整段正文，Instagram 的身份靠这几样自证，不靠那张照片。裁掉了什么写进那张图自己的旁证里。",
+  "request_file": "data/social_shot_requests/wawrinka-farewell.json"
+}
