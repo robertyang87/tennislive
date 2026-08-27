@@ -1,6 +1,6 @@
 {
   "slug": "wawrinka-farewell",
-  "_why": "「网球有故事·瓦林卡」这条片子要两张原始文书当整屏证据段：他自己那篇告别长文的原帖，和美网官网改了标题的那篇公告。两件事旁白都讲得到，而**原始文书比我们转述一遍硬得多**——这也是对标那条片子里唯一的非比赛画面。",
+  "_why": "账号所有者 2026-08-27：「**最好截取手机版的**」「**最好用 Instagram**」「**去 Instagram 截图啊**」。\n那篇告别长文他在 X 和 Instagram 都发了，正文逐字相同——Instagram 那条的shortcode 是 `DcdvcjaAHLh`，**拿 Instagram 自己的 oembed 核过**（`/api/v1/oembed/?url=…`，返回的 title 就是那段正文，和 X 那条对得上），不是从哪篇报道里抄一个链接就当真。\n手机版的理由不只是「像手机」：一条社媒帖子在手机上本来就是**竖的**，截出来直接贴合 3:4 的画布；桌面版是宽的，进片子之前必然要裁一刀，而裁一刀就要交代裁掉了什么（X 那张就是这么裁的）。\n⚠️ 原来那三张 X／美网官网的截图**留着不动**：它们是真的、旁证齐、已经进过一版成片。换 Instagram 是换**片子里用哪一张**，不是把已经截好的证据删掉。",
   "shots": [
     {
       "name": "x-farewell",
@@ -31,6 +31,30 @@
       "wait_ms": 9000,
       "revision": 1,
       "_why": "同一篇公告的**首屏**（不给选择器＝按视口截，标题在这儿）。片子里用的是这一张，不是那张整篇的 `uso-announcement`——理由是**画面要和旁白对得上**：整篇那张往下第五段写着 `Ranked 117`，而这条片子的旁白说的是「世界第一百二十七位」。\n⚠️ 127 是对的，两个独立源：美网**自己的**选手数据 feed （usopen.org/en_US/scores/feeds/2026/players/players.json → `singles_rank: '127'`）和 tennisexplorer 的当期页（Current rank 127，生涯最高 3，41 岁 1985-03-28）。官网那篇稿子的正文数字是个孤证，和赛事自己的数据 feed 对不上——**按数据走**，同时别把那一行放进画面。"
+    },
+    {
+      "name": "ig-post",
+      "url": "https://www.instagram.com/p/DcdvcjaAHLh/",
+      "selector": "article",
+      "mobile": true,
+      "wait_ms": 9000,
+      "hide": [
+        "div[role='dialog']",
+        "div[role='presentation']"
+      ],
+      "revision": 1,
+      "_why": "他自己那条 Instagram 原帖，手机视口。⚠️ Instagram 对未登录访客会盖登录浮层——`hide` 只挡得住浮层，真被墙掉的话工具会 exit 2 不交图（登录框的截图和帖子的截图在文件系统里没有区别）。"
+    },
+    {
+      "name": "ig-embed",
+      "url": "https://www.instagram.com/p/DcdvcjaAHLh/embed/captioned/",
+      "selector": "",
+      "mobile": true,
+      "width": 393,
+      "height": 1600,
+      "wait_ms": 9000,
+      "revision": 1,
+      "_why": "同一条帖子的**公开 embed** 版（`/embed/captioned/` 带正文），不用登录。这是 `ig-post` 撞上登录墙时的退路——两张都截回来，打开看过再决定片子里用哪一张。视口给到 1600 高是为了让整段正文渲得开。"
     }
   ]
 }

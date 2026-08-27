@@ -99,11 +99,16 @@ def main() -> int:
                 proof = cap.capture(
                     url, out,
                     selector=str(shot.get("selector") or ""),
-                    width=int(shot.get("width") or 1000),
-                    height=int(shot.get("height") or 1400),
-                    scale=int(shot.get("scale") or 2),
+                    # ⚠️ 没写就传 `None`，让 capture 按手机/桌面各自的预设填——
+                    # 在这儿写死一组数会把手机预设整个盖掉，而它不报错。
+                    width=int(shot["width"]) if shot.get("width") else None,
+                    height=int(shot["height"]) if shot.get("height") else None,
+                    scale=int(shot["scale"]) if shot.get("scale") else None,
                     wait_ms=int(shot.get("wait_ms") or 6000),
                     hide=tuple(shot.get("hide") or ()),
+                    # 社媒帖子默认走手机视口——一条帖子在手机上本来就是竖的，
+                    # 截出来直接贴合 3:4 的画布，不用再裁一刀。
+                    mobile=bool(shot.get("mobile", True)),
                 )
             except SystemExit as exc:  # 登录墙那一支，已经在工具里说过原因
                 failed.append(f"{slug}/{name}: 工具报 exit {exc.code}")

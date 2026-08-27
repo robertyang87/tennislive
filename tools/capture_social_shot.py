@@ -53,7 +53,36 @@ _LOGIN_WALL = (
     "Enable JavaScript and cookies to continue",
     "Verifying you are human",
     "Checking your browser",
+    # Instagram 对未登录访客会盖一层登录浮层。⚠️ **这几条不能只认「Log in」**
+    # 那个词——正文里随便一句话都可能带上它。认的是 Instagram 自己那几句固定文案。
+    "Sorry, this page isn't available",
+    "Log in to Instagram",
+    "Log In\u2022Sign Up",
+    "Sign up to see photos and videos from friends",
+    "Page Not Found",
 )
+
+#: 手机版视口。**为什么要有手机版**：账号所有者 2026-08-27「最好截取手机版的」。
+#: 一条社媒帖子在手机上本来就是竖的，截出来直接贴合 3:4 的画布；桌面版是宽的，
+#: 进片子之前必然要裁一刀，而裁一刀就要交代裁掉了什么。
+#: 393×852 是 iPhone 14 Pro 的 CSS 视口，`dsf=3` 是它的真实像素密度。
+_MOBILE = {
+    "width": 393,
+    "height": 852,
+    "scale": 3,
+    "user_agent": ("Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) "
+                   "AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 "
+                   "Mobile/15E148 Safari/604.1"),
+}
+#: 桌面版（原来写死在 capture 里的那一套）。X 对未知 UA 会退到「打开 App」那一版。
+_DESKTOP = {
+    "width": 1000,
+    "height": 1400,
+    "scale": 2,
+    "user_agent": ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+                   "AppleWebKit/537.36 (KHTML, like Gecko) "
+                   "Chrome/126.0.0.0 Safari/537.36"),
+}
 
 #: Chromium 装在哪。runner 和这台沙箱都靠 PLAYWRIGHT_BROWSERS_PATH，
 #: 但目录名带版本号且新旧两种布局都存在（`chrome-linux` / `chrome-linux64`），
@@ -82,15 +111,30 @@ def _chromium_path() -> str | None:
     return None
 
 
-def capture(url: str, out: Path, *, selector: str = "", width: int = 1000,
-            height: int = 1400, scale: int = 2, wait_ms: int = 6000,
-            hide: tuple[str, ...] = ()) -> dict:
+def capture(url: str, out: Path, *, selector: str = "",
+            width: int | None = None, height: int | None = None,
+            scale: int | None = None, wait_ms: int = 6000,
+            hide: tuple[str, ...] = (), mobile: bool = False) -> dict:
     """打开 `url`，把 `selector` 那一块截成 PNG。返回出处旁证。
 
     `hide` 是要在截图前隐藏掉的选择器（cookie 横幅、订阅浮层这类）——
     它们不是证据的一部分，留着只会挡住正文。
+
+    `mobile=True` 走手机视口（393×852@3x + iPhone UA + `is_mobile`/`has_touch`）。
+    ⚠️ **三样要一起给**：只换 UA 不换视口，站点会按桌面版排版但用手机 UA 提示你
+    「下载 App」；只换视口不换 UA，很多站照旧发桌面版 HTML。
+    `width`/`height`/`scale` 给 `None` 就用对应那一档的预设，显式给了就盖过去。
+    ⚠️ **「没给」要用 `None` 表示，不能拿某个具体数当哨兵**——第一版拿
+    `width == 1000` 当「没给」，于是「真的想要 1000 宽的手机视口」这件事
+    表达不出来，而它坏起来一声不吭。
     """
     from playwright.sync_api import sync_playwright  # noqa: PLC0415
+
+    preset = _MOBILE if mobile else _DESKTOP
+    width = preset["width"] if width is None else width
+    height = preset["height"] if height is None else height
+    scale = preset["scale"] if scale is None else scale
+    agent = preset["user_agent"]
 
     out.parent.mkdir(parents=True, exist_ok=True)
     exe = _chromium_path()
@@ -101,10 +145,11 @@ def capture(url: str, out: Path, *, selector: str = "", width: int = 1000,
         page = browser.new_page(
             viewport={"width": width, "height": height},
             device_scale_factor=scale,
-            # 用一个真实的桌面 UA：X 对未知 UA 会直接退到「打开 App」那一版
-            user_agent=("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
-                        "AppleWebKit/537.36 (KHTML, like Gecko) "
-                        "Chrome/126.0.0.0 Safari/537.36"),
+            # UA 要和视口配套：X 对未知 UA 会直接退到「打开 App」那一版，
+            # 而手机视口配桌面 UA 会拿到桌面版的排版。
+            user_agent=agent,
+            is_mobile=mobile,
+            has_touch=mobile,
             locale="en-US",
         )
         page.goto(url, wait_until="domcontentloaded", timeout=60_000)
@@ -164,6 +209,8 @@ def capture(url: str, out: Path, *, selector: str = "", width: int = 1000,
         "fallback_full_viewport": fallback,
         "viewport": [width, height],
         "device_scale_factor": scale,
+        "mobile": mobile,
+        "user_agent": agent,
         "bytes": len(blob),
         "sha256": hashlib.sha256(blob).hexdigest(),
         "chromium": exe or "(playwright 默认)",
@@ -181,16 +228,18 @@ def main(argv: list[str] | None = None) -> int:
                     help="裁到这一块（X 的一条推文是 `article`）")
     ap.add_argument("--hide", default="",
                     help="截图前隐藏掉的选择器，逗号分隔（cookie 横幅这类）")
-    ap.add_argument("--width", type=int, default=1000)
-    ap.add_argument("--height", type=int, default=1400)
-    ap.add_argument("--scale", type=int, default=2)
+    ap.add_argument("--width", type=int, default=None)
+    ap.add_argument("--height", type=int, default=None)
+    ap.add_argument("--scale", type=int, default=None)
     ap.add_argument("--wait-ms", type=int, default=6000)
+    ap.add_argument("--mobile", action="store_true",
+                    help="手机视口（393×852@3x + iPhone UA），社媒帖子默认该用这个")
     args = ap.parse_args(argv)
 
     hide = tuple(s.strip() for s in args.hide.split(",") if s.strip())
     proof = capture(args.url, args.out, selector=args.selector,
                     width=args.width, height=args.height, scale=args.scale,
-                    wait_ms=args.wait_ms, hide=hide)
+                    wait_ms=args.wait_ms, hide=hide, mobile=args.mobile)
     print(f"[截图] {args.out}（{proof['bytes'] // 1024} KB，"
           f"{'整屏兜底' if proof['fallback_full_viewport'] else '按选择器裁'}）")
     print(f"  页面标题：{proof['page_title']}")
