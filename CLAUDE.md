@@ -12123,3 +12123,52 @@ cancel-in-progress——新 run 一启动就把本 run（正在失败的这趟�
 ⚠️ **故意没动 promote/finalize 那一带**（教学线会话在改）：修复环只挂在
 render 失败之后，输入是判据文本，输出是 spec 的窗口/删字修订——和 #599
 （MiniMax 机械证据自修）、#601（DeepSeek 算术反馈重试）同形状，推广到渲后。
+
+### ⭐⭐ 2026-08-27「编排器 25 小时没点过 run」：一半是真空，另一半是 **GitHub 在丢弃 schedule 事件**
+
+账号所有者甩来告警截图「这个异常还在啊」。拆开是两层，处置完全不同：
+
+**① 前 20 小时是候选侧真空**（温斯顿-塞勒姆/克利夫兰尾声过不了热度闸），
+班次一直在跑、一直如实报「0 条该点」——这层不是故障。
+
+**② 后 5 小时是班次本身没来。** 本地干跑一下就把矛盾暴露出来：**候选有**
+（chwalinska-parks 85 分、van-darderi 43 分，都标着「点 run」），而 runner 侧
+01:02 之后再没有任何班次来接。拿 run 列表量：cron 写的每 10 分钟，GitHub 实际
+给的是——
+
+    orchestrate      …16:56 → 18:56 → 21:36 → 01:02 → （2 小时无班）
+    reel-auto-ready  …19:14 → 22:17 → 03:24        ← 中间空 5 小时
+
+**schedule 事件在平台高峰期会被 GitHub 丢弃，最饿的窗口 17:00–03:00 UTC
+恰好是美网比赛打完、集锦上线的时段**——这不是 cron 表达式能修的，也解释了
+耗时表里「发现 ≤10 分钟」那一行为什么在实践里不成立。
+
+**修法（#630）：挨饿的班次互相叫醒。** 各条 cron 的挨饿互相错开（上面两行
+的时刻就是证据），而 workflow_dispatch **不吃** schedule 的丢弃——所以每一班
+顺手看一眼别的时间敏感班次是不是 20 分钟没跑，是就代点一趟。逻辑收在
+`tools/nudge_stale_ticks.sh`（照 ci_apt_install / git_push_retry 的先例），
+六个频繁 cron 的工作流都当宿主，目标是 orchestrate + reel-auto-ready 两个
+内容链班次。效果：时间敏感班次的实际频率 ＝ **全部 cron 班次的并集**。
+
+边界（判据 tests/test_nudge_stale_ticks.py，行为拿 gh 桩真跑，方向反向验证过）：
+
+- 目标在跑/在排队/20 分钟内跑过 → 不点；**读不到运行列表 → 不点并说明**
+  （「读不到」≠「没跑」，处置相反——API 抖动不许放大成 dispatch 风暴）
+- 点失败出声不重试不报错：nudge 是顺手帮一把，目标自己的 cron 仍是兜底；
+  任何路径不许把宿主步骤带红
+- ⚠️ **叫醒 orchestrate 必须带 `-f apply=true`**——它 workflow_dispatch 的
+  apply 默认 false，裸点一趟只扫候选不派发，「看起来醒了」其实什么都没做
+- ⚠️ pipeline-health 的 `actions: read` 要提成 write，少了它 nudge 每次都
+  「没成」，而那和「没挨饿」在结果上长得一样
+- ⚠️ oncourt-interviews 的 nudge 挂在 **collect** job（kick-render 不
+  checkout，`source` 不到共享脚本）
+
+⚠️ **当场的处置别忘了**：结构修复合并之前，手动 `workflow_dispatch
+orchestrate.yml -f apply=true -f max=N` 一趟就能把积压的候选踢出去（这次
+就是这么把 85 分的 chwalinska-parks 送进生产的）；告警读的是 state 的
+`last_dispatch_at`，派发一落库它自己就清。
+
+⚠️ 顺带记一条边界：run #383 里 van-darderi 在 runner 上是「集锦还没探到，
+下次再探」而沙箱干跑标着「点 run」——**干跑的「点 run」不等于集锦已探到**，
+真正的探测在 apply 那一刻做；「下次再探」正是靠班次频率兜底的那一类，
+也就是这条修复照顾的对象。
