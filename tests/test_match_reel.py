@@ -13206,8 +13206,10 @@ def test_背景音乐要真的落在现场声的4个百分点上(tmp_path):
     voice = tmp_path / "voice.wav"
     _ff("-f", "lavfi", "-i", "sine=frequency=900:duration=7",
         "-c:a", "pcm_s16le", str(voice))
+    # 音乐**故意只有 5 秒**（片子 20 秒）：量的窗口在 10~16s，不循环的话
+    # 那里是静音——所以下面那条比值断言同时钉住了「电平对」和「真的循环了」。
     music = tmp_path / "music.wav"
-    _ff("-f", "lavfi", "-i", "sine=frequency=4000:duration=20",
+    _ff("-f", "lavfi", "-i", "sine=frequency=4000:duration=5",
         "-c:a", "pcm_s16le", str(music))
 
     def _mix(with_music):
@@ -13216,7 +13218,9 @@ def test_背景音乐要真的落在现场声的4个百分点上(tmp_path):
         chain = reel.music_chain(2, 20.0) if with_music else ""
         args = ["-i", str(bed), "-i", str(voice)]
         if with_music:
-            args += ["-i", str(music)]
+            # 和生产一样在**输入那一层**循环（滤镜里的 aloop 要把整首歌
+            # 缓存进内存）；music_chain 的 atrim 给这条无限输入封上界。
+            args += ["-stream_loop", "-1", "-i", str(music)]
         _ff(*args, "-filter_complex",
             reel.duck_filtergraph(["[1:a]adelay=0|0[v0]"], ["[v0]"], chain),
             "-map", "[out]", "-c:a", "pcm_s16le", "-t", "20", str(dest))
@@ -13242,6 +13246,8 @@ def test_背景音乐要真的落在现场声的4个百分点上(tmp_path):
         f"相减之后是数字静音（{music_only:.1f} dB）：音乐根本没混进 amix")
 
     # ② 音乐 ÷ 现场声 = 4.0%，也就是 20·log10(0.04) ≈ −27.96 dB。
+    #    ⚠️ 这条同时是**循环**的判据：音乐源只有 5 秒，而量的是 10~16s。
+    #    拿掉 `-stream_loop -1`，这一段就是数字静音，① 先红。
     got = music_only - bed_only
     want = 20 * math.log10(reel.MUSIC_GAIN_PCT / 100)
     assert abs(got - want) < 1.0, (
@@ -13255,3 +13261,30 @@ def test_背景音乐要真的落在现场声的4个百分点上(tmp_path):
     assert _peak_db(on, "-i", str(on)) > bed_only - 0.5, (
         f"加了音乐之后现场声掉了（{bed_only:.1f} → "
         f"{_peak_db(on, '-i', str(on)):.1f} dB）——amix 把它按平均算了？")
+
+
+def test_音乐那一路要循环喂而且索引按数i算():
+    """上一条判据验的是**滤镜链**（它自己拼 ffmpeg 参数），覆盖不到 `render()`
+    里那两行接线——「只测行为拦不住位置错」，这个仓库为它栽过好几次
+    （`_push` 键名、`_cut_person`、复制页那道闸装错步骤）。
+
+    钉两样：
+
+    ① **`-stream_loop -1`**：循环要在输入那一层做。滤镜里的 `aloop` 要把
+       整首歌缓存进内存，而这条线跑在 runner 上。
+    ② **索引按 `count("-i")` 算**，不是 `len(mix_inputs)//2`。加了
+       `-stream_loop -1` 之后这一项占四个元素，除以二会把音乐接到旁白那一路
+       上——**而 ffmpeg 不报错**，成片只是音乐没了、某段旁白响两遍。
+    """
+    body = Path("tools/build_match_reel.py").read_text(encoding="utf-8")
+    block = body[body.index("music_spec = spec.get(\"music\")"):]
+    block = block[:block.index("with stage(\"混音\")")]
+
+    assert '"-stream_loop", "-1"' in block, (
+        "音乐那一路没有 `-stream_loop -1`：曲子比片子短就铺不满，"
+        "而滤镜里的 aloop 要把整首歌缓存进内存")
+    assert 'mix_inputs.count("-i")' in block, (
+        "音乐的输入索引要数 `-i` 的个数——`-stream_loop -1` 让这一项占了"
+        "四个元素，`len(mix_inputs)//2` 会错位到别的输入上")
+    assert "len(mix_inputs) // 2" not in block, (
+        "音乐这一段不许再用 `len(mix_inputs)//2` 算索引")

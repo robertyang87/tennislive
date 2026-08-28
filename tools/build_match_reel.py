@@ -496,12 +496,16 @@ def music_chain(index: int, seconds: float, pct: float = MUSIC_GAIN_PCT) -> str:
     要乘上 `BED_LOUD`——现场声自己就放在那个刻度上。写死一个裸增益的话，
     哪天有人调 `BED_LOUD`，音乐和现场声的比例就静静地漂了。
 
-    音乐比片子长会被 `-shortest` 一刀切断（很难听），所以按**片长**锚一个
-    淡出；比片子短就自然结束，`amix` 的 `duration=longest` 让画面走完。
+    曲子**循环播放**铺满整条片子（`-stream_loop -1` 在输入那一层做，滤镜里
+    的 `aloop` 要把整首歌缓存进内存）。所以这里按**片长**锚一个淡出，
+    并用 `atrim` 给这一路封一个上界——循环之后输入是无限长的。
     """
     gain = BED_LOUD * pct / 100.0
     fade_from = max(0.0, seconds - MUSIC_FADE)
-    return (f"[{index}:a]volume={gain:.6f},"
+    # `atrim` 这个上界不能省：曲子是拿 `-stream_loop -1` 循环喂进来的，
+    # 也就是**一条无限长的输入**。只靠输出那个 `-shortest` 去收，等于让
+    # 整张滤镜图依赖一个下游行为；音乐这一路自己有上界，图才是收敛的。
+    return (f"[{index}:a]atrim=end={seconds:.3f},volume={gain:.6f},"
             f"afade=t=out:st={fade_from:.2f}:d={MUSIC_FADE}[music]")
 
 
@@ -6239,10 +6243,14 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     if music_spec:
         film_seconds = probe_duration(silent)
         pct = float(music_spec.get("gain_pct", MUSIC_GAIN_PCT))
-        mix_inputs.extend(["-i", str(Path(music_spec["file"]))])
-        music_graph = music_chain(len(mix_inputs) // 2, film_seconds, pct)
-        print(f"[音乐] {music_spec['file']}：{pct}% 现场声"
-              f"（增益 {BED_LOUD * pct / 100:.4f}），"
+        # ⚠️ 索引要**数 `-i` 的个数**，不能用 `len(mix_inputs)//2`：
+        # `-stream_loop -1` 让这一项占了四个元素，除以二就错位了——而错位的
+        # 样子是「音乐那一路接到旁白上」，ffmpeg 不报错。
+        mix_inputs.extend(["-stream_loop", "-1",
+                           "-i", str(Path(music_spec["file"]))])
+        music_graph = music_chain(mix_inputs.count("-i"), film_seconds, pct)
+        print(f"[音乐] {music_spec['file']}：循环播放铺满 {film_seconds:.1f}s，"
+              f"{pct}% 现场声（增益 {BED_LOUD * pct / 100:.4f}），"
               f"{max(0.0, film_seconds - MUSIC_FADE):.1f}s 起淡出")
     with stage("混音"):
         if filters:
