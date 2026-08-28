@@ -186,6 +186,20 @@ def promote(draft: dict) -> dict:
             "line2": f"{match['winner']} {match['winner_result']} {match['loser']}",
         },
     })
+    # ⭐ 「美网期间的比赛都用这个比例做视频」（账号所有者 2026-08-28）：美网的
+    # 自动草稿转正时直接带上带式版式，不指望模型或终审记得写——parse_segments
+    # 那头有同一判据的硬闸（reel_facts.us_open_match_line，单一出处），漏了这里
+    # 转正会当场红。scorebox 按五盘满列宽度写（量当前帧会把深盘的列静默裁掉，
+    # 写宽没有代价——账在 docs/us-open-scoreboard-aspect.md）；比赛画面的段
+    # 默认回贴记分条。setdefault：终审在草稿里显式写过 false 的段（真回放/
+    # 切走）不被盖掉。
+    from reel_facts import US_OPEN_SCOREBOX, us_open_match_line  # noqa: PLC0415
+    if us_open_match_line(spec["topbar"]["line1"]) and not spec.get("archival"):
+        spec["layout"] = "band"
+        spec.setdefault("scorebox", list(US_OPEN_SCOREBOX))
+        for seg in spec.get("segments") or []:
+            if not seg.get("image"):
+                seg.setdefault("score_inset", True)
     # 这是机器生成资格，不是发布旁路。render/QC/auto_push_gate/persistent ledger
     # 仍会逐层复核；标记只让 dry-run 对结构化赛果执行更严格的交叉校验。
     spec["_production"]["status"] = "ready_for_render"

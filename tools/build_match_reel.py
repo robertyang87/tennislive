@@ -2071,6 +2071,16 @@ def _seg_voice(raw: dict, index: int) -> tuple[str, str, str, str, float]:
     return rate, pitch, style, degree, lead
 
 
+# 「美网期间的比赛都用这个比例做视频」（2026-08-28）定在带式版式**之后**、
+# 而这两条发在**之前**（资格赛，全出血 + cx 排除的老办法）。已发的片子不为
+# 版式重渲（微信那条消息收不回来）。**只许减不许加**，表自带自检
+# （test_美网的比赛一律带式版式：slug 要真的存在、line1 真的写着美网、
+# layout 真的还不是 band——写错一个名字，豁免就成了一盏恒真的绿灯）。
+_LEGACY_USO_FULLBLEED = frozenset({
+    "zheng-burel-us-open-2026-q2", "zheng-you-us-open-2026-q1",
+})
+
+
 def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
     """spec 的 `segments` → `Segment` 列表，顺带把两条互斥/引用的规矩拦在这儿。
 
@@ -2214,6 +2224,31 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
             print(f"    [score] 第 {no_inset} 段没开 score_inset——带式的居中"
                   "窗口会把记分条裁出残条；回放/切走的段不开是对的，"
                   "比赛画面的段要写 true（或深盘段写 {\"x2\": N}）")
+    # ⭐ 账号所有者 2026-08-28：「**美网期间的比赛都用这个比例做视频**」。
+    # 美网比赛的 reel（topbar.line1 写着美网/US Open 的那种）一律带式——
+    # 只记在对话里拦不住下一个会话，自动链也会自己产美网的片子，所以落成
+    # 硬闸；自动链那头的注入在 promote_reel_draft.promote，判据同一份
+    # （reel_facts.us_open_match_line）。archival（存档故事片）不在此列：
+    # 老素材的图形包和分辨率都不是这套账量的。
+    from reel_facts import us_open_match_line  # noqa: PLC0415
+    line1 = str((spec.get("topbar") or {}).get("line1", ""))
+    if (us_open_match_line(line1) and not spec.get("archival")
+            and str(spec.get("slug", "")) not in _LEGACY_USO_FULLBLEED):
+        if layout != "band":
+            raise ReelError(
+                f"这是一场美网的比赛（topbar.line1：{line1}），美网期间的比赛"
+                "一律用带式版式（账号所有者 2026-08-28）。spec 顶层加：\n"
+                '  "layout": "band", "scorebox": [104, 888, 736, 978]\n'
+                "（scorebox 是五盘满列宽度——主赛第一条先拿 probe 的 "
+                "scorebox_guess 对一眼再沿用），比赛画面的段写 "
+                '"score_inset": true（回放/切走的段不写）。'
+                "账在 docs/us-open-scoreboard-aspect.md。")
+        if scorebox is None:
+            raise ReelError(
+                "美网的带式 spec 还要有顶层 scorebox（不然居中窗口把记分条裁成"
+                "残条、而回贴无从谈起）：\n"
+                '  "scorebox": [104, 888, 736, 978]（五盘满列宽度）\n'
+                "主赛第一条先拿 probe 的 scorebox_guess 对一眼再沿用。")
     bad_motion = [i + 1 for i, s in enumerate(segments) if s.inset
                   and str(s.inset.get("motion", "")) not in {"", "editorial"}]
     if bad_motion:
