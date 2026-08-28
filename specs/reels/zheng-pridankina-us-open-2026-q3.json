@@ -1,0 +1,407 @@
+{
+ "slug": "zheng-pridankina-us-open-2026-q3",
+ "_column": "reel",
+ "layout": "band",
+ "scorebox": [
+  104,
+  888,
+  736,
+  978
+ ],
+ "_scorebox_why": "美网世界 feed 的标准位（docs/us-open-scoreboard-aspect.md 实测 104,888,616,978，右缘随盘数 +39px/列）；本场 probe 的 score_XX 裁片逐格核过，板整条落在框内。按五盘满列宽度 736 写（多抠的是球场，贴回去看不见）。SET/MATCH POINT 黄标在 y<888 之外，按 docs 的口径不扩窗——关键分旁白本来就讲。",
+ "source_url": "https://youtu.be/63uyJ43Q_AY",
+ "_source": "US Open 官方 YouTube 频道（US Open Tennis Championships）本场官方集锦，204.5s 1920x1080 60fps（probe 落 29.97fps 口径）。画面自证四处：记分条 14 ZHENG CHN / PRIDANKINA 与 flashscore tYi0NJyA 逐分一致；SET POINT #3 / SET POINT #2 / MATCH POINT 黄标与逐分记录的关键分逐一对上；终场全屏图形 6 3 6 / 4 6 0 = 官方赛果 6-4 3-6 6-0；片尾美网品牌板（201.42 起，已排除在段外）。",
+ "cover": {
+  "matchup": [
+   {
+    "name": "郑钦文",
+    "name_en": "Qinwen Zheng",
+    "country": "CHN",
+    "rank": 121
+   },
+   {
+    "name": "普里丹基纳",
+    "name_en": "Elena Pridankina",
+    "country": "RUS",
+    "rank": 186
+   }
+  ],
+  "_rank_why": "两人排名取 WTA 官方 players/ranked 接口 rankedAt=2026-08-24 那期：Qinwen Zheng 121、Elena Pridankina 186（与仓库 Q2 spec 的封面排名一致）。",
+  "winner": "郑钦文",
+  "result": "6-4 3-6 6-0",
+  "eyebrow": "赛场之上",
+  "layout": "solo",
+  "subject": "郑钦文",
+  "hook": "被拖进决胜盘\n她一局没再给",
+  "topic": "美网资格赛 · 决胜轮",
+  "portrait": {
+   "image": "assets/reel/zheng-pridankina-us-open-2026-q3-cover.jpg",
+   "focus": 0.44,
+   "focus_y": 0.45,
+   "zoom": 1.0,
+   "_why": "US Open 官方摄影 Pete Staples/USTA 本场实拍（USTA2369837_20260827_PS2_5067，官方图注：women's qualifying singles match, Thursday, August 27——本场周四开打周五续完，周四那半场正是这场比赛，heavy.com 报道与官方 day feed 双源核过雨断跨天）。正手迎球瞬间：双眼锁球、咬牙发力，白色 Nike/vivo 上衣+薄荷绿裙与本场源片全程一致（52.5s/146.5s/196.5s 帧逐一对过）。同批四张里它的表情张力最大（5132 侧脸、5125 低头、5080 背景杂）。",
+   "_low_res_why": "美网官方图片接口封顶 1280x720（CLAUDE.md 记档的渠道天花板：十二个前缀/六个目录/三种参数都试过），裁 3:4 铺 1080x1440 需放大 2.0 倍——但它是相机原图，好过任何抽帧；USA TODAY 每日图集按比赛日晚间才上线、AP 对资格赛为零，本场当下没有更大的官方实拍。渲后已按流程打开海报核对面部清晰度。"
+  },
+  "scoreboard": {
+   "court": "Stadium 17",
+   "duration_source": {
+    "url": "data:application/json,%7B%22duration%22%3A%222%3A19%3A00%22%2C%22source%22%3A%22US%20Open%20official%20players%20feed%20setDurations%2056%2B47%2B36%22%7D",
+    "field": "duration"
+   },
+   "_court_why": "US Open 官方 players/matches feed courtName=Stadium 17；源片记分条上方场次信息与 Q1/Q2 同场地。",
+   "_duration_why": "官方 players feed 分盘用时 56+47+36=2:19（与画面里 Rolex 比赛计时自洽：104.5s 帧显示 1:43=56+47）。flashscore df_sui_1 给 56+49+36=2:21，分盘第二盘差 2 分钟——按『用时要交叉核、以官方为准』取 2:19。封面解析器按 H:MM:SS 读，规范为 2:19:00。"
+  }
+ },
+ "_match": {
+  "status": "result_verified",
+  "source": "flashscore_points",
+  "source_id": "tYi0NJyA",
+  "flashscore_id": "tYi0NJyA",
+  "participants": [
+   "郑钦文",
+   "普里丹基纳"
+  ],
+  "set_scores_home_away": [
+   [
+    6,
+    4
+   ],
+   [
+    3,
+    6
+   ],
+   [
+    6,
+    0
+   ]
+  ],
+  "winner": "郑钦文",
+  "loser": "普里丹基纳",
+  "winner_result": "6-4 3-6 6-0",
+  "loser_result": "4-6 6-3 0-6",
+  "_two_day_why": "本场跨两天：周四（8/27 纽约）开打，首盘 6-4、次盘 2-5 落后时因雨中断（heavy.com『US Open Announces New Friday Schedule After Rain Suspends Qualifying Matches』：外场约 13 点全停）；周五 11 点 Stadium 17 第一场续赛（同文+flashscore AD=15:05UTC=11:05EDT+官方 day_6 feed『Fan Week Day 6: Friday, August 28』收录完赛记录，day_5 无此场）。官方图注的『Thursday, August 27』因此是对的——那是这场球的第一天。普里丹基纳隔夜换了球衣（周四黑上衣薄荷裙、周五白上衣黑裙），源片 82.5s/104.5s 帧可对。"
+ },
+ "stats": {
+  "a": {
+   "aces": 5,
+   "df": 5,
+   "winners": 25,
+   "ue": 30,
+   "first_in": 34,
+   "first_won": 28,
+   "second_total": 44,
+   "second_won": 21,
+   "bp_conv": 5,
+   "bp_chances": 11,
+   "pts_won": 89,
+   "pts_total": 166,
+   "first_total": 78,
+   "headshot": "assets/players/wta-328120-zheng-qinwen.png",
+   "headshot_zoom": 2,
+   "headshot_focus_x": 50,
+   "headshot_focus_y": 12
+  },
+  "b": {
+   "aces": 2,
+   "df": 6,
+   "winners": 14,
+   "ue": 28,
+   "first_in": 55,
+   "first_won": 30,
+   "second_total": 33,
+   "second_won": 18,
+   "bp_conv": 2,
+   "bp_chances": 9,
+   "pts_won": 77,
+   "pts_total": 166,
+   "first_total": 88,
+   "headshot": "assets/players/headshots/wta-330905.jpg",
+   "_headshot_why": "普里丹基纳没有 WTA 官方头像（wtafiles blob 330905.png/.jpg 均 404，球员页引用的也是这个 404 路径）；用美网官方 bio 图 images.usopen.org/ix-events-usta-players/wta330905.jpg（players feed 的 bio_image 字段指认，身份由官方 feed 自证）。上限 156x213（imgix 参数不放大），画进 252px 圆圈约 1.6 倍——官方、认对了人，比不画整张数据卡强。"
+  },
+  "_source": "flashscore 本场 tYi0NJyA 的 df_st_1（match_stat_hooks --stats-block 机器抄录，含制胜分/非受迫失误——大满贯资格赛这场有）。a=郑钦文=cover.matchup[0]（flashscore home 恰好也是郑钦文，顺序核过：Total Points 89/166 是赢家郑钦文的）；first_total 按 first_in+second_total 和式（78=34+44、88=55+33）。"
+ },
+ "_hit_data": [
+  {
+   "label": "总分差",
+   "detail": "郑钦文 89 - 普里丹基纳 77，净差 12 分",
+   "source": "flashscore df_st_1（Total Points Won）"
+  },
+  {
+   "label": "普里丹基纳 一发得分率摆动",
+   "detail": "第1盘64% → 第2盘67% → 第3盘33%",
+   "swing": 34,
+   "source": "flashscore df_st_1（分盘一发得分率）"
+  },
+  {
+   "label": "郑钦文 决胜盘破发点兑现",
+   "detail": "3/4（全场 5/11）",
+   "source": "flashscore df_st_1（分盘破发点）"
+  },
+  {
+   "label": "决胜盘总分",
+   "detail": "28-14（67%:33%）",
+   "source": "flashscore df_st_1（Set 3 Total Points）"
+  },
+  {
+   "label": "普里丹基纳 连续被破",
+   "detail": "决胜盘 3 个发球局全部被破",
+   "source": "flashscore df_mh_1（逐局）"
+  },
+  {
+   "label": "郑钦文 一发",
+   "detail": "进球率44%但一发得分率82%（28/34），平均时速176km/h（对手161）",
+   "source": "flashscore df_st_1"
+  },
+  {
+   "label": "官方用时",
+   "detail": "2:19（56/47/36），决胜盘6-0打了36分钟",
+   "source": "US Open players feed；flashscore 2:21 有 2 分钟分歧，取官方"
+  }
+ ],
+ "_durations": [
+  [
+   "Set 1",
+   "0:56"
+  ],
+  [
+   "Set 2",
+   "0:47"
+  ],
+  [
+   "Set 3",
+   "0:36"
+  ],
+  [
+   "全场",
+   "2:19"
+  ]
+ ],
+ "_turning_points": [
+  {
+   "label": "【Set 3】2-0  普里丹基纳发球，郑钦文拿下  ← 三次平分、郑钦文首个破发点被救、对手两个局点被追回、第二个破发点兑现",
+   "density": 3
+  },
+  {
+   "label": "【Set 3】3-0  郑钦文发球，郑钦文拿下  ← 30-40 落后上网救掉唯一破发点（解说：nice move forwards just in time）",
+   "density": 2
+  },
+  {
+   "label": "【Set 1】6-4  郑钦文发球，第三个盘点兑现（画面烧着 SET POINT #3）",
+   "density": 2
+  },
+  {
+   "label": "【雨断】次盘 2-5 落后时全场停摆一夜——不在官方集锦里，旁白第 2/10 段交代；次盘 1-1 郑钦文一局连救四个破发点的防守局同样不在集锦里，放弃不讲",
+   "density": 3
+  }
+ ],
+ "editorial": {
+  "mode": "match_review",
+  "hook": [
+   "被拖进决胜盘",
+   "她一局没再给"
+  ],
+  "question": "被大雨切成两天、又被二十岁对手拖进决胜盘，郑钦文靠什么把资格赛决胜轮收成一个6-0？",
+  "thesis": "这不是一场顺风球：雨断过夜打乱节奏，次盘被普里丹基纳扳平；郑钦文赢在一发质量（进球率仅44%但一发得分率82%、平均176km/h）和关键分硬度（决胜盘四个破发点兑现三个、自己30-40落后时上网化解），36分钟的6-0让她在肘部手术十三个月后重返美网正赛。",
+  "beats": [
+   "北京时间8月27日深夜开打：首盘56分钟6-4；次盘2-5落后时大雨中断，比赛被切成两天（heavy.com报道+官方day feed双源）。",
+   "8月28日夜里续赛（官方赛程Stadium 17第一场）：普里丹基纳6-3收走第二盘，比赛进入决胜盘。",
+   "决胜盘连下六局但没有一局轻松：第二局三次平分后第二个破发点才兑现，第三局30-40上网救掉唯一被破风险，单盘28-14、官方用时36分钟。",
+   "赛点落地她瘫坐在场地上，转播原话 mission accomplished / back in the main draw；满看台球迷见证她肘部手术十三个月后重返美网正赛。"
+  ],
+  "human_context": {
+   "angle": "同一片17号球场：两年前她在阿瑟阿什打美网八强，如今要靠三轮资格赛打回正赛；两天里球迷把外场看台坐满（162.5s看台帧、200.5s送签名球帧，解说原话 hundreds of fans inside this stadium），这场36分钟的6-0是复出十三个月里离『回来了』最近的一刻。",
+   "facts": [
+    "郑钦文6-4 3-6 6-0击败普里丹基纳，晋级美网正赛（官方players feed match 12314 Completed）。",
+    "本场跨两天：周四首盘6-4、次盘2-5落后遇雨中断，周五11点（北京时间28日夜里11点）Stadium 17续赛（heavy.com+flashscore AD+官方day_6 feed）。",
+    "WTA官方（Q2 spec已核）：郑钦文右肘手术后从2025年7月至2026年2月只参加一站比赛；第一次复出在北京因右肘疼痛中止，2026年2月多哈第二次复出；曾排名世界第4、巴黎奥运金牌。",
+    "WTA官方ranked接口（2026-08-24期）：郑钦文121、普里丹基纳186。",
+    "WTA官方players接口：普里丹基纳2005-08-30出生——本场结束时还不满21岁。",
+    "普里丹基纳前两轮6-1 6-3、6-2 6-4未失一盘（Q2 spec已核）。",
+    "USTA官方图注：郑钦文2024年9月3日美网女单1/4决赛对萨巴伦卡（两年前的美网八强）。",
+    "美网正赛8月30日（周日）开打：官方eventDays表 Day 1=tournDay 8=Aug 30。",
+    "官方用时2:19（56/47/36）；决胜盘郑钦文破发点3/4、总分28-14；普里丹基纳决胜盘一发得分率33%。",
+    "仓库内已核事实的出处：specs/reels/zheng-burel-us-open-2026-q2.json 与 specs/reels/zheng-us-open-outlook.json（伤停时间线、前两轮赛果、Q2 排名）。"
+   ],
+   "sources": [
+    "https://youtu.be/63uyJ43Q_AY",
+    "https://www.flashscore.com/match/tennis/tYi0NJyA/#/match-summary",
+    "https://www.usopen.org/en_US/scores/feeds/2026/players/matches/wta328120_matches.json",
+    "https://www.usopen.org/en_US/scores/feeds/2026/completed_matches/days/day_6.json",
+    "https://heavy.com/sports/tennis/us-open-friday-schedule-rain/",
+    "https://api.wtatennis.com/tennis/players/ranked?page=0&pageSize=200&type=rankSingles&sort=asc&name=&metric=SINGLES",
+    "https://api.wtatennis.com/tennis/players/?pageSize=5&name=Pridankina",
+    "https://www.usopen.org/en_US/photos/USTA2369837_20260827_PS2_5067.html"
+   ]
+  }
+ },
+ "topbar": {
+  "line1": "2026 美网资格赛 决胜轮",
+  "line2": "郑钦文 6-4 3-6 6-0 普里丹基纳"
+ },
+ "push": {
+  "summary": "决胜盘6-0，郑钦文回正赛",
+  "lead": "被大雨切成两天的资格赛决胜轮：郑钦文首盘6-4，隔夜续赛3-6丢掉第二盘，决胜盘36分钟回敬6-0——肘部手术十三个月后，她重返美网正赛。8月30日正赛开打。",
+  "auto": true
+ },
+ "segments": [
+  {
+   "start": 163.9,
+   "end": 176.6,
+   "narration": "",
+   "score_inset": true,
+   "_quote_kind": "broadcast",
+   "_ending_payoff_required": true,
+   "quote": [
+    {
+     "at": 8.58,
+     "end": 12.7,
+     "text": "It is job done, and that's what it means.\n任务完成——这就是它的分量。"
+    }
+   ],
+   "crosses_cut": "冷开场：赛点前特写（164.5）→赛点回合（loose cut 165.27）→落地→她瘫坐在场地上（173.82 切、174.5/176.5 帧核过是郑钦文本人，MATCH POINT 板全程在画面里）。止于 176.6（板 176.68 翻掉/消失之前），把起身、终场图形和握手全部留给结尾兑现。解说原话 172.48 起，grep 过 captions.txt。",
+   "_why": "全片最强的一格：MATCH POINT 特写 + 决胜分 + 瘫坐。按『开场三格』第①格，不配旁白，现场欢呼自带情绪；转播那句 job done 用双语字幕给出钩子。"
+  },
+  {
+   "start": 0.0,
+   "end": 22.04,
+   "narration": "一场大雨，把这场球切成了两天——北京时间八月二十七号深夜开打，二十八号夜里十一点续赛。美网资格赛决胜轮：肘部手术十三个月后，郑钦文离正赛只差这一轮。",
+   "score_inset": true,
+   "crosses_cut": "2.44 一刀：普里丹基纳发球特写→首盘第一局的超长多拍（记分条 0/30 冻结近二十秒，解说 21.92 喊 Great point from both）。旁白承载落点+坐标+背景，画面是本场第一分的连续回合。",
+   "_why": "第②③格：先抛『两天』的钩子，再给坐标（日期+钟点+赛事+轮次）。钟点用的是钉得最死的那一个：续赛=周五纽约上午11点 Stadium 17 第一场（heavy.com 明文+flashscore AD 15:05UTC=23:05北京，两源一致，分钟 0-9 档说『十一点』）；周四开打的钟点三源都给不出精确值（约 11:00-11:35 EDT 区间），只说『二十七号深夜』这个所有源都支持的粒度。"
+  },
+  {
+   "start": 22.04,
+   "end": 36.82,
+   "narration": "对面是还不满二十一岁的普里丹基纳：世界第一百八十六，前两轮一盘没丢。第一局，她就敢跟奥运冠军硬碰硬。",
+   "score_inset": true,
+   "crosses_cut": "25.83 一刀：96mph 发球速度牌+普里丹基纳特写→第一局 0/40 的连续回合，均为本场首局画面，承载对手介绍。",
+   "_why": "对手一句带过（Q2 已铺开她的来路，这里只留看懂本场所需）：年龄按 WTA 官方生日 2005-08-30 算、排名 186 官方榜、前两轮未失一盘 Q2 spec 已核。"
+  },
+  {
+   "start": 36.82,
+   "end": 50.15,
+   "narration": "首盘二比二，郑钦文在接发局连赢三分，拿到三个破发点：前两个被普里丹基纳救掉，第三个，她终于撕开这一盘。",
+   "score_inset": true,
+   "crosses_cut": "窗口为 2-2 接发局连续回合（记分条 2/30 起），逐分 df_mh_1：15:0,30:0,40:0 三个破发点、前两个被救、第三个兑现。",
+   "_why": "首盘的第一道口子；破发点归属和救球主语显式写出（她拿到、普里丹基纳救）。"
+  },
+  {
+   "start": 50.15,
+   "end": 66.57,
+   "narration": "她的一发进球率整场只有百分之四十四；可只要一发落区，十个球能赢八个——平均时速一百七十六公里。",
+   "score_inset": true,
+   "crosses_cut": "50.15/53.99 两刀：比赛计时牌 0:17→郑钦文特写（52.5，白色上衣核过是她）→4-2 40-30 发球局长回合。旁白讲她的发球武器，画面正是她的特写与发球局。",
+   "_why": "技战术拆解的数字底座：44% 进球率 / 82% 一发得分率（28/34）/ 平均 176km/h，全部 df_st_1，转折点前先给归因。"
+  },
+  {
+   "start": 66.65,
+   "end": 73.5,
+   "narration": "五比四，第三个盘点——这一次，她没再松手。",
+   "score_inset": true,
+   "crosses_cut": "66.65/69.79/72.16 三刀同属盘点这一分的转播序列：抛球特写→回合→普里丹基纳→看台起立鼓掌；画面烧着 SET POINT #3，与旁白『第三个盘点』互证。",
+   "_why": "首盘收口。SET POINT #3 是转播自己烧上去的判据。"
+  },
+  {
+   "start": 73.5,
+   "end": 81.28,
+   "narration": "五十六分钟，六比四——第一盘，先攥在手里。",
+   "crosses_cut": "75.63 一刀：看台庆祝（板已收走）→首盘 6-4 全屏图形；不开 score_inset 因为这几秒板真的不在画面里，全屏图形自带比分。",
+   "_why": "56 分钟取官方分盘用时；图形显示 6/4 与旁白一致。"
+  },
+  {
+   "start": 81.28,
+   "end": 105.79,
+   "narration": "第二盘，风向变了。普里丹基纳敢跟她一拍一拍地对轰；这一盘，郑钦文的一发进球率掉到了百分之四十二。",
+   "score_inset": true,
+   "crosses_cut": "84.52/101.2 两处浅切同属次盘第一局 30-30 的超长多拍序列（解说 100.24：Oh, she made that. Goodness me.），105.79 前的尾帧已切到盘点局。旁白讲整盘走势与 42% 的分盘数据，不点当前具体比分。",
+   "_why": "次盘转向的归因（分盘一发 42%，df_st_1 Set 2）；把 goodness me 那一拍留在旁白结束后的现场声里。"
+  },
+  {
+   "start": 105.79,
+   "end": 113.0,
+   "narration": "",
+   "score_inset": true,
+   "crosses_cut": "SET POINT #2（板烧着 6 3 30 / 4 5 40）→普里丹基纳发球收盘的完整一分。不配旁白：解说 110.16 那句 sigh of relief 和现场声自己说话。",
+   "_why": "让对手的高光完整落地（板上 SET POINT #2 自证），为决胜盘蓄势；7.2 秒无旁白但现场声连续，是有意的呼吸口。"
+  },
+  {
+   "start": 113.0,
+   "end": 121.3,
+   "narration": "二比五落后时，比赛被大雨断了一夜；回来丢掉这盘——一盘一平。",
+   "crosses_cut": "115.77/119.54 两刀：普里丹基纳握拳庆祝（板已收）→一盘一平全屏图形+看台。雨断的兑现放在这里：板不在画面里，图形只写着 6 3 / 4 6，与旁白『一盘一平』一致、与『二比五时中断』（过去时）不冲突。",
+   "_why": "雨断跨天是本场最大的场外事实（heavy.com+官方 day feed 双源），放在丢盘图形上讲，既解释了这一盘也不与任何在画面上的比分打架。"
+  },
+  {
+   "start": 121.3,
+   "end": 143.59,
+   "narration": "决胜盘的六比零，没有一局是白给的。第二局她们缠过三次平分：她的破发点被普里丹基纳救掉一个，对手的两个局点也被她追回——第二次机会，她一锤砸穿。",
+   "score_inset": true,
+   "crosses_cut": "122.32/143.59 之间的多刀同属决胜盘第二局：板在 1-0 AD 状态冻结二十余秒，全是这一局的拉锯回合；143.59 切走时解说刚喊完 too good（142.48）。三次平分/一个破发点被救/两个局点被追回，全部按 df_mh_1 逐分数出来的。",
+   "_why": "全片的转折点局。『没有一局是白给的』是闭集断言：逐分核过六局，对手局局得分、无一局零封（40-30/三平分/一平分/40-15/40-15/40-30）。"
+  },
+  {
+   "start": 143.59,
+   "end": 159.51,
+   "narration": "转过身她自己也被逼到三十比四十——这一次她直接抢上网，把破发点当场掐掉。",
+   "score_inset": true,
+   "crosses_cut": "147.95 浅切同属第三局：走位→106mph 发球→30-40 破发点的救球回合（解说 157.52：nice move forwards just in time to save the break point）。",
+   "_why": "决胜盘的第二个关键分：她自己面对的唯一破发点，上网化解——动作由转播原话背书，板上 30/40 与旁白一致。"
+  },
+  {
+   "start": 159.51,
+   "end": 163.9,
+   "narration": "她的球迷，把十七号球场坐满了。",
+   "score_inset": true,
+   "crosses_cut": "161.64 一刀：DEUCE 状态她走位→看台满座鼓掌（板仍烧在画面上，Rolex 计时牌 GAME DURATION 4:31 同帧可见）。",
+   "_why": "人文一拍：解说 195.44 说 hundreds of fans inside this stadium，162.5 帧就是满看台；『她的球迷』贴解说原话口径，不替看台标国籍。"
+  },
+  {
+   "start": 163.9,
+   "end": 176.6,
+   "narration": "",
+   "score_inset": true,
+   "crosses_cut": "与冷开场同窗：MATCH POINT 特写→决胜分→瘫坐。正文按时间线重新走到冷开场末尾，完成结局兑现；这一遍不配字幕，交给现场声。",
+   "_why": "结局兑现段（_ending_payoff_required 的正文覆盖）。冷开场是预告，这里是正片。"
+  },
+  {
+   "start": 176.6,
+   "end": 189.19,
+   "narration": "",
+   "_quote_kind": "broadcast",
+   "quote": [
+    {
+     "at": 0.92,
+     "end": 4.9,
+     "text": "...after the elbow problems.\n——在那些肘伤之后。"
+    },
+    {
+     "at": 4.92,
+     "end": 7.0,
+     "text": "It is mission accomplished.\n任务完成。"
+    },
+    {
+     "at": 7.1,
+     "end": 12.59,
+     "text": "She's back in the main draw at the US Open.\n她回到了美网正赛。"
+    }
+   ],
+   "crosses_cut": "起身→终场图形（6 3 6 / 4 6 0）压着全场起立→挥手、向看台击球。板在头一秒内随镜头收走，之后是全屏图形，故不开 score_inset（残条只有不到一秒的过场）。解说 177.52/181.52/184.24 三句，grep 过 captions.txt。",
+   "_why": "转播替我们说出主题：肘伤之后、任务完成、回到正赛。比我们自己转述硬。"
+  },
+  {
+   "start": 189.19,
+   "end": 195.66,
+   "narration": "这个六比零打了三十六分钟：四个破发点，她兑现三个。",
+   "crosses_cut": "网前与裁判握手的连续序列。旁白收数据：36 分钟取官方 Set 3 用时，3/4 取 df_st_1 分盘破发点。",
+   "_why": "按整改合同的『收尾堆数据』拍：时长+关键分兑现两个维度。"
+  },
+  {
+   "start": 195.66,
+   "end": 201.0,
+   "narration": "八月三十号正赛开打。你会为她熬夜吗？",
+   "crosses_cut": "199.13 一刀：她含笑向看台鼓掌→满看台球迷举着签名球和她的照片、她抛球致意的全景。止于 201.0，离 201.42 的美网片尾板留出 0.42s+0.18s 溶解余量。",
+   "_why": "收尾落在一问上（旁白问出来）；8 月 30 日取官方 eventDays 表 Day 1=Aug 30（周日），不用『后天』这类会过期的相对时间。画面正是等她的球迷，问句与画面合奏。"
+  }
+ ],
+ "_editing_why": "冷开场（MATCH POINT 特写→决胜分→瘫坐，双语转播原声）→大雨切成两天+坐标（首局超长多拍）→对手一句带过→首盘：2-2 三个破发点撕开→一发武器归因→SET POINT #3 收盘→6-4 图形→次盘：对轰+一发掉到42%→SET POINT #2 现场声→雨断兑现+一盘一平图形→决胜盘：第二局三平分砸穿（too good）→第三局上网救破发点→满看台一拍（DEUCE+4:31 计时牌同帧）→结局兑现（同窗重放，纯现场声）→转播三连：肘伤之后/任务完成/回到正赛→握手+决胜盘数据→球迷全景+收尾一问。止于 201.0，美网片尾板（201.42 起、201.49 后静音）整个排除，此后只接品牌片尾。雨断本身与次盘 1-1 连救四个破发点的防守局不在官方集锦里：前者旁白交代，后者放弃。"
+}
