@@ -12,6 +12,27 @@ import re
 _SET_TOKEN = re.compile(r"(\d+)-(\d+)")
 _RETIRED = re.compile(r"ret\.?|退赛|w\.?/?o\.?|walkover|不战而胜", re.I)
 
+#: 美网 2026 世界 feed 的记分条抠图坐标（源片像素，[x0, y0, x1, y1]）。
+#: 左缘/上下缘是 probe 逐像素实测；**右缘 736 是五盘满列的外推值**（板每
+#: 完成一盘 +39px，账在 docs/us-open-scoreboard-aspect.md）——scorebox 一律
+#: 按板的最宽状态写，量当前帧的宽度会把深盘长出来的比分列静默裁掉
+#: （「尽量把五盘大战的比分能包括进来」）。主赛第一条片子拿 probe 的
+#: scorebox_guess 对一眼再沿用：阿瑟阿什的图形包可能和资格赛外场那套不同。
+US_OPEN_SCOREBOX = (104, 888, 736, 978)
+
+
+def us_open_match_line(line1) -> bool:
+    """这行顶栏标题（`topbar.line1`）说的是不是一场美网的比赛。
+
+    账号所有者 2026-08-28：「**美网期间的比赛都用这个比例做视频**」——美网
+    比赛的 reel 一律带式版式（闸在 build_match_reel.parse_segments，自动链
+    的注入在 promote_reel_draft.promote，两处认的都是这一个判据，别各写一份）。
+    判据钉在 line1 上是因为「赛场之上」的比赛 spec 顶栏是硬要求、而 line1
+    必然写着赛事名；故事/存档类（archival）不在此列，由调用方排除。
+    """
+    text = str(line1 or "")
+    return "美网" in text or "us open" in text.casefold()
+
 
 def result_direction_problem(spec: dict) -> str | None:
     """封面赛果是不是真的赢家视角——不依赖 `_match` 的机械下界。
