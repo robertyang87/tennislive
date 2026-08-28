@@ -460,8 +460,12 @@ jobs:
           # 而稀疏检出把 output/ 挡在外面（554 MB）——不拉回来的话这一层是哑的，
           # 「没查」和「查过没问题」在日志上长得一模一样。只 add 这条 slug 自己
           # 的那几格（probe.json 连着缩略图墙，几 MB），别把整棵 output/ 抬回来。
-          DIRS=$(git ls-tree -r --name-only HEAD -- output 2>/dev/null \
-            | grep -E "^output/[^/]+/reel/${SLUG}/probe\.json$" \
+          # ⚠️ grep 零命中退 1，在 pipefail + bash -e 下会把整步打死——下面那个
+          # 专门处理「还没有 probe」的 else 分支就永远走不到（自动链总是先 probe
+          # 后 render，从没有 slug 走过无 probe 这条路，2026-08-27 手建 spec 直接
+          # render 才第一次踩到）。`|| true` 让零命中如实落进 else。
+          DIRS=$({ git ls-tree -r --name-only HEAD -- output 2>/dev/null \
+            | grep -E "^output/[^/]+/reel/${SLUG}/probe\.json$" || true; } \
             | xargs -r -n1 dirname | sort -u)
           if [ -n "$DIRS" ]; then
             git sparse-checkout add $DIRS

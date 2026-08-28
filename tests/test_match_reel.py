@@ -2095,7 +2095,12 @@ def test_裁切窗口恒定取源片正中():
     src = Path("tools/build_match_reel.py").read_text(encoding="utf-8")
     assert not hasattr(reel, "auto_center"), "自动定心还在"
     assert not hasattr(reel, "court_center") and not hasattr(reel, "_court_axis")
+    # 带式版式的窗口**也居中**（账号所有者 2026-08-27：「不要偏离中心的」）——
+    # 第一版给带式配过一个左移的 BAND_DEFAULT_CX=0.385 去含住左下的记分条，
+    # 被当场纠正撤掉了。带式的记分条走 score_inset 回贴，不动窗口。
     assert "seg.cx = 0.5" in src, "不摇的段没有取正中"
+    assert not hasattr(reel, "BAND_DEFAULT_CX"), (
+        "带式的偏心默认窗口又回来了——「不要偏离中心的」，记分条走 score_inset")
 
 
 def test_海报进仓库且推送第一屏是它():
@@ -3101,8 +3106,14 @@ def test_源片自己烧了记分条时字幕要让开():
     """
     reel = _reel()
     src = Path(reel.__file__).read_text(encoding="utf-8")
-    assert 'spec.get("subtitle_top", _REEL_MARGIN_V)' in src, (
+    # 默认值从 2026-08-27 起按版式分（带式锚进底带），但 `subtitle_top` 的
+    # 人工覆盖必须还在——那正是这条判据守的东西。两头都钉：
+    # 读取仍然带 spec 覆盖，而默认值真的走 default_margin_v()（不许绕过它
+    # 另写一个死数，那会把带式那半默认悄悄断掉）。
+    assert 'spec.get("subtitle_top", default_margin)' in src, (
         "字幕上锚不能只有一个写死的值——竖版源片会撞上它自己的记分条")
+    assert "default_margin = default_margin_v()" in src, (
+        "字幕默认锚要从 default_margin_v() 来（按版式分），不许另写死一个数")
     # 抬高了要说出来：默认值和实际值不一样却不吭声，下次没人知道它被挪过
     assert "比默认抬高" in src, "抬了字幕却不打印，产物上看不出是有意的还是漂了"
 
@@ -12795,3 +12806,287 @@ def test_握手后只许接固定品牌片尾():
     assert spec.get("outro", True) is not False, (
         "这条片握手后仍要保留固定“网球时差”品牌片尾")
 
+
+
+def test_带式版式的段真的落在画面带里(tmp_path):
+    """spec 顶层 `"layout": "band"`（美网记分条那轮定的，账见
+    docs/us-open-scoreboard-aspect.md）：外框仍 1080×1440，段落改裁 6:5
+    （1296×1080）缩进画面带（1080×900、y=132 起），上下由带底色补齐——
+    顶带给顶栏、底带给字幕，两样都不再压在画面上。
+
+    **真跑一遍 cut_segment**（合成 1920×1080 纯白源片），两种版式都量像素：
+
+    - band：顶带(y 30~100)和底带(y 1150~1350)近黑、画面带(y 560~640)是白的。
+      查像素不查滤镜串——把 pad 换成别的写法照样得红
+    - 默认（不写 layout）：同一批坐标全是白的。**全出血一个字节不许变**，
+      这半张是回归钉：巡回赛片子不许被这次改动碰到
+
+    反向验证过：把 `_canvas_fit()` 的 band 分支拆掉 → band 那半红在「上下带
+    该近黑」；把默认分支也改成 band → full 那半红在「全出血被改了」。
+    """
+    import shutil  # noqa: PLC0415
+
+    import numpy as np  # noqa: PLC0415
+    from PIL import Image  # noqa: PLC0415
+
+    assert shutil.which("ffmpeg"), "没有 ffmpeg，这条判据跑不了：apt install ffmpeg"
+    reel = _reel()
+    src = tmp_path / "white.mp4"
+    subprocess.run(
+        ["ffmpeg", "-y", "-v", "error", "-f", "lavfi", "-i",
+         "color=c=white:s=1920x1080:r=25", "-t", "0.6",
+         "-pix_fmt", "yuv420p", str(src)], check=True)
+    saved = (reel.CROP_W, reel.CROP_H, reel.CROP_Y, reel.LAYOUT)
+    try:
+        for layout in ("band", "full"):
+            reel.resolve_crop(1920, 1080, None, "", layout=layout)
+            seg = reel.Segment(start=0.0, end=0.4, cx=None, narration="",
+                               track=False)
+            seg.cx = 0.5
+            out = tmp_path / f"seg_{layout}.mp4"
+            reel.cut_segment(src, seg, out, 1920)
+            frame = tmp_path / f"f_{layout}.png"
+            subprocess.run(
+                ["ffmpeg", "-y", "-v", "error", "-i", str(out),
+                 "-frames:v", "1", str(frame)], check=True)
+            im = Image.open(frame).convert("L")
+            assert im.size == (1080, 1440), f"{layout}: 画布变了 {im.size}"
+            t = np.asarray(im.crop((0, 30, 1080, 100))).mean()
+            m = np.asarray(im.crop((0, 560, 1080, 640))).mean()
+            b = np.asarray(im.crop((0, 1150, 1080, 1350))).mean()
+            assert m > 200, f"{layout}: 画面带该是白的，量到 {m:.0f}"
+            if layout == "band":
+                assert t < 60 and b < 60, (
+                    f"band: 上下带该是带底色（近黑），量到 顶 {t:.0f} / 底 {b:.0f}"
+                    "——pad 没画出来，字幕和顶栏就还压在画面上")
+            else:
+                assert t > 200 and b > 200, (
+                    f"full: 全出血被改了（顶 {t:.0f} / 底 {b:.0f}）——"
+                    "不写 layout 的巡回赛片子一个字节都不许变")
+    finally:
+        reel.CROP_W, reel.CROP_H, reel.CROP_Y, reel.LAYOUT = saved
+
+
+def test_带式的字幕锚顶栏角标都进带_全出血原样(monkeypatch):
+    """带式版式的三个「放到画面外/画面内」的落位，各钉一头（都反向验证过）：
+
+    - 字幕默认锚：band 进底带（BAND_MARGIN_V=1064），full 仍是画面内 1284。
+      `subtitle_top` 的人工覆盖不在这条判据里——那条口子归 render 里的读取
+    - 顶栏滤镜：band 不画那层半透明 drawbox（顶带已是实色，画了会在
+      y=126~132 露一道两色接缝）；full 照画（顶栏压在画面上要它保可读性）
+    - inset 角标：band 贴**画面带**的四角（纵向各让开一条带），full 贴画布四角
+    """
+    reel = _reel()
+    ins = {"image": "i.png", "corner": "tl", "animate": False}
+    ins_bl = {"image": "i.png", "corner": "bl", "animate": False}
+    pad = int(round(0.043 * reel.VIDEO_W))
+    band_bot = reel.VIDEO_H - reel.BAND_TOP - reel.BAND_PIC_H
+
+    monkeypatch.setattr(reel, "LAYOUT", "band")
+    assert reel.default_margin_v() == reel.BAND_MARGIN_V
+    assert reel.BAND_MARGIN_V == reel.BAND_TOP + reel.BAND_PIC_H + 32
+    assert reel.BAND_TOP >= reel.TOPBAR_H, "顶栏落不进顶带"
+    g = reel.topbar_filtergraph(1.2, 10.0, Path("t.ass"), Path("s.ass"))
+    assert "drawbox" not in g, "带式的顶带已是实色，再画 drawbox 会露两色接缝"
+    assert f"overlay={pad}:{reel.BAND_TOP + pad}" in reel._overlay_chain(
+        "[0:v]null[base]", ins), "band 的 tl 角标要贴画面带顶角，不是画布顶角"
+    assert f"H-h-{band_bot + pad}" in reel._overlay_chain(
+        "[0:v]null[base]", ins_bl), "band 的 bl 角标要贴画面带底角"
+
+    monkeypatch.setattr(reel, "LAYOUT", "full")
+    assert reel.default_margin_v() == reel._REEL_MARGIN_V
+    g2 = reel.topbar_filtergraph(1.2, 10.0, Path("t.ass"), Path("s.ass"))
+    assert "drawbox" in g2, "全出血的顶栏要那层半透明黑保可读性"
+    assert f"overlay={pad}:{pad}" in reel._overlay_chain(
+        "[0:v]null[base]", ins), "全出血的角标落位不许被带式改动牵动"
+
+
+def test_layout只认band且band不和contain混():
+    """spec.layout 的值域和兼容性，`--dry-run`（parse_segments）就拦：
+
+    - 只认 "band"；写错值当场报，别静默当成全出血渲出去（那样「写错了」和
+      「没写」长得一模一样）
+    - band × `fit: contain` 拒掉：带式的画面带本来就是 6:5 宽画幅，contain
+      要解决的「两个人分得很开」它本来就装得下
+    - band 要求源片装得下 6:5 窗口（resolve_crop 那道，方形/竖版源直接拒）
+    """
+    import pytest  # noqa: PLC0415
+
+    reel = _reel()
+    base_seg = [{"start": 1, "end": 7, "source": "r1"}]
+    ok = {"cover": {}, "layout": "band", "segments": list(base_seg)}
+    assert reel.parse_segments(ok, {"r1": Path("a.mp4")}, "r1")
+
+    with pytest.raises(reel.ReelError, match="layout"):
+        reel.parse_segments({"cover": {}, "layout": "wide",
+                             "segments": list(base_seg)},
+                            {"r1": Path("a.mp4")}, "r1")
+
+    with pytest.raises(reel.ReelError, match="contain"):
+        reel.parse_segments(
+            {"cover": {}, "layout": "band",
+             "segments": [{"start": 1, "end": 7, "source": "r1",
+                           "fit": "contain"}]},
+            {"r1": Path("a.mp4")}, "r1")
+
+    saved = (reel.CROP_W, reel.CROP_H, reel.CROP_Y, reel.LAYOUT)
+    try:
+        with pytest.raises(reel.ReelError, match="6:5"):
+            reel.resolve_crop(1080, 1080, None, "", layout="band")
+    finally:
+        reel.CROP_W, reel.CROP_H, reel.CROP_Y, reel.LAYOUT = saved
+
+
+def test_记分条回贴盖住居中窗口裁掉的残条(tmp_path, capsys):
+    """带式窗口**居中**（「不要偏离中心的」），美网那条浮在左下的板会被窗口
+    左缘裁到——`score_inset` 从同一帧把整条板抠出来贴回画面带左下，正好盖住
+    残条。判据**真跑 ffmpeg 量像素**，不查滤镜串：
+
+    合成源片在板的位置画三截色块——绿 [104,360]、红 [360,616]、蓝 [616,736]
+    （y∈[888,978]；蓝模拟**深盘长出来的比分列**——美网每完成一盘板右缘
+    +39px）。居中窗口左缘 312：不回贴时画面左下只有红（绿整截在窗外，这就是
+    残条的形状）；回贴后同一片采样区必须是**绿**——那截绿只有从贴上去的板里来。
+    box 写到 736（最宽状态）时蓝必须跟着进来；box 只写到 616（按当前帧量的）
+    时蓝被贴片盖住、整个消失——这正是「尽量把五盘大战的比分能包括进来」
+    要防的静默丢列。
+
+    反向验证过：把 cut_segment 的 box 分支拆掉 → 「回贴后该看见板的左半」红；
+    把 overlay 落点的 BAND_TOP 拿掉 → 同一条红（贴错了行盖不住采样区）。
+    """
+    import shutil  # noqa: PLC0415
+
+    import numpy as np  # noqa: PLC0415
+    from PIL import Image  # noqa: PLC0415
+
+    assert shutil.which("ffmpeg"), "没有 ffmpeg，这条判据跑不了：apt install ffmpeg"
+    reel = _reel()
+    src = tmp_path / "board.mp4"
+    subprocess.run(
+        ["ffmpeg", "-y", "-v", "error", "-f", "lavfi", "-i",
+         "color=c=white:s=1920x1080:r=25,"
+         "drawbox=x=104:y=888:w=256:h=90:color=green:t=fill,"
+         "drawbox=x=360:y=888:w=256:h=90:color=red:t=fill,"
+         "drawbox=x=616:y=888:w=120:h=90:color=blue:t=fill",
+         "-t", "0.6", "-pix_fmt", "yuv420p", str(src)], check=True)
+
+    def _mean_rgb(frame: Path, box: tuple[int, int, int, int]):
+        arr = np.asarray(Image.open(frame).convert("RGB").crop(box), float)
+        return arr[..., 0].mean(), arr[..., 1].mean(), arr[..., 2].mean()
+
+    saved = (reel.CROP_W, reel.CROP_H, reel.CROP_Y, reel.LAYOUT)
+    try:
+        reel.resolve_crop(1920, 1080, None, "", layout="band")
+        # 采样区（画布坐标）：x∈[60,180] 落在贴回来的板的**左半**——
+        # 居中窗口自己看不见那一截（它对应源片 x<312 之外的 [176,320]）。
+        probe_box = (60, 885, 180, 935)
+        # 蓝列（源片 [616,736]）在最宽 box 的贴片里落在
+        # [(616−104)×0.833, (736−104)×0.833] ≈ [427,527]
+        deep_box = (440, 885, 515, 935)
+        for case in ("narrow", "wide", "off"):
+            box = {"narrow": (104, 888, 616, 978),
+                   "wide": (104, 888, 736, 978),
+                   "off": None}[case]
+            seg = reel.Segment(start=0.0, end=0.4, cx=0.5, narration="",
+                               track=False, score_inset=box)
+            out = tmp_path / f"seg_{case}.mp4"
+            reel.cut_segment(src, seg, out, 1920)
+            frame = tmp_path / f"f_{case}.png"
+            subprocess.run(
+                ["ffmpeg", "-y", "-v", "error", "-i", str(out),
+                 "-frames:v", "1", str(frame)], check=True)
+            r, g, b = _mean_rgb(frame, probe_box)
+            if case == "off":
+                assert r > 150 and g < 90, (
+                    f"不回贴的对照组该只剩红色残条，量到 RGB=({r:.0f},{g:.0f},"
+                    f"{b:.0f})——对照组不成立的话，上面那半张绿的证明不了回贴")
+                continue
+            assert g > 90 and r < 80, (
+                f"{case}: 回贴后该看见板的左半（绿），量到 RGB=({r:.0f},"
+                f"{g:.0f},{b:.0f})——残条没被整条板盖住")
+            rd, gd, bd = _mean_rgb(frame, deep_box)
+            if case == "wide":
+                assert bd > 90 and rd < 80, (
+                    f"box 按最宽状态写时，深盘那几列（蓝）必须跟着贴进来，"
+                    f"量到 RGB=({rd:.0f},{gd:.0f},{bd:.0f})")
+                r2, g2, b2 = _mean_rgb(frame, (620, 885, 700, 935))
+                assert min(r2, g2, b2) > 200, (
+                    f"贴片右侧该还是主窗口的白，量到 ({r2:.0f},{g2:.0f},{b2:.0f})")
+            else:
+                assert min(rd, gd, bd) > 200, (
+                    f"box 按当前帧量（616）时深盘的列被贴片盖住整个消失"
+                    f"（这儿该是贴片带进来的白），量到 ({rd:.0f},{gd:.0f},"
+                    f"{bd:.0f})——这条断言画的就是那个静默丢列的样子，"
+                    "它是「box 要按最宽状态写」的证据，不是要修的 bug")
+
+        # 窗口左缘没越过板左缘时**跳过回贴并出声**（贴了反而叠重影）
+        seg = reel.Segment(start=0.0, end=0.4, cx=0.36, narration="",
+                           track=False, score_inset=(104, 888, 616, 978))
+        reel.cut_segment(src, seg, tmp_path / "skip.mp4", 1920)
+        assert "跳过回贴" in capsys.readouterr().out, (
+            "窗口本来就含住整条板时要跳过回贴并说一声——"
+            "不吭声的话「贴了」和「不用贴」在日志上一样")
+    finally:
+        reel.CROP_W, reel.CROP_H, reel.CROP_Y, reel.LAYOUT = saved
+
+
+def test_score_inset的形状校验和scorebox的死键闸(capsys):
+    """`score_inset` / `scorebox` 的形状规矩全在 parse_segments（--dry-run
+    0.2 秒就报，不用等下载）：
+
+    - score_inset 只在带式里有意义；带式外写了当场报（不是静默不生效）
+    - 开了 score_inset 就必须有 spec 顶层 scorebox（格式 [x0,y0,x1,y1]）
+    - scorebox 写在非带式 spec 里是死键，当场报
+    - `{"x2": N}` 放宽这一段的板右缘（深盘 +39px/列那笔账），解析成 (x0,y0,N,y1)
+    - 带式 + scorebox 下没开回贴的段要**报出来**（只报不拦：回放段不开是对的）
+    """
+    import pytest  # noqa: PLC0415
+
+    reel = _reel()
+    srcs = {"r1": Path("a.mp4")}
+    box = [104, 888, 616, 978]
+
+    with pytest.raises(reel.ReelError, match="score_inset"):
+        reel.parse_segments(
+            {"cover": {}, "segments": [
+                {"start": 1, "end": 7, "source": "r1", "score_inset": True}]},
+            srcs, "r1")
+    with pytest.raises(reel.ReelError, match="scorebox"):
+        reel.parse_segments(
+            {"cover": {}, "layout": "band", "segments": [
+                {"start": 1, "end": 7, "source": "r1", "score_inset": True}]},
+            srcs, "r1")
+    with pytest.raises(reel.ReelError, match="死键"):
+        reel.parse_segments(
+            {"cover": {}, "scorebox": box,
+             "segments": [{"start": 1, "end": 7, "source": "r1"}]},
+            srcs, "r1")
+    with pytest.raises(reel.ReelError, match="scorebox"):
+        reel.parse_segments(
+            {"cover": {}, "layout": "band", "scorebox": [104, 888, 616],
+             "segments": [{"start": 1, "end": 7, "source": "r1"}]},
+            srcs, "r1")
+    with pytest.raises(reel.ReelError, match="x2"):
+        reel.parse_segments(
+            {"cover": {}, "layout": "band", "scorebox": box, "segments": [
+                {"start": 1, "end": 7, "source": "r1",
+                 "score_inset": {"x2": 80}}]},
+            srcs, "r1")
+
+    segs = reel.parse_segments(
+        {"cover": {}, "layout": "band", "scorebox": box, "segments": [
+            {"start": 1, "end": 7, "source": "r1", "score_inset": True},
+            {"start": 7, "end": 12, "source": "r1",
+             "score_inset": {"x2": 655}},
+            {"start": 12, "end": 15, "source": "r1"}]},
+        srcs, "r1")
+    assert segs[0].score_inset == (104, 888, 616, 978)
+    assert segs[1].score_inset == (104, 888, 655, 978), "x2 放宽没落到这一段"
+    assert segs[2].score_inset is None
+    out = capsys.readouterr().out
+    assert "[score]" in out and "[3]" in out, (
+        "没开回贴的段要在 --dry-run 里点名——漏开的样子是画面左下留一截残条，"
+        "而渲染和质检对它一声不吭")
+    assert "最宽状态" in out, (
+        "带式 + scorebox 要在 --dry-run 里提醒「按板的最宽状态写」——"
+        "账号所有者：「尽量把五盘大战的比分能包括进来」；按当前帧量的 box "
+        "会把深盘长出来的列静默裁掉，而那一天没有任何闸会出声")
