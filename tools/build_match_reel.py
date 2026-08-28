@@ -351,6 +351,12 @@ CONTAIN_KEEP = 0.62
 CONTAIN_MAX_UPSCALE = 1.35
 # 原声压到多少。留一点现场声（球声、观众），但不能盖过中文解说。
 BED_LOUD = 0.72   # 没人说话时的现场声
+# 背景音乐相对现场声的音量。账号所有者 2026-08-28 定的 4.0%——它是**相对
+# `BED_LOUD` 的比例**，不是喂给 ffmpeg 的裸增益：现场声本身放在 0.72 上，
+# 音乐要听着是「现场声的 4%」，真正的增益就是 0.72×4% = 0.0288（−30.8 dB）。
+# 写成比例而不是写死 0.0288，是因为改 BED_LOUD 的人不会想到还要改这儿。
+MUSIC_GAIN_PCT = 4.0
+MUSIC_FADE = 3.0  # 收尾淡出：音乐比片子长就会被 -shortest 一刀切断，很难听
 # mute 段的地板音量（-26 dB）。量出来的账：宣传片配乐 mean 约 -15~-20 dB，
 # 乘 0.05 落在 -41~-46 dB——比旁白（约 -22 dB）低约 20 dB（听感是底噪级的
 # 「空气」），又稳稳高于 check_reel_landed 的 SILENCE_FLOOR_DB（-60）。
@@ -435,7 +441,8 @@ def dissolve_filtergraph(lengths: list[float], fade: float) -> str:
     return ";".join(vparts + aparts)
 
 
-def duck_filtergraph(filters: list[str], voice_labels: list[str]) -> str:
+def duck_filtergraph(filters: list[str], voice_labels: list[str],
+                     music: str = "") -> str:
     """闪避的滤镜图：没人说话时现场声开到 `BED_LOUD`，解说一进来就压下去。
 
     **`[vk0]apad[vk]` 那一段不能省，而且不能只当它是个细节。**
@@ -465,6 +472,10 @@ def duck_filtergraph(filters: list[str], voice_labels: list[str]) -> str:
     抽成函数是为了让判据能**真跑一次混音**：查源码文本的断言只能防「有人把它
     删了」，防不住「它从来没工作过」。
     """
+    # 音乐**不进闪避**：它已经在现场声的 4% 上，再让 sidechaincompress 压一道
+    # 等于没有；而且喂进 sidechain 会把「有没有人说话」这个判据搅浑。它直接进
+    # 最后那次 amix，和闪避完的现场声、解说三路相加。
+    beds = "[duck][vm]" + ("[music]" if music else "")
     return (
         f"[0:a]volume={BED_LOUD}[bed];{';'.join(filters)};"
         f"{''.join(voice_labels)}amix=inputs={len(filters)}:normalize=0[voice];"
@@ -472,8 +483,26 @@ def duck_filtergraph(filters: list[str], voice_labels: list[str]) -> str:
         f"[vk0]apad[vk];"
         f"[bed][vk]sidechaincompress=threshold=0.02:ratio=12:"
         f"attack=15:release=450:makeup=1[duck];"
-        f"[duck][vm]amix=inputs=2:normalize=0:dropout_transition=0[out]"
+        + (f"{music};" if music else "")
+        + f"{beds}amix=inputs={2 + bool(music)}:normalize=0:"
+        f"dropout_transition=0[out]"
     )
+
+
+def music_chain(index: int, seconds: float, pct: float = MUSIC_GAIN_PCT) -> str:
+    """背景音乐这一路的滤镜链：定量增益 + 收尾淡出。
+
+    `pct` 是**相对现场声**的百分比（账号所有者定的 4.0%），所以真正的增益
+    要乘上 `BED_LOUD`——现场声自己就放在那个刻度上。写死一个裸增益的话，
+    哪天有人调 `BED_LOUD`，音乐和现场声的比例就静静地漂了。
+
+    音乐比片子长会被 `-shortest` 一刀切断（很难听），所以按**片长**锚一个
+    淡出；比片子短就自然结束，`amix` 的 `duration=longest` 让画面走完。
+    """
+    gain = BED_LOUD * pct / 100.0
+    fade_from = max(0.0, seconds - MUSIC_FADE)
+    return (f"[{index}:a]volume={gain:.6f},"
+            f"afade=t=out:st={fade_from:.2f}:d={MUSIC_FADE}[music]")
 
 
 # 分段和封面都是**中间产物**：拼完之后整片还要以 crf 18 重编一次。在这里编到
@@ -2296,7 +2325,8 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
 _REAL_FIELDS: dict[str, tuple[str, ...]] = {
     "spec": ("archival", "conform", "cover", "crop_y", "crop_zoom",
              "layout", "mixed_fps", "primary",
-             "outro", "push", "rate", "scorebox", "segments", "silent_source",
+             "music", "outro", "push", "rate", "scorebox", "segments",
+             "silent_source",
              "slug", "source_audio", "source_url", "sources", "stats",
              "subtitle_top", "topbar", "voice", "editorial"),
     "cover": ("event_badge", "eyebrow", "hook", "layout", "matchup", "meta",
@@ -5578,6 +5608,36 @@ def ending_payoff_problem(
         "第一波庆祝必须真的出现在正文里。")
 
 
+def music_problem(spec: dict, base: Path = Path(".")) -> str | None:
+    """背景音乐这一路的形状闸——**只读 spec 和磁盘，不碰源片**，所以
+    `--dry-run` 0.2 秒就能报，不用等到第 5 分钟的混音那一步才炸。
+
+    `_license` 是**认领**，和 `mixed_fps` / `silent_source` / `_frame_why`
+    一个形状：把「想清楚了这首曲子能用」和「顺手拖了个文件进来」分开。
+    背景音乐是会被平台的音频指纹扫到的东西，而这个账号正在整改期——
+    授权来路必须留在 spec 里，事后才查得到当时是按什么用的。
+    """
+    music = spec.get("music")
+    if music is None:
+        return None
+    if not isinstance(music, dict):
+        return "spec.music 要写成对象：{\"file\": …, \"_license\": …}。"
+    path = str(music.get("file") or "").strip()
+    if not path:
+        return "spec.music 缺 `file`（音频文件路径，相对仓库根）。"
+    if not (base / path).is_file():
+        return (f"spec.music.file 指的文件不在：{path}\n"
+                "音乐文件要进仓库（和封面图一样），否则渲染那台机器上没有。")
+    if not str(music.get("_license") or "").strip():
+        return ("spec.music 要写 `_license` 认领这首曲子的授权来路"
+                "（哪儿来的、什么授权、能不能用在这个号上）。\n"
+                "背景音乐会被平台的音频指纹扫到，来路必须留在 spec 里。")
+    pct = music.get("gain_pct", MUSIC_GAIN_PCT)
+    if not isinstance(pct, (int, float)) or isinstance(pct, bool) or not 0 < pct <= 100:
+        return "spec.music.gain_pct 要是 0~100 之间的数（相对现场声的百分比）。"
+    return None
+
+
 def validate_spec(
     spec: dict, *, allow_published_legacy: bool = False,
 ) -> list[Segment]:
@@ -5625,6 +5685,9 @@ def validate_spec(
     photo = cover_photo_problem(spec)
     if photo:
         raise ReelError(photo)
+    music = music_problem(spec)
+    if music:
+        raise ReelError(music)
     segments = parse_segments(spec, urls, next(iter(urls)))
     raw_percent = [
         (index, seg.narration)
@@ -6168,6 +6231,19 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
           f"左右 {_ASS_MARGIN_H}）")
 
     mixed = outdir / "_audio.m4a"
+    # 背景音乐：独立一路，**不进闪避**（见 duck_filtergraph）。淡出锚在画面的
+    # 真实长度上——自己再算一遍片长就是「一个数写两处必分叉」，而分叉的样子是
+    # 「音乐在离结尾还有几秒的地方就淡没了」，渲染不报错。
+    music_graph = ""
+    music_spec = spec.get("music") or {}
+    if music_spec:
+        film_seconds = probe_duration(silent)
+        pct = float(music_spec.get("gain_pct", MUSIC_GAIN_PCT))
+        mix_inputs.extend(["-i", str(Path(music_spec["file"]))])
+        music_graph = music_chain(len(mix_inputs) // 2, film_seconds, pct)
+        print(f"[音乐] {music_spec['file']}：{pct}% 现场声"
+              f"（增益 {BED_LOUD * pct / 100:.4f}），"
+              f"{max(0.0, film_seconds - MUSIC_FADE):.1f}s 起淡出")
     with stage("混音"):
         if filters:
             # 闪避，不是一路压死：没人说话的时候现场声开到 BED_LOUD，解说一进来
@@ -6175,7 +6251,8 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
             # 要么盖住解说，要么整条片子的球声都听不见，两头不讨好。
             run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
                 "-i", str(silent), *mix_inputs,
-                "-filter_complex", duck_filtergraph(filters, voice_labels),
+                "-filter_complex",
+                duck_filtergraph(filters, voice_labels, music_graph),
                 # 这一步只是把解说混进现场声，产物是个 m4a——画面在这儿是
                 # 拿来给 `-shortest` 定长度的，**必须 copy**。原来没写 `-c:v`，
                 # 默认动作是把整条 1080×1920 重新 x264 编一遍，编完写进 m4a、

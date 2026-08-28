@@ -20,6 +20,7 @@ import inspect
 import os
 import re
 import subprocess
+import math
 import sys
 from fnmatch import fnmatch
 from pathlib import Path
@@ -13154,3 +13155,103 @@ def test_美网的比赛一律带式版式():
         reel.parse_segments(
             {"cover": {}, "slug": slug, "topbar": {"line1": line1, "line2": "x"},
              "segments": list(seg)}, srcs, "r1")
+
+
+def test_背景音乐要真的落在现场声的4个百分点上(tmp_path):
+    """账号所有者 2026-08-28：「配上背景音乐，音量是原声的 4.0%」。
+
+    **判据必须真跑一次混音**——查源码里有没有 `volume=0.0288` 只能防「有人把
+    它删了」，防不住「它从来没工作过」（`_push` 键名写错、`_cut_person` 从来
+    没跑起来过，都是这个形状）。
+
+    量法走了两版弯路，记在这儿免得下一个人重走：
+
+    ① **按频段劈开各自量**（现场声 300 Hz / 音乐 4000 Hz，高通低通分别量）
+       ——滤波器本身在衰减被测信号，三级 highpass 把 4000 Hz 的音乐压掉了
+       14 dB，量出来的比值直接偏一个量级。**band 比值这个量法有偏，别用。**
+    ② **门槛写成绝对分贝**（「没音乐时高频档要 < −60 dB」）——AAC 192k 的
+       量化噪底本来就在 −50 dB 上下，这条会红在噪底上而不是红在缺陷上。
+
+    现在的量法不经过任何滤波器：混两遍（给音乐 / 不给音乐），**相减**。
+    `amix=normalize=0` 是线性相加，所以 `有 − 没有` 按定义就是音乐那一路
+    本身。两份都写成 WAV，相减是精确的，噪底掉到 −90 dB 以下。
+    """
+    import shutil  # noqa: PLC0415
+    import subprocess  # noqa: PLC0415
+
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import build_match_reel as reel  # noqa: PLC0415
+
+    assert shutil.which("ffmpeg"), "没有 ffmpeg，这条判据跑不了：apt install ffmpeg"
+
+    def _ff(*args):
+        subprocess.run(["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+                        *args], check=True)
+
+    def _peak_db(path, *pre):
+        """量 10~16s 的峰值：旁白 7 秒就说完了（现场声开在满刻度 BED_LOUD），
+        而淡出要 17s 才开始——这个窗口量到的就是「音乐 ÷ 现场声」本身。"""
+        out = subprocess.run(
+            ["ffmpeg", "-hide_banner", "-ss", "10", "-t", "6", *pre,
+             "-af", "volumedetect", "-f", "null", "-"],
+            capture_output=True, text=True, check=True).stderr
+        line = [x for x in out.splitlines() if "max_volume" in x]
+        assert line, f"量不到 max_volume：{out[-400:]}"
+        return float(line[0].split("max_volume:")[1].split("dB")[0])
+
+    bed = tmp_path / "bed.mp4"
+    _ff("-f", "lavfi", "-i", "color=c=black:s=64x64:d=20",
+        "-f", "lavfi", "-i", "sine=frequency=300:duration=20",
+        "-shortest", "-c:v", "libx264", "-pix_fmt", "yuv420p", str(bed))
+    voice = tmp_path / "voice.wav"
+    _ff("-f", "lavfi", "-i", "sine=frequency=900:duration=7",
+        "-c:a", "pcm_s16le", str(voice))
+    music = tmp_path / "music.wav"
+    _ff("-f", "lavfi", "-i", "sine=frequency=4000:duration=20",
+        "-c:a", "pcm_s16le", str(music))
+
+    def _mix(with_music):
+        # 无损写出：相减要精确，AAC 的量化噪声会把噪底抬到 −50 dB。
+        dest = tmp_path / f"mix_{int(with_music)}.wav"
+        chain = reel.music_chain(2, 20.0) if with_music else ""
+        args = ["-i", str(bed), "-i", str(voice)]
+        if with_music:
+            args += ["-i", str(music)]
+        _ff(*args, "-filter_complex",
+            reel.duck_filtergraph(["[1:a]adelay=0|0[v0]"], ["[v0]"], chain),
+            "-map", "[out]", "-c:a", "pcm_s16le", "-t", "20", str(dest))
+        return dest
+
+    on, off = _mix(True), _mix(False)
+
+    # 有 − 没有 ＝ 音乐那一路本身（volume=-1 反相之后相加）。
+    diff = tmp_path / "music_only.wav"
+    _ff("-i", str(on), "-i", str(off), "-filter_complex",
+        "[1:a]volume=-1[inv];[0:a][inv]amix=inputs=2:normalize=0[d]",
+        "-map", "[d]", "-c:a", "pcm_s16le", str(diff))
+
+    music_only = _peak_db(diff, "-i", str(diff))
+    bed_only = _peak_db(off, "-i", str(off))
+
+    # ① 反面锚点：音乐真的混进去了。把 `[music]` 从 amix 里摘掉的话，两次混音
+    #    逐字节相同，相减是 16 位的数字静音（−91 dB）——这条当场红。
+    #    ⚠️ 门槛不能按「源文件是满刻度」去拍：ffmpeg 的 `sine` 源实测只有
+    #    −18 dB，第一版写 `> -45` 就是这么红在自己的假设上的。−70 是「离数字
+    #    静音有 20 dB 以上」，和源文件多大无关。
+    assert music_only > -70, (
+        f"相减之后是数字静音（{music_only:.1f} dB）：音乐根本没混进 amix")
+
+    # ② 音乐 ÷ 现场声 = 4.0%，也就是 20·log10(0.04) ≈ −27.96 dB。
+    got = music_only - bed_only
+    want = 20 * math.log10(reel.MUSIC_GAIN_PCT / 100)
+    assert abs(got - want) < 1.0, (
+        f"音乐应该落在现场声的 {reel.MUSIC_GAIN_PCT}%（{want:.1f} dB），"
+        f"实测 {got:.1f} dB")
+
+    # ③ 现场声没被音乐挤掉。要拦的是 `normalize=1`——那会把三路按平均算，
+    #    现场声当场掉好几个 dB。**这条只能是单向的**：峰值往上抬一点是两路
+    #    信号同相叠加的物理（4% 时约 0.25 dB、8% 时 0.7 dB），第一版写成
+    #    `abs(...) < 0.5` 的双向门槛，一调大增益就红在物理上而不是红在缺陷上。
+    assert _peak_db(on, "-i", str(on)) > bed_only - 0.5, (
+        f"加了音乐之后现场声掉了（{bed_only:.1f} → "
+        f"{_peak_db(on, '-i', str(on)):.1f} dB）——amix 把它按平均算了？")
