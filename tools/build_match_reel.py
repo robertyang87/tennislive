@@ -182,7 +182,9 @@ BAND_BG = "0x0D1016"        # 带底色：近黑偏蓝，接美网深蓝但不�
 # 中心的」——球场被推到窗内 66%，左边三分之一全是看台和裁判椅。居中之后
 # 记分条会被窗口左缘裁到（板 [104,616]、居中窗口左缘 312），所以带式的
 # 记分条走**回贴**：`score_inset` 从同一帧把整条板抠出来（spec 的 `scorebox`
-# 给坐标），按画面带的缩放比贴回左下——贴的位置正好盖住残条，逐帧天然同步。
+# 给坐标）贴回左下，正好盖住残条，逐帧天然同步。⚠️ 贴片**缩到残条那么宽**
+# （2026-08-28「下方球员脚步被遮挡了」）：按原比例贴会比残条宽一大截，多出来
+# 的那一截盖的是真球场——判据和实测在 cut_segment 的回贴那一段。
 # 近景镜头实测板也在同一位置（92.5/94.5s 两格放大核过），所以混着近景的段
 # 照样能开；板真的会消失的段（回放/采访切走）别开，残条警告会替人看着。
 #
@@ -2986,22 +2988,46 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
                 # 合完再一起拉慢，和 contain 那条路同一个形状。
                 x0, y0, x1, y1 = box
                 ratio = VIDEO_W / CROP_W
+
                 # 贴片尺寸**向上**取偶：向下取会在贴片右/下边留一条 1px 的残线
                 # （贴片盖不满它要盖的那一片），多出来的半像素只是把板拉伸
                 # 千分之几，看不见。
-                sw = max(2, -(-int(round((x1 - x0) * ratio)) // 2) * 2)
-                sh = max(2, -(-int(round((y1 - y0) * ratio)) // 2) * 2)
+                def _even(v: float) -> int:
+                    return max(2, -(-int(round(v)) // 2) * 2)
+
+                sh = _even((y1 - y0) * ratio)      # 残条的高＝贴片该占的高
                 oy = BAND_TOP + int(round(y0 * ratio))
+                # ⭐ 2026-08-28 账号所有者：「下方球员脚步被遮挡了」。回贴原来
+                # 按**原比例**贴整条板，而板比窗口天然含住的那一条（残条）宽——
+                # 多出来的那一截盖的是**真球场**。这一条实测量过：残条 287px，
+                # 原比例贴片 460px，多盖 173px＝画面宽的 16%；拿 probe 的缩略图
+                # 墙把被盖住的那一片摊开看，81 格里有 27 格底下是球员的腿和脚。
+                # 所以贴片**缩到残条的宽**：回贴只许盖住窗口本来就裁不掉的那一
+                # 条，一寸球场都不多占。缩完比残条矮（等比），矮出来的上下两条
+                # 用带底色垫平——不垫的话那两条会露出残条自己的上下边，成了
+                # 「板下面还有半条板」的重影。
+                bw = _even((x1 - x0) * ratio)      # 整条板按原比例的宽
+                strip = _even((x1 - x) * ratio)    # 居中窗口天然含住的残条
+                nw = min(bw, strip)
+                nh = _even((y1 - y0) * ratio * nw / bw)
+                by = oy + (sh - nh) // 2
                 print(f"    [score] {seg.start:.1f}s 段回贴记分条 "
                       f"[{x0},{y0},{x1},{y1}] → 画面带 (0,{oy})，"
-                      f"盖住窗口左缘裁掉的 {x - x0}px")
+                      f"缩到残条宽 {nw}px（原比例要 {bw}px，"
+                      f"少盖 {bw - nw}px 球场）")
+                if nw * 2 < bw:
+                    print(f"    [score] ⚠️ 贴片只有原比例的 {nw / bw:.0%}，"
+                          "板会小到读不出——多半是 scorebox 写宽了（把板右边"
+                          "的球场也框进去了）或者窗口把板裁得太狠，量一眼再定")
                 chain = (
                     f"split=2[wm][wb];"
                     f"[wm]crop={CROP_W}:{CROP_H}:{x}:{CROP_Y},"
-                    f"{_canvas_fit().rstrip(',')}[m];"
+                    f"{_canvas_fit()}"
+                    f"drawbox=x=0:y={oy}:w={strip}:h={sh}:"
+                    f"color={BAND_BG}:t=fill[m];"
                     f"[wb]crop={x1 - x0}:{y1 - y0}:{x0}:{y0},"
-                    f"scale={sw}:{sh}:flags=lanczos[b];"
-                    f"[m][b]overlay=0:{oy},{sp}fps={FPS_EXPR},setsar=1"
+                    f"scale={nw}:{nh}:flags=lanczos[b];"
+                    f"[m][b]overlay=0:{by},{sp}fps={FPS_EXPR},setsar=1"
                 )
                 labeled = True
             else:

@@ -5,10 +5,10 @@
  "scorebox": [
   104,
   888,
-  736,
+  660,
   978
  ],
- "_scorebox_why": "美网世界 feed 的标准位（docs/us-open-scoreboard-aspect.md 实测 104,888,616,978，右缘随盘数 +39px/列）；本场 probe 的 score_XX 裁片逐格核过，板整条落在框内。按五盘满列宽度 736 写（多抠的是球场，贴回去看不见）。SET/MATCH POINT 黄标在 y<888 之外，按 docs 的口径不扩窗——关键分旁白本来就讲。",
+ "_scorebox_why": "美网世界 feed 的标准位（docs/us-open-scoreboard-aspect.md 实测 104,888,616,978，右缘随盘数 +39px/列）。⚠️ 右缘按**这场板的真实右缘**写 660，不照抄模板里那个五盘满列的 736——把已发成片拉回本地逐帧量：决胜盘「6 3 1 AD」四列是这场最宽的一档，板的右边框落在画面带 x=460，换回源片 104+460×1.2=656，取 660 留 4px；一二盘只有两列（右缘 ~400），全包得住。736 那个写法有两处代价，而且都看得见：① 贴片会把板右边 80px 的**球场**一起贴到画面上；② 残条按 (x1−窗口左缘 312)×0.8333 算，736 会把它算成 353 而真值只有 290——回贴现在缩到残条宽，算宽了就等于白盖 63px。SET/MATCH POINT 黄标在 y<888 之外，按 docs 的口径不扩窗——关键分旁白本来就讲。",
  "source_url": "https://youtu.be/63uyJ43Q_AY",
  "_source": "US Open 官方 YouTube 频道（US Open Tennis Championships）本场官方集锦，204.5s 1920x1080 60fps（probe 落 29.97fps 口径）。画面自证四处：记分条 14 ZHENG CHN / PRIDANKINA 与 flashscore tYi0NJyA 逐分一致；SET POINT #3 / SET POINT #2 / MATCH POINT 黄标与逐分记录的关键分逐一对上；终场全屏图形 6 3 6 / 4 6 0 = 官方赛果 6-4 3-6 6-0；片尾美网品牌板（201.42 起，已排除在段外）。",
  "cover": {
