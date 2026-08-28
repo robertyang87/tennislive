@@ -13090,3 +13090,67 @@ def test_score_inset的形状校验和scorebox的死键闸(capsys):
         "带式 + scorebox 要在 --dry-run 里提醒「按板的最宽状态写」——"
         "账号所有者：「尽量把五盘大战的比分能包括进来」；按当前帧量的 box "
         "会把深盘长出来的列静默裁掉，而那一天没有任何闸会出声")
+
+
+def test_美网的比赛一律带式版式():
+    """账号所有者 2026-08-28：「**美网期间的比赛都用这个比例做视频**」。
+
+    美网比赛的 reel（topbar.line1 写着美网/US Open）不写 layout: band 就在
+    --dry-run 当场红——只记在对话里拦不住下一个会话，自动链也会自己产美网的
+    片子（注入在 promote_reel_draft，判据同一份 reel_facts.us_open_match_line）。
+
+    钉四头：① 美网 + 全出血 → 红（中英两种写法都认）；② 美网带式但没
+    scorebox → 红（居中窗口把板裁成残条、回贴无从谈起）；③ archival 存档
+    故事片豁免（老素材的图形包不是这套账量的）；④ 豁免表自检——slug 要
+    真的存在、line1 真的写着美网、layout 真的还不是 band，写错一个名字
+    豁免就成了恒真的绿灯。
+    """
+    import pytest  # noqa: PLC0415
+
+    reel = _reel()
+    srcs = {"r1": Path("a.mp4")}
+    seg = [{"start": 1, "end": 7, "source": "r1"}]
+
+    for line1 in ("2026 美网 女单第二轮", "2026 US Open R2"):
+        with pytest.raises(reel.ReelError, match="带式"):
+            reel.parse_segments(
+                {"cover": {}, "topbar": {"line1": line1, "line2": "x"},
+                 "segments": list(seg)}, srcs, "r1")
+
+    with pytest.raises(reel.ReelError, match="scorebox"):
+        reel.parse_segments(
+            {"cover": {}, "layout": "band",
+             "topbar": {"line1": "2026 美网 男单第三轮", "line2": "x"},
+             "segments": list(seg)}, srcs, "r1")
+
+    ok = reel.parse_segments(
+        {"cover": {}, "layout": "band", "scorebox": [104, 888, 736, 978],
+         "topbar": {"line1": "2026 美网 男单第三轮", "line2": "x"},
+         "segments": [{"start": 1, "end": 7, "source": "r1",
+                       "score_inset": True}]}, srcs, "r1")
+    assert ok[0].score_inset == (104, 888, 736, 978)
+
+    # 存档故事片（archival）不在此列；非美网的赛事也不受影响
+    assert reel.parse_segments(
+        {"cover": {}, "archival": "usq-2014",
+         "topbar": {"line1": "2014 美网 半决赛", "line2": "x"},
+         "segments": list(seg)}, srcs, "r1")
+    assert reel.parse_segments(
+        {"cover": {}, "topbar": {"line1": "WTA1000 辛辛那提 第二轮",
+                                 "line2": "x"},
+         "segments": list(seg)}, srcs, "r1")
+
+    # 豁免表自检（只许减不许加）
+    for slug in reel._LEGACY_USO_FULLBLEED:
+        spec_path = Path("specs/reels") / f"{slug}.json"
+        assert spec_path.is_file(), f"豁免表里的 {slug} 根本不存在"
+        legacy = json.loads(spec_path.read_text(encoding="utf-8"))
+        line1 = str((legacy.get("topbar") or {}).get("line1", ""))
+        assert "美网" in line1 or "us open" in line1.lower(), (
+            f"{slug} 的 line1 没写美网——它不该在豁免表里")
+        assert legacy.get("layout") != "band", (
+            f"{slug} 已经是带式了——从豁免表里把它删掉（只许减不许加）")
+        # 豁免真的在起作用：这条老 spec 的形状今天仍过得了闸
+        reel.parse_segments(
+            {"cover": {}, "slug": slug, "topbar": {"line1": line1, "line2": "x"},
+             "segments": list(seg)}, srcs, "r1")

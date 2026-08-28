@@ -177,6 +177,21 @@ BO5 一律写右缘 **~736**（第五盘满列外推值）：
     不写 layout＝现行全出血，巡回赛片子一个字节不变
     （回归钉在 `test_带式版式的段真的落在画面带里` 的 full 那半）
 
+### ⭐⭐ 美网期间不是 opt-in，是**规矩**（账号所有者 2026-08-28：「美网期间的比赛都用这个比例做视频」）
+
+- **硬闸**：topbar.line1 写着美网/US Open 的比赛 spec 不带 `layout: band` +
+  `scorebox`，`--dry-run` 当场红（`parse_segments`，判据
+  `test_美网的比赛一律带式版式`）。archival 存档故事片豁免（老素材的图形包
+  不是这套账量的）；规矩之前发的两条资格赛（`zheng-burel-us-open-2026-q2` /
+  `zheng-you-us-open-2026-q1`）挂 `_LEGACY_USO_FULLBLEED`，只许减不许加
+- **自动链注入**：`promote_reel_draft.promote` 转正美网草稿时自己带上三件套
+  （band + `US_OPEN_SCOREBOX` + 比赛画面段 `score_inset: true`，setdefault
+  保住终审显式标过 false 的回放段），模型和终审都不用记得——判据和闸同一份
+  （`reel_facts.us_open_match_line` / `US_OPEN_SCOREBOX`，单一出处）
+- ⚠️ 自动链的段是模型挑的，**切走/人群镜头它分不出来**——默认全开回贴意味着
+  偶尔会把横幅贴出一道接缝（t=30 那格的样子）。这是认领过的取舍：比分全程
+  在画面里优先；终审改草稿时看见切走段就标 `"score_inset": false`
+
 - 段滤镜链：`crop=1296:1080`（居中）→ `scale=1080:900` → `pad=1080:1440:0:132`
   （`_canvas_fit()`，crop/track 两条路共用一份）；开了 score_inset 的段劈两路
   `split=2`，第二路 `crop=板` → `scale=×0.833` → `overlay=0:872`

@@ -339,6 +339,37 @@ def test_promote只在最终validate_spec通过后ready(tmp_path, monkeypatch):
     assert spec["push"]["auto"] is True
 
 
+def test_promote美网草稿自动带式(tmp_path, monkeypatch):
+    """账号所有者 2026-08-28：「美网期间的比赛都用这个比例做视频」。
+
+    自动链的美网草稿转正时**机器自己带上**带式三件套——模型和终审都不用记得：
+    layout: band + scorebox（五盘满列宽度，reel_facts.US_OPEN_SCOREBOX 单一
+    出处）+ 比赛画面的段默认 score_inset: true（setdefault：终审显式写过
+    false 的段不被盖掉）。parse_segments 那头有同一判据的硬闸兜着——这里漏了
+    注入，转正时 validate_spec 会当场红，废不了片但会卡住整条自动链。
+
+    反向钉一头：非美网的草稿（Demo Open）一个字段都不许多——注入的判据是
+    line1 里的赛事，不是「所有自动草稿」。
+    """
+    promote = load("promote_reel_draft")
+    fake = type("M", (), {"validate_spec": staticmethod(lambda spec: None)})()
+    monkeypatch.setitem(sys.modules, "build_match_reel", fake)
+
+    uso = _ready_draft(tmp_path)
+    uso["_production"]["event"] = "US Open"
+    uso["segments"][2]["score_inset"] = False  # 终审标过的回放段
+    spec = promote.promote(uso)
+    assert spec["layout"] == "band"
+    assert spec["scorebox"] == [104, 888, 736, 978]
+    flags = [s.get("score_inset") for s in spec["segments"] if not s.get("image")]
+    assert flags.count(True) == len(flags) - 1 and flags.count(False) == 1, (
+        f"比赛画面的段该默认回贴、显式 false 的要保住：{flags}")
+
+    plain = promote.promote(_ready_draft(tmp_path))
+    assert "layout" not in plain and "scorebox" not in plain
+    assert all("score_inset" not in s for s in plain["segments"])
+
+
 def test_workflow只有正式ready才从probe派发render():
     body = (ROOT / ".github/workflows/match-reel.yml").read_text(encoding="utf-8")
     step = body.split("probe 正式 spec 就绪后自动派发 render", 1)[1].split(
