@@ -2254,20 +2254,20 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
         # 等于白盖一截球场（郑钦文那条一盘的段 588 比 660 少盖 62px）；
         # 框宽了还会把板右边的球场一起抠进贴片再贴到别处（绿盖绿看不出来，
         # 但它是错的）。
+        inset_on = [i + 1 for i, g in enumerate(spec["segments"])
+                    if g.get("score_inset")]
         print(f"    [score] scorebox 宽 {bx[2] - bx[0]}px（右缘 {bx[2]}）——"
-              "顶层按**这场最宽的那一档**写；比赛还没打到那一档的段用 "
-              '`"score_inset": {"x2": N}` 收窄到这一段板的真实右缘，'
-              "回贴才不会多盖球场")
-        # 带式窗口居中（「不要偏离中心的」），浮在左下的板会被窗口左缘裁掉；
-        # 没开回贴的段要么是回放/切走（对的），要么是漏了（画面上留一截残条）。
-        # 只报不拦：机器分不出这两种，但漏了的样子在 --dry-run 里要看得见。
-        no_inset = [i + 1 for i, s in enumerate(spec["segments"])
-                    if not s.get("image") and not s.get("score_inset")]
-        if no_inset:
-            print(f"    [score] 第 {no_inset} 段没开 score_inset——带式的居中"
-                  "窗口会把记分条裁出残条；回放/切走的段不开是对的，"
-                  "比赛画面的段要写 true（板还没长到最宽的段写 "
-                  "{\"x2\": 这一段板的真实右缘}）")
+              "顶层按**这场最宽的那一档**写。记分条默认不回贴（转播自己的板"
+              "按窗口原样露出来）；"
+              + (f"这条 spec 的第 {inset_on} 段开了回贴，"
+                 if inset_on else "真要开回贴的段，")
+              + '板还没长到最宽的那几段要用 `"score_inset": {"x2": N}` '
+              "收窄到这一段板的真实右缘，不然会多盖一截球场")
+        # ⚠️ 这儿原来有一条「没开 score_inset 的段要点名」的提醒。
+        # 2026-08-28 傍晚**默认翻了面**（账号所有者：「先把这些马赛克搞好」），
+        # 那条提醒于是变成了反向的唠叨——它会把人推回那个被否掉的做法，
+        # 所以整条拆掉。回贴现在是显式开关，理由记在 cut_segment 的回贴那一段
+        # 和 docs/us-open-scoreboard-aspect.md。
     # ⭐ 账号所有者 2026-08-28：「**美网期间的比赛都用这个比例做视频**」。
     # 美网比赛的 reel（topbar.line1 写着美网/US Open 的那种）一律带式——
     # 只记在对话里拦不住下一个会话，自动链也会自己产美网的片子，所以落成
@@ -2284,13 +2284,14 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
                 "一律用带式版式（账号所有者 2026-08-28）。spec 顶层加：\n"
                 '  "layout": "band", "scorebox": [104, 888, 736, 978]\n'
                 "（scorebox 是五盘满列宽度——主赛第一条先拿 probe 的 "
-                "scorebox_guess 对一眼再沿用），比赛画面的段写 "
-                '"score_inset": true（回放/切走的段不写）。'
+                "scorebox_guess 对一眼再沿用）。记分条**默认不回贴**，"
+                "让转播自己的板按窗口原样露出来；"
                 "账在 docs/us-open-scoreboard-aspect.md。")
         if scorebox is None:
             raise ReelError(
-                "美网的带式 spec 还要有顶层 scorebox（不然居中窗口把记分条裁成"
-                "残条、而回贴无从谈起）：\n"
+                "美网的带式 spec 还要有顶层 scorebox——它是**板在源片里的"
+                "位置**这件事的记录：probe 的 --scorebox（死球时刻）读它，"
+                "真要开 score_inset 回贴的段也读它：\n"
                 '  "scorebox": [104, 888, 736, 978]（五盘满列宽度）\n'
                 "主赛第一条先拿 probe 的 scorebox_guess 对一眼再沿用。")
     bad_motion = [i + 1 for i, s in enumerate(segments) if s.inset
@@ -3015,6 +3016,15 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
                 # 条，一寸球场都不多占。缩完比残条矮（等比），矮出来的上下两条
                 # 用带底色垫平——不垫的话那两条会露出残条自己的上下边，成了
                 # 「板下面还有半条板」的重影。
+                #
+                # ⚠️⚠️ **而回贴本身已经不是默认了**（同一天傍晚，账号所有者
+                # 「先把这些马赛克搞好」）：缩到残条之后板只有画面宽的 27%，
+                # 按手机尺寸（360px 宽）渲出来并排比，它是一条读不出字的深色
+                # 块；而**干脆不贴**、让转播自己的板按窗口原样露出来时，比分
+                # 「6 3 1 AD」在同样尺寸下清清楚楚——代价只是名字被画面左缘
+                # 切掉（顶栏本来就一直印着双方中文名）。所以 `score_inset` 现在
+                # 是显式开关，`promote_reel_draft` 不再自动注入。这一段留着，
+                # 是给那些窗口切得少、贴回去还够大的片子用的。
                 bw = _even((x1 - x0) * ratio)      # 整条板按原比例的宽
                 strip = _even((x1 - x) * ratio)    # 居中窗口天然含住的残条
                 nw = min(bw, strip)
