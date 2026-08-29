@@ -645,8 +645,22 @@ def test_import草稿工具不许要求教材在盘上():
 def test_跑教材工具的工作流都要检出skills目录():
     """`analyze_reel_visuals` 在**调用时**要读生产 skill 给 MiniMax/DeepSeek 拼
     prompt——工作流的稀疏检出漏了 `skills`，失败要等跑到那一步才炸。哪些工具
-    需要教材从 import 图自己推（直接或间接沾 `reel_skill` 的都算，宁可保守：
-    几个 markdown 的检出成本是零），不维护名单。"""
+    需要教材从 import 图自己推（直接或间接沾这两个 skill 模块的都算，宁可保守：
+    几个 markdown 的检出成本是零），不维护名单。
+
+    ⚠️ **2026-08-29 补上 `interview_skill`：原来只认 `reel_skill`，于是这条闸
+    只盖住了 reel 那一半。** `draft_interview_spec.py` 走的是
+    `from interview_skill import model_instructions`，而 `oncourt-interviews.yml`
+    的 `draft` job 稀疏检出没有 `skills`——真跑起来死在
+
+        FileNotFoundError: missing interview production skill resource:
+          skills/tennis-interview-production/SKILL.md
+
+    ⚠️ 它一直被排在前面的另一个坑挡着（那个 job 还缺 ffmpeg，#653 修的），
+    **ffmpeg 一补上，这个立刻就露出来了**——同一条路上排队的第二个障碍，
+    不是回归。「修了一个不等于修了那一类」这次是判据自己犯的：判据推导的
+    起点写死成一个模块名，另一条线用另一个名字就整个漏过去。
+    """
     import ast
     import re
 
@@ -661,11 +675,13 @@ def test_跑教材工具的工作流都要检出skills目录():
                 mods.add(node.module.split(".")[0])
         return mods
 
-    graph = {name: imported(name) & (set(tool_files) | {"reel_skill"})
+    #: 两条线各有一份教材，**两个都要认**——只认一个的话另一条线整个漏过去。
+    SKILL_MODULES = {"reel_skill", "interview_skill"}
+    graph = {name: imported(name) & (set(tool_files) | SKILL_MODULES)
              for name in tool_files}
 
     def needs_skill(name: str, seen: frozenset = frozenset()) -> bool:
-        if name == "reel_skill":
+        if name in SKILL_MODULES:
             return True
         if name in seen or name not in graph:
             return False
@@ -674,19 +690,28 @@ def test_跑教材工具的工作流都要检出skills目录():
     needy = {n for n in tool_files if needs_skill(n)}
     # 判据自己的判据：推导空了要出声，不许变一盏恒真的绿灯
     assert {"draft_spec", "assemble_spec", "analyze_reel_visuals",
-            "refresh_reel_cover"} <= needy, needy
+            "refresh_reel_cover", "draft_interview_spec"} <= needy, needy
 
+    # ⚠️ **按 job 扫，不按文件扫。** 稀疏检出是每个 job 各配一份的，而按整份
+    # 文件扫只要求「这个文件里某处有 skills」——`oncourt-interviews.yml` 有
+    # collect / draft 两个 job 各带一份检出，只给其中一个补上，按文件扫照样绿，
+    # 而线上照炸。「只测行为拦不住位置错」在这条判据自己身上的实例。
+    # 收紧时量过：9 个 job 全过，零误伤。
     checked = 0
-    for wf in (ROOT / ".github/workflows").glob("*.yml"):
-        body = wf.read_text("utf-8")
-        used = {m.group(1) for m in re.finditer(r"tools/(\w+)\.py", body)}
-        if not (used & needy) or "sparse-checkout" not in body:
-            continue   # 不跑这些工具，或全量检出（自然带 skills）
-        checked += 1
-        assert re.search(r"^\s+skills\s*$", body, re.M), (
-            f"{wf.name} 跑 {sorted(used & needy)}，稀疏检出却没有 skills——"
-            "import 现在是安全的，但真起草/审视觉证据那一刻要读教材")
-    assert checked >= 2, "一个工作流都没校到，判据的主语丢了"
+    for wf in sorted((ROOT / ".github/workflows").glob("*.yml")):
+        after_jobs = wf.read_text("utf-8").split("\njobs:", 1)[-1]
+        for m in re.finditer(
+                r"\n  ([a-z0-9_-]+):\n(.*?)(?=\n  [a-z0-9_-]+:\n|\Z)",
+                after_jobs, re.S):
+            job, body = m.group(1), m.group(2)
+            used = {x.group(1) for x in re.finditer(r"tools/(\w+)\.py", body)}
+            if not (used & needy) or "sparse-checkout" not in body:
+                continue   # 不跑这些工具，或全量检出（自然带 skills）
+            checked += 1
+            assert re.search(r"^\s+skills\s*$", body, re.M), (
+                f"{wf.name}::{job} 跑 {sorted(used & needy)}，稀疏检出却没有 "
+                "skills——import 现在是安全的，但真起草/审视觉证据那一刻要读教材")
+    assert checked >= 8, f"只校到 {checked} 个 job，判据的主语丢了"
 
 
 def test_模型练手拒绝minimax拿窗口外画面当证据():
