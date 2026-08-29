@@ -111,29 +111,46 @@ def _resolve_media_url(url: str) -> str:
 
 
 def _download_attempts(url: str) -> list[tuple[str, list[str]]]:
-    """人工请求下载与正式采访下载共用同一套 YouTube client 梯子。
+    """无业务素材依赖的轻量 YouTube client 梯子。
 
-    2026-08-29 锦织圭告别片第一次自动生成时，裸的一次 yt-dlp 请求撞上
-    ``The page needs to be reloaded`` 就直接失败；而采访正文、字幕和故事板的
-    既有下载器早已会逐档换 client。这里从同一出处读取，避免再次分叉。
+    不能从完整 match-reel / interview renderer 导入这张表：自动请求任务使用
+    sparse checkout，不含它们渲海报时读取的 ``assets/``。2026-08-29 锦织圭
+    请求实跑时，导入完整梯子先因缺 Munar 人脸素材失败，再静默退成单档默认。
+    下载判据必须只依赖 URL 和 yt-dlp，本函数因此故意保持纯数据。
     """
     if not _youtube_id(url):
         return [("direct", [])]
-    from build_interview_clip import _ytdlp_ladder  # noqa: PLC0415
+    return [
+        ("默认", []),
+        ("web_safari", ["--extractor-args", "youtube:player_client=web_safari"]),
+        ("ios", ["--extractor-args", "youtube:player_client=ios"]),
+        ("android_vr", ["--extractor-args", "youtube:player_client=android_vr"]),
+        ("web", ["--extractor-args", "youtube:player_client=web"]),
+        ("tv", ["--extractor-args", "youtube:player_client=tv"]),
+    ]
 
-    return list(_ytdlp_ladder())
+
+def _downloaded_audio(workdir: Path) -> Path | None:
+    """找本档真正下载完成的原始音轨，排除 yt-dlp 临时/续传文件。"""
+    candidates = [
+        path
+        for path in workdir.glob("audio.*")
+        if path.is_file()
+        and path.stat().st_size > 0
+        and not path.name.endswith((".part", ".ytdl", ".temp"))
+    ]
+    return max(candidates, key=lambda path: path.stat().st_size) if candidates else None
 
 
 def _download_audio(url: str, workdir: Path) -> Path:
-    """带 cookies、Node JS runtime 和 client 梯子下载音频，成功返回 MP3。
+    """带 cookies、Node JS runtime 和 client 梯子下载原始音轨。
 
-    每一档失败都打印真实尾部错误并继续；只有所有档都失败才抛异常。这样
-    ``page needs to be reloaded`` / 某个 player client 临时失效不会把整条人工
-    请求永久卡死，同时最终失败仍然保留完整诊断，而不是静默兜底。
+    这里不把音轨转成 MP3：``-x --audio-format mp3`` 会调用系统 ffmpeg，而轻量
+    请求任务没有安装它；faster-whisper 自带的 PyAV 能直接读取 webm/m4a/opus。
+    每一档失败都打印真实尾部错误并继续，只有所有档都失败才抛异常。
     """
     workdir.mkdir(parents=True, exist_ok=True)
     dl_url = _resolve_media_url(url)
-    out_mp3 = workdir / "audio.mp3"
     template = str(workdir / "audio.%(ext)s")
     cookie_args: list[str] = []
     cookies = os.environ.get("YT_COOKIES") or ""
@@ -142,17 +159,17 @@ def _download_audio(url: str, workdir: Path) -> Path:
 
     failures: list[str] = []
     for label, extra in _download_attempts(url):
-        # 失败档可能留下 .part / 原始 webm；下一档必须从干净状态开始，不能把
-        # 上一档的半截文件误认成这次成功产物。
+        # 失败档可能留下 .part / .ytdl / 原始容器；下一档必须从干净状态开始，
+        # 不能把上一档的半截文件误认成这次成功产物。
         for partial in workdir.glob("audio.*"):
             partial.unlink(missing_ok=True)
         cmd = [
             "yt-dlp",
             "--no-warnings",
+            "--no-playlist",
             "--js-runtimes", "node",
             "--extractor-retries", "3",
-            "-f", "bestaudio",
-            "-x", "--audio-format", "mp3",
+            "-f", "bestaudio/best",
             "-o", template,
             *cookie_args,
             *extra,
@@ -172,18 +189,20 @@ def _download_audio(url: str, workdir: Path) -> Path:
             failures.append(f"{label}: {tail}")
             continue
 
-        if proc.returncode == 0 and out_mp3.is_file() and out_mp3.stat().st_size > 0:
+        audio = _downloaded_audio(workdir)
+        if proc.returncode == 0 and audio is not None:
             if failures:
                 print(f"[人工请求音频] {label} 成功（前面 {len(failures)} 档没成）")
             else:
                 print(f"[人工请求音频] {label} 成功")
-            return out_mp3
+            print(f"[人工请求音频] 原始容器：{audio.name}，{audio.stat().st_size} bytes")
+            return audio
 
         raw = (proc.stderr or proc.stdout or "（没有 yt-dlp 输出）").strip()
         tail_lines = raw.splitlines()[-3:]
         tail = " | ".join(line.strip() for line in tail_lines if line.strip())
-        if proc.returncode == 0 and not out_mp3.is_file():
-            tail = f"exit 0 但没有生成 {out_mp3.name}" + (f"；{tail}" if tail else "")
+        if proc.returncode == 0 and audio is None:
+            tail = "exit 0 但没有生成完整原始音轨" + (f"；{tail}" if tail else "")
         tail = tail[-900:] or "（没有 yt-dlp 输出）"
         print(f"[人工请求音频] {label} 没成：{tail[:240]}")
         failures.append(f"{label}: {tail}")
