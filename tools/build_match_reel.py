@@ -7181,7 +7181,8 @@ TOPBAR_SCORE_PLAIN_ASS = r"{\b0}"
 
 def colorize_topbar_score(line: str) -> str:
     """顶栏第二行上色：**赢家名字高亮**，每一盘比分按"赢盘绿输盘灰"上色，
-    比分数字切到 `TOPBAR_SCORE_FONT`（Noto Sans CJK SC），赢下那一盘的加粗。
+    比分数字切到 `TOPBAR_SCORE_FONT`（仓库自带的 `TL Score`），赢下那一盘
+    的加粗（`\\b1`）、输掉那一盘的转细（`\\b300`）。
 
     ⚠️ **判据和 `versus_poster._sets_html` 一样：那一盘里谁的局数大，不是
     谁赢了整场。** `line` 是 `_expected_topbar_score_line` 拼出来的
