@@ -296,11 +296,24 @@ jobs:
           restore-keys: |
             interview-draft-apt-${{ runner.os }}-
 
+      # ⚠️ **`ensure_ffmpeg` 不能漏。** `draft_interview_spec.py` 抽音频走的是
+      # `yt-dlp -x --audio-format mp3`——`-x` 是 **postprocessing**，不管源是
+      # HLS 还是 progressive，转 mp3 这一步一律要 ffmpeg 二进制。少了它报的是
+      # `ERROR: Postprocessing: ffprobe and ffmpeg not found`，而这句被包进
+      # `RuntimeError` 塞在一行「⚠️ <标题>: ...」里，**读起来像这条源下不动**。
+      # ⚠️ **这个 job 是矩阵产生的，没有候选时压根不跑**——所以它从上线起就缺
+      # ffmpeg，而前面十几趟「全绿」只是因为候选一直是空的，2026-08-27 第一批
+      # 真候选进来当天就连炸 5 趟（run 138~142）。「走不到的路怎么查都是绿的」。
+      # ⚠️ 要 ffmpeg 的工具在工作流里真正被跑的有两处：这里，和
+      # `interview-model-benchmark.yml::compare`（`benchmark_interview_models.py`）
+      # ——后者 #608 补过 `ensure_ffmpeg`，**当时没落判据，于是这一处漏着**。
+      # 「修那一个不等于修了那一类」，所以这次和判据一起补。
       - name: 安装单场转写依赖
         timeout-minutes: 15
         run: |
           source tools/ci_apt_install.sh
           apt_install_cached fonts-noto-core
+          ensure_ffmpeg
           pip install -q -e . faster-whisper "yt-dlp[default]>=2026.7.4"
 
       - name: 启动 YouTube PO token provider

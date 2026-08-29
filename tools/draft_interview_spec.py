@@ -444,6 +444,24 @@ def _build_one(c: dict, chat, cal: list[dict], *, write: bool) -> tuple[str, boo
         return c.get("title", "?"), False, f"{type(exc).__name__}: {exc}"
 
 
+def _missing_media_tools() -> list[str]:
+    """抽音频要用到、而 runner 上不一定装了的那几个二进制。
+
+    ⚠️ **这道预检存在的理由是「缺依赖」和「这条源下不动」长得一模一样。**
+    真出事那次（oncourt-interviews run 138~142，连炸 5 趟）日志里是
+
+        ⚠️ Fery Enjoying the Winston-Salem Nights: RuntimeError: yt-dlp 音频下载
+        失败（exit 1）：... ERROR: Postprocessing: ffprobe and ffmpeg not found
+
+    ——真因那半句埋在 1800 字符的 yt-dlp 尾巴里，外面套着一句「这条源失败了」，
+    读起来像 Tennis TV 那条源的问题（而它上一行刚打印「Tennis TV 解出 HLS」，
+    更像了）。查依赖只要几毫秒，**让它死在第 5 秒、并且说出路**。
+    """
+    import shutil  # noqa: PLC0415
+
+    return [b for b in ("ffmpeg", "ffprobe") if shutil.which(b) is None]
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("--candidate", type=int, default=-1,
@@ -468,6 +486,16 @@ def main() -> int:
         if not cands:
             print(f"找不到候选 id={args.candidate_id}")
             return 2
+
+    if missing := _missing_media_tools():
+        print(
+            f"[预检] 缺 {'、'.join(missing)}——抽音频走的是 "
+            "`yt-dlp -x --audio-format mp3`，`-x` 是 postprocessing，"
+            "转 mp3 这一步一律要 ffmpeg 二进制，和源是不是 HLS 无关。\n"
+            "  出路：工作流里 `source tools/ci_apt_install.sh` 之后加一句 "
+            "`ensure_ffmpeg`；本地 `apt-get install -y ffmpeg`。",
+            file=sys.stderr)
+        return 2
 
     from tennislive.research.brief import Chat  # noqa: PLC0415
     chat = Chat()
