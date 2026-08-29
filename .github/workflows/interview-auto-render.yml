@@ -111,6 +111,13 @@ jobs:
             git sparse-checkout add "output/interviews/$slug"
           done < /tmp/request-slugs.txt
 
+      - name: 装转写与字幕排版字体
+        if: steps.gate.outputs.work == 'true'
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends fonts-noto-core
+          test -f /usr/share/fonts/truetype/noto/NotoSans-Regular.ttf
+
       - name: 装依赖
         if: steps.gate.outputs.work == 'true'
         run: pip install -q -e . "yt-dlp[default]>=2026.7.4" faster-whisper
