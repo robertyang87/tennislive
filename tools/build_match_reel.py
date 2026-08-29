@@ -226,14 +226,32 @@ TOPBAR_HEAD_TOP = 18
 TOPBAR_BODY_TOP = 72
 TOPBAR_MARGIN_H = 48
 
-#: 比分数字的字体和字号——账号所有者 2026-08-18，拿"赛后开麦"的顶栏截图
-#: 跟这条线对比之后要求"改成和赛后开麦一样"。值和字号直接照抄
-#: `build_interview_clip.py` 的 `_ASS_NAME["num"]` / `_SCORE_PX`：
-#: **不是另挑一支像的字体**，是同一支、同一个数字，两条线以后就不会再分叉。
-#: Barlow Condensed 是窄身，同字号下墨迹比汉字矮，不放大会显得比旁边的
-#: 名字小一号——44 是赛后开麦那边渲出来比过的数，这里不重新试一遍。
-TOPBAR_SCORE_FONT = "Barlow Condensed SemiBold"
-TOPBAR_SCORE_SIZE = 44
+#: 比分数字的字体和字号。**两条线共用同一支**——账号所有者 2026-08-18 拿
+#: "赛后开麦"的顶栏截图跟这条线对比之后要求"改成和赛后开麦一样"，所以这里和
+#: `build_interview_clip.py` 的 `_ASS_NAME["num"]` / `_SCORE_PX` 必须一起改。
+#:
+#: ⚠️⚠️ **2026-08-29 从 Barlow Condensed SemiBold 换成 Noto Sans CJK SC。**
+#: 账号所有者指着美网那张官方赛果图：「比分的数字字体都用这种，**包括以后
+#: 所有视频里的其他地方的比分都用这种字体**，赢的一盘的加粗」。
+#:
+#: **换哪一支是量出来的**：把参考图那个粗「6」和细「3」的墨迹二值化、归一到
+#: 200×200，跟手上每一支字体逐个算 IoU——
+#:     粗 6：Noto Sans CJK SC **0.719** ｜ 我们封面在用的 NotoSansSC-sub 0.716
+#:           ｜ Barlow Condensed SemiBold 0.689
+#:     细 3：Noto Sans CJK SC **0.640** ｜ NotoSansSC-sub 0.641
+#:           ｜ Barlow Condensed SemiBold **0.440**
+#: 也就是说 **Noto Sans CJK SC 和封面那支是同一套设计**（差 0.003），
+#: 顶栏和封面从此不会再是两种数字。
+#:
+#: ⚠️ **不用 `Noto Sans`（fonts-noto-core 那支）**，尽管它在粗 6 上更高
+#: （0.790）：① 细 3 只有 0.581，两档合起来不如 CJK SC；② `match-reel.yml`
+#: **只装了 `fonts-noto-cjk`，没装 `fonts-noto-core`**，写上去 libass 会静静
+#: 换一支——而"换掉了"和"就是这么渲的"在成片上长得一模一样。
+#:
+#: 字号从 44 收到 40：Barlow 是窄身，44 是给它补的；Noto Sans CJK SC 同字号
+#: 宽 14%（实测 80px 下 210px vs 240px），照抄 44 会把顶栏第二行撑出去。
+TOPBAR_SCORE_FONT = "Noto Sans CJK SC"
+TOPBAR_SCORE_SIZE = 40
 
 # **源片自己烧了记分条时，字幕要让开它。**
 #
@@ -7117,12 +7135,26 @@ TOPBAR_WINNER_ASS = TOPBAR_SETWIN_ASS
 #: `\c` 标签管，两件事分开写，缺一个都能单独排查（字体不对但颜色对，
 #: 或者反过来）。
 TOPBAR_SCORE_FONT_ASS = rf"{{\fn{TOPBAR_SCORE_FONT}\fs{TOPBAR_SCORE_SIZE}}}"
-TOPBAR_SCORE_FONT_RESET_ASS = rf"{{\fn{TOPBAR_BODY_FONT}\fs{TOPBAR_BODY_SIZE}}}"
+#: ⚠️ 复位要**连粗体一起复位**（`\b0` 排在最前）：赢下那一盘的数字挂了 `\b1`，
+#: 不关掉的话它后面的输家名字会跟着变粗，而那看起来像"输家也被高亮了"。
+TOPBAR_SCORE_FONT_RESET_ASS = (
+    rf"{{\b0\fn{TOPBAR_BODY_FONT}\fs{TOPBAR_BODY_SIZE}}}")
+#: 赢下那一盘的数字加粗——账号所有者 2026-08-29「赢的一盘的加粗」。
+#:
+#: ⚠️ **这是真渲量过的，不是照着 `TOPBAR_WINNER_ASS` 那段注释推的。** 那段写着
+#: 「libass 既解不到完整的 Bold face 也不给合成」——**那句话对中文名成立，对数字
+#: 不成立**。同一条命令（带 `fontsdir=assets/fonts`，和 `topbar_filtergraph`
+#: 一样）分别量：
+#:     中文名「萨巴伦卡」 常规 216px → 加粗 216px  差 0    ← 老注释说的就是这个
+#:     数字「6 3 6」      常规 111px → 加粗 118px  差 +7   ← 生效
+#: 所以名字那一行照旧**只靠色相**分输赢，数字这一行可以加粗。
+TOPBAR_SCORE_BOLD_ASS = r"{\b1}"
+TOPBAR_SCORE_UNBOLD_ASS = r"{\b0}"
 
 
 def colorize_topbar_score(line: str) -> str:
     """顶栏第二行上色：**赢家名字高亮**，每一盘比分按"赢盘绿输盘灰"上色，
-    比分数字切到 `TOPBAR_SCORE_FONT`（Barlow Condensed SemiBold）。
+    比分数字切到 `TOPBAR_SCORE_FONT`（Noto Sans CJK SC），赢下那一盘的加粗。
 
     ⚠️ **判据和 `versus_poster._sets_html` 一样：那一盘里谁的局数大，不是
     谁赢了整场。** `line` 是 `_expected_topbar_score_line` 拼出来的
@@ -7163,15 +7195,26 @@ def colorize_topbar_score(line: str) -> str:
             parts.append(token)
             continue
         left, right, tb = m.group(1), m.group(2), m.group(3)
-        lcolor = TOPBAR_SETWIN_ASS if int(left) > int(right) else TOPBAR_SETLOSE_ASS
-        rcolor = TOPBAR_SETWIN_ASS if int(right) > int(left) else TOPBAR_SETLOSE_ASS
+        lwin, rwin = int(left) > int(right), int(right) > int(left)
+        lcolor = TOPBAR_SETWIN_ASS if lwin else TOPBAR_SETLOSE_ASS
+        rcolor = TOPBAR_SETWIN_ASS if rwin else TOPBAR_SETLOSE_ASS
+        lbold = TOPBAR_SCORE_BOLD_ASS if lwin else TOPBAR_SCORE_UNBOLD_ASS
+        rbold = TOPBAR_SCORE_BOLD_ASS if rwin else TOPBAR_SCORE_UNBOLD_ASS
         # 连字符压暗一档，和比分板的 `.setdash` 同一个理由：它是分隔符不是内容。
         # 字体切换包住整个数字块（含连字符），和赛后开麦一样把"6-4"当一个
         # 整体切字体，不是逐个数字切——连字符跟着数字走，不会露出半个 Noto。
-        piece = (f"{TOPBAR_SCORE_FONT_ASS}{lcolor}{left}{TOPBAR_SETDASH_ASS}-"
-                 f"{rcolor}{right}{TOPBAR_RESET_ASS}")
+        # ⚠️ 连字符不许跟着粗——它是分隔符不是内容（和 `.setdash` 压暗同一个
+        # 理由）。左边那个数没加粗时就不用再关一次，少写一对空标签。
+        undo = TOPBAR_SCORE_UNBOLD_ASS if lwin else ""
+        piece = (f"{TOPBAR_SCORE_FONT_ASS}{lbold}{lcolor}{left}"
+                 f"{undo}{TOPBAR_SETDASH_ASS}-"
+                 f"{rbold}{rcolor}{right}{TOPBAR_RESET_ASS}")
         if tb:
-            piece += f"({tb})"
+            # ⚠️ 抢七小分**不跟着粗**，不管这一盘是左边还是右边赢的。它是这一盘
+            # 的附注（和连字符同一档），不是比分本身；而右边赢的时候 `\b1` 还
+            # 开着，不显式关掉的话同一个括号会时粗时细——**同一个元素按谁赢了
+            # 渲成两个样子**，比一直粗或一直细都糟。
+            piece += f"{TOPBAR_SCORE_UNBOLD_ASS}({tb})" if rwin else f"({tb})"
         piece += TOPBAR_SCORE_FONT_RESET_ASS
         parts.append(piece)
     return " ".join(parts)

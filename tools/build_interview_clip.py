@@ -144,8 +144,17 @@ _FONT_FILES = {
     # 顶栏走品牌显示体（得意黑）。**它在仓库里，不是 apt 装的**——`webcards`
     # 用的是同一支字体的 woff2，而 **libass 读不了 woff2**，所以另存了一份 ttf。
     "head": (str(ROOT / "assets/fonts/SmileySans-Oblique.ttf"), None),
-    # 比分走 Barlow Condensed，和卡片上的比分同一支（见 webcards 的模块注）。
-    "num": (str(ROOT / "assets/fonts/BarlowCondensed-SemiBold.ttf"), None),
+    # 比分走 Noto Sans CJK SC，和 match-reel 顶栏、和封面比分板同一套设计。
+    # ⚠️ 量宽度用 **Regular** 那个文件：赢下那一盘的数字渲出来是粗的，拿常规量
+    # 会略偏窄（实测 80px 下 6 个数字差 13px）。这一档偏窄是安全的方向——
+    # 断行会比实际更早换行，不会撑出去。
+    # ⚠️ **`.ttc` 是字体集合，PIL 默认取 index 0，而 index 0 是 JP 不是 SC。**
+    # 别顺手「修」成 `index=2`：五张比例脸（JP/KR/SC/TC/HK）的**数字宽度完全
+    # 一样**（实测同一串 `6-3 6-4 6-0 7-6(4)` 在 80px 下都是 618.58px，它们
+    # 只有汉字字形不同），而 `_measure_at` 这一档只量数字。`zh` 那一档从上线
+    # 起就是同一个文件、同一个 index，一直是对的。
+    "num": ("/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",
+            "fonts-noto-cjk"),
 }
 # ASS 的 `Fontname` 要写字体**自己声明的名字**，而且**只有某些名字算数**。
 # 两支都实测过（渲一小段，和一个不存在的字体名比 md5，一样就是没认出来）：
@@ -159,7 +168,11 @@ _ASS_NAME = {
     "en": "Noto Sans",
     "zh": "Noto Sans CJK SC",
     "head": "得意黑",
-    "num": "Barlow Condensed SemiBold",
+    # ⚠️ 2026-08-29 从 Barlow Condensed SemiBold 换成 Noto Sans CJK SC：
+    # 账号所有者要求所有比分数字照美网那张官方图的字体来，而这条线和
+    # match-reel 的顶栏 2026-08-18 起就必须是同一支（见那边的注释，
+    # 换哪一支是拿 IoU 量出来的）。
+    "num": "Noto Sans CJK SC",
 }
 _HEAD_FONT, _ZH_FONT, _EN_FONT = _ASS_NAME["head"], _ASS_NAME["zh"], _ASS_NAME["en"]
 
@@ -1047,7 +1060,7 @@ def _score_runs(score: str, px: int = _SCORE_PX) -> list[tuple[str, str, str, in
     """把 `push.score` 拆成一段一段：**每一盘里，只给赢下这一盘的那个数字上绿**。
 
     返回的每一段仍然是 `header_runs` 那种 `(文本, kind, 标签, 字号)` 四元组，
-    `kind` 一律 `"num"`（走 Barlow Condensed，量宽度按数字字体的尺子）——
+    `kind` 一律 `"num"`（走 Noto Sans CJK SC，量宽度按数字字体的尺子）——
     这样 `header_lines` 那句 `sum(_measure_at(...))` 不用跟着改，因为总字符
     和总 kind 没变，只是原来一整段现在拆成了好几小段。短横线跟着**前一个**
     数字走（"6-" 是一段，"4" 是下一段），冒号左右各自独立上色。
@@ -1068,8 +1081,11 @@ def _score_runs(score: str, px: int = _SCORE_PX) -> list[tuple[str, str, str, in
         n1, n2, paren = m.group(1), m.group(2), m.group(3) or ""
         trail = " " if i < len(tokens) - 1 else ""
         n1_won = int(n1) > int(n2)
-        tag1 = (_MARK_COLOUR if n1_won else "") + tag
-        tag2 = (_MARK_COLOUR if not n1_won else "") + tag
+        # 赢下这一盘的数字：上绿 **＋ 加粗**（账号所有者 2026-08-29
+        # 「赢的一盘的加粗」）。⚠️ 输的那个要显式 `\b0`，不然粗体会一路续到
+        # 后面那一段去——ASS 的标签是粘连的。
+        tag1 = (_MARK_COLOUR if n1_won else "") + (r"\b1" if n1_won else r"\b0") + tag
+        tag2 = (_MARK_COLOUR if not n1_won else "") + (r"\b0" if n1_won else r"\b1") + tag
         runs.append((f"{n1}-", "num", tag1, px))
         runs.append((f"{n2}{paren}{trail}", "num", tag2, px))
     return runs

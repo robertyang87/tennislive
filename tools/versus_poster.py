@@ -544,16 +544,37 @@ def _scoreboard_sets(result: str, where: str) -> tuple[list[tuple[int, int, str 
 #: 右侧按列对齐，赢下那一盘的数字加粗。相比旧版那个六道白框线的表格，它把
 #: 「谁赢了这场球」从**读比分**变成了**扫一眼哪一行亮着**。
 #:
-#: ⚠️ **端帽的绿和高亮条的墨底是我们自己的颜色。** 参考图那条长条是美网的品牌
-#: 蓝——那是**那个赛事**的身份色。照抄的话，温网、辛辛那提的片子上都会印着一条
-#: 美网蓝，等于拿别人的官方比分板当我们的模板。结构照搬，颜色用自己的。
+#: ⚠️⚠️ **这段原本还写着「颜色用我们自己的」——当天就被推翻了，见下面第二轮
+#: 那段。** 配色一律照参考图复刻，别再改回品牌色。
 #:
 #: 下面这一批数是**版式的唯一出处**：`score_name_avail_px` 拿它们算名字那一格
 #: 还剩多宽、`_fill_score_layout` 拿它们排版。写两处必分叉，而分叉的样子是
 #: 「算出来的字号其实放不下」——名字压在盘分上，**而渲染、质检、全量测试一个字
 #: 都不会说**（旧版就这么让 4 条名字压在框线上过了一个月）。
+#: ⭐⭐ 2026-08-29 第二轮：账号所有者看完第一版说「**要做出和原版一样的配色**」
+#: 「**不要自己配色**」「**要完整复刻**」「输的人那一行也是有背景色的」
+#: 「整个比分板应该都有统一的半透明的背景」。
+#:
+#: 第一版我把长条改成了自己的墨绿底 + 品牌绿端帽，理由是「那条蓝是美网的身份
+#: 色，印在每条片子上等于拿别人的比分板当模板」。**账号所有者看过这个理由之后
+#: 仍然要求照原样复刻**——那就是他的决定，照做。下面这三个颜色**逐个是从参考图
+#: 上量的**（`d0123af0-image.jpg`，取纯色区的像素值），不是挑的：
+SCORE_BLUE = "#172786"       # 赢家那条长条：量到 rgb(23,39,134)，整条一个值
+SCORE_CAP_COLOUR = "#739365"  # 两端的端帽：量到 rgb(113~120,144~150,99~109)
+#: 板底那层统一的半透明底。参考图那一带是美网自己的深藏青压在照片上——照片
+#: （她的绿裙子、球鞋）透得出来但压暗了，所以是**半透明**不是实心。
+#: ⚠️ 它是**渐变淡入**的，不是一块硬边的板。参考图那一带逐行量下来是连续压暗
+#: （x=980：y900 亮度 91 → y1100 75 → y1200 53 → y1325 32 → y1450 19），
+#: 没有任何一条硬边。第一版做成硬边矩形，钩子底下当场多出一道横线。
+SCORE_PANEL_RGB = "9,17,38"
+SCORE_PANEL_TOP_FADE = 70    # 板子上沿再往上这么多像素开始淡入
+SCORE_PANEL_ALPHA = 0.86
+#: ⚠️ 文字**全部纯白**。参考图上 `ZHENG`/`QINWEN`/`PRIDANKINA`/`STADIUM 17`/
+#: `#USOPEN` 和六个数字，逐个取峰值都是 (255,255,255)——没有第二档灰。
+#: 我们原来那套 `#dcefe4`（英文名）、`#93a79c`（抢七小分）在复刻里一律去掉。
+SCORE_INK = "#ffffff"
 SCORE_BOARD_W = 940          # `.storycopy` 的内宽：1080 − 左右各 70
-SCORE_CAP_W = 12             # 两端那颗品牌绿端帽
+SCORE_CAP_W = 12             # 两端那颗端帽（颜色见 SCORE_CAP_COLOUR）
 SCORE_CAP_R = 6              # 端帽的圆角
 SCORE_CAP_GAP = 10           # 端帽和高亮条之间的缝
 SCORE_FILL_PAD_L = 24        # 高亮条内的左内边距（国旗从这儿开始）
@@ -1258,32 +1279,40 @@ __SCRIM__
  text-shadow:0 2px 6px rgba(0,0,0,.9),0 4px 22px rgba(0,0,0,.85)}
 .storyscore .sets{font-family:'TL Numeral','TL Sans SC',sans-serif;
  font-weight:700;color:#c6f65a;letter-spacing:1px}
-/* ⭐ 「赛场之上」比分板：**两行，没有格子**——赢家那一行是一条实心高亮长条、
-   两端各挂一颗品牌绿端帽，输家那一行透明。账号所有者 2026-08-29 指着一张
-   美网官方赛果图定的版式（原话见 `SCORE_BOARD_W` 那段注释）。
+/* ⭐⭐ 「赛场之上」比分板：**照美网那张官方赛果图完整复刻**。
+   账号所有者 2026-08-29：「要做出和原版一样的配色」「不要自己配色」
+   「要完整复刻」「输的人那一行也是有背景色的」「整个比分板应该都有统一的
+   半透明的背景」。
 
-   旧版是一个六道白框线的表格：谁赢了这场球要**读比分**才知道。新版把这件事
-   交给版式——**扫一眼哪一行亮着**就够了，比分只回答「几比几」。
+   ⚠️ **第一版我换成了自己的墨绿底 + 品牌绿端帽**，理由是「那条蓝是美网的身份
+   色」。账号所有者看过那个理由之后仍然要求照原样复刻——**那就是决定，别再改回
+   自己的配色**。三个颜色逐个是从参考图上量的（见 `SCORE_BLUE` 那段）。
 
-   ⚠️ 端帽的绿和高亮条的墨底是**我们自己的**颜色。参考图那条是美网的品牌蓝，
-   那是那个赛事的身份色；印在每一条片子上等于拿别人的官方比分板当模板。
-   所有尺寸从 `SCORE_*` 常量来——`score_name_avail_px` 拿同一批数算名字那一格
-   还剩多宽，写两处必分叉，而分叉的样子是「名字压在盘分上而没有任何东西报错」。 */
-.scoreboard{width:100%;box-sizing:border-box;color:#f4fbf7;
- text-shadow:0 2px 8px rgba(0,0,0,.9)}
+   结构：整块一层半透明藏青底（左右满出到画布边、下面一直铺到画布底，和参考图
+   一样）→ 场地/用时 → 赢家那条实心蓝长条 + 两端端帽 → 输家那一行（底就是那层
+   半透明，所以它也「有背景色」）。文字**全部纯白**，没有第二档灰。 */
+.scoreboard{position:relative;z-index:0;width:100%;box-sizing:border-box;
+ color:__SCORE_INK__}
+/* 统一的半透明底：`left/right:-70px` 抵掉 `.storycopy` 的内缩，左右铺满画布；
+   `bottom` 一路铺到画布外——参考图那块深底就是一直到图的下沿的，截图会裁掉多出
+   来的部分。⚠️ `z-index:-1` 要配 `.scoreboard` 自己的 `z-index:0`（让它成为
+   一个层叠上下文），否则这层底会掉到 `.storycopy` 后面、被暗角盖住。 */
+.scoreboard::before{content:"";position:absolute;z-index:-1;
+ left:-70px;right:-70px;top:-__SCORE_PANEL_TOP_FADE__px;bottom:-320px;
+ background:linear-gradient(180deg,rgba(__SCORE_PANEL_RGB__,0) 0,
+  rgba(__SCORE_PANEL_RGB__,__SCORE_PANEL_ALPHA__) __SCORE_PANEL_FULL__px)}
 /* 场地和用时那一行：参考图里它在长条**外面、上方**，左边缘和长条对齐
-   （所以左右内边距正好是端帽 + 缝）。旧版把它做成表格的表头，连着一道
-   6px 白线——框线整块没有了，它也就不再需要那条下沿。 */
+   （所以左右内边距正好是端帽 + 缝）。 */
 .scoreboard-head{box-sizing:border-box;display:flex;align-items:baseline;
  justify-content:space-between;padding:0 __SCORE_HEAD_PAD__px 16px;
  font-family:'TL Sans SC',sans-serif;font-size:26px;letter-spacing:2px}
-.scoreboard-duration{font-family:'TL Numeral','TL Sans SC',sans-serif;font-size:34px;
- letter-spacing:0;color:#f4fbf7}
-/* 退赛/弃权注脚：和 duration 当一个整体右对齐，字号退回 head 的基准档
- （26px），比 duration 的 34px 小一档——它是补充信息，不是这一格的主角。
- 颜色用和英文名同款的柔和色（`.score-en` 那个 `#dcefe4`），不用主色白。 */
+.scoreboard-duration{font-family:'TL Sans SC',sans-serif;font-size:34px;
+ letter-spacing:0;color:__SCORE_INK__}
+/* 退赛/弃权注脚：和 duration 当一个整体右对齐，字号退回 head 的基准档（26px），
+   比 duration 的 34px 小一档——它是补充信息，不是这一格的主角。
+   ⚠️ 颜色和别处一样是纯白：复刻版没有第二档灰。 */
 .scoreboard-meta{display:flex;align-items:baseline;gap:12px}
-.scoreboard-note{font-family:'TL Sans SC',sans-serif;font-size:26px;color:#dcefe4}
+.scoreboard-note{font-family:'TL Sans SC',sans-serif;font-size:26px}
 .score-row{display:flex;align-items:stretch;height:__SCORE_ROW_H__px;
  gap:__SCORE_CAP_GAP__px}
 .score-row+.score-row{margin-top:__SCORE_ROW_GAP__px}
@@ -1291,31 +1320,25 @@ __SCRIM__
    一个端帽加一道缝，国旗和名字整块错开——看起来像「这一行没对齐」，
    而不像「少了个元素」。`visibility` 保位置，`display:none` 不保。 */
 .score-cap{flex:0 0 __SCORE_CAP_W__px;border-radius:__SCORE_CAP_R__px;
- background:#c6f65a;visibility:hidden}
-.score-row--win .score-cap{visibility:visible;
- box-shadow:0 0 22px rgba(198,246,90,.45)}
+ background:__SCORE_CAP_COLOUR__;visibility:hidden}
+.score-row--win .score-cap{visibility:visible}
 .score-fill{flex:1;min-width:0;box-sizing:border-box;display:flex;align-items:center;
  padding:0 __SCORE_FILL_PAD_R__px 0 __SCORE_FILL_PAD_L__px}
-/* 高亮条：**不透明**。渲了 .80/.86/.92/1.0 四档摆一起看（同一条片子、同一张
-   照片）——前三档都能看见球衣的形状从条子里透出来，左半边发灰、边缘发虚，
-   而这条长条存在的全部意义是「一眼看出哪一行亮着」。1.0 反而不像贴上去的板，
-   它就是一块记分板，参考图那条也是不透明的。⚠️ 别为了「让照片透一点」调低——
-   透出来的是照片的明暗，不是设计。 */
-.score-row--win .score-fill{background:#061c14}
+/* 赢家那条长条：**实心美网蓝**，量到的就是这一个值，整条没有渐变。 */
+.score-row--win .score-fill{background:__SCORE_BLUE__}
 .score-flag-slot{flex:0 0 __SCORE_FLAG_W__px;height:__SCORE_FLAG_H__px;
  margin-right:__SCORE_FLAG_GAP__px;display:flex;align-items:center;
  justify-content:center}
 .score-flag{display:block;width:__SCORE_FLAG_W__px;height:__SCORE_FLAG_H__px;
  object-fit:cover}
 /* 名字两行：**英文小字在上、中文大字在下**——参考图就是这个节奏（上面一行
-   小号的名、下面一行大号的姓）。旧版反过来（中文在上、英文在下）。
-   中文名是这一行的主语，所以它占大字那一行。 */
+   小号的名、下面一行大号的姓）。中文名是这一行的主语，占大字那一行。
+   ⚠️ 中文名保留得意黑（我们的中文标题字体，参考图那支字没有中文）；英文名和
+   数字跟着参考图走 Noto Sans。 */
 .score-names{flex:1;min-width:0;display:flex;flex-direction:column;
  justify-content:center}
-/* 英文名是**注脚不是主语**。18px 是渲了 22/20/19/18/17 五档摆一起看挑的：
-   17px 配着 1.5px 的字距开始发虚。字距**不跟着缩**——小号全大写本来就该松。 */
 .score-en{font-family:'TL Sans SC',sans-serif;font-size:__SCORE_EN_PX__px;
- line-height:1.15;letter-spacing:1.5px;color:#dcefe4;white-space:nowrap}
+ line-height:1.15;letter-spacing:1.5px;white-space:nowrap}
 /* 字号是**算出来的**（`score_cn_px`）：短名字给满上限，长名字按这一行还剩
    多宽缩，两位球员共用一个数。写死一个值的话，`亚历山德罗娃（19）` 会压到
    右边的盘分上——旧版加大之前它就已经在压框线了。 */
@@ -1326,25 +1349,31 @@ __SCRIM__
    一点点，右边那几个数字就会上下错位——而错位在 HTML 字符串里看不出来，
    只有渲出来量才看得见（判据 `test_比分板两行的盘分要上下对齐`）。 */
 .score-sets{flex:0 0 auto;display:flex;align-items:center}
+/* ⚠️⚠️ **数字用 `TL Sans SC`（Noto Sans），不是 `TL Numeral`（Montserrat）。**
+   账号所有者 2026-08-29：「比分的数字字体都用这种，包括以后所有视频里的其他
+   地方的比分都用这种字体，赢的一盘的加粗」。
+   **这是量出来的，不是挑的**：把参考图那个粗「6」和细「3」的墨迹二值化、
+   归一到 200×200，和我们手上每支字体逐个算 IoU——
+       粗 6：TL Sans SC 700 **0.728** ｜ TL Numeral 600 0.682 ｜ TL Numeral 500 0.555
+       细 3：TL Sans SC 400 **0.818** ｜ TL Numeral 500 0.584 ｜ TL Numeral 600 0.535
+   Barlow Condensed 700 在粗 6 上也是 0.728，但它是压缩字，细 3 只有 0.426。
+   ⚠️ 还有一个理由：`TL Numeral` 只有 500/600 两档，**粗细拉不开**；参考图靠
+   字重分输赢，Noto Sans 的 400/700 才够。 */
 .score-number{position:relative;flex:0 0 __SCORE_SET_COL_PX__px;text-align:center;
- font-family:'TL Numeral','TL Sans SC',sans-serif;
- font-size:__SCORE_NUM_PX__px;font-weight:500}
-.score-number.setwin{font-weight:800}
+ font-family:'TL Sans SC',sans-serif;font-size:__SCORE_NUM_PX__px;font-weight:400}
+/* 赢下那一盘的数字加粗——参考图分输赢**只靠字重**，两个数字都是纯白。 */
+.score-number.setwin{font-weight:700;color:__SCORE_INK__;text-shadow:none}
+.score-number.setlose{font-weight:400;color:__SCORE_INK__}
 /* ⚠️ 抢七小分**绝对定位**，不占位。留在文档流里的话，带小分的那一格会因为
    多出三十来像素而把数字推离列心——`6(4)` 和另一行的 `7` 当场差 40px，
    而这块板全部的意思就是「两行的列要对得齐」。`left:calc(50% + .30em)` 把它
    挂在数字右肩上：数字仍然正正落在列心，小分伸进列与列之间那道空当
    （每列 96px、数字只占 42px 上下，两边各有 27px 富余，够）。 */
 .score-number sup{position:absolute;left:calc(50% + .30em);top:.02em;
- font-size:.42em;line-height:1;color:#93a79c;white-space:nowrap}
-/* 盘分上色：**每一盘里赢的那个数字给品牌黄，输的给白**（账号所有者
-   2026-08-04 定的是灰，2026-08-09 改成白——灰在压缩后的视频里太接近底色，
-   读不出「谁输了这一盘」；2026-08-13「数字再大点、颜色再醒目点」→ 加大字号
-   并给赢的那个数字加一层同色的发光，「醒目」没有引入第二种颜色）。
-   参考图那张是拿**字重**分输赢、颜色全白；这儿两样都要——字重是从参考图学
-   来的，颜色是账号所有者三次定过的规矩，两者不冲突，叠起来在压缩后的视频里
-   比只有其中一样更分得开。
-   `.setdash` 和 `.tb` 仍然压暗一档：连字符是分隔符不是内容，抢七小分是注脚。 */
+ font-size:.42em;line-height:1;white-space:nowrap}
+/* 盘分上色：**这块板不上色**，输赢只靠字重（参考图就是这样，六个数字全是纯白）。
+   下面 `.setwin`/`.setlose` 那两条品牌绿/白仍然留着——它们还挂在旧版 VS 海报
+   和顶栏那条路上，`.score-number.setwin` 的特异性更高，盖得住。 */
 .set{display:inline-block;margin-right:.42em}
 .set:last-child{margin-right:0}
 .setwin{color:#c6f65a;text-shadow:0 2px 8px rgba(0,0,0,.9),0 0 22px rgba(198,246,90,.65)}
@@ -1392,6 +1421,15 @@ def _fill_score_layout(css: str, cover: dict) -> str:
         "__SCORE_FLAG_GAP__": SCORE_FLAG_GAP,
         "__SCORE_SET_COL_PX__": SCORE_SET_COL_PX,
         "__SCORE_NUM_PX__": SCORE_NUM_PX,
+        "__SCORE_BLUE__": SCORE_BLUE,
+        "__SCORE_CAP_COLOUR__": SCORE_CAP_COLOUR,
+        "__SCORE_PANEL_RGB__": SCORE_PANEL_RGB,
+        "__SCORE_PANEL_ALPHA__": SCORE_PANEL_ALPHA,
+        "__SCORE_PANEL_TOP_FADE__": SCORE_PANEL_TOP_FADE,
+        # 淡到满，正好落在场地那一行的中间——再晚，「Stadium 17」就压在
+        # 还没压暗的照片上了。
+        "__SCORE_PANEL_FULL__": SCORE_PANEL_TOP_FADE + 40,
+        "__SCORE_INK__": SCORE_INK,
         "__SCORE_ROW_H__": SCORE_ROW_H,
         "__SCORE_ROW_GAP__": SCORE_ROW_GAP,
         "__SCORE_HEAD_PAD__": SCORE_HEAD_PAD,

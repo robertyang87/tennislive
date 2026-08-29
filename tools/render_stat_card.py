@@ -504,11 +504,19 @@ body{{color:{vp.TEXT};font-family:'TL Sans SC','Noto Sans CJK SC',sans-serif;
 /* 竖着排：每一盘单独一行，行间距比行内的连字符更松，读起来是"三盘"
    不是"一串数字"。padding-top:8px 是量出来让比分块的视觉中心跟头像圆的
    视觉中心对齐的值——改字号/头像尺寸要重新量，别凭感觉改这个数。 */
-.h2h-set-row{{font-family:'TL Numeral','TL Sans SC',sans-serif;font-size:56px;
- font-weight:700;white-space:nowrap;text-align:center;line-height:1.42}}
+/* ⚠️ 数字走 `TL Sans SC`（Noto Sans），不是 `TL Numeral`（Montserrat）——
+   账号所有者 2026-08-29：「比分的数字字体都用这种，**包括以后所有视频里的
+   其他地方的比分都用这种字体**，赢的一盘的加粗」。换哪一支是拿 IoU 量出来的，
+   账记在 `versus_poster` 的 `.score-number` 那段注释里；封面比分板、视频顶栏、
+   赛后开麦顶栏和这张卡从此是同一套数字。
+   ⚠️ 这一条只管**比分**。底下 `.sval` 那些技术统计（Ace、双误）不是比分，
+   没跟着改——账号所有者说的是比分。 */
+.h2h-set-row{{font-family:'TL Sans SC',sans-serif;font-size:56px;
+ font-weight:400;white-space:nowrap;text-align:center;line-height:1.42}}
 .set{{display:inline-block}}
-.setwin{{color:#c6f65a}}
-.setlose{{color:{vp.TEXT}}}
+/* 赢下那一盘：上绿**＋加粗**（「赢的一盘的加粗」）。 */
+.setwin{{color:#c6f65a;font-weight:700}}
+.setlose{{color:{vp.TEXT};font-weight:400}}
 .setdash{{color:#93a79c;margin:0 .05em;font-size:.7em}}
 .tb{{font-size:.42em;color:#93a79c;vertical-align:super;margin-left:.04em}}
 .setplain{{color:#c6f65a}}
