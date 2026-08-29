@@ -1,0 +1,200 @@
+name: nishikori-caption-gap-fix
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/nishikori-caption-gap-fix.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: nishikori-caption-gap-fix
+  cancel-in-progress: false
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            data
+            output/interviews/nishikori-sakamoto-us-open-2026-q3-farewell
+            requests/interviews
+            specs/interviews
+            tools
+
+      - name: 补日语段编辑说明并逐段销账现场掌声
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          slug = "nishikori-sakamoto-us-open-2026-q3-farewell"
+          root = Path.cwd()
+          outdir = root / "output" / "interviews" / slug
+          cap_paths = [
+              outdir / "cap_asr.json3",
+              outdir / "cap_jBJ8mtkKGcM.asr.json3",
+          ]
+
+          manual_events = [
+              (142700, 400, "Speaking"),
+              (143100, 200, "in"),
+              (143300, 10000, "Japanese,"),
+              (153300, 300, "Kei"),
+              (153600, 400, "thanks"),
+              (154000, 200, "the"),
+              (154200, 400, "fans"),
+              (154600, 200, "for"),
+              (154800, 300, "their"),
+              (155100, 15000, "support."),
+          ]
+
+          for path in cap_paths:
+              data = json.loads(path.read_text(encoding="utf-8"))
+              events = []
+              for event in data.get("events") or []:
+                  start = int(event.get("tStartMs") or 0)
+                  text = "".join(
+                      str(seg.get("utf8") or "") for seg in event.get("segs") or []
+                  ).strip()
+                  # small.en 把日语发言结尾误听成 170.2 秒的 Sure.；不能把它当原话。
+                  if start == 170200 and text == "Sure.":
+                      continue
+                  # 保证重跑幂等：先删掉本次编辑说明的旧事件。
+                  if 142700 <= start <= 155100 and text in {
+                      "Speaking", "in", "Japanese,", "Kei", "thanks", "the",
+                      "fans", "for", "their", "support.",
+                  }:
+                      continue
+                  events.append(event)
+              for start, duration, text in manual_events:
+                  events.append({
+                      "tStartMs": start,
+                      "dDurationMs": duration,
+                      "segs": [{"utf8": text}],
+                  })
+              events.sort(key=lambda event: int(event.get("tStartMs") or 0))
+              data["events"] = events
+              path.write_text(
+                  json.dumps(data, ensure_ascii=False, separators=(",", ":")),
+                  encoding="utf-8",
+              )
+
+          spec_path = root / "specs" / "interviews" / f"{slug}.json"
+          spec = json.loads(spec_path.read_text(encoding="utf-8"))
+          if not spec.get("_manual_caption_inserts"):
+              zh = list(spec.get("zh") or [])
+              draft = list(spec.get("_zh_draft") or zh)
+              if len(zh) != 91 or zh[58] != "当然":
+                  raise SystemExit(
+                      f"不在预期的 91 行基线上：len={len(zh)}，第59行={zh[58] if len(zh)>58 else None!r}"
+                  )
+              replacement = ["（以下为日语发言）", "（锦织圭感谢球迷一路支持）"]
+              zh[58:59] = replacement
+              draft[58:59] = replacement
+              spec["zh"] = zh
+              spec["_zh_draft"] = draft
+
+              shifted = {}
+              for key, value in (spec.get("en_fixed") or {}).items():
+                  index = int(key)
+                  if index == 59:
+                      continue
+                  if index >= 60:
+                      index += 1
+                  shifted[str(index)] = value
+              spec["en_fixed"] = shifted
+
+          spec["caption_gaps_ok"] = {
+              "18.3-22.3": "前一句历史成就介绍结束后的现场掌声；英语播报在22.3秒恢复。",
+              "38.5-44.6": "邀请锦织圭上前后的现场掌声与走位；44.6秒主持人重新开口。",
+              "170.1-174.2": "锦织圭日语发言结束后的笑声与掌声；174.2秒主持人继续致辞。",
+              "207.9-212.2": "赛事方致辞停顿与现场掌声；212.2秒继续称赞锦织圭。",
+              "215.1-219.3": "‘Well done’之后的现场掌声；219.3秒主持人再次号召全场鼓掌。",
+              "232.2-273.5": "主持人号召全场送上掌声后，现场持续欢呼、合影并展示纪念海报；273.5秒主持人收尾。",
+          }
+          spec["_manual_caption_inserts"] = [{
+              "range": "142.7-170.1",
+              "source_language": "ja",
+              "display_en": [
+                  "Speaking in Japanese,",
+                  "Kei thanks the fans for their support.",
+              ],
+              "display_zh": [
+                  "（以下为日语发言）",
+                  "（锦织圭感谢球迷一路支持）",
+              ],
+              "verbatim": False,
+              "why": "英语专用ASR无法转写日语；美网官方报道确认该段为锦织圭用日语发言并引发笑声与掌声。采用明确标注的编辑说明，不冒充逐字译文。",
+          }]
+          notes = list(spec.get("_notes") or [])
+          note = "日语段使用明确标注的非逐字编辑说明；不得把该两行当作锦织圭原话引用。"
+          if note not in notes:
+              notes.append(note)
+          spec["_notes"] = notes
+          spec["_zh_draft_note"] = (
+              "第一份 faster-whisper small.en 逐词时间码经正式 segment() 切行；"
+              "机器初译后已依据美网官方报道逐行校正。142.7–170.1秒为日语发言，"
+              "使用明确标注的非逐字双语说明；render 时用 medium.en 做第二份独立英语ASR。"
+          )
+          spec_path.write_text(
+              json.dumps(spec, ensure_ascii=False, separators=(",", ":")),
+              encoding="utf-8",
+          )
+
+          state_path = root / "data" / "interview_render_dispatched.json"
+          state = json.loads(state_path.read_text(encoding="utf-8"))
+          state["slugs"] = [item for item in state.get("slugs") or [] if item != slug]
+          if isinstance(state.get("at"), dict):
+              state["at"].pop(slug, None)
+          state_path.write_text(
+              json.dumps(state, ensure_ascii=False, indent=2) + "\n",
+              encoding="utf-8",
+          )
+
+          request_path = root / "requests" / "interviews" / f"{slug}.json"
+          request = json.loads(request_path.read_text(encoding="utf-8"))
+          request["_pipeline_retry"] = (
+              "2026-08-29：双ASR内容核验已以4.9%分歧率通过；补入日语段明确标注的"
+              "非逐字双语说明，并逐段核实/销账掌声、走位、欢呼和纪念海报展示空档；"
+              "重新走渲染、L2 QC与自动微信推送。"
+          )
+          request_path.write_text(
+              json.dumps(request, ensure_ascii=False, indent=2) + "\n",
+              encoding="utf-8",
+          )
+
+          # 最低限度的结构自检：两份字幕源必须完全一致，中文行与预期一致。
+          first = cap_paths[0].read_bytes()
+          second = cap_paths[1].read_bytes()
+          if first != second:
+              raise SystemExit("两份第一ASR缓存不一致")
+          if len(spec["zh"]) != 92:
+              raise SystemExit(f"日语说明插入后应为92行，实际 {len(spec['zh'])}")
+          print("已补 2 行日语段编辑说明，移除 1 行误听 Sure.，并销账 6 段现场空档。")
+          PY
+
+      - name: 提交并叫醒正式生产链
+        run: |
+          git config user.name "Claude"
+          git config user.email "noreply@anthropic.com"
+          git add \
+            "output/interviews/nishikori-sakamoto-us-open-2026-q3-farewell/cap_asr.json3" \
+            "output/interviews/nishikori-sakamoto-us-open-2026-q3-farewell/cap_jBJ8mtkKGcM.asr.json3" \
+            "specs/interviews/nishikori-sakamoto-us-open-2026-q3-farewell.json" \
+            "requests/interviews/nishikori-sakamoto-us-open-2026-q3-farewell.json" \
+            data/interview_render_dispatched.json
+          python tools/check_staged_file_sizes.py
+          if git diff --cached --quiet; then
+            echo "已经是目标状态。"
+            exit 0
+          fi
+          git commit -m "interview: 补锦织圭日语段说明并销账现场空档"
+          source tools/git_push_retry.sh
+          push_with_rebase_retry "${GITHUB_REF_NAME}" 5
