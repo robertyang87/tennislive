@@ -123,3 +123,11 @@ def test_人工请求下载原始音轨且首档失败后换client(tmp_path, mon
     assert "-x" not in calls[0]
     assert "--audio-format" not in calls[0]
     assert "youtube:player_client=ios" in calls[1]
+
+
+def test_自动采访任务安装segment实际使用的英文字体():
+    workflow = (ROOT / ".github" / "workflows" / "interview-auto-render.yml").read_text(
+        encoding="utf-8"
+    )
+    assert "fonts-noto-core" in workflow
+    assert "/usr/share/fonts/truetype/noto/NotoSans-Regular.ttf" in workflow

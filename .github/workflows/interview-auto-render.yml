@@ -102,6 +102,21 @@ jobs:
           python-version: "3.11"
           cache: pip
 
+      # build_interview_clip.segment() 不是按字符数猜宽，而是用这支 Noto Sans
+      # 实际量每一行；缺字体会拒绝用 DejaVu 回退，因为回退宽度差约 8%，会让
+      # 切行与最终 libass 渲染悄悄分叉。字体安装复用全仓库统一的 apt 缓存、
+      # 重试和超时，不能再裸调 apt 把轻量任务静静拖十几分钟。
+      - name: 安装切行量宽字体
+        if: steps.gate.outputs.work == 'true'
+        timeout-minutes: 8
+        run: |
+          source tools/ci_apt_install.sh
+          FONT=/usr/share/fonts/truetype/noto/NotoSans-Regular.ttf
+          if [ ! -f "$FONT" ]; then
+            apt_install_cached fonts-noto-core
+          fi
+          test -f "$FONT"
+
       - name: 把人工请求的产物格加回稀疏范围
         if: steps.gate.outputs.work == 'true'
         run: |
