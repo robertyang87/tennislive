@@ -932,6 +932,193 @@ def suggest_scorebox(source: Path) -> str | None:
     return guess
 
 
+# 检出板右缘时，往右多留这么多源片像素。⚠️ **宁可多留，不许少**：
+# 少了就把最右那格小分裁掉（比分列静默消失），多了只是多盖几个像素球场
+# （8 源片像素＝画面带上 6.7px）。8 是按已发那条片子对出来的——手量的三档
+# 583/618/656，检出是 578/617/652，最坏差 5。
+BOARD_EDGE_PAD = 8
+# 一列要有多少行「不是球场色」才算板。板本身是实心图形，这个数很松。
+_BOARD_ROW_HIT = 0.5
+# 离球场色多远才算「不是球场」（RGB 欧氏距离）。
+_BOARD_COLOUR_TOL = 48
+# 连着多少源片像素都不是板，才认这儿是板的右缘（挡住 JPEG 噪点和格线缝）。
+_BOARD_GAP = 10
+
+
+def board_right_edge_in_band(band: "np.ndarray") -> int | None:      # noqa: F821
+    """从**一条已经裁好的带**（板左缘往右一直到画面右边）里找板的右缘。
+
+    返回的是**相对这条带左缘的偏移**（源片像素），板不在画面里就返回 None。
+
+    ⭐ 账号所有者 2026-08-29：「比分板的宽度会变化的，所以不能固定宽度去切，
+    要自适应。」在这之前板的右缘是**手量三档写进 spec** 的（一盘 583、
+    二盘 618、决胜盘 656）——每条新片子都要把成片拉回本地逐帧放大读边框，
+    而那正是这个仓库反复说的「修法不是提醒自己下次记得抄，是把手抄这一步
+    去掉」。
+
+    **怎么判**：板是实心图形（深蓝底 ＋ 最右那格白色小分），球场是一大片
+    颜色很匀的绿/蓝。所以先拿这条带**最右四分之一**的中位色当球场色
+    （板绝不可能长到那儿；用中位数是为了让偶尔走过的球员影响不了它），
+    再逐列数「有多少行离球场色够远」，从左往右走到连着 `_BOARD_GAP` 列都
+    不是板为止。
+
+    ⚠️ **不能按「暗」判**——板最右那格小分是**白底**，按暗块找边缘会在它
+    之前就停下，实测少 53px（这个坑 2026-08-28 手量时就踩过一次）。这条
+    判据按「离球场色多远」判，白格和深蓝底一样算板。
+
+    ⚠️ **一路走到带的右头就返回 None，不返回带宽**。那说明这一帧里板和右边
+    的东西连成了一片（球员/广告板/过曝），量出来的不是板的右缘——而「量到
+    一个很大的数」和「板真的很宽」在下游长得一模一样，会把整条带都抠进贴片。
+    实测这一类占 85 帧里的 3 帧，全是读到画面边缘那种。宁可这一帧不算数。
+
+    ⚠️ 球员正好贴着板走过时这一帧仍会读长几十像素——所以调用方要**跨多帧
+    看**，不要信任单帧（见 `segment_board_edge`）。
+    """
+    import numpy as np  # noqa: PLC0415
+
+    if band.ndim != 3 or band.shape[0] < 4 or band.shape[1] < 40:
+        return None
+    right = band[:, int(band.shape[1] * 0.75):]
+    court = np.median(right.reshape(-1, band.shape[2]), axis=0)
+    far = np.linalg.norm(band.astype(float) - court, axis=2)
+    hit = (far > _BOARD_COLOUR_TOL).mean(axis=0) >= _BOARD_ROW_HIT
+    last, i, n = None, 0, hit.shape[0]
+    while i < n:
+        if hit[i]:
+            last, i = i, i + 1
+        elif not hit[i:i + _BOARD_GAP].any():
+            break
+        else:
+            i += 1
+    if last is None or last >= n - 1:
+        return None
+    return int(last) + 1
+
+
+def board_right_edges(source: Path, box: tuple[int, int, int, int],
+                      times: list[float],
+                      runner=subprocess.run) -> list[tuple[float, int | None]]:
+    """在给定的几个时刻上量板的右缘（源片坐标）。返回 [(时刻, 右缘或 None)]。
+
+    ⚠️ **按 `-ss` 逐点抓，不整条过一遍**：成本跟段数走，不跟片长走
+    （14 段 × 5 点 = 70 次关键帧 seek，每次零点几秒），而且要的答案本来就是
+    「这一段里板有多宽」。整条扫一遍要把整个 1080p 解一遍，白花的时间加在
+    每一趟渲染上。
+
+    ⚠️ 抓不到帧、或者那一帧里板不在（回放/切走/镜头拉近），都返回 None 而不是
+    报错——**「板不在」是这条线上的常态**，回放段本来就不该开回贴。
+    """
+    import numpy as np  # noqa: PLC0415
+
+    x0, y0, _x1, y1 = box
+    w, h = probe_size(source)
+    bw, bh = w - x0, y1 - y0
+    out: list[tuple[float, int | None]] = []
+    for t in times:
+        proc = runner(
+            ["ffmpeg", "-v", "error", "-ss", f"{max(0.0, t):.3f}",
+             "-i", str(source), "-frames:v", "1",
+             "-vf", f"crop={bw}:{bh}:{x0}:{y0}",
+             "-pix_fmt", "rgb24", "-f", "rawvideo", "-"],
+            capture_output=True, check=False)
+        raw = proc.stdout or b""
+        if len(raw) < bw * bh * 3:
+            out.append((t, None))
+            continue
+        band = np.frombuffer(raw[:bw * bh * 3], dtype=np.uint8).reshape(bh, bw, 3)
+        edge = board_right_edge_in_band(band)
+        out.append((t, None if edge is None else x0 + edge))
+    return out
+
+
+def segment_board_edge(edges: list[tuple[float, int | None]],
+                       ) -> tuple[int | None, list[tuple[int, int]]]:
+    """把一段里那几个采样点收成**一个**右缘。返回 (右缘或 None, 直方图)。
+
+    **取「至少被两帧支持过」的那几档里最宽的那个**（一帧都撑不起两票时才退回
+    最宽的那一帧）。两条规矩各拦一头：
+
+    「取最宽」是因为两边的失败不对等——
+
+      · 裁窄了是**静默**的失败——最右那几列比分被贴片藏在自己底下，画面上
+        什么都看不出来，没有任何闸会响
+      · 裁宽了只是多盖几个像素球场，看得见，而且被调用方按 spec 的
+        `scorebox` 右缘**封了顶**（最坏也就退回老行为）
+
+    所以「板在这一段中途长了一列」（一盘正好在段里打完）这种情况按宽的裁：
+    对前半段多盖一点，不会把后半段的比分列吞掉。
+
+    「至少两帧」是因为**取最宽会把噪声一起取上**：拿这条片子的 104 格记分条
+    缩略图墙实测，82 格量到板，其中三大簇（580/618/655，对得上手量的
+    583/618/656）占 72 格，剩下 10 格是散的——而**读得比真值宽**的那几格
+    （635/640/650/700）正好是取最宽会中招的那种。一段采 6 帧，真值拿 5~6 票、
+    噪声拿 1 票，「两票」这条线把它们分得很干净。⚠️ 代价是：板正好在这一段
+    **末尾**才长起来（宽的那一档只占 1 帧）时会按窄的裁，那一小段的最后一列
+    比分会被藏住——直方图会打出两簇，人看见了就用 `{"x2": N}` 钉死或者把这
+    一段拆开，那正是 `x2` 这个口子该用的时候。
+
+    ⚠️ 另一类噪声（板和右边的东西连成一片、一路读到画面边缘）已经在
+    `board_right_edge_in_band` 里被判成 None——**那一层不做掉的话，这儿
+    「两票」也拦不住它**（它读到的都是同一个数：带宽）。
+
+    直方图 [(值, 次数)] 按值排序，**要打出来给人看**：两簇就说明板在这一段
+    中途长过，人才知道要不要把这一段拆开裁得更紧。
+    """
+    vals = [v for _t, v in edges if v is not None]
+    buckets: dict[int, list[int]] = {}
+    for v in vals:
+        buckets.setdefault(round(v / 4) * 4, []).append(v)
+    hist = sorted((k, len(g)) for k, g in buckets.items())
+    backed = [k for k, g in buckets.items() if len(g) >= 2]
+    if backed:
+        return max(buckets[max(backed)]), hist
+    return (max(vals) if vals else None), hist
+
+
+def resolve_board_insets(sources: dict[str, Path], segments: list["Segment"],
+                        samples: int = 6, runner=subprocess.run) -> None:
+    """把开了 `score_inset: true` 的段的板右缘**现量出来**，就地写回 segment。
+
+    ⭐ 账号所有者 2026-08-29：「比分板的宽度会变化的，所以不能固定宽度去切，
+    要自适应。」在这之前右缘是**手量三档写进 spec** 的（美网的板每打完一盘
+    +38px），每条新片子都要把成片拉回本地逐帧放大读边框——这个仓库反复说过
+    「修法不是提醒自己下次记得抄，是把手抄这一步去掉」。
+
+    **在 render 里量，不在 probe 里量**：这儿源片和 spec 都在手上，一条路
+    走到底，不用担心 probe.json 认领不上时静静退回一个错的宽度（「一个数
+    写两处必分叉」）。成本跟**段数**走不跟片长走——每段 `samples` 个关键帧
+    seek，不整条解一遍。
+
+    ⚠️ 量不出来（板不在画面里、或者采样点全落在切走的镜头上）**不报错**，
+    退回 spec 的 `scorebox`（最宽那一档）并说一声——那正是老行为，看得见
+    （多盖一截球场），不是静默的坏。
+    """
+    for i, seg in enumerate(segments):
+        if not (seg.score_inset and seg.score_inset_auto):
+            continue
+        src = sources.get(seg.source)
+        if src is None or not Path(src).is_file():
+            continue
+        x0, y0, x1, y1 = seg.score_inset
+        span = max(0.1, seg.end - seg.start)
+        times = [seg.start + span * (k + 0.5) / samples for k in range(samples)]
+        edges = board_right_edges(Path(src), (x0, y0, x1, y1), times, runner)
+        edge, hist = segment_board_edge(edges)
+        shown = "  ".join(f"{v}×{n}" for v, n in hist) or "一帧都没检出"
+        if edge is None:
+            print(f"    [score] 第 {i + 1} 段量不出板的右缘（{shown}），"
+                  f"退回 spec 的 scorebox 右缘 {x1}——板可能整段不在画面里"
+                  "（回放/切走），那种段本来就该写 score_inset: false")
+            continue
+        got = min(int(edge) + BOARD_EDGE_PAD, x1)
+        seg.score_inset = (x0, y0, got, y1)
+        grew = (" ⚠️ 这一段里板不止一种宽度（多半是一盘正好在段中打完），"
+                "按最宽的裁——要裁得更紧就把这一段拆开") if len(hist) > 1 else ""
+        print(f"    [score] 第 {i + 1} 段板右缘现量 {int(edge)}"
+              f"（+{BOARD_EDGE_PAD} 余量 → 裁到 {got}，spec 的兜底是 {x1}）"
+              f"；采样 {shown}{grew}")
+
+
 def require_live_sound(source: Path, spec: dict) -> float | None:
     """源片是哑的就报错并给出路，认领过的放行——**两种情况都打印**。
 
@@ -1822,15 +2009,20 @@ class Segment:
     # `"score_inset": true`（用 spec 顶层 `scorebox` 的坐标）或 `{"x2": N}`
     # （单独放宽这一段的板右缘）。
     # ⚠️ **顶层 scorebox 按板的最宽状态写**（「尽量把五盘大战的比分能包括
-    # 进来」）：美网每完成一盘板右缘 +38px，BO5 一律写 ~736，量窄了深盘的
-    # 比分列会被贴片静默裁掉。⚠️ 而**逐段**要用 `{"x2": N}` 收窄到这一段板
-    # 的真实右缘（账号所有者 2026-08-28：「根据比分板实际大小剪切」）——
-    # 多抠的那截是球场，会被贴到画面上另一个位置，绿盖绿看不出来但它是错的。
+    # 进来」）：美网每完成一盘板右缘 +38px，BO5 一律写 ~736。它现在只给
+    # **左缘和上下沿**（这两样不随盘数变）＋ 量不出来时的兜底右缘。
+    # ⭐ **右缘是渲染时逐段现量的**（`resolve_board_insets`，账号所有者
+    # 2026-08-29：「不能固定宽度去切，要自适应」）——多抠的那截是球场，
+    # 会被贴到画面上另一个位置，绿盖绿看不出来但它是错的。
     # ⚠️ 人名裁不掉：贴片左缘只能锚在板自己的左边缘（切在名字中间会露撕边、
     # 而且盖不住残条——接缝必须落在板右侧的球场上），账号所有者说的
     # 「人名可以不用包进来」落在这儿是「名字跟着原版板一起进来，不另花代价」。
     # ⚠️ 板真的会消失的段（回放/采访切走）别开：那时贴回来的是一块球场。
     score_inset: tuple[int, int, int, int] | None = None
+    # 这一段的板右缘是**渲染时现量的**（`score_inset: true`），还是 spec 里
+    # 用 `{"x2": N}` 手钉的。⭐ 账号所有者 2026-08-29：「不能固定宽度去切，
+    # 要自适应」——所以 true 是主路，`x2` 退成「量不准时人来钉」的口子。
+    score_inset_auto: bool = False
 
     @property
     def length(self) -> float:
@@ -2157,7 +2349,7 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
                 "[x0, y0, x1, y1]（源片像素坐标）——probe 的 scorebox_guess "
                 "直接抄，别按感觉量。")
         if raw is True:
-            return box
+            return box                    # 右缘渲染时现量，box 只当兜底
         if isinstance(raw, dict) and set(raw) == {"x2"}:
             x2 = raw["x2"]
             if not (isinstance(x2, (int, float)) and not isinstance(x2, bool)
@@ -2206,7 +2398,8 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
                        s.get("inset") or None,
                        _seg_speed(s, i),
                        _seg_mute(s, i),
-                       score_inset=_seg_score_inset(s, i))
+                       score_inset=_seg_score_inset(s, i),
+                       score_inset_auto=s.get("score_inset") is True)
 
     segments = [_one(s, i) for i, s in enumerate(spec["segments"])]
     gone_ev = [(i + 1, s.image) for i, s in enumerate(segments)
@@ -2265,11 +2458,15 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
         # 但它是错的）。
         inset_on = [i + 1 for i, g in enumerate(spec["segments"])
                     if g.get("score_inset")]
+        pinned = [i + 1 for i, g in enumerate(spec["segments"])
+                  if isinstance(g.get("score_inset"), dict)]
         print(f"    [score] scorebox 宽 {bx[2] - bx[0]}px（右缘 {bx[2]}）——"
-              "顶层按**这场最宽的那一档**写；"
-              + (f"开了回贴的第 {inset_on} 段里，" if inset_on else "")
-              + '板还没长到最宽的那几段要用 `"score_inset": {"x2": N}` '
-              "收窄到这一段板的真实右缘，不然贴片会把板右边的球场也抠进来")
+              "板的**左缘和上下沿**取这四个数（不随盘数变），"
+              "**右缘渲染时逐段现量**（板每打完一盘 +38px，"
+              "`resolve_board_insets` 每段采 6 点，量不出来才退回这个右缘）；"
+              + (f"开了回贴的是第 {inset_on} 段" if inset_on else "没有段开回贴")
+              + (f"，其中第 {pinned} 段用 `{{\"x2\": N}}` 把右缘钉死了"
+                 "（现量就不生效了，只在量不准的时候才该这么钉）" if pinned else ""))
         # 带式窗口居中（「不要偏离中心的」），浮在左下的板会被窗口左缘裁掉；
         # 没开回贴的段要么是回放/切走（对的），要么是漏了（画面上留一截被
         # 裁掉名字的板）。只报不拦：机器分不出这两种，但漏了的样子在
@@ -2278,9 +2475,9 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
                     if not g.get("image") and not g.get("score_inset")]
         if no_inset:
             print(f"    [score] 第 {no_inset} 段没开 score_inset——带式的居中"
-                  "窗口会把记分条的名字裁掉；回放/切走的段不开是对的，"
-                  "比赛画面的段要写 true（板还没长到最宽的段写 "
-                  "{\"x2\": 这一段板的真实右缘}）")
+                  "窗口会把记分条的名字裁掉；回放/切走的段不开是对的"
+                  "（那时贴回来的是一块球场），比赛画面的段写 true 就行，"
+                  "右缘渲染时会按这一段板的实际宽度现量")
     # ⭐ 账号所有者 2026-08-28：「**美网期间的比赛都用这个比例做视频**」。
     # 美网比赛的 reel（topbar.line1 写着美网/US Open 的那种）一律带式——
     # 只记在对话里拦不住下一个会话，自动链也会自己产美网的片子，所以落成
@@ -2297,9 +2494,9 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
                 "一律用带式版式（账号所有者 2026-08-28）。spec 顶层加：\n"
                 '  "layout": "band", "scorebox": [104, 888, 736, 978]\n'
                 "（scorebox 是五盘满列宽度——主赛第一条先拿 probe 的 "
-                "scorebox_guess 对一眼再沿用），比赛画面的段写 "
-                '"score_inset": true（回放/切走的段不写；板还没长到最宽的'
-                '段写 {"x2": 这一段板的真实右缘}）。'
+                "scorebox_guess 对一眼再沿用；它只给板的左缘和上下沿，"
+                "右缘渲染时逐段现量），比赛画面的段写 "
+                '"score_inset": true（回放/切走的段不写）。'
                 "账在 docs/us-open-scoreboard-aspect.md。")
         if scorebox is None:
             raise ReelError(
@@ -6118,6 +6315,11 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
         print("[注意] 以下片段超过旁白留白提示线；现场声仍在，所以不阻断渲染：\n"
               + "\n".join(idle)
               + "\n若画面观感确实空，再补旁白或缩短窗口；数字静音仍由成片 QA 硬拦。")
+
+    # **板的右缘现量**（`score_inset: true` 的段）——账号所有者 2026-08-29：
+    # 「比分板的宽度会变化的，所以不能固定宽度去切，要自适应」。排在切片之前，
+    # 和 track_shots 同一个位置：都是「先把整条量完，再逐段切」。
+    resolve_board_insets(sources, segments)
 
     # 跟踪要**先整条镜头跟完再切**，所以排在切片之前统一算（见 track_shots）
     tracks = track_shots(sources, segments, source_w)

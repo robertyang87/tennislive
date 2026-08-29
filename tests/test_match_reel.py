@@ -13099,6 +13099,113 @@ def test_背景音乐默认走平台曲库不烧进片子():
         f"读的人会去找授权，而正确答案多半是「不加」。实际报的是：{problem!r}")
 
 
+def test_板的右缘按每一段实际的宽度现量不是写死三档(tmp_path, capsys):
+    """⭐ 账号所有者 2026-08-29：「比分板的宽度会变化的，所以不能固定宽度去切，
+    要自适应。」
+
+    在这之前右缘是**手量三档写进 spec** 的（美网的板每打完一盘 +38px：这条
+    片子实测一盘 583、二盘 618、决胜盘 656）——每条新片子都要把成片拉回本地
+    逐帧放大读边框，而这个仓库反复说过「修法不是提醒自己下次记得抄，是把
+    手抄这一步去掉」。现在 `resolve_board_insets` 在渲染时逐段现量。
+
+    判据**真跑 ffmpeg 量像素**，合成源片里让板在三个时间段是三种宽度，
+    右端各带一格**白色**小分（那正是真板的样子）：
+
+    ① 三段各自量到自己那一档，不是三段都退回顶层 scorebox 的最宽值
+    ② **白格要算进板里**——按「暗块」找边缘会在深蓝底结束处就停下，实测
+       少 53px（2026-08-28 手量时踩过一次）。这一条钉的就是白格没被漏掉
+    ③ 板整段不在画面里（回放/切走）时退回 spec 的兜底右缘**并出声**——
+       「量不出来」和「量出来就是这么宽」在产物上分不出来
+    ④ 留了余量往**宽**里去，永远不许裁窄：裁窄是**静默**的失败（最右那几列
+       比分被贴片藏在自己底下，没有任何闸会响），裁宽只是多盖几像素球场
+
+    反向验证过三个方向：**不现量**（一律退回顶层 scorebox）→ ① 红；
+    **只认暗块**（`hit` 上再加一条「亮度 < 120」，白格就被漏掉）→ 也红在 ①
+    的区间断言上，报出来是「量到 552，该在 584~596」——那 40px 正是白格，
+    实测那个坑少 53px；**把量不出来那一支的 print 拆掉** → ③ 红。
+    """
+    import shutil  # noqa: PLC0415
+
+    assert shutil.which("ffmpeg"), "没有 ffmpeg，这条判据跑不了：apt install ffmpeg"
+    reel = _reel()
+    src = tmp_path / "board.mp4"
+    # 板：深蓝底 + 右端一格白色小分。三档右缘 584 / 619 / 657，
+    # 而**深蓝底**分别只到 544 / 579 / 617——白格宽 40。
+    plates = []
+    for k, (dark_end, white_end, lo, hi) in enumerate(
+            [(544, 584, 0, 2), (579, 619, 2, 4), (617, 657, 4, 6)]):
+        on = f"between(t,{lo},{hi})"
+        plates.append(f"drawbox=x=104:y=888:w={dark_end - 104}:h=90:"
+                      f"color=0x1B2A5E:t=fill:enable='{on}'")
+        plates.append(f"drawbox=x={dark_end}:y=888:w={white_end - dark_end}:h=90:"
+                      f"color=white:t=fill:enable='{on}'")
+    subprocess.run(
+        ["ffmpeg", "-y", "-v", "error", "-f", "lavfi", "-i",
+         "color=c=0x6E8B6E:s=1920x1080:r=25," + ",".join(plates),
+         "-t", "8", "-pix_fmt", "yuv420p", str(src)], check=True)
+
+    box = (104, 888, 660, 978)          # 顶层 scorebox：这场最宽那一档 + 兜底
+    segs = [reel.Segment(start=lo, end=hi, cx=0.5, narration="", track=False,
+                         score_inset=box, score_inset_auto=True)
+            for lo, hi in [(0.0, 2.0), (2.0, 4.0), (4.0, 6.0), (6.0, 8.0)]]
+    reel.resolve_board_insets({"": src}, segs)
+    out = capsys.readouterr().out
+    got = [s.score_inset[2] for s in segs]
+
+    for i, (want, seg) in enumerate(zip([584, 619, 657], segs[:3])):
+        assert want <= seg.score_inset[2] <= want + reel.BOARD_EDGE_PAD + 4, (
+            f"① 第 {i + 1} 段该量到自己那一档（板右缘 {want}，留余量往宽里去），"
+            f"量到 {seg.score_inset[2]}。三段一样宽就说明它没在现量、"
+            f"退回了顶层的 {box[2]}——那正是被账号所有者点掉的「固定宽度去切」。"
+            f"\n{out}")
+        assert seg.score_inset[2] >= want, (
+            f"④ 第 {i + 1} 段裁窄了（{seg.score_inset[2]} < {want}）——"
+            "裁窄会把最右那几列比分藏在贴片底下，而且一声不吭")
+
+    assert len(set(got[:3])) == 3, (
+        f"① 三段量出来该是三个不同的宽度（板每盘 +38px），拿到 {got[:3]}")
+    assert got[0] > 544 + 20, (
+        f"② 白色小分格要算进板里——量到 {got[0]}，而深蓝底只到 544。"
+        "按「暗块」找边缘会在这儿停下，实测少 53px（2026-08-28 手量时踩过）")
+
+    assert segs[3].score_inset[2] == box[2] and "量不出板的右缘" in out, (
+        "③ 板不在画面里的那一段要退回 spec 的兜底右缘**并出声**——"
+        f"不吭声的话「量不出来」和「板就这么宽」分不出来。实际：{out}")
+
+
+def test_板右缘的取值规则两票起步且取最宽():
+    """`segment_board_edge` 的取值规则，钉三头（不用跑 ffmpeg，秒级）。
+
+    ① **取最宽**：裁窄了是**静默**的失败（最右那几列比分被贴片藏在自己底下，
+       没有任何闸会响），裁宽了只是多盖几像素球场，看得见、而且被调用方按
+       spec 的 scorebox 封了顶。所以板在一段中途长了一列时按宽的裁
+    ② **两票起步**：只取最宽的话噪声会被一起取上。这条片子的 104 格记分条
+       缩略图墙实测——82 格量到板、三大簇占 72 格，剩下 10 格是散的，而其中
+       635/640/650/700 那几格正好读得比真值宽。一段采 6 帧，真值拿 5~6 票、
+       噪声拿 1 票，「两票」把它们分得很干净（真跑过：第 4 段那个 636、
+       第 5 段那个 700 都被挡掉了，两段都正确落在 580）
+    ③ **直方图要给出来**：两簇就说明板在这一段中途长过，人才知道要不要拆段
+
+    反向验证过：把「两票」放宽到一票 → ② 红（噪声被取中）；把 max 改成 min
+    → ① 红；不返回直方图 → ③ 红。
+    """
+    reel = _reel()
+    noisy = [(0.0, 584), (1.0, 583), (2.0, 585), (3.0, 584), (4.0, 650)]
+    edge, hist = reel.segment_board_edge(noisy)
+    assert edge is not None and 583 <= edge <= 585, (
+        f"② 只有一票的 650（球员贴着板走过那种）不该被取中，拿到 {edge}；"
+        f"直方图 {hist}")
+    edge2, hist2 = reel.segment_board_edge(
+        [(0.0, 584), (1.0, 584), (2.0, 619), (3.0, 619), (4.0, 620)])
+    assert edge2 is not None and edge2 >= 619, (
+        f"① 板在这一段中途长了一列、两档都有两票以上时要按**宽的**裁"
+        f"（裁窄会静默藏掉比分列），拿到 {edge2}")
+    assert len(hist2) >= 2, "③ 两簇要在直方图里看得见，人才知道要不要拆段"
+    assert reel.segment_board_edge([(0.0, None), (1.0, None)])[0] is None
+    # 一票都撑不起两票时退回最宽的那一帧（段太短、采样点大半落在切走的镜头上）
+    assert reel.segment_board_edge([(0.0, 516), (1.0, 652)])[0] == 652
+
+
 def test_score_inset的形状校验和scorebox的死键闸(capsys):
     """`score_inset` / `scorebox` 的形状规矩全在 parse_segments（--dry-run
     0.2 秒就报，不用等下载）：
@@ -13106,7 +13213,10 @@ def test_score_inset的形状校验和scorebox的死键闸(capsys):
     - score_inset 只在带式里有意义；带式外写了当场报（不是静默不生效）
     - 开了 score_inset 就必须有 spec 顶层 scorebox（格式 [x0,y0,x1,y1]）
     - scorebox 写在非带式 spec 里是死键，当场报
-    - `{"x2": N}` 改这一段的板右缘（板每盘 +38px 那笔账），解析成 (x0,y0,N,y1)
+    - `{"x2": N}` 把这一段的板右缘**钉死**，解析成 (x0,y0,N,y1)。⭐ 它退成
+      「现量不准时人来钉」的口子了——主路是 `true`＋渲染时现量
+      （`resolve_board_insets`，账号所有者 2026-08-29：「不能固定宽度去切，
+      要自适应」）
     - **没开回贴的段要逐段点名**（只报不拦）：带式的居中窗口会把板的名字裁掉，
       所以比赛画面的段都该开；回放/切走的段不开是对的，机器分不出这两种，
       漏开的样子（左下一截被裁掉名字的板）在 --dry-run 里要看得见
@@ -13155,18 +13265,20 @@ def test_score_inset的形状校验和scorebox的死键闸(capsys):
     assert segs[1].score_inset == (104, 888, 655, 978), "x2 放宽没落到这一段"
     assert segs[2].score_inset is None
     out = capsys.readouterr().out
-    assert "最宽" in out, (
-        "带式 + scorebox 要在 --dry-run 里提醒顶层「按最宽的那一档写」——"
-        "账号所有者：「尽量把五盘大战的比分能包括进来」；按当前帧量的 box "
-        "会把深盘长出来的列静默裁掉，而那一天没有任何闸会出声")
+    assert "现量" in out and "左缘和上下沿" in out, (
+        "带式 + scorebox 要在 --dry-run 里说清这四个数现在只给**板的左缘和"
+        "上下沿**（不随盘数变）＋ 量不出来时的兜底右缘，**右缘渲染时逐段"
+        "现量**（账号所有者 2026-08-29：「不能固定宽度去切，要自适应」）。\n"
+        "还写着「顶层按最宽那一档写、浅盘的段自己去 x2 收窄」的话，读的人"
+        f"会回去手量三档——那正是这次要去掉的那一步。实际打出来的是：{out!r}")
     assert "第 [3] 段没开 score_inset" in out, (
         "第 3 段没开回贴要被点名——带式居中窗口会把板的名字裁掉，而"
         "「漏开了」和「这段是回放」在产物上长得一样，只能靠 --dry-run 出声。"
         f"实际打出来的是：{out!r}")
-    assert "第 [1, 2] 段" in out and "x2" in out and "真实右缘" in out, (
-        "提醒里要点名**开了回贴**的那几段，并留一句：板还没长到最宽的段用 "
-        'x2 收窄到这一段板的真实右缘——账号所有者 2026-08-28：「根据比分板'
-        "实际大小剪切」。顶层那个最宽的框对浅盘的段会把球场也抠进贴片")
+    assert "第 [1, 2] 段" in out and "第 [2] 段" in out and "钉死" in out, (
+        "提醒里要点名**开了回贴**的那几段，并单独点出哪几段用 `{\"x2\": N}` "
+        "把右缘钉死了——钉死的段现量不生效，而「钉了」和「没钉」在产物上"
+        f"分不出来。实际打出来的是：{out!r}")
 
 
 def test_美网的比赛一律带式版式():
