@@ -65,8 +65,30 @@ jobs:
               assert seen and all(cmd[0] != 'yt-dlp' for cmd in seen)
           PY
           python3 -m py_compile tools/build_interview_clip.py
-          python3 -m pip install -q pytest
-          python3 -m pytest -q tests/test_interview_direct_media.py
+          python3 - <<'PY'
+          import sys, tempfile
+          from pathlib import Path
+          from types import SimpleNamespace
+          sys.path.insert(0, 'tools')
+          import build_interview_clip as clip
+          with tempfile.TemporaryDirectory() as td:
+              dest=Path(td)/'lead.mp4'
+              seen=[]
+              def fake_run(cmd, **kwargs):
+                  seen.append(cmd)
+                  assert cmd[0]=='curl', cmd
+                  Path(cmd[cmd.index('-o')+1]).write_bytes(b'x'*2048)
+                  return SimpleNamespace(returncode=0,stdout='',stderr='')
+              old=clip.subprocess.run
+              clip.subprocess.run=fake_run
+              try:
+                  got=clip.yt_download('https://media.example.test/path/final.mp4',dest,'bv*+ba/b',{})
+              finally:
+                  clip.subprocess.run=old
+              assert got==dest and dest.stat().st_size==2048
+              assert seen and all(cmd[0]!='yt-dlp' for cmd in seen)
+          print('direct-media regression: PASS')
+          PY
       - name: 提交共享修复并重跑锦织圭
         env:
           GH_TOKEN: ${{ github.token }}
