@@ -1,28 +1,25 @@
 name: interview-auto-render
 
-# 「赛后开麦」自动出片的最后一环：把草稿提升成正式 spec（补 winner/matchup，
-# 查赛果），然后 dispatch render——每 slug 一个 run，interview-clip 的
-# concurrency 按 slug 分组，**不同采访天然并行**（好多比赛差不多时间结束）。
+# 「赛后开麦」自动出片的最后一环：
+# 1) 把自动草稿提升成正式 spec；
+# 2) 把人工指定、身份与赛果已经核实的请求转写/翻译成正式 spec；
+# 3) 补同场比赛结尾与双语现场解说；
+# 4) 只 dispatch 生产契约完整的条目。
 #
-# ⚠️ **推微信不是「auto-push-interview 盯 render.json 自动触发」**——这句话
-# 2026-08-21 之前写在这儿，而它从来没成立过：render 的成片提交用的是
-# GITHUB_TOKEN，GitHub 防递归不给这种 push 创建 workflow run（铁证：50 份
-# render.json / 0 份 pushed.json）。真话是：interview-clip 渲完自己
-# `gh workflow run auto-push-interview.yml -f slug=…` 叫醒推送，
-# 那头会复核 L0、L2 attestation、成片指纹、独立发布账本和海报。
-#
-# ⚠️ **只 dispatch 生产契约完整的 spec。** 自动草稿的 zh 与正式切行同源，
-# transcript 走双 ASR 指纹；opening/lead-in/takeaway/cover 也由流水线补齐。
-# 任何身份不明或精确同场片头没找到的仍留在 waiting，不把失败任务记成已 dispatch。
-#
-# 前两环在 oncourt-interviews.yml：采集（定时）→ 候选（pick_oncourt_clips）→
-# 自动建草稿（逐场 matrix，最多 4 路）。这条做「提升 + 同场片头 + dispatch」。
+# 微信推送由 interview-clip 渲完后叫醒 auto-push-interview；后者复核 L0/L2、
+# 成片指纹、独立发布账本和海报。这里不把“dispatch 成功”冒充成“已经发布”。
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - "requests/interviews/*.json"
+      - "tools/build_interview_request.py"
+      - "tools/interview_source_gate.py"
+      - "tools/attach_interview_lead_in.py"
+      - ".github/workflows/interview-auto-render.yml"
   schedule:
-    # 每 10 分钟接住新草稿、片头重试和 dispatch。避开整点——
-    # GitHub 在整点半点最容易延迟或丢弃（daily 当年留下的经验，knowledge-adhoc
-    # 的 08:37 也是这么定的）。
+    # 每 10 分钟接住新草稿、人工请求、片头重试和 dispatch；避开整点/半点。
     - cron: "3,13,23,33,43,53 * * * *"
   workflow_dispatch:
 
@@ -44,23 +41,18 @@ jobs:
           sparse-checkout: |
             data
             docs
+            requests
             specs
             src
             tests
             tools
 
-      # **没活就早退，别装依赖。** 这条每 10 分钟跑一趟，而大多数趟什么都
-      # 没有——`pick_interview_renders` 和它 import 的 `build_interview_clip`
-      # 顶层只有标准库，系统 python3 就跑得动（git ls-files 读 index，也不用
-      # 检出 output/）。stale 告警也在这儿出：**「投了」只是信号，render.json
-      # 才是产物**——投出去 3 小时还没产物的要喊出来，不能安静地躺在状态文件里。
       - name: 没活就早退
         id: gate
         run: |
           set -o pipefail
-          # 用 find 不用 `ls *.glob`：没有草稿时 ls 退出码 2，在
-          # `set -e -o pipefail` 下会把整步打红——而「没有草稿」是常态。
           DRAFTS=$(find specs/interviews -maxdepth 1 -name '*.draft.json' | wc -l)
+          REQUESTS=$(python3 tools/build_interview_request.py --count-pending)
           NEEDS_LEAD=$(python3 - <<'PY'
           import json
           from pathlib import Path
@@ -71,7 +63,7 @@ jobs:
               try: d = json.loads(p.read_text(encoding='utf-8'))
               except Exception: continue
               op = d.get('opening') or {}
-              n += bool(d.get('requested_content_type') == 'on_court'
+              n += bool(d.get('requested_content_type') in {'on_court', 'farewell'}
                         and op.get('kind') == 'none' and not d.get('lead_in'))
           print(n)
           PY
@@ -95,11 +87,12 @@ jobs:
               tail -n +2 /tmp/waiting.txt | sed 's/^  /- /'
             } >> "$GITHUB_STEP_SUMMARY"
           fi
-          if [ "$DRAFTS" -eq 0 ] && [ "$READY" -eq 0 ] && [ "$NEEDS_LEAD" -eq 0 ]; then
-            echo "[早退] 没有草稿要提升、没有 spec 要 dispatch——不装依赖了。"
+          if [ "$DRAFTS" -eq 0 ] && [ "$REQUESTS" -eq 0 ] \
+             && [ "$READY" -eq 0 ] && [ "$NEEDS_LEAD" -eq 0 ]; then
+            echo "[早退] 没有草稿、人工请求、待补片头或待 dispatch 的正式 spec。"
             echo "work=false" >> "$GITHUB_OUTPUT"
           else
-            echo "草稿=$DRAFTS，待 dispatch=$READY，待同场冷开场=$NEEDS_LEAD"
+            echo "草稿=$DRAFTS，人工请求=$REQUESTS，待 dispatch=$READY，待同场冷开场=$NEEDS_LEAD"
             echo "work=true" >> "$GITHUB_OUTPUT"
           fi
 
@@ -109,9 +102,18 @@ jobs:
           python-version: "3.11"
           cache: pip
 
+      - name: 把人工请求的产物格加回稀疏范围
+        if: steps.gate.outputs.work == 'true'
+        run: |
+          python3 tools/build_interview_request.py --pending-slugs | tee /tmp/request-slugs.txt
+          while IFS= read -r slug; do
+            [ -n "$slug" ] || continue
+            git sparse-checkout add "output/interviews/$slug"
+          done < /tmp/request-slugs.txt
+
       - name: 装依赖
         if: steps.gate.outputs.work == 'true'
-        run: pip install -q -e . "yt-dlp[default]>=2026.7.4"
+        run: pip install -q -e . "yt-dlp[default]>=2026.7.4" faster-whisper
 
       - name: 启动 YouTube PO token provider
         if: steps.gate.outputs.work == 'true'
@@ -133,12 +135,9 @@ jobs:
         if: steps.gate.outputs.work == 'true'
         run: |
           set -o pipefail
-          # 只提升「赛果里查得到唯一同场对手」的草稿；查不到的留在草稿重试/复核
-          # （宁可漏推不误推——顶栏对阵印错比晚一点糟）。
-          python tools/promote_interview_draft.py --write \
-            | tee /tmp/promote.log
+          python tools/promote_interview_draft.py --write | tee /tmp/promote.log
 
-      - name: 落 cookies（同场官方集锦字幕）
+      - name: 落 cookies（正文转写与同场官方集锦字幕）
         if: steps.gate.outputs.work == 'true'
         id: lead_cookies
         env:
@@ -149,7 +148,16 @@ jobs:
             echo "path=$RUNNER_TEMP/yt-cookies.txt" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: 自动配同场获胜画面与解说双语字幕
+      - name: 人工指定请求转写、切行并逐行翻译
+        if: steps.gate.outputs.work == 'true'
+        env:
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          YT_COOKIES: ${{ steps.lead_cookies.outputs.path }}
+        run: |
+          set -o pipefail
+          python tools/build_interview_request.py --write | tee /tmp/request-build.log
+
+      - name: 自动配同场比赛结尾与解说双语字幕
         if: steps.gate.outputs.work == 'true'
         env:
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
@@ -158,27 +166,29 @@ jobs:
           set -o pipefail
           python tools/attach_interview_lead_in.py --write | tee /tmp/lead-in.log
 
-      - name: 提交提升结果
+      - name: 提交生成与提升结果
         if: steps.gate.outputs.work == 'true'
         run: |
           git config user.name "Claude"
           git config user.email "noreply@anthropic.com"
-          # 先 add 再判：提升会**新建**正式 spec（未跟踪文件），裸的
-          # `git diff --quiet` 看不见它们——只在删草稿那半边出声，而
-          # 「删了草稿、新 spec 没提交」正是最坏的中间态。
           git add specs/interviews
+          if [ -f /tmp/request-slugs.txt ]; then
+            while IFS= read -r slug; do
+              [ -n "$slug" ] || continue
+              if [ -f "output/interviews/$slug/cap_asr.json3" ]; then
+                git add -f "output/interviews/$slug/cap_asr.json3"
+              fi
+            done < /tmp/request-slugs.txt
+          fi
           if git diff --cached --quiet; then
-            echo "没有草稿被提升。"
+            echo "没有新请求或草稿被生成/提升。"
             exit 0
           fi
           python tools/check_staged_file_sizes.py
-          git commit -m "interview: 自动提升赛后开麦 spec 草稿"
-          # 重试收在共享脚本里：原来这儿的 `git pull --rebase` 没带
-          # `|| abort`，`bash -e` 下 rebase 一失败整步立刻死，循环一次
-          # 都轮不到（tools/git_push_retry.sh 顶部注释记着这一族）。
+          git commit -m "interview: 自动生成赛后开麦正式 spec"
           source tools/git_push_retry.sh
           if ! push_with_rebase_retry "${GITHUB_REF_NAME}" 5; then
-            echo "::error::提升结果推不上去——草稿还在，下一趟会重来"
+            echo "::error::生成结果推不上去——请求/草稿还在，下一趟会重来"
             exit 1
           fi
 
@@ -188,22 +198,14 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -o pipefail
-          # 重新扫一遍（上一步可能刚提升出新 spec）；stdout 第二行起是名单。
-          # ⚠️ 不能用 `… | while read`——管道里的 while 在子 shell 里跑，
-          # 循环里记下的任何状态都传不出来。用 mapfile。
           python tools/pick_interview_renders.py | tee /tmp/todo.txt
           mapfile -t SLUGS < <(tail -n +2 /tmp/todo.txt | grep -v '^$' || true)
           FAILED=()
           for slug in "${SLUGS[@]}"; do
-            # 正式 spec、同场片头和来源核验都齐了，到这里才是“生产链接已接收”。
-            # 这个时刻一路传给成片，不允许 render job 装完依赖后重新起表。
             RECEIVED_AT=$(date -u +%FT%TZ)
             echo "[dispatch] interview-clip render $slug"
             if gh workflow run interview-clip.yml --ref main \
               -f "slug=$slug" -f mode=render -f "received_at=$RECEIVED_AT"; then
-              # **投一条记一条，先投后记。** 反过来（先把整批记进状态再逐条
-              # dispatch）的下场踩过：dispatch 失败的那条挂着「已投」的标记，
-              # 从此再也不会被投，而且不吭声。
               python tools/pick_interview_renders.py --mark-one "$slug" --at "$RECEIVED_AT"
             else
               FAILED+=("$slug")
@@ -238,7 +240,6 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          # schedule 会被 GitHub 丢弃，详见 tools/nudge_stale_ticks.sh 顶注。
           source tools/nudge_stale_ticks.sh
           nudge_if_stale orchestrate.yml 20 -f apply=true
           nudge_if_stale reel-auto-ready.yml 20
