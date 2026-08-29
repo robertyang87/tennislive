@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
 import subprocess
 import sys
@@ -30,6 +31,7 @@ sys.path.insert(0, str(ROOT / "tools"))
 REQUESTS = ROOT / "requests" / "interviews"
 SPECS = ROOT / "specs" / "interviews"
 OUTDIR = ROOT / "output" / "interviews"
+DOWNLOAD_TIMEOUT = 300
 
 
 def _read(path: Path) -> dict:
@@ -96,6 +98,158 @@ def pending_paths(only_slug: str = "") -> list[Path]:
         if is_pending(path):
             out.append(path)
     return out
+
+
+def _resolve_media_url(url: str) -> str:
+    """Tennis TV 页面先换成可下载媒体；YouTube 等来源原样返回。"""
+    from tennislive.video.official import media_url  # noqa: PLC0415
+
+    try:
+        return media_url(url)
+    except Exception:  # noqa: BLE001 — 非 Tennis TV 来源不该被解析器挡住
+        return url
+
+
+def _download_attempts(url: str) -> list[tuple[str, list[str]]]:
+    """无业务素材依赖的轻量 YouTube client 梯子。
+
+    不能从完整 match-reel / interview renderer 导入这张表：自动请求任务使用
+    sparse checkout，不含它们渲海报时读取的 ``assets/``。2026-08-29 锦织圭
+    请求实跑时，导入完整梯子先因缺 Munar 人脸素材失败，再静默退成单档默认。
+    下载判据必须只依赖 URL 和 yt-dlp，本函数因此故意保持纯数据。
+    """
+    if not _youtube_id(url):
+        return [("direct", [])]
+    return [
+        ("默认", []),
+        ("web_safari", ["--extractor-args", "youtube:player_client=web_safari"]),
+        ("ios", ["--extractor-args", "youtube:player_client=ios"]),
+        ("android_vr", ["--extractor-args", "youtube:player_client=android_vr"]),
+        ("web", ["--extractor-args", "youtube:player_client=web"]),
+        ("tv", ["--extractor-args", "youtube:player_client=tv"]),
+    ]
+
+
+def _downloaded_audio(workdir: Path) -> Path | None:
+    """找本档真正下载完成的原始音轨，排除 yt-dlp 临时/续传文件。"""
+    candidates = [
+        path
+        for path in workdir.glob("audio.*")
+        if path.is_file()
+        and path.stat().st_size > 0
+        and not path.name.endswith((".part", ".ytdl", ".temp"))
+    ]
+    return max(candidates, key=lambda path: path.stat().st_size) if candidates else None
+
+
+def _download_audio(url: str, workdir: Path) -> Path:
+    """带 cookies、Node JS runtime 和 client 梯子下载原始音轨。
+
+    这里不把音轨转成 MP3：``-x --audio-format mp3`` 会调用系统 ffmpeg，而轻量
+    请求任务没有安装它；faster-whisper 自带的 PyAV 能直接读取 webm/m4a/opus。
+    每一档失败都打印真实尾部错误并继续，只有所有档都失败才抛异常。
+    """
+    workdir.mkdir(parents=True, exist_ok=True)
+    dl_url = _resolve_media_url(url)
+    template = str(workdir / "audio.%(ext)s")
+    cookie_args: list[str] = []
+    cookies = os.environ.get("YT_COOKIES") or ""
+    if cookies and Path(cookies).is_file():
+        cookie_args = ["--cookies", cookies]
+
+    failures: list[str] = []
+    for label, extra in _download_attempts(url):
+        # 失败档可能留下 .part / .ytdl / 原始容器；下一档必须从干净状态开始，
+        # 不能把上一档的半截文件误认成这次成功产物。
+        for partial in workdir.glob("audio.*"):
+            partial.unlink(missing_ok=True)
+        cmd = [
+            "yt-dlp",
+            "--no-warnings",
+            "--no-playlist",
+            "--js-runtimes", "node",
+            "--extractor-retries", "3",
+            "-f", "bestaudio/best",
+            "-o", template,
+            *cookie_args,
+            *extra,
+            dl_url,
+        ]
+        try:
+            proc = subprocess.run(
+                cmd,
+                check=False,
+                capture_output=True,
+                text=True,
+                timeout=DOWNLOAD_TIMEOUT,
+            )
+        except subprocess.TimeoutExpired:
+            tail = f"超过 {DOWNLOAD_TIMEOUT}s"
+            print(f"[人工请求音频] {label} 没成：{tail}")
+            failures.append(f"{label}: {tail}")
+            continue
+
+        audio = _downloaded_audio(workdir)
+        if proc.returncode == 0 and audio is not None:
+            if failures:
+                print(f"[人工请求音频] {label} 成功（前面 {len(failures)} 档没成）")
+            else:
+                print(f"[人工请求音频] {label} 成功")
+            print(f"[人工请求音频] 原始容器：{audio.name}，{audio.stat().st_size} bytes")
+            return audio
+
+        raw = (proc.stderr or proc.stdout or "（没有 yt-dlp 输出）").strip()
+        tail_lines = raw.splitlines()[-3:]
+        tail = " | ".join(line.strip() for line in tail_lines if line.strip())
+        if proc.returncode == 0 and audio is None:
+            tail = "exit 0 但没有生成完整原始音轨" + (f"；{tail}" if tail else "")
+        tail = tail[-900:] or "（没有 yt-dlp 输出）"
+        print(f"[人工请求音频] {label} 没成：{tail[:240]}")
+        failures.append(f"{label}: {tail}")
+
+    raise RuntimeError(
+        f"yt-dlp 音频下载 {len(failures)} 档全部失败：\n  "
+        + "\n  ".join(failures)
+    )
+
+
+def _transcribe_request(
+    url: str, workdir: Path, model: str = "small.en"
+) -> tuple[list[dict], float]:
+    """可靠下载人工请求音频，再用第一份 faster-whisper 产逐词时间码。"""
+    audio = _download_audio(url, workdir)
+    from faster_whisper import WhisperModel  # noqa: PLC0415
+
+    model_inst = WhisperModel(model, compute_type="int8")
+    segments, info = model_inst.transcribe(
+        str(audio), vad_filter=True, word_timestamps=True
+    )
+    duration = float(getattr(info, "duration", 0.0) or 0.0)
+    rows: list[dict] = []
+    for segment in segments:
+        words = list(getattr(segment, "words", None) or [])
+        if words:
+            rows.extend(
+                {
+                    "t": round(float(word.start), 2),
+                    "end": round(float(word.end), 2),
+                    "text": str(word.word).strip(),
+                }
+                for word in words
+                if str(word.word).strip()
+            )
+            continue
+        tokens = str(segment.text or "").strip().split()
+        span = max(0.01, float(segment.end) - float(segment.start))
+        for index, token in enumerate(tokens):
+            start = float(segment.start) + span * index / max(len(tokens), 1)
+            end = float(segment.start) + span * (index + 1) / max(len(tokens), 1)
+            rows.append({
+                "t": round(start, 2),
+                "end": round(end, 2),
+                "text": token,
+            })
+    return rows, duration
 
 
 def _verification(req: dict) -> dict:
@@ -201,19 +355,21 @@ def build_spec(req: dict, zh: list[str], duration: float) -> dict:
 
 def _build_one(path: Path, chat, *, write: bool) -> tuple[str, int, float]:
     from build_interview_clip import segment  # noqa: PLC0415
-    from draft_interview_spec import cap_json3, transcribe, translate  # noqa: PLC0415
+    from draft_interview_spec import cap_json3, translate  # noqa: PLC0415
 
     req = _read(path)
     slug = _slug(req, path)
     with tempfile.TemporaryDirectory() as td:
-        rows, duration = transcribe(str(req["url"]), Path(td), model="small.en")
+        rows, duration = _transcribe_request(
+            str(req["url"]), Path(td), model="small.en"
+        )
     if not rows:
         raise RuntimeError(f"{slug}: 第一份 ASR 为空")
     start = max(0.0, float(req.get("start") or 0.0))
     requested_end = req.get("end")
     end = float(requested_end) if requested_end not in (None, "") else float(duration)
     end = min(float(duration), end)
-    lines = segment([(r["t"], r["text"]) for r in rows], start, end)
+    lines = segment([(row["t"], row["text"]) for row in rows], start, end)
     if not lines:
         raise RuntimeError(f"{slug}: 正式切行为空")
     zh = translate([{"t": row["a"], "text": row["en"]} for row in lines], chat)
