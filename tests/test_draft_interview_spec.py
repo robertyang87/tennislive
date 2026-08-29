@@ -8,6 +8,7 @@
 from __future__ import annotations
 
 import json
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -180,3 +181,50 @@ def test_下载失败要带yt_dlp尾部原因不许只报CalledProcessError(tool
     monkeypatch.setattr("tennislive.video.official.media_url", lambda url: url)
     with pytest.raises(RuntimeError, match="HTTP Error 403.*signed manifest"):
         tool.transcribe("https://example.test/interview", tmp_path)
+
+
+def test_抽音频的依赖要在开跑前就查掉而不是下到一半才报(tool, monkeypatch, capsys):
+    """缺 ffmpeg 要死在第 5 秒，并且说出路——钉行为和位置两头。
+
+    来路：oncourt-interviews run 138~142 连炸 5 趟，日志里是
+
+        ⚠️ Fery Enjoying the Winston-Salem Nights: RuntimeError: yt-dlp 音频
+        下载失败（exit 1）：... ERROR: Postprocessing: ffprobe and ffmpeg not found
+
+    真因那半句埋在 1800 字符的 yt-dlp 尾巴里，外面套着一句「这条源失败了」，
+    而它上一行刚打印「Tennis TV 解出 HLS」——**读起来像这条源的问题**。
+
+    ⚠️ **位置那一头不能省**：只钉行为的话，把这段挪到下载之后照样绿，而那
+    正好是这次真出事的样子（工具是在下载途中才发现缺依赖的）。CLAUDE.md
+    「只测行为拦不住位置错」记的就是这个形状。
+    """
+    d = tool
+
+    # ① 行为：认得出缺了谁
+    real = shutil.which
+    monkeypatch.setattr(
+        shutil, "which",
+        lambda b, *a, **k: None if b in ("ffmpeg", "ffprobe") else real(b, *a, **k))
+    assert d._missing_media_tools() == ["ffmpeg", "ffprobe"]
+    monkeypatch.undo()
+    assert "ffmpeg" not in d._missing_media_tools(), (
+        "沙箱里 ffmpeg 是在的（启动钩子装的），这条判据的前提没了")
+
+    # ② 位置：预检必须排在真正干活之前
+    src = Path("tools/draft_interview_spec.py").read_text(encoding="utf-8")
+    main_src = src.split("def main() -> int:", 1)[1]
+    at_check = main_src.find("_missing_media_tools()")
+    at_work = main_src.find("ThreadPoolExecutor(")
+    assert at_check >= 0, "main() 里没有这道预检了"
+    assert 0 <= at_check < at_work, (
+        "预检排到干活后面去了——那就退回「下到一半才发现装少了」，"
+        "而那次的报错读起来像「这条源下不动」。")
+
+    # ③ 报错要说出路：光说「缺 ffmpeg」，下一个人还得自己翻工作流
+    monkeypatch.setattr(d, "_missing_media_tools", lambda: ["ffmpeg"])
+    monkeypatch.setattr(sys, "argv", ["draft_interview_spec.py"])
+    assert d.main() == 2
+    err = capsys.readouterr().err
+    assert "ensure_ffmpeg" in err and "postprocessing" in err.lower(), (
+        "报错没给出路：要点明「-x 是 postprocessing、和源是不是 HLS 无关」，"
+        "并指出工作流里加 `ensure_ffmpeg`。\n实际输出：" + err)

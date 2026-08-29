@@ -796,3 +796,112 @@ def test_CI要把最慢的测试打进日志():
         + "\n\nCI 排在每次合并前面，而它的耗时在 runner 上会 3~10 分钟乱跳"
           "（同一个 commit 实测 108.91s vs 581.55s）。没有这份榜单，"
           "「今天怎么这么慢」既查不出是哪几条，也证明不了不是这次改的。")
+
+
+#: yt-dlp 的 **postprocessing** 参数，以及直接调 ffmpeg/ffprobe 的写法。
+#: 命中任一条，这个工具跑起来就要盘上真有 ffmpeg 二进制。
+#: ⚠️ `-x`／`--audio-format` 常被读成「只是选个格式」——它是转码，和源是不是
+#: HLS 无关：`draft_interview_spec.py` 的 progressive 源同样要走这一步。
+_FFMPEG_CALLERS = re.compile(
+    r'"-x"|"--extract-audio"|"--audio-format"|"--merge-output-format"'
+    r'|"ffmpeg"|"ffprobe"|ffmpeg_bin|ffprobe_bin')
+
+
+def _py_code_only(src: str) -> str:
+    """去掉 docstring 和整行注释，只留真正会跑的代码。
+
+    和 `_yaml_only`／`_strip_shell_comments` 同一个理由，剥的是 Python 那一层：
+    `build_match_reel.py` 的注释里成段写着 ffmpeg 参数的来路（那是这个仓库记
+    教训的地方），连注释一起扫，「把坑记下来」会被判成「这个工具要 ffmpeg」。
+    """
+    src = re.sub(r'"""[\s\S]*?"""', "", src)
+    src = re.sub(r"'''[\s\S]*?'''", "", src)
+    return "\n".join(line.split("#")[0] for line in src.splitlines())
+
+
+def _tools_needing_ffmpeg() -> set[str]:
+    """**自己从 `tools/` 推出来，不维护白名单。**
+
+    一个会过期的名单和一条常年红的检查是同一个毛病：新写一个下载媒体的工具，
+    名单不会自己长出那一行，而漏掉的样子就是这次这个——工作流绿着跑，直到
+    真有候选那天才炸。
+
+    ⚠️ **自带便携 ffmpeg 的不算**：`check_crowd_rise.py` 走
+    `imageio_ffmpeg.get_ffmpeg_exe()`（pip 装的包里带二进制），它所在的
+    `probe-blocked.yml` 装的正是 `imageio-ffmpeg`，要求它再 `ensure_ffmpeg`
+    是纯误伤——判据宁可窄，不可宽。
+    """
+    need = set()
+    for path in sorted(Path("tools").glob("*.py")):
+        code = _py_code_only(path.read_text(encoding="utf-8"))
+        if not _FFMPEG_CALLERS.search(code):
+            continue
+        if "imageio_ffmpeg" in code:          # 自带便携版，不用系统装
+            continue
+        need.add(path.name)
+    return need
+
+
+def _jobs_of(text: str) -> list[tuple[str, str]]:
+    """按 job 切开工作流，**只看 `jobs:` 以后**。
+
+    ⚠️ 少了这一刀，`on: push: paths:` 里那几行 `- "tools/xxx.py"`（触发条件，
+    不是调用）会被读成「这个 job 调了这个工具」。实测误伤两条：
+    `interview-auto-render.yml` 和 `interview-model-benchmark.yml` 的 `on:`
+    块里都列着 `tools/draft_interview_spec.py`，而 GitHub 把 `on:` 下面那层
+    叫 `push`——正好和一个真 job 名撞上。同一个坑 CLAUDE.md 记过一次
+    （`ci.yml` 的 `paths-ignore: output/**` 被当成产物路径）。
+    """
+    body = text.split("\njobs:", 1)[-1]
+    return [(m.group(1), _strip_shell_comments(m.group(2)))
+            for m in re.finditer(
+                r"\n  ([a-z0-9_-]+):\n(.*?)(?=\n  [a-z0-9_-]+:\n|\Z)", body, re.S)]
+
+
+def test_会下载媒体的工作流都要装ffmpeg():
+    """跑 `yt-dlp -x` 那类工具的 job，必须 `ensure_ffmpeg`。
+
+    来路：`oncourt-interviews.yml` 的 `draft` job 只装了字体，而
+    `draft_interview_spec.py` 抽音频走 `yt-dlp -x --audio-format mp3`——
+    2026-08-29 连炸 5 趟（run 138~142），报的是
+
+        ERROR: Postprocessing: ffprobe and ffmpeg not found
+
+    ⚠️ **它从上线起就缺这一句，而前面十几趟全是绿的**——`draft` 是矩阵 job，
+    没有候选时压根不跑，08-27 第一批真候选进来当天就炸。「走不到的路怎么查
+    都是绿的」，所以这条判据不能靠「最近跑绿了」来代替。
+
+    ⚠️ **同一个工具的三个调用方，当时只有一个是对的**：
+    `interview-model-benchmark.yml` 在 #608 修过，`oncourt-interviews.yml`
+    和另外的调用点都漏着。**修那一个不等于修了那一类**——所以判据自己从
+    `tools/` 推，谁新增一个调用点都自动盖住。
+    """
+    need = _tools_needing_ffmpeg()
+    assert "draft_interview_spec.py" in need and "build_match_reel.py" in need, (
+        "判据失效了：连 `yt-dlp -x` 和直接调 ffmpeg 的工具都没认出来，"
+        f"当前认出 {sorted(need)}")
+
+    checked, missing = [], []
+    for path in sorted(Path(".github/workflows").glob("*.yml")):
+        for job, body in _jobs_of(path.read_text(encoding="utf-8")):
+            used = sorted(
+                t for t in need
+                # ⚠️ `py_compile` 只编译不运行，不需要二进制——`interview-auto-render.yml`
+                # 就是这么被第一版误伤的。
+                if re.search(rf"(?<![\w/]){re.escape(f'tools/{t}')}(?![\w.])", body)
+                and not re.search(rf"py_compile[^\n]*{re.escape(t)}", body))
+            if not used:
+                continue
+            checked.append(f"{path.name}::{job}")
+            if not re.search(r"(?<![\w-])ensure_ffmpeg(?![\w-])", body):
+                missing.append(f"{path.name}::{job} 跑 {'、'.join(used)}，却没有 ensure_ffmpeg")
+
+    assert len(checked) >= 5, (
+        f"判据自己的判据：只校到 {len(checked)} 个 job（{checked}）。"
+        "主语没了——要么工作流改了写法，要么 `_tools_needing_ffmpeg` 认不出来了。")
+    assert not missing, (
+        "这些 job 会跑要 ffmpeg 的工具，却没装：\n  " + "\n  ".join(missing)
+        + "\n\n出路：那一步 `source tools/ci_apt_install.sh` 之后加一句 "
+          "`ensure_ffmpeg`（步骤的 timeout-minutes 要 ≥ 15 分，够走完静态构建"
+          "落空之后的 apt 老路）。缺了它报的是 `Postprocessing: ffprobe and "
+          "ffmpeg not found`，而那句会被包进「这条源下不动」里，看不出是装少了。")
