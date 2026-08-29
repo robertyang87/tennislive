@@ -1,3 +1,4 @@
+import json
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 from types import SimpleNamespace
@@ -519,3 +520,42 @@ def test_publish_pushplus_uses_xiaohongshu_title(tmp_path, monkeypatch):
     assert sent == [("🏆7.21｜谢里夫这冠有点意外", "<div>待发稿</div>")]
 
 
+
+
+def test_跑测试不许改到仓库里那份选题账本():
+    """`data/story_state.json` 是**跟踪进仓库的数据**，不是产物。
+
+    ⚠️ 2026-08-29 量出来的：`pytest tests/test_cli.py -k knowledge` 跑完
+    （5 passed），那个文件就少掉一条 `__visual_backoff__` 记录——`cmd_knowledge`
+    走的是真的 `mark_story_used()`，而这个文件一处都没打过桩。
+
+    **它不吭声**：测试全绿，只有 `git status` 才看得见；而这个仓库的提交习惯是
+    `git add -A`，stop hook 还会催「有未提交的改动，请提交并推送」——一次全量的
+    副作用就这么被当成一次改动推上去，把另一条线的账本悄悄改掉。那几条
+    `__visual_backoff__` 是「这个选题的素材预检刚失败过，三天内别再排它」，
+    抹掉等于让那条线明天再撞同一堵墙。
+
+    判据不是「有没有打桩」（换个写法就绕过去了），是**真调一次写入，
+    然后看仓库里那份文件动没动**——`conftest` 的 `_isolate_story_state`
+    把它指到 tmp 去了，所以这里写进去的是副本。反向验证：把那条 autouse
+    去掉，这一条当场红。
+    """
+    from tennislive.render import tournament_story
+
+    repo_ledger = Path(__file__).resolve().parents[1] / "data" / "story_state.json"
+    before = repo_ledger.read_bytes()
+
+    # ⚠️ 用一个绝不会和真 slug 撞的名字：万一哪天这条隔离没生效，
+    # 留下的也是一条一眼认得出是测试写的记录，而不是把某个真选题标成已发。
+    tournament_story.mark_story_used("__pytest_should_never_land__", date(2026, 1, 1))
+
+    assert repo_ledger.read_bytes() == before, (
+        f"跑测试把仓库里的 {repo_ledger.relative_to(repo_ledger.parents[1])} 改了——"
+        "它是跟踪进仓库的数据不是产物，写它要走 conftest 的 _isolate_story_state "
+        "指到 tmp 的那份副本")
+
+    # 判据自己的判据：隔离要真的**指到别处**，而不是让写入整个不发生
+    # （那样这条断言会变成一盏恒真的绿灯）。
+    assert tournament_story.STATE_PATH != repo_ledger
+    written = json.loads(tournament_story.STATE_PATH.read_text(encoding="utf-8"))
+    assert written.get("__pytest_should_never_land__") == "2026-01-01"

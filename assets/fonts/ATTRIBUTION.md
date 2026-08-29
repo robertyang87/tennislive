@@ -33,3 +33,47 @@
 
   曾经用过 Newsreader（正文衬线）一版：单看好看，但方向错了——温网不是
   衬线。已移除。
+
+## Noto Sans SC / Noto Serif SC (subsets)
+
+- Files: `NotoSansSC-Regular-sub.ttf`, `NotoSansSC-Bold-sub.ttf`,
+  `NotoSerifSC-Black-sub.ttf`
+- Project: <https://fonts.google.com/noto> (Google Fonts, `ofl/notosanssc`)
+- Source: the variable font `NotoSansSC[wght].ttf`, instantiated at a single
+  weight and then subset to GB2312 + Latin-1 by `tools/build_fonts.py`.
+  Each file drops from ~20 MB to ~3 MB, which matters because
+  `webcards._font_css` inlines every face as base64 into **every card**.
+- License: SIL Open Font License 1.1.
+- Usage in TennisLive: body copy and subtitles on cards and posters
+  (`TL Sans SC` / `TL Serif SC` in the CSS).
+- Do not edit by hand; re-derive with `python tools/build_fonts.py`.
+
+## TL Score (digits, derived from Noto Sans SC)
+
+- Files: `TLScore-Light.ttf`, `TLScore-Regular.ttf`, `TLScore-Bold.ttf`
+- Derived from the same `NotoSansSC[wght].ttf` as above: instantiated at
+  300 / 400 / 700 and subset to **ASCII plus the full-width parentheses**
+  `（）` (ranks are written `（121）`). ~65 KB each.
+- License: SIL Open Font License 1.1, inherited. Noto Sans SC carries no
+  Reserved Font Name, so a renamed derivative is permitted; the family is
+  renamed to `TL Score` on purpose — see below.
+- Usage in TennisLive: **every score digit the account publishes** — the
+  poster scoreboard, the burned-in top bar on 赛场之上 and 赛后开麦, and the
+  分盘比分 on the stats card. Three weights because the win/lose contrast is
+  carried by weight alone (Bold vs Light).
+- Why a separate family instead of another weight of `TL Sans SC`:
+  - libass can only find fonts in `fontsdir` (`assets/fonts/`) or on the
+    system, and the system package `fonts-noto-cjk` ships **Regular and Bold
+    only** — Light lives in the several-hundred-MB `-extra` package. Shipping
+    the three weights here means the browser and libass read the *same files*,
+    and the score digits no longer depend on what apt installed.
+  - `Noto Sans SC` is a real family name. If a machine ever had a font by that
+    name installed, fontconfig's choice would be undefined — and picking the
+    wrong one does not fail, it just quietly changes how the digits look.
+- Do not edit by hand; re-derive with `python tools/build_fonts.py`
+  (`SCORE_BUILDS`). The build is **byte-reproducible**: `font.recalcTimestamp`
+  is turned off before saving, so rebuilding from the same source produces
+  identical files. Without that the only difference is `head.modified` (and the
+  checksum that follows it) — verified by diffing all 19 tables — which would
+  churn 200 KB of binary into git on every rebuild and make
+  "regenerate and compare" useless as a check.
