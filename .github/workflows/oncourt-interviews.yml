@@ -74,6 +74,7 @@ jobs:
             data
             docs
             output/interviews
+            skills
             specs
             src
             tests
@@ -265,10 +266,18 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          # ⚠️ `skills` 不能漏：`draft_interview_spec.py` 走
+          # `from interview_skill import model_instructions`，**起草那一刻**要读
+          # `skills/tennis-interview-production/SKILL.md` 给 DeepSeek 拼 prompt。
+          # 漏了它报的是 `FileNotFoundError: missing interview production skill
+          # resource`，而这一步排在下载 + 转写之后，白跑三十几秒才炸。
+          # 同一个坑 #613 在 reel 那半边修过（reel-auto-ready / orchestrate），
+          # 判据当时只认 `reel_skill` 这一个模块名，interview 这半边整个漏过去。
           sparse-checkout: |
             assets
             data
             output/interviews
+            skills
             specs
             src
             tools
