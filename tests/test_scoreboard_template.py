@@ -731,3 +731,67 @@ def test_场地和用时前面各有一个白色小图标(
         assert 'stroke="' not in svg and 'fill="' not in svg, (
             "颜色写进 svg 自己就分叉了——`.score-icon` 那条 `currentColor` "
             "才是唯一的出处。")
+
+
+def test_球场那个图标要画成网球场的样子(
+        tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
+    """账号所有者 2026-08-29 说了两次：「小 icon，白色的就行，不然很多人不知道
+    是啥」→「球场的 icon 要画成网球场的样子啊」。
+
+    前两版都过了「图标渲出来了、是白的」那条判据，**而它们都不像网球场**：
+
+        第一版  竖的方框、里面切四格            缩到 27px 读出来是**一扇窗**
+        第二版  横的外框 ＋ 球网 ＋ 一个内框     读出来是**一块多米诺骨牌**
+
+    所以「有没有图标」和「像不像网球场」是两件事，各要一条判据。像不像当然
+    机械判不了，**但那三笔认得出来的特征量得出来**——把图标那一格抠出来
+    二值化，三头（实测值见断言里的注释，三版逐个量过）：
+
+        宽高比   贯通全宽的横线   最上一行的墨宽
+        1.76           4              0.05      ← 现在这版（真球场）
+        2.00           2              0.95      ← 第二版：只有上下两条外框
+        0.91           5              0.90      ← 第一版：竖的，宽高比就不对
+
+    1. **横的**（宽高比 ≥ 1.5）——网球场是 2:1 的横图，竖着画就成了窗
+    2. **四条贯通全宽的横线**（底线两条 ＋ 单打边线两条）——第二版的内框边
+       不贯通，只有两条；这一头钉的正是「双打边道」那两笔
+    3. **球网出头**（最上一行的墨只有球网那一竖，占宽 ≤ 0.25）——网柱在界外，
+       所以那条竖线上下各伸出一点；两个旧版最上一行都是贯通的外框边
+
+    ⚠️ 三头缺一不可：第一版过得了第 2 头，第二版过得了第 1 头。
+    """
+    shot = _render_board(tmp_path, monkeypatch)
+    top, _ = _navy_rows(shot)
+    lum = np.asarray(Image.open(shot).convert("L")).astype(float)
+    y0, y1 = top - versus_poster.SCORE_ROW_H, top - 6
+    x0 = (1080 - versus_poster.SCORE_BOARD_W) // 2 + versus_poster.SCORE_HEAD_PAD_L
+    # 图标那一格：从场地那一行的左边线起，取到文字之前（图标和文字之间有缝）
+    band = lum[y0:y1, x0:x0 + 70] > 190
+    cols = np.where(band.any(axis=0))[0]
+    assert cols.size, "场地那一行的最左边一个像素都没有——图标没渲出来？"
+    end = cols[0]
+    for c in cols:
+        if c - end > 6:      # 图标和文字之间那道缝
+            break
+        end = c
+    glyph = band[:, cols[0]:end + 1]
+    rows = np.where(glyph.any(axis=1))[0]
+    glyph = glyph[rows.min():rows.max() + 1]
+    h, w = glyph.shape
+    widths = glyph.sum(axis=1) / w
+
+    assert w / h >= 1.5, (
+        f"图标是 {w}×{h}，宽高比只有 {w / h:.2f}——网球场是 2:1 的横图，"
+        "画进方框里就成了一扇窗（第一版就是这么来的）。")
+
+    wide = widths >= 0.8
+    bands = int((wide[:-1] & ~wide[1:]).sum() + bool(wide[-1]))
+    assert bands >= 4, (
+        f"贯通全宽的横线只有 {bands} 条——网球场要有四条（上下底线 ＋ 两条"
+        "单打边线，也就是双打边道那两笔）。只有两条的话画的是「外框套内框」，"
+        "读出来是一块多米诺骨牌。")
+
+    assert widths[0] <= 0.25 and widths[-1] <= 0.25, (
+        f"最上/最下一行的墨占宽 {widths[0]:.2f}/{widths[-1]:.2f}——"
+        "网柱在界外，球网那一竖要上下各伸出一点，所以最上和最下那一行"
+        "应该只有球网、不该是贯通的外框边。")

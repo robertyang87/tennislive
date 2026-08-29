@@ -624,9 +624,23 @@ SCORE_NUM_PX = 72
 #: 也就是说它们是**给那两个数字做标注的**，不是装饰：一个球场俯视图、一个钟。
 #: ⚠️ 尺寸跟着**各自那一行的字号**走，不是一个写死的数：场地那行 26px、
 #: 用时那行 34px，两个图标共用一套 `em` 比例，所以谁改字号图标自己跟上。
-SCORE_ICON_EM = 1.05         # 图标边长 ÷ 所在那一行的字号
+SCORE_ICON_EM = 1.05         # 方图标（钟）的边长 ÷ 所在那一行的字号
 SCORE_ICON_GAP_EM = 0.42     # 图标和文字之间的缝
-SCORE_ICON_STROKE = 1.7      # 24 单位 viewBox 里的线宽
+SCORE_ICON_STROKE = 1.3      # 24 单位 viewBox 里的线宽
+#: ⚠️ **球场那个图标单独一档，而且比钟大得多。** 网球场是 2:1 的横图，画进
+#: 一个方 viewBox 里只能占中间一条，缩到 27px 就成了一个「分成两半的方框」——
+#: 账号所有者 2026-08-29 第二次点名：「球场的 icon 要画成网球场的样子啊」。
+#: 所以它用 **26×13 的窄 viewBox**（贴着球场本身），宽度按 `em` 给到 1.70，
+#: 渲出来约 44×22px——**是原来的两倍**，单打边线、发球区、中线、球网才分得开。
+#: 五档并排渲出来比过（1.45/1.55/1.70/1.85 和几种线条组合），1.70 是每条线都
+#: 还分得开、又没有大过文字的那一档。
+SCORE_COURT_ICON_EM = 1.70   # 球场图标的**宽度** ÷ 那一行的字号（高是它的一半）
+SCORE_COURT_ICON_STROKE = 1.05
+#: ⚠️ 两个图标的线宽**要按各自的缩放算，不是写同一个数**：钟是 24 单位缩到
+#: 1.05em×34px（用时那一行字号 34），球场是 26 单位缩到 1.70em×26px。
+#: 换算成屏幕像素分别是 1.93px 和 1.79px——**看着才是一套**。
+#: 不用 `vector-effect:non-scaling-stroke`：那会让两个图标的线宽在屏幕上一样粗，
+#: 而它们所在的两行字号不同，粗细反而不成比例。
 #: 场地/用时那一行的左右内边距——**和长条里的内容对齐**（左边和国旗同一条竖线，
 #: 右边和最后一盘那个数字同一条）。端帽拿掉之前它对的是端帽外沿。
 SCORE_HEAD_PAD_L = SCORE_FILL_PAD_L
@@ -805,17 +819,26 @@ def solo_scoreboard_shape_error(cover: dict) -> str | None:
 #: 的文字走，所以「文字全部纯白」那条一改，图标自己跟上，不会分叉成两处颜色。
 #: ⚠️ 线条按 24 单位的 viewBox 画，`vector-effect:non-scaling-stroke` 不用——
 #: 我们要的就是线宽跟着尺寸缩，两个图标在各自那一行里粗细才一致。
-#: ⚠️ **球场画成横的、只留「外框＋球网＋发球区」三笔。** 第一版画的是竖的、
-#: 里面又切了中线，四个格子——放到 27px 上读出来是**一扇窗**，不是球场
-#: （四档并排渲出来比过：竖着切四格 / 只留球网 / 定位针 / 横着留发球区）。
-#: 账号所有者要的正是「不然很多人不知道是啥」，所以判据是**缩到实际尺寸看**，
-#: 不是在 24 单位的画布上看着像。
+#: ⚠️⚠️ **画成真的网球场：外框＋单打边线＋发球区＋中线＋出头的球网。**
+#: 账号所有者说了两次。第一版是竖的、里面切四格，缩到 27px 读出来是**一扇窗**；
+#: 第二版换成横的外框＋球网＋一个内框，读出来是**一块多米诺骨牌**——两版的
+#: 毛病是同一个：**少了让人认出「这是网球场」的那几笔**。
+#: 认出来靠三样，缺一样就不像：
+#:   ① **单打边线贯通全长**（就是双打的那两条边道）——足球场没有这个
+#:   ② **发球区**：两条发球线 ＋ 中间那条中线，合起来是网两边各一个「日」字
+#:   ③ **球网出头**（网柱在界外），所以那条竖线上下各伸出一点
+#: ⚠️ 判据是**缩到实际尺寸看**，不是在 26 单位的画布上看着像。
 _COURT_ICON = (
-    '<svg class="score-icon" viewBox="0 0 24 24" aria-hidden="true">'
-    '<rect x="2.6" y="4.4" width="18.8" height="15.2" rx="1.2"/>'
-    '<path d="M12 4.4v15.2"/>'            # 球网
-    '<path d="M6.6 8.2h10.8v7.6H6.6z"/>'  # 两个发球区
+    '<svg class="score-icon score-icon--court" viewBox="0 0 26 13"'
+    ' aria-hidden="true">'
+    '<rect x="0.7" y="0.7" width="24.6" height="11.6" rx="0.9"/>'   # 底线和双打边线
+    '<path d="M13 -0.4v13.8"/>'                                     # 球网（出头）
+    '<path d="M0.7 3.1h24.6"/><path d="M0.7 9.9h24.6"/>'            # 单打边线
+    '<path d="M6.6 3.1v6.8"/><path d="M19.4 3.1v6.8"/>'             # 两条发球线
+    '<path d="M6.6 6.5h12.8"/>'                                     # 中线
     '</svg>')
+
+
 _CLOCK_ICON = (
     '<svg class="score-icon" viewBox="0 0 24 24" aria-hidden="true">'
     '<circle cx="12" cy="12" r="9.1"/>'
@@ -1406,6 +1429,10 @@ __SCRIM__
 .score-icon{width:__SCORE_ICON_EM__em;height:__SCORE_ICON_EM__em;flex:none;
  fill:none;stroke:currentColor;stroke-width:__SCORE_ICON_STROKE__;
  stroke-linejoin:round;stroke-linecap:round}
+/* 球场是 2:1 的横图，viewBox 贴着球场本身（26×13），所以宽高单独给。 */
+.score-icon--court{width:__SCORE_COURT_ICON_EM__em;
+ height:calc(__SCORE_COURT_ICON_EM__em / 2);
+ stroke-width:__SCORE_COURT_ICON_STROKE__;overflow:visible}
 /* 退赛/弃权注脚：和 duration 当一个整体右对齐，字号退回 head 的基准档（26px），
    比 duration 的 34px 小一档——它是补充信息，不是这一格的主角。
    ⚠️ 颜色和别处一样是纯白：复刻版没有第二档灰。 */
@@ -1552,6 +1579,8 @@ def _fill_score_layout(css: str, cover: dict) -> str:
         "__SCORE_ICON_EM__": SCORE_ICON_EM,
         "__SCORE_ICON_GAP_EM__": SCORE_ICON_GAP_EM,
         "__SCORE_ICON_STROKE__": SCORE_ICON_STROKE,
+        "__SCORE_COURT_ICON_EM__": SCORE_COURT_ICON_EM,
+        "__SCORE_COURT_ICON_STROKE__": SCORE_COURT_ICON_STROKE,
         "__SCORE_WIN_WEIGHT__": SCORE_WIN_WEIGHT,
         "__SCORE_LOSE_WEIGHT__": SCORE_LOSE_WEIGHT,
         # 淡到满，正好落在场地那一行的中间——再晚，「Stadium 17」就压在
