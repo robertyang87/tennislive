@@ -42,6 +42,7 @@ jobs:
             data
             docs
             requests
+            skills
             specs
             src
             tests
@@ -110,6 +111,10 @@ jobs:
             [ -n "$slug" ] || continue
             git sparse-checkout add "output/interviews/$slug"
           done < /tmp/request-slugs.txt
+
+      - name: 校验赛后开麦制作规范资源
+        if: steps.gate.outputs.work == 'true'
+        run: test -f skills/tennis-interview-production/SKILL.md
 
       - name: 装转写与字幕排版字体
         if: steps.gate.outputs.work == 'true'
