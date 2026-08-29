@@ -79,7 +79,14 @@ def test_请求文件本身可构建且比分方向没有反转():
     assert spec["match"]["loser"] == "锦织圭"
 
 
-def test_人工请求音频下载带jsruntime并在首档失败后换client(tmp_path, monkeypatch):
+def test_人工请求客户端梯子本身不读取渲染素材():
+    attempts = request_builder._download_attempts(_request()["url"])
+    assert attempts[0] == ("默认", [])
+    assert len(attempts) >= 4
+    assert any("player_client=ios" in " ".join(args) for _, args in attempts)
+
+
+def test_人工请求下载原始音轨且首档失败后换client(tmp_path, monkeypatch):
     cookie = tmp_path / "cookies.txt"
     cookie.write_text("cookie", encoding="utf-8")
     monkeypatch.setenv("YT_COOKIES", str(cookie))
@@ -103,14 +110,16 @@ def test_人工请求音频下载带jsruntime并在首档失败后换client(tmp_
                 stderr="ERROR: The page needs to be reloaded.",
                 stdout="",
             )
-        (tmp_path / "audio.mp3").write_bytes(b"mp3")
+        (tmp_path / "audio.webm").write_bytes(b"webm")
         return SimpleNamespace(returncode=0, stderr="", stdout="")
 
     monkeypatch.setattr(request_builder.subprocess, "run", fake_run)
     audio = request_builder._download_audio(_request()["url"], tmp_path)
 
-    assert audio == tmp_path / "audio.mp3"
+    assert audio == tmp_path / "audio.webm"
     assert len(calls) == 2
     assert calls[0][calls[0].index("--js-runtimes") + 1] == "node"
     assert calls[0][calls[0].index("--cookies") + 1] == str(cookie)
+    assert "-x" not in calls[0]
+    assert "--audio-format" not in calls[0]
     assert "youtube:player_client=ios" in calls[1]
