@@ -191,17 +191,20 @@ def promote(draft: dict) -> dict:
     # 那头有同一判据的硬闸（reel_facts.us_open_match_line，单一出处），漏了这里
     # 转正会当场红。scorebox 记板在源片里的位置（probe 的 --scorebox、以及
     # 真要开回贴的段都读它），按五盘满列宽度写。
-    # ⚠️ **不再默认开 `score_inset`**（2026-08-28 傍晚）：居中窗口切掉的是板
-    # **左边固定的 208px**（名字那一段），所以回贴整条板必然比窗口天然含住的
-    # 那一条宽 173px——要么多盖一截球场（账号所有者：「下方球员脚步被遮挡了」），
-    # 要么缩到装得下而字变成 62%。两版渲出来按手机尺寸（360px 宽）并排看：
-    # 不回贴时比分「6 3 1 AD」清清楚楚，回贴缩小后是一条读不出字的深色块——
-    # 账号所有者管它叫「马赛克」。所以默认让转播自己的板按窗口原样露出来，
-    # 名字由顶栏交代；真要回贴的片子在段里显式写 score_inset。
+    # 比赛画面的段默认回贴记分条（setdefault：终审显式写过 false 的段——
+    # 真回放/切走——不被盖掉）。⚠️ 2026-08-28 这一条来回翻过两次，最后定在
+    # 「按板的实际大小裁，原比例贴回左下角」：不贴则名字被画面左缘裁掉
+    # （「比分板没展示全」），缩着贴则字只剩 62%（「马赛克」）。
+    # ⚠️ 注入的 scorebox 是 BO5 满列宽度，对没打到那一档的比赛偏宽——偏宽会
+    # 把板右边的球场也抠进贴片，所以终审要逐段按这一段板的真实右缘写
+    # `score_inset: {"x2": N}`（美网每打完一盘 +38px）。
     from reel_facts import US_OPEN_SCOREBOX, us_open_match_line  # noqa: PLC0415
     if us_open_match_line(spec["topbar"]["line1"]) and not spec.get("archival"):
         spec["layout"] = "band"
         spec.setdefault("scorebox", list(US_OPEN_SCOREBOX))
+        for seg in spec.get("segments") or []:
+            if not seg.get("image"):
+                seg.setdefault("score_inset", True)
     # 这是机器生成资格，不是发布旁路。render/QC/auto_push_gate/persistent ledger
     # 仍会逐层复核；标记只让 dry-run 对结构化赛果执行更严格的交叉校验。
     spec["_production"]["status"] = "ready_for_render"

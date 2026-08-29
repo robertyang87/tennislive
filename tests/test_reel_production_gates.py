@@ -347,12 +347,12 @@ def test_promote美网草稿自动带式(tmp_path, monkeypatch):
     出处）。parse_segments 那头有同一判据的硬闸兜着——这里漏了注入，转正时
     validate_spec 会当场红，废不了片但会卡住整条自动链。
 
-    ⚠️ **`score_inset` 不在注入之列**（2026-08-28 傍晚翻的面）。居中窗口切掉
-    的是板左边固定的 208px（名字那一段），所以回贴整条板必然比窗口天然含住的
-    那一条宽 173px：要么多盖一截球场（账号所有者：「下方球员脚步被遮挡了」），
-    要么缩到装得下、字只剩 62%——按手机尺寸渲出来是一条读不出字的深色块，
-    账号所有者管它叫「马赛克」。默认让转播自己的板按窗口原样露出来，名字由
-    顶栏交代。这一条钉的就是**别自动注入回贴**。
+    `score_inset` 跟着一起注入（每个非贴图段），因为不贴的代价是**名字被画面
+    左缘裁掉**——账号所有者 2026-08-28：「你这比分板没展示全啊」。居中窗口固定
+    切掉板左边 208px（正是名字那一段），所以回贴是这条线的默认，不是可选项。
+
+    ⚠️ 注入走 `setdefault`：终审显式写 `false` 的段（比如画面主体正好压在
+    左下角那几段）要**原样保住**——自动注入不许把人已经想清楚的决定盖掉。
 
     反向钉一头：非美网的草稿（Demo Open）一个字段都不许多——注入的判据是
     line1 里的赛事，不是「所有自动草稿」。
@@ -363,13 +363,13 @@ def test_promote美网草稿自动带式(tmp_path, monkeypatch):
 
     uso = _ready_draft(tmp_path)
     uso["_production"]["event"] = "US Open"
-    uso["segments"][2]["score_inset"] = True   # 终审显式要回贴的段
+    uso["segments"][2]["score_inset"] = False   # 终审显式不要回贴的那一段
     spec = promote.promote(uso)
     assert spec["layout"] == "band"
     assert spec["scorebox"] == [104, 888, 736, 978]
     flags = [s.get("score_inset") for s in spec["segments"] if not s.get("image")]
-    assert flags.count(True) == 1 and all(f in (True, None) for f in flags), (
-        f"回贴不许自动注入，终审显式写的那一段要原样保住：{flags}")
+    assert flags.count(False) == 1 and flags.count(True) == len(flags) - 1, (
+        f"回贴要自动注入，而终审显式写的 false 要原样保住：{flags}")
 
     plain = promote.promote(_ready_draft(tmp_path))
     assert "layout" not in plain and "scorebox" not in plain
