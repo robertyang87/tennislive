@@ -20,6 +20,7 @@ import inspect
 import os
 import re
 import subprocess
+import math
 import sys
 from fnmatch import fnmatch
 from pathlib import Path
@@ -12937,21 +12938,34 @@ def test_layout只认band且band不和contain混():
         reel.CROP_W, reel.CROP_H, reel.CROP_Y, reel.LAYOUT = saved
 
 
-def test_记分条回贴盖住居中窗口裁掉的残条(tmp_path, capsys):
+def test_记分条回贴只盖残条不多盖一寸球场(tmp_path, capsys):
     """带式窗口**居中**（「不要偏离中心的」），美网那条浮在左下的板会被窗口
-    左缘裁到——`score_inset` 从同一帧把整条板抠出来贴回画面带左下，正好盖住
-    残条。判据**真跑 ffmpeg 量像素**，不查滤镜串：
+    左缘裁到——`score_inset` 从同一帧把整条板抠出来贴回画面带左下，盖住残条。
 
-    合成源片在板的位置画三截色块——绿 [104,360]、红 [360,616]、蓝 [616,736]
-    （y∈[888,978]；蓝模拟**深盘长出来的比分列**——美网每完成一盘板右缘
-    +39px）。居中窗口左缘 312：不回贴时画面左下只有红（绿整截在窗外，这就是
-    残条的形状）；回贴后同一片采样区必须是**绿**——那截绿只有从贴上去的板里来。
-    box 写到 736（最宽状态）时蓝必须跟着进来；box 只写到 616（按当前帧量的）
-    时蓝被贴片盖住、整个消失——这正是「尽量把五盘大战的比分能包括进来」
-    要防的静默丢列。
+    ⭐ 2026-08-28 账号所有者：「下方球员脚步被遮挡了」。回贴原来按**原比例**
+    贴整条板，而板比残条宽一大截，多出来的那一截盖的是**真球场**（实测：残条
+    290px、原比例 528px，多盖 238px＝画面宽的 22%；拿 probe 的缩略图墙把被盖
+    住的那一片摊开，81 格里 27 格底下是球员的腿和脚）。所以贴片**缩到残条的
+    宽**，缩完矮出来的上下两条用带底色垫平。
 
-    反向验证过：把 cut_segment 的 box 分支拆掉 → 「回贴后该看见板的左半」红；
-    把 overlay 落点的 BAND_TOP 拿掉 → 同一条红（贴错了行盖不住采样区）。
+    判据**真跑 ffmpeg 量像素**，不查滤镜串。合成源片在板的位置画四截色块——
+    绿 [104,360]、红 [360,616]、蓝 [616,736]（蓝模拟深盘长出来的比分列），
+    外加**品红 [736,944]**：那一截是板右边的**球场**，原比例贴片正好把它盖掉，
+    缩到残条之后它必须重新看得见。居中窗口左缘 312，四条断言各钉一头：
+
+    ① 不回贴的对照组：左下只剩红（绿整截在窗外，这就是残条的形状）
+    ② 回贴后板的左半（绿）要看得见——残条被盖住了
+    ③ **品红要看得见**——回贴不许再往右多盖一寸球场（这一条是这次的主角）
+    ④ 垫板要真的垫上：贴片比残条矮，矮出来的那两条必须是带底色，
+       不是露出来的半条残条
+
+    box 按最宽状态写（736）和按当前帧写窄（616）的差别也钉住：窄了的话残条
+    只算到 254，右边那截真板（蓝）盖不住，会在画面上留一条**看得见**的接缝
+    ——比原来「静默把那一列吞掉」好，但仍然是要修的 spec 错。
+
+    反向验证过：把缩放退回原比例（nw=bw）→ ③ 红（品红被盖掉）；
+    把 drawbox 垫板拆掉 → ④ 红（那两条露出蓝色残条）；
+    把 overlay 落点的 BAND_TOP 拿掉 → ② 红（贴错了行盖不住采样区）。
     """
     import shutil  # noqa: PLC0415
 
@@ -12966,7 +12980,8 @@ def test_记分条回贴盖住居中窗口裁掉的残条(tmp_path, capsys):
          "color=c=white:s=1920x1080:r=25,"
          "drawbox=x=104:y=888:w=256:h=90:color=green:t=fill,"
          "drawbox=x=360:y=888:w=256:h=90:color=red:t=fill,"
-         "drawbox=x=616:y=888:w=120:h=90:color=blue:t=fill",
+         "drawbox=x=616:y=888:w=120:h=90:color=blue:t=fill,"
+         "drawbox=x=736:y=888:w=208:h=90:color=magenta:t=fill",
          "-t", "0.6", "-pix_fmt", "yuv420p", str(src)], check=True)
 
     def _mean_rgb(frame: Path, box: tuple[int, int, int, int]):
@@ -12976,12 +12991,14 @@ def test_记分条回贴盖住居中窗口裁掉的残条(tmp_path, capsys):
     saved = (reel.CROP_W, reel.CROP_H, reel.CROP_Y, reel.LAYOUT)
     try:
         reel.resolve_crop(1920, 1080, None, "", layout="band")
-        # 采样区（画布坐标）：x∈[60,180] 落在贴回来的板的**左半**——
-        # 居中窗口自己看不见那一截（它对应源片 x<312 之外的 [176,320]）。
-        probe_box = (60, 885, 180, 935)
-        # 蓝列（源片 [616,736]）在最宽 box 的贴片里落在
-        # [(616−104)×0.833, (736−104)×0.833] ≈ [427,527]
-        deep_box = (440, 885, 515, 935)
+        # 采样区（画布坐标）。残条 =(736−312)×0.8333≈354，贴片缩到 354 宽、
+        # 52 高，垫板 354×76 落在 y∈[872,948]，板本体在 y∈[884,936]。
+        green_box = (20, 892, 110, 928)     # 板的左半（窗口自己看不见的那截）
+        deep_box = (300, 892, 345, 928)     # 深盘那几列（蓝）
+        # 品红采样区往右挪到 450：按原比例贴时这一片正好整个落在贴片的
+        # 蓝列上（红/蓝各占一半的话红分量会掉到 101，离门槛只剩 9，判据太薄）
+        court_box = (450, 892, 510, 928)    # 板右边的球场（品红）
+        pad_box = (300, 874, 345, 880)      # 垫板：贴片上沿之上那一条
         for case in ("narrow", "wide", "off"):
             box = {"narrow": (104, 888, 616, 978),
                    "wide": (104, 888, 736, 978),
@@ -12994,29 +13011,40 @@ def test_记分条回贴盖住居中窗口裁掉的残条(tmp_path, capsys):
             subprocess.run(
                 ["ffmpeg", "-y", "-v", "error", "-i", str(out),
                  "-frames:v", "1", str(frame)], check=True)
-            r, g, b = _mean_rgb(frame, probe_box)
+            r, g, b = _mean_rgb(frame, green_box)
             if case == "off":
                 assert r > 150 and g < 90, (
-                    f"不回贴的对照组该只剩红色残条，量到 RGB=({r:.0f},{g:.0f},"
-                    f"{b:.0f})——对照组不成立的话，上面那半张绿的证明不了回贴")
+                    f"① 不回贴的对照组该只剩红色残条，量到 RGB=({r:.0f},{g:.0f},"
+                    f"{b:.0f})——对照组不成立的话，下面那半张绿的证明不了回贴")
                 continue
             assert g > 90 and r < 80, (
-                f"{case}: 回贴后该看见板的左半（绿），量到 RGB=({r:.0f},"
-                f"{g:.0f},{b:.0f})——残条没被整条板盖住")
+                f"② {case}: 回贴后该看见板的左半（绿），量到 RGB=({r:.0f},"
+                f"{g:.0f},{b:.0f})——残条没被盖住")
+            rc, gc, bc = _mean_rgb(frame, court_box)
+            assert rc > 110 and bc > 110 and gc < 90, (
+                f"③ {case}: 板右边的球场（品红）必须重新看得见，量到 "
+                f"RGB=({rc:.0f},{gc:.0f},{bc:.0f})——回贴又按原比例往右多盖了"
+                "一截真球场，「下方球员脚步被遮挡」就是这么来的")
             rd, gd, bd = _mean_rgb(frame, deep_box)
+            rp, gp, bp = _mean_rgb(frame, pad_box)
             if case == "wide":
                 assert bd > 90 and rd < 80, (
                     f"box 按最宽状态写时，深盘那几列（蓝）必须跟着贴进来，"
                     f"量到 RGB=({rd:.0f},{gd:.0f},{bd:.0f})")
+                assert max(rp, gp, bp) < 60, (
+                    f"④ 贴片比残条矮，上下那两条必须是带底色垫平的，量到 "
+                    f"RGB=({rp:.0f},{gp:.0f},{bp:.0f})——没垫的话露出来的是"
+                    "残条自己的上下边，画面上是「板下面还有半条板」的重影")
                 r2, g2, b2 = _mean_rgb(frame, (620, 885, 700, 935))
                 assert min(r2, g2, b2) > 200, (
                     f"贴片右侧该还是主窗口的白，量到 ({r2:.0f},{g2:.0f},{b2:.0f})")
             else:
-                assert min(rd, gd, bd) > 200, (
-                    f"box 按当前帧量（616）时深盘的列被贴片盖住整个消失"
-                    f"（这儿该是贴片带进来的白），量到 ({rd:.0f},{gd:.0f},"
-                    f"{bd:.0f})——这条断言画的就是那个静默丢列的样子，"
-                    "它是「box 要按最宽状态写」的证据，不是要修的 bug")
+                assert bd > 90 and rd < 80 and bp > 90, (
+                    f"box 按当前帧量窄了（616）时，残条只算到 254，右边那截真板"
+                    f"（蓝）盖不住，会在画面上留一条**看得见**的接缝——量到 "
+                    f"板高处 RGB=({rd:.0f},{gd:.0f},{bd:.0f})、垫板高处 "
+                    f"RGB=({rp:.0f},{gp:.0f},{bp:.0f})。这条断言画的就是"
+                    "「scorebox 要按最宽状态写」没做到时的样子，不是要修的 bug")
 
         # 窗口左缘没越过板左缘时**跳过回贴并出声**（贴了反而叠重影）
         seg = reel.Segment(start=0.0, end=0.4, cx=0.36, narration="",
@@ -13036,8 +13064,10 @@ def test_score_inset的形状校验和scorebox的死键闸(capsys):
     - score_inset 只在带式里有意义；带式外写了当场报（不是静默不生效）
     - 开了 score_inset 就必须有 spec 顶层 scorebox（格式 [x0,y0,x1,y1]）
     - scorebox 写在非带式 spec 里是死键，当场报
-    - `{"x2": N}` 放宽这一段的板右缘（深盘 +39px/列那笔账），解析成 (x0,y0,N,y1)
-    - 带式 + scorebox 下没开回贴的段要**报出来**（只报不拦：回放段不开是对的）
+    - `{"x2": N}` 改这一段的板右缘（板每盘 +38px 那笔账），解析成 (x0,y0,N,y1)
+    - ⚠️ **没开回贴的段不许再被点名**：2026-08-28 傍晚回贴从默认改成显式开关
+      （账号所有者「先把这些马赛克搞好」），原来那条「你是不是漏开了」的提醒
+      会把人推回被否掉的做法，所以拆掉了——这一条钉的就是它别自己回来
     """
     import pytest  # noqa: PLC0415
 
@@ -13083,13 +13113,18 @@ def test_score_inset的形状校验和scorebox的死键闸(capsys):
     assert segs[1].score_inset == (104, 888, 655, 978), "x2 放宽没落到这一段"
     assert segs[2].score_inset is None
     out = capsys.readouterr().out
-    assert "[score]" in out and "[3]" in out, (
-        "没开回贴的段要在 --dry-run 里点名——漏开的样子是画面左下留一截残条，"
-        "而渲染和质检对它一声不吭")
-    assert "最宽状态" in out, (
-        "带式 + scorebox 要在 --dry-run 里提醒「按板的最宽状态写」——"
+    assert "最宽" in out, (
+        "带式 + scorebox 要在 --dry-run 里提醒顶层「按最宽的那一档写」——"
         "账号所有者：「尽量把五盘大战的比分能包括进来」；按当前帧量的 box "
         "会把深盘长出来的列静默裁掉，而那一天没有任何闸会出声")
+    assert "没开 score_inset" not in out and "漏" not in out, (
+        "回贴 2026-08-28 傍晚从默认改成显式开关（账号所有者「先把这些马赛克"
+        "搞好」）——再提醒『这几段没开回贴』就是把人往被否掉的那条路推。"
+        f"实际打出来的是：{out!r}")
+    assert "x2" in out and "真实右缘" in out, (
+        "提醒里仍要留一句：真开回贴的段用 x2 收窄到这一段板的真实右缘——"
+        "账号所有者 2026-08-28：「建议根据实际比分板大小贴」。"
+        "回贴缩到残条宽之后，顶层那个最宽的框对浅盘的段就是白盖一截球场")
 
 
 def test_美网的比赛一律带式版式():
@@ -13154,3 +13189,136 @@ def test_美网的比赛一律带式版式():
         reel.parse_segments(
             {"cover": {}, "slug": slug, "topbar": {"line1": line1, "line2": "x"},
              "segments": list(seg)}, srcs, "r1")
+
+
+def test_背景音乐要真的落在现场声的4个百分点上(tmp_path):
+    """账号所有者 2026-08-28：「配上背景音乐，音量是原声的 4.0%」。
+
+    **判据必须真跑一次混音**——查源码里有没有 `volume=0.0288` 只能防「有人把
+    它删了」，防不住「它从来没工作过」（`_push` 键名写错、`_cut_person` 从来
+    没跑起来过，都是这个形状）。
+
+    量法走了两版弯路，记在这儿免得下一个人重走：
+
+    ① **按频段劈开各自量**（现场声 300 Hz / 音乐 4000 Hz，高通低通分别量）
+       ——滤波器本身在衰减被测信号，三级 highpass 把 4000 Hz 的音乐压掉了
+       14 dB，量出来的比值直接偏一个量级。**band 比值这个量法有偏，别用。**
+    ② **门槛写成绝对分贝**（「没音乐时高频档要 < −60 dB」）——AAC 192k 的
+       量化噪底本来就在 −50 dB 上下，这条会红在噪底上而不是红在缺陷上。
+
+    现在的量法不经过任何滤波器：混两遍（给音乐 / 不给音乐），**相减**。
+    `amix=normalize=0` 是线性相加，所以 `有 − 没有` 按定义就是音乐那一路
+    本身。两份都写成 WAV，相减是精确的，噪底掉到 −90 dB 以下。
+    """
+    import shutil  # noqa: PLC0415
+    import subprocess  # noqa: PLC0415
+
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import build_match_reel as reel  # noqa: PLC0415
+
+    assert shutil.which("ffmpeg"), "没有 ffmpeg，这条判据跑不了：apt install ffmpeg"
+
+    def _ff(*args):
+        subprocess.run(["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+                        *args], check=True)
+
+    def _peak_db(path, *pre):
+        """量 10~16s 的峰值：旁白 7 秒就说完了（现场声开在满刻度 BED_LOUD），
+        而淡出要 17s 才开始——这个窗口量到的就是「音乐 ÷ 现场声」本身。"""
+        out = subprocess.run(
+            ["ffmpeg", "-hide_banner", "-ss", "10", "-t", "6", *pre,
+             "-af", "volumedetect", "-f", "null", "-"],
+            capture_output=True, text=True, check=True).stderr
+        line = [x for x in out.splitlines() if "max_volume" in x]
+        assert line, f"量不到 max_volume：{out[-400:]}"
+        return float(line[0].split("max_volume:")[1].split("dB")[0])
+
+    bed = tmp_path / "bed.mp4"
+    _ff("-f", "lavfi", "-i", "color=c=black:s=64x64:d=20",
+        "-f", "lavfi", "-i", "sine=frequency=300:duration=20",
+        "-shortest", "-c:v", "libx264", "-pix_fmt", "yuv420p", str(bed))
+    voice = tmp_path / "voice.wav"
+    _ff("-f", "lavfi", "-i", "sine=frequency=900:duration=7",
+        "-c:a", "pcm_s16le", str(voice))
+    # 音乐**故意只有 5 秒**（片子 20 秒）：量的窗口在 10~16s，不循环的话
+    # 那里是静音——所以下面那条比值断言同时钉住了「电平对」和「真的循环了」。
+    music = tmp_path / "music.wav"
+    _ff("-f", "lavfi", "-i", "sine=frequency=4000:duration=5",
+        "-c:a", "pcm_s16le", str(music))
+
+    def _mix(with_music):
+        # 无损写出：相减要精确，AAC 的量化噪声会把噪底抬到 −50 dB。
+        dest = tmp_path / f"mix_{int(with_music)}.wav"
+        chain = reel.music_chain(2, 20.0) if with_music else ""
+        args = ["-i", str(bed), "-i", str(voice)]
+        if with_music:
+            # 和生产一样在**输入那一层**循环（滤镜里的 aloop 要把整首歌
+            # 缓存进内存）；music_chain 的 atrim 给这条无限输入封上界。
+            args += ["-stream_loop", "-1", "-i", str(music)]
+        _ff(*args, "-filter_complex",
+            reel.duck_filtergraph(["[1:a]adelay=0|0[v0]"], ["[v0]"], chain),
+            "-map", "[out]", "-c:a", "pcm_s16le", "-t", "20", str(dest))
+        return dest
+
+    on, off = _mix(True), _mix(False)
+
+    # 有 − 没有 ＝ 音乐那一路本身（volume=-1 反相之后相加）。
+    diff = tmp_path / "music_only.wav"
+    _ff("-i", str(on), "-i", str(off), "-filter_complex",
+        "[1:a]volume=-1[inv];[0:a][inv]amix=inputs=2:normalize=0[d]",
+        "-map", "[d]", "-c:a", "pcm_s16le", str(diff))
+
+    music_only = _peak_db(diff, "-i", str(diff))
+    bed_only = _peak_db(off, "-i", str(off))
+
+    # ① 反面锚点：音乐真的混进去了。把 `[music]` 从 amix 里摘掉的话，两次混音
+    #    逐字节相同，相减是 16 位的数字静音（−91 dB）——这条当场红。
+    #    ⚠️ 门槛不能按「源文件是满刻度」去拍：ffmpeg 的 `sine` 源实测只有
+    #    −18 dB，第一版写 `> -45` 就是这么红在自己的假设上的。−70 是「离数字
+    #    静音有 20 dB 以上」，和源文件多大无关。
+    assert music_only > -70, (
+        f"相减之后是数字静音（{music_only:.1f} dB）：音乐根本没混进 amix")
+
+    # ② 音乐 ÷ 现场声 = 4.0%，也就是 20·log10(0.04) ≈ −27.96 dB。
+    #    ⚠️ 这条同时是**循环**的判据：音乐源只有 5 秒，而量的是 10~16s。
+    #    拿掉 `-stream_loop -1`，这一段就是数字静音，① 先红。
+    got = music_only - bed_only
+    want = 20 * math.log10(reel.MUSIC_GAIN_PCT / 100)
+    assert abs(got - want) < 1.0, (
+        f"音乐应该落在现场声的 {reel.MUSIC_GAIN_PCT}%（{want:.1f} dB），"
+        f"实测 {got:.1f} dB")
+
+    # ③ 现场声没被音乐挤掉。要拦的是 `normalize=1`——那会把三路按平均算，
+    #    现场声当场掉好几个 dB。**这条只能是单向的**：峰值往上抬一点是两路
+    #    信号同相叠加的物理（4% 时约 0.25 dB、8% 时 0.7 dB），第一版写成
+    #    `abs(...) < 0.5` 的双向门槛，一调大增益就红在物理上而不是红在缺陷上。
+    assert _peak_db(on, "-i", str(on)) > bed_only - 0.5, (
+        f"加了音乐之后现场声掉了（{bed_only:.1f} → "
+        f"{_peak_db(on, '-i', str(on)):.1f} dB）——amix 把它按平均算了？")
+
+
+def test_音乐那一路要循环喂而且索引按数i算():
+    """上一条判据验的是**滤镜链**（它自己拼 ffmpeg 参数），覆盖不到 `render()`
+    里那两行接线——「只测行为拦不住位置错」，这个仓库为它栽过好几次
+    （`_push` 键名、`_cut_person`、复制页那道闸装错步骤）。
+
+    钉两样：
+
+    ① **`-stream_loop -1`**：循环要在输入那一层做。滤镜里的 `aloop` 要把
+       整首歌缓存进内存，而这条线跑在 runner 上。
+    ② **索引按 `count("-i")` 算**，不是 `len(mix_inputs)//2`。加了
+       `-stream_loop -1` 之后这一项占四个元素，除以二会把音乐接到旁白那一路
+       上——**而 ffmpeg 不报错**，成片只是音乐没了、某段旁白响两遍。
+    """
+    body = Path("tools/build_match_reel.py").read_text(encoding="utf-8")
+    block = body[body.index("music_spec = spec.get(\"music\")"):]
+    block = block[:block.index("with stage(\"混音\")")]
+
+    assert '"-stream_loop", "-1"' in block, (
+        "音乐那一路没有 `-stream_loop -1`：曲子比片子短就铺不满，"
+        "而滤镜里的 aloop 要把整首歌缓存进内存")
+    assert 'mix_inputs.count("-i")' in block, (
+        "音乐的输入索引要数 `-i` 的个数——`-stream_loop -1` 让这一项占了"
+        "四个元素，`len(mix_inputs)//2` 会错位到别的输入上")
+    assert "len(mix_inputs) // 2" not in block, (
+        "音乐这一段不许再用 `len(mix_inputs)//2` 算索引")

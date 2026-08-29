@@ -342,11 +342,17 @@ def test_promote只在最终validate_spec通过后ready(tmp_path, monkeypatch):
 def test_promote美网草稿自动带式(tmp_path, monkeypatch):
     """账号所有者 2026-08-28：「美网期间的比赛都用这个比例做视频」。
 
-    自动链的美网草稿转正时**机器自己带上**带式三件套——模型和终审都不用记得：
+    自动链的美网草稿转正时**机器自己带上**带式两件套——模型和终审都不用记得：
     layout: band + scorebox（五盘满列宽度，reel_facts.US_OPEN_SCOREBOX 单一
-    出处）+ 比赛画面的段默认 score_inset: true（setdefault：终审显式写过
-    false 的段不被盖掉）。parse_segments 那头有同一判据的硬闸兜着——这里漏了
-    注入，转正时 validate_spec 会当场红，废不了片但会卡住整条自动链。
+    出处）。parse_segments 那头有同一判据的硬闸兜着——这里漏了注入，转正时
+    validate_spec 会当场红，废不了片但会卡住整条自动链。
+
+    ⚠️ **`score_inset` 不在注入之列**（2026-08-28 傍晚翻的面）。居中窗口切掉
+    的是板左边固定的 208px（名字那一段），所以回贴整条板必然比窗口天然含住的
+    那一条宽 173px：要么多盖一截球场（账号所有者：「下方球员脚步被遮挡了」），
+    要么缩到装得下、字只剩 62%——按手机尺寸渲出来是一条读不出字的深色块，
+    账号所有者管它叫「马赛克」。默认让转播自己的板按窗口原样露出来，名字由
+    顶栏交代。这一条钉的就是**别自动注入回贴**。
 
     反向钉一头：非美网的草稿（Demo Open）一个字段都不许多——注入的判据是
     line1 里的赛事，不是「所有自动草稿」。
@@ -357,13 +363,13 @@ def test_promote美网草稿自动带式(tmp_path, monkeypatch):
 
     uso = _ready_draft(tmp_path)
     uso["_production"]["event"] = "US Open"
-    uso["segments"][2]["score_inset"] = False  # 终审标过的回放段
+    uso["segments"][2]["score_inset"] = True   # 终审显式要回贴的段
     spec = promote.promote(uso)
     assert spec["layout"] == "band"
     assert spec["scorebox"] == [104, 888, 736, 978]
     flags = [s.get("score_inset") for s in spec["segments"] if not s.get("image")]
-    assert flags.count(True) == len(flags) - 1 and flags.count(False) == 1, (
-        f"比赛画面的段该默认回贴、显式 false 的要保住：{flags}")
+    assert flags.count(True) == 1 and all(f in (True, None) for f in flags), (
+        f"回贴不许自动注入，终审显式写的那一段要原样保住：{flags}")
 
     plain = promote.promote(_ready_draft(tmp_path))
     assert "layout" not in plain and "scorebox" not in plain

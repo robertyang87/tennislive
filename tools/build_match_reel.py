@@ -182,7 +182,9 @@ BAND_BG = "0x0D1016"        # 带底色：近黑偏蓝，接美网深蓝但不�
 # 中心的」——球场被推到窗内 66%，左边三分之一全是看台和裁判椅。居中之后
 # 记分条会被窗口左缘裁到（板 [104,616]、居中窗口左缘 312），所以带式的
 # 记分条走**回贴**：`score_inset` 从同一帧把整条板抠出来（spec 的 `scorebox`
-# 给坐标），按画面带的缩放比贴回左下——贴的位置正好盖住残条，逐帧天然同步。
+# 给坐标）贴回左下，正好盖住残条，逐帧天然同步。⚠️ 贴片**缩到残条那么宽**
+# （2026-08-28「下方球员脚步被遮挡了」）：按原比例贴会比残条宽一大截，多出来
+# 的那一截盖的是真球场——判据和实测在 cut_segment 的回贴那一段。
 # 近景镜头实测板也在同一位置（92.5/94.5s 两格放大核过），所以混着近景的段
 # 照样能开；板真的会消失的段（回放/采访切走）别开，残条警告会替人看着。
 #
@@ -351,6 +353,12 @@ CONTAIN_KEEP = 0.62
 CONTAIN_MAX_UPSCALE = 1.35
 # 原声压到多少。留一点现场声（球声、观众），但不能盖过中文解说。
 BED_LOUD = 0.72   # 没人说话时的现场声
+# 背景音乐相对现场声的音量。账号所有者 2026-08-28 定的 4.0%——它是**相对
+# `BED_LOUD` 的比例**，不是喂给 ffmpeg 的裸增益：现场声本身放在 0.72 上，
+# 音乐要听着是「现场声的 4%」，真正的增益就是 0.72×4% = 0.0288（−30.8 dB）。
+# 写成比例而不是写死 0.0288，是因为改 BED_LOUD 的人不会想到还要改这儿。
+MUSIC_GAIN_PCT = 4.0
+MUSIC_FADE = 3.0  # 收尾淡出：音乐比片子长就会被 -shortest 一刀切断，很难听
 # mute 段的地板音量（-26 dB）。量出来的账：宣传片配乐 mean 约 -15~-20 dB，
 # 乘 0.05 落在 -41~-46 dB——比旁白（约 -22 dB）低约 20 dB（听感是底噪级的
 # 「空气」），又稳稳高于 check_reel_landed 的 SILENCE_FLOOR_DB（-60）。
@@ -435,7 +443,8 @@ def dissolve_filtergraph(lengths: list[float], fade: float) -> str:
     return ";".join(vparts + aparts)
 
 
-def duck_filtergraph(filters: list[str], voice_labels: list[str]) -> str:
+def duck_filtergraph(filters: list[str], voice_labels: list[str],
+                     music: str = "") -> str:
     """闪避的滤镜图：没人说话时现场声开到 `BED_LOUD`，解说一进来就压下去。
 
     **`[vk0]apad[vk]` 那一段不能省，而且不能只当它是个细节。**
@@ -465,6 +474,10 @@ def duck_filtergraph(filters: list[str], voice_labels: list[str]) -> str:
     抽成函数是为了让判据能**真跑一次混音**：查源码文本的断言只能防「有人把它
     删了」，防不住「它从来没工作过」。
     """
+    # 音乐**不进闪避**：它已经在现场声的 4% 上，再让 sidechaincompress 压一道
+    # 等于没有；而且喂进 sidechain 会把「有没有人说话」这个判据搅浑。它直接进
+    # 最后那次 amix，和闪避完的现场声、解说三路相加。
+    beds = "[duck][vm]" + ("[music]" if music else "")
     return (
         f"[0:a]volume={BED_LOUD}[bed];{';'.join(filters)};"
         f"{''.join(voice_labels)}amix=inputs={len(filters)}:normalize=0[voice];"
@@ -472,8 +485,30 @@ def duck_filtergraph(filters: list[str], voice_labels: list[str]) -> str:
         f"[vk0]apad[vk];"
         f"[bed][vk]sidechaincompress=threshold=0.02:ratio=12:"
         f"attack=15:release=450:makeup=1[duck];"
-        f"[duck][vm]amix=inputs=2:normalize=0:dropout_transition=0[out]"
+        + (f"{music};" if music else "")
+        + f"{beds}amix=inputs={2 + bool(music)}:normalize=0:"
+        f"dropout_transition=0[out]"
     )
+
+
+def music_chain(index: int, seconds: float, pct: float = MUSIC_GAIN_PCT) -> str:
+    """背景音乐这一路的滤镜链：定量增益 + 收尾淡出。
+
+    `pct` 是**相对现场声**的百分比（账号所有者定的 4.0%），所以真正的增益
+    要乘上 `BED_LOUD`——现场声自己就放在那个刻度上。写死一个裸增益的话，
+    哪天有人调 `BED_LOUD`，音乐和现场声的比例就静静地漂了。
+
+    曲子**循环播放**铺满整条片子（`-stream_loop -1` 在输入那一层做，滤镜里
+    的 `aloop` 要把整首歌缓存进内存）。所以这里按**片长**锚一个淡出，
+    并用 `atrim` 给这一路封一个上界——循环之后输入是无限长的。
+    """
+    gain = BED_LOUD * pct / 100.0
+    fade_from = max(0.0, seconds - MUSIC_FADE)
+    # `atrim` 这个上界不能省：曲子是拿 `-stream_loop -1` 循环喂进来的，
+    # 也就是**一条无限长的输入**。只靠输出那个 `-shortest` 去收，等于让
+    # 整张滤镜图依赖一个下游行为；音乐这一路自己有上界，图才是收敛的。
+    return (f"[{index}:a]atrim=end={seconds:.3f},volume={gain:.6f},"
+            f"afade=t=out:st={fade_from:.2f}:d={MUSIC_FADE}[music]")
 
 
 # 分段和封面都是**中间产物**：拼完之后整片还要以 crf 18 重编一次。在这里编到
@@ -2120,8 +2155,10 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
                     and x2 > box[0]):
                 raise ReelError(
                     f"第 {i + 1} 段 score_inset 的 x2 要是大于板左缘 "
-                    f"{box[0]} 的数（拿到 {x2!r}）——它是这一段的板右缘："
-                    "美网的板每打完一盘右缘 +39px，深盘的段单独放宽。")
+                    f"{box[0]} 的数（拿到 {x2!r}）——它是**这一段**板的真实"
+                    "右缘：美网的板每打完一盘右缘 +38px，所以浅盘的段要比"
+                    "顶层的 scorebox 窄（贴片缩到残条宽，写宽了就是白盖"
+                    "一截球场），深盘的段则单独放宽。")
             return (box[0], box[1], int(x2), box[3])
         raise ReelError(
             f"第 {i + 1} 段的 score_inset 只认 true（用 spec 的 scorebox）"
@@ -2209,21 +2246,28 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
                 f"拿到的是 {scorebox!r}。")
         bx = _scorebox4(scorebox)
         # 账号所有者 2026-08-27：「尽量把五盘大战的比分能包括进来」——
-        # 板会随比赛进程往右长（美网每完成一盘 +39px），scorebox 按**最宽
-        # 状态**写（美网 BO5 右缘 ~736），量当前帧的宽度会把深盘长出来的列
-        # 静默裁掉；多抠的那截是球场，贴回去看不见（真实帧模拟过，见 docs）。
+        # 板会随比赛进程往右长（美网每完成一盘 +38px），顶层 scorebox 按
+        # **这场最宽的那一档**写，量某一帧的宽度会把深盘长出来的列裁掉。
+        # ⭐ 2026-08-28「建议根据实际比分板大小贴」：**逐段**再用
+        # `score_inset: {"x2": N}` 收窄到这一段板的真实右缘。回贴现在缩到
+        # 残条宽，而残条 =(x1−窗口左缘)×比例——x1 写宽了残条跟着算宽，
+        # 等于白盖一截球场（郑钦文那条一盘的段 588 比 660 少盖 62px）；
+        # 框宽了还会把板右边的球场一起抠进贴片再贴到别处（绿盖绿看不出来，
+        # 但它是错的）。
+        inset_on = [i + 1 for i, g in enumerate(spec["segments"])
+                    if g.get("score_inset")]
         print(f"    [score] scorebox 宽 {bx[2] - bx[0]}px（右缘 {bx[2]}）——"
-              "板会随盘数变宽的转播要按**最宽状态**写（美网 BO5 右缘 ~736），"
-              "按当前帧量的话深盘的比分列会被静默裁掉")
-        # 带式窗口居中（「不要偏离中心的」），浮在左下的板会被窗口左缘裁掉；
-        # 没开回贴的段要么是回放/切走（对的），要么是漏了（画面上留一截残条）。
-        # 只报不拦：机器分不出这两种，但漏了的样子在 --dry-run 里要看得见。
-        no_inset = [i + 1 for i, s in enumerate(spec["segments"])
-                    if not s.get("image") and not s.get("score_inset")]
-        if no_inset:
-            print(f"    [score] 第 {no_inset} 段没开 score_inset——带式的居中"
-                  "窗口会把记分条裁出残条；回放/切走的段不开是对的，"
-                  "比赛画面的段要写 true（或深盘段写 {\"x2\": N}）")
+              "顶层按**这场最宽的那一档**写。记分条默认不回贴（转播自己的板"
+              "按窗口原样露出来）；"
+              + (f"这条 spec 的第 {inset_on} 段开了回贴，"
+                 if inset_on else "真要开回贴的段，")
+              + '板还没长到最宽的那几段要用 `"score_inset": {"x2": N}` '
+              "收窄到这一段板的真实右缘，不然会多盖一截球场")
+        # ⚠️ 这儿原来有一条「没开 score_inset 的段要点名」的提醒。
+        # 2026-08-28 傍晚**默认翻了面**（账号所有者：「先把这些马赛克搞好」），
+        # 那条提醒于是变成了反向的唠叨——它会把人推回那个被否掉的做法，
+        # 所以整条拆掉。回贴现在是显式开关，理由记在 cut_segment 的回贴那一段
+        # 和 docs/us-open-scoreboard-aspect.md。
     # ⭐ 账号所有者 2026-08-28：「**美网期间的比赛都用这个比例做视频**」。
     # 美网比赛的 reel（topbar.line1 写着美网/US Open 的那种）一律带式——
     # 只记在对话里拦不住下一个会话，自动链也会自己产美网的片子，所以落成
@@ -2240,13 +2284,14 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
                 "一律用带式版式（账号所有者 2026-08-28）。spec 顶层加：\n"
                 '  "layout": "band", "scorebox": [104, 888, 736, 978]\n'
                 "（scorebox 是五盘满列宽度——主赛第一条先拿 probe 的 "
-                "scorebox_guess 对一眼再沿用），比赛画面的段写 "
-                '"score_inset": true（回放/切走的段不写）。'
+                "scorebox_guess 对一眼再沿用）。记分条**默认不回贴**，"
+                "让转播自己的板按窗口原样露出来；"
                 "账在 docs/us-open-scoreboard-aspect.md。")
         if scorebox is None:
             raise ReelError(
-                "美网的带式 spec 还要有顶层 scorebox（不然居中窗口把记分条裁成"
-                "残条、而回贴无从谈起）：\n"
+                "美网的带式 spec 还要有顶层 scorebox——它是**板在源片里的"
+                "位置**这件事的记录：probe 的 --scorebox（死球时刻）读它，"
+                "真要开 score_inset 回贴的段也读它：\n"
                 '  "scorebox": [104, 888, 736, 978]（五盘满列宽度）\n'
                 "主赛第一条先拿 probe 的 scorebox_guess 对一眼再沿用。")
     bad_motion = [i + 1 for i, s in enumerate(segments) if s.inset
@@ -2296,7 +2341,8 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
 _REAL_FIELDS: dict[str, tuple[str, ...]] = {
     "spec": ("archival", "conform", "cover", "crop_y", "crop_zoom",
              "layout", "mixed_fps", "primary",
-             "outro", "push", "rate", "scorebox", "segments", "silent_source",
+             "music", "outro", "push", "rate", "scorebox", "segments",
+             "silent_source",
              "slug", "source_audio", "source_url", "sources", "stats",
              "subtitle_top", "topbar", "voice", "editorial"),
     "cover": ("event_badge", "eyebrow", "hook", "layout", "matchup", "meta",
@@ -2952,22 +2998,55 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
                 # 合完再一起拉慢，和 contain 那条路同一个形状。
                 x0, y0, x1, y1 = box
                 ratio = VIDEO_W / CROP_W
+
                 # 贴片尺寸**向上**取偶：向下取会在贴片右/下边留一条 1px 的残线
                 # （贴片盖不满它要盖的那一片），多出来的半像素只是把板拉伸
                 # 千分之几，看不见。
-                sw = max(2, -(-int(round((x1 - x0) * ratio)) // 2) * 2)
-                sh = max(2, -(-int(round((y1 - y0) * ratio)) // 2) * 2)
+                def _even(v: float) -> int:
+                    return max(2, -(-int(round(v)) // 2) * 2)
+
+                sh = _even((y1 - y0) * ratio)      # 残条的高＝贴片该占的高
                 oy = BAND_TOP + int(round(y0 * ratio))
+                # ⭐ 2026-08-28 账号所有者：「下方球员脚步被遮挡了」。回贴原来
+                # 按**原比例**贴整条板，而板比窗口天然含住的那一条（残条）宽——
+                # 多出来的那一截盖的是**真球场**。这一条实测量过：残条 287px，
+                # 原比例贴片 460px，多盖 173px＝画面宽的 16%；拿 probe 的缩略图
+                # 墙把被盖住的那一片摊开看，81 格里有 27 格底下是球员的腿和脚。
+                # 所以贴片**缩到残条的宽**：回贴只许盖住窗口本来就裁不掉的那一
+                # 条，一寸球场都不多占。缩完比残条矮（等比），矮出来的上下两条
+                # 用带底色垫平——不垫的话那两条会露出残条自己的上下边，成了
+                # 「板下面还有半条板」的重影。
+                #
+                # ⚠️⚠️ **而回贴本身已经不是默认了**（同一天傍晚，账号所有者
+                # 「先把这些马赛克搞好」）：缩到残条之后板只有画面宽的 27%，
+                # 按手机尺寸（360px 宽）渲出来并排比，它是一条读不出字的深色
+                # 块；而**干脆不贴**、让转播自己的板按窗口原样露出来时，比分
+                # 「6 3 1 AD」在同样尺寸下清清楚楚——代价只是名字被画面左缘
+                # 切掉（顶栏本来就一直印着双方中文名）。所以 `score_inset` 现在
+                # 是显式开关，`promote_reel_draft` 不再自动注入。这一段留着，
+                # 是给那些窗口切得少、贴回去还够大的片子用的。
+                bw = _even((x1 - x0) * ratio)      # 整条板按原比例的宽
+                strip = _even((x1 - x) * ratio)    # 居中窗口天然含住的残条
+                nw = min(bw, strip)
+                nh = _even((y1 - y0) * ratio * nw / bw)
+                by = oy + (sh - nh) // 2
                 print(f"    [score] {seg.start:.1f}s 段回贴记分条 "
                       f"[{x0},{y0},{x1},{y1}] → 画面带 (0,{oy})，"
-                      f"盖住窗口左缘裁掉的 {x - x0}px")
+                      f"缩到残条宽 {nw}px（原比例要 {bw}px，"
+                      f"少盖 {bw - nw}px 球场）")
+                if nw * 2 < bw:
+                    print(f"    [score] ⚠️ 贴片只有原比例的 {nw / bw:.0%}，"
+                          "板会小到读不出——多半是 scorebox 写宽了（把板右边"
+                          "的球场也框进去了）或者窗口把板裁得太狠，量一眼再定")
                 chain = (
                     f"split=2[wm][wb];"
                     f"[wm]crop={CROP_W}:{CROP_H}:{x}:{CROP_Y},"
-                    f"{_canvas_fit().rstrip(',')}[m];"
+                    f"{_canvas_fit()}"
+                    f"drawbox=x=0:y={oy}:w={strip}:h={sh}:"
+                    f"color={BAND_BG}:t=fill[m];"
                     f"[wb]crop={x1 - x0}:{y1 - y0}:{x0}:{y0},"
-                    f"scale={sw}:{sh}:flags=lanczos[b];"
-                    f"[m][b]overlay=0:{oy},{sp}fps={FPS_EXPR},setsar=1"
+                    f"scale={nw}:{nh}:flags=lanczos[b];"
+                    f"[m][b]overlay=0:{by},{sp}fps={FPS_EXPR},setsar=1"
                 )
                 labeled = True
             else:
@@ -5578,6 +5657,36 @@ def ending_payoff_problem(
         "第一波庆祝必须真的出现在正文里。")
 
 
+def music_problem(spec: dict, base: Path = Path(".")) -> str | None:
+    """背景音乐这一路的形状闸——**只读 spec 和磁盘，不碰源片**，所以
+    `--dry-run` 0.2 秒就能报，不用等到第 5 分钟的混音那一步才炸。
+
+    `_license` 是**认领**，和 `mixed_fps` / `silent_source` / `_frame_why`
+    一个形状：把「想清楚了这首曲子能用」和「顺手拖了个文件进来」分开。
+    背景音乐是会被平台的音频指纹扫到的东西，而这个账号正在整改期——
+    授权来路必须留在 spec 里，事后才查得到当时是按什么用的。
+    """
+    music = spec.get("music")
+    if music is None:
+        return None
+    if not isinstance(music, dict):
+        return "spec.music 要写成对象：{\"file\": …, \"_license\": …}。"
+    path = str(music.get("file") or "").strip()
+    if not path:
+        return "spec.music 缺 `file`（音频文件路径，相对仓库根）。"
+    if not (base / path).is_file():
+        return (f"spec.music.file 指的文件不在：{path}\n"
+                "音乐文件要进仓库（和封面图一样），否则渲染那台机器上没有。")
+    if not str(music.get("_license") or "").strip():
+        return ("spec.music 要写 `_license` 认领这首曲子的授权来路"
+                "（哪儿来的、什么授权、能不能用在这个号上）。\n"
+                "背景音乐会被平台的音频指纹扫到，来路必须留在 spec 里。")
+    pct = music.get("gain_pct", MUSIC_GAIN_PCT)
+    if not isinstance(pct, (int, float)) or isinstance(pct, bool) or not 0 < pct <= 100:
+        return "spec.music.gain_pct 要是 0~100 之间的数（相对现场声的百分比）。"
+    return None
+
+
 def validate_spec(
     spec: dict, *, allow_published_legacy: bool = False,
 ) -> list[Segment]:
@@ -5625,6 +5734,9 @@ def validate_spec(
     photo = cover_photo_problem(spec)
     if photo:
         raise ReelError(photo)
+    music = music_problem(spec)
+    if music:
+        raise ReelError(music)
     segments = parse_segments(spec, urls, next(iter(urls)))
     raw_percent = [
         (index, seg.narration)
@@ -6168,6 +6280,23 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
           f"左右 {_ASS_MARGIN_H}）")
 
     mixed = outdir / "_audio.m4a"
+    # 背景音乐：独立一路，**不进闪避**（见 duck_filtergraph）。淡出锚在画面的
+    # 真实长度上——自己再算一遍片长就是「一个数写两处必分叉」，而分叉的样子是
+    # 「音乐在离结尾还有几秒的地方就淡没了」，渲染不报错。
+    music_graph = ""
+    music_spec = spec.get("music") or {}
+    if music_spec:
+        film_seconds = probe_duration(silent)
+        pct = float(music_spec.get("gain_pct", MUSIC_GAIN_PCT))
+        # ⚠️ 索引要**数 `-i` 的个数**，不能用 `len(mix_inputs)//2`：
+        # `-stream_loop -1` 让这一项占了四个元素，除以二就错位了——而错位的
+        # 样子是「音乐那一路接到旁白上」，ffmpeg 不报错。
+        mix_inputs.extend(["-stream_loop", "-1",
+                           "-i", str(Path(music_spec["file"]))])
+        music_graph = music_chain(mix_inputs.count("-i"), film_seconds, pct)
+        print(f"[音乐] {music_spec['file']}：循环播放铺满 {film_seconds:.1f}s，"
+              f"{pct}% 现场声（增益 {BED_LOUD * pct / 100:.4f}），"
+              f"{max(0.0, film_seconds - MUSIC_FADE):.1f}s 起淡出")
     with stage("混音"):
         if filters:
             # 闪避，不是一路压死：没人说话的时候现场声开到 BED_LOUD，解说一进来
@@ -6175,7 +6304,8 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
             # 要么盖住解说，要么整条片子的球声都听不见，两头不讨好。
             run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
                 "-i", str(silent), *mix_inputs,
-                "-filter_complex", duck_filtergraph(filters, voice_labels),
+                "-filter_complex",
+                duck_filtergraph(filters, voice_labels, music_graph),
                 # 这一步只是把解说混进现场声，产物是个 m4a——画面在这儿是
                 # 拿来给 `-shortest` 定长度的，**必须 copy**。原来没写 `-c:v`，
                 # 默认动作是把整条 1080×1920 重新 x264 编一遍，编完写进 m4a、
