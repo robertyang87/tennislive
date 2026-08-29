@@ -15,6 +15,7 @@ on:
     paths:
       - "requests/interviews/*.json"
       - "tools/build_interview_request.py"
+      - "tools/draft_interview_spec.py"
       - "tools/interview_source_gate.py"
       - "tools/attach_interview_lead_in.py"
       - ".github/workflows/interview-auto-render.yml"
@@ -102,6 +103,10 @@ jobs:
         with:
           python-version: "3.11"
           cache: pip
+
+      - name: 先校验转写与翻译脚本语法
+        if: steps.gate.outputs.work == 'true'
+        run: python -m py_compile tools/draft_interview_spec.py tools/build_interview_request.py
 
       - name: 把人工请求的产物格加回稀疏范围
         if: steps.gate.outputs.work == 'true'
