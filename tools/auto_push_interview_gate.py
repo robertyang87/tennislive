@@ -164,9 +164,21 @@ def validate_qc(repo: Path, slug: str, outdir: Path) -> str:
     expected_lead = len(((spec.get("lead_in") or {}).get("subs") or []))
     if not expected_body or checks.get("bilingual_body_cues") != expected_body:
         raise Skip(f"{slug}：QC 没有逐 cue 证明采访正文中英字幕完整")
-    if (not expected_lead or checks.get("bilingual_lead_cues") != expected_lead
-            or not qc.get("lead_ass_sha256")):
-        raise Skip(f"{slug}：QC 没有逐 cue 证明获胜画面原解说的中英字幕完整")
+    official_farewell_no_lead = (
+        spec.get("requested_content_type") == "farewell"
+        and (spec.get("opening") or {}).get("kind") == "none"
+        and (spec.get("source_verification") or {}).get("status") == "verified"
+        and (spec.get("source_verification") or {}).get("method")
+            == "official_explicit_farewell"
+    )
+    if expected_lead:
+        if (checks.get("bilingual_lead_cues") != expected_lead
+                or not qc.get("lead_ass_sha256")):
+            raise Skip(f"{slug}：QC 没有逐 cue 证明获胜画面原解说的中英字幕完整")
+    elif not official_farewell_no_lead:
+        raise Skip(f"{slug}：缺冷开场双语字幕，且不符合已核验官方告别仪式例外")
+    elif checks.get("bilingual_lead_cues") not in (None, 0) or qc.get("lead_ass_sha256"):
+        raise Skip(f"{slug}：无冷开场例外与 QC 冷开场证据互相矛盾")
 
     render = _tracked_json(repo, outdir / "render.json")
     if render.get("qc_attestation_sha256") != _sha256_bytes(qc_bytes):
