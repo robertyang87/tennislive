@@ -186,7 +186,9 @@ def transcribe(url: str, workdir: Path, model: str = ASR_MODEL) -> tuple[list[di
         dl_url = url
 
     out_mp3 = workdir / "audio.mp3"
-    cmd = ["yt-dlp", "-f", "bestaudio", "-x", "--audio-format", "mp3",
+    cmd = ["yt-dlp", "--js-runtimes", "node",
+           "--remote-components", "ejs:github",
+           "-f", "bestaudio", "-x", "--audio-format", "mp3",
            "-o", str(out_mp3).replace(".mp3", ".%(ext)s"), dl_url]
     cookies = os.environ.get("YT_COOKIES")
     if cookies and os.path.isfile(cookies):

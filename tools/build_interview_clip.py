@@ -307,6 +307,7 @@ def storyboard_sheet(url: str, workdir: Path, spec: dict | None = None,
     for label, extra in _ytdlp_ladder():
         proc = subprocess.run(
             ["yt-dlp", "-J", "--no-warnings", "--js-runtimes", "node",
+        "--remote-components", "ejs:github",
              *cookie_args(spec or {}), *extra, url],
             capture_output=True, text=True, timeout=180)
         if proc.returncode == 0 and proc.stdout.strip():
@@ -345,6 +346,7 @@ def storyboard_sheet(url: str, workdir: Path, spec: dict | None = None,
     dest = workdir / "_sb.mhtml"
     try:
         subprocess.run(["yt-dlp", "--no-warnings", "--js-runtimes", "node",
+        "--remote-components", "ejs:github",
                         "-f", sb["format_id"], "-o", str(dest),
                         *cookie_args(spec or {}), url],
                        capture_output=True, text=True, timeout=300, check=True)
@@ -519,6 +521,7 @@ def fetch_words(url: str, workdir: Path,
         for label, extra in _ytdlp_ladder():
             proc = subprocess.run(
                 ["yt-dlp", "--no-warnings", "--js-runtimes", "node",
+        "--remote-components", "ejs:github",
                  "--skip-download", "--write-auto-subs",
                  "--sub-langs", "en", "--sub-format", "json3",
                  *cookie_args(spec or {}), *extra,
@@ -2482,6 +2485,7 @@ def yt_download(url: str, dest: Path, fmt: str, spec: dict) -> Path:
     tried: list[str] = []
     for label, extra in ladder:
         cmd = ["yt-dlp", "--no-warnings", "--js-runtimes", "node",
+        "--remote-components", "ejs:github",
                "-f", fmt, "-o", str(dest), *cookie_args(spec), *extra, *merge, media]
         # 240 秒：够一次正常下载（YouTube 限速约 0.7 MB/s，几分钟片子的
         # 720p 源片量得到），又不至于一档卡死拖垮整个梯子——`render` 那条路

@@ -99,6 +99,7 @@ def _download_subtitles(url: str, directory: Path) -> Path:
         "--no-warnings",
         "--js-runtimes",
         "node",
+        "--remote-components", "ejs:github",
         "--skip-download",
         "--write-subs",
         "--write-auto-subs",
