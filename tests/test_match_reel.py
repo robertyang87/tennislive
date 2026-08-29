@@ -13271,14 +13271,79 @@ def test_score_inset的形状校验和scorebox的死键闸(capsys):
         "现量**（账号所有者 2026-08-29：「不能固定宽度去切，要自适应」）。\n"
         "还写着「顶层按最宽那一档写、浅盘的段自己去 x2 收窄」的话，读的人"
         f"会回去手量三档——那正是这次要去掉的那一步。实际打出来的是：{out!r}")
-    assert "第 [3] 段没开 score_inset" in out, (
-        "第 3 段没开回贴要被点名——带式居中窗口会把板的名字裁掉，而"
-        "「漏开了」和「这段是回放」在产物上长得一样，只能靠 --dry-run 出声。"
-        f"实际打出来的是：{out!r}")
+    assert "第 [3] 段不回贴" in out, (
+        "不回贴的段要被点名——那几段的左下角是转播原样露出来的板（名字被"
+        "居中窗口裁掉），得让人一眼看见有哪几段。⚠️ 美网那条线上「漏写」已经"
+        "是硬闸了（test_美网的每一段都要显式表态score_inset），这一行只剩"
+        f"「让人看见」这一个职责。实际打出来的是：{out!r}")
     assert "第 [1, 2] 段" in out and "第 [2] 段" in out and "钉死" in out, (
         "提醒里要点名**开了回贴**的那几段，并单独点出哪几段用 `{\"x2\": N}` "
         "把右缘钉死了——钉死的段现量不生效，而「钉了」和「没钉」在产物上"
         f"分不出来。实际打出来的是：{out!r}")
+
+
+def test_美网的每一段都要显式表态score_inset():
+    """⭐⭐ 账号所有者 2026-08-29：「**以后美网期间的「赛场之上」比赛视频
+    比分板都按这个方式处理**」。
+
+    「这个方式」＝板的左缘上下沿取顶层 `scorebox`、**右缘渲染时逐段现量**、
+    原比例贴回左下。要让它真成为「以后都」，`score_inset` 就不能再是可漏的：
+    带式的居中窗口固定切掉板左边 **208px**（正是名字那一段），漏写的样子正是
+    账号所有者点过的那句「你这比分板没展示全啊」——而在这之前它只在 dry-run
+    里报一句，埋在几十行输出中间。
+
+    所以每一段比赛画面都要**显式表态**，钉四头：
+
+    ① `score_inset` 一个字都没写 → 当场红（「忘了写」和「想过了不贴」在产物
+       上长得一模一样：都是左下角一截被裁掉名字的板）
+    ② 写 `false` 或 `{"x2": N}` 却没说为什么 → 当场红。`false` 要说清板为什么
+       不在（哪一刀之后收走的），`x2` 要说清现量哪儿不准——和 `mixed_fps` /
+       `silent_source` / `_frame_why` 一个形状
+    ③ `true` 不用写理由（它是主路），`false` ＋ `_score_inset_why` 放行
+    ④ **只管美网**：别的赛事的带式 spec 不受这条约束（这条规矩是账号所有者
+       给美网期间定的）
+
+    ⚠️ 整屏证据段（image）在闸里被跳过，**这一头没有判据，是因为今天造不出
+    这个场景**：image 段写死 `fit="contain"`，而带式明令拒绝 contain，所以
+    band × image 的 spec 根本活不到这道闸。那个 `continue` 是防两道闸打架用的
+    ——整屏证据段那道闸把 `score_inset` 列进了「不认的窗口类字段」，不跳过的话
+    这条闸会去要一个那边禁止写的键。哪天带式支持了整屏证据段，这一头要补判据。
+
+    反向验证过：把整段闸拆掉 → ①② 红；把美网那个前提去掉（所有带式都查）
+    → ④ 红。
+    """
+    import pytest  # noqa: PLC0415
+
+    reel = _reel()
+    srcs = {"r1": Path("a.mp4")}
+
+    def _spec(segs, line1="2026 美网资格赛 决胜轮"):
+        return {"cover": {}, "layout": "band", "slug": "uso-x",
+                "scorebox": [104, 888, 660, 978],
+                "topbar": {"line1": line1, "line2": "甲 6-4 乙"},
+                "segments": segs}
+
+    base = {"start": 1, "end": 7, "source": "r1"}
+    with pytest.raises(reel.ReelError, match="一个字都没写"):
+        reel.parse_segments(_spec([dict(base)]), srcs, "r1")
+    with pytest.raises(reel.ReelError, match="没说为什么"):
+        reel.parse_segments(
+            _spec([dict(base, score_inset=False)]), srcs, "r1")
+    with pytest.raises(reel.ReelError, match="没说为什么"):
+        reel.parse_segments(
+            _spec([dict(base, score_inset={"x2": 588})]), srcs, "r1")
+
+    # ③ true 不用理由；false + 理由放行
+    segs = reel.parse_segments(_spec([
+        dict(base, score_inset=True),
+        dict(base, start=7, end=12, score_inset=False,
+             _score_inset_why="76 秒那一刀之后转播把板收走了，接着是全屏图形"),
+    ]), srcs, "r1")
+    assert segs[0].score_inset and segs[0].score_inset_auto
+    assert segs[1].score_inset is None
+
+    # ④ 只管美网：别的赛事的带式 spec 漏写不红
+    reel.parse_segments(_spec([dict(base)], line1="辛辛那提 第二轮"), srcs, "r1")
 
 
 def test_美网的比赛一律带式版式():
