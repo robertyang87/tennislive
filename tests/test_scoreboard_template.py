@@ -138,14 +138,20 @@ def test_中文名字号按最长的名字算不许超出那一列():
     assert vp.score_cn_px(short, 3) == vp.SCORE_CN_MAX_PX
 
     # ② 最长的那一对要缩下来，而且**两个人共用一个字号**
+    #
+    # ⚠️ **这一档 2026-08-29 从三盘挪到了五盘。** 新版式（两行高亮长条）给名字
+    #    腾出的宽度比旧表格多得多——三盘 448px vs 285px——`亚历山德罗娃（19）`
+    #    在 52px 下只要 356px，三盘**已经装得下了**。拿三盘去验「会不会缩」，
+    #    验的是一个不再存在的情形；五盘（大满贯男单）那一档才是今天真的会咬人
+    #    的地方（只剩 264px）。
     longest = [{"name": "亚历山德罗娃", "rank": 19}, {"name": "斯维托丽娜", "rank": 9}]
-    small = vp.score_cn_px(longest, 3)
-    assert small < vp.SCORE_CN_MAX_PX, "六个字的名字还给满字号，那一列装不下"
-    assert small == vp.score_cn_px(list(reversed(longest)), 3), "换个顺序算出两个数"
+    small = vp.score_cn_px(longest, 5)
+    assert small < vp.SCORE_CN_MAX_PX, "六个字的名字五盘还给满字号，那一格装不下"
+    assert small == vp.score_cn_px(list(reversed(longest)), 5), "换个顺序算出两个数"
 
-    # ③ 盘数少 → 那一列宽 → 同样的名字能给更大的字号（这一条同时钉住盘数真的
-    #    被读进去了；`_set_count` 写错时它会退化成恒等）
-    assert vp.score_cn_px(longest, 2) > small
+    # ③ 盘数少 → 名字那一格宽 → 同样的名字能给更大的字号（这一条同时钉住盘数
+    #    真的被读进去了；`_set_count` 写错时它会退化成恒等）
+    assert vp.score_cn_px(longest, 4) > small
 
     # ④ 算出来的字号必须**真的装得下**，逐条 spec 验
     checked = 0
@@ -187,23 +193,30 @@ def test_算出来的字号要真的写进CSS(monkeypatch: pytest.MonkeyPatch):
 
     所以这条判据**改一个值验一次**：换一对更长的名字，渲出来的字号必须跟着变。
     """
+    # ⚠️ **两条 cover 走的是两条不同的路**：短名字三盘吃满上限，长名字五盘被
+    #    宽度压下来。而两条都要和 `score_cn_px` 独立算出来的数逐个对上——
+    #    只断言「长的比短的小」的话，把 CSS 里的字号写死成任意两个数也能过。
+    short_pair = [{"name": "汤森德", "name_en": "T. TOWNSEND", "country": "USA", "rank": 94},
+                  {"name": "奥索里奥", "name_en": "C. OSORIO", "country": "COL", "rank": 55}]
+    long_pair = [{"name": "亚历山德罗娃", "name_en": "E. ALEXANDROVA", "country": "RUS", "rank": 19},
+                 {"name": "斯维托丽娜", "name_en": "E. SVITOLINA", "country": "UKR", "rank": 9}]
     short = _rendered_cn_px(monkeypatch, {
         "winner": "汤森德", "result": "3-6 6-3 6-3",
         "scoreboard": {"court": "Stadium 3", "duration_source": {"url": "fixture"}},
-        "matchup": [{"name": "汤森德", "name_en": "T. TOWNSEND", "country": "USA", "rank": 94},
-                    {"name": "奥索里奥", "name_en": "C. OSORIO", "country": "COL", "rank": 55}],
+        "matchup": short_pair,
     })
     long_ = _rendered_cn_px(monkeypatch, {
-        "winner": "斯维托丽娜", "result": "3-6 6-0 6-3",
+        "winner": "斯维托丽娜", "result": "6-4 3-6 6-7(5) 7-6(3) 6-2",
         "scoreboard": {"court": "Stadium 3", "duration_source": {"url": "fixture"}},
-        "matchup": [{"name": "亚历山德罗娃", "name_en": "E. ALEXANDROVA", "country": "RUS", "rank": 19},
-                    {"name": "斯维托丽娜", "name_en": "E. SVITOLINA", "country": "UKR", "rank": 9}],
+        "matchup": long_pair,
     })
     assert short == versus_poster.SCORE_CN_MAX_PX, (
         f"短名字渲出来是 {short}px，而上限是 {versus_poster.SCORE_CN_MAX_PX}px"
         "——多半是 CSS 里那个字号被写死了，`score_cn_px` 算完没人读")
-    assert long_ < short, (
-        f"换成更长的名字，渲出来的字号还是 {long_}px——CSS 没有跟着 spec 变")
+    assert long_ == versus_poster.score_cn_px(long_pair, 5) < short, (
+        f"六个字的名字五盘渲出来是 {long_}px，而 `score_cn_px` 算的是 "
+        f"{versus_poster.score_cn_px(long_pair, 5)}px（上限 {short}px）"
+        "——CSS 没有跟着 spec 变")
 
 
 def test_中文名的字号上限只许往上调():
@@ -212,11 +225,17 @@ def test_中文名的字号上限只许往上调():
     和 `test_成片的编码参数不许为了压体积往下调` 同一个形状：它拦的不是手滑，
     是下一次有人重新论证「小一点也看得清」。
     """
-    assert versus_poster.SCORE_CN_MAX_PX >= 44, (
+    assert versus_poster.SCORE_CN_MAX_PX >= 52, (
         f"中文名上限被调到了 {versus_poster.SCORE_CN_MAX_PX}px，"
-        "而账号所有者 2026-08-14 要求的是「再大一些」（当时是 33px，定在 44px）")
-    assert versus_poster.SCORE_NAME_COL_FR >= 2.3, (
-        "名字那一列的宽度是字号涨得上去的前提，收窄它等于把字号又压回来")
+        "而账号所有者 2026-08-14 要求「再大一些」（33px→44px），"
+        "2026-08-29 换成美网那套两行版式之后又提到 52px")
+    # ⚠️ **换了主语**：旧版名字占几份（`SCORE_NAME_COL_FR ≥ 2.3`）是表格时代的
+    #    说法，新版式没有网格列了。守的东西一个字没变——**名字那一格的宽度是
+    #    字号涨得上去的前提，收窄它等于把字号又压回来**——只是现在要拿真的像素
+    #    来量。285px 是旧表格三盘时给名字的宽度，新版式给 448px，不许退回去。
+    assert versus_poster.score_name_avail_px(3) >= 285, (
+        f"三盘时名字那一格只剩 {versus_poster.score_name_avail_px(3):.0f}px，"
+        "比旧版那个表格（285px）还窄——字号会被压回去")
 
 
 def test_英文名要退成注脚但还读得出(monkeypatch: pytest.MonkeyPatch):
@@ -249,78 +268,102 @@ def test_英文名要退成注脚但还读得出(monkeypatch: pytest.MonkeyPatch
         f"而常量是 {vp.SCORE_EN_PX}——占位符没换上")
 
 
-def test_名字那一列加宽之后盘分那几列还够用():
-    """名字列从 1.55fr 加宽到 2.3fr，代价落在盘分那几列上——要证明它们没被压瘪。
+def test_盘分那几列和名字那一格都够用():
+    """版式的两头都要留得住：盘分列装得下那个字号的数字，名字那一格不许被挤没。
 
-    盘分是 60px 的数字，抢七还要挂一个 `.45em` 的上标。三盘那一档是最窄的。
+    ⚠️ **换了主语**（2026-08-29）：旧版名字那一列是 `2.3fr`，这条判据算的是
+    `928/(fr+盘数)`。新版式没有网格了，盘分列是**写死的像素**、名字吃剩下的，
+    所以同一件事要拿像素来量。它守的东西没变——加宽一头就是压窄另一头，
+    这条钉的是两头都还够用。
+
+    五盘（大满贯男单）是最紧的一档：名字只剩 264px，六个字的名字会缩到 38px
+    上下——还读得出，但不能再窄了。
     """
-    fr = versus_poster.SCORE_NAME_COL_FR
-    for sets in (2, 3):
-        column = 928 / (fr + sets)
-        assert column >= 120, (
-            f"{sets} 盘时每一格盘分只剩 {column:.0f}px，装 60px 的数字太挤")
-        assert column >= 86, "已经掉到 minmax 的下限 86px，网格会开始挤名字那一列"
+    vp = versus_poster
+    assert vp.SCORE_SET_COL_PX >= vp.SCORE_NUM_PX + 20, (
+        f"盘分列只剩 {vp.SCORE_SET_COL_PX}px，装 {vp.SCORE_NUM_PX}px 的数字"
+        "加一个抢七上标太挤")
+    # ⚠️ 名字那一头的判据**不拍一个像素数**（拍出来的数只会在下次微调版式时
+    #    变成挡路的），而是问那个真正的后果：**库里最长的名字会不会被压到下限
+    #    以下**。压到下限 `score_cn_px` 会打印告警并硬渲，那一行就顶到盘分上了。
+    longest = [{"name": "亚历山德罗娃", "rank": 19}, {"name": "斯维托丽娜", "rank": 9}]
+    for sets in (2, 3, 5):
+        px = vp.score_cn_px(longest, sets)
+        assert px > vp.SCORE_CN_MIN_PX, (
+            f"{sets} 盘时最长的名字只能给到 {px}px，已经掉到下限 "
+            f"{vp.SCORE_CN_MIN_PX}px——名字会压到盘分上")
+    assert vp.score_name_avail_px(5) < vp.score_name_avail_px(3) < vp.score_name_avail_px(2), (
+        "盘越多名字那一格越窄，这是 `score_cn_px` 那套算法的全部前提")
 
 
-def _tracks(value: str) -> list[str]:
-    """按**浏览器的读法**把轨道列表拆开：只在括号外的空白处断。
-
-    `grid-template-columns` 是一个**空格分隔**的轨道列表；`minmax(0,1fr)`
-    里面那个逗号在括号内，不算分隔符。**顶层出现逗号是非法的**，整条声明
-    会被丢掉——所以这儿同时把顶层逗号数出来。
-    """
-    tracks: list[str] = []
-    depth = 0
-    cur = ""
-    for ch in value.strip():
-        if ch == "(":
-            depth += 1
-        elif ch == ")":
-            depth -= 1
-        if depth == 0 and (ch.isspace() or ch == ","):
-            if ch == ",":
-                cur += "\0"          # 顶层逗号：留个记号让断言看得见
-            if cur.strip():
-                tracks.append(cur.strip())
-            cur = ""
-            continue
-        cur += ch
-    if cur.strip():
-        tracks.append(cur.strip())
-    return tracks
-
-
-def test_比分板的盘分要真的排在名字右边(monkeypatch: pytest.MonkeyPatch):
-    """轨道列表**用空格分隔**。第一版写的是 `",".join(...)`。
-
-    渲出来是 `grid-template-columns:minmax(0,1fr),minmax(86px,1fr)`——顶层带
-    逗号在 CSS 里是**非法值**，整条声明被丢掉，grid 退回单列：两位球员在上、
-    四个盘分竖着排在下面。也就是说这块比分板**从来没有正确渲出来过**。
-
-    ⚠️ **它为什么一直没被发现**：`_scoreboard_html` 的既有测试全在比 HTML
-    字符串（有没有 `score-flag`、几个 `setwin`），而字符串里有没有逗号看不出
-    对错；已发的 `eala-parks` 那张 `poster.jpg` 又是这套模板落地**之前**渲的，
-    仓库里那份走的还是老的一行赛果。又一次「断言全绿不等于页面对」。
-
-    所以判据不查文本，**按浏览器的读法把值解析一遍**：几条轨道就是几列。
-    反向验证：把 `" ".join` 换回 `",".join`，`_tracks` 只解出 1 条，当场红。
-    """
+def _board_css(monkeypatch: pytest.MonkeyPatch) -> str:
     monkeypatch.setattr(versus_poster, "_fetch_match_duration", lambda source, where: "1:51")
-    cover = _cover()                      # result = "6-1 4-6 6-2"，三盘
-    html = versus_poster._scoreboard_html(cover)
+    _, css = versus_poster._solo_body({
+        **_cover(), "eyebrow": "赛场之上", "layout": "solo", "hook": "赢了",
+        "portrait": {"image": "assets/logo/brand/icon.png"},
+    })
+    return re.sub(r"/\*.*?\*/", "", css, flags=re.S)
 
-    match = re.search(r"grid-template-columns:([^\"';]+)", html)
-    assert match, "比分板没有写 grid-template-columns"
-    value = match.group(1)
-    tracks = _tracks(value)
 
-    assert "\0" not in "".join(tracks), (
-        f"轨道列表顶层出现逗号，浏览器会把整条声明丢掉、grid 退回单列：{value!r}")
-    assert len(tracks) == 1 + 3, (
-        f"名字一列 + 每盘一列 = 4 条轨道，解出来却是 {len(tracks)} 条：{value!r}\n"
-        "盘分会竖着堆在名字底下，而 HTML 字符串断言看不出这一点。")
-    # 名字那一列要比盘分列宽：`A. SABALENKA` 比一个 `6` 长得多，等分会挤到换行。
-    # 宽度从常量推，不写死——2026-08-14 为了让中文名字号涨上去，这一列从
-    # 1.55fr 加宽到了 2.3fr，写死的话每加宽一次都要来改这条断言。
-    assert f"{versus_poster.SCORE_NAME_COL_FR}fr" in tracks[0], (
-        f"名字那列没留够宽度：{tracks[0]!r}")
+def _rule(css: str, selector: str) -> str:
+    hit = re.search(re.escape(selector) + r"\{([^}]*)\}", css)
+    assert hit, f"渲出来的 CSS 里没有 `{selector}`：多半是选择器改名了"
+    return hit.group(1)
+
+
+def test_比分板两行的盘分要上下对齐(monkeypatch: pytest.MonkeyPatch):
+    """两行是**分开渲**的，盘分能不能上下对齐全靠三样东西同时成立。
+
+    ⚠️ **换了主语**（2026-08-29）：旧版比分板是一个 `grid`，两位球员在同一个
+    `.scoreboard-players` 格子里、盘分在右边几条轨道上，所以那条判据解的是
+    `grid-template-columns`（它当年抓到过一个真 bug：轨道列表用逗号分隔，
+    整条声明被浏览器丢掉、grid 退回单列）。账号所有者 2026-08-29 换成美网那套
+    **两行**版式之后，网格没有了——`grid-template-columns` 这个主语不存在，
+    留着那条判据就是一条常年红。
+
+    它守的东西一个字没变：**盘分要排在名字右边，而且两行的列要对得齐。**
+    只是保证它的机制换了，所以判据也跟着换：
+
+    1. **HTML**：每一行都是「名字在前、盘分在后」，两行的格子数一样多
+    2. **列宽写死**：`.score-number` 的 `flex` 必须是固定像素基准。换成 `flex:1`
+       的话，盘分那一块会缩到内容宽度，而「6」和带抢七上标的「6(3)」不一样宽，
+       两行当场错开
+    3. **名字那一格可以缩**：`.score-names` 要有 `min-width:0`。少了它，一个长
+       名字撑不下时会把盘分整块往右推，而**只有那一行被推**
+    4. **抢七小分不占位**：`.score-number sup` 要绝对定位。留在流里的话，
+       带小分的那一格宽出三十来像素，数字被挤离列心——`cirstea-kalinskaya`
+       实测 `6(4)` 比另一行的 `7` 左了 40px（改成绝对定位之后两者都在 718）
+
+    真渲量过（`zheng-pridankina-us-open-2026-q3`，三盘，1080×1440）：Chromium
+    报的盒子逐个和常量吻合——`.score-row` 940×104、`.score-fill` x=92 w=896、
+    `.score-names` x=222 w=448（正是 `score_name_avail_px(3)` 算出来的数）、
+    `.score-number` x=670 w=96、端帽 12×104。三列数字的墨迹中心因此落在
+    **718 / 813 / 909**，两行逐列相差不超过 2px（差的是 `3` 和 `6` 的字形宽度，
+    不是版式）。
+    """
+    monkeypatch.setattr(versus_poster, "_fetch_match_duration",
+                        lambda source, where: "1:51")
+    html_out = versus_poster._scoreboard_html(_cover())      # 三盘
+    rows = re.findall(r'<div class="score-row score-row--(win|lose)">(.*?)(?=<div class="score-row|$)',
+                      html_out, re.S)
+    assert [kind for kind, _ in rows] == ["win", "lose"], (
+        f"比分板要一行赢家一行输家，解出来却是 {[k for k, _ in rows]}：\n{html_out}")
+    for kind, body in rows:
+        assert body.index('class="score-names"') < body.index('class="score-sets"'), (
+            f"{kind} 那一行的盘分排在名字前面了：{body}")
+        cells = body.count('class="score-number ')
+        assert cells == 3, (
+            f"{kind} 那一行有 {cells} 个盘分格子，三盘应该是 3 个：{body}")
+
+    css = _board_css(monkeypatch)
+    flex = re.search(r"flex:0 0 (\d+)px", _rule(css, ".score-number"))
+    assert flex and int(flex.group(1)) == versus_poster.SCORE_SET_COL_PX, (
+        f"`.score-number` 的列宽不是写死的 {versus_poster.SCORE_SET_COL_PX}px："
+        f"{_rule(css, '.score-number')!r}\n"
+        "列宽一旦跟着内容走，带抢七上标的那一格就会比别人宽，两行错开。")
+    assert "min-width:0" in _rule(css, ".score-names"), (
+        "`.score-names` 少了 `min-width:0`：长名字撑不下时会把这一行的盘分"
+        "整块往右推，而另一行不会跟着推")
+    assert "position:absolute" in _rule(css, ".score-number sup"), (
+        "抢七小分留在文档流里了：带小分的那一格会多出三十来像素，数字被推离"
+        "列心——实测 `cirstea-kalinskaya` 的 `6(4)` 和另一行的 `7` 差 40px。")

@@ -535,17 +535,46 @@ def _scoreboard_sets(result: str, where: str) -> tuple[list[tuple[int, int, str 
     return scores, note
 
 
-#: 比分板名字那一列占几份，其余每一盘各占 1 份。
+#: ⭐ 比分板的版式：账号所有者 2026-08-29 指着一张美网官方赛果图定的——
+#: 「以后赛场之上视频封面的比分板都按这个设计来做，**但中英文名字和世界排名
+#: 保留，国旗用矩形**」。
 #:
-#: ⚠️ **2026-08-14 从 1.55 加宽到 2.3**，为的是让中文名的字号涨得上去（账号所有者
-#: 「球员的中文名字号再大一些，现在太小了」）。原来名字那格只有
-#: `928×1.55/4.55 − 118 = 198px` 可用，而 `亚历山德罗娃（19）` 在 33px 下就要
-#: **226px**——也就是说加大之前它**已经在溢出**，排名那几个字正压在右边那道
-#: 框线上（36 张比分板里 4 条名字如此）。加宽之后同样 3 盘有 285px。
-#: 盘分那几列并不吃亏：一个 60px 的数字占不到 40px，而每列仍有 175px。
-SCORE_NAME_COL_FR = 2.3
+#: 那张图的形状是**两行，没有格子**：赢家那一行是一条实心高亮长条、两端各挂
+#: 一颗圆角端帽，输家那一行透明；名字上下叠成「小字一行 + 大字一行」；盘分在
+#: 右侧按列对齐，赢下那一盘的数字加粗。相比旧版那个六道白框线的表格，它把
+#: 「谁赢了这场球」从**读比分**变成了**扫一眼哪一行亮着**。
+#:
+#: ⚠️ **端帽的绿和高亮条的墨底是我们自己的颜色。** 参考图那条长条是美网的品牌
+#: 蓝——那是**那个赛事**的身份色。照抄的话，温网、辛辛那提的片子上都会印着一条
+#: 美网蓝，等于拿别人的官方比分板当我们的模板。结构照搬，颜色用自己的。
+#:
+#: 下面这一批数是**版式的唯一出处**：`score_name_avail_px` 拿它们算名字那一格
+#: 还剩多宽、`_fill_score_layout` 拿它们排版。写两处必分叉，而分叉的样子是
+#: 「算出来的字号其实放不下」——名字压在盘分上，**而渲染、质检、全量测试一个字
+#: 都不会说**（旧版就这么让 4 条名字压在框线上过了一个月）。
+SCORE_BOARD_W = 940          # `.storycopy` 的内宽：1080 − 左右各 70
+SCORE_CAP_W = 12             # 两端那颗品牌绿端帽
+SCORE_CAP_R = 6              # 端帽的圆角
+SCORE_CAP_GAP = 10           # 端帽和高亮条之间的缝
+SCORE_FILL_PAD_L = 24        # 高亮条内的左内边距（国旗从这儿开始）
+SCORE_FILL_PAD_R = 30        # 右内边距（末一盘那个数字到条边的距离）
+SCORE_FLAG_W = 86            # 矩形国旗（3:2）——账号所有者点名「国旗用矩形」
+SCORE_FLAG_H = 57
+SCORE_FLAG_GAP = 20
+SCORE_SET_COL_PX = 96        # 每一盘一列；**两行共用同一个宽度，列才对得齐**
+SCORE_ROW_H = 104            # 一行的高度
+SCORE_ROW_GAP = 10           # 两行之间的缝
+#: 盘分数字的字号。⚠️ 这个数是**量参考图定的**，不是拍的：那张图里数字的墨迹
+#: 高度占行高 51.4%（55px / 107px），而 62px 的 `TL Numeral` 在 104px 的行里只
+#: 占 42.3%——数字比参考图小了一档。72px 量出来是 51.0%，对得上。
+SCORE_NUM_PX = 72
+#: 场地/用时那一行的左右内边距——和高亮条的左右边缘对齐（参考图就是这样）。
+SCORE_HEAD_PAD = SCORE_CAP_W + SCORE_CAP_GAP
 #: 中文名字号：**上限**（短名字就用这一档）和**下限**（名字太长时能缩到哪儿）。
-SCORE_CN_MAX_PX = 44
+#: ⚠️ 2026-08-29 从 44 提到 52：参考图里姓氏是整行里最大的一块（字高约占行高
+#: 四成二），而 44px 的得意黑在 104px 高的行里只占三成一。新版式给名字腾出的
+#: 宽度也比旧表格多得多（三盘 448px vs 285px），涨得上去。
+SCORE_CN_MAX_PX = 52
 SCORE_CN_MIN_PX = 28
 #: 英文名那一行——**注脚，不是主语**。中文名涨到 44px 之后 22px 显得抢戏，
 #: 账号所有者 2026-08-14「英文名可以字号小一些」。18px 是渲了五档摆一起
@@ -570,17 +599,24 @@ def _set_count(result: object) -> int:
 
 
 def score_name_avail_px(sets: int) -> float:
-    """名字那一格**留给文字**的宽度（px）。
+    """名字那一格**留给文字**的宽度（px）——盘越多越窄。
 
-    `.storycopy` 左右各留 70px → 940；`.scoreboard` 边框 6px×2 → 928 是网格的
-    内宽。名字那一列按 `SCORE_NAME_COL_FR : 1 : 1 …` 分，再扣掉
-    `.score-person` 的左右内边距（22+16）和国旗那一格（66+14）。
+    版式是一条 `SCORE_BOARD_W` 宽的高亮长条：两端各一颗端帽（外加一道缝）、
+    条内左右内边距、国旗那一格，剩下的先给盘分那几列（每列固定
+    `SCORE_SET_COL_PX`），最后才轮到名字。
 
-    量过：`sets=3`、`fr=1.55` 时这个式子给 198.1，浏览器报的 `clientWidth`
-    正是 **198**——所以它不是推的，是对得上的。
+    ⚠️ **盘分列写死宽度，不用 `1fr`。** 两行是分开渲的，只要两行留给名字的
+    宽度差一点点，右边那几个数字就会上下错位——而错位在 HTML 字符串里看不出来，
+    只有渲出来量才看得见（判据 `test_比分板两行的盘分要上下对齐`）。
+
+    量过（三盘，Chromium 1080×1440 真渲）：这个式子给 448，而浏览器报
+    `.score-names` 的宽度正是 **448**——不是推的，是对得上的。同一趟量到的还有
+    `.score-fill` 896、`.score-number` 96、端帽 12×104，逐个和常量吻合。
     """
-    column = 928 * SCORE_NAME_COL_FR / (SCORE_NAME_COL_FR + max(1, sets))
-    return column - (22 + 16) - (66 + 14)
+    fixed = (2 * (SCORE_CAP_W + SCORE_CAP_GAP)
+             + SCORE_FILL_PAD_L + SCORE_FILL_PAD_R
+             + SCORE_FLAG_W + SCORE_FLAG_GAP)
+    return SCORE_BOARD_W - fixed - max(1, sets) * SCORE_SET_COL_PX
 
 
 def _name_width_px(name: str, rank: object, px: int) -> float:
@@ -629,7 +665,16 @@ def score_cn_px(matchup: list, sets: int) -> int:
     return px
 
 
-def _scoreboard_person(meta: dict, where: str) -> str:
+def _score_row(meta: dict, cells: str, where: str, *, winner: bool) -> str:
+    """比分板的一行：端帽 + 矩形国旗 + 两行名字 + 这一行自己的盘分。
+
+    ⚠️ **输家那一行也渲两颗端帽，只是隐形**（CSS 里 `visibility:hidden`）。
+    干脆不渲的话，两行的左边缘会差一个端帽加一道缝（22px），国旗和名字整块
+    错开——看起来像「这一行没对齐」，不像「少了个元素」。
+
+    ⚠️ **英文名在上、中文名在下**，和旧版反过来。参考图的节奏就是「小号的名
+    在上、大号的姓在下」；中文名是这一行的主语，所以它占大字那一行。
+    """
     name = str(meta.get("name") or "").strip()
     if not name:
         raise SystemExit(f"{where} 缺 `name`。")
@@ -640,11 +685,18 @@ def _scoreboard_person(meta: dict, where: str) -> str:
     rank = meta["rank"]
     rank_html = "" if rank is None else f'<span class="score-rank">（{int(rank)}）</span>'
     return (
-        f'<div class="score-person">{_score_flag(meta, where)}'
+        f'<div class="score-row score-row--{"win" if winner else "lose"}">'
+        '<span class="score-cap"></span>'
+        '<div class="score-fill">'
+        f'{_score_flag(meta, where)}'
         '<span class="score-names">'
-        f'<span class="score-cn">{html.escape(name)}{rank_html}</span>'
         f'<span class="score-en">{html.escape(_english_display(name, meta, where))}</span>'
-        '</span></div>')
+        f'<span class="score-cn">{html.escape(name)}{rank_html}</span>'
+        '</span>'
+        f'<span class="score-sets">{cells}</span>'
+        '</div>'
+        '<span class="score-cap"></span>'
+        '</div>')
 
 
 def solo_scoreboard_shape_error(cover: dict) -> str | None:
@@ -683,7 +735,7 @@ def solo_scoreboard_shape_error(cover: dict) -> str | None:
 
 
 def _scoreboard_html(cover: dict) -> str:
-    """「赛场之上」统一首页比分板：直角、全透明、双语姓名、逐盘着色。"""
+    """「赛场之上」统一首页比分板：两行、赢家那行整条高亮、双语姓名、逐盘着色。"""
     result = str(cover.get("result") or "").strip()
     if not result:
         return ""
@@ -709,45 +761,27 @@ def _scoreboard_html(cover: dict) -> str:
     source = scoreboard.get("duration_source") or {}
     duration = _fetch_match_duration(source, "cover.scoreboard")
     scores, note = _scoreboard_sets(result, "cover")
-    # ⚠️ **轨道列表用空格分隔，不是逗号。** 第一版写的是 `",".join(...)`，
-    # 渲出来 `grid-template-columns:minmax(0,1fr),minmax(86px,1fr)` 是**非法 CSS**，
-    # 整条声明被丢掉、grid 退回单列——两位球员在上、四个盘分竖着排在下面。
-    # 而它**一次都没被人看见过**：`_scoreboard_html` 的测试全在比 HTML 字符串，
-    # 字符串里有没有逗号看不出对错；已发的 `eala-parks` 那张海报又是模板落地
-    # **之前**渲的，仓库里那份走的还是老的一行赛果。又一次「断言全绿不等于
-    # 页面对」。判据 `test_比分板的盘分要真的排在名字右边` 直接渲一张出来量。
-    # 名字那列给 1.55fr：`A. SABALENKA` 比盘分宽得多，等分会把它挤到换行。
-    columns = " ".join([f"minmax(0,{SCORE_NAME_COL_FR}fr)"]
-                       + ["minmax(86px,1fr)"] * len(scores))
-
-    # ⚠️ **决胜盘不再单独描边**（账号所有者 2026-08-14：「把最后一盘比分前面的
-    # 绿色竖线变成和其他框线一样的白色」「以后都这样固定下来」）。
+    # 两行分开渲，所以每一盘要拆成两个数字，各归各行。
     #
-    # 原来那一格挂 `score-set--deciding`，左边框换成品牌绿并粗一档、底下再垫
-    # 一层 14% 的品牌绿——立意是「跌宕常常就发生在这一盘」。现在整块取消：
-    # 每一格的竖线都和其余框线一样。**类跟着一起删掉，不留一个没有样式的
-    # 钩子**——一个版式永远不读的键就是个不吭声的死键。
-    #
-    # 绿底同时去掉，不是顺手扩大范围：那 14% 的绿是**给绿竖线垫底的**（它和
-    # 描边是同一次改动引进来的一套）。竖线变白之后单剩它，量出来那一格的色相
-    # 从 200.6° 偏到 185.5°、饱和度从 .379 掉到 .257——渲两版摆一起看，读起来
-    # 是「这一格脏了」，不是「这一格重要」，正好撞上账号所有者要的「有吸引力」。
-    # 判据 `test_比分板每一格的竖线都一样不许再给决胜盘描边`。
-    cells = []
+    # ⚠️ **抢七小分挂在输掉那一盘的那个数字上。** `7-6(3)` 里的 (3) 是输家在
+    # 抢七里拿到的分，转播记分条一律印成 `7 / 6³`。旧版两个数字挤在同一格里，
+    # 小分统一挂左边（赢家那个数），读出来像「7 比 3」；两行分开之后这个选择
+    # 躲不掉了，按网球自己的记法归位。
+    win_cells, lose_cells = [], []
     for left, right, tiebreak in scores:
-        left_class = "setwin" if left > right else "setlose"
-        right_class = "setwin" if right > left else "setlose"
-        tb = f"<sup>({tiebreak})</sup>" if tiebreak else ""
-        cells.append(
-            '<div class="score-set">'
-            f'<span class="score-number {left_class}">{left}{tb}</span>'
-            f'<span class="score-number {right_class}">{right}</span>'
-            '</div>')
+        for value, other, bucket in ((left, right, win_cells),
+                                     (right, left, lose_cells)):
+            cls = "setwin" if value > other else "setlose"
+            tb = f"<sup>({tiebreak})</sup>" if tiebreak and value < other else ""
+            bucket.append(f'<span class="score-number {cls}">{value}{tb}</span>')
+
     # ⚠️ 退赛标记不能塞进 `.scoreboard-duration` 那个 span——那个字号是给
     # 「1:56」这种数字定的（34px），中文注脚混进去会显得比时长本身还重。
     # 另包一层 `.scoreboard-meta` 把两者当一个整体右对齐，标记本身用和
     # `court` 同一档字号（26px，`.scoreboard-head` 的基准字号）。
-    note_html = f'<span class="scoreboard-note">{html.escape(_RETIREMENT_LABEL.get(note.lower(), note))}</span>' if note else ""
+    note_html = (f'<span class="scoreboard-note">'
+                 f'{html.escape(_RETIREMENT_LABEL.get(note.lower(), note))}</span>'
+                 if note else "")
     return (
         '<div class="scoreboard">'
         '<div class="scoreboard-head">'
@@ -757,11 +791,9 @@ def _scoreboard_html(cover: dict) -> str:
         f'{note_html}'
         '</span>'
         '</div>'
-        f'<div class="scoreboard-grid" style="grid-template-columns:{columns}">'
-        f'<div class="scoreboard-players">{_scoreboard_person(win, "cover.matchup[赢家]")}'
-        f'{_scoreboard_person(lose, "cover.matchup[输家]")}</div>'
-        + "".join(cells)
-        + '</div></div>')
+        + _score_row(win, "".join(win_cells), "cover.matchup[赢家]", winner=True)
+        + _score_row(lose, "".join(lose_cells), "cover.matchup[输家]", winner=False)
+        + '</div>')
 
 
 def _solo_score_html(cover: dict) -> str:
@@ -1226,13 +1258,25 @@ __SCRIM__
  text-shadow:0 2px 6px rgba(0,0,0,.9),0 4px 22px rgba(0,0,0,.85)}
 .storyscore .sets{font-family:'TL Numeral','TL Sans SC',sans-serif;
  font-weight:700;color:#c6f65a;letter-spacing:1px}
-/* 「赛场之上」首页统一比分板：直角边框、全透明底，比分按盘单独着色。
-   国旗固定占位，确保它与中文名/英文名两行整体垂直居中。 */
-.scoreboard{width:100%;box-sizing:border-box;border:6px solid rgba(244,251,247,.95);
- color:#f4fbf7;background:transparent;text-shadow:0 2px 8px rgba(0,0,0,.9)}
-.scoreboard-head{height:76px;box-sizing:border-box;padding:0 28px;display:flex;
- align-items:center;justify-content:space-between;border-bottom:6px solid rgba(244,251,247,.9);
- font-family:'TL Sans SC',sans-serif;font-size:26px;letter-spacing:1px}
+/* ⭐ 「赛场之上」比分板：**两行，没有格子**——赢家那一行是一条实心高亮长条、
+   两端各挂一颗品牌绿端帽，输家那一行透明。账号所有者 2026-08-29 指着一张
+   美网官方赛果图定的版式（原话见 `SCORE_BOARD_W` 那段注释）。
+
+   旧版是一个六道白框线的表格：谁赢了这场球要**读比分**才知道。新版把这件事
+   交给版式——**扫一眼哪一行亮着**就够了，比分只回答「几比几」。
+
+   ⚠️ 端帽的绿和高亮条的墨底是**我们自己的**颜色。参考图那条是美网的品牌蓝，
+   那是那个赛事的身份色；印在每一条片子上等于拿别人的官方比分板当模板。
+   所有尺寸从 `SCORE_*` 常量来——`score_name_avail_px` 拿同一批数算名字那一格
+   还剩多宽，写两处必分叉，而分叉的样子是「名字压在盘分上而没有任何东西报错」。 */
+.scoreboard{width:100%;box-sizing:border-box;color:#f4fbf7;
+ text-shadow:0 2px 8px rgba(0,0,0,.9)}
+/* 场地和用时那一行：参考图里它在长条**外面、上方**，左边缘和长条对齐
+   （所以左右内边距正好是端帽 + 缝）。旧版把它做成表格的表头，连着一道
+   6px 白线——框线整块没有了，它也就不再需要那条下沿。 */
+.scoreboard-head{box-sizing:border-box;display:flex;align-items:baseline;
+ justify-content:space-between;padding:0 __SCORE_HEAD_PAD__px 16px;
+ font-family:'TL Sans SC',sans-serif;font-size:26px;letter-spacing:2px}
 .scoreboard-duration{font-family:'TL Numeral','TL Sans SC',sans-serif;font-size:34px;
  letter-spacing:0;color:#f4fbf7}
 /* 退赛/弃权注脚：和 duration 当一个整体右对齐，字号退回 head 的基准档
@@ -1240,62 +1284,67 @@ __SCRIM__
  颜色用和英文名同款的柔和色（`.score-en` 那个 `#dcefe4`），不用主色白。 */
 .scoreboard-meta{display:flex;align-items:baseline;gap:12px}
 .scoreboard-note{font-family:'TL Sans SC',sans-serif;font-size:26px;color:#dcefe4}
-.scoreboard-grid{display:grid;min-height:214px}
-/* ⚠️ 名字这两行的分隔线要和右边比分格子的分隔线对齐，两边必须用同一种
-   算法分高度。这儿一直写死 107px（正好是 214÷2，眼下对得上），右边
-   `.score-number` 用的是 `flex:1`——两种算法背后各压着一个数，214 只要
-   哪天单独改一次就会分道扬镳。真的在一个只改了 min-height、没跟着改
-   107px 的旁支脚本上炸过（名字那条线和比分那条线错开了 18px）。改成
-   两边都 `flex:1`，永远各占整行高度的一半，不用再手动记两个数同步。 */
-.scoreboard-players{display:flex;flex-direction:column;min-width:0}
-.score-person{flex:1;box-sizing:border-box;display:flex;align-items:center;
- padding:0 16px 0 22px;min-width:0}
-.score-person+.score-person{border-top:6px solid rgba(244,251,247,.9)}
-.score-flag-slot{width:66px;height:44px;flex:0 0 66px;display:flex;align-items:center;
- justify-content:center;margin-right:14px}
-.score-flag{display:block;width:58px;height:38px;object-fit:cover}
-.score-names{display:flex;flex-direction:column;justify-content:center;min-width:0}
-/* 字号是**算出来的**（`score_cn_px`）：短名字给满上限，长名字按这一列的宽度
-   缩，两位球员共用一个数。写死一个值的话，`亚历山德罗娃（19）` 会压到右边
-   那道框线上——加大之前它就已经在压了。 */
-.score-cn{font-family:'TL Display SC','TL Sans SC',sans-serif;
- font-size:__SCORE_CN_PX__px;line-height:1.08;white-space:nowrap}
-.score-rank{font-family:'TL Sans SC',sans-serif;font-size:.62em;margin-left:4px}
-/* 英文名是**注脚不是主语**：中文名 2026-08-14 从 33px 涨到 44px 之后，22px 的
-   英文行跟着显得抢戏，账号所有者「英文名可以字号小一些」→ 18px。渲了
-   22/20/19/18/17 五档摆一起看：17px 配着 1.5px 的字距开始发虚，18px 是最后
-   一档「明显退成注脚、又还读得出」的。字距**不跟着缩**——小号全大写本来就
-   该松一点。 */
+.score-row{display:flex;align-items:stretch;height:__SCORE_ROW_H__px;
+ gap:__SCORE_CAP_GAP__px}
+.score-row+.score-row{margin-top:__SCORE_ROW_GAP__px}
+/* ⚠️ **输家那一行也渲两颗端帽，只是隐形。** 直接不渲的话两行的左边缘会差
+   一个端帽加一道缝，国旗和名字整块错开——看起来像「这一行没对齐」，
+   而不像「少了个元素」。`visibility` 保位置，`display:none` 不保。 */
+.score-cap{flex:0 0 __SCORE_CAP_W__px;border-radius:__SCORE_CAP_R__px;
+ background:#c6f65a;visibility:hidden}
+.score-row--win .score-cap{visibility:visible;
+ box-shadow:0 0 22px rgba(198,246,90,.45)}
+.score-fill{flex:1;min-width:0;box-sizing:border-box;display:flex;align-items:center;
+ padding:0 __SCORE_FILL_PAD_R__px 0 __SCORE_FILL_PAD_L__px}
+/* 高亮条：**不透明**。渲了 .80/.86/.92/1.0 四档摆一起看（同一条片子、同一张
+   照片）——前三档都能看见球衣的形状从条子里透出来，左半边发灰、边缘发虚，
+   而这条长条存在的全部意义是「一眼看出哪一行亮着」。1.0 反而不像贴上去的板，
+   它就是一块记分板，参考图那条也是不透明的。⚠️ 别为了「让照片透一点」调低——
+   透出来的是照片的明暗，不是设计。 */
+.score-row--win .score-fill{background:#061c14}
+.score-flag-slot{flex:0 0 __SCORE_FLAG_W__px;height:__SCORE_FLAG_H__px;
+ margin-right:__SCORE_FLAG_GAP__px;display:flex;align-items:center;
+ justify-content:center}
+.score-flag{display:block;width:__SCORE_FLAG_W__px;height:__SCORE_FLAG_H__px;
+ object-fit:cover}
+/* 名字两行：**英文小字在上、中文大字在下**——参考图就是这个节奏（上面一行
+   小号的名、下面一行大号的姓）。旧版反过来（中文在上、英文在下）。
+   中文名是这一行的主语，所以它占大字那一行。 */
+.score-names{flex:1;min-width:0;display:flex;flex-direction:column;
+ justify-content:center}
+/* 英文名是**注脚不是主语**。18px 是渲了 22/20/19/18/17 五档摆一起看挑的：
+   17px 配着 1.5px 的字距开始发虚。字距**不跟着缩**——小号全大写本来就该松。 */
 .score-en{font-family:'TL Sans SC',sans-serif;font-size:__SCORE_EN_PX__px;
- line-height:1.15;letter-spacing:1.5px;color:#dcefe4;white-space:nowrap;margin-top:5px}
-/* 每一盘一格，格与格之间就这一道竖线，**所有格子一视同仁**。
-   ⚠️ 决胜盘曾经单独有一条 `.score-set--deciding`（8px 品牌绿描边 + 14% 绿底），
-   2026-08-14 账号所有者要求整块取消，理由和判据写在 `_scoreboard_html` 里那段
-   注释。**别再给某一盘单开一条规则**——竖线的粗细和颜色只有这一处出处，
-   写第二处必分叉。
-   6px 是账号所有者一路加粗上来的：2026-08-09 1px→2px、2026-08-12「白线还是
-   太细」→3px、2026-08-13「还是太细，加粗一倍」→6px。 */
-.score-set{display:flex;flex-direction:column;border-left:6px solid rgba(244,251,247,.9)}
-.score-number{flex:1;display:flex;align-items:center;justify-content:center;
- font-family:'TL Numeral','TL Sans SC',sans-serif;font-size:60px;font-weight:800}
-.score-number+.score-number{border-top:6px solid rgba(244,251,247,.9)}
-.score-number sup{font-size:.45em;line-height:1;align-self:flex-start;margin-top:24px;
- color:#93a79c}
+ line-height:1.15;letter-spacing:1.5px;color:#dcefe4;white-space:nowrap}
+/* 字号是**算出来的**（`score_cn_px`）：短名字给满上限，长名字按这一行还剩
+   多宽缩，两位球员共用一个数。写死一个值的话，`亚历山德罗娃（19）` 会压到
+   右边的盘分上——旧版加大之前它就已经在压框线了。 */
+.score-cn{font-family:'TL Display SC','TL Sans SC',sans-serif;
+ font-size:__SCORE_CN_PX__px;line-height:1.08;white-space:nowrap;margin-top:4px}
+.score-rank{font-family:'TL Sans SC',sans-serif;font-size:.62em;margin-left:4px}
+/* 盘分：每一盘一列、**列宽写死**。两行分开渲之后，只要两行留给名字的宽度差
+   一点点，右边那几个数字就会上下错位——而错位在 HTML 字符串里看不出来，
+   只有渲出来量才看得见（判据 `test_比分板两行的盘分要上下对齐`）。 */
+.score-sets{flex:0 0 auto;display:flex;align-items:center}
+.score-number{position:relative;flex:0 0 __SCORE_SET_COL_PX__px;text-align:center;
+ font-family:'TL Numeral','TL Sans SC',sans-serif;
+ font-size:__SCORE_NUM_PX__px;font-weight:500}
+.score-number.setwin{font-weight:800}
+/* ⚠️ 抢七小分**绝对定位**，不占位。留在文档流里的话，带小分的那一格会因为
+   多出三十来像素而把数字推离列心——`6(4)` 和另一行的 `7` 当场差 40px，
+   而这块板全部的意思就是「两行的列要对得齐」。`left:calc(50% + .30em)` 把它
+   挂在数字右肩上：数字仍然正正落在列心，小分伸进列与列之间那道空当
+   （每列 96px、数字只占 42px 上下，两边各有 27px 富余，够）。 */
+.score-number sup{position:absolute;left:calc(50% + .30em);top:.02em;
+ font-size:.42em;line-height:1;color:#93a79c;white-space:nowrap}
 /* 盘分上色：**每一盘里赢的那个数字给品牌黄，输的给白**（账号所有者
    2026-08-04 定的是灰，2026-08-09 改成白——灰在压缩后的视频里太接近底色，
-   读不出「谁输了这一盘」）。颜色只有一个强调色——`#c6f65a` 就是台标球身
-   那个黄绿，不引入第二种；输的那个数字换成正文同款的 `#f4fbf7`，
-   和赢的那个数字仍然靠色相（黄绿 vs 近白）分得开，不是靠明暗。
-   `.setdash` 和 `.tb` 仍然压暗一档：连字符是分隔符不是内容，抢七小分是
-   注脚，这条没有改——账号所有者这次只说了「比分」，不是这两个。
-   网格线（`.scoreboard-head` 的下沿、`.score-person`/`.score-number` 之间
-   那几道分隔线）同一天从 1px 粗到 2px、透明度从 .55/.82 提到 .9——原来的
-   细线在压缩后的视频里几乎看不见。
-   2026-08-13 账号所有者再反馈「数字再大点、颜色再醒目点」：字号 48px→60px、
-   字重 700→800；「醒目」没有引入第二种颜色——那会破「一屏只留一个强调色」
-   这条規矩——而是给赢的那个数字加一层同色（品牌绿）的发光阴影
-   `.setwin` 专属 text-shadow，输的那个数字仍是纯白、不加发光，两者的反差
-   本身就被这层光晕拉大了。 */
+   读不出「谁输了这一盘」；2026-08-13「数字再大点、颜色再醒目点」→ 加大字号
+   并给赢的那个数字加一层同色的发光，「醒目」没有引入第二种颜色）。
+   参考图那张是拿**字重**分输赢、颜色全白；这儿两样都要——字重是从参考图学
+   来的，颜色是账号所有者三次定过的规矩，两者不冲突，叠起来在压缩后的视频里
+   比只有其中一样更分得开。
+   `.setdash` 和 `.tb` 仍然压暗一档：连字符是分隔符不是内容，抢七小分是注脚。 */
 .set{display:inline-block;margin-right:.42em}
 .set:last-child{margin-right:0}
 .setwin{color:#c6f65a;text-shadow:0 2px 8px rgba(0,0,0,.9),0 0 22px rgba(198,246,90,.65)}
@@ -1306,9 +1355,6 @@ __SCRIM__
 """
         .replace("__SCRIM__", _scrim_css(dim_centre))
         .replace("__STORYCOPY_TOP__", str(STORYCOPY_TOP))
-        .replace("__SCORE_EN_PX__", str(SCORE_EN_PX))
-        .replace("__SCORE_CN_PX__", str(score_cn_px(
-            cover.get("matchup") or [], _set_count(cover.get("result")))))
         # ⚠️ 这儿曾经给 `.storytitle` 补一段 `margin-top`（`STORYCOPY_TITLE_GAP_EXTRA`），
         # 撑开的是**药丸到标题**那一截。药丸 2026-08-14 整块拿掉之后这个常量
         # 没有主语了——那 40px 连同药丸自己的 64＋gap 34 一起折进了
@@ -1321,7 +1367,43 @@ __SCRIM__
         # 追加在最后，同特异性下后写的赢。
         + (".storycopy{top:auto;bottom:96px;transform:none;gap:26px}"
            if above else ""))
-    return body, extra
+    return body, _fill_score_layout(extra, cover)
+
+
+def _fill_score_layout(css: str, cover: dict) -> str:
+    """把比分板的版式常量填进 CSS——**一处出处**。
+
+    `score_name_avail_px` 算「名字还剩多宽」用的是同一批 `SCORE_*` 常量。
+    两边各写一份的话，改一个数就会分叉，而分叉的样子是「算出来的字号其实
+    放不下」：名字压在盘分上，渲染、质检、全量测试一个字都不说。
+
+    ⚠️ 末尾那句检查是**判据自己的判据**：漏填一个占位符，CSS 里会留下
+    `flex:0 0 __SCORE_SET_COL_PX__px` 这种非法声明——浏览器**静静地把整条
+    丢掉**，盘分列退回自动宽度，两行的数字就此错开。宁可当场报错。
+    """
+    for token, value in {
+        "__SCORE_CAP_W__": SCORE_CAP_W,
+        "__SCORE_CAP_R__": SCORE_CAP_R,
+        "__SCORE_CAP_GAP__": SCORE_CAP_GAP,
+        "__SCORE_FILL_PAD_L__": SCORE_FILL_PAD_L,
+        "__SCORE_FILL_PAD_R__": SCORE_FILL_PAD_R,
+        "__SCORE_FLAG_W__": SCORE_FLAG_W,
+        "__SCORE_FLAG_H__": SCORE_FLAG_H,
+        "__SCORE_FLAG_GAP__": SCORE_FLAG_GAP,
+        "__SCORE_SET_COL_PX__": SCORE_SET_COL_PX,
+        "__SCORE_NUM_PX__": SCORE_NUM_PX,
+        "__SCORE_ROW_H__": SCORE_ROW_H,
+        "__SCORE_ROW_GAP__": SCORE_ROW_GAP,
+        "__SCORE_HEAD_PAD__": SCORE_HEAD_PAD,
+        "__SCORE_EN_PX__": SCORE_EN_PX,
+        "__SCORE_CN_PX__": score_cn_px(cover.get("matchup") or [],
+                                       _set_count(cover.get("result"))),
+    }.items():
+        css = css.replace(token, str(value))
+    left = sorted(set(re.findall(r"__SCORE_[A-Z_]+__", css)))
+    if left:
+        raise SystemExit(f"比分板 CSS 还有没填的占位符：{left}")
+    return css
 
 
 def _precrop(image: Path, panel: dict) -> Path:

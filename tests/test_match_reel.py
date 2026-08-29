@@ -11098,22 +11098,31 @@ def _board_rules(vp) -> dict[str, str]:
     return rules
 
 
-def test_比分板每一格的竖线都一样不许再给决胜盘描边(monkeypatch):
+def test_比分板不许给某一盘单开样式(monkeypatch):
     """账号所有者 2026-08-14：「把最后一盘比分前面的绿色竖线变成和其他框线
     一样的白色」「**以后都这样固定下来**」。
 
     在这之前决胜盘那一格挂 `score-set--deciding`：左边框 8px 品牌绿 + 一层
-    14% 的品牌绿垫底。现在整块取消——竖线和其余框线同色同粗，绿底一并去掉
-    （量过：单剩那层绿，那一格的色相从 200.6° 偏到 185.5°、饱和度 .379 → .257，
-    渲两版摆一起看，读起来是「这一格脏了」不是「这一格重要」）。
+    14% 的品牌绿垫底（量过：单剩那层绿，那一格的色相从 200.6° 偏到 185.5°、
+    饱和度 .379 → .257，渲两版摆一起看，读起来是「这一格脏了」不是「这一格
+    重要」）。
 
-    判据钉三头，三个方向分别反向验证过：
+    ⚠️ **换了主语**（2026-08-29）：账号所有者指着一张美网官方赛果图定了新版式
+    ——两行、赢家那一行整条高亮、**没有格子也没有框线**。原来这条判据钉的是
+    「每一格的竖线都一样」，而竖线整块不存在了，判据得跟着换。它守的东西一个
+    字没变：**每一盘一视同仁，不许给某一盘单开一套颜色。**
 
-    1. **markup**：三盘只有三个一模一样的 `score-set` 格子，谁都不多一个类
-    2. **CSS 的框线**：比分板里每一条 `border*` 都用同一道白线——这一条不认
-       类名，所以换个名字把绿线加回来照样红
-    3. **CSS 的底色**：品牌绿不许出现在任何一条 `.score…` 规则里——第 2 条
-       只管 `border`，那层 `background` 的绿要靠这一条接住
+    判据钉四头，四个方向分别反向验证过：
+
+    1. **markup**：每一盘在两行里各一个格子，class 只有 `setwin`/`setlose`
+       两种，谁都不多一个类
+    2. **CSS 不许点名某一盘**：`nth-child` / `--deciding` / `:last-child`
+       这类选择器一出现就红——这一条不认类名，换个名字把绿线加回来照样拦得住
+    3. **框线整块没有了**：`.score…` 的任何一条规则都不许再声明 `border*`。
+       新版式靠「哪一行亮着」分主次，不靠格子；再画一道框线就是把旧表格搬回来
+    4. **品牌绿的射程**：只许出现在赢家那一行的端帽（`.score-cap`）上。那是
+       **按行**的高亮，不是按盘的；盘分数字的绿在 `.setwin`，那条规则的选择器
+       不带 `.score`，本来就不在 `_board_rules` 的射程里
     """
     vp = _vp()
     monkeypatch.setattr(vp, "_fetch_match_duration", lambda source, where: "1:16")
@@ -11124,34 +11133,43 @@ def test_比分板每一格的竖线都一样不许再给决胜盘描边(monkeyp
                     {"name": "张帅", "country": "CHN", "rank": 62}],
     }
 
-    # ① 三盘 → 三个格子，class 一个字都不许多
+    # ① 三盘 × 两行 → 六个格子，class 只有两种，一个字都不许多
     html_out = vp._scoreboard_html(cover)
-    cells = re.findall(r'<div class="(score-set[^"]*)"', html_out)
-    assert cells == ["score-set"] * 3, (
-        f"每一盘一个格子、class 必须一模一样，解出来却是 {cells}：\n{html_out}")
+    cells = re.findall(r'<span class="(score-number[^"]*)"', html_out)
+    assert sorted(cells) == sorted(["score-number setwin"] * 3
+                                   + ["score-number setlose"] * 3), (
+        f"每一盘在两行里各一个格子、class 只有输赢两种，解出来却是 {cells}：\n{html_out}")
 
     rules = _board_rules(vp)
-    # 判据自己的判据：主语还在（选择器改名或者 CSS 拿不到时，下面两条会变成
+    # 判据自己的判据：主语还在（选择器改名或者 CSS 拿不到时，下面几条会变成
     # 恒真的绿灯，而那和"守住了"长得一模一样）
-    assert ".score-set" in rules, f"比分板的 CSS 没解出来，解到的是：{sorted(rules)}"
+    assert ".score-number" in rules, f"比分板的 CSS 没解出来，解到的是：{sorted(rules)}"
+    assert ".score-cap" in rules, f"端帽那条规则没解出来：{sorted(rules)}"
 
     for selector, decls in rules.items():
+        # ② 选择器不许点名某一盘
+        for singled in (":nth-child", ":nth-of-type", ":last-child", ":first-child",
+                        "--deciding"):
+            assert singled not in selector, (
+                f"`{selector}` 点名了某一盘：账号所有者要的是每一盘一视同仁，"
+                "别再给决胜盘单开一套样式。")
         for decl in decls.split(";"):
             if ":" not in decl:
                 continue
             prop, value = (part.strip() for part in decl.split(":", 1))
-            # ② 框线：`box-sizing:border-box` 的属性名是 box-sizing，不在这里
-            if prop in {"border", "border-top", "border-right",
-                        "border-bottom", "border-left"}:
-                assert _BOARD_LINE in value, (
-                    f"`{selector}` 的 {prop} 不是比分板那道白框线：{value!r}\n"
-                    "账号所有者要的是「和其他框线一样的白色」，"
-                    "别再给某一盘单开一条带颜色的描边。")
-        # ③ 底色：那层 14% 的绿垫底同样不许回来
+            # ③ 框线：`border-radius`（端帽的圆角）和 `box-sizing` 不算
+            assert prop not in {"border", "border-top", "border-right",
+                                "border-bottom", "border-left"}, (
+                f"`{selector}` 又画了一道框线（{prop}:{value}）。\n"
+                "2026-08-29 起比分板没有格子也没有框线——主次靠"
+                "「哪一行亮着」，不靠画格子。")
+        # ④ 品牌绿只许在赢家那一行的端帽上
         for green in _BRAND_GREEN:
-            assert green not in decls.lower(), (
-                f"`{selector}` 里又出现了品牌绿 {green}：{decls.strip()!r}\n"
-                "比分板是全透明底 + 白框线；绿只留给盘分数字（`.setwin`）。")
+            if green in decls.lower():
+                assert "score-cap" in selector, (
+                    f"`{selector}` 里出现了品牌绿 {green}：{decls.strip()!r}\n"
+                    "比分板上的绿只有两处：赢家那一行的端帽，和盘分数字"
+                    "（`.setwin`）。别再给某一盘的格子上色。")
 
 
 def test_顶栏比分逐盘上色赢盘绿输盘灰():
