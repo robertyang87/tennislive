@@ -107,15 +107,52 @@ def test_cap_json3是fetch_words认的形状(tool):
     assert not any(">>" in s["utf8"] for e in evs for s in e["segs"])
 
 
-def test_翻译行数对不上要当场报错(tool):
+def test_批量行数对不上不许按位置硬贴(tool):
     """模型合并两句不报错，而错位的译文从那一条起**每一行都挂在别人的英文上**
-    ——比缺译文糟得多，必须整批作废。"""
+    ——比缺译文糟得多。
+
+    ⚠️ **2026-08-29 这条换过一次主语，不是放松。** 它原来叫
+    `test_翻译行数对不上要当场报错`，钉的是「批量条数对不上就当场
+    `RuntimeError` 整批作废」；`_translate_batch` 后来改成**二分到每一行都有
+    独立响应**，那个异常不再抛，判据当场变成一条常年红——`主语没了就得换判据`。
+    换的是机制，**不变量一个字没动：绝不按位置硬贴**。
+
+    所以这条按内容验，不按条数验：批量一律少回一条，逼它一路二分到单行，
+    每一句英文最后拿到的必须是**它自己那一句**的译文。只数条数的话，
+    「三条英文配三条别人的译文」照样过关——那正是这条测试要拦的那种。
+    """
+    asked: list[list[str]] = []
+
+    def _body(user: str) -> list[str]:
+        head, *rest = user.splitlines()
+        if rest:                                  # 批量：`N. 原文`
+            return [ln.split(". ", 1)[-1] for ln in rest]
+        return [head.split("：", 1)[-1]]           # 单行兜底那条 prompt
+
+    class _Chat:
+        def ask(self, _sys, user, **_k):
+            body = _body(user)
+            asked.append(body)
+            if len(body) > 1:                      # 批量永远少回一条
+                return {"lines": [f"译:{body[0]}"]}
+            return {"line": f"译:{body[0]}"}
+
+    rows = [{"t": 0.0, "text": "a"}, {"t": 1.0, "text": "b"}, {"t": 2.0, "text": "c"}]
+    assert tool.translate(rows, _Chat()) == ["译:a", "译:b", "译:c"]
+    # 判据自己的判据：批量那一路真的走到过（否则上面那行只证明了单行翻译能用）
+    assert any(len(b) > 1 for b in asked), "这一趟根本没走批量，二分那条路没验到"
+
+
+def test_单行兜底也拿不到译文时要报错不许塞空字幕(tool):
+    """二分到单行仍然拿不到非空译文时**必须报错**——服务故障时静静塞进一批
+    空字幕，比整条视频停下来糟得多（画面上会是「有中文行、但那一行是空的」）。
+    """
     class _Chat:
         def ask(self, *_a, **_k):
-            return {"lines": ["只有一行"]}
+            return {"line": "   "}                 # 永远只回空白
 
     rows = [{"t": 0.0, "text": "a"}, {"t": 1.0, "text": "b"}]
-    with pytest.raises(RuntimeError, match="行数对不上"):
+    with pytest.raises(RuntimeError, match="单行兜底三次都没成"):
         tool.translate(rows, _Chat())
 
 
