@@ -32,7 +32,6 @@ jobs:
           base64 -d /tmp/nishikori_patch.b64 > /tmp/nishikori_patch.tgz
           echo "b42f3f4a7a6eabb8c40dc5b07ea9ad6521c5178fff1c6e50dfbc8db7151036c9  /tmp/nishikori_patch.tgz" | sha256sum -c -
           tar -xzf /tmp/nishikori_patch.tgz -C .
-          rm -rf .bootstrap .github/workflows/bootstrap-nishikori.yml
 
       - name: 静态契约检查
         run: |
@@ -54,11 +53,21 @@ jobs:
           ruby -e "require 'yaml'; YAML.load_file('.github/workflows/interview-auto-render.yml')"
           git diff --check
 
-      - name: 写入分支并清理引导文件
+      - name: 写回普通代码并暂存最终工作流对象
         run: |
           set -euo pipefail
+          mkdir -p .bootstrap-output
+          cp .github/workflows/interview-auto-render.yml \
+            .bootstrap-output/interview-auto-render.yml
+          git restore --source=HEAD -- .github/workflows/interview-auto-render.yml
           git config user.name "ChatGPT"
           git config user.email "noreply@openai.com"
-          git add -A
-          git commit -m "interview: add Nishikori farewell special"
+          git add \
+            tools/interview_source_gate.py \
+            tools/attach_interview_lead_in.py \
+            tools/build_interview_request.py \
+            requests/interviews/nishikori-sakamoto-us-open-2026-q3-farewell.json \
+            tests/test_interview_farewell.py \
+            .bootstrap-output/interview-auto-render.yml
+          git commit -m "interview: stage Nishikori farewell implementation"
           git push origin "HEAD:${GITHUB_REF_NAME}"
