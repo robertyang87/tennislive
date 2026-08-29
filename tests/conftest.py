@@ -52,6 +52,49 @@ def _isolate_tts_cache(monkeypatch, tmp_path):
     monkeypatch.setenv("TENNISLIVE_TTS_CACHE", str(tmp_path / "tts-cache"))
 
 
+@pytest.fixture(autouse=True)
+def _isolate_story_state(monkeypatch, tmp_path):
+    """选题账本 `data/story_state.json` 是**跟踪进仓库的数据**，测试不许写它。
+
+    ⚠️ 2026-08-29 量出来的：`pytest tests/test_cli.py -k knowledge` 跑完
+    （**5 passed**），`git status` 里那个文件就脏了——少掉一条
+    `__visual_backoff__` 的记录。走的是 `cmd_knowledge` → `mark_story_used()`
+    这条真路，而 `test_cli.py` 一处都没有把 `STATE_PATH` 打桩
+    （`test_render.py` 每条都打了，所以它一直没事）。
+
+    **它不吭声**：测试全绿，只有 `git status` 才看得见。而这个仓库的提交习惯
+    是 `git add -A`，stop hook 还会主动催「有未提交的改动，请提交并推送」——
+    于是一次全量跑下来的副作用会被当成一次改动推上去，把另一条线的账本
+    悄悄改掉。`__visual_backoff__` 那几条正是「这个选题的素材预检刚失败过，
+    三天内别再排它」（见 CLAUDE.md 无人值守那节的第 ④ 条），抹掉它就等于
+    让那条线明天再去撞同一堵墙。
+
+    ⚠️ **要拷一份真的过去，不能指到一个空文件**：`published_topics()` 读的
+    就是它，指空了「这个选题发过没有」会全部答成「没发过」——那比脏一个
+    文件糟得多。每个测试各拿一份 `tmp_path` 里的副本，写坏了也只坏自己那份。
+
+    要测账本本身的测试自己 `monkeypatch.setattr(..., STATE_PATH, ...)` 覆盖
+    ——autouse 先跑、测试体后跑，显式给的那份必然盖过这里（和上面两条同一个
+    形状）。
+    """
+    from tennislive.render import tournament_story
+    from tennislive.research import topic_radar
+
+    real = tournament_story.STATE_PATH
+    # ⚠️ **放进单独一层目录，别放在 `tmp_path` 根上。** `test_visual_backoff.py`
+    # 的 `_state()` 和 `test_render.py` 里好几条自己也往 `tmp_path/story_state.json`
+    # 打桩，而它们**指望那份是空的**——第一版就放在根上，同名撞车，八条当场红
+    # （「左边多出 7 项」正是这里拷过去的真账本）。
+    fake = tmp_path / "_ledger_isolation" / "story_state.json"
+    fake.parent.mkdir(parents=True, exist_ok=True)
+    try:
+        fake.write_text(real.read_text(encoding="utf-8"), encoding="utf-8")
+    except OSError:
+        fake.write_text("{}", encoding="utf-8")
+    monkeypatch.setattr(tournament_story, "STATE_PATH", fake)
+    monkeypatch.setattr(topic_radar, "_STORY_STATE", fake)
+
+
 def make_match(
     home_name="Jannik Sinner",
     away_name="Novak Djokovic",

@@ -134,6 +134,19 @@ def _font_css() -> str:
                 f"@font-face{{font-family:'TL Numeral';font-weight:{weight};"
                 f"src:url(data:font/woff2;base64,{b}) format('woff2');}}"
             )
+    # ⭐ 比分数字专用的三档字重（`tools/build_fonts.py` 的 SCORE_BUILDS 产出）。
+    # **只装 ASCII ＋ 全角括号，三个文件加起来约 200 KB**——上面那几档 CJK 全集
+    # 是 3 MB 一档，而 `_font_css` 会把每一档 base64 内联进**每一张卡**。
+    # ⚠️ 它和 libass 读的是**同一批文件**（`fontsdir=assets/fonts`），所以封面
+    # 和成片里的比分数字从此一定是同一副样子，也不再依赖机器上装了哪个 apt 包。
+    for weight, fname in ((300, "TLScore-Light.ttf"), (400, "TLScore-Regular.ttf"),
+                          (700, "TLScore-Bold.ttf")):
+        b = _b64(ASSETS / "fonts" / fname)
+        if b:
+            css.append(
+                f"@font-face{{font-family:'TL Score';font-weight:{weight};"
+                f"src:url(data:font/ttf;base64,{b}) format('truetype');}}"
+            )
     display_font = _b64(ASSETS / "fonts" / "SmileySans-Oblique.woff2")
     if display_font:
         css.append(

@@ -144,8 +144,14 @@ _FONT_FILES = {
     # 顶栏走品牌显示体（得意黑）。**它在仓库里，不是 apt 装的**——`webcards`
     # 用的是同一支字体的 woff2，而 **libass 读不了 woff2**，所以另存了一份 ttf。
     "head": (str(ROOT / "assets/fonts/SmileySans-Oblique.ttf"), None),
-    # 比分走 Barlow Condensed，和卡片上的比分同一支（见 webcards 的模块注）。
-    "num": (str(ROOT / "assets/fonts/BarlowCondensed-SemiBold.ttf"), None),
+    # 比分走 `TL Score`，和 match-reel 顶栏、和封面比分板**同一批文件**。
+    # ⚠️ **它在仓库里**（`assets/fonts/TLScore-*.ttf`），不是 apt 装的：三档
+    # 字重（Light/Regular/Bold）从 `NotoSansSC[wght]` 实例化，只留 ASCII ＋
+    # 全角括号，三个加起来约 200 KB。系统的 `fonts-noto-cjk` 只有 Regular 和
+    # Bold，而输掉那一盘的数字要 Light（账号所有者 2026-08-29「再细一点」）。
+    # ⚠️ 量宽度用 **Regular** 那一档：一行里粗细都有，拿常规量是**偏窄**的
+    # 方向——断行会比实际更早换行，不会撑出去。
+    "num": (str(ROOT / "assets/fonts/TLScore-Regular.ttf"), None),
 }
 # ASS 的 `Fontname` 要写字体**自己声明的名字**，而且**只有某些名字算数**。
 # 两支都实测过（渲一小段，和一个不存在的字体名比 md5，一样就是没认出来）：
@@ -159,9 +165,18 @@ _ASS_NAME = {
     "en": "Noto Sans",
     "zh": "Noto Sans CJK SC",
     "head": "得意黑",
-    "num": "Barlow Condensed SemiBold",
+    # ⚠️ 2026-08-29 换了两次：Barlow Condensed SemiBold → Noto Sans CJK SC →
+    # `TL Score`（同一套设计的仓库内三档字重，见 `_FONT_FILES` 那段）。
+    # 账号所有者要求所有比分数字照美网那张官方图的字体来，而这条线和
+    # match-reel 的顶栏 2026-08-18 起就必须是同一支（见那边的注释，
+    # 换哪一支是拿 IoU 量出来的）。
+    "num": "TL Score",
 }
 _HEAD_FONT, _ZH_FONT, _EN_FONT = _ASS_NAME["head"], _ASS_NAME["zh"], _ASS_NAME["en"]
+#: 输掉那一盘的字重。⚠️ **和封面比分板、match-reel 顶栏必须是同一个数**
+#: （`versus_poster.SCORE_LOSE_WEIGHT` / `build_match_reel.TOPBAR_SCORE_LOSE_WEIGHT`），
+#: 判据钉着三边相等——分叉的样子是「同一个账号出去的比分粗细不一样」。
+_SCORE_LOSE_WEIGHT = 300
 
 # ⚠️ **字号只有这一处出处。** 这几个常量既喂 `_measure`（切行时量宽度），
 # 又喂 `_ASS_HEAD`（渲染时的 Style）——写成两处必分叉，而**分叉不吭声**：
@@ -1047,7 +1062,7 @@ def _score_runs(score: str, px: int = _SCORE_PX) -> list[tuple[str, str, str, in
     """把 `push.score` 拆成一段一段：**每一盘里，只给赢下这一盘的那个数字上绿**。
 
     返回的每一段仍然是 `header_runs` 那种 `(文本, kind, 标签, 字号)` 四元组，
-    `kind` 一律 `"num"`（走 Barlow Condensed，量宽度按数字字体的尺子）——
+    `kind` 一律 `"num"`（走 `TL Score`，量宽度按数字字体的尺子）——
     这样 `header_lines` 那句 `sum(_measure_at(...))` 不用跟着改，因为总字符
     和总 kind 没变，只是原来一整段现在拆成了好几小段。短横线跟着**前一个**
     数字走（"6-" 是一段，"4" 是下一段），冒号左右各自独立上色。
@@ -1068,8 +1083,18 @@ def _score_runs(score: str, px: int = _SCORE_PX) -> list[tuple[str, str, str, in
         n1, n2, paren = m.group(1), m.group(2), m.group(3) or ""
         trail = " " if i < len(tokens) - 1 else ""
         n1_won = int(n1) > int(n2)
-        tag1 = (_MARK_COLOUR if n1_won else "") + tag
-        tag2 = (_MARK_COLOUR if not n1_won else "") + tag
+        # 赢下这一盘的数字：上绿 **＋ 加粗**；输掉那一盘 **Light(300)**
+        # （账号所有者 2026-08-29「赢的一盘的加粗」「输掉那一盘的分数的数字
+        # 需要再细一点，和加粗的区分开」）。
+        # ⚠️ 两边都要显式写字重，一个都不能省——ASS 的标签是粘连的，省一次
+        # 后面那一段就跟着粗或者跟着细。
+        # ⚠️ 连字符跟着**前一个**数字走（见下面那句 `f"{n1}-"`），所以它会跟着
+        # 那个数字的粗细。这条线的顶栏比分是一整块小字，肉眼分不出连字符的
+        # 字重；match-reel 那条顶栏字大，连字符单独复位成常规档。
+        w1 = r"\b1" if n1_won else rf"\b{_SCORE_LOSE_WEIGHT}"
+        w2 = rf"\b{_SCORE_LOSE_WEIGHT}" if n1_won else r"\b1"
+        tag1 = (_MARK_COLOUR if n1_won else "") + w1 + tag
+        tag2 = (_MARK_COLOUR if not n1_won else "") + w2 + tag
         runs.append((f"{n1}-", "num", tag1, px))
         runs.append((f"{n2}{paren}{trail}", "num", tag2, px))
     return runs
