@@ -1,0 +1,108 @@
+name: probe-usopen-player-once
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/probe-usopen-player-once.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 2
+          sparse-checkout: |
+            .github
+            tools
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: 安装解析工具
+        run: pip install -q requests beautifulsoup4 selenium
+
+      - name: 浏览器渲染官网与AMP页面
+        env:
+          ARTICLE: https://www.usopen.org/en_US/news/articles/2026-08-28/kei_nishikori_honored_after_playing_final_grand_slam_match_at_2026_us_open.html
+          AMP: https://www.usopen.org/amp/en_US/news/articles/2026-08-28/kei_nishikori_honored_after_playing_final_grand_slam_match_at_2026_us_open.html
+        run: |
+          set -o pipefail
+          CHROME=$(command -v google-chrome || command -v chromium || command -v chromium-browser || true)
+          echo "chrome=$CHROME"
+          "$CHROME" --version || true
+
+          python - <<'PY'
+          import html, os, re
+          import requests
+          from bs4 import BeautifulSoup
+          for label,key in [('article','ARTICLE'),('amp','AMP')]:
+              url=os.environ[key]
+              r=requests.get(url,timeout=40,headers={'User-Agent':'Mozilla/5.0','Accept-Language':'en-US,en;q=0.9'})
+              print(f'=== STATIC {label} status={r.status_code} bytes={len(r.content)} ===')
+              print(r.text[:20000])
+              soup=BeautifulSoup(r.text,'html.parser')
+              print(f'=== STATIC {label} scripts ===')
+              for tag in soup.find_all(['script','iframe','video','source','amp-video','amp-iframe']):
+                  print(tag.name,dict(tag.attrs))
+          PY
+
+          echo "=== RENDERED DOM ==="
+          timeout 90 "$CHROME" --headless=new --no-sandbox --disable-gpu \
+            --disable-dev-shm-usage --autoplay-policy=no-user-gesture-required \
+            --virtual-time-budget=25000 --dump-dom "$ARTICLE" > /tmp/dom.html 2>/tmp/chrome.err || true
+          echo "dom bytes=$(wc -c </tmp/dom.html)"
+          tail -80 /tmp/chrome.err || true
+          python - <<'PY'
+          import html,re
+          from pathlib import Path
+          from bs4 import BeautifulSoup
+          text=Path('/tmp/dom.html').read_text(errors='replace')
+          soup=BeautifulSoup(text,'html.parser')
+          needles=('nishikori','sakamoto','brightcove','videojs','video-id','video_id','mediaid','media_id','qualifying final','bc-player','account','m3u8','manifest')
+          print('=== rendered video-ish tags ===')
+          for tag in soup.find_all(['video','iframe','source','script','div','a']):
+              blob=' '.join(f'{k}={v}' for k,v in tag.attrs.items())
+              body=(tag.get_text(' ',strip=True) or '')[:600]
+              low=(blob+' '+body).lower()
+              if any(n in low for n in needles):
+                  print(tag.name,blob[:4000],body[:600])
+          print('=== rendered candidate contexts ===')
+          for needle in needles:
+              pos=0
+              count=0
+              while count<20:
+                  i=text.lower().find(needle,pos)
+                  if i<0: break
+                  ctx=re.sub(r'\s+',' ',html.unescape(text[max(0,i-600):i+1600]))
+                  print('NEEDLE',needle,ctx[:2200])
+                  pos=i+len(needle); count+=1
+          print('=== all candidate media urls ===')
+          urls=sorted(set(re.findall(r'https?://[^\"\'<>\\\s]+',html.unescape(text))))
+          for u in urls:
+              if any(x in u.lower() for x in ('brightcove','akamai','m3u8','mp4','players.','edge.api','video','manifest')):
+                  print(u[:5000])
+          print('=== long numeric ids near video words ===')
+          for m in re.finditer(r'(?<!\d)\d{13,20}(?!\d)',text):
+              ctx=re.sub(r'\s+',' ',html.unescape(text[max(0,m.start()-500):m.end()+1000]))
+              if any(n in ctx.lower() for n in needles): print(m.group(),ctx[:1700])
+          PY
+
+      - name: 清理一次性工作流
+        if: always()
+        run: |
+          git pull --rebase origin main
+          git config user.name "ChatGPT"
+          git config user.email "noreply@openai.com"
+          git rm .github/workflows/probe-usopen-player-once.yml
+          git commit -m "ops: 清理美网播放器探测工作流"
+          source tools/git_push_retry.sh
+          push_with_rebase_retry main 5
