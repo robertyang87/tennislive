@@ -1,0 +1,64 @@
+name: bootstrap-nishikori-farewell
+
+on:
+  push:
+    branches:
+      - feat/nishikori-farewell-interview
+    paths:
+      - ".bootstrap/**"
+      - ".github/workflows/bootstrap-nishikori.yml"
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: bootstrap-nishikori-farewell
+  cancel-in-progress: false
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 校验并展开最终补丁
+        run: |
+          set -euo pipefail
+          cat .bootstrap/chunk-* > /tmp/nishikori_patch.b64
+          echo "f8e693d6347926f008c8b3d27428ef38277f8b902c67649785ae61ca2f44f123  /tmp/nishikori_patch.b64" | sha256sum -c -
+          base64 -d /tmp/nishikori_patch.b64 > /tmp/nishikori_patch.tgz
+          echo "b42f3f4a7a6eabb8c40dc5b07ea9ad6521c5178fff1c6e50dfbc8db7151036c9  /tmp/nishikori_patch.tgz" | sha256sum -c -
+          tar -xzf /tmp/nishikori_patch.tgz -C .
+          rm -rf .bootstrap .github/workflows/bootstrap-nishikori.yml
+
+      - name: 静态契约检查
+        run: |
+          set -euo pipefail
+          python -m py_compile \
+            tools/interview_source_gate.py \
+            tools/attach_interview_lead_in.py \
+            tools/build_interview_request.py \
+            tests/test_interview_farewell.py
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path("requests/interviews/nishikori-sakamoto-us-open-2026-q3-farewell.json")
+          d = json.loads(p.read_text(encoding="utf-8"))
+          assert d["winner"] == "坂本怜"
+          assert d["featured_player"] == "锦织圭"
+          assert d["push"]["score"] == "6-4 7-6(3)"
+          PY
+          ruby -e "require 'yaml'; YAML.load_file('.github/workflows/interview-auto-render.yml')"
+          git diff --check
+
+      - name: 写入分支并清理引导文件
+        run: |
+          set -euo pipefail
+          git config user.name "ChatGPT"
+          git config user.email "noreply@openai.com"
+          git add -A
+          git commit -m "interview: add Nishikori farewell special"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
