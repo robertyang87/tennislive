@@ -5,7 +5,9 @@ import re
 import sys
 from pathlib import Path
 
+import numpy as np
 import pytest
+from PIL import Image
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -367,3 +369,87 @@ def test_比分板两行的盘分要上下对齐(monkeypatch: pytest.MonkeyPatch
     assert "position:absolute" in _rule(css, ".score-number sup"), (
         "抢七小分留在文档流里了：带小分的那一格会多出三十来像素，数字被推离"
         "列心——实测 `cirstea-kalinskaya` 的 `6(4)` 和另一行的 `7` 差 40px。")
+
+
+def test_比分板底下那层要是一条长坡不许陡到看得出边(tmp_path: Path,
+                                                monkeypatch: pytest.MonkeyPatch):
+    """账号所有者 2026-08-29：「背景也要渐变的，你看原图里**最上面的背景和封面图
+    没有明显的分割**感觉」。
+
+    在那之前是 `top:-70px` ＋ 110px 淡到 0.86——**坡陡了五倍**，顶上就有一条
+    看得出来的边。参考图那条坡是量出来的：两列独立取样（x=0.93w / 0.98w，
+    两列逐行几乎相同，所以是叠上去的一层而不是照片本身），拿照片底色 91、
+    面板色亮度 18 代进 `alpha=(91-L)/73` 反解——
+
+        离藏青条上沿   -360  -300  -240  -180  -120   -60  +120  +240
+        参考图 alpha   0.02  0.03  0.07  0.16  0.34  0.52  0.83  0.99
+        我们 alpha     0.07  0.07  0.14  0.25  0.37  0.48  0.78  0.93
+
+    也就是**五百多像素的坡，末端不透明**。
+
+    ⚠️ **不能拿 CSS 文本当判据**（和 `test_封面不许再压一层居中的阴影` 同一个
+    理由）：上面这段注释里正引着 `-70px` 和 `0.86` 这两个老写法，按文本扫会把
+    「把坑记下来」判成「又踩了这个坑」。所以这一条**渲出来量像素**——底图给
+    一张纯白，每一行的灰度直接就是 `1 - alpha`，不依赖任何一张真照片。
+
+    ⚠️ **判据钉的是「坡有多长」，不是「有没有硬边」。** 老写法也没有硬边，
+    它只是陡；拿「相邻行不许跳变」当判据，老写法照样能过。所以量的是
+    **alpha 从 0.10 走到 0.80 跨了多少像素**：现在约 420px，老写法约 90px。
+    门槛 300 落在两者中间，不贴着任何一版。
+
+    另外两头也要钉，缺一头都不算判据：
+
+    - **画布上半必须基本没被压暗**——只钉「坡够长」的话，把整幅铺一层灰
+      也能得到一条很长的坡，而那会把人脸一起压掉。
+    - **末端要接近不透明**——参考图底部量到 L=19，就是面板色本身。只钉上面
+      两条的话，一条又长又浅的坡也能过，而那托不住比分板上的白字。
+    """
+    white = tmp_path / "white.png"
+    Image.new("RGB", (1080, 1440), (255, 255, 255)).save(white)
+    monkeypatch.setattr(versus_poster, "_fetch_match_duration",
+                        lambda source, where: "2:19")
+    body, css = versus_poster._solo_body({
+        **_cover(), "eyebrow": "赛场之上", "layout": "solo", "hook": "赢了",
+        "portrait": {"image": str(white)},
+    })
+    from tennislive.render.webcards import _font_css  # noqa: PLC0415
+    shot = versus_poster._render_html(
+        f"<!doctype html><meta charset=utf-8>"
+        f"<style>{_font_css()}{css}</style>{body}", tmp_path / "probe.jpg")
+
+    a = np.asarray(Image.open(shot).convert("L")).astype(float)
+    # 右边一条，避开人物和文字
+    alpha = 1 - a[:, 1030:1050].mean(axis=1) / 255
+
+    # ⚠️ **量的窗口要从 y=500 起。** 封面顶上另有一条 scrim（给台头垫的，
+    #    2026-08-17 定的「正中不压暗但文字那两条边要留」），它在 y=40 处
+    #    alpha 0.50、到 y≈480 才落回底噪。把它算进来的话「alpha 第一次到
+    #    0.10」会落在顶栏那一带，量出来的是它、不是这层底。
+    PANEL_FROM = 500
+    lower = alpha[PANEL_FROM:]
+
+    def first_at(level: float) -> int:
+        hit = np.where(lower >= level)[0]
+        assert hit.size, f"整幅都没到 alpha {level}：这层底根本没渲出来？"
+        return PANEL_FROM + int(hit[0])
+
+    ramp = first_at(0.80) - first_at(0.10)
+    assert ramp >= 300, (
+        f"alpha 从 0.10 到 0.80 只用了 {ramp}px——坡太陡，顶上会看得出一条边。\n"
+        "账号所有者要的是「和封面图没有明显的分割」，参考图那条坡跨五百多像素。")
+    # 坡上方必须真有一段**没被压暗**的画面（人脸、上半身在那儿）。
+    # ⚠️ 这一头不能钉一个绝对的 y：`.storycopy` 的钩子有几行，比分板就跟着
+    #    上下浮动，写死一个高度会在钩子长的封面上落进坡里。改成「坡开始之前
+    #    那一段」，并要求它**够宽**——一条铺满整幅的灰会让坡从画布顶上就开始，
+    #    这一段当场缩没，判据自己就报出来。
+    clean_to = first_at(0.10) - 40
+    assert clean_to - PANEL_FROM >= 80, (
+        f"坡从 y={first_at(0.10)} 就开始了，上面几乎没有干净的画面——"
+        "这层底怕是铺满了整幅，而不是收在比分板那一带。")
+    middle = alpha[PANEL_FROM:clean_to].max()
+    assert middle < 0.15, (
+        f"坡上方那一段最暗处 alpha {middle:.2f}——这层底爬到人脸上去了。\n"
+        "坡要长，但不能靠「整幅铺一层灰」来凑长。")
+    assert alpha[-1] >= 0.90, (
+        f"画布最底下 alpha 只有 {alpha[-1]:.2f}——参考图那儿量到的是面板色本身"
+        "（L=19，alpha≈0.99）。太浅的话输家那一行的白字托不住。")

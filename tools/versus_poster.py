@@ -560,23 +560,38 @@ def _scoreboard_sets(result: str, where: str) -> tuple[list[tuple[int, int, str 
 #: 仍然要求照原样复刻**——那就是他的决定，照做。下面这三个颜色**逐个是从参考图
 #: 上量的**（`d0123af0-image.jpg`，取纯色区的像素值），不是挑的：
 SCORE_BLUE = "#172786"       # 赢家那条长条：量到 rgb(23,39,134)，整条一个值
-SCORE_CAP_COLOUR = "#739365"  # 两端的端帽：量到 rgb(113~120,144~150,99~109)
+#: ⚠️ **参考图两端那两颗浅绿端帽 2026-08-29 拿掉了**（账号所有者：「可以不要
+#: 获胜方两边的绿色边条」「不要两边的绿色竖条了」，一条消息里说了两遍）。
+#: 也就是说这块板**不再是逐像素复刻**——版式、配色、字体照参考图，端帽是他
+#: 明确划掉的一样。别看着参考图又把它加回来。
+#: 拿掉之后长条占满 `SCORE_BOARD_W`，名字那一格因此从 448px 宽到 492px。
 #: 板底那层统一的半透明底。参考图那一带是美网自己的深藏青压在照片上——照片
 #: （她的绿裙子、球鞋）透得出来但压暗了，所以是**半透明**不是实心。
-#: ⚠️ 它是**渐变淡入**的，不是一块硬边的板。参考图那一带逐行量下来是连续压暗
-#: （x=980：y900 亮度 91 → y1100 75 → y1200 53 → y1325 32 → y1450 19），
-#: 没有任何一条硬边。第一版做成硬边矩形，钩子底下当场多出一道横线。
+#:
+#: ⚠️⚠️ **它是一条很长的渐变，不是一块板，也不是短短一段淡入。** 账号所有者
+#: 2026-08-29：「背景也要渐变的，你看原图里最上面的背景和封面图**没有明显的
+#: 分割**感觉」。参考图两列独立取样（x=0.93w / 0.98w，两列逐行几乎相同，所以
+#: 是叠上去的一层而不是照片本身），把照片底色 91、面板色亮度 18 代进
+#: `alpha=(91-L)/73` 反解出来：
+#:
+#:     离藏青条上沿   -360  -300  -240  -180  -120   -60  +120  +240
+#:     alpha          0.02  0.03  0.07  0.16  0.34  0.52  0.83  0.99
+#:
+#: 也就是**从条子上沿往上约 280px 开始淡入，往下约 250px 才满**——总共 500 多
+#: 像素的坡，而且最后是**不透明**的（+240 那一行 L=19≈面板色本身）。
+#: 我们原来是 110px 淡到 0.86，坡陡了五倍，于是顶上有一道看得见的边。
 SCORE_PANEL_RGB = "9,17,38"
-SCORE_PANEL_TOP_FADE = 70    # 板子上沿再往上这么多像素开始淡入
-SCORE_PANEL_ALPHA = 0.86
+#: 淡入从 `.scoreboard` 上沿再往上这么多像素开始。⚠️ 这个数是从**参考图的
+#: 藏青条上沿**倒推的：那儿是 −280px，而我们的 `.scoreboard` 比条子上沿还高
+#: 出一个台头行（场地/用时，约 60px），所以是 280−60。
+SCORE_PANEL_UP = 220
+#: 从淡入起点算起，走这么多像素到**完全不透明**。参考图是 −280 → +250。
+SCORE_PANEL_RAMP = 530
 #: ⚠️ 文字**全部纯白**。参考图上 `ZHENG`/`QINWEN`/`PRIDANKINA`/`STADIUM 17`/
 #: `#USOPEN` 和六个数字，逐个取峰值都是 (255,255,255)——没有第二档灰。
 #: 我们原来那套 `#dcefe4`（英文名）、`#93a79c`（抢七小分）在复刻里一律去掉。
 SCORE_INK = "#ffffff"
 SCORE_BOARD_W = 940          # `.storycopy` 的内宽：1080 − 左右各 70
-SCORE_CAP_W = 12             # 两端那颗端帽（颜色见 SCORE_CAP_COLOUR）
-SCORE_CAP_R = 6              # 端帽的圆角
-SCORE_CAP_GAP = 10           # 端帽和高亮条之间的缝
 SCORE_FILL_PAD_L = 24        # 高亮条内的左内边距（国旗从这儿开始）
 SCORE_FILL_PAD_R = 30        # 右内边距（末一盘那个数字到条边的距离）
 SCORE_FLAG_W = 86            # 矩形国旗（3:2）——账号所有者点名「国旗用矩形」
@@ -589,12 +604,18 @@ SCORE_ROW_GAP = 10           # 两行之间的缝
 #: 高度占行高 51.4%（55px / 107px），而 62px 的 `TL Numeral` 在 104px 的行里只
 #: 占 42.3%——数字比参考图小了一档。72px 量出来是 51.0%，对得上。
 SCORE_NUM_PX = 72
-#: 场地/用时那一行的左右内边距——和高亮条的左右边缘对齐（参考图就是这样）。
-SCORE_HEAD_PAD = SCORE_CAP_W + SCORE_CAP_GAP
+#: 场地/用时那一行的左右内边距——**和长条里的内容对齐**（左边和国旗同一条竖线，
+#: 右边和最后一盘那个数字同一条）。端帽拿掉之前它对的是端帽外沿。
+SCORE_HEAD_PAD_L = SCORE_FILL_PAD_L
+SCORE_HEAD_PAD_R = SCORE_FILL_PAD_R
 #: 中文名字号：**上限**（短名字就用这一档）和**下限**（名字太长时能缩到哪儿）。
 #: ⚠️ 2026-08-29 从 44 提到 52：参考图里姓氏是整行里最大的一块（字高约占行高
 #: 四成二），而 44px 的得意黑在 104px 高的行里只占三成一。新版式给名字腾出的
 #: 宽度也比旧表格多得多（三盘 448px vs 285px），涨得上去。
+#: 盘分数字的两档字重。⚠️ **输的那一档是 Light(300) 不是 Regular(400)**，
+#: 见 `.score-number.setlose` 那段注释里量出来的对比度账。
+SCORE_WIN_WEIGHT = 700
+SCORE_LOSE_WEIGHT = 300
 SCORE_CN_MAX_PX = 52
 SCORE_CN_MIN_PX = 28
 #: 英文名那一行——**注脚，不是主语**。中文名涨到 44px 之后 22px 显得抢戏，
@@ -634,8 +655,7 @@ def score_name_avail_px(sets: int) -> float:
     `.score-names` 的宽度正是 **448**——不是推的，是对得上的。同一趟量到的还有
     `.score-fill` 896、`.score-number` 96、端帽 12×104，逐个和常量吻合。
     """
-    fixed = (2 * (SCORE_CAP_W + SCORE_CAP_GAP)
-             + SCORE_FILL_PAD_L + SCORE_FILL_PAD_R
+    fixed = (SCORE_FILL_PAD_L + SCORE_FILL_PAD_R
              + SCORE_FLAG_W + SCORE_FLAG_GAP)
     return SCORE_BOARD_W - fixed - max(1, sets) * SCORE_SET_COL_PX
 
@@ -687,11 +707,12 @@ def score_cn_px(matchup: list, sets: int) -> int:
 
 
 def _score_row(meta: dict, cells: str, where: str, *, winner: bool) -> str:
-    """比分板的一行：端帽 + 矩形国旗 + 两行名字 + 这一行自己的盘分。
+    """比分板的一行：矩形国旗 + 两行名字 + 这一行自己的盘分。
 
-    ⚠️ **输家那一行也渲两颗端帽，只是隐形**（CSS 里 `visibility:hidden`）。
-    干脆不渲的话，两行的左边缘会差一个端帽加一道缝（22px），国旗和名字整块
-    错开——看起来像「这一行没对齐」，不像「少了个元素」。
+    ⚠️ **参考图两端那两颗浅绿端帽拿掉了**（账号所有者 2026-08-29 说了两遍）。
+    在那之前输家那一行也渲两颗、只是 `visibility:hidden`——那是为了让两行的
+    左边缘对齐（干脆不渲会差 22px，国旗和名字整块错开）。现在两行都没有，
+    对齐这件事自然成立，**别再把隐形端帽加回来当占位**。
 
     ⚠️ **英文名在上、中文名在下**，和旧版反过来。参考图的节奏就是「小号的名
     在上、大号的姓在下」；中文名是这一行的主语，所以它占大字那一行。
@@ -707,7 +728,6 @@ def _score_row(meta: dict, cells: str, where: str, *, winner: bool) -> str:
     rank_html = "" if rank is None else f'<span class="score-rank">（{int(rank)}）</span>'
     return (
         f'<div class="score-row score-row--{"win" if winner else "lose"}">'
-        '<span class="score-cap"></span>'
         '<div class="score-fill">'
         f'{_score_flag(meta, where)}'
         '<span class="score-names">'
@@ -716,7 +736,6 @@ def _score_row(meta: dict, cells: str, where: str, *, winner: bool) -> str:
         '</span>'
         f'<span class="score-sets">{cells}</span>'
         '</div>'
-        '<span class="score-cap"></span>'
         '</div>')
 
 
@@ -1277,7 +1296,12 @@ __SCRIM__
  font-family:'TL Display SC','TL Sans SC',sans-serif;font-size:44px;
  font-weight:400;color:#f4fbf7;
  text-shadow:0 2px 6px rgba(0,0,0,.9),0 4px 22px rgba(0,0,0,.85)}
-.storyscore .sets{font-family:'TL Numeral','TL Sans SC',sans-serif;
+/* ⚠️ 这一行是**没有 `cover.scoreboard` 的老 solo 封面**才走的路（19 条已发
+   spec 挂在 `_LEGACY_NO_SCOREBOARD` 里）。数字跟着 2026-08-29 那条「所有
+   视频里的比分都用这种字体」一起换成 `TL Score`——已发的不重渲，改它是为了
+   万一有人重渲那几条时不会渲出第二副数字。字重维持 700（这一行本来就没有
+   输赢之分，整串一个色）。 */
+.storyscore .sets{font-family:'TL Score','TL Sans SC',sans-serif;
  font-weight:700;color:#c6f65a;letter-spacing:1px}
 /* ⭐⭐ 「赛场之上」比分板：**照美网那张官方赛果图完整复刻**。
    账号所有者 2026-08-29：「要做出和原版一样的配色」「不要自己配色」
@@ -1296,15 +1320,23 @@ __SCRIM__
 /* 统一的半透明底：`left/right:-70px` 抵掉 `.storycopy` 的内缩，左右铺满画布；
    `bottom` 一路铺到画布外——参考图那块深底就是一直到图的下沿的，截图会裁掉多出
    来的部分。⚠️ `z-index:-1` 要配 `.scoreboard` 自己的 `z-index:0`（让它成为
-   一个层叠上下文），否则这层底会掉到 `.storycopy` 后面、被暗角盖住。 */
+   一个层叠上下文），否则这层底会掉到 `.storycopy` 后面、被暗角盖住。
+
+   ⚠️⚠️ **坡要长。** 账号所有者 2026-08-29：「原图里最上面的背景和封面图**没有
+   明显的分割**感觉」。这条坡从 `.scoreboard` 上沿再往上 `SCORE_PANEL_UP`px
+   起、走 `SCORE_PANEL_RAMP`px 到**完全不透明**——五百多像素，跟参考图反解出来
+   的 alpha 曲线对得上（见 `SCORE_PANEL_UP` 那段的表）。**别把它收短**：
+   原来是 110px 淡到 0.86，坡陡五倍，顶上就有一条看得见的边。
+   ⚠️ 末端是 **1.0 不是 0.86**：参考图底部量到 L=19，就是面板色本身。 */
 .scoreboard::before{content:"";position:absolute;z-index:-1;
- left:-70px;right:-70px;top:-__SCORE_PANEL_TOP_FADE__px;bottom:-320px;
+ left:-70px;right:-70px;top:-__SCORE_PANEL_UP__px;bottom:-320px;
  background:linear-gradient(180deg,rgba(__SCORE_PANEL_RGB__,0) 0,
-  rgba(__SCORE_PANEL_RGB__,__SCORE_PANEL_ALPHA__) __SCORE_PANEL_FULL__px)}
-/* 场地和用时那一行：参考图里它在长条**外面、上方**，左边缘和长条对齐
-   （所以左右内边距正好是端帽 + 缝）。 */
+  rgba(__SCORE_PANEL_RGB__,1) __SCORE_PANEL_RAMP__px)}
+/* 场地和用时那一行：参考图里它在长条**外面、上方**，左右和长条里的内容对齐
+   （左边和国旗同一条竖线，右边和最后一盘那个数字同一条）。 */
 .scoreboard-head{box-sizing:border-box;display:flex;align-items:baseline;
- justify-content:space-between;padding:0 __SCORE_HEAD_PAD__px 16px;
+ justify-content:space-between;
+ padding:0 __SCORE_HEAD_PAD_R__px 16px __SCORE_HEAD_PAD_L__px;
  font-family:'TL Sans SC',sans-serif;font-size:26px;letter-spacing:2px}
 .scoreboard-duration{font-family:'TL Sans SC',sans-serif;font-size:34px;
  letter-spacing:0;color:__SCORE_INK__}
@@ -1313,15 +1345,11 @@ __SCRIM__
    ⚠️ 颜色和别处一样是纯白：复刻版没有第二档灰。 */
 .scoreboard-meta{display:flex;align-items:baseline;gap:12px}
 .scoreboard-note{font-family:'TL Sans SC',sans-serif;font-size:26px}
-.score-row{display:flex;align-items:stretch;height:__SCORE_ROW_H__px;
- gap:__SCORE_CAP_GAP__px}
+/* ⚠️ **两端那两颗浅绿端帽 2026-08-29 拿掉了**（账号所有者说了两遍）。
+   在那之前输家那一行也渲两颗、只是隐形，为的是让两行左边缘对齐；现在两行
+   都没有，对齐自然成立。**别看着参考图又把它加回来。** */
+.score-row{display:flex;align-items:stretch;height:__SCORE_ROW_H__px}
 .score-row+.score-row{margin-top:__SCORE_ROW_GAP__px}
-/* ⚠️ **输家那一行也渲两颗端帽，只是隐形。** 直接不渲的话两行的左边缘会差
-   一个端帽加一道缝，国旗和名字整块错开——看起来像「这一行没对齐」，
-   而不像「少了个元素」。`visibility` 保位置，`display:none` 不保。 */
-.score-cap{flex:0 0 __SCORE_CAP_W__px;border-radius:__SCORE_CAP_R__px;
- background:__SCORE_CAP_COLOUR__;visibility:hidden}
-.score-row--win .score-cap{visibility:visible}
 .score-fill{flex:1;min-width:0;box-sizing:border-box;display:flex;align-items:center;
  padding:0 __SCORE_FILL_PAD_R__px 0 __SCORE_FILL_PAD_L__px}
 /* 赢家那条长条：**实心美网蓝**，量到的就是这一个值，整条没有渐变。 */
@@ -1344,26 +1372,45 @@ __SCRIM__
    右边的盘分上——旧版加大之前它就已经在压框线了。 */
 .score-cn{font-family:'TL Display SC','TL Sans SC',sans-serif;
  font-size:__SCORE_CN_PX__px;line-height:1.08;white-space:nowrap;margin-top:4px}
-.score-rank{font-family:'TL Sans SC',sans-serif;font-size:.62em;margin-left:4px}
+/* ⚠️ 排名数字**和盘分同一支** `TL Score`（账号所有者 2026-08-29：「排名的数字
+   也可以用这统一的数字，这样就只用一种数字字体」）。它原来写的是
+   `TL Sans SC`——那和 `TL Score` 本来就是同一套设计（`TL Score` 就是从
+   `NotoSansSC[wght]` 实例化出来、只留 ASCII ＋ 全角括号的三档），所以画面上
+   一个像素都不会变；改的是**「这块板上只有一支数字字体」这件事从此说得死**，
+   判据钉得住。⚠️ 全角括号在字符集里，别把它从 `SCORE_CHARSET` 里删掉。 */
+.score-rank{font-family:'TL Score','TL Sans SC',sans-serif;font-weight:400;
+ font-size:.62em;margin-left:4px}
 /* 盘分：每一盘一列、**列宽写死**。两行分开渲之后，只要两行留给名字的宽度差
    一点点，右边那几个数字就会上下错位——而错位在 HTML 字符串里看不出来，
    只有渲出来量才看得见（判据 `test_比分板两行的盘分要上下对齐`）。 */
 .score-sets{flex:0 0 auto;display:flex;align-items:center}
-/* ⚠️⚠️ **数字用 `TL Sans SC`（Noto Sans），不是 `TL Numeral`（Montserrat）。**
+/* ⚠️⚠️ **数字用 `TL Score`，不是 `TL Numeral`（Montserrat）。**
    账号所有者 2026-08-29：「比分的数字字体都用这种，包括以后所有视频里的其他
    地方的比分都用这种字体，赢的一盘的加粗」。
-   **这是量出来的，不是挑的**：把参考图那个粗「6」和细「3」的墨迹二值化、
-   归一到 200×200，和我们手上每支字体逐个算 IoU——
-       粗 6：TL Sans SC 700 **0.728** ｜ TL Numeral 600 0.682 ｜ TL Numeral 500 0.555
-       细 3：TL Sans SC 400 **0.818** ｜ TL Numeral 500 0.584 ｜ TL Numeral 600 0.535
+   `TL Score` 是从 `NotoSansSC[wght]` 实例化出来的三档（300/400/700），
+   只留 ASCII ＋ 全角括号，三个文件约 200 KB——**和 libass 读的是同一批文件**
+   （`fontsdir=assets/fonts`），封面和成片从此一定是同一副数字。
+   **换哪一套是量出来的，不是挑的**：把参考图那个粗「6」和细「3」的墨迹
+   二值化、归一到 200×200，和我们手上每支字体逐个算 IoU——
+       粗 6：Noto Sans SC 700 **0.728** ｜ TL Numeral 600 0.682 ｜ 500 0.555
+       细 3：Noto Sans SC 400 **0.818** ｜ TL Numeral 500 0.584 ｜ 600 0.535
    Barlow Condensed 700 在粗 6 上也是 0.728，但它是压缩字，细 3 只有 0.426。
-   ⚠️ 还有一个理由：`TL Numeral` 只有 500/600 两档，**粗细拉不开**；参考图靠
-   字重分输赢，Noto Sans 的 400/700 才够。 */
+   ⚠️ 还有一个理由：`TL Numeral` 只有 500/600 两档，**粗细拉不开**。 */
 .score-number{position:relative;flex:0 0 __SCORE_SET_COL_PX__px;text-align:center;
- font-family:'TL Sans SC',sans-serif;font-size:__SCORE_NUM_PX__px;font-weight:400}
-/* 赢下那一盘的数字加粗——参考图分输赢**只靠字重**，两个数字都是纯白。 */
-.score-number.setwin{font-weight:700;color:__SCORE_INK__;text-shadow:none}
-.score-number.setlose{font-weight:400;color:__SCORE_INK__}
+ font-family:'TL Score','TL Sans SC',sans-serif;font-size:__SCORE_NUM_PX__px;
+ font-weight:__SCORE_LOSE_WEIGHT__}
+/* 赢下那一盘的数字加粗，输掉那一盘用 **Light（300）**——参考图分输赢
+   **只靠字重**，两个数字都是纯白。
+   ⚠️ **输的那一档 2026-08-29 从 Regular(400) 换成 Light(300)**：账号所有者
+   「输掉那一盘的分数的数字需要再细一点，和加粗的区分开」。这是量得出来的
+   ——按「墨迹占外接框的比例」量，参考图粗/细是 **0.613 / 0.287 = 2.14**，
+   我们原来 400 vs 700 只有 **1.5**；换成 300 vs 700 之后 libass 实测
+   4773/2141 = **2.23**，和参考图对得上。
+   ⚠️ 想再拉开就该动**粗**那一头（参考图那个粗字接近 Black 900，不是 700），
+   但账号所有者点名要动的是细的那一头，没有顺手改。 */
+.score-number.setwin{font-weight:__SCORE_WIN_WEIGHT__;color:__SCORE_INK__;
+ text-shadow:none}
+.score-number.setlose{font-weight:__SCORE_LOSE_WEIGHT__;color:__SCORE_INK__}
 /* ⚠️ 抢七小分**绝对定位**，不占位。留在文档流里的话，带小分的那一格会因为
    多出三十来像素而把数字推离列心——`6(4)` 和另一行的 `7` 当场差 40px，
    而这块板全部的意思就是「两行的列要对得齐」。`left:calc(50% + .30em)` 把它
@@ -1411,9 +1458,7 @@ def _fill_score_layout(css: str, cover: dict) -> str:
     丢掉**，盘分列退回自动宽度，两行的数字就此错开。宁可当场报错。
     """
     for token, value in {
-        "__SCORE_CAP_W__": SCORE_CAP_W,
-        "__SCORE_CAP_R__": SCORE_CAP_R,
-        "__SCORE_CAP_GAP__": SCORE_CAP_GAP,
+
         "__SCORE_FILL_PAD_L__": SCORE_FILL_PAD_L,
         "__SCORE_FILL_PAD_R__": SCORE_FILL_PAD_R,
         "__SCORE_FLAG_W__": SCORE_FLAG_W,
@@ -1422,17 +1467,19 @@ def _fill_score_layout(css: str, cover: dict) -> str:
         "__SCORE_SET_COL_PX__": SCORE_SET_COL_PX,
         "__SCORE_NUM_PX__": SCORE_NUM_PX,
         "__SCORE_BLUE__": SCORE_BLUE,
-        "__SCORE_CAP_COLOUR__": SCORE_CAP_COLOUR,
         "__SCORE_PANEL_RGB__": SCORE_PANEL_RGB,
-        "__SCORE_PANEL_ALPHA__": SCORE_PANEL_ALPHA,
-        "__SCORE_PANEL_TOP_FADE__": SCORE_PANEL_TOP_FADE,
+        "__SCORE_PANEL_UP__": SCORE_PANEL_UP,
+        "__SCORE_PANEL_RAMP__": SCORE_PANEL_RAMP,
+        "__SCORE_WIN_WEIGHT__": SCORE_WIN_WEIGHT,
+        "__SCORE_LOSE_WEIGHT__": SCORE_LOSE_WEIGHT,
         # 淡到满，正好落在场地那一行的中间——再晚，「Stadium 17」就压在
         # 还没压暗的照片上了。
-        "__SCORE_PANEL_FULL__": SCORE_PANEL_TOP_FADE + 40,
+
         "__SCORE_INK__": SCORE_INK,
         "__SCORE_ROW_H__": SCORE_ROW_H,
         "__SCORE_ROW_GAP__": SCORE_ROW_GAP,
-        "__SCORE_HEAD_PAD__": SCORE_HEAD_PAD,
+        "__SCORE_HEAD_PAD_L__": SCORE_HEAD_PAD_L,
+        "__SCORE_HEAD_PAD_R__": SCORE_HEAD_PAD_R,
         "__SCORE_EN_PX__": SCORE_EN_PX,
         "__SCORE_CN_PX__": score_cn_px(cover.get("matchup") or [],
                                        _set_count(cover.get("result"))),

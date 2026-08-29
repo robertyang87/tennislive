@@ -492,7 +492,13 @@ body{{color:{vp.TEXT};font-family:'TL Sans SC','Noto Sans CJK SC',sans-serif;
 .h2h-ring--pair:last-child{{z-index:1}}
 .h2h-cn{{font-family:'TL Display SC','TL Sans SC',sans-serif;font-size:41px;
  margin-top:18px;text-align:center;white-space:nowrap}}
-.h2h-rank{{font-size:.6em;color:{vp.DIM};margin-left:2px}}
+/* ⚠️ 排名数字也走 `TL Score`——它原来什么都没写、跟着 `.h2h-cn` 继承了得意黑，
+   于是同一张卡上有两副数字（分盘比分是 Noto，排名是得意黑）。账号所有者
+   2026-08-29「排名的数字也可以用这统一的数字，**这样就只用一种数字字体**」
+   说的是封面那块板，这儿是同一句话的同一个surface：既然分盘比分刚换过来，
+   顺手把它旁边那个数字也对齐，不然「只用一种」在这张卡上仍然不成立。 */
+.h2h-rank{{font-family:'TL Score','TL Sans SC',sans-serif;font-weight:400;
+ font-size:.6em;color:{vp.DIM};margin-left:2px}}
 .h2h-flagrow{{display:flex;align-items:center;gap:9px;margin-top:10px}}
 .h2h-flagrow .score-flag-slot{{width:43px;height:29px;flex:0 0 43px}}
 .h2h-flagrow .score-flag{{width:39px;height:26px}}
@@ -504,19 +510,22 @@ body{{color:{vp.TEXT};font-family:'TL Sans SC','Noto Sans CJK SC',sans-serif;
 /* 竖着排：每一盘单独一行，行间距比行内的连字符更松，读起来是"三盘"
    不是"一串数字"。padding-top:8px 是量出来让比分块的视觉中心跟头像圆的
    视觉中心对齐的值——改字号/头像尺寸要重新量，别凭感觉改这个数。 */
-/* ⚠️ 数字走 `TL Sans SC`（Noto Sans），不是 `TL Numeral`（Montserrat）——
-   账号所有者 2026-08-29：「比分的数字字体都用这种，**包括以后所有视频里的
-   其他地方的比分都用这种字体**，赢的一盘的加粗」。换哪一支是拿 IoU 量出来的，
-   账记在 `versus_poster` 的 `.score-number` 那段注释里；封面比分板、视频顶栏、
-   赛后开麦顶栏和这张卡从此是同一套数字。
+/* ⚠️ 数字走 `TL Score`，不是 `TL Numeral`（Montserrat）——账号所有者
+   2026-08-29：「比分的数字字体都用这种，**包括以后所有视频里的其他地方的
+   比分都用这种字体**，赢的一盘的加粗」。换哪一支是拿 IoU 量出来的，账记在
+   `versus_poster` 的 `.score-number` 那段注释里；封面比分板、视频顶栏、
+   赛后开麦顶栏和这张卡从此读的是**同一批字模**（`assets/fonts/TLScore-*`）。
+   ⚠️ 输掉那一盘用 **Light(300)**（「输掉那一盘的分数的数字需要再细一点」），
+   字重从 `versus_poster` 读，写两处必分叉。
    ⚠️ 这一条只管**比分**。底下 `.sval` 那些技术统计（Ace、双误）不是比分，
    没跟着改——账号所有者说的是比分。 */
-.h2h-set-row{{font-family:'TL Sans SC',sans-serif;font-size:56px;
- font-weight:400;white-space:nowrap;text-align:center;line-height:1.42}}
+.h2h-set-row{{font-family:'TL Score','TL Sans SC',sans-serif;font-size:56px;
+ font-weight:{vp.SCORE_LOSE_WEIGHT};white-space:nowrap;text-align:center;
+ line-height:1.42}}
 .set{{display:inline-block}}
-/* 赢下那一盘：上绿**＋加粗**（「赢的一盘的加粗」）。 */
-.setwin{{color:#c6f65a;font-weight:700}}
-.setlose{{color:{vp.TEXT};font-weight:400}}
+/* 赢下那一盘：上绿**＋加粗**；输掉那一盘 Light。 */
+.setwin{{color:#c6f65a;font-weight:{vp.SCORE_WIN_WEIGHT}}}
+.setlose{{color:{vp.TEXT};font-weight:{vp.SCORE_LOSE_WEIGHT}}}
 .setdash{{color:#93a79c;margin:0 .05em;font-size:.7em}}
 .tb{{font-size:.42em;color:#93a79c;vertical-align:super;margin-left:.04em}}
 .setplain{{color:#c6f65a}}

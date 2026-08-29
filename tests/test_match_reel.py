@@ -11120,12 +11120,15 @@ def test_比分板不许给某一盘单开样式(monkeypatch):
        这类选择器一出现就红——这一条不认类名，换个名字把绿线加回来照样拦得住
     3. **框线整块没有了**：`.score…` 的任何一条规则都不许再声明 `border*`。
        新版式靠「哪一行亮着」分主次，不靠格子；再画一道框线就是把旧表格搬回来
-    4. **复刻之后板上一点品牌绿都不许有**。⚠️ 这一头 2026-08-29 第二轮又换过
-       一次主语：第一版端帽是品牌绿，所以判据写的是「绿只许在 `.score-cap`
-       上」；账号所有者随后要求「完整复刻、不要自己配色」，端帽改成量来的
-       `#739365`，**板上一处品牌绿都没有了**——留着那条「只许在端帽上」的
-       允许，它就成了一盏永远不会亮的绿灯，而且 docstring 还在描述一个不存在
-       的状态。现在拦的是「有人又把我们自己的颜色刷回这块板上」。
+    4. **板上一点绿都不许有**。⚠️ 这一头 2026-08-29 一天里换过**三次**主语，
+       记全了才看得懂它现在拦什么：
+         ① 第一版端帽是品牌绿 → 判据写「绿只许在 `.score-cap` 上」
+         ② 「完整复刻、不要自己配色」→ 端帽改成量来的 `#739365`，品牌绿
+            一处不剩 → 判据改成「板上不许有品牌绿」
+         ③ 「可以不要获胜方两边的绿色边条」「不要两边的绿色竖条了」（一条
+            消息里说了两遍）→ **端帽整块拿掉**，`.score-cap` 这个选择器都
+            没有了 → 判据现在拦的是「有人看着参考图又把绿加回来」，
+            品牌绿和端帽那个绿**两个都拦**。
        ⚠️ 盘分数字的绿在裸的 `.setwin` 上，那条规则的选择器不带 `.score`，
        本来就不在 `_board_rules` 的射程里（顶栏和数据图那两条视频路径上的
        品牌绿一个字没动，见 CLAUDE.md）。
@@ -11150,7 +11153,13 @@ def test_比分板不许给某一盘单开样式(monkeypatch):
     # 判据自己的判据：主语还在（选择器改名或者 CSS 拿不到时，下面几条会变成
     # 恒真的绿灯，而那和"守住了"长得一模一样）
     assert ".score-number" in rules, f"比分板的 CSS 没解出来，解到的是：{sorted(rules)}"
-    assert ".score-cap" in rules, f"端帽那条规则没解出来：{sorted(rules)}"
+    assert ".score-fill" in rules, f"长条那条规则没解出来：{sorted(rules)}"
+    # ⚠️ 端帽整块拿掉了（2026-08-29），markup 和 CSS 里都不许再有
+    assert "score-cap" not in html_out and not any(
+        "score-cap" in sel for sel in rules), (
+        "端帽又回来了：账号所有者 2026-08-29 说了两遍「不要两边的绿色竖条」。\n"
+        "⚠️ 别为了「让两行左边缘对齐」把隐形端帽加回来当占位——两行都没有，"
+        "对齐自然成立。")
 
     for selector, decls in rules.items():
         # ② 选择器不许点名某一盘
@@ -11169,13 +11178,14 @@ def test_比分板不许给某一盘单开样式(monkeypatch):
                 f"`{selector}` 又画了一道框线（{prop}:{value}）。\n"
                 "2026-08-29 起比分板没有格子也没有框线——主次靠"
                 "「哪一行亮着」，不靠画格子。")
-        # ④ 复刻之后板上一点品牌绿都不许有
-        for green in _BRAND_GREEN:
+        # ④ 板上一点绿都不许有：品牌绿，和参考图那两颗端帽的浅绿
+        for green in (*_BRAND_GREEN, "#739365"):
             if green in decls.lower():
                 assert False, (
                     f"`{selector}` 里出现了品牌绿 {green}：{decls.strip()!r}\n"
-                    "比分板上的绿只有两处：赢家那一行的端帽，和盘分数字"
-                    "（`.setwin`）。别再给某一盘的格子上色。")
+                    "2026-08-29 起这块板上一点绿都没有——端帽拿掉了，"
+                    "配色照参考图量的那三个值。别看着参考图又把它加回来，"
+                    "也别给某一盘的格子单独上色。")
 
 
 def test_顶栏比分逐盘上色赢盘绿输盘灰():
@@ -11203,15 +11213,16 @@ def test_顶栏比分逐盘上色赢盘绿输盘灰():
         return True
 
     assert order(f"{reel.TOPBAR_SCORE_BOLD_ASS}{reel.TOPBAR_SETWIN_ASS}6",
-                 reel.TOPBAR_SCORE_UNBOLD_ASS,
+                 reel.TOPBAR_SCORE_PLAIN_ASS,
                  f"{reel.TOPBAR_SETDASH_ASS}-",
-                 f"{reel.TOPBAR_SCORE_UNBOLD_ASS}{reel.TOPBAR_SETLOSE_ASS}3"), (
-        f"第一盘 6-3：6 要上 setwin 色并加粗、3 不加粗，连字符压暗且不许跟着粗\n{line}")
-    # 第二盘 4-6：赢家那一盘输了，左边（4）应该是 setlose 色、不加粗
-    assert order(f"{reel.TOPBAR_SCORE_UNBOLD_ASS}{reel.TOPBAR_SETLOSE_ASS}4",
+                 f"{reel.TOPBAR_SCORE_LIGHT_ASS}{reel.TOPBAR_SETLOSE_ASS}3"), (
+        f"第一盘 6-3：6 加粗、3 走 Light、连字符压暗且走常规档\n{line}")
+    # 第二盘 4-6：赢家那一盘输了，左边（4）应该是 setlose 色、走 Light
+    assert order(f"{reel.TOPBAR_SCORE_LIGHT_ASS}{reel.TOPBAR_SETLOSE_ASS}4",
+                 reel.TOPBAR_SCORE_PLAIN_ASS,
                  f"{reel.TOPBAR_SETDASH_ASS}-",
                  f"{reel.TOPBAR_SCORE_BOLD_ASS}{reel.TOPBAR_SETWIN_ASS}6"), (
-        f"第二盘 4-6：赢的是右边那个 6，加粗的也该是它\n{line}")
+        f"第二盘 4-6：赢的是右边那个 6，加粗的也该是它；连字符不许跟着细\n{line}")
     # 粗体一定要关掉：不关的话后面输家的名字会跟着变粗，看起来像"输家也高亮了"
     assert line.rstrip().endswith("张帅") and reel.TOPBAR_SCORE_BOLD_ASS not in \
         line[line.rfind(reel.TOPBAR_SCORE_FONT_RESET_ASS):], (
@@ -11219,30 +11230,32 @@ def test_顶栏比分逐盘上色赢盘绿输盘灰():
 
 
 def test_顶栏上色带抢七小分():
-    """⚠️ 抢七小分**两个方向都不许跟着粗**（2026-08-29 加「赢盘加粗」时补的）。
+    """⚠️ 抢七小分**两个方向都走常规档**（2026-08-29 加「赢盘加粗」时补的）。
 
     它是这一盘的附注，和连字符同一档，不是比分本身。而 ASS 的标签是粘连的：
-    右边那个数赢了的时候 `\b1` 还开着，不显式关一次的话 `(5)` 就跟着粗——
-    **同一个括号会按"这一盘谁赢的"渲成两个样子**，而那比一直粗或一直细都糟。
-    左边赢的那一支本来就已经被 `rbold=\b0` 关掉了，所以只有右边那一支要补。
+    不显式复位的话，`7-6(5)` 里的 `(5)` 会跟着前一个数字走细、`6-7(5)` 里的
+    跟着走粗——**同一个括号按「这一盘谁赢的」渲成两个样子**，比一直粗或一直细
+    都糟。
+    ⚠️ 同一天下午加了 Light(300) 之后，**两个方向都要显式复位**：在那之前
+    「没加粗」就是常规档，左边赢的那一支可以省掉一次；现在「没加粗」是 Light，
+    省掉就跟着变细。连字符同理（见上一条判据）。
     """
     reel = _reel()
 
-    def tb_is_bold(line: str) -> bool:
-        """`(` 之前最后一个粗体标签是不是 `\b1`。"""
+    def weight_before_paren(line: str) -> str:
+        """`(` 之前最后一个字重标签是哪一个——粗、细，还是常规。"""
         head = line[:line.index("(")]
-        b1, b0 = head.rfind(reel.TOPBAR_SCORE_BOLD_ASS), head.rfind(
-            reel.TOPBAR_SCORE_UNBOLD_ASS)
-        return b1 > b0
+        pos = {tag: head.rfind(tag) for tag in
+               (reel.TOPBAR_SCORE_BOLD_ASS, reel.TOPBAR_SCORE_LIGHT_ASS,
+                reel.TOPBAR_SCORE_PLAIN_ASS)}
+        return max(pos, key=pos.get)
 
-    left_won = reel.colorize_topbar_score("甲 7-6(5) 甲 乙")
-    assert "(5)" in left_won
-    assert not tb_is_bold(left_won), f"左边赢的那一盘，小分跟着粗了：{left_won}"
-
-    right_won = reel.colorize_topbar_score("甲 6-7(5) 甲 乙")
-    assert "(5)" in right_won
-    assert not tb_is_bold(right_won), (
-        f"右边赢的那一盘，`\\b1` 没关就写了小分，它跟着粗了：{right_won}")
+    for raw, who in (("甲 7-6(5) 甲 乙", "左边"), ("甲 6-7(5) 甲 乙", "右边")):
+        line = reel.colorize_topbar_score(raw)
+        assert "(5)" in line
+        assert weight_before_paren(line) == reel.TOPBAR_SCORE_PLAIN_ASS, (
+            f"{who}赢的那一盘，小分跟着前一个数字的字重走了：{line}\n"
+            "小分是这一盘的附注，两个方向都该是常规档。")
 
 
 def test_顶栏上色不会把人名当成比分():
@@ -11348,18 +11361,32 @@ def test_比分数字全站同一支字体而且加粗真的生效(tmp_path, mon
     两档合起来 Noto Sans CJK SC 最好，而且**和封面那支是同一套设计**（差 0.003）
     ——顶栏和封面从此不会再是两种数字。
 
-    判据钉三头：
+    ⚠️⚠️ **同一天下午又换了一次：`Noto Sans CJK SC` → `TL Score`。** 账号所有者
+    「输掉那一盘的分数的数字需要再细一点，和加粗的区分开」——而系统的
+    `fonts-noto-cjk` **只有 Regular 和 Bold 两档**，Light 在几百 MB 的
+    `-extra` 里。所以三档做成了仓库里的小文件（`assets/fonts/TLScore-*.ttf`，
+    从 `NotoSansSC[wght]` 实例化、只留 ASCII ＋ 全角括号，三个约 200 KB）。
+    `TL Score` 和 `Noto Sans CJK SC` 是同一套设计，上面那张 IoU 表照旧成立；
+    换来的是**浏览器和 libass 读同一批文件**，比分数字不再靠机器上装了哪个
+    apt 包。
 
-    1. **四处比分是同一支**：封面比分板（浏览器，`TL Sans SC`＝NotoSansSC）、
-       视频顶栏、赛后开麦顶栏、数据图的分盘比分
+    判据钉四头：
+
+    1. **四处比分是同一支**：封面比分板（浏览器）、视频顶栏、赛后开麦顶栏、
+       数据图的分盘比分
     2. **两条视频线一个字都不许分叉**——账号所有者 2026-08-18 要求过
        「改成和赛后开麦一样」，那条约束没有被这次换字体推翻
-    3. ⚠️ **加粗必须真的生效**，这一条**真渲一帧量墨迹宽度**。
+    3. **三处的「输掉那一盘」字重是同一个数**（封面 / 顶栏 / 赛后开麦）
+    4. ⚠️ **粗细必须真的分得开**，这一条**真渲两帧量墨迹**。
        `TOPBAR_WINNER_ASS` 上面那段注释记着一个真事：给中文名挂 `{\b1}` 渲出来
        是 216px → 216px，**什么都没发生**——libass 解不到那个字体的 Bold face
        时不报错也不合成。所以"写了 `\b1`"和"真的变粗了"是两件事，只有量渲染
        出来的宽度才分得开（同一条命令实测：中文名 0px，数字 +7px）。
-       谁哪天把比分字体换成一支解不到 Bold 的，这条会当场红。
+       谁哪天把比分字体换成一支解不到 Bold（或者解不到 `\b300`）的，
+       这条会当场红。
+       ⚠️ 量的是**墨的量**不是宽度：Light 和 Bold 的外接框宽度只差几个像素
+       （360 vs 395），而墨迹面积差一倍（2141 vs 4773）——拿宽度当判据，
+       换成一支解不到 Light 的字体照样能过。
     """
     reel = _reel()
     sys.path.insert(0, str(Path("tools").resolve()))
@@ -11369,8 +11396,14 @@ def test_比分数字全站同一支字体而且加粗真的生效(tmp_path, mon
     # ① 封面比分板（浏览器那一侧）和数据图：同一个 family，赢的那一盘更粗
     monkeypatch.setattr(vp, "_fetch_match_duration", lambda source, where: "1:16")
     board = _board_rules(vp)
-    assert "'TL Sans SC'" in board[".score-number"], (
-        f"封面比分板的数字不是 `TL Sans SC`：{board['.score-number']!r}")
+    hit = re.search(r"font-family:([^;]+);", board[".score-number"])
+    assert hit and hit.group(1).split(",")[0].strip() == "'TL Score'", (
+        f"封面比分板的数字不是 `TL Score`：{board['.score-number']!r}")
+    # 排名数字也走同一支——账号所有者「排名的数字也可以用这统一的数字，
+    # 这样就只用一种数字字体」
+    hit = re.search(r"font-family:([^;]+);", board[".score-rank"])
+    assert hit and hit.group(1).split(",")[0].strip() == "'TL Score'", (
+        f"排名那几个数字不是 `TL Score`：{board['.score-rank']!r}")
     win_w = re.search(r"font-weight:(\d+)", board[".score-number.setwin"])
     lose_w = re.search(r"font-weight:(\d+)", board[".score-number.setlose"])
     assert win_w and lose_w and int(win_w.group(1)) > int(lose_w.group(1)), (
@@ -11383,14 +11416,24 @@ def test_比分数字全站同一支字体而且加粗真的生效(tmp_path, mon
     hit = re.search(r"\.h2h-set-row\{\{font-family:([^;]+);", card)
     assert hit, "数据图里找不到 `.h2h-set-row` 的 font-family——选择器改名了？"
     first = hit.group(1).split(",")[0].strip()
-    assert first == "'TL Sans SC'", (
-        f"数据图那一列分盘比分的第一支字体是 {first}，不是 'TL Sans SC'："
+    assert first == "'TL Score'", (
+        f"数据图那一列分盘比分的第一支字体是 {first}，不是 'TL Score'："
         "比分数字全站要同一支")
 
     # ② 两条视频线共用同一支（2026-08-18 定的，这次换字体不推翻它）
     assert clip._ASS_NAME["num"] == reel.TOPBAR_SCORE_FONT, (
         f"赛后开麦的比分字体是 {clip._ASS_NAME['num']!r}，"
         f"而这条线是 {reel.TOPBAR_SCORE_FONT!r}——两条线分叉了")
+
+    # ③ 「输掉那一盘」的字重，三处必须是同一个数。写三处必分叉，而分叉的
+    #    样子是「同一个账号出去的比分，封面和成片粗细不一样」。
+    weights = {"封面比分板": vp.SCORE_LOSE_WEIGHT,
+               "视频顶栏": reel.TOPBAR_SCORE_LOSE_WEIGHT,
+               "赛后开麦": clip._SCORE_LOSE_WEIGHT}
+    assert len(set(weights.values())) == 1, f"输掉那一盘的字重分叉了：{weights}"
+    assert vp.SCORE_LOSE_WEIGHT < vp.SCORE_WIN_WEIGHT, (
+        f"输掉那一盘的字重 {vp.SCORE_LOSE_WEIGHT} 不比赢的 "
+        f"{vp.SCORE_WIN_WEIGHT} 细——账号所有者要的是「再细一点，和加粗的区分开」")
 
     # ③ 加粗真的生效：真渲一帧量墨迹宽度
     import shutil  # noqa: PLC0415
@@ -11400,7 +11443,8 @@ def test_比分数字全站同一支字体而且加粗真的生效(tmp_path, mon
     pil = pytest.importorskip("PIL.Image")
     fonts = Path("assets/fonts").resolve()
 
-    def ink_width(bold: bool) -> int:
+    def ink(tag: str) -> tuple[int, int]:
+        """渲一帧，返回（墨迹像素数，外接框宽度）。"""
         head = ("[Script Info]\nScriptType: v4.00+\nPlayResX: 1080\nPlayResY: 200\n"
                 "[V4+ Styles]\nFormat: Name, Fontname, Fontsize, PrimaryColour, "
                 "OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, "
@@ -11410,11 +11454,11 @@ def test_比分数字全站同一支字体而且加粗真的生效(tmp_path, mon
                 "&H00FFFFFF,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,0,0,5,"
                 "10,10,10,1\n[Events]\nFormat: Layer, Start, End, Style, Name, "
                 "MarginL, MarginR, MarginV, Effect, Text\n")
-        tag = reel.TOPBAR_SCORE_BOLD_ASS if bold else reel.TOPBAR_SCORE_UNBOLD_ASS
-        ass = tmp_path / f"n{int(bold)}.ass"
+        stem = tag.strip("{}").replace("\\", "")
+        ass = tmp_path / f"n{stem}.ass"
         ass.write_text(head + "Dialogue: 0,0:00:00.00,0:00:02.00,T,,0,0,0,,"
                        f"{tag}6 3 6 4 6 0\n", "utf-8")
-        png = tmp_path / f"n{int(bold)}.png"
+        png = tmp_path / f"n{stem}.png"
         subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "lavfi",
                         "-i", "color=c=black:s=1080x200:d=1",
                         "-vf", f"subtitles={ass}:fontsdir={fonts}",
@@ -11422,15 +11466,25 @@ def test_比分数字全站同一支字体而且加粗真的生效(tmp_path, mon
         a = np.asarray(pil.open(png).convert("L"))
         xs = np.where(a.max(axis=0) > 120)[0]
         assert xs.size, "一个数字都没渲出来"
-        return int(xs[-1] - xs[0] + 1)
+        return int((a > 120).sum()), int(xs[-1] - xs[0] + 1)
 
-    plain, bold = ink_width(False), ink_width(True)
-    assert bold - plain >= 4, (
-        f"给比分数字挂 `\\b1` 之后墨迹宽度 {plain}px → {bold}px，差 "
-        f"{bold - plain}px——**加粗没有生效**。\n"
-        f"libass 解不到 {reel.TOPBAR_SCORE_FONT!r} 的 Bold face 时既不报错也不合成，"
-        "写上去只会得到一个「看起来做了、其实没做」的加粗。\n"
+    light_ink, _ = ink(reel.TOPBAR_SCORE_LIGHT_ASS)
+    plain_ink, _ = ink(reel.TOPBAR_SCORE_PLAIN_ASS)
+    bold_ink, _ = ink(reel.TOPBAR_SCORE_BOLD_ASS)
+    # 参考图量出来「粗/细」的墨迹比是 2.14；我们原来 Regular vs Bold 只有 1.5，
+    # 换成 Light vs Bold 之后实测 2.2。留 1.8 当地板：够分得开，又不至于
+    # 一换字体就红。
+    assert bold_ink / light_ink >= 1.8, (
+        f"`{reel.TOPBAR_SCORE_BOLD_ASS}` 的墨 {bold_ink} ÷ "
+        f"`{reel.TOPBAR_SCORE_LIGHT_ASS}` 的墨 {light_ink} = "
+        f"{bold_ink / light_ink:.2f}，**粗细没分开**。\n"
+        f"libass 解不到 {reel.TOPBAR_SCORE_FONT!r} 的 Bold / Light 那一档时"
+        "既不报错也不合成，写上去只会得到一个「看起来做了、其实没做」的粗细。\n"
         "换比分字体之前先跑这条判据。")
+    assert light_ink < plain_ink < bold_ink, (
+        f"三档字重没有各就各位：Light {light_ink} / 常规 {plain_ink} / "
+        f"Bold {bold_ink}。连字符和抢七小分走的是中间那一档，"
+        "它塌到任何一头都会被读成「这一盘赢了/输了」。")
 
 
 def test_顶栏比分数字切到赛后开麦同一支字体():
