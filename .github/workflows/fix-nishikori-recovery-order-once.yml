@@ -1,0 +1,41 @@
+name: fix-nishikori-recovery-order-once
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/fix-nishikori-recovery-order-once.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: "${{ github.event.head_commit.message != 'ops: 清理锦织圭恢复顺序修复工作流' }}"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: 先安装项目，再跑恢复流程测试
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          path = Path('.github/workflows/recover-nishikori-artifact-push-once.yml')
+          text = path.read_text(encoding='utf-8')
+          old = '          pip install -q pytest\n          pytest -q tests/test_interview_official_farewell_no_lead.py\n'
+          new = '          pip install -q -e . pytest\n          pytest -q tests/test_interview_official_farewell_no_lead.py\n'
+          if old not in text:
+              raise SystemExit('恢复工作流中的测试安装片段已变化，停止自动改写')
+          path.write_text(text.replace(old, new, 1), encoding='utf-8')
+          PY
+      - name: 提交并清理一次性修复器
+        run: |
+          git config user.name "ChatGPT"
+          git config user.email "noreply@openai.com"
+          git rm .github/workflows/fix-nishikori-recovery-order-once.yml
+          git add .github/workflows/recover-nishikori-artifact-push-once.yml
+          git commit -m "ops: 清理锦织圭恢复顺序修复工作流"
+          source tools/git_push_retry.sh
+          push_with_rebase_retry main 5
