@@ -2474,10 +2474,10 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
         no_inset = [i + 1 for i, g in enumerate(spec["segments"])
                     if not g.get("image") and not g.get("score_inset")]
         if no_inset:
-            print(f"    [score] 第 {no_inset} 段没开 score_inset——带式的居中"
-                  "窗口会把记分条的名字裁掉；回放/切走的段不开是对的"
-                  "（那时贴回来的是一块球场），比赛画面的段写 true 就行，"
-                  "右缘渲染时会按这一段板的实际宽度现量")
+            print(f"    [score] 第 {no_inset} 段不回贴——那几段的左下角就是"
+                  "转播原样露出来的板（居中窗口会把名字裁掉）。回放/切走/"
+                  "全屏图形的段本来就该这样；美网那道闸要求它们各自写清"
+                  "`_score_inset_why`，所以这一行只是让人一眼看见有哪几段")
     # ⭐ 账号所有者 2026-08-28：「**美网期间的比赛都用这个比例做视频**」。
     # 美网比赛的 reel（topbar.line1 写着美网/US Open 的那种）一律带式——
     # 只记在对话里拦不住下一个会话，自动链也会自己产美网的片子，所以落成
@@ -2505,6 +2505,53 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
                 "真要开 score_inset 回贴的段也读它：\n"
                 '  "scorebox": [104, 888, 736, 978]（五盘满列宽度）\n'
                 "主赛第一条先拿 probe 的 scorebox_guess 对一眼再沿用。")
+        # ⭐⭐ 账号所有者 2026-08-29：「**以后美网期间的「赛场之上」比赛视频
+        # 比分板都按这个方式处理**」——也就是「板的左缘上下沿取顶层 scorebox、
+        # 右缘渲染时逐段现量、原比例贴回左下」这一整套。
+        #
+        # 在这之前 `score_inset` 漏写只**报一句**（上面那条 [score] 提示），
+        # 而带式的居中窗口固定切掉板左边 208px（正是名字那一段）——漏写的样子
+        # 就是账号所有者点过的那句「你这比分板没展示全啊」，而它埋在几十行
+        # dry-run 输出中间。所以现在**每一段都要显式表态**：
+        #
+        #   true         → 主路：回贴，右缘现量
+        #   false        → 板真的不在这一段（回放/切走/全屏图形），要写理由
+        #   {"x2": N}    → 现量不准，人钉死，要写理由
+        #
+        # 理由写进同一段的 `_score_inset_why`。和 `mixed_fps` / `silent_source`
+        # / `_frame_why` 一个形状：把「想清楚了」和「忘了写」分开——两者在
+        # 产物上长得一模一样（都是左下角一截被裁掉名字的板）。
+        undeclared, unclaimed = [], []
+        for i, raw in enumerate(spec["segments"]):
+            if raw.get("image"):
+                # 整屏证据段跳过，**为的是不和另一道闸打架**：那道闸把
+                # `score_inset` 列进了 image 段「不认的窗口类字段」，不跳过
+                # 的话这儿会去要一个那边禁止写的键。今天这一支其实走不到
+                # （image 段写死 fit=contain，而带式拒绝 contain），
+                # 哪天带式支持了整屏证据段，它就成了真路。
+                continue
+            if "score_inset" not in raw:
+                undeclared.append(i + 1)
+            elif (raw["score_inset"] is not True
+                    and not str(raw.get("_score_inset_why", "")).strip()):
+                unclaimed.append(i + 1)
+        if undeclared or unclaimed:
+            raise ReelError(
+                "美网的「赛场之上」每一段比赛画面都要**显式表态** "
+                "`score_inset`（账号所有者 2026-08-29：「以后美网期间的"
+                "「赛场之上」比赛视频比分板都按这个方式处理」）——"
+                "带式的居中窗口固定切掉板左边 208px（名字那一段），"
+                "漏写的样子就是「比分板没展示全」，而它只在 dry-run 里"
+                "报一句，埋在几十行输出中间。\n"
+                + (f"  第 {undeclared} 段一个字都没写：比赛画面写 "
+                   '`"score_inset": true`（右缘渲染时现量），板真的不在'
+                   "画面里的（回放/切走/全屏图形）写 `false`。\n"
+                   if undeclared else "")
+                + (f"  第 {unclaimed} 段写了 false 或 x2 但没说为什么："
+                   "同一段加一行 `\"_score_inset_why\"`——false 要说清板"
+                   "为什么不在（哪一刀之后收走的），x2 要说清现量哪儿不准。\n"
+                   if unclaimed else "")
+                + "账在 docs/us-open-scoreboard-aspect.md。")
     bad_motion = [i + 1 for i, s in enumerate(segments) if s.inset
                   and str(s.inset.get("motion", "")) not in {"", "editorial"}]
     if bad_motion:
