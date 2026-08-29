@@ -15,6 +15,7 @@ on:
     paths:
       - "requests/interviews/*.json"
       - "tools/build_interview_request.py"
+      - "tools/draft_interview_spec.py"
       - "tools/interview_source_gate.py"
       - "tools/attach_interview_lead_in.py"
       - ".github/workflows/interview-auto-render.yml"
@@ -42,6 +43,7 @@ jobs:
             data
             docs
             requests
+            skills
             specs
             src
             tests
@@ -102,6 +104,10 @@ jobs:
           python-version: "3.11"
           cache: pip
 
+      - name: 先校验转写与翻译脚本语法
+        if: steps.gate.outputs.work == 'true'
+        run: python -m py_compile tools/draft_interview_spec.py tools/build_interview_request.py
+
       - name: 把人工请求的产物格加回稀疏范围
         if: steps.gate.outputs.work == 'true'
         run: |
@@ -110,6 +116,17 @@ jobs:
             [ -n "$slug" ] || continue
             git sparse-checkout add "output/interviews/$slug"
           done < /tmp/request-slugs.txt
+
+      - name: 校验赛后开麦制作规范资源
+        if: steps.gate.outputs.work == 'true'
+        run: test -f skills/tennis-interview-production/SKILL.md
+
+      - name: 装转写与字幕排版字体
+        if: steps.gate.outputs.work == 'true'
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends fonts-noto-core
+          test -f /usr/share/fonts/truetype/noto/NotoSans-Regular.ttf
 
       - name: 装依赖
         if: steps.gate.outputs.work == 'true'
