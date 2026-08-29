@@ -3326,6 +3326,69 @@ run 30973785219 就卡在「安装 Chromium」上。
 一条要装 ffmpeg/字体的工作流，`source` 这份脚本就自动带上缓存和重试，不用
 再靠人记得抄一遍。
 
+#### ⭐⭐ 2026-08-29 第四次变体：**`source` 了共享脚本，却没调 `ensure_ffmpeg`**
+
+上面那句「`source` 这份脚本就自动带上」写得太乐观了——**`source` 只是把函数
+定义进来，调不调是另一回事**。`oncourt-interviews.yml` 的 `draft` job 写着
+
+    source tools/ci_apt_install.sh
+    apt_install_cached fonts-noto-core      # ← 只有字体，没有 ensure_ffmpeg
+
+而 `draft_interview_spec.py` 抽音频走的是 `yt-dlp -x --audio-format mp3`。
+⚠️ **`-x` 是 postprocessing，转 mp3 一律要 ffmpeg 二进制，和源是不是 HLS 无关**
+——我第一眼按「候选换成 Tennis TV 的 HLS 才需要 ffmpeg」去解释，那是错的：
+这个工具从上线起每一次抽音频都要它。
+
+**它躺了很久没被发现，因为 `draft` 是矩阵 job——没有候选时压根不跑。**
+2026-08-27 第一批真候选进来当天就连炸 5 趟（run 138~142，40% 失败率告警）。
+⚠️ **「前面十几趟全绿」不是它对，是这条路一次都没走到**——和 #613
+（reel-auto-ready 的 `skills` 检出，pending 空了 12 趟）是同一个形状，
+只是那次空的是 pending、这次空的是矩阵。**走不到的路怎么查都是绿的。**
+
+⚠️⚠️ **同一类风险在工作流里真正被跑的有两处，当时只有一处是对的**：
+`interview-model-benchmark.yml::compare`（跑 `benchmark_interview_models.py`）
+在 #608（「ci: install ffmpeg for interview benchmark」）补过 `ensure_ffmpeg`，
+而 `oncourt-interviews.yml::draft` 漏着。**修那一个不等于修了那一类**——本文件
+「失败之后要防住那一类，不是那一个」记的正是这件事，而 #608 只补了自己那一处、
+**没落判据**，所以这一处只能等它自己炸出来。
+
+⚠️ **顺带记一次我自己在同一轮里犯的**：第一版注释写的是「同一个工具的三个
+调用方」——那是从 `grep 哪些工作流提到 draft_interview_spec.py` 推的，而其中
+两处正是下面那张表里的误报（`on: paths:` 触发块、`py_compile`）。**我刚写完
+「判据宁可窄不可宽」，转手就把宽口径的结论写进了注释。** 真去量：这个工具
+真正被跑的只有 `oncourt::draft` 一处。**一句没量准的话写进注释，下一个人会
+拿它当判据用。**
+
+判据 `test_会下载媒体的工作流都要装ffmpeg` **自己从 `tools/` 推，不维护白名单**：
+工具源码（去 docstring 去注释）里出现 `-x`／`--audio-format`／
+`--merge-output-format` 或直接调 ffmpeg/ffprobe，就算「要 ffmpeg」。
+⚠️ **三处收窄都是量出来的，第一版扫出 4 个缺口、其中 3 个是误报**：
+
+| 误报 | 为什么 |
+|---|---|
+| `interview-auto-render.yml::push` / `benchmark::push` | 那是 `on: push: paths:` 的**触发块**，里面列着 `- "tools/draft_interview_spec.py"`，而 GitHub 把它叫 `push`——**正好和一个真 job 名撞上**。所以要**只看 `jobs:` 以后**（CLAUDE.md 早记过 `ci.yml` 的 `paths-ignore` 同一个坑） |
+| `interview-auto-render.yml::auto` | 它只 `py_compile` 那个工具（**编译不运行**），不需要二进制 |
+| `probe-blocked.yml::probe` | `check_crowd_rise.py` 走 `imageio_ffmpeg.get_ffmpeg_exe()`，pip 包自带便携版 |
+
+**照第一版那个宽口径去「修」，会给三个不需要的 job 各装一次 ffmpeg，而且判据
+从此常年误报**——又一次「判据宁可窄，不可宽」。
+
+顺带把预检补上（`_missing_media_tools()`，排在下载之前）：缺依赖报出来的样子是
+
+    ⚠️ Fery Enjoying the Winston-Salem Nights: RuntimeError: yt-dlp 音频下载
+    失败（exit 1）：… ERROR: Postprocessing: ffprobe and ffmpeg not found
+
+——真因那半句埋在 1800 字符的 yt-dlp 尾巴里，外面套着一句「这条源失败了」，
+而上一行刚打印「Tennis TV 解出 HLS」，**读起来完全像那条源的问题**。判据钉三头
+（认得出缺谁／**排在干活之前**／报错要说出路），三个方向分别反向验证过。
+
+⚠️ **反向验证时先踩了一次「红的原因是错的」**：拆掉预检，测试确实红了，
+但红的是 `ModuleNotFoundError: No module named 'draft_interview_spec'`
+——我在测试函数里裸 `import`，而 `tools/` 不在 `sys.path` 上，**完整跑时是被
+同一进程里另一个测试文件顺手插过才没暴露**（这个坑本文件在 #562 记过一次）。
+也就是说那条测试**单独跑本来就是坏的**，而我差点把这次「红」当成判据生效。
+改用文件里现成的 `tool` fixture 之后，三次反向验证才各红在自己的断言行。
+
 ### ⭐ 选段的机械判据早就算好并落库了，只是没人在写 spec 的时候用
 
 账号所有者 2026-08-05 问「返工这块还有什么好的办法做约束」。查下来答案很难看：
