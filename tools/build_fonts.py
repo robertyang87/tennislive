@@ -135,6 +135,14 @@ def build(workdir: Path) -> None:
         subsetter.populate(text=SCORE_CHARSET)
         subsetter.subset(font)
         _rename(font, SCORE_FAMILY, subfamily, weight)
+        # ⚠️ **不许每次重建都换一个内嵌时间戳。** `subset.Options` 那个
+        # `recalc_timestamp=False` 只管子集化那一步，`TTFont.save()` 另有一个
+        # `recalcTimestamp`，默认 True——不关掉的话同样的输入会生出字节不同的
+        # 文件（实测 19 张表里只有 `head` 不同，差的就是 `modified` 和跟着它
+        # 变的 `checkSumAdjustment`）。这三个文件是**提交进仓库的二进制**，
+        # 每次重建都换一遍字节，等于每次 rebuild 都往 git 里塞 200 KB 噪音，
+        # 而且「重新生成一遍看看对不对得上」这个检查也就没法做了。
+        font.recalcTimestamp = False
         out = OUT / out_name
         font.save(out)
         print(f"{out_name}: {out.stat().st_size / 1024:.0f} KB")

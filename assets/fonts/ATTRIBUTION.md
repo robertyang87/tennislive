@@ -71,4 +71,9 @@
     name installed, fontconfig's choice would be undefined — and picking the
     wrong one does not fail, it just quietly changes how the digits look.
 - Do not edit by hand; re-derive with `python tools/build_fonts.py`
-  (`SCORE_BUILDS`).
+  (`SCORE_BUILDS`). The build is **byte-reproducible**: `font.recalcTimestamp`
+  is turned off before saving, so rebuilding from the same source produces
+  identical files. Without that the only difference is `head.modified` (and the
+  checksum that follows it) — verified by diffing all 19 tables — which would
+  churn 200 KB of binary into git on every rebuild and make
+  "regenerate and compare" useless as a check.

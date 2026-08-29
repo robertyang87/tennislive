@@ -453,3 +453,89 @@ def test_比分板底下那层要是一条长坡不许陡到看得出边(tmp_pat
     assert alpha[-1] >= 0.90, (
         f"画布最底下 alpha 只有 {alpha[-1]:.2f}——参考图那儿量到的是面板色本身"
         "（L=19，alpha≈0.99）。太浅的话输家那一行的白字托不住。")
+
+
+def test_五盘也放得下(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
+    """五盘是这块板最紧的一档——**而紧到什么程度只有渲出来才看得见**。
+
+    账号所有者 2026-08-29：「同时看下如果是五盘数据能否放下」。
+
+    五盘那一档名字只剩 300px（三盘 492、两盘 588），而且末一盘可能带一个
+    **两位数的抢七小分**（`7-6(10)`），那个上标是绝对定位、伸到列与列之间的
+    空当里——最后一列往右伸就直接顶着板子的右沿。两头都不在 HTML 字符串里
+    看得出来，也不在 `score_cn_px` 的返回值里看得出来。
+
+    实测（1080×1440，Chromium）——
+
+        库里最长的名字 `胡安·曼努埃尔·塞伦多洛（51）`（12 个字）配五盘：
+        字号压到下限 28px，名字墨迹到 x=478，名字那一格右边界 500，
+        第一个盘分从 531 起 → **还剩 53px**
+        末一盘 `7-6(10)`：输家那一行墨迹到 x=988，板子右沿 1010 → **还剩 22px**
+
+    ⚠️ **`score_cn_px` 的告警在这一档是保守的**：它算出「要 27px 才放得下」
+    并按下限 28px 渲，可渲出来根本没顶上去。所以那句告警只说「已经最小了，
+    自己看一眼」，不说「会顶到盘分上」——**一句没量过的话写进告警，下一个人
+    会拿它当判据**。
+
+    判据钉两头，缺一头都不算：
+
+    1. **名字不许压到盘分上**——只钉这一头的话，把盘分列缩窄也能过
+    2. **末一盘的抢七小分不许伸出板子**——只钉这一头的话，名字压上去照样绿
+    """
+    white = tmp_path / "w.png"
+    Image.new("RGB", (1080, 1440), (255, 255, 255)).save(white)
+    monkeypatch.setattr(versus_poster, "_fetch_match_duration",
+                        lambda source, where: "4:12")
+    vp = versus_poster
+    long_name = "胡安·曼努埃尔·塞伦多洛"      # 库里最长的中文名，12 个字
+    body, css = vp._solo_body({
+        "winner": long_name,
+        # 末一盘带两位数抢七：小分挂在**输**的那个数字上，也就是最后一列
+        "result": "6-4 3-6 7-6(5) 4-6 7-6(10)",
+        "scoreboard": {"court": "Court Philippe-Chatrier",
+                       "duration_source": {"url": "fixture"}},
+        "matchup": [{"name": long_name, "name_en": "J. M. CERUNDOLO",
+                     "country": "ARG", "rank": 51},
+                    {"name": "范德赞德舒尔普", "name_en": "B. VAN DE ZANDSCHULP",
+                     "country": "NED", "rank": 70}],
+        "eyebrow": "赛场之上", "layout": "solo", "hook": "五盘四小时",
+        "portrait": {"image": str(white)},
+    })
+    from tennislive.render.webcards import _font_css  # noqa: PLC0415
+    shot = vp._render_html(
+        f"<!doctype html><meta charset=utf-8>"
+        f"<style>{_font_css()}{css}</style>{body}", tmp_path / "five.jpg")
+
+    px = np.asarray(Image.open(shot).convert("RGB")).astype(int)
+    lum = np.asarray(Image.open(shot).convert("L")).astype(float)
+    # 赢家那条长条的行范围——按藏青底色找，不按写死的 y（钩子几行会让板子上下浮动）
+    navy = ((np.abs(px[:, :, 0] - 0x17) < 26) & (np.abs(px[:, :, 1] - 0x27) < 26)
+            & (np.abs(px[:, :, 2] - 0x86) < 32))
+    rows = np.where(navy.sum(axis=1) > vp.SCORE_BOARD_W * 0.4)[0]
+    assert rows.size, "没找到赢家那条长条——底色改了？"
+
+    def ink_cols(y0: int, y1: int) -> np.ndarray:
+        return np.where((lum[y0:y1] > 200).any(axis=0))[0]
+
+    # 版式里那几个边界，从常量算，不写死
+    board_l = (1080 - vp.SCORE_BOARD_W) // 2
+    name_l = board_l + vp.SCORE_FILL_PAD_L + vp.SCORE_FLAG_W + vp.SCORE_FLAG_GAP
+    name_r = name_l + vp.score_name_avail_px(5)
+    board_r = board_l + vp.SCORE_BOARD_W
+
+    # ① 名字不许压到盘分上：名字那一格右边界之后、第一个盘分之前必须是空的
+    win = ink_cols(rows.min() + 8, rows.max() - 6)
+    in_gap = win[(win > name_r) & (win < name_r + vp.SCORE_FILL_PAD_L)]
+    assert in_gap.size == 0, (
+        f"名字压过了它那一格的右边界（{name_r:.0f}px），"
+        f"墨迹出现在 {in_gap[:6].tolist()}——五盘那一档名字只剩 "
+        f"{vp.score_name_avail_px(5):.0f}px，长名字会顶到盘分上。")
+
+    # ② 末一盘的两位数抢七小分不许伸出板子（输家那一行，板子下面没有底色）
+    lose = ink_cols(rows.max() + 16, rows.max() + 16 + vp.SCORE_ROW_H)
+    assert lose.size, "输家那一行一个字都没渲出来"
+    assert lose.max() <= board_r, (
+        f"输家那一行的墨迹到了 x={lose.max()}，而板子右沿是 {board_r}——"
+        "多半是末一盘那个两位数抢七小分伸出去了。"
+        "`.score-number sup` 是绝对定位、往右伸进列与列之间的空当，"
+        "最后一列没有下一列可伸，只能靠 `SCORE_FILL_PAD_R` 那点余量。")
