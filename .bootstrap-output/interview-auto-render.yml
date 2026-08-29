@@ -1,0 +1,245 @@
+name: interview-auto-render
+
+# 「赛后开麦」自动出片的最后一环：
+# 1) 把自动草稿提升成正式 spec；
+# 2) 把人工指定、身份与赛果已经核实的请求转写/翻译成正式 spec；
+# 3) 补同场比赛结尾与双语现场解说；
+# 4) 只 dispatch 生产契约完整的条目。
+#
+# 微信推送由 interview-clip 渲完后叫醒 auto-push-interview；后者复核 L0/L2、
+# 成片指纹、独立发布账本和海报。这里不把“dispatch 成功”冒充成“已经发布”。
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "requests/interviews/*.json"
+      - "tools/build_interview_request.py"
+      - "tools/interview_source_gate.py"
+      - "tools/attach_interview_lead_in.py"
+      - ".github/workflows/interview-auto-render.yml"
+  schedule:
+    # 每 10 分钟接住新草稿、人工请求、片头重试和 dispatch；避开整点/半点。
+    - cron: "3,13,23,33,43,53 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: interview-auto-render
+  cancel-in-progress: false
+
+jobs:
+  auto:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            data
+            docs
+            requests
+            specs
+            src
+            tests
+            tools
+
+      - name: 没活就早退
+        id: gate
+        run: |
+          set -o pipefail
+          DRAFTS=$(find specs/interviews -maxdepth 1 -name '*.draft.json' | wc -l)
+          REQUESTS=$(python3 tools/build_interview_request.py --count-pending)
+          NEEDS_LEAD=$(python3 - <<'PY'
+          import json
+          from pathlib import Path
+          n = 0
+          for p in Path('specs/interviews').glob('*.json'):
+              if p.name.endswith('.draft.json'):
+                  continue
+              try: d = json.loads(p.read_text(encoding='utf-8'))
+              except Exception: continue
+              op = d.get('opening') or {}
+              n += bool(d.get('requested_content_type') in {'on_court', 'farewell'}
+                        and op.get('kind') == 'none' and not d.get('lead_in'))
+          print(n)
+          PY
+          )
+          python3 tools/pick_interview_renders.py > /tmp/todo.txt 2> /tmp/waiting.txt
+          cat /tmp/todo.txt
+          cat /tmp/waiting.txt >&2
+          READY=$(tail -n +2 /tmp/todo.txt | grep -c . || true)
+          python3 tools/pick_interview_renders.py --stale | tee /tmp/stale.txt
+          if grep -q "（投于" /tmp/stale.txt; then
+            {
+              echo "## ⚠️ 有采访投出去超过 3 小时还没有 render.json（本轮自动重投）"
+              echo ""
+              tail -n +2 /tmp/stale.txt | sed 's/^  /- /'
+            } >> "$GITHUB_STEP_SUMMARY"
+          fi
+          if [ -s /tmp/waiting.txt ]; then
+            {
+              echo "## ⏳ 等自动补齐 / 例外复核（不 dispatch）"
+              echo ""
+              tail -n +2 /tmp/waiting.txt | sed 's/^  /- /'
+            } >> "$GITHUB_STEP_SUMMARY"
+          fi
+          if [ "$DRAFTS" -eq 0 ] && [ "$REQUESTS" -eq 0 ] \
+             && [ "$READY" -eq 0 ] && [ "$NEEDS_LEAD" -eq 0 ]; then
+            echo "[早退] 没有草稿、人工请求、待补片头或待 dispatch 的正式 spec。"
+            echo "work=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "草稿=$DRAFTS，人工请求=$REQUESTS，待 dispatch=$READY，待同场冷开场=$NEEDS_LEAD"
+            echo "work=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/setup-python@v5
+        if: steps.gate.outputs.work == 'true'
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: 把人工请求的产物格加回稀疏范围
+        if: steps.gate.outputs.work == 'true'
+        run: |
+          python3 tools/build_interview_request.py --pending-slugs | tee /tmp/request-slugs.txt
+          while IFS= read -r slug; do
+            [ -n "$slug" ] || continue
+            git sparse-checkout add "output/interviews/$slug"
+          done < /tmp/request-slugs.txt
+
+      - name: 装依赖
+        if: steps.gate.outputs.work == 'true'
+        run: pip install -q -e . "yt-dlp[default]>=2026.7.4" faster-whisper
+
+      - name: 启动 YouTube PO token provider
+        if: steps.gate.outputs.work == 'true'
+        continue-on-error: true
+        timeout-minutes: 3
+        run: |
+          pip install -q bgutil-ytdlp-pot-provider
+          docker run --name bgutil-pot -d -p 4416:4416 \
+            brainicism/bgutil-ytdlp-pot-provider
+          for i in $(seq 1 25); do
+            curl -fsS http://127.0.0.1:4416/ping >/dev/null && exit 0
+            sleep 2
+          done
+          docker logs bgutil-pot 2>&1 | tail -20 || true
+          echo "::warning::PO token provider 未就绪；继续用 cookies/client 梯子尝试"
+          exit 1
+
+      - name: 提升草稿为正式 spec（查赛果补 winner/matchup）
+        if: steps.gate.outputs.work == 'true'
+        run: |
+          set -o pipefail
+          python tools/promote_interview_draft.py --write | tee /tmp/promote.log
+
+      - name: 落 cookies（正文转写与同场官方集锦字幕）
+        if: steps.gate.outputs.work == 'true'
+        id: lead_cookies
+        env:
+          YT_COOKIES_TXT: ${{ secrets.YT_COOKIES_TXT }}
+        run: |
+          if [ -n "$YT_COOKIES_TXT" ]; then
+            printf '%s' "$YT_COOKIES_TXT" > "$RUNNER_TEMP/yt-cookies.txt"
+            echo "path=$RUNNER_TEMP/yt-cookies.txt" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: 人工指定请求转写、切行并逐行翻译
+        if: steps.gate.outputs.work == 'true'
+        env:
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          YT_COOKIES: ${{ steps.lead_cookies.outputs.path }}
+        run: |
+          set -o pipefail
+          python tools/build_interview_request.py --write | tee /tmp/request-build.log
+
+      - name: 自动配同场比赛结尾与解说双语字幕
+        if: steps.gate.outputs.work == 'true'
+        env:
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          YT_COOKIES: ${{ steps.lead_cookies.outputs.path }}
+        run: |
+          set -o pipefail
+          python tools/attach_interview_lead_in.py --write | tee /tmp/lead-in.log
+
+      - name: 提交生成与提升结果
+        if: steps.gate.outputs.work == 'true'
+        run: |
+          git config user.name "Claude"
+          git config user.email "noreply@anthropic.com"
+          git add specs/interviews
+          if [ -f /tmp/request-slugs.txt ]; then
+            while IFS= read -r slug; do
+              [ -n "$slug" ] || continue
+              if [ -f "output/interviews/$slug/cap_asr.json3" ]; then
+                git add -f "output/interviews/$slug/cap_asr.json3"
+              fi
+            done < /tmp/request-slugs.txt
+          fi
+          if git diff --cached --quiet; then
+            echo "没有新请求或草稿被生成/提升。"
+            exit 0
+          fi
+          python tools/check_staged_file_sizes.py
+          git commit -m "interview: 自动生成赛后开麦正式 spec"
+          source tools/git_push_retry.sh
+          if ! push_with_rebase_retry "${GITHUB_REF_NAME}" 5; then
+            echo "::error::生成结果推不上去——请求/草稿还在，下一趟会重来"
+            exit 1
+          fi
+
+      - name: dispatch 未 render 的正式 spec（每 slug 一个 run，并行）
+        if: steps.gate.outputs.work == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -o pipefail
+          python tools/pick_interview_renders.py | tee /tmp/todo.txt
+          mapfile -t SLUGS < <(tail -n +2 /tmp/todo.txt | grep -v '^$' || true)
+          FAILED=()
+          for slug in "${SLUGS[@]}"; do
+            RECEIVED_AT=$(date -u +%FT%TZ)
+            echo "[dispatch] interview-clip render $slug"
+            if gh workflow run interview-clip.yml --ref main \
+              -f "slug=$slug" -f mode=render -f "received_at=$RECEIVED_AT"; then
+              python tools/pick_interview_renders.py --mark-one "$slug" --at "$RECEIVED_AT"
+            else
+              FAILED+=("$slug")
+            fi
+          done
+          if [ "${#FAILED[@]}" -gt 0 ]; then
+            {
+              echo "## ⚠️ 有采访 dispatch 失败（没记状态，下一趟会重投）"
+              echo ""
+              for s in "${FAILED[@]}"; do echo "- $s"; done
+            } >> "$GITHUB_STEP_SUMMARY"
+            echo "::warning::${#FAILED[@]} 条 dispatch 失败：${FAILED[*]}"
+          fi
+          git add data/interview_render_dispatched.json
+          if git diff --cached --quiet; then
+            echo "状态没有变化。"
+            exit 0
+          fi
+          git config user.name "Claude"
+          git config user.email "noreply@anthropic.com"
+          python tools/check_staged_file_sizes.py
+          git commit -m "data: interview render dispatch 记录"
+          source tools/git_push_retry.sh
+          if ! push_with_rebase_retry "${GITHUB_REF_NAME}" 5; then
+            echo "::error::dispatch 状态推不上去——这批 slug 下一趟会被重投"
+            echo "::error::（interview-clip 的 concurrency 按 slug 去重，代价是把正在跑的那趟掐了重跑）"
+            exit 1
+          fi
+
+      - name: 顺手叫醒挨饿的编排/提升班次
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          source tools/nudge_stale_ticks.sh
+          nudge_if_stale orchestrate.yml 20 -f apply=true
+          nudge_if_stale reel-auto-ready.yml 20
