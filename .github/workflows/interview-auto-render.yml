@@ -121,11 +121,27 @@ jobs:
         if: steps.gate.outputs.work == 'true'
         run: test -f skills/tennis-interview-production/SKILL.md
 
+      # ⚠️ 这一步不许裸调 apt-get：重试/超时/缓存那套逻辑只有一份
+      # （`tools/ci_apt_install.sh`），裸调既绕开缓存、又没有超时——实测同一步
+      # 能从 18 秒变成 13 分 42 秒，而 `-qq` 让它卡的时候一个字都不吭。
+      - name: 缓存 apt 包（字幕排版字体，绕开镜像抽风）
+        if: steps.gate.outputs.work == 'true'
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/apt-archives
+            ~/.cache/apt-lists
+          # 滚动键：按稳定前缀恢复最近一份，跑完用本次 run_id 回写——固定钥匙
+          # 的话第一趟只攒下一部分包，之后再也覆盖不掉同名缓存。
+          key: apt-pkgs-${{ runner.os }}-24.04-interview-auto-render-v1-${{ github.run_id }}
+          restore-keys: |
+            apt-pkgs-${{ runner.os }}-24.04-interview-auto-render-v1-
       - name: 装转写与字幕排版字体
+        timeout-minutes: 15
         if: steps.gate.outputs.work == 'true'
         run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y --no-install-recommends fonts-noto-core
+          source tools/ci_apt_install.sh
+          apt_install_cached fonts-noto-core
           test -f /usr/share/fonts/truetype/noto/NotoSans-Regular.ttf
 
       - name: 装依赖
