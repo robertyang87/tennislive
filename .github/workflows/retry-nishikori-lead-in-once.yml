@@ -1,0 +1,40 @@
+name: retry-nishikori-lead-in-once
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/retry-nishikori-lead-in-once.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: 点名自动补同场冷开场
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh workflow run interview-auto-render.yml --ref main
+          echo "已点名 interview-auto-render：补同场赛点冷开场与双语现场解说"
+
+      - name: 删除一次性工作流
+        if: always()
+        run: |
+          git pull --rebase origin main
+          git config user.name "ChatGPT"
+          git config user.email "noreply@openai.com"
+          git rm .github/workflows/retry-nishikori-lead-in-once.yml
+          git commit -m "ops: 清理锦织圭补片头一次性工作流"
+          source tools/git_push_retry.sh
+          push_with_rebase_retry main 5
