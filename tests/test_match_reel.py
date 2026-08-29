@@ -13049,6 +13049,56 @@ def test_记分条按实际大小裁原比例贴回左下角(tmp_path, capsys):
         reel.CROP_W, reel.CROP_H, reel.CROP_Y, reel.LAYOUT = saved
 
 
+# ⭐⭐ 走**烧进片子**那条路的 spec。账号所有者 2026-08-29 在两条路里选了
+# 「平台曲库」——成片不带音乐，上传视频号／抖音之后在它们自己的曲库里加。
+# 所以这张表**现在是空的**，加一条就是一次看得见的决定（要自己解决授权，
+# 而且那份授权只对这个号成立）。整段账在 CLAUDE.md
+# 「背景音乐走平台曲库，不烧进片子」。
+_MUSIC_BURNED_IN: set[str] = set()
+
+
+def test_背景音乐默认走平台曲库不烧进片子():
+    """账号所有者 2026-08-29：在「A 烧进片子 / B 平台曲库」两条路里选了 **B**。
+
+    B 的形状是：成片一路**不带音乐**，上传视频号／抖音之后在**平台自己的
+    曲库**里加 BGM——不用重渲、不用自己找授权，而那份授权是平台拿的
+    （视频号的曲库由 QQ 音乐供）。⚠️ 抖音那份是「限站内自用」，所以 B 是把
+    风险压得很低，不是压到零，也不跟着片子换平台走。
+
+    混音那套实现（`music_chain` / `music_problem` / `MUSIC_GAIN_PCT`）**留着
+    不删**——它是 A 的现成能力。可留着的东西会被下一个人当成「可以顺手打开的
+    开关」，而这条线默认根本不该走到那儿。所以这条判据钉两头：
+
+    ① 存量一条 spec 都不许带 `music`（真要走 A，先把 slug 加进
+       `_MUSIC_BURNED_IN`——那一刻就是一次看得见的决定，不是手滑）
+    ② 缺 `_license` 时的报错要**先说 B 那条路**：十有八九「补上这个字段」
+       是错的答案，「不加音乐」才是。只教人补字段的报错会把人推去找授权
+
+    ⚠️ 豁免表自己也要有判据（这个仓库里「写错一个名字，豁免就成了一盏恒真的
+    绿灯」栽过），所以表里每个 slug 必须真的存在、真的还带着 `music`。
+    """
+    reel = _reel()
+
+    burned = set()
+    for path in sorted(Path("specs/reels").glob("*.json")):
+        spec = json.loads(path.read_text(encoding="utf-8"))
+        if spec.get("music") is not None:
+            burned.add(path.stem)
+    assert burned <= _MUSIC_BURNED_IN, (
+        f"这几条 spec 把背景音乐烧进了片子：{sorted(burned - _MUSIC_BURNED_IN)}。\n"
+        "账号所有者 2026-08-29 选的是「平台曲库」那条路——成片不带音乐，"
+        "上传视频号／抖音之后在它们自己的曲库里加。真要走烧进片子那条，"
+        "先把 slug 加进 _MUSIC_BURNED_IN 并写清授权来路。")
+    assert _MUSIC_BURNED_IN <= burned, (
+        f"豁免表里这几个 slug 已经不带 music 了：{sorted(_MUSIC_BURNED_IN - burned)}。"
+        "一个过期的豁免就是一盏恒真的绿灯，删掉它。")
+
+    problem = reel.music_problem({"music": {"file": "tools/build_match_reel.py"}})
+    assert problem and "曲库" in problem, (
+        "缺 `_license` 的报错要先把「平台曲库」那条路说出来——只教人补字段，"
+        f"读的人会去找授权，而正确答案多半是「不加」。实际报的是：{problem!r}")
+
+
 def test_score_inset的形状校验和scorebox的死键闸(capsys):
     """`score_inset` / `scorebox` 的形状规矩全在 parse_segments（--dry-run
     0.2 秒就报，不用等下载）：
