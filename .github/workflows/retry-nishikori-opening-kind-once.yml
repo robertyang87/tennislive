@@ -1,0 +1,48 @@
+name: retry-nishikori-opening-kind-once
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/retry-nishikori-opening-kind-once.yml"
+
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  patch-and-render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 2
+          sparse-checkout: |
+            .github
+            specs
+            tools
+      - name: 纠正 opening 类型
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('specs/interviews/nishikori-sakamoto-us-open-2026-q3-farewell.json')
+          d=json.loads(p.read_text(encoding='utf-8'))
+          d['opening']={'kind':'none','why':'正文官方告别仪式源片本身没有比赛画面；冷开场已由lead_in显式补入美网官方现场主持人开场。'}
+          p.write_text(json.dumps(d,ensure_ascii=False,separators=(',',':'))+'\n',encoding='utf-8')
+          PY
+      - name: 提交并点名重跑
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name "ChatGPT"
+          git config user.email "noreply@openai.com"
+          git rm .github/workflows/retry-nishikori-opening-kind-once.yml
+          git add specs/interviews/nishikori-sakamoto-us-open-2026-q3-farewell.json
+          git commit -m "content: 锦织圭告别片纠正开场类型"
+          source tools/git_push_retry.sh
+          push_with_rebase_retry main 5
+          sleep 3
+          gh workflow run interview-clip.yml --ref main -f slug=nishikori-sakamoto-us-open-2026-q3-farewell -f mode=render -f received_at="$(date -u +%FT%TZ)"
