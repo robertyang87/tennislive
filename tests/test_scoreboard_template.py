@@ -401,8 +401,15 @@ def test_比分板底下那层要是一条长坡不许陡到看得出边(tmp_pat
 
     - **画布上半必须基本没被压暗**——只钉「坡够长」的话，把整幅铺一层灰
       也能得到一条很长的坡，而那会把人脸一起压掉。
-    - **末端要接近不透明**——参考图底部量到 L=19，就是面板色本身。只钉上面
-      两条的话，一条又长又浅的坡也能过，而那托不住比分板上的白字。
+    - **末端要够暗**——只钉上面两条的话，一条又长又浅的坡也能过，而那托不住
+      比分板上的白字（输家那一行和场地/用时那一行直接压在照片上，赢家那一行
+      有实心藏青条，永远不受影响）。
+      ⚠️ **这一头 2026-08-29 从 0.90 降到 0.70**：账号所有者「背景底色可以再
+      透明些」，`SCORE_PANEL_END_ALPHA` 从参考图那档 1.0 降到 0.78。
+      **0.70 这个地板是算出来的，不是拍的**——白字压在最坏的底（纯白照片）上，
+      合成底色 `L = 255(1−a) + 18a`，要拿到 WCAG 4.5:1 需要 `L ≤ 119`，
+      也就是 `a ≥ 0.58`；留一档余量取 0.70。这里量到的是**合成值**（这层底
+      ＋ 封面自己那条 scrim 的底边），所以它比常量本身高。
     """
     white = tmp_path / "white.png"
     Image.new("RGB", (1080, 1440), (255, 255, 255)).save(white)
@@ -450,9 +457,10 @@ def test_比分板底下那层要是一条长坡不许陡到看得出边(tmp_pat
     assert middle < 0.15, (
         f"坡上方那一段最暗处 alpha {middle:.2f}——这层底爬到人脸上去了。\n"
         "坡要长，但不能靠「整幅铺一层灰」来凑长。")
-    assert alpha[-1] >= 0.90, (
-        f"画布最底下 alpha 只有 {alpha[-1]:.2f}——参考图那儿量到的是面板色本身"
-        "（L=19，alpha≈0.99）。太浅的话输家那一行的白字托不住。")
+    assert alpha[-1] >= 0.70, (
+        f"画布最底下 alpha 只有 {alpha[-1]:.2f}——白字压在纯白照片上时，"
+        "要拿到 4.5:1 需要 alpha ≥ 0.58，这里留一档余量取 0.70。\n"
+        "账号所有者要的是「再透明些」，不是「透到托不住字」。")
 
 
 def test_五盘也放得下(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
@@ -468,9 +476,14 @@ def test_五盘也放得下(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
     实测（1080×1440，Chromium）——
 
         库里最长的名字 `胡安·曼努埃尔·塞伦多洛（51）`（12 个字）配五盘：
-        字号压到下限 28px，名字墨迹到 x=478，名字那一格右边界 500，
-        第一个盘分从 531 起 → **还剩 53px**
-        末一盘 `7-6(10)`：输家那一行墨迹到 x=988，板子右沿 1010 → **还剩 22px**
+        字号压到下限 28px，名字墨迹到 x=484，名字那一格右边界 490，
+        第一个盘分从 547 起 → **还剩 63px**
+        末一盘 `7-6(10)`：输家那一行墨迹到 x=1006，板子右沿 1010 → **还剩 4px**
+
+    ⚠️ 上面这组数 2026-08-29 重量过一遍：盘分改成右对齐、`SCORE_FILL_PAD_R`
+    从 30 提到 40 之后，名字那一格从 300px 收到 290px，而末一盘那个两位数
+    抢七走的是 `.scoreboard--tbwide` 那档小一号的上标（见
+    `test_抢七小分右对齐之后也不许伸出板子`）。
 
     ⚠️ **`score_cn_px` 的告警在这一档是保守的**：它算出「要 27px 才放得下」
     并按下限 28px 渲，可渲出来根本没顶上去。所以那句告警只说「已经最小了，
@@ -539,3 +552,182 @@ def test_五盘也放得下(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
         "多半是末一盘那个两位数抢七小分伸出去了。"
         "`.score-number sup` 是绝对定位、往右伸进列与列之间的空当，"
         "最后一列没有下一列可伸，只能靠 `SCORE_FILL_PAD_R` 那点余量。")
+
+
+def _render_board(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, **over) -> Path:
+    """按真流程渲一张 solo 封面出来（底片纯白，量什么都是最坏情况）。"""
+    white = tmp_path / "white.png"
+    if not white.exists():
+        Image.new("RGB", (1080, 1440), (255, 255, 255)).save(white)
+    monkeypatch.setattr(versus_poster, "_fetch_match_duration",
+                        lambda source, where: "2:19")
+    cover = {**_cover(), "eyebrow": "赛场之上", "layout": "solo", "hook": "赢了",
+             "portrait": {"image": str(white)}, **over}
+    body, css = versus_poster._solo_body(cover)
+    from tennislive.render.webcards import _font_css  # noqa: PLC0415
+    return versus_poster._render_html(
+        f"<!doctype html><meta charset=utf-8>"
+        f"<style>{_font_css()}{css}</style>{body}",
+        tmp_path / f"board{len(list(tmp_path.glob('board*.jpg')))}.jpg")
+
+
+def _navy_rows(shot: Path) -> tuple[int, int]:
+    """赢家那条藏青条的行范围——按底色找，不按写死的 y（钩子几行会让板子浮动）。"""
+    px = np.asarray(Image.open(shot).convert("RGB")).astype(int)
+    navy = ((np.abs(px[:, :, 0] - 0x17) < 26) & (np.abs(px[:, :, 1] - 0x27) < 26)
+            & (np.abs(px[:, :, 2] - 0x86) < 32))
+    rows = np.where(navy.sum(axis=1) > versus_poster.SCORE_BOARD_W * 0.4)[0]
+    assert rows.size, "没找到赢家那条长条——底色改了？"
+    return int(rows.min()), int(rows.max())
+
+
+def _ink(shot: Path, y0: int, y1: int, thr: int = 200) -> np.ndarray:
+    lum = np.asarray(Image.open(shot).convert("L")).astype(float)
+    return np.where((lum[y0:y1] > thr).any(axis=0))[0]
+
+
+def test_盘分右对齐而且和用时落在同一条右边线上(
+        tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
+    """账号所有者 2026-08-29：「比分建议右对齐」。
+
+    在这之前盘分是 `text-align:center`——每一列 96px、数字只占 42px 上下，
+    于是末一盘那个数字的右沿停在 x=949，而它正上方的用时「2:19」是贴着
+    `SCORE_HEAD_PAD_R` 右对齐的、右沿在 977。**两条右边线差了 28px**，
+    比分因此看起来像浮在条子中间。
+
+    ⚠️ **单看「两行的列对不对得齐」是看不出来的**：居中和右对齐都让两行对齐
+    （每个数字都是单字符、等宽），差别只在整组数字离右边多远。所以这条判据
+    钉的是**另一件事**——数字的右沿和它头顶那一行的右沿是不是同一条线。
+
+    钉两头，缺一头都不算：
+
+    1. **数字右对齐到它那一列的右沿**（不是居中）——只钉第 2 头的话，把
+       `SCORE_HEAD_PAD_R` 调大也能让两条线重合，而数字还浮在中间。
+    2. **和用时同一条右边线**——只钉第 1 头的话，头一行的内边距漂走了也不红。
+    """
+    shot = _render_board(tmp_path, monkeypatch)
+    top, bot = _navy_rows(shot)
+    board_l = (1080 - versus_poster.SCORE_BOARD_W) // 2
+    col_r = board_l + versus_poster.SCORE_BOARD_W - versus_poster.SCORE_FILL_PAD_R
+
+    win = _ink(shot, top + 8, bot - 6)
+    head = _ink(shot, top - versus_poster.SCORE_ROW_H, top - 6)
+    assert win.size and head.size, "板子上一个字都没渲出来"
+
+    # ① 右对齐：末一盘那个数字的右沿要贴着这一列的右沿（差的只是字形的右边距）
+    assert col_r - win.max() <= 8, (
+        f"末一盘那个数字的右沿在 x={win.max()}，而这一列的右沿是 {col_r}——"
+        f"差了 {col_r - win.max()}px，多半是又退回 `text-align:center` 了。")
+
+    # ② 和用时同一条右边线
+    assert abs(win.max() - head.max()) <= 6, (
+        f"盘分右沿 x={win.max()}、用时右沿 x={head.max()}，两条线差 "
+        f"{abs(win.max() - head.max())}px。账号所有者要的「右对齐」就是这两条"
+        "线要重合——它们一个在长条里、一个在长条外，各自的内边距必须是同一个数。")
+
+
+@pytest.mark.parametrize("result,tag", [
+    ("6-1 4-6 6-2", "无抢七"),
+    ("6-1 4-6 7-6(5)", "末盘单位数抢七"),
+    ("6-1 4-6 7-6(12)", "末盘两位数抢七"),
+])
+def test_抢七小分右对齐之后也不许伸出板子(
+        result: str, tag: str, tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
+    """数字右对齐之后，抢七小分是**唯一**还会往右伸的东西。
+
+    小分是绝对定位、挂在数字右肩上（`left:100%`），所以它伸进的是末一盘右边
+    那点内边距。实测（1080×1440，Chromium）：
+
+        `(5)`  从列右沿起 36px —— `SCORE_FILL_PAD_R` 40px，还剩 9px
+        `(12)` 从列右沿起 52px —— 40px 装不下，会伸出板子 7px
+
+    所以两位数那一档**整块板的上标换小一号**（`.scoreboard--tbwide`，`.32em`）。
+    ⚠️ 上标是绝对定位的，改它的字号**不影响任何布局**——数字、列宽、名字那一格
+    一个像素都不变，所以这一档只花在它自己身上。
+
+    ⚠️ 155 条已发的 spec 里**末一盘两位数抢七一条都没有**（末一盘带抢七的 17
+    条全是单位数）。这一档今天走不到，它防的是以后真出现一次时**不吭声地伸出
+    板子**——而那和「就是这么渲的」在成片上长得一模一样。
+    """
+    shot = _render_board(tmp_path, monkeypatch, result=result)
+    top, bot = _navy_rows(shot)
+    board_r = (1080 - versus_poster.SCORE_BOARD_W) // 2 + versus_poster.SCORE_BOARD_W
+    lose = _ink(shot, bot + versus_poster.SCORE_ROW_GAP + 6,
+                bot + versus_poster.SCORE_ROW_GAP + versus_poster.SCORE_ROW_H)
+    assert lose.size, "输家那一行一个字都没渲出来"
+    assert lose.max() <= board_r, (
+        f"[{tag}] 输家那一行的墨迹到了 x={lose.max()}，板子右沿是 {board_r}——"
+        "抢七小分伸出去了。要么把 `SCORE_FILL_PAD_R` 加宽，要么让这一档走"
+        "`.scoreboard--tbwide` 那个小一号的上标。")
+
+
+def test_场地和用时前面各有一个白色小图标(
+        tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
+    """账号所有者 2026-08-29：「球场和比赛用时前面各加一个小 logo 表示下」
+    「小 icon，白色的就行」「不然很多人不知道是啥」。
+
+    判据**不查 HTML 里有没有 `<svg>`**——那只能防「有人把它删了」，防不住
+    「它渲出来是空的」：`.score-icon` 写的是 `fill:none;stroke:currentColor`，
+    描边那一半没画上的话 svg 照样在 HTML 里，画面上什么都没有。
+
+    所以渲两版比：**把两个图标换成空串**再渲一次。
+
+    - 场地在左边、左对齐 → 有图标时**文字被往右推**，那一块的右沿跟着右移
+    - 用时在右边、右对齐 → 有图标时**图标长在文字左边**，那一块的左沿左移
+
+    两边各是一个图标，所以这是两头独立的判据：只画一个的话另一头当场红。
+
+    另外两头：图标得是白的（他点名的），以及**颜色只有一处出处**——两个 svg
+    自己不许写死颜色，靠 `.score-icon` 的 `currentColor` 跟着文字走，这样
+    「文字全部纯白」那条一改，图标自己跟上，不会分叉成两处。
+    """
+    # ⚠️ **先把两个 svg 的原文抄下来。** 下面要把它们 monkeypatch 成空串去渲
+    # 「没有图标」那一版，而第 ③ 头读的正是这两个模块属性——不先抄下来的话它
+    # 读到的是空串，`'stroke="' not in ""` 恒真，那一头就成了一盏绿灯。
+    # （这一条是反向验证抓出来的：往 svg 里写死一个 `stroke="#fff"`，它照样绿。）
+    icons = (versus_poster._COURT_ICON, versus_poster._CLOCK_ICON)
+
+    shot = _render_board(tmp_path, monkeypatch)
+    top, _ = _navy_rows(shot)
+    head_y = (top - versus_poster.SCORE_ROW_H, top - 6)
+    MID = 600                      # 左边是场地、右边是用时，中间是空的
+
+    def halves(s: Path) -> tuple[np.ndarray, np.ndarray]:
+        ink = _ink(s, *head_y)
+        return ink[ink < MID], ink[ink >= MID]
+
+    court_on, clock_on = halves(shot)
+
+    # ② 图标是白的——先在「有图标」这一版上量，别等 monkeypatch 退掉
+    lum = np.asarray(Image.open(shot).convert("L")).astype(float)
+    x0 = (1080 - versus_poster.SCORE_BOARD_W) // 2 + versus_poster.SCORE_HEAD_PAD_L
+    box = lum[head_y[0]:head_y[1], x0:x0 + 34]
+    assert box.max() >= 235, (
+        f"场地那个图标所在的一格最亮只有 {box.max():.0f}——他点名「白色的就行」。")
+
+    monkeypatch.setattr(versus_poster, "_COURT_ICON", "")
+    monkeypatch.setattr(versus_poster, "_CLOCK_ICON", "")
+    court_off, clock_off = halves(_render_board(tmp_path, monkeypatch))
+
+    # ① 两个图标各占各的位
+    assert court_on.min() == pytest.approx(court_off.min(), abs=4), (
+        "场地那一块的左沿动了——图标该从文字原来那条左边线开始，"
+        "把文字往右推，而不是自己挤到左边线外面去。")
+    court_push = int(court_on.max() - court_off.max())
+    assert court_push >= 20, (
+        f"带图标和不带图标，场地那一块的右沿只差 {court_push}px——"
+        "球场那个图标多半根本没渲出来。")
+    assert clock_on.max() == pytest.approx(clock_off.max(), abs=4), (
+        "用时那一块的右沿动了——它是右对齐的，图标只该往左长。")
+    clock_push = int(clock_off.min() - clock_on.min())
+    assert clock_push >= 20, (
+        f"带图标和不带图标，用时那一块的左沿只差 {clock_push}px——"
+        "钟那个图标多半根本没渲出来。")
+
+    # ③ 颜色只有一处出处
+    src = Path(versus_poster.__file__).read_text(encoding="utf-8")
+    assert "stroke:currentColor" in src, "图标的颜色要跟着文字走，别另写一份"
+    for svg in icons:
+        assert 'stroke="' not in svg and 'fill="' not in svg, (
+            "颜色写进 svg 自己就分叉了——`.score-icon` 那条 `currentColor` "
+            "才是唯一的出处。")

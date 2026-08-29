@@ -587,13 +587,28 @@ SCORE_PANEL_RGB = "9,17,38"
 SCORE_PANEL_UP = 220
 #: 从淡入起点算起，走这么多像素到**完全不透明**。参考图是 −280 → +250。
 SCORE_PANEL_RAMP = 530
+#: 坡末端的不透明度。⚠️ **参考图那一档是 1.0（+240 那一行 L=19 就是面板色
+#: 本身），2026-08-29 账号所有者说「背景底色可以再透明些」，按他的要求降下来。**
+#: 这一档是**看出来的，不是推的**：拿真封面渲了 1.0 / 0.92 / 0.86 / 0.78 / 0.70
+#: 五档摆一起挑的（拿真封面渲，不是在纯色上试）
+#: （赢家那一行压在实心藏青条上，永远不受影响；受影响的只有**输家那一行和
+#: 场地/用时那一行**，它们直接压在照片上）。
+#: ⚠️ **别只看这块板**：坡的末端一路铺到画布下沿，调低它等于把整块底都调薄，
+#: 而底薄了托不住的正是那两行白字。判据 `test_比分板底下那层要是一条长坡…`
+#: 的第三头钉的就是这个下界。
+SCORE_PANEL_END_ALPHA = 0.78
 #: ⚠️ 文字**全部纯白**。参考图上 `ZHENG`/`QINWEN`/`PRIDANKINA`/`STADIUM 17`/
 #: `#USOPEN` 和六个数字，逐个取峰值都是 (255,255,255)——没有第二档灰。
 #: 我们原来那套 `#dcefe4`（英文名）、`#93a79c`（抢七小分）在复刻里一律去掉。
 SCORE_INK = "#ffffff"
 SCORE_BOARD_W = 940          # `.storycopy` 的内宽：1080 − 左右各 70
 SCORE_FILL_PAD_L = 24        # 高亮条内的左内边距（国旗从这儿开始）
-SCORE_FILL_PAD_R = 30        # 右内边距（末一盘那个数字到条边的距离）
+#: 右内边距。⚠️ **2026-08-29 从 30 提到 40**：账号所有者「比分建议右对齐」，
+#: 数字改成 `text-align:right` 之后**抢七小分要往右伸**（绝对定位，挂在数字
+#: 右肩上），而末一盘那一列往右就只剩这点内边距了。实测 `7-6(10)` 那个上标
+#: 34px 宽：30px 的时候它伸到 x=1014，板子右沿是 1010，**伸出去 4px**；
+#: 40px 之后落在 1004，还剩 6px。判据 `test_五盘也放得下` 钉着这一头。
+SCORE_FILL_PAD_R = 40
 SCORE_FLAG_W = 86            # 矩形国旗（3:2）——账号所有者点名「国旗用矩形」
 SCORE_FLAG_H = 57
 SCORE_FLAG_GAP = 20
@@ -604,6 +619,14 @@ SCORE_ROW_GAP = 10           # 两行之间的缝
 #: 高度占行高 51.4%（55px / 107px），而 62px 的 `TL Numeral` 在 104px 的行里只
 #: 占 42.3%——数字比参考图小了一档。72px 量出来是 51.0%，对得上。
 SCORE_NUM_PX = 72
+#: 场地/用时前面那两个小图标。账号所有者 2026-08-29：「球场和比赛用时前面各加
+#: 一个小 logo 表示下」「小 icon，白色的就行」「不然很多人不知道是啥」——
+#: 也就是说它们是**给那两个数字做标注的**，不是装饰：一个球场俯视图、一个钟。
+#: ⚠️ 尺寸跟着**各自那一行的字号**走，不是一个写死的数：场地那行 26px、
+#: 用时那行 34px，两个图标共用一套 `em` 比例，所以谁改字号图标自己跟上。
+SCORE_ICON_EM = 1.05         # 图标边长 ÷ 所在那一行的字号
+SCORE_ICON_GAP_EM = 0.42     # 图标和文字之间的缝
+SCORE_ICON_STROKE = 1.7      # 24 单位 viewBox 里的线宽
 #: 场地/用时那一行的左右内边距——**和长条里的内容对齐**（左边和国旗同一条竖线，
 #: 右边和最后一盘那个数字同一条）。端帽拿掉之前它对的是端帽外沿。
 SCORE_HEAD_PAD_L = SCORE_FILL_PAD_L
@@ -778,6 +801,28 @@ def solo_scoreboard_shape_error(cover: dict) -> str | None:
     return None
 
 
+#: 球场（俯视）和钟。⚠️ **描边不填色、`stroke="currentColor"`**——颜色跟着那一行
+#: 的文字走，所以「文字全部纯白」那条一改，图标自己跟上，不会分叉成两处颜色。
+#: ⚠️ 线条按 24 单位的 viewBox 画，`vector-effect:non-scaling-stroke` 不用——
+#: 我们要的就是线宽跟着尺寸缩，两个图标在各自那一行里粗细才一致。
+#: ⚠️ **球场画成横的、只留「外框＋球网＋发球区」三笔。** 第一版画的是竖的、
+#: 里面又切了中线，四个格子——放到 27px 上读出来是**一扇窗**，不是球场
+#: （四档并排渲出来比过：竖着切四格 / 只留球网 / 定位针 / 横着留发球区）。
+#: 账号所有者要的正是「不然很多人不知道是啥」，所以判据是**缩到实际尺寸看**，
+#: 不是在 24 单位的画布上看着像。
+_COURT_ICON = (
+    '<svg class="score-icon" viewBox="0 0 24 24" aria-hidden="true">'
+    '<rect x="2.6" y="4.4" width="18.8" height="15.2" rx="1.2"/>'
+    '<path d="M12 4.4v15.2"/>'            # 球网
+    '<path d="M6.6 8.2h10.8v7.6H6.6z"/>'  # 两个发球区
+    '</svg>')
+_CLOCK_ICON = (
+    '<svg class="score-icon" viewBox="0 0 24 24" aria-hidden="true">'
+    '<circle cx="12" cy="12" r="9.1"/>'
+    '<path d="M12 6.6V12l3.7 2.5"/>'
+    '</svg>')
+
+
 def _scoreboard_html(cover: dict) -> str:
     """「赛场之上」统一首页比分板：两行、赢家那行整条高亮、双语姓名、逐盘着色。"""
     result = str(cover.get("result") or "").strip()
@@ -805,6 +850,8 @@ def _scoreboard_html(cover: dict) -> str:
     source = scoreboard.get("duration_source") or {}
     duration = _fetch_match_duration(source, "cover.scoreboard")
     scores, note = _scoreboard_sets(result, "cover")
+    # ⚠️ 只看**位数**，不看是第几盘：同一块板上两种大小的上标比统一小一号难看。
+    wide_tb = any(len(str(tb)) > 1 for _, _, tb in scores if tb)
     # 两行分开渲，所以每一盘要拆成两个数字，各归各行。
     #
     # ⚠️ **抢七小分挂在输掉那一盘的那个数字上。** `7-6(3)` 里的 (3) 是输家在
@@ -827,11 +874,13 @@ def _scoreboard_html(cover: dict) -> str:
                  f'{html.escape(_RETIREMENT_LABEL.get(note.lower(), note))}</span>'
                  if note else "")
     return (
-        '<div class="scoreboard">'
+        f'<div class="scoreboard{" scoreboard--tbwide" if wide_tb else ""}">'
         '<div class="scoreboard-head">'
-        f'<span class="scoreboard-court">{html.escape(court)}</span>'
+        f'<span class="scoreboard-court">{_COURT_ICON}'
+        f'<span>{html.escape(court)}</span></span>'
         '<span class="scoreboard-meta">'
-        f'<span class="scoreboard-duration">{html.escape(duration)}</span>'
+        f'<span class="scoreboard-duration">{_CLOCK_ICON}'
+        f'<span>{html.escape(duration)}</span></span>'
         f'{note_html}'
         '</span>'
         '</div>'
@@ -1331,19 +1380,32 @@ __SCRIM__
    起、走 `SCORE_PANEL_RAMP`px 到**完全不透明**——五百多像素，跟参考图反解出来
    的 alpha 曲线对得上（见 `SCORE_PANEL_UP` 那段的表）。**别把它收短**：
    原来是 110px 淡到 0.86，坡陡五倍，顶上就有一条看得见的边。
-   ⚠️ 末端是 **1.0 不是 0.86**：参考图底部量到 L=19，就是面板色本身。 */
+   ⚠️ 末端**不是 1.0**：参考图底部量到 L=19（就是面板色本身，也就是 1.0），
+   而账号所有者 2026-08-29 说「背景底色可以再透明些」——现在是
+   `SCORE_PANEL_END_ALPHA`，见那个常量上面量出来的账。 */
 .scoreboard::before{content:"";position:absolute;z-index:-1;
  left:-70px;right:-70px;top:-__SCORE_PANEL_UP__px;bottom:-320px;
  background:linear-gradient(180deg,rgba(__SCORE_PANEL_RGB__,0) 0,
-  rgba(__SCORE_PANEL_RGB__,1) __SCORE_PANEL_RAMP__px)}
+  rgba(__SCORE_PANEL_RGB__,__SCORE_PANEL_END_ALPHA__) __SCORE_PANEL_RAMP__px)}
 /* 场地和用时那一行：参考图里它在长条**外面、上方**，左右和长条里的内容对齐
    （左边和国旗同一条竖线，右边和最后一盘那个数字同一条）。 */
-.scoreboard-head{box-sizing:border-box;display:flex;align-items:baseline;
+.scoreboard-head{box-sizing:border-box;display:flex;align-items:center;
  justify-content:space-between;
  padding:0 __SCORE_HEAD_PAD_R__px 16px __SCORE_HEAD_PAD_L__px;
  font-family:'TL Sans SC',sans-serif;font-size:26px;letter-spacing:2px}
 .scoreboard-duration{font-family:'TL Sans SC',sans-serif;font-size:34px;
  letter-spacing:0;color:__SCORE_INK__}
+/* 场地和用时前面各一个小图标。账号所有者 2026-08-29：「球场和比赛用时前面各加
+   一个小 logo 表示下」「小 icon，白色的就行」「不然很多人不知道是啥」。
+   ⚠️ **`align-items:center` 不是 `baseline`**：图标是个方块，没有基线可对——
+   按基线排会把它吊在文字上方（`inline-flex` 的基线取的是它自己第一行的基线，
+   而 svg 里没有文字）。头一行因此整体改成 center，两边的字号不同也照样居中。
+   ⚠️ **尺寸和缝都用 `em`**：跟着各自那一行的字号走，改字号图标自己跟上。 */
+.scoreboard-court,.scoreboard-duration{display:inline-flex;align-items:center;
+ gap:__SCORE_ICON_GAP_EM__em}
+.score-icon{width:__SCORE_ICON_EM__em;height:__SCORE_ICON_EM__em;flex:none;
+ fill:none;stroke:currentColor;stroke-width:__SCORE_ICON_STROKE__;
+ stroke-linejoin:round;stroke-linecap:round}
 /* 退赛/弃权注脚：和 duration 当一个整体右对齐，字号退回 head 的基准档（26px），
    比 duration 的 34px 小一档——它是补充信息，不是这一格的主角。
    ⚠️ 颜色和别处一样是纯白：复刻版没有第二档灰。 */
@@ -1400,7 +1462,7 @@ __SCRIM__
        细 3：Noto Sans SC 400 **0.818** ｜ TL Numeral 500 0.584 ｜ 600 0.535
    Barlow Condensed 700 在粗 6 上也是 0.728，但它是压缩字，细 3 只有 0.426。
    ⚠️ 还有一个理由：`TL Numeral` 只有 500/600 两档，**粗细拉不开**。 */
-.score-number{position:relative;flex:0 0 __SCORE_SET_COL_PX__px;text-align:center;
+.score-number{position:relative;flex:0 0 __SCORE_SET_COL_PX__px;text-align:right;
  font-family:'TL Score','TL Sans SC',sans-serif;font-size:__SCORE_NUM_PX__px;
  font-weight:__SCORE_LOSE_WEIGHT__}
 /* 赢下那一盘的数字加粗，输掉那一盘用 **Light（300）**——参考图分输赢
@@ -1416,12 +1478,24 @@ __SCRIM__
  text-shadow:none}
 .score-number.setlose{font-weight:__SCORE_LOSE_WEIGHT__;color:__SCORE_INK__}
 /* ⚠️ 抢七小分**绝对定位**，不占位。留在文档流里的话，带小分的那一格会因为
-   多出三十来像素而把数字推离列心——`6(4)` 和另一行的 `7` 当场差 40px，
-   而这块板全部的意思就是「两行的列要对得齐」。`left:calc(50% + .30em)` 把它
-   挂在数字右肩上：数字仍然正正落在列心，小分伸进列与列之间那道空当
-   （每列 96px、数字只占 42px 上下，两边各有 27px 富余，够）。 */
-.score-number sup{position:absolute;left:calc(50% + .30em);top:.02em;
+   多出三十来像素而把数字推走——而小分只挂在**输掉那一盘**的那一行上，也就是
+   两行里只有一行会被推，「两行的列要对得齐」当场就没了（旧版实测差 40px）。
+   ⚠️ **`left:100%` 是跟着右对齐改的**（2026-08-29）：数字右对齐之后它的右沿
+   就是这一列的右沿，所以小分从列的右沿起、往右伸进下一列的空当。实测
+   `(10)` 那个上标 34px 宽，而下一列的数字要到 62px 之后才开始——够。
+   末一盘那一列右边没有下一列，伸进的是 `SCORE_FILL_PAD_R`，那个数为此
+   从 30 提到了 40。 */
+.score-number sup{position:absolute;left:100%;top:.02em;
  font-size:.42em;line-height:1;white-space:nowrap}
+/* ⚠️ **两位数的抢七小分整块板换小一档。** 单位数的 `(5)` 在 40px 的右内边距里
+   还剩 9px；两位数的 `(10)` 宽 16px 多，40px 装不下（实测伸出板子 7px）。
+   上标是**绝对定位**的——改它的字号不影响任何布局，所以这一档只动它自己，
+   数字、列宽、名字那一格一个像素都不变。
+   ⚠️ 按**整块板**切，不按单个格子：同一块板上两种大小的上标比小一号更难看。
+   ⚠️ 155 条已发的 spec 里**末一盘两位数抢七一条都没有**（末一盘带抢七的 17
+   条全是单位数），所以这一档今天走不到——它防的是以后真出现一次时**不吭声地
+   伸出板子**。 */
+.scoreboard--tbwide .score-number sup{font-size:.32em}
 /* 盘分上色：**这块板不上色**，输赢只靠字重（参考图就是这样，六个数字全是纯白）。
    下面 `.setwin`/`.setlose` 那两条品牌绿/白仍然留着——它们还挂在旧版 VS 海报
    和顶栏那条路上，`.score-number.setwin` 的特异性更高，盖得住。 */
@@ -1474,6 +1548,10 @@ def _fill_score_layout(css: str, cover: dict) -> str:
         "__SCORE_PANEL_RGB__": SCORE_PANEL_RGB,
         "__SCORE_PANEL_UP__": SCORE_PANEL_UP,
         "__SCORE_PANEL_RAMP__": SCORE_PANEL_RAMP,
+        "__SCORE_PANEL_END_ALPHA__": SCORE_PANEL_END_ALPHA,
+        "__SCORE_ICON_EM__": SCORE_ICON_EM,
+        "__SCORE_ICON_GAP_EM__": SCORE_ICON_GAP_EM,
+        "__SCORE_ICON_STROKE__": SCORE_ICON_STROKE,
         "__SCORE_WIN_WEIGHT__": SCORE_WIN_WEIGHT,
         "__SCORE_LOSE_WEIGHT__": SCORE_LOSE_WEIGHT,
         # 淡到满，正好落在场地那一行的中间——再晚，「Stadium 17」就压在
