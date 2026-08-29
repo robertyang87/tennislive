@@ -2469,6 +2469,25 @@ def yt_download(url: str, dest: Path, fmt: str, spec: dict) -> Path:
     """
     if dest.exists():
         return dest
+    # 直链媒体不是播放器页面，不能套 YouTube 的 `-f bv*+ba/b` 选择器。
+    # US Open/Brightcove 这类官方源会直接给 `.mp4`；yt-dlp 对 generic extractor
+    # 套格式选择器会报 `Requested format is not available`，但 curl 直取完全正常。
+    # 这属于共享下载器的来源适配，不是当前视频的特判。
+    parsed = urlparse(url)
+    if (parsed.scheme in {"http", "https"}
+            and parsed.path.lower().endswith((".mp4", ".mov", ".m4v"))):
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        proc = subprocess.run(
+            ["curl", "-LfsS", "--retry", "2", "--connect-timeout", "15",
+             "--max-time", "240", "-o", str(dest), url],
+            capture_output=True, text=True, timeout=260)
+        if proc.returncode == 0 and dest.is_file() and dest.stat().st_size > 1024:
+            print(f"[下载] 官方直链媒体成功：{url} → {dest.name} "
+                  f"({dest.stat().st_size / 1e6:.1f}MB)")
+            return dest
+        dest.unlink(missing_ok=True)
+        tail = (proc.stderr or proc.stdout or "直链下载没有输出").strip().splitlines()[-1]
+        raise SystemExit(f"官方直链媒体下载失败 {url}：{tail[:180]}")
     media = media_url(url)  # **页面地址不一定就是下载地址**，Tennis TV 要先解一次
     # ⚠️ **`--merge-output-format` 只在真的要合流、且容器它认识时才加。**
     # 加在纯音轨那条路上（`-f ba` → `.m4a`）会直接吃
