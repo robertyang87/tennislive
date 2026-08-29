@@ -226,36 +226,101 @@ def transcribe(url: str, workdir: Path, model: str = ASR_MODEL) -> tuple[list[di
     return rows, dur
 
 
-def translate(rows: list[dict], chat) -> list[str]:
-    """DeepSeek 逐条翻中文（字幕条短，一条一问；条数多就分批，每批 ≤25 条）。
+def _translation_system_prompt() -> str:
+    return (
+        "你是网球短视频「赛后开麦」的双语字幕翻译。把每条英文转写成地道中文"
+        "口语，一条一行，不加编号，不在行尾加标点，不臆测原文没有的信息。"
+        "英文原文与顺序不可改写；主持人与球员的说话人边界不可互换。输入编号"
+        "只用于逐行对齐，绝不能省略、合并或重排任何一条。"
+        + model_instructions("deepseek")
+    )
 
-    ⚠️ **每批的行数必须和喂进去的条数相等，差一条就报错。** 模型合并两句、
-    漏一句都不报错，而错位的译文比缺译文糟得多——从错位那一条起，后面每一行
-    中文都挂在别人的英文上，**整段对不上而且不吭声**（和「中文 N 行、英文
-    M 行对不上」是同一个病，只是这儿在上游先烂）。
+
+def _translate_single(row: dict, chat, index: int, sys_prompt: str) -> str:
+    """批量响应无法保持行数时，最终按单行独立翻译；最多重试三次。"""
+    last = None
+    for attempt in range(1, 4):
+        res = chat.ask(
+            sys_prompt,
+            "只翻译下面这一条英文字幕，不要解释、不要编号：\n"
+            + str(row.get("text") or ""),
+            schema={
+                "type": "object",
+                "properties": {"line": {"type": "string"}},
+                "required": ["line"],
+            },
+            max_tokens=300,
+        )
+        line = res.get("line") if isinstance(res, dict) else None
+        if isinstance(line, str) and line.strip():
+            return line.strip()
+        # 兼容模型偶尔仍按旧的数组形状回答；只能接受恰好一条，不能猜位置。
+        lines = res.get("lines") if isinstance(res, dict) else None
+        if (isinstance(lines, list) and len(lines) == 1
+                and isinstance(lines[0], str) and lines[0].strip()):
+            return lines[0].strip()
+        last = res
+        print(
+            f"::warning::翻译第 {index} 行单行兜底第 {attempt}/3 次没成，自动重试",
+            flush=True,
+        )
+    raise RuntimeError(f"翻译第 {index} 行单行兜底三次都没成：{last}")
+
+
+def _translate_batch(batch: list[dict], chat, offset: int,
+                     sys_prompt: str) -> list[str]:
+    """翻一批；条数/类型不精确就二分，直到每一行都有独立响应。"""
+    if len(batch) == 1:
+        return [_translate_single(batch[0], chat, offset, sys_prompt)]
+
+    src = "\n".join(
+        f"{offset + j}. {row.get('text') or ''}" for j, row in enumerate(batch)
+    )
+    res = chat.ask(
+        sys_prompt,
+        f"逐条翻译成中文，返回的 lines 数组必须恰好有 {len(batch)} 项：\n{src}",
+        schema={
+            "type": "object",
+            "properties": {
+                "lines": {"type": "array", "items": {"type": "string"}}
+            },
+            "required": ["lines"],
+        },
+        max_tokens=2000,
+    )
+    raw = res.get("lines") if isinstance(res, dict) else None
+    if isinstance(raw, list) and len(raw) == len(batch):
+        cleaned = [line.strip() if isinstance(line, str) else "" for line in raw]
+        if all(cleaned):
+            return cleaned
+
+    got = len(raw) if isinstance(raw, list) else "无数组"
+    mid = len(batch) // 2
+    print(
+        f"::warning::翻译第 {offset}-{offset + len(batch) - 1} 行批量响应不可靠"
+        f"（喂 {len(batch)} 条、回 {got} 条或含空行），自动拆成 {mid}+"
+        f"{len(batch) - mid} 重试",
+        flush=True,
+    )
+    return (
+        _translate_batch(batch[:mid], chat, offset, sys_prompt)
+        + _translate_batch(batch[mid:], chat, offset + mid, sys_prompt)
+    )
+
+
+def translate(rows: list[dict], chat) -> list[str]:
+    """DeepSeek 逐条翻中文，批量异常时自动二分，最后逐行独立兜底。
+
+    行数一致仍是硬要求：绝不把 25→24 之类的响应按位置硬贴。区别是旧版当场
+    失败、让整条视频停在转写；现在会自动缩小批次，直到每条英文都有唯一中文。
+    单行连续三次仍拿不到非空译文才报错，避免服务故障时静默塞入空字幕。
     """
     out: list[str] = []
+    sys_prompt = _translation_system_prompt()
     for i in range(0, len(rows), 25):
-        batch = rows[i:i + 25]
-        src = "\n".join(f"{j}. {r['text']}" for j, r in enumerate(batch))
-        sys_prompt = ("你是网球短视频「赛后开麦」的双语字幕翻译。把每条英文转写成"
-                      "地道中文口语，一条一行，不加编号，不在行尾加标点，不臆测"
-                      "原文没有的信息。英文原文与顺序不可改写；主持人与球员的说话人"
-                      "边界不可互换。" + model_instructions("deepseek"))
-        user = f"逐条翻译成中文：\n{src}"
-        res = chat.ask(sys_prompt, user,
-                       schema={"type": "object",
-                               "properties": {"lines": {"type": "array",
-                                                        "items": {"type": "string"}}},
-                               "required": ["lines"]},
-                       max_tokens=2000)
-        if not res or not isinstance(res.get("lines"), list):
-            raise RuntimeError(f"翻译第 {i} 批没成：{res}")
-        if len(res["lines"]) != len(batch):
-            raise RuntimeError(
-                f"翻译第 {i} 批行数对不上：喂 {len(batch)} 条、回 {len(res['lines'])} 条。"
-                "错位的译文比缺译文更糟（后面每一行都挂在别人的英文上），整批作废。")
-        out.extend(res["lines"])
+        out.extend(_translate_batch(rows[i:i + 25], chat, i, sys_prompt))
+    if len(out) != len(rows):
+        raise RuntimeError(f"翻译总行数不一致：{len(out)} != {len(rows)}")
     return out
 
 
