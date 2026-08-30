@@ -2560,7 +2560,9 @@ def test_人名要以译名表为准():
     # 「克里斯蒂娜」就是一个）。
     for path in sorted(Path("specs/interviews").glob("*.xhs.txt")):
         scan(path.name, path.read_text(encoding="utf-8"))
-    for path in sorted(Path("specs/interviews").glob("*.json")):
+    # 草稿不会进入发布链；它只有机器转写/译文，尚未具备正式 spec 的内容字段。
+    for path in sorted(p for p in Path("specs/interviews").glob("*.json")
+                       if not p.name.endswith(".draft.json")):
         spec = json.loads(path.read_text(encoding="utf-8"))
         cover = spec.get("cover") or {}
         texts = [spec.get("event", ""), spec.get("winner", "")]

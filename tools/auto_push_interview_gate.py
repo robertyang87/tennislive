@@ -149,7 +149,9 @@ def validate_qc(repo: Path, slug: str, outdir: Path) -> str:
     spec = json.loads(spec_bytes)
     from interview_source_gate import (  # noqa: PLC0415
         SourceContractError,
+        content_identity_id,
         validate_source_contract,
+        verified_no_lead_exception,
     )
     try:
         source_sha = validate_source_contract(spec)
@@ -157,26 +159,22 @@ def validate_qc(repo: Path, slug: str, outdir: Path) -> str:
         raise Skip(f"{slug}：L0 内容身份失效（{exc}）") from exc
     if qc.get("source_attestation_sha256") != source_sha:
         raise Skip(f"{slug}：QC 绑定的来源身份与当前 spec 不一致")
-    if qc.get("match_id") != (spec.get("match") or {}).get("id"):
-        raise Skip(f"{slug}：QC 的 match_id 与当前比赛不一致")
+    expected_identity = content_identity_id(spec)
+    qc_identity = qc.get("content_id") or qc.get("match_id")
+    if qc_identity != expected_identity:
+        raise Skip(f"{slug}：QC 的内容身份与当前 spec 不一致")
     checks = qc.get("checks") or {}
     expected_body = len(spec.get("zh") or [])
     expected_lead = len(((spec.get("lead_in") or {}).get("subs") or []))
     if not expected_body or checks.get("bilingual_body_cues") != expected_body:
         raise Skip(f"{slug}：QC 没有逐 cue 证明采访正文中英字幕完整")
-    official_farewell_no_lead = (
-        spec.get("requested_content_type") == "farewell"
-        and (spec.get("opening") or {}).get("kind") == "none"
-        and (spec.get("source_verification") or {}).get("status") == "verified"
-        and (spec.get("source_verification") or {}).get("method")
-            == "official_explicit_farewell"
-    )
+    official_no_lead = verified_no_lead_exception(spec)
     if expected_lead:
         if (checks.get("bilingual_lead_cues") != expected_lead
                 or not qc.get("lead_ass_sha256")):
             raise Skip(f"{slug}：QC 没有逐 cue 证明获胜画面原解说的中英字幕完整")
-    elif not official_farewell_no_lead:
-        raise Skip(f"{slug}：缺冷开场双语字幕，且不符合已核验官方告别仪式例外")
+    elif not official_no_lead:
+        raise Skip(f"{slug}：缺冷开场双语字幕，且不符合已核验告别/入选典礼例外")
     elif checks.get("bilingual_lead_cues") not in (None, 0) or qc.get("lead_ass_sha256"):
         raise Skip(f"{slug}：无冷开场例外与 QC 冷开场证据互相矛盾")
 

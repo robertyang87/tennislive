@@ -120,15 +120,9 @@ def bilingual_lead_ok(ass: Path, spec: dict) -> tuple[bool, str]:
     """冷开场的原解说也必须逐 cue 中英成对，不能只验采访正文。"""
     expected = len(((spec.get("lead_in") or {}).get("subs") or []))
     if expected == 0:
-        official_farewell = (
-            spec.get("requested_content_type") == "farewell"
-            and (spec.get("opening") or {}).get("kind") == "none"
-            and (spec.get("source_verification") or {}).get("status") == "verified"
-            and (spec.get("source_verification") or {}).get("method")
-                == "official_explicit_farewell"
-        )
-        if official_farewell:
-            return True, "官方告别仪式按编辑决定不配置独立冷开场（显式例外）"
+        from interview_source_gate import verified_no_lead_exception  # noqa: PLC0415
+        if verified_no_lead_exception(spec):
+            return True, "已核验的告别/入选典礼按编辑决定不配置独立冷开场（显式例外）"
         return False, "spec.lead_in.subs 为空"
     events = _ass_body_events(ass)
     en, zh = events["EN"], events["ZH"]
@@ -205,14 +199,18 @@ def _sha256(path: Path) -> str:
 def write_attestation(film: Path, spec_path: Path, spec: dict,
                       ass: Path, outdir: Path) -> Path:
     """L0/L2 全绿后落不可变发布凭证；自动推送只认这份凭证。"""
-    from interview_source_gate import validate_source_contract  # noqa: PLC0415
+    from interview_source_gate import (  # noqa: PLC0415
+        content_identity_id,
+        validate_source_contract,
+    )
 
     source_attestation = validate_source_contract(spec)
+    identity_id = content_identity_id(spec)
     payload = {
         "status": "pass",
         "checked_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "slug": spec["slug"],
-        "match_id": spec["match"]["id"],
+        "content_id": identity_id,
         "requested_content_type": spec["requested_content_type"],
         "source_attestation_sha256": source_attestation,
         "spec_sha256": _sha256(spec_path),
@@ -231,6 +229,9 @@ def write_attestation(film: Path, spec_path: Path, spec: dict,
             "bilingual_lead_cues": len(_ass_body_events(outdir / "_lead.ass")["EN"]),
         },
     }
+    # 保留旧消费者读取的 match_id；非比赛典礼只写通用 content_id。
+    if (spec.get("match") or {}).get("id"):
+        payload["match_id"] = spec["match"]["id"]
     path = outdir / "qc_attestation.json"
     path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
                     encoding="utf-8")
