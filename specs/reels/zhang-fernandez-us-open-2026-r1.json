@@ -1,0 +1,380 @@
+{
+ "slug": "zhang-fernandez-us-open-2026-r1",
+ "_column": "reel",
+ "layout": "band",
+ "scorebox": [
+  172,
+  898,
+  540,
+  962
+ ],
+ "_scorebox_why": "板在源片里的位置，**从 probe 的记分条缩略图墙量出来的，不是抄模板**。probe 的 `scorebox_guess` 这条是 null（检出逻辑按资格赛/外场世界 feed 的板调的，主赛这块板更窄，认不出来），所以拿 score_00~04 五张墙 111 个格子按「离球场色多远」逐列判板、取中位数：左缘 175、上沿 902、下沿 957；右缘**第一盘 503、第二盘 525**（一列 +22px，比资格赛那条的 +38 窄）。这四个数各留几像素余量写成 172/898/540/962。右缘 540 只是兜底——渲染时 `resolve_board_insets` 每段现量（账号所有者 2026-08-29「比分板宽度会变化，不能固定宽度去切」）。⚠️ 我传给 probe 的框是 104,888,660,978（照 docs 里资格赛那套猜的），事后量出来左缘多含了约 70px 球场——**死球时刻不受影响**（那一步只看板那块区域变没变），但 scorebox 按量出来的写。⚠️ 原比例回贴必然比居中窗口天然含住的那条宽，多出来的那截盖的是球场，这是 docs/us-open-scoreboard-aspect.md 认领过的代价。",
+ "source_url": "https://youtu.be/EuDag0eBOsQ",
+ "_source": "US Open 官方 YouTube 频道（US Open Tennis Championships，oEmbed author_name 自证）本场官方集锦《Shuai Zhang vs. Leylah Fernandez Highlights | 2026 US Open Round 1》，196.51s 1920x1080 29.97fps。画面自证四处：① 记分条全程 `ZHANG CHN` / `31 FERNANDEZ CAN`（种子号 31 与美网官方 players feed 的 seed=31 一致）；② 38.5s 板烧 `SET POINT` + `3 15 / 5 40`，与 flashscore pGoR9Fum 逐分 Set1 第 9 局 `15:40 |B2|` 一分不差；③ 162.5-166.5s 板烧 `MATCH POINT #2` + `3 2 15 / 6 5 40`，与逐分 Set2 第 8 局 `0:40 |B3|, 15:40 |B3|`（张帅救下一个赛点）对上，也印证 df_st_1 的 `Match points saved 1/0`；④ 48.5s 场边 ROLEX 显示 `0:29`、162.5s/170.5s 显示 `1:15`，与美网官方 setDurations 29+46=1:15 逐个对上。⑤ 192.5s 全屏赛果图形写着 `WOMEN'S SINGLES | 1ST ROUND` + `STADIUM 17` + `SHUAI ZHANG 3 2 / LEYLAH FERNANDEZ 6 6`。片尾板 193.38 起（probe silent_audio 193.48-196.51 数字静音），整段排除在窗口之外。",
+ "cover": {
+  "matchup": [
+   {
+    "name": "张帅",
+    "name_en": "Shuai Zhang",
+    "country": "CHN",
+    "rank": 54
+   },
+   {
+    "name": "费尔南德斯",
+    "name_en": "Leylah Fernandez",
+    "country": "CAN",
+    "rank": 33
+   }
+  ],
+  "_rank_why": "两个独立源一致：美网官方 players.json（wta311779 singles_rank=54 seed=false；wta326735 singles_rank=33 seed=true）与 WTA 官方 players/ranked 接口（rankedAt 2026-08-31 期：Shuai Zhang 54、Leylah Fernandez 33）。⚠️ 费尔南德斯世界第 33 而种子号是 31（美网官方 team feed seed=31，板上也印着 31）——**种子号不是排名，两个数都对，不许混成一件事**；旁白里说的是种子号，matchup 里记的是名次。⚠️ matchup[0] 放张帅是为了让 stats.a（flashscore home=张帅）对得上版式顺序，同时她也是封面主体。",
+  "winner": "费尔南德斯",
+  "result": "6-3 6-2",
+  "eyebrow": "赛场之上",
+  "layout": "solo",
+  "subject": "张帅",
+  "hook": "七个破发点\n一个都没兑现",
+  "_hook_why": "全场级的硬事实、一眼读得懂，讲的是过程不是身份（排名、年龄、轮次海报别处已经印着）。7 个破发点横跨第二盘三个不同的发球局（第 2、4、6 局），**不是同一串「转换即终止」的序列**，所以 0/7 是会变的真实效率数字、有信息量——这一条按 CLAUDE.md「三个赛点只兑现了一个」那节的判据核过：换成任何一场同样打法的比赛，答案不会一模一样。",
+  "topic": "美网 · 女单第一轮",
+  "portrait": {
+   "image": "PENDING",
+   "focus": 0.5,
+   "focus_y": 0.42,
+   "zoom": 1.0,
+   "_why": "⚠️ **占位，等官方高清实拍**。按「封面一律用官方高清实拍、frame_at 不许再抽帧」，这一条现在是「还没发」不是「没有」，判据摆出来：美网官方图片接口按球员 tag 查 wta311779 全部 224 条、**2026 年 0 条**（费尔南德斯同接口 2026 年有 3 条），而 byType/photo 最新 200 条里今天 R1 的图正在陆续上线（Kostyuk、Medvedev、Pegula/Ruse 都有了）——Stadium 17 这场还没轮到，官方图库偏主球场、夜场约 24 小时才上线。这一趟跑过的渠道：WTA photo-resources（无）、AP 通讯社（无）、美网官方图片接口（2026 年 0 条）、USA TODAY 每日图集（当天翻到 1 辑 us-open，没有这场）。⚠️ **matchId 那条路会认错场次**：拿 players feed 的 match_id 2120 去查图，返回的是 Pavlyuchenkova vs Yastremska——图片系统的 tag 和赛程 feed 的 match_id 不是同一套编号，别用。图落地后换成实拍再渲，情绪要对题：这一屏讲的是她七次够到门口没进去，选**近景特写、表情读得出**的那一张（握拳、咬牙、扛住的瞬间），不选庆祝也不选垂头。"
+  },
+  "scoreboard": {
+   "court": "Stadium 17",
+   "duration_source": {
+    "url": "data:application/json,%7B%22duration%22%3A%221%3A15%3A00%22%2C%22source%22%3A%22US%20Open%20official%20players%20feed%20setDurations%2029%2B46%22%7D",
+    "field": "duration"
+   },
+   "_court_why": "美网官方 players/matches feed（match 2120）courtName=Stadium 17；192.5s 的全屏赛果图形上也印着 STADIUM 17。",
+   "_duration_why": "官方 setDurations 29+46=**1:15**。flashscore df_sui_1 报 0:30+0:46 与总计 1:16，两边差 1 分钟——按「用时要交叉核、以官方为准」取 1:15，而且**画面自证站在官方这一边**：162.5s 和 170.5s 两格场边 ROLEX 计时牌都显示 `1:15`（48.5s 那格显示 `0:29`，同样对上第一盘的 29 分钟）。"
+  }
+ },
+ "_match": {
+  "status": "result_verified",
+  "source": "flashscore_points",
+  "source_id": "pGoR9Fum",
+  "flashscore_id": "pGoR9Fum",
+  "participants": [
+   "张帅",
+   "费尔南德斯"
+  ],
+  "set_scores_home_away": [
+   [
+    3,
+    6
+   ],
+   [
+    2,
+    6
+   ]
+  ],
+  "winner": "费尔南德斯",
+  "loser": "张帅",
+  "winner_result": "6-3 6-2",
+  "loser_result": "3-6 2-6",
+  "_start_why": "flashscore AD=1788110700 → UTC 2026-08-30 17:25 = 纽约 EDT 13:25 = **北京时间 8 月 31 日凌晨 1:25**。按「开球时刻只说个大概，不报到分」，分钟 25 落在 10-39 档，旁白说「凌晨一点多」。产物落在 output/2026-08-31/ 也是这个上海日期。"
+ },
+ "stats": {
+  "a": {
+   "aces": 0,
+   "df": 1,
+   "winners": 12,
+   "ue": 17,
+   "first_in": 28,
+   "first_won": 16,
+   "second_total": 15,
+   "second_won": 10,
+   "bp_conv": 0,
+   "bp_chances": 7,
+   "pts_won": 46,
+   "pts_total": 107,
+   "first_total": 43,
+   "headshot": "assets/players/wta-311779-zhang-shuai.png"
+  },
+  "b": {
+   "aces": 4,
+   "df": 3,
+   "winners": 22,
+   "ue": 13,
+   "first_in": 45,
+   "first_won": 35,
+   "second_total": 19,
+   "second_won": 10,
+   "bp_conv": 3,
+   "bp_chances": 7,
+   "pts_won": 61,
+   "pts_total": 107,
+   "first_total": 64,
+   "headshot": "assets/players/wta-326735-leylah-fernandez.png"
+  },
+  "_source": "flashscore pGoR9Fum 的 df_st_1（match_stat_hooks --stats-block 机器抄录，含制胜分/非受迫失误——大满贯女子这个 feed 一直有，不是 WTA 巡回赛那一档）。a=张帅=cover.matchup[0]（flashscore home 恰好也是张帅，顺序核过：Total Points 46/107 是输家张帅的，与赛果 3-6 2-6 同向）；first_total 按 first_in+second_total 和式（43=28+15、64=45+19）。"
+ },
+ "_hit_data": [
+  {
+   "label": "破发点兑现",
+   "detail": "张帅 0/7（费尔南德斯 7 个破发点全部救下，7/7）",
+   "source": "flashscore df_st_1（Break Points Converted / Saved）"
+  },
+  {
+   "label": "七个破发点里五个挤在同一局",
+   "detail": "第二盘 1-2 费尔南德斯发球局：40-0 开局三个破发点，追平后两次占先再两个，共 5 个，全丢",
+   "source": "flashscore df_mh_1 逐分（Set2 第 4 局 40:0|B1|, 40:15|B1|, 40:30|B1|, A:40|B1|, A:40|B1|）"
+  },
+  {
+   "label": "费尔南德斯发球局",
+   "detail": "9/9 一局没丢；张帅 9 个接发局一局没破（Return games won 0%）",
+   "source": "flashscore df_st_1（Service/Return games won）"
+  },
+  {
+   "label": "张帅救下一个赛点",
+   "detail": "Match points saved 1/0，画面 162.5s 板烧 MATCH POINT #2 自证",
+   "source": "flashscore df_st_1 + 源片记分条"
+  },
+  {
+   "label": "制胜分/失误",
+   "detail": "制胜分 12:22，非受迫失误 17:13——她制胜分只有对手一半，失误还多四个",
+   "source": "flashscore df_st_1"
+  },
+  {
+   "label": "正手制胜分（转播图形）",
+   "detail": "96.5s 转播打出 FOREHAND WINNERS ZHANG 6 / FERNANDEZ 2",
+   "source": "源片 96.5s 画面自证"
+  },
+  {
+   "label": "官方用时",
+   "detail": "1:15（29+46），画面 ROLEX 两处自证；flashscore 报 1:16，取官方",
+   "source": "US Open players feed match 2120"
+  }
+ ],
+ "_durations": [
+  [
+   "Set 1",
+   "0:29"
+  ],
+  [
+   "Set 2",
+   "0:46"
+  ],
+  [
+   "全场",
+   "1:15"
+  ]
+ ],
+ "_turning_points": [
+  {
+   "label": "【Set 2】1-2 费尔南德斯发球局：张帅 40-0 领先、五个破发点全丢——破了就是 2-2 平，没破变成 1-3，这一盘从这儿走的",
+   "density": 5
+  },
+  {
+   "label": "【Set 2】0-2 费尔南德斯发球局：张帅本场第一个破发点（占先）没兑现，费尔南德斯保发",
+   "density": 1
+  },
+  {
+   "label": "【Set 2】1-2 张帅发球局：自己 30-40 面对两个破发点全部救下、保发（画面 120-144s 板冻在 30/40 二十多秒，超长多拍）",
+   "density": 2
+  },
+  {
+   "label": "【Set 1】3-5 张帅发球局 0-40 被破，随后费尔南德斯发球拿下盘点（画面 38.5s SET POINT 自证）",
+   "density": 2
+  },
+  {
+   "label": "⚠️ 40-0 那三个破发点的画面**不在集锦里**：146.88 那一刀之后板直接是 40-40，集锦跳过了这一局的开头。所以旁白讲这一局时按画面时序写成「四十比零开局的三个破发点已经被救回来了」，不写成正在发生",
+   "density": 0
+  }
+ ],
+ "editorial": {
+  "mode": "match_review",
+  "hook": [
+   "七个破发点",
+   "一个都没兑现"
+  ],
+  "_hook_why": "钩子讲全场级的过程（七次机会全部落空），不讲身份——排名、年龄、轮次海报别处已经印着。",
+  "question": "张帅整场七次够到费尔南德斯的发球局，为什么一次都没能推开门？",
+  "thesis": "这不是被碾压的一场：张帅七次拿到破发点，其中五个挤在第二盘那一个 40-0 开局的发球局里；但费尔南德斯把 7 个破发点全部救下、9 个发球局一局没丢，制胜分 22 比 12——张帅够得着，兑不了现，75 分钟直落两盘出局。",
+  "beats": [
+   "北京时间 8 月 31 日凌晨一点多、纽约 17 号球场：第一盘张帅一个破发点都没拿到，自己的发球局在 3-5 时 0-40 被破，29 分钟丢掉 3-6。",
+   "第二盘她够到了对手的发球局：0-2 那局缠到占先拿到全场第一个破发点，没兑现；自己 30-40 面对两个破发点全部救下保发。",
+   "1-2 那一局是全场的分水岭——40-0 开局三个破发点，追平后再两次占先，五个破发点一个都没兑现，比分变成 1-3。",
+   "2-5 费尔南德斯第二个赛点被张帅救下（板上 MATCH POINT #2），下一分比赛结束；1 小时 15 分钟，3-6 2-6。"
+  ],
+  "human_context": {
+   "angle": "37 岁的张帅在纽约的位置很特别：单打世界第 54、要靠自己打进正赛，双打却排在世界第 7——今年这站她的双打签位比单打高出四十多位。这条片子讲的是她单打这一关：七次够到门口，一次都没推开，而对面是五年前在这片场地打进决赛的费尔南德斯。",
+   "facts": [
+    "费尔南德斯 6-3 6-2 胜张帅，2026 美网女单第一轮，Stadium 17（美网官方 players feed match 2120，status Completed）。",
+    "张帅 1989-01-21 生，本场时 37 岁；单打世界第 54、非种子；双打世界第 7（美网官方 players.json：singles_rank 54 / doubles_rank 7 / seed false）。",
+    "费尔南德斯 2002-09-06 生，本场时 23 岁；单打世界第 33，本站 31 号种子（美网官方 players.json + team feed seed=31，板上也印着 31）。",
+    "官方分盘用时 29+46=1:15；画面 48.5s ROLEX 0:29、162.5s/170.5s ROLEX 1:15 自证。flashscore 报 1:16，取官方。",
+    "破发点：张帅 0/7，费尔南德斯 3/7；费尔南德斯救下全部 7 个破发点（df_st_1 Break Points Saved 7/7）。",
+    "发球局：费尔南德斯 9/9 一局没丢，张帅 5/8；张帅 9 个接发局一局没破（Return games won 0%）。",
+    "制胜分 12:22，非受迫失误 17:13，总得分 46:61（共 107 分）。",
+    "张帅救下 1 个赛点（df_st_1 Match points saved 1/0；画面 162.5-166.5s 板烧 MATCH POINT #2 + 3 2 15 / 6 5 40）。",
+    "两人生涯第二次交手，张帅 0 胜 2 负（flashscore df_hh_1；转播解说 177.76 也说 their second ever career meeting）。",
+    "开球：flashscore AD=1788110700 → 纽约 EDT 8/30 13:25 = 北京时间 8/31 凌晨 1:25。"
+   ],
+   "sources": [
+    "https://youtu.be/EuDag0eBOsQ",
+    "https://www.flashscore.com/match/tennis/pGoR9Fum/#/match-summary",
+    "https://www.usopen.org/en_US/scores/feeds/2026/players/matches/wta311779_matches.json",
+    "https://www.usopen.org/en_US/scores/feeds/2026/players/players.json",
+    "https://api.wtatennis.com/tennis/players/ranked?page=0&pageSize=200&type=rankSingles&sort=asc&name=&metric=SINGLES"
+   ]
+  }
+ },
+ "topbar": {
+  "line1": "2026 美网 女单第一轮",
+  "line2": "费尔南德斯 6-3 6-2 张帅"
+ },
+ "push": {
+  "summary": "七个破发点一个没兑现",
+  "lead": "37 岁的张帅在美网第一轮遇上 31 号种子费尔南德斯。整场她七次拿到破发点——其中五个挤在第二盘那一个 40-0 开局的发球局里——一个都没能兑现；费尔南德斯把 7 个破发点全部救下、9 个发球局一局没丢。1 小时 15 分钟，3-6 2-6。她还救下过一个赛点。",
+  "auto": false,
+  "_no_auto_why": "封面还在等官方高清实拍（见 cover.portrait._why），所以这一条**先不挂自动推送**：合并进 main 时如果 auto 是 true，`auto-push-reel` 会拿一张还没定的封面把消息发出去，而微信那条消息收不回来。图落地、换上实拍、渲完并 `check_reel_landed` 0 项不合格之后，走 `match-reel mode=push` + `push=true` 手动推一次。"
+ },
+ "segments": [
+  {
+   "start": 2.0,
+   "end": 10.93,
+   "narration": "",
+   "_head_open_why": "冷开场没有取「源片开头＝戏剧性最低」的那一格：这条集锦的第一分就是一个长回合，打完之后转播解说连说三句惊叹（7.20 起：「Wow. That's what I mean... you think that she's in trouble and she comes up with the shot like that. That was a one-handed backhand too.」）——全片解说唯一一次为单独一球连说三句。用它开场是为了先立住「这场球两个人都打得动」，后面七次够到门口没进去才有分量。⚠️ **没有指认这一球是谁打的**：ASR 只给了 she，而这一段近端是费尔南德斯（粉）、远端是张帅（黄），画面上分不出这一记救球出自谁的拍子，所以冷开场不配旁白、也不在任何地方声称它是张帅的球。窗口收在 10.93 这一刀（死球 8.91 之后，欢呼与解说赞叹的尾巴留在段里）。",
+   "crosses_cut": "8.86 一刀：底线宽景的这一分打完（死球 8.91）→ 场边 J.P.Morgan 广告板前两人走动。同一分的回合与它的余韵，不跨人。",
+   "_why": "开场第①格：全片最强的一格画面，不配旁白，交给现场声和解说的惊叹。",
+   "score_inset": true
+  },
+  {
+   "start": 10.93,
+   "end": 19.8,
+   "narration": "七个破发点，一个都没能兑现。三十七岁的张帅，在美网第一轮就走了。",
+   "crosses_cut": "观众席两格（12.5/14.5s）→ 张帅发球前的特写（16.5/18.5s，白帽黄裙）。落点旁白压在她自己的脸上，不压对手。",
+   "_why": "开场第②格：先把落点抛出来（七次机会全部落空 + 出局），不先报坐标。",
+   "score_inset": true
+  },
+  {
+   "start": 19.8,
+   "end": 33.52,
+   "narration": "北京时间八月三十一号凌晨一点多，纽约十七号球场。对面是三十一号种子费尔南德斯——五年前，她在这片场地打进过决赛。",
+   "crosses_cut": "第一盘 1-2 的连续宽景回合（板 1 15 / 2 0），两人都在画面里，承载坐标与对手介绍。",
+   "_why": "开场第③格：坐标（钟点按「只说个大概」写成「凌晨一点多」——实际 1:25，分钟落在 10-39 档）＋对手一句带过。种子号 31 用的是种子号，不和世界第 33 混。",
+   "score_inset": true
+  },
+  {
+   "start": 33.52,
+   "end": 45.85,
+   "narration": "第一盘的球打得不难看，可有一个数摆在那儿：整整一盘，张帅一个破发点都没拿到。三比五之后，盘点握在费尔南德斯手里。",
+   "crosses_cut": "33.52/35.32 两刀：张帅走位中景→她的面部特写→第一盘盘点局的宽景。窗口末尾板烧着 SET POINT + 3 15 / 5 40，与旁白「费尔南德斯手里握着盘点」互证。",
+   "_why": "第一盘怎么丢的：破发点 0/0（df_st_1 Set 1）、3-5 时自己发球 0-40 被破（df_mh_1 Set1 第 8 局 0:40|B1|），随后费尔南德斯发球拿下盘点。",
+   "score_inset": true
+  },
+  {
+   "start": 45.85,
+   "end": 52.35,
+   "narration": "二十九分钟，第一盘就结束了。三比六，张帅走回场边。",
+   "crosses_cut": "45.78/50.33 两刀：费尔南德斯特写→张帅走向场边（48.5s 场边 ROLEX 显示 0:29，与旁白的二十九分钟同帧可证）→费尔南德斯走位。三格里两格是费尔南德斯，所以旁白把主语「张帅」显式写出来，不用「她」。",
+   "_why": "第一盘用时取官方 setDurations 的 29 分钟，画面里的 ROLEX 正好是这个数（48.5s 那格）。",
+   "score_inset": true
+  },
+  {
+   "start": 52.35,
+   "end": 59.03,
+   "narration": "转播的解说说，最后那两局有几个擦网球，帮了费尔南德斯。",
+   "crosses_cut": "50.33 一刀之后是第一盘的全屏赛果图形（WOMEN'S SINGLES | 1ST ROUND，3 0 / 6 0），图形自带比分。",
+   "_why": "解说 46.40-56.16 原话：『A couple of net cords in the last two games... They helped Fernandez break and now it's helped to take the first set』——转述的是解说的观察（擦网球），不是我们自己给这一盘定性。",
+   "score_inset": false,
+   "_score_inset_why": "这一段是第一盘的全屏赛果图形，板不在画面里（图形自己写着 3 / 6），贴回来的会是一块球场。"
+  },
+  {
+   "start": 63.0,
+   "end": 80.01,
+   "narration": "第二盘的第二局，费尔南德斯发球。两个人从十五平缠到四十平，再缠到占先——一个破发点，终于摆在张帅面前。整场球到这里，她第一次真的够到了对手的发球局。",
+   "crosses_cut": "第二盘第 2 局的连续宽景回合（板 3 0 / 6 1 全段冻结在这一局），两人都在画面里。",
+   "_why": "df_mh_1 Set2 第 2 局逐分：0:15, 15:15, 15:30, 30:30, 30:40, 40:40, A:40 |B1| ——A:40 就是张帅本场第一个破发点。「第一次够到」按逐分核过：第一盘她 0 个破发点。",
+   "score_inset": true
+  },
+  {
+   "start": 80.01,
+   "end": 92.59,
+   "narration": "然后是这场球一遍遍重复的那一幕：占先丢了，回到平分，再两分，这一局还是费尔南德斯的。零比二。够得到，不等于推得开。",
+   "crosses_cut": "80.01 一刀：张帅发球动作→速度牌→这一局收尾的宽景（板 3 0 40 / 6 1 40，与旁白的『回到平分』对得上）。",
+   "_why": "同一局的收尾：A:40 之后 40:40、40:A，费尔南德斯保发，打完 0-2（df_mh_1）。",
+   "score_inset": true
+  },
+  {
+   "start": 94.58,
+   "end": 101.5,
+   "narration": "转播打出一组数：正手的制胜分，六比二，张帅领先。",
+   "crosses_cut": "94.58/97.23 两刀：费尔南德斯特写→张帅在场边（96.5s 板上方叠着转播的黄色统计条 FOREHAND WINNERS，同帧 ROLEX 0:44）→回到宽景回合。末尾 101.5 切在这个宽景镜头内部（下一刀要到 113.28），为的是给这句话留够时间，不至于挤。",
+   "_why": "96.5s 画面自证：转播自己打出的 `FOREHAND WINNERS ZHANG 6 / FERNANDEZ 2`。这是「她够得着」的第二个证据，紧接着才是兑不了现。",
+   "score_inset": true
+  },
+  {
+   "start": 119.85,
+   "end": 133.0,
+   "narration": "而她自己这一头，也一直悬着。三十比四十，费尔南德斯手上又是一个破发点。这一分打得很长——屏幕上那两行数字，久久没有动过。",
+   "crosses_cut": "第二盘 1-2 前张帅发球局的超长多拍，板全段冻在 3 0 30 / 6 2 40，与旁白的三十比四十逐帧一致。",
+   "_why": "df_mh_1 Set2 第 3 局：15:40 |B1|, 30:40 |B1| 两个破发点。画面上板冻结二十多秒说明这一分打了很久。",
+   "score_inset": true
+  },
+  {
+   "start": 133.0,
+   "end": 146.88,
+   "narration": "",
+   "crosses_cut": "同一分的后半段，板仍是 30/40；解说 141.12 喊 Wow, really good hands there。不配旁白，把这一分的现场声完整留下。",
+   "_why": "这一分是全片最长的多拍，现场声和解说自己说话——她把这个破发点救了下来、保住发球局，接下来才轮到她接发。有意的呼吸口。",
+   "score_inset": true
+  },
+  {
+   "start": 146.88,
+   "end": 155.52,
+   "narration": "换她接发。四十比零开局，三个破发点——费尔南德斯一个一个全救了回来。",
+   "crosses_cut": "146.88 一刀：切到第二盘 1-2 费尔南德斯发球局，板已经是 3 1 40 / 6 2 40。⚠️ 40-0 那三分的画面不在集锦里（这一刀之后板直接是四十平），所以旁白按画面时序写成『已经被救回来了』，不写成正在发生。",
+   "_why": "全场的分水岭局。df_mh_1 Set2 第 4 局：15:0, 30:0, 40:0 |B1|, 40:15 |B1|, 40:30 |B1| ——40-0 开局的三个破发点全部被救，画面此刻正是被追平之后的四十平。",
+   "score_inset": true
+  },
+  {
+   "start": 155.52,
+   "end": 162.4,
+   "narration": "张帅又两次拿到占先。这一局前后五个破发点，一个都没兑现。",
+   "crosses_cut": "158.22 一刀：这一局的拉锯→观众席。板从 3 1 / 6 2 的白框走到 AD——**占先在费尔南德斯那一行**，也就是张帅的两次占先都用掉了，与旁白『一个都没兑现』一致。⚠️ 收在 162.4 而不是 163.78 那一刀：162.5s 那一格板已经跳到 `MATCH POINT #2` + 3 2 15 / 6 5 40（第二盘 2-5），旁白还在讲 1-2 那一局，画面会和旁白差三局。三格里两格是费尔南德斯，所以主语写成「张帅」不用「她」。",
+   "_why": "同一局的后半：A:40 |B1|, A:40 |B1| 两次占先＝两个破发点，最后 40:A 费尔南德斯保发（df_mh_1）。五个破发点是这一局的总数，逐分数出来的。",
+   "score_inset": true
+  },
+  {
+   "start": 162.4,
+   "end": 167.57,
+   "narration": "二比五，费尔南德斯的第二个赛点。",
+   "crosses_cut": "从 162.5s 那一格起板就烧着 MATCH POINT #2 + 3 2 15 / 6 5 40，与旁白逐字对应；162.5s 的场边 ROLEX 同帧显示 1:15。集锦跳过了第二盘 1-3 到 2-5 之间的几局，所以旁白不点那几局的具体比分。",
+   "_why": "画面自证的关键分：板上的 MATCH POINT #2 就是判据，也印证 df_st_1 的 Match points saved 1/0。",
+   "score_inset": true
+  },
+  {
+   "start": 167.57,
+   "end": 173.37,
+   "narration": "那一分，张帅拿下了。可再下一分，比赛就结束了。",
+   "crosses_cut": "167.48/171.59 两刀：赛点这一分打完（死球 167.57）→费尔南德斯赢下比赛、举手→场边。板在 168.5s 之后随镜头收走。",
+   "_why": "她救下的正是第二个赛点（df_mh_1 Set2 第 8 局 15:40 |B3| 之后那一分未列＝费尔南德斯拿下）。两句话把『救下』和『还是输了』分开说，不含糊。",
+   "score_inset": false,
+   "_score_inset_why": "赛点落地后镜头切近景与庆祝，板从 168.5s 起就不在画面里了，贴回来的会是一块球场。"
+  },
+  {
+   "start": 173.37,
+   "end": 182.68,
+   "narration": "一小时十五分钟，三比六、二比六。七个破发点，费尔南德斯一个都没给她。",
+   "crosses_cut": "173.72 一刀：网前握手的连续序列（张帅黄裙伸手、费尔南德斯粉衣）。旁白收全场数据，画面是两人握手。",
+   "_why": "收尾堆数据第一拍：官方用时 1:15、赛果、以及全场那个最硬的数——7 个破发点对手全部救下（df_st_1 Break Points Saved 7/7）。",
+   "score_inset": false,
+   "_score_inset_why": "网前握手的赛后序列，板早已收走。"
+  },
+  {
+   "start": 182.68,
+   "end": 192.69,
+   "narration": "费尔南德斯九个发球局，一局没丢。三十七岁的张帅，双打世界第七——单打这条路，她还想走多远？",
+   "crosses_cut": "182.63 一刀：赛后场边→费尔南德斯举手致意→她在场上挥手→192.5s 全屏赛果图形（1ST ROUND / STADIUM 17 / 3 2 / 6 6）。止于 192.69（死球），离 193.38 的美网片尾板留出余量。",
+   "_why": "收尾第二拍＋落在一问上：发球局 9/9（df_st_1）是对手这一场的底座；双打世界第 7 与单打第 54 的反差是她今天在纽约的真实位置（美网官方 players.json）。问句留给评论区。⚠️ **如实认领一处画面与旁白的错位**：赛后镜头结构性地归赢家——186.5/188.5/190.5 三格全是费尔南德斯庆祝和挥手，而旁白后半句讲的是张帅。这条集锦里没有第二段赛后的张帅镜头可换（184.5s 两人同框已经并进上一段）。压在后半句上的最后一格是 192.5s 的全屏赛果图形，那一屏印着 SHUAI ZHANG 的名字，收尾一问落在那儿；前半句讲费尔南德斯的发球局，正对着她庆祝的画面。",
+   "score_inset": false,
+   "_score_inset_why": "赛后致意与全屏赛果图形，板不在画面里。"
+  }
+ ],
+ "_editing_why": "冷开场（第一盘 1-1 张帅的一记救球＋解说连说三句惊叹，先立住『她打得动』）→落点（七个破发点一个没兑现、37 岁首轮出局）→坐标＋对手→第一盘：0 个破发点、自己 0-40 被破、对手盘点→29 分钟丢盘（ROLEX 0:29 同帧）→解说说的擦网球（全屏图形）→第二盘第 2 局：第一次够到对手发球局、占先＝第一个破发点→占先丢掉、0-2→正手制胜分 6-2（转播图形）→自己 30-40 救球（板冻结的超长多拍，后半段纯现场声）→**分水岭局**：40-0 三个破发点被救→又两次占先、五个全丢→MATCH POINT #2→她救下这一分、下一分输掉→握手＋全场数据→赛后致意＋收尾一问。⚠️ 集锦跳过的两处已在 `_turning_points` 里认领：40-0 那三分的画面不在片子里（旁白按画面时序写成『已经被救回来』），第二盘 1-3 到 2-5 之间的几局集锦也没收（旁白不点那几局的具体比分）。止于 192.69，美网片尾板（193.38 起、193.48 后数字静音）整个排除。"
+}
