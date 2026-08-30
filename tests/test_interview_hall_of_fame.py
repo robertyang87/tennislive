@@ -178,6 +178,7 @@ def test_长人名超限时单行重试明确允许姓氏简称():
     )
     assert line == "瓜拉斯、阿尼科内"
     assert "并列人名可用规范姓氏简称" in prompts[0]
+    assert "正如米尔卡所说" in prompts[0]
 
 
 def test_中文短句不能以虚词收尾():
