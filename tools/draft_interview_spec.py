@@ -262,7 +262,8 @@ def _translate_single(row: dict, chat, index: int, sys_prompt: str,
             + (
                 f"\n硬性限制：译文不得超过 {max_zh_chars} 个字符；"
                 "并列人名可用规范姓氏简称，但每个人都必须保留；"
-                "不得以的、地、得、在、为等虚词收尾，必须写成完整短句。"
+                "不得以的、地、得、在、为等虚词收尾，必须写成完整短句；"
+                "例如“像米尔卡说的”应改成“正如米尔卡所说”。"
                 if max_zh_chars else ""
             ),
             schema={
