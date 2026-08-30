@@ -1,0 +1,153 @@
+# 转写交叉校验：federer-ithf-2026-induction-speech
+
+- 第一份：ASR（small.en） **3785** 词
+- 第二份：faster-whisper（medium.en）**3790** 词
+- **对不上 4.9%**（闸门 12%）
+
+⚠️ 上面两个词数和分歧率都是**去掉 erm/uh/uhh/um/umm 这类填词之后**算的：这些词 whisper 系统性地会丢，跟源可不可信无关，留着只会把「说话人有多磕巴」量成「两份转写对不上」。
+
+## 分歧逐处（左＝ASR（small.en），右＝第二份）
+
+- `you know` → `—`
+- `hoppman` → `hopman`
+- `—` → `and`
+- `sorry` → `so`
+- `—` → `and`
+- `—` → `that was`
+- `—` → `so when i`
+- `mary as well that was amazing you crushed it` → `—`
+- `—` → `incredible`
+- `on` → `and`
+- `going to` → `gonna`
+- `—` → `at`
+- `—` → `the`
+- `25 000` → `twenty five thousand`
+- `mirka` → `mirko`
+- `numbers` → `number`
+- `—` → `at`
+- `mack` → `mac`
+- `—` → `it's`
+- `strong` → `strung`
+- `centre` → `of center`
+- `pardanet` → `part in it`
+- `i` → `you`
+- `second` → `thing`
+- `the` → `a`
+- `handing them` → `hand in`
+- `adversity` → `diversity`
+- `—` → `so i wanted to thank`
+- `game today or here tonight all right we're the proud few guys thank you` → `—`
+- `—` → `would`
+- `grandparents'` → `grandparents`
+- `or zidane i'm playing basketball i was jordan` → `—`
+- `and` → `at`
+- `mom had` → `a moment`
+- `two` → `too`
+- `—` → `it`
+- `—` → `it more that made`
+- `a` → `more and`
+- `played` → `play`
+- `carried` → `carry`
+- `the` → `a`
+- `loved` → `love`
+- `their` → `the`
+- `the lions` → `a lines`
+- `played` → `play`
+- `the lions` → `a lines`
+- `and` → `i`
+- `on` → `—`
+- `—` → `in`
+- `waterhouse` → `wasser house`
+- `écublan` → `a cuba`
+- `biel` → `bill`
+- `i've asked` → `of us`
+- `écublan` → `a cube long`
+- `écublan` → `a cube long`
+- `bald` → `ball`
+- `are` → `—`
+- `longren` → `longer and`
+- `help` → `helped`
+- `help` → `helped`
+- `thank you` → `—`
+- `guaras paul anikone` → `guerra's polana cone`
+- `edberg that's` → `it's`
+- `am i` → `time`
+- `i had` → `how do`
+- `in` → `—`
+- `—` → `and`
+- `stauble` → `stobley`
+- `ivan nubicic` → `even new bitch`
+- `—` → `whoo`
+- `going to` → `gonna`
+- `—` → `home`
+- `severin lutti` → `seven lutein`
+- `tenured` → `tenor the`
+- `severin's` → `service`
+- `needed` → `need a`
+- `your insights` → `the insides`
+- `and` → `—`
+- `for a` → `the first`
+- `no` → `know`
+- `—` → `and an old`
+- `and` → `in`
+- `help` → `helped`
+- `and` → `i'm`
+- `we've built` → `we build`
+- `incredibly` → `incredible`
+- `a` → `—`
+- `your` → `the`
+- `who plays the` → `places a`
+- `their` → `the`
+- `the` → `that`
+- `there was` → `there's`
+- `privilege to have` → `chef`
+- `—` → `the`
+- `mirka` → `miracle`
+- `mirka` → `miracle`
+- `this is such` → `—`
+- `—` → `she inspired`
+- `mirka` → `miracle`
+- `mirka` → `in miracle`
+- `mirka is` → `mirka's`
+- `sorry man` → `the story about`
+- `mirka is` → `miracles`
+- `—` → `and`
+- `thank you oh god` → `—`
+- `will pave` → `who have paved`
+- `way` → `ways`
+- `lever` → `labor`
+- `—` → `the`
+- `mark` → `marc`
+- `it` → `we're it's like`
+- `had bleach` → `a bleached`
+- `4 040` → `four thousand and forty`
+- `that` → `that's`
+- `signals` → `singles`
+- `it` → `—`
+- `challenges` → `challengers`
+- `—` → `don't know`
+- `—` → `it`
+- `tennis` → `then this`
+- `you're the fan` → `you define`
+- `serving` → `servant`
+- `call it` → `called`
+- `—` → `really what`
+- `they come rather` → `the camaraderie`
+- `have` → `—`
+- `muka` → `mirka we start`
+- `in` → `—`
+- `night's` → `night`
+- `myla shelly` → `mila charlene`
+- `you` → `—`
+- `—` → `you`
+- `—` → `tonight`
+- `good buy` → `goodbye`
+- `rodic` → `roddick`
+- `had` → `and`
+- `legend` → `legends`
+- `thank you` → `—`
+- `—` → `like`
+- `wasserhaus` → `what's where i was`
+- `tennis` → `then it's`
+- `borrowed` → `board`
+- `are` → `they're`
