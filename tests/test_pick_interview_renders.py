@@ -292,5 +292,7 @@ def test_workflow监听正式spec并写明60分钟恢复窗口():
         encoding="utf-8")
     assert '"specs/interviews/*.json"' in body, (
         "同 slug 改 spec 后必须立即唤醒自动重渲，不能只等 schedule")
+    assert '"tools/build_interview_clip.py"' in body, (
+        "渲染器修顶栏、封面或发布闸后必须立即唤醒自动重渲")
     assert "超过 60 分钟还没有当前成片" in body
     assert "超过 3 小时" not in body
