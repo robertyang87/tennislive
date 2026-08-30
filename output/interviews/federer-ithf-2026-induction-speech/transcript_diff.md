@@ -9,7 +9,6 @@
 ## 分歧逐处（左＝ASR（small.en），右＝第二份）
 
 - `you know` → `—`
-- `hoppman` → `hopman`
 - `—` → `and`
 - `sorry` → `so`
 - `—` → `and`
@@ -23,16 +22,19 @@
 - `—` → `the`
 - `25 000` → `twenty five thousand`
 - `mirka` → `mirko`
+- `—` → `i`
 - `numbers` → `number`
 - `—` → `at`
+- `borg and` → `morgan`
 - `mack` → `mac`
 - `—` → `it's`
-- `strong` → `strung`
 - `centre` → `of center`
-- `pardanet` → `part in it`
+- `leo and` → `leon`
+- `atp` → `a3`
 - `i` → `you`
 - `second` → `thing`
 - `the` → `a`
+- `i'm a` → `in my`
 - `handing them` → `hand in`
 - `adversity` → `diversity`
 - `—` → `so i wanted to thank`
@@ -42,7 +44,6 @@
 - `or zidane i'm playing basketball i was jordan` → `—`
 - `and` → `at`
 - `mom had` → `a moment`
-- `two` → `too`
 - `—` → `it`
 - `—` → `it more that made`
 - `a` → `more and`
@@ -51,9 +52,10 @@
 - `the` → `a`
 - `loved` → `love`
 - `their` → `the`
-- `the lions` → `a lines`
+- `it's` → `as`
+- `the linespeople` → `a lines people`
 - `played` → `play`
-- `the lions` → `a lines`
+- `the linespeople` → `a lines people`
 - `and` → `i`
 - `on` → `—`
 - `—` → `in`
@@ -63,20 +65,17 @@
 - `i've asked` → `of us`
 - `écublan` → `a cube long`
 - `écublan` → `a cube long`
-- `bald` → `ball`
 - `are` → `—`
-- `longren` → `longer and`
-- `help` → `helped`
-- `help` → `helped`
+- `lundgren` → `longer and`
 - `thank you` → `—`
-- `guaras paul anikone` → `guerra's polana cone`
+- `higueras paul annacone` → `guerra's polana cone`
 - `edberg that's` → `it's`
 - `am i` → `time`
 - `i had` → `how do`
 - `in` → `—`
 - `—` → `and`
-- `stauble` → `stobley`
-- `ivan nubicic` → `even new bitch`
+- `reto staubli` → `rita stobley`
+- `ivan ljubicic` → `even new bitch`
 - `—` → `whoo`
 - `going to` → `gonna`
 - `—` → `home`
@@ -96,12 +95,12 @@
 - `incredibly` → `incredible`
 - `a` → `—`
 - `your` → `the`
-- `who plays the` → `places a`
-- `their` → `the`
+- `who plays` → `places`
+- `role` → `girl`
 - `the` → `that`
 - `there was` → `there's`
 - `privilege to have` → `chef`
-- `—` → `the`
+- `martinas` → `martinez the`
 - `mirka` → `miracle`
 - `mirka` → `miracle`
 - `this is such` → `—`
@@ -113,37 +112,37 @@
 - `mirka is` → `miracles`
 - `—` → `and`
 - `thank you oh god` → `—`
-- `will pave` → `who have paved`
-- `way` → `ways`
-- `lever` → `labor`
-- `—` → `the`
-- `mark` → `marc`
+- `—` → `have`
+- `way is` → `ways`
+- `laver` → `labor`
+- `rosewall borg` → `the roseville bork`
+- `who` → `it`
 - `it` → `we're it's like`
 - `had bleach` → `a bleached`
 - `4 040` → `four thousand and forty`
-- `that` → `that's`
-- `signals` → `singles`
 - `it` → `—`
-- `challenges` → `challengers`
+- `qualies` → `qualities`
 - `—` → `don't know`
 - `—` → `it`
 - `tennis` → `then this`
 - `you're the fan` → `you define`
-- `serving` → `servant`
+- `serve and` → `servant`
+- `behind` → `beyond`
 - `call it` → `called`
-- `—` → `really what`
-- `they come rather` → `the camaraderie`
+- `sabr` → `saber`
+- `—` → `what really`
 - `have` → `—`
-- `muka` → `mirka we start`
+- `—` → `of`
+- `—` → `we start`
+- `it shifted` → `it's shifting`
 - `in` → `—`
-- `night's` → `night`
-- `myla shelly` → `mila charlene`
+- `goodnight` → `good night`
+- `myla` → `mila`
 - `you` → `—`
 - `—` → `you`
 - `—` → `tonight`
-- `good buy` → `goodbye`
-- `rodic` → `roddick`
-- `had` → `and`
+- `i` → `—`
+- `laver` → `labour`
 - `legend` → `legends`
 - `thank you` → `—`
 - `—` → `like`

@@ -1,0 +1,56 @@
+{
+  "status": "pass",
+  "checked_at": "2026-08-30T19:54:54Z",
+  "auditor": "opencv-haar-v1",
+  "expected_subject": "费德勒",
+  "identity_evidence": "L0-bound spec subject + same-source frame_at",
+  "spec_sha256": "21a8205779cf377f74f3a6ca1fec07801d9a0e2eaf2a3f55c913e6181c02d961",
+  "poster_sha256": "b0252c01cb604cc913c2521a6852efd1c369e5ae6d55fbffd58b5e9348b842f1",
+  "thresholds": {
+    "close_up_zoom": 1.5,
+    "face_height_ratio": 0.08,
+    "close_up_face_height_ratio": 0.14,
+    "face_area_ratio": 0.01,
+    "face_sharpness": 45.0,
+    "face_contrast": 32.0,
+    "eyes": 2
+  },
+  "result": {
+    "poster": {
+      "decodable": true,
+      "format": "JPEG",
+      "width": 1080,
+      "height": 1440,
+      "photo_region": [
+        0,
+        150,
+        1080,
+        810
+      ]
+    },
+    "face": {
+      "detector": "frontal-default",
+      "box": [
+        348,
+        336,
+        159,
+        159
+      ],
+      "detected_faces": 4,
+      "eyes": 2,
+      "face_height_ratio": 0.1963,
+      "face_area_ratio": 0.0289,
+      "center_x_ratio": 0.39583,
+      "center_y_ratio": 0.32778,
+      "sharpness": 46.933,
+      "contrast": 110.0
+    },
+    "contract": {
+      "shot_type": "close_up",
+      "frame_at": 200.6,
+      "zoom": 1.9,
+      "focus_y": 0.9
+    }
+  },
+  "issues": []
+}
