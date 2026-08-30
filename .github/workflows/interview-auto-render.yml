@@ -205,6 +205,7 @@ jobs:
           git config user.name "Claude"
           git config user.email "noreply@anthropic.com"
           git add specs/interviews
+          git add requests/interviews
           if [ -f /tmp/request-slugs.txt ]; then
             while IFS= read -r slug; do
               [ -n "$slug" ] || continue
