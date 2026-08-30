@@ -865,6 +865,9 @@ def test_名人堂顶栏以人物内容为大标题_典礼为小标题(monkeypat
     assert r"\c&HFFFFFF&" in main_ass, "主标题要显式写白，不能只靠 \\r 复位竖条绿"
     assert rf"\an8\pos({clip.CANVAS_W // 2},{clip._HEAD_A_TOP})" in main_ass
     assert rf"\an8\pos({clip.CANVAS_W // 2},{clip._HEAD_B_TOP})" in context_ass
+    assert main_ass.index(r"\an8\pos") < main_ass.index("▍"), (
+        "行级定位标签必须在第一个可见字符之前；放到第二个 run 会让生产 libass"
+        "跳过整条人物主标题")
 
 
 def test_名人堂缺人物不许退回只有典礼小标题(monkeypatch):
@@ -909,21 +912,27 @@ def test_渲染后顶栏像素闸能抓住只有小标题(tmp_path, monkeypatch)
     ass = tmp_path / "topbar.ass"
     clip.write_ass([], [], 0.0, ass, spec=spec, duration=1.0)
     ass_text = ass.read_text(encoding="utf-8")
-    assert "Style: HEADSUBJECT,Noto Sans CJK SC" in ass_text
+    assert "Style: HEADSUBJECT,Noto Sans CJK SC,54,&H00FFFFFF," in ass_text
     assert "Dialogue: 2," in ass_text and ",HEADSUBJECT," in ass_text
     assert "Dialogue: 1," in ass_text and ",HEADB," in ass_text
+    main_dialogue = next(
+        line for line in ass_text.splitlines() if ",HEADSUBJECT," in line)
+    assert main_dialogue.index(r"\an8\pos") < main_dialogue.index("▍"), (
+        "最终写入 ASS 的 HEADSUBJECT 必须先定位，再出现任何可见文本")
 
-    def _render(src_ass: Path, dest: Path) -> None:
+    def _render(src_ass: Path, dest: Path) -> str:
         proc = subprocess.run(
-            ["ffmpeg", "-hide_banner", "-loglevel", "error", "-y",
+            ["ffmpeg", "-hide_banner", "-loglevel", "verbose", "-nostats", "-y",
              "-f", "lavfi", "-i", "color=c=0x00120b:s=1080x1440:d=1:r=25",
              "-vf", f"subtitles={src_ass}:fontsdir={ROOT / 'assets/fonts'}",
              "-c:v", "libx264", "-pix_fmt", "yuv420p", str(dest)],
             capture_output=True, text=True, check=False)
         assert proc.returncode == 0, proc.stderr
+        return proc.stderr
 
     good = tmp_path / "two-lines.mp4"
-    _render(ass, good)
+    font_log = _render(ass, good)
+    clip.assert_topbar_font_log(font_log, spec)
     clip.assert_rendered_topbar(good, spec)
 
     bad_ass = tmp_path / "only-small-title.ass"
@@ -964,6 +973,12 @@ def test_顶栏字体日志闸拒绝缺字方框和DejaVu回退():
     with pytest.raises(SystemExit, match="没有落到 Noto"):
         clip.assert_topbar_font_log("\n".join([
             "fontselect: (Noto Sans CJK SC, 700, 0) -> DejaVuSans-Bold, 0, DejaVuSans-Bold",
+            good.splitlines()[1],
+        ]), subject_spec)
+
+    with pytest.raises(SystemExit, match="Noto Bold"):
+        clip.assert_topbar_font_log("\n".join([
+            "fontselect: (Noto Sans CJK SC, 700, 0) -> NotoSansCJKsc-Regular, 0, NotoSansCJKsc-Regular",
             good.splitlines()[1],
         ]), subject_spec)
 
