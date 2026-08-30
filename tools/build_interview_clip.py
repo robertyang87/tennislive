@@ -502,6 +502,20 @@ def fetch_words(url: str, workdir: Path,
     在「要不要重试」而不是「要不要带 cookie」。
     """
     workdir.mkdir(parents=True, exist_ok=True)
+    # 人工请求已把第一份 Whisper 逐词稿持久化为 `cap_asr.json3`；渲染必须继续
+    # 使用同一份第一源。若这里又优先下载 YouTube 自动字幕，翻译与渲染会因
+    # 两套断句产生 674/673 这类错位。medium.en 仍独立担任第二份 ASR 校验。
+    asr_cache = workdir / "cap_asr.json3"
+    if spec and spec.get("asr_model") and asr_cache.is_file():
+        data = json.loads(asr_cache.read_text())
+        out = []
+        for ev in data.get("events", []):
+            base = ev.get("tStartMs", 0)
+            for seg in ev.get("segs") or []:
+                word = (seg.get("utf8") or "").strip()
+                if word:
+                    out.append(((base + seg.get("tOffsetMs", 0)) / 1000, word))
+        return out
     # **抓过就别再抓，但只认这条 URL 抓的那份。** YouTube 会限流，而限流时的
     # 报错和「这条片子没字幕」长得不一样但同样让人停手；字幕又是不会变的，
     # 缓存下来重跑不花代价——**这句话的前提是 outdir 里只对应一条视频**。
@@ -3578,8 +3592,10 @@ def main() -> int:
     if args.stage == "subs":
         # **挑封面用的**：只在取字幕这一趟出，出片那趟不重复下
         storyboard_sheet(spec["url"], outdir, spec)
-    lines = segment(fetch_words(spec["url"], outdir, spec), spec["start"], spec["end"],
-                    word_fix=spec.get("word_fix"))
+    lines = segment(
+        fetch_words(spec["url"], outdir, spec), spec["start"], spec["end"],
+        budget=spec.get("segment_budget_px"), word_fix=spec.get("word_fix"),
+    )
     # **人工订正压在 ASR 之上。** 键是行号（1 起），值是核对过的英文。
     # ASR 会把整句说得语法不成立（`The crazy Yes. round of applause.`），
     # 那种句子照发出去，这个号的英语素材就没有可信度了。
