@@ -1,0 +1,337 @@
+{
+  "slug": "wu-walton-us-open-2026-r1",
+  "_column": "reel",
+  "layout": "band",
+  "scorebox": [
+    104,
+    887,
+    660,
+    980
+  ],
+  "_scorebox_why": "从 probe 的记分条缩略图墙（score_00~05，crop 固定推算 (0,842) 806x216、tile 520 → scale 0.6452）反解出来的，不是抄模板：11 格逐格量深蓝板的 bounding box，左缘恒 x=104（个别格 102 是 JPEG 噪声）、上下沿 y 887~980。右缘随盘数变，量到三档 578（一盘）/ 616（两盘，按差值推）/ 653（三盘），每盘 +38px——和 zheng-pridankina 那条独立量出的『美网的板每打完一盘 +38px』完全对上，两条片子互相印证。顶层这四个数只给左缘、上下沿和兜底右缘（按最宽的决胜盘那一档 653 + 7 余量 = 660），真右缘由 `resolve_board_insets` 每段现量。SET/MATCH POINT 黄标在 y<887 之外，按 docs 口径不扩窗——关键分旁白本来就讲。",
+  "source_url": "https://youtu.be/UJM18Ni-J90",
+  "_source": "US Open 官方 YouTube 频道（US Open Tennis Championships，@usopen，oEmbed author_name 自证）本场官方集锦《Wu Yibing vs. Adam Walton Highlights | 2026 US Open Round 1》，probe 量到 1920x1080、203.5s、29.97fps。画面自证四处：14.5s 全屏台标写着 MEN'S SINGLES | 1ST ROUND | COURT 11（球场与官方 completed_matches day_8 feed 的 courtName=Court 11 一致）；左下记分条 WU CHN / WALTON AUS 与 flashscore hbWgxdL7 逐分逐格对得上（124.5s 的 `7 6 1 [40] / 6 2 2 [15]` 正是决胜盘第 4 局 0:15,15:15,30:15,40:15）；138.5–156.5s 的 SET POINT #2 黄标对应逐分 Set3 那一局的第二个 |B2|；182.5–190.5s 终场台标 YIBING WU 7 6 7 / ADAM WALTON 6 2 5 = 官方赛果。片尾板 200.38 起（probe 的 silent_audio [[200.47, 203.5]] 印证），已排除在段外。",
+  "cover": {
+    "matchup": [
+      {
+        "name": "吴易昺",
+        "name_en": "Yibing Wu",
+        "country": "CHN",
+        "rank": 113
+      },
+      {
+        "name": "沃尔顿",
+        "name_en": "Adam Walton",
+        "country": "AUS",
+        "rank": 93
+      }
+    ],
+    "_rank_why": "两人当期排名双源一致，不是拿签表或 LDA 那种快照：美网官方 players.json（singles_rank，吴易昺 atpwb32=113、沃尔顿 atpw09e=93）＋ tennisexplorer 球员页 Current rank（wu-9762d『113. / 54.』、walton『93. / 74.』）。⚠️ 沃尔顿那条躲过一次同名坑——按姓搜到的 walton-d19b2 是英国的 Matthew Walton（26 岁），Adam Walton 的 slug 是裸的 walton（title 自证）。两人都不是种子（官方 players.json seed=false）。",
+    "winner": "吴易昺",
+    "result": "7-6 6-2 7-5",
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "吴易昺",
+    "hook": "决胜盘两个盘点\n他一个都没给",
+    "topic": "美网首轮 · 11 号球场",
+    "portrait": {
+      "image": "assets/reel/wu-walton-us-open-2026-r1-cover-arms.jpg",
+      "focus": 0.47,
+      "focus_y": 0.42,
+      "zoom": 1.0,
+      "_why": "美网官方图片接口本场实拍（Dustin Satloff/USTA，f_USTA2380697_20260830_DS2_8131.jpg，图注 `Yibing Wu reacts during a Men's Singles match on Day One of the 2026 US Open`——四要素由赛事方自证）。赢下比赛那一刻双臂张开，脸在画面中央、**眼睛睁开、表情读得出来**，背景是虚化的看台，看得出在球场上。同批 7 张里的取舍：`reacts_7405` 咬牙握拳更『用力』，但帽檐压着、头低着，眼睛看不清，撞上 2026-08-21『封面图一定不要闭眼的』那条；`reacts_7988` 是全身握拳，脸太小；两张 `in action` 是击球中，而这条片子讲的是他扛住之后赢下来，庆祝更对题。焦点 0.47 落在脸上，裁出的 540px 竖条正好是头肩特写（双臂会被切在框外，那是近景特写要的样子）。",
+      "_low_res_why": "1280x720 铺 1080x1440 是放大 2.00 倍。**这是美网这条渠道的天花板，不是没找够**：`f_` 前缀就是顶（十二个前缀、六个目录、三种 ?width= 参数 CLAUDE.md 已探到底，别重探）。另外三档当天都真跑过——AP 通讯社按 Yibing Wu 搜命中的是打高尔夫的 Dylan Wu（非空≠对题），USA TODAY 8/30 那一辑 9 张 ImageObject 里只有 1 张提到吴易昺、而那张主体是沃尔顿（3841x2560 但人物不对，过不了第一道闸），WTA photo-resources 不收大满贯。赛事官网 WordPress 媒体库这一档美网没有（那是巡回赛站点才有的东西）。",
+      "_zoom_why": "试过 zoom 1.2 + focus_y 0.62（想把人放大到接近铺满、少留点上方虚化背景），渲出来**更差**：脸是大了，可钩子第一行正压在眼睛和鼻子上，而『眼睛要看得见』是硬要求；放大倍率也从 2.0 变成 2.4，本来就到天花板的清晰度又降一档。回到 1.0——这一版眼睛和整张脸都在钩子上方，钩子压的是胸口。上方那片虚化的看台和遮阳伞不是纯色空白，主体（脸＋张开的双臂＋比分板）占住了下三分之二。"
+    },
+    "scoreboard": {
+      "court": "Court 11",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%222%3A24%3A00%22%2C%22source%22%3A%22US%20Open%20official%20completed_matches%20day_8%20duration%202%3A24%20%3D%20setDurations%2054%2B31%2B59%22%7D",
+        "field": "duration"
+      },
+      "_court_why": "美网官方 completed_matches/days/day_8.json（match_id 1162）courtName=Court 11；源片 14.5s 全屏台标烧着 COURT 11，画面自证。",
+      "_duration_why": "官方 2:24，分盘 54+31+59=144 分钟自洽。⚠️ flashscore df_sui_1 报 0:55+0:32+0:59=2:26，比官方每盘各多约 1 分钟——按 CLAUDE.md『比赛用时不要只信 flashscore，交叉核、以官方为准』取 2:24。"
+    },
+    "_result_why": "闸要求 cover.result 等于 `verified_match_fact` 从 `_match.set_scores_home_away` 机械重建的那一串，所以这儿不带抢七小分。首盘小分 7-6(2) 有三个源（官方 day_8 feed sets[0] tiebreak 7/2、flashscore df_sui_1 的 IG/IH、源片 78.5s 记分条 6 [6] / 6 [2]），写在旁白和小红书正文里；band 版式的比分板是从画面抠出来的真板，小分本来就印在上面。"
+  },
+  "_match": {
+    "status": "result_verified",
+    "source": "flashscore_points",
+    "source_id": "hbWgxdL7",
+    "flashscore_id": "hbWgxdL7",
+    "participants": [
+      "吴易昺",
+      "沃尔顿"
+    ],
+    "set_scores_home_away": [
+      [
+        7,
+        6
+      ],
+      [
+        6,
+        2
+      ],
+      [
+        7,
+        5
+      ]
+    ],
+    "winner": "吴易昺",
+    "loser": "沃尔顿",
+    "winner_result": "7-6 6-2 7-5",
+    "loser_result": "6-7 2-6 5-7",
+    "_tiebreak_note": "抢七小分 7-6(2) 只写在 cover.result / topbar 上——`_match` 这两栏由 `verified_match_fact` 从 set_scores_home_away 机械重建，带上小分会和重建值对不上（dry-run 当场报『赢家视角赛果和逐盘事实不一致』）。",
+    "_direction_why": "flashscore home=Wu Y.（AE）、away=Walton A.（AF），BA/BB=7:6、BC/BD=6:2、BE/BF=7:5，赢家是吴易昺；美网官方 day_8 feed team1=Yibing Wu totalSetsWon=3 won=true 同向；源片 182.5–190.5s 终场台标 YIBING WU 7 6 7 / ADAM WALTON 6 2 5 第三处印证。抢七小分 7-6(2) 由官方 sets[0] tiebreak 7/2 与 flashscore df_sui_1 的 IG/IH 双源给出。",
+    "_upset_why": "官方 flags.upset=false——113 胜 93 差距不大，所以这条片子**不打爆冷牌**，卖点是过程（两次濒临丢盘）不是身份。"
+  },
+  "stats": {
+    "a": {
+      "aces": 9,
+      "df": 4,
+      "winners": 43,
+      "ue": 34,
+      "first_in": 62,
+      "first_won": 48,
+      "second_total": 45,
+      "second_won": 26,
+      "bp_conv": 4,
+      "bp_chances": 12,
+      "pts_won": 111,
+      "pts_total": 204,
+      "first_total": 107,
+      "headshot": "assets/players/headshots/atp-WB32.png"
+    },
+    "b": {
+      "aces": 15,
+      "df": 5,
+      "winners": 29,
+      "ue": 36,
+      "first_in": 70,
+      "first_won": 52,
+      "second_total": 38,
+      "second_won": 14,
+      "bp_conv": 1,
+      "bp_chances": 6,
+      "pts_won": 93,
+      "pts_total": 204,
+      "first_total": 108,
+      "headshot": "assets/players/headshots/atp-W09E.png"
+    },
+    "_source": "flashscore 本场 hbWgxdL7 的 df_st_1（大满贯男子这场有 Winners / Unforced errors）。a=吴易昺=cover.matchup[0]，而 flashscore home（SH）恰好也是吴易昺，顺序核过：Total Points Won 111/204 是赢家吴易昺的、b 的 93 是沃尔顿的。first_total 按 first_in+second_total 和式（107=62+45、108=70+38），反算一发进球率 62/107=58%、70/108=65%，与 feed 报的 58%/65% 一致。头像取 ATP 官方 player-headshot 别名（吴易昺 WB32、沃尔顿 W09E，经 mubadaladcopen.com 镜像取；颜色数 235/239 远高于占位剪影的 2 色，且逐张打开核过是本人）。",
+    "_headshot_why": "两张头像都是这个仓库第一次出现，所以『同一张官方头像不许挂两个中文名』那条判据在这一条上是哑的——自己对过：atp-WB32 是亚洲面孔男选手（吴易昺，26 岁，杭州），atp-W09E 戴白色 Lotto 帽，和 USA TODAY 那张沃尔顿实拍（白衣绿短裤 Lotto）同一人。"
+  },
+  "_hit_data": [
+    {
+      "label": "丢掉一个之后连保十个发球局",
+      "detail": "全场 16 个发球局只丢 1 个（首盘 5-6 那次）；此后次盘 4 个 + 决胜盘 6 个全部保下",
+      "source": "flashscore df_st_1（Service games won 94% 15/16）＋ df_mh_1 逐局（match_stat_hooks 报『主队 连续保发 10 个发球局』）"
+    },
+    {
+      "label": "总分差",
+      "detail": "吴易昺 111 - 沃尔顿 93，净差 18 分（204 分里 54%）",
+      "source": "flashscore df_st_1（Total Points Won）"
+    },
+    {
+      "label": "二发得分率碾压",
+      "detail": "吴易昺 58%（26/45）对沃尔顿 37%（14/38）",
+      "source": "flashscore df_st_1（2nd serve points won）"
+    },
+    {
+      "label": "沃尔顿 Ace 更多却输了",
+      "detail": "Ace 15 对 9、制胜分 29 对 43——发球分吃得开，回合分吃不住",
+      "source": "flashscore df_st_1"
+    },
+    {
+      "label": "决胜盘 4-5 那一局",
+      "detail": "18 分、5 次占先、2 个盘点全救下（逐分 17 条 + 制胜那一分）",
+      "source": "flashscore df_mh_1 Set 3（|B1| |B2| 各两处）＋ 源片 138.5–156.5s 的 SET POINT #2 黄标"
+    },
+    {
+      "label": "官方用时",
+      "detail": "2:24（54/31/59）——次盘只打了 31 分钟",
+      "source": "US Open completed_matches day_8 feed；flashscore 报 2:26，取官方"
+    }
+  ],
+  "_durations": [
+    [
+      "Set 1",
+      "0:54"
+    ],
+    [
+      "Set 2",
+      "0:31"
+    ],
+    [
+      "Set 3",
+      "0:59"
+    ],
+    [
+      "全场",
+      "2:24"
+    ]
+  ],
+  "_turning_points": [
+    {
+      "label": "【Set 3】4-5 吴易昺发球局：18 分、5 次占先、救下 2 个盘点（30:40 和 40:A 各一个 |B2|）后保住 5-5 —— 全场的分水岭，画面 138.5–158.5s 有第二个盘点全程",
+      "density": 3
+    },
+    {
+      "label": "【Set 3】5-5 沃尔顿发球局：吴易昺三个破发点，第三个兑现，6-5 —— 画面 156.39–161.86s",
+      "density": 2
+    },
+    {
+      "label": "【Set 1】5-6 沃尔顿发球胜盘局：他拿到 1 个盘点被救下，吴易昺随即破发追成 6-6 —— ⚠️ **这一段不在集锦里**（记分条 16.5–24.5s 还是 5-4，26.5s 直接跳到抢七 6-6），旁白第 4 段只讲抢七不讲这一局",
+      "density": 3
+    },
+    {
+      "label": "【Set 1】1-1 吴易昺发球局：救 2 个破发点、3 次占先保发 —— 画面 0.5–11.5s，全场第一次站上悬崖",
+      "density": 2
+    }
+  ],
+  "editorial": {
+    "mode": "match_review",
+    "hook": [
+      "决胜盘两个盘点",
+      "他一个都没给"
+    ],
+    "_hook_why": "按『钩子要有剧情的跌宕，不是把两个身份摆在一起』：排名（113 对 93）差得不大、官方 flags.upset 也是 false，拿身份当钩子既弱又不准；过程才是这场球的全部——决胜盘 4-5 自己发球、对手手握盘点，那 20 秒的 SET POINT #2 就挂在画面上。两行都在讲过程，落点（守住了）藏在『一个都没给』里，赛果由比分板印。",
+    "question": "排名比对手低二十位、两次被逼到丢盘边缘，吴易昺靠什么把这场美网首轮收成直落三盘？",
+    "thesis": "比分干净，过程一点都不干净：他两次站在丢盘的悬崖上——首盘 5-6 被对手拿到盘点，决胜盘 4-5 自己发球时又被拿到两个——三个盘点一个没给。赢的底子是发球局的硬度（16 个发球局只丢 1 个，丢掉那个之后连保 10 个）和二发质量（二发得分率 58% 对 37%），而不是发球威力（Ace 反而是 9 比 15 落后）。",
+    "beats": [
+      "北京时间 8 月 30 日夜里 11 点，11 号球场开打。首盘 1-1 之后吴易昺发球就被逼出两个破发点，三次占先才保下来——这是他全场第一次站上悬崖。",
+      "首盘咬到抢七：抢七开局 1-2 落后，之后连拿六分推到 6-2，第一个盘点就收下这一盘，7-6(2)，54 分钟。",
+      "次盘一发进球率上到 68%，6-2 只用 31 分钟——全场唯一轻松的一段。",
+      "决胜盘一路互保到 4-5，吴易昺发球：这一局打了 18 分、5 次占先，沃尔顿两个盘点都被救掉；保住 5-5 之后他立刻回破，6-5 上来发球胜赛局，40-0 三个赛点第一个就拿下。"
+    ],
+    "human_context": {
+      "angle": "这场球打在 11 号外场，不是任何一个大球场。吴易昺今年 26 岁，生涯最高排名是 2023 年 5 月的世界第 54，如今第 113；美网是他成绩最好的大满贯——2022 年在这里打进第三轮，那也是他四大满贯的生涯最佳。今年他在大满贯的战绩是澳网、法网各进第二轮、温网首轮出局，这一场是他本赛季在大满贯赢下的第三场球。",
+      "facts": [
+        "吴易昺 7-6(2) 6-2 7-5 胜 Adam Walton，2026 美网男单第一轮（美网官方 completed_matches day_8 feed，match_id 1162，Completed）。",
+        "官方 players/details/atpwb32.json：1999-10-14 生于杭州，身高 1.83m，右手持拍，2017 转职业；当前单打 113、生涯最高 54（2023-05-29）；生涯单打冠军 1 个，生涯 32 胜 41 负，今年 6 胜 9 负。",
+        "同一份 feed 的 singles_history：2022 年美网第三轮（USO 3RD，event.best_singles 记作『3, (2022)』，是他四大满贯的生涯最佳）；2023 年澳网/法网/温网首轮、美网第二轮；2026 年澳网第二轮、法网第二轮、温网首轮。",
+        "沃尔顿：澳大利亚人，官方 players.json 当期第 93，tennisexplorer 生涯最高 74；两人都不是本届种子。",
+        "官方用时 2:24（分盘 54/31/59），球场 Court 11，Day 1（tournDay 8，2026-08-30）。",
+        "开赛北京时间 8 月 30 日 23:05（flashscore AD=1788102300，纽约 11:05；同一时刻另有两场外场同时开打，是 Day 1 外场首场的整批开赛时刻，属于『到点就打』那一档）。",
+        "官方 flags.upset=false。"
+      ],
+      "_facts_note": "⚠️ 两条**没有写进产物**的事实，记在这儿省下次重查：① 官方 singles_history 里没有 2024、2025 两年的行，`event.num_played=2` 也指向『本届之前只打过两届美网』——但『为什么缺席』feed 一个字没说，属于推断，旁白和正文都不碰；② 『三年来第一次在美网赢球』由 singles_history 可以读出来（上一次是 2023 年），但那是一句全称断言、手上只有赛事方一个源，按『全称断言要两个独立源』没写进旁白。",
+      "sources": [
+        "https://www.usopen.org/en_US/scores/feeds/2026/completed_matches/days/day_8.json",
+        "https://www.usopen.org/en_US/scores/feeds/2026/players/details/atpwb32.json",
+        "https://www.usopen.org/en_US/scores/feeds/2026/players/players.json",
+        "https://www.tennisexplorer.com/player/wu-9762d/",
+        "https://www.tennisexplorer.com/player/walton/"
+      ],
+      "voice_label": "两次贴着悬崖走"
+    }
+  },
+  "topbar": {
+    "line1": "2026 美网 第一轮",
+    "line2": "吴易昺 7-6 6-2 7-5 沃尔顿"
+  },
+  "push": {
+    "summary": "两个盘点没给，吴易昺过关",
+    "lead": "美网首轮 11 号球场，吴易昺 7-6(2) 6-2 7-5 击败世界第 93 的沃尔顿。比分直落三盘，过程两次贴着悬崖：首盘 5-6 被对手拿到盘点，决胜盘 4-5 自己发球又被拿到两个——18 分、5 次占先，三个盘点一个没给。全场 16 个发球局他只丢掉 1 个，丢掉那个之后连保 10 个。",
+    "auto": true
+  },
+  "segments": [
+    {
+      "start": 172.8,
+      "end": 179.6,
+      "narration": "",
+      "crosses_cut": "176.14 一刀：赛点那一分的回合（172.5/174.5s 宽景，记分条 MATCH POINT 40-0 全程在画面里）→ 吴易昺双臂张开庆祝的近景（176.5s）。两边都是他本人，同一时刻的两个机位，正是开场要的『球落地 + 反应』。止于 179.6（下一刀 179.71 之前 0.11，且在死球 178.38 之后 1.2 秒）。",
+      "_why": "第①格：全片最强的一格——赛点落地和庆祝。不配旁白，靠现场声和欢呼。封面用的官方实拍（双臂张开）正是这同一个动作，封面和开场连成一气。",
+      "_ending_payoff_required": true,
+      "score_inset": true
+    },
+    {
+      "start": 0.5,
+      "end": 12.6,
+      "narration": "比分是直落三盘，看着很干净。可这场球，吴易昺几乎一直站在悬崖边上。一比一之后他发球，两个破发点，三次占先，才保下来。",
+      "crosses_cut": "10.19 是疑似切点（宽景→他在底线的中景），两边同一局同一人，记分条全程 WU 1 AD / WALTON 1。段尾 12.6 落在死球 11.61 之后一秒，画面是球落地后的反应。",
+      "_why": "第②格给落点和反差：赛果干净、过程不干净。画面正是他全场第一次救破发点那一局，说的和看到的是同一件事——逐分 Set1 第 3 局『15:40 |B1|, 30:40 |B1|』两个破发点、随后三次 A:40，和记分条上冻住的 AD 逐格对得上。",
+      "score_inset": true
+    },
+    {
+      "start": 16.5,
+      "end": 25.3,
+      "narration": "北京时间八月三十号夜里十一点，美网第一轮，十一号球场。对面是世界第九十三的沃尔顿。",
+      "crosses_cut": "23.67 是疑似切点，两边都是首盘 5-4 沃尔顿那个保发局（记分条 16.5–24.5s 恒为 WU 5 30 / WALTON 4 40）。",
+      "_why": "第③格给坐标。钟点按『开球时刻只说个大概』：23:05 的分钟落在 0–9 档，说『夜里十一点』；日期写绝对日期不写『今天』。⚠️ 段尾原本写 25.90，dry-run 报它切在死球 25.93 **之前 0.03 秒**——那是球还在飞就切走，改到 25.30（死球 25.03 之后 0.27）。⚠️ 25.03/25.93/26.73 这三个『死球』挨得很密，多半是首盘 5-5、5-6、6-6 三局被集锦剪掉之后记分条跳变造成的（24.5s 还是 5-4，26.5s 已经是抢七 6-6），所以取最早那个最稳。",
+      "score_inset": true
+    },
+    {
+      "start": 76.5,
+      "end": 94.0,
+      "narration": "首盘一路咬到抢七。抢七开局他一比二落后，之后连拿六个小分，把比分推到六比二。屏幕上，盘点亮起来，他第一个就用掉了。七比二，第一盘归他，用了五十四分钟。",
+      "crosses_cut": "92.04 是疑似切点：抢七最后一分的回合 → 他拿下首盘后走动庆祝。两边同一人，正是这一段要的落点。",
+      "_why": "抢七只讲落点不逐分念（『旁白不许把每一局都念一遍』）。画面从 76.5s 的 4-2 走到 78.5s 起的 SET POINT 6-2，和旁白同步；段尾 94.0 在死球 93.19 之后。逐分自证：抢七 1-0 1-1 1-2 2-2 3-2 4-2 5-2 6-2 7-2，1-2 之后正好连拿六分。 ⚠️ 『屏幕上盘点亮起来』被 edge-tts 切成 `屏幕｜上盘｜点亮｜起来`——『上盘』『点亮』两个假词，读音全变。按『把歧义本身去掉』加一个逗号把边界钉死。 ⚠️『连拿六分』被 `test_旁白里的分不许读成分钟` 拦下（听起来像六分钟），改成『六个小分』。",
+      "score_inset": true
+    },
+    {
+      "start": 95.5,
+      "end": 101.7,
+      "narration": "七比六拿下首盘。而这只是这场球的第一次咬牙。",
+      "_why": "两端都是死球（95.5 / 101.7）。画面是首盘的全屏台标 YIBING WU 7 / ADAM WALTON 6，赛果自己印在屏幕上，旁白只补一句情绪并把线索递给后面。",
+      "score_inset": false,
+      "_score_inset_why": "这一段是转播的全屏台标，左下角那块记分条整段不在画面里——贴回去会贴一块空的球场。"
+    },
+    {
+      "start": 104.5,
+      "end": 113.41,
+      "narration": "第二盘他松了口气。一发进球率百分之六十八，六比二，三十一分钟。",
+      "crosses_cut": "111.28 一刀：次盘最后那个盘点局的回合 → 112.5s 他举拳。两边同一人，一刀两边正是『拿下这一盘』的因和果。",
+      "_why": "全场唯一轻松的一段，给一句就够。68% 是 flashscore df_st_1 的 Set 2 分盘一发进球率，31 分钟是官方 setDurations[1]；按『百分比写百分之多少不写几成几』写。段尾 113.41 是死球。",
+      "score_inset": true
+    },
+    {
+      "start": 113.73,
+      "end": 118.6,
+      "narration": "两盘在手，看着要结束了。",
+      "_why": "两端都在硬切点之内，整段不跨刀。画面是观众鼓掌 + 次盘台标 7 6 / 6 2。这一句是给决胜盘那个反转垫的——『看着要结束了』，下一段就不是了。⚠️ 段尾原本写 118.85（正好是切点），溶解底料 0.18s 会跨过去，改到 118.60 留 0.25 秒。",
+      "score_inset": false,
+      "_score_inset_why": "观众席近景和全屏台标，两种画面都没有左下角记分条。"
+    },
+    {
+      "start": 124.5,
+      "end": 135.5,
+      "narration": "可决胜盘完全不是那么回事。一比二他发球，四十比十五保下来。这一盘两个人一路咬到四比四。",
+      "crosses_cut": "134.13 是疑似切点：回合 → 他走回底线的近景（134.5/136.5s），同一人同一局间隙。",
+      "_why": "比分严格跟着画面走：124.5–134.5s 记分条恒为 WU 7 6 1 [40] / WALTON 6 2 2 [15]，旁白说的『一比二他发球四十比十五』就是屏幕上那一行（逐分 Set3 第 4 局 0:15,15:15,30:15,40:15）。『咬到四比四』是这一盘接下来的走向，用来把观众带到下一段的 4-5。段尾 135.5 在死球 134.83 之后。",
+      "score_inset": true
+    },
+    {
+      "start": 138.5,
+      "end": 155.9,
+      "narration": "四比五，轮到吴易昺发球。输掉这一局，比赛就结束了。屏幕上，黄字亮起来：沃尔顿拿到盘点。这一局打了十八个小分，五次占先——两个盘点，吴易昺一个都没给。",
+      "_why": "全场的分水岭，给足 17 秒。画面 138.5–156.5s 整段挂着 SET POINT #2 和 WU 7 6 4 / WALTON 6 2 5 [AD]，和旁白逐字对得上。⚠️ 谁救的写死了名字（『沃尔顿拿到盘点』『吴易昺一个都没给』），不靠承前省略——拿到点的是沃尔顿，救它的是吴易昺，两个主语中间隔了两句，省掉会读反。十八分＝逐分 17 条 + 不列的那一分；五次占先＝A:40 出现 5 次；两个盘点＝|B2| 两处。段尾 155.9 留在切点 156.39 前 0.49 秒，溶解底料不跨刀。 ⚠️ 同第 4 段，『屏幕上黄字』加逗号断开，免得切出假词。 ⚠️『打了十八分』同上，改成『十八个小分』；平分其实有六次（40:40 出现 6 次），但十八这个总量更有分量，用『小分』消歧就够。",
+      "score_inset": true
+    },
+    {
+      "start": 156.39,
+      "end": 161.5,
+      "narration": "保下来之后，他立刻破发。六比五。",
+      "_why": "从切点起，止于下一刀前 0.36。画面 158.5s 记分条已经是 40 / 40（盘点救掉了），160.5s 变成 WU 7 6 6 / WALTON 6 2 5——破发完成。逐分：这一局吴易昺三个破发点，第三个兑现。",
+      "score_inset": true
+    },
+    {
+      "start": 161.86,
+      "end": 179.6,
+      "narration": "发球胜赛局，四十比零，三个赛点，第一个就拿下了。七比六、六比二、七比五，两小时二十四分钟。这场球他没有一刻是轻松的，可全场十六个发球局，他只丢掉了一个。",
+      "crosses_cut": "176.14 一刀：赛点回合 → 庆祝近景，和第①段是同一刀，同一人。这一段把冷开场预告过的结局完整兑现（172.8–179.6 全部重走一遍）。",
+      "_why": "画面 162.5–174.5s 记分条恒为 MATCH POINT WU 7 6 6 [40] / WALTON 6 2 5 [0]，逐分末局 15:0, 30:0, 40:0 |B3| 对得上。用时取官方 2:24。收尾那个数是这场球最硬的一条：Service games won 15/16。⚠️ 上一版 66 字被 dry-run 估成哑场（余量 +5.13s，门槛 4.0s），补的是『他没有一刻是轻松的』——中段那条 89% 报数据的提示要的也是这种非数据句。",
+      "_ending_payoff_required": true,
+      "score_inset": true
+    },
+    {
+      "start": 191.09,
+      "end": 199.0,
+      "narration": "丢掉那一个之后，他连保十个发球局。第二轮，你看好他吗？",
+      "_why": "收尾落在一问上，不停在数据上。画面是他走向看台向球迷致意（194.5–198.5s）。『连保十个』是 match_stat_hooks 从逐局算出来的，和上一段的 15/16 是同一件事的两面：丢的那一个是首盘 5-6，之后次盘 4 个 + 决胜盘 6 个全保下。段尾 199.0 在死球 198.5 之后，加溶解底料 199.18 仍在片尾板切点 200.38 前 1.2 秒。",
+      "score_inset": false,
+      "_score_inset_why": "赛后画面，记分条 178.5s 就已经从屏幕上撤掉了。"
+    }
+  ],
+  "_editing_why": "12 段共 125.2 秒。段落全部按 probe 的 point_ends / scene_cuts 定：段尾一律落在死球之后（11.61→12.6、93.19→94.0、113.41、134.83→135.5、178.38→179.6、198.5→199.0），硬切点只跨三次且都写了 crosses_cut（176.14 两次、111.28 一次，两边都是同一个人）。⚠️ 首盘 5-6 沃尔顿发球胜盘局那个盘点**不在集锦里**（记分条 16.5–24.5s 还是 5-4，26.5s 直接跳抢七 6-6），所以旁白只在 push.lead 和小红书正文里提『三个盘点』这个全场数，视频旁白只讲画面里有的那两个——按『转折点不在集锦里就明说』记在 _turning_points 第 3 条。片尾板 200.38 起（silent_audio 200.47 印证），末段收在 199.0，加 SEG_FADE 0.18 后仍留 1.2 秒余量。"
+}
