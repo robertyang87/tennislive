@@ -253,7 +253,7 @@ def test_下载失败要带yt_dlp尾部原因不许只报CalledProcessError(tool
         tool.transcribe("https://example.test/interview", tmp_path)
 
 
-def test_抽音频的依赖要在开跑前就查掉而不是下到一半才报(tool, monkeypatch):
+def test_抽音频的依赖要在开跑前就查掉而不是下到一半才报(tool, monkeypatch, tmp_path):
     """缺 ffmpeg 要死在第 5 秒，并且说出路——钉行为和位置两头。
 
     来路：oncourt-interviews run 138~142 连炸 5 趟，日志里是
@@ -293,6 +293,9 @@ def test_抽音频的依赖要在开跑前就查掉而不是下到一半才报(t
         "而那次的报错读起来像「这条源下不动」。")
 
     # ③ 报错要说出路：光说「缺 ffmpeg」，下一个人还得自己翻工作流
+    candidates = tmp_path / "candidates.json"
+    candidates.write_text('[{"id": "dependency-preflight"}]', encoding="utf-8")
+    monkeypatch.setattr(d, "CANDIDATES", candidates)
     monkeypatch.setattr(d, "_missing_media_tools", lambda: ["ffmpeg"])
     monkeypatch.setattr(sys, "argv", ["draft_interview_spec.py"])
     err_stream = io.StringIO()
