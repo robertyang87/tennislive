@@ -160,9 +160,9 @@
 
 - 名人堂入选致辞固定为 HEADA 大标题“人物 · 致辞类型”，HEADB 小标题“典礼名”；
   不再要求或伪造比赛对手、比分。
-- 名人堂 HEADA 显式使用已在最终片证明可渲染的 Noto Sans CJK SC 粗体 54px，
-  HEADB 使用 Noto Sans CJK SC 38px；每个 ASS run 都显式写入 `\fs`，不只依赖
-  Style 默认值。
+- 名人堂 HEADA 固定使用单一 Noto Sans CJK SC Regular 54px 白字 run，HEADB
+  使用 Noto Sans CJK SC Regular 38px；每个 ASS run 都显式写入 `\fs`，不只依赖
+  Style 默认值。54px Regular 尚需正式成功 artifact 裁决，不能提前写成“已证明”。
 - 正文编码完成后、海报与最终拼接之前，自动抽取 0.5 秒帧的顶部 150px，分别
   检查 HEADA/HEADB 带区的浅色文字像素。品牌绿竖条不能冒充标题；任一行不足
   阈值就让 render fail closed，不能进入发布。
@@ -173,14 +173,17 @@
 - 全片编码前先用真实源片、同一 `filter_complex` 和同一 ASS 预烧 1 秒并执行同一
   像素闸；该预检通过后才允许启动长片编码。正文编码结束后仍保留第二次像素复核，
   防止只在完整产物路径出现的差异。
-- 预烧同时捕获 ffmpeg/libass 的 verbose `fontselect`：主标题 700、小标题 400
-  都必须实际落到 Noto CJK；出现 DejaVu 回退或 `failed to find any fallback
-  with glyph` 立即失败。这样缺字方框即使产生足够浅色像素，也不能冒充中文标题。
-- 失败产物的最终 ASS 把行级 `\an8\pos(...)` 写在第二个 run，前面已经出现可见
-  竖条 `▍`；生产 runner 因而跳过整条 HEADSUBJECT，日志中连主标题的 700
-  `fontselect` 都没有。定位标签现固定写在第一个 override block、任何可见文本
-  之前；`\b1` 保持 ASS 标准布尔粗体，并由运行时 700→Noto Bold 日志及双带区
-  像素闸共同证明主标题真的画进成片。
+- 预烧同时捕获 ffmpeg/libass 的 verbose `fontselect`：顶栏必须实际落到 Noto CJK；
+  出现 DejaVu 回退或 `failed to find any fallback with glyph` 立即失败。这样缺字
+  方框即使产生足够浅色像素，也不能冒充中文标题。
+- 第二次失败 artifact（run `33323079498`）证明：即使把 `\pos` 移到竖条前，
+  HEADSUBJECT 仍是 0 像素，HEADB 为 2480；最终 ASS 与时长无误。artifact 证明
+  “装饰竖条 run + 中途 `\r` + 粗体 run”这一组合两次失败，但不能唯一隔离其中
+  哪个变量是 libass 触发点，也不能再归因于定位标签顺序。人物大标题一次移除这
+  三个变量，改为单一 Noto Regular 可见 run（54px 白字），小标题
+  同为 Noto Regular 38px；一条可信的 400→Noto 日志、无缺字日志和两个带区的
+  真实像素共同构成发布证据。像素闸先报哪一行缺失，字体闸随后验证不是 tofu；
+  两道都必须通过。
 
 ## 仍需保持的硬闸
 

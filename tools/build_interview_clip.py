@@ -1049,7 +1049,7 @@ Format: Name, Fontname, Fontsize, PrimaryColour, OutlineColour, BackColour, Bold
 Style: EN,{_EN_FONT},{_FONT_SIZE['en']},&H00FFFFFF,&H00000000,&H00000000,1,0,0,0,100,100,0,0,1,0,0,8,64,64,{_EN_TOP},1
 Style: ZH,{_ZH_FONT},{_FONT_SIZE['zh']},&H0074DCC3,&H00000000,&H00000000,1,0,0,0,100,100,0,0,1,0,0,8,64,64,{_ZH_TOP},1
 Style: HEADA,{_HEAD_FONT},{_HEAD_SIZE['a']},&H00FFFFFF,&H00000000,&H00000000,0,0,0,0,100,100,1,0,1,0,0,8,48,48,{_HEAD_A_TOP},1
-Style: HEADSUBJECT,{_ZH_FONT},{_HEAD_SIZE['a']},&H00FFFFFF,&H00000000,&H00000000,1,0,0,0,100,100,1,0,1,0,0,8,48,48,{_HEAD_A_TOP},1
+Style: HEADSUBJECT,{_ZH_FONT},{_HEAD_SIZE['a']},&H00FFFFFF,&H00000000,&H00000000,0,0,0,0,100,100,1,0,1,0,0,8,48,48,{_HEAD_A_TOP},1
 Style: HEADB,{_ZH_FONT},{_HEAD_SIZE['b']},&H00DBE2D5,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,1.5,0,8,48,48,{_HEAD_B_TOP},1
 
 [Events]
@@ -1235,17 +1235,13 @@ def header_runs(spec: dict) -> tuple[list[tuple[str, str, str]], ...]:
                 f"{slug} 要用人物主标题却缺 `subject.name`——HEADA 主标题"
                 "不知道该写谁，不能退回只有典礼小标题的版式。")
         return (
-            [("▍", "zh", _MARK_COLOUR, _HEAD_SIZE["a"]),
-             # 这条生产成片曾出现 HEADA 得意黑整行没形成像素、而 Noto 的
-             # HEADB 正常显示。名人堂主标题优先保证人物身份可见：显式走已验证
-             # 的 Noto 并加粗，不把发布资格押在显示体加载是否一致上。
-             # 颜色也显式写白，不能只赌 `\r` 会在每个 libass nightly 上把
-             # 前一段竖条的品牌绿完整复位。否则标题即使存在也会被浅色像素闸
-             # 判成 0；更糟的是肉眼会把绿字和竖条看成一整块强调色。
-             # `\b1` 是 ASS 的粗体布尔值，libass 会把它映射为 weight 700；
-             # 真实源片预检会要求该请求实际落到 Noto Bold。
-             (f"{name} · {kind}", "zh", r"\b1\c&HFFFFFF&",
-              _HEAD_SIZE["a"])],
+            [# 两次正式 runner artifact 都证明：“竖条 run + 中途 \r + 粗体 run”
+             # 这一组合在生产里是 0 像素，而同一份 ASS 的 Noto Regular 小标题
+             # 稳定可见。artifact 不能唯一隔离是哪个变量触发 runner 差异，所以
+             # 人物主标题一次移除三个变量，收敛为**一个可见 run**：
+             # 同一 Noto Regular、白色、54px；主次由 54/38 的确定字号建立，
+             # 不再用装饰竖条或切换字重触发版本敏感路径。
+             (f"{name} · {kind}", "zh", r"\c&HFFFFFF&", _HEAD_SIZE["a"])],
             [(ev, "zh", "", _HEAD_SIZE["b"])],
         )
 
@@ -1351,10 +1347,9 @@ def header_ass(spec: dict) -> tuple[str, str]:
         return rf"{{\r\fn{_ASS_NAME[kind]}{size_tag}{tags}}}{text}"
 
     # `MarginV` 继续作为 Style 的可读合同，但生产事件再钉一份绝对锚点。ASS 的
-    # 行级定位标签必须出现在**任何可见文本之前**：费德勒失败探针把 `\pos` 放在
-    # 第二个 run，前面已经画过竖条 `▍`，runner 因而整条 HEADSUBJECT 都没进入
-    # shaping/fontselect。位置标签钉在第一个 override block；后续 `\r` 只复位
-    # 字形样式，不会把已经解析的行级位置改回去。
+    # 行级定位标签必须出现在**任何可见文本之前**，所以始终写入第一个 override
+    # block。人物主标题另由 `header_runs()` 保证只有这个单一 block；普通赛后
+    # 顶栏即使有多 run，也不允许把行级定位拖到可见字符之后。
     def _line(runs: list[tuple[str, str, str, int]], top: int) -> str:
         return "".join(
             _run(text, kind,
@@ -1440,9 +1435,10 @@ def assert_topbar_font_log(stderr: str, spec: dict) -> None:
             "顶栏字体预检发现缺失中文字形；像素可能只是 tofu 方框，不能发布。")
 
     font_lines = [line for line in stderr.splitlines() if "fontselect:" in line]
-    required = [(400, "小标题常规体")]
-    if topbar_layout(spec) == "subject_primary":
-        required.insert(0, (700, "主标题粗体"))
+    # 人物主标题和语境小标题都固定走 Noto Regular；主次由字号而非字体切换
+    # 建立。libass 会合并相同 family/weight 的选择日志，所以一条可信 400
+    # 记录 + 两个带区的真实像素才是可复现的完整证据。
+    required = [(400, "顶栏常规体")]
     for weight, label in required:
         requested = re.compile(
             rf"fontselect:\s*\(Noto Sans CJK SC,\s*{weight},\s*0\)", re.I)
@@ -1455,10 +1451,6 @@ def assert_topbar_font_log(stderr: str, spec: dict) -> None:
         if "dejavu" in mapped.lower() or "noto" not in mapped.lower():
             raise SystemExit(
                 f"顶栏字体预检中 {label} 没有落到 Noto：{matches[-1].strip()}")
-        if weight == 700 and "bold" not in mapped.lower():
-            raise SystemExit(
-                f"顶栏字体预检中 {label} 没有落到 Noto Bold："
-                f"{matches[-1].strip()}")
 
 
 # 中文行尾吊在这些字上，就是把一个意思劈成两半——和英文那边
@@ -3784,8 +3776,10 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
         font_evidence = "\n".join(
             line for line in proc.stderr.splitlines() if "fontselect:" in line)
         print("[顶栏字体预检]\n" + (font_evidence or "（没有 fontselect 记录）"))
-        assert_topbar_font_log(proc.stderr, spec)
+        # 先报用户肉眼对应的“哪一行没像素”，再检查这些像素是不是 Noto 真字形。
+        # 两道闸都必须通过；只调整诊断顺序，不降低发布条件。
         assert_rendered_topbar(topbar_probe, spec)
+        assert_topbar_font_log(proc.stderr, spec)
 
     body = outdir / "_body.mp4"
     subprocess.run(

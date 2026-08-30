@@ -852,6 +852,7 @@ def test_名人堂顶栏以人物内容为大标题_典礼为小标题(monkeypat
         "2026 国际网球名人堂入选典礼",
     )
     main_runs, context_runs = clip.header_runs(spec)
+    assert len(main_runs) == 1, "人物大标题必须是单一可见 run，禁止竖条/中途复位"
     assert {size for _, _, _, size in main_runs} == {clip._HEAD_SIZE["a"]}
     assert {size for _, _, _, size in context_runs} == {clip._HEAD_SIZE["b"]}
     assert clip._HEAD_SIZE["a"] > clip._HEAD_SIZE["b"]
@@ -859,15 +860,17 @@ def test_名人堂顶栏以人物内容为大标题_典礼为小标题(monkeypat
     main_ass, context_ass = clip.header_ass(spec)
     assert rf"\fs{clip._HEAD_SIZE['a']}" in main_ass
     assert rf"\fs{clip._HEAD_SIZE['b']}" in context_ass
-    assert r"\fnNoto Sans CJK SC" in main_ass and r"\b1" in main_ass, (
-        "名人堂主标题要走已在最终片证明能出像素的 Noto 粗体，"
-        "不能再次押注曾整行消失的显示体加载")
+    assert main_ass.count(r"\fnNoto Sans CJK SC") == 1 and r"\b" not in main_ass, (
+        "名人堂主标题要走已被小标题证明能稳定出像素的 Noto Regular，"
+        "不能再次引入尚未被 artifact 隔离的粗体/多 run 组合")
+    assert context_ass.count(r"\fnNoto Sans CJK SC") == 1
+    assert context_ass.count(r"\fn") == 1 and r"\b" not in context_ass
     assert r"\c&HFFFFFF&" in main_ass, "主标题要显式写白，不能只靠 \\r 复位竖条绿"
     assert rf"\an8\pos({clip.CANVAS_W // 2},{clip._HEAD_A_TOP})" in main_ass
     assert rf"\an8\pos({clip.CANVAS_W // 2},{clip._HEAD_B_TOP})" in context_ass
-    assert main_ass.index(r"\an8\pos") < main_ass.index("▍"), (
-        "行级定位标签必须在第一个可见字符之前；放到第二个 run 会让生产 libass"
-        "跳过整条人物主标题")
+    assert "▍" not in main_ass
+    assert main_ass.count(r"{\r") == 1, "人物主标题只能有一个 override block"
+    assert main_ass.index(r"\an8\pos") < main_ass.index("费德勒")
 
 
 def test_名人堂缺人物不许退回只有典礼小标题(monkeypatch):
@@ -917,8 +920,16 @@ def test_渲染后顶栏像素闸能抓住只有小标题(tmp_path, monkeypatch)
     assert "Dialogue: 1," in ass_text and ",HEADB," in ass_text
     main_dialogue = next(
         line for line in ass_text.splitlines() if ",HEADSUBJECT," in line)
-    assert main_dialogue.index(r"\an8\pos") < main_dialogue.index("▍"), (
-        "最终写入 ASS 的 HEADSUBJECT 必须先定位，再出现任何可见文本")
+    context_dialogue = next(
+        line for line in ass_text.splitlines() if ",HEADB," in line)
+    assert "▍" not in main_dialogue and r"\b" not in main_dialogue
+    assert main_dialogue.count(r"{\r") == 1
+    assert main_dialogue.count(r"\fnNoto Sans CJK SC") == 1
+    assert main_dialogue.count(r"\fn") == 1
+    assert context_dialogue.count(r"\fnNoto Sans CJK SC") == 1
+    assert context_dialogue.count(r"\fn") == 1 and r"\b" not in context_dialogue
+    assert main_dialogue.index(r"\an8\pos") < main_dialogue.index("费德勒"), (
+        "最终 HEADSUBJECT 必须是先定位、后正文的单一可见事件")
 
     def _render(src_ass: Path, dest: Path) -> str:
         proc = subprocess.run(
@@ -932,8 +943,8 @@ def test_渲染后顶栏像素闸能抓住只有小标题(tmp_path, monkeypatch)
 
     good = tmp_path / "two-lines.mp4"
     font_log = _render(ass, good)
-    clip.assert_topbar_font_log(font_log, spec)
     clip.assert_rendered_topbar(good, spec)
+    clip.assert_topbar_font_log(font_log, spec)
 
     bad_ass = tmp_path / "only-small-title.ass"
     bad_ass.write_text("\n".join(
@@ -941,11 +952,17 @@ def test_渲染后顶栏像素闸能抓住只有小标题(tmp_path, monkeypatch)
         if ",HEADSUBJECT," not in line) + "\n", encoding="utf-8")
     bad = tmp_path / "only-small-title.mp4"
     _render(bad_ass, bad)
-    with pytest.raises(SystemExit, match="HEADA 主标题"):
+    with pytest.raises(SystemExit) as bad_exc:
         clip.assert_rendered_topbar(bad, spec)
+    assert "HEADA 主标题" in str(bad_exc.value)
+    assert "HEADB 小标题" not in str(bad_exc.value), (
+        "回归片必须精确复现正式 artifact 的主标题缺失、小标题仍正常")
 
     render_src = inspect.getsource(clip.render)
     assert "_topbar_probe.mp4" in render_src
+    assert render_src.index("assert_rendered_topbar(topbar_probe, spec)") < \
+        render_src.index("assert_topbar_font_log(proc.stderr, spec)"), (
+            "预烧失败要先报告真实缺失的像素带区，再报告字体证据")
     assert render_src.index("assert_rendered_topbar(topbar_probe, spec)") < \
         render_src.index("body = outdir / \"_body.mp4\""), (
             "必须在昂贵的全片编码前用真实源片和同一条滤镜链验顶栏")
@@ -960,10 +977,8 @@ def test_顶栏字体日志闸拒绝缺字方框和DejaVu回退():
         "slug": "federer-ithf",
         "topbar_layout": "subject_primary",
     }
-    good = "\n".join([
-        "fontselect: (Noto Sans CJK SC, 700, 0) -> NotoSansCJKsc-Bold, 0, NotoSansCJKsc-Bold",
-        "fontselect: (Noto Sans CJK SC, 400, 0) -> NotoSansCJKsc-Regular, 0, NotoSansCJKsc-Regular",
-    ])
+    good = ("fontselect: (Noto Sans CJK SC, 400, 0) -> "
+            "NotoSansCJKsc-Regular, 0, NotoSansCJKsc-Regular")
     clip.assert_topbar_font_log(good, subject_spec)
 
     with pytest.raises(SystemExit, match="tofu|缺失中文字形"):
@@ -971,22 +986,15 @@ def test_顶栏字体日志闸拒绝缺字方框和DejaVu回退():
             good + "\nfailed to find any fallback with glyph 0x8D39", subject_spec)
 
     with pytest.raises(SystemExit, match="没有落到 Noto"):
-        clip.assert_topbar_font_log("\n".join([
-            "fontselect: (Noto Sans CJK SC, 700, 0) -> DejaVuSans-Bold, 0, DejaVuSans-Bold",
-            good.splitlines()[1],
-        ]), subject_spec)
-
-    with pytest.raises(SystemExit, match="Noto Bold"):
-        clip.assert_topbar_font_log("\n".join([
-            "fontselect: (Noto Sans CJK SC, 700, 0) -> NotoSansCJKsc-Regular, 0, NotoSansCJKsc-Regular",
-            good.splitlines()[1],
-        ]), subject_spec)
+        clip.assert_topbar_font_log(
+            "fontselect: (Noto Sans CJK SC, 400, 0) -> "
+            "DejaVuSans, 0, DejaVuSans", subject_spec)
 
     with pytest.raises(SystemExit, match="没有记录"):
         clip.assert_topbar_font_log("", subject_spec)
 
     event_spec = {"slug": "ordinary-interview", "topbar_layout": "event_primary"}
-    clip.assert_topbar_font_log(good.splitlines()[1], event_spec)
+    clip.assert_topbar_font_log(good, event_spec)
 
 
 def test_顶栏有明确时长时覆盖到片尾而不是停在最后一句(tmp_path, monkeypatch):
