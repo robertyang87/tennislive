@@ -81,6 +81,9 @@ def test_采访片两个出口都要写film_seconds(tmp_path, monkeypatch, case,
     # 顶栏像素闸按生产合同检查 1080×1440，已经由 test_interview_clip 的真片
     # 正反例覆盖。这里必须打桩，否则假片尺寸会在到达本测试主语前正确地失败。
     monkeypatch.setattr(mod, "assert_rendered_topbar", lambda *a, **k: None)
+    # 同理，fake_run 不会真的启动 libass，也就不会产生 fontselect 日志；字体
+    # 证据本身由 test_interview_clip 的正反例覆盖，这里只验证两个片长出口。
+    monkeypatch.setattr(mod, "assert_topbar_font_log", lambda *a, **k: None)
     if with_outro:
         monkeypatch.setattr(
             mod, "_build_outro",
