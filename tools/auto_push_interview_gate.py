@@ -326,14 +326,20 @@ def wants_auto_push(repo: Path, slug: str, outdir: Path) -> None:
             f"{previous.get('run', '运行地址未记')}），不自动重复发送")
     marker = outdir / MARKER
     if tracked(repo, marker):
-        # 稀疏检出下这个文件可能不在工作区，读不到内容也要能拦住——
-        # **拦住是主要的，时间和运行地址是加餐**。
+        # pushed.json 只是上一份成片的兼容标记，真正的幂等键是上面的
+        # ledger key（slug + film hash）。同一 slug 重渲后 film hash 已变，
+        # 旧 marker 不能把新成片永久拦死；否则修封面后自动发布会绿着跳过。
+        # 没有 film_sha256 的老 marker 仍保守拦截，避免无凭据重发。
         try:
-            stamp = json.loads(marker.read_text(encoding="utf-8"))
+            stamp = _tracked_json(repo, marker)
             when = f"{stamp.get('at', '时间未记')}，{stamp.get('run', '地址未记')}"
-        except OSError:
-            when = "详情在仓库里，这次没检出"
-        raise Skip(f"{slug}：已经推过了（{when}），不重复发")
+        except Skip:
+            raise Skip(f"{slug}：旧 pushed.json 读不了，发布状态不明，不自动重发")
+        marker_hash = str(stamp.get("film_sha256") or "")
+        if not marker_hash or marker_hash == film_hash:
+            raise Skip(f"{slug}：已经推过了（{when}），不重复发")
+        print(f"[重渲发布] {slug}：旧 pushed.json 绑定 {marker_hash[:12]}…，"
+              f"当前成片是 {film_hash[:12]}…；保留旧账，允许新成片进入发布。")
 
     # **海报这道闸在这条线上现在会拦下所有存量，那是对的，不是 bug。**
     #

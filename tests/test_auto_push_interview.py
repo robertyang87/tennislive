@@ -295,6 +295,24 @@ def test_没提交的标记不算数(repo: Path):
     assert gate.pick(CHANGED, repo) is not None
 
 
+def test_旧成片的pushed标记不能拦住新成片(repo: Path, capsys):
+    """同一 slug 修封面重渲后，film hash 已变，必须作为新发布处理。
+
+    旧回执仍由独立 ledger 保存；不能因为 output 里的 pushed.json 还指向
+    上一版，就让新成片的自动推送绿着跳过。
+    """
+    _spec(repo, {"auto": True})
+    marker = repo / "output/interviews/demo/pushed.json"
+    marker.write_text(json.dumps({
+        "status": "sent", "film_sha256": "0" * 64,
+        "at": "old", "run": "https://example/old",
+    }), encoding="utf-8")
+    _commit_all(repo)
+
+    assert gate.pick(CHANGED, repo) is not None
+    assert "允许新成片进入发布" in capsys.readouterr().out
+
+
 def test_稀疏检出下也要拦得住(repo: Path):
     """这条工作流是稀疏检出的：判断的时候 `output/` 那一格还没
     `git sparse-checkout add` 回来，文件根本不在工作区——按
