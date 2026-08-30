@@ -973,7 +973,7 @@
 - **695.5–700.2 秒**（片内，4.7 秒空白，[跳过去](https://youtu.be/fQXTNAnY0zE?t=695)）　**还没销账**
 - **733.9–736.4 秒**（片内，2.5 秒空白，[跳过去](https://youtu.be/fQXTNAnY0zE?t=733)）　**还没销账**
 - **794.4–802.9 秒**（片内，8.5 秒空白，[跳过去](https://youtu.be/fQXTNAnY0zE?t=794)）　I love you guys. Thank you. 之后到 Also, legendary coaches 之前为掌声停顿；第二 ASR 无词，非致辞内容。
-- **818.8–827.9 秒**（片内，9.1 秒空白，[跳过去](https://youtu.be/fQXTNAnY0zE?t=818)）　**还没销账**
+- **818.8–827.9 秒**（片内，9.1 秒空白，[跳过去](https://youtu.be/fQXTNAnY0zE?t=818)）　Stefan Edberg. 之后费德勒低头整理情绪，直到下一句 That's not a first, am I?；逐秒画面确认没有继续讲话，第二 ASR 的孤立 it's 是环境声误识，前后完整句均已入字幕。
 - **854.2–863.6 秒**（片内，9.3 秒空白，[跳过去](https://youtu.be/fQXTNAnY0zE?t=854)）　**还没销账**
 - **871.9–878.6 秒**（片内，6.7 秒空白，[跳过去](https://youtu.be/fQXTNAnY0zE?t=871)）　**还没销账**
 - **890.5–903.8 秒**（片内，13.3 秒空白，[跳过去](https://youtu.be/fQXTNAnY0zE?t=890)）　**还没销账**
