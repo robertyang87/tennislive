@@ -862,6 +862,9 @@ def test_名人堂顶栏以人物内容为大标题_典礼为小标题(monkeypat
     assert r"\fnNoto Sans CJK SC" in main_ass and r"\b1" in main_ass, (
         "名人堂主标题要走已在最终片证明能出像素的 Noto 粗体，"
         "不能再次押注曾整行消失的显示体加载")
+    assert r"\c&HFFFFFF&" in main_ass, "主标题要显式写白，不能只靠 \\r 复位竖条绿"
+    assert rf"\an8\pos({clip.CANVAS_W // 2},{clip._HEAD_A_TOP})" in main_ass
+    assert rf"\an8\pos({clip.CANVAS_W // 2},{clip._HEAD_B_TOP})" in context_ass
 
 
 def test_名人堂缺人物不许退回只有典礼小标题(monkeypatch):
@@ -906,7 +909,8 @@ def test_渲染后顶栏像素闸能抓住只有小标题(tmp_path, monkeypatch)
     ass = tmp_path / "topbar.ass"
     clip.write_ass([], [], 0.0, ass, spec=spec, duration=1.0)
     ass_text = ass.read_text(encoding="utf-8")
-    assert "Dialogue: 2," in ass_text and ",HEADA," in ass_text
+    assert "Style: HEADSUBJECT,Noto Sans CJK SC" in ass_text
+    assert "Dialogue: 2," in ass_text and ",HEADSUBJECT," in ass_text
     assert "Dialogue: 1," in ass_text and ",HEADB," in ass_text
 
     def _render(src_ass: Path, dest: Path) -> None:
@@ -925,7 +929,7 @@ def test_渲染后顶栏像素闸能抓住只有小标题(tmp_path, monkeypatch)
     bad_ass = tmp_path / "only-small-title.ass"
     bad_ass.write_text("\n".join(
         line for line in ass.read_text(encoding="utf-8").splitlines()
-        if ",HEADA," not in line) + "\n", encoding="utf-8")
+        if ",HEADSUBJECT," not in line) + "\n", encoding="utf-8")
     bad = tmp_path / "only-small-title.mp4"
     _render(bad_ass, bad)
     with pytest.raises(SystemExit, match="HEADA 主标题"):
@@ -938,6 +942,29 @@ def test_渲染后顶栏像素闸能抓住只有小标题(tmp_path, monkeypatch)
             "必须在昂贵的全片编码前用真实源片和同一条滤镜链验顶栏")
     assert "assert_rendered_topbar(body, spec)" in render_src, (
         "像素闸必须接在正文编码之后，不能只是一个没人调用的测试工具")
+
+
+def test_顶栏字体日志闸拒绝缺字方框和DejaVu回退():
+    import tools.build_interview_clip as clip
+
+    good = "\n".join([
+        "fontselect: (Noto Sans CJK SC, 700, 0) -> NotoSansCJKsc-Bold, 0, NotoSansCJKsc-Bold",
+        "fontselect: (Noto Sans CJK SC, 400, 0) -> NotoSansCJKsc-Regular, 0, NotoSansCJKsc-Regular",
+    ])
+    clip.assert_topbar_font_log(good)
+
+    with pytest.raises(SystemExit, match="tofu|缺失中文字形"):
+        clip.assert_topbar_font_log(
+            good + "\nfailed to find any fallback with glyph 0x8D39")
+
+    with pytest.raises(SystemExit, match="没有落到 Noto"):
+        clip.assert_topbar_font_log("\n".join([
+            "fontselect: (Noto Sans CJK SC, 700, 0) -> DejaVuSans-Bold, 0, DejaVuSans-Bold",
+            good.splitlines()[1],
+        ]))
+
+    with pytest.raises(SystemExit, match="没有记录"):
+        clip.assert_topbar_font_log("")
 
 
 def test_顶栏说清这是哪一场():
@@ -5278,7 +5305,8 @@ def test_lead_in不带subs时真烧出顶栏(tmp_path, monkeypatch):
 
     ass_text = (src_dir / "_lead.ass").read_text(encoding="utf-8")
     assert re.search(r"Dialogue:.*,HEAD[AB],", ass_text)
-    assert "Dialogue: 0,0:00:00.00" in ass_text, "顶栏该从 0 开始盖住整段"
+    assert "Dialogue: 2,0:00:00.00" in ass_text, "主标题该从 0 开始盖住整段"
+    assert "Dialogue: 1,0:00:00.00" in ass_text, "小标题该从 0 开始盖住整段"
     assert not re.search(r"Dialogue:.*,(EN|ZH),", ass_text), (
         "没有台词，不该凭空多出 EN/ZH 事件")
 
