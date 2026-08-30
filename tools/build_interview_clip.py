@@ -1,6 +1,3 @@
-Warning: truncated output (original token count: 56678)
-Total output lines: 3864
-
 #!/usr/bin/env python3
 """把一条官方集锦尾巴上的**场上采访**剪出来，烧上中英双语字幕。
 
@@ -1684,7 +1681,496 @@ def transcript_fingerprint(spec: dict, lines: list[dict], outdir: Path) -> str:
         h.update(cap.name.encode("utf-8"))
         h.update(cap.read_bytes())
     for seg in lines:
-        h.update(seg["en"].e…6678 tokens truncated…ppend("✏️ 已订正")
+        h.update(seg["en"].encode("utf-8"))
+        h.update(b"\n")
+    h.update(json.dumps(spec.get("en_fixed") or {}, sort_keys=True,
+                        ensure_ascii=False).encode("utf-8"))
+    h.update(f"{spec.get('asr_model', '')}|{_second_model(spec)}".encode())
+    return h.hexdigest()
+
+
+def transcript_auto_verified(spec: dict, lines: list[dict], outdir: Path) -> bool:
+    """双 ASR 已在本次内容指纹上无红旗通过，自动生产无需再等人工布尔开关。"""
+    path = outdir / VERIFY_FP
+    if not path.is_file():
+        return False
+    try:
+        recorded = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return False
+    return (recorded.get("status") == "pass"
+            and recorded.get("sha256") == transcript_fingerprint(spec, lines, outdir))
+
+
+def _speech_overlap_seconds(gap: tuple[float, float],
+                            speech: list[tuple[float, float]]) -> float:
+    """语言无关 VAD 在空档核心区检测到多少秒人声。
+
+    空档两端各缩 350ms，避开相邻字幕对应话音的自然拖尾；两秒以上的空档仍
+    留有足够大的核心区。区间取并集，防重叠 VAD 段重复计时。
+    """
+    lo, hi = gap[0] + GAP_VAD_EDGE_PAD_SECS, gap[1] - GAP_VAD_EDGE_PAD_SECS
+    if hi <= lo:
+        return 0.0
+    clipped = sorted((max(lo, a), min(hi, b)) for a, b in speech
+                     if min(hi, b) > max(lo, a))
+    merged: list[list[float]] = []
+    for a, b in clipped:
+        if merged and a <= merged[-1][1]:
+            merged[-1][1] = max(merged[-1][1], b)
+        else:
+            merged.append([a, b])
+    return round(sum(b - a for a, b in merged), 3)
+
+
+def attest_gap_silence(spec: dict, lines: list[dict], outdir: Path,
+                       audio: Path,
+                       asr_words: list[tuple[float, float, str]]) -> Path:
+    """用 Silero VAD 给字幕空档留下语言无关的人声证据。
+
+    第二份英文 ASR 的「没词」不能排除非英语；VAD 只回答有没有人声，不猜
+    语言和内容。仅核心区人声不超过 120ms 的空档可自动认定为静音。检测到
+    人声的空档仍保持红灯，必须补字幕或人工听音销账。
+    """
+    from faster_whisper.audio import decode_audio  # noqa: PLC0415
+    from faster_whisper.vad import (  # noqa: PLC0415
+        VadOptions,
+        get_speech_timestamps,
+    )
+
+    sample_rate = 16000
+    samples = decode_audio(str(audio), sampling_rate=sample_rate)
+    raw = get_speech_timestamps(
+        samples,
+        VadOptions(min_speech_duration_ms=250, min_silence_duration_ms=500,
+                   speech_pad_ms=100),
+        sampling_rate=sample_rate,
+    )
+    speech = [(row["start"] / sample_rate, row["end"] / sample_rate)
+              for row in raw]
+    results = []
+    for gap in caption_gaps(spec, outdir):
+        seconds = _speech_overlap_seconds(gap, speech)
+        core = (gap[0] + GAP_VAD_EDGE_PAD_SECS,
+                gap[1] - GAP_VAD_EDGE_PAD_SECS)
+        words_here = [word for start, end, word in asr_words
+                      if max(core[0], start) < min(core[1], end)]
+        no_speech = seconds <= GAP_VAD_MAX_SPEECH_SECS and not words_here
+        results.append({
+            "key": gap_key(*gap),
+            "start": gap[0],
+            "end": gap[1],
+            "speech_seconds": seconds,
+            "second_asr_words": words_here,
+            "status": ("no_speech" if no_speech else "speech_detected"),
+        })
+    payload = {
+        "status": "pass",
+        "method": "silero_vad_language_independent",
+        "sha256": transcript_fingerprint(spec, lines, outdir),
+        "edge_pad_seconds": GAP_VAD_EDGE_PAD_SECS,
+        "max_speech_seconds": GAP_VAD_MAX_SPEECH_SECS,
+        "results": results,
+    }
+    path = outdir / GAP_VAD_ATTESTATION
+    path.write_text(json.dumps(payload, ensure_ascii=False, indent=1) + "\n",
+                    encoding="utf-8")
+    quiet = sum(row["status"] == "no_speech" for row in results)
+    print(f"[空档 VAD] {quiet}/{len(results)} 处核心区无人声；其余仍需补字幕或听音。"
+          f"证据 → {path}")
+    for row in results:
+        if row["status"] != "no_speech":
+            words = " ".join(row["second_asr_words"]) or "—"
+            print(f"[空档 VAD] 保持红灯 {row['key']}：人声 {row['speech_seconds']:.3f}s，"
+                  f"第二 ASR 词={words}")
+    return path
+
+
+def auto_silent_gap_keys(spec: dict, lines: list[dict], outdir: Path) -> set[str]:
+    """读取与当前转写指纹绑定的 VAD 静音证明；旧证据一律不复用。"""
+    path = outdir / GAP_VAD_ATTESTATION
+    if not path.is_file():
+        return set()
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return set()
+    if (payload.get("status") != "pass"
+            or payload.get("method") != "silero_vad_language_independent"
+            or payload.get("sha256") != transcript_fingerprint(spec, lines, outdir)):
+        return set()
+    return {str(row.get("key")) for row in payload.get("results", [])
+            if row.get("status") == "no_speech"
+            and not row.get("second_asr_words")
+            and float(row.get("speech_seconds", 1)) <= GAP_VAD_MAX_SPEECH_SECS}
+
+
+def verify_transcript(spec: dict, lines: list[dict], outdir: Path) -> Path:
+    """拿**独立的第二份 ASR** 校 YouTube 那份，把分歧摊出来。
+
+    **为什么必须做**：这是英语学习素材，发错的英文比没有更糟。而 YouTube 的
+    自动字幕实测错得不轻——`Alexandra Eala` 被写成 `Alex Ayala`/`Aala`/
+    `Y Alla`/`Alexa`，`Elina Svitolina` 被写成 `Alina Vitilina`/`Switzerina`，
+    还有整句语法不成立的（`The crazy Yes. round of applause.`）。
+
+    **YouTube 自己那两条轨对不了。** `en` 和 `en-orig` 实测逐词完全一致
+    （605 词，0 处差异）——是同一份 ASR 换了个名字，拿它当交叉验证是自欺。
+
+    所以第二份得自己跑。判据是**两份都说了同一个词**才算数；对不上的地方
+    列进 `transcript_diff.md`，人去听那几秒。分歧超过 `TRANSCRIPT_MAX_DISAGREE`
+    直接失败，不出片。
+
+    ⚠️ **这一步只能在 runner 上跑**：沙箱的 IP 被 YouTube 挡了，连音频也下不到
+    （`-f ba` 同样报 `Sign in to confirm you're not a bot`）。
+    """
+    # ⚠️ **第二份 ASR 必须换个模型，否则这道闸是空的。**
+    # 原来的前提是「第一份来自 YouTube 的 ASR，第二份是 faster-whisper」，
+    # 两边天然不同。而非 YouTube 的源没有自动字幕轨，第一份**也是 whisper 跑的**
+    # （spec 里的 `asr_model`）——这时候不检查的话，同一个模型跑两遍必然逐词一致，
+    # 分歧率 0%，报告一片绿，而它什么都没验证。
+    # 仓库里 `en` / `en-orig` 那次记的就是这个形状：**同一份 ASR 换个名字，
+    # 拿它当交叉验证是自欺。**
+    second = _second_model(spec)
+    if spec.get("asr_model") and second == spec["asr_model"]:
+        raise SystemExit(
+            f"`whisper_model` 和 `asr_model` 都是 {second}——同一个模型跑两遍不是"
+            "交叉验证，分歧率会恒为 0。第二份换一个（比如 `medium.en`）再跑。")
+
+    # ⚠️ **上面那道闸只查 spec 的形状，所以必须排在这两个 import 前面。**
+    # 第一版写在后面，于是在**任何没装 faster-whisper 的机器上它根本走不到**
+    # ——而那正是 CI 那台（PR #198 的 run 30980157757：本地绿、CI 报
+    # `No module named 'faster_whisper'`）。又一次「本地装着不等于 CI 装着」，
+    # 也是「形状校验里不许混进环境检查」的镜像：**环境依赖不许挡在形状校验前面。**
+    import difflib
+
+    from faster_whisper import WhisperModel  # noqa: PLC0415
+
+    # 走同一个下载口：`-o` 是模板不是保证，落到别的后缀要认出来。
+    # 这一步实测是通的（最佳音轨就是 m4a），但**别留一条没有这层保险的路**。
+    audio = yt_download(spec["url"], outdir / "_audio.m4a", "ba", spec)
+
+    model = WhisperModel(_second_model(spec), compute_type="int8")
+    segs, _ = model.transcribe(str(audio), language="en", word_timestamps=True,
+                               vad_filter=spec.get("whisper_vad_filter", True))
+    words = [w for s in segs for w in (s.words or [])
+             if spec["start"] <= w.start <= spec["end"]]
+    mine = [(w.start, w.word.strip()) for w in words]
+    (outdir / "whisper.json").write_text(
+        json.dumps(mine, ensure_ascii=False, indent=1), encoding="utf-8")
+    # 英文模型没听见词不代表没人说话；另用语言无关 VAD 给每处空档作证。
+    attest_gap_silence(
+        spec, lines, outdir, audio,
+        [(w.start, w.end, w.word.strip()) for w in words],
+    )
+
+    rate, theirs, ours, sm = disagree_rate(
+        " ".join(seg["en"] for seg in lines), " ".join(w for _, w in mine))
+
+    # **第一份是谁，要照实写。** 这条线原来只有一个源，所以这儿写死了「YouTube
+    # 自动字幕」；接进 Tennis TV 之后第一份其实是本地跑的 ASR（spec 的 `asr_model`），
+    # 标签再写 YouTube 就是**主动给出一个错答案**——将来有人回头查这份报告，
+    # 会以为它比的是两个不同来源，而那正是这道闸唯一要证明的事。
+    first = _first_source_label(spec)
+    report = [f"# 转写交叉校验：{spec['slug']}", "",
+              f"- 第一份：{first} **{len(theirs)}** 词",
+              f"- 第二份：faster-whisper（{_second_model(spec)}）"
+              f"**{len(ours)}** 词",
+              f"- **对不上 {rate:.1%}**（闸门 {TRANSCRIPT_MAX_DISAGREE:.0%}）", "",
+              # **报告要说清它到底量了什么。** 词数是去掉填词之后的，
+              # 不写这一句的话，回头有人拿它跟视频里数出来的词数对，会以为报告错了。
+              f"⚠️ 上面两个词数和分歧率都是**去掉 "
+              f"{'/'.join(sorted(_COMPARE_FILLERS))} 这类填词之后**算的："
+              "这些词 whisper 系统性地会丢，跟源可不可信无关，留着只会把"
+              "「说话人有多磕巴」量成「两份转写对不上」。", "",
+              f"## 分歧逐处（左＝{first}，右＝第二份）", ""]
+    for tag, i1, i2, j1, j2 in sm.get_opcodes():
+        if tag == "equal":
+            continue
+        report.append(f"- `{' '.join(theirs[i1:i2]) or '—'}` → "
+                      f"`{' '.join(ours[j1:j2]) or '—'}`")
+    path = outdir / "transcript_diff.md"
+    path.write_text("\n".join(report) + "\n", encoding="utf-8")
+    # **报告要打进日志，不能只落在 artifact 里。** 这一步只有 runner 上跑得动，
+    # 而 artifact 得下载才看得到——沙箱到 github.com 是 403，等于拿不到。
+    # 于是「跑成功了」和「我知道它比出了什么」之间差了一整趟往返。
+    print("\n".join(report))
+    print(f"转写分歧 {rate:.1%} → {path}")
+    # 空档单独探一次。**放在分歧率之前**：分歧率超标会抛，而空档那份报告
+    # 恰恰是这一趟最贵的产出（要下音频、要跑模型），抛之前先把它印出来。
+    probe_gap_speech(spec, caption_gaps(spec, outdir), mine, outdir)
+    if rate > TRANSCRIPT_MAX_DISAGREE:
+        _check_disagree_claim(spec, rate, path)
+    return path
+
+
+# 认领最多只能拉到这儿。再高就不是「虚词多」能解释的了，必然有整段对不上。
+TRANSCRIPT_DISAGREE_CEILING = 0.18
+
+
+def _check_disagree_claim(spec: dict, rate: float, path: Path) -> None:
+    """分歧率超闸时，**允许显式认领**，但认领要留下判据。
+
+    照 `mixed_fps` / `silent_source` 那套：一律红会把长采访整个挡在门外，
+    一律放行又回到「兜底出事的时候不吭声」。认领这一步是让这个取舍留下判据。
+
+    **为什么长采访会超**：这个指标按词比，而 whisper 会把 `um` / `uh` /
+    `you know` / 结巴重复整个丢掉，YouTube 全留着。演播室那条实测
+    YouTube 1229 词、whisper 1105 词——**光是这 124 个词就占 10.1%**，
+    而总分歧才 12.4%。也就是说超出闸门的部分几乎全是「whisper 更简」，
+    不是「英文有错」。片子越长、越口语，这个偏差越大。
+
+    **没有去改 `TRANSCRIPT_MAX_DISAGREE`**：那个数护着所有片子，
+    而沙箱里跑不了 whisper（IP 被 YouTube 挡），没法拿存量重新标定。
+    改一个动不了的数，等于把所有片子的闸一起放松，还验不了后果。
+
+    认领要写清两样，缺一不可：
+
+    - `rate`：**当时量到的那个数**。它把认领钉在这一次的观测上——
+      以后真的变差了（比如换了源、加了段落），实测超过认领值，闸重新响。
+      不写这个的话，「认领过一次」就成了永久豁免
+    - `why`：为什么这些分歧不影响发出去的英文。逐处看过才写得出来
+    """
+    claim = spec.get("transcript_disagree_ok") or {}
+    declared, why = claim.get("rate"), str(claim.get("why") or "").strip()
+    if not (isinstance(declared, int | float) and why):
+        raise SystemExit(
+            f"两份转写对不上 {rate:.1%}，超过闸门 {TRANSCRIPT_MAX_DISAGREE:.0%}。"
+            f"**不出片。** 逐处看 {path}，把确认过的写进 spec 的 `en_fixed`。\n"
+            "逐处看完、确认剩下的分歧不影响发出去的英文（长采访多半是 whisper "
+            "把虚词丢了），就在 spec 里显式认领：\n"
+            f'  "transcript_disagree_ok": {{"rate": {rate:.3f}, "why": "逐处看过：……"}}')
+    if rate > declared:
+        raise SystemExit(
+            f"分歧 {rate:.1%} 比认领的 {declared:.1%} 还高——认领是钉在当时那次观测上的，"
+            "现在变差了。重新逐处看过再更新 `transcript_disagree_ok.rate`。")
+    if rate > TRANSCRIPT_DISAGREE_CEILING:
+        raise SystemExit(
+            f"分歧 {rate:.1%} 超过认领的天花板 {TRANSCRIPT_DISAGREE_CEILING:.0%}。"
+            "这个量级不是虚词能解释的，必然有整段对不上——认领挡不住，去查源。")
+    print(f"[转写] 分歧 {rate:.1%} 超过闸门 {TRANSCRIPT_MAX_DISAGREE:.0%}，"
+          f"但 spec 里认领了（≤{declared:.1%}）：{why[:60]}…")
+
+
+def probe_gap_speech(spec: dict, gaps: list[tuple[float, float]],
+                     en_words: list[tuple[float, str]], outdir: Path) -> Path | None:
+    """把每个空档摊开：**第二份 ASR 在这几秒里听到了什么。**
+
+    用的是 `verify_transcript` **已经跑完的那一份**（spec 的 `whisper_model`，
+    带词时间戳），不下第二个模型、不切音频、不多跑一遍——这几秒的答案本来就在
+    那份结果里。
+
+    两种结果的含义**不一样，报告里必须分开写**：
+
+    - **有词** → 第一份漏了，而且漏的是英语。补进 `en_fixed` 就行
+    - **没有词** → ⚠️ **这不等于「没人说话」**。`small.en` 这一档是英语专用模型，
+      对着非英语同样给空白；而空档最可能的成因恰恰是球员换了母语
+      （伊埃拉那 3.2 秒面对的就是菲律宾球迷）。两种情况在这份输出里
+      **长得一模一样**，机器分不出来——所以这一档一律交给人听，
+      结论写进 `caption_gaps_ok`。
+
+    ⚠️ 报告要**两种情况都出声**。只在「发现漏词」时出声的检查，没法证明
+    它真的看过——而这条线上「什么都没听出来」才是需要人接手的那一档。
+
+    ⚠️ **两份转写各是谁，一律从 spec 读，不许写死。** 表头原来印着
+    `small.en`、发现漏词那一支原来写着「YouTube 漏了英语」——而萨巴伦卡那条
+    第二份是 `medium.en`、第一份根本不是 YouTube（Brightcove 源没有自动字幕轨，
+    第一份也是我们自己跑的）。**闸跑的是对的，报告印的是错的**，
+    而这份报告存在的全部理由就是告诉人「这几秒是拿谁跟谁比出来的」。
+    """
+    if not gaps:
+        print("自动字幕没有空档。")
+        return None
+    clip0 = spec["start"]
+    report = [f"# 自动字幕的空档：{spec['slug']}", "",
+              f"阈值 {CAPTION_GAP_SECS:.0f} 秒；空档 **{len(gaps)}** 处。", "",
+              f"第一份是 {_first_source_label(spec)}，第二份 ASR 是 "
+              f"`{_second_model(spec)}`（英语专用）。**它什么都没听出来，"
+              "不等于这几秒没人说话**——非英语在它这儿同样是空白，两种情况"
+              "分不出来，得人去听。", ""]
+    for a, b in gaps:
+        en_here = [w for t, w in en_words if a <= t <= b]
+        report += [
+            f"## {a - clip0:.1f}–{b - clip0:.1f} 秒（片内，{b - a:.1f} 秒；"
+            f"源片 {_yt_at(spec['url'], a)}）", "",
+            f"- 键：`{gap_key(a, b)}`",
+            f"- 第二份 ASR（{_second_model(spec)}）："
+            + (f"`{' '.join(en_here)}`　→ **第一份（{_first_source_label(spec)}）"
+               "漏了英语，补进 `en_fixed`**"
+               if en_here else "**什么都没有** → 人去听：没人说话，还是不是英语？"),
+            f"- 已销账：{(spec.get('caption_gaps_ok') or {}).get(gap_key(a, b), '**否**')}",
+            ""]
+    path = outdir / "caption_gaps.md"
+    path.write_text("\n".join(report) + "\n", encoding="utf-8")
+    print("\n".join(report))
+    print(f"空档 {len(gaps)} 处 → {path}")
+    return path
+
+
+# 只有这几个词算「记者顺手删掉的口头语」。**别往里加实词**——判据宁可窄不可宽，
+# 把 `well`/`so`/`like` 塞进来，真正的漏词就跟着被放过了。
+_FILLER = {"uh", "um", "erm", "er", "ah", "mm", "hmm", "mhm"}
+# 缩写两边都展开再比：印出来的引语写 `she's`，ASR 听成 `she is`，那不是分歧。
+_EXPAND = {
+    "'s": " is", "'re": " are", "'ve": " have", "'ll": " will", "'d": " would",
+    "'m": " am", "n't": " not",
+}
+
+
+def _norm_en(text: str) -> list[str]:
+    """英文归一化：小写、展开缩写、去标点。两处比对共用同一个口径。"""
+    low = text.lower()
+    for short, long in _EXPAND.items():
+        low = low.replace(short, long)
+    return [w for w in re.sub(r"[^\w\s]", " ", low).split() if w]
+
+
+def check_human_quote(spec: dict, lines: list[dict], outdir: Path) -> Path | None:
+    """拿**赛事官网战报里的人工引语**校 ASR。第二个源，而且不用联网。
+
+    这条是踩出来的：`--stage verify` 那份 faster-whisper 只能在 runner 上跑
+    （沙箱的 IP 被 YouTube 挡了，连音频都下不到），于是「务必检验准确」这件事
+    在本地根本没有着落。而 WTA 自己的战报里就抄着这段场上采访的原话——
+    **人工转写，比任何一份 ASR 都硬**。一比就抓到一处真错：
+
+        ASR  `there's so much respect **to** her for that`
+        WTA  `There's so much respect **for** her for that`
+
+    判据分三类，**只有前两类算无害**：
+
+    - 落在引语区间**之外**的词：印出来的引语本来就是片段，前后不算分歧
+    - ASR 有、引语没有的词（**删**）：记者顺手删口头语和引入语，正常编辑
+    - 其余（**改**、以及引语有而 ASR 没有的**增**）：两份里必有一份错，
+      必须人工定夺——要么写进 `en_fixed`，要么在 `human_quote_ok` 里显式声明
+      「这处是记者写松了」。默认**不出片**。
+
+    ⚠️ 引语只覆盖它抄的那几句。**过了这一关不等于整段都对**——没被引到的行
+    仍然只有 ASR 一个源，得靠 `verify_transcript` 那份 whisper 和人听。
+    """
+    import difflib
+
+    quote = spec.get("human_quote") or {}
+    text = quote.get("text")
+    if not text:
+        return None
+
+    asr = _norm_en(" ".join(seg["en"] for seg in lines))
+    human = _norm_en(text)
+    sm = difflib.SequenceMatcher(None, asr, human, autojunk=False)
+    blocks = [b for b in sm.get_matching_blocks() if b.size]
+    if not blocks:
+        raise SystemExit(
+            f"`human_quote` 在这段转写里一个词都对不上（引语 {len(human)} 词）。"
+            "先确认它抄的是不是同一场同一段——**零命中先怀疑自己的查询词**。")
+    # 只看引语真正覆盖到的那一段，前后不算
+    lo, hi = blocks[0].a, blocks[-1].a + blocks[-1].size
+
+    trimmed, hard = [], []
+    for tag, i1, i2, j1, j2 in sm.get_opcodes():
+        if tag == "equal" or i2 <= lo or i1 >= hi:
+            continue
+        left, right = asr[i1:i2], human[j1:j2]
+        if tag == "delete":
+            # **删不设闸。** 引语里少一个词只说明记者删了，推不出 ASR 错在哪；
+            # 而印出来的引语确实会把 `Yes, she is of course` 这种引入语整段拿掉。
+            # 但**要在报告里露出来**：删掉的是口头语还是实词，人一眼能分。
+            kind = "口头语" if all(w in _FILLER for w in left) else "实词"
+            trimmed.append(f"- 删 `{' '.join(left)}`（{kind}）")
+            continue
+        hard.append((" ".join(left) or "—", " ".join(right) or "—"))
+
+    allowed = {tuple(x) for x in (quote.get("human_quote_ok") or spec.get("human_quote_ok") or [])}
+    unresolved = [d for d in hard if d not in allowed]
+
+    report = [f"# 人工引语交叉校验：{spec['slug']}", "",
+              f"- 来源：{quote.get('url', '（没写 url）')}",
+              f"- 引语 **{len(human)}** 词，覆盖 ASR 第 {lo + 1}–{hi} 词", "",
+              "## 必须定夺（左＝ASR，右＝人工引语）", ""]
+    report += [f"- `{a}` → `{b}`" + ("　✅ 已声明" if (a, b) in allowed else "")
+               for a, b in hard] or ["（无）"]
+    report += ["", "## 记者删掉的（正常编辑，不算分歧）", ""] + (trimmed or ["（无）"])
+    path = outdir / "human_quote_diff.md"
+    path.write_text("\n".join(report) + "\n", encoding="utf-8")
+    print(f"人工引语校验：{len(hard)} 处待定夺（{len(unresolved)} 处未解决）→ {path}")
+    if unresolved:
+        raise SystemExit(
+            f"ASR 和 {quote.get('url', '人工引语')} 有 {len(unresolved)} 处对不上，"
+            f"**不出片**：\n" + "\n".join(f"  `{a}` → `{b}`" for a, b in unresolved) +
+            f"\n逐处听那几秒：改对的写进 `en_fixed`；确认是记者写松了的，"
+            f"写进 `human_quote_ok`（形如 [[\"to\", \"for\"]]）。详见 {path}")
+    return path
+
+
+def _yt_at(url: str, seconds: float) -> str:
+    """给一条 YouTube 链接钉上时刻。**要整秒**——`&t=` 不吃小数，带小数它整个忽略。
+
+    ⚠️ **非 YouTube 的源不许套这个模板。** 原来是无条件按 `/` 切最后一段当 video
+    id，喂一条 Tennis TV 地址进去会拼出 `https://youtu.be/montreal-2026-r2-shang-
+    interview?t=17`——一条**看着能点、点开是 404** 的链接。核对表就是给人对着听的
+    那张表，链接指错地方比没有链接坏得多（「喊错了是主动给出一个错答案」）。
+    """
+    if not is_youtube(url):
+        return f"{url}（片内 {seconds:.1f} 秒）"
+    vid = url.rsplit("/", 1)[-1].split("v=")[-1].split("&")[0]
+    return f"https://youtu.be/{vid}?t={int(seconds)}"
+
+
+def _jump_md(url: str, seconds: float, label: str) -> str:
+    """核对表里那颗「跳到这一秒」的按钮，**markdown 现成的一格**。
+
+    ⚠️ **不能拿 `_yt_at` 的返回值直接往 `[]()` 里塞。** 上面那个函数对非 YouTube
+    的源**故意**回一句带汉字的说明（`<url>（片内 18.7 秒）`）——它做对了自己那一半，
+    可调用方无条件包上 markdown 链接语法，把那句说明连同括号一起塞进了 href：
+
+        [▶](https://players.brightcove.net/…?videoId=6402850037112（片内 0.0 秒）)
+
+    渲出来是一颗**点不动的按钮**，而它和一颗点得动的长得一模一样。正是 `_yt_at`
+    的 docstring 要防的那件事，只是躲到了外面一层——「链接指错地方比没有链接坏得多」。
+
+    所以：钉得住时刻的（YouTube）才给链接，钉不住的**就写成明文**，让人自己拖
+    进度条。判据 `test_非YouTube的源不许在核对表里编一颗点不动的按钮`。
+    """
+    at = _yt_at(url, seconds)
+    if not at.startswith("http") or "（" in at:
+        return f"片内 {seconds:.1f} 秒"
+    return f"[{label}]({at})"
+
+
+def review_sheet(spec: dict, lines: list[dict], outdir: Path) -> Path:
+    """把这段采访的**所有源摊成一张表**，给人对着听。
+
+    在这之前判据散在三个地方：ASR 在 `lines.json`、人工引语的分歧在
+    `human_quote_diff.md`、哪几行可疑写在 spec 的一段散文注里。要核对的人
+    得同时开三个文件，还得自己去 YouTube 上找那几秒在哪。
+
+    表里每行给四样东西：**片内时刻**（对着成片走）、**可点的源片链接**
+    （直接跳到那一秒）、英文、中文，外加这一行的判据是哪来的：
+
+        ✅ 人工引语   赛事官网战报抄过这句，人转写的，最硬
+        ✏️ 已订正     `en_fixed` 里改过，值就是改后的
+        ⚠️ 待听       `suspect` 里挂着账，还没人听
+        👂 听过没问题  `suspect_ok` 里销的账
+
+    ⚠️ **没标记不等于对**，只等于「没人怀疑过它」——ASR 错得最狠的那种
+    正是读起来通顺的（`respect to her`）。这张表是给人干活用的，不是结论。
+    """
+    fixed = {int(k) for k in (spec.get("en_fixed") or {})}
+    suspect = {int(k): v for k, v in (spec.get("suspect") or {}).items()}
+    cleared = {int(k) for k in (spec.get("suspect_ok") or {})}
+    quoted = _quote_span(spec, lines)
+    clip0 = spec["start"]
+
+    head = [f"# 转写核对表：{spec['slug']}", "",
+            f"源片 {spec['url']}　采访段 {clip0:.1f}–{spec['end']:.1f} 秒"
+            f"（共 {len(lines)} 行）", "",
+            "| # | 片内 | 跳到源片 | 英文 | 中文 | 判据 |",
+            "|--:|:--|:--|:--|:--|:--|"]
+    zh = spec.get("zh") or []
+    rows = []
+    for i, seg in enumerate(lines, 1):
+        t = seg["a"] - clip0
+        mark = []
+        if i in fixed:
+            mark.append("✏️ 已订正")
         if quoted and quoted[0] <= i <= quoted[1]:
             mark.append("✅ 人工引语")
         if i in cleared:
