@@ -1428,7 +1428,7 @@ def assert_rendered_topbar(film: Path, spec: dict) -> None:
             "同时可见，不能发布只有小标题的版本。")
 
 
-def assert_topbar_font_log(stderr: str) -> None:
+def assert_topbar_font_log(stderr: str, spec: dict) -> None:
     """证明预检用 Noto CJK 真字形画了顶栏，不接受 tofu 像素假绿。"""
     lowered = stderr.lower()
     if ("failed to find any fallback with glyph" in lowered
@@ -1437,7 +1437,10 @@ def assert_topbar_font_log(stderr: str) -> None:
             "顶栏字体预检发现缺失中文字形；像素可能只是 tofu 方框，不能发布。")
 
     font_lines = [line for line in stderr.splitlines() if "fontselect:" in line]
-    for weight, label in ((700, "主标题粗体"), (400, "小标题常规体")):
+    required = [(400, "小标题常规体")]
+    if topbar_layout(spec) == "subject_primary":
+        required.insert(0, (700, "主标题粗体"))
+    for weight, label in required:
         requested = re.compile(
             rf"fontselect:\s*\(Noto Sans CJK SC,\s*{weight},\s*0\)", re.I)
         matches = [line for line in font_lines if requested.search(line)]
@@ -1562,10 +1565,10 @@ def write_ass(lines: list[dict], zh: list[str], clip_start: float, path: Path,
     if spec is not None and wants_topbar(spec):
         # 顶栏一直挂着：整条片子从头到尾都要能回答「这是哪一场」。
         # 刷到中段的人没看过封面，而封面只有 1.8 秒。
-        if lines:
-            topbar_end = lines[-1]["b"] - clip_start
-        elif duration is not None:
+        if duration is not None:
             topbar_end = duration
+        elif lines:
+            topbar_end = lines[-1]["b"] - clip_start
         else:
             raise SystemExit(
                 f"{spec.get('slug', '?')} 没有字幕行却要顶栏——`duration` 没给，"
@@ -3774,7 +3777,7 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
         font_evidence = "\n".join(
             line for line in proc.stderr.splitlines() if "fontselect:" in line)
         print("[顶栏字体预检]\n" + (font_evidence or "（没有 fontselect 记录）"))
-        assert_topbar_font_log(proc.stderr)
+        assert_topbar_font_log(proc.stderr, spec)
         assert_rendered_topbar(topbar_probe, spec)
 
     body = outdir / "_body.mp4"
@@ -4020,7 +4023,8 @@ def main() -> int:
             print(f"{i:2d}. {seg['a']:7.1f}  {seg['en']}")
         print(f"\n把 {len(lines)} 行中文按顺序填进 {args.spec} 的 zh 数组里再跑一次。")
         return 0
-    write_ass(lines, zh, spec["start"], ass, spec)
+    write_ass(lines, zh, spec["start"], ass, spec,
+              duration=spec["end"] - spec["start"])
     print(f"字幕 {len(lines)} 组双语 → {ass}")
     # 核对表每次都出：它是人干活时看的那一份，落后于 spec 就没用了。
     review_sheet(spec, lines, outdir)
