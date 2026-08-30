@@ -325,6 +325,7 @@ def build_spec(req: dict, zh: list[str], duration: float) -> dict:
         "end": round(end, 2),
         "asr_model": "small.en",
         "whisper_model": "medium.en",
+        "segment_budget_px": req.get("segment_budget_px"),
         "transcript_verified": False,
         "transcript_verification": "auto_pending",
         "column": "赛后开麦",
@@ -373,14 +374,20 @@ def _build_one(path: Path, chat, *, write: bool) -> tuple[str, int, float]:
     requested_end = req.get("end")
     end = float(requested_end) if requested_end not in (None, "") else float(duration)
     end = min(float(duration), end)
-    lines = segment([(row["t"], row["text"]) for row in rows], start, end)
+    lines = segment(
+        [(row["t"], row["text"]) for row in rows], start, end,
+        budget=req.get("segment_budget_px"),
+    )
     # render/verify 会在切行后清掉 um/uh 等犹豫音；初次翻译必须走完全相同的
     # 正文行，否则长讲话会出现“中文 656 行、英文 673 行”这种必然无法渲染的
     # spec。清理必须发生在 translate 前，不能事后硬补空行。
     strip_hesitation_lines(lines)
     if not lines:
         raise RuntimeError(f"{slug}: 正式切行为空")
-    zh = translate([{"t": row["a"], "text": row["en"]} for row in lines], chat)
+    zh = translate(
+        [{"t": row["a"], "text": row["en"]} for row in lines], chat,
+        max_zh_chars=req.get("max_zh_chars"),
+    )
     if len(zh) != len(lines):
         raise RuntimeError(f"{slug}: 中英文行数不一致 {len(zh)} != {len(lines)}")
     spec = build_spec(req, zh, duration)

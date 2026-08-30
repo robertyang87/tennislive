@@ -226,17 +226,23 @@ def transcribe(url: str, workdir: Path, model: str = ASR_MODEL) -> tuple[list[di
     return rows, dur
 
 
-def _translation_system_prompt() -> str:
+def _translation_system_prompt(max_zh_chars: int | None = None) -> str:
+    limit = (
+        f"每条中文最多 {max_zh_chars} 个字符；英文较长时用简洁而完整的口语表达，"
+        "不得通过漏译事实来缩短。"
+        if max_zh_chars else ""
+    )
     return (
         "你是网球短视频「赛后开麦」的双语字幕翻译。把每条英文转写成地道中文"
         "口语，一条一行，不加编号，不在行尾加标点，不臆测原文没有的信息。"
         "英文原文与顺序不可改写；主持人与球员的说话人边界不可互换。输入编号"
-        "只用于逐行对齐，绝不能省略、合并或重排任何一条。"
+        "只用于逐行对齐，绝不能省略、合并或重排任何一条。" + limit
         + model_instructions("deepseek")
     )
 
 
-def _translate_single(row: dict, chat, index: int, sys_prompt: str) -> str:
+def _translate_single(row: dict, chat, index: int, sys_prompt: str,
+                      max_zh_chars: int | None = None) -> str:
     """批量响应无法保持行数时，最终按单行独立翻译；最多重试三次。"""
     last = None
     for attempt in range(1, 4):
@@ -252,12 +258,14 @@ def _translate_single(row: dict, chat, index: int, sys_prompt: str) -> str:
             max_tokens=300,
         )
         line = res.get("line") if isinstance(res, dict) else None
-        if isinstance(line, str) and line.strip():
+        if (isinstance(line, str) and line.strip()
+                and (not max_zh_chars or len(line.strip()) <= max_zh_chars)):
             return line.strip()
         # 兼容模型偶尔仍按旧的数组形状回答；只能接受恰好一条，不能猜位置。
         lines = res.get("lines") if isinstance(res, dict) else None
         if (isinstance(lines, list) and len(lines) == 1
-                and isinstance(lines[0], str) and lines[0].strip()):
+                and isinstance(lines[0], str) and lines[0].strip()
+                and (not max_zh_chars or len(lines[0].strip()) <= max_zh_chars)):
             return lines[0].strip()
         last = res
         print(
@@ -268,10 +276,10 @@ def _translate_single(row: dict, chat, index: int, sys_prompt: str) -> str:
 
 
 def _translate_batch(batch: list[dict], chat, offset: int,
-                     sys_prompt: str) -> list[str]:
+                     sys_prompt: str, max_zh_chars: int | None = None) -> list[str]:
     """翻一批；条数/类型不精确就二分，直到每一行都有独立响应。"""
     if len(batch) == 1:
-        return [_translate_single(batch[0], chat, offset, sys_prompt)]
+        return [_translate_single(batch[0], chat, offset, sys_prompt, max_zh_chars)]
 
     src = "\n".join(
         f"{offset + j}. {row.get('text') or ''}" for j, row in enumerate(batch)
@@ -291,7 +299,8 @@ def _translate_batch(batch: list[dict], chat, offset: int,
     raw = res.get("lines") if isinstance(res, dict) else None
     if isinstance(raw, list) and len(raw) == len(batch):
         cleaned = [line.strip() if isinstance(line, str) else "" for line in raw]
-        if all(cleaned):
+        if all(cleaned) and (
+                not max_zh_chars or all(len(line) <= max_zh_chars for line in cleaned)):
             return cleaned
 
     got = len(raw) if isinstance(raw, list) else "无数组"
@@ -303,12 +312,12 @@ def _translate_batch(batch: list[dict], chat, offset: int,
         flush=True,
     )
     return (
-        _translate_batch(batch[:mid], chat, offset, sys_prompt)
-        + _translate_batch(batch[mid:], chat, offset + mid, sys_prompt)
+        _translate_batch(batch[:mid], chat, offset, sys_prompt, max_zh_chars)
+        + _translate_batch(batch[mid:], chat, offset + mid, sys_prompt, max_zh_chars)
     )
 
 
-def translate(rows: list[dict], chat) -> list[str]:
+def translate(rows: list[dict], chat, max_zh_chars: int | None = None) -> list[str]:
     """DeepSeek 逐条翻中文，批量异常时自动二分，最后逐行独立兜底。
 
     行数一致仍是硬要求：绝不把 25→24 之类的响应按位置硬贴。区别是旧版当场
@@ -316,9 +325,11 @@ def translate(rows: list[dict], chat) -> list[str]:
     单行连续三次仍拿不到非空译文才报错，避免服务故障时静默塞入空字幕。
     """
     out: list[str] = []
-    sys_prompt = _translation_system_prompt()
+    sys_prompt = _translation_system_prompt(max_zh_chars)
     for i in range(0, len(rows), 25):
-        out.extend(_translate_batch(rows[i:i + 25], chat, i, sys_prompt))
+        out.extend(_translate_batch(
+            rows[i:i + 25], chat, i, sys_prompt, max_zh_chars
+        ))
     if len(out) != len(rows):
         raise RuntimeError(f"翻译总行数不一致：{len(out)} != {len(rows)}")
     return out

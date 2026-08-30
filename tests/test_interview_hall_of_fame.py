@@ -117,15 +117,47 @@ def test_人工请求在翻译前与渲染使用同一套语气词清理(tmp_pat
     monkeypatch.setattr(
         build_interview_clip,
         "segment",
-        lambda words, start, end: [{"a": 0.0, "b": 1.0, "en": "Um hello"}],
+        lambda words, start, end, budget=None: [
+            {"a": 0.0, "b": 1.0, "en": "Um hello"}
+        ],
     )
     seen = []
 
-    def fake_translate(rows, chat):
+    def fake_translate(rows, chat, max_zh_chars=None):
         seen.extend(row["text"] for row in rows)
+        assert max_zh_chars is None
         return ["你好"]
 
     monkeypatch.setattr(draft_interview_spec, "translate", fake_translate)
     monkeypatch.setattr(request_builder, "build_spec", lambda req, zh, duration: {})
     request_builder._build_one(path, object(), write=False)
     assert seen == ["Hello"]
+
+
+def test_人工请求渲染优先复用已持久化的第一份ASR(tmp_path, monkeypatch):
+    cap = {
+        "events": [{
+            "tStartMs": 1000,
+            "segs": [{"utf8": "Hello", "tOffsetMs": 250}],
+        }]
+    }
+    (tmp_path / "cap_asr.json3").write_text(
+        __import__("json").dumps(cap), encoding="utf-8"
+    )
+    monkeypatch.setattr(
+        clip_builder.subprocess,
+        "run",
+        lambda *args, **kwargs: pytest.fail("已有第一份 ASR 时不应再下载 YouTube 字幕"),
+    )
+    words = clip_builder.fetch_words(
+        "https://youtu.be/fQXTNAnY0zE", tmp_path, {"asr_model": "small.en"}
+    )
+    assert words == [(1.25, "Hello")]
+
+
+def test_长致辞翻译提示会硬性限制单行中文长度():
+    import draft_interview_spec
+
+    prompt = draft_interview_spec._translation_system_prompt(13)
+    assert "最多 13 个字符" in prompt
+    assert "不得通过漏译事实来缩短" in prompt
