@@ -4507,8 +4507,9 @@ def test_会合语音的工作流都要装edge_tts():
     **数字静音（实测 −91 dB）**，而账号所有者对这张卡的原话是「但要有配音」。
     量出来才看得见（run 31151599208）。
 
-    判据**自己推导，不维护白名单**：run 里跑了哪个 `tools/*.py`，那个工具
-    （连同它 import 的本仓库模块）会不会走到 `synthesize_narration`。
+    判据**自己推导，不维护白名单**：真正的 `run:` 命令里跑了哪个 `tools/*.py`，
+    那个工具会不会走到 `synthesize_narration`。`on.push.paths` 只表示“这个文件
+    改了就叫醒工作流”，并不执行它；把监听路径也算进去会逼无关工作流白装依赖。
     """
     import ast
 
@@ -4531,10 +4532,17 @@ def test_会合语音的工作流都要装edge_tts():
                     if isinstance(n, ast.ImportFrom) for a in n.names}
         return "synthesize_narration" in (names | imported)
 
+    import yaml
+
     guilty = []
     for wf in sorted((ROOT / ".github" / "workflows").glob("*.yml")):
-        body = "\n".join(ln for ln in wf.read_text("utf-8").splitlines()
-                         if not ln.lstrip().startswith("#"))
+        doc = yaml.safe_load(wf.read_text("utf-8")) or {}
+        body = "\n".join(
+            step["run"]
+            for job in (doc.get("jobs") or {}).values()
+            for step in (job.get("steps") or [])
+            if isinstance(step, dict) and isinstance(step.get("run"), str)
+        )
         if not any(_calls_tts(t) for t in set(re.findall(r"tools/(\w+)\.py", body))):
             continue
         if "edge-tts" not in body:
