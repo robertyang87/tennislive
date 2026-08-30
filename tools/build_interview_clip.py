@@ -1049,7 +1049,6 @@ Format: Name, Fontname, Fontsize, PrimaryColour, OutlineColour, BackColour, Bold
 Style: EN,{_EN_FONT},{_FONT_SIZE['en']},&H00FFFFFF,&H00000000,&H00000000,1,0,0,0,100,100,0,0,1,0,0,8,64,64,{_EN_TOP},1
 Style: ZH,{_ZH_FONT},{_FONT_SIZE['zh']},&H0074DCC3,&H00000000,&H00000000,1,0,0,0,100,100,0,0,1,0,0,8,64,64,{_ZH_TOP},1
 Style: HEADA,{_HEAD_FONT},{_HEAD_SIZE['a']},&H00FFFFFF,&H00000000,&H00000000,0,0,0,0,100,100,1,0,1,0,0,8,48,48,{_HEAD_A_TOP},1
-Style: HEADSUBJECT,{_ZH_FONT},{_HEAD_SIZE['a']},&H00FFFFFF,&H00000000,&H00000000,0,0,0,0,100,100,1,0,1,0,0,8,48,48,{_HEAD_A_TOP},1
 Style: HEADB,{_ZH_FONT},{_HEAD_SIZE['b']},&H00DBE2D5,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,1.5,0,8,48,48,{_HEAD_B_TOP},1
 
 [Events]
@@ -1232,7 +1231,7 @@ def header_runs(spec: dict) -> tuple[list[tuple[str, str, str]], ...]:
         subject = spec.get("subject") or {}
         if not (name := str(subject.get("name") or "").strip()):
             raise SystemExit(
-                f"{slug} 要用人物主标题却缺 `subject.name`——HEADA 主标题"
+                f"{slug} 要用人物主标题却缺 `subject.name`——主标题"
                 "不知道该写谁，不能退回只有典礼小标题的版式。")
         return (
             [# 两次正式 runner artifact 都证明：“竖条 run + 中途 \r + 粗体 run”
@@ -1415,9 +1414,9 @@ def assert_rendered_topbar(film: Path, spec: dict) -> None:
     main_px, context_px = _topbar_light_pixel_counts(proc.stdout)
     missing = []
     if main_px < _TOPBAR_MIN_TEXT_PIXELS:
-        missing.append(f"HEADA 主标题仅 {main_px} 个浅色像素")
+        missing.append(f"主标题带区仅 {main_px} 个浅色像素")
     if context_px < _TOPBAR_MIN_TEXT_PIXELS:
-        missing.append(f"HEADB 小标题仅 {context_px} 个浅色像素")
+        missing.append(f"小标题带区仅 {context_px} 个浅色像素")
     if missing:
         raise SystemExit(
             f"{spec.get('slug', '?')} 顶栏渲染不合格：{'；'.join(missing)}"
@@ -1577,10 +1576,10 @@ def write_ass(lines: list[dict], zh: list[str], clip_start: float, path: Path,
         header_lines(spec)                    # 先过宽度闸
         head_a, head_b = header_ass(spec)
         layout = topbar_layout(spec)
-        head_a_style = "HEADSUBJECT" if layout == "subject_primary" else "HEADA"
-        # HEADA / HEADB 放在不同 layer，固定位置和颜色，绕开 runner/libass
-        # 版本敏感的同屏布局与 Style 复位路径。现有 artifact 无法唯一证明旧片
-        # 是碰撞、MarginV 还是颜色复位导致，所以不把任一猜测写成已证实根因。
+        # 三份正式 artifact 都证明独立主标题 Style 在该 runner 是 0 像素，而
+        # HEADB 同一时刻稳定出字。人物主标题因此复用已被生产证明的 HEADB
+        # Style，只靠 layer、显式字号/颜色/位置区分两行；普通赛后仍走 HEADA。
+        head_a_style = "HEADB" if layout == "subject_primary" else "HEADA"
         ev.append(f"Dialogue: 2,{a},{b},{head_a_style},,0,0,0,,{head_a}")
         ev.append(f"Dialogue: 1,{a},{b},HEADB,,0,0,0,,{head_b}")
     # 没有台词就到此为止——`highlight_en` 是给对白上色的，没有对白就没什么
