@@ -1049,7 +1049,7 @@ Format: Name, Fontname, Fontsize, PrimaryColour, OutlineColour, BackColour, Bold
 Style: EN,{_EN_FONT},{_FONT_SIZE['en']},&H00FFFFFF,&H00000000,&H00000000,1,0,0,0,100,100,0,0,1,0,0,8,64,64,{_EN_TOP},1
 Style: ZH,{_ZH_FONT},{_FONT_SIZE['zh']},&H0074DCC3,&H00000000,&H00000000,1,0,0,0,100,100,0,0,1,0,0,8,64,64,{_ZH_TOP},1
 Style: HEADA,{_HEAD_FONT},{_HEAD_SIZE['a']},&H00FFFFFF,&H00000000,&H00000000,0,0,0,0,100,100,1,0,1,0,0,8,48,48,{_HEAD_A_TOP},1
-Style: HEADSUBJECT,{_ZH_FONT},{_HEAD_SIZE['a']},&H00FFFFFF,&H00000000,&H00000000,1,0,0,0,100,100,1,0,1,0,0,8,48,48,{_HEAD_A_TOP},1
+Style: HEADSUBJECT,{_ZH_FONT},{_HEAD_SIZE['a']},&H00FFFFFF,&H00000000,&H00000000,700,0,0,0,100,100,1,0,1,0,0,8,48,48,{_HEAD_A_TOP},1
 Style: HEADB,{_ZH_FONT},{_HEAD_SIZE['b']},&H00DBE2D5,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,1.5,0,8,48,48,{_HEAD_B_TOP},1
 
 [Events]
@@ -1242,7 +1242,10 @@ def header_runs(spec: dict) -> tuple[list[tuple[str, str, str]], ...]:
              # 颜色也显式写白，不能只赌 `\r` 会在每个 libass nightly 上把
              # 前一段竖条的品牌绿完整复位。否则标题即使存在也会被浅色像素闸
              # 判成 0；更糟的是肉眼会把绿字和竖条看成一整块强调色。
-             (f"{name} · {kind}", "zh", r"\b1\c&HFFFFFF&",
+             # libass 把 `\b1` 当成 font weight=1，再归一到 Regular；要让
+             # fontselect 真正请求 Bold 必须写数值 weight 700，不能只看起来像
+             # 一个布尔“开”。真实源片预检会要求 700 选择实际落到 Noto Bold。
+             (f"{name} · {kind}", "zh", r"\b700\c&HFFFFFF&",
               _HEAD_SIZE["a"])],
             [(ev, "zh", "", _HEAD_SIZE["b"])],
         )
