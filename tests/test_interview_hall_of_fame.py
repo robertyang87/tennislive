@@ -178,3 +178,11 @@ def test_长人名超限时单行重试明确允许姓氏简称():
     )
     assert line == "瓜拉斯、阿尼科内"
     assert "并列人名可用规范姓氏简称" in prompts[0]
+
+
+def test_中文短句不能以虚词收尾():
+    import draft_interview_spec
+
+    assert not draft_interview_spec._translation_line_ok("和长期的", 13)
+    assert not draft_interview_spec._translation_line_ok("你给了我巨大的", 13)
+    assert draft_interview_spec._translation_line_ok("这是长期规划", 13)
