@@ -826,6 +826,113 @@ def test_渲染要把仓库的字体目录给libass():
         "render 的 fontsdir 要指向仓库的 assets/fonts"
 
 
+def test_名人堂顶栏以人物内容为大标题_典礼为小标题(monkeypatch):
+    """名人堂没有对手，真正的内容身份是「谁的什么致辞」。
+
+    旧版把通用典礼名放 HEADA，把「费德勒 · 名人堂入选致辞」缩在 HEADB；
+    即使两行都画出来，视觉语义也像只有一个小 kicker。这里把人物内容标题绑定
+    到大字号 run，并要求最终 ASS 每一段显式带字号，不只靠 Style 默认值。
+    """
+    import tools.build_interview_clip as clip
+
+    monkeypatch.setattr(clip, "_measure_at",
+                        lambda kind, size, text: len(text) * size * 0.45)
+    spec = {
+        "slug": "federer-ithf",
+        "event": "2026 国际网球名人堂入选典礼",
+        "interview_kind": "名人堂入选致辞",
+        "ceremony_subtype": "hall_of_fame_induction",
+        "topbar_layout": "subject_primary",
+        "subject": {"name": "费德勒"},
+        "push": {},
+    }
+
+    assert clip.header_lines(spec) == (
+        "费德勒 · 名人堂入选致辞",
+        "2026 国际网球名人堂入选典礼",
+    )
+    main_runs, context_runs = clip.header_runs(spec)
+    assert {size for _, _, _, size in main_runs} == {clip._HEAD_SIZE["a"]}
+    assert {size for _, _, _, size in context_runs} == {clip._HEAD_SIZE["b"]}
+    assert clip._HEAD_SIZE["a"] > clip._HEAD_SIZE["b"]
+
+    main_ass, context_ass = clip.header_ass(spec)
+    assert rf"\fs{clip._HEAD_SIZE['a']}" in main_ass
+    assert rf"\fs{clip._HEAD_SIZE['b']}" in context_ass
+    assert r"\fnNoto Sans CJK SC" in main_ass and r"\b1" in main_ass, (
+        "名人堂主标题要走已在最终片证明能出像素的 Noto 粗体，"
+        "不能再次押注曾整行消失的显示体加载")
+
+
+def test_名人堂缺人物不许退回只有典礼小标题(monkeypatch):
+    import tools.build_interview_clip as clip
+
+    monkeypatch.setattr(clip, "_measure_at", lambda *args: 100)
+    spec = {
+        "slug": "ithf-no-subject",
+        "event": "2026 国际网球名人堂入选典礼",
+        "interview_kind": "名人堂入选致辞",
+        "ceremony_subtype": "hall_of_fame_induction",
+        "topbar_layout": "subject_primary",
+        "subject": {},
+        "push": {},
+    }
+    with pytest.raises(SystemExit, match=r"subject\.name|HEADA"):
+        clip.header_lines(spec)
+
+    spec["subject"] = {"name": "费德勒"}
+    spec["topbar_layout"] = "small_title_only"
+    with pytest.raises(SystemExit, match="topbar_layout"):
+        clip.header_lines(spec)
+
+
+def test_渲染后顶栏像素闸能抓住只有小标题(tmp_path, monkeypatch):
+    """ASS 有 HEADA 事件不算通过；编码后的 HEADA 带区必须真的有标题墨迹。"""
+    import inspect
+
+    import tools.build_interview_clip as clip
+
+    monkeypatch.setattr(clip, "_measure_at",
+                        lambda kind, size, text: len(text) * size * 0.45)
+    spec = {
+        "slug": "federer-ithf",
+        "event": "2026 国际网球名人堂入选典礼",
+        "interview_kind": "名人堂入选致辞",
+        "ceremony_subtype": "hall_of_fame_induction",
+        "topbar_layout": "subject_primary",
+        "subject": {"name": "费德勒"},
+        "push": {},
+    }
+    ass = tmp_path / "topbar.ass"
+    clip.write_ass([], [], 0.0, ass, spec=spec, duration=1.0)
+
+    def _render(src_ass: Path, dest: Path) -> None:
+        proc = subprocess.run(
+            ["ffmpeg", "-hide_banner", "-loglevel", "error", "-y",
+             "-f", "lavfi", "-i", "color=c=0x00120b:s=1080x1440:d=1:r=25",
+             "-vf", f"subtitles={src_ass}:fontsdir={ROOT / 'assets/fonts'}",
+             "-c:v", "libx264", "-pix_fmt", "yuv420p", str(dest)],
+            capture_output=True, text=True, check=False)
+        assert proc.returncode == 0, proc.stderr
+
+    good = tmp_path / "two-lines.mp4"
+    _render(ass, good)
+    clip.assert_rendered_topbar(good, spec)
+
+    bad_ass = tmp_path / "only-small-title.ass"
+    bad_ass.write_text("\n".join(
+        line for line in ass.read_text(encoding="utf-8").splitlines()
+        if ",HEADA," not in line) + "\n", encoding="utf-8")
+    bad = tmp_path / "only-small-title.mp4"
+    _render(bad_ass, bad)
+    with pytest.raises(SystemExit, match="HEADA 主标题"):
+        clip.assert_rendered_topbar(bad, spec)
+
+    render_src = inspect.getsource(clip.render)
+    assert "assert_rendered_topbar(body, spec)" in render_src, (
+        "像素闸必须接在正文编码之后，不能只是一个没人调用的测试工具")
+
+
 def test_顶栏说清这是哪一场():
     """账号所有者：「顶部文字说明当前是什么比赛的赛后采访，不然好多人不知道背景」。
 
@@ -2809,7 +2916,7 @@ def test_采访成片一律走Release不进git():
     形状。存量动不了（链接钉在 main 的文件路径上，已发的微信消息收不
     回来），只改增量：**以后一律走 Release，不再进 git**。
 
-    四件事都要钉，少一件就会退回老样子：
+    五件事都要钉，少一件就会退回老样子：
 
     1. **没有体积早退**——去注释后不许出现 `LIMIT=`、不许出现「不到 95」。
        体积闸一回来，95 MiB 以下（也就是全部采访成片）又开始进 git。
@@ -2824,6 +2931,9 @@ def test_采访成片一律走Release不进git():
     4. 顺序：「验成片」在它**之前**（验的就是这份本地文件，rm 之后没得验），
        「提交成片」在它**之后**（文件进了 index 删不删都晚了——同
        「复制页那道闸装在发的那一步不是渲的那一步」）
+    5. 同 slug `--clobber` 后读取当前 Release asset 的 GitHub 原生 digest，
+       核对 QC SHA。公共 URL 的 200/206 可能来自旧缓存，不能证明远端已经
+       换成本趟字节
 
     ⚠️ 判据宁可窄：只扫这一步去注释后的 `run:`（`_step_run`），不扫整份
     yml——步骤注释里如实记着旧门槛那段来路（95、LIMIT 这些词都在），
@@ -2853,6 +2963,24 @@ def test_采访成片一律走Release不进git():
         "退避不是涨的：等长的重试对一次持续几十秒的服务端故障没有用")
     assert 'UPLOADED" = 1 ]' in body and "exit 1" in body, (
         "四次都没传上去却没有拦住：下游会把一个取不到的链接写进 render.json")
+    assert 'gh api "repos/$GITHUB_REPOSITORY/releases/tags/$TAG"' in body, (
+        "同 slug --clobber 后没有从当前 Release asset 读取 digest——公开 URL 的旧缓存"
+        "也会给 200，不能证明新 film hash 真替换成功")
+    assert "EXPECTED_SHA" in body and "REMOTE_DIGEST" in body
+    i_digest = body.index('gh api "repos/$GITHUB_REPOSITORY/releases/tags/$TAG"')
+    i_render_json = body.index('"$OUTDIR/render.json"')
+    assert upload < i_digest < i_render_json, (
+        "Release SHA 回读必须在上传之后、写 render.json 之前；否则账上可能记新 hash，"
+        "附件还是旧片")
+    assert '"$REMOTE_DIGEST" = "sha256:$EXPECTED_SHA"' in body, (
+        "Release asset digest 没和 QC SHA 比较，仍然证明不了远端是本趟成片")
+    assert 'data["release_asset_digest"] = release_digest' in body, (
+        "远端 digest 只在日志里闪过、没写进 render.json；发布闸无法复核 Release"
+        " 与 QC 的绑定")
+    assert '$SLUG.mp4?v=${EXPECTED_SHA:0:16}' in body, (
+        "同 slug 新成片的推送 URL 没带 hash，微信/CDN 可能继续命中旧资源缓存")
+    assert 'VERIFIED" = 1 ]' in body and "exit 1" in body[body.index("VERIFIED=0"):], (
+        "Release 回读 SHA 多次不一致却没拦红——下游仍会发旧片")
     # `bash -e` 下 `[ A ] && break` 整条为假会把这一步杀掉，一律用 if
     for line in tail.splitlines():
         stripped = line.strip()
@@ -3429,7 +3557,9 @@ def test_出海报只有一份实现():
     """
     src = (ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8")
     assert src.count("def cover_poster(") == 1, "cover_poster 有不止一份定义"
-    assert src.count('"-frames:v", "1"') == 1, (
+    cover_impl = src.split("def cover_poster(", 1)[1].split(
+        "\n\ndef ", 1)[0]
+    assert cover_impl.count('"-frames:v", "1"') == 1, (
         "抽封面帧那句 ffmpeg 出现了不止一次——多半是复制了一份进 cover 那一档")
     body = src.split("def render(")[1]
     assert "cover_poster(spec, src, outdir" in body, (

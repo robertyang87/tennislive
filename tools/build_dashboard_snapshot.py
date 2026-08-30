@@ -64,8 +64,18 @@ def collect_content(root: Path):
             key = (kind, slug)
             item = items.setdefault(key, {"type": kind, "slug": slug})
             if attempt:
+                platform_status = attempt.get("platform_status")
+                if not platform_status and attempt.get("status") == "sent":
+                    # Legacy ledgers used ``sent`` for a successful PushPlus API
+                    # response.  That is platform acceptance, not evidence that a
+                    # phone received the message.
+                    platform_status = "accepted"
                 item.update({
-                    "pushed": attempt.get("status") == "sent",
+                    "pushed": platform_status in {"accepted", "delivered", "confirmed"},
+                    "platform_status": platform_status,
+                    "delivery_status": attempt.get("delivery_status") or (
+                        "unverified" if platform_status == "accepted" else platform_status
+                    ),
                     "updated_at": attempt.get("at"),
                     "url": attempt.get("run"),
                 })
@@ -99,6 +109,8 @@ def collect_content(root: Path):
         item.setdefault("rendered", False)
         item.setdefault("qc", False)
         item.setdefault("pushed", False)
+        item.setdefault("platform_status", None)
+        item.setdefault("delivery_status", None)
         item.setdefault("updated_at", None)
     return sorted(items.values(), key=lambda x: x.get("updated_at") or "", reverse=True), state
 
@@ -153,7 +165,7 @@ def build(root: Path, token: str | None):
             latest_by_name[name] = run
     failed = [r for name, r in latest_by_name.items() if name in selected_names and r.get("conclusion") in FAILURES]
     active = [r for r in runs if r.get("status") != "completed"]
-    published_24h = sum(1 for x in content if x.get("pushed") and parse_time(x.get("updated_at")) and parse_time(x["updated_at"]) >= now - timedelta(hours=24))
+    accepted_24h = sum(1 for x in content if x.get("pushed") and parse_time(x.get("updated_at")) and parse_time(x["updated_at"]) >= now - timedelta(hours=24))
     sla_items = [x for x in content if x.get("sla_met") is not None]
     sla_met = sum(1 for x in sla_items if x["sla_met"])
     pending = len(state.get("dispatched") or {}) + len(list((root / "data/reel-dispatch-queue").glob("*.json")))
@@ -169,9 +181,9 @@ def build(root: Path, token: str | None):
         health = {"status": "healthy", "title": "流水线运行正常", "message": "最近 24 小时未发现生产工作流失败；页面只把有证据的阶段标记为完成。"}
 
     return {
-        "schema_version": 1, "generated_at": now.isoformat().replace("+00:00", "Z"), "repository": REPO,
+        "schema_version": 2, "generated_at": now.isoformat().replace("+00:00", "Z"), "repository": REPO,
         "health": health,
-        "summary": {"active": len(active), "published_24h": published_24h, "pending": pending, "sla_met": sla_met, "sla_total": len(sla_items), "sla_rate": round(100 * sla_met / len(sla_items)) if sla_items else 0},
+        "summary": {"active": len(active), "accepted_24h": accepted_24h, "pending": pending, "sla_met": sla_met, "sla_total": len(sla_items), "sla_rate": round(100 * sla_met / len(sla_items)) if sla_items else 0},
         "stages": stages, "content": content[:100], "workflows": workflow_rows[:40],
         "sources": ["GitHub Actions", "data/orchestration_state.json", "specs/**/*.json", "output/**/render.json", "data/*_publish_ledger/*.json"],
     }
