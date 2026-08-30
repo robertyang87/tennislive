@@ -512,9 +512,15 @@ def test_发布成功和状态不明都绑定同一成片指纹(repo: Path):
     _spec(repo, {"auto": True})
     outdir = repo / "output/interviews/demo"
     gate.reserve(repo, "demo", outdir, "run", "t1")
-    ledger = gate.record(repo, "demo", outdir, "run", "t2")
+    ledger = gate.record(repo, "demo", outdir, "run", "t2", "receipt-123")
     row = json.loads(ledger.read_text())["attempts"][0]
     assert row["status"] == "sent" and row["key"].startswith("pushplus:demo:")
+    assert row["pushplus_receipt"] == "receipt-123"
+    marker = json.loads((outdir / "pushed.json").read_text(encoding="utf-8"))
+    assert marker["status"] == "sent" and marker["slug"] == "demo"
+    assert marker["film_sha256"] == row["film_sha256"]
+    assert marker["publication_key"] == row["key"]
+    assert marker["pushplus_receipt"] == "receipt-123"
     ledger = gate.uncertain(repo, "demo", outdir, "run", "t3")
     rows = json.loads(ledger.read_text())["attempts"]
     assert len(rows) == 1 and rows[0]["status"] == "uncertain", \
@@ -714,6 +720,9 @@ def test_发完要把已推送记进仓库():
     # 「微信已发、标记没落库」——下一次触发会再发一遍。
     assert "git commit" in record and "push_with_rebase_retry" in record, (
         "记了 pushed.json 却没提交/没推——下一次触发会再发一遍")
+    assert "--receipt-out" in body and "pushed.json" in record \
+        and "--receipt-file" in record, (
+        "sent 账本没有同时提交 pushed.json / PushPlus 流水号，L4 证据不完整")
 
 
 def test_记已推送要排在发微信之后():

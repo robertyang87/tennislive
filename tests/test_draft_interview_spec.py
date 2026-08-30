@@ -7,6 +7,7 @@
 
 from __future__ import annotations
 
+import io
 import json
 import shutil
 import subprocess
@@ -125,6 +126,9 @@ def test_批量行数对不上不许按位置硬贴(tool):
     asked: list[list[str]] = []
 
     def _body(user: str) -> list[str]:
+        if "【目标，只翻译这一条】" in user:
+            target = user.split("【目标，只翻译这一条】", 1)[1].splitlines()[0]
+            return [target]
         head, *rest = user.splitlines()
         if rest:                                  # 批量：`N. 原文`
             return [ln.split(". ", 1)[-1] for ln in rest]
@@ -142,6 +146,72 @@ def test_批量行数对不上不许按位置硬贴(tool):
     assert tool.translate(rows, _Chat()) == ["译:a", "译:b", "译:c"]
     # 判据自己的判据：批量那一路真的走到过（否则上面那行只证明了单行翻译能用）
     assert any(len(b) > 1 for b in asked), "这一趟根本没走批量，二分那条路没验到"
+
+
+def test_单行兜底带前后文并把失败原因反馈给重试(tool):
+    """费德勒全文第 83 行真实形状：英文按字幕宽度切在所有格中间。
+
+    批量翻译拆到单行后若只喂 ``My goal was to spend my``，模型会逐字给出
+    ``我的目标是花我的``；它既意思悬空又以「的」收尾，连续三次原样失败。
+    单行仍需保持一行一译，但必须看得到下一条才能把中文语序自然切成
+    ``我曾希望用一生 / 做自己热爱的事``。
+    """
+    prompts: list[str] = []
+    target_attempts = 0
+
+    class _Chat:
+        def ask(self, _sys, user, **_k):
+            nonlocal target_attempts
+            prompts.append(user)
+            if "逐条翻译成中文" in user:          # 强制走批量二分→单行兜底
+                return {"lines": []}
+            if "My goal was to spend my" in user and \
+                    "【目标，只翻译这一条】My goal was to spend my" in user:
+                target_attempts += 1
+                if target_attempts == 1:
+                    return {"line": "我的目标是花我的"}
+                assert "以虚词“的”收尾" in user
+                return {"line": "我曾希望用一生"}
+            if "【目标，只翻译这一条】life doing something I love" in user:
+                return {"line": "做自己热爱的事"}
+            return {"line": "成名从不是目标"}
+
+    rows = [
+        {"t": 0.0, "text": "but fame was never the goal."},
+        {"t": 1.0, "text": "My goal was to spend my"},
+        {"t": 2.0, "text": "life doing something I love"},
+    ]
+    assert tool.translate(rows, _Chat(), max_zh_chars=13) == [
+        "成名从不是目标", "我曾希望用一生", "做自己热爱的事",
+    ]
+    target_prompt = next(
+        p for p in prompts if "【目标，只翻译这一条】My goal was to spend my" in p
+    )
+    assert "【上一条，仅供理解】but fame was never the goal." in target_prompt
+    assert "【下一条，仅供理解】life doing something I love" in target_prompt
+    assert target_attempts == 2, "坏答案应带着明确失败原因重试，不能原样撞三次"
+
+
+def test_单行上下文能跨过二十五行批次边界(tool):
+    """第 24 行的下一条在第二批；上下文必须来自完整 rows，不能只看当前批。"""
+    seen_target = ""
+
+    class _Chat:
+        def ask(self, _sys, user, **_k):
+            nonlocal seen_target
+            if "逐条翻译成中文" in user:
+                return {"lines": []}
+            marker = "【目标，只翻译这一条】"
+            target = user.split(marker, 1)[1].splitlines()[0]
+            if target == "row-24":
+                seen_target = user
+            return {"line": f"译{target.split('-')[-1]}"}
+
+    rows = [{"t": float(i), "text": f"row-{i}"} for i in range(26)]
+    out = tool.translate(rows, _Chat(), max_zh_chars=13)
+    assert out == [f"译{i}" for i in range(26)]
+    assert "【上一条，仅供理解】row-23" in seen_target
+    assert "【下一条，仅供理解】row-25" in seen_target
 
 
 def test_单行兜底也拿不到译文时要报错不许塞空字幕(tool):
@@ -183,7 +253,7 @@ def test_下载失败要带yt_dlp尾部原因不许只报CalledProcessError(tool
         tool.transcribe("https://example.test/interview", tmp_path)
 
 
-def test_抽音频的依赖要在开跑前就查掉而不是下到一半才报(tool, monkeypatch, capsys):
+def test_抽音频的依赖要在开跑前就查掉而不是下到一半才报(tool, monkeypatch, tmp_path):
     """缺 ffmpeg 要死在第 5 秒，并且说出路——钉行为和位置两头。
 
     来路：oncourt-interviews run 138~142 连炸 5 趟，日志里是
@@ -202,11 +272,13 @@ def test_抽音频的依赖要在开跑前就查掉而不是下到一半才报(t
 
     # ① 行为：认得出缺了谁
     real = shutil.which
-    monkeypatch.setattr(
-        shutil, "which",
-        lambda b, *a, **k: None if b in ("ffmpeg", "ffprobe") else real(b, *a, **k))
-    assert d._missing_media_tools() == ["ffmpeg", "ffprobe"]
-    monkeypatch.undo()
+    # 只撤销这一个模拟。直接调用 monkeypatch.undo() 会把 pytest 9 的
+    # capsys 内部补丁也一起撤掉，后面的 stderr 断言便会读到空字符串。
+    with monkeypatch.context() as media_patch:
+        media_patch.setattr(
+            shutil, "which",
+            lambda b, *a, **k: None if b in ("ffmpeg", "ffprobe") else real(b, *a, **k))
+        assert d._missing_media_tools() == ["ffmpeg", "ffprobe"]
     assert "ffmpeg" not in d._missing_media_tools(), (
         "沙箱里 ffmpeg 是在的（启动钩子装的），这条判据的前提没了")
 
@@ -221,10 +293,15 @@ def test_抽音频的依赖要在开跑前就查掉而不是下到一半才报(t
         "而那次的报错读起来像「这条源下不动」。")
 
     # ③ 报错要说出路：光说「缺 ffmpeg」，下一个人还得自己翻工作流
+    candidates = tmp_path / "candidates.json"
+    candidates.write_text('[{"id": "dependency-preflight"}]', encoding="utf-8")
+    monkeypatch.setattr(d, "CANDIDATES", candidates)
     monkeypatch.setattr(d, "_missing_media_tools", lambda: ["ffmpeg"])
     monkeypatch.setattr(sys, "argv", ["draft_interview_spec.py"])
+    err_stream = io.StringIO()
+    monkeypatch.setattr(d.sys, "stderr", err_stream)
     assert d.main() == 2
-    err = capsys.readouterr().err
+    err = err_stream.getvalue()
     assert "ensure_ffmpeg" in err and "postprocessing" in err.lower(), (
         "报错没给出路：要点明「-x 是 postprocessing、和源是不是 HLS 无关」，"
         "并指出工作流里加 `ensure_ffmpeg`。\n实际输出：" + err)

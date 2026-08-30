@@ -250,22 +250,56 @@ def _translation_line_ok(line: str, max_zh_chars: int | None) -> bool:
         and not text.endswith(_ZH_BAD_TAIL)
 
 
+def _translation_line_issue(line: object, max_zh_chars: int | None) -> str:
+    """把机械闸失败原因反馈给下一次重试，避免模型原样重复坏答案。"""
+    if not isinstance(line, str) or not line.strip():
+        return "译文为空"
+    text = line.strip()
+    if max_zh_chars and len(text) > max_zh_chars:
+        return f"译文有 {len(text)} 个字符，超过 {max_zh_chars} 字限制"
+    if text.endswith(_ZH_BAD_TAIL):
+        return f"译文以虚词“{text[-1]}”收尾，意思悬空"
+    return "响应结构不符合要求"
+
+
 def _translate_single(row: dict, chat, index: int, sys_prompt: str,
-                      max_zh_chars: int | None = None) -> str:
+                      max_zh_chars: int | None = None, *,
+                      previous: dict | None = None,
+                      following: dict | None = None) -> str:
     """批量响应无法保持行数时，最终按单行独立翻译；最多重试三次。"""
     last = None
+    last_line: object = None
     for attempt in range(1, 4):
+        context = []
+        if previous:
+            context.append("【上一条，仅供理解】" + str(previous.get("text") or ""))
+        context.append("【目标，只翻译这一条】" + str(row.get("text") or ""))
+        if following:
+            context.append("【下一条，仅供理解】" + str(following.get("text") or ""))
+        feedback = ""
+        if last is not None:
+            feedback = (
+                f"\n上一版“{str(last_line or '').strip()}”未通过机械校验："
+                f"{_translation_line_issue(last_line, max_zh_chars)}。"
+                "请换一种自然、完整的中文表达，不要原样重复。"
+            )
         res = chat.ask(
             sys_prompt,
-            "只翻译下面这一条英文字幕，不要解释、不要编号：\n"
-            + str(row.get("text") or "")
+            "只翻译【目标】这一条英文字幕，不要解释、不要编号。"
+            "上一条和下一条只用于理解跨行语义，绝不能合并进目标译文；"
+            "遇到英文在所有格、介词或半个短语处换行时，可结合下一条调整中文语序，"
+            "让本行自然收住，并把后续信息留给下一条。\n"
+            + "\n".join(context)
             + (
                 f"\n硬性限制：译文不得超过 {max_zh_chars} 个字符；"
                 "并列人名可用规范姓氏简称，但每个人都必须保留；"
                 "不得以的、地、得、在、为等虚词收尾，必须写成完整短句；"
-                "例如“像米尔卡说的”应改成“正如米尔卡所说”。"
+                "例如“像米尔卡说的”应改成“正如米尔卡所说”；"
+                "目标为“My goal was to spend my”、下一条为"
+                "“life doing something I love”时，本行可译“我曾希望用一生”。"
                 if max_zh_chars else ""
-            ),
+            )
+            + feedback,
             schema={
                 "type": "object",
                 "properties": {"line": {"type": "string"}},
@@ -283,6 +317,9 @@ def _translate_single(row: dict, chat, index: int, sys_prompt: str,
                 and _translation_line_ok(lines[0], max_zh_chars)):
             return lines[0].strip()
         last = res
+        last_line = line if isinstance(line, str) else (
+            lines[0] if isinstance(lines, list) and len(lines) == 1 else None
+        )
         print(
             f"::warning::翻译第 {index} 行单行兜底第 {attempt}/3 次没成，自动重试",
             flush=True,
@@ -291,10 +328,17 @@ def _translate_single(row: dict, chat, index: int, sys_prompt: str,
 
 
 def _translate_batch(batch: list[dict], chat, offset: int,
-                     sys_prompt: str, max_zh_chars: int | None = None) -> list[str]:
+                     sys_prompt: str, max_zh_chars: int | None = None, *,
+                     all_rows: list[dict] | None = None) -> list[str]:
     """翻一批；条数/类型不精确就二分，直到每一行都有独立响应。"""
     if len(batch) == 1:
-        return [_translate_single(batch[0], chat, offset, sys_prompt, max_zh_chars)]
+        rows = all_rows or batch
+        previous = rows[offset - 1] if 0 < offset < len(rows) else None
+        following = rows[offset + 1] if offset + 1 < len(rows) else None
+        return [_translate_single(
+            batch[0], chat, offset, sys_prompt, max_zh_chars,
+            previous=previous, following=following,
+        )]
 
     src = "\n".join(
         f"{offset + j}. {row.get('text') or ''}" for j, row in enumerate(batch)
@@ -326,8 +370,14 @@ def _translate_batch(batch: list[dict], chat, offset: int,
         flush=True,
     )
     return (
-        _translate_batch(batch[:mid], chat, offset, sys_prompt, max_zh_chars)
-        + _translate_batch(batch[mid:], chat, offset + mid, sys_prompt, max_zh_chars)
+        _translate_batch(
+            batch[:mid], chat, offset, sys_prompt, max_zh_chars,
+            all_rows=all_rows,
+        )
+        + _translate_batch(
+            batch[mid:], chat, offset + mid, sys_prompt, max_zh_chars,
+            all_rows=all_rows,
+        )
     )
 
 
@@ -342,7 +392,8 @@ def translate(rows: list[dict], chat, max_zh_chars: int | None = None) -> list[s
     sys_prompt = _translation_system_prompt(max_zh_chars)
     for i in range(0, len(rows), 25):
         out.extend(_translate_batch(
-            rows[i:i + 25], chat, i, sys_prompt, max_zh_chars
+            rows[i:i + 25], chat, i, sys_prompt, max_zh_chars,
+            all_rows=rows,
         ))
     if len(out) != len(rows):
         raise RuntimeError(f"翻译总行数不一致：{len(out)} != {len(rows)}")

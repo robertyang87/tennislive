@@ -245,7 +245,8 @@ jobs:
           python tools/push_reel.py \
             --outdir "${{ steps.gate.outputs.outdir }}" \
             --date "${{ steps.gate.outputs.date }}" \
-            --copy "specs/interviews/${{ steps.gate.outputs.slug }}.xhs.txt"
+            --copy "specs/interviews/${{ steps.gate.outputs.slug }}.xhs.txt" \
+            --receipt-out "$RUNNER_TEMP/interview-pushplus-receipt.json"
 
       # **发完必须记一笔，而且必须进仓库。** 这是「已经发过」的唯一判据——
       # 「工作流跑成功过」证明不了消息发出去了，而重发就是让人再收一条一样的。
@@ -259,8 +260,9 @@ jobs:
             --record "${{ steps.gate.outputs.outdir }}" \
             --slug "${{ steps.gate.outputs.slug }}" \
             --run "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
-            --now "$(date -u +%FT%TZ)"
-          git add --sparse "data/interview_publish_ledger/${{ steps.gate.outputs.slug }}.json"
+            --now "$(date -u +%FT%TZ)" \
+            --receipt-file "$RUNNER_TEMP/interview-pushplus-receipt.json"
+          git add --sparse "data/interview_publish_ledger/${{ steps.gate.outputs.slug }}.json" "${{ steps.gate.outputs.outdir }}/pushed.json"
           python tools/check_staged_file_sizes.py
           git commit -m "interview: ${{ steps.gate.outputs.slug }} 已自动推送"
           source tools/git_push_retry.sh

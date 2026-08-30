@@ -738,6 +738,8 @@ def main() -> int:
     ap.add_argument("--date", default="",
                     help="标题里的日期 YYYY-MM-DD。产物按日期分目录的线不用传"
                          "（从路径解）；按 slug 存的线（output/interviews/…）必须传")
+    ap.add_argument("--receipt-out", default="",
+                    help="PushPlus 成功后把流水号写入这个 JSON（供发布账本落证）")
     args = ap.parse_args()
 
     outdir = Path(args.outdir)
@@ -834,7 +836,15 @@ def main() -> int:
         print(f"[数据图] 带上这一屏：{stat_card}")
     body = build_html(url, copy_url, args.lead, copy_text, poster,
                       column=column, stat_card=stat_card)
-    push(title, body, asset_dir=outdir)
+    receipt = push(title, body, asset_dir=outdir)
+    if args.receipt_out:
+        receipt_path = Path(args.receipt_out)
+        receipt_path.parent.mkdir(parents=True, exist_ok=True)
+        receipt_path.write_text(
+            json.dumps({"receipt": receipt}, ensure_ascii=False) + "\n",
+            encoding="utf-8",
+        )
+        print(f"[PushPlus] 流水号凭据已写入：{receipt_path}")
     print(f"已推送：{title}\n  成片 {url}\n  复制页 {copy_url}\n"
           f"  文案 {len(copy_text)} 字")
     return 0
