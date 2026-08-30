@@ -31,6 +31,8 @@ from tools.build_interview_clip import (
     GAP_VAD_ATTESTATION,
     GAP_VAD_MAX_SPEECH_SECS,
     ROOT,
+    _gap_timeline_covered,
+    _gap_words_covered,
     _speech_overlap_seconds,
     auto_silent_gap_keys,
     caption_gaps,
@@ -473,6 +475,23 @@ def test_语言无关VAD只量空档核心区且重叠不重复计时():
     assert _speech_overlap_seconds(gap, [(11.0, 12.0), (11.5, 12.5)]) == 1.5
 
 
+def test_第二ASR词已在相邻字幕中就证明只是时间码漂移():
+    lines = [
+        {"a": 42.8, "b": 47.9, "en": "She's a good public speaker."},
+        {"a": 47.9, "b": 51.8, "en": "I didn't know that."},
+    ]
+    assert _gap_words_covered(["I"], (45.6, 47.9), lines)
+    assert not _gap_words_covered(["a", "missing", "phrase"],
+                                  (45.6, 47.9), lines)
+
+
+def test_成品字幕时间轴覆盖空档核心区就不算漏字幕():
+    assert _gap_timeline_covered(
+        (10.0, 14.0), [{"a": 9.8, "b": 14.1, "en": "covered"}])
+    assert not _gap_timeline_covered(
+        (10.0, 14.0), [{"a": 9.8, "b": 11.0, "en": "not enough"}])
+
+
 def test_VAD自动销账必须绑定当前指纹且不能和第二ASR词冲突(tmp_path):
     lines = [{"en": "hello"}]
     spec = {"asr_model": "small.en", "whisper_model": "medium.en",
@@ -480,7 +499,7 @@ def test_VAD自动销账必须绑定当前指纹且不能和第二ASR词冲突(t
     fp = transcript_fingerprint(spec, lines, tmp_path)
     proof = {
         "status": "pass",
-        "method": "silero_vad_language_independent",
+        "method": "silero_vad_plus_dual_asr_coverage",
         "sha256": fp,
         "results": [{
             "key": "3.0-6.0", "status": "no_speech", "speech_seconds": 0.0,
@@ -489,11 +508,21 @@ def test_VAD自动销账必须绑定当前指纹且不能和第二ASR词冲突(t
             # 即使 status 被误写成 no_speech，只要第二 ASR 有词也绝不放行。
             "key": "8.0-11.0", "status": "no_speech", "speech_seconds": 0.0,
             "second_asr_words": ["bonjour"],
+        }, {
+            "key": "12.0-15.0", "status": "transcript_covered",
+            "speech_seconds": 1.2, "second_asr_words": ["hello"],
+            "transcript_covered": True,
+        }, {
+            "key": "16.0-19.0", "status": "caption_timeline_covered",
+            "speech_seconds": 1.2, "second_asr_words": [],
+            "caption_timeline_covered": True,
         }],
     }
     (tmp_path / GAP_VAD_ATTESTATION).write_text(
         json.dumps(proof), encoding="utf-8")
-    assert auto_silent_gap_keys(spec, lines, tmp_path) == {"3.0-6.0"}
+    assert auto_silent_gap_keys(spec, lines, tmp_path) == {
+        "3.0-6.0", "12.0-15.0", "16.0-19.0",
+    }
 
     # 字幕、订正或模型一变，旧证据立即失效。
     assert auto_silent_gap_keys(spec, [{"en": "hello again"}], tmp_path) == set()
@@ -501,7 +530,9 @@ def test_VAD自动销账必须绑定当前指纹且不能和第二ASR词冲突(t
     proof["results"][0]["speech_seconds"] = GAP_VAD_MAX_SPEECH_SECS + 0.001
     (tmp_path / GAP_VAD_ATTESTATION).write_text(
         json.dumps(proof), encoding="utf-8")
-    assert auto_silent_gap_keys(spec, lines, tmp_path) == set()
+    assert auto_silent_gap_keys(spec, lines, tmp_path) == {
+        "12.0-15.0", "16.0-19.0",
+    }
 
 
 def test_核对表把空档单独列一节(tmp_path):
