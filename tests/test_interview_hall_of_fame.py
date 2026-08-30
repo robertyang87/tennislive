@@ -82,3 +82,50 @@ def test_已核验入选典礼可以按编辑决定不用冷开场(tmp_path):
     spec = request_builder.build_spec(_request(), ["谢谢大家"], duration=900.0)
     ok, detail = bilingual_lead_ok(tmp_path / "missing.ass", spec)
     assert ok and "显式例外" in detail
+
+
+def test_一次性重建标记会让已有spec重新进入队列(tmp_path, monkeypatch):
+    request_dir = tmp_path / "requests"
+    specs = tmp_path / "specs"
+    output = tmp_path / "output"
+    request_dir.mkdir()
+    specs.mkdir()
+    (output / "demo").mkdir(parents=True)
+    path = request_dir / "demo.json"
+    path.write_text(
+        '{"slug":"demo","url":"https://youtu.be/x","_rebuild_once":true}',
+        encoding="utf-8",
+    )
+    (specs / "demo.json").write_text("{}", encoding="utf-8")
+    (output / "demo" / "cap_asr.json3").write_text("{}", encoding="utf-8")
+    monkeypatch.setattr(request_builder, "SPECS", specs)
+    monkeypatch.setattr(request_builder, "OUTDIR", output)
+    assert request_builder.is_pending(path)
+
+
+def test_人工请求在翻译前与渲染使用同一套语气词清理(tmp_path, monkeypatch):
+    import build_interview_clip
+    import draft_interview_spec
+
+    path = tmp_path / "demo.json"
+    path.write_text('{"slug":"demo","url":"https://youtu.be/x"}', encoding="utf-8")
+    monkeypatch.setattr(
+        request_builder,
+        "_transcribe_request",
+        lambda url, directory, model: ([{"t": 0.0, "text": "Um hello"}], 2.0),
+    )
+    monkeypatch.setattr(
+        build_interview_clip,
+        "segment",
+        lambda words, start, end: [{"a": 0.0, "b": 1.0, "en": "Um hello"}],
+    )
+    seen = []
+
+    def fake_translate(rows, chat):
+        seen.extend(row["text"] for row in rows)
+        return ["你好"]
+
+    monkeypatch.setattr(draft_interview_spec, "translate", fake_translate)
+    monkeypatch.setattr(request_builder, "build_spec", lambda req, zh, duration: {})
+    request_builder._build_one(path, object(), write=False)
+    assert seen == ["Hello"]

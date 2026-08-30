@@ -351,6 +351,11 @@ def promote_all(*, write: bool = False) -> tuple[list[str], list[str]]:
         if not (draft.get("_zh_draft") or draft.get("zh")):
             skipped.append(f"{f.name}: 连译文草稿都没有（翻译没成），等终审")
             continue
+        if draft.get("manual_review_required"):
+            skipped.append(
+                f"{f.name}: 已标记人工复核（{draft['manual_review_required']}），不提升"
+            )
+            continue
         verification = draft.get("source_verification") or {}
         if verification.get("status") != "verified" or \
                 verification.get("detected_type") != "on_court":
