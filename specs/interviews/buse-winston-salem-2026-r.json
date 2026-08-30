@@ -1,5 +1,4 @@
 {
-  "_draft": true,
   "slug": "buse-winston-salem-2026-r",
   "url": "https://www.tennistv.com/videos/4568853/winston-salem-2026-final-ignacio-buse-interview",
   "source_title": "Buse Basking in \"Special\" Title in Winston-Salem",
@@ -11,7 +10,7 @@
   "requested_content_type": "on_court",
   "interview_kind": "赛后场上采访",
   "event": "2026 温斯顿-塞勒姆公开赛",
-  "winner": "",
+  "winner": "布塞",
   "_interviewee_en": "Ignacio Buse",
   "zh": [
     "谢谢，恭喜，",
@@ -90,7 +89,9 @@
         "round": "Final",
         "duration_s": 82
       }
-    ]
+    ],
+    "match_id": "2026:温斯顿-塞勒姆公开赛:f:ignacio-buse",
+    "attestation_sha256": "0d4ae58feebce52af158aaf3e4a39a0ac5f235089d1cdb21d6c0db505d9768e9"
   },
   "match": {
     "id": "2026:温斯顿-塞勒姆公开赛:f:ignacio-buse",
@@ -99,9 +100,43 @@
     "year": 2026,
     "round": "决赛",
     "interviewee_en": "Ignacio Buse",
-    "status": "candidate"
+    "status": "result_verified",
+    "winner": "布塞",
+    "loser": "费里",
+    "participants": [
+      "布塞",
+      "费里"
+    ],
+    "winner_en": "Ignacio Buse",
+    "loser_en": "Fery"
   },
   "_notes": [
     "自动草稿：正式切行 + 机器译文已备；cap_asr.json3 没有 `>> ` 说话人标记（whisper 不分说话人），终审切行前自己按内容补；双模型核对（verify_transcript）由 render 时跑第二份完成；出现模型分歧或实体红旗才转人工复核"
-  ]
+  ],
+  "push": {
+    "matchup": "布塞 vs 费里",
+    "summary": "布塞赢球后的场上采访",
+    "lead": "2026 温斯顿-塞勒姆公开赛，布塞击败费里后的完整场上采访。",
+    "auto": true
+  },
+  "cover": {
+    "frame_at": 45.4,
+    "title": [
+      "布塞赢球之后",
+      "第一时间说了什么？"
+    ],
+    "sub": "温斯顿-塞勒姆公开赛 决赛 赛后场上采访",
+    "tag": "温斯顿-塞勒姆公开赛 · 布塞",
+    "_why": "自动初选采访中段近景；L2 封面抽帧仍需检查清晰度和睁眼。"
+  },
+  "takeaway": {
+    "close": {
+      "point": "布塞赢球后的第一反应",
+      "ask": "你怎么看布塞这场比赛的表现？"
+    }
+  },
+  "opening": {
+    "kind": "none",
+    "why": "正文是独立场上采访产品；比赛结束画面必须从同场官方集锦以 lead_in 接入。"
+  }
 }
