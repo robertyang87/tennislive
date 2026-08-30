@@ -161,3 +161,20 @@ def test_长致辞翻译提示会硬性限制单行中文长度():
     prompt = draft_interview_spec._translation_system_prompt(13)
     assert "最多 13 个字符" in prompt
     assert "不得通过漏译事实来缩短" in prompt
+
+
+def test_长人名超限时单行重试明确允许姓氏简称():
+    import draft_interview_spec
+
+    prompts = []
+
+    class Chat:
+        def ask(self, system, user, **kwargs):
+            prompts.append(user)
+            return {"line": "瓜拉斯、阿尼科内"}
+
+    line = draft_interview_spec._translate_single(
+        {"text": "Jose Higueras and Paul Annacone"}, Chat(), 1, "system", 13
+    )
+    assert line == "瓜拉斯、阿尼科内"
+    assert "并列人名可用规范姓氏简称" in prompts[0]

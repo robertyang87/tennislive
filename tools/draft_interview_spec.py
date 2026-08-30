@@ -249,7 +249,12 @@ def _translate_single(row: dict, chat, index: int, sys_prompt: str,
         res = chat.ask(
             sys_prompt,
             "只翻译下面这一条英文字幕，不要解释、不要编号：\n"
-            + str(row.get("text") or ""),
+            + str(row.get("text") or "")
+            + (
+                f"\n硬性限制：译文不得超过 {max_zh_chars} 个字符；"
+                "并列人名可用规范姓氏简称，但每个人都必须保留。"
+                if max_zh_chars else ""
+            ),
             schema={
                 "type": "object",
                 "properties": {"line": {"type": "string"}},
