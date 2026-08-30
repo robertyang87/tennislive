@@ -947,24 +947,52 @@ def test_渲染后顶栏像素闸能抓住只有小标题(tmp_path, monkeypatch)
 def test_顶栏字体日志闸拒绝缺字方框和DejaVu回退():
     import tools.build_interview_clip as clip
 
+    subject_spec = {
+        "slug": "federer-ithf",
+        "topbar_layout": "subject_primary",
+    }
     good = "\n".join([
         "fontselect: (Noto Sans CJK SC, 700, 0) -> NotoSansCJKsc-Bold, 0, NotoSansCJKsc-Bold",
         "fontselect: (Noto Sans CJK SC, 400, 0) -> NotoSansCJKsc-Regular, 0, NotoSansCJKsc-Regular",
     ])
-    clip.assert_topbar_font_log(good)
+    clip.assert_topbar_font_log(good, subject_spec)
 
     with pytest.raises(SystemExit, match="tofu|缺失中文字形"):
         clip.assert_topbar_font_log(
-            good + "\nfailed to find any fallback with glyph 0x8D39")
+            good + "\nfailed to find any fallback with glyph 0x8D39", subject_spec)
 
     with pytest.raises(SystemExit, match="没有落到 Noto"):
         clip.assert_topbar_font_log("\n".join([
             "fontselect: (Noto Sans CJK SC, 700, 0) -> DejaVuSans-Bold, 0, DejaVuSans-Bold",
             good.splitlines()[1],
-        ]))
+        ]), subject_spec)
 
     with pytest.raises(SystemExit, match="没有记录"):
-        clip.assert_topbar_font_log("")
+        clip.assert_topbar_font_log("", subject_spec)
+
+    event_spec = {"slug": "ordinary-interview", "topbar_layout": "event_primary"}
+    clip.assert_topbar_font_log(good.splitlines()[1], event_spec)
+
+
+def test_顶栏有明确时长时覆盖到片尾而不是停在最后一句(tmp_path, monkeypatch):
+    import tools.build_interview_clip as clip
+
+    monkeypatch.setattr(clip, "_measure_at",
+                        lambda kind, size, text: len(text) * size * 0.45)
+    spec = {
+        "slug": "federer-ithf",
+        "event": "2026 国际网球名人堂入选典礼",
+        "interview_kind": "名人堂入选致辞",
+        "topbar_layout": "subject_primary",
+        "subject": {"name": "费德勒"},
+        "push": {},
+    }
+    ass = tmp_path / "full-duration-topbar.ass"
+    clip.write_ass([{"a": 0.0, "b": 0.2, "en": "Thank you."}], ["谢谢"],
+                   0.0, ass, spec=spec, duration=1.0)
+    text = ass.read_text(encoding="utf-8")
+    assert "Dialogue: 2,0:00:00.00,0:00:01.00,HEADSUBJECT" in text
+    assert "Dialogue: 1,0:00:00.00,0:00:01.00,HEADB" in text
 
 
 def test_顶栏说清这是哪一场():
