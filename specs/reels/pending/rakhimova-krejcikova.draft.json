@@ -18,7 +18,11 @@
       }
     ],
     "winner": "克雷吉茨科娃",
-    "result": "6-6 6-2"
+    "result": "6-6 6-2",
+    "portrait": {
+      "image": "assets/reel/rakhimova-krejcikova-cover.jpg",
+      "_portrait_why": "WTA 官方赛后稿/集锦头图，定时自动补齐"
+    }
   },
   "_production": {
     "kind": "orchestrated_reel",
@@ -272,39 +276,41 @@
     "retryable": false,
     "cold_open": {
       "start": 165.9,
-      "end": 181.95,
+      "end": 176.29,
       "kind": "match_point",
-      "winner_visible": true,
-      "reason": "166.5s–176.5s 屏幕左上角角标显示'MATCH POINT'，比分显示Rakhimova 5–6 / Krejcikova 6–6，符合第二盘6-6抢七/决胜盘阶段。176.5s–178.5s Krejcikova（绿裙白衣）赢球后举手庆祝，表情清晰可见。180.5s–181.95s 观众起立鼓掌。",
-      "confidence": 0.92
+      "winner_visible": false,
+      "reason": "在 165.9s 计分牌显示 MATCH POINT、RAKHIMOVA 6 2、KREJCIKOVA 6 6，即拉希莫娃拿下此盘最后一局（赛点）同时也是整场比赛的赛点；166.5s-172.5s 拉希莫娃（浅绿上衣、深绿短裙、白色 Lotto 帽）准备接发与回合进行；176.29s 拉希莫娃再次以同样球衣入画，回合正在结束。冷开场内只见拉希莫娃作为赛点回合的接发方/落败方，未见赢家克雷吉茨科娃的庆祝动作。",
+      "confidence": 0.78
     },
     "ending": {
       "start": 165.9,
-      "end": 181.95,
-      "kind": "winner_celebration",
+      "end": 198.85,
+      "kind": "aftermath",
       "winner_visible": true,
-      "reason": "窗口完整覆盖冷开场同一match point序列：166.5s–176.5s'MATCH POINT'角标+比分6-6, 176.5s–178.5s Krejcikova举手庆祝，180.5s–181.95s 观众鼓掌、赢家走向网前致意。完整兑现结局，并在握手前结束以便为正文末端握手保留画面。",
-      "confidence": 0.92
+      "reason": "在 165.9s-176.29s 区间覆盖赛点回合（166.5s 拉希莫娃接发、170.5s-172.5s 回合进行）；176.5s-178.5s 拉希莫娃穿浅绿上衣、深绿短裙、白色 Lotto 帽出现，178.91s-184.0s 观众起立鼓掌、双方走向网前；184.5s-186.5s 双方在网前握手；188.5s-190.5s-194.5s-196.5s-198.5s 拉希莫娃走回座位区、观众持续鼓掌；画面以赛点、握手、赛后余波完整兑现结局，窗口完全包住冷开场 165.9s-176.29s。",
+      "confidence": 0.82
     },
     "cover": {
       "same_match": true,
       "subject": "克雷吉茨科娃",
       "moment": "winner_celebration",
       "wrong_or_old": false,
-      "reason": "182.5s、184.5s、186.5s、188.5s 帧中绿裙白衣球员（与38.5s、80.5s、88.5s等镜头中Krejcikova装束一致）正与对手及裁判握手/致意；190.5s 屏幕下方蓝色条显示'WOMEN'S SINGLES - 1ST ROUND / KAMILLA RAKHIMOVA (RUS) 7 6 / BARBORA KREJCIKOVA (CZE) 6 2'，US Open标识、场地颜色、球员装束与contact sheet完全一致，可证明本场。",
-      "confidence": 0.93
+      "reason": "封面人物为白衣、白帽、深色裙装的女子，握拳庆祝姿态，背景为深蓝色 US Open 标志墙；与视频 176.5s-178.5s 出现的赢家克雷吉茨科娃（白衣、白帽）庆祝画面服装、帽饰、动作一致；US Open 赛事标识与视频内 'us open'、'JPMorgan'、'Emirates' 等现场广告完全一致；封面选人规则为空，按赢家识别。",
+      "confidence": 0.85
     },
     "problems": [
-      "没有官方高清封面候选"
+      "cold_open 无法确认赢家出现在画面中",
+      "cold_open 置信度 0.78 低于 0.80",
+      "ending 必须是 3-30 秒的完整收官窗口"
     ],
-    "model_attempts": 1,
-    "input_sha256": "09fef2e6c877d08dbaab9417e0155ab2ebd78fbb15fdfa7a2c32713f5c647f33",
+    "model_attempts": 2,
+    "input_sha256": "fa7329a99f2ad37f941f0371fe9acd89c56adcb340283d867648fb75a5e13f12",
     "inputs": [
       "contact_00.jpg",
       "contact_01.jpg",
       "contact_02.jpg",
       "contact_03.jpg"
     ],
-    "cover_image": ""
+    "cover_image": "assets/reel/rakhimova-krejcikova-cover.jpg"
   }
 }
