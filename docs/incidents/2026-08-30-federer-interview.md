@@ -160,9 +160,9 @@
 
 - 名人堂入选致辞固定为 HEADA 大标题“人物 · 致辞类型”，HEADB 小标题“典礼名”；
   不再要求或伪造比赛对手、比分。
-- 名人堂 HEADA 显式使用已在最终片证明可渲染的 Noto Sans CJK SC 粗体 54px，
-  HEADB 使用 Noto Sans CJK SC 38px；每个 ASS run 都显式写入 `\fs`，不只依赖
-  Style 默认值。
+- 名人堂 HEADA 固定使用单一 Noto Sans CJK SC Regular 54px 白字 run，HEADB
+  使用 Noto Sans CJK SC Regular 38px；每个 ASS run 都显式写入 `\fs`，不只依赖
+  Style 默认值。54px Regular 尚需正式成功 artifact 裁决，不能提前写成“已证明”。
 - 正文编码完成后、海报与最终拼接之前，自动抽取 0.5 秒帧的顶部 150px，分别
   检查 HEADA/HEADB 带区的浅色文字像素。品牌绿竖条不能冒充标题；任一行不足
   阈值就让 render fail closed，不能进入发布。
@@ -177,9 +177,10 @@
   出现 DejaVu 回退或 `failed to find any fallback with glyph` 立即失败。这样缺字
   方框即使产生足够浅色像素，也不能冒充中文标题。
 - 第二次失败 artifact（run `33323079498`）证明：即使把 `\pos` 移到竖条前，
-  HEADSUBJECT 仍是 0 像素，HEADB 为 2480；最终 ASS 与时长无误，问题收敛在
-  “装饰竖条 run + 中途 `\r` + 粗体 run”的生产渲染路径，而不能再归因于定位
-  标签顺序。人物大标题现改为单一 Noto Regular 可见 run（54px 白字），小标题
+  HEADSUBJECT 仍是 0 像素，HEADB 为 2480；最终 ASS 与时长无误。artifact 证明
+  “装饰竖条 run + 中途 `\r` + 粗体 run”这一组合两次失败，但不能唯一隔离其中
+  哪个变量是 libass 触发点，也不能再归因于定位标签顺序。人物大标题一次移除这
+  三个变量，改为单一 Noto Regular 可见 run（54px 白字），小标题
   同为 Noto Regular 38px；一条可信的 400→Noto 日志、无缺字日志和两个带区的
   真实像素共同构成发布证据。像素闸先报哪一行缺失，字体闸随后验证不是 tofu；
   两道都必须通过。
