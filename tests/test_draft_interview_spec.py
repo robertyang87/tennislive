@@ -271,11 +271,13 @@ def test_抽音频的依赖要在开跑前就查掉而不是下到一半才报(t
 
     # ① 行为：认得出缺了谁
     real = shutil.which
-    monkeypatch.setattr(
-        shutil, "which",
-        lambda b, *a, **k: None if b in ("ffmpeg", "ffprobe") else real(b, *a, **k))
-    assert d._missing_media_tools() == ["ffmpeg", "ffprobe"]
-    monkeypatch.undo()
+    # 只撤销这一个模拟。直接调用 monkeypatch.undo() 会把 pytest 9 的
+    # capsys 内部补丁也一起撤掉，后面的 stderr 断言便会读到空字符串。
+    with monkeypatch.context() as media_patch:
+        media_patch.setattr(
+            shutil, "which",
+            lambda b, *a, **k: None if b in ("ffmpeg", "ffprobe") else real(b, *a, **k))
+        assert d._missing_media_tools() == ["ffmpeg", "ffprobe"]
     assert "ffmpeg" not in d._missing_media_tools(), (
         "沙箱里 ffmpeg 是在的（启动钩子装的），这条判据的前提没了")
 
