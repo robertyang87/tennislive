@@ -859,12 +859,15 @@ def test_名人堂顶栏以人物内容为大标题_典礼为小标题(monkeypat
     main_ass, context_ass = clip.header_ass(spec)
     assert rf"\fs{clip._HEAD_SIZE['a']}" in main_ass
     assert rf"\fs{clip._HEAD_SIZE['b']}" in context_ass
-    assert r"\fnNoto Sans CJK SC" in main_ass and r"\b700" in main_ass, (
+    assert r"\fnNoto Sans CJK SC" in main_ass and r"\b1" in main_ass, (
         "名人堂主标题要走已在最终片证明能出像素的 Noto 粗体，"
         "不能再次押注曾整行消失的显示体加载")
     assert r"\c&HFFFFFF&" in main_ass, "主标题要显式写白，不能只靠 \\r 复位竖条绿"
     assert rf"\an8\pos({clip.CANVAS_W // 2},{clip._HEAD_A_TOP})" in main_ass
     assert rf"\an8\pos({clip.CANVAS_W // 2},{clip._HEAD_B_TOP})" in context_ass
+    assert main_ass.index(r"\an8\pos") < main_ass.index("▍"), (
+        "行级定位标签必须在第一个可见字符之前；放到第二个 run 会让生产 libass"
+        "跳过整条人物主标题")
 
 
 def test_名人堂缺人物不许退回只有典礼小标题(monkeypatch):
@@ -910,10 +913,12 @@ def test_渲染后顶栏像素闸能抓住只有小标题(tmp_path, monkeypatch)
     clip.write_ass([], [], 0.0, ass, spec=spec, duration=1.0)
     ass_text = ass.read_text(encoding="utf-8")
     assert "Style: HEADSUBJECT,Noto Sans CJK SC,54,&H00FFFFFF," in ass_text
-    assert ",700,0,0,0,100,100," in next(
-        line for line in ass_text.splitlines() if line.startswith("Style: HEADSUBJECT,"))
     assert "Dialogue: 2," in ass_text and ",HEADSUBJECT," in ass_text
     assert "Dialogue: 1," in ass_text and ",HEADB," in ass_text
+    main_dialogue = next(
+        line for line in ass_text.splitlines() if ",HEADSUBJECT," in line)
+    assert main_dialogue.index(r"\an8\pos") < main_dialogue.index("▍"), (
+        "最终写入 ASS 的 HEADSUBJECT 必须先定位，再出现任何可见文本")
 
     def _render(src_ass: Path, dest: Path) -> str:
         proc = subprocess.run(
@@ -968,6 +973,12 @@ def test_顶栏字体日志闸拒绝缺字方框和DejaVu回退():
     with pytest.raises(SystemExit, match="没有落到 Noto"):
         clip.assert_topbar_font_log("\n".join([
             "fontselect: (Noto Sans CJK SC, 700, 0) -> DejaVuSans-Bold, 0, DejaVuSans-Bold",
+            good.splitlines()[1],
+        ]), subject_spec)
+
+    with pytest.raises(SystemExit, match="Noto Bold"):
+        clip.assert_topbar_font_log("\n".join([
+            "fontselect: (Noto Sans CJK SC, 700, 0) -> NotoSansCJKsc-Regular, 0, NotoSansCJKsc-Regular",
             good.splitlines()[1],
         ]), subject_spec)
 
