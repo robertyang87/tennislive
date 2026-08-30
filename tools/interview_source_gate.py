@@ -48,7 +48,8 @@ APPROVED_METHODS = {
 _EXPLICIT_ONCOURT = re.compile(r"\bon[\s-]?court\s+interview\b", re.I)
 _EXPLICIT_CEREMONY = re.compile(
     r"\b(champion(?:ship)?\s+speech|trophy\s+(?:ceremony|presentation)"
-    r"|winner'?s?\s+speech|victory\s+speech|runner[\s-]?up\s+speech)\b",
+    r"|winner'?s?\s+speech|victory\s+speech|runner[\s-]?up\s+speech"
+    r"|(?:international\s+tennis\s+)?hall\s+of\s+fame\s+induction\s+speech)\b",
     re.I,
 )
 # 必须明确到“最后一战/告别/退役 + 仪式或致辞”。单独的 final、farewell、
@@ -224,20 +225,63 @@ def contract_payload(spec: dict) -> dict:
     """参与 L0 签名的稳定字段。注解、封面和文案变化不改变来源身份。"""
     verification = dict(spec.get("source_verification") or {})
     verification.pop("attestation_sha256", None)
-    return {
+    payload = {
         "requested_content_type": spec.get("requested_content_type"),
         "interview_kind": spec.get("interview_kind"),
         "url": spec.get("url"),
         "source_verification": verification,
         "match": spec.get("match"),
     }
+    # 老 spec 的 attestation 不能因为新增一种产品而集体失效；只让新类型把新字段
+    # 纳入签名，既能绑定名人堂身份，又保持既有比赛内容的哈希完全不变。
+    if is_hall_of_fame_induction(spec):
+        payload["ceremony_subtype"] = spec.get("ceremony_subtype")
+        payload["subject"] = spec.get("subject")
+    return payload
+
+
+def is_hall_of_fame_induction(spec: dict) -> bool:
+    """这是一段名人堂入选典礼致辞，而不是一场比赛之后的颁奖致辞。"""
+    return (
+        spec.get("requested_content_type") == "ceremony"
+        and spec.get("ceremony_subtype") == "hall_of_fame_induction"
+    )
+
+
+def content_identity_id(spec: dict) -> str:
+    """返回 L0/L2/L3 共同绑定的内容身份，兼容比赛与非比赛典礼。"""
+    if is_hall_of_fame_induction(spec):
+        return str((spec.get("subject") or {}).get("id") or "")
+    return str((spec.get("match") or {}).get("id") or "")
+
+
+def verified_no_lead_exception(spec: dict) -> bool:
+    """已核验、且按内容形态允许不另接冷开场的两种正式产品。"""
+    verification = spec.get("source_verification") or {}
+    opening = spec.get("opening") or {}
+    if opening.get("kind") != "none" or verification.get("status") != "verified":
+        return False
+    official_farewell = (
+        spec.get("requested_content_type") == "farewell"
+        and verification.get("method") == "official_explicit_farewell"
+    )
+    official_induction = (
+        is_hall_of_fame_induction(spec)
+        and verification.get("method") == "official_explicit_ceremony"
+    )
+    return official_farewell or official_induction
 
 
 def finalize_source_contract(spec: dict) -> dict:
-    """赛果补齐后，把 match_id 写回来源证明并生成不可伪装的 L0 哈希。"""
+    """把比赛/典礼身份写回来源证明并生成不可伪装的 L0 哈希。"""
     verification = spec.setdefault("source_verification", {})
-    match = spec.setdefault("match", {})
-    verification["match_id"] = match.get("id")
+    if is_hall_of_fame_induction(spec):
+        verification.pop("match_id", None)
+        verification["subject_id"] = (spec.get("subject") or {}).get("id")
+    else:
+        match = spec.setdefault("match", {})
+        verification.pop("subject_id", None)
+        verification["match_id"] = match.get("id")
     verification["attestation_sha256"] = sha256_json(contract_payload(spec))
     return spec
 
@@ -253,7 +297,10 @@ def validate_source_contract(spec: dict) -> str:
             "requested_content_type 必须是 on_court/ceremony 之一，或 farewell"
         )
         requested = None
-    display_kind = REQUESTED_KINDS.get(requested)
+    special_induction = is_hall_of_fame_induction(spec)
+    display_kind = (
+        "名人堂入选致辞" if special_induction else REQUESTED_KINDS.get(requested)
+    )
     if display_kind is not None and spec.get("interview_kind") != display_kind:
         problems.append(f"interview_kind 必须精确写成“{display_kind}”")
 
@@ -275,26 +322,44 @@ def validate_source_contract(spec: dict) -> str:
     ).rstrip("/"):
         problems.append("source_verification.source_url 与正文 url 不一致")
 
-    match = spec.get("match")
-    if not isinstance(match, dict):
-        problems.append("缺 match")
-        match = {}
-    for key in ("id", "event", "round", "winner", "loser", "participants"):
-        if not match.get(key):
-            problems.append(f"match.{key} 为空")
     placeholders = {"unknown", "event", "?", "未知", "待核", "待确认"}
-    for key in ("event", "round", "winner", "loser"):
-        if str(match.get(key) or "").strip().casefold() in placeholders:
-            problems.append(f"match.{key} 仍是占位值")
-    if ":unknown:" in str(match.get("id") or "").casefold():
-        problems.append("match.id 含 unknown，不能证明逐场身份")
-    participants = match.get("participants") or []
-    if not isinstance(participants, list) or len(participants) != 2:
-        problems.append("match.participants 必须恰好两名球员")
-    elif match.get("winner") not in participants or match.get("loser") not in participants:
-        problems.append("match 的胜负双方不在 participants 中")
-    if verification.get("match_id") != match.get("id"):
-        problems.append("来源证明和赛果的 match_id 不一致")
+    if special_induction:
+        subject = spec.get("subject")
+        if not isinstance(subject, dict):
+            problems.append("名人堂致辞缺 subject")
+            subject = {}
+        for key in ("id", "event", "name", "role"):
+            if not subject.get(key):
+                problems.append(f"subject.{key} 为空")
+        for key in ("event", "name", "role"):
+            if str(subject.get(key) or "").strip().casefold() in placeholders:
+                problems.append(f"subject.{key} 仍是占位值")
+        if ":unknown:" in str(subject.get("id") or "").casefold():
+            problems.append("subject.id 含 unknown，不能证明典礼身份")
+        if verification.get("subject_id") != subject.get("id"):
+            problems.append("来源证明和典礼的 subject_id 不一致")
+        if spec.get("match"):
+            problems.append("名人堂入选致辞不是比赛，不得填写 match")
+    else:
+        match = spec.get("match")
+        if not isinstance(match, dict):
+            problems.append("缺 match")
+            match = {}
+        for key in ("id", "event", "round", "winner", "loser", "participants"):
+            if not match.get(key):
+                problems.append(f"match.{key} 为空")
+        for key in ("event", "round", "winner", "loser"):
+            if str(match.get(key) or "").strip().casefold() in placeholders:
+                problems.append(f"match.{key} 仍是占位值")
+        if ":unknown:" in str(match.get("id") or "").casefold():
+            problems.append("match.id 含 unknown，不能证明逐场身份")
+        participants = match.get("participants") or []
+        if not isinstance(participants, list) or len(participants) != 2:
+            problems.append("match.participants 必须恰好两名球员")
+        elif match.get("winner") not in participants or match.get("loser") not in participants:
+            problems.append("match 的胜负双方不在 participants 中")
+        if verification.get("match_id") != match.get("id"):
+            problems.append("来源证明和赛果的 match_id 不一致")
 
     actual = str(verification.get("attestation_sha256") or "")
     expected = sha256_json(contract_payload(spec))
