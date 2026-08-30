@@ -241,6 +241,15 @@ def _translation_system_prompt(max_zh_chars: int | None = None) -> str:
     )
 
 
+_ZH_BAD_TAIL = tuple("的地得和跟与在把被为从对而或让就")
+
+
+def _translation_line_ok(line: str, max_zh_chars: int | None) -> bool:
+    text = line.strip()
+    return bool(text) and (not max_zh_chars or len(text) <= max_zh_chars) \
+        and not text.endswith(_ZH_BAD_TAIL)
+
+
 def _translate_single(row: dict, chat, index: int, sys_prompt: str,
                       max_zh_chars: int | None = None) -> str:
     """批量响应无法保持行数时，最终按单行独立翻译；最多重试三次。"""
@@ -252,7 +261,8 @@ def _translate_single(row: dict, chat, index: int, sys_prompt: str,
             + str(row.get("text") or "")
             + (
                 f"\n硬性限制：译文不得超过 {max_zh_chars} 个字符；"
-                "并列人名可用规范姓氏简称，但每个人都必须保留。"
+                "并列人名可用规范姓氏简称，但每个人都必须保留；"
+                "不得以的、地、得、在、为等虚词收尾，必须写成完整短句。"
                 if max_zh_chars else ""
             ),
             schema={
@@ -263,14 +273,13 @@ def _translate_single(row: dict, chat, index: int, sys_prompt: str,
             max_tokens=300,
         )
         line = res.get("line") if isinstance(res, dict) else None
-        if (isinstance(line, str) and line.strip()
-                and (not max_zh_chars or len(line.strip()) <= max_zh_chars)):
+        if isinstance(line, str) and _translation_line_ok(line, max_zh_chars):
             return line.strip()
         # 兼容模型偶尔仍按旧的数组形状回答；只能接受恰好一条，不能猜位置。
         lines = res.get("lines") if isinstance(res, dict) else None
         if (isinstance(lines, list) and len(lines) == 1
-                and isinstance(lines[0], str) and lines[0].strip()
-                and (not max_zh_chars or len(lines[0].strip()) <= max_zh_chars)):
+                and isinstance(lines[0], str)
+                and _translation_line_ok(lines[0], max_zh_chars)):
             return lines[0].strip()
         last = res
         print(
@@ -304,8 +313,7 @@ def _translate_batch(batch: list[dict], chat, offset: int,
     raw = res.get("lines") if isinstance(res, dict) else None
     if isinstance(raw, list) and len(raw) == len(batch):
         cleaned = [line.strip() if isinstance(line, str) else "" for line in raw]
-        if all(cleaned) and (
-                not max_zh_chars or all(len(line) <= max_zh_chars for line in cleaned)):
+        if all(_translation_line_ok(line, max_zh_chars) for line in cleaned):
             return cleaned
 
     got = len(raw) if isinstance(raw, list) else "无数组"
