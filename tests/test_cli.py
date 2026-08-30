@@ -502,7 +502,7 @@ def test_publish_content_includes_all_cards_and_review_fields(tmp_path, monkeypa
     assert "最关键的变量" in sent[0][1]
 
 
-def test_publish_pushplus_uses_xiaohongshu_title(tmp_path, monkeypatch):
+def test_publish_pushplus_uses_xiaohongshu_title(tmp_path, monkeypatch, capsys):
     package = tmp_path / "2026-07-21"
     package.mkdir()
     (package / "wechat_title.txt").write_text("网球晨报｜旧标题", encoding="utf-8")
@@ -518,6 +518,9 @@ def test_publish_pushplus_uses_xiaohongshu_title(tmp_path, monkeypatch):
 
     assert cli.cmd_publish_pushplus(SimpleNamespace(dir=str(package))) == 0
     assert sent == [("🏆7.21｜谢里夫这冠有点意外", "<div>待发稿</div>")]
+    output = capsys.readouterr().out
+    assert "PushPlus 已接收微信通道请求" in output
+    assert "不等于手机送达" in output
 
 
 

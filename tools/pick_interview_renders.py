@@ -16,12 +16,19 @@ concurrency 按 slug 分组 → 不同采访天然并行。
 让每一趟 run 的日志都看得见还有谁在等。
 
 已 dispatch 过的记在 `data/interview_render_dispatched.json`：
-`slugs` 是名单，`at` 记每条是什么时候投的——**投一条记一条**
+`slugs` 是名单，`at` 记每条是什么时候投的，`spec_sha256` 记这趟实际投的
+输入指纹——**投一条记一条**
 （`--mark-one`，dispatch 成功之后才记），不是先记后投：先记后投的下场是
 dispatch 失败的那条从此再也不会被投，而且不吭声。
-`--stale` 拿 `at` 反查「投出去超过 N 小时还没有 render.json」的条目；这些
+`--stale` 拿 `at` 反查「投出去超过 N 分钟还没有当前输入的成片」的条目；这些
 条目同时会自动释放回 dispatch 队列，下一次成功 dispatch 刷新时刻——
 「投了」只是信号，render.json 落库才是产物。
+
+⚠️ **render.json 存在不等于当前 spec 已经出片。** 同一个 slug 修字幕、封面或
+空档销账后，旧逻辑只看目录里有没有 render.json，于是 workflow 绿着早退，
+新 spec 永远不会重渲。现在有 QC 的新产物必须满足
+`qc_attestation.spec_sha256 == 当前 spec sha256` 才算已 render；历史产物没有
+QC 的仍按已 render 兼容，避免上线时把几十条存量一起重跑。
 
 用法：
     python tools/pick_interview_renders.py               # 打印待 dispatch 的
@@ -35,7 +42,9 @@ stdout 协议（workflow 靠它切）：第一行是给人看的题头，**第�
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
+import subprocess
 import sys
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -55,10 +64,68 @@ from interview_source_gate import SourceContractError, validate_source_contract 
 
 SPECS = ROOT / "specs" / "interviews"
 STATE = ROOT / "data" / "interview_render_dispatched.json"
+OUTPUT = ROOT / "output" / "interviews"
+LEGACY_INPUT_BASELINE = ROOT / "data" / "interview_render_legacy_baseline.json"
 
-# 「投出去多久没 render.json 才算可疑」。一趟 render 约 9 分钟、排队和重试
-# 撑死几十分钟——3 小时还没有产物，几乎一定是 run 挂了或死在编辑闸上。
-STALE_HOURS = 3
+# 「投出去多久还没有当前输入的成片才自动释放」。普通采访约 9 分钟，今天这条
+# 28 分钟完整致辞也在一小时内完成；固定 3 小时会让一次红灯拖掉半天。60 分钟
+# 给长片留足预算，过窗后同 slug concurrency 仍会阻止两趟同时写同一产物格。
+STALE_MINUTES = 60
+
+
+def _sha256(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def _repo_bytes(path: Path) -> bytes | None:
+    """读工作区或 HEAD 里的文件，兼容 workflow 的 sparse checkout。"""
+    if path.is_file():
+        return path.read_bytes()
+    try:
+        rel = path.resolve().relative_to(ROOT.resolve()).as_posix()
+    except ValueError:
+        return None
+    proc = subprocess.run(
+        ["git", "-C", str(ROOT), "show", f"HEAD:{rel}"],
+        capture_output=True, check=False, timeout=30,
+    )
+    return proc.stdout if proc.returncode == 0 else None
+
+
+def _render_matches_current_spec(slug: str) -> bool:
+    """有 QC 的产物必须绑定当前 spec；无 QC 的历史产物保守兼容。"""
+    spec_path = SPECS / f"{slug}.json"
+    if not spec_path.is_file():
+        # 没有正式 spec 的旧产物不会进入 todo；这里保守视为已落地。
+        return True
+    qc_raw = _repo_bytes(OUTPUT / slug / "qc_attestation.json")
+    if qc_raw is None:
+        # 2026-08-15 之前的 58 条采访没有 QC。不能因为部署本规则就批量重渲。
+        return True
+    try:
+        qc = json.loads(qc_raw)
+    except (ValueError, UnicodeDecodeError):
+        return False
+    if not isinstance(qc, dict) or qc.get("status") != "pass":
+        return False
+    landed_sha = str(qc.get("spec_sha256") or "")
+    current_sha = _sha256(spec_path)
+    if landed_sha and landed_sha == current_sha:
+        return True
+    # 指纹规则上线前有极少数已发布产物在同一次旧工作流里“先写 QC、后补 spec
+    # 运营字段”，导致两份 SHA 天生不同。部署新规则不能把这些旧消息重新推一遍。
+    # 基线只豁免当时那一份明确 SHA；spec 再改一个字就立刻失效并重新渲染。
+    try:
+        baseline = json.loads(LEGACY_INPUT_BASELINE.read_text(encoding="utf-8"))
+        row = (baseline.get("slugs") or {}).get(slug) or {}
+    except (OSError, ValueError, AttributeError):
+        row = {}
+    return row.get("spec_sha256") == current_sha
+
+
+def _current_rendered_slugs(rendered: set[str] | None = None) -> set[str]:
+    rendered = _rendered_slugs() if rendered is None else rendered
+    return {slug for slug in rendered if _render_matches_current_spec(slug)}
 
 
 def _rendered_slugs() -> set[str]:
@@ -67,8 +134,6 @@ def _rendered_slugs() -> set[str]:
     用 `git ls-files` 从 index 读，**不受 sparse-checkout 影响**——workflow 的
     checkout 没拉 output/（1.36 GB），但 index 里全量文件都在。
     """
-    import subprocess
-
     try:
         out = subprocess.run(["git", "ls-files", "output/interviews/"],
                              capture_output=True, text=True, timeout=30).stdout
@@ -116,29 +181,44 @@ def missing_for_render(slug: str, spec: dict) -> list[str]:
 
 def _load_state() -> dict:
     if not STATE.is_file():
-        return {"slugs": [], "at": {}}
+        return {"slugs": [], "at": {}, "spec_sha256": {}}
     try:
         data = json.loads(STATE.read_text(encoding="utf-8"))
     except (OSError, ValueError):
-        return {"slugs": [], "at": {}}
+        return {"slugs": [], "at": {}, "spec_sha256": {}}
     data.setdefault("slugs", [])
     data.setdefault("at", {})
+    data.setdefault("spec_sha256", {})
+    if not isinstance(data["spec_sha256"], dict):
+        data["spec_sha256"] = {}
     return data
 
 
-def _fresh_dispatches(*, now: datetime, rendered: set[str]) -> set[str]:
-    """已经 dispatch 且还在合理运行窗口内的 slug；过期的自动释放重试。"""
+def _fresh_dispatches(*, now: datetime, rendered: set[str],
+                      changed_inputs: set[str] | None = None) -> set[str]:
+    """同一份输入已 dispatch 且仍在合理窗口内的 slug。"""
     state = _load_state()
+    changed_inputs = changed_inputs or set()
     fresh: set[str] = set()
     for slug in state.get("slugs", []):
         if slug in rendered:
+            continue
+        spec_path = SPECS / f"{slug}.json"
+        current_sha = _sha256(spec_path) if spec_path.is_file() else ""
+        dispatched_sha = str(state.get("spec_sha256", {}).get(slug) or "")
+        if dispatched_sha and current_sha and dispatched_sha != current_sha:
+            # 这条状态认领的是旧 spec，新输入不该被它再拦一个小时。
+            continue
+        if slug in changed_inputs and current_sha and not dispatched_sha:
+            # 迁移前的状态没有输入指纹；QC 已明确证明产物绑定的是旧 spec，
+            # 所以让证据胜过那个无指纹的“投过了”信号，立即恢复。
             continue
         raw = state.get("at", {}).get(slug, "")
         try:
             at = datetime.strptime(raw, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
         except (TypeError, ValueError):
             continue
-        if now - at < timedelta(hours=STALE_HOURS):
+        if now - at < timedelta(minutes=STALE_MINUTES):
             fresh.add(slug)
     return fresh
 
@@ -146,12 +226,15 @@ def _fresh_dispatches(*, now: datetime, rendered: set[str]) -> set[str]:
 def todo_slugs(*, now: datetime | None = None) -> tuple[list[str], list[tuple[str, list[str]]]]:
     """→ (该 dispatch 的, [(还差自动补齐/复核的 slug, 缺什么)])。
 
-    两份都不含「已 render」和「最近刚 dispatch」的。dispatch 超过 3 小时仍无
+    两份都不含「已 render」和「最近刚 dispatch」的。dispatch 超过 60 分钟仍无
     render.json 的自动释放回 ready；再次 mark 会刷新时刻，实现环境抖动自愈。
     """
     rendered = _rendered_slugs()
-    blocked = rendered | _fresh_dispatches(
-        now=now or datetime.now(timezone.utc), rendered=rendered)
+    current_rendered = _current_rendered_slugs(rendered)
+    changed_inputs = rendered - current_rendered
+    blocked = current_rendered | _fresh_dispatches(
+        now=now or datetime.now(timezone.utc), rendered=current_rendered,
+        changed_inputs=changed_inputs)
     ready: list[str] = []
     waiting: list[tuple[str, list[str]]] = []
     for p in sorted(SPECS.glob("*.json")):
@@ -177,13 +260,16 @@ def mark_one(slug: str, *, now: str = "") -> None:
     if slug not in state["slugs"]:
         state["slugs"] = sorted({*state["slugs"], slug})
     state["at"][slug] = now or datetime.now(timezone.utc).strftime("%FT%TZ")
+    spec_path = SPECS / f"{slug}.json"
+    if spec_path.is_file():
+        state["spec_sha256"][slug] = _sha256(spec_path)
     STATE.parent.mkdir(parents=True, exist_ok=True)
     STATE.write_text(json.dumps(state, ensure_ascii=False, indent=2),
                      encoding="utf-8")
 
 
 def stale_dispatches(*, now: datetime | None = None) -> list[tuple[str, str]]:
-    """投出去超过 `STALE_HOURS` 还没有 render.json 的 → [(slug, 投出时刻)]。
+    """投出去超过 `STALE_MINUTES` 还没有当前成片的 → [(slug, 投出时刻)]。
 
     「投了」只是信号，render.json 才是产物——run 可以死在编辑闸上、被
     concurrency 顶掉、或者干脆没跑起来，而这些在状态文件上长得和「正在渲」
@@ -191,7 +277,7 @@ def stale_dispatches(*, now: datetime | None = None) -> list[tuple[str, str]]:
     时刻，一律算 stale——它们至少投出去一整天了。
     """
     state = _load_state()
-    rendered = _rendered_slugs()
+    rendered = _current_rendered_slugs()
     now = now or datetime.now(timezone.utc)
     out: list[tuple[str, str]] = []
     for slug in state.get("slugs", []):
@@ -204,7 +290,7 @@ def stale_dispatches(*, now: datetime | None = None) -> list[tuple[str, str]]:
                     tzinfo=timezone.utc)
             except ValueError:
                 at = None
-            if at is not None and now - at < timedelta(hours=STALE_HOURS):
+            if at is not None and now - at < timedelta(minutes=STALE_MINUTES):
                 continue
         out.append((slug, at_raw or "时刻没记（老状态）"))
     return out
@@ -217,7 +303,7 @@ def main() -> int:
     ap.add_argument("--at", default="",
                     help="配合 --mark-one：写入这次 dispatch 的 UTC 时刻")
     ap.add_argument("--stale", action="store_true",
-                    help="列出投了超过 %d 小时还没有 render.json 的" % STALE_HOURS)
+                    help="列出投了超过 %d 分钟还没有当前成片的" % STALE_MINUTES)
     args = ap.parse_args()
 
     if args.mark_one:
@@ -227,7 +313,7 @@ def main() -> int:
 
     if args.stale:
         stale = stale_dispatches()
-        print(f"投出去超过 {STALE_HOURS} 小时还没有 render.json 的：{len(stale)} 条")
+        print(f"投出去超过 {STALE_MINUTES} 分钟还没有当前成片的：{len(stale)} 条")
         for slug, at in stale:
             print(f"  {slug}（投于 {at}）——去查那趟 interview-clip run 的日志，"
                   "或人工重新 dispatch")

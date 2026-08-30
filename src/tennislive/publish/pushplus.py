@@ -32,6 +32,10 @@ class PushPlusError(RuntimeError):
     pass
 
 
+class PushPlusUncertainError(PushPlusError):
+    """请求可能已被平台接收，但客户端没有拿到可落账的响应。"""
+
+
 class _AssetSourceParser(HTMLParser):
     def __init__(self) -> None:
         super().__init__()
@@ -116,10 +120,10 @@ def _response_json(response: requests.Response, action: str) -> dict:
     return payload
 
 
-# 发消息那个 POST 的重试预算。**只覆盖「没送到」**（网络异常、5xx），
-# `code != 200` 是服务端明确拒绝，不重发。
-PUSH_ATTEMPTS = 4
-PUSH_RETRY_SECONDS = 5.0
+# AccessKey 等可安全重放的辅助请求可以重试；真正发消息的 POST 没有平台幂等键，
+# 网络异常/5xx 都可能发生在服务端已经收下之后，必须只发一次并记为 uncertain。
+AUXILIARY_ATTEMPTS = 4
+AUXILIARY_RETRY_SECONDS = 5.0
 
 
 # PushPlus 官方返回码表（`/doc/guide/code.html`）里跟开放接口有关的那几个。
@@ -157,7 +161,7 @@ def _access_key(token: str, secret_key: str, timeout: int) -> str:
     """取图床的 AccessKey。**网络抖动要重试**——它排在发消息之前，
     一次失败就把整条推送带走，而这一步跟内容对不对没有任何关系。"""
     last = ""
-    for attempt in range(PUSH_ATTEMPTS):
+    for attempt in range(AUXILIARY_ATTEMPTS):
         try:
             response = requests.post(
                 ACCESS_KEY_URL,
@@ -168,11 +172,12 @@ def _access_key(token: str, secret_key: str, timeout: int) -> str:
         except requests.RequestException as exc:
             last = f"{type(exc).__name__}: {exc}"
             logger.warning("取 AccessKey 第 %d/%d 次失败（%s）",
-                           attempt + 1, PUSH_ATTEMPTS, last)
-            if attempt + 1 < PUSH_ATTEMPTS:
-                time.sleep(PUSH_RETRY_SECONDS)
+                           attempt + 1, AUXILIARY_ATTEMPTS, last)
+            if attempt + 1 < AUXILIARY_ATTEMPTS:
+                time.sleep(AUXILIARY_RETRY_SECONDS)
     else:
-        raise PushPlusError(f"取 PushPlus AccessKey {PUSH_ATTEMPTS} 次都失败：{last}")
+        raise PushPlusError(
+            f"取 PushPlus AccessKey {AUXILIARY_ATTEMPTS} 次都失败：{last}")
     payload = _response_json(response, "获取 PushPlus AccessKey")
     if payload.get("code") != 200 or not (payload.get("data") or {}).get(
         "accessKey"
@@ -531,56 +536,42 @@ def push(
         timeout=timeout,
     )
     wait_for_images(html_content)
-    # **这一步必须重试。** 走到这儿之前已经串着等了三轮：复制页最长 10 分钟、
-    # 成片 2 分钟、图片 5 分钟——而**这个 POST 才是唯一真正发消息的动作**，
-    # 原来一次网络抖动就把前面十几分钟全废掉。更荒唐的是 `_upload_image`
-    # （传图片，失败了还能退回 jsDelivr）**反而有**重试循环：
-    # **保护了不重要的那一步，没保护唯一重要的那一步。**
-    #
-    # ⚠️ **只重试「没送到」，不重试「送到了但被拒」。** 网络异常和 HTTP 5xx
-    # 说明服务端多半没收下，重发是安全的；而 `code != 200` 是 PushPlus 明确
-    # 拒绝（token 错、内容超限），重发只会把同一条错误消息发很多次——
-    # 微信那条消息发出去收不回来，宁可一次都不发。
-    data: dict = {}
-    last = ""
-    for attempt in range(PUSH_ATTEMPTS):
-        try:
-            resp = requests.post(
-                URL,
-                json={
-                    "token": token,
-                    "title": title[:100],
-                    "content": html_content,
-                    "template": "html",
-                    # 这条模块的产品语义就是“推送到微信”。不继承账号后台的
-                    # 默认渠道：默认值被改成 App/邮件时，接口照样 code=200，
-                    # 但用户微信里永远看不到。
-                    "channel": "wechat",
-                },
-                timeout=timeout,
-            )
-            if resp.status_code >= 500:
-                last = f"HTTP {resp.status_code}"
-            else:
-                try:
-                    data = resp.json()
-                except ValueError as e:
-                    raise PushPlusError(
-                        f"PushPlus 返回异常: HTTP {resp.status_code}") from e
-                if data.get("code") != 200:
-                    # 服务端明确拒绝：重发只会发出很多条一样的错误消息
-                    raise PushPlusError(f"PushPlus 推送失败: {data}")
-                break
-        except requests.RequestException as exc:
-            last = f"{type(exc).__name__}: {exc}"
-        logger.warning("PushPlus 第 %d/%d 次没发出去（%s），%.0fs 后重试",
-                       attempt + 1, PUSH_ATTEMPTS, last, PUSH_RETRY_SECONDS)
-        if attempt + 1 < PUSH_ATTEMPTS:
-            time.sleep(PUSH_RETRY_SECONDS)
-    else:
-        raise PushPlusError(
-            f"PushPlus {PUSH_ATTEMPTS} 次都没发出去（{last}）。"
-            "前面等复制页、成片、图片都成功了，卡在最后这一步——重跑即可。")
+    # 这是一个不可撤回、平台又没有幂等键的 POST。连接异常、读超时、5xx 并不
+    # 证明平台没收下：自动重发会把同一条消息送进微信多次。因此只尝试一次；
+    # 没拿到明确的 code=200 + 流水号就交给发布账本记 uncertain，禁止盲重发。
+    try:
+        resp = requests.post(
+            URL,
+            json={
+                "token": token,
+                "title": title[:100],
+                "content": html_content,
+                "template": "html",
+                # 这条模块的产品语义就是“推送到微信”。不继承账号后台的
+                # 默认渠道：默认值被改成 App/邮件时，接口照样 code=200，
+                # 但用户微信里永远看不到。
+                "channel": "wechat",
+            },
+            timeout=timeout,
+        )
+    except requests.RequestException as exc:
+        raise PushPlusUncertainError(
+            "PushPlus 消息 POST 发生连接异常，平台是否接收状态不明；"
+            "为避免微信重复消息，本次不会自动重发，请按流水号/手机实收人工核验"
+        ) from exc
+    if resp.status_code >= 500:
+        raise PushPlusUncertainError(
+            f"PushPlus 消息 POST 返回 HTTP {resp.status_code}，平台是否接收状态不明；"
+            "为避免微信重复消息，本次不会自动重发")
+    try:
+        data = resp.json()
+    except ValueError as exc:
+        raise PushPlusUncertainError(
+            f"PushPlus 消息 POST 返回无法解析的响应（HTTP {resp.status_code}），"
+            "平台是否接收状态不明；本次不会自动重发") from exc
+    if data.get("code") != 200:
+        # 服务端明确拒绝；同样不重发，但错误本身不是“可能已接收”。
+        raise PushPlusError(f"PushPlus 推送失败: {data}")
     # **流水号要记下来。** `code == 200` 只保证 **PushPlus 收下了**，不保证
     # 微信真的推到了手机上。2026-08-02 热亚那条就是这样：第 29 步 success、
     # 日志写着「已推送」，账号所有者问了两次「推微信了么」——而我手上一条
@@ -594,22 +585,19 @@ def push(
     # 记录。判据 `test_推送成功要把流水号打进日志` 断言的是 **stdout**，
     # 不是 caplog——退回 `logger.info` 时它捕获到的是空字符串。
     receipt = str(data.get("data") or "")
+    if not receipt:
+        raise PushPlusUncertainError(
+            "PushPlus 返回 code=200 但没有流水号，不能证明平台接收了哪一条；"
+            "状态不明且不会自动重发")
     print(f"[PushPlus] 收下了：流水号 {receipt or '(返回体里没有)'}"
           f"　投递通道 wechat　图片通道 {image_provider}"
           f"　msg={data.get('msg') or ''}")
-    # ⚠️ **这儿原来印着一个查询 URL，那是没验证过的。**
-    # `https://www.pushplus.plus/api/send/queryMessage?token=…&id=…`——照它
-    # 建了工具和工作流、跑到 runner 上（token 在 secret 里，只有那儿查得了），
-    # 实测 `code=903 用户令牌不正确`；再去翻官方 API 文档，**根本没有这个
-    # 查询接口**（文档只说「可以用流水号查最终发送结果」，端点、参数、鉴权
-    # 一概没写）。也就是说那句提示把人引向一条不存在的路，而且它印了很久。
-    #
-    # 又一次「没量过的推断写进注释，之后每个人都拿它当判据」（同 CLAUDE.md
-    # 里「edge-tts 同理」那条）。所以现在只说**这个模块真的知道的那一半**：
-    # 收下了不等于送达了，而送达与否我们这儿查不了。判据
-    # `test_不许再印没验证过的投递查询接口`。
+    # 官方 OpenAPI 有发送结果查询能力，但不是拿消息 token + 流水号就能查：还要
+    # 用户 secretKey、后台启用开放接口，并让请求 IP 通过安全白名单。当前发布
+    # 工作流只配置 PUSHPLUS_TOKEN，GitHub Actions 出口 IP 也不固定，所以本趟
+    # **没有投递证据**。不能因为查询条件暂时不具备，就反过来说官方没有接口；
+    # 更不能把平台接收流水号口头升级成手机送达。
     print("[PushPlus] ⚠️ 这只代表接口收下，**不代表微信推到了手机上**。"
-          "PushPlus 没有公开的投递查询接口（官方 API 文档里没有；"
-          "照着猜的那个端点实测 903 用户令牌不正确），"
-          "所以送达与否只能看微信本身。")
+          "官方投递查询还需要 secretKey、开放接口开关和安全 IP 白名单；"
+          "当前工作流不具备这些条件，所以手机送达状态仍是 unverified。")
     return receipt

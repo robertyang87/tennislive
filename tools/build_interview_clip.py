@@ -235,7 +235,12 @@ _SCORE_LOSE_WEIGHT = 300
 # rybakina-osaka-tor2026-qf 等）——不为字号重渲，挂进
 # `test_字号涨了不许撑破已有的行` 的豁免表。
 _FONT_SIZE = {"en": 46, "zh": 70}
-# 顶栏两行：主行给赛事和轮次（品牌显示体），次行给对阵和「赛后场上采访」。
+# 顶栏两行：主行永远是这条内容的**识别标题**，次行补赛事语境。
+#
+# 普通赛后采访沿用「赛事＋轮次 / 对阵＋采访类型」；没有比赛对阵的典礼不能把
+# 通用典礼名当内容标题、把真正的「谁在做什么」缩成小字。名人堂入选致辞因此
+# 反过来用「人物＋致辞类型 / 典礼名」。这条语义和字号必须绑在一起，否则 ASS
+# 里虽然有 HEADA，观众仍然只会看到一个小 kicker，误以为大标题漏了。
 _HEAD_SIZE = {"a": 54, "b": 38}
 _FONT_CACHE: dict[str, object] = {}
 
@@ -1010,6 +1015,13 @@ _BAND_TOP = VIDEO_TOP + VIDEO_H               # 960，字幕带的上沿
 # body copy keeps Noto for long-form legibility」——得意黑是**斜体加窄身**，
 # 当标题有劲，一整句字幕读下来就累。渲出来两版比过，这条边界是对的。
 _HEAD_A_TOP, _HEAD_B_TOP = 24, 92
+# 渲后顶栏像素闸。顶栏所在的 0–150px 是纯品牌深绿底，不受源片内容影响，
+# 因而可以稳定地数「接近白色」的文字像素。分界取两行上锚之间：HEADA 的墨迹
+# 实测落在 24–71，HEADB 落在 98–126；84px 留足抗锯齿和编码余量。
+_TOPBAR_BAND_SPLIT_Y = 84
+_TOPBAR_LIGHT_FLOOR = 100
+_TOPBAR_MIN_TEXT_PIXELS = 300
+_TOPBAR_PROBE_SECONDS = 0.50
 
 # **两行之间的距离是量出来的，不是拍的。** 原来差 118，烧帧量下来两行之间
 # 有 **89px 纯空白＝中文字高的 2.78 倍**——两行读起来像两块不相干的东西，
@@ -1162,9 +1174,10 @@ def header_runs(spec: dict) -> tuple[list[tuple[str, str, str]], ...]:
     账号所有者：「顶部文字说明当前是什么比赛的赛后采访，不然好多人不知道
     背景。」要答的是：哪一站哪一轮、谁跟谁打成什么样、这是什么。
 
-    - 第一行 `event` —— 赛事＋级别＋轮次。**它和 `push.event` 不是一回事**：
-      那个为了把推送标题压进 20 字位是**故意留空的**，这儿没有长度限制。
-    - 第二行 `winner 比分 loser · 赛后场上采访`。
+    - 普通赛后采访：第一行 `event`，第二行
+      `winner 比分 loser · 赛后场上采访`。
+    - 名人堂入选典礼：第一行 `subject.name · interview_kind`，第二行 `event`。
+      名人堂没有对手和比分，人物内容标题必须占 HEADA 大字号，不能缩在 HEADB。
 
     ⚠️ **比分要靠 `winner` 摆，不许靠 `matchup` 的词序猜。** `matchup` 是按
     签位写的，**不保证胜者在前**（`@wta` 的标题就这样，我照着推过一次，
@@ -1179,8 +1192,6 @@ def header_runs(spec: dict) -> tuple[list[tuple[str, str, str]], ...]:
             "写赛事＋级别＋轮次，例如「2026 华盛顿 WTA500 1/4 决赛」。\n"
             "⚠️ 别拿 `push.event` 顶：那个是为了把推送标题压进 20 字位故意留空的。")
     push = spec.get("push") or {}
-    if not (mu := (push.get("matchup") or "").strip()):
-        raise SystemExit(f"{slug} 缺 `push.matchup`——顶栏第二行没东西可写。")
     # **采访是什么性质，跟着源走，不写死——而且必须显式认领，不许有默认值。**
     # 这里曾经默认「赛后场上采访」，理由是「这条线的本分」——可谢尔顿×门西克
     # 那条恰恰是完整的赛后新闻发布会（232 行记者问答，见 spec 的 `_note`），
@@ -1198,6 +1209,35 @@ def header_runs(spec: dict) -> tuple[list[tuple[str, str, str]], ...]:
             "确认这场采访是什么性质：\n"
             "  赛后场上采访 / 赛后新闻发布会 / 赛后演播室专访 / "
             "赛后捧杯致辞 / 赛后亚军致辞 …")
+
+    # 名人堂入选不是一场比赛。主标题要回答「谁在做什么」，典礼名只作语境。
+    # 不能复用 push.summary：那是推送文案，编辑为了标题长度随时可能改；顶栏
+    # 的事实层直接绑定正式 subject 和 interview_kind，缺任何一项都 fail closed。
+    layout = spec.get("topbar_layout") or (
+        "subject_primary"
+        if spec.get("ceremony_subtype") == "hall_of_fame_induction"
+        else "event_primary")
+    if layout not in {"event_primary", "subject_primary"}:
+        raise SystemExit(
+            f"{slug} 的 `topbar_layout` 是 {layout!r}——只认 "
+            "`event_primary` / `subject_primary`，不能猜哪一行是大标题。")
+    if layout == "subject_primary":
+        subject = spec.get("subject") or {}
+        if not (name := str(subject.get("name") or "").strip()):
+            raise SystemExit(
+                f"{slug} 要用人物主标题却缺 `subject.name`——HEADA 主标题"
+                "不知道该写谁，不能退回只有典礼小标题的版式。")
+        return (
+            [("▍", "zh", _MARK_COLOUR, _HEAD_SIZE["a"]),
+             # 这条生产成片曾出现 HEADA 得意黑整行没形成像素、而 Noto 的
+             # HEADB 正常显示。名人堂主标题优先保证人物身份可见：显式走已验证
+             # 的 Noto 并加粗，不把发布资格押在显示体加载是否一致上。
+             (f"{name} · {kind}", "zh", r"\b1", _HEAD_SIZE["a"])],
+            [(ev, "zh", "", _HEAD_SIZE["b"])],
+        )
+
+    if not (mu := (push.get("matchup") or "").strip()):
+        raise SystemExit(f"{slug} 缺 `push.matchup`——顶栏第二行没东西可写。")
     sides = [s.strip() for s in re.split(r"\bvs\.?\b", mu) if s.strip()]
 
     def _build_line_b(scale: float = 1.0) -> list[tuple[str, str, str, int]]:
@@ -1276,12 +1316,95 @@ def header_ass(spec: dict) -> tuple[str, str]:
     不复位的话后面整行标题跟着变绿。渲出来一眼看见，而**它不报错**。
     `\\r` 是「回到本 Style 的默认值」，比逐项写回去稳（颜色、字重、间距
     以后加了哪一项都不用记得跟着复位）。
+
+    ⚠️ **每一段也显式写 `\\fs`。** Style 里的字号只是一层默认值；生产上已经
+    出现过 ASS 有 HEADA 事件、成片却只剩 HEADB 的情况。把 run 的实测字号写进
+    最终绘制命令，再由渲后像素闸核对，才能证明“大标题”不是纸面字段。
     """
+    if _HEAD_SIZE["a"] <= _HEAD_SIZE["b"]:
+        raise SystemExit(
+            f"顶栏没有主次层级：HEADA {_HEAD_SIZE['a']}px / "
+            f"HEADB {_HEAD_SIZE['b']}px；主标题必须严格大于小标题。")
+
+    def _run(text: str, kind: str, tags: str, size: int) -> str:
+        if found := re.search(r"\\fs(\d+)", tags):
+            if int(found.group(1)) != size:
+                raise SystemExit(
+                    f"顶栏 run 的字号账对不上：量宽按 {size}px，ASS 标签却是"
+                    f" {found.group(1)}px（{text!r}）。")
+            size_tag = ""
+        else:
+            size_tag = rf"\fs{size}"
+        return rf"{{\r\fn{_ASS_NAME[kind]}{size_tag}{tags}}}{text}"
+
     return tuple(
-        "".join(rf"{{\r\fn{_ASS_NAME[kind]}{tags}}}{text}"
-                for text, kind, tags, _ in runs)
+        "".join(_run(text, kind, tags, size)
+                for text, kind, tags, size in runs)
         for runs in header_runs(spec)
     )
+
+
+def _topbar_light_pixel_counts(rgb: bytes) -> tuple[int, int]:
+    """返回渲染帧 HEADA / HEADB 两个带区里的浅色文字像素数。
+
+    只认 RGB 三通道都高于阈值，故品牌绿竖条不能冒充主标题。传入内容必须正好是
+    1080×150 的 ``rgb24``；尺寸不对说明 ffmpeg 的 crop/format 没按合同执行，
+    同样 fail closed。
+    """
+    expected = CANVAS_W * VIDEO_TOP * 3
+    if len(rgb) != expected:
+        raise SystemExit(
+            f"顶栏像素探针只读到 {len(rgb)} bytes（应为 {expected}），"
+            "无法证明主标题和小标题已经画进成片。")
+
+    def _count(y0: int, y1: int) -> int:
+        start, end = y0 * CANVAS_W * 3, y1 * CANVAS_W * 3
+        return sum(
+            rgb[i] > _TOPBAR_LIGHT_FLOOR
+            and rgb[i + 1] > _TOPBAR_LIGHT_FLOOR
+            and rgb[i + 2] > _TOPBAR_LIGHT_FLOOR
+            for i in range(start, end, 3)
+        )
+
+    return (_count(0, _TOPBAR_BAND_SPLIT_Y),
+            _count(_TOPBAR_BAND_SPLIT_Y, VIDEO_TOP))
+
+
+def assert_rendered_topbar(film: Path, spec: dict) -> None:
+    """从刚编码的正文取一帧，证明顶栏主次两行都已真正形成像素。
+
+    ASS 文件里有 HEADA/HEADB 事件不等于 libass 真画了两行。费德勒名人堂成片
+    就出现过「ASS 两行俱全、最终像素只剩 HEADB」；若不查编码后的帧，所有文本
+    单测和工作流绿灯都会放行。这里检查 ``_body.mp4``，最终 concat 是 ``-c copy``，
+    不会再改变这些像素，因此正文通过就等价于最终成片正文通过。
+    """
+    if not wants_topbar(spec):
+        return
+    proc = subprocess.run(
+        ["ffmpeg", "-hide_banner", "-loglevel", "error",
+         "-ss", str(_TOPBAR_PROBE_SECONDS), "-i", str(film),
+         "-vf", f"crop={CANVAS_W}:{VIDEO_TOP}:0:0",
+         "-frames:v", "1", "-c:v", "rawvideo", "-pix_fmt", "rgb24",
+         # ffmpeg 7 的 rawvideo frame-thread 初始化在 CI 偶发失败；这只是单帧
+         # 像素探针，本来也没有并行编码收益，显式单线程让不同 runner 一致。
+         "-threads", "1", "-f", "rawvideo", "pipe:1"],
+        capture_output=True, check=False, timeout=60)
+    if proc.returncode:
+        raise SystemExit(
+            f"顶栏像素探针无法读取 {film.name}："
+            f"{proc.stderr.decode('utf-8', errors='replace')[-600:]}")
+    main_px, context_px = _topbar_light_pixel_counts(proc.stdout)
+    missing = []
+    if main_px < _TOPBAR_MIN_TEXT_PIXELS:
+        missing.append(f"HEADA 主标题仅 {main_px} 个浅色像素")
+    if context_px < _TOPBAR_MIN_TEXT_PIXELS:
+        missing.append(f"HEADB 小标题仅 {context_px} 个浅色像素")
+    if missing:
+        raise SystemExit(
+            f"{spec.get('slug', '?')} 顶栏渲染不合格：{'；'.join(missing)}"
+            f"（每行至少 {_TOPBAR_MIN_TEXT_PIXELS}）。\n"
+            "ASS 有 Dialogue 不算通过；主标题和赛事语境必须在编码后的成片里"
+            "同时可见，不能发布只有小标题的版本。")
 
 
 # 中文行尾吊在这些字上，就是把一个意思劈成两半——和英文那边
@@ -2361,6 +2484,20 @@ def _chromium() -> str:
         "chromium-*/*/chrome）")
 
 
+def _cover_framing(cov: dict) -> tuple[float, float]:
+    """返回封面照片的放大倍率与纵向焦点，非法构图一律停止。"""
+    try:
+        zoom = float(cov.get("zoom", 1.0))
+        focus_y = float(cov.get("focus_y", 0.5))
+    except (TypeError, ValueError) as exc:
+        raise SystemExit("cover.zoom / cover.focus_y 必须是数字。") from exc
+    if not 1.0 <= zoom <= 2.4:
+        raise SystemExit(f"cover.zoom={zoom:g} 超出 1.0–2.4。")
+    if not 0.0 <= focus_y <= 1.0:
+        raise SystemExit(f"cover.focus_y={focus_y:g} 超出 0–1。")
+    return zoom, focus_y
+
+
 def build_cover(spec: dict, frame: Path, dest: Path) -> Path:
     """封面：本场抽一帧 + 文案，**字体走仓库那套**。
 
@@ -2377,6 +2514,7 @@ def build_cover(spec: dict, frame: Path, dest: Path) -> Path:
     from playwright.sync_api import sync_playwright   # noqa: PLC0415
 
     cov = spec["cover"]
+    zoom, focus_y = _cover_framing(cov)
     b64 = base64.b64encode(frame.read_bytes()).decode()
     title = "<br>".join(cov["title"])
     column = spec.get("column", "赛后开麦")
@@ -2414,7 +2552,8 @@ body{{width:{CANVAS_W}px;height:{CANVAS_H}px;position:relative;overflow:hidden;
  font-size:38px;font-weight:400;letter-spacing:1px;color:#f4fbf7}}
 .shot{{position:absolute;top:{VIDEO_TOP}px;left:0;width:{CANVAS_W}px;height:{VIDEO_H}px;
  overflow:hidden}}
-.shot img{{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);height:100%}}
+.shot img{{position:absolute;left:50%;top:{focus_y * 100:g}%;
+ transform:translate(-50%,-50%);height:{zoom * 100:g}%}}
 .band{{position:absolute;left:0;bottom:0;width:{CANVAS_W}px;height:520px;
  background:linear-gradient(180deg,rgba(6,20,15,0) 0%,rgba(6,20,15,.46) 16%,
  rgba(6,20,15,.62) 46%,rgba(6,20,15,.66) 100%);
@@ -3584,6 +3723,11 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
          # 见那儿的注释。
          "-movflags", "+faststart", str(body)],
         check=True, timeout=1800)
+
+    # 必须查**刚编码完的像素**，不能只查上游 ASS 文本。最终 concat 走 -c copy，
+    # 所以正文在这里两行俱全，最终成片正文才有确定性；任一行没画出来就停在
+    # render，不能让“只有小标题”的版本继续做海报、拼接和发布。
+    assert_rendered_topbar(body, spec)
 
     # 片尾品牌页。账号所有者 2026-08-05：「每个视频最后都加一页并配上关注的
     # 口播」——这条线（赛后开麦）是最后接上的一条。

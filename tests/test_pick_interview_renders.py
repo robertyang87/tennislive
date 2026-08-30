@@ -81,6 +81,10 @@ def tool(monkeypatch, tmp_path):
     monkeypatch.setattr(p, "SPECS", specs)
     monkeypatch.setattr(p, "STATE",
                         tmp_path / "data" / "interview_render_dispatched.json")
+    monkeypatch.setattr(p, "OUTPUT", tmp_path / "output" / "interviews")
+    monkeypatch.setattr(
+        p, "LEGACY_INPUT_BASELINE",
+        tmp_path / "data" / "interview_render_legacy_baseline.json")
     monkeypatch.setattr(p, "_rendered_slugs", lambda: {"a-done"})
     return p
 
@@ -91,6 +95,91 @@ def test_todo排除已render和草稿(tool):
     assert ready == ["b-todo"]
 
 
+def test_旧产物没有QC继续按已render兼容(tool):
+    """上线输入指纹不能把 58 条 QC 诞生前的历史采访一起重渲。"""
+    assert not (tool.OUTPUT / "a-done" / "qc_attestation.json").exists()
+    ready, _ = tool.todo_slugs()
+    assert "a-done" not in ready
+
+
+def _write_qc(tool, slug: str, spec_sha256: str) -> None:
+    path = tool.OUTPUT / slug / "qc_attestation.json"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps({"status": "pass", "slug": slug,
+                                "spec_sha256": spec_sha256}), encoding="utf-8")
+
+
+def test_同slug的spec指纹变化后自动重新成为候选(tool):
+    spec = tool.SPECS / "a-done.json"
+    old_sha = tool._sha256(spec)
+    _write_qc(tool, "a-done", old_sha)
+    assert "a-done" not in tool.todo_slugs()[0], "QC 绑定当前 spec 时不该重渲"
+
+    body = json.loads(spec.read_text(encoding="utf-8"))
+    body["cover"]["frame_at"] = 180.0
+    spec.write_text(json.dumps(body, ensure_ascii=False), encoding="utf-8")
+
+    ready, _ = tool.todo_slugs()
+    assert "a-done" in ready, (
+        "render.json 还在但 QC 绑定的是旧 spec；绿产物不能把新输入永久挡住")
+
+
+def test_QC不是pass或指纹损坏都不能冒充当前成片(tool):
+    spec = tool.SPECS / "a-done.json"
+    path = tool.OUTPUT / "a-done" / "qc_attestation.json"
+    _write_qc(tool, "a-done", tool._sha256(spec))
+    qc = json.loads(path.read_text(encoding="utf-8"))
+    qc["status"] = "fail"
+    path.write_text(json.dumps(qc), encoding="utf-8")
+    assert "a-done" in tool.todo_slugs()[0]
+
+    path.write_text("[]", encoding="utf-8")
+    assert "a-done" in tool.todo_slugs()[0]
+
+
+def test_已发布旧片可按明确spec指纹迁移但下一次修改立即失效(tool):
+    spec = tool.SPECS / "a-done.json"
+    _write_qc(tool, "a-done", "0" * 64)
+    tool.LEGACY_INPUT_BASELINE.parent.mkdir(parents=True, exist_ok=True)
+    tool.LEGACY_INPUT_BASELINE.write_text(json.dumps({
+        "schema_version": 1,
+        "slugs": {"a-done": {"spec_sha256": tool._sha256(spec)}},
+    }), encoding="utf-8")
+    assert "a-done" not in tool.todo_slugs()[0], (
+        "规则上线不能把已发布但旧 QC 天生错位的内容重新推一遍")
+
+    body = json.loads(spec.read_text(encoding="utf-8"))
+    body["cover"]["frame_at"] = 222.0
+    spec.write_text(json.dumps(body), encoding="utf-8")
+    assert "a-done" in tool.todo_slugs()[0], (
+        "迁移基线只认那一份 SHA，未来 spec 修改必须自动重渲")
+
+def test_新spec已经dispatch则定时班次不重复投(tool):
+    spec = tool.SPECS / "a-done.json"
+    _write_qc(tool, "a-done", "0" * 64)  # 明确是旧输入的成片
+    tool.mark_one("a-done", now="2026-08-30T12:00:00Z")
+    state = json.loads(tool.STATE.read_text(encoding="utf-8"))
+    assert state["spec_sha256"]["a-done"] == tool._sha256(spec)
+
+    now = datetime(2026, 8, 30, 12, 20, tzinfo=timezone.utc)
+    ready, _ = tool.todo_slugs(now=now)
+    assert "a-done" not in ready, (
+        "当前 spec 已投出 20 分钟、旧 QC 尚未被替换时，不许每 10 分钟重复 dispatch")
+
+
+def test_旧dispatch指纹不能拦住后来修改的spec(tool):
+    spec = tool.SPECS / "a-done.json"
+    _write_qc(tool, "a-done", "0" * 64)
+    tool.mark_one("a-done", now="2026-08-30T12:00:00Z")
+    body = json.loads(spec.read_text(encoding="utf-8"))
+    body["cover"]["frame_at"] = 181.0
+    spec.write_text(json.dumps(body, ensure_ascii=False), encoding="utf-8")
+
+    ready, _ = tool.todo_slugs(
+        now=datetime(2026, 8, 30, 12, 5, tzinfo=timezone.utc))
+    assert "a-done" in ready, "状态认领的是旧 SHA，新 spec 必须立即释放"
+
+
 def test_mark记录dispatch防重(tool):
     """记录过 dispatch 的 slug 不能再 dispatch（否则每 30 分钟重渲历史）。"""
     tool.mark_one("b-todo")
@@ -99,6 +188,8 @@ def test_mark记录dispatch防重(tool):
     state = json.loads(tool.STATE.read_text(encoding="utf-8"))
     assert state["slugs"] == ["b-todo"]
     assert state["at"]["b-todo"], "投出时刻要记下来——stale 反查靠它"
+    assert state["spec_sha256"]["b-todo"] == tool._sha256(
+        tool.SPECS / "b-todo.json"), "dispatch 状态必须绑定实际输入"
 
 
 def test_终审没补齐的不许投而且要说缺什么(tool):
@@ -140,11 +231,11 @@ def test_判定和闸共用同一张豁免表(tool):
 
 
 def test_stale判产物不判信号(tool, monkeypatch):
-    """投出去超过 3 小时还没有 render.json 的要点出来；有 render.json 的、
+    """投出去超过 60 分钟还没有当前成片的要点出来；有当前成片的、
     刚投的都不算。老状态（bulk mark 时代）没记时刻的一律算 stale。"""
     now = datetime(2026, 8, 21, 12, 0, tzinfo=timezone.utc)
-    old = (now - timedelta(hours=4)).strftime("%FT%TZ")
-    fresh = (now - timedelta(minutes=20)).strftime("%FT%TZ")
+    old = (now - timedelta(minutes=61)).strftime("%FT%TZ")
+    fresh = (now - timedelta(minutes=59)).strftime("%FT%TZ")
     tool.mark_one("old-no-render", now=old)
     tool.mark_one("fresh-no-render", now=fresh)
     tool.mark_one("old-rendered", now=old)
@@ -163,15 +254,25 @@ def test_stale判产物不判信号(tool, monkeypatch):
 
 def test_stale自动释放回dispatch队列而新任务不重复(tool, monkeypatch):
     now = datetime(2026, 8, 21, 12, 0, tzinfo=timezone.utc)
-    old = (now - timedelta(hours=4)).strftime("%FT%TZ")
-    fresh = (now - timedelta(minutes=20)).strftime("%FT%TZ")
+    old = (now - timedelta(minutes=61)).strftime("%FT%TZ")
+    fresh = (now - timedelta(minutes=59)).strftime("%FT%TZ")
     tool.mark_one("b-todo", now=old)
     ready, _ = tool.todo_slugs(now=now)
-    assert "b-todo" in ready, "超过 3 小时无产物要自动重投，不能只报警等人"
+    assert "b-todo" in ready, "超过 60 分钟无当前成片要自动重投，不能只报警等人"
 
     tool.mark_one("b-todo", now=fresh)
     ready, _ = tool.todo_slugs(now=now)
     assert "b-todo" not in ready, "刚投出的还在跑，不许并发重复 dispatch"
+
+
+def test_无产物60分钟释放但59分钟仍保护长片(tool):
+    now = datetime(2026, 8, 30, 12, 0, tzinfo=timezone.utc)
+    tool.mark_one("b-todo", now=(now - timedelta(minutes=59)).strftime("%FT%TZ"))
+    assert "b-todo" not in tool.todo_slugs(now=now)[0]
+
+    tool.mark_one("b-todo", now=(now - timedelta(minutes=61)).strftime("%FT%TZ"))
+    assert "b-todo" in tool.todo_slugs(now=now)[0], (
+        "固定 3 小时恢复太慢；无产物满 60 分钟必须自动释放")
 
 
 def test_stdout第二行起是名单等终审走stderr(tool, monkeypatch, capsys):
@@ -184,3 +285,12 @@ def test_stdout第二行起是名单等终审走stderr(tool, monkeypatch, capsys
     assert lines[0].startswith("待 dispatch")
     assert lines[1:] == ["b-todo"], f"stdout 第二行起必须只有名单：{lines!r}"
     assert "等自动补齐 / 例外复核" in err and "d-bare" in err
+
+
+def test_workflow监听正式spec并写明60分钟恢复窗口():
+    body = Path(".github/workflows/interview-auto-render.yml").read_text(
+        encoding="utf-8")
+    assert '"specs/interviews/*.json"' in body, (
+        "同 slug 改 spec 后必须立即唤醒自动重渲，不能只等 schedule")
+    assert "超过 60 分钟还没有当前成片" in body
+    assert "超过 3 小时" not in body

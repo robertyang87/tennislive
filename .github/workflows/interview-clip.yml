@@ -561,6 +561,24 @@ jobs:
             --pipeline interview-clip --slug "$SLUG" \
             --summary "$GITHUB_STEP_SUMMARY"
 
+      # 直接审核最终 poster，而不是相信 cover._why 或缩略图墙。两者都曾写着
+      # 「费德勒本人中近景」，最终海报却一版是家属席、一版是人物很小的全景。
+      # render/cover 两档都会生成 poster，所以都必须过同一把本地像素闸；
+      # 不调用 DeepSeek/MiniMax，不需要外部 key。OpenCV 不可用、尺寸/解码失败、
+      # 人脸不够正/大/清楚或近景 zoom/focus 合同不合格，一律红灯。
+      - name: 验封面视觉（完全本地，生产硬闸）
+        if: >-
+          github.event.inputs.mode == 'render' ||
+          github.event.inputs.mode == 'cover'
+        run: |
+          SLUG="${{ github.event.inputs.slug }}"
+          SPEC="specs/interviews/$SLUG.json"
+          OUTDIR="output/interviews/$SLUG"
+          PYTHONPATH=src python tools/audit_interview_cover.py \
+            --spec "$SPEC" \
+            --poster "$OUTDIR/poster.jpg" \
+            --out "$OUTDIR/cover_visual_attestation.json"
+
       # **查产物，不查信号。** 步骤 success 不等于成片存在——探一下文件和时长。
       # 2026-08-15 起升级成完整 L2 成片落地闸（docs/qa-contract.md §三）：
       # 原来只 `test -s` + ffprobe 时长，**不查分辨率、不查音画等长、不查字幕**。
@@ -635,7 +653,42 @@ jobs:
           done
           [ "$UPLOADED" = 1 ] || {
             echo "::error::Release 附件传了 4 次都没上去"; exit 1; }
-          URL="https://github.com/$GITHUB_REPOSITORY/releases/download/$TAG/$SLUG.mp4"
+          # `--clobber` 只说明 API 调用成功，不能证明同 slug 的附件已经换成
+          # **本趟这份字节**。旧附件和新附件的公开 URL 完全一样；只探 200/206
+          # 会被旧 CDN 缓存骗绿，随后 render.json 却会记下新 film_sha256，形成
+          # 「账上是新片、Release 实际还是旧片」。读取当前 Release asset 的
+          # GitHub 原生 `digest`（它绑定 asset id 与远端完整字节）核对 SHA；没
+          # 对上就不写 render.json、更不会推微信。成片可到 500 MiB，不为了验
+          # hash 再整片下载一遍。
+          EXPECTED_SHA=$(python -c \
+            'import json,sys; print(json.load(open(sys.argv[1], encoding="utf-8"))["film_sha256"])' \
+            "$OUTDIR/qc_attestation.json")
+          RELEASE_META="$RUNNER_TEMP/interview-release-$SLUG.json"
+          VERIFIED=0
+          for i in 1 2 3 4; do
+            if gh api "repos/$GITHUB_REPOSITORY/releases/tags/$TAG" > "$RELEASE_META"; then
+              REMOTE_DIGEST=$(python -c \
+                'import json,sys; d=json.load(open(sys.argv[1], encoding="utf-8")); n=sys.argv[2]; print(next((a.get("digest") or "" for a in d.get("assets", []) if a.get("name") == n), ""))' \
+                "$RELEASE_META" "$SLUG.mp4")
+              if [ "$REMOTE_DIGEST" = "sha256:$EXPECTED_SHA" ]; then
+                VERIFIED=1
+                break
+              fi
+              echo "::warning::Release asset digest 仍不是本趟成片（第 $i/4 次）：$REMOTE_DIGEST"
+            else
+              echo "::warning::Release asset 元数据读取失败（第 $i/4 次）"
+            fi
+            if [ "$i" != 4 ]; then sleep $((5 * i)); fi
+          done
+          rm -f "$RELEASE_META"
+          [ "$VERIFIED" = 1 ] || {
+            echo "::error::同 slug Release 附件没有替换成本趟成片（期望 $EXPECTED_SHA）";
+            exit 1;
+          }
+          echo "Release asset digest 已绑定本趟成片：$EXPECTED_SHA"
+          # 同 slug 的路径会复用；新推送必须带成片指纹，避免微信/CDN 仍命中旧
+          # URL 缓存。查询参数实测仍会 302 到当前 release asset。
+          URL="https://github.com/$GITHUB_REPOSITORY/releases/download/$TAG/$SLUG.mp4?v=${EXPECTED_SHA:0:16}"
           # **传完自己探一次**：Release 的 CDN 有几秒传播延迟，探不到就别写链接
           # ——写了等于把一个 404 发到微信，而消息发出去收不回来。
           # ⚠️ 循环体最后一句不许写成 `[ A ] || [ B ] && break`：整条 AND-OR
@@ -650,22 +703,24 @@ jobs:
           [ "$CODE" = "206" ] || [ "$CODE" = "200" ] || {
             echo "::error::Release 附件 $URL 探不到（$CODE）"; exit 1; }
           echo "Release 附件可取：$URL"
-          python - "$OUTDIR/render.json" "$OUTDIR/qc_attestation.json" "$URL" "$SZ" <<'PY'
+          python - "$OUTDIR/render.json" "$OUTDIR/qc_attestation.json" "$URL" "$SZ" "$REMOTE_DIGEST" <<'PY'
           import hashlib
           import json
           import sys
           from pathlib import Path
-          path, qc_path, url, size = Path(sys.argv[1]), Path(sys.argv[2]), sys.argv[3], int(sys.argv[4])
+          path, qc_path, url, size, release_digest = (
+              Path(sys.argv[1]), Path(sys.argv[2]), sys.argv[3], int(sys.argv[4]), sys.argv[5])
           # 这条线原来不写 render.json，所以要允许它还不存在
           data = json.loads(path.read_text(encoding="utf-8")) if path.is_file() else {}
           qc = json.loads(qc_path.read_text(encoding="utf-8"))
           data["video_url"] = url
           data["video_bytes"] = size
           data["film_sha256"] = qc["film_sha256"]
+          data["release_asset_digest"] = release_digest
           data["qc_attestation_sha256"] = hashlib.sha256(qc_path.read_bytes()).hexdigest()
           path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n",
                           encoding="utf-8")
-          print("render.json 记下 video_url + QC 成片哈希")
+          print("render.json 记下 video_url + QC 成片哈希 + Release asset digest")
           PY
           rm -f "$CLIP"
 
@@ -846,19 +901,19 @@ jobs:
           fi
 
       - name: 推送前通过 L0/L2/幂等门禁
+        id: manual_gate
         if: github.event.inputs.push == 'true'
         run: |
           [ "${{ github.ref_name }}" = "main" ] || {
             echo "::error::微信推送只允许 main：Pages、QC 和发布账本必须基于主干不可变产物"; exit 1; }
-          GITHUB_OUTPUT=/tmp/interview-push-gate.out \
-            python tools/auto_push_interview_gate.py \
-              --slug "${{ github.event.inputs.slug }}"
-          grep -q '^found=true$' /tmp/interview-push-gate.out || {
-            echo "::error::这条采访没有通过自动发布门禁，不发送"; exit 1; }
+          python tools/auto_push_interview_gate.py \
+            --slug "${{ github.event.inputs.slug }}"
 
       - name: 预占发布账本（发送前）
         id: manual_reserve
-        if: github.event.inputs.push == 'true'
+        if: >-
+          github.event.inputs.push == 'true' &&
+          steps.manual_gate.outputs.found == 'true'
         run: |
           SLUG="${{ github.event.inputs.slug }}"
           D="output/interviews/$SLUG"
@@ -882,7 +937,9 @@ jobs:
       # GitHub Pages 只服务 main，复制页没进 main 就取不到，按钮会被摘掉
       # （`drop_dead_copy_button` 发送前探一次）。这条在别的线上踩过四次。
       - name: 推送到微信
-        if: github.event.inputs.push == 'true'
+        if: >-
+          github.event.inputs.push == 'true' &&
+          steps.manual_gate.outputs.found == 'true'
         env:
           GITHUB_TOKEN: ${{ github.token }}
           PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
@@ -911,7 +968,8 @@ jobs:
             --summary "${{ steps.push_meta.outputs.summary }}" \
             --date "$(TZ=Asia/Shanghai date +%F)" \
             --lead "${{ github.event.inputs.push_lead || steps.push_meta.outputs.lead }}" \
-            --copy "$COPY"
+            --copy "$COPY" \
+            --receipt-out "$RUNNER_TEMP/interview-pushplus-receipt.json"
 
       # **发完记一笔，而且必须进仓库**（照 auto-push-interview.yml 同名步骤
       # 抄的，注释也抄）。`pushed.json` 是「已经发过」的唯一判据——原来只有
@@ -922,20 +980,25 @@ jobs:
       # 的假标记，这条采访从此再也发不出去，而且不吭声。这一步没有自己的
       # 状态函数，隐式 `success()`——上一步没发出去它就不会跑，顺序天然成立。
       # 记不进去也不算这一趟失败（消息已经发了），但要红出来让人看见。
-      - name: 记下已经推送过
-        if: github.event.inputs.push == 'true'
+      - name: 记下平台已经接收
+        if: >-
+          github.event.inputs.push == 'true' &&
+          steps.manual_gate.outputs.found == 'true'
         run: |
           D="output/interviews/${{ github.event.inputs.slug }}"
           python tools/auto_push_interview_gate.py \
             --record "$D" \
             --slug "${{ github.event.inputs.slug }}" \
             --run "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
-            --now "$(date -u +%FT%TZ)"
+            --now "$(date -u +%FT%TZ)" \
+            --receipt-file "$RUNNER_TEMP/interview-pushplus-receipt.json"
           git config user.name "Claude"
           git config user.email "noreply@anthropic.com"
-          git add --sparse "data/interview_publish_ledger/${{ github.event.inputs.slug }}.json"
+          git add --sparse \
+            "data/interview_publish_ledger/${{ github.event.inputs.slug }}.json" \
+            "$D/pushed.json"
           python tools/check_staged_file_sizes.py
-          git commit -m "interview: ${{ github.event.inputs.slug }} 已推送"
+          git commit -m "interview: ${{ github.event.inputs.slug }} PushPlus 已接收"
           # 标记是新文件、别的 run 不会碰同名路径（concurrency 按 slug 分组），
           # rebase 在这儿是安全的；真撞上冲突就放弃这一次、下一轮重试。
           for attempt in 1 2 3; do
@@ -943,23 +1006,48 @@ jobs:
             git pull --rebase origin "${{ github.ref_name }}" || { git rebase --abort || true; }
             sleep $((attempt * 3 + RANDOM % 5))
           done
-          echo "::error::sent 状态没推上去——消息**已经发出去了**，别再手动补发；"
+          echo "::error::accepted 状态没推上去——PushPlus 已返回流水号，别再手动补发；"
           echo "::error::发送前的 sending 状态已在 main，会阻断自动重发；请核对本 run 后再修账本。"
           exit 1
 
-      - name: 已预占后失败则标记状态不明
+      - name: 已预占后失败则按回执恢复账本
         if: failure() && steps.manual_reserve.outcome == 'success'
         continue-on-error: true
         run: |
           SLUG="${{ github.event.inputs.slug }}"
           D="output/interviews/$SLUG"
-          python tools/auto_push_interview_gate.py --uncertain "$D" --slug "$SLUG" \
-            --run "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
+          RECEIPT_FILE="$RUNNER_TEMP/interview-pushplus-receipt.json"
+          COMMON=(
+            --slug "$SLUG"
+            --run "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
             --now "$(date -u +%FT%TZ)"
-          git add --sparse "data/interview_publish_ledger/$SLUG.json"
-          git commit -m "interview: $SLUG 推送状态待核实" || exit 0
-          git pull --rebase origin main || { git rebase --abort || true; }
-          git push origin main
+          )
+          if python - "$RECEIPT_FILE" <<'PY'
+          import json, pathlib, sys
+          path = pathlib.Path(sys.argv[1])
+          try:
+              ok = bool(json.loads(path.read_text(encoding="utf-8")).get("receipt"))
+          except (OSError, ValueError, AttributeError):
+              ok = False
+          raise SystemExit(0 if ok else 1)
+          PY
+          then
+            echo "[恢复] 找到 PushPlus 流水号：只补 accepted 账本，不降级为 uncertain"
+            python tools/auto_push_interview_gate.py --record "$D" "${COMMON[@]}" \
+              --receipt-file "$RECEIPT_FILE"
+            COMMIT_MSG="interview: $SLUG 补记 PushPlus 接收凭据"
+            git add --sparse "data/interview_publish_ledger/$SLUG.json" "$D/pushed.json"
+          else
+            echo "[恢复] 没有平台流水号：只记 uncertain，禁止自动重发"
+            python tools/auto_push_interview_gate.py --uncertain "$D" "${COMMON[@]}"
+            COMMIT_MSG="interview: $SLUG 推送状态待核实"
+            git add --sparse "data/interview_publish_ledger/$SLUG.json"
+          fi
+          if ! git diff --cached --quiet; then
+            git commit -m "$COMMIT_MSG"
+          fi
+          source tools/git_push_retry.sh
+          push_with_rebase_retry main 5
 
       # ⚠️ artifact 里**没有成片 mp4 是正常的**：2026-08-13 起成片一律传
       # Release 后 `rm` 掉（见「成片发到 Release」那一步），要看成片去

@@ -526,23 +526,16 @@ def test_换镜像之后校验和钉版本都还认得出jsDelivr(monkeypatch):
     assert jsdelivr_host() == DEFAULT_JSDELIVR_HOST
 
 
-def test_发消息那个POST要重试但被拒绝时不许重发(monkeypatch):
-    """**走到这一步之前已经串着等了三轮**：复制页最长 10 分钟、成片 2 分钟、
-    图片 5 分钟。而这个 POST 才是唯一真正发消息的动作——原来它**一次重试都
-    没有**，一次网络抖动就把前面十几分钟全废掉。
+def test_发消息POST遇连接异常或5xx状态不明且绝不自动重发(monkeypatch):
+    """PushPlus 没有幂等键；超时/断连/5xx 都可能发生在服务端接收之后。
 
-    更荒唐的是 `_upload_image`（传图片，失败了还能退回 jsDelivr）**反而有**
-    重试循环：**保护了不重要的那一步，没保护唯一重要的那一步。**
-
-    ⚠️ **但只重试「没送到」。** `code != 200` 是 PushPlus 明确拒绝（token 错、
-    内容超限），重发只会把同一条错误消息发很多次——而微信那条消息发出去
-    收不回来。判据把这两支分开验。
+    一次 POST 最多调用一次。拿不到明确的 code=200 + 流水号就交给发布账本记
+    uncertain，不能用自动重发去赌微信是否会收到重复消息。
     """
     import requests as _rq
 
     from tennislive.publish import pushplus
 
-    monkeypatch.setattr(pushplus.time, "sleep", lambda *_: None)
     monkeypatch.setattr(pushplus, "wait_for_images", lambda *_a, **_k: None)
     monkeypatch.setattr(pushplus, "prepare_image_delivery",
                         lambda html, **_k: (html, "none"))
@@ -556,31 +549,31 @@ def test_发消息那个POST要重试但被拒绝时不许重发(monkeypatch):
         def json(self):
             return {"code": self._code, "data": "流水号-123"}
 
-    # ① 前两次网络抖动，第三次成功 → 发出去了，而且只发了一次成功的
+    # ① 连接异常：一次后立刻报状态不明
     calls = []
 
-    def _flaky(*_a, **_k):
+    def _network_error(*_a, **_k):
         calls.append(1)
-        if len(calls) < 3:
-            raise _rq.ConnectionError("boom")
-        return _Resp()
+        raise _rq.ConnectionError("boom")
 
-    monkeypatch.setattr(pushplus.requests, "post", _flaky)
-    pushplus.push("标题", "<p>正文</p>")
-    assert len(calls) == 3, f"抖动了两次却没重试到成功：{len(calls)}"
+    monkeypatch.setattr(pushplus.requests, "post", _network_error)
+    with pytest.raises(pushplus.PushPlusUncertainError, match="状态不明.*不会自动重发"):
+        pushplus.push("标题", "<p>正文</p>")
+    assert len(calls) == 1
 
-    # ② 5xx 也算「没送到」，要重试
+    # ② 5xx 同样可能已经接收，不能重发
     calls.clear()
 
     def _five(*_a, **_k):
         calls.append(1)
-        return _Resp(status=503) if len(calls) < 2 else _Resp()
+        return _Resp(status=503)
 
     monkeypatch.setattr(pushplus.requests, "post", _five)
-    pushplus.push("标题", "<p>正文</p>")
-    assert len(calls) == 2, "5xx 没有重试"
+    with pytest.raises(pushplus.PushPlusUncertainError, match="HTTP 503.*状态不明"):
+        pushplus.push("标题", "<p>正文</p>")
+    assert len(calls) == 1
 
-    # ③ **服务端明确拒绝：只发一次，不许重发**
+    # ③ 服务端明确拒绝：也只发一次，但错误语义不是“可能已接收”
     calls.clear()
     monkeypatch.setattr(pushplus.requests, "post",
                         lambda *_a, **_k: (calls.append(1), _Resp(code=903))[1])
@@ -589,17 +582,14 @@ def test_发消息那个POST要重试但被拒绝时不许重发(monkeypatch):
     assert len(calls) == 1, (
         f"被拒绝还重发了 {len(calls)} 次——那是往微信里灌同一条错误消息")
 
-    # ④ 一直不通：报错要说清楚卡在哪一步，别让人以为是内容的问题
+    # ④ code=200 却没有流水号也不能写 accepted
     calls.clear()
-
-    def _dead(*_a, **_k):
-        calls.append(1)
-        raise _rq.ConnectionError("boom")
-
-    monkeypatch.setattr(pushplus.requests, "post", _dead)
-    with pytest.raises(pushplus.PushPlusError, match="都没发出去"):
+    monkeypatch.setattr(pushplus.requests, "post",
+                        lambda *_a, **_k: (calls.append(1), _Resp())[1])
+    _Resp.json = lambda self: {"code": 200, "data": ""}
+    with pytest.raises(pushplus.PushPlusUncertainError, match="没有流水号"):
         pushplus.push("标题", "<p>正文</p>")
-    assert len(calls) == pushplus.PUSH_ATTEMPTS
+    assert len(calls) == 1
 
 
 def test_推送成功要把流水号打进日志(monkeypatch, capsys):
@@ -633,3 +623,7 @@ def test_推送成功要把流水号打进日志(monkeypatch, capsys):
     assert "投递通道 wechat" in out, f"日志没写明实际投递通道：{out!r}"
     # 反面：不许只说「成功」就完事——那正是这次查不下去的原因
     assert "只代表接口收下" in out, f"没说清 200 意味着什么：{out!r}"
+    assert "secretKey" in out and "安全 IP 白名单" in out, (
+        f"没说清为什么当前不能核验手机送达：{out!r}")
+    assert "unverified" in out and "没有公开的投递查询接口" not in out, (
+        "不能把当前缺查询凭据误写成官方没有查询能力")

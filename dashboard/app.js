@@ -1,6 +1,6 @@
 const $ = (id) => document.getElementById(id);
 const TYPE_LABELS = { reel: "赛场之上", interview: "赛后开麦", explainer: "网球有故事" };
-const STAGE_LABELS = { discovered:"发现", orchestrated:"编排", spec:"Spec", rendered:"渲染", qc:"质检", pushed:"推送" };
+const STAGE_LABELS = { discovered:"发现", orchestrated:"编排", spec:"Spec", rendered:"渲染", qc:"质检", pushed:"平台接收" };
 let snapshot = null;
 let activeType = "all";
 
@@ -24,7 +24,7 @@ function renderHero(data) {
 function renderMetrics(data) {
   const items = [
     ["运行中", data.summary.active, "当前 Actions 任务"],
-    ["24h 已推送", data.summary.published_24h, "PushPlus sent"],
+    ["24h 平台接收", data.summary.accepted_24h, "不等于手机送达"],
     ["待处理", data.summary.pending, "dispatch / render 队列"],
     ["10 分钟达标率", `${data.summary.sla_rate}%`, `${data.summary.sla_met}/${data.summary.sla_total} 条成片`]
   ];
@@ -47,7 +47,7 @@ function renderContent(data) {
   const order = ["discovered","orchestrated","spec","rendered","qc","pushed"];
   $("content-list").innerHTML = rows.map(x => {
     const state = x.failed_stage ? "failure" : x.pushed ? "sent" : x.rendered ? "rendered" : "running";
-    const label = x.failed_stage ? `${STAGE_LABELS[x.failed_stage]||x.failed_stage}失败` : x.pushed ? "已推送" : x.rendered ? "待推送" : "处理中";
+    const label = x.failed_stage ? `${STAGE_LABELS[x.failed_stage]||x.failed_stage}失败` : x.pushed ? (x.delivery_status === "confirmed" || x.delivery_status === "delivered" ? "送达已确认" : "平台已接收") : x.rendered ? "待推送" : "处理中";
     const bars = order.map(k => `<span class="${x.failed_stage===k?'fail':x[k]?'done':''}" title="${STAGE_LABELS[k]}"></span>`).join("");
     return `<a class="content-card" href="${escapeHtml(x.url||'#')}" ${x.url?'target="_blank" rel="noreferrer"':''}><div><div class="content-title">${escapeHtml(x.slug)}</div><div class="content-meta">${TYPE_LABELS[x.type]||x.type} · ${relative(x.updated_at)}</div><div class="pipeline-mini">${bars}</div></div><span class="badge ${state}">${label}</span></a>`;
   }).join("");

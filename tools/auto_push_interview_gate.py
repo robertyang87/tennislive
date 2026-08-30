@@ -20,7 +20,8 @@
    spec、match_id、最终成片 hash/bytes 完全一致
 3. spec 写了 `"push": {"auto": true}`；新草稿在来源和赛果都通过后默认写入，
    老 spec 仍逐条显式认领
-4. 这条**没推过**：独立发布账本的同一成片键没有 sending/sent/uncertain；
+4. 这条**没被平台接收过**：独立发布账本的同一成片键没有
+   sending/accepted/delivered/uncertain（有流水号的旧 sent 兼容视为 accepted）；
    旧 `<outdir>/pushed.json` 仍兼容拦截。
    查产物，不查信号——「工作流跑过一次」证明不了消息发出去了。
    ⚠️ 查的是 **`git ls-files`，不是 `test -f`**：这个脚本排在
@@ -81,6 +82,12 @@ _RENDER_JSON = re.compile(r"^output/interviews/([^/]+)/render\.json$")
 
 SPEC_DIR = Path("specs/interviews")
 LEDGER_DIR = Path("data/interview_publish_ledger")
+PROVIDER = "pushplus"
+REQUESTED_CHANNEL = "wechat"
+
+
+class AlreadyAccepted(Skip):
+    """当前成片已经被 PushPlus 接收；点名重放可安全地成功 no-op。"""
 
 
 def _tracked_bytes(repo: Path, path: Path) -> bytes:
@@ -113,14 +120,22 @@ def _ledger_path(repo: Path, slug: str) -> Path:
     return repo / LEDGER_DIR / f"{slug}.json"
 
 
-def _load_ledger(repo: Path, slug: str) -> dict:
+def _load_ledger(repo: Path, slug: str, *, allow_untracked: bool = False) -> dict:
     path = _ledger_path(repo, slug)
     # 自动推送工作流在 gate 阶段是稀疏检出。ledger 即使已经在 Git index/HEAD
     # 里，也可能根本没有落到工作区；只用 is_file() 会把已发送记录当成不存在，
     # 同一条采访因此再次进入发送。和 pushed.json / poster.jpg 一样，先问 Git，
     # 再用 _tracked_bytes() 从 HEAD 读取未检出的内容。
-    if not tracked(repo, path):
-        return {"slug": slug, "channel": "pushplus", "attempts": []}
+    # 同一 run 里 reserve → record/uncertain 之间，前一步刚写的文件可能尚未提交；
+    # 状态转换必须读它。发布门禁本身仍只认 Git 中的凭据，避免半截工作区假账。
+    if not (allow_untracked and path.is_file()) and not tracked(repo, path):
+        return {
+            "slug": slug,
+            "channel": PROVIDER,
+            "provider": PROVIDER,
+            "requested_channel": REQUESTED_CHANNEL,
+            "attempts": [],
+        }
     try:
         data = json.loads(_tracked_bytes(repo, path))
     except (OSError, ValueError, UnicodeDecodeError) as exc:
@@ -147,6 +162,39 @@ def validate_qc(repo: Path, slug: str, outdir: Path) -> str:
     if qc.get("spec_sha256") != _sha256_bytes(spec_bytes):
         raise Skip(f"{slug}：spec 在质检后发生过变化，必须重新渲染并质检")
     spec = json.loads(spec_bytes)
+    poster_path = outdir / "poster.jpg"
+    cover_proof_path = outdir / "cover_visual_attestation.json"
+    if not tracked(repo, poster_path) or not tracked(repo, cover_proof_path):
+        raise Skip(
+            f"{slug}：缺受跟踪的 poster.jpg 或 cover_visual_attestation.json；"
+            "先跑 interview-clip mode=cover 生成并通过本地像素闸，再重新 render/QC")
+    poster_bytes = _tracked_bytes(repo, poster_path)
+    cover_proof_bytes = _tracked_bytes(repo, cover_proof_path)
+    if qc.get("poster_sha256") != _sha256_bytes(poster_bytes):
+        raise Skip(f"{slug}：QC 绑定的不是当前 poster.jpg")
+    if qc.get("cover_visual_attestation_sha256") != _sha256_bytes(cover_proof_bytes):
+        raise Skip(f"{slug}：QC 绑定的不是当前封面视觉凭证")
+    try:
+        cover_proof = json.loads(cover_proof_bytes)
+    except (ValueError, UnicodeDecodeError) as exc:
+        raise Skip(f"{slug}：封面视觉凭证不是有效 JSON") from exc
+    if cover_proof.get("status") != "pass":
+        raise Skip(f"{slug}：封面视觉凭证不是 pass")
+    if cover_proof.get("spec_sha256") != _sha256_bytes(spec_bytes):
+        raise Skip(f"{slug}：封面视觉凭证绑定的不是当前 spec")
+    if cover_proof.get("poster_sha256") != _sha256_bytes(poster_bytes):
+        raise Skip(f"{slug}：封面视觉凭证绑定的不是当前 poster.jpg")
+    from audit_interview_cover import (  # noqa: PLC0415
+        LOCAL_AUDITOR,
+        expected_subject,
+        validate_result,
+    )
+    cover_subject = expected_subject(spec)
+    if (not cover_subject
+            or cover_proof.get("auditor") != LOCAL_AUDITOR
+            or cover_proof.get("expected_subject") != cover_subject
+            or validate_result(cover_proof.get("result"), spec)):
+        raise Skip(f"{slug}：封面人物/清晰度/主体性机械复核未通过")
     from interview_source_gate import (  # noqa: PLC0415
         SourceContractError,
         content_identity_id,
@@ -184,6 +232,8 @@ def validate_qc(repo: Path, slug: str, outdir: Path) -> str:
     film_hash = str(qc.get("film_sha256") or "")
     if not film_hash or render.get("film_sha256") != film_hash:
         raise Skip(f"{slug}：render.json 与 QC 不是同一份成片")
+    if render.get("release_asset_digest") != f"sha256:{film_hash}":
+        raise Skip(f"{slug}：render.json 没有证明 Release asset 是当前 QC 成片")
     if int(render.get("video_bytes") or 0) != int(qc.get("film_bytes") or 0):
         raise Skip(f"{slug}：Release 文件大小与 QC 成片不一致")
     if not render.get("video_url"):
@@ -195,18 +245,59 @@ def _publication_key(slug: str, film_hash: str) -> str:
     return f"pushplus:{slug}:{film_hash}"
 
 
+def _status_fields(status: str) -> dict[str, str]:
+    """把平台受理和手机送达拆成两条状态，不再用 ``sent`` 混称。"""
+    if status == "sending":
+        platform_status, delivery_status = "pending", "not_attempted"
+    elif status == "accepted":
+        platform_status, delivery_status = "accepted", "unverified"
+    elif status == "delivered":
+        platform_status, delivery_status = "accepted", "delivered"
+    elif status == "uncertain":
+        platform_status, delivery_status = "unknown", "unknown"
+    else:
+        raise ValueError(f"不支持的发布状态：{status}")
+    return {
+        "status": status,
+        "provider": PROVIDER,
+        "requested_channel": REQUESTED_CHANNEL,
+        "platform_status": platform_status,
+        "delivery_status": delivery_status,
+    }
+
+
+def _accepted_attempt(row: dict) -> bool:
+    """识别新状态与有流水号的旧 ``sent`` 记录。"""
+    status = str(row.get("status") or "")
+    if status in {"accepted", "delivered"}:
+        return status == "delivered" or bool(row.get("pushplus_receipt"))
+    return status == "sent" and bool(row.get("pushplus_receipt"))
+
+
 def _write_ledger(repo: Path, slug: str, outdir: Path, *, status: str,
                   run_url: str, now: str, receipt: str = "") -> Path:
     film_hash = validate_qc(repo, slug, outdir)
     key = _publication_key(slug, film_hash)
-    ledger = _load_ledger(repo, slug)
+    ledger = _load_ledger(repo, slug, allow_untracked=True)
+    ledger.update({
+        "slug": slug,
+        "channel": PROVIDER,
+        "provider": PROVIDER,
+        "requested_channel": REQUESTED_CHANNEL,
+    })
     attempts = ledger["attempts"]
     current = next((row for row in attempts if row.get("key") == key), None)
     if current is None:
         current = {"key": key, "film_sha256": film_hash}
         attempts.append(current)
-    current.update({"status": status, "at": now, "run": run_url})
-    if status == "sent" and receipt:
+    # 已有平台流水号就不能再被失败收尾降回 uncertain。失败恢复应该只补账，
+    # 不能把已经拿到的确定证据抹掉。
+    if status == "uncertain" and _accepted_attempt(current):
+        print(f"[自动推送] 当前成片已有 PushPlus 接收凭据，不降级为 uncertain：{key}")
+        return _ledger_path(repo, slug)
+    current.update(_status_fields(status))
+    current.update({"at": now, "run": run_url})
+    if status in {"accepted", "delivered"} and receipt:
         current["pushplus_receipt"] = receipt
     path = _ledger_path(repo, slug)
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -224,24 +315,26 @@ def reserve(repo: Path, slug: str, outdir: Path, run_url: str, now: str) -> Path
 
 def record(repo: Path, slug: str, outdir: Path, run_url: str, now: str,
            receipt: str = "") -> Path:
-    """PushPlus 正常返回后写 sent 账本与同指纹 ``pushed.json``。"""
+    """PushPlus 正常返回后写 accepted；手机是否送达仍保持未核验。"""
+    if not receipt:
+        raise ValueError("PushPlus accepted 必须带非空流水号，不能凭步骤绿灯补账")
     ledger_path = _write_ledger(
-        repo, slug, outdir, status="sent", run_url=run_url, now=now,
+        repo, slug, outdir, status="accepted", run_url=run_url, now=now,
         receipt=receipt,
     )
     film_hash = validate_qc(repo, slug, outdir)
     marker = outdir / MARKER
     marker.write_text(json.dumps({
         "slug": slug,
-        "status": "sent",
-        "channel": "pushplus",
+        **_status_fields("accepted"),
+        "channel": PROVIDER,
         "publication_key": _publication_key(slug, film_hash),
         "film_sha256": film_hash,
         "pushplus_receipt": receipt,
         "at": now,
         "run": run_url,
     }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(f"[自动推送] L4 已推送凭据：{marker}（{film_hash[:12]}…）")
+    print(f"[自动推送] L4 平台接收凭据：{marker}（{film_hash[:12]}…；手机送达未核验）")
     return ledger_path
 
 
@@ -313,14 +406,21 @@ def wants_auto_push(repo: Path, slug: str, outdir: Path) -> None:
     film_hash = validate_qc(repo, slug, outdir)
 
     # 新的权威状态在 data/ 下，渲染回放只会替换 output/interviews/<slug>，
-    # 再也擦不掉发布历史。同一成片一旦 sending/sent/uncertain 都不自动重发：
+    # 再也擦不掉发布历史。同一成片一旦 sending/accepted/uncertain 都不自动重发：
     # sending/uncertain 需要先查原 run/平台回执，不能靠重试猜。
     ledger = _load_ledger(repo, slug)
     key = _publication_key(slug, film_hash)
     previous = next((row for row in ledger.get("attempts", [])
                      if row.get("key") == key
-                     and row.get("status") in {"sending", "sent", "uncertain"}), None)
+                     and row.get("status") in {
+                         "sending", "accepted", "delivered", "sent", "uncertain"
+                     }), None)
     if previous:
+        if _accepted_attempt(previous):
+            raise AlreadyAccepted(
+                f"{slug}：当前成片已由 PushPlus 接收（流水号 "
+                f"{previous.get('pushplus_receipt', '历史记录未保存')}；"
+                "微信手机送达仍需另行确认），本次安全跳过")
         raise Skip(
             f"{slug}：发布账本已有 {previous.get('status')}（{previous.get('at', '时间未记')}，"
             f"{previous.get('run', '运行地址未记')}），不自动重复发送")
@@ -336,8 +436,13 @@ def wants_auto_push(repo: Path, slug: str, outdir: Path) -> None:
         except Skip:
             raise Skip(f"{slug}：旧 pushed.json 读不了，发布状态不明，不自动重发")
         marker_hash = str(stamp.get("film_sha256") or "")
+        if marker_hash == film_hash and _accepted_attempt(stamp):
+            raise AlreadyAccepted(
+                f"{slug}：当前成片已有 PushPlus 接收凭据（{when}；"
+                "微信手机送达仍需另行确认），本次安全跳过")
         if not marker_hash or marker_hash == film_hash:
-            raise Skip(f"{slug}：已经推过了（{when}），不重复发")
+            raise Skip(f"{slug}：旧标记显示已经推过了，但当前成片没有可核验的"
+                       f"平台接收凭据（{when}），状态不明，不自动重发")
         print(f"[重渲发布] {slug}：旧 pushed.json 绑定 {marker_hash[:12]}…，"
               f"当前成片是 {film_hash[:12]}…；保留旧账，允许新成片进入发布。")
 
@@ -416,6 +521,14 @@ def _emit(slug: str, outdir: Path) -> None:
             fh.write("\n".join(lines) + "\n")
 
 
+def _emit_already_accepted(slug: str) -> None:
+    """让工作流区分安全 no-op 与门禁失败，并跳过后续发送步骤。"""
+    out = os.environ.get("GITHUB_OUTPUT")
+    if out:
+        with open(out, "a", encoding="utf-8") as fh:
+            fh.write(f"slug={slug}\nfound=false\nalready_accepted=true\n")
+
+
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--changed", nargs="*", default=[],
@@ -449,19 +562,20 @@ def main(argv: list[str] | None = None) -> int:
         elif args.uncertain:
             uncertain(repo, slug, outdir, args.run, args.now)
         else:
-            receipt = ""
-            if args.receipt_file:
-                try:
-                    receipt_data = json.loads(
-                        Path(args.receipt_file).read_text(encoding="utf-8")
-                    )
-                    receipt = str(receipt_data.get("receipt") or "")
-                except (OSError, ValueError, AttributeError) as exc:
-                    raise SystemExit(
-                        f"PushPlus 成功后缺少有效流水号凭据：{args.receipt_file}"
-                    ) from exc
-                if not receipt:
-                    raise SystemExit("PushPlus 返回成功但流水号为空，不写 sent 凭据")
+            if not args.receipt_file:
+                raise SystemExit("--record 必须同时提供 --receipt-file；没有平台流水号"
+                                 "只能写 uncertain，不能冒充 accepted")
+            try:
+                receipt_data = json.loads(
+                    Path(args.receipt_file).read_text(encoding="utf-8")
+                )
+                receipt = str(receipt_data.get("receipt") or "")
+            except (OSError, ValueError, AttributeError) as exc:
+                raise SystemExit(
+                    f"PushPlus 成功后缺少有效流水号凭据：{args.receipt_file}"
+                ) from exc
+            if not receipt:
+                raise SystemExit("PushPlus 返回成功但流水号为空，不写 accepted 凭据")
             record(repo, slug, outdir, args.run, args.now, receipt)
         return 0
 
@@ -471,11 +585,21 @@ def main(argv: list[str] | None = None) -> int:
             # 两个入口一起给，没有一种读法是对的——宁可当场红。
             print("::error::--slug 和 --changed 不能同时给")
             raise SystemExit(2)
-        # 复用 `pick` 那条路：把 slug 折成它的 render.json 路径，
-        # `candidate` 解回 slug、`wants_auto_push` 过发布门禁——**不另写一条
-        # 只属于 dispatch 的判定**，写两处必分叉，而分叉的样子是
-        # 「叫醒的那条路少一道闸」。
-        changed = [f"output/interviews/{args.slug}/render.json"]
+        # 点名 dispatch 是一个明确的发布请求：除了“当前成片已经 accepted”之外，
+        # 任何门禁失败都必须非零，不能再绿着什么也没发。
+        path = f"output/interviews/{args.slug}/render.json"
+        try:
+            slug, outdir = candidate(path, repo)
+            wants_auto_push(repo, slug, outdir)
+        except AlreadyAccepted as why:
+            print(f"[安全跳过] {why}")
+            _emit_already_accepted(args.slug)
+            return 0
+        except Skip as why:
+            print(f"::error::点名发布被门禁阻断：{why}")
+            return 1
+        _emit(slug, outdir)
+        return 0
 
     found = pick(changed, repo)
     if found:

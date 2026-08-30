@@ -33,6 +33,7 @@ import auto_push_gate as reel_gate  # noqa: E402
 import auto_push_interview_gate as gate  # noqa: E402
 
 WORKFLOW = Path(".github/workflows/auto-push-interview.yml")
+MANUAL_WORKFLOW = Path(".github/workflows/interview-clip.yml")
 
 
 def _yaml_only(text: str) -> str:
@@ -62,6 +63,12 @@ def _write_interview(repo: Path, slug: str, push: dict | None) -> Path:
         "requested_content_type": "on_court",
         "interview_kind": "赛后场上采访",
         "zh": ["正文中文"],
+        "cover": {
+            "frame_at": 20.0,
+            "shot_type": "close_up",
+            "zoom": 1.8,
+            "focus_y": 0.55,
+        },
         "lead_in": {
             "url": f"https://example.test/{slug}/highlight", "start": 10.0, "end": 14.0,
             "subs": [{"a": 10.0, "b": 12.0, "en": "Match point", "zh": "赛点"}],
@@ -89,13 +96,42 @@ def _write_interview(repo: Path, slug: str, push: dict | None) -> Path:
 
     outdir = repo / f"output/interviews/{slug}"
     outdir.mkdir(parents=True, exist_ok=True)
+    poster_path = outdir / "poster.jpg"
+    poster_path.write_bytes(b"\xff\xd8\xff not-a-real-jpeg")
+    spec_sha = hashlib.sha256(spec_path.read_bytes()).hexdigest()
+    poster_sha = hashlib.sha256(poster_path.read_bytes()).hexdigest()
+    cover_proof_path = outdir / "cover_visual_attestation.json"
+    cover_proof_path.write_text(json.dumps({
+        "status": "pass", "expected_subject": "赢家",
+        "auditor": "opencv-haar-v1",
+        "spec_sha256": spec_sha, "poster_sha256": poster_sha,
+        "result": {
+            "poster": {
+                "decodable": True, "format": "JPEG", "width": 1080,
+                "height": 1440, "photo_region": [0, 150, 1080, 810],
+            },
+            "contract": {
+                "frame_at": 20.0, "shot_type": "close_up", "zoom": 1.8,
+                "focus_y": 0.55,
+            },
+            "face": {
+                "detector": "frontal-default", "box": [380, 230, 180, 180],
+                "detected_faces": 1, "eyes": 2, "face_height_ratio": 0.22,
+                "face_area_ratio": 0.037, "center_x_ratio": 0.435,
+                "center_y_ratio": 0.21, "sharpness": 120.0, "contrast": 96.0,
+            },
+        },
+    }, ensure_ascii=False), encoding="utf-8")
     film_hash = hashlib.sha256(f"{slug}-film".encode()).hexdigest()
     film_bytes = 12345
     qc_path = outdir / "qc_attestation.json"
     qc_path.write_text(json.dumps({
         "status": "pass", "slug": slug, "match_id": spec["match"]["id"],
         "source_attestation_sha256": spec["source_verification"]["attestation_sha256"],
-        "spec_sha256": hashlib.sha256(spec_path.read_bytes()).hexdigest(),
+        "spec_sha256": spec_sha,
+        "poster_sha256": poster_sha,
+        "cover_visual_attestation_sha256": hashlib.sha256(
+            cover_proof_path.read_bytes()).hexdigest(),
         "lead_ass_sha256": hashlib.sha256(f"{slug}-lead-ass".encode()).hexdigest(),
         "film_sha256": film_hash, "film_bytes": film_bytes,
         "checks": {"bilingual_body_cues": 1, "bilingual_lead_cues": 1},
@@ -104,9 +140,9 @@ def _write_interview(repo: Path, slug: str, push: dict | None) -> Path:
         "video_url": f"https://example.test/{slug}.mp4",
         "video_bytes": film_bytes,
         "film_sha256": film_hash,
+        "release_asset_digest": f"sha256:{film_hash}",
         "qc_attestation_sha256": hashlib.sha256(qc_path.read_bytes()).hexdigest(),
     }), encoding="utf-8")
-    (outdir / "poster.jpg").write_bytes(b"\xff\xd8\xff not-a-real-jpeg")
     return outdir
 
 
@@ -394,6 +430,19 @@ def test_render必须绑定当前QC凭证(repo: Path, capsys):
     assert "当前 QC 凭证" in capsys.readouterr().out
 
 
+def test_render必须持久绑定Release_asset_digest(repo: Path, capsys):
+    """公开 URL 能打开不等于同 slug 附件已经换成本趟成片。"""
+    _spec(repo, {"auto": True})
+    render_path = repo / "output/interviews/demo/render.json"
+    render = json.loads(render_path.read_text(encoding="utf-8"))
+    render["release_asset_digest"] = f"sha256:{'0' * 64}"
+    render_path.write_text(json.dumps(render), encoding="utf-8")
+
+    assert gate.pick(CHANGED, repo) is None
+    out = capsys.readouterr().out
+    assert "Release asset" in out and "当前 QC 成片" in out
+
+
 def test_QC必须逐cue证明冷开场解说双语完整(repo: Path, capsys):
     _spec(repo, {"auto": True})
     outdir = repo / "output/interviews/demo"
@@ -479,7 +528,7 @@ def test_工作流的diff要滤掉删除项():
     """第一层在 workflow：`--diff-filter=AM`。没有它，删除的 render.json
     一样进 changed 列表——闸挡得住，但一趟 run 会红着结束，真该发的那条
     要等人来查。"""
-    body = _yaml_only(WORKFLOW.read_text(encoding="utf-8"))
+    body = _yaml_only(WORKFLOW.read_text(encoding="utf-8")).replace("\\\n", " ")
     line = next(l for l in body.splitlines()
                 if "git diff" in l and "render.json" in l)
     assert "--diff-filter=AM" in line, (
@@ -526,23 +575,43 @@ def test_发布账本预占后阻断自动重发(repo: Path, capsys):
     assert "sending" in capsys.readouterr().out
 
 
-def test_发布成功和状态不明都绑定同一成片指纹(repo: Path):
+def test_平台接收和状态不明都绑定同一成片指纹(repo: Path):
     _spec(repo, {"auto": True})
     outdir = repo / "output/interviews/demo"
     gate.reserve(repo, "demo", outdir, "run", "t1")
     ledger = gate.record(repo, "demo", outdir, "run", "t2", "receipt-123")
     row = json.loads(ledger.read_text())["attempts"][0]
-    assert row["status"] == "sent" and row["key"].startswith("pushplus:demo:")
+    assert row["status"] == "accepted" and row["key"].startswith("pushplus:demo:")
     assert row["pushplus_receipt"] == "receipt-123"
+    assert row["provider"] == "pushplus"
+    assert row["requested_channel"] == "wechat"
+    assert row["platform_status"] == "accepted"
+    assert row["delivery_status"] == "unverified"
     marker = json.loads((outdir / "pushed.json").read_text(encoding="utf-8"))
-    assert marker["status"] == "sent" and marker["slug"] == "demo"
+    assert marker["status"] == "accepted" and marker["slug"] == "demo"
     assert marker["film_sha256"] == row["film_sha256"]
     assert marker["publication_key"] == row["key"]
     assert marker["pushplus_receipt"] == "receipt-123"
+    assert marker["provider"] == "pushplus"
+    assert marker["requested_channel"] == "wechat"
+    assert marker["platform_status"] == "accepted"
+    assert marker["delivery_status"] == "unverified"
     ledger = gate.uncertain(repo, "demo", outdir, "run", "t3")
     rows = json.loads(ledger.read_text())["attempts"]
-    assert len(rows) == 1 and rows[0]["status"] == "uncertain", \
-        "同一成片只允许一个幂等键，状态转换不能追加成多次发送"
+    assert len(rows) == 1 and rows[0]["status"] == "accepted", \
+        "已有平台流水号时，失败收尾不能把 accepted 降级成 uncertain"
+
+
+def test_没有流水号不许写accepted(repo: Path):
+    _spec(repo, {"auto": True})
+    outdir = repo / "output/interviews/demo"
+    with pytest.raises(ValueError, match="必须带非空流水号"):
+        gate.record(repo, "demo", outdir, "run", "t2", "")
+    with pytest.raises(SystemExit, match="必须同时提供 --receipt-file"):
+        gate.main([
+            "--record", str(outdir), "--slug", "demo",
+            "--repo", str(repo), "--run", "run", "--now", "t2",
+        ])
 
 
 # ------------------------------------------------- 标题日期：算一次，两处共用
@@ -667,7 +736,8 @@ def test_render完要叫醒自动推送():
     assert "github.ref_name == 'main'" in blk
 
 
-def test_gate的slug入口走同一条pick路(repo: Path, monkeypatch, capsys):
+def test_gate的slug入口只有当前成片accepted才允许成功noop(
+        repo: Path, monkeypatch, capsys):
     """`--slug` 不是绕闸的近路：它只是把入参折成那条 render.json 的路径，
     照走 `pick` → 发布门禁。判据两头：合格的这条要 found=true 落进
     GITHUB_OUTPUT；已推过的同一条要被「已经推过」那道闸拦下（拦得住才说明
@@ -681,23 +751,43 @@ def test_gate的slug入口走同一条pick路(repo: Path, monkeypatch, capsys):
     text = out_file.read_text(encoding="utf-8")
     assert "slug=demo" in text and "found=true" in text
 
-    # 同一条记上 pushed.json 之后，--slug 必须被「已经推过」拦下
-    (repo / "output/interviews/demo" / gate.MARKER).write_text(
-        json.dumps({"at": "t", "run": "r"}), encoding="utf-8")
+    # 当前成片有平台流水号后，点名重放允许 success no-op，但不能再发。
+    gate.record(
+        repo, "demo", repo / "output/interviews/demo", "r", "t", "receipt-accepted")
     _commit_all(repo)
     out_file.unlink()
     assert gate.main(["--slug", "demo", "--repo", str(repo)]) == 0
     captured = capsys.readouterr().out
-    assert "已经推过了" in captured, "--slug 绕过了「已经推过」那道闸"
-    assert not out_file.exists(), "被拦下的那条不许往 GITHUB_OUTPUT 写 found"
+    assert "[安全跳过]" in captured and "已由 PushPlus 接收" in captured
+    output = out_file.read_text(encoding="utf-8")
+    assert "found=false" in output and "already_accepted=true" in output
+
+
+def test_手动工作流accepted_noop后不许继续发送():
+    body = _yaml_only(MANUAL_WORKFLOW.read_text(encoding="utf-8"))
+    gate_block = body.split("- name: 推送前通过 L0/L2/幂等门禁", 1)[1]
+    assert "id: manual_gate" in gate_block.split("- name:", 1)[0]
+    for step_name in ("预占发布账本（发送前）", "推送到微信", "记下平台已经接收"):
+        block = body.split(f"- name: {step_name}", 1)[1].split("- name:", 1)[0]
+        assert "steps.manual_gate.outputs.found == 'true'" in block, (
+            f"{step_name} 没有在 accepted no-op 后停下")
+
+
+def test_gate的slug入口sending和无回执旧标记必须非零(repo: Path, capsys):
+    _spec(repo, {"auto": True})
+    outdir = repo / "output/interviews/demo"
+    gate.reserve(repo, "demo", outdir, "run", "t1")
+    _commit_all(repo)
+    assert gate.main(["--slug", "demo", "--repo", str(repo)]) == 1
+    assert "点名发布被门禁阻断" in capsys.readouterr().out
 
 
 def test_gate的slug入口对没render过的条目要出声(repo: Path, capsys):
     """点名一条根本没 render 过的 slug：不许炸、不许假绿地报 found，
     要打出「render.json 不在仓库里」让人看见点错了名。"""
-    assert gate.main(["--slug", "ghost", "--repo", str(repo)]) == 0
+    assert gate.main(["--slug", "ghost", "--repo", str(repo)]) == 1
     out = capsys.readouterr().out
-    assert "[跳过]" in out and "render.json 不在仓库里" in out
+    assert "点名发布被门禁阻断" in out and "render.json 不在仓库里" in out
 
 
 def test_gate的slug和changed不能同时给(repo: Path):
@@ -740,7 +830,18 @@ def test_发完要把已推送记进仓库():
         "记了 pushed.json 却没提交/没推——下一次触发会再发一遍")
     assert "--receipt-out" in body and "pushed.json" in record \
         and "--receipt-file" in record, (
-        "sent 账本没有同时提交 pushed.json / PushPlus 流水号，L4 证据不完整")
+        "accepted 账本没有同时提交 pushed.json / PushPlus 流水号，L4 证据不完整")
+
+
+def test_自动和手动推送都必须保存回执且失败恢复按回执分流():
+    """两条入口都要能在“平台已接收、后续补账失败”时只补 accepted。"""
+    for path in (WORKFLOW, MANUAL_WORKFLOW):
+        body = _yaml_only(path.read_text(encoding="utf-8"))
+        assert "--receipt-out" in body, f"{path} 推送成功后没有保存 PushPlus 流水号"
+        assert "--receipt-file" in body, f"{path} 补账没有消费 PushPlus 流水号"
+        assert "找到 PushPlus 流水号" in body and "--record" in body
+        assert "没有平台流水号" in body and "--uncertain" in body
+        assert "pushed.json" in body, f"{path} accepted marker 没有提交"
 
 
 def test_记已推送要排在发微信之后():
@@ -873,7 +974,7 @@ def test_只add自己那一格():
     警告、退出码 0，然后 `git diff --cached --quiet` 说「没有变化」——
     `pushed.json` 静默丢掉，下一次触发就再发一遍。
     """
-    body = _yaml_only(WORKFLOW.read_text(encoding="utf-8"))
+    body = _yaml_only(WORKFLOW.read_text(encoding="utf-8")).replace("\\\n", " ")
     adds = [l.strip() for l in body.splitlines() if l.strip().startswith("git add")]
     assert adds, "工作流里一句 git add 都没有？"
     for line in adds:

@@ -14,6 +14,9 @@ on:
     branches: [main]
     paths:
       - "requests/interviews/*.json"
+      # 同一 slug 修字幕、封面或空档销账后，spec SHA 会与已落地 QC 不同；
+      # 必须立刻叫醒输入指纹闸，不能等下一趟定时班次。
+      - "specs/interviews/*.json"
       - "tools/build_interview_request.py"
       - "tools/draft_interview_spec.py"
       - "tools/interview_source_gate.py"
@@ -77,7 +80,7 @@ jobs:
           python3 tools/pick_interview_renders.py --stale | tee /tmp/stale.txt
           if grep -q "（投于" /tmp/stale.txt; then
             {
-              echo "## ⚠️ 有采访投出去超过 3 小时还没有 render.json（本轮自动重投）"
+              echo "## ⚠️ 有采访投出去超过 60 分钟还没有当前成片（本轮自动重投）"
               echo ""
               tail -n +2 /tmp/stale.txt | sed 's/^  /- /'
             } >> "$GITHUB_STEP_SUMMARY"

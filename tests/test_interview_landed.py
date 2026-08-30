@@ -20,6 +20,57 @@ def _tool():
     return ci
 
 
+def _cover_tool():
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import audit_interview_cover as cover
+
+    return cover
+
+
+def _cover_spec(*, close_up: bool = True) -> dict:
+    return {
+        "slug": "demo",
+        "subject": {"name": "费德勒"},
+        "cover": {
+            "frame_at": 200.6,
+            "shot_type": "close_up" if close_up else "medium",
+            "zoom": 1.9 if close_up else 1.2,
+            "focus_y": 0.9,
+        },
+    }
+
+
+def _good_cover_result(*, close_up: bool = True) -> dict:
+    spec = _cover_spec(close_up=close_up)
+    return {
+        "poster": {
+            "decodable": True,
+            "format": "JPEG",
+            "width": 1080,
+            "height": 1440,
+            "photo_region": [0, 150, 1080, 810],
+        },
+        "contract": {
+            "frame_at": 200.6,
+            "shot_type": "close_up" if close_up else "medium",
+            "zoom": 1.9 if close_up else 1.2,
+            "focus_y": 0.9,
+        },
+        "face": {
+            "detector": "frontal-default",
+            "box": [380, 230, 180, 180],
+            "detected_faces": 1,
+            "eyes": 2,
+            "face_height_ratio": 0.2222 if close_up else 0.10,
+            "face_area_ratio": 0.037,
+            "center_x_ratio": 0.435,
+            "center_y_ratio": 0.21,
+            "sharpness": 120.0,
+            "contrast": 96.0,
+        },
+    }
+
+
 def test_ffprobe的csv输出带尾随逗号也解析得出来():
     """2026-08-20 撞的：`pegula-cirstea-cincinnati-2026-r16` 那趟 render 在
     最后一步（`check_interview_landed.check_film`）崩掉——`ffprobe`
@@ -115,3 +166,161 @@ def test_冷开场原解说也必须逐cue中英成对(tmp_path):
         "Dialogue: 0,0:00:01.00,0:00:03.00,EN,,0,0,0,,Match point\n",
         encoding="utf-8")
     assert not ci.bilingual_lead_ok(ass, spec)[0], "只有英文不能通过冷开场双语质检"
+
+
+def test_封面预期人物不能一律拿赢家_亚军与告别要取败者():
+    cover = _cover_tool()
+    assert cover.expected_subject({"subject": {"name": "费德勒"}}) == "费德勒"
+    runner_up = {
+        "requested_content_type": "ceremony", "interview_kind": "赛后亚军致辞",
+        "winner": "高芙",
+        "match": {"winner": "高芙", "loser": "佩古拉",
+                  "participants": ["高芙", "佩古拉"]},
+    }
+    assert cover.expected_subject(runner_up) == "佩古拉"
+    farewell = {
+        "requested_content_type": "farewell", "interview_kind": "赛后告别仪式",
+        "match": {"winner": "坂本怜", "loser": "锦织圭"},
+    }
+    assert cover.expected_subject(farewell) == "锦织圭"
+    assert cover.expected_subject({}) == "", "没有事实字段时必须停，不能从标题猜"
+
+
+def test_本地封面证据缺字段非正脸闭眼太小或模糊都失败():
+    cover = _cover_tool()
+    spec = _cover_spec()
+    assert cover.validate_result(_good_cover_result(), spec) == []
+
+    missing = _good_cover_result()
+    del missing["face"]
+    assert any("缺本地正面人脸" in x for x in cover.validate_result(missing, spec))
+
+    profile = _good_cover_result()
+    profile["face"]["detector"] = "profile"
+    assert any("正面人脸" in x for x in cover.validate_result(profile, spec))
+
+    closed = _good_cover_result()
+    closed["face"]["eyes"] = 1
+    assert any("只检出 1 只眼" in x for x in cover.validate_result(closed, spec))
+
+    wide = _good_cover_result()
+    wide["face"].update({"face_height_ratio": 0.08, "face_area_ratio": 0.005})
+    issues = cover.validate_result(wide, spec)
+    assert any("近景" in x and "14%" in x for x in issues)
+    assert any("主体大小" in x for x in issues)
+
+    blurry = _good_cover_result()
+    blurry["face"]["sharpness"] = 20
+    assert any("清晰度" in x for x in cover.validate_result(blurry, spec))
+
+    weak_contract = _cover_spec()
+    weak_contract["cover"]["zoom"] = 1.2
+    proof = _good_cover_result()
+    proof["contract"]["zoom"] = 1.2
+    assert any("近景封面 zoom" in x for x in cover.validate_result(
+        proof, weak_contract))
+
+
+def test_封面视觉凭证同时绑定当前spec和最终poster(tmp_path):
+    ci, cover = _tool(), _cover_tool()
+    spec = _cover_spec()
+    spec_path = tmp_path / "demo.json"
+    spec_path.write_text(json.dumps(spec, ensure_ascii=False), encoding="utf-8")
+    poster = tmp_path / "poster.jpg"
+    poster.write_bytes(b"first-poster")
+    proof = tmp_path / cover.REPORT_NAME
+    cover.write_report(
+        proof, spec_path, poster, "费德勒", _good_cover_result(), [])
+
+    ok, detail, _ = ci.cover_visual_ok(spec_path, spec, tmp_path)
+    assert ok, detail
+
+    poster.write_bytes(b"changed-poster")
+    ok, detail, _ = ci.cover_visual_ok(spec_path, spec, tmp_path)
+    assert not ok and "不是当前 poster" in detail
+
+    # 恢复海报再改 spec：两种输入任何一种变化都必须让旧凭证失效。
+    poster.write_bytes(b"first-poster")
+    spec["cover"] = {"frame_at": 180}
+    spec_path.write_text(json.dumps(spec, ensure_ascii=False), encoding="utf-8")
+    ok, detail, _ = ci.cover_visual_ok(spec_path, spec, tmp_path)
+    assert not ok and "不是当前 spec" in detail
+
+
+def test_本地审核不需要外部key_像素分析失败则fail_closed(tmp_path, monkeypatch):
+    cover = _cover_tool()
+    spec_path = tmp_path / "demo.json"
+    spec = _cover_spec()
+    spec_path.write_text(json.dumps(spec), encoding="utf-8")
+    poster = tmp_path / "poster.jpg"
+    poster.write_bytes(b"poster")
+    report = tmp_path / "proof.json"
+    argv = ["audit_interview_cover.py", "--spec", str(spec_path),
+            "--poster", str(poster), "--out", str(report)]
+    monkeypatch.setattr(sys, "argv", argv)
+    monkeypatch.delenv("MINIMAX_API_KEY", raising=False)
+    monkeypatch.delenv("DEEPSEEK_API_KEY", raising=False)
+    monkeypatch.setattr(cover, "analyze_poster", lambda _poster: _good_cover_result())
+    assert cover.main() == 0
+    passed = json.loads(report.read_text(encoding="utf-8"))
+    assert passed["status"] == "pass"
+    assert passed["auditor"] == cover.LOCAL_AUDITOR
+
+    monkeypatch.setattr(
+        cover,
+        "analyze_poster",
+        lambda _poster: (_ for _ in ()).throw(RuntimeError("opencv failed")),
+    )
+    assert cover.main() == 1
+    failed = json.loads(report.read_text(encoding="utf-8"))
+    assert failed["status"] == "fail" and "opencv failed" in failed["error"]
+
+
+def test_QC凭证记录poster与视觉凭证hash(tmp_path, monkeypatch):
+    ci, cover = _tool(), _cover_tool()
+    spec = {
+        "slug": "demo", "requested_content_type": "ceremony",
+        "subject": {"name": "费德勒"}, "zh": ["你好"],
+        "cover": _cover_spec()["cover"],
+    }
+    spec_path = tmp_path / "demo.json"
+    spec_path.write_text(json.dumps(spec, ensure_ascii=False), encoding="utf-8")
+    poster = tmp_path / "poster.jpg"
+    poster.write_bytes(b"poster-v1")
+    visual = tmp_path / cover.REPORT_NAME
+    cover.write_report(visual, spec_path, poster, "费德勒",
+                       _good_cover_result(), [])
+    ass = tmp_path / "demo.ass"
+    ass.write_text(
+        "Dialogue: 0,0:00:01.00,0:00:03.00,EN,,0,0,0,,Hello\n"
+        "Dialogue: 0,0:00:01.00,0:00:03.00,ZH,,0,0,0,,你好\n",
+        encoding="utf-8")
+    film = tmp_path / "demo.mp4"
+    film.write_bytes(b"film")
+
+    import interview_source_gate
+    monkeypatch.setattr(interview_source_gate, "validate_source_contract",
+                        lambda _spec: "source-attestation")
+    monkeypatch.setattr(interview_source_gate, "content_identity_id",
+                        lambda _spec: "content-id")
+    qc_path = ci.write_attestation(film, spec_path, spec, ass, tmp_path)
+    qc = json.loads(qc_path.read_text(encoding="utf-8"))
+    assert qc["spec_sha256"] == ci._sha256(spec_path)
+    assert qc["poster_sha256"] == ci._sha256(poster)
+    assert qc["cover_visual_attestation_sha256"] == ci._sha256(visual)
+    assert qc["checks"]["cover_subject"] == "费德勒"
+    assert qc["checks"]["cover_subject_prominent"] is True
+
+
+def test_正式采访工作流在技术L2之前运行完全本地封面硬闸():
+    body = Path(".github/workflows/interview-clip.yml").read_text(encoding="utf-8")
+    visual = body.index("python tools/audit_interview_cover.py")
+    landed = body.index("python tools/check_interview_landed.py")
+    assert visual < landed, "必须先取得并验证封面视觉凭证，再写技术 QC pass"
+    block = body[body.rfind("- name:", 0, visual):visual + 500]
+    assert "MINIMAX_API_KEY" not in block and "DEEPSEEK" not in block
+    assert "完全本地" in block
+    assert "mode == 'render'" in block and "mode == 'cover'" in block, (
+        "完整渲染和只换海报都必须审核，不能让 cover 模式成为绕闸入口")
+    assert "|| true" not in block and "continue-on-error" not in block, (
+        "视觉调用失败必须 fail closed")

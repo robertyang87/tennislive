@@ -12,6 +12,8 @@
   2. 音画等长（画面 ≥ 音轨，音轨别比画面短——短了就是结尾没声音）
   3. 字幕有字（.ass 里真有 Dialogue 行；只查有 / 没有，不查切行——切行是
      `check_human_quote` / 字宽闸的事，在渲染前就已经验过了）
+  4. 最终 poster 已经通过完全本地的像素终审：尺寸/解码、近景构图合同、
+     正面双眼、脸部清晰度与主体大小合格；凭证与当前 spec/poster 哈希一致
 
 用法：
     python tools/check_interview_landed.py --slug shang-rublev-mtl2026-r2
@@ -36,6 +38,7 @@ from pathlib import Path
 CANVAS_W, CANVAS_H = 1080, 1440
 MAX_AV_DELTA = 0.30
 SILENCE_FLOOR_DB = -60.0
+COVER_VISUAL_ATTESTATION = "cover_visual_attestation.json"
 
 
 def sh(*args: str) -> str:
@@ -196,6 +199,57 @@ def _sha256(path: Path) -> str:
     return h.hexdigest()
 
 
+def cover_visual_ok(spec_path: Path, spec: dict,
+                    outdir: Path) -> tuple[bool, str, dict | None]:
+    """验证本地封面凭证仍绑定当前 spec 与最终 poster。
+
+    不能只认 ``status=pass``：报告可能来自上一版封面，也可能少了某个判断字段。
+    因此重新跑一遍机械判据，并核两个输入哈希。任何读取/字段异常都 fail closed。
+    """
+    poster = outdir / "poster.jpg"
+    proof_path = outdir / COVER_VISUAL_ATTESTATION
+    if not poster.is_file():
+        return False, f"找不到最终海报 {poster}", None
+    if not proof_path.is_file():
+        return False, f"缺 {proof_path}（必须先跑本地封面像素终审）", None
+    try:
+        proof = json.loads(proof_path.read_text(encoding="utf-8"))
+    except (OSError, ValueError) as exc:
+        return False, f"封面视觉凭证读不了：{exc}", None
+    if proof.get("status") != "pass":
+        why = proof.get("issues") or proof.get("error")
+        return False, f"封面视觉凭证不是 pass：{why}", proof
+    if proof.get("spec_sha256") != _sha256(spec_path):
+        return False, "封面视觉凭证绑定的不是当前 spec", proof
+    if proof.get("poster_sha256") != _sha256(poster):
+        return False, "封面视觉凭证绑定的不是当前 poster.jpg", proof
+
+    try:
+        from audit_interview_cover import (  # noqa: PLC0415
+            LOCAL_AUDITOR,
+            expected_subject,
+            validate_result,
+        )
+        expected = expected_subject(spec)
+        if not expected:
+            return False, "当前 spec 无法确定封面主角", proof
+        if proof.get("expected_subject") != expected:
+            return False, (f"封面凭证预期人物是「{proof.get('expected_subject')}」，"
+                           f"当前 spec 是「{expected}」"), proof
+        if proof.get("auditor") != LOCAL_AUDITOR:
+            return False, "封面凭证不是当前本地审核器生成的", proof
+        issues = validate_result(proof.get("result"), spec)
+    except Exception as exc:  # noqa: BLE001 —— 审核器异常不能变成软通过
+        return False, f"封面视觉机械复核失败：{type(exc).__name__}: {exc}", proof
+    if issues:
+        return False, "；".join(issues), proof
+    face = (proof.get("result") or {}).get("face") or {}
+    return True, (
+        f"人物合同 {expected}；本地像素证明正面双眼、脸高 "
+        f"{float(face.get('face_height_ratio') or 0):.1%} 且清晰"
+    ), proof
+
+
 def write_attestation(film: Path, spec_path: Path, spec: dict,
                       ass: Path, outdir: Path) -> Path:
     """L0/L2 全绿后落不可变发布凭证；自动推送只认这份凭证。"""
@@ -206,6 +260,11 @@ def write_attestation(film: Path, spec_path: Path, spec: dict,
 
     source_attestation = validate_source_contract(spec)
     identity_id = content_identity_id(spec)
+    cover_ok, cover_detail, cover_proof = cover_visual_ok(spec_path, spec, outdir)
+    if not cover_ok or cover_proof is None:
+        raise SystemExit(f"封面视觉凭证不合格，不能写 QC pass：{cover_detail}")
+    poster = outdir / "poster.jpg"
+    cover_proof_path = outdir / COVER_VISUAL_ATTESTATION
     payload = {
         "status": "pass",
         "checked_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
@@ -214,6 +273,8 @@ def write_attestation(film: Path, spec_path: Path, spec: dict,
         "requested_content_type": spec["requested_content_type"],
         "source_attestation_sha256": source_attestation,
         "spec_sha256": _sha256(spec_path),
+        "poster_sha256": _sha256(poster),
+        "cover_visual_attestation_sha256": _sha256(cover_proof_path),
         "ass_sha256": _sha256(ass),
         "lead_ass_sha256": (
             _sha256(outdir / "_lead.ass")
@@ -227,6 +288,8 @@ def write_attestation(film: Path, spec_path: Path, spec: dict,
             "silence_floor_db": SILENCE_FLOOR_DB,
             "bilingual_body_cues": len(_ass_body_events(ass)["EN"]),
             "bilingual_lead_cues": len(_ass_body_events(outdir / "_lead.ass")["EN"]),
+            "cover_subject": cover_proof["expected_subject"],
+            "cover_subject_prominent": True,
         },
     }
     # 保留旧消费者读取的 match_id；非比赛典礼只写通用 content_id。
@@ -287,6 +350,9 @@ def main() -> int:
             return 1
         print(f"成片 {film}（{film.stat().st_size / 1e6:.1f} MB）")
         bad = check_film(film, spec, ass)
+        ok, detail, _proof = cover_visual_ok(spec_path, spec, outdir)
+        bad += 0 if ok else 1
+        print(f"[{'ok' if ok else '不合格'}] 封面视觉 {detail}")
         if bad == 0 and args.write_attestation:
             from interview_source_gate import (  # noqa: PLC0415
                 SourceContractError,
