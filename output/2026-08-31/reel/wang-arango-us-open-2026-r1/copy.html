@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>8.31 赛场之上 | 四比四被追平她立刻破回</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>王欣瑜 6-4 6-2 阿朗戈｜美网首轮，六号球场
+
+比分很干净，过程有两道坎。
+
+第一道在开场第三局。阿朗戈发球，两个人打到 3 次平分、一共 12 个小分，王欣瑜一共拿到 5 个破发点，阿朗戈救下了前 4 个——第 5 个才被兑现。
+
+第二道在第一盘后段。王欣瑜 4-2 领先之后连丢两局，被追成 4-4。下一局阿朗戈发球，15-40，破发点在王欣瑜手里，她一次就兑现了；5-4 上来自己的发球胜盘局，屏幕上黄字亮起盘点，6-4 拿下第一盘，44 分钟。
+
+第二盘的调子是开场那一局定的：阿朗戈自己的发球局 40-0 领先，王欣瑜连追四分，那一局打到 4 次平分、14 个小分，最后被她抢了过来。随后她再破一次，6-2 收工。发球胜赛局两个赛点，阿朗戈救下第一个，第二个王欣瑜拿下。全场 1 小时 18 分钟。
+
+赢的底子在进攻这一头，不在对手失误——
+
+制胜分 31 比 8（首盘 19:6、次盘 12:2）
+上网 22 次赢下 17 分，阿朗戈是 9 次赢 6 分
+一发得分率 首盘 62% → 次盘 86%
+总得分 66 比 54
+发球局 王欣瑜保下 8 个（9 个里），阿朗戈 5 个（9 个里）
+
+有意思的是非受迫失误反而是王欣瑜更多，32 比 23。这场球不是对手送出来的。
+
+两个人的交手记录停在 3 比 0，全在硬地：2025 年辛辛那提 2-0、2026 年多哈 2-0、这一场 2-0——六盘一盘没丢。（出处：flashscore 本场 6kvpNAcD 的交手记录表，三场逐场列着；赛果另有美网官方 completed_matches day_8 feed 印证，match_id 2127。）
+
+顺带一句排期：六号球场那天 11 点开打，第一场 Zarazua 对 Iatcenko 打了 3 小时 27 分，王欣瑜在场边等到北京时间 8 月 31 日快凌晨三点才上场。
+
+这是她第五次打美网，2023 年在这里打进过第四轮。
+
+#网球 #王欣瑜 #美网 #USOpen #网球时差</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>这一届，她能走多远？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
