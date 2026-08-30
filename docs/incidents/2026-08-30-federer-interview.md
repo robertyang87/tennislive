@@ -160,22 +160,21 @@
 
 - 名人堂入选致辞固定为大标题“人物 · 致辞类型”、小标题“典礼名”；
   不再要求或伪造比赛对手、比分。
-- 名人堂 HEADA 固定使用单一 Noto Sans CJK SC Regular 54px 白字 run，HEADB
-  使用 Noto Sans CJK SC Regular 38px；每个 ASS run 都显式写入 `\fs`，不只依赖
-  Style 默认值。54px Regular 尚需正式成功 artifact 裁决，不能提前写成“已证明”。
+- 名人堂人物主标题固定使用 Noto Sans CJK SC Regular 54px 白字，小标题使用
+  同一字体 38px 灰白字。二者先由 Pillow 按明确 TTC 文件预栅格为透明 PNG，
+  再在正文字幕前叠加；人物顶栏不再依赖 runner 的 libass 首行布局。
 - 正文编码完成后、海报与最终拼接之前，自动抽取 0.5 秒帧的顶部 150px，分别
   检查 HEADA/HEADB 带区的浅色文字像素。品牌绿竖条不能冒充标题；任一行不足
   阈值就让 render fail closed，不能进入发布。
-- HEADA 和 HEADB 使用不同 ASS layer，禁止 libass 把永久同屏的两行当作需要
-  垂直避让的同层字幕；两行同时写入固定 `\an8\pos(...)`，不把最终位置交给
-  runner 的 MarginV/collision 自由布局；HEADA 主文字显式写白，不只靠 `\r`
-  清除前一段品牌绿。
+- 人物顶栏 PNG 固定在 `y=24` / `y=92`，生成后先在深绿背景上分别统计上下带区
+  像素，再由正式源片 1 秒预烧和正文成片各复核一次。普通比赛采访仍保留既有
+  HEADA/HEADB ASS 路径，避免本次修复扩大到已经稳定发布的版式。
 - 全片编码前先用真实源片、同一 `filter_complex` 和同一 ASS 预烧 1 秒并执行同一
   像素闸；该预检通过后才允许启动长片编码。正文编码结束后仍保留第二次像素复核，
   防止只在完整产物路径出现的差异。
-- 预烧同时捕获 ffmpeg/libass 的 verbose `fontselect`：顶栏必须实际落到 Noto CJK；
-  出现 DejaVu 回退或 `failed to find any fallback with glyph` 立即失败。这样缺字
-  方框即使产生足够浅色像素，也不能冒充中文标题。
+- 普通 ASS 顶栏的预烧继续捕获 verbose `fontselect` 并拒绝 DejaVu/缺字回退；
+  人物顶栏改由明确 TTC 文件加载成功与 PNG 双带区像素作字体证据，不再把正文
+  字幕产生的 libass 日志误当作人物标题字体证据。
 - 第二次失败 artifact（run `33323079498`）证明：即使把 `\pos` 移到竖条前，
   HEADSUBJECT 仍是 0 像素，HEADB 为 2480；最终 ASS 与时长无误。artifact 证明
   “装饰竖条 run + 中途 `\r` + 粗体 run”这一组合两次失败，但不能唯一隔离其中
@@ -185,10 +184,11 @@
   真实像素共同构成发布证据。像素闸先报哪一行缺失，字体闸随后验证不是 tofu；
   两道都必须通过。
 - 第三次失败 artifact（run `33324736016`）进一步证明：即使人物标题已经是单一
-  Noto Regular run，独立 `HEADSUBJECT` Style 在生产仍为 0 像素；同一帧的
-  `HEADB` 保持 2480。为消除最后一个未被生产证明的分支，人物主标题和小标题
-  现在共用唯一 `HEADB` Style，分别由 layer 2/1 与显式 54px/38px、白色/灰白、
-  `pos(540,24)`/`pos(540,92)` 建立层级；正式源片预烧仍对两个带区独立计数。
+  Noto Regular run，生产 runner 的独立首行仍为 0 像素；同一帧小标题为 2480。
+  三次变化已排除字体、字重、Style 名、layer 和定位顺序作为单一根因，剩余事实
+  是 runner（Lavf63）与本地（Lavf60）对 24px 顶锚首行的布局结果不一致。
+  最终修复不再猜测 libass 内部原因：人物两级标题改为明确字体文件的透明 PNG，
+  ASS 中不再写重复顶栏事件；正式源片预烧仍对两个带区独立计数。
 
 ## 仍需保持的硬闸
 
