@@ -862,6 +862,9 @@ def test_名人堂顶栏以人物内容为大标题_典礼为小标题(monkeypat
     assert r"\fnNoto Sans CJK SC" in main_ass and r"\b1" in main_ass, (
         "名人堂主标题要走已在最终片证明能出像素的 Noto 粗体，"
         "不能再次押注曾整行消失的显示体加载")
+    assert r"\c&HFFFFFF&" in main_ass, "主标题要显式写白，不能只靠 \\r 复位竖条绿"
+    assert rf"\an8\pos({clip.CANVAS_W // 2},{clip._HEAD_A_TOP})" in main_ass
+    assert rf"\an8\pos({clip.CANVAS_W // 2},{clip._HEAD_B_TOP})" in context_ass
 
 
 def test_名人堂缺人物不许退回只有典礼小标题(monkeypatch):
@@ -905,6 +908,10 @@ def test_渲染后顶栏像素闸能抓住只有小标题(tmp_path, monkeypatch)
     }
     ass = tmp_path / "topbar.ass"
     clip.write_ass([], [], 0.0, ass, spec=spec, duration=1.0)
+    ass_text = ass.read_text(encoding="utf-8")
+    assert "Style: HEADSUBJECT,Noto Sans CJK SC" in ass_text
+    assert "Dialogue: 2," in ass_text and ",HEADSUBJECT," in ass_text
+    assert "Dialogue: 1," in ass_text and ",HEADB," in ass_text
 
     def _render(src_ass: Path, dest: Path) -> None:
         proc = subprocess.run(
@@ -922,15 +929,70 @@ def test_渲染后顶栏像素闸能抓住只有小标题(tmp_path, monkeypatch)
     bad_ass = tmp_path / "only-small-title.ass"
     bad_ass.write_text("\n".join(
         line for line in ass.read_text(encoding="utf-8").splitlines()
-        if ",HEADA," not in line) + "\n", encoding="utf-8")
+        if ",HEADSUBJECT," not in line) + "\n", encoding="utf-8")
     bad = tmp_path / "only-small-title.mp4"
     _render(bad_ass, bad)
     with pytest.raises(SystemExit, match="HEADA 主标题"):
         clip.assert_rendered_topbar(bad, spec)
 
     render_src = inspect.getsource(clip.render)
+    assert "_topbar_probe.mp4" in render_src
+    assert render_src.index("assert_rendered_topbar(topbar_probe, spec)") < \
+        render_src.index("body = outdir / \"_body.mp4\""), (
+            "必须在昂贵的全片编码前用真实源片和同一条滤镜链验顶栏")
     assert "assert_rendered_topbar(body, spec)" in render_src, (
         "像素闸必须接在正文编码之后，不能只是一个没人调用的测试工具")
+
+
+def test_顶栏字体日志闸拒绝缺字方框和DejaVu回退():
+    import tools.build_interview_clip as clip
+
+    subject_spec = {
+        "slug": "federer-ithf",
+        "topbar_layout": "subject_primary",
+    }
+    good = "\n".join([
+        "fontselect: (Noto Sans CJK SC, 700, 0) -> NotoSansCJKsc-Bold, 0, NotoSansCJKsc-Bold",
+        "fontselect: (Noto Sans CJK SC, 400, 0) -> NotoSansCJKsc-Regular, 0, NotoSansCJKsc-Regular",
+    ])
+    clip.assert_topbar_font_log(good, subject_spec)
+
+    with pytest.raises(SystemExit, match="tofu|缺失中文字形"):
+        clip.assert_topbar_font_log(
+            good + "\nfailed to find any fallback with glyph 0x8D39", subject_spec)
+
+    with pytest.raises(SystemExit, match="没有落到 Noto"):
+        clip.assert_topbar_font_log("\n".join([
+            "fontselect: (Noto Sans CJK SC, 700, 0) -> DejaVuSans-Bold, 0, DejaVuSans-Bold",
+            good.splitlines()[1],
+        ]), subject_spec)
+
+    with pytest.raises(SystemExit, match="没有记录"):
+        clip.assert_topbar_font_log("", subject_spec)
+
+    event_spec = {"slug": "ordinary-interview", "topbar_layout": "event_primary"}
+    clip.assert_topbar_font_log(good.splitlines()[1], event_spec)
+
+
+def test_顶栏有明确时长时覆盖到片尾而不是停在最后一句(tmp_path, monkeypatch):
+    import tools.build_interview_clip as clip
+
+    monkeypatch.setattr(clip, "_measure_at",
+                        lambda kind, size, text: len(text) * size * 0.45)
+    spec = {
+        "slug": "federer-ithf",
+        "event": "2026 国际网球名人堂入选典礼",
+        "interview_kind": "名人堂入选致辞",
+        "topbar_layout": "subject_primary",
+        "subject": {"name": "费德勒"},
+        "push": {},
+    }
+    ass = tmp_path / "full-duration-topbar.ass"
+    clip.write_ass([{"a": 0.0, "b": 0.2, "en": "Thank you."}], ["谢谢"],
+                   0.0, ass, spec=spec, duration=1.0)
+    text = ass.read_text(encoding="utf-8")
+    assert "Dialogue: 2,0:00:00.00,0:00:01.00,HEADSUBJECT" in text
+    assert "Dialogue: 1,0:00:00.00,0:00:01.00,HEADB" in text
 
 
 def test_顶栏说清这是哪一场():
@@ -4445,8 +4507,9 @@ def test_会合语音的工作流都要装edge_tts():
     **数字静音（实测 −91 dB）**，而账号所有者对这张卡的原话是「但要有配音」。
     量出来才看得见（run 31151599208）。
 
-    判据**自己推导，不维护白名单**：run 里跑了哪个 `tools/*.py`，那个工具
-    （连同它 import 的本仓库模块）会不会走到 `synthesize_narration`。
+    判据**自己推导，不维护白名单**：真正的 `run:` 命令里跑了哪个 `tools/*.py`，
+    那个工具会不会走到 `synthesize_narration`。`on.push.paths` 只表示“这个文件
+    改了就叫醒工作流”，并不执行它；把监听路径也算进去会逼无关工作流白装依赖。
     """
     import ast
 
@@ -4469,10 +4532,17 @@ def test_会合语音的工作流都要装edge_tts():
                     if isinstance(n, ast.ImportFrom) for a in n.names}
         return "synthesize_narration" in (names | imported)
 
+    import yaml
+
     guilty = []
     for wf in sorted((ROOT / ".github" / "workflows").glob("*.yml")):
-        body = "\n".join(ln for ln in wf.read_text("utf-8").splitlines()
-                         if not ln.lstrip().startswith("#"))
+        doc = yaml.safe_load(wf.read_text("utf-8")) or {}
+        body = "\n".join(
+            step["run"]
+            for job in (doc.get("jobs") or {}).values()
+            for step in (job.get("steps") or [])
+            if isinstance(step, dict) and isinstance(step.get("run"), str)
+        )
         if not any(_calls_tts(t) for t in set(re.findall(r"tools/(\w+)\.py", body))):
             continue
         if "edge-tts" not in body:
@@ -5271,7 +5341,8 @@ def test_lead_in不带subs时真烧出顶栏(tmp_path, monkeypatch):
 
     ass_text = (src_dir / "_lead.ass").read_text(encoding="utf-8")
     assert re.search(r"Dialogue:.*,HEAD[AB],", ass_text)
-    assert "Dialogue: 0,0:00:00.00" in ass_text, "顶栏该从 0 开始盖住整段"
+    assert "Dialogue: 2,0:00:00.00" in ass_text, "主标题该从 0 开始盖住整段"
+    assert "Dialogue: 1,0:00:00.00" in ass_text, "小标题该从 0 开始盖住整段"
     assert not re.search(r"Dialogue:.*,(EN|ZH),", ass_text), (
         "没有台词，不该凭空多出 EN/ZH 事件")
 
