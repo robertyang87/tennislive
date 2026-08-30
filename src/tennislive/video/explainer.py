@@ -1873,6 +1873,13 @@ AUTO_PUSH_SLUGS: frozenset[str] = frozenset({
     # 这一版的字有没有真烧进产物）；成片从 Release 拉回本地量过——226.8 秒、
     # 1080×1920、音画差 0.038 秒、十屏逐屏抽帧看过、全程 −22~−27 dB 没有哑场。
     "wawrinka-wildcard",
+    # 2026-08-30 验过才加进来的（同上那句「加进来之前先问一句：这条片子验过了吗」）：
+    # 在分支上渲的那趟（explainer.yml push=false）落库成功，工作流自带的两道闸都过了；
+    # 成片从 Release 拉回本地量过——142.8 秒、1080×1920、音画差 0.047 秒、
+    # 六屏逐屏抽帧看过（字幕逐条读过，数字都转成了阿拉伯数字、没有假词）、
+    # 全程 −23~−27 dB 没有哑场；`check_explainer_landed` 报「已落地」、
+    # `check_explainer_voice` 确认是代码默认的云健 +22%。
+    "qualifier-ceiling",
 })
 
 
