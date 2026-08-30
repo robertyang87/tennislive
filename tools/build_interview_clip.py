@@ -1530,8 +1530,13 @@ def write_ass(lines: list[dict], zh: list[str], clip_start: float, path: Path,
         a, b = _ts(0.0), _ts(topbar_end)
         header_lines(spec)                    # 先过宽度闸
         head_a, head_b = header_ass(spec)
-        ev.append(f"Dialogue: 0,{a},{b},HEADA,,0,0,0,,{head_a}")
-        ev.append(f"Dialogue: 0,{a},{b},HEADB,,0,0,0,,{head_b}")
+        # HEADA / HEADB 必须放在**不同 layer**。libass 只会在同一 layer 内做
+        # 字幕碰撞避让；两条永久同屏的顶栏都写 layer 0 时，Noto CJK 的实际
+        # vertical metrics 会把 HEADA 往画布外推，结果 ASS 事件存在、编码后
+        # 主标题却是 0 像素。测试用短色块没有稳定复现这条生产路径，所以这里
+        # 直接把两行从碰撞算法里隔开；字号、MarginV 和像素闸继续各自管位置。
+        ev.append(f"Dialogue: 2,{a},{b},HEADA,,0,0,0,,{head_a}")
+        ev.append(f"Dialogue: 1,{a},{b},HEADB,,0,0,0,,{head_b}")
     # 没有台词就到此为止——`highlight_en` 是给对白上色的，没有对白就没什么
     # 可高亮，硬跑下去只会拿一份空 `lines` 去比对 `spec.highlight_en`，
     # 把顶栏都没配文案这件事误判成「短语一个都没匹配上」。
@@ -3705,6 +3710,22 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
         # 一个目录，不是替换。验过：只给这个目录，中文照样渲得出来。
         f"[v]subtitles={ass}:fontsdir={ROOT / 'assets/fonts'}[out]"
     )
+
+    # 先拿**同一份源片、同一条 filter_complex、同一份 ASS** 烧 1 秒，再去跑
+    # 28 分钟全片。纯色测试只能证明 ASS 语法成立，证明不了生产源片＋libass 的
+    # 实际布局；费德勒这条就曾在完整编码 18 分钟后才发现 HEADA 被碰撞算法移出
+    # 画布。这个探针最多编码 1 秒，任一顶栏缺失会在昂贵编码之前 fail closed。
+    if wants_topbar(spec):
+        topbar_probe = outdir / "_topbar_probe.mp4"
+        subprocess.run(
+            ["ffmpeg", "-y", "-ss", str(spec["start"]), "-t", "1", "-i", str(src),
+             "-filter_complex", chain, "-map", "[out]", "-an", "-t", "1",
+             "-c:v", "libx264", "-preset", "ultrafast", "-crf", "18",
+             "-r", "25", "-pix_fmt", "yuv420p", "-color_range", "tv",
+             "-movflags", "+faststart", str(topbar_probe)],
+            check=True, timeout=120)
+        assert_rendered_topbar(topbar_probe, spec)
+
     body = outdir / "_body.mp4"
     subprocess.run(
         ["ffmpeg", "-y", "-ss", str(spec["start"]), "-t", str(dur), "-i", str(src),
