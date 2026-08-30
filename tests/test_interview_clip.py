@@ -905,6 +905,9 @@ def test_渲染后顶栏像素闸能抓住只有小标题(tmp_path, monkeypatch)
     }
     ass = tmp_path / "topbar.ass"
     clip.write_ass([], [], 0.0, ass, spec=spec, duration=1.0)
+    ass_text = ass.read_text(encoding="utf-8")
+    assert "Dialogue: 2," in ass_text and ",HEADA," in ass_text
+    assert "Dialogue: 1," in ass_text and ",HEADB," in ass_text
 
     def _render(src_ass: Path, dest: Path) -> None:
         proc = subprocess.run(
@@ -929,6 +932,10 @@ def test_渲染后顶栏像素闸能抓住只有小标题(tmp_path, monkeypatch)
         clip.assert_rendered_topbar(bad, spec)
 
     render_src = inspect.getsource(clip.render)
+    assert "_topbar_probe.mp4" in render_src
+    assert render_src.index("assert_rendered_topbar(topbar_probe, spec)") < \
+        render_src.index("body = outdir / \"_body.mp4\""), (
+            "必须在昂贵的全片编码前用真实源片和同一条滤镜链验顶栏")
     assert "assert_rendered_topbar(body, spec)" in render_src, (
         "像素闸必须接在正文编码之后，不能只是一个没人调用的测试工具")
 
