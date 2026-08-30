@@ -80,14 +80,94 @@ def _exists_or_tracked(path: Path) -> bool:
     return proc.returncode == 0
 
 
+def _production_contract(data: dict) -> dict:
+    """提取人工请求与正式 spec 之间不允许漂移的用户合同。
+
+    请求文件和正式 spec 都保存了人物、片头与封面。今天改费德勒封面时两处要
+    分别修改；只改请求、已有 spec 仍在时，旧逻辑会把请求判成“已经处理”，
+    继续用旧封面生产。这里只比较会改变内容身份或最终画面的语义字段，忽略
+    ``opening.why``、运营文案等允许在正式 spec 中继续编辑的说明文字。
+    """
+    subject = data.get("subject") or {}
+    opening = data.get("opening") or {}
+    cover = data.get("cover") or {}
+    push = data.get("push") or {}
+    contract = {
+        "url": str(data.get("url") or "").strip(),
+        "requested_content_type": str(data.get("requested_content_type") or ""),
+        "ceremony_subtype": str(data.get("ceremony_subtype") or ""),
+        "interview_kind": str(data.get("interview_kind") or ""),
+        "event": str(data.get("event") or ""),
+        "winner": str(data.get("winner") or ""),
+        "featured_player": str(data.get("featured_player") or ""),
+        "subject": {
+            key: subject.get(key)
+            for key in ("id", "event", "name", "role")
+            if key in subject
+        },
+        "opening_kind": opening.get("kind"),
+        "cover": {
+            key: cover.get(key)
+            for key in ("frame_at", "subject", "title", "sub", "tag", "topic",
+                        "shot_type", "zoom", "focus_y")
+            if key in cover
+        },
+        "push_auto": push.get("auto"),
+        "segment_budget_px": data.get("segment_budget_px"),
+        "topbar_layout": str(data.get("topbar_layout") or (
+            "subject_primary"
+            if data.get("ceremony_subtype") == "hall_of_fame_induction"
+            else "event_primary"
+        )),
+    }
+    return contract
+
+
+def _request_contract_changed(req: dict, spec_path: Path) -> bool:
+    try:
+        spec = _read(spec_path)
+    except (OSError, ValueError):
+        return True
+    expected = _production_contract(req)
+    actual = _production_contract(spec)
+    # 这些字段允许正式化阶段补出默认值；只有请求明确写过时，它们才是用户
+    # 合同。否则会把历史 spec 的正常默认值误判成漂移并触发昂贵的全文重转写。
+    for key in ("ceremony_subtype", "interview_kind", "winner",
+                "featured_player", "segment_budget_px"):
+        if key not in req:
+            expected.pop(key, None)
+            actual.pop(key, None)
+    if not isinstance(req.get("subject"), dict) or not req.get("subject"):
+        expected.pop("subject", None)
+        actual.pop("subject", None)
+    if not (req.get("opening") or {}).get("kind"):
+        expected.pop("opening_kind", None)
+        actual.pop("opening_kind", None)
+    if not isinstance(req.get("cover"), dict) or not req.get("cover"):
+        expected.pop("cover", None)
+        actual.pop("cover", None)
+    if "auto" not in (req.get("push") or {}):
+        expected.pop("push_auto", None)
+        actual.pop("push_auto", None)
+    if expected != actual:
+        return True
+    # 不写 start/end 表示完整采用源片，正式 spec 会把它展开成实际秒数；只有
+    # 请求显式裁切时才比较，防止“全文翻译”被后来静默改成节选。
+    for key in ("start", "end"):
+        if key in req and float(req[key]) != float(spec.get(key, -1)):
+            return True
+    return False
+
+
 def is_pending(path: Path) -> bool:
     req = _read(path)
     slug = _slug(req, path)
-    return bool(req.get("_rebuild_once")) or not _exists_or_tracked(
-        SPECS / f"{slug}.json"
-    ) or not _exists_or_tracked(
-        OUTDIR / slug / "cap_asr.json3"
-    )
+    spec_path = SPECS / f"{slug}.json"
+    if bool(req.get("_rebuild_once")) or not _exists_or_tracked(spec_path):
+        return True
+    if _request_contract_changed(req, spec_path):
+        return True
+    return not _exists_or_tracked(OUTDIR / slug / "cap_asr.json3")
 
 
 def pending_paths(only_slug: str = "") -> list[Path]:
@@ -335,6 +415,11 @@ def build_spec(req: dict, zh: list[str], duration: float) -> dict:
         "winner": str(req.get("winner") or ""),
         "featured_player": req.get("featured_player"),
         "ceremony_subtype": req.get("ceremony_subtype"),
+        "topbar_layout": str(req.get("topbar_layout") or (
+            "subject_primary"
+            if req.get("ceremony_subtype") == "hall_of_fame_induction"
+            else "event_primary"
+        )),
         "subject": dict(req.get("subject") or {}),
         "opening": dict(req.get("opening") or {}),
         "zh": zh,

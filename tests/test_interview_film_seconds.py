@@ -77,6 +77,10 @@ def test_采访片两个出口都要写film_seconds(tmp_path, monkeypatch, case,
     monkeypatch.setattr(mod, "yt_download",
                         lambda *a, **k: _tiny_mp4(outdir / "source.mp4", 1.0))
     monkeypatch.setattr(mod, "_takeaway_segments", lambda *a, **k: [])
+    # 这条测试故意把正文替成 64×64 的假片，只验证两个 return 都记成片时长；
+    # 顶栏像素闸按生产合同检查 1080×1440，已经由 test_interview_clip 的真片
+    # 正反例覆盖。这里必须打桩，否则假片尺寸会在到达本测试主语前正确地失败。
+    monkeypatch.setattr(mod, "assert_rendered_topbar", lambda *a, **k: None)
     if with_outro:
         monkeypatch.setattr(
             mod, "_build_outro",

@@ -957,7 +957,10 @@ def cmd_publish_pushplus(args) -> int:
     except PushPlusError as e:
         console.print(f"[red]{e}[/red]")
         return 1
-    console.print("[green]已推送到微信（PushPlus）[/green]")
+    console.print(
+        "[green]PushPlus 已接收微信通道请求[/green]"
+        "[yellow]（接口成功不等于手机送达，送达状态待确认）[/yellow]"
+    )
     return 0
 
 

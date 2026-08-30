@@ -248,12 +248,12 @@ jobs:
             --copy "specs/interviews/${{ steps.gate.outputs.slug }}.xhs.txt" \
             --receipt-out "$RUNNER_TEMP/interview-pushplus-receipt.json"
 
-      # **发完必须记一笔，而且必须进仓库。** 这是「已经发过」的唯一判据——
-      # 「工作流跑成功过」证明不了消息发出去了，而重发就是让人再收一条一样的。
+      # **平台接收后必须记一笔，而且必须进仓库。** 这是「PushPlus 已接收」的
+      # 唯一判据；它不冒充手机已经送达。
       # ⚠️ **必须排在发微信之后**：反过来的话，推送失败会留下一个「已经发过」
       # 的假标记，这条采访从此再也发不出去，而且不吭声。
       # 记不进去也不算这一趟失败（消息已经发了），但要红出来让人看见。
-      - name: 记下已经推送过
+      - name: 记下平台已经接收
         if: steps.gate.outputs.found == 'true'
         run: |
           python tools/auto_push_interview_gate.py \
@@ -264,26 +264,53 @@ jobs:
             --receipt-file "$RUNNER_TEMP/interview-pushplus-receipt.json"
           git add --sparse "data/interview_publish_ledger/${{ steps.gate.outputs.slug }}.json" "${{ steps.gate.outputs.outdir }}/pushed.json"
           python tools/check_staged_file_sizes.py
-          git commit -m "interview: ${{ steps.gate.outputs.slug }} 已自动推送"
+          git commit -m "interview: ${{ steps.gate.outputs.slug }} PushPlus 已接收"
           source tools/git_push_retry.sh
           if ! push_with_rebase_retry main 5; then
-            echo "::error::消息已发出，但 sent 状态没推上去；sending 会阻断重发"
+            echo "::error::PushPlus 已返回流水号，但 accepted 状态没推上去；sending 会阻断重发"
             exit 1
           fi
 
-      - name: 已预占后失败则标记状态不明
+      - name: 已预占后失败则按回执恢复账本
         if: failure() && steps.reserve.outcome == 'success'
         continue-on-error: true
         run: |
-          python tools/auto_push_interview_gate.py \
-            --uncertain "${{ steps.gate.outputs.outdir }}" \
-            --slug "${{ steps.gate.outputs.slug }}" \
-            --run "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
+          RECEIPT_FILE="$RUNNER_TEMP/interview-pushplus-receipt.json"
+          COMMON=(
+            --slug "${{ steps.gate.outputs.slug }}"
+            --run "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
             --now "$(date -u +%FT%TZ)"
+          )
+          if python - "$RECEIPT_FILE" <<'PY'
+          import json, pathlib, sys
+          path = pathlib.Path(sys.argv[1])
+          try:
+              ok = bool(json.loads(path.read_text(encoding="utf-8")).get("receipt"))
+          except (OSError, ValueError, AttributeError):
+              ok = False
+          raise SystemExit(0 if ok else 1)
+          PY
+          then
+            echo "[恢复] 找到 PushPlus 流水号：只补 accepted 账本，不降级为 uncertain"
+            python tools/auto_push_interview_gate.py \
+              --record "${{ steps.gate.outputs.outdir }}" "${COMMON[@]}" \
+              --receipt-file "$RECEIPT_FILE"
+            COMMIT_MSG="interview: ${{ steps.gate.outputs.slug }} 补记 PushPlus 接收凭据"
+            git add --sparse \
+              "data/interview_publish_ledger/${{ steps.gate.outputs.slug }}.json" \
+              "${{ steps.gate.outputs.outdir }}/pushed.json"
+          else
+            echo "[恢复] 没有平台流水号：只记 uncertain，禁止自动重发"
+            python tools/auto_push_interview_gate.py \
+              --uncertain "${{ steps.gate.outputs.outdir }}" "${COMMON[@]}"
+            COMMIT_MSG="interview: ${{ steps.gate.outputs.slug }} 推送状态待核实"
+            git add --sparse "data/interview_publish_ledger/${{ steps.gate.outputs.slug }}.json"
+          fi
           git config user.name "Claude"
           git config user.email "noreply@anthropic.com"
-          git add --sparse "data/interview_publish_ledger/${{ steps.gate.outputs.slug }}.json"
-          git commit -m "interview: ${{ steps.gate.outputs.slug }} 推送状态待核实" || exit 0
+          if ! git diff --cached --quiet; then
+            git commit -m "$COMMIT_MSG"
+          fi
           source tools/git_push_retry.sh
           push_with_rebase_retry main 5
 
@@ -299,6 +326,6 @@ jobs:
             echo ""
             echo "- slug：\`${{ steps.gate.outputs.slug }}\`"
             echo "- 运行日志：$RUN_URL"
-            echo "- ⚠️ **先看日志确认微信到底发出去没有**：失败在推送之前是安全的，"
-            echo "  失败在「记下已经推送过」那一步则消息已经发了，别再手动补一次。"
+            echo "- 发布账本恢复规则：有 PushPlus 流水号则补记 accepted；无流水号则记 uncertain。"
+            echo "- accepted 只代表平台接收，微信手机是否送达仍需另行确认。"
           } >> "$GITHUB_STEP_SUMMARY"

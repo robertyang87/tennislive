@@ -73,9 +73,10 @@ def test_名人堂顶栏不需要对手和比分(monkeypatch):
     monkeypatch.setattr(clip_builder, "_measure_at", lambda kind, size, text: len(text) * size)
     spec = request_builder.build_spec(_request(), ["谢谢大家"], duration=900.0)
     assert clip_builder.header_lines(spec) == (
-        "2026 国际网球名人堂入选典礼",
         "费德勒 · 名人堂入选致辞",
+        "2026 国际网球名人堂入选典礼",
     )
+    assert spec["topbar_layout"] == "subject_primary"
 
 
 def test_已核验入选典礼可以按编辑决定不用冷开场(tmp_path):
@@ -101,6 +102,70 @@ def test_一次性重建标记会让已有spec重新进入队列(tmp_path, monke
     monkeypatch.setattr(request_builder, "SPECS", specs)
     monkeypatch.setattr(request_builder, "OUTDIR", output)
     assert request_builder.is_pending(path)
+
+
+def test_请求与正式spec关键合同一致时不重复生成(tmp_path, monkeypatch):
+    request_dir = tmp_path / "requests"
+    specs = tmp_path / "specs"
+    output = tmp_path / "output"
+    request_dir.mkdir()
+    specs.mkdir()
+    (output / "demo").mkdir(parents=True)
+    req = _request()
+    req["slug"] = "demo"
+    path = request_dir / "demo.json"
+    path.write_text(__import__("json").dumps(req), encoding="utf-8")
+    spec = request_builder.build_spec(req, ["谢谢大家"], duration=900.0)
+    (specs / "demo.json").write_text(
+        __import__("json").dumps(spec), encoding="utf-8")
+    (output / "demo" / "cap_asr.json3").write_text("{}", encoding="utf-8")
+    monkeypatch.setattr(request_builder, "SPECS", specs)
+    monkeypatch.setattr(request_builder, "OUTDIR", output)
+
+    assert not request_builder.is_pending(path)
+
+
+@pytest.mark.parametrize(
+    ("mutate", "description"),
+    [
+        (lambda req: req["cover"].update(frame_at=180.0), "封面时间点"),
+        (lambda req: req["cover"].update(
+            shot_type="close_up", zoom=1.9, focus_y=0.9), "封面近景构图"),
+        (lambda req: req["subject"].update(name="另一位球员"), "主角"),
+        (lambda req: req["opening"].update(kind="match_point"), "冷开场决定"),
+    ],
+)
+def test_人工请求关键合同漂移会自动重新进入生成队列(
+    tmp_path, monkeypatch, mutate, description
+):
+    specs = tmp_path / "specs"
+    output = tmp_path / "output"
+    specs.mkdir()
+    (output / "demo").mkdir(parents=True)
+    original = _request()
+    original["slug"] = "demo"
+    spec = request_builder.build_spec(original, ["谢谢大家"], duration=900.0)
+    (specs / "demo.json").write_text(
+        __import__("json").dumps(spec), encoding="utf-8")
+    (output / "demo" / "cap_asr.json3").write_text("{}", encoding="utf-8")
+    changed = __import__("copy").deepcopy(original)
+    mutate(changed)
+    path = tmp_path / "demo.json"
+    path.write_text(__import__("json").dumps(changed), encoding="utf-8")
+    monkeypatch.setattr(request_builder, "SPECS", specs)
+    monkeypatch.setattr(request_builder, "OUTDIR", output)
+
+    assert request_builder.is_pending(path), f"{description}变化不能被已有 spec 静默吞掉"
+
+
+def test_封面近景参数必须在安全范围内():
+    assert clip_builder._cover_framing(
+        {"shot_type": "close_up", "zoom": 1.9, "focus_y": 0.9}
+    ) == (1.9, 0.9)
+    with pytest.raises(SystemExit, match="zoom"):
+        clip_builder._cover_framing({"zoom": 3.0})
+    with pytest.raises(SystemExit, match="focus_y"):
+        clip_builder._cover_framing({"focus_y": -0.1})
 
 
 def test_人工请求在翻译前与渲染使用同一套语气词清理(tmp_path, monkeypatch):
