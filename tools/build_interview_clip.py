@@ -1235,9 +1235,10 @@ def header_runs(spec: dict) -> tuple[list[tuple[str, str, str]], ...]:
                 f"{slug} 要用人物主标题却缺 `subject.name`——HEADA 主标题"
                 "不知道该写谁，不能退回只有典礼小标题的版式。")
         return (
-            [# 两次正式 runner artifact 都证明：HEADSUBJECT 一旦走“竖条 run +
-             # 中途 \r + 粗体 run”，整条大标题会是 0 像素，而同一份 ASS 的
-             # Noto Regular 小标题稳定可见。人物主标题因此收敛为**一个可见 run**：
+            [# 两次正式 runner artifact 都证明：“竖条 run + 中途 \r + 粗体 run”
+             # 这一组合在生产里是 0 像素，而同一份 ASS 的 Noto Regular 小标题
+             # 稳定可见。artifact 不能唯一隔离是哪个变量触发 runner 差异，所以
+             # 人物主标题一次移除三个变量，收敛为**一个可见 run**：
              # 同一 Noto Regular、白色、54px；主次由 54/38 的确定字号建立，
              # 不再用装饰竖条或切换字重触发版本敏感路径。
              (f"{name} · {kind}", "zh", r"\c&HFFFFFF&", _HEAD_SIZE["a"])],
