@@ -1242,6 +1242,8 @@ def header_runs(spec: dict) -> tuple[list[tuple[str, str, str]], ...]:
              # 颜色也显式写白，不能只赌 `\r` 会在每个 libass nightly 上把
              # 前一段竖条的品牌绿完整复位。否则标题即使存在也会被浅色像素闸
              # 判成 0；更糟的是肉眼会把绿字和竖条看成一整块强调色。
+             # `\b1` 是 ASS 的粗体布尔值，libass 会把它映射为 weight 700；
+             # 真实源片预检会要求该请求实际落到 Noto Bold。
              (f"{name} · {kind}", "zh", r"\b1\c&HFFFFFF&",
               _HEAD_SIZE["a"])],
             [(ev, "zh", "", _HEAD_SIZE["b"])],
@@ -1348,15 +1350,16 @@ def header_ass(spec: dict) -> tuple[str, str]:
             size_tag = rf"\fs{size}"
         return rf"{{\r\fn{_ASS_NAME[kind]}{size_tag}{tags}}}{text}"
 
-    # `MarginV` 继续作为 Style 的可读合同，但生产事件再钉一份绝对锚点，绕开
-    # libass nightly 对同屏顶栏的 margin/collision 布局差异。`\pos` 是整行标签，
-    # 放在最后一个 run 里，后面不会再有 `\r` 把它复位；它仍作用于整条 Dialogue。
+    # `MarginV` 继续作为 Style 的可读合同，但生产事件再钉一份绝对锚点。ASS 的
+    # 行级定位标签必须出现在**任何可见文本之前**：费德勒失败探针把 `\pos` 放在
+    # 第二个 run，前面已经画过竖条 `▍`，runner 因而整条 HEADSUBJECT 都没进入
+    # shaping/fontselect。位置标签钉在第一个 override block；后续 `\r` 只复位
+    # 字形样式，不会把已经解析的行级位置改回去。
     def _line(runs: list[tuple[str, str, str, int]], top: int) -> str:
-        last = len(runs) - 1
         return "".join(
             _run(text, kind,
                  tags + (rf"\an8\pos({CANVAS_W // 2},{top})"
-                         if i == last else ""),
+                         if i == 0 else ""),
                  size)
             for i, (text, kind, tags, size) in enumerate(runs)
         )
@@ -1452,6 +1455,10 @@ def assert_topbar_font_log(stderr: str, spec: dict) -> None:
         if "dejavu" in mapped.lower() or "noto" not in mapped.lower():
             raise SystemExit(
                 f"顶栏字体预检中 {label} 没有落到 Noto：{matches[-1].strip()}")
+        if weight == 700 and "bold" not in mapped.lower():
+            raise SystemExit(
+                f"顶栏字体预检中 {label} 没有落到 Noto Bold："
+                f"{matches[-1].strip()}")
 
 
 # 中文行尾吊在这些字上，就是把一个意思劈成两半——和英文那边
