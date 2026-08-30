@@ -915,51 +915,51 @@ def test_渲染后顶栏像素闸能抓住只有小标题(tmp_path, monkeypatch)
     ass = tmp_path / "topbar.ass"
     clip.write_ass([], [], 0.0, ass, spec=spec, duration=1.0)
     ass_text = ass.read_text(encoding="utf-8")
-    assert "Style: HEADSUBJECT,Noto Sans CJK SC,54,&H00FFFFFF," in ass_text
-    assert "Dialogue: 2," in ass_text and ",HEADSUBJECT," in ass_text
-    assert "Dialogue: 1," in ass_text and ",HEADB," in ass_text
-    main_dialogue = next(
-        line for line in ass_text.splitlines() if ",HEADSUBJECT," in line)
-    context_dialogue = next(
-        line for line in ass_text.splitlines() if ",HEADB," in line)
-    assert "▍" not in main_dialogue and r"\b" not in main_dialogue
-    assert main_dialogue.count(r"{\r") == 1
-    assert main_dialogue.count(r"\fnNoto Sans CJK SC") == 1
-    assert main_dialogue.count(r"\fn") == 1
-    assert context_dialogue.count(r"\fnNoto Sans CJK SC") == 1
-    assert context_dialogue.count(r"\fn") == 1 and r"\b" not in context_dialogue
-    assert main_dialogue.index(r"\an8\pos") < main_dialogue.index("费德勒"), (
-        "最终 HEADSUBJECT 必须是先定位、后正文的单一可见事件")
+    assert "Style: HEADSUBJECT" not in ass_text
+    assert ass_text.count("Style: HEADB,") == 1
+    assert not any(
+        line.startswith("Dialogue:") and "费德勒" in line
+        for line in ass_text.splitlines()), (
+        "人物顶栏已经预栅格，ASS 里不能再叠一层版本敏感的主/副标题事件")
+
+    topbar_png = clip._subject_topbar_png(spec, tmp_path)
+    assert topbar_png and topbar_png.exists()
 
     def _render(src_ass: Path, dest: Path) -> str:
         proc = subprocess.run(
             ["ffmpeg", "-hide_banner", "-loglevel", "verbose", "-nostats", "-y",
              "-f", "lavfi", "-i", "color=c=0x00120b:s=1080x1440:d=1:r=25",
-             "-vf", f"subtitles={src_ass}:fontsdir={ROOT / 'assets/fonts'}",
+             "-filter_complex",
+             f"movie={topbar_png},format=rgba[t];[0:v][t]overlay=0:0[v];"
+             f"[v]subtitles={src_ass}:fontsdir={ROOT / 'assets/fonts'}[out]",
+             "-map", "[out]",
              "-c:v", "libx264", "-pix_fmt", "yuv420p", str(dest)],
             capture_output=True, text=True, check=False)
         assert proc.returncode == 0, proc.stderr
         return proc.stderr
 
-    good = tmp_path / "two-lines.mp4"
-    font_log = _render(ass, good)
+    good = tmp_path / "raster-topbar.mp4"
+    _render(ass, good)
     clip.assert_rendered_topbar(good, spec)
-    clip.assert_topbar_font_log(font_log, spec)
 
-    bad_ass = tmp_path / "only-small-title.ass"
-    bad_ass.write_text("\n".join(
-        line for line in ass.read_text(encoding="utf-8").splitlines()
-        if ",HEADSUBJECT," not in line) + "\n", encoding="utf-8")
+    # 抹掉 PNG 的上半带，精确复现“主缺、小正常”，像素闸必须 fail closed。
+    from PIL import Image, ImageDraw
+    with Image.open(topbar_png).convert("RGBA") as broken:
+        ImageDraw.Draw(broken).rectangle(
+            (0, 0, clip.CANVAS_W, clip._TOPBAR_BAND_SPLIT_Y),
+            fill=(0, 0, 0, 0))
+        broken.save(topbar_png)
     bad = tmp_path / "only-small-title.mp4"
-    _render(bad_ass, bad)
+    _render(ass, bad)
     with pytest.raises(SystemExit) as bad_exc:
         clip.assert_rendered_topbar(bad, spec)
-    assert "HEADA 主标题" in str(bad_exc.value)
-    assert "HEADB 小标题" not in str(bad_exc.value), (
+    assert "主标题带区" in str(bad_exc.value)
+    assert "小标题带区" not in str(bad_exc.value), (
         "回归片必须精确复现正式 artifact 的主标题缺失、小标题仍正常")
 
     render_src = inspect.getsource(clip.render)
     assert "_topbar_probe.mp4" in render_src
+    assert "_subject_topbar_png(spec, outdir)" in render_src
     assert render_src.index("assert_rendered_topbar(topbar_probe, spec)") < \
         render_src.index("assert_topbar_font_log(proc.stderr, spec)"), (
             "预烧失败要先报告真实缺失的像素带区，再报告字体证据")
@@ -1014,8 +1014,10 @@ def test_顶栏有明确时长时覆盖到片尾而不是停在最后一句(tmp_
     clip.write_ass([{"a": 0.0, "b": 0.2, "en": "Thank you."}], ["谢谢"],
                    0.0, ass, spec=spec, duration=1.0)
     text = ass.read_text(encoding="utf-8")
-    assert "Dialogue: 2,0:00:00.00,0:00:01.00,HEADSUBJECT" in text
-    assert "Dialogue: 1,0:00:00.00,0:00:01.00,HEADB" in text
+    assert "Dialogue: 2,0:00:00.00,0:00:01.00" not in text
+    assert "Dialogue: 1,0:00:00.00,0:00:01.00" not in text
+    assert clip.header_lines(spec) == (
+        "费德勒 · 名人堂入选致辞", "2026 国际网球名人堂入选典礼")
 
 
 def test_顶栏说清这是哪一场():
@@ -5313,7 +5315,11 @@ def test_lead_in不带subs时仍要烧顶栏():
     src = (ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8")
     body = _code_only(src.split("def _lead_in_segment(")[1].split("\ndef ")[0])
     assert "elif wants_topbar(spec)" in body, "没有 subs 时要有单独烧顶栏那一支"
-    assert body.count("subtitles=") >= 2, "有 subs 和没 subs 各自要有能烧字幕的那条路"
+    assert "subtitles=" in body, "有 subs 时必须保留正文字幕滤镜"
+    assert "_subject_topbar_png(spec, outdir)" in body, (
+        "人物主标题的无字幕 lead-in 必须走预栅格顶栏，不能因为没有对白而消失")
+    assert 'use_ass = topbar_layout(spec) != "subject_primary"' in body, (
+        "普通采访仍走 ASS 顶栏，人物版式才切到明确字体文件的 PNG")
 
 
 def test_lead_in带subs时字幕和顶栏都要烧出来(tmp_path, monkeypatch):
