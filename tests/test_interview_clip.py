@@ -859,7 +859,7 @@ def test_名人堂顶栏以人物内容为大标题_典礼为小标题(monkeypat
     main_ass, context_ass = clip.header_ass(spec)
     assert rf"\fs{clip._HEAD_SIZE['a']}" in main_ass
     assert rf"\fs{clip._HEAD_SIZE['b']}" in context_ass
-    assert r"\fnNoto Sans CJK SC" in main_ass and r"\b1" in main_ass, (
+    assert r"\fnNoto Sans CJK SC" in main_ass and r"\b700" in main_ass, (
         "名人堂主标题要走已在最终片证明能出像素的 Noto 粗体，"
         "不能再次押注曾整行消失的显示体加载")
     assert r"\c&HFFFFFF&" in main_ass, "主标题要显式写白，不能只靠 \\r 复位竖条绿"
@@ -909,21 +909,25 @@ def test_渲染后顶栏像素闸能抓住只有小标题(tmp_path, monkeypatch)
     ass = tmp_path / "topbar.ass"
     clip.write_ass([], [], 0.0, ass, spec=spec, duration=1.0)
     ass_text = ass.read_text(encoding="utf-8")
-    assert "Style: HEADSUBJECT,Noto Sans CJK SC" in ass_text
+    assert "Style: HEADSUBJECT,Noto Sans CJK SC,54,&H00FFFFFF," in ass_text
+    assert ",700,0,0,0,100,100," in next(
+        line for line in ass_text.splitlines() if line.startswith("Style: HEADSUBJECT,"))
     assert "Dialogue: 2," in ass_text and ",HEADSUBJECT," in ass_text
     assert "Dialogue: 1," in ass_text and ",HEADB," in ass_text
 
-    def _render(src_ass: Path, dest: Path) -> None:
+    def _render(src_ass: Path, dest: Path) -> str:
         proc = subprocess.run(
-            ["ffmpeg", "-hide_banner", "-loglevel", "error", "-y",
+            ["ffmpeg", "-hide_banner", "-loglevel", "verbose", "-nostats", "-y",
              "-f", "lavfi", "-i", "color=c=0x00120b:s=1080x1440:d=1:r=25",
              "-vf", f"subtitles={src_ass}:fontsdir={ROOT / 'assets/fonts'}",
              "-c:v", "libx264", "-pix_fmt", "yuv420p", str(dest)],
             capture_output=True, text=True, check=False)
         assert proc.returncode == 0, proc.stderr
+        return proc.stderr
 
     good = tmp_path / "two-lines.mp4"
-    _render(ass, good)
+    font_log = _render(ass, good)
+    clip.assert_topbar_font_log(font_log, spec)
     clip.assert_rendered_topbar(good, spec)
 
     bad_ass = tmp_path / "only-small-title.ass"
