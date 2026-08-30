@@ -1049,6 +1049,7 @@ Format: Name, Fontname, Fontsize, PrimaryColour, OutlineColour, BackColour, Bold
 Style: EN,{_EN_FONT},{_FONT_SIZE['en']},&H00FFFFFF,&H00000000,&H00000000,1,0,0,0,100,100,0,0,1,0,0,8,64,64,{_EN_TOP},1
 Style: ZH,{_ZH_FONT},{_FONT_SIZE['zh']},&H0074DCC3,&H00000000,&H00000000,1,0,0,0,100,100,0,0,1,0,0,8,64,64,{_ZH_TOP},1
 Style: HEADA,{_HEAD_FONT},{_HEAD_SIZE['a']},&H00FFFFFF,&H00000000,&H00000000,0,0,0,0,100,100,1,0,1,0,0,8,48,48,{_HEAD_A_TOP},1
+Style: HEADSUBJECT,{_ZH_FONT},{_HEAD_SIZE['a']},&H00FFFFFF,&H00000000,&H00000000,1,0,0,0,100,100,1,0,1,0,0,8,48,48,{_HEAD_A_TOP},1
 Style: HEADB,{_ZH_FONT},{_HEAD_SIZE['b']},&H00DBE2D5,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,1.5,0,8,48,48,{_HEAD_B_TOP},1
 
 [Events]
@@ -1165,6 +1166,19 @@ def wants_topbar(spec: dict) -> bool:
     return False
 
 
+def topbar_layout(spec: dict) -> str:
+    """返回顶栏语义布局；人物/赛事主标题的判定只能有这一处出处。"""
+    layout = spec.get("topbar_layout") or (
+        "subject_primary"
+        if spec.get("ceremony_subtype") == "hall_of_fame_induction"
+        else "event_primary")
+    if layout not in {"event_primary", "subject_primary"}:
+        raise SystemExit(
+            f"{spec.get('slug', '?')} 的 `topbar_layout` 是 {layout!r}——只认 "
+            "`event_primary` / `subject_primary`，不能猜哪一行是大标题。")
+    return layout
+
+
 def header_runs(spec: dict) -> tuple[list[tuple[str, str, str]], ...]:
     """顶栏两行，**拆成一段一段**：`(文本, 字体 kind, 颜色覆盖或 "")`。
 
@@ -1213,14 +1227,7 @@ def header_runs(spec: dict) -> tuple[list[tuple[str, str, str]], ...]:
     # 名人堂入选不是一场比赛。主标题要回答「谁在做什么」，典礼名只作语境。
     # 不能复用 push.summary：那是推送文案，编辑为了标题长度随时可能改；顶栏
     # 的事实层直接绑定正式 subject 和 interview_kind，缺任何一项都 fail closed。
-    layout = spec.get("topbar_layout") or (
-        "subject_primary"
-        if spec.get("ceremony_subtype") == "hall_of_fame_induction"
-        else "event_primary")
-    if layout not in {"event_primary", "subject_primary"}:
-        raise SystemExit(
-            f"{slug} 的 `topbar_layout` 是 {layout!r}——只认 "
-            "`event_primary` / `subject_primary`，不能猜哪一行是大标题。")
+    layout = topbar_layout(spec)
     if layout == "subject_primary":
         subject = spec.get("subject") or {}
         if not (name := str(subject.get("name") or "").strip()):
@@ -1232,7 +1239,11 @@ def header_runs(spec: dict) -> tuple[list[tuple[str, str, str]], ...]:
              # 这条生产成片曾出现 HEADA 得意黑整行没形成像素、而 Noto 的
              # HEADB 正常显示。名人堂主标题优先保证人物身份可见：显式走已验证
              # 的 Noto 并加粗，不把发布资格押在显示体加载是否一致上。
-             (f"{name} · {kind}", "zh", r"\b1", _HEAD_SIZE["a"])],
+             # 颜色也显式写白，不能只赌 `\r` 会在每个 libass nightly 上把
+             # 前一段竖条的品牌绿完整复位。否则标题即使存在也会被浅色像素闸
+             # 判成 0；更糟的是肉眼会把绿字和竖条看成一整块强调色。
+             (f"{name} · {kind}", "zh", r"\b1\c&HFFFFFF&",
+              _HEAD_SIZE["a"])],
             [(ev, "zh", "", _HEAD_SIZE["b"])],
         )
 
@@ -1337,11 +1348,21 @@ def header_ass(spec: dict) -> tuple[str, str]:
             size_tag = rf"\fs{size}"
         return rf"{{\r\fn{_ASS_NAME[kind]}{size_tag}{tags}}}{text}"
 
-    return tuple(
-        "".join(_run(text, kind, tags, size)
-                for text, kind, tags, size in runs)
-        for runs in header_runs(spec)
-    )
+    # `MarginV` 继续作为 Style 的可读合同，但生产事件再钉一份绝对锚点，绕开
+    # libass nightly 对同屏顶栏的 margin/collision 布局差异。`\pos` 是整行标签，
+    # 放在最后一个 run 里，后面不会再有 `\r` 把它复位；它仍作用于整条 Dialogue。
+    def _line(runs: list[tuple[str, str, str, int]], top: int) -> str:
+        last = len(runs) - 1
+        return "".join(
+            _run(text, kind,
+                 tags + (rf"\an8\pos({CANVAS_W // 2},{top})"
+                         if i == last else ""),
+                 size)
+            for i, (text, kind, tags, size) in enumerate(runs)
+        )
+
+    main, context = header_runs(spec)
+    return (_line(main, _HEAD_A_TOP), _line(context, _HEAD_B_TOP))
 
 
 def _topbar_light_pixel_counts(rgb: bytes) -> tuple[int, int]:
@@ -1405,6 +1426,32 @@ def assert_rendered_topbar(film: Path, spec: dict) -> None:
             f"（每行至少 {_TOPBAR_MIN_TEXT_PIXELS}）。\n"
             "ASS 有 Dialogue 不算通过；主标题和赛事语境必须在编码后的成片里"
             "同时可见，不能发布只有小标题的版本。")
+
+
+def assert_topbar_font_log(stderr: str, spec: dict) -> None:
+    """证明预检用 Noto CJK 真字形画了顶栏，不接受 tofu 像素假绿。"""
+    lowered = stderr.lower()
+    if ("failed to find any fallback with glyph" in lowered
+            or re.search(r"glyph.*not found", stderr, re.I)):
+        raise SystemExit(
+            "顶栏字体预检发现缺失中文字形；像素可能只是 tofu 方框，不能发布。")
+
+    font_lines = [line for line in stderr.splitlines() if "fontselect:" in line]
+    required = [(400, "小标题常规体")]
+    if topbar_layout(spec) == "subject_primary":
+        required.insert(0, (700, "主标题粗体"))
+    for weight, label in required:
+        requested = re.compile(
+            rf"fontselect:\s*\(Noto Sans CJK SC,\s*{weight},\s*0\)", re.I)
+        matches = [line for line in font_lines if requested.search(line)]
+        if not matches:
+            raise SystemExit(
+                f"顶栏字体预检没有记录 {label} Noto Sans CJK SC/{weight} 的"
+                " fontselect，无法证明真实中文字形已加载。")
+        mapped = "\n".join(matches).split("->", 1)[-1]
+        if "dejavu" in mapped.lower() or "noto" not in mapped.lower():
+            raise SystemExit(
+                f"顶栏字体预检中 {label} 没有落到 Noto：{matches[-1].strip()}")
 
 
 # 中文行尾吊在这些字上，就是把一个意思劈成两半——和英文那边
@@ -1518,10 +1565,10 @@ def write_ass(lines: list[dict], zh: list[str], clip_start: float, path: Path,
     if spec is not None and wants_topbar(spec):
         # 顶栏一直挂着：整条片子从头到尾都要能回答「这是哪一场」。
         # 刷到中段的人没看过封面，而封面只有 1.8 秒。
-        if lines:
-            topbar_end = lines[-1]["b"] - clip_start
-        elif duration is not None:
+        if duration is not None:
             topbar_end = duration
+        elif lines:
+            topbar_end = lines[-1]["b"] - clip_start
         else:
             raise SystemExit(
                 f"{spec.get('slug', '?')} 没有字幕行却要顶栏——`duration` 没给，"
@@ -1530,8 +1577,13 @@ def write_ass(lines: list[dict], zh: list[str], clip_start: float, path: Path,
         a, b = _ts(0.0), _ts(topbar_end)
         header_lines(spec)                    # 先过宽度闸
         head_a, head_b = header_ass(spec)
-        ev.append(f"Dialogue: 0,{a},{b},HEADA,,0,0,0,,{head_a}")
-        ev.append(f"Dialogue: 0,{a},{b},HEADB,,0,0,0,,{head_b}")
+        layout = topbar_layout(spec)
+        head_a_style = "HEADSUBJECT" if layout == "subject_primary" else "HEADA"
+        # HEADA / HEADB 放在不同 layer，固定位置和颜色，绕开 runner/libass
+        # 版本敏感的同屏布局与 Style 复位路径。现有 artifact 无法唯一证明旧片
+        # 是碰撞、MarginV 还是颜色复位导致，所以不把任一猜测写成已证实根因。
+        ev.append(f"Dialogue: 2,{a},{b},{head_a_style},,0,0,0,,{head_a}")
+        ev.append(f"Dialogue: 1,{a},{b},HEADB,,0,0,0,,{head_b}")
     # 没有台词就到此为止——`highlight_en` 是给对白上色的，没有对白就没什么
     # 可高亮，硬跑下去只会拿一份空 `lines` 去比对 `spec.highlight_en`，
     # 把顶栏都没配文案这件事误判成「短语一个都没匹配上」。
@@ -3705,6 +3757,29 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
         # 一个目录，不是替换。验过：只给这个目录，中文照样渲得出来。
         f"[v]subtitles={ass}:fontsdir={ROOT / 'assets/fonts'}[out]"
     )
+
+    # 先拿**同一份源片、同一条 filter_complex、同一份 ASS** 烧 1 秒，再去跑
+    # 28 分钟全片。纯色测试只能证明 ASS 语法成立，证明不了生产源片＋libass 的
+    # 实际布局；费德勒这条就曾在完整编码 18 分钟后才发现 HEADA 被碰撞算法移出
+    # 画布。这个探针最多编码 1 秒，任一顶栏缺失会在昂贵编码之前 fail closed。
+    if wants_topbar(spec):
+        topbar_probe = outdir / "_topbar_probe.mp4"
+        proc = subprocess.run(
+            ["ffmpeg", "-hide_banner", "-loglevel", "verbose", "-nostats", "-y",
+             "-ss", str(spec["start"]), "-t", "1", "-i", str(src),
+             "-filter_complex", chain, "-map", "[out]", "-an", "-t", "1",
+             "-c:v", "libx264", "-preset", "ultrafast", "-crf", "18",
+             "-r", "25", "-pix_fmt", "yuv420p", "-color_range", "tv",
+             "-movflags", "+faststart", str(topbar_probe)],
+            capture_output=True, text=True, check=False, timeout=120)
+        if proc.returncode:
+            raise SystemExit("真实源片顶栏预检编码失败：\n" + proc.stderr[-1200:])
+        font_evidence = "\n".join(
+            line for line in proc.stderr.splitlines() if "fontselect:" in line)
+        print("[顶栏字体预检]\n" + (font_evidence or "（没有 fontselect 记录）"))
+        assert_topbar_font_log(proc.stderr, spec)
+        assert_rendered_topbar(topbar_probe, spec)
+
     body = outdir / "_body.mp4"
     subprocess.run(
         ["ffmpeg", "-y", "-ss", str(spec["start"]), "-t", str(dur), "-i", str(src),
@@ -3948,7 +4023,8 @@ def main() -> int:
             print(f"{i:2d}. {seg['a']:7.1f}  {seg['en']}")
         print(f"\n把 {len(lines)} 行中文按顺序填进 {args.spec} 的 zh 数组里再跑一次。")
         return 0
-    write_ass(lines, zh, spec["start"], ass, spec)
+    write_ass(lines, zh, spec["start"], ass, spec,
+              duration=spec["end"] - spec["start"])
     print(f"字幕 {len(lines)} 组双语 → {ass}")
     # 核对表每次都出：它是人干活时看的那一份，落后于 spec 就没用了。
     review_sheet(spec, lines, outdir)

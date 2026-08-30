@@ -17,6 +17,9 @@ on:
       # 同一 slug 修字幕、封面或空档销账后，spec SHA 会与已落地 QC 不同；
       # 必须立刻叫醒输入指纹闸，不能等下一趟定时班次。
       - "specs/interviews/*.json"
+      # 渲染器本身的字幕、顶栏、封面或发布闸修正也必须叫醒重渲；否则修复合并
+      # 后只能碰运气等 schedule。
+      - "tools/build_interview_clip.py"
       - "tools/build_interview_request.py"
       - "tools/draft_interview_spec.py"
       - "tools/interview_source_gate.py"
