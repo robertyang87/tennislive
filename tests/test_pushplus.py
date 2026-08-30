@@ -623,9 +623,10 @@ def test_推送成功要把流水号打进日志(monkeypatch, capsys):
         json=Mock(return_value={"code": 200, "msg": "请求成功",
                                 "data": "abc123def456"}))))
 
-    pushplus.push("标题", "<p>hi</p>", token="t")
+    receipt = pushplus.push("标题", "<p>hi</p>", token="t")
 
     out = capsys.readouterr().out
+    assert receipt == "abc123def456"
     assert "abc123def456" in out, f"流水号没进日志：{out!r}"
     # 反面：不许只说「成功」就完事——那正是这次查不下去的原因
     assert "只代表接口收下" in out, f"没说清 200 意味着什么：{out!r}"
