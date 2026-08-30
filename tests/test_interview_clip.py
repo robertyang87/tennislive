@@ -28,7 +28,11 @@ from tools.build_interview_clip import (
     CROP_RATIO,
     CROP_SHIFT_MAX,
     CAPTION_GAP_SECS,
+    GAP_VAD_ATTESTATION,
+    GAP_VAD_MAX_SPEECH_SECS,
     ROOT,
+    _speech_overlap_seconds,
+    auto_silent_gap_keys,
     caption_gaps,
     check_human_quote,
     check_source_contract,
@@ -36,6 +40,7 @@ from tools.build_interview_clip import (
     header_lines,
     review_sheet,
     segment,
+    transcript_fingerprint,
     wants_topbar,
     write_ass,
     zh_problems,
@@ -458,6 +463,45 @@ def test_空档的键按秒写不按序号():
     而且它不吭声：数量对得上，内容全串了。"""
     assert gap_key(431.64, 434.88) == "431.6-434.9"
     assert gap_key(5.0, 8.4) == "5.0-8.4"
+
+
+def test_语言无关VAD只量空档核心区且重叠不重复计时():
+    gap = (10.0, 14.0)
+    # 两端 350ms 属于相邻字幕的自然拖尾，不算空档内人声。
+    assert _speech_overlap_seconds(gap, [(9.8, 10.2), (13.8, 14.2)]) == 0
+    # 核心区两段互相重叠，只能按并集计一次。
+    assert _speech_overlap_seconds(gap, [(11.0, 12.0), (11.5, 12.5)]) == 1.5
+
+
+def test_VAD自动销账必须绑定当前指纹且不能和第二ASR词冲突(tmp_path):
+    lines = [{"en": "hello"}]
+    spec = {"asr_model": "small.en", "whisper_model": "medium.en",
+            "en_fixed": {}}
+    fp = transcript_fingerprint(spec, lines, tmp_path)
+    proof = {
+        "status": "pass",
+        "method": "silero_vad_language_independent",
+        "sha256": fp,
+        "results": [{
+            "key": "3.0-6.0", "status": "no_speech", "speech_seconds": 0.0,
+            "second_asr_words": [],
+        }, {
+            # 即使 status 被误写成 no_speech，只要第二 ASR 有词也绝不放行。
+            "key": "8.0-11.0", "status": "no_speech", "speech_seconds": 0.0,
+            "second_asr_words": ["bonjour"],
+        }],
+    }
+    (tmp_path / GAP_VAD_ATTESTATION).write_text(
+        json.dumps(proof), encoding="utf-8")
+    assert auto_silent_gap_keys(spec, lines, tmp_path) == {"3.0-6.0"}
+
+    # 字幕、订正或模型一变，旧证据立即失效。
+    assert auto_silent_gap_keys(spec, [{"en": "hello again"}], tmp_path) == set()
+    proof["sha256"] = transcript_fingerprint(spec, lines, tmp_path)
+    proof["results"][0]["speech_seconds"] = GAP_VAD_MAX_SPEECH_SECS + 0.001
+    (tmp_path / GAP_VAD_ATTESTATION).write_text(
+        json.dumps(proof), encoding="utf-8")
+    assert auto_silent_gap_keys(spec, lines, tmp_path) == set()
 
 
 def test_核对表把空档单独列一节(tmp_path):

@@ -44,8 +44,9 @@ not a bot`，`tv` 报 `This video is DRM protected`，默认的 `android vr`
   「源说了什么」，谁也不管「源什么都没说」。伊埃拉那条就这么漏了 3.2 秒：主持人
   把话筒交给她谢菲律宾球迷，她开口了，而 YouTube 的自动字幕在那一段**一个事件
   都没有**——于是成片上那 3.2 秒是空白，还通过了全部校验。见 `caption_gaps`。
-  ⚠️ **机器只把空档找出来，不判断它是什么**：没人说话、掌声、还是球员换了母语，
-  `small.en` 一律给空白，分不出来。那一档明说出来交给人，别再加模型去猜。
+  英语 ASR 的空白不能判断它是什么：没人说话、掌声、还是球员换了母语，
+  `small.en` 都可能给空白。verify 另跑语言无关的 Silero VAD；只有核心区无人声且
+  第二 ASR 也没有词才自动销账。VAD 检出人声的一律继续红灯，不猜语言和内容。
 
 用法：
     python tools/build_interview_clip.py --spec specs/interviews/<slug>.json --stage subs
@@ -1650,6 +1651,9 @@ def _second_model(spec: dict) -> str:
 
 
 VERIFY_FP = "verify_fingerprint.json"
+GAP_VAD_ATTESTATION = "gap_vad_attestation.json"
+GAP_VAD_EDGE_PAD_SECS = 0.35
+GAP_VAD_MAX_SPEECH_SECS = 0.12
 
 
 def transcript_fingerprint(spec: dict, lines: list[dict], outdir: Path) -> str:
@@ -1696,6 +1700,109 @@ def transcript_auto_verified(spec: dict, lines: list[dict], outdir: Path) -> boo
         return False
     return (recorded.get("status") == "pass"
             and recorded.get("sha256") == transcript_fingerprint(spec, lines, outdir))
+
+
+def _speech_overlap_seconds(gap: tuple[float, float],
+                            speech: list[tuple[float, float]]) -> float:
+    """语言无关 VAD 在空档核心区检测到多少秒人声。
+
+    空档两端各缩 350ms，避开相邻字幕对应话音的自然拖尾；两秒以上的空档仍
+    留有足够大的核心区。区间取并集，防重叠 VAD 段重复计时。
+    """
+    lo, hi = gap[0] + GAP_VAD_EDGE_PAD_SECS, gap[1] - GAP_VAD_EDGE_PAD_SECS
+    if hi <= lo:
+        return 0.0
+    clipped = sorted((max(lo, a), min(hi, b)) for a, b in speech
+                     if min(hi, b) > max(lo, a))
+    merged: list[list[float]] = []
+    for a, b in clipped:
+        if merged and a <= merged[-1][1]:
+            merged[-1][1] = max(merged[-1][1], b)
+        else:
+            merged.append([a, b])
+    return round(sum(b - a for a, b in merged), 3)
+
+
+def attest_gap_silence(spec: dict, lines: list[dict], outdir: Path,
+                       audio: Path,
+                       asr_words: list[tuple[float, float, str]]) -> Path:
+    """用 Silero VAD 给字幕空档留下语言无关的人声证据。
+
+    第二份英文 ASR 的「没词」不能排除非英语；VAD 只回答有没有人声，不猜
+    语言和内容。仅核心区人声不超过 120ms 的空档可自动认定为静音。检测到
+    人声的空档仍保持红灯，必须补字幕或人工听音销账。
+    """
+    from faster_whisper.audio import decode_audio  # noqa: PLC0415
+    from faster_whisper.vad import (  # noqa: PLC0415
+        VadOptions,
+        get_speech_timestamps,
+    )
+
+    sample_rate = 16000
+    samples = decode_audio(str(audio), sampling_rate=sample_rate)
+    raw = get_speech_timestamps(
+        samples,
+        VadOptions(min_speech_duration_ms=250, min_silence_duration_ms=500,
+                   speech_pad_ms=100),
+        sampling_rate=sample_rate,
+    )
+    speech = [(row["start"] / sample_rate, row["end"] / sample_rate)
+              for row in raw]
+    results = []
+    for gap in caption_gaps(spec, outdir):
+        seconds = _speech_overlap_seconds(gap, speech)
+        core = (gap[0] + GAP_VAD_EDGE_PAD_SECS,
+                gap[1] - GAP_VAD_EDGE_PAD_SECS)
+        words_here = [word for start, end, word in asr_words
+                      if max(core[0], start) < min(core[1], end)]
+        no_speech = seconds <= GAP_VAD_MAX_SPEECH_SECS and not words_here
+        results.append({
+            "key": gap_key(*gap),
+            "start": gap[0],
+            "end": gap[1],
+            "speech_seconds": seconds,
+            "second_asr_words": words_here,
+            "status": ("no_speech" if no_speech else "speech_detected"),
+        })
+    payload = {
+        "status": "pass",
+        "method": "silero_vad_language_independent",
+        "sha256": transcript_fingerprint(spec, lines, outdir),
+        "edge_pad_seconds": GAP_VAD_EDGE_PAD_SECS,
+        "max_speech_seconds": GAP_VAD_MAX_SPEECH_SECS,
+        "results": results,
+    }
+    path = outdir / GAP_VAD_ATTESTATION
+    path.write_text(json.dumps(payload, ensure_ascii=False, indent=1) + "\n",
+                    encoding="utf-8")
+    quiet = sum(row["status"] == "no_speech" for row in results)
+    print(f"[空档 VAD] {quiet}/{len(results)} 处核心区无人声；其余仍需补字幕或听音。"
+          f"证据 → {path}")
+    for row in results:
+        if row["status"] != "no_speech":
+            words = " ".join(row["second_asr_words"]) or "—"
+            print(f"[空档 VAD] 保持红灯 {row['key']}：人声 {row['speech_seconds']:.3f}s，"
+                  f"第二 ASR 词={words}")
+    return path
+
+
+def auto_silent_gap_keys(spec: dict, lines: list[dict], outdir: Path) -> set[str]:
+    """读取与当前转写指纹绑定的 VAD 静音证明；旧证据一律不复用。"""
+    path = outdir / GAP_VAD_ATTESTATION
+    if not path.is_file():
+        return set()
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return set()
+    if (payload.get("status") != "pass"
+            or payload.get("method") != "silero_vad_language_independent"
+            or payload.get("sha256") != transcript_fingerprint(spec, lines, outdir)):
+        return set()
+    return {str(row.get("key")) for row in payload.get("results", [])
+            if row.get("status") == "no_speech"
+            and not row.get("second_asr_words")
+            and float(row.get("speech_seconds", 1)) <= GAP_VAD_MAX_SPEECH_SECS}
 
 
 def verify_transcript(spec: dict, lines: list[dict], outdir: Path) -> Path:
@@ -1745,10 +1852,16 @@ def verify_transcript(spec: dict, lines: list[dict], outdir: Path) -> Path:
     model = WhisperModel(_second_model(spec), compute_type="int8")
     segs, _ = model.transcribe(str(audio), language="en", word_timestamps=True,
                                vad_filter=spec.get("whisper_vad_filter", True))
-    mine = [(w.start, w.word.strip()) for s in segs for w in (s.words or [])
-            if spec["start"] <= w.start <= spec["end"]]
+    words = [w for s in segs for w in (s.words or [])
+             if spec["start"] <= w.start <= spec["end"]]
+    mine = [(w.start, w.word.strip()) for w in words]
     (outdir / "whisper.json").write_text(
         json.dumps(mine, ensure_ascii=False, indent=1), encoding="utf-8")
+    # 英文模型没听见词不代表没人说话；另用语言无关 VAD 给每处空档作证。
+    attest_gap_silence(
+        spec, lines, outdir, audio,
+        [(w.start, w.end, w.word.strip()) for w in words],
+    )
 
     rate, theirs, ours, sm = disagree_rate(
         " ".join(seg["en"] for seg in lines), " ".join(w for _, w in mine))
@@ -3720,7 +3833,11 @@ def main() -> int:
         # **空档也要销账。** 上面那条闸盯的是「源说错了」，这条盯的是
         # 「源什么都没说」——伊埃拉那条 3.2 秒的空白就是从这个缝里漏出去的：
         # 没有词就没有分歧，两道旧闸全绿。
-        if holes := _unresolved_gaps(spec, caption_gaps(spec, outdir)):
+        manual_holes = _unresolved_gaps(spec, caption_gaps(spec, outdir))
+        auto_quiet = auto_silent_gap_keys(spec, lines, outdir)
+        if auto_quiet:
+            print(f"[空档 VAD] {len(auto_quiet)} 处由当前指纹的语言无关无人声证明销账。")
+        if holes := [g for g in manual_holes if gap_key(*g) not in auto_quiet]:
             raise SystemExit(
                 f"{args.spec} 有 {len(holes)} 处空档没销账："
                 + "、".join(f"{a - spec['start']:.1f}–{b - spec['start']:.1f} 秒（片内）"
