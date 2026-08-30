@@ -860,9 +860,11 @@ def test_名人堂顶栏以人物内容为大标题_典礼为小标题(monkeypat
     main_ass, context_ass = clip.header_ass(spec)
     assert rf"\fs{clip._HEAD_SIZE['a']}" in main_ass
     assert rf"\fs{clip._HEAD_SIZE['b']}" in context_ass
-    assert r"\fnNoto Sans CJK SC" in main_ass and r"\b" not in main_ass, (
+    assert main_ass.count(r"\fnNoto Sans CJK SC") == 1 and r"\b" not in main_ass, (
         "名人堂主标题要走已被小标题证明能稳定出像素的 Noto Regular，"
-        "不能再次进入生产 runner 会整行消失的粗体切换路径")
+        "不能再次引入尚未被 artifact 隔离的粗体/多 run 组合")
+    assert context_ass.count(r"\fnNoto Sans CJK SC") == 1
+    assert context_ass.count(r"\fn") == 1 and r"\b" not in context_ass
     assert r"\c&HFFFFFF&" in main_ass, "主标题要显式写白，不能只靠 \\r 复位竖条绿"
     assert rf"\an8\pos({clip.CANVAS_W // 2},{clip._HEAD_A_TOP})" in main_ass
     assert rf"\an8\pos({clip.CANVAS_W // 2},{clip._HEAD_B_TOP})" in context_ass
@@ -918,8 +920,14 @@ def test_渲染后顶栏像素闸能抓住只有小标题(tmp_path, monkeypatch)
     assert "Dialogue: 1," in ass_text and ",HEADB," in ass_text
     main_dialogue = next(
         line for line in ass_text.splitlines() if ",HEADSUBJECT," in line)
+    context_dialogue = next(
+        line for line in ass_text.splitlines() if ",HEADB," in line)
     assert "▍" not in main_dialogue and r"\b" not in main_dialogue
     assert main_dialogue.count(r"{\r") == 1
+    assert main_dialogue.count(r"\fnNoto Sans CJK SC") == 1
+    assert main_dialogue.count(r"\fn") == 1
+    assert context_dialogue.count(r"\fnNoto Sans CJK SC") == 1
+    assert context_dialogue.count(r"\fn") == 1 and r"\b" not in context_dialogue
     assert main_dialogue.index(r"\an8\pos") < main_dialogue.index("费德勒"), (
         "最终 HEADSUBJECT 必须是先定位、后正文的单一可见事件")
 
@@ -935,8 +943,8 @@ def test_渲染后顶栏像素闸能抓住只有小标题(tmp_path, monkeypatch)
 
     good = tmp_path / "two-lines.mp4"
     font_log = _render(ass, good)
-    clip.assert_topbar_font_log(font_log, spec)
     clip.assert_rendered_topbar(good, spec)
+    clip.assert_topbar_font_log(font_log, spec)
 
     bad_ass = tmp_path / "only-small-title.ass"
     bad_ass.write_text("\n".join(
@@ -944,8 +952,11 @@ def test_渲染后顶栏像素闸能抓住只有小标题(tmp_path, monkeypatch)
         if ",HEADSUBJECT," not in line) + "\n", encoding="utf-8")
     bad = tmp_path / "only-small-title.mp4"
     _render(bad_ass, bad)
-    with pytest.raises(SystemExit, match="HEADA 主标题"):
+    with pytest.raises(SystemExit) as bad_exc:
         clip.assert_rendered_topbar(bad, spec)
+    assert "HEADA 主标题" in str(bad_exc.value)
+    assert "HEADB 小标题" not in str(bad_exc.value), (
+        "回归片必须精确复现正式 artifact 的主标题缺失、小标题仍正常")
 
     render_src = inspect.getsource(clip.render)
     assert "_topbar_probe.mp4" in render_src
