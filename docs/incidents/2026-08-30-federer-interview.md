@@ -176,6 +176,9 @@
 - 预烧同时捕获 ffmpeg/libass 的 verbose `fontselect`：主标题 700、小标题 400
   都必须实际落到 Noto CJK；出现 DejaVu 回退或 `failed to find any fallback
   with glyph` 立即失败。这样缺字方框即使产生足够浅色像素，也不能冒充中文标题。
+- 首次启用该闸时，它准确揭示 `\b1` 在当前 libass 中请求的是 weight=1 并被
+  归一到 Regular，而不是 Bold；主标题改为显式 `\b700`，Style 的 Bold 字段
+  也写 700。以后“代码写了粗体”必须由运行时 700→Noto Bold 的日志证明。
 
 ## 仍需保持的硬闸
 
