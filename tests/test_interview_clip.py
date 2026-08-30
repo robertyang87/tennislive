@@ -73,7 +73,13 @@ SPECS = ROOT / "specs" / "interviews"
 
 
 def _specs() -> list[Path]:
-    return sorted(SPECS.glob("*.json")) if SPECS.exists() else []
+    if not SPECS.exists():
+        return []
+    # `.draft.json` 是转写/翻译的候选工作区，既不会被 renderer 选择，也不具备
+    # opening / takeaway / lead_in 等发布字段。发布质量闸只扫描正式 spec；否则
+    # 每生成一份尚待同场片头的草稿，整库 CI 都会在它转正前先被自己拦死。
+    return sorted(p for p in SPECS.glob("*.json")
+                  if not p.name.endswith(".draft.json"))
 
 
 def _code_only(src: str) -> str:
@@ -3805,7 +3811,7 @@ def test_顶栏次行要在虚化背景上读得出来():
 
 
 def _iv_specs():
-    return sorted(Path("specs/interviews").glob("*.json"))
+    return _specs()
 
 
 def test_没有解读卡的老片子只许减不许加():
