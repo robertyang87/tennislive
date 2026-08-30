@@ -83,7 +83,9 @@ def _exists_or_tracked(path: Path) -> bool:
 def is_pending(path: Path) -> bool:
     req = _read(path)
     slug = _slug(req, path)
-    return not _exists_or_tracked(SPECS / f"{slug}.json") or not _exists_or_tracked(
+    return bool(req.get("_rebuild_once")) or not _exists_or_tracked(
+        SPECS / f"{slug}.json"
+    ) or not _exists_or_tracked(
         OUTDIR / slug / "cap_asr.json3"
     )
 
@@ -356,7 +358,7 @@ def build_spec(req: dict, zh: list[str], duration: float) -> dict:
 
 
 def _build_one(path: Path, chat, *, write: bool) -> tuple[str, int, float]:
-    from build_interview_clip import segment  # noqa: PLC0415
+    from build_interview_clip import segment, strip_hesitation_lines  # noqa: PLC0415
     from draft_interview_spec import cap_json3, translate  # noqa: PLC0415
 
     req = _read(path)
@@ -372,6 +374,10 @@ def _build_one(path: Path, chat, *, write: bool) -> tuple[str, int, float]:
     end = float(requested_end) if requested_end not in (None, "") else float(duration)
     end = min(float(duration), end)
     lines = segment([(row["t"], row["text"]) for row in rows], start, end)
+    # render/verify 会在切行后清掉 um/uh 等犹豫音；初次翻译必须走完全相同的
+    # 正文行，否则长讲话会出现“中文 656 行、英文 673 行”这种必然无法渲染的
+    # spec。清理必须发生在 translate 前，不能事后硬补空行。
+    strip_hesitation_lines(lines)
     if not lines:
         raise RuntimeError(f"{slug}: 正式切行为空")
     zh = translate([{"t": row["a"], "text": row["en"]} for row in lines], chat)
@@ -391,6 +397,11 @@ def _build_one(path: Path, chat, *, write: bool) -> tuple[str, int, float]:
         (outdir / "cap_asr.json3").write_text(
             json.dumps(cap_json3(rows), ensure_ascii=False), encoding="utf-8"
         )
+        if req.pop("_rebuild_once", None) is not None:
+            path.write_text(
+                json.dumps(req, ensure_ascii=False, indent=2) + "\n",
+                encoding="utf-8",
+            )
     return slug, len(lines), duration
 
 
