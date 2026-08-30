@@ -196,7 +196,7 @@ def _publication_key(slug: str, film_hash: str) -> str:
 
 
 def _write_ledger(repo: Path, slug: str, outdir: Path, *, status: str,
-                  run_url: str, now: str) -> Path:
+                  run_url: str, now: str, receipt: str = "") -> Path:
     film_hash = validate_qc(repo, slug, outdir)
     key = _publication_key(slug, film_hash)
     ledger = _load_ledger(repo, slug)
@@ -206,6 +206,8 @@ def _write_ledger(repo: Path, slug: str, outdir: Path, *, status: str,
         current = {"key": key, "film_sha256": film_hash}
         attempts.append(current)
     current.update({"status": status, "at": now, "run": run_url})
+    if status == "sent" and receipt:
+        current["pushplus_receipt"] = receipt
     path = _ledger_path(repo, slug)
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(ledger, ensure_ascii=False, indent=2) + "\n",
@@ -220,10 +222,27 @@ def reserve(repo: Path, slug: str, outdir: Path, run_url: str, now: str) -> Path
                          run_url=run_url, now=now)
 
 
-def record(repo: Path, slug: str, outdir: Path, run_url: str, now: str) -> Path:
-    """PushPlus 正常返回后把同一幂等键改成 sent。"""
-    return _write_ledger(repo, slug, outdir, status="sent",
-                         run_url=run_url, now=now)
+def record(repo: Path, slug: str, outdir: Path, run_url: str, now: str,
+           receipt: str = "") -> Path:
+    """PushPlus 正常返回后写 sent 账本与同指纹 ``pushed.json``。"""
+    ledger_path = _write_ledger(
+        repo, slug, outdir, status="sent", run_url=run_url, now=now,
+        receipt=receipt,
+    )
+    film_hash = validate_qc(repo, slug, outdir)
+    marker = outdir / MARKER
+    marker.write_text(json.dumps({
+        "slug": slug,
+        "status": "sent",
+        "channel": "pushplus",
+        "publication_key": _publication_key(slug, film_hash),
+        "film_sha256": film_hash,
+        "pushplus_receipt": receipt,
+        "at": now,
+        "run": run_url,
+    }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    print(f"[自动推送] L4 已推送凭据：{marker}（{film_hash[:12]}…）")
+    return ledger_path
 
 
 def uncertain(repo: Path, slug: str, outdir: Path, run_url: str, now: str) -> Path:
@@ -405,6 +424,8 @@ def main(argv: list[str] | None = None) -> int:
                     help="预占后失败，更新为 uncertain（值为 outdir）")
     ap.add_argument("--run", default="", help="--record：这次运行的地址")
     ap.add_argument("--now", default="", help="--record：时间戳")
+    ap.add_argument("--receipt-file", default="",
+                    help="--record：push_reel 写下的 PushPlus 流水号 JSON")
     ap.add_argument("--repo", default=".", help="仓库根目录")
     args = ap.parse_args(argv)
 
@@ -422,7 +443,20 @@ def main(argv: list[str] | None = None) -> int:
         elif args.uncertain:
             uncertain(repo, slug, outdir, args.run, args.now)
         else:
-            record(repo, slug, outdir, args.run, args.now)
+            receipt = ""
+            if args.receipt_file:
+                try:
+                    receipt_data = json.loads(
+                        Path(args.receipt_file).read_text(encoding="utf-8")
+                    )
+                    receipt = str(receipt_data.get("receipt") or "")
+                except (OSError, ValueError, AttributeError) as exc:
+                    raise SystemExit(
+                        f"PushPlus 成功后缺少有效流水号凭据：{args.receipt_file}"
+                    ) from exc
+                if not receipt:
+                    raise SystemExit("PushPlus 返回成功但流水号为空，不写 sent 凭据")
+            record(repo, slug, outdir, args.run, args.now, receipt)
         return 0
 
     changed = args.changed

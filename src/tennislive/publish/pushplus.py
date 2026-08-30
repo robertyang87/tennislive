@@ -520,7 +520,7 @@ def push(
     timeout: int = 30,
     *,
     asset_dir: str | Path | None = None,
-) -> None:
+) -> str:
     token = token or os.environ.get("PUSHPLUS_TOKEN", "")
     if not token:
         raise PushPlusError("缺少 PUSHPLUS_TOKEN（请在环境变量或 GitHub Secrets 中配置）")
@@ -589,7 +589,8 @@ def push(
     # 哪条通道都没人知道。又一次「不吭声」，而且不吭声的正是那条本该出声的
     # 记录。判据 `test_推送成功要把流水号打进日志` 断言的是 **stdout**，
     # 不是 caplog——退回 `logger.info` 时它捕获到的是空字符串。
-    print(f"[PushPlus] 收下了：流水号 {data.get('data') or '(返回体里没有)'}"
+    receipt = str(data.get("data") or "")
+    print(f"[PushPlus] 收下了：流水号 {receipt or '(返回体里没有)'}"
           f"　图片通道 {image_provider}　msg={data.get('msg') or ''}")
     # ⚠️ **这儿原来印着一个查询 URL，那是没验证过的。**
     # `https://www.pushplus.plus/api/send/queryMessage?token=…&id=…`——照它
@@ -606,3 +607,4 @@ def push(
           "PushPlus 没有公开的投递查询接口（官方 API 文档里没有；"
           "照着猜的那个端点实测 903 用户令牌不正确），"
           "所以送达与否只能看微信本身。")
+    return receipt
