@@ -1362,6 +1362,54 @@ def header_ass(spec: dict) -> tuple[str, str]:
     return (_line(main, _HEAD_A_TOP), _line(context, _HEAD_B_TOP))
 
 
+def _subject_topbar_png(spec: dict, outdir: Path) -> Path | None:
+    """把人物主标题顶栏预栅格为透明 PNG，绕开生产 libass 的顶边差异。
+
+    三份正式 runner artifact 已依次排除字体、字重、Style 名、layer 和 ``pos``
+    顺序，却都只丢失 24px 顶锚的 54px 首行；同一 ASS 在本地旧版 libass 正常。
+    人物主标题因此不再交给 libass 排版，而是用明确的 Noto CJK TTC 文件一次
+    画成像素。正文字幕仍由 ASS 负责，普通赛后采访的既有顶栏也完全不变。
+    """
+    if not wants_topbar(spec) or topbar_layout(spec) != "subject_primary":
+        return None
+
+    from PIL import Image, ImageDraw, ImageFont  # noqa: PLC0415
+
+    main, context = header_lines(spec)
+    font_path = Path(_FONT_FILES["zh"][0])
+    if not font_path.exists():
+        raise SystemExit(
+            f"人物顶栏预栅格需要 {font_path}；不能拿回退字体生成正式标题。")
+    try:
+        # Ubuntu 的 NotoSansCJK-Regular.ttc：index 2 是 Simplified Chinese。
+        main_font = ImageFont.truetype(str(font_path), _HEAD_SIZE["a"], index=2)
+        context_font = ImageFont.truetype(str(font_path), _HEAD_SIZE["b"], index=2)
+    except OSError as exc:
+        raise SystemExit(f"无法从 {font_path} 加载简体中文 Noto 字体：{exc}") from exc
+
+    image = Image.new("RGBA", (CANVAS_W, VIDEO_TOP), (0, 0, 0, 0))
+    draw = ImageDraw.Draw(image)
+    draw.text((CANVAS_W // 2, _HEAD_A_TOP), main, font=main_font,
+              fill=(255, 255, 255, 255), anchor="mt")
+    # ASS 的 &H00DBE2D5& 是 BGR；对应 RGB 为 D5/E2/DB。
+    draw.text((CANVAS_W // 2, _HEAD_B_TOP), context, font=context_font,
+              fill=(213, 226, 219, 255), anchor="mt")
+
+    # 在保存和交给 ffmpeg 前先用与成片相同的双带区判据查真实像素。
+    proof = Image.new("RGB", image.size, (0, 18, 11))
+    proof.paste(image, mask=image.getchannel("A"))
+    main_px, context_px = _topbar_light_pixel_counts(proof.tobytes())
+    if min(main_px, context_px) < _TOPBAR_MIN_TEXT_PIXELS:
+        raise SystemExit(
+            "人物顶栏预栅格不合格："
+            f"主标题带区 {main_px}px，小标题带区 {context_px}px；"
+            f"每行至少 {_TOPBAR_MIN_TEXT_PIXELS}px。")
+
+    path = outdir / "_subject_topbar.png"
+    image.save(path)
+    return path
+
+
 def _topbar_light_pixel_counts(rgb: bytes) -> tuple[int, int]:
     """返回渲染帧 HEADA / HEADB 两个带区里的浅色文字像素数。
 
@@ -1573,15 +1621,14 @@ def write_ass(lines: list[dict], zh: list[str], clip_start: float, path: Path,
                 "顶栏该盖住多长没地方推。没有台词时调用方要显式传 `duration=`"
                 "（通常就是这一段的 `end - start`）。")
         a, b = _ts(0.0), _ts(topbar_end)
-        header_lines(spec)                    # 先过宽度闸
-        head_a, head_b = header_ass(spec)
         layout = topbar_layout(spec)
-        # 三份正式 artifact 都证明独立主标题 Style 在该 runner 是 0 像素，而
-        # HEADB 同一时刻稳定出字。人物主标题因此复用已被生产证明的 HEADB
-        # Style，只靠 layer、显式字号/颜色/位置区分两行；普通赛后仍走 HEADA。
-        head_a_style = "HEADB" if layout == "subject_primary" else "HEADA"
-        ev.append(f"Dialogue: 2,{a},{b},{head_a_style},,0,0,0,,{head_a}")
-        ev.append(f"Dialogue: 1,{a},{b},HEADB,,0,0,0,,{head_b}")
+        header_lines(spec)                    # 两种路径都先过事实与宽度闸
+        if layout != "subject_primary":
+            head_a, head_b = header_ass(spec)
+            ev.append(f"Dialogue: 2,{a},{b},HEADA,,0,0,0,,{head_a}")
+            ev.append(f"Dialogue: 1,{a},{b},HEADB,,0,0,0,,{head_b}")
+        # 人物主标题由 `_subject_topbar_png()` 预栅格并在字幕前 overlay；这里
+        # 刻意不再写重复的 ASS 事件，避免正式 runner 再叠一层小标题。
     # 没有台词就到此为止——`highlight_en` 是给对白上色的，没有对白就没什么
     # 可高亮，硬跑下去只会拿一份空 `lines` 去比对 `spec.highlight_en`，
     # 把顶栏都没配文案这件事误判成「短语一个都没匹配上」。
@@ -3685,23 +3732,30 @@ def _lead_in_segment(spec: dict, outdir: Path) -> Path | None:
     keep = float(lead.get("crop_keep_top", 1.0))
     shift = float(lead.get("crop_shift_x", 0.0))
     subs = lead.get("subs")
-    tail = "[out]"
+    use_ass = False
     if subs:
         ass = outdir / "_lead.ass"
         lines = [{"a": cue["a"], "b": cue["b"], "en": cue["en"]} for cue in subs]
         zh = [cue["zh"] for cue in subs]
         write_ass(lines, zh, lead["start"], ass, spec=spec)
-        tail = (f"[v];[v]subtitles={ass}:fontsdir={ROOT / 'assets/fonts'}[out]")
+        use_ass = True
     elif wants_topbar(spec):
         # 没有台词，但顶栏默认要印——单独烧一份只有 HEADA/HEADB 的 ASS，
         # 盖住整段 `lead_in` 的时长（`dur`，见上面 `dur = lead["end"] - lead["start"]`）。
         ass = outdir / "_lead.ass"
         write_ass([], [], lead["start"], ass, spec=spec, duration=dur)
-        tail = (f"[v];[v]subtitles={ass}:fontsdir={ROOT / 'assets/fonts'}[out]")
+        use_ass = topbar_layout(spec) != "subject_primary"
+    topbar_png = _subject_topbar_png(spec, outdir)
+    topbar_filter = (
+        f"movie={topbar_png},format=rgba[topbar];"
+        f"[base][topbar]overlay=0:0[v]"
+        if topbar_png else "[base]null[v]")
+    finish = (f";[v]subtitles={ass}:fontsdir={ROOT / 'assets/fonts'}[out]"
+              if use_ass else ";[v]null[out]")
     chain = (
         f"color=c={_BG_COLOUR}:s={CANVAS_W}x{CANVAS_H}:d={dur}:r=25[bg];"
         f"[0:v]{flip}{logo}{grade}{_crop_expr(ratio, keep, shift)},scale={CANVAS_W}:{vh}[fg];"
-        f"[bg][fg]overlay=0:{VIDEO_TOP}{tail}"
+        f"[bg][fg]overlay=0:{VIDEO_TOP}[base];{topbar_filter}{finish}"
     )
     dest = outdir / "_lead.mp4"
     subprocess.run(
@@ -3740,6 +3794,11 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
     # ⚠️ **两个调用点都要传。** 漏一个的表现是「成片裁对了、封面没裁」
     # ——两张图分开看都正常，只有并排才发现台标还在封面上。
     shift = float(spec.get("crop_shift_x", 0.0))
+    topbar_png = _subject_topbar_png(spec, outdir)
+    topbar_filter = (
+        f"movie={topbar_png},format=rgba[topbar];"
+        f"[base][topbar]overlay=0:0[v];"
+        if topbar_png else "[base]null[v];")
     chain = (
         # 垫底：**品牌深绿纯色**，不再从这一帧画面模糊出来——见 `_BG_COLOUR`
         # 上面那段注释。`d={dur}` 卡住这个虚拟源的时长：`color` 是无限长的
@@ -3749,7 +3808,8 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
         f"color=c={_BG_COLOUR}:s={CANVAS_W}x{CANVAS_H}:d={dur}:r=25[bg];"
         # 前景：横向收边到 crop_ratio，再铺满画布宽度
         f"[0:v]{flip}{logo}{grade}{_crop_expr(ratio, keep, shift)},scale={CANVAS_W}:{vh}[fg];"
-        f"[bg][fg]overlay=0:{VIDEO_TOP}[v];"
+        f"[bg][fg]overlay=0:{VIDEO_TOP}[base];"
+        f"{topbar_filter}"
         # `fontsdir` 指向**仓库里的字体目录**（得意黑的 ttf 在那儿）。
         # 系统字体照旧走 fontconfig，思源黑体不受影响——`fontsdir` 是**追加**
         # 一个目录，不是替换。验过：只给这个目录，中文照样渲得出来。
@@ -3778,7 +3838,10 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
         # 先报用户肉眼对应的“哪一行没像素”，再检查这些像素是不是 Noto 真字形。
         # 两道闸都必须通过；只调整诊断顺序，不降低发布条件。
         assert_rendered_topbar(topbar_probe, spec)
-        assert_topbar_font_log(proc.stderr, spec)
+        # 人物标题已经由 Pillow 从明确 TTC 文件预栅格，字体证据由加载成功和
+        # PNG 双带区像素闸给出；普通 ASS 顶栏仍必须核对 libass fontselect。
+        if topbar_layout(spec) != "subject_primary":
+            assert_topbar_font_log(proc.stderr, spec)
 
     body = outdir / "_body.mp4"
     subprocess.run(
