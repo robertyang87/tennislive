@@ -618,15 +618,18 @@ def test_推送成功要把流水号打进日志(monkeypatch, capsys):
     monkeypatch.setattr(pushplus, "prepare_image_delivery",
                         Mock(return_value=("<p>hi</p>", "jsdelivr")))
     monkeypatch.setattr(pushplus, "wait_for_images", Mock())
-    monkeypatch.setattr(requests, "post", Mock(return_value=Mock(
+    post = Mock(return_value=Mock(
         status_code=200,
         json=Mock(return_value={"code": 200, "msg": "请求成功",
-                                "data": "abc123def456"}))))
+                                "data": "abc123def456"})))
+    monkeypatch.setattr(requests, "post", post)
 
     receipt = pushplus.push("标题", "<p>hi</p>", token="t")
 
     out = capsys.readouterr().out
     assert receipt == "abc123def456"
+    assert post.call_args.kwargs["json"]["channel"] == "wechat"
     assert "abc123def456" in out, f"流水号没进日志：{out!r}"
+    assert "投递通道 wechat" in out, f"日志没写明实际投递通道：{out!r}"
     # 反面：不许只说「成功」就完事——那正是这次查不下去的原因
     assert "只代表接口收下" in out, f"没说清 200 意味着什么：{out!r}"

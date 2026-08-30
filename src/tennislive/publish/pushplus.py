@@ -552,6 +552,10 @@ def push(
                     "title": title[:100],
                     "content": html_content,
                     "template": "html",
+                    # 这条模块的产品语义就是“推送到微信”。不继承账号后台的
+                    # 默认渠道：默认值被改成 App/邮件时，接口照样 code=200，
+                    # 但用户微信里永远看不到。
+                    "channel": "wechat",
                 },
                 timeout=timeout,
             )
@@ -591,7 +595,8 @@ def push(
     # 不是 caplog——退回 `logger.info` 时它捕获到的是空字符串。
     receipt = str(data.get("data") or "")
     print(f"[PushPlus] 收下了：流水号 {receipt or '(返回体里没有)'}"
-          f"　图片通道 {image_provider}　msg={data.get('msg') or ''}")
+          f"　投递通道 wechat　图片通道 {image_provider}"
+          f"　msg={data.get('msg') or ''}")
     # ⚠️ **这儿原来印着一个查询 URL，那是没验证过的。**
     # `https://www.pushplus.plus/api/send/queryMessage?token=…&id=…`——照它
     # 建了工具和工作流、跑到 runner 上（token 在 secret 里，只有那儿查得了），
