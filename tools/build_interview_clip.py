@@ -1654,6 +1654,8 @@ VERIFY_FP = "verify_fingerprint.json"
 GAP_VAD_ATTESTATION = "gap_vad_attestation.json"
 GAP_VAD_EDGE_PAD_SECS = 0.35
 GAP_VAD_MAX_SPEECH_SECS = 0.12
+GAP_CONTEXT_PAD_SECS = 8.0
+GAP_NONLEXICAL_WORDS = frozenset({"whoo", "woo", "whoa"})
 
 
 def transcript_fingerprint(spec: dict, lines: list[dict], outdir: Path) -> str:
@@ -1723,14 +1725,55 @@ def _speech_overlap_seconds(gap: tuple[float, float],
     return round(sum(b - a for a, b in merged), 3)
 
 
+def _gap_words_covered(words: list[str], gap: tuple[float, float],
+                       lines: list[dict]) -> bool:
+    """第二份 ASR 在空档里听到的词，是否已出现在相邻成品字幕中。
+
+    两份 ASR 的词时间码会漂移一两秒；只要第二份听到的词按原顺序出现在空档
+    前后 8 秒的成品字幕里，内容就没有漏，只是时间边界不同。这里故意要求顺序
+    一致，不能拿一个远处同名词来销账。
+    """
+    wanted = [word for word in compare_tokens(" ".join(words))
+              if word not in GAP_NONLEXICAL_WORDS]
+    if not wanted:
+        return False
+    nearby = " ".join(
+        seg["en"] for seg in lines
+        if seg["b"] >= gap[0] - GAP_CONTEXT_PAD_SECS
+        and seg["a"] <= gap[1] + GAP_CONTEXT_PAD_SECS
+    )
+    context = compare_tokens(nearby)
+    index = 0
+    for word in context:
+        if index < len(wanted) and word == wanted[index]:
+            index += 1
+    return index == len(wanted)
+
+
+def _gap_timeline_covered(gap: tuple[float, float], lines: list[dict]) -> bool:
+    """空档核心区是否已经被成品字幕时间轴覆盖（容许 350ms 边界误差）。"""
+    lo, hi = gap[0] + GAP_VAD_EDGE_PAD_SECS, gap[1] - GAP_VAD_EDGE_PAD_SECS
+    if hi <= lo:
+        return True
+    intervals = sorted((max(lo, seg["a"]), min(hi, seg["b"])) for seg in lines
+                       if min(hi, seg["b"]) > max(lo, seg["a"]))
+    cursor = lo
+    for start, end in intervals:
+        if start - cursor > GAP_VAD_EDGE_PAD_SECS:
+            return False
+        cursor = max(cursor, end)
+    return hi - cursor <= GAP_VAD_EDGE_PAD_SECS
+
+
 def attest_gap_silence(spec: dict, lines: list[dict], outdir: Path,
                        audio: Path,
                        asr_words: list[tuple[float, float, str]]) -> Path:
     """用 Silero VAD 给字幕空档留下语言无关的人声证据。
 
     第二份英文 ASR 的「没词」不能排除非英语；VAD 只回答有没有人声，不猜
-    语言和内容。仅核心区人声不超过 120ms 的空档可自动认定为静音。检测到
-    人声的空档仍保持红灯，必须补字幕或人工听音销账。
+    语言和内容。仅核心区人声不超过 120ms 的空档可自动认定为静音。若第二份
+    ASR 在空档里听到了词，但这些词已按原顺序出现在相邻成品字幕中，则证明是
+    两套时间码边界漂移，不是内容遗漏；其余空档仍保持红灯。
     """
     from faster_whisper.audio import decode_audio  # noqa: PLC0415
     from faster_whisper.vad import (  # noqa: PLC0415
@@ -1751,22 +1794,33 @@ def attest_gap_silence(spec: dict, lines: list[dict], outdir: Path,
     results = []
     for gap in caption_gaps(spec, outdir):
         seconds = _speech_overlap_seconds(gap, speech)
-        core = (gap[0] + GAP_VAD_EDGE_PAD_SECS,
-                gap[1] - GAP_VAD_EDGE_PAD_SECS)
-        words_here = [word for start, end, word in asr_words
-                      if max(core[0], start) < min(core[1], end)]
-        no_speech = seconds <= GAP_VAD_MAX_SPEECH_SECS and not words_here
+        # 用词的起点归属空档。Whisper 遇到长停顿时会把前一个词的 end 拖到下一
+        # 个词前；拿区间重叠判断，会把停顿前的词误算成横跨十几秒的“漏词”。
+        words_here = [word for start, _end, word in asr_words
+                      if gap[0] <= start < gap[1]]
+        lexical = [word for word in compare_tokens(" ".join(words_here))
+                   if word not in GAP_NONLEXICAL_WORDS]
+        covered = bool(lexical) and _gap_words_covered(words_here, gap, lines)
+        timeline_covered = _gap_timeline_covered(gap, lines)
+        nonlexical = bool(words_here) and not lexical
+        no_speech = (seconds <= GAP_VAD_MAX_SPEECH_SECS
+                     and (not words_here or nonlexical))
+        status = ("transcript_covered" if covered else
+                  "caption_timeline_covered" if timeline_covered else
+                  "no_speech" if no_speech else "speech_detected")
         results.append({
             "key": gap_key(*gap),
             "start": gap[0],
             "end": gap[1],
             "speech_seconds": seconds,
             "second_asr_words": words_here,
-            "status": ("no_speech" if no_speech else "speech_detected"),
+            "transcript_covered": covered,
+            "caption_timeline_covered": timeline_covered,
+            "status": status,
         })
     payload = {
         "status": "pass",
-        "method": "silero_vad_language_independent",
+        "method": "silero_vad_plus_dual_asr_coverage",
         "sha256": transcript_fingerprint(spec, lines, outdir),
         "edge_pad_seconds": GAP_VAD_EDGE_PAD_SECS,
         "max_speech_seconds": GAP_VAD_MAX_SPEECH_SECS,
@@ -1775,11 +1829,14 @@ def attest_gap_silence(spec: dict, lines: list[dict], outdir: Path,
     path = outdir / GAP_VAD_ATTESTATION
     path.write_text(json.dumps(payload, ensure_ascii=False, indent=1) + "\n",
                     encoding="utf-8")
-    quiet = sum(row["status"] == "no_speech" for row in results)
-    print(f"[空档 VAD] {quiet}/{len(results)} 处核心区无人声；其余仍需补字幕或听音。"
+    resolved = sum(row["status"] in {"no_speech", "transcript_covered",
+                                     "caption_timeline_covered"}
+                   for row in results)
+    print(f"[空档 VAD] {resolved}/{len(results)} 处由静音或相邻字幕覆盖证明销账；"
+          "其余仍需补字幕或听音。"
           f"证据 → {path}")
     for row in results:
-        if row["status"] != "no_speech":
+        if row["status"] == "speech_detected":
             words = " ".join(row["second_asr_words"]) or "—"
             print(f"[空档 VAD] 保持红灯 {row['key']}：人声 {row['speech_seconds']:.3f}s，"
                   f"第二 ASR 词={words}")
@@ -1787,7 +1844,7 @@ def attest_gap_silence(spec: dict, lines: list[dict], outdir: Path,
 
 
 def auto_silent_gap_keys(spec: dict, lines: list[dict], outdir: Path) -> set[str]:
-    """读取与当前转写指纹绑定的 VAD 静音证明；旧证据一律不复用。"""
+    """读取与当前转写指纹绑定的空档证明；旧证据一律不复用。"""
     path = outdir / GAP_VAD_ATTESTATION
     if not path.is_file():
         return set()
@@ -1796,13 +1853,26 @@ def auto_silent_gap_keys(spec: dict, lines: list[dict], outdir: Path) -> set[str
     except (OSError, ValueError):
         return set()
     if (payload.get("status") != "pass"
-            or payload.get("method") != "silero_vad_language_independent"
+            or payload.get("method") != "silero_vad_plus_dual_asr_coverage"
             or payload.get("sha256") != transcript_fingerprint(spec, lines, outdir)):
         return set()
-    return {str(row.get("key")) for row in payload.get("results", [])
-            if row.get("status") == "no_speech"
-            and not row.get("second_asr_words")
-            and float(row.get("speech_seconds", 1)) <= GAP_VAD_MAX_SPEECH_SECS}
+    resolved = set()
+    for row in payload.get("results", []):
+        lexical = [word for word in compare_tokens(
+            " ".join(row.get("second_asr_words") or []))
+            if word not in GAP_NONLEXICAL_WORDS]
+        if (row.get("status") == "no_speech"
+                and not lexical
+                and float(row.get("speech_seconds", 1)) <= GAP_VAD_MAX_SPEECH_SECS):
+            resolved.add(str(row.get("key")))
+        elif (row.get("status") == "transcript_covered"
+              and row.get("transcript_covered") is True
+              and row.get("second_asr_words")):
+            resolved.add(str(row.get("key")))
+        elif (row.get("status") == "caption_timeline_covered"
+              and row.get("caption_timeline_covered") is True):
+            resolved.add(str(row.get("key")))
+    return resolved
 
 
 def verify_transcript(spec: dict, lines: list[dict], outdir: Path) -> Path:
