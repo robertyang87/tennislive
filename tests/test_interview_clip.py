@@ -915,21 +915,30 @@ def test_渲染后顶栏像素闸能抓住只有小标题(tmp_path, monkeypatch)
     ass = tmp_path / "topbar.ass"
     clip.write_ass([], [], 0.0, ass, spec=spec, duration=1.0)
     ass_text = ass.read_text(encoding="utf-8")
-    assert "Style: HEADSUBJECT,Noto Sans CJK SC,54,&H00FFFFFF," in ass_text
-    assert "Dialogue: 2," in ass_text and ",HEADSUBJECT," in ass_text
+    assert "Style: HEADSUBJECT" not in ass_text
+    assert ass_text.count("Style: HEADB,") == 1
+    assert "Dialogue: 2," in ass_text and ",HEADB," in ass_text
     assert "Dialogue: 1," in ass_text and ",HEADB," in ass_text
+    topbar_dialogues = [
+        line for line in ass_text.splitlines() if ",HEADB," in line]
+    assert len(topbar_dialogues) == 2
     main_dialogue = next(
-        line for line in ass_text.splitlines() if ",HEADSUBJECT," in line)
+        line for line in topbar_dialogues if line.startswith("Dialogue: 2,"))
     context_dialogue = next(
-        line for line in ass_text.splitlines() if ",HEADB," in line)
+        line for line in topbar_dialogues if line.startswith("Dialogue: 1,"))
     assert "▍" not in main_dialogue and r"\b" not in main_dialogue
     assert main_dialogue.count(r"{\r") == 1
     assert main_dialogue.count(r"\fnNoto Sans CJK SC") == 1
     assert main_dialogue.count(r"\fn") == 1
+    assert rf"\fs{clip._HEAD_SIZE['a']}" in main_dialogue
+    assert r"\c&HFFFFFF&" in main_dialogue
+    assert rf"\an8\pos({clip.CANVAS_W // 2},{clip._HEAD_A_TOP})" in main_dialogue
     assert context_dialogue.count(r"\fnNoto Sans CJK SC") == 1
     assert context_dialogue.count(r"\fn") == 1 and r"\b" not in context_dialogue
+    assert rf"\fs{clip._HEAD_SIZE['b']}" in context_dialogue
+    assert rf"\an8\pos({clip.CANVAS_W // 2},{clip._HEAD_B_TOP})" in context_dialogue
     assert main_dialogue.index(r"\an8\pos") < main_dialogue.index("费德勒"), (
-        "最终 HEADSUBJECT 必须是先定位、后正文的单一可见事件")
+        "最终人物主标题必须复用 HEADB，并保持先定位、后正文的单一事件")
 
     def _render(src_ass: Path, dest: Path) -> str:
         proc = subprocess.run(
@@ -949,13 +958,14 @@ def test_渲染后顶栏像素闸能抓住只有小标题(tmp_path, monkeypatch)
     bad_ass = tmp_path / "only-small-title.ass"
     bad_ass.write_text("\n".join(
         line for line in ass.read_text(encoding="utf-8").splitlines()
-        if ",HEADSUBJECT," not in line) + "\n", encoding="utf-8")
+        if not (line.startswith("Dialogue: 2,") and ",HEADB," in line)
+    ) + "\n", encoding="utf-8")
     bad = tmp_path / "only-small-title.mp4"
     _render(bad_ass, bad)
     with pytest.raises(SystemExit) as bad_exc:
         clip.assert_rendered_topbar(bad, spec)
-    assert "HEADA 主标题" in str(bad_exc.value)
-    assert "HEADB 小标题" not in str(bad_exc.value), (
+    assert "主标题带区" in str(bad_exc.value)
+    assert "小标题带区" not in str(bad_exc.value), (
         "回归片必须精确复现正式 artifact 的主标题缺失、小标题仍正常")
 
     render_src = inspect.getsource(clip.render)
@@ -1014,7 +1024,7 @@ def test_顶栏有明确时长时覆盖到片尾而不是停在最后一句(tmp_
     clip.write_ass([{"a": 0.0, "b": 0.2, "en": "Thank you."}], ["谢谢"],
                    0.0, ass, spec=spec, duration=1.0)
     text = ass.read_text(encoding="utf-8")
-    assert "Dialogue: 2,0:00:00.00,0:00:01.00,HEADSUBJECT" in text
+    assert "Dialogue: 2,0:00:00.00,0:00:01.00,HEADB" in text
     assert "Dialogue: 1,0:00:00.00,0:00:01.00,HEADB" in text
 
 
