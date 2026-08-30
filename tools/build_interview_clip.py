@@ -1383,8 +1383,11 @@ def assert_rendered_topbar(film: Path, spec: dict) -> None:
     proc = subprocess.run(
         ["ffmpeg", "-hide_banner", "-loglevel", "error",
          "-ss", str(_TOPBAR_PROBE_SECONDS), "-i", str(film),
-         "-vf", f"crop={CANVAS_W}:{VIDEO_TOP}:0:0,format=rgb24",
-         "-frames:v", "1", "-f", "rawvideo", "pipe:1"],
+         "-vf", f"crop={CANVAS_W}:{VIDEO_TOP}:0:0",
+         "-frames:v", "1", "-c:v", "rawvideo", "-pix_fmt", "rgb24",
+         # ffmpeg 7 的 rawvideo frame-thread 初始化在 CI 偶发失败；这只是单帧
+         # 像素探针，本来也没有并行编码收益，显式单线程让不同 runner 一致。
+         "-threads", "1", "-f", "rawvideo", "pipe:1"],
         capture_output=True, check=False, timeout=60)
     if proc.returncode:
         raise SystemExit(
