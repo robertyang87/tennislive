@@ -3575,6 +3575,116 @@ STORIES = STORIES + (
         source_label="WTA 官方 2026 年版 Record Book、WTA 官网 Rankings Watch、ESPN、Tennis Majors",
     ),
     _trivia_story(
+        slug="qualifier-ceiling",
+        # ⚠️ 标题受两条上限夹着，取更长的那个前缀算：`🎾8.30 网球有故事｜` 9.5 位。
+        # 「资格赛最远能打到哪儿」是 19.5，卡着 20 过；去掉「能」是 18.5，留 1.5 余量。
+        # 封面那一问不受这条限制（另有 16 字上限），所以那儿保留「能」字更口语。
+        title="资格赛最远打到哪儿",
+        subtitle="网球冷知识 · 赛制篇",
+        identity="从郑钦文打回美网正赛说起",
+        chips=("冷知识", "赛制", "资格赛"),
+        # ⚠️ 这一段整段进小红书文案，单段上限 120 字
+        # （`knowledge._validate_copy_for_publish`）。
+        hero=(
+            "郑钦文从美网资格赛打回正赛。公开赛年代 58 年，从资格赛进正赛的人里，"
+            "女子有拉杜卡努 2021 年美网夺冠、赫瓦林斯卡今年法网打进决赛；"
+            "男子只有 5 个人进过半决赛，没有一个进决赛，美网那一格到今天还是空的。"
+        ),
+        facts=(
+            "口径三条，混一条这张表就是假的：**公开赛年代（1968 起）**；"
+            "**资格赛球员＝打赢三场资格赛进正赛的人**，不含幸运落败者"
+            "（那是另一条通道，仓库里 `lucky-loser` 那条片子讲的就是它）；**单打**。",
+            "**男子：公开赛年代只有 5 个人从资格赛打进过大满贯半决赛，5 个全部止步半决赛，"
+            "没有一个进过决赛。** 1977 年 12 月澳网吉尔蒂南负洛依德、1977 温网麦肯罗四盘负"
+            "康纳斯、1997 法网德沃夫负当年冠军库尔滕、2000 温网沃尔奇科夫负当年冠军桑普拉斯、"
+            "2021 澳网卡拉采夫 3-6 4-6 2-6 负德约科维奇。"
+            "⚠️ 澳网官网 Karatsev 赛报把吉尔蒂南那次写作 **December 1977**——1977 年澳网"
+            "打了两届，写「1977」安全，写成 1 月那届就错了。",
+            "**男子美网那一格是空的**：从来没有半决赛，3 次 1/4 决赛封顶"
+            "（埃斯库德 1999、Gilles Müller 2008、范德赞德舒尔普 2021）。"
+            "出处是 ABC News 与 tennis.com 的 2021 美网赛报"
+            "（「just the third male qualifier to reach the quarter-finals since the "
+            "Open era began in 1968」，并点名前两个人）。"
+            "⚠️ 片子和图卡在这一格**只写年份、不点名**：Gilles Müller 的通行译法「米勒」"
+            "在 `zh/players.py` 里已经归 Alexandre Muller 了，"
+            "同一个账号不能把两个人叫一个名字。",
+            "**女子：6 个人进过半决赛，2 个进了决赛，其中 1 个夺冠。** "
+            "1978 澳网马蒂森、1999 温网史蒂文森、2020 法网波多罗斯卡、"
+            "2021 美网拉杜卡努**夺冠**、2024 澳网亚斯特雷姆斯卡（半决赛负郑钦文）、"
+            "2026 法网赫瓦林斯卡**亚军**。WTA 官网与澳网官网的 Yastremska 2024 赛报那句"
+            "「the fifth qualifier overall (after Matison, Stevenson, Podoroska and "
+            "Raducanu) in the Open Era to reach a major semifinal」"
+            "一句话同时钉住了前 5 个人和顺序。",
+            "拉杜卡努 2021 美网：3 场资格赛 ＋ 7 场正赛，**十场全胜、一盘未失**，"
+            "赛前世界第 150。吉尼斯世界纪录的条目名就是"
+            "「First qualifier to win a tennis Grand Slam singles title (open era)」，"
+            "ESPN 的说法是「first qualifier — male or female」。",
+            "赫瓦林斯卡 2026 法网：赛前世界第 114、法网正赛首秀，3 场资格赛 ＋ 6 场正赛，"
+            "**正赛第一场就 6-4 6-0 淘汰了 5 号种子郑钦文**，决赛 3-6 2-6 负安德列耶娃"
+            "（1 小时 22 分）。她是公开赛年代**第二个**打进大满贯决赛的资格赛球员，"
+            "第一个是拉杜卡努——也就是说**男子一个都没有**。"
+            "⚠️ 决赛比分核过两遍：olympics.com 写 6-3 6-3，而法网官网比赛页和 WTA 官网"
+            "都是 **6-3 6-2**，取后者（两个独立源对得上，前者是单一来源）。",
+            "赛制出自 **ITF 2026 大满贯规则书 L 节**原文（主源，不是转述）："
+            "「All men's singles Main Draw matches in Grand Slam Tournaments shall be "
+            "the best of five (5) sets. All other matches shall be the best of three "
+            "(3) sets」——也就是**只有男子正赛五盘三胜，其余全部三盘两胜**。"
+            "资格赛 128 人打 3 轮出 16 个正赛名额，男女相同。"
+            "⚠️ **片子只摆这条规则，不下因果**：「男子走不了那么远是因为要多打两盘」"
+            "说得通，但没有任何一个源这么说过。摆在一起让读者自己想，"
+            "末屏那一问问的正是这个。",
+            "⚠️ 2026 年新发生的两件事都核过，都**不改写这张表**："
+            "温网男单资格赛最好是萨菲乌林 1/4 决赛、女单是 Sawangkaew 第四轮，"
+            "两个都够不着半决赛那一档。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="1977-06-29", player="麦肯罗", age="18 岁，业余身份",
+                headline="从资格赛一路打进温网半决赛，四盘负于康纳斯",
+                detail=(
+                    "3 场资格赛加 5 场正赛，八场球进四强，"
+                    "当时是温网 1926 年设资格赛以来第一个打进半决赛的资格赛球员。"
+                ),
+                source_url=(
+                    "https://www.washingtonpost.com/archive/sports/1977/06/29/"
+                    "mcenroe-18-gains-semis-at-wimbledon/"
+                    "1b09d9be-fd10-4bd3-974c-402e7c819fc0/"
+                ),
+            ),
+            ChampionMoment(
+                date="2021-09-11", player="拉杜卡努", age="18 岁，赛前世界第 150",
+                headline="十场全胜、一盘未失，成为第一个从资格赛夺得大满贯的球员",
+                detail=(
+                    "3 场资格赛加 7 场正赛，决赛 6-4 6-3 胜费尔南德斯。"
+                    "男女通算，这是公开赛年代唯一一次。"
+                ),
+                source_url=(
+                    "https://www.guinnessworldrecords.com/world-records/675997-"
+                    "first-qualifier-to-win-a-tennis-grand-slam-singles-title-open-era"
+                ),
+            ),
+            ChampionMoment(
+                date="2026-06-06", player="赫瓦林斯卡", age="赛前世界第 114",
+                headline="法网决赛 3-6 2-6 负安德列耶娃，是第一个打进法网决赛的资格赛球员",
+                detail=(
+                    "正赛首秀，第一场就淘汰 5 号种子郑钦文；"
+                    "公开赛年代第二个打进大满贯决赛的资格赛球员，前一个是拉杜卡努。"
+                ),
+                source_url=(
+                    "https://www.wtatennis.com/news/4514247/chwalinska-breaks-new-"
+                    "ground-as-first-qualifier-to-reach-roland-garros-final"
+                ),
+            ),
+        ),
+        image_keys=(),
+        image_credit="WTA 官方图库 · 2026 美网资格赛决胜轮，郑钦文",
+        source_url="https://www.itftennis.com/media/5986/grand-slam-rulebook-2026-f2.pdf",
+        source_label=(
+            "ITF 2026 大满贯规则书、WTA 官网、澳网官网、法网官网、"
+            "吉尼斯世界纪录、ESPN、华盛顿邮报 1977 年报道"
+        ),
+    ),
+    _trivia_story(
         slug="gamesmanship",
         # ⚠️ 标题受两条上限夹着，而**两条的前缀不一样长**：知识帖那条前缀
         # `📖7.23网球有故事｜` 是 9 位，文案那条 `🎾7.26 网球有故事｜` 是 9.5 位。
