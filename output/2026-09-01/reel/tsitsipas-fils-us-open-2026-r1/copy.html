@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>9.1 赛场之上 | 三比五落后他连扳三盘</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>五次交手，西西帕斯一场都没赢过菲斯。
+
+2023 年安特卫普、2024 年巴塞尔、2025 年罗马和巴塞罗那、今年三月的迈阿密——五次，一场都没赢过。今天在纽约的美网第一轮，他把这条记录改成了 1 比 5。
+
+而且是从最难的位置改回来的。
+
+第一盘他其实开局就手握三个破发点，一个都没兑现；轮到自己发球，菲斯拿到两个盘点，第二个收下，6-4 先下一城。
+
+第二盘更险。他一度 0-2 落后，追到 3-5 时轮到菲斯发球——菲斯只要保住这一局，就是两盘领先。西西帕斯在那一局连拿两个破发点，兑现了第二个。5-5、6-6、抢七 7-3，扳平。
+
+从那一局之后，他再没输过一盘。
+
+第三盘 6-1，只用了 30 分钟，是全场最快的一盘。第四盘 6-4，发球胜赛局 40-0 拿到三个赛点，第一个就收下。全场两小时 54 分钟。
+
+真正的分水岭在发球上。一发得分率逐盘走向，西西帕斯是 75%、76%、80%、89%，一路往上；菲斯是 72%、77%、58%、40%，一路往下。第三、四盘菲斯连着三个发球局被破，而西西帕斯全场 20 个发球局只丢了 3 个。
+
+其他几项：Ace 14 比 10，制胜分 51 比 38，非受迫失误 49 比 37，总得分 140 比 131。他自己也送出 7 个双误，比菲斯多 3 个——赢得并不干净，但赢了。
+
+世界第 53，非种子进的签表，对面是 10 号种子、世界第 11。美网官方给这场标了 upset。
+
+下一轮，你看好他走多远？
+
+#网球时差 #美网 #西西帕斯 #菲斯 #网球</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>你看好他吗？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
