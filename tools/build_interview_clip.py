@@ -1081,7 +1081,8 @@ _SCORE_SIZE_TAG = rf"\fs{_SCORE_PX}"
 # 的 "7-6(3) 4-6 6-4" 就是这么写的：她中间那盘 4-6 输了，局数照旧写自己
 # 在前）。所以「这一盘谁赢的」只用比这一盘里两个数的大小就够，不用另外
 # 传一份「谁赢了每一盘」的数据。抢七的 "(N)" 记的是**这一盘输家**在抢七里
-# 拿到的分数，写法上永远跟在第二个数字后面，跟着第二个数字一起走。
+# 拿到的分数，数据格式里永远跟在第二个数字后面；**渲的时候剥掉括号、
+# 小一档单独一个 run**（2026-08-31「小分不带括号」，见 `_score_runs`）。
 _SET_SCORE_RE = re.compile(r"^(\d+)-(\d+)(\(\d+\))?$")
 
 
@@ -1123,7 +1124,18 @@ def _score_runs(score: str, px: int = _SCORE_PX) -> list[tuple[str, str, str, in
         tag1 = (_MARK_COLOUR if n1_won else "") + w1 + tag
         tag2 = (_MARK_COLOUR if not n1_won else "") + w2 + tag
         runs.append((f"{n1}-", "num", tag1, px))
-        runs.append((f"{n2}{paren}{trail}", "num", tag2, px))
+        if paren:
+            # 抢七小分：**裸数字不带括号，小一档**（账号所有者 2026-08-31
+            # 「小分不带括号」，全站一个口径——match-reel 顶栏同一天同款）。
+            # ASS 没有行内上标，靠字号差把它读成注脚；每个 run 自带 `\r`
+            # 复位（`_run`），所以不用担心颜色/字重粘连。0.6 和 match-reel
+            # 的 26/40 是同一档比例。
+            small = max(1, round(px * 0.6))
+            runs.append((n2, "num", tag2, px))
+            runs.append((f"{paren.strip('()')}{trail}", "num",
+                         rf"\b0\fs{small}", small))
+        else:
+            runs.append((f"{n2}{trail}", "num", tag2, px))
     return runs
 
 

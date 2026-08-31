@@ -141,14 +141,16 @@ def test_中文名字号按最长的名字算不许超出那一列():
 
     # ② 最长的那一对要缩下来，而且**两个人共用一个字号**
     #
-    # ⚠️ **这一档 2026-08-29 从三盘挪到了五盘。** 新版式（两行高亮长条）给名字
-    #    腾出的宽度比旧表格多得多——三盘 448px vs 285px——`亚历山德罗娃（19）`
-    #    在 52px 下只要 356px，三盘**已经装得下了**。拿三盘去验「会不会缩」，
-    #    验的是一个不再存在的情形；五盘（大满贯男单）那一档才是今天真的会咬人
-    #    的地方（只剩 264px）。
-    longest = [{"name": "亚历山德罗娃", "rank": 19}, {"name": "斯维托丽娜", "rank": 9}]
+    # ⚠️ **这一档 2026-08-29 从三盘挪到了五盘，2026-08-31 又从「亚历山德罗娃」
+    #    换成「塞伦多洛」全名。** 两次是同一个形状：版式给名字腾的宽度变大之后
+    #    （08-29 换两行长条、08-31 盘分列 96→80 让五盘的名字格 290→370px），
+    #    原来的压力名满字号也装得下了——拿它验「会不会缩」验的是一个不再存在
+    #    的情形。库里最长的「胡安·曼努埃尔·塞伦多洛（51）」12 个字才够着
+    #    今天的缩号路径。
+    longest = [{"name": "胡安·曼努埃尔·塞伦多洛", "rank": 51},
+               {"name": "斯维托丽娜", "rank": 9}]
     small = vp.score_cn_px(longest, 5)
-    assert small < vp.SCORE_CN_MAX_PX, "六个字的名字五盘还给满字号，那一格装不下"
+    assert small < vp.SCORE_CN_MAX_PX, "库里最长的名字五盘还给满字号，那一格装不下"
     assert small == vp.score_cn_px(list(reversed(longest)), 5), "换个顺序算出两个数"
 
     # ③ 盘数少 → 名字那一格宽 → 同样的名字能给更大的字号（这一条同时钉住盘数
@@ -200,7 +202,12 @@ def test_算出来的字号要真的写进CSS(monkeypatch: pytest.MonkeyPatch):
     #    只断言「长的比短的小」的话，把 CSS 里的字号写死成任意两个数也能过。
     short_pair = [{"name": "汤森德", "name_en": "T. TOWNSEND", "country": "USA", "rank": 94},
                   {"name": "奥索里奥", "name_en": "C. OSORIO", "country": "COL", "rank": 55}]
-    long_pair = [{"name": "亚历山德罗娃", "name_en": "E. ALEXANDROVA", "country": "RUS", "rank": 19},
+    # ⚠️ 长名字这一档 2026-08-31 从「亚历山德罗娃」换成库里最长的「塞伦多洛」
+    #    全名：盘分列 96→80 之后五盘的名字格宽到 370px，六个字的名字满字号
+    #    也装得下了——拿它验「会不会缩」验的是一个不再存在的情形（和当年
+    #    「这一档从三盘挪到五盘」同一个形状）。
+    long_pair = [{"name": "胡安·曼努埃尔·塞伦多洛", "name_en": "J. M. CERUNDOLO",
+                  "country": "ARG", "rank": 51},
                  {"name": "斯维托丽娜", "name_en": "E. SVITOLINA", "country": "UKR", "rank": 9}]
     short = _rendered_cn_px(monkeypatch, {
         "winner": "汤森德", "result": "3-6 6-3 6-3",
@@ -216,7 +223,7 @@ def test_算出来的字号要真的写进CSS(monkeypatch: pytest.MonkeyPatch):
         f"短名字渲出来是 {short}px，而上限是 {versus_poster.SCORE_CN_MAX_PX}px"
         "——多半是 CSS 里那个字号被写死了，`score_cn_px` 算完没人读")
     assert long_ == versus_poster.score_cn_px(long_pair, 5) < short, (
-        f"六个字的名字五盘渲出来是 {long_}px，而 `score_cn_px` 算的是 "
+        f"最长的名字五盘渲出来是 {long_}px，而 `score_cn_px` 算的是 "
         f"{versus_poster.score_cn_px(long_pair, 5)}px（上限 {short}px）"
         "——CSS 没有跟着 spec 变")
 
@@ -278,17 +285,30 @@ def test_盘分那几列和名字那一格都够用():
     所以同一件事要拿像素来量。它守的东西没变——加宽一头就是压窄另一头，
     这条钉的是两头都还够用。
 
-    五盘（大满贯男单）是最紧的一档：名字只剩 264px，六个字的名字会缩到 38px
-    上下——还读得出，但不能再窄了。
+    五盘（大满贯男单）是最紧的一档：盘分列 80px（08-31 收紧）之后名字剩
+    370px，库里最长的「塞伦多洛」全名会缩到 30px 上下——还读得出，
+    但不能再窄了。
     """
     vp = versus_poster
-    assert vp.SCORE_SET_COL_PX >= vp.SCORE_NUM_PX + 20, (
-        f"盘分列只剩 {vp.SCORE_SET_COL_PX}px，装 {vp.SCORE_NUM_PX}px 的数字"
-        "加一个抢七上标太挤")
+    # ⚠️ 盘分列的判据 2026-08-31 从「字号 + 20」换成**真量数字的墨宽**：
+    #    列宽 96→80 之后老写法（拿 72px 字号当宽度的代理）会红，而数字的墨
+    #    只有 ~42px——字号是行高的量纲，不是宽度。用仓库里真实的 TL Score
+    #    量最宽的那个数字，再加抢七上标（裸数字，`.score-number sup` 的
+    #    `.42em`）和一点呼吸，够装就是够装。
+    from PIL import ImageFont  # noqa: PLC0415
+    bold = ImageFont.truetype("assets/fonts/TLScore-Bold.ttf", vp.SCORE_NUM_PX)
+    digit_w = max(bold.getbbox(d)[2] for d in "0123456789")
+    sup = ImageFont.truetype("assets/fonts/TLScore-Regular.ttf",
+                             round(vp.SCORE_NUM_PX * 0.42))
+    tb_w = max(sup.getbbox(d)[2] for d in "0123456789")
+    assert vp.SCORE_SET_COL_PX >= digit_w + tb_w + 6, (
+        f"盘分列 {vp.SCORE_SET_COL_PX}px 装不下 {digit_w:.0f}px 的数字加"
+        f"{tb_w:.0f}px 的抢七上标——上标从列右沿伸进下一列，会贴到下一个数字上")
     # ⚠️ 名字那一头的判据**不拍一个像素数**（拍出来的数只会在下次微调版式时
     #    变成挡路的），而是问那个真正的后果：**库里最长的名字会不会被压到下限
     #    以下**。压到下限 `score_cn_px` 会打印告警并硬渲，那一行就顶到盘分上了。
-    longest = [{"name": "亚历山德罗娃", "rank": 19}, {"name": "斯维托丽娜", "rank": 9}]
+    longest = [{"name": "胡安·曼努埃尔·塞伦多洛", "rank": 51},
+               {"name": "斯维托丽娜", "rank": 9}]
     for sets in (2, 3, 5):
         px = vp.score_cn_px(longest, sets)
         assert px > vp.SCORE_CN_MIN_PX, (
@@ -872,7 +892,8 @@ def test_封面版式定版冻结_钩子字号和比分板坐标是全局统一�
         "HOOK_MAX_CHARS": 10,         # 每行 ≤10 字（从 940//94 推出来的）
         "STORYCOPY_TOP": 790,         # 文案块顶边（五次「往下移」的终值）
         "SCORE_BOARD_W": 940,         # 比分板外框 = 1080 − 左右各 70
-        "SCORE_SET_COL_PX": 96,       # 盘分一列（两行共用，列才对得齐）
+        "SCORE_SET_COL_PX": 80,       # 盘分一列（08-31「间隔再小一点，名字长的
+                                      # 球员放不下」96→80；74 起抢七上标挤下一盘）
         "SCORE_NUM_PX": 72,           # 盘分数字（量参考图定的 51% 墨高）
         "SCORE_CN_MAX_PX": 52,        # 中文名封顶（长名字往下缩是自适应，上限冻结）
         "SCORE_FILL_PAD_L": 24,       # 高亮条内边距

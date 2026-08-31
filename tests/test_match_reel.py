@@ -11229,32 +11229,29 @@ def test_顶栏比分逐盘上色赢盘绿输盘灰():
 
 
 def test_顶栏上色带抢七小分():
-    """⚠️ 抢七小分**两个方向都走常规档**（2026-08-29 加「赢盘加粗」时补的）。
+    """⚠️ 抢七小分：**裸数字不带括号**（账号所有者 2026-08-31 说了两遍——
+    先指着美网官方图「不要带()」，顶栏保留括号并说明理由之后他又来一句
+    「小分不带括号」，重申就是决定），**两个方向都走 `TOPBAR_TB_ASS`**
+    （常规字重 ＋ 小一档字号 ＋ 连字符那支暗色）。
 
-    它是这一盘的附注，和连字符同一档，不是比分本身。而 ASS 的标签是粘连的：
-    不显式复位的话，`7-6(5)` 里的 `(5)` 会跟着前一个数字走细、`6-7(5)` 里的
-    跟着走粗——**同一个括号按「这一盘谁赢的」渲成两个样子**，比一直粗或一直细
-    都糟。
-    ⚠️ 同一天下午加了 Light(300) 之后，**两个方向都要显式复位**：在那之前
-    「没加粗」就是常规档，左边赢的那一支可以省掉一次；现在「没加粗」是 Light，
-    省掉就跟着变细。连字符同理（见上一条判据）。
+    它是这一盘的附注，不是比分本身。ASS 没有行内上标，裸数字贴在基线上
+    满号渲就是「7-65」——所以靠字号小一大截（40 → 26）＋压暗让它读成注脚。
+    标签粘连，不显式复位的话小分会跟着前一个数字走粗/走细，小分之后的
+    正文又会跟着小分走暗——所以小分前挂 `TOPBAR_TB_ASS`、后面必须跟
+    `TOPBAR_RESET_ASS` 把颜色还回去。
     """
     reel = _reel()
 
-    def weight_before_paren(line: str) -> str:
-        """`(` 之前最后一个字重标签是哪一个——粗、细，还是常规。"""
-        head = line[:line.index("(")]
-        pos = {tag: head.rfind(tag) for tag in
-               (reel.TOPBAR_SCORE_BOLD_ASS, reel.TOPBAR_SCORE_LIGHT_ASS,
-                reel.TOPBAR_SCORE_PLAIN_ASS)}
-        return max(pos, key=pos.get)
-
     for raw, who in (("甲 7-6(5) 甲 乙", "左边"), ("甲 6-7(5) 甲 乙", "右边")):
         line = reel.colorize_topbar_score(raw)
-        assert "(5)" in line
-        assert weight_before_paren(line) == reel.TOPBAR_SCORE_PLAIN_ASS, (
-            f"{who}赢的那一盘，小分跟着前一个数字的字重走了：{line}\n"
-            "小分是这一盘的附注，两个方向都该是常规档。")
+        assert "(5)" not in line and "(" not in line, (
+            f"顶栏的抢七小分还带着括号：{line}\n"
+            "账号所有者 2026-08-31：「小分不带括号」——ASS 里用小号暗数字。")
+        want = f"{reel.TOPBAR_TB_ASS}5{reel.TOPBAR_RESET_ASS}"
+        assert want in line, (
+            f"{who}赢的那一盘，小分没走 `TOPBAR_TB_ASS`＋颜色复位：{line}\n"
+            "小分是注脚：常规字重＋小一档＋暗色，渲完要把颜色还给正文——"
+            "少哪一样它都会和满号数字混在一起，或把后面的字带暗。")
 
 
 def test_顶栏上色不会把人名当成比分():
