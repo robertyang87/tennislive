@@ -266,13 +266,17 @@ def test_钩子字号那个公式没变过():
     第一版正是拿源码字符串钉的，重构一次就当场变成一条常年红。
     """
     versus_poster = _versus_poster()
-    assert versus_poster.SHORT_HOOK_TITLE_PX == 124, \
-        "短钩子的字号上限变了，重算钩子长度那一节的账"
+    # ⭐ 2026-08-31 起钩子只有**一个**字号（`HOOK_TITLE_PX`），行越短字越大
+    # 那一档（124/96 两级上限）撤了——账号所有者「〔封面钩子〕高度再小 20%」，
+    # 而 8 字那行 117×0.8 正好落回 94，也就是他 08-14 点头的那个大小。
+    assert versus_poster.hook_title_px(["赢了"]) == \
+        versus_poster.hook_title_px(["八个字的一行钩子", "另一行"]) == 94, \
+        "钩子的字号又变成「行越短字越大」了，重算这一节的账"
     # 25 字 → 37px（棘轮那个当前最坏值）、10 字 → 94px（硬闸那条下限），
     # 两个端点都是上面那两段话直接引用的数。
     assert versus_poster.hook_title_px(["一" * 25, "短"]) == 37
     assert versus_poster.hook_title_px(["一" * 10, "短"]) == \
-        versus_poster.MIN_HOOK_TITLE_PX == 94
+        versus_poster.HOOK_TITLE_PX == 94
     assert versus_poster.hook_title_px(["一" * 11, "短"]) < 94, \
         "11 个字要掉到下限以下，不然 HOOK_MAX_CHARS 就不该是 10"
     assert versus_poster.HOOK_MAX_CHARS == 10
@@ -321,9 +325,9 @@ def test_solo封面的钩子每行不许超过十个字():
     versus_poster = _versus_poster()
     fresh = {s: v for s, v in _solo_hook_px().items()
              if s not in reel._LEGACY_LONG_HOOKS
-             and v[1] < versus_poster.MIN_HOOK_TITLE_PX}
+             and v[1] < versus_poster.HOOK_TITLE_PX}
     assert not fresh, (
-        f"这几条 solo 封面的钩子渲出来低于 {versus_poster.MIN_HOOK_TITLE_PX}px："
+        f"这几条 solo 封面的钩子渲出来低于 {versus_poster.HOOK_TITLE_PX}px："
         f"{fresh}（值是「最长行字数, 字号」）。每行最多 "
         f"{versus_poster.HOOK_MAX_CHARS} 个字符——**改文案，不要去调字号**。"
     )
@@ -377,7 +381,7 @@ def test_钩子豁免表里的每一条都还真的超着():
         f"豁免表里这几个 slug 不存在、或者已经不是 solo 封面了：{ghosts}。"
         f"名字写错的话这一条就永远豁免不到任何东西。")
     healed = sorted(s for s in reel._LEGACY_LONG_HOOKS
-                    if measured[s][1] >= versus_poster.MIN_HOOK_TITLE_PX)
+                    if measured[s][1] >= versus_poster.HOOK_TITLE_PX)
     assert not healed, (
         f"这几条已经不超了，把它们从 `_LEGACY_LONG_HOOKS` 里删掉：{healed}。"
         f"豁免表只许减不许加。")
@@ -1439,3 +1443,54 @@ def test_quote宽度闸真的接在validate_spec里不是白写了没人调():
     assert "_quote_lines_fit_the_frame" in calls, (
         "validate_spec 函数体里已经不调用 _quote_lines_fit_the_frame 了——"
         "这条闸写出来了，但没有接进 dry-run 会走的那条路")
+
+
+def test_两种封面版式的钩子字号是同一个出处():
+    """账号所有者 2026-08-31：「**钩子文案大小修改后，同步到全局**」。
+
+    钩子在两个地方渲：solo 的 `.storytitle`（默认版式，163 条）和 VS 那几版
+    的 `.hook`（cutout/diagonal，13 条存量）。后者原来**写死 100px**，和
+    solo 收成 94px 之后差着一档——同一个栏目的封面两种大小。
+
+    两边的可用宽度本来就一样（solo 的 `TITLE_WIDTH_PX` 940；VS 的 `.copy` 是
+    `left:66px right:66px` → 948），所以同一个 `hook_title_px()` 直接适用。
+
+    ⚠️ 判据是**渲出来的 CSS**，不是「源码里有没有写这个名字」：f-string 的
+    占位符没插上值时留下的是字面量 `{vs_hook_px}`，一个字都不报。
+    """
+    versus_poster = _versus_poster()
+    assert "font-size:100px" not in Path("tools/versus_poster.py").read_text(
+        encoding="utf-8"), "VS 版式的钩子又写死字号了"
+
+    captured = {}
+    real = versus_poster._render_html
+    versus_poster._render_html = lambda html, out: captured.setdefault("html", html) or out
+    cover = {
+        "layout": "cutout", "eyebrow": "赛场之上",
+        "hook": "一二三四五六七八九十一\n短的一行", "winner": "甲", "result": "6-4 6-4",
+        "matchup": [{"name": "甲", "country": "CHN", "rank": 1},
+                    {"name": "乙", "country": "USA", "rank": 2}],
+        "versus": {
+            "names": ["甲", "乙"],
+            "top": {"cutout": "assets/players/atp-fb98-taylor-fritz.png",
+                    "country": "CHN", "rank": 1},
+            "bottom": {"cutout": "assets/players/atp-j0dz-rafael-jodar.png",
+                       "country": "USA", "rank": 2},
+            "background": {"image": "assets/reel/anisimova-cincinnati-2026-r3.jpg",
+                           "shot": "wide_court", "frame_at": 1.0},
+        },
+    }
+    try:
+        versus_poster.build_poster(cover, Path("/tmp/_vs_probe.jpg"), layout="cutout")
+    except Exception:            # noqa: BLE001 - 只要 HTML 拼出来了就够
+        pass
+    finally:
+        versus_poster._render_html = real
+    html = captured.get("html", "")
+    assert html, "没拼出 HTML，这条判据的主语没了"
+    assert "{vs_hook_px}" not in html, "f-string 没插值，CSS 里留着占位符"
+    want = versus_poster.hook_title_px(["一" * 11, "短的一行"])
+    assert f"font-size:{want}px" in html, (
+        f"VS 的 .hook 没走 hook_title_px（应是 {want}px）：{html[html.find('.hook'):][:120]}")
+    # 11 个字在 948px 里放不下 100px——老写法是**默默多折一行**，不报错
+    assert want < 100
