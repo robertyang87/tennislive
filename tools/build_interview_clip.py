@@ -1081,8 +1081,11 @@ _SCORE_SIZE_TAG = rf"\fs{_SCORE_PX}"
 # 的 "7-6(3) 4-6 6-4" 就是这么写的：她中间那盘 4-6 输了，局数照旧写自己
 # 在前）。所以「这一盘谁赢的」只用比这一盘里两个数的大小就够，不用另外
 # 传一份「谁赢了每一盘」的数据。抢七的 "(N)" 记的是**这一盘输家**在抢七里
-# 拿到的分数，写法上永远跟在第二个数字后面，跟着第二个数字一起走。
+# 拿到的分数，数据格式里永远跟在第二个数字后面；**渲的时候剥掉括号、
+# 小一档单独一个 run**（2026-08-31「小分不带括号」，见 `_score_runs`）。
 _SET_SCORE_RE = re.compile(r"^(\d+)-(\d+)(\(\d+\))?$")
+#: 抢七小分渲成 `TL Score` 里合成的上标码位（见 `_score_runs` 里那段注释）。
+_SUP_DIGITS = str.maketrans("0123456789", "⁰¹²³⁴⁵⁶⁷⁸⁹")
 
 
 def _score_runs(score: str, px: int = _SCORE_PX) -> list[tuple[str, str, str, int]]:
@@ -1123,7 +1126,19 @@ def _score_runs(score: str, px: int = _SCORE_PX) -> list[tuple[str, str, str, in
         tag1 = (_MARK_COLOUR if n1_won else "") + w1 + tag
         tag2 = (_MARK_COLOUR if not n1_won else "") + w2 + tag
         runs.append((f"{n1}-", "num", tag1, px))
-        runs.append((f"{n2}{paren}{trail}", "num", tag2, px))
+        if paren:
+            # 抢七小分：**裸数字、印在大分的右上角**（账号所有者 2026-08-31，
+            # 全站一个口径——match-reel 顶栏同一天同款）。写的是 `TL Score`
+            # 里合成好的上标码位（`build_fonts.add_superscript_digits`），
+            # 小和高都在字形里，run 不用动字号；单独一个 run（空 tags）是
+            # 为了不跟着 `tag2` 的绿/粗走——它是注脚不是比分。
+            # ⚠️ 映射和 `build_match_reel.SUP_DIGITS` 是同一张 Unicode 标准表
+            # （1/2/3 在 Latin-1 区），判据钉两边相等。
+            runs.append((n2, "num", tag2, px))
+            runs.append((f"{paren.strip('()').translate(_SUP_DIGITS)}{trail}",
+                         "num", "", px))
+        else:
+            runs.append((f"{n2}{trail}", "num", tag2, px))
     return runs
 
 

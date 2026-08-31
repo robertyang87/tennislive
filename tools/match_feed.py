@@ -181,6 +181,37 @@ def durations(match_id: str) -> list[tuple[str, str]]:
     return out
 
 
+def set_pairs(match_id: str) -> list[tuple[int, int]]:
+    return _parse_set_pairs(fs_feed(FS_TIMES, match_id))
+
+
+def _parse_set_pairs(text: str) -> list[tuple[int, int]]:
+    """`df_sui_1` 每盘一块的 `IG/IH`——**平时是局数，抢七盘上是抢七小分**。
+
+    这个双重语义是拿两场四个抢七钉死的（2026-08-31，别按一场推）：
+
+        德约-纳沃内 hbCCx5Fj  Set1 局数 7-6 → IG/IH = 7/5（抢七小分）
+        穆纳尔-阿特曼 zVT1hvyP Set1 6-7 → 5/7；Set4 7-6 → 7/4
+                               其余盘 IG/IH 全部等于局数（3-6 6-1 7-5…）
+
+    分辨靠网球规则自证：抢七不可能 7-6 结束（要净胜 2 分），所以一对
+    (7,6)/(6,7) 必然是**局数**；max≥7 且差 ≥2 的才可能是小分。调用方拿
+    逐局表的局数对着认（`authoritative_sets`），这里只管解析。
+
+    ⚠️ 别去当日总表拿 `DA/DB` 那一族：`DE` 被开赛时间戳占着，第 3 盘的
+    抢七会和它撞车（同一块里两个 `DE÷`，正则字典谁盖谁说不准）。
+    """
+    out = []
+    for chunk in text.split("~"):
+        f = dict(re.findall(r"([A-Z]{2})÷([^¬]*)", chunk))
+        if str(f.get("AC", "")).startswith("Set"):
+            try:
+                out.append((int(f["IG"]), int(f["IH"])))
+            except (KeyError, ValueError):
+                out.append((-1, -1))
+    return out
+
+
 def wimbledon_points(year: str, match_id: str) -> list[dict]:
     """温网的逐分，**带击球方式**。
 

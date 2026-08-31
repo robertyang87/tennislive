@@ -1119,3 +1119,135 @@ def test_存量里没有一条踩到五盘三胜那个坑():
     # 判据自己的判据：主语没了要出声，而不是变成一条恒真的绿灯
     assert checked >= 150, f"只扫到 {checked} 条 spec，扫描范围坏了"
     assert not offenders, f"这几条把没打满五盘的大满贯男子比赛写成了决胜盘：{offenders}"
+
+
+def test_抢七小分进机械链_事实重建带N注脚():
+    """⭐ 账号所有者 2026-08-31（甩来美网官方比分图）：「封面比分板上抢七
+    没有小分啊」。板和数据图的 `.tb` 上标机制早就有，可 result_verified 的
+    spec **结构性写不了小分**——老 verified_result_problem 要求 cover.result
+    逐字等于只按局数重建的赛果，德约那条只好留一句「cover.result 不带抢七
+    小分」的注解。顺带一个更深的洞：df_mh_1 **不列抢七那一局**，
+    final_set_scores 对抢七盘只能取到 6-6，带抢七的比赛在自动链上整场判
+    不出赢家（home_sets == away_sets → verified_match_fact 返回 None）。
+
+    reconcile_sets 拿 df_sui_1 的 IG/IH 一次补两个洞（语义两场四抢七实证，
+    见 match_feed._parse_set_pairs）；verified_match_fact 带 tiebreaks 之后
+    winner/loser 两份赛果都带 (N)，N＝输掉那一盘的人的小分、不随视角翻。
+    """
+    facts = load("reel_facts")
+    # 德约-纳沃内的真实形状：逐局表首盘停在 6-6，sui 给小分 7/5
+    scores = [(6, 6), (5, 7), (4, 6), (6, 2), (6, 1)]
+    sui = [(7, 5), (5, 7), (4, 6), (6, 2), (6, 1)]
+    fixed, tiebreaks = facts.reconcile_sets(scores, sui)
+    assert fixed == [(7, 6), (5, 7), (4, 6), (6, 2), (6, 1)]
+    assert tiebreaks == [(7, 5), None, None, None, None]
+    fact = facts.verified_match_fact(
+        [{"name": "纳沃内"}, {"name": "德约科维奇"}], fixed, "hbCCx5Fj",
+        tiebreaks=tiebreaks)
+    assert fact["winner_result"] == "7-6(5) 5-7 4-6 6-2 6-1"
+    assert fact["loser_result"] == "6-7(5) 7-5 6-4 2-6 1-6"
+    assert fact["tiebreaks_home_away"] == [[7, 5], None, None, None, None]
+
+    # 穆纳尔-阿特曼（账号所有者截图那场）：两个抢七，含逐局表已是 7-6 的档
+    scores2 = [(6, 7), (3, 6), (6, 1), (7, 6), (7, 5)]
+    sui2 = [(5, 7), (3, 6), (6, 1), (7, 4), (7, 5)]
+    fixed2, tb2 = facts.reconcile_sets(scores2, sui2)
+    assert fixed2 == scores2 and tb2 == [(5, 7), None, None, (7, 4), None]
+
+    # 对不上就 None，不猜：sui 的小分方向和盘的赢家相反
+    assert facts.reconcile_sets([(6, 6)], [(5, 7)]) is not None  # away 赢 TB → 6-7 ✓
+    assert facts.reconcile_sets([(7, 6)], [(5, 7)]) is None      # 局数说 home 赢
+    assert facts.reconcile_sets([(6, 3)], [(6, 4)]) is None      # 普通盘对不上
+    # 抢七不可能 7-6 结束：一对 (7,6) 只能是局数，认不出小分 → None
+    assert facts.reconcile_sets([(6, 6)], [(7, 6)]) is None
+
+
+def test_verified闸校验小分的值_旧match不带小分栏也不误伤():
+    facts = load("reel_facts")
+
+    def spec_of(result: str, tb=None, winner_result=None):
+        match = {
+            "status": "result_verified",
+            "participants": ["纳沃内", "德约科维奇"],
+            "set_scores_home_away": [[7, 6], [6, 2]],
+            "winner": "纳沃内", "loser": "德约科维奇",
+            "winner_result": winner_result or result,
+        }
+        if tb is not None:
+            match["tiebreaks_home_away"] = tb
+        return {"_match": match, "cover": {"winner": "纳沃内", "result": result}}
+
+    # 带小分栏：逐字机械比对，(N) 写错当场红
+    ok = spec_of("7-6(5) 6-2", tb=[[7, 5], None])
+    assert facts.verified_result_problem(ok) is None
+    bad_n = spec_of("7-6(3) 6-2", tb=[[7, 5], None], winner_result="7-6(3) 6-2")
+    assert "不一致" in (facts.verified_result_problem(bad_n) or "")
+    # 非抢七盘写小分 / 小分不是合法抢七结果，都要说清楚
+    assert "不是抢七盘" in facts.verified_result_problem(
+        spec_of("7-6(5) 6-2", tb=[None, [7, 5]]))
+    assert "不是一个合法的抢七结果" in facts.verified_result_problem(
+        spec_of("7-6(5) 6-2", tb=[[7, 6], None]))
+    # 旧 _match 没有小分栏：(N) 剥掉再比，手补的小分不许被顶回去
+    legacy = spec_of("7-6(5) 6-2", winner_result="7-6 6-2")
+    assert facts.verified_result_problem(legacy) is None
+
+
+def test_抢七盘不带小分就红_全库扫描只剩豁免表那几条():
+    """7-6 的盘必然打过抢七（6-6 才进抢七），裸的 7-6 永远是漏。已发的
+    7 条挂豁免（已发不重渲；重渲会撞 validate_spec 里那道不豁免的闸），
+    **只许减不许加**，表自带自检——slug 要真的存在、真的还裸着。"""
+    facts = load("reel_facts")
+    assert "抢七" in (facts.bare_tiebreak_problem(
+        {"cover": {"result": "7-6 6-2"}}) or "")
+    assert "抢七" in (facts.bare_tiebreak_problem(
+        {"cover": {"result": "6-7 2-1 Ret."}}) or "")
+    for ok in ("7-6(5) 6-2", "7-5 6-2", "6-7(4) 7-6(10) 6-1", "6-0 4-0 退赛"):
+        assert facts.bare_tiebreak_problem({"cover": {"result": ok}}) is None, ok
+
+    import glob  # noqa: PLC0415
+
+    # 豁免表只有一份出处（闸自己消费的那份）；这里把 slug 挖空让检测器
+    # 绕过豁免真扫一遍——测的是检测器，不是豁免。
+    legacy = facts.LEGACY_BARE_TIEBREAK
+    checked, hits, stale = 0, [], set(legacy)
+    for f in glob.glob(str(ROOT / "specs" / "reels" / "*.json")):
+        spec = json.loads(Path(f).read_text(encoding="utf-8"))
+        slug = Path(f).stem
+        if (spec.get("cover") or {}).get("result"):
+            checked += 1
+        if facts.bare_tiebreak_problem({**spec, "slug": ""}):
+            if slug in legacy:
+                stale.discard(slug)
+            else:
+                hits.append(slug)
+        # 闸对豁免名单真的放行（已发的不为小分重渲）
+        if slug in legacy:
+            assert facts.bare_tiebreak_problem({**spec, "slug": slug}) is None
+    assert checked >= 100, f"只校到 {checked} 条——主语没了"
+    assert hits == [], f"这些 spec 的抢七盘没带小分：{hits}"
+    assert not stale, f"豁免表里这些已经不裸了/不存在了，从表里删掉：{stale}"
+
+
+def test_小分闸在渲染入口就红():
+    """闸装在 _topbar_lines（validate_spec 调它，dry-run 0.2 秒就走到）。"""
+    sys.path.insert(0, str(TOOLS))
+    import build_match_reel as reel  # noqa: PLC0415
+
+    spec = {"slug": "fresh-tb-spec",
+            "cover": {"eyebrow": "赛场之上", "winner": "纳沃内",
+                      "result": "7-6 6-2"},
+            "topbar": {"line1": "2026 美网 第一轮",
+                       "line2": "纳沃内 7-6 6-2 德约科维奇"}}
+    with pytest.raises(reel.ReelError, match="抢七"):
+        reel._topbar_lines(spec)
+
+
+def test_df_sui_1的每盘数字解析出IG_IH对():
+    """真实 feed 的形状（块间 ~、字段 ¬）；缺字段的块给 (-1,-1) 出声占位，
+    别静默丢——丢了和逐局表对齐就错位，reconcile 会拿错盘的小分。"""
+    mf = load("match_feed")
+    text = ("~AC÷Set 1¬IG÷5¬IH÷7¬RC÷1:15¬"
+            "~AC÷Set 2¬IG÷3¬IH÷6¬RD÷0:37¬"
+            "~AC÷Set 3¬IG÷6¬RE÷0:36¬"
+            "~RB÷4:36¬")
+    assert mf._parse_set_pairs(text) == [(5, 7), (3, 6), (-1, -1)]
