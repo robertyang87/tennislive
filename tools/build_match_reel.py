@@ -371,6 +371,12 @@ _LEGACY_VS_COVERS = frozenset({
 # 报错。判据 `test_solo封面的钩子每行不许超过十个字` 会自检这张表：里面的每个
 # slug 都必须真的存在、真的是 solo、而且真的还超着——写错一个名字，豁免就成了
 # 一盏恒真的绿灯（`_LEGACY_VS_COVERS` 那条栽过的形状）。
+#
+# ⚠️ **2026-08-31 少了一条**：`hook_title_px` 原来按 `len()` 数字符，而那把尺
+# 对半角是错的（见 `versus_poster.hook_line_width`）。改成按字位量之后
+# `shang-darderi-montreal-2026`（钩子里有 `0比3`、`4比5` 这些半角数字）
+# 渲出来正好是 94px、不再超着，自检当场要求把它删掉——**这不是放宽豁免，
+# 是那条本来就没超**。
 _LEGACY_LONG_HOOKS = frozenset({
     "alexandrova-sabalenka", "anisimova-bartunkova", "bencic-eala",
     "bencic-townsend", "chwalinska-gibson", "cincinnati-story",
@@ -381,7 +387,7 @@ _LEGACY_LONG_HOOKS = frozenset({
     "nakashima-jodar-montreal-sf", "noskova-mcnally", "osaka-fernandez",
     "osaka-mertens", "pegula-rakhimova", "rybakina-gauff-toronto-sf",
     "rybakina-kasatkina", "rybakina-li", "rybakina-osaka",
-    "rybakina-samsonova", "shang-darderi-montreal-2026", "shang-rublev",
+    "rybakina-samsonova", "shang-rublev",
     "shang-vallejo", "shelton-fonseca", "shelton-mensik",
     "shelton-nakashima-montreal-final", "shelton-tien-montreal-sf",
     "shnaider-pegula", "sonmez-kasatkina", "svitolina-alexandrova",
@@ -5478,7 +5484,8 @@ def _hook_lines_fit_the_title(spec: dict) -> None:
     if not lines or str(cover.get("layout", "")).strip() != "solo":
         return
     from versus_poster import (  # noqa: PLC0415
-        HOOK_MAX_CHARS, HOOK_TITLE_PX, SOLO_HOOK_MAX_LINES, hook_title_px)
+        HOOK_MAX_CHARS, HOOK_TITLE_PX, SOLO_HOOK_MAX_LINES, hook_line_width,
+        hook_title_px)
     # ⚠️ **行数这一条不吃 `_LEGACY_LONG_HOOKS` 的豁免**：那张表放行的是「行太长
     # 所以字号偏小」（已发的片子不重渲），而行数超了是**版式溢出**——`STORYCOPY_TOP`
     # 2026-08-31 从 750 挪到 790 之后，第三行会把比分板的输家那一行推出画布。
@@ -5495,11 +5502,11 @@ def _hook_lines_fit_the_title(spec: dict) -> None:
     px = hook_title_px(lines)
     if px >= HOOK_TITLE_PX:
         return
-    over = [ln for ln in lines if len(ln) > HOOK_MAX_CHARS]
+    over = [ln for ln in lines if hook_line_width(ln) > HOOK_MAX_CHARS]
     raise ReelError(
         f"封面钩子渲出来只有 {px}px，低于 {HOOK_TITLE_PX}px。\n"
         f"标题字号是按**最长那一行**算的（{versus_width()} ÷ 字数），"
-        f"所以每行最多 {HOOK_MAX_CHARS} 个字符：\n"
+        f"所以每行最多 {HOOK_MAX_CHARS} 个字位（全角 1、半角 0.5）：\n"
         + "".join(f"  · {len(ln):2d} 字 「{ln}」\n" for ln in over)
         + "**这条约束的是文案不是版式**——把长的那行拆开或者砍短，"
         "别去调字号。\n"

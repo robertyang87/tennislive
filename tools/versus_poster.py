@@ -1145,6 +1145,7 @@ TITLE_WIDTH_PX = 940
 # 缩略图里那一行基本读不出来，而封面是唯一决定人点不点的一屏。
 HOOK_TITLE_PX = 94
 # 每行的字符上限**从上面两个数推出来**，不另写一个数——一个数写两处必分叉。
+# ⚠️ **单位是「字位」不是「字符」**：全角 1、半角 0.5，见 `hook_line_width`。
 HOOK_MAX_CHARS = TITLE_WIDTH_PX // HOOK_TITLE_PX
 
 #: solo 封面的钩子最多几行。**这不是文风偏好，是版式的硬上限**：
@@ -1172,7 +1173,28 @@ def hook_title_px(lines: list[str]) -> int:
     """
     if not lines:
         return HOOK_TITLE_PX
-    return min(HOOK_TITLE_PX, int(TITLE_WIDTH_PX / max(len(ln) for ln in lines)))
+    return min(HOOK_TITLE_PX, int(TITLE_WIDTH_PX / max(hook_line_width(ln) for ln in lines)))
+
+
+def hook_line_width(line: str) -> float:
+    """这一行占几个「字位」：全角记 1，半角记 0.5。
+
+    ⚠️ **原来这儿是 `len()`，而那个数对英文是错的。** 上面那句「一个汉字约占
+    一个字号的宽」只对中日韩全角字成立；`Queen is back！` 十四个字符里十三个
+    是半角，真实宽度只有 7.5 个字位——按 `len()` 算会把字号压到 67px，
+    然后被 `_hook_lines_fit_the_title` 当成「行太长」拦下来，**而它渲出来
+    根本没顶出画布**（7.5 × 94 = 705px，可用 940px）。
+
+    2026-08-31 账号所有者点名要一行写 `Queen is back！`，这条才第一次咬人——
+    在那之前这条线的钩子全是中文，`len()` 和字位数正好相等，所以一直没露。
+
+    ⚠️ 这把尺和 `render.xiaohongshu.xhs_title_len`（推送标题那条闸用的）是
+    同一个口径，**不是又发明了一个**；两处各自实现是因为这个模块不依赖
+    `tennislive` 包（`versus_poster` 在 runner 上是裸跑的）。
+    """
+    import unicodedata  # noqa: PLC0415
+    return sum(1.0 if unicodedata.east_asian_width(ch) in "WF" else 0.5
+               for ch in line)
 
 # 台头药丸的顶边（px，画布 1080×1440）。**老版一行赛果时药丸落在 502~536**
 # （量的是已发的 eala-parks / shang-rublev 两张海报），520 取在中间。
