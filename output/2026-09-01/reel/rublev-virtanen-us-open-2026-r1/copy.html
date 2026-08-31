@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>9.1 赛场之上 | 卢布列夫救下赛点逆转</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>两个抢七都丢了，第二盘一分没拿到——他还是赢了🎾
+
+北京时间8月31日夜里十一点多，美网男单第一轮，纽约七号球场：23号种子卢布列夫 6-7(5)、6-7(0)、6-0、6-2、7-6(5) 逆转世界第109的维尔塔宁。三小时四十二分钟。
+
+前两盘他都不是被打崩的。第一盘打到抢七，3-6落后，他连救两个盘点追到5-6，第三个没救下；第二盘6-6那一局，他手里握着三个盘点，一个都没兑现，然后抢七0-7——七个球全丢。零比二落后。
+
+好在这是大满贯，五盘三胜，他还剩三盘可打。
+
+第三盘风向变了，而且变得很具体：维尔塔宁的一发得分率从第二盘的74%掉到21%。27分钟，6-0，卢布列夫一局都没让；第四盘28分钟，6-2。中间这两盘一共55分钟，对手只拿到两局。比赛回到原点。
+
+决胜盘打了67分钟，前12局全是保发，谁也破不了谁。6-5时，维尔塔宁在卢布列夫的发球局上拿到一个赛点——屏幕上黄字亮了16秒。卢布列夫把这一分救了回去，6-6进抢七。美网的决胜盘抢七是抢十分：3-1、5-2、6-2，比分一路在他这边；9-4第一个赛点被救掉，9-5第二个才兑现，10-5。
+
+撑住他的是发球：全场20记Ace、只有3次双误，三个多小时里连着保住20个发球局。反过来看效率就没那么好——24个破发点只兑现7个，对手8个里进2个。总分186比148，差38分。
+
+25岁的维尔塔宁是芬兰人，这一届是幸运落败者：资格赛输了球，靠别人退赛才递补进正赛。他大满贯生涯最好成绩是第二轮。两人此前从未交过手。
+
+赛点落地，28岁的卢布列夫仰面躺在了球场上。七号球场的看台全站了起来。
+
+而他身上那条最有名的线还在：大满贯的四分之一决赛他去过十次，十次都停在那儿，一次半决赛都没进过。这一次，他能不能再往前一步？
+
+#卢布列夫 #美网 #网球 #赛场之上 #网球时差</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>这一次，他能不能再往前一步？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
