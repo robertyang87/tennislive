@@ -13088,13 +13088,14 @@ def test_握手后只许接固定品牌片尾():
 
 def test_带式版式的段真的落在画面带里(tmp_path):
     """spec 顶层 `"layout": "band"`（美网记分条那轮定的，账见
-    docs/us-open-scoreboard-aspect.md）：外框仍 1080×1440，段落改裁 6:5
-    （1296×1080）缩进画面带（1080×900、y=132 起），上下由带底色补齐——
-    顶带给顶栏、底带给字幕，两样都不再压在画面上。
+    docs/us-open-scoreboard-aspect.md）：外框仍 1080×1440，段落改裁 9:8
+    （1214×1080，2026-08-31 从 6:5 收窄）缩进画面带（1080×960、y=132 起），
+    上下由带底色补齐——顶带给顶栏、底带给字幕，两样都不再压在画面上。
 
     **真跑一遍 cut_segment**（合成 1920×1080 纯白源片），两种版式都量像素：
 
-    - band：顶带(y 30~100)和底带(y 1150~1350)近黑、画面带(y 560~640)是白的。
+    - band：顶带(y 30~100)和底带(y 1150~1350，画面带底边 1092 之下)近黑、
+      画面带(y 560~640)是白的。
       查像素不查滤镜串——把 pad 换成别的写法照样得红
     - 默认（不写 layout）：同一批坐标全是白的。**全出血一个字节不许变**，
       这半张是回归钉：巡回赛片子不许被这次改动碰到
@@ -13148,7 +13149,7 @@ def test_带式版式的段真的落在画面带里(tmp_path):
 def test_带式的字幕锚顶栏角标都进带_全出血原样(monkeypatch):
     """带式版式的三个「放到画面外/画面内」的落位，各钉一头（都反向验证过）：
 
-    - 字幕默认锚：band 进底带（BAND_MARGIN_V=1064），full 仍是画面内 1284。
+    - 字幕默认锚：band 进底带（BAND_MARGIN_V=1124），full 仍是画面内 1284。
       `subtitle_top` 的人工覆盖不在这条判据里——那条口子归 render 里的读取
     - 顶栏滤镜：band 不画那层半透明 drawbox（顶带已是实色，画了会在
       y=126~132 露一道两色接缝）；full 照画（顶栏压在画面上要它保可读性）
@@ -13179,14 +13180,94 @@ def test_带式的字幕锚顶栏角标都进带_全出血原样(monkeypatch):
         "[0:v]null[base]", ins), "全出血的角标落位不许被带式改动牵动"
 
 
+def test_带式的品牌脚注真的渲出来而且只在带式(tmp_path, monkeypatch):
+    """带式底带的品牌脚注（2026-08-31「下半部分黑的地方很多」那轮定的，账在
+    docs/us-open-scoreboard-aspect.md 文末）。三头，缺一头都是恒真：
+
+    - **条本身有墨**：`band_foot_strip` 真渲一条（球标 + 「网球时差 ·
+      赛场之上」），透明底、有不透明像素——查文件在不在防不住「渲出来一张
+      全透明的空条」
+    - **真跑一遍滤镜图**：给了 `foot_input` 时脚注落在 BAND_FOOT_Y 竖直中心
+      （白底源片上量非白像素）——只查滤镜串防不住 overlay 表达式写错
+    - **不给 foot_input 的路一个字不变**：同一坐标带纯白。全出血和没脚注的
+      带式不许被这条改动牵动
+
+    反向验证过：把 `foot` 那截从滤镜图里拆掉 → 第二头红（脚注带全白）；
+    把 BAND_FOOT_Y 挪到 1200 → 第二头红在「落错了行」；把 strip 的 fill
+    改成全透明 → 第一头红。
+    """
+    import shutil  # noqa: PLC0415
+
+    import numpy as np  # noqa: PLC0415
+    from PIL import Image  # noqa: PLC0415
+
+    assert shutil.which("ffmpeg"), "没有 ffmpeg，这条判据跑不了：apt install ffmpeg"
+    reel = _reel()
+
+    strip = reel.band_foot_strip(tmp_path / "foot.png")
+    im = Image.open(strip)
+    arr = np.asarray(im)
+    assert im.mode == "RGBA" and im.width > im.height, f"脚注条形状不对 {im.size}"
+    assert (arr[..., 3] > 128).mean() > 0.05, "脚注条没有墨——渲出来是一张空透明图"
+
+    # 极简 ASS（零对白）——滤镜图里那两次 subtitles 要真的能跑
+    ass = tmp_path / "empty.ass"
+    ass.write_text(
+        "[Script Info]\nScriptType: v4.00+\nPlayResX: 1080\nPlayResY: 1440\n\n"
+        "[V4+ Styles]\n"
+        "Format: Name, Fontname, Fontsize, PrimaryColour, OutlineColour, "
+        "BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, "
+        "Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, "
+        "MarginR, MarginV, Encoding\n"
+        "Style: X,Arial,20,&H00FFFFFF,&H00000000,&H00000000,0,0,0,0,100,100,"
+        "0,0,1,0,0,2,10,10,10,1\n\n[Events]\n"
+        "Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, "
+        "Effect, Text\n", encoding="utf-8")
+    src = tmp_path / "white.mp4"
+    subprocess.run(
+        ["ffmpeg", "-y", "-v", "error", "-f", "lavfi", "-i",
+         "color=c=white:s=1080x1440:r=25", "-t", "1.0",
+         "-pix_fmt", "yuv420p", str(src)], check=True)
+
+    monkeypatch.setattr(reel, "LAYOUT", "band")
+    foot_rows = (reel.BAND_FOOT_Y - 30, reel.BAND_FOOT_Y + 30)
+    for case, extra, foot_in in (("with", ["-i", str(strip)], 2), ("without", [], None)):
+        g = reel.topbar_filtergraph(0.2, 0.6, ass, ass, foot_input=foot_in)
+        out = tmp_path / f"foot_{case}.mp4"
+        subprocess.run(
+            ["ffmpeg", "-y", "-v", "error", "-i", str(src), "-i", str(src),
+             *extra, "-filter_complex", g, "-map", "[out]", "-frames:v", "12",
+             str(out)], check=True)
+        frame = tmp_path / f"foot_{case}.png"
+        # 第 8 帧落在比赛区间（0.2s 封面之后），封面帧上本来就没有脚注
+        subprocess.run(
+            ["ffmpeg", "-y", "-v", "error", "-ss", "0.3", "-i", str(out),
+             "-frames:v", "1", str(frame)], check=True)
+        band = np.asarray(Image.open(frame).convert("L").crop(
+            (0, foot_rows[0], 1080, foot_rows[1])))
+        dark = (band < 200).mean()
+        if case == "with":
+            assert dark > 0.005, (
+                f"带式给了脚注输入，BAND_FOOT_Y={reel.BAND_FOOT_Y} 那一带"
+                f"该有脚注的墨，量到暗像素占比 {dark:.4f}——overlay 没接上"
+                "或落错了行")
+            ctrl = np.asarray(Image.open(frame).convert("L").crop(
+                (0, 1150, 1080, 1250)))
+            assert (ctrl < 200).mean() < 0.001, "脚注糊到了字幕那一带"
+        else:
+            assert dark < 0.001, (
+                f"没给脚注输入的路（全出血/无顶栏）不许有脚注，量到暗像素 "
+                f"{dark:.4f}")
+
+
 def test_layout只认band且band不和contain混():
     """spec.layout 的值域和兼容性，`--dry-run`（parse_segments）就拦：
 
     - 只认 "band"；写错值当场报，别静默当成全出血渲出去（那样「写错了」和
       「没写」长得一模一样）
-    - band × `fit: contain` 拒掉：带式的画面带本来就是 6:5 宽画幅，contain
+    - band × `fit: contain` 拒掉：带式的画面带本来就是 9:8 宽画幅，contain
       要解决的「两个人分得很开」它本来就装得下
-    - band 要求源片装得下 6:5 窗口（resolve_crop 那道，方形/竖版源直接拒）
+    - band 要求源片装得下 9:8 窗口（resolve_crop 那道，方形/竖版源直接拒）
     """
     import pytest  # noqa: PLC0415
 
@@ -13209,7 +13290,7 @@ def test_layout只认band且band不和contain混():
 
     saved = (reel.CROP_W, reel.CROP_H, reel.CROP_Y, reel.LAYOUT)
     try:
-        with pytest.raises(reel.ReelError, match="6:5"):
+        with pytest.raises(reel.ReelError, match="9:8"):
             reel.resolve_crop(1080, 1080, None, "", layout="band")
     finally:
         reel.CROP_W, reel.CROP_H, reel.CROP_Y, reel.LAYOUT = saved
@@ -13233,7 +13314,7 @@ def test_记分条按实际大小裁原比例贴回左下角(tmp_path, capsys):
     外加**品红 [736,944]**：那一截是板右边的**球场**。三条断言各钉一头：
 
     ① 被裁掉的板左半（绿）要贴回来——不贴的对照组那儿只有红
-    ② 贴片是**原比例**：蓝列必须落在 (616−104)×0.8333≈427 到 527，
+    ② 贴片是**原比例**：蓝列必须落在 (616−104)×0.8896≈455 到 562，
        缩过就不在那儿了（这一条钉的是「不许再缩」）
     ③ `x1` 按板的真实右缘写时，板右边的球场（品红）**不许**被抠进贴片；
        写宽到 944 时它就会被贴到画面上另一个位置——那正是要防的
@@ -13265,11 +13346,12 @@ def test_记分条按实际大小裁原比例贴回左下角(tmp_path, capsys):
     saved = (reel.CROP_W, reel.CROP_H, reel.CROP_Y, reel.LAYOUT)
     try:
         reel.resolve_crop(1920, 1080, None, "", layout="band")
-        # 采样区（画布坐标）。贴片原比例：板 [104,736] → 画面带 [0,528]，
-        # 纵向 y∈[872,948]（源片 888×0.8333 + 顶带 132）。
-        green_box = (20, 892, 110, 928)     # 板的左半：窗口自己看不见的那截
-        blue_box = (440, 892, 510, 928)     # 深盘那几列，落在原比例该在的位置
-        court_box = (560, 892, 660, 928)    # 板右边的球场（品红）该在的地方
+        # 采样区（画布坐标），按 9:8 的缩放比 1080/1214≈0.8896 排：
+        # 贴片原比例：板 [104,736] → 画面带 [0,562]，纵向 y∈[922,1002]
+        # （源片 888×0.8896 + 顶带 132）。
+        green_box = (20, 940, 110, 990)     # 板的左半：窗口自己看不见的那截
+        blue_box = (465, 940, 522, 988)     # 深盘那几列，落在原比例该在的位置
+        court_box = (580, 940, 680, 990)    # 板右边的球场（品红）该在的地方
         for case in ("real", "toowide", "off"):
             box = {"real": (104, 888, 736, 978),
                    "toowide": (104, 888, 944, 978),
@@ -13290,7 +13372,7 @@ def test_记分条按实际大小裁原比例贴回左下角(tmp_path, capsys):
                     "下面那半张绿的证明不了回贴")
                 rb, gb, bb = _mean_rgb(frame, blue_box)
                 assert rb > 110 and bb > 110 and gb < 90, (
-                    f"不贴时 427~527 那一带是**球场**（品红，源片 840~924），"
+                    f"不贴时 465~522 那一带是**球场**（品红，源片 876~940），"
                     f"量到 RGB=({rb:.0f},{gb:.0f},{bb:.0f})——这一头不成立的话，"
                     "②量到的蓝就可能本来就在那儿，证明不了贴片是原比例")
                 continue
@@ -13300,13 +13382,13 @@ def test_记分条按实际大小裁原比例贴回左下角(tmp_path, capsys):
             rb, gb, bb = _mean_rgb(frame, blue_box)
             assert bb > 90 and rb < 80, (
                 f"② {case}: 贴片要**原比例**——深盘那几列（蓝）该落在 "
-                f"427~527，量到 RGB=({rb:.0f},{gb:.0f},{bb:.0f})。"
+                f"455~562，量到 RGB=({rb:.0f},{gb:.0f},{bb:.0f})。"
                 "缩过（比如缩到残条宽）它就不在这儿了，而缩完的板在手机上"
                 "读不出字，账号所有者管那叫「马赛克」")
             rc, gc, bc = _mean_rgb(frame, court_box)
             if case == "real":
                 assert min(rc, gc, bc) > 200, (
-                    f"③ x1 按板的真实右缘写时，贴片到 528 就结束了，"
+                    f"③ x1 按板的真实右缘写时，贴片到 562 就结束了，"
                     f"这儿该是主窗口的白，量到 ({rc:.0f},{gc:.0f},{bc:.0f})")
             else:
                 assert rc > 110 and bc > 110 and gc < 90, (

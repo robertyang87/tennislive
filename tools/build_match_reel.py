@@ -167,15 +167,20 @@ _REEL_MARGIN_V = VIDEO_H - (CARD_TOP + CARD_H - _ASS_MARGIN_V)
 # 「字幕和顶栏可以放到画面外，保持 3:4」——外框仍是 1080×1440（海报、推送、
 # 平台显示全不变），里面拆三条带：顶带放顶栏、中间放 6:5 的宽画面、底带放字幕。
 #
-# 为什么是 6:5：美网世界 feed 的记分条浮在左下 x∈[104,~733]（右缘随盘数
-# +39px/列右移，五盘第五盘外推 ~733），球场近端右边线 ~1370——1296px 的窗口
-# （左缘 ~98）是「整条记分条 + 整个球场」都装下的最矮画幅。全部实测和各档
-# 对比图在 docs/us-open-scoreboard-aspect.md，别按感觉调这几个数。
+# 为什么是 9:8（2026-08-31 从 6:5 收窄，账号所有者「下半部分黑的地方很多」）：
+# 6:5 当年的推导是「窗口 ≥1272px 才能同时含住记分条左缘 98 和球场近端右边线
+# ~1370」——**那是居中纠正之前的账**。定案的带式是「窗口居中（cx=0.5）＋
+# 记分条回贴」，板本来就被窗口左缘裁掉、靠回贴补，所以真正约束窗口的只有
+# 球场本身 [~550, ~1370]：9:8 的居中窗口是源片 [352.5, 1567.5]，两侧各留
+# ~197px（6:5 是 240px），球场整个在内。画面带 900 → 960（+60px 画面），
+# 底带 408 → 348，底部死黑少一截。回贴的缩放比 `VIDEO_W / CROP_W` 是推导的，
+# 比例一改它自己跟着走。全部实测和各档对比图在
+# docs/us-open-scoreboard-aspect.md，别按感觉调这几个数。
 #
 # 不写 layout 的 spec 走原全出血路径，一个字节都不变——巡回赛片子零影响。
-BAND_PIC_RATIO = 6 / 5      # 画面带的源片窗口画幅（宽:高）
+BAND_PIC_RATIO = 9 / 8      # 画面带的源片窗口画幅（宽:高）
 BAND_TOP = 132              # 顶带高：TOPBAR_H=126 + 6px 呼吸，顶栏原样落进带里
-BAND_PIC_H = 900            # 6:5 窗口缩到 1080 宽的高（1080 ÷ 6×5）
+BAND_PIC_H = 960            # 9:8 窗口缩到 1080 宽的高（1080 ÷ 9×8）
 BAND_BG = "0x0D1016"        # 带底色：近黑偏蓝，接美网深蓝但不抢画面
 # ⚠️ 带式的窗口也**居中**（默认 cx=0.5，和全出血同一个值）。第一版把默认
 # 窗口左移到 0.385 去「含住」左下的记分条，账号所有者当场纠正：「不要偏离
@@ -190,9 +195,19 @@ BAND_BG = "0x0D1016"        # 带底色：近黑偏蓝，接美网深蓝但不�
 # 近景镜头实测板也在同一位置（92.5/94.5s 两格放大核过），所以混着近景的段
 # 照样能开；板真的会消失的段（回放/采访切走）别开，残条警告会替人看着。
 #
-# 带式下字幕锚进底带：画面带底边 132+900=1032，再留 32px 呼吸 → 1064。
-# 单行 68px 到 ~1132；双语 quote 两行到 ~1225，仍在平台底部 UI 区之上。
+# 带式下字幕锚进底带：画面带底边 132+960=1092，再留 32px 呼吸 → 1124。
+# 单行 68px 到 ~1192；双语 quote 两行到 ~1285，仍贴在平台底部 UI 区（~1290 起）
+# 之上——**这也是字幕没有跟着放大的原因**：76px 的两行 quote 会压进 UI 区。
 BAND_MARGIN_V = BAND_TOP + BAND_PIC_H + 32
+# 带式的品牌脚注：底带在字幕之下还剩一段死黑（双语 quote 最坏到 ~1274，
+# 帧底 1440）。脚注（球标 + 「网球时差 · 赛场之上」，小、压暗）放在那一段里，
+# 给底带一个收束、顺手补一次品牌露出。只在带式渲，全出血路径一个字节不变。
+# 竖直中心 1330 是算出来的：双语 quote 两行（78+68px）从 1124 到 ~1274，
+# 脚注条高 ~44px 从 1308 起——离 quote 底边还有 34px；抖音的进度条在 ~1400
+# 以下，也不压着。微信（主渠道）的播放器不盖视频，整条脚注都看得见。
+BAND_FOOT_Y = 1330          # 脚注条的**竖直中心**（贴的时候按条高换算左上角）
+BAND_FOOT_PX = 30           # 文字字号；球标高度跟着它走（~44px）
+BAND_FOOT_COLOUR = (148, 163, 156)  # 压暗的灰绿——脚注是注脚，不抢字幕
 
 # 可选的比赛信息顶栏。它只给「赛场之上」需要持续交代比赛背景的片子启用：
 # 封面仍然完整铺满，比赛画面从封面之后开始放进这个独立的信息带，片尾品牌页
@@ -1360,19 +1375,19 @@ def resolve_crop(source_w: int, source_h: int, crop_y: int | None = None,
         print(f"[存档] 主源 {source_w}×{source_h} 低于常规下限 {MIN_SOURCE_H}，"
               f"按认领放行：{archival}")
     if LAYOUT == "band":
-        # 带式：高度顶满、窗口 6:5。竖版/太窄的源片装不下这个窗口——带式是给
-        # 16:9 转播源设计的（画面带里要同时装记分条和整个球场），窄源片直接拒，
-        # 别静默退回全出血（退回去的样子和「忘了写 layout」一模一样）。
+        # 带式：高度顶满、窗口 9:8。竖版/太窄的源片装不下这个窗口——带式是给
+        # 16:9 转播源设计的（画面带里要装下整个球场，记分条靠回贴），窄源片
+        # 直接拒，别静默退回全出血（退回去的样子和「忘了写 layout」一模一样）。
         CROP_H = source_h // 2 * 2
         CROP_W = int(round(CROP_H * BAND_PIC_RATIO)) // 2 * 2
         CROP_Y = 0
         if CROP_W > source_w:
             raise ReelError(
-                f"带式版式要在源片里取 6:5 窗口（{CROP_W}×{CROP_H}），"
+                f"带式版式要在源片里取 9:8 窗口（{CROP_W}×{CROP_H}），"
                 f"而源片只有 {source_w}×{source_h} 宽。"
                 "带式是给 16:9 横幅转播源设计的——竖版或窄源片用不了，"
                 "把 spec 顶层的 `\"layout\": \"band\"` 拿掉走全出血。")
-        print(f"[裁切] 源片 {source_w}×{source_h} → 带式 6:5 窗口 "
+        print(f"[裁切] 源片 {source_w}×{source_h} → 带式 9:8 窗口 "
               f"{CROP_W}×{CROP_H}（画面带 {VIDEO_W}×{BAND_PIC_H}，"
               f"顶带 {BAND_TOP}px / 底带 {VIDEO_H - BAND_TOP - BAND_PIC_H}px）")
         return
@@ -2520,7 +2535,7 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
     if layout not in (None, "band"):
         raise ReelError(
             f'spec.layout 只认 "band"（带式版式：顶栏和字幕放进上下带，'
-            f"画面 6:5 装下整条记分条），拿到的是 {layout!r}。"
+            f"画面 9:8 宽画幅 + 记分条回贴），拿到的是 {layout!r}。"
             "不写就是原来的全出血 3:4。")
     if layout == "band":
         bad_contain = [i + 1 for i, s in enumerate(segments)
@@ -2528,7 +2543,7 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
         if bad_contain:
             raise ReelError(
                 f"第 {bad_contain} 段写了 `fit: contain`，和带式版式不兼容——"
-                "带式的画面带本来就是 6:5 宽画幅（源片的 67% 宽），"
+                "带式的画面带本来就是 9:8 宽画幅（源片的 63% 宽），"
                 "「两个人分得很开」那种画面它本来就装得下；"
                 "构图要挪窗口就写 seg.cx，别用 contain。")
     scorebox = spec.get("scorebox")
@@ -3249,7 +3264,7 @@ def cut_still_segment(seg: Segment, dest: Path, tail: float = 0.0) -> Path:
 
 
 def default_margin_v() -> int:
-    """字幕上锚的默认值：全出血在画面内老位置（1284），带式锚进底带（1064）。
+    """字幕上锚的默认值：全出血在画面内老位置（1284），带式锚进底带（1124）。
 
     spec 的 `subtitle_top` 照旧最大——那是「源片自己烧了记分条要让开」的口子，
     这里只管没写的时候落在哪。
@@ -3260,7 +3275,7 @@ def default_margin_v() -> int:
 def _canvas_fit() -> str:
     """把裁好的窗口铺上画布的那半截滤镜（末尾带逗号）。
 
-    全出血：直接缩满 1080×1440。带式：缩进画面带（1080×900）再用带底色 pad
+    全出血：直接缩满 1080×1440。带式：缩进画面带（1080×960）再用带底色 pad
     出上下两条带——顶带给顶栏、底带给字幕，两样都不再压在画面上。
     **写成一份**是因为 crop 和 track 两条路都要它：写两处必分叉，而分叉的样子
     是「摇的段是全出血、不摇的段是带式」，同一条片子里两种版式。
@@ -6711,14 +6726,28 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     # ⚠️ preset 不是画质那一档——2026-08-14 量过之后从 `slow` 换成 `medium`
     # （快 28~38%、大 1.6~6.1%、PSNR 差 0.04~0.18 dB），表在 `FINAL_PRESET`
     # 上面。这一步是整趟 render 里最大的一块（423.7s / 862s），值得量。
+    # 带式品牌脚注：只在带式渲（全出血一个字节不变），挂在 topbar 滤镜图的
+    # [match_canvas] 上。带式但没有顶栏时脚注走不到——要**出声**，不然
+    # 「没渲脚注」和「本来就不该有」在日志上长得一模一样。
+    foot_png = None
+    if LAYOUT == "band":
+        if topbar_ass:
+            foot_png = band_foot_strip(outdir / "_band_foot.png")
+            print(f"[脚注] 带式品牌脚注 {foot_png.name}：贴在底带 "
+                  f"y={BAND_FOOT_Y}（竖直中心），只盖比赛画面区间")
+        else:
+            print("[脚注] ⚠️ 带式但没有顶栏，脚注挂在顶栏滤镜图上、走不到——"
+                  "这条片子不渲品牌脚注")
     with stage("烧字幕+成片"):
+        foot_inputs = ["-i", str(foot_png)] if foot_png else []
         video_args = (["-filter_complex", topbar_filtergraph(
-            cover_secs, sum(s.length for s in segments), topbar_ass, ass),
+            cover_secs, sum(s.length for s in segments), topbar_ass, ass,
+            foot_input=2 if foot_png else None),
                        "-map", "[out]"] if topbar_ass else
                       ["-vf", f"subtitles={_escape(ass)}",
                        "-map", "0:v:0"])
         run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
-            "-i", str(silent), "-i", str(mixed), *video_args,
+            "-i", str(silent), "-i", str(mixed), *foot_inputs, *video_args,
             "-map", "1:a:0",
             "-c:v", "libx264", "-preset", FINAL_PRESET, "-crf", FINAL_CRF,
             "-pix_fmt", "yuv420p",
@@ -6730,7 +6759,7 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
                  + list(outdir.glob("_outro_*.png"))
                  + list(outdir.glob("_outro_*.html"))
                  + [silent, mixed, outdir / "_concat.txt",
-                    outdir / "_cover_frame.jpg"]):
+                    outdir / "_cover_frame.jpg", outdir / "_band_foot.png"]):
         junk.unlink(missing_ok=True)
     # **封面停多久要记下来。** 它现在跟着配音走，光看 spec 算不出来——
     # `check_reel_landed.py` 拿它对片长，没有这份就只能拿常量猜，而猜错的样子
@@ -7421,19 +7450,61 @@ Dialogue: 0,{_ass_timestamp(start)},{_ass_timestamp(end)},BODY,,0,0,0,,{body_tex
     return path
 
 
+BAND_FOOT_LABEL = "网球时差 · 赛场之上"
+
+
+def band_foot_strip(dest: Path) -> Path:
+    """PIL 渲带式品牌脚注条（透明底）：球标 + 「网球时差 · 赛场之上」。
+
+    只在带式渲、只贴在比赛画面区间（挂在 topbar 滤镜图上，封面和片尾不带）。
+    字体用仓库里的 NotoSansSC 子集——脚注这几个字都在子集里（量过 cmap），
+    不依赖机器上装没装 fonts-noto-cjk。
+    """
+    from PIL import Image, ImageDraw, ImageFont  # noqa: PLC0415
+    root = Path(__file__).resolve().parents[1]
+    fnt = ImageFont.truetype(
+        str(root / "assets" / "fonts" / "NotoSansSC-Regular-sub.ttf"),
+        BAND_FOOT_PX)
+    icon = Image.open(root / "assets" / "logo" / "brand" / "icon.png")
+    icon = icon.convert("RGBA")
+    ih = int(round(BAND_FOOT_PX * 44 / 30))
+    icon = icon.resize(
+        (max(2, int(round(icon.width * ih / icon.height))), ih), Image.LANCZOS)
+    probe = ImageDraw.Draw(Image.new("RGBA", (4, 4)))
+    bbox = probe.textbbox((0, 0), BAND_FOOT_LABEL, font=fnt)
+    tw, th = bbox[2] - bbox[0], bbox[3] - bbox[1]
+    gap = 14
+    strip = Image.new("RGBA", (icon.width + gap + tw + 2, ih), (0, 0, 0, 0))
+    strip.paste(icon, (0, 0), icon)
+    d = ImageDraw.Draw(strip)
+    # 文字按**墨迹**竖直居中（bbox 的 y0 不是 0），别按字号估——估出来偏上。
+    d.text((icon.width + gap - bbox[0], (ih - th) / 2 - bbox[1]),
+           BAND_FOOT_LABEL, font=fnt, fill=BAND_FOOT_COLOUR + (255,))
+    strip.save(dest)
+    return dest
+
+
 def topbar_filtergraph(cover_secs: float, segments_secs: float,
-                       topbar_ass: Path, subtitles_ass: Path) -> str:
+                       topbar_ass: Path, subtitles_ass: Path,
+                       foot_input: int | None = None) -> str:
     """给比赛画面加画外顶栏，保留封面和品牌片尾的原始版式。
 
     `silent` 的时间轴是：封面 → 比赛段落 → 片尾。只变换中间这一段：
     比赛画面先裁切成满屏 1080×1440，顶栏作为半透明覆盖层压在最上方；
     不能把比赛画面缩进 1290px 内容区，否则四周会露出空边。片尾单独原样拼回去，
     所以「关注网球时差」不会有顶栏。
+
+    `foot_input`：带式品牌脚注 PNG 的输入序号（带式才给）。overlay 的 still
+    输入默认 `eof_action=repeat`，一帧铺满整段比赛画面；封面/片尾不带。
     """
     match_end = cover_secs + segments_secs
     fontsdir = _escape(Path(__file__).resolve().parents[1] / "assets" / "fonts")
     topbar_path = _escape(topbar_ass)
     subtitles_path = _escape(subtitles_ass)
+    # 脚注贴在 concat 之前的 [match_canvas] 上——位置用 overlay 自己的表达式
+    # 换算竖直中心（`h` 是脚注条的高），Python 这头不用知道条有多高。
+    foot = ("" if foot_input is None else
+            f"[{foot_input}:v]overlay=(W-w)/2:{BAND_FOOT_Y}-h/2,")
     return (
         f"[0:v]split=3[cover_src][match_src][outro_src];"
         f"[cover_src]trim=start=0:end={cover_secs:.3f},"
@@ -7447,7 +7518,8 @@ def topbar_filtergraph(cover_secs: float, segments_secs: float,
         # 一道两色接缝（drawbox 高 126、顶带高 132，差 6px）。
         + ("" if LAYOUT == "band" else
            f"drawbox=x=0:y=0:w=iw:h={TOPBAR_H}:color=black@0.45:t=fill,")
-        + "setsar=1[match_canvas];"
+        + "setsar=1[match_flat];"
+        f"[match_flat]{foot}setsar=1[match_canvas];"
         f"[outro_src]trim=start={match_end:.3f},setpts=PTS-STARTPTS[outro];"
         "[cover][match_canvas][outro]concat=n=3:v=1:a=0,setpts=PTS-STARTPTS[base];"
         f"[base]subtitles={topbar_path}:fontsdir={fontsdir},"
