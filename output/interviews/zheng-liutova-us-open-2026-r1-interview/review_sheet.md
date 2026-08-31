@@ -58,7 +58,7 @@
 | 52 | 1:49.2 | [▶](https://youtu.be/0u8ur-u6SS8?t=109) | a lot this first round but I'm | 这场首轮对我意义重大 |  |
 | 53 | 1:51.1 | [▶](https://youtu.be/0u8ur-u6SS8?t=111) | so happy today to win this match. | 今天能赢下来我很开心 |  |
 | 54 | 1:53.7 | [▶](https://youtu.be/0u8ur-u6SS8?t=113) | One more quick thing. | 最后再问一个 |  |
-| 55 | 1:54.6 | [▶](https://youtu.be/0u8ur-u6SS8?t=114) | You came through qualifiers. | 你是从资格赛打上来的 | ✏️ 已订正 |
+| 55 | 1:54.6 | [▶](https://youtu.be/0u8ur-u6SS8?t=114) | I mean, you came through qualifiers. | 我是说 你是从资格赛打上来的 | ✏️ 已订正 |
 | 56 | 1:56.2 | [▶](https://youtu.be/0u8ur-u6SS8?t=116) | You've played a lot | 这几天你已经 |  |
 | 57 | 1:57.2 | [▶](https://youtu.be/0u8ur-u6SS8?t=117) | of tennis the last few days. | 打了很多场球 |  |
 | 58 | 1:59.3 | [▶](https://youtu.be/0u8ur-u6SS8?t=119) | Now you get a day off at least. | 现在至少能休息一天 |  |

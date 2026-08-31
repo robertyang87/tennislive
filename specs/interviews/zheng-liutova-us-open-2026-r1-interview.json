@@ -195,7 +195,7 @@
     "这场首轮对我意义重大",
     "今天能赢下来我很开心",
     "最后再问一个",
-    "你是从资格赛打上来的",
+    "我是说 你是从资格赛打上来的",
     "这几天你已经",
     "打了很多场球",
     "现在至少能休息一天",
@@ -218,11 +218,11 @@
   "en_fixed": {
     "1": "Qinwen, congratulations.",
     "27": "was my first Grand Slam main draw win",
-    "55": "You came through qualifiers.",
+    "55": "I mean, you came through qualifiers.",
     "59": "What does Qinwen do in New York",
     "64": "of qualies, I got two days luckily and I've"
   },
-  "_en_fixed_why": "五处都是 ASR 把专有名词听成了别的词，按发音校回来（这条线的老坑：`Alexandra Eala` 被写成 `Alex Ayala`）。① 主持人全程把「Qinwen」念对，自动字幕写成 `Kenwin`／`Kinwin`／`Jen Kingwan` 三种拼法；② `Grand Slam men win` → `Grand Slam main draw win`，她说的就是「大满贯正赛胜利」，而 `men win` 在女单采访里根本不成立——补上 `draw` 之后这一行 1031px 超了 952px 的行宽，所以把句尾那个填词 `actually` 一并去掉（她原话是 `...win actually, uh, more than a year`，`actually` 在这儿不承担意思）；③ `of Kali` → `of qualies`，上下文是「打完资格赛最后一轮」；④ 第 55 行原文是 `Amina you came through qualifiers.`——`Amina` 这个词我**没有把握**（480 毫秒，最像 `I mean`，但那是猜的），所以按「不确定就不写」整个去掉，只留 `You came through qualifiers.`，等 `--stage verify` 那份 medium.en 给出第二个读法再决定要不要补回来。",
+  "_en_fixed_why": "五处都是 ASR 把专有名词听成了别的词，按发音校回来（这条线的老坑：`Alexandra Eala` 被写成 `Alex Ayala`）。① 主持人全程把「Qinwen」念对，自动字幕写成 `Kenwin`／`Kinwin`／`Jen Kingwan` 三种拼法；② `Grand Slam men win` → `Grand Slam main draw win`，她说的就是「大满贯正赛胜利」，而 `men win` 在女单采访里根本不成立——补上 `draw` 之后这一行 1031px 超了 952px 的行宽，所以把句尾那个填词 `actually` 一并去掉（她原话是 `...win actually, uh, more than a year`，`actually` 在这儿不承担意思）；③ `of Kali` → `of qualies`，上下文是「打完资格赛最后一轮」；④ 第 55 行原文是 `Amina you came through qualifiers.`——`Amina` 这个词我**没有把握**（480 毫秒，最像 `I mean`，但那是猜的），所以按「不确定就不写」先整个去掉了；**`--stage verify` 那份 medium.en 在这个位置读出来的正是 `i mean`**（转写核对表里那一行 `— → i mean`，前后紧挨着 `cuz really means → miss`（第 51 行）和 `qinwen → kin wen`（第 59 行），位置对得上），所以按第二份 ASR 补回成 `I mean, you came through qualifiers.`——不是照我的猜测写的。",
   "cover": {
     "frame_at": 76.6,
     "_why": "沙箱下不动这条源片（YouTube 挡机房 IP），所以是拿 storyboard 挑的——1.96 秒一格排完 165 秒全片，68.8~78.6 这十秒她一直在笑：她刚说完「我爱你们，我只希望能一直拼下去，加油」（68.4 秒），主持人接着说「有时候真分不清你是在纽约还是在中国打球，这里对你的这份喜爱……」（70.2 秒起）。六格并排放大逐格看过：70.7 笑着但侧脸偏多，72.7 目光偏下，74.6 眯着眼，**76.6 那一格笑得最开、牙齿露出来、两只眼睛都睁着**，近景、正脸偏四分之三，背景是球场和还没散的看台——情绪正对着这条片子的落点（十五个月之后她终于赢回一场，而她把话给了看台）。\n⚠️ 一格 1.96 秒，比一帧粗；挑在 68.8~78.6 这段连续笑的中间，就算差一格也踩不到眨眼或说话中途的表情。渲完要把成片从 Release 拉回本地核这一帧。",
