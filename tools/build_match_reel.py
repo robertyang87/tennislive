@@ -5387,10 +5387,21 @@ def _hook_lines_fit_the_title(spec: dict) -> None:
     cover = spec.get("cover") or {}
     if not lines or str(cover.get("layout", "")).strip() != "solo":
         return
+    from versus_poster import (  # noqa: PLC0415
+        HOOK_MAX_CHARS, MIN_HOOK_TITLE_PX, SOLO_HOOK_MAX_LINES, hook_title_px)
+    # ⚠️ **行数这一条不吃 `_LEGACY_LONG_HOOKS` 的豁免**：那张表放行的是「行太长
+    # 所以字号偏小」（已发的片子不重渲），而行数超了是**版式溢出**——`STORYCOPY_TOP`
+    # 2026-08-31 从 750 挪到 790 之后，第三行会把比分板的输家那一行推出画布。
+    # 存量 161 条 solo 封面全是 2 行（量过），所以这条闸装上是零豁免的。
+    if len(lines) > SOLO_HOOK_MAX_LINES:
+        raise ReelError(
+            f"封面钩子有 {len(lines)} 行，solo 版式最多 {SOLO_HOOK_MAX_LINES} 行。\n"
+            "第三行会把比分板往下推出画布——`STORYCOPY_TOP` 是按两行的高度"
+            "顶到安全上限的（见 versus_poster.py 那段实测）。\n"
+            "钩子只有两行的位置：一行铺垫、一行落点。",
+        )
     if str(spec.get("slug", "")) in _LEGACY_LONG_HOOKS:
         return
-    from versus_poster import (  # noqa: PLC0415
-        HOOK_MAX_CHARS, MIN_HOOK_TITLE_PX, hook_title_px)
     px = hook_title_px(lines)
     if px >= MIN_HOOK_TITLE_PX:
         return
