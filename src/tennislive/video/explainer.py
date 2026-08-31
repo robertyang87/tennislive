@@ -31,6 +31,7 @@ from __future__ import annotations
 import base64
 import html
 import json
+import math
 import mimetypes
 import os
 import re
@@ -9098,6 +9099,13 @@ _SUB_MIN = 5
 # 句内合并的门槛比它再宽一格：一边不超过 6 个字就并（「2018年，她登顶…」）。
 # _SUB_MIN 管「短到读不到」，这个管「短到读起来是半截话」；跨句合并不吃这一档。
 _SUB_MERGE_SHORT = 6
+#: 一行窄到这个格数以下就算「孤屏」——读起来是半截话，不是一句短话。
+#: 6.5 是量出来的：全库 5991 行里 ≤6.5 格的同句片段 688 行，而它们的长相很齐
+#: （「6比2」「世界第39」「兑现两个」这种两三个字到六个字的尾巴）；再往上放到
+#: 8 格就会把「他叫了医疗暂停」这类**说得完整的短句**也判成罪。
+#: ⚠️ 只用来给分行**排序**（`subtitle_lines` 的代价函数）和 dry-run 报数，
+#: 不做硬闸——一句话的落点本来就常常是短的。
+_SUB_LONELY = 6.5
 
 
 _DIGIT = {"〇": "0", "零": "0", "一": "1", "二": "2", "三": "3", "四": "4",
@@ -9323,7 +9331,28 @@ def _best_break(text: str) -> int:
     1 秒。罚 95 分＝**降不满一个边界档**：别的词语边界（这条里是「两盘｜」）
     能赢过它，而它仍然赢过硬切——只剩它一个边界时，孤行好过把词劈开
     （「…温网冠｜军莱巴金娜」比孤行的人名更糟）。
+
+    ⭐ 2026-08-31：同档内的取舍从「越靠后越好」（`+ i`）换成**越均分越好**。
+    `+ i` 是贪心塞满——同一个边界档里永远挑最靠右的那个断点，把前一行顶到
+    贴着上限，于是这一句剩下的尾巴被挤成两三个字孤占一屏：
+
+        本西奇熬了3小时24分钟才拿下 ｜ 汤森德          14.4 + 3.0
+        下一轮 贝莱克要面对同一天淘汰了 ｜ 王曦雨的凯斯  15.7 + 6.0
+
+    读第一屏时话没说完（宾语在下一屏），而那正是「不要平白叙事」要躲的机器味。
+    换成均分之后同一句切成 11.4+6.0 / 10.7+11.0，两屏各是一个说得完的意思。
+
+    ⚠️ **只动同档内的取舍，边界档本身仍然压倒一切**（`bonus * 100`）：
+    docstring 开头那条「先看词语边界，哪怕上一行短一点」是反过来做过一版才
+    定下来的，均分不许把「在词中间硬切」抬到词边界之上。所以均分项封在
+    [0, 90]——比一个边界档（100）低，也低于孤行罚分（95），三者的优先级是
+    **边界档 > 不留孤行 > 均分**。
     """
+    total = _sub_width(_sub_display(text))
+    # 这一句总共要几行 → 每行的理想宽度。切两行时 target 是一半，切三行是
+    # 三分之一——按行数算而不是固定取 _SUB_MAX/2，否则长句的第一刀会切得太早。
+    rows = max(1, math.ceil(total / _SUB_MAX)) if total else 1
+    target = total / rows
     best, best_score = 0, -1e9
     for i in range(1, len(text)):
         width = _sub_width(text[:i])
@@ -9334,7 +9363,10 @@ def _best_break(text: str) -> int:
             continue
         if width < _SUB_MIN_AT_BOUNDARY:
             continue
-        score = bonus * 100 + i
+        # 离理想宽度越近分越高；最远也不过一整行的宽度，所以除以 _SUB_MAX
+        # 归一化之后乘 90，恒落在 [0, 90]。
+        balance = 90 * (1 - min(1.0, abs(width - target) / _SUB_MAX))
+        score = bonus * 100 + balance
         if _sub_len(text[i:]) < _SUB_MIN:
             score -= 95
         if score > best_score:
@@ -9363,6 +9395,17 @@ def _clause_spans(text: str) -> list[tuple[int, int]]:
     if start < len(text):
         clauses.append((start, len(text)))
     return clauses
+
+
+def crosses_hard_break(text: str, prev_end: int, nxt_start: int) -> bool:
+    """上一行的末尾到下一行的开头之间，隔着句号那一档的硬断吗。
+
+    `subtitle_lines` 拿它决定「能不能跨句合并」，dry-run 的孤屏报告拿它分
+    「同一句被切成半截话」（要报）和「一句短话独占一屏」（不报，那是落点）。
+    **写两处必分叉**，而分叉的样子是「报出来的和实际切出来的不是同一批」。
+    """
+    return any(ch in _SUB_HARD_BREAK
+               for ch in text[max(prev_end - 1, 0):nxt_start])
 
 
 def overwide_clauses(text: str) -> list[str]:
@@ -9428,8 +9471,7 @@ def subtitle_lines(text: str) -> list[tuple[int, int, str]]:
     #    句内（逗号、顿号）合并是好的——空格把停顿显出来，读起来仍是一句话；
     #    跨句合并是坏的，因为读者会把两件事读成一件。
     def _crosses_sentence(prev_end: int, nxt_start: int) -> bool:
-        """上一行的末尾到下一句的开头之间，隔着句号那一档的硬断吗。"""
-        return any(ch in _SUB_HARD_BREAK for ch in text[max(prev_end - 1, 0):nxt_start])
+        return crosses_hard_break(text, prev_end, nxt_start)
 
     # 唯一的例外：那一片短到**独自成行也读不到**（少于 3 个字，正是
     # `test_字幕里不写标点` 那条守卫的地板，时间轴最短只给 0.4 秒）。
@@ -9457,18 +9499,84 @@ def subtitle_lines(text: str) -> list[tuple[int, int, str]]:
     #     0.9 秒一屏——它不是读不到，是**读起来是半截话**。6 以下都值得并；
     #     跨句合并照旧只认 ≤2 的地板（账号所有者：「字幕也要保持断句的完整性，
     #     不要多也不要少」）。
-    lines: list[tuple[int, int]] = []
-    for a, b in pieces:
-        if lines:
-            prev_a, prev_b = lines[-1]
-            short = min(_sub_len(text[a:b]), _sub_len(text[prev_a:prev_b]))
-            fits = shown_width(prev_a, b) <= _SUB_MAX
+    #
+    # ⭐ 2026-08-31：合并从**从左往右的贪心**换成**整句一起挑最优**。
+    #    贪心的毛病是它把短片段用在前面，让后面的尾巴没了伴：
+    #
+    #        对面的巴尔通科娃20岁 捷克人 ｜ 世界第39      14.0 + 4.4（贪心）
+    #        对面的巴尔通科娃20岁 ｜ 捷克人 世界第39      10.0 + 8.4（最优）
+    #
+    #    两种分法用的是同一批合并规则，只是贪心第一步就把 `捷克人` 花掉了。
+    #    全库量过：这么换消掉 49 处「前一行贴满、尾巴剩三个字」的孤屏。
+    #
+    # ⚠️ **搜索空间和贪心完全一样，只是不再先到先得**——「一个子句就是一行、
+    #    合并是例外」那条没有松：一组里要么只有一个子句，要么组里有个短到该被
+    #    并走的（同句 ≤6 字 / 跨句 ≤2 字）。DP 不许把两个正常长度的子句拼一行。
+    def _group_ok(lo: int, hi: int) -> bool:
+        """pieces[lo:hi] 能不能并成一行（宽度 + 上面那条合并规矩）。"""
+        a, b = pieces[lo][0], pieces[hi - 1][1]
+        if shown_width(a, b) > _SUB_MAX:
+            return False
+        if hi - lo == 1:
+            return True
+        # 逐个相邻对都要满足「其中一个短到该并走」，门槛按跨不跨句取
+        for k in range(lo, hi - 1):
+            left = _sub_len(text[pieces[k][0]:pieces[k][1]])
+            right = _sub_len(text[pieces[k + 1][0]:pieces[k + 1][1]])
             limit = (_MERGE_ACROSS_SENTENCE_MAX
-                     if _crosses_sentence(prev_b, a) else _SUB_MERGE_SHORT)
-            if fits and short <= limit:
-                lines[-1] = (prev_a, b)
+                     if _crosses_sentence(pieces[k][1], pieces[k + 1][0])
+                     else _SUB_MERGE_SHORT)
+            if min(left, right) > limit:
+                return False
+        return True
+
+    # 代价：孤屏（≤ _SUB_LONELY 格）最贵，其次是不均衡。末行短不算孤屏——
+    # 一句话的落点本来就常常是短的（「她能走多远？」「输在了这里」）。
+    #
+    # ⚠️ **空出来的那截要平方，线性的不行**。第一版写的是 `(_SUB_MAX - w)`，
+    # 而它对任何分法的**总和都一样**（把一个片段从这行挪到那行，两行各自的
+    # 空余一增一减，抵消掉了）——于是均衡项根本没参与决策，选中哪个分法全看
+    # 遍历顺序先撞上谁：
+    #
+    #     [对面的巴尔通科娃20岁][捷克人 世界第39]   5.65 + 7.97 = 13.62
+    #     [对面的巴尔通科娃20岁 捷克人][世界第39]   1.97 + 11.65 = 13.62  ← 一样
+    #
+    # 是反向验证抓到的：把孤屏代价调成 0 本该让判据红，结果它没红——因为那个
+    # 4.35 格的尾巴恰好是末行、不算孤屏，两项代价里**没有一项**在区分这两种
+    # 分法。平方之后同一对是 33.5 / 49.1，选的是真的更均衡的那个。
+    # 归一化到 [0, 90]，比孤屏那 100 分低——**孤屏 > 均衡**的优先级不许被
+    # 一行特别空的分法翻过来。
+    def _cost(lo: int, hi: int, last: bool) -> float:
+        w = shown_width(pieces[lo][0], pieces[hi - 1][1])
+        lonely = 0.0 if (last or w > _SUB_LONELY) else 100.0
+        slack = max(0.0, _SUB_MAX - w) / _SUB_MAX
+        return lonely + 90.0 * slack * slack
+
+    n_pieces = len(pieces)
+    INF = float("inf")
+    # best[i] = 从第 i 个片段起分行的最小代价；choice[i] = 那一步取到哪儿
+    best_cost = [INF] * (n_pieces + 1)
+    choice = [0] * (n_pieces + 1)
+    best_cost[n_pieces] = 0.0
+    for i in range(n_pieces - 1, -1, -1):
+        for j in range(i + 1, n_pieces + 1):
+            if not _group_ok(i, j):
+                # 宽度超了就不用再往后试（越取越宽）；规矩不满足的还要往后看，
+                # 因为下一个片段可能是短的、把这一组重新变合法。
+                if shown_width(pieces[i][0], pieces[j - 1][1]) > _SUB_MAX:
+                    break
                 continue
-        lines.append((a, b))
+            if best_cost[j] == INF:
+                continue
+            c = _cost(i, j, last=(j == n_pieces)) + best_cost[j]
+            if c < best_cost[i]:
+                best_cost[i], choice[i] = c, j
+    lines: list[tuple[int, int]] = []
+    i = 0
+    while i < n_pieces:
+        j = choice[i] if best_cost[i] < INF else i + 1
+        lines.append((pieces[i][0], pieces[j - 1][1]))
+        i = j
 
     out = []
     for a, b in lines:

@@ -113,10 +113,13 @@ from tennislive.video.explainer import (  # noqa: E402
     _BAND_COLOR,
     _ASS_MARGIN_H,
     _ASS_MARGIN_V,
+    _SUB_LONELY,
     _SUB_MAX,
     _sub_display,
     _sub_width,
+    crosses_hard_break,
     overwide_clauses,
+    subtitle_lines,
     readable,
     speakable,
     all_single_char_segments,
@@ -7892,6 +7895,53 @@ def main() -> int:
             print(f"\n[断句] {len(wide_report)} 个子句宽过一行字幕"
                   f"（{_SUB_MAX} 格），会从词语边界硬切——最好加个逗号断开：")
             print("\n".join(wide_report))
+        # ⭐ 2026-08-31：另外两条**机器改不掉、只能改文案**的，一起报出来。
+        # 分行本身已经换成整句挑最优（`subtitle_lines`），消掉了 49 处「贪心
+        # 把前一行塞满、尾巴剩三个字」；剩下的 65 处是**这一句的形状**决定的
+        # ——子句序列就是「长 + 很短」，怎么分行都留一个半截话：
+        #
+        #     第四盘 纳沃内从1比2连赢5局 ｜ 6比2      13.7 + 2.4
+        #     这一盘恰拉耶娃拿到7个破发点 ｜ 兑现两个   13.7 + 4.0
+        #
+        # 改法在文案：把那个短尾巴并进前一句（「…连赢五局拿下六比二」），
+        # 或者给前一句减字。**只报不拦**——一句话的落点本来就常常是短的，
+        # 做成硬闸会把一批已发的好 spec 挡在门外。
+        lonely_report = []
+        for i, seg in enumerate(segments):
+            if not seg.narration.strip() or seg.quote:
+                continue
+            rows = subtitle_lines(readable(seg.narration))
+            for k in range(1, len(rows)):
+                w = _sub_width(rows[k][2])
+                pw = _sub_width(rows[k - 1][2])
+                if w > _SUB_LONELY or pw < 13.5:
+                    continue
+                if crosses_hard_break(readable(seg.narration),
+                                      rows[k - 1][1], rows[k][0]):
+                    continue          # 隔着句号：那是一句短话，不是半截话
+                lonely_report.append(
+                    f"  第 {i + 1} 段「{rows[k - 1][2]}」（{pw:.0f} 格）"
+                    f"／「{rows[k][2]}」（{w:.0f} 格）")
+        if lonely_report:
+            print(f"\n[断句] {len(lonely_report)} 处同一句被切成「一行贴满 + "
+                  f"一行三两个字」，后半读起来是半截话——把短尾巴并进前一句，"
+                  f"或者给前一句减字：")
+            print("\n".join(lonely_report))
+        # 配音这一头：一句里串了四个以上逗号。**逗号只给短停，连着四个等于
+        # 没停**（CLAUDE.md「停顿全部来自标点」那节量过的四类错之一）——念出来
+        # 是一长串短促的顿，没有一个真正的换气点。断成两句就行。
+        comma_report = [
+            f"  第 {i + 1} 段「{s.strip()[:34]}…」（{s.count('，')} 个逗号）"
+            for i, seg in enumerate(segments)
+            if seg.narration.strip() and not seg.quote
+            for s in re.split(r"(?<=[。！？])", seg.narration)
+            if s.count("，") >= 4
+        ]
+        if comma_report:
+            print(f"\n[断句] {len(comma_report)} 句串了四个以上逗号——逗号只给"
+                  f"短停，连着四个等于没停（TTS 的停顿全部来自标点）。"
+                  f"断成两句，或者把其中一处换成句号：")
+            print("\n".join(comma_report))
         # **这条命令查的是数，查不了画面。** 「这一段配的话和画面搭不搭」
         # 「近端是谁」——只有眼睛判得了，而判它要的东西（缩略图墙）**也已经
         # 提交进仓库了**。不在这儿指一句的话，下一个人仍然会去渲一趟四分钟的
