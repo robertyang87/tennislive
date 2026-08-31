@@ -10,7 +10,7 @@
   ],
   "_scorebox_why": "美网这套记分条贴左下角，`20CHWALINSKA POL` / `TOWNSEND USA` 两行加盘分正好落在 x 104–623、y 887–980（probe 就是按这个框裁的 `score_*.jpg`，六张墙上板子完整、四边都有余量）。⚠️ 右缘由 `resolve_board_insets` 渲染时逐段现量，这里给的是左缘、上下沿和兜底右缘。",
   "source_url": "https://youtu.be/-fc7s7gPebI",
-  "_source": "US Open 官方 YouTube 频道（`US Open Tennis Championships`，2026-08-26 起在 `OFFICIAL_CHANNELS` 白名单里——大满贯集锦版权归赛事自己，不上 ATP/WTA/TennisTV）。标题 `Maja Chwalinska vs. Taylor Townsend Highlights | 2026 US Open Round 1`，204.38 秒、1920x1080、29.97fps，2026-08-31 上传。四处自证：① 记分条烧着 `20CHWALINSKA POL` / `TOWNSEND USA`，种子号和国别都在；② 74.5s 和 198.5s 两次全屏台标 `WOMEN'S SINGLES | 1ST ROUND` + `GRANDSTAND`；③ 自动字幕 167.9s 解说说 `straight sets win over Maya [C]halinska`、175.7s 说 `Five breaks of serve`（对得上 flashscore 汤森德破发点 5/10 兑现）；④ 记分条逐格读出来的比分和 flashscore 逐分 `df_mh_1_KYuxPWS0` 一一对得上。⚠️ 分辨率 1080p 过 2026-08-18 那条硬门槛。",
+  "_source": "US Open 官方 YouTube 频道（`US Open Tennis Championships`，2026-08-26 起在 `OFFICIAL_CHANNELS` 白名单里——大满贯集锦版权归赛事自己，不上那三个巡回赛频道）。标题 `Maja Chwalinska vs. Taylor Townsend Highlights | 2026 US Open Round 1`，204.38 秒、1920x1080、29.97fps，2026-08-31 上传。四处自证：① 记分条烧着 `20CHWALINSKA POL` / `TOWNSEND USA`，种子号和国别都在；② 74.5s 和 198.5s 两次全屏台标 `WOMEN'S SINGLES | 1ST ROUND` + `GRANDSTAND`；③ 自动字幕 167.9s 解说说 `straight sets win over Maya [C]halinska`、175.7s 说 `Five breaks of serve`（对得上 flashscore 汤森德破发点 5/10 兑现）；④ 记分条逐格读出来的比分和 flashscore 逐分 `df_mh_1_KYuxPWS0` 一一对得上。⚠️ 分辨率 1080p 过 2026-08-18 那条硬门槛。 ⚠️ 这段说明改过两次措辞，两次都是同一个原因：仓库里有一条判据按「来路交代里出现的频道名」认领源片是不是那家订阅制转播商的，扫的就是 `_source` 和 `_editing_why` 两栏。第一版这里点了那三个巡回赛频道的名字（为了说明大满贯集锦为什么不在它们那儿），于是这条**用美网官方频道的** spec 被判成用了那家、却没写对应的剪辑认领；第二版我把那句改掉了，可**解释「为什么被误伤」的时候又把那个名字和判据名写了进来**，同一条测试再红一次——判据扫得太宽被自己的注释误伤，这次还递归了一层。现在整段不出现任何频道名。⚠️ 真用那家的源片仍然要认领片尾和台标，这条规矩没松。",
   "cover": {
     "matchup": [
       {
@@ -196,9 +196,9 @@
     {
       "start": 0.4,
       "end": 13.9,
-      "narration": "北京时间九月一号凌晨，美网第一轮。二十四岁的赫瓦林斯卡，世界第二十二，二十号种子。三个月前的法网，她从资格赛一路打进决赛。",
+      "narration": "北京时间九月一号凌晨两点，美网第一轮。二十四岁的赫瓦林斯卡，世界第二十二，二十号种子。三个月前的法网，她从资格赛一路打进决赛。",
       "crosses_cut": "11.09 一刀，是这一分结束时的机位切换（0.5s 汤森德发球特写 → 2.5–10.5s 宽景回合 → 11.11 死球 → 12.5s 赫瓦林斯卡在 J.P.Morgan 挡布前的近景）。两边同一场球、同一分前后，记分条 2.5–10.5s 从 `1 15` 走到 `1 40`，12.5s 是同一局的换人机位。",
-      "_why": "第②③格合一：坐标 ＋ 她是谁。钟点按『开球时刻只说个大概，不报到分』——flashscore 记的开赛是 2026-08-31 18:05 UTC，北京时间 9 月 1 日 02:05，分钟 05 落在 0–9 档，说「凌晨」；日期写北京的绝对日期（美洲赛事的夜场在北京是次日）。⚠️ 法网那半句**只一句带过不展开**：`chwalinska-gibson` 的 `_no_repeat` 明令这条线不许再铺开法网那段来路，而 CLAUDE.md 2026-08-05 收窄过读法——「看不懂这场球所必需的来路，一句带过」，20 号种子这个身份没有它就讲不通。段尾 13.90 在死球 11.11 之后 2.79 秒、切点 14.45 之前。",
+      "_why": "第②③格合一：坐标 ＋ 她是谁。钟点按『开球时刻只说个大概，不报到分』——flashscore 记的开赛是 2026-08-31 18:05 UTC，北京时间 9 月 1 日 02:05，分钟 05 落在 0–9 档，说「凌晨」；日期写北京的绝对日期（美洲赛事的夜场在北京是次日）。⚠️ 法网那半句**只一句带过不展开**：`chwalinska-gibson` 的 `_no_repeat` 明令这条线不许再铺开法网那段来路，而 CLAUDE.md 2026-08-05 收窄过读法——「看不懂这场球所必需的来路，一句带过」，20 号种子这个身份没有它就讲不通。段尾 13.90 在死球 11.11 之后 2.79 秒、切点 14.45 之前。 ⚠️ 钟点补过一次：原句只写「凌晨」，`test_赛场之上开场要给出北京时间赛事和轮次` 报「开场没给开球时刻」。按 2026-08-17『开球时刻只说个大概，不报到分』那张表：flashscore 记的开赛是 18:05 UTC、北京 9 月 1 日 02:05，分钟 05 落在 0–9 档，说「凌晨两点」（不是「两点多」，那是 10–39 档的说法）。",
       "score_inset": true,
       "_score_inset_why": "0.4–13.9 全程有常驻记分条（`score_00.jpg` 逐格看过，0.5s 起板就在，12.5s 那格近景左下角板也在）。"
     },
