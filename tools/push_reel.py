@@ -249,10 +249,19 @@ def headline(outdir: Path, column: str, matchup: str, score: str = "",
             "产物不按日期分目录的线（如 output/interviews/<slug>/）请显式传 --date")
     _, month, day = found.groups()
     if summary.strip():
+        from tennislive.render.xiaohongshu import xhs_title_len  # noqa: PLC0415
         pair = summary.strip()
-        if len(pair) > SUMMARY_MAX:
+        # ⚠️ **量的是「字位」不是 `len()`**：全角 1、半角 0.5，和 `_fits` 那把尺
+        # 一样。`SUMMARY_MAX` 上面那句注释写的就是字位（「日期和栏目已经占掉
+        # 七个多字位」），而实现原来用 `len()`——两把尺不一致，代价是**半角的
+        # 标题被按全角算，白白吃掉一半格子**：`Queen Wen is back` 十七个字符
+        # 其实只占 8.5 个字位，渲出来比一句六个汉字的中文标题还短。
+        # 2026-08-31 账号所有者点名标题要用 `Queen Wen is back !` 才咬到。
+        # 放宽不会让标题变长——整句仍然卡在 `_fits` 的 20 字位上。
+        if xhs_title_len(pair) > SUMMARY_MAX:
             raise SystemExit(
-                f"标题末尾那句 {len(pair)} 字，超过 {SUMMARY_MAX} 字：{pair}\n"
+                f"标题末尾那句 {xhs_title_len(pair):g} 个字位，超过 {SUMMARY_MAX}："
+                f"{pair}\n（全角 1、半角 0.5）\n"
                 "标题是给人扫的，不是给人读的——提炼到一个最硬的事实上。"
             )
     else:
