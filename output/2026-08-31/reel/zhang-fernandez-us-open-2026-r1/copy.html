@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>8.31 赛场之上 | 七个破发点一个没兑现</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>七个破发点，一个都没兑现🎾
+
+37岁的张帅在美网第一轮3-6、2-6负于31号种子费尔南德斯，1小时15分钟出局。
+
+比分看着干脆，过程不是。整场张帅拿到7个破发点——一个都没能兑现；反过来看更狠：她自己面对的7个破发点救下了4个，而费尔南德斯面对的7个，一个不落全救了回来。9个发球局，费尔南德斯一局没丢；张帅的9个接发局，一局没破成。
+
+七次机会里，有五次挤在同一局。第二盘1-2、费尔南德斯发球，张帅打出40-0——三个破发点摆在面前，被一个一个救回；追到平分后她又两次拿到占先，又是两个破发点，还是没进去。这一局如果破了是2-2平，没破变成1-3，这一盘就从这里走了。
+
+她不是没够着。转播中途打出过一组数字：正手制胜分，张帅6比2领先。第一盘解说也说过，她前场的移动很舒服——那一盘的几个关键分，解说的原话是最后两局有几个擦网球帮了费尔南德斯。全场制胜分12比22、非受迫失误17比13、总分46比61，差距是真的，但不是被碾过去的那种。
+
+2-5落后时她还救下过一个赛点，画面上记分条烧着MATCH POINT，那是第二个赛点。下一分，比赛结束。
+
+对面这位31号种子23岁，五年前正是在这片场地打进过美网决赛。而张帅今年37岁，单打世界第54，双打世界第7——同一站赛事，她的双打排名比单打高出四十多位。
+
+单打这条路，她还想走多远？
+
+#张帅 #美网 #网球 #赛场之上 #网球时差</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>三十七岁的张帅，双打世界第七——单打这条路，她还想走多远？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
