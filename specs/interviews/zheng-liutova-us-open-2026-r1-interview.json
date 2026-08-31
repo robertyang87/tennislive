@@ -18,9 +18,9 @@
   },
   "lead_in": {
     "url": "https://www.youtube.com/watch?v=QCtFpl0c_P4",
-    "start": 173.4,
+    "start": 162.6,
     "end": 200.8,
-    "why": "同一场的美网官方集锦（Qinwen Zheng vs. Kristina Liutova Highlights | 2026 US Open Round 1，@usopen，1920x1080）。起点切在 173.29 那个镜头切点之后、解说 174.08 开口交代赛果之前：174.5 秒那一格她已经握拳庆祝、记分条翻成 4 6 6 / 6 3 1。⚠️ 没有从赛点那一帧（166.5 秒挂出 MATCH POINT）起收——163.1 到 174.1 之间整整十一秒没有任何解说，对这条片子那是屏幕上一个字都没有的一段（CLAUDE.md 记过 arango-venus 同一个坑）。终点 200.8 卡在 201.58 那个切点前 0.78 秒——probe 量到 201.58 是最后一个 scene_cut、201.68 起音轨转数字静音，那之后是美网的「FOLLOW US ON SOCIAL MEDIA」片尾板，一帧都不收。窗口 27.4 秒装的是一整段连续的赛后画面：庆祝 → 教练席 → 走向球网 → 和柳托娃拥抱 → 转播打出全场比分 → 举手谢观众，不是把好几个回合拼起来。",
+    "why": "同一场的美网官方集锦（Qinwen Zheng vs. Kristina Liutova Highlights | 2026 US Open Round 1，@usopen，1920x1080）的**最后 38.2 秒**，一整段连续的赛后画面，不是把几个回合拼起来。\n窗口里有什么（逐格读记分条核过的）：163.1 解说说「那一记凌空抽击她感觉一定很好」→ **166.5 转播挂出 `MATCH POINT`，记分条 `ZHENG 4 6 5 40 / LIUTOVA 6 3 1 0`**（决胜盘 5-1、40-0，三个赛点）→ 168.5~172.5 这一分在打 → **173.29 切到近景，她握拳，记分条随后翻成 4 6 6 / 6 3 1** → 教练席 → 走向球网 → 和柳托娃拥抱 → 转播打出全屏赛果 `WOMEN'S SINGLES | 1ST ROUND / STADIUM 17` → 举手谢观众。\n**起点为什么是 162.6 而不是赛点那一帧**：166.0 起收的话，开头整整 8.1 秒没有任何解说、也就没有字幕（163.1~168.0 那句解说会被切掉，下一句要到 174.08 才开口），而这条片子的字幕就是它的内容本身。往前多收 3.4 秒把 163.1 那句解说包进来，开场第 0.5 秒就有字幕，中间只剩 168.0~174.08 这 6 秒没有解说——而那 6 秒正是赛点本身在打，屏幕上还挂着 `MATCH POINT`，不是 CLAUDE.md 里 arango-venus 那种「只有欢呼、屏幕上什么都没有」的死气。\n**终点 200.8**：probe 量到 201.58 是最后一个 scene_cut、201.68 起音轨转数字静音，之后是美网的「FOLLOW US ON SOCIAL MEDIA」片尾板——卡在切点前 0.78 秒，一帧不收。",
     "verification": {
       "match_id": "2026:us-open:womens-first-round:qinwen-zheng-kristina-liutova",
       "winner_en": "Qinwen Zheng",
@@ -32,6 +32,18 @@
       "channel": "US Open Tennis Championships"
     },
     "subs": [
+      {
+        "a": 163.1,
+        "b": 165.0,
+        "en": "Should be feeling really good",
+        "zh": "这一下的感觉一定很好"
+      },
+      {
+        "a": 165.0,
+        "b": 168.0,
+        "en": "about the drive volley.",
+        "zh": "说的是刚才那记凌空抽击"
+      },
       {
         "a": 174.0,
         "b": 176.8,
@@ -245,17 +257,19 @@
     "score": "4-6 6-3 6-1",
     "event": "",
     "summary": "先丢一盘 郑钦文逆转过关",
-    "lead": "2026 美网女单第一轮，17 号球场：郑钦文（世界第 121，从资格赛打上来）先丢一盘，4-6 6-3 6-1 逆转 16 岁的柳托娃，两小时二十九分钟。这是她十五个月来第一场大满贯正赛胜利——上一次还是 2025 年 6 月的法网 1/8 决赛，之后三次大满贯全部首轮出局，2025 美网和 2026 澳网因右肘手术缺席。赛后场上采访她先恭喜了对手：「她才 16 岁，打得非常出色，也很能拼。」再说自己：「几天前我有点生病，场上觉得有点头晕，但我告诉自己，今天我能做的只有拼。」最后她对着看台说：「我爱你们。」主持人接了一句：有时候真分不清你是在纽约还是在中国打球。"
+    "lead": "2026 美网女单第一轮，17 号球场：郑钦文（世界第 121，从资格赛打上来）先丢一盘，4-6 6-3 6-1 逆转 16 岁的柳托娃（七月底刚从资格赛夺得孟菲斯 WTA250 冠军，WTA 官方称她是现役最年轻的 WTA 冠军），两小时二十九分钟。这是她十五个月来第一场大满贯正赛胜利——上一次还是 2025 年 6 月的法网 1/8 决赛，之后三次大满贯全部首轮出局，2025 美网和 2026 澳网因右肘手术缺席。赛后场上采访她先恭喜了对手：「她才 16 岁，打得非常出色，也很能拼。」再说自己：「几天前我有点生病，场上觉得有点头晕，但我告诉自己，今天我能做的只有拼。」最后她对着看台说：「我爱你们。」主持人接了一句：有时候真分不清你是在纽约还是在中国打球。"
   },
   "_facts": [
     "**这一场**：2026 美网女单第一轮，17 号球场，郑钦文 4-6 6-3 6-1 胜柳托娃（Kristina Liutova）。flashscore 单场 `ClQmWxvS`：`BA÷4 BB÷6`／`BC÷6 BD÷3`／`BE÷6 BF÷1`，`df_sui_1` 分盘用时 `RC÷0:52 RD÷0:57 RE÷0:40`、总计 `RB÷2:29`（三盘加起来正好等于总计，自洽），场馆 `MIV÷USTA Billie Jean King NTC`。**两人都是 `PSPH÷Q PSPA÷Q`——双方都是从资格赛打上来的。** 球场名两处自证：官方集锦 188.5 秒那张全屏赛果图形印着 `WOMEN'S SINGLES | 1ST ROUND / STADIUM 17`，解说同时说 `here on Stadium 17`。",
     "**开球时刻**：flashscore `AD÷1788189000` ＝ 2026-08-31 15:10 UTC ＝ **北京时间 8 月 31 日 23:10**；`AO÷1788197867` ＝ 17:37:47 UTC ＝ 北京时间 9 月 1 日 01:37。⚠️ 同一个 `AD` 在当天四场球上重复出现（都是各自球场的日场第一场，11:10 ET），所以它可能是排期时刻而不是实际开球——但 `AO−AD ＝ 2:27:47` 和官方用时 2:29 只差一分多钟，说明它贴着真实开球。文案照 CLAUDE.md「开球时刻只说个大概不报到分」只写「夜里十一点多」。",
     "**排名**：郑钦文世界第 121、柳托娃世界第 125，两个独立官方源都给同一个数——WTA `api.wtatennis.com/tennis/players/ranked`（`rankedAt÷2026-08-31`，就是本周那期）和美网官方 `usopen.org/en_US/scores/feeds/2026/players/players.json`（`wta328120` `singles_rank÷121`、`seed÷false`，非种子）。",
-    "**柳托娃 16 岁**：WTA 球员接口 `dateOfBirth÷2010-02-02`，tennisexplorer 球员页写`Age: 16 (2. 2. 2010)`、`Current/Highest rank - singles: 125. / 125.`。她 2026 年 36 胜 5 负，主巡回赛拿过 **1 个冠军——孟菲斯**（tennisexplorer 冠军表「Main tournaments 2026: 1 — Memphis」），另有三个 ITF 冠军。这也印证了官方集锦解说那句 `the Memphis champion Kristina Liutova`。",
+    "**柳托娃 16 岁，而且是现役最年轻的 WTA 冠军**：WTA 球员接口 `dateOfBirth÷2010-02-02`，tennisexplorer 球员页写 `Age: 16 (2. 2. 2010)`、`Current/Highest rank - singles: 125. / 125.`。她 2026 年 36 胜 5 负；**7 月 27 日~8 月 2 日从资格赛一路打进 The Memphis Classic 决赛并夺冠，1-6 6-1 6-3 胜维德曼诺娃（Darja Vidmanova）**，途中 R32 还赢了 1 号种子、世界第 19 的亚历山德罗娃。级别三个源一致是 **WTA 250**：WTA 官方赛事接口 `tournaments/?from=&to=` 直接给 `LEVEL 'WTA 250' | id 1167 | MEMPHIS`（同一份返回里 WTA125 的帕勒莫和特尔古穆列什并排列着，分得开）、维基「as part of the WTA 250 category」、tennisexplorer 把它列在 `Main tournaments` 栏而同年三个 ITF 冠军在 `Lower level` 栏。「现役最年轻的 WTA 冠军」是 WTA 官方稿的说法（news/4552360 标题`how 16-year-old qualifier Kristina Liutova became the youngest active WTA champion`）。⚠️ 查这个接口 `?from=&to=` 默认 `pageSize=10` 而总数 49，**空结果是分页没翻完，不是真空**。这也印证了官方集锦解说那句 `the Memphis champion Kristina Liutova`。",
     "**十五个月**：郑钦文上一次在大满贯正赛赢球是 **2025 年 6 月 1 日法网 1/8 决赛**，7-6(5) 1-6 6-3 胜萨姆索诺娃。两个独立源逐条对过——tennisexplorer 年度页（2025 法网 1R 胜帕夫柳琴科娃、2R 胜阿朗戈、3R 胜姆博科、R16 胜萨姆索诺娃、QF 负萨巴伦卡）和 WTA 官方 `players/328120/matches`（同一串对手、同一串比分）。此后三次大满贯全部首轮出局：2025 温网负西尼亚科娃 5-7 6-4 1-6、2026 法网负赫瓦林斯卡 4-6 0-6、2026 温网负西尼亚科娃 4-6 4-6；2025 美网（右肘手术）和 2026 澳网两次缺席，两个源的赛历里都没有这两站。2025-06-01 → 2026-08-31 ＝ 十五个月。",
     "**第四次进美网第二轮**：2022（打到第三轮）、2023（1/4 决赛）、2024（1/4 决赛）、2026——tennisexplorer 的 US Open 历年成绩表逐年列着；2025 年那一栏是空的。官方集锦解说 174.08 秒说的 `back into the US Open second round for the fourth time` 因此是对的（自动字幕把 `fourth` 听成了 `full`，`lead_in.subs` 里已校正）。",
     "**技术统计**（flashscore `df_st_1`，`SH` 是郑钦文、`SI` 是柳托娃）：ACE 10 比 1，双误 6 比 5，一发成功率 46% 比 68%，一发得分率 75%(27/36) 比 59%(36/61)，破发点转化 6/16 比 3/4，破发点救下 1/4 比 10/16，制胜分 33 比 15，非受迫失误 27 比 22，总得分 93 比 75。⚠️ 总得分取 `df_st_1` 不取 `df_mh_1`（后者天生少一分，CLAUDE.md 记过）。",
-    "**她自己说的那几件事**（都在片子里，原声＋字幕）：先恭喜 16 岁的对手（`she's only 16 years old, very young junior, and she play incredible tennis, fights a lot`）；赛前几天生病、场上头晕（`I was a bit sick few days ago`／`I was feeling a bit dizzy on court`）；那天唯一能做的是拼（`what I can do is only to fight`）；这是她一年多来第一场大满贯正赛胜利（`my first Grand Slam main draw win ... more than a year`，和上面那条查出来的十五个月对得上）；她第一次打进大满贯 1/4 决赛就是在美网（2023，tennisexplorer 历年表可核）。"
+    "**她自己说的那几件事**（都在片子里，原声＋字幕）：先恭喜 16 岁的对手（`she's only 16 years old, very young junior, and she play incredible tennis, fights a lot`）；赛前几天生病、场上头晕（`I was a bit sick few days ago`／`I was feeling a bit dizzy on court`）；那天唯一能做的是拼（`what I can do is only to fight`）；这是她一年多来第一场大满贯正赛胜利（`my first Grand Slam main draw win ... more than a year`，和上面那条查出来的十五个月对得上）；她第一次打进大满贯 1/4 决赛就是在美网（2023，tennisexplorer 历年表可核）。",
+    "**巴黎奥运金牌**（冷开场解说那句 `the Olympic gold medalist from 2024` 的出处）：2024 年 8 月 3 日巴黎奥运会女单决赛，郑钦文 6-2 6-3 胜维基奇（Donna Vekić），场地 Stade Roland Garros 红土；半决赛 6-2 7-5 胜当时的世界第一斯瓦泰克。WTA 官方 `players/328120/matches`（`F | ZHENG, QINWEN vs VEKIC, DONNA | winner 1 | scores '6-2  6-3'`）、tennisexplorer 巴黎奥运会赛事页逐场（带日期）、维基条目三处一致。⚠️ WTA 那个接口只给赛事起止日，8 月 3 日这个决赛日期是另外两个源给的。",
+    "**冷开场那条源片的元数据**：`QCtFpl0c_P4`，频道 `US Open Tennis Championships`（`@usopen`），标题 `Qinwen Zheng vs. Kristina Liutova Highlights | 2026 US Open Round 1`，**205 秒、1920×1080@60fps**（`--list-formats` 顶格 1080p60，没有更高档）。频道和标题两条独立路径取过一字不差（yt-dlp ＋ oEmbed）。⚠️ **取格式表不能加 `player_client=web_embedded`**——加了只吐三行 storyboard，换 tv/ios/web_safari/mweb/web 全空，**只有默认 client 拿得到完整格式表**；而取元数据加着它是通的。"
   ],
   "_notes": "① 这条片子和 `specs/reels/zheng-liutova-us-open-2026-r1`（赛场之上）讲的是同一场球，**不算重复**——不同栏目各讲一次，CLAUDE.md 开头那条写着。赛场之上讲这场球怎么赢的，这条讲她赛后说了什么。\n② 采访线的自动扫描（`collect_oncourt_interviews`）只扫 tennistv.com 的 ATP 库，**对大满贯是盲的**（CLAUDE.md 2026-08-26 记过），所以这条是手工建的。美网的场上采访在 `@usopen` 频道上，标题格式固定：`<球员> On-Court Interview | 2026 US Open <轮次>`——正好命中 L0 的 `official_explicit_oncourt` 正则。\n③ 沙箱下不动这条源片的媒体（YouTube 挡机房 IP），但**字幕和 storyboard 都下得动**（`--extractor-args youtube:player_client=web_embedded`）。所以选段、切行、挑封面都在本地做完了，runner 上只剩 `--stage verify` 的第二份 ASR 和出片。\n④ 第 55 行的 `Amina` 没有把握，先整个去掉了（见 `_en_fixed_why`）——`--stage verify` 那份 medium.en 给出第二个读法之后再决定补不补回来。"
 }
