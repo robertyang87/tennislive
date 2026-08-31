@@ -333,9 +333,13 @@ def reconcile_sets(
 #: 这条规矩（2026-08-31）之前发出去的裸 7-6 封面。**只许减不许加**，表自带
 #: 自检（tests：slug 要真的存在、真的还裸着）。已发的不为小分重渲；哪天真要
 #: 重渲哪一条，先把它从这儿删掉、把小分补上（df_sui_1 的 IG/IH 现成）。
+#: ⚠️ williams-kenin / rakhimova-krejcikova 是**闸落地当天中午被并发会话推上
+#: main 并已发微信的**（pushed.json 09:37 / 09:58Z）——已发不重渲，同样只能
+#: 进这张表，不能改 spec。
 LEGACY_BARE_TIEBREAK = frozenset({
     "bencic-townsend", "fonseca-ruud", "fonseca-van-de-zandschulp",
-    "lehecka-fils", "wong-paul-us-open-2026-r1",
+    "lehecka-fils", "rakhimova-krejcikova-us-open-2026-r1",
+    "williams-kenin-us-open-2026-r1", "wong-paul-us-open-2026-r1",
     "wu-walton-us-open-2026-r1", "zverev-griekspoor",
 })
 
@@ -344,8 +348,8 @@ def bare_tiebreak_problem(spec: dict) -> str | None:
     """⭐ 抢七盘必须带小分注脚——`7-6` 后面没有 `(N)` 就红。
 
     账号所有者 2026-08-31（甩来美网官方比分图）：「封面比分板上抢七没有
-    小分啊」。板和数据图的抢七上标机制早就有（`.tb`），可 8 条 spec 的
-    `cover.result` 自己就写着裸的 7-6——其中三条美网 result_verified 的
+    小分啊」。板和数据图的抢七上标机制早就有（`.tb`），可 9 条 spec 的
+    `cover.result` 自己就写着裸的 7-6——其中几条美网 result_verified 的
     还是被老 `verified_result_problem` **逼**的（它要求 result 逐字等于
     只有局数的机械重建）。7-6 的盘必然打过抢七（6-6 才进抢七，7-5 不进），
     所以裸的 7-6 永远是漏，不存在正当写法。

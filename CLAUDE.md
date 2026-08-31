@@ -7953,11 +7953,17 @@ Set1 局数 7-6 → 7/5；穆纳尔-阿特曼 Set1 6-7 → 5/7、Set4 7-6 → 7/
 `_match.tiebreaks_home_away` 一栏和赛果一起被 `verified_result_problem`
 逐字校验（旧 _match 没这一栏的剥掉 `(N)` 再比，不误伤手补的小分）。
 闸 `bare_tiebreak_problem`（裸 7-6/6-7 一律红）坐在 `_topbar_lines`，
-dry-run 0.2 秒就到；已发的 7 条挂 `LEGACY_BARE_TIEBREAK`（**豁免收在闸里、
+dry-run 0.2 秒就到；已发的 9 条挂 `LEGACY_BARE_TIEBREAK`（**豁免收在闸里、
 测试引用同一份**——`test_每条spec的旁白都还估得下` 会把每条 spec 走一遍
 校验，豁免只写在测试里的话它们当场常年红）。`topbar.line2` 不用单独扫：
 它必须逐字等于 `winner result loser`，result 修好它跟着。
 五个方向分别反向验证过，各红在自己的断言行。
+
+⚠️ **那张表里有 2 条是闸落地当天中午的并发竞态**：`williams-kenin` /
+`rakhimova-krejcikova` 在我本地全量跑完**之后**被别的会话推上 main 并已发
+微信（pushed.json 09:37 / 09:58Z）——CI 在 PR 上红了三条才看见。已发不重渲，
+只能进豁免表；这也是「rebase → 跑全量 → 推」那条顺序的又一次学费：
+**全量绿的那棵树和要合并的那棵树隔了两次合并**。
 
 
 ### 封面停多久，跟着封面那句配音走

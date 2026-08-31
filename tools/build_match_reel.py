@@ -7125,7 +7125,9 @@ def _topbar_lines(spec: dict) -> tuple[str, str] | None:
     if direction_problem:
         raise ReelError(direction_problem)
     # 抢七盘必须带小分（账号所有者 2026-08-31，判据见函数 docstring）。
-    # 已发的 7 条裸 7-6 挂在 tests 的豁免表里；这儿不豁免——重渲就要修对。
+    # 已发的 9 条裸 7-6 挂在 reel_facts.LEGACY_BARE_TIEBREAK（闸自己豁免——
+    # 全库 validate 类测试会走到这儿，豁免只放 tests 会让已发 spec 常年红）；
+    # 从表里删掉哪条，重渲它就必须把小分补对。
     tb_problem = bare_tiebreak_problem(spec)
     if tb_problem:
         raise ReelError(tb_problem)
