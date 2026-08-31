@@ -8,7 +8,7 @@
 | 2 | 0:03.1 | [▶](https://youtu.be/0u8ur-u6SS8?t=3) | First of all, | 首先 |  |
 | 3 | 0:04.1 | [▶](https://youtu.be/0u8ur-u6SS8?t=4) | it is your first Grand Slam main draw win | 这是你久违的大满贯正赛胜利 |  |
 | 4 | 0:06.8 | [▶](https://youtu.be/0u8ur-u6SS8?t=6) | in a little | 隔了好一阵子了 |  |
-| 5 | 0:08.4 | [▶](https://youtu.be/0u8ur-u6SS8?t=8) | while, and you looked incredible doing it. | 而且你今天打得相当出色 |  |
+| 5 | 0:08.4 | [▶](https://youtu.be/0u8ur-u6SS8?t=8) | while, and you looked incredible doing it. | 而且你今天打得非常漂亮 |  |
 | 6 | 0:13.0 | [▶](https://youtu.be/0u8ur-u6SS8?t=13) | What was the key, | 关键是什么 |  |
 | 7 | 0:13.8 | [▶](https://youtu.be/0u8ur-u6SS8?t=13) | particularly after that first set? | 尤其是在丢掉第一盘之后？ |  |
 | 8 | 0:16.5 | [▶](https://youtu.be/0u8ur-u6SS8?t=16) | Well, first of all, I want | 首先 我想 |  |
@@ -66,8 +66,8 @@
 | 60 | 2:05.0 | [▶](https://youtu.be/0u8ur-u6SS8?t=125) | when you have a day off? | 都会做些什么？ |  |
 | 61 | 2:06.4 | [▶](https://youtu.be/0u8ur-u6SS8?t=126) | If you're not playing tennis, | 如果不打球 |  |
 | 62 | 2:08.7 | [▶](https://youtu.be/0u8ur-u6SS8?t=128) | what do you enjoy doing around here? | 你喜欢在这儿做点什么？ |  |
-| 63 | 2:11.3 | [▶](https://youtu.be/0u8ur-u6SS8?t=131) | Well, actually when I finished the last round | 其实打完资格赛 |  |
-| 64 | 2:14.3 | [▶](https://youtu.be/0u8ur-u6SS8?t=134) | of qualies, I got two days luckily and I've | 最后一轮 我幸运地有两天 | ✏️ 已订正 |
+| 63 | 2:11.3 | [▶](https://youtu.be/0u8ur-u6SS8?t=131) | Well, actually when I finished the last round | 其实打完资格赛最后一轮 |  |
+| 64 | 2:14.3 | [▶](https://youtu.be/0u8ur-u6SS8?t=134) | of qualies, I got two days luckily and I've | 我幸运地有两天空闲 | ✏️ 已订正 |
 | 65 | 2:18.2 | [▶](https://youtu.be/0u8ur-u6SS8?t=138) | been visit the city and went for a really light | 我去逛了逛这座城市 |  |
 | 66 | 2:21.9 | [▶](https://youtu.be/0u8ur-u6SS8?t=141) | shopping just few really a few clothes. | 还很轻松地买了点衣服 |  |
 | 67 | 2:24.8 | [▶](https://youtu.be/0u8ur-u6SS8?t=144) | I think all | 我想所有 |  |
