@@ -1,0 +1,394 @@
+{
+  "slug": "williams-kenin-us-open-2026-r1",
+  "_column": "reel",
+  "layout": "band",
+  "scorebox": [
+    104,
+    887,
+    623,
+    980
+  ],
+  "_scorebox_why": "不是抄模板：左缘和上下沿是从本条自己的记分条缩略图墙（score_00~05，tile 520x140、padding 6、crop 806x216@(0,842)、scale 0.6452）逐帧反解出来的——左缘 104（99 格里 67 格一致，其余是近景/换边这类板不在的格）、上沿主簇 888~890、下沿主簇 977~978，取 887/980 各留两三像素余量。和 wu-walton-us-open-2026-r1、zhang-fernandez-us-open-2026-r1 两条独立量出来的（104 / 887~978）完全对上，同一套 2026 美网世界 feed 图形。右缘随盘数走（美网的板每打完一盘 +38px：0 盘 578 / 1 盘 616 / 2 盘 653，wu-walton 与 zheng-pridankina 双向印证过）：女单三盘两胜，这场只打两盘，最宽状态就是次盘那一档 616，顶层兜底写 616+7=623。真右缘由 resolve_board_insets 每段现量，这四个数只是左缘/上下沿和兜底右缘。SET POINT / MATCH POINT 的黄标在 y<887 之外，按 docs/us-open-scoreboard-aspect.md 的口径不扩窗——关键分旁白本来就要讲。",
+  "_source": "美网官方 YouTube 频道（US Open Tennis Championships，@usopen，oEmbed author_name 自证）本场官方集锦《Venus Williams vs. Sofia Kenin Highlights | 2026 US Open Round 1》（youtu.be/gG8NPAvYOJc）。probe 量到 1920x1080、202.78s、29.97fps（1080p 硬门槛过）。画面自证四处：① 左下记分条全程 V. WILLIAMS USA / KENIN USA（两人都没有种子号，和官方 day_8 的 seed=null、entryStatus=WC 对得上）；② 54.5s 全屏台标 WOMEN'S SINGLES | 1ST ROUND | ARTHUR ASHE STADIUM；③ 92.5~100.5s 黄标 SET POINT 配 V. WILLIAMS 2 5 [40] / KENIN 6 4 [0]，142.5~148.5s 黄标 SET POINT #4 配抢七 [6]:[2]——「#4」正是本盘第 4 个盘点，和逐分（五比四那一局 3 个 + 抢七 4 个 = 7 个）机械对上；④ 188.5~196.5s 全屏赛果台标 VENUS WILLIAMS USA 2 6 / SOFIA KENIN USA 6 7。转播解说自己在 45.40s 说『32 minutes is all it』、46.52s『Six games to two』、48.76s『6-2 Kenin』，和官方 setDurations 的 32 分钟逐字对上。片尾板（FOLLOW US ON SOCIAL MEDIA #USOPEN）从 199.68 起（probe silent_audio [[199.72, 202.78]] 印证），段落全部收在 180.0 之前。",
+  "cover": {
+    "matchup": [
+      {
+        "name": "大威廉姆斯",
+        "name_en": "Venus Williams",
+        "country": "USA",
+        "rank": 618
+      },
+      {
+        "name": "肯宁",
+        "name_en": "Sofia Kenin",
+        "country": "USA",
+        "rank": 110
+      }
+    ],
+    "_matchup_order_why": "matchup[0] 是大威廉姆斯——她输了这场球，但封面主体按『放刷到这条的人是冲谁来的那个』定（CLAUDE.md 2026-08-15 arango-venus 那条）：四十六岁、两届美网冠军、前世界第一，关注度全在她身上。stats.a 因此也跟着她（flashscore home=Williams V.，和 matchup[0] 恰好同向，不是照抄 feed 顺序）。",
+    "_rank_why": "两人排名双源一致：① 美网官方 players.json / players/details singles_rank（wta230220=618、wta320942=110）；② WTA 官方榜单 PDF Singles_Numeric.pdf（Printed: 30 August 2026）第 14 页 618 (611) WILLIAMS, VENUS USA 75 分 12 站、第 4 页 110 (110) KENIN, SOFIA USA 709 分 26 站。⚠️ 两人都没有种子（官方 day_8 seed=null），所以这条片子里出现的名次一律是世界排名，不是种子号。",
+    "_heat_why": "两个人的名次都进不了前 20，热度不在名次里——按 2026-08-16 那条的第 ③ 档认领。① 大威廉姆斯：**七个大满贯单打冠军、前世界第一**（2002-02-25 登顶，美网官方球员档案 rank.high_singles=1），而这座球场就是她的地方——二〇〇〇、二〇〇一年两届美网冠军（官方 event.best_singles『W, (2000, 2001)』）。她今年 46 岁，这是她第 25 次之后又一次站上美网正赛（官方 event.num_played=25）。刷到这条的人不用被告诉她是谁。② 肯宁：**二〇二〇年澳网冠军**（官方 singles_history 2020 AO=WON）、同年法网亚军、生涯最高世界第四。③ 而这一场本身是一条正在发生的线：**两个大满贯冠军，都靠外卡进正赛，在第一轮碰上**，而且是在阿瑟阿什的午夜场。⚠️ 不拿『她是种子』（两人都没有种子）、也不拿『这场数据反常』当理由。",
+    "winner": "肯宁",
+    "result": "6-2 7-6",
+    "_result_why": "cover.result 不带抢七小分（`_match` 那两栏由 verified_match_fact 从 set_scores_home_away 机械重建）。次盘抢七 6-8：flashscore DC÷6/DD÷8 与 df_sui_1 的 IG 6/6、IH 7/8 双源给出，美网官方 day_8 的 sets[1] tiebreakDisplay 6 / 8 第三处印证。完整写法是 6-2 7-6(6)。",
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "大威廉姆斯",
+    "hook": "三十二分钟丢掉首盘\n七个盘点一个没拿下",
+    "_hook_why": "按『钩子讲整场，不是某一个时刻』写：第一行是首盘（官方 setDurations 32 分钟，转播自己也报了『32 minutes』），第二行是次盘她七次够到门口全没兑现（五比四那一局 40:0 的三个 + 抢七 6:2 起的四个）。两行各 9 个字符，≤10 ✓，solo 两行 ✓。⚠️ 不写『直落两盘』——比分板就在钩子正下方印着 6-2 7-6。⚠️ 『七个盘点一个没拿下』不是 2026-08-19 记的那种同义反复：她是输的一方，0/7 里的 0 完全可能是 1（拿下任何一个就进第三盘），这个数是真会变的。",
+    "topic": "美网第一轮 · 阿瑟阿什球场",
+    "portrait": {
+      "image": "assets/reel/williams-kenin-us-open-2026-r1-cover-roar.jpg",
+      "focus": 0.36,
+      "focus_y": 0.5,
+      "zoom": 1.0,
+      "_why": "AP 通讯社本场实拍（AP Photo，图注『Venus Williams, of the United States, reacts during her first round match against compatriot Sofia Kenin at the U.S. Open tennis championships, Monday, Aug. 31, 2026』——人物、赛事、对手、日期四要素齐）。4973x3316，铺 1080x1440 是 0.434 倍缩小，过 1.00x 地板，不需要 _low_res_why。画面自证：白色球衣、US Open 深蓝挡布上的 open 字样，和源片里她的装束一致。 ⚠️ 入库前按 LANCZOS 缩到 3000x2000、q92 存（AP 原图 4973x3316、10.9 MB，而这条线现有封面素材最大的一张也只有 908 KB / 4000px——11 MB 进 git 是数量级上的异类）。缩完仍是**缩小**：铺 1080x1440 的 fill 是 0.72，离 1.00 那道地板还远；渲染实际只用到 2160x1440，3000px 还留着三成余量。缩前缩后各渲一版封面并排看过，一样。",
+      "_portrait_why": "同一批候选逐张打开看过：美网官方图片接口给了 10 张（Mike Lawrence/USTA），全部封顶 1280x720（铺满要 0.50 倍放大，都得写 _low_res_why）——1446 握拳中景、1396 呐喊中景、5039 侧脸特写、1484 发球全身、1412 走动、1266 三分之一侧身；AP 这张是唯一 4000 像素级的，而且是全批里最近的一张：头肩占满画幅大半，吼出来的表情一眼读得到，背景是 US Open 的深蓝挡布，看得出在球场上。按 2026-08-18『同一批合格候选里优先近景特写、肢体和表情张力更大的那张』选它。⚠️ 眼睛是挤紧的——按 wu-walton 那条记的边界读：『封面图一定不要闭眼的』防的是眨眼瞬间（表情读不出来），而用力吼出来时眼睛就是挤着的，那是表情本身。",
+      "_zoom_why": "横图（1.4997）铺 3:4 竖版：按 cover 缩放后是 2160x1440，高度正好铺满，focus_y 是死的，只有 focus 有用（窗口在源图水平方向覆盖 focus*0.5 ~ focus*0.5+0.5）。她的头在源图 x 0.24~0.53：focus 0.50 会把发髻左缘切掉；focus 0.36 时窗口覆盖 0.18~0.68，整个头肩和握着的那只手都在框内，球拍框留一半——渲出来两版并排比过，取 0.36。",
+      "_band_why": "封面按 2026-08-31『挑封面之前先把钩子那条带叠上去』核过：她的下巴在源图 34%，映射到输出 y≈490，钩子带（STORYCOPY_TOP 790 起两行约 310px）和比分板都在她下方；头顶在源图 1.5%，映射到 y≈21，会顶进台头带（y 0~170）——所以 focus 取 0.36 让头偏在画面左侧、台头那行字（收在 x≈420）右边留出空当，渲出来核过没有压住脸。"
+    },
+    "scoreboard": {
+      "court": "Arthur Ashe Stadium",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%221%3A48%3A00%22%2C%22source%22%3A%22US%20Open%20official%20completed_matches%20day_8%20%28match_id%202118%29%20duration%201%3A48%20%3D%20setDurations%2032%2B76%20min%22%7D",
+        "field": "duration"
+      },
+      "_court_why": "三源一致：美网官方 completed_matches/days/day_8.json（match_id 2118）courtName=Arthur Ashe Stadium；flashscore df_sui_1 的 MIV÷Arthur Ashe Stadium；源片 54.5s 和 188.5~196.5s 两处全屏台标都烧着 ARTHUR ASHE STADIUM。flashscore 同场还记着 AM÷Playing under a closed roof（顶棚关闭）。",
+      "_duration_why": "官方 1:48，分盘 32+76=108 分钟自洽（day_8 的 duration 与 setDurations 互证）。flashscore df_sui_1 报 0:33+1:16 合计 1:49、时间戳 AD~AO 差 1:46:44——按『比赛用时不要只信 flashscore、以官方为准』取 1:48。第三处印证是转播解说 45.40s 的『32 minutes is all it』。"
+    }
+  },
+  "_match": {
+    "status": "result_verified",
+    "source": "flashscore_points",
+    "source_id": "G2MPZmsJ",
+    "flashscore_id": "G2MPZmsJ",
+    "participants": [
+      "大威廉姆斯",
+      "肯宁"
+    ],
+    "set_scores_home_away": [
+      [
+        2,
+        6
+      ],
+      [
+        6,
+        7
+      ]
+    ],
+    "winner": "肯宁",
+    "loser": "大威廉姆斯",
+    "winner_result": "6-2 7-6",
+    "loser_result": "2-6 6-7",
+    "_direction_why": "flashscore home=Williams V.（AE）、away=Kenin S.（AF，AS÷2 赢家标记），BA/BB=2:6、BC/BD=6:7，抢七 DC÷6/DD÷8；美网官方 day_8 feed team1=V. Williams totalSetsWon=0 won=false、team2=S. Kenin totalSetsWon=2 won=true 同向；源片 188.5~196.5s 的全屏赛果台标 VENUS WILLIAMS 2 6 / SOFIA KENIN 6 7 第三处印证。",
+    "_entry_why": "两人都是外卡：美网官方 day_8 team1/team2 的 entryStatus 都是 WC，flashscore df_sui_1 的 PSPH÷WC / PSPA÷WC 同向——两个源各自独立。"
+  },
+  "stats": {
+    "a": {
+      "aces": 0,
+      "df": 6,
+      "winners": 13,
+      "ue": 24,
+      "first_in": 40,
+      "first_won": 26,
+      "second_total": 38,
+      "second_won": 15,
+      "bp_conv": 2,
+      "bp_chances": 7,
+      "pts_won": 69,
+      "pts_total": 147,
+      "first_total": 78,
+      "headshot": "assets/players/headshots/wta-230220.jpg"
+    },
+    "b": {
+      "aces": 1,
+      "df": 4,
+      "winners": 28,
+      "ue": 21,
+      "first_in": 36,
+      "first_won": 24,
+      "second_total": 33,
+      "second_won": 17,
+      "bp_conv": 4,
+      "bp_chances": 9,
+      "pts_won": 78,
+      "pts_total": 147,
+      "first_total": 69,
+      "headshot": "assets/players/headshots/wta-320942.jpg"
+    },
+    "_source": "flashscore 本场 G2MPZmsJ 的 df_st_1（大满贯女子这场有 Winners / Unforced errors，CLAUDE.md 2026-08-14 那条量过：四大满贯的女子比赛这一栏一直有）。整块由 tools/match_stat_hooks.py --stats-block 机器抄出来，没有手打。⚠️ a 跟的是 cover.matchup[0]（大威廉姆斯），恰好等于 feed 的 home；first_total 按 first_in + second_total 算（40+38=78、36+33=69），不取接口的发球分分母。"
+  },
+  "_hit_data": [
+    {
+      "label": "七个盘点，一个没兑现",
+      "detail": "次盘五比四肯宁发球局她 40:0 拿到三个盘点（逐分 |B2| 三处），抢七 6:2 起又有四个（HM÷2,1 四行）——七个全没拿下；源片 142.5s 的黄标直接写着 SET POINT #4，和「本盘第四个盘点」机械对上",
+      "source": "flashscore df_mh_1 逐分 + 源片记分条黄标"
+    },
+    {
+      "label": "次盘一百零二分，只差两分",
+      "detail": "第二盘总分 50:52，102 分里她只少两分；两个人这一盘各自 6 个破发点只兑现 1 个、各自面对 6 个救下 5 个，对称到像照镜子",
+      "source": "flashscore df_st_1 分盘（Total Points Won / Break Points）"
+    },
+    {
+      "label": "首盘二发十一分只赢一分",
+      "detail": "第一盘她的二发得分率 9%（1/11），六个双误里五个在这一盘；到第二盘同一栏涨到 52%（14/27）",
+      "source": "flashscore df_st_1 分盘（2nd serve points won / Double Faults）"
+    },
+    {
+      "label": "总分差 9 分",
+      "detail": "全场 147 分她拿 69 分、肯宁 78 分",
+      "source": "flashscore df_st_1（Total Points Won）"
+    },
+    {
+      "label": "破发点兑现 2/7 对 4/9",
+      "detail": "她 7 个破发点兑现 2 个，肯宁 9 个兑现 4 个",
+      "source": "flashscore df_st_1（Break Points Converted）"
+    },
+    {
+      "label": "网前 13 分赢 10 分",
+      "detail": "全场她上网 13 次赢下 10 分（77%），肯宁 7 次赢 4 分；第二盘这一栏是 8 次赢 7 分",
+      "source": "flashscore df_st_1（Net points won）"
+    }
+  ],
+  "_durations": [
+    "官方分盘：32 分 / 76 分，全场 1:48（美网 day_8 setDurations + duration）",
+    "flashscore df_sui_1：0:33 / 1:16，合计 1:49（RB÷1:49）",
+    "时间戳：AD 1788149700 → AO 1788156104，差 1:46:44",
+    "取官方 1:48——32+76 自洽，且转播 45.40s 自己报了『32 minutes』"
+  ],
+  "_turning_points": [
+    {
+      "label": "【Set 1】开局连丢两个发球局：第 1 局 30:40 被破、第 3 局 30:0 领先又被追到 30:40 被破，0-3 落后；第 4 局她 40:0 破回来（逐分 15:0, 30:0, 40:0 |B1|），2-3 之后再被破一次，2-6 收场，32 分钟",
+      "density": 2
+    },
+    {
+      "label": "【Set 2 第 10 局】五比四，肯宁发球：她连拿三分 40:0，三个盘点（|B1||B2| 三行）——三个全被救掉，肯宁从 40:40 打到占先保住，5-5",
+      "density": 3
+    },
+    {
+      "label": "【Set 2 第 11 局】五比五她自己发球：15:40、30:40 两个破发点，40:A、40:A 又两个，四个全救下来，A:40 保住 6-5",
+      "density": 4
+    },
+    {
+      "label": "【Set 2 抢七】她 6-2 领先，四个盘点（源片黄标 SET POINT #4）——连丢六分，6-6、6-7（肯宁赛点，HM÷3,2）、6-8",
+      "density": 4
+    }
+  ],
+  "editorial": {
+    "mode": "match_review",
+    "question": "四十六岁的大威廉姆斯在第二盘七次够到门口，为什么一次都没推开？",
+    "thesis": "首盘和次盘是两个人：第一盘她的二发十一分只赢一分、五个双误，三十二分钟就丢了；第二盘她把同一栏从百分之九拉到百分之五十二，一百零二分只输两分，五比四时 40:0 拿到三个盘点、抢七 6:2 又拿到四个。输的地方就在这七个盘点上——三个被肯宁在自己的发球局里救掉，四个在抢七里被连拿六分抹平。转播席赛后给的解释是同一句话：她差的是把一盘、一场关上门的那一下。",
+    "beats": [
+      "首盘三十二分钟：开局连丢两个发球局，破回来一次，二发十一分只赢一分",
+      "第二盘她把球咬了回来：二发得分率翻六倍，两个人的破发点数据对称到像照镜子",
+      "五比四 40:0 三个盘点没兑现，五比五自己发球救下四个破发点保住六比五",
+      "抢七 6:2 领先、第四个盘点，连丢六分输掉比赛"
+    ],
+    "_hook_why": "这一栏和 cover.hook 逐行相同（闸要求）。理由见 cover._hook_why。",
+    "human_context": {
+      "angle": "这是一场在纽约的午夜开打的球。它排在夜场第二场，前面德约科维奇和纳沃内在同一片阿瑟阿什打了四小时三十六分——等大威廉姆斯走上场，纽约已经是八月三十一号凌晨零点十五分，打完是凌晨两点。这座球场是她的地方：二〇〇〇年和二〇〇一年她在这儿连拿两个美网冠军，第二次捧杯那天，对面的肯宁还不到三岁。两个人都是靠外卡进的正赛，而且都当过大满贯冠军——她七个，肯宁一个（二〇二〇年澳网）。",
+      "facts": [
+        "开球北京时间 8 月 31 日 12:15（flashscore AD=1788149700，纽约 8 月 31 日 00:15），结束 14:01（AO=1788156104，纽约 02:01）；顶棚关闭（flashscore AM÷Playing under a closed roof）。",
+        "为什么是午夜：同一片阿瑟阿什的夜场第一场是纳沃内 vs 德约科维奇，flashscore AD=1788131700（纽约 8/30 19:15）、官方用时 4:36 → 约 23:51 结束，两条独立记录的时间差正好接得上。",
+        "大威廉姆斯 1980 年 6 月 17 日生（美网官方球员档案 wta230220），比赛日 46 岁；美网官方 event.num_played=25、best_singles『W, (2000, 2001)』。",
+        "她的 singles_history 整张表数下来七个大满贯单打冠军：温网 2000/2001/2005/2007/2008，美网 2000/2001。",
+        "肯宁 1998 年 11 月 14 日生（美网官方 wta320942），比赛日 27 岁；singles_history 2020 年 AO=WON、RG=RUP，生涯最高世界第 4（2020-03-09）。2001 年美网女单决赛日（9 月 8 日）她两岁九个多月，不到三岁。",
+        "两人都是外卡：美网官方 day_8 entryStatus 都是 WC，flashscore PSPH/PSPA÷WC 同向。",
+        "排名：大威廉姆斯 618、肯宁 110（美网官方 + WTA 官方榜单 PDF，Printed 30 August 2026，双源一致）。",
+        "转播席赛后（源片 182.80~189.60s）：『it's that lack of confidence for Venus of not closing sets and matches out and that cost her in the end』——本片最后一段旁白是它的中译，只说『转播席上说』，不点名。"
+      ],
+      "sources": [
+        "https://www.usopen.org/en_US/scores/feeds/2026/completed_matches/days/day_8.json",
+        "https://www.usopen.org/en_US/scores/feeds/2026/players/details/wta230220.json",
+        "https://www.usopen.org/en_US/scores/feeds/2026/players/details/wta320942.json",
+        "https://www.usopen.org/en_US/scores/feeds/2026/players/players.json",
+        "https://wtafiles.wtatennis.com/pdf/rankings/Singles_Numeric.pdf",
+        "https://global.flashscore.ninja/2/x/feed/df_st_1_G2MPZmsJ",
+        "https://global.flashscore.ninja/2/x/feed/df_mh_1_G2MPZmsJ",
+        "https://global.flashscore.ninja/2/x/feed/df_sui_1_G2MPZmsJ",
+        "https://youtu.be/gG8NPAvYOJc"
+      ],
+      "_facts_note": "两条查到但**没写进产物**的，记在这儿省重查：① 她这一场之后的单打连败长度是 15（arango-venus 那条已经把连败这条线整段讲过，『同一栏目不许重讲铺开过的主体』——本片一个字都没碰连败和『上次赢球是去年七月』）；② 两人此前只在 2020 年 World TeamTennis 交手过一次（flashscore df_hh_1 KC÷1595104500，0:1），那不是巡回赛正赛，所以本片没有做任何 H2H 断言。",
+      "voice_label": "七次够到门口"
+    }
+  },
+  "_no_repeat": "同栏目里跟这两个人有关的已发片子有两条，本片刻意躲开它们铺开讲过的主体：① arango-venus（2026-08-15 辛辛那提首轮）整条片子讲的就是**连败**——『上次赢球是去年七月』『这是第十四场连败』『2026 年十一场一场没赢』。本片旁白和文案里一个字都没有连败、没有『上次赢球』、没有本赛季战绩。② kenin-lys（辛辛那提首轮）整条讲的是**肯宁的下坠**——2020 澳网冠军、前世界第四、今年 5 胜 19 负、掉到第 115、靠外卡进正赛。本片对肯宁只留一句身份（『对面的肯宁也是外卡，二〇二〇年的澳网冠军』），不展开。留下的这一句属于 CLAUDE.md 2026-08-05 那条『看不懂这场球所必需的来路，一句带过』。",
+  "_claims": {
+    "这座球场她拿过两个美网冠军，二〇〇〇年和二〇〇一年": "穷举源①：美网官方 players/details/wta230220.json 的 singles_history 整张表，USO 一列只有 2000、2001 两个 WON https://www.usopen.org/en_US/scores/feeds/2026/players/details/wta230220.json ；穷举源②：同一份档案的 event.best_singles 直接写着『W, (2000, 2001)』，两处独立字段互证。",
+    "第二次捧杯的那天，肯宁还不到三岁": "生日源：美网官方 wta320942.json birth.date=14 November 1998；夺冠年份源：同上 wta230220 的 singles_history USO 2001=WON。2001 年美网女单决赛在 9 月上旬，肯宁当时两岁九个多月——『不到三岁』两头都留了余量（她 1998-11-14 生，2001 年 11 月才满三岁）。",
+    "两个人都是拿外卡进来的": "源①：美网官方 completed_matches/days/day_8.json（match_id 2118）team1.entryStatus=WC、team2.entryStatus=WC，seed 都是 null；源②：flashscore df_sui_1 的 PSPH÷WC / PSPA÷WC。两个源各自独立。",
+    "七个盘点一个都没拿下": "源①：flashscore df_mh_1 逐分——次盘第 10 局（肯宁发球，5-4）HL 里 40:0 |B1| |B2|、40:15 |B1| |B2|、40:30 |B1| |B2| 三个盘点，抢七 HM÷2,1 出现在 6-2、6-3、6-4、6-5 四行，合计 7 个，之后 6-6 → 6-7（HM÷3,2 肯宁赛点）→ 6-8；源②：源片自己的记分条黄标——92.5~100.5s『SET POINT』配 2 5 [40] / 6 4 [0]，142.5~148.5s『SET POINT #4』配抢七 [6]:[2]，『#4』说明这一盘前面已经用掉三个，和逐分数出来的 3+4 机械对上。",
+    "七个大满贯单打冠军": "源①：美网官方 players/details/wta230220.json 的 singles_history 整张表数下来七个 WON（WIM 2000/2001/2005/2007/2008、USO 2000/2001） https://www.usopen.org/en_US/scores/feeds/2026/players/details/wta230220.json ；源②：维基百科词条摘要『Williams has won 49 WTA Tour-level singles titles, including seven majors』 https://en.wikipedia.org/api/rest_v1/page/summary/Venus_Williams 。两个源连生涯单打冠军总数也对得上（官方 results.career.singles_titles=49 vs 维基 49）。『前世界第一』出自同一份官方档案 rank.high_singles=1（2002-02-25），维基同一段也写着 world No. 1。"
+  },
+  "topbar": {
+    "line1": "2026 美网 第一轮",
+    "line2": "肯宁 6-2 7-6 大威廉姆斯"
+  },
+  "push": {
+    "summary": "大威廉姆斯七个盘点全丢",
+    "lead": "北京时间 8 月 31 日中午，美网女单第一轮，阿瑟阿什球场：世界第 110 的肯宁 6-2 7-6(6) 淘汰 46 岁的大威廉姆斯，用时 1 小时 48 分。两个人都是拿外卡进的正赛。第一盘只打了 32 分钟——她的二发 11 分只赢下 1 分，6 个双误里 5 个在这一盘。第二盘完全是另一场球：同一栏从 9% 涨到 52%，102 分她只输 2 分，5-4 时 40:0 拿到三个盘点、抢七 6:2 领先又有四个——七个盘点一个没兑现，抢七从 6:2 连丢六分，6-8 输掉比赛。",
+    "auto": true
+  },
+  "source_url": "https://youtu.be/gG8NPAvYOJc",
+  "_editing_why": "19 段共约 160 秒正文（加封面约 162 秒）。第 1 段是后段冷开场（最后一分落地），第 2 段是她赛后的脸配落点句，第 3 段起按时间顺序走完整场；第 17 段把冷开场那一分完整重放一遍兑现结局，最后收在网前握手。所有窗口都落在源片的 `scene_cuts` 之内（三处显式 `crosses_cut`），并全部收在片尾板 199.68 之前。⚠️ 源片里有四处 `scene_cuts` 没认出来的同机位／擦除转场（约 22~24 的 us open 擦除、`scene_cuts_loose` 报的 37.0、约 117~118、约 149~150），分别用 seg 5 起于 24.20、seg 6 收在 36.80、seg 15 收在 117.30、seg 18 起于 152.00 躲开，理由写在各段的 `_why` 里。",
+  "segments": [
+    {
+      "start": 156.6,
+      "end": 161.5,
+      "narration": "",
+      "score_inset": true,
+      "_ending_payoff_required": true,
+      "_why": "第①格：全片最强的一格——抢七 6:7 肯宁赛点的那一分和它的落地。记分条 152.5/154.5/156.5/158.5/160.5 五格逐格核过，恒为黄标 MATCH POINT ＋ V. WILLIAMS 2 6 [6] / KENIN ▸ 6 6 [7]；转播 160.76s 报出赛果。不配旁白，靠现场声。止于 161.50：下一刀在 161.76，留 0.26 给 0.18 的溶解底料；球落地约在 160.3~160.7（解说 160.76 开口），段尾给了约一秒的反应。⚠️ probe 的 `point_ends` 在 55.56~164.06 之间是空的（这一段转播的黄标一直挂着、板上的数字没变，检出靠的是板区变化），所以 dry-run 报的『最近死球 164.06』不是真死球时刻——真死球看记分条和解说，在 160.5 上下。⚠️ 这是后段冷开场，`_ending_payoff_required=true`——正文第 17 段（152.00~161.50）把整段完整重放了一遍。",
+      "_score_inset_why": "宽景，深蓝记分条全程在左下角（五格板区逐格裁出来看过）。"
+    },
+    {
+      "start": 165.05,
+      "end": 169.15,
+      "narration": "七个盘点，她一个都没拿下。",
+      "score_inset": false,
+      "_why": "第②格：一句话把落点说出来，配她赛后的近景。窗口在 164.88~169.40 这一刀之内（两头各留 0.17 / 0.25），166.5 和 168.5 两格都是她本人（白衣、白色遮阳帽）；164.5 那一格属于上一刀、是肯宁扶额，没有收进来。",
+      "_score_inset_why": "这一刀是场边近景，转播把记分条收掉了——164.5/166.5/168.5 三格的板区裁出来看过，只有深蓝挡布和她的肩。贴回来会是一块背景布。"
+    },
+    {
+      "start": 0.5,
+      "end": 10.6,
+      "narration": "北京时间八月三十一号中午十二点多，美网女单第一轮，阿瑟阿什球场。开场第一个发球局，她就被逼到了破发点。",
+      "score_inset": true,
+      "crosses_cut": "9.41 一刀：这一分的宽景回合 → 肯宁拿到破发点之后的近景（10.5 那一格）。两边是同一分的前后，旁白这一句是坐标交代，不指认任何一个人的动作。",
+      "_why": "第③格：坐标。画面是全场开局——记分条 0.5/4.5/8.5 三格是 V. WILLIAMS ▸ 0 [30] / KENIN 0 [30]，10.5 那一格变成 0 [30] / 0 [40]，也就是这一分丢了、肯宁拿到破发点；转播 10.16s 的『>> 30-40』同一时刻。逐分 HL『15:0, 15:15, 30:15, 30:30, 30:40 |B1|』对得上。⚠️ 旁白说的是『被逼到了破发点』不是『丢了发球局』——那一局要到 20 秒上下才结束（解说 21.00s『and an early break』），提前说就和画面上的板对不上。",
+      "_score_inset_why": "0.5~10.5 六格板都在。"
+    },
+    {
+      "start": 10.8,
+      "end": 21.3,
+      "narration": "对面的肯宁，二零二零年的澳网冠军。大威廉姆斯四十六岁，世界第六百一十八。两个人都是拿外卡进来的。",
+      "score_inset": true,
+      "_why": "身份只交代这一次，而且**按画面上的人排顺序**：12.5 那一格是肯宁的近景，所以先说肯宁、后说大威廉姆斯——第一版把大威那半句放在前面，预览里正压在肯宁的脸上（『整句旁白压在另一个人身上』）。画面是那个破发点被打的过程（12.5~18.5 四格恒为 0 [30] / 0 [40]，14.5 那一格还挂着黄标 BREAK POINT），20.5 是肯宁破成之后的近景，解说 21.00s 说『and an early break』。段尾 21.30 在死球 20.12 之后 1.18 秒；止于 21.30 是为了躲开 22.5 那一格的 us open 全屏擦除转场（那一格板整块被盖住）。",
+      "_score_inset_why": "10.5~20.5 六格板都在（黄色 BREAK POINT 标在 y<887，窗口之外）；22.5 那一格的擦除转场没收进来。",
+      "crosses_cut": "20.04 一刀：那个破发点的宽景回合 → 肯宁破成之后的近景（20.5 那一格）。两边是同一分的前后，旁白这一句只报两个人的参赛资格和排名，不指认谁在做什么。"
+    },
+    {
+      "start": 24.2,
+      "end": 32.85,
+      "narration": "开局她连丢两个发球局，零比三。这一局她一上来就是四十比零，肯宁一分没拿到。",
+      "score_inset": true,
+      "crosses_cut": "27.11 一刀：她在网前的近景（24.5/26.5 两格）→ 同一局的宽景回合（28.5~32.5）。两边都是她本人、同一局（记分条恒为 V. WILLIAMS 0 [40] / KENIN ▸ 3 [0]）。",
+      "_why": "第四局：0-3 落后时她在肯宁的发球局里打到 40:0。记分条 24.5~32.5 四格恒为 V. WILLIAMS 0 [40] / KENIN ▸ 3 [0]，逐分 HL『15:0, 30:0, 40:0 |B1|』对得上。⚠️ 这里**只说 40:0、不说『三个破发点』**：flashscore df_st_1 第一盘的 Break Points Converted 记的是 SH 1/1（它按列出来的破发点状态数，她在 40:0 之后一分就破成了），全场 2/7；说成三个会和数据图上的 7 对不上——『一个数写两处必分叉』的同族。破成那一下在下一段（33.30~36.80）。⚠️ 起点取 24.20 不取 20.04：20.5~24 之间有一次 us open 全屏擦除转场（`scene_cuts` 和 `scene_cuts_loose` 都没报，22.5 那一格板被整块盖住），窗口整段留在它之后。段尾 32.85 在下一刀 33.07 之前 0.22。",
+      "_score_inset_why": "24.5/26.5/28.5/32.5 四格板都在。"
+    },
+    {
+      "start": 33.3,
+      "end": 36.8,
+      "narration": "她破了回来——这是当年的她。",
+      "score_inset": true,
+      "crosses_cut": "34.98 一刀：她的发球（34.5 那一格带 IBM SERVE SPEED 图形）→ 她在看台前握拳（36.5 那一格，解说 36.68s 是 [cheering]）。两边都是她本人、同一个球局的前后。",
+      "_why": "破发那一下和她的反应：34.5 那一格她在场上（IBM SERVE SPEED 图形），36.5 那一格她在看台前握拳，解说 36.68s 是 [cheering]；记分条到 38.5 已经跳到 2 [30] / 5 [40]，也就是这一局在这个窗口里破成了。『这是当年的她』是转播 34.80s 原话『That's vintage. That really is.』的中译，captions.txt 里 grep 过，就落在这个窗口的开头；⚠️ 旁白**没有写成引语**（窗口只有 3.5 秒，加『解说说』那三个字余量只剩 0.25 秒，真语音量过会超），所以它在片子里是我们的话，出处记在这儿。⚠️ 止于 36.80：`scene_cuts_loose` 在 37.0 报了一处 us open 擦除转场（36.5 那一格的板已经被 logo 盖住一半），窗口收在它之前。",
+      "_score_inset_why": "34.5 那一格板在；36.5 那一格板被转场 logo 盖了一部分，而窗口 36.80 就收了，贴回来的仍是转播自己的图形，不是草地。"
+    },
+    {
+      "start": 37.2,
+      "end": 43.75,
+      "narration": "可首盘就到这儿了——二发十一分只赢一分，五个双误。",
+      "score_inset": true,
+      "_why": "画面 38.5~42.5 三格是黄标 SET POINT ＋ V. WILLIAMS 2 [30] / KENIN ▸ 5 [40]，肯宁发球胜盘局；解说 42.80s『Game and first set Kenin』。两个数出自 flashscore df_st_1 的 Set 1：2nd serve points won SH 9% (1/11)、Double Faults SH 5（全场 6 个，五个在这一盘）。起点 37.20 在 `scene_cuts_loose` 那处 37.0 之后 0.2；段尾 43.75 在下一刀 43.98 之前 0.23。",
+      "_score_inset_why": "38.5/40.5/42.5 三格板都在。"
+    },
+    {
+      "start": 46.0,
+      "end": 55.6,
+      "narration": "首盘六比二，三十二分钟。这是夜场第二场——前面德约科维奇打了四个多小时，纽约已经过了午夜。",
+      "score_inset": false,
+      "_why": "换边这一段：46.5 场边的劳力士钟、50.5 长凳、54.5 全屏台标（WOMEN'S SINGLES | 1ST ROUND | ARTHUR ASHE STADIUM）。『三十二分钟』是转播自己在 45.40s 报的（『32 minutes is all it』），也是官方 setDurations 的第一个数，两处独立。午夜那一句的两个源写在 human_context.facts 里（本场 flashscore AD＝纽约 8/31 00:15，同一片球场夜场第一场德约那条 AD＝8/30 19:15、官方用时 4:36）。⚠️ 起点取 46.00：44.5 那一格板还挂着（2 [30] / 5 [40]）；⚠️ 止于 55.60：56.5 那一格板已经回来了（2 1 [30] / 6 0 [0]）。整段声明 score_inset=false，两头都必须落在板不在的那一区间里。",
+      "_score_inset_why": "46.5/48.5/50.5/52.5/54.5 五格的板区逐格裁出来看过——钟、长凳、全屏台标，一格板都没有。整段贴回来会是背景布和草地。"
+    },
+    {
+      "start": 57.9,
+      "end": 66.8,
+      "narration": "第二盘换了个人。她的二发得分率从百分之九涨到百分之五十二。",
+      "score_inset": true,
+      "_why": "第二盘开打，记分条 58.5~66.5 五格是 V. WILLIAMS 2 [1] / KENIN 6 [0] 一路。两个数出自 flashscore df_st_1 分盘（Set 1 SH 9% 1/11、Set 2 SH 52% 14/27）。段尾 66.80 在下一刀 67.03 之前 0.23。",
+      "_score_inset_why": "宽景，五格板都在。"
+    },
+    {
+      "start": 69.55,
+      "end": 79.0,
+      "narration": "这一盘两边的数字像照镜子。破发点各有六个，各自只兑现一个；面对六个，各自救下五个。",
+      "score_inset": true,
+      "_why": "四个数全出自 flashscore df_st_1 的 Set 2：Break Points Converted SH 1/6、SI 1/6，Break Points Saved SH 5/6、SI 5/6——两边逐项相同，这是这场球最干净的一组数。⚠️ 用『面对』不用『拿到』：面对的点是自己要救的，拿到的点是自己要兑现的（CLAUDE.md『盘点赛点谁救的必须写出来』那条的分界）。",
+      "_score_inset_why": "宽景回合，70.5~78.5 五格板都在（72.5 是转场虚化，板仍在左下角）。"
+    },
+    {
+      "start": 79.2,
+      "end": 89.3,
+      "narration": "这座球场她拿过两个美网冠军，二零零零年和二零零一年。第二次捧杯的那天，肯宁还不到三岁。",
+      "score_inset": true,
+      "_why": "画面是第二盘中段的相持（解说 88.72s『Oh, that's too good.』）；旁白讲的是画面外的来路，不描述画面上任何一个具体动作，避开『整句旁白压在另一个人身上』。两条断言的出处见 _claims。段尾 89.30 在下一刀 89.56 之前 0.26。",
+      "_score_inset_why": "宽景，80.5~88.5 五格板都在。"
+    },
+    {
+      "start": 89.8,
+      "end": 94.0,
+      "narration": "第二盘五比四，轮到肯宁发球。",
+      "score_inset": true,
+      "_why": "90.5 那一格是肯宁和 IBM 98 MPH SERVE SPEED 图形，92.5 起黄标 SET POINT 出现。全片十九段里只有这一段报『轮到谁发球』，远低于『不许把每一局都念一遍』那条 25% 的密度线。段尾 94.00 在下一刀 94.26 之前 0.26。",
+      "_score_inset_why": "板在（92.5 那一格是 SET POINT ＋ 2 5 [40] / 6 4 [40]）。"
+    },
+    {
+      "start": 94.5,
+      "end": 100.15,
+      "narration": "大威廉姆斯连拿三分，四十比零——三个盘点。",
+      "score_inset": true,
+      "_why": "记分条 94.5/96.5/98.5 三格恒为黄标 SET POINT ＋ V. WILLIAMS 2 5 [40] / KENIN ▸ 6 4 [0]，和逐分 HL『40:0 |B1| |B2|』对得上：肯宁发球，她 40:0，破发点和盘点是同三个。段尾 100.15 在下一刀 100.42 之前 0.27。",
+      "_score_inset_why": "宽景，三格板都在。"
+    },
+    {
+      "start": 100.65,
+      "end": 114.4,
+      "narration": "三个全被肯宁救掉。五比五，轮到她自己发球，十五比四十——肯宁手里两个破发点，接着又是两个。四个，她一个都没给。",
+      "score_inset": true,
+      "_why": "这一刀里记分条按顺序走完了三件事：100.5 还是 40:0 SET POINT，102.5 变成 40:15（第一个盘点丢了），104.5 起变成 V. WILLIAMS ▸ 2 5 [15] / KENIN 6 5 [40]——肯宁保住那一局、5-5，换她自己发球、15:40 落后。逐分对得上：第 11 局 HL『0:15, 0:30, 15:30, 15:40 |B1|, 30:40 |B1|, 40:40, 40:A |B1|, 40:40, 40:A |B1|, 40:40, A:40』——四个破发点全救下。⚠️ 『肯宁手里两个破发点』『她一个都没给』把两个主语都写出来了，不用承前省略（CLAUDE.md『三个盘点都没救下来』那条读者反馈换来的规矩）。段尾 114.40 在下一刀 114.65 之前 0.25。",
+      "_score_inset_why": "宽景，100.5~114.5 八格板都在。"
+    },
+    {
+      "start": 114.9,
+      "end": 117.3,
+      "narration": "",
+      "score_inset": true,
+      "_why": "保住六比五之后她的近景（116.5 那一格：白衣白帽，身后是场边 DOBEL / IHG 挡板，记分条仍挂着 2 5 [15] / 6 5 [40]）。不配旁白——上一段刚说完『四个，她一个都没给』，这两秒半留给现场声。⚠️ 收在 117.30：114.65 之后到 118.5 那一格之间有一处 `scene_cuts` 没认出来的同机位切换（116.5 是场边近景、118.5 已经是抢七宽景），窗口整段留在近景这一侧。",
+      "_score_inset_why": "116.5 那一格的板区裁出来看过，板在（V. WILLIAMS ▸ 2 5 [15]）。"
+    },
+    {
+      "start": 118.3,
+      "end": 137.3,
+      "narration": "抢七开始，她先拿下第一分，然后一路领先。这一盘她打了七十六分钟，比首盘长了一倍还多；网前八分赢下七分。一百零二分里，她拿到五十分，肯宁五十二分——整整一盘，只差这两分。",
+      "score_inset": true,
+      "_why": "这一刀是抢七里的长回合，记分条 118.5~136.5 十格恒为 7 POINT TIEBREAK ＋ V. WILLIAMS 2 6 [1] / KENIN ▸ 6 6 [0]——所以旁白只说『先拿下第一分，然后一路领先』，不报后面的比分，避开『比分和画面对不上』。七十六分钟是官方 setDurations 的第二个数（32 / 76）；网前那两个数是 df_st_1 Set 2 的 Net points won SH 88% (7/8)；总分是同一张表的 Total Points Won SH 50/102、SI 52/102。段尾 137.30 在下一刀 137.52 之前 0.22。",
+      "_score_inset_why": "宽景，十格板都在。"
+    },
+    {
+      "start": 137.8,
+      "end": 147.05,
+      "narration": "六比二，第四个盘点。加上五比四那一局的三个，这一盘她一共七次够到门口。",
+      "score_inset": true,
+      "_why": "142.5/144.5/146.5 三格的黄标写着 SET POINT #4，配 V. WILLIAMS ▸ 2 6 [6] / KENIN 6 6 [2]——『#4』是本盘累计第四个盘点，正好接在五比四那一局的三个后面，和逐分数出来的 3+4=7 机械对上（这是『七个盘点』这句话的画面自证）。解说 139.80s『WHAT A SHOT TO HIT.』、147.40s『>> 6-3』。段尾 147.05 在下一刀 147.30 之前 0.25。",
+      "_score_inset_why": "宽景 ＋ 肯宁走动，138.5~146.5 五格板都在。"
+    },
+    {
+      "start": 152.0,
+      "end": 161.5,
+      "narration": "从六比二开始，她连丢六分。六比七，赛点在肯宁那边。一小时四十八分钟，结束了。",
+      "score_inset": true,
+      "_why": "正文重新兑现结局（冷开场 156.60~161.50 完整落在这一段里）。记分条 152.5~160.5 五格恒为黄标 MATCH POINT ＋ V. WILLIAMS 2 6 [6] / KENIN ▸ 6 6 [7]，逐分末两行 HM÷3,2（肯宁赛点）→ 6-8。⚠️ 起点取 152.00 不取 147.30：148.5 那一格板还是抢七 [6]:[2]、150.5 已经是 [6]:[7]，中间有一处 `scene_cuts` 没认出来的同机位切换（两边都是同一台底线机位的宽景），窗口整段留在 MATCH POINT 那一侧，不跨它。",
+      "_score_inset_why": "宽景，五格板都在。"
+    },
+    {
+      "start": 169.65,
+      "end": 180.0,
+      "narration": "转播席上说，她差的就是关门的那一下。七个盘点，一个都没关上。四十六岁的她，还有下一次吗？",
+      "score_inset": false,
+      "_why": "收尾：网前握手和拥抱（170.5~178.5 五格，白衣是她、深蓝是肯宁）。『关门的那一下』是转播席赛后原话的中译——captions.txt 182.80~189.60s：『it's that lack of confidence for Venus of not closing sets and matches out and that cost her in the end』，grep 过。⚠️ 那句话出现在 182.8 之后、不在这个窗口里，所以旁白只说『转播席上说』，不说『此刻』，也不点解说的名字（自动字幕把 Rennae Stubbs 听成了 Rene Stubbs）。⚠️ 没有把 182.88 之后收进来：那一段到片尾板为止全是肯宁的镜头和赛果台标，而这条片子的主体是她，收在两个人网前那一下。收尾落在一问上，不停在数据上。",
+      "_score_inset_why": "网前握手是低机位近景，170.5~178.5 五格的板区裁出来看过，是球网和场地，没有板。"
+    }
+  ],
+  "_tts_note": "旁白里的年份写成「二零零零年」而不是仓库惯例的「二〇〇〇年」，是**这条线上量出来的**：`build_match_reel.synthesize()` 把 `seg.narration` **原样**交给 `tts_one`，一次都没过 `speakable()`（explainer 那条线在 `synthesize_narration` 里是过的）。本条 `--check-narration` 的切词报告里 WordBoundary 的 token 文本带着 U+3007 `〇`，就是它的产物证据——合成器收到的确实是原文。所以 CLAUDE.md 2026-08-27『年份里的 〇 会挡住年份识别，修法收在 speakable()』这条，对**赛场之上这条线目前不生效**；`test_年份里的圈零要换成零否则合成器认不出这是年份` 只验 `speakable()` 本身，没有验哪条线真的调了它。⚠️ **这一条没有在本片里去修**（时效任务里不展开无关修复）：改 `synthesize()` 会让 marks 变成 `speakable` 之后那份，而字幕时间轴现在是拿 marks 去对**原文**字位的，动它要先确认那条映射，属于要单独跑一轮全量的规模。本片的规避办法零风险：`arabic_numerals('二零零零年')` 和 `arabic_numerals('二〇〇〇年')` 都得到 `2000年`（实测），屏幕上一个像素不差，只有喂给合成器那份变干净了。同一份报告还抓到两处假词，一并改掉：`赛点在肯宁手里` 被切成 `肯｜宁手｜里`（『宁手』会改『宁』的读音）→ 改成 `赛点在肯宁那边`（`肯宁拿到赛点` 试过，切成 `肯｜宁拿｜到`，同一个毛病换了个位置；人名后面跟一个强词『那边』才撑得开）；`两个人像照镜子` 被切成 `两｜个｜人像｜照镜子`（『人像』）→ 改成 `两边的数字像照镜子`（先试过加逗号的 `两个人，像在照镜子`，切词是干净了，但真语音量出来这一段超 0.25 秒）。"
+}
