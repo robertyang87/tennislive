@@ -13435,6 +13435,84 @@ def test_板右缘抓帧短读要单独出声不许装成板不在(monkeypatch, 
         f"一句话，下一个人就会去把真板的 score_inset 关掉。实际输出：{out!r}")
 
 
+def test_量不出的段按时间单调性从邻段补不再退最宽兜底(tmp_path, monkeypatch, capsys):
+    """⭐⭐ 账号所有者 2026-08-31：「现在固定长度不太合适啊，会截取太多空的
+    画面遮挡了真实画面」「以后所有赛场之上视频都能做到自适应裁切比分么」。
+
+    某一段自己量不出（特写做背景、球员贴板——德约那条第 4 段的真实形状：
+    6 帧散在 892~1608 各一票）时，原来退回 spec 的最宽兜底 736：十个段里
+    九个自适应、一个贴最宽的空板，还是「固定长度」，而自动链上没有人去手工
+    钉 `{"x2": N}`。同一条源片是按时间顺序剪的集锦，板每打完一盘 +38px、
+    **从不变窄**，所以「后面段可信读数的最小值」是本段真宽的安全上界。钉四头：
+
+    ① 可信段（两票起步）照旧按自己的读数裁——自适应的主路不动，可信读数
+       永远不被邻段改写（互相钳制会成环）
+    ② 只有孤票的段 → 用后面段可信读数的最小值，**不是**最宽兜底 736，
+       也**不是**那张孤票（噪声 1400）
+    ③ 补齐用的是**后面段**的下确界（上界，偏宽安全）——用前面段补会在
+       「中间正好打完一盘」时把新长出来的比分列藏在贴片底下，静默失败
+    ④ 后面也没有可信读数的段照旧退最宽兜底**并出声**（老行为不变）
+
+    反向验证过两个方向：把 `_later_floor` 那一支拆掉 → ② 红（拿到 736）；
+    把「后面段的最小值」换成「前面段的最大值」 → ②/③ 红（拿到 544，裁窄）。
+    """
+    import numpy as np  # noqa: PLC0415
+
+    reel = _reel()
+    monkeypatch.setattr(reel, "probe_size", lambda _p: (1920, 1080))
+    box = (104, 887, 736, 980)              # 高 93——奇数几何照旧
+    x0, _y0, _x1, y1 = box
+    bw, bh = 1920 - x0, y1 - box[1]
+    court = np.array([110, 150, 110], np.uint8)
+
+    def band_with_edge(src_edge):
+        b = np.tile(court, (bh, bw, 1))
+        b[:, :src_edge - x0] = (20, 35, 90)
+        return b
+
+    # 「花屏」：每一列都离球场参考色很远 → 检测一路走到带尾 → 这一帧 None
+    clutter = np.zeros((bh, bw, 3), np.uint8)
+    clutter[:, 0::2] = (250, 20, 20)
+    clutter[:, 1::2] = (20, 20, 250)
+
+    def runner(cmd, capture_output=True, check=False):
+        t = float(cmd[cmd.index("-ss") + 1])
+        if t < 2.0:
+            band = band_with_edge(536)                     # 第一盘，可信 ×6
+        elif t < 4.0:
+            # 德约 seg4 的形状：五帧花屏 + 一张孤票宽噪声（球员贴板那种）
+            band = band_with_edge(1400) if 3.4 < t < 3.6 else clutter
+        elif t < 6.0:
+            band = band_with_edge(616)                     # 第二盘，可信 ×6
+        else:
+            band = clutter                                 # 量不出且后面没有
+        class _R:
+            stdout = band.tobytes()
+        return _R()
+
+    src = tmp_path / "stub.mp4"
+    src.write_bytes(b"x")
+    segs = [reel.Segment(start=a, end=b, cx=0.5, narration="", track=False,
+                         score_inset=box, score_inset_auto=True)
+            for a, b in [(0.0, 2.0), (2.0, 4.0), (4.0, 6.0), (6.0, 8.0)]]
+    reel.resolve_board_insets({"": src}, segs, runner=runner)
+    out = capsys.readouterr().out
+
+    pad = reel.BOARD_EDGE_PAD
+    assert segs[0].score_inset[2] == 536 + pad, (
+        f"① 可信段要按自己的读数裁，拿到 {segs[0].score_inset[2]}\n{out}")
+    assert segs[2].score_inset[2] == 616 + pad, (
+        f"① 可信段要按自己的读数裁，拿到 {segs[2].score_inset[2]}\n{out}")
+    assert segs[1].score_inset[2] == 616 + pad, (
+        f"② 孤票段该按时间单调性拿后面段可信读数的最小值 616（安全上界），"
+        f"拿到 {segs[1].score_inset[2]}。736 就是被账号所有者点掉的「固定长度"
+        f"贴最宽空板」；544 是拿前面段补（③ 裁窄，会藏比分列）；1408 是把"
+        f"孤票噪声当了真。\n{out}")
+    assert "单调性" in out, f"补齐要出声说明来路，不然读日志的人以为量到了：{out}"
+    assert segs[3].score_inset[2] == box[2] and "量不出板的右缘" in out, (
+        f"④ 后面没有可信读数的段照旧退最宽兜底并出声。\n{out}")
+
+
 def test_板右缘的取值规则两票起步且取最宽():
     """`segment_board_edge` 的取值规则，钉三头（不用跑 ffmpeg，秒级）。
 
