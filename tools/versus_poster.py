@@ -740,6 +740,21 @@ def score_cn_px(matchup: list, sets: int) -> int:
         unit = _name_width_px(name, meta.get("rank"), 100) / 100.0
         if unit > 0:
             px = min(px, int(avail / unit))
+
+    # ⚠️ 上面那步是按 100px 量宽再**线性换算**的，而字体度量在小字号上不严格
+    # 线性（hinting/取整）——「德约科维奇（5）」配五盘板：线性给 51px，按 51px
+    # 真量是 289.75px，比 avail=287 多 2.75px。这个缝只在「长名字＋多盘数」的
+    # 最紧组合上露出来，2026-08-31 德约那条五盘 spec 第一次踩到。所以线性猜完
+    # 再按**候选字号真量一遍**，超了退一号——和
+    # `test_中文名字号按最长的名字算不许超出那一列` 用同一把尺子。
+    def _widest(p: int) -> float:
+        return max((_name_width_px(str(m.get("name") or "").strip(),
+                                   m.get("rank"), p)
+                    for m in matchup if str(m.get("name") or "").strip()),
+                   default=0.0)
+
+    while px > SCORE_CN_MIN_PX and _widest(px) > avail:
+        px -= 1
     if px < SCORE_CN_MIN_PX:
         # 退路要出声。⚠️ **但别把话说死成「会顶到盘分上」**：这个估算是保守的，
         # 库里最长的那个名字（`胡安·曼努埃尔·塞伦多洛（51）`，12 个字）在五盘
