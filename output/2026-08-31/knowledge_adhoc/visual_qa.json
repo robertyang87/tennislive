@@ -1,0 +1,131 @@
+{
+  "schema_version": 1,
+  "status": "pass",
+  "story_slug": "zheng-qinwen",
+  "standards": {
+    "license_policy": "record-only: credit/license are logged (unknown/unverified when missing) and never a fail condition; pre-publish rights review is a human step",
+    "photo_count_max": 64,
+    "photo_source_uniqueness": "same photo/source may appear only once",
+    "page_visual": "every page requires one distinct verified photo",
+    "non_cover_visual": "distinct exact-event photo; infographic may only be an overlay",
+    "rule_explainer": "topic-specific diagram plus verified photo required",
+    "player_crop": "head-safe object position",
+    "production_labels": "internal generation labels are forbidden",
+    "story_ordinals": "semantic icons replace ordinal markers",
+    "year_markers": "calendar years must use four digits",
+    "canned_story_labels": "fixed teaching-style labels are forbidden",
+    "max_text_block_chars": 82,
+    "max_card_text_chars": 520,
+    "card_size": [
+      1080,
+      1440
+    ],
+    "max_card_bytes": 950000
+  },
+  "photo_uses": 4,
+  "photo_sources": [
+    "https://ausopen.com/articles/news/rebounding-ao-final-zheng-qinwen-wins-olympic-gold-china",
+    "https://www.wtatennis.com/news/3867402/zheng-qinwen-bests-yastremska-makes-first-slam-final-at-australian-open",
+    "https://www.wtatennis.com/news/4074958/zheng-holds-off-vekic-in-olympic-gold-medal-final",
+    "https://sports.yahoo.com/no-1-iga-swiatek-loses-120600551.html"
+  ],
+  "resolved_visuals": [
+    {
+      "page": "story",
+      "file": "output/2026-08-31/knowledge_adhoc/visuals/story-360a21b7349c.jpg",
+      "source_url": "https://www.wtatennis.com/news/3867402/zheng-qinwen-bests-yastremska-makes-first-slam-final-at-australian-open",
+      "credit": "Cameron Spencer/Getty Images via WTA",
+      "license": "官方媒体供图 · 非商业资讯引用",
+      "width": 3981,
+      "height": 2654
+    },
+    {
+      "page": "explainer",
+      "file": "output/2026-08-31/knowledge_adhoc/visuals/explainer-0815358ef297.jpg",
+      "source_url": "https://www.wtatennis.com/news/4074958/zheng-holds-off-vekic-in-olympic-gold-medal-final",
+      "credit": "Getty Images via WTA",
+      "license": "官方媒体供图 · 非商业资讯引用",
+      "width": 3227,
+      "height": 2151
+    },
+    {
+      "page": "today",
+      "file": "output/2026-08-31/knowledge_adhoc/visuals/today-6fb16e8e4533.jpg",
+      "source_url": "https://sports.yahoo.com/no-1-iga-swiatek-loses-120600551.html",
+      "credit": "AP Photo via Yahoo Sports",
+      "license": "官方媒体供图 · 非商业资讯引用",
+      "width": 1200,
+      "height": 800
+    }
+  ],
+  "pages": [
+    {
+      "kind": "knowledge",
+      "visual": "verified-photo",
+      "text_chars": 106,
+      "longest_text_block": 50,
+      "photo_count": 1,
+      "photo_sources": [
+        "https://ausopen.com/articles/news/rebounding-ao-final-zheng-qinwen-wins-olympic-gold-china"
+      ]
+    },
+    {
+      "kind": "story",
+      "visual": "narrative-timeline",
+      "text_chars": 301,
+      "longest_text_block": 50,
+      "photo_count": 1,
+      "photo_sources": [
+        "https://www.wtatennis.com/news/3867402/zheng-qinwen-bests-yastremska-makes-first-slam-final-at-australian-open"
+      ]
+    },
+    {
+      "kind": "explainer",
+      "visual": "player-explainer",
+      "text_chars": 183,
+      "longest_text_block": 35,
+      "photo_count": 1,
+      "photo_sources": [
+        "https://www.wtatennis.com/news/4074958/zheng-holds-off-vekic-in-olympic-gold-medal-final"
+      ]
+    },
+    {
+      "kind": "today",
+      "visual": "history-timeline",
+      "text_chars": 240,
+      "longest_text_block": 46,
+      "photo_count": 1,
+      "photo_sources": [
+        "https://sports.yahoo.com/no-1-iga-swiatek-loses-120600551.html"
+      ]
+    }
+  ],
+  "rendered_cards": [
+    {
+      "file": "card_00_knowledge.jpg",
+      "width": 1080,
+      "height": 1440,
+      "bytes": 378862
+    },
+    {
+      "file": "card_01_story.jpg",
+      "width": 1080,
+      "height": 1440,
+      "bytes": 337095
+    },
+    {
+      "file": "card_02_explainer.jpg",
+      "width": 1080,
+      "height": 1440,
+      "bytes": 272810
+    },
+    {
+      "file": "card_03_today.jpg",
+      "width": 1080,
+      "height": 1440,
+      "bytes": 315655
+    }
+  ],
+  "errors": [],
+  "warnings": []
+}

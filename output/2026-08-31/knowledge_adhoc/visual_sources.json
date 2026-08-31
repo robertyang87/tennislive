@@ -1,0 +1,291 @@
+{
+  "schema_version": 2,
+  "status": "pass",
+  "story_slug": "zheng-qinwen",
+  "fetch_enabled": true,
+  "strict": true,
+  "policy": "事实先交叉核验；图片失败时排除失败来源并同题重试，仍失败则按新闻价值切换主题；候选耗尽后交给后续班次。",
+  "selected_count": 3,
+  "required_pages": [
+    "explainer",
+    "story",
+    "today"
+  ],
+  "missing_pages": [],
+  "degraded_pages": [],
+  "failed_curated_source_urls": [],
+  "input_domains": [
+    "en.wikipedia.org",
+    "olympics.com",
+    "sports.yahoo.com",
+    "wtatennis.com"
+  ],
+  "providers_queried": [
+    "curated-editorial",
+    "official-story-pages"
+  ],
+  "provider_runs": [
+    {
+      "page": "story",
+      "provider": "curated-editorial",
+      "query": "qinwen zheng 2024 australian open tennis",
+      "status": "ok",
+      "candidate_count": 1
+    },
+    {
+      "page": "story",
+      "provider": "official-story-pages",
+      "query": "qinwen zheng 2024 australian open tennis",
+      "status": "ok",
+      "candidate_count": 3
+    },
+    {
+      "page": "explainer",
+      "provider": "curated-editorial",
+      "query": "qinwen zheng 2024 olympic tennis",
+      "status": "ok",
+      "candidate_count": 1
+    },
+    {
+      "page": "explainer",
+      "provider": "official-story-pages",
+      "query": "qinwen zheng 2024 olympic tennis",
+      "status": "ok",
+      "candidate_count": 3
+    },
+    {
+      "page": "today",
+      "provider": "curated-editorial",
+      "query": "qinwen zheng 2024 olympic tennis",
+      "status": "ok",
+      "candidate_count": 1
+    },
+    {
+      "page": "today",
+      "provider": "official-story-pages",
+      "query": "qinwen zheng 2024 olympic tennis",
+      "status": "ok",
+      "candidate_count": 3
+    }
+  ],
+  "selected_providers": [
+    "official-media"
+  ],
+  "excluded_source_urls": [],
+  "errors": [],
+  "attempts": [
+    {
+      "provider": "official-media",
+      "page_url": "https://www.wtatennis.com/players/328120/qinwen-zheng",
+      "source_url": "https://www.wtatennis.com/players/328120/qinwen-zheng",
+      "image_url": "https://photoresources.wtatennis.com/photo-resources/2025/05/06/837e6f32-a9b9-42e2-b3a8-057f37846755/Home-Share_1200x630.png?width=2000",
+      "credit": "wtatennis.com",
+      "license": "官方媒体 · 非商业资讯引用",
+      "status": "candidate",
+      "reason": "官方页面图片作为正常候选参与评分；机构署名照记",
+      "search_text": "qinwen zheng | player stats & more – wta official get the latest player stats on qinwen zheng including her videos, highlights, and more at the official women https://www.wtatennis.com/players/328120/qinwen-zheng",
+      "image_text": " https://photoresources.wtatennis.com/photo-resources/2025/05/06/837e6f32-a9b9-42e2-b3a8-057f37846755/home-share_1200x630.png?width=2000",
+      "width": 0,
+      "height": 0
+    },
+    {
+      "provider": "official-media",
+      "page_url": "https://en.wikipedia.org/wiki/Zheng_Qinwen",
+      "source_url": "https://en.wikipedia.org/wiki/Zheng_Qinwen",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Zheng_Qinwen_%282024_US_Open%29_01_%28cropped%29.jpg/960px-Zheng_Qinwen_%282024_US_Open%29_01_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=index&utm_content=thumbnail",
+      "credit": "en.wikipedia.org",
+      "license": "官方媒体 · 非商业资讯引用",
+      "status": "candidate",
+      "reason": "官方页面图片作为正常候选参与评分；机构署名照记",
+      "search_text": "zheng qinwen - wikipedia  https://en.wikipedia.org/wiki/zheng_qinwen",
+      "image_text": " https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/zheng_qinwen_%282024_us_open%29_01_%28cropped%29.jpg/960px-zheng_qinwen_%282024_us_open%29_01_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=index&utm_content=thumbnail",
+      "width": 0,
+      "height": 0
+    },
+    {
+      "provider": "official-media",
+      "page_url": "https://www.wtatennis.com/news/3868599/sabalenka-overpowers-zheng-qinwen-to-defend-australian-open-title",
+      "source_url": "https://www.wtatennis.com/news/3868599/sabalenka-overpowers-zheng-qinwen-to-defend-australian-open-title",
+      "image_url": "https://photoresources.wtatennis.com/wta/photo/2024/01/27/9325c21f-5f79-4097-afc6-d9356a02dd39/Sabalenka-trophy-Darrian-Traynor.jpg?width=2000",
+      "credit": "wtatennis.com",
+      "license": "官方媒体 · 非商业资讯引用",
+      "status": "candidate",
+      "reason": "官方页面图片作为正常候选参与评分；机构署名照记",
+      "search_text": "sabalenka overpowers zheng qinwen to defend australian open title aryna sabalenka claimed the second grand slam title of her career with a successful defense of her australian open crown, defeating zheng qinwen in the final in straight sets. https://www.wtatennis.com/news/3868599/sabalenka-overpowers-zheng-qinwen-to-defend-australian-open-title",
+      "image_text": " https://photoresources.wtatennis.com/wta/photo/2024/01/27/9325c21f-5f79-4097-afc6-d9356a02dd39/sabalenka-trophy-darrian-traynor.jpg?width=2000",
+      "width": 0,
+      "height": 0
+    },
+    {
+      "provider": "official-page",
+      "page_url": "https://www.olympics.com/en/news/zheng-qinwen-wins-gold-paris-2024-tennis-women-singles",
+      "status": "error",
+      "reason": "HTTPSConnectionPool(host='www.olympics.com', port=443): Read timed out. (read timeout=7)"
+    },
+    {
+      "page": "cover",
+      "status": "selected",
+      "cached_file": "zheng-qinwen.jpg",
+      "title": "Zheng Qinwen celebrating on the clay after winning the 2024 Paris Olympics gold medal",
+      "subject": "qinwen zheng",
+      "required_years": [
+        "2024"
+      ],
+      "required_event_terms": [],
+      "person_required": true,
+      "subject_match": true,
+      "year_match": true,
+      "event_match": true,
+      "person_match": true,
+      "visual_impact_match": true,
+      "reason": ""
+    },
+    {
+      "page": "story",
+      "status": "selected",
+      "required_event_terms": [
+        "australian open",
+        "melbourne"
+      ],
+      "match_level": "exact-event",
+      "rejection_counts": {
+        "subject-or-person-mismatch": 2,
+        "low-visual-impact-metadata": 1
+      },
+      "source_runs": [
+        {
+          "page": "story",
+          "provider": "curated-editorial",
+          "query": "qinwen zheng 2024 australian open tennis",
+          "status": "ok",
+          "candidate_count": 1
+        },
+        {
+          "page": "story",
+          "provider": "official-story-pages",
+          "query": "qinwen zheng 2024 australian open tennis",
+          "status": "ok",
+          "candidate_count": 3
+        }
+      ],
+      "provider": "official-media",
+      "source_url": "https://www.wtatennis.com/news/3867402/zheng-qinwen-bests-yastremska-makes-first-slam-final-at-australian-open",
+      "image_url": "https://photoresources.wtatennis.com/wta/photo/2024/01/25/d736e04f-1a05-4b19-a78d-ab63210eee27/Zheng-SF-Cameron-Spencer.jpg",
+      "credit": "Cameron Spencer/Getty Images via WTA",
+      "license": "官方媒体供图 · 非商业资讯引用",
+      "query": "qinwen zheng 2024 australian open tennis",
+      "relevance": 100,
+      "sha256": "360a21b7349cef6bde2383ae9c9014d4450638514ec3e039fcb5861fcbb44b2d",
+      "focus": "50% 24%",
+      "subject_match": true,
+      "year_match": true,
+      "event_match": true,
+      "person_required": true,
+      "cached_file": "story-360a21b7349c.jpg"
+    },
+    {
+      "page": "explainer",
+      "status": "selected",
+      "required_event_terms": [],
+      "match_level": "exact-event",
+      "rejection_counts": {
+        "subject-or-person-mismatch": 2,
+        "low-visual-impact-metadata": 1
+      },
+      "source_runs": [
+        {
+          "page": "explainer",
+          "provider": "curated-editorial",
+          "query": "qinwen zheng 2024 olympic tennis",
+          "status": "ok",
+          "candidate_count": 1
+        },
+        {
+          "page": "explainer",
+          "provider": "official-story-pages",
+          "query": "qinwen zheng 2024 olympic tennis",
+          "status": "ok",
+          "candidate_count": 3
+        }
+      ],
+      "provider": "official-media",
+      "source_url": "https://www.wtatennis.com/news/4074958/zheng-holds-off-vekic-in-olympic-gold-medal-final",
+      "image_url": "https://photoresources.wtatennis.com/wta/photo/2024/08/03/13c7b92f-6767-4ed3-9a14-a78cd46642b9/GettyImages-2165120786.jpg",
+      "credit": "Getty Images via WTA",
+      "license": "官方媒体供图 · 非商业资讯引用",
+      "query": "qinwen zheng 2024 olympic tennis",
+      "relevance": 100,
+      "sha256": "0815358ef29798096dd944504c877b02eb667bde45f482d9d87c23c10cfe2f62",
+      "focus": "50% 24%",
+      "subject_match": true,
+      "year_match": true,
+      "event_match": true,
+      "person_required": true,
+      "cached_file": "explainer-0815358ef297.jpg"
+    },
+    {
+      "page": "today",
+      "status": "selected",
+      "required_event_terms": [
+        "olympic",
+        "paris 2024"
+      ],
+      "match_level": "exact-event",
+      "rejection_counts": {
+        "subject-or-person-mismatch": 2,
+        "low-visual-impact-metadata": 1
+      },
+      "source_runs": [
+        {
+          "page": "today",
+          "provider": "curated-editorial",
+          "query": "qinwen zheng 2024 olympic tennis",
+          "status": "ok",
+          "candidate_count": 1
+        },
+        {
+          "page": "today",
+          "provider": "official-story-pages",
+          "query": "qinwen zheng 2024 olympic tennis",
+          "status": "ok",
+          "candidate_count": 3
+        }
+      ],
+      "provider": "official-media",
+      "source_url": "https://sports.yahoo.com/no-1-iga-swiatek-loses-120600551.html",
+      "image_url": "https://s.yimg.com/ny/api/res/1.2/Gef3DdfgjCxkbdARWhTF0g--/YXBwaWQ9aGlnaGxhbmRlcjt3PTEyMDA7aD04MDA7Y2Y9d2VicA--/https://media.zenfs.com/en/ap.org/af74ba83d3fbb019753043d716cc1282",
+      "credit": "AP Photo via Yahoo Sports",
+      "license": "官方媒体供图 · 非商业资讯引用",
+      "query": "qinwen zheng 2024 olympic tennis",
+      "relevance": 100,
+      "sha256": "6fb16e8e4533ae0b610b716370e5e31a970b7dd2df0ac386494c2729ac67328b",
+      "focus": "50% 24%",
+      "subject_match": true,
+      "year_match": true,
+      "event_match": true,
+      "person_required": true,
+      "cached_file": "today-6fb16e8e4533.jpg"
+    }
+  ],
+  "selection_evidence": {
+    "kind": "player",
+    "candidate_slug": "zheng-qinwen",
+    "result_count": 53,
+    "live_count": 0,
+    "schedule_count": 23,
+    "selection_basis": "current player or tournament relevance, match news value, and recency",
+    "candidate_rank": 1,
+    "candidate_count": 21,
+    "visual_preflight_rejections": 0,
+    "visual_preflight_status": "pass",
+    "same_topic_attempt": 1,
+    "same_topic_attempt_limit": 4
+  },
+  "rejected_candidates": [],
+  "recovery": {
+    "status": "not-needed",
+    "same_topic_attempt": 1,
+    "excluded_source_urls": [],
+    "failed_attempts": []
+  }
+}
