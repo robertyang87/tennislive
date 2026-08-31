@@ -115,6 +115,7 @@ from tennislive.video.explainer import (  # noqa: E402
     _ASS_MARGIN_V,
     _SUB_LONELY,
     _SUB_MAX,
+    _best_break,
     _sub_display,
     _sub_width,
     crosses_hard_break,
@@ -7884,20 +7885,35 @@ def main() -> int:
         # 只能靠 `_best_break` 从词语边界硬切——切得再好也比在标点处断开差一截，
         # 而「哪儿停、停多久」百分之百由标点决定（标点是配音的节拍谱）。
         # 不做硬闸：硬切是兜底不是错误，存量里合格的长句会被一条常年红挡住。
-        wide_report = [
-            f"  第 {i + 1} 段「{clause}」"
-            f"（{_sub_width(_sub_display(clause)):.0f} 格）"
-            for i, seg in enumerate(segments)
-            if seg.narration.strip() and not seg.quote
-            for clause in overwide_clauses(readable(seg.narration))
-        ]
+        # ⚠️ 报告要把**切出来长什么样**印出来，不能只说「宽 N 格」。
+        # 原来那句写的是「会从词语边界硬切」，而全库 135 处硬切里有 20 处
+        # **一个词边界都没找到**（`_SUB_AFTER` 那张字表里没有「赛」「于」
+        # 这类），真在词中间切开的样子是「温网1/4决赛负于德约 ｜ 科维奇之后」
+        # ——人名被劈了。报告说得比现实好，读的人就不会去加那个逗号。
+        #
+        # ⚠️ **印切出来的样子，别在旁边再判一句「切在词中间」**。用
+        # `_break_bonus` 当那个判词试过，全库 135 处硬切里它对 20 处喊「劈词」，
+        # 而**逐条读下来真劈的只有五处上下**——`_SUB_AFTER` 那张词尾表很粗，
+        # 「送出17个 ｜ 非受迫失误」这种断得挺好的也被它喊。一条四次里错三次的
+        # 提示，只会把人训练成不看这个报告（本文件「判据宁可窄，不可宽」）。
+        # 切出来的样子本身就是判据：读一眼就知道要不要加逗号。
+        wide_report = []
+        for i, seg in enumerate(segments):
+            if not seg.narration.strip() or seg.quote:
+                continue
+            for clause in overwide_clauses(readable(seg.narration)):
+                cut = _best_break(clause)
+                wide_report.append(
+                    f"  第 {i + 1} 段（{_sub_width(_sub_display(clause)):.0f} 格）"
+                    f"「{_sub_display(clause[:cut])} ｜ {_sub_display(clause[cut:])}」")
         if wide_report:
             print(f"\n[断句] {len(wide_report)} 个子句宽过一行字幕"
-                  f"（{_SUB_MAX} 格），会从词语边界硬切——最好加个逗号断开：")
+                  f"（{_SUB_MAX} 格），只能硬切——加个逗号断在该断的地方："
+                  f"\n  （下面印的是**它现在会被切成什么样**）")
             print("\n".join(wide_report))
         # ⭐ 2026-08-31：另外两条**机器改不掉、只能改文案**的，一起报出来。
-        # 分行本身已经换成整句挑最优（`subtitle_lines`），消掉了 49 处「贪心
-        # 把前一行塞满、尾巴剩三个字」；剩下的 65 处是**这一句的形状**决定的
+        # 分行本身已经换成整句挑最优（`subtitle_lines`），消掉了 54 处「贪心
+        # 把前一行塞满、尾巴剩三个字」（全库 123 → 69）；剩下的是**这一句的形状**决定的
         # ——子句序列就是「长 + 很短」，怎么分行都留一个半截话：
         #
         #     第四盘 纳沃内从1比2连赢5局 ｜ 6比2      13.7 + 2.4
