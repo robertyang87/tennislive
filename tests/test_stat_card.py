@@ -277,7 +277,10 @@ def test_真实spec渲染出的html比分顺序方向都对():
     assert '<span class="setlose">4</span>' in set_rows[0]
     assert '<span class="setlose">6</span>' in set_rows[1]
     assert '<span class="setwin">7</span>' in set_rows[1]
-    assert '<span class="tb">(5)</span>' in set_rows[1]
+    # 抢七上标是裸数字（账号所有者 2026-08-31「不要带()」，美网官方那个写法）。
+    # 括号只活在 cover.result 的数据格式里，显示层一律 `6⁵`。
+    assert '<span class="tb">5</span>' in set_rows[1]
+    assert '<span class="tb">(5)</span>' not in set_rows[1]
     assert '<span class="setlose">4</span>' in set_rows[2]
     assert '<span class="setwin">6</span>' in set_rows[2]
 

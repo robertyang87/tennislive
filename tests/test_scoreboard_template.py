@@ -661,6 +661,37 @@ def test_抢七小分右对齐之后也不许伸出板子(
         "`.scoreboard--tbwide` 那个小一号的上标。")
 
 
+def test_抢七上标是裸数字不带括号(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
+    """账号所有者 2026-08-31（指着美网官方比分图）：「可以不列抢七获胜的一方
+    的小分（可以算出来），**不要带()**」。
+
+    美网官方的写法是 `6⁵`——上标裸数字。括号只活在 `cover.result` 的**数据
+    格式**（`7-6(5)`，校验/拼串都认它）里，显示层一律裸数字：
+
+    - 封面比分板：`<sup>5</sup>` 挂在输掉那一盘的数字右肩上
+    - 数据统计图：`_sets_html` 的 `.tb` 本来就是裸数字，`render_stat_card`
+      原来有个 `_add_tb_parens` 专门包回括号——那一步删掉了，判据在
+      `test_stat_card.test_真实spec渲染出的html比分顺序方向都对`
+
+    这条钉封面那一半：sup 里出现括号当场红（反向验证过：把
+    `<sup>({tiebreak})</sup>` 那版写回去，红在下面第二条断言）。
+    只查 HTML 不渲染——上标的几何（绝对定位、不伸出板子）由上面几条管。
+    """
+    monkeypatch.setattr(versus_poster, "_fetch_match_duration",
+                        lambda source, where: "2:19")
+    white = tmp_path / "white.png"
+    Image.new("RGB", (1080, 1440), (255, 255, 255)).save(white)
+    body, _ = versus_poster._solo_body({
+        **_cover(), "eyebrow": "赛场之上", "layout": "solo", "hook": "赢了",
+        "portrait": {"image": str(white)}, "result": "7-6(5) 6-2",
+        "scoreboard": {"court": "Court 1",
+                       "duration_source": {"url": "x", "note": "t"}}})
+    assert "<sup>5</sup>" in body, "抢七小分没渲出来——上标整个丢了？"
+    assert "<sup>(5)</sup>" not in body and "<sup>(" not in body, (
+        "抢七上标带了括号——账号所有者 2026-08-31「不要带()」，"
+        "显示层一律裸数字（美网官方那个写法），括号只留在数据格式里。")
+
+
 def test_场地和用时前面各有一个白色小图标(
         tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
     """账号所有者 2026-08-29：「球场和比赛用时前面各加一个小 logo 表示下」
@@ -846,6 +877,8 @@ def test_封面版式定版冻结_钩子字号和比分板坐标是全局统一�
         "SCORE_CN_MAX_PX": 52,        # 中文名封顶（长名字往下缩是自适应，上限冻结）
         "SCORE_FILL_PAD_L": 24,       # 高亮条内边距
         "SCORE_FILL_PAD_R": 40,       # 右对齐后为抢七小分留的（08-29 第四轮 30→40）
+        "SCORE_COURT_ICON_EM": 1.0,   # 球场图标高度（08-31「太长了，高度再短一些」，
+                                      # 1.35→1.0，五档渲出来比过的；比例 36:78 不动）
     }
     drift = {k: (getattr(vp, k), want)
              for k, want in frozen.items() if getattr(vp, k) != want}

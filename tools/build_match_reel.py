@@ -7333,6 +7333,10 @@ def colorize_topbar_score(line: str) -> str:
             # 的附注（和连字符同一档），不是比分本身；标签粘连，不显式复位的话
             # 同一个括号会时粗时细——**同一个元素按谁赢了渲成两个样子**，
             # 比一直粗或一直细都糟。⚠️ 加了 Light 之后这一下也不能省。
+            # ⚠️ **这儿保留括号，和封面/数据图故意分叉**：那两处是 HTML，
+            # `<sup>` 把裸数字抬成上标（美网官方写法，2026-08-31「不要带()」）；
+            # ASS 没有行内上标，裸数字贴在基线上就是「7-65」——括号是纯文本里
+            # 唯一读得通的记法。
             piece += f"{TOPBAR_SCORE_PLAIN_ASS}({tb})"
         piece += TOPBAR_SCORE_FONT_RESET_ASS
         parts.append(piece)
