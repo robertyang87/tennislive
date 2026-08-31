@@ -344,7 +344,7 @@ _LEGACY_VS_COVERS = frozenset({
     "wang-pareja", "wang-samsonova", "wong-brooksby", "wong-gea",
     "wong-lehecka",
 })
-# ⭐ 钩子写得太长、渲出来字号低于 `MIN_HOOK_TITLE_PX` 的存量 solo 封面。
+# ⭐ 钩子写得太长、渲出来字号低于 `HOOK_TITLE_PX` 的存量 solo 封面。
 # 账号所有者 2026-08-14 定下限之前发的，**已发的片子不为版式重渲**——
 # 微信那条消息发出去收不回来。
 #
@@ -5370,7 +5370,7 @@ def hook_lines(spec: dict) -> list[str]:
 
 
 def _hook_lines_fit_the_title(spec: dict) -> None:
-    """钩子每行不许长到把标题字号压到 `MIN_HOOK_TITLE_PX` 以下。
+    """钩子每行不许长到把标题字号压到 `HOOK_TITLE_PX` 以下。
 
     账号所有者 2026-08-14（看了 `townsend-osorio` 那张海报）：「**以后封面
     下面标题的字号就保持这种，不要再小了，所以以后要控制每行文字的数量**」。
@@ -5388,7 +5388,7 @@ def _hook_lines_fit_the_title(spec: dict) -> None:
     if not lines or str(cover.get("layout", "")).strip() != "solo":
         return
     from versus_poster import (  # noqa: PLC0415
-        HOOK_MAX_CHARS, MIN_HOOK_TITLE_PX, SOLO_HOOK_MAX_LINES, hook_title_px)
+        HOOK_MAX_CHARS, HOOK_TITLE_PX, SOLO_HOOK_MAX_LINES, hook_title_px)
     # ⚠️ **行数这一条不吃 `_LEGACY_LONG_HOOKS` 的豁免**：那张表放行的是「行太长
     # 所以字号偏小」（已发的片子不重渲），而行数超了是**版式溢出**——`STORYCOPY_TOP`
     # 2026-08-31 从 750 挪到 790 之后，第三行会把比分板的输家那一行推出画布。
@@ -5403,11 +5403,11 @@ def _hook_lines_fit_the_title(spec: dict) -> None:
     if str(spec.get("slug", "")) in _LEGACY_LONG_HOOKS:
         return
     px = hook_title_px(lines)
-    if px >= MIN_HOOK_TITLE_PX:
+    if px >= HOOK_TITLE_PX:
         return
     over = [ln for ln in lines if len(ln) > HOOK_MAX_CHARS]
     raise ReelError(
-        f"封面钩子渲出来只有 {px}px，低于下限 {MIN_HOOK_TITLE_PX}px。\n"
+        f"封面钩子渲出来只有 {px}px，低于 {HOOK_TITLE_PX}px。\n"
         f"标题字号是按**最长那一行**算的（{versus_width()} ÷ 字数），"
         f"所以每行最多 {HOOK_MAX_CHARS} 个字符：\n"
         + "".join(f"  · {len(ln):2d} 字 「{ln}」\n" for ln in over)

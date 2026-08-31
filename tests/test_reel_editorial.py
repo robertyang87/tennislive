@@ -266,13 +266,17 @@ def test_钩子字号那个公式没变过():
     第一版正是拿源码字符串钉的，重构一次就当场变成一条常年红。
     """
     versus_poster = _versus_poster()
-    assert versus_poster.SHORT_HOOK_TITLE_PX == 124, \
-        "短钩子的字号上限变了，重算钩子长度那一节的账"
+    # ⭐ 2026-08-31 起钩子只有**一个**字号（`HOOK_TITLE_PX`），行越短字越大
+    # 那一档（124/96 两级上限）撤了——账号所有者「〔封面钩子〕高度再小 20%」，
+    # 而 8 字那行 117×0.8 正好落回 94，也就是他 08-14 点头的那个大小。
+    assert versus_poster.hook_title_px(["赢了"]) == \
+        versus_poster.hook_title_px(["八个字的一行钩子", "另一行"]) == 94, \
+        "钩子的字号又变成「行越短字越大」了，重算这一节的账"
     # 25 字 → 37px（棘轮那个当前最坏值）、10 字 → 94px（硬闸那条下限），
     # 两个端点都是上面那两段话直接引用的数。
     assert versus_poster.hook_title_px(["一" * 25, "短"]) == 37
     assert versus_poster.hook_title_px(["一" * 10, "短"]) == \
-        versus_poster.MIN_HOOK_TITLE_PX == 94
+        versus_poster.HOOK_TITLE_PX == 94
     assert versus_poster.hook_title_px(["一" * 11, "短"]) < 94, \
         "11 个字要掉到下限以下，不然 HOOK_MAX_CHARS 就不该是 10"
     assert versus_poster.HOOK_MAX_CHARS == 10
@@ -321,9 +325,9 @@ def test_solo封面的钩子每行不许超过十个字():
     versus_poster = _versus_poster()
     fresh = {s: v for s, v in _solo_hook_px().items()
              if s not in reel._LEGACY_LONG_HOOKS
-             and v[1] < versus_poster.MIN_HOOK_TITLE_PX}
+             and v[1] < versus_poster.HOOK_TITLE_PX}
     assert not fresh, (
-        f"这几条 solo 封面的钩子渲出来低于 {versus_poster.MIN_HOOK_TITLE_PX}px："
+        f"这几条 solo 封面的钩子渲出来低于 {versus_poster.HOOK_TITLE_PX}px："
         f"{fresh}（值是「最长行字数, 字号」）。每行最多 "
         f"{versus_poster.HOOK_MAX_CHARS} 个字符——**改文案，不要去调字号**。"
     )
@@ -377,7 +381,7 @@ def test_钩子豁免表里的每一条都还真的超着():
         f"豁免表里这几个 slug 不存在、或者已经不是 solo 封面了：{ghosts}。"
         f"名字写错的话这一条就永远豁免不到任何东西。")
     healed = sorted(s for s in reel._LEGACY_LONG_HOOKS
-                    if measured[s][1] >= versus_poster.MIN_HOOK_TITLE_PX)
+                    if measured[s][1] >= versus_poster.HOOK_TITLE_PX)
     assert not healed, (
         f"这几条已经不超了，把它们从 `_LEGACY_LONG_HOOKS` 里删掉：{healed}。"
         f"豁免表只许减不许加。")
