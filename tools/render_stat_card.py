@@ -219,6 +219,30 @@ from tennislive.video.explainer import _data_uri  # noqa: E402
 
 W, H = 1080, 1920
 
+# 每盘一行那一摞的高度预算：三盘按现状（3 × 56px × 1.42 ≈ 239）占多高，
+# 盘数再多也钉在这附近。⚠️ 画布是定死的 1080×1920 且 `overflow:hidden`——
+# 五盘照 56px 摞是 398px，比三盘多出 160px，把底下九行技术统计整体往下推，
+# 推过画布就是**静默裁掉**（账号所有者 2026-08-31：「每盘的比分更紧凑一下，
+# 不然如果五盘的比赛，放不下所有内容」）。
+H2H_SETS_BUDGET_PX = 260
+
+
+def h2h_set_row_style(sets: int) -> tuple[int, float]:
+    """每盘一行的 (字号px, 行高)。≤3 盘保持现状；4/5 盘把字号和行距一起收，
+    让整摞的高度贴着 `H2H_SETS_BUDGET_PX` 走——和封面比分板同一个思路：
+    外框（预算）冻结，内容在里面自适应。
+
+    档位是渲出来并排比过挑的，别按比例推：40px 配 5 盘时数字仍略小于中文名
+    （41px），但赢盘的绿＋加粗把主次撑住了；再小一档（36）抢七上标就只剩
+    15px，缩到信息流里读不出。
+    """
+    if sets <= 3:
+        return 56, 1.42
+    if sets == 4:
+        return 46, 1.32
+    return 40, 1.26
+
+
 # (标签, 类型, ...字段名)——固定模板，见模块 docstring「每一行谁占优」。
 ROW_SPECS = [
     # ⚠️ 英文写空串＝**这一行故意不要英文**（账号所有者 2026-08-15：「ACE 就
@@ -399,9 +423,11 @@ def build(spec: dict) -> str:
 
     left_meta, right_meta = matchup[0], matchup[1]
     swap = str(left_meta["name"]).strip() != winner
+    set_tokens = _reorder_result(result, swap).split()
+    set_px, set_lh = h2h_set_row_style(len(set_tokens))
     sets_rows = "".join(
         f'<div class="h2h-set-row">{_add_tb_parens(vp._sets_html(token))}</div>'  # noqa: SLF001
-        for token in _reorder_result(result, swap).split())
+        for token in set_tokens)
 
     icon = REPO_ROOT / "assets/logo/brand/icon.png"
     icon_html = f'<img class="brand-icon" src="{_data_uri(icon)}" alt="">'
@@ -519,9 +545,13 @@ body{{color:{vp.TEXT};font-family:'TL Sans SC','Noto Sans CJK SC',sans-serif;
    字重从 `versus_poster` 读，写两处必分叉。
    ⚠️ 这一条只管**比分**。底下 `.sval` 那些技术统计（Ace、双误）不是比分，
    没跟着改——账号所有者说的是比分。 */
-.h2h-set-row{{font-family:'TL Score','TL Sans SC',sans-serif;font-size:56px;
+/* ⚠️ 字号/行高不是常量，按盘数算（`h2h_set_row_style`）：≤3 盘 56px、
+   4 盘 46px、5 盘 40px——整摞的高度钉在 `H2H_SETS_BUDGET_PX` 附近，
+   五盘不再把底下的技术统计推出画布（画布定死且 overflow:hidden，
+   推出去是静默裁掉）。 */
+.h2h-set-row{{font-family:'TL Score','TL Sans SC',sans-serif;font-size:{set_px}px;
  font-weight:{vp.SCORE_LOSE_WEIGHT};white-space:nowrap;text-align:center;
- line-height:1.42}}
+ line-height:{set_lh}}}
 .set{{display:inline-block}}
 /* 赢下那一盘：上绿**＋加粗**；输掉那一盘 Light。 */
 .setwin{{color:#c6f65a;font-weight:{vp.SCORE_WIN_WEIGHT}}}

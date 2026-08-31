@@ -511,3 +511,69 @@ def test_有stat_card文件才带上这一屏(tmp_path):
     assert (outdir / push_reel.STAT_CARD_NAME).is_file()
     url = push_reel.stat_card_url(outdir)
     assert url.endswith(f"{outdir.as_posix()}/{push_reel.STAT_CARD_NAME}")
+
+
+def test_盘分那一摞按盘数收紧_五盘也装得下():
+    """账号所有者 2026-08-31：「数据统计里每盘的比分更紧凑一下，不然如果
+    五盘的比赛，放不下所有内容」。
+
+    画布定死 1080×1920 且 `overflow:hidden`——五盘照三盘那档（56px/1.42）
+    摞是 398px，比三盘多 160px，把底下九行技术统计整体往下推，推出画布是
+    **静默裁掉**：不报错，图上就是少几行，而缺行的图和完整的图在产物上
+    长得一模一样。所以外框（`H2H_SETS_BUDGET_PX`）冻结、盘分那一摞在
+    里面自适应——和封面比分板「坐标冻结、内容自适应」同一个思路。
+
+    三头，缺一头都是恒真：
+    ① **预算**：1~5 盘算出来的整摞高度（n × 字号 × 行高）都不许超预算，
+      且 ≤3 盘必须还是 56/1.42——收紧不许波及存量三盘的图；
+    ② **单调**：盘数多，字号不许反而变大；
+    ③ **算出来的要真的写进 CSS**（`_push` 键名写错、占位符没插值那两类坑
+      只查函数看不见）：拿仓库里两条真 spec 各渲一遍 HTML——五盘的
+      djokovic-navone（真实 7-6 5-7 4-6 6-2 6-1）`.h2h-set-row` 必须是
+      40px/1.26 且真有五行；三盘的 rybakina-osaka 必须还是 56px/1.42。
+
+    反向验证过三个方向：五盘档改回 (56,1.42) → 红在①；4 盘档改成 60 →
+    红在②；build 里不调 h2h_set_row_style、CSS 写死 56px → ①②绿、红在③。
+    """
+    budget = sc.H2H_SETS_BUDGET_PX
+    prev_px = 0
+    for n in range(1, 6):
+        px, lh = sc.h2h_set_row_style(n)
+        stack = n * px * lh
+        assert stack <= budget, (
+            f"① {n} 盘的整摞 {stack:.0f}px 超了预算 {budget}px——"
+            "底下的技术统计会被静默推出画布。")
+        if n <= 3:
+            assert (px, lh) == (56, 1.42), (
+                f"① {n} 盘变成 {px}px/{lh}——≤3 盘要保持现状，"
+                "收紧五盘不许波及存量三盘的图。")
+        assert px <= prev_px or prev_px == 0, (
+            f"② {n} 盘的字号 {px} 比 {n - 1} 盘的 {prev_px} 还大——"
+            "盘数多字号只许持平或更小。")
+        prev_px = px
+
+    import os
+
+    repo = Path(__file__).resolve().parent.parent
+    os.chdir(repo)
+
+    def rule_of(out: str) -> str:
+        m = re.search(r"\.h2h-set-row\{[^}]*\}", out)
+        assert m, "渲出来的 CSS 里没有 .h2h-set-row 这条规则"
+        return m.group(0)
+
+    five = json.loads((repo / "specs/reels/djokovic-navone-us-open-2026-r1.json")
+                      .read_text(encoding="utf-8"))
+    out5 = sc.build(five)
+    assert len(re.findall(r'<div class="h2h-set-row">', out5)) == 5
+    r5 = rule_of(out5)
+    assert "font-size:40px" in r5 and "line-height:1.26" in r5, (
+        f"③ 五盘的卡渲出来盘分规则是 {r5!r}——算出来的 40px/1.26 没有"
+        "真的写进 CSS（占位符没插值/没调 h2h_set_row_style 都长这样）。")
+
+    three = json.loads((repo / "specs/reels/rybakina-osaka.json")
+                       .read_text(encoding="utf-8"))
+    out3 = sc.build(three)
+    r3 = rule_of(out3)
+    assert "font-size:56px" in r3 and "line-height:1.42" in r3, (
+        f"③ 三盘的卡渲出来盘分规则是 {r3!r}——存量三盘必须还是 56px/1.42。")
