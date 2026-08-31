@@ -1038,6 +1038,14 @@ def board_right_edges(source: Path, box: tuple[int, int, int, int],
 
     ⚠️ 抓不到帧、或者那一帧里板不在（回放/切走/镜头拉近），都返回 None 而不是
     报错——**「板不在」是这条线上的常态**，回放段本来就不该开回贴。
+
+    ⚠️⚠️ **`format=rgb24` 必须排在 crop 前面**（2026-08-31 德约那条整趟量空
+    换来的）：yuv420p 上 crop 奇数高度会被 ffmpeg **静默舍成偶数**——
+    scorebox 写 y∈[887,980]（高 93）时每帧少一行、字节数差 5448，下面那道
+    「不足就当没抓到」的守卫把 60/60 帧全判成 None，十个段全部退回最宽兜底。
+    先转 rgb24 再 crop 就没有色度子采样的约束，奇数尺寸精确输出。
+    而「抓帧短了」和「板不在画面里」在返回值上是同一个 None，所以短读要
+    **单独出声**——那次它就是被读成了「板可能整段不在画面里」。
     """
     import numpy as np  # noqa: PLC0415
 
@@ -1045,20 +1053,27 @@ def board_right_edges(source: Path, box: tuple[int, int, int, int],
     w, h = probe_size(source)
     bw, bh = w - x0, y1 - y0
     out: list[tuple[float, int | None]] = []
+    short = 0
     for t in times:
         proc = runner(
             ["ffmpeg", "-v", "error", "-ss", f"{max(0.0, t):.3f}",
              "-i", str(source), "-frames:v", "1",
-             "-vf", f"crop={bw}:{bh}:{x0}:{y0}",
-             "-pix_fmt", "rgb24", "-f", "rawvideo", "-"],
+             "-vf", f"format=rgb24,crop={bw}:{bh}:{x0}:{y0}",
+             "-f", "rawvideo", "-"],
             capture_output=True, check=False)
         raw = proc.stdout or b""
         if len(raw) < bw * bh * 3:
+            short += 1
             out.append((t, None))
             continue
         band = np.frombuffer(raw[:bw * bh * 3], dtype=np.uint8).reshape(bh, bw, 3)
         edge = board_right_edge_in_band(band)
         out.append((t, None if edge is None else x0 + edge))
+    if short:
+        print(f"    [score] ⚠️ {short}/{len(times)} 帧抓取不完整"
+              f"（要 {bw}×{bh}×3={bw * bh * 3} 字节）——这不是「板不在画面里」，"
+              "是抓帧本身失败（源片损坏/时刻越界/滤镜被降尺寸），别照着"
+              "「回放/切走」去改 spec")
     return out
 
 

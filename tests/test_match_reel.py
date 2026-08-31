@@ -13339,11 +13339,20 @@ def test_板的右缘按每一段实际的宽度现量不是写死三档(tmp_pat
        「量不出来」和「量出来就是这么宽」在产物上分不出来
     ④ 留了余量往**宽**里去，永远不许裁窄：裁窄是**静默**的失败（最右那几列
        比分被贴片藏在自己底下，没有任何闸会响），裁宽只是多盖几像素球场
+    ⑤ ⭐⭐ **scorebox 的高度是奇数也要量得出来**（2026-08-31 德约那条整趟
+       量空换来的）：spec 写 y∈[887,980]（高 93），yuv420p 上 crop 奇数高度
+       被 ffmpeg 静默舍成偶数，每帧少一行、字节数不足，「不足就当没抓到」的
+       守卫把 60/60 帧全判成 None——十个段全部退回最宽兜底，成片里每一段的
+       贴片都是固定 528px，第一盘白盖一大截球场。修法是 `format=rgb24` 排在
+       crop 前面。**这条测试的合成几何因此故意用奇数**（y0=887、高 93），
+       偶数几何量不出这个坑（zheng-burel 的 [888,978] 高 90 就是这么全绿的）
 
-    反向验证过三个方向：**不现量**（一律退回顶层 scorebox）→ ① 红；
+    反向验证过四个方向：**不现量**（一律退回顶层 scorebox）→ ① 红；
     **只认暗块**（`hit` 上再加一条「亮度 < 120」，白格就被漏掉）→ 也红在 ①
     的区间断言上，报出来是「量到 552，该在 584~596」——那 40px 正是白格，
-    实测那个坑少 53px；**把量不出来那一支的 print 拆掉** → ③ 红。
+    实测那个坑少 53px；**把量不出来那一支的 print 拆掉** → ③ 红；
+    **把 `format=rgb24,` 从滤镜链里拿掉** → ⑤ 让 ① 当场红（三段全退回 660，
+    正是线上那次的样子）。
     """
     import shutil  # noqa: PLC0415
 
@@ -13352,20 +13361,22 @@ def test_板的右缘按每一段实际的宽度现量不是写死三档(tmp_pat
     src = tmp_path / "board.mp4"
     # 板：深蓝底 + 右端一格白色小分。三档右缘 584 / 619 / 657，
     # 而**深蓝底**分别只到 544 / 579 / 617——白格宽 40。
+    # ⚠️ y=887、高 93 是故意的奇数（见 docstring ⑤），别「顺手」改成偶数。
     plates = []
     for k, (dark_end, white_end, lo, hi) in enumerate(
             [(544, 584, 0, 2), (579, 619, 2, 4), (617, 657, 4, 6)]):
         on = f"between(t,{lo},{hi})"
-        plates.append(f"drawbox=x=104:y=888:w={dark_end - 104}:h=90:"
+        plates.append(f"drawbox=x=104:y=887:w={dark_end - 104}:h=93:"
                       f"color=0x1B2A5E:t=fill:enable='{on}'")
-        plates.append(f"drawbox=x={dark_end}:y=888:w={white_end - dark_end}:h=90:"
+        plates.append(f"drawbox=x={dark_end}:y=887:w={white_end - dark_end}:h=93:"
                       f"color=white:t=fill:enable='{on}'")
     subprocess.run(
         ["ffmpeg", "-y", "-v", "error", "-f", "lavfi", "-i",
          "color=c=0x6E8B6E:s=1920x1080:r=25," + ",".join(plates),
          "-t", "8", "-pix_fmt", "yuv420p", str(src)], check=True)
 
-    box = (104, 888, 660, 978)          # 顶层 scorebox：这场最宽那一档 + 兜底
+    box = (104, 887, 660, 980)          # 顶层 scorebox：这场最宽那一档 + 兜底
+                                        # ⚠️ 高 93（奇数）是判据 ⑤ 的主语
     segs = [reel.Segment(start=lo, end=hi, cx=0.5, narration="", track=False,
                          score_inset=box, score_inset_auto=True)
             for lo, hi in [(0.0, 2.0), (2.0, 4.0), (4.0, 6.0), (6.0, 8.0)]]
@@ -13392,6 +13403,36 @@ def test_板的右缘按每一段实际的宽度现量不是写死三档(tmp_pat
     assert segs[3].score_inset[2] == box[2] and "量不出板的右缘" in out, (
         "③ 板不在画面里的那一段要退回 spec 的兜底右缘**并出声**——"
         f"不吭声的话「量不出来」和「板就这么宽」分不出来。实际：{out}")
+
+
+def test_板右缘抓帧短读要单独出声不许装成板不在(monkeypatch, capsys):
+    """「抓帧短了」和「板不在画面里」在返回值上是同一个 None——而 2026-08-31
+    德约那条正是把前者读成了后者（奇数高度被 ffmpeg 舍行、60/60 帧短读，
+    日志却说「板可能整段不在画面里（回放/切走）」），十个段静默退回最宽兜底。
+
+    钉两头：短读的帧照样返回 None（下游按「量不出」处理，兜底不变），
+    **但必须单独出声**、点名是抓帧失败——不吭声的话下一个人会照着
+    「回放/切走」去把 score_inset 改成 false，把真板也一起关掉。
+
+    反向验证过：把 board_right_edges 里那句短读的 print 拆掉 → 红在「出声」
+    那一条断言上。
+    """
+    reel = _reel()
+    monkeypatch.setattr(reel, "probe_size", lambda _p: (1920, 1080))
+
+    class _Short:
+        stdout = b"\x00" * 100          # 远小于 bw*bh*3——短读
+
+    edges = reel.board_right_edges(
+        Path("no-such.mp4"), (104, 887, 736, 980), [1.0, 2.0],
+        runner=lambda *a, **k: _Short())
+    out = capsys.readouterr().out
+    assert edges == [(1.0, None), (2.0, None)], (
+        f"短读的帧要按「量不出」返回 None（下游退兜底），拿到 {edges}")
+    assert "抓取不完整" in out and "板不在画面里" not in out.replace(
+        "不是「板不在画面里」", ""), (
+        "短读必须单独出声、点名是抓帧失败——和「板不在（回放/切走）」混成"
+        f"一句话，下一个人就会去把真板的 score_inset 关掉。实际输出：{out!r}")
 
 
 def test_板右缘的取值规则两票起步且取最宽():
