@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import importlib.util
+import json
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -1031,3 +1032,90 @@ def test_render红了的回喂步先commit再dispatch_三步都tee了判据():
     # received_at 要跟着转发：SLO 的表从确认链接那一刻起算，修一轮重渲不是
     # 重新接单——丢了它，production_sla 会把返工那趟当成一条新且飞快的生产
     assert "-f received_at=" in step
+
+
+def test_大满贯男子的第三盘不是决胜盘():
+    """账号所有者 2026-08-31：「大满贯男子是五盘三胜，所以吴易昺第三盘不是
+    决胜盘，也不是输了就输了」。
+
+    来路：`wu-walton-us-open-2026-r1`（美网男单首轮，7-6(2) 6-2 7-5）的旁白
+    和小红书正文都把第三盘叫「决胜盘」，还跟了一句「输掉这一局比赛就结束了」
+    ——4-5 那一局输掉只是丢掉这一盘（2-1），比赛不会结束。
+
+    ⚠️ **它一路过了所有闸，因为这条线上 95% 的片子是三盘两胜**（WTA 全部 ＋
+    ATP 巡回赛）：「第三盘＝决胜盘」是一个默认成立到不会被怀疑的习惯，
+    而它恰恰在大满贯男子这一档是错的。
+
+    判据三头，缺哪一头它都会变成误报机器或者一盏绿灯：
+    ① 男子大满贯没打满五盘时提「决胜盘」要红；
+    ② 打满五盘的不许误伤（第五盘真是决胜盘）；
+    ③ 女子大满贯 / 巡回赛（三盘两胜）不归它管——存量扫过 4 条两盘却提
+       「决胜盘」的，**全是在讲别的比赛**（上一轮、交手史、一个没发生的
+       假设），机器分不出「这一场」和「另一场」，宽到那一档就是天天误报。
+    """
+    facts = load("reel_facts")
+
+    def spec(result, *, heads=("atp-A.png", "atp-B.png"), event="2026 美网 第一轮",
+             text="决胜盘 4-5 他一个盘点没给"):
+        return {
+            "slug": "闸自己的用例",
+            "topbar": {"line1": event, "line2": "甲 乙"},
+            "cover": {"result": result, "winner": "甲", "hook": text},
+            "stats": {"a": {"headshot": f"assets/players/headshots/{heads[0]}"},
+                      "b": {"headshot": f"assets/players/headshots/{heads[1]}"}},
+        }
+
+    # ① 男子大满贯 + 三盘 → 红
+    problem = facts.decider_set_problem(spec("7-6 6-2 7-5"))
+    assert problem and "五盘三胜" in problem, problem
+    assert "第三盘" in problem, "报错要给出路（写第三盘/第四盘），不能只说不行"
+    # 四盘也一样不是决胜盘
+    assert facts.decider_set_problem(spec("6-4 3-6 6-2 7-5"))
+
+    # ② 真打满五盘 → 第五盘就是决胜盘，不许误伤
+    assert facts.decider_set_problem(spec("6-4 3-6 6-2 4-6 7-5")) is None
+    # 退赛不判：领先方退赛时赢家可以一个完赛盘都没有
+    assert facts.decider_set_problem(spec("6-4 2-1 Ret.")) is None
+
+    # ③ 三盘两胜那一档不归它管（女子大满贯 / 巡回赛都不许红）
+    assert facts.decider_set_problem(
+        spec("6-2 7-5", heads=("wta-A.png", "wta-B.png"))) is None
+    assert facts.decider_set_problem(
+        spec("6-2 7-5", event="2026 辛辛那提 第二轮")) is None
+    # 没写「决胜盘」当然不红
+    assert facts.decider_set_problem(spec("7-6 6-2 7-5", text="三个盘点一个没给")) is None
+    # 认领了就放行（真要提别的比赛的决胜盘）
+    claimed = dict(spec("7-6 6-2 7-5"), _decider_why="讲的是上一轮那场")
+    assert facts.decider_set_problem(claimed) is None
+
+    # 小红书正文也要扫得到——正文是另一个出口，spec 干净不代表它干净
+    assert facts.decider_set_problem(
+        spec("7-6 6-2 7-5", text="三个盘点一个没给"),
+        ["真正的分水岭在决胜盘 4-5。"])
+
+
+def test_存量里没有一条踩到五盘三胜那个坑():
+    """上面那道闸装上当天扫全库的结果：**176 条 spec，命中 0**。
+
+    这条钉的是「零误伤」这件事本身——判据要是哪天被放宽（比如把三盘两胜
+    那一档也收进来），存量里那 4 条讲别的比赛的决胜盘会当场变成误报，
+    而误报比没有判据更糟：人会写豁免去压噪音，把它唯一想拦的那一类
+    一起关掉。
+    """
+    facts = load("reel_facts")
+    offenders, checked = [], 0
+    for path in sorted(Path("specs/reels").glob("*.json")):
+        try:
+            spec = json.loads(path.read_text(encoding="utf-8"))
+        except json.JSONDecodeError:
+            continue
+        if not isinstance(spec, dict) or "cover" not in spec:
+            continue
+        checked += 1
+        xhs = path.parent / f"{path.stem}.xhs.txt"
+        extra = [xhs.read_text(encoding="utf-8")] if xhs.is_file() else []
+        if facts.decider_set_problem(spec, extra):
+            offenders.append(path.stem)
+    # 判据自己的判据：主语没了要出声，而不是变成一条恒真的绿灯
+    assert checked >= 150, f"只扫到 {checked} 条 spec，扫描范围坏了"
+    assert not offenders, f"这几条把没打满五盘的大满贯男子比赛写成了决胜盘：{offenders}"

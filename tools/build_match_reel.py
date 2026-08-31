@@ -2755,14 +2755,20 @@ def enforce_spec_wording(spec: dict, spec_path: Path) -> None:
     而 validate_spec 的一批调用方（preview 工具、benchmark）只有裸 spec；
     改签名把它们全牵动。promote_reel_draft 那头自己调 check_spec_wording。
     """
+    from reel_facts import decider_set_problem  # noqa: PLC0415
     from spec_wording import check_spec_wording  # noqa: PLC0415
 
     xhs = spec_path.with_suffix(".xhs.txt")
-    problems = check_spec_wording(
-        spec, spec_path.stem,
-        xhs.read_text(encoding="utf-8") if xhs.is_file() else None)
+    xhs_text = xhs.read_text(encoding="utf-8") if xhs.is_file() else None
+    problems = check_spec_wording(spec, spec_path.stem, xhs_text)
     if problems:
         raise ReelError("会发出去的措辞不合规矩：\n  - " + "\n  - ".join(problems))
+    # ⚠️ 「决胜盘」这一条判据要**结构化的东西**（赛事、巡回赛、盘数），
+    # 不是一个正则，所以它没进 spec_wording 那张表；但它和上面那批同样是
+    # 「只读 spec 就能判 ＋ 要小红书正文」，所以坐同一个座位。
+    decider = decider_set_problem(spec, [xhs_text] if xhs_text else [])
+    if decider:
+        raise ReelError(decider)
 
 
 def load_spec(path: Path) -> dict:

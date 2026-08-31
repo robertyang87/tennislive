@@ -57,7 +57,6 @@ from tennislive.render.hashtags import (  # noqa: E402
 )
 from tennislive.render.pushmsg import (  # noqa: E402
     _PAGES,
-    push_button,
     to_copy_page,
     trigger_pages_build,
 )
@@ -681,6 +680,12 @@ def build_html(video_url: str, copy_url: str, lead: str, copy_text: str,
             f'<a href="{stat_card}" style="color:#087747;font-size:13px;'
             f'text-decoration:none">数据图没显示？点此打开原图</a></div>')
 
+    def btn(url: str, text: str, bg: str, fg: str = "#ffffff") -> str:
+        return (f'<a href="{url}" style="display:block;background-color:{bg};'
+                f'color:{fg};text-align:center;text-decoration:none;'
+                f'font-weight:bold;padding:13px 16px;border-radius:6px;'
+                f'margin:0 0 7px">{text}</a>')
+
     return f"""<div style="background-color:#f6f7f4;color:#17251f;padding:12px 10px;\
 font-family:-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif">
 <div style="max-width:680px;margin:0 auto;background-color:#ffffff;\
@@ -703,8 +708,8 @@ word-break:break-word;margin:0 0 4px">{html.escape(body)}</div>
 {stat_card_el}
 <div style="{pad}">
 <div style="border-top:1px solid #e6ebe8;margin:18px 0 12px"></div>
-{push_button(video_url, "▶ 打开竖版成片", primary=True)}
-{push_button(copy_url, "分别复制标题 / 正文", primary=False)}
+{btn(video_url, "▶ 打开竖版成片", "#102d23")}
+{btn(copy_url, "分别复制标题 / 正文", "#ff2442")}
 <div style="text-align:center;color:#7a8580;font-size:12px">图片长按保存</div>
 </div></div></div>"""
 
