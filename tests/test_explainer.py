@@ -1587,21 +1587,19 @@ def test_分行整句一起挑最优不许贪心把尾巴挤成孤屏():
     """账号所有者 2026-08-31：「再去帮我看看配音文案断句和字幕换行断句问题」。
 
     量出来 123 处「前一行贴满（≥13.5 格）＋ 同句尾巴只剩两三个字」，根子是
-    两处**从左往右的贪心**：
-
-    - `_best_break` 的 `score = bonus*100 + i`——`+ i` 就是越靠后越好，同一个
-      边界档里永远挑最右的断点，把前一行顶到上限
-    - `subtitle_lines` 步骤 3b 先到先得，把短片段用在前面，后面的尾巴没了伴
-
-    两处都换成「整句一起挑最优」之后 123 → 65（剩下的是文案形状决定的，
-    子句序列就是「长 + 很短」，怎么分都留半截话——那一档归 dry-run 报）。
+    `subtitle_lines` 步骤 3b **从左往右的贪心**：它把短片段用在前面，后面的
+    尾巴就没了伴。换成「整句一起挑最优」之后 **123 → 69**。
 
     ⚠️ **搜索空间没变，合并规矩一条没松**：一组里要么只有一个子句，要么
     组里有个短到该被并走的（同句 ≤6 / 跨句 ≤2）。所以上面那条
     `test_顿号连的并列项和半截短句都并进一行` 的每一条断言原样成立。
 
-    四个方向分别反向验证过，各红在自己的断言行：`_best_break` 退回 `+ i` → ①；
-    3b 退回从左往右的贪心 → ②；代价里的空余退回线性 → ③；孤屏代价调成 0 → ④。
+    ⚠️⚠️ **`_best_break` 也试过同一个改法，撤了**——它会把词劈开，账记在那个
+    函数的 docstring 和 `test_断点不许让非词边界赢过词边界` 里。这条判据只管
+    3b 这一半。
+
+    三个方向分别反向验证过，各红在自己的断言行：3b 退回从左往右的贪心 → ①；
+    代价里的空余退回线性 → ②；孤屏代价调成 0 → ③。
 
     ⚠️ 代价函数里「**末行不算孤屏**」那一条**没有断言**，因为它验不出来：
     构造和真实例子都试过，DP 总是先把短片段并掉、并完末行就不短了，所以
@@ -1614,27 +1612,19 @@ def test_分行整句一起挑最优不许贪心把尾巴挤成孤屏():
     def shown(text):
         return [s for _, _, s in E.subtitle_lines(E.readable(text))]
 
-    # ① _best_break：没有标点可断的长句，断点要落在均分点附近而不是贴着上限
-    #    贪心切出「本西奇熬了3小时24分钟才拿下｜汤森德」——宾语孤成一行
-    lines = shown("本西奇熬了三小时二十四分钟才拿下汤森德")
-    assert len(lines) == 2, lines
-    assert not lines[-1].startswith("汤森德"), (
-        f"宾语被挤成孤屏了：{lines}——`_best_break` 又在贪心塞满")
-    assert E._sub_width(lines[-1]) >= 5.0, lines
-
-    # ② 3b：同一句里的短片段要并给「并完不留孤屏」的那一边，不是先到先得
+    # ① 3b：同一句里的短片段要并给「并完不留孤屏」的那一边，不是先到先得
     #    贪心把「捷克人」花在前面 → 「对面的巴尔通科娃20岁 捷克人｜世界第39」
     assert shown("对面的巴尔通科娃二十岁，捷克人，世界第三十九。") == [
         "对面的巴尔通科娃20岁", "捷克人 世界第39"]
 
-    # ③ 空出来的那截要**平方**：线性的话「把一个片段从这行挪到那行」两边
+    # ② 空出来的那截要**平方**：线性的话「把一个片段从这行挪到那行」两边
     #    一增一减正好抵消，任何分法总和都一样，选中谁全看遍历顺序先撞上谁。
     #    这一条线性下切成「掀翻世界第1之后 这一次｜她能走多远？」——把「这一次」
-    #    拽到上一屏的尾巴，末屏那一问断了头。全库 75 段在两种代价下不同。
+    #    拽到上一屏的尾巴，末屏那一问断了头。
     assert shown("掀翻世界第一之后，这一次，她能走多远？") == [
         "掀翻世界第1之后", "这一次 她能走多远？"]
 
-    # ④ 短片段要并给**前面**（留在前面就成了孤屏，留到末尾是落点）。
+    # ③ 短片段要并给**前面**（留在前面就成了孤屏，留到末尾是落点）。
     #    片段宽 5.0 / 8.7 / 4.4，两种分法完全对称、均衡项一模一样，
     #    **只有孤屏那一项在区分**——这条是专门为它写的：孤屏代价一旦归零
     #    或压到均衡之下，DP 就会翻过去选「5.0 ｜ 8.7+4.4」，把 5 格那行
@@ -1642,13 +1632,154 @@ def test_分行整句一起挑最优不许贪心把尾巴挤成孤屏():
     assert shown("第二盘开局，他一口气连丢了三局，二比五落后。") == [
         "第二盘开局 他一口气连丢了3局", "2比5落后"]
 
-    # ⑤ 换成 DP 之后**跨句仍然不许合并**——这是新写的 `_group_ok` 最容易
+    # ④ 换成 DP 之后**跨句仍然不许合并**——这是新写的 `_group_ok` 最容易
     #    破坏的一条（「字幕也要保持断句的完整性，不要多也不要少」）
     assert shown("先看一眼签表。这是澳网女单签表的一角。") == [
         "先看一眼签表", "这是澳网女单签表的一角"]
     # 而句内的短片段照旧并得动（同一条规矩的另一头，别一起收紧）
     assert shown("对手排在115位到455位之间，正赛，她一场没赢过。") == [
         "对手排在115位到455位之间", "正赛 她一场没赢过"]
+
+
+def test_断点不许让非词边界赢过词边界():
+    """`_best_break` 里那几个分数是一个**调好的平衡**，动它之前先读这条。
+
+    2026-08-31 我把同档内的取舍从 `+ i` 换成一个 [0,90] 的「越均分越好」，
+    全库孤屏从 69 再降到 59（多消掉 10 处）——代价是**四条把词劈开**，而 `_best_break` docstring
+    开头那条「哪怕上一行短一点」正是反过来做过一版才定下来的：
+
+        贝莱克一路稳扎稳打建 ｜ 立起5比1的领先    「建立」
+        本西奇熬了3小时20 ｜ 四分钟才拿下汤森德   「二十四分钟」劈成 20 和四
+        首盘她一度让汤森德打 ｜ 出5比2的领先      「打出」
+        一记救球让整个蒙特利 ｜ 尔一起站了起来    「蒙特利尔」
+
+    根子是量级：孤行罚分 −95 把 `bonus=1` 的候选从 100 拉到 5，此时它和
+    `bonus=0` 只差 5 分——`+ i` 最多 20 但**跨不过一个边界档**（100），
+    90 分的均分项跨得过去。
+
+    所以这条判据钉的是**不变量**，不是某个具体的分数：**只要还有 bonus>0 的
+    合法候选，就不许选 bonus==0 的**。谁再想动那几个数，先让这条绿。
+
+    ⚠️ **它只钉四个手挑的句子，覆盖不了全库**——上面那四条劈词里只有两条在
+    这四个里。全库那一半归 `test_断行的硬切不许悄悄挪位置`，两条一起看才够。
+
+    两个方向反向验证过：把 `+ i` 换成 `90*(1-|w-target|/16)` 的均分项 → 红在
+    ①（「本西奇」那句切在非边界）；把孤行罚分从 95 提到 200 → 红在同一头
+    （罚分大到把边界档整个吃掉，也会让非边界赢）。
+    """
+    from tennislive.video import explainer as E
+
+    def first_cut(text: str) -> int:
+        return E._best_break(E.readable(text))
+
+    # 逐个候选算一遍：有 bonus>0 的合法位置时，选中的那个必须也 bonus>0
+    for text in ("本西奇熬了三小时二十四分钟才拿下汤森德",
+                 "正赛首轮两盘击败当届温网冠军莱巴金娜",
+                 "代表亚洲国家的男子球员唯一一次打进大满贯单打决赛",
+                 "首盘她一度让汤森德打出五比二的领先"):
+        t = E.readable(text)
+        cut = first_cut(text)
+        legal = [i for i in range(1, len(t))
+                 if E._sub_width(t[:i]) <= E._SUB_MAX
+                 and E._sub_width(t[:i]) >= E._SUB_MIN_AT_BOUNDARY
+                 and not (E._break_bonus(t, i) <= 0
+                          and E._sub_width(t[:i]) < E._SUB_SOFT)]
+        if not any(E._break_bonus(t, i) > 0 for i in legal):
+            continue                      # 这一句真的没有词边界可用，跳过
+        assert E._break_bonus(t, cut) > 0, (
+            f"① 切在了非词边界：{t[:cut]!r}｜{t[cut:]!r}——"
+            f"有 bonus>0 的候选却没选（分数的量级被谁改动了？"
+            "孤行罚分 −95 之后一个边界档只剩 5 分，别让别的项跨过去）")
+
+    # ② 而「宁可孤行也不劈词」那一头照旧：这一句唯一的边界必然留下 3 字的尾巴
+    assert [s for _, _, s in E.subtitle_lines(
+        E.readable("本西奇熬了三小时二十四分钟才拿下汤森德"))] == [
+        "本西奇熬了三小时24分钟才拿下", "汤森德"]
+
+
+def test_断行的硬切不许悄悄挪位置():
+    """全库每一条超宽子句今天断在哪儿，冻结在
+    `tests/fixtures/subtitle_hard_cuts.json` 里——**动了断行算法，这条会逐条
+    告诉你哪些句子的断点挪了**。
+
+    来路（2026-08-31）：我改了 `_best_break` 的分数，**只拿四个例子对比过就
+    合并了**。事后手工跑一遍全库 before/after 才看见，那次改动把三条**词劈开**
+    了（「本西奇熬了3小时20 ｜ 四分钟」「首盘她一度让汤森德打 ｜ 出5比2的领先」）。
+    上一条判据（`test_断点不许让非词边界赢过词边界`）是那次的产物，可它只钉四个
+    手挑的句子——**而我改坏的那三条，两条不在那四个里**。这一条是把那次手工
+    diff 变成机器做的。
+
+    ⚠️ **它不是一条内容闸，是一条算法闸**：表按**子句原文**认领，所以
+
+        新写一条 spec              → 新子句不在表里，跳过，**不红**
+        改一句旁白                 → 老子句消失、新子句未知，**不红**
+        动 `_best_break` 的分数    → 表里的句子断点挪位置，**当场红**
+
+    这一点是故意的：CLAUDE.md 早定过「超宽子句只报不拦」（做成硬闸会把一批
+    已发的好 spec 挡住），所以这条判据一个字都不许去管新内容。
+
+    改对了要重新冻结（**先 `--diff` 逐条看过**，尤其「从词边界挪到了非词边界」
+    那几条）：
+
+        python3 tools/freeze_subtitle_cuts.py --diff
+        python3 tools/freeze_subtitle_cuts.py
+
+    ⚠️ 报告里那个 `❌` **只是提示不是判决**：`_SUB_AFTER` 那张词尾表很粗，
+    bonus==0 不等于真把词劈开（那次 7 条挂 ❌，真劈词的只有 4 条）。逐条读，
+    别照着标记数数。
+
+    ⚠️ 末尾那句 `assert checked >= 100` 是**判据自己的判据**：spec 目录挪走、
+    `_clause_spans` 改了口径、`readable()` 换了写法——这些都会让这条测试
+    校到 0 条然后安安静静地绿，而那和「全都没挪」长得一模一样。
+    """
+    import json as _json
+    from tennislive.video import explainer as E
+
+    frozen = _json.loads(
+        (E._REPO / "tests" / "fixtures" / "subtitle_hard_cuts.json").read_text(
+            encoding="utf-8"))
+    assert frozen, "冻结表是空的——判据没有主语了"
+
+    checked = 0
+    moved: list[str] = []
+    for spec_path in sorted((E._REPO / "specs" / "reels").glob("*.json")):
+        spec = _json.loads(spec_path.read_text(encoding="utf-8"))
+        for seg in spec.get("segments", []):
+            text = seg.get("narration") or ""
+            if not text.strip():
+                continue
+            shown = E.readable(text)
+            for lo, hi in E._clause_spans(shown):
+                clause = shown[lo:hi]
+                if E._sub_width(E._sub_display(clause)) <= E._SUB_MAX:
+                    continue
+                if clause not in frozen:
+                    continue          # 新写的子句没有冻结值，不管
+                checked += 1
+                cut = E._best_break(clause)
+                if cut == frozen[clause]:
+                    continue
+                was, now = frozen[clause], cut
+
+                def _show(k: int) -> str:
+                    edge = "" if E._break_bonus(clause, k) > 0 else "  ⚠️ 非词边界"
+                    return (f"{E._sub_display(clause[:k])} ｜ "
+                            f"{E._sub_display(clause[k:])}{edge}")
+
+                worse = (E._break_bonus(clause, was) > 0
+                         and E._break_bonus(clause, now) <= 0)
+                moved.append(
+                    f"\n  {spec_path.stem}"
+                    f"{'  ❌ 从词边界挪到了非词边界' if worse else ''}"
+                    f"\n    旧：{_show(was)}\n    新：{_show(now)}")
+
+    assert not moved, (
+        f"断行算法改了，{len(moved)} 条子句的断点挪了位置："
+        + "".join(moved)
+        + "\n\n看过并且确实改好了，就重新冻结："
+          "\n  python3 tools/freeze_subtitle_cuts.py --diff"
+          "\n  python3 tools/freeze_subtitle_cuts.py")
+    assert checked >= 100, f"只校到 {checked} 条超宽子句，判据失效了"
 
 
 def test_断句的两条软报告接在dry_run上():
