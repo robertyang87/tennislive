@@ -53,6 +53,64 @@ BUILDS = [
 #: vs Bold 只有 1.5；换成 Light vs Bold 之后 libass 实测 1506/700 = **2.15**。
 SCORE_FAMILY = "TL Score"
 SCORE_CHARSET = "".join(chr(c) for c in range(0x20, 0x7F)) + "（）"
+
+#: ⭐ 上标数字（U+2070/00B9/00B2/00B3/2074–2079）**是自己合成的**，源字体里
+#: 没有（NotoSansSC / 系统的 Noto Sans CJK 都查过：`0x2075 in cmap` 是 False）。
+#: 为什么要它们：抢七小分要印在大分的**右上角**（账号所有者 2026-08-31
+#: 「小分在大分的右上角」），而 ASS 没有行内上标标签——裸的 `\fs` 小字坐在
+#: 基线上是右**下**角。把「小而高」做进字形本身，libass 和 PIL 量宽就都
+#: 不用任何定位技巧，采访线和 match-reel 顶栏写同一个字符就行。
+#: ⚠️ 别写没合成的码位：libass 碰到缺字会走 fontconfig 回退到随便哪支有这个
+#: 码位的字体（DejaVu 就有 ⁵），**不报错、只是样子悄悄换了**——判据
+#: `test_TLScore的上标数字真的又小又高` 直接读 TTF 的 cmap ＋ 量墨迹几何。
+#: 比例 0.65 是跟着「顶栏小分 26px vs 比分 40px」那一档定的（24px 起 H.264
+#: 压完发虚）；抬升让上标的顶和数字的顶对齐（746×(1−0.65)），和封面比分板
+#: `<sup>` 的 `top:.02em` 同一个取景。
+SUP_SCALE = 0.65
+SUP_RAISE = 261          # = round(746 × (1 − SUP_SCALE))，746 是数字的墨顶
+SUP_DX = 25              # 离前一个数字留一口气（≈ .045em）
+SUP_CMAP = {0x2070: "0", 0x00B9: "1", 0x00B2: "2", 0x00B3: "3",
+            0x2074: "4", 0x2075: "5", 0x2076: "6", 0x2077: "7",
+            0x2078: "8", 0x2079: "9"}
+
+
+def add_superscript_digits(font: TTFont) -> None:
+    """把 0-9 的字形缩小抬高、落成真正的上标码位。
+
+    **落成独立轮廓，不用复合字形**：TrueType 复合字形带缩放时「偏移要不要
+    跟着缩放」在不同光栅器之间有历史分歧（Apple vs MS 约定），直接把变换
+    烘进坐标就没有这层歧义。`vmtx` 在这批字体里存在，所以新字形的纵向
+    度量也要补上，少了 save 会炸。
+    """
+    from fontTools.pens.transformPen import TransformPen
+    from fontTools.pens.ttGlyphPen import TTGlyphPen
+
+    glyf = font["glyf"]
+    hmtx = font["hmtx"]
+    base_cmap = font.getBestCmap()
+    glyph_set = font.getGlyphSet()
+    for cp, digit in sorted(SUP_CMAP.items()):
+        base_name = base_cmap[ord(digit)]
+        new_name = f"uni{cp:04X}"
+        pen = TTGlyphPen(glyph_set)
+        glyph_set[base_name].draw(
+            TransformPen(pen, (SUP_SCALE, 0, 0, SUP_SCALE, SUP_DX, SUP_RAISE)))
+        # ⚠️ `glyf[name] = glyph` 自己会把名字补进 glyf.glyphOrder——**别再手动
+        # append**（第一版就是两头都加，glyphOrder 比 glyphs 多出十条，save 在
+        # maxp.recalc 的断言上炸）。font 级的 glyphOrder 和 glyf 的常常是同一个
+        # list 对象，谁多碰一下都算两遍。
+        glyf[new_name] = pen.glyph()
+        adv, lsb = hmtx[base_name]
+        hmtx[new_name] = (round(adv * SUP_SCALE) + SUP_DX,
+                          round(lsb * SUP_SCALE) + SUP_DX)
+        if "vmtx" in font:
+            font["vmtx"][new_name] = font["vmtx"][base_name]
+    order = glyf.glyphOrder
+    font.setGlyphOrder(list(order))
+    for table in font["cmap"].tables:
+        if table.isUnicode():
+            for cp in SUP_CMAP:
+                table.cmap[cp] = f"uni{cp:04X}"
 # (字重, 子族名, 输出名)
 SCORE_BUILDS = [
     (300, "Light", "TLScore-Light.ttf"),
@@ -134,6 +192,7 @@ def build(workdir: Path) -> None:
         subsetter = subset.Subsetter(opts)
         subsetter.populate(text=SCORE_CHARSET)
         subsetter.subset(font)
+        add_superscript_digits(font)
         _rename(font, SCORE_FAMILY, subfamily, weight)
         # ⚠️ **不许每次重建都换一个内嵌时间戳。** `subset.Options` 那个
         # `recalc_timestamp=False` 只管子集化那一步，`TTFont.save()` 另有一个

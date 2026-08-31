@@ -1161,16 +1161,22 @@ def test_顶栏比分一盘里只有赢的那个数字绿():
     # 场景二：三盘赛丢了中间那盘（真实案例：亚历山德罗娃 7-6(3) 4-6 6-4 胜
     # 萨巴伦卡）——中间 "4-6" 是「甲」自己输掉的那一盘，**这一盘的赢家是
     # 对手**，所以绿的应该是后面那个数字「6」，不是前面「甲」自己的「4」。
-    # 抢七带的 "(3)" 跟着它后面那个数字（这一盘的输家分数）一起走，不单独
-    # 染色，也不该干扰谁大谁小的判断。
+    # 抢七的 "3" **剥掉括号、渲成字体里合成的上标码位、单独一个 run**
+    # （账号所有者 2026-08-31「小分不带括号」「小分在大分的右上角」）：
+    # 不染色，也不干扰谁大谁小的判断。
     dropped = header_runs({"slug": "t", "event": "某站 1/4 决赛", "winner": "甲",
                            "interview_kind": "赛后场上采访",
                            "push": {"matchup": "甲 vs 乙", "score": "7-6(3) 4-6 6-4"}})[1]
-    score_runs2 = [(text, tags) for text, kind, tags, _ in dropped if kind == "num"]
-    assert [t for t, _ in score_runs2] == ["7-", "6(3) ", "4-", "6 ", "6-", "4"]
-    s1a, s1b, s2a, s2b, s3a, s3b = score_runs2
+    score_runs2 = [(text, tags, size) for text, kind, tags, size in dropped
+                   if kind == "num"]
+    assert [t for t, _, _ in score_runs2] == ["7-", "6", "³ ", "4-", "6 ", "6-", "4"]
+    s1a, s1b, s1tb, s2a, s2b, s3a, s3b = score_runs2
     assert _MARK_COLOUR in s1a[1] and _MARK_COLOUR not in s1b[1], (
-        f"第一盘「7-6(3)」甲自己赢的，绿的该是「7」不是「6(3)」：{s1a} {s1b}")
+        f"第一盘「7-6(3)」甲自己赢的，绿的该是「7」不是「6」：{s1a} {s1b}")
+    assert "(" not in s1tb[0] and "3" not in s1tb[0] and _MARK_COLOUR not in s1tb[1], (
+        f"抢七小分要上标码位（³）、不带括号、不染色：{s1tb}\n"
+        "裸的 3 坐在基线上是右下角——账号所有者要的是右上角，"
+        "小和高在 TL Score 的字形里（build_fonts.add_superscript_digits）。")
     assert _MARK_COLOUR not in s2a[1] and _MARK_COLOUR in s2b[1], (
         f"第二盘「4-6」甲输掉的，绿的该是对手的「6」不是甲的「4」：{s2a} {s2b}")
     assert _MARK_COLOUR in s3a[1] and _MARK_COLOUR not in s3b[1], (

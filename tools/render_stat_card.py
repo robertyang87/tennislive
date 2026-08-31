@@ -368,10 +368,11 @@ def _reorder_result(result: str, swap: bool) -> str:
     return " ".join(out)
 
 
-def _add_tb_parens(sets_html: str) -> str:
-    """`_sets_html()` 的 `.tb` 只放裸数字（那是给小字用的），这版比分是
-    画面正中的焦点，裸数字紧跟在盘分后面容易看成指数——加回括号。"""
-    return re.sub(r'(<span class="tb">)(\d+)(</span>)', r"\1(\2)\3", sets_html)
+# ⚠️ 这儿原来有个 `_add_tb_parens`（给 `.tb` 的裸数字包回括号，理由是「画面
+# 正中的焦点，裸数字容易看成指数」）——2026-08-31 账号所有者指着美网官方图
+# 把它推翻了：「可以不列抢七获胜的一方的小分（可以算出来），不要带()」。
+# `.tb` 的裸数字上标（`vertical-align:super` 小一档）就是美网官方那个写法，
+# `_sets_html` 原样透传即可。括号只留在 `cover.result` 的数据格式里。
 
 
 def _headshot_style(raw: dict, where: str) -> str:
@@ -426,7 +427,7 @@ def build(spec: dict) -> str:
     set_tokens = _reorder_result(result, swap).split()
     set_px, set_lh = h2h_set_row_style(len(set_tokens))
     sets_rows = "".join(
-        f'<div class="h2h-set-row">{_add_tb_parens(vp._sets_html(token))}</div>'  # noqa: SLF001
+        f'<div class="h2h-set-row">{vp._sets_html(token)}</div>'  # noqa: SLF001
         for token in set_tokens)
 
     icon = REPO_ROOT / "assets/logo/brand/icon.png"

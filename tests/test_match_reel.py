@@ -11229,32 +11229,36 @@ def test_顶栏比分逐盘上色赢盘绿输盘灰():
 
 
 def test_顶栏上色带抢七小分():
-    """⚠️ 抢七小分**两个方向都走常规档**（2026-08-29 加「赢盘加粗」时补的）。
+    """⚠️ 抢七小分：**裸数字、印在大分的右上角**（账号所有者 2026-08-31 连着
+    三句：「不要带()」→「小分不带括号」→「小分在大分的右上角」）。
 
-    它是这一盘的附注，和连字符同一档，不是比分本身。而 ASS 的标签是粘连的：
-    不显式复位的话，`7-6(5)` 里的 `(5)` 会跟着前一个数字走细、`6-7(5)` 里的
-    跟着走粗——**同一个括号按「这一盘谁赢的」渲成两个样子**，比一直粗或一直细
-    都糟。
-    ⚠️ 同一天下午加了 Light(300) 之后，**两个方向都要显式复位**：在那之前
-    「没加粗」就是常规档，左边赢的那一支可以省掉一次；现在「没加粗」是 Light，
-    省掉就跟着变细。连字符同理（见上一条判据）。
+    ASS 没有行内上标标签——`\\fs` 小字坐在基线上是右**下**角——所以「小而高」
+    做进了 `TL Score` 的字形本身（`build_fonts.add_superscript_digits` 合成的
+    上标码位），顶栏写 `⁵` 这个字符就行。字形几何由
+    `test_TLScore的上标数字真的又小又高` 单独钉；这条钉的是 colorize 那一头：
+
+    - 不带括号、不留基线上的裸数字（「7-65」那种）
+    - 两个方向都走**常规档**（`TOPBAR_SCORE_PLAIN_ASS`）——它是附注不是比分，
+      跟着前一个数字走粗/走细都会被读成「这一盘是赢的/输的」
+    - 上标必须在 `TOPBAR_SCORE_FONT_RESET_ASS`（切回正文字体）**之前**：
+      正文字体（Noto Sans CJK SC）没有这些码位，切出去就是 fontconfig
+      随便回退一支，样子悄悄换掉
     """
     reel = _reel()
 
-    def weight_before_paren(line: str) -> str:
-        """`(` 之前最后一个字重标签是哪一个——粗、细，还是常规。"""
-        head = line[:line.index("(")]
-        pos = {tag: head.rfind(tag) for tag in
-               (reel.TOPBAR_SCORE_BOLD_ASS, reel.TOPBAR_SCORE_LIGHT_ASS,
-                reel.TOPBAR_SCORE_PLAIN_ASS)}
-        return max(pos, key=pos.get)
-
     for raw, who in (("甲 7-6(5) 甲 乙", "左边"), ("甲 6-7(5) 甲 乙", "右边")):
         line = reel.colorize_topbar_score(raw)
-        assert "(5)" in line
-        assert weight_before_paren(line) == reel.TOPBAR_SCORE_PLAIN_ASS, (
-            f"{who}赢的那一盘，小分跟着前一个数字的字重走了：{line}\n"
-            "小分是这一盘的附注，两个方向都该是常规档。")
+        assert "(" not in line, (
+            f"顶栏的抢七小分还带着括号：{line}\n"
+            "账号所有者 2026-08-31：「小分不带括号」——用字体里的上标码位。")
+        want = f"{reel.TOPBAR_SCORE_PLAIN_ASS}⁵"
+        assert want in line, (
+            f"{who}赢的那一盘，小分没走「常规档＋上标码位」：{line}\n"
+            "小分是注脚：常规字重、写 `SUP_DIGITS` 映射出的上标字符——"
+            "写裸的 5 它就掉回基线（右下角），跟着数字的字重走会被读成输赢。")
+        assert line.index("⁵") < line.index(reel.TOPBAR_SCORE_FONT_RESET_ASS), (
+            f"上标排在切回正文字体之后了：{line}\n"
+            "正文字体没有上标码位，libass 会 fontconfig 回退到别的字体。")
 
 
 def test_顶栏上色不会把人名当成比分():
@@ -11484,6 +11488,58 @@ def test_比分数字全站同一支字体而且加粗真的生效(tmp_path, mon
         f"三档字重没有各就各位：Light {light_ink} / 常规 {plain_ink} / "
         f"Bold {bold_ink}。连字符和抢七小分走的是中间那一档，"
         "它塌到任何一头都会被读成「这一盘赢了/输了」。")
+
+
+def test_TLScore的上标数字真的又小又高():
+    """⭐ 账号所有者 2026-08-31：「**小分在大分的右上角**」。
+
+    ASS 没有行内上标标签，`\\fs` 小字坐在基线上是右**下**角——所以「小而高」
+    做进了 `TL Score` 的字形本身（`build_fonts.add_superscript_digits` 把 0-9
+    缩到 0.65、抬到顶对齐，落在 Unicode 标准的上标码位上）。
+
+    这条判据量的是**仓库里那三份 TTF**，不是生成它们的代码：
+    - 三档字重都要有全部十个码位——libass 碰到缺字会走 fontconfig 回退到
+      随便哪支有这个码位的字体（DejaVu 就有 ⁵），**不报错、只是样子悄悄换**；
+      `\\b300`/`\\b1` 挑到别的字重时同理，所以三份都得查
+    - 上标要**小**（墨高 ≤ 0.75 × 数字）而且**高**（顶和数字的顶对齐、
+      底离开基线）——缺了字形时 `.notdef` 是个全高的框，高度那一头会当场红
+    - 两条视频线的映射表必须是同一张（写两处必分叉，而这张表连排会写错：
+      1/2/3 在 Latin-1 区不在 207x 区）
+    """
+    np = pytest.importorskip("numpy")
+    from PIL import Image, ImageDraw, ImageFont  # noqa: PLC0415
+    reel = _reel()
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import build_interview_clip as clip  # noqa: PLC0415
+
+    assert clip._SUP_DIGITS == reel.SUP_DIGITS, "两条视频线的上标映射分叉了"
+    sup_chars = "0123456789".translate(reel.SUP_DIGITS)
+    assert sup_chars == "⁰¹²³⁴⁵⁶⁷⁸⁹", (
+        f"映射不是 Unicode 标准的上标码位：{sup_chars!r}")
+
+    def ink(font, text) -> tuple[int, int, int, int]:
+        im = Image.new("L", (400, 240), 0)
+        ImageDraw.Draw(im).text((30, 60), text, font=font, fill=255)
+        a = np.asarray(im)
+        ys, xs = np.where(a > 100)
+        assert ys.size, f"{text!r} 一点墨都没有——字体里根本没有这个字形？"
+        return int(xs.min()), int(ys.min()), int(xs.max()), int(ys.max())
+
+    for weight in ("Regular", "Bold", "Light"):
+        font = ImageFont.truetype(f"assets/fonts/TLScore-{weight}.ttf", 100)
+        _, by0, _, by1 = ink(font, "8")
+        base_h = by1 - by0
+        for ch in sup_chars:
+            _, sy0, _, sy1 = ink(font, ch)
+            assert sy1 - sy0 <= base_h * 0.75, (
+                f"[{weight}] {ch!r} 的墨高 {sy1 - sy0} 不比数字（{base_h}）小"
+                "——多半是缺字渲成了 .notdef 的全高框，或者合成时没缩")
+            assert abs(sy0 - by0) <= base_h * 0.08, (
+                f"[{weight}] {ch!r} 的顶（{sy0}）没和数字的顶（{by0}）对齐"
+                "——上标要顶对齐才是「右上角」")
+            assert sy1 < by1 - base_h * 0.2, (
+                f"[{weight}] {ch!r} 的底（{sy1}）贴着基线（{by1}）"
+                "——没抬起来就是右下角，正是这条要防的")
 
 
 def test_顶栏比分数字切到赛后开麦同一支字体():
@@ -13032,13 +13088,14 @@ def test_握手后只许接固定品牌片尾():
 
 def test_带式版式的段真的落在画面带里(tmp_path):
     """spec 顶层 `"layout": "band"`（美网记分条那轮定的，账见
-    docs/us-open-scoreboard-aspect.md）：外框仍 1080×1440，段落改裁 6:5
-    （1296×1080）缩进画面带（1080×900、y=132 起），上下由带底色补齐——
-    顶带给顶栏、底带给字幕，两样都不再压在画面上。
+    docs/us-open-scoreboard-aspect.md）：外框仍 1080×1440，段落改裁 9:8
+    （1214×1080，2026-08-31 从 6:5 收窄）缩进画面带（1080×960、y=132 起），
+    上下由带底色补齐——顶带给顶栏、底带给字幕，两样都不再压在画面上。
 
     **真跑一遍 cut_segment**（合成 1920×1080 纯白源片），两种版式都量像素：
 
-    - band：顶带(y 30~100)和底带(y 1150~1350)近黑、画面带(y 560~640)是白的。
+    - band：顶带(y 30~100)和底带(y 1150~1350，画面带底边 1092 之下)近黑、
+      画面带(y 560~640)是白的。
       查像素不查滤镜串——把 pad 换成别的写法照样得红
     - 默认（不写 layout）：同一批坐标全是白的。**全出血一个字节不许变**，
       这半张是回归钉：巡回赛片子不许被这次改动碰到
@@ -13092,7 +13149,7 @@ def test_带式版式的段真的落在画面带里(tmp_path):
 def test_带式的字幕锚顶栏角标都进带_全出血原样(monkeypatch):
     """带式版式的三个「放到画面外/画面内」的落位，各钉一头（都反向验证过）：
 
-    - 字幕默认锚：band 进底带（BAND_MARGIN_V=1064），full 仍是画面内 1284。
+    - 字幕默认锚：band 进底带（BAND_MARGIN_V=1124），full 仍是画面内 1284。
       `subtitle_top` 的人工覆盖不在这条判据里——那条口子归 render 里的读取
     - 顶栏滤镜：band 不画那层半透明 drawbox（顶带已是实色，画了会在
       y=126~132 露一道两色接缝）；full 照画（顶栏压在画面上要它保可读性）
@@ -13123,14 +13180,94 @@ def test_带式的字幕锚顶栏角标都进带_全出血原样(monkeypatch):
         "[0:v]null[base]", ins), "全出血的角标落位不许被带式改动牵动"
 
 
+def test_带式的品牌脚注真的渲出来而且只在带式(tmp_path, monkeypatch):
+    """带式底带的品牌脚注（2026-08-31「下半部分黑的地方很多」那轮定的，账在
+    docs/us-open-scoreboard-aspect.md 文末）。三头，缺一头都是恒真：
+
+    - **条本身有墨**：`band_foot_strip` 真渲一条（球标 + 「网球时差 ·
+      赛场之上」），透明底、有不透明像素——查文件在不在防不住「渲出来一张
+      全透明的空条」
+    - **真跑一遍滤镜图**：给了 `foot_input` 时脚注落在 BAND_FOOT_Y 竖直中心
+      （白底源片上量非白像素）——只查滤镜串防不住 overlay 表达式写错
+    - **不给 foot_input 的路一个字不变**：同一坐标带纯白。全出血和没脚注的
+      带式不许被这条改动牵动
+
+    反向验证过：把 `foot` 那截从滤镜图里拆掉 → 第二头红（脚注带全白）；
+    把 BAND_FOOT_Y 挪到 1200 → 第二头红在「落错了行」；把 strip 的 fill
+    改成全透明 → 第一头红。
+    """
+    import shutil  # noqa: PLC0415
+
+    import numpy as np  # noqa: PLC0415
+    from PIL import Image  # noqa: PLC0415
+
+    assert shutil.which("ffmpeg"), "没有 ffmpeg，这条判据跑不了：apt install ffmpeg"
+    reel = _reel()
+
+    strip = reel.band_foot_strip(tmp_path / "foot.png")
+    im = Image.open(strip)
+    arr = np.asarray(im)
+    assert im.mode == "RGBA" and im.width > im.height, f"脚注条形状不对 {im.size}"
+    assert (arr[..., 3] > 128).mean() > 0.05, "脚注条没有墨——渲出来是一张空透明图"
+
+    # 极简 ASS（零对白）——滤镜图里那两次 subtitles 要真的能跑
+    ass = tmp_path / "empty.ass"
+    ass.write_text(
+        "[Script Info]\nScriptType: v4.00+\nPlayResX: 1080\nPlayResY: 1440\n\n"
+        "[V4+ Styles]\n"
+        "Format: Name, Fontname, Fontsize, PrimaryColour, OutlineColour, "
+        "BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, "
+        "Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, "
+        "MarginR, MarginV, Encoding\n"
+        "Style: X,Arial,20,&H00FFFFFF,&H00000000,&H00000000,0,0,0,0,100,100,"
+        "0,0,1,0,0,2,10,10,10,1\n\n[Events]\n"
+        "Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, "
+        "Effect, Text\n", encoding="utf-8")
+    src = tmp_path / "white.mp4"
+    subprocess.run(
+        ["ffmpeg", "-y", "-v", "error", "-f", "lavfi", "-i",
+         "color=c=white:s=1080x1440:r=25", "-t", "1.0",
+         "-pix_fmt", "yuv420p", str(src)], check=True)
+
+    monkeypatch.setattr(reel, "LAYOUT", "band")
+    foot_rows = (reel.BAND_FOOT_Y - 30, reel.BAND_FOOT_Y + 30)
+    for case, extra, foot_in in (("with", ["-i", str(strip)], 2), ("without", [], None)):
+        g = reel.topbar_filtergraph(0.2, 0.6, ass, ass, foot_input=foot_in)
+        out = tmp_path / f"foot_{case}.mp4"
+        subprocess.run(
+            ["ffmpeg", "-y", "-v", "error", "-i", str(src), "-i", str(src),
+             *extra, "-filter_complex", g, "-map", "[out]", "-frames:v", "12",
+             str(out)], check=True)
+        frame = tmp_path / f"foot_{case}.png"
+        # 第 8 帧落在比赛区间（0.2s 封面之后），封面帧上本来就没有脚注
+        subprocess.run(
+            ["ffmpeg", "-y", "-v", "error", "-ss", "0.3", "-i", str(out),
+             "-frames:v", "1", str(frame)], check=True)
+        band = np.asarray(Image.open(frame).convert("L").crop(
+            (0, foot_rows[0], 1080, foot_rows[1])))
+        dark = (band < 200).mean()
+        if case == "with":
+            assert dark > 0.005, (
+                f"带式给了脚注输入，BAND_FOOT_Y={reel.BAND_FOOT_Y} 那一带"
+                f"该有脚注的墨，量到暗像素占比 {dark:.4f}——overlay 没接上"
+                "或落错了行")
+            ctrl = np.asarray(Image.open(frame).convert("L").crop(
+                (0, 1150, 1080, 1250)))
+            assert (ctrl < 200).mean() < 0.001, "脚注糊到了字幕那一带"
+        else:
+            assert dark < 0.001, (
+                f"没给脚注输入的路（全出血/无顶栏）不许有脚注，量到暗像素 "
+                f"{dark:.4f}")
+
+
 def test_layout只认band且band不和contain混():
     """spec.layout 的值域和兼容性，`--dry-run`（parse_segments）就拦：
 
     - 只认 "band"；写错值当场报，别静默当成全出血渲出去（那样「写错了」和
       「没写」长得一模一样）
-    - band × `fit: contain` 拒掉：带式的画面带本来就是 6:5 宽画幅，contain
+    - band × `fit: contain` 拒掉：带式的画面带本来就是 9:8 宽画幅，contain
       要解决的「两个人分得很开」它本来就装得下
-    - band 要求源片装得下 6:5 窗口（resolve_crop 那道，方形/竖版源直接拒）
+    - band 要求源片装得下 9:8 窗口（resolve_crop 那道，方形/竖版源直接拒）
     """
     import pytest  # noqa: PLC0415
 
@@ -13153,7 +13290,7 @@ def test_layout只认band且band不和contain混():
 
     saved = (reel.CROP_W, reel.CROP_H, reel.CROP_Y, reel.LAYOUT)
     try:
-        with pytest.raises(reel.ReelError, match="6:5"):
+        with pytest.raises(reel.ReelError, match="9:8"):
             reel.resolve_crop(1080, 1080, None, "", layout="band")
     finally:
         reel.CROP_W, reel.CROP_H, reel.CROP_Y, reel.LAYOUT = saved
@@ -13177,7 +13314,7 @@ def test_记分条按实际大小裁原比例贴回左下角(tmp_path, capsys):
     外加**品红 [736,944]**：那一截是板右边的**球场**。三条断言各钉一头：
 
     ① 被裁掉的板左半（绿）要贴回来——不贴的对照组那儿只有红
-    ② 贴片是**原比例**：蓝列必须落在 (616−104)×0.8333≈427 到 527，
+    ② 贴片是**原比例**：蓝列必须落在 (616−104)×0.8896≈455 到 562，
        缩过就不在那儿了（这一条钉的是「不许再缩」）
     ③ `x1` 按板的真实右缘写时，板右边的球场（品红）**不许**被抠进贴片；
        写宽到 944 时它就会被贴到画面上另一个位置——那正是要防的
@@ -13209,11 +13346,12 @@ def test_记分条按实际大小裁原比例贴回左下角(tmp_path, capsys):
     saved = (reel.CROP_W, reel.CROP_H, reel.CROP_Y, reel.LAYOUT)
     try:
         reel.resolve_crop(1920, 1080, None, "", layout="band")
-        # 采样区（画布坐标）。贴片原比例：板 [104,736] → 画面带 [0,528]，
-        # 纵向 y∈[872,948]（源片 888×0.8333 + 顶带 132）。
-        green_box = (20, 892, 110, 928)     # 板的左半：窗口自己看不见的那截
-        blue_box = (440, 892, 510, 928)     # 深盘那几列，落在原比例该在的位置
-        court_box = (560, 892, 660, 928)    # 板右边的球场（品红）该在的地方
+        # 采样区（画布坐标），按 9:8 的缩放比 1080/1214≈0.8896 排：
+        # 贴片原比例：板 [104,736] → 画面带 [0,562]，纵向 y∈[922,1002]
+        # （源片 888×0.8896 + 顶带 132）。
+        green_box = (20, 940, 110, 990)     # 板的左半：窗口自己看不见的那截
+        blue_box = (465, 940, 522, 988)     # 深盘那几列，落在原比例该在的位置
+        court_box = (580, 940, 680, 990)    # 板右边的球场（品红）该在的地方
         for case in ("real", "toowide", "off"):
             box = {"real": (104, 888, 736, 978),
                    "toowide": (104, 888, 944, 978),
@@ -13234,7 +13372,7 @@ def test_记分条按实际大小裁原比例贴回左下角(tmp_path, capsys):
                     "下面那半张绿的证明不了回贴")
                 rb, gb, bb = _mean_rgb(frame, blue_box)
                 assert rb > 110 and bb > 110 and gb < 90, (
-                    f"不贴时 427~527 那一带是**球场**（品红，源片 840~924），"
+                    f"不贴时 465~522 那一带是**球场**（品红，源片 876~940），"
                     f"量到 RGB=({rb:.0f},{gb:.0f},{bb:.0f})——这一头不成立的话，"
                     "②量到的蓝就可能本来就在那儿，证明不了贴片是原比例")
                 continue
@@ -13244,13 +13382,13 @@ def test_记分条按实际大小裁原比例贴回左下角(tmp_path, capsys):
             rb, gb, bb = _mean_rgb(frame, blue_box)
             assert bb > 90 and rb < 80, (
                 f"② {case}: 贴片要**原比例**——深盘那几列（蓝）该落在 "
-                f"427~527，量到 RGB=({rb:.0f},{gb:.0f},{bb:.0f})。"
+                f"455~562，量到 RGB=({rb:.0f},{gb:.0f},{bb:.0f})。"
                 "缩过（比如缩到残条宽）它就不在这儿了，而缩完的板在手机上"
                 "读不出字，账号所有者管那叫「马赛克」")
             rc, gc, bc = _mean_rgb(frame, court_box)
             if case == "real":
                 assert min(rc, gc, bc) > 200, (
-                    f"③ x1 按板的真实右缘写时，贴片到 528 就结束了，"
+                    f"③ x1 按板的真实右缘写时，贴片到 562 就结束了，"
                     f"这儿该是主窗口的白，量到 ({rc:.0f},{gc:.0f},{bc:.0f})")
             else:
                 assert rc > 110 and bc > 110 and gc < 90, (

@@ -137,10 +137,37 @@ def result_direction_problem(spec: dict) -> str | None:
     return None
 
 
+def _tb_suffixes(
+    scores: list[tuple[int, int]], tiebreaks,
+) -> list[str]:
+    """每盘的抢七注脚 `(N)`，N＝**输掉那一盘的人**在抢七里拿到的分。
+
+    注脚跟着盘走、不跟着视角走：7-6(5) 换到输家视角是 6-7(5)，括号里
+    还是同一个 5——所以这里按 home/away 算一次，赢家/输家两份赛果共用。
+    tiebreaks 是和 scores 对齐的列表，非抢七盘写 None。
+    """
+    out = []
+    for i, (a, b) in enumerate(scores):
+        tb = tiebreaks[i] if tiebreaks and i < len(tiebreaks) else None
+        if tb is None or {a, b} != {6, 7}:
+            out.append("")
+            continue
+        th, ta = int(tb[0]), int(tb[1])
+        out.append(f"({ta if a > b else th})")
+    return out
+
+
 def verified_match_fact(
     matchup: list[dict], scores: list[tuple[int, int]], flashscore_id: str,
+    tiebreaks: list[tuple[int, int] | None] | None = None,
 ) -> dict | None:
-    """把 home/away 逐盘终场数据转换成唯一的赢家视角赛果事实。"""
+    """把 home/away 逐盘终场数据转换成唯一的赢家视角赛果事实。
+
+    `tiebreaks` 和 `scores` 对齐：抢七盘给 (home小分, away小分)，其余给
+    None——给了它，`winner_result` 就带 `(N)` 注脚（账号所有者 2026-08-31：
+    「封面比分板上抢七没有小分啊」；在这之前这条机械链结构性地写不了小分，
+    起草链只能留一句「cover.result 不带抢七小分」的注解）。
+    """
     if len(matchup) != 2 or not scores or not flashscore_id:
         return None
     home_sets = sum(a > b for a, b in scores)
@@ -157,7 +184,8 @@ def verified_match_fact(
         score if winner_index == 0 else (score[1], score[0]) for score in scores
     ]
     loser_scores = [(b, a) for a, b in winner_scores]
-    return {
+    tb = _tb_suffixes(scores, tiebreaks)
+    fact = {
         "status": "result_verified",
         "source": "flashscore_points",
         "source_id": flashscore_id,
@@ -166,9 +194,16 @@ def verified_match_fact(
         "set_scores_home_away": [[a, b] for a, b in scores],
         "winner": winner,
         "loser": loser,
-        "winner_result": " ".join(f"{a}-{b}" for a, b in winner_scores),
-        "loser_result": " ".join(f"{a}-{b}" for a, b in loser_scores),
+        "winner_result": " ".join(
+            f"{a}-{b}{s}" for (a, b), s in zip(winner_scores, tb)),
+        "loser_result": " ".join(
+            f"{a}-{b}{s}" for (a, b), s in zip(loser_scores, tb)),
     }
+    if tiebreaks is not None:
+        fact["tiebreaks_home_away"] = [
+            [int(t[0]), int(t[1])] if t is not None else None for t in tiebreaks
+        ]
+    return fact
 
 
 def verified_result_problem(spec: dict) -> str | None:
@@ -196,22 +231,50 @@ def verified_result_problem(spec: dict) -> str | None:
     if len(scores) != len(raw_scores):
         return "_match.set_scores_home_away 有无法解析的盘分"
 
+    # 抢七小分（可选，旧 _match 没有这一栏）。有就一起机械重建、逐字比对；
+    # 没有就把 "(N)" 剥掉再比——旧 verified spec 手补的小分不许被这道闸
+    # 顶回去（小分**必须在**归 bare_tiebreak_problem 管，那道不看 _match）。
+    raw_tb = match.get("tiebreaks_home_away")
+    tiebreaks = None
+    if raw_tb is not None:
+        if not isinstance(raw_tb, list) or len(raw_tb) != len(scores):
+            return "_match.tiebreaks_home_away 要和 set_scores_home_away 逐盘对齐"
+        tiebreaks = []
+        for i, row in enumerate(raw_tb):
+            if row is None:
+                tiebreaks.append(None)
+                continue
+            try:
+                th, ta = int(row[0]), int(row[1])
+            except (TypeError, ValueError, IndexError):
+                return "_match.tiebreaks_home_away 只能是 [主队小分, 客队小分] 或 null"
+            if {scores[i][0], scores[i][1]} != {6, 7}:
+                return f"_match 第 {i + 1} 盘 {scores[i][0]}-{scores[i][1]} 不是抢七盘，却写了小分"
+            if max(th, ta) < 7 or abs(th - ta) < 2 or (th > ta) != (scores[i][0] > scores[i][1]):
+                return f"_match 第 {i + 1} 盘的抢七小分 {th}-{ta} 不是一个合法的抢七结果"
+            tiebreaks.append((th, ta))
+
     rebuilt = verified_match_fact(
         [{"name": participants[0]}, {"name": participants[1]}],
         scores,
         str(match.get("flashscore_id") or match.get("source_id") or "verified"),
+        tiebreaks=tiebreaks,
     )
     if rebuilt is None:
         return "_match.set_scores_home_away 无法确定比赛赢家"
+
+    def _cmp(text: str) -> str:
+        return text if tiebreaks is not None else re.sub(r"\(\d+\)", "", text)
+
     expected = (
         rebuilt["winner"],
         rebuilt["loser"],
-        rebuilt["winner_result"],
+        _cmp(rebuilt["winner_result"]),
     )
     recorded = (
         str(match.get("winner") or "").strip(),
         str(match.get("loser") or "").strip(),
-        str(match.get("winner_result") or "").strip(),
+        _cmp(str(match.get("winner_result") or "").strip()),
     )
     if recorded != expected:
         return (
@@ -221,11 +284,91 @@ def verified_result_problem(spec: dict) -> str | None:
     cover = spec.get("cover") or {}
     shown = (
         str(cover.get("winner") or "").strip(),
-        str(cover.get("result") or "").strip(),
+        _cmp(str(cover.get("result") or "").strip()),
     )
     if shown != (expected[0], expected[2]):
         return (
             "cover 赛果和 _match 逐盘事实不一致：应为 "
             f"winner={expected[0]!r}, result={expected[2]!r}，现在是 {shown}"
+        )
+    return None
+
+
+def reconcile_sets(
+    scores: list[tuple[int, int]], sui_pairs: list[tuple[int, int]],
+) -> tuple[list[tuple[int, int]], list[tuple[int, int] | None]] | None:
+    """逐局表的盘分 ＋ `df_sui_1` 的 IG/IH → (修好的盘分, 对齐的抢七小分)。
+
+    两个 feed 各缺半边：`df_mh_1` **不列抢七那一局**（final_set_scores 对
+    抢七盘只能取到 6-6，于是德约-纳沃内这种带抢七的比赛在老链上会被算成
+    平盘、整场判不出赢家）；`df_sui_1` 的 IG/IH 在抢七盘上是**小分**、在
+    其余盘上是局数（语义实证见 match_feed._parse_set_pairs）。逐盘对上：
+
+      IG/IH == 逐局表盘分            → 普通盘，原样
+      逐局表 6-6 ＋ IG/IH 是合法抢七 → 盘分按小分赢家定 7-6，小分带上
+      逐局表已是 7-6 ＋ IG/IH 是合法抢七且同向 → 小分带上
+      其余                           → **返回 None，宁可不产 result_verified**
+                                       （猜错的比分板比没有更糟）
+    """
+    if len(scores) != len(sui_pairs) or not scores:
+        return None
+    fixed: list[tuple[int, int]] = []
+    tiebreaks: list[tuple[int, int] | None] = []
+    for (a, b), (ig, ih) in zip(scores, sui_pairs):
+        is_tb_points = max(ig, ih) >= 7 and abs(ig - ih) >= 2
+        if (ig, ih) == (a, b) and {a, b} != {6, 7}:
+            fixed.append((a, b))
+            tiebreaks.append(None)
+        elif (a, b) == (6, 6) and is_tb_points:
+            fixed.append((7, 6) if ig > ih else (6, 7))
+            tiebreaks.append((ig, ih))
+        elif {a, b} == {6, 7} and is_tb_points and (ig > ih) == (a > b):
+            fixed.append((a, b))
+            tiebreaks.append((ig, ih))
+        else:
+            return None
+    return fixed, tiebreaks
+
+
+#: 这条规矩（2026-08-31）之前发出去的裸 7-6 封面。**只许减不许加**，表自带
+#: 自检（tests：slug 要真的存在、真的还裸着）。已发的不为小分重渲；哪天真要
+#: 重渲哪一条，先把它从这儿删掉、把小分补上（df_sui_1 的 IG/IH 现成）。
+#: ⚠️ williams-kenin / rakhimova-krejcikova 是**闸落地当天中午被并发会话推上
+#: main 并已发微信的**（pushed.json 09:37 / 09:58Z）——已发不重渲，同样只能
+#: 进这张表，不能改 spec。
+LEGACY_BARE_TIEBREAK = frozenset({
+    "bencic-townsend", "fonseca-ruud", "fonseca-van-de-zandschulp",
+    "lehecka-fils", "rakhimova-krejcikova-us-open-2026-r1",
+    "williams-kenin-us-open-2026-r1", "wong-paul-us-open-2026-r1",
+    "wu-walton-us-open-2026-r1", "zverev-griekspoor",
+})
+
+
+def bare_tiebreak_problem(spec: dict) -> str | None:
+    """⭐ 抢七盘必须带小分注脚——`7-6` 后面没有 `(N)` 就红。
+
+    账号所有者 2026-08-31（甩来美网官方比分图）：「封面比分板上抢七没有
+    小分啊」。板和数据图的抢七上标机制早就有（`.tb`），可 9 条 spec 的
+    `cover.result` 自己就写着裸的 7-6——其中几条美网 result_verified 的
+    还是被老 `verified_result_problem` **逼**的（它要求 result 逐字等于
+    只有局数的机械重建）。7-6 的盘必然打过抢七（6-6 才进抢七，7-5 不进），
+    所以裸的 7-6 永远是漏，不存在正当写法。
+
+    小分哪儿来：flashscore `df_sui_1` 的 IG/IH 在抢七盘上就是小分
+    （`match_feed.set_pairs`，两场四个抢七钉死过语义），N 写**输掉那一盘
+    的人**拿到的分。topbar.line2 不用单独扫——它必须逐字等于
+    `winner result loser`，result 修好它跟着。
+    """
+    if str(spec.get("slug") or "") in LEGACY_BARE_TIEBREAK:
+        return None
+    cover = spec.get("cover") or {}
+    result = str(cover.get("result") or "")
+    if re.search(r"(?<!\d)(?:7-6|6-7)(?![\d(])", result):
+        return (
+            f"cover.result「{result}」里的抢七盘没带小分——7-6 的盘必然打过"
+            "抢七，要写成 7-6(N)，N 是输掉那一盘的人在抢七里拿到的分"
+            "（flashscore df_sui_1 的 IG/IH 在抢七盘上就是它，"
+            "`python tools/match_feed.py` / match_feed.set_pairs 取）。"
+            "topbar.line2 要跟着 cover.result 一起带上。"
         )
     return None
