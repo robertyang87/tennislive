@@ -212,6 +212,48 @@ def to_copy_page(
 """
 
 
+#: 推送卡片底部那两颗按钮的配色和高度。**三条线共用这一份**
+#: （`tools/push_reel.py` 的成片推送、`render/knowledge.py` 的知识帖、
+#: 本文件这条已停产的日报模板），别再各自内联一遍——同一件事写三处必分叉，
+#: 而分叉的样子是「同一个账号发出去的推送，按钮高矮不一」。
+#:
+#: ⭐ **红的那颗要比深绿那颗矮。** 账号所有者 2026-08-31：「红色区域高度可以
+#: 更小一些」。来路是这两颗按钮原来**一模一样高**（各 47px），而红色的视觉分量
+#: 天生比深绿重——于是「分别复制标题 / 正文」这个**次要动作**在卡片底部喊得比
+#: 「▶ 打开竖版成片」这个**主要动作**还响，层级是反的。
+#:
+#: 四档真渲量过（Chromium，390px 视口，和微信里同一个字号）：
+#:
+#:     padding-y 13px → 47px   和主按钮一样重 ← 改之前
+#:     padding-y 10px → 41px   轻下来了，层级读得出
+#:     **padding-y  8px → 37px   现在这档：明确是次要动作，还是一颗正经按钮**
+#:     padding-y  6px → 33px   字快贴着上下边，看着是「压扁了」不是「次要」
+#:
+#: ⚠️ **别再往下压**：6px 那档已经不像按钮；而且它仍然是个要用手指点的链接，
+#: 37px 已经贴着舒适点击区的下沿了。
+#: ⚠️ **矮的只有红那颗**。主按钮跟着一起矮，层级差就又没了——这条改动的全部
+#: 内容就是那个高度差。
+PUSH_BTN_BG_PRIMARY = "#102d23"
+PUSH_BTN_BG_COPY = "#ff2442"
+PUSH_BTN_PAD_Y = 13
+PUSH_BTN_PAD_Y_COPY = 8
+
+
+def push_button(url: str, label: str, *, primary: bool) -> str:
+    """推送卡片底部的一颗按钮。`primary=False` 就是那颗红的「复制」按钮。
+
+    ⚠️ **`href` 里的 `copy.html` 是 `_COPY_BUTTON_RE` 认领这颗按钮的钥匙**
+    （复制页探不到时只摘这一个 `<a>`，正文照发）。那条正则认的是 href 不是
+    样式，所以改高度不影响它——但**别把 href 包进别的标签里**。
+    """
+    bg = PUSH_BTN_BG_PRIMARY if primary else PUSH_BTN_BG_COPY
+    pad_y = PUSH_BTN_PAD_Y if primary else PUSH_BTN_PAD_Y_COPY
+    return (f'<a href="{url}" style="display:block;background-color:{bg};'
+            f'color:#ffffff;text-align:center;text-decoration:none;'
+            f'font-weight:bold;padding:{pad_y}px 16px;border-radius:6px;'
+            f'margin:0 0 7px;">{html.escape(label)}</a>')
+
+
 def to_push_html(
     digest: Digest,
     cards: list[str] | None = None,
@@ -279,10 +321,8 @@ def to_push_html(
         parts.extend(
             [
                 '<div style="border-top:1px solid #e6ebe8;margin:18px 0 12px;"></div>',
-                f'<a href="{copy_url}" style="display:block;background-color:#ff2442;'
-                'color:#ffffff;text-align:center;text-decoration:none;font-weight:bold;'
-                'padding:13px 16px;border-radius:6px;margin:0 0 7px;">'
-                '分别复制标题 / 正文 / 置顶评论</a>',
+                push_button(copy_url, "分别复制标题 / 正文 / 置顶评论",
+                            primary=False),
                 '<div style="text-align:center;color:#7a8580;font-size:12px;">'
                 '标题与正文已拆分，粘贴后即可发布</div>',
             ]

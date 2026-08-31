@@ -17,7 +17,7 @@ from pathlib import Path
 from ..digest import Digest
 from ..research.visual_sources import curated_source_urls, resolve_story_visuals
 from ..timeutil import WEEKDAY_ZH
-from .pushmsg import to_copy_page
+from .pushmsg import push_button, to_copy_page
 from .hashtags import hashtag_count, limit_hashtags
 from .knowledge_visual_qa import evaluate_knowledge_visuals
 from .tournament_story import (
@@ -496,12 +496,7 @@ def knowledge_push_html_from_parts(
     action = ""
     if extra_action:
         href, label = extra_action
-        action = (
-            f'<a href="{href}" style="display:block;background-color:#102d23;'
-            'color:#ffffff;text-align:center;text-decoration:none;font-weight:bold;'
-            'padding:13px 16px;border-radius:6px;margin:0 0 7px;">'
-            f'{html.escape(label)}</a>'
-        )
+        action = push_button(href, label, primary=True)
     return f"""<div style="background-color:#f6f7f4;color:#17251f;padding:12px 10px;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif;">
 <div style="max-width:680px;margin:0 auto;background-color:#ffffff;border-top:5px solid #ff2442;padding:18px 16px 22px;">
   <div style="display:inline-block;background-color:#e7f5ea;color:#087747;font-size:12px;font-weight:bold;padding:4px 8px;border-radius:4px;">{badge} · {date.month}.{date.day}</div>
@@ -509,7 +504,7 @@ def knowledge_push_html_from_parts(
   {''.join(images)}
   {body_block}
   <div style="border-top:1px solid #e6ebe8;margin:18px 0 12px;"></div>
-  {action}<a href="{copy_url}" style="display:block;background-color:#ff2442;color:#ffffff;text-align:center;text-decoration:none;font-weight:bold;padding:13px 16px;border-radius:6px;margin:0 0 7px;">分别复制标题 / 正文 / 置顶评论</a>
+  {action}{push_button(copy_url, "分别复制标题 / 正文 / 置顶评论", primary=False)}
   <div style="text-align:center;color:#7a8580;font-size:12px;">图片长按保存</div>
 </div>
 </div>"""
