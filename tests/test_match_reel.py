@@ -11229,29 +11229,36 @@ def test_顶栏比分逐盘上色赢盘绿输盘灰():
 
 
 def test_顶栏上色带抢七小分():
-    """⚠️ 抢七小分：**裸数字不带括号**（账号所有者 2026-08-31 说了两遍——
-    先指着美网官方图「不要带()」，顶栏保留括号并说明理由之后他又来一句
-    「小分不带括号」，重申就是决定），**两个方向都走 `TOPBAR_TB_ASS`**
-    （常规字重 ＋ 小一档字号 ＋ 连字符那支暗色）。
+    """⚠️ 抢七小分：**裸数字、印在大分的右上角**（账号所有者 2026-08-31 连着
+    三句：「不要带()」→「小分不带括号」→「小分在大分的右上角」）。
 
-    它是这一盘的附注，不是比分本身。ASS 没有行内上标，裸数字贴在基线上
-    满号渲就是「7-65」——所以靠字号小一大截（40 → 26）＋压暗让它读成注脚。
-    标签粘连，不显式复位的话小分会跟着前一个数字走粗/走细，小分之后的
-    正文又会跟着小分走暗——所以小分前挂 `TOPBAR_TB_ASS`、后面必须跟
-    `TOPBAR_RESET_ASS` 把颜色还回去。
+    ASS 没有行内上标标签——`\\fs` 小字坐在基线上是右**下**角——所以「小而高」
+    做进了 `TL Score` 的字形本身（`build_fonts.add_superscript_digits` 合成的
+    上标码位），顶栏写 `⁵` 这个字符就行。字形几何由
+    `test_TLScore的上标数字真的又小又高` 单独钉；这条钉的是 colorize 那一头：
+
+    - 不带括号、不留基线上的裸数字（「7-65」那种）
+    - 两个方向都走**常规档**（`TOPBAR_SCORE_PLAIN_ASS`）——它是附注不是比分，
+      跟着前一个数字走粗/走细都会被读成「这一盘是赢的/输的」
+    - 上标必须在 `TOPBAR_SCORE_FONT_RESET_ASS`（切回正文字体）**之前**：
+      正文字体（Noto Sans CJK SC）没有这些码位，切出去就是 fontconfig
+      随便回退一支，样子悄悄换掉
     """
     reel = _reel()
 
     for raw, who in (("甲 7-6(5) 甲 乙", "左边"), ("甲 6-7(5) 甲 乙", "右边")):
         line = reel.colorize_topbar_score(raw)
-        assert "(5)" not in line and "(" not in line, (
+        assert "(" not in line, (
             f"顶栏的抢七小分还带着括号：{line}\n"
-            "账号所有者 2026-08-31：「小分不带括号」——ASS 里用小号暗数字。")
-        want = f"{reel.TOPBAR_TB_ASS}5{reel.TOPBAR_RESET_ASS}"
+            "账号所有者 2026-08-31：「小分不带括号」——用字体里的上标码位。")
+        want = f"{reel.TOPBAR_SCORE_PLAIN_ASS}⁵"
         assert want in line, (
-            f"{who}赢的那一盘，小分没走 `TOPBAR_TB_ASS`＋颜色复位：{line}\n"
-            "小分是注脚：常规字重＋小一档＋暗色，渲完要把颜色还给正文——"
-            "少哪一样它都会和满号数字混在一起，或把后面的字带暗。")
+            f"{who}赢的那一盘，小分没走「常规档＋上标码位」：{line}\n"
+            "小分是注脚：常规字重、写 `SUP_DIGITS` 映射出的上标字符——"
+            "写裸的 5 它就掉回基线（右下角），跟着数字的字重走会被读成输赢。")
+        assert line.index("⁵") < line.index(reel.TOPBAR_SCORE_FONT_RESET_ASS), (
+            f"上标排在切回正文字体之后了：{line}\n"
+            "正文字体没有上标码位，libass 会 fontconfig 回退到别的字体。")
 
 
 def test_顶栏上色不会把人名当成比分():
@@ -11481,6 +11488,58 @@ def test_比分数字全站同一支字体而且加粗真的生效(tmp_path, mon
         f"三档字重没有各就各位：Light {light_ink} / 常规 {plain_ink} / "
         f"Bold {bold_ink}。连字符和抢七小分走的是中间那一档，"
         "它塌到任何一头都会被读成「这一盘赢了/输了」。")
+
+
+def test_TLScore的上标数字真的又小又高():
+    """⭐ 账号所有者 2026-08-31：「**小分在大分的右上角**」。
+
+    ASS 没有行内上标标签，`\\fs` 小字坐在基线上是右**下**角——所以「小而高」
+    做进了 `TL Score` 的字形本身（`build_fonts.add_superscript_digits` 把 0-9
+    缩到 0.65、抬到顶对齐，落在 Unicode 标准的上标码位上）。
+
+    这条判据量的是**仓库里那三份 TTF**，不是生成它们的代码：
+    - 三档字重都要有全部十个码位——libass 碰到缺字会走 fontconfig 回退到
+      随便哪支有这个码位的字体（DejaVu 就有 ⁵），**不报错、只是样子悄悄换**；
+      `\\b300`/`\\b1` 挑到别的字重时同理，所以三份都得查
+    - 上标要**小**（墨高 ≤ 0.75 × 数字）而且**高**（顶和数字的顶对齐、
+      底离开基线）——缺了字形时 `.notdef` 是个全高的框，高度那一头会当场红
+    - 两条视频线的映射表必须是同一张（写两处必分叉，而这张表连排会写错：
+      1/2/3 在 Latin-1 区不在 207x 区）
+    """
+    np = pytest.importorskip("numpy")
+    from PIL import Image, ImageDraw, ImageFont  # noqa: PLC0415
+    reel = _reel()
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import build_interview_clip as clip  # noqa: PLC0415
+
+    assert clip._SUP_DIGITS == reel.SUP_DIGITS, "两条视频线的上标映射分叉了"
+    sup_chars = "0123456789".translate(reel.SUP_DIGITS)
+    assert sup_chars == "⁰¹²³⁴⁵⁶⁷⁸⁹", (
+        f"映射不是 Unicode 标准的上标码位：{sup_chars!r}")
+
+    def ink(font, text) -> tuple[int, int, int, int]:
+        im = Image.new("L", (400, 240), 0)
+        ImageDraw.Draw(im).text((30, 60), text, font=font, fill=255)
+        a = np.asarray(im)
+        ys, xs = np.where(a > 100)
+        assert ys.size, f"{text!r} 一点墨都没有——字体里根本没有这个字形？"
+        return int(xs.min()), int(ys.min()), int(xs.max()), int(ys.max())
+
+    for weight in ("Regular", "Bold", "Light"):
+        font = ImageFont.truetype(f"assets/fonts/TLScore-{weight}.ttf", 100)
+        _, by0, _, by1 = ink(font, "8")
+        base_h = by1 - by0
+        for ch in sup_chars:
+            _, sy0, _, sy1 = ink(font, ch)
+            assert sy1 - sy0 <= base_h * 0.75, (
+                f"[{weight}] {ch!r} 的墨高 {sy1 - sy0} 不比数字（{base_h}）小"
+                "——多半是缺字渲成了 .notdef 的全高框，或者合成时没缩")
+            assert abs(sy0 - by0) <= base_h * 0.08, (
+                f"[{weight}] {ch!r} 的顶（{sy0}）没和数字的顶（{by0}）对齐"
+                "——上标要顶对齐才是「右上角」")
+            assert sy1 < by1 - base_h * 0.2, (
+                f"[{weight}] {ch!r} 的底（{sy1}）贴着基线（{by1}）"
+                "——没抬起来就是右下角，正是这条要防的")
 
 
 def test_顶栏比分数字切到赛后开麦同一支字体():

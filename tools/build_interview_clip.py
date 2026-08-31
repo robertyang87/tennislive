@@ -1084,6 +1084,8 @@ _SCORE_SIZE_TAG = rf"\fs{_SCORE_PX}"
 # 拿到的分数，数据格式里永远跟在第二个数字后面；**渲的时候剥掉括号、
 # 小一档单独一个 run**（2026-08-31「小分不带括号」，见 `_score_runs`）。
 _SET_SCORE_RE = re.compile(r"^(\d+)-(\d+)(\(\d+\))?$")
+#: 抢七小分渲成 `TL Score` 里合成的上标码位（见 `_score_runs` 里那段注释）。
+_SUP_DIGITS = str.maketrans("0123456789", "⁰¹²³⁴⁵⁶⁷⁸⁹")
 
 
 def _score_runs(score: str, px: int = _SCORE_PX) -> list[tuple[str, str, str, int]]:
@@ -1125,15 +1127,16 @@ def _score_runs(score: str, px: int = _SCORE_PX) -> list[tuple[str, str, str, in
         tag2 = (_MARK_COLOUR if not n1_won else "") + w2 + tag
         runs.append((f"{n1}-", "num", tag1, px))
         if paren:
-            # 抢七小分：**裸数字不带括号，小一档**（账号所有者 2026-08-31
-            # 「小分不带括号」，全站一个口径——match-reel 顶栏同一天同款）。
-            # ASS 没有行内上标，靠字号差把它读成注脚；每个 run 自带 `\r`
-            # 复位（`_run`），所以不用担心颜色/字重粘连。0.6 和 match-reel
-            # 的 26/40 是同一档比例。
-            small = max(1, round(px * 0.6))
+            # 抢七小分：**裸数字、印在大分的右上角**（账号所有者 2026-08-31，
+            # 全站一个口径——match-reel 顶栏同一天同款）。写的是 `TL Score`
+            # 里合成好的上标码位（`build_fonts.add_superscript_digits`），
+            # 小和高都在字形里，run 不用动字号；单独一个 run（空 tags）是
+            # 为了不跟着 `tag2` 的绿/粗走——它是注脚不是比分。
+            # ⚠️ 映射和 `build_match_reel.SUP_DIGITS` 是同一张 Unicode 标准表
+            # （1/2/3 在 Latin-1 区），判据钉两边相等。
             runs.append((n2, "num", tag2, px))
-            runs.append((f"{paren.strip('()')}{trail}", "num",
-                         rf"\b0\fs{small}", small))
+            runs.append((f"{paren.strip('()').translate(_SUP_DIGITS)}{trail}",
+                         "num", "", px))
         else:
             runs.append((f"{n2}{trail}", "num", tag2, px))
     return runs
