@@ -1887,8 +1887,19 @@ def build_poster(cover: dict, out: Path, layout: str = "diagonal") -> Path:
                 "赛场之上的海报要两个人的中文名：versus.names = [上格, 下格]。\n"
                 "名字查 src/tennislive/zh/player_names_top500.json，别手打。")
 
-    hook = "".join(f"<div>{line.strip()}</div>"
-                   for line in str(cover.get("hook", "")).split("\n") if line.strip())
+    hook_lines = [ln.strip() for ln in str(cover.get("hook", "")).split("\n")
+                  if ln.strip()]
+    hook = "".join(f"<div>{line}</div>" for line in hook_lines)
+    # ⭐ **VS 那几版的钩子字号和 solo 走同一个出处。** 账号所有者 2026-08-31
+    # 把钩子收成一个数（`HOOK_TITLE_PX`）之后：「钩子文案大小修改后，同步到
+    # 全局」——`.hook` 原来写死 100px，和 solo 的 94px 差着一档，同一个栏目
+    # 的封面两种大小。`.copy` 是 `left:66px right:66px`，可用 948px，和
+    # `TITLE_WIDTH_PX` 的 940 几乎一样，所以同一个公式直接适用。
+    # ⚠️ 顺带修掉两条存量的静默溢出：`jodar-fritz`（最长行 10 字）和
+    # `wang-pareja`（11 字）在 100px 下要 1000/1100px，超过 948——`.hook`
+    # 没有 `nowrap`，所以它们是**默默多折一行**，不报错。按公式算就是
+    # 94/85px，装得下。两条都已发、不重渲，这一条只管以后。
+    vs_hook_px = hook_title_px(hook_lines)
 
     if layout == "solo":
         body, panels = _solo_body(cover)
@@ -1968,7 +1979,7 @@ body{{width:{VIDEO_W}px;height:{VIDEO_H}px;overflow:hidden;background:{INK};
   color:{INK};font-size:30px;font-weight:800;letter-spacing:4px;
   padding:11px 26px;border-radius:999px}}
 .copy{{position:absolute;left:66px;right:66px;bottom:150px;z-index:6}}
-.hook{{font-family:'TL Display SC','TL Sans SC',sans-serif;font-size:100px;
+.hook{{font-family:'TL Display SC','TL Sans SC',sans-serif;font-size:{vs_hook_px}px;
   line-height:1.14;color:{TEXT};text-shadow:0 4px 30px rgba(0,0,0,.6)}}
 .score{{margin-top:26px;font-family:'TL Numeral','TL Sans SC',sans-serif;
   font-weight:600;font-size:50px;color:{BRAND}}}
