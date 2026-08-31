@@ -61,7 +61,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 
 from fetch_match_stats_fs import StatsError, find_match  # noqa: E402
-from match_feed import fs_feed, points  # noqa: E402
+from match_feed import fs_feed, points, set_pairs  # noqa: E402
 from match_stat_hooks import collect, stats_block  # noqa: E402
 from find_turning_points import _label, rank_games  # noqa: E402
 from tennislive.research.brief import Chat  # noqa: E402
@@ -69,7 +69,7 @@ from tennislive.zh import player_zh  # noqa: E402
 from tennislive.sources.rankings import fetch_rankings, norm_name, rank_map  # noqa: E402
 from tennislive.research.zh_trends import fetch_zh_hot  # noqa: E402
 from draft_spec import arithmetic_claim_problem, draft_editorial  # noqa: E402
-from reel_facts import verified_match_fact  # noqa: E402
+from reel_facts import reconcile_sets, verified_match_fact  # noqa: E402
 from reel_timing import speech_seconds  # noqa: E402
 
 TURNING_POINT_TOP = 5
@@ -611,9 +611,25 @@ def assemble(*, slug: str, home: str, away: str, event: str, year: int,
         except Exception as exc:  # noqa: BLE001
             notes.append(f"⚠️ 转折局没成（{type(exc).__name__}: {exc}）")
 
+    # 抢七小分＋补上抢七盘的洞：df_mh_1 不列抢七那一局，final_set_scores 对
+    # 抢七盘只能取到 6-6（老链上带抢七的比赛整场判不出赢家）；df_sui_1 的
+    # IG/IH 把两件事一次补齐（语义与判据见 reel_facts.reconcile_sets）。
+    authoritative_tiebreaks: list[tuple[int, int] | None] | None = None
+    if mid and authoritative_scores:
+        try:
+            reconciled = reconcile_sets(authoritative_scores, set_pairs(mid))
+            if reconciled:
+                authoritative_scores, authoritative_tiebreaks = reconciled
+            else:
+                notes.append("⚠️ df_sui_1 的每盘数字和逐局表对不上，"
+                             "抢七小分没拿到（对不上就不猜）")
+        except Exception as exc:  # noqa: BLE001
+            notes.append(f"⚠️ 抢七小分没拿到（{type(exc).__name__}: {exc}）——"
+                         "带抢七的比赛会过不了 result_verified/小分闸，属于该红")
+
     match_fact = verified_match_fact(
         draft.get("cover", {}).get("matchup", []), authoritative_scores,
-        str(mid or ""))
+        str(mid or ""), tiebreaks=authoritative_tiebreaks)
     if match_fact:
         draft["_match"] = match_fact
         draft["cover"].update({

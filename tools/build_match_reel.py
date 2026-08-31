@@ -7112,7 +7112,8 @@ def _topbar_lines(spec: dict) -> tuple[str, str] | None:
     豁免只给 `_LEGACY_NO_TOPBAR` 里那些**已经发出去的**片子：已发的不为版式
     重渲，而那张表有自检，写错名字会红。
     """
-    from reel_facts import result_direction_problem, verified_result_problem
+    from reel_facts import (bare_tiebreak_problem, result_direction_problem,
+                            verified_result_problem)
 
     verified_problem = verified_result_problem(spec)
     if verified_problem:
@@ -7123,6 +7124,11 @@ def _topbar_lines(spec: dict) -> tuple[str, str] | None:
     direction_problem = result_direction_problem(spec)
     if direction_problem:
         raise ReelError(direction_problem)
+    # 抢七盘必须带小分（账号所有者 2026-08-31，判据见函数 docstring）。
+    # 已发的 7 条裸 7-6 挂在 tests 的豁免表里；这儿不豁免——重渲就要修对。
+    tb_problem = bare_tiebreak_problem(spec)
+    if tb_problem:
+        raise ReelError(tb_problem)
     raw = spec.get("topbar")
     if raw is None:
         column = str((spec.get("cover") or {}).get("eyebrow", "")).strip()

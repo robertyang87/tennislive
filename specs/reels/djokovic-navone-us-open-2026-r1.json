@@ -28,7 +28,7 @@
     ],
     "_rank_why": "两人排名双源一致：美网官方 players.json singles_rank（atpd643=5、atpn0bs=49）＋ tennisexplorer 球员页 Current rank（navone『49. / 29.』）。德约是本届 4 号种子（官方 day_8 feed team2.seed=4，记分条上也烧着 4）——种子号和排名是两个数，海报括号里印排名 5，旁白说他是 4 号种子时说的是种子。",
     "winner": "纳沃内",
-    "result": "7-6 5-7 4-6 6-2 6-1",
+    "result": "7-6(5) 5-7 4-6 6-2 6-1",
     "eyebrow": "赛场之上",
     "layout": "solo",
     "subject": "德约科维奇",
@@ -53,7 +53,7 @@
       "_court_why": "美网官方 completed_matches/days/day_8.json（match_id 1148）courtName=Arthur Ashe Stadium；flashscore 同场记着 Playing under a closed roof（顶棚关闭）。",
       "_duration_why": "官方 4:36，分盘 73+58+62+52+31=276 分钟自洽。flashscore df_sui_1 报 1:15+0:58+1:03+0:52（+末盘缺失）合计 4:40、时间戳差 4:40:45——按『比赛用时不要只信 flashscore、以官方为准』取 4:36。"
     },
-    "_result_why": "cover.result 不带抢七小分（`_match` 那两栏由 verified_match_fact 从 set_scores_home_away 机械重建）。首盘小分 7-6(5) 三源一致：flashscore DA÷7/DB÷5、df_sui_1 的 IG÷7/IH÷5、AP 通稿比分 7-6 (5)；写在旁白、push.lead 和小红书正文里，band 版式的比分板是从画面抠出来的真板，小分本来就印在上面。",
+    "_result_why": "首盘抢七小分 (5) 进了 cover.result / topbar.line2 / _match（账号所有者 2026-08-31：「封面比分板上抢七没有小分啊」；此前 verified_result_problem 只按局数机械重建、结构性写不了小分，现在 tiebreaks_home_away 一栏和赛果一起机械重建）。小分三源一致：flashscore DA÷7/DB÷5、df_sui_1 的 IG÷7/IH÷5、AP 通稿比分 7-6 (5)；写在旁白、push.lead 和小红书正文里，band 版式的比分板是从画面抠出来的真板，小分本来就印在上面。",
     "_hook_why": "按『钩子讲整场的过程，不是某一个时刻』：第一行是他扳回 2-1 的那一段（首盘丢了之后 7-5 6-4 连扳），第二行是身体崩掉之后的结果（第四盘 2 局 + 决胜盘 1 局 = 3 局）。不写比分（比分板就在正下方印着五盘），不写身份（39 岁、世界第 5 都在海报别处）。⚠️ 同栏目上一条 djokovic-tirante 的钩子是『三十九岁他扛不住了』——身体那个词那条已经用过，这条改用纯过程，呕吐和医疗暂停留给旁白和正文。两行 6/8 字，94px 地板之上。"
   },
   "_match": {
@@ -87,10 +87,20 @@
         1
       ]
     ],
+    "tiebreaks_home_away": [
+      [
+        7,
+        5
+      ],
+      null,
+      null,
+      null,
+      null
+    ],
     "winner": "纳沃内",
     "loser": "德约科维奇",
-    "winner_result": "7-6 5-7 4-6 6-2 6-1",
-    "loser_result": "6-7 7-5 6-4 2-6 1-6",
+    "winner_result": "7-6(5) 5-7 4-6 6-2 6-1",
+    "loser_result": "6-7(5) 7-5 6-4 2-6 1-6",
     "_direction_why": "flashscore home=Navone M.（AE、AS÷1 赢家标记）、away=Djokovic N.（AF），BA/BB=7:6、BC/BD=5:7、BE/BF=4:6、BG/BH=6:2、BI/BJ=6:1；美网官方 day_8 feed team1=Navone totalSetsWon=3 won=true、team2=Djokovic totalSetsWon=2 won=false 同向；AP 通稿标题『Novak Djokovic loses in opening round of US Open for first time, falling in 5 sets to Mariano Navone』第三处印证。抢七小分 7-6(5) 由 flashscore DA÷7/DB÷5 与 df_sui_1 IG/IH 双源给出。",
     "_upset_why": "官方 flags.upset=true。世界第 49 掀翻 4 号种子、24 冠王的美网首轮首败——这条片子的全部分量就在这儿。"
   },
@@ -253,7 +263,7 @@
   },
   "topbar": {
     "line1": "2026 美网 第一轮",
-    "line2": "纳沃内 7-6 5-7 4-6 6-2 6-1 德约科维奇"
+    "line2": "纳沃内 7-6(5) 5-7 4-6 6-2 6-1 德约科维奇"
   },
   "push": {
     "summary": "德约二十年首次首轮出局",
