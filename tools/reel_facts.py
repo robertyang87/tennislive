@@ -8,6 +8,8 @@ from __future__ import annotations
 
 import re
 
+from spec_wording import outward_deep
+
 #: 完赛盘：任一方 ≥6 局。抢七注脚 (N) 先剥掉再切。
 _SET_TOKEN = re.compile(r"(\d+)-(\d+)")
 _RETIRED = re.compile(r"ret\.?|退赛|w\.?/?o\.?|walkover|不战而胜", re.I)
@@ -19,6 +21,71 @@ _RETIRED = re.compile(r"ret\.?|退赛|w\.?/?o\.?|walkover|不战而胜", re.I)
 #: （「尽量把五盘大战的比分能包括进来」）。主赛第一条片子拿 probe 的
 #: scorebox_guess 对一眼再沿用：阿瑟阿什的图形包可能和资格赛外场那套不同。
 US_OPEN_SCOREBOX = (104, 888, 736, 978)
+
+
+#: 四大满贯（中英两种写法都收）。**男子单打在这四站是五盘三胜**，
+#: 其余一切——WTA 全部、ATP 巡回赛、大满贯女子——都是三盘两胜。
+_GRAND_SLAMS = ("美网", "澳网", "温网", "法网", "us open", "australian open",
+                "wimbledon", "roland", "french open")
+
+
+def decider_set_problem(spec: dict, extra_texts=()) -> str | None:
+    """⭐ **大满贯男子五盘三胜，所以第三盘不是决胜盘。**
+
+    来路：`wu-walton-us-open-2026-r1`（美网男单首轮，7-6(2) 6-2 7-5）的旁白和
+    小红书正文都把第三盘叫「决胜盘」，还跟了一句「输掉这一局比赛就结束了」。
+    账号所有者 2026-08-31 指出来：「大满贯男子是五盘三胜，所以吴易昺第三盘
+    不是决胜盘，也不是输了就输了」——4-5 那一局输掉只是丢掉这一盘（2-1），
+    比赛不会结束。
+
+    ⚠️ **它之所以能一路过闸，是因为这条线上 95% 的片子是三盘两胜**（WTA 全部
+    ＋ ATP 巡回赛），「第三盘＝决胜盘」是一个默认成立到不会被怀疑的习惯——
+    而它恰恰在大满贯男子这一档是错的，也就是美网/澳网/温网/法网期间。
+
+    判据**故意只收这一档，很窄**：赛事是四大满贯之一、两位都是 ATP 球员
+    （按 `stats.*.headshot` 的 `atp-` 前缀认，那是机械的）、而这场**没打满
+    五盘**——此时任何一盘都不是决胜盘。
+
+    ⚠️ **反过来那一半（三盘两胜只打了两盘却提「决胜盘」）故意不收**：
+    存量扫过 4 条，**全是误报**——`rybakina-li`「上一场对卡萨金娜她被拖进了
+    决胜盘」、`wong-gea`「上一轮他 6-7 6-4 6-0 淘汰塞伦多洛，决胜盘 6-0」、
+    `shelton-nakashima-montreal-final` 讲交手史、`landaluce-draper` 讲一个
+    没发生的假设。**说的都是别的比赛**，而机器分不出「这一场」和「另一场」。
+    宽到那一档就是一条天天误报的闸，而人会写豁免去压噪音，把它唯一想拦的
+    那一类一起关掉（`crosses_cut` 那次的老账）。
+
+    真要在男子大满贯里提**别的比赛**的决胜盘，写一句 `_decider_why` 认领。
+    """
+    cover = spec.get("cover") or {}
+    blob = " ".join(str(x) for x in (
+        (spec.get("topbar") or {}).get("line1", "") if isinstance(
+            spec.get("topbar"), dict) else "",
+        cover.get("topic", ""), spec.get("slug", ""))).casefold()
+    if not any(g in blob for g in _GRAND_SLAMS):
+        return None
+    stats = spec.get("stats") if isinstance(spec.get("stats"), dict) else {}
+    heads = [str((stats.get(k) or {}).get("headshot", ""))
+             for k in ("a", "b") if isinstance(stats.get(k), dict)]
+    if not any("atp-" in h for h in heads):
+        return None            # 女子大满贯是三盘两胜，不归这道闸
+    result = str(cover.get("result") or "")
+    if _RETIRED.search(result):
+        return None
+    if len(_SET_TOKEN.findall(re.sub(r"\(\d+\)", "", result))) >= 5:
+        return None            # 真打满五盘了，第五盘就是决胜盘
+    if str(spec.get("_decider_why") or "").strip():
+        return None
+    texts = list(outward_deep(spec)) + [str(t) for t in extra_texts]
+    if not any("决胜盘" in t for t in texts):
+        return None
+    return (
+        f"大满贯男子单打是**五盘三胜**，而这场 cover.result「{result}」没打满"
+        "五盘——任何一盘都不是决胜盘，写「决胜盘」就是一句假话，"
+        "跟着来的「输了这一局比赛就结束了」同样不成立（输掉只是丢一盘）。\n"
+        "  · 收尾那一盘就写「第三盘」/「第四盘」\n"
+        "  · 真要提**别的比赛**的决胜盘（交手史、上一轮），"
+        "写一句 `_decider_why` 认领"
+    )
 
 
 def us_open_match_line(line1) -> bool:

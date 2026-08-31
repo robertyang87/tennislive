@@ -10553,10 +10553,16 @@ def test_文案块的位置不跟着比分板漂(monkeypatch: pytest.MonkeyPatch
     # 「没人写过」，不是「写不出来」。所以这两行断言是一对，缺哪一头都不行：
     # 只留下面那条，有人加一行钩子就静默溢出；只留上面那条，常量往下挪就没有
     # 上限了。
+    #
+    # ⚠️ **2026-08-31 同一天晚些时候，分子又小了一档**：账号所有者「〔封面
+    # 钩子〕高度再小 20%」，钩子的字号从「行越短字越大（≤2 行封顶 124）」收成
+    # 一个数 `HOOK_TITLE_PX = 94`。这笔账因此从 308px 掉到 233px，余量一下子
+    # 宽出 75px——**但 `STORYCOPY_TOP` 没跟着往下挪**，那是另一件事，
+    # 见它上面那段注释里 08-31 那一条。
     assert vp.SOLO_HOOK_MAX_LINES == 2, (
         "solo 钩子的行数上限变了，下面这笔『装不装得下』的账要跟着重算——"
-        "它现在按两行 124px 算，三行 96px 要多 49px。")
-    worst = round(2 * vp.SHORT_HOOK_TITLE_PX * 1.24) + 34 + (76 + 214)
+        f"它现在按两行 {vp.HOOK_TITLE_PX}px 算。")
+    worst = round(2 * vp.HOOK_TITLE_PX * 1.24) + 34 + (76 + 214)
     assert vp.STORYCOPY_TOP + worst <= 1440, (
         f"最坏情况排到 {vp.STORYCOPY_TOP + worst}px，超出 1440 的画布")
 
@@ -11026,53 +11032,35 @@ def _title_px(vp, hook: str) -> int:
     return int(hit.group(1))
 
 
-def test_一两行的短钩子拿到更高的字号上限():
-    """现在唯一的"视觉锤"候选（钩子本身）字号原来是死的 96px 封顶，
-    一个四字爆点和一个九字长句渲出来几乎一样大。"""
-    vp = _vp()
-    assert _title_px(vp, "赢了") == vp.SHORT_HOOK_TITLE_PX
-    assert _title_px(vp, "赢了\n真赢了") == vp.SHORT_HOOK_TITLE_PX
+def test_钩子的字号只有一个数不随行长变大():
+    """账号所有者 2026-08-31：「〔封面钩子〕**高度再小 20%**」。
 
+    钩子原来是「行越短字越大」：≤2 行封顶 124px、≥3 行封顶 96px，再按
+    940/行长 缩。于是同一个栏目的封面一条一个大小——两字爆点 124px、
+    八字 117px、十字 94px。他 2026-08-14 说的本来就是「字号**就保持这种**」
+    （`townsend-osorio`，十字行 → 94px），所以这次是把那句话做到位：
+    **≤10 个字一律 94px**，而 8 字那行 117×0.8 = 93.6 正好落回来，
+    刚好就是他要的那 20%。
 
-def test_三行钩子仍然封顶96不许跟着涨():
-    """`STORYCOPY_TOP` 那段最坏情况的账是按三行 96px 算的——3 行钩子涨了
-    上限就要重新核那笔账，所以短句加成只放开给 1~2 行。"""
-    vp = _vp()
-    assert _title_px(vp, "赢\n了\n啊") == 96
-
-
-def test_长句本来就撑不到新上限不受影响():
-    vp = _vp()
-    long_line = "这是一句写得很长很长根本用不上抬高上限的钩子文案"
-    assert _title_px(vp, long_line) < 96
-
-
-def test_短钩子新上限不会打破三行96px的最坏情况上界():
-    """`SHORT_HOOK_TITLE_PX` 只放开给 ≤2 行，两头都要钉住。
-
-    **相对**：2 行在这个字号下的总高必须仍然矮于 3 行 96px
-    （`STORYCOPY_TOP` 那笔最坏情况的账就是按后者算的），否则放开 1~2 行
-    本身就制造了一个没被那笔账覆盖的新溢出场景。
-
-    **绝对**：2 行这一档也要真的排得进 1440 的画布。只比相对量是不够的——
-    版式一直在往下挪（`STORYCOPY_TOP` 520→580、余量 136px→41px），
-    只做相对比较的话，等哪天布局再收紧，这条判据对短钩子这一档是哑的。
+    ⚠️ 上限收了，**下限那一半原样保留**——见下一条。
     """
     vp = _vp()
-    two_line_worst = round(2 * vp.SHORT_HOOK_TITLE_PX * 1.24)
-    three_line_worst = round(3 * 96 * 1.24)
-    assert two_line_worst < three_line_worst, (
-        f"2 行 {vp.SHORT_HOOK_TITLE_PX}px（{two_line_worst}）已经超过 "
-        f"3 行 96px（{three_line_worst}）——短钩子这一档变成了新的最坏情况，"
-        "得回去重核 STORYCOPY_TOP 那笔账")
+    assert _title_px(vp, "赢了") == vp.HOOK_TITLE_PX == 94
+    assert _title_px(vp, "两次差点丢掉一盘\n三个盘点一个没给") == 94
+    # 八个字那一行按老公式是 940/8=117px，两行 1.24 行高共 290px；
+    # 现在 94px 共 233px——**正好是账号所有者要的那 20%**。
+    assert round(1 - (2 * 94 * 1.24) / (2 * 117 * 1.24), 3) == 0.197
 
-    # 绝对：和 `test_文案块的位置不跟着比分板漂` 用同一套加法
-    # （2026-08-14 药丸删掉之后两处一起去掉了药丸那 138px，见那条测试里的说明）
-    board = 76 + 214
-    stacked = two_line_worst + 34 + board
-    assert vp.STORYCOPY_TOP + stacked <= 1440, (
-        f"2 行 {vp.SHORT_HOOK_TITLE_PX}px 排到 {vp.STORYCOPY_TOP + stacked}px，"
-        "超出 1440 的画布")
+
+def test_一行超过十个字仍然按宽度缩下去():
+    """上限收成一个数之后，**别把「太长就缩」那一半也一起收掉**：
+    存量 48 条长钩子的老海报靠它才排得下（`white-space:nowrap`，
+    不缩就直接顶出画布），`_hook_lines_fit_the_title` 那道闸也靠
+    「渲出来低于 94」认出它们。"""
+    vp = _vp()
+    long_line = "这是一句写得很长很长根本用不上抬高上限的钩子文案"
+    assert _title_px(vp, long_line) < vp.HOOK_TITLE_PX
+    assert _title_px(vp, "一" * 25) == 37
 
 
 #: 比分板那几道框线共用的白色。**一个出处**：每一条 `border` 都得是它。

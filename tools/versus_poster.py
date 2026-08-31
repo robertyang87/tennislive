@@ -1071,26 +1071,35 @@ def _cutout_body(cover: dict, versus: dict, names: list) -> tuple[str, str]:
     return body, extra
 
 
-# 短钩子（≤2 行）的标题字号上限。见 `_solo_body` 里的注释：2 行 124px 的总高
-# （2×124×1.24≈308px）比 3 行 96px 的总高（357px，`STORYCOPY_TOP` 那笔"最坏
-# 情况"的账基于这个数）矮，所以只放开 1~2 行不会打破已经验证过的上界。
-SHORT_HOOK_TITLE_PX = 124
-LONG_HOOK_TITLE_PX = 96
 # 标题可用宽度：画布 1080 宽，左右各留 70px。一个汉字约占一个字号的宽，
 # 所以「最长那一行有几个字」直接决定字号——这是下面 `hook_title_px()` 的全部。
 TITLE_WIDTH_PX = 940
 
-# ⭐ **字号下限。** 账号所有者 2026-08-14（看了 `townsend-osorio` 那张海报）：
-# 「以后封面下面标题的字号就保持这种，不要再小了，**所以以后要控制每行文字的
-# 数量**」。那张的最长行是 10 个字符 → 940/10 = 94px，就是这个数。
+# ⭐⭐ **钩子的字号，一个数。** 账号所有者两次说的其实是同一件事：
+#
+#   2026-08-14（看了 `townsend-osorio`）：「以后封面下面标题的字号**就保持
+#   这种**，不要再小了，所以以后要控制每行文字的数量」——那张最长行 10 个
+#   字符，940/10 = **94px**，也就是他点头的那个大小。
+#   2026-08-31（看了 `wu-walton-us-open-2026-r1`）：「〔封面钩子〕**高度再小
+#   20%**」——那条钩子最长行 8 个字符，按老公式渲出来是 940/8 = **117px**，
+#   ×0.8 = 93.6，**正好落回 94**。
+#
+# 所以这一条不是推翻 08-14，是把它照字面做到位：**94px 从「下限」变成「就是
+# 这个数」**。老公式的上限（≤2 行 124px / ≥3 行 96px）意味着行越短字越大——
+# 同一个栏目的封面因此一条一个大小（117/124/94 都出现过），而他 08-14 要的
+# 本来就是「保持这种」。
+#
+# ⚠️ **只有上限变了，下限那一半原样保留**：行超过 10 个字仍然按 940/行长
+# 缩下去（`min()` 的另一支），存量 48 条长钩子的老海报一个像素不变，
+# 而 `_hook_lines_fit_the_title` 那道闸照旧靠「渲出来低于 94」认出它们。
 #
 # ⚠️ **这条真正约束的是文案，不是版式。** 字号是从行长算出来的，
-# 所以「字号不许更小」＝「每行不许更长」。存量 48 条 solo 封面里最狠的一条
+# 所以「字号不许更小」＝「每行不许更长」。存量里最狠的一条
 # （`jodar-fils-montreal-qf`）最长行 25 个字符，渲出来只有 37px——在信息流的
 # 缩略图里那一行基本读不出来，而封面是唯一决定人点不点的一屏。
-MIN_HOOK_TITLE_PX = 94
+HOOK_TITLE_PX = 94
 # 每行的字符上限**从上面两个数推出来**，不另写一个数——一个数写两处必分叉。
-HOOK_MAX_CHARS = TITLE_WIDTH_PX // MIN_HOOK_TITLE_PX
+HOOK_MAX_CHARS = TITLE_WIDTH_PX // HOOK_TITLE_PX
 
 #: solo 封面的钩子最多几行。**这不是文风偏好，是版式的硬上限**：
 #: `STORYCOPY_TOP` 是按两行的高度顶到安全线的（见它上面那段实测），
@@ -1104,20 +1113,20 @@ def hook_title_px(lines: list[str]) -> int:
     """钩子标题的字号：**按最长那一行算**，别写死。
 
     左右各留 70px，可用 `TITLE_WIDTH_PX`；一个汉字约占一个字号的宽，
-    写死 96px 时 10 个字就是 960px——**顶出去自动折行**，而钩子本来已经手写
-    好了断行，再折一次就多出一个孤行。
+    写死一个大数时 10 个字就顶出去**自动折行**，而钩子本来已经手写好了断行，
+    再折一次就多出一个孤行。
 
-    **短句的上限比长句高一档，但只放开给 1~2 行的钩子**（见
-    `SHORT_HOOK_TITLE_PX` 上面那段账）。
+    **所以只有一支是活的：行长 ≤10 就是 `HOOK_TITLE_PX`（94px），
+    更长的按 940/行长 缩下去。** 上限原来还分「短句 124 / 长句 96」两档
+    （行越短字越大），2026-08-31 收成一个数，来路见 `HOOK_TITLE_PX` 那段。
 
     ⚠️ 这个函数是字号的**唯一出处**：`_solo_body` 渲海报用它，
     `build_match_reel.validate_spec` 的行长闸也用它。两处各算一遍必分叉，
     而分叉的样子是「闸放过了一条渲出来更小的钩子」——不报错。
     """
     if not lines:
-        return SHORT_HOOK_TITLE_PX
-    cap = SHORT_HOOK_TITLE_PX if len(lines) <= 2 else LONG_HOOK_TITLE_PX
-    return min(cap, int(TITLE_WIDTH_PX / max(len(ln) for ln in lines)))
+        return HOOK_TITLE_PX
+    return min(HOOK_TITLE_PX, int(TITLE_WIDTH_PX / max(len(ln) for ln in lines)))
 
 # 台头药丸的顶边（px，画布 1080×1440）。**老版一行赛果时药丸落在 502~536**
 # （量的是已发的 eala-parks / shang-rublev 两张海报），520 取在中间。
@@ -1168,6 +1177,17 @@ def hook_title_px(lines: list[str]) -> int:
 # ⚠️ 存量 161 条 solo 封面**全是 2 行**（量过，不是印象），3 行只是
 # `hook_title_px` 支持的一种可能——它没被用过，但没有任何闸拦着它。
 # 再往下移之前先重跑上面那四版，别照抄这里的数。
+#
+# ⭐ **2026-08-31 晚些时候钩子缩了 20%（117→94px），而这个数故意没跟着动。**
+# 钩子矮了 57px，所以比分板整块跟着上移 57px，画布底下多出 57px 空档。
+# 渲过两版并排比（`top=790` vs `top=847`，847 那版比分板正好回到原位）——
+# **取 790**，理由就写在这个常量自己的来路里：账号所有者 08-07/08-09/08-12
+# 三次「往下移」要的是「**不要过多遮挡主体背景图**」，而钩子变矮本身就少挡
+# 了 57px；把它推回去等于把刚让出来的那块又盖上。
+# ⚠️ 顺带把余量重算了一遍（`test_文案块的位置不跟着比分板漂` 里那笔加法是
+# 权威）：两行 94px 的最坏情况是 `233 + 34 + 290 = 557`，`790+557 = 1347`，
+# **离画布底 93px**，比原来的 13px 宽出一大截。
+# **下次再收到「往下挪」时有真余量了，但别拿这一条当授权自己去挪。**
 STORYCOPY_TOP = 790
 
 
@@ -1867,8 +1887,19 @@ def build_poster(cover: dict, out: Path, layout: str = "diagonal") -> Path:
                 "赛场之上的海报要两个人的中文名：versus.names = [上格, 下格]。\n"
                 "名字查 src/tennislive/zh/player_names_top500.json，别手打。")
 
-    hook = "".join(f"<div>{line.strip()}</div>"
-                   for line in str(cover.get("hook", "")).split("\n") if line.strip())
+    hook_lines = [ln.strip() for ln in str(cover.get("hook", "")).split("\n")
+                  if ln.strip()]
+    hook = "".join(f"<div>{line}</div>" for line in hook_lines)
+    # ⭐ **VS 那几版的钩子字号和 solo 走同一个出处。** 账号所有者 2026-08-31
+    # 把钩子收成一个数（`HOOK_TITLE_PX`）之后：「钩子文案大小修改后，同步到
+    # 全局」——`.hook` 原来写死 100px，和 solo 的 94px 差着一档，同一个栏目
+    # 的封面两种大小。`.copy` 是 `left:66px right:66px`，可用 948px，和
+    # `TITLE_WIDTH_PX` 的 940 几乎一样，所以同一个公式直接适用。
+    # ⚠️ 顺带修掉两条存量的静默溢出：`jodar-fritz`（最长行 10 字）和
+    # `wang-pareja`（11 字）在 100px 下要 1000/1100px，超过 948——`.hook`
+    # 没有 `nowrap`，所以它们是**默默多折一行**，不报错。按公式算就是
+    # 94/85px，装得下。两条都已发、不重渲，这一条只管以后。
+    vs_hook_px = hook_title_px(hook_lines)
 
     if layout == "solo":
         body, panels = _solo_body(cover)
@@ -1948,7 +1979,7 @@ body{{width:{VIDEO_W}px;height:{VIDEO_H}px;overflow:hidden;background:{INK};
   color:{INK};font-size:30px;font-weight:800;letter-spacing:4px;
   padding:11px 26px;border-radius:999px}}
 .copy{{position:absolute;left:66px;right:66px;bottom:150px;z-index:6}}
-.hook{{font-family:'TL Display SC','TL Sans SC',sans-serif;font-size:100px;
+.hook{{font-family:'TL Display SC','TL Sans SC',sans-serif;font-size:{vs_hook_px}px;
   line-height:1.14;color:{TEXT};text-shadow:0 4px 30px rgba(0,0,0,.6)}}
 .score{{margin-top:26px;font-family:'TL Numeral','TL Sans SC',sans-serif;
   font-weight:600;font-size:50px;color:{BRAND}}}
