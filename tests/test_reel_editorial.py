@@ -44,6 +44,8 @@ import inspect
 import json
 import re
 import sys
+
+import pytest
 from difflib import SequenceMatcher
 from pathlib import Path
 
@@ -326,6 +328,39 @@ def test_solo封面的钩子每行不许超过十个字():
         f"{versus_poster.HOOK_MAX_CHARS} 个字符——**改文案，不要去调字号**。"
     )
     assert len(_solo_hook_px()) >= 40, "只扫到几条 solo 钩子，判据的主语像是没了"
+
+
+def test_solo封面的钩子最多两行():
+    """第三行会把比分板的输家那一行推出画布，**而没有任何东西会报错**。
+
+    2026-08-31 账号所有者第五次要求「标题往下再挪一点」（`STORYCOPY_TOP`
+    750→790）。挪得动的前提是版式的最坏情况从「三行 96px」收成「两行 124px」
+    ——所以行数从「没人写过」变成「写不出来」，这条闸就是那次改动的另一半。
+
+    ⚠️ **零豁免，两头都钉**：存量一条都不许超（量过：161 条 solo 全是 2 行），
+    而且 `build_match_reel` 里那道闸真的拦得住——只扫存量的话，闸被删掉了
+    这条测试照样绿（存量本来就不超）。
+    """
+    reel = _build_match_reel()
+    versus_poster = _versus_poster()
+    over = {s: len(_hook_lines(spec)) for s, spec in _specs()
+            if str((spec.get("cover") or {}).get("layout", "")).strip() == "solo"
+            and len(_hook_lines(spec)) > versus_poster.SOLO_HOOK_MAX_LINES}
+    assert not over, (
+        f"这几条 solo 封面的钩子超过 {versus_poster.SOLO_HOOK_MAX_LINES} 行：{over}。"
+        "第三行会把比分板推出画布——把内容并进两行，别加行。")
+
+    good = {"slug": "闸自己的用例", "cover": {"layout": "solo", "hook": "两行\n就够"}}
+    reel._hook_lines_fit_the_title(good)          # 两行放行
+    bad = {"slug": "闸自己的用例",
+           "cover": {"layout": "solo", "hook": "第一行\n第二行\n第三行"}}
+    with pytest.raises(reel.ReelError, match="最多"):
+        reel._hook_lines_fit_the_title(bad)
+    # ⚠️ 行数**不吃** `_LEGACY_LONG_HOOKS` 的豁免：那张表放行的是「字号偏小」
+    # （已发的不重渲），而行数超了是版式溢出，重渲与否都会被切。
+    legacy = dict(bad, slug=sorted(reel._LEGACY_LONG_HOOKS)[0])
+    with pytest.raises(reel.ReelError, match="最多"):
+        reel._hook_lines_fit_the_title(legacy)
 
 
 def test_钩子豁免表里的每一条都还真的超着():
