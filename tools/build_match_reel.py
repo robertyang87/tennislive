@@ -1121,6 +1121,11 @@ def segment_board_edge(edges: list[tuple[float, int | None]],
     return (max(vals) if vals else None), hist
 
 
+# 邻段读数互相框的容差（源片像素）。现量本身对真值抖 ±5（578/617/652 对
+# 583/618/656），比这大的分歧才算「和邻段打架」。
+_BOARD_MONO_TOL = 8
+
+
 def resolve_board_insets(sources: dict[str, Path], segments: list["Segment"],
                         samples: int = 6, runner=subprocess.run) -> None:
     """把开了 `score_inset: true` 的段的板右缘**现量出来**，就地写回 segment。
@@ -1135,10 +1140,25 @@ def resolve_board_insets(sources: dict[str, Path], segments: list["Segment"],
     写两处必分叉」）。成本跟**段数**走不跟片长走——每段 `samples` 个关键帧
     seek，不整条解一遍。
 
-    ⚠️ 量不出来（板不在画面里、或者采样点全落在切走的镜头上）**不报错**，
-    退回 spec 的 `scorebox`（最宽那一档）并说一声——那正是老行为，看得见
-    （多盖一截球场），不是静默的坏。
+    ⭐⭐ 账号所有者 2026-08-31：「固定长度不太合适，会截取太多空的画面遮挡了
+    真实画面。」某一段自己量不出（特写做背景、球员贴板）时，原来退回 spec 的
+    scorebox 最宽兜底——那正是被点掉的「固定长度」。现在先退**时间单调性**：
+    同一条源片是按时间顺序剪的集锦，板每打完一盘 +38px、**从不变窄**，所以
+    「后面段量到的最小值」永远是本段的安全上界（≥ 本段真宽，且比最宽兜底紧
+    得多）。按可信度分三档，逐档退：
+
+      本段两票起步的可信读数        → 直接用，永远不被邻段改写
+      本段只有孤票/一帧都没检出     → 用后面段可信读数的最小值
+      后面也没有任何可信读数        → 孤票封顶兜底（老行为），或最宽兜底
+
+    ⚠️ 补齐一律往**宽**的那头补（用后段的下确界，不用前段的上确界）：前段的
+    读数是本段真宽的**下界**——中间要是正好打完一盘，按它裁会把新长出来的
+    比分列藏在贴片底下，而那是静默的失败。宁可偏宽几十像素，不许裁窄。
+
+    ⚠️ 量不出来且单调性也帮不上（后面没有可信读数）**不报错**，退回 spec 的
+    `scorebox`（最宽那一档）并说一声——看得见（多盖一截球场），不是静默的坏。
     """
+    picked: dict[int, tuple[int | None, list[tuple[int, int]], bool]] = {}
     for i, seg in enumerate(segments):
         if not (seg.score_inset and seg.score_inset_auto):
             continue
@@ -1150,19 +1170,49 @@ def resolve_board_insets(sources: dict[str, Path], segments: list["Segment"],
         times = [seg.start + span * (k + 0.5) / samples for k in range(samples)]
         edges = board_right_edges(Path(src), (x0, y0, x1, y1), times, runner)
         edge, hist = segment_board_edge(edges)
+        # segment_board_edge 有两票起步的桶时返回的就是那一档——「可信」
+        # 由此推出，不用改它的签名
+        picked[i] = (edge, hist, edge is not None
+                     and any(n >= 2 for _v, n in hist))
+
+    def _later_floor(seg: "Segment") -> int | None:
+        """后面段可信读数的最小值——本段真宽的安全上界（板从不变窄）。
+        ⚠️ 只让**可信**读数当界、只给**不可信**的段补：可信读数永远原样用，
+        所以不存在两个读数互相钳制的环。"""
+        vals = [picked[j][0] for j in picked
+                if segments[j].source == seg.source and picked[j][2]
+                and segments[j].start > seg.start
+                and picked[j][0] is not None]
+        return min(vals) if vals else None
+
+    for i, (edge, hist, trusted) in picked.items():
+        seg = segments[i]
+        x0, y0, x1, y1 = seg.score_inset
         shown = "  ".join(f"{v}×{n}" for v, n in hist) or "一帧都没检出"
-        if edge is None:
+        note = ""
+        if trusted:
+            final = edge
+            if len(hist) > 1:
+                note = (" ⚠️ 这一段里板不止一种宽度（多半是一盘正好在段中"
+                        "打完），按最宽的裁——要裁得更紧就把这一段拆开")
+        elif (floor := _later_floor(seg)) is not None:
+            final = floor
+            note = ("；本段读数撑不起两票（多半是特写做背景或球员贴板），"
+                    f"按时间单调性用后面段可信读数的最小值 {floor}——"
+                    "板从不变窄，它是本段的安全上界，比最宽兜底紧")
+        elif edge is not None:
+            final = edge
+            note = "；只有孤票、后面也没有可信读数，按最宽那一票（封顶兜底）"
+        else:
             print(f"    [score] 第 {i + 1} 段量不出板的右缘（{shown}），"
                   f"退回 spec 的 scorebox 右缘 {x1}——板可能整段不在画面里"
                   "（回放/切走），那种段本来就该写 score_inset: false")
             continue
-        got = min(int(edge) + BOARD_EDGE_PAD, x1)
+        got = min(int(final) + BOARD_EDGE_PAD, x1)
         seg.score_inset = (x0, y0, got, y1)
-        grew = (" ⚠️ 这一段里板不止一种宽度（多半是一盘正好在段中打完），"
-                "按最宽的裁——要裁得更紧就把这一段拆开") if len(hist) > 1 else ""
-        print(f"    [score] 第 {i + 1} 段板右缘现量 {int(edge)}"
+        print(f"    [score] 第 {i + 1} 段板右缘取 {int(final)}"
               f"（+{BOARD_EDGE_PAD} 余量 → 裁到 {got}，spec 的兜底是 {x1}）"
-              f"；采样 {shown}{grew}")
+              f"；采样 {shown}{note}")
 
 
 def require_live_sound(source: Path, spec: dict) -> float | None:
