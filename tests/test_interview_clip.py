@@ -3152,39 +3152,87 @@ def test_分歧率认领要钉在当时那次观测上():
         0.124, path)
 
 
-# 规矩定下来**之前**已经发出去的两个文件。已发的片子不为了措辞重渲——
+# 规矩定下来**之前**已经发出去的那批。已发的片子不为了措辞重渲——
 # `eala-svitolina-dc2026-qf.json` 的 `_event_why` 里账号所有者原话就是
 # 「不补了」，这条规矩同理不补。**只许减不许加**：修好一个就从下面删掉一个，
 # 别让它变成一张许可证。
-_LEGACY_QUALIFIER_NAMES = {
+#
+# ⚠️ 2026-09-01 判据翻面之后**整张表换了主语**：原来挂的是「用了强字」的
+# 4 个文件，现在挂的是「用了 1/4 决赛 / 1/8 决赛 / 半决赛」的这批。
+_LEGACY_ROUND_NAMES = {
     "alexandrova-sabalenka-tor2026-r16.json",
-    "alexandrova-sabalenka-tor2026-r16.xhs.txt",
+    "bejlek-keys-cincinnati-2026-qf.json",
+    "cobolli-jodar-cincinnati-2026-r16.json",
+    "cobolli-paul-cincinnati-2026-qf.json",
+    "eala-mcnally-toronto-2026-r3.json",
+    "eala-osaka-dc2026-sf-studio.json",
+    "eala-osaka-dc2026-sf.json",
     "eala-svitolina-dc2026-qf.json",
+    "fils-cobolli-cincinnati-2026-sf-interview.json",
+    "gauff-bejlek-cincinnati-2026-sf.json",
+    "gauff-kostyuk-cincinnati-2026-qf.json",
+    "keys-wangxiyu-cincinnati-2026-r16.json",
+    "nakashima-fritz-cincinnati-2026-qf.json",
+    "nishikori-sakamoto-us-open-2026-q3-farewell.json",
+    "pegula-anisimova-cincinnati-2026-qf.json",
+    "pegula-cirstea-cincinnati-2026-r16.json",
+    "pegula-swiatek-cincinnati-2026-sf.json",
+    "rybakina-gauff-tor2026-sf.json",
+    "rybakina-osaka-tor2026-qf.json",
+    "rybakina-swiatek-tor2026-final.json",
+    "shelton-mensik-mtl2026-qf.json",
+    "swiatek-parry-cincinnati-2026-r16.json",
+    "swiatek-sakkari-cincinnati-2026-r3.json",
+    "swiatek-shnaider-tor2026-qf.json",
+    "tiafoe-musetti-cincinnati-2026-qf-interview.json",
+    "tiafoe-nakashima-cincinnati-2026-sf-interview.json",
+    "zheng-liutova-us-open-2026-r1-interview.json",
+    "alexandrova-sabalenka-tor2026-r16.xhs.txt",
+    "bejlek-keys-cincinnati-2026-qf.xhs.txt",
+    "cobolli-jodar-cincinnati-2026-r16.xhs.txt",
+    "cobolli-paul-cincinnati-2026-qf.xhs.txt",
+    "eala-osaka-dc2026-sf-studio.xhs.txt",
+    "eala-osaka-dc2026-sf.xhs.txt",
+    "eala-pegula-dc2026-final.xhs.txt",
     "eala-svitolina-dc2026-qf.xhs.txt",
+    "fils-cobolli-cincinnati-2026-sf-interview.xhs.txt",
+    "gauff-bejlek-cincinnati-2026-sf.xhs.txt",
+    "gauff-kostyuk-cincinnati-2026-qf.xhs.txt",
+    "keys-wangxiyu-cincinnati-2026-r16.xhs.txt",
+    "nakashima-fritz-cincinnati-2026-qf.xhs.txt",
+    "pegula-anisimova-cincinnati-2026-qf.xhs.txt",
+    "pegula-cirstea-cincinnati-2026-r16.xhs.txt",
+    "pegula-swiatek-cincinnati-2026-sf.xhs.txt",
+    "rybakina-gauff-tor2026-sf.xhs.txt",
+    "rybakina-osaka-tor2026-qf.xhs.txt",
+    "rybakina-swiatek-tor2026-final.xhs.txt",
+    "shelton-mensik-mtl2026-qf.xhs.txt",
+    "swiatek-parry-cincinnati-2026-r16.xhs.txt",
+    "tiafoe-musetti-cincinnati-2026-qf-interview.xhs.txt",
+    "tiafoe-nakashima-cincinnati-2026-sf-interview.xhs.txt",
+    "zheng-liutova-us-open-2026-r1-interview.xhs.txt",
 }
 
 
-def test_轮次要写半决赛不写四强():
-    """账号所有者 2026-08-02：「以后不要用四强八强之类的，国内通常用半决赛
-    1／4 决赛 1/8 决赛之类的。再往前就第几轮好了」。
+def test_轮次写N强不写分数式():
+    """账号所有者 2026-09-01：「**以后，8 强、4 强、决赛，这种这样说，
+    不要说 1/4 决赛和什么 1/8 决赛之类的了。**」
 
-    这条规矩早就在「赛场之上」那条线（`build_match_reel`）落了闸
-    （`test_轮次要写半决赛不写四强`，`tests/test_match_reel.py`），
-    「赛后开麦」这条线一直没跟上——谢尔顿那条 spec 翻译时写进去了三处
-    「四强」（`你现在又进四强了` / `四强里可能会有` / `四强赛都打到了`），
-    一次都没被拦住，直到重新审这条片子时才发现。补上同一道闸，别的
-    interview spec 重蹈覆辙。
+    ⚠️ 这条**整个翻了个面**（2026-08-02 定的是反过来那一套），形状没变、
+    主语换了。来路和边界见 `tests/test_match_reel.py::test_轮次写N强不写分数式`
+    的 docstring——那条是同一条规矩在「赛场之上」那条线上的闸。
+
+    ⚠️ **正则从 `tools/spec_wording.py` import，不再自己抄一份**：翻面时发现
+    这儿原来手抄了一遍 match-reel 那个正则，两处各写一遍必然分叉——而分叉的
+    样子是「同一条规矩两条线松紧不一」，不报错。
 
     **只查会发出去的字段**：`zh`（对话字幕，读者读到的正是这个）、
     `push.*`、`cover.*`、`takeaway.*`，以及 `.xhs.txt` 小红书正文。
     `_` 开头的是写给下一个人的注解（`_note` / `_why` / `_event_why` 这类，
-    里面正引着账号所有者那句原话，或者是在解释这场球本身打到了第几轮）——
-    连它一起扫会把「把规矩记下来」判成「又违反了规矩」，同一个错这个仓库
-    已经犯过好几次。
+    里面正引着账号所有者那两句原话，含被废掉的旧叫法）——连它一起扫会把
+    「把规矩记下来」判成「又违反了规矩」，同一个错这个仓库已经犯过好几次。
     """
-    import re as _re
-
-    bad = _re.compile(r"[四八]强|十六强|三十二强|(?<!\d)(?:16|32|64)\s*强")
+    from tools.spec_wording import FRACTION_ROUND as bad  # noqa: PLC0415
 
     def outward(obj):
         if isinstance(obj, dict):
@@ -3209,15 +3257,15 @@ def test_轮次要写半决赛不写四强():
         if hits:
             offenders[path.name] = hits
 
-    fresh = {k: v for k, v in offenders.items() if k not in _LEGACY_QUALIFIER_NAMES}
+    fresh = {k: v for k, v in offenders.items() if k not in _LEGACY_ROUND_NAMES}
     assert not fresh, (
-        f"这些地方还在写强字轮次：{fresh}。"
-        "改成 半决赛 / 1/4 决赛 / 1/8 决赛，再往前写「第几轮」。")
-    # ⚠️ `set(offenders) <= _LEGACY_QUALIFIER_NAMES`（上面那条断言）只挡得住
+        f"这些地方还在写分数式轮次或「半决赛」：{fresh}。"
+        "改成 8 强 / 4 强 / 决赛，再往前写「第几轮」。")
+    # ⚠️ `set(offenders) <= _LEGACY_ROUND_NAMES`（上面那条断言）只挡得住
     # 「有真违规却没被豁免」，挡不住反过来那种：豁免表里混进一个根本不违规
     # （或者压根不存在）的名字——那种名字会一直静静地绿着，是一盏恒真的灯。
     # 这条 match-reel 那份原版没有，是反向验证时才发现的漏洞，这里补上。
-    missing = _LEGACY_QUALIFIER_NAMES - set(offenders)
+    missing = _LEGACY_ROUND_NAMES - set(offenders)
     assert not missing, (
         f"豁免表里这些条目已经不违规了（或者文件名写错了）：{sorted(missing)}。"
         "清单只许减不许加——修好了就把它删掉，别留着变成一张许可证。")
@@ -3317,7 +3365,7 @@ def test_文案不许再提中英双语字幕():
     全程。」或「🎤 中英双语字幕」收尾——**那是制作规格，不是这场球的内容**，
     读者关心的是发生了什么，不是我们用什么字幕方案做的。
 
-    判据只查会发出去的字段（同 `test_轮次要写半决赛不写四强` 的口径）：
+    判据只查会发出去的字段（同 `test_轮次写N强不写分数式` 的口径）：
     `_` 开头的注解跳过——`_copy_note` 里正引着账号所有者这句原话，
     连它一起扫会把「把规矩记下来」判成「又违反了规矩」。
 

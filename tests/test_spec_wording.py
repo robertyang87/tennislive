@@ -1,10 +1,12 @@
 """措辞判据的单一出处 + 自动链发布前执法（2026-08-26 内容自动化盘点）。
 
-来路：几成几/写秒/报到分/强字轮次/爱局/要到/盘点主语这批判据原来只活在
+来路：几成几/写秒/报到分/轮次叫法/爱局/要到/盘点主语这批判据原来只活在
 pytest 里，而自动出片链（备料 → 提升 → 渲染 → 发布）用 GITHUB_TOKEN 直推
 main、**不触发 CI**——模型/自动产的 spec 从生成到发进微信一次都没被扫过。
 已经漏过一条（tiafoe-musetti-cincinnati-2026-qf 带着「7点05分」推送，事后
 挂豁免表），装闸当天又在 pending 里抓到一条现行（musetti-zheng 的「十六强」）。
+⚠️ 轮次那一条 2026-09-01 翻过面：现在拦的是「1/4 决赛 / 1/8 决赛 / 半决赛」，
+放行「8 强 / 4 强 / 决赛」，所以这儿的坏样本用的是分数式。
 
 现在正则/豁免表/扫描面收在 tools/spec_wording.py 一份，三方共用：
 - pytest（全库扫描 + 豁免表自检，判据在 test_reel_editorial / test_match_reel）
@@ -29,7 +31,7 @@ from tools.spec_wording import (  # noqa: E402
 
 def _bad_spec() -> dict:
     return {
-        "cover": {"hook": "他打进四强"},
+        "cover": {"hook": "他打进1/4决赛"},
         "push": {"summary": "一发只进了三成四",
                  "lead": "中英双语字幕，全程。"},
         "segments": [
@@ -44,7 +46,7 @@ def _bad_spec() -> dict:
 def test_八类措辞违规一次全抓出来():
     problems = check_spec_wording(_bad_spec(), "not-in-any-legacy", None)
     joined = "\n".join(problems)
-    for needle in ("几成几", "写成了秒", "报到了分钟", "强字", "爱局",
+    for needle in ("几成几", "写成了秒", "报到了分钟", "分数式", "爱局",
                    "要到", "谁在救", "制作规格"):
         assert needle in joined, f"「{needle}」那一类没抓出来：\n{joined}"
 
@@ -88,7 +90,9 @@ def test_干净的spec一条不报():
             "push": {"summary": "掀翻世界第十六"},
             "segments": [{"narration": "夜里十一点多开球，百分之六十四的一发。"
                                        "他面对七个破发点，救下六个。"}],
-            "topbar": {"line1": "ATP1000 辛辛那提 1/4 决赛"}}
+            # 顶栏 2026-09-01 进了扫描面（烧在画面上），所以这儿要写新写法——
+            # 它顺带充当「N 强不许被误伤」在 topbar 那一面的反面锚点
+            "topbar": {"line1": "ATP1000 辛辛那提 8强"}}
     assert check_spec_wording(spec, "fresh-slug", None) == []
 
 
@@ -117,18 +121,18 @@ def test_出片入口在load_spec之后模式分发之前执法(tmp_path):
     # 小红书正文也在扫描面里：spec 干净、正文违规，同样要红
     ok_spec = {"cover": {}, "push": {}, "segments": [], "topbar": {}}
     (tmp_path / "fresh-model-spec.xhs.txt").write_text(
-        "他一路打进八强。", encoding="utf-8")
+        "他一路打进1/8决赛。", encoding="utf-8")
     try:
         reel.enforce_spec_wording(ok_spec, spec_path)
     except reel.ReelError as exc:
-        assert "强字" in str(exc)
+        assert "分数式" in str(exc)
     else:
-        raise AssertionError("正文里的强字轮次没被拦下")
+        raise AssertionError("正文里的分数式轮次没被拦下")
 
 
 def _bad_interview_spec() -> dict:
     return {
-        "push": {"summary": "他打进四强后的场上采访",
+        "push": {"summary": "他打进1/4决赛后的场上采访",
                  "lead": "中英双语字幕，全程。一发只进了三成四。",
                  "_note": "注解里的爱局不算数"},
         "takeaway": {"close": {
@@ -146,7 +150,7 @@ def test_采访线转正的措辞判据一次全抓出来():
     problems = check_interview_copy_wording(
         _bad_interview_spec(), "完整视频保留中英字幕。")
     joined = "\n".join(problems)
-    for needle in ("几成几", "写成了秒", "报到了分钟", "强字", "爱局",
+    for needle in ("几成几", "写成了秒", "报到了分钟", "分数式", "爱局",
                    "要到", "制作规格"):
         assert needle in joined, f"「{needle}」那一类没抓出来：\n{joined}"
     # zh 引语译文故意不在面里：他真说了「七成」只能照实译（见
@@ -167,7 +171,7 @@ def test_采访线干净的文案一条不报():
 
 def test_采访草稿转正那一刻也要过全套措辞判据():
     """原来那儿只拦 BILINGUAL_MENTION 一条——模型/模板写回 push/takeaway 的
-    几成几、强字轮次同样绕过 CI（自动链直推 main）。跳过不炸：草稿留在
+    几成几、轮次叫法同样绕过 CI（自动链直推 main）。跳过不炸：草稿留在
     原地等终审，别把一批草稿的提升整个带崩。"""
     body = Path("tools/promote_interview_draft.py").read_text("utf-8")
     assert "check_interview_copy_wording" in body
@@ -185,7 +189,7 @@ def test_采访草稿转正那一刻也要过全套措辞判据():
 def test_采访模板产出的文案本身要过全套判据():
     """上一条是源码扫描（防「把规格话术写回模板」），这条真调模板：
     xhs_copy 的产出直接过 check_interview_copy_wording——源码扫描只认
-    BILINGUAL 那几个词，模板哪天写进「几成几」「四强」之类，只有这条抓得到。"""
+    BILINGUAL 那几个词，模板哪天写进「几成几」「1/4 决赛」之类，只有这条抓得到。"""
     sys.path.insert(0, str(Path("tools").resolve()))
     from promote_interview_draft import xhs_copy  # noqa: PLC0415
 

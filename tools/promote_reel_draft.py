@@ -161,12 +161,18 @@ def promote(draft: dict) -> dict:
     duration_data = "data:application/json," + quote(json.dumps(
         {"duration": duration, "source": "structured match statistics"},
         ensure_ascii=False, separators=(",", ":")))
+    # ⚠️ 轮次一律过 `round_display`：内部那两套轮次名产的是「半决赛」
+    # 「四分之一决赛」，而 topic 和下面的 topbar.line1 都是**会发出去的字段**
+    # ——不转的话每一条自动草稿都会被同一个文件里那道零豁免的措辞闸拦下，
+    # 草稿转不了正、链子静静卡住。
+    from spec_wording import round_display  # noqa: PLC0415
+    round_out = round_display(production["round"])
     cover.update({
         "eyebrow": "赛场之上",
         "layout": "solo",
         "subject": str(visual_cover["subject"]),
         "hook": hook,
-        "topic": f"{production['event']} {production['round']}",
+        "topic": f"{production['event']} {round_out}",
         "winner": match["winner"],
         "result": match["winner_result"],
         "scoreboard": {
@@ -182,7 +188,7 @@ def promote(draft: dict) -> dict:
         "cover": cover,
         "editorial": editorial,
         "topbar": {
-            "line1": f"{production['year']} {production['event']} {production['round']}",
+            "line1": f"{production['year']} {production['event']} {round_out}",
             "line2": f"{match['winner']} {match['winner_result']} {match['loser']}",
         },
     })

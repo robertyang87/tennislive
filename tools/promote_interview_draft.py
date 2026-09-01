@@ -34,6 +34,7 @@ sys.path.insert(0, str(ROOT / "tools"))
 
 from tennislive.zh import player_zh  # noqa: E402
 from interview_source_gate import finalize_source_contract  # noqa: E402
+from spec_wording import round_display  # noqa: E402
 
 SPECS = ROOT / "specs" / "interviews"
 
@@ -262,7 +263,11 @@ def promote(draft: dict, opponent: tuple[str, str, str], details: dict | None = 
         spec["cover"] = {
             "frame_at": round(max(1.0, min(duration * 0.55, duration - 1.0)), 1),
             "title": [f"{win}赢球之后", "第一时间说了什么？"],
-            "sub": f"{match.get('event', '')} {match.get('round', '')} 赛后场上采访".strip(),
+            # ⚠️ 轮次过 `round_display`：`parse_round` 产的是「半决赛」
+            # 「四分之一决赛」，而 cover.sub 是**会发出去的字段**，
+            # 不转的话会被本文件末尾那道零豁免的措辞闸拦下、草稿转不了正。
+            "sub": f"{match.get('event', '')} "
+                   f"{round_display(match.get('round', ''))} 赛后场上采访".strip(),
             "tag": f"{match.get('event', '')} · {win}".strip(" ·"),
             "_why": "自动初选采访中段近景；L2 封面抽帧仍需检查清晰度和睁眼。",
         }
