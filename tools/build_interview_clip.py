@@ -295,6 +295,18 @@ _NAME_FIX = {
 _NOISE = re.compile(r"^(?:>>|&gt;&gt;)?\s*(?:\[.*\])?$")
 
 
+def _storyboards(meta: dict) -> list[dict]:
+    """这份元数据里的 storyboard 格式。**一处出处，梯子和拼图共用。**
+
+    storyboard 的格式 id 以 `sb` 开头，`rows`/`columns` 是每张大图里的格子数。
+    抽出来是因为它现在有两个消费者：梯子拿它判「这一档是不是回了个空壳」，
+    下面拼图拿它挑最大的那一档——写两处必分叉，而分叉的样子是「梯子说有、
+    拼图说没有」。
+    """
+    return [f for f in meta.get("formats") or []
+            if str(f.get("format_id", "")).startswith("sb") and f.get("fragments")]
+
+
 def storyboard_sheet(url: str, workdir: Path, spec: dict | None = None,
                      cols: int = 6) -> Path | None:
     """把 YouTube 的 storyboard 拼成一张带秒数的缩略图墙，**给挑封面用**。
@@ -324,23 +336,47 @@ def storyboard_sheet(url: str, workdir: Path, spec: dict | None = None,
               "——挑封面用 `--stage cover` 渲一张出来看")
         return None
     meta = None
+    picked: list[str] = []
     tried: list[str] = []
     for label, extra in _ytdlp_ladder():
         proc = subprocess.run(
+            # ⚠️ **`--ignore-no-formats-error` 不能少，`fetch_words` 那条路
+            # 一直带着它。** 沙箱里（没有 cookie）`web_embedded` 这一档只解得出
+            # storyboard、解不出媒体格式，而 `-J` 默认把「一个可下载格式都没有」
+            # 当成致命错——于是这一整趟报 `Requested format is not available`，
+            # 和「这条片子取不到信息」长得一模一样，梯子走完打印「8 档 client
+            # 都取不到」。可**这一步要的只有 storyboard 和 duration，本来就不
+            # 需要媒体格式**。2026-09-01 `osaka-walkout-us-open-2026-r1` 撞的
+            # 就是它：同一条 URL，`fetch_words` 拿得到字幕，这儿拿不到缩略图墙。
             ["yt-dlp", "-J", "--no-warnings", "--js-runtimes", "node",
+             "--ignore-no-formats-error",
              *cookie_args(spec or {}), *extra, url],
             capture_output=True, text=True, timeout=180)
         if proc.returncode == 0 and proc.stdout.strip():
-            if tried:
-                print(f"[缩略图墙] {label} 成功（前面 {len(tried)} 档没成）")
             try:
-                meta = json.loads(proc.stdout)
-                break
+                candidate = json.loads(proc.stdout)
             except Exception as exc:                  # noqa: BLE001
                 tail = f"返回的不是合法 JSON（{type(exc).__name__}）"
                 print(f"[缩略图墙] {label} 没成：{tail}")
                 tried.append(f"  {label}: {tail}")
                 continue
+            # ⚠️ **「这一档成不成」的判据是产物，不是退出码。** 加上
+            # `--ignore-no-formats-error` 之后，被限流的那几档不再报错了——
+            # 它们回一份**残缺**的元数据（标题有，`duration` 是 None、
+            # 一个格式都没有），而梯子按退出码判会当场停在这一档，
+            # 后面真拿得到 storyboard 的 `web_embedded` 再也走不到。
+            # 「拿到一份空壳」和「拿到了」在退出码上一模一样，
+            # 又一次「查产物，不查信号」。
+            if not candidate.get("duration") or not _storyboards(candidate):
+                miss = "没有片长" if not candidate.get("duration") else "没有 storyboard"
+                print(f"[缩略图墙] {label} 回了一份残缺元数据（{miss}），换下一档")
+                tried.append(f"  {label}: 残缺元数据（{miss}）")
+                continue
+            if tried:
+                print(f"[缩略图墙] {label} 成功（前面 {len(tried)} 档没成）")
+            meta = candidate
+            picked = list(extra)
+            break
         tail = (proc.stderr or proc.stdout or "").strip().splitlines()[-1:] or ["(无输出)"]
         print(f"[缩略图墙] {label} 没成：{tail[0][:150]}")
         tried.append(f"  {label}: {tail[0][:150]}")
@@ -356,18 +392,21 @@ def storyboard_sheet(url: str, workdir: Path, spec: dict | None = None,
     # 字幕停的地方是不是真的等于片子结束的地方）跟着一起丢了。
     print(f"[缩略图墙] 视频元数据：真实片长 {meta.get('duration')} 秒"
           f"（{meta.get('title', '')!r}）")
-    # storyboard 的格式 id 以 sb 开头，`rows`/`columns` 是每张大图里的格子数
-    sbs = [f for f in meta.get("formats") or []
-           if str(f.get("format_id", "")).startswith("sb") and f.get("fragments")]
-    if not sbs:
+    if not (sbs := _storyboards(meta)):
         print("⚠️ 缩略图墙：这条片子没有 storyboard，跳过")
         return None
     sb = max(sbs, key=lambda f: (f.get("width") or 0))
     dest = workdir / "_sb.mhtml"
     try:
+        # ⚠️ **下载要带上梯子选中那一档的 `extra`（`picked`）。** 梯子费劲
+        # 挑出「这条 URL 上哪个 client 解得出 storyboard」，下载却回头用默认
+        # client——而默认那一档往往正是刚才被挡掉的那个，于是变成「元数据到手、
+        # mhtml 下载失败」，报的还是一句看不出病因的 `CalledProcessError`。
+        # 「同一件事在两处各配一遍必分叉」，这次分叉的是 client。
         subprocess.run(["yt-dlp", "--no-warnings", "--js-runtimes", "node",
+                        "--ignore-no-formats-error",
                         "-f", sb["format_id"], "-o", str(dest),
-                        *cookie_args(spec or {}), url],
+                        *cookie_args(spec or {}), *picked, url],
                        capture_output=True, text=True, timeout=300, check=True)
         tiles = _mhtml_tiles(dest, int(sb.get("rows") or 0), int(sb.get("columns") or 0),
                              int(sb.get("width") or 0), int(sb.get("height") or 0))
@@ -3195,7 +3234,7 @@ def cover_poster(spec: dict, src: Path, outdir: Path, logo: str = "") -> Path:
 #:   老规矩：来源自己写下的东西 > 我们的转述）
 _OPENING_KINDS = {
     "match_end": "从比赛结束那一刻起——赛点落地 ＋ 转播报出赛果／分量，然后接采访",
-    "none": "源片里根本没有比赛画面（发布会、演播室专访），收不到",
+    "none": "源片里根本没有比赛画面（发布会、演播室专访、赛前出场秀），收不到",
 }
 
 
@@ -3207,11 +3246,17 @@ def check_source_contract(spec: dict) -> str:
     publishing` 一开始把 L0 硬编码成只认「记者持话筒在场边问」（`on_court`）；
     可颁奖典礼上球员自己拿着话筒对全场讲话是同一个栏目下另一种真实存在的
     内容——账号所有者原话「颁奖致辞就是赛后开麦场上采访的一种形式而已，
-    都要做」。所以 `interview_source_gate.REQUESTED_KINDS` 现在有两个合法
-    类型（`on_court` / `ceremony`），`validate_source_contract` 按 spec
-    自己声明的 `requested_content_type` 走对应那一套核验；两种类型都要求
-    `source_verification`／`match` 真实、可交叉核实、和赛果签在一起，
-    没有哪一种是靠一张豁免表跳过去的。见 `interview_source_gate.py`。
+    都要做」。所以 `interview_source_gate.REQUESTED_KINDS` 现在有四个合法
+    类型（`on_court` / `ceremony` / `farewell` / `walk_on`），
+    `validate_source_contract` 按 spec 自己声明的 `requested_content_type`
+    走对应那一套核验；每一种都要求 `source_verification`／`match` 真实、
+    可交叉核实、和赛果签在一起，没有哪一种是靠一张豁免表跳过去的。
+    见 `interview_source_gate.py`。
+
+    ⚠️ **`walk_on`（赛前出场秀）是同一个形状的第三次**，2026-09-01 加的：
+    球员穿着定制出场服从通道走进球场那一段。它是四种里唯一**发生在开赛之前**
+    的——所以 `interview_kind` 写「赛前出场秀」，顶栏走 `subject_primary`
+    （出场那一刻还没有比分，印赛果既不合时序也剧透）。
 
     ⚠️ **`tools/` 要自己确保在 `sys.path` 上，不能指望调用方顺手插过**——
     和 `_ytdlp_ladder()` 那条注释是同一个坑：直接 `python
@@ -3232,9 +3277,10 @@ def check_source_contract(spec: dict) -> str:
     except SourceContractError as exc:
         raise SystemExit(
             f"{spec.get('slug', '?')} 没通过 L0 内容身份门禁：{exc}\n"
-            "只允许本场、获胜后、仍在球场内的现场话筒采访，或本场颁奖典礼上"
-            "的捧杯致辞；演播室、发布会和 unknown 都不能替代。找不到就停在"
-            "待复核队列，不制作不推送。"
+            "只允许本场、获胜后、仍在球场内的现场话筒采访，本场颁奖典礼上"
+            "的捧杯致辞或告别仪式，以及本场赛前的出场秀（官方标题里明确写着"
+            " walk-out／walk-on）；演播室、发布会和 unknown 都不能替代。"
+            "找不到就停在待复核队列，不制作不推送。"
         ) from exc
     print(f"[L0] 本场来源身份通过（{attestation[:12]}…）")
     return attestation

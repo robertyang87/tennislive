@@ -5975,3 +5975,81 @@ def test_真实核验过的捧杯致辞能通过L0():
     finalize_source_contract(spec)
     attestation = check_source_contract(spec)
     assert len(attestation) == 64
+
+
+def test_缩略图墙那一档成不成看产物不看退出码(tmp_path, monkeypatch):
+    """**三处一起修的那一趟**（2026-09-01 `osaka-walkout-us-open-2026-r1`）。
+
+    病程是这样的：沙箱没有 cookie，`web_embedded` 这一档只解得出 storyboard、
+    解不出媒体格式，而 `-J` 默认把「一个可下载格式都没有」当成致命错——于是
+    **八档 client 全报失败**，打印「都取不到视频信息」，和「这条片子根本没有
+    storyboard」长得一模一样。而同一条 URL 上 `fetch_words` 拿得到字幕，
+    因为那条路一直带着 `--ignore-no-formats-error`：**同一件事在两处各配一遍，
+    必然分叉。**
+
+    补上那个参数之后又冒出第二个：被限流的那几档**不再报错**，改回一份残缺
+    元数据（标题有、`duration` 是 None、一个格式都没有），而梯子按退出码判
+    成败，当场停在这个空壳上——「拿到一份空壳」和「拿到了」在退出码上一模一样，
+    又一次「查产物，不查信号」。
+
+    第三个：梯子费劲挑出「哪一档解得出 storyboard」，下载 mhtml 时却回头用
+    默认 client——而默认那一档正是刚被挡掉的那个。
+
+    判据钉三头，缺一头都漏掉其中一个：
+      ① `-J` 那条命令带 `--ignore-no-formats-error`
+      ② 残缺元数据不算成功，梯子继续往下走（拿到的是第二档那份真数据）
+      ③ 下载 mhtml 带上梯子选中那一档的 client
+    """
+    import json as _json
+    from types import SimpleNamespace
+
+    from PIL import Image
+
+    from tools import build_interview_clip as clip
+
+    good = {
+        "title": "Naomi Osaka Stuns in her Walk-Out Outfit! | 2026 US Open",
+        "duration": 143,
+        "formats": [{"format_id": "sb0", "width": 160, "height": 90,
+                     "rows": 5, "columns": 5, "fps": 0.5105,
+                     "fragments": [{"url": "x"}]}],
+    }
+    picked = ["--extractor-args", "youtube:player_client=web_embedded"]
+    monkeypatch.setattr(clip, "_ytdlp_ladder",
+                        lambda: [("空壳档", []), ("好档", list(picked))])
+    monkeypatch.setattr(clip, "_mhtml_tiles",
+                        lambda *a, **k: [(i, Image.new("RGB", (160, 90))) for i in range(4)])
+
+    seen: list[list[str]] = []
+
+    def fake_run(cmd, **kw):
+        seen.append(list(cmd))
+        if "-J" in cmd:
+            # 被限流的那一档：**退出码 0，内容是空壳**——正是修好参数之后
+            # 冒出来的第二个坑。
+            payload = good if "--extractor-args" in cmd else {"title": "T"}
+            return SimpleNamespace(returncode=0, stdout=_json.dumps(payload), stderr="")
+        return SimpleNamespace(returncode=0, stdout="", stderr="")
+
+    monkeypatch.setattr(clip.subprocess, "run", fake_run)
+    out = clip.storyboard_sheet("https://youtu.be/eZSXaGpkmsU", tmp_path)
+
+    meta_calls = [c for c in seen if "-J" in c]
+    assert meta_calls, "一次都没去取元数据"
+    for cmd in meta_calls:                                            # ①
+        assert "--ignore-no-formats-error" in cmd, (
+            "`-J` 少了 `--ignore-no-formats-error`——只解得出 storyboard 的那一档"
+            "会被当成致命错，整条路报「取不到视频信息」，"
+            f"而 `fetch_words` 一直带着它：{cmd}")
+    assert len(meta_calls) == 2, (                                    # ②
+        f"梯子没有走过空壳那一档（取元数据调了 {len(meta_calls)} 次）——"
+        "残缺元数据（没有 duration、没有 storyboard）不能算成功，"
+        "「拿到一份空壳」和「拿到了」在退出码上一模一样")
+    assert out is not None and out.exists(), "拼图没出来"
+
+    dl = [c for c in seen if "-f" in c and "sb0" in c]
+    assert dl, "没走到下载 mhtml 那一步"
+    for cmd in dl:                                                    # ③
+        assert all(tok in cmd for tok in picked), (
+            "下载 mhtml 没带上梯子选中那一档的 client，回头用了默认档——"
+            f"而默认那一档正是刚被挡掉的那个：{cmd}")
