@@ -381,6 +381,13 @@ _LEGACY_VS_COVERS = frozenset({
 # `shang-darderi-montreal-2026`（钩子里有 `0比3`、`4比5` 这些半角数字）
 # 渲出来正好是 94px、不再超着，自检当场要求把它删掉——**这不是放宽豁免，
 # 是那条本来就没超**。
+# 封面口播和海报钩子的字集重合度下界，见 `cover_voice_matches_hook_problem`。
+# 量出来的：10 条存量全部 1.000（口播多出来的虚词本来就在句子别处出现过），
+# 而真出过的那个错法（改了钩子没改口播）是 0.154——0.7 落在两档中间，
+# 离两头都远。⚠️ 别改成逐字相同：那会误伤一半存量（印出来的和念出来的
+# 天然差几个虚词）。
+_COVER_VOICE_SIM_MIN = 0.7
+
 _LEGACY_LONG_HOOKS = frozenset({
     "alexandrova-sabalenka", "anisimova-bartunkova", "bencic-eala",
     "bencic-townsend", "chwalinska-gibson", "cincinnati-story",
@@ -5491,6 +5498,63 @@ def hook_lines(spec: dict) -> list[str]:
             if ln.strip()]
 
 
+def cover_voice_matches_hook_problem(spec: dict) -> str | None:
+    """封面口播和印在海报上的钩子必须是同一句话。
+
+    2026-09-01 `osaka-four-slams-2026` 差 15 分钟就把这个错渲出去：账号所有者
+    说「标题钩子写得不明不白」，我改了 `cover.hook`（**印在海报上那两行**），
+    **`cover.narration` 原样留着上一版**。渲出来的封面会是——
+
+        海报上印着   这一身缝满纸片 / 全是她自己的旧报道
+        声音在念     嫁衣拆了做和服，旧报纸缝成长袍
+        而且去标点后两者不同 → **再叠一条字幕**，说的是第三件事
+
+    ⚠️ **两处各自都合格，所以没有任何一道闸比得着它们**：`hook` 那头有
+    `_hook_lines_fit_the_title`（行长、行数），`narration` 那头有哑场和超长
+    那两道闸。`--dry-run`、全量测试、`check_reel_landed` 一律绿，只有渲出来
+    听一遍才发现声画在说两件事。这是「一个数写两处必分叉」的又一个实例，
+    只不过这次分叉的不是数，是**同一句话**。
+
+    ⚠️ **判据是字集重合度，不是逐字相同**——逐字会误伤一半的存量。口播是
+    说出来的，海报是印出来的，两者天然差几个虚词（`cincinnati-story` 的
+    「全美第三大网球赛事」念成「全美第三大**的**网球赛事」、`tiafoe-story`
+    的「两年前，输给辛纳」念成「两年前，**他**输给**了**辛纳」）。10 条存量
+    量下来重合度**全部是 1.000**（多出来的虚词本来就在句子别处出现过），
+    而上面那个真错法是 **0.154**——两档之间空得能开车，`_COVER_VOICE_SIM_MIN`
+    取 0.7 落在中间，离两头都远。
+
+    ⚠️ **留了认领的出口**：本文件写着「封面那句要是**另说了一件事**，它照样
+    要有字幕」，所以真要让口播和钩子讲两件事，写一句 `cover._narration_why`
+    说清为什么。和 `mixed_fps` / `silent_source` 一个形状——认领这一步把
+    「想清楚了」和「改了一半」分开。
+    """
+    cover = spec.get("cover") or {}
+    narration = str(cover.get("narration") or "").strip()
+    lines = hook_lines(spec)
+    if not narration or not lines:
+        return None
+    if str(cover.get("_narration_why") or "").strip():
+        return None
+    flat = re.compile(r"[，。！？、,.!?\s]")
+    hook_chars = set(flat.sub("", "".join(lines)))
+    voice_chars = set(flat.sub("", narration))
+    if not hook_chars or not voice_chars:
+        return None
+    overlap = len(hook_chars & voice_chars) / len(hook_chars | voice_chars)
+    if overlap >= _COVER_VOICE_SIM_MIN:
+        return None
+    return (
+        f"封面口播和海报上印的钩子不是同一句话（字集重合度 {overlap:.2f}，"
+        f"低于 {_COVER_VOICE_SIM_MIN}）：\n"
+        f"  海报印着  {' / '.join(lines)}\n"
+        f"  声音在念  {narration}\n"
+        "**改钩子就要连 `cover.narration` 一起改**——两处是同一句话，"
+        "海报印一句、声音念另一句，而且去标点后两者不同时封面还会再叠一条字幕。\n"
+        "真要让口播另说一件事（那时它本来就该有字幕），"
+        "写一句 `cover._narration_why` 说清为什么。"
+    )
+
+
 def _hook_lines_fit_the_title(spec: dict) -> None:
     """钩子每行不许长到把标题字号压到 `HOOK_TITLE_PX` 以下。
 
@@ -6145,6 +6209,9 @@ def validate_spec(
     _absolute_claims_need_a_source(spec)
     _players_are_worth_a_reel(spec)
     _hook_lines_fit_the_title(spec)
+    voice = cover_voice_matches_hook_problem(spec)
+    if voice:
+        raise ReelError(voice)
     _quote_lines_fit_the_frame(spec)
     _solo_scoreboard_shape(spec)
     ending = ending_payoff_problem(
