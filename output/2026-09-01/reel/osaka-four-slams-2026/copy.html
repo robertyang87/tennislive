@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>9.1 网球有故事 | 四个大满贯四身都是旧的</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>四个大满贯，四身衣服，三身是旧东西改的
+
+把今年四站摆在一起，才看得见那条线：她走进球场的样子没有一次重复，而四身衣服里有三身，材料来自旧东西——法网是她自己穿过的比赛服，温网是旧和服和一件白无垢嫁衣，美网是她自己职业生涯的旧报纸。
+
+最妙的一处是隔了五个月的呼应。一月的墨尔本，转播解说把她的伞、帽子、面纱一样一样数完，开了句玩笑：要是这身是白的，我真以为她是来结婚的。六月的温网，那一身真的是白的——而且真的是用嫁衣做的。
+
+一月 · 墨尔本
+耐克和伦敦设计师 Robert Wun 定制。原型是水母，起因是她两岁的女儿在一本海洋绘本上对水母那一页有反应。帽子和伞上各停着一只白蝴蝶，指的是 2021 年她在这里夺冠时，真的落在她脸上的那一只。
+
+五月 · 巴黎
+黑色胸衣长裙，瑞士设计师 Kevin Germanier 作品，胸前的线条画的是埃菲尔铁塔。而这条黑袍的布料，是她自己穿过的旧比赛服拆开重做的。
+
+六月 · 伦敦
+温网只有一条硬规矩：上场的人一身都得是白的。她把这条规矩穿成了一件和服式长袍——振袖式宽袖、腰间一条粗腰带、绣着仙鹤和樱花，身后一条半透明的薄纱拖尾，头上是传统的簪。做这一身的是东京设计师 Hana Yagi，作品名叫 Evolving Ceremony，材料是旧和服、一件传统的白无垢嫁衣和一件拆开的婚纱。
+
+她自己在场上解释过为什么是和服：日本血统对她意义很大，温网规定全白，她觉得穿和服出场会很酷。灵感来自她最喜欢的电影之一《杀死比尔》，刘玉玲演的石井御莲，出场穿的正是一身标志性的白和服。她还说了一句更有意思的：我常跟人说我想当个电子游戏角色，我不想在场上做我自己。
+
+九月 · 纽约
+耐克把主题定成篮球，她挑的人是艾弗森。护额压着脏辫，一只手护腕一只手护臂，黑和红正是他在费城七六人时期护额的颜色。缝在袍子上的那些纸片，是她自己职业生涯高光的旧报纸。上场前她把这一身发到社交媒体，配文只有两个词：The Answer，那是艾弗森的绰号。当天他就回了话。
+
+换成你，你会把哪一段穿在身上？
+
+#网球时差 #大坂直美 #网球 #温网 #网球时尚</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>换成你，你会把哪一段穿在身上？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
