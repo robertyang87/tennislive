@@ -110,7 +110,9 @@ def search(query: str, per: int = 6, timeout: int = 120) -> list[tuple]:
     """
     try:
         proc = subprocess.run(
-            ["yt-dlp", "--flat-playlist",
+            ["yt-dlp", "--js-runtimes", "node",
+             "--remote-components", "ejs:github",
+             "--flat-playlist",
              *_cookie_args(),
              "--print", "%(title)s ||| %(webpage_url)s ||| %(channel)s ||| %(duration)s",
              f"ytsearch{max(1, min(per, 20))}:{query}"],
@@ -225,6 +227,7 @@ def probe_meta(url: str, timeout: int = 120) -> tuple | None:
     （CLAUDE.md「记得带 --js-runtimes node」）。
     """
     cmd = ["yt-dlp", "--skip-download", "--js-runtimes", "node",
+        "--remote-components", "ejs:github",
            *_cookie_args(),
            "--print", "%(channel)s ||| %(duration)s ||| %(height)s"
                       " ||| %(formats.:.height)s", url]
