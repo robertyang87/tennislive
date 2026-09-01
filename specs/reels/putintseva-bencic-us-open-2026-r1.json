@@ -1,0 +1,328 @@
+{
+  "slug": "putintseva-bencic-us-open-2026-r1",
+  "_column": "reel",
+  "layout": "band",
+  "scorebox": [
+    104,
+    888,
+    736,
+    978
+  ],
+  "_scorebox_why": "probe 的 `scorebox_guess` 实测 `104,888,616,978`，和 `US_OPEN_SCOREBOX` 的左/上/下三边逐像素一致；右缘按最宽状态写 736（板每完成一盘 +38px），渲染时 `resolve_board_insets` 逐段现量往回收。",
+  "source_url": "https://www.youtube.com/watch?v=FCgBoA8IDOc",
+  "_source": "美网官方 YouTube 频道（`US Open Tennis Championships`，yt-dlp `%(channel)s` 自证）本场官方集锦 `Yulia Putintseva vs. Belinda Bencic Highlights | 2026 US Open Round 1`，1920×1080 / 29.97fps / 215.85s，upload_date 20260901。⚠️ 末尾 212.73s 之后是 US Open 社媒片尾板（silent_audio `[[212.79, 215.85]]` 印证），所有窗口收在它之前。",
+  "cover": {
+    "matchup": [
+      {
+        "name": "普汀塞娃",
+        "name_en": "Yulia Putintseva",
+        "country": "KAZ",
+        "rank": 84
+      },
+      {
+        "name": "本西奇",
+        "name_en": "Belinda Bencic",
+        "country": "SUI",
+        "rank": 12
+      }
+    ],
+    "_rank_why": "WTA 官方 `players/ranked`（`rankedAt=2026-08-31T00:00:00Z`，也就是这场球开打前那一期）：Putintseva 第 84、904 分；Bencic 第 12、2995 分。官方 `Singles_Numeric.pdf`（Printed 30 August 2026）同为 `84 (80) PUTINTSEVA, YULIA KAZ 904` / `12 (12) BENCIC, BELINDA SUI 2995`。⚠️ 本西奇的**种子号也是 12**（美网官方签表 `team2.seed: 12`，源片记分条印着 `12 BENCIC SUI`）——两个数碰巧一样，但排名和种子是两件事。",
+    "winner": "普汀塞娃",
+    "result": "4-6 7-5 6-3",
+    "_result_why": "赢家视角：她**丢了首盘**，所以 result 第一格是 4-6。⚠️ **自动草稿把赢家写成了本西奇，是反的**，四个源一致推翻它：① 美网官方签表 `match_id 2156` 的 `team1 = Y. Putintseva, won: true, totalSetsWon: 2`、`winner: \"1\"`；② flashscore `QF4kee9d` 逐分，第三盘最后一局 `6-3 客队发球，主队拿下 ← 破发、1个破发点、1个赛点`（home=Putintseva）；③ 源片 210.5s 的全屏赛果图形 `YULIA PUTINTSEVA 4 7 6 / 12 BELINDA BENCIC 6 5 3`；④ 转播解说 189.60 `Now she takes down Belinda Bencic`。",
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "普汀塞娃",
+    "hook": "先丢一盘，又零比四十\n她是郑钦文下一轮对手",
+    "_hook_why": "两行各 10 字符，正好压在 `HOOK_MAX_CHARS` 上。上一行概括**整场**怎么走的（丢掉首盘 → 第二盘自己发球局 0-40），不是某一个时刻；下一行是落点——对中文读者来说，这条片子的全部分量在这儿。⚠️ 两行都不重复比分板（板上印的是 `4-6 7-5 6-3` 和两人排名），也不写身份。",
+    "topic": "美网首轮 · 17 号球场",
+    "portrait": {
+      "image": "assets/reel/putintseva-us-open-2026-r1-usta-backhand-closeup.jpg",
+      "focus": 0.6,
+      "focus_y": 0.5,
+      "zoom": 1.0,
+      "_photo_why": "美网官方图库本场实拍（`photo-assets.usopen.org/.../f_USTA2403242_20260901_DS3_1917.jpg`，摄影 Dustin Satloff/USTA），官方说明自带四要素：`Yulia Putintseva in action during a Women's Singles match on Day Three of the 2026 US Open at USTA Billie Jean King National Tennis Center`。八张候选逐张打开看过：这一张是**最近的近景**，脸占画面主体、双眼睁开看着球、咬牙鼓腮的击球表情，背景是虚化的看台（看得出在球场上）。另外七张里三张是全身击球（脸只有几十像素）、四张脸更小或表情平静。",
+      "_low_res_why": "1280×720 铺 1080×1440 要放大 **2.0 倍**，够不着 `cover_photo_problem` 的 1.00× 地板。**这是美网这条渠道的出版天花板，不是没找够**：`f_` 前缀就是 xlarge，十二个前缀、六个目录、三种 `?width=` 参数都试过（第三组返回 200 但尺寸一个像素没变）。同日 USA TODAY 每日图集没有一辑对得上美网，AP 按 `Putintseva` 查为空，WTA `photo-resources` 不收大满贯。"
+    },
+    "scoreboard": {
+      "court": "Stadium 17",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%222%3A51%3A00%22%2C%22source%22%3A%22US%20Open%20official%20WS%20draw%20match_id%202156%20duration%202%3A51%20%3D%20setDurations%2047%2B70%2B54%22%7D",
+        "field": "duration"
+      },
+      "_court_why": "三源一致：美网官方 WS 签表 `match_id 2156` 的 `courtName: Stadium 17`；flashscore `df_sui_1` 的 `MIV÷USTA Billie Jean King NTC`；源片 210.5s 的全屏赛果图形上印着 `STADIUM 17`。⚠️ 顺带：郑钦文的首轮（官方 `match_id 2155`）也在这块场地。",
+      "_duration_why": "**两源一字不差**：美网官方 `duration: \"2:51\"`（`setDurations` 47+70+54＝171 分钟，自洽）；flashscore `df_sui_1` 报 `RC÷0:47`、`RD÷1:10`、`RE÷0:54`，合计同为 2:51。第三个数也对得上：flashscore 开赛/结束时间戳 `AD=1788288900`、`AO=1788299080` 相差 169 分钟，和 171 分钟只差两分钟（时间戳整分取的）。"
+    }
+  },
+  "_match": {
+    "status": "result_verified",
+    "source": "flashscore_points",
+    "source_id": "QF4kee9d",
+    "flashscore_id": "QF4kee9d",
+    "participants": [
+      "普汀塞娃",
+      "本西奇"
+    ],
+    "set_scores_home_away": [
+      [
+        4,
+        6
+      ],
+      [
+        7,
+        5
+      ],
+      [
+        6,
+        3
+      ]
+    ],
+    "winner": "普汀塞娃",
+    "loser": "本西奇",
+    "winner_result": "4-6 7-5 6-3",
+    "loser_result": "6-4 5-7 3-6",
+    "tiebreaks_home_away": [
+      null,
+      null,
+      null
+    ],
+    "_direction_why": "flashscore home=`Putintseva Y.`（AE）、away=`Bencic B.`（AF），BA/BB=4:6、BC/BD=7:5、BE/BF=6:3，AG/AH=2:1 指向 home；美网官方签表 `match_id 2156` 的 `team1(Putintseva).won = true`。⚠️ **`specs/reels/pending/putintseva-bencic.draft.json` 这一栏是反的**（`winner: 本西奇`），而它自己的 `_hit_data` 又写着「普汀塞娃 106 - 本西奇 95，普汀塞娃 领先」——草稿内部就自相矛盾，别照抄。",
+    "_upset_why": "世界第 84 淘汰世界第 12（12 号种子），是这条片子的卖点之一；但**更硬的落点是签表**：美网官方 `match_id 2228` 已经把 R2 排成 `Q. Zheng (entryStatus: Q) vs Y. Putintseva`。",
+    "_h2h_why": "郑钦文对普汀塞娃 **0 胜 2 负**，两个独立源：① tennisexplorer `mutual/zheng-qinwen/putintseva/` 报 `Zheng Qinwen 0 - 2 Putintseva Yulia`，逐条列着 2023 法网第二轮和 2024 马德里第二轮；② flashscore `df_hh_1_8Ehiz0tJ`（R2 那场已排定，id 8Ehiz0tJ）的 H2H 段里两场都在——`GnVFnuOR French Open | *Putintseva Y. vs Zheng Q. | 2:1` 和 `YFyyZVFE Madrid | Zheng Q. vs *Putintseva Y. | 0:1`，`*` 标的赢家都是普汀塞娃。⚠️ 马德里那场盘分 `0:1`（只打完一盘），两个源都指向中途结束，但**片子里只说「两次都输了」，不提退赛细节**——那一层只有间接证据。⚠️ 另：同一份 feed 里的 `OdExO4CL Jiujiang | *Putintseva Y. vs Zheng W.` 是**郑苰**不是郑钦文，别数进来。"
+  },
+  "stats": {
+    "a": {
+      "aces": 6,
+      "df": 4,
+      "winners": 37,
+      "ue": 37,
+      "first_in": 51,
+      "first_won": 35,
+      "second_total": 39,
+      "second_won": 22,
+      "bp_conv": 5,
+      "bp_chances": 10,
+      "pts_won": 106,
+      "pts_total": 201,
+      "first_total": 90,
+      "headshot": "assets/players/headshots/wta-317683.jpg"
+    },
+    "b": {
+      "aces": 0,
+      "df": 9,
+      "winners": 31,
+      "ue": 43,
+      "first_in": 61,
+      "first_won": 37,
+      "second_total": 50,
+      "second_won": 25,
+      "bp_conv": 3,
+      "bp_chances": 7,
+      "pts_won": 95,
+      "pts_total": 201,
+      "first_total": 111,
+      "headshot": "assets/players/headshots/wta-319001.jpg"
+    },
+    "_source": "flashscore 本场 `QF4kee9d` 的 `df_st_1`，`match_stat_hooks.py --stats-block` 机器抄录（**大满贯女子这场有制胜分/非受迫失误**）。a=普汀塞娃=`cover.matchup[0]`＝feed 的 home，b=本西奇=away——这一条两个顺序碰巧一致，但填的依据是 matchup 不是 feed。头像走 `fetch_official_headshot.py wta`（WTA 官方，58914 / 100000 种颜色，不是占位剪影）。"
+  },
+  "_hit_data": [
+    {
+      "label": "总分差",
+      "detail": "普汀塞娃 106 - 本西奇 95，净差 11 分",
+      "source": "flashscore df_mh_1"
+    },
+    {
+      "label": "普汀塞娃 一发得分率逐盘上升",
+      "detail": "第1盘 63% → 第2盘 70% → 第3盘 73%",
+      "source": "flashscore df_st_1"
+    },
+    {
+      "label": "本西奇 一发得分率第二盘塌一档",
+      "detail": "第1盘 67% → 第2盘 52% → 第3盘 64%",
+      "source": "flashscore df_st_1"
+    },
+    {
+      "label": "本西奇 9 个双误 / 0 个 Ace",
+      "detail": "而普汀塞娃 4 个双误 / 6 个 Ace；比赛以本西奇的第九个双误结束",
+      "source": "flashscore df_st_1 + 解说 177.12"
+    }
+  ],
+  "_no_repeat": "① `zhang-putintseva` 已经铺开讲过「张帅连输普汀塞娃七次、三十七岁终结七连败」——这条片子一个字都不碰那条线。② `zheng-liutova-us-open-2026-r1` 已经铺开讲过郑钦文的 456 天、世界第 121、资格赛三轮——这条只在第③格带一句「郑钦文首轮也是在这块场地赢的」，不重讲来路。③ `bencic-eala` / `bencic-townsend` 讲过本西奇，这条只把她当对手，不展开。",
+  "topbar": {
+    "line1": "2026 美网 女单第一轮",
+    "line2": "普汀塞娃 4-6 7-5 6-3 本西奇"
+  },
+  "push": {
+    "event": "美网",
+    "summary": "郑钦文下一轮对手",
+    "lead": "美网首轮 17 号球场，世界第 84 的普汀塞娃 4-6、7-5、6-3 逆转 12 号种子本西奇，2 小时 51 分钟。真正掰回局面的是发球后的第一拍：她的一发得分率逐盘往上走，63%→70%→73%，本西奇第二盘塌到 52%。而本西奇这一天送出 9 个双误、一个 Ace 都没有，43 次非受迫失误比对手多 6 次——这场球就是以她的第九个双误结束的。按美网官方签表，普汀塞娃第二轮的对手是郑钦文；两个人此前交手两次，郑钦文都输了。",
+    "_summary_why": "⚠️ **原来写的「掀翻本西奇，下一轮打郑钦文」过不了闸**：`push_reel` 量的是小红书字位（全角 1、半角 0.5），`7.31 赛场之上 | 美网 | …` 里日期+栏目已经占掉 8 个、`美网 | ` 再占 3.5，13 个全角字算下来 **24.5 字位，超过上限 20**（`test_每条spec都算得出一句过得了闸的标题` 用占位日期 `7.31` 量，比真实的 `9.2` 还严一格，所以过了这条就一定过得了线上）。收成 8 个字＝19.5 字位。\n这一句同时是这条片子的落点：封面那张脸就是答案，标题只负责把问题抛出来。赛果和用时交给 `lead` 的第一行。",
+    "auto": true,
+    "_auto_why": "合并进 main 之后由 `auto-push-reel` 自动推送。不写这一行的话它会**绿着跳过**，而「跳过」和「发出去了」在 run 列表上长得一模一样。"
+  },
+  "segments": [
+    {
+      "start": 175.6,
+      "end": 182.2,
+      "narration": "",
+      "score_inset": true,
+      "crosses_cut": "178.88 一刀：赛点那一分的宽景（记分条 `MATCH POINT / PUTINTSEVA 4 7 5 [40] / 12 BENCIC 6 5 3 [0]` 全程在画面里）→ 她的近景反应。两边都是同一时刻的她，正是开场要的『球落地 + 反应』。",
+      "_why": "第①格：全片最强的一格。本西奇的第九个双误出界（解说 177.12 `Out it goes. It's another double fault.`）→ 她的反应。**不配旁白**，留给现场欢呼和英文解说（181.68 `And what a win that is for Julia`）。",
+      "_head_open_why": "冷开场取自源片后段（175.6s），不是源片开头——官方集锦按时间顺序剪，开头是第一盘 0-2 的普通回合，戏剧性最低。",
+      "_ending_payoff_required": true,
+      "_score_inset_why": "实测：probe 的 `score_04` 缩略图 176.5 / 178.5 / 180.5 三格记分条都在（182.5 才消失，182.33 有一刀）。"
+    },
+    {
+      "start": 186.4,
+      "end": 195.9,
+      "score_inset": false,
+      "narration": "世界第八十四的普汀塞娃，淘汰了十二号种子本西奇。美网首轮，两小时五十一分钟。",
+      "_why": "第②格：落点。画面是网前握手、转身、向看台举手致意。 ⚠️ 旁白原来写成「…把十二号种子本西奇挡在了美网首轮门外」，那个子句 20 格、宽过一行字幕（16 格），会被硬切成「…挡在了 ｜ 美网首轮门外」——拆成三个短句，每个子句都在一行之内。",
+      "_score_inset_why": "赛后镜头，转播把常驻记分条撤了——`score_04` 的 184.5~198.5 六格全无板，贴回来会是一块球场。"
+    },
+    {
+      "start": 2.4,
+      "end": 14.0,
+      "score_inset": true,
+      "narration": "北京时间九月二号凌晨快三点，美网女单第一轮，十七号球场。普汀塞娃一上来就被破发，零比二落后。",
+      "_why": "第③格：坐标。⚠️ 旁白原来写「开场就是零比三」，而**本地预览把话画不符抓了出来**——这一段 2.5~12.5s 的记分条全程是 `PUTINTSEVA 0 / BENCIC 2`，0-3 要到 18.5s 才出现。改成画面上真有的那个比分：她的第一个发球局被破（逐分 `0-2 主队发球，客队拿下`），零比二落后。 开球时刻取 flashscore 当日表 `AD=1788288900` ＝ 2026-09-01 18:55 UTC ＝ **北京 9 月 2 日 02:55**，按 CLAUDE.md「开球时刻只说个大概不报到分」的 40~59 分档写成「凌晨快三点」。⚠️ 这个时间戳**自证不是整批排期的下界**：当天 23/22/16 场共用同一个整点时刻，而 18:55 只有 2 场；而且 `AO−AD` ＝ 169 分钟，和官方 2:51（171 分钟）只差两分钟（时间戳整分取）。⚠️ 美网官方签表那一栏的 `epoch` 是另一个口径（早 2 小时 11 分），和用时对不上，不取。"
+    },
+    {
+      "start": 19.2,
+      "end": 29.2,
+      "score_inset": true,
+      "crosses_cut": "26.31（loose）：回合宽景 → 她赢下这一分之后的跑动。两边是同一分的前后脚。",
+      "narration": "但第五局是个信号。本西奇的发球局四十比零领先，普汀塞娃连追五分，把这一局抢了回来。",
+      "_why": "逐分：第一盘第五局（打完 2-3），本西奇在自己发球局 40-0 领先，序列 `0:15, 0:30, 0:40, 15:40, 30:40, 40:40, A:40 |B1|` 再加不列出的制胜那一分＝普汀塞娃连得五分。解说 25.44~33.04 同一时刻说的正是 `Bencic will be very disappointed with that game. She was 40 love up.`。26.5s 那格记分条 `1 AD / 3` 自证。"
+    },
+    {
+      "start": 38.4,
+      "end": 45.4,
+      "score_inset": true,
+      "narration": "本西奇拿到盘点。第一盘还是丢了——普汀塞娃把球拍摔在了地上。",
+      "_why": "画面记分条是 `SET POINT / PUTINTSEVA 4 [15] / 12 BENCIC 5 [40]`，也就是**盘点那一分还没落地**；旁白原来直接说「四比六」，比画面早了一步，改成跟着画面走。摔拍是解说自己说的（44.24 `as she fires the racket away as Bencic takes the first set`，解说当场把人名从 Bencic 纠正成 Putintseva）。⚠️ 主语规矩：盘点是本西奇**拿到**的，所以「拿到」的主语就是她本人。"
+    },
+    {
+      "start": 62.6,
+      "end": 72.3,
+      "score_inset": true,
+      "crosses_cut": "67.77（loose）和 70.62：回合宽景 → 她保发后的背影握拳。三段都是同一局的同一时刻，解说 66.48 `a big reaction from Putintseva as she is very fired up here` 正压在这儿。",
+      "narration": "第二盘一比二，普汀塞娃的发球局零比四十落后。本西奇拿到三个破发点，一个都没兑现。",
+      "_why": "全场分水岭。逐分：第二盘打完 2-2 那一局（场上 1-2，普汀塞娃发球），序列 `0:15, 0:30, 15:30, 15:40 |B1|, 30:40 |B1|, 40:40, 40:A |B1|, 40:40, A:40` ——三个破发点标记，全部没被兑现。记分条 `4 1 / 6 2` 自证。"
+    },
+    {
+      "start": 102.9,
+      "end": 106.12,
+      "narration": "",
+      "score_inset": true,
+      "_why": "第二盘的盘点那一分，记分条 `SET POINT / PUTINTSEVA 4 6 [40] / 12 BENCIC 6 5 [0]` 全程在画面里（`score_02` 的 102.5 / 104.5 / 106.5 三格实测）。**不配旁白**，留给解说那句 105.44 `And takes it. That's the first time of asking.`"
+    },
+    {
+      "start": 106.12,
+      "end": 111.9,
+      "narration": "七比五，普汀塞娃把这一盘扳了回来。",
+      "score_inset": false,
+      "_why": "拿下第二盘之后的近景庆祝（108.5s 握拳）。",
+      "_score_inset_why": "⚠️ **这一段板会中途消失**：`score_02` 实测 106.5s 板还完整、**108.5s 已被 us open 图形盖掉一半、110.5s 完全没有**，112.5s 也没有（114.5s 起是全屏赛果图形）。开着回贴的话，后面三秒多会把一块球场贴到左下角——正是 `wong-paul` 那次的绿斑。所以这一段 `false`，而板还完整的那 3.2 秒拆出去单独一段开 `true`。"
+    },
+    {
+      "start": 133.0,
+      "end": 144.0,
+      "score_inset": true,
+      "narration": "第二盘她的一发得分率涨到百分之七十，本西奇掉到百分之五十二。决胜盘开始时，这场球已经打满两个小时。",
+      "_why": "技术性归因，不是『状态回暖』这种空话：flashscore `df_st_1` 分盘一发得分率，普汀塞娃 63%→70%→73% 一路往上，本西奇 67%→52%→64% 在第二盘塌了一档。解说 114.40 `And with just about 2 hours on the clock` 就在第二盘结束那一刻。⚠️ 画面是决胜盘早段的底线相持（记分条第三盘 0-1），旁白讲的是第二盘的数据——话画是合奏不是复读，但**比分不能说成第三盘的**，所以主语明写「第二盘」。 ⚠️ 和下一段同在 132.43~155.44 这一个镜头里，严格接续。"
+    },
+    {
+      "start": 144.0,
+      "end": 155.0,
+      "score_inset": true,
+      "narration": "本西奇这一天送出九个双误，一个发球直接得分都没有。四十三次非受迫失误，比对手多了六次。",
+      "_why": "全场数据，画面是决胜盘的相持——话画是合奏不是复读。数字出处 flashscore `df_st_1`：本西奇 df 9 / aces 0 / ue 43，普汀塞娃 ue 37，43−37＝6。"
+    },
+    {
+      "start": 162.2,
+      "end": 172.0,
+      "score_inset": true,
+      "narration": "决胜盘五比三，轮到本西奇发球。四十比零——三个赛点，全在普汀塞娃手里。",
+      "_why": "记分条自证：`MATCH POINT / PUTINTSEVA KAZ 4 7 5 [40] / 12 BENCIC SUI 6 5 3 [0]`，162.5~178.5 每一格都在。40-0 且在对手发球局＝三个赛点，这是规则推出来的，不是猜的。 ⚠️ 和下一段在**同一个镜头**里（162.0~178.88 之间没有切点），所以两段严格接续，不留空隙——留了就是回合中间的一次跳切。"
+    },
+    {
+      "start": 172.0,
+      "end": 178.88,
+      "score_inset": true,
+      "narration": "最后一分，本西奇双误。这场球，是以她的第九个双误结束的。",
+      "_why": "解说 177.12 `Out it goes. It's another double fault.`；逐分最后一局 `15:0, 30:0, 40:0 |B1| |B3|` 由主队破发拿下；本西奇全场 9 个双误，最后一分就是其中之一，所以是第九个。"
+    },
+    {
+      "start": 178.88,
+      "end": 182.2,
+      "narration": "",
+      "score_inset": true,
+      "_why": "她的反应近景，不配旁白。这一段和第①格重叠——正文在这里把冷开场预告过的结局重新兑现完整（`_ending_payoff_required`）。",
+      "_score_inset_why": "180.5s 记分条还在（`score_04` 实测），182.33 那一刀之后才撤。"
+    },
+    {
+      "start": 196.2,
+      "end": 205.4,
+      "score_inset": false,
+      "narration": "四比六、七比五、六比三。下一轮，普汀塞娃的对面是郑钦文。",
+      "_why": "赛后：向看台挥手、观众举手机、仰头。用时 2:51 两源一致（美网官方 match_id 2156 `duration` 与 flashscore `df_sui_1` 分盘 0:47+1:10+0:54 合计）。",
+      "_score_inset_why": "赛后镜头无板，`score_05` 的 200.5 / 202.5 / 204.5 三格实测都没有。"
+    },
+    {
+      "start": 206.0,
+      "end": 212.6,
+      "score_inset": false,
+      "narration": "两个人交手过两次，郑钦文两次都输了。这一次呢？",
+      "_why": "收尾落在一问上。画面走到转播的全屏赛果图形（210.5s 起，`STADIUM 17` / `YULIA PUTINTSEVA 4 7 6` / `12 BELINDA BENCIC 6 5 3`），它自己把赛果、球场、种子号全印出来了。窗口收在 212.6，避开 212.73 之后的 US Open 社媒片尾板（silent_audio 也从 212.79 起）。",
+      "_score_inset_why": "206.5 / 208.5 两格无板；210.5 起是全屏赛果图形，本来就把左下角盖住了。"
+    }
+  ],
+  "_editing_why": "⚠️ **窗口全部避开 212.73s 之后的 US Open 社媒片尾板**。① 冷开场取赛点落地＋反应（175.6–182.2），正文最后由第 ⑫ 段（178.88–182.2）把它完整兑现一遍，`_ending_payoff_required` 的覆盖要求由第 ⑩⑪⑫ 三段的并集 162.2–182.2 满足。② `score_inset` 逐段表态不靠默认：`score_04`/`score_05` 两张记分条缩略图墙逐格看过——160.5~180.5 板都在，**182.5 起消失**，所以 184.5 之后的赛后段一律 `false`（贴回来会是一块球场，正是 `wong-paul` 那次的绿斑）。③ 认人靠球衣：普汀塞娃绿衣白帽、本西奇紫红衣粉帽，缩略图墙上一眼分得开。④ 第三盘 3-3 之后连赢三局的画面**不在这条集锦里**（集锦从第三盘 0-1 直接跳到 5-3 的赛点），所以旁白不讲那三局，只讲画面上真有的东西。 ⑤ **本地 `preview_segments_local` 抓到四处**，都已改：第 3 段旁白说「零比三」而画面板是 `0-2`；第 5 段说「四比六丢了」而画面还停在 `SET POINT 4-5`；第 7 段说「七比五扳平」而画面是 `6-5 40-0` 的盘点；以及同一段的记分条 **108.5s 起淡出**，开着 `score_inset` 会贴出一块球场——按板在不在拆成了两段。",
+  "editorial": {
+    "mode": "match_review",
+    "hook": [
+      "先丢一盘，又零比四十",
+      "她是郑钦文下一轮对手"
+    ],
+    "_hook_why": "和 `cover.hook` 逐字同一句，来路见 `cover._hook_why`。",
+    "question": "世界第八十四的普汀塞娃，丢掉首盘、自己的发球局又零比四十落后，靠什么把十二号种子本西奇掰了回来？",
+    "thesis": "掰回来的不是某一记制胜分，是**发球之后的那一拍**，外加本西奇自己先松了手。普汀塞娃的一发得分率逐盘往上走——第一盘百分之六十三、第二盘百分之七十、第三盘百分之七十三；本西奇正好相反，第二盘从百分之六十七塌到百分之五十二。分水岭是第二盘一比二时普汀塞娃自己的发球局：零比四十落后、本西奇握着三个破发点，一个都没兑现；那一局保下来之后，普汀塞娃连破带保把第二盘 7-5 拿走。最反直觉的证据在收尾：全场制胜分普汀塞娃只多六记（37 比 31），真正拉开的是失误——本西奇 43 次非受迫失误、9 个双误、一个发球直接得分都没有，而这场球就是以她的第九个双误结束的。",
+    "beats": [
+      "北京时间 9 月 2 日凌晨，17 号球场：世界第 84 的普汀塞娃对 12 号种子、世界第 12 的本西奇。开场就是 0-3，普汀塞娃第一个发球局直接被破。",
+      "第一盘第五局是信号：本西奇在自己的发球局 40-0 领先，普汀塞娃连追五分破发。但第一盘还是 4-6 丢掉，她把球拍摔在地上。",
+      "第二盘 1-2、普汀塞娃发球局 0-40：三个破发点本西奇一个没兑现。这一局之后她的一发得分率从 63% 涨到 70%，本西奇掉到 52%，第二盘 7-5 扳平，此时比赛已打满两小时。",
+      "决胜盘 5-3，本西奇发球，40-0 三个赛点全在普汀塞娃手里。最后一分本西奇双误——她全场第九个双误。2 小时 51 分钟，4-6 7-5 6-3。"
+    ],
+    "human_context": {
+      "angle": "这场球对中文读者的分量不在爆冷本身，在**它决定了郑钦文下一轮要打谁**。郑钦文这一届美网是从资格赛打上来的（官方签表 `entryStatus: Q`，当期世界第 121），首轮 4-6 6-3 6-1 逆转柳托娃——**和普汀塞娃今天一样，也是先丢首盘再连扳两盘**，而且两场都在同一块 17 号球场。美网官方签表 `match_id 2228` 已经把第二轮排成 `Q. Zheng vs Y. Putintseva`。更硬的一层是交手记录：郑钦文对普汀塞娃 0 胜 2 负，2023 年法网第二轮和 2024 年马德里第二轮都输了。所以这条片子回答的是一个中国观众此刻真正在问的问题——挡在郑钦文前面的，是个什么样的对手。",
+      "facts": [
+        "普汀塞娃 4-6 7-5 6-3 胜本西奇，2026 美网女单第一轮，Stadium 17，官方用时 2:51（美网官方 WS 签表 match_id 2156，status Completed，team1.won=true）。",
+        "当期世界排名：普汀塞娃第 84（904 分）、本西奇第 12（2995 分），WTA 官方 players/ranked，rankedAt 2026-08-31；本西奇是本站 12 号种子（官方签表 team2.seed=12，源片记分条印着 `12 BENCIC SUI`）。",
+        "技术统计（flashscore df_st_1，大满贯女子这场有制胜分/非受迫失误）：普汀塞娃 6 Ace / 4 双误 / 37 制胜分 / 37 非受迫失误 / 破发点 5 中 10 / 总分 106；本西奇 0 Ace / 9 双误 / 31 制胜分 / 43 非受迫失误 / 破发点 3 中 7 / 总分 95。",
+        "分盘一发得分率（flashscore df_st_1）：普汀塞娃 63% → 70% → 73%；本西奇 67% → 52% → 64%。",
+        "美网官方 WS 签表 match_id 2228：第二轮 Q. Zheng（entryStatus Q）vs Y. Putintseva，尚未开赛。郑钦文首轮为 match_id 2155，Stadium 17，用时 2:28，胜 K. Liutova。",
+        "郑钦文对普汀塞娃交手 0 胜 2 负：2023 法网第二轮普汀塞娃 2-1、2024 马德里第二轮普汀塞娃胜（盘分 0:1，中途结束）。两个独立源：tennisexplorer mutual 页与 flashscore df_hh_1_8Ehiz0tJ。",
+        "比赛以本西奇的双误结束：转播解说 177.12s `Out it goes. It's another double fault.`；flashscore 逐分最后一局 `15:0, 30:0, 40:0 |B1| |B3|` 由 home（普汀塞娃）破发拿下。"
+      ],
+      "sources": [
+        "https://www.usopen.org/en_US/scores/feeds/2026/draws/WS.json",
+        "https://api.wtatennis.com/tennis/players/ranked?page=0&pageSize=100&type=rankSingles&sort=asc&name=&metric=SINGLES",
+        "https://wtafiles.wtatennis.com/pdf/rankings/Singles_Numeric.pdf",
+        "https://www.tennisexplorer.com/mutual/zheng-qinwen/putintseva/",
+        "https://www.youtube.com/watch?v=FCgBoA8IDOc"
+      ],
+      "voice_label": "郑钦文下一轮的对手"
+    }
+  },
+  "_claims": {
+    "郑钦文对普汀塞娃两次交手都输了（0 胜 2 负）": [
+      "https://www.tennisexplorer.com/mutual/zheng-qinwen/putintseva/",
+      "https://global.flashscore.ninja/2/x/feed/df_hh_1_8Ehiz0tJ"
+    ],
+    "本西奇本场一个发球直接得分都没有（0 Ace）": [
+      "https://global.flashscore.ninja/2/x/feed/df_st_1_QF4kee9d",
+      "https://www.usopen.org/en_US/scores/feeds/2026/draws/WS.json"
+    ]
+  }
+}
