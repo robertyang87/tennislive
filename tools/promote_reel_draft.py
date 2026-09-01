@@ -47,6 +47,67 @@ def _source_urls(draft: dict) -> list[str]:
     return urls
 
 
+def _video_key(url: str) -> str:
+    """把同一条视频的几种写法归一成一把钥匙。
+
+    ⚠️ 归一化不是洁癖：同一条片子在 spec 里写 `youtu.be/<id>`、在自动草稿里
+    写 `watch?v=<id>` 是常态（`wangxiyu-swiatek-us-open-2026-r1` 和
+    `swiatek-wang.draft.json` 就是这么一对），裸字符串比对认不出它们是同一个，
+    而认不出的样子就是「这一场没发过」——和真的没发过一模一样。
+    """
+    url = str(url or "").strip()
+    for prefix in ("https://www.youtube.com/watch?v=", "https://youtube.com/watch?v=",
+                   "http://www.youtube.com/watch?v=", "https://m.youtube.com/watch?v=",
+                   "https://youtu.be/", "http://youtu.be/"):
+        if url.startswith(prefix):
+            return "yt:" + url[len(prefix):].split("&")[0].split("?")[0].split("#")[0]
+    return url
+
+
+def _match_keys(spec: dict) -> set[str]:
+    """这一条讲的是哪一场球——两把钥匙：flashscore 场次 id ＋ 源片。
+
+    ⚠️ 两把都要，缺一把就漏一类：场次 id 最硬（同一场球常有两版官方集锦，
+    换一版视频它照样认得出），而 2026-08 之前那批 spec 的 `_match` 是一段散文、
+    根本没有 id（量过 187 条里 94 条如此），那时只剩源片认得出。
+    """
+    keys: set[str] = set()
+    match = spec.get("_match")
+    if isinstance(match, dict):
+        mid = str(match.get("flashscore_id") or "").strip()
+        if mid:
+            keys.add(f"fs:{mid}")
+    for url in (spec.get("source_url"), *(spec.get("sources") or {}).values()):
+        key = _video_key(url)
+        if key.startswith(("yt:", "http://", "https://")):
+            keys.add(key)
+    return keys
+
+
+def _published_reel_matches(root: Path | None = None) -> dict[str, str]:
+    """已经落库的「赛场之上」讲过哪几场球 → 那条 spec 的 slug。
+
+    ⚠️ 只扫「赛场之上」这一个栏目，不扫整个 `specs/reels/`：`promote` 产的就是
+    这个栏目（`cover.eyebrow` 是写死的），而同一个源片被「网球有故事」再用一次
+    是仓库明写允许的（「同一件事，不同栏目各讲一次不算重复」）。量过：13 处共用
+    源片里 **12 处是跨栏目的**，扫宽了这一条闸会把那一类整个误伤。
+    """
+    index: dict[str, str] = {}
+    for path in sorted((root or FORMAL).glob("*.json")):
+        try:
+            spec = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            continue
+        if not isinstance(spec, dict):
+            continue
+        cover = spec.get("cover")
+        if not isinstance(cover, dict) or cover.get("eyebrow") != "赛场之上":
+            continue
+        for key in _match_keys(spec):
+            index.setdefault(key, path.stem)
+    return index
+
+
 def waiting_reasons(draft: dict) -> list[str]:
     reasons: list[str] = []
     match = draft.get("_match") or {}
@@ -116,6 +177,16 @@ def waiting_reasons(draft: dict) -> list[str]:
         reasons.append("比赛时长没有结构化来源")
     if len(_source_urls(draft)) < 2:
         reasons.append("内容事实没有两类可核验来源（集锦+赛果）")
+    # ⚠️ 这一场已经有正式「赛场之上」了就不许再转正——同一个栏目里发第二条讲
+    # 同一场球的片子，而微信那条消息发出去收不回来。触发窗口很窄（草稿 20 小时
+    # 内凑齐证据、而这期间有人把同一场发了），2026-09-01 就撞上一次：编排器
+    # 01:55 产的 `swiatek-wang` 和人写的 `wangxiyu-swiatek-us-open-2026-r1`
+    # 是同一场球、同一条源片，只是视角不同。
+    published = _published_reel_matches()
+    hit = sorted({published[key] for key in _match_keys(draft) if key in published})
+    if hit:
+        reasons.append("这一场已经有正式「赛场之上」了（" + "、".join(hit)
+                       + "），同一个栏目不发第二条；这份草稿可以删掉")
     return reasons
 
 
