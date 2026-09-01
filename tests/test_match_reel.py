@@ -8795,8 +8795,12 @@ def _measured_narration() -> list[tuple[str, int, int, int, float]]:
                     continue
                 body = "".join(c for c in text if c not in reel._SPEECH_QUIET)
                 punct = sum(1 for c in body if c in reel._SPEECH_PUNCT)
-                out.append((outdir.name, index, len(body) - punct, punct,
-                            round(float(secs), 2)))
+                # ⚠️ 按词念的拉丁串单算一维（`Law Roach` / `QueenWen`），
+                # 全大写的缩写（ACE / WTA / ATP）仍然算在汉字那一维里——
+                # 它们逐字母念，和汉字一个价。见 reel_timing.SPEECH_PER_LATIN。
+                latin = reel.latin_word_letters(text)
+                out.append((outdir.name, index, len(body) - punct - latin,
+                            latin, punct, round(float(secs), 2)))
             continue
         for index, seg in enumerate(spec.get("segments") or []):
             length = float(seg["end"]) - float(seg["start"])
@@ -8882,8 +8886,21 @@ def test_离线估旁白长度要对得上真产物():
     reel = _reel()
 
     def check(rows, where):
-        errs = [secs - reel.speech_seconds("一" * chars + "，" * punct)
-                for _slug, _i, chars, punct, secs in rows]
+        # ⚠️ 行有两种宽度，**这是故意的**：
+        # `_SPEECH_FIXTURE` 是**冻结的基线**（5 元组，纯中文计数），而 2026-09-01
+        # 给模型加了「按词念的拉丁串」这一维之后实测那一路变成 6 元组。冻结表里
+        # 一条带小写拉丁词的样本都没有（逐条核过：`WTA`/`ACE`/`ATP` 是全大写，
+        # 走的还是汉字那一档），所以它照旧成立——**在改模型的同一个提交里重写
+        # 基线表，等于把基线本身作废掉**，那就没有东西能证明系数没漂了。
+        errs = []
+        for row in rows:
+            chars, punct, secs = row[2], row[-2], row[-1]
+            latin = row[3] if len(row) == 6 else 0
+            # 合成一段等价的文本再过 speech_seconds——比在这儿重抄一遍公式好：
+            # 公式改了这条判据自己就会跟着走，不会两处分叉。小写的 "a" 串会被
+            # 认成「按词念」，正是要校的那一维。
+            errs.append(secs - reel.speech_seconds(
+                "一" * chars + "a" * latin + "，" * punct))
         worst = max(abs(e) for e in errs)
         assert worst <= reel.SPEECH_EST_ERR, (
             f"{where}：最坏一段差 {worst:.2f}s，超过声明的误差 "
@@ -8907,6 +8924,57 @@ def test_离线估旁白长度要对得上真产物():
     if live:
         assert len(live) >= 60, f"只取到 {len(live)} 段实测，八成是取法错了"
         check(live, f"已发成片 {len(live)} 段")
+
+
+def test_按词念的拉丁串比逐字母念的缩写便宜():
+    """`Law Roach` 不能按 `A A A A A A A A A` 收费。
+
+    来路：`osaka-iverson-tribute` 第 ⑦ 段「造型师 Law Roach 牵的线，找的是纽约
+    一个牌子，Who Decides War。」——21 个拉丁字母按汉字价收是 3.49 秒，离线估
+    7.39 秒而真语音只有 **5.14 秒**，一段就把 ±2.2 的误差带子顶穿了。
+
+    分档的依据是**怎么念**，不是「是不是拉丁字母」：
+
+    - `ACE` / `WTA` / `ATP` 是**逐字母念**的缩写，一个字母约等于一个汉字
+      ——已发成片里 60 多段是这一类，老模型对它一直准，所以一个字都不能动；
+    - `Law` / `Roach` / `QueenWen` 是**按词念**的，一整个词往往还不到一个
+      汉字的工夫。
+
+    ⚠️ 这条钉的是**两档之间的关系**，不是某个具体的秒数——系数以后重新拟合
+    时它不该跟着红。
+
+    三个方向反向验证过，红在哪一行是**跑出来的不是推的**：把真词也按汉字价收
+    → 红在第 ① 条；把真词做成零成本 → 红在第 ② 条；把 `isupper()` 那道判据
+    拆掉（缩写也按词价收）→ **也红在第 ① 条**，因为那时 `Ace` 和 `ACE` 估出来
+    一样，① 先撞上。第 ③ 条守的是另一头（有人只调便宜缩写那一档），单独拆它
+    才轮得到它出声。
+    """
+    reel = _reel()
+
+    han = "他发了三个"          # 5 个汉字，两档共用的底
+    acro = reel.speech_seconds(han + "ACE。")
+    word = reel.speech_seconds(han + "Ace。")
+    plain = reel.speech_seconds(han + "。")
+
+    # ① 真词要比同样长的缩写便宜——这是这条修正的全部内容
+    assert word < acro - 0.1, (
+        f"「Ace」估 {word:.3f}s、「ACE」估 {acro:.3f}s，两档没分开："
+        "按词念的拉丁串被当成逐字母念的缩写在收费")
+
+    # ② 但真词不是免费的：三个字母总得有点工夫，不然长英文名会被严重低估
+    assert word > plain + 0.05, (
+        f"「Ace」估 {word:.3f}s、什么都不加估 {plain:.3f}s：拉丁词被当成零成本，"
+        "长英文名会被低估到装不下")
+
+    # ③ 缩写那一档不许被顺手改便宜——60 多段已发成片是靠它校准的
+    assert abs(acro - (plain + 3 * reel.SPEECH_PER_CHAR)) < 1e-6, (
+        f"「ACE」估 {acro:.3f}s，不等于三个汉字的价钱：全大写缩写是逐字母念的，"
+        "它的收费不该跟着真词那一档走")
+
+    # ④ 落单的字母也走缩写档（`W100` 的 W 是念出来的 “double-u”）
+    lone = reel.speech_seconds(han + "W。")
+    assert abs(lone - (plain + reel.SPEECH_PER_CHAR)) < 1e-6, (
+        f"单个字母估 {lone:.3f}s：它是逐字母念的，该走缩写那一档")
 
 
 def test_估体积的码率只许按实测往上调():
