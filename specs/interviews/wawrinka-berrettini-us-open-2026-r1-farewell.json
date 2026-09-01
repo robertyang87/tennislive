@@ -15,7 +15,7 @@
   "featured_player": "瓦林卡",
   "opening": {
     "kind": "none",
-    "why": "整条源片是美网官方在 Grandstand 办的告别仪式，正文从主持人递话进入瓦林卡致辞；片头 52-150 秒是致敬短片，整整 98 秒没有任何字幕事件，收进来就是一大段没有字幕的画面，不做冷开场。"
+    "why": "正文源（告别仪式那条）自己没有比赛画面：片头 52–150 秒是美网做的致敬短片，整整 98 秒没有任何字幕事件，收进来就是一大段没有字幕的画面。所以正文从主持人递话进入致辞，比赛结尾改由 `lead_in` 从同一天同一个官方频道的最后一分那条视频接入。"
   },
   "zh": [
     "太多美好的回忆",
@@ -158,13 +158,99 @@
     "⚠️ 表述边界一：只能写「三次夺冠」，不能写「三次进决赛」——他打过四次大满贯决赛，第四次是 2017 法网负于纳达尔。这条坑 explainer.py 的 wawrinka-wildcard 注释里记过一次。",
     "⚠️ 表述边界二：这是他最后一场大满贯，不是最后一场职业比赛。AP 稿标题写的就是 Grand Slam career ends；他自己在致辞里说的也是 to finish the four Grand Slam here。",
     "仪式嘉宾：Craig Tiley，2026 年 2 月从澳网转任美国网协 CEO（ESPN／SportsPro／USTA 官网）；Eric Butorac，2026 年起任美网赛事总监（USTA 官网／Tennis Now）。自动字幕把这两个名字转成了 Craig Kylie／USADA／Eric Burak，已按核实结果订正。",
-    "AP 引语交叉核对：「I'm going to miss it for sure. I'm going to miss it big time.」「I love the game」「I found a way to play my best tennis here」三处和这份转写逐句对得上。⚠️ 烧进画面的英文保留他自己的非母语说法，不按 AP 的规范化引语改写。"
+    "AP 引语交叉核对：「I'm going to miss it for sure. I'm going to miss it big time.」「I love the game」「I found a way to play my best tennis here」三处和这份转写逐句对得上。⚠️ 烧进画面的英文保留他自己的非母语说法，不按 AP 的规范化引语改写。",
+    "⭐ 画面自证（第四个源，也是最硬的一档）：冷开场那条源片 66.8–70.7 秒转播打出全屏比分板，上面写着「MEN'S SINGLES | 1ST ROUND」和「MATTEO BERRETTINI 7 7 6 / STAN WAWRINKA 6 6 0」——轮次和比分都烧在画面上，和美网官方 feed、flashscore、AP 赛报完全一致。"
   ],
   "_notes": [
     "赛后开麦·告别特别篇：正文取美网官方告别仪式，从主持人递话进入瓦林卡致辞，到赛事方宣布颁发纪念品收尾。",
     "顶栏胜者必须按真实赛果写贝雷蒂尼；featured_player 只用于封面与叙事，不得反转比分方向。",
     "⚠️ en_fixed 只改有外部证据的专名和明显不是词的转写错（Craig Tiley／USTA／Eric Butorac／memento／present Stan／Grand Slam），他本人的非母语语法一律保留不动。",
     "⚠️ 第 5、6 行（congrats Mateo 那两句）自动字幕给的是「to to Grand Sal」「a two time good match」，只把 Grand Sal 按发音订正成 Grand Slam，第 6 行原样保留——这两句听不确切，等 render 那趟第二份 ASR（medium.en）出来再定，中文按能确定的意思译。",
-    "片头 52-150 秒是美网做的致敬短片，98 秒没有任何字幕事件，整段不收进正文。"
-  ]
+    "片头 52-150 秒是美网做的致敬短片，98 秒没有任何字幕事件，整段不收进正文。",
+    "冷开场走 lead_in（跨视频接片头），不是 opening：正文源自己确实没有比赛画面，最后一分和解说交代赛果那一段来自同场官方的另一条视频，详见 lead_in.why。"
+  ],
+  "lead_in": {
+    "url": "https://www.youtube.com/watch?v=t09ZApKnZGE",
+    "start": 37.2,
+    "end": 72.0,
+    "subs": [
+      {
+        "a": 37.2,
+        "b": 39.5,
+        "en": "and it is a result",
+        "zh": "而这个结果"
+      },
+      {
+        "a": 39.5,
+        "b": 42.08,
+        "en": "that brings the curtain down",
+        "zh": "落下了帷幕"
+      },
+      {
+        "a": 42.08,
+        "b": 44.8,
+        "en": "on Stan Wawrinka's glittering career",
+        "zh": "终结了瓦林卡在大满贯"
+      },
+      {
+        "a": 44.8,
+        "b": 46.64,
+        "en": "at the majors.",
+        "zh": "赛场上的辉煌生涯"
+      },
+      {
+        "a": 46.64,
+        "b": 50.72,
+        "en": "The three-time major winner",
+        "zh": "这位三届大满贯冠军"
+      },
+      {
+        "a": 50.72,
+        "b": 53.76,
+        "en": "and 2016 champion here in New York",
+        "zh": "2016年在纽约夺冠的人"
+      },
+      {
+        "a": 53.76,
+        "b": 56.16,
+        "en": "plays his last match in this famous city.",
+        "zh": "在这座城市打完最后一场"
+      },
+      {
+        "a": 56.16,
+        "b": 60.4,
+        "en": "And it will surely be an emotional goodbye",
+        "zh": "这一定会是一场动情的告别"
+      },
+      {
+        "a": 60.4,
+        "b": 64.24,
+        "en": "to this sellout grandstand crowd.",
+        "zh": "面对坐满看台的观众"
+      },
+      {
+        "a": 64.24,
+        "b": 68.32,
+        "en": "Berrettini the first to recognize",
+        "zh": "贝雷蒂尼第一个意识到"
+      },
+      {
+        "a": 68.32,
+        "b": 72.0,
+        "en": "the gravity of this result.",
+        "zh": "这一刻的分量"
+      }
+    ],
+    "why": "同一天、同一个美网官方频道的《Stan Wawrinka's Emotional Final Grand Slam Point | 2026 US Open》（t09ZApKnZGE，165 秒）。收 37.2–72.0 秒——缩略图墙逐格看过，这一段的画面是：两人在网前长时间拥抱（37–41 秒）→ 并肩站在网前 → 和主裁握手 → 他走向场地四面举手致意、全场起立（53–57 秒）→ 观众席鼓掌特写 → 他抹了一把脸（60.9 秒）→ 转播打出全屏比分板「MEN'S SINGLES | 1ST ROUND / MATTEO BERRETTINI 7 7 6 / STAN WAWRINKA 6 6 0」（66.8–70.7 秒）。解说同时把这场球的分量讲了出来（辉煌生涯落幕、三届大满贯冠军、2016 年这里的冠军、最后一场、动情的告别），正好接上正文第一句主持人的「此刻你一定百感交集」。⚠️ 没有从 1.96 秒赛点那一刻起收：赛点之后 10.2–23.7 秒有 13.5 秒一个字幕事件都没有，而这条线的开头不许压在一段没有字幕的画面上。⚠️ 也没有收到 77 秒：71.9 秒之后解说说的是比分复述，而顶栏已经印着比分。⚠️ 解说把 Berrettini 念成了 Veritini，自动字幕照转，已按核实结果订正。",
+    "verification": {
+      "match_id": "2026:us-open:mens-singles-round-1:matteo-berrettini-stan-wawrinka",
+      "channel": "US Open Tennis Championships",
+      "height": 1080.0,
+      "method": "official_exact_match_highlight",
+      "winner_en": "Matteo Berrettini",
+      "loser_en": "Stan Wawrinka",
+      "event_search": "US Open",
+      "year": 2026
+    }
+  }
 }
