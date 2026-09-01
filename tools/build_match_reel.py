@@ -7174,8 +7174,8 @@ def _topbar_lines(spec: dict) -> tuple[str, str] | None:
     豁免只给 `_LEGACY_NO_TOPBAR` 里那些**已经发出去的**片子：已发的不为版式
     重渲，而那张表有自检，写错名字会红。
     """
-    from reel_facts import (bare_tiebreak_problem, result_direction_problem,
-                            verified_result_problem)
+    from reel_facts import (bare_tiebreak_problem, decider_tiebreak_problem,
+                            result_direction_problem, verified_result_problem)
 
     verified_problem = verified_result_problem(spec)
     if verified_problem:
@@ -7193,6 +7193,13 @@ def _topbar_lines(spec: dict) -> tuple[str, str] | None:
     tb_problem = bare_tiebreak_problem(spec)
     if tb_problem:
         raise ReelError(tb_problem)
+    # 大满贯的决胜盘是抢 10 分（账号所有者 2026-09-01，男女一样）。⚠️ 这道闸
+    # 不能并进上面 verified_result_problem 里那个「合法抢七」的判据——那一条
+    # 只在 _match.status == result_verified 时才咬，而这个错在任何 _match 里
+    # 都记得下；而且它渲出来逐字节相同（注脚是输家的分），只有这儿看得见。
+    decider_tb = decider_tiebreak_problem(spec)
+    if decider_tb:
+        raise ReelError(decider_tb)
     raw = spec.get("topbar")
     if raw is None:
         column = str((spec.get("cover") or {}).get("eyebrow", "")).strip()

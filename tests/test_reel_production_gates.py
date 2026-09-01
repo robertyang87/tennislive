@@ -1326,6 +1326,113 @@ def test_小分闸在渲染入口就红():
         reel._topbar_lines(spec)
 
 
+def test_大满贯决胜盘是抢十分男女都一样():
+    """⭐ 账号所有者 2026-09-01：「大满贯决胜盘 tiebreak 是抢十分的赛制，
+    男女都一样。要记住咯」。2022 年起四大满贯统一：决胜盘 6-6 抢 10 分，
+    其余盘照旧抢 7。
+
+    ⚠️ **这个错渲出来一个像素都看不出来**——注脚 (N) 是输掉那一盘的人拿到
+    的分，10-5 和 7-5 都印成 7-6(5)，机械重建的 winner_result 逐字节相同
+    （下面第 ② 组钉的就是这一点）。老判据只要求 `max >= 7`，两个值一起放行。
+
+    对照组全是**官方 feed 的真实数据**（美网 day8/day9 tiebreakDisplay）：
+    女单 2-0 那两场第 2 盘 7-4 / 8-6 是普通盘抢 7——**末盘 ≠ 决胜盘**，
+    拿「最后一盘」当判据会把它们误判。
+    """
+    facts = load("reel_facts")
+
+    def spec(sets, tb, slug="x-us-open-2026-r1", result="", topic=""):
+        return {"slug": slug, "cover": {"result": result, "topic": topic},
+                "_match": {"set_scores_home_away": sets,
+                           "tiebreaks_home_away": tb}}
+
+    # ① 决胜盘赢家没到 10 → 红（rublev-virtanen 那次记的正是 7-5）
+    five = [[6, 7], [6, 7], [6, 0], [6, 2], [7, 6]]
+    for bad in ([7, 5], [9, 7], [8, 6]):
+        msg = facts.decider_tiebreak_problem(
+            spec(five, [[5, 7], [0, 7], None, None, bad])) or ""
+        assert "决胜盘" in msg and "抢 10 分" in msg, (bad, msg)
+    assert facts.decider_tiebreak_problem(
+        spec(five, [[5, 7], [0, 7], None, None, [10, 5]])) is None
+
+    # ② 为什么非要一道闸：两个值渲出来逐字节相同
+    def rebuilt(tb5):
+        return facts.verified_match_fact(
+            [{"name": "卢布列夫"}, {"name": "维尔塔宁"}],
+            [tuple(s) for s in five], "YTRmDEf5",
+            tiebreaks=[(5, 7), (0, 7), None, None, tuple(tb5)])["winner_result"]
+    assert rebuilt([7, 5]) == rebuilt([10, 5]) == "6-7(5) 6-7(0) 6-0 6-2 7-6(5)"
+
+    # ③ 女单决胜盘同样抢 10（官方 feed：第 3 盘 7:10）
+    w3 = [[6, 4], [4, 6], [6, 7]]
+    assert facts.decider_tiebreak_problem(
+        spec(w3, [None, None, [7, 10]])) is None
+    assert facts.decider_tiebreak_problem(spec(w3, [None, None, [5, 7]]))
+
+    # ④ 对照组，一个都不许误伤
+    ok = [
+        # 末盘 ≠ 决胜盘：女单 2-0 的第 2 盘是普通盘（官方 feed 真实小分）
+        (spec([[6, 0], [7, 6]], [None, [7, 4]]), "女单 2-0 第 2 盘"),
+        (spec([[2, 6], [6, 7]], [None, [6, 8]]), "女单 0-2 第 2 盘"),
+        # 男单 3-1：第 4 盘不是决胜盘
+        (spec([[4, 6], [7, 6], [6, 1], [6, 4]], [None, [7, 3], None, None]),
+         "男单 3-1 的抢七盘"),
+        # 非大满贯：巡回赛决胜盘就是抢 7
+        (spec([[6, 4], [4, 6], [7, 6]], [None, None, [7, 5]],
+              slug="z-cincinnati-2026-r1"), "巡回赛决胜盘"),
+        # ⭐ 打满了五盘，可抢七在**第 1 盘**不在决胜盘（djokovic-navone 的真形状）
+        (spec([[7, 6], [5, 7], [4, 6], [6, 2], [6, 1]],
+              [[7, 5], None, None, None, None]), "打满但抢七不在末盘"),
+        # 男单 3-0 横扫：前两盘的抢七是普通盘（berrettini-wawrinka 的真形状）
+        (spec([[7, 6], [7, 6], [6, 0]], [[7, 4], [7, 3], None]), "3-0 横扫"),
+        # 决胜盘没打抢七 / 没有 _match / 对不齐
+        (spec([[6, 4], [4, 6], [6, 1]], [None, None, None]), "决胜盘不是抢七"),
+        ({"slug": "w-us-open-2026-r1", "cover": {"result": "6-4 4-6 7-6(5)"}},
+         "没有 _match"),
+        (spec(five, [[5, 7]]), "小分栏对不齐（归 verified_result_problem 报）"),
+    ]
+    for s, label in ok:
+        assert facts.decider_tiebreak_problem(s) is None, label
+    # 退赛的盘数形状本来就不是打满
+    ret = spec(five, [[5, 7], [0, 7], None, None, [7, 5]], result="… Ret.")
+    assert facts.decider_tiebreak_problem(ret) is None
+
+    # ⑤ 判据自己的判据：全库零命中（新写的 spec 撞上它才该红）
+    import glob  # noqa: PLC0415
+
+    checked, hits = 0, []
+    for f in glob.glob(str(ROOT / "specs" / "reels" / "*.json")):
+        s = json.loads(Path(f).read_text(encoding="utf-8"))
+        # ⚠️ 有 spec 的 _match 是一句注解（字符串）不是对象——闸自己
+        # isinstance 挡住了，扫描这头也要挡，否则测试红在自己身上
+        m = s.get("_match")
+        if isinstance(m, dict) and m.get("tiebreaks_home_away"):
+            checked += 1
+        if facts.decider_tiebreak_problem(s):
+            hits.append(Path(f).stem)
+    assert checked >= 4, f"只校到 {checked} 条带小分的 spec——主语没了"
+    assert hits == [], f"这些 spec 的大满贯决胜盘小分不到 10：{hits}"
+
+
+def test_决胜盘抢十那道闸在渲染入口就红():
+    """和小分闸同一个座位（_topbar_lines，validate_spec 调它，dry-run 就走到）
+    ——只测行为拦不住「闸装在下载源片之后」那一类。"""
+    sys.path.insert(0, str(TOOLS))
+    import build_match_reel as reel  # noqa: PLC0415
+
+    spec = {"slug": "fresh-decider-spec",
+            "cover": {"eyebrow": "赛场之上", "winner": "卢布列夫",
+                      "result": "6-7(5) 6-7(0) 6-0 6-2 7-6(5)"},
+            "topbar": {"line1": "2026 美网 第一轮",
+                       "line2": "卢布列夫 6-7(5) 6-7(0) 6-0 6-2 7-6(5) 维尔塔宁"},
+            "_match": {"set_scores_home_away":
+                       [[6, 7], [6, 7], [6, 0], [6, 2], [7, 6]],
+                       "tiebreaks_home_away":
+                       [[5, 7], [0, 7], None, None, [7, 5]]}}
+    with pytest.raises(reel.ReelError, match="抢 10 分"):
+        reel._topbar_lines(spec)
+
+
 def test_df_sui_1的每盘数字解析出IG_IH对():
     """真实 feed 的形状（块间 ~、字段 ¬）；缺字段的块给 (-1,-1) 出声占位，
     别静默丢——丢了和逐局表对齐就错位，reconcile 会拿错盘的小分。"""

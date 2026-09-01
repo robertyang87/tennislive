@@ -372,3 +372,102 @@ def bare_tiebreak_problem(spec: dict) -> str | None:
             "topbar.line2 要跟着 cover.result 一起带上。"
         )
     return None
+
+
+#: 大满贯决胜盘抢到几分。2022 年起四大满贯统一：决胜盘 6-6 打**抢 10 分**
+#: （净胜 2 分），其余盘照旧抢 7。
+DECIDER_TIEBREAK_TO = 10
+
+
+def _went_the_distance(scores: list[tuple[int, int]]) -> bool:
+    """这场球有没有打满距离——也就是最后一盘是不是决胜盘。
+
+    ⚠️ **不用判男女、不用判三盘五盘**：输家赢的盘数 == 赢家 − 1 就是打满。
+    三盘两胜 2-1 ✅、五盘三胜 3-2 ✅；2-0 / 3-1 / 3-0 都不是打满，
+    最后一盘只是普通盘。
+
+    ⚠️ **末盘 ≠ 决胜盘，这一刀不能省**：美网官方 feed 里女单 2-0 那两场的
+    第二盘小分是 7-4 和 8-6（普通盘，抢 7），拿「最后一盘」当决胜盘会把
+    它们误判成抢十不合法。
+    """
+    won = sum(a > b for a, b in scores)
+    lost = sum(b > a for a, b in scores)
+    return bool(scores) and won != lost and max(won, lost) == min(won, lost) + 1
+
+
+def decider_tiebreak_problem(spec: dict) -> str | None:
+    """⭐ **大满贯的决胜盘是抢 10 分，男女都一样**——赢家不到 10 就是记错了。
+
+    账号所有者 2026-09-01：「大满贯决胜盘 tiebreak 是抢十分的赛制，男女都
+    一样。要记住咯」。2022 年起四大满贯统一了这条：**决胜盘** 6-6 打抢 10 分
+    （净胜 2 分），**其余盘**照旧抢 7。
+
+    官方 feed 一份数据就自证了，而且自带对照组（美网 day8/day9，
+    `scores.sets[].tiebreakDisplay`）：
+
+        男单 第 5 盘（决胜）   5 : 10   抢 10 ✅
+        女单 第 3 盘（决胜）   7 : 10   抢 10 ✅ ← 男女一样
+        女单 2-0 那两场第 2 盘 7:4 / 8:6  抢 7  ← 对照组：末盘 ≠ 决胜盘
+        男单 第 1 / 2 盘       7:5 / 7:0  抢 7  ← 对照组
+
+    ⚠️⚠️ **这个错渲出来一个像素都看不出来**：`cover.result` 的注脚 `(N)` 是
+    **输掉那一盘的人**拿到的分，所以 10-5 和 7-5 都印成 `7-6(5)`——
+    机械重建出来的 `winner_result` 逐字节相同。也就是说封面比分板、顶栏、
+    数据图全是对的，**唯一现形的地方是 `_match.tiebreaks_home_away`**，
+    而老判据只要求 `max >= 7`（10 也 ≥ 7），两个值一起放行。
+    `rublev-virtanen-us-open-2026-r1` 就是这么把第五盘记成 7-5 的。
+
+    ⚠️ **根因值得记**：flashscore 当日表的 `D*` 字段**每盘步进两个字母**
+    （`DA/DB`=第一盘、`DC/DD`=第二盘…`DI/DJ`=第五盘）。那一条我抄的是
+    `DA/DB=7/5`——**第一盘的抢七**——填进了第五盘的槽位。两个源当时都写着
+    10，是抄错了槽位，不是源错了。
+
+    判据只读 `_match`（`cover.result` 里根本没有赢家那个数，判不了），
+    没有 `_match` 的 spec 跳过。退赛不判——它的盘数形状本来就不是打满。
+    """
+    cover = spec.get("cover") or {}
+    topbar = spec.get("topbar") if isinstance(spec.get("topbar"), dict) else {}
+    # ⚠️ slug 里写的是 `us-open`（连字符），而 _GRAND_SLAMS 收的是 `us open`
+    # （空格）——不抹平的话只有 topbar.line1 的中文名认得出来，而一条只在
+    # slug 里点名赛事的 spec 会静静地绕过这道闸（写这条测试时就是这么绿的，
+    # 绿得没有意义）。
+    blob = re.sub(r"[-_]+", " ", " ".join(str(x) for x in (
+        topbar.get("line1", ""), cover.get("topic", ""),
+        spec.get("slug", "")))).casefold()
+    if not any(g in blob for g in _GRAND_SLAMS):
+        return None
+    if _RETIRED.search(str(cover.get("result") or "")):
+        return None
+    match = spec.get("_match") if isinstance(spec.get("_match"), dict) else {}
+    raw_sets = match.get("set_scores_home_away")
+    raw_tb = match.get("tiebreaks_home_away")
+    if not isinstance(raw_sets, list) or not isinstance(raw_tb, list):
+        return None
+    if len(raw_tb) != len(raw_sets) or not raw_sets:
+        return None            # 对不齐归 verified_result_problem 报
+    try:
+        scores = [(int(a), int(b)) for a, b in raw_sets]
+    except (TypeError, ValueError):
+        return None
+    if not _went_the_distance(scores):
+        return None            # 最后一盘不是决胜盘，普通抢 7
+    row = raw_tb[-1]
+    if row is None:
+        return None            # 决胜盘没打抢七
+    try:
+        th, ta = int(row[0]), int(row[1])
+    except (TypeError, ValueError, IndexError):
+        return None            # 形状错归 verified_result_problem 报
+    if max(th, ta) >= DECIDER_TIEBREAK_TO:
+        return None
+    n = len(scores)
+    return (
+        f"_match 第 {n} 盘是**决胜盘**，而大满贯的决胜盘打的是抢 "
+        f"{DECIDER_TIEBREAK_TO} 分（2022 年起四大满贯统一，男女都一样）——"
+        f"小分记的却是 {th}-{ta}，赢家没到 {DECIDER_TIEBREAK_TO}，"
+        "这个比分打不出来。⚠️ 它渲出来看不出错：注脚 (N) 是输掉那一盘的人"
+        "拿到的分，10-5 和 7-5 都印成 7-6(5)，所以别拿封面对——去查源。"
+        "⚠️ flashscore 当日表的 D* 字段每盘步进两个字母"
+        "（DA/DB=第一盘…DI/DJ=第五盘），抄错槽位会把第一盘的抢七填到这儿；"
+        "美网官方 feed 的 scores.sets[].tiebreakDisplay 是另一个源。"
+    )
