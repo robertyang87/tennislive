@@ -319,6 +319,50 @@ def test_promote缺视觉证据就只留waiting(tmp_path):
         promote.promote(draft)
 
 
+def test_promote不许在同一个栏目里发第二条讲同一场球的片子(tmp_path):
+    """同一场球已经有正式「赛场之上」了，自动草稿就不许再转正。
+
+    来路：2026-09-01 编排器 01:55 产的 `swiatek-wang` 和人写的
+    `wangxiyu-swiatek-us-open-2026-r1` 是**同一场球、同一条源片**，只是视角不同；
+    量过当时 24 份 pending 里有 6 份是这个形状。撞上就是同一场球发第二条微信，
+    而那条消息发出去收不回来。
+
+    三头分别验，缺一头这条闸就是半哑的：
+      ① 场次 id 认得出（同一场球换一版官方集锦，视频地址不同）
+      ② 源片认得出，**而且要归一化**（`youtu.be/<id>` 和 `watch?v=<id>` 是同一条）
+      ③ **跨栏目不许误伤**——「网球有故事」复用同一段素材是仓库明写允许的
+    """
+    promote = load("promote_reel_draft")
+    published = tmp_path / "formal"
+    published.mkdir()
+
+    def write(slug, eyebrow, url, fsid):
+        (published / f"{slug}.json").write_text(json.dumps({
+            "slug": slug, "source_url": url,
+            "_match": {"flashscore_id": fsid},
+            "cover": {"eyebrow": eyebrow},
+        }, ensure_ascii=False), encoding="utf-8")
+
+    write("已发的这一场", "赛场之上", "https://youtu.be/na565GRLNpg", "KWGdlmdC")
+    write("别人的故事片", "网球有故事", "https://youtu.be/story999", "STORY999")
+    index = promote._published_reel_matches(published)
+
+    # ① 场次 id：视频换了一版，照样认得出是同一场
+    assert index.get("fs:KWGdlmdC") == "已发的这一场"
+    # ② 源片：两种写法归一到同一把钥匙
+    assert promote._video_key("https://www.youtube.com/watch?v=na565GRLNpg") == \
+           promote._video_key("https://youtu.be/na565GRLNpg")
+    assert index.get("yt:na565GRLNpg") == "已发的这一场"
+    # ③ 跨栏目不进这张表——「同一件事，不同栏目各讲一次不算重复」
+    assert "fs:STORY999" not in index and "yt:story999" not in index
+
+    draft = _ready_draft(tmp_path)
+    draft["_match"]["flashscore_id"] = "KWGdlmdC"
+    assert any("已经有正式" in reason for reason in promote.waiting_reasons(draft))
+    with pytest.raises(ValueError, match="已经有正式"):
+        promote.promote(draft)
+
+
 def test_promote拒绝没有新鲜度证据的自动草稿(tmp_path):
     promote = load("promote_reel_draft")
     draft = _ready_draft(tmp_path)
