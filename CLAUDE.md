@@ -435,6 +435,34 @@ city 写着 `TORONTO`（flashscore 也是 Toronto，tennisabstract 标 Montreal�
 ⚠️ **SofaScore 在这台沙箱恒 403**（`api.` 和 `www.` 两个入口都试过，带 Referer
 也一样），别再把它排进候选。
 
+#### ⭐⭐ ESPN 的**正文**取得到——文章页是 JS 壳，真入口是它自己的新闻接口
+
+2026-09-01 挖出来的，值一整轮返工：`espn.com/tennis/story/_/id/<id>/<slug>` 用
+`requests` 带浏览器 UA 请求，**回的是 202 ＋ 1987 字节的 JS 壳**（WebFetch 回空、
+`curl` 同样），看起来就是「这篇文章取不到」。真正的入口是
+
+    GET https://now.core.api.espn.com/v1/sports/news/<articleId>
+    → JSON；headlines[].story 是带 HTML 标签的**全文**，另有 headline / byline / published
+
+`<articleId>` 就是文章 URL 里 `/id/` 后面那串数字。实测两篇当天的稿子一次全给，
+逐字读到了设计师对 Vogue 说的那两段原话（`osaka-walkout-2026` 那条片子的核心）。
+
+⚠️ **它解掉的是一个反复出现的死结**：本文件「源有三类」那条说**接口没有的那一栏
+恰恰该去翻编辑稿**，而 ESPN 是编辑稿里覆盖最广的一家——在这条路子挖出来之前，
+「ESPN 有这篇稿子」和「这篇稿子读不到」是同一个结果。同一天四个别的入口全试过
+（`site.api.espn.com/apis/site/v2/.../news?id=`、`secure.espn.com/core/...?xhr=1`、
+`www.espn.com/core/...?xhr=1`、以及 espndeportes 那边）——**只有 `now.core` 这一个通**。
+
+⚠️ **拿到之后仍然要照「查得够深、查得够广」那条办**：正文里的**引语**可以抄，
+**结论**要另找一个源核（本文件「编辑稿的引语可以抄、结论不可以」记过一次）。
+这次两篇 ESPN 稿加上 USA TODAY / Sunday Guardian / Woman Magazine 交叉对过，
+设计师原话、艾弗森的回应、赛果统计三项都是两个独立源一致。
+
+⚠️ **别拿搜索摘要顶替它。** 同一段设计师原话我在三次 `WebSearch` 的摘要里见过
+措辞完全一致的版本，attribution 也对——**那仍然是摘要不是原文**，而本文件
+「编出来的判据 ＋ 正确的结论」记的正是这种「结论经得起查，于是没有人有理由去查
+它的出处」的形状。这条 API 一秒钟就能读到原文，没有理由不读。
+
 #### ⚠️ 比赛用时**不要只信 flashscore**——2026-08-15 一天里它错了两场，方向都是偏长
 
 海报比分板上那个用时（`cover.scoreboard.duration_source`）一直是从 flashscore
