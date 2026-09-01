@@ -1,0 +1,22 @@
+{
+ "_why": "「网球有故事 · 她把艾弗森穿上了球场」这条片子的封面。⚠️ 和同一天同栏目的 `osaka-grand-slam-outfits` **故意不共用封面**：那条用的是 AP 那张走场实拍，两条片子同一张图，在信息流里读起来就是同一条。",
+
+ "osaka-iverson-headband.jpg": {
+  "title": "大坂直美握拳，2026 美网第一轮",
+  "source": "美网官方图片接口（USTA 官方摄影）",
+  "url": "https://photo-assets.usopen.org/images/pics/large/f_20260831_SB1_7980B.jpg",
+  "api": "https://www.usopen.org/relatedcontent/rest/v2/uso_v1/en/content/byType/photo?count=200 里 title=「N. Osaka vs. A. Zakharova | R1」那一批；页面地址 https://www.usopen.org/en_US/photos/20260831_SB1_7980B.html",
+  "caption_原文": "Naomi Osaka fist pumps during a Women's Singles match on Day Two of the 2026 US Open at USTA Billie Jean King National Tennis Center on Monday, August 31, 2026 in Flushing, NY. (Photo by Simon Bruty/USTA)",
+  "artist": "Simon Bruty / USTA",
+  "license": "美网官方图片接口，本号自媒体使用；版权归 USTA",
+  "size": "原图 1280x720（**这是美网这条接口的天花板**，见下）；仓库存的是从 x=440 起裁 540x720 的正 3:4，未缩放，只裁不放大",
+  "date": "美东 2026-08-31 夜场，北京时间 2026-09-01 早上",
+  "四要素": "**官方说明里全齐**：人物 Naomi Osaka、赛事 2026 US Open、轮次 Day Two / R1（title 写着 vs. A. Zakharova | R1）、日期 Monday, August 31, 2026、场馆 USTA Billie Jean King National Tennis Center、摄影师 Simon Bruty/USTA。",
+  "画面自证": "几何曲线的玉米辫、黑色弹力发带（上面一枚白色 Nike 勾）、黑色篮球式背心（白色滚边＋白色 Nike 勾）、右手握拳、背景是美网的蓝色挡板——**这条片子要讲的那身『艾弗森』，一屏之内全在**（辫子、发带、篮球背心三样都是致敬他的那几处）。眼睛睁着，正脸偏四分之三侧。",
+  "四道闸门": "①精准——官方说明写死四要素；②在比赛中——就是这一场的比赛画面（fist pumps during a Women's Singles match），不是训练、不是场外；③有冲击力——近景特写、握拳、表情用力，符合 2026-08-18 定的『同样合格的几张里挑近景那张、挑肢体张力更大的那张』；④清晰度——见下，是这条渠道的天花板，要写 `_low_res_why`。",
+  "⚠️ 分辨率": "1280x720 是**美网官方图片接口的出版上限，不是没找够**：前缀只有 t_/b_/c_/f_ 四档，f_ 就是最大的那一档；`?width=4000` 之类的参数返回 200 但尺寸一个像素不变（只换了一次 JPEG 编码）。裁成 540x720 之后铺 1080x1440 要放大 2.0 倍，所以 spec 里写了 `cover.portrait._low_res_why`。",
+  "⚠️ 另外三条渠道当天都查过": "WTA photo-resources 不收大满贯；AP 通讯社当天只有那一张走场实拍，而它已经被同一天另一条片子用作封面；USA TODAY（Gannett）当日的两辑图集没有一辑是美网；`usopen.org` 没有 WordPress 媒体库（每条路径都返回同一份 4084 字节的 JS 壳，答案在 `config_web.json` 的接口表里）。",
+  "checked": "2026-09-01 下载后 Read 打开看过整张裁切图：辫子、发带、背心、握拳逐样确认；眼睛睁着（『封面图一定不要闭眼的』那条）。**认领这张图是靠 md5 对上的**——先按官方接口取回六个候选的 f_ 原图，逐个 md5 和本地那张比，只有 20260831_SB1_7980B 对得上（47be1b92950e7dd91f46de583c37b2ca），不是靠『看着像』认的。",
+  "用在": "cover.portrait（solo 版式主图）。**不做 inset**：源片 133-139 秒自己拍到了脱掉长袍之后那身黑色背心，用不着贴图。"
+ }
+}

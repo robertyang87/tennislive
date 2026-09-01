@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>9.1 网球有故事 | 她把艾弗森穿上了球场</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>她把艾弗森穿上了球场
+
+美网第一轮走场，大坂直美穿了一条白纱长袍走进亚瑟·阿什球场。第一眼像婚纱，走近看才成立两层意思。
+
+第一层在料子上。袍子的上半身根本不是纱，是一块重度做旧的浅灰色 French terry 卫衣布，上面缝着真的报纸剪报；下摆才展开成蓬松的白色 tulle 舞会裙。也就是说，这条看着最像礼服的衣服，骨子里是一件卫衣。
+
+第二层在人身上。几何曲线的玉米辫、一根弹力发带、红黑两色的护臂，脱掉长袍之后是一身黑色的篮球背心——这几样凑在一起指向同一个人，艾弗森。
+
+衣服是造型师 Law Roach 牵的线，找纽约品牌 Who Decides War 定做。两位设计师 Ev Bravado 和 Téla D&#x27;Amore 说，他们指的是艾弗森那身灰色运动衫，还有他作为运动员在这个世界上行走时那种不合群的节奏。
+
+所以这不是「球员穿了件好看的衣服」，是一次有具体设计人、也有具体参照物的改造：把街头的运动衫抬进高级定制的形状里，外形指向他，缝进去的内容是她自己。
+
+她本人把这层意思说得最直接：
+
+「这是我对艾弗森的致敬。我真的很喜欢他。耐克说篮球，那我说，你要篮球，我就给你篮球。」
+
+看着像婚纱，底下是件灰卫衣。她想让人看见的，是这身衣服，还是穿它的那个人？
+
+#网球 #大坂直美 #美网 #艾弗森 #网球时差</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>她想让人看见的，是衣服还是人？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
