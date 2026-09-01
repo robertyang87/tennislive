@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>9.1 赛场之上 | 瓦林卡最后一场大满贯</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>瓦林卡的最后一场大满贯，十三个破发点只兑现两个
+
+北京时间 9 月 1 日凌晨快四点，美网第一轮，Grandstand。41 岁的斯坦·瓦林卡持外卡出战，6-7(4) 6-7(3) 0-6 负于贝雷蒂尼。美网官方给这场球的定性是：他职业生涯的最后一场大满贯。
+
+这场球最扎心的不是比分，是他一直摸得到门口。
+
+第一盘他 3-5 落后，对面正在发球胜盘，30-40 那一分他把这一局破了回来，然后一口气连赢三局 6-5 反超。轮到对面发球，他手里握着一个盘点——再赢一分，这一盘就是他的。那一分没拿下，6-6 进抢七，他从 2-4 追到 4-4，接下来的三分全是对面的，4-7。这一盘打了 57 分钟。
+
+第二盘他机会更多：8 个破发点，只兑现了 1 个（对面 8 个救下 7 个）。抢七开局连丢五分，3-7。两盘打完 2 小时 16 分钟，他一盘没拿到。
+
+全场数据摊开是这样的——
+
+破发点：他 2/13，对面 5/7。同样是 13 个破发点摆在对面面前，被救下了 11 个。
+制胜分：31 对 44。
+非受迫失误：36 对 31。
+总得分：92 对 117。
+一发得分率：第一盘 79%，第二盘 74%，第三盘 57%。
+
+第三盘 38 分钟，6-0。他的三个发球局全部被破。全场 2 小时 54 分钟。最后一局 40-0，三个赛点摆在对面手里，第一个就落了地。
+
+还有一件事：两个月前的温网第一轮，把他淘汰的也是贝雷蒂尼。也就是说他今年最后两场大满贯，遇到的是同一个人。两人正式比赛交手 2 次，他都输了；唯一赢过的那次是 2022 年 12 月的一场表演赛。
+
+赛点落地之后，两个人在网前抱了很久。满场站着。他走到场地中央，一只手举起来向看台挥，另一只手按在胸口。美网随后在场上为他办了退役仪式，USTA 的 CEO 和赛事总监都上了场。
+
+按他自己的计划，2026 赛季结束之后他会正式退役——所以这不是他的最后一场球，但确实是最后一次在大满贯的球场上打球。
+
+三届大满贯冠军，最后一次以外卡的身份站在这里。
+
+你还记得他的哪一场球？
+
+#网球 #美网 #瓦林卡 #贝雷蒂尼 #网球时差</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>你还记得他的哪一场球？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
