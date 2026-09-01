@@ -57,16 +57,29 @@ BRAND_FONT = "SmileySans-Oblique.ttf"
 WATERMARK_LEFT = 70
 WATERMARK_TOP = 44
 
-#: 字标的**墨**离 `.head` 顶边多远。CSS 那头是行高和字体的 ascent 算出来的，
-#: 这儿只能量——所以它是从**真封面**量的（`.head{top:44px}`，字标墨从 y=47 起）。
-BRAND_INK_TOP_PX = 3
+#: 副标题那一行，就是封面 `.topic`：
+#:
+#:     .brandlines{gap:2px}
+#:     .topic{font-family:'TL Sans SC'; font-size:27px; font-weight:700;
+#:            letter-spacing:1px; color:#dcefe4}
+#:
+#: ⚠️ **账号所有者 2026-09-01：「副标题不要消失啊」。** 第一版角标只搬了台头的
+#: 第一行，封面第二行那句（这条片子是「她把过去穿在身上」）在正片里整个没了
+#: ——而「用封面上的 logo 和位置」要的是**那一块**，不是那一行。
+TOPIC_FONT = "NotoSansSC-Bold-sub.ttf"
+TOPIC_TEXT_PX = 27
+TOPIC_COLOUR = (220, 239, 228)
 
-#: ⚠️ **球标要比字标的墨再低一截，这个数不是拍的。** 封面的 `.brandwrap` 是
-#: `align-items:center`，而它里面的 `.brandlines` 有**两行**（`.brand` ＋
-#: `.topic`）——球标压的是两行的中线，比「网球时差 · 栏目」那一行低。
-#: 角标只有一行，照单行居中会把球标画高 18px，和封面一叠就看得出来。
-#: **量出来的**：真封面上球标墨顶 64、字标墨顶 47。判据拿真封面比，不是比这个数。
-BRAND_ICON_DROP_PX = 15
+#: ⚠️ **三块墨离 `.head` 顶边多远，全是从真封面量的**——CSS 那头是行高和字体的
+#: ascent 算出来的，PIL 这边只能量。真封面（`.head{top:44px}`）：球标墨 y64~111、
+#: 主行墨 y47~83、副标题墨 y100~124。**判据拿真封面比，不是比这三个数。**
+#:
+#: ⚠️ 球标之所以比主行低这么多，是因为封面的 `.brandwrap` 是 `align-items:center`
+#: 而 `.brandlines` 有**两行**——球标压的是两行的中线。所以这三个数是一套，
+#: 少画一行就要跟着重量（没有副标题时走 `_single_line_icon_top`）。
+BRAND_ICON_INK_TOP_PX = 18
+BRAND_INK_TOP_PX = 3
+TOPIC_INK_TOP_PX = 56
 
 #: ⚠️⚠️ **阴影不是装饰，是这条能压在任何画面上的前提**——量出来的：
 #: 「网球时差」这几个字是近白的（`#f4fbf7`），压在**纯白**上（白球衣、亮天空、
@@ -91,8 +104,13 @@ def brand_label(column: str) -> str:
     return f"网球时差 · {column}".strip(" ·")
 
 
-def brand_watermark(dest: Path, column: str) -> Path:
+def brand_watermark(dest: Path, column: str, topic: str = "") -> Path:
     """PIL 渲常驻角标（透明底）：封面台头那一块 ＋ 一层软阴影。
+
+    `topic` 是封面台头的**第二行**（`cover.topic`）。⚠️ 账号所有者
+    2026-09-01：「**副标题不要消失啊**」——不给它，正片里就只剩第一行，而封面上
+    是两行。⚠️ 空字符串是**显式的「这条片子没有副标题」**（封面那边同样是
+    `if topic` 才渲），这时球标改成和唯一那一行居中。
 
     只贴在**正片区间**——封面自己就印着这一块，品牌片尾整屏是这个 logo，
     两处再压一遍是把同一个标识说三遍。范围怎么卡由调用方决定（竖版短片靠
@@ -104,36 +122,49 @@ def brand_watermark(dest: Path, column: str) -> Path:
     icon = Image.open(root / "assets" / "logo" / "brand" / BRAND_ICON)
     icon = icon.convert("RGBA").resize(
         (BRAND_ICON_PX, BRAND_ICON_PX), Image.LANCZOS)
-    font = ImageFont.truetype(
-        str(root / "assets" / "fonts" / BRAND_FONT), BRAND_TEXT_PX)
-
-    text = brand_label(column)
     probe = ImageDraw.Draw(Image.new("RGBA", (4, 4)))
-    # **逐字排，因为封面有 `letter-spacing:1px`**——PIL 一次画一整串是不带
-    # 字距的，差出来的宽度会让角标比封面窄几个像素。
-    advances = [probe.textlength(ch, font=font) + BRAND_TRACKING_PX
-                for ch in text]
-    bbox = probe.textbbox((0, 0), text, font=font)
-    text_w = int(round(sum(advances)))
-    ink_h = bbox[3] - bbox[1]
 
-    # **纵向按封面量到的两个数摆**（`BRAND_INK_TOP_PX` / `BRAND_ICON_DROP_PX`），
-    # 不按「和字标居中」摆——理由见那两个常量上面。坐标都相对 `.head` 的顶边，
-    # 也就是这张 PNG 的内容框顶边。
+    def lay(text: str, fname: str, size: int):
+        """一行字：逐字排（封面有 `letter-spacing:1px`，PIL 整串画是不带的），
+        回 (每个字的步进, 墨的 bbox, 这一行的墨宽)。"""
+        f = ImageFont.truetype(str(root / "assets" / "fonts" / fname), size)
+        adv = [probe.textlength(ch, font=f) + BRAND_TRACKING_PX for ch in text]
+        return f, adv, probe.textbbox((0, 0), text, font=f), int(round(sum(adv)))
+
+    head = brand_label(column)
+    hf, hadv, hbox, hw = lay(head, BRAND_FONT, BRAND_TEXT_PX)
+    sub = str(topic or "").strip()
+    sf = sadv = sbox = None
+    sw = 0
+    if sub:
+        sf, sadv, sbox, sw = lay(sub, TOPIC_FONT, TOPIC_TEXT_PX)
+
+    # **纵向按封面量到的那三个数摆**，坐标都相对 `.head` 的顶边（也就是这张
+    # PNG 的内容框顶边）。没有副标题时封面只有一行，球标改成和它居中。
     icon_inset = icon.split()[3].getbbox()[1]      # 球标 PNG 自带的透明留白
-    icon_top = BRAND_INK_TOP_PX + BRAND_ICON_DROP_PX - icon_inset
-    block_h = max(icon_top + icon.height, BRAND_INK_TOP_PX + ink_h)
-    block_w = icon.width + BRAND_GAP_PX + text_w
+    icon_ink_top = (BRAND_ICON_INK_TOP_PX if sub
+                    else BRAND_INK_TOP_PX + (hbox[3] - hbox[1]) // 2
+                    - (BRAND_ICON_PX - icon_inset * 2) // 2)
+    icon_top = icon_ink_top - icon_inset
+    bottoms = [icon_top + icon.height, BRAND_INK_TOP_PX + (hbox[3] - hbox[1])]
+    if sub:
+        bottoms.append(TOPIC_INK_TOP_PX + (sbox[3] - sbox[1]))
+    block_h, block_w = max(bottoms), icon.width + BRAND_GAP_PX + max(hw, sw)
 
     pad = WATERMARK_SHADOW_PAD
     big = Image.new("RGBA", (block_w + pad * 2, block_h + pad * 2), (0, 0, 0, 0))
     big.paste(icon, (pad, pad + icon_top), icon)
     draw = ImageDraw.Draw(big)
-    x = pad + icon.width + BRAND_GAP_PX
-    y = pad + BRAND_INK_TOP_PX - bbox[1]
-    for ch, adv in zip(text, advances):
-        draw.text((x, y), ch, font=font, fill=BRAND_COLOUR + (255,))
-        x += adv
+    left = pad + icon.width + BRAND_GAP_PX
+    for text, font, advances, box, ink_top, colour in (
+            (head, hf, hadv, hbox, BRAND_INK_TOP_PX, BRAND_COLOUR),
+            (sub, sf, sadv, sbox, TOPIC_INK_TOP_PX, TOPIC_COLOUR)):
+        if not text:
+            continue
+        x, y = left, pad + ink_top - box[1]
+        for ch, adv in zip(text, advances):
+            draw.text((x, y), ch, font=font, fill=colour + (255,))
+            x += adv
 
     # 阴影 ＝ 整块自己的 alpha 模糊之后压成黑。乘 1.7 再截顶，是为了让笔画
     # **内部**的影子够实——纯高斯出来的中心太淡，白底上仍然吃掉那几个字。

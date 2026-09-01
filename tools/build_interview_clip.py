@@ -1417,6 +1417,18 @@ def header_ass(spec: dict) -> tuple[str, str]:
     return (_line(main, _HEAD_A_TOP), _line(context, _HEAD_B_TOP))
 
 
+def cover_topic(spec: dict, cover: dict | None = None) -> str:
+    """封面台头第二行。**只有这一处出处**，封面和常驻角标都从这儿取。
+
+    ⚠️ 它**有退路**：`cover.topic` 没写就取 `push.summary`（那正是微信推送的
+    标题）。角标那头不跟着退的话，就会出现「封面写一句、正片里写另一句」，
+    而那不报错——「一个数写两处必分叉」的又一个实例。
+    """
+    cov = cover if cover is not None else (spec.get("cover") or {})
+    return str(cov.get("topic")
+               or (spec.get("push") or {}).get("summary", "")).strip()
+
+
 def watermark_filter(outdir: Path, spec: dict, *,
                      src: str = "v", dst: str = "vw") -> str:
     """常驻角标那一截滤镜（不带首尾分号，调用方自己接）。
@@ -1444,7 +1456,7 @@ def watermark_filter(outdir: Path, spec: dict, *,
     # ⚠️ 栏目名和封面读的是**同一处**（`spec["column"]`，缺省「赛后开麦」，
     # 和 `_cover_png` 那行一模一样）——各读各的会让封面和播放画面写着两个栏目。
     png = brand_watermark(outdir / "_watermark.png",
-                          spec.get("column", "赛后开麦"))
+                          spec.get("column", "赛后开麦"), cover_topic(spec))
     x, y = watermark_xy(VIDEO_TOP)
     return (f"movie={png},format=rgba[wm];"
             f"[{src}][wm]overlay={x}:{y}[{dst}]")
@@ -2757,7 +2769,7 @@ def build_cover(spec: dict, frame: Path, dest: Path) -> Path:
     # 顶栏第二行：这条片子的标题。默认取 `push.summary`——那正是微信那条
     # 推送的标题，**一个出处**，不让人再敲一遍（CLAUDE.md「推送元数据的
     # 出处是 spec，不是命令行」是同一条）。
-    topic = cov.get("topic") or (spec.get("push") or {}).get("summary", "")
+    topic = cover_topic(spec, cov)
     icon = ROOT / "assets" / "logo" / "brand" / "icon.png"
     brand_icon = (
         f'<img class=brand-icon src="data:image/png;base64,'
