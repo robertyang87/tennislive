@@ -10,7 +10,7 @@
     "**法网 2026（五月，苏珊·朗格朗球场）**：黑色紧身胸衣 ＋ 层叠长裙，瑞士高定设计师 Kevin Germanier（热尔马尼耶）作品，胸衣上的线条画的是**埃菲尔铁塔**。⚠️ **本片真正的落点是材料**：这一身是**用她自己以前的比赛服升级改造（upcycle）**的——胸衣由她的比赛服做成，百褶裙用的是她外套的内衬层。脱下来之后是耐克做的金色亮片层叠裙。她自己的话是「Funny enough, you know the Eiffel Tower at night when it's sparkly? I think I look like that a little bit.」——⚠️ **这句不用**，上一条片子已经拿它当落点了（见 `_no_repeat`）。",
     "**二〇二〇年美网的七张口罩**：七轮七个名字，顺序是 Breonna Taylor（第一轮）、Elijah McClain（第二轮）、Ahmaud Arbery（第三轮）、Trayvon Martin（第四轮）、George Floyd（1/4 决赛）、Philando Castile（半决赛）、Tamir Rice（决赛）。⚠️ 片中**只说「七轮比赛，七个名字」**，不列名字、不用她反问记者那句——那两样上一条已经铺开讲过。",
     "**为什么口罩用整屏静片而不是视频**（这一版最关键的一个取舍，量过的）：二〇二〇年的口罩画面**只有 720p**。`osaka-outfits-2020`（EaO32-XI0fM）是那一年唯一的 1920×1080 素材，但它是纯比赛集锦——914 秒的自动字幕从头到尾是逐分解说、结尾停在冠军点没有颁奖，逐格看过的两处近景（442.5s／452.5s）她在打球、没戴口罩，**整条没有一格口罩画面**。真有口罩的三条（3ok_EQWYWo0 等）全是 1280×720。走 `conform` 把 720p 放大到 1080p 是 1.5 倍，再经 3:4 取景窗的 1.33 倍，**合计放大 2.0 倍**；而整屏证据静片是把 1280×720 的一帧**缩小**进 1015×1267 的卡片盒（麦克莱恩那张 0.94 倍、阿伯里那张 1.13 倍），**比走视频那条路锐 2.1 倍**。口罩上那个名字读不读得出来是这一段的全部意义，所以选锐的那条。",
-    "**两张口罩静片的自证**：麦克莱恩那张（`frame_0040s`）是第二轮赛后场上采访的近景，`ELIJAH MCCLAIN` 整个读得出来；阿伯里那张（`frame_0016s`）转播下方的角标写着 `Naomi Osaka / 3rd consecutive time advancing to US Open 4th Round`——**「晋级第四轮」自己证明了这是第三轮赛后**，而第三轮正是阿伯里那一张，和上面那张顺序表对得上。",
+    "**两张口罩静片的自证**（两条源片都是 `US Open Tennis Championships` 官方频道，oEmbed 的 author_name 查过；麦克莱恩那张出自 `3ok_EQWYWo0`，阿伯里那张出自 `oq3nCdZlpc4`）：麦克莱恩那张（`frame_0040s`）是第二轮赛后场上采访的近景，`ELIJAH MCCLAIN` 整个读得出来；阿伯里那张（`frame_0016s`）转播下方的角标写着 `Naomi Osaka / 3rd consecutive time advancing to US Open 4th Round`——**「晋级第四轮」自己证明了这是第三轮赛后**，而第三轮正是阿伯里那一张，和上面那张顺序表对得上。 ⚠️ 麦克莱恩＝第二轮这一条另外核过一次：她戴这张口罩打的是九月二日对乔尔吉那场（第二轮），赛后说「听到他的故事我很难受」。**别拿那条源片的标题去推轮次**——标题是「I'm scared of how good she'll be in the future!」，听起来像在说一个很年轻的对手，会把人引到第三轮（十八岁的科斯秋克）去。",
     "走场长袍（美网 2026）：Who Decides War 定制，造型师 Law Roach（劳·罗奇）。ESPN 原文『a custom Who Decides War all-white gown that featured news clippings of her career highlights』——缝在上面的是她自己职业生涯高光时刻的报纸剪报。源片 105.6~110.2 秒转播给了一段剪报特写。",
     "**设计理念（设计师自己的话）**：Téla D'Amore 和 Ev Bravado 对 Vogue 说『The look references Allen Iverson, more specifically, his gray sweats and the nonconformist cadence with which he moved through the world as an athlete.』",
     "**设计流程**：『Naomi and [stylist Law Roach] sent two images our way of Iverson wearing a headband -- head only -- and from there, we had roughly 30 hours to figure out the rest.』——只有两张照片、只拍到头，剩下的大约三十个小时。",
@@ -103,7 +103,7 @@
     "ao": "澳网出场秀源片是 25 fps，主源 walk 是 29.97——**这是升采样不是丢帧**（每五帧复制一帧），而这一段的内容全部是她穿着长纱裙慢慢走、站在椅子边、以及帽子和阳伞的近景，没有一格回合镜头。CLAUDE.md 记的那个『一眼看得出一顿一顿』是 30→25 丢帧丢在回合镜头上，方向和内容都和这里不同。反过来把 25 定成主源的话，walk 和 match 要 30→25，而 match 里全是赢球那几拍的回合和庆祝——那才是会看出来的那一头。",
     "rg": "法网出场秀源片同样是 25 fps，理由和 ao 一条一样：这四段全是通道里走路、红土上拖尾、以及网前掷币的中景，没有回合镜头。"
   },
-  "_sources_why": "四条**全部是 1920×1080**（`check_sources_match` 比的尺寸一致，不需要 `conform`），全部来自赛事官方频道。walk = 《Naomi Osaka Stuns in her Walk-Out Outfit! | 2026 US Open》143.27s @29.97（US Open Tennis Championships）——**这条就是账号所有者两次都点名的那条**（`youtu.be/eZSXaGpkmsU`）。match = 《Naomi Osaka vs. Anastasia Zakharova Highlights | 2026 US Open Round 1》198.23s @29.97，同频道，只用最后三段把『衣服』落回『网球』。ao = 《Naomi Osaka outfit reveal | Australian Open 2026》180.49s @25（Australian Open 频道）。rg = 《Naomi Osaka outfit reveal | Roland-Garros 2026》147.31s @25（Roland-Garros 频道）。 ⚠️ **片尾板**：walk 的 140.17 之后是社媒片尾板（`silent_audio` 报 140.23~143.27 数字静音，两头对得上），最后一段收在 139.40；match 的 195.14 之后同样是片尾板，最后一段收在 194.80；ao 的 174.53 之后是数字静音，本片最晚只用到 104.00；rg 最晚只用到 103.00，离 147.31 很远。 ⚠️ **温网那一站没有进来**：候选 `yEb2XEl4Kdk` 打开是一段采访不是出场秀，而且只有 1280×720，两条都不合格——所以片中说的是「今年的三个大满贯」，不是「每一个大满贯」。",
+  "_sources_why": "四条**全部是 1920×1080**（`check_sources_match` 比的尺寸一致，不需要 `conform`），全部来自赛事官方频道。walk = 《Naomi Osaka Stuns in her Walk-Out Outfit! | 2026 US Open》143.27s @29.97（US Open Tennis Championships）——**这条就是账号所有者两次都点名的那条**（`youtu.be/eZSXaGpkmsU`）。match = 《Naomi Osaka vs. Anastasia Zakharova Highlights | 2026 US Open Round 1》198.23s @29.97，同频道，只用最后三段把『衣服』落回『网球』。ao = 《Naomi Osaka's ICONIC Walk-On Outfit | Australian Open 2026》180.49s @25，oEmbed 的 author_name 是 `Australian Open`。rg = 《Naomi Osaka outfit reveal | Roland-Garros 2026》147.31s @25，author_name 是 `Roland-Garros`。⚠️ **四条的 author_name 都逐条查过**（`US Open Tennis Championships` ×2 ＋ 上面两条），全部是赛事自己的官方频道，没有搬运号。 ⚠️ **片尾板**：walk 的 140.17 之后是社媒片尾板（`silent_audio` 报 140.23~143.27 数字静音，两头对得上），最后一段收在 139.40；match 的 195.14 之后同样是片尾板，最后一段收在 194.80；ao 的 174.53 之后是数字静音，本片最晚只用到 104.00；rg 最晚只用到 103.00，离 147.31 很远。 ⚠️ **温网那一站没有进来**：候选 `yEb2XEl4Kdk` 打开是一段采访不是出场秀，而且只有 1280×720，两条都不合格——所以片中说的是「今年的三个大满贯」，不是「每一个大满贯」。",
   "cover": {
     "eyebrow": "网球有故事",
     "layout": "solo",
@@ -142,7 +142,8 @@
       "source": "walk",
       "start": 2.0,
       "end": 9.2,
-      "narration": "今年的三个大满贯，她走进球场的样子，没有一次是重复的。"
+      "narration": "今年这三个大满贯，她走进球场的样子，没有一次是重复的。",
+      "_why": "说「这三个」不说「三个」是有意的：她今年温网也打了（第四个大满贯），而温网那条出场秀候选打开是采访、又只有 720p，两条都不合格（见 `_sources_why`），所以片子只展示三站。写成「今年的三个大满贯」会读成「今年只有三个」，那是假的；「这三个」指的是接下来要看的这三站，不声称总数。"
     },
     {
       "source": "ao",
@@ -226,7 +227,7 @@
     {
       "image": "assets/reel/osaka-mask-2020-arbery.jpg",
       "seconds": 6.5,
-      "narration": "七轮比赛，七个名字。每赢一场，第二天就换一张。",
+      "narration": "七轮比赛，七个名字。每赢一场，下一场就换一张。",
       "_why": "第二张整屏证据静片，换的是另一场、另一张口罩（`AHMAUD ARB…`）。⚠️ **它自己带着自证**：转播下方的角标写着 `3rd consecutive time advancing to US Open 4th Round`——「晋级第四轮」说明这是第三轮赛后，而第三轮正是阿伯里那一张。⚠️ 只说「七轮七个名字」，**不列名字、不用她反问记者那句**——那两样上一条片子已经铺开讲过（见 `_no_repeat`）。"
     },
     {
