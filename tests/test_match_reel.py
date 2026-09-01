@@ -11270,6 +11270,68 @@ def test_一行超过十个字仍然按宽度缩下去():
     assert _title_px(vp, "一" * 25) == 37
 
 
+def test_封面口播和海报上印的钩子必须是同一句话():
+    """2026-09-01 `osaka-four-slams-2026` 差 15 分钟就把这个错渲出去。
+
+    账号所有者说「标题钩子写得不明不白」，我改了 `cover.hook`（**印在海报
+    上那两行**），`cover.narration` 原样留着上一版——渲出来是海报印一句、
+    声音念另一句，而且去标点后两者不同，封面还会再叠一条字幕说第三件事。
+
+    ⚠️ **两处各自都合格，所以没有任何一道既有的闸比得着它们**：`hook` 那头
+    有行长行数的闸，`narration` 那头有哑场和超长的闸。`--dry-run`、全量测试、
+    `check_reel_landed` 一律绿。
+
+    钉三头，缺一头都能单独变绿：
+
+    ① **行为**——真错法（字集重合度 0.154）必须被认出来；
+    ② **不许误伤**——存量那种「印出来的比念出来的少几个虚词」必须放行
+       （只钉 ① 的话，把判据收成「逐字相同」照样过，而那会红掉一半存量）；
+    ③ **闸真的接在 `validate_spec` 上**——只钉函数的话，函数写对了、
+       没人调它，线上照样渲错（本仓库为「写了不等于跑过」栽过好几次）。
+    """
+    reel = _reel()
+    good = {
+        "slug": "x", "cover": {
+            "layout": "solo",
+            "hook": "这一身缝满纸片\n全是她自己的旧报道",
+            "narration": "这一身缝满纸片，全是她自己的旧报道。"}}
+    assert reel.cover_voice_matches_hook_problem(good) is None
+
+    # ① 真错法：改了钩子、口播还是上一版
+    bad = json.loads(json.dumps(good))
+    bad["cover"]["narration"] = "嫁衣拆了做和服，旧报纸缝成长袍。"
+    problem = reel.cover_voice_matches_hook_problem(bad)
+    assert problem and "不是同一句话" in problem
+    assert "cover.narration" in problem and "_narration_why" in problem, (
+        "报错要说出路：改哪个字段、真要另说一件事怎么认领")
+
+    # ② 不许误伤：口播比海报多几个虚词是这条线的常态
+    for hook, voice in (
+            ("全美第三大网球赛事\n办在一个三万多人的小镇",
+             "全美第三大的网球赛事，办在一个三万多人的小镇。"),
+            ("两年前，输给辛纳\n今天，他回来了",
+             "两年前，他输给了辛纳。今天，他回来了。")):
+        assert reel.cover_voice_matches_hook_problem(
+            {"slug": "x", "cover": {
+                "layout": "solo", "hook": hook, "narration": voice}}) is None, (
+            f"「{voice}」只是把「{hook}」念顺了，不是另说一件事")
+
+    # ②' 认领的出口要真的管用（本文件写着「另说一件事时它照样要有字幕」）
+    claimed = json.loads(json.dumps(bad))
+    claimed["cover"]["_narration_why"] = "封面这句故意另说一件事，所以它有字幕"
+    assert reel.cover_voice_matches_hook_problem(claimed) is None
+
+    # ③ 闸接在 validate_spec 上，而且排在下载源片之前（dry-run 0.2 秒就报）
+    src = inspect.getsource(reel.validate_spec)
+    assert "cover_voice_matches_hook_problem" in src, (
+        "判据写出来了不等于有人调它")
+
+    # 存量一条都不许红——这条闸装上是零豁免的
+    for path in sorted(Path("specs/reels").glob("*.json")):
+        spec = json.loads(path.read_text(encoding="utf-8"))
+        assert reel.cover_voice_matches_hook_problem(spec) is None, path
+
+
 #: 比分板那几道框线共用的白色。**一个出处**：每一条 `border` 都得是它。
 _BOARD_LINE = "rgba(244,251,247,"
 #: 品牌绿的两种写法（描边用 hex，垫底用 rgb 三元组）。决胜盘那块绿两样都用过。
