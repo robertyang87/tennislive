@@ -13578,8 +13578,16 @@ def test_常驻角标就是封面台头那一块_落位也是封面那个位置(
     wt = ink_box(pasted, text_box)
     assert abs(wt[0] - ct[0]) <= 2 and abs(wt[1] - ct[1]) <= 2, (
         f"字标没落在封面那个位置：封面 {ct[:2]}，角标 {wt[:2]}")
-    assert abs((wt[2] - wt[0]) - (ct[2] - ct[0])) <= 3, (
-        f"字标宽度和封面对不上（封面 {ct[2] - ct[0]}，角标 {wt[2] - wt[0]}）"
+    # ⚠️ 宽度按**比例**给余量，不给一个绝对像素数：PIL 量出来是个定值，而
+    # Chromium 的排版**跨环境会差一点点**——同一份封面沙箱渲出来 304、CI 渲出来
+    # **300**（run 33506517362 上真红过一次，绝对余量 3px 差一点）。这就是
+    # CLAUDE.md 记过的「PIL 比 Chromium 稳定小 1~2px」，`SCORE_NAME_SLACK_PX`
+    # 是同一件事。3% 拦得住它要拦的那一类：换掉得意黑量出来是 402 vs 304
+    # （差 32%），反向验证过。
+    cover_w, wm_w = ct[2] - ct[0], wt[2] - wt[0]
+    assert abs(wm_w - cover_w) <= 0.03 * cover_w, (
+        f"字标宽度和封面对不上（封面 {cover_w}，角标 {wm_w}，"
+        f"差 {abs(wm_w - cover_w) / cover_w:.1%}）"
         "——多半是字体、字号或者 letter-spacing 抄漏了")
 
     # ── ② 阴影：贴在纯白上，字标那一带必须还有暗像素 ──────────────────
