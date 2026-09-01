@@ -291,21 +291,50 @@ def content_identity_id(spec: dict) -> str:
     return str((spec.get("match") or {}).get("id") or "")
 
 
+#: 哪几种内容形态**结构性地拿不到冷开场**，以及各自认哪一种官方判据。
+#:
+#: 值写 `None` ＝ 这一类必须有冷开场：源片里本来就有比赛画面，收得到
+#: （`build_interview_clip._OPENING_KINDS` 的 `match_end` 那一行）。
+#:
+#: ⚠️ **这张表必须盖住 `REQUESTED_KINDS` 的每一个键**，判据
+#: `test_每种内容形态都要表态能不能没有冷开场` 自己从那张表推、不维护第二份名单。
+#: 来路：2026-09-01 加 `walk_on` 时 L0 那四处（`REQUESTED_KINDS` /
+#: `DETECTED_TYPES` / `APPROVED_METHODS` / `explicit_title_type`）都改了，
+#: **独独漏了这儿**——而这道闸在 L2，排在成片渲完、封面过闸之后的最后一项。
+#: 于是那趟 render 跑满 4 分钟、成片和海报全都合格，最后报一句
+#: 「冷开场原解说双语字幕 spec.lead_in.subs 为空」。把「再加一个类型时要记得
+#: 改这儿」换成「不表态就红」，这一类漏改才算真的堵住（CLAUDE.md
+#: 「加新能力就要同时改三处」「修了一个不等于修了那一类」）。
+#:
+#: ⚠️ **只认官方明写的那一种判据，不认 `human_visual_verdict`**：和
+#: farewell／名人堂那两支的门槛保持一致。真出现一条只有人工目视判定的出场秀，
+#: 它会在这儿红出来，让人显式决定，而不是被一条宽口径悄悄放过。
+NO_LEAD_EXCEPTION_METHOD: dict[str, str | None] = {
+    "on_court": None,
+    "ceremony": None,
+    "farewell": "official_explicit_farewell",
+    "walk_on": "official_explicit_walk_on",
+}
+
+
 def verified_no_lead_exception(spec: dict) -> bool:
-    """已核验、且按内容形态允许不另接冷开场的两种正式产品。"""
+    """已核验、且按内容形态允许不另接冷开场的正式产品。
+
+    三种：官方明写的赛后告别仪式、名人堂入选致辞，以及**赛前出场秀**。
+    出场秀发生在开赛之前，源片里一个回合都没有——`_OPENING_KINDS` 的
+    `none` 那一行本来就把它列成了合法情形（「发布会、演播室专访、
+    **赛前出场秀**」），只是这道闸一直不认识它。
+    """
     verification = spec.get("source_verification") or {}
     opening = spec.get("opening") or {}
     if opening.get("kind") != "none" or verification.get("status") != "verified":
         return False
-    official_farewell = (
-        spec.get("requested_content_type") == "farewell"
-        and verification.get("method") == "official_explicit_farewell"
-    )
-    official_induction = (
-        is_hall_of_fame_induction(spec)
-        and verification.get("method") == "official_explicit_ceremony"
-    )
-    return official_farewell or official_induction
+    # 名人堂入选是 `ceremony` 底下的一个子型，按 `ceremony_subtype` 认，
+    # 所以它跟表里那几个键互斥，先判它再查表不会互相盖掉。
+    if is_hall_of_fame_induction(spec):
+        return verification.get("method") == "official_explicit_ceremony"
+    wanted = NO_LEAD_EXCEPTION_METHOD.get(spec.get("requested_content_type"))
+    return wanted is not None and verification.get("method") == wanted
 
 
 def finalize_source_contract(spec: dict) -> dict:
