@@ -1,0 +1,116 @@
+{
+  "slug": "osaka-walkout-us-open-2026-r1",
+  "url": "https://www.youtube.com/watch?v=eZSXaGpkmsU",
+  "source_title": "Naomi Osaka Stuns in her Walk-Out Outfit! | 2026 US Open（美网官方频道 @usopen）",
+  "start": 0.0,
+  "end": 34.4,
+  "whisper_model": "medium.en",
+  "column": "出场秀",
+  "requested_content_type": "walk_on",
+  "interview_kind": "赛前出场秀",
+  "topbar_layout": "subject_primary",
+  "subject": {
+    "name": "大坂直美"
+  },
+  "event": "2026 美网 女单第一轮",
+  "winner": "大坂直美",
+  "featured_player": "大坂直美",
+  "word_fix": {
+    "twotime": "two-time"
+  },
+  "_word_fix_why": "ASR 把 `two-time` 并成了一个词 `twotime`。按 CLAUDE.md 那条分工，词被并在一起要走 `word_fix`（切行之前逐词修，行自己重排），不走 `en_fixed`。改完那一行 857px → 872px，仍在 952px 以内，三行的断法一个字没变（两种都跑过对比）。",
+  "opening": {
+    "kind": "none",
+    "why": "这是一条**赛前**出场秀，源片里一个回合都没有——143 秒按 1.96 秒一格排完 73 格逐格看过：0~19.6 秒她在球员通道里往外走，19.6 秒转播打出全屏台标 `NAOMI OSAKA`，21.5~35 秒她穿过紫色烟雾走进球场、举手致意，35~82 秒在球员席，82~137 秒在网前掷硬币，139 秒起是美网的 `FOLLOW US ON SOCIAL MEDIA` 片尾板。**比赛在这条片子结束之后才开打**，所以既收不到比赛结尾，也没有理由从别处接一段——`check_lead_in` 的 `needs_cross_source_end` 只对 `interview_kind == 赛后场上采访` 生效，这条不是。"
+  },
+  "match": {
+    "id": "2026:us-open:womens-first-round:naomi-osaka-anastasia-zakharova",
+    "event": "2026 US Open",
+    "event_search": "US Open",
+    "round": "Women's Singles First Round",
+    "year": 2026,
+    "winner": "大坂直美",
+    "loser": "扎哈罗娃",
+    "participants": [
+      "大坂直美",
+      "扎哈罗娃"
+    ],
+    "winner_en": "Naomi Osaka",
+    "loser_en": "Anastasia Zakharova"
+  },
+  "source_verification": {
+    "source_id": "youtube:eZSXaGpkmsU",
+    "source_url": "https://www.youtube.com/watch?v=eZSXaGpkmsU",
+    "source": "US Open",
+    "title": "Naomi Osaka Stuns in her Walk-Out Outfit! | 2026 US Open",
+    "status": "verified",
+    "detected_type": "walk_on",
+    "method": "official_explicit_walk_on",
+    "evidence": [
+      {
+        "kind": "official_explicit_title",
+        "title": "Naomi Osaka Stuns in her Walk-Out Outfit! | 2026 US Open",
+        "source": "US Open",
+        "video_id": "eZSXaGpkmsU"
+      }
+    ],
+    "match_id": "2026:us-open:womens-first-round:naomi-osaka-anastasia-zakharova",
+    "attestation_sha256": "923db146f049570122b8333cfd11c4c4868c4f9273393a45b28959adb9f8e51f"
+  },
+  "zh": [
+    "来自日本 前世界第一",
+    "两届美网冠军",
+    "大坂直美"
+  ],
+  "_zh_why": "全片只有这一段是真有人在说话——**球场播报员报名**（10.08~20.86 秒，她正走出通道，19.6 秒转播接着打出台标）。其余 100 多秒是现场音乐、欢呼和赛前掷硬币的程序性对话，一句都没进窗口（见 `_editing_why`）。三行按 ASR 自己的断法走，没有强行拆并。",
+  "caption_gaps_ok": {
+    "24.3-34.4": "这 10.1 秒是**全场欢呼落下、入场配乐还没起**的那一段过渡：她一个人从烟雾里走向球员席，画面里没有第二个人靠近、没有话筒、没有采访者（storyboard 25.5／27.4／29.4／31.3／33.3 五格逐格看过，都是她一个人在走，33.3 那一格裙摆完全铺开）。\n⚠️ **判据是画面和字幕事件的分布，不是「我听过」**——沙箱下不动这条源片的媒体。字幕流在 22.27 秒的 `[cheering]` 之后，下一个事件是 38.65 秒的 `[music]`（入场配乐起来那一刻，已经在窗口之外）；也就是说这一段**官方转播自己也没有声音可标**，不是第一份转写漏了英语。"
+  },
+  "_head_silence_why": "⚠️ 开场 0~8.5 秒**没有**进 `caption_gaps_ok`，是因为它不构成空档：`caption_gaps` 从第一个字幕事件（8.52 秒的 `[cheering]`）算起，前面那一段不在它的量程里。记一笔是因为「开头没有事件」和「开头被漏掉了」在产物上长得一样——这 8.5 秒是她一个人在球员通道里往外走，通道尽头才是球场，storyboard 0／2.0／3.9／5.9／7.8 五格全是空通道加一个越走越近的白色身影，本来就没有人说话，而 8.52 秒那声欢呼正是快走到通道口时透进来的。",
+  "cover": {
+    "frame_at": 21.5,
+    "_why": "沙箱下不动这条源片的媒体（YouTube 挡机房 IP），所以是拿 storyboard 挑的——1.96 秒一格排完 143 秒全片，候选那七格（21.5~33.3）逐格放大到 640×360 比过。**21.5 那一格：她刚从两道白色烟柱之间现身，全身在画面正中，正对镜头，兜帽、拼贴上衣、红色袖套和整条白色薄纱裙一屏全在，背景是她自己的 `NAOMI OSAKA` 场边灯板。**一眼就是「出场」，而这正是这条片子的全部。\n\n**为什么不是 23.5（举手致意那一格）**：放大看才发现她**仰着头、脸整个落在兜帽的阴影里**，读不出表情（CLAUDE.md 那条「封面图一定不要闭眼／表情要读得出来」管的就是这个），而且人偏在画幅右侧——封面按高度铺满会裁掉两边各 12.5%，偏右的构图更吃亏。\n**为什么不是 27.4（脸最清楚的一格）**：背景是暗的看台，看不出这是什么场合；而 21.5 的烟柱和灯板自己就把场合说清楚了。\n**为什么不是 11.8（通道里唯一的正脸）**：那一格是「一个人在走廊里走」——情绪不对题，而**情绪对题排在脸的大小前面**（CLAUDE.md：一张情绪不对题的大头，比一张对题的中景差）；何况前后 9.8 在抬手、13.7 已经侧身，正脸只有那一格，差一格就没了。\n⚠️ 一格 1.96 秒比一帧粗，21.5~23.5 之间她正从站定转到举手，**渲完必须把成片从 Release 拉回本地核这一帧**（人在不在正中、脸有没有被兜帽吃掉）。",
+    "title": [
+      "她把自己的报道",
+      "缝在了出场服上"
+    ],
+    "sub": "2026 美网首轮 赛前出场秀",
+    "tag": "2026 美网 · 大坂直美",
+    "_copy_why": "第一行是这身衣服**唯一**的门道，也是不说就看不出来的那一层：白袍上那些拼贴不是花纹，是她自己职业生涯报道的报纸剪报（ABC News、Yahoo Sports、ESPN 三处一致，见 `_facts`）。第二行落到「出场服」上，把「这不是婚纱」这个第一反应挡掉。\n\n不写「世界第 13」这类身份——顶栏第一行已经印着「大坂直美 · 赛前出场秀」，第二行印着赛事和轮次。"
+  },
+  "takeaway": {
+    "open": {
+      "lead": "这不是婚纱",
+      "point": "白袍上缝着她自己的报道剪报",
+      "facts": [
+        "灵感来自艾弗森"
+      ]
+    },
+    "close": {
+      "lead": "不爱多说话",
+      "point": "所以她让衣服替自己说",
+      "ask": "这一身你给几分？"
+    }
+  },
+  "_takeaway_why": "**这条片子必须有落点卡（`open`），而这条线默认是不写的。** `check_takeaway` 的注释写着落点卡「真遇到『不先说一句就看不懂』的采访还用得上」——这就是那种情况：观众看到一个人穿着巨大的白色蓬裙从通道走出来，不说一句，看到的只是一件奇怪的裙子；而这身衣服的全部意义（缝着她自己的生涯剪报、致敬艾弗森）**一个字都不在源片里**，它在赛后发布会和赛事报道里。\n\n收尾卡接的是她自己在赛后发布会说的那句「我喜欢用衣服表达自己，因为我不太喜欢多说话」——**这条片子从头到尾她一个字没说**，落点正好落在这儿。\n⚠️ 两张卡都不用「」引号引原话：那些话不在这条片子的 `zh` 里（`check_takeaway` 会去 `zh` 里核），它们出自赛后发布会。",
+  "push": {
+    "matchup": "大坂直美 vs 扎哈罗娃",
+    "score": "7-6(6) 7-6(3)",
+    "event": "",
+    "summary": "大坂直美把生涯报道穿上场",
+    "auto": true,
+    "lead": "2026 美网女单第一轮，阿瑟·阿什球场夜场：大坂直美（世界第 13）7-6(6) 7-6(3) 险胜扎哈罗娃（世界第 101），两盘都靠抢七拿下。真正刷屏的是她走进球场那一段——一件带兜帽的白色长袍，拼贴的面料上缝着她自己职业生涯的报纸剪报，身后拖着大幅白色薄纱裙摆。这一身由 Who Decides War 定制、Law Roach 造型，致敬的是 NBA 名宿艾弗森：她把头发编成几何曲线的玉米辫，用红黑条纹发带束住，比赛服换成黑色的篮球式套装。她自己说：「这是我对艾弗森的致敬。耐克说篮球，那我说，你要篮球，我就给你篮球。」赛后被问到这身衣服，她说：「我喜欢用衣服表达自己——因为我不太喜欢多说话。」"
+  },
+  "_facts": [
+    "**这一场**：2026 美网女单第一轮，大坂直美 7-6(6) 7-6(3) 胜扎哈罗娃（Anastasia Zakharova）。flashscore 单场 `pUErHxWF`：`BA÷7 BB÷6`／`BC÷7 BD÷6`，抢七小分 `DA÷8 DB÷6`／`DC÷7 DD÷3`——也就是首盘抢七 8-6、次盘抢七 7-3，按「上标记输掉那一盘的人的小分」写作 `7-6(6) 7-6(3)`。ABC News 和 Yahoo Sports 都写 `7-6 (8/6), 7-6 (7/3)`，**三处一致**。",
+    "**开球时刻**：flashscore `AD÷1788229500` ＝ 2026-09-01 02:25 UTC ＝ 美东 8 月 31 日 22:25（周一夜场，ABC/Yahoo 都写 `Monday night`），北京时间 9 月 1 日 10:25；`AO÷1788236798` ＝ 12:26 结束。",
+    "**排名**：大坂直美世界第 13、扎哈罗娃世界第 101。第 101 这个数 ABC News 明写（`unseeded Russian player ranked world number 101`），和编排器从 flashscore 拉的那份（`specs/reels/pending/osaka-zakharova.draft.json` 的 `cover.matchup`）对得上。",
+    "**出场服**（两个以上独立源，逐条对过）：带兜帽的白色/灰色长袍（`hooded tunic`／`hooded white gown`／`gray, hooded robe`），拼贴式面板上**缝着她自己职业生涯的报纸剪报**（ABC News `patchwork-style panels with press clippings from past tournament appearances`；Yahoo Sports `newspaper headline cuttings sewn into the fabric`），身后是大幅白色薄纱拖尾（`billowing white tulle train`），材质是 tulle ＋ French terry。定制方 **Who Decides War**，造型 **Law Roach**（Zendaya 的造型师）。",
+    "**致敬艾弗森**：她自己的原话（ABC News）「It's my tribute to Iverson. I really like him a lot. Nike said basketball, so I said, 'You want basketball, I'll give you basketball.'」；（Yahoo Sports）「He's a trailblazer. I think he's also someone that I look up to a lot, because he's done a lot in fashion」「he's shifted the way that NBA players dress.」发型是几何曲线的玉米辫 ＋ 红黑条纹发带，复刻艾弗森的标志性造型；比赛服是黑色篮球式套装 ＋ 红黑发带和护肘。ESPN 那篇的标题直接用了艾弗森的绰号 `The Answer`。",
+    "**她关于「用衣服说话」的那句**（Yahoo Sports 赛后发布会）：「I wanted to play well because I wanted to show you guys some more outfits. I love expressing myself through clothes - because I don't like talking too much.」ABC News 另记了一句「I like expressing myself through clothes, and I'm glad you guys appreciate it.」——收尾卡的落点就是这一层。",
+    "**下一轮**：对西尼亚科娃（Kateřina Siniaková），ABC News 和 Yahoo Sports 都写了。",
+    "**这条源片的元数据**：`eZSXaGpkmsU`，频道 `US Open Tennis Championships`（`@usopen`，官方），标题 `Naomi Osaka Stuns in her Walk-Out Outfit! | 2026 US Open`，**143 秒**，上传日期 20260901。官方描述第一句 `Naomi Osaka stuns in her walk-out ahead of her Round 1 match at the 2026 US Open.` ——**轮次由官方描述自证**，另有源片 88.9 秒主裁那句 `for tonight's first round clash` 和 flashscore 三处对得上。⚠️ 元数据和 storyboard 在沙箱里要用 `--extractor-args youtube:player_client=web_embedded` ＋ `--ignore-no-formats-error` 才拿得到（默认 client 撞 `Sign in to confirm you're not a bot`）；`storyboard_sheet` 少这个参数的坑同一天已经修掉。"
+  ],
+  "_editing_why": "**窗口 0.0 → 34.4，收在她走完全场、裙摆完全铺开、还没坐进球员席之前。**\n\n源片 143 秒，逐格排完之后结构很干净：0~19.6 通道走出 ＋ 播报员报名 ＋ 台标｜21.5~35 穿过烟雾入场、举手致意、走向球员席（拖尾在 33.3 那一格完全铺开）｜35~68 球员席整理｜68~82 空镜和热身｜82~137 网前掷硬币｜139~143 美网片尾板。\n\n**为什么不全留**：34.4 秒之后的 100 秒是**赛前流程**，不是出场秀，而且那一段 ASR 切出来全是噪音——把整条 143 秒切一遍是 27 行，其中 4~6 行是背景音乐的歌词碎片（`Golden I can turn into a turn.`／`I can turn a dance.`），8~9 行是乱码（`is of Brazil for the codes over there and there.`），10~27 行是掷硬币的程序性对话（`Receive.` 连着三行、`We have a video review` 两行）。**这些烧成双语字幕是明确的错**：歌词不是现场对白，乱码不是任何人说过的话。收到 34.4 之后只剩 3 行，全是播报员那句报名，一行噪音都没有（0/34.4/36.5/40 四个终点都跑过对比，34.4~40 之间不再产生新行）。\n\n**代价照实说**：105.8 秒那一格是拼贴面料的特写（这身衣服上「报纸剪报」唯一的近景证据）留在窗口外了。补在别处——封面标题直接写出来，落点卡再说一次，小红书正文写全。\n\n**为什么不是 36.5 或 40**：35.3 那一格她已经弯腰在球员席，那是「坐下准备打球」不是「出场」。34.4 落在 33.3（全身拖尾）之后约 1 秒、35.3 之前约 1 秒——⚠️ storyboard 一格 1.96 秒，这个点只精确到 ±1 秒，渲完要拉回来核一眼末尾那一秒是不是已经切进球员席。\n\n**片尾板不进窗口**，而且离得很远（139.1 秒那一格已经是 `FOLLOW US ON SOCIAL MEDIA`，窗口末尾离它 105 秒）。",
+  "_notes": "① **这是这条线上第一条 `walk_on`（赛前出场秀）。** L0 门禁原来只认 `on_court`／`ceremony`／`farewell`，出场秀三种都不是，`--stage subs` 第一步就会被拦。加第四种类型走的是 2026-08-23 加 `ceremony` 时同一个形状——账号所有者要做，而它是这个栏目下另一种真实存在的内容，不是「把身份不明的素材塞进来」：正则要求官方标题里明确写着 walk-out／walk-on，`method` 记成 `official_explicit_walk_on`，`match` 照旧和赛果签在一起。\n② **它是四种里唯一发生在开赛之前的**，所以顶栏走 `topbar_layout: subject_primary`（「大坂直美 · 赛前出场秀」／「2026 美网 女单第一轮」）——出场那一刻比赛还没打，顶栏印「谁 比分 谁」既不合时序，也把赛果提前剧透了。`column` 跟着写「出场秀」：封面左上角那行印的是 `网球时差 · {column}`，写「赛后开麦」在一条赛前片子上是假话。\n③ 同一场球编排器另有一份「赛场之上」的自动草稿（`specs/reels/pending/osaka-zakharova.draft.json`）。**不算重复**——不同栏目各讲一次，CLAUDE.md 开头那条明写允许：那条讲这场球怎么赢的，这条讲她怎么走进来的。\n④ 采访线的自动扫描（`collect_oncourt_interviews`）只扫 tennistv.com 的 ATP 库，**对大满贯是盲的**，所以这条和 `zheng-liutova-us-open-2026-r1-interview` 一样是手工建的。\n⑤ 顺手修掉了 `storyboard_sheet` 的三处（都在同一趟里撞上）：`-J` 少 `--ignore-no-formats-error`（沙箱里 `web_embedded` 只解得出 storyboard、解不出媒体格式，于是八档 client 全报「取不到视频信息」）、梯子按退出码判成败（加上那个参数之后被限流的档不再报错，改回一份**残缺**元数据，梯子当场停在空壳上）、以及下载 mhtml 时没带梯子选中那一档的 client。三处合起来这条路从「八档全败」变成「第四档成功」。"
+}
