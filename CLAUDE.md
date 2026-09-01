@@ -6316,6 +6316,34 @@ raw/ huge/`）、三种参数（`?width=4000` / `?w=4000` / `?resize=4000`）—
 **按人查会得出「这场没有她的图」，而正确的说法是「这一批里没有」**。
 `title` 字段写的是 `Q. Zheng vs. K. Liutova | R1`，两边都认得出。
 
+###### ⭐⭐ 2026-09-01 补一条更准的钥匙：**按 `match_id` 查**，一次拿到这一场的全部内容
+
+上面那条说 `title` 比球员 tag 准，而**最准的是 match_id**——它就写在
+`config_web.json` 的接口表里（那一行原本标着 `&subType=match preview`，
+**把 subType 去掉就是这一场的全部内容**）：
+
+    GET https://www.usopen.org/relatedcontent/rest/v2/uso_v1/en/tag?tags=<match_id>&count=200
+    match_id 从 …/players/matches/<playerId>_matches.json 取（`shang-trungelliti` 那场是 1130）
+
+`shang-trungelliti-us-open-2026-r1` 实测一次拿到 **107 条**，`type/subType` 分得很干净：
+
+    photo/photo 69 ｜ photo/player 7 ｜ video/set_highlights 13 ｜ video/highlights 8
+    video/extended_highlights 3 ｜ video/features 3 ｜ news/articles 3
+
+⚠️⚠️ **但「按 match_id 查到 76 张 photo」不等于「这一场有 76 张实拍」**——逐条读
+`sortDate` 才看见：**49 张是 2025 年的、24 张 2024 年、3 张 2022 年，本场 0 张**。
+赛事方把这个球员的历史图也挂在了这场比赛的 tag 下。**判据是拍摄时刻，不是命中条数**：
+只有 `sortDate` 落在本场开赛前后的才算，早于开赛的一律是资料图（时间对不上，
+四道闸门第一道就过不了）。这是「非空 ≠ 对题」在这条接口上的样子。
+
+⚠️ **视频和照片是两个批次，视频快得多。** 同一场实测（比赛 01:56Z 结束）：
+
+    22:08Z 第一盘集锦 → 23:11Z / 23:41Z / 00:18Z / 02:03Z 逐盘 → **02:08Z 全场集锦**（结束后 12 分钟）
+    照片：03:08Z 仍未发
+
+所以**「这一场的视频已经上线」完全不能推出「照片也该有了」**——想知道照片发没发，
+只能查 `type == "photo"` 且 `sortDate` 在本场之后的那一批。
+
 ##### ⭐⭐ 而**稳定**拿美网高清图的那条不是官方接口，是 **USA TODAY 的每日图集**
 
 账号所有者 2026-08-25：「**那你帮我稳定找到美网的高清图片**」。上面那条官方接口
