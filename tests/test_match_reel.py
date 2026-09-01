@@ -6489,11 +6489,11 @@ def test_成片一律走Release不进git():
         "兜底拦红")
 
 
-# 规矩定下来**之前**已经发出去的九个文件。已发的片子不为了措辞重渲
+# 规矩定下来**之前**已经发出去的那批文件。已发的片子不为了措辞重渲
 # （那条规矩在别处），所以它们挂在这儿——**只许减不许加**：新写的 spec 要么
-# 用新叫法，要么显式把自己加进来，让「又用了强字」变成一次看得见的决定。
+# 用新叫法，要么显式把自己加进来，让「又用了旧叫法」变成一次看得见的决定。
 from tools.spec_wording import (  # noqa: E402
-    QUALIFIER_ROUND_LEGACY as _LEGACY_QUALIFIER_NAMES,
+    FRACTION_ROUND_LEGACY as _LEGACY_ROUND_NAMES,
 )
 
 
@@ -6687,26 +6687,32 @@ def test_渲海报的工作流都要装emoji字体():
             "国旗会悄悄变成方框，而这一步不会红")
 
 
-def test_轮次要写半决赛不写四强():
-    """账号所有者 2026-08-02：「以后不要用四强八强之类的，国内通常用半决赛
-    1／4 决赛 1/8 决赛之类的。再往前就第几轮好了」。
+def test_轮次写N强不写分数式():
+    """账号所有者 2026-09-01：「**以后，8 强、4 强、决赛，这种这样说，
+    不要说 1/4 决赛和什么 1/8 决赛之类的了。**」
 
-    「四强」「八强」是港台和赛事方的说法，国内观众看的是**半决赛 / 1/4 决赛 /
-    1/8 决赛**，再往前直接说第几轮。这不是同义词替换的洁癖：叫法不对，读者要多
-    想一步「四强是打到哪一步」，而这条片子的封面只有一行字的位置。
+    ⚠️ 这条**整个翻了个面**，判据的形状没变、主语换了。2026-08-02 他定的是
+    反过来的那一套（「以后不要用四强八强之类的，国内通常用半决赛 1／4 决赛
+    1/8 决赛之类的」），这条测试当年叫 `test_轮次要写半决赛不写四强`、拦的是
+    「四强/八强/十六强」。今天拦的是旧那套，放行的是「N 强」——和
+    `test_赛场之上的封面一律用solo`（2026-08-04 把 solo 从例外翻成默认）
+    是同一个形状：**闸原样翻面，不是新增一条**。
+
+    「半决赛」也在拦的范围里：他列的三档（8 强 / 4 强 / 决赛）里「4 强」正是
+    这一档，不拦它的话同一个账号会把同一轮叫两个名字。「决赛」两套叫法相同，
+    不动；32 强再往前照旧写「第几轮」（那半条没被推翻）。
 
     **只查会发出去的字段**——旁白、封面上印的字、推送那几栏、小红书文案。
     `_source` / `_why` / `_match` 这些是写给下一个人看的注解，里面正引着账号
-    所有者那句原话，连它一起扫就会把「把规矩记下来」判成「又违反了规矩」——
-    同一个错在这个仓库里犯过三次（工作流输入的旧默认值、push-reel 里的 ffmpeg、
-    查 `-e .` 那条）。
+    所有者那两句原话（含被废掉的旧叫法），连它一起扫就会把「把规矩记下来」
+    判成「又违反了规矩」——同一个错在这个仓库里犯过三次。
     """
     # 正则/扫描面的单一出处在 tools/spec_wording.py（validate_spec 和
     # promote_reel_draft 用同一份——自动链在发布前也执行这批判据）。
     # ⚠️ outward_deep 必须包含 push 的非注解字段：第一版这儿读的是
     # `_push`，真正发进微信的 `push.summary`/`push.lead` 一条都没被
     # 扫到——判据的主语错了，而它绿着。
-    from tools.spec_wording import QUALIFIER_ROUND as bad  # noqa: PLC0415
+    from tools.spec_wording import FRACTION_ROUND as bad  # noqa: PLC0415
     from tools.spec_wording import outward_deep as outward  # noqa: PLC0415
 
     offenders = {}
@@ -6721,12 +6727,98 @@ def test_轮次要写半决赛不写四强():
         if hits:
             offenders[path.name] = hits
 
-    fresh = {k: v for k, v in offenders.items() if k not in _LEGACY_QUALIFIER_NAMES}
+    fresh = {k: v for k, v in offenders.items() if k not in _LEGACY_ROUND_NAMES}
     assert not fresh, (
-        f"这些地方还在写强字轮次：{fresh}。"
-        "改成 半决赛 / 1/4 决赛 / 1/8 决赛，再往前写「第几轮」。")
+        f"这些地方还在写分数式轮次或「半决赛」：{fresh}。"
+        "改成 8 强 / 4 强 / 决赛，再往前写「第几轮」。")
     # **清单只许减不许加**：修好一个就从上面删掉一个，别让它变成一张许可证
-    assert set(offenders) <= _LEGACY_QUALIFIER_NAMES, "清单里有已经修好的条目？"
+    assert set(offenders) <= _LEGACY_ROUND_NAMES, "清单里有已经修好的条目？"
+
+
+def test_轮次那道闸要盖住烧在画面上的顶栏():
+    """`topbar.line1` 写的就是「<年> <赛事> <轮次>」，**整个比赛段一直烧在
+    画面上**——它比封面那一行还显眼，是这条规矩最该盖住的一面。
+
+    ⚠️ 而它 2026-09-01 之前不在扫描面里：`outward_deep` 只收 segments /
+    cover / push，于是 `promote_reel_draft` 往 line1 写一句「半决赛」照样过闸。
+    补它的代价当场量过是**零**——46 条 topbar 带旧写法的 spec 全部已经在豁免
+    表里（它们的 `cover.topic` 也写着同一句），「爱局」在 topbar 里零命中。
+
+    判据钉两头，缺一头都是恒真：**topbar 真的在扫描面里**（拿一条只在 topbar
+    里犯规的 spec 验，只钉这头的话把 line2 也收进来照样绿），
+    **而注解（`_` 开头）不许被扫**（这个仓库为「判据扫得太宽、被自己的注释
+    误伤」栽过五次）。
+    """
+    from tools.spec_wording import FRACTION_ROUND as bad  # noqa: PLC0415
+    from tools.spec_wording import outward_deep as outward  # noqa: PLC0415
+
+    only_topbar = {"topbar": {"line1": "2026 辛辛那提 ATP1000 1/8决赛",
+                              "line2": "甲 6-4 6-4 乙"}}
+    assert any(bad.search(t) for t in outward(only_topbar)), \
+        "topbar.line1 烧在画面上，轮次那道闸必须扫得到它"
+
+    annotated = {"topbar": {"line1": "2026 辛辛那提 ATP1000 8强",
+                            "_line1_why": "原来写的是 1/8 决赛，2026-09-01 翻面"}}
+    assert not any(bad.search(t) for t in outward(annotated)), \
+        "`_` 开头的是写给下一个人看的注解，扫它等于把「把规矩记下来」判成违规"
+
+
+def test_自动链写进封面的轮次要先过对外写法那张表():
+    """内部那两套轮次名（`zh.terms.round_zh`、`oncourt_feed.parse_round`）产出的
+    是「半决赛」「四分之一决赛」，而它们经 `promote_reel_draft` 的
+    `cover.topic` / `topbar.line1`、`promote_interview_draft` 的 `cover.sub`
+    **流进会发出去的字段**。
+
+    ⚠️ 翻面之后不转换的话，**自动链产的每一条草稿都会被同一个文件里那道零豁免
+    的措辞闸拦下**——草稿转不了正，链子静静卡住，而它和「今天没有候选」长得
+    一模一样（本文件反复记的「走不到的路怎么查都是绿的」的反面：这次是走得到，
+    而且每次都撞）。
+
+    ⚠️ **只转换出口，不改内部的键**：「半决赛」在 `KEY_ROUNDS`、排序表、覆盖率
+    表、`LEAD_ROUND_PTS` 里是当**标识符**用的，跟着改是拿一条文案规矩去动一批
+    不相干的判据，而那种改动坏起来不吭声。
+
+    判据钉三头：转换表本身对得上、**两个出口真的调了它**（只钉转换表的话，
+    出口忘了调照样绿——「一个数写两处必分叉」的老账）、认不出的原样透出去
+    （别在转换器里猜写法，让闸去拦）。
+    """
+    import ast  # noqa: PLC0415
+
+    from tools.spec_wording import FRACTION_ROUND as bad  # noqa: PLC0415
+    from tools.spec_wording import round_display  # noqa: PLC0415
+
+    # ① 两套内部轮次名的产出，转换之后都要过得了闸
+    from tennislive.zh.terms import round_zh  # noqa: PLC0415
+    from tools.oncourt_feed import parse_round  # noqa: PLC0415
+    produced = {round_zh(x) for x in
+                ("SF", "QF", "R16", "R32", "Final", "Semifinal", "Quarterfinal",
+                 "Round of 16", "Round of 32", "1st Round")}
+    produced |= {parse_round({"title": f"On-Court Interview | Event 2026 {x}"})
+                 for x in ("Final", "Semi-Final", "Quarter-Final", "Round of 16",
+                           "Third Round", "Second Round", "First Round")}
+    for label in sorted(filter(None, produced)):
+        out = round_display(label)
+        assert not bad.search(out), (
+            f"内部轮次名「{label}」转出来还是「{out}」——会被措辞闸拦下，"
+            f"自动链的草稿转不了正")
+    # 他点名的那三档要转成他要的那三个词
+    assert round_display("半决赛") == "4强"
+    assert round_display("四分之一决赛") == "8强"
+    assert round_display("决赛") == "决赛"
+    # 认不出来的原样透出去（资格赛、第几轮、英文原文都从这条走）
+    for passthrough in ("决赛", "第一轮", "资格赛", "小组赛", "Round Robin", ""):
+        assert round_display(passthrough) == passthrough
+
+    # ② 两个出口真的调了它——只验 ① 的话，出口忘了调照样绿
+    for tool, field in (("promote_reel_draft.py", "cover.topic / topbar.line1"),
+                        ("promote_interview_draft.py", "cover.sub")):
+        src = (Path("tools") / tool).read_text(encoding="utf-8")
+        tree = ast.parse(src)
+        called = any(isinstance(n, ast.Call) and isinstance(n.func, ast.Name)
+                     and n.func.id == "round_display" for n in ast.walk(tree))
+        assert called, (
+            f"tools/{tool} 往 {field} 写轮次，必须先过 round_display()——"
+            f"不然自动链的草稿会被措辞闸拦下")
 
 
 def test_零封的局不许翻译成爱局():
@@ -6739,7 +6831,7 @@ def test_零封的局不许翻译成爱局():
     标签。**要收尾用一个词，选「零封」，别选任何带「爱」字的直译。**
 
     只查会发出去的字段（旁白 / 封面 / 推送 / 小红书正文），和
-    `test_轮次要写半决赛不写四强` 同一套 `outward()`——`_why` 这类写给下一个人
+    `test_轮次写N强不写分数式` 同一套 `outward()`——`_why` 这类写给下一个人
     看的注解允许提到「爱局」这个反例本身，不算违规。
     """
     from tools.spec_wording import LOVE_GAME as bad  # noqa: PLC0415
@@ -8377,7 +8469,7 @@ def test_推送的标题和正文出处是spec不是命令行():
     取消了那趟 run 才没出事。
 
     **根子不是手滑，是那句话没有judge能看见它**：写进 spec 的字会被
-    `test_轮次要写半决赛不写四强`（推送那几栏）和 `test_人名要以译名表为准`
+    `test_轮次写N强不写分数式`（推送那几栏）和 `test_人名要以译名表为准`
     扫到；敲在 workflow_dispatch 输入里的字，**一条测试都过不了**，直接进微信。
 
     所以判据钉三样：
