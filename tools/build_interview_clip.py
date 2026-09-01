@@ -60,6 +60,7 @@ import difflib
 import hashlib
 import io
 import json
+import math
 import re
 import subprocess
 import sys
@@ -2243,15 +2244,40 @@ def verify_transcript(spec: dict, lines: list[dict], outdir: Path) -> Path:
     # 恰恰是这一趟最贵的产出（要下音频、要跑模型），抛之前先把它印出来。
     probe_gap_speech(spec, caption_gaps(spec, outdir), mine, outdir)
     if rate > TRANSCRIPT_MAX_DISAGREE:
-        _check_disagree_claim(spec, rate, path)
+        _check_disagree_claim(spec, rate, path, len(theirs))
     return path
 
 
 # 认领最多只能拉到这儿。再高就不是「虚词多」能解释的了，必然有整段对不上。
 TRANSCRIPT_DISAGREE_CEILING = 0.18
+# ⚠️ **上面那个天花板的语义默认了「分母够大」，而这条线上有分母很小的片子。**
+#
+# 2026-09-01 `osaka-walkout-us-open-2026-r1`（赛前出场秀）撞的：34.4 秒里
+# 真有人说话的只有球场播报员那一句，第一份转写 **15 个词**。whisper 在开头和
+# 结尾各漏了一个短语（那两处正是全场欢呼压过人声的时候）、外加把 `US` 拆成
+# `U S`——**逐处看没有任何一段对不上**，可 5 个词落在 15 的分母上就是 33.3%，
+# 直接撞穿 18% 的天花板，而那句话的报错写着「必然有整段对不上」。
+#
+# **比例这把尺子在小分母上量不出它要量的东西**：18% 要对应「一整段」，分母至少
+# 得有 30 个词上下；15 个词的转写里，18% 连三个词都不到。所以短转写改用
+# **绝对词数**当天花板——差几个词是几个词，不随分母缩放。
+#
+# 两个数都是量出来的，不是拍的：
+#   · 60 —— 68 条已落库的转写里**只有这一条**少于 60 词（次短 72 词，中位
+#     362.5）。也就是这道分支对存量零影响；而从语义推也落在这儿：要让 18%
+#     对应「至少一个五词短语」，分母得 ≥28，取 60 留一倍余量。
+#   · 8  —— 这条线一行字幕平均 5~8 个词，差 8 个词以上就是**整整一行还多**，
+#     那才是天花板要拦的「整段对不上」。这一条实测差 5 个。
+#
+# ⚠️ **放松的只有天花板这一道**：`_check_disagree_claim` 前两道（必须写
+# `rate` ＋ `why`、实测不许高于认领值）一个字没动，认领照旧要逐处看过才写得出。
+# 也就是说「把窗口切短一点绕过天花板」绕不掉认领本身。
+SHORT_TRANSCRIPT_WORDS = 60
+SHORT_TRANSCRIPT_MAX_DISAGREE_WORDS = 8
 
 
-def _check_disagree_claim(spec: dict, rate: float, path: Path) -> None:
+def _check_disagree_claim(spec: dict, rate: float, path: Path,
+                          first_words: int = 0) -> None:
     """分歧率超闸时，**允许显式认领**，但认领要留下判据。
 
     照 `mixed_fps` / `silent_source` 那套：一律红会把长采访整个挡在门外，
@@ -2273,6 +2299,10 @@ def _check_disagree_claim(spec: dict, rate: float, path: Path) -> None:
       以后真的变差了（比如换了源、加了段落），实测超过认领值，闸重新响。
       不写这个的话，「认领过一次」就成了永久豁免
     - `why`：为什么这些分歧不影响发出去的英文。逐处看过才写得出来
+
+    ⚠️ **短转写的天花板改按绝对词数算**，见 `SHORT_TRANSCRIPT_WORDS` 上面那段：
+    比例这把尺子在小分母上量不出「有没有整段对不上」，而这条线上「赛前出场秀」
+    这类内容天生就是短转写（大部分时间没人说话，只有一句球场播报）。
     """
     claim = spec.get("transcript_disagree_ok") or {}
     declared, why = claim.get("rate"), str(claim.get("why") or "").strip()
@@ -2282,17 +2312,35 @@ def _check_disagree_claim(spec: dict, rate: float, path: Path) -> None:
             f"**不出片。** 逐处看 {path}，把确认过的写进 spec 的 `en_fixed`。\n"
             "逐处看完、确认剩下的分歧不影响发出去的英文（长采访多半是 whisper "
             "把虚词丢了），就在 spec 里显式认领：\n"
-            f'  "transcript_disagree_ok": {{"rate": {rate:.3f}, "why": "逐处看过：……"}}')
+            # ⚠️ **这个数要向上取整，不能 `:.3f`。** 下一道闸是 `rate > declared`
+            # 就红，而 `.3f` 是四舍五入：实测 1−10/15＝0.33333… 印出来是
+            # `0.333`，**照着抄进 spec 会再红一次**——而报错正是让人照着抄的。
+            # 2026-09-01 `osaka-walkout-us-open-2026-r1` 差点为它白烧一趟 runner。
+            f'  "transcript_disagree_ok": {{"rate": {math.ceil(rate * 1000) / 1000}, '
+            '"why": "逐处看过：……"}')
     if rate > declared:
         raise SystemExit(
             f"分歧 {rate:.1%} 比认领的 {declared:.1%} 还高——认领是钉在当时那次观测上的，"
             "现在变差了。重新逐处看过再更新 `transcript_disagree_ok.rate`。")
-    if rate > TRANSCRIPT_DISAGREE_CEILING:
+    # **短转写按差了几个词判，长转写按比例判。** 分母小的时候比例量的不是
+    # 「有没有整段对不上」，是「漏了两三个词」——两者在这道闸上后果差着量级。
+    short = 0 < first_words < SHORT_TRANSCRIPT_WORDS
+    off = round(rate * max(first_words, 1))
+    if short:
+        if off > SHORT_TRANSCRIPT_MAX_DISAGREE_WORDS:
+            raise SystemExit(
+                f"两份转写差了 {off} 个词（共 {first_words} 词，{rate:.1%}），"
+                f"超过短转写的天花板 {SHORT_TRANSCRIPT_MAX_DISAGREE_WORDS} 个词。\n"
+                "这条转写本来就短，差这么多必然有整段对不上——认领挡不住，去查源。")
+    elif rate > TRANSCRIPT_DISAGREE_CEILING:
         raise SystemExit(
             f"分歧 {rate:.1%} 超过认领的天花板 {TRANSCRIPT_DISAGREE_CEILING:.0%}。"
             "这个量级不是虚词能解释的，必然有整段对不上——认领挡不住，去查源。")
+    scale = (f"短转写：{first_words} 词里差 {off} 个，"
+             f"天花板 {SHORT_TRANSCRIPT_MAX_DISAGREE_WORDS} 个词" if short
+             else f"天花板 {TRANSCRIPT_DISAGREE_CEILING:.0%}")
     print(f"[转写] 分歧 {rate:.1%} 超过闸门 {TRANSCRIPT_MAX_DISAGREE:.0%}，"
-          f"但 spec 里认领了（≤{declared:.1%}）：{why[:60]}…")
+          f"但 spec 里认领了（≤{declared:.1%}；{scale}）：{why[:60]}…")
 
 
 def probe_gap_speech(spec: dict, gaps: list[tuple[float, float]],

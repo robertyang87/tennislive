@@ -6053,3 +6053,88 @@ def test_缩略图墙那一档成不成看产物不看退出码(tmp_path, monkey
         assert all(tok in cmd for tok in picked), (
             "下载 mhtml 没带上梯子选中那一档的 client，回头用了默认档——"
             f"而默认那一档正是刚被挡掉的那个：{cmd}")
+
+
+def test_短转写的分歧天花板按词数算不按比例(tmp_path):
+    """**比例这把尺子在小分母上量不出它要量的东西。**
+
+    2026-09-01 `osaka-walkout-us-open-2026-r1`（赛前出场秀）撞的：34.4 秒里
+    真有人说话的只有球场播报员那一句，第一份转写 15 个词。whisper 在句首和
+    句尾各漏了一个短语、外加把 `US` 拆成 `U S`——**逐处看没有任何一段对不上**，
+    可 5 个词落在 15 的分母上就是 33.3%，直接撞穿 18% 的天花板，而那句报错
+    写着「必然有整段对不上」。
+
+    天花板的语义是「有整段对不上」，它**默认了分母够大**：要让 18% 对应一个
+    五词短语，分母至少得 28 词；15 个词的转写里 18% 连三个词都不到。所以短
+    转写改按**绝对词数**判——差几个词是几个词，不随分母缩放。
+
+    判据钉四头：
+      ① 短转写差得少 + 认领了 → 放行（这条片子）
+      ② 短转写差得多 → 仍然撞天花板（放松的不是「短就放行」）
+      ③ 长转写照旧按比例，一个字没松
+      ④ 认领本身没被放松——不写 `rate`/`why` 照样红
+    """
+    from tools.build_interview_clip import (
+        SHORT_TRANSCRIPT_MAX_DISAGREE_WORDS,
+        SHORT_TRANSCRIPT_WORDS,
+        TRANSCRIPT_DISAGREE_CEILING,
+        _check_disagree_claim,
+    )
+
+    path = tmp_path / "transcript_diff.md"
+    ok = {"transcript_disagree_ok": {"rate": 0.34, "why": "逐处看过：三处都无害"}}
+
+    # ① 15 词里差 5 个 —— 33.3%，远超 18%，但只差 5 个词
+    _check_disagree_claim(ok, 1 - 10 / 15, path, 15)
+
+    # ② 同样的短转写，差 9 个词（60%）—— 这才是「整段对不上」
+    with pytest.raises(SystemExit, match="短转写的天花板"):
+        _check_disagree_claim({"transcript_disagree_ok": {"rate": 0.65, "why": "x"}},
+                              0.60, path, 15)
+
+    # ③ 长转写一个字没松：25% 照旧撞老天花板
+    with pytest.raises(SystemExit, match=f"{TRANSCRIPT_DISAGREE_CEILING:.0%}"):
+        _check_disagree_claim({"transcript_disagree_ok": {"rate": 0.26, "why": "x"}},
+                              0.25, path, 400)
+    # 而长转写 15%（超闸门、没超天花板）＋ 认领 → 照旧放行
+    _check_disagree_claim({"transcript_disagree_ok": {"rate": 0.16, "why": "虚词"}},
+                          0.15, path, 400)
+
+    # ④ 短转写也要认领，不写照样红——放松的只有天花板那一道
+    with pytest.raises(SystemExit, match="transcript_disagree_ok"):
+        _check_disagree_claim({}, 1 - 10 / 15, path, 15)
+
+    # 两个常量的来路：60 是「68 条已落库的转写里只有这一条少于它」量出来的，
+    # 8 是「一行字幕 5~8 个词，差一整行还多」推出来的。钉住量级，别让它们
+    # 悄悄漂成「反正短的都放行」。
+    assert SHORT_TRANSCRIPT_WORDS <= 100, "短转写的门槛放到这么宽，长采访也会掉进来"
+    assert SHORT_TRANSCRIPT_MAX_DISAGREE_WORDS <= 12, (
+        "短转写里差十几个词还放行，那就不是「漏了两三个词」了")
+
+
+def test_分歧超闸时报错给的那个数照抄不会再红一次(tmp_path):
+    """报错正文是**让人照着抄进 spec 的**，那它给的数就必须真的能用。
+
+    下一道闸是 `rate > declared` 就红，而原来那句用 `:.3f` ——**四舍五入**：
+    实测 1−10/15＝0.33333… 印出来是 `0.333`，照抄进 spec 立刻撞上
+    「分歧比认领的还高」，再白烧一趟 runner。向上取整才是这句话的本意。
+
+    ⚠️ 这条和「判据引用的那个东西，我打开看过吗」是同一族：**报错里给出的
+    修复方案，自己走一遍了吗。**
+    """
+    import re as _re
+
+    from tools.build_interview_clip import _check_disagree_claim
+
+    rate = 1 - 10 / 15                      # 0.3333…，最容易被四舍五入吃掉的那种
+    with pytest.raises(SystemExit) as got:
+        _check_disagree_claim({}, rate, tmp_path / "d.md", 15)
+    m = _re.search(r'"rate":\s*([0-9.]+)', str(got.value))
+    assert m, f"报错里没给出可照抄的 rate：{got.value}"
+    suggested = float(m.group(1))
+    assert suggested >= rate, (
+        f"报错建议 rate={suggested}，而实测是 {rate}——照抄会立刻撞上"
+        "「分歧比认领的还高」那道闸，等于让人再白跑一趟")
+    # 照抄进去必须真的过得了
+    _check_disagree_claim({"transcript_disagree_ok": {"rate": suggested, "why": "看过"}},
+                          rate, tmp_path / "d.md", 15)
