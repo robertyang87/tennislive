@@ -4715,10 +4715,12 @@ def silent_stretches(segments, spoken_of: dict[int, float]) -> list[str]:
 SPEECH_FITTED_BACKEND = "azure"
 from reel_timing import (  # noqa: E402
     SPEECH_PER_CHAR,
+    SPEECH_PER_LATIN,
     SPEECH_PER_PUNCT,
     SPEECH_TAIL,
     SPEECH_PUNCT as _SPEECH_PUNCT,
     SPEECH_QUIET as _SPEECH_QUIET,
+    latin_word_letters,
     speech_seconds,
 )
 # 实测最坏的一段被低估 1.44s，取整留一点：小于这个数的差额不算数。
