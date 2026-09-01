@@ -6780,9 +6780,12 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     # 「网球时差 · 栏目」），落在封面那个位置上。两条路都要贴，都只盖比赛画面。
     # ⚠️ 栏目名和封面读的是**同一处**（`cover.eyebrow`，缺省「赛场之上」，和
     # `build_cover` 那行一模一样）——各读各的会让封面和播放画面写着两个栏目。
+    # ⚠️ **副标题也要带上**（账号所有者 2026-09-01「副标题不要消失啊」）——
+    # 封面台头是两行，只搬第一行的话第二行在正片里整个没了。
     wm_column = str((spec.get("cover") or {}).get("eyebrow", "")).strip() \
         or "赛场之上"
-    wm_png = brand_watermark(outdir / "_watermark.png", wm_column)
+    wm_topic = str((spec.get("cover") or {}).get("topic", "")).strip()
+    wm_png = brand_watermark(outdir / "_watermark.png", wm_column, wm_topic)
     match_end = cover_secs + sum(s.length for s in segments)
     with stage("烧字幕+成片"):
         foot_inputs = ["-i", str(foot_png)] if foot_png else []

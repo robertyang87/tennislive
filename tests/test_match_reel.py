@@ -13521,8 +13521,8 @@ def test_常驻角标就是封面台头那一块_落位也是封面那个位置(
     sys.path.insert(0, str(Path("src").resolve()))
     from tennislive.video import watermark as wm_mod  # noqa: PLC0415
 
-    column = "网球有故事"
-    png = wm_mod.brand_watermark(tmp_path / "wm.png", column)
+    column, topic = "网球有故事", "台头底下那一行"
+    png = wm_mod.brand_watermark(tmp_path / "wm.png", column, topic)
     art = Image.open(png).convert("RGBA")
 
     def lime_box(im, box):
@@ -13572,12 +13572,17 @@ def test_常驻角标就是封面台头那一块_落位也是封面那个位置(
     assert abs(wi[0] - ci[0]) <= 2 and abs(wi[1] - ci[1]) <= 2, (
         f"球标没落在封面那个位置：封面 {ci}，角标 {wi}。"
         "「用封面上的 logo 和位置」——落位和封面逐像素对得上才算数")
-    # 字标只量到 y=90，避开封面 `.topic` 那一行（角标没有它）
-    text_box = (130, 25, 620, 90)
-    ct = ink_box(cover_im, text_box)
-    wt = ink_box(pasted, text_box)
-    assert abs(wt[0] - ct[0]) <= 2 and abs(wt[1] - ct[1]) <= 2, (
-        f"字标没落在封面那个位置：封面 {ct[:2]}，角标 {wt[:2]}")
+    # ⚠️ **两行都要量**（账号所有者 2026-09-01「副标题不要消失啊」）：主行
+    # y25~90、副标题 y90~140。只量第一行的话，第二行整个丢掉也照样绿——
+    # 而那正是这条判据加这一头之前的样子。
+    for what, text_box in (("主行", (130, 25, 620, 90)),
+                           ("副标题", (130, 90, 620, 140))):
+        ct = ink_box(cover_im, text_box)
+        wt = ink_box(pasted, text_box)
+        assert abs(wt[0] - ct[0]) <= 2 and abs(wt[1] - ct[1]) <= 2, (
+            f"{what}没落在封面那个位置：封面 {ct[:2]}，角标 {wt[:2]}")
+    ct = ink_box(cover_im, (130, 25, 620, 90))
+    wt = ink_box(pasted, (130, 25, 620, 90))
     # ⚠️ 宽度按**比例**给余量，不给一个绝对像素数：PIL 量出来是个定值，而
     # Chromium 的排版**跨环境会差一点点**——同一份封面沙箱渲出来 304、CI 渲出来
     # **300**（run 33506517362 上真红过一次，绝对余量 3px 差一点）。这就是
