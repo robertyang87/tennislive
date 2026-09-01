@@ -1,0 +1,56 @@
+{
+  "status": "pass",
+  "checked_at": "2026-09-01T09:46:31Z",
+  "auditor": "opencv-haar-v1",
+  "expected_subject": "大坂直美",
+  "identity_evidence": "L0-bound spec subject + same-source frame_at",
+  "spec_sha256": "65ead01fedb2d6003d3a032c85e0304ed33c968d0c6c7a17a0b3265f33c38c73",
+  "poster_sha256": "e93f8010e9ddd511f99275206e826266ca428958fae43aee6d53982b92115ab9",
+  "thresholds": {
+    "close_up_zoom": 1.5,
+    "face_height_ratio": 0.08,
+    "close_up_face_height_ratio": 0.14,
+    "face_area_ratio": 0.01,
+    "face_sharpness": 45.0,
+    "face_contrast": 32.0,
+    "eyes": 2
+  },
+  "result": {
+    "poster": {
+      "decodable": true,
+      "format": "JPEG",
+      "width": 1080,
+      "height": 1440,
+      "photo_region": [
+        0,
+        150,
+        1080,
+        810
+      ]
+    },
+    "face": {
+      "detector": "frontal-default",
+      "box": [
+        573,
+        384,
+        158,
+        158
+      ],
+      "detected_faces": 5,
+      "eyes": 3,
+      "face_height_ratio": 0.19506,
+      "face_area_ratio": 0.02854,
+      "center_x_ratio": 0.6037,
+      "center_y_ratio": 0.38642,
+      "sharpness": 59.542,
+      "contrast": 116.0
+    },
+    "contract": {
+      "shot_type": "",
+      "frame_at": 11.8,
+      "zoom": 1.0,
+      "focus_y": 0.5
+    }
+  },
+  "issues": []
+}
