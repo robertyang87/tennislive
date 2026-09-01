@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "at": "2026-09-01T10:56:19Z",
+  "pipeline": "match-reel",
+  "slug": "osaka-iverson-tribute",
+  "mode": "render",
+  "outcome": "success",
+  "error": null,
+  "elapsed_seconds": 171.19,
+  "last_stage": "烧字幕+成片",
+  "stage_seconds": {
+    "下载源片 walkout": 0.057,
+    "封面配音": 0.603,
+    "片尾配音": 0.231,
+    "TTS 合成": 5.062,
+    "封面海报": 1.722,
+    "封面编码": 0.497,
+    "分段编码": 108.795,
+    "片尾渲染": 7.628,
+    "拼接": 24.227,
+    "混音": 2.38,
+    "烧字幕+成片": 98.609
+  },
+  "stage_counts": {
+    "下载源片 walkout": 1,
+    "封面配音": 1,
+    "片尾配音": 1,
+    "TTS 合成": 1,
+    "封面海报": 1,
+    "封面编码": 1,
+    "分段编码": 11,
+    "片尾渲染": 1,
+    "拼接": 1,
+    "混音": 1,
+    "烧字幕+成片": 1
+  },
+  "cpu_count": 4,
+  "run_id": "33499537512",
+  "run_attempt": "1",
+  "on_runner": true
+}
