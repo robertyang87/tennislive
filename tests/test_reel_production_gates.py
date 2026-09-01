@@ -610,6 +610,46 @@ def test_deepseek旁白prompt带着断句和比分写法的规矩():
         assert rule in draft.system_prompt(), rule
 
 
+def test_喂给模型的教材里不许出现会被措辞闸拦下的写法():
+    """**给模型看的每一个词，它都可能照着产。** 所以教材和 prompt 里一个被闸
+    拦的写法都不许出现——连当反例写都不行。
+
+    ⚠️ 来路：2026-09-01 轮次翻面（8 强 / 4 强 / 决赛）那一轮，闸、扫描面、
+    两条机械拼串的路都修了，**独独漏了模型自己写的字这条路**——而那才是旁白
+    和文案的主要产出口。当时的实况是：`skills/` 里**一个字都没教**轮次叫法，
+    而 prompt 里唯一的轮次例句写着旧写法（「打进半决赛」）。模型只能照着训练
+    数据和那句例句产旧写法 → `check_spec_wording` 拦下 → 草稿转不了正 →
+    **链子静静卡住，而它长得像「今天没有候选」**。
+
+    判据**自己从闸推**，不维护名单：闸拦什么，教材里就不许出现什么。
+    查的是**真拼出来的那份 prompt**（`_SYSTEM_RULES` ＋ SKILL.md ＋
+    references/deepseek.md ＋ references/quality-gates.md），不是某个文件的
+    源码——查产物不查信号。
+
+    ⚠️ 所以教材里这条规矩**只写正例**（「只能写 决赛/4强/8强/16强/第N轮」），
+    不列反例：列反例既会被这条判据拦下，也真的会让模型 pattern-match 到那个词。
+    """
+    from tools.spec_wording import FRACTION_ROUND, LOVE_GAME  # noqa: PLC0415
+
+    draft = load("draft_spec")
+    for name, text in (("旁白 prompt", draft.system_prompt()),
+                       ("推送 prompt", draft.push_system_prompt())):
+        for label, pattern in (("轮次", FRACTION_ROUND), ("爱局", LOVE_GAME)):
+            hits = sorted({m.group(0) for m in pattern.finditer(text)})
+            assert not hits, (
+                f"{name} 里出现了会被{label}那道闸拦下的写法：{hits}——"
+                f"模型会照着产，然后草稿转不了正、链子静静卡住。"
+                f"教材里这条只写正例，别列反例。")
+
+    # 而且**整份教材里要真的教过**新写法——只删掉旧写法的话，模型没有任何
+    # 地方学得到，它会照训练数据的习惯产旧写法，然后照样撞闸。
+    # ⚠️ 这一头查的是拼出来的整份 prompt（`_SYSTEM_RULES` 和教材都算），
+    # 不是某个文件的某两行——只删其中一处它仍然成立，那是对的：教到就行。
+    whole = draft.system_prompt()
+    assert "4强" in whole and "8强" in whole, \
+        "教材里要正面写出允许的轮次写法，不能只是不出现旧写法"
+
+
 def test_import草稿工具不许要求教材在盘上():
     """2026-08-27 reel-auto-ready 栽的：`draft_spec` 原来在 import 那一刻就拼
     SYSTEM prompt、读 `skills/…/SKILL.md`，而那条工作流的稀疏检出没有 skills——
