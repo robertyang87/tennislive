@@ -2,9 +2,21 @@
 """“赛后开麦”的 L0 内容身份门禁。
 
 机器字段 ``requested_content_type`` 与观众看到的 ``interview_kind`` 必须成对，
-来源身份和逐场赛果必须带哈希绑定。当前允许三种真实内容：赛后场上采访、
-颁奖台致辞，以及最后一战/退役告别仪式。发布会、演播室或身份不明的素材仍然
-停在复核队列，不能用一个宽泛的 ``post-match`` 标题绕过门禁。
+来源身份和逐场赛果必须带哈希绑定。当前允许四种真实内容：赛后场上采访、
+颁奖台致辞、最后一战/退役告别仪式，以及赛前出场秀。发布会、演播室或身份不明
+的素材仍然停在复核队列，不能用一个宽泛的 ``post-match`` 标题绕过门禁。
+
+⚠️ **``walk_on``（赛前出场秀）是这道闸认的第四种类型，不是绕开它的例外。**
+账号所有者 2026-09-01：「做大坂直美的出场秀视频，可以用赛后开麦的模板，但标题
+和部分文案要换掉」。形状和 2026-08-23 加 ``ceremony`` 时一模一样——球员穿着定制
+出场服走进球场、播报员报名、全场欢呼，是这个栏目下另一种真实存在的内容，
+而不是"把身份不明的素材塞进来"。所以它照旧要求 ``source_verification`` /
+``match`` 真实、可交叉核实、和赛果签在一起：官方频道 + 标题里明确写着
+walk-out/walk-on，两条都满足才放行。
+
+⚠️ **它是这四种里唯一发生在开赛之前的**，所以两处跟着变：``interview_kind``
+写「赛前出场秀」（不是"赛后…"），顶栏建议走 ``topbar_layout:
+subject_primary``——出场那一刻比赛还没打，顶栏印赛果既不合时序也剧透。
 """
 
 from __future__ import annotations
@@ -24,9 +36,11 @@ REQUESTED_KINDS = {
     "on_court": "赛后场上采访",
     "ceremony": "赛后捧杯致辞",
     "farewell": "赛后告别仪式",
+    "walk_on": "赛前出场秀",
 }
 DETECTED_TYPES = {
-    "on_court", "press", "studio", "ceremony", "farewell", "highlight", "unknown",
+    "on_court", "press", "studio", "ceremony", "farewell", "walk_on",
+    "highlight", "unknown",
 }
 
 APPROVED_METHODS = {
@@ -43,6 +57,10 @@ APPROVED_METHODS = {
         "human_visual_verdict",
         "official_explicit_farewell",
     },
+    "walk_on": {
+        "human_visual_verdict",
+        "official_explicit_walk_on",
+    },
 }
 
 _EXPLICIT_ONCOURT = re.compile(r"\bon[\s-]?court\s+interview\b", re.I)
@@ -58,6 +76,19 @@ _EXPLICIT_FAREWELL = re.compile(
     r"\b((?:final|last)\s+(?:grand\s+slam\s+)?match\s+"
     r"(?:presentation|ceremony)|farewell\s+(?:presentation|ceremony|speech)"
     r"|retirement\s+(?:presentation|ceremony|speech))\b",
+    re.I,
+)
+# 必须明确到“出场 + 这一身/这一刻”，或者独立成词的 walk-out——网球语境里
+# 后者专指球员从通道走进球场那一段。
+#
+# ⚠️ **两个真会撞上的词，两条都验过**：`walkover`（不战而胜）里的 `over` 不是
+# `out`，第二支匹配不上；`walked out of the match` 里的 `walked` 也匹配不上
+# （`walk[-\s]?out` 要求 walk 后面紧跟分隔符或 `out`，吃不掉那个 `ed`）。
+# 剩下唯一还会误伤的是 “walk out of/on …” 这种真·走开，用后顾排除挡掉。
+_EXPLICIT_WALK_ON = re.compile(
+    r"\bwalk[-\s]?(?:out|on)\s+"
+    r"(?:outfit|look|fit|kit|moment|entrance|style|ceremony)\b"
+    r"|\bwalk[-\s]?out\b(?!\s+(?:of|on)\b)",
     re.I,
 )
 
@@ -108,6 +139,8 @@ def explicit_title_type(title: str) -> str:
         return "ceremony"
     if _EXPLICIT_FAREWELL.search(title or ""):
         return "farewell"
+    if _EXPLICIT_WALK_ON.search(title or ""):
+        return "walk_on"
     return ""
 
 
@@ -137,6 +170,8 @@ def candidate_verification(
             "studio": "studio",
             "ceremony": "ceremony",
             "farewell": "farewell",
+            "walkon": "walk_on",
+            "walk_on": "walk_on",
             "other": "unknown",
             "degraded": "unknown",
         }.get(detected, "unknown")
@@ -208,6 +243,7 @@ def candidate_verification(
                 "on_court": "official_explicit_oncourt",
                 "ceremony": "official_explicit_ceremony",
                 "farewell": "official_explicit_farewell",
+                "walk_on": "official_explicit_walk_on",
             }[explicit],
             "evidence": [{"kind": "official_explicit_title", "title": title}],
         }
@@ -294,7 +330,8 @@ def validate_source_contract(spec: dict) -> str:
         # 保留旧测试/旧日志可检索的「on_court/ceremony 之一」文字，同时明确
         # 新增的 farewell；旧消费方不会因为错误文案变化而失去诊断锚点。
         problems.append(
-            "requested_content_type 必须是 on_court/ceremony 之一，或 farewell"
+            "requested_content_type 必须是 on_court/ceremony 之一，"
+            "或 farewell / walk_on"
         )
         requested = None
     special_induction = is_hall_of_fame_induction(spec)
