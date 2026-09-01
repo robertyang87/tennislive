@@ -6775,9 +6775,14 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
         else:
             print("[脚注] ⚠️ 带式但没有顶栏，脚注挂在顶栏滤镜图上、走不到——"
                   "这条片子不渲品牌脚注")
-    # 常驻角标：账号所有者 2026-09-01「视频播放时候左上角保留网球时差的 logo」。
-    # 两条路都要贴，而且都只盖比赛画面区间。
-    wm_png = brand_watermark(outdir / "_watermark.png")
+    # 常驻角标：账号所有者 2026-09-01「视频播放时候左上角保留网球时差的 logo」
+    # ＋「用封面上的 logo 和位置」——所以它就是**封面台头那一块**（球标 ＋
+    # 「网球时差 · 栏目」），落在封面那个位置上。两条路都要贴，都只盖比赛画面。
+    # ⚠️ 栏目名和封面读的是**同一处**（`cover.eyebrow`，缺省「赛场之上」，和
+    # `build_cover` 那行一模一样）——各读各的会让封面和播放画面写着两个栏目。
+    wm_column = str((spec.get("cover") or {}).get("eyebrow", "")).strip() \
+        or "赛场之上"
+    wm_png = brand_watermark(outdir / "_watermark.png", wm_column)
     match_end = cover_secs + sum(s.length for s in segments)
     with stage("烧字幕+成片"):
         foot_inputs = ["-i", str(foot_png)] if foot_png else []
@@ -6789,7 +6794,7 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
                       ["-filter_complex",
                        plain_filtergraph(ass, cover_secs, match_end, wm_input),
                        "-map", "[out]"])
-        print(f"[角标] 常驻角标 {wm_png.name}：左上角，只盖 "
+        print(f"[角标] 常驻角标「网球时差 · {wm_column}」：封面那个位置，只盖 "
               f"{cover_secs:.2f}~{match_end:.2f}s（封面和片尾不带）")
         run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
             "-i", str(silent), "-i", str(mixed), *foot_inputs,

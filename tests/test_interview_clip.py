@@ -6147,7 +6147,11 @@ def test_常驻角标压在视频区不许压进顶栏那条带(tmp_path):
     （HEADA y24~71、HEADB y98~126）——角标压上去**不报错**，只是两样东西
     叠在一起，只有打开看才知道。所以两头都钉（各自反向验证过）：
 
-    - **落位**：角标 PNG 的顶边（含阴影那一圈）要落在 `VIDEO_TOP` 底下
+    - **落位**：账号所有者随后一句「**用封面上的 logo 和位置**」——横向就是封面
+      `.head` 的 `left:70`，纵向是封面的 `top:44` **再让开顶栏那 150px**。
+      那条带是实色品牌底、压着两行顶栏文字（HEADA 24~71、HEADB 98~126），
+      角标压上去**不报错**，只是两样东西叠在一起
+      （封面那一块和角标逐像素对不对得上，由竖版短片那条判据拿真封面钉）
     - **每一条出画面的路都要接上，而且这一头自己推导、不维护名单**。
       ⚠️ 这条线有**两条**出画面的路——正片 `render` 和冷开场
       `_lead_in_segment`，两段都会被 concat 进成片。第一版只接了正片，
@@ -6169,11 +6173,15 @@ def test_常驻角标压在视频区不许压进顶栏那条带(tmp_path):
 
     src = Path("tools/build_interview_clip.py").read_text("utf-8")
     video_top = int(re.search(r"^VIDEO_TOP\s*=\s*(\d+)", src, re.M).group(1))
-    png = brand_watermark(tmp_path / "wm.png")
+    # 栏目名要传进去——角标就是封面台头那一块（球标 ＋「网球时差 · 栏目」）
+    png = brand_watermark(tmp_path / "wm.png", "赛后开麦")
     from PIL import Image
 
     art = Image.open(png)
     x, y = watermark_xy(video_top)
+    from tennislive.video.watermark import WATERMARK_LEFT, WATERMARK_SHADOW_PAD
+    assert x == WATERMARK_LEFT - WATERMARK_SHADOW_PAD, (
+        f"横向不是封面的 left:{WATERMARK_LEFT}（量到 {x}）")
     assert y >= video_top, (
         f"角标 PNG 顶边在 y={y}，而顶栏那条实色带占到 {video_top}——"
         "压上去不报错，只是和顶栏的两行字叠在一起")

@@ -1417,7 +1417,8 @@ def header_ass(spec: dict) -> tuple[str, str]:
     return (_line(main, _HEAD_A_TOP), _line(context, _HEAD_B_TOP))
 
 
-def watermark_filter(outdir: Path, *, src: str = "v", dst: str = "vw") -> str:
+def watermark_filter(outdir: Path, spec: dict, *,
+                     src: str = "v", dst: str = "vw") -> str:
     """常驻角标那一截滤镜（不带首尾分号，调用方自己接）。
 
     账号所有者 2026-09-01：「**视频播放时候左上角保留网球时差的 logo**」。
@@ -1440,7 +1441,10 @@ def watermark_filter(outdir: Path, *, src: str = "v", dst: str = "vw") -> str:
     from tennislive.video.watermark import (  # noqa: PLC0415
         brand_watermark, watermark_xy)
 
-    png = brand_watermark(outdir / "_watermark.png")
+    # ⚠️ 栏目名和封面读的是**同一处**（`spec["column"]`，缺省「赛后开麦」，
+    # 和 `_cover_png` 那行一模一样）——各读各的会让封面和播放画面写着两个栏目。
+    png = brand_watermark(outdir / "_watermark.png",
+                          spec.get("column", "赛后开麦"))
     x, y = watermark_xy(VIDEO_TOP)
     return (f"movie={png},format=rgba[wm];"
             f"[{src}][wm]overlay={x}:{y}[{dst}]")
@@ -3894,7 +3898,7 @@ def _lead_in_segment(spec: dict, outdir: Path) -> Path | None:
         f"color=c={_BG_COLOUR}:s={CANVAS_W}x{CANVAS_H}:d={dur}:r=25[bg];"
         f"[0:v]{flip}{logo}{grade}{_crop_expr(ratio, keep, shift)},scale={CANVAS_W}:{vh}[fg];"
         f"[bg][fg]overlay=0:{VIDEO_TOP}[base];{topbar_filter};"
-        f"{watermark_filter(outdir)}{finish}"
+        f"{watermark_filter(outdir, spec)}{finish}"
     )
     dest = outdir / "_lead.mp4"
     subprocess.run(
@@ -3941,7 +3945,7 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
     # 常驻角标：出处是 `watermark_filter`（冷开场那条路也用它）。范围不用
     # `enable=`——这条链只管 body，封面和品牌片尾是后面 concat 拼进来的，
     # 而那两处本来就印着这个 logo。
-    wm_chain = watermark_filter(outdir) + ";"
+    wm_chain = watermark_filter(outdir, spec) + ";"
     chain = (
         # 垫底：**品牌深绿纯色**，不再从这一帧画面模糊出来——见 `_BG_COLOUR`
         # 上面那段注释。`d={dur}` 卡住这个虚拟源的时长：`color` 是无限长的
