@@ -267,5 +267,9 @@
     ],
     "⚠️ memento 那条": "两份 ASR 都听成 momentum，我仍然订正成 memento。证据是语义不是听感——「to present Stan with a very special ___ for this occasion」只能是纪念品，momentum 在这儿讲不通；同类仪式（nishikori 那条）颁的也是纪念品。",
     "⚠️ 第 5、6 行仍然不确切": "第二份在这一带多出一个 `in a row`，但没给出比第一份更清楚的读法。第 5 行只订正了 Grand Sal→Grand Slam，第 6 行「It was a two time good match.」原样保留；中文只译能确定的那半句（「这是一场好球」），不替他补 two time 的意思。"
+  },
+  "transcript_disagree_ok": {
+    "rate": 0.165,
+    "why": "逐处看过 27 条分歧（run 33456628187 的 transcript_diff.md，结论全文在 _transcript_review），没有一处指向「第一份转写错了」，发出去的英文不受影响：① 大头是第二份在掌声段整段漏转——开头四行和第 43-45 行在它那儿都是 `—`，两份词数差 30 基本就是这些空缺；② 虚词丢失（the/but/i/to/was），whisper 系统性；③ 时态·单复数·拼写差异（enjoy→enjoyed、wild card→wildcard、going to→gonna）；④ 第二份听错而第一份对（quali→quality 是资格赛、four grand→foreground 上下文是 four Grand Slam、here it was→in this year）；⑤ 两处是有外部证据的人工订正，第二份同样没听清（butorac→putra at、memento→momentum）。⚠️ thanks 保留第一份不按第二份规范化——「I would like to thanks the tournament」是他的非母语说法。⚠️ 这条认领钉在 16.4% 这次观测上；换源、改窗口或加段落之后实测再超，闸会重新响。"
   }
 }
