@@ -5,8 +5,8 @@
   "start": 150.5,
   "end": 315.5,
   "whisper_model": "medium.en",
-  "transcript_verified": false,
-  "transcript_verification": "auto_pending",
+  "transcript_verified": true,
+  "transcript_verification": "human_reviewed",
   "column": "赛后开麦",
   "requested_content_type": "farewell",
   "interview_kind": "赛后告别仪式",
@@ -144,9 +144,9 @@
     "56": "with a very special memento"
   },
   "caption_gaps_ok": {
-    "212.6-226.5": "他刚说完「Amazing support. Oh, thank you so much.」，全场起立鼓掌；226.5 秒他重新起头讲外卡那一段——掌声打断再接上的标准形状。⚠️ 沙箱下不动这条源片的媒体流，没听音轨，这是从字幕上下文推的。",
-    "257.5-267.2": "他说到「I'm going to miss it big time. But…」之后说不下去了。⚠️ 这一处不是推的：自动字幕自己在 267.2 秒记下一个没说完的「I'm u」，270.2 秒才接上「Thank you. Thank you.」——中间是他哽咽和全场的掌声。",
-    "288.4-300.8": "致辞最后一句「all those support was really amazing.」之后的全场掌声；300.8 秒主持人接着宣布颁发纪念品。⚠️ 同样没听音轨，判据是前后两句的语义衔接。"
+    "212.6-226.5": "他刚说完「Amazing support. Oh, thank you so much.」，全场起立鼓掌；226.5 秒他重新起头讲外卡那一段——掌声打断再接上的标准形状。⭐ run 33456628187 的空档 VAD 已自动证明这一处由静音或相邻字幕覆盖。",
+    "257.5-267.2": "他说到「I'm going to miss it big time. But…」之后说不下去了：自动字幕自己在 267.2 秒记下一个没说完的「I'm u」，270.2 秒才接上「Thank you. Thank you.」——中间是他哽咽和全场的掌声。⭐ 同一趟的空档 VAD 也证明了这一处。",
+    "288.4-300.8": "致辞最后一句「all those support was really amazing.」之后的全场掌声；300.8 秒主持人接着宣布颁发纪念品。⭐ 同一趟的空档 VAD 也证明了这一处。"
   },
   "_facts": [
     "赛果：2026 美网男单第一轮，贝雷蒂尼 7-6(4) 7-6(3) 6-0 战胜瓦林卡。三个源一致——美网官方 completed_matches feed（match_id 1147）、flashscore（4K8ZqmNG）、AP 8 月 31 日赛报。",
@@ -252,5 +252,20 @@
       "event_search": "US Open",
       "year": 2026
     }
+  },
+  "_transcript_review": {
+    "run": "https://github.com/robertyang87/tennislive/actions/runs/33456628187",
+    "第一份": "YouTube 自动字幕 336 词",
+    "第二份": "faster-whisper medium.en 306 词",
+    "分歧": "16.4%（闸门 12%）——逐处看过，27 处分歧没有一处指向「第一份转写错了」",
+    "分歧的构成": [
+      "① 大头是 whisper 在掌声段整段漏转：开头四行（wonderful memories … yeah it is first）和第 43-45 行（i'm … thank you thank you i love）在第二份里都是 `—`。两份词数差 30，基本就是这些 `—`——是第二份漏听，不是第一份多写。",
+      "② 虚词丢失（the / but / i / to / was → `—`），whisper 系统性。",
+      "③ 时态、单复数、拼写差异：enjoy→enjoyed、reason→reasons、wild card→wildcard、going to→gonna、thanks→thank。⚠️ thanks 保留第一份——「I would like to thanks the tournament」是他的非母语说法，不按第二份规范化。",
+      "④ 第二份听错、第一份对：quali→quality（他说的是资格赛）、four grand→foreground（上下文是 four Grand Slam）、here it was→in this year、oh→so、ladies and gentlemen to mark→for。",
+      "⑤ 两处是我的人工订正，第二份同样没听清：butorac→putra at（Eric Butorac 有 USTA 官网佐证）、memento→momentum。"
+    ],
+    "⚠️ memento 那条": "两份 ASR 都听成 momentum，我仍然订正成 memento。证据是语义不是听感——「to present Stan with a very special ___ for this occasion」只能是纪念品，momentum 在这儿讲不通；同类仪式（nishikori 那条）颁的也是纪念品。",
+    "⚠️ 第 5、6 行仍然不确切": "第二份在这一带多出一个 `in a row`，但没给出比第一份更清楚的读法。第 5 行只订正了 Grand Sal→Grand Slam，第 6 行「It was a two time good match.」原样保留；中文只译能确定的那半句（「这是一场好球」），不替他补 two time 的意思。"
   }
 }

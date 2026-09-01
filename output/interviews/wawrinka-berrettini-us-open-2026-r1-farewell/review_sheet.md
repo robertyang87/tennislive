@@ -70,8 +70,8 @@
 
 ## 自动字幕的空档（≥2 秒连一个事件都没有）
 
-- **62.1–76.0 秒**（片内，13.9 秒空白，[跳过去](https://youtu.be/aGREoN-2dQc?t=212)）　他刚说完「Amazing support. Oh, thank you so much.」，全场起立鼓掌；226.5 秒他重新起头讲外卡那一段——掌声打断再接上的标准形状。⚠️ 沙箱下不动这条源片的媒体流，没听音轨，这是从字幕上下文推的。
-- **107.0–116.7 秒**（片内，9.7 秒空白，[跳过去](https://youtu.be/aGREoN-2dQc?t=257)）　他说到「I'm going to miss it big time. But…」之后说不下去了。⚠️ 这一处不是推的：自动字幕自己在 267.2 秒记下一个没说完的「I'm u」，270.2 秒才接上「Thank you. Thank you.」——中间是他哽咽和全场的掌声。
-- **137.9–150.3 秒**（片内，12.4 秒空白，[跳过去](https://youtu.be/aGREoN-2dQc?t=288)）　致辞最后一句「all those support was really amazing.」之后的全场掌声；300.8 秒主持人接着宣布颁发纪念品。⚠️ 同样没听音轨，判据是前后两句的语义衔接。
+- **62.1–76.0 秒**（片内，13.9 秒空白，[跳过去](https://youtu.be/aGREoN-2dQc?t=212)）　他刚说完「Amazing support. Oh, thank you so much.」，全场起立鼓掌；226.5 秒他重新起头讲外卡那一段——掌声打断再接上的标准形状。⭐ run 33456628187 的空档 VAD 已自动证明这一处由静音或相邻字幕覆盖。
+- **107.0–116.7 秒**（片内，9.7 秒空白，[跳过去](https://youtu.be/aGREoN-2dQc?t=257)）　他说到「I'm going to miss it big time. But…」之后说不下去了：自动字幕自己在 267.2 秒记下一个没说完的「I'm u」，270.2 秒才接上「Thank you. Thank you.」——中间是他哽咽和全场的掌声。⭐ 同一趟的空档 VAD 也证明了这一处。
+- **137.9–150.3 秒**（片内，12.4 秒空白，[跳过去](https://youtu.be/aGREoN-2dQc?t=288)）　致辞最后一句「all those support was really amazing.」之后的全场掌声；300.8 秒主持人接着宣布颁发纪念品。⭐ 同一趟的空档 VAD 也证明了这一处。
 
 打开源片听这几秒：**有人说话就是漏了**，掌声／欢呼就不是。结论写进 spec 的 `caption_gaps_ok`（键 `起-止`，秒，一位小数）。
