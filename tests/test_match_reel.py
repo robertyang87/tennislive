@@ -13467,6 +13467,171 @@ def test_带式的品牌脚注真的渲出来而且只在带式(tmp_path, monkey
                 f"{dark:.4f}")
 
 
+def test_常驻角标压左上角_让开顶栏_两条编码路都接上(tmp_path, monkeypatch):
+    """账号所有者 2026-09-01：「**视频播放时候左上角保留网球时差的 logo**」。
+
+    四头，**缺一头都是恒真**（四个方向分别反向验证过，各红在自己的断言行）：
+
+    ① **阴影是这条能压在任何画面上的前提，不是装饰。** lockup 里「网球时差」
+       四个字是近白的，压在**纯白**上（白球衣、亮天空、浅色看台）会整个消失。
+       量出来（字标那半贴在纯白上）：有阴影最暗 95、暗于 200 占 8.6%；
+       拆掉阴影最暗 180、占 0.4%——**两档差一个量级**。所以判据钉在
+       「贴纯白之后字标那一带真的有暗像素」，不是「PNG 渲出来了」。
+
+    ② **纵向要让开顶部那条带。** 三种版式各让开各的（band 让开 BAND_TOP、
+       全出血带顶栏让开 TOPBAR_H、没顶栏贴到 0）。压上去**不报错**，只是
+       角标和顶栏的字叠在一起——只能靠这一头拦。钉的是「连阴影那一圈都在
+       带外面」，不是「logo 本体在带外面」。
+
+    ③ **两条编码路都要接上，而且这一头是位置判据。** 没顶栏那条原来是
+       `-vf subtitles=…` 一句话，`-vf` 只吃 0 号流、接不了第二路输入——
+       所以它必须改走 `filter_complex` ＋ 显式 `[out]`。⚠️ 只测「有顶栏那条
+       接上了」拦不住「没顶栏那条还是老样子」，而**网球有故事这个栏目走的
+       正是没顶栏那条**。
+       同一头还钉住 **一条链里不许有两个 `overlay=`**：写成
+       `[a][2:v]overlay=…,[3:v]overlay=…` 时 ffmpeg 把标签**按顺序绑到那个
+       滤镜自己的输入上**，于是 `[3:v]` 绑成了第二个 overlay 的**主画面**，
+       296×88 的角标当场变成画布。它响得很大声（concat 报
+       `Input link in0:v0 parameters (size 296x88) do not match`），
+       **但那句话指的是 concat，读起来完全不像「overlay 的输入接反了」**。
+
+    ④ **只盖比赛画面区间**，封面和片尾不带：封面自己的台头印着
+       「网球时差 · 赛场之上」、品牌片尾整屏就是这个 logo，两处再压一遍是把
+       同一个标识说三遍。真跑一遍 ffmpeg 在三个时刻各量一帧——**查滤镜串里
+       有没有 `enable=` 防不住区间写反**。
+
+    ⚠️ 尺寸和阴影**只有一处出处**（`src/tennislive/video/watermark.py`），
+    赛后开麦那条线也从那儿拿；这条判据顺手钉住两个工具都不许自己再抄一份。
+    """
+    import shutil  # noqa: PLC0415
+
+    import numpy as np  # noqa: PLC0415
+    from PIL import Image  # noqa: PLC0415
+
+    assert shutil.which("ffmpeg"), "没有 ffmpeg，这条判据跑不了：apt install ffmpeg"
+    reel = _reel()
+    sys.path.insert(0, str(Path("src").resolve()))
+    from tennislive.video import watermark as wm_mod  # noqa: PLC0415
+
+    # ── ① 阴影：贴在纯白上，字标那一带必须还有暗像素 ──────────────────
+    png = wm_mod.brand_watermark(tmp_path / "wm.png")
+    art = Image.open(png).convert("RGBA")
+    assert art.width > art.height, f"角标应该是横版 lockup，量到 {art.size}"
+    on_white = Image.alpha_composite(
+        Image.new("RGBA", art.size, (255, 255, 255, 255)), art)
+    # 只看右边那一半——左边是绿色球标，天然和白底有对比，会把「字标看不看得见」
+    # 这件事盖掉（反向验证时整幅量出来照样过）。
+    word = np.asarray(on_white.convert("L").crop(
+        (int(art.width * 0.35), 0, art.width, art.height)), dtype=float)
+    assert word.min() < 150, (
+        f"字标贴在纯白上最暗才 {word.min():.0f}——阴影没了，"
+        "近白的「网球时差」在白球衣/亮天空上会整个消失")
+    assert (word < 200).mean() > 0.03, (
+        f"字标那一带暗像素只占 {(word < 200).mean():.4f}，"
+        "阴影太淡撑不住白底（有阴影实测 0.086，没阴影 0.004）")
+
+    # ── ② 纵向让开顶栏 ──────────────────────────────────────────────
+    pad = wm_mod.WATERMARK_PAD - wm_mod.WATERMARK_SHADOW_PAD
+    for layout, has_topbar, occupied in (
+            ("band", True, reel.BAND_TOP),
+            ("full", True, reel.TOPBAR_H),
+            ("full", False, 0)):
+        monkeypatch.setattr(reel, "LAYOUT", layout)
+        x, y = reel.watermark_xy(has_topbar=has_topbar)
+        assert x == pad, f"{layout}/{has_topbar}: 横向落位不对（{x}）"
+        assert y >= occupied, (
+            f"{layout}/topbar={has_topbar}: 角标 PNG 顶边在 y={y}，"
+            f"而顶部那条带占到 {occupied}——连阴影都要落在带外面，"
+            "压上去不报错，只是和顶栏的字叠在一起")
+        assert y - occupied == wm_mod.WATERMARK_PAD - wm_mod.WATERMARK_SHADOW_PAD, (
+            f"{layout}/topbar={has_topbar}: 让开之后的内边距不是 "
+            f"{wm_mod.WATERMARK_PAD}（阴影那一圈没减掉，或者减了两遍）")
+    # 赛后开麦那条线让开的是它自己的 VIDEO_TOP，出处是同一个函数
+    assert wm_mod.watermark_xy(150) == (pad, 150 + pad)
+
+    # ── ③ 位置：两条编码路都接上，而且不许一条链里两个 overlay ────────
+    src = Path("tools/build_match_reel.py").read_text("utf-8")
+    assert '"-vf", f"subtitles=' not in src, (
+        "没顶栏那条路还在用 `-vf subtitles=`——`-vf` 只吃 0 号流，"
+        "接不了角标那一路输入，于是网球有故事这个栏目的片子没有角标")
+    body = inspect.getsource(reel.render)
+    assert "plain_filtergraph(" in body and "wm_input=wm_input" in body, (
+        "render 里两条编码路没有都把角标接进去")
+    monkeypatch.setattr(reel, "LAYOUT", "full")
+    plain = reel.plain_filtergraph(Path("s.ass"), 0.4, 1.0, 2)
+    assert "[out]" in plain and "[2:v]overlay=" in plain and "enable=" in plain, (
+        f"没顶栏那条滤镜图不完整：{plain}")
+    bar = reel.topbar_filtergraph(0.4, 0.6, Path("t.ass"), Path("s.ass"),
+                                  foot_input=2, wm_input=3)
+    assert "[3:v]overlay=" in bar, "有顶栏那条没把角标接进去"
+    for chain in bar.split(";"):
+        assert chain.count("overlay=") <= 1, (
+            f"一条链里出现两个 overlay：{chain}\n"
+            "ffmpeg 会把 `[3:v]` 绑成第二个 overlay 的主画面，"
+            "296×88 的角标当场变成画布——报错指着 concat，读起来完全不像这回事")
+
+    # ── ④ 只盖比赛区间：真跑一遍，三个时刻各量一帧 ────────────────────
+    ass = tmp_path / "empty.ass"
+    ass.write_text(
+        "[Script Info]\nScriptType: v4.00+\nPlayResX: 1080\nPlayResY: 1440\n\n"
+        "[V4+ Styles]\n"
+        "Format: Name, Fontname, Fontsize, PrimaryColour, OutlineColour, "
+        "BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, "
+        "Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, "
+        "MarginR, MarginV, Encoding\n"
+        "Style: X,Arial,20,&H00FFFFFF,&H00000000,&H00000000,0,0,0,0,100,100,"
+        "0,0,1,0,0,2,10,10,10,1\n\n[Events]\n"
+        "Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, "
+        "Effect, Text\n", encoding="utf-8")
+    white = tmp_path / "white.mp4"
+    subprocess.run(
+        ["ffmpeg", "-y", "-v", "error", "-f", "lavfi", "-i",
+         "color=c=white:s=1080x1440:r=25", "-t", "1.4",
+         "-pix_fmt", "yuv420p", str(white)], check=True)
+
+    cover_secs, match_secs = 0.4, 0.6
+    cases = {
+        "有顶栏": (reel.topbar_filtergraph(
+            cover_secs, match_secs, ass, ass, wm_input=2),
+            reel.watermark_xy(has_topbar=True)),
+        "没顶栏": (reel.plain_filtergraph(
+            ass, cover_secs, cover_secs + match_secs, 2),
+            reel.watermark_xy(has_topbar=False)),
+    }
+    for name, (graph, (wx, wy)) in cases.items():
+        out = tmp_path / f"wm_{len(name)}.mp4"
+        subprocess.run(
+            ["ffmpeg", "-y", "-v", "error", "-i", str(white), "-i", str(white),
+             "-i", str(png), "-filter_complex", graph, "-map", "[out]",
+             "-pix_fmt", "yuv420p", str(out)], check=True)
+        seen = {}
+        for label, at in (("封面", 0.2), ("比赛", 0.7), ("片尾", 1.2)):
+            frame = tmp_path / f"{len(name)}_{label}.png"
+            subprocess.run(
+                ["ffmpeg", "-y", "-v", "error", "-ss", str(at), "-i", str(out),
+                 "-frames:v", "1", str(frame)], check=True)
+            box = np.asarray(Image.open(frame).convert("L").crop(
+                (wx, wy, wx + art.width, wy + art.height)), dtype=float)
+            seen[label] = float((box < 235).mean())
+        assert seen["比赛"] > 0.05, (
+            f"{name}：比赛画面上没有角标（左上角非白像素占 "
+            f"{seen['比赛']:.4f}）——overlay 没接上或落错了位置")
+        for label in ("封面", "片尾"):
+            assert seen[label] < 0.005, (
+                f"{name}：{label}那一段也压了角标（{seen[label]:.4f}）。"
+                "封面自己的台头和品牌片尾整屏都是这个 logo，再压一遍是说三遍")
+
+    # ── 出处只有一份：两个工具都不许自己再抄一份尺寸/阴影 ──────────────
+    itw = Path("tools/build_interview_clip.py").read_text("utf-8")
+    for path, text in (("build_match_reel.py", src),
+                       ("build_interview_clip.py", itw)):
+        assert "from tennislive.video.watermark import" in text, (
+            f"{path} 没从共享模块拿角标——两条线各配一份的样子是"
+            "「同一个账号出去的片子 logo 一大一小」，而且不报错")
+        assert not re.search(r"^\s*WATERMARK_\w+\s*=", text, re.M), (
+            f"{path} 里自己定义了 WATERMARK_* 常量——出处只许有一处")
+
+
 def test_layout只认band且band不和contain混():
     """spec.layout 的值域和兼容性，`--dry-run`（parse_segments）就拦：
 

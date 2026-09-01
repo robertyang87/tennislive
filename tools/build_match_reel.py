@@ -105,6 +105,10 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 from tennislive import localca  # noqa: E402
 from tennislive.video import outro_page  # noqa: E402
 from tennislive.video import azure_tts  # noqa: E402
+from tennislive.video.watermark import (  # noqa: E402
+    brand_watermark,
+    watermark_xy as _watermark_xy,
+)
 from tennislive.video.explainer import (  # noqa: E402
     CARD_H,
     CARD_TOP,
@@ -6771,16 +6775,25 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
         else:
             print("[脚注] ⚠️ 带式但没有顶栏，脚注挂在顶栏滤镜图上、走不到——"
                   "这条片子不渲品牌脚注")
+    # 常驻角标：账号所有者 2026-09-01「视频播放时候左上角保留网球时差的 logo」。
+    # 两条路都要贴，而且都只盖比赛画面区间。
+    wm_png = brand_watermark(outdir / "_watermark.png")
+    match_end = cover_secs + sum(s.length for s in segments)
     with stage("烧字幕+成片"):
         foot_inputs = ["-i", str(foot_png)] if foot_png else []
+        wm_input = 3 if foot_png else 2
         video_args = (["-filter_complex", topbar_filtergraph(
             cover_secs, sum(s.length for s in segments), topbar_ass, ass,
-            foot_input=2 if foot_png else None),
+            foot_input=2 if foot_png else None, wm_input=wm_input),
                        "-map", "[out]"] if topbar_ass else
-                      ["-vf", f"subtitles={_escape(ass)}",
-                       "-map", "0:v:0"])
+                      ["-filter_complex",
+                       plain_filtergraph(ass, cover_secs, match_end, wm_input),
+                       "-map", "[out]"])
+        print(f"[角标] 常驻角标 {wm_png.name}：左上角，只盖 "
+              f"{cover_secs:.2f}~{match_end:.2f}s（封面和片尾不带）")
         run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
-            "-i", str(silent), "-i", str(mixed), *foot_inputs, *video_args,
+            "-i", str(silent), "-i", str(mixed), *foot_inputs,
+            "-i", str(wm_png), *video_args,
             "-map", "1:a:0",
             "-c:v", "libx264", "-preset", FINAL_PRESET, "-crf", FINAL_CRF,
             "-pix_fmt", "yuv420p",
@@ -6792,7 +6805,8 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
                  + list(outdir.glob("_outro_*.png"))
                  + list(outdir.glob("_outro_*.html"))
                  + [silent, mixed, outdir / "_concat.txt",
-                    outdir / "_cover_frame.jpg", outdir / "_band_foot.png"]):
+                    outdir / "_cover_frame.jpg", outdir / "_band_foot.png",
+                    outdir / "_watermark.png"]):
         junk.unlink(missing_ok=True)
     # **封面停多久要记下来。** 它现在跟着配音走，光看 spec 算不出来——
     # `check_reel_landed.py` 拿它对片长，没有这份就只能拿常量猜，而猜错的样子
@@ -7492,6 +7506,23 @@ Dialogue: 0,{_ass_timestamp(start)},{_ass_timestamp(end)},BODY,,0,0,0,,{body_tex
 
 BAND_FOOT_LABEL = "网球时差 · 赛场之上"
 
+#: 常驻角标的尺寸、阴影和几何**只有一处出处**（`video/watermark.py`）——
+#: 赛后开麦那条线也从那儿拿。在这儿再抄一份的样子是「同一个账号出去的片子
+#: logo 一大一小」，而且不报错。这儿只负责**这条线的版式**：顶部被占掉多高。
+def watermark_xy(*, has_topbar: bool) -> tuple[int, int]:
+    """常驻角标那张 PNG 的左上角坐标。
+
+    **纵向要让开顶部那条带**，不然角标压在顶栏的字上：
+    - 带式：顶带是实色，画面从 `BAND_TOP` 才开始
+    - 全出血 ＋ 顶栏：顶栏占 `TOPBAR_H`，底下垫着一层半透明黑
+    - 全出血、没顶栏（网球有故事这类）：顶上是空的，直接贴
+    """
+    if LAYOUT == "band":
+        top = BAND_TOP
+    else:
+        top = TOPBAR_H if has_topbar else 0
+    return _watermark_xy(top)
+
 
 def band_foot_strip(dest: Path) -> Path:
     """PIL 渲带式品牌脚注条（透明底）：球标 + 「网球时差 · 赛场之上」。
@@ -7524,9 +7555,31 @@ def band_foot_strip(dest: Path) -> Path:
     return dest
 
 
+def plain_filtergraph(subtitles_ass: Path, cover_secs: float,
+                      match_end: float, wm_input: int) -> str:
+    """没有顶栏那条路：烧字幕 ＋ 压常驻角标。
+
+    ⚠️ 原来这条路是 `-vf subtitles=…` 一句话。改成 `-filter_complex` 是因为
+    角标要另一路输入，而 `-vf` 只能吃 0 号流。**输出必须打标签并显式 `-map`**
+    ——不打的话 `-map 0:v:0` 取的是原始流，整个滤镜图被绕过去，而且**它不报错**
+    （这个仓库为这一条栽过一次，注释在 `build_interview_clip` 里）。
+
+    角标用 `enable=` 卡在比赛画面区间，和有顶栏那条路把它挂在 `[match_canvas]`
+    上是同一个范围：封面和片尾不带。
+    """
+    fontsdir = _escape(str(Path(__file__).resolve().parents[1] / "assets" / "fonts"))
+    x, y = watermark_xy(has_topbar=False)
+    return (
+        f"[0:v]subtitles={_escape(subtitles_ass)}:fontsdir={fontsdir}[subbed];"
+        f"[subbed][{wm_input}:v]overlay={x}:{y}:"
+        f"enable='between(t,{cover_secs:.3f},{match_end:.3f})'[out]"
+    )
+
+
 def topbar_filtergraph(cover_secs: float, segments_secs: float,
                        topbar_ass: Path, subtitles_ass: Path,
-                       foot_input: int | None = None) -> str:
+                       foot_input: int | None = None,
+                       wm_input: int | None = None) -> str:
     """给比赛画面加画外顶栏，保留封面和品牌片尾的原始版式。
 
     `silent` 的时间轴是：封面 → 比赛段落 → 片尾。只变换中间这一段：
@@ -7543,8 +7596,28 @@ def topbar_filtergraph(cover_secs: float, segments_secs: float,
     subtitles_path = _escape(subtitles_ass)
     # 脚注贴在 concat 之前的 [match_canvas] 上——位置用 overlay 自己的表达式
     # 换算竖直中心（`h` 是脚注条的高），Python 这头不用知道条有多高。
-    foot = ("" if foot_input is None else
-            f"[{foot_input}:v]overlay=(W-w)/2:{BAND_FOOT_Y}-h/2,")
+    # 脚注和角标各是一次 overlay，**必须拆成两条链、拿中间标签接起来**。
+    # ⚠️ 写成 `[match_flat][2:v]overlay=…,[3:v]overlay=…,setsar=1[…]` 是错的：
+    # ffmpeg 把一个滤镜前面的标签**按顺序绑到它自己的输入上**，所以 `[3:v]`
+    # 绑的是第二个 overlay 的**第 0 路（主画面）**，主画面就变成了那张
+    # 296×88 的角标。好在它响得很大声——concat 当场报
+    # `Input link in0:v0 parameters (size 296x88) do not match`；
+    # 但那句话指的是 concat，读起来完全不像「overlay 的输入接反了」。
+    # 第一个 overlay 之所以能那么写，是因为它两路输入的标签都是显式的。
+    steps: list[str] = []
+    label = "match_flat"
+    if foot_input is not None:
+        steps.append(f"[{label}][{foot_input}:v]"
+                     f"overlay=(W-w)/2:{BAND_FOOT_Y}-h/2[match_foot]")
+        label = "match_foot"
+    # 常驻角标也挂在这儿——和脚注同一个范围（封面和片尾不带），所以不用
+    # `enable=`，上面 split 出来的那三段自己就把范围切好了。
+    if wm_input is not None:
+        wx, wy = watermark_xy(has_topbar=True)
+        steps.append(f"[{label}][{wm_input}:v]overlay={wx}:{wy}[match_wm]")
+        label = "match_wm"
+    steps.append(f"[{label}]setsar=1[match_canvas]")
+    canvas = ";".join(steps)
     return (
         f"[0:v]split=3[cover_src][match_src][outro_src];"
         f"[cover_src]trim=start=0:end={cover_secs:.3f},"
@@ -7559,7 +7632,7 @@ def topbar_filtergraph(cover_secs: float, segments_secs: float,
         + ("" if LAYOUT == "band" else
            f"drawbox=x=0:y=0:w=iw:h={TOPBAR_H}:color=black@0.45:t=fill,")
         + "setsar=1[match_flat];"
-        f"[match_flat]{foot}setsar=1[match_canvas];"
+        f"{canvas};"
         f"[outro_src]trim=start={match_end:.3f},setpts=PTS-STARTPTS[outro];"
         "[cover][match_canvas][outro]concat=n=3:v=1:a=0,setpts=PTS-STARTPTS[base];"
         f"[base]subtitles={topbar_path}:fontsdir={fontsdir},"

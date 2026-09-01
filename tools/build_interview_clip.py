@@ -1417,6 +1417,35 @@ def header_ass(spec: dict) -> tuple[str, str]:
     return (_line(main, _HEAD_A_TOP), _line(context, _HEAD_B_TOP))
 
 
+def watermark_filter(outdir: Path, *, src: str = "v", dst: str = "vw") -> str:
+    """常驻角标那一截滤镜（不带首尾分号，调用方自己接）。
+
+    账号所有者 2026-09-01：「**视频播放时候左上角保留网球时差的 logo**」。
+
+    ⚠️ **这条线有两条出画面的路**（正片 `render` 和冷开场 `_lead_in_segment`），
+    两段都会被 concat 进成片——所以两条都要接。第一版只接了正片，于是**开头
+    那几秒赛点/庆祝没有 logo，后面突然多出来一个**，而 ffmpeg 一个字都不报。
+    这儿收成一处出处，就是为了下次加第三条路时不会又漏。
+
+    尺寸和阴影不在这儿定：出处是 `src/tennislive/video/watermark.py`，
+    竖版短片那条线也从那儿拿（写两处必分叉，而分叉的样子是「同一个账号出去的
+    片子 logo 一大一小」）。
+
+    **贴在视频区里，不贴进顶栏那 150px**：那条带是实色品牌底，两行顶栏文字
+    （HEADA 24~71、HEADB 98~126）占着，压上去就是两样东西叠在一起。
+    """
+    # ⚠️ 和这个文件里别处一样，`src` 是**进函数才挂**上 sys.path 的（模块级
+    # 没挂），所以这一句必须留在函数里。
+    sys.path.insert(0, str(ROOT / "src"))
+    from tennislive.video.watermark import (  # noqa: PLC0415
+        brand_watermark, watermark_xy)
+
+    png = brand_watermark(outdir / "_watermark.png")
+    x, y = watermark_xy(VIDEO_TOP)
+    return (f"movie={png},format=rgba[wm];"
+            f"[{src}][wm]overlay={x}:{y}[{dst}]")
+
+
 def _subject_topbar_png(spec: dict, outdir: Path) -> Path | None:
     """把人物主标题顶栏预栅格为透明 PNG，绕开生产 libass 的顶边差异。
 
@@ -3859,12 +3888,13 @@ def _lead_in_segment(spec: dict, outdir: Path) -> Path | None:
         f"movie={topbar_png},format=rgba[topbar];"
         f"[base][topbar]overlay=0:0[v]"
         if topbar_png else "[base]null[v]")
-    finish = (f";[v]subtitles={ass}:fontsdir={ROOT / 'assets/fonts'}[out]"
-              if use_ass else ";[v]null[out]")
+    finish = (f";[vw]subtitles={ass}:fontsdir={ROOT / 'assets/fonts'}[out]"
+              if use_ass else ";[vw]null[out]")
     chain = (
         f"color=c={_BG_COLOUR}:s={CANVAS_W}x{CANVAS_H}:d={dur}:r=25[bg];"
         f"[0:v]{flip}{logo}{grade}{_crop_expr(ratio, keep, shift)},scale={CANVAS_W}:{vh}[fg];"
-        f"[bg][fg]overlay=0:{VIDEO_TOP}[base];{topbar_filter}{finish}"
+        f"[bg][fg]overlay=0:{VIDEO_TOP}[base];{topbar_filter};"
+        f"{watermark_filter(outdir)}{finish}"
     )
     dest = outdir / "_lead.mp4"
     subprocess.run(
@@ -3908,6 +3938,10 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
         f"movie={topbar_png},format=rgba[topbar];"
         f"[base][topbar]overlay=0:0[v];"
         if topbar_png else "[base]null[v];")
+    # 常驻角标：出处是 `watermark_filter`（冷开场那条路也用它）。范围不用
+    # `enable=`——这条链只管 body，封面和品牌片尾是后面 concat 拼进来的，
+    # 而那两处本来就印着这个 logo。
+    wm_chain = watermark_filter(outdir) + ";"
     chain = (
         # 垫底：**品牌深绿纯色**，不再从这一帧画面模糊出来——见 `_BG_COLOUR`
         # 上面那段注释。`d={dur}` 卡住这个虚拟源的时长：`color` 是无限长的
@@ -3919,10 +3953,11 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
         f"[0:v]{flip}{logo}{grade}{_crop_expr(ratio, keep, shift)},scale={CANVAS_W}:{vh}[fg];"
         f"[bg][fg]overlay=0:{VIDEO_TOP}[base];"
         f"{topbar_filter}"
+        f"{wm_chain}"
         # `fontsdir` 指向**仓库里的字体目录**（得意黑的 ttf 在那儿）。
         # 系统字体照旧走 fontconfig，思源黑体不受影响——`fontsdir` 是**追加**
         # 一个目录，不是替换。验过：只给这个目录，中文照样渲得出来。
-        f"[v]subtitles={ass}:fontsdir={ROOT / 'assets/fonts'}[out]"
+        f"[vw]subtitles={ass}:fontsdir={ROOT / 'assets/fonts'}[out]"
     )
 
     # 先拿**同一份源片、同一条 filter_complex、同一份 ASS** 烧 1 秒，再去跑
