@@ -1,0 +1,56 @@
+{
+  "status": "pass",
+  "checked_at": "2026-09-01T01:38:50Z",
+  "auditor": "opencv-haar-v1",
+  "expected_subject": "瓦林卡",
+  "identity_evidence": "L0-bound spec subject + same-source frame_at",
+  "spec_sha256": "0a39d6082b23916b95f8cbe7922edf14caca6795f44dece4dc5bc0f70a862a8d",
+  "poster_sha256": "2243dbf2fe9a8cff14237216c09eeb30c48da4b064317992280b9111eb6cf7a6",
+  "thresholds": {
+    "close_up_zoom": 1.5,
+    "face_height_ratio": 0.08,
+    "close_up_face_height_ratio": 0.14,
+    "face_area_ratio": 0.01,
+    "face_sharpness": 45.0,
+    "face_contrast": 32.0,
+    "eyes": 2
+  },
+  "result": {
+    "poster": {
+      "decodable": true,
+      "format": "JPEG",
+      "width": 1080,
+      "height": 1440,
+      "photo_region": [
+        0,
+        150,
+        1080,
+        810
+      ]
+    },
+    "face": {
+      "detector": "frontal-default",
+      "box": [
+        296,
+        293,
+        394,
+        394
+      ],
+      "detected_faces": 2,
+      "eyes": 2,
+      "face_height_ratio": 0.48642,
+      "face_area_ratio": 0.17745,
+      "center_x_ratio": 0.45648,
+      "center_y_ratio": 0.41975,
+      "sharpness": 465.301,
+      "contrast": 107.0
+    },
+    "contract": {
+      "shot_type": "",
+      "frame_at": 281.1,
+      "zoom": 1.0,
+      "focus_y": 0.5
+    }
+  },
+  "issues": []
+}
