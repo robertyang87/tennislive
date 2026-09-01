@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>9.1 出场秀 | 大坂直美把生涯报道穿上场</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>她还在球员通道里，看台已经在喊了。
+
+那不是婚纱。大坂直美身上那件带兜帽的白色长袍，拼贴的面料上一块一块缝着的，是她自己职业生涯的报纸剪报——这些年写过她的那些标题，被剪下来缝成了一件衣服。身后一大幅白色薄纱裙摆，从通道口一路拖进球场。
+
+2026 美网女单第一轮，阿瑟·阿什球场夜场。世界第 13 的大坂直美 7-6(6) 7-6(3) 险胜世界第 101 的扎哈罗娃，两盘都是打到抢七才分出来的。下一轮她对西尼亚科娃。
+
+这一身由 Who Decides War 定制，造型出自 Law Roach（Zendaya 的造型师）。而它致敬的人不在网球圈——是 NBA 的艾弗森。
+
+她把头发编成几何曲线的玉米辫，用红黑条纹发带束住，那是艾弗森的标志性造型；白袍脱下之后是一身篮球式的比赛服，配红黑发带和护肘，同样照着艾弗森那一套来。
+
+① 为什么是艾弗森
+&quot;It&#x27;s my tribute to Iverson. I really like him a lot. Nike said basketball, so I said, &#x27;You want basketball, I&#x27;ll give you basketball.&#x27;&quot;
+「这是我对艾弗森的致敬。我真的很喜欢他。耐克说篮球，那我就说，你要篮球，我就给你篮球。」
+
+② 他改变的不只是球场上的事
+&quot;He&#x27;s a trailblazer... he&#x27;s done a lot in fashion... he&#x27;s shifted the way that NBA players dress.&quot;
+「他是个开路的人……他在时尚上做了很多……他改变了 NBA 球员穿衣服的方式。」
+
+③ 这才是这一身真正的落点
+&quot;I love expressing myself through clothes - because I don&#x27;t like talking too much.&quot;
+「我喜欢用衣服表达自己——因为我不太喜欢多说话。」
+
+从走出通道到走上球场，她一个字都没说。说话的是球场播报员：来自日本，前世界第一，两届美网冠军。剩下的，衣服自己讲完了。
+
+这一身你给几分？
+
+#网球时差 #大坂直美 #美网 #USOpen #出场秀</textarea>
+    </section>
+    
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
