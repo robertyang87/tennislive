@@ -6138,3 +6138,79 @@ def test_分歧超闸时报错给的那个数照抄不会再红一次(tmp_path):
     # 照抄进去必须真的过得了
     _check_disagree_claim({"transcript_disagree_ok": {"rate": suggested, "why": "看过"}},
                           rate, tmp_path / "d.md", 15)
+
+
+def test_常驻角标压在视频区不许压进顶栏那条带(tmp_path):
+    """账号所有者 2026-09-01：「**视频播放时候左上角保留网球时差的 logo**」。
+
+    这条线的顶上 150px 是**实色品牌底**，两行顶栏文字压在上面
+    （HEADA y24~71、HEADB y98~126）——角标压上去**不报错**，只是两样东西
+    叠在一起，只有打开看才知道。所以两头都钉（各自反向验证过）：
+
+    - **落位**：账号所有者随后一句「**用封面上的 logo 和位置**」——横向就是封面
+      `.head` 的 `left:70`，纵向是封面的 `top:44` **再让开顶栏那 150px**。
+      那条带是实色品牌底、压着两行顶栏文字（HEADA 24~71、HEADB 98~126），
+      角标压上去**不报错**，只是两样东西叠在一起
+      （封面那一块和角标逐像素对不对得上，由竖版短片那条判据拿真封面钉）
+    - **每一条出画面的路都要接上，而且这一头自己推导、不维护名单**。
+      ⚠️ 这条线有**两条**出画面的路——正片 `render` 和冷开场
+      `_lead_in_segment`，两段都会被 concat 进成片。第一版只接了正片，
+      **开头那几秒赛点/庆祝没有 logo、后面突然多出来一个**，而 ffmpeg 一个字
+      都不报；是这条判据当场抓出来的。所以判的是「凡是 `chain = (` 的地方都
+      要走 `watermark_filter`」，不是点名那两处。
+      同一头还钉住 **`[v]` 不许有第二个消费者**：`[v]` 是顶栏那一步的产物，
+      角标把它接成 `[vw]`；谁再从 `[v]` 取，角标那次 overlay 就被整条绕过去，
+      **而这也不报错**（这个仓库为「输出不打标签就被绕过去」栽过一次）。
+
+    尺寸和阴影不在这儿定——出处是 `src/tennislive/video/watermark.py`，
+    竖版短片那条线也从那儿拿。「一个数写两处必分叉」，而分叉的样子是
+    **同一个账号出去的片子 logo 一大一小**。
+    """
+    import sys
+
+    sys.path.insert(0, str(ROOT / "src"))
+    from tennislive.video.watermark import brand_watermark, watermark_xy
+
+    src = Path("tools/build_interview_clip.py").read_text("utf-8")
+    video_top = int(re.search(r"^VIDEO_TOP\s*=\s*(\d+)", src, re.M).group(1))
+    # 栏目名要传进去——角标就是封面台头那一块（球标 ＋「网球时差 · 栏目」）
+    png = brand_watermark(tmp_path / "wm.png", "赛后开麦")
+    from PIL import Image
+
+    art = Image.open(png)
+    x, y = watermark_xy(video_top)
+    from tennislive.video.watermark import WATERMARK_LEFT, WATERMARK_SHADOW_PAD
+    assert x == WATERMARK_LEFT - WATERMARK_SHADOW_PAD, (
+        f"横向不是封面的 left:{WATERMARK_LEFT}（量到 {x}）")
+    assert y >= video_top, (
+        f"角标 PNG 顶边在 y={y}，而顶栏那条实色带占到 {video_top}——"
+        "压上去不报错，只是和顶栏的两行字叠在一起")
+    assert y + art.height < _BAND_TOP, (
+        f"角标底边 {y + art.height} 掉进了底下的字幕带（从 {_BAND_TOP} 起）")
+
+    # 主语自己推导：凡是**把 `chain` 喂给 `-filter_complex`** 的函数就是一条
+    # 出画面的路，不点名 `render` / `_lead_in_segment`——加第三条路时它自动算上。
+    lines = src.splitlines()
+    paths = {}
+    for node in ast.walk(ast.parse(src)):
+        if not isinstance(node, ast.FunctionDef):
+            continue
+        body = "\n".join(lines[node.lineno - 1:node.end_lineno])
+        if '"-filter_complex", chain' in body:
+            paths[node.name] = body
+    assert len(paths) >= 2, (
+        f"只找到 {sorted(paths)} 这几条出画面的路——这个文件本来有两条"
+        "（正片 render ＋ 冷开场 _lead_in_segment），判据的主语丢了")
+    for name, body in paths.items():
+        assert "watermark_filter(" in body, (
+            f"`{name}` 这条出画面的路没接常驻角标。两段都会被 concat 进成片，"
+            "漏一条的样子是「开头那几秒没有 logo，后面突然多出来一个」")
+    # 滤镜图里，标签跟在**滤镜名或另一个标签**前面才是「取用」；跟着 `;` 或
+    # 引号的是「产出」。所以消费者认的是 `[v]` 后面紧接着字母或 `[`。
+    # 角标自己那一次不会命中——它在 `watermark_filter` 里拼成 `[{src}]`。
+    consumers = re.findall(r"\[v\](?=[A-Za-z\[])", src)
+    assert not consumers, (
+        f"`[v]` 出现了 {len(consumers)} 个消费者——它是顶栏那一步的产物，"
+        "只许角标接走（接成 [vw]）。谁再从 [v] 取，角标就被整条绕过去了")
+    assert re.search(r"\[vw\](subtitles|null)", src), (
+        "角标之后没人从 [vw] 接着走——那一次 overlay 白做了")

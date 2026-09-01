@@ -13467,6 +13467,246 @@ def test_带式的品牌脚注真的渲出来而且只在带式(tmp_path, monkey
                 f"{dark:.4f}")
 
 
+def test_常驻角标就是封面台头那一块_落位也是封面那个位置(tmp_path, monkeypatch):
+    """账号所有者 2026-09-01：「**视频播放时候左上角保留网球时差的 logo**」，
+    随后一句「**用封面上的 logo 和位置**」。
+
+    ⚠️ 第二句推翻了第一版：那一版用的是横版 lockup（球标 ＋ 网球时差 ＋
+    TENNIS JETLAG）贴在 (22, 22)——**另一个 logo、另一个位置**。现在是封面
+    `.head` 那一块原样搬过来：球标 52 ＋ gap 14 ＋「网球时差 · 栏目」38px 得意黑，
+    落在 `left:70 / top:44`。
+
+    五头，**缺一头都是恒真**（六个方向分别反向验证过，各红在自己的断言行）：
+
+    ① **和真封面逐像素对得上**——这一头是这条判据的主语，而且**判据拿的是真
+       渲染器的输出**（`render_poster` 渲一张真海报），不是手搓一份 CSS 去比。
+       球标的墨和字标的墨在封面上落在哪儿，角标贴在 `watermark_xy(0)` 就得落在
+       哪儿（±2px）。手抄一份尺寸到别处、或者把 `BRAND_ICON_DROP_PX` 调回
+       「和字标居中」，这一头当场红。
+
+    ② **阴影是能压在任何画面上的前提，不是装饰。** 「网球时差」这几个字是近白的
+       （`#f4fbf7`），压在**纯白**上（白球衣、亮天空、浅色看台）会整个消失。
+       ⚠️ **封面那份 `text-shadow:0 2px 12px rgba(0,0,0,.6)` 不能照抄**——它依赖
+       一个播放时不存在的前提（封面顶上那条带被 scrim 压暗着）。这正是本仓库
+       记过的「抄了规则，没抄它依赖的前提」。
+
+    ③ **纵向要让开顶部那条带。** 三种版式各让开各的（band 让开 BAND_TOP、
+       全出血带顶栏让开 TOPBAR_H、没顶栏就是封面那个位置）。压上去**不报错**，
+       只是角标和顶栏的字叠在一起。
+
+    ④ **两条编码路都要接上，而且这一头是位置判据。** 没顶栏那条原来是
+       `-vf subtitles=…` 一句话，`-vf` 只吃 0 号流、接不了第二路输入——所以它
+       必须改走 `filter_complex` ＋ 显式 `[out]`。⚠️ 只测「有顶栏那条接上了」
+       拦不住「没顶栏那条还是老样子」，而**网球有故事这个栏目走的正是没顶栏那条**。
+       同一头还钉住 **一条链里不许有两个 `overlay=`**：写成
+       `[a][2:v]overlay=…,[3:v]overlay=…` 时 ffmpeg 把标签**按顺序绑到那个滤镜
+       自己的输入上**，于是 `[3:v]` 绑成了第二个 overlay 的**主画面**，角标当场
+       变成画布。它响得很大声（concat 报 `Input link in0:v0 parameters … do not
+       match`），**但那句话指的是 concat，读起来完全不像「overlay 的输入接反了」**。
+
+    ⑤ **只盖比赛画面区间**，封面和片尾不带：封面自己就印着这一块，品牌片尾整屏
+       就是这个 logo，两处再压一遍是把同一个标识说三遍。真跑一遍 ffmpeg 在三个
+       时刻各量一帧——**查滤镜串里有没有 `enable=` 防不住区间写反**。
+
+    ⚠️ 尺寸、阴影、几何**只有一处出处**（`src/tennislive/video/watermark.py`），
+    赛后开麦那条线也从那儿拿；这条判据顺手钉住两个工具都不许自己再抄一份。
+    """
+    import shutil  # noqa: PLC0415
+
+    import numpy as np  # noqa: PLC0415
+    from PIL import Image  # noqa: PLC0415
+
+    assert shutil.which("ffmpeg"), "没有 ffmpeg，这条判据跑不了：apt install ffmpeg"
+    reel = _reel()
+    sys.path.insert(0, str(Path("src").resolve()))
+    from tennislive.video import watermark as wm_mod  # noqa: PLC0415
+
+    column = "网球有故事"
+    png = wm_mod.brand_watermark(tmp_path / "wm.png", column)
+    art = Image.open(png).convert("RGBA")
+
+    def lime_box(im, box):
+        """品牌绿球标的墨。"""
+        a = np.asarray(im.convert("RGB").crop(box), dtype=int)
+        m = ((a[..., 1] > 150) & (a[..., 1] - a[..., 2] > 40)
+             & (a[..., 1] - a[..., 0] > 15))
+        ys, xs = np.where(m)
+        assert len(xs), f"这一块里没有球标：{box}"
+        return xs.min() + box[0], ys.min() + box[1]
+
+    def ink_box(im, box):
+        """近白字标的墨。"""
+        a = np.asarray(im.convert("L").crop(box), dtype=float)
+        ys, xs = np.where(a > 200)
+        assert len(xs), f"这一块里没有字标：{box}"
+        return xs.min() + box[0], ys.min() + box[1], xs.max() + box[0]
+
+    # ── ① 和真封面逐像素对得上 ────────────────────────────────────────
+    # **拿真渲染器渲一张真海报**——手搓一份 CSS 去比，验的是「我抄对了自己写的
+    # 那份」，验不了「它和封面对不对得上」（本仓库为手搓 fixture 栽过一次）。
+    poster = tmp_path / "poster.jpg"
+    hero = tmp_path / "hero.jpg"
+    Image.new("RGB", (1080, 1440), (14, 34, 24)).save(hero)
+    try:
+        reel.render_poster(
+            {"eyebrow": column, "topic": "台头底下那一行",
+             "subject": "大坂直美",
+             "hook": "一件缝着旧报纸\n一件是旧球衣改的",
+             "portrait": {"image": str(hero)}}, poster, "solo")
+    except Exception as exc:                       # noqa: BLE001
+        pytest.skip(f"渲不出封面（多半是没装 Chromium）：{exc}")
+    cover_im = Image.open(poster)
+    assert cover_im.size == (1080, 1440)
+
+    # 角标贴在 `watermark_xy(0)`（没顶栏 ＝ 封面那个位置）
+    monkeypatch.setattr(reel, "LAYOUT", "full")
+    wx, wy = reel.watermark_xy(has_topbar=False)
+    pasted = Image.new("RGB", cover_im.size, (0, 0, 0))
+    pasted.paste(art, (wx, wy), art)
+
+    # ⚠️ 球标要避开顶上那条 12px 彩虹条——它左端就是品牌绿，连它一起量会把
+    # 球标的 bbox 拉到 x=0。
+    icon_box = (0, 20, 200, 190)
+    ci = lime_box(cover_im, icon_box)
+    wi = lime_box(pasted, icon_box)
+    assert abs(wi[0] - ci[0]) <= 2 and abs(wi[1] - ci[1]) <= 2, (
+        f"球标没落在封面那个位置：封面 {ci}，角标 {wi}。"
+        "「用封面上的 logo 和位置」——落位和封面逐像素对得上才算数")
+    # 字标只量到 y=90，避开封面 `.topic` 那一行（角标没有它）
+    text_box = (130, 25, 620, 90)
+    ct = ink_box(cover_im, text_box)
+    wt = ink_box(pasted, text_box)
+    assert abs(wt[0] - ct[0]) <= 2 and abs(wt[1] - ct[1]) <= 2, (
+        f"字标没落在封面那个位置：封面 {ct[:2]}，角标 {wt[:2]}")
+    # ⚠️ 宽度按**比例**给余量，不给一个绝对像素数：PIL 量出来是个定值，而
+    # Chromium 的排版**跨环境会差一点点**——同一份封面沙箱渲出来 304、CI 渲出来
+    # **300**（run 33506517362 上真红过一次，绝对余量 3px 差一点）。这就是
+    # CLAUDE.md 记过的「PIL 比 Chromium 稳定小 1~2px」，`SCORE_NAME_SLACK_PX`
+    # 是同一件事。3% 拦得住它要拦的那一类：换掉得意黑量出来是 402 vs 304
+    # （差 32%），反向验证过。
+    cover_w, wm_w = ct[2] - ct[0], wt[2] - wt[0]
+    assert abs(wm_w - cover_w) <= 0.03 * cover_w, (
+        f"字标宽度和封面对不上（封面 {cover_w}，角标 {wm_w}，"
+        f"差 {abs(wm_w - cover_w) / cover_w:.1%}）"
+        "——多半是字体、字号或者 letter-spacing 抄漏了")
+
+    # ── ② 阴影：贴在纯白上，字标那一带必须还有暗像素 ──────────────────
+    on_white = Image.alpha_composite(
+        Image.new("RGBA", art.size, (255, 255, 255, 255)), art)
+    # 只看球标之后那一段——球标是绿的，天然和白底有对比，会把「字标看不看得见」
+    # 这件事盖掉（反向验证时整幅量出来照样过）。
+    x0 = wm_mod.WATERMARK_SHADOW_PAD + wm_mod.BRAND_ICON_PX + wm_mod.BRAND_GAP_PX
+    word = np.asarray(on_white.convert("L").crop(
+        (x0, 0, art.width, art.height)), dtype=float)
+    assert word.min() < 150, (
+        f"字标贴在纯白上最暗才 {word.min():.0f}——阴影没了，"
+        "近白的「网球时差」在白球衣/亮天空上会整个消失")
+    assert (word < 200).mean() > 0.05, (
+        f"字标那一带暗像素只占 {(word < 200).mean():.4f}，阴影太淡撑不住白底")
+
+    # ── ③ 纵向让开顶栏 ──────────────────────────────────────────────
+    for layout, has_topbar, occupied in (
+            ("band", True, reel.BAND_TOP),
+            ("full", True, reel.TOPBAR_H),
+            ("full", False, 0)):
+        monkeypatch.setattr(reel, "LAYOUT", layout)
+        x, y = reel.watermark_xy(has_topbar=has_topbar)
+        assert x == wm_mod.WATERMARK_LEFT - wm_mod.WATERMARK_SHADOW_PAD, (
+            f"{layout}/{has_topbar}: 横向不是封面的 left:{wm_mod.WATERMARK_LEFT}")
+        assert y >= occupied, (
+            f"{layout}/topbar={has_topbar}: 角标 PNG 顶边在 y={y}，"
+            f"而顶部那条带占到 {occupied}——连阴影都要落在带外面，"
+            "压上去不报错，只是和顶栏的字叠在一起")
+        assert y - occupied == wm_mod.WATERMARK_TOP - wm_mod.WATERMARK_SHADOW_PAD, (
+            f"{layout}/topbar={has_topbar}: 让开之后不是封面的 "
+            f"top:{wm_mod.WATERMARK_TOP}（阴影那一圈没减掉，或者减了两遍）")
+    # 赛后开麦那条线让开的是它自己的 VIDEO_TOP，出处是同一个函数
+    assert wm_mod.watermark_xy(150) == (wx, 150 + wy)
+
+    # ── ④ 位置：两条编码路都接上，而且不许一条链里两个 overlay ────────
+    src = Path("tools/build_match_reel.py").read_text("utf-8")
+    assert '"-vf", f"subtitles=' not in src, (
+        "没顶栏那条路还在用 `-vf subtitles=`——`-vf` 只吃 0 号流，"
+        "接不了角标那一路输入，于是网球有故事这个栏目的片子没有角标")
+    body = inspect.getsource(reel.render)
+    assert "plain_filtergraph(" in body and "wm_input=wm_input" in body, (
+        "render 里两条编码路没有都把角标接进去")
+    monkeypatch.setattr(reel, "LAYOUT", "full")
+    plain = reel.plain_filtergraph(Path("s.ass"), 0.4, 1.0, 2)
+    assert "[out]" in plain and "[2:v]overlay=" in plain and "enable=" in plain, (
+        f"没顶栏那条滤镜图不完整：{plain}")
+    bar = reel.topbar_filtergraph(0.4, 0.6, Path("t.ass"), Path("s.ass"),
+                                  foot_input=2, wm_input=3)
+    assert "[3:v]overlay=" in bar, "有顶栏那条没把角标接进去"
+    for chain in bar.split(";"):
+        assert chain.count("overlay=") <= 1, (
+            f"一条链里出现两个 overlay：{chain}\n"
+            "ffmpeg 会把 `[3:v]` 绑成第二个 overlay 的主画面，"
+            "角标当场变成画布——报错指着 concat，读起来完全不像这回事")
+
+    # ── ⑤ 只盖比赛区间：真跑一遍，三个时刻各量一帧 ────────────────────
+    ass = tmp_path / "empty.ass"
+    ass.write_text(
+        "[Script Info]\nScriptType: v4.00+\nPlayResX: 1080\nPlayResY: 1440\n\n"
+        "[V4+ Styles]\n"
+        "Format: Name, Fontname, Fontsize, PrimaryColour, OutlineColour, "
+        "BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, "
+        "Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, "
+        "MarginR, MarginV, Encoding\n"
+        "Style: X,Arial,20,&H00FFFFFF,&H00000000,&H00000000,0,0,0,0,100,100,"
+        "0,0,1,0,0,2,10,10,10,1\n\n[Events]\n"
+        "Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, "
+        "Effect, Text\n", encoding="utf-8")
+    white = tmp_path / "white.mp4"
+    subprocess.run(
+        ["ffmpeg", "-y", "-v", "error", "-f", "lavfi", "-i",
+         "color=c=white:s=1080x1440:r=25", "-t", "1.4",
+         "-pix_fmt", "yuv420p", str(white)], check=True)
+
+    cover_secs, match_secs = 0.4, 0.6
+    cases = {
+        "有顶栏": (reel.topbar_filtergraph(
+            cover_secs, match_secs, ass, ass, wm_input=2),
+            reel.watermark_xy(has_topbar=True)),
+        "没顶栏": (reel.plain_filtergraph(
+            ass, cover_secs, cover_secs + match_secs, 2),
+            reel.watermark_xy(has_topbar=False)),
+    }
+    for name, (graph, (px, py)) in cases.items():
+        out = tmp_path / f"wm_{len(name)}.mp4"
+        subprocess.run(
+            ["ffmpeg", "-y", "-v", "error", "-i", str(white), "-i", str(white),
+             "-i", str(png), "-filter_complex", graph, "-map", "[out]",
+             "-pix_fmt", "yuv420p", str(out)], check=True)
+        seen = {}
+        for label, at in (("封面", 0.2), ("比赛", 0.7), ("片尾", 1.2)):
+            frame = tmp_path / f"{len(name)}_{label}.png"
+            subprocess.run(
+                ["ffmpeg", "-y", "-v", "error", "-ss", str(at), "-i", str(out),
+                 "-frames:v", "1", str(frame)], check=True)
+            box = np.asarray(Image.open(frame).convert("L").crop(
+                (px, py, px + art.width, py + art.height)), dtype=float)
+            seen[label] = float((box < 235).mean())
+        assert seen["比赛"] > 0.05, (
+            f"{name}：比赛画面上没有角标（左上角非白像素占 "
+            f"{seen['比赛']:.4f}）——overlay 没接上或落错了位置")
+        for label in ("封面", "片尾"):
+            assert seen[label] < 0.005, (
+                f"{name}：{label}那一段也压了角标（{seen[label]:.4f}）。"
+                "封面自己就印着这一块、品牌片尾整屏都是这个 logo，再压一遍是说三遍")
+
+    # ── 出处只有一份：两个工具都不许自己再抄一份尺寸/阴影 ──────────────
+    itw = Path("tools/build_interview_clip.py").read_text("utf-8")
+    for path, text in (("build_match_reel.py", src),
+                       ("build_interview_clip.py", itw)):
+        assert "from tennislive.video.watermark import" in text, (
+            f"{path} 没从共享模块拿角标——两条线各配一份的样子是"
+            "「同一个账号出去的片子 logo 一大一小」，而且不报错")
+        assert not re.search(r"^\s*(WATERMARK|BRAND_ICON|BRAND_GAP|BRAND_TEXT)_"
+                             r"\w*\s*=", text, re.M), (
+            f"{path} 里自己定义了角标的常量——出处只许有一处")
+
+
 def test_layout只认band且band不和contain混():
     """spec.layout 的值域和兼容性，`--dry-run`（parse_segments）就拦：
 
