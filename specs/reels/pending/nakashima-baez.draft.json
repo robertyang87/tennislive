@@ -270,10 +270,47 @@
   "_visual_evidence": {
     "model": "MiniMax-M3",
     "status": "waiting",
-    "visual_status": "error",
-    "retryable": true,
+    "visual_status": "waiting",
+    "retryable": false,
+    "cold_open": {
+      "start": 187.67,
+      "end": 191.41,
+      "kind": "match_point",
+      "winner_visible": true,
+      "reason": "187.67s–190.34s 屏幕多次显示赛果字样 BRANDON NAKASHIMA 6 6 6 / SEBASTIAN BAEZ 2 1 0，190.34s–191.41s 中岛布兰登抬头凝望准备发球或刚完成最后一分的高潮段，可作赛点进入。",
+      "confidence": 0.88
+    },
+    "ending": {
+      "start": 187.67,
+      "end": 210.01,
+      "kind": "winner_celebration",
+      "winner_visible": true,
+      "reason": "187.67s–191.41s 显示最终比分 6-2 6-1 6-0 与中岛布兰登反应；192.5s–195.5s 两位选手走到网前握手；196.5s–203.8s 中岛布兰登挥手向观众致意、接受掌声庆祝；覆盖 cold_open 全部时间窗口并完整兑现结局。",
+      "confidence": 0.92
+    },
+    "cover": {
+      "same_match": false,
+      "subject": "",
+      "moment": "other",
+      "wrong_or_old": true,
+      "reason": "未提供候选封面照片；无法核对人物、比分字样或赛事标识，故 same_match=false。",
+      "confidence": 0.2
+    },
     "problems": [
-      "MiniMax API：JSONDecodeError: Expecting ',' delimiter: line 23 column 60 (char 836)"
-    ]
+      "没有官方高清封面候选",
+      "封面无法证明是同一场，或疑似旧图/错图",
+      "封面置信度 0.20 低于 0.80",
+      "封面人物应为 中岛布兰登，模型识别为 空",
+      "封面情绪应为 winner_celebration，现在是 other"
+    ],
+    "model_attempts": 1,
+    "input_sha256": "9795a0cb406b148dc5d77bb3e58766e9f71e306537e182e05a78671b24c2698e",
+    "inputs": [
+      "contact_00.jpg",
+      "contact_01.jpg",
+      "contact_02.jpg",
+      "contact_03.jpg"
+    ],
+    "cover_image": ""
   }
 }
