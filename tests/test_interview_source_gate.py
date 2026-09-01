@@ -242,3 +242,118 @@ def test_requested_content_type不在登记表里直接报错():
     gate.finalize_source_contract(spec)
     with pytest.raises(gate.SourceContractError, match="on_court/ceremony 之一"):
         gate.validate_source_contract(spec)
+
+
+def _walk_on_item(**extra) -> dict:
+    """赛前出场秀的候选素材——`walk_on` 是这道闸认的第四种合法类型。
+
+    ⚠️ **`source` 用 Cincinnati Open 而不是 US Open**：`_trusted_source_names()`
+    只收 `verified: true` 的源，而 `data/oncourt_sources.json` 里 US Open 那行
+    现在是 `false`。这条测的是「官方源 + 标题明确 → verified」这条路本身，
+    换一个已登记为受信的官方源才测得到它；真实那条 spec
+    （`osaka-walkout-us-open-2026-r1`）是手写的，走的是
+    `validate_source_contract`，不查这张受信表。
+    """
+    row = {
+        "id": "vid-walkon-1",
+        "url": "https://example.test/vid-walkon-1",
+        "title": "Naomi Osaka Stuns in her Walk-Out Outfit! | 2026 Cincinnati Open",
+        "source": "Cincinnati Open",
+    }
+    row.update(extra)
+    return row
+
+
+def _formal_walk_on_spec() -> dict:
+    verification = gate.candidate_verification(_walk_on_item(), verdicts={})
+    spec = {
+        "slug": "osaka-walkout-cincinnati-2026-r1",
+        "url": _walk_on_item()["url"],
+        "requested_content_type": "walk_on",
+        "interview_kind": "赛前出场秀",
+        "source_verification": verification,
+        "match": {
+            "id": "2026:cincinnati:r1:naomi-osaka",
+            "event": "辛辛那提大师赛",
+            "round": "第一轮",
+            "winner": "大坂直美",
+            "loser": "扎哈罗娃",
+            "participants": ["大坂直美", "扎哈罗娃"],
+        },
+    }
+    return gate.finalize_source_contract(spec)
+
+
+def test_官方源标题明确出场秀可进入生产():
+    """出场秀不是被这道闸拦下的例外，是它认的第四种合法类型——账号所有者
+    2026-09-01「做大坂直美的出场秀视频，可以用赛后开麦的模板」。形状和加
+    `ceremony`、`farewell` 那两次一样：球员穿着定制出场服走进球场是这个栏目
+    下另一种真实存在的内容，受信官方频道 + 标题明确写着 walk-out，应该直接
+    给出 verified，不用等人工判词。
+    """
+    got = gate.candidate_verification(_walk_on_item(), verdicts={})
+    assert got["status"] == "verified"
+    assert got["method"] == "official_explicit_walk_on"
+    assert got["detected_type"] == "walk_on"
+
+
+def test_出场秀那条正则只认出场不认退赛和走开():
+    """**反向：这条正则最容易误伤的三个词，逐个钉住。**
+
+    `walkover`（不战而胜）、`walked out of`（伤退走人）、`walk on court`
+    （走上球场，任何一条比赛报道都会写）——三个都长得像「walk + out/on」，
+    而它们一个都不是出场秀。判据宁可窄不可宽：**扩大化的判据不吭声**，
+    它会把一条退赛报道签成 verified 的出场秀，而 `method` 那一栏还写着
+    `official_explicit_walk_on`，回头查来源的人看不出哪里错了。
+    """
+    for title in (
+        "Naomi Osaka Stuns in her Walk-Out Outfit! | 2026 US Open",
+        "Osaka walkout look | US Open 2026",
+        "Coco Gauff Walk On Moment | 2026 US Open",
+        "Sinner walk-out ahead of the final",
+    ):
+        assert gate.explicit_title_type(title) == "walk_on", title
+    for title in (
+        "Zverev advances after Medvedev walkover",
+        "Nadal walked out of the match with injury",
+        "Djokovic walk out of the tunnel",
+        "She walks on court to a huge ovation",
+        "Players walk on court for the coin toss",
+    ):
+        assert gate.explicit_title_type(title) == "", title
+
+
+def test_出场秀的正式契约通过验证且改字即失效():
+    spec = _formal_walk_on_spec()
+    attestation = gate.validate_source_contract(spec)
+    assert len(attestation) == 64
+
+    spec["match"]["loser"] = "另一位球员"
+    with pytest.raises(gate.SourceContractError, match="attestation_sha256"):
+        gate.validate_source_contract(spec)
+
+
+def test_出场秀素材不能签成on_court发布():
+    """来源被核验成 walk_on 却声明成 on_court——出场秀里根本没有人拿话筒问
+    问题，混着用要当场报错，不能靠重新签名盖过去。和 ceremony 那条同一个
+    形状：判据落在 detected_type 本身，不是侥幸靠一个过期的哈希。
+    """
+    spec = _formal_walk_on_spec()
+    spec["requested_content_type"] = "on_court"
+    spec["interview_kind"] = "赛后场上采访"
+    gate.finalize_source_contract(spec)
+    with pytest.raises(gate.SourceContractError, match="detected_type"):
+        gate.validate_source_contract(spec)
+
+
+def test_出场秀的观众可见叫法必须写成赛前出场秀():
+    """`interview_kind` 是印在顶栏上给观众看的那一句。出场秀发生在**开赛之前**，
+    照抄「赛后场上采访」就是印一句假话——四种类型里只有它不是「赛后…」，
+    所以这条单独钉住。
+    """
+    assert gate.REQUESTED_KINDS["walk_on"] == "赛前出场秀"
+    spec = _formal_walk_on_spec()
+    spec["interview_kind"] = "赛后场上采访"
+    gate.finalize_source_contract(spec)
+    with pytest.raises(gate.SourceContractError, match="赛前出场秀"):
+        gate.validate_source_contract(spec)

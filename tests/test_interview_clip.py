@@ -5975,3 +5975,166 @@ def test_真实核验过的捧杯致辞能通过L0():
     finalize_source_contract(spec)
     attestation = check_source_contract(spec)
     assert len(attestation) == 64
+
+
+def test_缩略图墙那一档成不成看产物不看退出码(tmp_path, monkeypatch):
+    """**三处一起修的那一趟**（2026-09-01 `osaka-walkout-us-open-2026-r1`）。
+
+    病程是这样的：沙箱没有 cookie，`web_embedded` 这一档只解得出 storyboard、
+    解不出媒体格式，而 `-J` 默认把「一个可下载格式都没有」当成致命错——于是
+    **八档 client 全报失败**，打印「都取不到视频信息」，和「这条片子根本没有
+    storyboard」长得一模一样。而同一条 URL 上 `fetch_words` 拿得到字幕，
+    因为那条路一直带着 `--ignore-no-formats-error`：**同一件事在两处各配一遍，
+    必然分叉。**
+
+    补上那个参数之后又冒出第二个：被限流的那几档**不再报错**，改回一份残缺
+    元数据（标题有、`duration` 是 None、一个格式都没有），而梯子按退出码判
+    成败，当场停在这个空壳上——「拿到一份空壳」和「拿到了」在退出码上一模一样，
+    又一次「查产物，不查信号」。
+
+    第三个：梯子费劲挑出「哪一档解得出 storyboard」，下载 mhtml 时却回头用
+    默认 client——而默认那一档正是刚被挡掉的那个。
+
+    判据钉三头，缺一头都漏掉其中一个：
+      ① `-J` 那条命令带 `--ignore-no-formats-error`
+      ② 残缺元数据不算成功，梯子继续往下走（拿到的是第二档那份真数据）
+      ③ 下载 mhtml 带上梯子选中那一档的 client
+    """
+    import json as _json
+    from types import SimpleNamespace
+
+    from PIL import Image
+
+    from tools import build_interview_clip as clip
+
+    good = {
+        "title": "Naomi Osaka Stuns in her Walk-Out Outfit! | 2026 US Open",
+        "duration": 143,
+        "formats": [{"format_id": "sb0", "width": 160, "height": 90,
+                     "rows": 5, "columns": 5, "fps": 0.5105,
+                     "fragments": [{"url": "x"}]}],
+    }
+    picked = ["--extractor-args", "youtube:player_client=web_embedded"]
+    monkeypatch.setattr(clip, "_ytdlp_ladder",
+                        lambda: [("空壳档", []), ("好档", list(picked))])
+    monkeypatch.setattr(clip, "_mhtml_tiles",
+                        lambda *a, **k: [(i, Image.new("RGB", (160, 90))) for i in range(4)])
+
+    seen: list[list[str]] = []
+
+    def fake_run(cmd, **kw):
+        seen.append(list(cmd))
+        if "-J" in cmd:
+            # 被限流的那一档：**退出码 0，内容是空壳**——正是修好参数之后
+            # 冒出来的第二个坑。
+            payload = good if "--extractor-args" in cmd else {"title": "T"}
+            return SimpleNamespace(returncode=0, stdout=_json.dumps(payload), stderr="")
+        return SimpleNamespace(returncode=0, stdout="", stderr="")
+
+    monkeypatch.setattr(clip.subprocess, "run", fake_run)
+    out = clip.storyboard_sheet("https://youtu.be/eZSXaGpkmsU", tmp_path)
+
+    meta_calls = [c for c in seen if "-J" in c]
+    assert meta_calls, "一次都没去取元数据"
+    for cmd in meta_calls:                                            # ①
+        assert "--ignore-no-formats-error" in cmd, (
+            "`-J` 少了 `--ignore-no-formats-error`——只解得出 storyboard 的那一档"
+            "会被当成致命错，整条路报「取不到视频信息」，"
+            f"而 `fetch_words` 一直带着它：{cmd}")
+    assert len(meta_calls) == 2, (                                    # ②
+        f"梯子没有走过空壳那一档（取元数据调了 {len(meta_calls)} 次）——"
+        "残缺元数据（没有 duration、没有 storyboard）不能算成功，"
+        "「拿到一份空壳」和「拿到了」在退出码上一模一样")
+    assert out is not None and out.exists(), "拼图没出来"
+
+    dl = [c for c in seen if "-f" in c and "sb0" in c]
+    assert dl, "没走到下载 mhtml 那一步"
+    for cmd in dl:                                                    # ③
+        assert all(tok in cmd for tok in picked), (
+            "下载 mhtml 没带上梯子选中那一档的 client，回头用了默认档——"
+            f"而默认那一档正是刚被挡掉的那个：{cmd}")
+
+
+def test_短转写的分歧天花板按词数算不按比例(tmp_path):
+    """**比例这把尺子在小分母上量不出它要量的东西。**
+
+    2026-09-01 `osaka-walkout-us-open-2026-r1`（赛前出场秀）撞的：34.4 秒里
+    真有人说话的只有球场播报员那一句，第一份转写 15 个词。whisper 在句首和
+    句尾各漏了一个短语、外加把 `US` 拆成 `U S`——**逐处看没有任何一段对不上**，
+    可 5 个词落在 15 的分母上就是 33.3%，直接撞穿 18% 的天花板，而那句报错
+    写着「必然有整段对不上」。
+
+    天花板的语义是「有整段对不上」，它**默认了分母够大**：要让 18% 对应一个
+    五词短语，分母至少得 28 词；15 个词的转写里 18% 连三个词都不到。所以短
+    转写改按**绝对词数**判——差几个词是几个词，不随分母缩放。
+
+    判据钉四头：
+      ① 短转写差得少 + 认领了 → 放行（这条片子）
+      ② 短转写差得多 → 仍然撞天花板（放松的不是「短就放行」）
+      ③ 长转写照旧按比例，一个字没松
+      ④ 认领本身没被放松——不写 `rate`/`why` 照样红
+    """
+    from tools.build_interview_clip import (
+        SHORT_TRANSCRIPT_MAX_DISAGREE_WORDS,
+        SHORT_TRANSCRIPT_WORDS,
+        TRANSCRIPT_DISAGREE_CEILING,
+        _check_disagree_claim,
+    )
+
+    path = tmp_path / "transcript_diff.md"
+    ok = {"transcript_disagree_ok": {"rate": 0.34, "why": "逐处看过：三处都无害"}}
+
+    # ① 15 词里差 5 个 —— 33.3%，远超 18%，但只差 5 个词
+    _check_disagree_claim(ok, 1 - 10 / 15, path, 15)
+
+    # ② 同样的短转写，差 9 个词（60%）—— 这才是「整段对不上」
+    with pytest.raises(SystemExit, match="短转写的天花板"):
+        _check_disagree_claim({"transcript_disagree_ok": {"rate": 0.65, "why": "x"}},
+                              0.60, path, 15)
+
+    # ③ 长转写一个字没松：25% 照旧撞老天花板
+    with pytest.raises(SystemExit, match=f"{TRANSCRIPT_DISAGREE_CEILING:.0%}"):
+        _check_disagree_claim({"transcript_disagree_ok": {"rate": 0.26, "why": "x"}},
+                              0.25, path, 400)
+    # 而长转写 15%（超闸门、没超天花板）＋ 认领 → 照旧放行
+    _check_disagree_claim({"transcript_disagree_ok": {"rate": 0.16, "why": "虚词"}},
+                          0.15, path, 400)
+
+    # ④ 短转写也要认领，不写照样红——放松的只有天花板那一道
+    with pytest.raises(SystemExit, match="transcript_disagree_ok"):
+        _check_disagree_claim({}, 1 - 10 / 15, path, 15)
+
+    # 两个常量的来路：60 是「68 条已落库的转写里只有这一条少于它」量出来的，
+    # 8 是「一行字幕 5~8 个词，差一整行还多」推出来的。钉住量级，别让它们
+    # 悄悄漂成「反正短的都放行」。
+    assert SHORT_TRANSCRIPT_WORDS <= 100, "短转写的门槛放到这么宽，长采访也会掉进来"
+    assert SHORT_TRANSCRIPT_MAX_DISAGREE_WORDS <= 12, (
+        "短转写里差十几个词还放行，那就不是「漏了两三个词」了")
+
+
+def test_分歧超闸时报错给的那个数照抄不会再红一次(tmp_path):
+    """报错正文是**让人照着抄进 spec 的**，那它给的数就必须真的能用。
+
+    下一道闸是 `rate > declared` 就红，而原来那句用 `:.3f` ——**四舍五入**：
+    实测 1−10/15＝0.33333… 印出来是 `0.333`，照抄进 spec 立刻撞上
+    「分歧比认领的还高」，再白烧一趟 runner。向上取整才是这句话的本意。
+
+    ⚠️ 这条和「判据引用的那个东西，我打开看过吗」是同一族：**报错里给出的
+    修复方案，自己走一遍了吗。**
+    """
+    import re as _re
+
+    from tools.build_interview_clip import _check_disagree_claim
+
+    rate = 1 - 10 / 15                      # 0.3333…，最容易被四舍五入吃掉的那种
+    with pytest.raises(SystemExit) as got:
+        _check_disagree_claim({}, rate, tmp_path / "d.md", 15)
+    m = _re.search(r'"rate":\s*([0-9.]+)', str(got.value))
+    assert m, f"报错里没给出可照抄的 rate：{got.value}"
+    suggested = float(m.group(1))
+    assert suggested >= rate, (
+        f"报错建议 rate={suggested}，而实测是 {rate}——照抄会立刻撞上"
+        "「分歧比认领的还高」那道闸，等于让人再白跑一趟")
+    # 照抄进去必须真的过得了
+    _check_disagree_claim({"transcript_disagree_ok": {"rate": suggested, "why": "看过"}},
+                          rate, tmp_path / "d.md", 15)
