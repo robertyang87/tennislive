@@ -2,9 +2,21 @@
 """“赛后开麦”的 L0 内容身份门禁。
 
 机器字段 ``requested_content_type`` 与观众看到的 ``interview_kind`` 必须成对，
-来源身份和逐场赛果必须带哈希绑定。当前允许三种真实内容：赛后场上采访、
-颁奖台致辞，以及最后一战/退役告别仪式。发布会、演播室或身份不明的素材仍然
-停在复核队列，不能用一个宽泛的 ``post-match`` 标题绕过门禁。
+来源身份和逐场赛果必须带哈希绑定。当前允许四种真实内容：赛后场上采访、
+颁奖台致辞、最后一战/退役告别仪式，以及赛前出场秀。发布会、演播室或身份不明
+的素材仍然停在复核队列，不能用一个宽泛的 ``post-match`` 标题绕过门禁。
+
+⚠️ **``walk_on``（赛前出场秀）是这道闸认的第四种类型，不是绕开它的例外。**
+账号所有者 2026-09-01：「做大坂直美的出场秀视频，可以用赛后开麦的模板，但标题
+和部分文案要换掉」。形状和 2026-08-23 加 ``ceremony`` 时一模一样——球员穿着定制
+出场服走进球场、播报员报名、全场欢呼，是这个栏目下另一种真实存在的内容，
+而不是"把身份不明的素材塞进来"。所以它照旧要求 ``source_verification`` /
+``match`` 真实、可交叉核实、和赛果签在一起：官方频道 + 标题里明确写着
+walk-out/walk-on，两条都满足才放行。
+
+⚠️ **它是这四种里唯一发生在开赛之前的**，所以两处跟着变：``interview_kind``
+写「赛前出场秀」（不是"赛后…"），顶栏建议走 ``topbar_layout:
+subject_primary``——出场那一刻比赛还没打，顶栏印赛果既不合时序也剧透。
 """
 
 from __future__ import annotations
@@ -24,9 +36,11 @@ REQUESTED_KINDS = {
     "on_court": "赛后场上采访",
     "ceremony": "赛后捧杯致辞",
     "farewell": "赛后告别仪式",
+    "walk_on": "赛前出场秀",
 }
 DETECTED_TYPES = {
-    "on_court", "press", "studio", "ceremony", "farewell", "highlight", "unknown",
+    "on_court", "press", "studio", "ceremony", "farewell", "walk_on",
+    "highlight", "unknown",
 }
 
 APPROVED_METHODS = {
@@ -43,6 +57,10 @@ APPROVED_METHODS = {
         "human_visual_verdict",
         "official_explicit_farewell",
     },
+    "walk_on": {
+        "human_visual_verdict",
+        "official_explicit_walk_on",
+    },
 }
 
 _EXPLICIT_ONCOURT = re.compile(r"\bon[\s-]?court\s+interview\b", re.I)
@@ -58,6 +76,19 @@ _EXPLICIT_FAREWELL = re.compile(
     r"\b((?:final|last)\s+(?:grand\s+slam\s+)?match\s+"
     r"(?:presentation|ceremony)|farewell\s+(?:presentation|ceremony|speech)"
     r"|retirement\s+(?:presentation|ceremony|speech))\b",
+    re.I,
+)
+# 必须明确到“出场 + 这一身/这一刻”，或者独立成词的 walk-out——网球语境里
+# 后者专指球员从通道走进球场那一段。
+#
+# ⚠️ **两个真会撞上的词，两条都验过**：`walkover`（不战而胜）里的 `over` 不是
+# `out`，第二支匹配不上；`walked out of the match` 里的 `walked` 也匹配不上
+# （`walk[-\s]?out` 要求 walk 后面紧跟分隔符或 `out`，吃不掉那个 `ed`）。
+# 剩下唯一还会误伤的是 “walk out of/on …” 这种真·走开，用后顾排除挡掉。
+_EXPLICIT_WALK_ON = re.compile(
+    r"\bwalk[-\s]?(?:out|on)\s+"
+    r"(?:outfit|look|fit|kit|moment|entrance|style|ceremony)\b"
+    r"|\bwalk[-\s]?out\b(?!\s+(?:of|on)\b)",
     re.I,
 )
 
@@ -108,6 +139,8 @@ def explicit_title_type(title: str) -> str:
         return "ceremony"
     if _EXPLICIT_FAREWELL.search(title or ""):
         return "farewell"
+    if _EXPLICIT_WALK_ON.search(title or ""):
+        return "walk_on"
     return ""
 
 
@@ -137,6 +170,8 @@ def candidate_verification(
             "studio": "studio",
             "ceremony": "ceremony",
             "farewell": "farewell",
+            "walkon": "walk_on",
+            "walk_on": "walk_on",
             "other": "unknown",
             "degraded": "unknown",
         }.get(detected, "unknown")
@@ -208,6 +243,7 @@ def candidate_verification(
                 "on_court": "official_explicit_oncourt",
                 "ceremony": "official_explicit_ceremony",
                 "farewell": "official_explicit_farewell",
+                "walk_on": "official_explicit_walk_on",
             }[explicit],
             "evidence": [{"kind": "official_explicit_title", "title": title}],
         }
@@ -255,21 +291,50 @@ def content_identity_id(spec: dict) -> str:
     return str((spec.get("match") or {}).get("id") or "")
 
 
+#: 哪几种内容形态**结构性地拿不到冷开场**，以及各自认哪一种官方判据。
+#:
+#: 值写 `None` ＝ 这一类必须有冷开场：源片里本来就有比赛画面，收得到
+#: （`build_interview_clip._OPENING_KINDS` 的 `match_end` 那一行）。
+#:
+#: ⚠️ **这张表必须盖住 `REQUESTED_KINDS` 的每一个键**，判据
+#: `test_每种内容形态都要表态能不能没有冷开场` 自己从那张表推、不维护第二份名单。
+#: 来路：2026-09-01 加 `walk_on` 时 L0 那四处（`REQUESTED_KINDS` /
+#: `DETECTED_TYPES` / `APPROVED_METHODS` / `explicit_title_type`）都改了，
+#: **独独漏了这儿**——而这道闸在 L2，排在成片渲完、封面过闸之后的最后一项。
+#: 于是那趟 render 跑满 4 分钟、成片和海报全都合格，最后报一句
+#: 「冷开场原解说双语字幕 spec.lead_in.subs 为空」。把「再加一个类型时要记得
+#: 改这儿」换成「不表态就红」，这一类漏改才算真的堵住（CLAUDE.md
+#: 「加新能力就要同时改三处」「修了一个不等于修了那一类」）。
+#:
+#: ⚠️ **只认官方明写的那一种判据，不认 `human_visual_verdict`**：和
+#: farewell／名人堂那两支的门槛保持一致。真出现一条只有人工目视判定的出场秀，
+#: 它会在这儿红出来，让人显式决定，而不是被一条宽口径悄悄放过。
+NO_LEAD_EXCEPTION_METHOD: dict[str, str | None] = {
+    "on_court": None,
+    "ceremony": None,
+    "farewell": "official_explicit_farewell",
+    "walk_on": "official_explicit_walk_on",
+}
+
+
 def verified_no_lead_exception(spec: dict) -> bool:
-    """已核验、且按内容形态允许不另接冷开场的两种正式产品。"""
+    """已核验、且按内容形态允许不另接冷开场的正式产品。
+
+    三种：官方明写的赛后告别仪式、名人堂入选致辞，以及**赛前出场秀**。
+    出场秀发生在开赛之前，源片里一个回合都没有——`_OPENING_KINDS` 的
+    `none` 那一行本来就把它列成了合法情形（「发布会、演播室专访、
+    **赛前出场秀**」），只是这道闸一直不认识它。
+    """
     verification = spec.get("source_verification") or {}
     opening = spec.get("opening") or {}
     if opening.get("kind") != "none" or verification.get("status") != "verified":
         return False
-    official_farewell = (
-        spec.get("requested_content_type") == "farewell"
-        and verification.get("method") == "official_explicit_farewell"
-    )
-    official_induction = (
-        is_hall_of_fame_induction(spec)
-        and verification.get("method") == "official_explicit_ceremony"
-    )
-    return official_farewell or official_induction
+    # 名人堂入选是 `ceremony` 底下的一个子型，按 `ceremony_subtype` 认，
+    # 所以它跟表里那几个键互斥，先判它再查表不会互相盖掉。
+    if is_hall_of_fame_induction(spec):
+        return verification.get("method") == "official_explicit_ceremony"
+    wanted = NO_LEAD_EXCEPTION_METHOD.get(spec.get("requested_content_type"))
+    return wanted is not None and verification.get("method") == wanted
 
 
 def finalize_source_contract(spec: dict) -> dict:
@@ -294,7 +359,8 @@ def validate_source_contract(spec: dict) -> str:
         # 保留旧测试/旧日志可检索的「on_court/ceremony 之一」文字，同时明确
         # 新增的 farewell；旧消费方不会因为错误文案变化而失去诊断锚点。
         problems.append(
-            "requested_content_type 必须是 on_court/ceremony 之一，或 farewell"
+            "requested_content_type 必须是 on_court/ceremony 之一，"
+            "或 farewell / walk_on"
         )
         requested = None
     special_induction = is_hall_of_fame_induction(spec)
