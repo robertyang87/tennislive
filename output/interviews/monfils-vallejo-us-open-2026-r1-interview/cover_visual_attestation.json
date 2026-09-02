@@ -1,0 +1,56 @@
+{
+  "status": "pass",
+  "checked_at": "2026-09-02T13:30:07Z",
+  "auditor": "opencv-haar-v1",
+  "expected_subject": "孟菲尔斯",
+  "identity_evidence": "L0-bound spec subject + same-source frame_at",
+  "spec_sha256": "3f8fc168b7d9dd8f5d14336edec0653f576b7801f76fb72e42f0ca952aa564e8",
+  "poster_sha256": "5a6be224ede500449095603a14aa9f5cfa45315ad41ede41ce6b4b8c90a31d1d",
+  "thresholds": {
+    "close_up_zoom": 1.5,
+    "face_height_ratio": 0.08,
+    "close_up_face_height_ratio": 0.14,
+    "face_area_ratio": 0.01,
+    "face_sharpness": 45.0,
+    "face_contrast": 32.0,
+    "eyes": 2
+  },
+  "result": {
+    "poster": {
+      "decodable": true,
+      "format": "JPEG",
+      "width": 1080,
+      "height": 1440,
+      "photo_region": [
+        0,
+        150,
+        1080,
+        810
+      ]
+    },
+    "face": {
+      "detector": "frontal-alt2",
+      "box": [
+        419,
+        369,
+        338,
+        338
+      ],
+      "detected_faces": 3,
+      "eyes": 2,
+      "face_height_ratio": 0.41728,
+      "face_area_ratio": 0.13059,
+      "center_x_ratio": 0.54444,
+      "center_y_ratio": 0.47901,
+      "sharpness": 470.694,
+      "contrast": 108.0
+    },
+    "contract": {
+      "shot_type": "",
+      "frame_at": 89.5,
+      "zoom": 1.0,
+      "focus_y": 0.5
+    }
+  },
+  "issues": []
+}
