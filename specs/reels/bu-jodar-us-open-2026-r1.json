@@ -206,11 +206,11 @@
       "第三盘布云朝克特又是一上来就破发；1-5 时他发球胜赛局，15:40 的第一个赛点被霍达尔救掉，30:40 的第二个兑现。1 小时 48 分钟，全场霍达尔一个破发点都没有拿到。"
     ],
     "human_context": {
-      "angle": "这场球的背景不在球场上，在五天前的资格赛。布云朝克特今年 24 岁（2002 年 1 月 19 日生于新疆），去年美网他还是世界第 74、直接进的正赛；今年掉到第 124，只能从资格赛打起，还是资格赛的 11 号种子。8 月 28 日资格赛最后一轮，他先拿下一盘，最后 6-3 4-6 5-7 输给意大利人奇纳，打了 2 小时 18 分钟——那一刻这届美网跟他已经没有关系了。正赛开打前有人退赛，他以幸运落败者的身份补进签表，抽到 12 号种子霍达尔。对面这位马德里人 2006 年 9 月 17 日出生，还差半个月满 20 岁，今年一路打到世界第 13。",
+      "angle": "这场球的背景不在球场上，在五天前的资格赛。布云朝克特今年 24 岁（2002 年 1 月 19 日生于新疆），去年美网他还是世界第 74、直接进的正赛；今年掉到第 124，只能从资格赛打起，还是资格赛的 11 号种子。当地时间 8 月 28 日（北京时间 8 月 29 日凌晨）资格赛最后一轮，他先拿下一盘，最后 6-3 4-6 5-7 输给世界第 181 的意大利人奇纳，打了 2 小时 18 分钟——那一刻这届美网跟他已经没有关系了。正赛开打前有人退赛，他以幸运落败者的身份补进签表，抽到 12 号种子霍达尔。对面这位马德里人 2006 年 9 月 17 日出生，还差半个月满 20 岁，今年一路打到世界第 13。",
       "facts": [
         "布云朝克特 6-2 6-1 6-1 胜 Rafael Jodar，2026 美网男单第一轮，17 号球场，1 小时 48 分钟（美网官方 completed_matches/days/day_11.json，match_id 1109，status=Completed，flags.upset=true）。",
         "布云朝克特的入围身份是幸运落败者：美网官方 day_11 feed 里 team2.entryStatus=\"LL\"；flashscore df_sui_1 的 PSPA÷LL 独立印证。",
-        "他本届的资格赛记录（美网官方 atpy09v_matches feed）：R1 胜 Rei Noguchi 4-6 6-4 6-2（2:25）、R2 胜 Borna Gojo 6-4 6-4（1:24）、R3 负 Federico Cina 6-3 4-6 5-7（2:18，8 月 28 日）。",
+        "他本届的资格赛记录（美网官方 atpy09v_matches feed ＋ order of play）：R1 胜 Rei Noguchi 4-6 6-4 6-2（2:25，8/25）、R2 胜 Borna Gojo 6-4 6-4（1:24，8/26）、R3 负 Federico Cina 6-3 4-6 5-7（2:18）。⚠️ R3 的日期：原排在 Day 5（周四 8/27）6 号球场 order 3 没轮到，实际在 **Day 6（周五 8 月 28 日）**6 号球场 order 2 打完（`schedule6.json` status=Completed，completed_matches day_6 也在）；该场次 11:00 AM 开节、order 1 打了 3:43，所以约 14:55 ET 开打——北京时间是 8 月 29 日凌晨。",
         "两人排名与种子（美网官方 players.json）：布云朝克特世界第 124、无种子、资格赛 11 号种子；霍达尔世界第 13、正赛 12 号种子。",
         "布云朝克特历年美网（官方逐年 players.json）：2023 年世界第 202、2024 年第 113（打资格赛+正赛）、2025 年第 74（直接进正赛）、2026 年第 124（打资格赛）。",
         "转播解说在赛后的原话（源片自动字幕 160.32s）：『That is the win of his career.』；167.52s：『has knocked out the 12th seed and it has been emphatic today. 6-2 6-1 6-1』。"
@@ -219,7 +219,9 @@
         "https://www.usopen.org/en_US/scores/feeds/2026/completed_matches/days/day_11.json",
         "https://www.usopen.org/en_US/scores/feeds/2026/players/matches/atpy09v_matches.json",
         "https://www.usopen.org/en_US/scores/feeds/2026/players/players.json",
-        "https://www.flashscore.com/match/tennis/Sr9LZI45/"
+        "https://www.flashscore.com/match/tennis/Sr9LZI45/",
+        "https://www.usopen.org/en_US/scores/feeds/2026/schedule/schedule11.json",
+        "https://www.usopen.org/en_US/scores/feeds/2026/schedule/schedule6.json"
       ]
     }
   },
@@ -282,8 +284,8 @@
     {
       "start": 49.5,
       "end": 62.9,
-      "narration": "八月二十八号，资格赛最后一轮。他打满两小时十八分钟，先赢下一盘，最后五比七输给了意大利人奇纳。行李本来该收了。",
-      "_why": "背景的另一半：他是怎么走到「已经出局」那一步的。三个数全部来自美网官方 atpy09v_matches feed（R3 负 Cina 6-3 4-6 5-7，duration 2:18，8 月 28 日）。画面是次盘第一局那个破发点（板 48.5–62.5s 恒为 BREAK POINT #2 `2 0 15 / 6 0 40`）。⚠️ 段尾没有可用的死球——probe 的 point_ends 在 48.75 和 64.26 之间是空的（板整整十四秒一动不动），所以收在疑似切点 63.08 之前 0.18 秒。 ⚠️ 第一版旁白只有 46 字，dry-run 估出来余量 4.22 秒（哑场），而且一句里串了四个逗号；现在拆成三句、把对手名字补上，估余量降到 2.4 秒。",
+      "narration": "那一场是资格赛最后一轮，他打满两小时十八分钟，先赢下一盘，最后五比七输给了意大利人奇纳。行李本来该收了。",
+      "_why": "背景的另一半：他是怎么走到「已经出局」那一步的。三个数全部来自美网官方 atpy09v_matches feed（R3 负 Cina 6-3 4-6 5-7，duration 2:18）；奇纳是意大利人、当时世界第 181（官方 players.json），⚠️ 排名没写进旁白——「最后五比七输给了世界第一百八十一的意大利人奇纳」这个子句 19 格，超过一行字幕的 16 格会被硬切成「最后5比7输给了世界｜第181的意大利人奇纳」，排名留在小红书正文里。⚠️ **日期查了两轮才定下来，别再重查**：这一场原本排在 Fan Week Day 5（周四 8/27）6 号球场 order 3，而它前面两场打了 3:43 和 2:45，没轮到；官方 order of play 的 Day 6（**周五 8 月 28 日**，`schedule6.json`）把它列成 6 号球场 order 2 且 status=Completed，`completed_matches/days/day_6.json` 里也在。6 号球场那天第一节 11:00 AM（startEpoch 1787929200 = 15:00 UTC，ET=UTC−4）、order 1 打了 3:43，所以他这一场约 14:55 ET 开打、17:13 ET 结束——**换成北京时间是 8 月 29 日凌晨**。距离正赛首轮（北京时间 9 月 3 日凌晨）正好**五天**，两个时区数出来都是五天，所以旁白和钩子里的「五天前」是对的。⚠️ 旁白里因此**不写日期**：片子其余地方用的是北京时间，写「八月二十八号」（当地日期）会和「九月三号凌晨」串时区；日期留在小红书正文里，写成北京时间 8 月 29 日凌晨。画面是次盘第一局那个破发点（板 48.5–62.5s 恒为 BREAK POINT #2 `2 0 15 / 6 0 40`），宽景对拉，不指认任何一个人。⚠️ 段尾没有可用的死球——probe 的 point_ends 在 48.75 和 64.26 之间是空的（板整整十四秒一动不动），所以收在疑似切点 63.08 之前 0.18 秒。",
       "score_inset": true
     },
     {
