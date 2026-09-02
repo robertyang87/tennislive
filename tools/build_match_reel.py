@@ -6852,11 +6852,13 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     wm_column = str((spec.get("cover") or {}).get("eyebrow", "")).strip() \
         or "赛场之上"
     wm_topic = str((spec.get("cover") or {}).get("topic", "")).strip()
-    wm_png = brand_watermark(outdir / "_watermark.png", wm_column, wm_topic)
+    wm_png = (brand_watermark(outdir / "_watermark.png", wm_column, wm_topic)
+              if wants_watermark(wm_column) else None)
     match_end = cover_secs + sum(s.length for s in segments)
     with stage("烧字幕+成片"):
         foot_inputs = ["-i", str(foot_png)] if foot_png else []
-        wm_input = 3 if foot_png else 2
+        wm_inputs = ["-i", str(wm_png)] if wm_png else []
+        wm_input = (3 if foot_png else 2) if wm_png else None
         video_args = (["-filter_complex", topbar_filtergraph(
             cover_secs, sum(s.length for s in segments), topbar_ass, ass,
             foot_input=2 if foot_png else None, wm_input=wm_input),
@@ -6864,11 +6866,21 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
                       ["-filter_complex",
                        plain_filtergraph(ass, cover_secs, match_end, wm_input),
                        "-map", "[out]"])
-        print(f"[角标] 常驻角标「网球时差 · {wm_column}」：封面那个位置，只盖 "
-              f"{cover_secs:.2f}~{match_end:.2f}s（封面和片尾不带）")
+        # **两支都要出声。** 「这个栏目不画」和「渲角标那一步没走到」在成片上
+        # 长得一模一样，而后者是个真 bug——只在画的时候打印，等于把不画那一支
+        # 变成静默的。
+        if wm_png:
+            print(f"[角标] 常驻角标「网球时差 · {wm_column}」：封面那个位置，只盖 "
+                  f"{cover_secs:.2f}~{match_end:.2f}s（封面和片尾不带）")
+        else:
+            print(f"[角标] 「{wm_column}」这个栏目不画左上角角标"
+                  "（账号所有者 2026-09-02：下面的品牌脚注已经写着同一句）"
+                  + ("" if foot_png else
+                     "。⚠️ 而这条片子**也没有底带脚注**（不是带式，或者带式但没有"
+                     "顶栏），所以正片区间一个品牌标识都不带——只剩封面和片尾"))
         run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
             "-i", str(silent), "-i", str(mixed), *foot_inputs,
-            "-i", str(wm_png), *video_args,
+            *wm_inputs, *video_args,
             "-map", "1:a:0",
             "-c:v", "libx264", "-preset", FINAL_PRESET, "-crf", FINAL_CRF,
             "-pix_fmt", "yuv420p",
@@ -7581,6 +7593,44 @@ Dialogue: 0,{_ass_timestamp(start)},{_ass_timestamp(end)},BODY,,0,0,0,,{body_tex
 
 BAND_FOOT_LABEL = "网球时差 · 赛场之上"
 
+#: `cover.eyebrow` 空着时按哪个栏目算——和 `build_cover`、render 那两处
+#: `or "赛场之上"` 是同一个缺省。
+DEFAULT_COLUMN = "赛场之上"
+
+#: 这几个栏目**不画左上角那块常驻角标**。
+#:
+#: 账号所有者 2026-09-02：「**赛场之上视频就不要加左上角的栏目信息了。
+#: 因为下面已经有了**」。来路是 `eala-stoiana-us-open-2026-r1` 那条成片——
+#: 同一帧上「网球时差 · 赛场之上」**印了两遍**：左上角的角标一遍（压在看台上），
+#: 底带的品牌脚注又一遍（`BAND_FOOT_LABEL`，就是上面那个常量）。
+#:
+#: ⚠️ **拿掉的是整块，不是只拿掉中间那一行。** 左上角那一块是「封面台头」
+#: （球标 ＋ 「网球时差 · 栏目」 ＋ `cover.topic` 副标题），账号所有者指的是
+#: 这一块所在的那个角。只删中间那行会剩下「一个球标 ＋ 一句没有主语的副标题」
+#: ——那是个谁都没要求过的新版式。所以 2026-09-01 那条「副标题不要消失啊」
+#: 在这个栏目上跟着这一块一起撤掉；**别的栏目一个字没动**。
+#:
+#: ⚠️⚠️ **底带脚注只在带式（`layout: "band"`）＋ 有顶栏时才渲**，而带式是
+#: 美网期间的规矩。也就是说 **`赛场之上` 一旦回到全出血版式，正片区间就一个
+#: 品牌标识都没有了**（封面和品牌片尾照旧有）——这是这条规矩自带的代价，
+#: 不是漏了；render 那一支会**把这句话打进日志**，别让它变成静默的。
+#:
+#: ⚠️ 只按**栏目**分，不按 layout 分：按 layout 分的样子是「同一个栏目的片子
+#: 一半有角标一半没有」，而读者认的是栏目不是版式。
+WATERMARK_OFF_COLUMNS = frozenset({DEFAULT_COLUMN})
+
+
+def wants_watermark(column: str) -> bool:
+    """这个栏目画不画左上角的常驻角标。见 `WATERMARK_OFF_COLUMNS`。
+
+    ⚠️ 空栏目名按**「赛场之上」**算，和 `build_cover` / render 那两处
+    `cover.eyebrow` 的缺省是同一个——不这样的话，直接拿 `""` 调它会得到
+    「要画」，而管线里那个空值其实是赛场之上。
+    """
+    return (str(column or "").strip() or DEFAULT_COLUMN) \
+        not in WATERMARK_OFF_COLUMNS
+
+
 #: 常驻角标的尺寸、阴影和几何**只有一处出处**（`video/watermark.py`）——
 #: 赛后开麦那条线也从那儿拿。在这儿再抄一份的样子是「同一个账号出去的片子
 #: logo 一大一小」，而且不报错。这儿只负责**这条线的版式**：顶部被占掉多高。
@@ -7631,8 +7681,8 @@ def band_foot_strip(dest: Path) -> Path:
 
 
 def plain_filtergraph(subtitles_ass: Path, cover_secs: float,
-                      match_end: float, wm_input: int) -> str:
-    """没有顶栏那条路：烧字幕 ＋ 压常驻角标。
+                      match_end: float, wm_input: int | None) -> str:
+    """没有顶栏那条路：烧字幕 ＋ 压常驻角标（`wm_input=None` 就只烧字幕）。
 
     ⚠️ 原来这条路是 `-vf subtitles=…` 一句话。改成 `-filter_complex` 是因为
     角标要另一路输入，而 `-vf` 只能吃 0 号流。**输出必须打标签并显式 `-map`**
@@ -7643,9 +7693,15 @@ def plain_filtergraph(subtitles_ass: Path, cover_secs: float,
     上是同一个范围：封面和片尾不带。
     """
     fontsdir = _escape(str(Path(__file__).resolve().parents[1] / "assets" / "fonts"))
+    subbed = f"[0:v]subtitles={_escape(subtitles_ass)}:fontsdir={fontsdir}"
+    # `wm_input is None` ＝ 这个栏目不画角标（`WATERMARK_OFF_COLUMNS`）。
+    # ⚠️ **输出照旧要打 `[out]` 标签**：不打的话 `-map 0:v:0` 取的是原始流，
+    # 连字幕都被绕过去，而且它不报错。
+    if wm_input is None:
+        return f"{subbed}[out]"
     x, y = watermark_xy(has_topbar=False)
     return (
-        f"[0:v]subtitles={_escape(subtitles_ass)}:fontsdir={fontsdir}[subbed];"
+        f"{subbed}[subbed];"
         f"[subbed][{wm_input}:v]overlay={x}:{y}:"
         f"enable='between(t,{cover_secs:.3f},{match_end:.3f})'[out]"
     )

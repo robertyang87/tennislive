@@ -13769,10 +13769,106 @@ def test_常驻角标就是封面台头那一块_落位也是封面那个位置(
         assert "from tennislive.video.watermark import" in text, (
             f"{path} 没从共享模块拿角标——两条线各配一份的样子是"
             "「同一个账号出去的片子 logo 一大一小」，而且不报错")
-        assert not re.search(r"^\s*(WATERMARK|BRAND_ICON|BRAND_GAP|BRAND_TEXT)_"
-                             r"\w*\s*=", text, re.M), (
-            f"{path} 里自己定义了角标的常量——出处只许有一处")
+        # ⚠️ **判据从共享模块自己推，不写前缀名单。** 原来这一条扫的是
+        # `^(WATERMARK|BRAND_ICON|BRAND_GAP|BRAND_TEXT)_\w*\s*=` ——它把
+        # `WATERMARK_OFF_COLUMNS`（哪个栏目不画角标，是**这条线的编辑规矩**，
+        # 和尺寸阴影一点关系没有）也判成了「抄了一份常量」。前缀是个会误伤的
+        # 代理；真正要拦的是**同名**：谁在工具里给共享模块已经定义过的那个名字
+        # 再赋一次值，两边就会分叉，而分叉的样子是 logo 一大一小、不报错。
+        dupes = [name for name in dir(wm_mod)
+                 if name.isupper()
+                 and re.search(rf"^\s*{re.escape(name)}\s*=", text, re.M)]
+        assert not dupes, (
+            f"{path} 里自己又定义了一遍 {dupes}——这些名字的出处只许有一处"
+            f"（`src/tennislive/video/watermark.py`）")
 
+
+def test_赛场之上不画左上角角标而别的栏目照画():
+    """账号所有者 2026-09-02：「**赛场之上视频就不要加左上角的栏目信息了。
+    因为下面已经有了**」。
+
+    来路是 `eala-stoiana-us-open-2026-r1` 那条成片：同一帧上
+    「网球时差 · 赛场之上」**印了两遍**——左上角的常驻角标一遍（压在看台上），
+    底带的品牌脚注（`BAND_FOOT_LABEL`）又一遍。
+
+    ⚠️ **拿掉的是整块**（球标 ＋ 「网球时差 · 栏目」 ＋ 副标题），不是只拿掉
+    中间那一行：账号所有者指的是那个角，只删中间会剩下「一个球标 ＋ 一句没有
+    主语的副标题」，那是个谁都没要求过的新版式。
+
+    钉四头，缺一头都能变成一盏绿灯：
+
+    ① **行为**：赛场之上不画、别的栏目照画；空栏目名按赛场之上算（管线里
+       `cover.eyebrow` 缺省就是它，helper 不跟着缺省的话，直接拿 `""` 调它会
+       得到「要画」）。
+    ② **两条编码路都真的少了那次 overlay**，而且 `[out]` 还在——不打标签的话
+       `-map 0:v:0` 取的是原始流，连字幕都被绕过去，且不报错。
+    ③ **render 真的读了这个判据**，而且**那路 ffmpeg 输入跟着走**：留一个没人
+       消费的 `-i` 会把后面的输入序号整个错开（这一族的老账是 `_push` 那个键名
+       写错——函数在、没人读，而退路刚好给出对的答案）。
+    ④ **不画那一支要出声**：「这个栏目不画」和「渲角标那一步没走到」在成片上
+       长得一模一样，而后者是个真 bug。只在画的时候打印，等于把它变成静默的。
+    """
+    import textwrap as _tw  # noqa: PLC0415
+
+    reel = _reel()
+
+    # ── ① 行为 ────────────────────────────────────────────────────────
+    assert not reel.wants_watermark("赛场之上"), "赛场之上还在画左上角角标"
+    for col in ("网球有故事", "开球之前", "赛后开麦"):
+        assert reel.wants_watermark(col), f"{col} 不该被这条规矩带上"
+    assert not reel.wants_watermark(""), (
+        "空栏目名要按赛场之上算——管线里 `cover.eyebrow` 缺省就是它")
+    assert reel.DEFAULT_COLUMN in reel.WATERMARK_OFF_COLUMNS
+
+    # ── ② 两条编码路 ──────────────────────────────────────────────────
+    plain_off = reel.plain_filtergraph(Path("s.ass"), 0.4, 1.0, None)
+    assert "overlay=" not in plain_off, f"没顶栏那条还在压角标：{plain_off}"
+    assert plain_off.endswith("[out]"), (
+        f"输出没打标签，`-map 0:v:0` 会把整个滤镜图绕过去：{plain_off}")
+    assert "subtitles=" in plain_off, "把字幕一起弄丢了"
+    plain_on = reel.plain_filtergraph(Path("s.ass"), 0.4, 1.0, 2)
+    assert "[2:v]overlay=" in plain_on, "别的栏目那条路把角标也弄没了"
+
+    bar_off = reel.topbar_filtergraph(0.4, 0.6, Path("t.ass"), Path("s.ass"),
+                                      foot_input=2, wm_input=None)
+    assert bar_off.count("overlay=") == 1, (
+        f"有顶栏那条：不画角标时该只剩脚注那一次 overlay：{bar_off}")
+    assert "match_foot" in bar_off, "底带脚注被一起拿掉了——它正是「下面已经有了」"
+    assert "[out]" in bar_off
+
+    # ── ③ render 真的读它，输入也跟着走 ───────────────────────────────
+    body = inspect.getsource(reel.render)
+    tree = ast.parse(_tw.dedent(body))
+    called = {n.func.id for n in ast.walk(tree)
+              if isinstance(n, ast.Call) and isinstance(n.func, ast.Name)}
+    assert "wants_watermark" in called, (
+        "render 没调 wants_watermark——常量定了没人读，"
+        "和当年 `_push` 那个键名写错是同一个形状：函数在、退路刚好给出对的答案")
+    # ⚠️ **判据要窄**：`wm_inputs = ["-i", str(wm_png)] if wm_png else []`
+    # 里本来就有 `str(wm_png)`，按字符串扫会把正确的写法也判成错的。要看的是
+    # **那次 `run("ffmpeg", …)` 的实参里**还有没有一个裸的 `str(wm_png)`。
+    # render 里有好几次 run("ffmpeg", …)（分段、封面、拼接…），要的是**最后那次
+    # 出成片的**——它是唯一一个把 `*video_args`（滤镜图）展进去的。
+    ff = [[ast.unparse(a) for a in n.args] for n in ast.walk(tree)
+          if isinstance(n, ast.Call) and isinstance(n.func, ast.Name)
+          and n.func.id == "run" and n.args
+          and getattr(n.args[0], "value", None) == "ffmpeg"]
+    ff = [a for a in ff if "*video_args" in a]
+    assert len(ff) == 1, f"认不准出成片那次 ffmpeg：命中 {len(ff)} 处"
+    args = ff[0]
+    assert "str(wm_png)" not in args, (
+        "角标那路输入还是无条件加的——不画的时候留一个没人消费的 `-i`，"
+        "会把后面所有输入的序号错开，而 ffmpeg 不会说这是为什么")
+    assert "*wm_inputs" in args, "角标那路输入没有跟着判据走"
+
+    # ── ④ 不画那一支要出声 ────────────────────────────────────────────
+    prints = [n for n in ast.walk(tree)
+              if isinstance(n, ast.Call) and isinstance(n.func, ast.Name)
+              and n.func.id == "print"]
+    said = [ast.unparse(n) for n in prints if "[角标]" in ast.unparse(n)]
+    assert len(said) >= 2, (
+        f"`[角标]` 只有 {len(said)} 处 print——画和不画要各说一句，"
+        "不然「这个栏目不画」和「渲角标那一步没走到」在日志上长得一模一样")
 
 def test_layout只认band且band不和contain混():
     """spec.layout 的值域和兼容性，`--dry-run`（parse_segments）就拦：
