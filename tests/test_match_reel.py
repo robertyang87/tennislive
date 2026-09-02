@@ -13916,7 +13916,12 @@ def test_赛场之上不画左上角角标而别的栏目照画():
 
     # ── ① 行为 ────────────────────────────────────────────────────────
     assert not reel.wants_watermark("赛场之上"), "赛场之上还在画左上角角标"
-    for col in ("网球有故事", "开球之前", "赛后开麦"):
+    # ⚠️ **「赛后开麦」2026-09-02 晚些时候被账号所有者一起包了进来**（「以后
+    # 赛后开麦也不要左上角的栏目标题和副标题」），所以它从这一组里挪走了——
+    # 这条判据原来明确断言过它「要画」，那正是主语变了的样子。采访线自己的
+    # 判据在 `test_interview_clip.py::test_赛后开麦不画左上角角标`。
+    assert not reel.wants_watermark("赛后开麦"), "赛后开麦也不该再画角标"
+    for col in ("网球有故事", "开球之前"):
         assert reel.wants_watermark(col), f"{col} 不该被这条规矩带上"
     assert not reel.wants_watermark(""), (
         "空栏目名要按赛场之上算——管线里 `cover.eyebrow` 缺省就是它")

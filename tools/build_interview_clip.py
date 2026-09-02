@@ -1451,12 +1451,29 @@ def watermark_filter(outdir: Path, spec: dict, *,
     # 没挂），所以这一句必须留在函数里。
     sys.path.insert(0, str(ROOT / "src"))
     from tennislive.video.watermark import (  # noqa: PLC0415
-        brand_watermark, watermark_xy)
+        brand_watermark, column_wants_watermark, watermark_xy)
 
     # ⚠️ 栏目名和封面读的是**同一处**（`spec["column"]`，缺省「赛后开麦」，
     # 和 `_cover_png` 那行一模一样）——各读各的会让封面和播放画面写着两个栏目。
-    png = brand_watermark(outdir / "_watermark.png",
-                          spec.get("column", "赛后开麦"), cover_topic(spec))
+    column = spec.get("column", "赛后开麦")
+
+    # 账号所有者 2026-09-02：「**以后赛后开麦也不要左上角的栏目标题和副标题**」
+    # ——名单在 `video/watermark.py`（`WATERMARK_OFF_COLUMNS`），两条出片线共用。
+    #
+    # ⚠️ **不画的时候要直通，不能返回空串**：调用方接的是 `[{src}]→[{dst}]`，
+    # 空串会留下一个悬空的标签，而这条线**有两条出画面的路**（正片和冷开场），
+    # 让调用方各自去改标签名正是当年「第一版只接了正片」那个漏法的形状。
+    #
+    # ⚠️ **不画那一支必须出声**：「这个栏目不画」和「渲角标那一步没走到」在成片
+    # 上长得一模一样，而后者是个真 bug。顺带把代价也说出来——这条线没有底带
+    # 品牌脚注，所以拿掉角标之后正片区间一个品牌标识都不剩（封面和品牌片尾还有）。
+    if not column_wants_watermark(column, default="赛后开麦"):
+        print(f"[角标] 「{column}」这个栏目不画左上角的常驻角标（栏目标题和"
+              f"副标题都不画）。⚠️ 这条线没有底带品牌脚注，所以正片区间"
+              f"从此一个品牌标识都不剩，只有封面和品牌片尾还有。")
+        return f"[{src}]null[{dst}]"
+
+    png = brand_watermark(outdir / "_watermark.png", column, cover_topic(spec))
     x, y = watermark_xy(VIDEO_TOP)
     return (f"movie={png},format=rgba[wm];"
             f"[{src}][wm]overlay={x}:{y}[{dst}]")
