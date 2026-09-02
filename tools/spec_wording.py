@@ -100,6 +100,27 @@ OWN_POINT = re.compile(r"(要到|拿到|得到|握有)[^。！？\n]{0,12}?"
                        r"([一二三四五六七八九十\d]+)\s*个?(盘点|赛点|破发点)")
 SAVE_VERB = re.compile(r"(救|保住)")
 
+#: 小红书正文**首行**里必须出现一位球员的名字。
+#:
+#: 那一行不是"正文的开头"，是**标题**——`push_reel.split_copy()` 把它单独切出来，
+#: 小红书信息流里它就是缩略图底下那一行字，微信推送里它是单独成块、可长按复制的
+#: 那一句。也就是说这是**这条片子在信息流里唯一被读到的一行文字**。
+#:
+#: ⚠️ 它看起来该和封面钩子守同一条规矩（「身份海报上已经印着了，钩子再写一遍是
+#: 白占那 27 个字」），**而那条规矩依赖一个在这儿不成立的前提**。量了一遍：solo
+#: 封面的中文名是 `SCORE_CN_MAX_PX = 52px`，画布 1080 宽——小红书双列瀑布流的
+#: 缩略图约 170px 宽，缩下去名字只剩 **8.2px**，钩子 14.8px。也就是**滑到这一屏
+#: 的人看得见钩子，看不见名字**。所以「另一处已经印着」在封面上成立，在信息流里
+#: 不成立——这正是本仓库反复记的「抄了规则，没抄它依赖的前提」。
+#:
+#: 判据只机械地管**一样**：有没有点出是谁。「哪一站」「什么结果」写法太多、
+#: 机器分不出好坏，那半条归 CLAUDE.md，故意没有判据。
+#:
+#: ⚠️ 认简称：整名或**头两个字**（「德约」之于德约科维奇、「中岛」之于中岛布兰登，
+#: 存量里就这两条靠它放行）。人名一个都取不到的老 spec（cover 没有 matchup）
+#: **跳过不判**——没有可比的东西时报红是编一个判据，而不是执行一个判据。
+CAPTION_LEAD_NAME_PREFIX = 2
+
 #: 文案里不许提字幕这类制作规格（账号所有者 2026-08-19：「以后不要再在文案里
 #: 说中英文字幕相关的文案」）。每条片子都有的规格不是这一条的内容——
 #: interview 线为它攒了一张 78 个文件的豁免表；reel 语料量过是干净的（0 条），
@@ -240,6 +261,42 @@ FRACTION_ROUND_LEGACY = frozenset({
 
 YAODAO_LEGACY = frozenset({"zverev-griekspoor.json", "zverev-griekspoor.xhs.txt"})
 
+#: 首行没点出是谁——这条规矩（2026-09-02）之前发出去的 80 条。已发不为措辞重渲
+#: （消息收不回来，`push.summary` 还要和已发的 copy.html 逐字相同），和
+#: `FRACTION_ROUND_LEGACY` 那 173 个文件是同一个处置。**只许减不许加**，
+#: 自检在 pytest 那头（每个名字都要真的还命中）。
+CAPTION_LEAD_LEGACY = frozenset({
+    "altmaier-musetti", "anisimova-noskova", "arango-venus", "baez-dimitrov",
+    "bartunkova-charaeva", "bejlek-pliskova", "bejlek-sabalenka",
+    "boisson-krueger", "borges-rublev", "boulter-volynets", "bouzkova-jovic",
+    "bucsa-chwalinska", "chwalinska-gibson", "cincinnati-story",
+    "cirstea-bartunkova", "cirstea-kalinskaya", "cirstea-pegula",
+    "cobolli-blockx", "djokovic-tirante", "eala-ruse",
+    "eala-stoiana-us-open-2026-r1", "eala-story", "faria-shelton",
+    "fery-deminaur", "fils-tiafoe-cincinnati-2026-final",
+    "fonseca-van-de-zandschulp", "fritz-merida", "fritz-michelsen",
+    "gauff-li", "jodar-tabilo", "kovacevic-khachanov", "lehecka-fils",
+    "maria-yastremska", "medvedev-damm", "medvedev-zandschulp",
+    "navarro-kalinina", "noskova-boulter", "noskova-mcnally",
+    "noskova-tauson", "osaka-four-slams-2026", "osaka-iverson-tribute",
+    "osaka-walkout-2026", "ostapenko-frech", "parry-mertens",
+    "pegula-navarro", "putintseva-bencic-us-open-2026-r1",
+    "rakhimova-krejcikova-us-open-2026-r1", "rublev-virtanen-us-open-2026-r1",
+    "rybakina-kasatkina", "rybakina-shnaider", "sabalenka-gibson",
+    "safiullin-alcaraz-us-open-2026-r1", "shang-rublev",
+    "shnaider-chwalinska", "sonmez-anisimova", "stearns-tauson",
+    "swiatek-rybakina-cincinnati-2026-qf", "tiafoe-auger-aliassime",
+    "tiafoe-musetti-cincinnati-2026-qf", "tirante-fritz", "tirante-landaluce",
+    "townsend-rybakina", "trungelliti-medvedev", "tsitsipas-auger-aliassime",
+    "usopen-qualies-2026", "wang-kasatkina", "wang-xinyu-story",
+    "wangxiyu-swiatek-us-open-2026-r1", "williams-kenin-us-open-2026-r1",
+    "wong-paul-us-open-2026-r1", "wu-walton-us-open-2026-r1", "zhang-day",
+    "zhang-fernandez-us-open-2026-r1", "zhang-ostapenko",
+    "zheng-burel-us-open-2026-q2", "zheng-liutova-us-open-2026-r1",
+    "zheng-pridankina-us-open-2026-q3", "zverev-atmane", "zverev-griekspoor",
+    "zverev-norrie",
+})
+
 # ── 三种扫描面（故意不合并，见模块 docstring）──────────────────────────────
 
 
@@ -315,6 +372,25 @@ def spec_player_names(spec: dict) -> list[str]:
     for side in ("top", "bottom"):
         names += list((versus.get(side) or {}).get("names") or [])
     return [n for n in names if n]
+
+
+def caption_lead(xhs_text: str) -> str:
+    """小红书正文的**首行**，也就是标题那一行（和 `push_reel.split_copy` 同一套切法）。"""
+    return next((ln.strip() for ln in (xhs_text or "").splitlines() if ln.strip()), "")
+
+
+def caption_lead_names_nobody(first_line: str, names: list[str]) -> bool:
+    """这一行里一个球员的名字都没有吗？
+
+    人名一个都取不到时返回 **False**（判不了就不判，见 `CAPTION_LEAD_NAME_PREFIX`
+    上面那段）——报红需要有可比的东西，没有就不是"违规"，是"这条判不了"。
+    """
+    names = [n for n in names if n]
+    if not names or not first_line:
+        return False
+    n = CAPTION_LEAD_NAME_PREFIX
+    return not any(name in first_line or (len(name) > n and name[:n] in first_line)
+                   for name in names)
 
 
 def save_subject_flag(text: str, names: list[str]) -> list[str]:
@@ -447,6 +523,16 @@ def check_spec_wording(spec: dict, slug: str,
         problems.append(
             "「拿到 N 个盘点」之后接「救/保住」，没写出是谁在救——读者会把"
             "主语接成拿到点的那个人：" + "；".join(bad))
+
+    if xhs_text and slug not in CAPTION_LEAD_LEGACY:
+        first = caption_lead(xhs_text)
+        if caption_lead_names_nobody(first, spec_player_names(spec)):
+            problems.append(
+                f"小红书正文首行一个球员的名字都没有：「{first}」——那一行是"
+                f"**标题**（信息流里缩略图底下唯一被读到的一行），刷到的人得先"
+                f"知道这是谁。封面钩子不写身份是因为海报上印着，而缩略图缩到 "
+                f"170px 时那个名字只剩 8.2px，前提在这儿不成立。"
+                f"把「谁」补进这一行，钩子留在后半句")
 
     if hits := _hits(BILINGUAL_MENTION, voiced):
         problems.append(
