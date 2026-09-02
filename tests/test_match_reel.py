@@ -6735,6 +6735,108 @@ def test_轮次写N强不写分数式():
     assert set(offenders) <= _LEGACY_ROUND_NAMES, "清单里有已经修好的条目？"
 
 
+def test_小红书正文首行要点出是谁():
+    """账号所有者 2026-09-02 拿一条同场比赛的竞品视频问「文案需要学一下」。
+
+    那一行不是「正文的开头」，是**标题**——`push_reel.split_copy()` 把它单独
+    切出来：小红书信息流里它就是缩略图底下那一行字，微信推送里它是单独成块、
+    可长按复制的那一句。**这条片子在信息流里唯一被读到的一行文字。**
+
+    ⚠️ 它看起来该和封面钩子守同一条规矩（CLAUDE.md：「身份海报上已经印着了，
+    钩子再写一遍是白占那 27 个字」），**而那条规矩依赖一个在这儿不成立的
+    前提**。量出来的：solo 封面中文名 `SCORE_CN_MAX_PX = 52px` / 画布 1080 宽，
+    小红书双列瀑布流缩略图约 170px，缩下去名字只剩 **8.2px**（钩子 14.8px）。
+    滑到这一屏的人**看得见钩子，看不见名字**。所以「另一处已经印着」在封面上
+    成立、在信息流里不成立——正是本仓库反复记的「抄了规则，没抄它依赖的前提」。
+
+    **判据只机械地管一样：有没有点出是谁。** 「哪一站」「什么结果」写法太多、
+    好坏机器分不出来，那半条写在 CLAUDE.md 里，故意没有判据（硬凑一个会被
+    绕过的判据，比没有更糟）。
+
+    ⚠️ 它不是「把钩子换成名字」：钩子留在后半句就行。存量里 97 条已经是这个
+    形状（「郑钦文下一轮的对手，定了」是反例——那一行谁都没点出来）。
+    """
+    from tools.spec_wording import (  # noqa: PLC0415
+        CAPTION_LEAD_LEGACY, caption_lead, caption_lead_names_nobody,
+        spec_player_names,
+    )
+
+    offenders, checked, unjudgeable = {}, 0, []
+    for path in sorted(Path("specs/reels").glob("*.json")):
+        xhs = path.with_suffix(".xhs.txt")
+        if not xhs.exists():
+            continue
+        spec = json.loads(path.read_text(encoding="utf-8"))
+        names = [n for n in spec_player_names(spec) if n]
+        if not names:
+            # cover 没有 matchup 的老形状：没有可比的东西，这条判不了。
+            # 报红需要有可比的东西——没有就不是「违规」，是「判不了」。
+            unjudgeable.append(path.stem)
+            continue
+        checked += 1
+        first = caption_lead(xhs.read_text(encoding="utf-8"))
+        if caption_lead_names_nobody(first, names):
+            offenders[path.stem] = first
+
+    fresh = {k: v for k, v in offenders.items() if k not in CAPTION_LEAD_LEGACY}
+    assert not fresh, (
+        f"这些片子的小红书标题一个球员的名字都没点出来：{fresh}。"
+        "把「谁」补进首行，钩子留在后半句。")
+    # **清单只许减不许加**：修好一个就删一个，别让它变成一张许可证
+    assert set(offenders) <= CAPTION_LEAD_LEGACY, (
+        f"豁免表里有已经修好的条目：{sorted(set(CAPTION_LEAD_LEGACY) - set(offenders))}")
+    # **判据自己的判据**：上面两个 continue 一旦写宽，这条会变成恒真的绿灯。
+    # 4 是量出来的（cover 没有 matchup 的四条老 spec），涨了就说明
+    # `spec_player_names` 取不到名字了——那时这条闸对整库都是哑的。
+    assert checked >= 180, f"只校到 {checked} 条——跳过的条件是不是写宽了？"
+    assert len(unjudgeable) <= 4, f"判不了的条数涨了：{sorted(unjudgeable)}"
+
+
+def test_首行判据认简称而且没名字可比时不报红():
+    """三头，缺一头这条闸就坏在一个不吭声的方向上。
+
+    ① 点出了名字要放行，一个都没点出来要报——这是它的本分。
+    ② **认头两个字的简称**：存量里「德约」（德约科维奇）、「中岛」
+       （中岛布兰登）两条靠它放行。不认的话，这两条会被判成「没点出是谁」，
+       而那是假红——判据宁可窄，不可宽。
+    ③ **一个人名都取不到时返回 False**（判不了就不判）。反过来做的话，
+       cover 没有 matchup 的老 spec 会集体报红，而那不是「违规」。
+    """
+    from tools.spec_wording import (  # noqa: PLC0415
+        CAPTION_LEAD_NAME_PREFIX, caption_lead, caption_lead_names_nobody,
+    )
+
+    names = ["伊埃拉", "斯托亚纳"]
+    assert caption_lead_names_nobody("六个破发点，她一个没给", names)
+    assert not caption_lead_names_nobody("伊埃拉六个破发点一个没给", names)
+    # ② 简称
+    assert not caption_lead_names_nobody("二十年了，德约第一次倒在大满贯首轮",
+                                         ["德约科维奇", "纳沃内"])
+    assert CAPTION_LEAD_NAME_PREFIX == 2, "简称按头两个字认，改这个数要重扫存量"
+    # ③ 没名字可比
+    assert not caption_lead_names_nobody("随便一句话", [])
+    assert not caption_lead_names_nobody("", names), "空行判不了，不该报红"
+    # 首行 = 标题那一行，和 split_copy 同一套切法（前面的空行要跳过）
+    assert caption_lead("\n\n伊埃拉横扫过关\n\n正文第一段") == "伊埃拉横扫过关"
+
+
+def test_首行那道闸接在dry_run够得着的地方():
+    """CLAUDE.md 的教条：**只读 spec 就能判的规矩，出处必须在 validate_spec
+    够得着的地方**。这条只要 spec + `.xhs.txt`，两样 dry-run 都拿得到——
+    落在渲染路径上就是「本地全绿、远端红」，落在 pytest 里就是「自动链
+    直推 main 不触发 CI，一次都没被扫过」（`tiafoe-musetti` 那次的形状）。
+    """
+    from tools.spec_wording import check_spec_wording  # noqa: PLC0415
+
+    spec = {"cover": {"matchup": [{"name": "伊埃拉"}, {"name": "斯托亚纳"}]}}
+    assert any("首行" in p for p in
+               check_spec_wording(spec, "新写的一条", "六个破发点，她一个没给\n\n正文")),         "check_spec_wording 里没接上这条闸——那它对自动链就是不存在的"
+    assert not any("首行" in p for p in
+                   check_spec_wording(spec, "新写的一条", "伊埃拉六个破发点一个没给\n\n正文"))
+    # 没有 xhs 正文时不许凭空报红（probe/cover 那几条路不带正文）
+    assert not any("首行" in p for p in check_spec_wording(spec, "新写的一条"))
+
+
 def test_轮次那道闸要盖住烧在画面上的顶栏():
     """`topbar.line1` 写的就是「<年> <赛事> <轮次>」，**整个比赛段一直烧在
     画面上**——它比封面那一行还显眼，是这条规矩最该盖住的一面。
