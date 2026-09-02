@@ -74,8 +74,8 @@
     "她送你生日礼物了吗？",
     "送了的话 能说说是什么吗？",
     "其实 我想她",
-    "来了很多场 这对她来说",
-    "留在这里很不容易",
+    "明天还有比赛",
+    "能留下来对她很不容易",
     "所以 是的 她送了",
     "是一份很棒的礼物",
     "如果她允许我说的话",
@@ -167,9 +167,10 @@
     ]
   },
   "en_fixed": {
-    "40": "Your wife, Elina, is of course watching"
+    "40": "Your wife, Elina, is of course watching",
+    "47": "playing tomorrow, so it's great effort"
   },
-  "_en_fixed_why": "第 40 行 ASR 写的是 `Your wife, Alizé`——**那是错的，而且错得会伤到人**：孟菲尔斯的妻子是 埃琳娜·斯维托丽娜（2021 年结婚，女儿 Skaï），而 Alizé Cornet 是他二十年前交往过的前女友。照抄就等于在一条要发出去的片子上，把人家前女友的名字安在妻子头上。\n判据不是「我听着像 Elina」（我没有音轨），是**同一句话里主持人自己给的那个限定**：`You guys have already played mixed doubles together`——2026 美网混双正是孟菲尔斯和斯维托丽娜夫妻搭档，而且打进了四强（美网官网 2026-08-25 两篇战报、ESPN `Spouses Svitolina, Monfils into US Open mixed doubles semis`、ATP 官网 `Married couple Monfils & Svitolina`、NBC Sports 四处一致）。Alizé Cornet 和他没有任何混双搭档记录，也不是他妻子。\n⚠️ 这条线本来就记着这个坑：`build_interview_clip.py` 的 docstring 白纸黑字写着 `Elina Svitolina` 会被 ASR 写成 `Alina Vitilina` / `Switzerina`——同一个名字，这次被听成了 `Alizé`。**`--stage verify` 那份 medium.en 会给出第二个读法，渲之前再核一次。**",
+  "_en_fixed_why": "第 40 行 ASR 写的是 `Your wife, Alizé`——**那是错的，而且错得会伤到人**：孟菲尔斯的妻子是 埃琳娜·斯维托丽娜（2021 年结婚，女儿 Skaï），而 Alizé Cornet 是他二十年前交往过的前女友。照抄就等于在一条要发出去的片子上，把人家前女友的名字安在妻子头上。\n判据不是「我听着像 Elina」（我没有音轨），是**同一句话里主持人自己给的那个限定**：`You guys have already played mixed doubles together`——2026 美网混双正是孟菲尔斯和斯维托丽娜夫妻搭档，而且打进了四强（美网官网 2026-08-25 两篇战报、ESPN `Spouses Svitolina, Monfils into US Open mixed doubles semis`、ATP 官网 `Married couple Monfils & Svitolina`、NBC Sports 四处一致）。Alizé Cornet 和他没有任何混双搭档记录，也不是他妻子。\n⚠️ 这条线本来就记着这个坑：`build_interview_clip.py` 的 docstring 白纸黑字写着 `Elina Svitolina` 会被 ASR 写成 `Alina Vitilina` / `Switzerina`——同一个名字，这次被听成了 `Alizé`。**`--stage verify` 那份 medium.en 会给出第二个读法，渲之前再核一次。**\n\n**第 47 行（2026-09-02 按第二份 ASR 改的，我原来的推测是错的）**：small.en 给的是 `been to more`，medium.en 给的是 **`playing tomorrow`**。取后者，三条理由：\n① **语义**：`been to more` 后面缺宾语，而且和后半句 `so it's great effort for her to stay here` 的因果很弱；`playing tomorrow` 一接就通——她明天还要打，所以陪着看完这场夜场才叫「很大的付出」。\n② **独立事实**：斯维托丽娜自己也在打这届美网，flashscore 当日表 `AREAeWYG` 显示她 **2026-09-02 21:30 UTC 对阵 Joint M.**——而这场采访发生在美东 9 月 1 日深夜（比赛 9/2 01:31 UTC 结束）。「明天有比赛」是可核的事实，不是听感。\n③ 我在上一版 `_notes` 里已经把这一行标成「语义存疑、等 verify 核」——第二份 ASR 正是为这种情形跑的。",
   "cover": {
     "frame_at": 97.3,
     "_why": "沙箱下不动这条源片的媒体（YouTube 挡机房 IP），所以是拿 storyboard 挑的——1.95 秒一格排完 146 秒全片，逐格放大比过八个候选。95.4／97.3／99.3 这三格他连着在说同一句话，97.3 落在中间：**正面偏四分之三、两只眼睛都睁着、嘴张开、表情最外露**，背景是转播那块 `GAEL MONFILS` 挡板。另外几个都差一档——91.5 和 101.2 表情偏平静，136.3 他低着头，21.4／99.3 侧脸偏多，142.1 眼睛看向下方。\n**情绪正对着这条片子的落点**：97.3 秒他说的就是 `but a great show, and you guys are rock`（也想给一场好看的表演，你们太棒了）——二十年来他给自己的定位，而这一晚全场站起来给他唱了生日歌。\n⚠️ 一格 1.95 秒，比一帧粗；挑在连续同一表情的中间，就算差一格也踩不到闭眼或说话中途的怪口型。渲完要把成片从 Release 拉回本地核这一帧（账号所有者 2026-08-21：封面图一定不要闭眼的）。",
@@ -201,5 +202,9 @@
     "41.4-56.4": "**这一段不是漏词，是这条片子最该留白的十五秒：全场在给他唱生日歌。**\n两个独立判据对得上——① **画面自证**：storyboard 连着七格（42.8／44.8／46.7／48.7／50.6／52.6／54.5）全是看台，其中 50.6～54.5 那三格整片观众**站着、张着嘴在唱**，前面几格有人举着手欢呼；② **报道印证**：多家赛后报道明写路易斯·阿姆斯特朗球场的观众在他赢球后为他唱了生日歌（和 flashscore `MIV÷Louis Armstrong Stadium` 是同一个球场）。\n而且它两头自洽：39.20 秒他说了句 `Hey.`（像是被打断／招手），56.40 秒回来第一句就是`Thank you. Thank you. Thank you very much.`——**唱完之后道谢**，这正是被唱生日歌该有的形状。\n⚠️ ASR 在这十五秒里没听出词**不等于没人出声**——这里本来就没有人在「说话」，是在唱歌。",
     "103.5-106.1": "⚠️ 推的，不是听的。100.80 秒他说完 `so let's keep it up for the second one.`（第二轮我们继续），106.11 秒 ASR 收到 `[applause]`，109.16 秒主持人才接着问最后一个问题。storyboard 103.2 秒画面是**看台上的法国国旗**——他说完，全场鼓掌，转播切了观众席。是掌声，不是漏词。"
   },
-  "_notes": "① 采访线的自动扫描（`collect_oncourt_interviews`）只扫 tennistv.com 的 ATP 库，**对大满贯是盲的**（CLAUDE.md 2026-08-26 记过），所以这条和 `zheng-liutova-us-open-2026-r1-interview` 一样是手工建的。美网的场上采访在 `@usopen` 频道，标题格式固定 `<球员> On-Court Interview | 2026 US Open <轮次>`，正好命中 L0 的 `official_explicit_oncourt` 正则。\n② ⚠️ **顺手发现、没在这条时效片里展开修的缺口**：`data/oncourt_sources.json` 里 `US Open` 和 `Australian Open` 都是 `verified: false`，所以 `candidate_verification` 对大满贯只会返回 `pending`——手工写 `source_verification` 能过 L0（`validate_source_contract` 不重跑候选判定），自动链不行。要不要把这两个赛事标成 verified 是**自动链的口径选择**（会让它开始接受大满贯源），不该在一条赛果片里顺手定。\n③ ⚠️ **第 46～48 行的英文语义存疑，`--stage verify` 要重点核这一处**：ASR 给的是 `Actually, I mean I think she's been to more, so it's great effort for her to to stay here.`——`she's been to more` 后面缺宾语（多半是 `been to more [tournaments/matches]`，也可能是 `been through more`）。我按「她来看了很多场，能留在这儿对她是很大的付出」翻的，**这是从上下文推的，不是听出来的**；medium.en 那份要是给出不同读法，以它为准改 `en_fixed`。\n④ 第 8 行整行只有语气词（`Um Uh`，14.7 秒），工具提示了但**故意留着**：那是他说完「各位纽约，晚上好」之后等全场欢呼平息、边组织语言的几秒，storyboard 15.6／17.5／19.5 三格他都还握着话筒站在原地。中文配「嗯」，比去掉之后「有中文没英文」诚实。\n⑤ `push.auto` 在渲之前就写好了——CLAUDE.md 记过这条：补一行要重渲一整趟（`auto_push_interview_gate` 会比 `qc_attestation.spec_sha256` 和当前 spec 的字节哈希）。"
+  "_notes": "① 采访线的自动扫描（`collect_oncourt_interviews`）只扫 tennistv.com 的 ATP 库，**对大满贯是盲的**（CLAUDE.md 2026-08-26 记过），所以这条和 `zheng-liutova-us-open-2026-r1-interview` 一样是手工建的。美网的场上采访在 `@usopen` 频道，标题格式固定 `<球员> On-Court Interview | 2026 US Open <轮次>`，正好命中 L0 的 `official_explicit_oncourt` 正则。\n② ⚠️ **顺手发现、没在这条时效片里展开修的缺口**：`data/oncourt_sources.json` 里 `US Open` 和 `Australian Open` 都是 `verified: false`，所以 `candidate_verification` 对大满贯只会返回 `pending`——手工写 `source_verification` 能过 L0（`validate_source_contract` 不重跑候选判定），自动链不行。要不要把这两个赛事标成 verified 是**自动链的口径选择**（会让它开始接受大满贯源），不该在一条赛果片里顺手定。\n③ ⚠️ **第 46～48 行的英文语义存疑，`--stage verify` 要重点核这一处**：ASR 给的是 `Actually, I mean I think she's been to more, so it's great effort for her to to stay here.`——`she's been to more` 后面缺宾语（多半是 `been to more [tournaments/matches]`，也可能是 `been through more`）。我按「她来看了很多场，能留在这儿对她是很大的付出」翻的，**这是从上下文推的，不是听出来的**；medium.en 那份要是给出不同读法，以它为准改 `en_fixed`。\n④ 第 8 行整行只有语气词（`Um Uh`，14.7 秒），工具提示了但**故意留着**：那是他说完「各位纽约，晚上好」之后等全场欢呼平息、边组织语言的几秒，storyboard 15.6／17.5／19.5 三格他都还握着话筒站在原地。中文配「嗯」，比去掉之后「有中文没英文」诚实。\n⑤ `push.auto` 在渲之前就写好了——CLAUDE.md 记过这条：补一行要重渲一整趟（`auto_push_interview_gate` 会比 `qc_attestation.spec_sha256` 和当前 spec 的字节哈希）。",
+  "transcript_disagree_ok": {
+    "rate": 0.134,
+    "why": "逐处看过 23 处分歧，**没有一处影响发出去的英文**，两处反而帮我改对了东西：\n① **`elina` → `alina`**：这一处印证了 `en_fixed` 第 40 行。自动字幕原本给的是 `Alizé`（他二十年前的前女友），我按「主持人同一句里说他俩打过混双」校成 `Elina`；第二份独立听成 `alina`——**两份都不是 `Alizé`**，而 `Alina` 正是这条线记过的 `Elina Svitolina` 典型误听（工具 docstring 里写着 `Alina Vitilina`）。\n② **`been to more` → `playing tomorrow`**：**已按第二份改**，见 `_en_fixed_why`——她第二天真的有比赛（flashscore `AREAeWYG`，9/2 21:30 UTC），语义和事实两头都站得住。\n③ `gaël → gael` ×2、`40th → 40`：拼写和数字写法，同一个词。\n④ 其余 18 处**全是 whisper 系统性丢虚词**：`and` ×3、`so` ×2、`you know` ×3、`that was`、`play`、`a` ×2、`how`、`to`、`she`、`and just`。这条采访他说话很碎（`you know` 是口头禅），small.en 逐词收，medium.en 会归并——闸门那句「长采访多半是 whisper 把虚词丢了」说的正是这个。\n⑤ 唯一一处整句缺失是 `have a good one`（第 17 行，片内 60.1 秒）：紧接着 61.57 秒就是 `[applause]`，多半被掌声压过去了。第一份收到了，而且这是句再常见不过的告别语，中文照「祝你们愉快」译。\n分歧 13.3% 低于认领天花板 18%，词数 285 也远超短转写线（60），按比例判是合适的。"
+  }
 }

@@ -50,8 +50,8 @@
 | 44 | 2:04.3 | [▶](https://youtu.be/6jTPBKLew5g?t=124) | has she got your birthday present yet? | 她送你生日礼物了吗？ |  |
 | 45 | 2:06.9 | [▶](https://youtu.be/6jTPBKLew5g?t=126) | And if so, can you reveal to us what it was? | 送了的话 能说说是什么吗？ |  |
 | 46 | 2:10.9 | [▶](https://youtu.be/6jTPBKLew5g?t=130) | Actually, I mean I think she's | 其实 我想她 |  |
-| 47 | 2:12.6 | [▶](https://youtu.be/6jTPBKLew5g?t=132) | been to more, so it's great effort | 来了很多场 这对她来说 |  |
-| 48 | 2:14.1 | [▶](https://youtu.be/6jTPBKLew5g?t=134) | for her to to stay here. | 留在这里很不容易 |  |
+| 47 | 2:12.6 | [▶](https://youtu.be/6jTPBKLew5g?t=132) | playing tomorrow, so it's great effort | 明天还有比赛 | ✏️ 已订正 |
+| 48 | 2:14.1 | [▶](https://youtu.be/6jTPBKLew5g?t=134) | for her to to stay here. | 能留下来对她很不容易 |  |
 | 49 | 2:15.6 | [▶](https://youtu.be/6jTPBKLew5g?t=135) | So, yes, she did. | 所以 是的 她送了 |  |
 | 50 | 2:17.2 | [▶](https://youtu.be/6jTPBKLew5g?t=137) | It was an amazing gift. | 是一份很棒的礼物 |  |
 | 51 | 2:20.2 | [▶](https://youtu.be/6jTPBKLew5g?t=140) | If she allowed me to say it, | 如果她允许我说的话 |  |
