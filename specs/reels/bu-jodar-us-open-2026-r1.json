@@ -1,0 +1,355 @@
+{
+  "slug": "bu-jodar-us-open-2026-r1",
+  "_column": "reel",
+  "layout": "band",
+  "scorebox": [
+    104,
+    887,
+    660,
+    980
+  ],
+  "_bo5_why": "大满贯男子五盘三胜。这场直落三盘结束，**没有决胜盘**——第三盘只是赢家拿满三盘的那一盘，旁白和小红书正文里一个「决胜盘」都没有写（`decider_set_problem` 那道闸拦的正是这个）。",
+  "_scorebox_why": "和 wu-walton-us-open-2026-r1 同一路转播（美网官方集锦，1920x1080）：左缘 x=104、上下沿 y 887~980 直接沿用。右缘随盘数走（美网的板每打完一盘 +38px），本场三盘，按三盘档 660 当兜底——真右缘由 resolve_board_insets 每段现量。probe 就是拿这块窗口（右缘给到 745）量的死球，58 个 point_ends 全出来了。",
+  "source_url": "https://youtu.be/7xLudWFW98k",
+  "_source": "美网官方 YouTube 频道（US Open Tennis Championships，@usopen）本场官方集锦《Rafael Jodar vs. Yunchaokete Bu Highlights | 2026 US Open Round 1》，probe 量到 1920x1080、196.5s、29.97fps（1080p 硬门槛过）。画面自证四处：① 左下记分条整场烧着 `12 JODAR ESP / BU CHN`（种子号 12 在板上，与官方 players.json seedValue=12 一致）；② 36.5s / 110.5s / 192.5s 三次全屏台标 `MEN'S SINGLES | 1ST ROUND · STADIUM 17`，末一次印着 `12 RAFAEL JODAR 2 1 1 / YUNCHAOKETE BU 6 6 6`，赛果自证；③ 182.5s 场边 Rolex 钟烧着 **1:48**，与官方用时 1:48 逐分钟对上；④ 解说 62.16s 说 `here on stadium 17`、167.52s 说 `has knocked out the 12th seed and it has been emphatic today. 6-2 6-1 6-1`。片尾板 193.38 起（probe silent_audio [[193.43, 196.46]] 印证），段落全部收在 184.8 之前。",
+  "cover": {
+    "matchup": [
+      {
+        "name": "布云朝克特",
+        "name_en": "Yunchaokete Bu",
+        "country": "CHN",
+        "rank": 124
+      },
+      {
+        "name": "霍达尔",
+        "name_en": "Rafael Jodar",
+        "country": "ESP",
+        "rank": 13
+      }
+    ],
+    "_rank_why": "两人排名同源于美网官方 players.json（atpy09v singles_rank=124、atpj0dz singles_rank=13），并与官方 day_11 feed 的 seed 字段交叉：霍达尔 seed=12、布云朝克特 seed=null 且 **entryStatus=LL**。⚠️ 种子号 12 和排名 13 是两个数，海报括号里印的是排名，旁白说「十二号种子」时说的是种子。",
+    "winner": "布云朝克特",
+    "result": "6-2 6-1 6-1",
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "布云朝克特",
+    "hook": "五天前他已经出局\n今天他只丢四局",
+    "topic": "美网首轮 · 17 号球场",
+    "portrait": {
+      "image": "assets/reel/bu-jodar-us-open-2026-r1-cover-forehand.jpg",
+      "focus": 0.52,
+      "focus_y": 0.5,
+      "zoom": 1.0,
+      "_why": "美网官方图片接口本场实拍（Darren Carroll/USTA，说明原文『Yunchaokete Bu in action during a Men's Singles match on Day Four of the 2026 US Open at USTA Billie Jean King National Tennis Center on Wednesday, September 2』——人物、赛事、场馆、日期四要素由赛事方自证）。正手击球的近景特写：头肩占掉大半个画幅、眼睛睁着盯着击球点，身后是场边那面 `us open` 挡板，看得出是在球场上。",
+      "_portrait_why": "官方这一场一共只发了 6 张（按 playerId atpy09v 的 tag 接口点清楚的，其中两张 md5 相同）：一张走动『reacts』脸太小，两张中景带看台，一张背景是 IBM 测速牌，剩下两张是同一张。没有庆祝照——所以按『情绪对题』之内『优先近景特写』这一条，选脸最大、眼睛睁着的这张。",
+      "_low_res_why": "美网官方图片接口封顶 1280×720（`f_` 前缀就是顶，十二个前缀、六个目录、三种 width 参数 CLAUDE.md 都探过），铺 1080×1440 是 2.0 倍放大，够不着 1.00x 那道地板。同一轮里 AP 通讯社对这一场是零、WTA photo-resources 不收大满贯、USA TODAY 当日图集这一辑没有他——这一档就是大满贯封面的天花板，不是没找。",
+      "_zoom_why": "横图铺 3:4 竖版：高度正好铺满，focus_y 是死的，只有 focus 有用。他的头在源图 x 700~900、y 10~220，铺满后落在输出 y 20~440——台头带（y 0~170）的文字收在 x≈420 以内，两边不相撞。focus 0.52 时头落在输出 x 630~1030（右侧留 50px），球拍和握拍手还在画面里；再往小拧头会被右边切掉，再往大拧球拍就出画。钩子带（y 790~1100）压的是球衣和球拍，不压脸。"
+    },
+    "scoreboard": {
+      "court": "Stadium 17",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%20%221%3A48%3A00%22%2C%20%22source%22%3A%20%22US%20Open%20official%20completed_matches%20day_11%20match_id%201109%20duration%201%3A48%20%3D%20setDurations%2038%2B33%2B37%20min%22%7D",
+        "field": "duration"
+      },
+      "_court_why": "美网官方 completed_matches/days/day_11.json（match_id 1109）courtName=Stadium 17；源片 36.5s / 110.5s / 192.5s 的全屏台标烧着 STADIUM 17，解说 62.16s 也说 `here on stadium 17`，画面自证。",
+      "_duration_why": "官方 1:48，分盘 38+33+37=108 分钟自洽；源片 182.5s 场边 Rolex 钟烧着 1:48，画面第三次印证。⚠️ flashscore df_sui_1 报 0:38+0:34+0:37=1:49（次盘多一分钟）——按『比赛用时不要只信 flashscore，以官方为准』取 1:48。"
+    },
+    "_result_why": "三源一致：flashscore 当日表 BA~BF（2:6 1:6 1:6，home=Jodar）、美网官方 day_11 feed（team1 Jodar totalSetsWon=0 won=false / team2 Bu totalSetsWon=3 won=true）、以及源片 192.5s 全屏台标 `12 RAFAEL JODAR 2 1 1 / YUNCHAOKETE BU 6 6 6`。本场三盘全无抢七，`(N)` 一处都不该有。",
+    "_hook_why": "按『钩子讲的过程要是整场的，不是某一个时刻』：第二行『只丢四局』是全场 22 局里霍达尔只赢了 4 局（2+1+1）——比分板就在钩子正下方印着 6-2 6-1 6-1，读者要自己加才得到 4，所以这不是复读比分板，是把三盘概括成一个数。第一行是这条片子最大的跌宕，也是账号所有者点名要交代的背景（幸运落败者）。两行 8/7 字，都在 10 字上限之内、两行之内。⚠️ 不写身份（排名 124、种子 12）——海报的名条和顶栏已经印着。"
+  },
+  "_match": {
+    "status": "result_verified",
+    "source": "flashscore_points",
+    "source_id": "Sr9LZI45",
+    "flashscore_id": "Sr9LZI45",
+    "participants": [
+      "霍达尔",
+      "布云朝克特"
+    ],
+    "set_scores_home_away": [
+      [
+        2,
+        6
+      ],
+      [
+        1,
+        6
+      ],
+      [
+        1,
+        6
+      ]
+    ],
+    "winner": "布云朝克特",
+    "loser": "霍达尔",
+    "winner_result": "6-2 6-1 6-1",
+    "loser_result": "2-6 1-6 1-6",
+    "_direction_why": "flashscore home=Jodar R.（AE）、away=Bu Y.（AF），BA/BB=2:6、BC/BD=1:6、BE/BF=1:6；美网官方 day_11 feed（match_id 1109）team1=Jodar won=false totalSetsWon=0、team2=Bu won=true totalSetsWon=3 同向；源片 192.5s 全屏台标第三处印证。⚠️ `participants` 跟 home/away 走（和 `set_scores_home_away` 同序），而 `stats.a/b` 跟 `cover.matchup[0]` 走——本条两者正好相反，各对各的旁边那个字段。",
+    "_upset_why": "官方 `flags.upset=true`。世界第 124、**以幸运落败者身份**补进正赛的人，直落三盘掀翻 12 号种子、世界第 13 的霍达尔——这条片子的全部分量在这儿。",
+    "_ll_why": "⚠️ 幸运落败者这件事有**两个独立源各自写死**，不是推的：① 美网官方 day_11 feed 里 team2（Bu）的 `entryStatus` 字段就是 `\"LL\"`；② flashscore df_sui_1 的 `PSPA÷LL`（对应 `PSPH÷12` 是霍达尔的种子号）。再加第三处机械自证：官方 atpy09v_matches feed 里他的本届记录是「资格赛 R1 胜 Noguchi 4-6 6-4 6-2 / R2 胜 Gojo 6-4 6-4 / **R3 负 Cina 6-3 4-6 5-7** / 正赛 R1 胜 Jodar」——资格赛最后一轮输掉的人出现在正赛签表里，只可能是幸运落败者。"
+  },
+  "stats": {
+    "a": {
+      "aces": 2,
+      "df": 3,
+      "winners": 21,
+      "ue": 21,
+      "first_in": 38,
+      "first_won": 32,
+      "second_total": 23,
+      "second_won": 14,
+      "bp_conv": 7,
+      "bp_chances": 16,
+      "pts_won": 89,
+      "pts_total": 140,
+      "first_total": 61,
+      "headshot": "assets/players/headshots/atp-Y09V.png"
+    },
+    "b": {
+      "aces": 2,
+      "df": 3,
+      "winners": 15,
+      "ue": 37,
+      "first_in": 41,
+      "first_won": 24,
+      "second_total": 38,
+      "second_won": 12,
+      "bp_conv": 0,
+      "bp_chances": 0,
+      "pts_won": 51,
+      "pts_total": 140,
+      "first_total": 79,
+      "headshot": "assets/players/headshots/atp-J0DZ.png"
+    },
+    "_source": "flashscore df_st_1（Sr9LZI45）整份抄的，大满贯这一档带 Winners/Unforced errors。⚠️ 该 feed 的 SH=home=霍达尔、SI=away=布云朝克特，而 `stats.a` 跟的是 `cover.matchup[0]`（布云朝克特）——所以 a/b 相对 feed **对调过**。first_total 按 first_in + second_total 算（布 38+23=61、霍 41+38=79），不取接口的 Service Points Won 分母。",
+    "_headshot_why": "两张都是 ATP 官方头像端点取的（布云朝克特 id=Y09V 241 种颜色、霍达尔 id=J0DZ 仓库里已有），不是占位剪影。"
+  },
+  "_hit_data": [
+    {
+      "label": "世界第十三一个破发点都没拿到",
+      "detail": "霍达尔全场 Break Points Converted 0/0——他连一个破发点都没有制造出来；布云朝克特 11 个发球局 100% 保住",
+      "source": "flashscore df_st_1（Break Points Converted 0/0、Service games won 100% 11/11）；逐分 df_mh_1 里布云朝克特的每一个发球局都没有出现 |B1|，独立印证"
+    },
+    {
+      "label": "总分差 38 分",
+      "detail": "布云朝克特 89 - 霍达尔 51（140 分里 64%）",
+      "source": "flashscore df_st_1（Total Points Won 36% 51/140 : 64% 89/140）"
+    },
+    {
+      "label": "霍达尔 11 个发球局只保住 4 个",
+      "detail": "Service games won 36%（4/11）；布云朝克特 16 个破发点兑现 7 个",
+      "source": "flashscore df_st_1（Service games won / Break Points Converted 7/16）"
+    },
+    {
+      "label": "非受迫失误 37 比 21，制胜分反而少",
+      "detail": "霍达尔 37 个非受迫失误对 15 个制胜分；布云朝克特 21 比 21",
+      "source": "flashscore df_st_1（Winners / Unforced errors）"
+    },
+    {
+      "label": "一发得分率 84% 比 59%",
+      "detail": "布云朝克特一发得分 32/38，霍达尔 24/41；一发进球率 62% 比 52%",
+      "source": "flashscore df_st_1（1st serve points won / 1st serve percentage）"
+    }
+  ],
+  "_durations": [
+    [
+      "Set 1",
+      "0:38"
+    ],
+    [
+      "Set 2",
+      "0:33"
+    ],
+    [
+      "Set 3",
+      "0:37"
+    ],
+    [
+      "全场",
+      "1:48"
+    ]
+  ],
+  "_turning_points": [
+    {
+      "label": "【Set 1】1-1 霍达尔发球局：布云朝克特一口气拿到 **5 个破发点**（0:40、15:40、30:40、40:A、40:A），第五个才兑现——全场的开关。⚠️ **这一局不在集锦里**（画面 0.5–12.5s 还是首局 40:15，14.5s 直接跳到 2-5 的盘点），所以旁白不讲它",
+      "density": 5
+    },
+    {
+      "label": "【Set 1】2-5 布云朝克特发球胜盘局：15:40 的 |B2| 一次拿下，6-2 —— 画面 14.5–25.9s 全程挂着 SET POINT #2",
+      "density": 1
+    },
+    {
+      "label": "【Set 2】0-0 霍达尔发球局：两个破发点（0:40、15:40），第二个兑现——次盘开局就被破 —— 画面 38.5–62.5s，48.5s 起 BREAK POINT #2 全程在板上",
+      "density": 2
+    },
+    {
+      "label": "【Set 2】1-5 霍达尔发球局：30:40 的第一个盘点被救下，40:A 第二个兑现，6-1 —— 画面 84.5–96.6s 全程挂着 SET POINT #2",
+      "density": 2
+    },
+    {
+      "label": "【Set 3】1-5 布云朝克特发球胜赛局：15:40 第一个赛点被霍达尔救掉（解说 146.88s『Oh, he is still in the tournament』），30:40 第二个兑现 —— 画面 142.5–159.2s，板上先 MATCH POINT 后 MATCH POINT #2",
+      "density": 2
+    }
+  ],
+  "editorial": {
+    "mode": "match_review",
+    "hook": [
+      "五天前他已经出局",
+      "今天他只丢四局"
+    ],
+    "_hook_why": "⚠️ 这一栏必须和 `cover.hook` 逐字同一句。两行都不写身份：排名和种子号在海报名条、顶栏和数据图上各印着一次，钩子再写一遍是白占那 10 个字位。第一行给的是这条片子最大的落差（资格赛已经输掉了），第二行『只丢四局』把三盘概括成一个要读者自己算的数。",
+    "question": "一个五天前已经输掉资格赛、靠幸运落败者名额才补进正赛的人，凭什么用一小时四十八分钟直落三盘打掉 12 号种子？",
+    "thesis": "这场球不是「爆发一下」，是霍达尔的发球端从第一分起就没立起来、而布云朝克特把每一个机会都换成了实分。判据是两组互相咬合的数：霍达尔全场 **一个破发点都没拿到**（0/0），11 个发球局只保住 4 个；布云朝克特 11 个发球局 100% 保住、16 个破发点兑现 7 个，一发得分率 84% 对 59%。所以比分 6-2 6-1 6-1 不是运气，是发球局硬度的单向碾压——而他的『幸运』只发生在进正赛那一步，进来之后一分钱运气都没用上。",
+    "beats": [
+      "首盘霍达尔先保住自己的发球局（画面 0.5–12.5s 的 40:15），但 1-1 之后那一局被布云朝克特磨出 5 个破发点、丢掉，此后一路被拖到 2-5；2-5 时他救下一个盘点，下一局布云朝克特发球，15:40 第一次盘点就收下，6-2，38 分钟。",
+      "第二盘开局霍达尔再次被破（0:40、15:40 两个破发点，画面 48.5s 起 BREAK POINT #2 挂了十几秒），1-5 时他自己发球被拿到两个盘点，第二个丢掉，6-1，33 分钟——比首盘还快。",
+      "第三盘布云朝克特又是一上来就破发；1-5 时他发球胜赛局，15:40 的第一个赛点被霍达尔救掉，30:40 的第二个兑现。1 小时 48 分钟，全场霍达尔一个破发点都没有拿到。"
+    ],
+    "human_context": {
+      "angle": "这场球的背景不在球场上，在五天前的资格赛。布云朝克特今年 24 岁（2002 年 1 月 19 日生于新疆），去年美网他还是世界第 74、直接进的正赛；今年掉到第 124，只能从资格赛打起，还是资格赛的 11 号种子。8 月 28 日资格赛最后一轮，他先拿下一盘，最后 6-3 4-6 5-7 输给意大利人奇纳，打了 2 小时 18 分钟——那一刻这届美网跟他已经没有关系了。正赛开打前有人退赛，他以幸运落败者的身份补进签表，抽到 12 号种子霍达尔。对面这位马德里人 2006 年 9 月 17 日出生，还差半个月满 20 岁，今年一路打到世界第 13。",
+      "facts": [
+        "布云朝克特 6-2 6-1 6-1 胜 Rafael Jodar，2026 美网男单第一轮，17 号球场，1 小时 48 分钟（美网官方 completed_matches/days/day_11.json，match_id 1109，status=Completed，flags.upset=true）。",
+        "布云朝克特的入围身份是幸运落败者：美网官方 day_11 feed 里 team2.entryStatus=\"LL\"；flashscore df_sui_1 的 PSPA÷LL 独立印证。",
+        "他本届的资格赛记录（美网官方 atpy09v_matches feed）：R1 胜 Rei Noguchi 4-6 6-4 6-2（2:25）、R2 胜 Borna Gojo 6-4 6-4（1:24）、R3 负 Federico Cina 6-3 4-6 5-7（2:18，8 月 28 日）。",
+        "两人排名与种子（美网官方 players.json）：布云朝克特世界第 124、无种子、资格赛 11 号种子；霍达尔世界第 13、正赛 12 号种子。",
+        "布云朝克特历年美网（官方逐年 players.json）：2023 年世界第 202、2024 年第 113（打资格赛+正赛）、2025 年第 74（直接进正赛）、2026 年第 124（打资格赛）。",
+        "转播解说在赛后的原话（源片自动字幕 160.32s）：『That is the win of his career.』；167.52s：『has knocked out the 12th seed and it has been emphatic today. 6-2 6-1 6-1』。"
+      ],
+      "sources": [
+        "https://www.usopen.org/en_US/scores/feeds/2026/completed_matches/days/day_11.json",
+        "https://www.usopen.org/en_US/scores/feeds/2026/players/matches/atpy09v_matches.json",
+        "https://www.usopen.org/en_US/scores/feeds/2026/players/players.json",
+        "https://www.flashscore.com/match/tennis/Sr9LZI45/"
+      ]
+    }
+  },
+  "topbar": {
+    "line1": "2026 美网 第一轮",
+    "line2": "布云朝克特 6-2 6-1 6-1 霍达尔"
+  },
+  "push": {
+    "summary": "布云朝克特掀翻十二号种子",
+    "lead": "美网男单第一轮，17 号球场，布云朝克特 6-2 6-1 6-1 击败世界第 13、赛会 12 号种子霍达尔，1 小时 48 分钟。他是以幸运落败者的身份补进正赛的——五天前资格赛最后一轮，他 6-3 4-6 5-7 输给奇纳，这届美网本来已经跟他没有关系。全场霍达尔一个破发点都没有拿到，11 个发球局只保住 4 个；布云朝克特 11 个发球局全部保住，总分 89 比 51。",
+    "auto": true
+  },
+  "segments": [
+    {
+      "start": 159.4,
+      "end": 163.1,
+      "narration": "",
+      "_why": "第①格：全片最强的一格——制胜分落地之后他攥拳、张嘴吼出来的近景（160.5s）和随后的特写（162.5s）。不配旁白，靠现场声和欢呼。⚠️ 起点落在 159.19 那一刀之后 0.21 秒，整段待在同一个庆祝镜头里（下一刀 163.81，段尾 163.10 之后还留 0.53 秒余量，够 SEG_FADE 的 0.18）。",
+      "_ending_payoff_required": true,
+      "score_inset": false,
+      "_score_inset_why": "整段是庆祝近景，转播把常驻记分条撤了，板一帧都不在画面里。"
+    },
+    {
+      "start": 0.6,
+      "end": 12.4,
+      "narration": "二十四岁的布云朝克特，世界第一百二十四。五天前他输掉了美网资格赛最后一轮，按规矩，这一届跟他已经没关系了。",
+      "_why": "第②格给落点和反差：不是「他赢了」，是「他本来根本不该在这儿」。画面是首盘第一局霍达尔的发球局（记分条 0.5–12.5s 恒为 `12 JODAR 0 40 / BU 0 15`），中性的对拉镜头，不和旁白抢。段尾 12.40 停在死球 14.11 之前——⚠️ 这一段源片里没有更早的死球（板从 0.5 到 12.5 一动不动），12.63 那个疑似切点才是画面真正换的地方，所以收在它之前。",
+      "score_inset": true
+    },
+    {
+      "start": 16.5,
+      "end": 24.0,
+      "narration": "北京时间九月三号凌晨一点以后，美网男单第一轮，纽约十七号球场。",
+      "_why": "第③格给坐标。⚠️ 钟点的出处是**美网官方的 order of play**（`scores/feeds/2026/schedule/schedule11.json`，Day 4: Wednesday, September 2）：17 号球场第一节 `time: 11:00 AM`（startEpoch 1788361200 = 15:00 UTC，所以当地就是 UTC−4），这一场排在 order 3、`notBefore: 1:00 PM`——当地下午一点是**下界不是时刻**（前面还压着一场 1:49 的女单），换成北京时间就是九月三号凌晨一点，所以旁白说的是「凌晨一点以后」。⚠️ **不拿 `completed_matches` 的 `epoch` 当开球时刻**：那个字段和 order of play 对不上（它给 17 号球场首场 10:57、次场 11:53，而官方排的是 11:00 和不早于 12:30），当起点当终点都解释不通，两种读法在别的球场上还互相打架（Louis Armstrong 按起点读会重叠 16 分钟）——按「一个时刻有三种口径」只用官方排期那一个。画面是首盘 2-5 盘点那一局的回合（板上 SET POINT #2 全程挂着）；段尾 24.00 落在死球 22.82 之后 1.18 秒、疑似切点 24.26 之前（连 0.18 秒溶解底料一起算还剩 0.08 秒）。",
+      "score_inset": true
+    },
+    {
+      "start": 24.5,
+      "end": 30.5,
+      "narration": "第一盘三十八分钟就结束了，六比二。",
+      "_why": "首盘落点。画面：布云朝克特拿下盘点后走动（24.5s，板上还挂着 SET POINT #2）→ 霍达尔低头走开（26.5s）→ 看台上球迷的反应（28.5/30.5s）。段尾 30.50 在死球 30.03 之后 0.47 秒，下一刀 30.75 之前。 ⚠️ dry-run 报「切在一分打完之前（最近死球 30.93）」——30.93 那一下是看台镜头里记分条重新出现造成的跳变，不是一分打完；真正的死球在 30.03，段尾在它之后 0.47 秒，而 30.75 那一刀不能跨（跨过去是另一组看台镜头）。",
+      "score_inset": false,
+      "_score_inset_why": "26.5s 起转播切到人物和看台，板整段不在画面里（只有开头 2 秒还挂着）——按「板不在就写 false」取 false，不贴。"
+    },
+    {
+      "start": 33.0,
+      "end": 37.35,
+      "narration": "解说在这里已经用上了爆冷两个字。",
+      "_why": "接上一段。画面是场地空镜（34.5s）和全屏台标（36.5s，`MEN'S SINGLES | 1ST ROUND` ＋ `12 RAFAEL JODAR 2 0 / YUNCHAOKETE BU 6 0`）——台标自己把首盘比分印出来了，旁白就不再复读。⚠️ 引的是源片自动字幕 30.32s 的原话『has caused somewhat of an upset here. He's taken the opening set six games to two.』，「爆冷」是 upset 的直译。 段尾 37.35 落在死球 37.24 之后 0.11 秒。",
+      "score_inset": false,
+      "_score_inset_why": "空镜和全屏台标，常驻记分条不在画面里。"
+    },
+    {
+      "start": 38.2,
+      "end": 46.0,
+      "narration": "幸运落败者，说的是资格赛最后一轮输掉的人。正赛前有人退赛，才递补进来。",
+      "_why": "账号所有者点名要交代的背景，规则那一半。画面是次盘第一局霍达尔的发球局（板 38.5–46.0s 为 `2 0 0 / 6 0 30`），宽景对拉，两个人都在画面里、不指认任何一个。⚠️ **段尾从 48.90 收到 46.00 是为了躲开一次点名点反**：46.25 那一刀之后是**霍达尔**的近景（48.5s，浅粉球衣），而这一段旁白说的「资格赛最后一轮输掉的人」指的是布云朝克特——整句压在对手脸上会被读成在说霍达尔。预览（`preview_segments_local`）摆出来才看见的，`--dry-run` 和全量测试对这一类一个字都不会说。段尾 46.00 停在死球 46.25 之前，连 0.18 秒的溶解底料一起算还剩 0.07 秒。",
+      "score_inset": true
+    },
+    {
+      "start": 49.5,
+      "end": 62.9,
+      "narration": "八月二十八号，资格赛最后一轮。他打满两小时十八分钟，先赢下一盘，最后五比七输给了意大利人奇纳。行李本来该收了。",
+      "_why": "背景的另一半：他是怎么走到「已经出局」那一步的。三个数全部来自美网官方 atpy09v_matches feed（R3 负 Cina 6-3 4-6 5-7，duration 2:18，8 月 28 日）。画面是次盘第一局那个破发点（板 48.5–62.5s 恒为 BREAK POINT #2 `2 0 15 / 6 0 40`）。⚠️ 段尾没有可用的死球——probe 的 point_ends 在 48.75 和 64.26 之间是空的（板整整十四秒一动不动），所以收在疑似切点 63.08 之前 0.18 秒。 ⚠️ 第一版旁白只有 46 字，dry-run 估出来余量 4.22 秒（哑场），而且一句里串了四个逗号；现在拆成三句、把对手名字补上，估余量降到 2.4 秒。",
+      "score_inset": true
+    },
+    {
+      "start": 68.6,
+      "end": 82.5,
+      "narration": "而对面这位十九岁的西班牙人，今年一路打进世界前十三，是本届的十二号种子。这场球他的发球从开场就没找到过，一发进球率只有百分之五十二。",
+      "_why": "交代对手的身份和这场球的技术根子。⚠️ 生日 2006 年 9 月 17 日（官方 players.json），这场球打的时候他还差半个月满二十岁，所以是十九岁。画面正是霍达尔自己的发球局（板 68.5–82.5s 为 `2 0 40 / 6 2 15`，次盘 0-2 他保发那一局），话和画面是同一件事。⚠️ 段尾 82.50 收在疑似切点 82.57 之前 0.07 秒——那一刀是这一局打完之后转播换机位，随后 82.68 记分条才跳；跨过去就切进下一局霍达尔发球的特写了，所以宁可停在这一分的反应里。",
+      "crosses_cut": "69.92 一刀：霍达尔发球的近景（68.5s）→ 同一局的宽景回合。两边同一局同一人，板上比分连着。",
+      "score_inset": true
+    },
+    {
+      "start": 84.6,
+      "end": 96.6,
+      "narration": "第二盘更快，三十三分钟，六比一。整场比赛，霍达尔一个破发点都没有拿到，而布云朝克特十一个发球局一个没丢。",
+      "_why": "次盘落点 ＋ 全片最硬的那个数。画面是次盘 1-5 霍达尔发球局的第二个盘点（板 84.5–96.5s 恒为 SET POINT #2 `2 1 / 6 5 AD`），逐分 df_mh_1 里这一局写着 `30:40 |B1| |B2|, 40:40, 40:A |B1| |B2|`——第一个盘点被救、第二个兑现。「一个破发点都没拿到」的判据是 df_st_1 的 Break Points Converted 0/0，外加逐分里他的每个发球局都没有出现 |B1|。 ⚠️ 第一版写的是「整场比赛霍达尔一个破发点都没有拿到」，dry-run 报这个子句 17 格、超过一行字幕的 16 格会被硬切成「整场比赛霍达尔一个破发点｜都没有拿到」；在「整场比赛」后面加一个逗号把边界钉死。",
+      "crosses_cut": "86.85 一刀：霍达尔发球的近景（84.5/86.5s）→ 同一局的宽景回合。板上 SET POINT #2 全程不断。",
+      "score_inset": true
+    },
+    {
+      "start": 114.6,
+      "end": 128.9,
+      "narration": "第三盘布云朝克特又是一上来就破发。霍达尔全场十一个发球局只保住四个，非受迫失误三十七个，制胜分只有十五个。这已经不只是状态的问题了。",
+      "_why": "第三盘 ＋ 把三个数摞在一起（都出自 df_st_1：Service games won 36% 4/11、Unforced errors 37、Winners 15）。⚠️ 第一版把「总分五十一比八十九」放在中间，dry-run 报它会被切成「霍达尔全场11个发球局只保住4个」＋「总分51比89」——后半只有 6 格，读起来是半截话；总分那个数挪到推送正文和小红书正文里去，旁白留三个长度接近的子句。画面从 114.5s 的 `2 1 0 / 6 6 2` 走到 128.5s，正是第三盘他 2-0 领先之后的一段。 ⚠️ 第一句原来写的是「第三盘他又是一上来就破发」，而这一段的第一格（116.5s）正是**霍达尔**在发球（J.P.Morgan 挡板前，场边 Rolex 钟 1:22）——「他」会被读成霍达尔。按「破发点谁救的必须写出来」那条把主语补上。⚠️ 说「一上来就破发」配霍达尔的发球局画面是对的：被破的正是他这一局。",
+      "crosses_cut": "118.15、126.76、128.65 三处疑似切点，都是同一段第三盘里宽景与中景的机位切换，两边同一场同一局，板上比分连着（`2 1 0 | 0` → `6 6 2 | 30/40`）。",
+      "score_inset": true
+    },
+    {
+      "start": 142.8,
+      "end": 146.55,
+      "narration": "第一个赛点，霍达尔救掉了。",
+      "_why": "画面是布云朝克特发球胜赛局的第一个赛点（板 142.5s 起挂出 MATCH POINT，`2 1 1 15 / 6 6 5 40`），逐分 df_mh_1 末局写着 `15:40 |B3|, 30:40 |B3|`——第一个被救、第二个兑现，和 df_st_1 的 Match points saved 霍达尔 1 对得上。解说 146.88s 的原话是『Oh, he is still in the tournament.』。段尾 146.70 在下一刀 146.76 之前。 ⚠️ 段尾从 146.70 收到 146.55，给 0.18 秒的溶解底料让开 146.76 那一刀。",
+      "score_inset": true
+    },
+    {
+      "start": 151.5,
+      "end": 163.1,
+      "narration": "第二个赛点，他没有再给机会。一小时四十八分钟，比他五天前那场资格赛还短半个小时。",
+      "_why": "兑现冷开场：正文按时间顺序重新走完最后一分和庆祝，把第①格预告过的结局在这里交代完整（`_ending_payoff_required`）。板 150.5–158.5s 挂着 MATCH POINT #2 `2 1 1 30 / 6 6 5 40`。用时差是算的：官方 1:48 对资格赛最后一轮的 2:18，正好三十分钟。",
+      "crosses_cut": "159.19 一刀：赛点那一分的回合（板上 MATCH POINT #2 全程在画面里）→ 他攥拳庆祝的近景。两边都是他本人、同一时刻的两个机位，正是「球落地 ＋ 反应」。",
+      "score_inset": false,
+      "_score_inset_why": "这一段后四秒是庆祝近景，板不在画面里；一段只能表一次态，按「板不在就写 false」取 false，不贴——避免把界外地胶贴回左下角。"
+    },
+    {
+      "start": 163.9,
+      "end": 166.6,
+      "narration": "",
+      "_why": "他的团队在看台上站起来那两格（164.5/166.5s）。不配旁白，把现场的欢呼留出来——和第①格一样，这一段的内容就是声音和表情。 ⚠️ 段尾从 166.80 收到 166.60：dry-run 报 0.18 秒的溶解底料会跨过 166.83 那一刀。",
+      "score_inset": false,
+      "_score_inset_why": "看台近景，板不在画面里。"
+    },
+    {
+      "start": 168.5,
+      "end": 176.75,
+      "narration": "布云朝克特赢下这一场之后，转播解说给了一句，这是他生涯最好的一场胜利。",
+      "_why": "画面是网前握手（168.5s）、和主裁握手（174.5s）、他转身吼出来（176.5s）。旁白引的是源片自动字幕 160.32s 的原话『That is the win of his career.』——解说说的，不是我们的评价。 ⚠️ 段尾从 176.90 收到 176.75，同样是给溶解底料让开 177.03 那一刀。 ⚠️ 原来写的是「这是他职业生涯最好的一场胜利」，而这一段第二格（170.5s）画面主体是**霍达尔**转身走开——「他」会被读成霍达尔，正好把这句话说反。把名字挪到句首——⚠️ 一开始改成「这是布云朝克特职业生涯最好的一场胜利」，dry-run 报这个子句 18 格、超过一行字幕的 16 格会被硬切成「这是布云朝克特职业生涯｜最好的一场胜利」；现在拆成三个子句，名字在第一句、后面用「他」就不会歧义了。",
+      "score_inset": false,
+      "_score_inset_why": "握手和人物近景，板不在画面里。"
+    },
+    {
+      "start": 177.1,
+      "end": 184.65,
+      "narration": "五天前他已经被淘汰，今天他把十二号种子送回了家。这算运气吗？",
+      "_why": "收尾一问，落在评判上而不是数据上（末屏那一问必须由旁白问出来）。画面是他向看台挥手致意（182.5/184.5s），身后场边 Rolex 钟烧着 **1:48**——用时在这一格画面里自证。段尾 184.65 停在疑似切点 184.9 之前（连 0.18 秒的溶解底料一起算），离片尾板（193.38 起）还有八秒多。",
+      "score_inset": false,
+      "_score_inset_why": "致意的人物近景，板不在画面里。"
+    }
+  ],
+  "_editing_why": "选段的骨架：①最强的一格（庆祝）→ ②落点（他本来已经出局）→ ③坐标 → 背景（幸运落败者是什么、他是怎么输掉资格赛的） → 三盘的走势和数据 → 两个赛点 → 结束和收尾一问。全部十五段共用一条源片。\n⚠️ 这条集锦跳得很凶，旁白只讲画面上真的能读到的东西：首盘 1-1 那个五破发点的长局**不在集锦里**（画面 0.5–12.5s 还是首局 40:15，14.5s 直接跳到 2-5 的盘点），所以 `_turning_points` 里记着它、旁白一个字没提。\n⚠️ 死球的分布很稀：48.75→64.26 和 114.11→128.73 这两段里 probe 一个 point_end 都没有（板长时间不变），所以那两段的段尾是按疑似切点收的，写在各段的 `_why` 里。\n⚠️ 片尾板 193.38 起（silent_audio [[193.43, 196.46]] 印证），最后一段收在 184.80，中间整段没有碰它。"
+}
