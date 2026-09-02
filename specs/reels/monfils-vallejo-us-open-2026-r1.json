@@ -1,0 +1,364 @@
+{
+  "slug": "monfils-vallejo-us-open-2026-r1",
+  "_column": "赛场之上",
+  "layout": "band",
+  "scorebox": [
+    104,
+    888,
+    700,
+    978
+  ],
+  "_scorebox_why": "美网的板每打完一盘往右长 38px，顶层这个四元组按**最宽状态**（第四盘满列）写，只当兜底；右缘由 resolve_board_insets 渲染时逐段现量、按时间单调性补齐。probe 的 scorebox_guess 是 `104,888,579,978`——左缘 104 和上下沿 888/978 与 US_OPEN_SCOREBOX 逐像素一致，右缘 579 是探测那一帧（首盘进行中，板上只有一列盘分）的状态。按 docs/us-open-scoreboard-aspect.md 那张外推表（第 2 盘 616，每盘 +38）推到第四盘满列约 692，兜底取 700 留 8px 余量。⚠️ 高度 888~978（90，**偶数**）——不抄奇数高度，ffmpeg 在 yuv420p 上 crop 奇数高度会静默舍成偶数，整趟现量读空退回最宽兜底。",
+  "_source": "**美网官方频道**（`youtube.com/@usopen`）的单场集锦，标题 `Adolfo Daniel Vallejo vs. Gael Monfils Highlights | 2026 US Open Round 1`，213.5 秒、1920×1080、29.97 fps。频道由 YouTube oEmbed 自报（`author_name = US Open Tennis Championships`）——⚠️ 这个频道名不等于赛事名，CLAUDE.md 2026-08-26 记过它当初不在官方白名单里、险些让整个美网对自动链失明。\n\n四处画面自证：① 记分条整场烧着 `VALLEJO PAR / MONFILS FRA`，比分从首盘 1-4 的 `BREAK POINT` 一路到第四盘 5-0 的 `MATCH POINT` 都能和美网官方逐分对上；② **42.5 秒和 208.5 秒两次挂出全屏台标** `MEN'S SINGLES | 1ST ROUND`，后者印着 `ADOLFO DANIEL VALLEJO 6 1 2 0 / GAEL MONFILS 2 6 6 6`——和官方 feed 的赛果一字不差；③ 场地印着 `us open`、`Emirates`、`CHASE`、`IBM`、`J.P.M`，168 秒起后场板刷着 `GAEL MONFILS`；④ 右上角全程烧着 `us open` 台标。\n\n⚠️ **1080p 过了硬门槛**（CLAUDE.md 2026-08-18：「视频一定要选 1080p 及以上，没有的话就等」）。这条是大满贯，转播版权归赛事自己，巡回赛那几个官方频道都不发大满贯的集锦——美网官方频道是唯一的源。",
+  "sources": {
+    "main": "https://www.youtube.com/watch?v=hhGo8Ws_K7Y"
+  },
+  "mixed_fps": null,
+  "cover": {
+    "matchup": [
+      {
+        "name": "孟菲尔斯",
+        "name_en": "Gael Monfils",
+        "country": "FRA",
+        "rank": 311
+      },
+      {
+        "name": "巴列霍",
+        "name_en": "Adolfo Daniel Vallejo",
+        "country": "PAR",
+        "rank": 60
+      }
+    ],
+    "_rank_why": "美网官方 players.json：`atpmc65` singles_rank=311、`atpv0dp` singles_rank=60，两人都非种子（seed=false）。⚠️ 孟菲尔斯是**外卡**进的正赛（官方 matches feed `team2.entryStatus = \"WC\"`）——世界第 311 靠外卡打大满贯正赛，这是这条片子的前提，写进了旁白。巴列霍的 60 正是他的**生涯最高排名**，转播开场那句 `the man who's currently sitting at his career high has come to spoil the birthday party` 就是说他。",
+    "winner": "孟菲尔斯",
+    "result": "2-6 6-1 6-2 6-0",
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "孟菲尔斯",
+    "hook": "生日当天先丢一盘\n后三盘只丢三局",
+    "topic": "美网第一轮 · 孟菲尔斯 vs 巴列霍",
+    "_hook_why": "按『钩子讲整场的过程，不是某一个时刻』：第一行是这场球的谷底（四十岁生日这天，首盘 37 分钟就被拿走），第二行是他从那儿走出来的整段（后三盘 6-1 6-2 6-0，一共只丢三局）。⚠️ 不写身份——「四十岁」「世界第 311」「外卡」是身份，而海报的比分板和顶栏已经印着比分和轮次；「生日当天」是这场球独有的时间坐标，不是身份。两行 8/7 字，都在 10 字上限内，94px 地板之上。",
+    "portrait": {
+      "image": "assets/reel/monfils-vallejo-us-open-2026-r1-cover-arms.jpg",
+      "focus": 0.5,
+      "focus_y": 0.5,
+      "zoom": 1.0,
+      "_why": "美网官方图片接口本场实拍（`photo-assets.usopen.org` 的 `f_USTA2409203_20260901_MDC06376_1B.jpg`），官方说明四要素自证：`Gael Monfils celebrates after a Men's Singles match on Day Three of the 2026 US Open at USTA Billie Jean King National Tennis Center`，同一条目的标题写着 `A. Vallejo vs. G. Monfils | R1`，文件名里的 `20260901` 又是一次日期自证。画面是他赢下比赛之后双臂张开、仰头吼出来，背景是满场观众和 CHASE 广告板。",
+      "_low_res_why": "1280×720，铺 1080×1440 需要 **2.0 倍放大**，过不了 1.00x 地板——这是**认领过的取舍**。⚠️ 1280×720 是美网这个赛事的**出版上限**，不是没找够：CLAUDE.md 记着试过十二个前缀、六个目录、三种参数全部 404 或尺寸不变，别重探。\n\n四类源都翻到底了：AP 通讯社这场只有一张（背影鞠躬，4913×3275，见下）；WTA photo-resources 不收大满贯；USA TODAY / lohud / northjersey 的 9 月 1 日和 2 日图集里没有一辑是这场球（9/1 那两辑是大坂直美服装和名人看台）。\n\n⚠️ **AP 那张 0.44 倍的高清背影渲出来比过了，还是取这张**：三版并排渲出来看（AP 原尺寸、AP 放大 1.35 倍、这张），AP 那两版里他是背影、人很小，缩到信息流尺寸主体变成一片模糊的看台；这张他的脸占满画面上半部，**而 2.0 倍放大在实际显示尺寸下看不出软**。CLAUDE.md 反复说的「渲出来两版摆一起看，别按比例推」——按比例推会选错。AP 那张 7.5 MB，**没有进仓库**（仓库体积），要用的话地址在 `_fact_sources` 那篇 AP 通稿里：`assets.apnews.com/0c/d1/044f0e9376113a3bc5e6dc9dd510/81e97638bc2542b1847681f446884a47`，说明是 `Gael Monfils, of France, takes a bow after winning a point against Adolfo Daniel Vallejo`。",
+      "_portrait_why": "同一批美网官方候选 13 张里挑的。按 2026-08-18『同一批候选都过了前三道闸门时，选肢体和表情张力更大的那张』：`celebrates during`（比赛中握拳，正脸但收敛）、`smiles during`（微笑）、`bows to the fans`（鞠躬全景，人很小）、`in action against`（击球全身）都过得了情绪对题这一关，而这张是**赢下比赛那一刻双臂张开仰头吼**，用力的姿态压过松弛的姿态。\n\n⚠️ **他的眼睛是闭着的**，撞上账号所有者 2026-08-21 定的「封面图一定不要闭眼的」——按 `djokovic-navone` / `zverev-sonego` 立过的那条边界读，两者不矛盾：那条当年防的是**从缩略图墙里挑帧、不小心挑到一个眨眼瞬间**（表情读不出来、看着像渲坏了）；而**用力吼出来时眼睛是挤紧的，那是表情本身**。判据是「这张脸在表达什么」，不是「眼皮开着没有」。\n\n⚠️ 钩子那两行落在他下巴以下（`STORYCOPY_TOP` 790 起），脸完整露在带子之上——渲出来确认过，不是按几何推的。"
+    },
+    "_heat_why": "**孟菲尔斯是 CLAUDE.md 点过名的那一档热点球员**（和赫瓦林斯卡、霍达尔、伊埃拉、丰塞卡同列），身上那条正在展开的线是「最后一个赛季」——他 2025 年 10 月宣布 2026 年打完就退役，本仓库 2026-08-13 的 `hijikata-monfils` 就是按这条线做的，账号所有者认可过。\n\n而这一场把那条线推到了一个具体的时间点上：**这是他的四十岁生日当天，也是他最后一届美网**（第十八次）。他成了一九九二年康纳斯之后美网最年长的男单胜者，赛后全场唱生日快乐歌——AP 为这一场单发了一篇通稿，标题就是 `Gael Monfils wins on his 40th birthday at the US Open to extend his Grand Slam career`。\n\n⚠️ 世界第 311 这个数字恰恰是热度的一部分，不是它的反面：一个排到三百开外、靠外卡进正赛的人，在自己四十岁生日这天从落后一盘打到六比零——刷到这条的人认得的是「那个孟菲尔斯」，不是一个排名。",
+    "scoreboard": {
+      "court": "Louis Armstrong Stadium",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%20%222%3A22%3A00%22%2C%20%22source%22%3A%20%22US%20Open%20official%20matches%20feed%20match_id%201123%20duration%202%3A22%20%3D%20setDurations%2037%2B25%2B44%2B36%20min%22%7D",
+        "field": "duration"
+      },
+      "_court_why": "美网官方 matches feed（atpmc65_matches.json，match_id 1123）courtName=Louis Armstrong Stadium。转播 100.00 秒那句 `The volume is turned up on Armstrong` 是画面自证的旁证；AP 通稿也写着 `Monfils said to the fans at Louis Armstrong Stadium`。",
+      "_duration_why": "官方 2:22，分盘 37+25+44+36=142 分钟自洽（142 分 = 2 小时 22 分）。转播 40.16 秒 `the first set is his in just 37 minutes` 和 setDurations 的第一个数一分不差，是这份用时的画面自证。⚠️ 不用 IBM 逐分的 ElapsedTime 算——第四盘 G4 之后那一栏跳成 26:12:06，明显是坏的。"
+    }
+  },
+  "topbar": {
+    "line1": "2026 美网 第一轮",
+    "line2": "孟菲尔斯 2-6 6-1 6-2 6-0 巴列霍"
+  },
+  "_topbar_why": "第二行和 `cover.winner`（孟菲尔斯）、`cover.result`（2-6 6-1 6-2 6-0）、`cover.matchup` 的名字机械一致。这场没有抢七，不涉及上标小分。",
+  "_match": {
+    "status": "result_verified",
+    "source": "flashscore_points",
+    "source_id": "2HVgf06C",
+    "flashscore_id": "2HVgf06C",
+    "participants": [
+      "巴列霍",
+      "孟菲尔斯"
+    ],
+    "set_scores_home_away": [
+      [
+        6,
+        2
+      ],
+      [
+        1,
+        6
+      ],
+      [
+        2,
+        6
+      ],
+      [
+        0,
+        6
+      ]
+    ],
+    "tiebreaks_home_away": [
+      null,
+      null,
+      null,
+      null
+    ],
+    "winner": "孟菲尔斯",
+    "loser": "巴列霍",
+    "winner_result": "2-6 6-1 6-2 6-0",
+    "loser_result": "6-2 1-6 2-6 0-6",
+    "_direction_why": "⚠️ **`participants` 跟 flashscore 的 home/away，不跟 `cover.matchup`**（CLAUDE.md 2026-09-02 那条：同一份 spec 里并存两个相反的顺序）。flashscore `2HVgf06C` 的 `AE÷Vallejo D.`=home、`AF÷Monfils G.`=away，逐盘 `BA÷6 BC÷1 BE÷2 BG÷0` / `BB÷2 BD÷6 BF÷6 BH÷6`，`AS÷2` 赢家是 away——所以 participants[0]=巴列霍 和 set_scores_home_away 对齐，而 `cover.matchup[0]` 是孟菲尔斯（赢家兼封面主体），两者故意相反。\n\n**三个独立源的赛果一字不差**：flashscore（上面那串）、美网官方 matches feed（match_id 1123，`team1.totalSetsWon=1`／`team2.totalSetsWon=3`，`winner=\"2\"`）、以及源片 208.5 秒烧在画面上的全屏台标 `VALLEJO 6 1 2 0 / MONFILS 2 6 6 6`。\n\n⚠️ flashscore 还多给一条：`AM÷Playing under a closed roof.`——**这场是关着顶打的**，转播 100 秒那句 `The volume is turned up on Armstrong` 有了出处（关顶时全场声音是闷在里面的）。\n\n**四盘没有一盘打进抢七**（set_scores_home_away 里没有任何一盘是 7-6 或 6-7），所以 tiebreaks_home_away 四个都是 null。"
+  },
+  "stats": {
+    "a": {
+      "aces": 5,
+      "df": 2,
+      "winners": 37,
+      "ue": 26,
+      "first_in": 52,
+      "first_won": 41,
+      "second_total": 39,
+      "second_won": 21,
+      "bp_conv": 7,
+      "bp_chances": 19,
+      "pts_won": 114,
+      "pts_total": 196,
+      "first_total": 91,
+      "headshot": "assets/players/headshots/atp-MC65.png"
+    },
+    "b": {
+      "aces": 3,
+      "df": 5,
+      "winners": 20,
+      "ue": 35,
+      "first_in": 68,
+      "first_won": 39,
+      "second_total": 37,
+      "second_won": 14,
+      "bp_conv": 2,
+      "bp_chances": 6,
+      "pts_won": 82,
+      "pts_total": 196,
+      "first_total": 105,
+      "headshot": "assets/players/headshots/atp-V0DP.png"
+    },
+    "_source": "**两个独立源逐项对过，十二项全中。** ① flashscore 本场 `2HVgf06C` 的 `df_st_1`（大满贯男子这场有 Winners / Unforced errors），整块由 `python3 tools/match_stat_hooks.py 2HVgf06C --home 巴列霍 --away 孟菲尔斯 --stats-block` 机器抄出，没有手打；② 美网官方 IBM 逐分（`/en_US/scores/feeds/2026/slamtracker/history/1123C.json`，196 条有效分）按 `PointServer`/`ServeNumber`/`PointWinner` 自己聚合了一遍。\n\n⚠️ **a/b 对调过**：`match_stat_hooks` 吐出来的 a 是 flashscore 的 home（巴列霍），而 `cover.matchup[0]` 是孟菲尔斯——按 `render_stat_card` 第 19 行「a 对应 cover.matchup[0]（版式顺序，不是赢家顺序）」，这里两个顺序恰好相反，所以整块调了个个儿。判据：`headshot` 跟着数字走，`atp-MC65.png`（孟菲尔斯）挂在 a，制胜分 37 也在 a——赢的那个人制胜分更多、失误更少，自洽。\n\n⚠️ **`pts_total` 取 196 不取 flashscore 报的 199**：114+82=196，而美网 IBM 逐分末条的累计 `P1PointsWon=82 / P2PointsWon=114` 也是 196——两个源的**分项**一致而 flashscore 的**总数**多出 3，正是 CLAUDE.md 记过的「flashscore 两个 feed 自己打架」那一族。取自洽的那个。\n\n⚠️ `first_total` 按 `first_in + second_total` 算（91 / 105），不取接口的发球分分母。二发那一栏**含双误**：IBM 逐分里有 7 分的 `ServeNumber` 既不是 1 也不是 2，条数正好等于两人的双误数（2+5），并进二发之后两人发球分合计 91+105=196=总分，自洽。"
+  },
+  "_hit_data": "跑了 `python3 tools/match_stat_hooks.py 2HVgf06C --home 巴列霍 --away 孟菲尔斯`，另从美网官方 IBM 逐分逐盘聚合了一遍。候选：\n\n    [逐盘制胜分]  孟菲尔斯 7 / 8 / 7 / **15**   巴列霍 5 / 5 / 7 / **3**\n    [逐盘非受迫]  孟菲尔斯 **13** / **2** / 8 / 3\n    [破发点]      孟菲尔斯 7/19   巴列霍 2/6\n    [总分差]      114 - 82（净 32 分）\n    [交手记录]    首次交手（美网官方 head2head feed 两边都是 0）\n\n**挑的是前两条，它们说的是同一件事的两头**：第四盘他打出 15 个制胜分、对手只有 3 个（这是全场四盘里差距最大的一盘，而且是 6-0）；首盘他送出 13 个非受迫失误、第二盘只剩 2 个（这是转折本身）。两条都写进了旁白。\n\n⚠️ **没挑总分差**：114-82 净胜 32 分是一场四盘逆转该有的样子，不反常，当不了钩子。",
+  "_durations": "官方 2:22（37+25+44+36 分钟，美网 matches feed 的 `duration` 和 `scores.setDurations`）。⚠️ **第三盘 44 分钟是最长的一盘，而比分是 6-2**——那一盘他两次破发都发生在打满平分的长局里（逐分：G3 十分、G5 五分之外还有 G1 八分、G4 八分、G8 十分）。转播 40.16 秒那句 `the first set is his in just 37 minutes` 和 setDurations 的第一个数一分不差，是这份用时数据的画面自证。\n\n⚠️ **不拿 IBM 逐分的 `ElapsedTime` 算用时**：第四盘 G4 之后那一栏跳成 `26:12:06`，明显是坏的（跨午夜或格式异常），用时一律取 matches feed。",
+  "_claims": {
+    "这是他四十岁生日当天打的比赛": "三个独立源。① **美网官方 players.json**：`atpmc65` 的 `birth_date: \"01 September 1986\"`；② 官方 matches feed 的 `epoch: 1788294671000` = UTC 2026-09-01 20:31，纽约当地正是 **9 月 1 日**下午 4:31；③ **AP 通稿标题**就是 `Gael Monfils wins on his 40th birthday at the US Open to extend his Grand Slam career`。转播 159.20 秒另有一句 `40 years of age today`。",
+    "他成了一九九二年康纳斯之后美网最年长的胜者": "⚠️ 这是**全称断言**，两个独立源。① **AP 通稿**原文：`Monfils became the oldest man to win a U.S. Open match since Jimmy Connors — another guy who loved to put on a show in New York — defeated Jaime Oncins on Sept. 2, 1992, when he turned 40.`；② **转播解说** 174.32 秒：`He's the oldest match winner here in singles in over 30 years.`——两边都成立，而 AP 那条更精确（点名康纳斯、给了日期），旁白按 AP 的写。\n\n⚠️ **康纳斯那天也刚满 40 岁**（生于 1952-09-02，AP 原文 `when he turned 40`），所以这不只是「最年长」，是**两个四十岁生日隔了三十四年**——这一层写进了旁白。",
+    "他是靠外卡进的正赛，世界排名第三百一十一": "美网官方两处：`players.json` 的 `singles_rank: \"311\"`，以及 matches feed 的 `team2.entryStatus: \"WC\"`。",
+    "首盘三十七分钟六比二丢掉": "美网官方 matches feed 的 `scores.setDurations[0] = \"37\"` 和 `sets[0] = [6, 2]`（team1=巴列霍）。**转播自证**：40.16 秒 `the first set is his in just 37 minutes`。",
+    "首盘十三个非受迫失误，第二盘只剩两个": "美网官方 IBM 逐分（`1123C.json`）按 `UnforcedError` 字段逐盘聚合：孟菲尔斯（P2）第一盘 13、第二盘 2、第三盘 8、第四盘 3，四盘相加 26，和 flashscore `df_st_1` 全场那一行的 26 内部一致。⚠️ `UnforcedError` 的值 1/2 是**谁失误的**不是 0/1 标志位——拿 Ace 那几条交叉验证过（`Ace` 的 1/2 和 `PointServer`/`PointWinner` 三方一致，网球规则本身给的自证）。",
+    "第四盘他打出十五个制胜分，对手三个": "同一份 IBM 逐分按 `Winner` 字段逐盘聚合：第四盘孟菲尔斯 15、巴列霍 3；全场 37 对 20，和 flashscore `df_st_1` 的 `Winners` 一致。",
+    "第四盘第二局那记正手制胜分打了十三拍": "IBM 逐分第四盘第 2 局（孟菲尔斯发球）的分序：`0:15` Ace → `15:15` → `15:30`（13 拍）→ `15:40` **`G. Monfils wins the point with a forehand winner`，`RallyCount: 13`** → 保发。**三方对齐**：AP 原文 `It was 1-0 when he hit his leaping forehand winner, then raised his hand toward his ear and spun it to encourage cheers`（第四盘 1-0 正是这一局）、转播 139.64 秒 `OH, HE'S MADE IT. HOLLYWOOD TENNIS.`、以及记分条 140.5 秒读 `30`、142.5 秒变 `40`（正是这一分打完）。",
+    "他用一记 Ace 结束了比赛": "IBM 逐分最后一条：`G. Monfils wins the match with an ace`（第四盘第 6 局，`Ace: \"2\"`、`PointServer: \"2\"`）。画面自证：146.5 和 148.5 秒记分条挂着 `MATCH POINT` 且是 40-0，150.5 秒他双臂张开仰头。",
+    "全场唱生日快乐歌": "**AP 通稿**：`Monfils said to the fans at Louis Armstrong Stadium, who then sang happy birthday to him.` 画面同样自证：174 秒起全场起立、后场板刷着 `GAEL MONFILS`，98.5 秒看台上有人举着法国国旗。",
+    "这是他第十八次打美网，二〇一六年打进过四强": "**AP 通稿**：`Monfils, in his 18th U.S. Open appearance` 和 `the tournament where he reached the 2016 semifinals`。",
+    "这是他二〇二五年温网之后第一场大满贯胜利": "**AP 通稿**：`earned his first Grand Slam win since the first round of Wimbledon in 2025`。",
+    "他打完这个赛季就退役": "**AP 通稿**：`Monfils is planning to retire after this year`。ATP 官方 2025 年 10 月的退役公告和 ESPN 当时的报道是更早的出处（本仓库 `hijikata-monfils.json` 的 `_claims` 里记着）。"
+  },
+  "editorial": {
+    "mode": "match_review",
+    "hook": [
+      "生日当天先丢一盘",
+      "后三盘只丢三局"
+    ],
+    "question": "一个世界排名三百一十一、靠外卡进正赛的四十岁球员，怎么在自己生日这天先丢一盘，然后只让对手再拿三局？",
+    "thesis": "转折是他把失误收住了。首盘他自己送出十三个非受迫失误，三十七分钟六比二丢掉；第二盘这个数字掉到两个，他连赢五局。之后一路收紧：第三盘四十四分钟六比二，第四盘干脆打出十五个制胜分、对手只有三个，六比零。全场十九个破发点拿到七个，制胜分三十七比二十。而这场球的分量不在数据上——这一天是他的四十岁生日，他成了一九九二年康纳斯之后美网最年长的胜者，而康纳斯那天也刚好满四十岁。",
+    "beats": [
+      "北京时间九月二号凌晨四点多开球，阿姆斯特朗球场关着顶。对面是二十二岁的巴列霍，世界第六十、生涯最高排名，转播开场就说他是来搅局的。首盘三十七分钟，六比二。",
+      "第二盘他把非受迫失误从十三个降到两个，连赢五局六比一扳平；第三盘四十四分钟六比二，两次破发都在打满平分的长局里拿下。",
+      "第四盘他打出十五个制胜分、对手三个。第二局那记正手打了十三拍，他跳起来抽的，打完把手举到耳边转一圈问全场要掌声。最后一分是发球直接得分，六比零。",
+      "两小时二十二分，全场站起来给他唱生日快乐歌。他说：能在四十岁生日这天打球，是你们让它变得不可思议。"
+    ],
+    "_hook_why": "这一栏和 cover.hook 逐行相同（闸要求）。理由见 cover._hook_why。",
+    "human_context": {
+      "angle": "这一场的场外切口是**一个四十岁生日**，而它同时是三件事的交点：他今年打完就退役，所以这是他最后一届美网（第十八次）；他世界排名已经掉到三百一十一，是靠一张外卡进的正赛；而这是他自二〇二五年温网首轮以来第一场大满贯胜利。对面二十二岁的巴列霍，正处在生涯最高的世界第六十——孟菲尔斯二〇〇四年转职业那年，巴列霍才半岁。赛后全场唱生日快乐歌，这是这条片子的落点。",
+      "facts": [
+        "孟菲尔斯 2-6 6-1 6-2 6-0 胜巴列霍，2026 美网男单第一轮，路易斯·阿姆斯特朗球场，关顶，官方用时 2:22（美网官方 matches feed，match_id 1123）",
+        "孟菲尔斯 1986 年 9 月 1 日生于巴黎，这场球打在纽约当地 9 月 1 日下午 4:31，正是他四十岁生日当天",
+        "他世界排名第 311，靠外卡（entryStatus=WC）进正赛；巴列霍世界第 60，是其生涯最高排名，22 岁，巴拉圭人",
+        "他成了 1992 年康纳斯之后美网最年长的男单胜者；康纳斯 1992 年 9 月 2 日击败翁辛斯那天也刚满 40 岁",
+        "这是他第 18 次打美网，2016 年在这里打进过四强；也是他自 2025 年温网首轮以来第一场大满贯胜利",
+        "两人此前从未交手（美网官方 head2head feed 两边都是 0）"
+      ],
+      "sources": [
+        "https://apnews.com/article/us-open-gael-monfils-40-birthday-12e0e582b9f815f3541e21eabf8b3f77",
+        "https://www.usopen.org/en_US/scores/feeds/2026/completed_matches/matches/1123.json",
+        "https://www.usopen.org/en_US/scores/feeds/2026/players/players.json"
+      ],
+      "voice_label": "四十岁生日那场球"
+    }
+  },
+  "push": {
+    "summary": "四十岁生日逆转晋级",
+    "lead": "美网第一轮，孟菲尔斯在自己四十岁生日这天先丢一盘，然后 6-1、6-2、6-0 连拿三盘。他是 1992 年康纳斯之后美网最年长的胜者——而康纳斯那天也刚满四十岁。赛后全场站起来给他唱生日快乐歌。",
+    "matchup": "孟菲尔斯 vs 巴列霍",
+    "score": "2-6 6-1 6-2 6-0",
+    "auto": true
+  },
+  "_push_summary_why": "九个字，一层铺垫（四十岁生日）＋ 一个动词收尾（逆转晋级），没有插代词。⚠️ 不写「先丢一盘再连赢三盘」——那是两层铺垫叠在一起，正是 CLAUDE.md『kostyuk-andreeva 那条标题』记的毛病；比分板和顶栏已经印着四盘比分，标题不用再复述一遍。",
+  "segments": [
+    {
+      "source": "main",
+      "start": 147.5,
+      "end": 156.0,
+      "score_inset": false,
+      "_score_inset_why": "混合段：147.5~149.7 记分条还挂着 MATCH POINT，149.77 切点之后是庆祝近景，转播把板收掉了（score 墙 152.5s 起整格都是身体和球场）。板真会消失的段不开回贴——开了后半段贴回来的是一块蓝色场地。",
+      "crosses_cut": "149.77 —— 赛点那一分落地接他双臂张开仰头，同一个人同一个时刻；断在切点上会把「球落地」和「他的反应」劈成两半。",
+      "_why": "冷开场：全片最强的一格，不配旁白，靠现场声（满场欢呼）。147.5 起是第四盘 5-0、40-0 赛点那一分（记分条挂着 MATCH POINT，148.5s 那格读得到 `VALLEJO 6 1 2 0 [0] / MONFILS 2 6 6 5 [40]`），149.77 切点之后接落地、张臂、仰头。按「开场三格：画面爆点 → 落点 → 坐标」，爆点放这一格，落点和坐标交给第 2、3 段。",
+      "_ending_payoff_required": true,
+      "_ending_payoff_why": "冷开场包含最后一球和庆祝，所以正文必须重新走到：第 14 段 147.5–158.0 是同一段完整重放（起点相同、终点更晚），完整覆盖冷开场的 147.5–156.0。"
+    },
+    {
+      "source": "main",
+      "start": 2.2,
+      "end": 10.2,
+      "score_inset": true,
+      "narration": "九月一号，纽约。这一天是孟菲尔斯四十岁生日，而他要打美网第一轮。",
+      "_why": "镜头 1.95–10.59 之内。首盘 1-4 时的一个底线回合，开头 0.5s 那格是孟菲尔斯的近景（黑上衣、胸前薄荷绿块），记分条挂着黄色 `BREAK POINT`、读数 `VALLEJO 4 [40] / MONFILS 1 [40]`——这一段的画面是他正被压着打，正好垫住「这一天是他生日」这句话的反差。"
+    },
+    {
+      "source": "main",
+      "start": 17.1,
+      "end": 24.2,
+      "score_inset": true,
+      "narration": "北京时间九月二号凌晨四点多开球，阿姆斯特朗球场，屋顶关着。",
+      "_why": "镜头 16.92–29.61 之内，首盘 2-5 的底线回合，记分条挂着 `SET POINT #2`。⚠️ 开球时刻只说个大概不报到分（官方 epoch 是 UTC 9/1 20:31 ＝ 北京 9/2 04:31，落在「凌晨四点多」那一档）。关顶这条出自 flashscore 的 `AM÷Playing under a closed roof.`。"
+    },
+    {
+      "source": "main",
+      "start": 24.4,
+      "end": 33.2,
+      "score_inset": true,
+      "narration": "对面是二十二岁的巴列霍，世界第六十，正是他的生涯最高。转播说，他是来搅局的。",
+      "_why": "镜头 16.92–29.61 的后半 ＋ 29.61–33.43 一整块。⚠️ 原来窗口收在 29.2、旁白说「对面是巴列霍」——本地预览一摆就看见那三格里近端全是孟菲尔斯（薄荷绿短裤），巴列霍只是远端一个小人影。延过切点之后，说到他的时候画面正好切到他的近景。「生涯最高」这一层出自转播开场那句 `the man who's currently sitting at his career high has come to spoil the birthday party`。 「来搅局的」是转播 32.72 秒的原话 `has come to spoil the birthday party`。",
+      "crosses_cut": "29.61 —— 前半（24.5~28.5s）是两个人都在的底线宽景，后半（30.5/32.5s）才是**巴列霍的近景**（全黑装）。这一段的旁白正是在介绍他，切点之后画面才真正给到他；断在切点上，「对面是谁」这句话就落在一个看不见他的宽景上。"
+    },
+    {
+      "source": "main",
+      "start": 33.6,
+      "end": 38.3,
+      "score_inset": true,
+      "narration": "首盘三十七分钟，六比二。",
+      "_why": "镜头 33.43–38.74 之内，首盘最后一局。转播 40.16 秒紧接着说 `the first set is his in just 37 minutes`，和官方 setDurations 的第一个数一分不差。"
+    },
+    {
+      "source": "main",
+      "start": 45.0,
+      "end": 54.0,
+      "score_inset": true,
+      "narration": "首盘他自己送出十三个非受迫失误。第二盘只剩两个，一整盘少了十一个。",
+      "_why": "镜头 38.74–72.76 之内（第二盘开局）。⚠️ 这一段起点特意排在 42.5s 的全屏台标之后——那张台标印着 `VALLEJO 6 0 / MONFILS 2 1`，是首盘已经结束的自证，但它不适合压旁白（画面被图形占满）。"
+    },
+    {
+      "source": "main",
+      "start": 62.5,
+      "end": 72.3,
+      "score_inset": true,
+      "narration": "他连赢五局，第二盘六比一。那一盘巴列霍只拿到十二分。一小时零二分钟，比分一比一。",
+      "_why": "同一镜头块（38.74–72.76）的后段，第二盘的回合。「一小时零二分钟」＝ 官方 setDurations 的 37+25，两盘打完的累计用时。"
+    },
+    {
+      "source": "main",
+      "start": 80.6,
+      "end": 91.0,
+      "score_inset": true,
+      "narration": "第三盘打了四十四分钟，是全场最长的一盘。两次破发都发生在打满平分的长局里，一分一分磨出来的。",
+      "_why": "镜头 80.4–91.46 之内，第三盘 2-5 那一局的回合，记分条挂着 `SET POINT #2`。四十四分钟出自官方 setDurations；「打满平分的长局」出自 IBM 逐分（第三盘 G3 十分、G5 五分、G1 八分、G4 八分、G8 十分）。"
+    },
+    {
+      "source": "main",
+      "start": 91.6,
+      "end": 96.2,
+      "score_inset": true,
+      "narration": "六比二，他拿到二比一。",
+      "_why": "镜头 91.46–96.63 之内。92.5s 那格是他握拳庆祝的近景（拿下第三盘），94.5s 举双臂。旁白落在动作发生的那一刻。"
+    },
+    {
+      "source": "main",
+      "start": 96.8,
+      "end": 100.7,
+      "score_inset": true,
+      "_why": "镜头 96.63–101.08 之内，**不配旁白，交给现场声**。98.5s 那格看台上有人举着一面法国国旗，96.5s 整片观众在鼓掌——这一格自己会说话，压一句旁白反而是复读画面。"
+    },
+    {
+      "source": "main",
+      "start": 120.2,
+      "end": 131.5,
+      "score_inset": true,
+      "narration": "第四盘他打出十五个制胜分，对面只有三个，还发了三个发球直接得分。这是四盘里差距最大的一盘。",
+      "_why": "镜头 119.7–140.11 之内（第四盘第 2 局，他的发球局）。记分条读 `VALLEJO 6 1 2 0 [15] / MONFILS 2 6 6 1 [30]`，发球指示的黄箭头在 MONFILS 那一行。 ⚠️ 原来写成「…十五个制胜分，对面只有三个。这是全场四盘里差距最大的一盘。」，dry-run 的断句报告说它会被切成「一行贴满 ＋ 对面只有3个」这种半截话；把后半句接长之后短尾巴并进了前一行。"
+    },
+    {
+      "source": "main",
+      "start": 131.7,
+      "end": 146.9,
+      "score_inset": true,
+      "narration": "这一分打了十三拍。最后一下，四十岁的他跳起来，在空中抽了一记正手。球一落地，他把手举到耳边转了一圈，问全场要掌声，而掌声早就起来了。",
+      "_why": "镜头 119.7–140.11 的后段 ＋ 140.11–147.3 一整块，是同一个动作序列。IBM 逐分第四盘第 2 局 `15:30 → 15:40` 那一分 `RallyCount: 13`、`G. Monfils wins the point with a forehand winner`；转播 139.64 秒喊 `OH, HE'S MADE IT. HOLLYWOOD TENNIS.`；记分条 140.5s 读 30、142.5s 变 40——三方对齐。举手那个动作出自 AP 原文 `then raised his hand toward his ear and spun it to encourage cheers that were already well underway`，「掌声早就起来了」就是那半句，不是修辞。\n\n⚠️ **原来这里是两段（131.7–139.7 ＋ 140.3–146.9），中间 0.6 秒被跳过——而那正是球落地的瞬间**。本地预览里段 12 的四格全是远景相持、最后一格 138.5s 球还在空中，下一段一上来他已经在庆祝了。合并并跨过 140.11 之后，这一分从相持到落地到反应是连着的。⚠️ 说「多少拍」不说「多少秒」。",
+      "crosses_cut": "140.11 —— 13 拍相持的最后一下（跳起来那记正手）落地，接他举手要掌声的庆祝。同一个人同一个动作序列；断在切点上正好把「球飞出去」和「球落地之后他干了什么」劈成两半，而那一下就是这一段的全部意义。"
+    },
+    {
+      "source": "main",
+      "start": 147.5,
+      "end": 158.0,
+      "score_inset": false,
+      "_score_inset_why": "同第 1 段：149.77 之后转播撤板，混合段不开回贴。",
+      "crosses_cut": "149.77 —— 同第 1 段，赛点落地接庆祝，该跨的那种切点。",
+      "narration": "最后一分是一个发球直接得分。六比零，两小时二十二分钟。后面这三盘，他一共只丢了三局。",
+      "_why": "**兑现结局**：第 1 段冷开场（147.5–156.0）在这里完整重放并走完。IBM 逐分最后一条是 `G. Monfils wins the match with an ace`。用时和逐盘比分出自官方 matches feed。"
+    },
+    {
+      "source": "main",
+      "start": 158.2,
+      "end": 166.5,
+      "score_inset": false,
+      "_score_inset_why": "赛后段，转播已撤板（score 墙 160.5s 之后整墙都是球场和身体，一块板都没有）。",
+      "narration": "美网上一次有四十岁的人赢下一场球，要回到一九九二年的康纳斯。",
+      "_why": "镜头 149.77–174.62 之内。158.5–162.5s 那几格是他赛后的近景，笑着，背景是看台。这条纪录出自 AP 通稿，转播 174.32 秒另有一句 `He's the oldest match winner here in singles in over 30 years`。"
+    },
+    {
+      "source": "main",
+      "start": 166.7,
+      "end": 174.2,
+      "score_inset": false,
+      "_score_inset_why": "同上，赛后段无板。",
+      "narration": "而康纳斯赢球那天，也刚好满四十岁。中间隔了三十四年。",
+      "_why": "同一镜头块后段，164.5–172.5s 他在网前和场边，后场板刷着 `GAEL MONFILS`。⚠️ 「康纳斯那天也刚满四十岁」出自 AP 原文 `defeated Jaime Oncins on Sept. 2, 1992, when he turned 40`——1992 到 2026 正好三十四年。"
+    },
+    {
+      "source": "main",
+      "start": 174.8,
+      "end": 187.0,
+      "score_inset": false,
+      "_score_inset_why": "同上，赛后段无板。",
+      "narration": "他世界排名第三百一十一，靠一张外卡进的正赛。这是他第十八次打美网，也是最后一次——今年打完，他就退役了。",
+      "_why": "镜头 174.62–187.4 之内。174.5s 全场起立，176.5–180.5s 他走到看台边和球迷（含一个孩子）互动，182.5–186.5s 在场上向四面举拍致意。排名和外卡出自美网官方 players.json / matches feed，第十八次和退役出自 AP 通稿。"
+    },
+    {
+      "source": "main",
+      "start": 187.6,
+      "end": 197.4,
+      "score_inset": false,
+      "_score_inset_why": "同上，赛后段无板。",
+      "narration": "全场站起来给他唱生日快乐。他说，能在四十岁生日这天打球，是你们让它变得不可思议。",
+      "_why": "镜头 187.4–197.8 之内。190.5s 他举拍指向看台，192.5s 仰头大笑的近景，196.5s 他在观众席前、周围的人举着手机。生日快乐歌和他这句话都出自 AP 通稿（原话 `To play the day of my 40th birthday is special. You guys made it, like, incredible.`）。"
+    },
+    {
+      "source": "main",
+      "start": 198.0,
+      "end": 208.3,
+      "score_inset": false,
+      "_score_inset_why": "同上，赛后段无板；206.5–208.5s 那张全屏台标本身就印着完整比分。",
+      "narration": "说到那记跳起来的正手，他自己的解释是：剩下的次数不多了。那么，这样的夜晚还剩几个？",
+      "_why": "镜头 197.8–210.41 之内，他收拾球包离场，208.5s 挂出全屏台标 `ADOLFO DANIEL VALLEJO 6 1 2 0 / GAEL MONFILS 2 6 6 6`。⚠️ 末屏这一问不是封面钩子（「生日当天先丢一盘／后三盘只丢三局」）的回声——它接的是他自己关于那记飞身正手说的那句 `There's not many, many times (left)`（AP 通稿）。⚠️ 208.3 之后 210.41 起是 US Open 的订阅片尾板（probe 的 silent_audio 报 210.45–213.51 是数字静音），一帧都不收。 ⚠️ 原来只有 27 字，dry-run 估出来余量 4.75s 是**哑场**；补上他对那记正手的解释（AP 原话 There's not many, many times left）之后填满窗口，而且这一句正好把末屏那一问接在他自己的话上。"
+    }
+  ],
+  "_editing_why": "十九段，取源片 2.2–208.3 里的十四个镜头块，全部落在 probe.json 的 scene_cuts 之间（每段末尾另留 SEG_FADE=0.18 秒的溶解底料，都不越过下一个切点，最紧的一段仍留着 0.2 秒以上）。\n\n**冷开场用 147.5–156.0**（赛点那一分 ＋ 落地庆祝），不是源片开头——开头那十秒是首盘 1-4 被压着打的普通回合，戏剧性最低。开完这一格再倒回 2.2 秒从头讲，第 14 段把它完整重放并走完。\n\n⚠️ **两个人都穿黑上衣，只能靠短裤分**：孟菲尔斯是黑上衣、胸前一块薄荷绿、薄荷绿短裤；巴列霍全黑。判据不是看着像——记分条整场烧着两个人的名字和局分，0.5s（首盘 1-4 破发点时的绿裤近景）、30.5/32.5s（首盘末段的全黑近景）、150.5s（赛后张臂的绿裤庆祝）都能和逐分对上；98.5s 看台那面法国国旗也是旁证。\n\n**源片可用到 210.41**——那是最后一个 scene_cut，之后是 US Open 的订阅片尾板，probe 的 silent_audio 报 210.45–213.51 是数字静音，两处互相印证。末段收在 208.3，留了两秒以上余量。",
+  "_score_inset_why": "19 段里 13 段开回贴、6 段显式关掉。关掉的六段全在 149.77 之后（赛点落地起转播就把板收了）外加两个跨切点的混合段。⚠️ 判据是「这一段的源片里到底有没有那块深蓝板」，靠 probe 落的 score_*.jpg 逐格看出来的——score 墙裁的正是记分条那一块，160.5s 之后整墙都是球场、身体和球网，一眼可见。",
+  "_no_repeat": "⚠️ 本仓库已发过 hijikata-monfils（2026-08-13 辛辛那提第一轮，孟菲尔斯 2-6 7-6(5) 6-3 负土方凛辉）。那条的落点是**告别**——「第十四次也是最后一次来辛辛那提」，并且铺开讲了他今年 13 场 4 胜、法网之后两个多月没打、排名掉到三百零五。**这一条一个字都不许重讲那些**：今年的战绩、伤停、复出时间线全部不碰。\n\n这一条的落点是**四十岁生日**和**一九九二年以来最年长的胜者**，是那条片子里没有的东西。两条唯一重叠的事实是「他今年打完就退役」——那是看不懂这场球所必需的来路（不知道他要退役，就不懂「最后一次打美网」的分量），按 CLAUDE.md 的口径**一句带过**，写在第 17 段的后半句，不展开。\n\n⚠️ 同样躲开 maria-yastremska 那条的角度——**年龄本身**。这一条里「四十岁」出现的每一次都挂在**生日**这个具体时间点上（生日当天、四十岁生日这天打球、康纳斯那天也刚满四十），不铺开讲「四十岁还在打球」这件事本身。",
+  "_fact_sources": [
+    "https://apnews.com/article/us-open-gael-monfils-40-birthday-12e0e582b9f815f3541e21eabf8b3f77",
+    "https://www.usopen.org/en_US/scores/feeds/2026/completed_matches/matches/1123.json",
+    "https://www.usopen.org/en_US/scores/feeds/2026/slamtracker/history/1123C.json",
+    "https://www.usopen.org/en_US/scores/feeds/2026/players/players.json",
+    "https://www.youtube.com/watch?v=hhGo8Ws_K7Y"
+  ]
+}
