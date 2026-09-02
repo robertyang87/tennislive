@@ -18,7 +18,11 @@
       }
     ],
     "winner": "科斯秋克",
-    "result": "6-1 7-5"
+    "result": "6-1 7-5",
+    "portrait": {
+      "image": "assets/reel/kostyuk-stephens-cover.jpg",
+      "_portrait_why": "WTA 官方赛后稿/集锦头图，定时自动补齐"
+    }
   },
   "_production": {
     "kind": "orchestrated_reel",
@@ -271,46 +275,40 @@
     "visual_status": "waiting",
     "retryable": false,
     "cold_open": {
-      "start": 154.45,
-      "end": 178.5,
+      "start": 166.55,
+      "end": 172.92,
       "kind": "match_point",
       "winner_visible": true,
-      "reason": "154.5s 画面下方黄色 'MATCH POINT #1' 字样显示科斯秋克发球，156.5–166.5s 是科斯秋克（红衣）发球回合的广角覆盖；168.5–172.5s 红衣球员（科斯秋克）握拳/捂脸情绪反应，174.5–176.5s 黑衣球员（斯蒂芬斯）表情失落，进一步确认科斯秋克拿下制胜分。",
-      "confidence": 0.9
+      "reason": "166.5s 画面左下角闪现 MATCH POINT 黄色角标，比分 KOSTYUK 6-5，60 帧前选手在底线就位；168.5s–172.5s 红色球衣选手（赢家科斯秋克）面带如释重负的神情并抬头确认赛点已兑现，比赛已结束但尚未走向网前。",
+      "confidence": 0.92
     },
     "ending": {
-      "start": 154.45,
-      "end": 201.63,
+      "start": 166.55,
+      "end": 195.75,
       "kind": "winner_celebration",
       "winner_visible": true,
-      "reason": "154.5–176.5s 覆盖赛点与赛后反应；178.5s 两人在网前握手完成终场礼仪；180.5–190.5s 红衣科斯秋克哭泣式庆祝并与团队拥抱；192.5–198.5s 大屏幕显示 'MARTA KOSTYUK'，200.5s 转播记分牌写明 KOSTYUK 6-7(6) 1 5 / STEPHENS 1-6 5，202.5–204.5s 进入美网官方片尾。该窗口完整覆盖 cold_open 154.45–178.50。",
+      "reason": "166.5s–172.5s 红衣科斯秋克确认赛点后的余波表情（cut at 172.92）；172.92s 起 178.5s 网前握手；182.5s–190.5s 科斯秋克靠在场边遮阳棚下、捂住双眼激动落泪的完整庆祝镜头，全程完整覆盖并重新兑现冷开场的赛点/庆祝窗口。",
       "confidence": 0.95
     },
     "cover": {
-      "same_match": false,
-      "subject": "",
+      "same_match": true,
+      "subject": "科斯秋克",
       "moment": "other",
-      "wrong_or_old": true,
-      "reason": "未提供候选封面照片，无法核对人物/比分/赛事标识，按硬规则返回 same_match=false。",
-      "confidence": 0.2
+      "wrong_or_old": false,
+      "reason": "候选封面为红衣白边 Wilson 短裙选手击球瞬间，与视频集锦中科斯秋克的服装、球拍（J.P. Morgan 背景板、Wilson 球拍蓝色拍头）一致；同属 US Open 蓝场与赛事赞助背景，可视为本场同一人物在击球回合中的画面。confidence 偏低因为画面中无可见比分或姓名条做硬性同场锚定。",
+      "confidence": 0.82
     },
     "problems": [
-      "ending 必须是 3-30 秒的完整收官窗口",
-      "ending 理由引用窗口外时间：[204.5]",
-      "没有官方高清封面候选",
-      "封面无法证明是同一场，或疑似旧图/错图",
-      "封面置信度 0.20 低于 0.80",
-      "封面人物应为 科斯秋克，模型识别为 空",
       "封面情绪应为 winner_celebration，现在是 other"
     ],
     "model_attempts": 1,
-    "input_sha256": "cdb2613613e3e04c02a190635de3a23bd2e10122178cd3977c5f237fe258306e",
+    "input_sha256": "100fc5110ca3f709db6b4d664f238903b70862bb8f0080e5ae33b31edd2042fa",
     "inputs": [
       "contact_00.jpg",
       "contact_01.jpg",
       "contact_02.jpg",
       "contact_03.jpg"
     ],
-    "cover_image": ""
+    "cover_image": "assets/reel/kostyuk-stephens-cover.jpg"
   }
 }
