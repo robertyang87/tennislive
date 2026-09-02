@@ -155,16 +155,17 @@
       {
         "a": 174.32,
         "b": 179.0,
-        "en": "He's the oldest match winner here in singles",
-        "zh": "他是这里男单最年长的胜者"
+        "en": "He's the oldest match winner here",
+        "zh": "他是这里最年长的胜者"
       },
       {
         "a": 179.04,
         "b": 182.6,
-        "en": "in over 30 years.",
-        "zh": "三十多年来的第一个"
+        "en": "in singles in over 30 years.",
+        "zh": "男单 三十多年来第一个"
       }
-    ]
+    ],
+    "_subs_why": "⚠️ 第 6/7 行的断句位置是**被行宽逼出来的，不是随手切的**：解说原话「He's the oldest match winner here in singles in over 30 years.」按自动字幕的原始分段合并成两行时，第一行量出来 **952.7px，而可用宽是 952px——超 0.7 个像素**，2026-09-02 第二趟 render 就死在这儿（`#6 英文超宽 953px`）。\n**原话一个词都没有改动**，只是把断点从 `singles` 之后挪到 `here` 之后：拆完 738.0px / 567.2px，中文跟着拆成「他是这里最年长的胜者」/「男单 三十多年来第一个」（700.0 / 715.7px）。\n⚠️ 这一类超宽 `--stage subs` 查不出来（它只查采访正文那 54 行，不查 lead_in.subs），只有 render 才报——所以改完要拿 `_en_width()` / `_zh_width()` 在本地量一遍再发，别靠数字符。"
   },
   "en_fixed": {
     "40": "Your wife, Elina, is of course watching",
