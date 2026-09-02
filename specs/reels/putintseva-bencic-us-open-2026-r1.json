@@ -37,12 +37,12 @@
     "_hook_why": "两行各 10 字符，正好压在 `HOOK_MAX_CHARS` 上。上一行概括**整场**怎么走的（丢掉首盘 → 第二盘自己发球局 0-40），不是某一个时刻；下一行是落点——对中文读者来说，这条片子的全部分量在这儿。⚠️ 两行都不重复比分板（板上印的是 `4-6 7-5 6-3` 和两人排名），也不写身份。",
     "topic": "美网首轮 · 17 号球场",
     "portrait": {
-      "image": "assets/reel/putintseva-us-open-2026-r1-usta-backhand-closeup.jpg",
-      "focus": 0.6,
+      "image": "assets/reel/putintseva-bencic-cover.jpg",
+      "focus": 0.52,
       "focus_y": 0.5,
       "zoom": 1.0,
-      "_photo_why": "美网官方图库本场实拍（`photo-assets.usopen.org/.../f_USTA2403242_20260901_DS3_1917.jpg`，摄影 Dustin Satloff/USTA），官方说明自带四要素：`Yulia Putintseva in action during a Women's Singles match on Day Three of the 2026 US Open at USTA Billie Jean King National Tennis Center`。八张候选逐张打开看过：这一张是**最近的近景**，脸占画面主体、双眼睁开看着球、咬牙鼓腮的击球表情，背景是虚化的看台（看得出在球场上）。另外七张里三张是全身击球（脸只有几十像素）、四张脸更小或表情平静。",
-      "_low_res_why": "1280×720 铺 1080×1440 要放大 **2.0 倍**，够不着 `cover_photo_problem` 的 1.00× 地板。**这是美网这条渠道的出版天花板，不是没找够**：`f_` 前缀就是 xlarge，十二个前缀、六个目录、三种 `?width=` 参数都试过（第三组返回 200 但尺寸一个像素没变）。同日 USA TODAY 每日图集没有一辑对得上美网，AP 按 `Putintseva` 查为空，WTA `photo-resources` 不收大满贯。"
+      "_photo_why": "Getty Images 本场实拍，**出处不是推的，是图里自带的**：XMP 的 `dc:description` 写着「NEW YORK - SEPTEMBER 01: Yulia Putintseva of Kazakhstan **celebrates match point against Belinda Bencic of Switzerland** during their Women's Singles First Round match on Day Three of the 2026 US Open …(Photo by Patrick Smith/Getty Images)」——两个球员的名字、轮次、赛事、日期全在，**指的就是这一场**（Getty id 2293070158）。而 EXIF 把它钉得更死：`DateTimeOriginal 2026:09:01 17:45:04` ＋ `OffsetTimeOriginal -04:00` ＝ **21:45:04 UTC**，而这场球 18:55 UTC 开球、打了 2:51、约 21:46 UTC 结束——**快门落在赛点那一分钟**。原图 6000×4000，仓库这份 3000×2000，铺 1080×1440 只要 **0.72 倍缩小**，不用写 `_low_res_why`。情绪按 2026-08-18 那条排的：同一批合格候选里**仰头呐喊 ＋ 握拳**是 CLAUDE.md 点名的那一档（优先于招手、微笑、击球中的平静表情）；换掉的那张美网官方图（1280×720，要放大 2.0 倍）是咬牙击球的近景，情绪也对题，只是**分辨率差一整档**。版权是 Getty（四类源里第 ③ 档「图片社」），署名 Patrick Smith/Getty Images。",
+      "_layout_check": "本地渲出来把三条带子叠上去看过（`render_cover_local.py`，2026-08-31 那条规矩）：脸落在 y170~380，钩子那两行的墨在 y790~1100，台头的墨收在 y124 上下——**上下都不压脸**。`fit: cover` 竖向正好铺满（2000×0.72＝1440），所以 `focus_y` 在这一档是死的，能动的只有横向；`focus 0.52` 取自脸的几何中心（Haar 框中心 x=1560.5/3000＝0.520），渲出来握拳的手和球拍都在框内。"
     },
     "scoreboard": {
       "court": "Stadium 17",
