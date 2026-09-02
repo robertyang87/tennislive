@@ -106,7 +106,9 @@ from tennislive import localca  # noqa: E402
 from tennislive.video import outro_page  # noqa: E402
 from tennislive.video import azure_tts  # noqa: E402
 from tennislive.video.watermark import (  # noqa: E402
+    WATERMARK_OFF_COLUMNS,
     brand_watermark,
+    column_wants_watermark as _column_wants_watermark,
     watermark_xy as _watermark_xy,
 )
 from tennislive.video.explainer import (  # noqa: E402
@@ -7597,27 +7599,10 @@ BAND_FOOT_LABEL = "网球时差 · 赛场之上"
 #: `or "赛场之上"` 是同一个缺省。
 DEFAULT_COLUMN = "赛场之上"
 
-#: 这几个栏目**不画左上角那块常驻角标**。
-#:
-#: 账号所有者 2026-09-02：「**赛场之上视频就不要加左上角的栏目信息了。
-#: 因为下面已经有了**」。来路是 `eala-stoiana-us-open-2026-r1` 那条成片——
-#: 同一帧上「网球时差 · 赛场之上」**印了两遍**：左上角的角标一遍（压在看台上），
-#: 底带的品牌脚注又一遍（`BAND_FOOT_LABEL`，就是上面那个常量）。
-#:
-#: ⚠️ **拿掉的是整块，不是只拿掉中间那一行。** 左上角那一块是「封面台头」
-#: （球标 ＋ 「网球时差 · 栏目」 ＋ `cover.topic` 副标题），账号所有者指的是
-#: 这一块所在的那个角。只删中间那行会剩下「一个球标 ＋ 一句没有主语的副标题」
-#: ——那是个谁都没要求过的新版式。所以 2026-09-01 那条「副标题不要消失啊」
-#: 在这个栏目上跟着这一块一起撤掉；**别的栏目一个字没动**。
-#:
-#: ⚠️⚠️ **底带脚注只在带式（`layout: "band"`）＋ 有顶栏时才渲**，而带式是
-#: 美网期间的规矩。也就是说 **`赛场之上` 一旦回到全出血版式，正片区间就一个
-#: 品牌标识都没有了**（封面和品牌片尾照旧有）——这是这条规矩自带的代价，
-#: 不是漏了；render 那一支会**把这句话打进日志**，别让它变成静默的。
-#:
-#: ⚠️ 只按**栏目**分，不按 layout 分：按 layout 分的样子是「同一个栏目的片子
-#: 一半有角标一半没有」，而读者认的是栏目不是版式。
-WATERMARK_OFF_COLUMNS = frozenset({DEFAULT_COLUMN})
+# 哪几个栏目不画左上角那块常驻角标，**名单在 `video/watermark.py`**
+# （`WATERMARK_OFF_COLUMNS`）——同一条规矩管着这条线和赛后开麦那条，写两处
+# 必分叉，而分叉的样子是**其中一条线又把角标画回来了**，不报错。来路、拿掉
+# 整块的理由、以及「正片区间还剩不剩品牌标识」那个代价，全写在那个常量上面。
 
 
 def wants_watermark(column: str) -> bool:
@@ -7625,10 +7610,10 @@ def wants_watermark(column: str) -> bool:
 
     ⚠️ 空栏目名按**「赛场之上」**算，和 `build_cover` / render 那两处
     `cover.eyebrow` 的缺省是同一个——不这样的话，直接拿 `""` 调它会得到
-    「要画」，而管线里那个空值其实是赛场之上。
+    「要画」，而管线里那个空值其实是赛场之上。缺省由这一层给、名单在共享
+    模块，是因为**两条线的缺省栏目不是同一个**。
     """
-    return (str(column or "").strip() or DEFAULT_COLUMN) \
-        not in WATERMARK_OFF_COLUMNS
+    return _column_wants_watermark(column, default=DEFAULT_COLUMN)
 
 
 #: 常驻角标的尺寸、阴影和几何**只有一处出处**（`video/watermark.py`）——

@@ -6214,3 +6214,90 @@ def test_常驻角标压在视频区不许压进顶栏那条带(tmp_path):
         "只许角标接走（接成 [vw]）。谁再从 [v] 取，角标就被整条绕过去了")
     assert re.search(r"\[vw\](subtitles|null)", src), (
         "角标之后没人从 [vw] 接着走——那一次 overlay 白做了")
+
+
+def test_赛后开麦不画左上角角标(tmp_path, capsys):
+    """账号所有者 2026-09-02：「**以后赛后开麦也不要左上角的栏目标题和副标题**」。
+
+    这是同一天那条「赛场之上视频就不要加左上角的栏目信息了」的延伸——「也」字
+    接的就是它。所以名单在共享模块（`video/watermark.py` 的
+    `WATERMARK_OFF_COLUMNS`），两条出片线一份。
+
+    ⚠️ **拿掉的是整块**（球标 ＋ 「网球时差 · 栏目」 ＋ 副标题），不是只拿掉
+    中间那一行：账号所有者点名的就是「栏目标题和副标题」两样。
+
+    钉四头，缺一头都能变成一盏绿灯：
+
+    ① **行为**：赛后开麦不画、别的栏目照画；**空栏目名按赛后开麦算**——管线里
+       `spec.get("column", "赛后开麦")` 就是这么缺省的，helper 不跟着缺省的话，
+       一条没写 `column` 的 spec 会得到「要画」。
+    ② **不画那一支要直通，不能返回空串**：调用方接的是 `[v]→[vw]`，而这条线
+       有**两条**出画面的路（正片 ＋ 冷开场）。空串会留下悬空的标签，且
+       `-map` 会把整个滤镜图绕过去而**不报错**。这一头**真跑一次 ffmpeg**：
+       查源码字符串只能防「有人把它删了」，防不住「它从来没工作过」。
+    ③ **不画那一支要出声**：「这个栏目不画」和「渲角标那一步没走到」在成片上
+       长得一模一样，而后者是个真 bug。只在画的时候打印等于把它变成静默的。
+    ④ **名单只有一份出处**：两条线读的必须是同一个 `WATERMARK_OFF_COLUMNS`。
+       写两处必分叉，而分叉的样子是**其中一条线又把角标画回来了**。
+    """
+    import subprocess
+    import sys
+
+    import numpy as np
+    from PIL import Image
+
+    sys.path.insert(0, str(ROOT / "src"))
+    sys.path.insert(0, str(ROOT / "tools"))
+    from tennislive.video.watermark import (
+        WATERMARK_OFF_COLUMNS, column_wants_watermark)
+    import build_interview_clip as ic
+
+    # ── ① 行为 ────────────────────────────────────────────────────────
+    assert "赛后开麦" in WATERMARK_OFF_COLUMNS, "赛后开麦还在画左上角角标"
+    assert not column_wants_watermark("赛后开麦", default="赛后开麦")
+    assert not column_wants_watermark("", default="赛后开麦"), (
+        "空栏目名要按赛后开麦算——管线里 `spec.get(\"column\", \"赛后开麦\")` "
+        "就是这么缺省的")
+    assert column_wants_watermark("网球有故事", default="赛后开麦"), (
+        "别的栏目不该被这条规矩带上")
+
+    # ── ② 不画那一支：直通，而且真跑得动 ──────────────────────────────
+    off = ic.watermark_filter(tmp_path, {"column": "赛后开麦"})
+    assert "overlay=" not in off, f"说好不画，滤镜里还有 overlay：{off}"
+    assert off.startswith("[v]") and off.endswith("[vw]"), (
+        f"不画的时候要把 [v] 直通到 [vw]，不能返回空串或改标签名：{off}——"
+        "空串会留下悬空的标签，而这条线有两条出画面的路，"
+        "让调用方各自去改标签名正是「第一版只接了正片」那个漏法的形状")
+    on = ic.watermark_filter(tmp_path, {"column": "网球有故事"})
+    assert "overlay=" in on, f"别的栏目那条路把角标也弄没了：{on}"
+
+    # 真跑一次：白底进去，`[vw]` 出得来，而且左上角是干净的
+    white = tmp_path / "w.png"
+    Image.new("RGB", (ic.CANVAS_W, 240), (255, 255, 255)).save(white)
+    out = tmp_path / "off.png"
+    subprocess.run(
+        ["ffmpeg", "-y", "-v", "error", "-i", str(white),
+         "-filter_complex", f"[0:v]null[v];{off}", "-map", "[vw]",
+         "-frames:v", "1", str(out)], check=True)
+    px, py = 0, 0
+    box = np.asarray(Image.open(out).convert("L").crop((px, py, 400, 240)),
+                     dtype=float)
+    assert float((box < 235).mean()) < 0.005, (
+        "说好不画角标，左上角却有墨——直通那一支接错了")
+
+    # ── ③ 出声 ────────────────────────────────────────────────────────
+    capsys.readouterr()
+    ic.watermark_filter(tmp_path, {"column": "赛后开麦"})
+    said = capsys.readouterr().out
+    assert "不画" in said and "角标" in said, (
+        f"不画那一支一个字都没说：{said!r}——「这个栏目不画」和「渲角标那一步"
+        "没走到」在成片上长得一模一样，而后者是个真 bug")
+
+    # ── ④ 名单只有一份出处 ────────────────────────────────────────────
+    import build_match_reel as reel
+    assert reel.WATERMARK_OFF_COLUMNS is WATERMARK_OFF_COLUMNS, (
+        "竖版短片那条线自己又抄了一份名单——同一条规矩管两条线，"
+        "写两处必分叉，而分叉的样子是其中一条又把角标画回来了")
+    itw_src = Path("tools/build_interview_clip.py").read_text("utf-8")
+    assert "column_wants_watermark" in itw_src, (
+        "采访线没走共享的那个 helper")
