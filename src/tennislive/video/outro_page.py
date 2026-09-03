@@ -61,7 +61,14 @@ ICON = ROOT / "assets/logo/brand/icon-512.png"
 
 # 屏幕上印的那句。**口播比它多一句「关注网球时差」**，而那六个字正是屏幕上
 # 最大的那四个字加动作——所以 outro 不另排字幕，见 `build_match_reel` 那头。
-TAGLINE = "你睡着的那些球，我替你看完"
+#
+# 2026-09-03 从「你睡着的那些球，我替你看完」换成这句，账号所有者点头的。
+# 老那句的毛病摆得出来：「那些球」指代含糊、「看完」落在我们身上不落在观众
+# 拿到什么；它只对「赛场之上」成立（赛后开麦和网球有故事不是「睡着时打完的
+# 球」），而这一页三条线共用；14 个字里没有「时差」——品牌名的钩子就是那两个
+# 绿字，解释和名字没咬合。这句 4+4 对仗、句里带「时差」、说的是分工和承诺，
+# 三条线都成立。五版真渲并排比过、生产那把嗓子合过（4.20s，切词干净）。
+TAGLINE = "时差归我，好球归你"
 
 # 片尾那句口播。**全站只有这一个出处**（剪辑片、解说片、采访片共用）。
 #
@@ -71,7 +78,7 @@ TAGLINE = "你睡着的那些球，我替你看完"
 # ⚠️ 屏幕上印的是它的后半截（`TAGLINE`），前面多出来的「关注网球时差」正是
 # 屏幕最大那四个字加一个动作——所以片尾不另排字幕。改这句就要同时看一眼那张
 # 页面还盖不盖得住，判据在 `test_片尾口播说的话画面上要印得全`。
-NARRATION = "关注网球时差，你睡着的那些球，我替你看完。"
+NARRATION = "关注网球时差，时差归我，好球归你。"
 
 # 口播说完之后留的那口气。片尾是整条片子的最后一帧，贴着最后一个字切会像
 # 被掐断，所以比封面那档（0.25s）留得多一点。
@@ -312,8 +319,15 @@ def build_with_voice(
     voice: str | None = None,
     rate: str | None = None,
     pitch: str | None = None,
+    fresh: bool = False,
 ) -> Path:
     """合口播 → 渲页 → 出片尾片段。**三条生产线共用这一份。**
+
+    `fresh=True` 跳过「母版在就从它转码」那条近路，**现渲**——只给
+    `tools/build_outro_master.py` 用：改了口播或版式之后重出母版，走近路等于
+    拿旧母版转码成「新母版」，文案一个字都不会变（2026-09-03 换 slogan 时
+    第一趟就是这么栽的：输入输出同一个文件，ffmpeg 直接报错；要是 `--out`
+    指到别处，它会**成功**地产出一份印着旧文案的母版，而且不报错）。
 
     片尾停多久由**口播**决定，但不短于动效自己要的下限（`min_length`）——
     换嗓子或改动效节奏时两头都不会被截断。
@@ -344,7 +358,7 @@ def build_with_voice(
     # ⚠️ 中间这一步转码**省不掉**：三条线的帧率/采样率/声道数不一样，
     # `concat` 差一项就静默丢流。母版按上界存（60fps / 48000 stereo / crf 12），
     # 往下转无损失，往上补不出信息。
-    if MASTER.is_file():
+    if MASTER.is_file() and not fresh:
         subprocess.run(
             ["ffmpeg", "-y", "-hide_banner", "-loglevel", "error", "-i", str(MASTER),
              "-r", str(fps_expr or int(fps)),
@@ -357,8 +371,11 @@ def build_with_voice(
 
     # 母版不在就现渲一份（第一次生成母版本身走的就是这条路）。
     # ⚠️ **要出声**：默默多花 12 秒和正常出片长得一模一样。
-    print("[片尾] 没有母版，这条片子现渲一份（约 14 秒）；"
-          "跑一次 tools/build_outro_master.py 就不用每次渲了")
+    if fresh:
+        print("[片尾] fresh=True：现渲一份（约 14 秒），不从旧母版转码")
+    else:
+        print("[片尾] 没有母版，这条片子现渲一份（约 14 秒）；"
+              "跑一次 tools/build_outro_master.py 就不用每次渲了")
     spoken = synthesize_narration(
         [ExplainerSegment(kind="outro", label="片尾", title="", narration=NARRATION)],
         outdir / "_outro_voice",
