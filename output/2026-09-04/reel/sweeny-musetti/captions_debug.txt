@@ -1,0 +1,36 @@
+拿不到自动字幕，各 client 的原因如下：
+
+### web(+POT)
+WARNING: Only images are available for download. use --list-formats to see them
+ERROR: [youtube] MP-0UwOBqEI: Requested format is not available. Use --list-formats for a list of available formats
+
+### mweb(+POT)
+WARNING: The extractor specified to use impersonation for this download, but no impersonate target is available. If you encounter errors, then see  https://github.com/yt-dlp/yt-dlp#impersonation  for information on installing the required dependencies
+ERROR: Unable to download video subtitles for 'en-orig': HTTP Error 429: Too Many Requests
+
+### tv(+POT)
+ERROR: [youtube] MP-0UwOBqEI: The page needs to be reloaded.
+
+### 默认
+WARNING: The extractor specified to use impersonation for this download, but no impersonate target is available. If you encounter errors, then see  https://github.com/yt-dlp/yt-dlp#impersonation  for information on installing the required dependencies
+ERROR: Unable to download video subtitles for 'en-orig': HTTP Error 429: Too Many Requests
+
+### android_vr
+WARNING: [youtube] Skipping client "android_vr" since it does not support cookies
+WARNING: Only images are available for download. use --list-formats to see them
+ERROR: [youtube] MP-0UwOBqEI: Requested format is not available. Use --list-formats for a list of available formats
+
+### tv_simply
+WARNING: [youtube] Skipping client "tv_simply" since it does not support cookies
+WARNING: Only images are available for download. use --list-formats to see them
+ERROR: [youtube] MP-0UwOBqEI: Requested format is not available. Use --list-formats for a list of available formats
+
+### web_embedded
+WARNING: The extractor specified to use impersonation for this download, but no impersonate target is available. If you encounter errors, then see  https://github.com/yt-dlp/yt-dlp#impersonation  for information on installing the required dependencies
+ERROR: Unable to download video subtitles for 'en-orig': HTTP Error 429: Too Many Requests
+
+### android+ios
+WARNING: [youtube] Skipping client "android" since it does not support cookies
+WARNING: [youtube] Skipping client "ios" since it does not support cookies
+WARNING: Only images are available for download. use --list-formats to see them
+ERROR: [youtube] MP-0UwOBqEI: Requested format is not available. Use --list-formats for a list of available formats
