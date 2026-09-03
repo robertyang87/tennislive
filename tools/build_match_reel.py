@@ -1064,6 +1064,127 @@ def board_right_edge_in_band(band: "np.ndarray") -> int | None:      # noqa: F82
     return int(last) + 1
 
 
+_BOARD_PRESENT_COLS = 100   # 判「板在不在」只看板左缘往右这么宽（名字那一段）
+_BOARD_PRESENT_ROW_HIT = 0.25   # 比 `_BOARD_ROW_HIT` 松：板可能只占 scorebox 的一部分高
+
+
+def board_present_in_band(band: "np.ndarray") -> bool:      # noqa: F821
+    """这一帧的板**在不在画面里**——和「量不量得出右缘」是两件事。
+
+    ⚠️⚠️ **这个区分是必须的**：`board_right_edge_in_band` 返回 `None` 有两种
+    原因，而它们的处置完全相反——
+
+    - **板不在**（球场、回放、全屏图形）→ 不能回贴，贴上去是一块同色的球场
+    - **板在，只是量不出右缘**（球员贴着板走过、过曝、花屏）→ **照旧回贴**，
+      右缘按邻段的单调性补（`_later_floor` 那一支）
+
+    把两者混成一类，德约那条 seg4「五帧花屏 ＋ 一张孤票」就会被判成「整段
+    没有板」而当场报错——那是**误伤**，板一直在。
+
+    **怎么判**：只看板左缘往右 `_BOARD_PRESENT_COLS` 列（名字那一段，板在的话
+    这儿必然是实心图形），问「有多少行离球场参考色够远」。
+    ⚠️ 行的门槛比量右缘时**松一档**（0.25 vs 0.5）：板不一定填满 `scorebox`
+    的整个高度——`wu-walton` 那条的板只有一行，实测只占贴片高度的三分之一，
+    按 0.5 判会把**明明在画面里的板**判成不在。这也是「查了一场就写成一类」
+    在这条线上的又一个实例：门槛只在一条片子上标定过，换一场就不成立。
+    """
+    import numpy as np  # noqa: PLC0415
+
+    if band.ndim != 3 or band.shape[0] < 4 or band.shape[1] < 40:
+        return False
+    right = band[:, int(band.shape[1] * 0.75):]
+    court = np.median(right.reshape(-1, band.shape[2]), axis=0)
+    left = band[:, :min(_BOARD_PRESENT_COLS, band.shape[1])].astype(float)
+    far = np.linalg.norm(left - court, axis=2) > _BOARD_COLOUR_TOL
+    return bool(far.mean(axis=0).mean() >= _BOARD_PRESENT_ROW_HIT)
+
+
+BOARD_SCAN_FPS = 2          # 板的在场扫描：每 0.5 秒一格
+BOARD_SPAN_MIN = 0.8        # 短于这个的在场片段不值得贴（一闪而过）
+
+
+def board_edge_timeline(source: Path, box: tuple[int, int, int, int],
+                        start: float, end: float,
+                        runner=subprocess.run,
+                        fps: int = BOARD_SCAN_FPS,
+                        ) -> list[tuple[float, int | None, bool]]:
+    """**一次解码**量出这一段里板的右缘随时间怎么走。返回 [(段内秒, 右缘或 None)]。
+
+    ⚠️ **为什么要按时间轴量，而不是像原来那样抽几帧取个众数**：板在源片里
+    **会在段中途消失**（一分打完转播就把它淡出）——而 `score_inset` 是**一段
+    一个布尔**，于是「这一段有板」这句话对半截窗口是假的，回贴照旧执行，
+    贴上去的是**一块没有板的球场**。2026-09-03 量吴易昺那条成片：
+    14 段里 4 段中招，**合计 23.8 秒 ＝ 正片的 19%**，最长的一段连着贴了 10 秒
+    （第 11 段，源片 157.2~167.0）。
+
+    它长什么样：贴片和真画面同色（都是球场），所以不是一块黑，是**一道竖直
+    的接缝** ——球员的腿走到 x≈390 会断成两截。渲染不报错、`--dry-run` 查不了
+    （要解源片）、`check_reel_landed` 也不查，**只有把成片拉回来逐秒切贴片区
+    才看得见**。
+
+    **一次解码，不是 N 次 seek**：原来 6 个采样点是 6 次关键帧 seek，成本和这里
+    解一遍同一段差不多，而这里拿到的是**密到 0.5 秒的整条时间线**——右缘和
+    在场区间一次都算出来，不用为了密度再付一遍钱。
+    """
+    import numpy as np  # noqa: PLC0415
+
+    x0, y0, _x1, y1 = box
+    w, _h = probe_size(source)
+    bw, bh = w - x0, y1 - y0
+    span = max(0.05, end - start)
+    proc = runner(
+        ["ffmpeg", "-v", "error", "-ss", f"{max(0.0, start):.3f}",
+         "-t", f"{span:.3f}", "-i", str(source), "-an", "-sn",
+         "-vf", f"format=rgb24,crop={bw}:{bh}:{x0}:{y0},fps={fps}",
+         "-f", "rawvideo", "-"],
+        capture_output=True, check=False)
+    raw = proc.stdout or b""
+    per = bw * bh * 3
+    out: list[tuple[float, int | None, bool]] = []
+    for k in range(len(raw) // per):
+        band = np.frombuffer(raw[k * per:(k + 1) * per],
+                             dtype=np.uint8).reshape(bh, bw, 3)
+        edge = board_right_edge_in_band(band)
+        out.append(((k + 0.5) / fps,
+                    None if edge is None else x0 + edge,
+                    board_present_in_band(band)))
+    if not out:
+        print(f"    [score] ⚠️ {start:.1f}s 段一帧都没解出来"
+              f"（要 {bw}×{bh}×3={per} 字节/帧）——这不是「板不在画面里」，"
+              "是解码本身失败（源片损坏/时刻越界），别照着「回放/切走」改 spec")
+    return out
+
+
+def board_present_spans(timeline: list[tuple[float, int | None, bool]],
+                        span: float, fps: int = BOARD_SCAN_FPS,
+                        ) -> list[tuple[float, float]]:
+    """时间线 → **板真的在画面里**的那几段（段内秒，左闭右开）。
+
+    ⚠️ **往窄里收，不往宽里放**：只把**确认检出**的采样点连成区间，边界各留
+    半格。检漏一格的代价是少贴半秒板（画面上是转播自己那半条板露出来）；
+    检多一格的代价是贴一块球场上去——**两边不对等，所以宁可少贴**。
+
+    短于 `BOARD_SPAN_MIN` 的孤立片段整个丢掉：那多半是球员正好走过板的位置
+    被读成了「有板」，贴半秒又撤是闪烁，比不贴糟。
+    """
+    hits = [t for t, _e, present in timeline if present]
+    if not hits:
+        return []
+    step = 1.0 / fps
+    runs: list[list[float]] = []
+    for t in hits:
+        if runs and t - runs[-1][1] <= step * 1.6:
+            runs[-1][1] = t
+        else:
+            runs.append([t, t])
+    out = []
+    for a, b in runs:
+        lo, hi = max(0.0, a - step / 2), min(span, b + step / 2)
+        if hi - lo >= BOARD_SPAN_MIN:
+            out.append((round(lo, 3), round(hi, 3)))
+    return out
+
+
 def board_right_edges(source: Path, box: tuple[int, int, int, int],
                       times: list[float],
                       runner=subprocess.run) -> list[tuple[float, int | None]]:
@@ -1164,6 +1285,34 @@ def segment_board_edge(edges: list[tuple[float, int | None]],
 _BOARD_MONO_TOL = 8
 
 
+def _claim_board_spans(seg: "Segment", i: int,
+                       spans: list[tuple[float, float]], span: float) -> str | None:
+    """把量出来的在场区间写回这一段——**整段都在就不写**（照旧整段回贴）。
+
+    三条出路，按「这一段到底有多少时间是有板的」分：
+
+    - **一格都没检出** → 报错。`score_inset: true` 说的就是「这一段有板」，
+      整段都没有，那是写错了，该写 `false` ＋ `_score_inset_why`。
+      ⚠️ 这一条**必须硬**：在这之前它只在日志里说一句「板可能整段不在画面里」，
+      而没有人会去读一条绿 run 的日志——吴易昺那条第 11 段就是这么贴了 10 秒
+      球场出去的。
+    - **整段（或几乎整段）都在** → `spans = None`，一个字节都不变，
+      和这条闸装上之前逐帧相同。
+    - **只有一截在** → 只贴那一截。**不再要求作者去拆段**：板什么时候淡出是
+      转播的行为，和「这一段在讲什么」没关系，逼人按它拆段会把叙事切碎。
+    """
+    if not spans:
+        return f"第 {i + 1} 段（源片 {seg.start:.1f}~{seg.end:.1f}s）"
+    covered = sum(b - a for a, b in spans)
+    if len(spans) == 1 and covered >= span - 1.0 / BOARD_SCAN_FPS:
+        return None                 # 整段都在，照旧
+    seg.score_inset_spans = tuple(spans)
+    shown = "  ".join(f"{seg.start + a:.1f}~{seg.start + b:.1f}" for a, b in spans)
+    print(f"    [score] 第 {i + 1} 段板只在 {covered:.1f}/{span:.1f}s 里"
+          f"（源片 {shown}）——只在这几段回贴，其余照原画面走。"
+          "板中途淡出是转播的行为，不用为它拆段")
+
+
 def resolve_board_insets(sources: dict[str, Path], segments: list["Segment"],
                         samples: int = 6, runner=subprocess.run) -> None:
     """把开了 `score_inset: true` 的段的板右缘**现量出来**，就地写回 segment。
@@ -1197,6 +1346,7 @@ def resolve_board_insets(sources: dict[str, Path], segments: list["Segment"],
     `scorebox`（最宽那一档）并说一声——看得见（多盖一截球场），不是静默的坏。
     """
     picked: dict[int, tuple[int | None, list[tuple[int, int]], bool]] = {}
+    no_board: list[str] = []
     for i, seg in enumerate(segments):
         if not (seg.score_inset and seg.score_inset_auto):
             continue
@@ -1205,9 +1355,12 @@ def resolve_board_insets(sources: dict[str, Path], segments: list["Segment"],
             continue
         x0, y0, x1, y1 = seg.score_inset
         span = max(0.1, seg.end - seg.start)
-        times = [seg.start + span * (k + 0.5) / samples for k in range(samples)]
-        edges = board_right_edges(Path(src), (x0, y0, x1, y1), times, runner)
-        edge, hist = segment_board_edge(edges)
+        edges = board_edge_timeline(Path(src), (x0, y0, x1, y1),
+                                    seg.start, seg.end, runner)
+        spans = board_present_spans(edges, span)
+        if (bad := _claim_board_spans(seg, i, spans, span)):
+            no_board.append(bad)
+        edge, hist = segment_board_edge([(t, e) for t, e, _p in edges])
         # segment_board_edge 有两票起步的桶时返回的就是那一档——「可信」
         # 由此推出，不用改它的签名
         picked[i] = (edge, hist, edge is not None
@@ -1251,6 +1404,20 @@ def resolve_board_insets(sources: dict[str, Path], segments: list["Segment"],
         print(f"    [score] 第 {i + 1} 段板右缘取 {int(final)}"
               f"（+{BOARD_EDGE_PAD} 余量 → 裁到 {got}，spec 的兜底是 {x1}）"
               f"；采样 {shown}{note}")
+
+    if no_board:
+        raise ReelError(
+            "这几段开着 `score_inset: true`，可是**整段都没有记分条**：\n  "
+            + "\n  ".join(no_board) + "\n\n"
+            "回贴会把一块**没有板的球场**原样贴到画面左下角。它和真画面同色，"
+            "所以不是一块黑，是**一道竖直的接缝**——球员的腿会在那儿断成两截，"
+            "而渲染不报错、`--dry-run` 查不了（要解源片）、`check_reel_landed` "
+            "也不查。2026-09-03 量吴易昺那条已发成片：14 段里 4 段中招，"
+            "合计 23.8 秒＝正片的 19%。\n"
+            '这种段该写 `"score_inset": false` ＋ 一句 `_score_inset_why`'
+            "（回放／切走／全屏图形／休息时段／这一分还没开始）。\n"
+            "⚠️ **先打开 probe 的 `score_*.jpg`**（2 秒一格，就是源片左下角那一块）"
+            "数一眼这几秒有没有那块深蓝板，别照着「这一段在讲什么」猜。")
 
 
 def require_live_sound(source: Path, spec: dict) -> float | None:
@@ -2157,6 +2324,10 @@ class Segment:
     # 用 `{"x2": N}` 手钉的。⭐ 账号所有者 2026-08-29：「不能固定宽度去切，
     # 要自适应」——所以 true 是主路，`x2` 退成「量不准时人来钉」的口子。
     score_inset_auto: bool = False
+    # 这一段里板**真的在画面里**的那几段（段内秒）。`None` ＝ 整段都在，
+    # 照旧整段回贴；非空 ＝ 只在这几段回贴（`overlay` 的 `enable`）。
+    # ⚠️ 它是**渲染时现量的**，spec 里写不了——板什么时候淡出是转播的行为。
+    score_inset_spans: tuple[tuple[float, float], ...] | None = None
 
     @property
     def length(self) -> float:
@@ -3427,13 +3598,24 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
                       f"[{x0},{y0},{x1},{y1}] → 画面带 (0,{oy})，"
                       f"原比例 {bw}×{sh}px；盖住残条 {strip}px 之外"
                       f"再多占 {bw - strip}px 球场（认领过的代价）")
+                # ⭐ 板中途淡出的那几秒**不贴**（`enable`）——贴上去是一块
+                # 和真画面同色的球场，接缝看得见而渲染不报。区间是
+                # `resolve_board_insets` 现量的，段内秒；`-ss` 在 `-i` 前面，
+                # 所以滤镜里的 `t` 就是段内时间。
+                # ⚠️ 单引号不能省：`between(t,a,b)` 里的逗号会被 filtergraph
+                # 当成滤镜分隔符，不引起来是解析错（而且报的错指向别处）。
+                gate = ""
+                if seg.score_inset_spans:
+                    gate = ":enable='" + "+".join(
+                        f"between(t,{a:.3f},{b:.3f})"
+                        for a, b in seg.score_inset_spans) + "'"
                 chain = (
                     f"split=2[wm][wb];"
                     f"[wm]crop={CROP_W}:{CROP_H}:{x}:{CROP_Y},"
                     f"{_canvas_fit().rstrip(',')}[m];"
                     f"[wb]crop={x1 - x0}:{y1 - y0}:{x0}:{y0},"
                     f"scale={bw}:{sh}:flags=lanczos[b];"
-                    f"[m][b]overlay=0:{oy},{sp}fps={FPS_EXPR},setsar=1"
+                    f"[m][b]overlay=0:{oy}{gate},{sp}fps={FPS_EXPR},setsar=1"
                 )
                 labeled = True
             else:
