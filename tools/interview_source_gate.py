@@ -336,16 +336,20 @@ NO_LEAD_EXCEPTION_METHOD: dict[str, str | None] = {
     "ceremony": None,
     "farewell": "official_explicit_farewell",
     "walk_on": "official_explicit_walk_on",
+    # 发布会在发布厅里录，源片一帧比赛画面都没有，也不该去借——`check_lead_in`
+    # 明写「发布会／演播室／赛前专访不属于〔必须接冷开场〕这条规则」。
+    "press_conference": "official_explicit_press_conference",
 }
 
 
 def verified_no_lead_exception(spec: dict) -> bool:
     """已核验、且按内容形态允许不另接冷开场的正式产品。
 
-    三种：官方明写的赛后告别仪式、名人堂入选致辞，以及**赛前出场秀**。
-    出场秀发生在开赛之前，源片里一个回合都没有——`_OPENING_KINDS` 的
-    `none` 那一行本来就把它列成了合法情形（「发布会、演播室专访、
-    **赛前出场秀**」），只是这道闸一直不认识它。
+    四种：官方明写的赛后告别仪式、名人堂入选致辞、**赛前出场秀**，以及
+    **赛后新闻发布会**。出场秀发生在开赛之前，源片里一个回合都没有；发布会
+    则整条在发布厅里录——`_OPENING_KINDS` 的 `none` 那一行本来就把两者都
+    列成了合法情形（「发布会、演播室专访、**赛前出场秀**」），只是这道闸
+    先后不认识它们。
     """
     verification = spec.get("source_verification") or {}
     opening = spec.get("opening") or {}
