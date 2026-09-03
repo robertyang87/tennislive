@@ -1121,8 +1121,26 @@ def board_present_in_band(band: "np.ndarray") -> bool:      # noqa: F821
     return bool(rows.mean() >= _BOARD_PRESENT_ROW_HIT)
 
 
-BOARD_SCAN_FPS = 2          # 板的在场扫描：每 0.5 秒一格
+BOARD_SCAN_FPS = 6          # 板的在场扫描：每 1/6 秒一格，见下面那段注释
+BOARD_EDGE_EVERY = 3        # 右缘投票每隔这么多格取一个 → 仍然是每 0.5 秒一票
+BOARD_GAP_BRIDGE = 0.8      # 在场片段之间断多久还算同一段（**秒**，不随 fps 变）
+BOARD_FULL_TOL = 0.5        # 覆盖到只差这么多就算「整段都在」（**秒**，同上）
 BOARD_SPAN_MIN = 0.8        # 短于这个的在场片段不值得贴（一闪而过）
+
+# ⚠️ **在场判定加密到 6 fps，而右缘投票仍然按 2 fps**——两件事在同一趟解码里
+# 出来，但对采样率的需求正好相反：
+#
+# - **在场**决定「哪几秒回贴」，边界误差就是 ±半格。2 fps 时那是 ±0.25 秒，
+#   吴易昺那条第 13 段板淡出之后**多贴了 0.27 秒**（约 8 帧），成片上球员的鞋
+#   在贴片右缘被切成两截。加密到 6 fps，误差降到 ±0.083 秒（2~3 帧）。
+# - **右缘**是投票选出来的（`segment_board_edge` 要「两票起步」才算可信），
+#   **票多了会改变可信度的分档**——同一段本来只有孤票的，三倍采样之后轻易凑
+#   够两票，于是从「按后面段的下确界补」变成「按自己那一票」，而那一票可能
+#   正是球员贴着板时读出来的噪声。所以这一头**一格都不许多**。
+#
+# 每隔 `BOARD_EDGE_EVERY` 取一个，取到的时刻和原来 2 fps 逐个相同
+# （ffmpeg 的 `fps=6` 出 0、1/6、2/6…，每隔 3 个就是 0、0.5、1.0…）。
+# 代价只有管子里多两倍的字节（一段十秒 60 格 × 155 KB ≈ 9 MB），解码不变。
 
 
 def board_edge_timeline(source: Path, box: tuple[int, int, int, int],
@@ -1182,9 +1200,26 @@ def board_present_spans(timeline: list[tuple[float, int | None, bool]],
                         ) -> list[tuple[float, float]]:
     """时间线 → **板真的在画面里**的那几段（段内秒，左闭右开）。
 
-    ⚠️ **往窄里收，不往宽里放**：只把**确认检出**的采样点连成区间，边界各留
-    半格。检漏一格的代价是少贴半秒板（画面上是转播自己那半条板露出来）；
-    检多一格的代价是贴一块球场上去——**两边不对等，所以宁可少贴**。
+    区间取**确认检出的采样点**连成的段，两头各往外放**半格**——也就是说
+    边界落在最后一个「在」和第一个「不在」的**中点**上，误差 ±半格。
+
+    ⚠️⚠️ **这条 docstring 原来写的是「往窄里收，不往宽里放……宁可少贴」，
+    而代码一直是往外放半格——规矩和实现打架，2026-09-03 才发现。** 现在按
+    代码写，因为往哪边偏都不对：
+
+    | 偏的方向 | 画面上是什么 |
+    |---|---|
+    | 多贴（现在这样，误差半格） | 板已经淡出而还在贴 → 一块球场贴在球场上，接缝处人会被切成两截 |
+    | 少贴 | 板还在而不贴了 → 露出转播那半条板，两个名字被画面左缘裁掉 |
+
+    **两个都是可见的坏，没有哪一边明显更轻**，所以取中点（无偏），
+    真正的杠杆是**把格子变密**——见 `BOARD_SCAN_FPS` 那段注释，
+    2026-09-03 从 2 fps 加密到 6 fps，边界误差从 ±0.25 秒降到 ±0.083 秒。
+
+    ⚠️ 连段的容差和「整段都在」的容差都写成**秒**（`BOARD_GAP_BRIDGE` /
+    `BOARD_FULL_TOL`），不写成「几格」：写成格数的话，加密采样会把它们一起
+    收紧——球员走过板挡住半秒本来能连上，加密之后就断成两截，再被
+    `BOARD_SPAN_MIN` 各自丢掉，**结果是加密采样反而少贴了**。
 
     短于 `BOARD_SPAN_MIN` 的孤立片段整个丢掉：那多半是球员正好走过板的位置
     被读成了「有板」，贴半秒又撤是闪烁，比不贴糟。
@@ -1195,7 +1230,7 @@ def board_present_spans(timeline: list[tuple[float, int | None, bool]],
     step = 1.0 / fps
     runs: list[list[float]] = []
     for t in hits:
-        if runs and t - runs[-1][1] <= step * 1.6:
+        if runs and t - runs[-1][1] <= BOARD_GAP_BRIDGE:
             runs[-1][1] = t
         else:
             runs.append([t, t])
@@ -1326,7 +1361,7 @@ def _claim_board_spans(seg: "Segment", i: int,
     if not spans:
         return f"第 {i + 1} 段（源片 {seg.start:.1f}~{seg.end:.1f}s）"
     covered = sum(b - a for a, b in spans)
-    if len(spans) == 1 and covered >= span - 1.0 / BOARD_SCAN_FPS:
+    if len(spans) == 1 and covered >= span - BOARD_FULL_TOL:
         return None                 # 整段都在，照旧
     seg.score_inset_spans = tuple(spans)
     shown = "  ".join(f"{seg.start + a:.1f}~{seg.start + b:.1f}" for a, b in spans)
@@ -1382,7 +1417,12 @@ def resolve_board_insets(sources: dict[str, Path], segments: list["Segment"],
         spans = board_present_spans(edges, span)
         if (bad := _claim_board_spans(seg, i, spans, span)):
             no_board.append(bad)
-        edge, hist = segment_board_edge([(t, e) for t, e, _p in edges])
+        # ⚠️ 取**每组的中间那一格**（`E // 2`），不是第 0 格：时间轴的时刻是
+        # 格心 `(k+0.5)/fps`，所以 6 fps 里 k=1,4,7… 的时刻正好是 0.25、0.75、
+        # 1.25——和原来 2 fps 的格心逐个相同。取第 0 格会整体偏早 1/6 秒。
+        edge, hist = segment_board_edge(
+            [(t, e) for k, (t, e, _p) in enumerate(edges)
+             if k % BOARD_EDGE_EVERY == BOARD_EDGE_EVERY // 2])
         # segment_board_edge 有两票起步的桶时返回的就是那一档——「可信」
         # 由此推出，不用改它的签名
         picked[i] = (edge, hist, edge is not None
