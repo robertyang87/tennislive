@@ -1,0 +1,55 @@
+{
+ "_note": "每张图的赛事/年份取自来源页自身的说明，不靠看图推断；发布时可据此在文案里署名（画面上不烧录来源）。三张都是美网官方图片接口（usopen.org relatedcontent，按 playerId atpy09v 的 tag 接口点清楚的这一场一共 6 张，其中两张 md5 相同）里 Darren Carroll/USTA 的实拍，说明原文都写着『Yunchaokete Bu in action / reacts during a Men's Singles match on Day Four of the 2026 US Open at USTA Billie Jean King National Tennis Center on Wednesday, September 2』——人物、赛事、场馆、日期四要素由赛事方自证。",
+ "_low_res_why": "三张都是 1280×720，这是美网官方图片接口的**天花板**（`f_` 前缀就是顶，CLAUDE.md 记着十二个前缀、六个目录、三种 width 参数都探过）。同一轮 `find_cover_photo.py --player Yunchaokete --event \"US Open\"` 跑过 09-02 / 09-03 两天：AP 通讯社零、WTA photo-resources 不收大满贯、USA TODAY 当日图集那一辑（8/31）没有他，赛事官网没有 WP 媒体库。所以这一档就是这条片子封面的上限，不是没找；封面铺 1080×1440 是 2.0 倍放大，记在 tests/test_cover_resolution.py 的 _UNDERSIZED 里，换到更大的原图就从那里删掉。",
+ "bu_us_open_2026_r1_forehand.jpg": {
+  "subject": "布云朝克特正手击球的近景：头肩占掉大半个画幅，眼睛睁着盯着击球点，身后是 `us open` 挡板",
+  "event": "2026 US Open, Men's Singles Round 1, Stadium 17 — 布云朝克特 6-2 6-1 6-1 胜 12 号种子霍达尔",
+  "date": "2026-09-02（当地）",
+  "artist": "Darren Carroll/USTA",
+  "license": "unverified —— 美网官方图片接口的编辑图，未取得授权；发布前由人工判断",
+  "via": "usopen.org relatedcontent 接口（tags=atpy09v, type=photo）",
+  "image_url": "https://photo-assets.usopen.org/images/pics/large/f_20260902_CDC03807B.jpg",
+  "_用在哪": "封面。封面那一问是「五天前出局，五天后赢种子？」，主体只能是他；这张是六张里脸最大、眼睛睁着、情绪最用力的一张（CLAUDE.md「优先近景特写」「不要闭眼」）。同一张也是 specs/reels/bu-jodar-us-open-2026-r1 那条竖版短片的封面——同一场球、同一个账号，两条片子的封面认同一张脸，不是撞车。",
+  "_四道闸门": {
+   "1 精准": "来源说明自带四要素（见 _note）。画面里 `us open` 挡板和 FILA 球衣与集锦一致。",
+   "2 在比赛中": "正手击球中。",
+   "3 冲击力": "近景，表情读得出（咬牙盯球）。",
+   "4 清晰度": "1280×720——见 _low_res_why，这一档是天花板。精准优先于清晰。"
+  },
+  "_亮度": "均值 133.9 / 中位 106 / 暗于 50 占 3.2%——白天场，主体有光。"
+ },
+ "bu_us_open_2026_r1_crowd.jpg": {
+  "subject": "布云朝克特反手击球，身后是 17 号球场坐满的看台，左下 IBM 测速牌显示 110 MPH",
+  "event": "2026 US Open, Men's Singles Round 1, Stadium 17 — 同上",
+  "date": "2026-09-02（当地）",
+  "artist": "Darren Carroll/USTA",
+  "license": "unverified —— 同上",
+  "via": "usopen.org relatedcontent 接口（tags=atpy09v, type=photo）",
+  "image_url": "https://photo-assets.usopen.org/images/pics/large/f_USTA2415716_20260902_ADC08040.jpg",
+  "_用在哪": "第 ① 屏「这一次」。这一屏讲的是他五天前已经出局、又被叫回来打这一场——要的是「他在这片场地上、看台坐满」这个事实，看台是这张的一半画面。横图在正文屏走信箱式（contain + 同图模糊垫底），一个像素不放大。",
+  "_四道闸门": {
+   "1 精准": "同上。",
+   "2 在比赛中": "反手击球中，球在画面里。",
+   "3 冲击力": "中景，人和看台都在。",
+   "4 清晰度": "1280×720，正文屏 contain 不放大。"
+  },
+  "_亮度": "均值 135.8 / 中位 113 / 暗于 50 占 4.5%。"
+ },
+ "bu_us_open_2026_r1_reacts.jpg": {
+  "subject": "布云朝克特分与分之间走向底线，拍子扛在肩上，眼神向前，身后是坐满的看台",
+  "event": "2026 US Open, Men's Singles Round 1, Stadium 17 — 同上",
+  "date": "2026-09-02（当地）",
+  "artist": "Darren Carroll/USTA",
+  "license": "unverified —— 同上",
+  "via": "usopen.org relatedcontent 接口（tags=atpy09v, type=photo）；说明原文用的是 `reacts`",
+  "image_url": "https://photo-assets.usopen.org/images/pics/large/f_20260902_ADC08195.jpg",
+  "_用在哪": "末屏「还差几场」。这一屏讲的是打完首轮那天他离那堵墙还有三场——要的不是击球，是「往前走」这个姿态；六张里只有这一张他在走、在想，情绪对题（CLAUDE.md 第 2 道闸门的准确读法：走动也可以，画面要对上这一屏在说的那件事）。正文屏 contain 不放大。",
+  "_四道闸门": {
+   "1 精准": "同上。",
+   "2 在比赛中": "分与分之间在场上走位，四要素对得上；不是训练／发布会。",
+   "3 冲击力": "中景，表情读得出。",
+   "4 清晰度": "1280×720，正文屏 contain 不放大。"
+  },
+  "_亮度": "均值 161.3 / 中位 183 / 暗于 50 占 3.8%——全套里最亮的一张。"
+ }
+}

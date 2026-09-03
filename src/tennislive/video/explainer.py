@@ -872,6 +872,147 @@ _LUCKY_LOSER_WALL_DIAGRAM = """
 """
 
 
+# 大满贯的递补顺序——它是一条流程，没有任何一张照片能表达。
+# 出处：2026 Grand Slam Rule Book（ITF）Article III.h「Lucky Losers and
+# Substitutions」：最后一轮输掉的人里排名最高的四个**抽签**定顺序，之后按排名；
+# 每天签到截止是当天第一场开打前半小时；男子五分钟内准备上场。
+# 「美网用扑克筹码抽」「今年第一天九女五男」出自 ESPN 2026-09-02 那篇现场稿
+# （裁判长办公室，10:30 闹钟一响就收表）。一屏一个强调色。
+_LL_SLAM_PICK_DIAGRAM = """
+<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="44" text-anchor="middle" fill="#f4fbf7"
+        font-size="36" font-weight="800">大满贯的空位，按这个顺序给</text>
+  <text x="450" y="80" text-anchor="middle" fill="#cfe6d8"
+        font-size="23" font-weight="700">资格赛最后一轮输掉的 16 个人</text>
+
+  <rect x="48" y="104" width="804" height="118" rx="14"
+        fill="rgba(143,214,168,.16)"/>
+  <text x="72" y="140" fill="#cfe6d8" font-size="22" font-weight="700">第一步</text>
+  <text x="72" y="182" fill="#f4fbf7" font-size="30" font-weight="800">排名最高的 4 个人，抽签定顺序</text>
+  <text x="72" y="210" fill="#cfe6d8" font-size="21" font-weight="700">美网用的是扑克筹码　·　第 5 个起按排名排队</text>
+
+  <rect x="48" y="240" width="804" height="118" rx="14"
+        fill="rgba(207,230,216,.07)" stroke="rgba(207,230,216,.30)" stroke-width="2"/>
+  <text x="72" y="276" fill="#cfe6d8" font-size="22" font-weight="700">每天早上</text>
+  <text x="72" y="318" fill="#f4fbf7" font-size="30" font-weight="800">第一场开打前半小时，到裁判长办公室签到</text>
+  <text x="72" y="346" fill="#cfe6d8" font-size="21" font-weight="700">今年美网正赛第一天：截止 10:30，签到的有 9 女 5 男</text>
+
+  <rect x="48" y="376" width="804" height="118" rx="14"
+        fill="rgba(207,230,216,.07)" stroke="rgba(207,230,216,.30)" stroke-width="2"/>
+  <text x="72" y="412" fill="#cfe6d8" font-size="22" font-weight="700">然后等</text>
+  <text x="72" y="454" fill="#f4fbf7" font-size="30" font-weight="800">留在场馆里，有人退赛就顶上</text>
+  <text x="72" y="482" fill="#cfe6d8" font-size="21" font-weight="700">男子 5 分钟内准备好　·　第一轮打完就不再递补</text>
+
+  <rect x="48" y="514" width="804" height="64" rx="14"
+        fill="rgba(198,246,90,.10)" stroke="#c6f65a" stroke-width="2" stroke-dasharray="8 6"/>
+  <text x="450" y="556" text-anchor="middle" fill="#c6f65a"
+        font-size="27" font-weight="800">2026 美网第一天：14 个人签到，空出来 1 个位置</text>
+</svg>
+"""
+
+# 奖金那一屏：一张阶梯。数出自 Flashscore 的 2026 美网奖金表（资格赛末轮
+# 66,000 / 首轮 140,000 / 次轮 190,000 / 第三轮 290,000 / 第四轮 480,000 /
+# 八强 780,000 美元）；「现场退赛拿首轮一半」出自 2026 Grand Slam Rule Book
+# Article I（2018 年起执行，ESPN 2017-11 那篇解读）。条上不写字，
+# 数字钉在右边（`text-anchor="end"`），一屏一个强调色。
+_LL_MONEY_DIAGRAM = """
+<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="44" text-anchor="middle" fill="#f4fbf7"
+        font-size="36" font-weight="800">2026 美网单打奖金（美元）</text>
+  <text x="450" y="80" text-anchor="middle" fill="#cfe6d8"
+        font-size="23" font-weight="700">递补进正赛，起点就从资格赛末轮跳到首轮</text>
+
+  <g font-size="26" font-weight="700">
+    <text x="72" y="140" fill="#cfe6d8">资格赛末轮输</text>
+    <rect x="290" y="118" width="62" height="30" rx="8" fill="rgba(207,230,216,.34)"/>
+    <text x="852" y="140" text-anchor="end" fill="#cfe6d8">66,000</text>
+
+    <text x="72" y="196" fill="#f4fbf7">正赛首轮输</text>
+    <rect x="290" y="174" width="131" height="30" rx="8" fill="#c6f65a"/>
+    <text x="852" y="196" text-anchor="end" fill="#c6f65a" font-weight="800">140,000</text>
+
+    <text x="72" y="252" fill="#f4fbf7">第二轮输</text>
+    <rect x="290" y="230" width="178" height="30" rx="8" fill="#8fd6a8"/>
+    <text x="852" y="252" text-anchor="end" fill="#f4fbf7">190,000</text>
+
+    <text x="72" y="308" fill="#f4fbf7">第三轮输</text>
+    <rect x="290" y="286" width="272" height="30" rx="8" fill="#8fd6a8"/>
+    <text x="852" y="308" text-anchor="end" fill="#f4fbf7">290,000</text>
+
+    <text x="72" y="364" fill="#f4fbf7">第四轮输</text>
+    <rect x="290" y="342" width="450" height="30" rx="8" fill="#8fd6a8"/>
+    <text x="852" y="364" text-anchor="end" fill="#f4fbf7">480,000</text>
+  </g>
+
+  <rect x="48" y="404" width="804" height="170" rx="14"
+        fill="rgba(198,246,90,.10)" stroke="#c6f65a" stroke-width="2" stroke-dasharray="8 6"/>
+  <text x="72" y="442" fill="#c6f65a" font-size="24" font-weight="800">退赛那一头：2018 年起的规矩</text>
+  <text x="72" y="484" fill="#f4fbf7" font-size="27" font-weight="800">开赛前在现场被赛会医生认定不能打，退赛拿首轮的一半</text>
+  <text x="72" y="522" fill="#cfe6d8" font-size="22" font-weight="700">今年美网就是 70,000 美元　·　每人每年最多用两次</text>
+  <text x="72" y="556" fill="#cfe6d8" font-size="22" font-weight="700">顶上来的幸运落败者，按正赛打到的轮次拿钱</text>
+</svg>
+"""
+
+# 「第四轮是墙」——同一堵墙上一期画过（`_LUCKY_LOSER_WALL_DIAGRAM`），这一期
+# 把人数摆上去：女子那七个是 WTA 官方数的（谢拉那篇：the seventh lucky loser
+# in the Open Era to reach the women's singles Round of 16），男子那一栏
+# 澳网官方 2025-01 数到 12 个，之后加德容；「男女加起来二十个上下」是
+# 两个官方源相加，两个源对女子的计数差一个，所以旁白和图上都不说死。
+# 「零人进八强」两个源：Olympics.com 2026-06 德容那篇（one win short of the
+# first lucky loser ever to reach a men's Grand Slam quarter-final）、
+# WTA 谢拉那篇（女子最远第四轮）。
+_LL_WALL_COUNT_DIAGRAM = """
+<svg viewBox="0 0 900 580" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="44" text-anchor="middle" fill="#f4fbf7"
+        font-size="36" font-weight="800">公开赛年代，幸运落败者在大满贯走到哪儿</text>
+  <text x="450" y="80" text-anchor="middle" fill="#cfe6d8"
+        font-size="23" font-weight="700">绿格＝有人到过　·　数字＝到过这一轮之后没再往前的人</text>
+
+  <g fill="#cfe6d8" font-size="24" font-weight="700" text-anchor="middle">
+    <text x="118" y="150">首轮</text>
+    <text x="228" y="150">2 轮</text>
+    <text x="338" y="150">3 轮</text>
+    <text x="448" y="150">4 轮</text>
+    <text x="562" y="150">8 强</text>
+    <text x="672" y="150">4 强</text>
+    <text x="782" y="150">决赛</text>
+  </g>
+
+  <rect x="68"  y="170" width="100" height="96" rx="12" fill="#8fd6a8"/>
+  <rect x="178" y="170" width="100" height="96" rx="12" fill="#8fd6a8"/>
+  <rect x="288" y="170" width="100" height="96" rx="12" fill="#8fd6a8"/>
+  <rect x="398" y="170" width="100" height="96" rx="12" fill="#c6f65a"/>
+  <rect x="512" y="170" width="100" height="96" rx="12" fill="rgba(207,230,216,.08)"
+        stroke="rgba(207,230,216,.34)" stroke-width="2"/>
+  <rect x="622" y="170" width="100" height="96" rx="12" fill="rgba(207,230,216,.08)"
+        stroke="rgba(207,230,216,.34)" stroke-width="2"/>
+  <rect x="732" y="170" width="100" height="96" rx="12" fill="rgba(207,230,216,.08)"
+        stroke="rgba(207,230,216,.34)" stroke-width="2"/>
+
+  <text x="448" y="232" text-anchor="middle" fill="#062018"
+        font-size="40" font-weight="800">≈20</text>
+  <text x="562" y="232" text-anchor="middle" fill="#f4fbf7"
+        font-size="40" font-weight="800">0</text>
+  <text x="672" y="232" text-anchor="middle" fill="#cfe6d8"
+        font-size="40" font-weight="800">0</text>
+  <text x="782" y="232" text-anchor="middle" fill="#cfe6d8"
+        font-size="40" font-weight="800">0</text>
+
+  <line x1="505" y1="160" x2="505" y2="290" stroke="#f4fbf7"
+        stroke-width="4" stroke-dasharray="10 8"/>
+  <text x="505" y="330" text-anchor="middle" fill="#f4fbf7"
+        font-size="30" font-weight="800">这条线，男女都还没人越过</text>
+
+  <text x="72" y="398" fill="#cfe6d8" font-size="24" font-weight="700">女子 · WTA 数的 7 个</text>
+  <text x="72" y="436" fill="#f4fbf7" font-size="25" font-weight="700">1980 年到 1993 年 4 个　·　2023 法网 阿瓦涅相</text>
+  <text x="72" y="472" fill="#f4fbf7" font-size="25" font-weight="700">2025 澳网 利斯　·　2025 温网 谢拉</text>
+
+  <text x="72" y="524" fill="#cfe6d8" font-size="24" font-weight="700">男子 · 最近三个</text>
+  <text x="72" y="560" fill="#f4fbf7" font-size="25" font-weight="700">2014 澳网 罗贝尔　·　2022 美网 穆泰　·　2026 法网 德容</text>
+</svg>
+"""
+
+
 #: 「保护排名」到底替你做什么、不替你做什么。这件事没有任何一张照片能表达——
 #: 它是一张权限表，不是一个瞬间。两栏对照，只给"能用"那一栏上品牌绿。
 _PR_SCOPE_DIAGRAM = """
@@ -1880,6 +2021,13 @@ AUTO_PUSH_SLUGS: frozenset[str] = frozenset({
     # 全程 −23~−27 dB 没有哑场；`check_explainer_landed` 报「已落地」、
     # `check_explainer_voice` 确认是代码默认的云健 +22%。
     "qualifier-ceiling",
+    # 2026-09-03 验过才加进来的（同上那句）：在分支上渲的第二趟
+    #（run 33736115929，explainer.yml push=false）落库成功，工作流自带的两道闸都过了；
+    # 成片从 Release 拉回本地量过——226.0 秒、1080×1920、音画差 0.04 秒、
+    # 五个采样窗全程 −23~−25 dB 没有哑场、六屏抽帧墙逐格看过（字幕逐条读过，
+    # 数字都转成了阿拉伯数字）；第一趟报出来的四处假词（「讲布｜云朝」「定首｜轮」
+    # 「辛辛那｜提伤」「了兹维列夫」）在第二趟的 words.json 里一处都没有了。
+    "bu-lucky-loser",
 })
 
 
@@ -4190,6 +4338,109 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             ),
             _LUCKY_LOSER_WALL_DIAGRAM,
             "如果名额早就空着，最后一轮那场球，你还会拼吗？",
+        ),
+    ),
+    "bu-lucky-loser": (
+        (
+            "this-time",
+            "这一次",
+            "五天前出局，机票都订好了",
+            "先看这一次。北京时间八月二十九日凌晨，美网资格赛最后一轮，布云朝克特打了"
+            "两小时十八分钟，六比三、四比六、五比七，输给了意大利人奇纳。那一刻，"
+            "这届美网跟他已经没有关系了，周三晚上回家的机票都订好了。周二中午，"
+            "他刚练完球，正和教练吃午饭，工作人员过来说：你能打了。原本要在首轮对阵"
+            "十二号种子霍达尔的科基纳基斯，两周前在辛辛那提，扭伤了脚踝，一场没打就退赛；"
+            "美网官方公告写得很清楚，由幸运落败者布云朝克特顶替。第二天，他六比二、"
+            "六比一、六比一，只让世界第十三的霍达尔拿了四局。这是他大满贯正赛的第七场，"
+            "前六场全部倒在第一轮。而按 ATP 的统计，公开赛年代以来，在大满贯正赛里"
+            "赢下前十五号种子的幸运落败者，他是第一个。",
+            "assets/explainer/bu-lucky-loser/bu_us_open_2026_r1_crowd.jpg",
+            "Darren Carroll/USTA · usopen.org 官方图 · 2026 美网首轮，布云朝克特对霍达尔",
+            (
+                "资格赛末轮 5-7 输给奇纳",
+                "科基纳基斯伤退 他顶上",
+                "6-2 6-1 6-1 赢 12 号种子",
+            ),
+        ),
+        (
+            "slam-rule",
+            "大满贯怎么补",
+            "前四个抽签，每天早上要签到",
+            "大满贯的规矩和巡回赛不完全一样。资格赛最后一轮输掉的十六个人里，排名最高的"
+            "四个先抽签，抽出来的顺序就是递补的顺序，美网用的是扑克筹码；四个人之后，"
+            "再按排名排队。然后每天早上，想递补的人都要到裁判长办公室签到，截止时间是"
+            "当天第一场开打前半小时，今年美网是十点半，闹钟一响，表就收走。签了到就得"
+            "留在场馆里，随时准备上场，男子要在五分钟之内准备好。今年美网正赛第一天，"
+            "签到的有九个女的、五个男的，等来的空位只有一个，鲁德伤退。所以幸运这两个字"
+            "的前面，是好几天的等待，等的是别人的坏消息。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "最高 4 人 抽签定顺序",
+                "开打前半小时 签到",
+                "留在场馆 随时上场",
+            ),
+            _LL_SLAM_PICK_DIAGRAM,
+        ),
+        (
+            "money",
+            "钱和退赛",
+            "退赛的人拿一半，顶上的人从正赛算",
+            "为什么大满贯的空位，常常要到开赛前几天，才空出来？这和一条二〇一八年起执行的规矩有关。"
+            "正赛开打前那个周二中午之后，在现场被赛会医生认定不能比赛的人退赛，可以拿到"
+            "首轮奖金的一半，今年美网首轮是十四万美元，一半就是七万。这条规矩本来是为了"
+            "减少带伤上场、打两局就退的闹剧：不用硬撑，空位就真的空出来了。顶上来的"
+            "幸运落败者，按正赛打到的轮次拿钱。对布云朝克特来说，资格赛末轮输球是"
+            "6.6 万美元，正赛首轮是十四万，再赢一轮，十九万。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "2018 起 现场伤退拿首轮一半",
+                "美网首轮 14 万美元",
+                "资格赛末轮 6.6 万",
+            ),
+            _LL_MONEY_DIAGRAM,
+        ),
+        (
+            "wall",
+            "那堵墙",
+            "二十个人到过第四轮，八强零个",
+            "这个身份在大满贯能走多远？上一期说过第四轮是天花板，这一期把人数摆出来。"
+            "公开赛年代五十多年，以幸运落败者身份打进大满贯第四轮的，男女加起来二十个"
+            "上下；打进八强的，零个。女子这边 WTA 数得很清楚，一共七个：一九八〇年到"
+            "一九九三年四个，然后隔了整整三十年，才等来二〇二三年法网的阿瓦涅相、"
+            "二〇二五年澳网的利斯和温网的谢拉。男子最近的三个，二〇一四年澳网的罗贝尔、"
+            "二〇二二年美网的穆泰，还有今年法网的德容。德容那一次离墙最近：他顶替伤退的"
+            "菲斯进来，四盘赢了瓦林卡，第二轮赢的正是奇纳，就是资格赛淘汰布云朝克特的"
+            "那个人，第三轮五盘打了四小时十九分钟，赢下十三号种子哈恰诺夫，第四轮，输给"
+            "兹维列夫。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "第四轮 男女约 20 人",
+                "八强 0 人",
+                "德容 2026 法网 差一场",
+            ),
+            _LL_WALL_COUNT_DIAGRAM,
+        ),
+        (
+            "three-more",
+            "还差几场",
+            "打完首轮那天，他离墙还差三场",
+            "回到布云朝克特。打完首轮那天，他离那堵墙还差三场球：第二轮、第三轮、第四轮，"
+            "每一场都要赢，而历史上没有一个幸运落败者走完过这三场。他自己在赛后发布会上"
+            "说的是另一件事：如果第一场胜利必须这样赢来，那之前输五六次，他也认。上一期"
+            "问的是，名额早就空着，最后一轮你还拼不拼；这一期把它反过来，一个五天前已经"
+            "出局、机票都订好的人，被一个电话叫了回来。",
+            "assets/explainer/bu-lucky-loser/bu_us_open_2026_r1_reacts.jpg",
+            "Darren Carroll/USTA · usopen.org 官方图 · 2026 美网首轮，布云朝克特",
+            (
+                "第二轮 第三轮 第四轮",
+                "历史上 没人走完这三场",
+                "「输五六次我也认」",
+            ),
+            "",
+            "这张递补的门票，你觉得算运气，还是算实力？",
         ),
     ),
     "hawkeye": (
@@ -7137,6 +7388,13 @@ _CAPTIONS: dict[str, dict] = {
         ),
         "tags": ("网球", "网球时差", "幸运落败者", "卢布列夫", "网球冷知识"),
     },
+    "bu-lucky-loser": {
+        "hook": (
+            "五天前资格赛出局、机票都订好的人，因为一次伤退被叫回来，然后只让 12 号种子拿了 4 局。\n"
+            "幸运落败者在大满贯怎么补、拿多少钱、最远走到哪儿——这一期用布云朝克特这一张讲清楚。"
+        ),
+        "tags": ("网球", "网球时差", "布云朝克特", "幸运落败者", "美网"),
+    },
     "hawkeye": {
         "hook": (
             "一颗球压没压线，网球用了一百年才把这句话从人眼交给摄像机。\n"
@@ -7719,6 +7977,24 @@ _OPENINGS: dict[str, dict] = {
         "narration": "资格赛输了，怎么还在正赛？他自己管这叫——输的那个人，是幸运的。",
         "gloss": "LL = Lucky Loser",
         "image": "assets/explainer/lucky-loser/rublev_umag_2017_trophy.jpg",
+    },
+    "bu-lucky-loser": {
+        "topic": "幸运落败者：布云朝克特的第七次",
+        # 13 个全角字，排一行约 89px，过 `_COVER_MIN_ONE_LINE_PX = 84`。
+        # 「五天」对「五天」是这条片子的全部反差：8 月 28 日（当地）资格赛末轮出局，
+        # 9 月 2 日正赛首轮赢下 12 号种子。
+        "question": "五天前出局，五天后赢种子？",
+        # 首句 17 字，落在 5 秒的决定窗口里。
+        "narration": "五天前出局，五天后赢了十二号种子？"
+                     "这不是穿越，是网球规则里一个正经的身份，幸运落败者。"
+                     "上一期讲过它怎么来，这一期，主角是布云朝克特。",
+        "gloss": "LL = Lucky Loser",
+        # ⚠️ 1280×720，铺满 1080×1440 是 2.0 倍放大——这是美网官方图片接口的
+        # 天花板，不是没找（四类源都跑过，记在 credits.json 的 `_low_res_why`），
+        # 例外登记在 tests/test_cover_resolution.py 的 `_UNDERSIZED`。封面主体只能
+        # 是他：那一问的主语就是他，而这张是六张里脸最大、眼睛睁着、最用力的一张。
+        "image": "assets/explainer/bu-lucky-loser/bu_us_open_2026_r1_forehand.jpg",
+        "credit": "Darren Carroll/USTA · usopen.org 官方图 · 2026 美网首轮，布云朝克特",
     },
     "hawkeye": {
         "topic": "鹰眼的来历：源于一次误判",
