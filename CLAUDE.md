@@ -9964,6 +9964,11 @@ probe 那一趟 3~5 分钟，是整条快路里最贵的一步。
 ⚠️ 退出码 2 是「扫了 N 份没有」，它会把 N 打出来；**没有也要出声**，「没找到」
 和「没查」在会话里长得一模一样。
 
+⚠️ **同一天顺手修掉的根因**：那 49 份草稿卡在「缺 round / court」，是因为 flashscore
+不给这两个字段、ESPN 对 runner 403。美网官方 feed（`usopen.org/en_US/scores/feeds/<年>/
+players/matches/<id>_matches.json`）**在 runner 上是通的**（沙箱恒 403，别拿沙箱的结果
+下结论），`tools/slam_feed.py` 接上、编排器 dispatch 之前补齐。
+
 ### 选谁：中国球员 > 顶级球员 > 热点球员，主要做单打
 
 账号所有者 2026-08-07：「优先中国球员再 top 级别球员，主要关注单打，
