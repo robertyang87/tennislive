@@ -2037,6 +2037,46 @@ STORIES = STORIES + (
         source_url="https://en.wikipedia.org/wiki/Lucky_loser",
     ),
     _trivia_story(
+        slug="bu-lucky-loser",
+        title="出局五天后，赢了种子",
+        subtitle="网球观察 · 规则篇",
+        identity="幸运落败者：布云朝克特的第七次",
+        chips=("大满贯递补规则", "退赛拿一半", "第四轮是墙"),
+        hero=(
+            "布云朝克特美网资格赛末轮输给奇纳，五天后以幸运落败者身份顶替伤退的"
+            "科基纳基斯，6-2 6-1 6-1 击败 12 号种子霍达尔——公开赛年代第一个在大满贯"
+            "正赛赢下前 15 号种子的幸运落败者。"
+        ),
+        facts=(
+            "2026 Grand Slam Rule Book Article III.h：资格赛末轮失利者中排名最高的四人"
+            "**抽签**定递补顺序，之后按排名；每天签到截止为当天首场开打前半小时，"
+            "男子须在 5 分钟内准备上场；第一轮打完不再递补。",
+            "同一本规则书 Article I：正赛开打前那个周二中午之后、在现场被赛会医生认定"
+            "不能比赛而退赛的人，拿首轮奖金的 50%（2018 年起执行）；顶替的幸运落败者"
+            "按正赛所打轮次领取奖金。2026 美网首轮 140,000 美元、资格赛末轮 66,000 美元。",
+            "公开赛年代无人以幸运落败者身份打进大满贯八强：女子七人到过第四轮（WTA 官方，"
+            "1980–1993 四人，2023 阿瓦涅相、2025 利斯、2025 谢拉），男子最近三人为"
+            "2014 澳网罗贝尔、2022 美网穆泰、2026 法网德容。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2026-09-02",
+                player="布云朝克特",
+                age="24 岁",
+                headline="五天前出局，五天后赢下 12 号种子",
+                detail=(
+                    "资格赛末轮 5-7 负奇纳；科基纳基斯脚踝伤退，官方公告由幸运落败者顶替；"
+                    "首轮 6-2 6-1 6-1 胜 12 号种子霍达尔，大满贯正赛七场第一胜。"
+                ),
+                source_url="https://x.com/usopen/status/2094808461448016379",
+            ),
+        ),
+        image_keys=(),
+        source_label="2026 Grand Slam Rule Book / ESPN / WTA / ATP",
+        image_credit="Darren Carroll/USTA · usopen.org 官方图",
+        source_url="https://www.itftennis.com/media/5986/grand-slam-rulebook-2026-f2.pdf",
+    ),
+    _trivia_story(
         slug="roof",
         title="温网屋顶谁说了算",
         subtitle="网球观察 · 规则篇",
