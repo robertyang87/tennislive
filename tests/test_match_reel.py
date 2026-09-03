@@ -9443,6 +9443,107 @@ def test_封面大图一律用官方高清图不许抽帧():
             "这一栏要写清楚四类源各自查了什么、结果如何，不是写一句「没找到」")
 
 
+def test_同一场球不许在赛场之上发第二条(tmp_path):
+    """⚠️ **这道闸的实现 2026-09-01 就写好了，只是接错了地方**：它一直坐在
+    `promote_reel_draft`（自动链**转正**）那条路上，而**手写 spec 走的是
+    `validate_spec`**——同一份 `_match_keys` 就在仓库里，这条路没接上。
+
+    2026-09-03 撞了一次，代价是一条几乎做完的片子：`faria-alcaraz-us-open-2026-r2`
+    做到第三趟 render 才发现别的会话 04:51 已经把同一场球（`CpKK9Ia4`、同一条
+    源片 `Hz6jq9Ebvuc`）推送出去了。**开工时查过，那次查是对的**——它是在这之后
+    才落库的，纯并发。撤稿收场。
+
+    钉六头，缺一头这条闸就是半哑的：
+
+    ① **同场同栏目**要拦下来
+    ② **真不同的球要放行**——只钉 ① 的话，一个恒真的闸也能过
+    ③ **跨栏目不许误伤**——「同一件事，不同栏目各讲一次不算重复」是明写允许的，
+       而存量里同栏目共用源片 7 处**有 5 处是「网球有故事」同一个人的多条故事片**
+       （大坂那四条讲的是四件不同的事），扫宽了会把它们整个误伤
+    ④ **源片要归一化**：`youtu.be/<id>` 和 `watch?v=<id>` 是同一条，裸字符串比对
+       认不出，而**认不出的样子和「这一场没发过」一模一样**
+    ⑤ **位置**：`validate_spec` 真的调了它，`--dry-run` 0.2 秒就报。只测行为的话，
+       闸排在下载后面照样全绿，而真实代价是每次先等几百 MB（本仓库栽过两次）
+    ⑥ **存量零误伤** ＋ 豁免表自检（立规矩那天顺手扫一遍 `specs/`，
+       别留给下一个人去撞）
+
+    ⚠️ **它有一条治不了的边界，别指望它**：这道闸扫的是**本地工作区**，
+    所以「别的会话刚推上 origin/main 的那一条」它看不见——09-03 那次正是这个
+    形状。所以发之前还要再 `git fetch` 查一次，那一步机器替不了。
+    """
+    reel = _reel()
+    published = tmp_path / "formal"
+    published.mkdir()
+
+    def write(slug, eyebrow, url, fsid):
+        (published / f"{slug}.json").write_text(json.dumps({
+            "slug": slug, "source_url": url,
+            "_match": {"flashscore_id": fsid},
+            "cover": {"eyebrow": eyebrow},
+        }, ensure_ascii=False), encoding="utf-8")
+
+    def spec(slug, eyebrow, url, fsid):
+        return {"slug": slug, "source_url": url,
+                "_match": {"flashscore_id": fsid},
+                "cover": {"eyebrow": eyebrow}}
+
+    write("已发的这一场", "赛场之上", "https://youtu.be/Hz6jq9Ebvuc", "CpKK9Ia4")
+    write("别人的故事片", "网球有故事", "https://youtu.be/story999", "STORY999")
+
+    # ① 同一场、同一个栏目：拦。⚠️ 两个视角的 slug 常常正好是反的，所以按
+    #    场次 id ／ 源片比，不按 slug 比
+    hit = reel.duplicate_match_problem(
+        spec("反过来的视角", "赛场之上", "https://youtu.be/Hz6jq9Ebvuc", "CpKK9Ia4"),
+        published)
+    assert hit and "已发的这一场" in hit, \
+        "同一场球在「赛场之上」发第二条都没拦住——这道闸等于没装"
+    assert "收不回来" in hit, \
+        "报错没说清代价：同一场球发第二条微信，而那条消息发出去收不回来"
+
+    # ② 真不同的球要放行。⚠️ **这一头必须排在跨栏目前面**：一个恒真的闸
+    #    （不管钥匙对不对都报）会同时打红 ②③ 两头，排在后面就被 ③ 盖住，
+    #    于是它自己反向验证不出来——而反向验证不出来的守卫和恒真的绿灯长得一样
+    assert reel.duplicate_match_problem(
+        spec("另一场球", "赛场之上", "https://youtu.be/OTHER111111", "ZZZZ9999"),
+        published) is None, \
+        "把另一场球也拦了——一条常年红的检查和没有检查是同一个毛病"
+
+    # ③ 跨栏目不许误伤，两个方向都验
+    assert reel.duplicate_match_problem(
+        spec("同一场的故事片", "网球有故事", "https://youtu.be/Hz6jq9Ebvuc",
+             "CpKK9Ia4"), published) is None, \
+        "把跨栏目的也拦了——「同一件事，不同栏目各讲一次不算重复」是明写允许的"
+    assert reel.duplicate_match_problem(
+        spec("赛场之上讲那条故事片的球", "赛场之上", "https://youtu.be/story999",
+             "STORY999"), published) is None, \
+        "「网球有故事」用过的源片把「赛场之上」挡住了——那张表只该收赛场之上"
+
+    # ④ 源片归一化：换一种写法照样认得出（这一头故意不给 flashscore_id，
+    #    2026-08 之前那批 spec 的 `_match` 是散文、根本没有 id）
+    assert reel.duplicate_match_problem(
+        {"slug": "换个写法", "cover": {"eyebrow": "赛场之上"},
+         "source_url": "https://www.youtube.com/watch?v=Hz6jq9Ebvuc"},
+        published), \
+        "`watch?v=` 和 `youtu.be/` 没归一到同一把钥匙——认不出的样子和没发过一样"
+
+    # ⑤ 位置：dry-run 那条路真的走得到
+    assert "duplicate_match_problem(" in inspect.getsource(reel.validate_spec), \
+        "validate_spec 没调这道闸——手写 spec 那条路还是拦不住，" \
+        "而它 2026-09-01 起就已经在 promote_reel_draft 那条路上了"
+
+    # ⑥ 豁免表自检 ＋ 存量零误伤
+    specs = _reel_specs()
+    for slug in sorted(reel._LEGACY_SAME_MATCH_TWICE):
+        assert slug in specs, (
+            f"豁免表里的 {slug!r} 找不到对应的 spec"
+            "——写错一个名字，豁免就成了一盏恒真的绿灯")
+    flagged = sorted(s for s, sp in specs.items()
+                     if reel.duplicate_match_problem(sp) is not None)
+    assert not flagged, (
+        f"这几条存量被判成「同一场球发了两条」：{flagged}"
+        "——要么是真撞了（那就撤一条），要么是这道闸扫宽了")
+
+
 def test_spec引的图不许放在output里CI上看不见():
     """⚠️ **`ci.yml` 的稀疏检出不含 `output/`**，所以一条指到那儿的图片路径
     **在本地存在、在 CI 上不存在**——而上面那道 `cover_photo_problem` 是真去
@@ -14240,8 +14341,10 @@ def test_板的右缘按每一段实际的宽度现量不是写死三档(tmp_pat
     ① 三段各自量到自己那一档，不是三段都退回顶层 scorebox 的最宽值
     ② **白格要算进板里**——按「暗块」找边缘会在深蓝底结束处就停下，实测
        少 53px（2026-08-28 手量时踩过一次）。这一条钉的就是白格没被漏掉
-    ③ 板整段不在画面里（回放/切走）时退回 spec 的兜底右缘**并出声**——
-       「量不出来」和「量出来就是这么宽」在产物上分不出来
+    ③ ⭐⭐ 板**整段不在画面里**（回放/切走）时**当场报错**——2026-09-03 之前
+       它只退回兜底右缘、在日志里说一句，而没有人会去读一条绿 run 的日志：
+       吴易昺那条已发成片就这么把 4 段、合计 23.8 秒（正片的 19%）的
+       「没有板的球场」贴了出去。报错要一次列全所有坏段，不是一段一段抛
     ④ 留了余量往**宽**里去，永远不许裁窄：裁窄是**静默**的失败（最右那几列
        比分被贴片藏在自己底下，没有任何闸会响），裁宽只是多盖几像素球场
     ⑤ ⭐⭐ **scorebox 的高度是奇数也要量得出来**（2026-08-31 德约那条整趟
@@ -14252,7 +14355,7 @@ def test_板的右缘按每一段实际的宽度现量不是写死三档(tmp_pat
        crop 前面。**这条测试的合成几何因此故意用奇数**（y0=887、高 93），
        偶数几何量不出这个坑（zheng-burel 的 [888,978] 高 90 就是这么全绿的）
 
-    反向验证过四个方向：**不现量**（一律退回顶层 scorebox）→ ① 红；
+    反向验证过四个方向（③ 换主语之后重跑过）：**不现量**（一律退回顶层 scorebox）→ ① 红；
     **只认暗块**（`hit` 上再加一条「亮度 < 120」，白格就被漏掉）→ 也红在 ①
     的区间断言上，报出来是「量到 552，该在 584~596」——那 40px 正是白格，
     实测那个坑少 53px；**把量不出来那一支的 print 拆掉** → ③ 红；
@@ -14285,7 +14388,10 @@ def test_板的右缘按每一段实际的宽度现量不是写死三档(tmp_pat
     segs = [reel.Segment(start=lo, end=hi, cx=0.5, narration="", track=False,
                          score_inset=box, score_inset_auto=True)
             for lo, hi in [(0.0, 2.0), (2.0, 4.0), (4.0, 6.0), (6.0, 8.0)]]
-    reel.resolve_board_insets({"": src}, segs)
+    # ⚠️ 第 4 段整段没有板 → 现在是硬错。前三段的右缘在抛之前就已经写回去了，
+    # 所以下面那些断言照旧成立（抛在函数收尾，不是撞见第一个坏段就抛）。
+    with pytest.raises(reel.ReelError, match="整段都没有记分条") as caught:
+        reel.resolve_board_insets({"": src}, segs)
     out = capsys.readouterr().out
     got = [s.score_inset[2] for s in segs]
 
@@ -14305,9 +14411,348 @@ def test_板的右缘按每一段实际的宽度现量不是写死三档(tmp_pat
         f"② 白色小分格要算进板里——量到 {got[0]}，而深蓝底只到 544。"
         "按「暗块」找边缘会在这儿停下，实测少 53px（2026-08-28 手量时踩过）")
 
-    assert segs[3].score_inset[2] == box[2] and "量不出板的右缘" in out, (
-        "③ 板不在画面里的那一段要退回 spec 的兜底右缘**并出声**——"
-        f"不吭声的话「量不出来」和「板就这么宽」分不出来。实际：{out}")
+    msg = str(caught.value)
+    assert "第 4 段" in msg, (
+        f"③ 报错要点名是哪一段（这儿是第 4 段，源片 6.0~8.0s），实际：{msg}")
+    assert "score_inset\": false" in msg and "score_*.jpg" in msg, (
+        "③ 报错要说出路：这种段该写 false ＋ `_score_inset_why`，"
+        "而判它的产物是 probe 的 `score_*.jpg`（2 秒一格的源片左下角）。"
+        f"实际：{msg}")
+    assert "第 1 段" not in msg and "第 2 段" not in msg, (
+        f"③ 有板的那几段被一起点名了，报错就成了噪音：{msg}")
+
+
+def test_右缘投票取的是每组中间那一格(tmp_path, monkeypatch):
+    """`BOARD_EDGE_EVERY` 隔格取的时候，取的是每组**中间**那一格不是第 0 格。
+
+    时间轴记的时刻是**格心** `(k+0.5)/fps`，所以 6 fps 里 k=1,4,7… 的格心
+    正好是 0.25、0.75、1.25——和原来 2 fps 的格心逐个相同；取第 0 格会整体
+    偏早 1/6 秒。
+
+    ⚠️⚠️ **这一条必须是行为判据，拿常量自己算不算数。** 第一版把它写成
+    「按常量算出 picked，比 stamps(2)」——反向验证时把实现改回取第 0 格，
+    **测试照样绿**：它算的是它自己，从头到尾没碰过 `resolve_board_insets`。
+    这个仓库反复记过「查源码文本的断言只能防有人把它删了，防不住它从来没
+    工作过」，而拿常量重算一遍是同一族更隐蔽的一种。
+
+    做法：让每一格的板宽**编码这一格的序号**——中间那一格给 600，其余给 900。
+    取对了组内位置，直方图里只有 600；取错了只有 900。反向验证过（把实现改回
+    `k % E == 0` 当场红）。
+    """
+    import numpy as np  # noqa: PLC0415
+
+    reel = _reel()
+    monkeypatch.setattr(reel, "probe_size", lambda _p: (1920, 1080))
+    box = (104, 887, 736, 980)
+    x0, _y0, _x1, y1 = box
+    bw, bh = 1920 - x0, y1 - box[1]
+    court = np.array([110, 150, 110], np.uint8)
+
+    def band(src_edge):
+        b = np.tile(court, (bh, bw, 1))
+        b[:, :src_edge - x0] = (20, 35, 90)
+        return b
+
+    picked_at = reel.BOARD_EDGE_EVERY // 2
+
+    def runner(cmd, capture_output=True, check=False):
+        n = int(2.0 * reel.BOARD_SCAN_FPS)
+        bands = [band(600 if k % reel.BOARD_EDGE_EVERY == picked_at else 900)
+                 for k in range(n)]
+        class _R:
+            stdout = b"".join(b.tobytes() for b in bands)
+        return _R()
+
+    src = tmp_path / "stub.mp4"
+    src.write_bytes(b"x")
+    segs = [reel.Segment(start=0.0, end=2.0, cx=0.5, narration="", track=False,
+                         score_inset=box, score_inset_auto=True)]
+    reel.resolve_board_insets({"": src}, segs, runner=runner)
+    got = segs[0].score_inset[2] - reel.BOARD_EDGE_PAD
+    assert got == 600, (
+        f"右缘投票取到的是第 {got} 档——600 是每组中间那一格、900 是别的格。"
+        "取第 0 格的话格心整体偏早 1/6 秒，「和原来 2 fps 逐个相同」这句话就不成立")
+
+
+def test_在场判定加密而右缘投票不跟着加密():
+    """⭐⭐ 2026-09-03：同一趟解码出来的时间线，**两头对采样率的需求正好相反**。
+
+    - **在场**决定「哪几秒回贴」，边界误差就是 ±半格。2 fps 时那是 ±0.25 秒，
+      吴易昺那条第 13 段板淡出之后多贴了 **0.27 秒**（约 8 帧）：成片 113.4~113.67
+      球员的鞋在贴片右缘被切成两截（x=495 那一列的列间差 20~60，而板在的时候
+      是 74）。加密到 6 fps，误差降到 ±0.083 秒。
+    - **右缘**是投票选出来的，`segment_board_edge` 要「两票起步」才算可信。
+      **票多了会改变可信度的分档**：本来只有孤票的段，三倍采样之后轻易凑够
+      两票，于是从「按后面段的下确界补」变成「按自己那一票」——而那一票往往
+      正是球员贴着板时读出来的噪声（德约 seg4 的 1400 就是）。
+
+    所以 `BOARD_EDGE_EVERY` 把两者拆开。钉三头，三个方向分别反向验证过：
+
+    ① 右缘投票的实际频率仍然是 **2 票/秒**，而且取到的**时刻**和原来 2 fps
+       的格心逐个相同（时间轴记的是格心 `(k+0.5)/fps`，所以要取每组**中间**
+       那一格：6 fps 的 k=1,4,7 → 0.25、0.75、1.25）
+    ② 加密之后区间边界真的更贴近转换点——按最坏情况比，不按某一个转换点比
+    ③ 连段容差写成**秒**：写成「几格」的话，加密采样会把它一起收紧，
+       球员挡住板半秒本来能连上、加密之后断成两截，再被 `BOARD_SPAN_MIN`
+       各自丢掉——**结果是加密采样反而少贴**
+
+    ⚠️ **「取到的是同一批帧」这句话不成立，别写进注释**：ffmpeg 的 `fps=N`
+    是按 1/N 的窗口挑帧，6 fps 的第 1 格和 2 fps 的第 0 格挑的是**不同的源帧**
+    （相差最多 1/6 秒）。同一的是**格心时刻和票的频率**——而「两票起步」这条
+    阈值依赖的正是频率，不是具体哪一帧。
+    """
+    reel = _reel()
+
+    # ① 右缘那一头的实际频率没变
+    assert reel.BOARD_SCAN_FPS % reel.BOARD_EDGE_EVERY == 0, (
+        "① 隔格取不整除，取到的时刻会和 2 fps 那套对不上")
+    assert reel.BOARD_SCAN_FPS / reel.BOARD_EDGE_EVERY == 2, (
+        "① 右缘投票的频率变了——`segment_board_edge` 的「两票起步」是按 2 fps "
+        "标定的，票数一变可信度分档跟着变，而那是静默的")
+
+    # ⚠️ 「取的是每组中间那一格」归 test_右缘投票取的是每组中间那一格 管，
+    #    那一条是行为判据（真跑 resolve_board_insets）。这里只钉频率。
+
+    # ② 边界误差：**按最坏情况比**。转换点正好落在格心上时两档都是零误差，
+    #    拿某一个转换点比会得出「加密没用」这种假结论。
+    def worst(fps):
+        err = 0.0
+        for j in range(1, 40):
+            until = 2.0 + j * 0.0137          # 扫一串不对齐格子的转换点
+            tl = [((k + 0.5) / fps, 500, (k + 0.5) / fps < until)
+                  for k in range(int(6.0 * fps))]
+            got = reel.board_present_spans(tl, 6.0, fps=fps)
+            assert got, "② 前提变了：这一档该量出一个区间"
+            err = max(err, abs(got[0][1] - until))
+        return err
+    w_coarse, w_fine = worst(2), worst(reel.BOARD_SCAN_FPS)
+    assert w_fine < w_coarse, (
+        f"② 加密之后最坏边界误差没有变小：2 fps {w_coarse:.3f}s，"
+        f"{reel.BOARD_SCAN_FPS} fps {w_fine:.3f}s")
+    assert w_fine <= 1.0 / (2 * reel.BOARD_SCAN_FPS) + 1e-6, (
+        f"② 最坏误差 {w_fine:.3f}s 超过了半格 {1/(2*reel.BOARD_SCAN_FPS):.3f}s"
+        "——区间边界不该比「两头各放半格」还差")
+
+    # ③ 中间断 0.5 秒（球员走过板）仍然连成一段——容差是秒，不是格
+    st = 1.0 / reel.BOARD_SCAN_FPS
+    gapped = [(round((k + 0.5) * st, 6), 500,
+               not (1.0 <= (k + 0.5) * st < 1.5))
+              for k in range(int(3.0 * reel.BOARD_SCAN_FPS))]
+    joined = reel.board_present_spans(gapped, 3.0)
+    assert len(joined) == 1, (
+        f"③ 半秒的遮挡把在场区间断成了 {len(joined)} 段——连段容差要写成秒"
+        "（`BOARD_GAP_BRIDGE`）。写成「几格」的话加密采样会把它一起收紧，"
+        "断出来的碎片再被 BOARD_SPAN_MIN 丢掉，加密反而少贴")
+
+
+def test_板不在和量不出右缘是两回事():
+    """`board_right_edge_in_band` 返回 `None` **有两种原因，而处置完全相反**：
+
+    | 为什么是 None | 该怎么办 |
+    |---|---|
+    | **板不在**（球场／回放／全屏图形） | **不许回贴**——贴上去是一块同色的球场 |
+    | **板在，只是量不出右缘**（球员贴着板、过曝、花屏） | **照旧回贴**，右缘按邻段的单调性补 |
+
+    混成一类的后果是**误伤**：德约那条 seg4「花屏 ＋ 一张孤票」会被判成
+    「整段没有板」而当场报错，而板一直在。所以 `board_present_in_band` 是一条
+    独立的判据，问的是「板左缘往右那一段是不是一块**压在球场上的实心暗图形**」。
+
+    ⚠️⚠️ **两个条件缺一不可，而这是 2026-09-03 拿一趟白渲的成片换来的。**
+    第一版只问「颜色离球场参考色远不远」，于是**球场自己的绿转蓝分界线**被读成
+    了板：`wu-duckworth` 第 12 段源片 170.9~178.4 前半截根本没有板，只有底线
+    那道绿转蓝，`far` 一路涨到 **0.819**（真板是 0.867~0.973），闸放行，成片
+    100.8~104s 贴了一块球场在球场上，白线在贴片右缘断开错位。同一个毛病在第
+    5、13 段也各有一处（13 段那处还把网前的 `us open` 广告和半个 `CHN` 一起
+    贴了出来）。补上**亮度**这一条之后，同一批帧的行占比是 0.000~0.107，
+    而有板的是 0.833~0.988——中间空着三倍余量。
+
+    判据是亮度：navy 板 L≈60，而绿场和蓝场都在 115~155，**它们之间**只差
+    6.7~10.7。所以「颜色远」分不开两种球场，「亮度也远」分得开。
+
+    ⚠️ 反过来只留亮度那条同样不行：回放、夜场、深色人群那种整幅都暗的画面，
+    亮度这一条会满足而颜色那条不会（参考色本身也暗）。两条要**同时**要。
+
+    ⚠️ 行的门槛比量右缘时松一档（0.25 vs `_BOARD_ROW_HIT` 的 0.5）：
+    **板不一定填满 `scorebox` 的整个高度**——`wu-walton` 那条的板只有一行，
+    实测只占贴片高度的三分之一，按 0.5 判会把明明在画面里的板判成不在
+    （「查了一场就写成一类」在这条线上的又一个实例）。
+
+    钉五头，三个方向反向验证过：把门槛提到 0.5 → ④ 红（半高的板被判成不在）；
+    把它换成 `board_right_edge_in_band(...) is not None` → ③ 红（花屏被判成
+    板不在，于是好端端的一段被当成硬错）；**拿掉亮度那一条 → ⑤ 红**（球场的
+    绿蓝分界线又被读成板，也就是这一节开头那趟白渲）。
+    """
+    import numpy as np  # noqa: PLC0415
+
+    reel = _reel()
+    h, w = 93, 1816                       # scorebox 高 93，带到画面右缘
+    court = np.array([110, 150, 110], np.uint8)
+
+    def band(fill=None, rows=None):
+        b = np.tile(court, (h, w, 1))
+        if fill is not None:
+            b[:rows if rows else h, :fill] = (20, 35, 90)
+        return b
+
+    # ① 空球场 → 不在
+    assert not reel.board_present_in_band(band()), \
+        "① 一片球场被判成「板在」——那正是会贴出一道竖直接缝的那一类"
+    # ② 整块板 → 在
+    assert reel.board_present_in_band(band(fill=550)), "② 整块板该判成「在」"
+    # ③ 花屏（每一列都离场色很远，量右缘会一路走到带尾 → None）→ 仍然是「在」
+    #    ⚠️ 条纹的亮度要和参考色拉开：过曝/闪光那一类本来就是亮的，而两条
+    #    亮度**相同**的条纹在物理上不是「一块实心图形」，判成不在才是对的。
+    clutter = np.zeros((h, w, 3), np.uint8)
+    clutter[:, 0::2] = (250, 250, 250)
+    clutter[:, 1::2] = (250, 20, 20)
+    assert reel.board_right_edge_in_band(clutter) is None, \
+        "③ 前提变了：花屏本该量不出右缘（这条判据的主语就是这种 None）"
+    assert reel.board_present_in_band(clutter), (
+        "③ 花屏被判成「板不在」——板一直在，只是量不出右缘。"
+        "判成不在的话，德约 seg4 那种段会被新加的硬闸当场误伤")
+    # ④ 只占三分之一高度的板（wu-walton 那条的形状）→ 仍然是「在」
+    assert reel.board_present_in_band(band(fill=550, rows=h // 3)), (
+        "④ 只有一行的板被判成「板不在」——门槛跟着量右缘那条走到 0.5 就会这样，"
+        "而 wu-walton 那条的板实测只占贴片高度的三分之一")
+    # ⑤ 球场自己的绿转蓝分界线 → 不在（2026-09-03 那趟白渲的那一类）
+    two_tone = np.tile(np.array([75, 100, 175], np.uint8), (h, w, 1))   # 蓝场
+    two_tone[:, :w // 2] = (110, 150, 110)                              # 绿场
+    left_l = float(np.asarray([110, 150, 110], float).mean())
+    right_l = float(np.asarray([75, 100, 175], float).mean())
+    assert abs(left_l - right_l) < reel._BOARD_SOLID_DL, (
+        "⑤ 前提变了：这条判据要的是「两种球场颜色差得远、亮度差不多」，"
+        "而这份底片的两半亮度已经差得比门槛还大，它证明不了任何事")
+    assert not reel.board_present_in_band(two_tone), (
+        "⑤ 球场的绿转蓝被判成「板在」——那正是 2026-09-03 白渲一趟的那个毛病："
+        "闸放行 → 成片上贴了一块球场在球场上，白线在贴片右缘断开错位。"
+        "只问颜色远不远分不开两种球场，亮度那一条才分得开")
+
+
+def test_板中途淡出的那几秒不许回贴(tmp_path):
+    """⭐⭐ 账号所有者 2026-09-03：「我刚看到好多比分板贴图问题，请一一解决，
+    形成规则固定下来，保证后续不要再出问题。」
+
+    **根子是粒度错了**：`score_inset` 是**一段一个布尔**，而板是**在段中途
+    消失的**——一分打完转播就把它淡出。于是「这一段有板」这句话对半截窗口是
+    假的，回贴照旧整段执行，贴上去的是**一块没有板的球场**。
+
+    量吴易昺那条已发成片（把成片从 Release 拉回来，逐 0.25 秒切贴片区、
+    按「左 250px 里暗于 95 的像素占比」判板在不在——板 0.80~0.85，球场 0.000，
+    分得很开）：**14 段里 4 段中招，合计 23.8 秒 ＝ 正片的 19%**，最长一段
+    连着贴了 10 秒（第 11 段，源片 157.2~167.0）。
+
+    ⚠️ **它为什么一路过了所有闸**：贴片和真画面**同色**（都是球场），所以不是
+    一块黑，是**一道竖直的接缝**——球员的腿走到那儿断成两截。渲染不报错、
+    `--dry-run` 查不了（要解源片）、`check_reel_landed` 也不查、全量测试更不查。
+
+    ⚠️ **而判据一直躺在 probe 产物里**：`score_*.jpg` 就是源片左下角那一块、
+    2 秒一格——打开 `score_00.jpg` 一眼就能看见 4.5~22.5s 那 10 格全是空球场，
+    而第 2 段的窗口正是源片 2.0~12.0。**没有人打开看过。**
+
+    修法不是「提醒自己下次记得看」，是**把手抄这一步去掉**：渲染时现量板在
+    哪几段里，`overlay` 只在那几段 `enable`。钉四头：
+
+    ① **区间量得准**（合成源片：板在 0~3s，3~8s 没有）
+    ② **没板那几秒真的没贴**——埋一个只有贴了才看得见的红点（源片 x=300 在
+       居中窗口 x≥353 的左边，不贴根本进不了画面），量成片里有没有它
+    ③ **有板那几秒照旧贴**——只钉 ② 的话，「整段都不贴」也能过，而那把板
+       整个弄丢了。⚠️ 这一头判的是**最右那格白色小分落在哪儿**，不是「深不深」：
+       居中窗口本来就含着板的右半截，所以按深浅判的话**贴不贴都是深的**——
+       第一版就这么写的，反向验证一跑（把贴片关掉）照样绿
+    ④ **整段都有板的段不许被这条改动碰到**：`spans` 留 `None`，走的还是原来
+       那条整段回贴的路（回归钉）
+
+    反向验证过三个方向，各红在自己的断言行：把 `enable` 那一段拆掉（退回改动
+    之前）→ ② 红；把 `board_present_spans` 改成恒返回空 → 变成硬错（第三头
+    那条判据管）；把 spans 恒设成整段 → ④ 红。
+    """
+    import shutil  # noqa: PLC0415
+
+    assert shutil.which("ffmpeg"), "没有 ffmpeg，这条判据跑不了：apt install ffmpeg"
+    import numpy as np  # noqa: PLC0415
+
+    reel = _reel()
+    src = tmp_path / "fade.mp4"
+    # 板在 0~3s；3~8s 没有板，但在 scorebox 里埋一个红点当「贴了没有」的判据
+    subprocess.run(
+        ["ffmpeg", "-y", "-v", "error", "-f", "lavfi", "-i",
+         "color=c=0x6E8B6E:s=1920x1080:r=25,"
+         "drawbox=x=104:y=887:w=496:h=93:color=0x1B2A5E:t=fill:"
+         "enable='between(t,0,3)',"
+         "drawbox=x=600:y=887:w=57:h=93:color=white:t=fill:"
+         "enable='between(t,0,3)',"
+         "drawbox=x=280:y=915:w=40:h=40:color=0xE61E1E:t=fill:"
+         "enable='between(t,3,8)'",
+         "-t", "8", "-pix_fmt", "yuv420p", str(src)], check=True)
+
+    box = (104, 887, 660, 980)
+    saved = (reel.CROP_W, reel.CROP_H, reel.CROP_Y, reel.LAYOUT)
+    try:
+        reel.resolve_crop(1920, 1080, layout="band")
+        seg = reel.Segment(start=0.0, end=8.0, cx=0.5, narration="", track=False,
+                           score_inset=box, score_inset_auto=True)
+        reel.resolve_board_insets({"": src}, [seg])
+
+        # ① 区间量得准（边界各留半格采样，所以给一格的容差）
+        assert seg.score_inset_spans and len(seg.score_inset_spans) == 1, (
+            f"① 该量出「只有前一截有板」，拿到 {seg.score_inset_spans}")
+        lo, hi = seg.score_inset_spans[0]
+        step = 1.0 / reel.BOARD_SCAN_FPS
+        assert lo <= step and abs(hi - 3.0) <= step * 1.5, (
+            f"① 在场区间该是 ~(0, 3)，量到 ({lo}, {hi})")
+
+        def region(mp4, t):
+            raw = subprocess.run(
+                ["ffmpeg", "-v", "error", "-ss", f"{t}", "-i", str(mp4),
+                 "-frames:v", "1", "-vf", "crop=496:84:0:921",
+                 "-f", "rawvideo", "-pix_fmt", "rgb24", "-"],
+                capture_output=True).stdout
+            a = np.frombuffer(raw[:496 * 84 * 3], dtype=np.uint8)
+            a = a.reshape(84, 496, 3).astype(int)
+            red = float(((a[..., 0] > 170) & (a[..., 1] < 90)
+                         & (a[..., 2] < 90)).mean())
+            # ⚠️ 「贴了没有」不能按「深不深」判——**居中窗口本来就含着板的
+            # 右半截**（窗口左缘落在源片 x=353，而板从 104 到 660），所以
+            # 贴不贴，成片左边那一块都是深的。第一版就是这么写的，反向验证
+            # 一跑：把贴片整个关掉，那条断言照样绿。
+            # 真正能分辨的是**最右那格白色小分落在哪儿**：
+            #   贴了   → 源片 x600 → 成片 x≈441（(600-104)×0.89）
+            #   没贴   → 源片 x600 → 成片 x≈220（(600-353)×0.89）
+            白 = a.mean(axis=2) > 190
+            return red, float(白[:, 430:495].mean())
+
+        good = tmp_path / "good.mp4"
+        reel.cut_segment(src, seg, good, 1920)
+        red_off, white_off = region(good, 5.5)
+        red_on, white_on = region(good, 1.5)
+
+        # ② 没板那几秒不许贴
+        assert red_off < 0.002, (
+            f"② 板已经淡出了还在回贴：成片 5.5s 的贴片区里有 {red_off:.4f} 的"
+            "红点，而那个红点在源片里正落在 scorebox 中间、居中窗口够不着——"
+            "它出现在成片里，只可能是被整块贴上去的。"
+            "线上那 23.8 秒贴的就是这一类（只不过贴的是同色球场，看起来是"
+            "一道竖直的接缝，不是红点）")
+        # ③ 有板那几秒照旧贴：整条板（含最右那格白色小分）要落在贴上去的位置
+        assert white_on > 0.5, (
+            f"③ 有板的那几秒反而没贴：成片 x430~495 那一带只有 {white_on:.3f} "
+            "是白的，而整条板贴上去的话最右那格白色小分正落在这儿"
+            "（源片 x600 × 0.89）。没贴的话它会退到 x≈220——"
+            "板的左半截（名字那一段）就整个被窗口切掉了，"
+            "而那正是当初要回贴的理由")
+        assert white_off < 0.2, (
+            f"③ 板都淡出了，x430~495 还是白的（{white_off:.3f}）——"
+            "那说明还在贴")
+
+        # ④ 整段都有板的段：一个字节都不许变（回归钉）
+        whole = reel.Segment(start=0.0, end=2.5, cx=0.5, narration="", track=False,
+                             score_inset=box, score_inset_auto=True)
+        reel.resolve_board_insets({"": src}, [whole])
+        assert whole.score_inset_spans is None, (
+            "④ 整段都有板的段不该被这条改动碰到——`spans` 要留 None，"
+            f"走原来那条整段回贴的路，拿到 {whole.score_inset_spans}")
+    finally:
+        reel.CROP_W, reel.CROP_H, reel.CROP_Y, reel.LAYOUT = saved
 
 
 def test_板右缘抓帧短读要单独出声不许装成板不在(monkeypatch, capsys):
@@ -14376,23 +14821,38 @@ def test_量不出的段按时间单调性从邻段补不再退最宽兜底(tmp_
         return b
 
     # 「花屏」：每一列都离球场参考色很远 → 检测一路走到带尾 → 这一帧 None
+    # ⚠️ 条纹的亮度也要和参考色拉开（过曝/闪光本来就是亮的）：
+    # `board_present_in_band` 2026-09-03 起要求「颜色远 **且** 亮度远」，
+    # 两条亮度相同的条纹在物理上不是一块实心图形，会被判成「板不在」。
     clutter = np.zeros((bh, bw, 3), np.uint8)
-    clutter[:, 0::2] = (250, 20, 20)
-    clutter[:, 1::2] = (20, 20, 250)
+    clutter[:, 0::2] = (250, 250, 250)
+    clutter[:, 1::2] = (250, 20, 20)
 
     def runner(cmd, capture_output=True, check=False):
+        # ⚠️ 2026-09-03 起量板走的是**一次解码拿整条时间线**（`board_edge_timeline`），
+        # 不再是每段 6 次 `-ss` 关键帧 seek——所以这个桩要按 `-ss`＋`-t` 回**一串**
+        # 帧，不是一帧。回一帧的话每段只有一个采样点，短过 `BOARD_SPAN_MIN`，
+        # 会被判成「整段没有板」而当场报错（那是这次改动新加的硬闸）。
         t = float(cmd[cmd.index("-ss") + 1])
+        n = int(2.0 * reel.BOARD_SCAN_FPS)                 # 2 秒 × 在场扫描帧率
         if t < 2.0:
-            band = band_with_edge(536)                     # 第一盘，可信 ×6
+            bands = [band_with_edge(536)] * n              # 第一盘，可信
         elif t < 4.0:
-            # 德约 seg4 的形状：五帧花屏 + 一张孤票宽噪声（球员贴板那种）
-            band = band_with_edge(1400) if 3.4 < t < 3.6 else clutter
+            # 德约 seg4 的形状：花屏 ＋ 一张孤票宽噪声（球员贴板那种）。
+            # ⚠️ 花屏**算「板在」**（`board_present_in_band` 问的是左边那一段
+            # 是不是一块离球场又远又亮/暗的实心图形）——板一直在，只是量不出
+            # 右缘，这一段照旧要回贴。
+            # ⚠️ 那张孤票要落在**右缘投票取得到**的格子上（每隔
+            # `BOARD_EDGE_EVERY` 取一格）——落在别处的话它根本不进直方图，
+            # 这一段就成了「一帧都没检出」，验的不再是「只有孤票」那一支。
+            bands = [clutter] * n
+            bands[reel.BOARD_EDGE_EVERY] = band_with_edge(1400)
         elif t < 6.0:
-            band = band_with_edge(616)                     # 第二盘，可信 ×6
+            bands = [band_with_edge(616)] * n              # 第二盘，可信
         else:
-            band = clutter                                 # 量不出且后面没有
+            bands = [clutter] * n                          # 量不出且后面没有
         class _R:
-            stdout = band.tobytes()
+            stdout = b"".join(b.tobytes() for b in bands)
         return _R()
 
     src = tmp_path / "stub.mp4"
