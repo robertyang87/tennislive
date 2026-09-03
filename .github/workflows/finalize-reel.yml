@@ -18,6 +18,11 @@ permissions:
   contents: write
   actions: write
 
+# 同一个 slug 两趟并发终审会互相踩 pending/正式 spec；按 slug 排队，不掐前一趟。
+concurrency:
+  group: finalize-reel-${{ inputs.slug }}
+  cancel-in-progress: false
+
 jobs:
   finalize:
     runs-on: ubuntu-latest
@@ -77,8 +82,10 @@ jobs:
           git diff --cached --quiet && { echo "::error::没有可提交的正式 spec"; exit 1; }
           python tools/check_staged_file_sizes.py
           git commit -m "reel: finalize $SLUG"
-          git pull --rebase origin main
-          git push origin HEAD:main
+          # 和这条线上其它提交点一样走带重试的推送；裸 push 撞车一次这一步就红，
+          # 下面的 dispatch 不跑，正式 spec 躺在 main 上没人渲。
+          source tools/git_push_retry.sh
+          push_with_rebase_retry main 5
       - name: Dispatch render
         env:
           GH_TOKEN: ${{ github.token }}

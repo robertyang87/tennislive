@@ -114,23 +114,29 @@ def matchup_order(home: str, away: str, flashscore_id: str) -> list[tuple[str, s
         # SA÷N 的计数行），从整份 body 里找才稳。
         f = dict(re.findall(r"(F[HK])÷([^¬]*)", body))
         fs_home, fs_away = f.get("FH", ""), f.get("FK", "")
-    except Exception:  # noqa: BLE001 —— 网络失败就退回命令行顺序
+    except Exception as exc:  # noqa: BLE001 —— 网络失败就退回命令行顺序
+        print(f"[matchup] flashscore df_hh_1 读不到（{exc}），退回命令行顺序")
         fs_home = fs_away = ""
     if not fs_home or not fs_away:
+        print("[matchup] flashscore 没给 FH/FK，退回命令行顺序")
         return [(home, player_zh(home)), (away, player_zh(away))]
     # 按「谁的姓出现在 flashscore 的 home 里」归位，而不是按整名相等——feed 是
     # 「Baez S.」缩写，命令行是「Sebastian Baez」，整名对不上。
     def side_is(fs_name: str, full: str) -> bool:
         return _surname(full).casefold() in fs_name.casefold()
 
+    # ⚠️ 同姓（王欣瑜/王曦雨、两个 Wang）时两边都会命中 home，`ordered` 会变成
+    # `[home, home]`——长度也是 2，静默把 away 吞掉。要求两边各认领一个。
     ordered = []
     for fs_name in (fs_home, fs_away):
-        if side_is(fs_name, home):
+        hit_home, hit_away = side_is(fs_name, home), side_is(fs_name, away)
+        if hit_home and not hit_away:
             ordered.append((home, player_zh(home)))
-        elif side_is(fs_name, away):
+        elif hit_away and not hit_home:
             ordered.append((away, player_zh(away)))
-    if len(ordered) == 2:
+    if len(ordered) == 2 and ordered[0][0] != ordered[1][0]:
         return ordered
+    print(f"[matchup] 按姓认不出 home/away（FH={fs_home!r} FK={fs_away!r}），退回命令行顺序")
     return [(home, player_zh(home)), (away, player_zh(away))]
 
 

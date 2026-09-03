@@ -194,7 +194,7 @@ def wants_auto_push(repo: Path, slug: str, outdir: Path) -> None:
         try:
             stamp = json.loads(marker.read_text(encoding="utf-8"))
             when = f"{stamp.get('at', '时间未记')}，{stamp.get('run', '地址未记')}"
-        except OSError:
+        except (OSError, ValueError):  # ValueError 含 JSONDecodeError：标记坏了也要拦住
             when = "详情在仓库里，这次没检出"
         raise Skip(f"{slug}：已经推过了（{when}），不重复发")
 

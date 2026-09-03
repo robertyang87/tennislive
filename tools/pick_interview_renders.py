@@ -69,8 +69,11 @@ LEGACY_INPUT_BASELINE = ROOT / "data" / "interview_render_legacy_baseline.json"
 
 # 「投出去多久还没有当前输入的成片才自动释放」。普通采访约 9 分钟，今天这条
 # 28 分钟完整致辞也在一小时内完成；固定 3 小时会让一次红灯拖掉半天。60 分钟
-# 给长片留足预算，过窗后同 slug concurrency 仍会阻止两趟同时写同一产物格。
-STALE_MINUTES = 60
+# 给长片留足预算。
+# ⚠️ 必须**大于** interview-clip.yml 的 `timeout-minutes`（65）：那条工作流是
+# `cancel-in-progress`，窗口比 job 超时短的话，一趟还在跑的长片会在第 60 分钟
+# 被重投的那趟掐掉——同一个形状这文件头部记过一次（45 对 49）。
+STALE_MINUTES = 70
 
 
 def _sha256(path: Path) -> str:
@@ -226,7 +229,7 @@ def _fresh_dispatches(*, now: datetime, rendered: set[str],
 def todo_slugs(*, now: datetime | None = None) -> tuple[list[str], list[tuple[str, list[str]]]]:
     """→ (该 dispatch 的, [(还差自动补齐/复核的 slug, 缺什么)])。
 
-    两份都不含「已 render」和「最近刚 dispatch」的。dispatch 超过 60 分钟仍无
+    两份都不含「已 render」和「最近刚 dispatch」的。dispatch 超过 STALE_MINUTES 仍无
     render.json 的自动释放回 ready；再次 mark 会刷新时刻，实现环境抖动自愈。
     """
     rendered = _rendered_slugs()

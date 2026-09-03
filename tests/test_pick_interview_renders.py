@@ -15,6 +15,7 @@
 from __future__ import annotations
 
 import json
+import re
 import sys
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -231,11 +232,11 @@ def test_判定和闸共用同一张豁免表(tool):
 
 
 def test_stale判产物不判信号(tool, monkeypatch):
-    """投出去超过 60 分钟还没有当前成片的要点出来；有当前成片的、
+    """投出去超过 STALE_MINUTES 还没有当前成片的要点出来；有当前成片的、
     刚投的都不算。老状态（bulk mark 时代）没记时刻的一律算 stale。"""
     now = datetime(2026, 8, 21, 12, 0, tzinfo=timezone.utc)
-    old = (now - timedelta(minutes=61)).strftime("%FT%TZ")
-    fresh = (now - timedelta(minutes=59)).strftime("%FT%TZ")
+    old = (now - timedelta(minutes=tool.STALE_MINUTES + 1)).strftime("%FT%TZ")
+    fresh = (now - timedelta(minutes=tool.STALE_MINUTES - 1)).strftime("%FT%TZ")
     tool.mark_one("old-no-render", now=old)
     tool.mark_one("fresh-no-render", now=fresh)
     tool.mark_one("old-rendered", now=old)
@@ -254,25 +255,39 @@ def test_stale判产物不判信号(tool, monkeypatch):
 
 def test_stale自动释放回dispatch队列而新任务不重复(tool, monkeypatch):
     now = datetime(2026, 8, 21, 12, 0, tzinfo=timezone.utc)
-    old = (now - timedelta(minutes=61)).strftime("%FT%TZ")
-    fresh = (now - timedelta(minutes=59)).strftime("%FT%TZ")
+    old = (now - timedelta(minutes=tool.STALE_MINUTES + 1)).strftime("%FT%TZ")
+    fresh = (now - timedelta(minutes=tool.STALE_MINUTES - 1)).strftime("%FT%TZ")
     tool.mark_one("b-todo", now=old)
     ready, _ = tool.todo_slugs(now=now)
-    assert "b-todo" in ready, "超过 60 分钟无当前成片要自动重投，不能只报警等人"
+    assert "b-todo" in ready, "超过 STALE_MINUTES 无当前成片要自动重投，不能只报警等人"
 
     tool.mark_one("b-todo", now=fresh)
     ready, _ = tool.todo_slugs(now=now)
     assert "b-todo" not in ready, "刚投出的还在跑，不许并发重复 dispatch"
 
 
-def test_无产物60分钟释放但59分钟仍保护长片(tool):
+def test_无产物满窗口释放但差一分钟仍保护长片(tool):
     now = datetime(2026, 8, 30, 12, 0, tzinfo=timezone.utc)
-    tool.mark_one("b-todo", now=(now - timedelta(minutes=59)).strftime("%FT%TZ"))
+    before = now - timedelta(minutes=tool.STALE_MINUTES - 1)
+    tool.mark_one("b-todo", now=before.strftime("%FT%TZ"))
     assert "b-todo" not in tool.todo_slugs(now=now)[0]
 
-    tool.mark_one("b-todo", now=(now - timedelta(minutes=61)).strftime("%FT%TZ"))
+    after = now - timedelta(minutes=tool.STALE_MINUTES + 1)
+    tool.mark_one("b-todo", now=after.strftime("%FT%TZ"))
     assert "b-todo" in tool.todo_slugs(now=now)[0], (
-        "固定 3 小时恢复太慢；无产物满 60 分钟必须自动释放")
+        "固定 3 小时恢复太慢；无产物满窗口必须自动释放")
+
+
+def test_重投窗口必须长于渲染job的超时否则会掐掉在跑的长片(tool):
+    """interview-clip.yml 是 cancel-in-progress：窗口比 job 的 timeout-minutes
+    短，一趟还在跑的长片会在满窗那一刻被重投的那趟掐掉——和当年 45 对 49
+    那次是同一个形状。上限也钉住：固定 3 小时会让一次红灯拖掉半天。"""
+    body = Path(".github/workflows/interview-clip.yml").read_text(encoding="utf-8")
+    job_timeout = int(re.search(r"^    timeout-minutes: (\d+)", body, re.M).group(1))
+    assert "cancel-in-progress: true" in body
+    assert tool.STALE_MINUTES > job_timeout, (
+        f"STALE_MINUTES={tool.STALE_MINUTES} 不长于 job 超时 {job_timeout}")
+    assert tool.STALE_MINUTES <= 120
 
 
 def test_stdout第二行起是名单等终审走stderr(tool, monkeypatch, capsys):
@@ -287,12 +302,12 @@ def test_stdout第二行起是名单等终审走stderr(tool, monkeypatch, capsys
     assert "等自动补齐 / 例外复核" in err and "d-bare" in err
 
 
-def test_workflow监听正式spec并写明60分钟恢复窗口():
+def test_workflow监听正式spec并写明恢复窗口(tool):
     body = Path(".github/workflows/interview-auto-render.yml").read_text(
         encoding="utf-8")
     assert '"specs/interviews/*.json"' in body, (
         "同 slug 改 spec 后必须立即唤醒自动重渲，不能只等 schedule")
     assert '"tools/build_interview_clip.py"' in body, (
         "渲染器修顶栏、封面或发布闸后必须立即唤醒自动重渲")
-    assert "超过 60 分钟还没有当前成片" in body
+    assert f"超过 {tool.STALE_MINUTES} 分钟还没有当前成片" in body
     assert "超过 3 小时" not in body
