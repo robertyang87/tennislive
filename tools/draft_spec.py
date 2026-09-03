@@ -116,16 +116,9 @@ def system_prompt() -> str:
 
 
 def _spoken_integer(value: int) -> str:
-    digits = "零一二三四五六七八九"
-    if value < 10:
-        return digits[value]
-    if value < 20:
-        return "十" + (digits[value % 10] if value % 10 else "")
-    if value < 100:
-        return digits[value // 10] + "十" + (digits[value % 10] if value % 10 else "")
-    if value == 100:
-        return "一百"
-    return "".join(digits[int(char)] for char in str(value))
+    # 出处只有一份：spec_wording.spoken_integer（promote 那头也用它）
+    from spec_wording import spoken_integer  # noqa: PLC0415
+    return spoken_integer(value)
 
 
 def normalize_editorial_for_speech(value):

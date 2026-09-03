@@ -592,6 +592,14 @@ def assemble(*, slug: str, home: str, away: str, event: str, year: int,
             notes.append("制胜分/非受迫失误：" + (
                 "这场有，已填进 stats" if blk["_has_winners_ue"]
                 else "接口里没有——照 render_stat_card 的 OPTIONAL_FIELDS 留空"))
+            # ②′ 数据图头像——没有它 render 最后一步（渲给推送用的数据图）是
+            #    SystemExit。已发 spec 里认过的人复用，WTA 现抓，ATP 留空出声
+            #    （promote 那头的闸会把草稿留在 waiting）。
+            try:
+                from headshot_index import resolve_headshots  # noqa: PLC0415
+                notes.extend(resolve_headshots(draft))
+            except Exception as exc:  # noqa: BLE001 —— 头像失败不拖垮整份草稿
+                notes.append(f"⚠️ 数据图头像没补上（{type(exc).__name__}: {exc}）")
 
         # ③ 狠数据候选。
         try:
