@@ -51,6 +51,78 @@ def test_八类措辞违规一次全抓出来():
         assert needle in joined, f"「{needle}」那一类没抓出来：\n{joined}"
 
 
+def test_文案里不许挂来源注脚():
+    """账号所有者 2026-09-03：「文案里不要再出现数据来源及后面的内容」。
+
+    和「不许提中英字幕」是同一族：**溯源是写给仓库里下一个人看的，不是内容**。
+    读者不关心我们从哪个 feed 取的数，而它占着正文那 1000 字里的六七十字。
+
+    ⚠️ 来源本身没被取消，只是换了位置——照旧写进 spec 的 `_source` / `_facts` /
+    `_claims`，那几栏是注解，`voiced_texts` / `outward_deep` 本来就不扫。
+
+    判据钉四头，缺一头都不够：
+
+    ① **拦得住**，而且两条线都装上了（reel 和 interview 发同一个小红书账号，
+       「一条规矩两条线各写一遍必分叉」——所以两个入口用同一个 `SOURCE_FOOTER`）；
+    ② **不误伤**「来源」的正当用法——没有冒号的（「信心来源于……」）、
+       以及正文中间讲某个数据出处的句子，那是内容不是注脚；
+    ③ **注解栏不许被扫到**：`_source` 里写着「数据来源：…」是对的，
+       它要是也报红，这条规矩就把溯源本身杀掉了；
+    ④ **存量真的清干净了**——零豁免的前提是全库没有命中，
+       而不是「我改了几条我记得的」。
+
+    反向验证（三个方向，各红在自己的断言行）：把 `SOURCE_FOOTER` 从
+    `check_spec_wording` 拆掉 → ①红；去掉行首锚 `^` → ②红（「信心来源于」
+    仍不中，但正文中间的「……来源：」会被抓）；把它加进 `outward_deep`
+    扫的面 → ③红。
+    """
+    from tools.spec_wording import SOURCE_FOOTER  # noqa: PLC0415
+
+    # ① 两条线都拦得住
+    for footer in ("数据来源：flashscore、ATP 官方。",
+                   "资料来源：美网官方 feed",
+                   "来源：维基百科",
+                   "素材出处：Tennis TV 官方集锦"):
+        caption = f"这场球他赢了。\n\n{footer}\n\n#网球时差 #赛场之上"
+        reel = check_spec_wording({"cover": {}, "segments": []},
+                                  "not-in-any-legacy", caption)
+        assert any("来源注脚" in p for p in reel), f"reel 侧没拦住：{footer}"
+        interview = check_interview_copy_wording(
+            {"push": {"lead": footer}}, None)
+        assert any("来源注脚" in p for p in interview), \
+            f"interview 侧没拦住：{footer}"
+
+    # ② 「来源」的正当用法不许误伤
+    for ok in ("他的信心来源于那记正手。",
+               "这套打法的来源是他少年时的教练。",
+               "两个数据对不上，来源不同罢了。"):
+        caption = f"{ok}\n\n#网球时差"
+        assert not any("来源注脚" in p for p in check_spec_wording(
+            {"cover": {}, "segments": []}, "not-in-any-legacy", caption)), \
+            f"误伤了正当用法：{ok}"
+
+    # ③ 注解栏是溯源该待的地方，不许被扫到
+    with_note = {
+        "cover": {},
+        "segments": [],
+        "_source": "数据来源：flashscore 本场逐分与技术统计。",
+        "_facts": ["来源：美网官方 players feed"],
+    }
+    assert not any("来源注脚" in p for p in
+                   check_spec_wording(with_note, "not-in-any-legacy", None)), \
+        "把注解栏也扫了——那等于把溯源本身杀掉，而这条规矩只搬位置"
+
+    # ④ 零豁免的前提：全库真的干净
+    dirty = [p.name for p in sorted(Path("specs").glob("*/*.xhs.txt"))
+             if SOURCE_FOOTER.search(p.read_text(encoding="utf-8"))]
+    assert not dirty, (
+        f"这条是零豁免的，而这些文案还挂着来源注脚：{dirty}——"
+        "要么把它们改掉，要么这条得配一张豁免表（`.xhs.txt` 不进成片、"
+        "不参与 qc_attestation 的哈希链，改它不用重渲，所以没有理由攒表）")
+    assert len(list(Path("specs").glob("*/*.xhs.txt"))) >= 100, \
+        "一份文案都没扫到，第 ④ 头是一盏恒真的绿灯——先证明扫描面还在"
+
+
 def test_promote模板不许再把字幕规格话术写回文案():
     """两个 promote 模板 2026-08-26 之前都写着「…与中英字幕」——每条自动产的
     文案都带着违规出生，interview 那张 78 文件的豁免表就是这么攒出来的。
