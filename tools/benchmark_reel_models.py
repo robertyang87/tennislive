@@ -58,6 +58,13 @@ def deepseek_score(editorial: dict | None, push: dict | None) -> tuple[int, list
         score += 15
     else:
         issues.append("旁白有空句或超过 50 字")
+    # 章节卡标题（可选字段，不计分）：写了就要合章节卡的形状，不合只记问题——
+    # 出处只有一份（promote_reel_draft.chapter_cards_problem），别在这儿另抄一套
+    if editorial.get("chapters") is not None:
+        from promote_reel_draft import chapter_cards_problem  # noqa: PLC0415
+        problem = chapter_cards_problem(editorial)
+        if problem:
+            issues.append(f"chapters 不合章节卡形状：{problem}")
     text = json.dumps(editorial, ensure_ascii=False)
     anchors = [
         ("22比3", ("22比3", "二十二比三")),

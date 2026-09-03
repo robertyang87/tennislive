@@ -313,7 +313,7 @@ def scene_cut_segments(cuts_path: str, narration: list[str]) -> list[dict]:
         picked.append(scene)
         last_end = scene[1]
     segments = []
-    for line, (start, end) in zip(lines, picked, strict=True):
+    for beat, (line, (start, end)) in enumerate(zip(lines, picked, strict=True), 1):
         need = speech_seconds(line) + 0.8
         center = (start + end) / 2
         seg_start = max(start + 0.05, center - need / 2)
@@ -321,7 +321,7 @@ def scene_cut_segments(cuts_path: str, narration: list[str]) -> list[dict]:
         seg_start = max(start + 0.05, seg_end - need)
         segments.append({
             "start": round(seg_start, 2), "end": round(seg_end, 2),
-            "narration": line, "fit": "crop",
+            "narration": line, "fit": "crop", "_beat": beat,
             "_why": "无字幕源：按 probe 镜头切点选单镜头高光窗口；不跨切点",
         })
     return segments
