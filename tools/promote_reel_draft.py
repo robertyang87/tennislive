@@ -316,8 +316,17 @@ def main() -> int:
     draft = json.loads(args.draft.read_text(encoding="utf-8"))
     try:
         spec = promote(draft)
-    except Exception as exc:  # noqa: BLE001
+    except ValueError as exc:
+        # 闸没过：这不是故障，是明确「不生产」——调用方按 0 读
         print(f"[waiting] {args.draft.name}: {exc}")
+        return 0
+    except Exception:  # noqa: BLE001
+        # 真崩了（KeyError / 接口异常）和「证据没齐」以前长得一模一样，
+        # 三个调用方都按 0 读成正常。仍然不让整班变红（probe 变红会释放 claim
+        # 触发重探），但把 traceback 和一条 warning 注解印出来，别再冒充 waiting。
+        import traceback
+        traceback.print_exc()
+        print(f"::warning::{args.draft.name} promote 崩了（不是 waiting），见上面的 traceback")
         return 0
     out = FORMAL / f"{spec['slug']}.json"
     copy = FORMAL / f"{spec['slug']}.xhs.txt"

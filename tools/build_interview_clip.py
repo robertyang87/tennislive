@@ -4231,9 +4231,13 @@ def main() -> int:
     outdir.mkdir(parents=True, exist_ok=True)
     ass = outdir / f"{spec['slug']}.ass"
 
-    if args.stage == "subs":
+    if args.stage in ("subs", "sheet"):
         # **挑封面用的**：只在取字幕这一趟出，出片那趟不重复下
         storyboard_sheet(spec["url"], outdir, spec)
+    if args.stage == "sheet":
+        # 只出缩略图墙，不切行。原来 `sheet` 在 choices 里却没有分支，
+        # 落到下面等于「subs 少一面墙」，和名字说的正好相反。
+        return 0
     lines = segment(
         fetch_words(spec["url"], outdir, spec), spec["start"], spec["end"],
         budget=spec.get("segment_budget_px"), word_fix=spec.get("word_fix"),
