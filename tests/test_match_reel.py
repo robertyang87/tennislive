@@ -5829,10 +5829,13 @@ def test_dry_run闸在runner上排在重准备之前且拉回probe产物():
     assert "::warning::" in gate, (
         "查不到 probe 时不出声——「没查」和「查过没问题」在日志上就长一样了")
 
-    # ③ 位置：排在三样重准备之前
+    # ③ 位置：排在重准备之前——apt 那两步（各 15 分钟最坏预算）也算，
+    #    dry-run 一个 ffmpeg / 字体都不碰（PATH 上抽掉 ffmpeg 跑过，照旧绿）
     yml = _yaml_only(text)
     gate_at = yml.index("- name: dry-run — 先把 spec 的形状错拦在编码之前")
-    for later in ("- name: 缓存 Chromium",
+    for later in ("- name: 缓存 apt 包（ffmpeg + 字体，绕开镜像抽风）",
+                  "- name: 装 ffmpeg",
+                  "- name: 缓存 Chromium",
                   "- name: 缓存源片（同一条片子只下一次）",
                   "- name: 起 PO token provider"):
         assert gate_at < yml.index(later), f"dry-run 闸排到「{later}」后面去了"
