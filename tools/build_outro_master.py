@@ -82,6 +82,9 @@ def main() -> int:
         work, chromium=_chromium_executable(), dest=args.out,
         fps=float(MASTER_FPS), audio_rate=MASTER_AUDIO_RATE,
         preset="slow", crf=MASTER_CRF, audio_bitrate="192k", audio_channels=2,
+        # **必须现渲。** 不带它的话母版在时会从旧母版转码——改了口播重跑这个
+        # 工具，出来的还是旧文案，而且不报错（`--out` 指到别处时）。
+        fresh=True,
     )
 
     for junk in work.glob("*"):
