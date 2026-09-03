@@ -7993,8 +7993,8 @@ _OPENINGS: dict[str, dict] = {
         # 天花板，不是没找（四类源都跑过，记在 credits.json 的 `_low_res_why`），
         # 例外登记在 tests/test_cover_resolution.py 的 `_UNDERSIZED`。封面主体只能
         # 是他：那一问的主语就是他，而这张是六张里脸最大、眼睛睁着、最用力的一张。
-        "image": "assets/explainer/bu-lucky-loser/bu_us_open_2026_r1_forehand.jpg",
-        "credit": "Darren Carroll/USTA · usopen.org 官方图 · 2026 美网首轮，布云朝克特",
+        "image": "assets/explainer/bu-lucky-loser/bu_us_open_2026_qual_forehand.jpg",
+        "credit": "Chris Krusberg/USTA · usopen.org 官方图 · 2026 美网资格赛决胜轮，布云朝克特",
     },
     "hawkeye": {
         "topic": "鹰眼的来历：源于一次误判",
