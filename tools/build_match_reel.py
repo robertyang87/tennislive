@@ -6718,6 +6718,27 @@ def _check_segments_fit(segments: list[Segment], sources: dict[str, Path]) -> No
                         + "\n\n把 `end` 收回片长以内，或者换一条更长的源片。")
 
 
+_PRINTED_VS_SPOKEN_NOISE = re.compile(r"[？！?!\s]+")
+
+
+def same_line_as_printed(spoken: str, printed: str) -> bool:
+    """封面念的那句和海报上印的钩子，是不是同一句话。
+
+    判据是「一不一样」——一样就不另排字幕（大字已经印着了）。但「一样」要按
+    **说的是不是同一件事**判，不能按 `drop_punctuation` 之后逐字节比：那个函数
+    是给字幕显示用的，**故意留着「？！」**（换页表达得了停顿，表达不了「这是一问」），
+    于是钩子写成陈述句、旁白念成问句（`五天前出局，五天后赢了种子？`）会差一个
+    问号，被判成「另说了一件事」，封面那 3 秒多叠一行把钩子原样再写一遍的小字。
+    `bu-lucky-loser-story` 2026-09-03 就这么渲出去过一版。
+
+    所以这儿在 `drop_punctuation` 之上再抹掉 ？！ 和所有空白（钩子的换行、
+    标点换出来的空格）再比。真另说一件事的（`cincinnati-story` 那种）照旧不等。
+    """
+    def flat(text: str) -> str:
+        return _PRINTED_VS_SPOKEN_NOISE.sub("", drop_punctuation(str(text)))
+    return flat(spoken) == flat(printed.replace("\n", " "))
+
+
 def render(spec: dict, outdir: Path, *, voice: str, rate: str,
            source_override: Path | None = None,
            cover_only: bool = False) -> Path:
@@ -7012,9 +7033,7 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
         # 大字，字幕把同样的话在同一帧里再写一遍，只是把画面弄脏。
         # 判据是「一不一样」，不是「封面一律不出字幕」：封面那句要是**另说了
         # 一件事**（存量里没有，但迟早会有），它照样要有字幕——静音刷是默认状态。
-        printed = drop_punctuation(
-            str(spec["cover"].get("hook", "")).replace("\n", " "))
-        if drop_punctuation(cover_text) == printed:
+        if same_line_as_printed(cover_text, str(spec["cover"].get("hook", ""))):
             print("[封面] 旁白就是海报上那句钩子，不另排字幕")
         else:
             cues.extend(subtitle_cues(readable(cover_text),

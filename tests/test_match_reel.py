@@ -2915,10 +2915,26 @@ def test_封面念的就是海报上那句钩子就不另排字幕():
     reel = Path("tools/build_match_reel.py").read_text(encoding="utf-8")
     assert "drop_punctuation" in reel, "比对没有去标点——印的带换行、念的带句号，永远不等"
     assert "不另排字幕" in reel
+    # 比对必须走 same_line_as_printed，而且是紧挨着那句日志的那个 if——
+    # 退回裸的 `drop_punctuation(a) == drop_punctuation(b)` 会把「？」算成差异
+    tail = reel[:reel.index("[封面] 旁白就是海报上那句钩子")]
+    assert "if same_line_as_printed(cover_text" in tail[-400:], (
+        "封面字幕的比对没走 same_line_as_printed——问句形式的钩子旁白又会叠一行重复字幕")
     # else 分支必须还在：另说一件事时要排字幕
     head = reel[reel.index("[封面] 旁白就是海报上那句钩子"):]
     assert "else:" in head[:400] and "subtitle_cues(readable(cover_text)" in head[:800], (
         "封面变成一律不出字幕了——另说一件事的那种情况就没字幕了")
+
+    # 行为：只差标点（含 ？！）和空白的算同一句；真另说一件事的不算
+    r = _reel()
+    assert r.same_line_as_printed("五天前出局，五天后赢了种子？", "五天前出局\n五天后赢了种子"), (
+        "钩子是陈述句、旁白念成问句，仍然是同一句——bu-lucky-loser-story 2026-09-03 "
+        "就因为这一个问号在封面上多叠了一行重复钩子的小字")
+    assert not r.same_line_as_printed(
+        "全美第三大的网球赛事，办在一个三万多人的小镇。", "全美第三大赛事\n办在小镇"), (
+        "真另说一件事的被判成同一句了——那一屏就没字幕了")
+    bu = json.loads(Path("specs/reels/bu-lucky-loser-story.json").read_text("utf-8"))["cover"]
+    assert r.same_line_as_printed(bu["narration"], bu["hook"])
 
     spec = json.loads(Path("specs/reels/hewitt-washington.json").read_text("utf-8"))
     cover = spec["cover"]
