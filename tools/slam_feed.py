@@ -87,17 +87,24 @@ def round_label(round_code: object, round_name: object, event_name: object) -> s
     return _ROUND_BY_CODE.get(code) or str(round_name or "")
 
 
+def _same_surname(feed_last: object, want: str) -> bool:
+    """`de Minaur` 对 `minaur`、`Auger-Aliassime` 对 `auger-aliassime` 都要认。
+    编排器传过来的姓是全名的**最后一个词**，而 feed 的 `last_name` 带着小品词。"""
+    have = _norm(feed_last)
+    return bool(want) and (have == want or have.endswith(" " + want))
+
+
 def player_ids(players: list, surname: str) -> list[str]:
     want = _norm(surname)
     out = [p["id"] for p in players
-           if isinstance(p, dict) and _norm(p.get("last_name")) == want and p.get("id")]
+           if isinstance(p, dict) and _same_surname(p.get("last_name"), want) and p.get("id")]
     return out
 
 
-def _team_surnames(team: object) -> set[str]:
+def _team_has(team: object, want: str) -> bool:
     if not isinstance(team, dict):
-        return set()
-    return {_norm(team.get(k)) for k in ("lastNameA", "lastNameB") if team.get(k)}
+        return False
+    return any(_same_surname(team.get(k), want) for k in ("lastNameA", "lastNameB") if team.get(k))
 
 
 def _pick(matches: list, other: str) -> dict | None:
@@ -106,8 +113,7 @@ def _pick(matches: list, other: str) -> dict | None:
     for m in matches:
         if not isinstance(m, dict):
             continue
-        t1, t2 = _team_surnames(m.get("team1")), _team_surnames(m.get("team2"))
-        if want in t1 or want in t2:
+        if _team_has(m.get("team1"), want) or _team_has(m.get("team2"), want):
             hits.append(m)
     if not hits:
         return None

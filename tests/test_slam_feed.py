@@ -107,3 +107,18 @@ def test_feed非200要报成SlamFeedError(monkeypatch):
         assert "403" in str(exc)
     else:
         raise AssertionError("403 要报出来，不许当成空结果")
+
+
+def test_带小品词的姓要认得出来():
+    """2026-09-03 干跑：`andrea guerrieri vs alex de minaur` 查空——编排器传的是末词 `minaur`，
+    feed 的 `last_name` 是 `de Minaur`。"""
+    t = _tool()
+    players = {"players": [{"last_name": "de Minaur", "first_name": "Alex", "id": "atpdh58"}]}
+    m = {"courtName": "Court 17", "roundCode": "2", "roundName": "Round 2", "duration": "1:40",
+         "status": "Completed", "epoch": 3, "eventName": "Gentlemen's Singles",
+         "team1": {"lastNameA": "de Minaur", "idA": "atpdh58"}, "team2": {"lastNameA": "Guerrieri", "idA": "x"}}
+    fetch = _fetch({"players/players.json": players, "atpdh58_matches.json": [m]})
+    assert t.player_ids(players["players"], "minaur") == ["atpdh58"]
+    assert t.usopen_match(2026, "guerrieri", "minaur", fetch=fetch)["court"] == "Court 17"
+    assert t.usopen_match(2026, "minaur", "guerrieri", fetch=fetch)["court"] == "Court 17"
+    assert not t._same_surname("Aminaur", "minaur"), "只认整词或小品词后面那一截，不认子串"
