@@ -359,6 +359,18 @@ def _specced_surname_pairs() -> dict[frozenset[str], Path]:
     return out
 
 
+def _surname(full: str) -> str:
+    """全名取最后一个词；`player_name_en` 还原不了的缩写名（`Gorzny S.` /
+    `Bu Y.`）是「姓 ＋ 名首字母加点」，那时姓是**第一个**词——2026-09-03 干跑
+    里三条就是这么查空的（`S.` 当然对不上任何人）。"""
+    words = str(full or "").split()
+    if not words:
+        return ""
+    if words[-1].endswith(".") and len(words) >= 2:
+        return words[0]
+    return words[-1]
+
+
 def enrich_slam_fields(cands: list[dict], *, lookup=None) -> None:
     """大满贯期间从官方 feed 补 round / court——就地改 cands，缺一个字段才查。
 
@@ -376,9 +388,8 @@ def enrich_slam_fields(cands: list[dict], *, lookup=None) -> None:
             continue
         if slam_feed.feed_for(c.get("event") or "") is None:
             continue
-        surname = lambda full: (str(full or "").split() or [""])[-1]
         try:
-            res = look(c["event"], c["year"], surname(c["home"]), surname(c["away"]))
+            res = look(c["event"], c["year"], _surname(c["home"]), _surname(c["away"]))
         except Exception as exc:  # 网络/形状——一场的失败不许拖死同批
             print(f"  [{c['slug']}] 官方 feed 补 round/court 失败：{type(exc).__name__}: {exc}")
             continue
@@ -549,11 +560,13 @@ def main() -> int:
     dig = build_digest(_beijing_today())
     _report_rank_coverage(dig)
     cands = candidates(dig)
-    enrich_slam_fields(cands)
     if args.column:
         cands = [c for c in cands if c["column"] == args.column]
     state = load_state()
     fresh = dispatch_plan(cands, state)
+    # 只给还没 dispatch 的补——已做过的那批 round/court 用不上了，2026-09-03
+    # 干跑时 25 条全查是 50 次白花的请求（每班一次）。
+    enrich_slam_fields(fresh)
 
     if not cands:
         print("今天没有过门槛的候选（≥250 单打、本比赛日、热度预筛、分 ≥38）。")
