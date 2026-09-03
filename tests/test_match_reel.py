@@ -9409,20 +9409,26 @@ def test_封面大图一律用官方高清图不许抽帧():
 
     # ⑤ 豁免表自检：每个 slug 必须真的存在，而且真的还过不了这道闸
     specs = _reel_specs()
-    for slug in sorted(reel.LEGACY_SOFT_COVERS):
+    # ⚠️ 两张表**语义不同**（见 `build_match_reel` 里各自的注释）：
+    #    `LEGACY_SOFT_COVERS` 是规矩立起来之前的存量，只许减不许加；
+    #    `OWNER_APPROVED_FRAME_COVERS` 是立起来之后账号所有者逐条授权的例外，
+    #    它会增长。但**自检对两张表是同一套**：名字要真、而且真的还过不了闸。
+    for slug in sorted(reel.LEGACY_SOFT_COVERS | reel.OWNER_APPROVED_FRAME_COVERS):
         assert slug in specs, (
-            f"`LEGACY_SOFT_COVERS` 里的 {slug!r} 找不到对应的 spec"
+            f"封面豁免表里的 {slug!r} 找不到对应的 spec"
             "——写错一个名字，豁免就成了一盏恒真的绿灯")
         naked = json.loads(json.dumps(specs[slug]))
         naked.pop("slug", None)          # 绕开豁免，看它本身过不过得了
         assert reel.cover_photo_problem(naked) is not None, (
-            f"{slug} 的封面已经过得了这道闸了，从 `LEGACY_SOFT_COVERS` 里删掉"
-            "——这张表只许减不许加")
+            f"{slug} 的封面已经过得了这道闸了，从豁免表里删掉"
+            "——`LEGACY_SOFT_COVERS` 只许减不许加；"
+            "`OWNER_APPROVED_FRAME_COVERS` 里的补上真图之后也该删")
 
     # ⑥ 而**没进表的 spec 一律要过**：立规矩的那天顺手扫一遍存量，
     #   不留给下一个人去撞（CLAUDE.md「立一条新的形状规矩时，顺手拿它扫一遍 specs/」）
     left = sorted(s for s, sp in specs.items()
-                  if s not in reel.LEGACY_SOFT_COVERS
+                  if s not in (reel.LEGACY_SOFT_COVERS
+                               | reel.OWNER_APPROVED_FRAME_COVERS)
                   and reel.cover_photo_problem(sp) is not None)
     assert not left, f"这几条既不在豁免表里、封面又过不了闸：{left}"
 
