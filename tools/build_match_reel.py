@@ -5700,6 +5700,29 @@ def _solo_scoreboard_shape(spec: dict) -> None:
 #: （`tools/check_cover_resolution.py` 第一次量就这么错过）。
 COVER_FILL_W, COVER_FILL_H = 1080, 1440
 
+#: 账号所有者**逐条授权**用源片抽帧当封面的片子。
+#:
+#: ⚠️ **这张表和 `LEGACY_SOFT_COVERS` 语义不同，别合并。** 那张是「规矩立起来
+#: **之前**发出去的存量」，所以「只许减不许加」；这张是「规矩立起来**之后**，
+#: 账号所有者看过取舍、明确说这一条可以」——它**会增长**，但每加一条都必须是
+#: 他亲口说的，不是谁觉得找不到图就往里塞。混进一张表的话，下一个人分不出
+#: 哪些是真存量、哪些是授权例外，而 `LEGACY_SOFT_COVERS` 的「只许减不许加」
+#: 那个不变量也就废了。
+#:
+#: 自检和 `LEGACY_SOFT_COVERS` 共用（`test_封面大图一律用官方高清图不许抽帧`）：
+#: 表里每个 slug 必须真的存在、而且真的还过不了这道闸。
+#:
+#: - `wu-duckworth-us-open-2026-r2`：2026-09-03 美网男单第二轮。官方高清实拍
+#:   在推片窗口内**结构性地拿不到**（美东 9/2 夜场，主批要等次日 01:00~03:00Z；
+#:   两个球员的 tag ＋ 按 title 扫最近 600 条，四条渠道一致为空，详见 spec 的
+#:   `cover.portrait._frame_why`）。我把「等图」「你给图」「松这一次口径」三条
+#:   摆出来，账号所有者选了第三条。⚠️ 这一条上抽帧**反而比官方图清楚**：
+#:   源片 1920×1080 铺 1080×1440 是放大 1.33 倍，而美网官方图封顶 1280×720、
+#:   要放大 2.00 倍。
+OWNER_APPROVED_FRAME_COVERS = frozenset({
+    "wu-duckworth-us-open-2026-r2",
+})
+
 #: 「封面大图一律用官方高清实拍」这条规矩（账号所有者 2026-08-16 重申）立起来
 #: **之前**发出去的片子。已发的不为封面重渲——微信那条消息发出去收不回来。
 #:
@@ -5784,7 +5807,8 @@ def cover_photo_problem(spec: dict) -> str | None:
     ——CLAUDE.md「上面这条只管『整帧铺满』，不管『抠出来的人』」记的就是这个。
     判据宁可窄，不可宽。
     """
-    if str(spec.get("slug") or "") in LEGACY_SOFT_COVERS:
+    if str(spec.get("slug") or "") in (LEGACY_SOFT_COVERS
+                                      | OWNER_APPROVED_FRAME_COVERS):
         return None
     cover = spec.get("cover")
     if not isinstance(cover, dict):
