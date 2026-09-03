@@ -489,7 +489,11 @@ def main() -> int:
         bad += 1
         print(f"\n[不合格] 封面之后还有 {len(dead)} 秒是数字静音：{dead}")
     else:
-        print(f"\n[ok] 封面之后没有数字静音（最低 {min(levels[after:]):.1f} dB）")
+        tail = levels[after:]
+        # 短片 + 长封面口播时 `after` 可能越过末尾；空序列上 min() 会把一次
+        # 合格的 QC 炸成崩溃，而崩溃和「不合格」在 run 上长得一样。
+        floor = f"最低 {min(tail):.1f} dB" if tail else "封面之后没有可量的秒"
+        print(f"\n[ok] 封面之后没有数字静音（{floor}）")
     if exempt:
         print(f"[ok] 另有 {len(exempt)} 秒静音落在整屏证据段的口播间隙里"
               f"（底轨是 anullsrc，静音是设计的一部分，同封面）：{exempt}")

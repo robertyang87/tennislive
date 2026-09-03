@@ -3477,7 +3477,9 @@ def _chromium_executable() -> str | None:
     for base in (os.environ.get("PLAYWRIGHT_BROWSERS_PATH", ""), "/opt/pw-browsers"):
         if not base:
             continue
-        hits = sorted(glob.glob(f"{base}/chromium-*/chrome-linux/chrome"))
+        # ⚠️ 新版 playwright 的目录是 `chrome-linux64`，只认 `chrome-linux` 会在
+        # runner 上装好了却返回 None（build_interview_clip._chromium 记过同一个坑）。
+        hits = sorted(glob.glob(f"{base}/chromium-*/chrome-linux*/chrome"))
         if hits:
             return hits[-1]
     return None
