@@ -1,0 +1,138 @@
+# 转写交叉校验：bu-jodar-us-open-2026-r1-presser
+
+- 第一份：YouTube 自动字幕 **1482** 词
+- 第二份：faster-whisper（medium.en）**1417** 词
+- **对不上 10.4%**（闸门 12%）
+
+⚠️ 上面两个词数和分歧率都是**去掉 erm/uh/uhh/um/umm 这类填词之后**算的：这些词 whisper 系统性地会丢，跟源可不可信无关，留着只会把「说话人有多磕巴」量成「两份转写对不上」。
+
+## 分歧逐处（左＝YouTube 自动字幕，右＝第二份）
+
+- `and` → `—`
+- `you` → `—`
+- `the` → `a`
+- `very` → `right where i`
+- `the` → `—`
+- `yeah question` → `—`
+- `you` → `—`
+- `he` → `—`
+- `—` → `a`
+- `lot of` → `last`
+- `in the` → `—`
+- `how` → `—`
+- `how` → `—`
+- `ju` → `—`
+- `being` → `—`
+- `is` → `—`
+- `—` → `for`
+- `that's` → `—`
+- `—` → `lose already`
+- `loser ready and i don't` → `—`
+- `is also` → `so so`
+- `qualies` → `quality`
+- `yeah` → `—`
+- `gonna` → `going to`
+- `or` → `—`
+- `—` → `a plan`
+- `have plan like` → `go`
+- `is` → `it's`
+- `yeah` → `—`
+- `the` → `—`
+- `when` → `—`
+- `lunch` → `lounge`
+- `okay` → `ok`
+- `a` → `our`
+- `and` → `—`
+- `i` → `—`
+- `wait` → `—`
+- `sorry` → `so`
+- `yesterday` → `yes`
+- `30` → `13`
+- `lounge okay` → `lunch ok`
+- `okay` → `—`
+- `—` → `i'm`
+- `very very good` → `right why are you`
+- `okay` → `ok`
+- `—` → `a`
+- `do you` → `—`
+- `—` → `you understand`
+- `did you i i` → `—`
+- `start` → `started`
+- `he's` → `is`
+- `the` → `a`
+- `—` → `of`
+- `—` → `a`
+- `test` → `pass`
+- `in` → `—`
+- `—` → `and`
+- `right` → `today`
+- `i` → `—`
+- `the` → `—`
+- `spin` → `spain`
+- `and` → `—`
+- `higher` → `high`
+- `get have` → `—`
+- `100` → `hundred`
+- `my` → `—`
+- `100` → `hundred`
+- `in` → `—`
+- `the` → `—`
+- `the all the` → `other`
+- `100` → `hundred`
+- `then we are` → `—`
+- `100` → `hundred`
+- `the` → `—`
+- `when when i` → `—`
+- `up` → `off`
+- `sa` → `third side`
+- `rain stop` → `reinstalled`
+- `you know` → `—`
+- `reply` → `replay`
+- `yeah` → `—`
+- `receive` → `received`
+- `so` → `—`
+- `are` → `—`
+- `when i i` → `one`
+- `the` → `—`
+- `is when` → `—`
+- `i born` → `i've grown`
+- `we i was` → `—`
+- `huzhou` → `hangzhou`
+- `in` → `—`
+- `18` → `17`
+- `guangha` → `guangzhou`
+- `ha ha` → `hangzhou hangzhou`
+- `huzhou okay yeah` → `hangzhou`
+- `how` → `—`
+- `yeah yeah` → `—`
+- `play` → `played`
+- `were` → `—`
+- `okay` → `ok`
+- `when` → `—`
+- `in the` → `—`
+- `play` → `playing`
+- `—` → `ok`
+- `has` → `is`
+- `been` → `—`
+- `when` → `—`
+- `shooting` → `she wins`
+- `every` → `—`
+- `her` → `him`
+- `—` → `a`
+- `—` → `of`
+- `player` → `players`
+- `in` → `—`
+- `last` → `yeah nice`
+- `yeah` → `—`
+- `yeah` → `zhen`
+- `do you` → `—`
+- `and yeah` → `i`
+- `not` → `know`
+- `much` → `match`
+- `—` → `with`
+- `grass` → `grand`
+- `he he` → `—`
+- `and` → `i mean`
+- `play` → `played`
+- `is` → `it's`
+- `would` → `will`
