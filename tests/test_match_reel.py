@@ -12459,6 +12459,50 @@ def test_算不出标题时文案字数不许估得比真推送松():
         "dry-run 算不出标题时必须拼占位标题，不能直接把文件第一段当标题甩掉")
 
 
+def test_推送成功那行印的字数要和那道闸量的是同一个数():
+    """「已推送」那几行里的字数，必须是**正文**的，不是 `copy_text` 的长度。
+
+    来路：`rublev-merida-us-open-2026-r2` 推送成功，日志写着「文案 1004 字」
+    ——而 `split_copy` 的 `BODY_MAX` 是 1000。两个数摆在一起读起来就是
+    「超标了还发出去了，那道闸漏了」，**而闸没漏**：它量的是正文（981 字），
+    日志印的是 `copy_text`（正文 ＋ 标题 ＋ 那行空行 ＝ 1004）。
+    **一个数写两处必分叉**，只不过这次分叉的不是两个字段，是两个量纲。
+
+    上面那条判据管的是 dry-run 和真推送**量的是不是同一段文字**；这条管的是
+    真推送**印出来的那个数是不是它自己量的那个**。
+
+    判据钉两头，缺一头都不够：
+
+    ① **行为**：这两个量纲真的会分叉，而且分叉得跨过上限——所以这条判据不是
+       恒真的。正文卡在 `BODY_MAX` 时 `copy_text` 必然更长。
+    ② **位置**：那行不许再印 `len(copy_text)`，而且必须把上限一起印出来
+       （`N/1000`）——只印一个裸数字，下一个人还是得自己去翻上限是多少。
+
+    反向验证：把那行改回 `文案 {len(copy_text)} 字`，第 ② 头当场红。
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import push_reel  # noqa: PLC0415
+
+    # ① 两个量纲真的分叉：正文顶格时，copy_text 已经跨过上限
+    body_at_cap = "标" * push_reel.BODY_MAX
+    copy_text = f"9.3 赛场之上 | 某某某连丢三盘出局\n\n{body_at_cap}"
+    _t, got = push_reel.split_copy(copy_text)
+    assert len(got) == push_reel.BODY_MAX, "正文顶格，闸放行"
+    assert len(copy_text) > push_reel.BODY_MAX, (
+        f"copy_text {len(copy_text)} 字没有跨过上限 {push_reel.BODY_MAX}——"
+        "那这条判据就是恒真的，两个量纲得能分叉它才有意义")
+
+    # ② 那行印的是正文，而且带着上限
+    src = Path("tools/push_reel.py").read_text(encoding="utf-8")
+    tail = src[src.index('print(f"已推送：'):]
+    tail = tail[: tail.index("return 0")]
+    assert "len(copy_text)" not in tail, (
+        "「已推送」那几行不许印 len(copy_text)——它含标题和空行，比正文多二十几字，"
+        f"印出来会得到一个跨过 {push_reel.BODY_MAX} 的数，读日志的人会以为那道闸漏了")
+    assert "BODY_MAX" in tail, (
+        "把上限一起印出来（N/1000），只印一个裸数字，读的人还得自己去翻上限是多少")
+
+
 def test_不许再印没验证过的投递查询接口():
     """发送成功那行日志里，**不许再给出一个没验证过的查询 URL**。
 
