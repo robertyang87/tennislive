@@ -1768,8 +1768,26 @@ ledger，等到了、还打开看了——**差点就报「发出去了」**：
 | 这条线 | 判据 |
 |---|---|
 | 解说片 `data/explainer_publish_ledger/` | 文件出现即可（单笔，POST 之后） |
-| 竖版短片 `data/reel_publish_ledger/` | 同上 |
+| **竖版短片 `data/reel_publish_ledger/`** | ⚠️ **也是两笔**，见下——要 `attempts[-1].status == "sent"` |
 | **采访 `data/interview_publish_ledger/`** | **`attempts[-1].status` 要走出 `sending`**（`accepted` / `delivered`），并且带着 `pushplus_receipt` |
+
+##### ⚠️ 2026-09-03 修正：竖版短片那一行原来写的是「同上」，而它也是两笔
+
+上面那张表立起来的时候，竖版短片这一行照解说片写成了「文件出现即可」。
+`alcaraz-faria-us-open-2026-r2` 推送时按 commit 序列量了一遍，**它和采访线同形**：
+
+    c465764 reel: **预占推送** alcaraz-faria-us-open-2026-r2
+      "status": "sending", "at": "2026-09-03T04:51:35Z"   ← POST 还没发
+    89b9504 reel: **已自动推送** alcaraz-faria-us-open-2026-r2
+      "status": "sent",    "at": "2026-09-03T04:51:43Z"   ← POST 回来了
+
+`auto-push-reel.yml` 的步骤表也写着（逐条核过）：第 9 步「预占发布账本（发送前）」
+→ 第 10 步「推送到微信」→ 第 11 步「记下已经推送过」。**两笔之间只隔 8 秒**，
+所以按「文件出现即可」判**大多数时候会碰巧蒙对**——而碰巧对和真的对长得一模一样。
+
+⚠️ **这一条正是上面那段自己写的「拿它去判别的线之前，先问一句：这条线记几笔？」——
+而这张表当时没有对竖版短片问这一句。** 改的是判据，不是机制：
+`sending` 那一笔本来就该存在（防并发和 runner 崩溃后重发），错的是读它的方式。
 
 这条片子最后是 `accepted` ＋ 流水号 `d26c4960…`，中间隔了约 4 分钟。
 
