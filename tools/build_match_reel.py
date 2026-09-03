@@ -340,6 +340,12 @@ POSTER_NAME = "poster.jpg"
 #: 数据统计对照图的文件名——`push_reel.py` 里有一份同名同值的常量，
 #: `test_数据图文件名两处要同源` 钉住两边不会各写各的。
 STAT_CARD_NAME = "stat_card.jpg"
+# 段落里写 `"stat_card": true` 就是「把这张数据图剪进片子当一段整屏证据」。
+# parse_segments 先把它当成 image 段、路径填这个占位符（dry-run 那一刻图还没渲），
+# render 在切段之前把图渲出来再把占位符换成真路径（`_materialize_stat_card`）。
+# 来路：2026-09-03 review——131 条 spec 带完整 stats，**0 条**烧进片子：数据图
+# 一直是渲完成片之后才出的推送图，证据只被「说」出来、从不「亮」出来。
+STAT_CARD_PLACEHOLDER = "<stat_card>"
 #: 封面素材（抓下来的帧、抠好的人）落在这儿，**跟着产物一起进仓库**。
 #
 # **它买的是「封面返工不用上 runner」。** 量出来的账（shang-rublev，2026-08-05）：
@@ -2734,6 +2740,11 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
             f"拿到的是 {raw!r}。")
 
     def _one(s: dict, i: int) -> Segment:
+        if s.get("stat_card"):
+            # 数据统计图当整屏证据段：形状和 image 段一样，只是图由 render 现渲。
+            # load_spec 已经归一过一遍；直接喂 dict 的调用方（测试）走同一道闸。
+            _normalize_stat_card_segments({"segments": [s], "stats": spec.get("stats")})
+            s = {k: v for k, v in s.items() if k != "stat_card"}
         if s.get("image"):
             # 整屏证据段：只认 image/seconds/narration/voice（外加 `_` 注解）。
             # 窗口类字段一概不许——它没有源片窗口，写了就是没被读的死键。
@@ -2770,7 +2781,8 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
 
     segments = [_one(s, i) for i, s in enumerate(spec["segments"])]
     gone_ev = [(i + 1, s.image) for i, s in enumerate(segments)
-               if s.image and not Path(s.image).is_file()]
+               if s.image and s.image != STAT_CARD_PLACEHOLDER
+               and not Path(s.image).is_file()]
     if gone_ev:
         raise ReelError("这些整屏证据段的图片找不到：\n  "
                         + "\n  ".join(f"第 {i} 段：{f}" for i, f in gone_ev))
@@ -2794,8 +2806,11 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
             f"画面 9:8 宽画幅 + 记分条回贴），拿到的是 {layout!r}。"
             "不写就是原来的全出血 3:4。")
     if layout == "band":
+        # 整屏证据段（image / stat_card）不在这道闸里：它的 fit 是写死的
+        # contain，而它根本不裁源片——那句「9:8 本来就装得下」说的是源片
+        # 画面。带式下它由 cut_still_segment 缩进画面带、上下垫带底色。
         bad_contain = [i + 1 for i, s in enumerate(segments)
-                       if s.fit == "contain"]
+                       if s.fit == "contain" and not s.image]
         if bad_contain:
             raise ReelError(
                 f"第 {bad_contain} 段写了 `fit: contain`，和带式版式不兼容——"
@@ -2976,7 +2991,8 @@ _REAL_FIELDS: dict[str, tuple[str, ...]] = {
               "tier", "topic", "versus", "winner"),
     "segment": ("crosses_cut", "crop_zoom", "cx", "end", "fit", "image",
                 "inset", "mute", "narration", "quote", "score_inset",
-                "seconds", "source", "speed", "start", "track", "voice"),
+                "seconds", "source", "speed", "start", "stat_card", "track",
+                "voice"),
 }
 
 
@@ -3107,6 +3123,30 @@ def enforce_spec_wording(spec: dict, spec_path: Path) -> None:
         raise ReelError(decider)
 
 
+def _normalize_stat_card_segments(spec: dict) -> None:
+    """`{"stat_card": true}` 段就地补上 `image: <stat_card>` 占位符。
+
+    **必须在 load_spec 里做、早于任何读 raw segments 的消费者**：
+    `seg_seconds` / `reel_length_verdict` / 多源 source 校验 / 片尾兑现闸 /
+    `check_reel_landed` 那份抄的公式，全按 `s.get("image")` 认「整屏证据段」。
+    只在 `parse_segments._one` 里换的话，`load_spec` 第一行的片长估算就会去
+    读一个不存在的 `end`（2026-09-03 拿 alcaraz-faria 真 spec 跑 --dry-run
+    当场 KeyError）。`stat_card` 键留着，`stat_card_in_film` 靠它认领。
+    """
+    for i, s in enumerate(spec.get("segments") or []):
+        if not (isinstance(s, dict) and s.get("stat_card")):
+            continue
+        if s.get("image") not in (None, "", STAT_CARD_PLACEHOLDER):
+            raise ReelError(f"第 {i + 1} 段 stat_card 和 image 二选一——"
+                            "数据图就是这一段的图，别再给一张")
+        if not spec.get("stats"):
+            raise ReelError(
+                f"第 {i + 1} 段要把数据统计图剪进片子（stat_card），可这条 spec "
+                "没有 `stats` 块。先 `python tools/match_stat_hooks.py <flashscore_id> "
+                "--stats-block` 把 stats.a / stats.b 填上（a 跟 cover.matchup[0]）。")
+        s["image"] = STAT_CARD_PLACEHOLDER
+
+
 def load_spec(path: Path) -> dict:
     spec = json.loads(path.read_text(encoding="utf-8"))
     for key in ("segments", "cover"):
@@ -3114,6 +3154,7 @@ def load_spec(path: Path) -> dict:
             raise ReelError(f"spec 缺少 {key}")
     _reject_underscored_fields(spec)
     _reject_dead_voice_keys(spec)
+    _normalize_stat_card_segments(spec)
     if not spec.get("sources") and not spec.get("source_url"):
         raise ReelError("spec 既没有 `sources` 也没有 `source_url`")
     # 多源的 spec：每一段都要说清自己从哪条源片剪。**不给默认值**——猜错了
@@ -3483,6 +3524,41 @@ def _overlay_chain(base: str, ins: dict) -> str:
 EVIDENCE_BG = (13, 23, 18)   # 整屏证据段的深绿底，和字卡描边同一族
 
 
+def _band_bg_rgb() -> tuple[int, int, int]:
+    """`BAND_BG`（ffmpeg 的 `0xRRGGBB` 写法）→ PIL 的 RGB 三元组，一个出处。"""
+    v = int(BAND_BG.replace("0x", ""), 16)
+    return ((v >> 16) & 0xFF, (v >> 8) & 0xFF, v & 0xFF)
+
+
+def still_canvas_for_layout(card, Image):
+    """整屏证据段的底板：卡缩进**这个版式的画面区**居中，返回 (canvas, 卡的落位框)。
+
+    全出血：画面区就是整幅 1080×1440，深绿底。
+    带式：画面区只有 `BAND_TOP` 起那 1080×960 的带——顶带给顶栏、底带给字幕，
+    卡不许伸进去（伸进去就压在顶栏底下 / 被字幕盖住）；底色用 `BAND_BG`，
+    和 `_band_scale_pad` 给源片段垫的那两条带是同一个色，接缝处不露色差。
+    ⚠️ 这一条 2026-09-03 拿 alcaraz-faria（美网、带式）跑 --dry-run 才发现：
+    在那之前整屏证据段在带式下**根本过不了闸**（fit 写死 contain 被带式拒掉），
+    所以 cut_still_segment 从没在带式上渲过一帧。
+    """
+    if LAYOUT == "band":
+        bg = _band_bg_rgb()
+        top, region_h = BAND_TOP, BAND_PIC_H
+    else:
+        bg = EVIDENCE_BG
+        top, region_h = 0, VIDEO_H
+    canvas = Image.new("RGBA", (VIDEO_W, VIDEO_H), (*bg, 255))
+    max_w, max_h = int(VIDEO_W * 0.94), int(region_h * 0.88)
+    scale = min(max_w / card.width, max_h / card.height)
+    fitted = card.resize((max(2, int(card.width * scale)),
+                          max(2, int(card.height * scale))),
+                         Image.LANCZOS)
+    x = (VIDEO_W - fitted.width) // 2
+    y = top + (region_h - fitted.height) // 2
+    canvas.paste(fitted, (x, y), fitted)
+    return canvas, (x, y, x + fitted.width, y + fitted.height)
+
+
 def cut_still_segment(seg: Segment, dest: Path, tail: float = 0.0) -> Path:
     """整屏证据段：深色底 + 卡片居中 → 一段静片。
 
@@ -3495,14 +3571,7 @@ def cut_still_segment(seg: Segment, dest: Path, tail: float = 0.0) -> Path:
     from PIL import Image  # noqa: PLC0415
 
     card = Image.open(seg.image).convert("RGBA")
-    canvas = Image.new("RGBA", (VIDEO_W, VIDEO_H), (*EVIDENCE_BG, 255))
-    max_w, max_h = int(VIDEO_W * 0.94), int(VIDEO_H * 0.88)
-    scale = min(max_w / card.width, max_h / card.height)
-    fitted = card.resize((max(2, int(card.width * scale)),
-                          max(2, int(card.height * scale))),
-                         Image.LANCZOS)
-    canvas.paste(fitted, ((VIDEO_W - fitted.width) // 2,
-                          (VIDEO_H - fitted.height) // 2), fitted)
+    canvas, box = still_canvas_for_layout(card, Image)
     still = dest.with_suffix(".evidence.png")
     canvas.convert("RGB").save(still)
     with stage("分段编码"):
@@ -6707,6 +6776,37 @@ def segments_over_source_end(segments: list[Segment],
     return over
 
 
+def stat_card_in_film(spec: dict) -> bool:
+    """有没有哪一段把数据图剪进了片子（`"stat_card": true`）。"""
+    return any(isinstance(s, dict) and s.get("stat_card")
+               for s in (spec.get("segments") or []))
+
+
+def _materialize_stat_card(spec: dict, segments: list[Segment], outdir: Path,
+                           *, renderer=None) -> list[Segment]:
+    """把 `stat_card` 段的占位符换成真渲出来的 `stat_card.jpg`。
+
+    排在切段之前、`_check_segments_fit` 之前：图不存在的话 `cut_still_segment`
+    会死在 PIL 打不开文件上，而那时已经付了下源片和封面的钱。渲不出来就让
+    整趟红——写了 stat_card 就是在说「这条片子要这一屏」。
+    """
+    from dataclasses import replace  # noqa: PLC0415
+
+    if not any(s.image == STAT_CARD_PLACEHOLDER for s in segments):
+        return segments
+    with stage("数据统计对照图（剪进片子）"):
+        if renderer is None:
+            sys.path.insert(0, str(Path(__file__).resolve().parent))
+            import render_stat_card  # noqa: PLC0415
+            renderer = render_stat_card.render
+        out = outdir / STAT_CARD_NAME
+        renderer(spec, out)
+        if not out.is_file():
+            raise ReelError(f"数据统计图没渲出来：{out}")
+    return [replace(s, image=str(outdir / STAT_CARD_NAME))
+            if s.image == STAT_CARD_PLACEHOLDER else s for s in segments]
+
+
 def _check_segments_fit(segments: list[Segment], sources: dict[str, Path]) -> None:
     """段落不许写过源片的末尾。
 
@@ -6830,6 +6930,7 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     portrait = source_w * 4 < source_h * 3
 
     segments = parse_segments(spec, sources, primary)
+    segments = _materialize_stat_card(spec, segments, outdir)
     _check_segments_fit(segments, sources)
     # 封面那句先合出来——**封面停多久由它决定**，所以排在渲封面之前。
     cover_voice, cover_marks = synth_cover(spec, outdir, voice, rate)
@@ -7266,7 +7367,9 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     # 写了这个字段就是在说「这条片子要配一张数据图」，渲失败了应该让整趟
     # render 红，而不是把它当成一个可有可无的附加品悄悄吞掉。没写 `stats`
     # 的旧 spec（发布规矩定下来之前的那些）完全不受影响，一行代码都不跑。
-    if spec.get("stats"):
+    # 剪进片子的那条路已经在切段之前渲过同一张图（`_materialize_stat_card`），
+    # 这里不再渲第二遍——两次渲的是同一份 spec，逐字节相同，白花一次 Chromium。
+    if spec.get("stats") and not stat_card_in_film(spec):
         with stage("数据统计对照图"):
             sys.path.insert(0, str(Path(__file__).resolve().parent))
             import render_stat_card  # noqa: PLC0415

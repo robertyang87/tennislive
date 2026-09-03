@@ -269,8 +269,25 @@
   接上，`orchestrate.enrich_slam_fields` 在候选出来之后、dispatch 之前补 round/court
   （只对 `SLAM_FEEDS` 认得的赛事查，查不到出声继续）。路线 ① 的「有源」那一支
   落地；**下一条自动草稿真的 promote 并 render 才算数**，那是判据。
+  ⚠️ 合并当天（07:37Z，orchestrate run 33728989031 干跑）第一次在真产物上看见它工作：
+  `[sakamoto-tiafoe] 官方 feed 补上 round=第二轮、court=Louis Armstrong Stadium`——
+  同一班次里四条「开球之前」候选（还没打的场次）feed 里没有，照旧空着、照旧出声。
   澳网/法网/温网各自的 feed 还没探，往 `SLAM_FEEDS` 加一行的事。
 - 路线 ②（会话先读 pending）：`tools/find_pending_draft.py` ＋ CLAUDE.md 一节，PR #743。
+- 路线 ④ 第一刀（本 PR）：`{"stat_card": true, "seconds": N, "narration": …}` 段——
+  数据统计对照图**剪进片子**当整屏证据段，render 在切段之前现渲 `stat_card.jpg`
+  换掉占位符，片尾那次「渲给推送用」的渲染对剪进片子的不再渲第二遍。
+  ⚠️ 拿 alcaraz-faria（美网、带式）跑 `--dry-run` 才发现两件事，都修了：
+  ① 归一化必须在 `load_spec` 里做（`seg_seconds` / 多源校验 / 片尾兑现闸 /
+  `check_reel_landed` 那份抄的公式全按 `image` 认整屏段，晚一步就 KeyError）；
+  ② **带式版式一直拒 `fit: contain`，而整屏证据段的 fit 写死 contain——也就是说
+  美网期间整屏证据段整个用不了**，`cut_still_segment` 从没在带式上渲过一帧。
+  现在带式放过整屏段，卡缩进画面带（`BAND_TOP` 起 1080×960）、底色 `BAND_BG`。
+  还没做：数据图是 1080×1920 竖版，缩进 3:4 画布只剩 713px 宽、缩进带式画面带
+  只剩约 475px 宽——**要一张 3:4／横版的数据图变体**（`render_stat_card` 画布
+  定死 1080×1920），以及自动链里**谁来插这一段**：DeepSeek 不写 segments（窗口全是
+  机械工具给的，`draft_spec.py` 第 12 行），所以该是 `assemble_spec` 在有 `stats` 块
+  时机械地在转折 beat 之后插一段，不是教模型。
 - Release tag 改哈希没动（口径选择）。
 - `build_match_reel.py` 没拆一行（要分三次 PR）。
 - 内容那一节的 11 条没有一条落成代码，只落成了这份文档和路线表。

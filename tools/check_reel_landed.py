@@ -102,7 +102,8 @@ def seg_film_seconds(s: dict) -> float:
     是为了让这个检查工具保持纯标准库（它要在只装了 ffprobe 的环境里也能跑）。
     两边对不上会被 `tests/test_slow_motion.py` 的一致性判据抓住。
     """
-    if s.get("image"):
+    if s.get("image") or s.get("stat_card"):
+        # stat_card 段是 render 现渲的整屏证据段，形状同 image（seconds 定长）
         return round(float(s["seconds"]), 3)
     return round((float(s["end"]) - float(s["start"]))
                  / float(s.get("speed") or 1.0), 3)
@@ -276,7 +277,7 @@ def evidence_windows(spec: dict, cover: float) -> list[tuple[float, float]]:
     t = cover
     for seg in spec["segments"]:
         length = seg_film_seconds(seg)
-        if seg.get("image"):
+        if seg.get("image") or seg.get("stat_card"):
             out.append((t, t + length))
         t += length
     return out
