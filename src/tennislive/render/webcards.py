@@ -3471,18 +3471,9 @@ def rankings_body(rankings, date_label: str) -> str:
 
 
 def _chromium_executable() -> str | None:
-    import glob
-    import os
-
-    for base in (os.environ.get("PLAYWRIGHT_BROWSERS_PATH", ""), "/opt/pw-browsers"):
-        if not base:
-            continue
-        # ⚠️ 新版 playwright 的目录是 `chrome-linux64`，只认 `chrome-linux` 会在
-        # runner 上装好了却返回 None（build_interview_clip._chromium 记过同一个坑）。
-        hits = sorted(glob.glob(f"{base}/chromium-*/chrome-linux*/chrome"))
-        if hits:
-            return hits[-1]
-    return None
+    """找 Chromium 只有一份出处：`tennislive.chromium.find_chromium`。"""
+    from tennislive.chromium import find_chromium  # noqa: PLC0415
+    return find_chromium(ask_playwright=False)
 
 
 # 技术对比放得下几行，取决于它上方的头条句折了几行——那是文本，长度不固定，
@@ -3546,13 +3537,8 @@ def _screenshot_pages(pages: list[tuple[str, str]], theme: str):
 
     out = []
     with sync_playwright() as p:
-        try:
-            browser = p.chromium.launch()
-        except Exception:
-            exe = _chromium_executable()
-            if not exe:
-                raise
-            browser = p.chromium.launch(executable_path=exe)
+        from tennislive.chromium import launch_chromium  # noqa: PLC0415
+        browser = launch_chromium(p)
         try:
             for kind, body in pages:
                 # A fresh page per card prevents Chromium from carrying scroll

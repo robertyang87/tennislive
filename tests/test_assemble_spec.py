@@ -39,6 +39,8 @@ def test_surname取最后一个词():
     assert mod._surname("Alexandra Eala") == "Eala"
     assert mod._surname("Elena-Gabriela Ruse") == "Ruse"
     assert mod._surname("单名") == "单名"
+    # 缩写名（feed 的形状）姓在第一个词——出处只有一份 tennislive.names.surname_en
+    assert mod._surname("Bu Y.") == "Bu" and mod._surname("Wolf J.J.") == "Wolf"
 
 
 def test_facts_text把狠数据拼成行():
