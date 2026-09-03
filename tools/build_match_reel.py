@@ -3031,7 +3031,7 @@ _REAL_FIELDS: dict[str, tuple[str, ...]] = {
              "music", "outro", "push", "rate", "scorebox", "segments",
              "silent_source",
              "slug", "source_audio", "source_url", "sources", "stats",
-             "subtitle_top", "topbar", "voice", "editorial"),
+             "subtitle_top", "topbar", "tts_backend", "voice", "editorial"),
     "cover": ("event_badge", "eyebrow", "hook", "layout", "matchup", "meta",
               "narration", "portrait", "portrait_above", "result", "round",
               "score", "scoreboard", "scrim", "split", "sub", "subject",
@@ -8097,6 +8097,45 @@ def topbar_filtergraph(cover_secs: float, segments_secs: float,
     )
 
 
+#: spec 顶层 `tts_backend` 只认这一个值——它是「Azure 坏了先退回 edge-tts」的
+#: 认领，不是一张可以随便挑的后端表。
+TTS_BACKENDS = ("edge",)
+
+
+def apply_tts_backend(spec: dict) -> str:
+    """把 spec 的 `tts_backend` 落成 `azure_tts` 认的那个环境变量，返回生效的后端名。
+
+    2026-09-03 仓库的 `AZURE_SPEECH_KEY` 被 Azure 401 拒掉（run 33795108848 /
+    33795635981，同一把钥匙 15:31Z 还渲成过 `bu-lucky-loser-story`），账号所有者定
+    「换 edge tts」。`match-reel.yml` 的 dispatch 表单已经 25 项满了，开关加不进
+    工作流，所以走 spec：
+
+        "tts_backend": "edge",
+        "_tts_backend_why": "为什么这一条不走 Azure"
+
+    ⚠️ **必须认领理由**：Azure 是这条线的默认（情绪风格、真 `<break>`、离线估
+    的系数都按它拟合），退回 edge-tts 的片子要说得出为什么——「忘了配钥匙」和
+    「想清楚了退回去」在产物上长得一模一样（`render.json` 都记 `edge-tts`）。
+    ⚠️ 不写这个键就什么都不动，Azure 照旧按有没有钥匙自己判。
+    """
+    backend = spec.get("tts_backend")
+    if backend is None:
+        return "azure" if azure_tts.available() else "edge-tts"
+    if backend not in TTS_BACKENDS:
+        raise ReelError(
+            f"spec.tts_backend 只认 {list(TTS_BACKENDS)}，现在是 {backend!r}——"
+            "要用 Azure 就把这个键删掉（有钥匙自动走 Azure）")
+    why = spec.get("_tts_backend_why")
+    if not isinstance(why, str) or not why.strip():
+        raise ReelError(
+            "spec 写了 tts_backend 就必须写一句 `_tts_backend_why`：为什么这一条"
+            "不走 Azure（钥匙 401？spec 没用情绪风格所以 edge 够用？）——"
+            "「忘了配钥匙」和「想清楚了退回去」在 render.json 里长得一模一样")
+    os.environ[azure_tts._ENV_BACKEND] = backend
+    print(f"[TTS] spec 认领 tts_backend={backend}，这一趟不走 Azure：{why.strip()}")
+    return "edge-tts"
+
+
 def main() -> int:
     # **排在所有 `import edge_tts` 之前。** edge-tts 在模块导入那一刻就把
     # SSL context 建好了，之后再挂 CA 一点用都没有。在 runner 上这一句是
@@ -8254,6 +8293,7 @@ def main() -> int:
     # load_spec 之后、模式分发之前：dry-run / check-narration / render
     # 三条路一个 seat 全过，0.2 秒就红。豁免表按 slug 查，老 spec 照旧绿。
     enforce_spec_wording(spec, Path(args.spec))
+    apply_tts_backend(spec)
     if args.check_narration:
         # **一个源片字节都不碰。** 这道闸比的是「TTS 时长 vs spec 里的段长」，
         # 两样都不需要源片；而跑一趟 render 去问同一个问题，在通过的情况下会

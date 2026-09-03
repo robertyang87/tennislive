@@ -15270,3 +15270,53 @@ def test_音乐那一路要循环喂而且索引按数i算():
         "四个元素，`len(mix_inputs)//2` 会错位到别的输入上")
     assert "len(mix_inputs) // 2" not in block, (
         "音乐这一段不许再用 `len(mix_inputs)//2` 算索引")
+
+
+def test_spec认领tts_backend为edge就不走Azure(monkeypatch):
+    """Azure 钥匙 401 时退回 edge-tts 的开关（2026-09-03，账号所有者：「换 edge tts」）。
+
+    `match-reel.yml` 的 dispatch 表单 25 项已满，开关只能走 spec：写
+    `tts_backend: "edge"` ＋ `_tts_backend_why`，`apply_tts_backend` 把它落成
+    `TENNISLIVE_TTS_BACKEND=edge`，`azure_tts.available()` 据此返回 False——
+    **哪怕钥匙和 SDK 都在**。钉四头：
+    ① 认领了就关掉 Azure（钥匙在也关）；② 不写这个键一个字都不动；
+    ③ 没写 `_tts_backend_why` 当场红；④ 值不是 edge 当场红。
+    """
+    import sys
+    import types
+
+    reel = _reel()
+    from tennislive.video import azure_tts
+
+    monkeypatch.delenv(azure_tts._ENV_BACKEND, raising=False)
+    monkeypatch.setenv("AZURE_SPEECH_KEY", "k")
+    monkeypatch.setenv("AZURE_SPEECH_REGION", "eastus")
+    # SDK 装得上——让 available() 的另外两条都成立，只剩开关那一条在起作用
+    monkeypatch.setitem(sys.modules, "azure", types.ModuleType("azure"))
+    monkeypatch.setitem(sys.modules, "azure.cognitiveservices",
+                        types.ModuleType("azure.cognitiveservices"))
+    monkeypatch.setitem(sys.modules, "azure.cognitiveservices.speech",
+                        types.ModuleType("azure.cognitiveservices.speech"))
+    assert azure_tts.available(), "前提没立住：钥匙和 SDK 都在时 Azure 本该可用"
+
+    # ② 不写这个键：一个字都不动
+    assert reel.apply_tts_backend({"slug": "x"}) == "azure"
+    assert azure_tts.available()
+    assert azure_tts._ENV_BACKEND not in os.environ
+
+    # ① 认领了就关掉，钥匙在也关；why_unavailable 要说清是被关掉的不是没配
+    got = reel.apply_tts_backend({"tts_backend": "edge",
+                                  "_tts_backend_why": "钥匙 401，spec 没用情绪风格"})
+    assert got == "edge-tts"
+    assert not azure_tts.available(), "认领了 edge 之后 Azure 还可用"
+    assert "关掉" in azure_tts.why_unavailable()
+
+    # ③ 没写理由当场红
+    monkeypatch.delenv(azure_tts._ENV_BACKEND, raising=False)
+    with pytest.raises(reel.ReelError, match="_tts_backend_why"):
+        reel.apply_tts_backend({"tts_backend": "edge"})
+    assert azure_tts.available(), "红了还把开关落下去了"
+
+    # ④ 值不是 edge 当场红
+    with pytest.raises(reel.ReelError, match="tts_backend"):
+        reel.apply_tts_backend({"tts_backend": "azure", "_tts_backend_why": "x"})
