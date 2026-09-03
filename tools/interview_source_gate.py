@@ -2,9 +2,26 @@
 """“赛后开麦”的 L0 内容身份门禁。
 
 机器字段 ``requested_content_type`` 与观众看到的 ``interview_kind`` 必须成对，
-来源身份和逐场赛果必须带哈希绑定。当前允许四种真实内容：赛后场上采访、
-颁奖台致辞、最后一战/退役告别仪式，以及赛前出场秀。发布会、演播室或身份不明
-的素材仍然停在复核队列，不能用一个宽泛的 ``post-match`` 标题绕过门禁。
+来源身份和逐场赛果必须带哈希绑定。当前允许五种真实内容：赛后场上采访、
+颁奖台致辞、最后一战/退役告别仪式、赛前出场秀，以及**赛后新闻发布会**。
+演播室或身份不明的素材仍然停在复核队列，不能用一个宽泛的 ``post-match``
+标题绕过门禁。
+
+⚠️ **``press_conference`` 是第五种，2026-09-03 加的，形状和 ceremony /
+walk_on 那两次一模一样**：赛后新闻发布会是这个栏目本来就在做的内容
+（``specs/interviews/`` 里已经发过 10 条 ``*-presser``，谢尔顿×门西克那条
+是 232 行完整问答），而这道闸 2026-08-23 立起来时**没有扫存量**——于是
+那 10 条从那天起全部渲不出来了，报的正是「发布会不能替代」。这不是那 10 条
+有问题，是闸的类型表漏了一种真实内容。
+
+⚠️⚠️ **加它的时候特意只动了三处（``REQUESTED_KINDS`` / ``DETECTED_TYPES`` /
+``APPROVED_METHODS``），``explicit_title_type`` 和 ``candidate_verification``
+一个字都没碰**——那两个是**自动链**用的：前者从标题猜类型，后者把采访库条目
+判成 verified。往它们里加一支 press，自动链扫到任何标题带 "Press Conference"
+的官方视频就会直接标 ``status: verified``，等于给「只做场上采访」那道闸捅个洞。
+现在 detected 的 ``press`` 仍然不在 ``REQUESTED_KINDS`` 里，
+``candidate_verification`` 那句 ``mapped not in REQUESTED_KINDS`` 的早退照旧
+触发，自动链行为逐字节不变；``press_conference`` 只有**人手写的 spec** 才用得上。
 
 ⚠️ **``walk_on``（赛前出场秀）是这道闸认的第四种类型，不是绕开它的例外。**
 账号所有者 2026-09-01：「做大坂直美的出场秀视频，可以用赛后开麦的模板，但标题
@@ -37,10 +54,11 @@ REQUESTED_KINDS = {
     "ceremony": "赛后捧杯致辞",
     "farewell": "赛后告别仪式",
     "walk_on": "赛前出场秀",
+    "press_conference": "赛后新闻发布会",
 }
 DETECTED_TYPES = {
-    "on_court", "press", "studio", "ceremony", "farewell", "walk_on",
-    "highlight", "unknown",
+    "on_court", "press", "press_conference", "studio", "ceremony", "farewell",
+    "walk_on", "highlight", "unknown",
 }
 
 APPROVED_METHODS = {
@@ -60,6 +78,10 @@ APPROVED_METHODS = {
     "walk_on": {
         "human_visual_verdict",
         "official_explicit_walk_on",
+    },
+    "press_conference": {
+        "human_visual_verdict",
+        "official_explicit_press_conference",
     },
 }
 

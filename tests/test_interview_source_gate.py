@@ -357,3 +357,102 @@ def test_出场秀的观众可见叫法必须写成赛前出场秀():
     gate.finalize_source_contract(spec)
     with pytest.raises(gate.SourceContractError, match="赛前出场秀"):
         gate.validate_source_contract(spec)
+
+
+def _formal_presser_spec() -> dict:
+    """赛后新闻发布会——这道闸认的第五种类型（2026-09-03 加）。
+
+    ⚠️ **它的 `source_verification` 是手写的，不走 `candidate_verification()`**：
+    那个函数是**自动链**用的（把采访库条目判成 verified），而发布会永远不该由
+    自动链自己认领——它只在人手写 spec、显式声明 `press_conference` 时才成立。
+    """
+    spec = {
+        "slug": "bu-jodar-us-open-2026-r1-presser",
+        "url": "https://example.test/vid-presser-1",
+        "requested_content_type": "press_conference",
+        "interview_kind": "赛后新闻发布会",
+        "source_verification": {
+            "source_id": "youtube:vid-presser-1",
+            "source_url": "https://example.test/vid-presser-1",
+            "source": "US Open",
+            "title": "Yunchaokete Bu Press Conference | 2026 US Open Round 1",
+            "status": "verified",
+            "detected_type": "press_conference",
+            "method": "official_explicit_press_conference",
+            "evidence": [{"kind": "official_explicit_title",
+                          "title": "Yunchaokete Bu Press Conference | 2026 US Open Round 1"}],
+        },
+        "match": {
+            "id": "2026:us-open:mens-first-round:yunchaokete-bu-rafael-jodar",
+            "event": "2026 US Open",
+            "round": "Men's Singles First Round",
+            "winner": "布云朝克特",
+            "loser": "霍达尔",
+            "participants": ["布云朝克特", "霍达尔"],
+        },
+    }
+    return gate.finalize_source_contract(spec)
+
+
+def test_赛后新闻发布会可进入生产():
+    """发布会是这个栏目本来就在做的内容（`specs/interviews/` 里已发过 10 条
+    `*-presser`），而闸 2026-08-23 立起来时漏了这一种，于是那 10 条从那天起
+    全部渲不出来。这条钉住第五种类型确实认得出来。
+    """
+    spec = _formal_presser_spec()
+    attestation = gate.validate_source_contract(spec)
+    assert len(attestation) == 64
+
+    spec["match"]["loser"] = "另一位球员"
+    with pytest.raises(gate.SourceContractError, match="attestation_sha256"):
+        gate.validate_source_contract(spec)
+
+
+def test_加了发布会之后自动链一个字都不许变():
+    """⚠️⚠️ **这条是加 `press_conference` 的全部风险所在。**
+
+    `explicit_title_type()` 和 `candidate_verification()` 是**自动链**用的：
+    前者从标题猜类型，后者把采访库条目判成 verified。往它们里加一支 press，
+    自动链扫到任何标题带 "Press Conference" 的官方视频就会直接标
+    `status: verified`——等于给「这条线只做场上采访」那道闸捅个洞。
+
+    所以加类型时只动了 `REQUESTED_KINDS`/`DETECTED_TYPES`/`APPROVED_METHODS`
+    三处，这两个函数一个字没碰。三头分别钉住。
+    """
+    # ① 官方标题写着 Press Conference，自动链仍然猜不出类型（返回空串）
+    assert gate.explicit_title_type(
+        "Yunchaokete Bu Press Conference | 2026 US Open Round 1") == ""
+    # ② 人工判成 press 的条目，照旧 rejected——`press` 不在 REQUESTED_KINDS 里
+    assert "press" not in gate.REQUESTED_KINDS
+    got = gate.candidate_verification(
+        _item(), verdicts={"vid1": {"verdict": "press", "by": "reviewer"}})
+    assert got["status"] == "rejected" and got["detected_type"] == "press"
+    # ③ 受信官方源 + 明确标题这条自动路径，产出的类型里不会有发布会
+    assert gate.candidate_verification(
+        _item(title="Yunchaokete Bu Press Conference | 2026 US Open Round 1"),
+        verdicts={})["detected_type"] == "unknown"
+
+
+def test_发布会素材不能签成on_court发布():
+    """和 ceremony／walk_on 那两条同一个形状：来源核验成发布会却声明成场上
+    采访，要当场报错——发布厅里没有人在球场上拿话筒问问题。
+    """
+    spec = _formal_presser_spec()
+    spec["requested_content_type"] = "on_court"
+    spec["interview_kind"] = "赛后场上采访"
+    gate.finalize_source_contract(spec)
+    with pytest.raises(gate.SourceContractError, match="detected_type"):
+        gate.validate_source_contract(spec)
+
+
+def test_发布会的观众可见叫法必须写成赛后新闻发布会():
+    """`interview_kind` 印在顶栏上给观众看。画面是发布会背板和记者提问，
+    顶栏却印「赛后场上采访」就是印一句假话——这个坑 `build_interview_clip`
+    的注释里记过一次（谢尔顿×门西克那条 232 行问答就这么印错过）。
+    """
+    assert gate.REQUESTED_KINDS["press_conference"] == "赛后新闻发布会"
+    spec = _formal_presser_spec()
+    spec["interview_kind"] = "赛后场上采访"
+    gate.finalize_source_contract(spec)
+    with pytest.raises(gate.SourceContractError, match="赛后新闻发布会"):
+        gate.validate_source_contract(spec)
