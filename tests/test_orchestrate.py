@@ -782,3 +782,76 @@ def test_排名一个都没补上要当场喊出来(capsys):
     assert "[排名] 覆盖 0/2" in out
     assert "::warning::" in out and "瞎的" in out, \
         f"一个都没补上却不吭声——那正是这一行存在的理由：{out!r}"
+
+
+def test_大满贯候选缺round和court时从官方feed补(monkeypatch, capsys):
+    """美网期间 49 份 pending 草稿 49/49 卡在「缺 court」——flashscore 不给这两个
+    字段。补上就是自动链在大满贯活过来的那半天。"""
+    o = _tool()
+    monkeypatch.setenv("TENNISLIVE_SLAM_FEED", "1")
+    calls = []
+
+    def fake(event, year, a, b):
+        calls.append((event, year, a, b))
+        return {"round": "第二轮", "court": "Court 4", "duration": "2:16", "source": "s"}
+
+    cands = [
+        {"slug": "wu-duckworth", "event": "US Open", "year": 2026, "home": "yibing wu",
+         "away": "james duckworth", "round": "", "court": ""},
+        {"slug": "a-b", "event": "Cincinnati Open", "year": 2026, "home": "a a", "away": "b b",
+         "round": "", "court": ""},
+        {"slug": "c-d", "event": "US Open", "year": 2026, "home": "c c", "away": "d d",
+         "round": "第一轮", "court": "Court 5"},
+    ]
+    o.enrich_slam_fields(cands, lookup=fake)
+    assert calls == [("US Open", 2026, "wu", "duckworth")], "只查认得的赛事、只查缺字段的"
+    assert cands[0]["round"] == "第二轮" and cands[0]["court"] == "Court 4"
+    assert cands[2]["round"] == "第一轮", "本来有的不许被覆盖"
+    assert "补上 round=第二轮、court=Court 4" in capsys.readouterr().out
+
+
+def test_官方feed挂了或查不到都出声不带崩(monkeypatch, capsys):
+    o = _tool()
+    monkeypatch.setenv("TENNISLIVE_SLAM_FEED", "1")
+    cands = [{"slug": "x-y", "event": "US Open", "year": 2026, "home": "x x", "away": "y y",
+              "round": "", "court": ""},
+             {"slug": "p-q", "event": "US Open", "year": 2026, "home": "p p", "away": "q q",
+              "round": "", "court": ""}]
+
+    def boom(event, year, a, b):
+        if a == "x":
+            raise RuntimeError("HTTP 403")
+        return None
+
+    o.enrich_slam_fields(cands, lookup=boom)
+    out = capsys.readouterr().out
+    assert "补 round/court 失败" in out and "RuntimeError: HTTP 403" in out
+    assert "没找到这一场" in out
+    assert cands[0]["round"] == "" and cands[1]["court"] == ""
+
+
+def test_环境变量关掉时一次都不查(monkeypatch):
+    o = _tool()
+    monkeypatch.setenv("TENNISLIVE_SLAM_FEED", "0")
+    cands = [{"slug": "x-y", "event": "US Open", "year": 2026, "home": "x x", "away": "y y",
+              "round": "", "court": ""}]
+
+    def never(*a):
+        raise AssertionError("关掉了还在查")
+
+    o.enrich_slam_fields(cands, lookup=never)
+
+
+def test_main在候选之后先补大满贯字段再排dispatch(monkeypatch):
+    o = _tool()
+    seen = {}
+    monkeypatch.setattr(o, "build_digest", lambda today: type("D", (), {"results": [], "schedule": []})())
+    monkeypatch.setattr(o, "candidates", lambda dig: [{"slug": "s", "column": "reel", "score": 50,
+                                                       "home": "a", "away": "b", "event": "US Open",
+                                                       "year": 2026, "round": "", "court": ""}])
+    monkeypatch.setattr(o, "enrich_slam_fields", lambda cands, **kw: seen.setdefault("cands", cands))
+    monkeypatch.setattr(o, "dispatch_plan", lambda cands, state: [])
+    monkeypatch.setattr(o, "load_state", lambda: {})
+    monkeypatch.setattr(sys, "argv", ["orchestrate.py"])
+    assert o.main() == 0
+    assert seen.get("cands") and seen["cands"][0]["slug"] == "s", "main 要真的调 enrich，不然闸永远缺 round/court"

@@ -1,5 +1,9 @@
 # 等官方高清封面的 spec 放这儿
 
+> 会话开工前先 `python3 tools/find_pending_draft.py --who <姓>,<姓>`——
+> 这一场自动链多半已经 probe 过、赛果和统计也拉好了，别再 dispatch 一趟 probe
+> （CLAUDE.md「开工前先查 pending 草稿」）。
+
 `specs/reels/*.json` 是**非递归**扫的（`tests/` 里两处都是 `Path("specs/reels").glob("*.json")`），
 所以放进这个子目录的 spec **不参与那批判据**，也不会被 `auto-push-reel` 认领。
 

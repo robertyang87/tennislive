@@ -262,7 +262,15 @@
 
 ## 5. 这次没做、别当成做过
 
-- 美网官方 feed 只在沙箱试了（403），runner 上通不通没验。
+- ~~美网官方 feed 只在沙箱试了（403），runner 上通不通没验。~~ **2026-09-03 晚补上了**：
+  `probe-blocked` run 33726027891 / 33726235409 在 runner 上取到 `players.json`（200，
+  1259 个球员）和 `players/matches/<id>_matches.json`（`roundName` / `courtName` /
+  `duration` / `team1`/`team2` 都在）——**403 只是沙箱的事**。`tools/slam_feed.py`
+  接上，`orchestrate.enrich_slam_fields` 在候选出来之后、dispatch 之前补 round/court
+  （只对 `SLAM_FEEDS` 认得的赛事查，查不到出声继续）。路线 ① 的「有源」那一支
+  落地；**下一条自动草稿真的 promote 并 render 才算数**，那是判据。
+  澳网/法网/温网各自的 feed 还没探，往 `SLAM_FEEDS` 加一行的事。
+- 路线 ②（会话先读 pending）：`tools/find_pending_draft.py` ＋ CLAUDE.md 一节，PR #743。
 - Release tag 改哈希没动（口径选择）。
 - `build_match_reel.py` 没拆一行（要分三次 PR）。
 - 内容那一节的 11 条没有一条落成代码，只落成了这份文档和路线表。

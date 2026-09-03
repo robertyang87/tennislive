@@ -9940,6 +9940,35 @@ probe 落了库、逐分和官方统计核完了、TNNS 的制胜分/UE 也拿�
 这跟上一条是一家的：那条管**一句话**什么时候过期，这条管**一整条片子**
 什么时候过期。
 
+### ⭐⭐ 2026-09-03：开工前先查 pending 草稿——同一场球别 probe 两遍
+
+全库 review 量出来的：最近发出的 30 条「赛场之上」里 **29 条是会话手写的 spec**，
+而编排器在旁边为同一批比赛跑了 **57 次 probe**、留下 49 份 `specs/reels/pending/`
+草稿——两条路互不复用。`zverev-sonego` 那一场同一天里 `output/2026-09-02/reel/`
+下躺着**两个目录**（`zverev-sonego` 是自动链的、`zverev-sonego-us-open-2026-r1`
+是会话的）：同一条 1080p 源片下了两遍、缩略图墙拼了两遍、逐分和统计各查了一遍。
+probe 那一趟 3~5 分钟，是整条快路里最贵的一步。
+
+**所以会话写「赛场之上」之前，第一条命令是：**
+
+    python3 tools/find_pending_draft.py --who <姓>,<姓>
+
+它按产物说话：草稿在哪、源片是哪条、probe 目录落没落（缩略图墙／切点／死球／
+静音区都在里面）、`_match` 是不是 `result_verified`、`stats`／`_hit_data`／
+`_turning_points` 在不在、封面落没落、以及 `promote_reel_draft.waiting_reasons`
+报的卡点。**找到了就接着用**——`_match`／`stats`／`_hit_data`／`_turning_points`
+直接搬进正式 spec，`--dry-run` 指到那个 probe 目录，不要再 dispatch 一趟 probe。
+
+⚠️ **草稿的 slug 是短的**（`zverev-sonego`），正式 spec 的 slug 带站和轮
+（`zverev-sonego-us-open-2026-r1`）——按 slug 猜会「没找到」，按两个姓找。
+⚠️ 退出码 2 是「扫了 N 份没有」，它会把 N 打出来；**没有也要出声**，「没找到」
+和「没查」在会话里长得一模一样。
+
+⚠️ **同一天顺手修掉的根因**：那 49 份草稿卡在「缺 round / court」，是因为 flashscore
+不给这两个字段、ESPN 对 runner 403。美网官方 feed（`usopen.org/en_US/scores/feeds/<年>/
+players/matches/<id>_matches.json`）**在 runner 上是通的**（沙箱恒 403，别拿沙箱的结果
+下结论），`tools/slam_feed.py` 接上、编排器 dispatch 之前补齐。
+
 ### 选谁：中国球员 > 顶级球员 > 热点球员，主要做单打
 
 账号所有者 2026-08-07：「优先中国球员再 top 级别球员，主要关注单打，

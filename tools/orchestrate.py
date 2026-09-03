@@ -37,6 +37,8 @@ from tennislive.render.rating import (  # noqa: E402
 from tennislive.zh import player_name_en  # noqa: E402
 from tennislive.zh.terms import round_zh  # noqa: E402
 
+import slam_feed  # noqa: E402  大满贯官方 feed 补 round/court
+
 # 编排器按**北京时间**的「今天」抓 digest——凌晨结束的欧美比赛在 flashscore 算
 # 昨天，build_digest 自己会把昨日也并进 results，这里只负责给它「今天」这个锚点。
 def _beijing_today() -> date:
@@ -357,6 +359,43 @@ def _specced_surname_pairs() -> dict[frozenset[str], Path]:
     return out
 
 
+def enrich_slam_fields(cands: list[dict], *, lookup=None) -> None:
+    """大满贯期间从官方 feed 补 round / court——就地改 cands，缺一个字段才查。
+
+    来路：promote 闸要这两个字段，而 flashscore 不给、ESPN 对 runner 403，
+    美网期间 49 份 pending 草稿 49/49 卡在「缺 court」。只对 `slam_feed.SLAM_FEEDS`
+    认得的赛事查；查不到、feed 挂了都**出声继续**，不许把整班带崩。
+    `TENNISLIVE_SLAM_FEED=0` 关掉（单元测试的 conftest 默认关，免得跑测试真去联网）。
+    """
+    import os
+    if os.environ.get("TENNISLIVE_SLAM_FEED", "1") == "0":
+        return
+    look = lookup or slam_feed.lookup
+    for c in cands:
+        if c.get("round") and c.get("court"):
+            continue
+        if slam_feed.feed_for(c.get("event") or "") is None:
+            continue
+        surname = lambda full: (str(full or "").split() or [""])[-1]
+        try:
+            res = look(c["event"], c["year"], surname(c["home"]), surname(c["away"]))
+        except Exception as exc:  # 网络/形状——一场的失败不许拖死同批
+            print(f"  [{c['slug']}] 官方 feed 补 round/court 失败：{type(exc).__name__}: {exc}")
+            continue
+        if not res:
+            print(f"  [{c['slug']}] 官方 feed 里没找到这一场（{c['home']} vs {c['away']}），round/court 照旧空着")
+            continue
+        filled = []
+        for key in ("round", "court"):
+            if not c.get(key) and res.get(key):
+                c[key] = res[key]
+                filled.append(f"{key}={res[key]}")
+        if res.get("duration"):
+            c.setdefault("duration", res["duration"])
+        print(f"  [{c['slug']}] 官方 feed 补上 {'、'.join(filled) or '（两项本来就有）'}"
+              + (f"（{res.get('source')}）" if res.get("source") else ""))
+
+
 def dispatch_plan(cands: list[dict], state: dict) -> list[dict]:
     """过滤已 dispatch 的和已有 spec 的，返回「真正要点 run」的那几条。
 
@@ -510,6 +549,7 @@ def main() -> int:
     dig = build_digest(_beijing_today())
     _report_rank_coverage(dig)
     cands = candidates(dig)
+    enrich_slam_fields(cands)
     if args.column:
         cands = [c for c in cands if c["column"] == args.column]
     state = load_state()
