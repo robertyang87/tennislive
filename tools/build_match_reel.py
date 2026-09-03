@@ -1066,6 +1066,7 @@ def board_right_edge_in_band(band: "np.ndarray") -> int | None:      # noqa: F82
 
 _BOARD_PRESENT_COLS = 100   # 判「板在不在」只看板左缘往右这么宽（名字那一段）
 _BOARD_PRESENT_ROW_HIT = 0.25   # 比 `_BOARD_ROW_HIT` 松：板可能只占 scorebox 的一部分高
+_BOARD_SOLID_DL = 35        # 「实心图形」还要亮度也离球场够远，见 board_present_in_band
 
 
 def board_present_in_band(band: "np.ndarray") -> bool:      # noqa: F821
@@ -1081,8 +1082,26 @@ def board_present_in_band(band: "np.ndarray") -> bool:      # noqa: F821
     把两者混成一类，德约那条 seg4「五帧花屏 ＋ 一张孤票」就会被判成「整段
     没有板」而当场报错——那是**误伤**，板一直在。
 
-    **怎么判**：只看板左缘往右 `_BOARD_PRESENT_COLS` 列（名字那一段，板在的话
-    这儿必然是实心图形），问「有多少行离球场参考色够远」。
+    **怎么判**：板是「压在球场上的一块**实心暗图形**」，所以两个条件缺一不可
+    ——只看板左缘往右 `_BOARD_PRESENT_COLS` 列（名字那一段），要求那儿的像素
+
+    1. **颜色**离球场参考色够远（`_BOARD_COLOUR_TOL`），并且
+    2. **亮度**也离球场够远（`_BOARD_SOLID_DL`）
+
+    再按行收一次：一行里这样的像素过半才算「这一行是板」，够 25% 的行才算板在。
+
+    ⚠️⚠️ **只用第 1 条会把球场自己的绿蓝分界线读成板，这是 2026-09-03 实测的**：
+    `wu-duckworth` 第 12 段源片 170.9~178.4 前半截根本没有板，只有底线那道
+    绿转蓝，而它的 `far` 一路涨到 **0.819**（板是 0.867~0.973）——闸放行，
+    成片 100.8~104s 于是贴了一块球场在球场上，白线在贴片右缘断开错位。
+    补上第 2 条之后同一批帧是 **0.000~0.107**，而有板的是 **0.833~0.988**，
+    中间空着三倍余量。判据是**亮度**：navy 板 L≈60，而绿场和蓝场都在 115~155,
+    它们**之间**的差只有 6.7~10.7。
+
+    ⚠️ 两条要**同时**要，别只留亮度那条：回放、夜场、深色人群那种整幅都暗的
+    画面，亮度这一条会满足而颜色那条不会（参考色本身也暗），只留亮度就是把
+    另一类误判反过来。
+
     ⚠️ 行的门槛比量右缘时**松一档**（0.25 vs 0.5）：板不一定填满 `scorebox`
     的整个高度——`wu-walton` 那条的板只有一行，实测只占贴片高度的三分之一，
     按 0.5 判会把**明明在画面里的板**判成不在。这也是「查了一场就写成一类」
@@ -1094,9 +1113,12 @@ def board_present_in_band(band: "np.ndarray") -> bool:      # noqa: F821
         return False
     right = band[:, int(band.shape[1] * 0.75):]
     court = np.median(right.reshape(-1, band.shape[2]), axis=0)
+    court_l = float(np.asarray(court, dtype=float).mean())
     left = band[:, :min(_BOARD_PRESENT_COLS, band.shape[1])].astype(float)
     far = np.linalg.norm(left - court, axis=2) > _BOARD_COLOUR_TOL
-    return bool(far.mean(axis=0).mean() >= _BOARD_PRESENT_ROW_HIT)
+    solid = far & (np.abs(left.mean(axis=2) - court_l) > _BOARD_SOLID_DL)
+    rows = solid.mean(axis=1) >= _BOARD_ROW_HIT
+    return bool(rows.mean() >= _BOARD_PRESENT_ROW_HIT)
 
 
 BOARD_SCAN_FPS = 2          # 板的在场扫描：每 0.5 秒一格
