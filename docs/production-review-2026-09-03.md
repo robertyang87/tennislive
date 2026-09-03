@@ -310,6 +310,11 @@
   和 stat_card 走同一条「切段之前现渲」的路，带式按画面带 1080×960 渲。
   没做的一半：自动链里谁插它（`promote` 按 `editorial.beats` 在每幕开头插一张，
   是路线 ⑤「三幕落进段落」那条的事，和 `act` 字段一起做）。
+- 路线 ⑤ 第二刀（PR 待开）：**三档音床**——段上写 `"bed": "low" | "high"`
+  （不写＝中档），乘在这一段自己的音轨上再进全局 `BED_LOUD` 和闪避，闪避阈值不动；
+  和 mute 互斥。cut_segment 那两处 `-map` 判据收成 `_seg_audio_needs_filter` 一个
+  出处（原来 `seg.speed != 1 or seg.mute` 写了两遍，漏改一处的样子是滤镜链算好了
+  被 map 绕过去、不报错）。真切三段量过：low 比对照低 ≈6 dB，high 高 ≈2.6 dB。
 - Release tag 改哈希没动（口径选择）。
 - `build_match_reel.py` 没拆一行（要分三次 PR）。
 - 内容那一节的 11 条没有一条落成代码，只落成了这份文档和路线表。

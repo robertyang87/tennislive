@@ -450,6 +450,14 @@ MUSIC_FADE = 3.0  # 收尾淡出：音乐比片子长就会被 -shortest 一刀�
 # 乘 0.05 落在 -41~-46 dB——比旁白（约 -22 dB）低约 20 dB（听感是底噪级的
 # 「空气」），又稳稳高于 check_reel_landed 的 SILENCE_FLOOR_DB（-60）。
 MUTE_FLOOR = 0.05
+# ⭐ 三档音床（review 路线 ⑤，3.2 C-8）：每段可写 `"bed": "low" | "high"`，
+# 不写就是中档（现场声原样进闪避）。乘在这一段自己的音轨上、再进全局的
+# `BED_LOUD` 和闪避——闪避阈值一个字不动。low 给「旁白要压过一切」的段
+# （复盘走势、数据那几句），high 给「让现场声顶上来」的段（赛点落地、
+# 全场起立、握手）——纪录片的情绪几乎全在这几秒的现场声里，而它们原来
+# 只有「原样」和「压到地板（mute）」两档。倍率是听着定的：0.5 把人声之外的
+# 底噪退成背景，1.35 让欢呼顶到旁白同一档但不爆（BED_LOUD 0.72 × 1.35 ≈ 0.97）。
+BED_TIERS = {"low": 0.5, "high": 1.35}
 # **段与段之间要淡入淡出，不能硬切。** 账号所有者：「音频和视频切换或转场的时候，
 # 要有淡入淡出，而不是要突然一下从这里切过来，就是感觉给人的观感不好，或者听感
 # 不好。」画面和**现场声**都要——现场声硬切时球场的底噪会「啪」地换一个，
@@ -2376,6 +2384,10 @@ class Segment:
     # seconds 合成（0..seconds），窗口类检查（切点/越界/死球）一律跳过——
     # 它没有源片窗口可查。
     image: str = ""
+    # 三档音床：""（中档，原样）/ "low" / "high"，见 `BED_TIERS`。和 mute 互斥。
+    # ⚠️ 排在 image 之后：`_one` 到 image 为止都是按位置传的，插在前面会把
+    # mute 顶进这个槽（第一版就是这么在 `bed=` 上撞出 multiple values 的）。
+    bed: str = ""
     # **记分条回贴（只在带式版式）**：解析好的抠图坐标 (x0, y0, x1, y1)，
     # None＝这一段不贴。带式的窗口居中（「不要偏离中心的」），美网那条浮在
     # 左下的板会被窗口左缘裁掉——开了这个的段从同一帧把整条板抠出来、按画面
@@ -2436,6 +2448,21 @@ def _scorebox4(box) -> tuple[int, int, int, int] | None:
     return None
 
 
+def _seg_bed(s: dict, index: int) -> str:
+    """`bed` 只认 `low` / `high`（`mid` 等于不写）。写错当场红，和 mute 一起写也红——
+    mute 已经把这一段压到地板，再给它一档音床是两种读法都说得通的矛盾。"""
+    raw = s.get("bed")
+    if raw is None or raw == "mid":
+        return ""
+    if raw not in BED_TIERS:
+        raise ReelError(f"第 {index + 1} 段的 bed 只认 {sorted(BED_TIERS)}（不写＝中档），"
+                        f"拿到的是 {raw!r}")
+    if s.get("mute") is True:
+        raise ReelError(f"第 {index + 1} 段同时写了 mute 和 bed——mute 已经把现场声压到"
+                        "地板，音床对它没有意义；二选一")
+    return str(raw)
+
+
 def _seg_mute(s: dict, index: int) -> bool:
     """`mute` 只认布尔的 true/false。字符串 `"true"` 要报错——Python 里它是
     真值，但和 `"auto": "true"` 那次同一个理由：两种处理都说得通的写法，
@@ -2481,7 +2508,16 @@ def _seg_audio_chain(seg: "Segment") -> str:
         parts.append(_atempo(seg.speed))
     if seg.mute:
         parts.append(f"volume={MUTE_FLOOR}")
+    if seg.bed:
+        parts.append(f"volume={BED_TIERS[seg.bed]}")
     return ",".join(parts)
+
+
+def _seg_audio_needs_filter(seg: "Segment") -> bool:
+    """这一段的音轨要不要走滤镜（慢放 / mute / 音床）——cut_segment 那两处
+    `-map` 判据的单一出处。原来写成 `seg.speed != 1 or seg.mute` 两遍，加音床
+    时漏改一处的样子是：滤镜链算好了、`-map 0:a:0` 把它绕过去，**不报错**。"""
+    return seg.speed != 1 or seg.mute or bool(seg.bed)
 
 
 def _atempo(speed: float) -> str:
@@ -2785,6 +2821,7 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
                        s.get("inset") or None,
                        _seg_speed(s, i),
                        _seg_mute(s, i),
+                       bed=_seg_bed(s, i),
                        score_inset=_seg_score_inset(s, i),
                        score_inset_auto=s.get("score_inset") is True)
 
@@ -2999,7 +3036,7 @@ _REAL_FIELDS: dict[str, tuple[str, ...]] = {
               "narration", "portrait", "portrait_above", "result", "round",
               "score", "scoreboard", "scrim", "split", "sub", "subject",
               "tier", "topic", "versus", "winner"),
-    "segment": ("crosses_cut", "crop_zoom", "cx", "end", "fit", "image",
+    "segment": ("bed", "crosses_cut", "crop_zoom", "cx", "end", "fit", "image",
                 "inset", "mute", "narration", "quote", "score_inset",
                 "seconds", "source", "speed", "start", "stat_card", "title_card",
                 "kicker", "track", "voice"),
@@ -3845,9 +3882,9 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
                 (chain + "[base]") if labeled
                 else f"[0:v]{chain}[base]", ins)
             + (f";[0:a:0]{_seg_audio_chain(seg)}[aout]"
-               if has_audio and (seg.speed != 1 or seg.mute) else ""),
+               if has_audio and _seg_audio_needs_filter(seg) else ""),
             "-shortest", "-map", "[vout]",
-            "-map", ("[aout]" if has_audio and (seg.speed != 1 or seg.mute)
+            "-map", ("[aout]" if has_audio and _seg_audio_needs_filter(seg)
                      else "0:a:0" if has_audio else f"{null_idx}:a:0"),
             # 分段是**中间产物**：最后整片还要以 crf 18 重编一次，这里编到
             # crf 17/preset slow 是把画质编进一个马上被重编的文件里，白花时间。
