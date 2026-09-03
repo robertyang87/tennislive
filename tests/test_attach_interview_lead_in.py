@@ -99,3 +99,33 @@ def test_正式片头verification必须与当前比赛逐字段一致():
     spec["lead_in"]["verification"]["loser_en"] = "Wrong Opponent"
     with pytest.raises(SystemExit, match="与当前比赛不一致"):
         check_lead_in(spec)
+
+
+def test_一条源片的意外只算它自己待下一轮_同批的照常落盘(tmp_path, monkeypatch, capsys):
+    """原来 `_one` 只兜 RuntimeError / SourceContractError / ValueError：别的异常
+    从 `future.result()` 原样抛出，同批已完成的结果一起丢掉、摘要不打、退出码
+    非零。现在任何异常都只算那一条「待下一轮」，并把类型名带进警告。
+    反向验证：把 `except Exception` 那一支拆掉，KeyError 直接炸出 main。"""
+    specs = tmp_path / "interviews"
+    specs.mkdir()
+    base = {"opening": {"kind": "none"}, "requested_content_type": "on_court"}
+    for slug in ("good", "bad"):
+        (specs / f"{slug}.json").write_text(json.dumps({**base, "slug": slug}), "utf-8")
+    monkeypatch.setattr(lead, "SPECS", specs)
+
+    def fake_attach(spec, chat):
+        if spec["slug"] == "bad":
+            raise KeyError("winner_en")
+        return {**spec, "lead_in": {"subs": [{"en": "x", "zh": "y"}]}}
+
+    monkeypatch.setattr(lead, "attach", fake_attach)
+    import tennislive.research.brief as brief
+    monkeypatch.setattr(brief, "Chat", lambda: type("C", (), {"ready": True})())
+    monkeypatch.setattr(sys, "argv", ["attach", "--write", "--max-parallel", "2"])
+
+    assert lead.main() == 0
+    out = capsys.readouterr().out
+    assert "冷开场完成 1/2，待重试 1" in out, out
+    assert "::warning::bad 冷开场待下一轮：KeyError" in out, out
+    assert json.loads((specs / "good.json").read_text("utf-8"))["lead_in"]["subs"]
+    assert "lead_in" not in json.loads((specs / "bad.json").read_text("utf-8"))

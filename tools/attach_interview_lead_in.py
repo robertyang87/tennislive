@@ -217,6 +217,12 @@ def main() -> int:
             updated = attach(spec, chat)
         except (RuntimeError, SourceContractError, ValueError) as exc:
             return path, None, str(exc)
+        except Exception as exc:  # noqa: BLE001 —— 别的异常也只算这一条没成
+            # 原来只兜上面三类：别的异常（KeyError / 网络层的 OSError…）会从
+            # `future.result()` 里原样抛出来，把**同一批已经完成的**结果一起扔掉
+            # ——摘要一行都不打，退出码非零，而已经 --write 落盘的那几条谁也不
+            # 知道。一条源片的意外只该算它自己「待下一轮」。
+            return path, None, f"{type(exc).__name__}: {exc}"
         if args.write:
             path.write_text(
                 json.dumps(updated, ensure_ascii=False, indent=2) + "\n",
