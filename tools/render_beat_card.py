@@ -151,26 +151,15 @@ def render(html: str, out: Path) -> Path:
     page.write_text(html, encoding="utf-8")
     from playwright.sync_api import sync_playwright  # noqa: PLC0415
 
+    from tennislive.chromium import launch_chromium  # noqa: PLC0415
+
     with sync_playwright() as pw:
         try:
-            browser = pw.chromium.launch(args=["--no-sandbox"])
-        except Exception as default_error:  # noqa: BLE001
-            # 和 versus_poster._render_html 同一串兜底：沙箱的
-            # PLAYWRIGHT_BROWSERS_PATH 指的版本号和装的对不上时要显式给路径
-            candidates = [
-                os.environ.get("CHROMIUM_PATH"),
-                "/opt/pw-browsers/chromium-1194/chrome-linux/chrome",
-            ]
-            browser = None
-            for exe in candidates:
-                if exe and Path(exe).is_file():
-                    browser = pw.chromium.launch(
-                        executable_path=exe, args=["--no-sandbox"])
-                    break
-            if browser is None:
-                result = _render_with_pillow(html, out)
-                page.unlink(missing_ok=True)
-                return result
+            browser = launch_chromium(pw, args=["--no-sandbox"])
+        except Exception:  # noqa: BLE001 — 起不来退回 Pillow 那条路
+            result = _render_with_pillow(html, out)
+            page.unlink(missing_ok=True)
+            return result
         # 2× 物理像素出图：卡是按内容收缩的，贴进 inset 槽位时可能被放大——
         # 密度翻倍之后 0.40 画布宽的槽位也仍然是缩小着贴，字不发软
         tab = browser.new_page(viewport={"width": CARD_W, "height": 640},

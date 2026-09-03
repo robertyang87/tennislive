@@ -2106,28 +2106,12 @@ def _render_html(html: str, out: Path) -> Path:
     page.write_text(html, encoding="utf-8")
     from playwright.sync_api import sync_playwright  # noqa: PLC0415
 
+    from tennislive.chromium import launch_chromium  # noqa: PLC0415
+
     with sync_playwright() as pw:
-        try:
-            browser = pw.chromium.launch(args=["--no-sandbox"])
-        except Exception as default_error:  # noqa: BLE001
-            # 本地 Work 环境和 GitHub runner 的浏览器位置不同。优先尊重显式配置，
-            # 再找项目旁的本地 Chromium，最后兼容既有 runner 镜像；不要因为
-            # Playwright 缓存目录不同就把每次封面预览都送去 Actions。
-            candidates = [
-                os.environ.get("CHROMIUM_PATH"),
-                str(Path(__file__).resolve().parents[2]
-                    / ".local-browser" / "chromium"),
-                "/opt/pw-browsers/chromium-1194/chrome-linux/chrome",
-            ]
-            browser = None
-            for executable in candidates:
-                if not executable or not Path(executable).is_file():
-                    continue
-                browser = pw.chromium.launch(
-                    executable_path=executable, args=["--no-sandbox"])
-                break
-            if browser is None:
-                raise default_error
+        # 本地 Work 环境和 GitHub runner 的浏览器位置不同——找的逻辑只有一份
+        # （tennislive.chromium：CHROMIUM_PATH → playwright 自报 → 通配 glob）
+        browser = launch_chromium(pw, args=["--no-sandbox"])
         tab = browser.new_page(viewport={"width": VIDEO_W, "height": VIDEO_H},
                                device_scale_factor=1)
         tab.goto(page.resolve().as_uri())

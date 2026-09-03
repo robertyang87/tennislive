@@ -39,6 +39,8 @@ def test_surname取最后一个词():
     assert mod._surname("Alexandra Eala") == "Eala"
     assert mod._surname("Elena-Gabriela Ruse") == "Ruse"
     assert mod._surname("单名") == "单名"
+    # 缩写名（feed 的形状）姓在第一个词——出处只有一份 tennislive.names.surname_en
+    assert mod._surname("Bu Y.") == "Bu" and mod._surname("Wolf J.J.") == "Wolf"
 
 
 def test_facts_text把狠数据拼成行():
@@ -147,6 +149,7 @@ def test_无字幕时从probe切点生成不跨镜头窗口(tool, tmp_path):
         "第一段旁白需要装得下。", "第二段旁白也不能跨切点。", "最后是比赛结果。"]
     segments = tool.scene_cut_segments(str(probe), narration)
     assert [s["narration"] for s in segments] == narration
+    assert [s["_beat"] for s in segments] == [1, 2, 3], "章节卡按 _beat 定位"
     assert all(segments[i]["end"] <= segments[i + 1]["start"]
                for i in range(len(segments) - 1))
     cuts = json.loads(probe.read_text(encoding="utf-8"))["scene_cuts"]

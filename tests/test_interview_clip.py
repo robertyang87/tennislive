@@ -287,6 +287,16 @@ def test_一行不许收在虚词上():
             f"第 {i+1} 行吊在虚词上：…{ln['en'][-28:]}"
 
 
+def test_切行用的_bare要转小写_否则句首大写的虚词认不出来():
+    """2026-09-03 之前模块里有两个同名的 `_bare`，后一份（比对引文用、不转小写）
+    静默盖掉了这一份——`_RANK` / `_NO_TAIL` 全是小写词表，`And` / `The` 起头的
+    词在断点排序里一律认不出来。判据在 tests/test_no_duplicate_defs.py；这儿钉
+    行为：切行拿到的 `_bare` 必须转小写、剥标点，但**留着**词内的撇号。"""
+    assert _bare("And,") == "and" and _bare("The") == "the"
+    assert _bare("don't") == "don't", "词内撇号不是标点，剥掉就认不出 don't"
+    assert _bare("The") in _NO_TAIL
+
+
 def test_行宽按量出来的算不按字符数():
     """**超宽不报错，只是被 libass 悄悄折成两行**，折在哪儿没人管。
 

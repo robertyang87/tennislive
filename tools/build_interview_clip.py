@@ -2705,7 +2705,8 @@ def _unresolved_suspects(spec: dict) -> list[str]:
 def _chromium() -> str:
     """找 Chromium：**先问 playwright 自己，它答错了再自己找，而且不写死目录名。**
 
-    两边都不能单独信，实测：
+    实现只有一份（`tennislive.chromium`，review 路线 ⑥ 第一刀）；这儿记的是它
+    为什么长那样——两边都不能单独信，实测：
 
     | | playwright 说 | 磁盘上实际是 |
     |---|---|---|
@@ -2714,35 +2715,14 @@ def _chromium() -> str:
 
     原来只按 `chromium*/chrome-linux/chrome` glob，于是 runner 上装好了却报
     「找不到」——**日志上一行还写着 `downloaded to …/chromium_headless_shell-1234`**。
-    仓库里记过同一个毛病（「我那个查找函数只按猜的路径 glob，它其实装好了」），
-    这次换成新版改了目录名又踩一次。
-
     所以中间那一段用 `chromium-*/*/chrome`：`chrome-linux` 和 `chrome-linux64`
-    都能中，以后再改名也不用跟着改。
+    都能中，以后再改名也不用跟着改。找不到是 SystemExit（这条线的约定）。
     """
-    import glob
-    import os
-
+    from tennislive.chromium import require_chromium  # noqa: PLC0415
     try:
-        from playwright.sync_api import sync_playwright  # noqa: PLC0415
-
-        with sync_playwright() as p:
-            if (exe := p.chromium.executable_path) and Path(exe).exists():
-                return exe
-    except Exception:  # noqa: BLE001 — 没装 playwright / 版本对不上，都退回自己找
-        pass
-
-    roots = [os.environ.get("PLAYWRIGHT_BROWSERS_PATH"), "/opt/pw-browsers",
-             str(Path.home() / ".cache/ms-playwright")]
-    for root in filter(None, roots):
-        # 完整版优先；headless shell 是最后一招（渲封面截图够用，但别当默认）
-        for pat in ("chromium-*/*/chrome", "chromium_headless_shell-*/*/headless_shell"):
-            if hit := sorted(glob.glob(str(Path(root) / pat))):
-                return hit[-1]
-    raise SystemExit(
-        "找不到 Chromium。装：python -m playwright install chromium\n"
-        f"（找过 playwright 自报的路径，和 {', '.join(filter(None, roots))} 下的 "
-        "chromium-*/*/chrome）")
+        return require_chromium()
+    except FileNotFoundError as e:
+        raise SystemExit(str(e)) from e
 
 
 def _cover_framing(cov: dict) -> tuple[float, float]:
@@ -3670,11 +3650,18 @@ _LEGACY_ASK_NO_QUESTION_MARK = frozenset({"rybakina-osaka-tor2026-qf"})
 MIN_OURS_RATIO = 0.10
 
 
-def _bare(s: str) -> str:
+def _bare_text(s: str) -> str:
     """剥掉标点和空白，只留下字。比对原话时两边都要过它一遍。
 
     卡上的引文按正常中文写（带逗号），而 `zh` 里的字幕**按规矩不写标点**
     （见 CLAUDE.md「屏幕上不写标点」），逐字比会永远对不上。
+
+    ⚠️ 2026-09-03 之前它叫 `_bare`——**和上面第 793 行切行用的 `_bare(word)`
+    同名**，模块加载到这儿就把前一份静默盖掉了：切行那头的 `_RANK` / `_NO_TAIL`
+    全是小写词表，而这一份**不转小写**，于是 `And` / `The` / `But` 起头的词在
+    断点排序里一律认不出来——英文字幕的断行质量就这么悄悄差了一档，ruff 的 F811
+    不报（前一份在被盖掉之前已经被引用过）。判据在
+    tests/test_no_duplicate_defs.py：一个模块里同名顶层定义不许出现两次。
     """
     return re.sub(r"[\s\W_]+", "", s, flags=re.UNICODE)
 
@@ -3763,13 +3750,13 @@ def check_takeaway(spec: dict) -> None:
     # ⚠️ **两张卡都要查，别写死 `tk["open"]`。** 第一版就是那样，而落点卡后来
     # 变成可选的，于是这道闸 `KeyError` ——更要紧的是，收尾卡引一句他没说过的
     # 话，坏处一模一样。判据要跟着结构走，不是跟着当初那一版的字段名走。
-    said = _bare("".join(spec.get("zh") or []))
+    said = _bare_text("".join(spec.get("zh") or []))
     for which, card in tk.items():
         if not isinstance(card, dict):
             continue
         for quoted in re.findall(r"[「“\"]([^」”\"]+)[」”\"]",
                                  str(card.get("point", ""))):
-            if _bare(quoted) not in said:
+            if _bare_text(quoted) not in said:
                 raise SystemExit(
                     f"`takeaway.{which}` 引的这句在采访里找不到：「{quoted}」\n"
                     "卡上把它当成他的原话，那就必须是他真说过的——"

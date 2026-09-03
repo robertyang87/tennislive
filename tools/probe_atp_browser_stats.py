@@ -64,13 +64,13 @@ def chromium_path() -> str:
     env = os.environ.get("ATP_CHROMIUM")
     if env:
         return env
-    fixed = "/opt/pw-browsers/chromium-1194/chrome-linux/chrome"
-    if Path(fixed).exists():
-        return fixed
-    hits = sorted(glob.glob("/opt/pw-browsers/chromium-*/chrome-linux/chrome"))
-    if hits:
-        return hits[-1]
-    raise SystemExit("no chromium under /opt/pw-browsers; set ATP_CHROMIUM")
+    # 找 Chromium 只有一份出处（tennislive.chromium）；原来这儿写死 chromium-1194
+    # 又只认旧目录名 chrome-linux
+    from tennislive.chromium import find_chromium  # noqa: PLC0415
+    exe = find_chromium(ask_playwright=False)
+    if exe:
+        return exe
+    raise SystemExit("no chromium found; set ATP_CHROMIUM or CHROMIUM_PATH")
 
 
 def launch(pw):

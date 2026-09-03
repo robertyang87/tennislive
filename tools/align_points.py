@@ -266,7 +266,10 @@ def segment_skeleton(anchors: dict[str, float | None], narration: list[str],
         if t is None:
             continue
         nar = narration[i] if i < len(narration) else ""
-        segs.append({"start": t - margin, "end": t + margin, "narration": nar})
+        # _beat：这一段服务第几个 beat（1 起）。章节卡（promote_reel_draft.
+        # insert_chapter_cards）按它定位，不按旁白原文猜
+        segs.append({"start": t - margin, "end": t + margin, "narration": nar,
+                     "_beat": i + 1})
     return segs
 
 

@@ -315,6 +315,34 @@
   和 mute 互斥。cut_segment 那两处 `-map` 判据收成 `_seg_audio_needs_filter` 一个
   出处（原来 `seg.speed != 1 or seg.mute` 写了两遍，漏改一处的样子是滤镜链算好了
   被 map 绕过去、不报错）。真切三段量过：low 比对照低 ≈6 dB，high 高 ≈2.6 dB。
+- 路线 ⑤ 第三刀（PR 待开）：自动链的章节卡——DeepSeek 合同多一个 `chapters`
+  （三条 ≤10 字、不带标点的章节标题，一条对应一个 beat；prompt 和
+  references/deepseek.md 都教了），`promote_reel_draft.insert_chapter_cards`
+  转正时按段上的 **`_beat`**（三条产窗口的路都标：align_points /
+  draft_segments 合同 / scene_cut_segments；老草稿退回旁白原文）认出每个 beat 的
+  第一段、在它前面插一张 `title_card`
+  （kicker 01/02/03，秒数按念完标题算）。钥匙是逐字相同的 narration——
+  ⚠️ 47 份 pending 草稿量过：模型写窗口那条路的旁白**全是改写过的**，按原文一条
+  都认不到——`_beat` 是这个功能在主路上成立的前提；两把钥匙都认不到的 beat 不插、
+  `_chapter_cards_why` 出声。形状不合（标点/超长/条数）不拦转正，只出声：章节卡是加分项，不该卡链。
+  ⚠️ 49 份 pending 草稿全是旧合同产的（没有 chapters），要等下一批 assemble 才有。
+- 路线 ⑥ 第一刀（PR 待开）：**找 Chromium 收成 `src/tennislive/chromium.py` 一份
+  出处**（`find_chromium` / `require_chromium` / `launch_chromium`）。量出来在这之前
+  是 **12 份**，四份写死 `chromium-1194`（`render_stat_card` / `render_evidence_card` /
+  `render_beat_card` / `versus_poster`）、两份只认旧目录名 `chrome-linux`
+  （`probe_atp_browser_stats` / `probe_venue_photos`）——runner 换一版 playwright
+  就是「本地全绿、远端找不到」。判据 `tests/test_chromium.py` 钉行为（假目录树
+  两种目录名、headless 兜底、`CHROMIUM_PATH` 优先）＋出处（别处字符串里不许再有
+  `pw-browsers` / `chromium-1194` / `chrome-linux`，`launch(executable_path=` 不许
+  写死）。`_surname` 收成 `tennislive/names.py::surname_en`（`Bu Y.` 姓在第一个词；
+  `assemble_spec` / `prepare_alignment` 原来取末词，对缩写名是错的）。
+  ⚠️ 顺手抓到一个真 bug：`build_interview_clip.py` 里 `_bare` **定义了两遍**
+  （793 切行用 / 3673 比引文用），后一份静默盖掉前一份、不转小写，于是
+  `And` / `The` 起头的词在英文字幕断点排序里一律认不出来——ruff F811 不报
+  （前一份在被盖掉之前被引用过）。`orchestrate._surname` 同款（93 / 362）。
+  新判据 `tests/test_no_duplicate_defs.py`：一个模块里同名顶层定义不许两次。
+  ASS 时间戳那一份（2.4 里列的）实际只有 `build_match_reel` 一处 `def`，别处是
+  内联格式化，没动；TTS 两套（2.4 的最后一项）留给下一刀。
 - Release tag 改哈希没动（口径选择）。
 - `build_match_reel.py` 没拆一行（要分三次 PR）。
 - 内容那一节的 11 条没有一条落成代码，只落成了这份文档和路线表。
