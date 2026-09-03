@@ -305,9 +305,69 @@ def _ready_draft(tmp_path: Path) -> dict:
             {"start": 40, "end": 48, "narration": "首盘"},
             {"start": 80, "end": 88, "narration": "转折"},
             {"start": 140, "end": 150, "narration": "为什么会爆冷？"}],
-        "stats": {"a": {"pts_won": 56}, "b": {"pts_won": 67}},
+        "stats": {"a": {"pts_won": 56, "headshot": str(photo)},
+                  "b": {"pts_won": 67, "headshot": str(photo)}},
         "push": {"summary": "乙爆冷击败甲", "lead": "乙两盘取胜。", "auto": True},
     }
+
+
+def test_promote缺数据图头像就留waiting并说怎么补(tmp_path):
+    """render 末尾那次「渲给推送用」的数据图缺 headshot 是 SystemExit——转正了就是
+    一趟必红的 render。2026-09-03 量过：49 份 pending 草稿全带 stats、零份带
+    headshot，而自动链里没有任何工具写过这个字段。闸装在转正那一刻，报错正文
+    要说出路（机械补的命令 + ATP 的手动命令）。"""
+    promote = load("promote_reel_draft")
+    draft = _ready_draft(tmp_path)
+    del draft["stats"]["b"]["headshot"]
+    reasons = promote.waiting_reasons(draft)
+    hit = [r for r in reasons if "头像" in r]
+    assert hit and "stats.b" in hit[0] and "乙" in hit[0]
+    assert "headshot_index.py" in hit[0] and "fetch_official_headshot.py atp" in hit[0]
+    with pytest.raises(ValueError, match="头像"):
+        promote.promote(draft)
+    # 两侧都在就不报
+    draft = _ready_draft(tmp_path)
+    assert not [r for r in promote.waiting_reasons(draft) if "头像" in r]
+
+
+def test_promote转正时在收官段之前机械插一段数据图(tmp_path):
+    """review 路线 ④：131 条已发 spec 带 stats、0 条烧进片子。DeepSeek 不写
+    segments，所以证据段也机械插——收官段之前、旁白只讲总得分（汉字数字给
+    TTS 念、方向机械算）。三个不插的情形都是确定性的，各验一头。"""
+    promote = load("promote_reel_draft")
+    spec = promote.promote(_ready_draft(tmp_path))
+    segs = spec["segments"]
+    card = [s for s in segs if s.get("stat_card")]
+    assert len(card) == 1 and segs[-2] is card[0], "要插在收官段之前，只插一段"
+    assert card[0]["narration"] == "全场总得分，乙六十七比五十六，多拿了十一分。"
+    assert card[0]["seconds"] >= 4.0 and "score_inset" not in card[0]
+    assert "image" in card[0] and card[0]["image"] == "<stat_card>", \
+        "validate_spec 走了 load_spec 之外的路，占位符要由 parse_segments 归一"
+    # ① 段数已到上限不插（waiting_reasons 那条「5-10 段」会拒 11 段）
+    draft = _ready_draft(tmp_path)
+    draft["segments"] = draft["segments"][:4] + [
+        {"start": 100 + i, "end": 101 + i, "narration": f"第{i}"} for i in range(5)
+    ] + draft["segments"][-1:]
+    assert len(draft["segments"]) == 10
+    assert not any(s.get("stat_card") for s in promote.promote(draft)["segments"])
+    # ② 总得分算不出不插
+    draft = _ready_draft(tmp_path)
+    del draft["stats"]["a"]["pts_won"]
+    assert not any(s.get("stat_card") for s in promote.promote(draft)["segments"])
+    # ③ 已经有一段就不重复插
+    draft = _ready_draft(tmp_path)
+    draft["segments"].insert(2, {"stat_card": True, "seconds": 5, "narration": "手写的。"})
+    assert sum(1 for s in promote.promote(draft)["segments"] if s.get("stat_card")) == 1
+
+
+def test_数据图那段的旁白方向机械算持平也说得通():
+    promote = load("promote_reel_draft")
+    m = [{"name": "甲"}, {"name": "乙"}]
+    assert promote.stat_card_narration({"a": {"pts_won": 80}, "b": {"pts_won": 71}}, m) \
+        == "全场总得分，甲八十比七十一，多拿了九分。"
+    assert promote.stat_card_narration({"a": {"pts_won": 60}, "b": {"pts_won": 60}}, m) \
+        == "全场总得分六十比六十，一分不差。"
+    assert promote.stat_card_narration({"a": {}, "b": {"pts_won": 60}}, m) == ""
 
 
 def test_promote缺视觉证据就只留waiting(tmp_path):
@@ -409,10 +469,14 @@ def test_promote美网草稿自动带式(tmp_path, monkeypatch):
     uso = _ready_draft(tmp_path)
     uso["_production"]["event"] = "US Open"
     uso["segments"][2]["score_inset"] = False   # 终审显式不要回贴的那一段
+    # 手写的数据图段（stat_card）不是源片段，回贴对它没有意义——注入要跳过它
+    uso["segments"].insert(3, {"stat_card": True, "seconds": 5, "narration": "手写的。"})
     spec = promote.promote(uso)
+    assert all("score_inset" not in s for s in spec["segments"] if s.get("stat_card"))
     assert spec["layout"] == "band"
     assert spec["scorebox"] == [104, 888, 736, 978]
-    flags = [s.get("score_inset") for s in spec["segments"] if not s.get("image")]
+    flags = [s.get("score_inset") for s in spec["segments"]
+             if not s.get("image") and not s.get("stat_card")]
     assert flags.count(False) == 1 and flags.count(True) == len(flags) - 1, (
         f"回贴要自动注入，而终审显式写的 false 要原样保住：{flags}")
 

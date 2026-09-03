@@ -170,6 +170,19 @@ def waiting_reasons(draft: dict) -> list[str]:
         reasons.append("官方高清封面文件未落库")
     if not draft.get("stats"):
         reasons.append("完整技术统计未生成")
+    else:
+        # 数据图的头像：render 末尾那次「渲给推送用」的数据图缺 headshot 是
+        # SystemExit——转正了就是一趟必红的 render。49 份自动草稿量过全部缺它，
+        # 所以在这儿拦住、留 waiting，assemble_spec 会机械补（已发 spec 复用 /
+        # WTA 现抓），ATP 要人手一条命令，报错正文里写着。
+        from headshot_index import missing_headshots  # noqa: PLC0415
+        for key in missing_headshots(draft):
+            name = ((draft.get("cover") or {}).get("matchup") or [{}, {}])[
+                0 if key == "a" else 1].get("name", key)
+            reasons.append(
+                f"数据图头像未落库（stats.{key}.headshot，{name}）——"
+                "python3 tools/headshot_index.py <草稿> --write；ATP 球员用 "
+                "tools/fetch_official_headshot.py atp <名> --id <ID> --via <赛事域名>")
     push = draft.get("push") or {}
     if not push.get("summary") or not push.get("lead") or push.get("auto") is not True:
         reasons.append("推送标题/导语/auto 未通过")
@@ -188,6 +201,71 @@ def waiting_reasons(draft: dict) -> list[str]:
         reasons.append("这一场已经有正式「赛场之上」了（" + "、".join(hit)
                        + "），同一个栏目不发第二条；这份草稿可以删掉")
     return reasons
+
+
+def _spoken(value: int) -> str:
+    # ⚠️ 别从 draft_spec 拿：那会把 reel_skill（读教材）拖进 build_match_reel
+    # 的 import 图（build_match_reel → promote_reel_draft），frame-grab 这类
+    # 没检出 skills 的工作流就被判成要教材。
+    from spec_wording import spoken_integer  # noqa: PLC0415
+    return spoken_integer(value)
+
+
+def stat_card_narration(stats: dict, matchup: list[dict]) -> str:
+    """数据图那一段的旁白：只讲总得分，方向机械算，数字写成汉字给 TTS 念。
+
+    和 `assemble_spec.total_points_fact` 是同一笔账，但那句是喂给模型的
+    （带着「禁止写成…」），不能上口播。算不出（缺 pts_won）返回空串——
+    调用方据此不插段，别拿一句没有数的话占六秒。
+    """
+    try:
+        a = int(stats["a"]["pts_won"])
+        b = int(stats["b"]["pts_won"])
+        a_name = str(matchup[0]["name"]).strip()
+        b_name = str(matchup[1]["name"]).strip()
+    except (KeyError, IndexError, TypeError, ValueError):
+        return ""
+    if not a_name or not b_name or max(a, b) > 999:
+        return ""
+    if a == b:
+        return f"全场总得分{_spoken(a)}比{_spoken(b)}，一分不差。"
+    lead = a_name if a > b else b_name
+    hi, lo = max(a, b), min(a, b)
+    return (f"全场总得分，{lead}{_spoken(hi)}比{_spoken(lo)}，"
+            f"多拿了{_spoken(hi - lo)}分。")
+
+
+STAT_CARD_MAX_SEGMENTS = 10      # waiting_reasons 那条「5-10 段」的上限，同一个数
+STAT_CARD_TAIL_SECONDS = 1.2     # 旁白说完之后留的一口气
+
+
+def insert_stat_card_segment(spec: dict) -> bool:
+    """收官段之前插一段 `{"stat_card": true}`。插了返回 True。
+
+    不插的三种情形都是确定性的：没有 stats/头像（render 会红）、段数已到上限
+    （waiting_reasons 会拒）、总得分算不出（没有旁白可念）。已经有一段的不重复插。
+    """
+    segments = spec.get("segments") or []
+    stats = spec.get("stats") or {}
+    from headshot_index import missing_headshots  # noqa: PLC0415
+    if not stats or missing_headshots(spec) or len(segments) < 2:
+        return False
+    if any(isinstance(s, dict) and s.get("stat_card") for s in segments):
+        return False
+    if len(segments) >= STAT_CARD_MAX_SEGMENTS:
+        return False
+    narration = stat_card_narration(stats, (spec.get("cover") or {}).get("matchup") or [])
+    if not narration:
+        return False
+    from reel_timing import speech_seconds  # noqa: PLC0415
+    seconds = round(max(4.0, speech_seconds(narration) + STAT_CARD_TAIL_SECONDS), 1)
+    segments.insert(len(segments) - 1, {
+        "stat_card": True, "seconds": seconds, "narration": narration,
+        "_why": "自动链机械插的证据段：数据统计图剪进片子（review 路线 ④），"
+                "收官段之前、旁白只讲总得分",
+    })
+    spec["segments"] = segments
+    return True
 
 
 def promote(draft: dict) -> dict:
@@ -280,8 +358,12 @@ def promote(draft: dict) -> dict:
         spec["layout"] = "band"
         spec.setdefault("scorebox", list(US_OPEN_SCOREBOX))
         for seg in spec.get("segments") or []:
-            if not seg.get("image"):
+            if not seg.get("image") and not seg.get("stat_card"):
                 seg.setdefault("score_inset", True)
+    # ⭐ 证据上屏（2026-09-03 review 路线 ④）：131 条已发 spec 带 stats、0 条烧进
+    # 片子——数据一直只在旁白里被念出来。DeepSeek 不写 segments（窗口全是机械
+    # 工具给的），所以这一段也机械插：收官段之前、一句只讲总得分的旁白。
+    insert_stat_card_segment(spec)
     # 这是机器生成资格，不是发布旁路。render/QC/auto_push_gate/persistent ledger
     # 仍会逐层复核；标记只让 dry-run 对结构化赛果执行更严格的交叉校验。
     spec["_production"]["status"] = "ready_for_render"

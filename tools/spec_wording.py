@@ -568,3 +568,25 @@ def check_spec_wording(spec: dict, slug: str,
             f"（2026-09-03 的规矩）。溯源写进 spec 的 `_source` / `_facts` / "
             f"`_claims`，那几栏是给下一个人看的注解，不进正文")
     return problems
+
+
+def spoken_integer(value: int) -> str:
+    """整数写成给 TTS 念的汉字（0~999）：`67` → `六十七`，`100` → `一百`。
+
+    单一出处——`draft_spec.normalize_editorial_for_speech` 和
+    `promote_reel_draft.stat_card_narration` 都用它。放在这个叶子模块是有意的：
+    promote 直接 `from draft_spec import` 会把 `reel_skill`（读教材）拖进
+    `build_match_reel` 的 import 图（build_match_reel → promote_reel_draft），
+    `test_跑教材工具的工作流都要检出skills目录` 当场把 frame-grab 也判成要教材。
+    """
+    digits = "零一二三四五六七八九"
+    value = int(value)
+    if value < 10:
+        return digits[value]
+    if value < 20:
+        return "十" + (digits[value % 10] if value % 10 else "")
+    if value < 100:
+        return digits[value // 10] + "十" + (digits[value % 10] if value % 10 else "")
+    if value == 100:
+        return "一百"
+    return "".join(digits[int(char)] for char in str(value))
