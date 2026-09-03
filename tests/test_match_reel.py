@@ -9443,6 +9443,107 @@ def test_封面大图一律用官方高清图不许抽帧():
             "这一栏要写清楚四类源各自查了什么、结果如何，不是写一句「没找到」")
 
 
+def test_同一场球不许在赛场之上发第二条(tmp_path):
+    """⚠️ **这道闸的实现 2026-09-01 就写好了，只是接错了地方**：它一直坐在
+    `promote_reel_draft`（自动链**转正**）那条路上，而**手写 spec 走的是
+    `validate_spec`**——同一份 `_match_keys` 就在仓库里，这条路没接上。
+
+    2026-09-03 撞了一次，代价是一条几乎做完的片子：`faria-alcaraz-us-open-2026-r2`
+    做到第三趟 render 才发现别的会话 04:51 已经把同一场球（`CpKK9Ia4`、同一条
+    源片 `Hz6jq9Ebvuc`）推送出去了。**开工时查过，那次查是对的**——它是在这之后
+    才落库的，纯并发。撤稿收场。
+
+    钉六头，缺一头这条闸就是半哑的：
+
+    ① **同场同栏目**要拦下来
+    ② **真不同的球要放行**——只钉 ① 的话，一个恒真的闸也能过
+    ③ **跨栏目不许误伤**——「同一件事，不同栏目各讲一次不算重复」是明写允许的，
+       而存量里同栏目共用源片 7 处**有 5 处是「网球有故事」同一个人的多条故事片**
+       （大坂那四条讲的是四件不同的事），扫宽了会把它们整个误伤
+    ④ **源片要归一化**：`youtu.be/<id>` 和 `watch?v=<id>` 是同一条，裸字符串比对
+       认不出，而**认不出的样子和「这一场没发过」一模一样**
+    ⑤ **位置**：`validate_spec` 真的调了它，`--dry-run` 0.2 秒就报。只测行为的话，
+       闸排在下载后面照样全绿，而真实代价是每次先等几百 MB（本仓库栽过两次）
+    ⑥ **存量零误伤** ＋ 豁免表自检（立规矩那天顺手扫一遍 `specs/`，
+       别留给下一个人去撞）
+
+    ⚠️ **它有一条治不了的边界，别指望它**：这道闸扫的是**本地工作区**，
+    所以「别的会话刚推上 origin/main 的那一条」它看不见——09-03 那次正是这个
+    形状。所以发之前还要再 `git fetch` 查一次，那一步机器替不了。
+    """
+    reel = _reel()
+    published = tmp_path / "formal"
+    published.mkdir()
+
+    def write(slug, eyebrow, url, fsid):
+        (published / f"{slug}.json").write_text(json.dumps({
+            "slug": slug, "source_url": url,
+            "_match": {"flashscore_id": fsid},
+            "cover": {"eyebrow": eyebrow},
+        }, ensure_ascii=False), encoding="utf-8")
+
+    def spec(slug, eyebrow, url, fsid):
+        return {"slug": slug, "source_url": url,
+                "_match": {"flashscore_id": fsid},
+                "cover": {"eyebrow": eyebrow}}
+
+    write("已发的这一场", "赛场之上", "https://youtu.be/Hz6jq9Ebvuc", "CpKK9Ia4")
+    write("别人的故事片", "网球有故事", "https://youtu.be/story999", "STORY999")
+
+    # ① 同一场、同一个栏目：拦。⚠️ 两个视角的 slug 常常正好是反的，所以按
+    #    场次 id ／ 源片比，不按 slug 比
+    hit = reel.duplicate_match_problem(
+        spec("反过来的视角", "赛场之上", "https://youtu.be/Hz6jq9Ebvuc", "CpKK9Ia4"),
+        published)
+    assert hit and "已发的这一场" in hit, \
+        "同一场球在「赛场之上」发第二条都没拦住——这道闸等于没装"
+    assert "收不回来" in hit, \
+        "报错没说清代价：同一场球发第二条微信，而那条消息发出去收不回来"
+
+    # ② 真不同的球要放行。⚠️ **这一头必须排在跨栏目前面**：一个恒真的闸
+    #    （不管钥匙对不对都报）会同时打红 ②③ 两头，排在后面就被 ③ 盖住，
+    #    于是它自己反向验证不出来——而反向验证不出来的守卫和恒真的绿灯长得一样
+    assert reel.duplicate_match_problem(
+        spec("另一场球", "赛场之上", "https://youtu.be/OTHER111111", "ZZZZ9999"),
+        published) is None, \
+        "把另一场球也拦了——一条常年红的检查和没有检查是同一个毛病"
+
+    # ③ 跨栏目不许误伤，两个方向都验
+    assert reel.duplicate_match_problem(
+        spec("同一场的故事片", "网球有故事", "https://youtu.be/Hz6jq9Ebvuc",
+             "CpKK9Ia4"), published) is None, \
+        "把跨栏目的也拦了——「同一件事，不同栏目各讲一次不算重复」是明写允许的"
+    assert reel.duplicate_match_problem(
+        spec("赛场之上讲那条故事片的球", "赛场之上", "https://youtu.be/story999",
+             "STORY999"), published) is None, \
+        "「网球有故事」用过的源片把「赛场之上」挡住了——那张表只该收赛场之上"
+
+    # ④ 源片归一化：换一种写法照样认得出（这一头故意不给 flashscore_id，
+    #    2026-08 之前那批 spec 的 `_match` 是散文、根本没有 id）
+    assert reel.duplicate_match_problem(
+        {"slug": "换个写法", "cover": {"eyebrow": "赛场之上"},
+         "source_url": "https://www.youtube.com/watch?v=Hz6jq9Ebvuc"},
+        published), \
+        "`watch?v=` 和 `youtu.be/` 没归一到同一把钥匙——认不出的样子和没发过一样"
+
+    # ⑤ 位置：dry-run 那条路真的走得到
+    assert "duplicate_match_problem(" in inspect.getsource(reel.validate_spec), \
+        "validate_spec 没调这道闸——手写 spec 那条路还是拦不住，" \
+        "而它 2026-09-01 起就已经在 promote_reel_draft 那条路上了"
+
+    # ⑥ 豁免表自检 ＋ 存量零误伤
+    specs = _reel_specs()
+    for slug in sorted(reel._LEGACY_SAME_MATCH_TWICE):
+        assert slug in specs, (
+            f"豁免表里的 {slug!r} 找不到对应的 spec"
+            "——写错一个名字，豁免就成了一盏恒真的绿灯")
+    flagged = sorted(s for s, sp in specs.items()
+                     if reel.duplicate_match_problem(sp) is not None)
+    assert not flagged, (
+        f"这几条存量被判成「同一场球发了两条」：{flagged}"
+        "——要么是真撞了（那就撤一条），要么是这道闸扫宽了")
+
+
 def test_spec引的图不许放在output里CI上看不见():
     """⚠️ **`ci.yml` 的稀疏检出不含 `output/`**，所以一条指到那儿的图片路径
     **在本地存在、在 CI 上不存在**——而上面那道 `cover_photo_problem` 是真去

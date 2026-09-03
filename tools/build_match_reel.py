@@ -6198,6 +6198,61 @@ def music_problem(spec: dict, base: Path = Path(".")) -> str | None:
     return None
 
 
+# 同一个栏目里不许发第二条讲同一场球的片子——豁免表只许减不许加。
+# ⚠️ `anisimova-eala` / `eala-anisimova` 是 2026-08-18 改名/返工留下的一对，
+# 两条都没开自动推送（本文件为它单独记过一节），不是先例。
+_LEGACY_SAME_MATCH_TWICE = frozenset({
+    "anisimova-eala",
+    "eala-anisimova",
+})
+
+
+def duplicate_match_problem(spec: dict, root: Path | None = None) -> str | None:
+    """这一场球在同一个栏目里已经有一条正式 spec 了吗？
+
+    ⚠️ **这道闸的实现 2026-09-01 就写好了，只是坐在 `promote_reel_draft`
+    （自动链转正）那条路上，手写 spec 走的 `validate_spec` 一直没接上。**
+    2026-09-03 就撞了一次：`faria-alcaraz-us-open-2026-r2` 做到第三趟 render
+    才发现别的会话 04:51 已经把同一场（`CpKK9Ia4`、同一条源片）推送出去了。
+    开工时查过、那次查是对的——**它是在这之后才落库的，纯并发**。
+
+    ⚠️ **只扫「赛场之上」**，和 `promote_reel_draft._published_reel_matches`
+    同一个口径。存量 199 条量过：同栏目共用源片 7 处，**其中 5 处是「网球有故事」
+    同一个人的多条故事片共用素材**（`osaka-four-slams` / `osaka-walkout` /
+    `osaka-grand-slam-outfits` / `osaka-iverson-tribute` 讲的是四件不同的事）
+    ——那是这个栏目的正常形态，扫宽了会把它们整个误伤。
+    """
+    cover = spec.get("cover")
+    if not isinstance(cover, dict) or cover.get("eyebrow") != "赛场之上":
+        return None
+    slug = str(spec.get("slug") or "").strip()
+    if slug in _LEGACY_SAME_MATCH_TWICE:
+        return None
+    try:
+        sys.path.insert(0, str(Path(__file__).resolve().parent))
+        from promote_reel_draft import _match_keys, _published_reel_matches
+    except Exception:
+        return None          # 拿不到就不判——闸缺席好过误报
+    keys = _match_keys(spec)
+    if not keys:
+        return None
+    published = _published_reel_matches(root)
+    for key in sorted(keys):
+        other = published.get(key)
+        if other and other != slug and other not in _LEGACY_SAME_MATCH_TWICE:
+            return (
+                f"这一场球「赛场之上」已经有一条了：`{other}`（对上的钥匙 `{key}`）。\n"
+                "同一个栏目里发第二条讲同一场球，就是同一场球发第二条微信，"
+                "而那条消息发出去收不回来。\n"
+                "⚠️ 两个视角的 slug 常常正好是反的（`faria-alcaraz` vs "
+                "`alcaraz-faria`），源片也有 `youtu.be/<id>` 和 `watch?v=<id>` "
+                "两种写法——所以这道闸按 `_match.flashscore_id` ＋ 归一化后的源片比，"
+                "不按 slug 比。\n"
+                "真要做另一个视角，换个栏目（「同一件事，不同栏目各讲一次不算重复」）。"
+            )
+    return None
+
+
 def validate_spec(
     spec: dict, *, allow_published_legacy: bool = False,
 ) -> list[Segment]:
@@ -6248,6 +6303,9 @@ def validate_spec(
     photo = cover_photo_problem(spec)
     if photo:
         raise ReelError(photo)
+    duplicate = duplicate_match_problem(spec)
+    if duplicate:
+        raise ReelError(duplicate)
     music = music_problem(spec)
     if music:
         raise ReelError(music)
