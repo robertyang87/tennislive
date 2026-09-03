@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>9.3 赛场之上 | 王欣瑜多拿一分仍然出局</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>王欣瑜美网第二轮出局｜全场多拿一分，还是输了
+
+这场球最反常的地方：赢的人小分更少。
+
+王欣瑜 95 分，卡林斯卡娅 94 分。制胜分 39 比 22，几乎是对手的两倍。上网 22 次赢下 16 分，对手 10 次赢 6 分。这些都是她的。
+
+而她 5-7、6-2、3-6 输掉了比赛。
+
+答案在一个数上：破发点 3/11。
+
+十一次站在对手的发球线前，只有三次把机会变成局分。卡林斯卡娅九次拿到破发点，同样兑现三次——同一个结果，一个人用了十一次机会，另一个人用了九次。
+
+第一盘是这场球的缩影。开场第三局她 40-15 拿到两个破发点，第一个就兑现，2-1 领先，一路走到 4-2。接下来那一局轮到她自己发球，15-40，两个破发点到了对手手里，一次就被拿走，4-4。到 5-6 她再一次 15-40，屏幕上黄字换成盘点——这一盘她从 4-2 领先，走到了 5-7。52 分钟，首盘五个破发点全在她手里，兑现了一个。
+
+第二盘她像换了个人。一发进球率从 63% 提到 74%，一发得分率从 64% 提到 77%，而对手的一发得分率从 73% 跌到 46%。开局就破发，一路 5-2 来到发球胜盘局：这一局打了四次平分，卡林斯卡娅先后拿到四个破发点，她一个都没给；自己的第二个盘点落地，6-2，46 分钟。
+
+决胜盘第四局她的发球局被破，1-3。之后保住自己的发球局追到 2-4，但对面那一头一直守得很稳。2-5 时她还剩最后两个破发点，仍然没有兑现。3-6。
+
+三盘用时 52、46、44 分钟，全场 2 小时 22 分钟。
+
+再往回看一层：她上一次在美网走过第二轮，是 2023 年，那一年她打进第四轮。之后 2024、2025，两次都停在第二轮。今年是第三次。（逐年战绩出自美网官方 players/matches feed，逐条可查。）
+
+这场球她不是被打垮的。制胜分翻倍、小分领先、网前效率更高，缺的只是把机会换成局分的那一下。
+
+数据出自 flashscore 本场逐分与统计、美网官方 players/matches feed（Court 7，用时 2:22），排名取 WTA 官方 8 月 31 日那期：王欣瑜第 43，卡林斯卡娅第 23、本届 21 号种子。
+
+#网球 #王欣瑜 #美网 #USOpen #网球时差</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>这场球，到底输在哪儿？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
