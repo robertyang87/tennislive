@@ -1,0 +1,354 @@
+{
+  "slug": "zheng-putintseva-us-open-2026-r2",
+  "_column": "reel",
+  "layout": "band",
+  "scorebox": [
+    100,
+    886,
+    660,
+    980
+  ],
+  "_scorebox_why": "板在源片里的位置。probe 的 `scorebox_guess` 报 `104,888,585,978`，和同一届同一条频道已发的`zheng-liutova-us-open-2026-r1`（左 104 / 上 887 / 下 978）、`zheng-pridankina-us-open-2026-q3`（104 / 888 / 978）逐条对得上——同一套转播图形包，不是各量各的。写进 spec 的四个数各留几像素余量。\n⚠️ **右缘 660 只是兜底**：真正的右缘是渲染时 `resolve_board_insets` 每段现量的——美网这块板每打完一盘右缘 +38px，本场从一盘走到三盘会经过三档，写死一个数必然有两档是错的。\n⚠️ SET/MATCH POINT 那条黄标在 y<886 之外，按 docs/us-open-scoreboard-aspect.md 的口径不扩窗——关键分旁白本来就讲（第 ⑤⑦⑨ 段）。",
+  "source_url": "https://www.youtube.com/watch?v=a8Xh22hsppg",
+  "_source": "US Open 官方 YouTube 频道（`US Open Tennis Championships`，yt-dlp `%(channel)s` 自证）本场官方集锦`Qinwen Zheng vs. Yulia Putintseva Highlights | 2026 US Open Round 2`，204.50s / 1920×1080 / 29.97fps（probe 实测，过 1080p 那道硬闸）。画面自证四处：\n① 记分条 `ZHENG CHN / PUTINTSEVA KAZ` 逐格比分和 flashscore `8Ehiz0tJ` 的逐分记录对得上（0.5s 首局 `0-AD`、38.5s `DEUCE #2`、54.5s `SET POINT #2` 5-4 40-30、116.5s `SET POINT` 二盘 2-5、158.5s 三盘 4-1 40-15、170.5s `MATCH POINT` 三盘 5-1 40-30）；\n② 84.5s / 130.5s / 184.5s 三次全屏赛果图形，最后一次印着 `WOMEN'S SINGLES | 2ND ROUND · COURT 12 / QINWEN ZHENG 6 2 6 / YULIA PUTINTSEVA 4 6 1`，和官方赛果一致；\n③ 球衣可分：郑钦文白背心＋薄荷绿短裙，普汀塞娃深绿套装＋白帽——136.5s 那一格是普汀塞娃不是她，所以第 ⑧ 段窗口从 138.6 起（见 `_editing_why`）；\n④ 片尾 201.37s 起是美网品牌板（`silent_audio` 报 201.46s 之后是数字静音），已排除在所有段之外。\n⚠️ 同一天同一频道只发了这一版（标题是 `Highlights` 不是 `Extended Highlights`）。",
+  "cover": {
+    "matchup": [
+      {
+        "name": "郑钦文",
+        "name_en": "Qinwen Zheng",
+        "country": "CHN",
+        "rank": 121
+      },
+      {
+        "name": "普汀塞娃",
+        "name_en": "Yulia Putintseva",
+        "country": "KAZ",
+        "rank": 84
+      }
+    ],
+    "_rank_why": "两人当期排名同一期、同一个权威源：WTA 官方 `players/ranked`（`rankedAt=2026-08-31T00:00:00Z`；Qinwen Zheng 第 121、613 分，id `wta328120`；Yulia Putintseva 第 84、904 分，id `wta317683`）。\n⚠️ 那个接口**一页只回 100 条**，郑钦文第 121 要翻到 `page=1` 才拿得到——只查第一页会得出「查不到她」，而那和「她没有排名」长得一模一样。\n⚠️ 身份侧另有官方印证，和 121 这个数自洽：美网官方 `players/matches/wta328120_matches.json`（match_id 2228）里两人 `seed` 都是 null（都不是种子），而郑钦文 `entryStatus: \"Q\"`——**她是从资格赛打上来的**。所以名条上不写种子号。\n⚠️ 美网官方 `players.json` 这一趟是 403（Akamai 挡的，和 `config_web.json` 一样），所以排名没能拿到第二个独立源；写在这里如实认领，不假装双源。",
+    "winner": "郑钦文",
+    "result": "6-4 2-6 6-1",
+    "_result_why": "赢家视角，三处印证：flashscore `8Ehiz0tJ` 的 BA/BC/BE=6/2/6（home 是 `Zheng Q.`，AE/AF 自证）；美网官方 match_id 2228 的 `scores.sets` = [[6,4],[2,6],[6,1]]、team1 郑钦文 `totalSetsWon: 2, won: true`；源片 184.5s 全屏图形印着 `QINWEN ZHENG 6 2 6 / YULIA PUTINTSEVA 4 6 1`。\n⚠️ 她**赢了首盘又丢了次盘**，所以 result 是 6-4 2-6 6-1，不是「先丢一盘再赢回来」那种形状——写收尾文案时别顺手写成「先丢一盘」。\n全场没有抢七（官方 `tiebreakDisplay` 三盘都是 null），所以没有上标小分。",
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "郑钦文",
+    "topic": "美网第二轮 · 郑钦文 vs 普汀塞娃",
+    "_topic_why": "按账号所有者 2026-09-03「封面左上角的副标题不要写球场号，写对阵双方」写成对阵。球场号（Court 12）在比分板头一行已经印着，台头再写一遍是第二遍。",
+    "hook": "第二盘二发只拿三分\n决胜盘发球局全保",
+    "_hook_why": "两行框住的是**整场的形状**，不是某一局：谷底（次盘二发塌掉）→ 落点（决胜盘发球局一个没丢）。\n事实各有出处：次盘二发 `3/20`（flashscore df_st_1 `Set 2 | 2nd serve points won 15% (3/20)`）；决胜盘发球局 `4/4`（`Set 3 | Games | Service games won 100% (4/4)`）。\n⚠️ 两行都不重复比分板——板上印的是 `6-4 2-6 6-1`，钩子一个盘分都没写。\n⚠️ 行长各 9 字 / 8 字，都在 `HOOK_MAX_CHARS = 10` 之内，两行也在 `SOLO_HOOK_MAX_LINES = 2` 之内。",
+    "portrait": {
+      "image": "assets/reel/zheng-us-open-2026-r2-backhand.jpg",
+      "focus": 0.68,
+      "_photo_why": "美网**官方**图库这一场的实拍（`photo-assets.usopen.org/images/pics/large/f_USTA2425001_20260903_ML1_9700.jpg`），说明四要素齐全、由赛事方自己写：`Qinwen Zheng hits a backhand during a Women's Singles match on Day Five of the 2026 US Open at USTA Billie Jean King National Tennis Center on Thursday, September 3, 2026 in Flushing, NY.（Photo by Mike Lawrence/USTA）`，条目 `title` 是 `Q. Zheng vs. Y. Putintseva | R2`——**这一场，不是资料图**。\n同一场官方一共发了 6 张郑钦文的（正手 2、反手 3、发球 1），**全是击球中，没有庆祝照**；这张是三张近景里脸最正、表情最读得出来的一张（正面反手、咬牙用力）。另外两张（`_9725` 侧脸正手、`_9656` 抬头看球）一并落在 `assets/reel/` 里，换图不用重新去找。\n⚠️ **按人查会漏**：按球员 tag（`tag?tags=wta328120`）只查到 8 条，按日期扫（`content/byType/photo`）这一场共 14 条——多出来的 5 张是普汀塞娃的。两条路都要走。\n⚠️ `find_cover_photo.py` 对美网这一档报 403，是它**没带浏览器 UA**（手工 curl 同一个接口是 200）；工具那一趟报「没有对得上的」是假阴性，别据此得出「官方没有实拍」。",
+      "_low_res_why": "1280×720，铺 1080×1440 要放大 **2.0 倍**，过不了 `cover_photo_problem` 的 1.00x 地板——**这是美网这条渠道的天花板，不是没找够**：`f_` 已经是四档里最大的（`t_`/`b_`/`c_`/`f_`），CLAUDE.md 记着十二个前缀、六个目录、三种 `?width=` 参数全试过，要么 404 要么尺寸一个像素不变。\n另外两条更高清的渠道这一场**是真空，不是没查**：USA TODAY 每日图集 9/3 那天没有网球辑（只有 9/2 一辑「美网食物饮料」，不对题），AP 通讯社这一场没有图。两条都当天查过。\n⚠️ 它仍然远好过抽帧：这是相机原图，而抽帧是压缩转播流再放大——而且封面**一律不许抽帧**那条闸本来就把那条路封死了。",
+      "_focus_why": "横图铺竖版画布，按高度铺满之后横向只留中间 42%，而她在源图偏右（人体主轴约在 0.60~0.65），`focus` 默认 0.5 会把她切掉一半。**0.62 / 0.68 / 0.72 三版渲出来并排比过**：0.62 她仍偏右、左边空一大块，0.72 球拍完整但右边又空出来，**0.68 人最接近居中、球拍露出一截、左右都不空**，符合「人物放正中间、放大到接近铺满、四周留一点空间」。\n⚠️ 竖向铺满时 `focus_y` 是死的（cover 之下没有可移动量），所以只调横向。渲出来量过：她的脸落在钩子带（790 起）之上，也没被顶栏压到。"
+    },
+    "scoreboard": {
+      "court": "Court 12",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%222%3A37%3A00%22%2C%22source%22%3A%22US%20Open%20official%20matches%20feed%20match_id%202228%20duration%202%3A37%20%3D%20setDurations%2064%2B51%2B42%22%7D",
+        "field": "duration"
+      },
+      "_court_why": "两源一致：美网官方 `matches` feed（match_id 2228）`courtName: \"Court 12\"`；源片 184.5s 的全屏赛果图形上印着 `COURT 12`。",
+      "_duration_why": "官方 **2:37**（`duration: \"2:37\"`，`setDurations: [64, 51, 42]`，64+51+42=157 分钟＝2:37，三个数自洽）。\n⚠️ flashscore 报的是 1:05+0:52+0:42＝**2:39**，比官方多 2 分钟——按「比赛用时不要只信 flashscore，交叉核、以官方为准」取 2:37。第三个数也站在官方这边：flashscore 自己的开赛/结束时间戳（AD=1788462900、AO=1788472416）相差 158.6 分钟，和官方 157 分钟只差一分半，而和它自己的 159 分钟对不上。"
+    }
+  },
+  "_match": {
+    "status": "result_verified",
+    "source": "flashscore_points",
+    "source_id": "8Ehiz0tJ",
+    "flashscore_id": "8Ehiz0tJ",
+    "participants": [
+      "郑钦文",
+      "普汀塞娃"
+    ],
+    "set_scores_home_away": [
+      [
+        6,
+        4
+      ],
+      [
+        2,
+        6
+      ],
+      [
+        6,
+        1
+      ]
+    ],
+    "winner": "郑钦文",
+    "loser": "普汀塞娃",
+    "winner_result": "6-4 2-6 6-1",
+    "loser_result": "4-6 6-2 1-6",
+    "tiebreaks_home_away": [
+      null,
+      null,
+      null
+    ]
+  },
+  "_participants_why": "`participants` 跟 flashscore 的 **home/away**（AE÷`Zheng Q.` 是 home），所以和同一块里的 `set_scores_home_away` 同序——这一条上 home 恰好也是 `cover.matchup[0]`，两个顺序碰巧一致。⚠️ 别把这当成通例：`stats.a/b` 跟的是 matchup，`participants` 跟的是 home/away，两者常常是反的。",
+  "stats": {
+    "a": {
+      "aces": 9,
+      "df": 5,
+      "winners": 31,
+      "ue": 52,
+      "first_in": 47,
+      "first_won": 41,
+      "second_total": 50,
+      "second_won": 15,
+      "bp_conv": 5,
+      "bp_chances": 8,
+      "pts_won": 88,
+      "pts_total": 173,
+      "first_total": 97,
+      "headshot": "assets/players/wta-328120-zheng-qinwen.png"
+    },
+    "b": {
+      "aces": 3,
+      "df": 4,
+      "winners": 12,
+      "ue": 33,
+      "first_in": 51,
+      "first_won": 32,
+      "second_total": 25,
+      "second_won": 13,
+      "bp_conv": 4,
+      "bp_chances": 9,
+      "pts_won": 85,
+      "pts_total": 173,
+      "first_total": 76,
+      "headshot": "assets/players/headshots/wta-317683.jpg"
+    },
+    "_source": "flashscore `8Ehiz0tJ` 的 `df_st_1`（Match 那一档）。这场**有**制胜分和非受迫失误（31/52 对 12/33），已填进图里。⚠️ `first_total` 按 `first_in + second_total` 算（47+50=97、51+25=76），不取接口的 `Service Points Won` 分母——一发成功率画的是 `first_in / first_total`，用和式才自洽。"
+  },
+  "_stats_why": "全部来自 flashscore `df_st_1` 的 `Match` 那一档，这场**有**制胜分和非受迫失误（31/52 对 12/33），已填。\n⚠️ `first_total` 按 `first_in + second_total` 算（47+50=97、51+25=76），不取接口的 `Service Points Won` 分母——一发成功率画的是 `first_in / first_total`，用和式才自洽。\n⚠️ `stats.a` 跟的是 `cover.matchup[0]`（郑钦文），而本场 flashscore 的 home 也是她，所以照抄不用对调；头像跟着数字走，左边那张脸和左边那个名字对得上。",
+  "_hit_data": [
+    {
+      "label": "总分差",
+      "detail": "郑钦文 88 - 普汀塞娃 85，净差 3 分",
+      "source": "flashscore df_mh_1（总分）"
+    },
+    {
+      "label": "首盘一发的反差",
+      "detail": "一发只进百分之四十，可进了的 16 个球全部得分（16/16）",
+      "source": "flashscore df_st_1（Set 1：1st serve percentage 40%、1st serve points won 100% 16/16）"
+    },
+    {
+      "label": "次盘二发塌掉",
+      "detail": "20 个二发只拿到 3 分（百分之十五）",
+      "source": "flashscore df_st_1（Set 2：2nd serve points won 15% 3/20）"
+    },
+    {
+      "label": "次盘失误对比",
+      "detail": "郑钦文 23 个非受迫失误，普汀塞娃只有 7 个",
+      "source": "flashscore df_st_1（Set 2：Unforced errors 23 / 7）"
+    },
+    {
+      "label": "决胜盘一发修回来",
+      "detail": "一发进球率从首盘百分之四十提到百分之七十一，失误从 23 个掉到 8 个",
+      "source": "flashscore df_st_1（Set 1/Set 3：1st serve percentage 40%→71%；Unforced errors 23→8）"
+    },
+    {
+      "label": "决胜盘对手的一发",
+      "detail": "普汀塞娃一发得分率只剩百分之三十三（3/9）",
+      "source": "flashscore df_st_1（Set 3：1st serve points won 33% 3/9）"
+    },
+    {
+      "label": "决胜盘发球局",
+      "detail": "郑钦文 4 个发球局全部保住，破发点 2 次机会 2 次兑现",
+      "source": "flashscore df_st_1（Set 3：Service games won 100% 4/4；Break Points Converted 2/2）"
+    },
+    {
+      "label": "交手记录",
+      "detail": "三次交手，这是郑钦文第一次赢：此前红土 0:2，硬地这是首胜",
+      "source": "flashscore df_hh_1（Zheng Q. 1 : 2 Putintseva Y.，含本场）"
+    }
+  ],
+  "_no_repeat": "同栏目已发的 `zheng-liutova-us-open-2026-r1`（正赛首轮）铺开讲过「456 天之后」「Queen Wen is back」那条线，这一条一个字都不碰。资格赛三条（`zheng-you-q1` / `zheng-burel-q2` / `zheng-pridankina-q3`）同理。这一条要的是**这一场自己的形状**：一发、二发、失误三个数在三盘里各走各的。",
+  "_durations": [
+    [
+      "Set 1",
+      "1:04"
+    ],
+    [
+      "Set 2",
+      "0:51"
+    ],
+    [
+      "Set 3",
+      "0:42"
+    ],
+    [
+      "全场",
+      "2:37"
+    ]
+  ],
+  "_turning_points": [
+    {
+      "label": "【Set 1】首局 郑钦文发球，救下 3 个破发点保住",
+      "density": 3,
+      "tags": [
+        "3个破发点"
+      ]
+    },
+    {
+      "label": "【Set 1】5-4 郑钦文发球，第 2 个盘点拿下首盘",
+      "density": 4,
+      "tags": [
+        "2个破发点",
+        "1个盘点"
+      ]
+    },
+    {
+      "label": "【Set 2】2-5 普汀塞娃发球，盘点拿下次盘",
+      "density": 3,
+      "tags": [
+        "1个盘点"
+      ]
+    },
+    {
+      "label": "【Set 3】4-1 普汀塞娃发球，郑钦文 40-15 手握两个破发点",
+      "density": 3,
+      "tags": [
+        "2个破发点"
+      ]
+    },
+    {
+      "label": "【Set 3】5-1 郑钦文发球，赛点拿下全场",
+      "density": 3,
+      "tags": [
+        "1个赛点"
+      ]
+    }
+  ],
+  "_turning_points_why": "⚠️ 草稿（`specs/reels/pending/zheng-putintseva.draft.json`）自动生成的那份 label 里，局号和记分条对不上（比如「5-4 郑钦文发球，普汀塞娃拿下」，而记分条 54.5~76.5s 全程停在 `5-4 40-30 SET POINT #2`、首盘最终 6-4）。**这一份按记分条重写**——画面自证比逐分标签硬。",
+  "editorial": {
+    "mode": "match_review",
+    "question": "总分只多三分的一场球，为什么决胜盘打成了 6-1？",
+    "thesis": "郑钦文首盘靠一发硬撑、次盘被二发拖垮，决胜盘把一发进球率从百分之四十提到百分之七十一、失误砍掉三分之二，于是同一场球的最后四十二分钟变成了一边倒。",
+    "beats": [
+      "首盘一发只进百分之四十，但进了的 16 个全部得分；5-4 自己发球，第二个盘点收下首盘。",
+      "次盘二发被盯上——20 个二发只拿 3 分，非受迫失误 23 比 7，2-6 交出这一盘。",
+      "决胜盘一发进球率提到百分之七十一、失误掉到 8 个，4 个发球局全保、2 次破发全兑现，6-1 结束。"
+    ],
+    "human_context": {
+      "angle": "她是从资格赛打上来的：世界第 121 位、非种子，官方入围身份是 Q；而这是她三次交手第一次赢下普汀塞娃。",
+      "facts": [
+        "美网官方 matches feed（match_id 2228）team1 郑钦文 entryStatus=Q、seed=null",
+        "WTA 官方 players/ranked（rankedAt 2026-08-31）：郑钦文第 121、普汀塞娃第 84",
+        "flashscore df_hh_1：Zheng Q. 1 : 2 Putintseva Y.（含本场），此前两次都在红土"
+      ],
+      "sources": [
+        "https://www.usopen.org/en_US/scores/feeds/2026/players/matches/wta328120_matches.json",
+        "https://api.wtatennis.com/tennis/players/ranked?page=1&pageSize=100&type=rankSingles&sort=asc&metric=SINGLES"
+      ]
+    }
+  },
+  "topbar": {
+    "line1": "2026 美网 女单第二轮",
+    "line2": "郑钦文 6-4 2-6 6-1 普汀塞娃"
+  },
+  "push": {
+    "summary": "郑钦文决胜盘只丢一局",
+    "lead": "全场总分只多三分，决胜盘却只丢一局。郑钦文首盘一发只进百分之四十、进了的十六个球一分没丢；第二盘二十个二发只拿到三分，被 2-6 拖走；决胜盘她把一发进球率提到百分之七十一，四个发球局全保、两次破发全部兑现，6-1 结束比赛。三次交手，这是她第一次赢下普汀塞娃。",
+    "auto": true
+  },
+  "segments": [
+    {
+      "start": 176.0,
+      "end": 183.5,
+      "narration": "",
+      "crosses_cut": "178.03 和 180.91 两刀：赛点那一分的宽景 → 普汀塞娃扑救倒地（178.5s）→ 观众整片站起来（182.5s）。三段是**同一分的连续画面**，只是机位换了，没有换人也没有换时刻——正是开场要的「球落地 + 反应」。",
+      "_why": "第①格：全片最强的一格——制胜分落地、普汀塞娃扑出去趴在场上、看台起立。**不配旁白，靠现场声和欢呼**。\n起点 176.0 落在赛点那一分的回合里（记分条 `MATCH POINT` `6 2 5 [40] / 4 6 1 [30]` 还在画面上），所以观众先看见球落地，再看见结果。",
+      "_ending_payoff_required": true,
+      "score_inset": true,
+      "_score_inset_why": "前半（176.0~178.5）记分条在，`MATCH POINT` 那一格就是它；178.5 之后板淡出，由 `board_present_spans` 现量自动收，不用拆段。",
+      "fit": "crop"
+    },
+    {
+      "start": 168.4,
+      "end": 175.9,
+      "narration": "两个多小时，她只比对手多拿三分。决胜盘，只丢了一局。",
+      "_why": "第②格给落点。画面是赛点局（记分条 `MATCH POINT` 5-1 全程在），和旁白说的「决胜盘只丢一局」对得上。\n「多拿三分」＝88-85（flashscore df_mh_1 总分）；「两个多小时」＝官方 2:37，按「不报到分」的口径说个大概。",
+      "score_inset": true,
+      "fit": "crop"
+    },
+    {
+      "start": 3.0,
+      "end": 15.5,
+      "narration": "北京时间九月四日凌晨三点多，美网第二轮，十二号球场。开场第一个发球局，郑钦文就先救下三个破发点。",
+      "_why": "第③格交代坐标。画面是首盘第一局（记分条盘分两格还空着、`0-AD`，38.5s 才走到 `DEUCE #2`——这一局打了很久），和「开场第一个发球局救下三个破发点」对得上。\n开球时刻取 flashscore `AD=1788462900`＝北京时间 2026-09-04 03:15，按「只说个大概不报到分」的档位（分钟 15 落在 10~39）说「凌晨三点多」。⚠️ 官方 feed 里的 `epoch`（16:53 UTC）比它早 2 小时 21 分，那是排期口径不是开赛；取 AD 是因为它和 AO（结束）、官方 2:37 三者自洽。",
+      "score_inset": true,
+      "fit": "crop"
+    },
+    {
+      "start": 38.2,
+      "end": 48.8,
+      "narration": "首盘她的一发只进了百分之四十，两个里进不到一个。可进去的那十六个球，她一分没丢。",
+      "_why": "画面：首盘 3-2 普汀塞娃发球（记分条 `3 [30] / 2 [15]`）。旁白讲首盘那组反差数据——一发进球率 40%、一发得分率 100%（16/16），两个数同出 `df_st_1` 的 Set 1。",
+      "score_inset": true,
+      "fit": "crop"
+    },
+    {
+      "start": 59.2,
+      "end": 66.7,
+      "narration": "五比四，轮到她自己发球。第二个盘点，她把首盘收了下来。",
+      "_why": "画面：她站在 J.P.Morgan 板前准备发这个盘点球（60.5~66.5s 每一格都是她，白背心＋薄荷绿短裙），记分条全程 `SET POINT #2` `5 [40] / 4 [30]`，发球指示在 ZHENG 那一行——**她自己发球、手握第二个盘点**，和旁白逐字对得上。首盘最终 6-4（80.5s 全屏图形印着 `QINWEN ZHENG 6 / YULIA PUTINTSEVA 4` 自证）。\n⚠️ **窗口原来写的是 51.6~58.8，被 `preview_segments_local` 抓下来了**：那一段的第一格（52.5s）记分条还停在上一局的 `3 [30] / 2 [15]`（记分条滞后），而旁白开口就说「五比四」——读者一眼看得出对不上。挪到 59.2 之后，整段记分条都是 5-4。\n⚠️ 段尾 66.7 ＋ `SEG_FADE` 0.18 ＝ 66.88，停在 66.97 那一刀之前。",
+      "score_inset": true,
+      "fit": "crop"
+    },
+    {
+      "start": 85.0,
+      "end": 96.5,
+      "narration": "第二盘风向变了。二十个二发，她只拿到三分；非受迫失误涨到二十三个，而对面只有七个。",
+      "_why": "画面：次盘 1-3 落后（记分条 `6 1 [30] / 4 3 [30]`，发球指示在 ZHENG 行）。两个数都出自 `df_st_1` 的 Set 2：`2nd serve points won 15% (3/20)`、`Unforced errors 23 / 7`。",
+      "score_inset": true,
+      "fit": "crop"
+    },
+    {
+      "start": 114.6,
+      "end": 122.2,
+      "narration": "二比五，盘点握在普汀塞娃手里。这一盘，郑钦文交了出去。",
+      "_why": "画面：记分条 `SET POINT` `6 2 [15] / 4 5 [40]`，发球指示在 PUTINTSEVA 行——**盘点是她拿到的、她发球**，所以旁白写「普汀塞娃手握盘点」，不写「郑钦文没救下来」（那句会把主语说反）。次盘 2-6。\n⚠️ 旁白原来写的是「普汀塞娃手握盘点」，`--check-narration` 报出合成器把它切成 `普汀塞 ｜ 娃手 ｜ 握盘点`——**「娃手」是个不存在的词**，念出来会把名字和邻字连读。改成「盘点握在普汀塞娃手里」，名字后面直接跟句号，骑不到边界上。",
+      "score_inset": true,
+      "fit": "crop"
+    },
+    {
+      "start": 138.6,
+      "end": 152.8,
+      "narration": "决胜盘她先修的是一发：进球率从百分之四十提到百分之七十一，失误从二十三个掉到八个。而普汀塞娃的一发得分率，只剩百分之三十三。",
+      "_why": "画面：决胜盘 1-0（记分条 `6 2 1 / 4 6 0`）的底线回合。三个数都出自 `df_st_1`：Set1→Set3 的 `1st serve percentage` 40%→71%、`Unforced errors` 23→8、普汀塞娃 Set3 `1st serve points won 33% (3/9)`。\n⚠️ 窗口**不从 136.74 那一刀起**：136.5s 那一格是普汀塞娃（深绿套装＋白帽）在擦汗，而这一段旁白讲的是郑钦文——从 138.6 起画面才是两人的回合，话画才对得上。",
+      "score_inset": true,
+      "fit": "crop"
+    },
+    {
+      "start": 158.9,
+      "end": 167.8,
+      "narration": "她的四个发球局一个没丢。两次破发机会，两次都兑现了。",
+      "_why": "画面：决胜盘 4-1，记分条 `6 2 4 [40] / 4 6 1 [15]`，发球指示在 PUTINTSEVA 行——**普汀塞娃发球、郑钦文 40-15 手握两个破发点**，正是旁白那句「两次破发机会」的画面。两个数出自 `df_st_1` Set 3：`Service games won 100% (4/4)`、`Break Points Converted 2/2`。",
+      "score_inset": true,
+      "fit": "crop"
+    },
+    {
+      "start": 176.0,
+      "end": 183.6,
+      "narration": "两小时三十七分钟，普汀塞娃扑出去，没够着。",
+      "crosses_cut": "和第①段同一分的连续画面，跨 178.03 / 180.91 两刀：击球 → 扑救倒地 → 看台起立。",
+      "_why": "正文重新走到结局，**完整覆盖第①段冷开场的 176.0~183.5**（`ending_payoff_problem` 要的就是这个）。\n「两小时三十七分钟」＝官方用时；「扑出去没够着」是画面本身（178.5s 她扑救、180.5s 趴在场上），不是指示语，也不是替她说话。",
+      "score_inset": true,
+      "fit": "crop"
+    },
+    {
+      "start": 184.0,
+      "end": 200.8,
+      "narration": "从资格赛第一轮打到这里，她已经连赢五场。世界第一百二十一位，赢了世界第八十四位。三次交手，这是她第一次赢下普汀塞娃。下一轮，你看好她吗？",
+      "_why": "画面：全屏赛果图形（184.5s，印着 `2ND ROUND · COURT 12`）→ 走向网前 → 和普汀塞娃握手（190.5s）→ 和裁判握手 → 走向场边 → 转身向看台举手致意、笑（198.5~200.5s）。收尾落在一问上，不停在数据上。\n「连赢五场」＝资格赛三轮（尤晓迪、布雷尔、普里丹基纳）＋ 正赛两轮（柳托娃、普汀塞娃），仓库里前四条各有已发的 spec。\n「三次交手第一次赢」＝ flashscore df_hh_1 `1 : 2`（含本场），此前两次都在红土。\n⚠️ 这一段里有好几个真实镜头切换（台标／握手／致意），而 `scene_cuts` 和 `scene_cuts_loose` 都没认出来——`scene_cuts` 是下限不是上限。逐格看过：全程是赛后同一段连续过程、主体一直是她，所以整段留在一起。\n⚠️ 段尾 200.8 ＋ `SEG_FADE` 0.18 ＝ 200.98，停在片尾板那一刀（201.37）和数字静音（201.46）之前。",
+      "score_inset": false,
+      "_score_inset_why": "整段是全屏赛果图形和赛后画面，记分条已经撤掉（contact_03 的 184.5~200.5 每一格都没有板）。开 true 会把一块球场底色贴到台标和观众席上。",
+      "fit": "crop"
+    }
+  ],
+  "_editing_why": "**probe**：`output/2026-09-04/reel/zheng-putintseva/probe.json`（源片 URL 相同，`--dry-run` 按 URL 认领）。\n⚠️ **`point_ends` 是空的**——那一趟 probe 没给 `--scorebox`。今天补跑了一趟带 `--scorebox 104,888,585,978` 的（run 33815714028），缩略图墙那一步成功了，但下一步「逐分+比分板对齐备料」失败，导致产物没提交，所以死球时刻这一项**至今没有机器量过**。\n**段尾因此是拿 `score_*.jpg` 目视定的**：那六张墙就是记分条那一块 2 秒一格的时间序列，记分条翻牌那一刻就是死球。分辨率 2 秒，比 `point_ends` 粗，但每一段的段尾都落在记分条已经翻过、下一分还没开始的那一格上。\n**每段都待在同一个镜头里**（按 `scene_cuts` ＋ `scene_cuts_loose` 合并出来的区间核过），只有第①⑩段跨切点，两段都写了 `crosses_cut` 认领——它们是同一分的连续画面。\n⚠️ 第⑪段是个例外：`scene_cuts` 把 183.67~201.37 报成一个镜头，而画面里明显有台标／握手／致意好几次切换。逐格看过之后仍然整段留着，理由写在那一段的 `_why` 里。\n**画面自证的人物区分**：郑钦文白背心＋薄荷绿短裙，普汀塞娃深绿套装＋白帽。第⑧段的起点就是按这个挪过的。"
+}
