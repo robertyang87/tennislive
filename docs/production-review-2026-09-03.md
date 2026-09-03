@@ -288,6 +288,16 @@
   定死 1080×1920），以及自动链里**谁来插这一段**：DeepSeek 不写 segments（窗口全是
   机械工具给的，`draft_spec.py` 第 12 行），所以该是 `assemble_spec` 在有 `stats` 块
   时机械地在转折 beat 之后插一段，不是教模型。
+- 路线 ④ 第二刀（PR 待开）：**自动链把数据图剪进片子**。先量出一个挡在前面的
+  洞：49 份 pending 草稿全带 `stats`、**零份带 `headshot`**，而 render 末尾那次
+  「渲给推送用」的数据图缺 headshot 是 SystemExit——任何一份自动草稿转正都是一趟
+  必红的 render（medvedev-damm 的头像是人手补的）。修法三处：`tools/headshot_index.py`
+  从已发 spec 推「中文名→头像」（130 个名字，规则和头像判据同一条）复用、WTA 按名字
+  现抓、ATP 留空出声；`assemble_spec` 在 stats 块之后调它；`promote` 缺头像留
+  waiting（报错正文写着两条命令）。然后 `promote` 转正时在收官段之前机械插一段
+  `stat_card`（旁白只讲总得分、汉字数字、方向机械算；段数到 10 或算不出就不插）。
+  ⚠️ `spoken_integer` 从 draft_spec 挪到 spec_wording：promote 直接 import draft_spec
+  会把 reel_skill 拖进 build_match_reel 的 import 图，frame-grab 被判成要教材。
 - Release tag 改哈希没动（口径选择）。
 - `build_match_reel.py` 没拆一行（要分三次 PR）。
 - 内容那一节的 11 条没有一条落成代码，只落成了这份文档和路线表。

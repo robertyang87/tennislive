@@ -61,6 +61,14 @@ def _no_slam_feed_network(monkeypatch):
 
 
 @pytest.fixture(autouse=True)
+def _no_headshot_fetch_network(monkeypatch):
+    """`headshot_index.resolve_headshots` 索引没命中会去 WTA 官方现抓头像（并把
+    文件写进 assets/players/headshots/）。单元测试一律关掉——要测那条路的测试
+    自己传 `fetch_wta=` 打桩。"""
+    monkeypatch.setenv("TENNISLIVE_HEADSHOT_FETCH", "0")
+
+
+@pytest.fixture(autouse=True)
 def _isolate_story_state(monkeypatch, tmp_path):
     """选题账本 `data/story_state.json` 是**跟踪进仓库的数据**，测试不许写它。
 
