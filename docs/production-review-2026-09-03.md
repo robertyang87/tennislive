@@ -355,6 +355,15 @@
   解说片真走共享模块并落 words.json / 三条出片线里 `edge_tts.Communicate(` 只许在
   共享模块——往采访线塞一个反向验证过）；`test_reel_narration.py` 那套喂假模块
   真跑的重试判据原样绿。
+- 3.2 里「教模型」那三条补上（PR 待开）：**B6** `_SYSTEM_RULES`【收尾一问】改成
+  「先兑现，再抛问」（收尾第一句先用事实包里的一个数字回答开场的 question），
+  `references/deepseek.md` 同步；**D10** `references/minimax.md` 加反应镜头
+  （输家的脸 / 教练席 / 握手）优先、且只许点名图上真有的；**A3** 只做了软报告那
+  一半——`promote_reel_draft.note_evidence_on_screen`：一处证据都没上屏就写
+  `_evidence_on_screen_why`，不拦。教材加插入语汇那一半**没做**：自动链的
+  segments 是机械工具产的，DeepSeek 不写窗口，数据图/章节卡已经机械插了，
+  再教它写 inset 没有消费者。判据 `test_教材教了收尾先兑现再抛问和反应镜头`、
+  `test_promote零证据上屏要出声但不拦`（拆掉那次调用反向验证过）。
 - Release tag 改哈希没动（口径选择）。
 - `build_match_reel.py` 没拆一行（要分三次 PR）。
 - 内容那一节的 11 条没有一条落成代码，只落成了这份文档和路线表。
