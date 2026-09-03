@@ -2497,6 +2497,13 @@ checkout 14s → 装依赖 7s → 写复制页 0s → 提交 0s → **发微信 
 补进模板自己的 `topic` 行（台头底下那句），**别另拟一套**。原来的 `event_badge`
 一并删掉——一个版式永远不读的键就是个不吭声的死键。
 
+⭐ **`topic` 那一行写「赛事轮次 · 对阵双方」，不写球场号。** 账号所有者
+2026-09-03（`keys-bondar-us-open-2026-r2`）：「封面左上角的副标题不要写球场号，
+写对阵双方」。美网那批 spec 一直写的是 `美网第二轮 · 17 号球场`——球场号在
+比分板的头一行（`scoreboard.court`）已经印着，台头再写一遍是第二遍；而对阵双方
+是刷到这一屏的人最先要知道的事。现在的形状是 `美网第二轮 · 凯斯 vs 邦达尔`。
+已发的不重渲，这条只管以后。
+
 ##### ⚠️ 2026-08-04：这条闸整个翻了个面，solo 成了默认
 
 账号所有者：「**以后都用 solo 版做「赛场之上」封面**」「**中间标题下面写上比分
@@ -12437,6 +12444,34 @@ pw.chromium.launch(executable_path="/opt/pw-browsers/chromium-1194/chrome-linux/
 你本地验的那个声音」的地方；本地日志里对应的那行写的是别的。真要在本地量准，
 只能配一份 `AZURE_SPEECH_KEY`（加到仓库 Settings → Secrets → **Actions** 那一栏
 工作流才读得到，加到 Codespaces 那栏读不到而且不报错）。
+
+#### ⚠️⚠️ 2026-09-03：Azure 钥匙突然 401，退回 edge-tts 的开关走 **spec**，不走工作流输入
+
+`keys-bondar-us-open-2026-r2` 两趟 render（33795108848 / 33795635981，隔 5 分钟）
+都在第 2 秒死在同一句：
+
+    AzureTTSError: … WebSocket upgrade failed: Authentication error (401).
+    Please check subscription information and region name.｜Azure 明确拒绝，重试没有意义
+
+**判「是不是这条 spec 的问题」很便宜**：dry-run、源片缓存、封面都过了，第一次调
+Azure（片尾配音）就被拒；而**同一把钥匙 15:31Z 还渲出了 `bu-lucky-loser-story`**
+（`render.json` 的 `narration_backend: azure`），所以是钥匙在那之后失效了，
+会拦住**所有**走 match-reel 的片子。账号所有者定：「换 edge tts」。
+
+⚠️ **开关加不进工作流**：`match-reel.yml` 的 dispatch 表单已经 **25 项满了**
+（本文件「26 个必挂、25 当场能跑」那条），再加一项整份工作流文件失效。所以走 spec：
+
+    "tts_backend": "edge",
+    "_tts_backend_why": "钥匙 401；这条没用 style / lead_pause，同一把嗓子 edge 也有"
+
+`build_match_reel.apply_tts_backend` 排在 `load_spec` 之后、模式分发之前，把它落成
+`TENNISLIVE_TTS_BACKEND=edge`，`azure_tts.available()` 据此返回 False——**哪怕钥匙
+和 SDK 都在**；`render.json` 的 `narration_backend` 自然记成 `edge-tts`。
+**必须认领理由**：「忘了配钥匙」和「想清楚了退回去」在产物上长得一模一样。
+判据 `test_spec认领tts_backend为edge就不走Azure` 钉四头。
+
+⚠️ 它是**每条 spec 各自认领**的，不是全局开关——钥匙修好之后把这两个键删掉就回到
+Azure；而在钥匙修好之前，**每一条要渲的片子都得写上这两行**，不写就照旧 401。
 
 #### ⚠️ 砍字的收益**不是线性的**——同一段我连着低估了两次
 
