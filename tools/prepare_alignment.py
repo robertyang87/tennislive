@@ -30,8 +30,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 
 
 def _surname(full: str) -> str:
-    words = (full or "").strip().split()
-    return words[-1] if words else full
+    from tennislive.names import surname_en  # noqa: PLC0415
+    return surname_en(full) or full
 
 
 def fetch_pbp(home: str, away: str, outdir: Path) -> bool:

@@ -8996,8 +8996,6 @@ def render_explainer_slides(
     """Render one image-first 3:4 card per beat via a headless Chromium page."""
     from playwright.sync_api import sync_playwright
 
-    from ..render.webcards import _chromium_executable
-
     outdir.mkdir(parents=True, exist_ok=True)
     checked: set[Path] = set()
     for segment in segments:
@@ -9009,14 +9007,10 @@ def render_explainer_slides(
             checked.add(image_path)
 
     paths: list[Path] = []
+    from tennislive.chromium import launch_chromium  # noqa: PLC0415
+
     with sync_playwright() as p:
-        try:
-            browser = p.chromium.launch()
-        except Exception:
-            exe = _chromium_executable()
-            if not exe:
-                raise
-            browser = p.chromium.launch(executable_path=exe)
+        browser = launch_chromium(p)
         try:
             for index, seg in enumerate(segments):
                 page = browser.new_page(
@@ -9080,7 +9074,7 @@ def _render_intro_badge(topic: str, column: str, outdir: Path) -> Path | None:
     """
     from playwright.sync_api import sync_playwright  # noqa: PLC0415
 
-    from ..render.webcards import _chromium_executable, _font_css  # noqa: PLC0415
+    from ..render.webcards import _font_css  # noqa: PLC0415
 
     icon_path = _REPO / "assets" / "logo" / "brand" / "icon.png"
     brand_icon = (
@@ -9114,14 +9108,13 @@ body{{font-family:'TL Sans SC','Noto Sans CJK SC','Noto Sans SC',sans-serif;colo
 
     outdir.mkdir(parents=True, exist_ok=True)
     out = outdir / "_intro_badge.png"
+    from tennislive.chromium import launch_chromium  # noqa: PLC0415
+
     with sync_playwright() as p:
         try:
-            browser = p.chromium.launch()
-        except Exception:
-            exe = _chromium_executable()
-            if not exe:
-                return None
-            browser = p.chromium.launch(executable_path=exe)
+            browser = launch_chromium(p)
+        except Exception:  # noqa: BLE001 — 没浏览器就没有台头徽标，调用方认 None
+            return None
         try:
             page = browser.new_page(
                 viewport={"width": VIDEO_W, "height": badge_h}, device_scale_factor=1

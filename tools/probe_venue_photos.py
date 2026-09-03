@@ -267,19 +267,14 @@ CHANNELS = {
 
 # 沙箱里 PLAYWRIGHT_BROWSERS_PATH 指的目录带版本号，playwright 自己找的那条
 # 路径对不上，得显式给 executable_path（CLAUDE.md 里记过同一条）。
-_CHROME_GLOBS = (
-    "/opt/pw-browsers/chromium-*/chrome-linux/chrome",
-    "/opt/pw-browsers/chromium/chrome-linux/chrome",
-)
-
-
 def _chromium_path() -> str:
-    import glob
-    for pattern in _CHROME_GLOBS:
-        found = sorted(glob.glob(pattern))
-        if found:
-            return found[-1]
-    raise Blocked("找不到 Chromium，装了 playwright 也没用")
+    """找 Chromium 只有一份出处：`tennislive.chromium`（原来这儿只认旧目录名
+    `chrome-linux`，新版 runner 上装好了也找不到）。"""
+    from tennislive.chromium import find_chromium  # noqa: PLC0415
+    exe = find_chromium(ask_playwright=False)
+    if not exe:
+        raise Blocked("找不到 Chromium，装了 playwright 也没用")
+    return exe
 
 
 # ⚠️ Chromium 在这个沙箱里连不上网，报的是 `ERR_CONNECTION_RESET`，而

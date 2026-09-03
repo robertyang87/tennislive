@@ -31,6 +31,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 
 from tennislive.digest import build_digest  # noqa: E402
+from tennislive.names import surname_en  # noqa: E402
 from tennislive.models import MatchStatus  # noqa: E402
 from tennislive.render.rating import (  # noqa: E402
     TOUR_FOCUS_LEVELS, UPSET_LOSER_MAX_RANK, _level_of, is_upset, match_score)
@@ -91,21 +92,13 @@ STATE_TTL_DAYS = 7
 
 
 def _surname(name: str) -> str:
-    """英文名取姓。名字有两种形状，姓的位置相反：
-
-      "Alexandra Eala"   → 名在前，姓在最后一个词 → "Eala"
-      "Kenin S."         → 姓在前，名缩写成首字母点 → 姓在第一个词 → "Kenin"
-    ⚠️ 判据：最后一个词若是「单个字母 + 点」（缩写名的形状），就取第一个词；
-    否则取最后一个词。不修这个，ESPN 缩写名会产出 `s.-e.` 这种垃圾 slug，
-    同一场比赛还和全名版各得一个 slug，去重失效、dispatch 点错目录。
-    """
-    words = [w for w in (name or "").strip().split() if w]
-    if not words:
-        return ""
-    last = words[-1]
-    if len(last.rstrip(".")) == 1 and last.endswith("."):
-        return words[0]            # 缩写名：姓在开头
-    return last
+    """英文名取姓——出处只有一份 `tennislive.names.surname_en`。两种形状，姓的位置
+    相反：`Alexandra Eala` → 最后一个词；`Kenin S.` / `Wolf J.J.`（缩写名）→
+    第一个词。不修这个，ESPN 缩写名会产出 `s.-e.` 这种垃圾 slug，同一场比赛还和
+    全名版各得一个 slug，去重失效、dispatch 点错目录。
+    ⚠️ 2026-09-03 之前这个文件里它**定义了两遍**（后一份静默盖掉前一份，
+    两份的缩写规则还不一样），判据在 tests/test_no_duplicate_defs.py。"""
+    return surname_en(name)
 
 
 def slug_for(m) -> str:
@@ -357,18 +350,6 @@ def _specced_surname_pairs() -> dict[frozenset[str], Path]:
         if len(surnames) == 2:
             out[frozenset(surnames)] = p
     return out
-
-
-def _surname(full: str) -> str:
-    """全名取最后一个词；`player_name_en` 还原不了的缩写名（`Gorzny S.` /
-    `Bu Y.`）是「姓 ＋ 名首字母加点」，那时姓是**第一个**词——2026-09-03 干跑
-    里三条就是这么查空的（`S.` 当然对不上任何人）。"""
-    words = str(full or "").split()
-    if not words:
-        return ""
-    if words[-1].endswith(".") and len(words) >= 2:
-        return words[0]
-    return words[-1]
 
 
 def enrich_slam_fields(cands: list[dict], *, lookup=None) -> None:

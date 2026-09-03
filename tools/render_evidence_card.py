@@ -189,22 +189,10 @@ def render(html: str, out: Path) -> Path:
     page.write_text(html, encoding="utf-8")
     from playwright.sync_api import sync_playwright  # noqa: PLC0415
 
+    from tennislive.chromium import launch_chromium  # noqa: PLC0415
+
     with sync_playwright() as pw:
-        try:
-            browser = pw.chromium.launch(args=["--no-sandbox"])
-        except Exception as default_error:  # noqa: BLE001
-            # 同 render_beat_card / versus_poster：沙箱的
-            # PLAYWRIGHT_BROWSERS_PATH 指的版本号和装的对不上时要显式给路径
-            candidates = [os.environ.get("CHROMIUM_PATH"),
-                          "/opt/pw-browsers/chromium-1194/chrome-linux/chrome"]
-            browser = None
-            for exe in candidates:
-                if exe and Path(exe).is_file():
-                    browser = pw.chromium.launch(
-                        executable_path=exe, args=["--no-sandbox"])
-                    break
-            if browser is None:
-                raise default_error
+        browser = launch_chromium(pw, args=["--no-sandbox"])
         tab = browser.new_page(viewport={"width": CARD_W, "height": 900},
                                device_scale_factor=1)
         tab.goto(page.resolve().as_uri())

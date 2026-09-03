@@ -680,19 +680,10 @@ body{{color:{vp.TEXT};font-family:'TL Sans SC','Noto Sans CJK SC',sans-serif;
 
 
 def _launch_browser(pw):
-    try:
-        return pw.chromium.launch(args=["--no-sandbox"])
-    except Exception as default_error:  # noqa: BLE001
-        import os
-        candidates = [
-            os.environ.get("CHROMIUM_PATH"),
-            str(REPO_ROOT / ".local-browser" / "chromium"),
-            "/opt/pw-browsers/chromium-1194/chrome-linux/chrome",
-        ]
-        for executable in candidates:
-            if executable and Path(executable).is_file():
-                return pw.chromium.launch(executable_path=executable, args=["--no-sandbox"])
-        raise default_error
+    """起 Chromium 只有一份出处：`tennislive.chromium.launch_chromium`（原来这儿
+    写死 chromium-1194）。"""
+    from tennislive.chromium import launch_chromium  # noqa: PLC0415
+    return launch_chromium(pw, args=["--no-sandbox"])
 
 
 def render(spec: dict, out: Path, *, variant: str = "poster") -> Path:

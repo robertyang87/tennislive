@@ -32,14 +32,12 @@ POSTER_FONT_STACK = (
 
 
 def _chromium() -> str:
-    """沙箱里 playwright 自报的路径和磁盘上对不上，得自己找。
-
-    ⚠️ 新版目录叫 `chrome-linux64`、旧版叫 `chrome-linux`，所以中间那段用 `*`。
-    """
-    hits = sorted(Path("/opt/pw-browsers").glob("chromium-*/*/chrome"))
-    if not hits:
-        raise SystemExit("找不到 Chromium：/opt/pw-browsers/chromium-*/*/chrome 无命中")
-    return str(hits[0])
+    """找 Chromium 只有一份出处：`tennislive.chromium`。"""
+    from tennislive.chromium import require_chromium  # noqa: PLC0415
+    try:
+        return require_chromium()
+    except FileNotFoundError as e:
+        raise SystemExit(str(e)) from e
 
 
 def render(target: str, out: Path, width: int = 920, height: int = 614) -> None:

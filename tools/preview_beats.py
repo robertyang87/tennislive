@@ -180,7 +180,7 @@ def _render_stat_overlay(kind: str, data: dict, outdir: Path,
 
     from playwright.sync_api import sync_playwright  # noqa: PLC0415
 
-    from tennislive.render.webcards import _chromium_executable, _font_css  # noqa: PLC0415
+    from tennislive.render.webcards import _font_css  # noqa: PLC0415
 
     who = _name_html(str(data["name"]).strip(), data, "overlay.player_card")
     doc = f"""<!DOCTYPE html><html><head><meta charset="utf-8"><style>{_font_css()}
@@ -203,13 +203,11 @@ body{{font-family:'TL Sans SC','Noto Sans CJK SC','Noto Sans SC',sans-serif;}}
     outdir.mkdir(parents=True, exist_ok=True)
     out = outdir / f"_overlay_{kind}_{abs(hash(data['name']))}.png"
     with sync_playwright() as p:
+        from tennislive.chromium import launch_chromium  # noqa: PLC0415
         try:
-            browser = p.chromium.launch()
-        except Exception:
-            exe = _chromium_executable()
-            if not exe:
-                return None
-            browser = p.chromium.launch(executable_path=exe)
+            browser = launch_chromium(p)
+        except Exception:  # noqa: BLE001 — 没浏览器就没有这张叠图，调用方认 None
+            return None
         try:
             page = browser.new_page(
                 viewport={"width": canvas_w, "height": _OVERLAY_BAR_H},

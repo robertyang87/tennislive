@@ -22,9 +22,8 @@ import sys
 from pathlib import Path
 
 # The sandbox ships Chromium under a versioned directory that Playwright's own
-# lookup misses. The renderer already had to solve this, so borrow its answer
-# rather than keeping a second copy that can drift.
-from tennislive.render.webcards import _chromium_executable
+# lookup misses. `tennislive.chromium.launch_chromium` is the single place that
+# solves it — never keep a second copy here that can drift.
 
 
 def main() -> int:
@@ -42,9 +41,10 @@ def main() -> int:
 
     from playwright.sync_api import sync_playwright
 
-    exe = _chromium_executable()
+    from tennislive.chromium import launch_chromium
+
     with sync_playwright() as pw:
-        browser = pw.chromium.launch(executable_path=exe, args=["--no-sandbox"])
+        browser = launch_chromium(pw, args=["--no-sandbox"])
         page = browser.new_page(
             viewport={"width": args.width, "height": 900}, device_scale_factor=2
         )
