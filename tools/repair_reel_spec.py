@@ -113,13 +113,35 @@ def deletion_only(original: str, revised: str) -> bool:
     return all(ch in it for ch in revised)
 
 
-def probe_facts(outdir: Path) -> str:
+def find_probe(outdir: Path, slug: str | None = None) -> Path | None:
+    """本 outdir 里的 probe.json；没有就按 slug 反查仓库里最新的一份。
+
+    ⚠️ **render 的 OUTDIR 按今天的日期算，而 probe.json 躺在 probe 那天的目录**
+    （`match-reel.yml` 的 dry-run 那一步已经按 slug 把它 `sparse-checkout add`
+    回来了，所以它在盘上，只是不在 outdir 里）。跨日渲染时只看 outdir 就是
+    「（没有 probe 事实）」——模型改窗口是盲修，而它在日志上和「这条真的没
+    probe」长得一模一样。`mode=push` 2026-08-07 修过同一个坑（按 slug 反查目录
+    不按今天的日期），这儿是它在修复环上的那一半。同一个 slug 多个日期目录时
+    取最新的，和「查产物按最新那一份」一个道理。
+    """
+    direct = outdir / "probe.json"
+    if direct.is_file():
+        return direct
+    if not slug:
+        return None
+    hits = sorted((ROOT / "output").glob(f"*/reel/{slug}/probe.json"))
+    return hits[-1] if hits else None
+
+
+def probe_facts(outdir: Path, slug: str | None = None) -> str:
     """probe.json 里模型需要的机械事实，压成一段紧凑文本。"""
-    path = outdir / "probe.json"
-    if not path.is_file():
+    path = find_probe(outdir, slug)
+    if path is None:
         return "（没有 probe 事实——窗口只能保守小动）"
     data = json.loads(path.read_text(encoding="utf-8"))
     rows = [f"源片总长 {data.get('duration')}s"]
+    if path.parent != outdir:
+        rows.append(f"（probe 事实来自 {path.parent}——outdir 里没有，按 slug 反查到的）")
     cuts = data.get("scene_cuts") or []
     if cuts:
         rows.append("scene_cuts（镜头切点，秒）：" +
@@ -253,7 +275,7 @@ def repair(spec_path: Path, findings_text: str, outdir: Path,
 
     user = (f"被打回的判据（确定性输出，逐行是真的）：\n{findings}\n\n"
             f"当前 segments：\n{segment_brief(spec)}\n\n"
-            f"源片机械事实：\n{probe_facts(outdir)}\n")
+            f"源片机械事实：\n{probe_facts(outdir, str(spec.get('slug') or spec_path.stem))}\n")
     answer = chat.ask(SYSTEM, user, schema=SCHEMA, max_tokens=2400)
     if not isinstance(answer, dict):
         return "[skip] 模型这步没成（见日志），本轮不修"

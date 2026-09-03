@@ -288,6 +288,7 @@ run 33728989031 干跑）；其余都是测试绿——自动链下一批草稿�
 | ⑥ 第二刀 | TTS 收成 `src/tennislive/video/tts.py`（原两套），解说片和采访线拿到重试和内容缓存 | #754 |
 | 3.2 教模型 | **B6** 收尾先兑现再抛问、**D10** MiniMax 优先反应镜头、**A3** 的软报告那一半（`promote.note_evidence_on_screen`） | #755 |
 | 2.1 | review 抓出的九处静默坏路径 | #742 |
+| 2.2 赛场之上 | 修复环读 probe 按 slug 反查（跨日渲染不再盲修）；20 小时新鲜窗三处收成一份出处；`orchestrate.assemble_draft` 删掉；dry-run 和 pip 装依赖挪到 apt 那两步前面（PATH 上抽掉 ffmpeg 跑过，dry-run 照旧绿） | 本 PR |
 
 ### 5.2 没做的（每条说清为什么停在这儿，别当成漏了）
 
@@ -317,10 +318,13 @@ run 33728989031 干跑）；其余都是测试绿——自动链下一批草稿�
 - **3.2 D9**（`person_story` 模式）：依赖 ⑦，没动。
 - **带式（美网）下数据图的横版变体**：film 版缩进 1080×960 的画面带只有约
   634px 宽，真要铺满得再做一张横版——美网还有一周，先用 film 版顶着。
-- **2.2 里没归到路线表的那些小项**（`--cover-only` 在 `resolve_crop` 之前 return、
-  `mode=render` 按今天日期算 `OUT_DIR`、dry-run 排在装依赖之后、自动 dispatch 的
-  五个空标题输入、`orchestrate.assemble_draft` 零调用、采访线的三条、解说片线的
-  中间物进 git 等）：一条没动，仍然是 2.2 那张表。
+- **2.2 里没归到路线表的那些小项**：赛场之上那一栏做了四条（见 5.1 末行）。
+  ⚠️ `--cover-only` 那条量过**不是 bug**：`build_cover` 不读 `LAYOUT`（那几处
+  `LAYOUT == "band"` 全在段落和章节卡那条路上），`FPS_EXPR` 只影响那段随手删掉的
+  `part_cover.mp4`——白编几秒钟，海报本身一个像素不差，不值得动委托链。
+  没动的：自动 dispatch 的五个空标题输入（删输入是行为改动，要看手动 dispatch
+  还有没有人填）、采访线的三条、解说片线的中间物进 git、`pipeline_health` 不监控
+  explainer/knowledge-adhoc、`_MISCALL_DIAGRAM` 零引用——仍然是 2.2 那张表。
 - **49 份 pending 草稿全是旧合同产的**（没有 `chapters`、没有 `_beat`），
   ⑤ 第三刀对它们只会走「退回旁白原文」那条路（量过：0/47 认得到）。要等下一批
   `assemble` 才有新合同的草稿——这也是「路线真的通了」那个判据还没到的原因。

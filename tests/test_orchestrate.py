@@ -150,40 +150,6 @@ def test_main把今天传给build_digest(monkeypatch, capsys):
     assert "today" in captured, "build_digest 必须收到 today 参数"
 
 
-def test_assemble_draft跳过出声(monkeypatch):
-    o = _tool()
-    notes = o.assemble_draft({"slug": "x"}, skip=True)
-    assert notes == ["[assemble] 已跳过（--no-assemble）"]
-
-
-def test_assemble_draft成功返回备料notes(monkeypatch):
-    o = _tool()
-
-    def _fake_assemble(**kw):
-        return {"_notes": ["flashscore id：A"]}
-
-    fake = type("M", (), {"assemble": staticmethod(_fake_assemble)})()
-    monkeypatch.setitem(sys.modules, "assemble_spec", fake)
-    notes = o.assemble_draft({"slug": "eala-pegula", "home": "A E", "away": "B R",
-                              "event": "C", "year": 2026})
-    assert notes[0] == "[assemble] eala-pegula 草稿备好（未落盘）"
-    assert "flashscore id：A" in notes
-
-
-def test_assemble_draft失败不抛出声(monkeypatch):
-    o = _tool()
-
-    class Boom:
-        def assemble(self, **kw):
-            raise RuntimeError("network down")
-
-    monkeypatch.setitem(sys.modules, "assemble_spec", Boom())
-    notes = o.assemble_draft({"slug": "x", "home": "A", "away": "B",
-                              "event": "C", "year": 2026})
-    assert any("备料没成" in n and "network down" in n for n in notes), (
-        "备料失败必须出声且不抛——dispatch 已经点下去了，别让便宜的备料把整趟带崩")
-
-
 # ---------------------------------------------------------------------------
 # 下面这批是 2026-08-21 编排链修复的判据。
 # 造比赛用 _match2（可控级别/轮次/排名/种子/时间），别改上面那个老 _match——
@@ -375,6 +341,35 @@ def test_state条目七天过期同slug再交手不被永久压住(monkeypatch, 
                "date": (today + dt.timedelta(days=5)).isoformat()}
     assert o.dispatch_plan([rematch], state) == [rematch], (
         "差 5 天是再交手，不许被老条目永久压住")
+
+
+def test_新鲜窗只有一份出处_三处写的是同一个数():
+    """「上一个比赛日的不要做了」落到机器上是一个小时数，而它原来写在三处：
+    `orchestrate.FRESH_RESULT_HOURS`（候选侧）、`promote_reel_draft.PENDING_MAX_AGE`
+    （草稿侧）、`reel-auto-ready.yml` 里手抄的 `timedelta(hours=20)`（重试侧）。
+    改一处漏两处的样子是「这一班放过、下一步拦下」，不报错。yml 那份现在
+    从 promote 读那个常量；候选侧和草稿侧仍是两个名字（两个模块不该互相
+    引用），由这条钉成同一个数——和 HEAT_TOP_RANK 那条同一个形状。
+    ⚠️ 这段话里别写「import <名字>」——`test_测试用到的第三方包都在dev依赖里`
+    按行首正则扫，docstring 一起扫（写这条时就被自己的说明误伤了一次）。"""
+    import datetime as _dt
+    import importlib.util
+    import re
+    from pathlib import Path
+    ROOT = Path(__file__).resolve().parents[1]
+    o = _tool()
+    spec = importlib.util.spec_from_file_location(
+        "promote_reel_draft", ROOT / "tools" / "promote_reel_draft.py")
+    promote = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(promote)
+    assert _dt.timedelta(hours=o.FRESH_RESULT_HOURS) == promote.PENDING_MAX_AGE, (
+        f"候选侧 {o.FRESH_RESULT_HOURS}h ≠ 草稿侧 {promote.PENDING_MAX_AGE}")
+    yml = (ROOT / ".github" / "workflows" / "reel-auto-ready.yml").read_text(encoding="utf-8")
+    code = "\n".join(ln for ln in yml.splitlines() if not ln.strip().startswith("#"))
+    assert "from promote_reel_draft import PENDING_MAX_AGE" in code, (
+        "reel-auto-ready 没从 promote 读新鲜窗")
+    assert not re.search(r"timedelta\(hours\s*=\s*\d+\)", code), (
+        "reel-auto-ready 又手抄了一份小时数")
 
 
 def test_已有spec的候选跳过并出声(monkeypatch, tmp_path, capsys):

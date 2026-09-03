@@ -59,17 +59,24 @@ jobs:
             RECEIVED=$(jq -r '._production.received_at // ""' "$DRAFT")
             if ! python - "$RECEIVED" <<'PY'
           import sys
-          from datetime import datetime, timedelta, timezone
+          from datetime import datetime, timezone
+
+          # 新鲜窗只有一份出处：promote_reel_draft.PENDING_MAX_AGE（和调度侧
+          # orchestrate.FRESH_RESULT_HOURS 由测试钉成同一个数）。原来这儿手抄
+          # 了一个 20——三处各写一遍，改一处漏两处的样子是「这一班放过、下一步
+          # 拦下」，不报错。
+          sys.path.insert(0, "tools")
+          from promote_reel_draft import PENDING_MAX_AGE
 
           try:
               stamp = datetime.fromisoformat(sys.argv[1].replace("Z", "+00:00"))
               assert stamp.tzinfo is not None
           except (AssertionError, ValueError):
               raise SystemExit(1)
-          raise SystemExit(datetime.now(timezone.utc) - stamp > timedelta(hours=20))
+          raise SystemExit(datetime.now(timezone.utc) - stamp > PENDING_MAX_AGE)
           PY
             then
-              echo "[expired] $SLUG 已超过 20 小时或缺 received_at，不再追旧比赛"
+              echo "[expired] $SLUG 已超过 PENDING_MAX_AGE 或缺 received_at，不再追旧比赛"
               continue
             fi
             PROBE=$(git ls-tree -r --name-only HEAD \

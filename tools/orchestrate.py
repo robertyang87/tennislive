@@ -467,26 +467,6 @@ def _workflow_for(column: str) -> str:
         column, "match-reel.yml")
 
 
-def assemble_draft(c: dict, *, skip: bool = False) -> list[str]:
-    """⚠️ 已弃用：备料职责移到了 probe 工作流的「自动备料写 spec 草稿」步骤
-    （那儿有 captions + DeepSeek key + 能写盘），编排器不再本地跑 assemble。
-
-    留着这个函数是为了不破坏它名下三条测试的历史判据——「备料失败不许把
-    dispatch 带崩」这条规矩仍然成立，只是执行点换到了 probe 工作流里。
-    """
-    if skip:
-        return ["[assemble] 已跳过（--no-assemble）"]
-    try:
-        from assemble_spec import assemble
-        draft = assemble(slug=c["slug"], home=c["home"], away=c["away"],
-                         event=c["event"], year=c["year"], fixture="",
-                         flashscore_id=None)
-        return [f"[assemble] {c['slug']} 草稿备好（未落盘）", *draft["_notes"]]
-    except Exception as exc:  # noqa: BLE001 —— 备料失败不许把 dispatch 带崩
-        return [f"[assemble] {c['slug']} 备料没成（{type(exc).__name__}: {exc}）"
-                "——不影响 probe，终审时手动补"]
-
-
 def _report_rank_coverage(dig) -> None:
     """把「这一轮打分到底有没有排名这一维」打出来。
 
