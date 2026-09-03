@@ -1,0 +1,56 @@
+{
+  "status": "pass",
+  "checked_at": "2026-09-02T23:55:09Z",
+  "auditor": "opencv-haar-v1",
+  "expected_subject": "布云朝克特",
+  "identity_evidence": "L0-bound spec subject + same-source frame_at",
+  "spec_sha256": "ca85250c1332d569ad6897987da70416ef73d9a3a6a379b5679f5346e44ba24f",
+  "poster_sha256": "6191e418eaececd3bdaf0ec6364bbbd7f65b9a0466f620195fd662e927608b63",
+  "thresholds": {
+    "close_up_zoom": 1.5,
+    "face_height_ratio": 0.08,
+    "close_up_face_height_ratio": 0.14,
+    "face_area_ratio": 0.01,
+    "face_sharpness": 45.0,
+    "face_contrast": 32.0,
+    "eyes": 2
+  },
+  "result": {
+    "poster": {
+      "decodable": true,
+      "format": "JPEG",
+      "width": 1080,
+      "height": 1440,
+      "photo_region": [
+        0,
+        150,
+        1080,
+        810
+      ]
+    },
+    "face": {
+      "detector": "frontal-default",
+      "box": [
+        274,
+        186,
+        317,
+        317
+      ],
+      "detected_faces": 4,
+      "eyes": 3,
+      "face_height_ratio": 0.39136,
+      "face_area_ratio": 0.11487,
+      "center_x_ratio": 0.40046,
+      "center_y_ratio": 0.24012,
+      "sharpness": 233.189,
+      "contrast": 79.0
+    },
+    "contract": {
+      "shot_type": "",
+      "frame_at": 56.9,
+      "zoom": 1.0,
+      "focus_y": 0.5
+    }
+  },
+  "issues": []
+}
