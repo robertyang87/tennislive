@@ -18,7 +18,11 @@
       }
     ],
     "winner": "萨巴伦卡",
-    "result": "6-1 6-1"
+    "result": "6-1 6-1",
+    "portrait": {
+      "image": "assets/reel/sabalenka-iatcenko-cover.jpg",
+      "_portrait_why": "WTA 官方赛后稿/集锦头图，定时自动补齐"
+    }
   },
   "_production": {
     "kind": "orchestrated_reel",
@@ -271,44 +275,42 @@
     "visual_status": "waiting",
     "retryable": false,
     "cold_open": {
-      "start": 177.16,
-      "end": 189.22,
+      "start": 152.37,
+      "end": 161.13,
       "kind": "match_point",
       "winner_visible": true,
-      "reason": "画面覆盖 177.16–189.22 秒：177.16–178.5s 萨巴伦卡发球制胜分落地，180.5–182.5s 她走向网前，184.5–186.5s 两人完成握手并走向主裁，188.5s 显示全场比分 'ARYNA SABALENKA 6 6 / POLINA IATCE NKO 1 1'，标志 6-1 6-1 的赛点与赛后握手余波。赢家萨巴伦卡在画面中清晰可见。",
-      "confidence": 0.93
+      "reason": "152.37s–154.5s 比分板显示 SET POINT 萨巴伦卡发球前的准备画面；158.5s 亚特琴科表情紧绷擦汗；160.5s 后场 ROLEX 时钟正在跑动，最后一分进行中；萨巴伦卡（胜者）在本窗口始终可见。",
+      "confidence": 0.82
     },
     "ending": {
-      "start": 177.16,
-      "end": 189.22,
-      "kind": "winner_celebration",
+      "start": 156.36,
+      "end": 161.13,
+      "kind": "match_point",
       "winner_visible": true,
-      "reason": "ending 完全覆盖 cold_open（177.16–189.22）：包括 177.16–178.5s 制胜分落地、180.5–182.5s 网前确认、184.5–186.5s 与 Iatcenko 握手、188.5s 官方记分牌显示最终比分 6-1 6-1 萨巴伦卡获胜。紧接其后是品牌 outro（189.22s），符合握手后立即收尾规则。",
-      "confidence": 0.93
+      "reason": "156.36s 亚特琴科擦汗特写；158.5s–160.5s 仍是赛点/最后一分进行中画面（ROLEX 时钟跑动），萨巴伦卡作为胜者全程可见；完全覆盖冷开场 152.37–161.13 的窗口并延伸至 161.13 切点。",
+      "confidence": 0.82
     },
     "cover": {
-      "same_match": false,
-      "subject": "",
+      "same_match": true,
+      "subject": "萨巴伦卡",
       "moment": "other",
-      "wrong_or_old": true,
-      "reason": "本次任务是接触表审核，没有提供候选封面照片。contact sheet 中无独立可作封面的静态关键帧。结构化结果显示萨巴伦卡 6-1 6-1 胜 Iatcenko，赛场为 US Open。由于缺少候选封面图，无法验证 same_match，标为 false。",
-      "confidence": 0.4
+      "wrong_or_old": false,
+      "reason": "封面上球员为萨巴伦卡，身穿 US Open 标志性黑色 Nike 网球裙，胸前网状拼接与她在 contact sheet 中（92.5s、94.5s、130.5s、138.5s）完全一致；背景蓝色 US Open 标识墙与画面中多次出现的赛事标识吻合；右手腕可见小皇冠纹身与接触表对应。但封面无法在画面上看到对手亚特琴科或具体比分牌，因此只能凭服装与赛事标识判断为本场同人物，未发现旧图证据。",
+      "confidence": 0.78
     },
     "problems": [
-      "没有官方高清封面候选",
-      "封面无法证明是同一场，或疑似旧图/错图",
-      "封面置信度 0.40 低于 0.80",
-      "封面人物应为 萨巴伦卡，模型识别为 空",
+      "ending 没有完整覆盖 cold_open，结局不能只在开头出现",
+      "封面置信度 0.78 低于 0.80",
       "封面情绪应为 winner_celebration，现在是 other"
     ],
     "model_attempts": 1,
-    "input_sha256": "6217596de0c2b6de21306ac25eed5caa1dfb051fb83f317814621bf8b3e29f6b",
+    "input_sha256": "4a9b2468c73666de5738f72efff1d22b81abf9336aa612b583e1813691ede0ce",
     "inputs": [
       "contact_00.jpg",
       "contact_01.jpg",
       "contact_02.jpg",
       "contact_03.jpg"
     ],
-    "cover_image": ""
+    "cover_image": "assets/reel/sabalenka-iatcenko-cover.jpg"
   }
 }
