@@ -156,13 +156,28 @@ def credentials() -> tuple[str, str]:
     return (key, region) if key and region else ("", "")
 
 
+#: 显式关掉 Azure、退回 edge-tts 的开关（值写 `edge`）。2026-09-03 仓库的
+#: `AZURE_SPEECH_KEY` 突然 401（同一把钥匙 15:31Z 还渲成过一条），而
+#: `match-reel.yml` 的 dispatch 表单已经 25 项满了、加不了输入——账号所有者定
+#: 「换 edge tts」，于是开关走环境变量，spec 用 `tts_backend: "edge"` 认领
+#: （`build_match_reel.apply_tts_backend` 把它落成这个变量）。
+_ENV_BACKEND = "TENNISLIVE_TTS_BACKEND"
+
+
+def forced_off() -> bool:
+    """环境里显式写了 `TENNISLIVE_TTS_BACKEND=edge` 就不走 Azure，哪怕钥匙在。"""
+    return os.environ.get(_ENV_BACKEND, "").strip().lower() == "edge"
+
+
 def available() -> bool:
-    """key/region 都在，而且 SDK 装得上。
+    """key/region 都在，而且 SDK 装得上，而且没被显式关掉。
 
     ⚠️ **两样都要查。** 只查环境变量的话，在没装 SDK 的机器上会一路走到
     `import` 才炸，而那时可能已经下完几百 MB 源片了（这个仓库栽过三次：
     playwright、Chromium、cv2 都是「本地装着不等于 CI 装着」）。
     """
+    if forced_off():
+        return False
     if not all(credentials()):
         return False
     try:
@@ -173,7 +188,10 @@ def available() -> bool:
 
 
 def why_unavailable() -> str:
-    """说清楚差哪一样——「没配」和「没装」是两条完全不同的出路。"""
+    """说清楚差哪一样——「没配」「没装」「被关掉」是三条完全不同的出路。"""
+    if forced_off():
+        return (f"{_ENV_BACKEND}=edge 显式关掉了 Azure（spec 的 `tts_backend` "
+                f"或环境变量），这一趟走 edge-tts")
     key, region = credentials()
     if not key or not region:
         missing = [n for n, v in ((_ENV_KEY, key), (_ENV_REGION, region)) if not v]
