@@ -854,8 +854,16 @@ def main() -> int:
             encoding="utf-8",
         )
         print(f"[PushPlus] 流水号凭据已写入：{receipt_path}")
+    # ⚠️ 印的是**正文**的字数，不是 copy_text 的长度——后者含标题和那行空行，
+    # 比正文多二十几字。而受 1000 字硬限制（`split_copy` 的 `BODY_MAX`）的只有
+    # 正文；印 copy_text 的长度会得到一个「1004 字」这样跨过上限的数，读日志的
+    # 人会以为那道闸漏了，而它量的根本是另一个量纲。走到这儿说明 `build_html`
+    # 里那次 `split_copy` 已经放行过，这里再切一次不会抛。
+    # ⚠️ 别叫 `body`——上面几行那个 `body` 是推送的 HTML，两个只差一层意思的
+    # 名字挨在一起，改的人迟早会拿错一个。
+    _, caption_body = split_copy(copy_text)
     print(f"已推送：{title}\n  成片 {url}\n  复制页 {copy_url}\n"
-          f"  文案 {len(copy_text)} 字")
+          f"  正文 {len(caption_body)}/{BODY_MAX} 字")
     return 0
 
 
