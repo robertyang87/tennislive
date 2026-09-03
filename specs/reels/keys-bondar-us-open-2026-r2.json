@@ -1,0 +1,232 @@
+{
+  "slug": "keys-bondar-us-open-2026-r2",
+  "_column": "reel",
+  "layout": "band",
+  "scorebox": [104, 887, 660, 980],
+  "_scorebox_why": "沿用同赛事 `wu-duckworth-us-open-2026-r2` / `wu-walton` 量出的那一组（左缘 104、上下沿 887~980、兜底右缘 660），**并在本场逐格核过**：probe 出的 score_00~05 记分条墙里，0.5s 的 `22 KEYS USA 1 0 / BONDAR HUN 0 30` 到 172.5s 的 `MATCH POINT / KEYS 5 6 6 [9] / BONDAR 7 4 6 [5]`，每一格深蓝板都完整落在框内、上下没被切。这一场是 17 号球场（Stadium 17），和 `zheng-liutova-us-open-2026-r1` 同一块场地、同一套转播图形。真右缘随盘数变（美网的板每打完一盘 +38px），由 `resolve_board_insets` 每段现量，顶层这四个数只给左缘、上下沿和兜底右缘。",
+  "source_url": "https://www.youtube.com/watch?v=kCDHqTFmgrY",
+  "_source": "US Open 官方 YouTube 频道（oEmbed `author_name: US Open Tennis Championships`，@usopen）本场官方集锦《Madison Keys vs. Anna Bondar Highlights | 2026 US Open Round 2》，probe 量到 1920×1080、207.56s、29.97fps。画面自证：左下记分条从头到尾烧着 `22 KEYS USA / BONDAR HUN` 和逐盘比分，30.5s 的 `SET POINT / KEYS 5 [30] / BONDAR ⇢6 [40]` 正是 flashscore `IRrawdYh` 首盘第 12 局的 `30:40 |B2|`（邦达尔发球）；74.5s 的 `SET POINT #2 / KEYS 5 5 [40] / BONDAR ⇢7 4 [30]` 正是次盘第 10 局的 `40:30 |B1| |B2|`；106.5s 起的 `MATCH POINT #3 / KEYS ⇢5 6 3 [15] / BONDAR 7 4 5 [40]` 正是决胜盘第 9 局（凯斯发球，4-5 那一局）的 `15:40 |B1| |B3|`；146.5s 起 `10 POINT TIEBREAK`；160.5s 起 `MATCH POINT / KEYS 5 6 6 [9] / BONDAR ⇢7 4 6 [5]`。50.5~53.7s 和 100.5~105.4s 两处全屏台标印着 `WOMEN'S SINGLES | 2ND ROUND / STADIUM 17`。解说词（captions.txt）120.32s `saves a third match point. Here's a fourth.`、142.00s `And Keys comes up with something good.`、173.20s `Madison Keys gets the win. A remarkable victory.`、177.84s `57 64 76` 与赛果逐项一致。片尾板从 204.44（最后一刀 scene_cut）起，`silent_audio [[204.51, 207.56]]` 互证；段落全部收在 200.5 之前。",
+  "cover": {
+    "matchup": [
+      {"name": "凯斯", "name_en": "Madison Keys", "country": "USA", "rank": 24},
+      {"name": "邦达尔", "name_en": "Anna Bondar", "country": "HUN", "rank": 73}
+    ],
+    "_rank_why": "两人当期排名**双源一致**：WTA 官方 `players/ranked`（`rankedAt 2026-08-31`：Madison Keys ranking 24 / id 316959；Anna Bondar ranking 73 / id 322942）＋ 美网官方 `players.json`（wta316959 singles_rank 24、seed true；wta322942 singles_rank 73、seed false）。tennisexplorer 的 mutual 页也报 24 / 73。⚠️ flashscore 当日表里的 `CA÷200` / `CB÷91` **不是排名**，一个字都没用。⚠️ 译名都调 `player_zh()` 取的：`Madison Keys → 凯斯`、`Anna Bondar → 邦达尔`。种子号 22 来自美网官方 `players/matches/wta316959_matches.json` 的 `team1.seed: 22`，和记分条上烧的 `22 KEYS` 一致——种子不是排名，海报上印的是排名 24。",
+    "_heat_why": "凯斯世界第 24，过不了「前 20」那道名次闸，热度不在名次里：她是 **2025 年澳网冠军**（决赛 6-3 2-6 7-5 胜萨巴伦卡，tennisexplorer 2025 年表），生涯最高世界第 5，本届 22 号种子；而这一场本身是**决胜盘 2-5 落后、连救五个赛点的逆转**（flashscore `df_st_1` `Match points saved 5`），账号所有者点名要「突出逆转的剧情」。大满贯第二轮，一个前大满贯冠军差五个赛点出局——刷到的人认得这个名字，也认得这个形状。",
+    "winner": "凯斯",
+    "result": "5-7 6-4 7-6(5)",
+    "_result_why": "赛果三处一致：flashscore 当日表 `AE÷Keys M.`（home）`BA÷5 BC÷6 BE÷7 DE÷10`、`AF÷Bondar A.`（away）`BB÷7 BD÷4 BF÷6 DF÷5`，`AG÷2 / AH÷1` 盘数 2:1；美网官方 `wta316959_matches.json` Round 2 `sets[2] = [{score 7, tiebreak 10}, {score 6, tiebreak 5}]`、`winner: 1`（team1 = Keys）；源片解说 177.84s `57 64 76`。赢家视角写 `5-7 6-4 7-6(5)`——括号里是**输掉那一盘的人**在抢十里拿到的分（邦达尔 5），不随视角翻。⚠️ 这是大满贯**决胜盘**（三盘两胜打满 2-1），抢的是 10 分：凯斯 10、邦达尔 5，`DE÷10` 就是那个 10。",
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "凯斯",
+    "hook": "决胜盘二比五落后\n五个赛点一个没给",
+    "_hook_why": "按「钩子讲的过程要是整场的」＋「不许重复比分板」写的。比分板正下方印着 5-7 6-4 7-6(5)，所以钩子不写比分，两行讲的是比分板上看不见的这场球的形状：**「决胜盘二比五落后」**（逐分：决胜盘 2-5 时邦达尔发球胜赛局）是铺垫，**「五个赛点一个没给」**（`df_st_1` `Match points saved 5`：邦达尔发球局 2 个 `|B3|`、凯斯自己发球局 3 个 `|B3|`，全部救回）是落点。主语是扛住的那一方，数的是对手拿到了几个赛点、她救了几个——不是「N 个赛点只兑现 1 个」那种同义反复。行长 8 / 8，都 ≤10。⚠️ 和 `shang-rublev` 的钩子（「决胜盘二比五落后，五个赛点 / 他一个没给，掀翻世界第十六」）形状相近——那是 2026-08-05 账号所有者亲口定为范例的写法，两条片子隔了一个月、两个不同的人，这里照着范例的结构写而不是照抄，第二行不再挂对手的排名。",
+    "_no_cover_narration_why": "赛场之上的封面**不配音**、定长 1.2 秒（`test_封面跟着配音走只给网球有故事`：封面跟着配音走是网球有故事那条线的规矩，这条线停久了会被当成图片）。第一版写了 `cover.narration`，全量测试当场红，删掉。",
+    "topic": "美网第二轮 · 17 号球场",
+    "portrait": {
+      "image": "assets/reel/keys-us-open-2026-r2.jpg",
+      "focus": 0.36,
+      "focus_y": 0.0,
+      "zoom": 1.0,
+      "_photo_why": "美网官方图片接口本场实拍（`f_USTA2421599_20260903_BJPA0176.jpg`，说明 `Madison Keys reacts during a Women's Singles match on Day Five of the 2026 US Open … Thursday, September 3, 2026 in Flushing, NY. (Photo by Brad Penner/USTA)`，title `M. Keys vs. A. Bondar | R2`——人物、对手、轮次、日期由赛事方自己写出来，四道闸门第一道直接过）。情绪对题：**握拳、咬牙、低头收拳**——这场球的全部意思就是「扛住」，六张同一批候选里只有这一张是情绪外露的近景（其余五张是击球中的中景，`uso_sheet.jpg` 并排看过）。近景、球场为背景、眼睛睁着（半垂但读得出表情，不是眨眼）。⚠️ 同一批还有两张邦达尔的（`BJPA0404` / `BJPA0415`），封面放凯斯——她是赢家、大名字、也是这条片子要讲的人。",
+      "_low_res_why": "1280×720 是美网官方图片接口的出版上限（CLAUDE.md 2026-08-25 那节：十二个前缀、六个目录、三种 `?width=` 参数全探过，`f_` 就是顶），铺 1080×1440 要放大 2.0 倍。四条渠道当天都查过（`find_cover_photo.py --player Keys --event \"US Open\" --date 2026-09-03`）：WTA photo-resources 无（大满贯不进）、AP 通讯社按 Keys 搜无本场、USA TODAY 每日图集当天那一辑未上线（按比赛日出，往往次日）、赛事 WP 媒体库美网没有。官方图这一批 16:29Z 上线（比赛 15:07Z 开打、18:06Z 打完，是**中场**那一波），到写 spec 时（18:55Z）没有第二波。**它是相机原图不是电视截图**：长焦浅景深，背景挡板整块虚化——和源片抽帧（压缩转播流 1920×1080 再放大 1.33 倍）不是一回事，宁可 2.0 倍放大一张真照片。",
+      "_geometry_why": "1280×720 按 `fit: cover` 竖向正好铺满（2.0 倍），`zoom=1.0` 时 `focus_y` 是死的——所以看的是**横向**：原图里她的头在 x≈43%，脸从 y≈2% 到 32%（帽顶~下巴），铺满后落在 y≈30~460：**整张脸在钩子那条带（790 起）之上**，比分板更不碰。帽子那几十像素落进台头带（0~170），所以 `focus` 不取 0.43 而取 **0.36**——把裁切窗口往左挪 180px，脸的横向中心从 x≈540 挪到 x≈720，台头两行文字（左对齐，收在 x≈450 之内）压的就是她左肩后面的挡板，不压帽子和脸。**两版都渲出来看过**（`render_cover_local.py`，0.43 那版「美网第二轮 · 17 号球场」压在帽檐左侧），不是按公式推的。"
+    },
+    "scoreboard": {
+      "court": "Stadium 17",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%222%3A58%3A00%22%2C%22source%22%3A%22US%20Open%20official%20players%2Fmatches%20wta316959_matches.json%20Round%202%20duration%202%3A58%20%3D%20setDurations%2052%2B49%2B77%22%7D",
+        "field": "duration"
+      },
+      "_court_why": "三源一致：美网官方 `wta316959_matches.json` Round 2 `courtName: Stadium 17`；源片 50.5~53.7s 全屏台标印着 `WOMEN'S SINGLES | 2ND ROUND / STADIUM 17`（缩略图 52.5s 那一格读的）；解说 101.92s `a third set coming up here on Stadium 17`。",
+      "_duration_why": "**两个独立源，差一分钟**：美网官方 `duration: 2:58`（分盘 52+49+77=178 分钟，自洽）；flashscore `df_sui_1` 报 0:52 / 0:50 / 1:17，全场 2:59。比分板印官方那个 2:58。旁白里**不报全场用时的精确值**，只在小红书正文里写「近三个小时」。"
+    }
+  },
+  "_match": {
+    "status": "result_verified",
+    "source": "flashscore_points",
+    "source_id": "IRrawdYh",
+    "flashscore_id": "IRrawdYh",
+    "participants": ["凯斯", "邦达尔"],
+    "set_scores_home_away": [[5, 7], [6, 4], [7, 6]],
+    "tiebreaks_home_away": [null, null, [10, 5]],
+    "winner": "凯斯",
+    "loser": "邦达尔",
+    "winner_result": "5-7 6-4 7-6(5)",
+    "loser_result": "7-5 4-6 6-7(5)",
+    "_direction_why": "flashscore `AE÷Keys M.` 是 home、`AF÷Bondar A.` 是 away，`AG÷2 / AH÷1` 盘数 2:1，赢家是凯斯；美网官方 `winner: \"1\"`（team1 = Keys）第二处印证；`df_st_1` `Match points saved` 主队 5 / 客队 0 第三处印证（救赛点的只能是赢家）。",
+    "_order_why": "⚠️ `participants` 跟 flashscore 的 home/away（这场 home 恰好就是凯斯，所以和 `cover.matchup` 同序——**是碰巧，不是规则**）。`participants[0]=凯斯` 对齐 `set_scores_home_away[0]=[5,7]`（home 首盘 5 局）。",
+    "_tiebreak_why": "决胜盘 6-6 打的是大满贯的**抢十**：flashscore 当日表 `DE÷10 / DF÷5`（第三盘那一对槽位，不是 `DA/DB`——那是首盘的），美网官方 `sets[2].tiebreak` 10 / 5。前两盘没有抢七（5-7、6-4 都是局数分出的），所以写 null。"
+  },
+  "stats": {
+    "a": {"aces": 5, "df": 8, "winners": 51, "ue": 50, "first_in": 73, "first_won": 48, "second_total": 40, "second_won": 20, "bp_conv": 4, "bp_chances": 13, "pts_won": 125, "pts_total": 242, "first_total": 113, "headshot": "assets/players/headshots/wta-316959.jpg"},
+    "b": {"aces": 2, "df": 8, "winners": 17, "ue": 36, "first_in": 69, "first_won": 41, "second_total": 60, "second_won": 31, "bp_conv": 4, "bp_chances": 11, "pts_won": 117, "pts_total": 242, "first_total": 129, "headshot": "assets/players/headshots/wta-322942.jpg"},
+    "_source": "flashscore 本场 `IRrawdYh` 的 `df_st_1`（大满贯女子这场有 Winners / Unforced errors），`python3 tools/match_stat_hooks.py IRrawdYh --stats-block` 原样吐出来的。`stats.a` 跟 `cover.matchup[0]=凯斯`，而 flashscore 的 home 也是凯斯，所以 a=home、b=away **不用对调**（和 `wu-duckworth` 那条正好相反，那条 home 是输家）。顺序核过三处：`a.pts_won=125` 是赢家的（`Total Points Won 52% (125/242)`）、`a.winners=51` 对应凯斯全场 51 个制胜分（邦达尔 17）、`b.bp_chances=11` 对应邦达尔 `Break Points Converted 4/11`。`first_total` 按 `first_in + second_total`（凯斯 73+40=113、邦达尔 69+60=129），反算一发进球率 73/113=65%、69/129=53%，与 feed 报的 `65% / 53%` 一致。",
+    "_headshot_why": "凯斯 `wta-316959.jpg` 是仓库里已有的那张（`bejlek-keys-cincinnati-2026-qf` 用过，挂的中文名也是「凯斯」）；邦达尔 `wta-322942.jpg` 是今天用 `fetch_official_headshot.py wta \"Anna Bondar\" --id 322942` 新拉的（39488 种颜色，是真头像不是占位剪影）。左脸对左名：a=凯斯=左，b=邦达尔=右。"
+  },
+  "_hit_data": "跑过 `python3 tools/match_stat_hooks.py IRrawdYh`，9 条候选：总分差 8（125:117）、凯斯一发得分率逐盘 62%→88%→58%、邦达尔 65%→61%→50%、破发点 4/13 对 4/11、连续保发 7 对 6、交手 2:0（2026 查尔斯顿红土 R16 6-2 7-5 ＋ 本场）、近况 4 胜对 3 胜。**挑进片子的是自己从 `df_st_1` 读出来、比候选更狠的两条**：`Match points saved 5 / 0`（决胜盘邦达尔发球局 2 个 ＋ 凯斯发球局 3 个，逐分里五个 `|B3|` 全在）——它就是钩子；以及 `Winners 51 / 17`（凯斯的制胜分是对手的三倍，非受迫失误 50 对 36，全场净胜只有 8 分）——它是收尾那一句。候选里用上的还有次盘一发得分率 88%（第 5 段的技术归因）和次盘破发点 1/7（第 6 段「第七个破发点」）。`Last 10 balls 8 / 2` 没进旁白（读者不知道这个指标是什么）。",
+  "_durations": [["Set 1", "0:52"], ["Set 2", "0:49"], ["Set 3", "1:17"], ["全场", "2:58"]],
+  "_turning_points": "逐分（`df_mh_1`）把转折钉得很死，而且**全都在集锦里**：\n① 决胜盘 2-5，邦达尔发球胜赛局：`30:40 |B3|`、`40:A |B3|`（比分是 home-first，40 在邦达尔那边就是她的赛点）两个赛点被救，然后 `A:40 |B1|` 凯斯破发 → 3-5。⚠️ **这一局集锦没有画面**（集锦从 MP#3 起才进决胜盘），旁白第 8 段只用一句话交代。\n② 决胜盘 3-5，凯斯发球，14 分的马拉松局：`15:40 |B1| |B3|`（MP#3，源片 106~120s）、`30:40 |B1| |B3|`（MP#4，120~131s，解说「saves a third match point. Here's a fourth」）、连着两次 `A:40`/`40:40`、再 `40:A |B1| |B3|`（MP#5，132~144s，解说「Keys comes up with something good」）、最后 `A:40` 保住 → 4-5。**三个赛点三段画面都在，各占一段。**\n③ 5-5 `15:0, 30:0, 40:0 |B1|` 零封破发；6-5 `15:0, 30:0, 40:0` 零封保发——**集锦里没有**，第 10 段旁白一句带过。6-6 邦达尔保发进抢十。\n④ 抢十 0-1 起（146.5s 记分条 `KEYS 0 / BONDAR 1`）到 9-5 赛点（160.5s），10-5 收。\n另外两处也在片里：首盘 5-6 邦达尔发球的盘点（`30:40 |B2|`，源片 29.6~40.7s，凯斯正手出界）；次盘 4-5 邦达尔发球的 `40:30 |B1| |B2|`（源片 74.5~89.2s，凯斯破发拿盘）。",
+  "editorial": {
+    "mode": "match_review",
+    "hook": ["决胜盘二比五落后", "五个赛点一个没给"],
+    "_hook_why": "这一栏和 `cover.hook` 必须逐字相同。理由见 `cover._hook_why`。",
+    "question": "决胜盘 2-5 落后、对面握着五个赛点，凯斯是怎么一个都没给出去、还把这场球翻回来的？",
+    "thesis": "这场球凯斯打了 51 个制胜分对邦达尔的 17 个，但也送出了 50 个非受迫失误，所以全场净胜只有 8 分——一场她自己「打出来」也「送出去」的球。首盘她被破两次输掉；第二盘她把一发得分率拉到 88%、五个发球局全保，靠第七个破发点才破掉邦达尔拿下；决胜盘 2-5 被逼到绝境之后，五个赛点全部扛住（对手发球局两个、自己发球局三个），然后连赢两个零封局进抢十，抢十 10-5。翻盘不是对手崩了，是她在最要命的那五分上一分都没让。",
+    "beats": [
+      "北京时间 9 月 3 日夜里 11 点多，美网第二轮，17 号球场。22 号种子凯斯对世界第 73 的匈牙利人邦达尔。首盘凯斯的发球局两次被破（面对 3 个破发点丢 2 个），5-6 邦达尔发球的盘点上凯斯正手出界，5-7 先丢一盘（52 分钟）。",
+      "第二盘凯斯一发得分率 88%、五个发球局一个没丢，但前九局谁都破不掉谁；第 10 局邦达尔发球 40-30（盘点，也是凯斯这一盘的第七个破发点，前六个全没兑现）她终于破发，6-4 扳平（49 分钟）。",
+      "决胜盘凯斯 2-4 时自己的发球局被零封破发，2-5，邦达尔发球胜赛局拿到两个赛点——凯斯救回来并破发；3-5 凯斯发球的 14 分马拉松局里又面对三个赛点（15-40、30-40、对手占先），全部扛住保发。五个赛点，一个没给。",
+      "5-5 零封破发、6-5 零封保发，6-6 进大满贯决胜盘的抢十，从 0-1 打到 10-5。全场制胜分 51 比 17、非受迫失误 50 比 36、总分只多 8 分，用时 2 小时 58 分。"
+    ],
+    "human_context": {
+      "angle": "**去年美网她是以澳网冠军的身份来的，首轮就输给了萨拉苏亚**（6-7(10) 7-6(3) 7-5，2025-08-25）。这一次 22 号种子、第二轮，又被拖进决胜盘、又被逼到赛点——同一块场地一年前的那道坎，这次她用五个救回来的赛点迈过去了。对面的邦达尔 29 岁、匈牙利人、世界第 73、生涯最高第 50，今年 4 月查尔斯顿红土两人交过一次手（凯斯 6-2 7-5），这是硬地上第一次碰面，也是邦达尔第一次把凯斯逼到赛点。",
+      "facts": [
+        "凯斯 5-7 6-4 7-6(5) 胜 Anna Bondar，2026 美网女单第二轮，Stadium 17，用时 2:58（美网官方 `wta316959_matches.json`；flashscore `IRrawdYh` 报 2:59）。",
+        "凯斯 2025 年澳网冠军（决赛 6-3 2-6 7-5 胜萨巴伦卡，2025-01-25）；2025 年美网首轮 6-7(10) 7-6(3) 7-5 负于萨拉苏亚（2025-08-25）。两条都出自 tennisexplorer 的 2025 年逐场表，美网那条另有美网官方 2025 图库 `M. Keys vs. R. Zarazua | R1` 印证。",
+        "两人当期排名凯斯 24、邦达尔 73（WTA 官方 `players/ranked` rankedAt 2026-08-31 ＋ 美网官方 players.json 双源一致）；凯斯本届 22 号种子（players/matches `seed: 22`，记分条烧着 `22 KEYS`）；邦达尔生涯最高第 50（tennisexplorer 球员页 `Current/Highest rank - singles: 73. / 50.`）。",
+        "交手记录凯斯 2-0：2026 查尔斯顿 R16 6-2 7-5（红土）＋ 本场（flashscore `df_hh_1` 和 tennisexplorer mutual 页一致）。",
+        "全场技术统计（flashscore `df_st_1`）：凯斯 Ace 5、双误 8、制胜分 51、非受迫失误 50、一发进球率 65%、一发得分率 66%、二发得分率 50%、破发点 4/13、总分 125；邦达尔 Ace 2、双误 8、制胜分 17、非受迫失误 36、一发进球率 53%、一发得分率 59%、二发得分率 52%、破发点 4/11、总分 117。`Match points saved` 凯斯 5、邦达尔 0。分盘：次盘凯斯一发得分率 88%、发球局 5/5、破发点 1/7；决胜盘凯斯破发点被救 6/8。",
+        "分盘用时 52 / 49 / 77 分钟（美网官方 setDurations），flashscore 0:52 / 0:50 / 1:17。"
+      ],
+      "sources": [
+        "https://www.youtube.com/watch?v=kCDHqTFmgrY",
+        "https://www.usopen.org/en_US/scores/feeds/2026/players/matches/wta316959_matches.json",
+        "https://www.usopen.org/en_US/scores/feeds/2026/players/players.json",
+        "https://api.wtatennis.com/tennis/players/ranked?page=0&pageSize=100&type=rankSingles&sort=asc&name=&metric=SINGLES",
+        "https://www.tennisexplorer.com/mutual/keys/bondar-4cb3e/",
+        "https://www.tennisexplorer.com/player/keys/?annual=2025",
+        "https://www.tennisexplorer.com/player/bondar-4cb3e/",
+        "https://global.flashscore.ninja/2/x/feed/df_st_1_IRrawdYh"
+      ],
+      "_sources_note": "最后一条是 flashscore 本场 `IRrawdYh` 的统计 feed（同一个 id 换 `df_mh_1` 是逐分、`df_sui_1` 是分盘用时、`df_hh_1` 是交手记录），要带 `x-fsign: SW9D1eZo` 请求头；本地用 `tools/match_feed.py show IRrawdYh` 一次全拉。",
+      "voice_label": "五个赛点没给出去的人"
+    },
+    "_why": "账号所有者点名「要突出逆转的剧情」，所以骨架就是逆转的形状：先丢一盘 → 扳平 → 决胜盘被逼到绝境 → 五个赛点 → 抢十翻盘。技术归因落在两处能核实的数上：次盘一发得分率 88%（为什么扳得平）和全场 51 个制胜分对 50 个非受迫失误（为什么这场球一直在悬崖边）。"
+  },
+  "topbar": {
+    "line1": "2026 美网 第二轮",
+    "line2": "凯斯 5-7 6-4 7-6(5) 邦达尔"
+  },
+  "push": {
+    "summary": "凯斯连救五个赛点逆转",
+    "lead": "美网第二轮 17 号球场，22 号种子凯斯 5-7 6-4 7-6(5) 逆转世界第 73 的邦达尔，打了近三个小时。决胜盘她 2-5 落后，邦达尔在自己的发球胜赛局拿到两个赛点，凯斯救回来并破发；3-5 她自己的发球局又面对三个赛点，全部扛住。五个赛点一个没给，之后零封破发、零封保发，抢十 10-5 收下。全场她 51 个制胜分对 17 个，非受迫失误 50 对 36，总得分只多赢了 8 个小分。去年美网她首轮就出局了。",
+    "auto": true,
+    "_summary_why": "10 个字位，在 `SUMMARY_MAX=13` 之内。主语（凯斯）＋ 比分板上看不见的事实（连救五个赛点）＋ 结果（逆转），一层铺垫、不插代词。没有写比分——封面比分板和顶栏各印了一遍。⚠️ **不写 `event`**：第一版写了「美网」，`test_每条spec都算得出一句过得了闸的标题` 当场报 21.5 字位（上限 20）——日期＋栏目占 8，summary 10，再加「美网 | 」就顶破了；`zheng-liutova` 那条能加是因为它的 summary 短。哪一站交给 `lead` 第一句。"
+  },
+  "segments": [
+    {
+      "start": 168.5,
+      "end": 176.0,
+      "narration": "",
+      "score_inset": true,
+      "crosses_cut": "跨 172.62：赛点那一分的最后几拍 → 凯斯赢球后的近景反应，两边同一个人同一件事，这一刀正是「球落地」那一刻",
+      "_ending_payoff_required": true,
+      "_why": "**第①格：全片最强的一格。** 不配旁白，靠现场声——解说 173.20s `Madison Keys gets the win. A remarkable victory.` 和欢呼。画面是抢十 9-5 赛点那一分的收尾（记分条 `MATCH POINT / KEYS 5 6 6 [9] / BONDAR 7 4 6 [5]`）＋ 174.5s 她的近景反应。⚠️ 这是后段冷开场，正文第 11、12 段（158.47→172.62、172.62→187.34）的并集完整覆盖 168.5→176.0，`ending_payoff_problem` 那道闸要的就是这个覆盖关系——观众开头看一次赢球，正文按时间顺序再走一次并接上握手和举臂。`score_inset: true`：168.5~174.5 板一直在（172.5 那格还烧着 9/5），175 之后淡出由 `resolve_board_insets` 现量收掉。"
+    },
+    {
+      "start": 2.32,
+      "end": 11.29,
+      "narration": "决胜盘二比五落后，对面拿到了五个赛点。她一个都没给，然后赢了。",
+      "score_inset": true,
+      "_why": "**第②格给落点和反差**：先把这场球的形状说出来，再进坐标。画面是首盘开局的回合（记分条 `22 KEYS 1 [0] / BONDAR ⇢0 [30]`），说的是整场的事，和画面不冲突。板全程在（score_00 的 2.5~10.5 每格都有）。"
+    },
+    {
+      "start": 11.29,
+      "end": 25.28,
+      "narration": "北京时间九月三号夜里十一点多，美网第二轮，十七号球场。二十二号种子凯斯，对面是世界第七十三的匈牙利人邦达尔。",
+      "score_inset": true,
+      "_why": "**第③格坐标。** 开球 15:06Z＝北京 23:06，「夜里十一点多」照 CLAUDE.md 只说大概。画面是邦达尔发球（14.5s 台标 77 MPH）→ 凯斯上网截击得分（解说 25.76s `I love the way she followed that in`），记分条 `KEYS ⇢1 [15] / BONDAR 1 [0]`。板 12.5~24.5 全程在。段尾 25.28 是 scene_cut，也是 point_end 25.33 前一格。"
+    },
+    {
+      "start": 29.6,
+      "end": 45.26,
+      "narration": "首盘五比六，邦达尔的发球局，盘点。凯斯正手出界，七比五，先丢一盘，五十二分钟。这一盘她面对三个破发点，丢了两个。",
+      "score_inset": true,
+      "crosses_cut": "跨 40.69：盘点那一分（凯斯正手出界）→ 邦达尔拿下首盘的近景，前后是同一分的结果和反应",
+      "_why": "记分条 30.5s 起 `SET POINT / KEYS 5 [30] / BONDAR ⇢6 [40]`——邦达尔发球、盘点，正是 flashscore 首盘第 12 局 `30:40 |B2|`；解说 40.64s `And she pulled that forehand wide. Anna Bondar has taken the opening set`。窗口从 29.6 起而不是 26.71 那一刀：26.7~29.5 是凯斯在 1-1 30-0 时的近景和一格观众（scene_cuts 0.35 没认出 ~29.5 那一刀，缩略图 28.5/30.5 两格看得出换了镜头），跨进来会让「盘点」压在一个不是盘点的画面上。段尾 45.26 是 scene_cut（邦达尔近景 → 走向椅子）。「面对三个破发点丢了两个」：`df_st_1` Set 1 `Break Points Saved 1/3`。"
+    },
+    {
+      "start": 61.0,
+      "end": 75.04,
+      "narration": "第二盘，她把一发的质量拉了上来。这一盘一发得分率百分之八十八，五个发球局一个没丢。可对面也一样稳，前九局谁都没破掉谁。",
+      "score_inset": true,
+      "_why": "记分条 `KEYS ⇢5 1 [15] / BONDAR 7 0 [0]`：次盘第 2 局凯斯发球 15-0，一个长回合（解说 72.70s 掌声，point_end 75.08）。技术归因落在 `df_st_1` Set 2：`1st serve points won 88% (14/16)`、`Service games won 100% (5/5)`。「前九局谁都没破掉谁」：逐分次盘前九局全是保发，破发在第 10 局。窗口 61.0→75.04 是 48.78~75.04 那一刀里去掉开头的全屏台标（50.5~53.7）和回合的前几拍（54~61；`--check-narration` 真 TTS 量出旁白 11.4 秒，20.5 秒的窗口空 9 秒，收短窗口而不是把旁白硬撑长——这一段是一个连续长回合，从中间进不影响看懂），段尾 75.04 是 scene_cut 也是 point_end。"
+    },
+    {
+      "start": 76.5,
+      "end": 92.93,
+      "narration": "四比五，邦达尔发球，三十比四十。盘点，也是凯斯这一盘的第七个破发点，前六个她一个都没兑现。这一个，进了。六比四，一比一。",
+      "score_inset": true,
+      "crosses_cut": "跨 89.19：破发那一分 → 凯斯的近景，同一分的结果和反应",
+      "_why": "记分条 74.5s 起 `SET POINT #2 / KEYS 5 5 [40] / BONDAR ⇢7 4 [30]`：邦达尔发球 4-5 30-40，是 flashscore 次盘第 10 局的 `40:30 |B1| |B2|`。解说 89.28s `And Keys gets the breakthrough. Second set by six against the four`。「第七个破发点」：次盘 `Break Points Converted 1/7`——第 2 局 1 个、第 6 局 4 个、第 10 局 `40:15 |B1||B2|` 第 6 个没兑现、`40:30` 这一个是第 7 个。「前六个一个都没兑现」是同一个数的另一面。窗口从 76.5 起而不是那一刀 75.04：`--check-narration` 真 TTS 量出旁白 13.3 秒，17.9 秒的窗口空 4.6 秒，从回合前一秒半进，`SET POINT #2` 的黄标 74.5 起就一直在。段尾 92.93 是 scene_cut（凯斯近景 → 教练席）。"
+    },
+    {
+      "start": 92.93,
+      "end": 105.41,
+      "narration": "去年她顶着澳网冠军的头衔来到这里，首轮就输给了萨拉苏亚。今年二十二号种子，第二轮，又打到了决胜盘。",
+      "score_inset": false,
+      "_score_inset_why": "源片 92.93~105.41 整段没有常驻记分条：92.5~98.5 是教练席鼓掌和凯斯走动的近景（score_02 那几格左下角是看台和人），100.5~105.4 是 `WOMEN'S SINGLES | 2ND ROUND / KEYS 5 6 / BONDAR 7 4` 的全屏台标——板不在，回贴会贴一块看台。",
+      "crosses_cut": "跨 96.56 和 98.63（loose）：教练席 → 凯斯走动 → 全屏台标，都是盘间的过渡镜头，配的是背景交代不是比分",
+      "_why": "盘间过渡给**来路**：2025 澳网冠军（tennisexplorer 2025 年表 `25.01. Keys M. - Sabalenka A. F 6-3, 2-6, 7-5`）、2025 美网首轮负萨拉苏亚（`25.08. Zarazua R. - Keys M. 1R 6-7(10) 7-6(3) 7-5`，美网官方图库 2025 `M. Keys vs. R. Zarazua | R1` 印证）。⚠️ 同栏目 `snigur-keys` 已经**铺开讲过**她的生涯（2017 美网亚军、2023 四强、30 岁拿第一个大满贯），这里只一句带过「澳网冠军」当来路，不展开——展开的是**去年美网首轮出局**这条新线。全屏台标 100.5~105.4 上印的正是 5 6 / 7 4，「又打到了决胜盘」压在它上面对得上。"
+    },
+    {
+      "start": 106.0,
+      "end": 119.87,
+      "narration": "决胜盘，二比五。邦达尔自己的发球局，先拿到两个赛点，凯斯救回来，还把她破了。三比五，凯斯发球，十五比四十，第三个赛点。",
+      "score_inset": true,
+      "_why": "记分条 106.5s 起 `MATCH POINT #3 / KEYS ⇢5 6 3 [15] / BONDAR 7 4 5 [40]`——凯斯发球 3-5 15-40，是 flashscore 决胜盘第 9 局的 `15:40 |B1| |B3|`；解说 120.32s `saves a third match point`。前两个赛点（2-5 邦达尔发球局的 `30:40 |B3|`、`40:A |B3|`）**集锦没有画面**，只能一句话交代，而这一句配的画面记分条上就烧着 `#3`。段尾 119.87 是 point_end（掌声 119.87），下一刀 124.29 之前 120.5~124 是邦达尔的近景，归下一段。"
+    },
+    {
+      "start": 120.5,
+      "end": 134.18,
+      "narration": "第四个赛点，邦达尔离赢球又只差一个球。这一局凯斯来回打了四次平分，三次被逼到赛点，三次都扛了过去。解说只剩一个词：天哪。",
+      "score_inset": true,
+      "crosses_cut": "跨 124.29：邦达尔准备接发的近景 → 赛点那一分的回合，同一分的前后",
+      "_subject_why": "前 3.8 秒（120.5~124.29）画面是**邦达尔**的近景，所以第一句的主语是邦达尔（「离赢球又只差一分」说的正是画面里这个人）；之后切到回合，第二句才换成凯斯，而且**把名字写出来**，不用「她」——`preview_segments_local` 摆出来才看见第一版的「她一共打了十四分」压在邦达尔脸上。",
+      "_why": "记分条 120.5s 起 `MATCH POINT #4 / KEYS ⇢5 6 3 [30] / BONDAR 7 4 5 [40]`（`30:40 |B1| |B3|`），解说 120.32s `Here's a fourth.`、131.04s `Jeez.`（凯斯救下）。「四次平分」：这一局逐分 `40:40` 出现四次（`…30:40, 40:40, A:40, 40:40, A:40, 40:40, 40:A, 40:40, A:40`）；整局 13 条＋制胜那一分＝14 分，但「十四分」读起来像「十四分钟」（`test_旁白里的分不许读成分钟`），所以按账号所有者定的写法说平分次数。段尾 134.18 是 scene_cut（凯斯发球近景 → 第五个赛点的回合）。"
+    },
+    {
+      "start": 134.18,
+      "end": 143.84,
+      "narration": "第五个赛点，邦达尔占先。这一分之后，解说只说了一句：凯斯又拿出了好东西。",
+      "score_inset": true,
+      "_why": "记分条 132.5~142.5 `KEYS ⇢5 6 3 [ ] / BONDAR 7 4 5 [AD]`——邦达尔占先就是 `40:A |B1| |B3|`，第五个赛点。解说 142.00s `And Keys comes up with something good.`（captions.txt 原句，引的就是这一句）。144.5s 记分条回到 40-40，143.84 是 scene_cut 也是 point_end 附近。"
+    },
+    {
+      "start": 146.5,
+      "end": 158.47,
+      "narration": "保住这一局之后，五比五，她零封破发；六比五，零封保发。六比六，大满贯的决胜盘，抢十。",
+      "score_inset": true,
+      "crosses_cut": "跨 147.63：凯斯站在 Rolex 钟前准备（2:48）→ 抢十的回合，同一段抢十的前后",
+      "_why": "记分条 146.5s 起 `10 POINT TIEBREAK / KEYS 5 6 6 [0] / BONDAR ⇢7 4 6 [1]`。146.5 那一格凯斯站在 Rolex 2:48 的钟前面。5-5 `15:0, 30:0, 40:0 |B1|`、6-5 `15:0, 30:0, 40:0` 两个零封局**集锦没有画面**，旁白一句带过；6-6 邦达尔保发（`0:15, 0:30, 15:30, 15:40`）。「零封」不写「爱局」（CLAUDE.md 2026-08-24）。抢十那一句配的画面就是 `10 POINT TIEBREAK` 的黄标。段尾 158.47 是 scene_cut（回合 → 凯斯走动，解说 158.80 `that landed in`）。"
+    },
+    {
+      "start": 158.47,
+      "end": 172.62,
+      "narration": "抢十从零比一开始，她一路打到九比五。赛点，这一次是她的赛点，邦达尔发球。几局之前，她还差一个球就出局。",
+      "score_inset": true,
+      "crosses_cut": "跨 162.2：凯斯拿下一分后走动 → 9-5 赛点那一分的回合，同一段抢十",
+      "_why": "158.5~160.5 记分条还是 `0 / 1`（凯斯刚拿下 158.56s `Boy, that landed in` 那一分），160.5s 起 `MATCH POINT / KEYS 5 6 6 [9] / BONDAR ⇢7 4 6 [5]`——邦达尔发球，凯斯的赛点。抢十中段 1-1 到 9-5 之间**集锦没有画面**（记分条从 0/1 直接跳到 9/5），所以旁白只说起点和终点。段尾 172.62 是 scene_cut（回合 → 凯斯赢球后近景），也是「球落地」那一刻：解说 173.20s `Madison Keys gets the win`。这一段和下一段的并集覆盖冷开场 168.5→176.0。"
+    },
+    {
+      "start": 172.62,
+      "end": 187.34,
+      "narration": "赢了。从二比五和五个赛点那里，她一路翻了回来。",
+      "score_inset": true,
+      "crosses_cut": "跨 175.99 / 179.4 / 180.68：凯斯近景反应 → 观众起立 → 网前握手 → 邦达尔离场、凯斯举臂，全是赛后同一段反应",
+      "_why": "**结局重新兑现 ＋ 赢球后的情绪**：172.62 起是解说 `Madison Keys gets the win. A remarkable victory. 57 64 76` 压着她的近景（174.5s），176.5~178.5 观众全体起立，180.5 网前握手，182.5 邦达尔走出画面、184.5~186.5 凯斯双臂举起（近景 → 全景）。旁白只有一句、留在开头，其余交给现场声和欢呼——CLAUDE.md「赢球后多给情绪一点篇幅」。记分条 172.5~174.5 还烧着 `9 / 5`，176 之后撤掉，`resolve_board_insets` 现量。段尾 187.34 是 scene_cut。"
+    },
+    {
+      "start": 187.34,
+      "end": 200.5,
+      "narration": "全场制胜分五十一比十七，非受迫失误五十比三十六。五个赛点都没给出去的人，第三轮她还会这么打吗？",
+      "score_inset": false,
+      "_score_inset_why": "源片 187.34~200.5 没有记分条：188.5 是她双手抱头的特写、190.5~192.5 举手致意（背景 IBM 99 MPH 板）、194.5 走动、196.5~198.5 观众起立鼓掌——score_04/05 这几格左下角全是人和看台，板早在 176 就撤了。",
+      "crosses_cut": "跨 192.61 / 195.8 / 198.87：抱头特写 → 致意 → 走回椅子 → 观众起立，全是赛后一连串反应镜头",
+      "_why": "收尾落在一问上。数字出自 `df_st_1` 全场 `Winners 51 / 17`、`Unforced errors 50 / 36`。画面 188.5s 她双手抱头咧嘴笑是全片情绪最高的一格，之后 196.5~198.5 解说 `Everyone on their feet`。段尾 200.5 收在她走回椅子之前，离片尾板（204.44）还有 3.9 秒，离 `silent_audio` 204.51 有 4 秒。⚠️ 那一问没有回声封面那一问（封面钩子不是问句）。"
+    }
+  ],
+  "_editing_why": "**选段的三条线索都来自 probe 产物：**\n① **片尾板**：`scene_cuts` 最后一刀 204.44 ＋ `silent_audio [[204.51, 207.56]]` 两处互证，204.5s/206.5s 缩略图确认是 `FOLLOW US ON SOCIAL MEDIA` 的社媒卡。所有段落收在 200.5 之前。\n② **镜头切点**：27 个 `scene_cuts`，13 段里 6 段整段落在同一刀之内，其余 7 段各自写了 `crosses_cut`——跨的全是「那一分 → 那一分的反应」或「赛后一连串反应镜头」，两边同一个人同一件事。⚠️ 有一刀 `scene_cuts` 没认出来（~29.5s，凯斯近景/观众 → 盘点回合），第 3 段的起点因此手动定在 29.6 而不是那一刀 26.71。\n③ **死球时刻**：probe 带 `--scorebox 104,887,660,980` 量出 44 个 `point_ends`，几处段尾正好压在上面（25.28≈25.33、75.04≈75.08、119.87、143.84 附近），其余段尾落在全屏台标、近景或 scene_cut 上，没有「球还在飞就切走」。\n\n**这场集锦里没有的三段，旁白都只用一句话交代、不假装有画面**：决胜盘 2-5 邦达尔发球局的前两个赛点、5-5 和 6-5 两个零封局、抢十 1-1 到 9-5 之间。\n\n**认人的判据**：凯斯薄荷绿背心＋黑帽（记分条 `22 KEYS`），邦达尔亮黄色连衣裙＋白帽（Yonex）——两个人颜色差得远，缩略图墙上一眼分得开；近景那几格（26.5 凯斯、42.5/44.5 邦达尔、90.5/92.5 凯斯、120.5/122.5 邦达尔、174.5/188.5 凯斯）逐格对过。\n\n⚠️ `preview_segments_local` 逐段核过之后再定稿（见 PR 正文）。",
+  "_no_repeat": "同栏目讲过凯斯的三条：`snigur-keys`（2026-08，铺开讲了她十四年的生涯：2017 美网亚军、2023 美网四强、30 岁在 2025 澳网拿第一个大满贯、43 个制胜分配 61 个非受迫失误那种打法）、`bejlek-keys-cincinnati-2026-qf`（总分 107 平、抢七 2-4 翻盘，她输的那场）、`wangxiyu-keys`（辛辛那提 R16）。**那三条铺开讲过的这条一个字都不碰**：生涯履历只留一句「澳网冠军」当来路（看不懂「顶着冠军头衔来、首轮出局」就看不懂这一场有多重），制胜分/非受迫失误那一组这次是这场球自己的数（51/50），不再评价「打法」。这条讲的是完全不同的形状——**五个赛点的逆转**——和 2025 美网首轮出局那条新线。⚠️ 钩子结构和 `shang-rublev` 相近，见 `cover._hook_why`。源片 `kCDHqTFmgrY`、flashscore `IRrawdYh` 都是首次出现，去重闸不会误伤。"
+}
