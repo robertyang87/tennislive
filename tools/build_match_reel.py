@@ -7733,6 +7733,19 @@ def _validate_editorial_contract(spec: dict, *, required: bool = False) -> None:
         raise ReelError("spec.editorial.beats 至少要有三个走势/转折节点")
     if any(not isinstance(item, str) or not item.strip() for item in beats):
         raise ReelError("spec.editorial.beats 必须是非空文字列表")
+    chapters = raw.get("chapters")
+    if chapters is not None:
+        # 章节卡标题（review 路线 ⑤）：可选；写了就得是短标题列表——它会烧成
+        # 整屏大字，render_title_card 两行装不下就在切段那一刻红，这儿提前拦。
+        from render_title_card import MAX_CHARS as _TITLE_MAX  # noqa: PLC0415
+        if not isinstance(chapters, list) or not chapters:
+            raise ReelError("spec.editorial.chapters 写了就要是非空列表（章节标题）")
+        if any(not isinstance(item, str) or not item.strip() for item in chapters):
+            raise ReelError("spec.editorial.chapters 必须是非空文字列表")
+        long = [c for c in chapters if len(c.strip()) > _TITLE_MAX]
+        if long:
+            raise ReelError(f"spec.editorial.chapters 每条最多 {_TITLE_MAX} 字（整屏大字），"
+                            f"超了：{long}")
     context = raw.get("human_context")
     if required and context is None:
         raise ReelError(

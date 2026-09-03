@@ -204,6 +204,8 @@ def test_segment_skeleton生成草稿窗口(ap):
     assert segs[1]["narration"] == "她一分一分追回来"   # beat 0 → 首盘
     assert segs[2]["narration"] == "五个破发点一个都没给"  # beat 1 → 转折
     assert segs[3]["narration"] == "六比零三比零"       # beat 2 → 结局
+    # 每段标它服务第几个 beat（1 起）——章节卡按它定位；冷开场不属于任何 beat
+    assert [s.get("_beat") for s in segs] == [None, 1, 2, 3]
 
 
 def test_segment_skeleton旁白不够就留空(ap):

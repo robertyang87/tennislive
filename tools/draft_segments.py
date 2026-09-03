@@ -42,9 +42,10 @@ SCHEMA = {
                     "start": {"type": "number"},
                     "end": {"type": "number"},
                     "narration": {"type": "string"},
+                    "_beat": {"type": "integer"},
                     "_why": {"type": "string"},
                 },
-                "required": ["start", "end", "narration"],
+                "required": ["start", "end", "narration", "_beat"],
                 "additionalProperties": False,
             },
         }
@@ -73,8 +74,11 @@ SYSTEM = """你是网球短视频账号「网球时差」的剪辑，给一条 6
 - 旁白每段一句，40 字以内，中文。
 - 字幕里没有对应画面的内容（比如场外背景）挂到最接近它的、讲得通的画面段上。
 - _why 一句话说明「这段旁白为什么挂在这个窗口」，方便终审核对。
+- **_beat 标这一段服务叙事大纲的第几个 beat**：1、2、3 各对应大纲的第一、二、三段；
+  冷开场和坐标这种不属于任何 beat 的段写 0。同一个 beat 可以有好几段，
+  **第一段**前面会插一张章节卡，所以 beat 的顺序要和大纲一致。
 
-只输出一个 json 对象，字段 segments，每段 {start, end, narration, _why}。"""
+只输出一个 json 对象，字段 segments，每段 {start, end, narration, _beat, _why}。"""
 
 
 def _read_captions(path: Path) -> str:
@@ -131,6 +135,11 @@ def clean_segments(data: dict, *, min_duration: float = 2.0) -> dict:
         if end - start < min_duration:
             dropped += 1
             continue
+        # _beat 只认 0~3 的整数（0＝不属于任何 beat）；别的值一律去掉——章节卡按它
+        # 定位，一个错的 beat 号比没有更糟（卡会插到别的段前面）
+        beat = s.get("_beat")
+        if isinstance(beat, bool) or not isinstance(beat, int) or not 0 <= beat <= 3:
+            s = {k: v for k, v in s.items() if k != "_beat"}
         kept.append(s)
     if dropped:
         # 出声：丢了几段要让终审知道，别把「模型没产」和「被闸拦了」混成一样

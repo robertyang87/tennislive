@@ -106,6 +106,24 @@ def test_clean_segments拦掉零长度和超短窗口():
     assert got["_dropped"] == 2, "拦掉几段要记下来，别静默"
 
 
+def test_clean_segments只认0到3的整数_beat():
+    """章节卡（promote_reel_draft.insert_chapter_cards）按段上的 `_beat` 定位。
+    2026-09-03 拿 47 份 pending 草稿量过：模型写窗口那条路的旁白全是改写过的，
+    按旁白原文认 beat 一条都认不到——所以合同里要模型自己标 `_beat`，而一个
+    错的 beat 号比没有更糟（卡会插到别的段前面），不合法的一律去掉。"""
+    ds = _tool()
+    assert "_beat" in ds.SCHEMA["properties"]["segments"]["items"]["required"]
+    assert "_beat" in ds.SYSTEM and "章节卡" in ds.SYSTEM
+    got = ds.clean_segments({"segments": [
+        {"start": 0.0, "end": 5.0, "narration": "冷开场", "_beat": 0},
+        {"start": 10.0, "end": 15.0, "narration": "首盘", "_beat": 1},
+        {"start": 20.0, "end": 25.0, "narration": "怪", "_beat": 7},
+        {"start": 30.0, "end": 35.0, "narration": "字符串", "_beat": "2"},
+        {"start": 40.0, "end": 45.0, "narration": "布尔", "_beat": True},
+    ]})
+    assert [s.get("_beat") for s in got["segments"]] == [0, 1, None, None, None]
+
+
 def test_clean_segments坏字段也不放过():
     ds = _tool()
     got = ds.clean_segments({"segments": [
