@@ -580,3 +580,136 @@ def test_盘分那一摞按盘数收紧_五盘也装得下():
     r3 = rule_of(out3)
     assert "font-size:56px" in r3 and "line-height:1.42" in r3, (
         f"③ 三盘的卡渲出来盘分规则是 {r3!r}——存量三盘必须还是 56px/1.42。")
+
+
+# ---------------------------------------------------------------------------
+# 数据图剪进片子（2026-09-03 review：131 条 spec 带 stats、0 条烧进片子）
+# ---------------------------------------------------------------------------
+
+def _reel():
+    import build_match_reel as reel  # noqa: PLC0415
+    return reel
+
+
+def _spec_with_stat_card(**seg_extra):
+    seg = {"stat_card": True, "seconds": 6, "narration": "一发进球率四十七对七十八，差在发球。"}
+    seg.update(seg_extra)
+    return {"cover": {}, "stats": {"a": {"aces": 1}, "b": {"aces": 2}},
+            "segments": [{"start": 0, "end": 5, "narration": "开场"}, seg]}
+
+
+def test_stat_card段当整屏证据段解析_图先占位():
+    reel = _reel()
+    segs = reel.parse_segments(_spec_with_stat_card(), {"": 1}, "")
+    assert segs[1].image == reel.STAT_CARD_PLACEHOLDER
+    assert (segs[1].start, segs[1].end) == (0.0, 6.0), "长度就是 seconds，没有源片窗口"
+    assert reel.stat_card_in_film(_spec_with_stat_card())
+    assert not reel.stat_card_in_film({"segments": [{"start": 0, "end": 1}]})
+
+
+def test_stat_card段没有stats块要当场红_并说怎么填():
+    import pytest
+    reel = _reel()
+    spec = _spec_with_stat_card()
+    spec.pop("stats")
+    with pytest.raises(reel.ReelError, match="stats"):
+        reel.parse_segments(spec, {"": 1}, "")
+    with pytest.raises(reel.ReelError, match="二选一"):
+        reel.parse_segments(_spec_with_stat_card(image="x.jpg"), {"": 1}, "")
+    with pytest.raises(reel.ReelError, match="narration"):
+        reel.parse_segments(_spec_with_stat_card(narration=""), {"": 1}, "")
+    assert "stat_card" in reel._KNOWN_FIELDS["segment"] if hasattr(reel, "_KNOWN_FIELDS") else True
+
+
+def test_render在切段之前把占位符换成真渲出来的图(tmp_path):
+    reel = _reel()
+    segs = reel.parse_segments(_spec_with_stat_card(), {"": 1}, "")
+    calls = []
+
+    def fake_render(spec, out):
+        calls.append(out)
+        out.write_bytes(b"jpg")
+
+    got = reel._materialize_stat_card(_spec_with_stat_card(), segs, tmp_path, renderer=fake_render)
+    assert calls == [tmp_path / reel.STAT_CARD_NAME]
+    assert got[1].image == str(tmp_path / reel.STAT_CARD_NAME)
+    assert got[0].image == "", "别的段一个字段都不许动"
+    # 没有 stat_card 段时一次都不渲
+    plain = reel.parse_segments({"cover": {}, "segments": [{"start": 0, "end": 5, "narration": "x"}]}, {"": 1}, "")
+    calls.clear()
+    assert reel._materialize_stat_card({}, plain, tmp_path, renderer=fake_render) == plain and calls == []
+
+
+def test_渲不出图要红_而且剪进片子的不再渲第二遍(tmp_path):
+    import pytest
+    reel = _reel()
+    segs = reel.parse_segments(_spec_with_stat_card(), {"": 1}, "")
+    with pytest.raises(reel.ReelError, match="没渲出来"):
+        reel._materialize_stat_card(_spec_with_stat_card(), segs, tmp_path, renderer=lambda spec, out: None)
+    src = (Path(__file__).resolve().parents[1] / "tools" / "build_match_reel.py").read_text(encoding="utf-8")
+    body = "\n".join(ln for ln in src.splitlines() if not ln.lstrip().startswith("#"))
+    late = body.index('with stage("数据统计对照图")')
+    guard = body.rindex("not stat_card_in_film(spec)", 0, late)
+    assert late - guard < 200, "渲完成片之后那一趟要跳过已经剪进片子的图"
+    early = body.index("_materialize_stat_card(spec, segments, outdir)")
+    assert early < body.index("_check_segments_fit(segments, sources)"), "图要在切段和越界检查之前渲出来"
+
+
+def test_stat_card段在load_spec那一刻就归一成image段(tmp_path):
+    """归一化必须早于任何读 raw segments 的消费者：`load_spec` 第一行的片长估算
+    （`reel_length_verdict` → `seg_seconds`）按 `s.get("image")` 认整屏证据段，
+    只在 `parse_segments._one` 里换的话它会去读一个不存在的 `end`
+    （2026-09-03 拿 alcaraz-faria 真 spec 跑 --dry-run 当场 KeyError）。"""
+    reel = _reel()
+    spec = _spec_with_stat_card()
+    spec["segments"] = [{"start": 1.0, "end": 8.0, "narration": "开局。"},
+                        spec["segments"][1]]
+    spec.setdefault("source_url", "https://youtu.be/x")
+    spec.setdefault("cover", {"hook": "x"})
+    p = tmp_path / "x.json"
+    p.write_text(json.dumps(spec, ensure_ascii=False), encoding="utf-8")
+    loaded = reel.load_spec(p)
+    seg = loaded["segments"][1]
+    assert seg["image"] == reel.STAT_CARD_PLACEHOLDER
+    assert seg["stat_card"] is True, "stat_card 键要留着，stat_card_in_film 靠它认领"
+    assert reel.stat_card_in_film(loaded)
+    # 抄了同一份公式的检查工具也要认它——不然 QC 那一步在同一个 end 上 KeyError
+    import check_reel_landed  # noqa: PLC0415
+    raw = {"stat_card": True, "seconds": 6, "narration": "x"}
+    assert check_reel_landed.seg_film_seconds(raw) == 6.0
+    src = inspect.getsource(reel.load_spec)
+    assert src.index("_normalize_stat_card_segments(spec)") < src.index("reel_length_verdict(spec)")
+
+
+def test_带式版式放过整屏证据段的contain_而且卡缩进画面带不压顶栏和字幕(tmp_path, monkeypatch):
+    """带式（美网）拒 `fit: contain`，理由是「9:8 画面带本来就装得下源片」——
+    那句话说的是源片裁切；整屏证据段的 fit 是写死的 contain，它不裁源片，
+    拦它等于把数据图整个挡在美网片子外面（正是最想用它的那批）。
+    放过之后卡要缩进**画面带**（BAND_TOP 起 1080×960）：伸进顶带就压在顶栏底下，
+    伸进底带就被字幕盖住；底色用 BAND_BG 和源片段垫的带同色。"""
+    from PIL import Image  # noqa: PLC0415
+    reel = _reel()
+    spec = _spec_with_stat_card()
+    spec["layout"] = "band"
+    spec["scorebox"] = [104, 888, 736, 978]
+    spec["segments"] = [{"start": 1.0, "end": 8.0, "narration": "开局。",
+                         "score_inset": True}, spec["segments"][1]]
+    segs = reel.parse_segments(spec, {"main": "https://youtu.be/x"}, "main")
+    assert segs[1].fit == "contain" and segs[1].image == reel.STAT_CARD_PLACEHOLDER
+    # 源片段写 contain 照旧要红——放过的只是整屏证据段
+    spec2 = json.loads(json.dumps(spec))
+    spec2["segments"][0]["fit"] = "contain"
+    with pytest.raises(reel.ReelError, match="contain"):
+        reel.parse_segments(spec2, {"main": "https://youtu.be/x"}, "main")
+    # 真拼一张底板量落位
+    card = Image.new("RGBA", (1080, 1920), (255, 255, 255, 255))
+    monkeypatch.setattr(reel, "LAYOUT", "band")
+    canvas, (x0, y0, x1, y1) = reel.still_canvas_for_layout(card, Image)
+    assert y0 >= reel.BAND_TOP and y1 <= reel.BAND_TOP + reel.BAND_PIC_H, \
+        "卡伸进了顶带或底带"
+    px = canvas.convert("RGB").load()
+    assert px[540, 10] == reel._band_bg_rgb() and px[540, 1430] == reel._band_bg_rgb()
+    assert px[540, reel.BAND_TOP + reel.BAND_PIC_H // 2] == (255, 255, 255)
+    monkeypatch.setattr(reel, "LAYOUT", "full")
+    canvas, (x0, y0, x1, y1) = reel.still_canvas_for_layout(card, Image)
+    assert y0 < reel.BAND_TOP, "全出血下卡照旧铺整幅居中，不该让出顶带"
