@@ -83,7 +83,7 @@ jobs:
           python3 tools/pick_interview_renders.py --stale | tee /tmp/stale.txt
           if grep -q "（投于" /tmp/stale.txt; then
             {
-              echo "## ⚠️ 有采访投出去超过 60 分钟还没有当前成片（本轮自动重投）"
+              echo "## ⚠️ 有采访投出去超过 70 分钟还没有当前成片（本轮自动重投；窗口和 tools/pick_interview_renders.py 的 STALE_MINUTES 同一个数）"
               echo ""
               tail -n +2 /tmp/stale.txt | sed 's/^  /- /'
             } >> "$GITHUB_STEP_SUMMARY"

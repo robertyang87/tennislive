@@ -118,10 +118,10 @@ jobs:
         # 只在周一跑一次：搜索有配额，每天跑没必要——新源不会天天出现。
         run: |
           # 星期几按**上海时间**算（「产物在哪个日期目录下按上海时间算」同一个坑）。
-          # cron 现在是每 3 小时一轮（`7 */3 * * *`），只看星期几的话周一会搜
-          # 八遍——再钉一个钟点：只认 21:07 UTC 那一轮（北京周一 05:07，
-          # 沿用原来「早上那一轮」的位置）。手动 dispatch 带 only 时照旧放行。
-          if [ -n "${{ github.event.inputs.only }}" ] || { [ "$(TZ=Asia/Shanghai date +%u)" = "1" ] && [ "$(date -u +%H)" = "21" ]; }; then
+          # cron 现在是每 15 分钟一轮（`7,22,37,52`），只看星期几的话周一会搜
+          # 九十几遍；只看钟点也还有四遍——所以钉到 21 点那一小时里**第一班**
+          # （分钟数 < 20，给 schedule 的延迟留余量）。手动 dispatch 带 only 时照旧放行。
+          if [ -n "${{ github.event.inputs.only }}" ] || { [ "$(TZ=Asia/Shanghai date +%u)" = "1" ] && [ "$(date -u +%H)" = "21" ] && [ "$(date -u +%M)" -lt 20 ]; }; then
             python tools/discover_oncourt_sources.py --min 2 | tee -a /tmp/oncourt.log || true
           else
             echo "非周一 21 时那一轮（上海 $(TZ=Asia/Shanghai date '+%F %A')，UTC $(date -u +%H) 时），跳过来源发现。"

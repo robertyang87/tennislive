@@ -483,7 +483,7 @@ def _report_rank_coverage(dig) -> None:
             tour = getattr(getattr(m, "tour", None), "value", "?")
             row = by.setdefault(tour, [0, 0])
             row[1] += 1
-            if p.rank is not None:
+            if getattr(p, "rank", None) is not None:
                 hit += 1
                 row[0] += 1
     if not tot:

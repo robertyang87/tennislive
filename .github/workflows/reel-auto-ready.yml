@@ -81,7 +81,10 @@ jobs:
             OUTDIR=${PROBE%/probe.json}
             git sparse-checkout add "$OUTDIR"
 
-            python tools/refresh_reel_cover.py --draft "$DRAFT" --write
+            # 每份草稿各自隔离：一份炸了（模型接口 4xx、坏 JSON）不许把这一班
+            # 剩下的草稿一起跳过——整段是 bash -e 的 for 循环，不隔离就是这个后果。
+            python tools/refresh_reel_cover.py --draft "$DRAFT" --write \
+              || { echo "::warning::$SLUG refresh_reel_cover 失败，这一份跳过"; continue; }
 
             PORTRAIT=$(jq -r '.cover.portrait.image // ""' "$DRAFT")
             REVIEWED=$(jq -r '._visual_evidence.cover_image // "__missing__"' "$DRAFT")
@@ -92,11 +95,13 @@ jobs:
             if [ "$REVIEWED" = "__missing__" ] || [ "$PORTRAIT" != "$REVIEWED" ] \
               || [ "$VISUAL_STATUS" = "error" ] || [ "$RETRYABLE" = "true" ]; then
               python tools/analyze_reel_visuals.py \
-                --draft "$DRAFT" --outdir "$OUTDIR" --write
+                --draft "$DRAFT" --outdir "$OUTDIR" --write \
+                || { echo "::warning::$SLUG analyze_reel_visuals 失败，这一份跳过"; continue; }
             else
               echo "[skip] $SLUG 的同一批视觉证据已经审核过"
             fi
-            python tools/promote_reel_draft.py --draft "$DRAFT" --write
+            python tools/promote_reel_draft.py --draft "$DRAFT" --write \
+              || { echo "::warning::$SLUG promote_reel_draft 失败，这一份跳过"; continue; }
             if [ -f "specs/reels/$SLUG.json" ] && [ ! -f "$DRAFT" ]; then
               echo "$SLUG" >> /tmp/reel-ready
             fi
