@@ -109,6 +109,13 @@ _UNDERSIZED = {
     # 放到第 1 道前面，方向反了。完整取舍在
     # assets/explainer/fonseca-oconnell/credits.json 的 `_cover_is_underscale_why`。
     "fonseca-oconnell": 0.93,  # 2000x1334
+    # 1280×720，铺满 1080×1440 是 2.0 倍放大——**美网官方图片接口的天花板**
+    # （`f_` 前缀就是顶，CLAUDE.md 记着十二个前缀、六个目录、三种 width 参数都
+    # 探过）。同一轮 `find_cover_photo.py` 跑过 09-02 / 09-03 两天：AP 对这一场
+    # 是零、WTA photo-resources 不收大满贯、USA TODAY 当日图集没有他。封面主体
+    # 只能是布云朝克特（那一问的主语就是他），所以这一档是这条片子的上限，
+    # 不是没找；完整取舍在 assets/explainer/bu-lucky-loser/credits.json。
+    "bu-lucky-loser": 0.50,     # 1280x720
 }
 # lucky-loser 的封面不在这张名单上，但它的做法值得记一句，因为**这条 1.00x 的
 # 地板正是那张图的垫层能减到多小的下界**。
@@ -265,7 +272,9 @@ def test_能推近的片子是算出来的不是手写的():
     # 于是 `_PHOTO_COVERS` 和「在放大」那一档同时各多一条。
     # ⚠️ 同日从 10 变 11：`fonseca-oconnell` 的封面同样是赛事图库那一批
     # 2000 像素的实拍（见 `_UNDERSIZED` 里那段），形状和 `heat-rule` 一模一样。
-    assert len(eligible) == len(_PHOTO_COVERS) - 11
+    # ⚠️ 2026-09-03 从 11 变 12：`bu-lucky-loser` 的封面是美网官方图片接口那一档
+    # 1280×720 的实拍（那条渠道的天花板，见 `_UNDERSIZED` 里那段），铺满 0.50x。
+    assert len(eligible) == len(_PHOTO_COVERS) - 12
     for slug in _UNDERSIZED:
         assert slug not in eligible, f"{slug} 本来就在放大，不该被判成能推近"
 
