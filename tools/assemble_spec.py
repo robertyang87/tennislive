@@ -81,9 +81,10 @@ DRAFT_DIR = Path(__file__).resolve().parent.parent / "specs" / "reels" / "pendin
 
 
 def _surname(full: str) -> str:
-    """英文全名取最后一个词当姓。反查 flashscore 用它（find_match 按片段匹配）。"""
-    words = (full or "").strip().split()
-    return words[-1] if words else full
+    """英文名取姓（出处只有一份 `tennislive.names.surname_en`：缩写名 `Bu Y.`
+    姓在第一个词）。反查 flashscore 用它（find_match 按片段匹配）。"""
+    from tennislive.names import surname_en  # noqa: PLC0415
+    return surname_en(full) or full
 
 
 def resolve_match_id(home: str, away: str) -> str | None:

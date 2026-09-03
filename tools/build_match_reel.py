@@ -4364,16 +4364,13 @@ def _still_to_clip(still: Path, dest: Path, seconds: float = COVER_SECONDS) -> P
 
 
 def _chromium() -> str:
-    """沙箱里 PLAYWRIGHT_BROWSERS_PATH 指的路径带版本号，playwright 自己找不到，
-    得显式给。CI 上装的那份在默认位置，glob 一下两边都覆盖。"""
-    import glob as _glob
-    roots = ["/opt/pw-browsers", str(Path.home() / ".cache/ms-playwright")]
-    for pattern in [f"{r}/chromium*/chrome-linux*/{exe}"
-                    for r in roots for exe in ("chrome", "headless_shell")]:
-        hits = sorted(_glob.glob(pattern))
-        if hits:
-            return hits[-1]
-    raise ReelError("找不到 chromium")
+    """找 Chromium 只有一份出处：`tennislive.chromium`（review 路线 ⑥ 第一刀）。
+    这里只把找不到翻译成 ReelError。"""
+    from tennislive.chromium import require_chromium  # noqa: PLC0415
+    try:
+        return require_chromium()
+    except FileNotFoundError as e:
+        raise ReelError(str(e)) from e
 
 
 # ⭐ 2026-08-13：**edge-tts 这条路原来一次重试都没有**（`asyncio.run(one())`
