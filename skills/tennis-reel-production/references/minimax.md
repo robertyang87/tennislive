@@ -6,6 +6,8 @@ Return JSON only with `cold_open`, `ending`, and `cover`. Each video window must
 
 Choose a 3–30 second payoff, never an ordinary rally. Make ending fully cover cold open within 0.25 seconds. Confirm the winner is visible. Check face, clothing, court, scoreboard, and event marks for same-match cover evidence. Follow the provided upset cover-subject rule exactly. Require confidence of at least 0.80.
 
+Reaction shots carry the emotion of a documentary ending: when the sampled sheets offer both, prefer an ending window that shows the winner's celebration together with the loser's reaction, the coach box, or the handshake over one that shows the winner alone. Name the reaction you saw in the reason (loser's face, coach box, handshake); never invent one that is not on the sheets.
+
 Treat a completed handshake as the terminal match story beat. If the accepted ending includes the handshake, cut at the first clean boundary immediately after it; never append narration, a second replay, or unrelated post-match footage. The deterministic brand outro may follow immediately after the handshake and remains enabled by default. When the cold open and ending use the same match-point sequence, prefer ending the cold open before the handshake and reserve the full handshake for the final payoff.
 
 When contact sheets are sampled from a longer source, preserve the final two sheets together in addition to broad full-video coverage. The deciding point is often on the penultimate sheet while the handshake or outro is on the last; supplying only the last sheet is incomplete evidence.

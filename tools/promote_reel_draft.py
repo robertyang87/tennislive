@@ -352,6 +352,35 @@ def insert_chapter_cards(spec: dict) -> int:
     return len(plan)
 
 
+def evidence_on_screen(spec: dict) -> int:
+    """这条 spec 有几处「数字/文字上屏」：数据图段、章节卡段、贴图（inset）、关键分脉冲。"""
+    n = 0
+    for s in spec.get("segments") or []:
+        if not isinstance(s, dict):
+            continue
+        if s.get("stat_card") or s.get("title_card") or s.get("inset"):
+            n += 1
+    if (spec.get("topbar") or {}).get("pulse_at"):
+        n += 1
+    return n
+
+
+def note_evidence_on_screen(spec: dict) -> int:
+    """软报告（review 路线 ④ A3）：一处证据都没上屏就写进 `_evidence_on_screen_why`
+    出声，**不拦**——131 条已发 spec 带 stats、0 条烧进片子，就是「没人报」的
+    样子。数据图 / 章节卡机械插不进来的情形（没头像、总分算不出、旧合同没
+    chapters）各自已经出声，这儿是给终审的汇总。"""
+    n = evidence_on_screen(spec)
+    if n == 0:
+        spec["_evidence_on_screen_why"] = (
+            "零证据上屏：这条片子没有数据图段、章节卡段、贴图或关键分脉冲——"
+            "数据只在旁白里被念出来。终审补一处（stat_card / title_card / inset），"
+            "或者说清为什么这条不需要")
+    else:
+        spec.pop("_evidence_on_screen_why", None)
+    return n
+
+
 def promote(draft: dict) -> dict:
     reasons = waiting_reasons(draft)
     if reasons:
@@ -452,6 +481,7 @@ def promote(draft: dict) -> dict:
     # 第一段之前插一张深底大字卡，标题来自 editorial.chapters。排在数据图之后
     # 插，数据图仍然紧挨着收官段（chapters 按 beat 的段落定位，不按倒数第几段）。
     insert_chapter_cards(spec)
+    note_evidence_on_screen(spec)
     # 这是机器生成资格，不是发布旁路。render/QC/auto_push_gate/persistent ledger
     # 仍会逐层复核；标记只让 dry-run 对结构化赛果执行更严格的交叉校验。
     spec["_production"]["status"] = "ready_for_render"

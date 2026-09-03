@@ -424,6 +424,40 @@ def test_promote按chapters在每个beat的第一段前插章节卡(tmp_path):
     assert "chapters" in draft_spec.system_prompt() and "10 字" in draft_spec.system_prompt()
 
 
+def test_教材教了收尾先兑现再抛问和反应镜头():
+    """review 3.2 的 B6 / D10（教模型那一半）：DeepSeek 的收尾要先用一个数字回答
+    开场的 question 再抛问；MiniMax 挑 ending 时有反应镜头（输家的脸 / 教练席 /
+    握手）就优先——纪录片的情绪几乎全在反应镜头里。查的是真拼出来的 prompt。"""
+    skill = load("reel_skill")
+    draft = load("draft_spec")
+    deepseek = draft.system_prompt()
+    assert "先兑现" in deepseek and "回答开场的 question" in deepseek
+    assert "pay off before you ask" in skill.model_instructions("deepseek")
+    minimax = skill.model_instructions("minimax")
+    for phrase in ("loser's reaction", "coach box", "handshake", "never invent"):
+        assert phrase in minimax, phrase
+
+
+def test_promote零证据上屏要出声但不拦(tmp_path):
+    """review 3.2 A3 的软报告：一处数字/文字都没上屏（没数据图段、章节卡段、
+    贴图、脉冲）就写 `_evidence_on_screen_why`，有一处就不写。不拦转正——
+    机械插不进来的各自已经出声，这儿是给终审的汇总。"""
+    promote = load("promote_reel_draft")
+    spec = promote.promote(_ready_draft(tmp_path))
+    assert "_evidence_on_screen_why" not in spec and promote.evidence_on_screen(spec) >= 1
+    bare = _ready_draft(tmp_path)
+    del bare["stats"]["a"]["pts_won"]           # 数据图插不进来
+    del bare["editorial"]["chapters"]           # 章节卡插不进来
+    spec = promote.promote(bare)
+    assert promote.evidence_on_screen(spec) == 0
+    assert "零证据上屏" in spec["_evidence_on_screen_why"]
+    # 手写一处（比如一张章节卡）就够
+    bare = _ready_draft(tmp_path)
+    del bare["stats"]["a"]["pts_won"]; del bare["editorial"]["chapters"]
+    bare["segments"].insert(2, {"title_card": "手写章节", "seconds": 2.5})
+    assert "_evidence_on_screen_why" not in promote.promote(bare)
+
+
 def test_editorial的chapters写了就要是短标题列表():
     """spec 那头：chapters 可选；写了就得装得进整屏大字（render_title_card 两行的上限）。"""
     reel = load("build_match_reel")
