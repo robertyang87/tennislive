@@ -137,6 +137,11 @@ URL 也有两种写法（`youtu.be/<id>` vs `watch?v=<id>`，这一对正是）�
 `--dry-run` 0.2 秒就报），判据 `test_同一场球不许在赛场之上发第二条` 钉六头，
 六个方向分别反向验证过、各红在自己的断言行。
 
+⚠️ **而它不是「写了」，是「跑过了」**：把撤掉的那条 spec 拿真库重放了一次，
+当场红在 `fs:CpKK9Ia4` 上。顺带自证了两把钥匙**各自都够**——他们那条写
+`youtu.be/Hz6jq9Ebvuc`、我这条写 `watch?v=Hz6jq9Ebvuc`，**归一化之后同一把钥匙**，
+所以就算 2026-08 之前那种没有 `flashscore_id` 的老 spec，源片这一头也拦得住。
+
 ⚠️ **闸只扫「赛场之上」这一个栏目**：存量 199 条量过，「同栏目共用源片」有 7 处，
 **其中 5 处是「网球有故事」同一个人的多条故事片共用素材**（`osaka-four-slams` /
 `osaka-walkout` / `osaka-grand-slam-outfits` / `osaka-iverson-tribute` 讲的是
