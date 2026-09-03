@@ -1644,6 +1644,60 @@ explainer），而规矩常常是**跨线**的，所以这个缺口会反复出�
 要配一张自己的豁免表（采访线存量 40+ 条），而那是口径选择不是顺手能定的。
 **当下该做的是把这一条的首行改对**，缺口记在这儿。
 
+### ⭐⭐ 2026-09-03 做发布会撞出来的四件事
+
+账号所有者甩来一条 `Yunchaokete Bu Press Conference | 2026 US Open Round 1`
+（美网官方频道）要做小布的赛后发布会。三个坑，两个是**静默**的。
+
+**① L0 门禁认不出「发布会」，而这个栏目已经发过 10 条。**
+`interview_source_gate.REQUESTED_KINDS` 2026-08-23 立起来时只有
+`on_court`/`ceremony`/`farewell`/`walk_on`，报错正文还明写着「演播室、**发布会**
+和 unknown 都不能替代」。⚠️ **那道闸立起来时没有扫存量**——`specs/interviews/`
+里 10 条 `*-presser`（含 232 行问答的谢尔顿×门西克）**从那天起全部渲不出来**，
+实测三条确认。这不是那 10 条有问题，是类型表漏了一种真实内容。
+现在加了第五种 `press_conference`。
+
+⚠️⚠️ **加类型只许动三处**（`REQUESTED_KINDS`/`DETECTED_TYPES`/`APPROVED_METHODS`），
+`explicit_title_type` 和 `candidate_verification` 一个字都不许碰——那两个是
+**自动链**用的（从标题猜类型、把采访库条目判成 verified）。往里加一支 press，
+自动链扫到任何标题带 "Press Conference" 的官方视频就会直接标 `verified`，
+等于给「这条线只做场上采访」那道闸捅个洞。detected 的 `press` 仍**不在**
+`REQUESTED_KINDS` 里，`candidate_verification` 那句 `mapped not in
+REQUESTED_KINDS` 的早退照旧触发，自动链行为逐字节不变。反向验证时把 `press`
+放进可请求，**连仓库原有的 `test_人工判成发布会优先级高于标题规则` 一起红**
+——那个洞是真的。
+
+⚠️ 那 10 条存量**没跟着修**（缺 `source_verification`、都是已发不重渲的片子），
+是已知债。
+
+**② 加第五种类型时漏的那一处，是仓库自己的判据抓到的。**
+`NO_LEAD_EXCEPTION_METHOD`（「这种内容能不能没有冷开场」）少了表态，
+`test_每种内容形态都要表态能不能没有冷开场` 当场红——它的 docstring 明写
+「以后再加第五种类型，不在这张表里表态就当场红」。**这就是「把『要记得改这儿』
+换成『不表态就红』」的价值**：2026-09-01 加第四种时漏的同一处，那次是在 L2
+最后一项才报出来。
+
+**③ `word_fix` 里带标点的 key 会静默失效。**
+`Mory.` / `Hanjo.` / `Lena?` 三条第一轮**一个都没换掉**，而同一份表里不带标点的
+`quali` / `here` / `Wimiden` / `GR` 全部生效——规律很干净：**带标点的全失效**。
+它不报错，`--stage subs` 照样出字幕，只有回头 grep 核对表才看得见。
+裸词和带标点的变体**都写上**（`sabalenka-uchijima` 那条 spec 早就是这个写法，
+只是没人写下为什么）。
+
+⚠️ 顺带一条**分工**，报错信息里说得比这儿清楚：**改变行长的订正必须走
+`word_fix`**（切行之前逐词修，行会自己重排），`en_fixed` 只适合「这一行读起来
+不对」而长度不变宽的——把 `be`→`beat` 写进 `en_fixed` 会被「英文超宽」当场拦下。
+⚠️ 而 `run`→`round` 这种**全文出现两次、只有一处该改**的，反过来只能走
+`en_fixed`（另一处 `I can run` 是对的）。落笔前先在全文数一遍出现次数。
+
+**④ 顺带：沙箱现在又下得动 YouTube 字幕了。**
+`interview-clip.yml` 开头那句「⚠️ 但字幕是通的这句 2026-08-02 起不成立了：
+现在连 `--list-subs` 都吃同一个 bot 拦截」——2026-09-03 实测**重试一次就过**
+（`--js-runtimes node` ＋ `player_client=web_embedded`；裸跑先撞 429 和
+`Sign in to confirm you're not a bot`）。所以切行、翻译、挑窗口这一整段又能在
+本地做完，runner 上只剩第二份 ASR 和出片。⚠️ **那句注释没跟着改**——改它要等
+一轮全量，而当时手上是条时效片；**这条结论一年里已经翻过两次，引用之前跑一次**。
+
 ### ⚠️ `mode=push` 不发微信——还要 `push=true`，只拨一个 run 照样绿
 
 2026-08-05 踩的，就在上面那条授权生效的第一条片子上。`mode=push` 的**唯一
