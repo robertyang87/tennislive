@@ -1,11 +1,11 @@
 {
   "status": "pass",
-  "checked_at": "2026-09-03T03:32:05Z",
+  "checked_at": "2026-09-03T03:40:46Z",
   "auditor": "opencv-haar-v1",
   "expected_subject": "布云朝克特",
   "identity_evidence": "L0-bound spec subject + same-source frame_at",
-  "spec_sha256": "c158e25dea69320f7d976b5ea09736248b2f96a4e41fd629a4e1b3c33d16be56",
-  "poster_sha256": "da652569f11069ed2469bcabcc4162fb1e43a3d31940774a0e33e3a4c3e7d8a3",
+  "spec_sha256": "9cd485c39fa3cbaaef3e1ae6f7738be07f072b60ab8122f6669aca28b8f0716c",
+  "poster_sha256": "f4e3c06f3837fd3d412870cb51d1aa7f5bb893c49c30c44ee8d43d64c505f66d",
   "thresholds": {
     "close_up_zoom": 1.5,
     "face_height_ratio": 0.08,
@@ -29,25 +29,25 @@
       ]
     },
     "face": {
-      "detector": "frontal-default",
+      "detector": "frontal-alt2",
       "box": [
-        524,
-        286,
-        216,
-        216
+        485,
+        272,
+        215,
+        215
       ],
       "detected_faces": 1,
       "eyes": 2,
-      "face_height_ratio": 0.26667,
-      "face_area_ratio": 0.05333,
-      "center_x_ratio": 0.58519,
-      "center_y_ratio": 0.30123,
-      "sharpness": 88.884,
-      "contrast": 125.0
+      "face_height_ratio": 0.26543,
+      "face_area_ratio": 0.05284,
+      "center_x_ratio": 0.54861,
+      "center_y_ratio": 0.28333,
+      "sharpness": 185.124,
+      "contrast": 128.0
     },
     "contract": {
       "shot_type": "",
-      "frame_at": 264.4,
+      "frame_at": 269.3,
       "zoom": 1.0,
       "focus_y": 0.5
     }
