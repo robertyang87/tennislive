@@ -2915,33 +2915,39 @@ def test_封面念的就是海报上那句钩子就不另排字幕():
     reel = Path("tools/build_match_reel.py").read_text(encoding="utf-8")
     assert "drop_punctuation" in reel, "比对没有去标点——印的带换行、念的带句号，永远不等"
     assert "不另排字幕" in reel
+    # 比对必须走 same_line_as_printed，而且是紧挨着那句日志的那个 if——
+    # 退回裸的 `drop_punctuation(a) == drop_punctuation(b)` 会把「？」算成差异
+    tail = reel[:reel.index("[封面] 旁白就是海报上那句钩子")]
+    assert "if same_line_as_printed(cover_text" in tail[-400:], (
+        "封面字幕的比对没走 same_line_as_printed——问句形式的钩子旁白又会叠一行重复字幕")
     # else 分支必须还在：另说一件事时要排字幕
     head = reel[reel.index("[封面] 旁白就是海报上那句钩子"):]
     assert "else:" in head[:400] and "subtitle_cues(readable(cover_text)" in head[:800], (
         "封面变成一律不出字幕了——另说一件事的那种情况就没字幕了")
 
+    # 行为：只差标点（含 ？！）和空白的算同一句；真另说一件事的不算
+    r = _reel()
+    assert r.same_line_as_printed("五天前出局，五天后赢了种子？", "五天前出局\n五天后赢了种子"), (
+        "钩子是陈述句、旁白念成问句，仍然是同一句——bu-lucky-loser-story 2026-09-03 "
+        "就因为这一个问号在封面上多叠了一行重复钩子的小字")
+    assert not r.same_line_as_printed(
+        "全美第三大的网球赛事，办在一个三万多人的小镇。", "全美第三大赛事\n办在小镇"), (
+        "真另说一件事的被判成同一句了——那一屏就没字幕了")
+    bu = json.loads(Path("specs/reels/bu-lucky-loser-story.json").read_text("utf-8"))["cover"]
+    assert r.same_line_as_printed(bu["narration"], bu["hook"])
+
     spec = json.loads(Path("specs/reels/hewitt-washington.json").read_text("utf-8"))
     cover = spec["cover"]
     assert cover.get("narration"), "休伊特那条封面没有配音——那就又是一屏哑的"
-    reel_mod = _reel()
-    same = reel_mod.cover_voice_is_the_printed_hook
-    assert same(cover["narration"], cover["hook"]), (
+    assert r.same_line_as_printed(cover["narration"], cover["hook"]), (
         "封面念的和印的不是同一句了。那没问题，但字幕会跟着出现——"
         "确认过排版再改这条断言")
 
-    # ⚠️ **只差句末那个问号，仍然是同一句话。** `drop_punctuation` 是给屏幕
-    # 文本用的、故意留着 `？！`，拿它直接比就会把「五天前出局，五天后赢了
-    # 种子？」判成另说一件事，于是海报上那两行大字底下又叠一行小字
-    # （2026-09-03 `bu-lucky-loser-story` 第一版渲出来就是这样）。
-    assert same("五天前出局，五天后赢了种子？", "五天前出局\n五天后赢了种子"), (
-        "只差一个句末问号被判成另说一件事——字幕会把海报上那句再写一遍")
-    # 另一头：真的另说一件事，不许被放宽到判成同一句
-    assert not same("全美第三大的网球赛事，办在一个三万多人的小镇。",
-                    "小镇办大赛\n三万人对二十万人"), (
-        "放宽到什么都判成一样了——另说一件事的那种情况就没字幕了")
+    # ⚠️ 上面两条行为断言喂的是手写的串；这一头拿**真实存量**验另一个方向——
+    # 手搓的 fixture 只能验函数的局部行为，验不了它和真语料对不对得上。
     for slug in ("cincinnati-story", "tiafoe-story"):
         c = json.loads(Path(f"specs/reels/{slug}.json").read_text("utf-8"))["cover"]
-        assert not same(c["narration"], c["hook"]), (
+        assert not r.same_line_as_printed(c["narration"], c["hook"]), (
             f"{slug} 的封面口播另说了一件事，它必须还有字幕")
 
 
@@ -5844,10 +5850,13 @@ def test_dry_run闸在runner上排在重准备之前且拉回probe产物():
     assert "::warning::" in gate, (
         "查不到 probe 时不出声——「没查」和「查过没问题」在日志上就长一样了")
 
-    # ③ 位置：排在三样重准备之前
+    # ③ 位置：排在重准备之前——apt 那两步（各 15 分钟最坏预算）也算，
+    #    dry-run 一个 ffmpeg / 字体都不碰（PATH 上抽掉 ffmpeg 跑过，照旧绿）
     yml = _yaml_only(text)
     gate_at = yml.index("- name: dry-run — 先把 spec 的形状错拦在编码之前")
-    for later in ("- name: 缓存 Chromium",
+    for later in ("- name: 缓存 apt 包（ffmpeg + 字体，绕开镜像抽风）",
+                  "- name: 装 ffmpeg",
+                  "- name: 缓存 Chromium",
                   "- name: 缓存源片（同一条片子只下一次）",
                   "- name: 起 PO token provider"):
         assert gate_at < yml.index(later), f"dry-run 闸排到「{later}」后面去了"

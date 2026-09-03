@@ -42,7 +42,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable, Sequence
 from ..cdn import jsdelivr_base
-from .subtitle_text import DROP as SUB_DROP, TRIM as SUB_TRIM, drop_punctuation
+from .subtitle_text import drop_punctuation
 
 # The card/image keeps the brand 3:4 (1080x1440); the video canvas is 9:16
 # (1080x1920) with that 3:4 card centred on brand-colour bands.
@@ -207,30 +207,6 @@ _HAWKEYE_DIAGRAM = """
 # lists, official media and Flickr all come back empty). Rather than run a
 # near-miss frame under it, beat 1 draws the incident itself: a ball down
 # inside the line, called out.
-_MISCALL_DIAGRAM = """
-<svg viewBox="0 0 900 660" xmlns="http://www.w3.org/2000/svg">
-  <rect x="90" y="60" width="720" height="320" rx="10" fill="rgba(55,226,154,.07)"
-        stroke="rgba(55,226,154,.4)" stroke-width="3"/>
-  <line x1="90" y1="380" x2="810" y2="380" stroke="#ffffff" stroke-width="12"/>
-  <text x="112" y="106" fill="#9fb4aa" font-size="26" font-weight="700">界内</text>
-  <text x="112" y="432" fill="#9fb4aa" font-size="26" font-weight="700">界外</text>
-  <path d="M250 120 Q360 230 430 330" fill="none" stroke="#ffe08a"
-        stroke-width="4" stroke-dasharray="4 10" opacity=".85"/>
-  <circle cx="438" cy="344" r="26" fill="#c6f65a" stroke="#ffffff" stroke-width="4"/>
-  <line x1="472" y1="344" x2="556" y2="344" stroke="#c6f65a" stroke-width="3"/>
-  <text x="568" y="355" fill="#c6f65a" font-size="29" font-weight="800">球压线 · 界内</text>
-  <g transform="translate(450,486)">
-    <rect x="-150" y="-40" width="300" height="76" rx="38"
-          fill="rgba(255,90,106,.16)" stroke="#ff5a6a" stroke-width="4"/>
-    <text x="0" y="13" text-anchor="middle" fill="#ff5a6a"
-          font-size="37" font-weight="800">判罚：OUT</text>
-  </g>
-  <text x="450" y="614" text-anchor="middle" fill="#e7f3ec"
-        font-size="31" font-weight="700">2004 美网 1/4 决赛 · 小威 vs 卡普里亚蒂</text>
-</svg>
-"""
-
-
 # The subject of this beat is a calendar, not a place — no photograph shows
 # "seven of nine events grew to twelve days". Draw it instead, and label it.
 _MASTERS_FORMAT_DIAGRAM = """
@@ -9359,9 +9335,7 @@ _SUB_HARD_BREAK = "。！？；…"
 _SUB_SOFT_BREAK = "，、：,"
 # 屏幕上的字幕**不写标点**，规矩和实现全站统一放在 video/subtitle_text.py
 # （账号所有者：「以后字幕里的尽量不要用标点符号，可以切换下一页表达」，
-# 后来又补「字幕要应用到全局里」）。这儿只留本产线自己的两个数。
-_SUB_TRIM = SUB_TRIM
-_SUB_DROP = SUB_DROP
+# 后来又补「字幕要应用到全局里」）。这儿只留本产线自己的几个数。
 # 比这还短的一行会一闪而过（时间轴给的最短是 0.4 秒），并到邻行去。
 _SUB_MIN = 5
 # 句内合并的门槛比它再宽一格：一边不超过 6 个字就并（「2018年，她登顶…」）。

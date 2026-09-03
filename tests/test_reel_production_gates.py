@@ -1233,6 +1233,36 @@ def test_判据回喂只认自动spec最多两轮_环境错和绿日志不喂模
     assert repairer.CONTENT_CLASS.search("[不合格] 封面之后还有 1 秒是数字静音")
 
 
+def test_判据回喂读probe要按slug反查不只看今天的outdir(tmp_path, monkeypatch):
+    """render 的 OUTDIR 按今天的日期算，而 probe.json 躺在 probe 那天的目录
+    （dry-run 那一步按 slug 把它 sparse-checkout add 回来了，所以在盘上）。
+    修复环原来只看 outdir——跨日渲染时模型收到的是「（没有 probe 事实）」，
+    改窗口是盲修，而那和「这条真的没 probe」在日志上长得一模一样。
+    判据三头：outdir 里有就用它；没有就按 slug 取最新那份并说明来路；
+    连 slug 都认不到才是真的没有。"""
+    import json as _json
+    repairer = load("repair_reel_spec")
+    monkeypatch.setattr(repairer, "ROOT", tmp_path)
+    old = tmp_path / "output" / "2026-09-01" / "reel" / "x"
+    newer = tmp_path / "output" / "2026-09-02" / "reel" / "x"
+    today = tmp_path / "output" / "2026-09-03" / "reel" / "x"
+    for d, dur in ((old, 100.0), (newer, 200.0)):
+        d.mkdir(parents=True)
+        (d / "probe.json").write_text(_json.dumps({"duration": dur, "scene_cuts": [1.5]}), "utf-8")
+    today.mkdir(parents=True)
+
+    facts = repairer.probe_facts(today, "x")
+    assert "源片总长 200.0s" in facts, facts          # 最新那份，不是最早那份
+    assert "按 slug 反查到的" in facts and "2026-09-02" in facts
+
+    (today / "probe.json").write_text(_json.dumps({"duration": 300.0}), "utf-8")
+    facts = repairer.probe_facts(today, "x")
+    assert "源片总长 300.0s" in facts and "反查" not in facts  # outdir 自己的优先
+
+    assert "没有 probe 事实" in repairer.probe_facts(tmp_path / "nowhere", "y")
+    assert "没有 probe 事实" in repairer.probe_facts(tmp_path / "nowhere")
+
+
 def test_判据回喂修完先过本地闸才落盘(tmp_path, monkeypatch):
     """模型输出过了有界套用，还要过**同一套生产闸**（dry-run 子进程）才写回；
     闸红就一个字节都不落盘。反向验证：把 local_gate 的失败吞掉，第二段断言

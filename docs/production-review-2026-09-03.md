@@ -26,6 +26,9 @@
 ② 把「证据上屏」做成渲染能力而不是后期图；③ 给模型的教材加叙事结构和镜头语汇。
 其余都是第二梯队。
 
+⚠️ **上面那张表是 review 开始时的基线，不随后面的 PR 更新**——做到哪儿了看 §5
+（做完的 / 没做的 / 等账号所有者定的，每条带 PR 号）。
+
 ---
 
 ## 1. 现状怎么量的
@@ -260,7 +263,87 @@
 
 ---
 
-## 5. 这次没做、别当成做过
+## 5. 收尾清单：做完的 / 没做的 / 等账号所有者定的（2026-09-03 晚）
+
+这一节是路线表（§4）的账。「做完」的判据是**合进 main 且带目标测试**，不是
+「写了」；全量测试从 review 开始时的 2933 passed 走到 **3015 passed / 0 failed**
+（`pytest -q -n auto --dist loadfile`，每次合并前跑在 rebase 之后那棵树上）。
+⚠️ 下面写着「合进去了」的东西，**只有一条是拿真产物验过的**（① 的 feed 补字段，
+run 33728989031 干跑）；其余都是测试绿——自动链下一批草稿真的 promote 并 render
+出片才算路线真的通了，那是还没到的判据。
+
+### 5.1 做完的（按路线序，每条给 PR 号；细节和坑照旧记在下面「来路」里）
+
+| 路线 | 做了什么 | PR |
+|---|---|---|
+| ① | 美网官方 feed 在 runner 上验通（沙箱 403 只是沙箱的事），`tools/slam_feed.py` 接上，`orchestrate.enrich_slam_fields` 在 dispatch 之前补 round/court | #743 |
+| ② | `tools/find_pending_draft.py` ＋ CLAUDE.md「开工前先查 pending 草稿」一节 | #743 |
+| ④ 第一刀 | `stat_card` 段：数据统计图剪进片子当整屏证据段，切段之前现渲；带式（美网）放过整屏段 | #745 |
+| ④ 第二刀 | 自动链把数据图剪进片子：`tools/headshot_index.py` 机械补头像，`promote` 转正时在收官段之前插一段 `stat_card` | #746 |
+| ④ 第三刀 | 数据图 **film 变体**（1080×1440，成片画幅），剪进片子的那张渲它 | #747 |
+| ⑤ 第一刀 | `title_card` 段（章节卡 / 论点卡，`tools/render_title_card.py`），旁白缺省就是卡上那句 | #749 |
+| ⑤ 第二刀 | 三档音床 `bed: low|high`；`cut_segment` 两处 `-map` 判据收成 `_seg_audio_needs_filter` 一个出处 | #750 |
+| ⑤ 第三刀 | 自动链的章节卡：DeepSeek 合同多 `chapters`，三条产窗口的路都标 `_beat`，`promote.insert_chapter_cards` 按 `_beat` 插卡 | #751 |
+| ⑥ 第一刀 | 找 Chromium 收成 `src/tennislive/chromium.py`（原 12 份），`_surname` 收成 `tennislive/names.py`；顺手修 `build_interview_clip._bare` 被同名定义静默盖掉；新判据「一个模块里同名顶层定义不许两次」 | #752 |
+| ⑥ 第二刀 | TTS 收成 `src/tennislive/video/tts.py`（原两套），解说片和采访线拿到重试和内容缓存 | #754 |
+| 3.2 教模型 | **B6** 收尾先兑现再抛问、**D10** MiniMax 优先反应镜头、**A3** 的软报告那一半（`promote.note_evidence_on_screen`） | #755 |
+| 2.1 | review 抓出的九处静默坏路径 | #742 |
+| 2.2 赛场之上 | 修复环读 probe 按 slug 反查（跨日渲染不再盲修）；20 小时新鲜窗三处收成一份出处；`orchestrate.assemble_draft` 删掉；dry-run 和 pip 装依赖挪到 apt 那两步前面（PATH 上抽掉 ffmpeg 跑过，dry-run 照旧绿） | 本 PR |
+| 2.2 采访线 / 解说片线 | `attach_interview_lead_in` 一条源片的意外只算它自己待下一轮（原来只兜三类异常，别的会把同批已完成的一起扔掉）；`pipeline_health` 盖住 `explainer.yml` 和 `knowledge-adhoc.yml`；`_MISCALL_DIAGRAM` / `_SUB_TRIM` / `_SUB_DROP` 删掉；12 份零引用的 `_outro.mp4` 从 git 里拿掉、explainer.yml 清理步骤从此删它 | #758 之后那个 PR |
+
+### 5.2 没做的（每条说清为什么停在这儿，别当成漏了）
+
+- **③ 发布层三条**（tag 带哈希 / 四段发布步骤收一份 / 三笔提交并两笔）：一条没动。
+  第一条是 2.3 的口径选择（见 5.3），后两条能做但每条都要在**四个 yml** 上动
+  发布路径，而发布路径的判据只在真推送时才走得到——本文件「判据只在发布路径上
+  才走得到，它就永远验不了」记的正是这类，要配 selftest 一起做，不该顺手。
+- **⑥ 第三步：`render()` 按阶段切、全局 `LAYOUT/CROP/FPS` 收进 `RenderContext`**。
+  量过判据面：**122 处判据按源码位置钉**（`test_…排在…之前` 那一族），
+  `render()` 537 行。这一刀会让那 122 处里的一大半换主语——本文件「主语没了就得
+  换判据」说的正是那种改法要一条条重写判据，不是搬完代码看谁红。要做就是单独
+  一个 PR、只做这一件事，而且要在没有时效片子排队的时候做。
+- **⑦ 解说片 spec 化**：是 2.3 的口径选择（见 5.3）。量了一下规模：`_SCRIPTS`
+  44 个键、第 2669 到 7215 行；不定方向之前一行都没动。
+- **3.2 A2**（beat 卡预制进自动链）：`render_beat_card.py` 能出图，但 assemble
+  之后「按 `_hit_data` 自动出 2–3 张、模型只决定放哪一段」那一段没写——
+  ④ 的 stat_card 和 ⑤ 的章节卡已经把「数字上屏」「章节上屏」两类机械插进去了，
+  beat 卡是第三类，先看前两类在真产物上长什么样再决定要不要第三类。
+- **3.2 A3 的另一半**（教材加插入语汇）：**故意没做**——自动链的 segments 是
+  机械工具产的，DeepSeek 不写窗口，教它写 `inset / speed / crop_zoom / pulse_at`
+  没有消费者；等模型真的接手窗口那一步再教。
+- **3.2 B4**（三幕落进段落、`docs/reel-narrative-template.md` 接进 prompt）：
+  `_beat` 已经把「这一段属于哪个 beat」标上了（⑤ 第三刀），但「第 2 幕开头必须是
+  转折点那一分」没有闸，九屏骨架也仍然不在 prompt 路径里。
+- **3.2 C7**（可声明的留白 `beat_silence`）：没做。哑场闸的语义要改，而它是
+  QC 的硬闸之一，动它要连 `check_reel_landed` 那头一起改，单独一个 PR。
+- **3.2 D9**（`person_story` 模式）：依赖 ⑦，没动。
+- **带式（美网）下数据图的横版变体**：film 版缩进 1080×960 的画面带只有约
+  634px 宽，真要铺满得再做一张横版——美网还有一周，先用 film 版顶着。
+- **2.2 里没归到路线表的那些小项**：赛场之上那一栏做了四条（见 5.1 末行）。
+  ⚠️ `--cover-only` 那条量过**不是 bug**：`build_cover` 不读 `LAYOUT`（那几处
+  `LAYOUT == "band"` 全在段落和章节卡那条路上），`FPS_EXPR` 只影响那段随手删掉的
+  `part_cover.mp4`——白编几秒钟，海报本身一个像素不差，不值得动委托链。
+  没动的：自动 dispatch 的五个空标题输入（删输入是行为改动，要看手动 dispatch
+  还有没有人填）；采访线的 `validate_qc` 一次推送跑三遍——量过它只是几次 `git show`
+  加小文件的 sha256，不值得给读文件的函数加缓存；`already_accepted` 那个输出没人读
+  但也不碍事；`interview-auto-render` 每班装 whisper/Docker；explainer 的 `render.json`
+  没有 `production_sla`（那条线没有「接单」时刻，SLA 的语义要另定）——仍然是 2.2 那张表。
+- **49 份 pending 草稿全是旧合同产的**（没有 `chapters`、没有 `_beat`），
+  ⑤ 第三刀对它们只会走「退回旁白原文」那条路（量过：0/47 认得到）。要等下一批
+  `assemble` 才有新合同的草稿——这也是「路线真的通了」那个判据还没到的原因。
+- **124 条 skipped 测试**没逐条看（`-rs` 抽样全是按 spec 参数化的「这条 spec 没有
+  X 可比」，不是缺依赖）。
+
+### 5.3 等账号所有者定的（2.3 那张表，这次一个都没替他定）
+
+| 问题 | 方向 A | 方向 B | 这次的状态 |
+|---|---|---|---|
+| 已发消息要不要永远播旧片（Release tag 带哈希） | tag 带成片哈希前八位，重渲不影响旧链接；换封面重发走显式「重发」 | 维持现状（重渲即替换），「已发不重渲」继续当规矩守 | 没动。量过解说片线 42 条里 8 条已经是「同一 URL 两份 render.json」 |
+| 解说片要不要 spec 化（路线 ⑦） | `_SCRIPTS` 迁成 `specs/explainers/*.json`，接 `draft_spec` 同款起草，`push.auto` 认领 | 维持手写；只把 SVG 和脚本拆出 `explainer.py` 减轻 import | 没动。⑦ 是「BBC 那种质感」真正长出来的地方，但一周的活，方向要先定 |
+| 大满贯 round/court 从哪来 | 接官方 feed | promote 闸放宽 | **已按 A 做了美网**（#743）；澳网/法网/温网各自的 feed 还没探，往 `SLAM_FEEDS` 加一行的事 |
+| 背景音乐 | 平台曲库（2026-08-29 定的） | —— | 照旧 |
+
+### 5.4 来路（每一刀踩到的坑，判据都落在各自的测试里）
 
 - ~~美网官方 feed 只在沙箱试了（403），runner 上通不通没验。~~ **2026-09-03 晚补上了**：
   `probe-blocked` run 33726027891 / 33726235409 在 runner 上取到 `players.json`（200，
@@ -364,8 +447,3 @@
   segments 是机械工具产的，DeepSeek 不写窗口，数据图/章节卡已经机械插了，
   再教它写 inset 没有消费者。判据 `test_教材教了收尾先兑现再抛问和反应镜头`、
   `test_promote零证据上屏要出声但不拦`（拆掉那次调用反向验证过）。
-- Release tag 改哈希没动（口径选择）。
-- `build_match_reel.py` 没拆一行（要分三次 PR）。
-- 内容那一节的 11 条没有一条落成代码，只落成了这份文档和路线表。
-- 124 条 skipped 测试没逐条看（`-rs` 抽样看到的全是「这条 spec 没有 X 可比」
-  一类的按 spec 参数化跳过，不是缺依赖）。
