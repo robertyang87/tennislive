@@ -376,6 +376,36 @@ spec 才没丢——但它后来过时了，所以**写进去还要记得改**�
 改对之后一眼看到 `Zheng Qinwen vs Alexandra Eala / STATUS_SCHEDULED`。所以：
 **自己写的探测脚本报空时，先拿一个已知非空的口径对一下**，别急着下结论。
 
+#### ⚠️ shell 的 cwd 跨调用留着，而 `git ls-files` 在子目录里只列该目录
+
+2026-09-03 拉 probe 产物时栽的，**四轮命令全在「修」一个不存在的问题**：
+
+    git ls-files | wc -l         →  12
+    git cat-file -p HEAD^{tree}  →  完整的仓库（specs/ src/ tests/ 都在）
+    git status --short           →  干净
+
+据此判定 **index 坏了**，然后一路加码：`git reset --hard HEAD` 没用 →
+`git sparse-checkout disable` 没用 → `git read-tree --reset -u HEAD` 还是没用，
+差一点去重新 clone。
+
+真相是 **shell 的当前目录在几步之前漂到了产物子目录**（Bash 工具的 cwd
+跨调用持久化，而前面某条 `cd output/… && …` 成功了）。`git ls-files`
+**在子目录里默认只列该目录下的文件**——那 12 条正是那个目录里的 12 个产物。
+index 从头到尾是好的。
+
+- **判据是 `pwd`，一秒钟。** 「ls-files 12 条」和「index 坏了」长得一模一样，
+  而 `pwd` / `git rev-parse --show-toplevel` 一比就露馅
+- ⚠️ **同一个漂移还把相对路径写歪了**：`git show HEAD:output/<date>/<slug>/x`
+  重定向到 `output/<date>/<slug>/x`，实际落在
+  `output/<date>/<slug>/output/<date>/<slug>/x`——一个嵌套的假目录，
+  而 `git status` 只报一句 `?? output/`，读起来像「产物还没提交」
+- **这就是上一条的同族**：两个数对不上（HEAD 树完整、ls-files 只有 12）说明
+  **探测错了，不是数据坏了**——而我先动手去修数据，还越修越重。
+  重置类命令（`reset --hard` / `read-tree --reset -u` / `checkout -B`）
+  **在诊断没落地之前一条都不该发**，本文件为它们单独记过一节
+- 往后跨目录操作**要么用绝对路径，要么每条命令自己带
+  `cd /home/user/tennislive &&`**
+
 ### ⭐ 源有三类，查空一类不等于查空全部
 
 2026-08-06，账号所有者点名要做「莱巴金娜的 UE 和 Winner 齐飞」。我查了三个地方——
