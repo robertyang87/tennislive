@@ -58,6 +58,7 @@ PLAYER_ZH: dict[str, str] = {
     "Benjamin Bonzi": "邦齐",
     "Alexandre Muller": "米勒",
     "Corentin Moutet": "穆泰",
+    "Stephane Robert": "罗贝尔",
     "Valentin Royer": "鲁瓦耶",
     "Arthur Cazaux": "卡佐",
     "Quentin Halys": "阿利斯",
