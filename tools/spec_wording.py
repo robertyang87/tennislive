@@ -127,6 +127,26 @@ CAPTION_LEAD_NAME_PREFIX = 2
 #: 所以这条在 reel 侧**零豁免**，拦的是「promote 模板把规格话术写回来」那一类。
 BILINGUAL_MENTION = re.compile(r"中英双语|中英文字幕|中英字幕|双语字幕")
 
+#: 文案里不许挂「数据来源：…」这类注脚（账号所有者 2026-09-03：「文案里不要
+#: 再出现数据来源及后面的内容」）。**和上面那条是同一族**：溯源是写给仓库里
+#: 下一个人看的，读者不关心，还占着正文那 1000 字里的六七十字。
+#:
+#: ⚠️ 来源本身没有被取消——它照旧写进 spec 的 `_source` / `_facts` / `_claims`，
+#: 那几栏是注解，`voiced_texts` 本来就不扫。搬的是位置，不是把溯源丢掉。
+#:
+#: ⚠️ **零豁免**：这条落地当天把存量那 8 条（`auger-aliassime-cerundolo` /
+#: `cobolli-jodar` / `fils-deminaur` / `nakashima-borges` /
+#: `rublev-merida-us-open-2026-r2` / `safiullin-alcaraz-us-open-2026-r1` /
+#: `tirante-mensik` / `zverev-paul`）一起改掉了——`.xhs.txt` 不进成片、
+#: 不参与 `qc_attestation` 的哈希链，改它不用重渲任何东西，所以没有理由
+#: 攒一张豁免表（`push.summary` 才是那个例外：它要和已发的 copy.html 逐字同）。
+#:
+#: ⚠️ **行首锚定 ＋ 冒号**，窄到只认注脚这一个形状：「他的信心来源于……」
+#: 没有冒号，不匹配；正文中间讲某个数据的出处也不该被这条拦——那是内容。
+SOURCE_FOOTER = re.compile(
+    r"^[ \t]*(?:数据|资料|统计|信息|素材|图片|视频|消息)?(?:来源|出处)[：:]",
+    re.M)
+
 # ── 豁免表：规矩生效前已经发出去的，消息收不回来。只许减不许加 ─────────────
 
 PERCENT_IDIOM_LEGACY = frozenset({
@@ -458,6 +478,9 @@ def check_interview_copy_wording(spec: dict,
             (BILINGUAL_MENTION, "文案里提了字幕这类制作规格",
              "读者关心这场球发生了什么，不关心我们用什么字幕方案做的"
              "（2026-08-19 的规矩）"),
+            (SOURCE_FOOTER, "文案里挂了来源注脚",
+             "连同它后面列的那一串来源一起删掉（2026-09-03 的规矩）；"
+             "溯源写进 spec 的注解栏，不进正文"),
     ):
         if hits := _hits(pattern, texts):
             problems.append(f"{label}：{hits}——{fix}")
@@ -538,4 +561,10 @@ def check_spec_wording(spec: dict, slug: str,
         problems.append(
             f"文案里提了字幕这类制作规格：{hits}——读者关心这场球发生了什么，"
             f"不关心我们用什么字幕方案做的（2026-08-19 的规矩）")
+
+    if hits := _hits(SOURCE_FOOTER, voiced):
+        problems.append(
+            f"文案里挂了来源注脚：{hits}——**连同它后面列的那一串来源一起删掉**"
+            f"（2026-09-03 的规矩）。溯源写进 spec 的 `_source` / `_facts` / "
+            f"`_claims`，那几栏是给下一个人看的注解，不进正文")
     return problems
