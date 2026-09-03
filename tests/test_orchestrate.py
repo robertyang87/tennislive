@@ -849,9 +849,24 @@ def test_main在候选之后先补大满贯字段再排dispatch(monkeypatch):
     monkeypatch.setattr(o, "candidates", lambda dig: [{"slug": "s", "column": "reel", "score": 50,
                                                        "home": "a", "away": "b", "event": "US Open",
                                                        "year": 2026, "round": "", "court": ""}])
-    monkeypatch.setattr(o, "enrich_slam_fields", lambda cands, **kw: seen.setdefault("cands", cands))
-    monkeypatch.setattr(o, "dispatch_plan", lambda cands, state: [])
+    monkeypatch.setattr(o, "enrich_slam_fields", lambda cands, **kw: seen.setdefault("cands", list(cands)))
+    # 只补还没 dispatch 的：dispatch_plan 说 s 已做过 → enrich 拿到的是空表
+    monkeypatch.setattr(o, "dispatch_plan", lambda cands, state: [c for c in cands if c["slug"] != "s"])
     monkeypatch.setattr(o, "load_state", lambda: {})
     monkeypatch.setattr(sys, "argv", ["orchestrate.py"])
     assert o.main() == 0
+    assert seen.get("cands") == [], "已经 dispatch 过的候选不该再去查官方 feed（每班 50 次白花的请求）"
+    seen.clear()
+    monkeypatch.setattr(o, "dispatch_plan", lambda cands, state: list(cands))
+    assert o.main() == 0
     assert seen.get("cands") and seen["cands"][0]["slug"] == "s", "main 要真的调 enrich，不然闸永远缺 round/court"
+
+
+def test_缩写名取姓取第一个词_全名取最后一个词():
+    """2026-09-03 干跑：`Gorzny S.` / `Bu Y.` / `Sakamoto R.` 三条按末词取到 `S.`，官方 feed 当然查空。"""
+    o = _tool()
+    assert o._surname("Gorzny S.") == "Gorzny"
+    assert o._surname("Bu Y.") == "Bu"
+    assert o._surname("daniil medvedev") == "medvedev"
+    assert o._surname("alex de minaur") == "minaur"
+    assert o._surname("") == ""
