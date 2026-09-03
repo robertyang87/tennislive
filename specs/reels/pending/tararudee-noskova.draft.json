@@ -276,10 +276,47 @@
   "_visual_evidence": {
     "model": "MiniMax-M3",
     "status": "waiting",
-    "visual_status": "error",
-    "retryable": true,
+    "visual_status": "waiting",
+    "retryable": false,
+    "cold_open": {
+      "start": 173.49,
+      "end": 189.69,
+      "kind": "winner_celebration",
+      "winner_visible": true,
+      "reason": "177.51s–188.49s 画面显示女子白上衣（诺斯科娃）与紫衣（塔拉鲁迪）走向网前握手、拥抱、挥手致意；184.52s 比分板明确显示 'LANLANA TARARUDEE 4 2 / LINDA NOSKOVA 6 6'（US Open 标识），与结构化赛果一致，赢家诺斯科娃在握手后举起手臂与观众互动，属于赛后庆祝+握手余波；174.49s 塔拉鲁迪低头略显失落但仍在同一场景内。",
+      "confidence": 0.9
+    },
+    "ending": {
+      "start": 173.49,
+      "end": 194.5,
+      "kind": "aftermath",
+      "winner_visible": true,
+      "reason": "173.49s 起至 192.96s（含 193s 切点之前的画面）完整呈现赛后握手、拥抱、双方致意以及诺斯科娃举臂向观众回应等余波画面，188.49s 起两位选手在网前互动并向看台挥手，192.5s 后进入 US Open 社媒片尾（194.5s）。该窗口完全覆盖 cold_open 的 173.49–189.69，且终点对齐邻近镜头切点 192.96。",
+      "confidence": 0.9
+    },
+    "cover": {
+      "same_match": null,
+      "subject": "",
+      "moment": "other",
+      "wrong_or_old": null,
+      "reason": "题目明确告知没有候选封面照片（'没有候选封面照片'），因此本项无法核对人物、比分、赛事标识或服装，无法证明属于本场；按规定无法证明时 same_match 应为 false，但因没有候选图片可评估，保留为 false 并给出最低置信。",
+      "confidence": 0.2
+    },
     "problems": [
-      "MiniMax API：JSONDecodeError: Expecting ',' delimiter: line 7 column 104 (char 224)"
-    ]
+      "没有官方高清封面候选",
+      "封面无法证明是同一场，或疑似旧图/错图",
+      "封面置信度 0.20 低于 0.80",
+      "封面人物应为 诺斯科娃，模型识别为 空",
+      "封面情绪应为 winner_celebration，现在是 other"
+    ],
+    "model_attempts": 1,
+    "input_sha256": "bfaecc2a0c05adeb55e5952bfcf4fad6ee0f3955ed37cd932a504f2250697c7e",
+    "inputs": [
+      "contact_00.jpg",
+      "contact_01.jpg",
+      "contact_02.jpg",
+      "contact_03.jpg"
+    ],
+    "cover_image": ""
   }
 }
