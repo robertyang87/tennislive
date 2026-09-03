@@ -3609,8 +3609,12 @@ def test_缩略图墙只在取字幕那一趟出():
     src = (ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8")
     body = "\n".join(ln for ln in src.splitlines() if not ln.lstrip().startswith("#"))
     call = body.index("storyboard_sheet(spec[")
-    guard = body.rindex('args.stage == "subs"', 0, call)
-    assert call - guard < 300, "缩略图墙没挂在 subs 那一档上"
+    # `sheet` 那一档是「只出墙不切行」，所以守卫是 subs/sheet 二选一；
+    # 判据要拦的仍然是 render 那一趟——它最贵，而且源片已经在手上。
+    guard = body.rindex('args.stage in ("subs", "sheet")', 0, call)
+    assert call - guard < 300, "缩略图墙没挂在 subs/sheet 那一档上"
+    render_branch = body.index('args.stage == "render"')
+    assert render_branch > call, "render 那一趟不许再出一次缩略图墙"
 
 
 def test_缩略图墙两头都不许进仓库():
