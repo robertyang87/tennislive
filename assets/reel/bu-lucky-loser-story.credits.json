@@ -1,0 +1,54 @@
+{
+  "_note": "**网球有故事** · 幸运落败者：布云朝克特的第七次（视频版，2026-09-03）。同日上午的解说片 bu-lucky-loser 账号所有者看完说「太多文字了，有更多图或者视频么」，于是事实链不动、载体换成官方比赛画面＋他本人发布会原声。证据素材一律整屏切走（账号所有者 2026-08-12 定的口径），四张证据卡的内容各自从 JSON 渲（tools/render_evidence_card.py），出处印在卡上。",
+  "bu-us-open-2026-qual-forehand.jpg": {
+    "subject": "布云朝克特正手击球的正面近景，身后 CHASE 挡板",
+    "event": "2026 US Open, Men's Qualifying Singles Final Round（资格赛决胜轮）— 负奇纳 6-3 4-6 5-7",
+    "date": "2026-08-28（当地）",
+    "artist": "Chris Krusberg/USTA",
+    "license": "unverified —— 美网官方图片接口的编辑图，未取得授权；发布前由人工判断",
+    "via": "usopen.org relatedcontent 接口（tags=atpy09v, type=photo），cmsId 20260828_CK106453_1B；说明原文『Yunchaokete Bu hits a forehand during a Men's Qualifying Singles match during Fan Week as part of the 2026 US Open at USTA Billie Jean King National Tennis Center on Friday, August 28, 2026 in Flushing, NY.』",
+    "image_url": "https://photo-assets.usopen.org/images/pics/large/f_20260828_CK106453_1B.jpg",
+    "_用在哪": "封面（cover.portrait）。同一张也是解说片 bu-lucky-loser 第二版的封面（assets/explainer/bu-lucky-loser/bu_us_open_2026_qual_forehand.jpg）——同一个账号同一天讲同一个人，两条片子的封面认同一张脸。1280×720 铺 1080×1440 是 2.0 倍，取舍写在 spec 的 portrait._low_res_why。"
+  },
+  "bu-us-open-2026-qual-serve.jpg": {
+    "subject": "布云朝克特发球，身后记分牌写着 MEN'S QUALIFYING SINGLES FINAL ROUND · Y. BU / F. CINA",
+    "event": "同上",
+    "date": "2026-08-28（当地）",
+    "artist": "Chris Krusberg/USTA",
+    "license": "unverified —— 同上",
+    "via": "usopen.org relatedcontent 接口，cmsId USTA2374148_20260828_CK106408；说明原文『Yunchaokete Bu serves during a Men's Qualifying Singles match during Fan Week as part of the 2026 US Open …』",
+    "image_url": "https://photo-assets.usopen.org/images/pics/large/f_USTA2374148_20260828_CK106408.jpg",
+    "_用在哪": "整屏静图（第 5 段「八月二十八号，资格赛最后一轮」）。资格赛那一场没有官方集锦，这张是唯一的影像证据，而且画面里的记分牌自证了是哪一场、对手是谁。",
+    "_crop": "官方原图 1280×720，入库前横向裁成 1010×720（x=155~1165）——整屏证据段的盒子是 1015×1267（0.801），16:9 缩进去只占画面高 40%，人小得像缩略图（CLAUDE.md「整屏静片要预裁成卡片盒的比例」）。裁到 1010 之后占 50%、放大只 1.005 倍。⚠️ 没有裁到盒子那个 0.801：人在 x≈200~470、记分牌在 x≈795~1165，两者跨 960px，裁成竖条必然丢掉一头，而记分牌正是这一屏「资格赛最后一轮、对奇纳」的自证。"
+  },
+  "bu-us-open-2026-r1-walk.jpg": {
+    "subject": "布云朝克特分与分之间走向底线，身后看台坐满",
+    "event": "2026 US Open, Men's Singles Round 1, Stadium 17 — 6-2 6-1 6-1 胜 12 号种子霍达尔",
+    "date": "2026-09-02（当地）",
+    "artist": "Darren Carroll/USTA",
+    "license": "unverified —— 同上",
+    "via": "usopen.org relatedcontent 接口，cmsId 20260902_ADC08195",
+    "image_url": "https://photo-assets.usopen.org/images/pics/large/f_20260902_ADC08195.jpg",
+    "_用在哪": "备用（第一版没有用上，留着给以后同一个人的片子）。"
+  },
+  "bu-ll-official-notice.png": {
+    "kind": "quote 证据卡",
+    "source": "美网官方 X @usopen 2026-09-01 https://x.com/usopen/status/2094808461448016379，英文逐字，中译是我们的",
+    "json": "bu-ll-official-notice.json"
+  },
+  "bu-ll-slam-rule.png": {
+    "kind": "facts 证据卡",
+    "source": "2026 Grand Slam Rule Book Article III.h（itftennis.com/media/5986）＋ ESPN 2026-09-02 现场稿",
+    "json": "bu-ll-slam-rule.json"
+  },
+  "bu-ll-money.png": {
+    "kind": "facts 证据卡",
+    "source": "2026 Grand Slam Rule Book Article I ＋ Flashscore 2026 美网奖金表",
+    "json": "bu-ll-money.json"
+  },
+  "bu-ll-wall.png": {
+    "kind": "timeline 证据卡",
+    "source": "WTA 官方（wtatennis.com/news/4301713）、Olympics.com 德容第四轮那篇、ATP、澳网官方（ausopen.com qualifier-lucky-loser 那篇）",
+    "json": "bu-ll-wall.json"
+  }
+}

@@ -2915,19 +2915,40 @@ def test_封面念的就是海报上那句钩子就不另排字幕():
     reel = Path("tools/build_match_reel.py").read_text(encoding="utf-8")
     assert "drop_punctuation" in reel, "比对没有去标点——印的带换行、念的带句号，永远不等"
     assert "不另排字幕" in reel
+    # 比对必须走 same_line_as_printed，而且是紧挨着那句日志的那个 if——
+    # 退回裸的 `drop_punctuation(a) == drop_punctuation(b)` 会把「？」算成差异
+    tail = reel[:reel.index("[封面] 旁白就是海报上那句钩子")]
+    assert "if same_line_as_printed(cover_text" in tail[-400:], (
+        "封面字幕的比对没走 same_line_as_printed——问句形式的钩子旁白又会叠一行重复字幕")
     # else 分支必须还在：另说一件事时要排字幕
     head = reel[reel.index("[封面] 旁白就是海报上那句钩子"):]
     assert "else:" in head[:400] and "subtitle_cues(readable(cover_text)" in head[:800], (
         "封面变成一律不出字幕了——另说一件事的那种情况就没字幕了")
 
+    # 行为：只差标点（含 ？！）和空白的算同一句；真另说一件事的不算
+    r = _reel()
+    assert r.same_line_as_printed("五天前出局，五天后赢了种子？", "五天前出局\n五天后赢了种子"), (
+        "钩子是陈述句、旁白念成问句，仍然是同一句——bu-lucky-loser-story 2026-09-03 "
+        "就因为这一个问号在封面上多叠了一行重复钩子的小字")
+    assert not r.same_line_as_printed(
+        "全美第三大的网球赛事，办在一个三万多人的小镇。", "全美第三大赛事\n办在小镇"), (
+        "真另说一件事的被判成同一句了——那一屏就没字幕了")
+    bu = json.loads(Path("specs/reels/bu-lucky-loser-story.json").read_text("utf-8"))["cover"]
+    assert r.same_line_as_printed(bu["narration"], bu["hook"])
+
     spec = json.loads(Path("specs/reels/hewitt-washington.json").read_text("utf-8"))
     cover = spec["cover"]
     assert cover.get("narration"), "休伊特那条封面没有配音——那就又是一屏哑的"
-    from tennislive.video.subtitle_text import drop_punctuation
-    assert drop_punctuation(cover["narration"]) == drop_punctuation(
-        cover["hook"].replace("\n", " ")), (
+    assert r.same_line_as_printed(cover["narration"], cover["hook"]), (
         "封面念的和印的不是同一句了。那没问题，但字幕会跟着出现——"
         "确认过排版再改这条断言")
+
+    # ⚠️ 上面两条行为断言喂的是手写的串；这一头拿**真实存量**验另一个方向——
+    # 手搓的 fixture 只能验函数的局部行为，验不了它和真语料对不对得上。
+    for slug in ("cincinnati-story", "tiafoe-story"):
+        c = json.loads(Path(f"specs/reels/{slug}.json").read_text("utf-8"))["cover"]
+        assert not r.same_line_as_printed(c["narration"], c["hook"]), (
+            f"{slug} 的封面口播另说了一件事，它必须还有字幕")
 
 
 def test_检查工具认的画布要和成片的画布是同一个():
