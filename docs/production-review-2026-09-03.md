@@ -289,6 +289,7 @@ run 33728989031 干跑）；其余都是测试绿——自动链下一批草稿�
 | 3.2 教模型 | **B6** 收尾先兑现再抛问、**D10** MiniMax 优先反应镜头、**A3** 的软报告那一半（`promote.note_evidence_on_screen`） | #755 |
 | 2.1 | review 抓出的九处静默坏路径 | #742 |
 | 2.2 赛场之上 | 修复环读 probe 按 slug 反查（跨日渲染不再盲修）；20 小时新鲜窗三处收成一份出处；`orchestrate.assemble_draft` 删掉；dry-run 和 pip 装依赖挪到 apt 那两步前面（PATH 上抽掉 ffmpeg 跑过，dry-run 照旧绿） | 本 PR |
+| 2.2 采访线 / 解说片线 | `attach_interview_lead_in` 一条源片的意外只算它自己待下一轮（原来只兜三类异常，别的会把同批已完成的一起扔掉）；`pipeline_health` 盖住 `explainer.yml` 和 `knowledge-adhoc.yml`；`_MISCALL_DIAGRAM` / `_SUB_TRIM` / `_SUB_DROP` 删掉；12 份零引用的 `_outro.mp4` 从 git 里拿掉、explainer.yml 清理步骤从此删它 | #758 之后那个 PR |
 
 ### 5.2 没做的（每条说清为什么停在这儿，别当成漏了）
 
@@ -323,8 +324,10 @@ run 33728989031 干跑）；其余都是测试绿——自动链下一批草稿�
   `LAYOUT == "band"` 全在段落和章节卡那条路上），`FPS_EXPR` 只影响那段随手删掉的
   `part_cover.mp4`——白编几秒钟，海报本身一个像素不差，不值得动委托链。
   没动的：自动 dispatch 的五个空标题输入（删输入是行为改动，要看手动 dispatch
-  还有没有人填）、采访线的三条、解说片线的中间物进 git、`pipeline_health` 不监控
-  explainer/knowledge-adhoc、`_MISCALL_DIAGRAM` 零引用——仍然是 2.2 那张表。
+  还有没有人填）；采访线的 `validate_qc` 一次推送跑三遍——量过它只是几次 `git show`
+  加小文件的 sha256，不值得给读文件的函数加缓存；`already_accepted` 那个输出没人读
+  但也不碍事；`interview-auto-render` 每班装 whisper/Docker；explainer 的 `render.json`
+  没有 `production_sla`（那条线没有「接单」时刻，SLA 的语义要另定）——仍然是 2.2 那张表。
 - **49 份 pending 草稿全是旧合同产的**（没有 `chapters`、没有 `_beat`），
   ⑤ 第三刀对它们只会走「退回旁白原文」那条路（量过：0/47 认得到）。要等下一批
   `assemble` 才有新合同的草稿——这也是「路线真的通了」那个判据还没到的原因。
