@@ -2021,6 +2021,13 @@ AUTO_PUSH_SLUGS: frozenset[str] = frozenset({
     # 全程 −23~−27 dB 没有哑场；`check_explainer_landed` 报「已落地」、
     # `check_explainer_voice` 确认是代码默认的云健 +22%。
     "qualifier-ceiling",
+    # 2026-09-03 验过才加进来的（同上那句）：在分支上渲的第二趟
+    #（run 33736115929，explainer.yml push=false）落库成功，工作流自带的两道闸都过了；
+    # 成片从 Release 拉回本地量过——226.0 秒、1080×1920、音画差 0.04 秒、
+    # 五个采样窗全程 −23~−25 dB 没有哑场、六屏抽帧墙逐格看过（字幕逐条读过，
+    # 数字都转成了阿拉伯数字）；第一趟报出来的四处假词（「讲布｜云朝」「定首｜轮」
+    # 「辛辛那｜提伤」「了兹维列夫」）在第二趟的 words.json 里一处都没有了。
+    "bu-lucky-loser",
 })
 
 
