@@ -343,6 +343,18 @@
   新判据 `tests/test_no_duplicate_defs.py`：一个模块里同名顶层定义不许两次。
   ASS 时间戳那一份（2.4 里列的）实际只有 `build_match_reel` 一处 `def`，别处是
   内联格式化，没动；TTS 两套（2.4 的最后一项）留给下一刀。
+- 路线 ⑥ 第二刀（PR 待开）：**TTS 收成 `src/tennislive/video/tts.py` 一份出处**
+  （`tts_one` / `_tts_one_uncached` / `edge_tts_verdict` / `tts_content_key`，
+  reel 那套连注释一起搬过去）。解说片和采访线的 `synthesize_narration` 改成逐段调
+  它——那两条线在这之前只有 edge-tts、**一次重试都没有、不缓存**（reel 那头
+  2026-08-13 的注释白纸黑字写着「同一个形状还在 explainer，没修别当成修过了」，
+  写了三周）。reel 留薄包装（`tts_one` 按名字把 `_tts_one_uncached` 递进去，
+  判据打桩的正是这个名字；失败抛 `ReelError`）。⚠️ 生产上解说片/采访线的工作流
+  仍然没配 `AZURE_SPEECH_*`，所以后端照旧是 edge-tts——变的是有了重试和内容缓存，
+  不是换后端。判据 `tests/test_tts.py`（缓存 / 错误类型 / 要风格没 Azure 必须报错 /
+  解说片真走共享模块并落 words.json / 三条出片线里 `edge_tts.Communicate(` 只许在
+  共享模块——往采访线塞一个反向验证过）；`test_reel_narration.py` 那套喂假模块
+  真跑的重试判据原样绿。
 - Release tag 改哈希没动（口径选择）。
 - `build_match_reel.py` 没拆一行（要分三次 PR）。
 - 内容那一节的 11 条没有一条落成代码，只落成了这份文档和路线表。

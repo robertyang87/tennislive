@@ -10133,50 +10133,31 @@ def synthesize_narration(
     rate: str = DEFAULT_RATE,
     pitch: str = DEFAULT_PITCH,
 ) -> list[Path]:
-    """Synthesize one narration audio file per beat with edge-tts (online)."""
-    try:
-        import asyncio
+    """每个 beat 合一条旁白。**合成只有一份出处 `tennislive.video.tts`**
+    （review 路线 ⑥ 第二刀）——这条线因此拿到了 reel 那套的重试、内容缓存和
+    「配了 Azure 就走 Azure」；在这之前它只有 edge-tts、一次重试都没有。
 
-        import edge_tts
-    except ImportError as exc:  # pragma: no cover - dependency guard
-        raise ExplainerVideoError("缺少 edge-tts，请安装后再生成解说视频") from exc
+    走 stream() 而不是 save()，为的是顺手接住 WordBoundary——合成器自己报的
+    「第几个字念到第几毫秒」。字幕的时间轴就是从这儿来的；save() 把它扔了
+    （那一段实现在 tts.py 里，注释也一起搬过去了）。
+    """
+    from .tts import tts_one  # noqa: PLC0415
 
     outdir.mkdir(parents=True, exist_ok=True)
     paths: list[Path] = []
-
-    # 走 stream() 而不是 save()，为的是顺手接住 WordBoundary——合成器自己报的
-    # 「第几个字念到第几毫秒」。字幕的时间轴就是从这儿来的；save() 把它扔了。
-    async def _one(text: str, path: Path) -> list[dict]:
-        marks: list[dict] = []
-        with path.open("wb") as fh:
-            # boundary="WordBoundary" 必须显式要。edge-tts 的默认值是
-            # **SentenceBoundary**，服务端就只发整句的时刻——我只收
-            # WordBoundary，于是 words.json 每条都是 []。空列表和「这个声音
-            # 不报边界」长得一模一样，字幕悄悄退回按字数分，看不出哪儿不对。
-            # 两种都收下：真拿不到词级的时候，句级也比按字数猜准。
-            stream = edge_tts.Communicate(
-                text, voice, rate=rate, pitch=pitch, boundary="WordBoundary"
-            ).stream()
-            async for chunk in stream:
-                if chunk.get("type") == "audio" and chunk.get("data"):
-                    fh.write(chunk["data"])
-                elif chunk.get("type") in ("WordBoundary", "SentenceBoundary"):
-                    marks.append({
-                        "offset": chunk.get("offset", 0),
-                        "duration": chunk.get("duration", 0),
-                        "text": chunk.get("text", ""),
-                    })
-        return marks
-
     for index, seg in enumerate(segments):
         path = outdir / f"voice_{index:02d}.mp3"
         try:
-            marks = asyncio.run(_one(speakable(seg.narration), path))
+            marks = tts_one(speakable(seg.narration), path, voice, rate, pitch,
+                            error=ExplainerVideoError)
+        except ExplainerVideoError:
+            raise
         except Exception as exc:  # noqa: BLE001
             raise ExplainerVideoError(f"TTS 合成失败（第 {index + 1} 段）: {exc}") from exc
         if not path.is_file() or path.stat().st_size == 0:
             raise ExplainerVideoError(f"TTS 未生成音频（第 {index + 1} 段）")
         # 空列表也照写：字幕那边靠它区分「这个声音不报边界」和「还没合成过」。
+        # ⚠️ 缓存命中那条路只拷 mp3、不落 words.json，所以这一行不能省。
         path.with_suffix(".words.json").write_text(
             json.dumps(marks, ensure_ascii=False), encoding="utf-8"
         )
