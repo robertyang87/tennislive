@@ -626,12 +626,12 @@ def test_render在切段之前把占位符换成真渲出来的图(tmp_path):
     segs = reel.parse_segments(_spec_with_stat_card(), {"": 1}, "")
     calls = []
 
-    def fake_render(spec, out):
-        calls.append(out)
+    def fake_render(spec, out, **kw):
+        calls.append((out, kw.get("variant")))
         out.write_bytes(b"jpg")
 
     got = reel._materialize_stat_card(_spec_with_stat_card(), segs, tmp_path, renderer=fake_render)
-    assert calls == [tmp_path / reel.STAT_CARD_NAME]
+    assert calls == [(tmp_path / reel.STAT_CARD_NAME, "film")], "剪进片子的那张要渲 film 变体"
     assert got[1].image == str(tmp_path / reel.STAT_CARD_NAME)
     assert got[0].image == "", "别的段一个字段都不许动"
     # 没有 stat_card 段时一次都不渲
@@ -645,7 +645,7 @@ def test_渲不出图要红_而且剪进片子的不再渲第二遍(tmp_path):
     reel = _reel()
     segs = reel.parse_segments(_spec_with_stat_card(), {"": 1}, "")
     with pytest.raises(reel.ReelError, match="没渲出来"):
-        reel._materialize_stat_card(_spec_with_stat_card(), segs, tmp_path, renderer=lambda spec, out: None)
+        reel._materialize_stat_card(_spec_with_stat_card(), segs, tmp_path, renderer=lambda spec, out, **kw: None)
     src = (Path(__file__).resolve().parents[1] / "tools" / "build_match_reel.py").read_text(encoding="utf-8")
     body = "\n".join(ln for ln in src.splitlines() if not ln.lstrip().startswith("#"))
     late = body.index('with stage("数据统计对照图")')
@@ -713,3 +713,70 @@ def test_带式版式放过整屏证据段的contain_而且卡缩进画面带不
     monkeypatch.setattr(reel, "LAYOUT", "full")
     canvas, (x0, y0, x1, y1) = reel.still_canvas_for_layout(card, Image)
     assert y0 < reel.BAND_TOP, "全出血下卡照旧铺整幅居中，不该让出顶带"
+
+
+# ---------------------------------------------------------------------------
+# film 变体：剪进片子的那张是 1080×1440（review 路线 ④ 第三刀）
+# ---------------------------------------------------------------------------
+
+def _film_spec():
+    return json.loads(Path("specs/reels/djokovic-navone-us-open-2026-r1.json").read_text(encoding="utf-8"))
+
+
+def test_film变体是成片画幅_不渲footer和段标题_poster一个像素不动(monkeypatch):
+    """1920 那版缩进 1440 的画布只剩 713px 宽；film 版画布就是成片的 3:4，
+    铺满宽度。少掉的 480px：footer（片里有角标和片尾）、「全场数据对比」段标题
+    （旁白正在说它）、行距。poster 那张仍是推送页用的，一个字不许变。"""
+    import versus_poster as vp  # noqa: PLC0415
+    monkeypatch.setattr(vp, "_fetch_match_duration", lambda src, where: "3:12:00")
+    spec = _film_spec()
+    film = sc.build(spec, variant="film")
+    poster = sc.build(spec)
+    assert sc.VARIANTS["film"] == (1080, 1440) and sc.VARIANTS["poster"] == (1080, 1920)
+    assert "height:1440px" in film and "height:1920px" in poster
+    assert 'class="footer"' not in film and "全场数据对比" not in film
+    assert 'class="footer"' in poster and "全场数据对比" in poster
+    assert film.count('class="srow"') == poster.count('class="srow"') == 9
+    with pytest.raises(SystemExit, match="变体"):
+        sc.build(spec, variant="wide")
+
+
+def test_film变体真渲出来装得下五盘九行_松行距会溢出(monkeypatch, tmp_path):
+    """判据是最低墨迹底边（`CONTENT_BOTTOM_JS`）≤ 画布：五盘九行、收紧的行距
+    量到 1413；沿用 poster 的行距（33/23）量到 1615，溢出 1440——这一头钉住
+    「行距不许悄悄放回去」。⚠️ 写这条时我先断言过「scrollHeight 在溢出时恒报
+    画布高」——**量出来是假的**（松行距时它也报 1615），所以这儿只钉两把尺子
+    在溢出方向上一致，不钉那句没量过的话。"""
+    import versus_poster as vp  # noqa: PLC0415
+    monkeypatch.setattr(vp, "_fetch_match_duration", lambda src, where: "3:12:00")
+    from playwright.sync_api import sync_playwright  # noqa: PLC0415
+    spec = _film_spec()
+    assert len(spec["cover"]["result"].split()) == 5, "要拿五盘的（最坏情形）验"
+    loose = sc.build(spec, variant="film").replace(
+        "</style>", ".wrap{padding:52px 74px 0}.srow{margin-bottom:33px;padding-bottom:23px}</style>", 1)
+    tight = sc.build(spec, variant="film")
+    heights = {}
+    with sync_playwright() as pw:
+        browser = sc._launch_browser(pw)
+        for name, html in (("loose", loose), ("tight", tight)):
+            page = tmp_path / f"{name}.html"
+            page.write_text(html, encoding="utf-8")
+            tab = browser.new_page(viewport={"width": 1080, "height": 1440})
+            tab.goto(page.resolve().as_uri())
+            tab.wait_for_timeout(200)
+            heights[name] = (tab.evaluate(sc.CONTENT_BOTTOM_JS),
+                             tab.evaluate("document.body.scrollHeight"))
+            tab.close()
+        browser.close()
+    assert heights["tight"][0] <= 1440, heights
+    assert heights["loose"][0] > 1440, "松行距本该溢出——量法不对（拿了 scrollHeight？）"
+    assert heights["loose"][1] > 1440 and heights["tight"][1] == 1440, \
+        "scrollHeight 溢出时报得出、装得下时只报画布高——两把尺子在溢出方向上要一致"
+    assert "CONTENT_BOTTOM_JS" in inspect.getsource(sc.render)
+
+
+def test_render按变体开视口_命令行也认变体():
+    body = inspect.getsource(sc.render)
+    assert 'viewport={"width": canvas_w, "height": canvas_h}' in body
+    assert "VARIANTS[variant]" in body
+    assert '"--variant"' in inspect.getsource(sc.main)
