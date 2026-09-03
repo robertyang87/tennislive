@@ -346,6 +346,11 @@ STAT_CARD_NAME = "stat_card.jpg"
 # 来路：2026-09-03 review——131 条 spec 带完整 stats，**0 条**烧进片子：数据图
 # 一直是渲完成片之后才出的推送图，证据只被「说」出来、从不「亮」出来。
 STAT_CARD_PLACEHOLDER = "<stat_card>"
+# 章节卡 / 论点卡（review 路线 ⑤）：段落里写 `"title_card": "一句话"`（可带
+# `"kicker": "01"`），render 在切段之前用 tools/render_title_card.py 现渲一张
+# 深底大字卡当整屏段。占位符后面跟着那句话的 JSON——每段的字不一样，
+# 一个常量占位符认不出是哪一张。
+TITLE_CARD_PREFIX = "<title_card>"
 #: 封面素材（抓下来的帧、抠好的人）落在这儿，**跟着产物一起进仓库**。
 #
 # **它买的是「封面返工不用上 runner」。** 量出来的账（shang-rublev，2026-08-05）：
@@ -2745,6 +2750,10 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
             # load_spec 已经归一过一遍；直接喂 dict 的调用方（测试）走同一道闸。
             _normalize_stat_card_segments({"segments": [s], "stats": spec.get("stats")})
             s = {k: v for k, v in s.items() if k != "stat_card"}
+        if s.get("title_card"):
+            s = dict(s)
+            _normalize_title_card_segments({"segments": [s]})
+            s = {k: v for k, v in s.items() if k not in ("title_card", "kicker")}
         if s.get("image"):
             # 整屏证据段：只认 image/seconds/narration/voice（外加 `_` 注解）。
             # 窗口类字段一概不许——它没有源片窗口，写了就是没被读的死键。
@@ -2782,6 +2791,7 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
     segments = [_one(s, i) for i, s in enumerate(spec["segments"])]
     gone_ev = [(i + 1, s.image) for i, s in enumerate(segments)
                if s.image and s.image != STAT_CARD_PLACEHOLDER
+               and not s.image.startswith(TITLE_CARD_PREFIX)
                and not Path(s.image).is_file()]
     if gone_ev:
         raise ReelError("这些整屏证据段的图片找不到：\n  "
@@ -2991,8 +3001,8 @@ _REAL_FIELDS: dict[str, tuple[str, ...]] = {
               "tier", "topic", "versus", "winner"),
     "segment": ("crosses_cut", "crop_zoom", "cx", "end", "fit", "image",
                 "inset", "mute", "narration", "quote", "score_inset",
-                "seconds", "source", "speed", "start", "stat_card", "track",
-                "voice"),
+                "seconds", "source", "speed", "start", "stat_card", "title_card",
+                "kicker", "track", "voice"),
 }
 
 
@@ -3147,6 +3157,34 @@ def _normalize_stat_card_segments(spec: dict) -> None:
         s["image"] = STAT_CARD_PLACEHOLDER
 
 
+def _normalize_title_card_segments(spec: dict) -> None:
+    """`{"title_card": "一句话", "seconds": N}` 段就地补上 `image: <title_card>{…}`。
+
+    和 `_normalize_stat_card_segments` 同一个位置、同一个理由（raw 消费者全按
+    `image` 认整屏段）。narration 缺省就是卡上那句——章节卡不能是一段死寂
+    （QC 的数字静音闸 1 秒就红；账号所有者定过「卡要有配音」），要真的只留
+    现场声就显式写 `"narration": ""` 并按 image 段的规矩自己担哑场。
+    """
+    for i, s in enumerate(spec.get("segments") or []):
+        if not (isinstance(s, dict) and s.get("title_card")):
+            continue
+        text = str(s["title_card"]).strip()
+        if not text:
+            raise ReelError(f"第 {i + 1} 段 title_card 是空的——章节卡要有一句话")
+        img = s.get("image")
+        if img and not str(img).startswith(TITLE_CARD_PREFIX):
+            raise ReelError(f"第 {i + 1} 段 title_card 和 image 二选一——"
+                            "章节卡就是这一段的图，别再给一张")
+        if not float(s.get("seconds") or 0) > 0:
+            raise ReelError(
+                f"第 {i + 1} 段（title_card）要写 seconds（>0）：章节卡停多久由你定，"
+                "念出来的话 speech_seconds(那句话)+1.2 左右；只闪一下 1.0~1.5")
+        if "narration" not in s:
+            s["narration"] = text
+        s["image"] = TITLE_CARD_PREFIX + json.dumps(
+            {"text": text, "kicker": str(s.get("kicker") or "").strip()}, ensure_ascii=False)
+
+
 def load_spec(path: Path) -> dict:
     spec = json.loads(path.read_text(encoding="utf-8"))
     for key in ("segments", "cover"):
@@ -3155,6 +3193,7 @@ def load_spec(path: Path) -> dict:
     _reject_underscored_fields(spec)
     _reject_dead_voice_keys(spec)
     _normalize_stat_card_segments(spec)
+    _normalize_title_card_segments(spec)
     if not spec.get("sources") and not spec.get("source_url"):
         raise ReelError("spec 既没有 `sources` 也没有 `source_url`")
     # 多源的 spec：每一段都要说清自己从哪条源片剪。**不给默认值**——猜错了
@@ -6809,6 +6848,39 @@ def _materialize_stat_card(spec: dict, segments: list[Segment], outdir: Path,
             if s.image == STAT_CARD_PLACEHOLDER else s for s in segments]
 
 
+def _materialize_title_cards(spec: dict, segments: list[Segment], outdir: Path,
+                             *, renderer=None) -> list[Segment]:
+    """把 `title_card` 段的占位符换成真渲出来的 `title_card_NN.jpg`。
+
+    和 `_materialize_stat_card` 同一个位置（切段之前）、同一个理由。带式版式
+    按画面带的尺寸渲（1080×960），全出血按成片画幅——`still_canvas_for_layout`
+    缩进去时才铺得满，不然一张 3:4 的卡缩进 9:8 的带里两边留出大片底色。
+    """
+    from dataclasses import replace  # noqa: PLC0415
+
+    if not any(s.image.startswith(TITLE_CARD_PREFIX) for s in segments if s.image):
+        return segments
+    with stage("章节卡（剪进片子）"):
+        if renderer is None:
+            sys.path.insert(0, str(Path(__file__).resolve().parent))
+            import render_title_card  # noqa: PLC0415
+            renderer = render_title_card.render
+        size = (VIDEO_W, BAND_PIC_H) if LAYOUT == "band" else (VIDEO_W, VIDEO_H)
+        out_segments = []
+        for i, s in enumerate(segments):
+            if not (s.image and s.image.startswith(TITLE_CARD_PREFIX)):
+                out_segments.append(s)
+                continue
+            card = json.loads(s.image[len(TITLE_CARD_PREFIX):])
+            out = outdir / f"title_card_{i + 1:02d}.jpg"
+            renderer(card["text"], out, kicker=card.get("kicker", ""), size=size)
+            if not out.is_file():
+                raise ReelError(f"第 {i + 1} 段的章节卡没渲出来：{out}")
+            print(f"[章节卡] 第 {i + 1} 段「{card['text']}」→ {out.name}（{size[0]}×{size[1]}）")
+            out_segments.append(replace(s, image=str(out)))
+    return out_segments
+
+
 def _check_segments_fit(segments: list[Segment], sources: dict[str, Path]) -> None:
     """段落不许写过源片的末尾。
 
@@ -6933,6 +7005,7 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
 
     segments = parse_segments(spec, sources, primary)
     segments = _materialize_stat_card(spec, segments, outdir)
+    segments = _materialize_title_cards(spec, segments, outdir)
     _check_segments_fit(segments, sources)
     # 封面那句先合出来——**封面停多久由它决定**，所以排在渲封面之前。
     cover_voice, cover_marks = synth_cover(spec, outdir, voice, rate)
