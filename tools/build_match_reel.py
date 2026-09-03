@@ -6800,7 +6800,9 @@ def _materialize_stat_card(spec: dict, segments: list[Segment], outdir: Path,
             import render_stat_card  # noqa: PLC0415
             renderer = render_stat_card.render
         out = outdir / STAT_CARD_NAME
-        renderer(spec, out)
+        # 片里那一版是 1080×1440（render_stat_card.VARIANTS["film"]）——就是成片的
+        # 画幅，缩进去铺满宽度；推送页那张仍是 1080×1920，两张各渲各的。
+        renderer(spec, out, variant="film")
         if not out.is_file():
             raise ReelError(f"数据统计图没渲出来：{out}")
     return [replace(s, image=str(outdir / STAT_CARD_NAME))
