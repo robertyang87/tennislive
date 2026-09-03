@@ -2588,7 +2588,30 @@ _KNOWN_TYPOS = {
 #: 「斯图加特」（德国城市，Stuttgart）四个字里三个和「斯图尔特」（球员
 #: Hamish Stewart，登记在 player_names_top500.json）重叠——`known` 并进
 #: 排名快照之后才现形的假阳性，判据变准了、`_TYPO_SAFE` 跟着补一条。
+#:
+#: ⚠️ **这张表只放不是球员名的词。** 规范名自己含着某个错字串的那一类不写在
+#: 这儿，`_typo_safe_names()` 从译名表自己推——见那个函数。
 _TYPO_SAFE = ("巴基斯坦", "斯图加特")
+
+
+def _typo_safe_names(known):
+    """译名表里**自己含着某个已知错写**的规范名——查 `_KNOWN_TYPOS` 之前要遮掉。
+
+    2026-09-03 撞出来的：`player_zh("Thanasi Kokkinakis")` 是**科基纳基斯**，
+    而它里面就有「基斯」——`_KNOWN_TYPOS` 那一条盯的是把 Madison Keys 写成
+    「基斯」。于是一句写对了的话被判成写错了。
+
+    ⚠️ **不往 `_TYPO_SAFE` 里手工补一条**：那张表是给「巴基斯坦」「斯图加特」
+    这种**不是球员名**的词用的，手工维护得起；而「规范名含着错字串」这一类
+    要跟着译名表长，手工名单必然过期，**而过期的样子是一条常年红的检查**。
+    这一份从 `known` 自己推：今天全表 1100 个名字里只有「科基纳基斯」一个撞上
+    （六个 `_KNOWN_TYPOS` 键逐个扫过），明天多一个它自动跟上。
+
+    ⚠️ **遮的是「规范名整串出现的地方」，不是「错字串本身」**——`str.replace`
+    只吃完整的规范名，所以文中别处单独写一个「基斯」照样报得出来。判据没有
+    因此变松，测试里那两个方向都反向验证过。
+    """
+    return tuple(n for n in known if any(w in n and w != n for w in _KNOWN_TYPOS))
 
 
 #: 「全汉字」和「全汉字或间隔号」的极大区间。
@@ -2734,9 +2757,11 @@ def test_人名要以译名表为准():
         return not any(f"{where}：「{wrong}」" in msg
                        for where, wrong in _SHIPPED_TYPOS)
 
+    typo_safe_names = _typo_safe_names(known)
+
     def scan(where: str, text: str) -> None:
         safe = text
-        for word in _TYPO_SAFE:
+        for word in _TYPO_SAFE + typo_safe_names:
             safe = safe.replace(word, "　" * len(word))
         for wrong, right in _KNOWN_TYPOS.items():
             if wrong in safe:

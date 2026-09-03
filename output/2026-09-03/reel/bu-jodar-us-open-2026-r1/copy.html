@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>9.3 赛场之上 | 布云朝克特大满贯正赛首胜</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>布云朝克特美网首轮爆冷横扫12号种子，拿到大满贯正赛首胜🎾
+
+美网男单第一轮，17号球场，布云朝克特6-2、6-1、6-1击败西班牙人霍达尔，1小时48分钟。
+
+这是他在大满贯正赛赢下的第一场球。
+
+在这之前他打过6场大满贯正赛，0胜6负，而且6次全部止步第一轮：2024年美网负于鲁德，2025年澳网、法网、温网、美网连着四站首轮出局，2026年澳网负于沙波瓦洛夫。最近的一次就在今年1月。
+
+而这一场，他本来根本不该打。
+
+北京时间8月29日凌晨，美网资格赛最后一轮，他打满2小时18分钟，先赢下一盘，最后6-3 4-6 5-7输给意大利人奇纳。那一刻，这届美网跟他已经没有关系了。顺带一提，把他淘汰的奇纳自己进了正赛，首轮6-4 6-1 6-0被米切尔森横扫。
+
+真正把门重新推开的是一次伤退。原定和霍达尔打这场首轮的是澳大利亚人科基纳基斯，两周前在辛辛那提扭伤脚踝，一场没打就退了赛。美网官方的公告写得很清楚：科基纳基斯因伤退出男单，由幸运落败者布云朝克特顶替。官方赛果数据里，他名字后面挂着的就是LL这两个字母。
+
+也就是说，他顶的正是霍达尔那个签位。
+
+而霍达尔近期是真的势头正盛。19岁的马德里人，今年打进过法网8强，8月拿到华盛顿ATP500亚军，又打进蒙特利尔ATP1000的4强，排名一路升到世界第13，是本届12号种子。今年他在大满贯正赛7胜3负。
+
+然后他只丢了4局。
+
+首盘38分钟，6-2；第二盘33分钟，6-1；第三盘37分钟，6-1。三盘加起来1小时48分钟，比他五天前那场资格赛还短半个小时。
+
+最硬的一个数不在制胜分上，在破发点：整场比赛，霍达尔一个破发点都没有拿到。布云朝克特11个发球局一个没丢，霍达尔11个发球局只保住4个。总分89比51，非受迫失误37比21，一发得分率84%比59%。
+
+赛点也不是白拿的。1-5时布云朝克特发球胜赛局，15-40的第一个赛点被霍达尔救掉，30-40的第二个才兑现。球落地那一刻，转播解说说了一句：That is the win of his career.
+
+大满贯正赛第7次，第1胜。而五天前，他已经出局。
+
+这算运气吗？
+
+#布云朝克特 #美网 #网球 #赛场之上 #网球时差</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>这算运气吗？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
