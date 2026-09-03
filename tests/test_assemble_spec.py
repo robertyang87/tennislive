@@ -290,6 +290,10 @@ def test_assemble有id时各块拼装(tool, monkeypatch):
                        event="Cincinnati", year=2026, fixture="北京时间",
                        flashscore_id="4CYI9Ick")
     assert draft["_match"]["flashscore_id"] == "4CYI9Ick"
+    # 数据图头像在 stats 块之后机械补上：这两位在已发 spec 里认过，走索引复用
+    # （不摸网——conftest 把现抓关了）。去掉它之后其余字段要原样。
+    assert draft["stats"]["a"].pop("headshot").startswith("assets/players/headshots/")
+    assert draft["stats"]["b"].pop("headshot").startswith("assets/players/headshots/")
     assert draft["stats"] == {"a": {"aces": 0}, "b": {"aces": 0}}
     assert draft["_hit_data"][0]["label"] == "总分差"
     assert draft["_turning_points"][0]["density"] == 2
