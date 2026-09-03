@@ -40,7 +40,8 @@
       "zoom": 1.0,
       "_low_res_why": "美网官方图片接口的天花板就是 1280×720（`f_` 前缀是顶，CLAUDE.md 记着十二个前缀、六个目录、三种 width 参数都探过），铺 1080×1440 是 2.0 倍。同一轮 AP（按 Yunchaokete 索引 8 条，2026-09 只有一篇日综述不配他的图）、USA TODAY/Gannett（27 份 sitemap 零命中）、WTA photo-resources（不收大满贯）都跑过，没有更大的原图。这是官方实拍不是抽帧，精准优先于清晰。",
       "_why": "美网官方接口按 playerId atpy09v 点清楚 2026 年一共 8 张，只有这一张（资格赛决胜轮，Chris Krusberg/USTA，cmsId 20260828_CK106453_1B）脸完全正对镜头、头肩占满画幅上三分之一、眼睛睁着盯球——账号所有者同日对解说片的封面要求『换个其他正面近景的』，解说片第二版封面就是它。它拍的正是钩子第一行『五天前出局』的那一场。focus 0.48：他的头在源图 x≈0.48，cover 铺满后可见的是中间 42%，头正好居中，左边的球拍被裁掉无所谓。"
-    }
+    },
+    "_narration_why_note": "口播「五天前出局，五天后赢了种子？」和海报印的那两行是同一句，只多一个问号——第一版渲出来底下叠了一行字幕（`drop_punctuation` 留着 `？！`，比对因此判成「另说了一件事」）。2026-09-03 已把比对换成 `cover_voice_is_the_printed_hook`，问号不再算差别。"
   },
   "push": {
     "summary": "出局五天后，他赢了种子",
@@ -92,7 +93,7 @@
       "image": "assets/reel/bu-us-open-2026-qual-serve.jpg",
       "seconds": 13.5,
       "narration": "八月二十八号，资格赛最后一轮。他先赢一盘，然后四比六、五比七，两小时十八分钟，输给了意大利人奇纳。回家的机票，是周三晚上的。",
-      "_why": "整屏切走看证据：美网官方图片接口的实拍（Chris Krusberg/USTA，2026-08-28），画面里的记分牌自己写着 MEN'S QUALIFYING SINGLES FINAL ROUND · Y. BU / F. CINA——这一场没有官方集锦，照片是唯一的影像证据，而且它自证了是哪一场。说明见 assets/reel/bu-lucky-loser-story.credits.json。旁白离线估 12.1s，seconds 13 留 0.9s。 edge-tts 实测 12.84s，卡停 13.5s。"
+      "_why": "整屏切走看证据：美网官方图片接口的实拍（Chris Krusberg/USTA，2026-08-28），画面里的记分牌自己写着 MEN'S QUALIFYING SINGLES FINAL ROUND · Y. BU / F. CINA——这一场没有官方集锦，照片是唯一的影像证据，而且它自证了是哪一场。说明见 assets/reel/bu-lucky-loser-story.credits.json。旁白离线估 12.1s，seconds 13 留 0.9s。 edge-tts 实测 12.84s，卡停 13.5s。 ⚠️ 这张图入库前横向裁成 1010×720：整屏证据段的盒子是 1015×1267，16:9 原图缩进去只占画面高 40%（第一版渲出来人小得像缩略图），裁完占 50%。裁法和为什么没裁到 0.801 见 credits 的 `_crop`。"
     },
     {
       "source": "presser",

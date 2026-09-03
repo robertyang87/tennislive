@@ -2923,11 +2923,26 @@ def test_封面念的就是海报上那句钩子就不另排字幕():
     spec = json.loads(Path("specs/reels/hewitt-washington.json").read_text("utf-8"))
     cover = spec["cover"]
     assert cover.get("narration"), "休伊特那条封面没有配音——那就又是一屏哑的"
-    from tennislive.video.subtitle_text import drop_punctuation
-    assert drop_punctuation(cover["narration"]) == drop_punctuation(
-        cover["hook"].replace("\n", " ")), (
+    reel_mod = _reel()
+    same = reel_mod.cover_voice_is_the_printed_hook
+    assert same(cover["narration"], cover["hook"]), (
         "封面念的和印的不是同一句了。那没问题，但字幕会跟着出现——"
         "确认过排版再改这条断言")
+
+    # ⚠️ **只差句末那个问号，仍然是同一句话。** `drop_punctuation` 是给屏幕
+    # 文本用的、故意留着 `？！`，拿它直接比就会把「五天前出局，五天后赢了
+    # 种子？」判成另说一件事，于是海报上那两行大字底下又叠一行小字
+    # （2026-09-03 `bu-lucky-loser-story` 第一版渲出来就是这样）。
+    assert same("五天前出局，五天后赢了种子？", "五天前出局\n五天后赢了种子"), (
+        "只差一个句末问号被判成另说一件事——字幕会把海报上那句再写一遍")
+    # 另一头：真的另说一件事，不许被放宽到判成同一句
+    assert not same("全美第三大的网球赛事，办在一个三万多人的小镇。",
+                    "小镇办大赛\n三万人对二十万人"), (
+        "放宽到什么都判成一样了——另说一件事的那种情况就没字幕了")
+    for slug in ("cincinnati-story", "tiafoe-story"):
+        c = json.loads(Path(f"specs/reels/{slug}.json").read_text("utf-8"))["cover"]
+        assert not same(c["narration"], c["hook"]), (
+            f"{slug} 的封面口播另说了一件事，它必须还有字幕")
 
 
 def test_检查工具认的画布要和成片的画布是同一个():

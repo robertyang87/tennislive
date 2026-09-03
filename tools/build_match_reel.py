@@ -5657,6 +5657,29 @@ def hook_lines(spec: dict) -> list[str]:
             if ln.strip()]
 
 
+def cover_voice_is_the_printed_hook(narration: str, hook: str) -> bool:
+    """封面念的那句，是不是海报上印的那句——**只用来决定要不要排字幕**。
+
+    ⚠️ **别拿 `drop_punctuation` 直接比，那是用错了函数。** 它是**给屏幕文本**
+    用的，故意留着 `？！`（本文件「屏幕上不写标点」那条：换页表达得了停顿，
+    表达不了「这是一问」）；而这儿要问的是「这两句是不是同一句话」。海报上的
+    钩子按全站规矩不带标点，而口播那句常常是问句——于是
+
+        海报印着   五天前出局 / 五天后赢了种子
+        声音在念   五天前出局，五天后赢了种子？
+
+    只差一个问号，却被判成「另说了一件事」，字幕把同一句话在同一帧里又写了
+    一遍（还被 `arabic_numerals` 换成了「5天前出局 5天后赢了种子?」，读起来
+    像第三句）。2026-09-03 `bu-lucky-loser-story` 第一版就是这么渲出去的。
+    ⚠️ 空格也要收掉：钩子的换行和口播的逗号都被 `drop_punctuation` 换成空格，
+    而它们的**个数**未必一样（三行钩子 vs 两个逗号）。
+    """
+    def key(text: str) -> str:
+        flat = drop_punctuation(str(text).replace("\n", " "))
+        return "".join(ch for ch in flat if ch not in "？！?!　 ")
+    return key(narration) == key(hook)
+
+
 def cover_voice_matches_hook_problem(spec: dict) -> str | None:
     """封面口播和印在海报上的钩子必须是同一句话。
 
@@ -7012,9 +7035,11 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
         # 大字，字幕把同样的话在同一帧里再写一遍，只是把画面弄脏。
         # 判据是「一不一样」，不是「封面一律不出字幕」：封面那句要是**另说了
         # 一件事**（存量里没有，但迟早会有），它照样要有字幕——静音刷是默认状态。
-        printed = drop_punctuation(
-            str(spec["cover"].get("hook", "")).replace("\n", " "))
-        if drop_punctuation(cover_text) == printed:
+        # ⚠️ 比对走 `cover_voice_is_the_printed_hook`，不直接用
+        # `drop_punctuation`——那个函数留着 `？！`，而钩子按规矩不带标点，
+        # 于是「只差一个问号」会被判成另说一件事。见那个函数的注释。
+        if cover_voice_is_the_printed_hook(cover_text,
+                                           spec["cover"].get("hook", "")):
             print("[封面] 旁白就是海报上那句钩子，不另排字幕")
         else:
             cues.extend(subtitle_cues(readable(cover_text),
