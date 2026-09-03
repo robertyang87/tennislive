@@ -28,6 +28,12 @@ DEFAULT_WORKFLOWS = (
     "auto-push-interview.yml",
     "auto-push-reel.yml",
     "auto-push-explainer.yml",
+    # 解说片那条线原来整个不在监控里：`explainer.yml` 是它唯一的出片入口，
+    # `knowledge-adhoc.yml` 是全库唯一的**定时产出线**（每日知识，一天一班）——
+    # 它 2026-08-26 之前九天里六天红在同一句「素材预检失败」，而这份报表一个字
+    # 都没说（review 2026-09-03 §2.2）。
+    "explainer.yml",
+    "knowledge-adhoc.yml",
 )
 
 

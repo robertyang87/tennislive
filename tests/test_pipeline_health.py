@@ -32,6 +32,12 @@ def test_health_monitor_covers_every_auto_publish_column():
             "auto-push-explainer.yml"} <= set(DEFAULT_WORKFLOWS)
 
 
+def test_health_monitor_covers_the_explainer_line_and_the_only_cron_producer():
+    """解说片线原来整个不在监控里；`knowledge-adhoc.yml` 是全库唯一的定时
+    产出线，它连红六天（2026-08-26 之前）报表一个字没说。"""
+    assert {"explainer.yml", "knowledge-adhoc.yml"} <= set(DEFAULT_WORKFLOWS)
+
+
 def test_stale_publication_is_reported():
     rows = [WorkflowHealth("match-reel.yml", 3, 3, 0, 420, 0)]
     report, alerts = render_report(rows, [], (3, 0, 420), ["demo: sending 已持续 2.0h"])
