@@ -219,6 +219,20 @@ from tennislive.video.explainer import _data_uri  # noqa: E402
 
 W, H = 1080, 1920
 
+# 两个变体（2026-09-03 review 路线 ④「证据上屏」）：
+#   poster —— 1080×1920，推送页/复制页那张（老样子，一个像素不动）
+#   film   —— 1080×1440，**剪进片子**那一段用的。画布就是成片的 3:4 画幅，
+#             cut_still_segment 缩进去正好铺满宽度；1920 那版缩进 1440 只剩 713px 宽。
+#             少掉 480px 的账：footer 不要（片里有品牌角标和片尾）、「全场数据对比」
+#             的段标题不要（旁白正在说它）、九行统计的行距从 33/23 收到 20/13。
+VARIANTS = {"poster": (W, H), "film": (W, 1440)}
+
+# 「内容到底画到多低」：逐元素取 getBoundingClientRect().bottom 的最大值。
+CONTENT_BOTTOM_JS = (
+    "() => { let b = 0; for (const e of document.body.querySelectorAll('*')) {"
+    " const r = e.getBoundingClientRect(); if (r.height > 0) b = Math.max(b, r.bottom); }"
+    " return Math.round(b); }")
+
 # 每盘一行那一摞的高度预算：三盘按现状（3 × 56px × 1.42 ≈ 239）占多高，
 # 盘数再多也钉在这附近。⚠️ 画布是定死的 1080×1920 且 `overflow:hidden`——
 # 五盘照 56px 摞是 398px，比三盘多出 160px，把底下九行技术统计整体往下推，
@@ -395,7 +409,10 @@ def _headshot_style(raw: dict, where: str) -> str:
     )
 
 
-def build(spec: dict) -> str:
+def build(spec: dict, *, variant: str = "poster") -> str:
+    if variant not in VARIANTS:
+        raise SystemExit(f"数据统计图只有 {sorted(VARIANTS)} 两种变体，拿到的是 {variant!r}")
+    canvas_w, canvas_h = VARIANTS[variant]
     cover = spec["cover"]
     stats = spec.get("stats")
     if not stats:
@@ -476,11 +493,29 @@ def build(spec: dict) -> str:
     topic = f'{html.escape(str(cover.get("topic", "")))}'
     footer_venue = html.escape(str(stats.get("footer_venue") or court))
     footer_date = html.escape(str(stats.get("footer_date") or ""))
+    if variant == "film":
+        # 片里那一版：段标题和 footer 整个不渲（不是 display:none——不渲就没有
+        # 那两个盒子的高度账），行距收紧。行距那两个数是拿两条九行全有的真 spec
+        # （djokovic-navone 五盘 / alcaraz-faria 四盘）渲出来量最低墨迹底边的：
+        # 沿用 poster 的 33/23 是 **1615px，溢出 1440**；20/13 是 **1413px**，
+        # 余 27px。量的是逐元素 getBoundingClientRect().bottom 的最大值
+        # （`CONTENT_BOTTOM_JS`）：装得下的时候它给出真实余量，
+        # body.scrollHeight 那时只会报画布高（1440），看不出还剩多少。
+        section_title = ""
+        footer = ""
+        film_css = (".wrap{padding:34px 74px 0}"
+                    ".srow{margin-bottom:20px;padding-bottom:13px}")
+    else:
+        section_title = '<div class="section-title">全场数据对比</div>'
+        footer = ('<div class="footer">\n    <span>网球时差 · 赛场之上</span>\n'
+                  f'    <span>{footer_venue}{" · " + footer_date if footer_date else ""}</span>'
+                  "\n  </div>")
+        film_css = ""
 
     return f"""<!doctype html><html><head><meta charset="utf-8"><style>
 {_font_css()}
 *{{margin:0;padding:0;box-sizing:border-box}}
-html,body{{width:{W}px;height:{H}px;overflow:hidden}}
+html,body{{width:{canvas_w}px;height:{canvas_h}px;overflow:hidden}}
 body{{color:{vp.TEXT};font-family:'TL Sans SC','Noto Sans CJK SC',sans-serif;
  background:
   radial-gradient(1150px 800px at 8% -8%, rgba(198,246,90,.20), transparent 52%),
@@ -616,6 +651,7 @@ body{{color:{vp.TEXT};font-family:'TL Sans SC','Noto Sans CJK SC',sans-serif;
 .footer{{margin-top:38px;padding-top:20px;border-top:1px solid rgba(244,251,247,.18);
  display:flex;justify-content:space-between;align-items:center;
  font-family:'TL Sans SC',sans-serif;font-size:23px;color:{vp.DIM};letter-spacing:.5px}}
+{film_css}
 </style></head>
 <body>
 <div class="bar"></div>
@@ -635,13 +671,10 @@ body{{color:{vp.TEXT};font-family:'TL Sans SC','Noto Sans CJK SC',sans-serif;
 </div>
 
 <div class="wrap">
-  <div class="section-title">全场数据对比</div>
+  {section_title}
   {rows_html}
 
-  <div class="footer">
-    <span>网球时差 · 赛场之上</span>
-    <span>{footer_venue}{" · " + footer_date if footer_date else ""}</span>
-  </div>
+  {footer}
 </div>
 </body></html>"""
 
@@ -662,15 +695,17 @@ def _launch_browser(pw):
         raise default_error
 
 
-def render(spec: dict, out: Path) -> Path:
-    html_str = build(spec)
+def render(spec: dict, out: Path, *, variant: str = "poster") -> Path:
+    html_str = build(spec, variant=variant)
+    canvas_w, canvas_h = VARIANTS[variant]
     page = out.with_suffix(".html")
     page.write_text(html_str, encoding="utf-8")
     from playwright.sync_api import sync_playwright
 
     with sync_playwright() as pw:
         browser = _launch_browser(pw)
-        tab = browser.new_page(viewport={"width": W, "height": H}, device_scale_factor=2)
+        tab = browser.new_page(viewport={"width": canvas_w, "height": canvas_h},
+                               device_scale_factor=2)
         tab.goto(page.resolve().as_uri())
         # 头像是 data URI，文件稍大时 Chromium 会先把首批扫描线画出来，
         # `img.complete` 也可能已经为真；固定等 400ms 会截到“上半张脸 + 下半块
@@ -684,9 +719,15 @@ def render(spec: dict, out: Path) -> Path:
         )
         tab.wait_for_timeout(100)
         tab.screenshot(path=str(out), type="jpeg", quality=95)
-        content_h = tab.evaluate("document.body.scrollHeight")
-        if content_h > H:
-            print(f"[数据统计图] ⚠️ 内容溢出：画布 {H}px，实际 {content_h}px")
+        # 量最低墨迹底边而不是 body.scrollHeight：溢出时两者都报得出（量过：
+        # 松行距的 film 版两者都是 1615），装得下时 scrollHeight 只会报画布高，
+        # 而这一行想打出来的是「还剩多少」。
+        content_h = tab.evaluate(CONTENT_BOTTOM_JS)
+        if content_h > canvas_h:
+            print(f"[数据统计图] ⚠️ 内容溢出：画布 {canvas_h}px（{variant}），实际 {content_h}px")
+        else:
+            print(f"[数据统计图] {variant} 画布 {canvas_h}px，内容到 {content_h}px，"
+                  f"余 {canvas_h - content_h}px")
         browser.close()
     page.unlink(missing_ok=True)
     return out
@@ -697,11 +738,13 @@ def main() -> None:
                                   formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--spec", required=True, type=Path)
     ap.add_argument("--out", required=True, type=Path)
+    ap.add_argument("--variant", choices=sorted(VARIANTS), default="poster",
+                    help="poster=推送页那张 1080×1920；film=剪进片子的 1080×1440")
     args = ap.parse_args()
 
     spec = json.loads(args.spec.read_text(encoding="utf-8"))
     args.out.parent.mkdir(parents=True, exist_ok=True)
-    render(spec, args.out)
+    render(spec, args.out, variant=args.variant)
     print(f"[数据统计图] {args.out}（{args.out.stat().st_size / 1024:.0f} KB）")
 
 
