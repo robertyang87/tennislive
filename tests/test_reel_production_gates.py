@@ -297,7 +297,9 @@ def _ready_draft(tmp_path: Path) -> dict:
             "portrait": {"image": str(photo)}, "winner": "乙", "result": "7-5 6-3"},
         "editorial": {"hook": ["爆冷", "生涯一胜"], "question": "为什么会爆冷？",
                       "thesis": "乙靠关键分拿下比赛。", "beats": ["首盘", "转折", "收官"],
-                      "human_context": "乙首次击败前十。", "narration": ["一", "二", "三"]},
+                      "chapters": ["首盘失守", "第二盘反过来", "五个赛点"],
+                      "human_context": "乙首次击败前十。",
+                      "narration": ["首盘", "转折", "为什么会爆冷？"]},
         "segments": [
             {"start": 140, "end": 150, "narration": "", "quote": ["Great shot!\n好球！"],
              "_ending_payoff_required": True},
@@ -338,7 +340,9 @@ def test_promote转正时在收官段之前机械插一段数据图(tmp_path):
     spec = promote.promote(_ready_draft(tmp_path))
     segs = spec["segments"]
     card = [s for s in segs if s.get("stat_card")]
-    assert len(card) == 1 and segs[-2] is card[0], "要插在收官段之前，只插一段"
+    # 收官段之前——收官 beat 自己的章节卡（路线 ⑤）插在它前面，数据图再前一格
+    assert len(card) == 1 and segs[-3] is card[0] and segs[-2].get("title_card"), \
+        "要插在收官段之前，只插一段"
     assert card[0]["narration"] == "全场总得分，乙六十七比五十六，多拿了十一分。"
     assert card[0]["seconds"] >= 4.0 and "score_inset" not in card[0]
     assert "image" in card[0] and card[0]["image"] == "<stat_card>", \
@@ -358,6 +362,86 @@ def test_promote转正时在收官段之前机械插一段数据图(tmp_path):
     draft = _ready_draft(tmp_path)
     draft["segments"].insert(2, {"stat_card": True, "seconds": 5, "narration": "手写的。"})
     assert sum(1 for s in promote.promote(draft)["segments"] if s.get("stat_card")) == 1
+
+
+def test_promote按chapters在每个beat的第一段前插章节卡(tmp_path):
+    """review 路线 ⑤（学「小丝瓜🎾」的 01/02/03 章节页）：DeepSeek 合同多一个
+    `chapters`（三条 ≤10 字的标题，一条对应一个 beat），转正时按**旁白原文**认出
+    每个 beat 的那一段，在它前面插一张 title_card。钥匙是逐字相同的 narration
+    （align_points 就是这么挂的）——认不到的 beat 不插、要出声。"""
+    promote = load("promote_reel_draft")
+    spec = promote.promote(_ready_draft(tmp_path))
+    segs = spec["segments"]
+    cards = [(i, s) for i, s in enumerate(segs) if s.get("title_card")]
+    assert [s["title_card"] for _, s in cards] == ["首盘失守", "第二盘反过来", "五个赛点"]
+    assert [s["kicker"] for _, s in cards] == ["01", "02", "03"]
+    for i, s in cards:
+        assert s["seconds"] >= 2.0 and "score_inset" not in s and "narration" not in s
+    # 每张卡紧挨着它那个 beat 的段
+    nxt = [segs[i + 1].get("narration") for i, _ in cards]
+    assert nxt == ["首盘", "转折", "为什么会爆冷？"]
+    assert not segs[0].get("title_card") and "_chapter_cards_why" not in spec
+    # ① 硬钥匙 `_beat`：模型写窗口那条路旁白全是改写过的（47 份 pending 草稿
+    #    量过，按原文一条都认不到），段上标了 _beat 就按它定位，不看旁白
+    draft = _ready_draft(tmp_path)
+    for seg, beat in zip(draft["segments"][1:], (0, 1, 2, 3), strict=True):
+        seg["narration"] = "模型改写过：" + seg["narration"]
+        seg["_beat"] = beat
+    draft["segments"].insert(3, {"start": 60, "end": 66, "narration": "同一 beat 的第二段",
+                                 "_beat": 1})
+    spec = promote.promote(draft)
+    cards = [(i, s) for i, s in enumerate(spec["segments"]) if s.get("title_card")]
+    assert [s["kicker"] for _, s in cards] == ["01", "02", "03"]
+    assert [spec["segments"][i + 1].get("_beat") for i, _ in cards] == [1, 2, 3]
+    assert spec["segments"][cards[0][0] + 1]["narration"].endswith("首盘"), \
+        "同一 beat 有几段时，卡插在第一段前面"
+    # ② 两把钥匙都认不到的 beat 不插，但要出声
+    draft = _ready_draft(tmp_path)
+    draft["segments"][2]["narration"] = "首盘，模型改写过的一句。"
+    spec = promote.promote(draft)
+    assert sum(1 for s in spec["segments"] if s.get("title_card")) == 2
+    assert "beat 1" in spec["_chapter_cards_why"]
+    # ③ 形状不合（带标点 / 超长 / 条数对不上 / 没这个字段）都不拦转正，只出声
+    for bad, why in ((["首盘失守。", "二", "三"], "标点"),
+                     (["这个标题写得实在是太长了", "二", "三"], "超过"),
+                     (["一", "二"], "对不上"), (None, "没有 chapters")):
+        draft = _ready_draft(tmp_path)
+        if bad is None:
+            del draft["editorial"]["chapters"]
+        else:
+            draft["editorial"]["chapters"] = bad
+        spec = promote.promote(draft)
+        assert not any(s.get("title_card") for s in spec["segments"])
+        assert why in spec["_chapter_cards_why"], (bad, spec["_chapter_cards_why"])
+    # ④ 手写过章节卡的不再机械插
+    draft = _ready_draft(tmp_path)
+    draft["segments"].insert(2, {"title_card": "手写的", "seconds": 2.5})
+    spec = promote.promote(draft)
+    assert sum(1 for s in spec["segments"] if s.get("title_card")) == 1
+    # ⑤ 教材和 prompt 真的教过这个字段——模型没处学就永远不会产
+    draft_spec = load("draft_spec")
+    assert "chapters" in draft_spec.SCHEMA["required"]
+    assert "chapters" in draft_spec.system_prompt() and "10 字" in draft_spec.system_prompt()
+
+
+def test_editorial的chapters写了就要是短标题列表():
+    """spec 那头：chapters 可选；写了就得装得进整屏大字（render_title_card 两行的上限）。"""
+    reel = load("build_match_reel")
+    base = {"mode": "match_review", "question": "为什么？", "thesis": "因为。",
+            "beats": ["一", "二", "三"]}
+    reel._validate_editorial_contract({"editorial": base})
+    reel._validate_editorial_contract({"editorial": {**base, "chapters": ["首盘失守"]}})
+    with pytest.raises(reel.ReelError, match="chapters"):
+        reel._validate_editorial_contract({"editorial": {**base, "chapters": []}})
+    with pytest.raises(reel.ReelError, match="最多"):
+        reel._validate_editorial_contract(
+            {"editorial": {**base, "chapters": ["这一条章节标题长到两行大字都装不下了呀"]}})
+    bench = load("benchmark_reel_models")
+    _, issues = bench.deepseek_score(
+        {"hook": ["a", "b"], "question": "q", "thesis": "t", "human_context": "h",
+         "beats": ["1", "2", "3"], "narration": ["1", "2", "3"],
+         "chapters": ["带标点。", "二", "三"]}, {"summary": "s", "lead": "l"})
+    assert any("chapters" in x for x in issues)
 
 
 def test_数据图那段的旁白方向机械算持平也说得通():
@@ -471,12 +555,16 @@ def test_promote美网草稿自动带式(tmp_path, monkeypatch):
     uso["segments"][2]["score_inset"] = False   # 终审显式不要回贴的那一段
     # 手写的数据图段（stat_card）不是源片段，回贴对它没有意义——注入要跳过它
     uso["segments"].insert(3, {"stat_card": True, "seconds": 5, "narration": "手写的。"})
+    # 手写的章节卡（title_card）同理：它进 parse_segments 走的是 image 那一支，
+    # 带着 score_inset 会当场红——注入必须跳过它（反向验证：拆掉那个跳过就红）
+    uso["segments"].insert(2, {"title_card": "手写章节", "seconds": 2.5})
     spec = promote.promote(uso)
     assert all("score_inset" not in s for s in spec["segments"] if s.get("stat_card"))
     assert spec["layout"] == "band"
     assert spec["scorebox"] == [104, 888, 736, 978]
     flags = [s.get("score_inset") for s in spec["segments"]
-             if not s.get("image") and not s.get("stat_card")]
+             if not (s.get("image") or s.get("stat_card") or s.get("title_card"))]
+    assert all("score_inset" not in s for s in spec["segments"] if s.get("title_card"))
     assert flags.count(False) == 1 and flags.count(True) == len(flags) - 1, (
         f"回贴要自动注入，而终审显式写的 false 要原样保住：{flags}")
 

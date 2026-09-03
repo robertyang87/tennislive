@@ -268,6 +268,90 @@ def insert_stat_card_segment(spec: dict) -> bool:
     return True
 
 
+CHAPTER_MAX_CHARS = 10          # 章节标题：一行大字（render_title_card 的 18 是两行的上限）
+CHAPTER_TAIL_SECONDS = 0.6      # 念完标题之后停的一口气
+_CHAPTER_PUNCT = "，。、；！？,;.!?:："
+
+
+def chapter_cards_problem(editorial: dict) -> str | None:
+    """`editorial.chapters` 合不合章节卡的形状；合就返回 None。
+
+    形状：和 narration 一样多的**短标题**，每条 1~CHAPTER_MAX_CHARS 字、不带标点
+    （卡上不写标点，全站规矩）。不合形状**不拦转正**——章节卡是加分项，一条
+    cosmetic 字段不该把整条自动链卡住；但要出声，理由由调用方记进 spec。
+    """
+    chapters = editorial.get("chapters")
+    narration = editorial.get("narration") or []
+    if chapters is None:
+        return "editorial 没有 chapters（旧合同产的草稿）"
+    if not isinstance(chapters, list) or not chapters:
+        return "editorial.chapters 不是非空列表"
+    if len(chapters) != len(narration):
+        return f"chapters 有 {len(chapters)} 条，narration 有 {len(narration)} 条，对不上"
+    for i, item in enumerate(chapters):
+        text = str(item or "").strip()
+        if not text:
+            return f"chapters[{i}] 是空的"
+        if len(text) > CHAPTER_MAX_CHARS:
+            return f"chapters[{i}]「{text}」{len(text)} 字，超过 {CHAPTER_MAX_CHARS}"
+        if any(ch in _CHAPTER_PUNCT for ch in text):
+            return f"chapters[{i}]「{text}」带标点——卡上不写标点"
+    return None
+
+
+def insert_chapter_cards(spec: dict) -> int:
+    """按 `editorial.chapters` 在每个 beat 的那一段之前插一张章节卡，返回插了几张。
+
+    beat ↔ 段的钥匙有两把，先硬后软：① 段上的 `_beat`（三条产窗口的路——
+    align_points.segment_skeleton / draft_segments / assemble_spec.scene_cut_segments
+    ——都写它，1 起）；② 没有 `_beat` 的老草稿退回「narration 和
+    editorial.narration[i] 逐字相同的第一段」。⚠️ 2026-09-03 拿 47 份 pending
+    草稿量过：模型写窗口那条路的旁白**全是改写过的**，第二把钥匙一条都认不到
+    ——所以 `_beat` 不是锦上添花，是这个功能在主路上成立的前提。认不到的 beat
+    不插——宁可少一张，别插错位置。冷开场（quote 段）永远不动。不插的理由写进
+    `_chapter_cards_why`，「没插」和「没这个功能」在产物上不许长得一样。
+    """
+    editorial = spec.get("editorial") or {}
+    problem = chapter_cards_problem(editorial)
+    if problem:
+        spec["_chapter_cards_why"] = f"没插章节卡：{problem}"
+        return 0
+    segments = spec.get("segments") or []
+    if any(isinstance(s, dict) and s.get("title_card") for s in segments):
+        spec["_chapter_cards_why"] = "没插章节卡：spec 里已经手写了 title_card 段"
+        return 0
+    from reel_timing import speech_seconds  # noqa: PLC0415
+    plan: list[tuple[int, dict]] = []
+    missed: list[str] = []
+    for i, (title, line) in enumerate(zip(editorial["chapters"], editorial["narration"])):
+        want = str(line or "").strip()
+        eligible = [(j, s) for j, s in enumerate(segments)
+                    if isinstance(s, dict) and not s.get("quote")
+                    and not s.get("stat_card") and not s.get("title_card")]
+        hit = next((j for j, s in eligible if s.get("_beat") == i + 1), None)
+        if hit is None:
+            hit = next((j for j, s in eligible
+                        if str(s.get("narration") or "").strip() == want), None)
+        if hit is None:
+            missed.append(f"beat {i + 1}")
+            continue
+        text = str(title).strip()
+        plan.append((hit, {
+            "title_card": text, "kicker": f"{i + 1:02d}",
+            "seconds": round(max(2.0, speech_seconds(text) + CHAPTER_TAIL_SECONDS), 1),
+            "_why": "自动链机械插的章节卡（review 路线 ⑤）：editorial.chapters 对应这个 "
+                    "beat，插在它的第一段之前",
+        }))
+    for hit, card in sorted(plan, key=lambda x: x[0], reverse=True):
+        segments.insert(hit, card)
+    spec["segments"] = segments
+    if missed:
+        spec["_chapter_cards_why"] = (
+            f"只插了 {len(plan)} 张章节卡：{'、'.join(missed)} 在 segments 里既没有"
+            "标 _beat 的段、旁白也找不到逐字相同的段，没插")
+    return len(plan)
+
+
 def promote(draft: dict) -> dict:
     reasons = waiting_reasons(draft)
     if reasons:
@@ -358,12 +442,16 @@ def promote(draft: dict) -> dict:
         spec["layout"] = "band"
         spec.setdefault("scorebox", list(US_OPEN_SCOREBOX))
         for seg in spec.get("segments") or []:
-            if not seg.get("image") and not seg.get("stat_card"):
+            if not (seg.get("image") or seg.get("stat_card") or seg.get("title_card")):
                 seg.setdefault("score_inset", True)
     # ⭐ 证据上屏（2026-09-03 review 路线 ④）：131 条已发 spec 带 stats、0 条烧进
     # 片子——数据一直只在旁白里被念出来。DeepSeek 不写 segments（窗口全是机械
     # 工具给的），所以这一段也机械插：收官段之前、一句只讲总得分的旁白。
     insert_stat_card_segment(spec)
+    # ⭐ 章节卡（review 路线 ⑤，学「小丝瓜🎾」的 01/02/03 章节页）：每个 beat 的
+    # 第一段之前插一张深底大字卡，标题来自 editorial.chapters。排在数据图之后
+    # 插，数据图仍然紧挨着收官段（chapters 按 beat 的段落定位，不按倒数第几段）。
+    insert_chapter_cards(spec)
     # 这是机器生成资格，不是发布旁路。render/QC/auto_push_gate/persistent ledger
     # 仍会逐层复核；标记只让 dry-run 对结构化赛果执行更严格的交叉校验。
     spec["_production"]["status"] = "ready_for_render"

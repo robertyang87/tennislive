@@ -18,7 +18,8 @@ def _tool():
 def test_schema钉死编辑字段():
     ds = _tool()
     keys = set((ds.SCHEMA.get("properties") or {}).keys())
-    assert keys == {"hook", "question", "thesis", "beats", "human_context", "narration"}
+    assert keys == {"hook", "question", "thesis", "beats", "chapters", "human_context",
+                    "narration"}
 
 
 def test_draft_editorial把fixture和facts喂进prompt():

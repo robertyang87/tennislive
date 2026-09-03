@@ -41,10 +41,12 @@ SCHEMA = {
         "question": {"type": "string"},
         "thesis": {"type": "string"},
         "beats": {"type": "array", "items": {"type": "string"}},
+        "chapters": {"type": "array", "items": {"type": "string"}},
         "human_context": {"type": "string"},
         "narration": {"type": "array", "items": {"type": "string"}},
     },
-    "required": ["hook", "question", "thesis", "beats", "human_context", "narration"],
+    "required": ["hook", "question", "thesis", "beats", "chapters", "human_context",
+                 "narration"],
     "additionalProperties": False,
 }
 
@@ -93,12 +95,19 @@ _SYSTEM_RULES = """你是网球短视频账号「网球时差」的编辑，给�
 - question、thesis、beats、human_context、narration 都可能进入中文配音：百分比必须
   写成「百分之八十二」，不得写 `82%` 或 `82％`；push 文案可以保留 `%`。
 
+【章节卡——每个 beat 一个标题】
+- chapters 是三条**章节标题**，一条对应一个 beat，会烧成一张深底大字卡插在
+  那一段之前（像纪录片的 01/02/03 章节页）。**每条 ≤ 10 字，不带标点**，
+  写这一章要回答的那件事：「排名是怎么掉的」「五个盘点一个没给」——不是复述
+  hook，也不是一句完整的旁白。
+
 【收尾一问】
 - 收尾落在**这一场球有证据的具体悬念**上。问题里的每个比分和数字都必须来自
   本次事实包；不要套用提示词示例，也不要写「还能走多远」这种空话。
 
 只输出一个 json 对象，字段：hook（2 行，每行 ≤10 字符）、question、thesis、
-beats（3 段）、human_context（场外切口：金句/纪录/复仇/告别，一段话）、
+beats（3 段）、chapters（3 条章节标题，各 ≤10 字、不带标点，对应 beats）、
+human_context（场外切口：金句/纪录/复仇/告别，一段话）、
 narration（每段一句，对应 beats）。"""
 
 
