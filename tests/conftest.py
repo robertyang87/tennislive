@@ -53,6 +53,14 @@ def _isolate_tts_cache(monkeypatch, tmp_path):
 
 
 @pytest.fixture(autouse=True)
+def _no_slam_feed_network(monkeypatch):
+    """`orchestrate.enrich_slam_fields` 会去 usopen.org 补 round/court——沙箱里恒
+    403、CI 上会真联网。单元测试一律关掉；要测它的测试自己 `setenv("TENNISLIVE_SLAM_FEED", "1")`
+    并把 `lookup` 打桩（和上面两条 autouse 同一个形状）。"""
+    monkeypatch.setenv("TENNISLIVE_SLAM_FEED", "0")
+
+
+@pytest.fixture(autouse=True)
 def _isolate_story_state(monkeypatch, tmp_path):
     """选题账本 `data/story_state.json` 是**跟踪进仓库的数据**，测试不许写它。
 
