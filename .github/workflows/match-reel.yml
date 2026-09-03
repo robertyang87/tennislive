@@ -279,85 +279,12 @@ jobs:
           python-version: "3.11"
           cache: pip
 
-      # ffmpeg 两种模式都要；**中文字体只有渲染要**（封面和烧字幕）。
-      # 原来合成一步挂在所有模式前面，而 apt 那一步挂死过——probe 因此被一个
-      # 它根本用不到的依赖拖住二十分钟。拆开，并给超时：卡住要失败，不要空转。
-      #
-      # ⚠️ **2026-08-19 (bouzkova-jovic 那趟 render) `apt-get update` 连着两次
-      # 吃满 150 秒、零字节进度**——`Acquire::http::Timeout=20` 那道防线对着一个
-      # 彻底不响应的镜像没能生效，和 PR #448 那次 ci.yml 撞的是同一个坑。
-      # 继续调重试参数治不了根：真正的杠杆是**大多数 run 根本不碰这个镜像**。
-      # `tools/ci_apt_install.sh` 把 apt 的索引和下载缓存重定向到这里缓存住的
-      # 目录，先试一次零网络的本地安装，缓存没命中才回退到会摸网的老路。
-      - name: 缓存 apt 包（ffmpeg + 字体，绕开镜像抽风）
-        if: github.event.inputs.mode != 'push'
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.cache/apt-archives
-            ~/.cache/apt-lists
-          # actions/cache 的主键是不可变的。原来这儿是一把固定钥匙：如果第一趟
-          # probe 只攒下 ffmpeg，后面的 render 即使把字体包补进目录，post step
-          # 也不能覆盖同名缓存，于是每一趟 render 仍要重新摸 apt 镜像。
-          #
-          # 和下面 TTS 内容缓存一样改成滚动键：先按稳定前缀恢复最近一份，跑完
-          # 再用本次 run_id 回写「旧缓存 + 这趟补齐的包」。这样一次 render
-          # 补齐字体后，下一趟才能真的吃到完整缓存。
-          key: apt-pkgs-${{ runner.os }}-24.04-ffmpeg-fonts-v2-${{ github.run_id }}
-          restore-keys: |
-            apt-pkgs-${{ runner.os }}-24.04-ffmpeg-fonts-v2-
-      - name: 装 ffmpeg
-        # push 模式一帧都不碰：`push_reel.py` 那条路里 ffmpeg / ffprobe /
-        # subprocess **一个都没出现**，装它白花半分钟。
-        if: github.event.inputs.mode != 'push'
-        timeout-minutes: 15
-        run: |
-          source tools/ci_apt_install.sh
-          ensure_ffmpeg
-
-      # ⚠️ **`cover` 也要**：封面走 HTML 渲染（和知识帖同一套字），少了中文字体
-      # 出来的是豆腐块。加 cover 档那次漏了这三步，run 155 就是这么红的——
-      # 「加新能力就要同时改三处」的第 N 次。
-      - name: 装中文字体（渲染和封面都要）
-        if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover'
-        # ⚠️ 7 分钟不够：`apt_install_cached` 缓存没命中时会退到
-        # apt_retry(update) + apt_retry(install) 各两次 150 秒。
-        # ⚠️⚠️ 2026-08-19 傍晚又涨了一次：`apt_install_cached` 最前面那句
-        # 「先试本地安装」原来没有 `timeout` 包着，run 32290505356 撞出它
-        # 也可能悄悄摸网（索引是新的不代表这批包的 .deb 也在盘上），补上
-        # `timeout 150` 之后最坏预算变成 150 + 2×2×160 = 790 秒 ≈ 13.2 分。
-        # 按 15 分钟留够余量，和这条线上其余用到 `apt_install_cached` 的
-        # 步骤统一（判据 `test_装ffmpeg和字体那批步骤都走共享脚本不留手搓的调用`）。
-        timeout-minutes: 15
-        # `fonts-noto-color-emoji` 不是可选项：封面上每个球员名字旁边有一面
-        # 国旗（账号所有者 2026-08-02 定的），而**缺了它不报错**——Chromium
-        # 回退到没有旗帜字形的字体，🇵🇭 渲成两个方框或者裸的「PH」两个字母，
-        # 海报照样出得来。同一条规矩这一天已经咬过三次（fonts-noto-core、
-        # pip 行漏了 `-e .`、ci.yml 漏了字体）。判据在
-        # `test_封面的国旗要有字体渲得出来`：它真渲一次并比像素。
-        #
-        # apt 那套重试/缓存逻辑和上面「装 ffmpeg」共用同一份脚本、同一份
-        # 缓存目录——这一步不用再单独 `actions/cache`：同一个 job 里
-        # ffmpeg 那步如果真的摸了网，索引已经落在 `~/.cache/apt-lists` 里，
-        # 这一步直接吃现成的。
-        run: |
-          source tools/ci_apt_install.sh
-          apt_install_cached fonts-noto-cjk fonts-noto-color-emoji
-
-      # 封面走 HTML 渲染（和知识帖同一套字），所以要 webrender + Chromium。
-      # 少了它 render 会死在 ModuleNotFoundError: playwright，而且是在下完
-      # 64MB 源片、合完音之后才死——白跑一分半。
-      # visualqa 那份是 opencv：跟踪裁切靠它算帧差质心。**同一个坑第二次**——
-      # 跟踪合进来的那次 render 就是在下完源片、合完音之后死在
-      # `ModuleNotFoundError: No module named 'cv2'`（run 30334177432）。
-      # 抠图模型 176MB，第一次跑要现下。缓存住，否则每条片子都等一遍。
-      - name: 缓存抠图模型
-        if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover'
-        uses: actions/cache@v4
-        with:
-          path: ~/.u2net
-          key: rembg-isnet-general-use-${{ runner.os }}
-
+      # **装依赖和 dry-run 排在 apt 那两步前面。** dry-run 只读 spec 和
+      # probe.json，一个 ffmpeg / 字体 / 抠图模型都不碰（沙箱里把 PATH 上的
+      # ffmpeg 抽掉跑过一遍，0.2 秒照旧绿）；而 apt 那两步各带 15 分钟的最坏
+      # 预算——镜像抽风那天，一条 spec 形状错要等它们跑完才红，「第 30 秒
+      # 失败」就成了「第 30 分钟失败」。pip 装依赖只靠 setup-python 的缓存，
+      # 不摸 apt 镜像，跟着一起提前。
       - name: 装依赖
         run: |
           # **push 模式只装主依赖。** 它不下片、不渲染、不抠图——rembg、opencv、
@@ -476,6 +403,85 @@ jobs:
           fi
           python tools/build_match_reel.py render --dry-run \
             --spec "$SPEC" --outdir /tmp/dryrun 2>&1 | tee -a /tmp/render-findings.log
+
+      # ffmpeg 两种模式都要；**中文字体只有渲染要**（封面和烧字幕）。
+      # 原来合成一步挂在所有模式前面，而 apt 那一步挂死过——probe 因此被一个
+      # 它根本用不到的依赖拖住二十分钟。拆开，并给超时：卡住要失败，不要空转。
+      #
+      # ⚠️ **2026-08-19 (bouzkova-jovic 那趟 render) `apt-get update` 连着两次
+      # 吃满 150 秒、零字节进度**——`Acquire::http::Timeout=20` 那道防线对着一个
+      # 彻底不响应的镜像没能生效，和 PR #448 那次 ci.yml 撞的是同一个坑。
+      # 继续调重试参数治不了根：真正的杠杆是**大多数 run 根本不碰这个镜像**。
+      # `tools/ci_apt_install.sh` 把 apt 的索引和下载缓存重定向到这里缓存住的
+      # 目录，先试一次零网络的本地安装，缓存没命中才回退到会摸网的老路。
+      - name: 缓存 apt 包（ffmpeg + 字体，绕开镜像抽风）
+        if: github.event.inputs.mode != 'push'
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/apt-archives
+            ~/.cache/apt-lists
+          # actions/cache 的主键是不可变的。原来这儿是一把固定钥匙：如果第一趟
+          # probe 只攒下 ffmpeg，后面的 render 即使把字体包补进目录，post step
+          # 也不能覆盖同名缓存，于是每一趟 render 仍要重新摸 apt 镜像。
+          #
+          # 和下面 TTS 内容缓存一样改成滚动键：先按稳定前缀恢复最近一份，跑完
+          # 再用本次 run_id 回写「旧缓存 + 这趟补齐的包」。这样一次 render
+          # 补齐字体后，下一趟才能真的吃到完整缓存。
+          key: apt-pkgs-${{ runner.os }}-24.04-ffmpeg-fonts-v2-${{ github.run_id }}
+          restore-keys: |
+            apt-pkgs-${{ runner.os }}-24.04-ffmpeg-fonts-v2-
+      - name: 装 ffmpeg
+        # push 模式一帧都不碰：`push_reel.py` 那条路里 ffmpeg / ffprobe /
+        # subprocess **一个都没出现**，装它白花半分钟。
+        if: github.event.inputs.mode != 'push'
+        timeout-minutes: 15
+        run: |
+          source tools/ci_apt_install.sh
+          ensure_ffmpeg
+
+      # ⚠️ **`cover` 也要**：封面走 HTML 渲染（和知识帖同一套字），少了中文字体
+      # 出来的是豆腐块。加 cover 档那次漏了这三步，run 155 就是这么红的——
+      # 「加新能力就要同时改三处」的第 N 次。
+      - name: 装中文字体（渲染和封面都要）
+        if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover'
+        # ⚠️ 7 分钟不够：`apt_install_cached` 缓存没命中时会退到
+        # apt_retry(update) + apt_retry(install) 各两次 150 秒。
+        # ⚠️⚠️ 2026-08-19 傍晚又涨了一次：`apt_install_cached` 最前面那句
+        # 「先试本地安装」原来没有 `timeout` 包着，run 32290505356 撞出它
+        # 也可能悄悄摸网（索引是新的不代表这批包的 .deb 也在盘上），补上
+        # `timeout 150` 之后最坏预算变成 150 + 2×2×160 = 790 秒 ≈ 13.2 分。
+        # 按 15 分钟留够余量，和这条线上其余用到 `apt_install_cached` 的
+        # 步骤统一（判据 `test_装ffmpeg和字体那批步骤都走共享脚本不留手搓的调用`）。
+        timeout-minutes: 15
+        # `fonts-noto-color-emoji` 不是可选项：封面上每个球员名字旁边有一面
+        # 国旗（账号所有者 2026-08-02 定的），而**缺了它不报错**——Chromium
+        # 回退到没有旗帜字形的字体，🇵🇭 渲成两个方框或者裸的「PH」两个字母，
+        # 海报照样出得来。同一条规矩这一天已经咬过三次（fonts-noto-core、
+        # pip 行漏了 `-e .`、ci.yml 漏了字体）。判据在
+        # `test_封面的国旗要有字体渲得出来`：它真渲一次并比像素。
+        #
+        # apt 那套重试/缓存逻辑和上面「装 ffmpeg」共用同一份脚本、同一份
+        # 缓存目录——这一步不用再单独 `actions/cache`：同一个 job 里
+        # ffmpeg 那步如果真的摸了网，索引已经落在 `~/.cache/apt-lists` 里，
+        # 这一步直接吃现成的。
+        run: |
+          source tools/ci_apt_install.sh
+          apt_install_cached fonts-noto-cjk fonts-noto-color-emoji
+
+      # 封面走 HTML 渲染（和知识帖同一套字），所以要 webrender + Chromium。
+      # 少了它 render 会死在 ModuleNotFoundError: playwright，而且是在下完
+      # 64MB 源片、合完音之后才死——白跑一分半。
+      # visualqa 那份是 opencv：跟踪裁切靠它算帧差质心。**同一个坑第二次**——
+      # 跟踪合进来的那次 render 就是在下完源片、合完音之后死在
+      # `ModuleNotFoundError: No module named 'cv2'`（run 30334177432）。
+      # 抠图模型 176MB，第一次跑要现下。缓存住，否则每条片子都等一遍。
+      - name: 缓存抠图模型
+        if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover'
+        uses: actions/cache@v4
+        with:
+          path: ~/.u2net
+          key: rembg-isnet-general-use-${{ runner.os }}
 
       - name: 缓存 Chromium
         if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover'
