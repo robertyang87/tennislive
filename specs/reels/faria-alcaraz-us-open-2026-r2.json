@@ -15,19 +15,19 @@
   "cover": {
     "matchup": [
       {
-        "name_zh": "阿尔卡拉斯",
+        "name": "阿尔卡拉斯",
         "name_en": "CARLOS ALCARAZ",
         "country": "ESP",
         "rank": 3
       },
       {
-        "name_zh": "法里亚",
+        "name": "法里亚",
         "name_en": "JAIME FARIA",
         "country": "POR",
         "rank": 72
       }
     ],
-    "_rank_why": "两个数出自美网官方的 `scores/feeds/2026/players/players.json`（`singles_rank` 一栏）：阿尔卡拉斯 3、法里亚 72，同一份 feed 还写着阿尔卡拉斯 `seed: true`、法里亚 `seed: false`。⚠️ **种子不是排名**（CLAUDE.md 记过卢布列夫那次），所以印的是名次不是种子号。⚠️ 我一开始按印象要写「世界第一」，查了才知道是第三——排名是快照，每条片子都要现查。",
+    "_rank_why": "两个数出自美网官方的 `scores/feeds/2026/players/players.json`（`singles_rank` 一栏）：阿尔卡拉斯 3、法里亚 72，同一份 feed 还写着阿尔卡拉斯 `seed: true`、法里亚 `seed: false`。⚠️ **种子不是排名**（CLAUDE.md 记过卢布列夫那次），所以印的是名次不是种子号。⚠️ 我一开始按印象要写「世界第一」，查了才知道是第三——排名是快照，每条片子都要现查。⚠️ 字段名是 `name` 不是 `name_zh`——第一版写错，`test_栏目和封面模板要配对` 和 render 的第 15 秒各拦了一次。⚠️ **`--dry-run` 对这个是哑的**：`validate_spec` 不查 matchup 的字段名，只有真渲封面时才用得上，所以「全量测试排在 mode=render 之前」那条在这一类上不是可选项。",
     "winner": "阿尔卡拉斯",
     "result": "4-6 6-0 6-3 6-2",
     "eyebrow": "赛场之上",
