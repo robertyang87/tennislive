@@ -29,7 +29,7 @@
 | 23 | 1:08.3 | [▶](https://youtu.be/lATamG1C8EA?t=189) | and you guys give me great love. | 而你们给了我巨大的爱 |  |
 | 24 | 1:09.7 | [▶](https://youtu.be/lATamG1C8EA?t=190) | So, you know, I will never forget that. | 我永远不会忘记 |  |
 | 25 | 1:11.4 | [▶](https://youtu.be/lATamG1C8EA?t=192) | So, thank you very much for everything. | 谢谢你们的一切 |  |
-| 26 | 1:13.2 | [▶](https://youtu.be/lATamG1C8EA?t=194) | Thank you, Neil. | 谢谢你 |  |
+| 26 | 1:13.2 | [▶](https://youtu.be/lATamG1C8EA?t=194) | Thank you, New York. | 谢谢你，纽约 |  |
 | 27 | 1:19.6 | [▶](https://youtu.be/lATamG1C8EA?t=200) | Well, Gael, now USTA CEO Craig Tiley and | 美国网协CEO克雷格·泰利 |  |
 | 28 | 1:24.0 | [▶](https://youtu.be/lATamG1C8EA?t=204) | US Open tournament director Eric Butorac | 和美网赛事总监布托拉克 |  |
 | 29 | 1:26.6 | [▶](https://youtu.be/lATamG1C8EA?t=207) | are going to present you with a special gift. | 将为你送上一份特别的礼物 |  |

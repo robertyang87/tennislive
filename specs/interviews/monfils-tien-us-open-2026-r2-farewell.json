@@ -41,7 +41,7 @@
     "而你们给了我巨大的爱",
     "我永远不会忘记",
     "谢谢你们的一切",
-    "谢谢你",
+    "谢谢你，纽约",
     "美国网协CEO克雷格·泰利",
     "和美网赛事总监布托拉克",
     "将为你送上一份特别的礼物",
@@ -109,7 +109,9 @@
     "Burak": "Butorac",
     "Gel": "Gael",
     "Mis.": "Monfils.",
-    "Mis": "Monfils"
+    "Mis": "Monfils",
+    "Neil.": "New York.",
+    "Neil": "New York"
   },
   "lead_in": {
     "url": "https://www.youtube.com/watch?v=g7Hs91AJsX0",
@@ -195,8 +197,12 @@
     "顶栏胜者必须按真实赛果写勒纳·钱；featured_player 只用于封面与叙事，不得反转比分方向。",
     "⚠️ word_fix 只改有外部证据的专名：Gail→Gael、USA→USTA、Tyl→Tiley、Burak→Butorac、Gel Mis→Gael Monfils。Craig Tiley（美国网协 CEO）和 Eric Butorac（美网赛事总监）这两个身份在瓦林卡那条告别片里已经按 USTA 官网核实过，这里沿用同一份订正。⚠️ 带标点的 key 会静默失效，所以裸词和带标点的变体都写上了（Gail/Gail,、Mis/Mis.）。这五个词全文各只出现一次，全文替换不会误伤别处（落笔前数过）。",
     "⚠️ 第 10 行「So, it's a had a long ride.」和第 17 行「I just want to just to tell you it's」保留原样不动：两处都是自动字幕把词听重复了，而不是专名错或明显不是词的转写错——他本人的非母语语法一律不改。中文只译能确定的意思。等 render 那趟第二份 ASR（medium.en）出来再看要不要动。",
-    "⚠️ 第 26 行「Thank you, Neil.」里的 Neil 没有核实——听上去是在谢主持人，但我找不到第二个源确认这个名字，所以英文原样保留、中文只写「谢谢你」，不把一个没核过的专名译进画面。",
+    "⭐ 第 26 行原来自动字幕写的是「Thank you, Neil.」——第一趟 render 的第二份 ASR（medium.en，run 33834654294）在同一处听成的是 **new york**，据此订正成「Thank you, New York.」。三条理由指向同一个答案：① 第二份 ASR 的读法；② 他这段致辞的开场第一句就是「Good evening, New York.」，末句谢纽约是首尾呼应的标准形状；③ Neil 这个名字在整条源片里没有第二处出处，也没有任何证据表明现场有个叫 Neil 的人。⚠️ 这条正是我上一版写「找不到第二个源、所以中文不译这个名字」的那一处——**第二个源就是那趟被闸拦下的 render 自己跑出来的**，闸红换回了一个真发现。",
     "⚠️ 第 1 行主持人叫的是「G」（孟菲尔斯的绰号），中文按汉语呼语习惯省掉了这个称呼，没有引入「盖尔」这个译名表里没有的译法。",
     "片头 20–117 秒是美网做的大屏幕致敬短片，97 秒里几乎没有字幕事件，整段不收进正文；比赛结尾走 lead_in 从同场官方集锦接入，详见 lead_in.why。"
-  ]
+  ],
+  "transcript_disagree_ok": {
+    "rate": 0.16,
+    "why": "第一趟 render（run 33834654294）实测 14.8%（YouTube 自动字幕 209 词 / faster-whisper medium.en 182 词，闸门 12%）。八处分歧逐处看过，没有一处指向「第一份转写错了」：① **大头是第二份整段漏转**——开头主持人递话那句「g you have given so much」和结尾主持人那整段「what a moment for the final time here in new york let's hear it for gael monfils」在它那儿都是 `—`，两处合计 21 词，正是两份 27 词差额的大部分；② 虚词丢失（a／just to／you know／a→an），whisper 系统性；③ `butorac`→`buterac` 是我按 USTA 官网核实过的人工订正，第二份自己也听不清，反而佐证了订正；④ **`neil`→`new york` 这一处第二份是对的，已按它订正**（见 `_notes`），所以这一条在下一趟不再是分歧。⚠️ 认领的 0.16 高于这次的单次观测 14.8%，理由是 faster-whisper 本身不确定——瓦林卡那条同一份音频两趟转出 306／300 词、分歧率从 16.4% 漂到 17.6%，钉单次观测值会在下一趟随机红。0.16 仍低于那条认领的 0.18；再高就不是「第二份漏转 + 虚词」能解释的了，那时该去查源而不是抬认领。"
+  }
 }
