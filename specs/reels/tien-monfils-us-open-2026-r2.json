@@ -1,0 +1,293 @@
+{
+ "slug": "tien-monfils-us-open-2026-r2",
+ "_column": "reel",
+ "layout": "band",
+ "scorebox": [
+  104,
+  888,
+  660,
+  978
+ ],
+ "_scorebox_why": "板在源片里的位置。probe 这一趟 `scorebox_guess` 是 null（没猜出来），四个数取的是**同一座球场、同一个人、同一届**那条已发的 `monfils-vallejo-us-open-2026-r1`（104/888/700/978，阿姆斯特朗球场的同一套转播图形包）。\n⚠️ **右缘 660 只是兜底**：真正的右缘是渲染时 `resolve_board_insets` 每段现量的——美网这块板每打完一盘右缘 +38px，本场从一盘走到三盘会经过三档，写死一个数必然有两档是错的。R1 那条是四盘球所以兜底写 700，这一条三盘，按同为三盘的 `zandschulp-deminaur-us-open-2026-r2` 取 660。\n⚠️ `SET POINT` / `MATCH POINT #N` 那条黄标在 y<888 之外，按 docs/us-open-scoreboard-aspect.md 的口径不扩窗——赛点那几段旁白本来就讲。",
+ "tts_backend": "edge",
+ "_tts_backend_why": "仓库的 `AZURE_SPEECH_KEY` 现在被 Azure 401 拒（2026-09-03 `keys-bondar-us-open-2026-r2` 连挂两趟、2026-09-04 `zheng-putintseva-us-open-2026-r2` 又挂一趟，都是 `WebSocket upgrade failed: Authentication error (401)`），账号所有者当天定的是「换 edge tts」。\n这一条退回 edge 没有代价：**没用 `voice.style`，也没用 `lead_pause`**——Azure 独有的那两样一个都没碰，同一把嗓子（`zh-CN-YunjianNeural`）edge 也有；而旁白长度本来就是拿 edge 真跑量过的（本地 `--check-narration` 在这台沙箱走的就是 edge-tts）。\n⚠️ 钥匙修好之后把 `tts_backend` 和这一段删掉就回到 Azure。",
+ "source_url": "https://youtu.be/g7Hs91AJsX0",
+ "_source": "美网官方 YouTube 频道（US Open Tennis Championships）的单场集锦，212.74s / 1920×1080 / 30000/1001 fps——过得了「1080p 及以上是硬门槛」那道闸。\n⚠️ `source_url` 和 `output/2026-09-04/reel/tien-monfils-us-open-2026-r2/probe.json` 的 `url` **逐字节相同**（都写成 `youtu.be/<id>`）——`--dry-run` 按 URL 认领 probe.json，写成 `watch?v=` 那一种会认不上，报「一份 probe.json 都没认领上」。\n画面自证：记分条一行 `MONFILS FRA`、一行 `14 LEARNER TIEN USA`；122.5s 有一张全屏图形写着 `MEN'S SINGLES | 2ND ROUND / LOUIS ARMSTRONG STADIUM`；208.5s 收尾图形印着 `GAEL MONFILS FRA 3 4 3 / 14 LEARNER TIEN USA 6 6 6`。\n⚠️ `silent_audio = [[209.67, 212.74]]` 是美网的社媒片尾板，所有段落都收在 209.6 之前。",
+ "cover": {
+  "matchup": [
+   {
+    "name": "孟菲尔斯",
+    "name_en": "Gael Monfils",
+    "country": "FRA",
+    "rank": 311
+   },
+   {
+    "name": "勒纳·钱",
+    "name_en": "Learner Tien",
+    "country": "USA",
+    "rank": 15
+   }
+  ],
+  "_rank_why": "美网官方 `players.json`（2026）：`atpmc65` Gael Monfils `singles_rank 311`、无种子号；`atpt0ha` Learner Tien `singles_rank 15`、**`seedValue 14`**。\n⚠️ **排名 15、种子 14，两个数都对，别混成一件事**——源片记分条上印在名字前面的 `14` 是种子号不是排名，而名条上写的是世界排名。\n孟菲尔斯的 311 和已发的 `monfils-vallejo-us-open-2026-r1` 是同一个数（同一届，中间只隔一轮）。",
+  "winner": "勒纳·钱",
+  "result": "6-3 6-4 6-3",
+  "_result_why": "赢家视角，三处印证：flashscore `8pHDByLF` 的 BA/BC/BE=3/4/3（home 是 `Monfils G.`）、BB/BD/BF=6/6/6，`AS=2`（客队赢）；美网官方 matches feed 的分盘 42+43+52 分钟对应三盘；源片 208.5s 那张全屏收尾图形自己印着 `3 4 3 / 6 6 6`。\n全场没有抢七（三盘都没走到 6-6），所以没有上标小分。",
+  "eyebrow": "赛场之上",
+  "layout": "solo",
+  "subject": "孟菲尔斯",
+  "topic": "美网第二轮 · 孟菲尔斯 vs 勒纳·钱",
+  "_topic_why": "按账号所有者 2026-09-03「封面左上角的副标题不要写球场号，写对阵双方」写成对阵。球场名（Louis Armstrong Stadium）在比分板头一行已经印着，台头再写一遍是第二遍。\n台头把孟菲尔斯写在前面，跟的是 `cover.subject`（这一屏放的是他）；这一条 `cover.matchup`、`stats.a/b`、`_match.participants` **三者同序**（都是 flashscore 的 home/away，孟菲尔斯是 home），少一次对调就少一次填反的机会。",
+  "hook": "最后一场大满贯\n四个赛点才送他走",
+  "_hook_why": "两行框住的是**整场的形状**：一行给赌注（这是他大满贯生涯的最后一场，转播自己在 170.88s 说的 `whose career at the majors comes to an end`），一行给过程（flashscore 官方统计栏 `Match points saved 主队 4`——他救下四个赛点，第五个才走）。\n⚠️ **「四个赛点才送他走」的主语没有歧义**：赛点是对手的、救的是他，「送他走」把归属写死了，不会被读成「他自己拿到四个赛点」。\n⚠️ **一个盘分都不写**：板上已经印着 `勒纳·钱 6-3 6-4 6-3 孟菲尔斯`，钩子不重复板。\n⚠️ 行长 7 字 / 8 字，都在 `HOOK_MAX_CHARS = 10` 之内，两行也在 `SOLO_HOOK_MAX_LINES = 2` 之内。\n⚠️ **「四十岁生日」那条不进钩子**：同栏目的 `monfils-vallejo-us-open-2026-r1`（同一届第一轮）整条片子讲的就是它（生日、康纳斯、生日歌、外卡、第十八次），按「上一条铺开讲过的主体一个字都别碰」，这一条只在正文里一句带过。",
+  "portrait": {
+   "image": "assets/reel/monfils-us-open-2026-r2-arms-out.jpg",
+   "focus": 0.5,
+   "_photo_why": "美网官方图库这一场的实拍，说明四要素齐全：`Gael Monfils celebrates **during** a Men's Singles match on **Day Five of the 2026 US Open** at USTA Billie Jean King National Tennis Center on **Thursday, September 3, 2026** in Flushing, NY. (Photo by Manuela Davies/USTA)`，挂在 `G. Monfils vs. L. Tien | R2` 名下——时间、地点、人物、事件都由赛事方自己写死。\n**四道闸门**：① 精准 ✓（说明自证）② 在比赛中 ✓（`during a match`）③ 有冲击力 ✓（双臂张开向看台致意、眼睛睁着、表情读得出来，正是这条片子的情绪）④ 清晰度——见 `_low_res_why`。\n同一辑另外五张逐张渲进海报比过：`reacts`（背对镜头）和 `wave`（背对镜头）看不见脸；`touch-court`（弯腰摸场地）脸朝下；`walkout`（入场）人太小；`forehand` 是全辑唯一的大特写、但表情是中性的专注，而且人偏在画幅右侧，铺进 1080×1440 之后主体不居中。**上位判据是情绪对不对题**（账号所有者 2026-08-05），这一条讲的是他的大满贯谢幕，`arms-out` 是唯一对得上的那一张。",
+   "_low_res_why": "1280×720，铺 1080×1440 要放大 **2.00 倍**，够不着 `cover_photo_problem` 的 1.00x 地板。\n**这是美网这个赛事的出版天花板，不是没找够**：`photo-assets.usopen.org` 的 `f_` 前缀就是最大档，十二个别的前缀、六个别的目录、三种 `?width=` 参数全试过——前两组 404，第三组返回 200 但**尺寸一个像素没变**。\n另外两条更高清的渠道当天都没有这一场：AP 通讯社按人查只有 2025 年的旧图；USA TODAY 每日图集扫 56 张零命中。\n⚠️ 它仍然远好过抽帧——这是相机原图，而抽帧是压缩转播流再放大。"
+  },
+  "scoreboard": {
+   "court": "Louis Armstrong Stadium",
+   "duration_source": {
+    "url": "data:application/json,%7B%22duration%22%3A%20%222%3A17%3A00%22%2C%20%22source%22%3A%20%22US%20Open%20official%20matches%20feed%3A%20duration%202%3A17%2C%20setDurations%2042%2B43%2B52%3D137min%22%7D",
+    "field": "duration"
+   },
+   "_court_why": "美网官方 matches feed `courtName: \"Louis Armstrong Stadium\"`；源片 122.5s 那张全屏图形自己也印着 `LOUIS ARMSTRONG STADIUM`，两处对得上。已发的 `monfils-vallejo-us-open-2026-r1` 写的也是同一个球场同一个写法。",
+   "_duration_why": "官方 **2:17**（`setDurations` 42+43+52＝137 分钟＝2:17，三个数自洽）。\n⚠️ flashscore 显示 2:18（它自己的分盘 43+43+52＝138，第一盘比官方多算 1 分）；而 flashscore 自己的起止时间戳是 `23:10:00 → 01:26:51 UTC`＝**2:16:51**，四舍五入正好也是 2:17——**两个独立源指向同一个数**，分歧只是取整方式。按「比赛用时不要只信 flashscore」取官方。"
+  }
+ },
+ "_match": {
+  "status": "result_verified",
+  "source": "flashscore_points",
+  "source_id": "8pHDByLF",
+  "flashscore_id": "8pHDByLF",
+  "participants": [
+   "孟菲尔斯",
+   "勒纳·钱"
+  ],
+  "set_scores_home_away": [
+   [
+    3,
+    6
+   ],
+   [
+    4,
+    6
+   ],
+   [
+    3,
+    6
+   ]
+  ],
+  "winner": "勒纳·钱",
+  "loser": "孟菲尔斯",
+  "winner_result": "6-3 6-4 6-3",
+  "loser_result": "3-6 4-6 3-6",
+  "tiebreaks_home_away": [
+   null,
+   null,
+   null
+  ]
+ },
+ "_participants_why": "`participants` 跟 flashscore 的 **home/away**（`AE÷Monfils G.` / `AF÷Tien L.`），和同一块里的 `set_scores_home_away` 同序。\n⚠️ 这一条 `cover.matchup` 恰好也是同一个顺序，所以 `stats.a/b`（跟 matchup[0]）和这里**三者同序**——但那是巧合不是规矩：CLAUDE.md 记着这两个字段的顺序在别的 spec 里正好相反，写完各自对一眼旁边那个字段。",
+ "stats": {
+  "a": {
+   "aces": 8,
+   "df": 8,
+   "winners": 29,
+   "ue": 54,
+   "first_in": 50,
+   "first_won": 38,
+   "second_total": 53,
+   "second_won": 20,
+   "bp_conv": 0,
+   "bp_chances": 8,
+   "pts_won": 88,
+   "pts_total": 199,
+   "first_total": 103,
+   "headshot": "assets/players/headshots/atp-MC65.png"
+  },
+  "b": {
+   "aces": 3,
+   "df": 4,
+   "winners": 20,
+   "ue": 21,
+   "first_in": 60,
+   "first_won": 48,
+   "second_total": 36,
+   "second_won": 18,
+   "bp_conv": 4,
+   "bp_chances": 13,
+   "pts_won": 111,
+   "pts_total": 199,
+   "first_total": 96,
+   "headshot": "assets/players/headshots/atp-T0HA.png"
+  },
+  "_source": "flashscore 官方统计（`df_st_1`，`tools/match_stat_hooks.py 8pHDByLF --stats-block` 直接吐出来的那一份，没有手抄）"
+ },
+ "_stats_why": "`a` 跟 `cover.matchup[0]`＝孟菲尔斯，`b` 跟勒纳·钱；而 flashscore 的 home 正好也是孟菲尔斯，所以这一条**不用对调**。头像按译名表挂：`atp-MC65.png` 在已发的 `monfils-vallejo-us-open-2026-r1` 里挂的就是「孟菲尔斯」，`atp-T0HA.png` 在 `shelton-tien-montreal-sf` 里挂的就是「勒纳·钱」——同一张官方头像不许挂两个中文名，这条对得上。\n`first_total` 按 `first_in + second_total` 算（103 / 96），不取接口的 `Service Points Won` 分母——一发成功率画的是 `first_in / first_total`，用和式才自洽。\n⚠️ 制胜分和非受迫失误这一场**有**（大满贯的男子比赛 `df_st_1` 一直有这两项），所以必须填，不许留空。",
+ "_hit_data": "`tools/match_stat_hooks.py 8pHDByLF --stats-block` 加逐分（`match_feed.py show 8pHDByLF`）跑下来，这一场最硬的四条：\n\n    赛点     孟菲尔斯**救下 4 个**（官方统计栏 `Set 3 / Match points saved 主队 4`），第 5 个才走\n             ——源片 154.5s 起画面上那块黄标写的就是 `MATCH POINT #5`，两处对得上\n    破发点   孟菲尔斯全场 **8 个，0 个兑现**（2 + 4 + 2，三盘各拿到过机会，三盘都没换来一局）\n    非受迫失误 **54 : 21**，两倍半；第二盘最狠，**22 : 7**\n    第三盘   他救下 **6/8** 个破发点，而勒纳·钱那一盘只兑现了 2 个\n\n钩子取的是「最后一场大满贯 ＋ 四个赛点」：一头是赌注、一头是过程；「破发点 0/8」和「失误 54:21」进旁白和小红书正文——钩子的十个字塞不下，而且两行都要能一眼读懂。\n⚠️ **「0 个兑现」不是同义反复**：CLAUDE.md 记着「N 个赛点只兑现 1 个」那一类是被定义锁死的，而破发点散在不同的发球局里，0/8 是一个真实会变的数——这一条正是它明写可以用的那一类。",
+ "_no_repeat": "同栏目「赛场之上」此前发过两条孟菲尔斯，**铺开讲过的东西这一条一个字都不碰**：\n  · `monfils-vallejo-us-open-2026-r1`（同一届第一轮）：四十岁生日、1992 年康纳斯、全场唱生日歌、    世界第 311、靠外卡进正赛、第十八次打美网、那记跳起来的正手、末屏一问「这样的夜晚还剩几个？」\n  · `hijikata-monfils`（辛辛那提）：最后一次来这一站、这个赛季打完就退役、末屏一问「你会记得他的哪一场球？」\n所以这一条只留**看不懂这场球所必需的那一句**——「这是他大满贯生涯的最后一场」——放在第 ② 段一句带过，不展开。\n全新的料有四样：① 这场球本身（8 个破发点 0 兑现 / 54 个失误 / 救下 4 个赛点）② 勒纳·钱那边（上个月蒙特利尔赢过他一次，赛后走到网前请他在球上签名，今晚说「那天我跟他讲，希望我们还能再打一次」）③ 他第一次打美网是二〇〇五年、首轮输给德约科维奇 ④ 十一月的巴黎大师赛才是生涯真正的最后一站。\n⚠️ 末屏那一问也要换门：前两条问的是「还剩几个夜晚」和「你会记得哪一场」，这一条问的是巴黎那一场。",
+ "_durations": "官方 2:17（`setDurations` 42+43+52＝137 分钟）。flashscore 显示 2:18（分盘 43+43+52），但它自己的起止时间戳`23:10:00 → 01:26:51 UTC`＝2:16:51，四舍五入也是 2:17——两个源指向同一个数，取官方。",
+ "_turning_points": [
+  "首盘 5-3 勒纳·钱发球胜盘局，盘点连着来（源片 0.5s 起黄标 `SET POINT`、58.5s 是 `SET POINT #2`）：孟菲尔斯这一盘拿到过 2 个破发点，一个都没兑现，3-6。",
+  "第二盘他拿到 4 个破发点，还是一个没兑现；而自己一个人送出 22 个非受迫失误，对面只有 7 个。4-6。",
+  "第三盘 3-5 轮到孟菲尔斯自己发球：这一盘他一共救下 6 个破发点，其中 4 个是赛点（`MATCH POINT #1~#4`），第 5 个赛点结束比赛。"
+ ],
+ "_turning_points_why": "三条都从 `match_feed.py show 8pHDByLF` 的分盘官方统计推出来，不是看画面猜的：\n  Set 1  `Break Points Converted 主队 0/2`、`Unforced errors 主队 14 客队 9`、`Total games won 3/9`\n  Set 2  `Break Points Converted 主队 0/4`、`Unforced errors 主队 22 客队 7`\n  Set 3  `Break Points Saved 主队 6/8`、`Match points saved 主队 4`、`Service games won 主队 3/5 客队 4/4`\n⚠️ **最后一局是谁发球，是算出来的不是猜的**：第三盘一共 9 局，勒纳·钱发 4 局全保、外加破掉孟菲尔斯 2 局＝6 局；孟菲尔斯发 5 局保 3 局＝3 局。也就是**孟菲尔斯发的是单数局**，第 9 局（3-5）正是他自己发球——所以那 4 个赛点同时也是破发点，正好落在「救下 6/8」里面。源片 156.5s 的记分条 `MONFILS 3 4 3 / TIEN 6 6 5 AD` 与此吻合（AD 在勒纳·钱那一行＝对手占先＝赛点在孟菲尔斯的发球局上）。",
+ "editorial": {
+  "mode": "match_review",
+  "question": "他一路在救，为什么一局都没能抢回来？",
+  "thesis": "孟菲尔斯这一场的攻守是分开的两半：守的那一半他一直顶得住——第三盘八个破发点救回六个、四个赛点全挡了回去；攻的那一半从头到尾没打开——全场八个破发点一个没兑现，而自己送出五十四个非受迫失误，是对面的两倍半。于是三盘的收口全被勒纳·钱拿走。",
+  "beats": [
+   "首盘 3-5，勒纳·钱发球胜盘局，盘点连着来；孟菲尔斯这一盘拿到过两个破发点，一个都没兑现。3-6。",
+   "第二盘他拿到四个破发点，还是零兑现；同一盘他一个人送出二十二个非受迫失误，勒纳·钱只有七个。4-6。",
+   "第三盘 3-5 轮到他自己发球：八个破发点救回六个，四个赛点一个接一个挡回去，第五个才结束。全场站起来。"
+  ],
+  "human_context": {
+   "angle": "赢他的是二十岁的勒纳·钱——上个月蒙特利尔那场也是他赢的，赛后他走到网前，请孟菲尔斯在一颗球上签了名，还说过「希望我们还能再打一次」。这一条的镜头因此不放在爆冷上，放在两个人身上：一个人的大满贯在今晚结束，而想再打一次的那个人，正是终结它的人。",
+   "facts": [
+    "美网官方 players.json：atpmc65 singles_rank 311、无种子号；atpt0ha singles_rank 15、seedValue 14、2005-12-02 生于 Irvine, CA",
+    "flashscore 8pHDByLF 分盘官方统计：Set 3 Match points saved 主队 4、Break Points Saved 主队 6/8",
+    "源片 170.88s 转播解说：whose career at the majors comes to an end",
+    "ATP：Tien won their only previous Lexus ATP Head2Head meeting, prevailing in three sets in Montreal last month, after which Tien asked Monfils for a signature"
+   ],
+   "sources": [
+    "https://www.usopen.org/en_US/scores/feeds/2026/players/players.json",
+    "https://www.usopen.org/relatedcontent/rest/v2/uso_v1/en/tag?tags=atpmc65&type=photo&count=200"
+   ],
+   "voice_label": "最后一场大满贯"
+  }
+ },
+ "topbar": {
+  "line1": "2026 美网 男单第二轮",
+  "line2": "勒纳·钱 6-3 6-4 6-3 孟菲尔斯"
+ },
+ "push": {
+  "summary": "孟菲尔斯大满贯生涯谢幕",
+  "lead": "美网男单第二轮，二十岁的勒纳·钱 6-3 6-4 6-3 赢下四十岁的孟菲尔斯，两小时十七分钟。这是孟菲尔斯的最后一场大满贯——今年这个赛季打完，他就退役了。全场他拿到八个破发点，一个都没兑现；非受迫失误五十四个，对面二十一个。而第三盘他救下八个破发点里的六个，四个赛点一个接一个挡了回去，第五个才没能再够到。球落地之后全场站起来，他弯下腰摸了一下场地。",
+  "auto": true
+ },
+ "segments": [
+  {
+   "start": 172.0,
+   "end": 182.5,
+   "narration": "",
+   "_why": "第①格：全片最强的一格——最后一分打完，两个人在网前抱在一起。**不配旁白，靠现场声和全场的掌声**。场边广告带写着 `LEARNER TIEN`（赛后布置），自证是赛后。",
+   "_ending_payoff_required": true,
+   "score_inset": false,
+   "_score_inset_why": "164.5s 之后记分条就撤了，这一段左下角是转播原样的球场画面，没有板可贴。",
+   "fit": "crop"
+  },
+  {
+   "start": 0.5,
+   "end": 13.0,
+   "narration": "二〇〇五年孟菲尔斯第一次打美网，首轮输给德约科维奇，那年两个人都还是少年。二十一年之后，这是他最后一场大满贯。",
+   "crosses_cut": "10.38 一刀：全景回合 → 他走在 J.P.Morgan 背板前（同一个人、同一分之后的换机位，没换时刻）。",
+   "_why": "第②句给落点：这是他大满贯生涯的最后一场。画面这一段黄标写着 `SET POINT`，正好是「他一直在被逼到墙角」的开场。⚠️ 四十岁生日那条不在这儿展开——`monfils-vallejo-us-open-2026-r1` 整条讲的就是它，见 `_no_repeat`。\n⚠️ `--dry-run` 报「像是切在一分打完之前」——这一段不适用：10.38 之后画面是他在 J.P.Morgan 背板前走动、12.5s 站着、14.5s 弯腰喘气，**都是两分之间的镜头，不是回合中**，观众看不到有球在飞。",
+   "score_inset": true,
+   "fit": "crop"
+  },
+  {
+   "start": 13.0,
+   "end": 25.0,
+   "narration": "北京时间九月四号早上七点多，美网男单第二轮，阿姆斯特朗球场，夜场。首盘三比五，他落后，对面正在发球胜盘。",
+   "crosses_cut": "15.78 一刀：他的近景 → 全景回合。",
+   "_why": "第③句给坐标。开球 07:10（flashscore `AD÷1788477000` 换成北京时间），按「开球时刻只说个大概」写成「早上七点多」（分钟落在 10~39 这一档）。画面上 12.5s 是他站着、14.5s 弯腰喘气的近景，和「他落后」对得上。",
+   "score_inset": true,
+   "fit": "crop"
+  },
+  {
+   "start": 26.0,
+   "end": 40.0,
+   "narration": "第一个盘点，他挡了回去。接下来这一分，两个人从底线打到网前来回拉扯。解说说，那是这场球到那时，最精彩的一分。最后拿下它的是钱。",
+   "_why": "这一段整段落在同一个长回合里（15.78 到 53.02 之间源片没有任何镜头切点，`point_ends` 也是空的——一分打了很久）。⚠️ **不写它打了多少秒**：按「一个球说打了多少拍，不说多少秒」，拿不到拍数就换个说法——这儿用的是转播自己的话（47.84s `Oh, brilliant rally of the match so far.`），比一个秒数硬。「最后拿下它的是钱」的出处是 54.16s 解说 `but that time Leonard Tien was ready.` 加记分条 54.15 翻成 AD。",
+   "score_inset": true,
+   "fit": "crop"
+  },
+  {
+   "start": 58.0,
+   "end": 70.5,
+   "narration": "第二个盘点，钱打丢了，解说说这个法国人还留在局里。可首盘他的两个破发点一个都没兑现，这一局还是丢了。三比六。",
+   "crosses_cut": "68.94 一刀：全景 → 钱的背影近景（同一局之内的换机位）。",
+   "_why": "画面上 58.5~68.5 六格都挂着 `SET POINT #2`，67.92s 解说 `That's missed. So still in the game the Frenchman.`＋70.00s `[applause]`——第二个盘点也被救下。而首盘最后仍是 3-6：他从 3 局起再没拿到第 4 局，也就是这一局钱还是收掉了。首盘破发点 0/2 出自 flashscore 分盘统计。⚠️ 右端 70.5 卡在 ≈71 那一处剪辑跳档之前——源片在那儿直接跳到第二盘 2-1，跨过去就是两件事接在一起。\n⚠️ 段尾 70.5 落在 `point_ends` 的 **70.27 之后** 0.23 秒（`--dry-run` 那句「最近的死球在 72.17」是往后找的，不是说前面没有）。想再多留一点尾巴也不行——≈71 就是那一处剪辑跳档。",
+   "score_inset": true,
+   "fit": "crop"
+  },
+  {
+   "start": 74.0,
+   "end": 87.0,
+   "narration": "第二盘二比一，轮到钱发球，孟菲尔斯拿到破发点。这一个也没换成一局，解说说，钱把船稳住了。整场八个破发点，他一个都没兑现。",
+   "crosses_cut": "74.36 / 81.51 / 86.04 三刀：全景回合 → 全景 → 钱在 Emirates 背板前握拳。同一局之内的换机位。",
+   "_why": "记分条 `3 2 | AD / ●6 1`：第一盘 3-6 已完，第二盘 2-1，钱发球，孟菲尔斯占先＝破发点。84.32s 解说 `Steadies the ship. Great point saved.`＋87.11s `[applause]`——这个破发点被钱救掉。⚠️ 「他一个都没兑现过」的主语是孟菲尔斯，紧跟在他名字后面，不换人。\n⚠️ 「兑现过」被合成器切成 `兑 ｜ 现过`（「现过」是个不存在的词），去掉「过」就干净了。",
+   "score_inset": true,
+   "fit": "crop"
+  },
+  {
+   "start": 92.0,
+   "end": 106.0,
+   "narration": "第二盘，他一个人送出二十二个非受迫失误，对面只有七个。全场下来是五十四比二十一，两倍半。五比四，钱发球胜盘，四比六——两盘落后。",
+   "crosses_cut": "99.3 / 103.57 两刀：全景回合内部的换机位，画面上一直挂着 `SET POINT #2`。",
+   "_why": "记分条 `3 4 | 30 / ●6 5 | 40`＝第二盘 4-5、钱发球胜盘、盘点。失误 22:7 和 54:21 都出自 flashscore 分盘/全场官方统计。",
+   "score_inset": true,
+   "fit": "crop"
+  },
+  {
+   "start": 112.5,
+   "end": 124.5,
+   "narration": "赢他的这个人二十岁，十四号种子，世界第十五。上个月在蒙特利尔，钱赢过他一次；那天赛后，钱请他在一颗球上签了名。",
+   "crosses_cut": "117.15 / 119.45 两刀，另外 122.5s 是一张全屏比分图形（`MEN'S SINGLES | 2ND ROUND` / `LOUIS ARMSTRONG STADIUM` / `3 4 0 · 6 6 0`）——都是第二盘打完到第三盘开局之间的连续画面。",
+   "_why": "这一段画面是钱拿下第二盘之后的庆祝和换边，配的正是「他是谁」。种子 14 / 世界第 15 出自美网官方 players.json；蒙特利尔那一场和签球那件事出自 ATP（`Tien won their only previous ... after which Tien asked Monfils for a signature`）＋ Tennis Majors，两个源对得上。\n⚠️ 「钱刚赢过他一次」被切成 `钱刚 ｜ 赢`——「钱刚」读起来像一个人名，去掉「刚」。",
+   "score_inset": false,
+   "_score_inset_why": "112.5s 起记分条被 `us open` 转场动画替换，114.5~120.5 整段没有板，122.5s 是全屏图形——这一段左下角没有可贴的板。",
+   "fit": "crop"
+  },
+  {
+   "start": 126.0,
+   "end": 137.0,
+   "narration": "第三盘孟菲尔斯先拿下一局。他自己的发球局这一盘被打到八个破发点，救回来六个；而钱只兑现了两个。",
+   "crosses_cut": "131.01 / 134.47 / 136.52 三刀：全景回合 → 钱擦脸的近景。",
+   "_why": "记分条 `3 4 1 | 15 / ●6 6 0`＝第三盘孟菲尔斯 1-0 领先、钱发球。第三盘 `Break Points Saved 主队 6/8`、`Break Points Converted 客队 2/8` 都出自 flashscore 分盘官方统计。\n⚠️ 主语写死成「孟菲尔斯」不写「他」：这一段 126.5~134.5 的近端是**钱**（逐段核过换边），末格 136.5 又是钱擦脸——用代词会被读成钱救的破发点。",
+   "score_inset": true,
+   "fit": "crop"
+  },
+  {
+   "start": 142.0,
+   "end": 152.5,
+   "narration": "二比二，轮到孟菲尔斯自己发球，四十比零。整片看台，站了起来。解说说，他们来就是为了这个。",
+   "crosses_cut": "148.67 一刀：全景击球 → 他走向网前一侧。",
+   "_why": "记分条 `●3 4 2 | 40 / 6 6 2 | 0`＝第三盘 2-2、孟菲尔斯发球、40-0。150.5~152.5 两格整片看台起立，解说 148.96s `Yes, there we go.`、151.04s `That's what they came for.`——这一句是转播自己说的，不是我们的形容。⚠️ 右端 152.5 卡在 ≈153 那一处剪辑跳档之前：源片下一格就直接跳到 3-5 的第五个赛点了。\n⚠️ 「看台站了起来」被切成 `看 ｜ 台站`（「台站」是真实存在的词，读起来是另一个意思），加一个逗号撑开成「整片看台，站了起来」。",
+   "score_inset": true,
+   "fit": "crop"
+  },
+  {
+   "start": 154.0,
+   "end": 169.0,
+   "narration": "三比五，轮到孟菲尔斯自己发球。这是第五个赛点——前面那四个，他一个个挡了回去。这一个没挡住。两小时十七分钟，六比三、六比四、六比三。",
+   "crosses_cut": "155.26 / 160.73 两刀：钱的近景 → 赛点那一分的全景 → 球落地、钱抬头看包厢。三段是同一分的连续画面。",
+   "_why": "画面上 154.5~160.5 四格挂着 `MATCH POINT #5`，记分条 `●3 4 3 | 空 / 6 6 5 | AD`——AD 在钱那一行，而发球指示在孟菲尔斯那一行，也就是**赛点落在他自己的发球局上**。⚠️ **前四个赛点不在源片里**（源片在 ≈153 跳档），所以那一句是旁白补的、不是画面在演——而画面上那块牌子自己写着 `#5`，正是这句话的自证。四个的出处是 flashscore `Set 3 / Match points saved 主队 4`。解说 160.48s `It is victory for the American learner.`\n⚠️ 同上，开头写死「孟菲尔斯」：这一段第一格 154.5 是**钱**的近景，用「他」会指错人。",
+   "score_inset": true,
+   "_score_inset_why": "154.5~162.5 板都在（162.5 是它最后一次出现），164.5 之后没有——中间的淡出由 `board_present_spans` 现量自动收，不用拆段。",
+   "fit": "crop"
+  },
+  {
+   "start": 172.0,
+   "end": 187.0,
+   "narration": "网前，两个人抱在一起。今晚赛后勒纳·钱说，上个月在蒙特利尔，他就跟孟菲尔斯讲过：希望我们还能再打一次。而这一次打完，孟菲尔斯把手举向了看台。",
+   "_why": "**兑现冷开场**：第①格是 172.0~182.5，这一段 172.0~187.0 完整覆盖它，并且往后走到 184.5s 孟菲尔斯举手向看台致意。钱那句话出自 AP（`I told him when we played in Montreal, 'I hope we get to play one more time.'`）。⚠️ 「孟菲尔斯把手举向了看台」把主语写死了——184.5s 那一格举手的是他，钱在前景低头持拍，不写名字会读反。",
+   "score_inset": false,
+   "_score_inset_why": "赛后画面，记分条早就撤了。",
+   "fit": "crop"
+  },
+  {
+   "start": 198.8,
+   "end": 209.3,
+   "narration": "全场站着，他坐在长凳上。十一月的巴黎大师赛，才是他真正的最后一站。那一场，你会守着看吗？",
+   "crosses_cut": "199.18 / 204.39 两刀：钱向前排致意 → 钱走回场地 → 孟菲尔斯坐在长凳上、全场起立。",
+   "_why": "末段落在 204.5~208.5：他坐着，整片看台站着，208.5s 是那张全屏赛果图形（`3 4 3 / 6 6 6`）。⚠️ 右端 209.3 收在 `silent_audio` 起点 209.67 之前（加 `SEG_FADE` 0.18 是 209.48，仍在前面）——209.63 之后是美网的社媒片尾板，收进来就是一段哑场。末屏这一问问的是巴黎（两个源：AP `plans to retire after this year's Paris Masters`、Tennis Majors），**和前两条孟菲尔斯的末屏一问不重合**（R1 问的是「这样的夜晚还剩几个」，辛辛那提问的是「你会记得他的哪一场球」）。",
+   "score_inset": false,
+   "_score_inset_why": "赛后画面，没有记分条。",
+   "fit": "crop"
+  }
+ ],
+ "_editing_why": "**源片是剪过的，两处剪辑跳档必须绕开**（逐格读记分条读出来的）：≈71s 从第一盘 5-3 直接跳到第二盘 2-1；≈153s 从第三盘 2-2、40-0 直接跳到 3-5 的 `MATCH POINT #5`。所有窗口都收在这两处之前或之后，没有一段跨过去。\n**源片里没有的两样，旁白讲、画面不演**：① 第一盘钱是怎么拿下 5-3 那一局的 ② 前四个赛点。第 ⑪ 段那句「前面那四个」因此是补的——而画面上那块牌子自己写着 `MATCH POINT #5`，是它的自证。\n**认人**：孟菲尔斯是深色上衣＋荧光绿前襟和荧光绿短裤、不戴帽；勒纳·钱是浅粉上衣＋酒红短裤＋酒红鸭舌帽。远景里最可靠的是那块荧光绿短裤（蓝场绿外场上最扎眼的一块高饱和亮绿）。⚠️ **不许拿「谁在近端」认人**——这一场正常换边，逐段核过：0.5~68.5 孟菲尔斯近端、74.5~84.5 钱近端、92.5~108.5 孟菲尔斯、124.5~134.5 钱、142.5~160.5 孟菲尔斯。\n**片尾板**：`silent_audio [[209.67, 212.74]]` 是美网的社媒板，末段收在 209.3。\n⚠️ probe 自动读的 `scoreboard.json` 在 0.5~58.5 整段是空的，而记分条其实清清楚楚写着 `3 | 30 / 5 | 40`——**那份 json 拿来当判据会得出「前 60 秒没有比分」这个错结论**，比分一律打开 `score_*.jpg` 读。"
+}

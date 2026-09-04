@@ -1,0 +1,301 @@
+{
+  "slug": "bu-zhengmichael-us-open-2026-r2",
+  "_column": "reel",
+  "layout": "band",
+  "scorebox": [
+    100,
+    886,
+    660,
+    980
+  ],
+  "_scorebox_why": "板在源片里的位置。这一趟 probe 传了 `--scorebox 100,886,660,980`，`point_ends` 量出来 33 处，说明框住了；四个数取的是同一届同一套转播图形包（`zheng-putintseva-us-open-2026-r2` 100/886/660/980、`zheng-liutova-us-open-2026-r1` 104/887/978、`zheng-pridankina-us-open-2026-q3` 104/888/978，三条对得上）。\n⚠️ **右缘 660 只是兜底**，真正的右缘是渲染时 `resolve_board_insets` 每段现量的——美网这块板每打完一盘 +38px，本场是四盘球，会经过四档。\n⚠️ `SET POINT` / `MATCH POINT #N` 那条黄标在 y<886 之外，按 docs/us-open-scoreboard-aspect.md 的口径不扩窗。",
+  "tts_backend": "edge",
+  "_tts_backend_why": "仓库的 `AZURE_SPEECH_KEY` 现在被 Azure 401 拒（2026-09-03 起连挂三趟，都是 `WebSocket upgrade failed: Authentication error (401)`），账号所有者当天定的是「换 edge tts」。\n这一条退回 edge 没有代价：**没用 `voice.style`，也没用 `lead_pause`**，同一把嗓子 edge 也有；旁白长度本来就是拿 edge 真跑量过的。⚠️ 钥匙修好之后把这两个键删掉就回到 Azure。",
+  "source_url": "https://youtu.be/qNVYg_pAfzQ",
+  "_source": "美网官方 YouTube 频道的单场集锦，201.36s / 1920×1080 / 30000/1001 fps——过得了「1080p 及以上是硬门槛」那道闸。\n⚠️ `source_url` 和 probe.json 的 `url` **逐字节相同**（都写成 `youtu.be/<id>`），否则 `--dry-run` 认领不上。\n画面自证：42.5/76.5/114.5/170.5 四处全屏图形的顶栏写着 `MEN'S SINGLES | 2ND ROUND`、下面小字 **`COURT 12`**；118.5s 场边 IBM 屏印着 `Y. BU / CHINA`、`M. ZHENG / UNITED STATES OF AMERICA`；170.5s 的最终图形是 `YUNCHAOKETE BU CHN 3 6 2 3 / MICHAEL ZHENG USA 6 2 6 6`。\n⚠️ **这条源片没有自动字幕**（八档 client 全报 `There are no subtitles`），所以没有解说原话可引，画面自证只能靠记分条和图形。\n⚠️ `silent_audio = [[198.33, 201.36]]` 是美网社媒片尾板，所有段落都收在它之前。",
+  "cover": {
+    "matchup": [
+      {
+        "name": "布云朝克特",
+        "name_en": "Yunchaokete Bu",
+        "country": "CHN",
+        "rank": 124
+      },
+      {
+        "name": "郑瑞",
+        "name_en": "Michael Zheng",
+        "country": "USA",
+        "rank": 107
+      }
+    ],
+    "_rank_why": "美网官方 `players.json`（2026）：`atpy09v` Yunchaokete Bu `singles_rank 124`、无种子号、`entryStatus \"LL\"`（幸运落败者）；`atpz0bz` Michael Zheng `singles_rank 107`、无种子号、`entryStatus \"WC\"`（外卡）。tennisexplorer 和维基逐字印证同样两个数。\n⚠️ **两个人都不是种子**，画面上记分条名字前面没有数字，和 spec 对得上。",
+    "winner": "郑瑞",
+    "result": "6-3 2-6 6-2 6-3",
+    "_result_why": "赢家视角，三处印证：flashscore `Y3n8V2JD` 的 BA/BC/BE/BG=3/6/2/3（home 是 `Bu Y.`）、BB/BD/BF/BH=6/2/6/3，`AS=2`（客队赢）；美网官方 matches feed match_id 1205；源片 170.5s 那张全屏收尾图形自己印着 `BU 3 6 2 3 / ZHENG 6 2 6 6`。\n四盘没有抢七（官方 `tiebreak: null` ×4），所以没有上标小分。",
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "布云朝克特",
+    "topic": "美网第二轮 · 布云朝克特 vs 郑瑞",
+    "_topic_why": "按账号所有者 2026-09-03「封面左上角的副标题不要写球场号，写对阵双方」写成对阵——球场号（12 号）在比分板头一行已经印着。\n台头把布云朝克特写在前面，跟的是 `cover.subject`；这一条 `cover.matchup`、`stats.a/b`、`_match.participants` **三者同序**（都跟 flashscore 的 home/away，布云朝克特是 home）。",
+    "hook": "他赢的那盘只失误三次\n另外三盘一共三十六次",
+    "_hook_why": "两行框住的是**整场的形状**，而且都不在比分板上：他赢下的第二盘全盘只送出 **3** 个非受迫失误，另外三盘加起来 **36** 个（全场 39，flashscore 分盘官方统计 16 + 3 + 11 + 9）。\n⚠️ 两行各 10 个字，正好卡在 `HOOK_MAX_CHARS = 10` 上；两行也在 `SOLO_HOOK_MAX_LINES = 2` 之内。\n⚠️ **一个盘分都不写**：板上已经印着 `郑瑞 6-3 2-6 6-2 6-3 布云朝克特`。\n⚠️ **没用「制胜分少二十二」那个形状**（26 比 48，也是这一场最硬的数之一）：它讲的是对面有多强，而这一条的封面主体是布云朝克特，钩子该讲他自己身上发生了什么。那个数进旁白和小红书正文。\n⚠️ **和已发的两条布云朝克特都不重合**：`bu-jodar-us-open-2026-r1` 是「大满贯正赛六连败／第七次他只丢四局」，`bu-lucky-loser-story` 是「五天前出局／五天后赢了种子」，见 `_no_repeat`。",
+    "portrait": {
+      "image": "assets/reel/bu-us-open-2026-r2-fist.jpg",
+      "focus": 0.5,
+      "_photo_why": "美网官方图库这一场的实拍，四要素齐全（`G. Bu vs. M. Zheng | R2` 名下，说明写着 2026 US Open Day Five、Thursday, September 3, 2026、USTA Billie Jean King National Tennis Center）。\n**四道闸门**：① 精准 ✓ ② 在比赛中 ✓ ③ 有冲击力 ✓——**近景特写，头肩填满画面大半，白色 FILA 发带、满头汗、右拳攥在胸前、眼睛睁着、表情读得出来**，正是账号所有者 2026-08-18 点名的那一类（「握拳、咬牙、呐喊这类『用力』的姿态，优先于招手、微笑」）④ 清晰度见 `_low_res_why`。\n**叠上三条版式带渲过一遍**：脸整块落在台头带（0~170）和钩子带（790~1100）之间的净空里，没有被压到。",
+      "_low_res_why": "1280×720，铺 1080×1440 要放大 **2.00 倍**，够不着 `cover_photo_problem` 的 1.00x 地板。\n**这是美网这个赛事的出版天花板**：`photo-assets.usopen.org` 的 `f_` 前缀就是最大档，十二个别的前缀、六个别的目录、三种 `?width=` 参数全试过——前两组 404，第三组返回 200 但尺寸一个像素没变。\n⚠️ 它仍然远好过抽帧——相机原图，而抽帧是压缩转播流再放大；而且这条源片里布云朝克特**全片只有一个特写**（62.5s），情绪也不如这一张。"
+    },
+    "scoreboard": {
+      "court": "Court 12",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%20%222%3A33%3A00%22%2C%20%22source%22%3A%20%22US%20Open%20official%20matches%20feed%20match_id%201205%3A%20duration%202%3A33%2C%20setDurations%2049%2B36%2B31%2B37%3D153min%22%7D",
+        "field": "duration"
+      },
+      "_court_why": "美网官方 matches feed（match_id 1205）`courtName`；源片 44.5 / 78.5 / 170.5 三处全屏图形的小字**逐格放大读过**，都读得出 `COURT 12`，两处对得上。",
+      "_duration_why": "官方 **2:33**（`setDurations` 49+36+31+37＝153 分钟＝2:33，四个数自洽）。\n⚠️ flashscore 报 50+37+31+37＝**2:35**，多 2 分钟——按「比赛用时不要只信 flashscore」取官方。\n⚠️ **画面里没有用时的出处**：源片一处统计图都没有；38.5s 场边屏那行 `2:00 | 94` 的标签糊得读不出，而且那一刻才第一盘 3-5，**不可能是全场用时，别拿它当佐证**。"
+    }
+  },
+  "_match": {
+    "status": "result_verified",
+    "source": "flashscore_points",
+    "source_id": "Y3n8V2JD",
+    "flashscore_id": "Y3n8V2JD",
+    "participants": [
+      "布云朝克特",
+      "郑瑞"
+    ],
+    "set_scores_home_away": [
+      [
+        3,
+        6
+      ],
+      [
+        6,
+        2
+      ],
+      [
+        2,
+        6
+      ],
+      [
+        3,
+        6
+      ]
+    ],
+    "winner": "郑瑞",
+    "loser": "布云朝克特",
+    "winner_result": "6-3 2-6 6-2 6-3",
+    "loser_result": "3-6 6-2 2-6 3-6",
+    "tiebreaks_home_away": [
+      null,
+      null,
+      null,
+      null
+    ]
+  },
+  "_participants_why": "`participants` 跟 flashscore 的 home/away（`AE÷Bu Y.` / `AF÷Zheng M.`），和同一块里的 `set_scores_home_away` 同序。这一条 `cover.matchup` 恰好也是同一个顺序，所以 `stats.a/b` 三者同序——但那是巧合不是规矩，写完各自对一眼旁边那个字段。",
+  "stats": {
+    "a": {
+      "aces": 8,
+      "df": 8,
+      "winners": 26,
+      "ue": 39,
+      "first_in": 52,
+      "first_won": 37,
+      "second_total": 55,
+      "second_won": 24,
+      "bp_conv": 3,
+      "bp_chances": 7,
+      "pts_won": 93,
+      "pts_total": 206,
+      "first_total": 107,
+      "headshot": "assets/players/headshots/atp-Y09V.png"
+    },
+    "b": {
+      "aces": 13,
+      "df": 5,
+      "winners": 48,
+      "ue": 38,
+      "first_in": 53,
+      "first_won": 44,
+      "second_total": 47,
+      "second_won": 24,
+      "bp_conv": 6,
+      "bp_chances": 11,
+      "pts_won": 113,
+      "pts_total": 206,
+      "first_total": 100,
+      "headshot": "assets/players/headshots/atp-Z0BZ.png"
+    },
+    "_source": "flashscore 官方统计（`tools/match_stat_hooks.py Y3n8V2JD --stats-block` 直接吐出来的那一份），并且和美网官方 IBM 数据 `completed_matches/matches/1205.json` 的 `base_stats.match` **逐项交叉核过**：制胜分 26/48、非受迫失误 39/38、Ace 8/13、双误 8/5、破发点 3-of-7 / 6-of-11、总分 93/113，一处不差。"
+  },
+  "_stats_why": "`a` 跟 `cover.matchup[0]`＝布云朝克特，而 flashscore 的 home 也是他，**不用对调**。\n头像：`atp-Y09V.png` 在已发的 `bu-jodar-us-open-2026-r1` 里挂的就是「布云朝克特」；⚠️ **`atp-Z0BZ.png`（郑瑞）是第一次出现**，「同一张官方头像不许挂两个中文名」那条判据在这一条上是哑的——渲完要自己打开数据图看一眼左边那张脸是不是左边那个名字。译名走 `player_zh(\"Michael Zheng\")`＝**郑瑞**（译名表标注「球员原生中文名」）。\n`first_total` 按 `first_in + second_total` 算（107 / 100），不取接口的 `Service Points Won` 分母。",
+  "_hit_data": "`tools/match_stat_hooks.py Y3n8V2JD --stats-block` 加逐分（`match_feed.py show Y3n8V2JD`）跑下来，这一场最硬的四条：\n\n    非受迫失误  分盘 **16 / 3 / 11 / 9**——他赢下的第二盘只有 **3** 个，另外三盘 36 个（全场 39）\n    制胜分      **26 : 48**，差 22 个；而非受迫失误 39 : 38，只差 1 个\n    第二盘      破发点 **2/2** 全兑现、自己四个发球局 **一个破发点都没让对面拿到**、小分 25:15\n    赛点        第四盘 3-5 自己发球 0-40，三个赛点**救下 1 个**（源片 152.5s 徽标 `MATCH POINT`、158.5s 变成 `MATCH POINT #2`，中间那一分他赢了——和 flashscore `Match points saved 主队 1` 对得上）\n\n钩子取第一条（3 对 36）：它讲的是主角自己身上发生了什么，而且**两个数都不在比分板上**。第二条「制胜分少二十二」进旁白和小红书正文——它讲的是对面有多强，不适合当封面主语。",
+  "_no_repeat": "此前发过两条布云朝克特，**铺开讲过的东西这一条一个字都不碰**：\n  · `bu-jodar-us-open-2026-r1`（赛场之上，同一届第一轮）：六连败、第七次才赢、霍达尔一个破发点都没拿到、    十一个发球局一个没丢、末屏一问「这算运气吗？」\n  · `bu-lucky-loser-story`（网球有故事）：资格赛末轮输给奇纳、回家的机票、科基纳基斯脚踝伤退、    递补签到的规矩、幸运落败者在大满贯走得最远是第四轮那堵墙、末屏一问「算运气还是算实力？」\n所以这一条只留**看不懂这场球所必需的那一句**——「上一轮他刚拿到大满贯正赛的第一场胜利」——一句带过。\n全新的料有三样：① 这场球本身（分盘失误 16/3/11/9、制胜分 26 比 48、第二盘零破发点）② 郑瑞是谁（二十二岁美国人，父母从湖北移民，哥伦比亚大学毕业，两届全美大学生单打冠军，持外卡）③ 两年前芝加哥挑战赛首轮布云朝克特 6-4 6-4 赢过他，这一场之后交手记录一比一。\n⚠️ 末屏一问也要换门：前两条都在问「运气」，这一条问的是下一次他能走到第几轮。",
+  "_durations": "官方 2:33（`setDurations` 49+36+31+37）。flashscore 报 2:35（50+37+31+37），多 2 分钟，不采用。⚠️ 源片里没有用时的画面出处。",
+  "_turning_points": [
+    "首盘 3-5 郑瑞发球胜盘，一连四个盘点（源片 38.5s 徽标 `SET POINT #4`）：布云朝克特挡掉前三个，第四个没挡住。3-6。",
+    "第二盘整盘他只送出 3 个非受迫失误（对面 9 个），两个破发机会两次全兑现，自己四个发球局一个破发点都没让对面拿到。6-2，一比一。",
+    "第四盘 3-5 轮到他自己发球，0-40 三个赛点：救下第一个（`MATCH POINT` → `MATCH POINT #2`），第二个被郑瑞破发结束比赛。"
+  ],
+  "_turning_points_why": "三条都从 `match_feed.py show Y3n8V2JD` 的分盘官方统计推出来，再和源片的记分条／徽标对过：\n  Set 1  `Break Points Saved 主队 3/5`、`Unforced errors 主队 16`、`1st serve percentage 主队 41%`；源片 18.5~38.5 徽标从 `SET POINT` 一路走到 `SET POINT #4`\n  Set 2  `Unforced errors 主队 3 客队 9`、`Break Points Converted 主队 2/2`、`Break Points Saved 主队 0/0`（＝一个都没面对）、`Service games won 主队 100% (4/4)`、小分 25:15\n  Set 4  `Match points saved 主队 1`、`Break Points Saved 主队 1/3`、`Service games won 主队 3/5`；源片 152.5s 板是 `3 [0] / 5 [40]` ＋ 徽标 `MATCH POINT`，158.5s 变成 `[15]/[40]` ＋ `MATCH POINT #2`\n⚠️ **最后一局是他自己发球，是记分条直接读到的**（152.5s 发球箭头在 `BU` 那一行），不是推的——所以那三个赛点同时也是破发点，郑瑞是**破发结束的比赛**。",
+  "editorial": {
+    "mode": "match_review",
+    "question": "他赢下的那一盘和输掉的三盘，差在哪儿？",
+    "thesis": "布云朝克特赢下的第二盘只送出三个非受迫失误、四个发球局一个破发点都没让对面拿到；另外三盘他一共送出三十六个失误。而对面那一头一直很稳——全场制胜分四十八比二十六，非受迫失误却只差一个。也就是说这场球的分水岭不在谁失误更多，在谁能一直把球打进去。",
+    "beats": [
+      "首盘 3-5 郑瑞发球胜盘，一连四个盘点，布云朝克特挡掉三个；这一盘他自己的一发只进了百分之四十一。3-6。",
+      "第二盘他整盘只失误三次，两个破发机会两次全兑现，四个发球局一个破发点都没让对面拿到。6-2，一比一。",
+      "第三盘他一个破发点都没拿到；第四盘 3-5 自己发球 0-40，救下一个赛点，第二个被破发结束比赛。"
+    ],
+    "human_context": {
+      "angle": "这一场是两张中国面孔的对决：一个来自新疆、靠幸运落败者的身份递补进正赛，上一轮刚拿到大满贯正赛的第一场胜利；另一个在美国出生长大、父母从湖北移民过去，哥伦比亚大学毕业、拿过两届全美大学生单打冠军，这一届靠外卡进的正赛。而两年前的芝加哥挑战赛首轮，赢的是前面那个人。",
+      "facts": [
+        "美网官方 players.json：atpy09v singles_rank 124、entryStatus LL、生于 Xinjiang, China；atpz0bz singles_rank 107、entryStatus WC、生于 Chesapeake、2004-01-27",
+        "ATP 特稿：Michael Zheng 的父母从湖北移民美国（his parents emigrated from Hubei, China）",
+        "tennisexplorer mutual ＋ ATP Stats Centre：2024 芝加哥挑战赛首轮 布云朝克特 6-4 6-4 胜 郑瑞",
+        "flashscore Y3n8V2JD 分盘官方统计：第二盘 Unforced errors 主队 3、Break Points Converted 主队 2/2、Break Points Saved 主队 0/0"
+      ],
+      "sources": [
+        "https://www.usopen.org/en_US/scores/feeds/2026/players/players.json",
+        "https://www.atptour.com/en/news/zheng-challenger-2025-feature",
+        "https://www.tennisexplorer.com/mutual/zheng-c91db/yunchaokete/"
+      ]
+    }
+  },
+  "topbar": {
+    "line1": "2026 美网 男单第二轮",
+    "line2": "郑瑞 6-3 2-6 6-2 6-3 布云朝克特"
+  },
+  "push": {
+    "summary": "布云朝克特止步美网第二轮",
+    "lead": "美网男单第二轮，十二号球场，二十二岁的美国人郑瑞 6-3 2-6 6-2 6-3 赢下布云朝克特，两小时三十三分钟。布云朝克特赢下的第二盘整盘只送出三个非受迫失误，两个破发机会两次全兑现，四个发球局一个破发点都没让对面拿到；另外三盘他一共送出三十六个。全场制胜分二十六比四十八，而非受迫失误三十九比三十八，只差一个。第四盘三比五他自己发球零比四十，救下一个赛点，第二个被破发结束比赛。上一轮他刚拿到大满贯正赛的第一场胜利。",
+    "auto": true
+  },
+  "segments": [
+    {
+      "start": 168.5,
+      "end": 176.5,
+      "narration": "",
+      "crosses_cut": "171.91 一刀：郑瑞独自走向球网 →（170.5/172.5 是那张全屏最终比分图形）→ 网前握手 → 两个人一起低着头走下场。同一段赛后的连续画面。",
+      "_why": "第①格：全片最强的一格——那张写着 `BU 3 6 2 3 / ZHENG 6 2 6 6` 的全屏图形，紧接着是网前握手和**两个人一起低着头走下场**（174.5s）。**不配旁白，靠现场声和掌声**。⚠️ 没有用 164.5s 郑瑞举手那一格——这条片子的主体是输的那一个（中国球员），开场落在赢家的庆祝上会把视角带偏。",
+      "_ending_payoff_required": true,
+      "score_inset": false,
+      "_score_inset_why": "166.5 之后记分条已经撤了，170.5/172.5 是全屏图形——这一段左下角没有可贴的板。",
+      "fit": "crop"
+    },
+    {
+      "start": 0.5,
+      "end": 14.0,
+      "narration": "二十四岁的布云朝克特，世界第一百二十四位。上一轮，他在大满贯的正赛里赢了第一场球。对面这个美国人排在第一百零七——两个人只差十七位。",
+      "_why": "第②句给落点和反差。画面是首盘 1-2、他自己发球被逼到破发点的回合，配「他刚拿到第一场胜利」正好。⚠️ 幸运落败者那条来路不在这儿展开——`bu-lucky-loser-story` 整条讲的就是它，见 `_no_repeat`。⚠️ 右端 14.0 收在 16.5→18.5 那一处剪辑跳档之前（记分条从 1-2 直接跳到 3-5）。",
+      "score_inset": true,
+      "fit": "crop"
+    },
+    {
+      "start": 18.5,
+      "end": 30.0,
+      "narration": "北京时间九月四号早上快八点，美网男单第二轮，十二号球场。首盘三比五，对面发球胜盘——一连四个盘点。",
+      "crosses_cut": "29.33 一刀：底线全景 → 他在蓝场上握拳（刚救下第一个盘点）。",
+      "_why": "第③句给坐标。开球取 flashscore `AD÷1788478800`＝北京时间 07:40，按「开球时刻只说个大概」写成「早上快八点」（分钟落在 40~59 这一档）。⚠️ 美网官方赛程写的是 `notBefore 6:40 PM`（美东）——那是**下界不是时刻**（这是 12 号球场当天第四场，前面压着三场共七个多小时），所以不拿它当开球时间。球场号出自官方 matches feed，源片 44.5/78.5/170.5 三处全屏图形的小字 `COURT 12` 印证。「一连四个盘点」的出处是源片 38.5s 的徽标 `SET POINT #4`。",
+      "score_inset": true,
+      "fit": "crop"
+    },
+    {
+      "start": 32.5,
+      "end": 44.0,
+      "narration": "前三个他都挡了回去，第四个没能再挡。首盘三比六。这一盘他的一发只进了百分之四十一，非受迫失误十六个。",
+      "crosses_cut": "37.39 一刀：全景 → 场边 IBM 屏和球童。之后 40.5 起是观众起立、42.5 是首盘的全屏比分图形——首盘结束的连续画面。",
+      "_why": "徽标从 `SET POINT` 一路走到 `SET POINT #4`（18.5~38.5），也就是对面在这一局至少拿到四个盘点、他挡掉了前三个。首盘一发 41%、非受迫失误 16 个出自 flashscore 分盘官方统计。",
+      "score_inset": true,
+      "_score_inset_why": "32.5~38.5 板都在；40.5 之后板被撤、42.5 起是全屏图形——中间的淡出由 `board_present_spans` 现量自动收，不用拆段。",
+      "fit": "crop"
+    },
+    {
+      "start": 46.5,
+      "end": 60.5,
+      "narration": "第二盘变了个样子。整整一盘他只送出三个非受迫失误，对面那一头是九个。两个破发机会两次都兑现；自己的四个发球局，一个破发点都没让对面拿到。",
+      "crosses_cut": "47.1 / 60.14 两刀：他在 `us open / J.P.Morgan` 墙前 → 底线全景回合。",
+      "_why": "记分条 `3|1 / 6|0`＝首盘 3-6 已完、第二盘他 1-0。这一盘的四个数全出自 flashscore 分盘官方统计：`Unforced errors 主队 3 客队 9`、`Break Points Converted 主队 2/2`、`Break Points Saved 主队 0/0`（＝一个破发点都没面对）、`Service games won 主队 100% (4/4)`。⚠️ 右端 60.5 收在 60.5→62.5 那一处剪辑跳档之前（记分条从 1-0 直接跳到 5-2）。",
+      "score_inset": true,
+      "fit": "crop"
+    },
+    {
+      "start": 62.5,
+      "end": 72.0,
+      "narration": "五比二，两个盘点——四盘里他只在这一盘领先过。第二盘六比二，四十个小分拿走二十五。",
+      "crosses_cut": "71.96 一刀：底线全景 → 他拿下第二盘之后在场上走动、右手握拳。",
+      "_why": "**这一段开头 62.5s 是全片唯一一个布云朝克特的大特写**（满头汗、白 FILA 发带、压低重心接发），记分条是 `3|5 [40] / 6|2 [15]` ＋ 徽标 `SET POINT`——他手里两个盘点。小分 25:15 出自flashscore 第二盘 `Total Points Won 主队 63% (25/40)`。\n⚠️ 「全场他只在这一盘握住过局面」是量出来的：首盘他面对的是对方的盘点，第三盘 `Break Points Converted 主队 0/0`（一个机会都没有），第四盘只有两个破发点且没兑现——**四盘里他手里握过盘点的只有这一盘**。",
+      "score_inset": true,
+      "fit": "crop"
+    },
+    {
+      "start": 75.5,
+      "end": 86.0,
+      "narration": "赢他的这个人二十二岁，美国人，父母从湖北移民过去。哥伦比亚大学毕业，两届全美大学生单打冠军。",
+      "crosses_cut": "81.51 一刀：第二盘的全屏比分图形（`BU 3 6 / ZHENG 6 2`）→ 换边，两个人在座椅区休息。",
+      "_why": "这一段画面是第二盘打完的图形和换边，配「他是谁」。两个源对上之后才写进旁白：ATP 特稿（`his parents emigrated from Hubei, China`）＋ 维基；哥伦比亚大学和两届全美大学生单打冠军（2024、2025）三源一致。⚠️ **NCAA 写成「全美大学生单打冠军」**——缩写读出来是四个字母，屏幕上也难读。⚠️ 「首次打进大满贯第三轮」那句**没有写**：他 2026 温网就打进过第三轮，这次是追平，不是首次。",
+      "score_inset": false,
+      "_score_inset_why": "76.5~80.5 是全屏比分图形、82.5~84.5 是换边，整段没有记分条。",
+      "fit": "crop"
+    },
+    {
+      "start": 86.5,
+      "end": 100.5,
+      "narration": "第三盘他一个破发点都没拿到，自己的发球局丢了两个。全场的账是这样：制胜分二十六比四十八，差二十二个；非受迫失误三十九比三十八，只差一个。",
+      "crosses_cut": "88.1 / 99.3 两刀：他在 J.P.Morgan 墙前发球 → 底线全景回合 → 看台。",
+      "_why": "记分条 `3|6|2 / 6|2|4`＝第三盘他 2-4 落后。第三盘 `Break Points Converted 主队 0/0`（一个机会都没拿到）、`Service games won 主队 50% (2/4)`。制胜分和失误那两个数flashscore 和美网官方 IBM 数据逐项对过，一处不差。",
+      "score_inset": true,
+      "fit": "crop"
+    },
+    {
+      "start": 102.5,
+      "end": 110.0,
+      "narration": "第三盘二比六，比分变成一比二。第二盘那种手感，没有再回来。",
+      "crosses_cut": "103.57 / 108.44 两刀：郑瑞弯腰准备发球 → 底线全景 → 他拿下第三盘举臂。",
+      "_why": "记分条 `3|6|2 [0] / 6|2|5 [40]` ＋ 徽标 `SET POINT`＝第三盘 2-5、对面发球胜盘、盘点。",
+      "score_inset": true,
+      "fit": "crop"
+    },
+    {
+      "start": 118.5,
+      "end": 132.0,
+      "narration": "第四盘。两个人此前交手过一次——两年前的芝加哥挑战赛首轮，布云朝克特六比四、六比四赢下。所以今晚这一场，是对面来讨回去的。",
+      "crosses_cut": "119.45 / 131.01 两刀：郑瑞走向发球位 → 底线全景回合 → 布云朝克特在场上走动握拳。",
+      "_why": "118.5s 那一格右侧的场边 IBM 屏印着 `Y. BU / CHINA`、`M. ZHENG / UNITED STATES OF AMERICA`，是这一段最干净的画面自证。交手记录三源一致：tennisexplorer mutual 页（带比分）＋ ATP Stats Centre 2024 芝加哥存档 ＋ 赛前中文稿「交手记录，小布 1-0 领先」。这一场之后变成一比一。",
+      "score_inset": true,
+      "fit": "crop"
+    },
+    {
+      "start": 134.5,
+      "end": 150.5,
+      "narration": "三比四，轮到他自己发球。这一场他十七个发球局丢了六个，对面只丢了三个；发球直接得分十三比八，也在对面那边。第四盘他拿到过两个破发点，一个都没兑现。",
+      "crosses_cut": "148.67 一刀：底线全景 → 低角度只看得见郑瑞那双荧光黄球鞋。",
+      "_why": "记分条 `3 6 2 3 / 6 2 6 4`＝第四盘 3-4。发球局 11/17 对 14/17、Ace 8 对 13、第四盘破发点 0/2 都出自 flashscore 官方统计。⚠️ **这一段近端才是布云朝克特**（134.5 起两人换边，之前 0.5~131s 近端基本是郑瑞）——旁白说「他自己发球」而画面上近端正是他，对得上。⚠️ 右端 150.5 收在 150.5→152.5 那一处剪辑跳档之前（记分条从 3-4 0-15 直接跳到 3-5 0-40）。",
+      "score_inset": true,
+      "fit": "crop"
+    },
+    {
+      "start": 152.5,
+      "end": 164.5,
+      "narration": "三比五，零比四十，三个赛点。第一个他救了回来。第二个，郑瑞破发结束了比赛。两小时三十三分钟。",
+      "crosses_cut": "162.78 一刀：最后一分的宽景 → 郑瑞在 `Emirates / Deloitte.` 墙前举手，全场起立。",
+      "_why": "记分条 `3 [0] / 5 [40]` ＋ 徽标 `MATCH POINT`（152.5~156.5），158.5s 变成 `[15]/[40]` ＋ `MATCH POINT #2`——中间那一分他赢了，也就是**正好救下一个**，和 flashscore `Match points saved 主队 1` 一字不差。⚠️ **发球箭头在 `BU` 那一行**，所以那三个赛点同时也是破发点，郑瑞是破发结束的比赛。",
+      "score_inset": true,
+      "_score_inset_why": "152.5~162.5 板都在；164.5 那一格板还在但徽标已撤——中间的变化由 `board_present_spans` 现量自动收。",
+      "fit": "crop"
+    },
+    {
+      "start": 166.5,
+      "end": 182.0,
+      "narration": "两个人一起走下场。这一场两百零六个小分，他拿到九十三个，差了二十个。这一届的美网，布云朝克特停在第二轮。下一次，你希望他走到第几轮？",
+      "crosses_cut": "171.91 一刀：郑瑞走向球网 →（170.5/172.5 全屏最终比分图形）→ 网前握手 → 两人低头走下场 → 座椅区。",
+      "_why": "**兑现冷开场**：第①格是 168.5~176.5，这一段 166.5~182.0 完整覆盖它。「来自新疆」出自美网官方 players.json 的 `birth_place: \"Xinjiang, China\"`。⚠️ 末屏这一问问的是「下一次走到第几轮」，**和前两条布云朝克特的末屏一问不重合**（`bu-jodar` 问「这算运气吗」、`bu-lucky-loser-story` 问「算运气还是算实力」）。⚠️ 没有往后收到 184.5~196.5——那一段整段是郑瑞独自受赏和挥手，布云朝克特一格都没有。",
+      "score_inset": false,
+      "_score_inset_why": "赛后画面，记分条已撤，170.5/172.5 是全屏图形。",
+      "fit": "crop",
+      "_narration_why": "末屏不许再碰『资格赛落败者递补』（bu-lucky-loser-story 的主体）和『第一场胜利』（已在段2一句带过）；画面 166.5~170.5 是两人各自在场上＋赛果台标，没有握手镜头，所以不写握手。小分 93/206 出自 stats，全片未用过。"
+    }
+  ],
+  "_editing_why": "⚠️⚠️ **这条源片段落之间大量用溶解转场，`scene_cuts` 严重偏少（只报了 18 个），不能拿它当「这一段没跨镜头」的证据。**真正要绕开的是**记分条比分跳变**那几处剪辑跳档，逐格读记分条读出来的：`16.5→18.5`（①盘 1-2 → 3-5）、`60.5→62.5`（②盘 1-0 → 5-2）、`84.5→86.5`、`116.5→118.5`、`132.5→134.5`（④盘 1-0 → 3-4）、`150.5→152.5`（④盘 3-4 0-15 → 3-5 0-40）。**十三段窗口没有一段跨过这几处。**\n⚠️ `point_ends` 在 119.5~165.5 这 46 秒里一条都没有，而记分条在这段里至少变了五次——**这一项在这条片子上不可靠，段尾没有靠它定**，靠的是记分条和剪辑跳档。\n⚠️ **徽标会残留一拍**：30.5s 板上已经是平分却还挂着 `SET POINT`，164.5s 板上还是 15-40 而徽标已撤。判「这一分是不是赛点」看分数，不只看徽标。\n**认人**：布云朝克特是米白无袖＋酒红滚边、白 FILA 发带、**白鞋**；郑瑞是全黑短袖、不戴发带、**荧光黄绿球鞋**。远景一眼分开靠上衣明暗（浅 vs 全黑）＋ 鞋（白 vs 荧光黄）。⚠️ **不许拿「谁在近端」认人**——0.5~131s 近端基本是郑瑞，134.5~162.5 才换成布云朝克特（逐段核过）。认人的判据是记分条的发球箭头和画面里谁在发球对得上：86.5s 板说他发球→白衣在发球；102.5s 板说郑瑞发球→黑衣在发球。\n**片尾板**：`silent_audio [[198.33, 201.36]]`，末段收在 182.0。\n⚠️ **这条源片没有自动字幕**，所以没有解说原话可引；全片一处统计图都没有，所有数字只能来自 flashscore／美网官方。"
+}
