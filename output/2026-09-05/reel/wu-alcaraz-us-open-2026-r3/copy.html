@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>9.5 赛场之上 | 吴易昺两盘追平仍出局</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>吴易昺止步美网第三轮，两盘追平仍被阿尔卡拉斯直落三盘
+
+北京时间 9 月 5 日凌晨，阿瑟·阿什球场。世界第 113 的吴易昺 3-6 4-6 1-6 负于世界第 3、二号种子阿尔卡拉斯，止步美网男单第三轮。全场 2 小时 20 分。
+
+比分是直落三盘，过程不是。首盘他 0-40 拿到三个破发点并且兑现，把比分追成 3-3；第二盘咬得更紧，2-2、3-3、4-4 三次追平，一直打到 4-5 才被破发。那一盘他打了整整 60 分钟，比首盘多出 18 分钟，是全场最长的一盘。
+
+差别在关键分和发球。全场他拿到 7 个破发点，只兑现 2 个；阿尔卡拉斯拿到 15 个，兑现 7 个。一发进球率 57% 对 67%，一发得分率 53% 对 69%，二发得分率 45% 对 50%——每一局他都要靠二发去扛，而二发只赢了不到一半。制胜分 12 比 21，非受迫失误 39 比 33，全场小分 86 比 109。
+
+第三盘塌得最明显的是发球：他的一发得分率前两盘都是 56%，第三盘掉到 42%。最后一局阿尔卡拉斯发球，三个赛点他救下前两个，中间还拿到一个破发点没能兑现，第三个赛点结束了比赛。
+
+这场球之前两人交手过一次：2024 年上海大师赛，阿尔卡拉斯 7-6(5) 6-3 —— 那次吴易昺把首盘拖进了抢七。
+
+26 岁的杭州人，生涯最高排名是 2023 年 5 月的世界第 54。第三轮是他在大满贯走得最远的一次，四年前的美网也停在这里。而两个月前的温网首轮，他在中央球场从德约科维奇手里拿下过一盘。
+
+赛点落地后两人在网前拥抱，转播镜头给了很久。
+
+下一次站上阿瑟·阿什，他还差多少？
+
+#网球时差 #美网 #吴易昺 #阿尔卡拉斯 #赛场之上</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>下一次站上这里，他还差多少？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
