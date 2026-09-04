@@ -20,6 +20,7 @@
 from __future__ import annotations
 
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -303,3 +304,78 @@ def test_美网球员表真的没这个人还是要说没这个人(monkeypatch):
     said = "\n".join(report.get("notes") or [])
     assert "没有叫" in said, f"真的查无此人时没有指向查询词：{said!r}"
     assert "取不到" not in said, f"把查无此人报成了取数失败：{said!r}"
+
+
+def test_美网那几个feed间歇403要自己重试扛过去(monkeypatch):
+    """⚠️ **间歇 403 不只在 `players.json` 上**，三个 feed 都会。
+
+    2026-09-04 找吴易昺封面时量到的：`find_cover_photo` 对美网接口的**五次调用
+    全部 403**，工具据此报「没有对得上的」；而同一时刻带重试的直连一次拿到完整
+    18 条。也就是说前一条修的只是三处里的一处——`tag` 和 `byType/photo`
+    那两处照旧把一次限流读成「这一档查空了」。
+    """
+    hits = {"n": 0}
+
+    def flaky(url, timeout=30):
+        hits["n"] += 1
+        if hits["n"] < 3:                      # 前两次 403，第三次通
+            raise RuntimeError("403 Client Error: Forbidden")
+        return json.dumps({"content": [], "totalRows": 0})
+
+    monkeypatch.setattr(fc, "_get", flaky)
+    monkeypatch.setattr(fc.time, "sleep", lambda *_: None)
+
+    body = fc._uso_get("https://www.usopen.org/whatever")
+    assert json.loads(body)["totalRows"] == 0
+    assert hits["n"] == 3, f"没有重试，只发了 {hits['n']} 次"
+
+
+def test_重试不许升到_get自己上面去(monkeypatch):
+    """上一条的另一头：**别的站是恒 403，重试只是把一次失败拖成四次。**
+
+    `atptour.com` 全站 403 是这个仓库量死过的结论（CLAUDE.md 记着）。把重试
+    升进 `_get`，「这条路不通」这个真结论会跟着慢四倍，而它一点用都没有。
+
+    ⚠️ **桩必须打在 `requests.get` 上，不能打在 `fc._get` 上。** 第一版就是
+    那么写的，而且和上一条挤在同一个测试函数里——`fc._get` 早被上一头换成了
+    桩，这一头调到的还是它，真正的 `_get` 里有没有重试循环**根本走不到**。
+    反向验证时把重试升进 `_get`，它照样绿。**恒真的断言比没有断言更坏**，
+    是反向验证把它抓出来的。
+    """
+    sent = {"n": 0}
+
+    class _Resp:
+        text = ""
+
+        def raise_for_status(self):
+            raise RuntimeError("403 Client Error: Forbidden")
+
+    def one_shot(url, **kw):
+        sent["n"] += 1
+        return _Resp()
+
+    monkeypatch.setattr(fc.requests, "get", one_shot)
+    try:
+        fc._get("https://www.atptour.com/")
+    except RuntimeError:
+        pass
+    assert sent["n"] == 1, (
+        f"`_get` 自己也重试了 {sent['n']} 次——恒 403 的站会被拖成四倍，"
+        f"而「这条路不通」这个真结论跟着慢四倍")
+
+
+def test_三处美网调用都走带重试的那条路():
+    """判据钉的是**位置**，不是行为。
+
+    行为测试只证明 `_uso_get` 会重试，证明不了三个调用点真的用了它——
+    「一个数写两处必分叉」的老账：改一处、漏两处，而漏掉的那两处照旧把限流
+    读成查空，报告上一个字都不差。
+    """
+    src = (ROOT / "tools" / "find_cover_photo.py").read_text(encoding="utf-8")
+    body = re.sub(r'"""[\s\S]*?"""', "", src)          # 去掉 docstring，注释里会提到这些名字
+    body = "\n".join(l for l in body.splitlines() if not l.lstrip().startswith("#"))
+    for feed in ("_USO_PLAYERS.format", "/tag?tags=", "/content/byType/photo"):
+        line = [l for l in body.splitlines() if feed in l and "_get(" in l]
+        assert line, f"找不到调用 {feed} 的那一行"
+        assert all("_uso_get(" in l for l in line), (
+            f"{feed} 那一处还在裸调 `_get`，间歇 403 会被读成查空：{line}")

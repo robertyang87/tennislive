@@ -247,6 +247,30 @@ class UsoPlayersUnavailable(RuntimeError):
     分开报是有代价的（调用方要多一个分支），换来的是「这一档没跑」不会被读成
     「这一档查空了」。CLAUDE.md「空结果先自证是真空」那条说的就是这件事。
     """
+
+
+def _uso_get(url: str, timeout: int = 40) -> str:
+    """美网那几个 feed 专用的取数：**间歇 403 一律重试**。
+
+    ⚠️ 这不是「多试几次总会好」的迷信，是量出来的：同一个 URL 连发六次，
+    三次 403 三次 200；`players.json` 有时第一次就通、有时第三次才通。
+    而**每一次 403 在报告里的样子都是「这一档查空了」**——2026-09-04 找吴易昺
+    封面时，五次调用全 403，工具据此报「没有对得上的」，而带重试的直连
+    一次拿到完整 18 条。
+
+    ⚠️ **只给美网这几个 feed 用，别升到 `_get`**：别的站（`atptour.com`）是
+    **恒 403**，对它重试四次只是把一次失败拖成四次，还把「这条路不通」这个
+    真结论拖慢了。
+    """
+    last: Exception | None = None
+    for attempt in range(_USO_PLAYERS_TRIES):
+        try:
+            return _get(url, timeout=timeout)
+        except Exception as exc:                                # noqa: BLE001
+            last = exc
+            if attempt + 1 < _USO_PLAYERS_TRIES:
+                time.sleep(1.5 * (attempt + 1))
+    raise last if last else RuntimeError(url)
 _USO_PREFIX = {"small": "t_", "medium": "b_", "large": "c_", "xlarge": "f_"}
 
 _WTA_PAGES = (
@@ -514,17 +538,10 @@ def usopen_player_ids(player: str, year: str) -> list[dict]:
     ⚠️ **返回全部同姓命中，不替调用方挑一个。** 同一站两个中国选手都姓 Wang
     时挑错人，在产物上和挑对了长得一模一样（CLAUDE.md 那条老坑）。
     """
-    last_exc: Exception | None = None
-    for attempt in range(_USO_PLAYERS_TRIES):
-        try:
-            raw = json.loads(_get(_USO_PLAYERS.format(year=year), timeout=40))
-            break
-        except Exception as exc:                                # noqa: BLE001
-            last_exc = exc
-            if attempt + 1 < _USO_PLAYERS_TRIES:
-                time.sleep(1.5 * (attempt + 1))
-    else:
-        raise UsoPlayersUnavailable(str(last_exc))
+    try:
+        raw = json.loads(_uso_get(_USO_PLAYERS.format(year=year)))
+    except Exception as exc:                                    # noqa: BLE001
+        raise UsoPlayersUnavailable(str(exc)) from exc
     people = raw.get("players") if isinstance(raw, dict) else raw
     want = player.lower().strip()
     out = []
@@ -597,7 +614,7 @@ def sweep_usopen(player: str | None, date: str | None, year: str) -> dict:
                          f"**先怀疑查询词**（要姓或姓名，不是 slug），再怀疑没有照片")
     for person in who:
         try:
-            payload = _get(f"{_USO_REST}/tag?tags={person['id']}"
+            payload = _uso_get(f"{_USO_REST}/tag?tags={person['id']}"
                            f"&type=photo&count=200&skip=0", timeout=40)
         except Exception as exc:                                # noqa: BLE001
             notes.append(f"{person['name']}（{person['id']}）取不到：{exc}")
@@ -610,7 +627,7 @@ def sweep_usopen(player: str | None, date: str | None, year: str) -> dict:
     if not player:
         for skip in (0, 200, 400):
             try:
-                payload = _get(f"{_USO_REST}/content/byType/photo"
+                payload = _uso_get(f"{_USO_REST}/content/byType/photo"
                                f"?count=200&skip={skip}", timeout=40)
             except Exception:                                   # noqa: BLE001
                 break
