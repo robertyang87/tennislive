@@ -83,22 +83,53 @@ def download(url: str, outdir: Path) -> Path:
     raise SystemExit(1)
 
 
-def sample(video: Path, outdir: Path, every: float, width: int) -> list[Path]:
+def frame_stamp(seconds: float) -> str:
+    """一帧的文件名。**名字里那个数必须是片子里的绝对秒数。**
+
+    挑封面时 `cover.frame_at` 直接照抄这个数，所以它错多少、封面就偏多少。
+    2026-09-04 挑孟菲尔斯告别仪式的封面时，我拿缩略图墙的格号乘了个 4.9
+    （真步长是 storyboard 自报的 1/fps = 4.8947），39 格下来偏了 0.2 秒——
+    正好跨过一个镜头切点，渲出来是另一个画面，而闸只会说「没检出正面人脸」。
+    所以截了一段之后，名字要按 `start + i*every` 算，不是按 `i*every`。
+
+    整秒仍然是老的四位补零写法（既有产物一个字节不变、也还排得了序）；
+    只有 `--every`/`--start` 带小数时才多一位。
+    """
+    if float(seconds).is_integer():
+        return f"frame_{int(seconds):04d}s.jpg"
+    return f"frame_{seconds:07.1f}s.jpg"
+
+
+def sample(video: Path, outdir: Path, every: float, width: int,
+           start: float = 0.0, end: float = 0.0) -> list[Path]:
+    """抽帧。`start`/`end` 给的是**片子里的秒数**，不给就是整条。
+
+    ⚠️ 截一段不是为了省时间，是为了**别把整条片子的帧都塞进仓库**：
+    这个工具的产物是提交进 git 的（沙箱下不动 artifact），372 秒的片子
+    按 1 秒一帧就是 372 张、上百 MB，而想看的往往只有其中十几秒。
+    """
     if not shutil.which("ffmpeg"):
         raise SystemExit("没装 ffmpeg。")
+    if end and end <= start:
+        raise SystemExit(f"--end {end:g} 要大于 --start {start:g}。")
     pat = str(outdir / "frame_%04d.jpg")
+    # `-ss` 放在 `-i` 前面走快速定位；时长用 `-t` 给（`-to` 在这个位置的
+    # 语义随 ffmpeg 版本变过，`-t` 没有这个歧义）。
+    seek = ["-ss", f"{start:g}"] if start else []
+    span = ["-t", f"{end - start:g}"] if end else []
     subprocess.run(
-        ["ffmpeg", "-v", "error", "-i", str(video),
+        ["ffmpeg", "-v", "error", *seek, "-i", str(video), *span,
          "-vf", f"fps=1/{every},scale={width}:-2", "-q:v", "2", pat],
         check=True)
-    frames = sorted(outdir.glob("frame_*.jpg"))
+    frames = sorted(outdir.glob("frame_[0-9][0-9][0-9][0-9].jpg"))
     # 按秒数重命名，肉眼一看就知道这一帧在片子的哪儿
     out: list[Path] = []
     for i, p in enumerate(frames):
-        dest = p.with_name(f"frame_{int(i * every):04d}s.jpg")
+        dest = p.with_name(frame_stamp(start + i * every))
         p.rename(dest)
         out.append(dest)
-    print(f"[抽帧] {len(out)} 张，每 {every} 秒一张，宽 {width}")
+    span_text = f"（{start:g}s~{end:g}s）" if (start or end) else ""
+    print(f"[抽帧] {len(out)} 张，每 {every} 秒一张，宽 {width}{span_text}")
     return out
 
 
@@ -130,12 +161,17 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("-o", "--outdir", required=True)
     ap.add_argument("--every", type=float, default=2.0, help="每几秒抽一帧")
     ap.add_argument("--width", type=int, default=1600)
+    ap.add_argument("--start", type=float, default=0.0,
+                    help="从片子的第几秒开始抽（默认从头）")
+    ap.add_argument("--end", type=float, default=0.0,
+                    help="抽到第几秒为止（默认到尾）")
     args = ap.parse_args(argv)
 
     outdir = Path(args.outdir)
     outdir.mkdir(parents=True, exist_ok=True)
     video = download(args.url, outdir)
-    frames = sample(video, outdir, args.every, args.width)
+    frames = sample(video, outdir, args.every, args.width,
+                    args.start, args.end)
     contact_sheet(frames, outdir / "contact.jpg")
     # 源片不进仓库——几十上百 MB，而帧才是产物。
     #

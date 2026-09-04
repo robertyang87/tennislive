@@ -324,3 +324,40 @@ def test_正式采访工作流在技术L2之前运行完全本地封面硬闸():
         "完整渲染和只换海报都必须审核，不能让 cover 模式成为绕闸入口")
     assert "|| true" not in block and "continue-on-error" not in block, (
         "视觉调用失败必须 fail closed")
+
+
+def test_封面闸不合格也要把量到的数打出来(tmp_path, monkeypatch, capsys):
+    """红灯那一支必须印证据，不能只印判词。
+
+    来路：2026-09-04 孟菲尔斯那条封面连红四趟，每趟只换回一个比特——
+    「这一版不行」。而脸多大、几只眼、清不清楚，`analyze_poster` 早就算完
+    了就在手里，只是不合格那一支没打印，于是下一版改 `frame_at` 还是改
+    `zoom` 全靠猜，每猜一次 2 分钟一趟 run。
+
+    ⚠️ 判据不许因此变松：这里只断言「量到的数出现在输出里」，
+    一个阈值都没动。
+    """
+    cover = _cover_tool()
+    spec = _cover_spec()
+    spec_path = tmp_path / "demo.json"
+    spec_path.write_text(json.dumps(spec, ensure_ascii=False), encoding="utf-8")
+    poster = tmp_path / "poster.jpg"
+    poster.write_bytes(b"poster")
+    report = tmp_path / "proof.json"
+    monkeypatch.setattr(sys, "argv", [
+        "audit_interview_cover.py", "--spec", str(spec_path),
+        "--poster", str(poster), "--out", str(report)])
+
+    bad = _good_cover_result()
+    bad["face"]["eyes"] = 1          # 只检出一只眼，正是当时那一趟
+    monkeypatch.setattr(cover, "analyze_poster", lambda _poster: bad)
+    assert cover.main() == 1
+    out = capsys.readouterr().out
+    assert "只检出 1 只眼" in out, "判词还是要有"
+    # 证据那几项：脸多大、几只眼、清不清楚、明暗跨度——缺一项就还得靠猜
+    for token in ("脸 ", "px", "眼 1 只", "清晰度", "明暗跨度", "脸心"):
+        assert token in out, f"不合格那一支没把「{token}」打出来：{out}"
+
+    # 一张正面脸都没检出时，读数那一行也要说人话，不能崩
+    assert "没有人脸证据" in cover._evidence_line({"poster": {}})
+    assert cover._evidence_line(None)
