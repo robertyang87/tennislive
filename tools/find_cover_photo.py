@@ -191,6 +191,7 @@ import html as html_mod
 import json
 import re
 import sys
+import time
 import urllib.parse
 
 import requests
@@ -233,6 +234,19 @@ _CDN = "https://photoresources.wtatennis.com/"
 _USO = "https://www.usopen.org"
 _USO_REST = _USO + "/relatedcontent/rest/v2/uso_v1/en"
 _USO_PLAYERS = _USO + "/en_US/scores/feeds/{year}/players/players.json"
+
+# ⚠️ 这个接口**间歇 403**（实测 6 次里 3 次），不是恒 403。取数失败一旦被吞成
+# 空列表，调用方就会报「players.json 里没有叫 X 的人」——**取不到和查无此人
+# 在产物上长得一模一样**，而后者会把人推去改查询词，改半天也改不出来。
+_USO_PLAYERS_TRIES = 4
+
+
+class UsoPlayersUnavailable(RuntimeError):
+    """players.json 取不到（间歇 403）——**不是「没有这个人」**。
+
+    分开报是有代价的（调用方要多一个分支），换来的是「这一档没跑」不会被读成
+    「这一档查空了」。CLAUDE.md「空结果先自证是真空」那条说的就是这件事。
+    """
 _USO_PREFIX = {"small": "t_", "medium": "b_", "large": "c_", "xlarge": "f_"}
 
 _WTA_PAGES = (
@@ -500,10 +514,17 @@ def usopen_player_ids(player: str, year: str) -> list[dict]:
     ⚠️ **返回全部同姓命中，不替调用方挑一个。** 同一站两个中国选手都姓 Wang
     时挑错人，在产物上和挑对了长得一模一样（CLAUDE.md 那条老坑）。
     """
-    try:
-        raw = json.loads(_get(_USO_PLAYERS.format(year=year), timeout=40))
-    except Exception:                                           # noqa: BLE001
-        return []
+    last_exc: Exception | None = None
+    for attempt in range(_USO_PLAYERS_TRIES):
+        try:
+            raw = json.loads(_get(_USO_PLAYERS.format(year=year), timeout=40))
+            break
+        except Exception as exc:                                # noqa: BLE001
+            last_exc = exc
+            if attempt + 1 < _USO_PLAYERS_TRIES:
+                time.sleep(1.5 * (attempt + 1))
+    else:
+        raise UsoPlayersUnavailable(str(last_exc))
     people = raw.get("players") if isinstance(raw, dict) else raw
     want = player.lower().strip()
     out = []
@@ -563,10 +584,17 @@ def sweep_usopen(player: str | None, date: str | None, year: str) -> dict:
 
     found: list[dict] = []
     notes: list[str] = []
-    who = usopen_player_ids(player, year) if player else []
-    if player and not who:
-        notes.append(f"players.json 里没有叫 {player!r} 的人——"
-                     f"**先怀疑查询词**（要姓或姓名，不是 slug），再怀疑没有照片")
+    try:
+        who = usopen_player_ids(player, year) if player else []
+    except UsoPlayersUnavailable as exc:
+        who = []
+        notes.append(f"⚠️ players.json 取不到（{exc}）——**这不是「没有这个人」，"
+                     f"是取数失败**（这个接口间歇 403，已经重试 "
+                     f"{_USO_PLAYERS_TRIES} 次）。这一档没跑，别读成查空")
+    else:
+        if player and not who:
+            notes.append(f"players.json 里没有叫 {player!r} 的人——"
+                         f"**先怀疑查询词**（要姓或姓名，不是 slug），再怀疑没有照片")
     for person in who:
         try:
             payload = _get(f"{_USO_REST}/tag?tags={person['id']}"
