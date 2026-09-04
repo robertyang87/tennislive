@@ -234,3 +234,72 @@ def test_报纸那一档筛掉的辑数要报出来(monkeypatch):
 
     # 原图域名要换过（`www.usatoday.com/gcdn/` 恒 406）
     assert all(r["url"].startswith("https://www.gannett-cdn.com/") for r in got["rows"])
+
+
+def test_美网球员表取不到要说取不到不许报成查无此人(monkeypatch):
+    """⚠️ **`players.json` 间歇 403，而它被吞成了「没有这个人」。**
+
+    2026-09-04 做布云朝克特那条片子时撞上的：`find_cover_photo --player Bu`
+    报「players.json 里没有叫 'Bu' 的人——先怀疑查询词」，而手查同一个接口
+    `atpy09v` 是第一条命中。真因是这个接口**间歇 403**（实测 6 次里 3 次），
+    而 `usopen_player_ids` 是裸的 `except Exception: return []`——
+
+        取数失败  → 空列表 → 「没有叫 X 的人，先怀疑查询词」
+        真的没有  → 空列表 → 同一句话
+
+    **两种情况在报告上一个字都不差**，而处置完全相反：前者重跑就好，后者要换
+    查询词。照它给的方向去改查询词，改多久都改不出来——这正是 CLAUDE.md
+    「空结果先自证是真空」和「兜底出事的时候不吭声」那两条。
+
+    ⚠️ **这里钉两头，缺一头都是恒真的**：只钉「取不到要出声」的话，把「查无此人」
+    那一支也改成同一句话照样绿，而那会把一个真的该换查询词的情形也说成取数失败。
+    """
+    calls = {"n": 0}
+
+    def always_403(url, timeout=30):
+        calls["n"] += 1
+        raise RuntimeError("403 Client Error: Forbidden")
+
+    monkeypatch.setattr(fc, "_get", always_403)
+    monkeypatch.setattr(fc.time, "sleep", lambda *_: None)
+
+    # ① 取数失败：必须抛出专门的异常，不许静静返回空列表
+    try:
+        fc.usopen_player_ids("Bu", "2026")
+    except fc.UsoPlayersUnavailable:
+        pass
+    else:
+        raise AssertionError("players.json 取不到时静静返回了空列表——"
+                             "调用方会把它读成「没有这个人」")
+    assert calls["n"] == fc._USO_PLAYERS_TRIES, (
+        f"间歇 403 要重试，实际只发了 {calls['n']} 次请求")
+
+    # ② 而报告里那句话要说「取不到」，不许说「没有叫 X 的人」
+    report = fc.sweep_usopen("Bu", None, "2026")
+    said = "\n".join(report.get("notes") or [])
+    assert "取不到" in said, f"取数失败没有出声：{said!r}"
+    assert "没有叫" not in said, f"取数失败被报成了查无此人：{said!r}"
+
+
+def test_美网球员表真的没这个人还是要说没这个人(monkeypatch):
+    """上一条的另一头：接口通、名字确实不在表里，报告要照旧指向查询词。
+
+    没有这一条的话，把「查无此人」那一支删掉、两种情况都报「取不到」，
+    上一条测试照样绿——而那会让一个真的写错了查询词的人去反复重试。
+    """
+    people = {"players": [{"id": "atpy09v", "first_name": "Yunchaokete",
+                           "last_name": "Bu", "country": "CHN"}]}
+
+    def feed(url, timeout=30):
+        if "players.json" in url:
+            return json.dumps(people)
+        return json.dumps({"content": [], "totalRows": 0})
+
+    monkeypatch.setattr(fc, "_get", feed)
+
+    assert fc.usopen_player_ids("Bu", "2026"), "表里有他却没认出来"
+
+    report = fc.sweep_usopen("Nosuchplayer", None, "2026")
+    said = "\n".join(report.get("notes") or [])
+    assert "没有叫" in said, f"真的查无此人时没有指向查询词：{said!r}"
+    assert "取不到" not in said, f"把查无此人报成了取数失败：{said!r}"
