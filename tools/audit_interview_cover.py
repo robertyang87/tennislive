@@ -372,6 +372,31 @@ def write_report(
     return out
 
 
+def _evidence_line(result: object) -> str:
+    """把审核量到的数摊成一行，供不合格那一支打印。
+
+    只读 `analyze_poster` 已经算好的字段，不重新计算、不做任何判断——
+    它是仪器的读数，不是第二套判据。
+    """
+    if not isinstance(result, dict):
+        return "本地审核器没有返回 JSON 对象"
+    face = result.get("face")
+    if not isinstance(face, dict):
+        return "没有人脸证据（照片区域一张正面脸都没检出）"
+    box = face.get("box")
+    box_text = "×".join(str(v) for v in box[2:]) if isinstance(box, list) and len(box) == 4 else "?"
+    return (
+        f"脸 {box_text}px（检出 {face.get('detected_faces')} 张，"
+        f"{face.get('detector')}）｜眼 {face.get('eyes')} 只｜"
+        f"脸高 {_number(face.get('face_height_ratio')):.1%}｜"
+        f"脸面积 {_number(face.get('face_area_ratio')):.2%}｜"
+        f"清晰度 {_number(face.get('sharpness')):g}｜"
+        f"明暗跨度 {_number(face.get('contrast')):g}｜"
+        f"脸心 ({_number(face.get('center_x_ratio')):.1%}, "
+        f"{_number(face.get('center_y_ratio')):.1%})"
+    )
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     parser.add_argument("--spec", required=True)
@@ -418,6 +443,13 @@ def main() -> int:
         print("[不合格] 封面本地视觉终审：")
         for issue in issues:
             print(f"  - {issue}")
+        # ⚠️ **不合格那一支也要把量到的数打出来。** 这道闸红的时候只印判词、
+        # 不印证据，于是每红一趟只换回一个比特（「这一版不行」），下一版改
+        # `frame_at` 还是改 `zoom` 全靠猜——2026-09-04 为孟菲尔斯那条封面连着
+        # 猜了四趟，每趟 2 分钟。而这些数（脸多大、几只眼、清不清楚、明暗跨度
+        # 够不够）**闸自己已经算完了，就在手里**，只是没让人看见。
+        # 判据不许因此变松：这里只是把 `result` 里已有的数原样打印。
+        print(f"  量到的：{_evidence_line(result)}")
         print(f"失败凭据 → {out}")
         return 1
     face = result["face"]
