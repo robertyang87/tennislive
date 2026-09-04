@@ -24,6 +24,12 @@ on:
       width:
         description: "帧宽（像素）"
         default: "1600"
+      start:
+        description: "从片子的第几秒开始抽（留空＝从头）"
+        default: ""
+      end:
+        description: "抽到第几秒为止（留空＝到尾）"
+        default: ""
 
 permissions:
   contents: write
@@ -126,11 +132,20 @@ jobs:
           # 不设的话八档照跑，只是把最可能成的那几档排到了最后。
           YT_POT_PROVIDER: ${{ steps.pot.outputs.up }}
           PYTHONPATH: src
+          # ⚠️ 这两个走 env 不走 `${{ }}` 直插：值可能是空串，而空串插进
+          # `--start ""` 会让 argparse 吃到一个空参数。空就整个不给这个开关。
+          # （CLAUDE.md 记过 `${{ inputs.x }}` 直接拼进 run 正文的引号打架。）
+          GRAB_START: ${{ github.event.inputs.start }}
+          GRAB_END: ${{ github.event.inputs.end }}
         run: |
+          RANGE=()
+          [ -n "$GRAB_START" ] && RANGE+=(--start "$GRAB_START")
+          [ -n "$GRAB_END" ] && RANGE+=(--end "$GRAB_END")
           python tools/grab_frames.py "${{ github.event.inputs.url }}" \
             -o "${{ steps.paths.outputs.outdir }}" \
             --every "${{ github.event.inputs.every }}" \
-            --width "${{ github.event.inputs.width }}"
+            --width "${{ github.event.inputs.width }}" \
+            "${RANGE[@]}"
           ls -la "${{ steps.paths.outputs.outdir }}" | head -20
 
       - name: 提交候选帧
