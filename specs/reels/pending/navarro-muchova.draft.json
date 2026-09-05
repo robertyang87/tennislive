@@ -18,7 +18,11 @@
       }
     ],
     "winner": "纳瓦罗",
-    "result": "6-3 7-5"
+    "result": "6-3 7-5",
+    "portrait": {
+      "image": "assets/reel/navarro-muchova-cover.jpg",
+      "_portrait_why": "WTA 官方赛后稿/集锦头图，定时自动补齐"
+    }
   },
   "_production": {
     "kind": "orchestrated_reel",
@@ -277,42 +281,49 @@
     "visual_status": "waiting",
     "retryable": false,
     "cold_open": {
-      "start": 141.62,
-      "end": 148.88,
+      "start": 0.98,
+      "end": 31.41,
       "kind": "match_point",
       "winner_visible": true,
-      "reason": "146.5s处观众起立鼓掌，148.5s可见球网两侧选手走向中线准备握手，对应第二盘5-7的关键收分时刻；该段位于切点141.62–148.88内，包含紧接赛点后的余波。",
-      "confidence": 0.82
-    },
-    "ending": {
-      "start": 141.62,
-      "end": 172.87,
-      "kind": "winner_celebration",
-      "winner_visible": true,
-      "reason": "146.5s–148.5s观众起立庆祝，150.5s–152.5s纳瓦罗（白粉色上衣）与教练相拥，156.5s–166.5s网前握手流程（穆霍娃握手、裁判致意），172.5s纳瓦罗与搭档向看台致意；完整覆盖冷开场窗口并延伸至握手结束。",
-      "confidence": 0.88
-    },
-    "cover": {
-      "same_match": true,
-      "subject": "纳瓦罗",
-      "moment": "winner_celebration",
-      "wrong_or_old": false,
-      "reason": "无候选封面照片，按规则返回空判断；如以集锦中152.5s纳瓦罗与教练拥抱的画面作为参考，可见其白粉色Adidas上衣、深色发带与Us Open赛事标识一致，姓名墙显示'KAROLINA MUCHOVA'印证赛果。",
+      "reason": "The video is a MIXED DOUBLES match (scoreboard at 60.5s/184.5s shows 'K. MUCHOVA / J. MENSIK vs E. NAVARRO / T. PAUL'). The structured result singles (纳瓦罗 vs 穆霍娃 6-3 7-5) does not match the footage's doubles match-up. However, at 0.5–2.5s Muchova/Mensik team is shown on match point (score 0-40 visible at 4.5s with break point), then the point plays out 6.5–22.5s and Navarro/Paul are shown at 32.5–34.5s after the game breaks. This appears to be the deciding/closing segment of the doubles match shown.",
       "confidence": 0.55
     },
+    "ending": {
+      "start": 172.87,
+      "end": 188.44,
+      "kind": "winner_celebration",
+      "winner_visible": true,
+      "reason": "At 172.87–186.5s the winning team (Muchova/Mensik, pink top and white shirt) embrace, shake hands at the net with Navarro/Paul (148.5–168.5s), then Mensik raises arms to the crowd at 180.5–184.5s. Final scoreboard at 184.5–186.5s confirms 4-5 and 'MATCH POINT' graphic at 124.5–136.5s preceded the conclusion. The winning pair is clearly visible celebrating.",
+      "confidence": 0.72
+    },
+    "cover": {
+      "same_match": false,
+      "subject": "",
+      "moment": "other",
+      "wrong_or_old": true,
+      "reason": "The structured result is a women's SINGLES match (纳瓦罗 vs 穆霍娃 6-3 7-5). The contact-sheet footage is a MIXED DOUBLES quarterfinal (Muchova/Mensik vs Navarro/Paul) at the US Open. The cover photo shows a blonde female player in a pink Adidas top wiping sweat — this could be Muchova, but no scoreboard, opponent, or event mark confirms it belongs to this specific singles match. Cannot verify as same-match.",
+      "confidence": 0.35
+    },
     "problems": [
-      "ending 必须是 3-30 秒的完整收官窗口",
-      "没有官方高清封面候选",
-      "封面置信度 0.55 低于 0.80"
+      "cold_open 必须是 3-30 秒的完整收官窗口",
+      "cold_open 置信度 0.55 低于 0.80",
+      "cold_open 理由引用窗口外时间：[60.5, 184.5, 34.5]",
+      "ending 置信度 0.72 低于 0.80",
+      "ending 理由引用窗口外时间：[168.5, 136.5]",
+      "ending 没有完整覆盖 cold_open，结局不能只在开头出现",
+      "封面无法证明是同一场，或疑似旧图/错图",
+      "封面置信度 0.35 低于 0.80",
+      "封面人物应为 纳瓦罗，模型识别为 空",
+      "封面情绪应为 winner_celebration，现在是 other"
     ],
     "model_attempts": 1,
-    "input_sha256": "731ea769d0fb78f5830219efdd9ef9d20e61a699a4ab33a9e577bdcf4e50aad0",
+    "input_sha256": "0b69ca721e3f78cedfa19ed0a12a69ab6028c7348ec1edbd30698b86821874d7",
     "inputs": [
       "contact_00.jpg",
       "contact_01.jpg",
       "contact_02.jpg",
       "contact_03.jpg"
     ],
-    "cover_image": ""
+    "cover_image": "assets/reel/navarro-muchova-cover.jpg"
   }
 }
