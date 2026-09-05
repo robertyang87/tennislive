@@ -2429,8 +2429,14 @@ def seg_seconds(s: dict) -> float:
     `tools/check_reel_landed.py` 为了保持零依赖抄了一份同样的公式，
     两边对不上会被 `test_slow_motion.py` 的一致性判据抓住。
     """
-    if s.get("image"):
-        # 整屏证据段：长度就是 seconds，没有源片窗口，speed 不适用
+    if s.get("image") or s.get("title_card") or s.get("stat_card"):
+        # 整屏段：长度就是 seconds，没有源片窗口，speed 不适用。
+        # ⚠️ 三个键都要认，不能只认 `image`：`title_card` / `stat_card` 段的 `image`
+        # 是 `load_spec` 的 `_normalize_*_card_segments` 补上的，而这个函数的消费者
+        # 有一半**不走 load_spec**（测试直接读 JSON、check_reel_landed 零依赖抄了
+        # 一份同样的公式）——只认 `image` 的话同一段在两条路上算出两个答案，而上面
+        # 那句「全仓库只有这一个口径」就不成立了。2026-09-06 第一条真用 title_card
+        # 的 spec 撞上了：render 路径好好的，只有全量测试红在 `KeyError: end`。
         return round(float(s["seconds"]), 3)
     speed = float(s.get("speed") or 1.0)
     return round((float(s["end"]) - float(s["start"])) / speed, 3)

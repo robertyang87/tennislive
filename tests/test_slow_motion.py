@@ -46,6 +46,19 @@ def test_length是成片时长而且三处口径一致():
     plain = Segment(2.0, 6.0, 0.5, "")
     assert plain.length == 4.0
 
+    # ⚠️ 整屏段那一支也要钉——这条判据的名字说「三处口径一致」，而它长期只验了
+    # 慢放这一支，于是 2026-09-06 漏掉一次真分叉：`check_reel_landed` 早就认
+    # image/stat_card/title_card 三个键，而 `seg_seconds` 只认 `image`。
+    # title_card 段的 `image` 是 load_spec 补的，所以走 load_spec 的 render 路径
+    # 好好的，**只有直接读 JSON 的消费者会炸**（KeyError: end），而全仓库
+    # 直到那天才有第一条真用 title_card 的 spec。
+    import build_match_reel as _bmr
+    import check_reel_landed as _crl
+    for key in ("image", "stat_card", "title_card"):
+        seg = {key: "x", "seconds": 9.0}
+        assert _bmr.seg_seconds(seg) == 9.0, f"seg_seconds 认不出 {key} 段"
+        assert _crl.seg_film_seconds(seg) == 9.0, f"check_reel_landed 认不出 {key} 段"
+
     spec = {"segments": [{"start": 2.0, "end": 6.0, "speed": 0.5},
                          {"start": 10.0, "end": 13.0}]}
     total = sum(seg_seconds(s) for s in spec["segments"])
