@@ -65,12 +65,14 @@ def test_render在切段之前按版式尺寸渲章节卡(tmp_path, monkeypatch)
     segs = reel.parse_segments(_spec(), {"": 1}, "")
     calls = []
 
-    def fake(text, out, *, kicker="", size=None):
-        calls.append((text, kicker, size, out.name))
+    def fake(text, out, *, kicker="", size=None, clear_bottom=0):
+        calls.append((text, kicker, size, out.name, clear_bottom))
         out.write_bytes(b"jpg")
 
     got = reel._materialize_title_cards({}, segs, tmp_path, renderer=fake)
-    assert calls == [("排名是怎么掉的", "01", (1080, 1440), "title_card_02.jpg")]
+    # 全出血：卡铺满整幅，字幕从 default_margin_v() 起压在卡上，@handle 要让开它
+    assert calls == [("排名是怎么掉的", "01", (1080, 1440), "title_card_02.jpg",
+                      reel.VIDEO_H - reel.default_margin_v() + reel.TITLE_CARD_HANDLE_GAP_PX)]
     assert got[1].image == str(tmp_path / "title_card_02.jpg")
     assert got[0] is segs[0] and got[2] is segs[2], "别的段一个字不动"
     # 带式：按画面带的尺寸渲，不然 3:4 的卡缩进 9:8 的带里两边留出大片底色
@@ -78,6 +80,7 @@ def test_render在切段之前按版式尺寸渲章节卡(tmp_path, monkeypatch)
     monkeypatch.setattr(reel, "LAYOUT", "band")
     reel._materialize_title_cards({}, segs, tmp_path, renderer=fake)
     assert calls[0][2] == (1080, reel.BAND_PIC_H)
+    assert calls[0][4] == 0, "带式的字幕在底带里、卡外，handle 不用让"
     # 没有章节卡的 spec 一次都不渲
     plain = reel.parse_segments({"segments": [{"start": 0, "end": 3, "narration": "x"}]}, {"": 1}, "")
     calls.clear()
@@ -119,3 +122,49 @@ def test_真渲一张_深底上有亮字_尺寸是画布的两倍(tmp_path):
     assert 0.005 < bright < 0.10, f"大字要真的画出来了（亮像素 {bright:.3f}）"
     out2 = tc.render("排名是怎么掉的", tmp_path / "b.jpg", size=(1080, 960))
     assert Image.open(out2).size == (2160, 1920)
+
+
+def test_按画面区尺寸渲的章节卡铺满整幅_彩条落在顶边不缩不居中(monkeypatch):
+    """2026-09-05 账号所有者「顶部的彩条位置不对」。章节卡按 1080×1440 渲、顶上 12px
+    是品牌彩条；`still_canvas_for_layout` 原来一律缩进 0.94×0.88 的盒子再居中，
+    底色相同看不出边框，**只把彩条挪到 y≈87**——正好横穿左上角常驻角标的两行字。
+    整幅设计页不许缩；照片/数据图那一支照旧缩（那是给它们留呼吸的）。"""
+    from PIL import Image  # noqa: PLC0415
+    stripe = (198, 246, 90)
+    card = Image.new("RGBA", (reel.VIDEO_W, reel.VIDEO_H), (4, 18, 13, 255))
+    card.paste((*stripe, 255), (0, 0, reel.VIDEO_W, 12))
+    monkeypatch.setattr(reel, "LAYOUT", "full")
+    canvas, box = reel.still_canvas_for_layout(card, Image)
+    assert box == (0, 0, reel.VIDEO_W, reel.VIDEO_H), box
+    px = canvas.convert("RGB").load()
+    assert px[540, 3] == stripe and px[20, 3] == stripe, "彩条要在 y=0 起、贯通全宽"
+    assert px[540, 90] != stripe, "缩过的那版彩条落在 y≈87，这儿不许再有"
+    # 带式：按画面带尺寸渲的卡铺满画面带，顶上让给顶栏那条带
+    monkeypatch.setattr(reel, "LAYOUT", "band")
+    band_card = Image.new("RGBA", (reel.VIDEO_W, reel.BAND_PIC_H), (4, 18, 13, 255))
+    band_card.paste((*stripe, 255), (0, 0, reel.VIDEO_W, 12))
+    canvas, box = reel.still_canvas_for_layout(band_card, Image)
+    assert box == (0, reel.BAND_TOP, reel.VIDEO_W, reel.BAND_TOP + reel.BAND_PIC_H)
+    assert canvas.convert("RGB").getpixel((540, reel.BAND_TOP + 3)) == stripe
+    # 照片（不是画面区尺寸）照旧缩进盒子居中——这一支一个字没变
+    monkeypatch.setattr(reel, "LAYOUT", "full")
+    photo = Image.new("RGBA", (1080, 1920), (255, 255, 255, 255))
+    _canvas, (x0, y0, x1, y1) = reel.still_canvas_for_layout(photo, Image)
+    assert y0 > 0 and x0 > 0 and x1 - x0 <= int(reel.VIDEO_W * 0.94)
+
+
+def test_章节卡底部的handle要让开字幕那一行(tmp_path):
+    """铺满整幅之后，照片尾页那 64px 贴底的 @handle 落在 y 1336~1376，而字幕从
+    1284 起（`_REEL_MARGIN_V`）——正压在字幕那一行上。调用方按字幕上锚算好
+    `clear_bottom` 传进来；渲出来的卡在字幕带里不许有亮像素。"""
+    from PIL import Image  # noqa: PLC0415
+    clear = reel.VIDEO_H - reel.default_margin_v() + reel.TITLE_CARD_HANDLE_GAP_PX
+    assert f"bottom:{clear}px" in tc.build("x", clear_bottom=clear)
+    assert "bottom:64px" in tc.build("x"), "不传就是片尾页那一档，别的调用方不受影响"
+    out = tc.render("排名是怎么掉的", tmp_path / "c.jpg", kicker="01", clear_bottom=clear)
+    im = Image.open(out).convert("L")          # 2x：2160×2880
+    sub_band = im.crop((0, reel.default_margin_v() * 2, im.width, im.height))
+    bright = sum(1 for v in sub_band.getdata() if v > 120)
+    assert bright == 0, f"字幕带（y≥{reel.default_margin_v()}）里还有 {bright} 个亮像素——handle 没让开"
+    handle_zone = im.crop((0, (reel.VIDEO_H - clear - 60) * 2, im.width, (reel.VIDEO_H - clear) * 2))
+    assert sum(1 for v in handle_zone.getdata() if v > 120) > 200, "handle 得还在，只是抬到字幕上方"

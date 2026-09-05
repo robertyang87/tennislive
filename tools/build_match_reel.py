@@ -106,7 +106,11 @@ from tennislive import localca  # noqa: E402
 from tennislive.video import outro_page  # noqa: E402
 from tennislive.video import azure_tts  # noqa: E402
 from tennislive.video.watermark import (  # noqa: E402
+    BRAND_ICON_PX,
+    TOPIC_INK_TOP_PX,
+    TOPIC_TEXT_PX,
     WATERMARK_OFF_COLUMNS,
+    WATERMARK_SHADOW_PAD,
     brand_watermark,
     column_wants_watermark as _column_wants_watermark,
     watermark_xy as _watermark_xy,
@@ -488,6 +492,20 @@ INSET_RISE_PX = 36
 # the footage rather than arriving as another UI card.
 EDITORIAL_IN_SECS = 0.28
 EDITORIAL_RISE_PX = 14
+#: 顶角（tl/tr）的 inset 要让开左上角那块常驻角标：角标块的底再加这一口气。
+#: 2026-09-05 comeback-five-love-down：story_text 按合同贴 tr/pad 0.085 落在
+#: y=92，而角标两行字占到 y≈125——贴图的标签一行正好压在「他们怎么赢回来的」
+#: 上。合同（`docs/short-video-text-overlay-system.md`）是 2026-08-24 定的，
+#: 角标 2026-09-01 才有；前提变了，位置得跟着让，而且要在代码里让——写进
+#: 每条 spec 的 pad 里，下一条又会照合同抄 0.085。
+INSET_WATERMARK_GAP_PX = 24
+#: render() 按这条片子算出来的「顶角 inset 的 y 不许高过这里」；0 = 不画角标的
+#: 栏目，照合同的 pad 贴。模块全局和 `LAYOUT` 同一个形状——cut_segment 那一层
+#: 拿不到 spec。
+_INSET_TOP_CLEAR_Y = 0
+#: 章节卡底部那行 @handle 离字幕上锚的距离：全出血下字幕从 y=1284 起，
+#: handle 若照 outro 那 64px 贴底就落在 1336~1376，正压在字幕那一行上。
+TITLE_CARD_HANDLE_GAP_PX = 24
 # **每一段的音轨都要压到同一个采样率**。`concat` + `-c copy` 只认第一个文件的
 # 流参数：封面那段的 anullsrc 是 48k，而各分段跟着源片走 44.1k，于是 44.1k 的
 # AAC 帧被当成 48k 播——整条现场声快 8.8%，音轨在画面还剩 5.7 秒时就播完了
@@ -3577,7 +3595,12 @@ def _overlay_chain(base: str, ins: dict) -> str:
     # 底角是字幕的带，贴上去就压在顶栏/字幕上。纵向边距各加一条带的高度。
     top_off = BAND_TOP if LAYOUT == "band" else 0
     bot_off = (VIDEO_H - BAND_TOP - BAND_PIC_H) if LAYOUT == "band" else 0
-    y = f"{top_off + pad}" if corner in ("tl", "tr") else f"H-h-{bot_off + pad}"
+    y_top = top_off + pad
+    if _INSET_TOP_CLEAR_Y and corner in ("tl", "tr"):
+        # 让开常驻角标（见 `_INSET_TOP_CLEAR_Y`）。只往下推，不往上拉：
+        # 合同的 pad 本来就比角标低的（没有的事）照旧。
+        y_top = max(y_top, _INSET_TOP_CLEAR_Y)
+    y = f"{y_top}" if corner in ("tl", "tr") else f"H-h-{bot_off + pad}"
     # **入场动效默认开**（`"animate": false` 关）：0.45s 淡入 + 36px 上浮。
     # 来路：抖音七批诊断里六批点名「动态文字/卡片要有动感」，这是其中唯一
     # 纯机械可加的一档。克制版——不做「跳出来」，和一屏一个强调色同一个审美。
@@ -3630,6 +3653,15 @@ def still_canvas_for_layout(card, Image):
         bg = EVIDENCE_BG
         top, region_h = 0, VIDEO_H
     canvas = Image.new("RGBA", (VIDEO_W, VIDEO_H), (*bg, 255))
+    if (card.width, card.height) == (VIDEO_W, region_h):
+        # 按画面区尺寸渲出来的**整幅设计页**（章节卡）：原样铺满，不缩不居中。
+        # 0.94×0.88 那个盒子是给照片和数据图留呼吸的；一张自己就是版式的页面
+        # 缩 12% 再居中，底色相同看不出边框，**只把它顶上那条 12px 品牌彩条
+        # 挪到 y≈87**——正好横穿左上角常驻角标的两行字，底下的 @handle 也
+        # 跟着漂进字幕带。2026-09-05 comeback-five-love-down 三张章节卡，
+        # 账号所有者「顶部的彩条位置不对」。判据 test_title_card。
+        canvas.paste(card, (0, top), card)
+        return canvas, (0, top, VIDEO_W, top + region_h)
     max_w, max_h = int(VIDEO_W * 0.94), int(region_h * 0.88)
     scale = min(max_w / card.width, max_h / card.height)
     fitted = card.resize((max(2, int(card.width * scale)),
@@ -6677,6 +6709,10 @@ def _materialize_title_cards(spec: dict, segments: list[Segment], outdir: Path,
             import render_title_card  # noqa: PLC0415
             renderer = render_title_card.render
         size = (VIDEO_W, BAND_PIC_H) if LAYOUT == "band" else (VIDEO_W, VIDEO_H)
+        # 全出血下卡铺满整幅（`still_canvas_for_layout`），字幕从 `default_margin_v()`
+        # 起压在卡上——卡底那行 @handle 要让开它；带式的字幕在底带里、卡外，不用让。
+        clear_bottom = (0 if LAYOUT == "band"
+                        else VIDEO_H - default_margin_v() + TITLE_CARD_HANDLE_GAP_PX)
         out_segments = []
         for i, s in enumerate(segments):
             if not (s.image and s.image.startswith(TITLE_CARD_PREFIX)):
@@ -6684,7 +6720,8 @@ def _materialize_title_cards(spec: dict, segments: list[Segment], outdir: Path,
                 continue
             card = json.loads(s.image[len(TITLE_CARD_PREFIX):])
             out = outdir / f"title_card_{i + 1:02d}.jpg"
-            renderer(card["text"], out, kicker=card.get("kicker", ""), size=size)
+            renderer(card["text"], out, kicker=card.get("kicker", ""), size=size,
+                     clear_bottom=clear_bottom)
             if not out.is_file():
                 raise ReelError(f"第 {i + 1} 段的章节卡没渲出来：{out}")
             print(f"[章节卡] 第 {i + 1} 段「{card['text']}」→ {out.name}（{size[0]}×{size[1]}）")
@@ -6839,6 +6876,10 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     segments = _materialize_stat_card(spec, segments, outdir)
     segments = _materialize_title_cards(spec, segments, outdir)
     _check_segments_fit(segments, sources)
+    global _INSET_TOP_CLEAR_Y
+    _INSET_TOP_CLEAR_Y = inset_top_clear_y(spec)
+    if _INSET_TOP_CLEAR_Y and any(s.inset for s in segments):
+        print(f"[贴图] 这个栏目画常驻角标，顶角的 inset 一律让到 y ≥ {_INSET_TOP_CLEAR_Y}")
     # 封面那句先合出来——**封面停多久由它决定**，所以排在渲封面之前。
     cover_voice, cover_marks = synth_cover(spec, outdir, voice, rate)
     cover_secs = cover_length(cover_voice)
@@ -7979,6 +8020,28 @@ def watermark_xy(*, has_topbar: bool) -> tuple[int, int]:
     else:
         top = TOPBAR_H if has_topbar else 0
     return _watermark_xy(top)
+
+
+def inset_top_clear_y(spec: dict) -> int:
+    """顶角 inset（story_text 这类贴图）的 y 下限：常驻角标块的底 ＋ 一口气。
+
+    栏目不画角标（`wants_watermark` 为假）→ 0，照合同的 pad 贴。画角标时按
+    这条片子真实的角标几何算：`watermark_xy` 给角标落点（带式/顶栏会往下让），
+    块高按有没有副标题——两行是球标居中在两行的中线上、副标题墨底在
+    `TOPIC_INK_TOP_PX + TOPIC_TEXT_PX`；只有一行时块高就是球标那 52px。
+    """
+    cover = spec.get("cover") or {}
+    column = str(cover.get("eyebrow", "")).strip() or DEFAULT_COLUMN
+    if not wants_watermark(column):
+        return 0
+    topic = str(cover.get("topic", "")).strip()
+    _wx, wy = watermark_xy(has_topbar=bool(spec.get("topbar")))
+    # ⚠️ `watermark_xy` 给的是 PNG 的左上角，**阴影那一圈（SHADOW_PAD）已经减掉**
+    # ——墨的顶边要把它加回来，不然算出来比真值高 18px（第一版就这么错的，
+    # 判据 test_inset_animation 那条钉的是绝对值 151）。
+    ink_top = wy + WATERMARK_SHADOW_PAD
+    block_h = (TOPIC_INK_TOP_PX + TOPIC_TEXT_PX) if topic else BRAND_ICON_PX
+    return ink_top + block_h + INSET_WATERMARK_GAP_PX
 
 
 def band_foot_strip(dest: Path) -> Path:
