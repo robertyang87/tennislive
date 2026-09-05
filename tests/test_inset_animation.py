@@ -100,3 +100,37 @@ def test_编辑型屏幕文字用更克制的动效():
     assert f"d={EDITORIAL_IN_SECS}" in chain
     assert f"+{EDITORIAL_RISE_PX}*" in chain
     assert f"d={INSET_IN_SECS}" not in chain
+
+
+def test_画常驻角标的栏目里顶角贴图要让开角标块(monkeypatch):
+    """2026-09-05 comeback-five-love-down：story_text 按合同贴 tr/pad 0.085 落在 y=92，
+    角标两行字占到 y≈125，贴图的标签行正压在「他们怎么赢回来的」上。合同是
+    2026-08-24 定的、角标 2026-09-01 才有——前提变了，让位要在代码里做，不然
+    下一条 spec 又照合同抄 0.085。只往下推、只推顶角；不画角标的栏目照旧。"""
+    import re  # noqa: PLC0415
+    import build_match_reel as reel  # noqa: PLC0415
+
+    def y_of(chain: str) -> str:
+        return re.search(r"overlay=[^:]+:(.*?)\[vout\]", chain).group(1)
+
+    ins = {"image": "c.png", "corner": "tr", "width": 0.6, "pad": 0.085,
+           "show_for": 3.8, "motion": "editorial", "animate": False}
+    monkeypatch.setattr(reel, "_INSET_TOP_CLEAR_Y", 0)
+    assert y_of(reel._overlay_chain("[0:v]x[base]", ins)) == "92"
+    monkeypatch.setattr(reel, "_INSET_TOP_CLEAR_Y", 151)
+    assert y_of(reel._overlay_chain("[0:v]x[base]", ins)) == "151"
+    assert y_of(reel._overlay_chain("[0:v]x[base]", {**ins, "corner": "tl"})) == "151"
+    assert y_of(reel._overlay_chain("[0:v]x[base]", {**ins, "pad": 0.2})) == "216", \
+        "本来就比角标低的只往下推不往上拉"
+    assert y_of(reel._overlay_chain("[0:v]x[base]", {**ins, "corner": "bl"})) == "H-h-92", \
+        "底角不受角标影响"
+    # 这条片子的真值：网球有故事、有副标题、没顶栏 → 44 + 56 + 27 + 24
+    monkeypatch.setattr(reel, "LAYOUT", "full")
+    spec = {"cover": {"eyebrow": "网球有故事", "topic": "决胜盘零比五"}}
+    assert reel.inset_top_clear_y(spec) == 44 + 56 + 27 + reel.INSET_WATERMARK_GAP_PX
+    assert reel.inset_top_clear_y({"cover": {"eyebrow": "网球有故事"}}) == 44 + 52 + reel.INSET_WATERMARK_GAP_PX
+    assert reel.inset_top_clear_y({"cover": {"eyebrow": "赛场之上"}}) == 0, "不画角标的栏目不让"
+    # render() 真的把它算进全局，且排在切段之前
+    import inspect  # noqa: PLC0415
+    body = inspect.getsource(reel.render)
+    assert body.index("_INSET_TOP_CLEAR_Y = inset_top_clear_y(spec)") < body.index("def _encode_one(")

@@ -41,7 +41,12 @@ DEFAULT_SIZE = (1080, 1440)
 MAX_CHARS = 18
 
 
-def build(text: str, *, kicker: str = "", size: tuple[int, int] = DEFAULT_SIZE) -> str:
+def build(text: str, *, kicker: str = "", size: tuple[int, int] = DEFAULT_SIZE,
+          clear_bottom: int = 0) -> str:
+    """`clear_bottom`：卡底要留空多少像素（字幕会压在这一段上）。全出血下卡铺满
+    整幅、字幕从 y=1284 起，@handle 若照片尾页那 64px 贴底就正压在字幕那一行上；
+    调用方（`build_match_reel._materialize_title_cards`）按字幕上锚算好传进来，
+    带式传 0（字幕在卡外的底带里）。"""
     text = str(text or "").strip()
     if not text:
         raise SystemExit("章节卡要有一句话（text 是空的）")
@@ -75,7 +80,7 @@ body{{width:{w}px;height:{h}px;overflow:hidden;background:{outro_page.INK};
 .thesis{{font-family:'TL Display SC','TL Sans SC',sans-serif;font-weight:400;
  font-size:{px}px;line-height:1.28;letter-spacing:2px;max-width:940px;
  text-shadow:0 4px 24px rgba(0,0,0,.45)}}
-.handle{{position:absolute;bottom:64px;left:0;right:0;text-align:center;
+.handle{{position:absolute;bottom:{max(64, int(clear_bottom))}px;left:0;right:0;text-align:center;
  display:flex;align-items:center;justify-content:center;gap:14px;
  font-family:'TL Numeral','TL Sans SC',sans-serif;font-size:26px;
  letter-spacing:3px;color:{outro_page.SUB};opacity:.72}}
@@ -86,12 +91,13 @@ body{{width:{w}px;height:{h}px;overflow:hidden;background:{outro_page.INK};
 
 
 def render(text: str, out: Path, *, kicker: str = "",
-           size: tuple[int, int] = DEFAULT_SIZE) -> Path:
+           size: tuple[int, int] = DEFAULT_SIZE, clear_bottom: int = 0) -> Path:
     from render_stat_card import _launch_browser  # noqa: PLC0415
     from playwright.sync_api import sync_playwright  # noqa: PLC0415
 
     page = out.with_suffix(".html")
-    page.write_text(build(text, kicker=kicker, size=size), encoding="utf-8")
+    page.write_text(build(text, kicker=kicker, size=size, clear_bottom=clear_bottom),
+                    encoding="utf-8")
     w, h = size
     with sync_playwright() as pw:
         browser = _launch_browser(pw)
