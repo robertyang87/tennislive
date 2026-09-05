@@ -1,0 +1,297 @@
+{
+  "slug": "fritz-cerundolo-us-open-2026-r3",
+  "_column": "赛场之上",
+  "layout": "band",
+  "scorebox": [
+    104,
+    887,
+    740,
+    980
+  ],
+  "_scorebox_why": "左缘和上下沿沿用同赛事、**同一个球场**（阿瑟·阿什）的 `wu-alcaraz-us-open-2026-r3` 那一组（104 / 887~980），**并拿本场产物逐格核过**：`score_00.jpg` 的 0.5~14.5s（`9 FRITZ USA 1 [40] / 24 F. CERUNDOLO ARG 0 [0]`）、`score_03.jpg` 的 152.5~158.5s（`MATCH POINT` ＋ `6 6 3 4 4 [30] / 3 4 6 6 5 [40]`），深蓝板每一格都完整落在框内、上下都没被切。⚠️ **兜底右缘取 740 不是 660**：美网的板每打完一盘 +38px，而这一场打满**五盘**，比三盘那条宽约 76px；probe 自己的 `scorebox_guess` 报 `104,888,723,978`（左缘一致），740 比它再宽一点当兜底。真右缘由 `resolve_board_insets` 每段现量，顶层这四个数只给左缘、上下沿和兜底右缘。",
+  "_bo5_why": "⚠️ **大满贯男单五盘三胜**。这一场真的打满五盘（弗里茨 2 盘、塞伦多洛 3 盘），所以第五盘**确实是决胜盘**——「输家赢的盘数 == 赢家 − 1」成立。不过旁白里一个「决胜盘」都没写，用的是「还剩最后一盘」，更不容易被读成三盘两胜那一档。⚠️ 全场**没有抢七**（五盘比分 6-3 6-4 3-6 4-6 4-6，`tiebreakDisplay` 全是 null），所以「大满贯决胜盘抢十分」那条在这条上走不到。",
+  "tts_backend": "edge",
+  "_tts_backend_why": "仓库的 `AZURE_SPEECH_KEY` 自 2026-09-03 起被 Azure 401 拒，已经连挂 `keys-bondar` / `zheng-putintseva` / `tien-monfils` / `wu-alcaraz` 四条（都死在第 2 秒的片尾配音上）。账号所有者 2026-09-03 定的是「换 edge tts」，而 CLAUDE.md 2026-09-04 把它从例外处置改成了**默认动作**：写 spec 那一刻就写上，别等 render 红了再补。\n这一条退回 edge **零代价**，两条机械判据都成立：没用 `voice.style`、也没用 `lead_pause`（Azure 独有的那两样一个都没碰），同一把嗓子 `zh-CN-YunjianNeural` edge 也有。而且本地 `--check-narration` 在这台沙箱跑的**本来就是 edge-tts**，量到的余量直接适用，不用再按 Azure↔edge 那 6% 折算。",
+  "source_url": "https://youtu.be/M19Or_Y3m40",
+  "_source": "美网官方 YouTube 频道 `US Open Tennis Championships`（oEmbed 的 `author_name` 自证，不是搬运号），标题 `Taylor Fritz vs. Francisco Cerundolo Highlights | 2026 US Open Round 3`。源片 **1920×1080 / 29.97fps / 213.25s**，过 1080p 硬门槛。⚠️ 画面自证三处，全是赛事方自己烧上去的：34.5~36.5s / 62.5~64.5s / 124.5s 的全屏台标印着 `MEN'S SINGLES | 3RD ROUND` ＋ `ARTHUR ASHE STADIUM` ＋ 逐盘比分；**208.5s 的终场台标**印着 `TAYLOR FRITZ 6 6 3 4 4 / FRANCISCO CERUNDOLO 3 4 6 6 6`，轮次、球场、赛果一次给全；常驻记分条写着 `9 FRITZ USA / 24 F. CERUNDOLO ARG`，那两个数是**种子号**不是排名（见 `_rank_why`）。",
+  "_tennistv_trim": "⚠️ **不适用**：这条源片是**美网官方频道**的，不是 Tennis TV，没有 Tennis TV 的片尾板和角标要剪。本片自己的片尾板边界是量出来的：`scene_cuts` 末项 **210.14**、`silent_audio` 从 **210.21** 起，两个数互相印证——末段收在 209.5，离它 0.64 秒（含 `SEG_FADE` 0.18 之后是 209.68，仍在 210.14 之前），一帧片尾板都收不进来。",
+  "cover": {
+    "matchup": [
+      {
+        "name": "弗里茨",
+        "name_en": "Taylor Fritz",
+        "country": "USA",
+        "rank": 10
+      },
+      {
+        "name": "塞伦多洛",
+        "name_en": "Francisco Cerundolo",
+        "country": "ARG",
+        "rank": 25
+      }
+    ],
+    "_rank_why": "两人当期排名**双源一致**：美网官方 `players.json`（`atpfb98` singles_rank **10** / seed true，`atpc0au` singles_rank **25** / seed true）＋ tennisexplorer ATP 榜（榜单日期自报 `31.08.2026`，`Fritz Taylor 10. / 3475 分`、`Cerundolo Francisco 25. / 1980 分`）。\n⚠️⚠️ **种子号不是排名，而这一场两个数就差一位、最容易混**：源片常驻记分条和全屏台标印的是 `9 FRITZ` / `24 F. CERUNDOLO`——那是**赛会九号种子和二十四号种子**，而世界排名是 **10** 和 **25**。四个数都对，混成一件事就是假话（CLAUDE.md 卢布列夫那条记的正是这个）。印在名条上的是排名 10 / 25；种子号只在旁白里以「赛会九号种子」的身份出现过一次，和排名分开说。\n⚠️ 译名两个都调 `player_zh()` 取的，不是手打：`Taylor Fritz → 弗里茨`、`Francisco Cerundolo → 塞伦多洛`。⚠️ 同姓的 `Juan Manuel Cerundolo`（世界第 45）是另一个人，美网 feed 里 id 是 `atpc0c8`，和本场的 `atpc0au` 不是一个。",
+    "winner": "塞伦多洛",
+    "result": "3-6 4-6 6-3 6-4 6-4",
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "弗里茨",
+    "_subject_why": "账号所有者点的题就是「弗里茨出局」，而这也正是 CLAUDE.md `arango-venus` 那条的形状——**封面放刷到这条的人是冲谁来的那个，输赢不管**：一边是世界第十、本土球员、九号种子，另一边世界第二十五，关注度全在弗里茨身上。所以 `subject` 和 `portrait` 都是弗里茨，而 `winner` / `result` / 比分板照旧印「赢家 比分 输家」——**封面主体是谁，跟赛果行印什么是两件事**。钩子、`push.summary`、小红书首行也一起跟着主体走。\n⚠️ **而「主视角不等于看笑话」**：重音在付出——他两盘领先、全场比对手多拿两分，这条片子讲的是这个，不是讲他崩了。",
+    "hook": "两盘领先 多拿两分\n他还是出局了",
+    "_hook_why": "**讲整场，不是某一个时刻**（CLAUDE.md 2026-08-31）：这场球的形状就是「赢下前两盘 → 被连扳三盘 → 而全场小分他还多两分」，两行分别是铺垫和落点。⚠️ **「多拿两分」是比分板给不了的信息**——板上只有盘分局分，没有总分，而 150:148 这个数正是这场球最刺眼的一层（`_hit_data` 里记着出处）。⚠️ 不写身份（世界第十、九号种子）：排名在比分板的名条上已经印着。⚠️ 每行 9 / 6 个字符，在 `HOOK_MAX_CHARS=10` 之内；两行也在 `SOLO_HOOK_MAX_LINES=2` 之内。\n⚠️ **这一屏不配音**：`cover.narration` 只给「网球有故事」，赛场之上写了会被 `synth_cover` 当场报错，封面走定长 `COVER_SECONDS=1.2`（判据 `test_封面跟着配音走只给网球有故事`）。我起初照 CLAUDE.md「封面停多久跟着配音走」那节写了一句封面旁白，**漏了那节的栏目限定**，全量测试当场红——同栏目的 `wu-alcaraz-us-open-2026-r3` 本来就没有这个字段。所以钩子只印不念，开场那 1.2 秒之后直接进第①格的现场声。",
+    "topic": "美网第三轮 · 弗里茨 vs 塞伦多洛",
+    "_topic_why": "按 CLAUDE.md 2026-09-03「台头左上角的副标题不要写球场号，写对阵双方」——球场（阿瑟·阿什）在比分板头一行已经印着。",
+    "portrait": {
+      "image": "assets/reel/fritz-us-open-2026-r3.jpg",
+      "fit": "cover",
+      "focus": 0.23,
+      "focus_y": 0.0,
+      "zoom": 1.0,
+      "_frame_why": "**官方高清实拍，不是抽帧**。美网官方图片接口（`find_cover_photo.py` 走的那条 `relatedcontent/rest/v2/uso_v1/en/tag?tags=atpfb98&type=photo`），这一场（`T. Fritz vs. F. Cerundolo | R3`）当天发了多张，说明自带四要素：`Taylor Fritz reacts during a Men's Singles match on Day Seven of the 2026 US Open at USTA Billie Jean King National Tennis Center on Saturday, September 5, 2026 in Flushing, NY. (Photo by Garrett Ellwood/USTA)`。原文件 `f_USTA2437829_20260905_GE300279.jpg`（`f_` 是这条渠道的顶）。\n**候选全部打开看过**，逐条过四道闸门：同批的 `in action` / `hits a backhand` / `hits a forehand` 那几张都是**全身击球照，脸只有几十个像素**（CLAUDE.md 2026-08-18「优先近景特写」把它们排在后面）。选中的这张是**正面近景**：头肩填满画幅大半、**吼出来、握拳、眼睛睁着**（不是眨眼瞬间——CLAUDE.md 2026-08-21「封面图一定不要闭眼的」），背景是虚化的美网 logo 墙，看得出在球场上，不是「脸占满一屏看不出他在哪儿」。\n⚠️ **情绪对题**：这条片子讲的是「他拼了、领先了、还是走了」，重音在付出——一张吼出来握拳的照片正是「付出」；而同批那几张击球照读不出情绪。\n⚠️ **`focus=0.23` 是按真实裁切数学算出来的，不是拍的。** 1280×720 铺 1080×1440 竖向正好铺满（2.0×），横向只留中间 **42.19%**（源图 540px，可移动量 740px）。Haar 量出脸框 `x372~513`、中心 `x=442`；要让脸落在窗口中心需要 `focus = (442-270)/740 = 0.232`，取 0.23。\n⚠️ **`focus_y` 在 zoom=1.0 时是死的**（竖向已铺满，没有可移动量），写 0.0 只是显式化。**脸的落点是几何决定的、事后调不动**，所以挑图那一刻就把三条文字带叠上去算过：脸在源图 y60~201，铺满后落在输出 **y120~402**——**避开钩子带（790~1100）**，只有发带上沿擦到台头副标题的墨迹下缘（y≈124），压的是发带不是五官。\n⚠️ **不 zoom**：这是官方照片，没有转播记分条要推出画面，而人已经占满大半画幅。",
+      "_low_res_why": "**1280×720，铺 1080×1440 的 fill 是 0.500，够不着 1.00 的地板——这是美网这条渠道的天花板，不是没找够。** CLAUDE.md 早量死：`f_` 前缀就是顶，十二个前缀、六个目录、三种 `?width=` 参数全试过（第三组返回 200 但尺寸一个像素没变），别再重探。**主路那一档今天确实没有**：`find_cover_photo` 同一趟跑过 USA TODAY 每日图集（当天 1 辑，没有一辑名字带 us-open——这一档按比赛日出、往往次日才上线）、AP 通讯社、WTA photo-resources，都过不了四道闸门第一道。\n⚠️ **而它仍然远好过抽帧**：这是相机原图，而抽帧是压缩转播流的 1920×1080 再放大 1.33 倍；何况 2026-08-17 起 `cover.portrait.frame_at` 一律红，抽帧不是可选项。"
+    },
+    "scoreboard": {
+      "court": "Arthur Ashe Stadium",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%223%3A40%3A00%22%2C%22source%22%3A%22usopen.org%20players%2Fmatches%2Fatpfb98%20match_id%201307%20duration%3D3%3A40%2C%20setDurations%2051%2B43%2B40%2B46%2B40%22%7D",
+        "field": "duration"
+      },
+      "_court_why": "美网官方 `players/matches/atpfb98_matches.json` 的 `match_id 1307` 写着 `courtName: \"Arthur Ashe Stadium\"`；源片 34.5s / 62.5s / 124.5s / 208.5s 四次全屏台标底下那行小字也印着 `ARTHUR ASHE STADIUM`；解说 119.36s 的原话是 `here on Arthur Ash Stadium`（ASR 把 Ashe 转成了 Ash）——赛事方在数据和画面上各写了一遍。",
+      "_duration_why": "**这个数交叉核过三个源，取的是官方那个。** 美网官方 `players/matches` 报 `duration: \"3:40\"`、`setDurations: [\"51\",\"43\",\"40\",\"46\",\"40\"]`——51+43+40+46+40 = 220 分钟 = 3:40 **自洽**；flashscore `df_sui_1` 报 `0:52 / 0:43 / 0:40 / 0:46 / 0:41`、全场 `3:42`。⚠️ **两者差 2 分钟，取美网官方**：CLAUDE.md 早实测 flashscore 的用时会偏长（张帅那场偏 10 分钟），而这次偏的方向一致（首盘 52 vs 51、末盘 41 vs 40）。⚠️ 「自洽不等于对」——flashscore 那五个分盘和总计出自同一次计算，对上了说明不了什么；真正的交叉是**两个独立的源都给出了 51/43/40/46/40 这个形状**，只在首盘和末盘各差一分钟。\n⚠️ 顺带记一个**没有采用**的数：flashscore 当日表 `AO÷1788636168 − AD÷1788623100 = 13068 秒 = 3:37:48`，那是「开赛到结束」的挂钟时间，比净比赛用时还短（排期时刻晚于实际开球），不能拿来当第三个源假装核过了。"
+    },
+    "_result_why": "赛果**双源逐盘一致**：美网官方 `match_id 1307` 的 `scores.sets` 给 `[[6,3],[6,4],[3,6],[4,6],[4,6]]`（team1=弗里茨）、`winner: \"2\"`；flashscore `rDK0eSR7` 给 `BA÷6 BC÷6 BE÷3 BG÷4 BI÷4`（home 弗里茨每盘）/ `BB÷3 BD÷4 BF÷6 BH÷6 BJ÷6`（away 塞伦多洛），`AG÷2 / AH÷3`、`AW÷1`（away 赢）。第三处是源片 **208.5s 终场台标** `TAYLOR FRITZ 6 6 3 4 4 / FRANCISCO CERUNDOLO 3 4 6 6 6`。⚠️ `result` 写的是**赢家视角**（塞伦多洛 3-6 4-6 6-3 6-4 6-4 弗里茨），和 `_match.set_scores_home_away` 的 home/away 顺序**正好相反**——两个字段各跟各的（CLAUDE.md `eala-stoiana` 那条记的就是这一对）。五盘都没打到抢七，`tiebreaks` 一栏因此为空。"
+  },
+  "topbar": {
+    "line1": "2026 美网 第三轮",
+    "line2": "塞伦多洛 3-6 4-6 6-3 6-4 6-4 弗里茨"
+  },
+  "stats": {
+    "a": {
+      "aces": 12,
+      "df": 5,
+      "winners": 37,
+      "ue": 54,
+      "first_in": 83,
+      "first_won": 56,
+      "second_total": 75,
+      "second_won": 41,
+      "bp_conv": 5,
+      "bp_chances": 12,
+      "pts_won": 150,
+      "pts_total": 298,
+      "first_total": 158,
+      "headshot": "assets/players/headshots/atp-FB98.png"
+    },
+    "b": {
+      "aces": 10,
+      "df": 9,
+      "winners": 41,
+      "ue": 54,
+      "first_in": 85,
+      "first_won": 69,
+      "second_total": 55,
+      "second_won": 18,
+      "bp_conv": 6,
+      "bp_chances": 19,
+      "pts_won": 148,
+      "pts_total": 298,
+      "first_total": 140,
+      "headshot": "assets/players/headshots/atp-C0AU.png"
+    },
+    "_source": "flashscore 本场 `rDK0eSR7` 的 `df_st_1`（大满贯男子这场有 Winners / Unforced errors），经 `match_stat_hooks.py --stats-block` **机器抄出来的，不是手抄**——工具自己报了那一句「制胜分 / 非受迫失误：**这场有，必须填**」。⚠️ **a/b 相对 feed 没有对调**：`stats.a` 必须跟 `cover.matchup[0]`＝弗里茨，而 feed 的 home 也是弗里茨（`AE÷Fritz T.`），两者恰好同序。顺序核过两处：`a.pts_won=150` 对 `b.pts_won=148`，而**输的恰恰是拿到 150 分的弗里茨**（这正是本片的钩子，不是填反了）；`a.df=5` 对 `b.df=9`，和 `_hit_data` 里两人的双误差方向一致。⚠️ `first_total` 按 `first_in + second_total` 算（a: 83+75=158、b: 85+55=140），不取接口的 `Service Points Won` 分母——一发成功率画的是 `first_in / first_total`，用和式才自洽。⚠️ **头像左右和名字必须是同一个人**：`atp-FB98.png` 在 `fritz-merida` / `fritz-michelsen` / `fritz-nakashima-cincinnati-2026-qf` / `fritz-oconnell` 四条里挂的都是「弗里茨」；`atp-C0AU.png` 是**这条片子第一次用**（ATP 官方 `player-headshot/C0AU`，300×300、253 色，不是那张 2 色的占位剪影，id 和美网 feed 的 `atpc0au` 是同一个），所以那条判据在它身上是哑的——**已经打开看过确认是本人**（深色卷发、正面证件照式头像）。"
+  },
+  "_hit_data": "跑过 `match_stat_hooks.py rDK0eSR7`，9 条候选：\n  ⭐ **[总分差] 弗里茨 150 − 塞伦多洛 148，净差 2 分，而输的是弗里茨** ← 本片的钩子和落点，比分板给不了这个数\n  [塞伦多洛 一发得分率摆动] 第1盘71% → 第2盘88% → 86% → 82% → 79%（从次盘起就一直很高）← 用在第 7 段当转折点的技术归因\n  [弗里茨 一发得分率摆动] 68% → 68% → 60% → 64% → 73%\n  [弗里茨 破发点兑现] 5/12（42%）／[塞伦多洛] 6/19（32%）← 用在第 10 段\n  [塞伦多洛 连续保发] **14 个发球局** ／[弗里茨] 6 个 ← 用在第 11 段，这是后三盘破不掉的直接解释\n  [交手记录] 弗里茨 1 : 2 塞伦多洛（含本场）· 红土 1:1 · 硬地 0:1 → **本场之前 1:1，而且这是两人第一次在硬地交手**\n  [近况] 弗里茨最近 5 场 3 胜（LWWLW）；塞伦多洛最近 5 场 3 胜（WWWLL）",
+  "_no_hit_data_why": null,
+  "_facts": "⚠️ **没有写进产物的两条，都是因为核不动**：① 解说 168.64s 说塞伦多洛「for just the second time in his career comes back to win from two sets to love down」——**生涯第二次从两盘落后逆转**，这是个计数式全称断言（CLAUDE.md 2026-08-27「一共只 N 次」那一族），一个反例就倒，而我只有解说这一个源，没有第二个独立源能核，所以旁白里一个字都没写。② 解说 179.28s 说两人是拉沃杯队友（`the camaraderie from the time spent together on the Laver Cup team`）——这一条**写进了旁白第 13 段，但明确标成「解说说」**，用的是引语不是结论（CLAUDE.md「编辑稿的引语可以抄，结论不可以」）。\n可以直接引的解说原话（都在 `captions.txt` 里 grep 得到，不是编的）：24.24s `Toughest set for him by far of the week`；57.20s `he is just one set away now from returning to the last 16 of the US Open`；112.00s `Three hours on the D and full credit to Francisco Serundo who has reeled in Taylor Fritz`。",
+  "_match": {
+    "status": "result_verified",
+    "source": "flashscore_points",
+    "source_id": "rDK0eSR7",
+    "flashscore_id": "rDK0eSR7",
+    "participants": [
+      "弗里茨",
+      "塞伦多洛"
+    ],
+    "set_scores_home_away": [
+      [
+        6,
+        3
+      ],
+      [
+        6,
+        4
+      ],
+      [
+        3,
+        6
+      ],
+      [
+        4,
+        6
+      ],
+      [
+        4,
+        6
+      ]
+    ],
+    "winner": "塞伦多洛",
+    "loser": "弗里茨",
+    "winner_result": "3-6 4-6 6-3 6-4 6-4",
+    "loser_result": "6-3 6-4 3-6 4-6 4-6",
+    "_participants_why": "⚠️ **这一栏跟 flashscore 的 home / away，和 `stats.a/b` 跟 `cover.matchup` 是两个相反的顺序**（CLAUDE.md `eala-stoiana` 那条）。这一场 home=弗里茨（`AE÷Fritz T.`）恰好也是 `matchup[0]`，所以两边看起来一样——**但理由不同，别当成同一条规矩**。判据是「这个字段旁边放着什么」：`participants` 紧挨着 `set_scores_home_away`，两个必须同序（`participants[0]=弗里茨` 对 `[[6,3],...]` 的 home 列 6/6/3/4/4 ✅）。"
+  },
+  "editorial": {
+    "mode": "match_review",
+    "question": "两盘领先、全场还多拿两分，为什么走的是弗里茨？",
+    "thesis": "差别不在谁打得更漂亮——制胜分 37 比 41、非受迫失误两人一模一样都是 54 个——差别在谁的发球局更难碰。塞伦多洛的一发得分率从首盘的 71% 起跳，第二盘之后一路是 88%、86%、82%、79%，而弗里茨同期从 68% 滑到 60%、64%。发球一稳住，弗里茨的机会就兑现不掉：全场 12 个破发点只拿下 5 个，而塞伦多洛有过连续 14 个发球局一次都没被破。所以小分能赢 150 比 148，盘分却是 2 比 3——多出来的那两分散在他保得住的局里，而不是落在他需要破的那几局上。",
+    "beats": [
+      "前段：首盘 51 分钟 6-3、次盘 43 分钟 6-4，两盘领先，离十六强只差一盘",
+      "中段：第三盘塞伦多洛的一发得分率从 71% 涨到 86%，6-3 追回一盘；第四盘 6-4 扳成 2 比 2",
+      "结局：三小时四十分钟，决胜盘赛点落在塞伦多洛自己的发球局上，40-30 拿下；网前两人抱了一下"
+    ],
+    "human_context": {
+      "angle": "两个人是**拉沃杯世界队的队友**——解说在赛点落地之后说的第一句就是 `you see the camaraderie from the time spent together on the Laver Cup team. A lot of empathy. Not really a celebration from Serendelo`，所以镜头里没有惯常的倒地和嘶吼，是一个拥抱。而这场球打在**阿瑟·阿什**，弗里茨是美国人、赛会九号种子，解说因此说塞伦多洛是 `in enemy territory` 做到的。此前两人交手过两次、**1 比 1**，两次都在红土；**这是他们第一次在硬地相遇**，而硬地正是弗里茨的主场地——解说 201.04s 还补了一句，塞伦多洛 `has not necessarily performed at his best on hard court majors`。",
+      "facts": [
+        "塞伦多洛 3-6 4-6 6-3 6-4 6-4 胜弗里茨，2026 美网男单第三轮（美网官方 players/matches match_id 1307，Arthur Ashe Stadium，roundName Round 3，winner=2；flashscore rDK0eSR7 逐盘一致：BA/BC/BE/BG/BI = 6/6/3/4/4，BB/BD/BF/BH/BJ = 3/4/6/6/6，AW=1；源片 208.5s 终场台标第三处印证）。",
+        "两人当期排名：弗里茨 10、塞伦多洛 25（美网官方 players.json 的 atpfb98 / atpc0au ＋ tennisexplorer ATP 榜 31.08.2026 双源一致）。⚠️ 源片记分条印的 9 / 24 是**种子号**不是排名。",
+        "官方用时 3:40（分盘 51/43/40/46/40，五个数加起来正好 220 分钟＝3:40，自洽）；flashscore df_sui_1 报 3:42（0:52/0:43/0:40/0:46/0:41），偏长 2 分钟，取官方那份。",
+        "全场技术统计（flashscore df_st_1，大满贯男子这场有 Winners/UE）：弗里茨 Ace 12、双误 5、制胜分 37、非受迫失误 54、一发 83/158、一发得分 56、二发 41/75、破发点 5/12、总分 150；塞伦多洛 Ace 10、双误 9、制胜分 41、非受迫失误 54、一发 85/140、一发得分 69、二发 18/55、破发点 6/19、总分 148。总分 298 分里弗里茨拿 150、塞伦多洛拿 148——**输的那个人多拿两分**。",
+        "分盘一发得分率（match_stat_hooks 从 df_st_1 分盘算）：弗里茨 68% → 68% → 60% → 64% → 73%；塞伦多洛 71% → 88% → 86% → 82% → 79%。",
+        "最长连续保发（match_stat_hooks 从 df_mh_1 逐局算）：塞伦多洛 14 个发球局，弗里茨 6 个。",
+        "H2H 本场之前 1 比 1，两次都在红土；本场是两人**第一次在硬地交手**（flashscore df_hh_1：含本场 1:2，红土 1:1、硬地 0:1）。",
+        "开赛北京时间 9 月 5 日 23:45（flashscore AD=1788623100 = 2026-09-05 15:45 UTC，纽约当地 11:45）。按「开球时刻只说个大概」，旁白写作「快十二点」。"
+      ],
+      "sources": [
+        "https://www.usopen.org/en_US/scores/feeds/2026/players/matches/atpfb98_matches.json",
+        "https://www.usopen.org/en_US/scores/feeds/2026/players/players.json",
+        "https://www.tennisexplorer.com/ranking/atp-men/",
+        "https://youtu.be/M19Or_Y3m40"
+      ],
+      "voice_label": null
+    }
+  },
+  "segments": [
+    {
+      "start": 157.0,
+      "end": 162.5,
+      "narration": "",
+      "score_inset": true,
+      "_ending_payoff_required": true,
+      "_why": "**第①格：全片最强的一格。** 不配旁白，靠现场声。画面是赛点那一分的最后几拍到落地，记分条烧着 `MATCH POINT` ＋ `9 FRITZ 6 6 3 4 4 [30] / 24 F. CERUNDOLO 3 4 6 6 5 [40]`——**观众一眼看到「MATCH POINT」和五盘的比分**，这场球是什么、走到哪一步，一格说完。\n⚠️ **落在同一个镜头内**：切点 153.24 → 162.66，157.0~162.5 整段在里面。\n⚠️ **不是源片开头**（157.0 ≫ `_COLD_OPEN_HEAD_SECONDS`），不用写 `_head_open_why`——官方集锦按时间顺序剪，开头是戏剧性最低的那一格。\n⚠️ `_ending_payoff_required: true`：这一格**含最后一球**，是结局预告，所以正文必须重新走到它——第 12 段（153.4~162.5）完整覆盖了本段区间 157.0~162.5，冷开场没有把结局从正文里省掉。\n⚠️ `score_inset: true`：`score_03.jpg` 的 156.5/158.5s 和 `score_04.jpg` 的 160.5/162.5s 四格深蓝板都在。"
+    },
+    {
+      "start": 171.5,
+      "end": 173.5,
+      "narration": "",
+      "score_inset": false,
+      "_score_inset_why": "**这一段真的没有板。** 赛点在 162.66 打完，转播随即把常驻记分条撤了——`score_04.jpg` 的 164.5s 起到 198.5s 每一格都没有那块深蓝板，172.5s 这一格是弗里茨黑色球衣的近景。写 `true` 会往他身上贴一块球场（CLAUDE.md `wong-paul` 那条的形状）。",
+      "_ending_payoff_required": false,
+      "_why": "**第①格的下半句，仍然不配旁白。** 落在切点 171.45~173.56 内，整段是同一个镜头：弗里茨低着头。**这是这条片子的题眼**——两盘领先、多拿两分，最后是这个表情。\n⚠️ 只有 2.0 秒，不配旁白是刻意的：这一格要的是情绪留白，而不是把话说满；加上第①格一共 7.5 秒现场声，之后立刻开口。\n⚠️ `_ending_payoff_required: false`：它**不含最后一球或结果确认**（球早在 162.66 就打完了），只是赛后反应，所以不是第二个结局预告。"
+    },
+    {
+      "start": 2.5,
+      "end": 13.6,
+      "narration": "北京时间九月五号快十二点，美网第三轮，阿瑟·阿什。弗里茨世界第十，塞伦多洛世界第二十五。",
+      "score_inset": true,
+      "_ending_payoff_required": false,
+      "_why": "**第③格给坐标。** 画面回到首盘第一局的底线回合（记分条 `FRITZ 1 [40] / CERUNDOLO 0 [0]`，弗里茨在发球），旁白交代时间、赛事、轮次、球场和两人的排名——刷到这条的人先知道这是哪一场。\n⚠️ **开球时刻只说个大概不报到分**（CLAUDE.md 2026-08-17）：flashscore `AD÷1788623100` 换算成北京时间是 9 月 5 日 **23:45**，45 分落在「40–59 → 快 X+1 点」那一档，所以说「快十二点」。而且这个排期时刻本来就可能是整批开赛值，说大概永远字面为真。\n⚠️ 落在切点 2.42~13.7 内，同一个镜头。\n⚠️ `score_inset: true`：`score_00.jpg` 的 2.5~12.5s 五格板都在。"
+    },
+    {
+      "start": 17.2,
+      "end": 21.9,
+      "narration": "解说说，首盘是他这周最难的一盘。",
+      "score_inset": true,
+      "_ending_payoff_required": false,
+      "_why": "画面是首盘盘点那一分（`SET POINT` ＋ `FRITZ 5 [40] / CERUNDOLO 3 [30]`），旁白只给解说那句原话——**话和画面是合奏**：屏幕上是「盘点」，话说的是「这一盘有多难拿」。\n⚠️ **用时（官方 51 分钟）从这一段撤掉了**：真 TTS 量到原稿 4.54s／画面 4.7s，余量只剩 +0.16s，属于 CLAUDE.md 说的「很紧不等于过了，换个合成器就会红」。撤的是数据不是引语——「解说说」三个字必须留着，去掉它就把**记者的评价**变成了**我们的结论**（CLAUDE.md「编辑稿的引语可以抄，结论不可以」）。用时仍然印在封面比分板上（3:40），分盘用时记在 `editorial.facts` 和小红书正文里。\n⚠️ 「解说说，这是他这一周最难的一盘」是**逐字引语不是结论**：`captions.txt` 24.24s 原文 `Toughest set for him by far of the week`，grep 得到（CLAUDE.md「编出来的判据 + 正确的结论」那条要求落笔前搜一次）。\n⚠️ 落在切点 17.17~21.94 内。`score_00.jpg` 的 18.5/20.5s 板都在（16.5s 那格无板，但 17.17 是切点，17.2 已是新镜头）。"
+    },
+    {
+      "start": 45.2,
+      "end": 50.7,
+      "narration": "第二盘四十三分钟，他又拿下。两盘领先。",
+      "score_inset": true,
+      "_ending_payoff_required": false,
+      "_why": "画面是次盘的第三个盘点（`SET POINT #3` ＋ `FRITZ 6 5 [AD] / CERUNDOLO 3 4`），旁白给用时和结果。\n⚠️ **「他又拿下」的主语是弗里茨，而这个盘点也是他自己拿到的**——不是 CLAUDE.md「三个盘点都没救下来」那条要拦的换人情形（那条拦的是「拿到点的人」和「救点的人」不是同一个）。\n⚠️ 落在切点 45.1~50.75 内。`score_01.jpg` 的 46.5/48.5/50.5s 板都在。"
+    },
+    {
+      "start": 58.9,
+      "end": 65.0,
+      "narration": "转播打出比分，他离十六强只差一盘。",
+      "score_inset": false,
+      "_score_inset_why": "**这一段整段没有常驻板。** `score_01.jpg` 的 58.5/60.5s 是球场和人的特写（无板），62.5/64.5s 是**全屏台标**（`us open` ＋ `9 TAYLOR FRITZ` / `24 FRANCISCO CERUNDOLO`）——全屏台标是转播自己的整屏图形，不是左下角那块常驻记分条，回贴会在它上面再糊一块球场。",
+      "_ending_payoff_required": false,
+      "_why": "画面是转播打出的**全屏台标 `6 6 0 / 3 4 0`**——两盘拿下、第三盘刚开始，这一屏自己就把「两盘领先」写死了，旁白因此不复读比分，只说它的意义。\n⚠️ 「十六强」＝ 第四轮，解说 57.20s 原话 `he is just one set away now from returning to the last 16 of the US Open`，同一句话的中文说法。⚠️ 按 CLAUDE.md 2026-09-01 的轮次写法，写「十六强」不写「1/8 决赛」。\n⚠️ 落在切点 58.81~77.18 内，中间没有硬切点。"
+    },
+    {
+      "start": 66.5,
+      "end": 77.1,
+      "narration": "第三盘开始，弗里茨的一发得分率掉到百分之六十。而塞伦多洛，涨到了百分之八十六。",
+      "score_inset": true,
+      "_ending_payoff_required": false,
+      "_why": "**转折点的技术归因**（CLAUDE.md 2026-08-21「旁白要有技战术拆解」）：不止说「他反弹了」，要说清靠什么——分盘一发得分率是 `match_stat_hooks` 从 `df_st_1` 算出来的，弗里茨 68% → 68% → **60%** → 64% → 73%，塞伦多洛 71% → 88% → **86%** → 82% → 79%，第三盘正是两条线交叉的地方。\n⚠️ **百分比写「百分之多少」不写「几成几」**（CLAUDE.md 2026-08-16）。\n⚠️ **句子的顺序是照着画面排的，不是照着数据排的**：`preview_segments_local` 摆出来看见这一段前两格（66.5/68.5s）是**弗里茨的近景**、70.5s 之后才切到回合远景。原稿「变化从第三盘开始。塞伦多洛的一发得分率…」会让**整句讲对手的话压在弗里茨脸上**；换成先说弗里茨掉到 60%（配他的近景）、再说塞伦多洛涨到 86%（配回合），话和画面才对得上。⚠️ 这也顺带把两个人的数并排摆出来了，比只报一个人的涨幅更能说清「差别在哪儿」。\n⚠️ 落在切点 58.81~77.18 内。`score_01.jpg` 的 66.5~76.5s 六格板都在。\n⚠️ **「塞伦多洛」后面那个逗号是撑开假词用的，不是语气**：不加的话 edge-tts 切成 `塞伦多 ｜ 洛涨`，「洛涨」是个不存在的词（CLAUDE.md「加逗号把边界钉死」）。"
+    },
+    {
+      "start": 84.0,
+      "end": 88.3,
+      "narration": "第三盘六比三，追回一盘。",
+      "score_inset": true,
+      "_ending_payoff_required": false,
+      "_why": "画面是塞伦多洛在第三盘的盘点上（`SET POINT #2` ＋ `FRITZ 6 6 3 [15] / CERUNDOLO 3 4 5 [40]`，塞伦多洛发球），旁白给这一盘的结果。\n⚠️ 落在切点 84.0~88.34 内。`score_02.jpg` 的 84.5/86.5/88.5s 板都在。⚠️ **没有取 90.6~97.7 那一段**：那几格（92.5s 起）是球员席和教练的特写，`score_02.jpg` 里一格板都没有。"
+    },
+    {
+      "start": 106.4,
+      "end": 110.9,
+      "narration": "第四盘六比四，扳成二比二。",
+      "score_inset": true,
+      "_ending_payoff_required": false,
+      "_why": "画面是第四盘的盘点（`SET POINT` ＋ `FRITZ 6 6 3 4 [15] / CERUNDOLO 3 4 6 5 [40]`），旁白给结果。两盘的转折各占一段，按时间顺序推进。\n⚠️ 落在切点 106.39~110.99 内。`score_02.jpg` 的 106.5/108.5/110.5s 板都在。"
+    },
+    {
+      "start": 128.3,
+      "end": 138.0,
+      "narration": "三个小时过去。五盘三胜的大满贯还剩最后一盘。弗里茨全场拿到十二个破发点。",
+      "score_inset": true,
+      "_ending_payoff_required": false,
+      "_why": "画面是决胜盘开局（记分条 `FRITZ 6 6 3 4 0 [15] / CERUNDOLO 3 4 6 6 0 [0]`），旁白交代赛制和时间，并把破发点这条线起个头（下一段收）。\n⚠️ 「三个小时」有画面自证：源片 126.5s 那一格转播打出的计时器写着 `3:03`。\n⚠️ **写「还剩最后一盘」不写「决胜盘」**：这一场确实打满五盘、第五盘确实是决胜盘，但 CLAUDE.md 记着这条线 95% 的片子是三盘两胜、「第三盘＝决胜盘」是个危险的默认，换个说法更稳。\n⚠️ 落在切点 128.26~138.1 内。`score_03.jpg` 的 128.5~136.5s 五格板都在。"
+    },
+    {
+      "start": 140.8,
+      "end": 150.3,
+      "narration": "只兑现了五个。而塞伦多洛有过连续十四个发球局，一次都没被破掉。",
+      "score_inset": true,
+      "_ending_payoff_required": false,
+      "_why": "**接上一段的破发点，给出后三盘破不掉的直接解释。** 两个数都出自 `match_stat_hooks`：弗里茨破发点 5/12（`df_st_1`），塞伦多洛最长连续保发 14 个发球局（`df_mh_1` 逐局）。\n⚠️ 画面是决胜盘 1-1 的回合（`FRITZ 6 6 3 4 1 [30] / CERUNDOLO 3 4 6 6 1 [30]`），和「他保住了发球局」这件事对得上。\n⚠️ 落在切点 140.74~150.38 内。`score_03.jpg` 的 140.5~150.5s 六格板都在。"
+    },
+    {
+      "start": 153.4,
+      "end": 162.5,
+      "narration": "赛点在塞伦多洛的发球局，四十比三十。三小时四十分钟，他把两盘落后追了回来。",
+      "score_inset": true,
+      "_ending_payoff_required": false,
+      "_why": "**正文重新走完赛点那一分**——第①格（157.0~162.5）是它的后半截，本段 153.4~162.5 完整覆盖，所以冷开场的 `_ending_payoff_required: true` 在这里兑现：结局没有只出现在预告里。\n⚠️ 记分条自证了旁白里的每一个数：`MATCH POINT` ＋ `FRITZ 6 6 3 4 4 [30] / CERUNDOLO 3 4 6 6 5 [40]`，**黄色发球箭头在塞伦多洛那一行**，所以「赛点在他的发球局、四十比三十」是画面读出来的。\n⚠️ 「三小时四十分钟」取美网官方 `duration: \"3:40\"`（见 `_duration_why`）。\n⚠️ 落在切点 153.24~162.66 内。`score_03/04` 的 154.5~162.5s 五格板都在。"
+    },
+    {
+      "start": 173.6,
+      "end": 183.0,
+      "narration": "两个人是拉沃杯的队友。解说说塞伦多洛没有庆祝，更多的是共情。",
+      "score_inset": false,
+      "_score_inset_why": "**这一段整段没有板。** 赛点打完转播就把常驻记分条撤了，`score_04.jpg` 的 174.5~182.5s 每一格都是球场、球网和人，一块深蓝板都没有。",
+      "_ending_payoff_required": false,
+      "_why": "画面是两人在网前的握手和拥抱，旁白给这一刻的来路。\n⚠️ 「拉沃杯队友」和「几乎没有庆祝，更多的是共情」都是**解说的原话**（`captions.txt` 179.28~186.48s：`you see the camaraderie from the time spent together on the Laver Cup team. A lot of empathy. Not really a celebration from Serendelo`），标成「解说说」照抄引语，不当成自己的结论（CLAUDE.md「编辑稿的引语可以抄，结论不可以」）。\n⚠️ 落在切点 173.56~192.36 内，同一个镜头段。"
+    },
+    {
+      "start": 204.99,
+      "end": 209.8,
+      "narration": "小分一百五十比一百四十八。他输在哪儿？",
+      "score_inset": false,
+      "_score_inset_why": "**这一段整段没有板。** `score_05.jpg` 那一带是包厢、球场和全屏终场台标，常驻记分条早在 162.66 之后就撤了。",
+      "_ending_payoff_required": false,
+      "_why": "**落点回到那个比分板上没有的数，并且收在一问上。** 画面是塞伦多洛在场上向看台致意，随后转播打出终场台标 `MEN'S SINGLES | 3RD ROUND` ＋ `TAYLOR FRITZ 6 6 3 4 4 / FRANCISCO CERUNDOLO 3 4 6 6 6`——**赛果由画面给，旁白只给台标上没有的那两个数**（150 : 148，出处见 `_hit_data`）。\n⚠️⚠️ **原稿是「多拿两分的是弗里茨」，被 `preview_segments_local` 拦下来改掉了**：我一开始以为 206.5s 那一格是「弗里茨独自留在场上」，把 contact_03 那一格裁出来放大三倍、拿 182.5s 网前那一格当对照组一比才看清——**206.5s 和 208.5s 都是塞伦多洛**（白上衣＋酒红短裤＋酒红腕带），弗里茨全程是黑衣。整句讲弗里茨的话压在对手身上正是 CLAUDE.md 明令要拦的那一类（`kovacevic-khachanov` 那条）。改成报**两个人的小分**之后，话和画面就对上了：台标印着两个人的盘分，旁白补上两个人的总分。\n⚠️ **而 150 比 148 比「多拿两分」更硬**：两个数摆在一起，差 2 一眼可见，不用替读者算；「多拿两分」这个说法留在封面钩子和小红书正文里。\n⚠️ **收尾落在一问上，不停在数据上**（CLAUDE.md），而且这一问不是封面那一问的回声——封面是陈述句。「他」的指代由上一段的画面（网前那个黑衣的人）和整条片子的主体承担。\n⚠️ **末段离片尾板的余量**：`scene_cuts` 末项 210.14、`silent_audio` 从 210.21 起，本段 209.8 ＋ `SEG_FADE` 0.18 ＝ 209.98，仍在两者之前，一帧片尾板都收不进来。\n⚠️ 落在切点 204.99~210.14 内。"
+    }
+  ],
+  "push": {
+    "summary": "弗里茨多拿两分仍出局",
+    "lead": "美网第三轮，阿瑟·阿什球场，弗里茨 6-3 6-4 3-6 4-6 4-6 负于世界第 25 的塞伦多洛。他赢下了前两盘，离十六强只差一盘；三小时四十分钟之后，走的是他。全场小分弗里茨 150、塞伦多洛 148——多拿两分的那个人出局了。转折在发球：塞伦多洛的一发得分率从首盘的 71% 一路涨到 88%、86%、82%、79%，而弗里茨从 68% 掉到 60%。弗里茨全场拿到 12 个破发点只兑现 5 个，塞伦多洛则有过连续 14 个发球局没被破掉。两人是拉沃杯的队友，赛点落地之后没有太多庆祝。",
+    "auto": true,
+    "_summary_why": "10 个字位，在 `SUMMARY_MAX=13` 之内。按「标题写的要通顺，一句只留一层铺垫」：主语（弗里茨）＋ 一个比分板上看不见的事实（多拿两分）＋ 结果（出局），中间不插代词、不叠三层限定。⚠️ 没有写任何比分——那在封面比分板和顶栏上各印了一遍。⚠️ 主语是弗里茨不是赢家，跟着 `cover.subject` 走。"
+  }
+}
