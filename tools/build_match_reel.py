@@ -2431,6 +2431,13 @@ class Segment:
     # 照旧整段回贴；非空 ＝ 只在这几段回贴（`overlay` 的 `enable`）。
     # ⚠️ 它是**渲染时现量的**，spec 里写不了——板什么时候淡出是转播的行为。
     score_inset_spans: tuple[tuple[float, float], ...] | None = None
+    # **这一段的 image 是一张按画面区尺寸设计的整幅页**（章节卡），铺满不缩。
+    # 由 `_materialize_title_cards` 认领，写 spec 的人碰不到它。为什么不按尺寸
+    # 猜：`render_title_card` 出的是 2×（device_scale_factor=2，2160×2880），
+    # 「等于画面区尺寸」那个判据在生产里一次都没成立过——2026-09-05 那版
+    # 成片的彩条照旧落在 y≈87，而按 1× 手搓卡验的判据全绿。按长宽比猜也不行：
+    # 一张恰好 3:4 的照片会被误当成设计页顶到边。所以显式认领。
+    full_bleed: bool = False
 
     @property
     def length(self) -> float:
@@ -3635,8 +3642,13 @@ def _band_bg_rgb() -> tuple[int, int, int]:
     return ((v >> 16) & 0xFF, (v >> 8) & 0xFF, v & 0xFF)
 
 
-def still_canvas_for_layout(card, Image):
+def still_canvas_for_layout(card, Image, *, full_bleed: bool = False):
     """整屏证据段的底板：卡缩进**这个版式的画面区**居中，返回 (canvas, 卡的落位框)。
+
+    `full_bleed=True`（章节卡，`Segment.full_bleed`）：这张图自己就是按画面区
+    设计的整幅页，缩回画面区尺寸原样铺满、不居中。卡的长宽比必须和画面区一致
+    （章节卡本来就按 `(VIDEO_W, region_h)` 渲，只是 2× DPR），不一致当场红——
+    一张被拉变形的设计页比一张缩过的还糟。
 
     全出血：画面区就是整幅 1080×1440，深绿底。
     带式：画面区只有 `BAND_TOP` 起那 1080×960 的带——顶带给顶栏、底带给字幕，
@@ -3653,14 +3665,24 @@ def still_canvas_for_layout(card, Image):
         bg = EVIDENCE_BG
         top, region_h = 0, VIDEO_H
     canvas = Image.new("RGBA", (VIDEO_W, VIDEO_H), (*bg, 255))
-    if (card.width, card.height) == (VIDEO_W, region_h):
-        # 按画面区尺寸渲出来的**整幅设计页**（章节卡）：原样铺满，不缩不居中。
+    if full_bleed or (card.width, card.height) == (VIDEO_W, region_h):
+        # 按画面区尺寸渲出来的**整幅设计页**（章节卡）：铺满，不缩不居中。
         # 0.94×0.88 那个盒子是给照片和数据图留呼吸的；一张自己就是版式的页面
         # 缩 12% 再居中，底色相同看不出边框，**只把它顶上那条 12px 品牌彩条
         # 挪到 y≈87**——正好横穿左上角常驻角标的两行字，底下的 @handle 也
         # 跟着漂进字幕带。2026-09-05 comeback-five-love-down 三张章节卡，
-        # 账号所有者「顶部的彩条位置不对」。判据 test_title_card。
-        canvas.paste(card, (0, top), card)
+        # 账号所有者「顶部的彩条位置不对」。
+        # ⚠️ 第一版只认「尺寸等于画面区」，而 `render_title_card` 出的是 2×
+        # （2160×2880）——那个等式在生产里一次都没成立，渲出来的成片彩条照旧
+        # 在 y≈87；按 1× 手搓卡验的判据全绿。所以章节卡走显式的 `full_bleed`，
+        # 这儿把 2× 缩回画面区尺寸再铺。判据 test_title_card（真渲 + 真切段）。
+        if abs(card.width * region_h - card.height * VIDEO_W) > 0.01 * card.width * region_h:
+            raise ReelError(
+                f"整幅设计页的长宽比 {card.width}×{card.height} 和画面区 "
+                f"{VIDEO_W}×{region_h} 不一致——铺满会拉变形；章节卡要按画面区尺寸渲")
+        page = (card if (card.width, card.height) == (VIDEO_W, region_h)
+                else card.resize((VIDEO_W, region_h), Image.LANCZOS))
+        canvas.paste(page, (0, top), page)
         return canvas, (0, top, VIDEO_W, top + region_h)
     max_w, max_h = int(VIDEO_W * 0.94), int(region_h * 0.88)
     scale = min(max_w / card.width, max_h / card.height)
@@ -3685,7 +3707,7 @@ def cut_still_segment(seg: Segment, dest: Path, tail: float = 0.0) -> Path:
     from PIL import Image  # noqa: PLC0415
 
     card = Image.open(seg.image).convert("RGBA")
-    canvas, box = still_canvas_for_layout(card, Image)
+    canvas, box = still_canvas_for_layout(card, Image, full_bleed=seg.full_bleed)
     still = dest.with_suffix(".evidence.png")
     canvas.convert("RGB").save(still)
     with stage("分段编码"):
@@ -6725,7 +6747,9 @@ def _materialize_title_cards(spec: dict, segments: list[Segment], outdir: Path,
             if not out.is_file():
                 raise ReelError(f"第 {i + 1} 段的章节卡没渲出来：{out}")
             print(f"[章节卡] 第 {i + 1} 段「{card['text']}」→ {out.name}（{size[0]}×{size[1]}）")
-            out_segments.append(replace(s, image=str(out)))
+            # full_bleed：这张是按画面区设计的整幅页，`still_canvas_for_layout`
+            # 铺满不缩（渲出来是 2×，按尺寸认不出来，所以在这儿认领）
+            out_segments.append(replace(s, image=str(out), full_bleed=True))
     return out_segments
 
 

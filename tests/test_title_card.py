@@ -128,7 +128,12 @@ def test_按画面区尺寸渲的章节卡铺满整幅_彩条落在顶边不缩�
     """2026-09-05 账号所有者「顶部的彩条位置不对」。章节卡按 1080×1440 渲、顶上 12px
     是品牌彩条；`still_canvas_for_layout` 原来一律缩进 0.94×0.88 的盒子再居中，
     底色相同看不出边框，**只把彩条挪到 y≈87**——正好横穿左上角常驻角标的两行字。
-    整幅设计页不许缩；照片/数据图那一支照旧缩（那是给它们留呼吸的）。"""
+    整幅设计页不许缩；照片/数据图那一支照旧缩（那是给它们留呼吸的）。
+
+    ⚠️ 第一版只喂了 1× 手搓卡，而 `render_title_card` 出的是 **2×**（2160×2880）
+    ——「尺寸等于画面区」那个等式在生产里一次都没成立，渲出来的成片彩条照旧在
+    y≈87。所以章节卡走显式的 `full_bleed`；2× 那一档要缩回画面区再铺，而**没认领
+    的 2× 图照旧缩进盒子**（不许按长宽比猜：一张恰好 3:4 的照片不是设计页）。"""
     from PIL import Image  # noqa: PLC0415
     stripe = (198, 246, 90)
     card = Image.new("RGBA", (reel.VIDEO_W, reel.VIDEO_H), (4, 18, 13, 255))
@@ -139,6 +144,22 @@ def test_按画面区尺寸渲的章节卡铺满整幅_彩条落在顶边不缩�
     px = canvas.convert("RGB").load()
     assert px[540, 3] == stripe and px[20, 3] == stripe, "彩条要在 y=0 起、贯通全宽"
     assert px[540, 90] != stripe, "缩过的那版彩条落在 y≈87，这儿不许再有"
+    # 2× 的设计页（真渲染器出的那一档）：认领 full_bleed 就缩回 1× 铺满
+    card2 = Image.new("RGBA", (reel.VIDEO_W * 2, reel.VIDEO_H * 2), (4, 18, 13, 255))
+    card2.paste((*stripe, 255), (0, 0, reel.VIDEO_W * 2, 24))
+    canvas, box = reel.still_canvas_for_layout(card2, Image, full_bleed=True)
+    assert box == (0, 0, reel.VIDEO_W, reel.VIDEO_H), box
+    px = canvas.convert("RGB").load()
+    assert px[540, 3] == stripe and px[20, 3] == stripe and px[1060, 3] == stripe, \
+        "2× 章节卡认领 full_bleed 之后彩条也要在 y=0 起、贯通全宽"
+    assert px[540, 90] != stripe
+    # 同一张 2× 图**没认领**就照旧缩进盒子——不按尺寸倍数、不按长宽比猜
+    _canvas, (x0, y0, x1, _y1) = reel.still_canvas_for_layout(card2, Image)
+    assert y0 > 0 and x0 > 0 and x1 - x0 <= int(reel.VIDEO_W * 0.94), (x0, y0, x1)
+    # 认领了 full_bleed 但长宽比对不上画面区：拉变形比缩过还糟，当场红
+    with pytest.raises(reel.ReelError, match="长宽比"):
+        reel.still_canvas_for_layout(
+            Image.new("RGBA", (1080, 1920), (0, 0, 0, 255)), Image, full_bleed=True)
     # 带式：按画面带尺寸渲的卡铺满画面带，顶上让给顶栏那条带
     monkeypatch.setattr(reel, "LAYOUT", "band")
     band_card = Image.new("RGBA", (reel.VIDEO_W, reel.BAND_PIC_H), (4, 18, 13, 255))
@@ -168,3 +189,40 @@ def test_章节卡底部的handle要让开字幕那一行(tmp_path):
     assert bright == 0, f"字幕带（y≥{reel.default_margin_v()}）里还有 {bright} 个亮像素——handle 没让开"
     handle_zone = im.crop((0, (reel.VIDEO_H - clear - 60) * 2, im.width, (reel.VIDEO_H - clear) * 2))
     assert sum(1 for v in handle_zone.getdata() if v > 120) > 200, "handle 得还在，只是抬到字幕上方"
+
+
+def test_真渲的章节卡走完切段那条路_成片第一行就是彩条(tmp_path):
+    """判据要过**真渲染器 + 真切段**，不许再拿手搓卡验：上一条的第一版就是这么
+    绿着放过了一版彩条在 y≈87 的成片（2026-09-05 comeback-five-love-down）。
+    真链：parse_segments → _materialize_title_cards（Chromium，2×）→ cut_still_segment
+    （PIL 铺满 + ffmpeg）→ 抽第一帧量：顶上那几行是彩条（亮、高饱和），y≈87 是
+    深底；`Segment.full_bleed` 由 materialize 认领，不是 spec 写的。"""
+    import subprocess  # noqa: PLC0415
+
+    from PIL import Image  # noqa: PLC0415
+
+    segs = reel.parse_segments(_spec(), {"": 1}, "")
+    got = reel._materialize_title_cards({}, segs, tmp_path)
+    card_seg = got[1]
+    assert card_seg.full_bleed is True and not segs[0].full_bleed and not got[2].full_bleed
+    with Image.open(card_seg.image) as im:
+        assert im.size == (reel.VIDEO_W * 2, reel.VIDEO_H * 2), "渲染器出的是 2×，判据要拿这一档验"
+    dest = tmp_path / "part.mp4"
+    reel.cut_still_segment(card_seg, dest)
+    frame = tmp_path / "f0.png"
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(dest), "-frames:v", "1", str(frame)],
+                   check=True)
+    px = Image.open(frame).convert("RGB")
+    assert px.size == (reel.VIDEO_W, reel.VIDEO_H)
+
+    def row(y):
+        return [px.getpixel((x, y)) for x in range(0, reel.VIDEO_W, 20)]
+
+    # 彩条是四色渐变，中段混色处饱和度会掉下来，所以只按「亮」判——深底 max<40
+    for y in (1, 5, 9):
+        hits = sum(max(c) > 120 for c in row(y))
+        assert hits >= len(row(y)) * 0.9, f"y={y} 这一行该是彩条（亮），只有 {hits} 格是"
+    assert px.getpixel((10, 1))[1] > 200 and px.getpixel((1070, 1))[2] > 200, \
+        "彩条左端是品牌绿、右端是蓝——渐变要贯通全宽"
+    for y in (60, 87, 95):
+        assert all(max(c) < 70 for c in row(y)), f"y={y} 该是深底——彩条要是还落在这儿就是又缩了"
