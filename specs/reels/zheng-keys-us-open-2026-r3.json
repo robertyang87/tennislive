@@ -1,0 +1,456 @@
+{
+  "slug": "zheng-keys-us-open-2026-r3",
+  "_column": "reel",
+  "layout": "band",
+  "scorebox": [
+    104,
+    887,
+    660,
+    980
+  ],
+  "_scorebox_why": "美网这一届同一条频道同一套转播图形，和已发的 `keys-bondar-us-open-2026-r2` / `wu-alcaraz-us-open-2026-r3`（104 / 887 / 660 / 980）逐条相同；本场 probe 就是带着这组数跑的，`point_ends` 报了 65 个死球时刻。⚠️ 右缘 660 只是兜底，真正的右缘是 `resolve_board_insets` 每段现量的（这块板每打完一盘右缘 +38px，本场三盘会经过三档）。",
+  "tts_backend": "edge",
+  "_tts_backend_why": "仓库的 `AZURE_SPEECH_KEY` 自 2026-09-03 起被 Azure 401 拒（`keys-bondar` / `zheng-putintseva` / `wu-alcaraz` 连着四条都死在第 2 秒的片尾配音上），账号所有者定的是「换 edge tts」。这一条退回 edge 零代价：没用 `voice.style`，也没用 `lead_pause`。本地 `--check-narration` 在这台沙箱跑的就是 edge-tts，量到的余量直接就是成片的真实情况。钥匙修好之后删掉这两个键就回到 Azure。",
+  "source_url": "https://www.youtube.com/watch?v=PiuDtMWKU2g",
+  "_source": "US Open 官方 YouTube 频道（oEmbed `author_name: US Open Tennis Championships`，yt-dlp `%(channel)s` 同）本场官方集锦 `Madison Keys vs. Qinwen Zheng Highlights | 2026 US Open Round 3`，probe 实测 215.09s / 1920×1080 / 29.97fps（过 1080p 硬闸），上传日期 20260905。画面自证四处：\n① 记分条 `22 KEYS USA / ZHENG CHN` 逐格比分和 flashscore `8QdDaEc5` 的逐分记录对得上（20.5s 首盘 `2 [15] / 1 [0]`、24.5s `SET POINT 5 [40] / 1 [15]` 凯斯发球、48.5s `7 POINT TIEBREAK 6 6 [2] / 1 6 [2]`、88.5s `SET POINT 6 6 [3] / 1 6 [6]`、116.5s 决胜盘 `6 6 1 [AD] / 1 7 0`、138.5s `MATCH POINT 6 6 5 [40] / 1 7 1 [30]` 凯斯发球、150.5s `BREAK POINT 6 6 5 / 1 7 1 [AD]`、174.5s `MATCH POINT 6 6 5 [30] / 1 7 6 [40]` 郑钦文发球）；\n② 44.5s / 112.5s / 172.5s 三次全屏图形，印着 `WOMEN'S SINGLES | 3RD ROUND · GRANDSTAND / 22 MADISON KEYS / QINWEN ZHENG`；38.5s 场边时钟 `0:23`（首盘用时），68.5s `1:22`，150.5s `2:0x`，190.5s `2:2x`；\n③ 球衣可分：郑钦文白背心＋薄荷绿短裙、无帽；凯斯薄荷绿连衣裙＋黑帽——两个人都穿薄荷绿，认人看帽子和上衣；\n④ 片尾 211.96s 起是美网品牌板（`silent_audio` 报 212.05s 之后数字静音），已排除在所有段之外。\n⚠️ 同一天同一频道只发了这一版（`Highlights`，215 秒）。",
+  "cover": {
+    "matchup": [
+      {
+        "name": "郑钦文",
+        "name_en": "Qinwen Zheng",
+        "country": "CHN",
+        "rank": 121
+      },
+      {
+        "name": "凯斯",
+        "name_en": "Madison Keys",
+        "country": "USA",
+        "rank": 24
+      }
+    ],
+    "_rank_why": "两人当期排名同一期、同一个权威源：WTA 官方 `players/ranked`（`rankedAt=2026-08-31T00:00:00Z`）：Qinwen Zheng 第 121（613 分，`page=1`，第一页只回 100 条）；Madison Keys 第 24（1909 分，`page=0`）。\n身份侧美网官方 `players/matches/wta328120_matches.json`（match_id 2314）印证：team1 凯斯 `seed: 22`，team2 郑钦文 `seed: null, entryStatus: \"Q\"`——她是从资格赛打上来的，名条上不写种子号。",
+    "_heat_why": "郑钦文 `country == CHN`，①档不用额外理由。对面是 2025 年澳网冠军、本届 22 号种子凯斯，而这一场本身是决胜盘 0-5 落后、救下赛点、连赢七局的逆转——转播原话（184.56s 起）：`has come back from the brink, five love down and has pulled off one of the biggest comebacks we've seen in recent years at the US Open`。",
+    "winner": "郑钦文",
+    "result": "1-6 7-6(3) 7-5",
+    "_result_why": "赢家视角，三处印证：flashscore 当日表 `8QdDaEc5` `AE÷Keys M.`(home) `AF÷Zheng Q.`(away)，`BA/BB=6/1 BC/BD=6/7 BE/BF=5/7`，`AG÷1 / AH÷2` 盘数 1:2，`DC÷3 / DD÷7` 是第二盘抢七小分；美网官方 match_id 2314 `scores.sets` = [[6,1],[6,7],[5,7]]、`sets[1].tiebreakDisplay` 3 / 7、team2 郑钦文 `totalSetsWon: 2, won: true`；源片 172.5s 全屏图形和 174.5s 记分条 `6 6 5 / 1 7 6`。\n抢七小分 `(3)` 是**输掉那一盘的人**（凯斯）拿到的分。第三盘 7-5 是局数分出的，没有抢七（`tiebreakDisplay` null）。",
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "郑钦文",
+    "topic": "美网第三轮 · 郑钦文 vs 凯斯",
+    "_topic_why": "按账号所有者 2026-09-03「封面左上角的副标题不要写球场号，写对阵双方」写成对阵。球场（Grandstand）在比分板头一行印着。",
+    "hook": "决胜盘零比五落后\n救赛点连赢七局",
+    "_hook_why": "两行框住的是**整场的形状**：谷底（决胜盘 0-5）→ 落点（救下赛点之后连赢七局）。事实各有出处：决胜盘前五局全丢（flashscore `df_mh_1` Set 3 逐局 1-0 / 2-0 / 3-0 / 4-0 / 5-0 都是主队拿下）；凯斯 5-1 发球 40-30 赛点（`5-2` 那一局 `40:30 |B3|`，`df_st_1` `Match points saved` 客队 1）；之后 5-2 / 5-3 / 5-4 / 5-5 / 5-6 / 5-7 六局加上 5-1 那一局，郑钦文连赢七局。\n⚠️ 不重复比分板：板上印 1-6 7-6(3) 7-5，钩子一个盘分都没写。行长 8 字 / 7 字，都在 `HOOK_MAX_CHARS = 10` 之内。",
+    "portrait": {
+      "image": "assets/reel/zheng-us-open-2026-r3-celebrate.jpg",
+      "fit": "width",
+      "focus": 0.5,
+      "focus_y": 0.0,
+      "zoom": 1.0,
+      "_photo_why": "AP 通讯社这一场的实拍（`find_cover_photo.py --player Zheng --event \"US Open\" --date 2026-09-05` 在赛后约五小时扫到），原图 4331×2887，说明自带四要素：`Zheng Qinwen, of China, gestures after she won her match against Madison Keys, of the United States, during the third round of the U.S. Open tennis championship`——赢球那一刻、这一场、双臂高举、笑容读得出来，正是这条片子讲的情绪；打开看过（`assets.apnews.com/92/a9/ee787a89…`）。\n⚠️ 赛后头三个小时 AP 是空的，那时只有美网官方图片接口的 4 张 1280×720（三张击球中、一张入场，都落在 `assets/reel/zheng-us-open-2026-r3-backhand.jpg` / `-fist.jpg` 备用）；USA TODAY 9/5、9/6 的 sitemap 里没有网球辑。**「还没发」不是「没有」**——多等了一会儿就拿到了 4331px 的原图。",
+      "_fit_why": "横图 3:2，按高度铺满（`cover`）时她的脸落在画布 y 650~1035——正好压在钩子带（790 起）里；zoom 到 1.6 才能把下巴抬到 790 之上，而那会把高举的双臂和球拍整个切出画面，这张照片的意思就没了。所以走 `fit: width`：整幅照片 1080×720 按宽铺、上下垫同图的模糊放大版（`PAD_FILTER`），`focus_y: 0` 让照片贴在台头带底下——脸落在钩子带之上、双臂和球拍完整。渲出来量过，见 `_zoom_why`。",
+      "_zoom_why": "代价是人比 `cover` 那条路小一圈（脸约 190px 高），撞上「优先近景、放大到接近铺满」——取舍的理由是：`cover` 那条路上脸和钩子两行字必然重叠，而「脸被字横穿」是账号所有者 2026-08-31 当场退回过的那种错，比人小一圈重得多。"
+    },
+    "scoreboard": {
+      "court": "Grandstand",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%222%3A28%3A00%22%2C%22source%22%3A%22US%20Open%20official%20players%2Fmatches%20wta328120_matches.json%20match_id%202314%20duration%202%3A28%20%3D%20setDurations%2023%2B63%2B62%22%7D",
+        "field": "duration"
+      },
+      "_court_why": "三源一致：美网官方 match_id 2314 `courtName: \"Grandstand\"`；源片 44.5s / 112.5s 全屏图形印着 `GRANDSTAND`；解说 101.76s `we are going the distance here on the grand sand`（ASR 把 Grandstand 听成两个词）。",
+      "_duration_why": "官方 **2:28**（`duration: \"2:28\"`，`setDurations: [23, 63, 62]`，23+63+62=148 分钟＝2:28，自洽）。flashscore `df_sui_1` 报 0:23 / 1:04 / 1:02 全场 2:29，比官方多一分钟——按「用时以官方为准」取 2:28。flashscore 自己的 AD/AO 时间戳相差 147.3 分钟，也站在官方这边。源片 38.5s 场边时钟 `0:23` 和首盘用时对得上。"
+    },
+    "_no_cover_narration_why": "赛场之上的封面是定长 1.2 秒的短亮相（`COVER_SECONDS`），封面跟着配音走只给网球有故事——`test_封面跟着配音走只给网球有故事` 钉着这一条。钩子那两行只印在海报上，不念。"
+  },
+  "_match": {
+    "status": "result_verified",
+    "source": "flashscore_points",
+    "source_id": "8QdDaEc5",
+    "flashscore_id": "8QdDaEc5",
+    "participants": [
+      "凯斯",
+      "郑钦文"
+    ],
+    "set_scores_home_away": [
+      [
+        6,
+        1
+      ],
+      [
+        6,
+        7
+      ],
+      [
+        5,
+        7
+      ]
+    ],
+    "tiebreaks_home_away": [
+      null,
+      [
+        3,
+        7
+      ],
+      null
+    ],
+    "winner": "郑钦文",
+    "loser": "凯斯",
+    "winner_result": "1-6 7-6(3) 7-5",
+    "loser_result": "6-1 6-7(3) 5-7",
+    "_direction_why": "flashscore `AE÷Keys M.` 是 home、`AF÷Zheng Q.` 是 away，`AG÷1 / AH÷2` 盘数 1:2，赢家是郑钦文；美网官方 team2 郑钦文 `won: true`；`df_st_1` `Match points saved` 主队 0 / 客队 1（救赛点的是赢家）。",
+    "_order_why": "⚠️ `participants` 跟 flashscore 的 home/away（凯斯是 home），**和 `cover.matchup` 正好相反**——`participants[0]=凯斯` 对齐 `set_scores_home_away[0]=[6,1]`（home 首盘 6 局）。`stats.a` 跟的是 matchup，所以那一块是反过来抄的。",
+    "_tiebreak_why": "第二盘抢七是普通抢七（不是决胜盘），flashscore 当日表 `DC÷3 / DD÷7`（第二盘那一对槽位），美网官方 `sets[1].tiebreak` 3 / 7。首盘和决胜盘都是局数分出的，写 null。"
+  },
+  "stats": {
+    "a": {
+      "aces": 2,
+      "df": 5,
+      "winners": 25,
+      "ue": 22,
+      "first_in": 45,
+      "first_won": 35,
+      "second_total": 45,
+      "second_won": 24,
+      "bp_conv": 4,
+      "bp_chances": 8,
+      "pts_won": 98,
+      "pts_total": 195,
+      "first_total": 90,
+      "headshot": "assets/players/wta-328120-zheng-qinwen.png"
+    },
+    "b": {
+      "aces": 4,
+      "df": 1,
+      "winners": 27,
+      "ue": 34,
+      "first_in": 72,
+      "first_won": 49,
+      "second_total": 35,
+      "second_won": 14,
+      "bp_conv": 5,
+      "bp_chances": 8,
+      "pts_won": 97,
+      "pts_total": 195,
+      "first_total": 107,
+      "headshot": "assets/players/headshots/wta-316959.jpg"
+    },
+    "_source": "flashscore `8QdDaEc5` 的 `df_st_1`（Match 那一档，`match_stat_hooks.py --stats-block` 直接吐的）。这场**有**制胜分和非受迫失误（郑钦文 25/22，凯斯 27/34），已填。\n⚠️ `stats.a` 跟 `cover.matchup[0]`（郑钦文），而 flashscore 的 home 是凯斯——所以工具吐出来的 a/b **对调**过才填进来：a 是接口的客队（Zheng），b 是主队（Keys）。头像跟着数字走：左边 `wta-328120` 是郑钦文、右边 `wta-316959` 是凯斯。\n`first_total` 按 `first_in + second_total` 算（45+45=90、72+35=107）。"
+  },
+  "_hit_data": [
+    {
+      "label": "总分差",
+      "detail": "郑钦文 98 - 凯斯 97，全场只多赢一分",
+      "source": "flashscore df_st_1（Total Points Won 98/195 vs 97/195）"
+    },
+    {
+      "label": "决胜盘 0-5",
+      "detail": "决胜盘前五局全丢，凯斯 5-1 发球胜赛局 40-30 拿到赛点，郑钦文救下之后连赢七局 7-5",
+      "source": "flashscore df_mh_1 逐局 + df_st_1 Match points saved 客队 1"
+    },
+    {
+      "label": "凯斯最后三个发球局全被破",
+      "detail": "5-1、5-3、5-5 三个发球局连续被破",
+      "source": "flashscore df_mh_1（主队连续被破 3 个发球局）"
+    },
+    {
+      "label": "首盘 23 分钟",
+      "detail": "首盘一发只进百分之二十九、四个双误，35 分只拿到 10 分",
+      "source": "flashscore df_st_1 Set 1（1st serve 29%、DF 4、Total Points 10/35）；官方 setDurations[0]=23"
+    },
+    {
+      "label": "一发得分率摆动",
+      "detail": "郑钦文一发得分率 50% → 89% → 74%；凯斯 87% → 70% → 56%",
+      "source": "flashscore df_st_1 分盘"
+    },
+    {
+      "label": "失误对比",
+      "detail": "凯斯非受迫失误 34 对 22，其中第二盘 16 对 6",
+      "source": "flashscore df_st_1（Unforced errors）"
+    },
+    {
+      "label": "最后十分",
+      "detail": "全场最后十个球郑钦文赢了八个",
+      "source": "flashscore df_st_1（Last 10 balls 2 / 8）"
+    },
+    {
+      "label": "交手记录",
+      "detail": "三次交手郑钦文 2-1 领先：2023 华盛顿凯斯胜，2026 年 3 月迈阿密郑钦文三盘胜，本场",
+      "source": "flashscore df_hh_1（Keys M. 1 : 2 Zheng Q.，含本场）"
+    }
+  ],
+  "_no_repeat": "同栏目已发的 `zheng-liutova-us-open-2026-r1` 铺开讲过「456 天」「Queen Wen is back」那条复出线，`zheng-putintseva-us-open-2026-r2` 讲过「总分只多三分、决胜盘 6-1」那组一发二发的数。这一条一个字都不碰那两条线，只留「从资格赛打上来」一句带过（看不懂这场球所必需的来路）。这一条要的是**这一场自己的形状**：首盘 23 分钟、抢七、决胜盘 0-5 到 7-5。",
+  "_durations": [
+    [
+      "Set 1",
+      "0:23"
+    ],
+    [
+      "Set 2",
+      "1:03"
+    ],
+    [
+      "Set 3",
+      "1:02"
+    ],
+    [
+      "全场",
+      "2:28"
+    ]
+  ],
+  "_turning_points": [
+    {
+      "label": "【Set 1】5-1 凯斯发球，40-15 盘点拿下首盘（23 分钟）",
+      "density": 3,
+      "tags": [
+        "1个盘点"
+      ]
+    },
+    {
+      "label": "【Set 2】5-3 郑钦文发球胜盘被破回，抢七 7-3 追平",
+      "density": 4,
+      "tags": [
+        "1个破发点",
+        "1个盘点"
+      ]
+    },
+    {
+      "label": "【Set 3】0-1 郑钦文发球，凯斯第三个破发点破掉，之后 5-0",
+      "density": 3,
+      "tags": [
+        "3个破发点"
+      ]
+    },
+    {
+      "label": "【Set 3】5-1 凯斯发球胜赛局，40-30 赛点被救下，破发",
+      "density": 5,
+      "tags": [
+        "1个赛点",
+        "1个破发点"
+      ]
+    },
+    {
+      "label": "【Set 3】5-3 凯斯发球零封被破，5-5 再被破，6-5 郑钦文发球 40-30 赛点收下",
+      "density": 5,
+      "tags": [
+        "2个破发点",
+        "1个赛点"
+      ]
+    }
+  ],
+  "_turning_points_why": "按记分条（画面自证）＋ flashscore 逐分写的：24.5s `SET POINT 5 [40] / 1 [15]` 发球指示在 KEYS；88.5s `SET POINT 6 6 [3] / 1 6 [6]` 指示在 KEYS（凯斯发球、郑钦文 6-3 手握盘点）；116.5s `6 6 1 [AD] / 1 7 0` 指示在 ZHENG（她发球、凯斯占先＝破发点）；138.5s `MATCH POINT 6 6 5 [40] / 1 7 1 [30]` 指示在 KEYS；150.5s `BREAK POINT 6 6 5 / 1 7 1 [AD]`；174.5s `MATCH POINT 6 6 5 [30] / 1 7 6 [40]` 指示在 ZHENG。\n⚠️ flashscore 逐局的行标是「打完之后的比分」：`5-2 主队发球 40:30 |B3|` 那一局，场上是凯斯 **5-1** 发球，记分条 138.5s 印的就是 5-1——旁白按记分条写 5-1。",
+  "editorial": {
+    "mode": "match_review",
+    "hook": [
+      "决胜盘零比五落后",
+      "救赛点连赢七局"
+    ],
+    "_hook_why": "这一栏和 `cover.hook` 必须逐字相同。理由见 `cover._hook_why`。",
+    "question": "首盘 23 分钟就 1-6 输掉、决胜盘 0-5 落后还面对赛点的一场球，郑钦文是怎么把它翻回来的？",
+    "thesis": "凯斯赢了首盘的 35 分里的 25 分，可从第二盘起她的非受迫失误涨到 16 个、决胜盘 15 个，一发得分率从百分之八十七一路掉到百分之五十六；郑钦文这边一发得分率从百分之五十提到百分之八十九、决胜盘上网 6 次拿 6 分。决胜盘 5-1 凯斯发球胜赛局的那个赛点被救下之后，凯斯最后三个发球局全部被破——全场 195 分郑钦文只多赢一分，而最后十分她赢了八分。",
+    "beats": [
+      "首盘 23 分钟：郑钦文一发只进百分之二十九、四个双误，35 分只拿 10 分，1-6；凯斯一发得分率百分之八十七。",
+      "第二盘她 5-3 发球胜盘被破回，抢七 2-2 之后连拿六分里的五分，7-3 追平；这一盘凯斯 16 个非受迫失误对 6 个。",
+      "决胜盘凯斯连赢五局到 5-0，5-1 发球胜赛局 40-30 赛点；郑钦文救下、破发，之后凯斯 5-3、5-5 两个发球局再被破，6-5 郑钦文发球 40-30 赛点收下——从 0-5 连赢七局，最后十分赢八分。"
+    ],
+    "human_context": {
+      "angle": "世界第 121、从资格赛打上来的人，赢了 22 号种子、2025 年澳网冠军；而凯斯上一轮（第二轮）刚连救五个赛点逆转邦达尔，这一轮自己的赛点没握住。转播把这场叫作「近几年美网最大的逆转之一」。",
+      "facts": [
+        "美网官方 matches feed（match_id 2314）：team1 凯斯 seed=22；team2 郑钦文 seed=null、entryStatus=Q；courtName Grandstand；duration 2:28",
+        "WTA 官方 players/ranked（rankedAt 2026-08-31）：郑钦文第 121、凯斯第 24",
+        "flashscore df_hh_1：Keys M. 1 : 2 Zheng Q.（含本场），此前 2023 华盛顿凯斯胜、2026 迈阿密郑钦文胜",
+        "同栏目已发 `keys-bondar-us-open-2026-r2`：凯斯第二轮决胜盘 2-5 落后连救五个赛点 7-6(5) 逆转邦达尔（flashscore df_st_1 Match points saved 5）",
+        "转播原声 184.56~201.36s：`the qualifier from China … the Olympic gold medalist a couple years ago has come back from the brink, five love down and has pulled off one of the biggest comebacks we've seen in recent years at the US Open`"
+      ],
+      "sources": [
+        "https://www.usopen.org/en_US/scores/feeds/2026/players/matches/wta328120_matches.json",
+        "https://api.wtatennis.com/tennis/players/ranked?page=1&pageSize=100&type=rankSingles&sort=asc&metric=SINGLES",
+        "https://www.youtube.com/watch?v=PiuDtMWKU2g"
+      ]
+    }
+  },
+  "topbar": {
+    "line1": "2026 美网 女单第三轮",
+    "line2": "郑钦文 1-6 7-6(3) 7-5 凯斯"
+  },
+  "push": {
+    "summary": "郑钦文零比五落后逆转凯斯",
+    "_summary_why": "真调 `push_reel.headline()` 量过：不带 `event` 是 `9.6 赛场之上 | 郑钦文零比五落后逆转凯斯`，过闸；带「美网」23 字位被 `_fits` 拦。主语（郑钦文）＋ 比分板上看不见的事实（零比五落后）＋ 结果（逆转凯斯）。哪一站交给 `lead` 第一句。",
+    "lead": "美网女单第三轮，大看台球场。世界第 121、从资格赛打上来的郑钦文 1-6 7-6(3) 7-5 逆转 22 号种子、2025 年澳网冠军凯斯，打了两小时二十八分钟。首盘只用 23 分钟就 1-6 丢掉，决胜盘她 0-5 落后，凯斯 5-1 发球胜赛局拿到赛点——她救下来，然后连赢七局。凯斯最后三个发球局全部被破。全场 195 分她只多赢一分（98 比 97），最后十分她赢了八分。上一轮连救五个赛点的凯斯，这一次自己的赛点没握住。",
+    "auto": true
+  },
+  "segments": [
+    {
+      "start": 177.0,
+      "end": 187.3,
+      "narration": "",
+      "score_inset": true,
+      "crosses_cut": "跨 183.97：赛点那一分的最后几拍 → 球落地后她仰面躺倒在场上（184.5s、186.5s 两格）。同一分的连续画面，同一个人，这一刀正是「球落地」那一刻。",
+      "_ending_payoff_required": true,
+      "_why": "**第①格：全片最强的一格。** 不配旁白，靠现场声——解说 183.28s `That is it.`，然后她整个人仰面倒在场上，看台起立。记分条 `MATCH POINT 6 6 5 [30] / 1 7 6 [40]`，发球指示在 ZHENG（她 6-5 发球、40-30 赛点）。\n⚠️ 后段冷开场：正文第 ⑯ 段（176.0→187.3）完整覆盖 177.0→187.3，`ending_payoff_problem` 要的就是这个覆盖关系。`score_inset: true`：177~184 板一直在，184 之后板淡出由现量收掉。",
+      "fit": "crop"
+    },
+    {
+      "start": 186.9,
+      "end": 192.0,
+      "narration": "凯斯五比零领先、手握赛点，然后连输七局。",
+      "score_inset": false,
+      "_score_inset_why": "凯斯赛后近景，记分条已经撤掉（score_04 的 188.5、190.5 两格都没有板）。",
+      "_why": "第②句给落点，主语是画面里这个人：187~192 是凯斯赛后的近景（黑帽、薄荷绿连衣裙，背后时钟 `2:2x`），旁白讲的正是她——五比零、赛点、连输七局，避免把讲郑钦文的话压在对手脸上。三个数：决胜盘 5-0（df_mh_1）、赛点（5-1 那一局 40:30 |B3|）、连输七局（5-1 之后 5-2 / 5-3 / 5-4 / 5-5 / 5-6 / 5-7 加 5-1 那一局本身，凯斯一局没再赢）。",
+      "fit": "crop"
+    },
+    {
+      "start": 4.0,
+      "end": 20.0,
+      "narration": "北京时间九月五日夜里十一点多，美网第三轮，大看台球场。世界第一百二十一、从资格赛打上来的郑钦文，对面是二十二号种子凯斯。首盘她的一发只进了百分之二十九。",
+      "score_inset": true,
+      "_why": "第③格交代坐标，接着首盘的数。画面是首盘 2-1 郑钦文发球的底线回合（记分条 `2 / 1`，发球指示在 ZHENG），谁都没露脸的宽景，正好放身份；loose 切点 18.82 只是镜头微动，两边同一个回合。开球时刻取 flashscore `AD=1788621000`＝北京时间 2026-09-05 23:10，按「不报到分」的档位（分钟 10 落在 10~39）说「夜里十一点多」；官方 feed 的 `epoch` 是结束时刻不是开球。排名和种子见 `cover._rank_why`。首盘两个数出自 `df_st_1` Set 1：`1st serve percentage 29%`、`Total Points Won 10/35`。段尾 20.0 停在 `point_ends` 20.22 之前、下一分开始之前。",
+      "fit": "crop"
+    },
+    {
+      "start": 24.0,
+      "end": 31.2,
+      "narration": "这一盘三十五分她只拿到十分。五比一，凯斯发球，盘点。",
+      "score_inset": true,
+      "_why": "画面：记分条 `SET POINT 5 [40] / 1 [15]`，发球指示在 KEYS——凯斯 5-1 发球、40-15 盘点，24.5s 一格是她的近景、26.5~30.5 是那一分的回合。段尾 31.2 停在切点 31.28 之前（`point_ends` 31.33 就是这一分落地）。",
+      "fit": "crop"
+    },
+    {
+      "start": 31.4,
+      "end": 39.4,
+      "narration": "二十三分钟，一比六。转播说，这是凯斯近乎完美的一盘。",
+      "score_inset": true,
+      "crosses_cut": "跨 36.59（loose）：凯斯赢盘后的近景（32.5~36.5）→ 场边时钟 `0:23`（38.5s）。同一个赛后时刻，时钟那一格正是旁白里「二十三分钟」的自证。",
+      "_why": "画面：凯斯拿下首盘之后的近景（黑帽、薄荷绿连衣裙）和场边劳力士时钟 `0:23`。「近乎完美的一盘」是转播原话 25.68~30.16s `Pretty much the perfect set for Madison Keys`，转述标了出处。用时出自官方 `setDurations[0]=23`。",
+      "fit": "crop"
+    },
+    {
+      "start": 48.3,
+      "end": 58.5,
+      "narration": "第二盘，她五比三领先，发球胜盘却被破了回来。抢七，二比二，她发球。",
+      "score_inset": true,
+      "_why": "画面：`7 POINT TIEBREAK 6 6 [2] / 1 6 [2]`，发球指示在 ZHENG——抢七 2-2 她发球，48.5s 一格是她发球的近景、50.5~58.5 是回合。「5-3 发球胜盘被破」出自 df_mh_1 Set 2 行标 `4-5 客队发球，主队拿下 ← 破发`（打完之后 4-5，也就是她 5-3 发球那一局）。",
+      "fit": "crop",
+      "crosses_cut": "跨 49.60：她抢七 2-2 发球前的近景（48.5s，白背心）→ 那一分的宽景回合。同一分、同一个人，切的是机位。"
+    },
+    {
+      "start": 58.5,
+      "end": 64.9,
+      "narration": "她没有退。转播说：够勇敢，不再被动了。三比二。",
+      "score_inset": true,
+      "crosses_cut": "跨 62.06（loose）：回合的最后几拍 → 她赢下这一分后走回底线（62.5、64.5 两格，白背心）。同一分、同一个人。",
+      "_why": "画面：抢七 2-2 那一分的收尾和她赢分后的走位，64.5s 记分条已翻成 `[2] / [3]`。转播原话 61.44~66.64s `That's so good from Kinw. Brave taking it on. >> Not getting passive.`——「没有退」是画面（她上前把球拿下）也是解说的意思，两句引语标了出处。段尾 64.9 停在切点 65.01 之前。",
+      "fit": "crop"
+    },
+    {
+      "start": 70.6,
+      "end": 84.2,
+      "narration": "凯斯发球，二比三。这一盘她的非受迫失误从三个涨到了十六个——这一分，一记放小球打丢了，转播说代价很大。二比四。",
+      "score_inset": true,
+      "crosses_cut": "跨 81.65（loose）：那一分的宽景回合（72.5~80.5）→ 82.5 郑钦文走位。同一分的收尾。",
+      "_why": "画面：`7 POINT TIEBREAK 6 6 [2] / 1 6 [3]`，发球指示在 KEYS——凯斯 2-3 发球，70.6 起是那一分的宽景回合。回合末尾转播 80.72~82.80s `The wrong shot. The drop shot. That is costly.`，84.5s 记分条翻成 `[2] / [4]`——放小球打丢的是凯斯（她发球、丢分的是她）。失误数出自 `df_st_1`：Set 1 `Unforced errors` 主队 3、Set 2 主队 16。段尾 84.2 停在切点 84.35（看台）之前。",
+      "fit": "crop"
+    },
+    {
+      "start": 88.3,
+      "end": 102.6,
+      "narration": "六比三，盘点，凯斯发球。二比二之后的六分，她拿了五分。这一分落地，抢七，七比三——第二盘追了回来，一比一。",
+      "score_inset": true,
+      "crosses_cut": "跨 90.99 / 99.07：她在盘点前的近景（88.5、90.5）→ 盘点那一分的宽景回合（92.5~98.5）→ 赢下这一盘后的近景（100.5、102.5）。同一分前后，同一个人。",
+      "_why": "画面：`SET POINT 6 6 [3] / 1 6 [6]`，发球指示在 KEYS——凯斯发球、郑钦文 6-3 手握盘点。解说 98.88~106.32s `So, Kinwen fights back and takes the second set. And we are going the distance here on the grand sand. One set all.`。「二比二之后六分拿五分」按记分条推：2-2 → 2-3 → 2-4（84.5s）→ 3-4 → 3-6（88.5s）→ 3-7，凯斯只拿了一分。段尾 103.0 停在切点 103.05 之前。",
+      "fit": "crop"
+    },
+    {
+      "start": 116.3,
+      "end": 131.2,
+      "narration": "决胜盘，凯斯又变回了首盘那个凯斯。第二局，郑钦文发球，前两个破发点她救下了，第三个——转播说，这一次美国人没有任何问题。破发，二比零。",
+      "score_inset": true,
+      "crosses_cut": "跨 118~131 这一段只有 131.33 那一刀在段尾之外；116.5 是凯斯的近景（记分条 `6 6 1 [AD] / 1 7 0`），118.5~126.5 是那个破发点的宽景回合，128.5~130.5 凯斯走回底线。同一分前后。",
+      "_why": "画面：决胜盘 0-1 郑钦文发球（发球指示在 ZHENG），凯斯 AD＝破发点。df_mh_1 Set 3 行标 `2-0 客队发球，主队拿下 ← 3 个破发点`：40:15 / 40:30 两个没兑现，A:40 第三个兑现——记分条 `AD` 正是第三个。转播 126.24s `No problems this time for the American`、132.56s `Madison Keys gets the vital break in this third set`。",
+      "fit": "crop"
+    },
+    {
+      "start": 131.4,
+      "end": 135.3,
+      "narration": "然后是五比零。",
+      "score_inset": false,
+      "_score_inset_why": "看台观众鼓掌的近景（132.5、134.5 两格），记分条不在画面里。",
+      "_why": "画面：凯斯破发之后看台鼓掌（解说 129.60s `the crowd are urging their player on`）。决胜盘前五局全归凯斯（df_mh_1 Set 3：1-0 / 2-0 / 3-0 / 4-0 / 5-0）。段尾 135.3 停在切点 35.37 之前。",
+      "fit": "crop"
+    },
+    {
+      "start": 135.5,
+      "end": 147.6,
+      "narration": "五比一，凯斯上来发球胜赛局。首盘一发得分率百分之八十七的她，这一盘只剩百分之五十六。四十比三十，赛点。",
+      "score_inset": true,
+      "crosses_cut": "跨 140.46：135.5~140.4 是换边后郑钦文在后场擦汗（136.5，白背心）和凯斯发球前的近景（138.5，记分条 `MATCH POINT`）→ 140.5~146.5 赛点那一分的宽景回合。同一个赛点前后。",
+      "_why": "画面：`MATCH POINT 6 6 5 [40] / 1 7 1 [30]`，发球指示在 KEYS——凯斯 5-1 发球、40-30 赛点（df_mh_1 `5-2 主队发球 40:30 |B3|`，df_st_1 `Match points saved` 客队 1）。段尾 147.6 停在切点 147.7 之前，也就是这一分落地之前（148.16s 解说 `Huge.`，148.5s 记分条翻成 40-40）——观众看见的是她救这一分的过程。⚠️ `point_ends` 在 138~163 之间没报，记分条那一刻正被 `MATCH POINT` 黄标盖着，段尾按切点定。\n一发得分率两个数出自 `df_st_1`：Set 1 `1st serve points won 87% (13/15)`、Set 3 `56% (15/27)`，都是主队（凯斯）。",
+      "fit": "crop"
+    },
+    {
+      "start": 147.8,
+      "end": 151.5,
+      "narration": "救下了。平分，破发点。",
+      "score_inset": true,
+      "crosses_cut": "跨 151.57 之前没有硬切点；148.5 是凯斯的近景（记分条 `[40] / [40]`）→ 150.5 郑钦文接发球前（`BREAK POINT … [AD]`，场边时钟 `2:0x`）。同一局连着的两分。",
+      "_why": "画面：148.5s 记分条 `6 6 5 [40] / 1 7 1 [40]`（赛点被救下，平分），150.5s `BREAK POINT 6 6 5 / 1 7 1 [AD]`（郑钦文占先＝破发点）。df_mh_1 `5-2` 那一局：40:30 |B3| → 40:40 → 40:A |B1|。",
+      "fit": "crop"
+    },
+    {
+      "start": 151.7,
+      "end": 162.1,
+      "narration": "这一分打完，五比二。转播说，郑钦文反击了，她救下了一个赛点。可凯斯还领先着。",
+      "score_inset": true,
+      "_why": "画面：破发点那一分的宽景回合（152.5~160.5，记分条 `BREAK POINT … [AD]`）。解说 161.84~169.68s `Well done, Kinwen. Jung strikes back, saves a match point, but it is Madison Keys still with the strong lead. 5-2 final set.`。段尾 162.1 停在切点 162.3 之前。",
+      "fit": "crop"
+    },
+    {
+      "start": 162.4,
+      "end": 171.2,
+      "narration": "凯斯之后三个发球局全被破：五比三，五比五。零比五落后的人，把比分翻成了六比五。",
+      "score_inset": false,
+      "_score_inset_why": "162.5、164.5 是郑钦文擦汗的近景，166.5、168.5 是看台——四格都没有记分条（score_04 那一行的 162.5 有半截板，164.5 起没有；按窄里收，整段不贴）。",
+      "crosses_cut": "跨 166.08 / 169.32：郑钦文破发后擦汗的近景（背后时钟 `2:1x`）→ 看台观众 → 170.5 凯斯走向场边换边。同一个换边前后的时刻；旁白讲的是凯斯的发球局被破，170.5 那一格正是她。",
+      "_why": "画面：她破发之后走向场边擦汗、看台。这一段旁白把 5-2 到 6-5 之间没有画面的三局说清楚：df_mh_1 Set 3 行标 `5-3` 郑钦文保发、`5-4 主队发球，客队拿下`（凯斯 5-3 发球被零封破）、`5-5` 郑钦文保发、`5-6 主队发球，客队拿下`（凯斯 5-5 发球再被破）——凯斯 5-1、5-3、5-5 三个发球局连续被破（`match_stat_hooks`：主队连续被破 3 个发球局）。",
+      "fit": "crop"
+    },
+    {
+      "start": 171.4,
+      "end": 176.9,
+      "narration": "六比五，她发球，四十比三十——赛点在她手里。",
+      "score_inset": true,
+      "crosses_cut": "跨 175.79：172.5 全屏图形 → 174.5 郑钦文发球前的近景（`MATCH POINT 6 6 5 [30] / 1 7 6 [40]`）→ 176 起赛点那一分的开头。换边到她上来发球的连续过程，落点在 174.5 她的脸上。",
+      "_why": "画面：记分条 `MATCH POINT 6 6 5 [30] / 1 7 6 [40]`，发球指示在 ZHENG——她 6-5 发球、40-30 赛点（df_mh_1 `5-7 客队发球 30:40 |B3|`，显示是主:客，30:40 就是凯斯 30、郑钦文 40）。⚠️ 中间那格 172.5 是全屏图形，`score_inset` 现量会在没板的那几秒自动不贴。",
+      "fit": "crop"
+    },
+    {
+      "start": 177.0,
+      "end": 187.3,
+      "narration": "两小时二十八分钟，她仰面躺在了地上。转播说：从悬崖边回来，近几年美网最大的逆转之一。",
+      "score_inset": true,
+      "crosses_cut": "和第①段同一分的连续画面，跨 183.97：赛点那一分的最后几拍 → 她仰面躺倒在场上。",
+      "_ending_payoff_required": false,
+      "_why": "正文重新走到结局，**和第①段冷开场是同一个窗口 177.0~187.3，完整覆盖**。「两小时二十八分钟」＝官方用时；「仰面躺在了地上」是画面本身（184.5、186.5 两格她躺在球场上），不是替她说话。转播原话 184.56~201.36s `has come back from the brink, five love down and has pulled off one of the biggest comebacks we've seen in recent years at the US Open`，转述标了出处、去掉了「五比零」（第②句已说过）。",
+      "fit": "crop"
+    },
+    {
+      "start": 192.1,
+      "end": 197.0,
+      "narration": "全场她只多赢一分：九十八比九十七。",
+      "score_inset": false,
+      "_score_inset_why": "赛后她走向网前、和凯斯握手，记分条已经撤掉（score_04 / score_05 的 192.5 之后每一格都没有板）。",
+      "crosses_cut": "跨 196.61 之前：她笑着走向网前（192.5~196.5，白背心、举着球拍）。",
+      "_why": "画面：赢球之后她笑着走向网前。「只多赢一分」＝ df_st_1 `Total Points Won 98/195 vs 97/195`。",
+      "fit": "crop"
+    },
+    {
+      "start": 197.2,
+      "end": 211.6,
+      "narration": "上一轮连救五个赛点的凯斯，这一次自己的赛点没握住。从资格赛第一轮打到十六强，郑钦文已经连赢六场。这样的翻盘，你上一次看见是什么时候？",
+      "score_inset": false,
+      "_score_inset_why": "握手、举拍致意、球员包厢鼓掌，全是赛后画面，没有记分条。",
+      "crosses_cut": "跨 204.2 / 206.97 / 210.56：网前和凯斯握手（198.5~202.5）→ 她握拳、举拍向看台致意（204.5、206.5）→ 球员包厢起立鼓掌（208.5、210.5）。赛后同一段连续过程，主体一直是她和她的团队。",
+      "_why": "画面：握手 → 她向看台举拳、举拍 → 包厢鼓掌。收尾落在一问上，不停在数据上。「凯斯上一轮连救五个赛点」＝同栏目已发的 `keys-bondar-us-open-2026-r2`（df_st_1 `Match points saved 5`）；「连赢六场」＝资格赛三轮（尤晓迪、布雷尔、普里丹基纳）＋ 正赛三轮（柳托娃、普汀塞娃、凯斯），前五条各有已发的 spec；「十六强」＝第三轮赢了之后进第四轮，按「8 强 / 4 强 / 16 强」的写法。\n⚠️ 段尾 211.6 ＋ `SEG_FADE` 0.18 ＝ 211.78，停在片尾板那一刀（211.96）和数字静音（212.05）之前。",
+      "fit": "crop"
+    }
+  ],
+  "_editing_why": "**probe**：`output/2026-09-06/reel/zheng-keys-us-open-2026-r3/probe.json`（run 33983076180，带 `--scorebox 104,887,660,980`，`point_ends` 报了 65 个时刻）。\n**段尾按 `point_ends` ＋ `scene_cuts` 定**：每一段的段尾都落在切点之前、这一分已经落地之后（例外是第 ⑫ 段，段尾故意停在赛点那一分落地之前，理由写在那一段里）。\n**认人看帽子**：两个人都穿薄荷绿，凯斯是黑帽＋薄荷绿连衣裙，郑钦文是白背心＋薄荷绿短裙、无帽。第②段（凯斯近景）旁白主语是凯斯；第 ⑯⑰⑱ 段的近景全是白背心。\n**没有画面的三局**（5-2 → 6-5）由第 ⑮ 段旁白交代，压在她擦汗和看台的画面上。\n**第一版渲之前跑过**：`--dry-run`、`preview_segments_local`（逐段对记分条）、`--check-narration`（edge 真跑）。"
+}
