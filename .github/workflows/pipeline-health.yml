@@ -28,6 +28,12 @@ jobs:
             data/explainer_publish_ledger/*.json
             output/**/render.json
             tools/pipeline_health.py
+            # ⚠️ 叫醒挨饿班次那一步 `source` 它。这条是**逐文件**列的
+            # （不像 orchestrate / reel-auto-ready 那样整个 `tools`），
+            # 漏了它那一步每小时 `No such file or directory` 一次——
+            # 而后果是双份的：pipeline-health 这条监控线自己常年红，
+            # 且 nudge 从装上（#629）起在这个宿主上一次都没生效过。
+            tools/nudge_stale_ticks.sh
           sparse-checkout-cone-mode: false
 
       # 每趟用唯一 key 保存一份很小的 JSON；restore-keys 会拿同分支最近一份。
