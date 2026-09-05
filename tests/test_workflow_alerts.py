@@ -905,3 +905,82 @@ def test_会下载媒体的工作流都要装ffmpeg():
           "`ensure_ffmpeg`（步骤的 timeout-minutes 要 ≥ 15 分，够走完静态构建"
           "落空之后的 apt 老路）。缺了它报的是 `Postprocessing: ffprobe and "
           "ffmpeg not found`，而那句会被包进「这条源下不动」里，看不出是装少了。")
+
+
+def _sparse_lists(job_body: str) -> list[list[str]]:
+    """这个 job 的稀疏检出列了哪几条路径（可能有多个 checkout）。"""
+    out = []
+    for m in re.finditer(r"sparse-checkout:\s*\|\n((?:[ \t]+\S.*\n)+)", job_body):
+        out.append([ln.strip() for ln in m.group(1).splitlines() if ln.strip()])
+    return out
+
+
+def _sparse_reaches(entries: list[str], script: str, pkg: str) -> bool:
+    """这一份稀疏检出够不够得着 `script`。
+
+    三种写法都要认，少认一种就是假阳性：
+
+    - 文件级   `tools/nudge_stale_ticks.sh`
+    - 目录级   `tools`（orchestrate / reel-auto-ready 就是这么写的）
+    - **全都要** `/*` 或 `*`（`--no-cone` 的 gitignore 语义，`ci.yml` 和
+      `frame-grab.yml` 就是这么写的，后面再用 `!` 排掉几格）
+
+    ⚠️ 第三种是这条判据第二次被收窄的原因：只认前两种时它把 `ci.yml::test`
+    和 `frame-grab.yml::grab` 报成缺——**而 CI 一直是绿的**，两个数一打架就
+    知道是判据错了，不是工作流错了。
+    """
+    if any(e == script or e == pkg for e in entries):
+        return True
+    if any(e in ("/*", "*") for e in entries):
+        # 全都要，除非被显式排掉
+        return not any(
+            e.lstrip("!").strip("/") in (pkg, script) or
+            script.startswith(e.lstrip("!").strip("/") + "/")
+            for e in entries if e.startswith("!")
+        )
+    return False
+
+
+def test_source共享脚本的job要真的把它检出来():
+    """`source tools/X.sh` 的 job，稀疏检出里必须够得着 X。
+
+    来路：`pipeline-health.yml` 每小时红一次，日志只有一句
+    `tools/nudge_stale_ticks.sh: No such file or directory`——它的稀疏检出是
+    **逐文件**列的（`tools/pipeline_health.py`），而 #629 加叫醒步骤时只加了
+    `source` 那一行。后果是双份的：这条监控线自己常年红（一条常年红的检查和
+    没有检查是同一个毛病），而 nudge 在这个宿主上**从装上起一次都没生效过**。
+
+    ⚠️ **按 job 扫，不按文件扫**：`oncourt-interviews.yml` 有 collect / draft
+    两个 job 各带一份 checkout，只给其中一个补上，按文件扫照样绿、线上照炸。
+
+    ⚠️ **目录级检出也算数**：`orchestrate` / `reel-auto-ready` 列的是整个
+    `tools`。第一版判据只认字面文件名，把这几条全报成缺——**6 个里 5 个是
+    误报**，而「orchestrate 只失败过 1 次」这个数当场和它打架。判据宁可窄，
+    不可宽；而这次是太窄，太窄给出的是假阳性。
+
+    ⚠️ 没有 `sparse-checkout` 的 job 是全量检出，不判。
+    """
+    missing, checked = [], 0
+    for path in sorted(Path(".github/workflows").glob("*.yml")):
+        text = _yaml_only(path.read_text(encoding="utf-8"))
+        for job, body in _jobs_of(text):
+            scripts = set(re.findall(r"^\s*source\s+(tools/[\w./-]+\.sh)", body, re.M))
+            if not scripts:
+                continue
+            lists = _sparse_lists(body)
+            if not lists:
+                continue  # 全量检出，够得着
+            for script in scripts:
+                checked += 1
+                pkg = script.split("/")[0]          # tools
+                if any(_sparse_reaches(lst, script, pkg) for lst in lists):
+                    continue
+                missing.append(f"{path.name}::{job} → {script}")
+
+    assert checked >= 5, f"判据失效了，只校到 {checked} 处 source"
+    assert not missing, (
+        "这些 job `source` 了共享脚本，稀疏检出却够不着它：\n  "
+        + "\n  ".join(missing)
+        + "\n\n出路：把那个脚本（或它所在的 `tools` 目录）加进这个 job 的 "
+          "sparse-checkout。缺了它报的是 `No such file or directory`，"
+          "而 `source` 在 `bash -e` 下会把整步带红。")
