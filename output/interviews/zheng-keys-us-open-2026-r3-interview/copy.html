@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>9.6 赛后开麦 | 郑钦文0-5落后连赢七局</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>郑钦文决胜盘 0-5 落后，救回一个赛点，连赢七局逆转 22 号种子凯斯，从资格赛一路打进美网 16 强。
+
+这是她右肘手术之后第一次打进大满贯 16 强，也是这次美网的第六场胜利——资格赛三轮，正赛三轮，一场没输。
+
+首盘只用了 23 分钟就被 6-1 拿走。决胜盘 0-5 落后的时候，凯斯在 5-1 上握着一个赛点。她救了下来，然后一局都没再丢，7-5。全场两小时二十九分钟。
+
+赛后她自己说，这是生涯第一次从 0-5 追回来——以前最多是 1-5、2-5。
+
+她在场上说了什么：
+
+「首先我得说，凯斯那个时候打得非常好。我不觉得她能 5-0 领先是因为我打得太差，我觉得是她打得好。」
+
+「后来我就一直告诉自己：每一分都要咬住，永远别放弃，就留在场上。然后一点一点地，它真的发生了。」
+
+「老实说，这是我生涯第一次从 0-5 追回来，以前最多是 1-5 或 2-5。」
+
+「4-5 落后那一局非常难。那一刻我没有表现出任何情绪，因为我知道比赛还没完。勇敢就是今天的关键词——对麦迪（凯斯）你不能太被动，否则她会一直压着你。」
+
+「手术之后并不容易，感觉我在球场上丢了一些能量。这三四五个月我过得非常难，那是我转职业以来最糟的一段时间。」
+
+「幸好，谢谢我的团队。多伦多之后我们在 IMG 学院一直很努力地练，努力终于有了一点回报。」
+
+「比赛里我从没放弃过。我觉得这是现在最积极的一点。」
+
+她也谢了看台：「谢谢今天来现场的观众，不管你支持的是麦迪还是我。」
+
+主持人最后说：从资格赛一路打上来，现在进了美网第二周——为郑钦文鼓掌。
+
+#网球时差 #美网 #郑钦文 #赛后开麦 #WTA</textarea>
+    </section>
+    
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
