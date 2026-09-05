@@ -72,12 +72,20 @@ def fetch_released_film(slug: str) -> Path:
     import push_reel  # noqa: PLC0415  # 只为复用那一处出处，不在模块顶层拖依赖
 
     root = Path(__file__).resolve().parent.parent
+    # ⚠️ **两条线的产物目录形状不一样，两处都要找。** 竖版短片按日期分格
+    # （`output/<日期>/reel/<slug>`），赛后开麦不分日期（`output/interviews/<slug>`）。
+    # 只找前一条的话，采访片一律报「output/ 里找不到」——**而它长得像 slug 写错了**，
+    # 于是那半条线的审片版会一直发不出去。CLAUDE.md 把这条命令写成了「每条片子
+    # 渲完就跑一趟」的常规动作，规矩写对了、实现只盖住一半，正是这个仓库反复
+    # 记的那个形状。
     # 日期目录按上海时间分而沙箱跑在 UTC，别去算「今天」——排序取最新的那一天，
     # 两种时区下都对（和 `render_cover_local.find_outdir` 同一个理由）。
     hits = sorted(root.glob(f"output/*/reel/{slug}"), reverse=True)
+    hits += sorted(root.glob(f"output/interviews/{slug}"), reverse=True)
     if not hits:
         raise SystemExit(
-            f"output/ 里找不到 {slug} 的产物目录。\n"
+            f"output/ 里找不到 {slug} 的产物目录"
+            "（竖版短片 output/<日期>/reel/ 和赛后开麦 output/interviews/ 两处都查过）。\n"
             "  slug 写错了？还是这条片子的产物没在这个工作区里（先 git fetch/checkout）？")
     outdir = hits[0]
 

@@ -1625,6 +1625,23 @@ def assert_topbar_font_log(stderr: str, spec: dict) -> None:
 _ZH_DANGLE = tuple("的地得和跟与在把被为从对而或让就")
 
 
+def en_problems(lines: list[dict]) -> list[str]:
+    """英文那一行的硬要求：不超宽。
+
+    ⚠️ **抽成函数是为了让 `check_lead_in` 能在下载源片之前跑同一份判据。**
+    原来这段内联在 `write_ass` 里，也就是**要等主体编码完才报**——
+    `zheng-keys-us-open-2026-r3-interview` 为它烧掉一整趟 render：主体那
+    214 秒编完（两分二十秒）之后，才在拼片头时报「#4 英文超宽 1072px」，
+    而那一行是**手写的 `lead_in.subs`，只读 spec 就判得出来**。
+    CLAUDE.md 早写着「凡是只读 spec 就能判的规矩，出处必须在够得着的地方」。
+
+    ⚠️ **两个调用方共用这一份，别各写一遍**——写两处必分叉，而分叉的样子是
+    「本地全绿、远端红」。
+    """
+    return [f"#{i} 英文超宽 {_en_width(seg['en']):.0f}px（可用 {_LINE_PX}）：{seg['en']}"
+            for i, seg in enumerate(lines, 1) if _en_width(seg["en"]) > _LINE_PX]
+
+
 def zh_problems(lines: list[dict], zh: list[str]) -> list[str]:
     """中文那一行的两条硬要求：不超宽、行尾不吊在虚词上。"""
     bad = []
@@ -1714,9 +1731,7 @@ def write_ass(lines: list[dict], zh: list[str], clip_start: float, path: Path,
     # **英文也要量。** 原来这道闸只查中文——于是 `en_fixed` 里一行订正写长了
     # （实测 1150px，超出可用宽两成）**一路畅通**，libass 到渲染时默默折行，
     # 压到中文那一行上。切行时量过的是 ASR 原文，订正之后没人再量一次。
-    if wide := [f"#{i} 英文超宽 {_en_width(seg['en']):.0f}px（可用 {_LINE_PX}）："
-                f"{seg['en']}" for i, seg in enumerate(lines, 1)
-                if _en_width(seg["en"]) > _LINE_PX]:
+    if wide := en_problems(lines):
         raise SystemExit(
             "英文字幕过不了：\n  " + "\n  ".join(wide)
             + "\n⚠️ 多半是 `en_fixed` 把一行改长了。**词被 ASR 并在一起的那种错要走"
@@ -3498,6 +3513,21 @@ _LEGACY_ONCOURT_NO_LEAD_IN = frozenset({
 })
 
 
+# 这条闸装上（2026-09-05）之前发出去的片子，`lead_in.subs` 没被本地量过。
+# **只许减不许加，而且表自带自检**（`test_lead_in字幕的老债只许减不许加`）：
+# 表里每个 slug 必须真的存在、而且真的还过不了——写错一个名字，豁免就成了
+# 一盏恒真的绿灯。
+#
+# 锦织圭告别那条的 `lead_in.subs` 是一份**没怎么整理的 ASR 直落**：中文里
+# 留着标点、`[鼓掌]` 当成一行字幕、`直落 ／ 盘获胜` 从词中间劈开，另外两行
+# 一行超宽 980px、一行吊在「的」上。**它已经推过微信，不为字幕重渲**
+# （CLAUDE.md：「已发的不重渲」），而重写那 11 行要逐条对着源片解说改，
+# 不是顺手的规模——记在这儿，等回头单独处理。
+_LEGACY_LEAD_IN_SUBS = frozenset({
+    "nishikori-sakamoto-us-open-2026-q3-farewell",
+})
+
+
 def check_lead_in(spec: dict) -> None:
     """跨视频接一段片头——比赛结尾不在 `spec["url"]` 自己的窗口里，是**另一条
     源片**（通常是官方逐场集锦）单独剪一段接在最前面。
@@ -3580,10 +3610,19 @@ def check_lead_in(spec: dict) -> None:
                 f"{slug} 的正式场上采访片头缺 `lead_in.subs`——获胜画面的原声解说"
                 "必须配中英文字幕；不能用无字幕 B-roll 降级发布。")
     # 老片/non-formal 的 `subs` 可选；正式 on_court 上面已经提升为必填。写了就要
-    # 按正片那套字幕规矩过：
-    # 时刻落在窗口内、按时间排好、英文/中文都不能是空的。**宽度/收尾那两条
-    # 硬规矩交给 `write_ass` 在真正烧字幕那一刻去查**——这儿只管形状，
-    # 不重复一遍 `zh_problems`（判据只有一处，别写两遍必分叉）。
+    # 按正片那套字幕规矩过：时刻落在窗口内、按时间排好、英文/中文都不能是空的，
+    # **外加宽度和行尾那两条硬规矩**。
+    #
+    # ⚠️ 后面这两条原来只在 `write_ass` 里查，也就是**要等主体编码完才报**——
+    # `zheng-keys-us-open-2026-r3-interview` 为它烧掉一整趟 render：214 秒的
+    # 主体编完（两分二十秒）之后，拼片头时才报「#4 英文超宽 1072px（可用 952）」。
+    # 而 `lead_in.subs` 是**手写**的，只读 spec 就判得出来，本该在下载源片之前
+    # 0.2 秒报出来（CLAUDE.md：「凡是只读 spec 就能判的规矩，出处必须在够得着的
+    # 地方」）。⚠️ 正片那一头的英文是切行切出来的、这一头是人写的，
+    # **人写的那一头反而没人在本地查**——缺口正在这儿。
+    #
+    # 「判据只有一处」照旧守着：**调的就是 `write_ass` 用的那两个函数**
+    # （`en_problems` / `zh_problems`），不在这儿另写一份。
     subs = lead.get("subs")
     if subs is not None:
         if not isinstance(subs, list) or not subs:
@@ -3611,6 +3650,16 @@ def check_lead_in(spec: dict) -> None:
             if not str(cue.get("zh", "")).strip():
                 raise SystemExit(f"{slug} 的 `lead_in.subs[{i}]` 没写 `zh`。")
             prev_b = b
+        cue_lines = [{"en": str(cue["en"])} for cue in subs]
+        cue_zh = [str(cue["zh"]) for cue in subs]
+        bad = ([] if slug in _LEGACY_LEAD_IN_SUBS
+               else en_problems(cue_lines) + zh_problems(cue_lines, cue_zh))
+        if bad:
+            raise SystemExit(
+                f"{slug} 的 `lead_in.subs` 过不了正片那套字幕规矩：\n  "
+                + "\n  ".join(bad)
+                + "\n⚠️ 一行装不下就**照源片的逐词时间戳把它拆成两条**，"
+                "别去缩字号、也别硬塞——libass 只会默默折行压到中文那一行上。")
 
 
 # 规矩之前发出去的六条，**只许减不许加**，而且有自检（见

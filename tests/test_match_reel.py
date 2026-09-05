@@ -15444,3 +15444,53 @@ def test_审片版的成片链接只从render_json那一处读():
                            and isinstance(fn.body[0].value, ast.Constant)) else fn.body
     code = "\n".join(ast.unparse(n) for n in body)
     assert "releases/download" not in code, "别自己拼 Release 链接，读 render.json"
+
+
+def _an_interview_released_slug() -> tuple[str, str]:
+    """赛后开麦那条线上，任意一条走过 Release 的片子。"""
+    for meta in sorted(Path("output/interviews").glob("*/render.json"), reverse=True):
+        try:
+            url = str(json.loads(meta.read_text(encoding="utf-8")).get("video_url") or "")
+        except (json.JSONDecodeError, OSError):
+            continue
+        if url:
+            return meta.parent.name, url
+    return "", ""
+
+
+def test_审片版两条线的产物目录都找得到(monkeypatch):
+    """⚠️ **规矩写对了、实现只盖住一半，而缺的那一半长得像「slug 写错了」。**
+
+    来路：2026-09-05 账号所有者定下「每条片子渲完就跑一趟 `review_copy --slug`
+    把审片版发进对话」（微信里那个 ▶ 指向 GitHub 的 Release CDN，他在国内点
+    不开）。而 `fetch_released_film` 当时只 glob `output/*/reel/<slug>`——
+    **赛后开麦的产物落在 `output/interviews/<slug>`，一条都找不到**，报出来
+    是「output/ 里找不到这个 slug」，读起来完全像名字写错了。
+
+    判据**真跑一次**并用真产物：查源码里有没有那句 glob 只能防「有人把它删了」，
+    防不住「它从来没工作过」；而手搓一个假目录验不了它和真产物对不对得上
+    （这个仓库为手搓 fixture 栽过）。
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import review_copy  # noqa: PLC0415
+    import urllib.request  # noqa: PLC0415
+
+    slug, url = _an_interview_released_slug()
+    # 判据自己的判据：主语没了要出声，不许变成一条恒真的绿灯
+    assert slug, "output/interviews/ 里一条走 Release 的片子都没有——主语没了，换判据"
+
+    got: dict[str, str] = {}
+
+    def _fake(src, dest):  # noqa: ANN001
+        got["src"] = src
+        Path(dest).write_bytes(b"\0" * 1024)
+        return dest, None
+
+    monkeypatch.setattr(urllib.request, "urlretrieve", _fake)
+    film = review_copy.fetch_released_film(slug)
+
+    assert got["src"] == url, "拉的不是那条采访片 render.json 里记的链接"
+    assert film.is_file(), "说拉回来了，文件却不在"
+    # 顺带钉住上一条判据守的那一头：拉回来的原片不许落进仓库的 output/
+    assert Path("output").resolve() not in film.resolve().parents, (
+        f"采访片这条路把原片下到了仓库的 output/ 底下（{film}）")

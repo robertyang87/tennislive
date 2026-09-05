@@ -5300,6 +5300,88 @@ def test_lead_in的subs字段要认全():
             pytest.fail(f"这一种没拦住：{label}")
 
 
+def test_lead_in的字幕也要在下载之前量宽度和行尾():
+    """⚠️ **手写的那一头反而没人在本地查。**
+
+    来路：`zheng-keys-us-open-2026-r3-interview` 为它烧掉一整趟 render。
+    正片那 101 行英文是切行切出来的、切的时候量过；而 `lead_in.subs` 是
+    **人照着源片解说手写的**，那条闸原来只在 `write_ass` 里——也就是
+    **214 秒的主体编完（两分二十秒）之后，拼片头时才报**：
+
+        #4 英文超宽 1072px（可用 952）：a couple years ago has come back from the brink,
+
+    这一行只读 spec 就判得出来。CLAUDE.md：「凡是只读 spec 就能判的规矩，
+    出处必须在够得着的地方」——而这一条判据长得像装好了（`write_ass` 里
+    确实有），只是**排在了下载和编码后面**。
+
+    ⚠️ 判据钉两头，缺一头都是恒真：**英文超宽**要拦下（原来那条真实的行），
+    **中文吊在虚词上**也要拦下（`lead_in` 这一头原来完全没走 `zh_problems`）。
+    """
+    import tools.build_interview_clip as clip
+
+    base = {"url": "https://youtu.be/x", "start": 180.0, "end": 206.5, "why": "a"}
+    宽的 = "a couple years ago has come back from the brink,"
+    assert clip._en_width(宽的) > clip._LINE_PX, (
+        "这一行今天已经装得下了——判据的主语没了，换一行更长的，别删这条")
+
+    好 = {"slug": "新片", "lead_in": dict(base, subs=[
+        {"a": 191.3, "b": 192.8, "en": "a couple years ago", "zh": "就在两年前"},
+        {"a": 192.8, "b": 195.1, "en": "has come back from the brink,",
+         "zh": "她从悬崖边上走了回来"},
+    ])}
+    clip.check_lead_in(好)            # 不许抛
+
+    with pytest.raises(SystemExit, match="英文超宽"):
+        clip.check_lead_in({"slug": "新片", "lead_in": dict(base, subs=[
+            {"a": 191.3, "b": 195.1, "en": 宽的, "zh": "从悬崖边上走了回来"}])})
+
+    with pytest.raises(SystemExit, match="吊在"):
+        clip.check_lead_in({"slug": "新片", "lead_in": dict(base, subs=[
+            {"a": 191.3, "b": 195.1, "en": "one of the biggest comebacks we've seen",
+             "zh": "我们近年来见过的"}])})
+
+
+def test_量字幕宽度那份判据只有一处():
+    """`check_lead_in` 和 `write_ass` 必须调**同一个** `en_problems`。
+
+    各写一遍必分叉，而**分叉的样子是「本地全绿、远端红」**——正是这条线
+    刚付过一趟 render 的那个形状。所以判据钉的是「两处都在调它」，
+    不是「两处都有一句 `_en_width(...) > _LINE_PX`」。
+    """
+    src = Path("tools/build_interview_clip.py").read_text(encoding="utf-8")
+    tree = ast.parse(src)
+    fns = {n.name: n for n in ast.walk(tree) if isinstance(n, ast.FunctionDef)}
+    for name in ("check_lead_in", "write_ass"):
+        fn = fns.get(name)
+        assert fn is not None, f"{name} 没了——主语变了就得换判据"
+        called = {n.func.id for n in ast.walk(fn)
+                  if isinstance(n, ast.Call) and isinstance(n.func, ast.Name)}
+        assert "en_problems" in called, (
+            f"{name} 没调 en_problems，自己又量了一遍宽度——写两处必分叉")
+
+
+def test_lead_in字幕的老债只许减不许加():
+    """豁免表自检：每个 slug 必须真的存在，**而且真的还过不了**。
+
+    ⚠️ 写错一个名字，或者哪天那条 spec 被改好了，豁免就成了一盏恒真的绿灯——
+    这个仓库为「一个会过期的名单和一条常年红的检查是同一个毛病」栽过好几次。
+    """
+    import tools.build_interview_clip as clip
+
+    存量 = {json.loads(p.read_text("utf-8")).get("slug"): json.loads(p.read_text("utf-8"))
+            for p in _iv_specs()}
+    for slug in clip._LEGACY_LEAD_IN_SUBS:
+        spec = 存量.get(slug)
+        assert spec is not None, f"豁免表里的 {slug} 根本不存在——名字写错了？"
+        subs = (spec.get("lead_in") or {}).get("subs") or []
+        assert subs, f"{slug} 已经没有 lead_in.subs 了，从豁免表里删掉它"
+        lines = [{"en": str(c["en"])} for c in subs]
+        zh = [str(c["zh"]) for c in subs]
+        assert clip.en_problems(lines) + clip.zh_problems(lines, zh), (
+            f"{slug} 的 lead_in.subs 现在已经合格了——从豁免表里删掉它，"
+            "别留一盏恒真的绿灯")
+
+
 def test_lead_in那道闸排在下载之前():
     """⚠️ 和 `opening` 那道闸同一个理由：这条只读 spec，该在第 0.2 秒就报，
     不能等九分钟的 render 下完两条源片才发现哪个字段忘了填。"""
