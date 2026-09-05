@@ -100,6 +100,24 @@ def frame_stamp(seconds: float) -> str:
     return f"frame_{seconds:07.1f}s.jpg"
 
 
+def probe_size(video: Path) -> tuple[int, int]:
+    """源片的像素尺寸。读不出来回 `(0, 0)`，**不抛**——这是诊断信息，
+    不该让一次抽帧因为 ffprobe 缺席或者流里没写尺寸而整个失败。
+    """
+    if not shutil.which("ffprobe"):
+        return (0, 0)
+    try:
+        out = subprocess.run(
+            ["ffprobe", "-v", "error", "-select_streams", "v:0",
+             "-show_entries", "stream=width,height", "-of", "csv=p=0:s=x",
+             str(video)],
+            check=True, capture_output=True, text=True).stdout.strip()
+        w, h = out.split("x")[:2]
+        return (int(w), int(h))
+    except Exception:
+        return (0, 0)
+
+
 def sample(video: Path, outdir: Path, every: float, width: int,
            start: float = 0.0, end: float = 0.0) -> list[Path]:
     """抽帧。`start`/`end` 给的是**片子里的秒数**，不给就是整条。
@@ -112,6 +130,20 @@ def sample(video: Path, outdir: Path, every: float, width: int,
         raise SystemExit("没装 ffmpeg。")
     if end and end <= start:
         raise SystemExit(f"--end {end:g} 要大于 --start {start:g}。")
+    # **先报源片是多大，再抽。** `scale={width}:-2` 只往一个方向走：给的宽
+    # 比源片窄就是静默降采样，比源片宽就是静默放大——两种都不报错，画面看着
+    # 都挺好，只有把两版并排才看得出亏了（CLAUDE.md 记过一次：源片 1920 写了
+    # 1600）。把源片的真实尺寸打进日志，这一类就不再是「事后才发现」。
+    #
+    # 顺带它是这条线上**唯一**能在 runner 上量到源片分辨率的地方：沙箱的
+    # YouTube 格式表被 n challenge / 429 挡着，`--print height` 恒空，而
+    # 「片头必须是 1080p 官方集锦」那道闸要的正是这个数。
+    src_w, src_h = probe_size(video)
+    if src_w and src_h:
+        how = "原样" if width == src_w else ("放大" if width > src_w else "降采样")
+        print(f"[源片] {src_w}x{src_h}　→ 抽帧宽 {width}（{how}）")
+    else:
+        print(f"[源片] ⚠️ ffprobe 读不出尺寸，抽帧宽 {width} 是降是放不知道")
     pat = str(outdir / "frame_%04d.jpg")
     # `-ss` 放在 `-i` 前面走快速定位；时长用 `-t` 给（`-to` 在这个位置的
     # 语义随 ffmpeg 版本变过，`-t` 没有这个歧义）。
