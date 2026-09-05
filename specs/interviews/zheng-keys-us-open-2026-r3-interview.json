@@ -185,39 +185,45 @@
       },
       {
         "a": 185.2,
-        "b": 188.7,
+        "b": 189.9,
         "en": "Qinwen Zheng, the qualifier from China.",
         "zh": "郑钦文 来自中国的资格赛球员"
       },
       {
-        "a": 188.7,
-        "b": 191.5,
+        "a": 189.9,
+        "b": 191.3,
         "en": "The Olympic gold medalist",
-        "zh": "两年前的奥运会金牌得主"
+        "zh": "奥运会金牌得主"
       },
       {
-        "a": 191.5,
-        "b": 194.7,
-        "en": "a couple years ago has come back from the brink,",
-        "zh": "从悬崖边上走了回来"
+        "a": 191.3,
+        "b": 192.8,
+        "en": "a couple years ago",
+        "zh": "就在两年前"
       },
       {
-        "a": 194.7,
-        "b": 198.7,
+        "a": 192.8,
+        "b": 195.1,
+        "en": "has come back from the brink,",
+        "zh": "她从悬崖边上走了回来"
+      },
+      {
+        "a": 195.1,
+        "b": 198.6,
         "en": "five love down and has pulled off",
-        "zh": "0-5 落后 完成了一次"
+        "zh": "0-5 落后 她做到了"
       },
       {
-        "a": 198.7,
-        "b": 202.0,
+        "a": 198.6,
+        "b": 201.35,
         "en": "one of the biggest comebacks we've seen",
-        "zh": "我们近年来见过的"
+        "zh": "这是美网近年来"
       },
       {
-        "a": 202.0,
+        "a": 201.35,
         "b": 205.9,
         "en": "in recent years at the US Open.",
-        "zh": "美网最大的逆转之一"
+        "zh": "最大的逆转之一"
       }
     ],
     "verification": {
@@ -230,7 +236,8 @@
       "height": 1080,
       "channel": "US Open Tennis Championships",
       "_height_why": "1920x1080 是**在 runner 上量到的**，不是照着同频道别的片子推的：沙箱的 YouTube 格式表被 n challenge / 429 挡着，`--print height`、`-J`、页面 HTML 三条路全空（`-J` 回来只有四档 storyboard，没有一条真视频流）。跑了一趟 `frame-grab`（run 33984431785，本分支）拿 ffprobe 量源片，日志原话：`[源片] 1920x1080　→ 抽帧宽 1920（原样）`。那一行打印是这次顺手给 `tools/grab_frames.py` 补上的。"
-    }
+    },
+    "_subs_why": "八条的**断点和时刻都是拿源片自动字幕的逐词时间戳定的**，不是按秒估的：`That`183.28 / `Kinwen`184.56 / `The`189.92 / `a`191.36 / `has`192.88 / `five`195.20 / `one`198.72 / `in`201.36。⚠️ 原来第 4 条把「a couple years ago has come back from the brink,」并成一行，实测 **1072px > 可用 952**——libass 会默默折行压到中文那一行上，而这条闸原来只在 `write_ass` 里查，**要等主体编码完（两分二十秒）才报**。拆成「a couple years ago」和「has come back from the brink,」两条之后最宽 867px。⚠️ ASR 把 `Qinwen Zheng` 听成 `Kinwen Jang`、`China` 后面那句 `to one six` 读不通（多半是 `two one six`／比分口误），**两处都没进字幕**——人名按译名表的规范拼法写，听不准的那半句整个不收，不猜。"
   },
   "word_fix": {
     "medicine": "Madison",
