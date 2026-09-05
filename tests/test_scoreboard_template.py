@@ -919,3 +919,78 @@ def test_封面版式定版冻结_钩子字号和比分板坐标是全局统一�
         "跟着它走，改行高等于把板的落点也改了。")
     # 推导落点自证：每条新封面（两行 94px 钩子）的比分板顶边恒在 1057
     assert vp.STORYCOPY_TOP + round(2 * vp.HOOK_TITLE_PX * 1.24) + 34 == 1057
+
+
+def _solo_css(cover: dict) -> str:
+    """渲一版 solo 封面的 CSS（去掉注释——注释里正写着这几个数）。"""
+    _, css = versus_poster._solo_body(cover)
+    return re.sub(r"/\*.*?\*/", "", css, flags=re.S)
+
+
+def test_信箱式封面的钩子让到照片下边缘之外不压主体(
+        monkeypatch: pytest.MonkeyPatch):
+    """⭐ 账号所有者 2026-09-05：「封面钩子文案可以下移，不遮住主体」。
+
+    这是他第六次说同一件事（前五次的终值是 `STORYCOPY_TOP = 790`）。这一次
+    躲得开的原因很具体：`fit: "width"` 的封面是**信箱式**的——照片按宽度铺，
+    上下空出来的两条垫的是同图的模糊放大版，所以**照片的下边缘是算得出来的**，
+    钩子让到它下面就一个像素都不压主体。
+
+    实测这条片子（3119×2079、`focus_y=0.2`）：照片带落在 y 144~864，而定版的
+    790 让第一行有 74px 骑在她的腿上。推出来的新位置是 **960**——和渲了
+    790/880/960/1035 四版摆一起挑出来的那一版**逐字节相同**。
+
+    ⚠️ **三条边界缺一条都会坏，所以三条都钉**：
+
+    1. **只对信箱式成立**。`fit: "cover"` 铺满整幅，主体在哪儿机器不知道
+       （要人脸检测，而 CLAUDE.md 记着那条在戴帽子／脸在阴影里时零命中）。
+       全库 16 条「网球有故事」里 14 条是铺满的——**一张照片量出来的结论不配
+       当一类照片的判据**，这个仓库为「查了一场就写成了一类」栽过四次。
+    2. **必须没有比分板**。2026-08-31 定版那笔账是
+       `钩子 308 + gap 34 + 板 324 ≤ 1440` → `top ≤ 808`；往下让会把输家那一行
+       推出画布，而**推出画布是静默的**（Chromium 和 ffmpeg 都不报错）。
+       `wangxiyu-fernandez` 就是一条 `fit:"width"` ＋ 有板的「赛场之上」，
+       这一条一个像素都不许动它。
+    3. **基础那条 `top:790px` 原样留着**。override 是追加在最后、靠同特异性下
+       后写的赢——定版判据
+       `test_封面版式定版冻结_钩子字号和比分板坐标是全局统一的` 钉的就是它，
+       而铺满那一档和赛场之上照旧走这个值。
+
+    反向验证过三个方向，各红在自己的断言行：把 `_img_size` 打桩成恒 (0,0)
+    → 红在「信箱式没有让下去」；把 override 的条件里的 `not score_html.strip()`
+    去掉 → 红在「有板的也被挪了」；把基础规则的 `top:790px` 换掉 → 红在第三条。
+    """
+    vp = versus_poster
+    # ① 推导本身：照片下边缘 + 一口气，两头夹住
+    assert vp.storycopy_top_for({"portrait": {"zoom": 1.0, "focus_y": 0.2}},
+                                (3119, 2079)) == 960, "本条封面推出来的位置变了"
+    assert vp.storycopy_top_for({"portrait": {"zoom": 1.0, "focus_y": 0.0}},
+                                (4000, 1000)) == vp.STORYCOPY_TOP, (
+        "照片本来就矮、下边缘在 790 以上时不许把钩子往回提")
+    hook_h = round(vp.SOLO_HOOK_MAX_LINES * vp.HOOK_TITLE_PX * 1.24)
+    assert vp.storycopy_top_for({"portrait": {"zoom": 1.0, "focus_y": 1.0}},
+                                (1080, 1400)) == 1440 - hook_h, (
+        "照片很高的时候要夹住，不然两行钩子顶出画布——而顶出去是静默的")
+    assert vp.storycopy_top_for({"portrait": {}}, (0, 0)) == vp.STORYCOPY_TOP, (
+        "读不出图的尺寸要退回定版那个值，不许拿 0 去算")
+
+    photo = {"image": "assets/logo/brand/icon.png", "fit": "width",
+             "focus_y": 0.2, "zoom": 1.0}
+    # ② 信箱式 + 没板 → 追加 override，而基础那条还在
+    css = _solo_css({"eyebrow": "网球有故事", "layout": "solo",
+                     "hook": "决胜盘零比五\n他们都赢回来了", "portrait": photo})
+    tops = re.findall(r"\.storycopy\{[^}]*?top:(\d+)px", css)
+    assert tops and tops[0] == "790", (
+        f"基础那条 `.storycopy{{top:790px}}` 没了（现在是 {tops}）——"
+        "定版判据钉的就是它，铺满那一档和赛场之上也还走它")
+    assert len(tops) >= 2 and int(tops[-1]) > 790, (
+        f"信箱式封面的钩子没有让下去：`.storycopy` 的 top 只有 {tops}")
+
+    # ③ 有比分板的一律不动（`fit:"width"` 的赛场之上真实存在）
+    monkeypatch.setattr(vp, "_fetch_match_duration", lambda source, where: "1:51")
+    css_board = _solo_css({**_cover(), "eyebrow": "赛场之上", "layout": "solo",
+                           "hook": "赢了", "portrait": photo})
+    tops_board = re.findall(r"\.storycopy\{[^}]*?top:(\d+)px", css_board)
+    assert tops_board == ["790"], (
+        f"有比分板的封面被挪了：{tops_board}。往下让会把输家那一行推出画布，"
+        "而推出画布不报错——只有渲出来才看得见")
