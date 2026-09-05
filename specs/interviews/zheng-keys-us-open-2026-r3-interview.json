@@ -176,7 +176,7 @@
     "url": "https://www.youtube.com/watch?v=PiuDtMWKU2g",
     "start": 180.0,
     "end": 206.5,
-    "why": "同一场的美网官方集锦（Madison Keys vs. Qinwen Zheng Highlights | 2026 US Open Round 3，@usopen，215 秒）的**倒数第 35 秒起那 26.5 秒**，一整段连续的赛后画面，不是把几个回合拼起来。\n窗口里有什么（逐格读记分条核过的）：**开场是赛点那一分的最后一两拍**，转播的 `MATCH POINT` 角标挂在记分条左上角（`KEYS 6 6 5 [30] / ▲ZHENG 1 7 6 [40]`——决胜盘 6-5、40-30，**发球指示 ▲ 在 ZHENG 那一行，她自己发球胜赛局**）→ **181.5 她背朝下躺倒在场上**，183.4 躺着举起一只拳头 → 183.28 解说开口交代赛果 → 凯斯的失落特写 → 和裁判握手 → 网前和凯斯握手 → 转身向看台举拍、笑 → 走向团队击掌。\n**起点为什么是 180.0**：这一分从 171.6 打到约 180，而解说从 174.68 到 183.28 整整 8.6 秒没说话——那段是赛点本身在打，可这条片子是逐句配字幕的，开场压着八秒多没有字的画面太长。180.0 起收把没解说的过程砍掉大半（只剩 3.3 秒），而赛点该有的东西一样没少：`MATCH POINT` 角标、这一分的收尾、躺倒那一下。\n**终点为什么是 206.5**：解说最后一句「one of the biggest comebacks we've seen in recent years at the US Open」到 205.96 结束；再往后 209.03 那一格已经是美网的蓝色片尾板（`FOLLOW US ON SOCIAL MEDIA`），206.5 离它还有 2.5 秒。⚠️ 别拿「离源片末尾还有 8.5 秒」当余量——那 8.5 秒里有 6 秒就是片尾板本身。",
+    "why": "同一场的美网官方集锦（Madison Keys vs. Qinwen Zheng Highlights | 2026 US Open Round 3，@usopen，215 秒）的**倒数第 35 秒起那 26.5 秒**，一整段连续的赛后画面，不是把几个回合拼起来。\n窗口里有什么——**这一段是拿 1 秒一帧的真实帧逐帧读的**（`frame-grab` run 33984180244，176~209 秒，1920×1080），不是按 storyboard 估的：\n  180~183　宽景，赛点那一分正在打。转播的 `MATCH POINT` 角标挂在记分条左上角，记分条写着 `22 KEYS USA 6 6 5 [30] / ▲ZHENG CHN 1 7 6 [40]`——决胜盘 6-5、40-30，**发球指示 ▲ 在 ZHENG 那一行，她自己发球胜赛局**；凯斯名字前面那个 `22` 就是她的种子号。\n  **184　她背朝下躺倒在球场上**，186 躺着举起一只拳头。\n  183.28　解说开口交代赛果（字幕从这里起一路到 205.96 没断过）。\n  187~191　凯斯的失落特写。\n  196~198　她笑着走向网前，和凯斯握手。\n  201~203　转身向看台举拍。\n  **204~206　正面近景，双手举起、笑得最开**——这一段是整条 lead_in 的落点。\n**起点为什么是 180.0**：这一分从 171.6 打到 184，而解说从 174.68 到 183.28 整整 8.6 秒没说话——那段是赛点本身在打，可这条片子是逐句配字幕的，开场压着八秒多没有字的画面太长。180.0 起收把没解说的过程砍掉大半（只剩 3.3 秒，正好是这一分的最后几拍），而赛点该有的东西一样没少：`MATCH POINT` 角标、这一分的收尾、躺倒那一下。\n**终点为什么是 206.5**：解说最后一句「one of the biggest comebacks we've seen in recent years at the US Open」到 205.96 结束，206.5 收在它后面半秒；再往后 207~209 是她和团队击掌（另一段情绪），而下一句解说「What a moment.」要到 210.16 才来。\n⚠️ **片尾板的位置是量过的，不是按「离末尾还有几秒」推的**：真实帧到 209 秒还是团队击掌的画面，storyboard 那一格（209.03）看着像蓝色片尾板是因为一格 1.97 秒、跨在交界上。206.5 离它很远。",
     "subs": [
       {
         "a": 183.3,
@@ -216,11 +216,22 @@
       },
       {
         "a": 202.0,
-        "b": 205.5,
+        "b": 205.9,
         "en": "in recent years at the US Open.",
         "zh": "美网最大的逆转之一"
       }
-    ]
+    ],
+    "verification": {
+      "match_id": "2026:us-open:womens-third-round:qinwen-zheng-madison-keys",
+      "winner_en": "Qinwen Zheng",
+      "loser_en": "Madison Keys",
+      "event_search": "US Open",
+      "year": 2026,
+      "method": "official_exact_match_highlight",
+      "height": 1080,
+      "channel": "US Open Tennis Championships",
+      "_height_why": "1920x1080 是**在 runner 上量到的**，不是照着同频道别的片子推的：沙箱的 YouTube 格式表被 n challenge / 429 挡着，`--print height`、`-J`、页面 HTML 三条路全空（`-J` 回来只有四档 storyboard，没有一条真视频流）。跑了一趟 `frame-grab`（run 33984431785，本分支）拿 ffprobe 量源片，日志原话：`[源片] 1920x1080　→ 抽帧宽 1920（原样）`。那一行打印是这次顺手给 `tools/grab_frames.py` 补上的。"
+    }
   },
   "word_fix": {
     "medicine": "Madison",
