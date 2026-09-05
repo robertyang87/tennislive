@@ -1258,6 +1258,54 @@ def hook_line_width(line: str) -> float:
 # **下次再收到「往下挪」时有真余量了，但别拿这一条当授权自己去挪。**
 STORYCOPY_TOP = 790
 
+#: `fit: "width"` 且**没有比分板**时，钩子往下让到照片下边缘之外留的一口气。
+#:
+#: 账号所有者 2026-09-05：「封面钩子文案可以下移，不遮住主体」——这是他第六次
+#: 说同一件事（前五次的终值就是上面那个 790，来路见它自己的注释）。
+#:
+#: ⚠️ **这一档只对「信箱式」封面成立，别推广到铺满的那些。** `fit: "width"` 的
+#: 照片按宽度铺，上下空出来的两条垫的是同图的模糊放大版——也就是**照片的下边缘
+#: 是算得出来的**，钩子让到它下面就一个像素都不压主体。而 `fit: "cover"`
+#: 铺满整幅，画面里哪儿是主体机器不知道（要人脸检测，而 CLAUDE.md 记着那条
+#: 在戴帽子／脸在阴影里时零命中），所以那些照旧用 790——**一张照片量出来的结论
+#: 不配当一类照片的判据**，这个仓库为「查了一场就写成了一类」栽过四次。
+#:
+#: ⚠️ **必须同时没有比分板**：2026-08-31 定版那笔账是
+#: `钩子 308 + gap 34 + 比分板 324 ≤ 1440` → `top ≤ 808`，往下让会把输家那一行
+#: 推出画布。而这个栏目「不印赛果」（剧透会让后面的倒数没人看），所以
+#: 网球有故事天然没有板；真有一条赛场之上写了 `fit: "width"`
+#: （`wangxiyu-fernandez` 就是），这条一个像素都不动它。
+#:
+#: 96 是**抄的不是拍的**：上下叠那一版（`portrait_above`）压到底部时用的
+#: `bottom:96px` 就是这个数，两处保持同一口气。
+SOLO_PAD_HOOK_GAP = 96
+
+
+def storycopy_top_for(cover: dict, img: tuple[int, int]) -> int:
+    """信箱式封面的钩子顶边：让到照片下边缘之外，不压主体。
+
+    `img` 是**预裁之后**那张图的 (宽, 高)——`_precrop` 会按 `crop` 键裁一刀，
+    拿原图算出来的比例是错的。
+
+    几何：`background-size:{zoom}% auto` 把图铺成 `1080*zoom` 宽，高度按原比例
+    缩；`background-position-y: P%` 让图的 P% 对齐容器的 P%，所以
+    `照片顶边 = (1440 - H) * P`、`照片下边缘 = 顶边 + H`。
+
+    ⚠️ 结果要**夹住**：往上不许低于定版的 `STORYCOPY_TOP`（照片本来就矮、
+    下边缘在 790 以上时不许把钩子往回提），往下不许让两行钩子顶出画布。
+    """
+    iw, ih = img
+    if not iw or not ih:
+        return STORYCOPY_TOP
+    zoom = float((cover.get("portrait") or {}).get("zoom", 1.0))
+    focus_y = float((cover.get("portrait") or {}).get("focus_y", 0.5))
+    band_h = 1080 * zoom * ih / iw
+    photo_bottom = (1440 - band_h) * focus_y + band_h
+    want = int(round(photo_bottom + SOLO_PAD_HOOK_GAP))
+    # 两行 94px 钩子的高度（和定版那笔账同一个式子）
+    hook_h = round(SOLO_HOOK_MAX_LINES * HOOK_TITLE_PX * 1.24)
+    return max(STORYCOPY_TOP, min(want, 1440 - hook_h))
+
 
 def _scrim_css(dim_centre: bool = False) -> str:
     """**照片本身一点都不压暗；只有文字压着的那两条边留一层。**
@@ -1405,6 +1453,9 @@ def _solo_body(cover: dict) -> tuple[str, str]:
     else:
         hero = '<div class="hero"></div>'
         stack_css = ""
+    # 比分板只算一次：下面「钩子要不要下移」也要问它在不在，
+    # 两处各调一遍就会分叉（而分叉的样子是「板渲出来了，钩子却按没板往下让了」）。
+    score_html = _solo_score_html(cover)
     body = (
         f'{hero}<div class="scrim"></div><div class="bar"></div>'
         f'<div class="head"><div class="brandwrap">{icon_html}'
@@ -1416,7 +1467,7 @@ def _solo_body(cover: dict) -> tuple[str, str]:
         # 没有丢——它一直同时印在左上角那行 `网球时差 · {column}` 里，药丸是
         # 第二遍。判据 `test_台头药丸不许自己回来`。
         f'<div class="storycopy">'
-        f'<div class="storytitle">{hook}</div>{_solo_score_html(cover)}</div>')
+        f'<div class="storytitle">{hook}</div>{score_html}</div>')
     # **`fit: "width"` 这条路以前只有 VS 的分格有**（`_panel_style`），solo 没有——
     # 而 CLAUDE.md 那条「横素材在 3:4 的海报里要 `fit: "width"`，不是 cover」写的是
     # **海报**，没分版式。于是在 solo 上写这个键是个**不吭声的死键**：渲得出来、
@@ -1670,7 +1721,14 @@ __SCRIM__
         # 和下格的上半（那只搭在眉骨上的手，正是这条片子的落点）一起盖住。
         # 追加在最后，同特异性下后写的赢。
         + (".storycopy{top:auto;bottom:96px;transform:none;gap:26px}"
-           if above else ""))
+           if above else "")
+        # ⭐ 账号所有者 2026-09-05：「封面钩子文案可以下移，不遮住主体」。
+        # 信箱式（`fit: "width"`）且没有比分板时，钩子让到照片下边缘之外——
+        # 推导和它的两条边界写在 `storycopy_top_for()` 里。
+        # ⚠️ **追加在最后、同特异性下后写的赢**，基础那条 `top:790px` 原样
+        # 留着——定版判据钉的就是它，也是铺满那一档和赛场之上照旧走的值。
+        + (f".storycopy{{top:{storycopy_top_for(cover, _img_size(src))}px}}"
+           if solo_fit_width and not score_html.strip() else ""))
     return body, _fill_score_layout(extra, cover)
 
 
@@ -1723,6 +1781,21 @@ def _fill_score_layout(css: str, cover: dict) -> str:
     if left:
         raise SystemExit(f"比分板 CSS 还有没填的占位符：{left}")
     return css
+
+
+def _img_size(image: Path) -> tuple[int, int]:
+    """(宽, 高)——读不出来就返回 (0, 0)，让调用方退回定版的那个值。
+
+    ⚠️ **PIL 在这个模块里是延迟导入的**（渲海报本身只要 Chromium，不要 PIL），
+    所以这儿也照办；`ImageOps.exif_transpose` 那一下不能省——手机拍的照片
+    常带旋转位，不应用的话宽高是反的，而反了之后算出来的下边缘会静静地错。
+    """
+    try:
+        from PIL import Image, ImageOps
+        with Image.open(image) as im:
+            return ImageOps.exif_transpose(im).size
+    except Exception:
+        return (0, 0)
 
 
 def _precrop(image: Path, panel: dict) -> Path:
