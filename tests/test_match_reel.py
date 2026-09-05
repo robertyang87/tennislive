@@ -15358,3 +15358,89 @@ def test_标题前缀只作用在发出去那一处不许混进探活():
         "前缀混进了复制页探活——那是在等一句永远不出现的话，而它不吭声：\n  "
         + "\n  ".join(probe_calls)
         + "\n\n探活和复制页比对一律用裸 title，前缀只作用在 push() 那一处。")
+
+
+def _a_released_slug() -> tuple[str, str]:
+    """挑一条**真的走了 Release** 的片子（slug 和它的 video_url）。
+
+    不维护名单：从 `output/*/reel/*/render.json` 里自己找。⚠️ `output/**/*.json`
+    在 CI 的稀疏检出里（2026-08-23 那次改宽），所以这条在 CI 上真的走得到——
+    「测试不许拿 output/ 当判据的主语」那条防的是**它不在**的情形，这一格在。
+    """
+    for meta in sorted(Path("output").glob("*/reel/*/render.json"), reverse=True):
+        try:
+            url = str(json.loads(meta.read_text(encoding="utf-8")).get("video_url") or "")
+        except (json.JSONDecodeError, OSError):
+            continue
+        if url:
+            return meta.parent.name, url
+    return "", ""
+
+
+def test_审片版拉回来的原片不许落在output底下(monkeypatch):
+    """⚠️ **一个躺在被跟踪目录里的未跟踪大文件是个盲区。**
+
+    来路：2026-09-05 核 `wu-alcaraz-us-open-2026-r3` 时图省事，把 Release 上
+    那份 41.8 MB 的成片下到了 `check_reel_landed` 要找的位置（也就是产物目录），
+    验完顺手 `git add -A && git commit`——**差 30 秒就把它提交进历史**，
+    `git show --stat` 第一行才看见。
+
+    三道该拦的闸一道都没响，而且每一道都「没做错」：
+    `test_成片一律走Release不进git` 查的是 `git ls-files`，那一刻它还没被跟踪；
+    全量测试跑在 `git add` **之前**；工作流那步「丢掉不进仓库的中间物」是
+    **runner 上**的清理，管不到沙箱里下的这一份。
+
+    所以判据钉在**它落在哪**，而且**真跑一次**——查源码里有没有 `mkdtemp`
+    只能防「有人把它删了」，防不住「它从来没工作过」。
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import review_copy  # noqa: PLC0415
+    import urllib.request  # noqa: PLC0415
+
+    slug, url = _a_released_slug()
+    # 判据自己的判据：主语没了要出声，不许变成一条恒真的绿灯
+    assert slug, "output/ 里一条走 Release 的片子都没有——这条判据的主语没了，换判据"
+
+    got: dict[str, str] = {}
+
+    def _fake(src, dest):  # noqa: ANN001
+        got["src"] = src
+        Path(dest).write_bytes(b"\0" * 1024)
+        return dest, None
+
+    monkeypatch.setattr(urllib.request, "urlretrieve", _fake)
+    film = review_copy.fetch_released_film(slug)
+
+    assert got["src"] == url, "拉的不是 render.json 里记的那一条"
+    assert film.is_file(), "说拉回来了，文件却不在"
+
+    repo_output = (Path("output").resolve())
+    assert repo_output not in film.resolve().parents, (
+        f"原片落在了仓库的 output/ 底下（{film}）——下一次 `git add -A` 会把它"
+        "吃进历史。这条线为它差 30 秒栽过一次。")
+
+
+def test_审片版的成片链接只从render_json那一处读():
+    """出处只有一处（`push_reel.released_video_url`）。
+
+    自己拼一份 `releases/download/...` 必然分叉，而**分叉的样子是「拉回来的是
+    另一条片子」或者一个 404，两种都不吭声**——审片版看起来正常，只是内容不对。
+    """
+    src = Path("tools/review_copy.py").read_text(encoding="utf-8")
+    tree = ast.parse(src)
+    fn = next((n for n in ast.walk(tree)
+               if isinstance(n, ast.FunctionDef) and n.name == "fetch_released_film"), None)
+    assert fn is not None, "fetch_released_film 没了——主语变了就得换判据"
+
+    calls = {n.func.attr for n in ast.walk(fn)
+             if isinstance(n, ast.Call) and isinstance(n.func, ast.Attribute)}
+    assert "released_video_url" in calls, (
+        "成片链接没走 push_reel.released_video_url——写两处必分叉")
+
+    # ⚠️ 只看这个函数的**代码**，不看 docstring：这条教训的来路就写在它自己的
+    # docstring 里，连注释一起扫会把「把坑记下来」判成「又踩了这个坑」
+    # （这个仓库为它栽过五次）。
+    body = fn.body[1:] if (fn.body and isinstance(fn.body[0], ast.Expr)
+                           and isinstance(fn.body[0].value, ast.Constant)) else fn.body
+    code = "\n".join(ast.unparse(n) for n in body)
+    assert "releases/download" not in code, "别自己拼 Release 链接，读 render.json"

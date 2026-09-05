@@ -11,9 +11,17 @@
 所以输出文件名硬性带 `-审片版`，肉眼就能分出来——这条线为「两个地址两条片子，
 谁也没说哪个是哪个」栽过（见 CLAUDE.md 里 Release 那节）。
 
+⚠️ **2026-09-05 起这是一条常规动作，不是应急手段**：账号所有者点开微信里那个
+▶ 按钮「视频也下不下来」——它指向 `release-assets.githubusercontent.com`
+（GitHub 的 Release CDN，响应头写着 `attachment` + `octet-stream`），而他在国内。
+量出来的对照很干净：同一条推送里**海报走 gcore.jsdelivr 是好的**，而复制页
+（github.io）和成片（Release）**两个 GitHub 域名的都打不开**。他定的处置是
+「对话里发审片版」，所以**每条片子渲完就跑一趟这个脚本，把审片版发进对话**。
+
 用法：
-    python3 tools/review_copy.py output/2026-08-05/reel/shang-rublev/shang-rublev.mp4
-    python3 tools/review_copy.py <成片> --mib 20 --width 640
+    python3 tools/review_copy.py --slug shang-rublev          # 常规路，自己去 Release 拉
+    python3 tools/review_copy.py <成片路径>                    # 成片已经在手上时
+    python3 tools/review_copy.py --slug <slug> --mib 20 --width 640
 """
 from __future__ import annotations
 
@@ -40,9 +48,72 @@ def probe_seconds(path: Path) -> float:
     return float(json.loads(out.stdout)["format"]["duration"])
 
 
+def fetch_released_film(slug: str) -> Path:
+    """按 slug 反查产物目录，把 Release 上那份成片拉到**专用临时目录**。
+
+    来路：2026-09-05 账号所有者「视频也下不下来」——微信里那个 ▶ 按钮指向
+    `release-assets.githubusercontent.com`（GitHub 的 Release CDN，`attachment`
+    + `octet-stream`），他在国内点不开。定下来的处置是**渲完在对话里发一份
+    审片版**，而在这之前要三步手工（curl → review_copy → mv），所以收成一条命令
+    ——「只有一个说得通的下一步时，让它便宜到不会被跳过」。
+
+    ⚠️ **拉回来那份 64 MB 的原片一律落在临时目录，绝不落 `output/`。**
+    这条线为它栽过：`check_reel_landed` 按产物目录找成片，图省事把 Release
+    那份下到了它要找的位置，验完顺手 `git add -A`，差 30 秒就把一个 41.8 MB
+    的 mp4 提交进历史（`git show --stat` 第一行才看见）。「一个躺在被跟踪目录里
+    的未跟踪大文件」是个盲区：`test_成片一律走Release不进git` 查的是
+    `git ls-files`，那一刻它还没被跟踪，三道闸一道都不响。
+
+    ⚠️ **链接从 `render.json` 读，不自己拼**——出处只有一处
+    （`push_reel.released_video_url`）。自己拼一份必然分叉，而分叉的样子是
+    「拉回来的是另一条片子」或者一个 404，两种都不吭声。
+    """
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    import push_reel  # noqa: PLC0415  # 只为复用那一处出处，不在模块顶层拖依赖
+
+    root = Path(__file__).resolve().parent.parent
+    # 日期目录按上海时间分而沙箱跑在 UTC，别去算「今天」——排序取最新的那一天，
+    # 两种时区下都对（和 `render_cover_local.find_outdir` 同一个理由）。
+    hits = sorted(root.glob(f"output/*/reel/{slug}"), reverse=True)
+    if not hits:
+        raise SystemExit(
+            f"output/ 里找不到 {slug} 的产物目录。\n"
+            "  slug 写错了？还是这条片子的产物没在这个工作区里（先 git fetch/checkout）？")
+    outdir = hits[0]
+
+    url = push_reel.released_video_url(outdir)
+    if not url:
+        # 走过 Release 之前的老片子，成片就在产物目录里
+        local = outdir / f"{slug}.mp4"
+        if local.is_file():
+            print(f"[审片版] {outdir} 里就有成片，不用下载")
+            return local
+        raise SystemExit(
+            f"{outdir}/render.json 里没有 video_url，{local} 也不在。\n"
+            "  这条片子还没渲完？先看一眼那份 render.json。")
+
+    import urllib.request
+
+    tmp = Path(tempfile.mkdtemp(prefix="review-copy-"))
+    dest = tmp / f"{slug}.mp4"
+    print(f"[审片版] 从 Release 拉成片：{url}")
+    try:
+        urllib.request.urlretrieve(url, dest)  # noqa: S310  # 只认 render.json 里的链接
+    except Exception as exc:  # noqa: BLE001
+        raise SystemExit(f"成片下不下来（{exc}）——Release 链接过期或者网络不通？") from exc
+    print(f"[审片版] 拿到 {dest.stat().st_size / MIB:.1f} MiB → {dest}")
+    return dest
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("film", type=Path)
+    # ⚠️ 两条入口二选一：`--slug` 是常规路（自己去 Release 拉），给路径那条
+    # 留给「成片已经在手上」的情形。**都不给或者都给都要当场报错**——
+    # 静默挑一条的话，「拉的是哪一条片子」就没人说得清了。
+    ap.add_argument("film", type=Path, nargs="?",
+                    help="成片路径。和 --slug 二选一")
+    ap.add_argument("--slug", help="按 slug 反查产物目录，从 render.json 的 "
+                                   "Release 链接把成片拉回来（常规路）")
     ap.add_argument("--mib", type=float, default=DEFAULT_TARGET_MIB)
     ap.add_argument("--width", type=int, default=720,
                     help="缩到这个宽度；审片看的是内容和节奏，不是画质")
@@ -53,15 +124,20 @@ def main() -> int:
                     help="审片版落在哪，默认临时目录（**不进仓库**）")
     args = ap.parse_args()
 
-    if not args.film.is_file():
-        raise SystemExit(f"成片不在：{args.film}")
-    src_mib = args.film.stat().st_size / MIB
-    secs = probe_seconds(args.film)
+    if bool(args.film) == bool(args.slug):
+        raise SystemExit("要么给成片路径，要么给 --slug，二选一。\n"
+                         "  常规路：python3 tools/review_copy.py --slug <slug>")
+
+    film = fetch_released_film(args.slug) if args.slug else args.film
+    if not film.is_file():
+        raise SystemExit(f"成片不在：{film}")
+    src_mib = film.stat().st_size / MIB
+    secs = probe_seconds(film)
 
     if src_mib <= args.mib:
         print(f"[审片版] 原片 {src_mib:.1f} MiB 已经在 {args.mib} MiB 以内，"
               "直接发原片就行，不用压")
-        print(args.film)
+        print(film)
         return 0
 
     # 反算视频码率：目标体积扣掉音轨，再留 3% 给封装
@@ -74,8 +150,8 @@ def main() -> int:
             "音轨 1.5 MB 上下，而配音和断句正是最需要耳朵的那一维。")
 
     args.out_dir.mkdir(parents=True, exist_ok=True)
-    out = args.out_dir / f"{args.film.stem}-审片版.mp4"
-    cmd = ["ffmpeg", "-v", "error", "-y", "-i", str(args.film),
+    out = args.out_dir / f"{film.stem}-审片版.mp4"
+    cmd = ["ffmpeg", "-v", "error", "-y", "-i", str(film),
            "-vf", f"scale={args.width}:-2",
            "-c:v", "libx264", "-preset", "medium",
            "-b:v", f"{video_kbps}k", "-maxrate", f"{int(video_kbps*1.3)}k",
@@ -91,7 +167,7 @@ def main() -> int:
     if got > 30:
         raise SystemExit(f"⚠️ 压完还是 {got:.1f} MiB，超过 30 MiB 上限——"
                          "调小 --mib 或 --width 再来一次")
-    print(f"⚠️ 这是**审片版**，只用来看。发微信的仍然是 {args.film.name}")
+    print(f"⚠️ 这是**审片版**，只用来看。发微信的仍然是 {film.name}")
     print(out)
     return 0
 
