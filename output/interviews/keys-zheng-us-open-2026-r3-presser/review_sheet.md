@@ -49,7 +49,7 @@
 | 43 | 1:48.9 | [▶](https://youtu.be/e2A_5vrMqNs?t=108) | What? | 嗯？ |  |
 | 44 | 1:49.3 | [▶](https://youtu.be/e2A_5vrMqNs?t=109) | I I got in late. | 我来晚了 |  |
 | 45 | 1:50.5 | [▶](https://youtu.be/e2A_5vrMqNs?t=110) | I apologize. | 不好意思 |  |
-| 46 | 1:51.8 | [▶](https://youtu.be/e2A_5vrMqNs?t=111) | But Madison, | 麦迪逊 |  |
+| 46 | 1:51.8 | [▶](https://youtu.be/e2A_5vrMqNs?t=111) | But Madison, | 凯斯 |  |
 | 47 | 1:53.0 | [▶](https://youtu.be/e2A_5vrMqNs?t=113) | what were the specifics do you think | 你觉得具体是什么 |  |
 | 48 | 1:55.9 | [▶](https://youtu.be/e2A_5vrMqNs?t=115) | of what turned the match around? | 让这场球翻了过来？ |  |
 | 49 | 2:01.8 | [▶](https://youtu.be/e2A_5vrMqNs?t=121) | Like at the end, | 到最后 |  |
@@ -60,7 +60,7 @@
 | 54 | 2:23.1 | [▶](https://youtu.be/e2A_5vrMqNs?t=143) | was a much bigger deal than just playing | 突然远远不止是 |  |
 | 55 | 2:24.6 | [▶](https://youtu.be/e2A_5vrMqNs?t=144) | a tennis match all of a sudden. | 打一场网球比赛 |  |
 | 56 | 2:27.9 | [▶](https://youtu.be/e2A_5vrMqNs?t=147) | We'll take one more. | 最后一个问题 |  |
-| 57 | 2:29.7 | [▶](https://youtu.be/e2A_5vrMqNs?t=149) | Madison, I appreciate this is straight | 麦迪逊 我知道这是 |  |
+| 57 | 2:29.7 | [▶](https://youtu.be/e2A_5vrMqNs?t=149) | Madison, I appreciate this is straight | 凯斯 我知道这是 |  |
 | 58 | 2:31.5 | [▶](https://youtu.be/e2A_5vrMqNs?t=151) | after the match and you said you | 刚打完就问 你刚说 |  |
 | 59 | 2:33.8 | [▶](https://youtu.be/e2A_5vrMqNs?t=153) | might want to make some changes. | 可能要做一些改变 |  |
 | 60 | 2:35.2 | [▶](https://youtu.be/e2A_5vrMqNs?t=155) | I wonder are there changes | 是不是有一些改变 |  |
