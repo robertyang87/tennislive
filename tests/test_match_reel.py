@@ -15320,3 +15320,36 @@ def test_spec认领tts_backend为edge就不走Azure(monkeypatch):
     # ④ 值不是 edge 当场红
     with pytest.raises(reel.ReelError, match="tts_backend"):
         reel.apply_tts_backend({"tts_backend": "azure", "_tts_backend_why": "x"})
+
+
+def test_标题前缀只作用在发出去那一处不许混进探活():
+    """`--title-prefix` 只许改**发出去那条消息**的标题。
+
+    来路：2026-09-05 查「wu-alcaraz 推送没收到」，A/B 两条自检都收到了——
+    token／关注／额度／渠道一次全排除，问题收窄到「那一条真消息本身」。
+    要问下去只能把那条的**真实推送体原样再发一次**，而它和生产唯一该有的
+    差别就是标题上多一句「推送自检 C」。
+
+    ⚠️ **它最容易坏的方式不是没生效，是生效得太宽**：`wait_for_copy_page`
+    拿 `title` 去复制页里比对（两次 run 要算出同一句标题，本文件为它栽过），
+    前缀混进那一处，就是「等一句永远不出现的话」——探满 60×40s 之后
+    静静摘掉按钮或者整趟作废，**而它一个字都不会说是前缀干的**。
+
+    所以钉两头，缺一头都拦不住：
+      ① 发送那一处**必须**带前缀（不带＝这个开关根本没接上）
+      ② 探活那一处**必须**是裸 `title`
+    """
+    src = Path("tools/push_reel.py").read_text(encoding="utf-8")
+
+    push_calls = re.findall(r"^\s*receipt = push\((.+?),", src, re.M)
+    assert push_calls, "找不到发送那一处 `receipt = push(...)`——判据的主语没了"
+    assert all("title_prefix" in c for c in push_calls), (
+        "发出去那条消息的标题没带 --title-prefix，这个开关等于没接上：\n  "
+        + "\n  ".join(push_calls))
+
+    probe_calls = re.findall(r"^\s*wait_for_copy_page\((.+?)\)\s*$", src, re.M)
+    assert probe_calls, "找不到 `wait_for_copy_page(...)`——判据的主语没了"
+    assert not any("title_prefix" in c for c in probe_calls), (
+        "前缀混进了复制页探活——那是在等一句永远不出现的话，而它不吭声：\n  "
+        + "\n  ".join(probe_calls)
+        + "\n\n探活和复制页比对一律用裸 title，前缀只作用在 push() 那一处。")

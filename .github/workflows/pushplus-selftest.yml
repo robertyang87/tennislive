@@ -28,7 +28,12 @@ name: pushplus-selftest
 #      在「pushplus 推送加」公众号里发 **「请求次数」** 查当日请求数、
 #      发 **「解封时间」** 查解封日期。撞限额的话那儿直接就说了。
 #
-# ── A / B 两条路 ────────────────────────────────────────────────────────
+# ── 三条路，A/B 一层、C 一层 ────────────────────────────────────────────
+#
+# A/B 问的是「**token 这一层还通不通**」，C 问的是「**那一条真消息本身有没有
+# 问题**」——2026-09-05 A/B 两条都收到了，于是问题一次收窄到 C 那一层：
+# A/B 是纯文本零图零链接，而真片子是几千字 HTML ＋ 2 张 jsDelivr 图 ＋ 4 个外链。
+#
 #
 #   A 裸 curl，**不带 channel** —— 告警走这条（pipeline-health / source-health /
 #     orchestrate / news-brief / flash）
@@ -68,7 +73,15 @@ on:
   workflow_dispatch:
     inputs:
       note:
-        description: "写进两条消息里的备注（留空就只有时间戳）"
+        description: "写进消息里的备注（留空就只有时间戳）"
+        required: false
+        default: ""
+      slug:
+        description: "C 路：拿这条 spec 的**真实推送体**原样发一次（留空＝只跑 A/B）"
+        required: false
+        default: ""
+      asset_rev:
+        description: "C 路的图片 URL 钉哪个 commit（留空＝@main）。要和当初那趟一模一样就填那趟的 head_sha"
         required: false
         default: ""
 
@@ -85,6 +98,8 @@ jobs:
           # 只要源码，`output/` 一 GB 多，这条一个产物都不读。
           sparse-checkout: |
             src
+            tools
+            specs
             pyproject.toml
           sparse-checkout-cone-mode: false
 
@@ -155,19 +170,70 @@ jobs:
           print(f"B 路流水号：{receipt}")
           PY
 
+      # ── C：拿一条真 spec 的**推送体原样**发一次 ─────────────────────────
+      # A/B 是纯文本、零图、零链接；一条真片子是几千字 HTML ＋ 两张 jsDelivr 图
+      # ＋ 四个外链。**三样同时不一样，所以 A/B 都到了也分不出是哪一样坏的**
+      # ——这一路把那三样一次全带上：到了说明那一次是偶发，没到说明是这条
+      # 消息本身，再去二分图片／链接／长度。
+      #
+      # ⚠️ **调的是生产那条 `push_reel.py --stage push`，不在这儿重组一份。**
+      # 自己拼会漏掉 `copy_text = f"{title}\n\n{copy_text}"` 这类只在 main 里
+      # 发生的步骤（第一次写就漏了），而漏掉的样子是「自检发的和真发的差一点，
+      # 却看不出差在哪」——那正好毁掉这一路唯一的意义。
+      # 唯一的差别是 `--title-prefix` 给标题加了「推送自检 C」。
+      #
+      # ⚠️ **不写复制页**（`--stage push` 本来就不写）、**不提交、不碰台账**：
+      # 这一路只是再发一次同样的内容，**不是重发这条片子**。真要重发走
+      # `match-reel mode=push`，那条路有它自己「先把 pushed.json 删掉」的显式闸。
+      - name: C · 真实推送体原样发一次
+        if: always() && github.event.inputs.slug != ''
+        env:
+          PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
+          STAMP: ${{ steps.stamp.outputs.stamp }}
+          SLUG: ${{ github.event.inputs.slug }}
+          # 图片 URL 钉哪个 commit。留空＝@main；要和当初那趟逐字节一样就填
+          # 那趟的 head_sha——微信的图片缓存按**路径**算，换个 rev 就是另一个
+          # 资源，实验就不等价了。
+          TENNISLIVE_ASSET_REV: ${{ github.event.inputs.asset_rev }}
+        run: |
+          # ⚠️ 按 slug 反查产物目录，**别按今天的日期拼**——`mode=push` 为这个
+          # 栽过一次（渲的那天和推的那天不是同一天）。渲过不止一次取最晚那份。
+          # ⚠️ 用 `git ls-files` 不用 `test -f`：稀疏检出下 `output/` 不在工作区，
+          # 而索引里认得（`auto_push_gate` 早为这个栽过）。
+          RENDER=$(git ls-files -- "output/*/reel/$SLUG/render.json" | sort | tail -1)
+          if [ -z "$RENDER" ]; then
+            echo "::error::仓库里找不到 output/*/reel/$SLUG/render.json——slug 写错了？"
+            exit 1
+          fi
+          OUTDIR=$(dirname "$RENDER")
+          echo "产物目录：$OUTDIR"
+          git sparse-checkout add "$OUTDIR"
+          python tools/push_reel.py \
+            --outdir "$OUTDIR" \
+            --copy "specs/reels/$SLUG.xhs.txt" \
+            --title-prefix "推送自检 C · $STAMP ｜ "
+
       - name: 怎么读这一趟
         if: always()
         run: |
           cat <<'EOF'
           ────────────────────────────────────────────────
-          run 变绿只说明 PushPlus 两次都返回了 code=200。
+          run 变绿只说明 PushPlus 每一路都返回了 code=200。
           **产物是你微信里收到几条**，去看一眼：
 
-            两条都到    → token／关注／额度都好，问题在那一条真消息上
+          【A/B：token 这一层还通不通】
+            两条都到    → token／关注／额度／渠道全好，问题在那一条真消息上
             两条都不到  → 先去「pushplus 推送加」公众号发「请求次数」；
                           再发「解封时间」。撞限额时接口照样返回 200，
                           官方文档原话：「超出的请求将不再推送」
             一到一不到  → 意外（两条本该同渠道），把两边返回体贴出来
+
+          【C：那一条真消息本身有没有问题】（给了 slug 才有）
+            A/B 到了、C 也到  → 那一次是**偶发**，直接重发那条片子就行
+                                （走 match-reel mode=push，先删 pushed.json）
+            A/B 到了、C 没到  → 就是**这条消息的内容**。接着二分：
+                                图片（2 张 jsDelivr）／外链（Release + Pages）／
+                                长度（几千字 HTML）——三样里是哪一样
 
           日额度：实名 200 次／天，会员 2000 次／天。
           错误的请求也算次数——「请求次数不等于接收到消息的条数」。
