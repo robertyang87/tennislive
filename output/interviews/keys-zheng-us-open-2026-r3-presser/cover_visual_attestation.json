@@ -1,0 +1,56 @@
+{
+  "status": "pass",
+  "checked_at": "2026-09-05T20:58:32Z",
+  "auditor": "opencv-haar-v1",
+  "expected_subject": "凯斯",
+  "identity_evidence": "L0-bound spec subject + same-source frame_at",
+  "spec_sha256": "8591dd614e54975150d22f2c370dbe8918fd56748d7243c34d5572c06c3d77af",
+  "poster_sha256": "6af92c03f7505e426c96fd6435772a847e5aceda0bdad6cf4bee8f1dd54f8f07",
+  "thresholds": {
+    "close_up_zoom": 1.5,
+    "face_height_ratio": 0.08,
+    "close_up_face_height_ratio": 0.14,
+    "face_area_ratio": 0.01,
+    "face_sharpness": 45.0,
+    "face_contrast": 32.0,
+    "eyes": 2
+  },
+  "result": {
+    "poster": {
+      "decodable": true,
+      "format": "JPEG",
+      "width": 1080,
+      "height": 1440,
+      "photo_region": [
+        0,
+        150,
+        1080,
+        810
+      ]
+    },
+    "face": {
+      "detector": "frontal-default",
+      "box": [
+        461,
+        315,
+        205,
+        205
+      ],
+      "detected_faces": 2,
+      "eyes": 2,
+      "face_height_ratio": 0.25309,
+      "face_area_ratio": 0.04804,
+      "center_x_ratio": 0.52176,
+      "center_y_ratio": 0.33025,
+      "sharpness": 150.305,
+      "contrast": 98.0
+    },
+    "contract": {
+      "shot_type": "",
+      "frame_at": 31.0,
+      "zoom": 1.0,
+      "focus_y": 0.5
+    }
+  },
+  "issues": []
+}
