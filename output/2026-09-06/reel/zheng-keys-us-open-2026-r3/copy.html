@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>9.6 赛场之上 | 郑钦文零比五落后逆转凯斯</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>郑钦文0-5落后救下赛点，连赢七局逆转凯斯🎾
+
+北京时间9月5日深夜，美网女单第三轮，大看台球场。一边是世界第121、从资格赛一路打上来的郑钦文，一边是22号种子、2025年澳网冠军凯斯。两小时二十八分钟之后，1-6、7-6(3)、7-5，赢的是前者。
+
+可开头完全不是这个样子。首盘只打了23分钟：一发只进了29%，4个双误，35分里她只拿到10分。转播说，这是凯斯近乎完美的一盘。那23分钟里，她像是还没走进这场球。
+
+第二盘她5-3领先，发球胜盘却被破了回来。5-5，6-6，抢七。2-2她发球，那一分她上前把球拿下，转播说：够勇敢，不再被动了。3-2。
+
+转折点就在下一分。凯斯发球，2-3，一记放小球打丢——转播说这一拍代价很大。2-4。从这一分起风向变了：之后的四分郑钦文拿了三分，7-3，1-1。这一盘凯斯的非受迫失误从3个涨到16个，郑钦文只有6个；她的一发得分率从首盘的50%提到了89%。
+
+然后是决胜盘，最难看的那一段。凯斯连赢五局，5-0。5-1她发球胜赛局，40-30，赛点。郑钦文离出局，只差一分。
+
+那一分，她救了下来。平分，破发点，破发。5-2。
+
+接着是凯斯最后的三个发球局：5-3，被零封破；5-5，再破。6-5，轮到郑钦文发球，40-30——这一次，赛点在她手里。球落地，她仰面躺在了球场上。两小时二十八分钟，全落在那一躺里。
+
+从0-5到7-5，连赢七局。全场195分她只多赢了一分，98比97；最后十个球，她赢了八个；上网13次拿下11分。转播的原话：从悬崖边回来，这是近几年美网最大的逆转之一。
+
+再看看对面那个人。上一轮凯斯决胜盘2-5落后、连救五个赛点逆转邦达尔；这一轮她手握赛点，却输给了一个连赢七局的人。三次交手，郑钦文2-1领先。
+
+从资格赛第一轮到16强，六连胜。一个世界第121的人，在大看台球场救下赛点翻盘。这样的夜晚，你上一次看见是什么时候？
+
+#网球时差 #美网 #郑钦文 #WTA #赛场之上</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>这样的翻盘，你上一次看见是什么时候？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
