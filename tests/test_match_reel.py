@@ -3773,7 +3773,12 @@ def test_成片链接发之前要自己探一次(monkeypatch):
     # `url = released or video_url(...)`。锚字符串写死过一次，改代码就红——
     # 那不是「测试拦住了 bug」，是测试自己在挡路。取最短的稳定前缀。
     stage = source[source.index("url = released or video_url("):]
-    assert stage.index("wait_for_video(") < stage.index("push(title"), (
+    # ⚠️ 锚点是 `receipt = push(`，**不是 `push(title`**：后者把「标题长什么样」
+    # 当成了锚的一部分，而那是会变的。2026-09-05 加 `--title-prefix`（自检 C 路
+    # 要把一条真推送体标成自检）时那一行成了 `push(f"{args.title_prefix}{title}"`，
+    # 这条当场 `ValueError`——**而它要钉的「探活排在发送之前」一个字都没变**。
+    # 上面那句「取最短的稳定前缀」是它自己写的，只是上次没收够。
+    assert stage.index("wait_for_video(") < stage.index("receipt = push("), (
         "wait_for_video 没排在 push 之前——「写了」不等于「跑过」")
 
 

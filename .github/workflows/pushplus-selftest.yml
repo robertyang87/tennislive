@@ -87,6 +87,15 @@ on:
 
 permissions:
   contents: read
+  # ⚠️ C 路走生产那条 `push_reel.py --stage push`，而它会 `wait_for_copy_page`
+  # → `trigger_pages_build()` 点一次 `pages.yml`。**没有这个权限那次点会静静
+  # 失败**（「204 是信号，运行记录才是产物」那条），后果不是慢一点：探不到
+  # 复制页 → 那颗按钮被摘掉 → **发出去的推送体就和真片子不一样了**，
+  # 而这一路的全部意义就是「原样」。
+  # 判据 `test_给了actions_write的工作流都真的要点Pages` /
+  # `test_会发微信的工作流都要能触发Pages` 两条都钉着它。
+  # ⚠️ A/B 两路用不上它，而权限只能按 job 给、分不开——这是代价，认领在这儿。
+  actions: write
 
 jobs:
   selftest:
@@ -191,6 +200,9 @@ jobs:
           PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
           STAMP: ${{ steps.stamp.outputs.stamp }}
           SLUG: ${{ github.event.inputs.slug }}
+          # ⚠️ 光有 `actions: write` 不够：`trigger_pages_build()` **环境里没有
+          # token 就直接跳过**（不报错）。生产那条 push 步给的也是这个。
+          GITHUB_TOKEN: ${{ github.token }}
           # 图片 URL 钉哪个 commit。留空＝@main；要和当初那趟逐字节一样就填
           # 那趟的 head_sha——微信的图片缓存按**路径**算，换个 rev 就是另一个
           # 资源，实验就不等价了。
