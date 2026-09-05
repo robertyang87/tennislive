@@ -37,7 +37,7 @@
 | 31 | 1:12.2 | [▶](https://youtu.be/1NzkaTx0a8U?t=72) | and I want to say thank you | 我想说声谢谢 |  |
 | 32 | 1:13.4 | [▶](https://youtu.be/1NzkaTx0a8U?t=73) | for the crowd who come | 谢谢今天来现场的观众 |  |
 | 33 | 1:14.3 | [▶](https://youtu.be/1NzkaTx0a8U?t=74) | to supporting us today doesn't matter | 来给我们加油 不管 |  |
-| 34 | 1:16.4 | [▶](https://youtu.be/1NzkaTx0a8U?t=76) | if he's supporting Maddie or me I mean, | 你支持的是麦迪还是我 |  |
+| 34 | 1:16.4 | [▶](https://youtu.be/1NzkaTx0a8U?t=76) | if it's supporting Maddie or me I mean, | 你支持的是麦迪还是我 | ✏️ 已订正 |
 | 35 | 1:19.8 | [▶](https://youtu.be/1NzkaTx0a8U?t=79) | thank you very much. | 真的非常感谢 |  |
 | 36 | 1:22.6 | [▶](https://youtu.be/1NzkaTx0a8U?t=82) | This is truly one | 这真的是 |  |
 | 37 | 1:23.3 | [▶](https://youtu.be/1NzkaTx0a8U?t=83) | of the loudest atmospheres we've had here | 我们见过气氛最热的一场 |  |
@@ -60,7 +60,7 @@
 | 54 | 1:55.9 | [▶](https://youtu.be/1NzkaTx0a8U?t=115) | going there I mean yes I think brave | 我就一直拼 一直往前 |  |
 | 55 | 1:59.0 | [▶](https://youtu.be/1NzkaTx0a8U?t=118) | is the word today cuz | 勇敢就是今天的关键词 |  |
 | 56 | 2:00.2 | [▶](https://youtu.be/1NzkaTx0a8U?t=120) | against Maddie you can't be too passive | 对麦迪你不能太被动 |  |
-| 57 | 2:02.3 | [▶](https://youtu.be/1NzkaTx0a8U?t=122) | if not she will keep you and I think I find | 否则她会一直压着你 |  |
+| 57 | 2:02.3 | [▶](https://youtu.be/1NzkaTx0a8U?t=122) | if not she will kill you and I think I find | 否则她会碾压你 | ✏️ 已订正 |
 | 58 | 2:05.0 | [▶](https://youtu.be/1NzkaTx0a8U?t=124) | the right balance at the end | 我觉得最后我找到了 |  |
 | 59 | 2:06.3 | [▶](https://youtu.be/1NzkaTx0a8U?t=126) | of the game well I'm just super happy | 那个平衡 我特别开心 |  |
 | 60 | 2:09.0 | [▶](https://youtu.be/1NzkaTx0a8U?t=128) | to this match it's like Yeah. | 这场球 就是 是啊 |  |
