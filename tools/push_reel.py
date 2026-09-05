@@ -749,6 +749,11 @@ def main() -> int:
                          "（从路径解）；按 slug 存的线（output/interviews/…）必须传")
     ap.add_argument("--receipt-out", default="",
                     help="PushPlus 成功后把流水号写入这个 JSON（供发布账本落证）")
+    ap.add_argument("--title-prefix", default="",
+                    help="只给**发出去那条消息**的标题加个前缀（`pushplus-selftest` "
+                         "的 C 路用它把一条真推送体标成自检）。⚠️ 探活和复制页比对"
+                         "一律用**原标题**——加了前缀去比，`wait_for_copy_page` 会等"
+                         "一句永远不出现的话。")
     args = ap.parse_args()
 
     outdir = Path(args.outdir)
@@ -845,7 +850,9 @@ def main() -> int:
         print(f"[数据图] 带上这一屏：{stat_card}")
     body = build_html(url, copy_url, args.lead, copy_text, poster,
                       column=column, stat_card=stat_card)
-    receipt = push(title, body, asset_dir=outdir)
+    # ⚠️ 前缀**只作用在这一处**。上面 `wait_for_copy_page(copy_url, title)` 和
+    # 复制页里印的都是裸 `title`——前缀混进去就是「等一句永远不出现的话」。
+    receipt = push(f"{args.title_prefix}{title}", body, asset_dir=outdir)
     if args.receipt_out:
         receipt_path = Path(args.receipt_out)
         receipt_path.parent.mkdir(parents=True, exist_ok=True)
