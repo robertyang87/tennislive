@@ -1,0 +1,282 @@
+{
+  "schema_version": 2,
+  "status": "pass",
+  "story_slug": "big-three",
+  "fetch_enabled": true,
+  "strict": true,
+  "policy": "事实先交叉核验；图片失败时排除失败来源并同题重试，仍失败则按新闻价值切换主题；候选耗尽后交给后续班次。",
+  "selected_count": 3,
+  "required_pages": [
+    "explainer",
+    "story",
+    "today"
+  ],
+  "missing_pages": [],
+  "degraded_pages": [],
+  "failed_curated_source_urls": [],
+  "input_domains": [
+    "espn.com",
+    "forbes.com",
+    "si.com",
+    "sports.yahoo.com",
+    "tennis365.com"
+  ],
+  "providers_queried": [
+    "curated-editorial",
+    "official-story-pages"
+  ],
+  "provider_runs": [
+    {
+      "page": "story",
+      "provider": "curated-editorial",
+      "query": "Federer Nadal 2008 wimbledon tennis",
+      "status": "ok",
+      "candidate_count": 1
+    },
+    {
+      "page": "story",
+      "provider": "official-story-pages",
+      "query": "Federer Nadal 2008 wimbledon tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "explainer",
+      "provider": "curated-editorial",
+      "query": "Djokovic Nadal 2012 australian open tennis",
+      "status": "ok",
+      "candidate_count": 1
+    },
+    {
+      "page": "explainer",
+      "provider": "official-story-pages",
+      "query": "Djokovic Nadal 2012 australian open tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "today",
+      "provider": "curated-editorial",
+      "query": "Djokovic Federer 2019 wimbledon tennis",
+      "status": "ok",
+      "candidate_count": 1
+    },
+    {
+      "page": "today",
+      "provider": "official-story-pages",
+      "query": "Djokovic Federer 2019 wimbledon tennis",
+      "status": "empty",
+      "candidate_count": 0
+    }
+  ],
+  "selected_providers": [
+    "verified-editorial"
+  ],
+  "excluded_source_urls": [],
+  "errors": [],
+  "attempts": [
+    {
+      "provider": "official-media",
+      "page_url": "https://www.espn.com/tennis/story/_/id/29190340/novak-djokovic-prediction-breaking-roger-federer-grand-slam-title-record-point",
+      "source_url": "https://www.espn.com/tennis/story/_/id/29190340/novak-djokovic-prediction-breaking-roger-federer-grand-slam-title-record-point",
+      "image_url": "",
+      "credit": "espn.com",
+      "license": "官方媒体 · 非商业资讯引用",
+      "status": "reference-only",
+      "reason": "官方页面未暴露 og:image，仅用于事实与事件核验",
+      "search_text": "  https://www.espn.com/tennis/story/_/id/29190340/novak-djokovic-prediction-breaking-roger-federer-grand-slam-title-record-point",
+      "image_text": " ",
+      "width": 0,
+      "height": 0
+    },
+    {
+      "provider": "official-media",
+      "page_url": "https://www.espn.com/tennis/story/_/id/23977542/roger-federer-rafael-nadal-epic-2008-wimbledon-final",
+      "source_url": "https://www.espn.com/tennis/story/_/id/23977542/roger-federer-rafael-nadal-epic-2008-wimbledon-final",
+      "image_url": "",
+      "credit": "espn.com",
+      "license": "官方媒体 · 非商业资讯引用",
+      "status": "reference-only",
+      "reason": "官方页面未暴露 og:image，仅用于事实与事件核验",
+      "search_text": "  https://www.espn.com/tennis/story/_/id/23977542/roger-federer-rafael-nadal-epic-2008-wimbledon-final",
+      "image_text": " ",
+      "width": 0,
+      "height": 0
+    },
+    {
+      "provider": "official-media",
+      "page_url": "https://www.espn.com/tennis/aus12/story/_/id/7515950/2012-australian-open-novak-djokovic-outlasts-rafael-nadal-longest-grand-slam-final",
+      "source_url": "https://www.espn.com/tennis/aus12/story/_/id/7515950/2012-australian-open-novak-djokovic-outlasts-rafael-nadal-longest-grand-slam-final",
+      "image_url": "",
+      "credit": "espn.com",
+      "license": "官方媒体 · 非商业资讯引用",
+      "status": "reference-only",
+      "reason": "官方页面未暴露 og:image，仅用于事实与事件核验",
+      "search_text": "  https://www.espn.com/tennis/aus12/story/_/id/7515950/2012-australian-open-novak-djokovic-outlasts-rafael-nadal-longest-grand-slam-final",
+      "image_text": " ",
+      "width": 0,
+      "height": 0
+    },
+    {
+      "provider": "official-page",
+      "page_url": "https://www.forbes.com/sites/adamzagoria/2019/07/14/wimbledon-novak-djokovics-championship-win-over-roger-federer-by-the-numbers/",
+      "status": "error",
+      "reason": "403 Client Error: Forbidden for url: https://www.forbes.com/sites/adamzagoria/2019/07/14/wimbledon-novak-djokovics-championship-win-over-roger-federer-by-the-numbers/"
+    },
+    {
+      "page": "cover",
+      "status": "selected",
+      "cached_file": "trivia-big-three.jpg",
+      "title": "Composite of three on-court trophy moments: Roger Federer kissing the Wimbledon trophy after his 8th title (2017), Rafael Nadal biting the Roland Garros trophy after his 14th title (2022), and Novak Djokovic holding the Australian Open trophy at the podium after the 2012 final",
+      "subject": "Federer Nadal Djokovic",
+      "required_years": [],
+      "required_event_terms": [
+        "tennis"
+      ],
+      "person_required": true,
+      "subject_match": true,
+      "year_match": true,
+      "event_match": true,
+      "person_match": true,
+      "visual_impact_match": true,
+      "reason": ""
+    },
+    {
+      "page": "story",
+      "status": "selected",
+      "required_event_terms": [],
+      "match_level": "exact-event",
+      "rejection_counts": {},
+      "source_runs": [
+        {
+          "page": "story",
+          "provider": "curated-editorial",
+          "query": "Federer Nadal 2008 wimbledon tennis",
+          "status": "ok",
+          "candidate_count": 1
+        },
+        {
+          "page": "story",
+          "provider": "official-story-pages",
+          "query": "Federer Nadal 2008 wimbledon tennis",
+          "status": "empty",
+          "candidate_count": 0
+        }
+      ],
+      "provider": "verified-editorial",
+      "source_url": "https://www.tennis365.com/tennis-news/t365-recalls-roger-federer-rafael-nadal-wimbledon-trilogy-2008",
+      "image_url": "https://d2me2qg8dfiw8u.cloudfront.net/content/uploads/2022/04/06115036/Roger-Federer-and-Rafael-Nadal-at-Wimbledon-2008.jpg",
+      "credit": "Tennis365",
+      "license": "公开网页图片 · 非商业资讯引用",
+      "query": "Federer Nadal 2008 wimbledon tennis",
+      "relevance": 100,
+      "sha256": "654041ab02605394c390d357c7b3eba3e12c5819bfe5c03dd04b1324d864778e",
+      "focus": "50% 24%",
+      "subject_match": true,
+      "year_match": true,
+      "event_match": true,
+      "person_required": true,
+      "cached_file": "story-654041ab0260.jpg"
+    },
+    {
+      "page": "explainer",
+      "status": "selected",
+      "required_event_terms": [],
+      "match_level": "exact-event",
+      "rejection_counts": {},
+      "source_runs": [
+        {
+          "page": "explainer",
+          "provider": "curated-editorial",
+          "query": "Djokovic Nadal 2012 australian open tennis",
+          "status": "ok",
+          "candidate_count": 1
+        },
+        {
+          "page": "explainer",
+          "provider": "official-story-pages",
+          "query": "Djokovic Nadal 2012 australian open tennis",
+          "status": "empty",
+          "candidate_count": 0
+        }
+      ],
+      "provider": "verified-editorial",
+      "source_url": "https://www.si.com/tennis/2012/01/29/29-0australian-open-2012",
+      "image_url": "https://www.si.com/.image/c_fill,w_1440,ar_1440:810,f_auto,q_auto,g_auto/MTY4MjYyNDk4OTcyODA0MjYx/novak-djokovic.jpg",
+      "credit": "Sports Illustrated",
+      "license": "公开网页图片 · 非商业资讯引用",
+      "query": "Djokovic Nadal 2012 australian open tennis",
+      "relevance": 100,
+      "sha256": "17446fe89cef4dda25154ff8ec0942d64b16c96f9c8734e0958d0230b7c74990",
+      "focus": "50% 24%",
+      "subject_match": true,
+      "year_match": true,
+      "event_match": true,
+      "person_required": true,
+      "cached_file": "explainer-17446fe89cef.jpg"
+    },
+    {
+      "page": "today",
+      "status": "selected",
+      "required_event_terms": [],
+      "match_level": "exact-event",
+      "rejection_counts": {},
+      "source_runs": [
+        {
+          "page": "today",
+          "provider": "curated-editorial",
+          "query": "Djokovic Federer 2019 wimbledon tennis",
+          "status": "ok",
+          "candidate_count": 1
+        },
+        {
+          "page": "today",
+          "provider": "official-story-pages",
+          "query": "Djokovic Federer 2019 wimbledon tennis",
+          "status": "empty",
+          "candidate_count": 0
+        }
+      ],
+      "provider": "verified-editorial",
+      "source_url": "https://sports.yahoo.com/the-world-sports-reacts-to-epic-djokovic-federer-wimbledon-final-185101781.html",
+      "image_url": "https://s.yimg.com/ny/api/res/1.2/2Zrq0kWiND9DcYp_0DBtXg--/YXBwaWQ9aGlnaGxhbmRlcjt3PTEyMDA7aD04MDA7Y2Y9d2VicA--/https://s.yimg.com/os/creatr-uploaded-images/2019-07/18f46b90-a665-11e9-acb6-cf3e566b4877",
+      "credit": "AP Photo via Yahoo Sports",
+      "license": "公开网页图片 · 非商业资讯引用",
+      "query": "Djokovic Federer 2019 wimbledon tennis",
+      "relevance": 100,
+      "sha256": "c13f81a2b7b1af1a48e516b75fa8e2548ee769ab855cedef191cb28b64ed43e4",
+      "focus": "50% 24%",
+      "subject_match": true,
+      "year_match": true,
+      "event_match": true,
+      "person_required": true,
+      "cached_file": "today-c13f81a2b7b1.jpg"
+    }
+  ],
+  "selection_evidence": {
+    "kind": "trivia",
+    "candidate_slug": "big-three",
+    "result_count": 79,
+    "live_count": 2,
+    "schedule_count": 5,
+    "selection_basis": "no media/search signals attached on this path; ranked on match context, intrinsic curiosity, shareability and cooldown",
+    "viral_prior": 8.0,
+    "topic_score": 8.0,
+    "live_relevance_score": 0.0,
+    "trend_signal_count": 0,
+    "media_search_heat": 0.0,
+    "candidate_rank": 1,
+    "candidate_count": 23,
+    "visual_preflight_rejections": 0,
+    "visual_preflight_status": "pass",
+    "same_topic_attempt": 1,
+    "same_topic_attempt_limit": 4
+  },
+  "rejected_candidates": [],
+  "recovery": {
+    "status": "not-needed",
+    "same_topic_attempt": 1,
+    "excluded_source_urls": [],
+    "failed_attempts": []
+  }
+}
