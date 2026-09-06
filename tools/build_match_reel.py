@@ -3776,6 +3776,7 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
     # 拼 -filter_complex 时不能再往前面塞 `[0:v]`。
     labeled = False
     if seg.fit == "contain":
+        native_w, native_h = probe_size(source)
         # 整幅铺进来会只占屏高的三成（1080 宽的 16:9 才 608 高），上下两条死黑，
         # 「冲击力先折一半」。所以两件事一起做：
         #   1. 先横向留 KEEP 的宽度再缩——画面大一圈，而球员仍在窗口内
@@ -3793,6 +3794,16 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
             f"[bgb][fgs]overlay=(W-w)/2:(H-h)/2,{sp}fps={FPS_EXPR},setsar=1"
         )
         labeled = True
+        if native_w < native_h:
+            # 竖屏本人存档保留整幅动作和来源标识，不套主比赛的横屏裁切几何。
+            chain = (
+                "split=2[bg][fg];"
+                f"[bg]scale={VIDEO_W}:{VIDEO_H}:force_original_aspect_ratio=increase,"
+                f"crop={VIDEO_W}:{VIDEO_H},boxblur=42:2,eq=brightness=-0.20[bgb];"
+                f"[fg]scale={VIDEO_W}:{VIDEO_H}:force_original_aspect_ratio=decrease:"
+                "force_divisible_by=2:flags=lanczos[fgs];"
+                f"[bgb][fgs]overlay=(W-w)/2:(H-h)/2,{sp}fps={FPS_EXPR},setsar=1"
+            )
     else:
         x = int(round(seg.cx * source_w - CROP_W / 2))
         x = max(0, min(x, source_w - CROP_W))
@@ -5666,7 +5677,16 @@ def check_sources_match(paths: dict[str, Path], spec: dict | None = None) -> Non
     rw, rh, rf, rfv = seen[ref_key]
     rows = "\n  ".join(f"{k or '(主源)'}: {w}×{h} @ {f}"
                        for k, (w, h, f, _) in seen.items())
-    bad_size = [k for k, (w, h, _, _) in seen.items() if (w, h) != (rw, rh)]
+    # 只有明确认领、全部整幅展示的竖屏存档使用独立几何；比赛源继续严格同尺寸。
+    archival = archival_claims(spec)
+    native_archives = set()
+    for key in archival:
+        uses = [s for s in (spec or {}).get("segments", []) if s.get("source") == key]
+        if key in seen and seen[key][0] < seen[key][1] and uses and all(
+                s.get("fit") == "contain" for s in uses):
+            native_archives.add(key)
+    bad_size = [k for k, (w, h, _, _) in seen.items()
+                if (w, h) != (rw, rh) and k not in native_archives]
     if bad_size:
         raise ReelError(
             f"这些源片和主源 {ref_key or '(主源)'} 的尺寸对不上，裁切会静默裁错："
@@ -6854,11 +6874,7 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     # 这里**宁可报错也不自动缩放**——自动缩放会把「素材选错了」变成一个看不见的
     # 画质问题，而报错能让人当场发现。
     sizes = {name: probe_size(path) for name, path in sources.items()}
-    if len(set(sizes.values())) > 1:
-        raise ReelError(
-            "多条源片的画幅不一致，裁切几何没法共用：\n  "
-            + "\n  ".join(f"{n or '(单源)'}: {w}×{h}" for n, (w, h) in sizes.items())
-            + "\n换一条同画幅的源片，或者把不一致的那条单独出片。")
+    # check_sources_match 已校验；整幅竖屏存档由 cut_segment 使用其原生尺寸。
     source_w, source_h = sizes[next(iter(sources))]
 
     # **只出封面就到此为止。** 封面是全流程返工最多的那一屏（CLAUDE.md 里
