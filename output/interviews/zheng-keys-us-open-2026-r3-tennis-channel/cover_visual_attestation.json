@@ -1,0 +1,56 @@
+{
+  "status": "pass",
+  "checked_at": "2026-09-06T00:58:51Z",
+  "auditor": "opencv-haar-v1",
+  "expected_subject": "郑钦文",
+  "identity_evidence": "L0-bound spec subject + same-source frame_at",
+  "spec_sha256": "f0de40c34c3bd38ed31db780b765c02fce6f63e95034061e33b588c0194a5116",
+  "poster_sha256": "03dd3a145a0671e02080756bd03da3cf0b2660480187bf150515e9249ea7d708",
+  "thresholds": {
+    "close_up_zoom": 1.5,
+    "face_height_ratio": 0.08,
+    "close_up_face_height_ratio": 0.14,
+    "face_area_ratio": 0.01,
+    "face_sharpness": 45.0,
+    "face_contrast": 32.0,
+    "eyes": 2
+  },
+  "result": {
+    "poster": {
+      "decodable": true,
+      "format": "JPEG",
+      "width": 1080,
+      "height": 1440,
+      "photo_region": [
+        0,
+        150,
+        1080,
+        810
+      ]
+    },
+    "face": {
+      "detector": "frontal-default",
+      "box": [
+        506,
+        246,
+        205,
+        205
+      ],
+      "detected_faces": 3,
+      "eyes": 3,
+      "face_height_ratio": 0.25309,
+      "face_area_ratio": 0.04804,
+      "center_x_ratio": 0.56343,
+      "center_y_ratio": 0.24506,
+      "sharpness": 294.231,
+      "contrast": 100.0
+    },
+    "contract": {
+      "shot_type": "",
+      "frame_at": 247.3,
+      "zoom": 1.0,
+      "focus_y": 0.5
+    }
+  },
+  "issues": []
+}
