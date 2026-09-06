@@ -1,0 +1,467 @@
+{
+ "slug": "osaka-mertens-us-open-2026-r3",
+ "_column": "reel",
+ "layout": "band",
+ "scorebox": [
+  104,
+  887,
+  660,
+  980
+ ],
+ "_scorebox_why": "美网这一届同一条频道同一套转播图形，和已发的 `potapova-anisimova-us-open-2026-r3` / `zheng-keys-us-open-2026-r3`（104 / 887 / 660 / 980）逐条相同；本场 probe 就是按这四个数量的死球（`point_ends` 37 个）。⚠️ 右缘 660 只是兜底，真正的右缘是 `resolve_board_insets` 每段现量的（这块板每打完一盘右缘 +38px，决胜盘那几段最宽）。",
+ "tts_backend": "edge",
+ "_tts_backend_why": "仓库的 `AZURE_SPEECH_KEY` 自 2026-09-03 起被 Azure 401 拒（今天同一批 `potapova-anisimova` / `bucsa-gauff` / `andreeva-bartunkova` 三条 render.json 记的都是 `narration_backend: edge-tts`），账号所有者定的是「换 edge tts」。这一条退回 edge 零代价：没用 `voice.style`，也没用 `lead_pause`。本地 `--check-narration` 跑的就是 edge-tts，量到的余量就是成片的真实情况。",
+ "source_url": "https://www.youtube.com/watch?v=c4o9H_dOmbM",
+ "_source": "US Open 官方 YouTube 频道（@usopen 频道页 `ytInitialData` 里的条目，标题 `Naomi Osaka vs. Elise Mertens Highlights | 2026 US Open Round 3`）本场官方集锦，probe 实测 204.15s / 1920×1080 / 29.97fps（过 1080p 硬闸）。画面自证四处：\n① 记分条 `13 OSAKA JPN / 23 MERTENS BEL` 逐格比分和 flashscore `hUGKJDYh` 的逐分记录对得上（0.5~12.5s 首盘第一局 `0 [30] / 0 [0]` 大坂发球；14.5~22.5s `SET POINT #4 5 [AD] / 3` 大坂发球；34.5~50.5s 第二盘 `6 3 [40] / 3 3 [15]` 梅尔滕斯发球＝她的两个破发点；52.5~58.5s `SET POINT 6 3 / 3 5 [AD]` 梅尔滕斯发球；74.5~86.5s 决胜盘 `6 3 0 [30] / 3 6 0 [0]` 大坂发球；90.5~102.5s `6 3 1 [0] / 3 6 0 [40]` 梅尔滕斯发球；104.5~114.5s `MATCH POINT 6 3 5 [40] / 3 6 4 [30]`；116.5~136.5s `MATCH POINT #2 6 3 6 [40] / 3 6 5 [15]`；138.5~160.5s `MATCH POINT #3 … [40] / [30]`；162.5~178.5s `MATCH POINT #4 … [AD] / [ ]`，四个赛点全部在梅尔滕斯的发球局）；\n② 30.5~32.5s / 70.5~72.5s 两次全屏图形 `WOMEN'S SINGLES | 3RD ROUND · LOUIS ARMSTRONG STADIUM / 13 NAOMI OSAKA / 23 ELISE MERTENS`，第二张比分 `6 3 / 3 6`；194.5s 场边 LED 打着 `NAOMI OSAKA`；\n③ 球衣可分：大坂黑色 Nike 背心裙＋黑色遮阳帽＋白色发带；梅尔滕斯酒红色 Lotto 背心裙＋白色遮阳帽——52.5s / 60.5s / 100.5s / 186.5s 的近景都是酒红；\n④ 片尾 201.03s 起是美网品牌板（`silent_audio` 报 201.08s 之后数字静音），已排除在所有段之外。\n⚠️ 这条集锦**没有自动字幕**（probe 的 `captions_debug.txt`：各 client 都报 `There are no subtitles for the requested languages`），解说落点全靠记分条和缩略图墙；赛后引语出自同频道的场上采访 `gNxTi0L7XYM`（自动字幕拉到本地核过）。",
+ "cover": {
+  "matchup": [
+   {
+    "name": "大坂直美",
+    "name_en": "Naomi Osaka",
+    "country": "JPN",
+    "rank": 13
+   },
+   {
+    "name": "梅尔滕斯",
+    "name_en": "Elise Mertens",
+    "country": "BEL",
+    "rank": 20
+   }
+  ],
+  "_rank_why": "两人当期排名同一期、同一个权威源：WTA 官方 `players/ranked`（`rankedAt=2026-08-31T00:00:00Z`）：Naomi Osaka 第 13（JPN）；Elise Mertens 第 20（BEL）。美网官方 `players.json`：wta319998 Osaka singles_rank 13 / seed True（记分条 13 号种子）；wta317964 Mertens singles_rank 20 / seed True（记分条 23 号种子——种子号和排名不是一回事）。",
+  "_heat_why": "大坂直美世界第 13、本届 13 号种子，②档（世界前 20）直接过；而且她是这条线上有故事线的人（两届美网冠军 2018 / 2020，去年在这里打进 4 强，本届四站大满贯的出场装一路是话题——仓库里 `osaka-four-slams-2026` / `osaka-walkout-2026` 都发过），这一场又是四个赛点才拿下的 2 小时 38 分。",
+  "winner": "大坂直美",
+  "result": "6-3 3-6 7-5",
+  "_result_why": "赢家视角，三处印证：flashscore 当日表 `hUGKJDYh` `AE÷Osaka N.`(home) `AF÷Mertens E.`(away)，`BA/BB=6/3 BC/BD=3/6 BE/BF=7/5`；`df_st_1` `Total games won 主队 16/30 客队 14/30`；美网官方 matches feed `Round 3 … Osaka totalSetsWon 2 won true`；源片 178.5s 记分条 `MATCH POINT #4 6 3 6 [AD] / 3 6 5`，下一分落地。三盘都是局数分出的，没有抢七。",
+  "eyebrow": "赛场之上",
+  "layout": "solo",
+  "subject": "大坂直美",
+  "topic": "美网第三轮 · 大坂直美 vs 梅尔滕斯",
+  "_topic_why": "按账号所有者 2026-09-03「封面左上角的副标题不要写球场号，写对阵双方」写成对阵。球场（Louis Armstrong Stadium）在比分板头一行印着。",
+  "hook": "决胜盘二比四落后\n三个赛点都被救回",
+  "_hook_why": "两行框住的是**整场的形状**：决胜盘她 2-2 被破、2-4 落后（`df_mh_1` Set 3 2-3 / 2-4），之后六局赢五局；5-4 起的四个赛点，梅尔滕斯救回三个（`df_st_1` `Match points saved 客队 3`；记分条 `MATCH POINT` 一路标到 `#4`）。主语是封面主体大坂。\n⚠️ 不重复比分板：板上印 6-3 3-6 7-5，钩子一个盘分都没写。行长 8 字 / 8 字，都在 `HOOK_MAX_CHARS = 10` 之内。\n⚠️ 「三个赛点都被救回」写的是**对手救了几个**（会变的那个数），不是「四个赛点只兑现一个」那种恒为一的同义反复（CLAUDE.md 2026-08-19 那条）。",
+  "portrait": {
+   "image": "assets/reel/osaka-mertens-us-open-2026-r3-cover.jpg",
+   "fit": "cover",
+   "focus": 0.36,
+   "focus_y": 0.0,
+   "zoom": 1.0,
+   "_photo_why": "美网官方图片接口（`find_cover_photo.py --player Osaka --event \"US Open\" --date 2026-09-05` → `sweep_usopen`，标题 `N. Osaka vs. E. Mertens | R3`）本场 29 张里的 `f_USTA2440784_20260905_DS2_7889.jpg`，说明 `Naomi Osaka reacts during a Women's Singles match on Day Seven of the 2026 US Open … Saturday, Sep 5`，署名 Rhea Nall/USTA。同一批 14 张下下来拼墙看过（`scratchpad/osaka/photos_sheet.jpg`）：这一张右手握拳、张嘴吼、**眼睛睁着**、看台在背后（DS2_6816 / DS2_6803 两张是闭眼吼；DS2_7550 侧脸；RN1_4579 全身小）。黑色 Nike 背心裙、白色发带，和源片 22.5s / 104.5s / 162.5s 的近景是同一个人同一场；情绪是「扛住之后赢下来」，正是钩子那两行。",
+   "_low_res_why": "1280×720 铺 1080×1440 是放大 **2.00 倍**，够不着 `cover_photo_problem` 那道 1.00x 的地板。**这是美网这条渠道的天花板，不是没找够**：`f_` 前缀就是美网官方图片接口的顶档（十二个前缀、六个目录、三种 `?width=` 参数 CLAUDE.md 里都试过）。另外三条更高清的路这一天都拿不到——WTA `photo-resources` 这场没有；AP 只有她 8/31 首轮的走场照（`arrives to compete against Anastasia Zakharova`）；USA TODAY 9/5、9/6 的 sitemap 里没有美网图集（各 9 / 1 辑，一辑都不带 tennis / open）。和已发的 `andreeva-bartunkova-us-open-2026-r3` / `berrettini-wawrinka-us-open-2026-r1` 同一处置。",
+   "_fit_why": "横图 16:9，按高度铺满（`cover`）之后整幅缩到 2560×1440，取 1080 宽的一条。`focus 0.36` 把她整个人放在画布中央——她在源图里偏左（头在 x≈0.25~0.45）。`focus_y` 在 zoom=1.0 时是死的；脸的高度由源图决定（头顶约在源图 8%，下巴约 50%）。",
+   "_zoom_why": "本地 `render_cover_local.py` 渲过再定，见 `_editing_why`。不往上 zoom：再放大握拳那只手就出画，而这张图的意思（握拳吼）就没了。"
+  },
+  "scoreboard": {
+   "court": "Louis Armstrong Stadium",
+   "duration_source": {
+    "url": "data:application/json,%7B%22duration%22%3A%20%222%3A38%3A00%22%2C%20%22source%22%3A%20%22US%20Open%20official%20players/matches%20feed%20wta319998_matches.json%20Round%203%20duration%202%3A38%EF%BC%88flashscore%20df_sui_1%20Set%201%200%3A42%20%2B%20Set%202%200%3A47%20%2B%20Set%203%201%3A10%20%3D%202%3A39%EF%BC%8C%E5%B7%AE%E4%B8%80%E5%88%86%EF%BC%9B%E6%8C%89%E5%AE%98%E6%96%B9%EF%BC%89%22%7D",
+    "field": "duration"
+   },
+   "_court_why": "两源一致：源片 30.5s / 70.5s 全屏图形印着 `LOUIS ARMSTRONG STADIUM`；美网官方 `players/matches/wta319998_matches.json` Round 3 `courtName: Louis Armstrong Stadium`。",
+   "_duration_why": "美网官方 matches feed Round 3 `duration 2:38`（场上采访主持人也说 `two hours and 38 minutes`）；flashscore `df_sui_1` Set 1 0:42 + Set 2 0:47 + Set 3 1:10 = 2:39，差一分，按官方。源片 138.5s 场边时钟 `2:36`（第三个赛点时）和 2:38 自洽。"
+  },
+  "_no_cover_narration_why": "赛场之上的封面是定长 1.2 秒的短亮相（`COVER_SECONDS`），封面跟着配音走只给网球有故事。钩子那两行只印在海报上，不念。"
+ },
+ "_match": {
+  "status": "result_verified",
+  "source": "flashscore_points",
+  "source_id": "hUGKJDYh",
+  "flashscore_id": "hUGKJDYh",
+  "participants": [
+   "大坂直美",
+   "梅尔滕斯"
+  ],
+  "set_scores_home_away": [
+   [
+    6,
+    3
+   ],
+   [
+    3,
+    6
+   ],
+   [
+    7,
+    5
+   ]
+  ],
+  "tiebreaks_home_away": [
+   null,
+   null,
+   null
+  ],
+  "winner": "大坂直美",
+  "loser": "梅尔滕斯",
+  "winner_result": "6-3 3-6 7-5",
+  "loser_result": "3-6 6-3 5-7",
+  "_direction_why": "flashscore `AE÷Osaka N.` 是 home、`AF÷Mertens E.` 是 away，`BA/BB=6/3 BC/BD=3/6 BE/BF=7/5`，赢家是大坂；`df_st_1` `Total games won 主队 16/30`；美网官方 feed `Osaka … won true`。",
+  "_order_why": "`participants` 跟 flashscore 的 home/away（大坂是 home），这一场恰好和 `cover.matchup` 同序，所以 `stats.a` 不用对调。",
+  "_tiebreak_why": "三盘都是局数分出的（6-3、3-6、7-5），没有抢七，写 null。"
+ },
+ "stats": {
+  "a": {
+   "aces": 9,
+   "df": 2,
+   "winners": 39,
+   "ue": 41,
+   "first_in": 63,
+   "first_won": 50,
+   "second_total": 46,
+   "second_won": 16,
+   "bp_conv": 4,
+   "bp_chances": 16,
+   "pts_won": 111,
+   "pts_total": 218,
+   "first_total": 109,
+   "headshot": "assets/players/headshots/wta-319998.jpg"
+  },
+  "b": {
+   "aces": 3,
+   "df": 5,
+   "winners": 22,
+   "ue": 32,
+   "first_in": 69,
+   "first_won": 47,
+   "second_total": 40,
+   "second_won": 17,
+   "bp_conv": 3,
+   "bp_chances": 11,
+   "pts_won": 107,
+   "pts_total": 218,
+   "first_total": 109,
+   "headshot": "assets/players/headshots/wta-317964.jpg"
+  },
+  "_source": "flashscore `hUGKJDYh` 的 `df_st_1`（Match 那一档，`match_stat_hooks.py hUGKJDYh --stats-block` 直接吐的）。这场**有**制胜分和非受迫失误（大坂 39/41，梅尔滕斯 22/32），已填。\n`stats.a` 跟 `cover.matchup[0]`（大坂），flashscore 的 home 也是大坂——同序，工具吐出来的 a/b 原样填。头像跟着数字走：左边 `wta-319998` 是大坂（已发 `osaka-mertens`（多伦多）/ `rybakina-osaka` 认过），右边 `wta-317964` 是梅尔滕斯（同一条多伦多 spec 认过）。\n`first_total` 按 `first_in + second_total` 算（63+46=109、69+40=109）。"
+ },
+ "_hit_data": [
+  {
+   "label": "四个赛点，对手救回三个",
+   "detail": "5-4 梅尔滕斯发球 30-40 第一个赛点被救；6-5 梅尔滕斯发球 15-40 两个赛点都被救，平分之后占先第四个才拿下",
+   "source": "flashscore df_mh_1 逐分（Set 3 5-5：40:30 |B1||B3|；7-5：40:15 |B1||B3| 40:30 |B1||B3| 40:40 A:40 |B1||B3|）；df_st_1 Match points saved 客队 3；记分条 MATCH POINT #1~#4"
+  },
+  {
+   "label": "决胜盘 2-4 落后，之后六局赢五局",
+   "detail": "2-2 自己的发球局被破、2-4 落后（两个破发点没追回），3-4 零封保发、4-4 零封破发、5-4 救一个破发点保发、6-5 保发、7-5 破发拿下",
+   "source": "flashscore df_mh_1 Set 3 逐局"
+  },
+  {
+   "label": "总分差",
+   "detail": "大坂 111 - 梅尔滕斯 107，净差 4 分",
+   "source": "flashscore df_st_1（Total Points Won 111/218 vs 107/218）"
+  },
+  {
+   "label": "制胜分 / 非受迫失误",
+   "detail": "大坂 39 个制胜分对 22 个（近两倍），非受迫失误 41 对 32（多 9 个）；第二盘她 8 个制胜分 16 个失误",
+   "source": "flashscore df_st_1（Winners 39/22、Unforced errors 41/32；Set 2 Winners 8/7、UE 16/11）"
+  },
+  {
+   "label": "首盘四个盘点才拿下",
+   "detail": "5-3 梅尔滕斯发球局两个盘点被救；6-3 自己发球局又两个盘点，第四个（A-40）拿下；中间还救了一个破发点",
+   "source": "flashscore df_mh_1 Set 1（5-3：40:30 |B1||B2| … A:40 |B1||B2|；6-3：30:40 |B1| … A:40 |B2| … A:40 |B2|）；记分条 14.5~20.5s SET POINT #4"
+  },
+  {
+   "label": "跑动距离",
+   "detail": "大坂全场跑了 1923 米，梅尔滕斯 1089 米",
+   "source": "flashscore df_st_1（Distance covered 1923 / 1089）"
+  },
+  {
+   "label": "交手记录",
+   "detail": "Osaka N. 7 : 4 Mertens E.（含本场）· 草地 2:0 · 硬地 5:4",
+   "source": "flashscore df_hh_1"
+  },
+  {
+   "label": "近况",
+   "detail": "Osaka N. 最近 5 场 4 胜（WWWLW）；Mertens E. 最近 5 场 3 胜（LWWLW）",
+   "source": "flashscore df_hh_1 Last matches"
+  }
+ ],
+ "_durations": [
+  [
+   "Set 1",
+   "0:42"
+  ],
+  [
+   "Set 2",
+   "0:47"
+  ],
+  [
+   "Set 3",
+   "1:10"
+  ],
+  [
+   "全场",
+   "2:39"
+  ]
+ ],
+ "_turning_points": [
+  {
+   "label": "【Set 1】6-3  大坂发球，大坂拿下  ← 2个破发点、2个盘点（SET POINT #4）",
+   "density": 6,
+   "tags": [
+    "2个破发点",
+    "2个盘点"
+   ]
+  },
+  {
+   "label": "【Set 2】2-2  大坂发球，梅尔滕斯拿下  ← 3个破发点（刚破发就被破回）",
+   "density": 3,
+   "tags": [
+    "3个破发点"
+   ]
+  },
+  {
+   "label": "【Set 3】2-3  大坂发球，梅尔滕斯拿下  ← 2个破发点（2-4 落后的起点）",
+   "density": 2,
+   "tags": [
+    "2个破发点"
+   ]
+  },
+  {
+   "label": "【Set 3】4-4  梅尔滕斯发球，大坂拿下  ← 零封破发",
+   "density": 1,
+   "tags": [
+    "破发"
+   ]
+  },
+  {
+   "label": "【Set 3】5-5  梅尔滕斯发球，梅尔滕斯拿下  ← 1个赛点被救",
+   "density": 2,
+   "tags": [
+    "1个赛点"
+   ]
+  },
+  {
+   "label": "【Set 3】7-5  梅尔滕斯发球，大坂拿下  ← 3个赛点（两个被救，第三个拿下）",
+   "density": 6,
+   "tags": [
+    "3个赛点"
+   ]
+  }
+ ],
+ "_turning_points_why": "决胜盘 2-2 被破、2-4 落后、4-4 零封破回、5-4 保发这一整段（Set 3 第 4~9 局）**集锦里没有**——集锦从 1-1 那一局（92.5~103.3s）直接跳到 5-4 的第一个赛点（104.5s）。第 ⑧ 段旁白明说「集锦里没有」并把这一段讲出来，压在梅尔滕斯保发 1-1 的画面上。四个赛点集锦保留完整（104.5~178.5s，74 秒），正文逐个交代。",
+ "editorial": {
+  "mode": "match_review",
+  "hook": [
+   "决胜盘二比四落后",
+   "三个赛点都被救回"
+  ],
+  "_hook_why": "这一栏和 `cover.hook` 必须逐字相同。理由见 `cover._hook_why`。",
+  "question": "一盘一平、决胜盘二比四落后，大坂直美是怎么把这场球赢回来的？梅尔滕斯救了三个赛点，为什么第四个没顶住？",
+  "thesis": "首盘她四个盘点才拿下 6-3；第二盘先破发又立刻被破回，3-3 两个破发点没兑现，梅尔滕斯 6-3 扳平；决胜盘 2-2 被破、2-4 落后，然后 4-4 零封破发，5-4 起四个赛点——梅尔滕斯救回三个，第四个才落地。全场 39 个制胜分对 22，41 个非受迫失误对 32，总分只多 4 分；她赛后说自己不敢相信赢了、对自己太负面。",
+  "beats": [
+   "首盘 42 分钟：她早早破发 3-1，5-3 梅尔滕斯发球局两个盘点被救，自己发球局又救一个破发点、两个盘点，第四个盘点（A-40）拿下 6-3。",
+   "第二盘 47 分钟：2-1 她破发，2-2 立刻被破回（自己两个局点没守住）；3-3 梅尔滕斯发球局两个破发点没兑现，3-5 被破，梅尔滕斯 6-3 拿盘；这一盘大坂 8 个制胜分 16 个失误。",
+   "决胜盘 70 分钟：1-0 两次平分守住；集锦里没有的一段——2-2 被破、2-4 落后、4-4 零封破回；5-4 第一个赛点被救，6-5 两个赛点被救、平分，占先第四个落地 7-5，两小时三十八分。",
+   "赛后场上采访：说实话不敢相信赢了；把整颗心放在了场上；对自己太负面、向看比赛的小朋友道歉；这是她最爱的赛事。"
+  ],
+  "human_context": {
+   "angle": "两届美网冠军、去年在这里打进4强的大坂，本届出场装一路是话题；这一场她自己说「打得不好」「对自己太负面」，还向看比赛的小朋友道歉——赢下来的方式不好看，但四个赛点、两小时三十八分，她一分一分磨过来的。梅尔滕斯 30 岁，救了三个赛点。",
+   "facts": [
+    "WTA 官方 players/ranked（rankedAt 2026-08-31）：大坂第 13（JPN）、梅尔滕斯第 20（BEL）",
+    "美网官方 players.json：wta319998 Osaka seed True（13 号）；wta317964 Mertens seed True（23 号）",
+    "美网官方 players/matches/wta319998_matches.json：2026 R1 / R2 都在 Arthur Ashe 各 2:02，R3 Louis Armstrong 2:38；2025 年在这里打进 Semi-Finals（Arthur Ashe，2:56，负）",
+    "flashscore df_hh_1：Osaka N. 7 : 4 Mertens E.（含本场）",
+    "场上采访 gNxTi0L7XYM 自动字幕：`Honestly, I can't believe I won this match`（27.1s）；`I felt like I put my entire heart on the court`（51.8s）；`I was very negative on myself. So, I'm really sorry about my behavior. For the little kids watching, I'm really sorry`（87.2s）；`this is my favorite tournament`（104.8s）；`it took me what, five match points to finish it`（143.4s——她口误，记分条和逐分都是四个）；主持人 `two hours and 38 minutes` / `We saw the physio out for you`",
+    "WTA API players/319998：dateOfBirth 1997-10-16（28 岁）；players/317964：1995-11-17（30 岁）"
+   ],
+   "sources": [
+    "https://api.wtatennis.com/tennis/players/ranked?page=0&pageSize=100&type=rankSingles&sort=asc&metric=SINGLES",
+    "https://www.usopen.org/en_US/scores/feeds/2026/players/players.json",
+    "https://www.usopen.org/en_US/scores/feeds/2026/players/matches/wta319998_matches.json",
+    "https://www.youtube.com/watch?v=gNxTi0L7XYM",
+    "https://www.youtube.com/watch?v=c4o9H_dOmbM"
+   ]
+  }
+ },
+ "topbar": {
+  "line1": "2026 美网 女单第三轮",
+  "line2": "大坂直美 6-3 3-6 7-5 梅尔滕斯"
+ },
+ "push": {
+  "summary": "大坂直美决胜盘逆转过关",
+  "_summary_why": "主语（大坂直美）＋ 过程（决胜盘逆转：2-4 落后）＋ 结果（过关）。11 字，`SUMMARY_MAX=13` 之内。哪一站交给 `lead` 第一句。",
+  "lead": "美网女单第三轮夜场，路易斯·阿姆斯特朗球场。13 号种子大坂直美 6-3 3-6 7-5 险胜 23 号种子梅尔滕斯，两小时三十八分。首盘她四个盘点才拿下；第二盘先破发又被立刻破回，3-3 两个破发点没兑现，梅尔滕斯 6-3 扳平；决胜盘她 2-2 被破、2-4 落后，4-4 零封破回来，5-4 起四个赛点——梅尔滕斯救回三个，第四个才落地。全场 39 个制胜分对 22 个，41 个非受迫失误对 32 个，总分只多 4 分。赛后她说：说实话，不敢相信自己赢了；对自己太负面，向看比赛的小朋友道歉。",
+  "auto": true
+ },
+ "_facts": [
+  "大坂直美两届美网冠军（2018、2020）——常识级事实，美网官方球员页和 WTA 球员页都列；2025 年美网打进半决赛（美网官方 2025 matches feed：Semi-Finals, Arthur Ashe Stadium, 2:56, 负）",
+  "梅尔滕斯救回 3 个赛点：flashscore df_st_1 `Match points saved 客队 3`；记分条 MATCH POINT 一路标到 #4；她自己在采访里说的「five match points」是口误，按数据写四个"
+ ],
+ "_editing_why": "**probe**：`output/2026-09-06/reel/osaka-mertens-us-open-2026-r3/probe.json`（带 `--scorebox 104,887,660,980`，`point_ends` 37 个；`scene_cuts` 22 个；这条集锦**没有自动字幕**）。\n**认人看球衣**：大坂黑裙黑帽白发带（Nike），梅尔滕斯酒红裙白帽（Lotto）。第 ①②⑯⑰ 段的近景全是黑裙；第 ⑥ 段（53.5~66.3）和第 ⑧ 段 100.5 之后的近景是酒红，那两段旁白的主语正是梅尔滕斯或明写「大坂」。\n**集锦漏掉的一段**（决胜盘 2-2 被破 → 2-4 → 4-4 破回 → 5-4 保发）由第 ⑦⑧ 段旁白交代并明说「集锦里没有」。\n**四个赛点保留完整**：104.5 起到 180.4 连续（MP#1 回合 → MP#2 回合 21 秒 → 两人近景 → MP#3 回合 19 秒 → 大坂近景 → MP#4 回合 → 落地 → 弯腰），中间按镜头切点分段各配一句，MP#2 / MP#3 两个长回合各切两段。\n**冷开场**取 MP#4 回合后半到落地（172.0→179.5），正文第 ⑯⑰ 段（163.66→172.0、172.0→180.4）完整重走。\n**第一版渲之前跑过**：`--dry-run`、`preview_segments_local`（逐段对记分条）、`--check-narration`（edge 真跑）、`render_cover_local`。",
+ "segments": [
+  {
+   "start": 172.0,
+   "end": 179.5,
+   "narration": "",
+   "score_inset": true,
+   "_ending_payoff_required": true,
+   "crosses_cut": "跨 177.64：赛点那一分落地 → 她弯下腰的近景（178.5、180.5 两格都是黑裙大坂），同一个人。",
+   "_why": "**第①格：全片最强的一格。** 第四个赛点那一分的后半到落地（记分条 `MATCH POINT #4 6 3 6 [AD] / 3 6 5`，发球指示在 MERTENS），177.64 切到她弯腰的近景（178.5 黑裙），不配旁白，靠现场声。\n⚠️ 后段冷开场：正文第 ⑯⑰ 段（163.66→172.0、172.0→180.4）完整覆盖 172.0→179.5 和第②段，`ending_payoff_problem` 要的就是这个覆盖关系。",
+   "fit": "crop"
+  },
+  {
+   "start": 179.5,
+   "end": 185.6,
+   "narration": "从二比四追回来，最后六局她赢了五局。",
+   "score_inset": false,
+   "_ending_payoff_required": true,
+   "_score_inset_why": "赛后画面：180.38 起记分条撤掉（`point_ends` 最后一串就是板消失的跳变），`score_04.jpg` 180.5~184.5 那几格是空的。",
+   "_why": "第②句给落点，压在她弯腰、抬头（180.5 / 182.5 / 184.5，黑裙）上。「最后六局赢五局」＝ `df_mh_1` Set 3 从 2-4 起：3-4 / 4-4 / 5-4 主队、5-5 客队、6-5 / 7-5 主队。⚠️ 措辞躲开封面钩子（CI 判据「开场旁白不许复读封面钩子」）。段尾 185.6 ＋ `SEG_FADE` 0.18 ＝ 185.78，溶解底料是酒红裙梅尔滕斯的近景，旁白约 4.4s 在 184 前说完，不压任何一句话。",
+   "fit": "crop"
+  },
+  {
+   "start": 0.0,
+   "end": 12.51,
+   "narration": "北京时间九月六号早上七点多，美网第三轮夜场。十三号种子大坂直美，穿着西装外套走上球场，对面是二十三号种子梅尔滕斯。",
+   "score_inset": true,
+   "_why": "第③格交代坐标。画面是全片第一分（首盘第一局大坂发球 30-0，记分条 `13 OSAKA [30] / 23 MERTENS [0]`），宽景谁都没露脸，正好放身份。开球时刻取 flashscore `AD=1788649800`＝北京时间 2026-09-06 07:10（美东 9/5 19:10，夜场），按「不报到分」的档位（分钟 10 落在 10~39）说「早上七点多」。种子号出自记分条 `13 OSAKA / 23 MERTENS`。段尾 12.51 正好是死球 ＋ 切点（`point_ends[0]` = `scene_cuts[0]` = 12.51），溶解底料落进她的近景。 「穿着西装外套走上球场」出自场上采访主持人 0.2s `you walked out on court tonight wearing a blazer`。",
+   "fit": "crop"
+  },
+  {
+   "start": 16.12,
+   "end": 25.1,
+   "narration": "首盘她早早破发。四个盘点，前三个都没拿下，第四个才落地——六比三。",
+   "score_inset": true,
+   "crosses_cut": "跨 20.52：盘点那一分落地 → 她的近景（22.5、24.5 两格都是黑裙大坂），同一个人。",
+   "_why": "记分条 `SET POINT #4 5 [AD] / 3`，发球指示在 OSAKA——首盘第 9 局的第四个盘点（`df_mh_1` Set 1 5-3 客队发球局两个盘点 |B2| 被救；6-3 主队发球局 A:40 |B2| 第三个被救、40:A |B1| 救回一个破发点、A:40 |B2| 第四个拿下）。「早早破发」＝ Set 1 3-1 那一局 40:30 |B1| 破发。20.52 切到她的近景（22.5 / 24.5 黑裙）。段尾 25.1 ＋ 0.18 ＝ 25.28，停在 25.31 那一刀（看台）之前。",
+   "fit": "crop"
+  },
+  {
+   "start": 35.0,
+   "end": 48.87,
+   "narration": "第二盘风向变了。她先破发，下一局就被破了回来——自己的两个局点都没守住。三比三，梅尔滕斯的发球局，她两个破发点都没兑现。",
+   "score_inset": true,
+   "_why": "记分条 `6 3 [40] / 3 3 [15]`，发球指示在 MERTENS——第二盘第 7 局 15-40，大坂的两个破发点（`df_mh_1` Set 2 3-4：40:15 |B1| 40:30 |B1| 40:40 40:A 客队拿下，两个都没兑现）。「先破发，下一局就被破回」＝ Set 2 2-1 主队破发（A:40 |B1|）、2-2 客队破回（40:A |B1|）。34.5 那格已经是这个宽景（全屏图形在 32.5 结束，中间的过渡 `scene_cuts` 没认出来），窗口从 35.0 起躲开它；段尾 48.87 是死球 ＋ 切点。 「两个局点没守住」＝ Set 2 2-2 主队发球：A:40、A:40 两次局点之后 40:A |B1| 客队拿下。",
+   "fit": "crop"
+  },
+  {
+   "start": 53.5,
+   "end": 66.3,
+   "narration": "五比三，梅尔滕斯的盘点。这一分她拿下——六比三，一盘一平。这一盘大坂十六个非受迫失误，制胜分只有八个。",
+   "score_inset": true,
+   "crosses_cut": "跨 56.99 和 62.88：梅尔滕斯近景 → 盘点那一分 → 梅尔滕斯近景，三段都是酒红裙梅尔滕斯，旁白主语也是她。",
+   "_why": "记分条 `SET POINT 6 3 / 3 5 [AD]`，发球指示在 MERTENS——第二盘第 9 局的盘点（`df_mh_1` Set 2 3-6：40:A |B2| 客队拿下）。53.5 梅尔滕斯的近景（酒红）→ 56.99 那一分 → 62.88 她赢盘后的近景（60.5 / 62.5 / 64.5 酒红），旁白主语「她」＝梅尔滕斯，后半句点名「大坂」。数字：`df_st_1` Set 2 `Unforced errors 主队 16`、`Winners 主队 8`。段尾 66.3 ＋ 0.18 ＝ 66.48，停在 66.53 那一刀（宽景）之前。",
+   "fit": "crop"
+  },
+  {
+   "start": 77.94,
+   "end": 87.3,
+   "narration": "决胜盘，她先发球，两次平分守住。全场她跑了一千九百米，对手一千一百米。",
+   "score_inset": true,
+   "_why": "记分条 `6 3 0 [30] / 3 6 0 [0]`，发球指示在 OSAKA——决胜盘第 1 局（`df_mh_1` Set 3 1-0：40:40 A:40 40:40 A:40，两次平分守住）。跑动距离 `df_st_1` `Distance covered 主队 1923 / 客队 1089`，按「一千九百 / 一千一百」说。段尾 87.3 ＋ 0.18 ＝ 87.48，停在 87.44 那一刀之后 0.04s——底料是梅尔滕斯发球局的开头一格，同一块场地的宽景。",
+   "fit": "crop"
+  },
+  {
+   "start": 92.54,
+   "end": 103.2,
+   "narration": "梅尔滕斯零封保发，一比一。之后的路集锦里没有：大坂二比二被破，二比四落后。",
+   "score_inset": true,
+   "crosses_cut": "跨 100.5（宽松切点）：这一分的回合 → 梅尔滕斯握拳近景（100.5、102.5 都是酒红裙），同一个人。",
+   "_why": "记分条 `6 3 1 [0] / 3 6 0 [40]`，发球指示在 MERTENS——决胜盘第 2 局 40-0，她这一分拿下就是零封保发（`df_mh_1` Set 3 1-1：0:15 0:30 0:40 客队拿下）。100.5 那一刀（`scene_cuts_loose`）切到她握拳的近景（100.5 / 102.5 酒红），主语正是她。后半句是**集锦里没有的那一段**（Set 3 2-3 主队发球局 15:40 |B1| 30:40 |B1| 客队拿下；2-4 客队保发），明说。段尾 103.2 停在 103.3 板变成 `MATCH POINT` 之前。",
+   "fit": "crop"
+  },
+  {
+   "start": 103.4,
+   "end": 114.7,
+   "narration": "四比四那一局，她一分没让，破了回来。五比四，第一个赛点——梅尔滕斯救了回来。",
+   "score_inset": true,
+   "crosses_cut": "跨 106.16：大坂近景（104.5 黑裙）→ 第一个赛点那一分的宽景，旁白前半句主语是她。",
+   "_why": "记分条 `MATCH POINT 6 3 5 [40] / 3 6 4 [30]`，发球指示在 MERTENS——决胜盘第 10 局 30-40，第一个赛点（`df_mh_1` Set 3 5-5：40:30 |B1||B3| 40:40 40:A 客队拿下）。「四比四那一局一分没让」＝ Set 3 4-4 客队发球 15:0 30:0 40:0 |B1| 主队拿下（零封破发）。103.4~106.16 是大坂的近景（104.5 黑裙）→ 106.16 那一分的宽景；段尾 114.7 是切点。",
+   "fit": "crop"
+  },
+  {
+   "start": 114.7,
+   "end": 125.5,
+   "narration": "她保发，六比五。梅尔滕斯的发球局，十五比四十，两个赛点。打到这儿，已经两个多小时。",
+   "score_inset": true,
+   "_why": "记分条 `MATCH POINT #2 6 3 6 [40] / 3 6 5 [15]`，发球指示在 MERTENS——决胜盘第 12 局 15-40（`df_mh_1` Set 3 7-5：40:15 |B1||B3|）。「她保发六比五」＝ Set 3 6-5 主队发球 40:30 拿下（集锦里没有）。「两个多小时」：138.5s 场边时钟 `2:36`。这一分是 114.7→135.74 的 21 秒长回合，切成两段各配一句；125.5 是同一镜头内部的分割点，两段无缝相接。",
+   "fit": "crop"
+  },
+  {
+   "start": 125.5,
+   "end": 135.74,
+   "narration": "第二个赛点，又是一个长回合，梅尔滕斯救下了——她这一盘的一发得分率只剩百分之六十三。第三个呢？",
+   "score_inset": true,
+   "_why": "同一分的后半到落地（记分条仍是 `MATCH POINT #2 … [40] / [15]`）；`df_mh_1` Set 3 7-5：40:15 |B1||B3| 之后 40:30——第二个被救。段尾 135.74 是切点（→ 梅尔滕斯近景）。 一发得分率：`df_st_1` 客队 Set 1 73% → Set 2 70% → Set 3 63%（`match_stat_hooks` 的「一发得分率摆动」那一行）。",
+   "fit": "crop"
+  },
+  {
+   "start": 135.74,
+   "end": 140.34,
+   "narration": "三十比四十，第三个。",
+   "score_inset": true,
+   "crosses_cut": "两个近景之间约 137.5 有一刀 `scene_cuts` 没认出来（梅尔滕斯 → 大坂）；旁白「三十比四十，第三个」不指任何人。",
+   "_why": "梅尔滕斯（136.5 酒红）→ 大坂（138.5 黑裙，场边时钟 `2:36`）的两个近景，记分条 `MATCH POINT #3 6 3 6 [40] / 3 6 5 [30]`。旁白只报比分，不指人。",
+   "fit": "crop"
+  },
+  {
+   "start": 140.34,
+   "end": 150.0,
+   "narration": "整场她三十九个制胜分，是对手的近两倍；非受迫失误四十一个，也比对手多九个。",
+   "score_inset": true,
+   "_why": "第三个赛点那一分（记分条 `MATCH POINT #3 … [40] / [30]`，140.34→159.51 的 19 秒长回合，切成两段各配一句；150.0 是同一镜头内部的分割点）。数字：`df_st_1` `Winners 39/22`（1.77 倍，「近两倍」）、`Unforced errors 41/32`（多 9）。「她」承上一段的大坂近景。",
+   "fit": "crop"
+  },
+  {
+   "start": 150.0,
+   "end": 159.51,
+   "narration": "第三个赛点，梅尔滕斯又救回来，又是平分。九个 Ace 里，大坂这一盘发出了四个。",
+   "score_inset": true,
+   "_why": "同一分的后半到落地。「平分」＝ `df_mh_1` Set 3 7-5：40:30 |B1||B3| 之后 40:40。Ace：`df_st_1` 主队 Match 9、Set 3 4。段尾 159.51 是切点（→ 大坂近景）。",
+   "fit": "crop"
+  },
+  {
+   "start": 159.51,
+   "end": 163.66,
+   "narration": "占先，第四个。",
+   "score_inset": true,
+   "_why": "大坂在底线准备接发的近景（160.5 黑裙，场边时钟 `2:36`），记分条 `MATCH POINT #3 → #4`（162.5 起 `[AD] / [ ]`）。`df_mh_1` Set 3 7-5：40:40 A:40 |B1||B3|。",
+   "fit": "crop"
+  },
+  {
+   "start": 163.66,
+   "end": 172.0,
+   "narration": "全场总分一百一十一比一百零七，只差四分。这一场，就在这一分上。",
+   "score_inset": true,
+   "_why": "第四个赛点那一分的前半（记分条 `MATCH POINT #4 6 3 6 [AD] / 3 6 5`，发球指示在 MERTENS）。总分 `df_st_1` `Total Points Won 111/218 vs 107/218`。172.0 是同一镜头内部的分割点，接下一段（也就是冷开场用过的那一截）无缝相接。",
+   "fit": "crop"
+  },
+  {
+   "start": 172.0,
+   "end": 180.4,
+   "narration": "这一分落地，七比五。两小时三十八分——她弯下腰，好一会儿没直起来。",
+   "score_inset": true,
+   "crosses_cut": "跨 177.64：赛点落地 → 她弯腰的近景，同一个人（黑裙）。",
+   "_why": "第四个赛点那一分的后半到落地（177.64 切到她弯腰的近景，178.5 / 180.5 黑裙）。用时 2:38 出自美网官方 matches feed（主持人也说 `two hours and 38 minutes`）。段尾 180.4 停在 180.38 板撤掉那一格上——板消失之后 `board_present_spans` 自己收掉回贴。这一段和第 ⑯ 段一起完整覆盖冷开场（172.0→179.5）和第②段（179.5→185.6 由本段和下一段覆盖）。 「球落地」在合成器里被切成「球落｜地」，改成「这一分落地」让「落地」整词。",
+   "fit": "crop"
+  },
+  {
+   "start": 180.4,
+   "end": 185.6,
+   "narration": "四个赛点，梅尔滕斯救回三个。",
+   "score_inset": false,
+   "_score_inset_why": "赛后画面，记分条 180.38 起撤掉（`score_04.jpg` 182.5~186.5 空）。",
+   "_why": "她抬头、直起身（182.5 / 184.5 黑裙）。「救回三个」＝ `df_st_1` `Match points saved 客队 3`。段尾 185.6 是切点（→ 梅尔滕斯近景），旁白约 3.2s 在 183.8 前说完。",
+   "fit": "crop"
+  },
+  {
+   "start": 185.6,
+   "end": 195.7,
+   "narration": "她还是输了。赛后大坂说：说实话，我不敢相信自己赢了这场球——有一刻，我把整颗心都放在了场上。",
+   "score_inset": false,
+   "_score_inset_why": "赛后画面，没有记分条。",
+   "crosses_cut": "跨 187.85：梅尔滕斯近景（酒红）→ 网前握手 → 大坂挥手。前半句主语是梅尔滕斯、压在她的近景上；后半句点名大坂、压在握手和她挥手的画面上。",
+   "_why": "185.6~187.85 梅尔滕斯的近景（186.5 酒红）——「她还是输了」承上一句的主语梅尔滕斯，压在她脸上；187.85 切到网前握手（188.5 / 190.5）→ 大坂向看台挥手（192.5 / 194.5，场边 LED `NAOMI OSAKA`），后半句点名「大坂」。引语出自场上采访 27.1s `Honestly, I can't believe I won this match`。段尾 195.7 ＋ 0.18 ＝ 195.88，正好是下一刀。 第二句引语出自 51.8s `I felt like I put my entire heart on the court`（她说的是 `a certain point`，旁白照写「有一刻」）。",
+   "fit": "crop"
+  },
+  {
+   "start": 195.88,
+   "end": 200.8,
+   "narration": "两届冠军说自己打得不好——你觉得呢？",
+   "score_inset": false,
+   "_score_inset_why": "赛后画面，没有记分条。",
+   "_why": "收尾落在一问上。她笑（196.5）、捂脸（198.5）、挥手（200.5），黑裙。「两届冠军」＝ 2018 / 2020 美网冠军（`_facts`）；「说自己打得不好」＝ 采访 83.4s `I didn't feel like I played amazing`。段尾 200.8 ＋ 0.18 ＝ 200.98，停在 201.03 片尾板那一刀和 201.08 数字静音之前。",
+   "fit": "crop"
+  }
+ ]
+}
