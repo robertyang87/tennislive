@@ -1,0 +1,120 @@
+# 转写交叉校验：zheng-keys-us-open-2026-r3-presser
+
+- 第一份：YouTube 自动字幕 **1698** 词
+- 第二份：faster-whisper（medium.en）**1658** 词
+- **对不上 7.9%**（闸门 12%）
+
+⚠️ 上面两个词数和分歧率都是**去掉 erm/uh/uhh/um/umm 这类填词之后**算的：这些词 whisper 系统性地会丢，跟源可不可信无关，留着只会把「说话人有多磕巴」量成「两份转写对不上」。
+
+## 分歧逐处（左＝YouTube 自动字幕，右＝第二份）
+
+- `thank you` → `—`
+- `very` → `—`
+- `opponent` → `opponents`
+- `i'm` → `—`
+- `cuz` → `because`
+- `and` → `—`
+- `very` → `—`
+- `cuz as` → `because there's`
+- `—` → `but`
+- `happen` → `happened`
+- `they supporting` → `the support in`
+- `great` → `—`
+- `to you man` → `—`
+- `to the` → `—`
+- `us` → `u s`
+- `needs` → `need`
+- `us` → `u s`
+- `us` → `u s`
+- `to` → `—`
+- `—` → `the`
+- `cuz` → `because`
+- `wants` → `want`
+- `what's happen cuz` → `what happens because`
+- `happen` → `happened`
+- `okay catherine` → `hi`
+- `wanted` → `wondered`
+- `you` → `—`
+- `come back` → `—`
+- `5 0` → `five love`
+- `lost` → `lose`
+- `play` → `played`
+- `qualy` → `quality`
+- `—` → `a`
+- `qualy` → `quality`
+- `main` → `men's`
+- `main` → `men's`
+- `starts` → `start`
+- `i i` → `—`
+- `—` → `to`
+- `wants` → `want`
+- `that` → `—`
+- `—` → `a`
+- `oof` → `—`
+- `that's` → `—`
+- `suffering` → `suffered`
+- `okay` → `—`
+- `yeah` → `—`
+- `strike` → `strength`
+- `met` → `meet`
+- `opponent` → `opponents`
+- `opponent` → `opponents`
+- `maddie` → `maddy`
+- `maddie` → `maddy`
+- `—` → `it`
+- `okay` → `ok`
+- `give` → `gave`
+- `cuz` → `because`
+- `—` → `it`
+- `cuz` → `because`
+- `try` → `tried`
+- `yeah` → `—`
+- `her` → `third`
+- `a` → `—`
+- `serve in` → `serving`
+- `—` → `games`
+- `mistake` → `mistakes`
+- `okay` → `ok`
+- `okay eva` → `ava`
+- `qinwen` → `—`
+- `matches` → `messages`
+- `cuz` → `because`
+- `cuz` → `because`
+- `are` → `had`
+- `8 9` → `eight nine`
+- `okay` → `—`
+- `go ahead just going to say` → `—`
+- `harry` → `how are you`
+- `mm` → `—`
+- `doing` → `during`
+- `cuz` → `because`
+- `bradenton` → `bretonton`
+- `—` → `a`
+- `fitness` → `feet`
+- `okay` → `—`
+- `i want and then wait go` → `owen's`
+- `okay okay go ahead` → `—`
+- `4 5` → `four or five`
+- `love` → `below`
+- `in` → `—`
+- `it is a` → `he's an`
+- `look` → `—`
+- `that's that's` → `that`
+- `it` → `it's`
+- `okay` → `—`
+- `in` → `to`
+- `yeah` → `—`
+- `3` → `three`
+- `up` → `—`
+- `3` → `three`
+- `questions` → `question`
+- `6 2` → `—`
+- `cuz` → `because`
+- `2` → `two`
+- `—` → `maddie`
+- `madison start` → `started`
+- `cuz` → `because`
+- `or` → `where`
+- `needs` → `need`
+- `concentrate` → `concentrated`
+- `yeah` → `let's`
