@@ -114,6 +114,40 @@ def test_仓库里不许留签名URL的凭据部分():
           "整个删掉那个字段的话，下一个人会以为它本来就没有源片。")
 
 
+def test_CI签名扫描的文本产物必须在sparse_checkout中():
+    """签名扫描的 output 文本必须真在 sparse checkout 块里，不能只写在注释里。
+
+    工作树缺文件时，扫描会逐个回退到 ``git show``；部分克隆随后为每个 blob
+    单独联网，真实 CI 曾因此从约 0.4 秒退化到约 370 秒。这里只读取实际配置块，
+    避免模式仅残留在说明文字里时测试仍然假绿。
+    """
+    workflow = (ROOT / ".github/workflows/ci.yml").read_text("utf-8")
+    lines = workflow.splitlines()
+    marker = "          sparse-checkout: |"
+    assert lines.count(marker) == 1, "ci.yml 的 sparse-checkout 块缺失或不唯一"
+
+    start = lines.index(marker) + 1
+    sparse_patterns: set[str] = set()
+    for line in lines[start:]:
+        if not line.startswith("            "):
+            break
+        pattern = line.strip()
+        if pattern:
+            sparse_patterns.add(pattern)
+
+    required = {
+        "/output/**/*.json",
+        "/output/**/*.md",
+        "/output/**/*.txt",
+    }
+    missing = required - sparse_patterns
+    assert not missing, (
+        f"ci sparse-checkout 缺 {sorted(missing)}；签名 URL 扫描会退回逐文件 git show")
+    assert "!/output/" in sparse_patterns, "必须先排除整个 output，再只批量检出文本产物"
+    assert not ({"/output/", "/output/**", "/output/**/*"} & sparse_patterns), (
+        "不许为提速把整个 output 检出；历史成片和图片会把 CI checkout 撑大")
+
+
 def test_这条判据不许误伤对凭据形状的描述():
     """反向锚点：**这个仓库的注释就是教训的存放处**，里面必然写着当年那些串。
 
