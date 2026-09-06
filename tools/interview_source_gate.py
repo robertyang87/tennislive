@@ -23,6 +23,34 @@ walk_on 那两次一模一样**：赛后新闻发布会是这个栏目本来就�
 ``candidate_verification`` 那句 ``mapped not in REQUESTED_KINDS`` 的早退照旧
 触发，自动链行为逐字节不变；``press_conference`` 只有**人手写的 spec** 才用得上。
 
+⚠️⚠️ **``broadcaster_interview``（赛后转播商专访）是第六种，2026-09-06 加的，
+形状和 ``press_conference`` 那次一模一样——类型表漏了一种真实内容，不是有人
+想把身份不明的素材塞进来。** 三条证据都是量出来的：① ``specs/interviews/``
+里已经发过 3 条同类（``chwalinska-cincinnati-2026-studio`` / ``eala-osaka-
+dc2026-sf-studio`` / ``djokovic-cincinnati-2026-return``），它们的
+``source_verification`` 是空的 ``{}``——闸立起来之前发的，从那天起渲不出来，
+和 press 那 10 条一样是已知债；② ``data/oncourt_sources.json`` 里 Tennis
+Channel 是 ``verified: true`` / ``provenance: "broadcaster"``，而它的 note
+自己写着「**它做的是转播商的访谈段落，不是赛后场上采访——这是内容类型的问题，
+不是深度的问题**」，也就是这一类**早就被识别过**，只是当时的处置是把扫深退回
+250（不让自动链碰），没给手写 spec 留门；③ ``build_interview_clip.
+_OPENING_KINDS`` 的 ``none`` 那一行本来就把「发布会、**演播室专访**、赛前
+出场秀」列成合法情形——**产片那头一直认，只有 L0 不认**。
+
+⚠️ **键名必须是新的，不能把 ``studio`` 提进 ``REQUESTED_KINDS``。** 后者会让
+``candidate_verification`` 里 ``"studio": "studio"`` 那一支从 rejected 变成
+verified，等于给自动链开一个口子；而新键名在那张映射表里没有任何来源，
+自动链**永远产不出它**，行为逐字节不变（和 press_conference 同一个理由）。
+所以它同样**只有人手写的 spec 用得上**，而且 ``official_explicit_*`` 那条
+方法在 ``explicit_title_type`` 里没有对应分支——真实的判据是
+``human_visual_verdict``：打开画面确认是**赛场里**的转播商话筒采访
+（台标话筒、球员还穿着当场比赛服、背景是赛场区域），而不是演播台对坐。
+
+⚠️ **它和发布会的分界在 ``NO_LEAD_EXCEPTION_METHOD``**：发布会在发布厅录、
+"也不该去借"，写的是方法名（允许没有冷开场）；转播商专访是在赛场里录的，
+同一场的比赛画面官方集锦里就有，所以写 ``None``——**必须接冷开场**，
+照 on_court / ceremony 那样。这一条是收紧不是放宽。
+
 ⚠️ **``walk_on``（赛前出场秀）是这道闸认的第四种类型，不是绕开它的例外。**
 账号所有者 2026-09-01：「做大坂直美的出场秀视频，可以用赛后开麦的模板，但标题
 和部分文案要换掉」。形状和 2026-08-23 加 ``ceremony`` 时一模一样——球员穿着定制
@@ -55,10 +83,11 @@ REQUESTED_KINDS = {
     "farewell": "赛后告别仪式",
     "walk_on": "赛前出场秀",
     "press_conference": "赛后新闻发布会",
+    "broadcaster_interview": "赛后转播商专访",
 }
 DETECTED_TYPES = {
     "on_court", "press", "press_conference", "studio", "ceremony", "farewell",
-    "walk_on", "highlight", "unknown",
+    "walk_on", "broadcaster_interview", "highlight", "unknown",
 }
 
 APPROVED_METHODS = {
@@ -82,6 +111,10 @@ APPROVED_METHODS = {
     "press_conference": {
         "human_visual_verdict",
         "official_explicit_press_conference",
+    },
+    "broadcaster_interview": {
+        "human_visual_verdict",
+        "official_explicit_broadcaster_interview",
     },
 }
 
@@ -339,6 +372,11 @@ NO_LEAD_EXCEPTION_METHOD: dict[str, str | None] = {
     # 发布会在发布厅里录，源片一帧比赛画面都没有，也不该去借——`check_lead_in`
     # 明写「发布会／演播室／赛前专访不属于〔必须接冷开场〕这条规则」。
     "press_conference": "official_explicit_press_conference",
+    # 转播商专访在**赛场里**录（场边站位、球场步道），同一场的比赛画面
+    # 官方集锦里就有、借得到——所以它跟发布会不是一回事，照 on_court /
+    # ceremony 那样写 `None`：必须接冷开场。账号所有者 2026-08-16 定的
+    # 「赛后采访片从比赛结束那一刻开头」对它照旧成立。
+    "broadcaster_interview": None,
 }
 
 

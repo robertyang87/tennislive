@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import inspect
 import sys
 from pathlib import Path
 
@@ -456,3 +457,132 @@ def test_发布会的观众可见叫法必须写成赛后新闻发布会():
     gate.finalize_source_contract(spec)
     with pytest.raises(gate.SourceContractError, match="赛后新闻发布会"):
         gate.validate_source_contract(spec)
+
+
+def _formal_broadcaster_spec() -> dict:
+    """赛后转播商专访——这道闸认的第六种类型（2026-09-06 加）。
+
+    ⚠️ 和发布会那条一样，`source_verification` 是**手写**的，不走
+    `candidate_verification()`：那个函数是自动链用的，而转播商专访永远不该
+    由自动链自己认领——它只在人手写 spec、显式声明 `broadcaster_interview`
+    时才成立。真实来路是 `zheng-keys-us-open-2026-r3-tennis-channel`
+    （Tennis Channel 在美网赛场边对郑钦文做的赛后专访）。
+    """
+    spec = {
+        "slug": "zheng-keys-us-open-2026-r3-tennis-channel",
+        "url": "https://example.test/vid-tc-1",
+        "requested_content_type": "broadcaster_interview",
+        "interview_kind": "赛后转播商专访",
+        "source_verification": {
+            "source_id": "youtube:vid-tc-1",
+            "source_url": "https://example.test/vid-tc-1",
+            "source": "Tennis Channel",
+            "title": "Qinwen Zheng recaps WILD comeback win over Madison Keys | 2026 US Open",
+            "status": "verified",
+            "detected_type": "broadcaster_interview",
+            "method": "human_visual_verdict",
+            "evidence": [{"kind": "visual_verdict", "by": "manual",
+                          "note": "站在赛场边、手持 Tennis Channel 台标话筒、"
+                                  "穿当场比赛服；不是演播台对坐"}],
+        },
+        "match": {
+            "id": "2026:us-open:womens-third-round:qinwen-zheng-madison-keys",
+            "event": "2026 US Open",
+            "round": "Women's Singles Third Round",
+            "winner": "郑钦文",
+            "loser": "凯斯",
+            "participants": ["郑钦文", "凯斯"],
+        },
+    }
+    return gate.finalize_source_contract(spec)
+
+
+def test_赛后转播商专访可进入生产():
+    """转播商在赛场里做的赛后专访是这个栏目本来就在做的内容——
+    `specs/interviews/` 里已经发过 3 条（`chwalinska-cincinnati-2026-studio` /
+    `eala-osaka-dc2026-sf-studio` / `djokovic-cincinnati-2026-return`），而闸
+    2026-08-23 立起来时漏了这一种，那 3 条的 `source_verification` 至今是空的。
+    `build_interview_clip._OPENING_KINDS` 的 `none` 那一行本来就把「演播室专访」
+    列成合法情形——产片那头一直认，只有 L0 不认。这条钉住第六种认得出来。
+    """
+    spec = _formal_broadcaster_spec()
+    attestation = gate.validate_source_contract(spec)
+    assert len(attestation) == 64
+
+    spec["match"]["loser"] = "另一位球员"
+    with pytest.raises(gate.SourceContractError, match="attestation_sha256"):
+        gate.validate_source_contract(spec)
+
+
+def test_加了转播商专访之后自动链一个字都不许变():
+    """⚠️⚠️ **这条是加 `broadcaster_interview` 的全部风险所在**，和加发布会
+    那次同一个形状：`explicit_title_type()` 和 `candidate_verification()` 是
+    自动链用的，往它们里加一支，自动链扫到任何转播商发的访谈就会直接标
+    `verified`——等于给「这条线只做场上采访」那道闸捅个洞。四头分别钉住。
+    """
+    # ① 标题里写着 Interview，自动链仍然猜不出类型（返回空串）
+    assert gate.explicit_title_type(
+        "Qinwen Zheng Interview | 2026 US Open Round 3") == ""
+    # ② 人工判成 studio 的条目照旧 rejected
+    got = gate.candidate_verification(
+        _item(), verdicts={"vid1": {"verdict": "studio", "by": "reviewer"}})
+    assert got["status"] == "rejected" and got["detected_type"] == "studio"
+    # ③ 受信来源 + 标题这条自动路径，产出的类型里不会有转播商专访
+    assert gate.candidate_verification(
+        _item(title="Qinwen Zheng recaps WILD comeback win | 2026 US Open"),
+        verdicts={})["detected_type"] == "unknown"
+    # ④ 整张自动链映射表里没有任何来源能映射出这个新类型
+    assert "broadcaster_interview" not in inspect.getsource(
+        gate.candidate_verification)
+
+
+def test_studio不许被顺手提进可请求类型():
+    """⚠️ **这是加第六种类型时特有的风险，press_conference 那次没有。**
+
+    `studio` 早就在 `DETECTED_TYPES` 和 `candidate_verification` 的映射表里
+    （`"studio": "studio"`），所以「把 studio 提进 REQUESTED_KINDS」看着像
+    最省事的做法——而那会让自动链里判成 studio 的条目从 rejected 变成
+    verified，正是上一条要防的那个洞。新类型必须用一个映射表里没有的新键名。
+    """
+    assert "studio" not in gate.REQUESTED_KINDS
+    assert "broadcaster_interview" in gate.REQUESTED_KINDS
+
+
+def test_转播商专访素材不能签成on_court发布():
+    """和 ceremony／walk_on／发布会那三条同一个形状：来源核验成转播商专访却
+    声明成场上采访，要当场报错——赛场边的转播台不是球场上的现场话筒。
+    """
+    spec = _formal_broadcaster_spec()
+    spec["requested_content_type"] = "on_court"
+    spec["interview_kind"] = "赛后场上采访"
+    gate.finalize_source_contract(spec)
+    with pytest.raises(gate.SourceContractError, match="detected_type"):
+        gate.validate_source_contract(spec)
+
+
+def test_转播商专访的观众可见叫法必须写成赛后转播商专访():
+    """`interview_kind` 印在顶栏上给观众看。画面是赛场边的台标话筒，顶栏却
+    印「赛后场上采访」就是印一句假话。
+    """
+    assert gate.REQUESTED_KINDS["broadcaster_interview"] == "赛后转播商专访"
+    spec = _formal_broadcaster_spec()
+    spec["interview_kind"] = "赛后场上采访"
+    gate.finalize_source_contract(spec)
+    with pytest.raises(gate.SourceContractError, match="赛后转播商专访"):
+        gate.validate_source_contract(spec)
+
+
+def test_转播商专访必须接冷开场():
+    """⚠️ **它和发布会的分界就在这儿，而且是收紧不是放宽。**
+
+    发布会在发布厅里录、源片一帧比赛画面都没有、`check_lead_in` 明写它不受
+    「必须接冷开场」约束，所以 `NO_LEAD_EXCEPTION_METHOD` 给的是方法名；
+    转播商专访是在**赛场里**录的，同一场的比赛画面官方集锦里就有、借得到，
+    所以写 `None`——照 on_court／ceremony 那样必须接。账号所有者 2026-08-16
+    定的「赛后采访片从比赛结束那一刻开头」对它照旧成立。
+    """
+    assert gate.NO_LEAD_EXCEPTION_METHOD["broadcaster_interview"] is None
+    spec = _formal_broadcaster_spec()
+    spec["opening"] = {"kind": "none", "why": "源片从第一帧就是采访"}
+    # 即便来源已核验、opening 写了 none，也拿不到「不接冷开场」的豁免
+    assert gate.verified_no_lead_exception(spec) is False
