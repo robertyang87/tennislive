@@ -11,7 +11,10 @@
     "burel": "https://youtu.be/iCRfxcIFAoo?is=7QI7xbEXBisHEj8q",
     "q3": "https://youtu.be/63uyJ43Q_AY",
     "r1": "https://youtu.be/QCtFpl0c_P4",
-    "r2": "https://www.youtube.com/watch?v=a8Xh22hsppg"
+    "r2": "https://www.youtube.com/watch?v=a8Xh22hsppg",
+    "rehab": "https://raw.githubusercontent.com/robertyang87/tennislive/b3d7dcd838377df23db04260cd169e8ec01775d8/assets/reel/zheng-comeback-story/rehab-2025.mp4",
+    "beijing": "https://raw.githubusercontent.com/robertyang87/tennislive/b3d7dcd838377df23db04260cd169e8ec01775d8/assets/reel/zheng-comeback-story/beijing-retirement-2025.mp4",
+    "celebration": "https://video.twimg.com/amplify_video/2096294837972819968/vid/avc1/1280x720/kG7w1_6GqV7GE-US.mp4?tag=16"
   },
   "mixed_fps": {
     "presser": "以本届美网主素材29.97fps为准；历史素材与发布会只在短回合或低动量人物近景使用，保持原分辨率。真正帧率由render探测，不伪造测量。",
@@ -21,7 +24,10 @@
     "burel": "以本届美网主素材29.97fps为准；历史素材与发布会只在短回合或低动量人物近景使用，保持原分辨率。真正帧率由render探测，不伪造测量。",
     "q3": "以本届美网主素材29.97fps为准；历史素材与发布会只在短回合或低动量人物近景使用，保持原分辨率。真正帧率由render探测，不伪造测量。",
     "r1": "以本届美网主素材29.97fps为准；历史素材与发布会只在短回合或低动量人物近景使用，保持原分辨率。真正帧率由render探测，不伪造测量。",
-    "r2": "以本届美网主素材29.97fps为准；历史素材与发布会只在短回合或低动量人物近景使用，保持原分辨率。真正帧率由render探测，不伪造测量。"
+    "r2": "以本届美网主素材29.97fps为准；历史素材与发布会只在短回合或低动量人物近景使用，保持原分辨率。真正帧率由render探测，不伪造测量。",
+    "rehab": "仅用于康复动作或赛后人物反应，按主源帧率重采样；不用来冒充连续比赛回合。",
+    "beijing": "仅用于康复动作或赛后人物反应，按主源帧率重采样；不用来冒充连续比赛回合。",
+    "celebration": "仅用于康复动作或赛后人物反应，按主源帧率重采样；不用来冒充连续比赛回合。"
   },
   "_column": "网球有故事：伤后低谷→重新接受资格赛起点→从0-5逆转；不重复单场逐分复盘或历史逆转榜单。",
   "_reference": "用户指定KeeKtennis https://www.douyin.com/video/7682137580225514048；已下载133.9秒1080x1350参考片并抽帧。只借鉴悬念、本人采访、低谷和回扣的结构，旁白重新写，不搬运作者解说/音乐/字幕。",
@@ -42,6 +48,13 @@
     "training": [
       "https://www.reuters.com/sports/tennis/chinas-zheng-rediscovers-competitive-spark-us-open-2026-09-05/",
       "https://www.youtube.com/watch?v=B2CYwQMcT3g"
+    ],
+    "australian_open": [
+      "https://www.wtatennis.com/news/4430881/qinwen-zheng-withdraws-from-2026-australian-open-kudermetova-main-draw"
+    ],
+    "roland_garros": [
+      "https://www.rolandgarros.com/en-us/matches/2026/SD090",
+      "https://www.wtatennis.com/news/4509341/takeaways-chwalinska-upsets-zheng-as-paolini-advances-at-roland-garros"
     ]
   },
   "editorial": {
@@ -49,13 +62,14 @@
     "question": "为什么赢过奥运金牌的郑钦文，会为重回美网正赛而哭，又如何在0-5时继续争取机会？",
     "thesis": "伤后归来既要恢复身体也要重新找到比赛感觉。接受资格赛、用集训准备、把0-5时的目标缩成先保一局，构成这次逆转背后的具体行动。",
     "beats": [
-      "奥运夺金的高度",
-      "手术与北京复出再停",
-      "多哈回归后继续受挫",
-      "集训与资格赛三关",
-      "正赛三轮反复打到决胜盘",
-      "0-5时先赢一局",
-      "挽救赛点、连赢七局、找回自我"
+      "零比五时先赢一局的原话",
+      "奥运冠军为何为正赛门票落泪",
+      "手术后病床和走廊里的康复动作",
+      "中网复出又退赛、再缺席澳网",
+      "多哈归来与法网失利",
+      "集训、资格赛三关与正赛两场三盘",
+      "第二盘战术变化、决胜盘挽救赛点",
+      "连赢七局、完整制胜分和庆祝"
     ],
     "human_context": {
       "angle": "重回别人起点的代价，用本人采访交代，不以伤病渲染空泛鸡汤。",
@@ -75,7 +89,7 @@
     "eyebrow": "网球有故事",
     "layout": "solo",
     "subject": "郑钦文",
-    "hook": "从低谷走回球场\n从零比五赢回来",
+    "hook": "零比五时\n她只想赢一局",
     "topic": "郑钦文的重返之路",
     "portrait": {
       "image": "assets/reel/zheng-us-open-2026-r3-celebrate.jpg",
@@ -88,58 +102,42 @@
   },
   "push": {
     "auto": false,
-    "summary": "从低谷走回球场",
-    "lead": "手术、复出再停、从资格赛重新开始。直到美网第三轮，零比五落后，她还想再争取一局。这一次，讲完整郑钦文重返球场的路。",
+    "summary": "郑钦文：先赢下一局",
+    "lead": "故事扩充版：病床边的握拍、走廊里的训练、中网复出再退赛，到从资格赛闯进美网十六强。零比五时，她只想先赢下一局。",
     "_why": "新组合先渲染并验收；通过后按用户长期授权推送。"
   },
   "segments": [
     {
-      "source": "keys",
-      "start": 183.3,
-      "end": 187.3,
+      "source": "celebration",
+      "start": 0,
+      "end": 3.65,
       "fit": "crop",
-      "narration": "这一刻，她终于可以躺下了。",
-      "_why": "实看源片183.3–187.3为郑钦文倒地与坐起，避开188秒后凯斯特写，第一句人称与画面一致。",
-      "crosses_cut": "同场倒地到坐起。",
-      "_ending_payoff_required": true
-    },
-    {
-      "source": "keys",
-      "start": 192.1,
-      "end": 199.3,
-      "fit": "crop",
-      "narration": "可在这场逆转之前，郑钦文已经和低谷，打了很久。",
-      "_why": "实看192.1–199.3为郑钦文微笑走向网前；原首版188–191秒的凯斯特写删除。",
-      "crosses_cut": "郑钦文走向网前，同场结果镜头。",
-      "_ending_payoff_required": false
+      "narration": "零比五落后，奥运冠军想的却是——",
+      "_why": "WTA官方同场地面机位，原音轨为数字静音。按run 34014344381实测旁白3.55秒，将镜头定为3.65秒后立即接本人原声；无声尾部只留0.10秒，不叠音、不留空场。结尾完整兑现。",
+      "crosses_cut": "同场获胜反应。"
     },
     {
       "source": "presser",
-      "start": 162.96,
-      "end": 171.96,
+      "start": 207.8,
+      "end": 213.84,
       "fit": "crop",
       "narration": "",
-      "_why": "本人回顾伤后状态；字幕复用已审校发布会162.96–171.96秒，原话优先。",
+      "_why": "本人复盘0-5时真实目标：不想被6-0，先赢一局。保留原意，不套用参考作者转述。",
       "quote": [
         {
-          "at": 0,
-          "end": 2.08,
-          "text": "after coming back from injury,\n伤病复出之后"
+          "at": 0.0,
+          "end": 3.44,
+          "text": "please I I I don't want be beaten like 6-0.\n拜托 我不想被打成 6-0"
         },
         {
-          "at": 2.08,
-          "end": 5.16,
-          "text": "it is true it's been a while I didn't compete,\n我确实很久没有比赛了"
+          "at": 3.44,
+          "end": 4.92,
+          "text": "I just wants to win one game\n我只想赢下一局"
         },
         {
-          "at": 5.16,
-          "end": 6.92,
-          "text": "so I felt I lost those energy,\n所以我觉得自己丢了那股劲"
-        },
-        {
-          "at": 6.92,
-          "end": 9,
-          "text": "I forgot how to compete.\n忘了该怎么竞技"
+          "at": 4.92,
+          "end": 6.04,
+          "text": "in that moment\n在那个时刻"
         }
       ]
     },
@@ -148,61 +146,9 @@
       "start": 18,
       "end": 27.5,
       "fit": "crop",
-      "narration": "她曾把巴黎奥运金牌，挂在胸前。也曾让人相信，未来只会一路向上。",
+      "narration": "两年前，她是巴黎奥运冠军。两年后，只是重回美网正赛，就让她哭了。",
       "_why": "Olympics官方夺金短片；年份在旁白明确，这是2024巴黎，不是本届纽约。",
       "crosses_cut": "官方同一夺金事件蒙太奇。"
-    },
-    {
-      "source": "presser",
-      "start": 100,
-      "end": 113,
-      "fit": "crop",
-      "narration": "可二零二五年夏天，右肘手术，让她停了下来。北京复出，又因疼痛退赛。她只好，再等。",
-      "_why": "用当事人2026发布会回忆镜头承载伤病来路，不以他场比赛冒充手术或退赛现场。事实WTA 2026-03-05专访与2025-09-29赛报。"
-    },
-    {
-      "source": "doha",
-      "start": 14,
-      "end": 24,
-      "fit": "crop",
-      "narration": "直到二零二六年二月，多哈，她才再度归来。首战逆转肯宁，发出了二十记ACE。",
-      "_why": "WTA官方多哈首轮郑钦文对肯宁，原有outlook实测窗口；讲同一场复出。",
-      "crosses_cut": "WTA官方同场集锦，含回合及当事人近景。"
-    },
-    {
-      "source": "presser",
-      "start": 113,
-      "end": 125,
-      "fit": "crop",
-      "narration": "可是，能上场了，不等于找回了自己。接连受挫之后，她退出辛辛那提，把时间留给训练。",
-      "_why": "当事人本场发布会谈集训决定的同一问答；不使用旧雅典比赛假装训练。Reuters 2026-09-05及本人原话双源。"
-    },
-    {
-      "source": "you",
-      "start": 134,
-      "end": 146,
-      "fit": "crop",
-      "narration": "资格赛首轮，对面是尤晓迪。她赢下一场，才向那张正赛门票，迈出第一步。",
-      "_why": "已下载原片并实看134–146秒：134郑钦文，137尤晓迪走向网前，140起双方握手。旁白按此顺序介绍资格赛首轮与对手，避免将尤晓迪特写误指为奥运冠军。",
-      "crosses_cut": "同场末段的回合与反应。"
-    },
-    {
-      "source": "burel",
-      "start": 161.4,
-      "end": 173.81,
-      "fit": "crop",
-      "narration": "闯过尤晓迪这一关，又赢下布雷尔。她一道关，一道关地过。她要找回的，是比赛的感觉。",
-      "_why": "已看本场contact_02：161秒左右制胜分结束，162.5郑钦文转身、168.5起结果牌、172.5网前握手。以结果和反应承接赢下布雷尔，不截断末分。",
-      "crosses_cut": "布雷尔一战最后一分至赛后，原spec连续保留窗口。"
-    },
-    {
-      "source": "q3",
-      "start": 188,
-      "end": 198.6,
-      "fit": "crop",
-      "narration": "最后一关，雨把比赛拆成了两天。她还是赢下普里丹基纳，拿到了那张门票。",
-      "_why": "实看contact_03：188.5网前与对手同框，190.5握手，192.5起郑钦文走向场边，196.5近景。用本人晋级反应承载资格赛故事。",
-      "crosses_cut": "同场网前握手到她回场边的连续反应。"
     },
     {
       "source": "presser",
@@ -250,6 +196,133 @@
       ]
     },
     {
+      "source": "rehab",
+      "start": 3,
+      "end": 10,
+      "fit": "contain",
+      "narration": "二零二五年七月，右肘手术，让她停了下来。",
+      "_why": "2025康复存档，病床与走廊练习；手术月份由本人公告和WTA专访核实。",
+      "mute": true,
+      "crosses_cut": "本人康复vlog连续蒙太奇，日期与来源不变。"
+    },
+    {
+      "source": "rehab",
+      "start": 10,
+      "end": 17.5,
+      "fit": "contain",
+      "narration": "她在病床边握拍，在走廊练习。也会跳一段舞，让自己笑起来。",
+      "_why": "接前段病床练习，当前为本人走廊跳舞及健身房；不虚构康复程度。",
+      "mute": true,
+      "crosses_cut": "本人康复vlog连续蒙太奇，日期与来源不变。"
+    },
+    {
+      "source": "rehab",
+      "start": 17.5,
+      "end": 27.2,
+      "fit": "contain",
+      "narration": "球场上的大力击球，暂时换成了康复动作。她一点点练，等着回去。",
+      "_why": "健身房陪练、杠铃臀推和球上核心练习，按可见动作描述。",
+      "mute": true,
+      "crosses_cut": "本人康复vlog连续蒙太奇，日期与来源不变。"
+    },
+    {
+      "source": "beijing",
+      "start": 0,
+      "end": 12.2,
+      "fit": "crop",
+      "narration": "九月，她回到中网，却因右肘疼痛，没能打完第二场。复出的脚步，又停住了。",
+      "_why": "WTA2025-09-29原片163秒起；场边沟通、网前结束，第二场对手诺斯科娃。",
+      "crosses_cut": "退赛现场至双方网前结束。"
+    },
+    {
+      "source": "presser",
+      "start": 100,
+      "end": 112,
+      "fit": "crop",
+      "narration": "到了新一年，她又退出澳网。后来接受采访时，她说，做出那个决定后，自己哭了。",
+      "_why": "2026美网发布会画面仅作当事人回忆背景；事实为WTA3月专访，不冒充澳网退赛现场。"
+    },
+    {
+      "source": "doha",
+      "start": 14,
+      "end": 24,
+      "fit": "crop",
+      "narration": "直到二零二六年二月，多哈，她才再度归来。首战逆转肯宁，发出了二十记ACE。",
+      "_why": "WTA官方多哈首轮郑钦文对肯宁，原有outlook实测窗口；讲同一场复出。",
+      "crosses_cut": "WTA官方同场集锦，含回合及当事人近景。"
+    },
+    {
+      "image": "assets/reel/zheng-comeback-story/roland-garros-2026.jpg",
+      "seconds": 8,
+      "narration": "可到了法网，她又止步首轮。回到赢过奥运金牌的巴黎，比赛的感觉，却没回来。",
+      "_why": "2026-05-25法网当场官方照片，Nicolas Gouhier/FFT；不同球场，不称同一块球场。"
+    },
+    {
+      "source": "presser",
+      "start": 162.96,
+      "end": 171.96,
+      "fit": "crop",
+      "narration": "",
+      "_why": "本人回顾伤后状态；字幕复用已审校发布会162.96–171.96秒，原话优先。",
+      "quote": [
+        {
+          "at": 0,
+          "end": 2.08,
+          "text": "after coming back from injury,\n伤病复出之后"
+        },
+        {
+          "at": 2.08,
+          "end": 5.16,
+          "text": "it is true it's been a while I didn't compete,\n我确实很久没有比赛了"
+        },
+        {
+          "at": 5.16,
+          "end": 6.92,
+          "text": "so I felt I lost those energy,\n所以我觉得自己丢了那股劲"
+        },
+        {
+          "at": 6.92,
+          "end": 9,
+          "text": "I forgot how to compete.\n忘了该怎么竞技"
+        }
+      ]
+    },
+    {
+      "source": "presser",
+      "start": 113,
+      "end": 125,
+      "fit": "crop",
+      "narration": "接连受挫之后，她退出辛辛那提，把时间留给训练。排名跌出前百，美网要从资格赛打起。",
+      "_why": "当事人本场发布会谈集训决定的同一问答；不使用旧雅典比赛假装训练。Reuters 2026-09-05及本人原话双源。"
+    },
+    {
+      "source": "you",
+      "start": 134,
+      "end": 146,
+      "fit": "crop",
+      "narration": "资格赛首轮，对面是尤晓迪。赢下这一场，她才迈出了通往正赛的第一步。",
+      "_why": "已下载原片并实看134–146秒：134郑钦文，137尤晓迪走向网前，140起双方握手。旁白按此顺序介绍资格赛首轮与对手，避免将尤晓迪特写误指为奥运冠军。",
+      "crosses_cut": "同场末段的回合与反应。"
+    },
+    {
+      "source": "burel",
+      "start": 161.4,
+      "end": 173.81,
+      "fit": "crop",
+      "narration": "闯过尤晓迪这一关，又赢下布雷尔。她一道关，一道关地过。她要找回的，是比赛的感觉。",
+      "_why": "已看本场contact_02：161秒左右制胜分结束，162.5郑钦文转身、168.5起结果牌、172.5网前握手。以结果和反应承接赢下布雷尔，不截断末分。",
+      "crosses_cut": "布雷尔一战最后一分至赛后，原spec连续保留窗口。"
+    },
+    {
+      "source": "q3",
+      "start": 188,
+      "end": 198.6,
+      "fit": "crop",
+      "narration": "最后一关，雨把比赛拆成了两天。她还是赢下普里丹基纳，拿到了那张门票。",
+      "_why": "实看contact_03：188.5网前与对手同框，190.5握手，192.5起郑钦文走向场边，196.5近景。用本人晋级反应承载资格赛故事。",
+      "crosses_cut": "同场网前握手到她回场边的连续反应。"
+    },
+    {
       "source": "r1",
       "start": 163,
       "end": 175,
@@ -291,36 +364,6 @@
       "fit": "crop",
       "narration": "决胜盘，凯斯再次提速。比分一路走到零比五。离出局越来越近，她先把目标，缩成了一件小事。",
       "_why": "同场决胜盘开局破发；0-5是之后赛况，旁白明确一路走到，不声称当帧0-5。"
-    },
-    {
-      "source": "presser",
-      "start": 204.04,
-      "end": 213.84,
-      "fit": "crop",
-      "narration": "",
-      "_why": "本人复盘0-5时真实目标：不想被6-0，先赢一局。保留原意，不套用参考作者转述。",
-      "quote": [
-        {
-          "at": 0,
-          "end": 3.76,
-          "text": "the first things in that moment I thought\n那一刻我想的第一件事是"
-        },
-        {
-          "at": 3.76,
-          "end": 7.2,
-          "text": "please I I I don't want be beaten like 6-0.\n拜托 我不想被打成 6-0"
-        },
-        {
-          "at": 7.2,
-          "end": 8.68,
-          "text": "I just wants to win one game\n我只想赢下一局"
-        },
-        {
-          "at": 8.68,
-          "end": 9.8,
-          "text": "in that moment\n在那个时刻"
-        }
-      ]
     },
     {
       "source": "keys",
@@ -439,15 +482,19 @@
       ]
     },
     {
-      "source": "keys",
-      "start": 192.1,
-      "end": 203.15,
-      "fit": "crop",
-      "narration": "从手术后重新学着比赛，到资格赛，再到美网十六强。她赢回来的，难道只是一场比赛？",
-      "_why": "同场赛后缓收。闭合人物弧线，不预言下一轮、不声称身体已完全康复。",
-      "crosses_cut": "赛后走向球网、握手与庆祝；这里作有旁白的回望，之前已完整连续交代结局。",
-      "speed": 0.85
+      "image": "assets/reel/zheng-us-open-2026-r3-celebrate.jpg",
+      "seconds": 8,
+      "narration": "从病床边的球拍，到美网十六强。她赢回来的，难道只是一场比赛？",
+      "_why": "同场官方高清照片收束，不再次倒放握手或重复跌倒；以具体来路回扣，保留品牌片尾。"
     }
   ],
-  "_tts_backend_why": "沿用当前已验证的 Edge 中文旁白；Azure 自 9 月 3 日凭据返回 401。实际合成后检查语速、读音和镜头余量。"
+  "_tts_backend_why": "沿用当前已验证的 Edge 中文旁白；Azure 自 9 月 3 日凭据返回 401。实际合成后检查语速、读音和镜头余量。",
+  "archival": {
+    "rehab": "2025年8月本人小红书康复vlog的公开转载，原生360×640；保留整幅、来源标识，不声称高清，不裁掉训练动作。"
+  },
+  "conform": {
+    "beijing": "WTA原生1280×720横屏退赛片段，与主片同为16:9；等比转为主片尺寸，不裁内容。",
+    "celebration": "WTA官方同场地面机位，1280×720与主片同为16:9；等比统一尺寸，人物近景。"
+  },
+  "_revision": "2026-09-06 用户要求补充真实视频和图片、把故事做丰满；增加康复、中网退赛、澳网缺席、法网失利，保留完整逆转兑现，不强行限到两三分钟。"
 }
