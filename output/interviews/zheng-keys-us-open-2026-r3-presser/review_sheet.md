@@ -80,7 +80,7 @@
 | 74 | 2:25.0 | [▶](https://youtu.be/B2CYwQMcT3g?t=145) | of the game that took the longest | 那是你花最久 |  |
 | 75 | 2:26.5 | [▶](https://youtu.be/B2CYwQMcT3g?t=146) | to come back come back. | 才找回来的那一部分 |  |
 | 76 | 2:27.4 | [▶](https://youtu.be/B2CYwQMcT3g?t=147) | I just wondered the way you won today | 我想知道 你今天这样赢下来 |  |
-| 77 | 2:30.1 | [▶](https://youtu.be/B2CYwQMcT3g?t=150) | from being 5-0 and match point down, | 从 5-0 落后 还面对赛点 |  |
+| 77 | 2:30.1 | [▶](https://youtu.be/B2CYwQMcT3g?t=150) | from being 5-0 and match point down, | 从 0-5 落后 还面对赛点 |  |
 | 78 | 2:32.5 | [▶](https://youtu.be/B2CYwQMcT3g?t=152) | I wonder | 我想知道 |  |
 | 79 | 2:32.9 | [▶](https://youtu.be/B2CYwQMcT3g?t=152) | if that gives you particular satisfaction given | 这会不会让你特别满足 考虑到 |  |
 | 80 | 2:36.9 | [▶](https://youtu.be/B2CYwQMcT3g?t=156) | the struggles you've | 你在竞技状态上 |  |
@@ -100,13 +100,13 @@
 | 94 | 3:04.5 | [▶](https://youtu.be/B2CYwQMcT3g?t=184) | main draw is just the beginning | 正赛只是一个开始 |  |
 | 95 | 3:06.8 | [▶](https://youtu.be/B2CYwQMcT3g?t=186) | where all the players starts. | 所有人都从那里出发 |  |
 | 96 | 3:08.3 | [▶](https://youtu.be/B2CYwQMcT3g?t=188) | Also, that's just my beginning before. | 而那 只是我以前的起点 |  |
-| 97 | 3:11.2 | [▶](https://youtu.be/B2CYwQMcT3g?t=191) | So, I fight | 所以我拼了这么久 |  |
+| 97 | 3:11.2 | [▶](https://youtu.be/B2CYwQMcT3g?t=191) | So, I fight | 所以我拼得这么狠 |  |
 | 98 | 3:11.9 | [▶](https://youtu.be/B2CYwQMcT3g?t=191) | so hard just to start like everyone else. | 只为了和别人站在同一个起点 |  |
 | 99 | 3:15.6 | [▶](https://youtu.be/B2CYwQMcT3g?t=195) | And for me, that was really not easy. | 对我来说 这真的不容易 |  |
 | 100 | 3:18.7 | [▶](https://youtu.be/B2CYwQMcT3g?t=198) | And for today, | 而今天 |  |
 | 101 | 3:20.0 | [▶](https://youtu.be/B2CYwQMcT3g?t=200) | it's like after coming back from 0-5, | 从 0-5 追回来之后 |  |
 | 102 | 3:24.0 | [▶](https://youtu.be/B2CYwQMcT3g?t=204) | the first things in that moment I thought | 那一刻我想的第一件事是 |  |
-| 103 | 3:27.8 | [▶](https://youtu.be/B2CYwQMcT3g?t=207) | please I I I don't want be beaten like 6-0. | 拜托 我不想被 6-0 打成这样 |  |
+| 103 | 3:27.8 | [▶](https://youtu.be/B2CYwQMcT3g?t=207) | please I I I don't want be beaten like 6-0. | 拜托 我不想被打成 6-0 |  |
 | 104 | 3:31.2 | [▶](https://youtu.be/B2CYwQMcT3g?t=211) | I just wants to win one game | 我只想赢下一局 |  |
 | 105 | 3:32.7 | [▶](https://youtu.be/B2CYwQMcT3g?t=212) | in that moment | 在那个时刻 |  |
 | 106 | 3:33.8 | [▶](https://youtu.be/B2CYwQMcT3g?t=213) | and after that the dynamic start to came | 之后那股势头开始来了 |  |
@@ -114,7 +114,7 @@
 | 108 | 3:37.8 | [▶](https://youtu.be/B2CYwQMcT3g?t=217) | I felt like I can see the tennis better | 我觉得我能把球看得更清楚 |  |
 | 109 | 3:41.5 | [▶](https://youtu.be/B2CYwQMcT3g?t=221) | and then I felt I have lot of energy | 然后我觉得自己身上 |  |
 | 110 | 3:43.4 | [▶](https://youtu.be/B2CYwQMcT3g?t=223) | on myself. | 有很多能量 |  |
-| 111 | 3:44.0 | [▶](https://youtu.be/B2CYwQMcT3g?t=224) | I can just keep pushing, keep fighting. | 我可以一直推 一直拼 |  |
+| 111 | 3:44.0 | [▶](https://youtu.be/B2CYwQMcT3g?t=224) | I can just keep pushing, keep fighting. | 我可以一直往前顶 一直拼 |  |
 | 112 | 3:46.6 | [▶](https://youtu.be/B2CYwQMcT3g?t=226) | And at the end when I won the match, | 最后赢下比赛的那一刻 |  |
 | 113 | 3:48.3 | [▶](https://youtu.be/B2CYwQMcT3g?t=228) | it's like oof. | 就像 呼 |  |
 | 114 | 3:50.2 | [▶](https://youtu.be/B2CYwQMcT3g?t=230) | Wow, that's that's incredible. | 哇 这太不可思议了 |  |
@@ -284,7 +284,7 @@
 | 278 | 9:30.4 | [▶](https://youtu.be/B2CYwQMcT3g?t=570) | Like today was just happening. | 就像今天发生的这样 |  |
 | 279 | 9:32.4 | [▶](https://youtu.be/B2CYwQMcT3g?t=572) | So, this gives me also a lesson | 所以这也给了我一课 |  |
 | 280 | 9:34.6 | [▶](https://youtu.be/B2CYwQMcT3g?t=574) | that in a tennis match you always | 在一场网球比赛里 |  |
-| 281 | 9:36.2 | [▶](https://youtu.be/B2CYwQMcT3g?t=576) | have to be there. | 你必须一直在场上 |  |
+| 281 | 9:36.2 | [▶](https://youtu.be/B2CYwQMcT3g?t=576) | have to be there. | 你必须一直在状态里 |  |
 | 282 | 9:37.1 | [▶](https://youtu.be/B2CYwQMcT3g?t=577) | It doesn't matter if you are winning | 不管你是领先 |  |
 | 283 | 9:38.6 | [▶](https://youtu.be/B2CYwQMcT3g?t=578) | or losing. | 还是落后 |  |
 | 284 | 9:39.5 | [▶](https://youtu.be/B2CYwQMcT3g?t=579) | You have a match point | 不管你有没有 |  |
