@@ -15494,3 +15494,52 @@ def test_审片版两条线的产物目录都找得到(monkeypatch):
     # 顺带钉住上一条判据守的那一头：拉回来的原片不许落进仓库的 output/
     assert Path("output").resolve() not in film.resolve().parents, (
         f"采访片这条路把原片下到了仓库的 output/ 底下（{film}）")
+
+
+def test_合语音喂的是speakable之后那份不是原文(monkeypatch, tmp_path):
+    """reel 线三处合语音（段落 / 封面 / 片尾）喂给合成器的都必须是 `speakable()` 之后的文本。
+
+    来路（2026-09-06 审听 `comeback-five-love-down` 抓到的）：`synthesize()` 写的是
+    `tts_one(seg.narration, …)`——原文直接进合成器，于是 〇→零（年份识别）、
+    挑→选、硬地→硬帝、`5-1`→`5比1` 那套替换在 reel 线上**一次都没到过合成器**；
+    只有 `_word_splits` 的切词报告拿 `speakable()` 算过，报告和实际念的不是同一份。
+    解说片线（`explainer.py` 的 `tts_one(speakable(seg.narration), …)`）一直是对的。
+    CLAUDE.md「年份里的 〇 会挡住『这是个年份』的识别」那节写的「两条线共用」
+    在 reel 这一半是空的。
+
+    判据真调三个入口，打桩 `_tts_one_uncached` 收下合成器**实际拿到的文本**，
+    和 `speakable(原文)` 逐字比；原文里故意放一个 〇 和一个连字符比分，保证
+    两份不相等——否则断言恒真。
+    """
+    reel = _reel()
+    monkeypatch.setenv("TENNISLIVE_TTS_CACHE", str(tmp_path / "cache"))
+    fed: list[str] = []
+
+    def fake_uncached(text, path, *a, **k):
+        fed.append(text)
+        path.write_bytes(b"FAKE")
+        return [{"offset": 0, "duration": 100, "text": text[:2]}]
+
+    monkeypatch.setattr(reel, "_tts_one_uncached", fake_uncached)
+
+    raw = "二〇一九年澳网八强，决胜盘 1-5 落后。"
+    assert reel.speakable(raw) != raw, "样本必须真的会被 speakable 改写，否则判据恒真"
+
+    seg = _seg(reel, 0.0, 8.0)
+    seg.narration = raw
+    reel.synthesize([seg], tmp_path, "v", "+0%")
+    assert fed and fed[-1] == reel.speakable(raw), (
+        f"段落旁白喂的是原文不是 speakable：{fed[-1]!r}")
+
+    # ⚠️ 封面那句换一段文本：同文同参数会命中上一步刚写进缓存的那份，
+    # 合成器一次都不被调——那时 `fed` 为空，断言红在错的原因上。
+    raw2 = "二〇二三年，硬地上他挑球过网，5-7 输了那一盘。"
+    assert reel.speakable(raw2) != raw2
+    fed.clear()
+    reel.synth_cover({"column": "网球有故事", "cover": {"narration": raw2}},
+                     tmp_path, "v", "+0%")
+    assert fed and fed[-1] == reel.speakable(raw2), "封面那句喂的是原文"
+
+    fed.clear()
+    reel.synth_outro(tmp_path, "v", "+0%")
+    assert fed and fed[-1] == reel.speakable(reel.OUTRO_NARRATION), "片尾那句没过 speakable"
