@@ -4012,12 +4012,15 @@ def build_cover(sources: dict[str, Path], primary: str, spec: dict,
     #
     # 已发的十几条 VS 封面不动（`_LEGACY_VS_COVERS`，只许减不许加）——
     # 微信那条消息发出去收不回来，为版式重渲没有意义。
-    if layout != "solo" and eyebrow == "赛场之上" \
+    # ⚠️ 这一行原来写死成 `eyebrow == "赛场之上"`。2026-09-06 给「网球有故事」
+    # 放开 cutout 的那一刻，**认领这道闸对新栏目就是哑的**——表放宽了、闸没
+    # 跟上，于是「手头正好有两张抠图就顺手退回 VS」那个滑坡在新栏目上没人管。
+    if layout != "solo" and eyebrow in SOLO_DEFAULT_COLUMNS \
             and str(spec.get("slug", "")) not in _LEGACY_VS_COVERS \
             and not str(cover.get("_layout_why", "")).strip():
         raise ReelError(
-            "「赛场之上」的封面从 2026-08-04 起一律用 solo："
-            "账号所有者「以后都用 solo 版做『赛场之上』封面」。\n"
+            f"「{eyebrow}」的封面一律用 solo"
+            "（赛场之上 2026-08-04 起；网球有故事默认讲一个人）。\n"
             f"这条 spec 写的是 layout={layout!r}。\n"
             "改成 `\"layout\": \"solo\"` + `cover.portrait`（本场源片抓一帧就行），"
             "赛果写在 `cover.result` + `cover.matchup`，"
@@ -8030,6 +8033,17 @@ BAND_FOOT_LABEL = "网球时差 · 赛场之上"
 
 #: `cover.eyebrow` 空着时按哪个栏目算——和 `build_cover`、render 那两处
 #: `or "赛场之上"` 是同一个缺省。
+# 默认走 solo 封面的栏目——**非 solo 要写 `cover._layout_why` 认领**。
+# 「赛场之上」2026-08-04 翻成 solo 默认；「网球有故事」2026-09-06 放开 cutout
+# 之后同样落在这一档（账号所有者：郑钦文与斯瓦泰克那条「封面可以用两人 h2h
+# 方式」——那个栏目讲的不一定是一个人，交手史的主体本来就是两个）。
+# ⚠️ 「开球之前」不在这儿：它的版式表里根本没有 solo（讲的就是一场对决），
+# 拿它去要认领是误伤。
+# ⚠️ 这份名单和 tests/test_match_reel.py 的 `_COLUMNS` 是**同一件事的两处**
+# （那儿扫存量 spec，这儿拦新写的），判据
+# test_默认走solo的栏目名单两处要对得上 钉着它们不许分叉。
+SOLO_DEFAULT_COLUMNS = ("赛场之上", "网球有故事")
+
 DEFAULT_COLUMN = "赛场之上"
 
 # 哪几个栏目不画左上角那块常驻角标，**名单在 `video/watermark.py`**
