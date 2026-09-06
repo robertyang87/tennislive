@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "at": "2026-09-06T15:06:27Z",
+  "pipeline": "match-reel",
+  "slug": "zheng-swiatek-eight-meetings",
+  "mode": "render",
+  "outcome": "success",
+  "error": null,
+  "elapsed_seconds": 259.053,
+  "last_stage": "烧字幕+成片",
+  "stage_seconds": {
+    "下载源片 olympics": 14.157,
+    "封面配音": 1.398,
+    "片尾配音": 1.696,
+    "TTS 合成": 20.257,
+    "封面海报": 2.283,
+    "封面编码": 0.514,
+    "分段编码": 156.011,
+    "片尾渲染": 7.201,
+    "拼接": 36.122,
+    "混音": 3.927,
+    "烧字幕+成片": 127.829
+  },
+  "stage_counts": {
+    "下载源片 olympics": 1,
+    "封面配音": 1,
+    "片尾配音": 1,
+    "TTS 合成": 1,
+    "封面海报": 1,
+    "封面编码": 1,
+    "分段编码": 18,
+    "片尾渲染": 1,
+    "拼接": 1,
+    "混音": 1,
+    "烧字幕+成片": 1
+  },
+  "cpu_count": 4,
+  "run_id": "34040884104",
+  "run_attempt": "1",
+  "on_runner": true
+}
