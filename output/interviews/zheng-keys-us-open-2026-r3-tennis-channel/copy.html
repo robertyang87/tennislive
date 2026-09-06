@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>9.6 赛后开麦 | 郑钦文0-5时只求别被6-0</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>郑钦文 0-5 落后的时候在想什么：「至少别让她 6-0 拿下你，那太丢人了。」
+
+赛后她在场边接受 Tennis Channel 专访，讲的是场上那 149 分钟里没人看得见的部分。
+
+三层意思，一层比一层往回：
+
+第一层是那一刻的算盘。0-5，轮到她发球，她给自己定的目标不是逆转，是别输得太难看。等真的拿下决胜盘第一局，才换成「好，下一局再说」。最难的也不是追到 5-5——是 5-5 之后那两局。
+
+第二层是这一年。四个月一场球没赢过，她说那段时间对自己有很多怀疑。后来和团队去佛罗里达的 IMG 学院备战，那里热到打 20 分钟就从头湿到脚。
+
+第三层是资格赛。上一次在大满贯打资格赛，她 19 岁。五年之后又回到同一个位置。
+
+她说了什么：
+
+「求你了，至少别让她 6-0 拿下你。那真的太丢人了。」
+
+「拿下决胜盘第一局之后我就想：好，下一局再说，一分一分打下去。然后不知怎么的，事情开始变了。」
+
+「最关键的是 5-5。因为我已经连赢了五局，接下来要再拿下那两局才是最难的——那时候回合变多了，我们俩都打得好得不可思议。」
+
+「今天我证明了三件事：第一，努力终于有回报了；第二，永远不要放弃，因为什么都可能发生；第三，奇迹是存在的。」
+
+「这四个月我一场球都没赢过，我对自己有很多怀疑。」
+
+「IMG 学院那里真的非常非常热，打 20 分钟你就从头湿到脚。我甚至不愿意再回想是怎么熬过来的。」
+
+「上一次我在大满贯打资格赛，还是 19 岁那年。怎么五年之后我又回到了同一个位置。」
+
+「有时候我状态往下掉，观众会喊：加油 Queen，你可以的。就算他们在支持对手，我也能感觉到，他们同时也在跟我说：顶住，我们想看一场好球。」
+
+问她状态是不是回到了世界前五那时候，她说：「我还在路上。我每打一场就好一点，但还有很多东西我想去够到。」
+
+你熬过最长的低谷有多久？
+
+#网球时差 #美网 #郑钦文 #赛后开麦 #WTA</textarea>
+    </section>
+    
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
