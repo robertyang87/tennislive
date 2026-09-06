@@ -4491,7 +4491,9 @@ def synth_cover(spec: dict, outdir: Path, voice: str, rate: str
             "把 cover.narration 删掉；那句话要留，就放进第一段的 narration。")
     path = outdir / "voice_cover.mp3"
     with stage("封面配音"):
-        marks = tts_one(text, path, voice, rate)
+        # ⚠️ 喂 `speakable()` 之后那份，不是原文——合成器念的是它（〇→零、
+        # 挑→选、硬地→硬帝、5-1→5比1）。屏幕上那份不动，字数 1:1。
+        marks = tts_one(speakable(text), path, voice, rate)
     return path, marks
 
 
@@ -4524,7 +4526,7 @@ def synth_outro(outdir: Path, voice: str, rate: str) -> tuple[Path, list[dict]]:
     """
     path = outdir / "voice_outro.mp3"
     with stage("片尾配音"):
-        marks = tts_one(OUTRO_NARRATION, path, voice, rate)
+        marks = tts_one(speakable(OUTRO_NARRATION), path, voice, rate)
     return path, marks
 
 
@@ -5458,7 +5460,10 @@ def synthesize(segments: list[Segment], outdir: Path, voice: str, rate: str,
             continue
         # **段级永远赢。** 基调只填空位——「王欣瑜那条的第 7 段要 excited」
         # 是编辑判断，不能被一个按栏目算出来的默认值盖掉。
-        out.append((path, tts_one(seg.narration, path, voice,
+        # ⚠️ **喂 `speakable()` 之后那份。** 2026-09-06 之前这儿喂的是原文，于是
+        # 〇→零／挑→选／硬地→硬帝 那套替换在 reel 线上一次都没到过合成器
+        # （只有 `_word_splits` 的报告拿它算过）；解说片线一直是对的。
+        out.append((path, tts_one(speakable(seg.narration), path, voice,
                                   seg.voice_rate or rate,
                                   seg.voice_pitch or "+0Hz",
                                   seg.voice_style or base_style,

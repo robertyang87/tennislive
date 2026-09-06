@@ -1,0 +1,445 @@
+{
+  "slug": "bucsa-gauff-us-open-2026-r3",
+  "_column": "reel",
+  "layout": "band",
+  "scorebox": [
+    104,
+    887,
+    660,
+    980
+  ],
+  "_scorebox_why": "美网这一届同一条频道同一套转播图形，和已发的 `potapova-anisimova-us-open-2026-r3` / `zheng-keys-us-open-2026-r3` / `wu-alcaraz-us-open-2026-r3`（104 / 887 / 660 / 980）逐条相同；本场 probe 的 `scorebox_guess` 是 `104,888,579,978`（右缘 579 是猜的，只有一盘时板窄）。⚠️ 右缘 660 只是兜底，真正的右缘是 `resolve_board_insets` 每段现量的（这块板每打完一盘右缘 +38px；本场第二盘的板 `3 2 [30] / 6 2 [0]` 就比首盘宽一格）。",
+  "tts_backend": "edge",
+  "_tts_backend_why": "仓库的 `AZURE_SPEECH_KEY` 自 2026-09-03 起被 Azure 401 拒（`keys-bondar` / `zheng-putintseva` / `wu-alcaraz` 连着死在第 2 秒的片尾配音上；`zheng-keys-us-open-2026-r3` / `comeback-five-love-down` / `potapova-anisimova-us-open-2026-r3` 都是 edge 渲的），账号所有者定的是「换 edge tts」。这一条退回 edge 零代价：没用 `voice.style`，也没用 `lead_pause`。本地 `--check-narration` 在这台沙箱跑的就是 edge-tts，量到的余量就是成片的真实情况。",
+  "source_url": "https://www.youtube.com/watch?v=TeFzSvE1p4k",
+  "_source": "US Open 官方 YouTube 频道（oEmbed `author_name: US Open Tennis Championships`）本场官方集锦，probe 实测 209.77s / 1920×1080 / 29.97fps（过 1080p 硬闸）。画面自证四处：\n① 记分条 `BUCSA ESP / 4 GAUFF USA`（高芙 4 号种子，布克沙无种子号）逐格比分和 flashscore `SStV7i8F` 的逐分记录对得上（0.5~26.5s 首盘 `2 [40] / 1 [40]` 布克沙发球＝第 4 局第三个平分、32.5s `2 [AD] / 1`、34.5~68.5s `3 [40] / 2 [40]` 布克沙发球＝第 6 局平分、74.5~102.5s `BREAK POINT #3 3 / 4 [AD]` 布克沙发球＝第 8 局第三个破发点、106.5~110.5s `SET POINT 3 [15] / 5 [40]` 高芙发球、124.5~150.5s 第二盘 `3 2 [30] / 6 2 [0]` 布克沙发球、154.5~162.5s `BREAK POINT 3 4 [0] / 6 4 [40]` 布克沙发球、168.5~178.5s `MATCH POINT 3 4 [0] / 6 5 [40]` 高芙发球）；\n② 122.5s 换边时的全屏图形 `WOMEN'S SINGLES | 3RD ROUND · CRISTINA BUCSA / COCO GAUFF`，206.5s 收尾图形 `ARTHUR ASHE STADIUM · CRISTINA BUCSA ESP 3 4 / 4 COCO GAUFF USA 6 6`；\n③ 球衣可分：布克沙白色无袖上衣＋深色短裙＋白色遮阳帽（胸口 `Harvey` / `dayforce` 赞助贴，32.5s 近景读得出），高芙淡黄色 New Balance 连衣裙＋同色发带；\n④ 片尾 206.66s 起是美网品牌板（`silent_audio` 报 206.7s 之后数字静音），已排除在所有段之外，最后一段收在 206.4。\n⚠️ 自动字幕把 Gauff 写成 `Golf`（178.32s `It's Coco Golf`），认人靠球衣和记分条。",
+  "cover": {
+    "matchup": [
+      {
+        "name": "高芙",
+        "name_en": "Coco Gauff",
+        "country": "USA",
+        "rank": 4
+      },
+      {
+        "name": "布克沙",
+        "name_en": "Cristina Bucsa",
+        "country": "ESP",
+        "rank": 40
+      }
+    ],
+    "_rank_why": "两人当期排名同一期、同一个权威源：WTA 官方 `players/ranked`（`rankedAt=2026-08-31T00:00:00Z`）：Coco Gauff 第 4（USA）、Cristina Bucsa 第 40（ESP）。记分条印 `4 GAUFF`（4 号种子）、布克沙无种子号——种子号和名次这一场恰好同数，海报印的是名次。译名走 `player_zh()`：Coco Gauff → 高芙、Cristina Bucsa → 布克沙（和已发的 `gauff-*` / `bucsa-chwalinska` 同名同头像）。",
+    "_heat_why": "高芙世界第 4、本届 4 号种子，②档（世界前 20）直接过；而且她是这块场地的前冠军（转播 119.44s / 188.72s 两次 `the former champion`，2023 美网女单冠军）。",
+    "winner": "高芙",
+    "result": "6-3 6-4",
+    "_result_why": "赢家视角，三处印证：flashscore 当日表 `SStV7i8F` `AE÷Bucsa C.`(home) `AF÷Gauff C.`(away)，`BA/BB=3/6 BC/BD=4/6`；`df_st_1` `Total games won 主队 7/19 客队 12/19`；源片 206.5s 收尾图形 `CRISTINA BUCSA 3 4 / COCO GAUFF 6 6`、168.5s 记分条 `MATCH POINT 3 4 [0] / 6 5 [40]` 发球指示在 GAUFF。两盘都是局数分出的，没有抢七。⚠️ `specs/reels/pending/bucsa-gauff.draft.json` 把 matchup 顺序套到了 home/away 比分上写成布克沙赢——那份草稿的 winner / _match / stats / editorial / push 全反，一个字没抄。",
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "高芙",
+    "topic": "美网第三轮 · 高芙 vs 布克沙",
+    "_topic_why": "按账号所有者 2026-09-03「封面左上角的副标题不要写球场号，写对阵双方」写成对阵。球场（Arthur Ashe Stadium）在比分板头一行印着。",
+    "hook": "六个双误、两次被破\n最后八分全是她的",
+    "_hook_why": "两行框住的是**整场的形状**：高芙全场 6 个双误、一发只进 49%（`df_st_1` Double Faults 客队 6、1st serve 49%），两个发球局被破（首盘第 3 局 `40:30 |B1|`、第二盘第 8 局 `15:0 30:0 40:0 |B1|` 零封被破）——一句铺垫说她这一天发球有多不稳；落点是收尾：4-4 之后布克沙零封破发，然后高芙连拿八分（第 9 局零封破回 `0:15 0:30 0:40 |B1|` ＋第 10 局零封保发 `0:15 0:30 0:40 |B3|`），`df_st_1` `Last 10 balls 2 / 8` 也印证。「她」是封面主体高芙。\n⚠️ 不重复比分板：板上印 6-3 6-4，钩子一个盘分都没写。行长 9 字 / 8 字，都在 `HOOK_MAX_CHARS = 10` 之内。\n⚠️ 封面主体放高芙：世界第 4 对世界第 40，名气差得远，按「一边是大名字」办；而且她是赢家，WTA 官方赛后稿的实拍正是她握拳张嘴吼的一格（见 `portrait._photo_why`）。",
+    "portrait": {
+      "image": "assets/reel/bucsa-gauff-cover.jpg",
+      "fit": "cover",
+      "focus": 0.73,
+      "focus_y": 0.0,
+      "zoom": 1.0,
+      "_photo_why": "WTA 官方赛后稿《Coco Gauff tops Cristina Bucsa in straights to advance to US Open fourth round》（/news/4572534）的头图，编排器自动抓的（`assets/reel/bucsa-gauff-cover.jpg`，5272×3515，铺 1080×1440 只要 0.41×）。打开看过：淡黄色 New Balance 连衣裙、同色发带和护腕、右手握拳、张嘴吼、球拍垂在左手，背景是阿瑟·阿什球场的看台——和源片 178.5s 的赛点庆祝近景是同一个人、同一件衣服、同一场；情绪正是「发球不稳还是把它拿下」的那一吼。",
+      "_fit_why": "横图 3:2，按高度铺满（`cover`）之后整幅缩到 2160×1440，取 1080 宽的一条。她的头顶离源图上沿只有约 2%（量过），竖向铺满后头顶落在画布 y≈30——**必然压进台头带（y 0~170）**，而 `focus_y` 在 zoom=1.0 时是死的（竖向没有可移动量）。所以能动的只有横向：`focus 0.73` 把她的脑袋（源图 x≈0.62~0.78）放到画布 x≈560~910，落在台头两行文字（收在 x≈500 之前）的右边；握拳在 x≈560~730、y≈390~580，正好卡在台头带和钩子带（790 起）之间的空档里。",
+      "_zoom_why": "本地 `render_cover_local.py` 渲了 focus 0.68 / 0.73 / 0.78 三版摆一起比：0.68 时裙摆右缘出画一截、脸靠右；0.78 时头的左沿贴到台头第二行「布克沙」三个字的右边，差不到 30px；0.73 两头都留得住（头左沿离文字约 60px，裙摆右缘 ≈1080 刚好在框内）。不往上 zoom：头顶已经贴着画布上沿，放大只会把头切掉。"
+    },
+    "scoreboard": {
+      "court": "Arthur Ashe Stadium",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%221%3A28%3A00%22%2C%22source%22%3A%22flashscore%20SStV7i8F%20df_sui_1%20Set%201%200%3A49%20%2B%20Set%202%200%3A39%20%3D%201%3A28%3B%20%E6%BA%90%E7%89%87%E8%A7%A3%E8%AF%B4%20196.8s%3A%20after%201%20hour%20and%2027%20minutes%22%7D",
+        "field": "duration"
+      },
+      "_court_why": "两源一致：源片 206.5s 收尾图形印着 `ARTHUR ASHE STADIUM`；flashscore `df_sui_1` `MIT÷VEN MIV÷Arthur Ashe Stadium`；编排器从美网官方 matches feed 取的 `court: Arthur Ashe Stadium`（草稿 `_production.court`）。",
+      "_duration_why": "flashscore `df_sui_1`：Set 1 0:49、Set 2 0:39、全场 1:28（分盘加起来等于全场，自洽）。源片解说 196.80s `after 1 hour and 27 minutes`——差一分钟，是四舍五入的口径差（转播按 1:27:xx 说、flashscore 进位到 1:28），板上印 flashscore 那份；旁白里只说「不到一个半小时」，两边都对。"
+    },
+    "_no_cover_narration_why": "赛场之上的封面是定长 1.2 秒的短亮相（`COVER_SECONDS`），封面跟着配音走只给网球有故事。钩子那两行只印在海报上，不念。"
+  },
+  "_match": {
+    "status": "result_verified",
+    "source": "flashscore_points",
+    "source_id": "SStV7i8F",
+    "flashscore_id": "SStV7i8F",
+    "participants": [
+      "布克沙",
+      "高芙"
+    ],
+    "set_scores_home_away": [
+      [
+        3,
+        6
+      ],
+      [
+        4,
+        6
+      ]
+    ],
+    "tiebreaks_home_away": [
+      null,
+      null
+    ],
+    "winner": "高芙",
+    "loser": "布克沙",
+    "winner_result": "6-3 6-4",
+    "loser_result": "3-6 4-6",
+    "_direction_why": "flashscore `AE÷Bucsa C.` 是 home、`AF÷Gauff C.` 是 away，`BA/BB=3/6 BC/BD=4/6`，赢家是高芙；`df_st_1` `Total games won 主队 7/19 客队 12/19`；源片 206.5s 收尾图形 `3 4 / 6 6`。",
+    "_order_why": "`participants` 跟 flashscore 的 home/away（布克沙是 home），和 `cover.matchup`（高芙在前）**反序**——所以 `stats.a` 是把工具吐的 a/b 对调之后填的，见 `stats._source`。",
+    "_tiebreak_why": "两盘都是局数分出的（6-3、6-4），没有抢七，写 null。"
+  },
+  "stats": {
+    "a": {
+      "aces": 1,
+      "df": 6,
+      "winners": 15,
+      "ue": 28,
+      "first_in": 27,
+      "first_won": 20,
+      "second_total": 28,
+      "second_won": 16,
+      "bp_conv": 4,
+      "bp_chances": 9,
+      "pts_won": 72,
+      "pts_total": 126,
+      "first_total": 55,
+      "headshot": "assets/players/headshots/wta-328560.jpg"
+    },
+    "b": {
+      "aces": 0,
+      "df": 1,
+      "winners": 10,
+      "ue": 25,
+      "first_in": 45,
+      "first_won": 24,
+      "second_total": 26,
+      "second_won": 11,
+      "bp_conv": 2,
+      "bp_chances": 3,
+      "pts_won": 54,
+      "pts_total": 126,
+      "first_total": 71,
+      "headshot": "assets/players/headshots/wta-321158.jpg"
+    },
+    "_source": "flashscore `SStV7i8F` 的 `df_st_1`（Match 那一档，`match_stat_hooks.py SStV7i8F --stats-block` 直接吐的）。这场**有**制胜分和非受迫失误（高芙 15/28，布克沙 10/25），已填。\n⚠️ 工具按 flashscore 的 home/away 吐 a/b（home 是布克沙），而 `stats.a` 跟 `cover.matchup[0]`（高芙）——**对调之后填**：a=SI/客队高芙，b=SH/主队布克沙。头像跟着数字走：左边 `wta-328560` 是高芙（`gauff-*` 那几条已发 spec 里认过），右边 `wta-321158` 是布克沙（`bucsa-chwalinska` 里认过）。\n`first_total` 按 `first_in + second_total` 算（27+28=55、45+26=71）。"
+  },
+  "_hit_data": [
+    {
+      "label": "最后八分全归高芙",
+      "detail": "4-4 布克沙零封破发之后，高芙连拿 8 分：第 9 局零封破回 + 第 10 局零封保发拿下赛点；转播 164.00s `A run of eight straight points won by the returner`（第 8、9 两局都是接发球方零封）",
+      "source": "flashscore df_mh_1 Set 2 4-4 `15:0 30:0 40:0 |B1|`、4-5 `0:15 0:30 0:40 |B1|`、4-6 `0:15 0:30 0:40 |B3|`；df_st_1 Last 10 balls 2 / 8"
+    },
+    {
+      "label": "一发不到一半、六个双误却赢了",
+      "detail": "高芙一发 49%（首盘只有 42%）、双误 6 个（首盘 4 个）；可进去的一发赢了 74%（20/27），布克沙的一发只赢 53%（24/45）",
+      "source": "flashscore df_st_1 Match / Set 1（1st serve percentage 63%/49%、Set 1 64%/42%；Double Faults 1/6；1st serve points won 53%/74%）"
+    },
+    {
+      "label": "差距在接发球",
+      "detail": "高芙接发球赢了 51%（36/71），布克沙只有 35%（19/55）；首盘布克沙的二发高芙 15 分里赢了 10 个（67%）；高芙非受迫失误反而比对手多（28 对 25）",
+      "source": "flashscore df_st_1（Return Points Won 35%/51%；Set 1 2nd return points won 客队 67% 10/15；Unforced errors 25/28）"
+    },
+    {
+      "label": "总分差",
+      "detail": "高芙 72 - 布克沙 54，净差 18 分",
+      "source": "flashscore df_st_1（Total Points Won 54/126 vs 72/126）"
+    },
+    {
+      "label": "破发点：高芙 4/9，布克沙 2/3",
+      "detail": "布克沙首盘救回 5 个破发点（第 2 局 1、第 4 局 2、第 8 局 2），第 8 局第三个破发点上被破；第二盘她的两个破发点一个都没救下（第 7 局 1、第 9 局 1）",
+      "source": "flashscore df_st_1（Break Points Saved 5/9 vs 1/3；Break Points Converted 2/3 vs 4/9）+ df_mh_1 逐局"
+    },
+    {
+      "label": "首盘第 6 局那一分",
+      "detail": "3-2 布克沙发球局平分，源片 34.9~69.5s 一个长回合，转播 69.36s `One of the best points you'll see all tournament`，赢下这一分的是布克沙（70.5s 她举臂）——但这一局她还是被破，3-3",
+      "source": "flashscore df_mh_1 Set 1 3-3 `40:40 A:40 40:40 40:A |B1|` + 源片 70.5s 缩略图（白衣深裙＝布克沙举臂）"
+    },
+    {
+      "label": "交手记录",
+      "detail": "Gauff C. 2 : 0 Bucsa C.（含本场）· 硬地 2:0——此前只有一次，2023-03-11 印第安维尔斯（`KC÷1678505700 KP÷EBGHFaeS`），高芙 2:0 拿下；⚠️ 草稿写的「此前两次交手高芙全胜」是错的，Head-to-head 那一段只有两条（含本场）",
+      "source": "flashscore df_hh_1 `KB÷Head-to-head matches` 整段（sed 打出来数过）"
+    },
+    {
+      "label": "近况",
+      "detail": "Gauff C. 最近 5 场 5 胜（WWWWW）；Bucsa C. 最近 5 场 3 胜（LWWLW）",
+      "source": "flashscore df_hh_1 Last matches"
+    },
+    {
+      "label": "用时",
+      "detail": "首盘 0:49，第二盘 0:39，全场 1:28（转播 196.8s 说 1 小时 27 分）",
+      "source": "flashscore df_sui_1 RC/RD/RB + 源片解说"
+    }
+  ],
+  "_durations": [
+    [
+      "Set 1",
+      "0:49"
+    ],
+    [
+      "Set 2",
+      "0:39"
+    ],
+    [
+      "全场",
+      "1:28"
+    ]
+  ],
+  "_turning_points": [
+    {
+      "label": "【Set 1】3-5  布克沙发球，高芙拿下  密度3  ← 3个破发点",
+      "density": 3,
+      "tags": [
+        "3个破发点"
+      ]
+    },
+    {
+      "label": "【Set 2】4-6  高芙发球，高芙拿下  密度3  ← 1个赛点",
+      "density": 3,
+      "tags": [
+        "1个赛点"
+      ]
+    },
+    {
+      "label": "【Set 1】3-1  布克沙发球，布克沙拿下  密度2  ← 2个破发点",
+      "density": 2,
+      "tags": [
+        "2个破发点"
+      ]
+    },
+    {
+      "label": "【Set 1】3-6  高芙发球，高芙拿下  密度2  ← 1个盘点",
+      "density": 2,
+      "tags": [
+        "1个盘点"
+      ]
+    },
+    {
+      "label": "【Set 1】1-1  布克沙发球，布克沙拿下  密度1  ← 1个破发点",
+      "density": 1,
+      "tags": [
+        "1个破发点"
+      ]
+    }
+  ],
+  "_turning_points_why": "这五条是拿 `df_mh_1` 自己数的（草稿那份 `_turning_points` 也对——它只反了 winner/_match/stats/editorial/push）。首盘第 3 局布克沙破发（`40:30 |B1|`）、第 6 局高芙回破（3-3）、第 8 局第三个破发点上破发（3-5）是首盘的三个换手点，其中第 6 局那一分和第 8 局的破发点**集锦里都有**（34.9~69.5s、73.6~103.8s），第 3 局的破发和第 4 局救两个破发点集锦里没有——第 ④ 段用第 4 局第三个平分那一分的画面把它讲出来。第二盘 3-3 → 高芙破（3-4）→ 布克沙零封破回（4-4）→ 高芙零封破回（4-5）→ 零封保发（6-4）：集锦里有 4-4 那个 0-40 破发点（153.5~163.85s）和赛点（170.7~184.3s），第 7、8 两局没有，第 ⑬ 段旁白交代。",
+  "editorial": {
+    "mode": "match_review",
+    "hook": [
+      "六个双误、两次被破",
+      "最后八分全是她的"
+    ],
+    "_hook_why": "这一栏和 `cover.hook` 必须逐字相同。理由见 `cover._hook_why`。",
+    "question": "世界第四的高芙一发只进了百分之四十九、六个双误、两次被破发，非受迫失误还比对手多，为什么仍然两盘就过了关？她赢在哪一项？",
+    "thesis": "赢在接发球和关键分：布克沙的发球分高芙赢了一半（36/71），首盘布克沙的二发 15 分她赢了 10 个；自己的一发进不去，可进去的赢了 74%。首盘布克沙先破发 3-1 领先、救回五个破发点，高芙 3-3 回破、3-5 在第三个破发点上再破，6-3 只用 49 分钟；第二盘 4-4 布克沙零封破发之后，高芙连拿八分收尾——零封破回、零封保发拿下赛点。总分 72 比 54，1 小时 28 分，前冠军进 16 强。",
+    "beats": [
+      "首盘 49 分钟：布克沙第 3 局破发 2-1、第 4 局救回两个破发点 3-1；高芙首盘一发只进 42%、4 个双误；第 6 局那个平分上的长回合（转播：本届最好的球之一）布克沙赢了却丢了这一局 3-3；第 8 局第三个破发点上高芙再破 3-5，盘点一个拿下 6-3。",
+      "第二盘：前四局谁都没拿到破发点；第 5 局 30-0 那一分又是长回合（转播：又一个不可思议的球），高芙赢下这一分、布克沙保住这一局 3-2；3-3 后高芙先破 3-4，布克沙立刻零封破回 4-4，然后 4-4 布克沙发球局 0-40——高芙零封破回。",
+      "5-4 高芙发球，四十比零，赛点：4-4 之后她连拿的第八分落地，她握拳吼出来——总分 72 比 54，接发球赢了一半的分对 35%，六个双误一发不到一半的一天，前冠军订好 16 强的票。"
+    ],
+    "human_context": {
+      "angle": "转播两次叫她 `the former champion`——2023 年她在这块场地捧过杯。这一天她的发球是全场最差的一项（一发 49%、6 个双误、两次被破），赢球靠的是接发球：布克沙的发球分她拿走一半。这是两个人第二次交手，上一次是三年半前的印第安维尔斯。",
+      "facts": [
+        "WTA 官方 players/ranked（rankedAt 2026-08-31）：Coco Gauff 第 4（USA）、Cristina Bucsa 第 40（ESP）；记分条印 `4 GAUFF`，布克沙无种子号",
+        "flashscore df_hh_1 Head-to-head：Gauff C. 2 : 0 Bucsa C.（含本场），此前唯一一次是 2023-03-11 印第安维尔斯，高芙 2:0",
+        "转播原声 69.36s：`One of the best points you'll see all tournament`；111.76s：`The American does seal the opening set`；119.44s：`the former champion takes it 6-3`；164.00s：`A run of eight straight points won by the returner`；178.32s：`It's Coco Gauff that's moving on in New York`；188.72~202.64s：`Not the easiest of days for the former champion. Things got better as the match moved along, but all that matters is after 1 hour and 27 minutes, she has booked her ticket to the last 16.`",
+        "高芙 2023 美网女单冠军（转播两次 `the former champion` 自证）",
+        "WTA 官方赛后稿标题：Coco Gauff tops Cristina Bucsa in straights to advance to US Open fourth round（/news/4572534）"
+      ],
+      "sources": [
+        "https://api.wtatennis.com/tennis/players/ranked?page=0&pageSize=100&type=rankSingles&sort=asc&metric=SINGLES",
+        "https://www.wtatennis.com/news/4572534/coco-gauff-tops-cristina-bucsa-in-straights-to-advance-to-us-open-fourth-round",
+        "https://www.youtube.com/watch?v=TeFzSvE1p4k"
+      ]
+    }
+  },
+  "topbar": {
+    "line1": "2026 美网 女单第三轮",
+    "line2": "高芙 6-3 6-4 布克沙"
+  },
+  "push": {
+    "summary": "高芙两盘过关进十六强",
+    "_summary_why": "主语（高芙）＋ 结果（两盘过关）＋ 走到哪儿（十六强）。10 字，`SUMMARY_MAX=13` 之内。哪一站交给 `lead` 第一句。",
+    "lead": "美网女单第三轮，阿瑟·阿什球场。4 号种子、世界第四的高芙 6-3 6-4 淘汰世界第四十的布克沙，不到一个半小时。这一天她的发球是最差的一项：一发只进了 49%，六个双误，两次被破——首盘布克沙先破发 3-1 领先、救回五个破发点，高芙 3-3 回破、3-5 在第三个破发点上再破，6-3 用了 49 分钟。第二盘 4-4 布克沙零封破发之后，高芙连拿八分收尾：零封破回、零封保发拿下赛点。赢在接发球：布克沙的发球分她赢了一半（36/71），总分 72 比 54。前冠军进 16 强。",
+    "auto": true
+  },
+  "_editing_why": "**probe**：`output/2026-09-06/reel/bucsa-gauff/probe.json`（编排器跑的，没给 `--scorebox`，`point_ends` 是空的——段尾按 `scene_cuts` ＋ 解说落点 ＋ 缩略图墙定）。这条源片的三个宽景回合都很长（34.9~69.5s、73.6~103.8s、124.5~151.2s，各三十秒上下），同一个回合按旁白拆成两段（52.0 / 88.0 / 137.5 三刀都切在回合中间，不是镜头切换）。\n**认人看球衣**：布克沙白色无袖上衣＋深色短裙＋白色遮阳帽（`Harvey` 贴），高芙淡黄色 New Balance 连衣裙＋同色发带。近景归属：28.5~32.5 布克沙（AmEx 围挡前走动、正脸）；34.5 高芙（CHASE 墙前准备接发）；70.5 布克沙举臂（赢下那个长回合）；72.5 高芙（溶解进破发点宽景）；104.5 / 110.5 高芙握拳、走回；120.5 / 122.5 高芙坐在椅子上；152.5 布克沙走回底线；164.5 / 168.5 / 170.5 高芙近景；178.5 起全是高芙。\n**集锦漏掉的**：首盘第 3 局布克沙破发、第 4 局她救两个破发点（第 ④ 段用第 4 局第三个平分那一分的画面讲）；第二盘第 7 局高芙破发、第 8 局布克沙零封破回（第 ⑬ 段压在 4-4 破发点的宽景上讲）。\n**赛点那一分保留完整**：170.7 起到 184.3 连续（宽景赛点回合 → 177.51 切到她吼 → 把球打上看台 → 走回），中间只在 180.3 分了一刀给冷开场/正文用。\n**第一版渲之前跑过**：`--dry-run`、`preview_segments_local`（逐段对记分条）、`--check-narration`（edge 真跑）、`render_cover_local`（三个 focus 并排）。",
+  "segments": [
+    {
+      "start": 170.7,
+      "end": 180.3,
+      "narration": "",
+      "score_inset": true,
+      "_ending_payoff_required": true,
+      "crosses_cut": "跨 177.51：赛点那一分的宽景（172.5~176.5 记分条 `MATCH POINT 3 4 [0] / 6 5 [40]`，发球指示在 GAUFF）→ 178.5 高芙握拳张嘴吼的近景（淡黄裙、发带，J.P.Morgan 围挡前）。同一个人、同一分。",
+      "_why": "**第①格：全片最强的一格。** 5-4 高芙发球、40-0 的赛点，从 170.67 那一刀（她抛球）起完整放到落地和那一吼，不配旁白，靠现场声——解说 178.32s `It's Coco Gauff that's moving on in New York`，随后 [cheering]。\n⚠️ 后段冷开场：正文第 ⑯ 段（170.7→184.3）完整覆盖 170.7→180.3 和第②段，`ending_payoff_problem` 要的就是这个覆盖关系。段尾 180.3 落在 177.51→184.53 这一个近景镜头里。",
+      "fit": "crop"
+    },
+    {
+      "start": 180.3,
+      "end": 184.3,
+      "narration": "两盘过关，但今天并不轻松。",
+      "score_inset": false,
+      "_score_inset_why": "180.5 她把球打上看台、182.5 转身走回的近景——记分条 178.5 之后已经撤掉（`score_04.jpg` 180.5 / 182.5 两格都是空的）。",
+      "_why": "第②句给落点，压在她把纪念球打上看台（180.5）和转身（182.5）上。「并不轻松」是转播 188.72s `Not the easiest of days for the former champion` 的意思，也是 `df_st_1` 那一列（一发 49%、6 个双误）说的事。**不复读钩子**（CI 判据「开场旁白不许复读封面钩子」）：钩子讲发球和收尾八分，这一句讲结果。段尾 184.3 ＋ `SEG_FADE` 0.18 ＝ 184.48，停在 184.53 那一刀（握手）之前。",
+      "fit": "crop"
+    },
+    {
+      "start": 0.0,
+      "end": 14.0,
+      "narration": "北京时间九月六日凌晨三点多，美网女单第三轮，阿瑟·阿什球场。四号种子高芙，对面是世界第四十的布克沙。开局，领先的是布克沙。",
+      "score_inset": true,
+      "_why": "第③格交代坐标。画面是首盘第 4 局第三个平分那一分的宽景（记分条 `2 [40] / 1 [40]`，发球指示在 BUCSA），谁都没露脸，正好放身份。开球时刻取 flashscore `AD=1788637500`＝北京时间 2026-09-06 03:45，按「不报到分」的档位（分钟 45 落在 40~59）说「凌晨三点多」——⚠️ 按表该说「快四点」，但 03:45 落在整批开赛时刻上（美网夜场统一排的），真开球只会更晚，「三点多」字面为真、「快四点」可能反过来往早了带；种子号出自记分条 `4 GAUFF`，排名出自 WTA 08-31 榜。「领先的是布克沙」和板上 2-1 一致。0→27.53 是同一个宽景镜头，在 14.0 分一刀只是换旁白。",
+      "fit": "crop"
+    },
+    {
+      "start": 14.0,
+      "end": 27.3,
+      "narration": "第三局她破了高芙的发球局，二比一。轮到自己发球，高芙拿到两个破发点，布克沙都救了回来。这一分她也拿下——三比一。",
+      "score_inset": true,
+      "_why": "记分条 `2 [40] / 1 [40]`，发球指示在 BUCSA——首盘第 4 局的第三个平分（`df_mh_1` Set 1 3-1：15:0 15:15 30:15 40:15 40:30 40:40 40:A |B1| 40:40 40:A |B1| 40:40 A:40，两个破发点都救回）。这一分她赢了：32.5s 记分条 `2 [AD] / 1`，随后保发 3-1。「第三局她破了高芙的发球局」＝ `df_mh_1` Set 1 2-1：客队发球 40:30 |B1| 主队拿下——**这一局集锦里没有**，转播从第 4 局起才有画面。⚠️ 主语按 CLAUDE.md「拿到点的是高芙、救的是布克沙」写全。段尾 27.3 ＋ 0.18 ＝ 27.48，停在 27.53 那一刀之前。",
+      "fit": "crop"
+    },
+    {
+      "start": 27.6,
+      "end": 34.6,
+      "narration": "三比一，布克沙领先。两个人三年多没交过手了。",
+      "score_inset": true,
+      "crosses_cut": "跨 30.76 和一处 `scene_cuts` 没报的溶解（约 33.5）：布克沙在 AmEx 围挡前走动（28.5、30.5，白衣深裙）→ 她的正脸（32.5，记分条 `2 [AD] / 1`）→ 高芙在 CHASE 墙前准备接发（34.5，淡黄裙，记分条已是 `3 [40] / 2 [40]`）。旁白说的是两个人，两张脸各露一次。",
+      "_why": "布克沙赢下那个平分之后的近景，记分条 `2 [AD] / 1`；「三比一」是她随后保发的结果（`df_mh_1` A:40 → 3-1），34.5s 那格记分条已经翻成 `3 / 2`。「三年多没交过手」＝ `df_hh_1` Head-to-head 只有一条此前记录 `KC÷1678505700`＝2023-03-11 印第安维尔斯，到 2026-09-05 三年半。段尾 34.6 ＋ 0.18 ＝ 34.78，停在 34.82 那一刀（宽景）之前。",
+      "fit": "crop"
+    },
+    {
+      "start": 34.9,
+      "end": 52.0,
+      "narration": "上一次在二〇二三年的印第安维尔斯，那一场高芙两盘拿下。三比二，布克沙的发球局，平分。布克沙前面两个发球局，已经救回三个破发点。这一局，还守得住吗？",
+      "score_inset": true,
+      "_why": "记分条 `3 [40] / 2 [40]`，发球指示在 BUCSA——首盘第 6 局的第一个平分（`df_mh_1` Set 1 3-3：15:0 30:0 30:15 40:15 40:30 40:40 A:40 40:40 40:A |B1|）。34.82→69.69 是同一个宽景镜头、同一分（板从 34.5 到 68.5 一直是 40-40），转播 69.36s 说它是 `One of the best points you'll see all tournament`；这里 52.0 一刀只是换旁白。「救回三个破发点」＝第 2 局 1 个（30:40 |B1|）＋第 4 局 2 个。「上一次」＝ `df_hh_1` `KC÷1678505700 KP÷EBGHFaeS KF÷Indian Wells KL÷2:0`（高芙 home，2:0）。",
+      "fit": "crop"
+    },
+    {
+      "start": 52.0,
+      "end": 62.0,
+      "narration": "这一分谁都不肯先失误。高芙首盘一发只进了百分之四十二，四个双误。布克沙的机会就在这儿。",
+      "score_inset": true,
+      "_why": "同一个长回合的中段。数字：`df_st_1` Set 1 `1st serve percentage 客队 42%`、`Double Faults 客队 4`。「布克沙的机会就在这儿」＝她首盘接高芙二发赢了 44%（8/18），这一盘她的两个破发点也都是在高芙一发不进的局里拿到的。",
+      "fit": "crop"
+    },
+    {
+      "start": 62.0,
+      "end": 72.2,
+      "narration": "转播说，这是本届最好看的球之一。赢下它的是布克沙——可这一局，她还是丢了，三比三。",
+      "score_inset": true,
+      "crosses_cut": "跨 69.69：长回合的最后几拍（宽景）→ 布克沙在 AmEx 围挡前举臂（70.5，白衣深裙）。旁白说「赢下它的是布克沙」，画面就是她庆祝。",
+      "_why": "解说 69.36s `One of the best points you'll see all tournament`；70.5s 举臂的是白衣深裙的布克沙——这一分是她的（`df_mh_1` 40:40 之后 A:40）。「这一局她还是丢了」＝ 随后 40:40、40:A |B1| 客队拿下，3-3（**这两分集锦里没有**，按「转折点不在集锦里 → 明说」办）。段尾 72.2 ＋ 0.18 ＝ 72.38，停在 72.46 那处溶解（切进高芙近景再进破发点宽景）之前。",
+      "fit": "crop"
+    },
+    {
+      "start": 73.6,
+      "end": 88.0,
+      "narration": "三比三之后，高芙保发，四比三领先。布克沙发球，高芙拿到了这一局的第三个破发点——前两个，布克沙都救了回来。这一个呢？",
+      "score_inset": true,
+      "_why": "记分条 `BREAK POINT #3 3 / 4 [AD]`，发球指示在 BUCSA——首盘第 8 局的第三个破发点（`df_mh_1` Set 1 3-5：0:15 15:15 15:30 30:30 40:30 40:40 40:A |B1| 40:40 40:A |B1| 40:40 40:A |B1|，前两个都救回）。「高芙保发，四比三领先」＝ Set 1 3-4：客队发球 15:0 … A:40 |B1| 40:40 40:A 客队拿下（她自己也救了一个破发点）。72.46→104.05 是同一个宽景镜头、同一分，88.0 一刀只是换旁白；起点 73.6 躲开 72.5 那格的溶解（高芙的脸叠在宽景上）。",
+      "fit": "crop"
+    },
+    {
+      "start": 88.0,
+      "end": 103.8,
+      "narration": "这一分，布克沙的回球出界。破发，五比三，高芙拿到了发球胜盘局。接发球这一项，她全场赢了一半的分，布克沙只有百分之三十五——差距就在这儿。",
+      "score_inset": true,
+      "_why": "同一分的后半到落地：解说 103.60s `out. Game done.`——球出界、这一局结束，`df_mh_1` 40:A |B1| 客队拿下，3-5。「接发球赢了一半的分」＝ `df_st_1` `Return Points Won 客队 51% (36/71)`、`主队 35% (19/55)`。段尾 103.8 ＋ 0.18 ＝ 103.98，停在 104.05 那一刀（她握拳近景）之前。",
+      "fit": "crop"
+    },
+    {
+      "start": 104.1,
+      "end": 112.3,
+      "narration": "五比三，盘点。这一分她拿下——六比三，四十九分钟。",
+      "score_inset": true,
+      "crosses_cut": "跨 105.6（`scene_cuts_loose`）和 109.56：高芙破发后握拳的近景（104.5，J.P.Morgan 围挡前，淡黄裙）→ 盘点那一分的宽景（106.5、108.5，记分条 `SET POINT 3 [15] / 5 [40]`）→ 她拿下首盘走回的近景（110.5，us open 墙前）。三段都是高芙。",
+      "_why": "记分条 `SET POINT 3 [15] / 5 [40]`，发球指示在 GAUFF——首盘第 9 局的盘点（`df_mh_1` Set 1 3-6：0:15 15:15 15:30 15:40 |B2|，第一个盘点就拿下）。解说 111.76s `The American does seal the opening set`，119.44s `the former champion takes it 6-3`。「四十九分钟」＝ `df_sui_1` Set 1 RC÷0:49。段尾 112.3 ＋ 0.18 ＝ 112.48，停在 112.5 那一刀（看台）之前。",
+      "fit": "crop"
+    },
+    {
+      "start": 112.6,
+      "end": 123.4,
+      "narration": "首盘高芙的一发不稳，可布克沙的二发，她十五分里赢了十个。第二盘，布克沙还有机会吗？",
+      "score_inset": false,
+      "_score_inset_why": "看台（112.5、118.5）、高芙团队的包厢（114.5、116.5）、她坐在椅子上（120.5）、换边时的全屏赛果图形（122.5）——整段没有常驻记分条（`score_02.jpg` / `score_03.jpg` 这几格都是空的；112.5 那格只剩一块正在滑出画面的板尾）。",
+      "crosses_cut": "跨 114.31 / 116.62 和 120.1（`scene_cuts_loose`）：看台鼓掌 → 包厢里穿白 T 恤的团队鼓掌 → 阿瑟·阿什球场全景 → 高芙坐在椅子上 → 全屏图形 `WOMEN'S SINGLES | 3RD ROUND · BUCSA / GAUFF`。换边一整段，旁白讲的是首盘的账，「她」指高芙（120.5、122.5 坐着的就是她）。",
+      "_why": "首盘收账压在换边上。数字：`df_st_1` Set 1 `2nd return points won 客队 67% (10/15)`——布克沙首盘 15 个二发分高芙拿了 10 个，这是首盘真正的差距；她自己的一发 42%（上一段说过）。段尾 123.4 落在 122.5 那张图形和 124.5 宽景之间的过渡里（116.62→151.35 这一段 `scene_cuts` 没报硬切，转播用的是图形擦除）。",
+      "fit": "crop"
+    },
+    {
+      "start": 123.5,
+      "end": 137.5,
+      "narration": "第二盘，二比二，布克沙发球，三十比零。前四局谁都没拿到破发点。高芙这一盘的一发进了百分之五十八，比首盘好了不少。",
+      "score_inset": true,
+      "_why": "记分条 `3 2 [30] / 6 2 [0]`，发球指示在 BUCSA——第二盘第 5 局 30-0 那一分（`df_mh_1` Set 2 3-2：15:0 30:0 30:15 40:15 40:30 40:40 A:40）。「前四局谁都没拿到破发点」＝ Set 2 前四局逐分里一个 |B1| 都没有。「一发进了百分之五十八」＝ `df_st_1` Set 2 `1st serve percentage 客队 58%`（首盘 42%）。124.5→150.5 板一直是 30-0，是同一分；137.5 一刀只是换旁白。",
+      "fit": "crop"
+    },
+    {
+      "start": 137.5,
+      "end": 153.2,
+      "narration": "转播说，又一个不可思议的球。这一分是高芙的，可这一局布克沙保住了，三比二领先。她的二发这一盘赢了一半以上，比首盘好得多。这一盘，她咬住了。",
+      "score_inset": true,
+      "crosses_cut": "跨 151.35：长回合的最后几拍（宽景）→ 布克沙走回底线的近景（152.5，白衣深裙、遮阳帽，Emirates / J.P.Morgan 围挡前，记分条 `3 2 [30] / 6 2 [0]`）。旁白说「布克沙保住了」，画面就是她。",
+      "_why": "解说 133.84s `Another` … 153.12s `incredible point`。这一分是高芙的：`df_mh_1` 30:0 之后是 30:15；「这一局布克沙保住了」＝ 40:15 40:30 40:40 A:40 主队拿下，3-2。「二发这一盘赢了一半以上」＝ `df_st_1` Set 2 `2nd serve points won 主队 55% (6/11)`，首盘 33%（5/15）。段尾 153.2 ＋ 0.18 ＝ 153.38，停在 153.42 那一刀（破发点宽景）之前。",
+      "fit": "crop"
+    },
+    {
+      "start": 153.5,
+      "end": 163.85,
+      "narration": "高芙先破发，布克沙立刻零封破回来，四比四。她发球，零比四十——连着八分，都归了接发的人。",
+      "score_inset": true,
+      "_why": "记分条 `BREAK POINT 3 4 [0] / 6 4 [40]`，发球指示在 BUCSA——第二盘第 9 局 0-40 的破发点（`df_mh_1` Set 2 4-5：0:15 0:30 0:40 |B1| 客队拿下，零封破发）。前面两局**集锦里没有**：Set 2 3-4 主队发球 0:15 15:15 15:30 15:40 |B1| 客队拿下（高芙破发）；4-4 客队发球 15:0 30:0 40:0 |B1| 主队拿下（布克沙零封破回）。「连着八分都归了接发的人」＝第 8 局 4 分归接发的布克沙、第 9 局 4 分归接发的高芙，解说 164.00s 原话 `A run of eight straight points won by the returner`。「她发球」的她＝布克沙（紧接「四比四」那句的主语）。段尾 163.85 ＋ 0.18 ＝ 164.03，停在 164.08 那一刀（高芙近景）之前。",
+      "fit": "crop"
+    },
+    {
+      "start": 164.1,
+      "end": 170.45,
+      "narration": "五比四，高芙自己的发球局，四十比零——赛点。",
+      "score_inset": true,
+      "crosses_cut": "跨 166.28：高芙的近景（164.5，Rolex 时钟前，淡黄裙、发带）→ 看台全景（166.5）→ 她拍球准备发球的近景（168.5、170.5，us open 墙前，记分条 `MATCH POINT 3 4 [0] / 6 5 [40]`）。旁白主语就是她。",
+      "_why": "记分条 `MATCH POINT 3 4 [0] / 6 5 [40]`，发球指示在 GAUFF——第二盘第 10 局 40-0 的赛点（`df_mh_1` Set 2 4-6：0:15 0:30 0:40 |B3|）。166.5 那格看台没有板，中间几秒由 `board_present_spans` 自己收掉。段尾 170.45 ＋ 0.18 ＝ 170.63，停在 170.67 那一刀（赛点宽景）之前。",
+      "fit": "crop"
+    },
+    {
+      "start": 170.7,
+      "end": 184.3,
+      "narration": "四比四之后，她连拿了七分，这是第八分。落地——她吼了出来。转播说，越打越顺，十六强的票，她订好了。",
+      "score_inset": true,
+      "crosses_cut": "跨 177.51：赛点那一分的宽景 → 她握拳张嘴吼（178.5）→ 把球打上看台（180.5）→ 转身走回（182.5）。全是淡黄裙的高芙。",
+      "_why": "正文重新兑现冷开场：170.7→184.3 完整覆盖第①段（170.7→180.3）和第②段（180.3→184.3）。「连拿了七分，这是第八分」＝ `df_mh_1` Set 2 4-5 那一局 4 分 ＋ 4-6 那一局 0:15 0:30 0:40 三分，赛点是第八分（`df_st_1` Last 10 balls 2 / 8 印证）。「越打越顺」＝解说 192.56s `Things got better as the match moved along`；「订好了十六强的票」＝ 199.28s `she has booked her ticket to the last 16`。不说这一分打了多少秒（「说拍数不说秒数」，拍数没有公开源）。段尾 184.3 ＋ 0.18 ＝ 184.48，停在 184.53 之前。",
+      "fit": "crop"
+    },
+    {
+      "start": 184.6,
+      "end": 195.7,
+      "narration": "总分七十二比五十四。高芙的非受迫失误比对手还多三个，差距在接发：布克沙的发球分，她赢了一半。",
+      "score_inset": false,
+      "_score_inset_why": "网前握手（186.5、188.5）、和主裁握手（190.5）、走回场边（192.5、194.5）——赛后画面，没有记分条（`score_04.jpg` 这几格都是空的）。",
+      "_why": "收账：`df_st_1` `Total Points Won 54/126 vs 72/126`；`Unforced errors 25 / 28`（高芙反而多 3 个）；`Return Points Won 主队 35% (19/55) 客队 51% (36/71)`——布克沙的 71 个发球分高芙拿了 36 个。184.53→195.9 是同一个镜头（握手到走回）。段尾 195.7 ＋ 0.18 ＝ 195.88，停在 195.9 那一刀之前。",
+      "fit": "crop"
+    },
+    {
+      "start": 195.9,
+      "end": 206.4,
+      "narration": "转播叫她前冠军，二〇二三年她在这里捧过杯。一发不到一半、六个双误，第二周还能这么赢吗？",
+      "score_inset": false,
+      "_score_inset_why": "她朝大屏方向挥手、握拳（196.5、198.5，彩色大屏前）、包厢起立鼓掌（200.5、202.5）、她在椅子边收拾包（204.5）——赛后，没有记分条。",
+      "crosses_cut": "跨 198.77 / 203.15：高芙挥手、握拳 → 她的包厢起立鼓掌 → 她走回椅子收拾。赛后同一段连续过程，主体是她和她的团队。",
+      "_why": "收尾落在一问上，不停在数据上。「前冠军」＝解说 119.44s / 188.72s 两次 `the former champion`，2023 美网女单冠军（`_facts`）。「一发不到一半、六个双误」＝ `df_st_1` 1st serve 49%、Double Faults 6。⚠️ 段尾 206.4 ＋ `SEG_FADE` 0.18 ＝ 206.58，停在片尾板那一刀（206.66）和数字静音（206.7）之前。",
+      "fit": "crop"
+    }
+  ],
+  "_facts": [
+    "高芙 2023 美网女单冠军——源片解说 119.44s `the former champion takes it 6-3`、188.72s `Not the easiest of days for the former champion` 两处自证；旁白里以「转播叫她前冠军」引出",
+    "开球时刻 flashscore `AD÷1788637500` ＝ 北京时间 2026-09-06 03:45（旁白只说「凌晨三点多」，不报到分）",
+    "交手记录 flashscore df_hh_1 Head-to-head 整段只有两条：本场 `KC÷1788637500`（排除）和 2023-03-11 印第安维尔斯 `KC÷1678505700 KP÷EBGHFaeS KL÷2:0`（高芙 home 胜）——草稿那句「此前两次交手」是错的",
+    "排名 WTA 2026-08-31 榜：高芙 4、布克沙 40；国别 USA / ESP",
+    "用时 flashscore df_sui_1：Set 1 0:49、Set 2 0:39、全场 1:28；源片解说 196.8s 说 1 小时 27 分——差一分钟是口径差，旁白说「不到一个半小时」"
+  ]
+}
