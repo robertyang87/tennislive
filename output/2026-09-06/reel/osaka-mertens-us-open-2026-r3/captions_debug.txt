@@ -1,0 +1,56 @@
+拿不到自动字幕，各 client 的原因如下：
+
+### web(+POT)
+WARNING: Only images are available for download. use --list-formats to see them
+ERROR: [youtube] c4o9H_dOmbM: Requested format is not available. Use --list-formats for a list of available formats
+
+### mweb(+POT)
+[youtube] Extracting URL: https://www.youtube.com/watch?v=c4o9H_dOmbM
+[youtube] c4o9H_dOmbM: Downloading webpage
+[youtube] c4o9H_dOmbM: Downloading mweb client config
+[youtube] c4o9H_dOmbM: Downloading mweb player API JSON
+[youtube] [pot:bgutil:http] Generating a gvs PO Token for mweb client via bgutil HTTP server
+[youtube] c4o9H_dOmbM: Downloading player f572e43c-main
+[youtube] [jsc:node] Solving JS challenges using node
+[info] c4o9H_dOmbM: Downloading 1 format(s): 399+251
+[info] There are no subtitles for the requested languages
+
+### tv(+POT)
+ERROR: [youtube] c4o9H_dOmbM: The page needs to be reloaded.
+
+### 默认
+[youtube] Extracting URL: https://www.youtube.com/watch?v=c4o9H_dOmbM
+[youtube] c4o9H_dOmbM: Downloading webpage
+[youtube] c4o9H_dOmbM: Downloading web embedded client config
+[youtube] c4o9H_dOmbM: Downloading player f572e43c-main
+[youtube] c4o9H_dOmbM: Downloading web embedded player API JSON
+[youtube] c4o9H_dOmbM: Downloading tv downgraded player API JSON
+[youtube] [jsc:node] Solving JS challenges using node
+[info] c4o9H_dOmbM: Downloading 1 format(s): 399+251
+[info] There are no subtitles for the requested languages
+
+### android_vr
+WARNING: [youtube] Skipping client "android_vr" since it does not support cookies
+WARNING: Only images are available for download. use --list-formats to see them
+ERROR: [youtube] c4o9H_dOmbM: Requested format is not available. Use --list-formats for a list of available formats
+
+### tv_simply
+WARNING: [youtube] Skipping client "tv_simply" since it does not support cookies
+WARNING: Only images are available for download. use --list-formats to see them
+ERROR: [youtube] c4o9H_dOmbM: Requested format is not available. Use --list-formats for a list of available formats
+
+### web_embedded
+[youtube] Extracting URL: https://www.youtube.com/watch?v=c4o9H_dOmbM
+[youtube] c4o9H_dOmbM: Downloading webpage
+[youtube] c4o9H_dOmbM: Downloading web embedded client config
+[youtube] c4o9H_dOmbM: Downloading player f572e43c-main
+[youtube] c4o9H_dOmbM: Downloading web embedded player API JSON
+[youtube] [jsc:node] Solving JS challenges using node
+[info] c4o9H_dOmbM: Downloading 1 format(s): 399+251
+[info] There are no subtitles for the requested languages
+
+### android+ios
+WARNING: [youtube] Skipping client "android" since it does not support cookies
+WARNING: [youtube] Skipping client "ios" since it does not support cookies
+WARNING: Only images are available for download. use --list-formats to see them
+ERROR: [youtube] c4o9H_dOmbM: Requested format is not available. Use --list-formats for a list of available formats
