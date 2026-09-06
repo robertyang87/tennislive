@@ -1,0 +1,447 @@
+{
+  "slug": "andreeva-bartunkova-us-open-2026-r3",
+  "_column": "reel",
+  "layout": "band",
+  "scorebox": [
+    104,
+    887,
+    660,
+    980
+  ],
+  "_scorebox_why": "美网这一届同一条频道同一套转播图形，和已发的 `potapova-anisimova-us-open-2026-r3` / `zheng-keys-us-open-2026-r3` / `wu-alcaraz-us-open-2026-r3`（104 / 887 / 660 / 980）逐条相同；本场 probe 的 `scorebox_guess` 是 `104,888,616,978`（右缘 616 是猜的，猜在只有一盘那几格上）。⚠️ 右缘 660 只是兜底，真正的右缘是 `resolve_board_insets` 每段现量的（这块板每打完一盘右缘 +38px，抢七那几段还多一列小分）。",
+  "tts_backend": "edge",
+  "_tts_backend_why": "仓库的 `AZURE_SPEECH_KEY` 自 2026-09-03 起被 Azure 401 拒（`keys-bondar` / `zheng-putintseva` / `wu-alcaraz` 连着死在第 2 秒的片尾配音上；`potapova-anisimova-us-open-2026-r3` / `zheng-keys-us-open-2026-r3` 都是 edge 渲的），账号所有者定的是「换 edge tts」。这一条退回 edge 零代价：没用 `voice.style`，也没用 `lead_pause`。本地 `--check-narration` 在这台沙箱跑的就是 edge-tts，量到的余量就是成片的真实情况。",
+  "source_url": "https://www.youtube.com/watch?v=2GQrgO8pBTU",
+  "_source": "US Open 官方 YouTube 频道（oEmbed `author_name: US Open Tennis Championships`，标题 `Mirra Andreeva vs. Nikola Bartunkova Highlights | 2026 US Open Round 3`）本场官方集锦，probe 实测 211.12s / 1920×1080 / 29.97fps（过 1080p 硬闸）。画面自证四处：\n① 记分条 `5 ANDREEVA / BARTUNKOVA CZE` 逐格比分和 flashscore `EsjaS3X8` 的逐分记录对得上（0.5~16.5s 首盘 `4 [40] / 2 [30]` 巴尔通科娃发球＝4-2 那一局安德烈耶娃的破发点；20.5~34.5s `SET POINT 5 [40] / 2 [15]` 安德烈耶娃发球；48.5~72.5s 第二盘 `6 0 [15] / 2 0 [0]` 巴尔通科娃发球；74.5~102.5s `6 1 [0] / 2 0 [15]` 安德烈耶娃发球；104.5~116.5s `6 1 [30] / 2 0 [40]`＝她的发球局被逼到破发点；118.5~138.5s `6 1 [0] / 2 1 [30]` 巴尔通科娃发球，140.5s 翻成 `[15] / [30]`；142.5~152.5s `7 POINT TIEBREAK 6 6 [4] / 2 6 [4]` 巴尔通科娃发球；154.5~156.5s `[4] / [5]`；158.5~176.5s `MATCH POINT 6 6 [6] / 2 6 [5]` 巴尔通科娃发球）；\n② 40.5~44.5s 和 202.5~206.5s 两次全屏图形，印着 `WOMEN'S SINGLES | 3RD ROUND · STADIUM 17 / 5 MIRRA ANDREEVA / NIKOLA BARTUNKOVA CZE`，第一次比分 `6 / 2`、第二次 `6 7 / 2 6`；解说 45.44s `here on Stadium 17`、193.04s `here on stadium 17`；\n③ 球衣可分：安德烈耶娃黑色 Nike 背心裙＋宝蓝色短裙＋宝蓝色遮阳帽（美网官方图 `f_USTA2438399_20260905_DS2_0847.jpg` 同一套）；巴尔通科娃白色 adidas 上衣＋酒红短裤＋酒红发带——104.5 / 116.5 / 118.5 / 142.5 / 154.5 / 156.5 那些近景全是白衣；\n④ 片尾 208.01s 起是美网的社媒品牌板（`silent_audio` 报 208.08s 之后数字静音），已排除在所有段之外。\n⚠️ 解说把两个人的名字都念歪了（`Mera Andrea` / `Meera` / `Mera and Draa`、`Nicola Bulkova`），自动字幕照写，认人靠球衣和记分条。",
+  "cover": {
+    "matchup": [
+      {
+        "name": "米拉·安德烈耶娃",
+        "name_en": "Mirra Andreeva",
+        "country": "RUS",
+        "rank": 5
+      },
+      {
+        "name": "巴尔通科娃",
+        "name_en": "Nikola Bartunkova",
+        "country": "CZE",
+        "rank": 34
+      }
+    ],
+    "_name_why": "两个中文名都走 `player_zh()`：`player_zh(\"Mirra Andreeva\")` → 米拉·安德烈耶娃（`player_names_top500.json` rank 5），`player_zh(\"Nikola Bartunkova\")` → 巴尔通科娃（rank 41）。头像 `wta-331809.jpg` 在已发的 `kostyuk-andreeva` 里挂的就是「米拉·安德烈耶娃」，`wta-330364.jpg` 在 `cirstea-bartunkova` 里挂的是「巴尔通科娃」——同一张官方头像只挂一个中文名。",
+    "_rank_why": "两人当期排名同一期、同一个权威源：WTA 官方 `players/ranked`（`rankedAt=2026-08-31T00:00:00Z`，`page=0`，落在 scratchpad/day7/wta_rank_0.json）：Mirra Andreeva 第 5（5443 分）；Nikola Bartunkova 第 34（1417 分）。美网官方 `players.json`：wta331809 Andreeva singles_rank 5 / seed True（5 号种子，记分条印 `5 ANDREEVA`）；wta330364 Bartunkova singles_rank 34 / seed False（非种子，记分条没有种子号）。草稿 `pending/andreeva-bartunkova.draft.json` 写的 5 / 34 和这两处一致。",
+    "_country_why": "安德烈耶娃是中立身份运动员：flashscore 给的是 `FU÷World`，记分条上 `ANDREEVA` 后面没有国别码（`BARTUNKOVA` 后面印着 `CZE`）。⚠️ 照抄已发 spec 的处理：`kostyuk-andreeva` / `fernandez-andreeva`（还有 `rublev-merida-us-open-2026-r2` / `wang-kalinskaya-us-open-2026-r2` 等同样中立身份的球员）都写 `RUS`——美网官方 `players.json` 也是 `country: RUS`、`players/matches` 的 `nationA: RUS`。别自己发明第三种写法。巴尔通科娃 CZE 三处一致（flashscore `FV÷Czech Republic`、美网 `CZE`、记分条 `CZE`）。",
+    "_heat_why": "安德烈耶娃世界第 5、本届 5 号种子，②档（世界前 20）直接过；而且她是今年的法网冠军（flashscore `df_hh_1` Last matches：2026 法网七连胜，最后一场 2026-06-06 胜赫瓦林斯卡；已发 `fernandez-andreeva` 的 `_facts` 也核过「法网现任冠军」），美网却一直是她四站里最浅的——2023 / 2024 第二轮、2025 第三轮出局，这一场是她第一次打进美网第二周（美网官方 2023/2024/2025 三年 `players/matches/wta331809_matches.json` ＋ 转播 180.72s `to reach the fourth round here at the US Open for the first time`）。",
+    "winner": "米拉·安德烈耶娃",
+    "result": "6-2 7-6(5)",
+    "_result_why": "赢家视角，三处印证：flashscore 当日表 `EsjaS3X8` `AE÷Andreeva M.`(home) `AF÷Bartunkova N.`(away)，`BA/BB=6/2 BC/BD=7/6 DC/DD=7/5`，`AG÷2 AH÷0`；`df_sui_1` `Set 2 IG÷7 IG÷7 IH÷6 IH÷5`（局数 7-6、抢七小分 7-5）；`df_st_1` `Total games won 主队 12/20 客队 8/20`；源片 202.5s 全屏图形 `6 7 / 2 6`、158.5s 记分条 `MATCH POINT 6 6 [6] / 2 6 [5]`。抢七小分 `(5)` 是输家巴尔通科娃拿到的分。美网官方 match_id 2309：`tiebreakDisplay 7 / 5`，同。",
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "米拉·安德烈耶娃",
+    "topic": "美网第三轮 · 安德烈耶娃 vs 巴尔通科娃",
+    "_topic_why": "按账号所有者 2026-09-03「封面左上角的副标题不要写球场号，写对阵双方」写成对阵。球场（Stadium 17）在比分板头一行印着。台头这一行用「安德烈耶娃」不带「米拉·」——多三个字会让台头文字伸到 x≈700 之后，压到封面主体的帽子上（见 `portrait._bands_why`）。",
+    "hook": "次盘两次被破发\n抢七四比五连拿三分",
+    "_hook_why": "两行框住的是**整场的形状**：首盘 33 分钟 6-2 顺过，次盘才是这场球——她先破发领先，又在 1-0 和 2-4 两次被破（`df_mh_1` Set 2：1-1 那一局 30:40 |B1| 巴尔通科娃拿下；2-4 那一局 40:A |B1| 巴尔通科娃拿下），每次都破回来拖进抢七；抢七 4-0 领先被连追五分到 4-5，然后连拿三分 7-5（`df_mh_1` Tiebreak：1-0 2-0 3-0 4-0 → 4-1 4-2 4-3 4-4 4-5 → 5-5 6-5 7-5）。「她」是封面主体安德烈耶娃。\n⚠️ 不重复比分板：板上印 6-2 7-6⁵，钩子一个盘分都没写；抢七里的 4-5 板上没有。⚠️ 不写身份：排名、种子、法网冠军都留给 ② 句和台头。行长 7 字 / 9 字，都在 `HOOK_MAX_CHARS = 10` 之内，两行。\n⚠️ 封面主体放赢家：安德烈耶娃世界第 5、今年法网冠军，对面世界第 34——是刷到这条的人冲着来的那个名字，输赢在这儿是同一个答案。",
+    "portrait": {
+      "image": "assets/reel/andreeva-bartunkova-cover.jpg",
+      "fit": "cover",
+      "focus": 0.26,
+      "focus_y": 0.0,
+      "zoom": 1.0,
+      "_photo_why": "美网官方图片接口本场实拍（`f_USTA2438399_20260905_DS2_0847.jpg`，Dustin Satloff/USTA），图注原文 `Mirra Andreeva reacts during a Women's Singles match on Day Seven of the 2026 US Open at USTA Billie Jean King National Tennis Center on Saturday, Sep 5, 2026`——时间、地点、人物、事件四要素由来源自己写死；接口按 `tags=wta331809&type=photo` 查，标题 `M. Andreeva vs. N. Bartunkova | R3`。打开看过：黑色 Nike 背心裙、宝蓝短裙、宝蓝遮阳帽、辫子，右手举着 Wilson 拍子，眼睛睁着、目光朝右前方（看向自己的包厢那一侧），嘴微张——是一分之后的反应，情绪是绷着的、还在战斗里，正是这条片子讲的那件事（两次被破、抢七 4-5 落后还要再扛）。四道闸门：① 精准 ✓；② 比赛中 ✓（图注 `reacts during a Women's Singles match`，背景是 17 号球场的看台和网）；③ 近景特写、头肩填满画面宽度的大半、表情读得出来 ✓，眼睛睁着 ✓；④ 见 `_low_res_why`。同一辑本场共 10 张，逐张看过：`DS2_0964`（回头看包厢，嘴张开，近景，脸在源图顶上一截、帽子会压进台头带）、`DS2_1385`（仰头握拳吼，眼睛挤着、脸在源图 y≈40~110 也会顶进台头带、人小）、`DS3_0792`（正手击球近景，脸在源图顶部 y≈15~110，铺满之后顶进台头带）、`DS2_0439` / `DS2_0719` / `DS2_1204` / `DS2_1079_2`（击球中全身或半身，脸小或被帽檐挡住）、`DS2_1509` / `DS3_1627`（发球抛球，仰头看球，脸不朝镜头）——只有这一张脸的高度落在两条文字带之间。",
+      "_low_res_why": "1280x720 铺 1080x1440 是放大 **2.00 倍**，够不着 `cover_photo_problem` 那道 1.00x 的地板。**这是美网这条渠道的天花板，不是没找够**：`f_` 前缀就是美网官方图片接口的顶档（十二个前缀、六个目录、三种 `?width=` 参数 CLAUDE.md 里都试过，第三组返回 200 但尺寸一个像素没变）。另外三条更高清的路这一天都拿不到——`tools/find_cover_photo.py --player Andreeva --event \"US Open\" --date 2026-09-05` 跑过：WTA photo-resources 没有本场（WTA 球员页上只有 8/25 资格赛周那张 `Mirra_Andreeva_-_US_Open_2026_-_Tuesday_Qs`，不是这一场）；AP 通讯社按 `Andreeva`+`US Open` 只有 8/25 混双那张（不是这一场，四道闸门第一道过不了）；USA TODAY 当天四辑**都不是美网的**（那一辑按比赛日出，当天的次日才上线）。报告末尾那份『这一趟查了什么』就是判据。",
+      "_bands_why": "按 2026-08-31『挑封面之前先把钩子那条带叠上去』核过：1280x720 铺 1080x1440 竖向正好铺满（2.00 倍），所以 `focus_y` 在 zoom=1.0 时是死的，源图每个 y 直接乘 2 就是输出 y。她的脸（帽檐下缘到下巴）在源图 y≈90~235，映射到输出 y≈180~470；帽顶源图 y≈28 → 输出 56。三条带子：台头 0~170、钩子带 790~1023（`STORYCOPY_TOP` 790 + 两行 94px×1.24）、比分板从 1057 起——脸整块落在台头带和钩子带之间，脸底离钩子带上沿还有 300px 以上；只有帽顶那几十像素落进台头带的高度范围，所以横向要把她放到台头文字的右边：台头第二行「美网第三轮 · 安德烈耶娃 vs 巴尔通科娃」约 19 字 27px，墨迹收在 x≈650 之前；`focus 0.26` → 取景窗左缘 0.26×1480≈385，她的头（源图 x≈540~720 → 缩放后 1080~1440）落在输出 x≈695~1055，帽子整个在台头文字右边，中间留约 45px。代价是右边的拍框大半出画（源图 x≈690~990 → 输出 995~1595），留在框内的是握拍的手和拍柄——这张图的意思在脸上，不在拍子上。本地 `render_cover_local.py` 渲过再定，见 `_zoom_why`。",
+      "_zoom_why": "不往上 zoom：`fit: cover` 下竖向已经是 2.0 倍铺满，再放大脸会顶进台头带；也不走 `fit: width`——那条路整幅照片缩到 1080×608、脸只剩约 140px 高，撞上 2026-08-18「优先近景特写、放大到接近铺满」。渲出来两版并排比过（`focus` 0.26 / 0.34），0.34 那版帽子左缘压到台头第二行的末尾，取 0.26。"
+    },
+    "scoreboard": {
+      "court": "Stadium 17",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%20%221%3A38%3A00%22%2C%20%22source%22%3A%20%22US%20Open%20official%20players%2Fmatches%20wta331809_matches.json%20match_id%202309%20duration%201%3A38%20%3D%20setDurations%2033%2B65%22%7D",
+        "field": "duration"
+      },
+      "_court_why": "三源一致：美网官方 `players/matches/wta331809_matches.json` match_id 2309 `courtName: \"Stadium 17\"`；源片 40.5s / 202.5s 全屏图形印着 `STADIUM 17`；解说 45.44s `here on Stadium 17`、193.04s `here on stadium 17`。草稿 `_production.court` 同。",
+      "_duration_why": "官方 **1:38**（`duration: \"1:38\"`，`setDurations: [33, 65]`，33+65=98 分钟＝1:38，自洽）。flashscore `df_sui_1` 报 0:34 / 1:05 全场 1:39，比官方多一分钟——按「用时以官方为准」取 1:38。flashscore 自己的 AD/AO 时间戳相差 96.6 分钟，也站在官方这边。源片 74.5s 场边时钟 `0:42`（第二盘 1-0 时）和首盘 33 分钟自洽。"
+    },
+    "_no_cover_narration_why": "赛场之上的封面是定长 1.2 秒的短亮相（`COVER_SECONDS`），封面跟着配音走只给网球有故事。钩子那两行只印在海报上，不念。"
+  },
+  "_match": {
+    "status": "result_verified",
+    "source": "flashscore_points",
+    "source_id": "EsjaS3X8",
+    "flashscore_id": "EsjaS3X8",
+    "participants": [
+      "米拉·安德烈耶娃",
+      "巴尔通科娃"
+    ],
+    "set_scores_home_away": [
+      [
+        6,
+        2
+      ],
+      [
+        7,
+        6
+      ]
+    ],
+    "tiebreaks_home_away": [
+      null,
+      [
+        7,
+        5
+      ]
+    ],
+    "winner": "米拉·安德烈耶娃",
+    "loser": "巴尔通科娃",
+    "winner_result": "6-2 7-6(5)",
+    "loser_result": "2-6 6-7(5)",
+    "_direction_why": "flashscore `AE÷Andreeva M.` 是 home、`AF÷Bartunkova N.` 是 away，`BA/BB=6/2 BC/BD=7/6`，`AG÷2 AH÷0`，赢家是安德烈耶娃；`df_st_1` `Total games won 主队 12/20`；源片 202.5s 全屏图形 `6 7 / 2 6`。",
+    "_order_why": "`participants` 跟 flashscore 的 home/away（安德烈耶娃是 home），这一场恰好和 `cover.matchup` 同序，所以 `stats.a` 不用对调。",
+    "_tiebreak_why": "第二盘抢七取 `df_sui_1` 的 `IG/IH`（抢七盘上那对是小分）：`Set 2 IG÷7 IG÷7 IH÷6 IH÷5` → 局数 7-6、小分 7-5，写成 home/away 的 `[7, 5]`；美网官方 `tiebreakDisplay 7 / 5` 同。第一盆 6-2 没有抢七，写 null。这不是决胜盘（三盘两胜的第二盘），所以是抢 7 不是抢 10——记分条上就印着 `7 POINT TIEBREAK`。"
+  },
+  "stats": {
+    "a": {
+      "aces": 2,
+      "df": 4,
+      "winners": 25,
+      "ue": 15,
+      "first_in": 35,
+      "first_won": 25,
+      "second_total": 26,
+      "second_won": 16,
+      "bp_conv": 4,
+      "bp_chances": 8,
+      "pts_won": 75,
+      "pts_total": 134,
+      "first_total": 61,
+      "headshot": "assets/players/headshots/wta-331809.jpg"
+    },
+    "b": {
+      "aces": 3,
+      "df": 6,
+      "winners": 17,
+      "ue": 19,
+      "first_in": 42,
+      "first_won": 29,
+      "second_total": 31,
+      "second_won": 10,
+      "bp_conv": 2,
+      "bp_chances": 2,
+      "pts_won": 59,
+      "pts_total": 134,
+      "first_total": 73,
+      "headshot": "assets/players/headshots/wta-330364.jpg"
+    },
+    "_source": "flashscore `EsjaS3X8` 的 `df_st_1`（Match 那一档，`match_stat_hooks.py EsjaS3X8 --stats-block` 直接吐的）。这场**有**制胜分和非受迫失误（安德烈耶娃 25/15，巴尔通科娃 17/19），已填。\n`stats.a` 跟 `cover.matchup[0]`（安德烈耶娃），flashscore 的 home 也是安德烈耶娃——同序，工具吐出来的 a/b 原样填。头像跟着数字走：左边 `wta-331809` 是安德烈耶娃（已发 `kostyuk-andreeva` 里认过），右边 `wta-330364` 是巴尔通科娃（已发 `cirstea-bartunkova` 里认过）。\n`first_total` 按 `first_in + second_total` 算（35+26=61、42+31=73）。"
+  },
+  "_hit_data": [
+    {
+      "label": "抢七 4-0 领先被追到 4-5，然后连拿三分",
+      "detail": "抢七逐分：安德烈耶娃 1-0 2-0 3-0 4-0，巴尔通科娃连拿五分 4-1 4-2 4-3 4-4 4-5，安德烈耶娃连拿三分 5-5 6-5 7-5；集锦从 4-4 那一分起有画面，4-0 和 5-5 / 6-5 两分没有",
+      "source": "flashscore df_mh_1（Tiebreak - Set 2 逐分）"
+    },
+    {
+      "label": "对手两个破发点全兑现，她八个兑现四个",
+      "detail": "巴尔通科娃全场只拿到 2 个破发点，两个都破了（第二盘 1-0 和 2-4 两局）；安德烈耶娃 8 个兑现 4 个",
+      "source": "flashscore df_st_1（Break Points Converted 主队 4/8、客队 2/2；Break Points Saved 主队 0/2）"
+    },
+    {
+      "label": "上网 22 次拿下 19 分",
+      "detail": "安德烈耶娃网前得分 19/22（86%），首盘 12/13；巴尔通科娃 17/33（52%）",
+      "source": "flashscore df_st_1（Net points won 主队 86% (19/22)，Set 1 92% (12/13)；客队 52% (17/33)）"
+    },
+    {
+      "label": "二发得分率",
+      "detail": "巴尔通科娃二发只赢 32%（10/31），首盘 23%（3/13）；安德烈耶娃二发 62%（16/26）",
+      "source": "flashscore df_st_1（2nd serve points won）"
+    },
+    {
+      "label": "总分差",
+      "detail": "安德烈耶娃 75 - 巴尔通科娃 59，净差 16 分",
+      "source": "flashscore df_st_1（Total Points Won 75/134 vs 59/134）"
+    },
+    {
+      "label": "制胜分 / 非受迫失误",
+      "detail": "安德烈耶娃 25 个制胜分对 15 个非受迫失误；巴尔通科娃 17 对 19",
+      "source": "flashscore df_st_1（Winners 25/17、Unforced errors 15/19）"
+    },
+    {
+      "label": "两盘用时差一倍",
+      "detail": "首盘 33 分钟，第二盘 65 分钟；全场 1:38",
+      "source": "美网官方 players/matches match_id 2309 setDurations [33, 65]、duration 1:38（flashscore df_sui_1 报 0:34 / 1:05 / 1:39）"
+    },
+    {
+      "label": "交手记录",
+      "detail": "Andreeva M. 1 : 0 Bartunkova N.（含本场）——此前没有交过手",
+      "source": "flashscore df_hh_1（Head-to-head matches 只列本场）"
+    },
+    {
+      "label": "近况",
+      "detail": "Andreeva M. 最近 5 场 4 胜（WWWLW）；Bartunkova N. 最近 5 场 3 胜（LWWLW）",
+      "source": "flashscore df_hh_1 Last matches"
+    }
+  ],
+  "_durations": [
+    [
+      "Set 1",
+      "0:33"
+    ],
+    [
+      "Set 2",
+      "1:05"
+    ],
+    [
+      "全场",
+      "1:38"
+    ]
+  ],
+  "_turning_points": [
+    {
+      "label": "【Set 1】5-2  巴尔通科娃发球，安德烈耶娃拿下  密度1  ← 1个破发点",
+      "density": 1,
+      "tags": [
+        "1个破发点"
+      ]
+    },
+    {
+      "label": "【Set 1】6-2  安德烈耶娃发球，安德烈耶娃拿下  密度1  ← 1个盘点",
+      "density": 1,
+      "tags": [
+        "1个盘点"
+      ]
+    },
+    {
+      "label": "【Set 2】1-0  巴尔通科娃发球，安德烈耶娃拿下  密度2  ← 2个破发点",
+      "density": 2,
+      "tags": [
+        "2个破发点"
+      ]
+    },
+    {
+      "label": "【Set 2】1-1  安德烈耶娃发球，巴尔通科娃拿下  密度1  ← 1个破发点",
+      "density": 1,
+      "tags": [
+        "1个破发点"
+      ]
+    },
+    {
+      "label": "【Set 2】2-4  安德烈耶娃发球，巴尔通科娃拿下  密度1  ← 1个破发点",
+      "density": 1,
+      "tags": [
+        "1个破发点"
+      ]
+    },
+    {
+      "label": "【Set 2】3-4  巴尔通科娃发球，安德烈耶娃拿下  密度2  ← 2个破发点",
+      "density": 2,
+      "tags": [
+        "2个破发点"
+      ]
+    },
+    {
+      "label": "【Set 2】抢七  4-0 → 4-5 → 7-5",
+      "density": 3,
+      "tags": [
+        "抢七",
+        "1个赛点"
+      ]
+    }
+  ],
+  "_turning_points_why": "第二盘 2-4 那一次被破（40:A |B1|）和 3-4 那一次破回（40:15 |B1| 40:30 |B1|）**集锦里都没有**——转播的画面从 1-1 那一局的 0-30 一分（120.5~140.5s）直接跳到抢七 4-4（142.5s）。第 ⑩ 段用 1-1 那一局的画面把这两局讲出来，注解写明。抢七 4-0 领先和 5-5 / 6-5 那两分也不在集锦里，第 ⑪ ⑫ 段旁白交代。",
+  "editorial": {
+    "mode": "match_review",
+    "hook": [
+      "次盘两次被破发",
+      "抢七四比五连拿三分"
+    ],
+    "_hook_why": "这一栏和 `cover.hook` 必须逐字相同。理由见 `cover._hook_why`。",
+    "question": "首盘 33 分钟 6-2 顺过，第二盘为什么会两次被破、被拖进抢七，抢七里 4-0 的领先又是怎么被追到 4-5 的？安德烈耶娃靠什么在最后三分上站住？",
+    "thesis": "首盘她靠网前把比赛拿在手里（上网 13 次拿下 12 分，巴尔通科娃二发只赢 3 分，33 分钟 6-2）；第二盘她先破发 1-0，随后自己的发球局两次被破（1-1、2-4），两次都立刻破回来拖进抢七；抢七 4-0 领先被连追五分到 4-5，离丢掉这一盘只差两分，她连拿三分 7-5，最后一拍是制胜分。全场她上网 22 次拿下 19 分、总分多 16 分；巴尔通科娃全场只有两个破发点却全部兑现，仍然不够。今年的法网冠军，第一次打进美网第二周。",
+    "beats": [
+      "首盘 33 分钟：4-2 那一局安德烈耶娃拿下破发点（`4 [40] / 2 [30]`），5-2 自己的发球局 40-15 第一个盘点就拿下 6-2；这一盘她网前 12/13，巴尔通科娃二发 3/13。",
+      "第二盘：第一局巴尔通科娃发球，15-0 那一分安德烈耶娃追到一个几乎不可能的球（转播 69.52s `How on earth did she just get that?`），这一局破发 1-0；1-0 自己的发球局 30-40 被巴尔通科娃拿到全场第一个破发点并兑现，1-1；1-1 那一局她的破发点没兑现，1-2。集锦里没有的：2-4 她再被破，3-4 立刻破回，一路 6-6。",
+      "抢七：安德烈耶娃 4-0 领先，巴尔通科娃连拿五分 4-5；安德烈耶娃连赢两分 6-5 拿到赛点，巴尔通科娃发球的赛点那一分是个长回合，最后她一拍制胜分 7-5（转播 176.64s `Magic from Meera`、204.08s `seals it with another winner`）。今年的法网冠军第一次打进美网第二周（转播 180.72s `for the first time`；美网官方 2023/2024/2025 三年她最远只到第三轮）。"
+    ],
+    "human_context": {
+      "angle": "美网一直是安德烈耶娃四个大满贯里最浅的一站：2023 第二轮、2024 第二轮、2025 第三轮，今年她已经是法网冠军、世界第五、5 号种子，才第一次在纽约打进第二周——而且是在 17 号球场、对一个此前没交过手的 20 岁捷克人，抢七 4-0 领先被追到 4-5 才拿下来的。",
+      "facts": [
+        "WTA 官方 players/ranked（rankedAt 2026-08-31）：Mirra Andreeva 第 5（5443 分，2007-04-29 生，19 岁）；Nikola Bartunkova 第 34（1417 分，2006-02-25 生，20 岁）",
+        "美网官方 players.json：wta331809 Andreeva seed True（5 号）；wta330364 Bartunkova seed False；players/matches match_id 2309：Stadium 17、Round 3、duration 1:38、setDurations [33, 65]、winner team1、tiebreak 7-5",
+        "美网官方 2023/2024/2025 三年 players/matches/wta331809_matches.json：2023 第二轮负高芙、2024 第二轮负克鲁格、2025 第三轮负汤森德——2026 第四轮是她第一次打进美网第二周；转播 180.72~183.04s `A brilliant display by the big seeds to reach the fourth round here at the US Open for the first time`",
+        "flashscore df_hh_1 Last matches：2026 法网七连胜（Ferro / Bassols / Bouzkova / Teichmann / Cirstea / Kostyuk / Chwalinska，最后一场 2026-06-06）——她是今年的法网冠军；已发 `fernandez-andreeva` 的 `_facts` 也核过「法网现任冠军」",
+        "flashscore df_hh_1 Head-to-head：两人此前没有交过手，本场是第一次",
+        "转播原声 14.48s `That is exquisite from Mera Andrea using every part of the court`；32.00~45.44s `credit the incredible movement of Mera Andrea. How she possibly got to that short ball … she takes the first set 6-2 in some style here on Stadium 17`；69.52s `No. How on earth did she just get that?`；115.04s `That's a big roar. She does get the break.`；137.28s `This is exceptional tennis`；176.64s `Magic from Meera`"
+      ],
+      "sources": [
+        "https://api.wtatennis.com/tennis/players/ranked?page=0&pageSize=100&type=rankSingles&sort=asc&metric=SINGLES",
+        "https://www.usopen.org/en_US/scores/feeds/2026/players/players.json",
+        "https://www.usopen.org/en_US/scores/feeds/2026/players/matches/wta331809_matches.json",
+        "https://www.usopen.org/en_US/scores/feeds/2025/players/matches/wta331809_matches.json",
+        "https://www.youtube.com/watch?v=2GQrgO8pBTU"
+      ]
+    }
+  },
+  "topbar": {
+    "line1": "2026 美网 女单第三轮",
+    "line2": "米拉·安德烈耶娃 6-2 7-6(5) 巴尔通科娃"
+  },
+  "push": {
+    "summary": "安德烈耶娃抢七险胜晋级",
+    "_summary_why": "主语（安德烈耶娃）＋ 结果（晋级）＋ 比分板上看不见的那件事（抢七从 4-5 落后拿下来，所以是「险胜」——首盘 6-2 不险，险的是抢七那三分）。11 字，`SUMMARY_MAX=13` 之内；整句 `9.6 赛场之上 | 安德烈耶娃抢七险胜晋级` 19 字位。哪一站、对谁交给 `lead` 第一句。",
+    "lead": "美网女单第三轮，17 号球场。5 号种子、今年法网冠军安德烈耶娃 6-2 7-6(5) 淘汰世界第 34 的巴尔通科娃，一小时三十八分钟。首盘 33 分钟：她上网 13 次拿下 12 分，巴尔通科娃的二发只赢了 3 分。第二盘她先破发 1-0，随后自己的发球局在 1-0 和 2-4 两次被破，两次都立刻破回来拖进抢七；抢七 4-0 领先被连追五分到 4-5，离丢掉这一盘只差两分，她连拿三分 7-5，最后一拍是制胜分。全场她上网 22 次拿下 19 分，总分多 16 分；巴尔通科娃全场只拿到 2 个破发点，两个全兑现，仍然不够。19 岁的法网冠军，第一次打进美网第二周。",
+    "auto": true
+  },
+  "_editing_why": "**probe**：`output/2026-09-06/reel/andreeva-bartunkova/probe.json`（编排器跑的，没给 `--scorebox`，`point_ends` 是空的——段尾按 `scene_cuts` ＋ 解说落点 ＋ 缩略图墙定；记分条按 `score_00~05.jpg` 逐格读）。\n**认人看球衣**：安德烈耶娃黑背心宝蓝短裙宝蓝帽，巴尔通科娃白衣酒红短裤酒红发带。第 ④ ⑤ 段的近景（34.5、36.5）是黑衣；第 ⑧ ⑨ 段的近景（104.5、116.5、118.5）是白衣，那两段旁白主语正是巴尔通科娃；第 ⑪ ⑫ 段开头的近景（142.5、152.5~156.5）是白衣，旁白先说巴尔通科娃再说安德烈耶娃，和画面 156.5 → 158.5 从白衣切到黑衣的顺序对得上。\n**集锦漏掉的四段**（第二盘 2-4 被破、3-4 破回；抢七 4-0 领先、5-5 / 6-5 两分）由第 ⑩ ⑪ ⑫ 段旁白交代，压在 1-1 那一局的画面和两个人的近景上。\n**赛点那一分保留完整**：159.14 起到 179.6 连续（赛点回合 → 落地 → 她仰头庆祝 → 走向球童），中间只在 169.5 分了一刀给冷开场/正文用；之后 179.95~197.3 的包厢、握手、挥手、飞吻一格都没剪掉，只跳过 197.51~199.4 那一格包厢和 208.01 起的品牌板。\n**第一版渲之前跑过**：`--dry-run`、`preview_segments_local`（逐段对记分条）、`--check-narration`（edge 真跑）、`render_cover_local`。",
+  "segments": [
+    {
+      "start": 169.5,
+      "end": 179.6,
+      "narration": "",
+      "score_inset": true,
+      "_ending_payoff_required": true,
+      "crosses_cut": "跨 176.36：赛点那一分落地 → 她仰头举拳的近景（176.5，黑衣宝蓝帽）→ 走向球童（178.5），同一个人。",
+      "_why": "**第①格：全片最强的一格。** 赛点那一分的最后七秒到落地，不配旁白，靠现场声——记分条 `MATCH POINT 6 6 [6] / 2 6 [5]`，发球指示在 BARTUNKOVA；解说 176.64s `Magic from Meera`，176.5 她仰头举拳。段尾 179.6 ＋ `SEG_FADE` 0.18 ＝ 179.78，停在 179.91 那一刀（包厢）之前。\n⚠️ 后段冷开场：正文第 ⑬ 段（169.5→179.6）完整覆盖这一段，`ending_payoff_problem` 要的就是这个覆盖关系。",
+      "fit": "crop"
+    },
+    {
+      "start": 189.8,
+      "end": 197.3,
+      "narration": "今年的法网冠军，第一次打进美网第二周。",
+      "score_inset": false,
+      "_score_inset_why": "赛后画面：她在网边挥手（190.5）、飞吻（192.5）、笑（194.5）、再挥手（196.5）——没有记分条（`score_04.jpg` 184.5 之后的格子板位全是空的）。",
+      "_why": "第②句给落点，压在她挥手和飞吻的近景上（全是黑衣宝蓝帽，189.79~197.51 之间没有硬切）。两件事各有出处：法网冠军见 `cover._heat_why`；「第一次打进美网第二周」是转播原话（180.72s `to reach the fourth round here at the US Open for the first time`）＋ 美网官方 2023/2024/2025 三年的 `players/matches` feed（第二轮、第二轮、第三轮出局）——两个独立源。段尾 197.3 ＋ 0.18 ＝ 197.48，停在 197.51 那一刀（包厢）之前。⚠️ 不复读钩子：钩子讲抢七的过程，这句讲身份和落点。",
+      "fit": "crop"
+    },
+    {
+      "start": 0.0,
+      "end": 15.6,
+      "narration": "北京时间九月六日凌晨一点，美网第三轮，十七号球场。五号种子安德烈耶娃，对面是世界第三十四、二十岁的捷克人巴尔通科娃。四比二，她的破发点。",
+      "score_inset": true,
+      "crosses_cut": "跨 1.9：她在场边时钟前的准备姿势近景（0.5，黑衣宝蓝帽，她是接发方）→ 那一分的宽景。同一个人。",
+      "_why": "第③格交代坐标。画面是首盘 4-2 那一局的破发点（记分条 `4 [40] / 2 [30]`，发球指示在 BARTUNKOVA——巴尔通科娃发球、安德烈耶娃 40-30 破发点；`df_mh_1` Set 1 5-2 那一局 `40:30 |B1|` 主队拿下）。开球时刻取 flashscore `AD=1788627900`＝北京时间 2026-09-06 01:05（美网官方 match epoch 1788633699 减 1:38 用时倒推 ≈ 01:03），按「不报到分」的档位（分钟 03~05 落在 0~9）说「凌晨一点」。种子号出自记分条 `5 ANDREEVA`；「二十岁」按 WTA 官方 `dateOfBirth 2006-02-25` 算；「世界第三十四」和 `matchup[1].rank` 同一期榜单。末句「四比二，她的破发点」正是板上这一分。段尾 15.6 ＋ 0.18 ＝ 15.78，停在 15.87 那一刀之前。",
+      "fit": "crop"
+    },
+    {
+      "start": 21.1,
+      "end": 35.8,
+      "narration": "破发成功，五比二。两个人此前从没交过手——二十岁的巴尔通科娃，前两轮她赢了谢里夫和塔·玛丽亚，才走到这儿。自己的发球局，四十比十五，第一个盘点。",
+      "score_inset": true,
+      "crosses_cut": "跨 33.62：盘点那一分的宽景 → 她拿下首盘后的微笑近景（34.5，黑衣宝蓝帽）。同一个人。",
+      "_why": "记分条 `SET POINT 5 [40] / 2 [15]`，发球指示在 ANDREEVA——6-2 那一局 40-15 第一个盘点（`df_mh_1` Set 1 6-2：0:15 15:15 30:15 40:15 |B2|）。解说 32.00s `She's missed it … she takes the first set 6-2 in some style here on Stadium 17`——巴尔通科娃打丢那一拍在 32 秒上下，旁白到「第一个盘点」就停，结果交给现场声和下一段。窗口从 21.1 起（`scene_cuts_loose` 21.05 之后，避开 17.7~21 那一段包厢→发球近景的软切）。段尾 35.8 ＋ 0.18 ＝ 35.98，停在 37.02 那一刀之前；板在 34.5 那格还在、36.5 那格已经淡掉（板位只剩 us open 标），现量会自己收。",
+      "fit": "crop"
+    },
+    {
+      "start": 36.0,
+      "end": 46.4,
+      "narration": "六比二，首盘三十三分钟。这一盘她上网十三次拿下十二分；巴尔通科娃的二发，只赢了三分。",
+      "score_inset": false,
+      "_score_inset_why": "板在 35 秒前后淡出：`score_00.jpg` 36.5 那格板位只剩 us open 标，38.5 空；40.5~44.5 是全屏赛果图形（贴回去会把图形叠成两层）；46.5 是球包。整段不贴。",
+      "crosses_cut": "跨 37.02：她在场边墙前的近景（36.5，黑衣）→ 走向椅子的中景（38.5）→ 全屏图形 `5 MIRRA ANDREEVA 6 / NIKOLA BARTUNKOVA 2`（40.5~44.5）→ 球包（46.5）。赛后同一段连续过程，主体一直是她，图形里两个名字都在。",
+      "_why": "首盘收账。三个数：美网官方 `setDurations[0]=33`（flashscore `df_sui_1` 报 0:34，按官方）；`df_st_1` Set 1 `Net points won 主队 92% (12/13)`；Set 1 `2nd serve points won 客队 23% (3/13)`。「二发只赢了三分」比「百分之二十三」更像人话，而且分母 13 观众用不着。段尾 46.4 停在 48.5 那格回合开始之前（37.02~75.46 之间没有硬切，图形→回合是转播的软过渡）。",
+      "fit": "crop"
+    },
+    {
+      "start": 57.0,
+      "end": 74.0,
+      "narration": "第二盘第一局，巴尔通科娃发球，十五比零。这一分来回很久——安德烈耶娃全场的非受迫失误，只有十五个，对手十九个，就是这么磨出来的。转播直接喊出来：她到底是怎么追到这个球的？",
+      "score_inset": true,
+      "crosses_cut": "跨 `scene_cuts_loose` 70.7：回合的宽景 → 她的近景（72.5，黑衣，IBM 84 MPH 板前）→ 她在时钟 0:42 前的近景（74.5）。都是安德烈耶娃；`scene_cuts` 在 37.02~75.46 之间没有硬切。",
+      "_why": "记分条 `6 0 [15] / 2 0 [0]`，发球指示在 BARTUNKOVA——第二盘 1-0 那一局的第二分（`df_mh_1` Set 2 1-0：15:0 30:0 30:15 40:15 |B1| 40:30 |B1|，主队拿下）。48.5~70.5 整整二十来秒是同一分的回合（板一直是 15-0），解说 69.52s `No. How on earth did she just get that?`、73.60s `Isn't she running out to the right hand side?`，随后 72.5 的反应近景给的是安德烈耶娃——她赢了这一分，和 `df_mh_1` 的 15:0 → 30:0 一致。不说这一分打了多少拍（没有公开的拍数源）。段尾 75.2 ＋ 0.18 ＝ 75.38，停在 75.46 那一刀之前。",
+      "fit": "crop"
+    },
+    {
+      "start": 84.0,
+      "end": 101.85,
+      "narration": "这一局两个破发点，第二个她兑现了，一比零。接着自己发球，零比十五——又一个长回合。这一盘要打六十五分钟，首盘的两倍。转播说，又是一个了不起的球。",
+      "score_inset": true,
+      "_why": "记分条 `6 1 [0] / 2 0 [15]`，发球指示在 ANDREEVA——第二盘 1-0 她发球那一局的第二分（`df_mh_1` Set 2 1-1：0:15 15:15 15:30 30:30 30:40 |B1|，客队拿下）。76.5~100.5 又是同一分的长回合（板一直是 0-15），解说 100.88s `Oh, it's another phenomenal point.`——旁白照转播说，不替他判这一分归谁（`df_mh_1` 0:15 → 15:15 是她赢的，但集锦 102.07 之后的反应镜头给的是巴尔通科娃走回底线，两边都不点名）。「这一局她破发，一比零」说的是刚过去的 1-0 那一局，板上已经印着 1。段尾 101.85 ＋ 0.18 ＝ 102.03，停在 102.07 那一刀之前。",
+      "fit": "crop"
+    },
+    {
+      "start": 104.0,
+      "end": 114.7,
+      "narration": "三十比四十。巴尔通科娃拿到这一局的破发点，也是她全场第一个破发点。",
+      "score_inset": true,
+      "crosses_cut": "跨 105.96：巴尔通科娃弯腰准备接发的近景（104.5，白衣酒红发带）→ 破发点那一分的宽景。旁白主语正是她。",
+      "_why": "记分条 `6 1 [30] / 2 0 [40]`，发球指示在 ANDREEVA——1-0 她发球那一局的 30-40（`df_mh_1` Set 2 1-1：30:40 |B1|）。「全场第一个破发点」：`df_st_1` Set 1 `Break Points Converted 客队 0/0`，全场客队 2/2，这是第一个。解说 115.04s `That's a big roar. She does get the break.` 落在下一段。段尾 114.7 ＋ 0.18 ＝ 114.88，停在 114.91 那一刀之前。",
+      "fit": "crop"
+    },
+    {
+      "start": 114.95,
+      "end": 118.9,
+      "narration": "她兑现了，一比一。",
+      "score_inset": true,
+      "_why": "巴尔通科娃握拳（116.5，白衣）、走回底线的近景（118.5）。板 116.5 那格还是 `[30] / [40]`，118.5 翻成 `6 1 [0] / 2 1 [30]`（1-1，她发球，0-30）。解说 115.04s `She does get the break.`。「兑现」的是她自己拿到的破发点，主语和上一段一致。段尾 118.9 ＋ 0.18 ＝ 119.08，停在 119.15 那一刀之前。",
+      "fit": "crop"
+    },
+    {
+      "start": 119.2,
+      "end": 139.5,
+      "narration": "一比一，巴尔通科娃发球，零比三十。这一分安德烈耶娃拿下，可这一局她的破发点没兑现。之后是集锦里没有的：二比四她再被破——巴尔通科娃全场就两个破发点，两个都破了。她又立刻破回来，一路打到六比六。",
+      "score_inset": true,
+      "_why": "记分条 `6 1 [0] / 2 1 [30]`，发球指示在 BARTUNKOVA——1-1 她发球那一局的第三分（`df_mh_1` Set 2 1-2：0:15 0:30 15:30 30:30 40:30 |B1| 40:40 40:A，客队拿下）。120.5~136.5 是同一分的长回合，140.5 那格板翻成 `[15] / [30]`、138.5 / 140.5 的近景是安德烈耶娃在网前——这一分是她拿下的（解说 137.28s `This is exceptional tennis`）。「她的破发点没兑现」＝ 40:30 |B1| 之后 40:40 40:A；「二比四她再被破」＝ Set 2 2-4：40:A |B1| 客队拿下；「立刻破回来」＝ 3-4：40:15 |B1| 40:30 |B1| 主队拿下；之后 4-4 / 4-5 / 5-5 / 5-6 / 6-6 各自保发。**这两局集锦里没有**（板从 1-1 直接跳到抢七 4-4），按「转折点不在集锦里 → 明说」办。段尾 138.2 ＋ 0.18 ＝ 138.38，停在 `scene_cuts_loose` 138.45（她的网前近景）之前——那两格近景不收，因为 140.5 和 142.5 之间有一刀 `scene_cuts` 没报的切换（安德烈耶娃网前 → 巴尔通科娃抢七），位置定不到。",
+      "fit": "crop"
+    },
+    {
+      "start": 142.6,
+      "end": 151.9,
+      "narration": "抢七。安德烈耶娃四比零领先，然后被巴尔通科娃连追四分——四比四，巴尔通科娃发球。",
+      "score_inset": true,
+      "crosses_cut": "跨 143.44：巴尔通科娃准备发球的近景（142.5，白衣酒红发带）→ 抢七 4-4 那一分的宽景。旁白落点正是「巴尔通科娃发球」。",
+      "_why": "记分条 `7 POINT TIEBREAK 6 6 [4] / 2 6 [4]`，发球指示在 BARTUNKOVA——抢七第九分（`df_mh_1` Tiebreak：1-0 2-0 3-0 4-0 4-1 4-2 4-3 4-4，第九分 HG÷2 巴尔通科娃发球，她拿下 → 4-5）。解说 151.44s `She's made that one as well.` 4-0 领先那四分集锦里没有，旁白交代。窗口从 142.6 起（142.5 那格已是抢七板，140.5~142.5 之间那刀没报的切换在它之前）。段尾 151.9 ＋ 0.18 ＝ 152.08，停在 152.14 那一刀之前。",
+      "fit": "crop"
+    },
+    {
+      "start": 152.2,
+      "end": 169.4,
+      "narration": "四比五。巴尔通科娃连拿五分，离这一盘只差两分。安德烈耶娃全场二发得分率百分之六十二，巴尔通科娃只有百分之三十二。安德烈耶娃接下来连赢两分——六比五，赛点。",
+      "score_inset": true,
+      "crosses_cut": "跨 159.14：安德烈耶娃在时钟前的近景（158.5，黑衣宝蓝帽，`MATCH POINT` 板）→ 赛点那一分的宽景。此前 152.5~156.5 是巴尔通科娃走回底线的近景（白衣），156.5 → 158.5 之间有一刀 `scene_cuts` 没报的切换（白衣 → 黑衣）；旁白先说巴尔通科娃、再说安德烈耶娃，顺序和画面一致。",
+      "_why": "记分条 154.5 / 156.5 `[4] / [5]`（发球指示在 ANDREEVA——她要发第 10、11 分），158.5 起 `MATCH POINT 6 6 [6] / 2 6 [5]`（发球指示在 BARTUNKOVA）。`df_mh_1` Tiebreak：4-5 → 5-5（HG÷1）→ 6-5（HG÷1）→ 7-5（HG÷2）——5-5 / 6-5 那两分集锦里没有，旁白交代。「离这一盘只差两分」：七分制抢七 4-5 时巴尔通科娃再赢两分到 7。解说 154.88s `I love the spirit in this set`。这一分从 159.14 打到 176.36 落地，旁白只在开头说，其余交给现场声。169.4 这一刀是为冷开场分的（不是镜头切换），下一段接着同一个回合。",
+      "fit": "crop"
+    },
+    {
+      "start": 169.5,
+      "end": 179.6,
+      "narration": "巴尔通科娃发球，赛点。又是一个长回合，全场最后一分。转播那一句是：米拉的魔法。",
+      "score_inset": true,
+      "crosses_cut": "跨 176.36：赛点那一分落地 → 她仰头举拳（176.5，黑衣宝蓝帽）→ 走向球童（178.5）。全是安德烈耶娃。",
+      "_why": "正文重新兑现冷开场：169.5→179.6 和第①段逐字相同，`ending_payoff_problem` 要的覆盖关系。旁白只一句「全场最后一分」——它是赛点、她拿下了，冷开场已经放过结局，这里不抢在球落地之前报七比五（那留给下一段）。解说 176.64s `Magic from Meera`。段尾 179.6 ＋ 0.18 ＝ 179.78，停在 179.91 之前。",
+      "fit": "crop"
+    },
+    {
+      "start": 179.95,
+      "end": 189.5,
+      "narration": "最后一拍是她的制胜分，七比五。全场她上网二十二次，拿下十九分。",
+      "score_inset": false,
+      "_score_inset_why": "包厢（180.5、182.5）、网前握手（184.5）、巴尔通科娃向看台致意（186.5）、安德烈耶娃举手（188.5）——赛后画面，没有记分条（`score_04.jpg` 178.5 之后板位全空）。",
+      "crosses_cut": "跨 182.57 / 183.5：包厢庆祝 → 两人网前握手的宽景 → 各自向看台致意。赛后同一段连续过程，旁白讲的是全场的账，不指认画面里的哪一个人。",
+      "_why": "赢家收账。「制胜分」两处：解说 176.64s `Magic from Meera`、204.08s `She certainly seals it with another winner`；「上网二十二次拿下十九分」＝ `df_st_1` `Net points won 主队 86% (19/22)`。段尾 189.5 ＋ 0.18 ＝ 189.68，停在 189.79 那一刀之前。",
+      "fit": "crop"
+    },
+    {
+      "start": 189.8,
+      "end": 197.3,
+      "narration": "十九岁的五号种子，前三次来美网，最远只到第三轮。",
+      "score_inset": false,
+      "_score_inset_why": "同第②段：她在网边挥手、飞吻、笑——没有记分条。",
+      "_why": "和第②段同一段画面（她挥手、飞吻），第②段说落点、这一段补来路：美网官方 2023 / 2024 / 2025 三年的 `players/matches/wta331809_matches.json`——2023 第二轮负高芙、2024 第二轮负克鲁格、2025 第三轮负汤森德。「十九岁」按 WTA 官方 `dateOfBirth 2007-04-29` 算（2026-09-05 是 19 岁）。段尾 197.3 ＋ 0.18 ＝ 197.48，停在 197.51 之前。",
+      "fit": "crop"
+    },
+    {
+      "start": 199.5,
+      "end": 207.7,
+      "narration": "四比零领先能被追到四比五——下一轮，她还会给对手这样的机会吗？",
+      "score_inset": false,
+      "_score_inset_why": "宽景走向球包（200.5）、全屏赛果图形 `5 MIRRA ANDREEVA 6 7 / NIKOLA BARTUNKOVA 2 6`（202.5~206.5）——没有常驻记分条，贴回去会把图形叠成两层。",
+      "crosses_cut": "199.4 那一刀在段首之前，208.01 在段尾之后；200.5 → 202.5 是转播的软过渡进全屏图形，主体是赛果本身。",
+      "_why": "收尾落在一问上，不停在数据上。那一问接的是抢七 4-0 → 4-5 这个事实（`df_mh_1` Tiebreak）。解说 201.52s `Will she seal it with a kiss? She certainly seals it with another winner. 62 76` 压在图形上。段尾 207.7 ＋ `SEG_FADE` 0.18 ＝ 207.88，停在片尾板那一刀（208.01）和数字静音（208.08）之前。",
+      "fit": "crop"
+    }
+  ],
+  "_facts": [
+    "安德烈耶娃 2026 法网女单冠军（flashscore df_hh_1：2026 法网七连胜，末场 2026-06-06 胜赫瓦林斯卡；已发 fernandez-andreeva 的 _facts 同），2026-08-31 榜单世界第 5；美网 2023 R2 / 2024 R2 / 2025 R3 出局（美网官方三年 players/matches feed），2026 第四轮是第一次打进第二周（转播 180.72s 同）",
+    "巴尔通科娃 2006-02-25 生，20 岁，世界第 34（WTA 官方 players/ranked 2026-08-31），美网前两轮胜谢里夫、塔·玛丽亚（flashscore df_hh_1 Last matches h4TqpNk4 / Yw5HaGak）",
+    "两人此前没有交过手（flashscore df_hh_1 Head-to-head matches 只列本场 EsjaS3X8）"
+  ],
+  "_review_2026_09_06": "真 TTS 复核 6 段哑场（最长 11.1s）：第 4/6/7/10/12/13 段按 _hit_data / _facts 补旁白（此前没交手＋前两轮对手；UE 15 对 19；两个破发点第二个兑现＋第二盘 65 分钟；巴尔通科娃 2/2 破发点；二发得分率 62% 对 32%；转播 176.64s `Magic from Meera`），第 6 段窗口收成 57.0~74.0、第 7 段起点 83.0、第 10 段末尾放到 139.5（140.5 板才翻）。第 3 段把「世界第三十四」提到人名前面，躲开断句报的半截尾巴。"
+}
