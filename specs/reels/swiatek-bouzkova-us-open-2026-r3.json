@@ -1,418 +1,418 @@
 {
- "slug": "swiatek-bouzkova-us-open-2026-r3",
- "_column": "reel",
- "layout": "band",
- "scorebox": [
-  104,
-  887,
-  660,
-  980
- ],
- "_scorebox_why": "美网这一届同一条频道同一套转播图形，和已发的 `zheng-keys-us-open-2026-r3` / `wu-alcaraz-us-open-2026-r3`（104 / 887 / 660 / 980）逐条相同；本场 probe 的 `scorebox_guess` 是 `104,863,579,978`（上沿 863 是因为它猜的那一格顶上叠着 `SET POINT` 黄标）。⚠️ 右缘 660 只是兜底，真正的右缘是 `resolve_board_insets` 每段现量的（这块板每打完一盘右缘 +38px，抢七时还多一列小分）。",
- "tts_backend": "edge",
- "_tts_backend_why": "仓库的 `AZURE_SPEECH_KEY` 自 2026-09-03 起被 Azure 401 拒（`keys-bondar` / `zheng-putintseva` / `wu-alcaraz` 连着死在第 2 秒的片尾配音上；昨天 `zheng-keys-us-open-2026-r3` / `comeback-five-love-down` 都是 edge 渲的），账号所有者定的是「换 edge tts」。这一条退回 edge 零代价：没用 `voice.style`，也没用 `lead_pause`。本地 `--check-narration` 在这台沙箱跑的就是 edge-tts，量到的余量就是成片的真实情况。",
- "source_url": "https://www.youtube.com/watch?v=0x6WoB4W8bI",
- "_source": "US Open 官方 YouTube 频道（oEmbed `author_name: US Open Tennis Championships`）本场官方集锦《Iga Swiatek vs. Marie Bouzkova Highlights | 2026 US Open Round 3》，probe 实测 199.46s / 1920×1080 / 29.97fps（过 1080p 硬闸）。画面自证四处：\n① 记分条 `8 SWIATEK POL / 25 BOUZKOVA CZE` 逐格比分和 flashscore `jopRZPOj` 的逐分记录对得上（0.5s `LONGEST RALLY: 16 SHOTS` 首盘 `0 [AD] / 1` 布兹科娃发球、26.5s `SET POINT 6 [6] / 6 [2]` 抢七斯瓦泰克发球、40.5s `SET POINT #2 6 [6] / 6 [3]` 布兹科娃发球、68.5s 第二盘 `7 5 / 6 5` 布兹科娃发球、88.5s `SET POINT #3 7 5 [ ] / 6 6 [AD]` 斯瓦泰克发球、108.5s `7 POINT TIEBREAK 7 6 [2] / 6 6 [0]`、124.5s `MATCH POINT #2 7 6 [6] / 6 6 [2]`、146.5s `MATCH POINT #3 7 6 [6] / 6 6 [3]`）；\n② 62.5s / 190.5s 两次全屏图形，印着 `WOMEN'S SINGLES | 3RD ROUND · GRANDSTAND / 8 IGA SWIATEK / 25 MARIE BOUZKOVA`，190.5s 那一张比分 `7 7 / 6 6`；解说 188.40s `What an excellent match here on the grand stand`；\n③ 球衣可分：斯瓦泰克白色 On 背心＋紫色渐变短裙＋紫色帽子；布兹科娃荧光黄 Joma 连衣裙＋白发带——0.5s / 20.5s / 158.5s 近景是紫帽，64.5s / 86.5s / 88.5s 近景是荧光黄；\n④ 片尾 196.35s 起是美网品牌板（`silent_audio` 报 196.39s 之后数字静音），已排除在所有段之外。\n⚠️ 解说把 Swiatek 念成 `Shakes` / `Eager`（104.80s / 158.72s），自动字幕照写。",
- "cover": {
-  "matchup": [
-   {
-    "name": "斯瓦泰克",
-    "name_en": "Iga Swiatek",
-    "country": "POL",
-    "rank": 8
-   },
-   {
-    "name": "布兹科娃",
-    "name_en": "Marie Bouzkova",
-    "country": "CZE",
-    "rank": 26
-   }
+  "slug": "swiatek-bouzkova-us-open-2026-r3",
+  "_column": "reel",
+  "layout": "band",
+  "scorebox": [
+    104,
+    887,
+    660,
+    980
   ],
-  "_rank_why": "两人当期排名同一期、同一个权威源：WTA 官方 `players/ranked`（`rankedAt=2026-08-31T00:00:00Z`，`page=0`）：Iga Swiatek 第 8（4809 分）；Marie Bouzkova 第 26（1753 分）。美网官方 `players.json`：wta326408 Swiatek singles_rank 8 / seed True（记分条 8 号种子）；wta320983 Bouzkova singles_rank 26 / seed True（25 号种子）。",
-  "_heat_why": "斯瓦泰克世界第 8、本届 8 号种子，②档（世界前 20）直接过；她是 2022 年美网冠军（转播 50.32s / 190.32s 两次 `the former champion`），这一场两盘都在 5-6 落后、次盘救下三个盘点才两个抢七过关。",
-  "winner": "斯瓦泰克",
-  "result": "7-6(3) 7-6(3)",
-  "_result_why": "赢家视角，三处印证：flashscore 当日表 `jopRZPOj` `AE÷Swiatek I.`(home) `AF÷Bouzkova M.`(away)，`BA/BB=7/6 BC/BD=7/6`，`df_st_1` `Match points saved 客队 2`（救赛点的是输家布兹科娃）；`df_sui_1` 两盘抢七小分 7/3、7/3；源片 190.5s 全屏图形 `7 7 / 6 6`、124.5s 记分条 `MATCH POINT #2 7 6 [6] / 6 6 [2]` 发球指示在 SWIATEK。\n抢七小分 `(3)` 是**输掉那一盘的人**（布兹科娃）拿到的分。⚠️ 编排器草稿 `_match` 把 participants 写成了 [布兹科娃, 斯瓦泰克]、赢家写成布兹科娃——那是把 matchup 的顺序套到了 home/away 的比分上，这里按 flashscore home/away 重写。",
-  "eyebrow": "赛场之上",
-  "layout": "solo",
-  "subject": "斯瓦泰克",
-  "topic": "美网第三轮 · 斯瓦泰克 vs 布兹科娃",
-  "_topic_why": "按账号所有者 2026-09-03「封面左上角的副标题不要写球场号，写对阵双方」写成对阵。球场（Grandstand）在比分板头一行印着。",
-  "hook": "两盘都打到五比六\n她救回三个盘点",
-  "_hook_why": "两行框住的是**整场的形状**：首盘 5-5 她的发球局被破、5-6 落后，布兹科娃发球胜盘局又被她破回（`df_mh_1` Set 1 5-6 / 6-6 两局）；第二盘 5-6 她自己发球，连着三个盘点全救回（Set 2 6-6 那一局 40:A |B1||B2| ×3），两盘都拖进抢七。「她」是封面主体斯瓦泰克。\n⚠️ 不重复比分板：板上印 7-6(3) 7-6(3)，钩子一个抢七的数都没写。行长 8 字 / 7 字，都在 `HOOK_MAX_CHARS = 10` 之内。",
-  "portrait": {
-   "image": "assets/reel/swiatek-bouzkova-cover.jpg",
-   "fit": "cover",
-   "focus": 0.6,
-   "focus_y": 0.0,
-   "zoom": 1.0,
-   "_photo_why": "WTA 官方赛后稿头图，编排器自动抓的（`assets/reel/swiatek-bouzkova-cover.jpg`，4081×2721，铺 1080×1440 只要 0.53×）。打开看过：白色 On 背心＋紫色帽子、正手击球瞬间、球还在拍面上、背景是 `us open` 的蓝色围挡——和源片 0.5s / 20.5s 近景是同一个人同一场，击球中、眼睛盯着球，表情用力。",
-   "_fit_why": "横图 3:2，按高度铺满（`cover`）之后整幅缩到 2160×1440，取 1080 宽的一条。`focus 0.6` 把脸放在画布中央偏右：脸在源图 x≈0.63、y≈0.30~0.45 → 画布 y≈430~650，落在台头带（0~170）之下、钩子带（790 起）之上；球拍和球在左下角，框内。",
-   "_zoom_why": "本地 `render_cover_local.py` 渲过再定：zoom 1.0 时脸和两条文字带都不重叠，球拍上的球还在框里；再放大球拍就出画。"
+  "_scorebox_why": "美网这一届同一条频道同一套转播图形，和已发的 `zheng-keys-us-open-2026-r3` / `wu-alcaraz-us-open-2026-r3`（104 / 887 / 660 / 980）逐条相同；本场 probe 的 `scorebox_guess` 是 `104,863,579,978`（上沿 863 是因为它猜的那一格顶上叠着 `SET POINT` 黄标）。⚠️ 右缘 660 只是兜底，真正的右缘是 `resolve_board_insets` 每段现量的（这块板每打完一盘右缘 +38px，抢七时还多一列小分）。",
+  "tts_backend": "edge",
+  "_tts_backend_why": "仓库的 `AZURE_SPEECH_KEY` 自 2026-09-03 起被 Azure 401 拒（`keys-bondar` / `zheng-putintseva` / `wu-alcaraz` 连着死在第 2 秒的片尾配音上；昨天 `zheng-keys-us-open-2026-r3` / `comeback-five-love-down` 都是 edge 渲的），账号所有者定的是「换 edge tts」。这一条退回 edge 零代价：没用 `voice.style`，也没用 `lead_pause`。本地 `--check-narration` 在这台沙箱跑的就是 edge-tts，量到的余量就是成片的真实情况。",
+  "source_url": "https://www.youtube.com/watch?v=0x6WoB4W8bI",
+  "_source": "US Open 官方 YouTube 频道（oEmbed `author_name: US Open Tennis Championships`）本场官方集锦《Iga Swiatek vs. Marie Bouzkova Highlights | 2026 US Open Round 3》，probe 实测 199.46s / 1920×1080 / 29.97fps（过 1080p 硬闸）。画面自证四处：\n① 记分条 `8 SWIATEK POL / 25 BOUZKOVA CZE` 逐格比分和 flashscore `jopRZPOj` 的逐分记录对得上（0.5s `LONGEST RALLY: 16 SHOTS` 首盘 `0 [AD] / 1` 布兹科娃发球、26.5s `SET POINT 6 [6] / 6 [2]` 抢七斯瓦泰克发球、40.5s `SET POINT #2 6 [6] / 6 [3]` 布兹科娃发球、68.5s 第二盘 `7 5 / 6 5` 布兹科娃发球、88.5s `SET POINT #3 7 5 [ ] / 6 6 [AD]` 斯瓦泰克发球、108.5s `7 POINT TIEBREAK 7 6 [2] / 6 6 [0]`、124.5s `MATCH POINT #2 7 6 [6] / 6 6 [2]`、146.5s `MATCH POINT #3 7 6 [6] / 6 6 [3]`）；\n② 62.5s / 190.5s 两次全屏图形，印着 `WOMEN'S SINGLES | 3RD ROUND · GRANDSTAND / 8 IGA SWIATEK / 25 MARIE BOUZKOVA`，190.5s 那一张比分 `7 7 / 6 6`；解说 188.40s `What an excellent match here on the grand stand`；\n③ 球衣可分：斯瓦泰克白色 On 背心＋紫色渐变短裙＋紫色帽子；布兹科娃荧光黄 Joma 连衣裙＋白发带——0.5s / 20.5s / 158.5s 近景是紫帽，64.5s / 86.5s / 88.5s 近景是荧光黄；\n④ 片尾 196.35s 起是美网品牌板（`silent_audio` 报 196.39s 之后数字静音），已排除在所有段之外。\n⚠️ 解说把 Swiatek 念成 `Shakes` / `Eager`（104.80s / 158.72s），自动字幕照写。",
+  "cover": {
+    "matchup": [
+      {
+        "name": "斯瓦泰克",
+        "name_en": "Iga Swiatek",
+        "country": "POL",
+        "rank": 8
+      },
+      {
+        "name": "布兹科娃",
+        "name_en": "Marie Bouzkova",
+        "country": "CZE",
+        "rank": 26
+      }
+    ],
+    "_rank_why": "两人当期排名同一期、同一个权威源：WTA 官方 `players/ranked`（`rankedAt=2026-08-31T00:00:00Z`，`page=0`）：Iga Swiatek 第 8（4809 分）；Marie Bouzkova 第 26（1753 分）。美网官方 `players.json`：wta326408 Swiatek singles_rank 8 / seed True（记分条 8 号种子）；wta320983 Bouzkova singles_rank 26 / seed True（25 号种子）。",
+    "_heat_why": "斯瓦泰克世界第 8、本届 8 号种子，②档（世界前 20）直接过；她是 2022 年美网冠军（转播 50.32s / 190.32s 两次 `the former champion`），这一场两盘都在 5-6 落后、次盘救下三个盘点才两个抢七过关。",
+    "winner": "斯瓦泰克",
+    "result": "7-6(3) 7-6(3)",
+    "_result_why": "赢家视角，三处印证：flashscore 当日表 `jopRZPOj` `AE÷Swiatek I.`(home) `AF÷Bouzkova M.`(away)，`BA/BB=7/6 BC/BD=7/6`，`df_st_1` `Match points saved 客队 2`（救赛点的是输家布兹科娃）；`df_sui_1` 两盘抢七小分 7/3、7/3；源片 190.5s 全屏图形 `7 7 / 6 6`、124.5s 记分条 `MATCH POINT #2 7 6 [6] / 6 6 [2]` 发球指示在 SWIATEK。\n抢七小分 `(3)` 是**输掉那一盘的人**（布兹科娃）拿到的分。⚠️ 编排器草稿 `_match` 把 participants 写成了 [布兹科娃, 斯瓦泰克]、赢家写成布兹科娃——那是把 matchup 的顺序套到了 home/away 的比分上，这里按 flashscore home/away 重写。",
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "斯瓦泰克",
+    "topic": "美网第三轮 · 斯瓦泰克 vs 布兹科娃",
+    "_topic_why": "按账号所有者 2026-09-03「封面左上角的副标题不要写球场号，写对阵双方」写成对阵。球场（Grandstand）在比分板头一行印着。",
+    "hook": "两盘都打到五比六\n她救回三个盘点",
+    "_hook_why": "两行框住的是**整场的形状**：首盘 5-5 她的发球局被破、5-6 落后，布兹科娃发球胜盘局又被她破回（`df_mh_1` Set 1 5-6 / 6-6 两局）；第二盘 5-6 她自己发球，连着三个盘点全救回（Set 2 6-6 那一局 40:A |B1||B2| ×3），两盘都拖进抢七。「她」是封面主体斯瓦泰克。\n⚠️ 不重复比分板：板上印 7-6(3) 7-6(3)，钩子一个抢七的数都没写。行长 8 字 / 7 字，都在 `HOOK_MAX_CHARS = 10` 之内。",
+    "portrait": {
+      "image": "assets/reel/swiatek-bouzkova-cover.jpg",
+      "fit": "cover",
+      "focus": 0.6,
+      "focus_y": 0.0,
+      "zoom": 1.0,
+      "_photo_why": "WTA 官方赛后稿头图，编排器自动抓的（`assets/reel/swiatek-bouzkova-cover.jpg`，4081×2721，铺 1080×1440 只要 0.53×）。打开看过：白色 On 背心＋紫色帽子、正手击球瞬间、球还在拍面上、背景是 `us open` 的蓝色围挡——和源片 0.5s / 20.5s 近景是同一个人同一场，击球中、眼睛盯着球，表情用力。",
+      "_fit_why": "横图 3:2，按高度铺满（`cover`）之后整幅缩到 2160×1440，取 1080 宽的一条。`focus 0.6` 把脸放在画布中央偏右：脸在源图 x≈0.63、y≈0.30~0.45 → 画布 y≈430~650，落在台头带（0~170）之下、钩子带（790 起）之上；球拍和球在左下角，框内。",
+      "_zoom_why": "本地 `render_cover_local.py` 渲过再定：zoom 1.0 时脸和两条文字带都不重叠，球拍上的球还在框里；再放大球拍就出画。"
+    },
+    "scoreboard": {
+      "court": "Grandstand",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%222%3A27%3A00%22%2C%22source%22%3A%22flashscore%20jopRZPOj%20df_sui_1%20Set%201%201%3A08%20%2B%20Set%202%201%3A19%20%3D%202%3A27%22%7D",
+        "field": "duration"
+      },
+      "_court_why": "三源一致：源片 62.5s / 190.5s 全屏图形印着 `GRANDSTAND`；解说 188.40s `here on the grand stand`；编排器从美网官方 matches feed 取的 `court: Grandstand`（草稿 `_production.court`）。",
+      "_duration_why": "flashscore `df_sui_1`：Set 1 1:08、Set 2 1:19、全场 2:27（分盘加起来等于全场，自洽）；解说 190.32s `Two and a half hours` 同一个量级。美网官方 `players/matches/wta326408_matches.json` 在这台沙箱 403（`players.json` 通、`matches/` 被拒），拿不到 `setDurations` 交叉核——写进这一条，下次在 runner 上能取到就以官方为准。源片 144.5s 场边时钟 `2:2x`（第二盘抢七 6-2 时）和全场 2:27 自洽。"
+    },
+    "_no_cover_narration_why": "赛场之上的封面是定长 1.2 秒的短亮相（`COVER_SECONDS`），封面跟着配音走只给网球有故事。钩子那两行只印在海报上，不念。"
   },
-  "scoreboard": {
-   "court": "Grandstand",
-   "duration_source": {
-    "url": "data:application/json,%7B%22duration%22%3A%222%3A27%3A00%22%2C%22source%22%3A%22flashscore%20jopRZPOj%20df_sui_1%20Set%201%201%3A08%20%2B%20Set%202%201%3A19%20%3D%202%3A27%22%7D",
-    "field": "duration"
-   },
-   "_court_why": "三源一致：源片 62.5s / 190.5s 全屏图形印着 `GRANDSTAND`；解说 188.40s `here on the grand stand`；编排器从美网官方 matches feed 取的 `court: Grandstand`（草稿 `_production.court`）。",
-   "_duration_why": "flashscore `df_sui_1`：Set 1 1:08、Set 2 1:19、全场 2:27（分盘加起来等于全场，自洽）；解说 190.32s `Two and a half hours` 同一个量级。美网官方 `players/matches/wta326408_matches.json` 在这台沙箱 403（`players.json` 通、`matches/` 被拒），拿不到 `setDurations` 交叉核——写进这一条，下次在 runner 上能取到就以官方为准。源片 144.5s 场边时钟 `2:2x`（第二盘抢七 6-2 时）和全场 2:27 自洽。"
+  "_match": {
+    "status": "result_verified",
+    "source": "flashscore_points",
+    "source_id": "jopRZPOj",
+    "flashscore_id": "jopRZPOj",
+    "participants": [
+      "斯瓦泰克",
+      "布兹科娃"
+    ],
+    "set_scores_home_away": [
+      [
+        7,
+        6
+      ],
+      [
+        7,
+        6
+      ]
+    ],
+    "tiebreaks_home_away": [
+      [
+        7,
+        3
+      ],
+      [
+        7,
+        3
+      ]
+    ],
+    "winner": "斯瓦泰克",
+    "loser": "布兹科娃",
+    "winner_result": "7-6(3) 7-6(3)",
+    "loser_result": "6-7(3) 6-7(3)",
+    "_direction_why": "flashscore `AE÷Swiatek I.` 是 home、`AF÷Bouzkova M.` 是 away，`BA/BB=7/6 BC/BD=7/6`，赢家是斯瓦泰克；`df_st_1` `Match points saved 主队 0 / 客队 2`（救赛点的是输家）；源片 190.5s 全屏图形 `7 7 / 6 6`。",
+    "_order_why": "`participants` 跟 flashscore 的 home/away（斯瓦泰克是 home），这一场和 `cover.matchup` 同序，所以 `stats.a` 不用对调。⚠️ 编排器草稿把 participants 写成 [布兹科娃, 斯瓦泰克] 套在同一组 home/away 比分上，算出的赢家是反的——`_match` 的顺序跟 feed，不跟 matchup。",
+    "_tiebreak_why": "两盘都是普通抢七（都不是决胜盘），`df_sui_1` 两对小分 7/3、7/3；flashscore 当日表 `DA/DB=7/3`、`DC/DD=7/3`。"
   },
-  "_no_cover_narration_why": "赛场之上的封面是定长 1.2 秒的短亮相（`COVER_SECONDS`），封面跟着配音走只给网球有故事。钩子那两行只印在海报上，不念。"
- },
- "_match": {
-  "status": "result_verified",
-  "source": "flashscore_points",
-  "source_id": "jopRZPOj",
-  "flashscore_id": "jopRZPOj",
-  "participants": [
-   "斯瓦泰克",
-   "布兹科娃"
+  "stats": {
+    "a": {
+      "aces": 2,
+      "df": 3,
+      "winners": 35,
+      "ue": 34,
+      "first_in": 70,
+      "first_won": 42,
+      "second_total": 25,
+      "second_won": 14,
+      "bp_conv": 5,
+      "bp_chances": 10,
+      "pts_won": 91,
+      "pts_total": 177,
+      "first_total": 95,
+      "headshot": "assets/players/headshots/wta-326408.jpg"
+    },
+    "b": {
+      "aces": 0,
+      "df": 6,
+      "winners": 20,
+      "ue": 24,
+      "first_in": 60,
+      "first_won": 39,
+      "second_total": 22,
+      "second_won": 8,
+      "bp_conv": 5,
+      "bp_chances": 13,
+      "pts_won": 86,
+      "pts_total": 177,
+      "first_total": 82,
+      "headshot": "assets/players/headshots/wta-320983.jpg"
+    },
+    "_source": "flashscore `jopRZPOj` 的 `df_st_1`（Match 那一档，`match_stat_hooks.py jopRZPOj --stats-block` 直接吐的）。这场**有**制胜分和非受迫失误（斯瓦泰克 35/34，布兹科娃 20/24），已填。\n`stats.a` 跟 `cover.matchup[0]`（斯瓦泰克），flashscore 的 home 也是斯瓦泰克——同序，工具吐出来的 a/b 原样填。头像跟着数字走：左边 `wta-326408` 是斯瓦泰克，右边 `wta-320983` 是布兹科娃（两张都在已发 spec 里认过）。⚠️ 编排器草稿把这两块的名字标反了（数字是斯瓦泰克的，头像和 matchup[0] 是布兹科娃），这里按数字归位。\n`first_total` 按 `first_in + second_total` 算（70+25=95、60+22=82）。"
+  },
+  "_hit_data": [
+    {
+      "label": "两盘都在 5-6 落后",
+      "detail": "首盘 5-5 她的发球局从 0-40 被破、5-6；布兹科娃 6-5 发球胜盘局被她破回（40-15 领先时）。第二盘 5-6 她自己发球，40-A 三次，三个盘点全救回",
+      "source": "flashscore df_mh_1（Set 1 5-6 / 6-6；Set 2 6-6：40:A |B1||B2| ×3）"
+    },
+    {
+      "label": "三个盘点全救回",
+      "detail": "全场布兹科娃只在第二盘 5-6 那一局拿到过盘点，三个，一个都没兑现；首盘她发球胜盘局没有拿到盘点就被破",
+      "source": "flashscore df_mh_1（|B2| 只出现在 Set 2 6-6 那一局）"
+    },
+    {
+      "label": "两个抢七都是 7-3",
+      "detail": "首盘抢七 6-2 一个盘点被救、第二个拿下；第二盘抢七 3-0 开局，6-1 / 6-2 两个赛点被布兹科娃救下，第三个拿下",
+      "source": "flashscore df_sui_1 抢七小分 7/3、7/3；df_st_1 Match points saved 客队 2；源片记分条 26.5s / 40.5s / 124.5s / 146.5s"
+    },
+    {
+      "label": "总分差",
+      "detail": "斯瓦泰克 91 - 布兹科娃 86，只多 5 分",
+      "source": "flashscore df_st_1（Total Points Won 91/177 vs 86/177）"
+    },
+    {
+      "label": "首盘各破三次",
+      "detail": "首盘两人各破对方三次发球局（斯瓦泰克 3/6、布兹科娃 3/5）",
+      "source": "flashscore df_st_1 Set 1（Break Points Converted 3/6 vs 3/5）"
+    },
+    {
+      "label": "第二盘 0-3 落后",
+      "detail": "第二盘布兹科娃 3-0 开局；斯瓦泰克 2-3 破回、2-4 再丢、3-4 再破回，4-4 那一局又救一个破发点",
+      "source": "flashscore df_mh_1 Set 2 逐局"
+    },
+    {
+      "label": "制胜分对比",
+      "detail": "斯瓦泰克 35 个制胜分对 20 个，非受迫失误 34 对 24",
+      "source": "flashscore df_st_1（Winners 35/20、Unforced errors 34/24）"
+    },
+    {
+      "label": "最后十个球",
+      "detail": "全场最后十个球斯瓦泰克赢了七个",
+      "source": "flashscore df_st_1（Last 10 balls 7 / 3）"
+    },
+    {
+      "label": "交手记录",
+      "detail": "Swiatek I. 4 : 0 Bouzkova M.（含本场）· 红土 1:0 · 硬地 3:0",
+      "source": "flashscore df_hh_1"
+    },
+    {
+      "label": "近况",
+      "detail": "Swiatek I. 最近 5 场 4 胜（WWWLW）；Bouzkova M. 最近 5 场 3 胜（LWWLW）",
+      "source": "flashscore df_hh_1 Last matches"
+    }
   ],
-  "set_scores_home_away": [
-   [
-    7,
-    6
-   ],
-   [
-    7,
-    6
-   ]
+  "_durations": [
+    [
+      "Set 1",
+      "1:08"
+    ],
+    [
+      "Set 2",
+      "1:19"
+    ],
+    [
+      "全场",
+      "2:27"
+    ]
   ],
-  "tiebreaks_home_away": [
-   [
-    7,
-    3
-   ],
-   [
-    7,
-    3
-   ]
+  "_turning_points": [
+    {
+      "label": "【Set 2】6-6  斯瓦泰克发球，斯瓦泰克拿下  密度9  ← 3个破发点、3个盘点",
+      "density": 9,
+      "tags": [
+        "3个破发点",
+        "3个盘点"
+      ]
+    },
+    {
+      "label": "【Set 1】6-6  布兹科娃发球，斯瓦泰克拿下  密度2  ← 2个破发点、破发成功（布兹科娃发球胜盘局被破）",
+      "density": 2,
+      "tags": [
+        "2个破发点",
+        "破发成功"
+      ]
+    },
+    {
+      "label": "【Set 1】5-6  斯瓦泰克发球，布兹科娃拿下  密度3  ← 3个破发点",
+      "density": 3,
+      "tags": [
+        "3个破发点"
+      ]
+    },
+    {
+      "label": "【Set 2】0-2  斯瓦泰克发球，布兹科娃拿下  密度3  ← 3个破发点",
+      "density": 3,
+      "tags": [
+        "3个破发点"
+      ]
+    },
+    {
+      "label": "【Set 1】1-1  布兹科娃发球，斯瓦泰克拿下  密度3  ← 3个破发点、破发成功",
+      "density": 3,
+      "tags": [
+        "3个破发点",
+        "破发成功"
+      ]
+    }
   ],
-  "winner": "斯瓦泰克",
-  "loser": "布兹科娃",
-  "winner_result": "7-6(3) 7-6(3)",
-  "loser_result": "6-7(3) 6-7(3)",
-  "_direction_why": "flashscore `AE÷Swiatek I.` 是 home、`AF÷Bouzkova M.` 是 away，`BA/BB=7/6 BC/BD=7/6`，赢家是斯瓦泰克；`df_st_1` `Match points saved 主队 0 / 客队 2`（救赛点的是输家）；源片 190.5s 全屏图形 `7 7 / 6 6`。",
-  "_order_why": "`participants` 跟 flashscore 的 home/away（斯瓦泰克是 home），这一场和 `cover.matchup` 同序，所以 `stats.a` 不用对调。⚠️ 编排器草稿把 participants 写成 [布兹科娃, 斯瓦泰克] 套在同一组 home/away 比分上，算出的赢家是反的——`_match` 的顺序跟 feed，不跟 matchup。",
-  "_tiebreak_why": "两盘都是普通抢七（都不是决胜盘），`df_sui_1` 两对小分 7/3、7/3；flashscore 当日表 `DA/DB=7/3`、`DC/DD=7/3`。"
- },
- "stats": {
-  "a": {
-   "aces": 2,
-   "df": 3,
-   "winners": 35,
-   "ue": 34,
-   "first_in": 70,
-   "first_won": 42,
-   "second_total": 25,
-   "second_won": 14,
-   "bp_conv": 5,
-   "bp_chances": 10,
-   "pts_won": 91,
-   "pts_total": 177,
-   "first_total": 95,
-   "headshot": "assets/players/headshots/wta-326408.jpg"
+  "_turning_points_why": "转折点是第二盘 5-6 斯瓦泰克发球那一局的三个盘点（Set 2 6-6，密度 9），**集锦里有**（88.5~105.7s，`SET POINT #3` 那一分带解说 `Somehow Swiatek survives that point`），第 ⑧ 段整段给它。首盘 5-6 / 6-6 那两局（她被破、再破回布兹科娃的发球胜盘局）**集锦里没有**——转播从抢七 6-2 盘点起才接上，第 ④ 段旁白交代。第二盘 0-3 → 5-5 那一段同样不在集锦里，第 ⑥ 段旁白交代，压在她走回椅子和全屏图形的画面上。",
+  "editorial": {
+    "mode": "match_review",
+    "hook": [
+      "两盘都打到五比六",
+      "她救回三个盘点"
+    ],
+    "_hook_why": "这一栏和 `cover.hook` 必须逐字相同。理由见 `cover._hook_why`。",
+    "question": "总分只多五分、两盘都在 5-6 落后的斯瓦泰克，是怎么两个抢七都 7-3 拿下的？她在哪几分上站住了？",
+    "thesis": "首盘 5-5 她的发球局从 0-40 被破，布兹科娃 6-5 发球胜盘局又被她破回（40-15 领先时），抢七 6-2 一个盘点被救、第二个 7-3 拿下；第二盘 0-3 落后追到 5-5，5-6 自己发球连着面对三个盘点、40-A 三次全救回，抢七 3-0 开局，6-1 / 6-2 两个赛点被救下，第三个 7-3 收下。全场 177 分她只多 5 分，破发点两边各兑现 5 个，差别在她关键分上的制胜分（35 对 20）——最后十个球她赢七个。",
+    "beats": [
+      "首盘 1 小时 8 分：两人各破对方三次；5-5 斯瓦泰克发球局 0-40 被破、5-6，布兹科娃 6-5 发球胜盘局又被破回；抢七 6-2 盘点被救下（`That's too good`），6-3 第二个盘点拿下 7-3。",
+      "第二盘布兹科娃 3-0 开局，斯瓦泰克 2-3 破回、2-4 再丢、3-4 再破回，4-4 又救一个破发点，5-5；布兹科娃 5-5 发球保住，5-6——**斯瓦泰克 5-6 自己发球，40-A 三次，三个盘点全救回**（`Somehow Swiatek survives that point`），6-6。",
+      "第二个抢七 3-0 开局，6-1 / 6-2 两个赛点被布兹科娃救下（`Not yet`），6-3 第三个赛点拿下——两小时二十七分钟，两个抢七都是 7-3，四次交手 4-0；总分 91 比 86，最后十个球赢七个。"
+    ],
+    "human_context": {
+      "angle": "2022 年在这儿夺冠的斯瓦泰克，第三轮就被一个此前三次都输给她的人逼到两个抢七、还救了三个盘点——总分只多五分。转播两次叫她 `the former champion`，最后一句是 `Two and a half hours and the former champion is through`。",
+      "facts": [
+        "WTA 官方 players/ranked（rankedAt 2026-08-31）：斯瓦泰克第 8、布兹科娃第 26",
+        "美网官方 players.json：wta326408 Swiatek seed True（8 号）；wta320983 Bouzkova seed True（25 号）",
+        "flashscore df_hh_1：Swiatek I. 4 : 0 Bouzkova M.（含本场），硬地 3:0、红土 1:0",
+        "转播原声 50.32s：`the former champion finding her way out here as she takes the opening set by seven games to six`；104.80s：`Somehow Swiatek survives that point.`；186.48~192.56s：`What a fabulous performance. What an excellent match here on the grand stand. Two and a half hours and the former champion is through. 76 76.`",
+        "斯瓦泰克 2022 年美网女单冠军（决赛胜贾巴尔），转播的 `former champion` 指的就是这一冠"
+      ],
+      "sources": [
+        "https://api.wtatennis.com/tennis/players/ranked?page=0&pageSize=100&type=rankSingles&sort=asc&metric=SINGLES",
+        "https://www.usopen.org/en_US/scores/feeds/2026/players/players.json",
+        "https://www.youtube.com/watch?v=0x6WoB4W8bI"
+      ]
+    }
   },
-  "b": {
-   "aces": 0,
-   "df": 6,
-   "winners": 20,
-   "ue": 24,
-   "first_in": 60,
-   "first_won": 39,
-   "second_total": 22,
-   "second_won": 8,
-   "bp_conv": 5,
-   "bp_chances": 13,
-   "pts_won": 86,
-   "pts_total": 177,
-   "first_total": 82,
-   "headshot": "assets/players/headshots/wta-320983.jpg"
+  "topbar": {
+    "line1": "2026 美网 女单第三轮",
+    "line2": "斯瓦泰克 7-6(3) 7-6(3) 布兹科娃"
   },
-  "_source": "flashscore `jopRZPOj` 的 `df_st_1`（Match 那一档，`match_stat_hooks.py jopRZPOj --stats-block` 直接吐的）。这场**有**制胜分和非受迫失误（斯瓦泰克 35/34，布兹科娃 20/24），已填。\n`stats.a` 跟 `cover.matchup[0]`（斯瓦泰克），flashscore 的 home 也是斯瓦泰克——同序，工具吐出来的 a/b 原样填。头像跟着数字走：左边 `wta-326408` 是斯瓦泰克，右边 `wta-320983` 是布兹科娃（两张都在已发 spec 里认过）。⚠️ 编排器草稿把这两块的名字标反了（数字是斯瓦泰克的，头像和 matchup[0] 是布兹科娃），这里按数字归位。\n`first_total` 按 `first_in + second_total` 算（70+25=95、60+22=82）。"
- },
- "_hit_data": [
-  {
-   "label": "两盘都在 5-6 落后",
-   "detail": "首盘 5-5 她的发球局从 0-40 被破、5-6；布兹科娃 6-5 发球胜盘局被她破回（40-15 领先时）。第二盘 5-6 她自己发球，40-A 三次，三个盘点全救回",
-   "source": "flashscore df_mh_1（Set 1 5-6 / 6-6；Set 2 6-6：40:A |B1||B2| ×3）"
+  "push": {
+    "summary": "斯瓦泰克连赢两个抢七",
+    "_summary_why": "主语（斯瓦泰克）＋ 比分板上看得见但读者一眼未必读出来的形状（双抢七）＋ 险胜 ＋ 对手。12 字，`SUMMARY_MAX=13` 之内。哪一站交给 `lead` 第一句。",
+    "lead": "美网女单第三轮，大看台球场。8 号种子、2022 年冠军斯瓦泰克 7-6(3) 7-6(3) 险胜 25 号种子布兹科娃，两小时二十七分钟。首盘 5-5 她的发球局从 0-40 被破，布兹科娃 6-5 发球胜盘局又被她破回，抢七 7-3；第二盘她 0-3 落后追到 5-5，5-6 自己发球连着面对三个盘点、全部救回，抢七再 7-3——中间布兹科娃还救了两个赛点。全场 177 分她只多 5 分，两边破发点各兑现 5 个，差别在关键分上的制胜分（35 对 20）；最后十个球她赢七个。四次交手 4-0。",
+    "auto": true
   },
-  {
-   "label": "三个盘点全救回",
-   "detail": "全场布兹科娃只在第二盘 5-6 那一局拿到过盘点，三个，一个都没兑现；首盘她发球胜盘局没有拿到盘点就被破",
-   "source": "flashscore df_mh_1（|B2| 只出现在 Set 2 6-6 那一局）"
-  },
-  {
-   "label": "两个抢七都是 7-3",
-   "detail": "首盘抢七 6-2 一个盘点被救、第二个拿下；第二盘抢七 3-0 开局，6-1 / 6-2 两个赛点被布兹科娃救下，第三个拿下",
-   "source": "flashscore df_sui_1 抢七小分 7/3、7/3；df_st_1 Match points saved 客队 2；源片记分条 26.5s / 40.5s / 124.5s / 146.5s"
-  },
-  {
-   "label": "总分差",
-   "detail": "斯瓦泰克 91 - 布兹科娃 86，只多 5 分",
-   "source": "flashscore df_st_1（Total Points Won 91/177 vs 86/177）"
-  },
-  {
-   "label": "首盘各破三次",
-   "detail": "首盘两人各破对方三次发球局（斯瓦泰克 3/6、布兹科娃 3/5）",
-   "source": "flashscore df_st_1 Set 1（Break Points Converted 3/6 vs 3/5）"
-  },
-  {
-   "label": "第二盘 0-3 落后",
-   "detail": "第二盘布兹科娃 3-0 开局；斯瓦泰克 2-3 破回、2-4 再丢、3-4 再破回，4-4 那一局又救一个破发点",
-   "source": "flashscore df_mh_1 Set 2 逐局"
-  },
-  {
-   "label": "制胜分对比",
-   "detail": "斯瓦泰克 35 个制胜分对 20 个，非受迫失误 34 对 24",
-   "source": "flashscore df_st_1（Winners 35/20、Unforced errors 34/24）"
-  },
-  {
-   "label": "最后十个球",
-   "detail": "全场最后十个球斯瓦泰克赢了七个",
-   "source": "flashscore df_st_1（Last 10 balls 7 / 3）"
-  },
-  {
-   "label": "交手记录",
-   "detail": "Swiatek I. 4 : 0 Bouzkova M.（含本场）· 红土 1:0 · 硬地 3:0",
-   "source": "flashscore df_hh_1"
-  },
-  {
-   "label": "近况",
-   "detail": "Swiatek I. 最近 5 场 4 胜（WWWLW）；Bouzkova M. 最近 5 场 3 胜（LWWLW）",
-   "source": "flashscore df_hh_1 Last matches"
-  }
- ],
- "_durations": [
-  [
-   "Set 1",
-   "1:08"
-  ],
-  [
-   "Set 2",
-   "1:19"
-  ],
-  [
-   "全场",
-   "2:27"
+  "_editing_why": "**probe**：`output/2026-09-06/reel/swiatek-bouzkova/probe.json`（编排器跑的，没给 `--scorebox`，`point_ends` 是空的——段尾按 `scene_cuts` ＋ 解说落点 ＋ 缩略图墙定）。\n**认人看球衣**：斯瓦泰克白背心紫帽紫裙（On），布兹科娃荧光黄连衣裙白发带（Joma）。第 ①②⑮⑰ 段的近景全是紫帽；第 ⑦ 段回合以布兹科娃的一拍收尾，旁白主语是她。\n**集锦漏掉的两段**（首盘 5-6 / 6-6 两局；第二盘 0-3 → 5-5）由第 ④ ⑥ 段旁白交代。**转折点在集锦里**：第 ⑧ 段 `SET POINT #3` 那一分整段保留。\n**赢球之后一刀不剪**：154.0 起到 196.1（片尾板 196.35 之前）连续保留——赛点那一分 → 吼出来 → 笑 → 握手 → 布兹科娃致意 → 和裁判握手 → 包厢 → 走回椅子 → 全屏赛果图形，中间只在 160.0 / 165.85 / 179.15 分了刀给旁白用。\n**第一版渲之前跑过**：`--dry-run`、`preview_segments_local`（逐段对记分条）、`--check-narration`（edge 真跑）、`render_cover_local`。",
+  "segments": [
+    {
+      "start": 154.0,
+      "end": 160.0,
+      "narration": "",
+      "score_inset": true,
+      "_ending_payoff_required": true,
+      "crosses_cut": "跨 157.57：第三个赛点那一分落地 → 她张嘴吼出来的近景（158.5，紫帽），同一个人。",
+      "_why": "**第①格：全片最强的一格。** 第三个赛点那一分的最后三秒半到落地，不配旁白，靠现场声——记分条 `MATCH POINT #3 7 6 [6] / 6 6 [3]`，发球指示在 SWIATEK；解说 158.72s `Iga takes the breaker and moves into the fourth round`，158.5 她吼出来。\n⚠️ 后段冷开场：正文第 ⑮ 段（154.0→166.0）完整覆盖 154.0→160.0 和第②段，`ending_payoff_problem` 要的就是这个覆盖关系。",
+      "fit": "crop"
+    },
+    {
+      "start": 160.0,
+      "end": 165.85,
+      "narration": "两盘都五比六落后，三个盘点全救回来。",
+      "score_inset": false,
+      "_score_inset_why": "160.5 / 162.5 / 164.5 三格都是她笑着走回底线的近景（紫帽、白背心 OSHEE 标），记分条已经收掉（`score_04.jpg` 这三格是空的）。",
+      "_why": "第②句给落点，压在她笑出来的近景上。两个数：`df_mh_1` Set 1 5-6、Set 2 5-6 两局都是她落后；Set 2 6-6 那一局 40:A |B1||B2| ×3 全救回。段尾 165.85 ＋ `SEG_FADE` 0.18 ＝ 166.03，连溶解底料也停在 166.08 那一刀（握手宽景）之前。",
+      "fit": "crop"
+    },
+    {
+      "start": 2.0,
+      "end": 18.45,
+      "narration": "北京时间九月六日凌晨两点，美网第三轮，大看台球场。八号种子、二〇二二年的冠军斯瓦泰克，对面是二十五号种子布兹科娃。",
+      "score_inset": true,
+      "_why": "第③格交代坐标。画面是首盘第二局的底线回合（记分条 `0 [AD] / 1`，发球指示在 BOUZKOVA——1-1 那一局，斯瓦泰克三个破发点破回来），宽景谁都没露脸，正好放身份；2.5 那格顶上还挂着 `LONGEST RALLY: 16 SHOTS`。开球时刻取 flashscore `AD=1788631200`＝北京时间 2026-09-06 02:00，按「不报到分」的档位（分钟 0 落在 0~9）说「凌晨两点」。种子号出自记分条 `8 SWIATEK / 25 BOUZKOVA`；「二〇二二年的冠军」出自转播 50.32s / 190.32s `the former champion` ＋ 2022 年美网决赛（见 `editorial.human_context.facts`）。段尾 18.45 ＋ 0.18 ＝ 18.63，连溶解底料也停在 18.65 那一刀（她的近景）之前。",
+      "fit": "crop"
+    },
+    {
+      "start": 26.95,
+      "end": 37.5,
+      "narration": "首盘两次被破，两次都破回来。五比六，布兹科娃的发球胜盘局，又被她破掉。抢七。",
+      "score_inset": true,
+      "_why": "记分条 `SET POINT 6 [6] / 6 [2]`，发球指示在 SWIATEK——首盘抢七 6-2 她发球的盘点那一分（26.5 她的近景，28.5~36.5 回合）。回合以布兹科娃的一拍收尾，解说 36.32s `That's too good`——这一分布兹科娃拿下，6-3。旁白讲的是刚过去的两局：`df_mh_1` Set 1 0-1 / 1-2 她两次丢发球局、1-1 / 2-2 两次破回；5-6 那一局 0:40 被破；6-6 那一局布兹科娃发球 40:15 |B1| 40:30 |B1| 被破。**这几局集锦里没有**，转播从抢七 6-2 起才接上。段尾 37.5 ＋ 0.18 ＝ 37.68，连溶解底料也停在 37.69 那一刀之前。",
+      "fit": "crop"
+    },
+    {
+      "start": 40.9,
+      "end": 53.6,
+      "narration": "第二个盘点，七比三。首盘一小时零八分钟，两个人各破对方三次。",
+      "score_inset": true,
+      "crosses_cut": "跨 50.77：盘点那一分落地 → 她走回底线、场边时钟（52.5，紫帽）。同一个人。",
+      "_why": "记分条 `SET POINT #2 6 [6] / 6 [3]`，发球指示在 BOUZKOVA——首盘抢七第二个盘点，解说 50.32s `the former champion finding her way out here as she takes the opening set by seven games to six`。「一小时零八分钟」＝ `df_sui_1` Set 1 1:08；「各破三次」＝ `df_st_1` Set 1 Break Points Converted 3/6 vs 3/5。段尾 53.6 ＋ 0.18 ＝ 53.78，停在 53.8 那一刀（看台）之前。",
+      "fit": "crop"
+    },
+    {
+      "start": 53.9,
+      "end": 63.5,
+      "narration": "第二盘她零比三落后。二比三破回来，二比四又丢，三比四再破回来，五比五。",
+      "score_inset": false,
+      "_score_inset_why": "看台（54.5）、她的包厢鼓掌（56.5、58.5）、她坐在伞下的椅子上（60.5）、全屏图形（62.5）——整段没有常驻记分条（`score_01.jpg` 这几格都是空的）。",
+      "crosses_cut": "跨 56.32 / 58.84：看台 → 包厢鼓掌 → 她在伞下 → 62.5 全屏图形 `7 0 / 6 0`。盘间过场，主体不是某一个回合。",
+      "_why": "第二盘前半段**集锦里没有**（记分条从首盘抢七直接跳到 5-5），按「转折点不在集锦里 → 明说」办：`df_mh_1` Set 2 0-1 / 0-2（三个破发点破掉她）/ 0-3；1-3 保发；2-3 破回；2-4 又丢；3-4 破回；4-4 救一个破发点保住；4-5 / 5-5。旁白压在盘间的看台、包厢和全屏图形上。段尾 63.5 停在 64.5 那格布兹科娃近景之前（`scene_cuts` 没报这一刀，缩略图墙上 62.5→64.5 从图形切到荧光黄近景）。",
+      "fit": "crop"
+    },
+    {
+      "start": 67.95,
+      "end": 82.55,
+      "narration": "五比五，布兹科娃发球。这一局她保住了，五比六——斯瓦泰克又一次要发球保盘。",
+      "score_inset": true,
+      "_why": "记分条 `7 5 / 6 5`，发球指示在 BOUZKOVA——第二盘 5-5 布兹科娃发球那一局（`df_mh_1` Set 2 5-6：0:15 15:15 15:30 30:30 30:40，客队拿下）。回合以布兹科娃的一拍收尾，解说 81.92s `Oh, brilliant.` 84.24s `She got away with that.` 段尾 82.55 ＋ 0.18 ＝ 82.73，连溶解底料也停在 82.78 那一刀（她走动的近景）之前。",
+      "fit": "crop"
+    },
+    {
+      "start": 89.35,
+      "end": 105.55,
+      "narration": "五比六，斯瓦泰克发球，四十平之后连着三个盘点。这是第三个——转播说，不知道她是怎么救下来的。",
+      "score_inset": true,
+      "_why": "记分条 `SET POINT #3 7 5 [ ] / 6 6 [AD]`，发球指示在 SWIATEK——第二盘 5-6 她发球那一局的第三个盘点（`df_mh_1` Set 2 6-6：40:40 A:40 40:40 40:A |B1||B2| 40:40 40:A |B1||B2| 40:40 40:A |B1||B2| 40:40 A:40）。解说 104.80s `Somehow Shakes survives that point.`（ASR 把 Swiatek 听成 Shakes）。**全片的转折点，整段保留。** 段尾 105.55 ＋ 0.18 ＝ 105.73，连溶解底料也停在 105.77 那一刀之前。「救下来」的主语是她自己（面对盘点的一方）。",
+      "fit": "crop"
+    },
+    {
+      "start": 105.8,
+      "end": 109.8,
+      "narration": "三个盘点全救回，六比六。",
+      "score_inset": true,
+      "_why": "她转身走回底线的背影（106.5，紫裙），记分条 `SET POINT #3` 淡出、108.5 换成 `7 POINT TIEBREAK`。段尾 109.8 ＋ 0.18 ＝ 109.98，停在 109.99 那一刀之前。",
+      "fit": "crop"
+    },
+    {
+      "start": 110.0,
+      "end": 120.45,
+      "narration": "第二个抢七，她开局二比零。这一分再拿下，三比零。",
+      "score_inset": true,
+      "_why": "记分条 `7 POINT TIEBREAK 7 6 [2] / 6 6 [0]`，发球指示在 SWIATEK——第二盘抢七 2-0 她发球的那一分，解说 120.08s `Yes. Swinging freely.`；122.5 那格记分条已是 `3 / 0`，所以「这一分再拿下，三比零」和画面对得上。段尾 120.45 ＋ 0.18 ＝ 120.63，停在 120.64 那一刀之前。",
+      "fit": "crop"
+    },
+    {
+      "start": 120.65,
+      "end": 142.9,
+      "narration": "三比零之后到六比一，布兹科娃救下第一个赛点。六比二，第二个赛点，斯瓦泰克发球。",
+      "score_inset": true,
+      "crosses_cut": "跨 125.01：她发球（122.5，89 MPH）→ 124.5 她的近景 `MATCH POINT #2` → 126.5 起赛点回合的宽景。同一个人。",
+      "_why": "122.5 记分条 `7 6 [3] / 6 6 [0]` 布兹科娃发球；124.5 起 `MATCH POINT #2 7 6 [6] / 6 6 [2]` 发球指示在 SWIATEK。第一个赛点（6-1）集锦里没有，`df_st_1` Match points saved 客队 2 ＋ 记分条的 `#2` 编号钉住它存在。这一分布兹科娃救下，解说 142.08s `Not yet.`——结果留给下一段说。段尾 142.9 ＋ 0.18 ＝ 143.08，停在那一刀上。",
+      "fit": "crop"
+    },
+    {
+      "start": 143.1,
+      "end": 154.0,
+      "narration": "布兹科娃又救下一个，六比三。第三个赛点，斯瓦泰克发球。",
+      "score_inset": true,
+      "crosses_cut": "跨 146.51（loose）：布兹科娃走回底线、场边时钟 `2:2x`（144.5，荧光黄）→ 146.5 起 `MATCH POINT #3` 那一分的宽景。旁白主语先是布兹科娃（她刚救下赛点，画面正是她），再转到发球的斯瓦泰克。",
+      "_why": "记分条 144.5 `MATCH POINT #2 … 6 / 2` 淡出，146.5 起 `MATCH POINT #3 7 6 [6] / 6 6 [3]`，发球指示在 SWIATEK。这一分从 146.5 一直打到 157.57 落地，154.0 这一刀是为冷开场分的（不是镜头切换），下一段接着同一个回合。",
+      "fit": "crop"
+    },
+    {
+      "start": 154.0,
+      "end": 165.85,
+      "narration": "两小时二十七分钟，两个抢七都是七比三。她吼了出来。",
+      "score_inset": true,
+      "crosses_cut": "跨 157.57 / 160.x：赛点那一分落地 → 她吼出来（158.5）→ 笑着走回底线（160.5~164.5），全是紫帽斯瓦泰克。",
+      "_why": "正文重新兑现冷开场：154.0→165.85 完整覆盖第①段（154.0→160.0）和第②段（160.0→165.85）。「两小时二十七分钟」＝ `df_sui_1` 全场 2:27（转播 190.32s `Two and a half hours`）；「两个抢七都是七比三」＝ `df_sui_1` 抢七小分 7/3、7/3。旁白约四秒念完，「她吼了出来」落在 157.57 那一刀之后的近景上。段尾 165.85 ＋ 0.18 ＝ 166.03，停在 166.08 之前。",
+      "fit": "crop"
+    },
+    {
+      "start": 166.1,
+      "end": 179.15,
+      "narration": "布兹科娃四次交手四次输给她。这一次，她全场只少五分——九十一比八十六。",
+      "score_inset": false,
+      "_score_inset_why": "网前握手（166.5~172.5）、布兹科娃向看台致意（174.5）、斯瓦泰克和裁判握手（176.5）、她走回底线（178.5）——赛后画面，没有记分条（`score_04.jpg` 这几格都是空的）。",
+      "_why": "输家收账：`df_hh_1` Swiatek I. 4 : 0 Bouzkova M.（含本场）；`df_st_1` Total Points Won 86/177 vs 91/177。旁白主语是布兹科娃，画面是两人握手、她向看台致意（174.5，荧光黄）。段尾 179.15 ＋ 0.18 ＝ 179.33，停在 179.38 那一刀之前。",
+      "fit": "crop"
+    },
+    {
+      "start": 179.4,
+      "end": 196.1,
+      "narration": "首盘破掉对手的发球胜盘局，次盘救下三个盘点。四年前在这儿夺冠的人，今年走到了十六强。这样的斯瓦泰克，是警报，还是热身？",
+      "score_inset": false,
+      "_score_inset_why": "她笑着的近景（180.5）、包厢鼓掌（182.5、184.5）、走回椅子（186.5、188.5）、全屏赛果图形（190.5~194.5）——没有常驻记分条。",
+      "crosses_cut": "跨 181.81 / 185.9：她的近景 → 包厢 → 走回椅子 → 全屏赛果图形 `7 7 / 6 6`。赛后同一段连续过程，主体一直是她和她的团队。",
+      "_why": "收尾落在一问上，不停在数据上。「四年前在这儿夺冠」＝ 2022 年美网冠军（转播 `former champion`）；「十六强」＝第三轮赢了之后进第四轮，按「8 强 / 4 强 / 16 强」的写法；全屏图形 190.5s 印着 `7 7 / 6 6`。\n⚠️ 段尾 196.1 ＋ `SEG_FADE` 0.18 ＝ 196.28，停在片尾板那一刀（196.35）和数字静音（196.39）之前。",
+      "fit": "crop"
+    }
   ]
- ],
- "_turning_points": [
-  {
-   "label": "【Set 2】6-6  斯瓦泰克发球，斯瓦泰克拿下  密度9  ← 3个破发点、3个盘点",
-   "density": 9,
-   "tags": [
-    "3个破发点",
-    "3个盘点"
-   ]
-  },
-  {
-   "label": "【Set 1】6-6  布兹科娃发球，斯瓦泰克拿下  密度2  ← 2个破发点、破发成功（布兹科娃发球胜盘局被破）",
-   "density": 2,
-   "tags": [
-    "2个破发点",
-    "破发成功"
-   ]
-  },
-  {
-   "label": "【Set 1】5-6  斯瓦泰克发球，布兹科娃拿下  密度3  ← 3个破发点",
-   "density": 3,
-   "tags": [
-    "3个破发点"
-   ]
-  },
-  {
-   "label": "【Set 2】0-2  斯瓦泰克发球，布兹科娃拿下  密度3  ← 3个破发点",
-   "density": 3,
-   "tags": [
-    "3个破发点"
-   ]
-  },
-  {
-   "label": "【Set 1】1-1  布兹科娃发球，斯瓦泰克拿下  密度3  ← 3个破发点、破发成功",
-   "density": 3,
-   "tags": [
-    "3个破发点",
-    "破发成功"
-   ]
-  }
- ],
- "_turning_points_why": "转折点是第二盘 5-6 斯瓦泰克发球那一局的三个盘点（Set 2 6-6，密度 9），**集锦里有**（88.5~105.7s，`SET POINT #3` 那一分带解说 `Somehow Swiatek survives that point`），第 ⑧ 段整段给它。首盘 5-6 / 6-6 那两局（她被破、再破回布兹科娃的发球胜盘局）**集锦里没有**——转播从抢七 6-2 盘点起才接上，第 ④ 段旁白交代。第二盘 0-3 → 5-5 那一段同样不在集锦里，第 ⑥ 段旁白交代，压在她走回椅子和全屏图形的画面上。",
- "editorial": {
-  "mode": "match_review",
-  "hook": [
-   "两盘都打到五比六",
-   "她救回三个盘点"
-  ],
-  "_hook_why": "这一栏和 `cover.hook` 必须逐字相同。理由见 `cover._hook_why`。",
-  "question": "总分只多五分、两盘都在 5-6 落后的斯瓦泰克，是怎么两个抢七都 7-3 拿下的？她在哪几分上站住了？",
-  "thesis": "首盘 5-5 她的发球局从 0-40 被破，布兹科娃 6-5 发球胜盘局又被她破回（40-15 领先时），抢七 6-2 一个盘点被救、第二个 7-3 拿下；第二盘 0-3 落后追到 5-5，5-6 自己发球连着面对三个盘点、40-A 三次全救回，抢七 3-0 开局，6-1 / 6-2 两个赛点被救下，第三个 7-3 收下。全场 177 分她只多 5 分，破发点两边各兑现 5 个，差别在她关键分上的制胜分（35 对 20）——最后十个球她赢七个。",
-  "beats": [
-   "首盘 1 小时 8 分：两人各破对方三次；5-5 斯瓦泰克发球局 0-40 被破、5-6，布兹科娃 6-5 发球胜盘局又被破回；抢七 6-2 盘点被救下（`That's too good`），6-3 第二个盘点拿下 7-3。",
-   "第二盘布兹科娃 3-0 开局，斯瓦泰克 2-3 破回、2-4 再丢、3-4 再破回，4-4 又救一个破发点，5-5；布兹科娃 5-5 发球保住，5-6——**斯瓦泰克 5-6 自己发球，40-A 三次，三个盘点全救回**（`Somehow Swiatek survives that point`），6-6。",
-   "第二个抢七 3-0 开局，6-1 / 6-2 两个赛点被布兹科娃救下（`Not yet`），6-3 第三个赛点拿下——两小时二十七分钟，两个抢七都是 7-3，四次交手 4-0；总分 91 比 86，最后十个球赢七个。"
-  ],
-  "human_context": {
-   "angle": "2022 年在这儿夺冠的斯瓦泰克，第三轮就被一个此前三次都输给她的人逼到两个抢七、还救了三个盘点——总分只多五分。转播两次叫她 `the former champion`，最后一句是 `Two and a half hours and the former champion is through`。",
-   "facts": [
-    "WTA 官方 players/ranked（rankedAt 2026-08-31）：斯瓦泰克第 8、布兹科娃第 26",
-    "美网官方 players.json：wta326408 Swiatek seed True（8 号）；wta320983 Bouzkova seed True（25 号）",
-    "flashscore df_hh_1：Swiatek I. 4 : 0 Bouzkova M.（含本场），硬地 3:0、红土 1:0",
-    "转播原声 50.32s：`the former champion finding her way out here as she takes the opening set by seven games to six`；104.80s：`Somehow Swiatek survives that point.`；186.48~192.56s：`What a fabulous performance. What an excellent match here on the grand stand. Two and a half hours and the former champion is through. 76 76.`",
-    "斯瓦泰克 2022 年美网女单冠军（决赛胜贾巴尔），转播的 `former champion` 指的就是这一冠"
-   ],
-   "sources": [
-    "https://api.wtatennis.com/tennis/players/ranked?page=0&pageSize=100&type=rankSingles&sort=asc&metric=SINGLES",
-    "https://www.usopen.org/en_US/scores/feeds/2026/players/players.json",
-    "https://www.youtube.com/watch?v=0x6WoB4W8bI"
-   ]
-  }
- },
- "topbar": {
-  "line1": "2026 美网 女单第三轮",
-  "line2": "斯瓦泰克 7-6(3) 7-6(3) 布兹科娃"
- },
- "push": {
-  "summary": "斯瓦泰克双抢七险胜布兹科娃",
-  "_summary_why": "主语（斯瓦泰克）＋ 比分板上看得见但读者一眼未必读出来的形状（双抢七）＋ 险胜 ＋ 对手。12 字，`SUMMARY_MAX=13` 之内。哪一站交给 `lead` 第一句。",
-  "lead": "美网女单第三轮，大看台球场。8 号种子、2022 年冠军斯瓦泰克 7-6(3) 7-6(3) 险胜 25 号种子布兹科娃，两小时二十七分钟。首盘 5-5 她的发球局从 0-40 被破，布兹科娃 6-5 发球胜盘局又被她破回，抢七 7-3；第二盘她 0-3 落后追到 5-5，5-6 自己发球连着面对三个盘点、全部救回，抢七再 7-3——中间布兹科娃还救了两个赛点。全场 177 分她只多 5 分，两边破发点各兑现 5 个，差别在关键分上的制胜分（35 对 20）；最后十个球她赢七个。四次交手 4-0。",
-  "auto": true
- },
- "_editing_why": "**probe**：`output/2026-09-06/reel/swiatek-bouzkova/probe.json`（编排器跑的，没给 `--scorebox`，`point_ends` 是空的——段尾按 `scene_cuts` ＋ 解说落点 ＋ 缩略图墙定）。\n**认人看球衣**：斯瓦泰克白背心紫帽紫裙（On），布兹科娃荧光黄连衣裙白发带（Joma）。第 ①②⑮⑰ 段的近景全是紫帽；第 ⑦ 段回合以布兹科娃的一拍收尾，旁白主语是她。\n**集锦漏掉的两段**（首盘 5-6 / 6-6 两局；第二盘 0-3 → 5-5）由第 ④ ⑥ 段旁白交代。**转折点在集锦里**：第 ⑧ 段 `SET POINT #3` 那一分整段保留。\n**赢球之后一刀不剪**：154.0 起到 196.1（片尾板 196.35 之前）连续保留——赛点那一分 → 吼出来 → 笑 → 握手 → 布兹科娃致意 → 和裁判握手 → 包厢 → 走回椅子 → 全屏赛果图形，中间只在 160.0 / 165.85 / 179.15 分了刀给旁白用。\n**第一版渲之前跑过**：`--dry-run`、`preview_segments_local`（逐段对记分条）、`--check-narration`（edge 真跑）、`render_cover_local`。",
- "segments": [
-  {
-   "start": 154.0,
-   "end": 160.0,
-   "narration": "",
-   "score_inset": true,
-   "_ending_payoff_required": true,
-   "crosses_cut": "跨 157.57：第三个赛点那一分落地 → 她张嘴吼出来的近景（158.5，紫帽），同一个人。",
-   "_why": "**第①格：全片最强的一格。** 第三个赛点那一分的最后三秒半到落地，不配旁白，靠现场声——记分条 `MATCH POINT #3 7 6 [6] / 6 6 [3]`，发球指示在 SWIATEK；解说 158.72s `Iga takes the breaker and moves into the fourth round`，158.5 她吼出来。\n⚠️ 后段冷开场：正文第 ⑮ 段（154.0→166.0）完整覆盖 154.0→160.0 和第②段，`ending_payoff_problem` 要的就是这个覆盖关系。",
-   "fit": "crop"
-  },
-  {
-   "start": 160.0,
-   "end": 165.85,
-   "narration": "两盘都五比六落后，三个盘点全救回来。",
-   "score_inset": false,
-   "_score_inset_why": "160.5 / 162.5 / 164.5 三格都是她笑着走回底线的近景（紫帽、白背心 OSHEE 标），记分条已经收掉（`score_04.jpg` 这三格是空的）。",
-   "_why": "第②句给落点，压在她笑出来的近景上。两个数：`df_mh_1` Set 1 5-6、Set 2 5-6 两局都是她落后；Set 2 6-6 那一局 40:A |B1||B2| ×3 全救回。段尾 165.85 ＋ `SEG_FADE` 0.18 ＝ 166.03，连溶解底料也停在 166.08 那一刀（握手宽景）之前。",
-   "fit": "crop"
-  },
-  {
-   "start": 2.0,
-   "end": 18.45,
-   "narration": "北京时间九月六日凌晨两点，美网第三轮，大看台球场。八号种子、二〇二二年的冠军斯瓦泰克，对面是二十五号种子布兹科娃。",
-   "score_inset": true,
-   "_why": "第③格交代坐标。画面是首盘第二局的底线回合（记分条 `0 [AD] / 1`，发球指示在 BOUZKOVA——1-1 那一局，斯瓦泰克三个破发点破回来），宽景谁都没露脸，正好放身份；2.5 那格顶上还挂着 `LONGEST RALLY: 16 SHOTS`。开球时刻取 flashscore `AD=1788631200`＝北京时间 2026-09-06 02:00，按「不报到分」的档位（分钟 0 落在 0~9）说「凌晨两点」。种子号出自记分条 `8 SWIATEK / 25 BOUZKOVA`；「二〇二二年的冠军」出自转播 50.32s / 190.32s `the former champion` ＋ 2022 年美网决赛（见 `editorial.human_context.facts`）。段尾 18.45 ＋ 0.18 ＝ 18.63，连溶解底料也停在 18.65 那一刀（她的近景）之前。",
-   "fit": "crop"
-  },
-  {
-   "start": 26.95,
-   "end": 37.5,
-   "narration": "首盘两次被破，两次都破回来。五比六，布兹科娃的发球胜盘局，又被她破掉。抢七。",
-   "score_inset": true,
-   "_why": "记分条 `SET POINT 6 [6] / 6 [2]`，发球指示在 SWIATEK——首盘抢七 6-2 她发球的盘点那一分（26.5 她的近景，28.5~36.5 回合）。回合以布兹科娃的一拍收尾，解说 36.32s `That's too good`——这一分布兹科娃拿下，6-3。旁白讲的是刚过去的两局：`df_mh_1` Set 1 0-1 / 1-2 她两次丢发球局、1-1 / 2-2 两次破回；5-6 那一局 0:40 被破；6-6 那一局布兹科娃发球 40:15 |B1| 40:30 |B1| 被破。**这几局集锦里没有**，转播从抢七 6-2 起才接上。段尾 37.5 ＋ 0.18 ＝ 37.68，连溶解底料也停在 37.69 那一刀之前。",
-   "fit": "crop"
-  },
-  {
-   "start": 40.9,
-   "end": 53.6,
-   "narration": "第二个盘点，七比三。首盘一小时零八分钟，两个人各破对方三次。",
-   "score_inset": true,
-   "crosses_cut": "跨 50.77：盘点那一分落地 → 她走回底线、场边时钟（52.5，紫帽）。同一个人。",
-   "_why": "记分条 `SET POINT #2 6 [6] / 6 [3]`，发球指示在 BOUZKOVA——首盘抢七第二个盘点，解说 50.32s `the former champion finding her way out here as she takes the opening set by seven games to six`。「一小时零八分钟」＝ `df_sui_1` Set 1 1:08；「各破三次」＝ `df_st_1` Set 1 Break Points Converted 3/6 vs 3/5。段尾 53.6 ＋ 0.18 ＝ 53.78，停在 53.8 那一刀（看台）之前。",
-   "fit": "crop"
-  },
-  {
-   "start": 53.9,
-   "end": 63.5,
-   "narration": "第二盘她零比三落后。二比三破回来，二比四又丢，三比四再破回来，五比五。",
-   "score_inset": false,
-   "_score_inset_why": "看台（54.5）、她的包厢鼓掌（56.5、58.5）、她坐在伞下的椅子上（60.5）、全屏图形（62.5）——整段没有常驻记分条（`score_01.jpg` 这几格都是空的）。",
-   "crosses_cut": "跨 56.32 / 58.84：看台 → 包厢鼓掌 → 她在伞下 → 62.5 全屏图形 `7 0 / 6 0`。盘间过场，主体不是某一个回合。",
-   "_why": "第二盘前半段**集锦里没有**（记分条从首盘抢七直接跳到 5-5），按「转折点不在集锦里 → 明说」办：`df_mh_1` Set 2 0-1 / 0-2（三个破发点破掉她）/ 0-3；1-3 保发；2-3 破回；2-4 又丢；3-4 破回；4-4 救一个破发点保住；4-5 / 5-5。旁白压在盘间的看台、包厢和全屏图形上。段尾 63.5 停在 64.5 那格布兹科娃近景之前（`scene_cuts` 没报这一刀，缩略图墙上 62.5→64.5 从图形切到荧光黄近景）。",
-   "fit": "crop"
-  },
-  {
-   "start": 67.95,
-   "end": 82.55,
-   "narration": "五比五，布兹科娃发球。这一局她保住了，五比六——斯瓦泰克又一次要发球保盘。",
-   "score_inset": true,
-   "_why": "记分条 `7 5 / 6 5`，发球指示在 BOUZKOVA——第二盘 5-5 布兹科娃发球那一局（`df_mh_1` Set 2 5-6：0:15 15:15 15:30 30:30 30:40，客队拿下）。回合以布兹科娃的一拍收尾，解说 81.92s `Oh, brilliant.` 84.24s `She got away with that.` 段尾 82.55 ＋ 0.18 ＝ 82.73，连溶解底料也停在 82.78 那一刀（她走动的近景）之前。",
-   "fit": "crop"
-  },
-  {
-   "start": 89.35,
-   "end": 105.55,
-   "narration": "五比六，斯瓦泰克发球，四十平之后连着三个盘点。这是第三个——转播说，不知道她是怎么救下来的。",
-   "score_inset": true,
-   "_why": "记分条 `SET POINT #3 7 5 [ ] / 6 6 [AD]`，发球指示在 SWIATEK——第二盘 5-6 她发球那一局的第三个盘点（`df_mh_1` Set 2 6-6：40:40 A:40 40:40 40:A |B1||B2| 40:40 40:A |B1||B2| 40:40 40:A |B1||B2| 40:40 A:40）。解说 104.80s `Somehow Shakes survives that point.`（ASR 把 Swiatek 听成 Shakes）。**全片的转折点，整段保留。** 段尾 105.55 ＋ 0.18 ＝ 105.73，连溶解底料也停在 105.77 那一刀之前。「救下来」的主语是她自己（面对盘点的一方）。",
-   "fit": "crop"
-  },
-  {
-   "start": 105.8,
-   "end": 109.8,
-   "narration": "三个盘点全救回，六比六。",
-   "score_inset": true,
-   "_why": "她转身走回底线的背影（106.5，紫裙），记分条 `SET POINT #3` 淡出、108.5 换成 `7 POINT TIEBREAK`。段尾 109.8 ＋ 0.18 ＝ 109.98，停在 109.99 那一刀之前。",
-   "fit": "crop"
-  },
-  {
-   "start": 110.0,
-   "end": 120.45,
-   "narration": "第二个抢七，她开局二比零。这一分再拿下，三比零。",
-   "score_inset": true,
-   "_why": "记分条 `7 POINT TIEBREAK 7 6 [2] / 6 6 [0]`，发球指示在 SWIATEK——第二盘抢七 2-0 她发球的那一分，解说 120.08s `Yes. Swinging freely.`；122.5 那格记分条已是 `3 / 0`，所以「这一分再拿下，三比零」和画面对得上。段尾 120.45 ＋ 0.18 ＝ 120.63，停在 120.64 那一刀之前。",
-   "fit": "crop"
-  },
-  {
-   "start": 120.65,
-   "end": 142.9,
-   "narration": "三比零之后到六比一，布兹科娃救下第一个赛点。六比二，第二个赛点，斯瓦泰克发球。",
-   "score_inset": true,
-   "crosses_cut": "跨 125.01：她发球（122.5，89 MPH）→ 124.5 她的近景 `MATCH POINT #2` → 126.5 起赛点回合的宽景。同一个人。",
-   "_why": "122.5 记分条 `7 6 [3] / 6 6 [0]` 布兹科娃发球；124.5 起 `MATCH POINT #2 7 6 [6] / 6 6 [2]` 发球指示在 SWIATEK。第一个赛点（6-1）集锦里没有，`df_st_1` Match points saved 客队 2 ＋ 记分条的 `#2` 编号钉住它存在。这一分布兹科娃救下，解说 142.08s `Not yet.`——结果留给下一段说。段尾 142.9 ＋ 0.18 ＝ 143.08，停在那一刀上。",
-   "fit": "crop"
-  },
-  {
-   "start": 143.1,
-   "end": 154.0,
-   "narration": "布兹科娃又救下一个，六比三。第三个赛点，斯瓦泰克发球。",
-   "score_inset": true,
-   "crosses_cut": "跨 146.51（loose）：布兹科娃走回底线、场边时钟 `2:2x`（144.5，荧光黄）→ 146.5 起 `MATCH POINT #3` 那一分的宽景。旁白主语先是布兹科娃（她刚救下赛点，画面正是她），再转到发球的斯瓦泰克。",
-   "_why": "记分条 144.5 `MATCH POINT #2 … 6 / 2` 淡出，146.5 起 `MATCH POINT #3 7 6 [6] / 6 6 [3]`，发球指示在 SWIATEK。这一分从 146.5 一直打到 157.57 落地，154.0 这一刀是为冷开场分的（不是镜头切换），下一段接着同一个回合。",
-   "fit": "crop"
-  },
-  {
-   "start": 154.0,
-   "end": 165.85,
-   "narration": "两小时二十七分钟，两个抢七都是七比三。她吼了出来。",
-   "score_inset": true,
-   "crosses_cut": "跨 157.57 / 160.x：赛点那一分落地 → 她吼出来（158.5）→ 笑着走回底线（160.5~164.5），全是紫帽斯瓦泰克。",
-   "_why": "正文重新兑现冷开场：154.0→165.85 完整覆盖第①段（154.0→160.0）和第②段（160.0→165.85）。「两小时二十七分钟」＝ `df_sui_1` 全场 2:27（转播 190.32s `Two and a half hours`）；「两个抢七都是七比三」＝ `df_sui_1` 抢七小分 7/3、7/3。旁白约四秒念完，「她吼了出来」落在 157.57 那一刀之后的近景上。段尾 165.85 ＋ 0.18 ＝ 166.03，停在 166.08 之前。",
-   "fit": "crop"
-  },
-  {
-   "start": 166.1,
-   "end": 179.15,
-   "narration": "布兹科娃四次交手四次输给她。这一次，她全场只少五分——九十一比八十六。",
-   "score_inset": false,
-   "_score_inset_why": "网前握手（166.5~172.5）、布兹科娃向看台致意（174.5）、斯瓦泰克和裁判握手（176.5）、她走回底线（178.5）——赛后画面，没有记分条（`score_04.jpg` 这几格都是空的）。",
-   "_why": "输家收账：`df_hh_1` Swiatek I. 4 : 0 Bouzkova M.（含本场）；`df_st_1` Total Points Won 86/177 vs 91/177。旁白主语是布兹科娃，画面是两人握手、她向看台致意（174.5，荧光黄）。段尾 179.15 ＋ 0.18 ＝ 179.33，停在 179.38 那一刀之前。",
-   "fit": "crop"
-  },
-  {
-   "start": 179.4,
-   "end": 196.1,
-   "narration": "首盘破掉对手的发球胜盘局，次盘救下三个盘点。四年前在这儿夺冠的人，今年走到了十六强。这样的斯瓦泰克，是警报，还是热身？",
-   "score_inset": false,
-   "_score_inset_why": "她笑着的近景（180.5）、包厢鼓掌（182.5、184.5）、走回椅子（186.5、188.5）、全屏赛果图形（190.5~194.5）——没有常驻记分条。",
-   "crosses_cut": "跨 181.81 / 185.9：她的近景 → 包厢 → 走回椅子 → 全屏赛果图形 `7 7 / 6 6`。赛后同一段连续过程，主体一直是她和她的团队。",
-   "_why": "收尾落在一问上，不停在数据上。「四年前在这儿夺冠」＝ 2022 年美网冠军（转播 `former champion`）；「十六强」＝第三轮赢了之后进第四轮，按「8 强 / 4 强 / 16 强」的写法；全屏图形 190.5s 印着 `7 7 / 6 6`。\n⚠️ 段尾 196.1 ＋ `SEG_FADE` 0.18 ＝ 196.28，停在片尾板那一刀（196.35）和数字静音（196.39）之前。",
-   "fit": "crop"
-  }
- ]
 }
