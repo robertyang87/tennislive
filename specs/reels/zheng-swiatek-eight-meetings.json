@@ -1,0 +1,242 @@
+{
+  "slug": "zheng-swiatek-eight-meetings",
+  "primary": "olympics",
+  "sources": {
+    "olympics": "https://www.youtube.com/watch?v=3e-ApJ_YhXI"
+  },
+  "_sources_why": "单源，而且是**唯一那一胜**那一场：Olympic Games 官方频道的 2024 巴黎奥运会女单 4 强集锦（1920×1080、25fps、184.85s）。⚠️ 讲八次交手却只用一条源片，是量出来的取舍，不是省事：① 印第安维尔斯 2025 那场 WTA 官方版 probe 出来只有 **1280×720**，过不了『1080p 及以上是硬门槛』那条，而且和这条 1920×1080 混在一条 spec 里会被 check_sources_match 当场拦下（尺寸对不上没有出路）；② 2022 法网那场**没有官方单场集锦**——Roland-Garros 官方频道搜过两组词，同频道同年别的场次都有，就是没有这一场；③ 美网 2026 第三轮那条源片（PiuDtMWKU2g）仓库里已经被两条片子用过，其中 zheng-keys-us-open-2026-r3 用了 20 段覆盖 4~212 秒几乎全片，再用第三次就是 CLAUDE.md 那条『不同栏目各讲一次给的是讲不同的事，不是把同一段画面再放一遍』点名要躲的。所以其余七次交手交给旁白和标签卡，画面全部来自这一场——**而这一场恰好是全片的落点**，画面和主题是合的。",
+  "_column": "网球有故事。⚠️ 账号所有者要的是『开球之前』，而那个栏目 2026-08-17 由他本人停掉、判据在 tests/test_explainer.py::test_不再做比赛前瞻，报错正文自己写着出路：『想讲这两个人……把他们的来路做成常青的网球有故事』。这条片子的主体是**八次交手的历史**（常青，第九次打完也不作废），第九次只在收尾带一句、不写具体时刻——所以它不是前瞻。",
+  "_no_repeat": "⚠️ 仓库里已有三条郑钦文的『网球有故事』（zheng-lanlana / zheng-from-low-to-us-open-comeback / zheng-us-open-outlook），讲的**全是同一条线**：受伤、掉出前一百、从资格赛打回来。这一条一个字都不铺开那条线——第 17 段那句『世界第一百二十一位，从资格赛打起』是**理解这条片子所必需的来路，一句带过**（CLAUDE.md『看不懂这场球所必需的来路，一句带过，别展开』）。本条的主体是两个人的交手史，那三条一次都没讲过。\n⚠️ 同栏目今天刚发过 comeback-five-love-down（决胜盘 0-5 逆转的序列，郑钦文只是引子）——那条讲『这样的球有人赢回来过吗』，这条讲『她跟这个人打过几次』，主体不同、画面零重叠（那条用美网 R3，这条用奥运）。",
+  "mixed_fps": {},
+  "_mixed_fps_why": "单源，没有混帧率的问题。",
+  "editorial": {
+    "mode": "match_review",
+    "question": "郑钦文和斯瓦泰克打过八次，她赢下来的是哪一次，那一次跟前面七次差在哪儿？",
+    "thesis": "第一次交手她就拿下过斯瓦泰克一盘——2022 年法网第四轮，五比四落后、对手手握三个盘点，十九岁的她一个都没给，抢七拿下首盘。可紧接着的第二盘只打了三十一分钟，一局没赢到。这个形状在之后两年里重复了六次：够得着一盘，够不着一场。真正把它走通的是 2024 年 8 月 1 日的巴黎——同样是红土，同样是这个人，六比二、七比五，一小时五十一分钟，两天后她拿到中国网球第一块奥运单打金牌。",
+    "beats": [
+      "先给落点：八次交手，她赢下来的只有这一次——冷开场就是那一刻，转播自己在画面上打出了 Zheng Qinwen defeats Iga Swiatek, 6-2, 7-5",
+      "回到第一次：2022 法网第四轮，十九岁，救下三个盘点抢七拿下首盘，然后第二盘三十一分钟一局没赢",
+      "中间六次连败：五站全输，六场里只拿下过三盘——够得着一盘，够不着一场",
+      "巴黎那一场把它走通：红土、同一个人、39 分钟的首盘、1 小时 51 分的全场，两天后是金牌",
+      "最近一次的落差：2025 印第安维尔斯 6-3 6-3",
+      "收口回到现在：她世界第 121 从资格赛打起、六场打进第四轮，对面世界第 8——第九次的问题交给观众"
+    ],
+    "human_context": {
+      "angle": "这条片子的切口是**同一个形状重复了六次然后被打破**：她从第一次交手就够得着斯瓦泰克的一盘（法网首盘救三个盘点抢七拿下），却要再等两年、换到奥运会的红土上，才第一次把一整场赢下来。八次交手的分盘拉开看，『拿下过三盘』和『赢下过一场』之间那道坎，比任何一个排名差都说明问题。",
+      "facts": [
+        "八次交手 1 胜 7 负；郑钦文赢的那一次是 2024-08-01 巴黎奥运会女单 4 强，6-2 7-5",
+        "2022 法网第四轮首盘：斯瓦泰克 5-4 领先自己发球胜盘、手握三个盘点，郑钦文全部救下并回破，抢七 7-5 拿下首盘；第二盘 31 分钟 0-6",
+        "六次连败（法网、圣地亚哥、斯图加特、辛辛那提、联合杯、迪拜）里，郑钦文只拿下过三盘",
+        "奥运那场分盘用时 39 分钟 + 72 分钟，全场 1 小时 51 分",
+        "2026 美网她从资格赛打起，六场打进第四轮；官方排名世界第 121，斯瓦泰克世界第 8"
+      ],
+      "voice_label": "够得着一盘，够不着一场",
+      "sources": [
+        "https://www.tennisexplorer.com/mutual/zheng-13301/swiatek/",
+        "https://local-global.flashscore.ninja/2/x/feed/df_hh_1_jBiLW0fm",
+        "https://local-global.flashscore.ninja/2/x/feed/df_sui_1_2JBAtoyI",
+        "https://wtafiles.wtatennis.com/pdf/rankings/Singles_Numeric.pdf"
+      ]
+    }
+  },
+  "_claims": {
+    "郑钦文与斯瓦泰克八次交手 1 胜 7 负，逐场比分见下": [
+      "https://www.tennisexplorer.com/mutual/zheng-13301/swiatek/",
+      "https://local-global.flashscore.ninja/2/x/feed/df_hh_1_jBiLW0fm"
+    ],
+    "2024-08-01 巴黎奥运会女单 4 强，郑钦文 6-2 7-5 胜斯瓦泰克，全场 1 小时 51 分（分盘 39 分 + 72 分）": [
+      "https://local-global.flashscore.ninja/2/x/feed/df_sui_1_2JBAtoyI",
+      "https://www.youtube.com/watch?v=3e-ApJ_YhXI"
+    ],
+    "2022 法网第四轮首盘：斯瓦泰克 5-4 发球胜盘手握三个盘点被全部救下，郑钦文抢七 7-5 拿下首盘；第二盘 31 分钟": [
+      "https://local-global.flashscore.ninja/2/x/feed/df_mh_1_Y7VEmvQf",
+      "https://local-global.flashscore.ninja/2/x/feed/df_sui_1_Y7VEmvQf"
+    ],
+    "郑钦文世界第 121（613 分）、斯瓦泰克世界第 8（4809 分），榜单日期 2026-08-31": [
+      "https://wtafiles.wtatennis.com/pdf/rankings/Singles_Numeric.pdf",
+      "https://api.wtatennis.com/tennis/players/ranked?page=0&pageSize=150&type=rankSingles&sort=asc&name=&metric=SINGLES"
+    ],
+    "2026 美网郑钦文从资格赛打起，三轮资格赛加三轮正赛共六场打进第四轮": [
+      "specs/reels/zheng-you-us-open-2026-q1.json",
+      "https://www.tennisexplorer.com/player/zheng-13301/"
+    ]
+  },
+  "cover": {
+    "eyebrow": "网球有故事",
+    "layout": "solo",
+    "subject": "郑钦文",
+    "hook": "八次交手\n她只赢过一次",
+    "_hook_why": "两行 4 字和 6 字，都在 solo 封面 HOOK_MAX_CHARS=10 之内，2 行也在 SOLO_HOOK_MAX_LINES=2 之内。讲的是**整条片子的形状**（八次里的一次），不是某一个时刻，也不写身份——排名、年龄、奥运冠军这些封面别处和片子里都有。反差就在两个数之间：八和一。⚠️ 这个栏目不印赛果，所以封面没有比分板。",
+    "narration": "八次交手，她只赢过一次。",
+    "_narration_why": "封面停多久跟着这句配音走；念的就是钩子的口语版，去标点后和钩子逐字相同（八次交手她只赢过一次），所以封面不另排字幕。",
+    "topic": "郑钦文与斯瓦泰克的八次相遇",
+    "portrait": {
+      "image": "assets/reel/zheng-us-open-2026-r3-on-the-ground.jpg",
+      "fit": "width",
+      "focus": 0.5,
+      "focus_y": 0.2,
+      "zoom": 1.0,
+      "_why": "AP 通讯社，说明自带四要素：「Zheng Qinwen, of China, celebrates after she won her match against Madison Keys, of the United States, during the third round of the U.S. Open tennis championships」。3119×2079，铺 1080×1440 只要 0.69 倍（缩小），过得了那道 1.00 倍地板，不用写 _low_res_why。四道闸门：说明自证时间地点人物 ✅；赢球那一刻、正是通往第九次交手的那一场 ✅；躺地双拳举起怒吼，情绪外露到极致 ✅；0.69 倍缩小 ✅。她闭着眼——按 2026-08-31 那条修正，用力吼出来时眼睛挤紧是表情本身，不是眨眼。\n⚠️ **同一张图今天已经被 comeback-five-love-down 用过一次，这是认领过的取舍**：仓库里郑钦文的美网官方实拍只有这一张过得了 1.00 倍地板（另两张 1280×720 和 1920×1080 要放大 2.00 和 1.33 倍，比仓库判过『太软』的 1.78 倍还糟或接近），而奥运那场两年前的官方图 AP 和 WTA 两条渠道今天都查空。**裁法是不同的**：那条走 fit:width 的信箱式（照片按宽度铺、上下垫模糊层、钩子推到 960），这一条走 fit:cover 把她的脸和双拳裁近，两张封面在信息流里长得不一样。",
+      "_focus_why": "⚠️ **先试过 fit:cover 裁近景，渲出来钩子正好横穿她的脸**——这张图她横躺着、脸在左侧偏下（源图 y 约 0.55~0.78），铺满 1440 高之后脸落在 y 790~1120，而钩子带就在 790 起的那 310px 上；而且脸太靠左（源图 x 0.11~0.31），钩子又是从左边 70px 起排的，**横向怎么调 focus 都躲不开**（focus 顶到左边界时脸仍落在输出 x 238~670，钩子占 70~634）。所以走信箱式：照片按宽度铺成 1080×720，focus_y=0.2 把它放在 y 144~864，脸落在 540~706——整个在钩子带以上；钩子由 storycopy_top_for() 自动推到照片下边缘之外，压的是模糊垫层，主体一个像素不挡。⚠️ 几何和 comeback-five-love-down 相同，那不是照抄——是这张图唯一说得通的裁法。两条封面靠钩子分得开（那条是『决胜盘零比五／他们都赢回来了』）。"
+    }
+  },
+  "segments": [
+    {
+      "source": "olympics",
+      "start": 173.3,
+      "end": 181.0,
+      "crosses_cut": "180.6 那一刀是转播从她躺在地上切到记分条特写，两边都是她赢下这一分之后的同一段庆祝，跨过去读起来是连的。⚠️ 末尾收在 181.0：片尾板从 181.9 起（182.5s 那一格已经是 Paris 2024 的品牌图形），留 0.9 秒余量，比 SEG_FADE 的 0.18 宽得多。",
+      "_why": "冷开场用全片最强的那一格：174.5 秒她倒在红土上双臂张开，176.5 秒转播在画面下方打出 Zheng Qinwen defeats Iga Swiatek, 6-2, 7-5——**赛果是转播自己写在画面上的**，比任何转述都硬。不配旁白，只有现场声。",
+      "_ending_payoff_required": true,
+      "_ending_payoff_why": "冷开场就是最后一球之后的庆祝，而且转播在 176.5 秒把赛果打在了画面上（Zheng Qinwen defeats Iga Swiatek, 6-2, 7-5）——它承担了结局预告，所以正文必须重放。最后一段 167.9→181.0 从她发赛点起，完整盖住冷开场的 173.3→181.0。"
+    },
+    {
+      "source": "olympics",
+      "start": 0.3,
+      "end": 8.0,
+      "narration": "郑钦文和斯瓦泰克，一共打过八次。刚才那一场，是她唯一赢下来的那一次。"
+    },
+    {
+      "source": "olympics",
+      "start": 20.1,
+      "end": 27.4,
+      "narration": "第一次交手，是二〇二二年法网第四轮。那一年她十九岁。",
+      "inset": {
+        "image": "assets/beatcards/zheng-swiatek-eight-meetings/m1-rg2022.png",
+        "kind": "story_text",
+        "corner": "tr",
+        "width": 0.6,
+        "pad": 0.085,
+        "show_for": 3.8,
+        "motion": "editorial"
+      },
+      "_inset_why": "第一次交手：标出年份、赛事、轮次和赛果。⚠️ 这一条整片的画面都来自 2024 奥运那一场，而奥运和法网**同样是红土、同样这两个人**——不标年份的话观众会把这一段读成『这就是法网那场』。标签卡在这条片子里不是装饰，是分辨『现在讲的是哪一次』的唯一依据。"
+    },
+    {
+      "source": "olympics",
+      "start": 33.3,
+      "end": 41.6,
+      "narration": "首盘五比四，斯瓦泰克自己发球胜盘，手里握着三个盘点。"
+    },
+    {
+      "source": "olympics",
+      "start": 41.6,
+      "end": 51.6,
+      "narration": "三个盘点，郑钦文一个都没给，回过头来把这一局破掉，抢七七比五拿下首盘。"
+    },
+    {
+      "source": "olympics",
+      "start": 58.4,
+      "end": 66.0,
+      "narration": "可第二盘只打了三十一分钟，她一局都没能赢到。"
+    },
+    {
+      "source": "olympics",
+      "start": 66.0,
+      "end": 72.1,
+      "narration": "够得着一盘，够不着一场。"
+    },
+    {
+      "source": "olympics",
+      "start": 72.1,
+      "end": 80.5,
+      "narration": "接下来两年，圣地亚哥、斯图加特、辛辛那提、联合杯、迪拜。",
+      "inset": {
+        "image": "assets/beatcards/zheng-swiatek-eight-meetings/m2-streak.png",
+        "kind": "story_text",
+        "corner": "tr",
+        "width": 0.6,
+        "pad": 0.085,
+        "show_for": 3.8,
+        "motion": "editorial"
+      },
+      "_inset_why": "中间那五站一次列全，观众不用记。"
+    },
+    {
+      "source": "olympics",
+      "start": 84.5,
+      "end": 94.9,
+      "narration": "五站，五次全输。加上法网那一次是六连败，而这六场里，她只拿下过三盘。"
+    },
+    {
+      "source": "olympics",
+      "start": 100.3,
+      "end": 105.0,
+      "narration": "然后是二〇二四年八月一日。"
+    },
+    {
+      "source": "olympics",
+      "start": 105.8,
+      "end": 113.4,
+      "narration": "巴黎，奥运会女单四强。还是红土，还是这个人。",
+      "inset": {
+        "image": "assets/beatcards/zheng-swiatek-eight-meetings/m3-olympics.png",
+        "kind": "story_text",
+        "corner": "tr",
+        "width": 0.6,
+        "pad": 0.085,
+        "show_for": 3.8,
+        "motion": "editorial"
+      },
+      "_inset_why": "唯一那一胜——从这一段起画面和旁白终于说的是同一场球。"
+    },
+    {
+      "source": "olympics",
+      "start": 119.0,
+      "end": 127.6,
+      "narration": "第一盘六比二，三十九分钟就结束了。斯瓦泰克在这一盘只赢下两局。"
+    },
+    {
+      "source": "olympics",
+      "start": 127.6,
+      "end": 138.4,
+      "narration": "第二盘七比五，又打了一个多小时。全场一小时五十一分钟，她第一次把这个人赢了下来。"
+    },
+    {
+      "source": "olympics",
+      "start": 140.6,
+      "end": 144.2,
+      "narration": "两天之后，她拿到金牌。"
+    },
+    {
+      "source": "olympics",
+      "start": 146.4,
+      "end": 153.8,
+      "narration": "那是中国网球的第一块奥运单打金牌。"
+    },
+    {
+      "source": "olympics",
+      "start": 153.8,
+      "end": 158.5,
+      "narration": "第八次是去年印第安维尔斯，六比三、六比三。",
+      "inset": {
+        "image": "assets/beatcards/zheng-swiatek-eight-meetings/m4-iw2025.png",
+        "kind": "story_text",
+        "corner": "tr",
+        "width": 0.6,
+        "pad": 0.085,
+        "show_for": 3.8,
+        "motion": "editorial"
+      },
+      "_inset_why": "最近一次，落差摆在赛果上。"
+    },
+    {
+      "source": "olympics",
+      "start": 158.5,
+      "end": 167.9,
+      "narration": "今天她世界第一百二十一位，从资格赛打起，六场打进第四轮。对面世界第八。"
+    },
+    {
+      "source": "olympics",
+      "start": 167.9,
+      "end": 181.0,
+      "crosses_cut": "169.3 / 173.3 / 180.6 三刀全在赛点那一分和随后的庆祝里：她发赛点、这一分打完、倒在地上、记分条特写。整段是同一件事，跨过去是连的。",
+      "narration": "八次交手，她赢下来的就是这一次。第九次就在这一届美网的第四轮——同样的对手，同样的问题：她还能不能再赢一次？"
+    }
+  ],
+  "push": {
+    "summary": "郑钦文赢过斯瓦泰克一次",
+    "lead": "八次交手，她赢下来的是巴黎奥运会那一场。"
+  },
+  "_editing_why": "**旁白定稿之后又跑了一遍 preview_segments_local 逐段核画面**（CLAUDE.md 那条『这个工具要跑两遍，第二遍在旁白定稿之后——这句话说的那个人，是不是画面里那个人』）。认人判据是队服：**郑钦文红色中国队服、斯瓦泰克白衣**，奥运赛场上色差极大，不吃『球衣颜色不能当认人判据』那条的亏。逐段结论：\n· 第 2 段配的正好是转播开场图形 `IGA SWIATEK vs QINWEN ZHENG`——旁白说『一共打过八次』，画面上就是两个人的名字并排；\n· 第 4 段 40.5s 正好是斯瓦泰克在发球，旁白说的就是『斯瓦泰克自己发球胜盘』；\n· 第 5 段画面里斯瓦泰克居多（42.5 发球、50.5 垂头走动），而旁白讲的是郑钦文救三个盘点、把这一局破掉——**这不是压在对手身上**：被破的正是斯瓦泰克那个发球局，50.5 她丢了首盘之后的走动是这句话的落点；\n· 第 17 段配网前握手（两个人都在画面里），旁白说『对面世界第八』，合的；\n· 第 18 段完整重放赛点→倒地→转播字幕，兑现冷开场的结局。\n⚠️ **整片画面都来自 2024 奥运这一场，而旁白讲的是八次交手**——这是设计，不是话画不符：四张 story_text 标签卡（第 3/8/11/16 段）标出『第几次·哪一年·哪一站·赛果』，**它们是观众分辨『现在讲的是哪一次』的唯一依据**，不是装饰。奥运和法网同样是红土、同样这两个人，没有标签卡的话第 3~5 段会被读成『这就是法网那场』。"
+}
