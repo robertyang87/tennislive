@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>9.6 赛场之上 | 伊埃拉两个赛点救回一个</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>伊埃拉三小时输掉美网第三轮，两个赛点只救回一个
+
+三个小时零三分钟，二百一十四分打完，两个人只差十分——约维奇 112，伊埃拉 102。这是美网女单第三轮，阿瑟·阿什球场，21 岁的菲律宾人伊埃拉 5-7 6-3 5-7 输给 18 岁的美国新星约维奇。
+
+这是当晚阿什的第一场球，出场按整套规格做：通道尽头那块屏上写着「压力是一种荣幸」，落款是比利·简·金——阿瑟·阿什球场所在的这片园区，正式名字就是「USTA 比利·简·金国家网球中心」。干冰喷起来，大屏上打出 ALEXANDRA EALA。她这一届的头两轮都在路易斯·阿姆斯特朗球场，第三轮才第一次站上中心球场。
+
+这场球的形状全写在发球局上：两人合计 37 个破发点，破成 17 次。首盘十二局里就有七局被破——约维奇先拉开到 4-1，伊埃拉连追三局扳平，又追到 5-5，然后自己的发球局被破，7-5 丢掉首盘。第二盘她 3-1 拉开，57 分钟 6-3 扳了回来。
+
+决胜盘她一上来就破发，一路领先到 4-2，那一刻这一盘看着已经是她的。可从 4-2 往后的六局，她只赢了一局。
+
+真正的分水岭是最后三局，而且两次都发生在伊埃拉自己的发球局上：4-5 落后，约维奇 40-30 拿到第一个赛点，伊埃拉把它救了下来，比分扳成 5-5；5-6 再一次轮到伊埃拉发球，约维奇的第二个赛点，这一次没能再救。
+
+技术统计上她并不吃亏：制胜分 34 比 44，非受迫失误 33 比 27，一发进了 70 个。差的是关键分——破发点她拿到 20 个只兑现 8 个，约维奇 17 个兑现了 9 个。
+
+三次交手，约维奇三次都赢了，红土、草地、硬地各一次。
+
+转播在终场把用时打在了屏幕上：3:03。走下场的时候，她背着包，双手捂住嘴，抬头看向看台。
+
+#网球时差 #美网 #伊埃拉 #约维奇 #赛场之上</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>下一次站上这里，伊埃拉能走多远？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
