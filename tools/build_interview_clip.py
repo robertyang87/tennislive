@@ -3383,8 +3383,10 @@ def check_source_contract(spec: dict) -> str:
         raise SystemExit(
             f"{spec.get('slug', '?')} 没通过 L0 内容身份门禁：{exc}\n"
             "只允许本场、获胜后、仍在球场内的现场话筒采访，本场颁奖典礼上"
-            "的捧杯致辞或告别仪式，以及本场赛前的出场秀（官方标题里明确写着"
-            " walk-out／walk-on）；演播室、发布会和 unknown 都不能替代。"
+            "的捧杯致辞或告别仪式，本场赛前的出场秀（官方标题里明确写着"
+            " walk-out／walk-on），本场赛后的新闻发布会，以及本场赛后由"
+            "受信转播商在赛场里做的专访（台标话筒＋还穿着当场比赛服）。"
+            "演播台对坐的访谈和 unknown 都不能替代——"
             "找不到就停在待复核队列，不制作不推送。"
         ) from exc
     print(f"[L0] 本场来源身份通过（{attestation[:12]}…）")
