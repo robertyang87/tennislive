@@ -425,6 +425,16 @@ PLAYER_ZH: dict[str, str] = {
     "Martina Navratilova": "纳芙拉蒂洛娃",
     "Na Li": "李娜",
 
+    # ↓ 2026-09-06 补。触发的是「赛场之上」伊埃拉美网第三轮那条：官方的出场
+    # 视频里，通道尽头那块屏上印着 `PRESSURE IS A PRIVILEGE / BILLIE JEAN KING`，
+    # 旁白要念这个名字。**仓库里已经在用了，表里却没有**——
+    # `zh/tournaments.py` 的 `billie jean king cup → 比利·简·金杯`、
+    # `render/tournament_story.py` 里那句「推动者正是比利·简·金」，
+    # 两处都是这个写法，所以照它写，不另起一个「比莉」。
+    # 正是「人名不要手打，先查仓库里的译名表」那条踩过两次的坑，只是这回
+    # 错在**表里根本没有可查的**：`player_zh("Billie Jean King")` 原样返回英文。
+    "Billie Jean King": "比利·简·金",
+
     # ↓ 2026-07-29 补。触发的是两件事，都指向同一个漏：
     #
     # 1. **仓库里已经在用了，表里却没有**——`render/tournament_story.py` 和
