@@ -156,8 +156,15 @@ def main() -> int:
     # `sources=None` ＝ **只认缓存**：一个源片字节都不碰。缺素材要报错，
     # 不许悄悄退回抓帧——那条路在沙箱里必然失败，而失败的样子会是一句
     # 看不懂的 ffmpeg 报错，不是「你要的是一帧新的」。
+    # ⚠️ `primary` 不能省：素材键里的 `source` 是 `spot.get("source", primary)`
+    # 算的，不传就恒为 `""`，而 runner 写进 manifest 的是真源名（多源 spec 里是
+    # `"olympics"` 这种）。两边对不上 → 每次都判成「缓存里没有这一版」，
+    # 而报出来的话是「先跑一趟 mode=cover 把素材抓下来」——**指着一个已经做过
+    # 的动作**，于是多源片子的本地迭代这条路等于关着，且没人看得出为什么。
+    # 判据 test_本地渲封面要按spec的主源算素材键。
     try:
-        payload, layout = resolve_cover_payload(cover, outdir, sources=None)
+        payload, layout = resolve_cover_payload(
+            cover, outdir, sources=None, primary=str(spec.get("primary", "")))
     except ReelError as exc:
         raise SystemExit(str(exc)) from exc
 

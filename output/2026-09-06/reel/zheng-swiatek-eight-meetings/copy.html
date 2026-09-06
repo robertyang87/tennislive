@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>9.6 网球有故事 | 郑钦文赢过斯瓦泰克一次</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>郑钦文和斯瓦泰克交手八次，她赢下来的是巴黎那一场
+
+这一届美网第四轮，是她们的第九次相遇。前八次，郑钦文1胜7负。
+
+第一次是2022年法网第四轮，那年她19岁。首盘5比4，斯瓦泰克自己发球胜盘，手里握着三个盘点——三个盘点郑钦文一个都没给，回过头把这一局破掉，抢七7比5拿下首盘。那一盘打了1小时24分。
+
+紧接着的第二盘只用了31分钟，她一局都没赢到。6比7、6比0、6比2，第一次交手就是这个形状：够得着一盘，够不着一场。
+
+接下来两年，圣地亚哥、斯图加特、辛辛那提、联合杯、迪拜，五站全输。加上法网那次是六连败——而这六场里她只拿下过三盘：法网首盘、圣地亚哥第二盘、辛辛那提首盘。每一次都够得着一盘。
+
+真正把它走通的是2024年8月1日的巴黎。奥运会女单4强，还是红土，还是同一个人。首盘6比2只用了39分钟，斯瓦泰克整盘只赢下两局；第二盘7比5，全场1小时51分。两天之后她拿到金牌——中国网球的第一块奥运单打金牌。
+
+第八次是去年3月的印第安维尔斯8强，6比3、6比3，1小时38分。
+
+今天她世界第121位，从资格赛打起，六场打进第四轮；对面世界第8。
+
+上一场她1比6先丢一盘，7比6、7比5翻过来，赢的是世界第24的凯斯。
+
+八次交手，她赢下来的就是奥运会那一次。第九次，她还能不能再赢一次？
+
+#网球时差 #网球有故事 #郑钦文 #斯瓦泰克 #美网</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>第九次就在这一届美网的第四轮——同样的对手，同样的问题：她还能不能再赢一次？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>

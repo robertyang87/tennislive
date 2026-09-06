@@ -474,6 +474,95 @@ def test_本地渲封面那条路一个源片字节都不碰():
     assert hasattr(reel, "render_poster") and hasattr(reel, "resolve_cover_payload")
 
 
+def test_本地渲封面要按spec的主源算素材键(tmp_path, monkeypatch, capsys):
+    """多源 spec 上，本地渲封面这条路原来**永远命中不了 runner 存的素材**。
+
+    素材键里的 `source` 是 `spot.get("source", primary)` 算出来的，而
+    `render_cover_local` 调 `resolve_cover_payload` 时把 `primary` 漏了——
+    于是本地算出来恒为 `""`，runner 写进 manifest 的却是真源名
+    （`"olympics"` 这种）。两边对不上，每一趟都判成「缓存里没有这一版」。
+
+    ⚠️ **报出来的话指着一个已经做过的动作**（「先跑一趟 mode=cover 把素材抓
+    下来」），于是多源片子的「本地 7 秒渲一版」这条路等于关着，而且没人看得
+    出为什么——和「能力写出来了，能用的那台机器上没有开关」是同一个形状。
+
+    判据**真跑一遍那条路**，不查源码里有没有 `primary=` 这个词：手搓一份
+    runner 会写的 manifest（键里带真源名），main() 走通才算数。海报出口打桩
+    掉——这条测的是素材认领，不是渲染。
+    """
+    import json as _json
+    import sys as _sys
+
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import render_cover_local as rcl
+    from build_match_reel import _cover_asset_key
+
+    slug = "本地渲封面主源"
+    spec = {
+        "slug": slug,
+        "primary": "olympics",
+        "sources": {"olympics": "https://youtu.be/aaaaaaaaaaa",
+                    "iw": "https://youtu.be/bbbbbbbbbbb"},
+        "segments": [{"source": "olympics", "start": 0.0, "end": 4.0,
+                      "narration": "一句话。"}],
+        "cover": {
+            "eyebrow": "网球有故事",
+            "layout": "cutout",
+            "hook": "八次交手\n只赢过一次",
+            "topic": "两个人的交手史",
+            "winner": "甲",
+            "result": "7-1",
+            "versus": {
+                "background": {"frame_at": 8.5, "shot": "wide_court"},
+                "names": ["甲", "乙"],
+                "top": {"cutout": "", "country": "POL", "rank": 8},
+                "bottom": {"cutout": "", "country": "CHN", "rank": 121},
+            },
+        },
+    }
+    from PIL import Image
+    for side, name in (("top", "a.png"), ("bottom", "b.png")):
+        cut = tmp_path / name
+        Image.new("RGBA", (60, 80), (200, 200, 200, 255)).save(cut)
+        spec["cover"]["versus"][side]["cutout"] = str(cut)
+
+    spec_dir = tmp_path / "specs" / "reels"
+    spec_dir.mkdir(parents=True)
+    (spec_dir / f"{slug}.json").write_text(
+        _json.dumps(spec, ensure_ascii=False), encoding="utf-8")
+
+    outdir = tmp_path / "out"
+    src = outdir / "cover_src"
+    src.mkdir(parents=True)
+    (src / "bg.jpg").write_bytes(b"not-a-real-jpeg")
+    # runner 存下来的就是这一份：`source` 是真源名，不是空串
+    key = _cover_asset_key(spec["cover"]["versus"]["background"], "olympics", "frame")
+    assert key["source"] == "olympics", "样例本身就不是多源的话，这条判据是恒真的"
+    (src / "manifest.json").write_text(
+        _json.dumps({"bg": key}, ensure_ascii=False), encoding="utf-8")
+
+    seen = {}
+
+    def _fake_poster(payload, out, layout):
+        seen["bg"] = payload["versus"]["background"]["image"]
+        Path(out).write_bytes(b"x")
+
+    monkeypatch.setattr(rcl, "ROOT", tmp_path)
+    monkeypatch.setattr(rcl, "render_poster", _fake_poster)
+    monkeypatch.setattr(_sys, "argv",
+                        ["render_cover_local.py", "--slug", slug,
+                         "--outdir", str(outdir),
+                         "--out", str(tmp_path / "poster.jpg")])
+
+    assert rcl.main() == 0
+    assert seen["bg"] == str(src / "bg.jpg"), (
+        "没认出 runner 存的那一帧——`primary` 又漏了，"
+        "多源片子的本地迭代这条路就是关着的")
+    assert "复用" in capsys.readouterr().out, (
+        "复用了却不出声：「复用旧帧」和「重新抓了一帧」在日志上一样的话，"
+        "frame_at 改了没生效就没人能发现")
+
+
 def test_清理之后还有大文件要报错退出():
     """模式挡的是**已知**的中间物，挡不住下一个没见过的。
 
@@ -2158,7 +2247,13 @@ _COLUMNS = {
     # VS 那几版留在表里**只为了已发的十几条**（`_LEGACY_VS_COVERS`）——
     # 新写的 spec 要退回 VS 必须写 `_layout_why`，见 test_栏目和封面模板要配对。
     "赛场之上": ("cutout", "diagonal", "split", "stack", "solo"),
-    "网球有故事": ("solo",),                                 # 讲一个人 → 单人
+    # ⚠️ **2026-09-06 放宽了一格：多了 cutout。** 账号所有者，郑钦文与斯瓦泰克
+    # 那条八次交手：「**封面可以用两人 h2h 方式**」。
+    # 这一行原来的注释是「讲一个人 → 单人」——**那个前提对交手史这类片子不成立**：
+    # 主体本来就是两个人，solo 只放得下一个。前提没了，规则不该留在原地。
+    # 滑坡（手头正好有两张抠图就顺手退回 VS）由**认领**接住：这个栏目的表里
+    # 有 solo，而你没用 solo，就必须写 `cover._layout_why`。下面那段是判据。
+    "网球有故事": ("solo", "cutout"),
     # 赛前前瞻。讲的也是一场对决——**两个人必须同框**，所以和赛场之上共用
     # VS 那几版；差别在内容（没有赛果，讲的是来路），不在版式。
     "开球之前": ("cutout", "diagonal", "split", "stack"),
@@ -2202,6 +2297,31 @@ _LEGACY_SOLO_NO_SCORE = frozenset({
 })
 
 
+def test_默认走solo的栏目名单两处要对得上():
+    """「哪些栏目默认走 solo」写在两处，**而它们必须是同一份**。
+
+    - `tests` 的 `_COLUMNS`——扫存量 spec，已发布的不会悄悄漂
+    - `build_match_reel.SOLO_DEFAULT_COLUMNS`——拦**新写的** spec
+
+    两处是故意的（各拦一头，见 test_栏目和封面模板要配对 的说明），但
+    「一个数写两处必分叉」照旧成立：分叉的样子是**某个栏目在这儿要认领、
+    在那儿不要**，而两边各自都是绿的，没有任何东西会说它们不一致。
+
+    判据**从 `_COLUMNS` 自己推**，不另抄一份名单：表里有 solo 的栏目，
+    就是「默认 solo」的那一档。
+    """
+    reel = _reel()
+    want = {col for col, allowed in _COLUMNS.items() if "solo" in allowed}
+    assert set(reel.SOLO_DEFAULT_COLUMNS) == want, (
+        f"两处对不上：代码里是 {sorted(reel.SOLO_DEFAULT_COLUMNS)}，"
+        f"而 _COLUMNS 里表含 solo 的是 {sorted(want)}——"
+        "少一个，那个栏目退回 VS 就没人要求认领了")
+    # 「开球之前」讲的就是一场对决，表里没有 solo，**不该**被要求认领
+    assert "开球之前" not in want, (
+        "开球之前的版式表里不该有 solo——有的话它会被拖进「非 solo 要认领」，"
+        "而那一整个栏目本来就没有 solo 可用，是误伤")
+
+
 def test_栏目和封面模板要配对():
     """**「赛场之上」从 2026-08-04 起一律用 solo**，退回 VS 才要写判据。
 
@@ -2229,13 +2349,20 @@ def test_栏目和封面模板要配对():
         assert cover.get("layout") in allowed, (
             f"{path.name}：{cover['eyebrow']} 只能用 {allowed}，"
             f"写的是 {cover.get('layout')!r}")
-        if cover["eyebrow"] == "赛场之上" and cover.get("layout") != "solo":
+        # **「要不要认领」自己从表推，不另记一份栏目名单。** 判据是
+        # 「这个栏目的默认是 solo（表里有它），而这条没用 solo」——
+        # 赛场之上和网球有故事都落在这一档；`开球之前` 的表里根本没有 solo
+        # （它讲的就是一场对决），所以那一档不适用，不会被误伤。
+        # ⚠️ 原来这一行写死成 `== "赛场之上"`，于是 2026-09-06 给
+        # 网球有故事放开 cutout 的那一刻，**认领这道闸对新栏目是哑的**——
+        # 表放宽了、闸没跟上，正是「前提搬走了规则留在原地」那个形状。
+        if "solo" in allowed and cover.get("layout") != "solo":
             # 2026-08-04 之前发出去的那一批不动（微信那条消息收不回来），
             # 之后新写的要么 solo、要么写一句为什么退回 VS。
             if spec.get("slug") not in legacy:
                 checked_new += 1
                 assert str(cover.get("_layout_why", "")).strip(), (
-                    f"{path.name} 是赛场之上却没用 solo，要写一句 "
+                    f"{path.name} 是{cover['eyebrow']}却没用 solo，要写一句 "
                     "`cover._layout_why` 说清楚为什么退回 VS 版式")
         if cover.get("layout") == "solo":
             assert cover.get("subject"), f"{path.name} 的 solo 封面没写 subject"
