@@ -91,6 +91,13 @@ BOARD: tuple[tuple[str, str, int, str, int], ...] = (
 
 #: 男子那五个人，按时间排。**这张表就是「五十八年只有五个」这句话的全部依据**，
 #: 所以每一行都带年份和赛事，读者可以逐条去查。
+#:
+#: ⚠️ **它现在没有渲染函数读它，是故意的。** 第一版把这五行画成了一张图——
+#: 五行文字排成表格，正是账号所有者 2026-08-30 点名的「不要全是文字的卡片」
+#: （CLAUDE.md 里 heat-rule 那条记过同一句话：「我需要更多是图片或视频，
+#: 而不是文字卡片」）。那一屏现在换成了卡拉采夫在美网外场打资格赛的实拍，
+#: 五个人的名单退回旁白和要点里。**表留着是因为它是事实的出处**，
+#: 删了下一个人就得重查一遍。
 MEN_SEMIS: tuple[tuple[str, str, str], ...] = (
     ("1977", "澳网", "吉尔蒂南"),
     ("1977", "温网", "麦肯罗"),
@@ -100,6 +107,8 @@ MEN_SEMIS: tuple[tuple[str, str, str], ...] = (
 )
 
 #: 男子在美网的三次 1/4 决赛。⚠️ 只写年份，不点名，理由见模块 docstring。
+#: ⚠️ 和 `MEN_SEMIS` 一样，**现在没有渲染函数读它**——那张赛制对照图删掉了。
+#: 留着是因为它是「美网那一格到今天还是空的」这句话的出处，不是忘了删的死代码。
 MEN_USO_QF_YEARS = ("1999", "2008", "2021")
 
 _TIER_FILL = {3: LIME, 2: "none", 1: FILL, 0: "none"}
@@ -166,112 +175,6 @@ def qualifier_board() -> str:
     return "\n".join(parts)
 
 
-def men_semifinal_timeline() -> str:
-    """男子那五个人，和美网那一格的空白。
-
-    ⚠️ 五行画得一样高、一样亮，**故意的**：他们走到的是同一轮，
-    分深浅会凭空造出一个不存在的排序。真正要跳出来的是最后那一条横线以下的
-    美网——那一格是空的，而空白在图上不会自己显形，所以把它写出来。
-    """
-    # ⚠️ 这几个数是**渲出来量出来的**，不是照着 CLAUDE.md 那条「y ≤ 572」抄的。
-    # 第一版落点写在 566，渲出来被「④ 男子这边」那颗序号药丸压掉半行——
-    # 那条安全线是另一张图在另一套版式下的数，搬过来不成立。现在落点收在 462，
-    # 和同一条片子里已经验证没撞的 `qualifier_board()`（注脚 466）对齐。
-    top, pitch = 136, 52
-    x_year, x_event, x_name = 122, 250, 392
-    parts = [
-        '<svg viewBox="0 0 900 640" xmlns="http://www.w3.org/2000/svg">',
-        '<text x="450" y="46" text-anchor="middle" font-size="34" '
-        f'font-weight="700" fill="{INK}">男子这边，五十八年五个人</text>',
-        '<text x="450" y="88" text-anchor="middle" font-size="26" '
-        f'fill="{SOFT}">公开赛年代从资格赛打进大满贯半决赛的男子</text>',
-    ]
-    for i, (year, event, who) in enumerate(MEN_SEMIS):
-        y = top + i * pitch
-        parts.append(
-            f'<rect x="{x_year - 22}" y="{y - 30}" width="656" height="42" rx="10" '
-            f'fill="{FILL}" fill-opacity="0.14"/>'
-        )
-        parts.append(
-            f'<text x="{x_year}" y="{y}" font-size="28" fill="{SOFT}">{year}</text>'
-        )
-        parts.append(
-            f'<text x="{x_event}" y="{y}" font-size="28" fill="{INK}">{event}</text>'
-        )
-        parts.append(
-            f'<text x="{x_name}" y="{y}" font-size="28" font-weight="700" '
-            f'fill="{INK}">{who}</text>'
-        )
-        parts.append(
-            f'<text x="778" y="{y}" text-anchor="end" font-size="28" '
-            f'fill="{SOFT}">半决赛</text>'
-        )
-    line_y = top + len(MEN_SEMIS) * pitch - 12
-    parts.append(
-        f'<line x1="100" y1="{line_y}" x2="800" y2="{line_y}" '
-        f'stroke="{SOFT}" stroke-width="1.5" stroke-dasharray="7 7"/>'
-    )
-    parts.append(
-        f'<text x="450" y="{line_y + 46}" text-anchor="middle" font-size="30" '
-        f'font-weight="700" fill="{LIME}">美网 · 一个都没有</text>'
-    )
-    parts.append(
-        f'<text x="450" y="{line_y + 84}" text-anchor="middle" font-size="26" '
-        f'fill="{SOFT}">三次 1/4 决赛封顶 · '
-        f'{" · ".join(MEN_USO_QF_YEARS)}</text>'
-    )
-    parts.append("</svg>")
-    return "\n".join(parts)
-
-
-def draw_format() -> str:
-    """同一条路，男子在中途换了赛制。
-
-    ⚠️ 这张图**只摆规则，不摆因果**——见模块 docstring 最后那条警告。
-    标题因此写「换了赛制」而不是「所以更难」。
-    """
-    parts = [
-        '<svg viewBox="0 0 900 640" xmlns="http://www.w3.org/2000/svg">',
-        '<text x="450" y="46" text-anchor="middle" font-size="34" '
-        f'font-weight="700" fill="{INK}">同一条路，男子中途换了赛制</text>',
-        '<text x="450" y="84" text-anchor="middle" font-size="26" '
-        f'fill="{SOFT}">ITF 2026 大满贯规则书 L 节</text>',
-    ]
-    # ⚠️ 同上：第一版注脚在 546，渲出来被序号药丸压住。收到 466。
-    blocks = (
-        (126, "资格赛 3 场", "三盘两胜", "三盘两胜", "128 人抢 16 个正赛名额"),
-        (296, "正赛 7 场", "三盘两胜", "五盘三胜", "夺冠要连赢七场"),
-    )
-    for y, stage, women, men, note in blocks:
-        parts.append(
-            f'<text x="{450}" y="{y}" text-anchor="middle" font-size="30" '
-            f'font-weight="700" fill="{INK}">{stage}</text>'
-        )
-        parts.append(
-            f'<text x="450" y="{y + 34}" text-anchor="middle" font-size="25" '
-            f'fill="{SOFT}">{note}</text>'
-        )
-        for cx, label, fmt in ((262, "女子", women), (638, "男子", men)):
-            hot = fmt == "五盘三胜"
-            parts.append(
-                f'<rect x="{cx - 150}" y="{y + 52}" width="300" height="86" rx="14" '
-                f'fill="{LIME if hot else FILL}" fill-opacity="{0.9 if hot else 0.18}" '
-                f'stroke="{LIME if hot else FILL}" stroke-width="{0 if hot else 0}"/>'
-            )
-            parts.append(
-                f'<text x="{cx}" y="{y + 84}" text-anchor="middle" font-size="26" '
-                f'fill="{_CHAMP_INK if hot else SOFT}">{label}</text>'
-            )
-            parts.append(
-                f'<text x="{cx}" y="{y + 122}" text-anchor="middle" font-size="30" '
-                f'font-weight="700" fill="{_CHAMP_INK if hot else INK}">{fmt}</text>'
-            )
-    parts.append(
-        '<text x="450" y="466" text-anchor="middle" font-size="27" '
-        f'fill="{SOFT}">规则书原话：只有男子正赛是五盘三胜，其余全是三盘两胜</text>'
-    )
-    parts.append("</svg>")
-    return "\n".join(parts)
 
 
 def ceiling_cover() -> str:

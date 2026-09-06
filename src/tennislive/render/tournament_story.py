@@ -3673,6 +3673,23 @@ STORIES = STORIES + (
             "⚠️ **片子只摆这条规则，不下因果**：「男子走不了那么远是因为要多打两盘」"
             "说得通，但没有任何一个源这么说过。摆在一起让读者自己想，"
             "末屏那一问问的正是这个。",
+            "⚠️ 片子从「四张示意图 + 两张照片」改成「六屏照片 + 一张表」之后，"
+            "另外四个例子各自的数也逐条核过（两个独立源）："
+            "**卡拉采夫 2021 澳网**赛前世界第 114，"
+            "「first man in the Open Era to reach the semifinals in his Grand Slam debut」"
+            "（ESPN 与澳网官网赛报，同一句还写着他是公开赛年代第 5 个打进男单半决赛的资格赛球员，"
+            "和上面那条数得上）；"
+            "**亚斯特雷姆斯卡 2024 澳网**赛前世界第 93，半决赛 4-6 4-6 负郑钦文、1 小时 42 分，"
+            "澳网官网写着她那半个月「spent roughly four hours more than Zheng on court "
+            "during her AO 2024 campaign – including qualifying matches」；"
+            "**波多罗斯卡 2020 法网**赛前世界第 131，1/4 决赛 6-2 6-4 胜 3 号种子斯维托丽娜，"
+            "赛前「had never won a main draw match at a Grand Slam event」，"
+            "且是「the first in 21 years to reach such a point in any major」"
+            "（CNN、CBC、WTA 官网三处一致）；"
+            "**赫瓦林斯卡 2026 法网**赛后世界排名从 114 涨到 21（涨 93 位），"
+            "出处是 WTA 官网 Rankings Watch 和 tennis.com。"
+            "⚠️ 波多罗斯卡那场 1/4 决赛的**用时没查到出处，所以旁白里没有这个数**——"
+            "只讲确认过的。",
             "⚠️ 2026 年新发生的两件事都核过，都**不改写这张表**："
             "温网男单资格赛最好是萨菲乌林 1/4 决赛、女单是 Sawangkaew 第四轮，"
             "两个都够不着半决赛那一档。",
