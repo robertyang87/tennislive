@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>9.6 赛场之上 | 安德烈耶娃抢七险胜晋级</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>米拉·安德烈耶娃抢七4-0领先被追到4-5，连拿三分晋级美网16强🎾
+
+北京时间9月6日凌晨，美网女单第三轮，17号球场。一边是5号种子、世界第5、今年的法网冠军安德烈耶娃，一边是20岁的捷克人巴尔通科娃，世界第34，两人此前没交过手。一小时三十八分钟，6-2、7-6(5)，赢的是前者。
+
+首盘只用了33分钟。4-2那一局她拿下破发点，5-2自己的发球局第一个盘点就收下这一盘。这一盘她上网13次拿下12分，巴尔通科娃的二发只赢了3分。
+
+第二盘才是这场球。第一局她追到一个几乎不可能的球，转播都在问她是怎么追到的，这一局破发，1-0。接着自己的发球局30-40，巴尔通科娃拿到全场第一个破发点，兑现，1-1。2-4她再被破，3-4立刻破回来，一路6-6。
+
+抢七她4-0领先，然后被连追五分，4-5，巴尔通科娃离这一盘只差两分。她连赢两分6-5拿到赛点，赛点那一分又是一个长回合，最后一拍是她的制胜分，7-5。
+
+全场她上网22次拿下19分，总分75比59多16分，25个制胜分对15个非受迫失误。巴尔通科娃全场只拿到2个破发点，两个全兑现了，仍然不够。
+
+19岁的法网冠军，前三次来美网最远只到第三轮，这是她第一次打进纽约的第二周。4-0领先能被追到4-5，下一轮她还会给对手这样的机会吗？
+
+#网球时差 #美网 #安德烈耶娃 #巴尔通科娃 #赛场之上</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>四比零领先能被追到四比五——下一轮，她还会给对手这样的机会吗？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
