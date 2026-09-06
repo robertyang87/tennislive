@@ -1,12 +1,12 @@
 {
-  "_note": "「决胜盘零比五还能赢吗」——由头是 2026-09-05 美网女单第三轮郑钦文决胜盘 0-5 逆转凯斯。账号所有者要一条榜单式的「网球有故事」，男女各档都要，片长 3~5 分钟。完整调研底子在 docs/comeback-research-0-5.md，每条案例的源数和软硬都标在那儿。 ｜ 2026-09-05 第三版（账号所有者复审）：① 三张章节卡原来被 `still_canvas_for_layout` 缩 0.88 居中，顶上的品牌彩条落到 y≈87 横穿左上角角标——现在按画面区尺寸渲的整幅页铺满，彩条回到 y=0；② 每次换到另一场球（第 1/4/7/10/16 段）右上角贴 3.8s 的 story_text：哪一站哪一轮、谁对谁、画面上那一刻的比分，比分逐帧读的是转播记分条；③ story_text 贴图按品牌那套重新配色（一个强调色）。已发的微信不重发（pushed.json 在），成片替换同一个 Release 附件，审片版另发对话。",
+  "_note": "「决胜盘零比五还能赢吗」——由头是 2026-09-05 美网女单第三轮郑钦文决胜盘 0-5 逆转凯斯。账号所有者要一条榜单式的「网球有故事」，男女各档都要，片长 3~5 分钟。完整调研底子在 docs/comeback-research-0-5.md，每条案例的源数和软硬都标在那儿。 ｜ 2026-09-05 第三版（账号所有者复审）：① 三张章节卡原来被 `still_canvas_for_layout` 缩 0.88 居中，顶上的品牌彩条落到 y≈87 横穿左上角角标——现在按画面区尺寸渲的整幅页铺满，彩条回到 y=0；② 每次换到另一场球（第 1/4/7/10/16 段）右上角贴 3.8s 的 story_text：哪一站哪一轮、谁对谁、画面上那一刻的比分，比分逐帧读的是转播记分条；③ story_text 贴图按品牌那套重新配色（一个强调色）。已发的微信不重发（pushed.json 在），成片替换同一个 Release 附件，审片版另发对话。 ｜ 2026-09-06 第四版（账号所有者：「替换」）：伊埃拉-陶森那三段换成 2019 澳网八强普利斯科娃逆转小威廉姆斯（决胜盘 1-5、救四个赛点、连赢六局），六段 68 秒，源片是 @AustralianOpen 的 7:53 官方集锦（probe `comebacks-pliskova-williams`）。窗口全部按 probe 的记分条墙（score_07~10）和切点表定，事实三源见 `_claims`。已发的微信照旧不重发，成片替换同一个 Release 附件，审片版另发对话。",
   "_claims": {
     "郑钦文这场": "三源：flashscore 逐分 df_mh_1（第三盘逐局 1-0…5-0 再 5-1→5-7，两处 |B3|）＋ 官方统计 df_st_1（Match points saved 0/1、总分 97:98、总局数 17:14）＋ 源片自带解说 194.72s「come back from the brink, five love down」。",
     "1993 美网 Masur": "两源：tennis.com 专文 ＋ 1993 年 UPI 存档报道。0-5 落后、Morgan 在 5-1 自己发球时拿到赛点、连赢七局 7-5。",
     "1995 法网 Rubin": "两源：Tennis Majors 专文 ＋ 巴尔的摩太阳报 1995 存档。诺沃特娃决胜盘 5-0、40-0，共九个赛点，鲁宾 7-6(8) 4-6 8-6。 ⚠️ 2026-09-05：不许写成「极限/纪录」——大满贯救赛点的纪录是 1966 温网 Schultze 的 11 个（tennis365 ＋ 待第二源），Bramblett 1983 美网资格赛 18 个；九个只是这条片子里最多的。",
     "2024 温网 Machac": "ATP 官网（权威）：3-6 3-6 6-4 6-1 7-6(10-5)，两盘落后 ＋ 第五盘 0-5。⚠️ 官网明写 Machac 一个赛点都没面对，所以卡上不写「救赛点」。",
     "2023 澳网 Rublev": "ATP 官网：6-3 3-6 6-3 4-6 7-6(11-9)，3 小时 37 分。第五盘 2-5 落后、5-6 自己发球救 2 个赛点、从 2-5 起赢 13 分里的 12 分；抢十 0-5 落后、鲁内一度 7-3。",
-    "2025 美网 Eala": "WTA 官网 ＋ olympics.com：6-3 2-6 7-6(13-11)，决胜盘 1-5 落后，2 小时 36 分，五个赛点，菲律宾公开赛年代大满贯首胜。",
+    "2019 澳网 Pliskova": "三源：澳网官网赛报 ausopen.com/articles/match-report/pliskova-stuns-serena-quarterfinal-upset（6-4 4-6 7-5；「trailed Williams 5-1 in the third set and saved four match points」；5-1 40-30 第一个赛点上「rolled her left ankle mid-rally and lost the point. She double faulted on the next point, and then lost the game」；「never called for a medical time out」；保发第八局、第九局破发到 love 成 4-5；4-5 她自己发球 15-40 两个赛点＋两分之后第四个，保发 5-5；「won the next seven straight points to arrive at triple match point… missed the first two… converted her third when Serena struck her 37th unforced error」；小威原话「I can't say that I choked on those match points. She literally played her best tennis ever on those shots.」）＋ ESPN/AP 赛后稿 espn.com/tennis/story/_/id/25827556（「Serving for the victory at 5-1, 40-30, Williams was called for a foot fault… During the ensuing point Wednesday, Williams twisted her left ankle and dumped a forehand into the net」；「would lose every point she served the rest of the way」；「dropping the last six games」）＋ The Ringer theringer.com/2019/01/23/tennis/serena-williams-karolina-pliskova-australian-open（脚误在一发上，第二发之后的回合崴脚、正手下网，然后双误送出破发点，反手失误被破）。维基 2019 澳网女单签表：7 号种子 Plíšková 胜 16 号种子 S. Williams 6-4 4-6 7-5。⚠️ 「此后自己的发球分一分没再拿到」是 ESPN/AP 明写的，而且能从澳网赛报逐局反推（5-1 那局丢 3 分、5-3 被破到 love 4 分、5-5 被破到 love 4 分）——两源对得上才写进旁白。⚠️ 不写「脚误让她输了」这类因果，也不写「崩了」——小威自己否了，只引她的原话。⚠️ 转播记分条读出来的 MATCH POINT #3（成片里 6-5 40-30 那一段）是普利斯科娃的第三个赛点，和「missed the first two」对得上。",
     "2026 美网 Keys": "仓库既有 spec keys-bondar-us-open-2026-r2（三源核过）：5-7 6-4 7-6(5)，决胜盘 2-5、df_st_1 Match points saved 5/0、抢十 3-5 落后连拿七分。"
   },
   "_facts": [
@@ -19,13 +19,14 @@
   "sources": {
     "zheng": "https://www.youtube.com/watch?v=PiuDtMWKU2g",
     "keys": "https://www.youtube.com/watch?v=2Tfi066oeHU",
-    "eala": "https://www.youtube.com/watch?v=JRCuP2U5Alk",
+    "pliskova": "https://www.youtube.com/watch?v=tvt2K_geBQ8",
     "rublev": "https://www.youtube.com/watch?v=Ol-RRSlCmjU"
   },
   "primary": "zheng",
-  "_sources_why": "四条全是赛事官方频道（@usopen ×3、@australianopen ×1），四要素靠频道和标题自证：`Madison Keys vs. Qinwen Zheng Highlights | 2026 US Open Round 3`、`Madison Keys vs. Anna Bondar Extended Highlights | 2026 US Open Round 2`、`Alexandra Eala vs. Clara Tauson Extended Highlights | 2025 US Open Round 1`、`Andrey Rublev v Holger Rune Extended Highlights | Australian Open 2023 Fourth Round`。同一场有多版时按仓库老规矩取长的那一版（伊埃拉 12:17 加长而不是 3:11、凯斯 12:12 加长而不是 3:28）。⚠️ 郑钦文那场官方只发了这一个版本（3:35），没有加长版，所以收尾那一段的可用画面就这么多。⚠️ 马哈奇-戈芬 2024 温网首轮**没有任何官方动态素材**：温网官方频道六组不同的词全空（同频道搜得到马哈奇 2023 年对诺里那场、搜得到戈芬的资格赛，所以搜索机制是有效的）、ATP 官方频道空、Tennis TV 空；结构性原因是那场是首轮而且戈芬是幸运落败者临时顶替退赛的穆雷。所以它和 1995、1958 一样降级成整屏卡片。⚠️ 阿尔卡拉斯-辛纳 2025 法网决赛砍掉了：账号所有者定的入选标准是「落差 ≥4 局」，而它是盘数级落差，是唯一形状不符的那一条。",
+  "_sources_why": "四条全是赛事官方频道（@usopen ×2、@australianopen ×2），四要素靠频道和标题自证：`Madison Keys vs. Qinwen Zheng Highlights | 2026 US Open Round 3`、`Madison Keys vs. Anna Bondar Extended Highlights | 2026 US Open Round 2`、`Serena Williams v Karolina Pliskova match highlights (QF) | Australian Open 2019`、`Andrey Rublev v Holger Rune Extended Highlights | Australian Open 2023 Fourth Round`。同一场有多版时按仓库老规矩取长的那一版（凯斯 12:12 加长而不是 3:28）。⚠️ 郑钦文那场官方只发了这一个版本（3:35），没有加长版，所以收尾那一段的可用画面就这么多。⚠️ 2026-09-06 账号所有者定「替换」：伊埃拉-陶森（2025 美网首轮，决胜盘 1-5）换成普利斯科娃-小威廉姆斯（2019 澳网八强，决胜盘 1-5、救四个赛点）——同一档落差、名气大得多，而且形状和郑钦文这场最像（5-1 ＋ 赛点 ＋ 7-5）。@AustralianOpen 这场一共发了八版（YouTube 搜索结果页 ytInitialData 逐条数的，oEmbed author_name 全是 Australian Open）：全场两版 1:41:19 / 1:41:39、集锦 7:53、首盘 5:09、次盘 10:23、`Pliskova clinical in final set` 1:30、`FINAL GAME` 3:41、`Czechs into SF` 3:06。**用的是 7:53 集锦**——它是唯一一版从决胜盘 1-4 一路带着转播记分条走到 7-5 和握手的（probe `comebacks-pliskova-williams`：1920×1080、25fps、472.9s）；全场版 1 小时 41 分要在 runner 上下两三个 GB，不值；`FINAL GAME` 也 probe 过（`comebacks-pliskova-final-game`，220.7s），只盖最后一局，而集锦里 MATCH POINT #3 和赢球那一分都在，再加一条同场源片只会多一份 mixed_fps 和一处接缝，**没用它**。⚠️ 马哈奇-戈芬 2024 温网首轮**没有任何官方动态素材**：温网官方频道六组不同的词全空（同频道搜得到马哈奇 2023 年对诺里那场、搜得到戈芬的资格赛，所以搜索机制是有效的）、ATP 官方频道空、Tennis TV 空；结构性原因是那场是首轮而且戈芬是幸运落败者临时顶替退赛的穆雷。所以它和 1995、1958 一样降级成整屏卡片。⚠️ 阿尔卡拉斯-辛纳 2025 法网决赛砍掉了：账号所有者定的入选标准是「落差 ≥4 局」，而它是盘数级落差，是唯一形状不符的那一条。",
   "mixed_fps": {
-    "rublev": "25 → 29.97：主源是郑钦文那条（29.97），所以这条要**升采样**，每五帧补一帧。⚠️ 这四段里有三段是真回合（抢十 5-7、赛点 9-8、最后那一分），不是低动量画面——原来那句「故意不取长回合」写在窗口取在赛后庆祝的时候，窗口按记分条重排之后它不成立了，照实改掉。认领的取舍是：转播主机位是固定的、球员在画面里很小，补出来那一帧看不太出来；而反过来把成片定成 25fps 的话，要降采样的就是郑钦文＋凯斯＋伊埃拉那 190 秒，比这 44 秒糟得多。四条源尺寸全是 1920×1080，只有帧率这一处要迁就。"
+    "rublev": "25 → 29.97：主源是郑钦文那条（29.97），所以这条要**升采样**，每五帧补一帧。⚠️ 这四段里有三段是真回合（抢十 5-7、赛点 9-8、最后那一分），不是低动量画面——原来那句「故意不取长回合」写在窗口取在赛后庆祝的时候，窗口按记分条重排之后它不成立了，照实改掉。认领的取舍是：转播主机位是固定的、球员在画面里很小，补出来那一帧看不太出来；而反过来把成片定成 25fps 的话，要降采样的就是郑钦文＋凯斯＋伊埃拉那 190 秒，比这 44 秒糟得多。四条源尺寸全是 1920×1080，只有帧率这一处要迁就。",
+    "pliskova": "25 → 29.97：和 rublev 那条同一个账——主源是郑钦文那条（29.97），这条要**升采样**，每五帧补一帧。六段里四段是转播主机位的宽景回合（球员在画面里很小，补出来那一帧看不太出来），两段是反应近景（弯腰、握拳、庆祝，低动量）。反过来把成片定成 25fps 要降采样郑钦文＋凯斯那 130 多秒，比这 68 秒糟得多。源片 1920×1080，只有帧率这一处要迁就（probe.json fps 25/1）。"
   },
   "tts_backend": "edge",
   "_tts_backend_why": "Azure 的钥匙在 401（run 33987640638 第 2 秒就死在片尾配音上：`WebSocket upgrade failed: Authentication error (401)`）。这已经是连着第五条了（`keys-bondar` 两趟、`zheng-putintseva`、`tien-monfils`、`wu-alcaraz`），CLAUDE.md 的结论是**写 spec 那一刻就写上，别等 render 红了再补**。\n退回 edge 的代价：**零**。两条机械判据——这条 spec 里 `voice.style` 0 段、`lead_pause` 0 段，Azure 独有的那两样一样都没用到；而本地 `--check-narration` 跑的本来就是 edge-tts（这台沙箱只够得着它），所以量到的「每段旁白都装得下」直接适用，不用再按「Azure 比 edge 快 6.6%」折算一遍。钥匙修好之后把这两个键删掉就回 Azure。",
@@ -111,12 +112,12 @@
       "_why": "抢十逐分（同一份 `df_mh_1`）：0-1 1-1 2-1 2-2 2-3 2-4 3-4 **3-5** 4-5 5-5 6-5 7-5 8-5 9-5 10-5——三比五之后连拿七分，一分没丢。⚠️ 是**抢十**不是抢七：2022 年起四大满贯的决胜盘统一打十分，男女一样。原来「五个全丢了」主语含糊（丢的人是邦达尔），改成凯斯自己当主语。⚠️ 而「五个**她**一个都没给」也不行：成片 43.7~48s 画面上是**邦达尔**（记分条 3 / 5 AD，正是她手里那几个赛点），承前省略的「她」压在对手脸上，正是本仓库「三个盘点都没救下来」那条被读者当众指出来的形状。按那条的处方**把名字写出来**。"
     },
     {
-      "source": "eala",
-      "start": 334.5,
-      "end": 345.3,
-      "narration": "往前推一年，同样是美网首轮，菲律宾人伊埃拉，对手是十四号种子陶森。决胜盘一比五。",
+      "source": "pliskova",
+      "start": 291.92,
+      "end": 306.68,
+      "narration": "再往前，二〇一九年澳网八强，普利斯科娃对小威廉姆斯。决胜盘一比五，小威的赛点。一发被判脚误。第二发之后那一拍，她崴了左脚踝。",
       "inset": {
-        "image": "assets/beatcards/comeback-five-love-down/eala.png",
+        "image": "assets/beatcards/comeback-five-love-down/pliskova.png",
         "kind": "story_text",
         "corner": "tr",
         "width": 0.6,
@@ -124,22 +125,49 @@
         "show_for": 3.8,
         "motion": "editorial"
       },
-      "_inset_why": "成片 55~62s 记分条 `1 / 5`：决胜盘伊埃拉 1-5（旁白同句）。陶森 14 号种子出自赛事签表（`_facts`）。 位置：tr / pad 0.085 照合同写；render 会把顶角贴图让到常驻角标块底下（`inset_top_clear_y` 这条片子=151，见 CLAUDE.md 2026-09-05），不用在 pad 里手调。贴图按 `tools/render_story_info_band.py --variant player` 渲（2026-09-05 品牌配色版），show_for 3.8s 淡出。",
-      "_why": "记分条墙 `score_08.jpg`：334.5~344.5 烧着 `EALA 6 2 1 / TAUSON 3 6 5`，也就是决胜盘一比五。原来这两段取的是 643~662 秒——那儿画面已经在决胜抢十的赛点上，而旁白在讲一比五，差了整整一盘。切点 334.30→345.48 是一个完整镜头。"
+      "_inset_why": "probe `comebacks-pliskova-williams` 的记分条墙 score_07.jpg：292.5~306.5 烧着 `MATCH POINT  16 WILLIAMS ◀ 4 6 5 [40] / 7 PLISKOVA 6 4 1 [30]`——决胜盘 5-1、小威发球（发球指示在她那一行）、40-30 赛点，和旁白同句。kicker 写「2019 澳网8强」（2026-09-01 轮次写 N 强那条），headline 主角在前；「小威」是译名表「小威廉姆斯」的头两字简称（`普利斯科娃 vs 小威廉姆斯` 11.9 格超 10.5 格上限，渲染器当场拒）。位置：tr / pad 0.085 照合同写；render 会把顶角贴图让到常驻角标块底下（`inset_top_clear_y`，见 CLAUDE.md 2026-09-05），不用在 pad 里手调。贴图按 `tools/render_story_info_band.py --variant player` 渲（品牌配色版），show_for 3.8s 淡出。",
+      "_why": "切点 291.92→306.68 是一个完整镜头：292.5 那一格是**小威踩在底线上的脚的特写**——转播给脚误的回放，正配「一发被判脚误」；294.5~306.5 是第二发之后那一分的主机位宽景，rally 在 306.68 收。记分条 292.5~306.5 全程 `MATCH POINT 5-1 40-30`，发球指示在小威那一行。脚误出自 ESPN/AP ＋ The Ringer，崴左脚踝出自澳网赛报 ＋ ESPN/AP（`_claims`）。⚠️ 「她崴了左脚踝」的「她」承前指小威（上一句主语是「小威的赛点」，发球的是她）。⚠️ 3:4 居中窗口取源片 x 555~1365，澳网这块板在 x 109~527、y 933~1023，**不在成片画面里**——比分靠这一段的 story_text 交代，所以贴图的比分必须和这一格的板一致。",
+      "_narration_why": "真 TTS（edge-tts 云见 +6%）量出 14.88s，窗口 14.76s 超 0.12s；去掉「四十比三十」——这一格的 story_text 贴图上就印着 40-30，旁白不用再说一遍。"
     },
     {
-      "source": "eala",
-      "start": 378.8,
-      "end": 387.7,
-      "narration": "五比四，陶森发球胜赛局。一次录像回放判给了伊埃拉，陶森的情绪从那儿开始散。",
-      "_why": "同一面墙 376.5~386.5 烧着 `EALA 6 2 4 / TAUSON 3 6 5`，发球指示点在陶森那一行——四比五、她发球胜赛局。388.5 起变成 40-15，伊埃拉拿到两个破发点，随后破成五比五（402.5 秒的记分条是 `6 2 5 / 3 6 5`）。切点 378.63→387.94 是一个完整镜头。录像回放那一下的出处是 WTA 官网＋olympics.com，不是从画面上认的。"
+      "source": "pliskova",
+      "start": 307.72,
+      "end": 314.64,
+      "narration": "四十平。她弯着腰站了一会儿，没有叫医疗暂停。",
+      "crosses_cut": "311.4：小威弯腰的近景 → 她那只脚的特写，是崴脚之后同一时刻的两个机位，正是这一段要的东西。",
+      "_why": "score_07.jpg 308.5~314.5 记分条 `DEUCE 5-1 40-40`——赛点救掉了。contact_05.jpg 308.5/310.5 她弯腰撑着、312.5/314.5 是她那只鞋和脚踝的特写。「没有叫医疗暂停」是澳网赛报原话（never called for a medical time out）。切点 307.72→314.64。"
     },
     {
-      "source": "eala",
-      "start": 698.5,
-      "end": 710.1,
-      "narration": "抢十打到十三比十一，五个赛点才结束。菲律宾人第一次在大满贯赢下一场球，等了整整一个公开赛年代。",
-      "_why": "落点不在比分上，在「第一人」这件事上。 ⚠️ 是抢十不是抢七——美网决胜盘 6-6 打十分，13-11 正是打过十分之后还要净胜两分的样子。"
+      "source": "pliskova",
+      "start": 319.88,
+      "end": 330.9,
+      "narration": "接着一个双误，破发点。再一记反手失误，这一局丢了，五比二。三分之前她还握着赛点。",
+      "crosses_cut": "327.88：破发那一分的宽景 → 普利斯科娃的反应近景（328.5），同一时刻两个机位；330.5 记分条已经翻成 5-2。",
+      "_why": "score_08.jpg 320.5~328.5 烧着 `BREAK POINT  WILLIAMS ◀ 5 / PLISKOVA 1 [AD]`——小威发球、普利斯科娃占先＝破发点；330.5 变成 `5 / 2`。双误→破发点、反手失误→被破，出自澳网赛报（double faulted on the next point, and then lost the game）＋ The Ringer（An error from Williams's backhand completed Pliskova's break）。收在 330.9：loose 切点 330.92 之后是 AO 转场标。「她」承前指小威。"
+    },
+    {
+      "source": "pliskova",
+      "start": 360.5,
+      "end": 372.2,
+      "narration": "保发，再破发，四比五。她自己的发球局又面对两个赛点，紧接着还有第四个，全救了下来。五比五。",
+      "crosses_cut": "369.68：占先那一分的宽景回合 → 普利斯科娃的反应近景（370.5），同一时刻两个机位。",
+      "_why": "score_09.jpg 360.5~372.5 记分条 `WILLIAMS 4 6 5 / PLISKOVA ◀ 6 4 4 [AD]`——4-5、她自己发球、占先（也就是救完赛点之后的局点）；374.5 翻成 5-5。「保发，再破发」盖住集锦跳过的第八局（她保发 5-3）和第九局（score_08 334.5~338.5 `3 BREAK POINTS 5-3 0-40` → 340.5 `5-4`，破发到 love）。15-40 两个赛点＋两分之后第四个，出自澳网赛报（arrive at 15-40. But Pliskova saved both those match points… and a fourth two points later to hold for 5-5）。⚠️ 主语：「她自己的发球局又面对两个赛点」——面对/救的是同一个人（普利斯科娃），赛点是小威的，按「拿到的点是对手的、面对的点才是自己救的」那条写。",
+      "_narration_why": "「两分之后还有第四个」被 `test_旁白里的分不许读成分钟` 拦下——「两分之后」听着就是「两分钟之后」。改成「紧接着」；澳网赛报原文是 a fourth two points later，具体差几分写在 `_why` 里就够。"
+    },
+    {
+      "source": "pliskova",
+      "start": 402.0,
+      "end": 415.0,
+      "narration": "从那个赛点起，小威在自己的发球局一分都没再拿到。六比五，普利斯科娃的第三个赛点，前两个没兑现。这一分她拿下了，七比五。",
+      "_why": "score_10.jpg 400.5~414.5 记分条 `MATCH POINT #3  WILLIAMS 4 6 5 [30] / PLISKOVA ◀ 6 4 6 [40]`——6-5、她自己发球、第三个赛点；416.5 翻成 `7`。402.0→415.0 落在 loose 切点 399.76 和硬切点 415.0 之间，一个完整镜头（主机位宽景，这一分打到 415 收）。「前两个没兑现」＝澳网赛报 missed the first two, converted her third；「自己的发球局一分都没再拿到」＝ ESPN/AP would lose every point she served the rest of the way，澳网赛报逐局可反推（5-1 那局丢 3 分、5-3 和 5-5 各被破到 love）。⚠️ 不写最后那一分是什么球——澳网赛报只说 37th unforced error，没说正手反手。"
+    },
+    {
+      "source": "pliskova",
+      "start": 415.0,
+      "end": 425.96,
+      "narration": "连赢六局。小威廉姆斯赛后说：我不能说我在那几个赛点上崩了，她打出了她生涯最好的网球。",
+      "crosses_cut": "417.88 / 418.84 / 422.0（loose）：她举拍庆祝 → 她的教练席跳起来 → 她捂着脸 → 小威走向球网，是赢球那一刻连着的四个机位，正是这一段要的东西。425.96 之后是握手，不收。",
+      "_why": "contact_07.jpg 416.5 她在底线庆祝、418.5 教练席、420.5 她捂脸、422.5/424.5 小威走向球网。引语是澳网赛报里小威的原话 I can't say that I choked on those match points. She literally played her best tennis ever on those shots.——评论号只引她自己说的，不替她下「崩盘」的结论。落点不在比分上，在对手的这句话上。"
     },
     {
       "source": "rublev",
@@ -272,10 +300,10 @@
   "editorial": {
     "mode": "match_review",
     "question": "决胜盘零比五落后，这样的球还赢得回来吗？",
-    "thesis": "赢得回来，但代价是对手必须先松一次手——这几场里输的那一方都握着赛点，而真正把球送回去的往往不是一记制胜分，是一个多想了一秒的选择：凯斯在唯一的赛点上把反手变了线，诺沃特娜在九个赛点上一次次抢攻出界，鲁内在抢十七比三时开始等对手失误。",
+    "thesis": "赢得回来，但代价是对手必须先松一次手——这几场里输的那一方都握着赛点，而真正把球送回去的往往不是一记制胜分，是一个多想了一秒的选择：凯斯在唯一的赛点上把反手变了线，诺沃特娜在九个赛点上一次次抢攻出界，鲁内在抢十七比三时开始等对手失误；小威廉姆斯在五比一四十比三十的赛点上先被判了一个脚误，再崴了脚，之后自己的发球分一分没再拿到。",
     "beats": [
       "先给最近的一次：凯斯在美网第二轮从决胜盘二比五、五个赛点里活下来——她自己刚做过这件事。",
-      "往前推到一比五（伊埃拉 2025 美网首轮，五个赛点＋一次录像回放改判）和二比五叠抢十零比五（卢布列夫 2023 澳网，两次绝境）。",
+      "往前推到一比五（普利斯科娃 2019 澳网八强：小威 5-1 40-30 的赛点上一发脚误、随后崴脚，四个赛点全救回、连赢六局 7-5）和二比五叠抢十零比五（卢布列夫 2023 澳网，两次绝境）。",
       "极限那一档没有画面只有记录：2024 温网马哈奇两盘落后加第五盘零比五；1995 法网诺沃特娜五比零、四十比零、九个赛点。",
       "回到由头：郑钦文决胜盘零比五、对手唯一的赛点在五比一，她连赢七局；而全场她只多拿一分、还少赢三局。"
     ],
@@ -285,6 +313,7 @@
         "郑钦文全场总得分 98:97、总局数 14:17——多输三局、多拿一分，赢了（flashscore df_st_1）。",
         "凯斯全场唯一的赛点在决胜盘 5-1 她自己发球时，40-30，接住抛球重来后反手变线下网。",
         "凯斯上一轮对邦达尔救了五个赛点（df_st_1 的 Match points saved 5:0），两轮之内一救一丢。",
+        "普利斯科娃 2019 澳网八强：决胜盘 1-5，小威在 5-1 40-30 的第一个赛点上一发被判脚误、随后崴了左脚踝（ausopen.com ＋ ESPN/AP）；此后小威自己的发球分一分没再拿到（ESPN/AP，澳网赛报逐局可反推），普利斯科娃救四个赛点、连赢六局 7-5。小威赛后：「我不能说我在赛点上崩了，她打出了她生涯最好的网球。」",
         "卢布列夫那场从第五盘 2-5 起赢了 13 分里的 12 分，抢十又从 0-5 追到 11-9，鲁内一度 7-3。",
         "诺沃特娜 1995 年法网决胜盘 5-0、40-0 领先，共九个赛点没兑现，鲁宾 8-6 拿下。",
         "马哈奇 2024 温网首轮两盘落后加第五盘 0-5，而 ATP 官网明写他一个赛点都没面对。"
@@ -292,8 +321,9 @@
       "sources": [
         "https://www.atptour.com/en/news/rublev-rune-australian-open-2022-r16",
         "https://www.atptour.com/en/news/machac-goffin-wimbledon-2024-r1",
+        "https://ausopen.com/articles/match-report/pliskova-stuns-serena-quarterfinal-upset",
+        "https://www.espn.com/tennis/story/_/id/25827556/australian-open-women-quarterfinal-roundup-wednesday",
         "https://www.tennismajors.com/roland-garros-news/june-3-1995-the-day-jana-novotna-blew-nine-match-points-at-roland-garros-413492.html",
-        "https://www.wtatennis.com/news/4349424/with-the-crowd-rallying-behind-her-eala-makes-tennis-history-for-the-philippines",
         "https://ca.sports.yahoo.com/news/zheng-qinwen-stuns-madison-keys-174604685.html",
         "https://www.tennis.com/baseline/articles/worst-choke-ever-david-goffin-tomas-machac-wimbledon-5-0-in-the-fifth"
       ]
