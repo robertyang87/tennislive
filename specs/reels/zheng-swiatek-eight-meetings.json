@@ -9,6 +9,8 @@
   "_no_repeat": "⚠️ 仓库里已有三条郑钦文的『网球有故事』（zheng-lanlana / zheng-from-low-to-us-open-comeback / zheng-us-open-outlook），讲的**全是同一条线**：受伤、掉出前一百、从资格赛打回来。这一条一个字都不铺开那条线——第 17 段那句『世界第一百二十一位，从资格赛打起』是**理解这条片子所必需的来路，一句带过**（CLAUDE.md『看不懂这场球所必需的来路，一句带过，别展开』）。本条的主体是两个人的交手史，那三条一次都没讲过。\n⚠️ 同栏目今天刚发过 comeback-five-love-down（决胜盘 0-5 逆转的序列，郑钦文只是引子）——那条讲『这样的球有人赢回来过吗』，这条讲『她跟这个人打过几次』，主体不同、画面零重叠（那条用美网 R3，这条用奥运）。",
   "mixed_fps": {},
   "_mixed_fps_why": "单源，没有混帧率的问题。",
+  "tts_backend": "edge",
+  "_tts_backend_why": "Azure 的钥匙从 2026-09-03 起一路 401（WebSocket upgrade failed: Authentication error），连着打死过四条片子，都死在第 2 秒的片尾配音上。**查产物不查信号**：今天 output/ 里最近渲过的六条 render.json 的 narration_backend 全是 edge-tts，说明钥匙还没修好。\n⚠️ 退回 edge 对这一条**零代价**，判据是两条机械的：这份 spec 没有 voice.style、也没有 lead_pause（那两样是 Azure 独有的）。而且本地 --check-narration 跑的本来就是 edge-tts，量到的每段余量直接适用，不用再按『Azure 比 edge 快 6.6%』折算一遍。\n钥匙修好之后把这两个键删掉就回到 Azure。",
   "editorial": {
     "mode": "match_review",
     "question": "郑钦文和斯瓦泰克打过八次，她赢下来的是哪一次，那一次跟前面七次差在哪儿？",
