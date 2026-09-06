@@ -1889,6 +1889,35 @@ REQUESTED_KINDS` 的早退照旧触发，自动链行为逐字节不变。反向
 ⚠️ 那 10 条存量**没跟着修**（缺 `source_verification`、都是已发不重渲的片子），
 是已知债。
 
+##### ⭐ 2026-09-06 第六种：`broadcaster_interview`（赛后转播商专访）——同一个形状，而它多一条风险
+
+来路：账号所有者点名做 Tennis Channel 对郑钦文的赛后专访（美网第三轮
+`TjyzXDi1j3s`）。三条证据和上面那次同形，**都是量出来的**：`specs/interviews/`
+里已经发过 3 条同类（`chwalinska-cincinnati-2026-studio` /
+`eala-osaka-dc2026-sf-studio` / `djokovic-cincinnati-2026-return`，
+`source_verification` 全是空的 `{}`，闸立起来之后就渲不出来了）；
+`data/oncourt_sources.json` 里 Tennis Channel 是 `verified` / `broadcaster`，
+它的 note **自己写着**「它做的是转播商的访谈段落，不是赛后场上采访——**这是
+内容类型的问题，不是深度的问题**」；`_OPENING_KINDS` 的 `none` 那一行本来就把
+「演播室专访」列成合法情形——**产片那头一直认，只有 L0 不认**。
+
+⚠️⚠️ **它比 press 那次多一条风险，而那条风险伪装成「最省事的做法」**：
+`studio` 早就在 `DETECTED_TYPES` 和 `candidate_verification` 的映射表里
+（`"studio": "studio"`），所以把它提进 `REQUESTED_KINDS` 看着只是加一行——
+**而那正是上面那段要防的洞**：自动链里判成 studio 的条目会从 rejected 变成
+verified。**新类型必须用一个映射表里没有的键名。** 反向验证把 studio 提进去，
+`test_加了转播商专访之后自动链一个字都不许变` 当场红，判据
+`test_studio不许被顺手提进可请求类型` 专门钉这一条。
+
+⚠️ **`NO_LEAD_EXCEPTION_METHOD` 给它写 `None` 是收紧不是放宽。** 两种都是
+「源片里一帧比赛画面都没有」，**分界不在那儿，在借不借得到**：发布会在发布厅
+录、`check_lead_in` 明写「也不该去借」；转播商专访在**赛场里**录，同一场的官方
+集锦借得到，所以照 on_court / ceremony 那样必须接冷开场。
+
+⚠️ 顺手修掉一句**已经过期**的报错文案：`build_interview_clip` 那句「演播室、
+**发布会**和 unknown 都不能替代」——发布会 2026-09-03 就加进来了，这句话从那天
+起一直在说假话。**加类型时报错文案要跟着改**，它是撞上闸的人唯一读得到的说明。
+
 **② 加第五种类型时漏的那一处，是仓库自己的判据抓到的。**
 `NO_LEAD_EXCEPTION_METHOD`（「这种内容能不能没有冷开场」）少了表态，
 `test_每种内容形态都要表态能不能没有冷开场` 当场红——它的 docstring 明写
