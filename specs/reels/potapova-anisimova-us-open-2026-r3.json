@@ -1,0 +1,403 @@
+{
+ "slug": "potapova-anisimova-us-open-2026-r3",
+ "_column": "reel",
+ "layout": "band",
+ "scorebox": [
+  104,
+  887,
+  660,
+  980
+ ],
+ "_scorebox_why": "美网这一届同一条频道同一套转播图形，和已发的 `zheng-keys-us-open-2026-r3` / `wu-alcaraz-us-open-2026-r3`（104 / 887 / 660 / 980）逐条相同；本场 probe 的 `scorebox_guess` 是 `104,888,579,978`（右缘 579 是猜的，只有一盘时板窄）。⚠️ 右缘 660 只是兜底，真正的右缘是 `resolve_board_insets` 每段现量的（这块板每打完一盘右缘 +38px）。",
+ "tts_backend": "edge",
+ "_tts_backend_why": "仓库的 `AZURE_SPEECH_KEY` 自 2026-09-03 起被 Azure 401 拒（`keys-bondar` / `zheng-putintseva` / `wu-alcaraz` 连着死在第 2 秒的片尾配音上；昨天 `zheng-keys-us-open-2026-r3` / `comeback-five-love-down` 都是 edge 渲的），账号所有者定的是「换 edge tts」。这一条退回 edge 零代价：没用 `voice.style`，也没用 `lead_pause`。本地 `--check-narration` 在这台沙箱跑的就是 edge-tts，量到的余量就是成片的真实情况。",
+ "source_url": "https://www.youtube.com/watch?v=MbMPFIDunzs",
+ "_source": "US Open 官方 YouTube 频道（oEmbed `author_name: US Open Tennis Championships`）本场官方集锦，probe 实测 193.77s / 1920×1080 / 29.97fps（过 1080p 硬闸）。画面自证四处：\n① 记分条 `24 POTAPOVA AUT / 10 ANISIMOVA USA` 逐格比分和 flashscore `p0Zrr3Z0` 的逐分记录对得上（18.5s 首盘 `2 / 1` 波塔波娃发球、32.5s `3 [0] / 1 [15]` 阿尼西莫娃发球、44.5s `3 [15] / 2 [30]` 波塔波娃发球、68.5s `SET POINT #4 5 [AD] / 2` 波塔波娃发球、86.5s 第二盘 `6 1 [15] / 2 0 [30]`、106.5s `BREAK POINT 6 2 [30] / 2 1 [40]` 波塔波娃发球、132.5s `MATCH POINT 6 6 [40] / 2 5 [30]` 波塔波娃发球）；\n② 84.5s / 186.5s 两次全屏图形，印着 `WOMEN'S SINGLES | 3RD ROUND · LOUIS ARMSTRONG STADIUM / 24 ANASTASIA POTAPOVA / 10 AMANDA ANISIMOVA`，186.5s 那一张比分 `6 7 / 2 5`；180.5s 场边 LED 打着 `ANASTASIA POTAPOVA`；\n③ 球衣可分：波塔波娃红色 Wilson 连衣裙＋白色遮阳帽（Wilson 标）；阿尼西莫娃薄荷绿 Nike 背心裙＋薄荷绿遮阳帽——转播 12.5s 发球近景、160.5s 低头近景都是薄荷绿；\n④ 片尾 190.64s 起是美网品牌板（`silent_audio` 报 190.7s 之后数字静音），已排除在所有段之外。\n⚠️ 解说把两个人的名字都念歪了（`Pipova` / `Podapova` / `Potterova`、`Isimova` / `Misimova` / `Amandaova`），自动字幕照写，认人靠球衣和记分条。",
+ "cover": {
+  "matchup": [
+   {
+    "name": "波塔波娃",
+    "name_en": "Anastasia Potapova",
+    "country": "AUT",
+    "rank": 25
+   },
+   {
+    "name": "阿尼西莫娃",
+    "name_en": "Amanda Anisimova",
+    "country": "USA",
+    "rank": 10
+   }
+  ],
+  "_rank_why": "两人当期排名同一期、同一个权威源：WTA 官方 `players/ranked`（`rankedAt=2026-08-31T00:00:00Z`，`page=0`）：Anastasia Potapova 第 25（1756 分，countryCode AUT——她 2025 年起代表奥地利，记分条也印 AUT）；Amanda Anisimova 第 10（4533 分）。美网官方 `players.json`：wta325601 Potapova singles_rank 25 / seed True（记分条 24 号种子）；wta326384 Anisimova singles_rank 10 / seed True（10 号种子）。",
+  "_heat_why": "阿尼西莫娃世界第 10、本届 10 号种子，②档（世界前 20）直接过；而且她是 2025 年美网亚军（转播 73.60s / 164.16s 两次说 `last year's runner up`），第三轮出局本身是这个比赛日最大的冷门——同一天前十种子里只有她输了。",
+  "winner": "波塔波娃",
+  "result": "6-2 7-5",
+  "_result_why": "赢家视角，三处印证：flashscore 当日表 `p0Zrr3Z0` `AE÷Potapova A.`(home) `AF÷Anisimova A.`(away)，`BA/BB=6/2 BC/BD=7/5`；`df_st_1` `Total games won 主队 13/20 客队 7/20`；源片 186.5s 全屏图形 `6 7 / 2 5`、132.5s 记分条 `MATCH POINT 6 6 [40] / 2 5 [30]` 发球指示在 POTAPOVA。两盘都是局数分出的，没有抢七。",
+  "eyebrow": "赛场之上",
+  "layout": "solo",
+  "subject": "波塔波娃",
+  "topic": "美网第三轮 · 波塔波娃 vs 阿尼西莫娃",
+  "_topic_why": "按账号所有者 2026-09-03「封面左上角的副标题不要写球场号，写对阵双方」写成对阵。球场（Louis Armstrong Stadium）在比分板头一行印着。",
+  "hook": "对手十六个破发点\n她救回了十三个",
+  "_hook_why": "两行框住的是**整场的形状**：阿尼西莫娃全场拿到 16 个破发点（`df_st_1` `Break Points Converted 客队 3/16`），波塔波娃救回 13 个（`Break Points Saved 主队 13/16`）——首盘自己第一个发球局 0-40 救回六个、次盘 3-3 那一局又救两个。「她」是封面主体波塔波娃。\n⚠️ 不重复比分板：板上印 6-2 7-5，钩子一个盘分都没写。行长 8 字 / 7 字，都在 `HOOK_MAX_CHARS = 10` 之内。\n⚠️ 封面主体放赢家：阿尼西莫娃（世界第 10）名气略大，但美网官方图片接口里她这一场只有 1280×720（`find_cover_photo.py --player Anisimova` 实测，四张击球中，`f_` 前缀就是顶），铺 1080×1440 只有 0.50×；而 WTA 赛后稿的波塔波娃实拍是 6447×4298 的握拳庆祝，情绪就是这条片子讲的那件事（扛住 13 个破发点之后赢下来）。两边名次差 15 位，按「两边名气相当 → 赢的那个」办。",
+  "portrait": {
+   "image": "assets/reel/potapova-anisimova-cover.jpg",
+   "fit": "cover",
+   "focus": 0.53,
+   "focus_y": 0.0,
+   "zoom": 1.0,
+   "_photo_why": "WTA 官方赛后稿《Potapova ousts No. 10 seed Anisimova, reaches US Open fourth round for first time》（/news/4572460）的头图，编排器自动抓的（`assets/reel/potapova-anisimova-cover.jpg`，6447×4298，铺 1080×1440 只要 0.34×）。打开看过：红色 Wilson 连衣裙、白色遮阳帽、右手握拳、背景是路易斯·阿姆斯特朗球场的看台和 FAGE / IHG 围挡——和源片 74.5s / 156.5s 的握拳近景是同一个人同一场；情绪是「扛住之后赢下来」，正是钩子那两行。",
+   "_fit_why": "横图 3:2，按高度铺满（`cover`）之后整幅缩到 2160×1440，取 1080 宽的一条。`focus 0.53` 把她整个人放在画布中央偏右——脸落在台头那行字的右边（台头文字收在 x≈500 之前），握拳、球拍、双腿全在框内；`focus_y` 在 zoom=1.0 时是死的，脸的高度由源图决定（头顶约在源图 4%，脸在 10~20%），渲出来量过，见 `_zoom_why`。",
+   "_zoom_why": "本地 `render_cover_local.py` 渲过再定：zoom 1.0 时脸在 y≈150~260、钩子带从 790 起、比分板 1057 起——脸和两条文字带都不重叠。不往上 zoom：再放大脚就出画，而这张图的意思（整个人站在场上握拳）就没了。"
+  },
+  "scoreboard": {
+   "court": "Louis Armstrong Stadium",
+   "duration_source": {
+    "url": "data:application/json,%7B%22duration%22%3A%221%3A40%3A00%22%2C%22source%22%3A%22flashscore%20p0Zrr3Z0%20df_sui_1%20Set%201%200%3A42%20%2B%20Set%202%200%3A58%20%3D%201%3A40%22%7D",
+    "field": "duration"
+   },
+   "_court_why": "两源一致：源片 84.5s / 186.5s 全屏图形印着 `LOUIS ARMSTRONG STADIUM`；编排器从美网官方 matches feed 取的 `court: Louis Armstrong Stadium`（草稿 `_production.court`）。",
+   "_duration_why": "flashscore `df_sui_1`：Set 1 0:42、Set 2 0:58、全场 1:40（分盘加起来等于全场，自洽）。美网官方 `players/matches/wta325601_matches.json` 在这台沙箱 403（`players.json` 通、`matches/` 被拒），拿不到 `setDurations` 交叉核——写进这一条，下次在 runner 上能取到就以官方为准。源片 100.5s 场边时钟 `0:51`（第二盘 1-0 时）和首盘 42 分钟自洽。"
+  },
+  "_no_cover_narration_why": "赛场之上的封面是定长 1.2 秒的短亮相（`COVER_SECONDS`），封面跟着配音走只给网球有故事。钩子那两行只印在海报上，不念。"
+ },
+ "_match": {
+  "status": "result_verified",
+  "source": "flashscore_points",
+  "source_id": "p0Zrr3Z0",
+  "flashscore_id": "p0Zrr3Z0",
+  "participants": [
+   "波塔波娃",
+   "阿尼西莫娃"
+  ],
+  "set_scores_home_away": [
+   [
+    6,
+    2
+   ],
+   [
+    7,
+    5
+   ]
+  ],
+  "tiebreaks_home_away": [
+   null,
+   null
+  ],
+  "winner": "波塔波娃",
+  "loser": "阿尼西莫娃",
+  "winner_result": "6-2 7-5",
+  "loser_result": "2-6 5-7",
+  "_direction_why": "flashscore `AE÷Potapova A.` 是 home、`AF÷Anisimova A.` 是 away，`BA/BB=6/2 BC/BD=7/5`，赢家是波塔波娃；`df_st_1` `Total games won 主队 13/20`；源片 186.5s 全屏图形 `6 7 / 2 5`。",
+  "_order_why": "`participants` 跟 flashscore 的 home/away（波塔波娃是 home），这一场恰好和 `cover.matchup` 同序，所以 `stats.a` 不用对调。",
+  "_tiebreak_why": "两盘都是局数分出的（6-2、7-5），没有抢七，写 null。"
+ },
+ "stats": {
+  "a": {
+   "aces": 4,
+   "df": 6,
+   "winners": 8,
+   "ue": 17,
+   "first_in": 53,
+   "first_won": 33,
+   "second_total": 34,
+   "second_won": 15,
+   "bp_conv": 6,
+   "bp_chances": 8,
+   "pts_won": 78,
+   "pts_total": 141,
+   "first_total": 87,
+   "headshot": "assets/players/headshots/wta-325601.jpg"
+  },
+  "b": {
+   "aces": 1,
+   "df": 3,
+   "winners": 22,
+   "ue": 46,
+   "first_in": 33,
+   "first_won": 16,
+   "second_total": 21,
+   "second_won": 8,
+   "bp_conv": 3,
+   "bp_chances": 16,
+   "pts_won": 63,
+   "pts_total": 141,
+   "first_total": 54,
+   "headshot": "assets/players/headshots/wta-326384.jpg"
+  },
+  "_source": "flashscore `p0Zrr3Z0` 的 `df_st_1`（Match 那一档，`match_stat_hooks.py p0Zrr3Z0 --stats-block` 直接吐的）。这场**有**制胜分和非受迫失误（波塔波娃 8/17，阿尼西莫娃 22/46），已填。\n`stats.a` 跟 `cover.matchup[0]`（波塔波娃），flashscore 的 home 也是波塔波娃——同序，工具吐出来的 a/b 原样填。头像跟着数字走：左边 `wta-325601` 是波塔波娃（`fetch_official_headshot.py wta` 今天抓的），右边 `wta-326384` 是阿尼西莫娃（已发 spec 里认过）。\n`first_total` 按 `first_in + second_total` 算（53+34=87、33+21=54）。"
+ },
+ "_hit_data": [
+  {
+   "label": "破发点：16 个只兑现 3 个",
+   "detail": "阿尼西莫娃全场拿到 16 个破发点，只兑现 3 个（19%）；波塔波娃救回 13 个",
+   "source": "flashscore df_st_1（Break Points Converted 客队 3/16；Break Points Saved 主队 13/16）"
+  },
+  {
+   "label": "首盘第一个发球局救回六个破发点",
+   "detail": "1-1 那一局波塔波娃 0-40 落后，六个破发点全救回；下一局 40-0 零封破发",
+   "source": "flashscore df_mh_1 逐分（Set 1 1-1：0:40 |B1| … 40:A |B1| ×6；2-1：15:0 30:0 40:0 |B1|）"
+  },
+  {
+   "label": "总分差",
+   "detail": "波塔波娃 78 - 阿尼西莫娃 63，净差 15 分",
+   "source": "flashscore df_st_1（Total Points Won 78/141 vs 63/141）"
+  },
+  {
+   "label": "失误对比",
+   "detail": "阿尼西莫娃非受迫失误 46 对 17，制胜分 22 对 8——她打出了近三倍的制胜分，也打出了近三倍的失误",
+   "source": "flashscore df_st_1（Winners 8/22、Unforced errors 17/46）"
+  },
+  {
+   "label": "第二盘开头四局四次破发",
+   "detail": "1-0 波塔波娃破、1-1 阿尼西莫娃破、2-1 波塔波娃破、2-2 阿尼西莫娃破；转播 122.40s：`Four straight breaks to start us off in this second set`",
+   "source": "flashscore df_mh_1 Set 2 逐局 + 源片解说"
+  },
+  {
+   "label": "第二盘尾段三次破发",
+   "detail": "5-4 波塔波娃零封破发，5-5 阿尼西莫娃从 0-40 破回，6-5 波塔波娃再破，7-5 发球胜赛局一个赛点拿下",
+   "source": "flashscore df_mh_1 Set 2 逐局（5-4 客队发球 15:0 30:0 40:0 |B1|；5-5 主队发球 0:40 |B1|…；6-5 客队发球 40:30 |B1|；7-5 40:30 |B3|）"
+  },
+  {
+   "label": "一发得分率摆动",
+   "detail": "波塔波娃第 1 盘 68% → 第 2 盘 58%",
+   "source": "flashscore df_st_1（分盘一发得分率）"
+  },
+  {
+   "label": "最后十个球",
+   "detail": "全场最后十个球波塔波娃赢了七个",
+   "source": "flashscore df_st_1（Last 10 balls 7 / 3）"
+  },
+  {
+   "label": "交手记录",
+   "detail": "Potapova A. 1 : 2 Anisimova A.（含本场）· 红土 0:2 · 硬地 1:0——此前两次红土都是阿尼西莫娃赢，硬地首战波塔波娃拿下",
+   "source": "flashscore df_hh_1"
+  },
+  {
+   "label": "近况",
+   "detail": "Potapova A. 最近 5 场 3 胜（WWWLL）；Anisimova A. 最近 5 场 3 胜（LWWLW）",
+   "source": "flashscore df_hh_1 Last matches"
+  }
+ ],
+ "_durations": [
+  [
+   "Set 1",
+   "0:42"
+  ],
+  [
+   "Set 2",
+   "0:58"
+  ],
+  [
+   "全场",
+   "1:40"
+  ]
+ ],
+ "_turning_points": [
+  {
+   "label": "【Set 1】1-1  波塔波娃发球，波塔波娃拿下  密度6  ← 6个破发点",
+   "density": 6,
+   "tags": [
+    "6个破发点"
+   ]
+  },
+  {
+   "label": "【Set 1】6-2  波塔波娃发球，波塔波娃拿下  密度8  ← 4个盘点",
+   "density": 8,
+   "tags": [
+    "4个盘点"
+   ]
+  },
+  {
+   "label": "【Set 2】1-1  波塔波娃发球，阿尼西莫娃拿下  密度3  ← 3个破发点",
+   "density": 3,
+   "tags": [
+    "3个破发点"
+   ]
+  },
+  {
+   "label": "【Set 2】5-5  波塔波娃发球，阿尼西莫娃拿下  密度3  ← 3个破发点",
+   "density": 3,
+   "tags": [
+    "3个破发点"
+   ]
+  },
+  {
+   "label": "【Set 2】7-5  波塔波娃发球，波塔波娃拿下  密度3  ← 1个赛点",
+   "density": 3,
+   "tags": [
+    "1个赛点"
+   ]
+  }
+ ],
+ "_turning_points_why": "首盘 1-1 那一局（0-40 救六个破发点、随后零封破发）是这场球定调的一局，**集锦里没有**——转播从 2-1 波塔波娃发球那一局起才挂记分条（18.5s）。第 ④ 段用 2-1 那一局的画面把它讲出来，注解写明。第二盘 5-4 / 5-5 / 6-5 三次破发同样不在集锦里，第 ⑩ 段旁白交代，压在她握拳和看台的画面上。",
+ "editorial": {
+  "mode": "match_review",
+  "hook": [
+   "对手十六个破发点",
+   "她救回了十三个"
+  ],
+  "_hook_why": "这一栏和 `cover.hook` 必须逐字相同。理由见 `cover._hook_why`。",
+  "question": "世界第十、去年的美网亚军阿尼西莫娃拿到十六个破发点，为什么只兑现了三个？波塔波娃是怎么在一个又一个破发点上站住的？",
+  "thesis": "定调的是首盘第二局：波塔波娃自己的发球局 0-40 落后，六个破发点全救回，接着 40-0 零封破发，6-2 只用了 42 分钟；第二盘开头四局四次互破之后，她在 3-3 又救两个破发点，5-4 零封破发，5-5 被从 0-40 破回，6-5 再破，7-5 的发球胜赛局一个赛点拿下。全场阿尼西莫娃 16 个破发点只兑现 3 个、46 个非受迫失误对 17 个；波塔波娃总分多 15 分，最后十个球赢七个，第一次打进美网第二周。",
+  "beats": [
+   "首盘 42 分钟：波塔波娃 1-1 那一局 0-40 落后救回六个破发点、下一局 40-0 零封破发，4-2 那一局又救一个，5-2 发球胜盘局第四个盘点拿下 6-2；阿尼西莫娃首盘 19 个非受迫失误、7 个破发点一个没兑现。",
+   "第二盘开头四局四次互破（1-0 / 1-1 / 2-1 / 2-2，转播：`Four straight breaks`）；3-3 波塔波娃再救两个破发点；集锦里没有的尾段：5-4 她零封破发，5-5 被从 0-40 破回，6-5 再破。",
+   "6-5 波塔波娃发球，40-30 全场唯一的赛点，一个长回合之后落地，她双手捂脸——总分 78 比 63，破发点 13/16 救回对 3/16 兑现，最后十个球赢七个；世界第 25 淘汰世界第 10、去年亚军，第一次打进美网第二周。"
+  ],
+  "human_context": {
+   "angle": "去年在这块场地打进决赛的阿尼西莫娃，今年第三轮就走了——而且是输给一个此前两次交手都输给她的人（两次红土）。波塔波娃 2025 年起代表奥地利，这是她第一次打进美网第二周（转播 156.24s 原话，WTA 赛后稿标题同）。",
+   "facts": [
+    "WTA 官方 players/ranked（rankedAt 2026-08-31）：波塔波娃第 25（AUT）、阿尼西莫娃第 10",
+    "美网官方 players.json：wta325601 Potapova seed True（24 号）；wta326384 Anisimova seed True（10 号）",
+    "flashscore df_hh_1：Potapova A. 1 : 2 Anisimova A.（含本场），此前两次红土都是阿尼西莫娃赢",
+    "转播原声 73.60s：`last year's runner up, Amanda Anisimova in a whole heap of trouble here`；153.52~161.44s：`It's a huge moment in the career of Anastasia Potapova. She is into the second week here at the US Open for the very first time`；182.24s：`She was calm in some of the big moments … She held her ground, held her nerve.`",
+    "WTA 官方赛后稿标题：Potapova ousts No. 10 seed Anisimova, reaches US Open fourth round for first time（/news/4572460）"
+   ],
+   "sources": [
+    "https://api.wtatennis.com/tennis/players/ranked?page=0&pageSize=100&type=rankSingles&sort=asc&metric=SINGLES",
+    "https://www.usopen.org/en_US/scores/feeds/2026/players/players.json",
+    "https://www.wtatennis.com/news/4572460/potapova-ousts-no-10-seed-anisimova-reaches-us-open-fourth-round-for-first-time",
+    "https://www.youtube.com/watch?v=MbMPFIDunzs"
+   ]
+  }
+ },
+ "topbar": {
+  "line1": "2026 美网 女单第三轮",
+  "line2": "波塔波娃 6-2 7-5 阿尼西莫娃"
+ },
+ "push": {
+  "summary": "波塔波娃两盘淘汰世界第十",
+  "_summary_why": "主语（波塔波娃）＋ 结果（两盘淘汰）＋ 对手的分量（世界第十，和 `matchup[1].rank=10` 同一个数）。12 字，`SUMMARY_MAX=13` 之内。哪一站交给 `lead` 第一句。",
+  "lead": "美网女单第三轮，路易斯·阿姆斯特朗球场。24 号种子波塔波娃 6-2 7-5 淘汰 10 号种子、去年美网亚军阿尼西莫娃，一小时四十分钟。定调的是首盘第二局：波塔波娃自己的发球局 0-40 落后，六个破发点全救回，下一局 40-0 零封破发，首盘只用 42 分钟。第二盘开头四局四次互破，尾段 5-4 她破发、5-5 被破回、6-5 再破，7-5 发球胜赛局一个赛点拿下。全场阿尼西莫娃 16 个破发点只兑现 3 个，46 个非受迫失误对 17 个；波塔波娃总分多 15 分，最后十个球赢七个，第一次打进美网第二周。",
+  "auto": true
+ },
+ "_editing_why": "**probe**：`output/2026-09-06/reel/potapova-anisimova/probe.json`（编排器跑的，没给 `--scorebox`，`point_ends` 是空的——段尾按 `scene_cuts` ＋ 解说落点 ＋ 缩略图墙定）。\n**认人看球衣**：波塔波娃红裙白帽（Wilson），阿尼西莫娃薄荷绿（Nike）。第 ② ⑫ 段的近景全是红裙；第 ⑬ 段开头 160.5/162.5 两格是阿尼西莫娃低头的近景，那一段旁白主语正是她。\n**集锦漏掉的三段**（首盘 1-1 救六个破发点；第二盘 5-4 / 5-5 / 6-5 三次破发）由第 ④ ⑩ 段旁白交代，压在 2-1 那一局的画面和她握拳、看台的画面上。\n**赛点那一分保留完整**：132.4 起到 159.7 连续（赛点回合 → 落地 → 双手捂脸 → 握拳 → 背影），中间只在 146.5 分了一刀给冷开场/正文用。\n**第一版渲之前跑过**：`--dry-run`、`preview_segments_local`（逐段对记分条）、`--check-narration`（edge 真跑）、`render_cover_local`。",
+ "segments": [
+  {
+   "start": 146.5,
+   "end": 156.0,
+   "narration": "",
+   "score_inset": true,
+   "_ending_payoff_required": true,
+   "crosses_cut": "跨 154.14：赛点那一分落地 → 她双手捂脸的近景（154.5、156.5 两格都是红裙波塔波娃），同一个人。",
+   "_why": "**第①格：全片最强的一格。** 赛点那一分的最后九秒到落地，不配旁白，靠现场声——记分条 `MATCH POINT 6 6 [40] / 2 5 [30]`，发球指示在 POTAPOVA；解说 153.52s `It's a huge moment in the career of Anastasia Potapova`，154.5 她双手捂住脸。\n⚠️ 后段冷开场：正文第 ⑫ 段（146.5→159.7）完整覆盖 146.5→156.0 和第②段，`ending_payoff_problem` 要的就是这个覆盖关系。",
+   "fit": "crop"
+  },
+  {
+   "start": 156.0,
+   "end": 159.7,
+   "narration": "十六个破发点，她救回了十三个。",
+   "score_inset": true,
+   "_why": "第②句给落点，压在她握拳（156.5）和转身的背影（158.5）上，红裙。两个数：`df_st_1` `Break Points Converted 客队 3/16`、`Break Points Saved 主队 13/16`。段尾 159.7 ＋ `SEG_FADE` 0.18 ＝ 159.88，停在 159.96 那一刀（阿尼西莫娃近景）之前。",
+   "fit": "crop"
+  },
+  {
+   "start": 0.0,
+   "end": 11.15,
+   "narration": "北京时间九月五日夜里十一点多，美网第三轮。二十四号种子波塔波娃，对面是十号种子、去年的亚军阿尼西莫娃。",
+   "score_inset": false,
+   "_score_inset_why": "开场第一分转播还没挂记分条——`score_00.jpg` 前六格（0.5~10.5s）全是空球场，板 18.5s 才第一次出现。",
+   "_why": "第③格交代坐标。画面是全片第一分（阿尼西莫娃发球，波塔波娃的第一个反手制胜分，解说 10.56s `First backhand winner`），宽景谁都没露脸，正好放身份。开球时刻取 flashscore `AD=1788621000`＝北京时间 2026-09-05 23:10，按「不报到分」的档位（分钟 10 落在 10~39）说「夜里十一点多」。种子号出自记分条 `24 POTAPOVA / 10 ANISIMOVA`，「去年的亚军」出自转播 73.60s / 164.16s 两次原话。段尾 11.15 ＋ `SEG_FADE` 0.18 ＝ 11.33，连溶解底料也停在 11.38 那一刀之前。",
+   "fit": "crop"
+  },
+  {
+   "start": 18.0,
+   "end": 30.0,
+   "narration": "二比一。这之前，她自己的发球局零比四十落后，救回六个破发点，然后零封破发。",
+   "score_inset": true,
+   "_why": "记分条 `2 / 1`，发球指示在 POTAPOVA——首盘 2-1 波塔波娃发球那一局的底线回合（解说 28.16s `beautiful move forward. Good hands`，没点名是谁，旁白不认领那一拍）。旁白讲的是刚过去的两局：1-1 那一局她 0-40 救六个破发点（`df_mh_1` Set 1 1-1：0:40 |B1|、15:40 |B1|、30:40 |B1|、40:A |B1| ×3），2-1 那一局 15:0 30:0 40:0 |B1| 零封破发。**这两局集锦里没有**，转播 18.5s 才挂记分条。段尾 30.0 停在 30.5 那格阿尼西莫娃走动的近景之前（`scene_cuts_loose` 29.38）。",
+   "fit": "crop"
+  },
+  {
+   "start": 52.0,
+   "end": 63.7,
+   "narration": "三比二，她的发球局，十五比三十。这一局她又救了一个破发点，保住。",
+   "score_inset": true,
+   "_why": "记分条 `3 [15] / 2 [30]`，发球指示在 POTAPOVA——4-2 那一局（`df_mh_1`：15:0 15:15 15:30 30:30 30:40 |B1| 40:40 A:40，一个破发点救回）。回合以她的一拍收尾，解说 61.76s `Oh, wow. How good was that from Potapova?`。段尾 63.7 ＋ 0.18 ＝ 63.88，连溶解底料也停在 63.91 那一刀（她的近景）之前。",
+   "fit": "crop"
+  },
+  {
+   "start": 66.6,
+   "end": 77.0,
+   "narration": "五比二，第四个盘点。这一次她拿下了，六比二。",
+   "score_inset": true,
+   "crosses_cut": "跨 69.77 / 74.01：她在网前的近景（66.5，红裙）→ `SET POINT #4` 那一分的宽景 → 她握拳庆祝（74.5、76.5）。三段都是波塔波娃。",
+   "_why": "记分条 `SET POINT #4 5 [AD] / 2`，发球指示在 POTAPOVA——6-2 那一局的第四个盘点（`df_mh_1`：40:15 |B2| 40:30 |B2| 40:40 A:40 |B2| 40:40 A:40 |B2|）。解说 73.60s `This time she takes it.`。段尾 77.0 停在 77.11 那一刀（看台）之前。",
+   "fit": "crop"
+  },
+  {
+   "start": 77.2,
+   "end": 86.4,
+   "narration": "四十二分钟。首盘阿尼西莫娃十九个非受迫失误，七个破发点一个没兑现。",
+   "score_inset": false,
+   "_score_inset_why": "看台（78.5、80.5）、阿尼西莫娃走回底线（82.5）、全屏图形（84.5）——整段没有常驻记分条（`score_02.jpg` 这几格都是空的）。",
+   "_why": "首盘收账压在看台和全屏图形 `24 ANASTASIA POTAPOVA 6 / 10 AMANDA ANISIMOVA 2` 上。三个数：`df_sui_1` Set 1 0:42；`df_st_1` Set 1 Unforced errors 客队 19；Set 1 Break Points Converted 客队 0/7。⚠️ 这一段里 82.95 附近有转播的图形过渡，`scene_cuts` 没报（77.11 到 99.47 之间没有硬切），缩略图墙上看是看台→她→图形→回合的连续过渡，主体不是某一个人。",
+   "fit": "crop"
+  },
+  {
+   "start": 86.5,
+   "end": 103.3,
+   "narration": "第二盘她上来先破发，一比零。而这一分，转播说，这是阿尼西莫娃今天最好的球之一。",
+   "score_inset": true,
+   "crosses_cut": "跨 99.47：回合结束 → 阿尼西莫娃在底线后走动、场边时钟 `0:51`（100.5、102.5，薄荷绿）。旁白后半句说的正是她这一分打得好，画面就是她。",
+   "_why": "记分条 `6 1 [15] / 2 0 [30]`，发球指示在 POTAPOVA——第二盘 1-0 她发球那一局（1-1 那一局，阿尼西莫娃拿到三个破发点破了回来）。回合以阿尼西莫娃的一拍收尾（99.47 之后 100.5 / 102.5 两格是她走回底线的近景），解说 98.56s `how good it's got to be. One of the best points that Anisimova has played today`——旁白照转播说，不替他判。段尾 103.3 停在 103.3 那一刀（看台）之前。",
+   "fit": "crop"
+  },
+  {
+   "start": 103.4,
+   "end": 123.2,
+   "narration": "二比一，她发球，三十比四十。阿尼西莫娃破了回来，二比二——第二盘开头四局，四次破发。",
+   "score_inset": true,
+   "crosses_cut": "跨 107.39：看台（104.5）→ 阿尼西莫娃弯腰接发的近景（106.5，薄荷绿）→ 破发点那一分的宽景。旁白主语先是「她（波塔波娃）发球」再是「阿尼西莫娃破了回来」，和画面里先近景阿尼西莫娃、再宽景两个人的顺序对得上。",
+   "_why": "记分条 `BREAK POINT 6 2 [30] / 2 1 [40]`，发球指示在 POTAPOVA——2-1 她发球那一局的破发点（`df_mh_1` Set 2 2-2：15:0 15:15 30:15 30:30 30:40 |B1|，阿尼西莫娃拿下）。解说 122.40s `So much better from Anisimova who breaks again. Four straight breaks to start us off in this second set.` 段尾 123.2 停在 123.24 那一刀之前。",
+   "fit": "crop"
+  },
+  {
+   "start": 123.3,
+   "end": 132.3,
+   "narration": "之后是集锦里没有的拉锯：五比四她破发，五比五又被破回来，六比五她再破一次。",
+   "score_inset": true,
+   "crosses_cut": "跨 126.04：阿尼西莫娃握拳（124.5，薄荷绿）→ 看台（126.5、128.5）→ 130.5 淡入的 `MATCH POINT` 记分条。旁白讲的是这之后集锦没有的三局，主语交替，画面是她握拳和看台，不指认任何人。",
+   "_why": "三局的事实：`df_mh_1` Set 2 5-4 客队发球 15:0 30:0 40:0 |B1| 主队拿下（零封破发）；5-5 主队发球 0:15 0:30 0:40 |B1| 15:40 |B1| 30:40 |B1| 客队拿下；6-5 客队发球 40:30 |B1| 主队拿下。**这三局集锦里没有**（记分条从 2-2 直接跳到 `MATCH POINT 6 6 / 2 5`），按「转折点不在集锦里 → 明说」办。段尾 132.3 停在 132.38 那一刀（赛点回合）之前。",
+   "fit": "crop"
+  },
+  {
+   "start": 132.4,
+   "end": 146.5,
+   "narration": "六比五，自己的发球局，四十比三十——全场第一个赛点。",
+   "score_inset": true,
+   "_why": "记分条 `MATCH POINT 6 6 [40] / 2 5 [30]`，发球指示在 POTAPOVA——7-5 那一局 40:30 |B3|，全场唯一的赛点（`df_st_1` Match points saved 0/0）。这一分是个长回合，从 132.4 一直打到 154.14 落地；旁白只在开头说一句，其余交给现场声。146.5 这一刀是为冷开场分的（不是镜头切换），下一段接着同一个回合。",
+   "fit": "crop"
+  },
+  {
+   "start": 146.5,
+   "end": 159.7,
+   "narration": "这一分来回打了很久，最后落地——她双手捂住了脸。转播说，这是她第一次打进美网的第二周。",
+   "score_inset": true,
+   "crosses_cut": "跨 154.14：赛点那一分落地 → 她双手捂脸（154.5）→ 握拳（156.5）→ 背影（158.5），全是红裙波塔波娃。",
+   "_why": "正文重新兑现冷开场：146.5→159.7 完整覆盖第①段（146.5→156.0）和第②段（156.0→159.7）。「第一次打进美网第二周」是转播原话（156.24s `She is into the second week here at the US Open for the very first time`），WTA 赛后稿标题同（reaches US Open fourth round for first time）——旁白以「转播说」引出，不替他下全称断言。不说这一分打了多少秒（「说拍数不说秒数」，拍数没有公开源）。段尾 159.7 ＋ 0.18 ＝ 159.88，停在 159.96 之前。",
+   "fit": "crop"
+  },
+  {
+   "start": 160.0,
+   "end": 175.0,
+   "narration": "阿尼西莫娃四十六个非受迫失误，十六个破发点只兑现了三个。去年的亚军，止步第三轮。",
+   "score_inset": false,
+   "_score_inset_why": "阿尼西莫娃低头的近景（160.5、162.5）、网前握手（164.5~172.5）、她向看台致意（174.5）——赛后画面，没有记分条（`score_04.jpg` 这几格都是空的）。",
+   "crosses_cut": "跨 162.7：阿尼西莫娃低头的近景（薄荷绿）→ 两人网前握手的宽景。旁白主语是阿尼西莫娃，前半句压在她的近景上，后半句压在握手上。",
+   "_why": "输家收账：`df_st_1` Unforced errors 客队 46；Break Points Converted 客队 3/16。「去年的亚军」出自转播 164.16s `she does so by beating last year's runner up and the world number 10 Amanda Anisimova`。⚠️ 「十六个破发点只兑现了三个」说的是横跨十几个发球局的转化率，不是「N 个赛点只兑现一个」那种同义反复。段尾 175.0 停在 175.01 那一刀之前。",
+   "fit": "crop"
+  },
+  {
+   "start": 175.1,
+   "end": 190.3,
+   "narration": "总分七十八比六十三。转播说，她从头到尾都很冷静。世界第二十五掀翻世界第十，下一轮，她还能扛住多少个破发点？",
+   "score_inset": false,
+   "_score_inset_why": "她向看台挥手（176.5）、场边 LED `ANASTASIA POTAPOVA`（178.5~182.5）、走回椅子（184.5）、全屏赛果图形（186.5~190.5）——没有常驻记分条。",
+   "crosses_cut": "跨 182.95：她在场边 LED 前挥手 → 走回椅子 → 全屏赛果图形 `6 7 / 2 5`。赛后同一段连续过程，主体一直是她。",
+   "_why": "收尾落在一问上，不停在数据上。「七十八比六十三」＝ `df_st_1` Total Points Won 78/141 vs 63/141；「从头到尾都很冷静」＝ 转播 176.48s `This is a fantastic performance from start to finish … She was calm in some of the big moments … held her nerve`；排名 25 / 10 和 `cover.matchup` 同一期榜单。\n⚠️ 段尾 190.3 ＋ `SEG_FADE` 0.18 ＝ 190.48，停在片尾板那一刀（190.64）和数字静音（190.7）之前。",
+   "fit": "crop"
+  }
+ ]
+}
