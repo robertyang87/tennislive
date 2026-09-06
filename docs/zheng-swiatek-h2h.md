@@ -19,6 +19,27 @@
 **第 9 次：2026-09-07 美网第四轮**，北京时间 23:00 开球（纽约 11:00）。
 flashscore 场次 id `jBiLW0fm`。
 
+⚠️ **2026-09-06 15:30Z 重核过：仍是 `AB÷1`（未开赛）。**
+`zheng-swiatek-eight-meetings` 那条片子的落点「她还能不能再赢一次」全押在这一条上，
+**打完之后那个结尾就不成立了**。判据一条命令：
+
+    curl -s -H "x-fsign: SW9D1eZo" -H "Referer: https://www.flashscore.com/" \
+      "https://global.flashscore.ninja/2/x/feed/f_2_<offset>_0_en_1" \
+      | tr '~' '\n' | grep -i swiatek
+
+⚠️ **两个人都是从 `offset` 那一档里认的，不要按 slug 猜**——同一天两条 feed
+（今天 / 明天）各只出现一次，`AB÷1` 是排期、`AB÷3` 是已完赛。
+
+## 走到第九次之前，两个人各自打了什么（2026 美网）
+
+| | 这一届的路 |
+|---|---|
+| 郑钦文 | 世界第 **121**，从资格赛打起，三轮资格赛 + 三轮正赛共六场进第四轮；第三轮 **1-6 7-6 7-5 胜凯斯**（世界第 24），北京 09-05 23:10 |
+| 斯瓦泰克 | 世界第 **8**，第三轮 7-6 7-6 胜布兹科娃（北京 09-06 02:00） |
+
+排名两个数取 WTA 官方 `players/ranked`，同一期 `rankedAt: 2026-08-31`
+（⚠️ 郑钦文不在前 100，要翻到 `page=1` 才认得出）。
+
 ## 两个源怎么对的
 
 - **flashscore**：H2H feed `df_hh_1_jBiLW0fm`（⚠️ 段标题是 `~KB÷Head-to-head matches`，
