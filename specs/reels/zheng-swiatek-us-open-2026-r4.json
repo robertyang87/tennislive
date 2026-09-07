@@ -292,10 +292,13 @@
    "start": 0.0,
    "end": 9.35,
    "narration": "",
-   "score_inset": true,
+   "score_inset": {
+    "x2": 616
+   },
    "_head_open_why": "这条源片就是美网官方按结果剪的 57 秒短片（《Qinwen Zheng Beats Iga Swiatek to Make Quarterfinals》），**开头就是第四个赛点那一分**（记分条 `MATCH POINT #4 5 3 / 7 5 [AD]`，0.5~8.5s 一整个回合，9.56 那一刀切到她仰面躺倒）——爆点在开头，不是按时间顺序剪的集锦。",
    "_why": "**第①格：全片最强的一格。** 第四个赛点那一分从头到落地，不配旁白，靠现场声（转播 9.6s 那句 `Just…` 就是球出界）。账号所有者 2026-09-07 定的：用这条短片做开场、全部用原声解说。段尾 9.5 停在切点 9.56 之前。",
-   "fit": "crop"
+   "fit": "crop",
+   "_score_inset_why": "open 0.0~9.35（第四个赛点那一分）：板**整段都在**（probe 的 `score_*.jpg` 逐格看过：这几秒印着 `MATCH POINT …` 的深蓝板），但 `board_present_in_band` 判成「整段没有板」——这几段是宽景回合，检测带右半是**深绿球场**，板 navy 和它的亮度差够不着 `_BOARD_SOLID_DL=35`（CLAUDE.md 2026-09-03 记的那两条判据的边界），于是全程假阴性。按 `resolve_board_insets` 给的出路人工钉死右缘：从 `score_03.jpg` 量了八格，navy 严格判据下板右缘在源片 x≈526~535；取 616 和相邻可信段（第 19/23/27 段现量 616，各 6 票）一致——「宁可偏宽几十像素，不许裁窄」，宽出来那一截落在球场空白上。"
   },
   {
    "source": "open",
@@ -600,18 +603,24 @@
    "start": 118.3,
    "end": 126.5,
    "narration": "五比三，斯瓦泰克发球，零比四十，三个赛点。第一个，斯瓦泰克救了下来。",
-   "score_inset": true,
+   "score_inset": {
+    "x2": 616
+   },
    "_why": "记分条 `MATCH POINT 5 3 [0] / 7 5 [40]`，指示在 SWIATEK（118.5~126.5s 一个回合）。逐分：df_mh_1 Set 2 `3-6` 行 `0:40 |B1| |B3|, 15:40 |B1| |B3|, 30:40 |B1| |B3|, 40:40, 40:A |B1| |B3|`。段尾 126.6 停在切点 126.68 / 死球 126.73 之前。⚠️ 主语写全（斯瓦泰克救），别让「她」被读成郑钦文。",
-   "fit": "crop"
+   "fit": "crop",
+   "_score_inset_why": "main 118.3~126.5（第一个赛点）：板**整段都在**（probe 的 `score_*.jpg` 逐格看过：这几秒印着 `MATCH POINT …` 的深蓝板），但 `board_present_in_band` 判成「整段没有板」——这几段是宽景回合，检测带右半是**深绿球场**，板 navy 和它的亮度差够不着 `_BOARD_SOLID_DL=35`（CLAUDE.md 2026-09-03 记的那两条判据的边界），于是全程假阴性。按 `resolve_board_insets` 给的出路人工钉死右缘：从 `score_03.jpg` 量了八格，navy 严格判据下板右缘在源片 x≈526~535；取 616 和相邻可信段（第 19/23/27 段现量 616，各 6 票）一致——「宁可偏宽几十像素，不许裁窄」，宽出来那一截落在球场空白上。"
   },
   {
    "source": "main",
    "start": 128.3,
    "end": 135.1,
    "narration": "十五比四十，第二个赛点。斯瓦泰克又救了下来。",
-   "score_inset": true,
+   "score_inset": {
+    "x2": 616
+   },
    "_why": "记分条 `MATCH POINT #2 5 3 [15] / 7 5 [40]`（128.5~134.5s）。段尾 135.2 停在切点 135.34 / 死球 135.34 之前。",
-   "fit": "crop"
+   "fit": "crop",
+   "_score_inset_why": "main 128.3~135.1（第二个赛点）：板**整段都在**（probe 的 `score_*.jpg` 逐格看过：这几秒印着 `MATCH POINT …` 的深蓝板），但 `board_present_in_band` 判成「整段没有板」——这几段是宽景回合，检测带右半是**深绿球场**，板 navy 和它的亮度差够不着 `_BOARD_SOLID_DL=35`（CLAUDE.md 2026-09-03 记的那两条判据的边界），于是全程假阴性。按 `resolve_board_insets` 给的出路人工钉死右缘：从 `score_03.jpg` 量了八格，navy 严格判据下板右缘在源片 x≈526~535；取 616 和相邻可信段（第 19/23/27 段现量 616，各 6 票）一致——「宁可偏宽几十像素，不许裁窄」，宽出来那一截落在球场空白上。"
   },
   {
    "source": "main",
@@ -634,10 +643,13 @@
     }
    ],
    "_quote_kind": "broadcast",
-   "score_inset": true,
+   "score_inset": {
+    "x2": 616
+   },
    "_quote_why": "转播原句 146.56s「And that is three taken care of.」——第三个赛点落地那一刻。",
    "_why": "第三个赛点那一分的宽景回合（142.5~146.5s，记分条 `MATCH POINT #3`），不配旁白，落地时解说自己报了「三个都救回去了」。段尾 147.5 停在切点 147.7 之前（死球 148.45 是翻牌滞后）。",
-   "fit": "crop"
+   "fit": "crop",
+   "_score_inset_why": "main 140.7~147.5（第三个赛点）：板**整段都在**（probe 的 `score_*.jpg` 逐格看过：这几秒印着 `MATCH POINT …` 的深蓝板），但 `board_present_in_band` 判成「整段没有板」——这几段是宽景回合，检测带右半是**深绿球场**，板 navy 和它的亮度差够不着 `_BOARD_SOLID_DL=35`（CLAUDE.md 2026-09-03 记的那两条判据的边界），于是全程假阴性。按 `resolve_board_insets` 给的出路人工钉死右缘：从 `score_03.jpg` 量了八格，navy 严格判据下板右缘在源片 x≈526~535；取 616 和相邻可信段（第 19/23/27 段现量 616，各 6 票）一致——「宁可偏宽几十像素，不许裁窄」，宽出来那一截落在球场空白上。"
   },
   {
    "source": "main",
@@ -654,9 +666,12 @@
    "start": 151.7,
    "end": 160.7,
    "narration": "占先，第四个赛点。",
-   "score_inset": true,
+   "score_inset": {
+    "x2": 616
+   },
    "_why": "记分条 `MATCH POINT #4 5 3 / 7 5 [AD]`（152.5~160.5s 一整个回合）。旁白只报一句，其余交给现场声——这一分本身就是全片的落点。段尾 160.8 停在切点 160.86 / 死球 160.86 之前。",
-   "fit": "crop"
+   "fit": "crop",
+   "_score_inset_why": "main 151.7~160.7（第四个赛点）：板**整段都在**（probe 的 `score_*.jpg` 逐格看过：这几秒印着 `MATCH POINT …` 的深蓝板），但 `board_present_in_band` 判成「整段没有板」——这几段是宽景回合，检测带右半是**深绿球场**，板 navy 和它的亮度差够不着 `_BOARD_SOLID_DL=35`（CLAUDE.md 2026-09-03 记的那两条判据的边界），于是全程假阴性。按 `resolve_board_insets` 给的出路人工钉死右缘：从 `score_03.jpg` 量了八格，navy 严格判据下板右缘在源片 x≈526~535；取 616 和相邻可信段（第 19/23/27 段现量 616，各 6 票）一致——「宁可偏宽几十像素，不许裁窄」，宽出来那一截落在球场空白上。"
   },
   {
    "source": "main",
