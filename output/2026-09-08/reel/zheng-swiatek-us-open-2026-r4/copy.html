@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>9.8 赛场之上 | 郑钦文0-5翻盘斯瓦泰克</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>郑钦文又从0-5翻盘，硬地首胜斯瓦泰克进8强🎾
+
+北京时间9月7日夜里11点，美网女单16强，阿瑟·阿什球场。一边是世界第121、从资格赛一路打上来的郑钦文，一边是8号种子、世界第8、前世界第一斯瓦泰克。1小时56分钟，7-5、6-3，赢的又是前者。
+
+先说立场：这不是运气。上一轮对凯斯，决胜盘0-5落后连赢七局；这一轮对斯瓦泰克，首盘0-5落后又连赢七局。同一个深渊掉进去两次，两次都自己爬出来，这已经不是翻盘，是她这两周在纽约打球的方式。转播的原话：She&#x27;s done it again，今天又是0-5落后。
+
+过程从最难看的地方开始。首盘前五局，斯瓦泰克保发、破发、保发、破发、保发，0-5。郑钦文这一盘一发只进了50%，前五局被破两次。
+
+转折点在5-1。斯瓦泰克发球胜盘，40-30，盘点，郑钦文救下；A-40，第二个盘点，又救下；然后破发，5-2。5-3斯瓦泰克再发球，40-30第三个盘点，还是被郑钦文救下，再破。6-5轮到她自己发球，零封收盘，7-5。三个盘点一个没给，七局连赢。
+
+第二盘，3-3她的发球局救下两个破发点保住，3-4斯瓦泰克30-40被破。5-3斯瓦泰克发球，0-40，三个赛点。斯瓦泰克一个一个救了回来。第四个，占先，球落地，她仰面躺在阿瑟·阿什的场地上。
+
+差别在哪儿。一发：斯瓦泰克进了70%，只拿到57%；郑钦文只进了41%，进了的拿下83%。一发均速176对154，慢的那一边赢了。非受迫失误17对28，制胜分20对17。全场138分她赢了75分，多12分；最后十个球她赢了七个；上网4次4次得分。
+
+再看交手记录。九次交手，郑钦文2胜7负，此前唯一一胜是2024年巴黎奥运会4强，红土。在硬地上、在大满贯里赢斯瓦泰克，这是第一次。
+
+从资格赛第一轮到今天，三轮资格赛加四轮正赛，纽约七连胜，一个世界第121的资格赛选手打进美网8强。肘部手术之后的复出，走到了这里。转播的话：What a story. What a performance. Remarkable story inside Arthur Ashe Stadium.
+
+连续两轮从0-5爬回来的人，8强你还敢不看好她吗？
+
+#网球时差 #美网 #郑钦文 #斯瓦泰克 #赛场之上</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>八强那一场，你会熬夜看吗？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
