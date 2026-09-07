@@ -1,0 +1,695 @@
+{
+ "slug": "zheng-swiatek-us-open-2026-r4",
+ "_column": "赛场之上",
+ "layout": "band",
+ "scorebox": [
+  104,
+  887,
+  660,
+  980
+ ],
+ "_scorebox_why": "美网这一届同一条频道同一套转播图形，和已发的 `zheng-keys-us-open-2026-r3` / `keys-bondar-us-open-2026-r2` / `wu-alcaraz-us-open-2026-r3`（104 / 887 / 660 / 980）逐条相同；两条源片（集锦和 57 秒短片）都是 @usopen 同一天发的同一套图形，probe 带着这组数跑的，主源 `point_ends` 报了 42 个时刻、短片报了 18 个。右缘 660 只是兜底，真正的右缘 `resolve_board_insets` 每段现量。",
+ "tts_backend": "edge",
+ "_tts_backend_why": "仓库的 `AZURE_SPEECH_KEY` 自 2026-09-03 起被 Azure 401 拒（`keys-bondar` / `zheng-putintseva` / `wu-alcaraz` / `zheng-keys` 连着都走的 edge），账号所有者定的是「换 edge tts」。这一条退回 edge 零代价：没用 `voice.style`，也没用 `lead_pause`。本地 `--check-narration` 在这台沙箱跑的就是 edge-tts，量到的余量直接就是成片的真实情况。钥匙修好之后删掉这两个键就回到 Azure。",
+ "sources": {
+  "main": "https://www.youtube.com/watch?v=Md8vyWg60fI",
+  "open": "https://www.youtube.com/watch?v=dg7Whi_m_Tc"
+ },
+ "primary": "main",
+ "_sources_why": "两条都是 US Open 官方 YouTube 频道（oEmbed `author_name: US Open Tennis Championships`，yt-dlp `%(channel)s` 同），上传日期都是 20260907。`main`＝本场官方集锦《Iga Swiatek vs. Qinwen Zheng Highlights | 2026 US Open Round 4》，probe 实测 207.91s / 1920×1080 / 29.97fps；`open`＝账号所有者点名做开场的《Qinwen Zheng Beats Iga Swiatek to Make Quarterfinals | 2026 US Open》，probe 实测 56.61s / 1920×1080 / 29.97fps——**两条尺寸帧率完全一样，不用 mixed_fps**。⚠️ 短片就是集锦最后 57 秒的原样（自动字幕逐句对上、偏移恒为 151.30s：短片 9.56 / 22.61 / 33.40 / 45.20 / 53.49 五个切点 ↔ 集锦 160.86 / 173.91 / 184.70 / 196.50 / 204.79），也就是说开场和正文结尾用的是同一段画面——这是账号所有者 2026-09-07 定的（「可以加上这个视频做开场，全部用原声解说」），开场整条走转播原声＋双语字幕，正文按规矩重新走到结局。画面自证：记分条 `8 SWIATEK POL / ZHENG CHN` 逐格和 flashscore `jBiLW0fm` 逐分对得上（28.5s `SET POINT 5 [40] / 1 [30]` 斯瓦泰克发球、44.5s `SET POINT #3 5 [40] / 3 [30]`、62.5s `SET POINT 5 [0] / 6 [40]` 郑钦文发球、118.5s `MATCH POINT 5 3 [0] / 7 5 [40]`、152.5s `MATCH POINT #4 5 3 / 7 5 [AD]`）；200.5s 全屏图形 `WOMEN'S SINGLES | 4TH ROUND · ARTHUR ASHE STADIUM / 8 IGA SWIATEK 5 3 / QINWEN ZHENG 7 6`；136.5s 场边时钟 `1:54`。球衣可分：郑钦文白背心＋薄荷绿短裙、无帽；斯瓦泰克紫帽＋紫白连衣裙。片尾板：集锦 204.79s 起、短片 53.49s 起（`silent_audio` 各报 204.85 / 53.58 之后数字静音），都排除在所有段之外。",
+ "cover": {
+  "matchup": [
+   {
+    "name": "郑钦文",
+    "name_en": "Qinwen Zheng",
+    "country": "CHN",
+    "rank": 121
+   },
+   {
+    "name": "斯瓦泰克",
+    "name_en": "Iga Swiatek",
+    "country": "POL",
+    "rank": 8
+   }
+  ],
+  "_rank_why": "两人当期排名同一期、同一个权威源：WTA 官方 `players/ranked`（`rankedAt=2026-08-31T00:00:00Z`，大满贯期间榜单不更新）：Qinwen Zheng 第 121（613 分，`page=1`）；Iga Swiatek 第 8（`page=0`）。身份侧美网官方 `players/matches/wta328120_matches.json`（match_id 2407）印证：team1 斯瓦泰克 `seed: 8`，team2 郑钦文 `seed: null, entryStatus: \"Q\"`——她是从资格赛打上来的，名条上不写种子号。",
+  "_heat_why": "郑钦文 `country == CHN`，①档不用额外理由。对面是世界第八、八号种子、前世界第一斯瓦泰克，而这一场本身是首盘 0-5 落后连赢七局、第二盘救回三个被救的赛点之后打进美网八强——**连续两轮 0-5 落后翻盘**（上一轮对凯斯是决胜盘 0-5），转播原话 69.04s：`She's done it again. Incredible. Five love down against Matty Keys in the previous round. She won that set. Five love down today.`",
+  "winner": "郑钦文",
+  "result": "7-5 6-3",
+  "_result_why": "赢家视角，三处印证：flashscore 当日表 `jBiLW0fm` `AE÷Swiatek I.`(home) `AF÷Zheng Q.`(away)，`BA/BB=5/7 BC/BD=3/6`，`AG÷0 / AH÷2` 盘数 0:2；美网官方 match_id 2407 `scores.sets` = [[5,7],[3,6]]、team2 郑钦文 `totalSetsWon: 2, won: true`；源片 200.5s 全屏图形 `5 3 / 7 6`。两盘都没有抢七（`tiebreakDisplay` 全 null，flashscore `df_sui_1` `IG/IH` 5/7、3/6 就是局数）。",
+  "eyebrow": "赛场之上",
+  "layout": "solo",
+  "subject": "郑钦文",
+  "topic": "美网16强 · 郑钦文 vs 斯瓦泰克",
+  "_topic_why": "按账号所有者 2026-09-03「封面左上角的副标题不要写球场号，写对阵双方」写成对阵。球场（Arthur Ashe Stadium）在比分板头一行印着。轮次按 2026-09-01 定的写法：第四轮写「16强」。",
+  "hook": "又是零比五落后\n又是连赢七局翻盘",
+  "_hook_why": "两行框住的是**整场的形状**：首盘 0-5 落后（flashscore `df_mh_1` Set 1 逐局 1-0 / 2-0 / 3-0 / 4-0 / 5-0 都是主队拿下）→ 之后 5-1 / 5-2 / 5-3 / 5-4 / 5-5 / 5-6 / 5-7 七局全归郑钦文，第二盘 6-3 收掉。两个「又是」指的是上一轮（`zheng-keys-us-open-2026-r3`）决胜盘 0-5 落后连赢七局——同一个人连续两场同一个形状，这就是这条片子的钩子，转播 69.04s 也是这么说的（`She's done it again`）。\n⚠️ 不重复比分板：板上印 7-5 6-3，钩子一个盘分都没写。行长 7 字 / 8 字，都在 `HOOK_MAX_CHARS=10` 之内、两行；字号封顶 94。",
+  "portrait": {
+   "image": "assets/reel/zheng-us-open-2026-r4-celebrate.jpg",
+   "fit": "width",
+   "focus": 0.5,
+   "focus_y": 0.0,
+   "zoom": 1.0,
+   "_photo_why": "美网官方图片接口这一场的实拍（`find_cover_photo.py --player Zheng --event \"US Open\" --date 2026-09-07` 扫到的 8 张里的一张，`f_20260907_SB2_6292.jpg`，Simon Bruty/USTA），说明自带四要素：`Qinwen Zheng reacts after winning a Women's Singles match on Day Nine of the 2026 US Open at USTA Billie Jean King National Tennis Center on Monday, September 7`——赢球那一刻、这一场、她举着拍子指向包厢、大笑、眼睛睁着（缩略图墙 192.5s 就是这一格），正是这条片子讲的情绪；打开看过。同一批另外七张是击球中（正手 ×4、反手 ×1、握拳 ×1、追球 ×1），情绪都不如这一张。",
+   "_low_res_why": "1280×720 铺 1080×1440 是放大 2.00 倍，够不着 `cover_photo_problem` 那道 1.00x 的地板。**这是美网这条渠道的天花板，不是没找够**：`f_` 前缀就是美网官方图片接口的顶档（CLAUDE.md 记过十二个前缀、六个目录、三种 `?width=` 参数都试过）。更高清的三条路赛后一小时内都还没有：AP 通讯社（`apnews.com/search?q=Zheng Swiatek US Open` 和 `/hub/tennis` 只有上一轮对凯斯那张 4331px 的）、USA TODAY 每日图集（9/7 的 sitemap 里没有网球辑）、WTA photo-resources（大满贯不进）。账号所有者要的是「赶紧」，先用官方实拍出片；AP 那张出来之后可以换封面重渲。",
+   "_fit_why": "横图 16:9，按高度铺满（`cover`）时她的脸落在画布 y≈550~830——下巴压进钩子带（790 起）。走 `fit: width`：整幅照片 1080×608 按宽铺、上下垫同图的模糊放大版（`PAD_FILTER`），`focus_y: 0` 让照片贴在台头带底下——脸落在钩子带之上、举起的球拍和指向包厢的手都完整。本地 `render_cover_local.py` 渲出来看过。",
+   "_zoom_why": "代价是人比 `cover` 那条路小一圈——取舍的理由和 `zheng-keys-us-open-2026-r3` 同：`cover` 那条路上脸和钩子两行字必然重叠，而「脸被字横穿」是账号所有者 2026-08-31 当场退回过的那种错，比人小一圈重得多。"
+  },
+  "scoreboard": {
+   "court": "Arthur Ashe Stadium",
+   "duration_source": {
+    "url": "data:application/json,%7B%22duration%22%3A%20%221%3A56%3A00%22%2C%20%22source%22%3A%20%22US%20Open%20official%20players/matches%20wta328120_matches.json%20match_id%202407%20duration%201%3A56%20%3D%20setDurations%2059%2B57%22%7D",
+    "field": "duration"
+   },
+   "_court_why": "三源一致：美网官方 match_id 2407 `courtName: \"Arthur Ashe Stadium\"`；源片 200.5s 全屏图形印着 `ARTHUR ASHE STADIUM`；解说 198.32s `Remarkable story inside Arthur Ashe Stadium`。",
+   "_duration_why": "官方 **1:56**（`duration: \"1:56\"`，`setDurations: [59, 57]`，59+57=116 分钟＝1:56，自洽）。flashscore `df_sui_1` 报 0:59 / 0:54 全场 1:53，比官方少三分钟——按「用时以官方为准」取 1:56。flashscore 自己的 AD/AO 时间戳相差 120.7 分钟，更接近官方。源片 136.5s 场边时钟 `1:54`（第二盘赛点时）也站在官方这边。"
+  },
+  "_no_cover_narration_why": "赛场之上的封面是定长 1.2 秒的短亮相（`COVER_SECONDS`），封面跟着配音走只给网球有故事——`test_封面跟着配音走只给网球有故事` 钉着这一条。钩子那两行只印在海报上，不念。"
+ },
+ "_match": {
+  "status": "result_verified",
+  "source": "flashscore_points",
+  "source_id": "jBiLW0fm",
+  "flashscore_id": "jBiLW0fm",
+  "participants": [
+   "斯瓦泰克",
+   "郑钦文"
+  ],
+  "set_scores_home_away": [
+   [
+    5,
+    7
+   ],
+   [
+    3,
+    6
+   ]
+  ],
+  "tiebreaks_home_away": [
+   null,
+   null
+  ],
+  "winner": "郑钦文",
+  "loser": "斯瓦泰克",
+  "winner_result": "7-5 6-3",
+  "loser_result": "5-7 3-6",
+  "_direction_why": "flashscore `AE÷Swiatek I.` 是 home、`AF÷Zheng Q.` 是 away，`AG÷0 / AH÷2` 盘数 0:2，赢家是郑钦文；美网官方 team2 郑钦文 `won: true`；`df_st_1` `Match points saved` 主队 3 / 客队 0（救赛点的是输家斯瓦泰克，兑现的是赢家）。",
+  "_order_why": "⚠️ `participants` 跟 flashscore 的 home/away（斯瓦泰克是 home），**和 `cover.matchup` 的顺序相反**（matchup[0] 是郑钦文——封面主体）。`set_scores_home_away` 同序：[[5,7],[3,6]] 读作 home 斯瓦泰克 5-7、3-6。"
+ },
+ "stats": {
+  "a": {
+   "aces": 3,
+   "df": 2,
+   "winners": 20,
+   "ue": 17,
+   "first_in": 24,
+   "first_won": 20,
+   "second_total": 34,
+   "second_won": 18,
+   "bp_conv": 5,
+   "bp_chances": 13,
+   "pts_won": 75,
+   "pts_total": 138,
+   "first_total": 58,
+   "headshot": "assets/players/wta-328120-zheng-qinwen.png"
+  },
+  "b": {
+   "aces": 1,
+   "df": 2,
+   "winners": 17,
+   "ue": 28,
+   "first_in": 56,
+   "first_won": 32,
+   "second_total": 24,
+   "second_won": 11,
+   "bp_conv": 2,
+   "bp_chances": 7,
+   "pts_won": 63,
+   "pts_total": 138,
+   "first_total": 80,
+   "headshot": "assets/players/headshots/wta-326408.jpg"
+  },
+  "_source": "flashscore `jBiLW0fm` 的 `df_st_1`（Match 那一档，`match_stat_hooks.py jBiLW0fm --stats-block` 直接吐的）。这场**有**制胜分和非受迫失误（郑钦文 20/17，斯瓦泰克 17/28），已填。\n⚠️ `stats.a` 跟 `cover.matchup[0]`（郑钦文），而 flashscore 的 home 是斯瓦泰克——所以工具吐出来的 a/b **对调**过才填进来：a 是接口的客队（Zheng），b 是主队（Swiatek）。头像跟着数字走：左边 `wta-328120` 是郑钦文、右边 `wta-326408` 是斯瓦泰克（和 `swiatek-bouzkova-us-open-2026-r3` 同一张）。\n`first_total` 按 `first_in + second_total` 算（24+34=58、56+24=80）。"
+ },
+ "_hit_data": [
+  {
+   "label": "连续两轮 0-5 落后连赢七局",
+   "detail": "上一轮决胜盘 0-5 → 7-5，这一轮首盘 0-5 → 7-5，两场各连赢七局",
+   "source": "flashscore df_mh_1（8QdDaEc5 Set 3 / jBiLW0fm Set 1 逐局）；转播 69.04s `She's done it again … Five love down today`"
+  },
+  {
+   "label": "三个盘点全救",
+   "detail": "首盘 5-1 斯瓦泰克发球两个盘点（40-30、A-40）、5-3 第三个盘点（40-30），三个都被郑钦文救下，那两个发球局都被破",
+   "source": "flashscore df_mh_1 Set 1（`|B2|` 三处）＋ 记分条 28.5s / 44.5s"
+  },
+  {
+   "label": "斯瓦泰克救了三个赛点",
+   "detail": "第二盘 3-5 斯瓦泰克发球 0-40 三个赛点全救下，第四个（占先）才结束",
+   "source": "flashscore df_st_1 Match points saved 主队 3；df_mh_1 Set 2 末局 `|B3|` 四处；记分条 118.5s~160.5s MATCH POINT #1~#4"
+  },
+  {
+   "label": "一发得分率倒挂",
+   "detail": "斯瓦泰克一发进了 70% 却只拿到 57%（32/56）；郑钦文一发只进 41%，进了的拿下 83%（20/24）。一发均速 176 对 154 km/h",
+   "source": "flashscore df_st_1（1st serve percentage / 1st serve points won / Average 1st serve speed）"
+  },
+  {
+   "label": "失误对比",
+   "detail": "斯瓦泰克非受迫失误 28 对 17，制胜分反而少（17 对 20）",
+   "source": "flashscore df_st_1（Winners / Unforced errors）"
+  },
+  {
+   "label": "总分差",
+   "detail": "郑钦文 75 - 63，多赢 12 分；最后十个球赢了七个；上网 4 次 4 次得分",
+   "source": "flashscore df_st_1（Total Points Won 75/138、Last 10 balls 7、Net points won 4/4）"
+  },
+  {
+   "label": "纽约七连胜",
+   "detail": "资格赛三轮 ＋ 正赛四轮，七场全胜打进八强",
+   "source": "美网官方 players/matches wta328120_matches.json（12153 / 12227 / 12314 / 2155 / 2228 / 2314 / 2407 七条 won: true）；转播 191.20s `seven wins on the bounce here in New York`"
+  },
+  {
+   "label": "交手记录",
+   "detail": "九次交手郑钦文 2-7；此前唯一一胜是 2024 巴黎奥运会 4 强（红土），这是硬地上第一次、大满贯第一次赢斯瓦泰克",
+   "source": "flashscore df_hh_1（本场 0:2）＋ `zheng-swiatek-eight-meetings` 里两个源核过的八场（tennisexplorer mutual + flashscore df_hh_1）"
+  }
+ ],
+ "_claims": {
+  "九次交手郑钦文 2 胜 7 负；此前唯一一胜是 2024-08-01 巴黎奥运会女单 4 强（红土），其余七场（2022 法网、圣地亚哥、2023 斯图加特、辛辛那提、2024 联合杯、迪拜、2025 印第安维尔斯）全是硬地或红土败——所以本场是她硬地上、大满贯上第一次赢斯瓦泰克": [
+   "https://www.tennisexplorer.com/mutual/zheng-13301/swiatek/",
+   "https://global.flashscore.ninja/2/x/feed/df_hh_1_jBiLW0fm"
+  ],
+  "2026 美网郑钦文从资格赛打起，三轮资格赛加四轮正赛七连胜打进八强": [
+   "https://www.usopen.org/en_US/scores/feeds/2026/players/matches/wta328120_matches.json",
+   "https://www.youtube.com/watch?v=Md8vyWg60fI"
+  ]
+ },
+ "_no_repeat": "同栏目已发的 `zheng-keys-us-open-2026-r3` 铺开讲过上一轮决胜盘 0-5 落后救赛点连赢七局的全过程，这一条只留一句「上一轮对凯斯，她决胜盘零比五还翻了回来」当参照（看懂「又是」所必需的来路），不重讲那场的任何一分；`zheng-liutova-us-open-2026-r1` 讲过「456 天」的复出线，这一条一个字都不碰——手术只出现在转播原声那一句（`After the elbow surgery, the comeback`）里。`zheng-swiatek-eight-meetings`（网球有故事）铺开讲过八次交手的逐场，这一条只留「第二次赢、硬地第一次、上一次是巴黎」一句。",
+ "_durations": [
+  [
+   "Set 1",
+   "0:59"
+  ],
+  [
+   "Set 2",
+   "0:57"
+  ],
+  [
+   "全场",
+   "1:56"
+  ]
+ ],
+ "_turning_points": [
+  {
+   "label": "【Set 1】0-5：斯瓦泰克保发、破发、保发、破发、保发",
+   "density": 3,
+   "tags": [
+    "2个破发点兑现"
+   ]
+  },
+  {
+   "label": "【Set 1】5-1 斯瓦泰克发球胜盘，40-30、A-40 两个盘点被救，被破——全场的转折点",
+   "density": 5,
+   "tags": [
+    "2个盘点",
+    "3个破发点"
+   ]
+  },
+  {
+   "label": "【Set 1】5-3 斯瓦泰克发球，40-30 第三个盘点被救，再被破",
+   "density": 5,
+   "tags": [
+    "1个盘点",
+    "3个破发点"
+   ]
+  },
+  {
+   "label": "【Set 1】6-5 郑钦文发球零封收盘 7-5，连赢七局",
+   "density": 4,
+   "tags": [
+    "1个盘点"
+   ]
+  },
+  {
+   "label": "【Set 2】3-3 郑钦文发球救下两个破发点保发；3-4 斯瓦泰克 30-40 被破",
+   "density": 4,
+   "tags": [
+    "3个破发点"
+   ]
+  },
+  {
+   "label": "【Set 2】5-3 斯瓦泰克发球 0-40 三个赛点全救，第四个（占先）郑钦文收下",
+   "density": 5,
+   "tags": [
+    "4个赛点"
+   ]
+  }
+ ],
+ "_turning_points_why": "按记分条（画面自证）＋ flashscore 逐分写的：28.5s `SET POINT 5 [40] / 1 [30]` 发球指示在 SWIATEK；44.5s `SET POINT #3 5 [40] / 3 [30]` 指示在 SWIATEK；62.5s `SET POINT 5 [0] / 6 [40]` 指示在 ZHENG；118.5s `MATCH POINT 5 3 [0] / 7 5 [40]` 指示在 SWIATEK；128.5s `#2 [15]`、140.5s `#3 [30]`、152.5s `#4 [AD]`。\n⚠️ flashscore 逐局的行标是「打完之后的比分」：`5-2 主队发球 40:30 |B2|` 那一局，场上是斯瓦泰克 **5-1** 发球，记分条 28.5s 印的就是 5-1——旁白按记分条写 5-1；`5-4` 那一行同理，场上是 5-3。\n**转折点定在首盘 5-1 那一局**：两个盘点救下之后破发，从那一局起七局连赢；第二盘 3-4 那次破发（30-40）集锦里没有画面，第 ⑫ 段旁白一句带过。",
+ "editorial": {
+  "mode": "match_review",
+  "hook": [
+   "又是零比五落后",
+   "又是连赢七局翻盘"
+  ],
+  "_hook_why": "这一栏和 `cover.hook` 必须逐字相同。理由见 `cover._hook_why`。",
+  "question": "首盘 0-5 落后、对面是世界第八斯瓦泰克，郑钦文是怎么连赢七局把这一盘翻回来、又在三个赛点被救之后把比赛收掉的？她的一发到底强在哪儿？",
+  "thesis": "转折点在首盘 5-1 斯瓦泰克的发球胜盘：40-30 和 A-40 两个盘点被郑钦文救下，然后破发——从那一局起七局连赢，三个盘点一个没给。真正的差别在一发：斯瓦泰克一发进了 70% 只拿到 57%，郑钦文一发只进 41% 却拿下 83%，均速 176 对 154；非受迫失误 17 对 28。第二盘 3-5 斯瓦泰克发球 0-40，三个赛点全救下，第四个才落地。九次交手第二次赢斯瓦泰克、硬地第一次，从资格赛七连胜打进八强。",
+  "beats": [
+   "首盘 0-5：斯瓦泰克保发破发交替连拿五局；郑钦文首盘一发只进 50%，前五局被破两次。",
+   "5-1 斯瓦泰克发球胜盘两个盘点被救、被破；5-3 第三个盘点被救、再被破；6-5 郑钦文发球零封收盘 7-5，七局连赢——转播：`She's done it again`。",
+   "第二盘一发得分率的倒挂（57% 对 83%），3-4 破发之后 5-3 斯瓦泰克发球 0-40：三个赛点全救，第四个占先才收——她仰面躺在阿瑟·阿什的场地上，七连胜进八强。"
+  ],
+  "human_context": {
+   "angle": "连续两轮 0-5 落后连赢七局的人，赢的是世界第八、前世界第一；而她九次交手此前只在巴黎奥运会赢过对方一次。转播把它叫作「remarkable story inside Arthur Ashe Stadium」，开场解说说资格赛期间就有约三千人在看她的资格赛（12.72s）。",
+   "facts": [
+    "美网官方 matches feed（match_id 2407）：team1 斯瓦泰克 seed=8；team2 郑钦文 seed=null、entryStatus=Q；courtName Arthur Ashe Stadium；duration 1:56",
+    "WTA 官方 players/ranked（rankedAt 2026-08-31）：郑钦文第 121、斯瓦泰克第 8",
+    "flashscore df_hh_1：本场 Swiatek I. 0 : 2 Zheng Q.；此前八次交手郑钦文 1 胜（2024 巴黎奥运会 4 强）",
+    "同栏目已发 `zheng-keys-us-open-2026-r3`：上一轮决胜盘 0-5 落后救赛点连赢七局 1-6 7-6(3) 7-5",
+    "转播原声 69.04~77.52s：`She's done it again. Incredible. Five love down against Matty Keys in the previous round. She won that set. Five love down today. She's just taken it 7-5`；165.20~201.36s：`is into the quarterfinals at the US Open once more. What a story. What a performance. What a hugely significant result. Love five remember in the first set. Won seven games in a row. And this is massive. After the elbow surgery, the comeback. 121 in the world right now and a qualifier that is seven wins on the bounce here in New York and she's still going strong. Remarkable story inside Arthur Ashe Stadium. 7-5 6-3 today`"
+   ],
+   "sources": [
+    "https://www.usopen.org/en_US/scores/feeds/2026/players/matches/wta328120_matches.json",
+    "https://api.wtatennis.com/tennis/players/ranked?page=1&pageSize=100&type=rankSingles&sort=asc&metric=SINGLES",
+    "https://www.youtube.com/watch?v=Md8vyWg60fI",
+    "https://www.youtube.com/watch?v=dg7Whi_m_Tc"
+   ]
+  }
+ },
+ "topbar": {
+  "line1": "2026 美网 女单16强",
+  "line2": "郑钦文 7-5 6-3 斯瓦泰克"
+ },
+ "push": {
+  "summary": "郑钦文0-5落后翻盘斯瓦泰克",
+  "_summary_why": "真调 `push_reel.headline()` 量过：`9.7 赛场之上 | 郑钦文0-5落后翻盘斯瓦泰克` 整句 20 字位正好压在 `TITLE_MAX=20` 上，summary 12.5 字位在 `SUMMARY_MAX=13` 之内。第一版「郑钦文又零比五翻盘赢斯瓦泰克」14 字位被闸拦下。主语（郑钦文）＋ 比分板上看不见的事实（0-5 落后翻盘）＋ 赢了谁（斯瓦泰克）。哪一站交给 `lead` 第一句。",
+  "lead": "美网女单16强，阿瑟·阿什球场。世界第121、从资格赛打上来的郑钦文 7-5 6-3 击败8号种子、前世界第一斯瓦泰克，一小时五十六分钟，打进八强。首盘她0-5落后——上一轮对凯斯是决胜盘0-5，这一轮换成了第一盘。5-1斯瓦泰克发球胜盘拿到两个盘点，都被救下，被破；5-3第三个盘点，又被救下，再被破；6-5郑钦文发球零封收盘，七局连赢。第二盘3-5斯瓦泰克发球0-40，三个赛点全被她救回去，第四个才落地。斯瓦泰克一发进了70%只拿到57%，郑钦文一发只进41%却拿下83%。九次交手她第二次赢斯瓦泰克，硬地上第一次；从资格赛第一轮到今天，纽约七连胜。",
+  "auto": true
+ },
+ "segments": [
+  {
+   "source": "open",
+   "start": 0.0,
+   "end": 9.5,
+   "narration": "",
+   "score_inset": true,
+   "_head_open_why": "这条源片就是美网官方按结果剪的 57 秒短片（《Qinwen Zheng Beats Iga Swiatek to Make Quarterfinals》），**开头就是第四个赛点那一分**（记分条 `MATCH POINT #4 5 3 / 7 5 [AD]`，0.5~8.5s 一整个回合，9.56 那一刀切到她仰面躺倒）——爆点在开头，不是按时间顺序剪的集锦。",
+   "_why": "**第①格：全片最强的一格。** 第四个赛点那一分从头到落地，不配旁白，靠现场声（转播 9.6s 那句 `Just…` 就是球出界）。账号所有者 2026-09-07 定的：用这条短片做开场、全部用原声解说。段尾 9.5 停在切点 9.56 之前。",
+   "fit": "crop"
+  },
+  {
+   "source": "open",
+   "start": 9.6,
+   "end": 22.5,
+   "quote": [
+    {
+     "at": 2.64,
+     "text": "Qinwen Zheng\n郑钦文"
+    },
+    {
+     "at": 4.24,
+     "text": "is into the quarterfinals\n打进了八强"
+    },
+    {
+     "at": 6.96,
+     "text": "at the US Open once more\n美网 又一次"
+    },
+    {
+     "at": 8.48,
+     "text": "What a story\n多好的故事"
+    },
+    {
+     "at": 10.2,
+     "text": "What a performance\n多好的表现"
+    },
+    {
+     "at": 12.16,
+     "text": "a significant result\n多重要的一场胜利"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "score_inset": false,
+   "_score_inset_why": "球落地之后记分条一秒内淡出（短片 12.5s 起整段是她躺在场上的近景、起身、跪地），板不在画面里，`board_present_spans` 也收不到——整段不贴。",
+   "crosses_cut": "loose 11.18 是同一个镜头里她从躺倒到举拳的动作幅度，两边都是她；硬切点 9.56 / 22.61 都在段外。",
+   "_quote_why": "转播原句 12.24~21.76s「Qinwen Zheng is into the quarterfinals at the US Open once more. What a story. What a performance. What a hugely significant result.」每条 at 从 captions.txt 时间戳减段起点 9.6；英文每行 ≤16 格，所以整句拆成六条，`hugely` 省掉。",
+   "_why": "第②格：她仰面躺倒、双拳举起、坐起、跪地、站起来（短片 12.5 / 14.5 / 16.5 / 18.5 / 20.5s），压着解说那句「打进八强」。",
+   "fit": "crop"
+  },
+  {
+   "source": "open",
+   "start": 22.7,
+   "end": 33.3,
+   "quote": [
+    {
+     "at": 2.66,
+     "text": "Love-five, first set\n首盘零比五落后"
+    },
+    {
+     "at": 5.38,
+     "text": "Seven games in a row\n然后连赢七局"
+    },
+    {
+     "at": 8.42,
+     "text": "And this is massive\n这太重要了"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "score_inset": false,
+   "_score_inset_why": "走向网前、握手、和裁判握手（短片 24.5 / 26.5 / 28.5 / 30.5 / 32.5s），记分条不在画面里。",
+   "_quote_why": "转播原句 25.36~33.1s「Love five remember in the first set. Won seven games in a row. And this is massive.」`remember` 和 `Won` 省掉才装得进 16 格。",
+   "_why": "第③格：网前握手。解说在这儿把整场的形状说了出来——零比五，七局连赢。",
+   "fit": "crop"
+  },
+  {
+   "source": "open",
+   "start": 33.5,
+   "end": 45.1,
+   "quote": [
+    {
+     "at": 0.0,
+     "text": "After the elbow surgery\n肘部手术之后"
+    },
+    {
+     "at": 1.7,
+     "text": "the comeback\n这一次回归"
+    },
+    {
+     "at": 3.14,
+     "text": "No.121 in the world\n现在世界第一百二十一"
+    },
+    {
+     "at": 6.42,
+     "text": "a qualifier\n一个资格赛选手"
+    },
+    {
+     "at": 8.2,
+     "text": "seven on the bounce\n纽约七连胜"
+    },
+    {
+     "at": 9.94,
+     "text": "here in New York\n就在纽约"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "score_inset": false,
+   "_score_inset_why": "向看台挥手的全景和近景、背影、她的包厢（短片 34.5 / 36.5 / 38.5 / 40.5 / 42.5 / 44.5s），记分条不在画面里。",
+   "crosses_cut": "loose 34.02 / 37.79 / 39.86 是全景→挥手近景→背影→包厢的机位切换，全是赢球之后她和她的团队，没有对手。",
+   "_quote_why": "转播原句 31.12~44.9s「And this is massive. After the elbow surgery, the comeback. 121 in the world right now and a qualifier that is seven wins on the bounce here in New York」。`right now` / `that is` / `wins` 省掉才装得进 16 格；`seven wins on the bounce` 是英式说法「七连胜」。",
+   "_why": "第④格：挥手、大笑、包厢里的团队，压着解说交代来路（手术、121、资格赛、七连胜）。",
+   "fit": "crop"
+  },
+  {
+   "source": "open",
+   "start": 45.3,
+   "end": 53.3,
+   "quote": [
+    {
+     "at": 0.0,
+     "text": "still going strong\n她还在往前走"
+    },
+    {
+     "at": 1.74,
+     "text": "Remarkable story\n了不起的故事"
+    },
+    {
+     "at": 3.2,
+     "text": "inside Arthur Ashe\n就在阿瑟·阿什球场"
+    },
+    {
+     "at": 4.78,
+     "text": "7-5, 6-3 today\n今天七比五 六比三"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "score_inset": false,
+   "_score_inset_why": "近景指向包厢（短片 46.5s，和封面那张官方实拍是同一刻）→ 走向椅子 → 全屏赛果图形（48.5~53.3s），记分条不在画面里，全屏图形本身就是赛果。",
+   "_quote_why": "转播原句 43.44~52s「and she's still going strong. Remarkable story inside Arthur Ashe Stadium. 7-5 6-3 today.」`and she's` / `Stadium` 省掉才装得进 16 格。",
+   "_why": "第⑤格：封面那一刻在动（46.5s 举拍指向包厢、大笑），然后官方全屏图形把 7-5 6-3 印出来。段尾 53.3 停在切点 53.49 / 片尾板之前。",
+   "fit": "crop"
+  },
+  {
+   "source": "main",
+   "start": 1.8,
+   "end": 11.0,
+   "narration": "北京时间九月七日夜里十一点，美网十六强。资格赛打上来的郑钦文，对八号种子斯瓦泰克。",
+   "score_inset": true,
+   "_why": "正文第一格交代坐标。画面是开局第一局斯瓦泰克发球 0-15 的底线回合（记分条 `0 [15] / 0 [0]`，发球指示在 SWIATEK），谁都没露脸的宽景，正好放身份。开球时刻取 flashscore `AD=1788795600`＝北京时间 2026-09-07 23:00，按「不报到分」的档位（分钟 0 落在 0~9）说「夜里十一点」；官方 feed 的 `epoch` 是结束时刻不是开球。种子见 `cover._rank_why`；「世界第一百二十一」留到第 ㉘ 段说，这一段真 TTS 量过装不下（9.26s / 8.8s）。起点 1.8：0.8 / 1.7 两个 point_ends 是开场图形翻牌，2.5s 那一格记分条已经在了。段尾 11.0（真 TTS 8.81s，留 0.4s）停在切到斯瓦泰克近景（12.5s 那一格）之前。",
+   "fit": "crop"
+  },
+  {
+   "source": "main",
+   "start": 12.0,
+   "end": 15.3,
+   "narration": "斯瓦泰克，连赢五局。",
+   "score_inset": true,
+   "_why": "斯瓦泰克近景握拳（12.5 / 14.5s，紫帽），记分条 `2 [0] / 0 [15]`。首盘前五局全归主队（df_mh_1 Set 1 逐局 1-0 / 2-0 / 3-0 / 4-0 / 5-0）。段尾 15.3 停在切点 15.43 之前。",
+   "fit": "crop"
+  },
+  {
+   "source": "main",
+   "start": 16.0,
+   "end": 27.0,
+   "narration": "五比零。上一轮对凯斯，她决胜盘零比五还翻了回来。这一次，是第一盘零比五。",
+   "score_inset": true,
+   "_why": "2-0 郑钦文发球的底线回合（记分条 `2 [0] / 0 [15]`，宽景）；旁白只用一句带上一轮当参照（`_no_repeat`）。段尾 27.0 停在切点 27.08 / 死球 27.13 之前——这一分收在解说 26.80s `That's beautifully struck` 那一拍上。",
+   "fit": "crop"
+  },
+  {
+   "source": "main",
+   "start": 28.3,
+   "end": 40.8,
+   "narration": "五比一，斯瓦泰克发球，四十比三十，盘点。郑钦文救了下来；平分之后第二个盘点，又救下。这一局，她破了斯瓦泰克。",
+   "score_inset": true,
+   "_why": "记分条 `SET POINT 5 [40] / 1 [30]`，发球指示在 SWIATEK（28.5~40.5s 一整个回合）。逐分：df_mh_1 Set 1 `5-2` 那一行 `40:30 |B2|, 40:40, 40:A |B1|, 40:40, A:40 |B2|, 40:40, 40:A |B1|, 40:40, 40:A |B1|`——两个盘点被救、三个破发点、第三个兑现；场上比分按记分条写 5-1。段尾 40.8 停在切点 40.92 之前（死球 41.14 是记分条翻牌的滞后）。",
+   "fit": "crop"
+  },
+  {
+   "source": "main",
+   "start": 41.1,
+   "end": 44.4,
+   "narration": "五比二，斯瓦泰克低着头。",
+   "score_inset": true,
+   "_why": "斯瓦泰克近景低头走开（42.5s，紫帽），记分条还挂着 `5 [40] / 1 [30]`（翻牌滞后）。段尾 44.4 停在切回宽景（44.5s）之前。",
+   "fit": "crop"
+  },
+  {
+   "source": "main",
+   "start": 44.6,
+   "end": 59.1,
+   "narration": "五比三，斯瓦泰克发球，第三个盘点。这一分打了很久，落地的时候转播喊了一句：漂亮的角度。三个盘点一个没给，这一局她又破发。",
+   "score_inset": true,
+   "_why": "记分条 `SET POINT #3 5 [40] / 3 [30]`，发球指示在 SWIATEK（44.5~58.5s 一整个回合）。逐分：`5-4` 那一行 `40:30 |B2|, 40:40, 40:A |B1|, 40:40, 40:A |B1|, 40:40, 40:A |B1|`——第三个盘点被救、三个破发点、第三个兑现。解说 58.72s `That's a great angle.`（不点名是谁的角度，旁白照实只说「转播喊了一句」）。段尾 59.1 停在切点 59.23 / 死球 59.26 之前。",
+   "fit": "crop"
+  },
+  {
+   "source": "main",
+   "start": 61.8,
+   "end": 65.3,
+   "narration": "六比五，她发球，盘点。",
+   "score_inset": true,
+   "_why": "郑钦文近景发球（62.5 / 64.5s，白背心），记分条 `SET POINT 5 [0] / 6 [40]`，发球指示在 ZHENG。⚠️ 起点 61.8 而不是 59.5：60.5s 那一格记分条还挂着 `SET POINT #3 5 / 3`（翻牌滞后），旁白说「六比五」要等板翻过来。段尾 65.3 停在切点 65.45 之前。",
+   "fit": "crop"
+  },
+  {
+   "source": "main",
+   "start": 65.6,
+   "end": 69.2,
+   "narration": "",
+   "score_inset": true,
+   "_why": "盘点那一分（66.5 / 68.5s 宽景，记分条 `SET POINT 5 [0] / 6 [40]`），不配旁白，靠现场声——落地之后切到她握拳的近景。段尾 69.2 停在切点 69.34 之前。",
+   "fit": "crop"
+  },
+  {
+   "source": "main",
+   "start": 69.4,
+   "end": 72.1,
+   "quote": [
+    {
+     "at": 0.0,
+     "text": "She's done it again\n她又做到了"
+    },
+    {
+     "at": 1.5,
+     "text": "Incredible\n难以置信"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "score_inset": true,
+   "_quote_why": "转播原句 69.04s「She's done it again. Incredible.」——账号所有者要的原声解说，这一句就是整条片子的钩子（「又是」）。",
+   "_why": "郑钦文握拳的近景（70.5s，白背心），记分条 `5 [0] / 6 [40]` 还在。段尾 72.1 停在切到包厢（loose 72.24）之前。",
+   "fit": "crop"
+  },
+  {
+   "source": "main",
+   "start": 72.3,
+   "end": 79.3,
+   "quote": [
+    {
+     "at": 0.0,
+     "text": "Five-love down vs Keys\n上一轮对凯斯零比五"
+    },
+    {
+     "at": 1.6,
+     "text": "She won that set\n那一盘她赢了"
+    },
+    {
+     "at": 3.6,
+     "text": "Five-love down today\n今天又是零比五"
+    },
+    {
+     "at": 5.2,
+     "text": "She's just taken it 7-5\n她刚七比五拿下"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "score_inset": false,
+   "_score_inset_why": "她的包厢鼓掌（72.5 / 74.5 / 76.5s）和换边镜头（78.5s 斯瓦泰克回椅子），记分条不在画面里。",
+   "crosses_cut": "硬切点 77.79：包厢 → 换边（斯瓦泰克回椅子）。原声段，解说这一句「She's just taken it 7-5」正好跨在这一刀上，两边都是首盘刚结束的画面，没有回合。",
+   "_quote_why": "转播原句 71.28~79s「Five love down against Matty Keys in the previous round. She won that set. Five love down today. She's just taken it 7-5.」`against Matty` / `in the previous round` 压成 `vs Keys` 才装得进 16 格。",
+   "_why": "包厢鼓掌 → 换边。解说把两轮的形状并排说出来。",
+   "fit": "crop"
+  },
+  {
+   "source": "main",
+   "start": 79.4,
+   "end": 83.6,
+   "narration": "七比五，从零比五连赢七局。",
+   "score_inset": false,
+   "_score_inset_why": "换边镜头（80.5s 斯瓦泰克坐在椅子上、82.5s 走回场），前半段没有记分条，后半段板在画面里但整段不贴——`board_present_in_band` 对深色器材包和椅子会误判成板在（CLAUDE.md 09-03），不冒这个险。",
+   "_why": "首盘 5-7、0:59（美网官方 setDurations[0]=59）。七局连赢：df_mh_1 Set 1 从 5-1 那一局起 5-2 / 5-3 / 5-4 / 5-5 / 5-6 / 5-7 全归客队。真 TTS 第一版「七比五。零比五之后，连赢七局。」4.25s 装不进 3.8s 的窗口，收成这一句并把起点提前到 79.4（上一段原声「7-5」79.0 已经说完）。段尾 83.6 停在切点 83.75 之前。",
+   "fit": "crop"
+  },
+  {
+   "source": "main",
+   "start": 84.4,
+   "end": 94.5,
+   "narration": "第二盘。这场球，斯瓦泰克的一发得分率只有百分之五十七；郑钦文的一发，百分之八十三。",
+   "score_inset": true,
+   "_why": "第二盘第一局斯瓦泰克发球 40-30 的宽景回合（记分条 `5 0 [40] / 7 0 [30]`，指示在 SWIATEK）。两个数出自 df_st_1 Match：`1st serve points won 57% (32/56)` 主队、`83% (20/24)` 客队。段尾 94.5 停在切点 94.63 / 死球 94.69 之前。",
+   "fit": "crop"
+  },
+  {
+   "source": "main",
+   "start": 96.3,
+   "end": 100.2,
+   "narration": "一比二，她发球。",
+   "score_inset": true,
+   "_why": "郑钦文近景准备发球（96.5 / 98.5s），记分条 `5 2 [0] / 7 1 [30]`，指示在 ZHENG。段尾 100.2 停在切点 100.33 之前。",
+   "fit": "crop"
+  },
+  {
+   "source": "main",
+   "start": 100.5,
+   "end": 115.9,
+   "narration": "转播说，她一发后面拿到的分，好得惊人。全场她的一发平均一百七十六公里，斯瓦泰克一百五十四。这一分她拿下，四十比零；然后保发，二比二。",
+   "score_inset": true,
+   "_why": "1-2 郑钦文发球 30-0 的宽景回合（记分条 `5 2 [0] / 7 1 [30]` 一路到 114.5s），解说 96.72~100.72s `the points she's winning behind her first serve now. That has been phenomenal.`、115.52s `Oh yes.`。一发均速：df_st_1 `Average 1st serve speed` 154 / 176 km/h。这一局：df_mh_1 Set 2 `2-2` 行 `0:15, 0:30, 0:40, 15:40, 30:40` 然后拿下——这一分之后 40-0，再丢两分保发。段尾 115.9 停在切点 115.92 / 死球 115.92 之前。",
+   "fit": "crop"
+  },
+  {
+   "source": "main",
+   "start": 118.3,
+   "end": 126.6,
+   "narration": "五比三，斯瓦泰克发球，零比四十，三个赛点。第一个，斯瓦泰克救了下来。",
+   "score_inset": true,
+   "_why": "记分条 `MATCH POINT 5 3 [0] / 7 5 [40]`，指示在 SWIATEK（118.5~126.5s 一个回合）。逐分：df_mh_1 Set 2 `3-6` 行 `0:40 |B1| |B3|, 15:40 |B1| |B3|, 30:40 |B1| |B3|, 40:40, 40:A |B1| |B3|`。段尾 126.6 停在切点 126.68 / 死球 126.73 之前。⚠️ 主语写全（斯瓦泰克救），别让「她」被读成郑钦文。",
+   "fit": "crop"
+  },
+  {
+   "source": "main",
+   "start": 128.3,
+   "end": 135.2,
+   "narration": "十五比四十，第二个赛点。斯瓦泰克又救了下来。",
+   "score_inset": true,
+   "_why": "记分条 `MATCH POINT #2 5 3 [15] / 7 5 [40]`（128.5~134.5s）。段尾 135.2 停在切点 135.34 / 死球 135.34 之前。",
+   "fit": "crop"
+  },
+  {
+   "source": "main",
+   "start": 136.3,
+   "end": 140.4,
+   "narration": "三十比四十，第三个赛点。",
+   "score_inset": true,
+   "crosses_cut": "136.5 / 138.5s 斯瓦泰克近景（紫帽，场边时钟 1:54）→ 140.5s 郑钦文近景，中间那一刀 probe 没认出来（两格都是同一个比分下两个人各自的反应近景，记分条 `MATCH POINT #3 5 3 [30] / 7 5 [40]` 两边都在）。旁白只报比分，不点名谁。",
+   "_why": "两个人的反应近景。段尾 140.4 停在切点 140.59 之前。",
+   "fit": "crop"
+  },
+  {
+   "source": "main",
+   "start": 140.7,
+   "end": 147.5,
+   "quote": [
+    {
+     "at": 5.85,
+     "text": "Three taken care of\n三个赛点全救回去了"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "score_inset": true,
+   "_quote_why": "转播原句 146.56s「And that is three taken care of.」——第三个赛点落地那一刻。",
+   "_why": "第三个赛点那一分的宽景回合（142.5~146.5s，记分条 `MATCH POINT #3`），不配旁白，落地时解说自己报了「三个都救回去了」。段尾 147.5 停在切点 147.7 之前（死球 148.45 是翻牌滞后）。",
+   "fit": "crop"
+  },
+  {
+   "source": "main",
+   "start": 147.9,
+   "end": 151.4,
+   "narration": "平分。她闭上了眼睛。",
+   "score_inset": true,
+   "_why": "郑钦文近景（148.5s 背影转身、150.5s 闭眼走向底线，白背心），记分条 `5 3 [30] / 7 5 [40]` → 150.5s `[40] / [40]`。「闭上眼睛」是 150.5s 那一格看得见的动作。段尾 151.4 停在切点 149.17 之后、下一分（152.5s 宽景）之前——loose 148.46 / 148.5 是近景内的机位微动。",
+   "crosses_cut": "硬切点 149.17 在段内：148.5s 背影 → 150.5s 正面近景，两边都是郑钦文一个人。",
+   "fit": "crop"
+  },
+  {
+   "source": "main",
+   "start": 151.7,
+   "end": 160.8,
+   "narration": "占先，第四个赛点。",
+   "score_inset": true,
+   "_why": "记分条 `MATCH POINT #4 5 3 / 7 5 [AD]`（152.5~160.5s 一整个回合）。旁白只报一句，其余交给现场声——这一分本身就是全片的落点。段尾 160.8 停在切点 160.86 / 死球 160.86 之前。",
+   "fit": "crop"
+  },
+  {
+   "source": "main",
+   "start": 161.0,
+   "end": 173.7,
+   "narration": "这一分落地。七比五，六比三，一小时五十六分钟。她仰面躺在了阿瑟·阿什的场地上，双拳举起，然后跪在那儿。",
+   "score_inset": false,
+   "_score_inset_why": "球落地之后记分条一秒内淡出，162.5s 起整段是她仰面躺倒、举拳、坐起、跪地、站起来的近景，板不在画面里。",
+   "_why": "**正文重新兑现结局**（冷开场只是预告）：162.5 / 164.5 / 166.5 / 168.5 / 170.5s 从躺倒到站起来一格不跳。用时 1:56 见 `cover.scoreboard._duration_why`。段尾 173.7 停在切点 173.91 之前（连 0.18s 溶解底料一起）。",
+   "fit": "crop"
+  },
+  {
+   "source": "main",
+   "start": 174.0,
+   "end": 184.5,
+   "narration": "九次交手，她第二次赢了斯瓦泰克，硬地上是第一次。上一次，是巴黎奥运会。",
+   "score_inset": false,
+   "_score_inset_why": "网前握手、和裁判握手（174.5 / 176.5 / 178.5 / 180.5 / 182.5s），记分条不在画面里。",
+   "_why": "交手记录见 `_claims` 第一条（两个源）。段尾 184.5 停在切点 184.7 之前（连 0.18s 溶解底料一起）。 「赢了斯瓦泰克」不写「赢下斯瓦泰克」：edge 切词把「下斯瓦泰克」黏成一个词。",
+   "fit": "crop"
+  },
+  {
+   "source": "main",
+   "start": 184.8,
+   "end": 196.4,
+   "narration": "从资格赛第一轮打到今天，纽约七连胜。世界第一百二十一，打进美网八强。转播说：了不起的故事。",
+   "score_inset": false,
+   "_score_inset_why": "向看台挥手的全景（184.5s）、近景（186.5s）、背影（188.5s）、包厢（190.5s）、指向包厢的近景（192.5 / 194.5s），记分条不在画面里。",
+   "crosses_cut": "loose 185.32 / 189.09 / 191.16 是全景→挥手近景→背影→包厢的机位切换，全是赢球之后她和她的团队，没有对手。",
+   "_why": "七连胜见 `_claims` 第二条。解说 198.32s `Remarkable story`。段尾 196.4 停在切点 196.5 之前。",
+   "fit": "crop"
+  },
+  {
+   "source": "main",
+   "start": 196.6,
+   "end": 204.7,
+   "narration": "两场球，两次零比五落后，两次连赢七局。八强那一场，你会熬夜看吗？",
+   "score_inset": false,
+   "_score_inset_why": "走向椅子的全景（196.5 / 198.5s）和官方全屏赛果图形（200.5~204.5s），记分条不在画面里，全屏图形本身就是赛果。",
+   "_why": "收尾落在一问上。官方图形 `8 IGA SWIATEK 5 3 / QINWEN ZHENG 7 6` 把赛果印出来收尾。段尾 204.7 停在切点 204.79 / 片尾板 / 静音 204.85 之前。",
+   "fit": "crop"
+  }
+ ],
+ "_editing_why": "**probe**：`output/2026-09-08/reel/zheng-swiatek-us-open-2026-r4/probe.json`（run 34149651669，`--scorebox 104,887,660,980`，`point_ends` 42 个时刻）和 `…/zheng-swiatek-us-open-2026-r4-open/probe.json`（run 34149814948）。\n**结构**：账号所有者 2026-09-07 定的——用官方那条 57 秒短片做开场、全部用原声解说（五段 quote，双语字幕钉在转播原句的时刻上）；正文按时间顺序从集锦 2.0s 走到 204.7s，结尾重新兑现结局（赛点落地 → 躺倒 → 握手 → 挥手 → 全屏图形）。开场和正文结尾是同一段画面（见 `_sources_why`），这是认领过的重复：冷开场可以重复，结局不能省。\n**段尾按 `point_ends` ＋ `scene_cuts` 定**：每一段的段尾都落在切点之前、这一分已经落地之后。\n**认人看帽子**：斯瓦泰克紫帽＋紫白连衣裙，郑钦文白背心＋薄荷绿短裙、无帽。\n**转折点**定在首盘 5-1 那一局（两个盘点救下、破发，从此七连胜），第 ⑨ 段点名。\n**第二盘没画面的四局**（2-2 → 3-5）由第 ⑯ 段的「第二盘」和第 ⑳ 段的「五比三」跨过去；3-4 那次破发集锦里没有。\n**渲之前跑过**：`--dry-run`、`preview_segments_local`（逐段对记分条）、`--check-narration`（edge 真跑）。"
+}
