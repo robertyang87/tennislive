@@ -1,0 +1,172 @@
+# 转写核对表：swiatek-zheng-us-open-2026-r4-presser
+
+源片 https://www.youtube.com/watch?v=2Kwt3R7JGGc　采访段 0.0–355.0 秒（共 153 行）
+
+| # | 片内 | 跳到源片 | 英文 | 中文 | 判据 |
+|--:|:--|:--|:--|:--|:--|
+| 1 | 0:00.1 | [▶](https://youtu.be/2Kwt3R7JGGc?t=0) | up in the first set. | 在第一盘领先的时候 |  |
+| 2 | 0:01.1 | [▶](https://youtu.be/2Kwt3R7JGGc?t=1) | Did you feel like you got | 你有没有觉得自己 |  |
+| 3 | 0:01.8 | [▶](https://youtu.be/2Kwt3R7JGGc?t=1) | a little bit more tense or a little bit ahead | 有点紧张 或者有点 |  |
+| 4 | 0:03.2 | [▶](https://youtu.be/2Kwt3R7JGGc?t=3) | of yourself? | 想得太早了？ |  |
+| 5 | 0:03.7 | [▶](https://youtu.be/2Kwt3R7JGGc?t=3) | Just kind of what do you think led | 你觉得是什么导致了 |  |
+| 6 | 0:04.6 | [▶](https://youtu.be/2Kwt3R7JGGc?t=4) | to that, you know, come back? | 她那一波反扑？ |  |
+| 7 | 0:06.1 | [▶](https://youtu.be/2Kwt3R7JGGc?t=6) | Honestly, no. | 说实话 没有 |  |
+| 8 | 0:07.2 | [▶](https://youtu.be/2Kwt3R7JGGc?t=7) | For sure I felt like I started missing too | 我确实觉得自己开始失误 |  |
+| 9 | 0:10.5 | [▶](https://youtu.be/2Kwt3R7JGGc?t=10) | many shots. | 太多了 |  |
+| 10 | 0:11.4 | [▶](https://youtu.be/2Kwt3R7JGGc?t=11) | She started playing in. | 她开始把球打进来了 |  |
+| 11 | 0:13.5 | [▶](https://youtu.be/2Kwt3R7JGGc?t=13) | I let her back into into the match. | 是我让她回到了比赛里 |  |
+| 12 | 0:16.0 | [▶](https://youtu.be/2Kwt3R7JGGc?t=16) | So, no, but I honestly my focus | 所以不是 说实话我的专注 |  |
+| 13 | 0:19.8 | [▶](https://youtu.be/2Kwt3R7JGGc?t=19) | was the same as always. | 和平时一样 |  |
+| 14 | 0:21.4 | [▶](https://youtu.be/2Kwt3R7JGGc?t=21) | I wanted to play the same as always. | 我想打得和平时一样 |  |
+| 15 | 0:25.2 | [▶](https://youtu.be/2Kwt3R7JGGc?t=25) | Just starting to started to miss too much. | 只是开始失误太多 |  |
+| 16 | 0:28.7 | [▶](https://youtu.be/2Kwt3R7JGGc?t=28) | wanted to adjust it, | 我想调整 |  |
+| 17 | 0:29.8 | [▶](https://youtu.be/2Kwt3R7JGGc?t=29) | but nothing kind of worked at at that point. | 但那时候怎么调都不管用 |  |
+| 18 | 0:32.9 | [▶](https://youtu.be/2Kwt3R7JGGc?t=32) | And I knew I'm going | 而且我知道我还会 |  |
+| 19 | 0:35.3 | [▶](https://youtu.be/2Kwt3R7JGGc?t=35) | to have, you know, | 有 |  |
+| 20 | 0:36.6 | [▶](https://youtu.be/2Kwt3R7JGGc?t=36) | another chance and I wanted to use it, | 别的机会 我也想抓住 |  |
+| 21 | 0:38.6 | [▶](https://youtu.be/2Kwt3R7JGGc?t=38) | but I missed them all. | 但我一个都没兑现 |  |
+| 22 | 0:40.6 | [▶](https://youtu.be/2Kwt3R7JGGc?t=40) | Eva, | 伊娃 请问 |  |
+| 23 | 0:41.7 | [▶](https://youtu.be/2Kwt3R7JGGc?t=41) | hey, tough luck today, | 今天运气不太好 |  |
+| 24 | 0:43.3 | [▶](https://youtu.be/2Kwt3R7JGGc?t=43) | but when you're when you're up 5-1 | 但当你 5-1 领先的时候 | ✏️ 已订正 |
+| 25 | 0:44.9 | [▶](https://youtu.be/2Kwt3R7JGGc?t=44) | and you do have that cushion, | 你手上有足够的缓冲 |  |
+| 26 | 0:46.2 | [▶](https://youtu.be/2Kwt3R7JGGc?t=46) | h how what kind of mental adjustment | 那你要做什么样的心理调整 |  |
+| 27 | 0:49.2 | [▶](https://youtu.be/2Kwt3R7JGGc?t=49) | do you have to make of like it feels like you | 就是感觉你明明 |  |
+| 28 | 0:51.8 | [▶](https://youtu.be/2Kwt3R7JGGc?t=51) | have a lot of time to get things back | 有很多时间把局面拉回来 |  |
+| 29 | 0:53.4 | [▶](https://youtu.be/2Kwt3R7JGGc?t=53) | and then all of a sudden like | 然后突然之间 |  |
+| 30 | 0:55.9 | [▶](https://youtu.be/2Kwt3R7JGGc?t=55) | you don't have time? | 你就没时间了？ |  |
+| 31 | 0:57.7 | [▶](https://youtu.be/2Kwt3R7JGGc?t=57) | I never judge that I'm going to have a lot | 我从不觉得自己会有 |  |
+| 32 | 1:00.2 | [▶](https://youtu.be/2Kwt3R7JGGc?t=60) | of time. | 很多时间 |  |
+| 33 | 1:01.0 | [▶](https://youtu.be/2Kwt3R7JGGc?t=61) | That's why I usually am able to close | 所以我通常能用 |  |
+| 34 | 1:05.5 | [▶](https://youtu.be/2Kwt3R7JGGc?t=65) | the sets with a pretty straightforward score. | 很直接的比分收下一盘 |  |
+| 35 | 1:09.4 | [▶](https://youtu.be/2Kwt3R7JGGc?t=69) | Because I'm good | 因为我擅长 |  |
+| 36 | 1:11.1 | [▶](https://youtu.be/2Kwt3R7JGGc?t=71) | at like I don't know like even imagining | 怎么说呢 就是去想象 |  |
+| 37 | 1:15.4 | [▶](https://youtu.be/2Kwt3R7JGGc?t=75) | that the score line is is not like | 比分并不是 |  |
+| 38 | 1:17.5 | [▶](https://youtu.be/2Kwt3R7JGGc?t=77) | that and just pushing | 那样 然后一直往前顶 |  |
+| 39 | 1:18.7 | [▶](https://youtu.be/2Kwt3R7JGGc?t=78) | and being intense all the time. | 全程都保持强度 |  |
+| 40 | 1:20.4 | [▶](https://youtu.be/2Kwt3R7JGGc?t=80) | But like today I I wouldn't say it | 但今天我不会说 |  |
+| 41 | 1:24.4 | [▶](https://youtu.be/2Kwt3R7JGGc?t=84) | had anything to do with mentality. | 这跟心态有什么关系 |  |
+| 42 | 1:26.7 | [▶](https://youtu.be/2Kwt3R7JGGc?t=86) | It was more that I started making mistakes, | 更多是我开始失误 |  |
+| 43 | 1:28.9 | [▶](https://youtu.be/2Kwt3R7JGGc?t=88) | you know, from easy balls | 从很简单的球开始 |  |
+| 44 | 1:30.2 | [▶](https://youtu.be/2Kwt3R7JGGc?t=90) | and Qinwen stopped, you know, | 而郑钦文 |  |
+| 45 | 1:32.6 | [▶](https://youtu.be/2Kwt3R7JGGc?t=92) | doing doing mistakes. | 不再失误了 |  |
+| 46 | 1:33.7 | [▶](https://youtu.be/2Kwt3R7JGGc?t=93) | She she played the balls better | 她把球处理得更好 |  |
+| 47 | 1:35.5 | [▶](https://youtu.be/2Kwt3R7JGGc?t=95) | and yeah, | 就是这样 |  |
+| 48 | 1:40.0 | [▶](https://youtu.be/2Kwt3R7JGGc?t=100) | Matt. | 马特 请问 |  |
+| 49 | 1:41.0 | [▶](https://youtu.be/2Kwt3R7JGGc?t=100) | Hey, tough one. | 今天这场挺难的 |  |
+| 50 | 1:42.9 | [▶](https://youtu.be/2Kwt3R7JGGc?t=102) | I know New York doesn't necessarily | 我知道纽约不一定 |  |
+| 51 | 1:45.6 | [▶](https://youtu.be/2Kwt3R7JGGc?t=105) | like fit with you. | 很适合你 |  |
+| 52 | 1:46.8 | [▶](https://youtu.be/2Kwt3R7JGGc?t=106) | you can find ita chaotic and noisy | 你可能觉得这里又乱又吵 |  |
+| 53 | 1:49.4 | [▶](https://youtu.be/2Kwt3R7JGGc?t=109) | and things like that. | 之类的 |  |
+| 54 | 1:50.2 | [▶](https://youtu.be/2Kwt3R7JGGc?t=110) | How was your comfort level here | 这十天你在这里 |  |
+| 55 | 1:51.8 | [▶](https://youtu.be/2Kwt3R7JGGc?t=111) | during the past 10 days | 待得舒不舒服 |  |
+| 56 | 1:53.5 | [▶](https://youtu.be/2Kwt3R7JGGc?t=113) | or so or two weeks really? | 或者说这两周 |  |
+| 57 | 1:55.7 | [▶](https://youtu.be/2Kwt3R7JGGc?t=115) | I think it's chaotic for everyone. | 我觉得对所有人都是乱的 |  |
+| 58 | 1:57.4 | [▶](https://youtu.be/2Kwt3R7JGGc?t=117) | So you just need to deal with it | 你只需要去应付它 |  |
+| 59 | 2:01.1 | [▶](https://youtu.be/2Kwt3R7JGGc?t=121) | and I've been fine. | 我一直挺好 |  |
+| 60 | 2:05.3 | [▶](https://youtu.be/2Kwt3R7JGGc?t=125) | Thank | 谢谢 |  |
+| 61 | 2:07.0 | [▶](https://youtu.be/2Kwt3R7JGGc?t=126) | eager. I remember you saying | 下一位 我记得你说过 |  |
+| 62 | 2:07.8 | [▶](https://youtu.be/2Kwt3R7JGGc?t=127) | at Roland Garros that you felt very tense | 你在法网说过在场上很紧张 |  |
+| 63 | 2:10.2 | [▶](https://youtu.be/2Kwt3R7JGGc?t=130) | on court and it's been a bit stressful | 而且最近这几个月 |  |
+| 64 | 2:12.5 | [▶](https://youtu.be/2Kwt3R7JGGc?t=132) | being on the tennis tour in recent months. | 打巡回赛压力有点大 |  |
+| 65 | 2:14.7 | [▶](https://youtu.be/2Kwt3R7JGGc?t=134) | Have you felt that here at all | 你在这里有过这种感觉吗 |  |
+| 66 | 2:16.0 | [▶](https://youtu.be/2Kwt3R7JGGc?t=136) | or do you feel you've moved on from that? | 还是你觉得已经走出来了？ |  |
+| 67 | 2:18.5 | [▶](https://youtu.be/2Kwt3R7JGGc?t=138) | Yeah, I feel like I moved on. | 是 我觉得我走出来了 |  |
+| 68 | 2:20.8 | [▶](https://youtu.be/2Kwt3R7JGGc?t=140) | For sure it's not so easy for me | 这里对我来说确实 |  |
+| 69 | 2:24.2 | [▶](https://youtu.be/2Kwt3R7JGGc?t=144) | to play here as on a bit slower surface | 不如慢一点的场地好打 |  |
+| 70 | 2:29.1 | [▶](https://youtu.be/2Kwt3R7JGGc?t=149) | where the ball is bouncing a bit higher. | 就是球弹得高一些的那种 |  |
+| 71 | 2:31.9 | [▶](https://youtu.be/2Kwt3R7JGGc?t=151) | But you know still I feel like I could have | 但我还是觉得我本可以 |  |
+| 72 | 2:40.6 | [▶](https://youtu.be/2Kwt3R7JGGc?t=160) | played a bit better so that's unfortunate. | 打得更好一点 挺可惜的 |  |
+| 73 | 2:43.0 | [▶](https://youtu.be/2Kwt3R7JGGc?t=163) | But I feel like for sure this part | 不过我觉得这一段赛季 |  |
+| 74 | 2:46.4 | [▶](https://youtu.be/2Kwt3R7JGGc?t=166) | of the season has been better in terms | 在这方面 |  |
+| 75 | 2:48.3 | [▶](https://youtu.be/2Kwt3R7JGGc?t=168) | of managing that. | 确实处理得更好了 |  |
+| 76 | 2:49.6 | [▶](https://youtu.be/2Kwt3R7JGGc?t=169) | So, yeah. | 就是这样 |  |
+| 77 | 2:51.0 | [▶](https://youtu.be/2Kwt3R7JGGc?t=171) | Exactly. | 好的 |  |
+| 78 | 2:52.5 | [▶](https://youtu.be/2Kwt3R7JGGc?t=172) | What experiences in your career, if any, | 你职业生涯里有没有 |  |
+| 79 | 2:55.7 | [▶](https://youtu.be/2Kwt3R7JGGc?t=175) | have been comparable to this and how | 类似的经历 那时候你 |  |
+| 80 | 2:57.7 | [▶](https://youtu.be/2Kwt3R7JGGc?t=177) | did you go about bouncing back | 是怎么重新振作 |  |
+| 81 | 2:59.3 | [▶](https://youtu.be/2Kwt3R7JGGc?t=179) | from those? | 起来的？ |  |
+| 82 | 3:02.2 | [▶](https://youtu.be/2Kwt3R7JGGc?t=182) | Honestly, every US Open except 2022 | 说实话 除了 2022 年 |  |
+| 83 | 3:05.1 | [▶](https://youtu.be/2Kwt3R7JGGc?t=185) | has been like that. | 每一届美网都是这样 |  |
+| 84 | 3:06.0 | [▶](https://youtu.be/2Kwt3R7JGGc?t=186) | So, many like we face many losses. | 我们要面对很多次失利 |  |
+| 85 | 3:10.3 | [▶](https://youtu.be/2Kwt3R7JGGc?t=190) | So obviously it's not the best thing | 这话说出来可能 |  |
+| 86 | 3:15.7 | [▶](https://youtu.be/2Kwt3R7JGGc?t=195) | to say, but like in tennis you're more used | 不太好听 但打网球 |  |
+| 87 | 3:19.0 | [▶](https://youtu.be/2Kwt3R7JGGc?t=199) | to losing than winning. | 你习惯输多过习惯赢 |  |
+| 88 | 3:21.2 | [▶](https://youtu.be/2Kwt3R7JGGc?t=201) | So I don't feel like I need | 所以我不觉得我需要 |  |
+| 89 | 3:23.4 | [▶](https://youtu.be/2Kwt3R7JGGc?t=203) | to like bounce back from anything. | 从什么里面走出来 |  |
+| 90 | 3:25.0 | [▶](https://youtu.be/2Kwt3R7JGGc?t=205) | Just need to focus on the work | 只需要专心准备 |  |
+| 91 | 3:27.0 | [▶](https://youtu.be/2Kwt3R7JGGc?t=206) | before next tournament | 下一站之前的训练 |  |
+| 92 | 3:28.2 | [▶](https://youtu.be/2Kwt3R7JGGc?t=208) | and there are going to be other chances | 以后还会有别的机会 |  |
+| 93 | 3:30.9 | [▶](https://youtu.be/2Kwt3R7JGGc?t=210) | to play good tennis and I'll focus | 打出好网球 我会专注于 |  |
+| 94 | 3:33.0 | [▶](https://youtu.be/2Kwt3R7JGGc?t=213) | on growing and developing my game | 让自己的球继续长 |  |
+| 95 | 3:34.6 | [▶](https://youtu.be/2Kwt3R7JGGc?t=214) | and that's it. | 就这样 |  |
+| 96 | 3:36.4 | [▶](https://youtu.be/2Kwt3R7JGGc?t=216) | I was speaking more specifically | 我问的其实更具体 |  |
+| 97 | 3:38.1 | [▶](https://youtu.be/2Kwt3R7JGGc?t=218) | about the first set having been up five love | 是第一盘 5-0 领先那件事 |  |
+| 98 | 3:41.4 | [▶](https://youtu.be/2Kwt3R7JGGc?t=221) | and bouncing back from that. | 以及从那里面走出来 |  |
+| 99 | 3:43.1 | [▶](https://youtu.be/2Kwt3R7JGGc?t=223) | How do you think you'll go | 你觉得你会怎么 |  |
+| 100 | 3:44.9 | [▶](https://youtu.be/2Kwt3R7JGGc?t=224) | about internalizing that and growing | 消化它 并且从中 |  |
+| 101 | 3:47.1 | [▶](https://youtu.be/2Kwt3R7JGGc?t=227) | from it? | 成长起来？ |  |
+| 102 | 3:48.2 | [▶](https://youtu.be/2Kwt3R7JGGc?t=228) | It's just one match like I'll try | 就是一场球而已 我会 |  |
+| 103 | 3:56.4 | [▶](https://youtu.be/2Kwt3R7JGGc?t=236) | to play the same way as usual. | 照平时那样去打 |  |
+| 104 | 3:59.4 | [▶](https://youtu.be/2Kwt3R7JGGc?t=239) | What do you mean? Like | 你什么意思？ |  |
+| 105 | 4:00.4 | [▶](https://youtu.be/2Kwt3R7JGGc?t=240) | do you think it's something crazy? | 你觉得这有什么了不得吗？ |  |
+| 106 | 4:03.7 | [▶](https://youtu.be/2Kwt3R7JGGc?t=243) | you know, you can lose a set | 任何比分下 |  |
+| 107 | 4:05.4 | [▶](https://youtu.be/2Kwt3R7JGGc?t=245) | from any score. | 你都可能丢掉一盘 |  |
+| 108 | 4:06.8 | [▶](https://youtu.be/2Kwt3R7JGGc?t=246) | So, nothing special about that. | 所以这没什么特别的 |  |
+| 109 | 4:08.9 | [▶](https://youtu.be/2Kwt3R7JGGc?t=248) | Just that's what happened and that's it. | 就是这么发生了 仅此而已 |  |
+| 110 | 4:11.0 | [▶](https://youtu.be/2Kwt3R7JGGc?t=251) | Okay, last question. | 好 最后一个问题 |  |
+| 111 | 4:12.0 | [▶](https://youtu.be/2Kwt3R7JGGc?t=252) | English. | 用英语 |  |
+| 112 | 4:12.3 | [▶](https://youtu.be/2Kwt3R7JGGc?t=252) | Tammani, just curious. | 请问 我就是好奇 |  |
+| 113 | 4:15.0 | [▶](https://youtu.be/2Kwt3R7JGGc?t=255) | You took a medical time out | 你叫了一次医疗暂停 |  |
+| 114 | 4:16.6 | [▶](https://youtu.be/2Kwt3R7JGGc?t=256) | and how are you feeling physically? | 身体感觉怎么样？ |  |
+| 115 | 4:18.8 | [▶](https://youtu.be/2Kwt3R7JGGc?t=258) | Well, I've been fresher, but just little, | 我也有过更精神的时候 |  |
+| 116 | 4:24.9 | [▶](https://youtu.be/2Kwt3R7JGGc?t=264) | you know, my quad is quite tired, | 我的股四头肌很累 |  |
+| 117 | 4:27.6 | [▶](https://youtu.be/2Kwt3R7JGGc?t=267) | but it had no influence on the game. | 但它对比赛没有影响 |  |
+| 118 | 4:30.2 | [▶](https://youtu.be/2Kwt3R7JGGc?t=270) | just wanted to, you know, | 我只是想 |  |
+| 119 | 4:32.2 | [▶](https://youtu.be/2Kwt3R7JGGc?t=272) | give it a little boost, but yeah, | 给它提一提劲 |  |
+| 120 | 4:36.8 | [▶](https://youtu.be/2Kwt3R7JGGc?t=276) | it didn't influence anything. | 它没有影响到任何事 |  |
+| 121 | 4:39.8 | [▶](https://youtu.be/2Kwt3R7JGGc?t=279) | It seemed like you've | 看起来你一直 |  |
+| 122 | 4:41.0 | [▶](https://youtu.be/2Kwt3R7JGGc?t=280) | been problem solving very well on court | 很擅长在场上解决问题 |  |
+| 123 | 4:42.9 | [▶](https://youtu.be/2Kwt3R7JGGc?t=282) | and you know, finding solutions. | 总能找到办法 |  |
+| 124 | 4:44.3 | [▶](https://youtu.be/2Kwt3R7JGGc?t=284) | So, it did it feel kind of different today | 那今天是不是不太一样 |  |
+| 125 | 4:46.4 | [▶](https://youtu.be/2Kwt3R7JGGc?t=286) | that you weren't able to find a solution? | 因为你没能找到办法？ |  |
+| 126 | 4:48.4 | [▶](https://youtu.be/2Kwt3R7JGGc?t=288) | Well, I was just mishitting the balls, | 我就是没打到甜点 |  |
+| 127 | 4:50.2 | [▶](https://youtu.be/2Kwt3R7JGGc?t=290) | you know. | 你知道的 |  |
+| 128 | 4:50.7 | [▶](https://youtu.be/2Kwt3R7JGGc?t=290) | So, didn't feel like I had space | 所以我觉得没有空间 |  |
+| 129 | 4:56.6 | [▶](https://youtu.be/2Kwt3R7JGGc?t=296) | to to feel it better. | 去把球感找回来 |  |
+| 130 | 5:01.4 | [▶](https://youtu.be/2Kwt3R7JGGc?t=301) | I don't know. | 我也说不好 |  |
+| 131 | 5:02.2 | [▶](https://youtu.be/2Kwt3R7JGGc?t=302) | Um, | 嗯 |  |
+| 132 | 5:07.3 | [▶](https://youtu.be/2Kwt3R7JGGc?t=307) | well, I framed a lot. | 我打到拍框上很多次 |  |
+| 133 | 5:08.5 | [▶](https://youtu.be/2Kwt3R7JGGc?t=308) | I didn't hit the ball in the right place. | 我没把球打在对的位置上 |  |
+| 134 | 5:11.4 | [▶](https://youtu.be/2Kwt3R7JGGc?t=311) | It's not so easy | 而且不太容易 |  |
+| 135 | 5:12.2 | [▶](https://youtu.be/2Kwt3R7JGGc?t=312) | to adjust like the basic things in the game | 去调整比赛里最基本的东西 |  |
+| 136 | 5:15.7 | [▶](https://youtu.be/2Kwt3R7JGGc?t=315) | if they're not working, you know. | 如果它们本来就不管用 |  |
+| 137 | 5:17.7 | [▶](https://youtu.be/2Kwt3R7JGGc?t=317) | Just try to focus | 只能尽量让自己专注 |  |
+| 138 | 5:19.0 | [▶](https://youtu.be/2Kwt3R7JGGc?t=319) | on having like smooth rhythm | 保持流畅的节奏 |  |
+| 139 | 5:20.9 | [▶](https://youtu.be/2Kwt3R7JGGc?t=320) | and everything, but also, you know, | 这些东西 但同时 |  |
+| 140 | 5:24.1 | [▶](https://youtu.be/2Kwt3R7JGGc?t=324) | I was not I didn't have a good timing. | 我的时机感也不好 |  |
+| 141 | 5:26.1 | [▶](https://youtu.be/2Kwt3R7JGGc?t=326) | I wasn't hitting the ball right. | 我没有把球打实 |  |
+| 142 | 5:27.4 | [▶](https://youtu.be/2Kwt3R7JGGc?t=327) | So, it's tough to get | 所以很难 |  |
+| 143 | 5:30.7 | [▶](https://youtu.be/2Kwt3R7JGGc?t=330) | over that when when it happens. | 在这种时候熬过去 |  |
+| 144 | 5:34.6 | [▶](https://youtu.be/2Kwt3R7JGGc?t=334) | And maybe I could have | 也许我本可以 |  |
+| 145 | 5:37.8 | [▶](https://youtu.be/2Kwt3R7JGGc?t=337) | played more safe or something, | 打得更保守一些 |  |
+| 146 | 5:39.6 | [▶](https://youtu.be/2Kwt3R7JGGc?t=339) | but I also didn't feel like I have space | 但我也觉得面对郑钦文 |  |
+| 147 | 5:41.6 | [▶](https://youtu.be/2Kwt3R7JGGc?t=341) | with Qinwen to do that. | 我没有那个余地 |  |
+| 148 | 5:43.5 | [▶](https://youtu.be/2Kwt3R7JGGc?t=343) | If I would be more solid | 如果我能比她更稳 |  |
+| 149 | 5:46.3 | [▶](https://youtu.be/2Kwt3R7JGGc?t=346) | than her, I would win this game, | 我就赢下这场球了 |  |
+| 150 | 5:47.9 | [▶](https://youtu.be/2Kwt3R7JGGc?t=347) | but I wasn't solid | 但我不够稳 |  |
+| 151 | 5:49.1 | [▶](https://youtu.be/2Kwt3R7JGGc?t=349) | and I was missing too much. | 我失误太多 |  |
+| 152 | 5:50.6 | [▶](https://youtu.be/2Kwt3R7JGGc?t=350) | So, yeah, had like some ideas of what | 我确实有过一些想法 |  |
+| 153 | 5:54.2 | [▶](https://youtu.be/2Kwt3R7JGGc?t=354) | to do with it. | 想怎么去处理它 |  |
+
+## 还欠着的
+
+（无）
+
+听完之后：改对的写进 `en_fixed`；听下来本来就对的写进 `suspect_ok`（值写一句为什么），别默默留着——**一个常年挂着的待办和没有待办长得一模一样**。
+
+## 自动字幕的空档（≥2 秒连一个事件都没有）
+
+- **232.4–234.9 秒**（片内，2.5 秒空白，[跳过去](https://youtu.be/2Kwt3R7JGGc?t=232)）　她在斟酌。⚠️ 我没听音轨（沙箱下不动这条源片的媒体流，只下得动字幕），下面是从字幕结构推的，判据两条、都可复核：① 说话人没换——自动字幕在 228.24 打了 >> （她开始回答），而空档后的 234.88 那一条没有 >>，也就是 ASR 自己认为这仍是同一个人在说；② 语法在空档两侧是连续的——前半是 "It is just one match like"，后半是 "I will try to play the same way as usual"，合起来是一个被停顿切开的句子，中间不可能漏掉一整句话。位置也说得通：这正是记者追问「首盘 5-0 领先那件事你怎么消化」之后她开口的第一句，停一下再答是这段的内容本身。
+- **305.2–307.3 秒**（片内，2.1 秒空白，[跳过去](https://youtu.be/2Kwt3R7JGGc?t=305)）　她在想怎么说。⚠️ 同样没听音轨，判据：① 空档前一条是 300.32 的 "to feel it better. I don not know. Um,"——以填充词 Um 收尾，典型的思考停顿；她从 302.2 的 "Um," 到 307.3 才接上下一句，中间空了五秒；② 空档后 307.28 那一条 ASR 打了一个 >>，但内容是 "well, I framed a lot."（我打飞了很多），**这显然还是她在说**——记者不会说自己打飞了球，所以那个 >> 是 ASR 的换人误判，不是真的换了人。也就是说这两处空档之间没有丢失任何一方的话。
+
+打开源片听这几秒：**有人说话就是漏了**，掌声／欢呼就不是。结论写进 spec 的 `caption_gaps_ok`（键 `起-止`，秒，一位小数）。
