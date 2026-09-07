@@ -1,0 +1,47 @@
+{
+  "slug": "rybakina-osaka-us-open-2026-r4",
+  "_column": "reel",
+  "layout": "band",
+  "scorebox": [104, 887, 660, 980],
+  "_scorebox_why": "美网这一届同一条频道同一套转播图形，和已发的 `osaka-mertens-us-open-2026-r3` / `potapova-anisimova-us-open-2026-r3` / `zheng-keys-us-open-2026-r3`（104 / 887 / 660 / 980）逐条相同。⚠️ 右缘 660 只是兜底，真正的右缘是 `resolve_board_insets` 每段现量的。",
+  "tts_backend": "edge",
+  "_tts_backend_why": "仓库的 `AZURE_SPEECH_KEY` 自 2026-09-03 起被 Azure 401 拒，账号所有者定的是「换 edge tts」。这一条退回 edge 零代价：没用 `voice.style`，也没用 `lead_pause`。本地 `--check-narration` 跑的就是 edge-tts，量到的余量就是成片的真实情况。",
+  "source_url": "https://www.youtube.com/watch?v=F_SFBTMpWiE",
+  "_source": "【probe 之后补齐画面自证】US Open 官方 YouTube 频道（`--print %(channel)s` 回 `US Open Tennis Championships`），标题 `Naomi Osaka vs. Elena Rybakina Highlights | 2026 US Open Round 4`，`upload_date 20260907`，时长 201s。",
+  "cover": {
+    "matchup": [
+      { "name": "莱巴金娜", "name_en": "Elena Rybakina", "country": "KAZ", "rank": 2 },
+      { "name": "大坂直美", "name_en": "Naomi Osaka", "country": "JPN", "rank": 13 }
+    ],
+    "_rank_why": "两个独立源、同一期：WTA 官方 `players/ranked`（`rankedAt=2026-08-31T00:00:00Z`）Rybakina 第 2（8141 分）/ Osaka 第 13（2846 分）；美网官方 `players.json` 同样是 singles_rank 2 / 13，两人都是种子。⚠️ 译名两个都走 `player_zh()` 现调：Elena Rybakina→莱巴金娜、Naomi Osaka→大坂直美。",
+    "winner": "莱巴金娜",
+    "result": "6-1 6-4",
+    "_result_why": "赢家视角。flashscore 当日表 `YTRJZrTH`：`AE÷Osaka N.`(home) / `AF÷Rybakina E.`(away)，`BA/BB=1/6`、`BC/BD=4/6`，`AS÷2`（away 赢）；单场 `df_sui_1` 逐盘 `IG/IH = 1/6` 和 `4/6` 复核一致。美网官方图注独立自证：`Elena Rybakina reacts after winning a Women's Singles match on Day Nine`；AP 图注 `Elena Rybakina … after winning a match during the fourth round`。两盘都是局数分出的，没有抢七。",
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "莱巴金娜",
+    "topic": "美网第四轮 · 莱巴金娜 vs 大坂直美",
+    "_hook_why": "【等 probe 和逐分之后定稿】",
+    "hook": "占位\n等 probe",
+    "scoreboard": {
+      "court": "【等画面自证】",
+      "duration_source": { "url": "【等交叉核】" }
+    }
+  },
+  "_match": {
+    "flashscore_id": "YTRJZrTH",
+    "participants": ["大坂直美", "莱巴金娜"],
+    "_participants_why": "⚠️ 这一栏跟 flashscore 的 home/away，和 `stats.a/b`（跟 matchup 版式顺序）**正好相反**——它必须和紧挨着的 `set_scores_home_away` 对齐。",
+    "set_scores_home_away": [[1, 6], [4, 6]],
+    "event": "US Open",
+    "round": "16 强",
+    "date": "2026-09-07"
+  },
+  "segments": [
+    { "start": 0.0, "end": 20.0, "narration": "占位，等 probe 回来按缩略图墙和死球时刻重排。" }
+  ],
+  "push": {
+    "summary": "【等定稿】",
+    "lead": "【等定稿】"
+  }
+}
