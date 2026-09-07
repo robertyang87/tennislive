@@ -1,0 +1,56 @@
+{
+  "status": "pass",
+  "checked_at": "2026-09-07T20:06:52Z",
+  "auditor": "opencv-haar-v1",
+  "expected_subject": "斯瓦泰克",
+  "identity_evidence": "L0-bound spec subject + same-source frame_at",
+  "spec_sha256": "aab5a322cf357d328e531ac2aaa6562c6d6b27107fc27773e7cc1585d676531c",
+  "poster_sha256": "c2dfd517a3ceb5d7937e6202c89dff6c095bd4dbd6611922f025a39f4dbf4969",
+  "thresholds": {
+    "close_up_zoom": 1.5,
+    "face_height_ratio": 0.08,
+    "close_up_face_height_ratio": 0.14,
+    "face_area_ratio": 0.01,
+    "face_sharpness": 45.0,
+    "face_contrast": 32.0,
+    "eyes": 2
+  },
+  "result": {
+    "poster": {
+      "decodable": true,
+      "format": "JPEG",
+      "width": 1080,
+      "height": 1440,
+      "photo_region": [
+        0,
+        150,
+        1080,
+        810
+      ]
+    },
+    "face": {
+      "detector": "frontal-alt2",
+      "box": [
+        442,
+        358,
+        198,
+        198
+      ],
+      "detected_faces": 1,
+      "eyes": 3,
+      "face_height_ratio": 0.24444,
+      "face_area_ratio": 0.04481,
+      "center_x_ratio": 0.50093,
+      "center_y_ratio": 0.37901,
+      "sharpness": 72.097,
+      "contrast": 77.0
+    },
+    "contract": {
+      "shot_type": "",
+      "frame_at": 190.3,
+      "zoom": 1.0,
+      "focus_y": 0.5
+    }
+  },
+  "issues": []
+}
