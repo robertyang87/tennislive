@@ -1,0 +1,43 @@
+{
+ "status": "pass",
+ "method": "silero_vad_plus_dual_asr_coverage",
+ "sha256": "11811b613ec82ba28304224e5f889cbae704eaa0b9928a3fac96b41f4e482674",
+ "edge_pad_seconds": 0.35,
+ "max_speech_seconds": 0.12,
+ "results": [
+  {
+   "key": "10.5-13.1",
+   "start": 10.54,
+   "end": 13.1,
+   "speech_seconds": 0,
+   "second_asr_words": [],
+   "transcript_covered": false,
+   "caption_timeline_covered": true,
+   "status": "caption_timeline_covered"
+  },
+  {
+   "key": "71.6-75.4",
+   "start": 71.56,
+   "end": 75.44,
+   "speech_seconds": 0,
+   "second_asr_words": [
+    "It's"
+   ],
+   "transcript_covered": true,
+   "caption_timeline_covered": false,
+   "status": "transcript_covered"
+  },
+  {
+   "key": "134.3-136.7",
+   "start": 134.33,
+   "end": 136.72,
+   "speech_seconds": 0,
+   "second_asr_words": [
+    "Can"
+   ],
+   "transcript_covered": false,
+   "caption_timeline_covered": false,
+   "status": "speech_detected"
+  }
+ ]
+}
