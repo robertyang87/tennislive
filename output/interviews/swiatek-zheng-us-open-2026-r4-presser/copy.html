@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>9.8 赛后开麦 | 斯瓦泰克说就是一场球</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>斯瓦泰克被追问了两次「5-0 领先怎么丢的」，第二次她反问记者：你觉得这有什么了不得吗？
+
+📍 2026 美网女单 16 强 阿瑟·阿什球场
+🎾 郑钦文 7-5 6-3 斯瓦泰克 1 小时 56 分
+🎤 她的赛后发布会 六分钟 八个提问
+
+先说这场球的形状：首盘斯瓦泰克 5-0 领先，两次发球胜盘、三个盘点，一个都没兑现，被郑钦文连赢七局 7-5 拿走。第二盘她 3-5 落后时救下三个赛点，第四个没救回来。
+
+记者们想问的其实是同一件事——一个 8 号种子被世界第 121 的资格赛球员从 0-5 翻掉，这是不是崩了。八个提问里有四个在往这个方向推。而她八个回答里，一次都没有接。
+
+第一次她说的是技术：「今天我不会说这跟心态有什么关系。更多是我开始失误，从很简单的球开始，而郑钦文不再失误了。」
+
+第二次记者问她生涯里有没有类似经历、怎么走出来，她的回答带着自嘲：「说实话，除了 2022 年，每一届美网都是这样。打网球，你习惯输多过习惯赢。所以我不觉得我需要从什么里面走出来。」
+
+记者不甘心，紧接着把问题又推回来：我问的其实更具体，是第一盘 5-0 领先那件事。
+
+于是有了这条片子的落点。她说：「就是一场球而已。」然后反问回去：「你什么意思？你觉得这有什么了不得吗？任何比分下你都可能丢掉一盘。所以这没什么特别的。」
+
+听起来是有点赌气的。但把技术统计摊开看，她那句「是我失误太多」并不是托词——这场她非受迫失误 28 次，郑钦文只有 17 次；制胜分她 17、郑钦文 20。真正扎眼的是另一个数：郑钦文全场一发只进了 41%，第二盘更是只有 31%，可一发只要进了，她就拿下其中的 83%。
+
+还有一段没什么人会注意：被问到纽约又吵又乱适不适应，她顶了一句「我觉得对所有人都是乱的」。被问到医疗暂停，她说股四头肌很累，「但它对比赛没有影响」。
+
+一个刚出局的人，把所有能被写成故事的地方，全都按了回去。
+
+你觉得她是真的这么想，还是不想承认？
+
+#斯瓦泰克 #郑钦文 #美网 #赛后开麦 #网球时差</textarea>
+    </section>
+    
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
