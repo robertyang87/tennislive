@@ -44,7 +44,7 @@
 | 38 | 1:17.5 | [▶](https://youtu.be/2Kwt3R7JGGc?t=77) | that and just pushing | 那样 然后一直往前顶 |  |
 | 39 | 1:18.7 | [▶](https://youtu.be/2Kwt3R7JGGc?t=78) | and being intense all the time. | 全程都保持强度 |  |
 | 40 | 1:20.4 | [▶](https://youtu.be/2Kwt3R7JGGc?t=80) | But like today I I wouldn't say it | 但今天我不会说 |  |
-| 41 | 1:24.4 | [▶](https://youtu.be/2Kwt3R7JGGc?t=84) | had anything to do with mentality. | 这跟心态有什么关系 |  |
+| 41 | 1:24.4 | [▶](https://youtu.be/2Kwt3R7JGGc?t=84) | had anything to do with mentality. | 这跟心态有关 |  |
 | 42 | 1:26.7 | [▶](https://youtu.be/2Kwt3R7JGGc?t=86) | It was more that I started making mistakes, | 更多是我开始失误 |  |
 | 43 | 1:28.9 | [▶](https://youtu.be/2Kwt3R7JGGc?t=88) | you know, from easy balls | 从很简单的球开始 |  |
 | 44 | 1:30.2 | [▶](https://youtu.be/2Kwt3R7JGGc?t=90) | and Qinwen stopped, you know, | 而郑钦文 |  |
@@ -109,8 +109,8 @@
 | 103 | 3:56.4 | [▶](https://youtu.be/2Kwt3R7JGGc?t=236) | to play the same way as usual. | 照平时那样去打 |  |
 | 104 | 3:59.4 | [▶](https://youtu.be/2Kwt3R7JGGc?t=239) | What do you mean? Like | 你什么意思？ |  |
 | 105 | 4:00.4 | [▶](https://youtu.be/2Kwt3R7JGGc?t=240) | do you think it's something crazy? | 你觉得这有什么了不得吗？ |  |
-| 106 | 4:03.7 | [▶](https://youtu.be/2Kwt3R7JGGc?t=243) | you know, you can lose a set | 任何比分下 |  |
-| 107 | 4:05.4 | [▶](https://youtu.be/2Kwt3R7JGGc?t=245) | from any score. | 你都可能丢掉一盘 |  |
+| 106 | 4:03.7 | [▶](https://youtu.be/2Kwt3R7JGGc?t=243) | you know, you can lose a set | 你可能会丢掉一盘 |  |
+| 107 | 4:05.4 | [▶](https://youtu.be/2Kwt3R7JGGc?t=245) | from any score. | 不管当时是什么比分 |  |
 | 108 | 4:06.8 | [▶](https://youtu.be/2Kwt3R7JGGc?t=246) | So, nothing special about that. | 所以这没什么特别的 |  |
 | 109 | 4:08.9 | [▶](https://youtu.be/2Kwt3R7JGGc?t=248) | Just that's what happened and that's it. | 就是这么发生了 仅此而已 |  |
 | 110 | 4:11.0 | [▶](https://youtu.be/2Kwt3R7JGGc?t=251) | Okay, last question. | 好 最后一个问题 |  |
@@ -149,8 +149,8 @@
 | 143 | 5:30.7 | [▶](https://youtu.be/2Kwt3R7JGGc?t=330) | over that when when it happens. | 在这种时候熬过去 |  |
 | 144 | 5:34.6 | [▶](https://youtu.be/2Kwt3R7JGGc?t=334) | And maybe I could have | 也许我本可以 |  |
 | 145 | 5:37.8 | [▶](https://youtu.be/2Kwt3R7JGGc?t=337) | played more safe or something, | 打得更保守一些 |  |
-| 146 | 5:39.6 | [▶](https://youtu.be/2Kwt3R7JGGc?t=339) | but I also didn't feel like I have space | 但我也觉得面对郑钦文 |  |
-| 147 | 5:41.6 | [▶](https://youtu.be/2Kwt3R7JGGc?t=341) | with Qinwen to do that. | 我没有那个余地 |  |
+| 146 | 5:39.6 | [▶](https://youtu.be/2Kwt3R7JGGc?t=339) | but I also didn't feel like I have space | 但我也觉得没有那个空间 |  |
+| 147 | 5:41.6 | [▶](https://youtu.be/2Kwt3R7JGGc?t=341) | with Qinwen to do that. | 面对郑钦文时做不到 |  |
 | 148 | 5:43.5 | [▶](https://youtu.be/2Kwt3R7JGGc?t=343) | If I would be more solid | 如果我能比她更稳 |  |
 | 149 | 5:46.3 | [▶](https://youtu.be/2Kwt3R7JGGc?t=346) | than her, I would win this game, | 我就赢下这场球了 |  |
 | 150 | 5:47.9 | [▶](https://youtu.be/2Kwt3R7JGGc?t=347) | but I wasn't solid | 但我不够稳 |  |
