@@ -21,7 +21,7 @@
 | 15 | 0:28.6 | [▶](https://youtu.be/NAT3IUN5T74?t=28) | David, | 大卫 |  |
 | 16 | 0:30.2 | [▶](https://youtu.be/NAT3IUN5T74?t=30) | congratulations. | 恭喜 |  |
 | 17 | 0:31.0 | [▶](https://youtu.be/NAT3IUN5T74?t=31) | Obviously, | 显然 |  |
-| 18 | 0:31.4 | [▶](https://youtu.be/NAT3IUN5T74?t=31) | being down low five is not an ideal situation | 0-5 落后不是个理想的处境 |  |
+| 18 | 0:31.4 | [▶](https://youtu.be/NAT3IUN5T74?t=31) | being down 0-5 is not an ideal situation | 0-5 落后不是个理想的处境 | ✏️ 已订正 |
 | 19 | 0:33.6 | [▶](https://youtu.be/NAT3IUN5T74?t=33) | to be in, but did the experience | 但那次经历 |  |
 | 20 | 0:35.4 | [▶](https://youtu.be/NAT3IUN5T74?t=35) | of having come back from that deficit | 从这么大的落后追回来 |  |
 | 21 | 0:37.3 | [▶](https://youtu.be/NAT3IUN5T74?t=37) | against Madison the previous | 上一轮对凯斯 |  |
@@ -47,13 +47,13 @@
 | 41 | 1:21.1 | [▶](https://youtu.be/NAT3IUN5T74?t=81) | You mentioned that also | 你刚才也提到 |  |
 | 42 | 1:22.0 | [▶](https://youtu.be/NAT3IUN5T74?t=82) | that you forgot the score. | 说你忘了比分 |  |
 | 43 | 1:23.8 | [▶](https://youtu.be/NAT3IUN5T74?t=83) | Yeah. | 嗯 |  |
-| 44 | 1:24.2 | [▶](https://youtu.be/NAT3IUN5T74?t=84) | Like did you think it was 53 or did what? | 你以为是 5-3 吗？ |  |
+| 44 | 1:24.2 | [▶](https://youtu.be/NAT3IUN5T74?t=84) | Like did you think it was 5-3 or what? | 你以为是 5-3 吗？ | ✏️ 已订正 |
 | 45 | 1:27.1 | [▶](https://youtu.be/NAT3IUN5T74?t=87) | How did you mean you forgot what it was? | 忘了比分是什么意思？ |  |
-| 46 | 1:29.7 | [▶](https://youtu.be/NAT3IUN5T74?t=89) | Yes. So at 45 I went to the towel | 是的 4-5 的时候我去擦汗 |  |
-| 47 | 1:33.4 | [▶](https://youtu.be/NAT3IUN5T74?t=93) | because I thought yes it was 35 | 因为我以为是 3-5 |  |
+| 46 | 1:29.7 | [▶](https://youtu.be/NAT3IUN5T74?t=89) | Yes. So at 4-5 I went to the towel | 是的 4-5 的时候我去擦汗 | ✏️ 已订正 |
+| 47 | 1:33.4 | [▶](https://youtu.be/NAT3IUN5T74?t=93) | because I thought it was 3-5 | 因为我以为是 3-5 | ✏️ 已订正 |
 | 48 | 1:35.4 | [▶](https://youtu.be/NAT3IUN5T74?t=95) | and I thought I need | 我以为我还要 |  |
 | 49 | 1:36.7 | [▶](https://youtu.be/NAT3IUN5T74?t=96) | to play one more game but when I saw | 再打一局 但我看到 |  |
-| 50 | 1:38.8 | [▶](https://youtu.be/NAT3IUN5T74?t=98) | the scoreboard I was like four five I need | 记分牌 才知道是 4-5 |  |
+| 50 | 1:38.8 | [▶](https://youtu.be/NAT3IUN5T74?t=98) | the scoreboard I was like 4-5 I need | 记分牌 才知道是 4-5 | ✏️ 已订正 |
 | 51 | 1:40.8 | [▶](https://youtu.be/NAT3IUN5T74?t=100) | to go to my place to sit down. | 我得回座位坐下 |  |
 | 52 | 1:43.6 | [▶](https://youtu.be/NAT3IUN5T74?t=103) | Because I was so | 因为我太投入 |  |
 | 53 | 1:44.9 | [▶](https://youtu.be/NAT3IUN5T74?t=104) | focusing every single point | 每一分都全神贯注 |  |
@@ -115,7 +115,7 @@
 | 109 | 4:00.9 | [▶](https://youtu.be/NAT3IUN5T74?t=240) | to have a training block | 去做一段封闭训练 |  |
 | 110 | 4:02.2 | [▶](https://youtu.be/NAT3IUN5T74?t=242) | and find your tennis again. | 把你的网球找回来 |  |
 | 111 | 4:05.0 | [▶](https://youtu.be/NAT3IUN5T74?t=245) | I think about it. | 我想了想 |  |
-| 112 | 4:07.0 | [▶](https://youtu.be/NAT3IUN5T74?t=247) | just take five seconds | 就想了5秒 |  |
+| 112 | 4:07.0 | [▶](https://youtu.be/NAT3IUN5T74?t=247) | just take five seconds | 就想了 5 秒 |  |
 | 113 | 4:08.4 | [▶](https://youtu.be/NAT3IUN5T74?t=248) | and I say okay let's do that. | 我说好 那就去吧 |  |
 | 114 | 4:10.5 | [▶](https://youtu.be/NAT3IUN5T74?t=250) | So we decided to go to Bradenton, | 我们就决定去布雷登顿 |  |
 | 115 | 4:13.5 | [▶](https://youtu.be/NAT3IUN5T74?t=253) | you know, IMG academy which is they | 就是IMG学院 他们那儿 |  |
@@ -124,8 +124,8 @@
 | 118 | 4:20.6 | [▶](https://youtu.be/NAT3IUN5T74?t=260) | So we've been really dedicate all the time | 我们把全部时间都投进去 |  |
 | 119 | 4:23.8 | [▶](https://youtu.be/NAT3IUN5T74?t=263) | in tennis tennis tennis in training | 网球 网球 网球 全是训练 |  |
 | 120 | 4:26.6 | [▶](https://youtu.be/NAT3IUN5T74?t=266) | and I remember one day | 我记得有一天 |  |
-| 121 | 4:28.0 | [▶](https://youtu.be/NAT3IUN5T74?t=268) | that we even finished training at 8:30 | 我们训练一直练到8点半 |  |
-| 122 | 4:30.6 | [▶](https://youtu.be/NAT3IUN5T74?t=270) | in the evening when I start like 8:00 | 是晚上 而我8点就开始 |  |
+| 121 | 4:28.0 | [▶](https://youtu.be/NAT3IUN5T74?t=268) | that we even finished training at 8:30 | 我们训练一直练到 8 点半 |  |
+| 122 | 4:30.6 | [▶](https://youtu.be/NAT3IUN5T74?t=270) | in the evening when I start like 8:00 | 是晚上 而我 8 点就开始 |  |
 | 123 | 4:33.2 | [▶](https://youtu.be/NAT3IUN5T74?t=273) | in the morning. | 是早上 |  |
 | 124 | 4:34.2 | [▶](https://youtu.be/NAT3IUN5T74?t=274) | So yeah, it was a really tough | 所以是真的很苦 |  |
 | 125 | 4:36.2 | [▶](https://youtu.be/NAT3IUN5T74?t=276) | but this is how sport shows. | 但体育就是这样 |  |
@@ -153,7 +153,7 @@
 | 147 | 5:16.0 | [▶](https://youtu.be/NAT3IUN5T74?t=316) | before it before it started | 在这一切开始之前 |  |
 | 148 | 5:17.7 | [▶](https://youtu.be/NAT3IUN5T74?t=317) | yeah psychologically it it is very difficult | 是的 心理上非常难 |  |
 | 149 | 5:22.6 | [▶](https://youtu.be/NAT3IUN5T74?t=322) | to accept I mean I used | 接受 我以前 |  |
-| 150 | 5:24.9 | [▶](https://youtu.be/NAT3IUN5T74?t=324) | to be top 10 Olympic champion I play | 是世界前10 奥运冠军 |  |
+| 150 | 5:24.9 | [▶](https://youtu.be/NAT3IUN5T74?t=324) | to be top 10 Olympic champion I play | 是世界前 10 奥运冠军 |  |
 | 151 | 5:28.6 | [▶](https://youtu.be/NAT3IUN5T74?t=328) | in a big stadium since the beginning | 一直都在大球场打球 |  |
 | 152 | 5:30.9 | [▶](https://youtu.be/NAT3IUN5T74?t=330) | and right now you know | 而现在你知道 |  |
 | 153 | 5:32.4 | [▶](https://youtu.be/NAT3IUN5T74?t=332) | my ranking dropped | 我的排名掉了 |  |
@@ -179,12 +179,12 @@
 | 173 | 6:24.9 | [▶](https://youtu.be/NAT3IUN5T74?t=384) | that he will give me something back. | 他会还给我一些东西 |  |
 | 174 | 6:27.6 | [▶](https://youtu.be/NAT3IUN5T74?t=387) | No, | 不 |  |
 | 175 | 6:28.5 | [▶](https://youtu.be/NAT3IUN5T74?t=388) | right. | 好 |  |
-| 176 | 6:29.6 | [▶](https://youtu.be/NAT3IUN5T74?t=389) | Hey Jun, well done. | 嗨 郑钦文 打得好 |  |
+| 176 | 6:29.6 | [▶](https://youtu.be/NAT3IUN5T74?t=389) | Hey, well done. | 嗨 打得好 | ✏️ 已订正 |
 | 177 | 6:31.8 | [▶](https://youtu.be/NAT3IUN5T74?t=391) | Is there anything | 有没有什么事 |  |
 | 178 | 6:34.1 | [▶](https://youtu.be/NAT3IUN5T74?t=394) | that you've had to do to prevent yourself | 是你为了不让自己 |  |
 | 179 | 6:37.4 | [▶](https://youtu.be/NAT3IUN5T74?t=397) | from getting injured again | 再次受伤 |  |
 | 180 | 6:40.1 | [▶](https://youtu.be/NAT3IUN5T74?t=400) | from from reinjuring the elbow? | 手肘不再伤一次？ |  |
-| 181 | 6:43.0 | [▶](https://youtu.be/NAT3IUN5T74?t=403) | And also having played three more matches | 还有你多打了3场球 |  |
+| 181 | 6:43.0 | [▶](https://youtu.be/NAT3IUN5T74?t=403) | And also having played three more matches | 还有你多打了 3 场球 |  |
 | 182 | 6:46.5 | [▶](https://youtu.be/NAT3IUN5T74?t=406) | than everybody else here, | 比这里其他所有人 |  |
 | 183 | 6:47.9 | [▶](https://youtu.be/NAT3IUN5T74?t=407) | is there any like concern | 你会不会有点担心 |  |
 | 184 | 6:49.8 | [▶](https://youtu.be/NAT3IUN5T74?t=409) | that you have either in your mind | 心里的那种担心 |  |
@@ -216,7 +216,7 @@
 | 210 | 7:53.8 | [▶](https://youtu.be/NAT3IUN5T74?t=473) | Well, we are we needs | 嗯 我们确实需要 |  |
 | 211 | 7:56.6 | [▶](https://youtu.be/NAT3IUN5T74?t=476) | to adjust a bit the serve of course | 把发球稍微调整一下 |  |
 | 212 | 7:59.9 | [▶](https://youtu.be/NAT3IUN5T74?t=479) | because I really believe my serve | 因为我真的相信我的发球 |  |
-| 213 | 8:03.6 | [▶](https://youtu.be/NAT3IUN5T74?t=483) | can be much better than us. | 可以比现在好得多 |  |
+| 213 | 8:03.6 | [▶](https://youtu.be/NAT3IUN5T74?t=483) | can be much better than this. | 可以比现在好得多 | ✏️ 已订正 |
 | 214 | 8:05.3 | [▶](https://youtu.be/NAT3IUN5T74?t=485) | So we are still improving on. | 所以我们还在改进 |  |
 | 215 | 8:06.8 | [▶](https://youtu.be/NAT3IUN5T74?t=486) | Yeah. | 嗯 |  |
 | 216 | 8:08.9 | [▶](https://youtu.be/NAT3IUN5T74?t=488) | It hasn't been decided | 现在还没定下来 |  |
@@ -276,7 +276,7 @@
 | 270 | 10:12.6 | [▶](https://youtu.be/NAT3IUN5T74?t=612) | and the team feel like drastic change | 和团队觉得必须大改 |  |
 | 271 | 10:14.2 | [▶](https://youtu.be/NAT3IUN5T74?t=614) | was needed and if you can compare | 才行 你能不能对比一下 |  |
 | 272 | 10:15.8 | [▶](https://youtu.be/NAT3IUN5T74?t=615) | that to just a few weeks later here. | 几周之后在这里的样子 |  |
-| 273 | 10:19.8 | [▶](https://youtu.be/NAT3IUN5T74?t=619) | Well, even I lost that quality in Toronto. | 就算我多伦多资格赛输了 |  |
+| 273 | 10:19.8 | [▶](https://youtu.be/NAT3IUN5T74?t=619) | Well, even I lost that quali in Toronto. | 就算我多伦多资格赛输了 | ✏️ 已订正 |
 | 274 | 10:23.5 | [▶](https://youtu.be/NAT3IUN5T74?t=623) | We had a meeting with my coach. | 我跟教练开了个会 |  |
 | 275 | 10:26.2 | [▶](https://youtu.be/NAT3IUN5T74?t=626) | I talked him like this. | 我跟他这么说 |  |
 | 276 | 10:29.0 | [▶](https://youtu.be/NAT3IUN5T74?t=628) | I have all the pieces. | 我的拼图都在那儿 |  |
@@ -330,7 +330,7 @@
 | 324 | 12:06.1 | [▶](https://youtu.be/NAT3IUN5T74?t=726) | the most important challenge for me | 对我来说最重要的挑战 |  |
 | 325 | 12:08.4 | [▶](https://youtu.be/NAT3IUN5T74?t=728) | is to keep this humble and then be there | 就是保持谦逊 然后待在那儿 |  |
 | 326 | 12:12.6 | [▶](https://youtu.be/NAT3IUN5T74?t=732) | fight like I have nothing okay I come | 就当自己什么都没有那样拼 |  |
-| 327 | 12:17.1 | [▶](https://youtu.be/NAT3IUN5T74?t=737) | from the quality this time so I say | 我这次从资格赛上来 所以我说 |  |
+| 327 | 12:17.1 | [▶](https://youtu.be/NAT3IUN5T74?t=737) | from the qualies this time so I say | 我这次从资格赛上来 所以我说 | ✏️ 已订正 |
 | 328 | 12:20.6 | [▶](https://youtu.be/NAT3IUN5T74?t=740) | to myself the reality is you are just 125 | 现实就是 你不过就是第 125 |  |
 | 329 | 12:24.8 | [▶](https://youtu.be/NAT3IUN5T74?t=744) | so you are not the top 10 you | 所以你不是世界前 10 了 |  |
 | 330 | 12:27.0 | [▶](https://youtu.be/NAT3IUN5T74?t=746) | were before don't treat yourself so high you | 以前是 别把自己看那么高 |  |
