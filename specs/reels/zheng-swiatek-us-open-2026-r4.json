@@ -46,14 +46,14 @@
   "_hook_why": "两行框住的是**整场的形状**：首盘 0-5 落后（flashscore `df_mh_1` Set 1 逐局 1-0 / 2-0 / 3-0 / 4-0 / 5-0 都是主队拿下）→ 之后 5-1 / 5-2 / 5-3 / 5-4 / 5-5 / 5-6 / 5-7 七局全归郑钦文，第二盘 6-3 收掉。两个「又是」指的是上一轮（`zheng-keys-us-open-2026-r3`）决胜盘 0-5 落后连赢七局——同一个人连续两场同一个形状，这就是这条片子的钩子，转播 69.04s 也是这么说的（`She's done it again`）。\n⚠️ 不重复比分板：板上印 7-5 6-3，钩子一个盘分都没写。行长 7 字 / 8 字，都在 `HOOK_MAX_CHARS=10` 之内、两行；字号封顶 94。",
   "portrait": {
    "image": "assets/reel/zheng-us-open-2026-r4-celebrate.jpg",
-   "fit": "width",
-   "focus": 0.5,
-   "focus_y": 0.0,
-   "zoom": 1.0,
+   "fit": "cover",
+   "focus": 0.7,
+   "focus_y": 1.0,
+   "zoom": 1.1,
    "_photo_why": "美网官方图片接口这一场的实拍（`find_cover_photo.py --player Zheng --event \"US Open\" --date 2026-09-07` 扫到的 8 张里的一张，`f_20260907_SB2_6292.jpg`，Simon Bruty/USTA），说明自带四要素：`Qinwen Zheng reacts after winning a Women's Singles match on Day Nine of the 2026 US Open at USTA Billie Jean King National Tennis Center on Monday, September 7`——赢球那一刻、这一场、她举着拍子指向包厢、大笑、眼睛睁着（缩略图墙 192.5s 就是这一格），正是这条片子讲的情绪；打开看过。同一批另外七张是击球中（正手 ×4、反手 ×1、握拳 ×1、追球 ×1），情绪都不如这一张。",
-   "_low_res_why": "1280×720 铺 1080×1440 是放大 2.00 倍，够不着 `cover_photo_problem` 那道 1.00x 的地板。**这是美网这条渠道的天花板，不是没找够**：`f_` 前缀就是美网官方图片接口的顶档（CLAUDE.md 记过十二个前缀、六个目录、三种 `?width=` 参数都试过）。更高清的三条路赛后一小时内都还没有：AP 通讯社（`apnews.com/search?q=Zheng Swiatek US Open` 和 `/hub/tennis` 只有上一轮对凯斯那张 4331px 的）、USA TODAY 每日图集（9/7 的 sitemap 里没有网球辑）、WTA photo-resources（大满贯不进）。账号所有者要的是「赶紧」，先用官方实拍出片；AP 那张出来之后可以换封面重渲。",
-   "_fit_why": "横图 16:9，按高度铺满（`cover`）时她的脸落在画布 y≈550~830——下巴压进钩子带（790 起）。走 `fit: width`：整幅照片 1080×608 按宽铺、上下垫同图的模糊放大版（`PAD_FILTER`），`focus_y: 0` 让照片贴在台头带底下——脸落在钩子带之上、举起的球拍和指向包厢的手都完整。本地 `render_cover_local.py` 渲出来看过。",
-   "_zoom_why": "代价是人比 `cover` 那条路小一圈——取舍的理由和 `zheng-keys-us-open-2026-r3` 同：`cover` 那条路上脸和钩子两行字必然重叠，而「脸被字横穿」是账号所有者 2026-08-31 当场退回过的那种错，比人小一圈重得多。"
+   "_low_res_why": "1280×720 铺 1080×1440 是放大 2.00 倍（zoom 1.1 之后 2.2 倍），够不着 `cover_photo_problem` 那道 1.00x 的地板。**这是美网这条渠道的天花板，不是没找够**：`f_` 前缀就是美网官方图片接口的顶档（CLAUDE.md 记过十二个前缀、六个目录、三种 `?width=` 参数都试过）。更高清的三条路赛后一小时内都还没有：AP 通讯社（`apnews.com/search?q=Zheng Swiatek US Open` 和 `/hub/tennis` 只有上一轮对凯斯那张 4331px 的）、USA TODAY 每日图集（9/7 的 sitemap 里没有网球辑）、WTA photo-resources（大满贯不进）。账号所有者要的是「赶紧」，先用官方实拍出片；AP 那张出来之后可以换封面重渲。",
+   "_fit_why": "本地 `render_cover_local.py` 渲了十版并排比（cv2 按缩放比模板匹配量脸位置）。原来的 fit: width / focus_y 0 脸只有 194px 高、头顶 y156 顶进台头带（0~170），上下 830px 全是模糊垫层，撞上「放大到接近铺满」那条；focus_y 0.5 脸不被压但同样只有 194px。改走 cover：focus 0.7 让脸（源图 x 800~990，0.69 处）居中，zoom 1.1 把图铺成 1584 高、focus_y 1.0 底对齐，整幅往上抬 144px——脸落在 y 252~758（眼 476、嘴 637、下巴 740），钩子第一行墨迹从 801 起，下巴上方还留 61px；头顶 263 离台头带 93px。眼睛睁着、大笑，指向包厢的指尖和护腕在左边缘露出来。",
+   "_zoom_why": "zoom 1.0（2.0×）下巴落在 804，压进钩子第一行墨迹（801）——正是 2026-08-31 吴易昺那条被退回的「脸被字横穿」的形状，差 3px 也不行；zoom 1.2 + focus_y 1.0 脸更大（552px）但发髻顶到 156、贴进台头带底边，指向包厢的手整个出画。1.1 是两头都留得下空的那一档（1.15 也过，只是少露一点手）。zoom 加大不能配 focus_y 0：那是顶对齐，把脸往钩子带里推（1.2/0 那版嘴在 852）。备用图 `zheng-us-open-2026-r4-fist.jpg` 也渲过：她低头垂眼咬牙攥拳，情绪是「咬住一分」不是赢球后的庆祝，不用。"
   },
   "scoreboard": {
    "court": "Arthur Ashe Stadium",
