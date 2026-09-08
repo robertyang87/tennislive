@@ -20,6 +20,7 @@ BG='#061c14'; FG='#f4f4e8'; LIME='#d5f35a'; MUTED='#a7bdb1'
 def font(n,bold=True):
     return ImageFont.truetype(str(ROOT/'assets/fonts'/('NotoSansSC-Bold-sub.ttf' if bold else 'NotoSansSC-Regular-sub.ttf')),n)
 def text(d,xy,s,n=42,color=FG,bold=True):
+    s=s.replace("｜", " | ").replace("／", " / ")
     x,y=xy
     fallback=ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf',n)
     for line in s.split('\n'):
@@ -47,7 +48,7 @@ def card(i,c,out,total):
     d=ImageDraw.Draw(im)
     text(d,(64,38),'网球时差  /  网球有故事',30)
     d.line((64,96,1016,96),fill=LIME,width=3)
-    # y=120–210 reserved for native engine's timed subtitles.
+    # Keep y=1260–1340 clear for the engine's timed subtitles.
     ty=860 if c.get('photo') else 260
     text(d,(64,ty-65),c['tag'],29,LIME)
     text(d,(64,ty),c['title'],82 if c.get('photo') else 74)
@@ -61,7 +62,7 @@ def card(i,c,out,total):
             text(d,(100,yy),line,fit(d,line,885,39))
     else:
         text(d,(64,1135),c['lines'][0],fit(d,c['lines'][0],950,37),LIME)
-    text(d,(64,1290),c['source'],fit(d,c['source'],950,23),MUTED,False)
+    text(d,(64,1200),c['source'],fit(d,c['source'],950,23),MUTED,False)
     text(d,(64,1360),'ZHENG QINWEN  /  2026',22,MUTED)
     text(d,(913,1354),f'{i+1:02d} / {total:02d}',25,MUTED)
     d.rectangle((64,1420,64+int(952*(i+1)/total),1425),fill=LIME)
@@ -70,7 +71,7 @@ def card(i,c,out,total):
 def runner(cmd,**kw):
     if cmd[0]=='ffmpeg':
         cmd=list(cmd)
-        if '-preset' in cmd:cmd[cmd.index('-preset')+1]='veryfast'
+        if '-preset' in cmd:cmd[cmd.index('-preset')+1]='ultrafast'
         cmd[1:1]=['-threads','2','-filter_complex_threads','1']
         if '-filter_complex' in cmd:
             import re
