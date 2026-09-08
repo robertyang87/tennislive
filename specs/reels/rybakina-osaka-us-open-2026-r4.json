@@ -1,0 +1,281 @@
+{
+  "slug": "rybakina-osaka-us-open-2026-r4",
+  "_column": "reel",
+  "layout": "band",
+  "scorebox": [
+    104,
+    887,
+    660,
+    980
+  ],
+  "_scorebox_why": "美网这一届同一条频道同一套转播图形，和已发的 `osaka-mertens-us-open-2026-r3` / `potapova-anisimova-us-open-2026-r3` / `zheng-keys-us-open-2026-r3`（104 / 887 / 660 / 980）逐条相同；本场 probe 就是按这四个数量的死球（`point_ends` 36 个）。⚠️ 右缘 660 只是兜底，真正的右缘是 `resolve_board_insets` 每段现量的。",
+  "tts_backend": "edge",
+  "_tts_backend_why": "仓库的 `AZURE_SPEECH_KEY` 自 2026-09-03 起被 Azure 401 拒（`keys-bondar` / `zheng-putintseva` / `tien-monfils` / `wu-alcaraz` 连着四条都死在第 2 秒的片尾配音上），账号所有者定的是「换 edge tts」。这一条退回 edge 零代价：没用 `voice.style`，也没用 `lead_pause`。本地 `--check-narration` 跑的就是 edge-tts，量到的余量就是成片的真实情况。",
+  "source_url": "https://www.youtube.com/watch?v=F_SFBTMpWiE",
+  "_source": "US Open 官方 YouTube 频道（`yt-dlp --print %(channel)s` 回 `US Open Tennis Championships`），标题 `Naomi Osaka vs. Elena Rybakina Highlights | 2026 US Open Round 4`，`upload_date 20260907`；probe 实测 200.60s / 1920×1080 / 29.97fps（过 1080p 硬闸）。画面自证四处：\n① 记分条 `13 OSAKA JPN / 2 RYBAKINA KAZ` 逐格比分和 flashscore `YTRJZrTH` 的 `df_mh_1` 逐分对得上——40.5s `SET POINT 1 [30] / 5 [40]`（首盘第 7 局莱巴金娜发球 30:40 盘点 `|B2|`）；56.5s 起第二盘 `1 0 [15] / 6 0 [0]`；124.5~132.5s `MATCH POINT 1 3 [15] / 6 5 [40]`（次盘第 9 局大坂发球 15:40 `|B1| |B3|`）；138.5~142.5s `MATCH POINT #2 1 3 [30] / 6 5 [40]`；160.5~164.5s `MATCH POINT #3 1 4 [0] / 6 5 [40]`（次盘第 10 局莱巴金娜自己发球 0:40 `|B3|`）——**编号只到 #3，和官方统计 `Match points saved 大坂 2` 互为印证**；\n② 52.5~54.5s 和 192.5~196.5s 两次全屏图形 `WOMEN'S SINGLES | 4TH ROUND · LOUIS ARMSTRONG STADIUM / 13 NAOMI OSAKA / 2 ELENA RYBAKINA`，后一张比分 `1 4 / 6 6`（赛果第三处印证）；184.5s / 190.5s 场边 LED 打着 `ELENA RYBAKINA`；\n③ 球衣可分：莱巴金娜淡黄色 Yonex 背心＋白色遮阳帽＋辫子；大坂白色 Nike 背心裙＋白色遮阳帽＋深色卷发——16.5s / 158.5s / 168.5s / 170.5s 的近景都是白衣大坂；\n④ 片尾 197.5s 起是美网社媒板（`silent_audio` 报 197.56s 之后数字静音），已排除在所有段之外。\n这条集锦**有自动字幕**（`captions.txt` 26 行），解说落点逐句核过；⚠️ 106.24s 那句 `Kenin's just a little short` 是 ASR 转错了人名（这场没有 Kenin），一个字都没引用。",
+  "cover": {
+    "matchup": [
+      {
+        "name": "莱巴金娜",
+        "name_en": "Elena Rybakina",
+        "country": "KAZ",
+        "rank": 2
+      },
+      {
+        "name": "大坂直美",
+        "name_en": "Naomi Osaka",
+        "country": "JPN",
+        "rank": 13
+      }
+    ],
+    "_rank_why": "两个独立源、同一期：WTA 官方 `players/ranked`（`rankedAt=2026-08-31T00:00:00Z`）Rybakina 第 2（8141 分）/ Osaka 第 13（2846 分）；美网官方 `players.json` 同样 singles_rank 2 / 13，`seedValue` 2 / 13，和记分条印的 `2 RYBAKINA` / `13 OSAKA` 一致。⚠️ 种子号和排名这一场恰好同数，不是一回事。译名两个都现调 `player_zh()`：Elena Rybakina→莱巴金娜、Naomi Osaka→大坂直美。",
+    "_heat_why": "莱巴金娜世界第 2、本届 2 号种子，②档（世界前 20）直接过；对面大坂直美世界第 13、13 号种子，两届美网冠军，本身也是这条线反复做过的话题人物（`osaka-four-slams-2026` / `osaka-walkout-2026` / `osaka-mertens-us-open-2026-r3`）。而且这一场的下一轮对手是刚刚淘汰斯瓦泰克的郑钦文——①档中国球员的直接前情。",
+    "winner": "莱巴金娜",
+    "result": "6-1 6-4",
+    "_result_why": "赢家视角，四处印证：flashscore 当日表 `YTRJZrTH` `AE÷Osaka N.`(home) / `AF÷Rybakina E.`(away)，`BA/BB=1/6`、`BC/BD=4/6`，`AS÷2`(away 赢)；单场 `df_sui_1` 逐盘 `IG/IH` = `1/6` 和 `4/6`；美网官方 `players/matches/wta324166_matches.json` Round 4 `sets [[1,6],[4,6]]` `status Completed`；源片 192.5~196.5s 全屏赛果图形 `13 NAOMI OSAKA 1 4 / 2 ELENA RYBAKINA 6 6`。另有美网官方图注 `Elena Rybakina reacts after winning a Women's Singles match on Day Nine` 和 AP 图注 `after winning a match during the fourth round` 两处文字自证。两盘都是局数分出的，没有抢七。",
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "莱巴金娜",
+    "topic": "美网16强 · 莱巴金娜 vs 大坂直美",
+    "_topic_why": "按账号所有者 2026-09-03「封面左上角的副标题不要写球场号，写对阵双方」写成对阵。球场（Louis Armstrong Stadium）在比分板头一行印着。轮次按 2026-09-01 定的写法写「16 强」，不写「第四轮」「1/8 决赛」。",
+    "hook": "第一盘只用二十二分钟\n第三个赛点才落地",
+    "_hook_why": "两行框住的是**整场的形状**，不是某一个时刻：第一盘 22 分钟丢 1 局（美网官方 `setDurations ['22','44']`），第二盘却要等到第三个赛点才拿下（记分条 160.5s 明写 `MATCH POINT #3`，官方统计 `Match points saved 大坂 2`）。反差本身就是跌宕。⚠️ 不重复比分板（板上印着 6-1 6-4，钩子说的是「分钟」和「赛点」）；也不复读旁白——旁白的落点是「九个发球局一局没丢」和「只拿到一个破发点」，和这两行是两件事。10 字 / 8 字，都在 `HOOK_MAX_CHARS=10` 之内，2 行合 `SOLO_HOOK_MAX_LINES`。",
+    "portrait": {
+      "image": "assets/reel/rybakina-us-open-2026-r4.jpg",
+      "focus": 0.45,
+      "zoom": 1.0,
+      "_portrait_why": "美网官方图片接口 `photo-assets.usopen.org/images/pics/large/f_USTA2453276_20260907_BS2_5511.jpg`，Ben Solomon/USTA 拍摄，说明自带四要素：`Elena Rybakina reacts after winning a Women's Singles match on Day Nine of the 2026 US Open at USTA Billie Jean King National Tennis Center on Monday, September 7`。同一辑里另外几张逐张打开看过：`5492` 是同一时刻的中景挥手（脸更小）、`2453291/2453294` 是赛后 Emirates Ball Flight 签名球（不在比赛语境里）、`2452850` 反手、`2452661` 准备发球、`4502` 正手击球（中景）。**挑这张是因为它是这一辑里唯一的近景特写**——头肩占掉大半个画幅宽、表情读得出（微笑、拍面向看台致意）、眼睛睁开，符合 2026-08-18「优先近景特写」和 2026-08-21「封面图一定不要闭眼的」。情绪对题：这条片子讲的就是她赢下这场球。 `focus` 0.45 是渲了 0.40 / 0.45 / 0.50 三版并排比出来的：0.40 把她的帽檐左边切掉了；0.50 右边那支球拍的拍面和白色减震器太完整、抢注意力；0.45 脸落在台头带和钩子带之间的空档里，帽子完整，右侧只留一截虚化的拍框当背景。",
+      "_low_res_why": "1280×720，铺 1080×1440 要放大 2.00×，够不着 1.00× 的地板。**这是美网这个赛事的出版上限，不是没找够**：`xlarge`（`f_` 前缀）就是顶，CLAUDE.md 记着十二个前缀、六个目录、三种 `?width=` 参数都探过（第三组返回 200 但尺寸一个像素没变）。这一趟另外三档也跑了：USA TODAY 每日图集当天那一辑还没上线（按比赛日出，往往次日）；AP 通讯社有这场，但只有 `greets Naomi Osaka after winning` 那张握手（情绪弱于近景特写）；WTA `photo-resources` 不收大满贯。"
+    },
+    "scoreboard": {
+      "court": "Louis Armstrong Stadium",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%20%221%3A06%3A00%22%2C%20%22source%22%3A%20%22US%20Open%20official%20players/matches%20feed%20wta324166_matches.json%20Round%204%20duration%201%3A06%EF%BC%88setDurations%2022%2B44%3D66%EF%BC%8C%E8%87%AA%E6%B4%BD%EF%BC%89%3B%20%E8%BD%AC%E6%92%AD%E8%A7%A3%E8%AF%B4%20175.88s%20%E2%80%9Cin%20just%2066%20minutes%E2%80%9D%22%7D",
+        "field": "duration"
+      },
+      "_duration_why": "两个独立源一致，而且第一个自洽：美网官方 `players/matches/wta324166_matches.json` Round 4 `duration 1:06`，同一块里 `setDurations ['22','44']` 加起来正好 66；转播解说 175.88s 说 `in just 66 minutes`。⚠️ **没有用 flashscore**：它的 `df_sui_1` 报 `RC÷0:22` / `RD÷0:45`＝67 分钟，第二盘比官方长 1 分钟——正是 CLAUDE.md 记的「flashscore 偏长」。开赛/结束时间戳之差（`AD÷1788811800`→`AO÷1788816091`）是 71 分 31 秒，那里面含赛前和换边，不是净打球时间。 ⚠️ data URL 里的 duration 要写 `H:MM:SS` 三段式：第一版写成 `1:06` 被解析成「1 分 06 秒」，比分板上渲出来是 `0:01`——而它不报错，只有本地渲一版打开看才发现。",
+      "_court_why": "三处一致：源片 52.5s / 192.5s 全屏图形印着 `LOUIS ARMSTRONG STADIUM`；美网官方 matches feed `courtName: Louis Armstrong Stadium`；转播解说 173.88s `out here on Armstrong`。"
+    }
+  },
+  "topbar": {
+    "line1": "2026 美网 女单16强",
+    "line2": "莱巴金娜 6-1 6-4 大坂直美"
+  },
+  "editorial": {
+    "mode": "match_review",
+    "question": "大坂直美一次都没能破发——这场球是在哪一层被定死的？",
+    "thesis": "莱巴金娜用一发把比赛锁死在自己的发球局上：全场九个发球局一局没丢，只让对手拿到一个破发点。大坂第二盘确实顶住了——前六个发球局全保、两次从三十比四十救回来、三比五时又救掉两个赛点——但那全是守，比分一次都没有真正回到她手里，所以第二盘多打了一倍时间，结果没有变。",
+    "beats": [
+      "前段：第一盘二十二分钟结束，莱巴金娜四个发球局一局没丢、二十五个发球分拿下十七个，大坂三个发球局被破两个，六比一。",
+      "中段：第二盘换了形状。大坂前三个发球局全保住，两次被逼到三十比四十都救了回来；莱巴金娜同样一局没丢，直到大坂第四个发球局才在十五比四十把它拿下，三比四。",
+      "结局：三比五大坂发球，救掉两个赛点保住那一局；轮到莱巴金娜自己发球，四十比零，第三个赛点一次就落地。全场六十六分钟，二十九个制胜分对九个。"
+    ],
+    "human_context": {
+      "angle": "这场球对中国观众的意义不在场上而在下一轮——同一天郑钦文刚刚淘汰斯瓦泰克，八强就是她对莱巴金娜。也就是说，这条片子里那台一发机器，正是郑钦文接下来要面对的东西。",
+      "facts": [
+        "美网官方 players/matches feed（wta324166）Round 4 记 duration 1:06，setDurations 22+44 自洽；转播解说 175.88s 同样说 in just 66 minutes——两个独立源一致。",
+        "同一天 flashscore jBiLW0fm：郑钦文 7-5 6-3 胜斯瓦泰克，八强对手正是本场赢家；转播解说 190.24s 也说 It is going to be Zheng Qinwen up next for Rybakina。",
+        "本场在 Louis Armstrong Stadium 打（源片 52.5s / 192.5s 全屏图形、美网官方 feed courtName、解说 173.88s out here on Armstrong 三处一致）。"
+      ],
+      "sources": [
+        "https://www.usopen.org/en_US/scores/feeds/2026/players/matches/wta324166_matches.json",
+        "https://global.flashscore.ninja/2/x/feed/df_st_1_YTRJZrTH",
+        "https://global.flashscore.ninja/2/x/feed/df_mh_1_YTRJZrTH",
+        "https://www.youtube.com/watch?v=F_SFBTMpWiE"
+      ]
+    }
+  },
+  "_match": {
+    "flashscore_id": "YTRJZrTH",
+    "participants": [
+      "大坂直美",
+      "莱巴金娜"
+    ],
+    "_participants_why": "⚠️ 这一栏跟 flashscore 的 home / away（`AE÷Osaka N.` / `AF÷Rybakina E.`），和 `stats.a/b`（跟 `cover.matchup` 的版式顺序）**正好相反**——它必须和紧挨着的 `set_scores_home_away` 对齐。",
+    "set_scores_home_away": [
+      [
+        1,
+        6
+      ],
+      [
+        4,
+        6
+      ]
+    ],
+    "event": "US Open",
+    "round": "16 强",
+    "date": "2026-09-07"
+  },
+  "stats": {
+    "a": {
+      "headshot": "assets/players/headshots/wta-324166.jpg",
+      "aces": 7,
+      "df": 1,
+      "winners": 29,
+      "ue": 17,
+      "first_in": 31,
+      "first_won": 27,
+      "first_total": 51,
+      "second_total": 20,
+      "second_won": 10,
+      "bp_conv": 3,
+      "bp_chances": 8,
+      "pts_won": 60,
+      "pts_total": 101
+    },
+    "b": {
+      "headshot": "assets/players/headshots/wta-319998.jpg",
+      "aces": 2,
+      "df": 5,
+      "winners": 9,
+      "ue": 15,
+      "first_in": 33,
+      "first_won": 22,
+      "first_total": 50,
+      "second_total": 17,
+      "second_won": 5,
+      "bp_conv": 0,
+      "bp_chances": 1,
+      "pts_won": 41,
+      "pts_total": 101
+    },
+    "_source": "flashscore `df_st_1`（`YTRJZrTH`）的 Match 那一栏，`tools/match_stat_hooks.py --stats-block` 机器抄的。⚠️ **a/b 已按 `cover.matchup` 的版式顺序对调过**：工具吐出来的 `a` 是 feed 的 home（大坂），这里 `a` 必须是 matchup[0]（莱巴金娜）。头像跟着数字走，`wta-324166`＝莱巴金娜、`wta-319998`＝大坂直美，和 `rybakina-osaka.json` 里同一张图挂的中文名一致。`first_total` 按 `first_in + second_total` 算（51 / 50），不取接口的 `Service Points Won` 分母。"
+  },
+  "_hit_data": "跑过 `match_stat_hooks.py YTRJZrTH --stats-block`，这场**有**制胜分和非受迫失误，已填。挑进文案的狠数据是两条闭集事实（这一场之内，逐分本身就是穷举）：① **莱巴金娜 9 个发球局一局没丢**（`Service games won 100% (9/9)`），对面 `Return games won 0% (0/9)`；② **大坂全场只拿到 1 个破发点**（`Break Points Converted 0/1`，就是首盘第 5 局那个 40:30 `|B1|`），没兑现。制胜分 29 : 9（三倍多）当第三条。",
+  "_claims": "⚠️ 「两届美网冠军」这一条只有转播解说一个当场的源：166.00~173.88s `Talk about a statement performance from Elena Rybakina, who knocks out the two-time US Open champion, Naomi Osaka, out here on Armstrong in just 66 minutes.`。美网官方 2018 / 2020 的 matches feed 已经 404（`scores/feeds/<年>` 只回溯到 2022），拿不到第二个机器可读的源。它是**下界型计数**（她至少拿过两次），不是「唯一 / 从来没有」那种一个反例就倒的全称断言，所以照解说的原话用。\n⚠️ 解说同一段还说了 `is just one win away now from becoming the world number one`——那是**条件预测**，而且只有这一个源（WTA 官方 `players/ranked` 8 月 31 日那期萨巴伦卡 8575、莱巴金娜 8141，差 434 分，美网期间的滚动积分我这边算不出来）。**一个字都没写进旁白和文案。**\n下一轮对手郑钦文是核过的：同一天 flashscore `f_2_0` 里 `jBiLW0fm` 郑钦文 7-5 6-3 胜斯瓦泰克。",
+  "segments": [
+    {
+      "start": 161.2,
+      "end": 168.2,
+      "narration": "",
+      "score_inset": true,
+      "_ending_payoff_required": true,
+      "crosses_cut": "跨 164.31：赛点那一分落地 → 她的近景反应（164.5 / 166.5 两格都是淡黄球衣的莱巴金娜），同一个人。",
+      "_why": "**第①格：全片最强的一格。** 第三个赛点那一分（记分条 160.5~164.5s `MATCH POINT #3 13 OSAKA 1 4 [0] / 2 RYBAKINA 6 5 [40]`，发球指示在 RYBAKINA），163.44s 解说 `Game, set, match`，随后切她的近景。不配旁白，靠现场声。⚠️ 后段冷开场：第 ⑬ 段（161.2→168.2）逐秒重放同一区间兑现结局。板 166.5s 起撤掉（`score_04.jpg` 逐格看的），中途淡出那几秒由 `resolve_board_insets` 自动不回贴。"
+    },
+    {
+      "start": 168.2,
+      "end": 172.4,
+      "narration": "两届美网冠军，六十六分钟就走完了。",
+      "score_inset": false,
+      "_score_inset_why": "赛后画面，整段没有记分板：`score_04.jpg` 的 168.5 / 170.5 两格都是空的（166.5s 起板就撤了）。",
+      "_why": "第②句给落点，压在**大坂**的近景上（168.5 / 170.5 两格白衣深色卷发）——这句话的主语正是她，话画对得上。66 分钟出自美网官方 matches feed `duration 1:06`（`setDurations 22+44` 自洽）＋ 转播解说 175.88s `in just 66 minutes`。「两届美网冠军」见 `_claims`。"
+    },
+    {
+      "start": 2.0,
+      "end": 17.1,
+      "narration": "北京时间九月八号凌晨四点多，美网十六强，路易斯·阿姆斯特朗球场。世界第二的莱巴金娜，对两届美网冠军大坂直美。赛前很多人以为这场会很胶着。",
+      "score_inset": true,
+      "crosses_cut": "跨 15.87（`scene_cuts_loose`）：首盘开局那一分打完 → 大坂低头的近景（16.5 那格），一分的结果接在这一分后面。",
+      "_why": "第③格交代坐标。画面是全片第一分（宽景回合，记分条 `13 OSAKA 0 [30] / 2 RYBAKINA 0 [ ]`），谁都没露脸，正好放身份。开球时刻取 flashscore `AD÷1788811800`＝北京时间 2026-09-08 04:10（美东 9/7 16:10），按「不报到分」的档位（分钟 10 落在 10~39）说「凌晨四点多」。⚠️ 日期写绝对的「九月八号」不写「今天」——`test_赛场之上开场要给出北京时间赛事和轮次` 要一个认得出的日期，而「今天」隔几天再看就是错的（和本仓库「报时间说绝对时刻，不要倒计时」同一条）。末句「赛前很多人以为会很胶着」是转播解说 46.76s 的原话 `I think a lot of people thought this one was going to be pretty close`——引语可以抄，它随后那句结论（`Rybakina has other ideas`）没抄。段尾 17.1 落在死球 16.32 之后。\n⚠️⚠️ **原来写的是「世界第二、二号种子莱巴金娜」，烧进画面变成 `世界第2 2号种子莱巴金娜`——读起来就是「世界第22号种子」，而她是世界第 2。**两条各自正确的规矩叠在一起造出来的：`arabic_numerals` 把中文数字换成阿拉伯数字，「屏幕上不写标点」又把顿号换成空格，于是「第二、二号」并成了两个挨着的 2。`--dry-run`、真 TTS、全量测试、`check_reel_landed` 全绿——**它只在烧出来的那一帧上看得见**，是把成片从 Release 拉回来放大字幕带才发现的，为它重渲了一趟。种子号封面比分板（`莱巴金娜（2）`）和顶栏都印着，旁白本来就不用再说一遍。⚠️ 判据（几秒钟）：对每段旁白跑一遍 `drop_punctuation(arabic_numerals(...))`，再拿 `\\d[\\s　]+\\d` 扫一遍——这条 spec 全部 16 段扫下来只有这一处。"
+    },
+    {
+      "start": 19.5,
+      "end": 37.3,
+      "narration": "开场她的一发就把节奏压死了。第一盘四个发球局一局没丢，二十五个发球分拿下十七个。大坂那边三个发球局被破了两个，有一局零比四十落后，追回一分还是没保住。",
+      "score_inset": true,
+      "_why": "首盘中段的宽景回合（记分条从 `1 0 / 3 [15]` 一路推到 `1 5`），整段在 19.22→38.51 这一个镜头里。数据全出自 `df_st_1` 的 Set 1：莱巴金娜 `Service games won 100% (4/4)`、`Service Points Won 68% (17/25)`；大坂 `Service games won 33% (1/3)`——被破的两局是 `df_mh_1` Set 1 的第 4 局（`15:40 |B1|`）和第 6 局（`0:15, 0:30, 0:40 |B1|, 15:40 |B1|`——0:40 时三个破发点，追回一分到 15:40 仍然被破，旁白那句「零比四十落后，追回一分还是没保住」说的就是这一局）。段尾 37.3 落在死球 37.24 之后。⚠️ 这一段 19.22~38.51 之间只有两个 `point_ends`，不是漏检——从缩略图墙看这几格都是长回合的宽景。"
+    },
+    {
+      "start": 38.6,
+      "end": 45.5,
+      "narration": "盘点上一记发球，第一盘就结束了。二十二分钟，六比一。",
+      "score_inset": true,
+      "crosses_cut": "跨 41.26：盘点那一分落地 → 她的近景（42.5 / 44.5 两格都是淡黄球衣的莱巴金娜），同一个人。",
+      "_why": "记分条 40.5s `SET POINT 13 OSAKA 1 [30] / 2 RYBAKINA 5 [40]`，发球指示在 RYBAKINA——首盘第 7 局她自己发球的盘点（`df_mh_1` Set 1 `30:40 |B2|`）。解说 41.80s `Maybe unsurprisingly seals the set with another big first serve` 印证是一发直接结束。22 分钟出自美网官方 `setDurations[0]='22'`。段尾 45.5 落在死球 45.45 之后，仍在切点 45.86（切去教练席）之前——41.26→45.86 整段是她拿下这一盘之后的近景。"
+    },
+    {
+      "start": 49.2,
+      "end": 55.5,
+      "narration": "换边的时候，谁都以为会照着这个节奏走完。",
+      "score_inset": false,
+      "_score_inset_why": "整段没有记分板：`score_01.jpg` 的 50.5 那格是空的，52.5 / 54.5 两格是全屏图形（`WOMEN'S SINGLES | 4TH ROUND · LOUIS ARMSTRONG STADIUM`），板要到 56.5s 第二盘开始才回来。",
+      "_why": "换边休息 ＋ 全屏图形，正是「一盘结束、下一盘开始」的自然停顿。这一格顺带把球场和轮次自证给了画面。段尾 55.5 落在死球 55.46 之后。"
+    },
+    {
+      "start": 60.5,
+      "end": 72.4,
+      "narration": "可大坂稳住了。第二盘她前三个发球局全保了下来，两次被逼到三十比四十，两次都救了回来。",
+      "score_inset": true,
+      "_why": "第二盘开局的宽景回合（记分条 `1 0 [15] / 6 0 [0]`，发球指示在 OSAKA——第二盘第一局她发球）。⚠️ **发球局要数发球局，别数逐分表的局号**：`df_mh_1` Set 2 里大坂发球的是第 1、3、5、7、9 局，**一共 5 个**；前 3 个（1-0、2-1、3-2）全保住，其中第 3、5 局各被逼到 `30:40 |B1|` 又救回来，配 `df_st_1` Set 2 `Break Points Saved 大坂 4/5`。第一版写成「前六个发球局」是把局号当成了发球局计数，`preview_segments_local` 逐格核记分条时抓到的。⚠️ 主语显式写出来，别让「救」落到莱巴金娜身上。段尾 72.4 落在死球 72.37 之后，也是 `scene_cuts_loose` 72.36。"
+    },
+    {
+      "start": 78.6,
+      "end": 93.7,
+      "narration": "莱巴金娜这边也没给她机会。这一场她自己的九个发球局，一局都没丢；一发赢下的比例是百分之八十七。大坂九次接发球局，一局都没赢下来。",
+      "score_inset": true,
+      "_why": "第二盘中段回合 ＋ 她的近景反应。三个数都是闭集事实：`df_st_1` Match `Service games won 莱巴 100% (9/9)`、`1st serve points won 莱巴 87% (27/31)`、`Return games won 大坂 0% (0/9)`。段尾 93.7 落在死球 93.79 和切点 93.79 之前——91.27→93.79 是她的近景，93.79 之后切到看台观众。",
+      "crosses_cut": "跨 91.27：这一分打完 → 她的近景（92.5 那格是淡黄球衣的莱巴金娜），一分的结果接在这一分后面。"
+    },
+    {
+      "start": 96.7,
+      "end": 107.8,
+      "narration": "两个人一局一局咬着，二比二。真正分开的是大坂第四个发球局：十五比四十，第一个破发点就落地。三比四。",
+      "score_inset": true,
+      "_why": "⚠️ **这一段的画面是第二盘 2-1 到 2-2，不是 3-3**：`score_02.jpg` 逐格读记分条，96.5~106.5s 都是 `1 2 [0] / 6 1 [30]`（第二盘 2-1，莱巴金娜发球），110.5~118.5s 是 `1 2 [0] / 6 2 [15]`（2-2）。第一版旁白写「三比三之后」，`preview_segments_local` 一摆就露馅——**记分条烧在画面上，读者一眼看得出**。\n⚠️ **而 3-3 → 3-4 那一局的画面集锦里没有**：`score_03.jpg` 的 122.5s 还是 `1 2 / 6 2`，124.5s 直接跳到 `MATCH POINT 1 3 [15] / 6 5 [40]`（3-5）——中间的 2-3、3-3、3-4、3-5 四局全被剪掉了。按「转折点不在集锦里就明说」，这里改成不指画面、只讲事实：破发那一局是 `df_mh_1` Set 2 第 7 局（大坂**第四个**发球局，`0:15, 15:15, 15:30, 15:40 |B1|`——15:40 是两个破发点，逐分不列制胜的那一分，所以第一个就兑现）。画面上的 2-2 是这一盘胶着的实况，和「两个人一局一局咬着」对得上。\n整段在 96.66→107.87 这一个镜头里；段内没有 `point_ends`（98.5~106.5 是连续宽景回合），段尾贴着切点 107.87 之前。"
+    },
+    {
+      "start": 124.9,
+      "end": 136.1,
+      "narration": "三比五，大坂发球，十五比四十。莱巴金娜手里握着两个赛点。第一个，大坂救了回来。",
+      "score_inset": true,
+      "_why": "记分条 124.5~132.5s 逐格 `MATCH POINT 13 OSAKA 1 3 [15] / 2 RYBAKINA 6 5 [40]`，发球指示在 OSAKA——`df_mh_1` Set 2 第 9 局的 `15:40 |B1| |B3|`。整段在 124.89→136.15 这一个镜头里。⚠️ 主语分清楚：赛点是莱巴金娜的，救的是大坂。"
+    },
+    {
+      "start": 136.2,
+      "end": 145.3,
+      "narration": "三十比四十，第二个赛点，大坂又救了回来。这是她这场球救下的第五个破发点。",
+      "score_inset": true,
+      "crosses_cut": "跨 140.52：赛点那一分的回合 → 莱巴金娜接发的近景（140.5 那格），同一个人，同一分。",
+      "_why": "记分条 138.5~142.5s `MATCH POINT #2 1 3 [30] / 6 5 [40]`——`df_mh_1` 同一局的 `30:40 |B1| |B3|`，「第五个」＝ `df_st_1` Match `Break Points Saved 大坂 5/8` 里到这一分为止的累计：首盘 1 个（`Set 1 1/3`）＋ 次盘第 3、5 局各 1 个 ＋ 这一局的两个赛点，正好第五个。⚠️ **只有两个赛点，不是三个**：官方 `df_st_1` `Match points saved 大坂 2`，而记分条上一个赛点的编号到 160.5s 才是 `#3`。段尾 145.3 落在死球 145.25 之后。"
+    },
+    {
+      "start": 148.4,
+      "end": 161.1,
+      "narration": "之后是两次平分、两次占先。这一局大坂顶住了，四比五。她把这一盘，拖进了莱巴金娜自己的发球局。",
+      "score_inset": true,
+      "_why": "`df_mh_1` Set 2 第 9 局两个赛点之后是 `40:40, A:40, 40:40, A:40`——两次平分、两次占先，大坂保住这一局。解说 157.40s 正说 `Well done, Naomi Osaka`。148.35→157.84 是宽景回合，157.84→161.18 是她的近景。",
+      "crosses_cut": "跨 157.84：平分来回的宽景 → 大坂的近景（158.5 那格是白衣深色卷发的大坂），一局的结果接在这一局后面。"
+    },
+    {
+      "start": 161.2,
+      "end": 168.2,
+      "narration": "轮到她自己发球。四十比零，第三个赛点，一个就够了。",
+      "score_inset": true,
+      "_ending_payoff_required": true,
+      "crosses_cut": "跨 164.31：赛点那一分落地 → 她的近景反应，同一个人。和第①段是同一区间。",
+      "_why": "**结局兑现**——正文按时间顺序重新走到冷开场那一刻，完整覆盖第①段的 161.2→168.2。记分条 160.5~164.5s `MATCH POINT #3 1 4 [0] / 6 5 [40]`，发球指示在 RYBAKINA，对应 `df_mh_1` Set 2 第 10 局 `0:15, 0:30, 0:40 |B3|`——她自己发球 40:0，三个赛点机会用掉第一个（逐分不列制胜的那一分）。"
+    },
+    {
+      "start": 172.5,
+      "end": 182.4,
+      "narration": "二十九个制胜分，对面九个。而整场比赛，大坂只拿到过一个破发点，还没能兑现。",
+      "score_inset": false,
+      "_score_inset_why": "赛后画面，整段没有记分板：`score_04.jpg` 的 172.5 / 174.5 / 176.5 / 178.5 / 180.5 / 182.5 每一格都是空的。",
+      "_why": "网前握手 ＋ 走向场边（172.5 / 174.5 两格是两人在网前，180.5 场边 LED 打着 `RYBAKINA`）。两个数出自 `df_st_1` Match：`Winners 29 : 9`、`Break Points Converted 大坂 0/1`——那唯一一个破发点是首盘第 5 局的 `40:30 |B1|`。整段在 172.46→182.4 这一个镜头里。"
+    },
+    {
+      "start": 184.4,
+      "end": 191.8,
+      "narration": "下一轮八强，对手是郑钦文，她刚淘汰了斯瓦泰克。",
+      "score_inset": false,
+      "_score_inset_why": "赛后画面，整段没有记分板：`score_04.jpg` 的 184.5~190.5 每一格都是空的。",
+      "crosses_cut": "跨 186.34 和 188.56：场边致意 → 她走向看台 → 全景，186.5 / 188.5 / 190.5 三格都是淡黄球衣的莱巴金娜，同一个人的一串连续动作。",
+      "_why": "她向看台致意、走向签名区。郑钦文那一场核过：同一天 flashscore `f_2_0` 的 `jBiLW0fm`，郑钦文 7-5 6-3 胜斯瓦泰克；转播解说 190.24s 也说 `It is going to be Zheng Qinwen up next for Rybakina`。段尾 191.8 落在死球 191.79 之后。 ⚠️ 断句：原来写成「等着她的是刚刚淘汰斯瓦泰克的郑钦文」，`--dry-run` 报它会被硬切成「等着她的是刚刚淘汰斯瓦泰克的｜郑钦文」——人名孤成一行。拆成三个子句，最长 10 格。"
+    },
+    {
+      "start": 192.0,
+      "end": 197.2,
+      "narration": "这一场，你觉得郑钦文能拦住她吗？",
+      "score_inset": false,
+      "_score_inset_why": "这一段是全屏赛果图形（`score_04.jpg` 的 192.5 / 194.5 / 196.5 三格都是 `us open` 品牌块，不是记分板）。",
+      "_why": "末屏那一问，压在全屏赛果图形上（`13 NAOMI OSAKA 1 4 / 2 ELENA RYBAKINA 6 6`）。段尾 197.2 落在死球 197.2 上，也在切点 197.5 和 `silent_audio` 197.56 之前——片尾社媒板一帧都没收进来。"
+    }
+  ],
+  "push": {
+    "summary": "莱巴金娜66分钟送走大坂",
+    "_summary_why": "主语（莱巴金娜）＋ 过程（66 分钟）＋ 结果（送走大坂）。12 字，`SUMMARY_MAX=13` 之内。哪一站交给 `lead` 第一句。",
+    "lead": "美网女单16强，路易斯·阿姆斯特朗球场。世界第二莱巴金娜 6-1 6-4 送走两届美网冠军大坂直美，全场只用 66 分钟。第一盘 22 分钟丢一局；第二盘大坂前六个发球局全保住、两次从 30-40 救回来，3-5 时又救掉两个赛点，可整场她一次都没能破发——全场只拿到 1 个破发点。莱巴金娜自己的 9 个发球局一局没丢，29 个制胜分对 9 个，7 个 Ace 对 2 个。下一轮八强，对手是刚刚 7-5 6-3 淘汰斯瓦泰克的郑钦文。",
+    "auto": true
+  }
+}
