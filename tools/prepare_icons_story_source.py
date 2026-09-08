@@ -4,6 +4,7 @@ import argparse
 import json
 from pathlib import Path
 
+from build_match_reel import spec_sources
 from grab_frames import download, sample, contact_sheet
 
 
@@ -15,7 +16,8 @@ def main():
     source = request["sources"][args.source]
     out = Path("source-review") / args.source
     out.mkdir(parents=True, exist_ok=True)
-    video = download(source["url"], out)
+    urls = spec_sources({"sources": {args.source: source["url"]}})
+    video = download(urls[args.source], out)
     # Retain source only in the expiring Actions artifact, never commit media.
     frames = sample(video, out, 8.0, 640, 0.0, 0.0)
     contact_sheet(frames, out / "contact.jpg")
