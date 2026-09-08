@@ -33,9 +33,13 @@ def main():
     (out/'script.json').write_text(json.dumps(narration,ensure_ascii=False,indent=2))
     (out/'narration.json').write_text(json.dumps({'voice':E.DEFAULT_VOICE,'rate':'+22%','pitch':E.DEFAULT_PITCH,'segments':15,'subtitles':True,'script_sha256':hashlib.sha256((out/'script.json').read_bytes()).hexdigest()},indent=2))
     text=(ROOT/'docs/research/zheng-wildcards-publish-copy.md').read_text().split('## 置顶补充')[0].removeprefix('# 发布文案\n\n').strip()
+    title, body = text.split('\n\n', 1)
+    assert title.startswith('🎾9.8 网球有故事｜'), 'Use the established dated column title'
+    assert len(body) <= 1000, 'Xiaohongshu body exceeds 1000 characters'
+    assert len([word for word in body.split() if word.startswith('#')]) <= 5
     (out/'xiaohongshu.txt').write_text(text)
     (out/'copy.html').write_text(to_copy_page(text))
-    (out/'wechat_title.txt').write_text('网球有故事｜中网给了外卡，武网怎么办？')
+    (out/'wechat_title.txt').write_text(text.splitlines()[0])
     (out/'render.json').write_text(json.dumps({'video_url':a.video_url,'video_bytes':clip.stat().st_size,'duration':float(probe['format']['duration']),'qc':'passed'},indent=2))
     (out/'push.html').write_text(E.explainer_push_html(beats,out,date=datetime.date(2026,9,8),xhs_text=text))
     print('15 cards, narration, dimensions, audio and full decode passed')
