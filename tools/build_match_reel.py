@@ -2426,6 +2426,7 @@ class Segment:
     # 这一段的板右缘是**渲染时现量的**（`score_inset: true`），还是 spec 里
     # 用 `{"x2": N}` 手钉的。⭐ 账号所有者 2026-08-29：「不能固定宽度去切，
     # 要自适应」——所以 true 是主路，`x2` 退成「量不准时人来钉」的口子。
+    square_pan: tuple[tuple[float, float], ...] = ()
     score_inset_auto: bool = False
     # 这一段里板**真的在画面里**的那几段（段内秒）。`None` ＝ 整段都在，
     # 照旧整段回贴；非空 ＝ 只在这几段回贴（`overlay` 的 `enable`）。
@@ -2854,7 +2855,8 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
                        _seg_mute(s, i),
                        bed=_seg_bed(s, i),
                        score_inset=_seg_score_inset(s, i),
-                       score_inset_auto=s.get("score_inset") is True)
+                       score_inset_auto=s.get("score_inset") is True,
+                       square_pan=tuple((float(t), float(cx)) for t, cx in s.get("square_pan", [])))
 
     segments = [_one(s, i) for i, s in enumerate(spec["segments"])]
     gone_ev = [(i + 1, s.image) for i, s in enumerate(segments)
@@ -3775,7 +3777,31 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
     # labeled=True 的链自己带 `;` 和输入标签（首个滤镜隐式吃 [0:v]），
     # 拼 -filter_complex 时不能再往前面塞 `[0:v]`。
     labeled = False
-    if seg.fit in ("contain", "full_source"):
+    if seg.fit == "square":
+        native_w, native_h = probe_size(source)
+        side = min(native_w, native_h) // 2 * 2
+        center = 0.5 if seg.cx is None else seg.cx
+        points = seg.square_pan or ((0.0, center),)
+        if any(not 0 <= cx <= 1 or t < 0 for t, cx in points):
+            raise ReelError("square_pan requires nonnegative times and focus between 0 and 1")
+        if any(b[0] <= a[0] for a, b in zip(points, points[1:])):
+            raise ReelError("square_pan times must strictly increase")
+        def xpos(cx):
+            return max(0, min(native_w-side, round(cx*native_w-side/2)))
+        expr = str(xpos(points[-1][1]))
+        for (ta, ca), (tb, cb) in reversed(list(zip(points, points[1:]))):
+            xa, xb = xpos(ca), xpos(cb)
+            expr = f"if(lt(t,{tb}),{xa}+({xb-xa})*max(0,t-{ta})/{tb-ta},{expr})"
+        chain = (
+            "split=2[bg][fg];"
+            f"[bg]scale={VIDEO_W}:{VIDEO_H}:force_original_aspect_ratio=increase,"
+            f"crop={VIDEO_W}:{VIDEO_H},boxblur=42:2,eq=brightness=-0.20[bgb];"
+            f"[fg]crop={side}:{side}:x='{expr}':y={(native_h-side)//2},"
+            f"scale={VIDEO_W}:{VIDEO_W}:flags=lanczos[fgs];"
+            f"[bgb][fgs]overlay=0:{(VIDEO_H-VIDEO_W)//2},{sp}fps={FPS_EXPR},setsar=1"
+        )
+        labeled = True
+    elif seg.fit in ("contain", "full_source"):
         native_w, native_h = probe_size(source)
         # 整幅铺进来会只占屏高的三成（1080 宽的 16:9 才 608 高），上下两条死黑，
         # 「冲击力先折一半」。所以两件事一起做：
@@ -3999,6 +4025,13 @@ def build_cover(sources: dict[str, Path], primary: str, spec: dict,
     注释记着这次翻面的完整理由。
     """
     cover = spec["cover"]
+    if cover.get("approved_image"):
+        approved = Path(cover["approved_image"])
+        if not approved.is_file() or not cover.get("_approved_by_user"):
+            raise ReelError("Prebuilt cover requires its file and explicit user approval")
+        poster = dest.parent / POSTER_NAME
+        shutil.copyfile(approved, poster)
+        return _still_to_clip(poster, dest, seconds + tail)
     layout = str(cover.get("layout", "cutout"))
     eyebrow = str(cover.get("eyebrow", "")).strip()
     # ⚠️ **闸在 2026-08-04 整个反过来了。**

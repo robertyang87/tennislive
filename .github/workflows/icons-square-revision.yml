@@ -1,0 +1,169 @@
+name: Zheng icons centered square revision
+permissions:
+  contents: write
+  actions: write
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 65
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            assets
+            src
+            specs
+            tools
+            docs
+            data
+            output/2026-09-08/reel/zheng-usopen-icons
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install renderer dependencies
+        run: |
+          pip install -q -e '.[webrender,visualqa]' edge-tts
+      - name: 缓存 apt 包（ffmpeg + 字体，绕开镜像抽风）
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/apt-archives
+            ~/.cache/apt-lists
+          key: apt-pkgs-${{ runner.os }}-24.04-ffmpeg-fonts-v2-${{ github.run_id }}
+          restore-keys: |
+            apt-pkgs-${{ runner.os }}-24.04-ffmpeg-fonts-v2-
+      - name: 装 ffmpeg
+        timeout-minutes: 15
+        run: |
+          source tools/ci_apt_install.sh
+          ensure_ffmpeg
+      - name: 装中文字体（渲染和封面都要）
+        timeout-minutes: 15
+        run: |
+          source tools/ci_apt_install.sh
+          apt_install_cached fonts-noto-cjk fonts-noto-color-emoji
+      - name: 缓存 Chromium
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-chromium-${{ runner.os }}-${{ hashFiles('pyproject.toml') }}
+          restore-keys: playwright-chromium-${{ runner.os }}-
+      - name: 装 Chromium
+        timeout-minutes: 10
+        run: |
+          if timeout 20 python - <<'PY'
+          from playwright.sync_api import sync_playwright
+
+          try:
+              with sync_playwright() as playwright:
+                  browser = playwright.chromium.launch(headless=True)
+                  page = browser.new_page()
+                  page.set_content("<p>chromium-ready</p>")
+                  assert page.locator("p").inner_text() == "chromium-ready"
+                  browser.close()
+          except Exception as exc:  # noqa: BLE001
+              print(f"[chromium] 缓存未就绪，走带依赖安装：{type(exc).__name__}: {exc}")
+              raise SystemExit(1)
+          PY
+          then
+            echo "[chromium] 缓存可直接启动，跳过带系统依赖的安装"
+            exit 0
+          fi
+
+          pw_wait_apt() {
+            for _ in $(seq 1 22); do
+              if ! pgrep -x apt-get >/dev/null && ! pgrep -x dpkg >/dev/null; then
+                return 0
+              fi
+              sleep 5
+            done
+            echo "::warning::等了 110 秒 dpkg 锁还没松开——下一次尝试八成会在两秒内死在 Could not get lock，不是 apt 装不上"
+            sudo pkill -9 apt-get 2>/dev/null || true
+            sudo pkill -9 dpkg 2>/dev/null || true
+            sudo dpkg --configure -a 2>/dev/null || true
+          }
+          pw_retry() {
+            for i in 1 2; do
+              timeout 240 python -m playwright install --with-deps chromium && return 0
+              echo "::warning::装 Chromium 第 $i 次没跑完（多半卡在 --with-deps 的 apt）"
+              pw_wait_apt
+            done
+            echo "::error::装 Chromium 两次都没成功"
+            return 1
+          }
+          pw_retry
+      - uses: actions/download-artifact@v4
+        with:
+          run-id: 34190431618
+          github-token: ${{ github.token }}
+          pattern: icons-source-*
+          path: reviewed-sources
+      - name: Render episode with original broadcast audio
+        env:
+          PYTHONPATH: src
+        run: |
+          OUTDIR=output/2026-09-08/reel/zheng-usopen-icons
+          mkdir -p "$OUTDIR"
+          for SOURCE in swiatek jordan woods keys; do
+            cp "reviewed-sources/icons-source-$SOURCE/source.mp4" "$OUTDIR/source_$SOURCE.mp4"
+          done
+          python tools/build_match_reel.py render --spec specs/reels/zheng-usopen-icons.json --outdir "$OUTDIR"
+      - name: Check final film and audio
+        run: |
+          PYTHONPATH=src python tools/check_reel_landed.py --slug zheng-usopen-icons --film output/2026-09-08/reel/zheng-usopen-icons/zheng-usopen-icons.mp4
+      - name: Build copy page
+        run: python tools/push_reel.py --stage page --outdir output/2026-09-08/reel/zheng-usopen-icons --copy specs/reels/zheng-usopen-icons.xhs.txt
+      - name: Publish verified revision
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          OUTDIR=output/2026-09-08/reel/zheng-usopen-icons
+          TAG=reel-zheng-usopen-icons-square-v3
+          gh release create "$TAG" --target "$GITHUB_SHA" --title '网球有故事｜郑钦文、乔丹、伍兹（1:1居中画面版）' --notes '用户要求所有比赛片段裁切为1:1，1080×1080居中；保留已确认的封面和小红书文案。'
+          gh release upload "$TAG" "$OUTDIR/zheng-usopen-icons.mp4" "$OUTDIR/poster.jpg" "$OUTDIR/subtitles.ass" specs/reels/zheng-usopen-icons.xhs.txt
+          python - <<'PY'
+          import hashlib,json,subprocess
+          from pathlib import Path
+          out=Path("output/2026-09-08/reel/zheng-usopen-icons")
+          meta=json.loads((out/"render.json").read_text())
+          film=out/"zheng-usopen-icons.mp4"
+          assets=json.loads(subprocess.check_output(["gh","api","repos/robertyang87/tennislive/releases/tags/reel-zheng-usopen-icons-square-v3"]))["assets"]
+          asset=next(a for a in assets if a["name"]==film.name)
+          assert asset["size"]==film.stat().st_size
+          assert asset["digest"]=="sha256:"+hashlib.sha256(film.read_bytes()).hexdigest()
+          meta.update(video_url=asset["browser_download_url"],video_bytes=asset["size"])
+          (out/"render.json").write_text(json.dumps(meta,ensure_ascii=False,indent=2)+"\n")
+          PY
+      - name: Commit QC and copy page then dispatch WeChat
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          OUTDIR=output/2026-09-08/reel/zheng-usopen-icons
+          git config user.name "Codex"
+          git config user.email "noreply@openai.com"
+          git add "$OUTDIR/poster.jpg" "$OUTDIR/subtitles.ass" "$OUTDIR/render.json" "$OUTDIR/qc_attestation.json" "$OUTDIR/copy.html"
+          if git ls-files --error-unmatch "$OUTDIR/pushed.json" >/dev/null 2>&1; then
+            git rm "$OUTDIR/pushed.json"
+          fi
+          git commit -m "reel: QC-approved centered square revision; user requested resend"
+          source tools/git_push_retry.sh
+          push_with_rebase_retry main
+          gh workflow run match-reel.yml --ref main -f mode=push -f slug=zheng-usopen-icons -f push=true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: icons-square-v3-review
+          path: |
+            output/2026-09-08/reel/zheng-usopen-icons/zheng-usopen-icons.mp4
+            output/2026-09-08/reel/zheng-usopen-icons/*.json
+            output/2026-09-08/reel/zheng-usopen-icons/*.ass
+            output/2026-09-08/reel/zheng-usopen-icons/poster.jpg
+          compression-level: 0
+          retention-days: 14
+on:
+  push:
+    branches: [main]
+    paths: [requests/stories/zheng-usopen-icons.square-v3.json]
+concurrency:
+  group: icons-square-v3
+  cancel-in-progress: false

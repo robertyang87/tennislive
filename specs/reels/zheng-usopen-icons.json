@@ -1,47 +1,35 @@
 {
-  "slug": "zheng-usopen-icons",
-  "sources": {
-    "swiatek": "https://www.youtube.com/watch?v=Md8vyWg60fI",
-    "jordan": "https://www.youtube.com/watch?v=kwAu78IiixE",
-    "woods": "https://www.youtube.com/watch?v=ldsAXXuVSSc",
-    "keys": "https://www.youtube.com/watch?v=PiuDtMWKU2g"
-  },
-  "primary": "swiatek",
-  "tts_backend": "edge",
-  "_tts_backend_why": "沿用已审定云健体育旁白；本片不使用Azure情绪标记。",
   "_column": "网球有故事",
-  "mixed_fps": {
-    "jordan": "NBA官方29.97fps，与主片整除降采样后的29.97fps一致。",
-    "woods": "Masters官方23.976fps，以主片29.97fps重复帧呈现，不变速，不造中间帧。"
+  "_facts": {
+    "jordan_example": "https://www.nba.com/news/history-finals-moments-michael-jordan-last-shot-1998",
+    "woods_2019": "https://www.pgatour.com/article/news/latest/2020/11/09/remembering-the-final-round-of-the-2019-masters-augusta-national-golf-club-tiger-woods",
+    "woods_sunday": "https://www.pgatour.com/article/news/latest/2024/02/12/tiger-woods-announces-new-sun-day-red-clothing-line",
+    "zheng_r3": "https://www.wtatennis.com/news/4572496/zheng-saves-match-point-rallies-from-5-0-down-in-third-set-to-stun-keys-at-us-open",
+    "zheng_r4": "https://www.usopen.org/en_US/news/articles/2026-09-07/zheng_qinwen_stuns_iga_swiatek_to_reach_2026_us_open_quarterfinals.html"
   },
+  "_tts_backend_why": "沿用已审定云健体育旁白；本片不使用Azure情绪标记。",
   "cover": {
     "eyebrow": "网球有故事",
-    "layout": "solo",
-    "subject": "郑钦文",
     "hook": "乔丹、伍兹之后\n美网写下了她",
-    "topic": "一条美网原帖的三个名字",
+    "layout": "solo",
     "portrait": {
-      "image": "assets/reel/zheng-us-open-2026-r4-celebrate.jpg",
+      "_fit_why": "本地 `render_cover_local.py` 渲了十版并排比（cv2 按缩放比模板匹配量脸位置）。原来的 fit: width / focus_y 0 脸只有 194px 高、头顶 y156 顶进台头带（0~170），上下 830px 全是模糊垫层，撞上「放大到接近铺满」那条；focus_y 0.5 脸不被压但同样只有 194px。改走 cover：focus 0.7 让脸（源图 x 800~990，0.69 处）居中，zoom 1.1 把图铺成 1584 高、focus_y 1.0 底对齐，整幅往上抬 144px——脸落在 y 252~758（眼 476、嘴 637、下巴 740），钩子第一行墨迹从 801 起，下巴上方还留 61px；头顶 263 离台头带 93px。眼睛睁着、大笑，指向包厢的指尖和护腕在左边缘露出来。",
+      "_low_res_why": "1280×720 铺 1080×1440 是放大 2.00 倍（zoom 1.1 之后 2.2 倍），够不着 `cover_photo_problem` 那道 1.00x 的地板。**这是美网这条渠道的天花板，不是没找够**：`f_` 前缀就是美网官方图片接口的顶档（CLAUDE.md 记过十二个前缀、六个目录、三种 `?width=` 参数都试过）。更高清的三条路赛后一小时内都还没有：AP 通讯社（`apnews.com/search?q=Zheng Swiatek US Open` 和 `/hub/tennis` 只有上一轮对凯斯那张 4331px 的）、USA TODAY 每日图集（9/7 的 sitemap 里没有网球辑）、WTA photo-resources（大满贯不进）。账号所有者要的是「赶紧」，先用官方实拍出片；AP 那张出来之后可以换封面重渲。",
+      "_photo_why": "美网官方图片接口这一场的实拍（`find_cover_photo.py --player Zheng --event \"US Open\" --date 2026-09-07` 扫到的 8 张里的一张，`f_20260907_SB2_6292.jpg`，Simon Bruty/USTA），说明自带四要素：`Qinwen Zheng reacts after winning a Women's Singles match on Day Nine of the 2026 US Open at USTA Billie Jean King National Tennis Center on Monday, September 7`——赢球那一刻、这一场、她举着拍子指向包厢、大笑、眼睛睁着（缩略图墙 192.5s 就是这一格），正是这条片子讲的情绪；打开看过。同一批另外七张是击球中（正手 ×4、反手 ×1、握拳 ×1、追球 ×1），情绪都不如这一张。",
+      "_zoom_why": "zoom 1.0（2.0×）下巴落在 804，压进钩子第一行墨迹（801）——正是 2026-08-31 吴易昺那条被退回的「脸被字横穿」的形状，差 3px 也不行；zoom 1.2 + focus_y 1.0 脸更大（552px）但发髻顶到 156、贴进台头带底边，指向包厢的手整个出画。1.1 是两头都留得下空的那一档（1.15 也过，只是少露一点手）。zoom 加大不能配 focus_y 0：那是顶对齐，把脸往钩子带里推（1.2/0 那版嘴在 852）。备用图 `zheng-us-open-2026-r4-fist.jpg` 也渲过：她低头垂眼咬牙攥拳，情绪是「咬住一分」不是赢球后的庆祝，不用。",
       "fit": "cover",
       "focus": 0.7,
-      "focus_y": 1.0,
-      "zoom": 1.1,
-      "_photo_why": "美网官方图片接口这一场的实拍（`find_cover_photo.py --player Zheng --event \"US Open\" --date 2026-09-07` 扫到的 8 张里的一张，`f_20260907_SB2_6292.jpg`，Simon Bruty/USTA），说明自带四要素：`Qinwen Zheng reacts after winning a Women's Singles match on Day Nine of the 2026 US Open at USTA Billie Jean King National Tennis Center on Monday, September 7`——赢球那一刻、这一场、她举着拍子指向包厢、大笑、眼睛睁着（缩略图墙 192.5s 就是这一格），正是这条片子讲的情绪；打开看过。同一批另外七张是击球中（正手 ×4、反手 ×1、握拳 ×1、追球 ×1），情绪都不如这一张。",
-      "_low_res_why": "1280×720 铺 1080×1440 是放大 2.00 倍（zoom 1.1 之后 2.2 倍），够不着 `cover_photo_problem` 那道 1.00x 的地板。**这是美网这条渠道的天花板，不是没找够**：`f_` 前缀就是美网官方图片接口的顶档（CLAUDE.md 记过十二个前缀、六个目录、三种 `?width=` 参数都试过）。更高清的三条路赛后一小时内都还没有：AP 通讯社（`apnews.com/search?q=Zheng Swiatek US Open` 和 `/hub/tennis` 只有上一轮对凯斯那张 4331px 的）、USA TODAY 每日图集（9/7 的 sitemap 里没有网球辑）、WTA photo-resources（大满贯不进）。账号所有者要的是「赶紧」，先用官方实拍出片；AP 那张出来之后可以换封面重渲。",
-      "_fit_why": "本地 `render_cover_local.py` 渲了十版并排比（cv2 按缩放比模板匹配量脸位置）。原来的 fit: width / focus_y 0 脸只有 194px 高、头顶 y156 顶进台头带（0~170），上下 830px 全是模糊垫层，撞上「放大到接近铺满」那条；focus_y 0.5 脸不被压但同样只有 194px。改走 cover：focus 0.7 让脸（源图 x 800~990，0.69 处）居中，zoom 1.1 把图铺成 1584 高、focus_y 1.0 底对齐，整幅往上抬 144px——脸落在 y 252~758（眼 476、嘴 637、下巴 740），钩子第一行墨迹从 801 起，下巴上方还留 61px；头顶 263 离台头带 93px。眼睛睁着、大笑，指向包厢的指尖和护腕在左边缘露出来。",
-      "_zoom_why": "zoom 1.0（2.0×）下巴落在 804，压进钩子第一行墨迹（801）——正是 2026-08-31 吴易昺那条被退回的「脸被字横穿」的形状，差 3px 也不行；zoom 1.2 + focus_y 1.0 脸更大（552px）但发髻顶到 156、贴进台头带底边，指向包厢的手整个出画。1.1 是两头都留得下空的那一档（1.15 也过，只是少露一点手）。zoom 加大不能配 focus_y 0：那是顶对齐，把脸往钩子带里推（1.2/0 那版嘴在 852）。备用图 `zheng-us-open-2026-r4-fist.jpg` 也渲过：她低头垂眼咬牙攥拳，情绪是「咬住一分」不是赢球后的庆祝，不用。"
+      "focus_y": 1,
+      "image": "assets/reel/zheng-us-open-2026-r4-celebrate.jpg",
+      "zoom": 1.1
     },
-    "scrim": "clear"
-  },
-  "push": {
-    "auto": false,
-    "summary": "郑钦文的零比五标签",
-    "lead": "三行官方原帖，两次0比5逆转。原声重回乔丹和伍兹的关键时刻，再看郑钦文如何让这个比分有了另一种意味。"
+    "scrim": "clear",
+    "subject": "郑钦文",
+    "topic": "一条美网原帖的三个名字",
+    "approved_image": "assets/reel/zheng-usopen-icons-approved-cover-v2.jpg",
+    "_approved_by_user": "用户确认品字型封面，并要求保留封面后将所有比赛画面裁切成1:1居中。"
   },
   "editorial": {
-    "mode": "match_review",
-    "question": "美网为什么用乔丹第六场与周日伍兹类比零比五落后的郑钦文？",
-    "thesis": "官方以三个特定场景并列赞叹关键表现；两场不同性质的0-5逆转让这个梗成立，而不是宣称她必胜或三人历史地位相同。",
     "beats": [
       "原帖引题",
       "乔丹第六场典故与关键原声",
@@ -61,43 +49,51 @@
         "https://www.wtatennis.com/news/4572496/zheng-saves-match-point-rallies-from-5-0-down-in-third-set-to-stun-keys-at-us-open",
         "https://www.usopen.org/en_US/news/articles/2026-09-07/zheng_qinwen_stuns_iga_swiatek_to_reach_2026_us_open_quarterfinals.html"
       ]
-    }
+    },
+    "mode": "match_review",
+    "question": "美网为什么用乔丹第六场与周日伍兹类比零比五落后的郑钦文？",
+    "thesis": "官方以三个特定场景并列赞叹关键表现；两场不同性质的0-5逆转让这个梗成立，而不是宣称她必胜或三人历史地位相同。"
   },
-  "_facts": {
-    "jordan_example": "https://www.nba.com/news/history-finals-moments-michael-jordan-last-shot-1998",
-    "woods_sunday": "https://www.pgatour.com/article/news/latest/2024/02/12/tiger-woods-announces-new-sun-day-red-clothing-line",
-    "woods_2019": "https://www.pgatour.com/article/news/latest/2020/11/09/remembering-the-final-round-of-the-2019-masters-augusta-national-golf-club-tiger-woods",
-    "zheng_r4": "https://www.usopen.org/en_US/news/articles/2026-09-07/zheng_qinwen_stuns_iga_swiatek_to_reach_2026_us_open_quarterfinals.html",
-    "zheng_r3": "https://www.wtatennis.com/news/4572496/zheng-saves-match-point-rallies-from-5-0-down-in-third-set-to-stun-keys-at-us-open"
+  "mixed_fps": {
+    "jordan": "NBA官方29.97fps，与主片整除降采样后的29.97fps一致。",
+    "woods": "Masters官方23.976fps，以主片29.97fps重复帧呈现，不变速，不造中间帧。"
+  },
+  "primary": "swiatek",
+  "push": {
+    "auto": false,
+    "lead": "三行官方原帖，两次0比5逆转。原声重回乔丹和伍兹的关键时刻，再看郑钦文如何让这个比分有了另一种意味。",
+    "summary": "郑钦文的零比五标签"
   },
   "segments": [
     {
+      "_why": "用户原截图完整缩放进安全区；没有改动原文或数据。",
       "image": "assets/social/zheng-usopen-icons/usopen-evidence.png",
-      "seconds": 8.5,
       "narration": "乔丹，伍兹，郑钦文。美网官方，为什么把这三个名字写在一起？",
-      "_why": "用户原截图完整缩放进安全区；没有改动原文或数据。"
+      "seconds": 8.5
     },
     {
-      "source": "jordan",
-      "start": 1254,
       "end": 1263.5,
-      "fit": "full_source",
-      "narration": "第六场的乔丹。最经典的一幕，发生在一九九八年总决赛。",
+      "fit": "square",
       "inset": {
+        "corner": "tr",
         "image": "assets/beatcards/zheng-usopen-icons/jordan-context.png",
         "kind": "story_text",
-        "corner": "tr",
-        "width": 0.6,
+        "motion": "editorial",
         "pad": 0.085,
         "show_for": 3.8,
-        "motion": "editorial"
-      }
+        "width": 0.6
+      },
+      "narration": "第六场的乔丹。最经典的一幕，发生在一九九八年总决赛。",
+      "source": "jordan",
+      "start": 1254,
+      "cx": 0.5,
+      "track": false
     },
     {
-      "source": "jordan",
-      "start": 1366,
+      "_why": "关键段无旁白和贴纸；小模型逐字时间码与画面交叉校对。",
+      "crosses_cut": "完整抢断到推进、关键投篮及暂停反应。",
       "end": 1401,
-      "fit": "full_source",
+      "fit": "square",
       "narration": "",
       "quote": [
         {
@@ -156,45 +152,87 @@
           "text": "...with 45 points.\n他已经拿下45分"
         }
       ],
-      "crosses_cut": "完整抢断到推进、关键投篮及暂停反应。",
-      "_why": "关键段无旁白和贴纸；小模型逐字时间码与画面交叉校对。"
+      "source": "jordan",
+      "start": 1366,
+      "cx": 0.5,
+      "track": false,
+      "square_pan": [
+        [
+          0,
+          0.65
+        ],
+        [
+          5,
+          0.65
+        ],
+        [
+          7,
+          0.55
+        ],
+        [
+          12,
+          0.55
+        ],
+        [
+          14,
+          0.4
+        ],
+        [
+          23,
+          0.4
+        ],
+        [
+          24,
+          0.5
+        ],
+        [
+          35,
+          0.5
+        ]
+      ]
     },
     {
+      "_why": "关键球后的暂停反应，解释第六场与关键时刻信任的联系。",
+      "end": 1407,
+      "fit": "square",
+      "narration": "这记反超，帮公牛拿下了第六冠。越到决定胜负的时候，越让人相信乔丹。",
       "source": "jordan",
       "start": 1398.5,
-      "end": 1407,
-      "fit": "full_source",
-      "narration": "这记反超，帮公牛拿下了第六冠。越到决定胜负的时候，越让人相信乔丹。",
-      "_why": "关键球后的暂停反应，解释第六场与关键时刻信任的联系。"
+      "cx": 0.5,
+      "track": false
     },
     {
-      "source": "woods",
-      "start": 24,
       "end": 34,
-      "fit": "full_source",
-      "narration": "周日的伍兹。高尔夫比赛通常在周日决出冠军，那身红衣，就是他决赛轮的标志。",
+      "fit": "square",
       "inset": {
+        "corner": "tr",
         "image": "assets/beatcards/zheng-usopen-icons/woods-context.png",
         "kind": "story_text",
-        "corner": "tr",
-        "width": 0.6,
+        "motion": "editorial",
         "pad": 0.085,
         "show_for": 3.8,
-        "motion": "editorial"
-      }
+        "width": 0.6
+      },
+      "narration": "周日的伍兹。高尔夫比赛通常在周日决出冠军，那身红衣，就是他决赛轮的标志。",
+      "source": "woods",
+      "start": 24,
+      "cx": 0.5,
+      "track": false
     },
     {
+      "end": 513.5,
+      "fit": "square",
+      "narration": "二零一九年大师赛，经历漫长低谷的伍兹，再次站到了夺冠的门前。",
       "source": "woods",
       "start": 504,
-      "end": 513.5,
-      "fit": "full_source",
-      "narration": "二零一九年大师赛，经历漫长低谷的伍兹，再次站到了夺冠的门前。"
+      "cx": 0.5,
+      "track": false
     },
     {
-      "source": "woods",
-      "start": 529,
+      "_why": "字幕来自原片base.en和small.en双次转写，关键动作完整。",
+      "crosses_cut": "完整最后一推到举起双臂、拥抱球童。",
       "end": 553,
-      "fit": "full_source",
+      "fit": "square",
       "narration": "",
       "quote": [
         {
@@ -228,109 +266,148 @@
           "text": "The return to glory.\n重返荣耀"
         }
       ],
-      "crosses_cut": "完整最后一推到举起双臂、拥抱球童。",
-      "_why": "字幕来自原片base.en和small.en双次转写，关键动作完整。"
+      "source": "woods",
+      "start": 529,
+      "cx": 0.5,
+      "track": false
     },
     {
-      "source": "swiatek",
-      "start": 186,
+      "crosses_cut": "同场向看台致意与获胜表情。",
       "end": 196,
-      "fit": "full_source",
-      "narration": "两个人的名字，代表关键时刻的信任。零比五落后的郑钦文，为什么也能在这份名单里？",
+      "fit": "square",
       "inset": {
+        "corner": "tr",
         "image": "assets/beatcards/zheng-usopen-icons/zheng-number.png",
         "kind": "story_text",
-        "corner": "tr",
-        "width": 0.6,
+        "motion": "editorial",
         "pad": 0.085,
         "show_for": 3.8,
-        "motion": "editorial"
+        "width": 0.6
       },
-      "crosses_cut": "同场向看台致意与获胜表情。"
+      "narration": "两个人的名字，代表关键时刻的信任。零比五落后的郑钦文，为什么也能在这份名单里？",
+      "source": "swiatek",
+      "start": 186,
+      "cx": 0.5,
+      "track": false
     },
     {
+      "crosses_cut": "看台到球员赛点前反应，明确讲本场后续比分。",
+      "end": 140.3,
+      "fit": "square",
+      "narration": "对凯斯，零比五已经是决胜盘。再丢一局，美网之旅就结束。",
       "source": "keys",
       "start": 131.4,
-      "end": 140.3,
-      "fit": "full_source",
-      "narration": "对凯斯，零比五已经是决胜盘。再丢一局，美网之旅就结束。",
-      "crosses_cut": "看台到球员赛点前反应，明确讲本场后续比分。"
+      "cx": 0.5,
+      "track": false
     },
     {
+      "crosses_cut": "完整挽救赛点回合和结果反应。",
+      "end": 148.8,
+      "fit": "square",
+      "narration": "追到一比五，凯斯还有赛点。郑钦文，把这一分救了回来。",
       "source": "keys",
       "start": 140.5,
-      "end": 148.8,
-      "fit": "full_source",
-      "narration": "追到一比五，凯斯还有赛点。郑钦文，把这一分救了回来。",
-      "crosses_cut": "完整挽救赛点回合和结果反应。"
+      "cx": 0.5,
+      "track": false
     },
     {
+      "end": 162.1,
+      "fit": "square",
+      "narration": "接着，是破发。机会没有自己回来，是她一分一分，争了回来。",
       "source": "keys",
       "start": 151.7,
-      "end": 162.1,
-      "fit": "full_source",
-      "narration": "接着，是破发。机会没有自己回来，是她一分一分，争了回来。"
+      "cx": 0.5,
+      "track": false
     },
     {
+      "crosses_cut": "完整制胜分到倒地庆祝。",
+      "end": 187.3,
+      "fit": "square",
+      "narration": "从零比五到七比五。她连赢七局，躺倒在了球场上。",
       "source": "keys",
       "start": 176,
-      "end": 187.3,
-      "fit": "full_source",
-      "narration": "从零比五到七比五。她连赢七局，躺倒在了球场上。",
-      "crosses_cut": "完整制胜分到倒地庆祝。"
+      "cx": 0.5,
+      "track": false
     },
     {
+      "crosses_cut": "同场首盘开局回合。",
+      "end": 26.85,
+      "fit": "square",
+      "narration": "下一轮，换成斯瓦泰克。开场又是零比五。对面那位，她此前八次交手，只赢过一次。",
       "source": "swiatek",
       "start": 16,
-      "end": 26.85,
-      "fit": "full_source",
-      "narration": "下一轮，换成斯瓦泰克。开场又是零比五。对面那位，她此前八次交手，只赢过一次。",
-      "crosses_cut": "同场首盘开局回合。"
+      "cx": 0.5,
+      "track": false
     },
     {
+      "crosses_cut": "两个盘点和破发机会的集锦，逐项只说对应局。",
+      "end": 40.7,
+      "fit": "square",
+      "narration": "这一次是首盘。斯瓦泰克拿到盘点，一个，救下。又一个，再救下。郑钦文，破了回来。",
       "source": "swiatek",
       "start": 28.3,
-      "end": 40.7,
-      "fit": "full_source",
-      "narration": "这一次是首盘。斯瓦泰克拿到盘点，一个，救下。又一个，再救下。郑钦文，破了回来。",
-      "crosses_cut": "两个盘点和破发机会的集锦，逐项只说对应局。"
+      "cx": 0.5,
+      "track": false
     },
     {
+      "crosses_cut": "盘点完整回合；尾部现场声留给落点。",
+      "end": 55,
+      "fit": "square",
+      "narration": "第三个盘点，她还是没让这盘结束。上一场的逆转，开始有了回声。",
       "source": "swiatek",
       "start": 44.6,
-      "end": 55,
-      "fit": "full_source",
-      "narration": "第三个盘点，她还是没让这盘结束。上一场的逆转，开始有了回声。",
-      "crosses_cut": "盘点完整回合；尾部现场声留给落点。"
+      "cx": 0.5,
+      "track": false
     },
     {
+      "crosses_cut": "首盘最后一分至转播全屏比分；旁白先述首盘，再交代后续整场结果。",
+      "end": 73.5,
+      "fit": "square",
+      "narration": "又是连赢七局。她把首盘追回来，再拿下第二盘，从资格赛，一路走进美网八强。",
       "source": "swiatek",
       "start": 61.8,
-      "end": 73.5,
-      "fit": "full_source",
-      "narration": "又是连赢七局。她把首盘追回来，再拿下第二盘，从资格赛，一路走进美网八强。",
-      "crosses_cut": "首盘最后一分至转播全屏比分；旁白先述首盘，再交代后续整场结果。"
+      "cx": 0.5,
+      "track": false
     },
     {
+      "crosses_cut": "完整第四个赛点到倒地庆祝，无提前截断。",
+      "end": 164.5,
+      "fit": "square",
+      "narration": "乔丹和伍兹，让人相信关键时刻他们能赢。郑钦文，让人看到零比五，也不敢认定她会输。两场比赛，两次连赢七局。",
       "source": "swiatek",
       "start": 151.7,
-      "end": 164.5,
-      "fit": "full_source",
-      "narration": "乔丹和伍兹，让人相信关键时刻他们能赢。郑钦文，让人看到零比五，也不敢认定她会输。两场比赛，两次连赢七局。",
-      "crosses_cut": "完整第四个赛点到倒地庆祝，无提前截断。"
+      "cx": 0.5,
+      "track": false
     },
     {
       "image": "assets/social/zheng-usopen-icons/usopen-evidence.png",
-      "seconds": 5.5,
-      "narration": "乔丹的第六场，伍兹的周日，郑钦文的零比五。"
+      "narration": "乔丹的第六场，伍兹的周日，郑钦文的零比五。",
+      "seconds": 5.5
     },
     {
+      "crosses_cut": "当场举拍致意与笑容收口，之后保留网球时差片尾。",
+      "end": 196.4,
+      "fit": "square",
+      "narration": "场次，星期几，落后的比分，都成了球员的标签。再看到零比五，你还会提前关掉直播吗？",
       "source": "swiatek",
       "start": 184.8,
-      "end": 196.4,
-      "fit": "crop",
-      "narration": "场次，星期几，落后的比分，都成了球员的标签。再看到零比五，你还会提前关掉直播吗？",
-      "crosses_cut": "当场举拍致意与笑容收口，之后保留网球时差片尾。"
+      "cx": 0.5,
+      "track": false
     }
-  ]
+  ],
+  "slug": "zheng-usopen-icons",
+  "sources": {
+    "jordan": "https://www.youtube.com/watch?v=kwAu78IiixE",
+    "keys": "https://www.youtube.com/watch?v=PiuDtMWKU2g",
+    "swiatek": "https://www.youtube.com/watch?v=Md8vyWg60fI",
+    "woods": "https://www.youtube.com/watch?v=ldsAXXuVSSc"
+  },
+  "tts_backend": "edge",
+  "_square_layout": {
+    "width": 1080,
+    "height": 1080,
+    "x": 0,
+    "y": 180,
+    "reason": "用户要求全部比赛画面1:1，平铺到中间"
+  }
 }
