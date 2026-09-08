@@ -23,7 +23,7 @@
       "_portrait_why": "同场WTA官方赛后报道高清实拍，橙色裙装、项链及绿底球场与原片一致。",
       "focus": 0.5,
       "focus_y": 0.5,
-      "zoom": 1.0,
+      "zoom": 1,
       "_photo_url": "https://photoresources.wtatennis.com/wta/photo/2026/09/08/daccd33c-83b0-4b73-b5e5-883218b09d59/Aryna_Sabalenka_-_US_Open_2026_-_Day_10-DSC_2796.jpg"
     },
     "eyebrow": "赛场之上",
@@ -208,7 +208,7 @@
     "narration": [
       "首盘错过发球胜盘局，萨巴伦卡没有松手。抢七六比一，盘点就在眼前。",
       "这位温网冠军没有退让，第二盘六比三，比赛回到同一起点。",
-      "决胜盘抢十，每一分都不容有失。诺斯科娃步步紧逼，萨巴伦卡顶住压力，悬念留到最后。"
+      "决胜盘又走到抢十。诺斯科娃步步紧逼，萨巴伦卡把胜负悬念扛到了最后。"
     ],
     "mode": "match_review"
   },
@@ -257,8 +257,13 @@
         },
         {
           "at": 5.41,
+          "end": 8.37,
+          "text": "The world number one stretched to the\n世界第一在纽约"
+        },
+        {
+          "at": 8.37,
           "end": 10.32,
-          "text": "The world number one stretched\nto the limit in New York.\n世界第一在纽约被逼到极限。"
+          "text": "limit in New York,\n被逼到了极限"
         }
       ],
       "fit": "crop",
@@ -277,7 +282,7 @@
     {
       "title_card": "首盘抢七压制",
       "kicker": "01",
-      "seconds": 2.0,
+      "seconds": 3,
       "_why": "自动链机械插的章节卡（review 路线 ⑤）：editorial.chapters 对应这个 beat，插在它的第一段之前",
       "narration": "首盘抢七压制",
       "image": "<title_card>{\"text\": \"首盘抢七压制\", \"kicker\": \"01\"}"
@@ -293,17 +298,17 @@
     {
       "title_card": "温网冠军反扑",
       "kicker": "02",
-      "seconds": 2.0,
+      "seconds": 3,
       "_why": "自动链机械插的章节卡（review 路线 ⑤）：editorial.chapters 对应这个 beat，插在它的第一段之前",
       "narration": "温网冠军反扑",
       "image": "<title_card>{\"text\": \"温网冠军反扑\", \"kicker\": \"02\"}"
     },
     {
       "start": 110.4,
-      "end": 125.2,
+      "end": 120,
       "narration": "这位温网冠军没有退让，第二盘六比三，比赛回到同一起点。",
       "_beat": 2,
-      "crosses_cut": "114.85、120.09秒由盘点回合切到诺斯科娃及包厢庆祝，完整交代第二盘结局。",
+      "crosses_cut": "114.85秒由盘点落地切到诺斯科娃包厢庆祝；120.09秒转观众前收住。",
       "_why": "诺斯科娃盘点及庆祝，英文原声124.72确认6-3。",
       "voice": {
         "lead_pause": 1.5,
@@ -314,24 +319,23 @@
     {
       "title_card": "抢十寸步不让",
       "kicker": "03",
-      "seconds": 2.0,
+      "seconds": 3,
       "_why": "自动链机械插的章节卡（review 路线 ⑤）：editorial.chapters 对应这个 beat，插在它的第一段之前",
       "narration": "抢十寸步不让",
       "image": "<title_card>{\"text\": \"抢十寸步不让\", \"kicker\": \"03\"}"
     },
     {
       "start": 130.4,
-      "end": 160.2,
-      "narration": "决胜盘抢十，每一分都不容有失。诺斯科娃步步紧逼，萨巴伦卡顶住压力，悬念留到最后。",
+      "end": 141.2,
+      "narration": "决胜盘又走到抢十。诺斯科娃步步紧逼，萨巴伦卡把胜负悬念扛到了最后。",
       "_beat": 3,
-      "_why": "决胜盘抢十回合；141.32为同一分后的诺斯科娃反应；镜头后进入9-7赛点。",
-      "crosses_cut": "141.32秒由同一分的场内回合切到诺斯科娃反应，随后继续决胜盘抢十；按原片时间顺序保留。",
+      "_why": "130.4–141.2秒完整抢十回合；球落地后、141.32秒反应镜头切点前收住。",
       "score_inset": true
     },
     {
       "stat_card": true,
-      "seconds": 14.0,
-      "narration": "诺斯科娃十八记Ace、四十六个制胜分，两项都更多。萨巴伦卡赢下的，却是两盘抢七。",
+      "seconds": 10,
+      "narration": "诺斯科娃的Ace和制胜分都更多。萨巴伦卡赢下的，却是两盘抢七。",
       "_why": "完整数据图展示18比12个Ace、46比42个制胜分；统计反差与两盘抢七结果为复盘论点提供证据。",
       "image": "<stat_card>"
     },
@@ -345,7 +349,7 @@
       "crosses_cut": "保留完整赛点及紧接其后的获胜、对手反应；所有画面同场，具体时码与身份见MiniMax原始通过证据。",
       "_reviewed_ending_boundary": "原片182.5秒两人网前拥抱；184.5秒已经松手分开。按合同在握手完成后的第一个已核实画面边界收住，不接之后挥手和包厢。MiniMax报告保留原文，实际片尾仍完整覆盖166.67–176.99秒冷开场。",
       "voice": {
-        "lead_pause": 1.0,
+        "lead_pause": 1,
         "_why": "发球先动；得分口播落在169.97秒落点与庆祝之后，握手前说完。"
       }
     }
