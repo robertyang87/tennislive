@@ -27,6 +27,7 @@ from tools.spec_wording import (  # noqa: E402
     RALLY_SECONDS_LEGACY,
     check_interview_copy_wording,
     check_spec_wording,
+    voiced_texts,
 )
 
 
@@ -279,3 +280,68 @@ def test_模型草稿转正那一刻也要过措辞判据():
     assert body.index("check_spec_wording", i) > i, (
         "措辞判据要排在 validate_spec 之后的转正路径上")
     assert "xhs_copy(spec)" in body[i:], "转正生成的小红书正文也要一起扫"
+
+
+def test_push和topbar里的注解不算文案():
+    """`voiced_texts` 跳过 `_` 开头的键——判据不许被自己的注释误伤。
+
+    来路（2026-09-08，`zheng-swiatek-us-open-2026-r4` 重渲那趟）：我把一段
+    「为什么按新轮次写法重渲」的注解写进 `push` 块，里面提到「第 3 段**双语
+    字幕**的中文行」，`enforce_spec_wording` 当场报
+
+        文案里提了字幕这类制作规格：['双语字幕']
+
+    ——而**文案里一个字都没有**，命中的是注解本身。这是本仓库记过五次的
+    「判据扫得太宽，被自己的注释误伤」，这是第六次；前五次误伤的是工作流的
+    注释，这次误伤的是 spec 的注解。
+
+    ⚠️ CLAUDE.md 里那句「今天全库 topbar 一个注解都没有，所以它是休眠的」
+    **只对 `topbar` 成立**：量过，全库 **128 个** spec 的 `push`/`topbar`
+    块里带着 `_` 注解（`_summary_why` / `_lead_why` 本来就住在 `push` 里），
+    也就是说这个缺口在 `push` 那一头从来就不是休眠的，只是没被踩到。
+
+    ⚠️ 收窄的方向是安全的：`_` 开头按本仓库的约定就是写给下一个人的注解，
+    不进产物、不被念出来，而 `outward_deep` 早就是这个口径——两处不一致
+    本身就是分叉。
+
+    两头都钉：注解不许被扫到、**真的会发出去的那几栏一个都不许漏**。
+    只钉前一头的话，一个 `return []` 也能过。
+    """
+    spec = {
+        "cover": {"hook": "钩子这一行"},
+        "push": {"summary": "推送标题", "lead": "推送正文",
+                 "_lead_why": "第 3 段双语字幕的中文行，十一点十分开球，一发三成四"},
+        "topbar": {"line1": "顶栏第一行", "line2": "顶栏第二行",
+                   "_line1_why": "这一句注解里也写着双语字幕"},
+        "segments": [{"narration": "旁白这一段"}],
+    }
+    texts = voiced_texts(spec)
+    joined = "".join(texts)
+
+    # ① 注解不许进这个面
+    assert "双语字幕" not in joined, (
+        "`push`/`topbar` 里 `_` 开头的注解被当成了文案——判据被自己的注释误伤")
+    assert "十一点十分" not in joined and "三成四" not in joined
+
+    # ② 真的会发出去的那几栏一个都不许漏
+    for must in ("钩子这一行", "推送标题", "推送正文", "顶栏第一行",
+                 "顶栏第二行", "旁白这一段"):
+        assert must in joined, f"收窄把真的会发出去的「{must}」也漏掉了"
+
+
+def test_注解里提字幕规格不许让这条spec红():
+    """走真入口 `check_spec_wording`，不是只测那个函数。
+
+    ⚠️ 上一条只验 `voiced_texts` 的局部行为；拦不住「函数收窄了，而闸从
+    别的面又把注解扫了回来」。这一条真跑一遍闸。
+    """
+    spec = {
+        "cover": {"hook": "两行钩子", "matchup": [{"name": "郑钦文"},
+                                                  {"name": "斯瓦泰克"}]},
+        "push": {"summary": "郑钦文翻盘斯瓦泰克",
+                 "_rewording_why": "第 3 段双语字幕的中文行改成了 1/4 决赛"},
+        "topbar": {"line1": "2026 美网 女单第四轮"},
+        "segments": [{"narration": "美网第四轮，郑钦文对斯瓦泰克。"}],
+    }
+    problems = check_spec_wording(spec, "unit-test-slug", None)
+    assert not any("字幕" in p for p in problems), problems

@@ -290,14 +290,27 @@ CAPTION_LEAD_LEGACY = frozenset({
 
 
 def voiced_texts(spec: dict) -> list[str]:
-    """钩子 + push 字符串 + 旁白 + 顶栏——「几成几/写秒/报到分」那三条的面。"""
+    """钩子 + push 字符串 + 旁白 + 顶栏——「几成几/写秒/报到分」那三条的面。
+
+    ⚠️ **`_` 开头的键跳过**，和 `outward_deep` 同一个口径。这个仓库的约定是
+    `_` 开头一律是写给下一个人的注解（`_summary_why` / `_lead_why` /
+    `_rewording_why` 就在 `push` 块里），它们不进产物、不被念出来。
+    2026-09-08 之前这儿不过滤，于是往 `push` 写一句「第 3 段双语字幕的中文行」
+    当场被 `BILINGUAL_MENTION` 判成「文案里提了字幕这类制作规格」——
+    **判据被自己的注释误伤**，这个仓库记过五次的那个形状，这是第六次。
+    量过：全库 128 个 spec 的 `push`/`topbar` 块里带着 `_` 注解，也就是说
+    这不是边角情形；CLAUDE.md 里那句「今天全库 topbar 一个注解都没有，所以
+    它是休眠的」只对 `topbar` 成立，**对 `push` 从来就不成立**。
+    """
+    def _said(block) -> list[str]:
+        return [str(v) for k, v in (block or {}).items()
+                if isinstance(v, str) and not str(k).startswith("_")]
+
     texts = [str((spec.get("cover") or {}).get("hook") or "")]
-    texts += [str(v) for v in (spec.get("push") or {}).values()
-              if isinstance(v, str)]
+    texts += _said(spec.get("push"))
     texts += [str(s.get("narration") or "") for s in spec.get("segments") or []
               if isinstance(s, dict)]
-    texts += [str(v) for v in (spec.get("topbar") or {}).values()
-              if isinstance(v, str)]
+    texts += _said(spec.get("topbar"))
     return texts
 
 
