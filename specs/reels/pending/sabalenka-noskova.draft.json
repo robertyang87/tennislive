@@ -220,6 +220,29 @@
   },
   "segments": [
     {
+      "start": 166.67,
+      "end": 176.99,
+      "narration": "",
+      "_ending_payoff_required": true,
+      "_quote_kind": "broadcast",
+      "quote": [
+        {
+          "at": 3.41,
+          "text": "game. [cheering]\n比赛。[欢呼声]"
+        },
+        {
+          "at": 5.41,
+          "text": ">> The world number one stretched to the\n>> 世界第一在纽约被逼到极限，"
+        },
+        {
+          "at": 8.37,
+          "text": "limit in New York,\n在纽约被逼到极限，"
+        }
+      ],
+      "fit": "crop",
+      "_why": "MiniMax 视觉证据：Frame 167.5s shows 'MATCH POINT' graphic on scoreboard with Sabalenka serving at 7-6(1) 3-6 6-6(7). Frames 169.5s–170.5s show Sabalenka serving the deciding point. Frames 172.5s–176.5s show Sabalenka in orange with head tilted back in emotional winner reaction, scoreboard now showing 7 3 7 final.；英文原声来自 captions.txt。"
+    },
+    {
       "start": 14.3,
       "end": 21.35,
       "narration": "美网八强战，世界第一迎战温网冠军。",
@@ -248,6 +271,13 @@
       "narration": "决胜盘抢十，每一分都不容有失。温网冠军步步紧逼，萨巴伦卡顶住压力，把悬念留到最后。",
       "_beat": 3,
       "_why": "决胜盘抢十回合；141.32为同一分后的诺斯科娃反应；镜头后进入9-7赛点。"
+    },
+    {
+      "start": 166.67,
+      "end": 192.41,
+      "narration": "火力统计不占优，萨巴伦卡如何赢下这场苦战？",
+      "fit": "crop",
+      "_why": "正文重新兑现冷开场的完整结局：Reuses cold-open match point (166.67–176.99: serving + winner reaction), then 179.46–181.5s shows both players walking to net, 182.5s–183.5s shows the handshake at net, 184.5s–185.5s shows Sabalenka waving to the crowd. Ending fully covers cold open window."
     }
   ],
   "_visual_evidence_history": [
@@ -293,5 +323,47 @@
       ],
       "cover_image": "assets/reel/sabalenka-noskova-cover.jpg"
     }
-  ]
+  ],
+  "_visual_evidence": {
+    "model": "MiniMax-M3",
+    "status": "pass",
+    "visual_status": "pass",
+    "retryable": false,
+    "cold_open": {
+      "start": 166.67,
+      "end": 176.99,
+      "kind": "match_point",
+      "winner_visible": true,
+      "reason": "Frame 167.5s shows 'MATCH POINT' graphic on scoreboard with Sabalenka serving at 7-6(1) 3-6 6-6(7). Frames 169.5s–170.5s show Sabalenka serving the deciding point. Frames 172.5s–176.5s show Sabalenka in orange with head tilted back in emotional winner reaction, scoreboard now showing 7 3 7 final.",
+      "confidence": 0.95
+    },
+    "ending": {
+      "start": 166.67,
+      "end": 192.41,
+      "kind": "aftermath",
+      "winner_visible": true,
+      "reason": "Reuses cold-open match point (166.67–176.99: serving + winner reaction), then 179.46–181.5s shows both players walking to net, 182.5s–183.5s shows the handshake at net, 184.5s–185.5s shows Sabalenka waving to the crowd. Ending fully covers cold open window.",
+      "confidence": 0.92
+    },
+    "cover": {
+      "same_match": true,
+      "subject": "萨巴伦卡",
+      "moment": "other",
+      "wrong_or_old": false,
+      "reason": "Cover photo shows a player in the same bright orange Nike mesh dress with crystal-embellished neckline worn by Sabalenka throughout the match footage (e.g., frames at 14.5s, 42.5s, 166.5s, 172.5s). Forehand volley stretch pose on US Open-style hard court (blue court, green surround). Forearm tattoo visible, matching Sabalenka. The photo is an action/forehand shot (not celebration), consistent with the cover rule specifying an action photo rather than celebration.",
+      "confidence": 0.82
+    },
+    "problems": [],
+    "model_attempts": 1,
+    "input_sha256": "1eada09cd08d1f69b216cf6d02876d1fb0f60133e33144f0ef69eca5ecc91d63",
+    "inputs": [
+      "contact_00.jpg",
+      "contact_01.jpg",
+      "contact_02.jpg",
+      "contact_03.jpg",
+      "contact_04_detail.jpg"
+    ],
+    "cover_image": "assets/reel/sabalenka-noskova-cover.jpg"
+  },
+  "_segments_source": " + MiniMax 冷开场/结尾视觉闸"
 }
