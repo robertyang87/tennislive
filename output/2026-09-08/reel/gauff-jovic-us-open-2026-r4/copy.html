@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>9.8 赛场之上 | 高芙三十四分钟拿下首盘</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>高芙三十四分钟拿走首盘，直落两盘送走约维奇
+
+北京时间9月8日早上七点多，美网女单第四轮，阿瑟·阿什球场的夜场。四号种子高芙6-1 6-4战胜十四号种子约维奇，用时1小时33分钟，第三次打进美网四分之一决赛。
+
+两个美国人的对决，转播管这叫 all American affair。一边是22岁的高芙，一边是18岁的约维奇。
+
+首盘几乎是一边倒。约维奇连着三个发球局被破，高芙自己五个发球局一个没丢，34分钟就把这一盘拿走。转播在她拿下首盘时报了一句：这是高芙连着赢下的第19盘。
+
+第二盘约维奇是真的回稳了。她的一发得分率从首盘的29%提到52%，拿到的两个破发点全部兑现，一度2-1领先，把这一盘拖到了59分钟——比首盘多了将近一倍。但她始终没能再往前一步，高芙在自己的发球胜赛局上40-30拿到赛点，6-4收掉比赛。
+
+有一组数字值得单独看一眼：约维奇全场只拿到2个破发点，2个都兑现了，转化率100%；高芙拿到11个，兑现5个，45%。单看转化率是约维奇更高，可机会数差了五倍多——高芙一整场都在对方发球局上施压，这才是最后净胜21分（65比44）的来处。
+
+另一组是击球质量。约维奇9个制胜分对30个非受迫失误，高芙是18个制胜分对15个非受迫失误。第二盘她的发球找回来了，可这笔失误的账补不回来。
+
+这场球的底子是多拍对抗。开场第一分两个人就来回拉扯了很久，转播当时说，今晚会有不少这样的长回合——后面第二盘2-2那一分同样拉锯了很久，最后还是高芙拿下。
+
+比赛结束时约维奇站在网前鼓掌致意，看台和教练席整排站了起来。转播的最后一句是：从她的反应看得出，高芙知道这场球不好打，而她扛住了。
+
+下一轮，高芙还能这么顺吗？
+
+#网球时差 #美网 #高芙 #约维奇 #赛场之上</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>下一轮，高芙还能这么顺吗？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
