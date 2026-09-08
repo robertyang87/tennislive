@@ -860,14 +860,24 @@ def test_喂给模型的教材里不许出现会被措辞闸拦下的写法():
     ⚠️ 所以教材里这条规矩**只写正例**（「只能写 决赛/半决赛/1/4决赛/1/8决赛/
     第N轮」），
     不列反例：列反例既会被这条判据拦下，也真的会让模型 pattern-match 到那个词。
+
+    ⚠️⚠️ **2026-09-08 晚闸收窄成「只拦轮次名，不拦成绩」之后，教材故意没跟着
+    放宽**——「打进 8 强」现在过得了闸，可教材仍然只教那一条阶梯
+    （冠军/亚军/半决赛/1/4决赛/1/8决赛/第几轮）。理由是上面那句话反过来用：
+    **给模型看的每一个词它都可能照着产**，教两种写法的下场就是同一个账号把
+    同一件事说两个样子。闸定的是**下限**（什么不许发），教材定的是**房子的
+    写法**（我们怎么说），后者可以更窄——别看见闸放宽了就来「同步」教材。
     """
-    from tools.spec_wording import LOVE_GAME, STRENGTH_ROUND  # noqa: PLC0415
+    from tools.spec_wording import LOVE_GAME  # noqa: PLC0415
+    from tools.spec_wording import strength_round_hits  # noqa: PLC0415
 
     draft = load("draft_spec")
     for name, text in (("旁白 prompt", draft.system_prompt()),
                        ("推送 prompt", draft.push_system_prompt())):
-        for label, pattern in (("轮次", STRENGTH_ROUND), ("爱局", LOVE_GAME)):
-            hits = sorted({m.group(0) for m in pattern.finditer(text)})
+        for label, judge in (
+                ("轮次", strength_round_hits),
+                ("爱局", lambda t: sorted({m.group(0) for m in LOVE_GAME.finditer(t)}))):
+            hits = judge(text)
             assert not hits, (
                 f"{name} 里出现了会被{label}那道闸拦下的写法：{hits}——"
                 f"模型会照着产，然后草稿转不了正、链子静静卡住。"

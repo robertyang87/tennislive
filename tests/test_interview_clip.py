@@ -3174,22 +3174,18 @@ def test_分歧率认领要钉在当时那次观测上():
 # ⚠️ 这条线的扫描面**含 `zh`**（受访者引语的译文，读者读到的正是它），所以
 # 表里有几条命中的是球员自己说的那句「大概是八强左右」——那是**译法**问题，
 # 已发的不追改。`.draft.json` 不在 `_specs()` 里，草稿不进表。
+#
+# ⚠️ **2026-09-08 当晚闸收窄成「只拦轮次名，不拦成绩」之后，这张表从 16 条
+# 降到 9 条**——放出去的 7 条全是「打进 8 强」「晋级 16 强」那一类。
+# 闸收窄了豁免表就要跟着缩：留着一个已经不违规的名字，它会一直静静地绿着，
+# 而下面那条 `missing` 自检正是为它写的。
 _LEGACY_ROUND_NAMES = {
-    "alexandrova-sabalenka-tor2026-r16.json",
-    "alexandrova-sabalenka-tor2026-r16.xhs.txt",
-    "eala-svitolina-dc2026-qf.json", "eala-svitolina-dc2026-qf.xhs.txt",
-    "monfils-vallejo-us-open-2026-r1-interview.json",
-    "monfils-vallejo-us-open-2026-r1-interview.xhs.txt",
+    "alexandrova-sabalenka-tor2026-r16.json", "eala-svitolina-dc2026-qf.json",
+    "eala-svitolina-dc2026-qf.xhs.txt",
     "swiatek-zheng-us-open-2026-r4-presser.json",
     "swiatek-zheng-us-open-2026-r4-presser.xhs.txt",
-    "zheng-keys-us-open-2026-r3-interview.json",
-    "zheng-keys-us-open-2026-r3-interview.xhs.txt",
-    "zheng-keys-us-open-2026-r3-presser.xhs.txt",
-    "zheng-keys-us-open-2026-r3-tennis-channel.json",
     "zheng-swiatek-us-open-2026-r4-interview.json",
     "zheng-swiatek-us-open-2026-r4-interview.xhs.txt",
-    "zheng-swiatek-us-open-2026-r4-presser.json",
-    "zheng-swiatek-us-open-2026-r4-presser.xhs.txt",
 }
 
 
@@ -3207,13 +3203,22 @@ def test_轮次写分数式不写N强():
     这儿原来手抄了一遍 match-reel 那个正则，两处各写一遍必然分叉——而分叉的
     样子是「同一条规矩两条线松紧不一」，不报错。
 
+    ⚠️⚠️ **同日晚上账号所有者又收窄了一档，改的是判据的形状不是主语**：
+    「**比如说他打进了 8 强或 16 强，这个是可以的，但是比赛不能说是 16 强的
+    比赛，应该说是……第四轮比赛，或者是 1/4 决赛，或者是 1/8 决赛这种**」。
+    也就是这条规矩管的从来不是「强」这个字，是**「N 强」被当成一个轮次名去
+    指称一场球**——「打进 8 强」是成绩，放行；「美网 16 强」是轮次名，拦。
+    判据因此不再是一条裸正则，是 `spec_wording.strength_round_hits()`
+    （到达类动词/次数标记 + N 强 → 放行）。**别再直接拿
+    `STRENGTH_ROUND_TOKEN` 当闸用**，那会把他点名允许的那一类全判成违规。
+
     **只查会发出去的字段**：`zh`（对话字幕，读者读到的正是这个）、
     `push.*`、`cover.*`、`takeaway.*`，以及 `.xhs.txt` 小红书正文。
     `_` 开头的是写给下一个人的注解（`_note` / `_why` / `_event_why` 这类，
     里面正引着账号所有者那两句原话，含被废掉的旧叫法）——连它一起扫会把
     「把规矩记下来」判成「又违反了规矩」，同一个错这个仓库已经犯过好几次。
     """
-    from tools.spec_wording import STRENGTH_ROUND as bad  # noqa: PLC0415
+    from tools.spec_wording import strength_round_hits as bad  # noqa: PLC0415
 
     def outward(obj):
         if isinstance(obj, dict):
@@ -3229,12 +3234,11 @@ def test_轮次写分数式不写N强():
 
     offenders = {}
     for path in _specs():
-        hits = sorted({m.group(0) for text in outward(
-            json.loads(path.read_text(encoding="utf-8"))) for m in bad.finditer(text)})
+        hits = bad(outward(json.loads(path.read_text(encoding="utf-8"))))
         if hits:
             offenders[path.name] = hits
     for path in sorted(SPECS.glob("*.xhs.txt")):
-        hits = sorted({m.group(0) for m in bad.finditer(path.read_text(encoding="utf-8"))})
+        hits = bad(path.read_text(encoding="utf-8"))
         if hits:
             offenders[path.name] = hits
 
