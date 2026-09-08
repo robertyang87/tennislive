@@ -13,6 +13,10 @@ name: Push existing content to PlusPlus
 # 定时产、自己推，不再走这条。
 
 on:
+  # Explicit one-time resend requested by the account owner after copy correction.
+  push:
+    branches: [main]
+    paths: [data/manual_push_requests/2026-09-08-zheng-copy.json]
   workflow_dispatch:
     inputs:
       date:
@@ -38,8 +42,14 @@ permissions:
   # **不会**创建 workflow run，见 `trigger_pages_build`。
   actions: write
 
+concurrency:
+  group: push-existing-content
+  cancel-in-progress: false
+
 jobs:
   push-existing:
+    # An uncertain POST must not be retried by rerunning the same request.
+    if: github.event_name == 'workflow_dispatch' || github.run_attempt == 1
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -61,9 +71,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
           PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
-          INPUT_DATE: ${{ inputs.date }}
-          INPUT_SCOPE: ${{ inputs.scope }}
-          INPUT_SLUG: ${{ inputs.slug }}
+          INPUT_DATE: ${{ github.event_name == 'push' && '2026-09-08' || inputs.date }}
+          INPUT_SCOPE: ${{ github.event_name == 'push' && 'explainer' || inputs.scope }}
+          INPUT_SLUG: ${{ github.event_name == 'push' && 'zheng-china-wuhan-wildcards-v2' || inputs.slug }}
           # Fresh GitHub Pages assets can take several minutes to propagate.
           TENNISLIVE_PUSHPLUS_IMAGE_SETTLE_SECONDS: '20'
           TENNISLIVE_PUSHPLUS_IMAGE_ATTEMPTS: '20'
