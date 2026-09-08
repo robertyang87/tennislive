@@ -211,12 +211,19 @@ CLOCK_MINUTE_LEGACY = frozenset({
 #: 2026-09-08 又换回「用了 N 强」的这 34 个。表的大小每次都跟着倒过来，
 #: 因为**旧写法本来就是上一版规矩要求的**。
 #:
-#: ⚠️ 这 34 个文件**全部已经发出去了**（逐条查过 `data/reel_publish_ledger/`
+#: ⚠️ 表里的文件**全部已经发出去了**（逐条查过 `data/reel_publish_ledger/`
 #: 和 `output/*/reel/*/pushed.json`；`eala-fernandez` / `eala-svitolina` /
 #: `wong-brooksby` / `wong-gea` 那四条是台账建立之前发的，判据是它们的
 #: `push.summary` ——那几句本来就是照已发的 copy.html 标题补回来的）。
 #: 已发的片子不为措辞重渲，`push.summary` 还要和已发的 copy.html 逐字相同
 #: （`wong-brooksby` 的「黄泽林首进ATP四强」就在里面）。
+#:
+#: ⚠️ **`rybakina-osaka-us-open-2026-r4` 是唯一一条从表里减出去的**：规矩落地
+#: 时它才发出去二十分钟，账号所有者要求重渲。成片按新写法重渲之后**替换同一个
+#: Release 附件**——微信里那个 ▶ 按钮指的就是那个地址，替换等于把已经发出去的
+#: 那条消息指向改好的片子，**不是再发一条**（`pushed.json` 在仓库里，
+#: `auto-push-reel` 会跳过）。代价写在它 spec 的 `push._lead_why` 里：
+#: 微信正文那一份收不回来，所以 spec 和已发消息从此对不上。
 #: **只许减不许加**，自检在 pytest 那头（每个名字都要真的还命中）。
 STRENGTH_ROUND_LEGACY = frozenset({
     "andreeva-bartunkova-us-open-2026-r3.xhs.txt",
@@ -231,8 +238,6 @@ STRENGTH_ROUND_LEGACY = frozenset({
     "fritz-cerundolo-us-open-2026-r3.xhs.txt",
     "monfils-vallejo-us-open-2026-r1.xhs.txt",
     "osaka-mertens-us-open-2026-r3.xhs.txt",
-    "rybakina-osaka-us-open-2026-r4.json",
-    "rybakina-osaka-us-open-2026-r4.xhs.txt",
     "swiatek-bouzkova-us-open-2026-r3.json",
     "swiatek-bouzkova-us-open-2026-r3.xhs.txt", "wong-brooksby.json",
     "wong-brooksby.xhs.txt", "wong-gea.json", "wong-gea.xhs.txt",
