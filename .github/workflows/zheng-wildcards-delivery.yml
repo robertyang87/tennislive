@@ -3,7 +3,6 @@ on:
   push:
     branches: [story/zheng-wildcards-20260908]
     paths:
-      - .github/workflows/zheng-wildcards-delivery.yml
       - tools/build_zheng_wildcard_story.py
       - tools/package_zheng_wildcard_story.py
 permissions:
@@ -14,7 +13,7 @@ concurrency:
 jobs:
   render:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 50
     env:
       OUTDIR: output/2026-09-08/explainer/zheng-china-wuhan-wildcards
       GH_TOKEN: ${{ github.token }}
@@ -31,12 +30,67 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Install renderer dependencies
+      - name: 缓存 apt 包（中文字体 + ffmpeg，绕开镜像抽风）
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/apt-archives
+            ~/.cache/apt-lists
+          key: apt-pkgs-${{ runner.os }}-24.04-explainer-v2-${{ github.run_id }}
+          restore-keys: |
+            apt-pkgs-${{ runner.os }}-24.04-explainer-v2-
+      - name: 安装中文字体（幻灯需要）
+        timeout-minutes: 15
         run: |
-          pip install -q -e '.[webrender]' edge-tts
           source tools/ci_apt_install.sh
-          apt_install_cached fonts-noto-cjk ffmpeg
-          python -m playwright install --with-deps chromium
+          apt_install_cached fonts-noto-cjk
+
+      - name: 安装 tennislive + edge-tts
+        run: |
+          pip install -q -e ".[webrender]"
+          pip install -q edge-tts
+
+      - name: 缓存 Chromium
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-chromium-${{ runner.os }}-${{ hashFiles('pyproject.toml') }}
+          restore-keys: playwright-chromium-${{ runner.os }}-
+
+      - name: 安装 Chromium
+        timeout-minutes: 10
+        run: |
+          pw_wait_apt() {
+            for _ in $(seq 1 22); do
+              if ! pgrep -x apt-get >/dev/null && ! pgrep -x dpkg >/dev/null; then
+                return 0
+              fi
+              sleep 5
+            done
+            echo "::warning::等了 110 秒 dpkg 锁还没松开——下一次尝试八成会在两秒内死在 Could not get lock，不是 apt 装不上"
+            sudo pkill -9 apt-get 2>/dev/null || true
+            sudo pkill -9 dpkg 2>/dev/null || true
+            sudo dpkg --configure -a 2>/dev/null || true
+          }
+          pw_retry() {
+            for i in 1 2; do
+              timeout 240 python -m playwright install --with-deps chromium && return 0
+              echo "::warning::装 Chromium 第 $i 次没跑完（多半卡在 --with-deps 的 apt）"
+              pw_wait_apt
+            done
+            echo "::error::装 Chromium 两次都没成功"
+            return 1
+          }
+          pw_retry
+
+      - name: 安装 ffmpeg
+        timeout-minutes: 15
+        run: |
+          source tools/ci_apt_install.sh
+          ensure_ffmpeg
+
+      - name: Prepare output checkout before rendering
+        run: git sparse-checkout add "$OUTDIR"
       - name: Render reviewed native cards and narration
         run: python tools/build_zheng_wildcard_story.py --outdir "$OUTDIR"
       - name: Package and validate actual output
@@ -58,10 +112,9 @@ jobs:
           curl --fail --location --range 0-99 --output /dev/null "https://github.com/$GITHUB_REPOSITORY/releases/download/$TAG/explainer.mp4"
       - name: Commit only lightweight delivery files to the feature branch
         run: |
-          git sparse-checkout add "$OUTDIR"
           rm -f "$OUTDIR"/*.mp4 "$OUTDIR"/voice_*.mp3 "$OUTDIR"/slide_*.html
-          git config user.name 'TennisLive'
-          git config user.email 'actions@users.noreply.github.com'
+          git config user.name "Claude"
+          git config user.email "noreply@anthropic.com"
           git add --sparse "$OUTDIR"
           python tools/check_staged_file_sizes.py
           git commit -m 'content: reviewed Zheng wildcard delivery package'
