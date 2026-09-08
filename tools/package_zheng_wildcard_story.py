@@ -35,7 +35,7 @@ def main():
     text=(ROOT/'docs/research/zheng-wildcards-publish-copy.md').read_text().split('## 置顶补充')[0].removeprefix('# 发布文案\n\n').strip()
     (out/'xiaohongshu.txt').write_text(text)
     (out/'copy.html').write_text(to_copy_page(text))
-    (out/'wechat_title.txt').write_text('网球有故事修订版｜中网给了外卡，武网怎么办？')
+    (out/'wechat_title.txt').write_text('网球有故事｜中网给了外卡，武网怎么办？')
     (out/'render.json').write_text(json.dumps({'video_url':a.video_url,'video_bytes':clip.stat().st_size,'duration':float(probe['format']['duration']),'qc':'passed'},indent=2))
     (out/'push.html').write_text(E.explainer_push_html(beats,out,date=datetime.date(2026,9,8),xhs_text=text))
     print('15 cards, narration, dimensions, audio and full decode passed')
