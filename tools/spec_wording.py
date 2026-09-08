@@ -44,19 +44,28 @@ CLOCK_MINUTE = re.compile(
     r"(?:零点|[一二三四五六七八九十]{1,3}点)\s*[零〇一二三四五六七八九十]{1,4}\s*分"
     r"|(?<!\d)\d{1,2}\s*点\s*\d{1,2}\s*分")
 
-#: 分数式轮次（1/4 决赛、1/8 决赛）和「半决赛」。写 8 强 / 4 强 / 决赛。
+#: 「N 强」式轮次（16 强 / 8 强 / 4 强 / 八强 / 四强）。写 1/8 决赛 /
+#: 1/4 决赛 / 半决赛 / 决赛，大满贯也可以写「第四轮」。
 #:
-#: ⚠️ 这条 2026-09-01 **整个翻了个面**，主语换了，形状没变。原来（2026-08-02）
-#: 账号所有者定的是反过来的：「以后不要用四强八强之类的，国内通常用半决赛
-#: 1／4 决赛 1/8 决赛之类的」，正则拦的是「四强/八强/十六强」。今天他改了口径：
-#: 「**8 强、4 强、决赛，这种这样说，不要说 1/4 决赛和什么 1/8 决赛之类的了**」。
-#: 所以现在拦的是旧那套，放行的是「N 强」——和 2026-08-04 那次「solo 从要写
-#: `_layout_why` 的例外翻成默认」是同一个形状：闸原样翻面，判据钉两头。
+#: ⚠️ 这条规矩**一年里翻过三次**，形状每次都一样、主语每次都换。记全三次是
+#: 因为「我记得他上次说的是……」在这一条上已经错过两回：
 #:
-#: 「半决赛」也在里面：他列的三档（8 强 / 4 强 / 决赛）里，「4 强」正是这一档。
-#: 不禁它的话同一个账号会把同一轮叫两个名字，而那是这个仓库反复要避免的。
-#: 「决赛」两套叫法一样，不动；32 强往前照旧写「第几轮」（那条没被推翻）。
-FRACTION_ROUND = re.compile(r"1\s*/\s*(?:4|8|16|32)\s*决赛|四分之一决赛|半决赛")
+#:   2026-08-02  「不要用四强八强之类的，国内通常用半决赛 1／4 决赛 1/8 决赛」
+#:   2026-09-01  「8 强、4 强、决赛，这种这样说，不要说 1/4 决赛和 1/8 决赛」
+#:   2026-09-08  「不要用什么美网 16 强，应该用美网第四轮或者美网 1/8 决赛…
+#:                接着继续用 1/4 决赛…半决赛以及决赛，不要用八强、四强」
+#:
+#: 也就是今天翻回了 08-02 那一套。**闸原样翻面，不是新增一条**——和
+#: `test_赛场之上的封面一律用solo`（2026-08-04 把 solo 从例外翻成默认）同形。
+#:
+#: ⚠️ **只认真的轮次名，不认排名和形容词**：语料里「世界前十强边缘」是排名、
+#: 「防守能力最强」「延续强势」是形容词——按裸的 `\d+强` 扫会把它们一起判成
+#: 违规（第一版就是，34 个命中里 5 个是这种误伤）。轮次是 2 的幂，所以只收
+#: 四/八/十六/三十二/六十四 这几档，「十强」一律不收。
+#:
+#: 「决赛」两套叫法相同，不动；32 强再往前照旧写「第几轮」（那半条三次都没被推翻）。
+STRENGTH_ROUND = re.compile(
+    r"(?:四强|八强|十六强|三十二强|六十四强)|(?<!\d)(?:4|8|16|32|64)\s*强")
 
 #: 内部轮次名 → 会发出去的写法。**闸的建设性那一半。**
 #:
@@ -71,17 +80,28 @@ FRACTION_ROUND = re.compile(r"1\s*/\s*(?:4|8|16|32)\s*决赛|四分之一决赛|
 #: ⚠️ **只转换出口，不改内部的键。** 「半决赛」在 `KEY_ROUNDS`、排序表、
 #: 覆盖率表、`LEAD_ROUND_PTS` 里当**标识符**用，跟着改是拿一条文案规矩去
 #: 动一批不相干的判据——而那种改动坏起来不吭声。
+#: ⚠️ **两个方向的键都收**：内部那两套产的是「四分之一决赛」「16强赛」，
+#: 而 2026-09-01～09-08 之间落库的代码/草稿产的是「8强」「4强」。翻面之后
+#: 只收前一种的话，后一种会原样透出去然后撞闸——**而那正是这条表存在的理由**。
+#:
+#: ⚠️ 输出取**不带空格**那一种（语料里 297 : 96 压倒性）。R16 这一档给的是
+#: 「1/8决赛」不是「第四轮」：第几轮要知道签表多大才算得出来，而这张表的输入
+#: 只有一个轮次名——**大满贯那条路自己知道**，`slam_feed._ROUND_BY_CODE`
+#: 的 `"4": "第四轮"` 就是它，两条路各按自己知道的东西写。
 _ROUND_DISPLAY = {
-    "半决赛": "4强",
-    "四分之一决赛": "8强", "1/4决赛": "8强", "1/4 决赛": "8强",
-    "1/8决赛": "16强", "1/8 决赛": "16强", "十六强": "16强", "16强赛": "16强",
-    "1/16决赛": "32强", "1/16 决赛": "32强", "32强赛": "32强",
-    "64强赛": "64强",
+    "半决赛": "半决赛", "4强": "半决赛", "四强": "半决赛",
+    "四分之一决赛": "1/4决赛", "1/4 决赛": "1/4决赛",
+    "8强": "1/4决赛", "八强": "1/4决赛",
+    "十六强": "1/8决赛", "16强赛": "1/8决赛", "1/8 决赛": "1/8决赛",
+    "16强": "1/8决赛",
+    "三十二强": "1/16决赛", "32强赛": "1/16决赛", "1/16 决赛": "1/16决赛",
+    "32强": "1/16决赛",
+    "64强赛": "1/32决赛", "64强": "1/32决赛",
 }
 
 
 def round_display(round_name: str | None) -> str:
-    """轮次的**对外**写法：4 强 / 8 强 / 16 强 / 决赛 / 第几轮。
+    """轮次的**对外**写法：1/8决赛 / 1/4决赛 / 半决赛 / 决赛 / 第几轮。
 
     认不出来的原样返回（资格赛、第几轮、小组赛、英文原文都从这条走）——
     宁可原样透出去让闸去拦，也别在这儿猜一个写法。
@@ -186,104 +206,50 @@ CLOCK_MINUTE_LEGACY = frozenset({
 
 #: 这张按**文件名**记（spec 和 xhs 各自算一条），照原判据的口径。
 #:
-#: ⚠️ 2026-09-01 判据翻面之后**整张表换了主语**：原来挂的是「用了强字」的
-#: 11 个文件，现在挂的是「用了 1/4 决赛 / 1/8 决赛 / 半决赛」的 173 个。
-#: 表大是因为旧写法本来就是上一版规矩要求的——已发的片子不为措辞重渲
-#: （消息发出去收不回来，`push.summary` 还要和已发的 copy.html 逐字相同），
-#: 和 `_LEGACY_BILINGUAL_MENTION` 那 78 个文件是同一个处置。
+#: ⚠️ **整张表随着闸一起翻面，这是第三次**：2026-08-02 挂的是「用了强字」的
+#: 11 个文件，2026-09-01 换成「用了 1/4 决赛 / 1/8 决赛 / 半决赛」的 173 个，
+#: 2026-09-08 又换回「用了 N 强」的这 34 个。表的大小每次都跟着倒过来，
+#: 因为**旧写法本来就是上一版规矩要求的**。
+#:
+#: ⚠️ 这 34 个文件**全部已经发出去了**（逐条查过 `data/reel_publish_ledger/`
+#: 和 `output/*/reel/*/pushed.json`；`eala-fernandez` / `eala-svitolina` /
+#: `wong-brooksby` / `wong-gea` 那四条是台账建立之前发的，判据是它们的
+#: `push.summary` ——那几句本来就是照已发的 copy.html 标题补回来的）。
+#: 已发的片子不为措辞重渲，`push.summary` 还要和已发的 copy.html 逐字相同
+#: （`wong-brooksby` 的「黄泽林首进ATP四强」就在里面）。
 #: **只许减不许加**，自检在 pytest 那头（每个名字都要真的还命中）。
-FRACTION_ROUND_LEGACY = frozenset({
-    "alexandrova-sabalenka.json", "alexandrova-sabalenka.xhs.txt",
-    "anisimova-bartunkova.json", "anisimova-bartunkova.xhs.txt",
-    "anisimova-noskova.json", "anisimova-noskova.xhs.txt",
-    "auger-aliassime-cerundolo.json", "auger-aliassime-cerundolo.xhs.txt",
+STRENGTH_ROUND_LEGACY = frozenset({
+    "andreeva-bartunkova-us-open-2026-r3.xhs.txt",
     "bejlek-keys-cincinnati-2026-qf.json",
-    "bejlek-keys-cincinnati-2026-qf.xhs.txt", "bejlek-sabalenka.json",
-    "bejlek-sabalenka.xhs.txt", "bencic-eala.json", "bencic-eala.xhs.txt",
-    "bencic-townsend.json", "bencic-townsend.xhs.txt",
-    "boisson-krueger.json", "boisson-krueger.xhs.txt",
-    "chwalinska-gibson.xhs.txt", "cirstea-pegula.json",
-    "cirstea-pegula.xhs.txt", "cobolli-jodar.json", "cobolli-jodar.xhs.txt",
-    "djokovic-tirante.json", "djokovic-tirante.xhs.txt", "eala-mcnally.json",
-    "eala-mcnally.xhs.txt", "eala-osaka.json", "eala-osaka.xhs.txt",
-    "eala-pegula.json", "eala-pegula.xhs.txt", "eala-story.json",
-    "eala-story.xhs.txt", "eala-washington-story.xhs.txt", "eala-zheng.json",
-    "eala-zheng.xhs.txt", "fernandez-andreeva.json",
-    "fils-cobolli-cincinnati-2026-sf.json",
-    "fils-cobolli-cincinnati-2026-sf.xhs.txt", "fils-deminaur.json",
-    "fils-tirante.json", "fils-tirante.xhs.txt", "fonseca-ruud.xhs.txt",
-    "fritz-jodar-final.xhs.txt", "fritz-merida.json", "fritz-merida.xhs.txt",
-    "fritz-nakashima-cincinnati-2026-qf.json",
-    "fritz-nakashima-cincinnati-2026-qf.xhs.txt", "fritz-oconnell.json",
-    "fritz-oconnell.xhs.txt", "gauff-bejlek-cincinnati-2026-sf.json",
-    "gauff-bejlek-cincinnati-2026-sf.xhs.txt", "gauff-bouzkova.json",
-    "gauff-bouzkova.xhs.txt", "gauff-korneeva.json",
-    "gauff-korneeva.xhs.txt", "gauff-kostyuk-cincinnati-2026-qf.json",
-    "gauff-kostyuk-cincinnati-2026-qf.xhs.txt",
-    "gauff-pegula-cincinnati-2026-final.xhs.txt", "gauff-sakkari.json",
-    "gauff-sakkari.xhs.txt", "gea-shapovalov.json", "gea-shapovalov.xhs.txt",
-    "jodar-fils-montreal-qf.json", "jodar-fils-montreal-qf.xhs.txt",
-    "jodar-fritz.json", "jodar-fritz.xhs.txt", "jodar-tabilo.json",
-    "jodar-tabilo.xhs.txt", "kostyuk-andreeva.json",
-    "kostyuk-andreeva.xhs.txt", "kovacevic-khachanov.json",
-    "kovacevic-khachanov.xhs.txt", "landaluce-draper.json",
-    "landaluce-draper.xhs.txt", "lehecka-fils.json", "lehecka-fils.xhs.txt",
-    "lina-cincinnati-2012.json", "lina-cincinnati-2012.xhs.txt",
-    "maria-yastremska.json", "maria-yastremska.xhs.txt",
-    "musetti-faria.json", "musetti-faria.xhs.txt", "nakashima-borges.json",
-    "nakashima-borges.xhs.txt", "nakashima-jodar-montreal-sf.json",
-    "nakashima-jodar-montreal-sf.xhs.txt", "noskova-tauson.xhs.txt",
-    "osaka-fernandez.json", "osaka-fernandez.xhs.txt", "osaka-mertens.json",
-    "osaka-mertens.xhs.txt", "paul-cobolli.json", "paul-cobolli.xhs.txt",
-    "pegula-anisimova.json", "pegula-anisimova.xhs.txt",
-    "pegula-rakhimova.json", "pegula-rakhimova.xhs.txt",
-    "pegula-swiatek-cincinnati-2026-sf.json",
-    "pegula-swiatek-cincinnati-2026-sf.xhs.txt",
-    "rublev-virtanen-us-open-2026-r1.json",
-    "rublev-virtanen-us-open-2026-r1.xhs.txt",
-    "rybakina-gauff-toronto-sf.json", "rybakina-gauff-toronto-sf.xhs.txt",
-    "rybakina-kasatkina.xhs.txt", "rybakina-li.json", "rybakina-li.xhs.txt",
-    "rybakina-osaka.json", "rybakina-osaka.xhs.txt",
-    "rybakina-samsonova.json", "rybakina-samsonova.xhs.txt",
-    "rybakina-shnaider.json", "rybakina-shnaider.xhs.txt",
-    "safiullin-alcaraz-us-open-2026-r1.xhs.txt", "shang-vallejo.xhs.txt",
-    "shelton-fonseca.json", "shelton-fonseca.xhs.txt", "shelton-mensik.json",
-    "shelton-mensik.xhs.txt", "shelton-nakashima-montreal-final.json",
-    "shelton-tien-montreal-sf.json", "shelton-tien-montreal-sf.xhs.txt",
-    "shnaider-chwalinska.json", "shnaider-chwalinska.xhs.txt",
-    "shnaider-pegula.json", "shnaider-pegula.xhs.txt",
-    "sonmez-anisimova.xhs.txt", "sonmez-kasatkina.json",
-    "sonmez-kasatkina.xhs.txt", "svitolina-alexandrova.json",
-    "svitolina-alexandrova.xhs.txt", "svitolina-anisimova.json",
-    "svitolina-anisimova.xhs.txt", "swiatek-golubic.json",
-    "swiatek-golubic.xhs.txt", "swiatek-kostyuk.json",
-    "swiatek-kostyuk.xhs.txt", "swiatek-parry.json", "swiatek-parry.xhs.txt",
-    "swiatek-rybakina-cincinnati-2026-qf.json",
-    "swiatek-rybakina-cincinnati-2026-qf.xhs.txt",
-    "swiatek-rybakina-toronto-final.json", "swiatek-shnaider.json",
-    "swiatek-shnaider.xhs.txt", "swiatek-svitolina-toronto-sf.json",
-    "swiatek-svitolina-toronto-sf.xhs.txt", "tiafoe-auger-aliassime.json",
-    "tiafoe-auger-aliassime.xhs.txt",
-    "tiafoe-musetti-cincinnati-2026-qf.json",
-    "tiafoe-musetti-cincinnati-2026-qf.xhs.txt",
-    "tiafoe-nakashima-cincinnati-2026-sf.json",
-    "tiafoe-nakashima-cincinnati-2026-sf.xhs.txt", "tiafoe-story.json",
-    "tiafoe-story.xhs.txt", "tirante-landaluce.xhs.txt",
-    "tirante-mensik.json", "tirante-mensik.xhs.txt",
-    "usopen-qualies-2026.json", "usopen-qualies-2026.xhs.txt",
-    "wang-samsonova.json", "wang-samsonova.xhs.txt", "wangxiyu-keys.json",
-    "wangxiyu-keys.xhs.txt", "wong-brooksby.xhs.txt", "wong-gea.xhs.txt",
-    "zheng-lanlana.json", "zheng-lanlana.xhs.txt",
-    "zheng-liutova-us-open-2026-r1.json",
-    "zheng-liutova-us-open-2026-r1.xhs.txt", "zverev-atmane.json",
-    "zverev-atmane.xhs.txt", "zverev-paul.json", "zverev-paul.xhs.txt",
+    "bejlek-keys-cincinnati-2026-qf.xhs.txt", "bu-jodar-us-open-2026-r1.json",
+    "bu-jodar-us-open-2026-r1.xhs.txt", "bu-lucky-loser-story.json",
+    "bu-lucky-loser-story.xhs.txt", "bucsa-gauff-us-open-2026-r3.json",
+    "bucsa-gauff-us-open-2026-r3.xhs.txt", "comeback-five-love-down.json",
+    "comeback-five-love-down.xhs.txt", "eala-fernandez.xhs.txt",
+    "eala-svitolina.json", "eala-svitolina.xhs.txt",
+    "fritz-cerundolo-us-open-2026-r3.json",
+    "fritz-cerundolo-us-open-2026-r3.xhs.txt",
+    "monfils-vallejo-us-open-2026-r1.xhs.txt",
+    "osaka-mertens-us-open-2026-r3.xhs.txt",
+    "rybakina-osaka-us-open-2026-r4.json",
+    "rybakina-osaka-us-open-2026-r4.xhs.txt",
+    "swiatek-bouzkova-us-open-2026-r3.json",
+    "swiatek-bouzkova-us-open-2026-r3.xhs.txt", "wong-brooksby.json",
+    "wong-brooksby.xhs.txt", "wong-gea.json", "wong-gea.xhs.txt",
+    "zheng-from-low-to-us-open-comeback.json",
+    "zheng-keys-us-open-2026-r3.json", "zheng-keys-us-open-2026-r3.xhs.txt",
+    "zheng-lanlana.xhs.txt", "zheng-swiatek-eight-meetings.json",
+    "zheng-swiatek-eight-meetings.xhs.txt",
+    "zheng-swiatek-us-open-2026-r4.json",
+    "zheng-swiatek-us-open-2026-r4.xhs.txt",
 })
 
 YAODAO_LEGACY = frozenset({"zverev-griekspoor.json", "zverev-griekspoor.xhs.txt"})
 
 #: 首行没点出是谁——这条规矩（2026-09-02）之前发出去的 80 条。已发不为措辞重渲
 #: （消息收不回来，`push.summary` 还要和已发的 copy.html 逐字相同），和
-#: `FRACTION_ROUND_LEGACY` 那 173 个文件是同一个处置。**只许减不许加**，
+#: `STRENGTH_ROUND_LEGACY` 那张表是同一个处置（⚠️ 那张表的**条数随闸翻面**，
+#: 别在这儿引一个会过期的数）。**只许减不许加**，
 #: 自检在 pytest 那头（每个名字都要真的还命中）。
 CAPTION_LEAD_LEGACY = frozenset({
     "altmaier-musetti", "anisimova-noskova", "arango-venus", "baez-dimitrov",
@@ -470,8 +436,9 @@ def check_interview_copy_wording(spec: dict,
              "说打了多少拍；拿不到拍数就换个说法"),
             (CLOCK_MINUTE, "开球时刻报到了分钟",
              "只说个大概（X 点多 / 快 X 点），时段词留着"),
-            (FRACTION_ROUND, "轮次写了分数式或「半决赛」",
-             "写 8 强 / 4 强 / 决赛，再往前写「第几轮」"),
+            (STRENGTH_ROUND, "轮次写成了「N 强」",
+             "写 1/8决赛 / 1/4决赛 / 半决赛 / 决赛，大满贯也可写「第四轮」；"
+             "再往前写「第几轮」"),
             (LOVE_GAME, "love game 被字面直译成了「爱局」", "写「零封」"),
             (YAODAO_POINT, "写了「要到…点」",
              "破发点/盘点/赛点一律写「拿到」"),
@@ -515,14 +482,14 @@ def check_spec_wording(spec: dict, slug: str,
                 f"那个分钟多半是整批开赛时刻，不是这一场的")
 
     spec_name, xhs_name = f"{slug}.json", f"{slug}.xhs.txt"
-    if spec_name not in FRACTION_ROUND_LEGACY:
-        if hits := _hits(FRACTION_ROUND, outward_deep(spec)):
+    if spec_name not in STRENGTH_ROUND_LEGACY:
+        if hits := _hits(STRENGTH_ROUND, outward_deep(spec)):
             problems.append(
-                f"轮次写了分数式或「半决赛」：{hits}——写 8 强 / 4 强 / 决赛，"
-                f"再往前写「第几轮」")
-    if xhs_text and xhs_name not in FRACTION_ROUND_LEGACY:
-        if hits := _hits(FRACTION_ROUND, [xhs_text]):
-            problems.append(f"小红书正文的轮次写了分数式或「半决赛」：{hits}")
+                f"轮次写成了「N 强」：{hits}——写 1/8决赛 / 1/4决赛 / 半决赛 / "
+                f"决赛，大满贯也可写「第四轮」；再往前写「第几轮」")
+    if xhs_text and xhs_name not in STRENGTH_ROUND_LEGACY:
+        if hits := _hits(STRENGTH_ROUND, [xhs_text]):
+            problems.append(f"小红书正文的轮次写成了「N 强」：{hits}")
 
     if hits := _hits(LOVE_GAME, list(outward_deep(spec)) +
                      ([xhs_text] if xhs_text else [])):

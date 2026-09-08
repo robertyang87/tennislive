@@ -20,7 +20,7 @@ For bilingual broadcast subtitles, preserve the English wording and line order. 
 
 Apply a reviewed ASR name-alias correction deterministically before translation, and only when its canonical player is present in the verified participant list. DeepSeek then translates the corrected English without deciding whether an alias is valid. Keep the alias table narrow and evidence-backed; never use a global ordinary-word replacement.
 
-Name a round only as 决赛, 4强, 8强, 16强, or 第一轮/第二轮/第三轮. Describe how far a player went only as 冠军, 亚军, 4强, 8强, 16强, or 第N轮 — a player who reached the final without winning it is 亚军, so never leave that result vague by saying only that they reached the final. These are the sole permitted forms in every outward field; a deterministic wording gate rejects the alternatives and the draft cannot be promoted.
+Name a round only as 决赛, 半决赛, 1/4决赛, 1/8决赛, or 第一轮/第二轮/第三轮/第四轮 — at a Grand Slam the round of 16 may also be written 第四轮. Describe how far a player went only as 冠军, 亚军, 半决赛, 1/4决赛, 1/8决赛, or 第N轮 — a player who reached the final without winning it is 亚军, so never leave that result vague by saying only that they reached the final. These are the sole permitted forms in every outward field; a deterministic wording gate rejects the alternatives and the draft cannot be promoted.
 
 Write percentages in every voice-bound editorial field as spoken Chinese, such as “百分之八十二”, never `82%` or `82％`. PushPlus display copy may retain the symbol.
 
