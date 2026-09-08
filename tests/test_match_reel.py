@@ -6865,6 +6865,15 @@ def test_轮次写分数式不写N强():
     误伤。「决赛」两套叫法相同，不动；32 强再往前照旧写「第几轮」（那半条
     三次都没被推翻）。
 
+
+    ⚠️⚠️ **同日晚上账号所有者又收窄了一档，改的是判据的形状不是主语**：
+    「**比如说他打进了 8 强或 16 强，这个是可以的，但是比赛不能说是 16 强的
+    比赛，应该说是……第四轮比赛，或者是 1/4 决赛，或者是 1/8 决赛这种**」。
+    也就是这条规矩管的从来不是「强」这个字，是**「N 强」被当成一个轮次名去
+    指称一场球**——「打进 8 强」是成绩，放行；「美网 16 强」是轮次名，拦。
+    判据因此不再是一条裸正则，是 `spec_wording.strength_round_hits()`
+    （到达类动词/次数标记 + N 强 → 放行）。**别再直接拿
+    `STRENGTH_ROUND_TOKEN` 当闸用**，那会把他点名允许的那一类全判成违规。
     **只查会发出去的字段**——旁白、封面上印的字、推送那几栏、小红书文案。
     `_source` / `_why` / `_match` 这些是写给下一个人看的注解，里面正引着账号
     所有者那两句原话（含被废掉的旧叫法），连它一起扫就会把「把规矩记下来」
@@ -6875,18 +6884,16 @@ def test_轮次写分数式不写N强():
     # ⚠️ outward_deep 必须包含 push 的非注解字段：第一版这儿读的是
     # `_push`，真正发进微信的 `push.summary`/`push.lead` 一条都没被
     # 扫到——判据的主语错了，而它绿着。
-    from tools.spec_wording import STRENGTH_ROUND as bad  # noqa: PLC0415
     from tools.spec_wording import outward_deep as outward  # noqa: PLC0415
+    from tools.spec_wording import strength_round_hits as bad  # noqa: PLC0415
 
     offenders = {}
     for path in sorted(Path("specs/reels").glob("*.json")):
-        hits = sorted({m.group(0) for text in outward(
-            json.loads(path.read_text(encoding="utf-8"))) for m in bad.finditer(text)})
+        hits = bad(outward(json.loads(path.read_text(encoding="utf-8"))))
         if hits:
             offenders[path.name] = hits
     for path in sorted(Path("specs/reels").glob("*.xhs.txt")):
-        hits = sorted({m.group(0)
-                       for m in bad.finditer(path.read_text(encoding="utf-8"))})
+        hits = bad(path.read_text(encoding="utf-8"))
         if hits:
             offenders[path.name] = hits
 
@@ -7015,17 +7022,17 @@ def test_轮次那道闸要盖住烧在画面上的顶栏():
     **而注解（`_` 开头）不许被扫**（这个仓库为「判据扫得太宽、被自己的注释
     误伤」栽过五次）。
     """
-    from tools.spec_wording import STRENGTH_ROUND as bad  # noqa: PLC0415
     from tools.spec_wording import outward_deep as outward  # noqa: PLC0415
+    from tools.spec_wording import strength_round_hits as bad  # noqa: PLC0415
 
     only_topbar = {"topbar": {"line1": "2026 辛辛那提 ATP1000 16强",
                               "line2": "甲 6-4 6-4 乙"}}
-    assert any(bad.search(t) for t in outward(only_topbar)), \
+    assert bad(outward(only_topbar)), \
         "topbar.line1 烧在画面上，轮次那道闸必须扫得到它"
 
     annotated = {"topbar": {"line1": "2026 辛辛那提 ATP1000 1/8决赛",
                             "_line1_why": "原来写的是 16 强，2026-09-08 翻回来"}}
-    assert not any(bad.search(t) for t in outward(annotated)), \
+    assert not bad(outward(annotated)), \
         "`_` 开头的是写给下一个人看的注解，扫它等于把「把规矩记下来」判成违规"
 
 
@@ -7050,8 +7057,8 @@ def test_自动链写进封面的轮次要先过对外写法那张表():
     """
     import ast  # noqa: PLC0415
 
-    from tools.spec_wording import STRENGTH_ROUND as bad  # noqa: PLC0415
     from tools.spec_wording import round_display  # noqa: PLC0415
+    from tools.spec_wording import strength_round_hits as bad  # noqa: PLC0415
 
     # ① 两套内部轮次名的产出，转换之后都要过得了闸
     from tennislive.zh.terms import round_zh  # noqa: PLC0415
@@ -7064,7 +7071,7 @@ def test_自动链写进封面的轮次要先过对外写法那张表():
                            "Third Round", "Second Round", "First Round")}
     for label in sorted(filter(None, produced)):
         out = round_display(label)
-        assert not bad.search(out), (
+        assert not bad(out), (
             f"内部轮次名「{label}」转出来还是「{out}」——会被措辞闸拦下，"
             f"自动链的草稿转不了正")
     # 他点名的那几档要转成他要的那几个词

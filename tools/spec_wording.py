@@ -64,8 +64,72 @@ CLOCK_MINUTE = re.compile(
 #: 四/八/十六/三十二/六十四 这几档，「十强」一律不收。
 #:
 #: 「决赛」两套叫法相同，不动；32 强再往前照旧写「第几轮」（那半条三次都没被推翻）。
-STRENGTH_ROUND = re.compile(
+#:
+#: ⚠️⚠️ **2026-09-08 当晚账号所有者又收窄了一档，这一档改的是判据的形状不是
+#: 主语**：「**比如说他打进了 8 强或 16 强，这个是可以的，但是比赛不能说是
+#: 16 强的比赛，应该说是……第四轮比赛，或者是 1/4 决赛，或者是 1/8 决赛这种**」。
+#:
+#: 也就是说这条规矩管的从来不是「强」这个字，是**「N 强」被当成一个轮次名去
+#: 指称一场球**：
+#:
+#:   ✅ 成绩（这个人走到了哪一步）  「打进 8 强」「进 16 强」「首次晋级四强」
+#:   ❌ 轮次名（这一场是哪一轮）    「16 强的比赛」「美网 16 强」「男单八强」
+#:
+#: 两者在语法上分得开，所以判据也分得开：**「到达」类动词/次数标记 + N 强**
+#: 放行，其余一律拦。量出来的账（赛场之上存量 32 个文件、82 处命中）：收窄
+#: 之后剩 **15 个文件**，放出去的那 17 个文件全是「打进过法网八强」「晋级
+#: 美网 16 强」「从资格赛打到十六强」这一类，**一处误放都没有**；留下的全是
+#: 「2026 美网 女单16强」「洛斯卡沃斯 ATP250，男单八强」「二〇一九年澳网
+#: 八强，普利斯科娃对小威廉姆斯」「下一轮八强，对手是」这种真的在给一场球
+#: 起轮次名的。
+#:
+#: ⚠️ **`STRENGTH_ROUND_TOKEN` 不是判据**——它只认「N 强」这个词本身。判据是
+#: `strength_round_hits()`，两条线、教材扫描、slam_feed 的产出扫描全走它。
+#: 名字带 `_TOKEN` 是故意的：直接拿它当闸用会把「打进 8 强」判成违规，而那
+#: 正好是账号所有者点名允许的那一类。
+STRENGTH_ROUND_TOKEN = re.compile(
     r"(?:四强|八强|十六强|三十二强|六十四强)|(?<!\d)(?:4|8|16|32|64)\s*强")
+
+#: 「这个人走到了哪一步」的说法——`STRENGTH_ROUND_TOKEN` 前面 14 字内出现它
+#: 就放行（`$` 锚死，中间不许隔句读：隔了句读就是另一句话了）。
+#:
+#: ⚠️ 「进」和「到」是单字，看着宽——而它们要紧挨在 N 强前面 10 字以内、
+#: 中间不许有任何标点，量下来没有一处误放（「前冠军进 16 强」「从资格赛第一轮
+#: 到 16 强」靠的正是这两个）。反过来，把它们拿掉会误伤这一类真成绩，
+#: 而误伤的下场本文件写过：**人会写豁免去压噪音，把闸真想拦的那一类一起关掉。**
+_REACHED_STAGE = re.compile(
+    r"(?:打进|闯进|杀进|挺进|挤进|跻身|晋级|首进|打到|站上|走到|走进|止步|无缘"
+    r"|离|进|到|第[一二三四五六七八九十百\d]+次|首次|首个)"
+    r"[^。！？；\n，、：·]{0,10}?$")
+
+#: 窗口取 14 字：`_REACHED_STAGE` 自己只准跨 10 个非标点字，多留 4 字是给
+#: 动词本身（「第一百次」四个字）。
+#:
+#: ⚠️ **只往前看，不往后看**——「四强止步」这种反过来的词序会被拦下，而它
+#: 其实也是成绩。**量过才决定不改**：全库会发出去的字段里这个形状只有一处
+#: （`wong-gea` 的「黄泽林四强止步」，而那条 spec 本来就因为顶栏的「男单四强」
+#: 挂在豁免表里），加一个反方向的判据换不到任何东西，却给这个判据多一个
+#: 要推理的方向。撞上它就改写成「止步四强」，那一种本来就放行。
+_REACHED_WINDOW = 14
+
+
+def strength_round_hits(texts) -> list[str]:
+    """把轮次名写成「N 强」的那几处——**这条规矩的判据，别用裸正则**。
+
+    `texts` 收一个字符串或一串字符串（和 `_hits` 同一个口径）。
+    返回去重排序后的命中词；成绩说法（打进/进/晋级/第 N 次 + N 强）不算命中。
+    """
+    if isinstance(texts, str):
+        texts = [texts]
+    hits = set()
+    for text in texts:
+        text = text or ""
+        for m in STRENGTH_ROUND_TOKEN.finditer(text):
+            window = text[max(0, m.start() - _REACHED_WINDOW):m.start()]
+            if _REACHED_STAGE.search(window):
+                continue          # 「打进 8 强」——成绩，账号所有者点名允许
+            hits.add(m.group(0))
+    return sorted(hits)
 
 #: 内部轮次名 → 会发出去的写法。**闸的建设性那一半。**
 #:
@@ -208,41 +272,37 @@ CLOCK_MINUTE_LEGACY = frozenset({
 #:
 #: ⚠️ **整张表随着闸一起翻面，这是第三次**：2026-08-02 挂的是「用了强字」的
 #: 11 个文件，2026-09-01 换成「用了 1/4 决赛 / 1/8 决赛 / 半决赛」的 173 个，
-#: 2026-09-08 又换回「用了 N 强」的这 34 个。表的大小每次都跟着倒过来，
+#: 2026-09-08 又换回「用了 N 强」的这批。表的大小每次都跟着倒过来，
 #: 因为**旧写法本来就是上一版规矩要求的**。
 #:
-#: ⚠️ 表里的文件**全部已经发出去了**（逐条查过 `data/reel_publish_ledger/`
-#: 和 `output/*/reel/*/pushed.json`；`eala-fernandez` / `eala-svitolina` /
-#: `wong-brooksby` / `wong-gea` 那四条是台账建立之前发的，判据是它们的
-#: `push.summary` ——那几句本来就是照已发的 copy.html 标题补回来的）。
-#: 已发的片子不为措辞重渲，`push.summary` 还要和已发的 copy.html 逐字相同
-#: （`wong-brooksby` 的「黄泽林首进ATP四强」就在里面）。
+#: ⚠️ **2026-09-08 当晚收窄「只拦轮次名不拦成绩」之后，这张表又缩了一轮**
+#: ——放出去的那批全是「打进过法网八强」「晋级美网 16 强」「从资格赛打到十六强」
+#: 这一类，也就是账号所有者点名允许的那半边。**闸收窄了，豁免表就要跟着缩**：
+#: 留着一个已经不违规的名字，它会一直静静地绿着（自检 `missing` 就为这个）。
 #:
-#: ⚠️ **`rybakina-osaka-us-open-2026-r4` 是唯一一条从表里减出去的**：规矩落地
-#: 时它才发出去二十分钟，账号所有者要求重渲。成片按新写法重渲之后**替换同一个
-#: Release 附件**——微信里那个 ▶ 按钮指的就是那个地址，替换等于把已经发出去的
-#: 那条消息指向改好的片子，**不是再发一条**（`pushed.json` 在仓库里，
-#: `auto-push-reel` 会跳过）。代价写在它 spec 的 `push._lead_why` 里：
-#: 微信正文那一份收不回来，所以 spec 和已发消息从此对不上。
+#: ⚠️ 表里的文件**全部已经发出去了**（逐条查过 `data/reel_publish_ledger/`
+#: 和 `output/*/reel/*/pushed.json`；`eala-svitolina` / `wong-brooksby` /
+#: `wong-gea` 那三条是台账建立之前发的，判据是它们的 `push.summary`
+#: ——那几句本来就是照已发的 copy.html 标题补回来的）。
+#: 已发的片子不为措辞重渲，`push.summary` 还要和已发的 copy.html 逐字相同。
+#: ⚠️ 收窄之后**它们挂在表里的理由换了**：`wong-brooksby` 的
+#: 「黄泽林首进ATP四强」现在是成绩、已经放行，真正还违规的是同一条 spec 的
+#: 顶栏「洛斯卡沃斯 ATP250，男单八强」和「洛斯卡沃斯站 · 八强」——
+#: **别照着旧注释去猜某个名字为什么还在表里，跑一次 `strength_round_hits()`。**
+#:
+#: ⚠️ **`rybakina-osaka-us-open-2026-r4` 是唯一一条靠重渲减出去的**（其余是
+#: 收窄那一轮释放的，那些片子一个字都没动）：规矩落地时它才发出去二十分钟，
+#: 账号所有者要求重渲。成片按新写法重渲之后**替换同一个 Release 附件**——
+#: 微信里那个 ▶ 按钮指的就是那个地址，替换等于把已经发出去的那条消息指向
+#: 改好的片子，**不是再发一条**（`pushed.json` 在仓库里，`auto-push-reel`
+#: 会跳过）。代价写在它 spec 的 `push._lead_why` 里：微信正文那一份收不回来，
+#: 所以 spec 和已发消息从此对不上。
 #: **只许减不许加**，自检在 pytest 那头（每个名字都要真的还命中）。
 STRENGTH_ROUND_LEGACY = frozenset({
-    "andreeva-bartunkova-us-open-2026-r3.xhs.txt",
-    "bejlek-keys-cincinnati-2026-qf.json",
-    "bejlek-keys-cincinnati-2026-qf.xhs.txt", "bu-jodar-us-open-2026-r1.json",
-    "bu-jodar-us-open-2026-r1.xhs.txt", "bu-lucky-loser-story.json",
-    "bu-lucky-loser-story.xhs.txt", "bucsa-gauff-us-open-2026-r3.json",
-    "bucsa-gauff-us-open-2026-r3.xhs.txt", "comeback-five-love-down.json",
-    "comeback-five-love-down.xhs.txt", "eala-fernandez.xhs.txt",
-    "eala-svitolina.json", "eala-svitolina.xhs.txt",
-    "fritz-cerundolo-us-open-2026-r3.json",
-    "fritz-cerundolo-us-open-2026-r3.xhs.txt",
-    "monfils-vallejo-us-open-2026-r1.xhs.txt",
-    "osaka-mertens-us-open-2026-r3.xhs.txt",
-    "swiatek-bouzkova-us-open-2026-r3.json",
-    "swiatek-bouzkova-us-open-2026-r3.xhs.txt", "wong-brooksby.json",
+    "bu-jodar-us-open-2026-r1.xhs.txt", "bucsa-gauff-us-open-2026-r3.json",
+    "comeback-five-love-down.json", "comeback-five-love-down.xhs.txt",
+    "eala-svitolina.json", "eala-svitolina.xhs.txt", "wong-brooksby.json",
     "wong-brooksby.xhs.txt", "wong-gea.json", "wong-gea.xhs.txt",
-    "zheng-from-low-to-us-open-comeback.json",
-    "zheng-keys-us-open-2026-r3.json", "zheng-keys-us-open-2026-r3.xhs.txt",
     "zheng-lanlana.xhs.txt", "zheng-swiatek-eight-meetings.json",
     "zheng-swiatek-eight-meetings.xhs.txt",
     "zheng-swiatek-us-open-2026-r4.json",
@@ -441,9 +501,6 @@ def check_interview_copy_wording(spec: dict,
              "说打了多少拍；拿不到拍数就换个说法"),
             (CLOCK_MINUTE, "开球时刻报到了分钟",
              "只说个大概（X 点多 / 快 X 点），时段词留着"),
-            (STRENGTH_ROUND, "轮次写成了「N 强」",
-             "写 1/8决赛 / 1/4决赛 / 半决赛 / 决赛，大满贯也可写「第四轮」；"
-             "再往前写「第几轮」"),
             (LOVE_GAME, "love game 被字面直译成了「爱局」", "写「零封」"),
             (YAODAO_POINT, "写了「要到…点」",
              "破发点/盘点/赛点一律写「拿到」"),
@@ -456,6 +513,14 @@ def check_interview_copy_wording(spec: dict,
     ):
         if hits := _hits(pattern, texts):
             problems.append(f"{label}：{hits}——{fix}")
+    # ⚠️ 轮次那条不在上面那张表里，因为它**不是一条裸正则**：「打进 8 强」是
+    # 成绩、账号所有者点名允许，只有「16 强的比赛」这种轮次名才算违规，
+    # 判据在 `strength_round_hits()`（见它上面那段）。
+    if hits := strength_round_hits(texts):
+        problems.append(
+            f"轮次名写成了「N 强」：{hits}——一场球是哪一轮要写 1/8决赛 / "
+            f"1/4决赛 / 半决赛 / 决赛，大满贯也可写「第四轮」；再往前写「第几轮」。"
+            f"（说这个人**打进**了 8 强 / 16 强照旧可以，那是成绩不是轮次名）")
     return problems
 
 
@@ -488,12 +553,12 @@ def check_spec_wording(spec: dict, slug: str,
 
     spec_name, xhs_name = f"{slug}.json", f"{slug}.xhs.txt"
     if spec_name not in STRENGTH_ROUND_LEGACY:
-        if hits := _hits(STRENGTH_ROUND, outward_deep(spec)):
+        if hits := strength_round_hits(outward_deep(spec)):
             problems.append(
                 f"轮次写成了「N 强」：{hits}——写 1/8决赛 / 1/4决赛 / 半决赛 / "
                 f"决赛，大满贯也可写「第四轮」；再往前写「第几轮」")
     if xhs_text and xhs_name not in STRENGTH_ROUND_LEGACY:
-        if hits := _hits(STRENGTH_ROUND, [xhs_text]):
+        if hits := strength_round_hits([xhs_text]):
             problems.append(f"小红书正文的轮次写成了「N 强」：{hits}")
 
     if hits := _hits(LOVE_GAME, list(outward_deep(spec)) +
