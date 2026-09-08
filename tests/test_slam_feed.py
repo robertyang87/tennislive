@@ -75,14 +75,29 @@ def test_查不到返回None不抛():
 
 
 def test_轮次映射_资格赛另写_认不出的原样透出去():
+    """⚠️ 这张表是**第二份**轮次表（`spec_wording._ROUND_DISPLAY` 是第一份）：
+    键不一样（这份认大满贯的 `roundCode`，那份认中文轮次名），所以没合并——
+    但**输出词汇必须一致**，不然同一个账号会把同一轮叫两个名字。
+
+    ⚠️ 断言不再手写一张「不许出现的词」（那是会过期的名单：这条规矩一年翻了
+    三次，08-02 / 09-01 / 09-08，每翻一次那张名单就要跟着倒过来一遍）。
+    现在**直接拿措辞闸去扫这张表的产出**——闸翻面，这条判据自己跟着翻。
+    """
+    import sys  # noqa: PLC0415
+    sys.path.insert(0, str(ROOT / "tools"))
+    from spec_wording import STRENGTH_ROUND  # noqa: PLC0415
+
     t = _tool()
-    assert t.round_label("5", "Quarterfinals", "Ladies' Singles") == "8强"
-    assert t.round_label("6", "Semifinals", "Ladies' Singles") == "4强"
+    assert t.round_label("4", "Round 4", "Ladies' Singles") == "第四轮"
+    assert t.round_label("5", "Quarterfinals", "Ladies' Singles") == "1/4决赛"
+    assert t.round_label("6", "Semifinals", "Ladies' Singles") == "半决赛"
     assert t.round_label("7", "Final", "Ladies' Singles") == "决赛"
     assert t.round_label("3", "Round 3", "Ladies' Singles Qualifying") == "资格赛第三轮"
     assert t.round_label("", "Round Robin", "Whatever") == "Round Robin"
-    for bad in ("半决赛", "1/4", "四分之一"):
-        assert bad not in "".join(t._ROUND_BY_CODE.values()), "对外写法不许回到被废掉的叫法"
+    # 这张表吐出去的每一个词都要过得了措辞闸——判据自己从闸推，不维护名单
+    for code, label in t._ROUND_BY_CODE.items():
+        assert not STRENGTH_ROUND.search(label), (
+            f"roundCode {code} 转出来是「{label}」，会被措辞闸拦下")
 
 
 def test_只有认得的赛事才查():

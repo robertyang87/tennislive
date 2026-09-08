@@ -3167,70 +3167,41 @@ def test_分歧率认领要钉在当时那次观测上():
 # 「不补了」，这条规矩同理不补。**只许减不许加**：修好一个就从下面删掉一个，
 # 别让它变成一张许可证。
 #
-# ⚠️ 2026-09-01 判据翻面之后**整张表换了主语**：原来挂的是「用了强字」的
-# 4 个文件，现在挂的是「用了 1/4 决赛 / 1/8 决赛 / 半决赛」的这批。
+# ⚠️ **整张表随着闸翻面，这是第三次**：2026-08-02 挂的是「用了强字」的 4 个
+# 文件，2026-09-01 换成「用了 1/4 决赛 / 1/8 决赛 / 半决赛」的那批，
+# 2026-09-08 又换回「用了 N 强」的这批。
+#
+# ⚠️ 这条线的扫描面**含 `zh`**（受访者引语的译文，读者读到的正是它），所以
+# 表里有几条命中的是球员自己说的那句「大概是八强左右」——那是**译法**问题，
+# 已发的不追改。`.draft.json` 不在 `_specs()` 里，草稿不进表。
 _LEGACY_ROUND_NAMES = {
     "alexandrova-sabalenka-tor2026-r16.json",
-    "bejlek-keys-cincinnati-2026-qf.json",
-    "cobolli-jodar-cincinnati-2026-r16.json",
-    "cobolli-paul-cincinnati-2026-qf.json",
-    "eala-mcnally-toronto-2026-r3.json",
-    "eala-osaka-dc2026-sf-studio.json",
-    "eala-osaka-dc2026-sf.json",
-    "eala-svitolina-dc2026-qf.json",
-    "fils-cobolli-cincinnati-2026-sf-interview.json",
-    "gauff-bejlek-cincinnati-2026-sf.json",
-    "gauff-kostyuk-cincinnati-2026-qf.json",
-    "keys-wangxiyu-cincinnati-2026-r16.json",
-    "nakashima-fritz-cincinnati-2026-qf.json",
-    "nishikori-sakamoto-us-open-2026-q3-farewell.json",
-    "pegula-anisimova-cincinnati-2026-qf.json",
-    "pegula-cirstea-cincinnati-2026-r16.json",
-    "pegula-swiatek-cincinnati-2026-sf.json",
-    "rybakina-gauff-tor2026-sf.json",
-    "rybakina-osaka-tor2026-qf.json",
-    "rybakina-swiatek-tor2026-final.json",
-    "shelton-mensik-mtl2026-qf.json",
-    "swiatek-parry-cincinnati-2026-r16.json",
-    "swiatek-sakkari-cincinnati-2026-r3.json",
-    "swiatek-shnaider-tor2026-qf.json",
-    "tiafoe-musetti-cincinnati-2026-qf-interview.json",
-    "tiafoe-nakashima-cincinnati-2026-sf-interview.json",
-    "zheng-liutova-us-open-2026-r1-interview.json",
     "alexandrova-sabalenka-tor2026-r16.xhs.txt",
-    "bejlek-keys-cincinnati-2026-qf.xhs.txt",
-    "cobolli-jodar-cincinnati-2026-r16.xhs.txt",
-    "cobolli-paul-cincinnati-2026-qf.xhs.txt",
-    "eala-osaka-dc2026-sf-studio.xhs.txt",
-    "eala-osaka-dc2026-sf.xhs.txt",
-    "eala-pegula-dc2026-final.xhs.txt",
-    "eala-svitolina-dc2026-qf.xhs.txt",
-    "fils-cobolli-cincinnati-2026-sf-interview.xhs.txt",
-    "gauff-bejlek-cincinnati-2026-sf.xhs.txt",
-    "gauff-kostyuk-cincinnati-2026-qf.xhs.txt",
-    "keys-wangxiyu-cincinnati-2026-r16.xhs.txt",
-    "nakashima-fritz-cincinnati-2026-qf.xhs.txt",
-    "pegula-anisimova-cincinnati-2026-qf.xhs.txt",
-    "pegula-cirstea-cincinnati-2026-r16.xhs.txt",
-    "pegula-swiatek-cincinnati-2026-sf.xhs.txt",
-    "rybakina-gauff-tor2026-sf.xhs.txt",
-    "rybakina-osaka-tor2026-qf.xhs.txt",
-    "rybakina-swiatek-tor2026-final.xhs.txt",
-    "shelton-mensik-mtl2026-qf.xhs.txt",
-    "swiatek-parry-cincinnati-2026-r16.xhs.txt",
-    "tiafoe-musetti-cincinnati-2026-qf-interview.xhs.txt",
-    "tiafoe-nakashima-cincinnati-2026-sf-interview.xhs.txt",
-    "zheng-liutova-us-open-2026-r1-interview.xhs.txt",
+    "eala-svitolina-dc2026-qf.json", "eala-svitolina-dc2026-qf.xhs.txt",
+    "monfils-vallejo-us-open-2026-r1-interview.json",
+    "monfils-vallejo-us-open-2026-r1-interview.xhs.txt",
+    "swiatek-zheng-us-open-2026-r4-presser.json",
+    "swiatek-zheng-us-open-2026-r4-presser.xhs.txt",
+    "zheng-keys-us-open-2026-r3-interview.json",
+    "zheng-keys-us-open-2026-r3-interview.xhs.txt",
+    "zheng-keys-us-open-2026-r3-presser.xhs.txt",
+    "zheng-keys-us-open-2026-r3-tennis-channel.json",
+    "zheng-swiatek-us-open-2026-r4-interview.json",
+    "zheng-swiatek-us-open-2026-r4-interview.xhs.txt",
+    "zheng-swiatek-us-open-2026-r4-presser.json",
+    "zheng-swiatek-us-open-2026-r4-presser.xhs.txt",
 }
 
 
-def test_轮次写N强不写分数式():
-    """账号所有者 2026-09-01：「**以后，8 强、4 强、决赛，这种这样说，
-    不要说 1/4 决赛和什么 1/8 决赛之类的了。**」
+def test_轮次写分数式不写N强():
+    """账号所有者 2026-09-08：「**不要用什么美网 16 强，应该用美网第四轮或者
+    用美网 1/8 决赛……接着继续用什么 1/4 决赛。和那个 semi final 半决赛以及
+    决赛这种，不要用什么八强、四强什么之类的。**」
 
-    ⚠️ 这条**整个翻了个面**（2026-08-02 定的是反过来那一套），形状没变、
-    主语换了。来路和边界见 `tests/test_match_reel.py::test_轮次写N强不写分数式`
-    的 docstring——那条是同一条规矩在「赛场之上」那条线上的闸。
+    ⚠️ 这条**一年里翻了三次**（08-02 分数式 → 09-01 N 强 → 09-08 又翻回分数式），
+    形状没变、主语每次都倒过来。来路和边界见
+    `tests/test_match_reel.py::test_轮次写分数式不写N强` 的 docstring——
+    那条是同一条规矩在「赛场之上」那条线上的闸。
 
     ⚠️ **正则从 `tools/spec_wording.py` import，不再自己抄一份**：翻面时发现
     这儿原来手抄了一遍 match-reel 那个正则，两处各写一遍必然分叉——而分叉的
@@ -3242,7 +3213,7 @@ def test_轮次写N强不写分数式():
     里面正引着账号所有者那两句原话，含被废掉的旧叫法）——连它一起扫会把
     「把规矩记下来」判成「又违反了规矩」，同一个错这个仓库已经犯过好几次。
     """
-    from tools.spec_wording import FRACTION_ROUND as bad  # noqa: PLC0415
+    from tools.spec_wording import STRENGTH_ROUND as bad  # noqa: PLC0415
 
     def outward(obj):
         if isinstance(obj, dict):
@@ -3269,8 +3240,8 @@ def test_轮次写N强不写分数式():
 
     fresh = {k: v for k, v in offenders.items() if k not in _LEGACY_ROUND_NAMES}
     assert not fresh, (
-        f"这些地方还在写分数式轮次或「半决赛」：{fresh}。"
-        "改成 8 强 / 4 强 / 决赛，再往前写「第几轮」。")
+        f"这些地方还在把轮次写成「N 强」：{fresh}。"
+        "改成 1/8决赛 / 1/4决赛 / 半决赛 / 决赛，再往前写「第几轮」。")
     # ⚠️ `set(offenders) <= _LEGACY_ROUND_NAMES`（上面那条断言）只挡得住
     # 「有真违规却没被豁免」，挡不住反过来那种：豁免表里混进一个根本不违规
     # （或者压根不存在）的名字——那种名字会一直静静地绿着，是一盏恒真的灯。

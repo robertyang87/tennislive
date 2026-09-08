@@ -6649,7 +6649,7 @@ def test_成片一律走Release不进git():
 # （那条规矩在别处），所以它们挂在这儿——**只许减不许加**：新写的 spec 要么
 # 用新叫法，要么显式把自己加进来，让「又用了旧叫法」变成一次看得见的决定。
 from tools.spec_wording import (  # noqa: E402
-    FRACTION_ROUND_LEGACY as _LEGACY_ROUND_NAMES,
+    STRENGTH_ROUND_LEGACY as _LEGACY_ROUND_NAMES,
 )
 
 
@@ -6843,20 +6843,27 @@ def test_渲海报的工作流都要装emoji字体():
             "国旗会悄悄变成方框，而这一步不会红")
 
 
-def test_轮次写N强不写分数式():
-    """账号所有者 2026-09-01：「**以后，8 强、4 强、决赛，这种这样说，
-    不要说 1/4 决赛和什么 1/8 决赛之类的了。**」
+def test_轮次写分数式不写N强():
+    r"""账号所有者 2026-09-08：「**以后比赛不要用什么美网 16 强，应该用美网
+    第四轮或者用美网 1/8 决赛。或者以后的什么，接着继续用什么 1/4 决赛。
+    和那个 semi final 半决赛以及决赛这种，不要用什么八强、四强什么之类的。**」
+    随后又补了一句「**以后都按着这个策略走，不要再出现什么美网 16 强的比赛**」。
 
-    ⚠️ 这条**整个翻了个面**，判据的形状没变、主语换了。2026-08-02 他定的是
-    反过来的那一套（「以后不要用四强八强之类的，国内通常用半决赛 1／4 决赛
-    1/8 决赛之类的」），这条测试当年叫 `test_轮次要写半决赛不写四强`、拦的是
-    「四强/八强/十六强」。今天拦的是旧那套，放行的是「N 强」——和
-    `test_赛场之上的封面一律用solo`（2026-08-04 把 solo 从例外翻成默认）
-    是同一个形状：**闸原样翻面，不是新增一条**。
+    ⚠️ 这条**一年里翻了三次**，每次形状不变、主语倒过来，所以三次都记下来
+    ——「我记得他上次说的是……」在这一条上已经错过两回：
 
-    「半决赛」也在拦的范围里：他列的三档（8 强 / 4 强 / 决赛）里「4 强」正是
-    这一档，不拦它的话同一个账号会把同一轮叫两个名字。「决赛」两套叫法相同，
-    不动；32 强再往前照旧写「第几轮」（那半条没被推翻）。
+        2026-08-02  不要四强八强，用半决赛 / 1／4 决赛 / 1/8 决赛
+        2026-09-01  反过来：8 强 / 4 强 / 决赛，不要分数式
+        2026-09-08  又翻回 08-02 那一套（**当前**）
+
+    **闸原样翻面，不是新增一条**——和 `test_赛场之上的封面一律用solo`
+    （2026-08-04 把 solo 从例外翻成默认）是同一个动作。
+
+    ⚠️ 正则**只认真的轮次名**（四/八/十六/三十二/六十四强，2 的幂）：语料里
+    「世界前十强边缘」是排名、「防守能力最强」「延续强势」是形容词，按裸的
+    `\d+强` 扫会把它们一起判成违规——第一版量出来 34 个命中里有 5 个是这种
+    误伤。「决赛」两套叫法相同，不动；32 强再往前照旧写「第几轮」（那半条
+    三次都没被推翻）。
 
     **只查会发出去的字段**——旁白、封面上印的字、推送那几栏、小红书文案。
     `_source` / `_why` / `_match` 这些是写给下一个人看的注解，里面正引着账号
@@ -6868,7 +6875,7 @@ def test_轮次写N强不写分数式():
     # ⚠️ outward_deep 必须包含 push 的非注解字段：第一版这儿读的是
     # `_push`，真正发进微信的 `push.summary`/`push.lead` 一条都没被
     # 扫到——判据的主语错了，而它绿着。
-    from tools.spec_wording import FRACTION_ROUND as bad  # noqa: PLC0415
+    from tools.spec_wording import STRENGTH_ROUND as bad  # noqa: PLC0415
     from tools.spec_wording import outward_deep as outward  # noqa: PLC0415
 
     offenders = {}
@@ -6885,8 +6892,9 @@ def test_轮次写N强不写分数式():
 
     fresh = {k: v for k, v in offenders.items() if k not in _LEGACY_ROUND_NAMES}
     assert not fresh, (
-        f"这些地方还在写分数式轮次或「半决赛」：{fresh}。"
-        "改成 8 强 / 4 强 / 决赛，再往前写「第几轮」。")
+        f"这些地方还在把轮次写成「N 强」：{fresh}。"
+        "改成 1/8决赛 / 1/4决赛 / 半决赛 / 决赛，大满贯也可写「第四轮」；"
+        "再往前写「第几轮」。")
     # **清单只许减不许加**：修好一个就从上面删掉一个，别让它变成一张许可证
     assert set(offenders) <= _LEGACY_ROUND_NAMES, "清单里有已经修好的条目？"
 
@@ -7007,16 +7015,16 @@ def test_轮次那道闸要盖住烧在画面上的顶栏():
     **而注解（`_` 开头）不许被扫**（这个仓库为「判据扫得太宽、被自己的注释
     误伤」栽过五次）。
     """
-    from tools.spec_wording import FRACTION_ROUND as bad  # noqa: PLC0415
+    from tools.spec_wording import STRENGTH_ROUND as bad  # noqa: PLC0415
     from tools.spec_wording import outward_deep as outward  # noqa: PLC0415
 
-    only_topbar = {"topbar": {"line1": "2026 辛辛那提 ATP1000 1/8决赛",
+    only_topbar = {"topbar": {"line1": "2026 辛辛那提 ATP1000 16强",
                               "line2": "甲 6-4 6-4 乙"}}
     assert any(bad.search(t) for t in outward(only_topbar)), \
         "topbar.line1 烧在画面上，轮次那道闸必须扫得到它"
 
-    annotated = {"topbar": {"line1": "2026 辛辛那提 ATP1000 8强",
-                            "_line1_why": "原来写的是 1/8 决赛，2026-09-01 翻面"}}
+    annotated = {"topbar": {"line1": "2026 辛辛那提 ATP1000 1/8决赛",
+                            "_line1_why": "原来写的是 16 强，2026-09-08 翻回来"}}
     assert not any(bad.search(t) for t in outward(annotated)), \
         "`_` 开头的是写给下一个人看的注解，扫它等于把「把规矩记下来」判成违规"
 
@@ -7042,7 +7050,7 @@ def test_自动链写进封面的轮次要先过对外写法那张表():
     """
     import ast  # noqa: PLC0415
 
-    from tools.spec_wording import FRACTION_ROUND as bad  # noqa: PLC0415
+    from tools.spec_wording import STRENGTH_ROUND as bad  # noqa: PLC0415
     from tools.spec_wording import round_display  # noqa: PLC0415
 
     # ① 两套内部轮次名的产出，转换之后都要过得了闸
@@ -7059,10 +7067,16 @@ def test_自动链写进封面的轮次要先过对外写法那张表():
         assert not bad.search(out), (
             f"内部轮次名「{label}」转出来还是「{out}」——会被措辞闸拦下，"
             f"自动链的草稿转不了正")
-    # 他点名的那三档要转成他要的那三个词
-    assert round_display("半决赛") == "4强"
-    assert round_display("四分之一决赛") == "8强"
+    # 他点名的那几档要转成他要的那几个词
+    assert round_display("半决赛") == "半决赛"
+    assert round_display("四分之一决赛") == "1/4决赛"
+    assert round_display("16强赛") == "1/8决赛"
     assert round_display("决赛") == "决赛"
+    # ⚠️ 两个方向的键都要收：2026-09-01～09-08 之间落库的代码/草稿产的是
+    # 「8强」「4强」，翻面之后只收中文名的话它们会原样透出去然后撞闸
+    assert round_display("4强") == "半决赛"
+    assert round_display("8强") == "1/4决赛"
+    assert round_display("16强") == "1/8决赛"
     # 认不出来的原样透出去（资格赛、第几轮、英文原文都从这条走）
     for passthrough in ("决赛", "第一轮", "资格赛", "小组赛", "Round Robin", ""):
         assert round_display(passthrough) == passthrough
