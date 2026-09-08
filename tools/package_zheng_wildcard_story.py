@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Package the reviewed Zheng episode for the existing explainer delivery path."""
+"""Package documentary narration and matching publication copy for delivery."""
 import argparse, datetime, hashlib, json, subprocess, sys
 from pathlib import Path
 from build_zheng_wildcard_story import ROOT, E, segments

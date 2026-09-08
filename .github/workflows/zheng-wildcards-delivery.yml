@@ -3,13 +3,15 @@ on:
   push:
     branches: [story/zheng-wildcards-editorial-20260908]
     paths:
+      - .github/workflows/zheng-wildcards-delivery.yml
       - tools/build_zheng_wildcard_story.py
       - tools/package_zheng_wildcard_story.py
 permissions:
   contents: write
 concurrency:
   group: zheng-wildcards-reviewed-render
-  cancel-in-progress: false
+  # Rendering has no WeChat POST; a newer editorial revision supersedes it.
+  cancel-in-progress: true
 jobs:
   render:
     runs-on: ubuntu-latest
@@ -118,5 +120,16 @@ jobs:
           git add --sparse "$OUTDIR"
           python tools/check_staged_file_sizes.py
           git commit -m 'content: reviewed Zheng wildcard delivery package'
-          source tools/git_push_retry.sh
-          push_with_rebase_retry "$GITHUB_REF_NAME" 5
+          for attempt in 1 2 3 4 5; do
+            if git push origin "HEAD:$GITHUB_REF_NAME"; then exit 0; fi
+            git branch -f rendered HEAD
+            git fetch origin "$GITHUB_REF_NAME"
+            git reset --hard "origin/$GITHUB_REF_NAME"
+            git checkout rendered -- "$OUTDIR"
+            git add --sparse "$OUTDIR"
+            if git diff --cached --quiet; then exit 0; fi
+            git commit -m 'content: reviewed Zheng wildcard delivery package'
+            sleep 3
+          done
+          echo "::error::Reviewed delivery output could not be committed"
+          exit 1
