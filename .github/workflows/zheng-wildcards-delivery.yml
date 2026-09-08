@@ -1,0 +1,69 @@
+name: Zheng wildcard reviewed episode delivery
+on:
+  push:
+    branches: [story/zheng-wildcards-20260908]
+    paths:
+      - .github/workflows/zheng-wildcards-delivery.yml
+      - tools/build_zheng_wildcard_story.py
+      - tools/package_zheng_wildcard_story.py
+permissions:
+  contents: write
+concurrency:
+  group: zheng-wildcards-reviewed-render
+  cancel-in-progress: false
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      OUTDIR: output/2026-09-08/explainer/zheng-china-wuhan-wildcards
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            .github
+            assets
+            src
+            specs
+            tools
+            docs
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install renderer dependencies
+        run: |
+          pip install -q -e '.[webrender]' edge-tts
+          source tools/ci_apt_install.sh
+          apt_install_cached fonts-noto-cjk ffmpeg
+          python -m playwright install --with-deps chromium
+      - name: Render reviewed native cards and narration
+        run: python tools/build_zheng_wildcard_story.py --outdir "$OUTDIR"
+      - name: Package and validate actual output
+        run: |
+          python tools/package_zheng_wildcard_story.py --outdir "$OUTDIR" --video-url "https://github.com/$GITHUB_REPOSITORY/releases/download/explainer-zheng-china-wuhan-wildcards/explainer.mp4"
+          python tools/check_explainer_voice.py --local "$(dirname "$OUTDIR")" zheng-china-wuhan-wildcards
+          python tools/check_explainer_landed.py --local "$OUTDIR" zheng-china-wuhan-wildcards --says '全年六次，正赛最多三次' '去年直入线，卡在第四十一'
+      - uses: actions/upload-artifact@v4
+        with:
+          name: zheng-wildcards-reviewed-video
+          path: output/2026-09-08/explainer/zheng-china-wuhan-wildcards
+          retention-days: 14
+      - name: Upload validated video to Release
+        run: |
+          TAG=explainer-zheng-china-wuhan-wildcards
+          gh release view "$TAG" >/dev/null 2>&1 || gh release create "$TAG" --target "$GITHUB_SHA" --title '网球有故事｜中网给了外卡，武网怎么办？' --notes '经质检的卡片视频。成片不进入 Git。'
+          cp "$OUTDIR/zheng-wildcards-template.mp4" /tmp/explainer.mp4
+          gh release upload "$TAG" /tmp/explainer.mp4 --clobber
+          curl --fail --location --range 0-99 --output /dev/null "https://github.com/$GITHUB_REPOSITORY/releases/download/$TAG/explainer.mp4"
+      - name: Commit only lightweight delivery files to the feature branch
+        run: |
+          git sparse-checkout add "$OUTDIR"
+          rm -f "$OUTDIR"/*.mp4 "$OUTDIR"/voice_*.mp3 "$OUTDIR"/slide_*.html
+          git config user.name 'TennisLive'
+          git config user.email 'actions@users.noreply.github.com'
+          git add --sparse "$OUTDIR"
+          python tools/check_staged_file_sizes.py
+          git commit -m 'content: reviewed Zheng wildcard delivery package'
+          source tools/git_push_retry.sh
+          push_with_rebase_retry "$GITHUB_REF_NAME" 5
