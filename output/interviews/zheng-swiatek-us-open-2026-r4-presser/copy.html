@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>9.8 赛后开麦 | 郑钦文说自己就是第 125</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>郑钦文刚淘汰世界第 8，转身在发布会上说：现实就是你不过就是第 125。
+
+📍 2026 美网 女单 16 强 阿瑟·阿什球场
+🎾 郑钦文 7-5 6-3 斯瓦泰克 1 小时 56 分
+🎤 赛后新闻发布会 英文场完整问答
+
+她是从资格赛打上来的，本届七场全胜。首盘 0-5 落后，连赢七局——上一轮对凯斯，决胜盘也是 0-5 落后连赢七局。全场非受迫失误 17 比 28，总得分 75 比 63。此前她对斯瓦泰克 1 胜 7 负。
+
+① 记者追问「你说你忘了比分，是什么意思」
+她说 4-5 的时候她以为是 3-5，走去擦汗，看到记分牌才发现该回座位了。「我太专注在每一分上，连比分都记不住。」
+
+② 多伦多资格赛输完，教练找她长谈
+「我跟他说，我的拼图都在那儿，只是我还没把它们拼起来。」于是去了 IMG 学院，早上 8 点开练，有一天晚上 8 点半才收工——她说那是跟这位教练做过最苦的一段训练。
+
+③ 最后落在这一句
+「现实就是你不过就是第 125，你不是以前那个世界前 10 了。别把自己看那么高，你在这儿和大家一样，都是从最底下开始的。」
+（WTA 8 月 31 日那期榜单上她其实是第 121，比她自己说的还高四位。）
+
+下一轮她碰莱巴金娜，世界第 2，此前 1 胜 4 负。
+
+刚赢完世界第 8 就先给自己泼一盆冷水，你觉得这是清醒，还是她心里那道坎还没过去？
+
+#网球时差 #郑钦文 #美网 #赛后开麦 #斯瓦泰克</textarea>
+    </section>
+    
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
