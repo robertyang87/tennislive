@@ -1,0 +1,746 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1440
+WrapStyle: 0
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: EN,Noto Sans,46,&H00FFFFFF,&H00000000,&H00000000,1,0,0,0,100,100,0,0,1,0,0,8,64,64,1141,1
+Style: ZH,Noto Sans CJK SC,70,&H0074DCC3,&H00000000,&H00000000,1,0,0,0,100,100,0,0,1,0,0,8,64,64,1194,1
+Style: HEADA,得意黑,54,&H00FFFFFF,&H00000000,&H00000000,0,0,0,0,100,100,1,0,1,0,0,8,48,48,24,1
+Style: HEADB,Noto Sans CJK SC,38,&H00DBE2D5,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,1.5,0,8,48,48,92,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 2,0:00:00.00,0:13:41.00,HEADA,,0,0,0,,{\r\fnNoto Sans CJK SC\fs54\c&H8CDC4A&\an8\pos(540,24)}▍{\r\fn得意黑\fs54}2026 美网 女单 16 强
+Dialogue: 1,0:00:00.00,0:13:41.00,HEADB,,0,0,0,,{\r\fnNoto Sans CJK SC\fs38\c&H8CDC4A&\an8\pos(540,92)}郑钦文 {\r\fnTL Score\c&H8CDC4A&\b1\fs44}7-{\r\fnTL Score\b300\fs44}5 {\r\fnTL Score\c&H8CDC4A&\b1\fs44}6-{\r\fnTL Score\b300\fs44}3{\r\fnNoto Sans CJK SC\fs38} 斯瓦泰克 · 赛后新闻发布会
+Dialogue: 0,0:00:02.80,0:00:04.08,EN,,0,0,0,,Congratulations.
+Dialogue: 0,0:00:02.80,0:00:04.08,ZH,,0,0,0,,恭喜
+Dialogue: 0,0:00:04.08,0:00:04.80,EN,,0,0,0,,Thank you.
+Dialogue: 0,0:00:04.08,0:00:04.80,ZH,,0,0,0,,谢谢
+Dialogue: 0,0:00:04.80,0:00:07.12,EN,,0,0,0,,Impressive two set win including
+Dialogue: 0,0:00:04.80,0:00:07.12,ZH,,0,0,0,,直落两盘 赢得很漂亮 尤其是
+Dialogue: 0,0:00:07.12,0:00:08.48,EN,,0,0,0,,that first set.
+Dialogue: 0,0:00:07.12,0:00:08.48,ZH,,0,0,0,,第一盘
+Dialogue: 0,0:00:08.48,0:00:10.88,EN,,0,0,0,,Your thoughts?
+Dialogue: 0,0:00:08.48,0:00:10.88,ZH,,0,0,0,,你怎么看？
+Dialogue: 0,0:00:10.88,0:00:12.40,EN,,0,0,0,,Yes.
+Dialogue: 0,0:00:10.88,0:00:12.40,ZH,,0,0,0,,嗯
+Dialogue: 0,0:00:12.40,0:00:15.52,EN,,0,0,0,,I've been expecting like really tough match
+Dialogue: 0,0:00:12.40,0:00:15.52,ZH,,0,0,0,,我一直觉得会是一场硬仗
+Dialogue: 0,0:00:15.52,0:00:19.12,EN,,0,0,0,,today and also I'm happy to win two set.
+Dialogue: 0,0:00:15.52,0:00:19.12,ZH,,0,0,0,,今天 也很高兴能两盘拿下
+Dialogue: 0,0:00:19.12,0:00:20.40,EN,,0,0,0,,I mean it's really difficult
+Dialogue: 0,0:00:19.12,0:00:20.40,ZH,,0,0,0,,我是说 这真的很难
+Dialogue: 0,0:00:20.40,0:00:21.84,EN,,0,0,0,,to do that against Iga
+Dialogue: 0,0:00:20.40,0:00:21.84,ZH,,0,0,0,,对上斯瓦泰克做到这点
+Dialogue: 0,0:00:21.84,0:00:24.32,EN,,0,0,0,,because she's a wonderful player.
+Dialogue: 0,0:00:21.84,0:00:24.32,ZH,,0,0,0,,因为她是个很棒的球员
+Dialogue: 0,0:00:24.32,0:00:25.36,EN,,0,0,0,,Okay. Thank you very much.
+Dialogue: 0,0:00:24.32,0:00:25.36,ZH,,0,0,0,,好 非常感谢
+Dialogue: 0,0:00:25.36,0:00:26.88,EN,,0,0,0,,Congratulations once again.
+Dialogue: 0,0:00:25.36,0:00:26.88,ZH,,0,0,0,,再次恭喜
+Dialogue: 0,0:00:26.88,0:00:28.56,EN,,0,0,0,,Questions please.
+Dialogue: 0,0:00:26.88,0:00:28.56,ZH,,0,0,0,,请提问
+Dialogue: 0,0:00:28.56,0:00:30.16,EN,,0,0,0,,David,
+Dialogue: 0,0:00:28.56,0:00:30.16,ZH,,0,0,0,,大卫
+Dialogue: 0,0:00:30.16,0:00:31.04,EN,,0,0,0,,congratulations.
+Dialogue: 0,0:00:30.16,0:00:31.04,ZH,,0,0,0,,恭喜
+Dialogue: 0,0:00:31.04,0:00:31.44,EN,,0,0,0,,Obviously,
+Dialogue: 0,0:00:31.04,0:00:31.44,ZH,,0,0,0,,显然
+Dialogue: 0,0:00:31.44,0:00:33.60,EN,,0,0,0,,being down 0-5 is not an ideal situation
+Dialogue: 0,0:00:31.44,0:00:33.60,ZH,,0,0,0,,0-5 落后不是个理想的处境
+Dialogue: 0,0:00:33.60,0:00:35.36,EN,,0,0,0,,to be in, but did the experience
+Dialogue: 0,0:00:33.60,0:00:35.36,ZH,,0,0,0,,但那次经历
+Dialogue: 0,0:00:35.36,0:00:37.28,EN,,0,0,0,,of having come back from that deficit
+Dialogue: 0,0:00:35.36,0:00:37.28,ZH,,0,0,0,,从这么大的落后追回来
+Dialogue: 0,0:00:37.28,0:00:38.64,EN,,0,0,0,,against Madison the previous
+Dialogue: 0,0:00:37.28,0:00:38.64,ZH,,0,0,0,,上一轮对凯斯
+Dialogue: 0,0:00:38.64,0:00:40.40,EN,,0,0,0,,round give you any encouragement
+Dialogue: 0,0:00:38.64,0:00:40.40,ZH,,0,0,0,,有没有给你一点鼓励
+Dialogue: 0,0:00:40.40,0:00:42.64,EN,,0,0,0,,to do the same thing today?
+Dialogue: 0,0:00:40.40,0:00:42.64,ZH,,0,0,0,,今天也这么做？
+Dialogue: 0,0:00:42.64,0:00:45.68,EN,,0,0,0,,Yes,
+Dialogue: 0,0:00:42.64,0:00:45.68,ZH,,0,0,0,,是啊
+Dialogue: 0,0:00:45.68,0:00:48.08,EN,,0,0,0,,but I would say I start the match really slow.
+Dialogue: 0,0:00:45.68,0:00:48.08,ZH,,0,0,0,,但我得说 我开局特别慢
+Dialogue: 0,0:00:48.08,0:00:50.72,EN,,0,0,0,,That's why she's able to lead 5-0.
+Dialogue: 0,0:00:48.08,0:00:50.72,ZH,,0,0,0,,所以她才能 5-0 领先
+Dialogue: 0,0:00:50.72,0:00:54.32,EN,,0,0,0,,And after that, I start to play more freely,
+Dialogue: 0,0:00:50.72,0:00:54.32,ZH,,0,0,0,,之后 我开始打得放开一些
+Dialogue: 0,0:00:54.32,0:00:57.04,EN,,0,0,0,,let's say, because I think I need to try to find
+Dialogue: 0,0:00:54.32,0:00:57.04,ZH,,0,0,0,,怎么说呢 因为我得试着找到
+Dialogue: 0,0:00:57.04,0:00:59.28,EN,,0,0,0,,my rhythm at least for the second set.
+Dialogue: 0,0:00:57.04,0:00:59.28,ZH,,0,0,0,,自己的节奏 至少在第二盘
+Dialogue: 0,0:00:59.28,0:01:01.92,EN,,0,0,0,,But somehow I felt really comfortable
+Dialogue: 0,0:00:59.28,0:01:01.92,ZH,,0,0,0,,但不知怎么 我感觉很舒服
+Dialogue: 0,0:01:01.92,0:01:04.72,EN,,0,0,0,,on court and in one moment I also lose
+Dialogue: 0,0:01:01.92,0:01:04.72,ZH,,0,0,0,,在场上 有一刻我甚至
+Dialogue: 0,0:01:04.72,0:01:06.80,EN,,0,0,0,,the score because I'm so focused
+Dialogue: 0,0:01:04.72,0:01:06.80,ZH,,0,0,0,,忘了比分 因为我太专注了
+Dialogue: 0,0:01:06.80,0:01:08.88,EN,,0,0,0,,to playing every single point.
+Dialogue: 0,0:01:06.80,0:01:08.88,ZH,,0,0,0,,每一分都想打好
+Dialogue: 0,0:01:08.88,0:01:10.56,EN,,0,0,0,,And I think that's the key for me
+Dialogue: 0,0:01:08.88,0:01:10.56,ZH,,0,0,0,,我觉得这对我来说是关键
+Dialogue: 0,0:01:10.56,0:01:12.08,EN,,0,0,0,,to come back.
+Dialogue: 0,0:01:10.56,0:01:12.08,ZH,,0,0,0,,让我追了回来
+Dialogue: 0,0:01:12.08,0:01:15.04,EN,,0,0,0,,I didn't expect that today,
+Dialogue: 0,0:01:12.08,0:01:15.04,ZH,,0,0,0,,今天我没想到会这样
+Dialogue: 0,0:01:15.04,0:01:17.20,EN,,0,0,0,,but somehow it's just happening again.
+Dialogue: 0,0:01:15.04,0:01:17.20,ZH,,0,0,0,,但不知怎么 又发生了一次
+Dialogue: 0,0:01:17.20,0:01:17.68,EN,,0,0,0,,Yeah.
+Dialogue: 0,0:01:17.20,0:01:17.68,ZH,,0,0,0,,嗯
+Dialogue: 0,0:01:17.68,0:01:19.76,EN,,0,0,0,,Okay, Brian.
+Dialogue: 0,0:01:17.68,0:01:19.76,ZH,,0,0,0,,好 布莱恩
+Dialogue: 0,0:01:19.76,0:01:21.12,EN,,0,0,0,,I wanted to ask you about that.
+Dialogue: 0,0:01:19.76,0:01:21.12,ZH,,0,0,0,,我想问的就是这个
+Dialogue: 0,0:01:21.12,0:01:22.00,EN,,0,0,0,,You mentioned that also
+Dialogue: 0,0:01:21.12,0:01:22.00,ZH,,0,0,0,,你刚才也提到
+Dialogue: 0,0:01:22.00,0:01:23.76,EN,,0,0,0,,that you forgot the score.
+Dialogue: 0,0:01:22.00,0:01:23.76,ZH,,0,0,0,,说你忘了比分
+Dialogue: 0,0:01:23.76,0:01:24.24,EN,,0,0,0,,Yeah.
+Dialogue: 0,0:01:23.76,0:01:24.24,ZH,,0,0,0,,嗯
+Dialogue: 0,0:01:24.24,0:01:27.12,EN,,0,0,0,,Like did you think it was 5-3 or what?
+Dialogue: 0,0:01:24.24,0:01:27.12,ZH,,0,0,0,,你以为是 5-3 吗？
+Dialogue: 0,0:01:27.12,0:01:29.68,EN,,0,0,0,,How did you mean you forgot what it was?
+Dialogue: 0,0:01:27.12,0:01:29.68,ZH,,0,0,0,,忘了比分是什么意思？
+Dialogue: 0,0:01:29.68,0:01:33.44,EN,,0,0,0,,Yes. So at 4-5 I went to the towel
+Dialogue: 0,0:01:29.68,0:01:33.44,ZH,,0,0,0,,是的 4-5 的时候我去擦汗
+Dialogue: 0,0:01:33.44,0:01:35.44,EN,,0,0,0,,because I thought it was 3-5
+Dialogue: 0,0:01:33.44,0:01:35.44,ZH,,0,0,0,,因为我以为是 3-5
+Dialogue: 0,0:01:35.44,0:01:36.72,EN,,0,0,0,,and I thought I need
+Dialogue: 0,0:01:35.44,0:01:36.72,ZH,,0,0,0,,我以为我还要
+Dialogue: 0,0:01:36.72,0:01:38.80,EN,,0,0,0,,to play one more game but when I saw
+Dialogue: 0,0:01:36.72,0:01:38.80,ZH,,0,0,0,,再打一局 但我看到
+Dialogue: 0,0:01:38.80,0:01:40.80,EN,,0,0,0,,the scoreboard I was like 4-5 I need
+Dialogue: 0,0:01:38.80,0:01:40.80,ZH,,0,0,0,,记分牌 才知道是 4-5
+Dialogue: 0,0:01:40.80,0:01:43.60,EN,,0,0,0,,to go to my place to sit down.
+Dialogue: 0,0:01:40.80,0:01:43.60,ZH,,0,0,0,,我得回座位坐下
+Dialogue: 0,0:01:43.60,0:01:44.88,EN,,0,0,0,,Because I was so
+Dialogue: 0,0:01:43.60,0:01:44.88,ZH,,0,0,0,,因为我太投入
+Dialogue: 0,0:01:44.88,0:01:46.48,EN,,0,0,0,,focusing every single point
+Dialogue: 0,0:01:44.88,0:01:46.48,ZH,,0,0,0,,每一分都全神贯注
+Dialogue: 0,0:01:46.48,0:01:48.48,EN,,0,0,0,,so I I couldn't even remember the score.
+Dialogue: 0,0:01:46.48,0:01:48.48,ZH,,0,0,0,,所以我连比分都记不住
+Dialogue: 0,0:01:48.48,0:01:50.80,EN,,0,0,0,,So I just say okay this ball have to play here
+Dialogue: 0,0:01:48.48,0:01:50.80,ZH,,0,0,0,,我就想 这个球打这儿
+Dialogue: 0,0:01:50.80,0:01:52.80,EN,,0,0,0,,that ball there next point.
+Dialogue: 0,0:01:50.80,0:01:52.80,ZH,,0,0,0,,那个球打那儿 下一分
+Dialogue: 0,0:01:52.80,0:01:54.24,EN,,0,0,0,,So just keep repeating.
+Dialogue: 0,0:01:52.80,0:01:54.24,ZH,,0,0,0,,就这么一直重复
+Dialogue: 0,0:01:54.24,0:01:56.56,EN,,0,0,0,,Yeah
+Dialogue: 0,0:01:54.24,0:01:56.56,ZH,,0,0,0,,嗯
+Dialogue: 0,0:01:56.56,0:01:57.92,EN,,0,0,0,,congratulations Qinwen.
+Dialogue: 0,0:01:56.56,0:01:57.92,ZH,,0,0,0,,恭喜郑钦文
+Dialogue: 0,0:01:57.92,0:01:59.52,EN,,0,0,0,,I remember at the French Open
+Dialogue: 0,0:01:57.92,0:01:59.52,ZH,,0,0,0,,我记得在法网
+Dialogue: 0,0:01:59.52,0:02:01.20,EN,,0,0,0,,in that in that really tough loss you
+Dialogue: 0,0:01:59.52,0:02:01.20,ZH,,0,0,0,,那场非常难受的失利
+Dialogue: 0,0:02:01.20,0:02:03.20,EN,,0,0,0,,have had and you were so emotional after.
+Dialogue: 0,0:02:01.20,0:02:03.20,ZH,,0,0,0,,赛后你情绪很激动
+Dialogue: 0,0:02:03.20,0:02:06.48,EN,,0,0,0,,I wonder if then you you had any sense
+Dialogue: 0,0:02:03.20,0:02:06.48,ZH,,0,0,0,,我想知道你当时有没有想过
+Dialogue: 0,0:02:06.48,0:02:08.64,EN,,0,0,0,,that even though it was a frustrating loss
+Dialogue: 0,0:02:06.48,0:02:08.64,ZH,,0,0,0,,虽然那场输得很难受
+Dialogue: 0,0:02:08.64,0:02:10.08,EN,,0,0,0,,that you would be back
+Dialogue: 0,0:02:08.64,0:02:10.08,ZH,,0,0,0,,但你会这么快
+Dialogue: 0,0:02:10.08,0:02:12.16,EN,,0,0,0,,to where you wanted to be this soon.
+Dialogue: 0,0:02:10.08,0:02:12.16,ZH,,0,0,0,,回到你想去的位置
+Dialogue: 0,0:02:12.16,0:02:14.24,EN,,0,0,0,,I'm sure it feels long to you but it it
+Dialogue: 0,0:02:12.16,0:02:14.24,ZH,,0,0,0,,对你来说肯定觉得很久
+Dialogue: 0,0:02:14.24,0:02:17.04,EN,,0,0,0,,hasn't it's you know just been a a summer.
+Dialogue: 0,0:02:14.24,0:02:17.04,ZH,,0,0,0,,但其实也就一个夏天
+Dialogue: 0,0:02:17.04,0:02:19.44,EN,,0,0,0,,Yeah. That loss for me is one
+Dialogue: 0,0:02:17.04,0:02:19.44,ZH,,0,0,0,,嗯 那场失利对我来说
+Dialogue: 0,0:02:19.44,0:02:21.92,EN,,0,0,0,,of the toughest for me to accept it
+Dialogue: 0,0:02:19.44,0:02:21.92,ZH,,0,0,0,,是最难接受的一场
+Dialogue: 0,0:02:21.92,0:02:25.60,EN,,0,0,0,,because I got lot of chance in that match.
+Dialogue: 0,0:02:21.92,0:02:25.60,ZH,,0,0,0,,因为那场我有很多机会
+Dialogue: 0,0:02:25.60,0:02:27.04,EN,,0,0,0,,Even right now for me,
+Dialogue: 0,0:02:25.60,0:02:27.04,ZH,,0,0,0,,哪怕到今天
+Dialogue: 0,0:02:27.04,0:02:28.64,EN,,0,0,0,,I could remember how I missed
+Dialogue: 0,0:02:27.04,0:02:28.64,ZH,,0,0,0,,我还记得自己是怎么
+Dialogue: 0,0:02:28.64,0:02:30.32,EN,,0,0,0,,those chances.
+Dialogue: 0,0:02:28.64,0:02:30.32,ZH,,0,0,0,,错过那些机会
+Dialogue: 0,0:02:30.32,0:02:34.72,EN,,0,0,0,,But I think those losses maybe is necessary
+Dialogue: 0,0:02:30.32,0:02:34.72,ZH,,0,0,0,,但我觉得这些失利也许有必要
+Dialogue: 0,0:02:34.72,0:02:36.08,EN,,0,0,0,,for me to understand.
+Dialogue: 0,0:02:34.72,0:02:36.08,ZH,,0,0,0,,才能让我明白
+Dialogue: 0,0:02:36.08,0:02:38.32,EN,,0,0,0,,I need to stay humble.
+Dialogue: 0,0:02:36.08,0:02:38.32,ZH,,0,0,0,,我得保持谦逊
+Dialogue: 0,0:02:38.32,0:02:40.48,EN,,0,0,0,,You know, I need to continue work hard
+Dialogue: 0,0:02:38.32,0:02:40.48,ZH,,0,0,0,,我得继续努力
+Dialogue: 0,0:02:40.48,0:02:42.72,EN,,0,0,0,,to come back to my spot
+Dialogue: 0,0:02:40.48,0:02:42.72,ZH,,0,0,0,,才能回到我原来的位置
+Dialogue: 0,0:02:42.72,0:02:44.56,EN,,0,0,0,,because I felt sport.
+Dialogue: 0,0:02:42.72,0:02:44.56,ZH,,0,0,0,,因为我觉得 在体育里
+Dialogue: 0,0:02:44.56,0:02:48.40,EN,,0,0,0,,there is no gift if you stop working hard
+Dialogue: 0,0:02:44.56,0:02:48.40,ZH,,0,0,0,,不努力 就没有白给的东西
+Dialogue: 0,0:02:48.40,0:02:50.80,EN,,0,0,0,,the result shows everything so I need
+Dialogue: 0,0:02:48.40,0:02:50.80,ZH,,0,0,0,,成绩就说明一切了
+Dialogue: 0,0:02:50.80,0:02:54.96,EN,,0,0,0,,to in that moment to heal myself
+Dialogue: 0,0:02:50.80,0:02:54.96,ZH,,0,0,0,,所以那时候我得治愈自己
+Dialogue: 0,0:02:54.96,0:02:58.24,EN,,0,0,0,,for quite long time little by little find myself
+Dialogue: 0,0:02:54.96,0:02:58.24,ZH,,0,0,0,,花了挺长时间 一点点找回自己
+Dialogue: 0,0:02:58.24,0:03:00.40,EN,,0,0,0,,and also I'm not winning still
+Dialogue: 0,0:02:58.24,0:03:00.40,ZH,,0,0,0,,而且我还是赢不了球
+Dialogue: 0,0:03:00.40,0:03:02.32,EN,,0,0,0,,after that and I just need
+Dialogue: 0,0:03:00.40,0:03:02.32,ZH,,0,0,0,,那之后 我只需要
+Dialogue: 0,0:03:02.32,0:03:04.16,EN,,0,0,0,,to accept it keep working hard
+Dialogue: 0,0:03:02.32,0:03:04.16,ZH,,0,0,0,,接受它 继续努力
+Dialogue: 0,0:03:04.16,0:03:06.64,EN,,0,0,0,,and let's see when is my moment
+Dialogue: 0,0:03:04.16,0:03:06.64,ZH,,0,0,0,,看看什么时候是我的时刻
+Dialogue: 0,0:03:06.64,0:03:09.36,EN,,0,0,0,,when I can come back again but I always
+Dialogue: 0,0:03:06.64,0:03:09.36,ZH,,0,0,0,,什么时候能再回来 但我一直
+Dialogue: 0,0:03:09.36,0:03:11.84,EN,,0,0,0,,have the confidence of myself I will be there
+Dialogue: 0,0:03:09.36,0:03:11.84,ZH,,0,0,0,,对自己有信心 我一定会回去
+Dialogue: 0,0:03:11.84,0:03:15.68,EN,,0,0,0,,but it's just matter of when of course I
+Dialogue: 0,0:03:11.84,0:03:15.68,ZH,,0,0,0,,只是时间早晚的问题
+Dialogue: 0,0:03:15.68,0:03:21.64,EN,,0,0,0,,won't happen not so long you know
+Dialogue: 0,0:03:15.68,0:03:21.64,ZH,,0,0,0,,当然 不会太久
+Dialogue: 0,0:03:22.80,0:03:24.40,EN,,0,0,0,,congratulations I wanted to ask you
+Dialogue: 0,0:03:22.80,0:03:24.40,ZH,,0,0,0,,恭喜 我想问你
+Dialogue: 0,0:03:24.40,0:03:25.36,EN,,0,0,0,,about your training block
+Dialogue: 0,0:03:24.40,0:03:25.36,ZH,,0,0,0,,关于你的封闭训练
+Dialogue: 0,0:03:25.36,0:03:28.16,EN,,0,0,0,,that you had before before coming here
+Dialogue: 0,0:03:25.36,0:03:28.16,ZH,,0,0,0,,来这里之前的那一段
+Dialogue: 0,0:03:28.16,0:03:31.20,EN,,0,0,0,,was that your decision to to go
+Dialogue: 0,0:03:28.16,0:03:31.20,ZH,,0,0,0,,这是你自己的决定吗
+Dialogue: 0,0:03:31.20,0:03:32.48,EN,,0,0,0,,to have that training block
+Dialogue: 0,0:03:31.20,0:03:32.48,ZH,,0,0,0,,去做那个封闭训练
+Dialogue: 0,0:03:32.48,0:03:34.32,EN,,0,0,0,,or did your coaches tell you
+Dialogue: 0,0:03:32.48,0:03:34.32,ZH,,0,0,0,,还是你的教练告诉你
+Dialogue: 0,0:03:34.32,0:03:38.16,EN,,0,0,0,,to do that and just how did you how
+Dialogue: 0,0:03:34.32,0:03:38.16,ZH,,0,0,0,,这么做 你当时是怎么
+Dialogue: 0,0:03:38.16,0:03:40.24,EN,,0,0,0,,and why did you decide on that?
+Dialogue: 0,0:03:38.16,0:03:40.24,ZH,,0,0,0,,为什么做这个决定？
+Dialogue: 0,0:03:40.24,0:03:44.24,EN,,0,0,0,,So after when I lost badly
+Dialogue: 0,0:03:40.24,0:03:44.24,ZH,,0,0,0,,就是在我输得很惨之后
+Dialogue: 0,0:03:44.24,0:03:45.60,EN,,0,0,0,,in Toronto quali
+Dialogue: 0,0:03:44.24,0:03:45.60,ZH,,0,0,0,,多伦多资格赛
+Dialogue: 0,0:03:45.60,0:03:48.40,EN,,0,0,0,,which is I play really disaster there
+Dialogue: 0,0:03:45.60,0:03:48.40,ZH,,0,0,0,,我在那儿打得一塌糊涂
+Dialogue: 0,0:03:48.40,0:03:51.84,EN,,0,0,0,,and my coach sat down with me
+Dialogue: 0,0:03:48.40,0:03:51.84,ZH,,0,0,0,,我教练坐下来跟我
+Dialogue: 0,0:03:51.84,0:03:54.96,EN,,0,0,0,,and we had a long talk together.
+Dialogue: 0,0:03:51.84,0:03:54.96,ZH,,0,0,0,,我们长谈了一次
+Dialogue: 0,0:03:54.96,0:03:57.92,EN,,0,0,0,,He told me you can't continue playing
+Dialogue: 0,0:03:54.96,0:03:57.92,ZH,,0,0,0,,他说你不能再这样
+Dialogue: 0,0:03:57.92,0:03:58.56,EN,,0,0,0,,like this.
+Dialogue: 0,0:03:57.92,0:03:58.56,ZH,,0,0,0,,打下去了
+Dialogue: 0,0:03:58.56,0:04:00.88,EN,,0,0,0,,You need to you need
+Dialogue: 0,0:03:58.56,0:04:00.88,ZH,,0,0,0,,你需要 你必须
+Dialogue: 0,0:04:00.88,0:04:02.24,EN,,0,0,0,,to have a training block
+Dialogue: 0,0:04:00.88,0:04:02.24,ZH,,0,0,0,,去做一段封闭训练
+Dialogue: 0,0:04:02.24,0:04:05.04,EN,,0,0,0,,and find your tennis again.
+Dialogue: 0,0:04:02.24,0:04:05.04,ZH,,0,0,0,,把你的网球找回来
+Dialogue: 0,0:04:05.04,0:04:07.04,EN,,0,0,0,,I think about it.
+Dialogue: 0,0:04:05.04,0:04:07.04,ZH,,0,0,0,,我想了想
+Dialogue: 0,0:04:07.04,0:04:08.40,EN,,0,0,0,,just take five seconds
+Dialogue: 0,0:04:07.04,0:04:08.40,ZH,,0,0,0,,就想了 5 秒
+Dialogue: 0,0:04:08.40,0:04:10.48,EN,,0,0,0,,and I say okay let's do that.
+Dialogue: 0,0:04:08.40,0:04:10.48,ZH,,0,0,0,,我说好 那就去吧
+Dialogue: 0,0:04:10.48,0:04:13.52,EN,,0,0,0,,So we decided to go to Bradenton,
+Dialogue: 0,0:04:10.48,0:04:13.52,ZH,,0,0,0,,我们就决定去布雷登顿
+Dialogue: 0,0:04:13.52,0:04:15.68,EN,,0,0,0,,you know, IMG academy which is they
+Dialogue: 0,0:04:13.52,0:04:15.68,ZH,,0,0,0,,就是IMG学院 他们那儿
+Dialogue: 0,0:04:15.68,0:04:18.56,EN,,0,0,0,,have nothing around just tennis gym
+Dialogue: 0,0:04:15.68,0:04:18.56,ZH,,0,0,0,,周围什么都没有 只有网球
+Dialogue: 0,0:04:18.56,0:04:20.64,EN,,0,0,0,,and a resting place.
+Dialogue: 0,0:04:18.56,0:04:20.64,ZH,,0,0,0,,健身房 和一个休息的地方
+Dialogue: 0,0:04:20.64,0:04:23.84,EN,,0,0,0,,So we've been really dedicate all the time
+Dialogue: 0,0:04:20.64,0:04:23.84,ZH,,0,0,0,,我们把全部时间都投进去
+Dialogue: 0,0:04:23.84,0:04:26.56,EN,,0,0,0,,in tennis tennis tennis in training
+Dialogue: 0,0:04:23.84,0:04:26.56,ZH,,0,0,0,,网球 网球 网球 全是训练
+Dialogue: 0,0:04:26.56,0:04:28.00,EN,,0,0,0,,and I remember one day
+Dialogue: 0,0:04:26.56,0:04:28.00,ZH,,0,0,0,,我记得有一天
+Dialogue: 0,0:04:28.00,0:04:30.56,EN,,0,0,0,,that we even finished training at 8:30
+Dialogue: 0,0:04:28.00,0:04:30.56,ZH,,0,0,0,,我们训练一直练到 8 点半
+Dialogue: 0,0:04:30.56,0:04:33.20,EN,,0,0,0,,in the evening when I start like 8:00
+Dialogue: 0,0:04:30.56,0:04:33.20,ZH,,0,0,0,,是晚上 而我 8 点就开始
+Dialogue: 0,0:04:33.20,0:04:34.16,EN,,0,0,0,,in the morning.
+Dialogue: 0,0:04:33.20,0:04:34.16,ZH,,0,0,0,,是早上
+Dialogue: 0,0:04:34.16,0:04:36.24,EN,,0,0,0,,So yeah, it was a really tough
+Dialogue: 0,0:04:34.16,0:04:36.24,ZH,,0,0,0,,所以是真的很苦
+Dialogue: 0,0:04:36.24,0:04:38.80,EN,,0,0,0,,but this is how sport shows.
+Dialogue: 0,0:04:36.24,0:04:38.80,ZH,,0,0,0,,但体育就是这样
+Dialogue: 0,0:04:38.80,0:04:40.48,EN,,0,0,0,,If you don't work hard, you don't have it.
+Dialogue: 0,0:04:38.80,0:04:40.48,ZH,,0,0,0,,你不努力就得不到
+Dialogue: 0,0:04:40.48,0:04:42.48,EN,,0,0,0,,So, I'm really happy
+Dialogue: 0,0:04:40.48,0:04:42.48,ZH,,0,0,0,,所以我真的很开心
+Dialogue: 0,0:04:42.48,0:04:45.76,EN,,0,0,0,,about we make together the work
+Dialogue: 0,0:04:42.48,0:04:45.76,ZH,,0,0,0,,我们一起做了这些事
+Dialogue: 0,0:04:45.76,0:04:49.20,EN,,0,0,0,,and then at the end the effort pays off.
+Dialogue: 0,0:04:45.76,0:04:49.20,ZH,,0,0,0,,最后努力有了回报
+Dialogue: 0,0:04:49.20,0:04:50.08,EN,,0,0,0,,Right.
+Dialogue: 0,0:04:49.20,0:04:50.08,ZH,,0,0,0,,明白了
+Dialogue: 0,0:04:50.08,0:04:51.04,EN,,0,0,0,,Congratulations.
+Dialogue: 0,0:04:50.08,0:04:51.04,ZH,,0,0,0,,恭喜你
+Dialogue: 0,0:04:51.04,0:04:53.68,EN,,0,0,0,,You're obviously a big star in a lot
+Dialogue: 0,0:04:51.04,0:04:53.68,ZH,,0,0,0,,你显然是个大明星
+Dialogue: 0,0:04:53.68,0:04:54.08,EN,,0,0,0,,of ways.
+Dialogue: 0,0:04:53.68,0:04:54.08,ZH,,0,0,0,,在很多方面
+Dialogue: 0,0:04:54.08,0:04:55.60,EN,,0,0,0,,You a lot of fans in China,
+Dialogue: 0,0:04:54.08,0:04:55.60,ZH,,0,0,0,,你在中国有很多球迷
+Dialogue: 0,0:04:55.60,0:04:57.68,EN,,0,0,0,,you Olympic gold medal still
+Dialogue: 0,0:04:55.60,0:04:57.68,ZH,,0,0,0,,你还有奥运金牌
+Dialogue: 0,0:04:57.68,0:04:58.56,EN,,0,0,0,,the last Olympics.
+Dialogue: 0,0:04:57.68,0:04:58.56,ZH,,0,0,0,,上一届奥运会
+Dialogue: 0,0:04:58.56,0:05:00.40,EN,,0,0,0,,like how difficult was it
+Dialogue: 0,0:04:58.56,0:05:00.40,ZH,,0,0,0,,对你来说有多难
+Dialogue: 0,0:05:00.40,0:05:03.60,EN,,0,0,0,,for you last two weeks ago I guess now
+Dialogue: 0,0:05:00.40,0:05:03.60,ZH,,0,0,0,,大概两周前吧
+Dialogue: 0,0:05:03.60,0:05:04.56,EN,,0,0,0,,to play qualifying
+Dialogue: 0,0:05:03.60,0:05:04.56,ZH,,0,0,0,,去打资格赛
+Dialogue: 0,0:05:04.56,0:05:05.60,EN,,0,0,0,,to not be in the main event
+Dialogue: 0,0:05:04.56,0:05:05.60,ZH,,0,0,0,,没有直接进正赛
+Dialogue: 0,0:05:05.60,0:05:07.44,EN,,0,0,0,,and to sort of sit start earlier
+Dialogue: 0,0:05:05.60,0:05:07.44,ZH,,0,0,0,,而且要提前开始
+Dialogue: 0,0:05:07.44,0:05:09.60,EN,,0,0,0,,than everyone else something
+Dialogue: 0,0:05:07.44,0:05:09.60,ZH,,0,0,0,,比其他所有人都早
+Dialogue: 0,0:05:09.60,0:05:10.24,EN,,0,0,0,,that was at all
+Dialogue: 0,0:05:09.60,0:05:10.24,ZH,,0,0,0,,这算不算是
+Dialogue: 0,0:05:10.24,0:05:12.32,EN,,0,0,0,,a psychological challenge even
+Dialogue: 0,0:05:10.24,0:05:12.32,ZH,,0,0,0,,一种心理上的挑战
+Dialogue: 0,0:05:12.32,0:05:14.08,EN,,0,0,0,,if it obviously worked out great in the end
+Dialogue: 0,0:05:12.32,0:05:14.08,ZH,,0,0,0,,虽然最后结果很好
+Dialogue: 0,0:05:14.08,0:05:16.00,EN,,0,0,0,,is still something that you had to accept
+Dialogue: 0,0:05:14.08,0:05:16.00,ZH,,0,0,0,,但你还是得先接受它
+Dialogue: 0,0:05:16.00,0:05:17.68,EN,,0,0,0,,before it before it started
+Dialogue: 0,0:05:16.00,0:05:17.68,ZH,,0,0,0,,在这一切开始之前
+Dialogue: 0,0:05:17.68,0:05:22.64,EN,,0,0,0,,yeah psychologically it it is very difficult
+Dialogue: 0,0:05:17.68,0:05:22.64,ZH,,0,0,0,,是的 心理上非常难
+Dialogue: 0,0:05:22.64,0:05:24.88,EN,,0,0,0,,to accept I mean I used
+Dialogue: 0,0:05:22.64,0:05:24.88,ZH,,0,0,0,,接受 我以前
+Dialogue: 0,0:05:24.88,0:05:28.56,EN,,0,0,0,,to be top 10 Olympic champion I play
+Dialogue: 0,0:05:24.88,0:05:28.56,ZH,,0,0,0,,是世界前 10 奥运冠军
+Dialogue: 0,0:05:28.56,0:05:30.88,EN,,0,0,0,,in a big stadium since the beginning
+Dialogue: 0,0:05:28.56,0:05:30.88,ZH,,0,0,0,,一直都在大球场打球
+Dialogue: 0,0:05:30.88,0:05:32.40,EN,,0,0,0,,and right now you know
+Dialogue: 0,0:05:30.88,0:05:32.40,ZH,,0,0,0,,而现在你知道
+Dialogue: 0,0:05:32.40,0:05:33.36,EN,,0,0,0,,my ranking dropped
+Dialogue: 0,0:05:32.40,0:05:33.36,ZH,,0,0,0,,我的排名掉了
+Dialogue: 0,0:05:33.36,0:05:35.60,EN,,0,0,0,,so much after injury I couldn't perform
+Dialogue: 0,0:05:33.36,0:05:35.60,ZH,,0,0,0,,伤病之后掉了很多 打不出来
+Dialogue: 0,0:05:35.60,0:05:38.72,EN,,0,0,0,,as well the last three four months
+Dialogue: 0,0:05:35.60,0:05:38.72,ZH,,0,0,0,,这三四个月一直这样
+Dialogue: 0,0:05:38.72,0:05:40.88,EN,,0,0,0,,and I know people has lot
+Dialogue: 0,0:05:38.72,0:05:40.88,ZH,,0,0,0,,我知道很多人
+Dialogue: 0,0:05:40.88,0:05:42.48,EN,,0,0,0,,of doubt about me
+Dialogue: 0,0:05:40.88,0:05:42.48,ZH,,0,0,0,,对我有怀疑
+Dialogue: 0,0:05:42.48,0:05:45.20,EN,,0,0,0,,and it's just really hard for me I just needs
+Dialogue: 0,0:05:42.48,0:05:45.20,ZH,,0,0,0,,这对我真的很难 我只能
+Dialogue: 0,0:05:45.20,0:05:48.32,EN,,0,0,0,,to keep positive every single day you
+Dialogue: 0,0:05:45.20,0:05:48.32,ZH,,0,0,0,,就是每天保持积极
+Dialogue: 0,0:05:48.32,0:05:50.72,EN,,0,0,0,,know telling myself just keep working
+Dialogue: 0,0:05:48.32,0:05:50.72,ZH,,0,0,0,,告诉自己继续努力
+Dialogue: 0,0:05:50.72,0:05:54.08,EN,,0,0,0,,and let's see when the result going
+Dialogue: 0,0:05:50.72,0:05:54.08,ZH,,0,0,0,,看看结果什么时候
+Dialogue: 0,0:05:54.08,0:05:58.00,EN,,0,0,0,,to happen it is really really tough courses.
+Dialogue: 0,0:05:54.08,0:05:58.00,ZH,,0,0,0,,会来 这条路真的很难
+Dialogue: 0,0:05:58.00,0:06:00.64,EN,,0,0,0,,I I suffered a lot and I've been through a lot
+Dialogue: 0,0:05:58.00,0:06:00.64,ZH,,0,0,0,,我吃了很多苦 也经历了很多
+Dialogue: 0,0:06:00.64,0:06:03.60,EN,,0,0,0,,of pain every single losses I have.
+Dialogue: 0,0:06:00.64,0:06:03.60,ZH,,0,0,0,,每一场失利都很痛
+Dialogue: 0,0:06:03.60,0:06:05.84,EN,,0,0,0,,But I think
+Dialogue: 0,0:06:03.60,0:06:05.84,ZH,,0,0,0,,但我想
+Dialogue: 0,0:06:05.84,0:06:08.72,EN,,0,0,0,,at the end sport you just need
+Dialogue: 0,0:06:05.84,0:06:08.72,ZH,,0,0,0,,做体育到最后 你只需要
+Dialogue: 0,0:06:08.72,0:06:11.44,EN,,0,0,0,,to stay humble and keep fighting
+Dialogue: 0,0:06:08.72,0:06:11.44,ZH,,0,0,0,,保持谦逊 继续拼
+Dialogue: 0,0:06:11.44,0:06:12.80,EN,,0,0,0,,because once you lost
+Dialogue: 0,0:06:11.44,0:06:12.80,ZH,,0,0,0,,因为一旦你输了
+Dialogue: 0,0:06:12.80,0:06:15.44,EN,,0,0,0,,that the result will shows everything.
+Dialogue: 0,0:06:12.80,0:06:15.44,ZH,,0,0,0,,结果就说明一切了
+Dialogue: 0,0:06:15.44,0:06:18.48,EN,,0,0,0,,I'm I'm just really happy to be back again
+Dialogue: 0,0:06:15.44,0:06:18.48,ZH,,0,0,0,,我真的很高兴又回来了
+Dialogue: 0,0:06:18.48,0:06:21.28,EN,,0,0,0,,and I mean if that's what God gave
+Dialogue: 0,0:06:18.48,0:06:21.28,ZH,,0,0,0,,如果这些是上天给我
+Dialogue: 0,0:06:21.28,0:06:24.88,EN,,0,0,0,,to me all the losses before I'm sure
+Dialogue: 0,0:06:21.28,0:06:24.88,ZH,,0,0,0,,之前那些失利 我相信
+Dialogue: 0,0:06:24.88,0:06:27.60,EN,,0,0,0,,that he will give me something back.
+Dialogue: 0,0:06:24.88,0:06:27.60,ZH,,0,0,0,,他会还给我一些东西
+Dialogue: 0,0:06:27.60,0:06:28.48,EN,,0,0,0,,No,
+Dialogue: 0,0:06:27.60,0:06:28.48,ZH,,0,0,0,,不
+Dialogue: 0,0:06:28.48,0:06:29.60,EN,,0,0,0,,right.
+Dialogue: 0,0:06:28.48,0:06:29.60,ZH,,0,0,0,,好
+Dialogue: 0,0:06:29.60,0:06:31.76,EN,,0,0,0,,Hey, well done.
+Dialogue: 0,0:06:29.60,0:06:31.76,ZH,,0,0,0,,嗨 打得好
+Dialogue: 0,0:06:31.76,0:06:34.08,EN,,0,0,0,,Is there anything
+Dialogue: 0,0:06:31.76,0:06:34.08,ZH,,0,0,0,,有没有什么事
+Dialogue: 0,0:06:34.08,0:06:37.36,EN,,0,0,0,,that you've had to do to prevent yourself
+Dialogue: 0,0:06:34.08,0:06:37.36,ZH,,0,0,0,,是你为了不让自己
+Dialogue: 0,0:06:37.36,0:06:40.08,EN,,0,0,0,,from getting injured again
+Dialogue: 0,0:06:37.36,0:06:40.08,ZH,,0,0,0,,再次受伤
+Dialogue: 0,0:06:40.08,0:06:43.04,EN,,0,0,0,,from from reinjuring the elbow?
+Dialogue: 0,0:06:40.08,0:06:43.04,ZH,,0,0,0,,手肘不再伤一次？
+Dialogue: 0,0:06:43.04,0:06:46.48,EN,,0,0,0,,And also having played three more matches
+Dialogue: 0,0:06:43.04,0:06:46.48,ZH,,0,0,0,,还有你多打了 3 场球
+Dialogue: 0,0:06:46.48,0:06:47.92,EN,,0,0,0,,than everybody else here,
+Dialogue: 0,0:06:46.48,0:06:47.92,ZH,,0,0,0,,比这里其他所有人
+Dialogue: 0,0:06:47.92,0:06:49.76,EN,,0,0,0,,is there any like concern
+Dialogue: 0,0:06:47.92,0:06:49.76,ZH,,0,0,0,,你会不会有点担心
+Dialogue: 0,0:06:49.76,0:06:51.68,EN,,0,0,0,,that you have either in your mind
+Dialogue: 0,0:06:49.76,0:06:51.68,ZH,,0,0,0,,心里的那种担心
+Dialogue: 0,0:06:51.68,0:06:54.96,EN,,0,0,0,,or real concern about sort of the wear
+Dialogue: 0,0:06:51.68,0:06:54.96,ZH,,0,0,0,,或者真担心身体的消耗
+Dialogue: 0,0:06:54.96,0:06:57.84,EN,,0,0,0,,and tear of piling up
+Dialogue: 0,0:06:54.96,0:06:57.84,ZH,,0,0,0,,消耗一点点攒下来
+Dialogue: 0,0:06:57.84,0:07:00.88,EN,,0,0,0,,as the the tournament gets longer for you?
+Dialogue: 0,0:06:57.84,0:07:00.88,ZH,,0,0,0,,随着赛程越拉越长 你担心吗？
+Dialogue: 0,0:07:00.88,0:07:04.72,EN,,0,0,0,,Yeah, actually my body has always
+Dialogue: 0,0:07:00.88,0:07:04.72,ZH,,0,0,0,,嗯 其实我的身体一直
+Dialogue: 0,0:07:04.72,0:07:06.00,EN,,0,0,0,,been quite healthy.
+Dialogue: 0,0:07:04.72,0:07:06.00,ZH,,0,0,0,,都挺健康
+Dialogue: 0,0:07:06.00,0:07:08.56,EN,,0,0,0,,The most biggest injury I have is just the
+Dialogue: 0,0:07:06.00,0:07:08.56,ZH,,0,0,0,,我受过最大的伤就是
+Dialogue: 0,0:07:08.56,0:07:08.96,EN,,0,0,0,,elbow.
+Dialogue: 0,0:07:08.56,0:07:08.96,ZH,,0,0,0,,手肘
+Dialogue: 0,0:07:08.96,0:07:11.04,EN,,0,0,0,,I mean this took lot of time
+Dialogue: 0,0:07:08.96,0:07:11.04,ZH,,0,0,0,,这个伤花了不少时间
+Dialogue: 0,0:07:11.04,0:07:12.56,EN,,0,0,0,,but I remember besides
+Dialogue: 0,0:07:11.04,0:07:12.56,ZH,,0,0,0,,不过我记得 除了它
+Dialogue: 0,0:07:12.56,0:07:14.80,EN,,0,0,0,,that I my body nearly doesn't
+Dialogue: 0,0:07:12.56,0:07:14.80,ZH,,0,0,0,,我的身体几乎没有
+Dialogue: 0,0:07:14.80,0:07:17.36,EN,,0,0,0,,have much injury even is the injury it's just
+Dialogue: 0,0:07:14.80,0:07:17.36,ZH,,0,0,0,,什么伤 就算有伤也就是
+Dialogue: 0,0:07:17.36,0:07:20.56,EN,,0,0,0,,takes more like it's going to heal in three
+Dialogue: 0,0:07:17.36,0:07:20.56,ZH,,0,0,0,,也就是 3 天
+Dialogue: 0,0:07:20.56,0:07:24.56,EN,,0,0,0,,to one week and from now I mean my body
+Dialogue: 0,0:07:20.56,0:07:24.56,ZH,,0,0,0,,到 1 周就好 现在我的身体
+Dialogue: 0,0:07:24.56,0:07:27.68,EN,,0,0,0,,is in a good shape I mean today
+Dialogue: 0,0:07:24.56,0:07:27.68,ZH,,0,0,0,,状态挺好的 今天
+Dialogue: 0,0:07:27.68,0:07:30.24,EN,,0,0,0,,after my my match I even go
+Dialogue: 0,0:07:27.68,0:07:30.24,ZH,,0,0,0,,我打完比赛之后还去
+Dialogue: 0,0:07:30.24,0:07:32.56,EN,,0,0,0,,to practice a bit because I felt with lot
+Dialogue: 0,0:07:30.24,0:07:32.56,ZH,,0,0,0,,练了一会儿 因为我感觉
+Dialogue: 0,0:07:32.56,0:07:36.40,EN,,0,0,0,,of energy but I think in sport
+Dialogue: 0,0:07:32.56,0:07:36.40,ZH,,0,0,0,,能量很足 但我觉得运动里
+Dialogue: 0,0:07:36.40,0:07:40.00,EN,,0,0,0,,if the mind is there and The body is healthy.
+Dialogue: 0,0:07:36.40,0:07:40.00,ZH,,0,0,0,,只要心气还在 身体也健康
+Dialogue: 0,0:07:40.00,0:07:43.04,EN,,0,0,0,,I think I can go a bit longer.
+Dialogue: 0,0:07:40.00,0:07:43.04,ZH,,0,0,0,,我觉得我还能再走远一点
+Dialogue: 0,0:07:43.04,0:07:44.16,EN,,0,0,0,,Yeah.
+Dialogue: 0,0:07:43.04,0:07:44.16,ZH,,0,0,0,,嗯
+Dialogue: 0,0:07:44.16,0:07:45.44,EN,,0,0,0,,Did you have to change anything
+Dialogue: 0,0:07:44.16,0:07:45.44,ZH,,0,0,0,,你需不需要调整什么
+Dialogue: 0,0:07:45.44,0:07:47.20,EN,,0,0,0,,with your stroke or your serve
+Dialogue: 0,0:07:45.44,0:07:47.20,ZH,,0,0,0,,比如你的击球或者发球
+Dialogue: 0,0:07:47.20,0:07:48.72,EN,,0,0,0,,or anything like Novak
+Dialogue: 0,0:07:47.20,0:07:48.72,ZH,,0,0,0,,或者像德约科维奇那样
+Dialogue: 0,0:07:48.72,0:07:51.44,EN,,0,0,0,,did after he had the elbow issue in order
+Dialogue: 0,0:07:48.72,0:07:51.44,ZH,,0,0,0,,他手肘出问题之后做的调整
+Dialogue: 0,0:07:51.44,0:07:53.76,EN,,0,0,0,,to prevent injury again?
+Dialogue: 0,0:07:51.44,0:07:53.76,ZH,,0,0,0,,为了防止再受伤？
+Dialogue: 0,0:07:53.76,0:07:56.56,EN,,0,0,0,,Well, we are we needs
+Dialogue: 0,0:07:53.76,0:07:56.56,ZH,,0,0,0,,嗯 我们确实需要
+Dialogue: 0,0:07:56.56,0:07:59.92,EN,,0,0,0,,to adjust a bit the serve of course
+Dialogue: 0,0:07:56.56,0:07:59.92,ZH,,0,0,0,,把发球稍微调整一下
+Dialogue: 0,0:07:59.92,0:08:03.60,EN,,0,0,0,,because I really believe my serve
+Dialogue: 0,0:07:59.92,0:08:03.60,ZH,,0,0,0,,因为我真的相信我的发球
+Dialogue: 0,0:08:03.60,0:08:05.28,EN,,0,0,0,,can be much better than this.
+Dialogue: 0,0:08:03.60,0:08:05.28,ZH,,0,0,0,,可以比现在好得多
+Dialogue: 0,0:08:05.28,0:08:06.80,EN,,0,0,0,,So we are still improving on.
+Dialogue: 0,0:08:05.28,0:08:06.80,ZH,,0,0,0,,所以我们还在改进
+Dialogue: 0,0:08:06.80,0:08:08.88,EN,,0,0,0,,Yeah.
+Dialogue: 0,0:08:06.80,0:08:08.88,ZH,,0,0,0,,嗯
+Dialogue: 0,0:08:08.88,0:08:10.32,EN,,0,0,0,,It hasn't been decided
+Dialogue: 0,0:08:08.88,0:08:10.32,ZH,,0,0,0,,现在还没定下来
+Dialogue: 0,0:08:10.32,0:08:12.00,EN,,0,0,0,,who your next opponent will be.
+Dialogue: 0,0:08:10.32,0:08:12.00,ZH,,0,0,0,,你下一轮的对手是谁
+Dialogue: 0,0:08:12.00,0:08:13.44,EN,,0,0,0,,We know it'll be
+Dialogue: 0,0:08:12.00,0:08:13.44,ZH,,0,0,0,,我们知道会是
+Dialogue: 0,0:08:13.44,0:08:16.24,EN,,0,0,0,,Naomi or Elena.
+Dialogue: 0,0:08:13.44,0:08:16.24,ZH,,0,0,0,,大坂直美或者莱巴金娜
+Dialogue: 0,0:08:16.24,0:08:17.84,EN,,0,0,0,,Starting with Naomi.
+Dialogue: 0,0:08:16.24,0:08:17.84,ZH,,0,0,0,,先说大坂直美
+Dialogue: 0,0:08:17.84,0:08:19.28,EN,,0,0,0,,With the experience you
+Dialogue: 0,0:08:17.84,0:08:19.28,ZH,,0,0,0,,以你跟她交手的经验
+Dialogue: 0,0:08:19.28,0:08:22.00,EN,,0,0,0,,have against her and with the run
+Dialogue: 0,0:08:19.28,0:08:22.00,ZH,,0,0,0,,还有你在这儿这一波
+Dialogue: 0,0:08:22.00,0:08:23.36,EN,,0,0,0,,that you've had here,
+Dialogue: 0,0:08:22.00,0:08:23.36,ZH,,0,0,0,,打出来的势头
+Dialogue: 0,0:08:23.36,0:08:26.16,EN,,0,0,0,,what are your thoughts about that match?
+Dialogue: 0,0:08:23.36,0:08:26.16,ZH,,0,0,0,,你怎么看这场球？
+Dialogue: 0,0:08:26.16,0:08:30.24,EN,,0,0,0,,I think both they are really tough opponent.
+Dialogue: 0,0:08:26.16,0:08:30.24,ZH,,0,0,0,,我觉得她们两个都很难打
+Dialogue: 0,0:08:30.24,0:08:32.64,EN,,0,0,0,,they had a grand slam winner
+Dialogue: 0,0:08:30.24,0:08:32.64,ZH,,0,0,0,,她们都拿过大满贯冠军
+Dialogue: 0,0:08:32.64,0:08:35.92,EN,,0,0,0,,before and doesn't matter who I play
+Dialogue: 0,0:08:32.64,0:08:35.92,ZH,,0,0,0,,不管我碰上的是谁
+Dialogue: 0,0:08:35.92,0:08:39.20,EN,,0,0,0,,against I just going to give my 100%
+Dialogue: 0,0:08:35.92,0:08:39.20,ZH,,0,0,0,,我都会拿出 100% 去打
+Dialogue: 0,0:08:39.20,0:08:41.28,EN,,0,0,0,,and I think it's going to be a tough fight
+Dialogue: 0,0:08:39.20,0:08:41.28,ZH,,0,0,0,,我觉得那也会是一场硬仗
+Dialogue: 0,0:08:41.28,0:08:43.28,EN,,0,0,0,,over there as well you know both
+Dialogue: 0,0:08:41.28,0:08:43.28,ZH,,0,0,0,,在那边一样 她们两个
+Dialogue: 0,0:08:43.28,0:08:46.40,EN,,0,0,0,,have big stroke big serve it's not going
+Dialogue: 0,0:08:43.28,0:08:46.40,ZH,,0,0,0,,击球重 发球也重 不会是
+Dialogue: 0,0:08:46.40,0:08:49.12,EN,,0,0,0,,to be easy match I mean doesn't matter
+Dialogue: 0,0:08:46.40,0:08:49.12,ZH,,0,0,0,,一场轻松的比赛 不管
+Dialogue: 0,0:08:49.12,0:08:50.96,EN,,0,0,0,,who I play I just can make sure
+Dialogue: 0,0:08:49.12,0:08:50.96,ZH,,0,0,0,,我碰上谁 我只能保证
+Dialogue: 0,0:08:50.96,0:08:53.76,EN,,0,0,0,,on my side I will try to play my tennis
+Dialogue: 0,0:08:50.96,0:08:53.76,ZH,,0,0,0,,我这边会打出自己的网球
+Dialogue: 0,0:08:53.76,0:08:56.16,EN,,0,0,0,,and trying to keep fighting the same
+Dialogue: 0,0:08:53.76,0:08:56.16,ZH,,0,0,0,,会一直这么拼下去
+Dialogue: 0,0:08:56.16,0:08:58.40,EN,,0,0,0,,and with a good energy there
+Dialogue: 0,0:08:56.16,0:08:58.40,ZH,,0,0,0,,带着饱满的能量
+Dialogue: 0,0:08:58.40,0:09:00.40,EN,,0,0,0,,specifically about each of the two.
+Dialogue: 0,0:08:58.40,0:09:00.40,ZH,,0,0,0,,具体说说这两个人
+Dialogue: 0,0:09:00.40,0:09:03.04,EN,,0,0,0,,With Naomi, what for you specifically
+Dialogue: 0,0:09:00.40,0:09:03.04,ZH,,0,0,0,,对上大坂直美 对你来说
+Dialogue: 0,0:09:03.04,0:09:06.00,EN,,0,0,0,,is the biggest challenge in playing her?
+Dialogue: 0,0:09:03.04,0:09:06.00,ZH,,0,0,0,,最大的挑战具体是什么？
+Dialogue: 0,0:09:06.00,0:09:07.92,EN,,0,0,0,,I think in the baseline,
+Dialogue: 0,0:09:06.00,0:09:07.92,ZH,,0,0,0,,我觉得在底线上
+Dialogue: 0,0:09:07.92,0:09:11.68,EN,,0,0,0,,she can open the court really good
+Dialogue: 0,0:09:07.92,0:09:11.68,ZH,,0,0,0,,她能把球场角度打得很开
+Dialogue: 0,0:09:11.68,0:09:15.52,EN,,0,0,0,,and then she I I see recently her matches
+Dialogue: 0,0:09:11.68,0:09:15.52,ZH,,0,0,0,,而且我最近看了她的比赛
+Dialogue: 0,0:09:15.52,0:09:18.40,EN,,0,0,0,,and she move much better compared
+Dialogue: 0,0:09:15.52,0:09:18.40,ZH,,0,0,0,,她的移动比起以前
+Dialogue: 0,0:09:18.40,0:09:20.48,EN,,0,0,0,,to before she can hold more rally.
+Dialogue: 0,0:09:18.40,0:09:20.48,ZH,,0,0,0,,好很多 能扛更多回合
+Dialogue: 0,0:09:20.48,0:09:22.32,EN,,0,0,0,,So that's going to makes the challenge.
+Dialogue: 0,0:09:20.48,0:09:22.32,ZH,,0,0,0,,所以这会是个挑战
+Dialogue: 0,0:09:22.32,0:09:23.04,EN,,0,0,0,,Yeah.
+Dialogue: 0,0:09:22.32,0:09:23.04,ZH,,0,0,0,,嗯
+Dialogue: 0,0:09:23.04,0:09:24.80,EN,,0,0,0,,And then against Rybakina,
+Dialogue: 0,0:09:23.04,0:09:24.80,ZH,,0,0,0,,然后是对上莱巴金娜
+Dialogue: 0,0:09:24.80,0:09:26.40,EN,,0,0,0,,of course, Rybakina, you know,
+Dialogue: 0,0:09:24.80,0:09:26.40,ZH,,0,0,0,,莱巴金娜嘛 你知道
+Dialogue: 0,0:09:26.40,0:09:27.84,EN,,0,0,0,,she's leading on the exit.
+Dialogue: 0,0:09:26.40,0:09:27.84,ZH,,0,0,0,,她发球上很占优
+Dialogue: 0,0:09:27.84,0:09:30.32,EN,,0,0,0,,she her serve is like biggest weapon
+Dialogue: 0,0:09:27.84,0:09:30.32,ZH,,0,0,0,,她的发球是她最大的武器
+Dialogue: 0,0:09:30.32,0:09:32.64,EN,,0,0,0,,of her and it's not easy
+Dialogue: 0,0:09:30.32,0:09:32.64,ZH,,0,0,0,,打起来不容易
+Dialogue: 0,0:09:32.64,0:09:35.20,EN,,0,0,0,,and you know she play very flat ball also
+Dialogue: 0,0:09:32.64,0:09:35.20,ZH,,0,0,0,,而且她的球打得特别平
+Dialogue: 0,0:09:35.20,0:09:39.52,EN,,0,0,0,,this can makes me not so comfortable
+Dialogue: 0,0:09:35.20,0:09:39.52,ZH,,0,0,0,,这会让我打得不太舒服
+Dialogue: 0,0:09:39.52,0:09:43.60,EN,,0,0,0,,but I think both has their good good stuff
+Dialogue: 0,0:09:39.52,0:09:43.60,ZH,,0,0,0,,但我觉得她们各有各的强项
+Dialogue: 0,0:09:43.60,0:09:44.72,EN,,0,0,0,,and both also
+Dialogue: 0,0:09:43.60,0:09:44.72,ZH,,0,0,0,,而且她们两个
+Dialogue: 0,0:09:44.72,0:09:47.52,EN,,0,0,0,,has their weakness like everybody here
+Dialogue: 0,0:09:44.72,0:09:47.52,ZH,,0,0,0,,都有各自的弱点 跟所有人一样
+Dialogue: 0,0:09:47.52,0:09:49.52,EN,,0,0,0,,so we just play the game
+Dialogue: 0,0:09:47.52,0:09:49.52,ZH,,0,0,0,,所以我们就打这场球
+Dialogue: 0,0:09:49.52,0:09:51.12,EN,,0,0,0,,and let's see what's what's going
+Dialogue: 0,0:09:49.52,0:09:51.12,ZH,,0,0,0,,看看到时候
+Dialogue: 0,0:09:51.12,0:09:51.84,EN,,0,0,0,,to happen there
+Dialogue: 0,0:09:51.12,0:09:51.84,ZH,,0,0,0,,会发生什么
+Dialogue: 0,0:09:51.84,0:09:52.72,EN,,0,0,0,,all right we'll try to squeeze
+Dialogue: 0,0:09:51.84,0:09:52.72,ZH,,0,0,0,,好 我们尽量再塞
+Dialogue: 0,0:09:52.72,0:09:55.36,EN,,0,0,0,,in three more please be brief Katherine
+Dialogue: 0,0:09:52.72,0:09:55.36,ZH,,0,0,0,,3 个问题 请简短 凯瑟琳
+Dialogue: 0,0:09:55.36,0:09:57.68,EN,,0,0,0,,congratulations again just wanted
+Dialogue: 0,0:09:55.36,0:09:57.68,ZH,,0,0,0,,再次恭喜 我想
+Dialogue: 0,0:09:57.68,0:10:00.24,EN,,0,0,0,,to take you back to that loss in Toronto
+Dialogue: 0,0:09:57.68,0:10:00.24,ZH,,0,0,0,,把你带回多伦多那场失利
+Dialogue: 0,0:10:00.24,0:10:02.80,EN,,0,0,0,,that you mentioned and specifically
+Dialogue: 0,0:10:00.24,0:10:02.80,ZH,,0,0,0,,就是你刚才提到的 具体说
+Dialogue: 0,0:10:02.80,0:10:04.16,EN,,0,0,0,,that conversation you
+Dialogue: 0,0:10:02.80,0:10:04.16,ZH,,0,0,0,,说说那次谈话
+Dialogue: 0,0:10:04.16,0:10:06.32,EN,,0,0,0,,had with your team afterwards.
+Dialogue: 0,0:10:04.16,0:10:06.32,ZH,,0,0,0,,你赛后跟团队聊的那次
+Dialogue: 0,0:10:06.32,0:10:07.84,EN,,0,0,0,,What was it about your game,
+Dialogue: 0,0:10:06.32,0:10:07.84,ZH,,0,0,0,,到底是你的球
+Dialogue: 0,0:10:07.84,0:10:09.28,EN,,0,0,0,,your mentality, how you were feeling
+Dialogue: 0,0:10:07.84,0:10:09.28,ZH,,0,0,0,,你的心态 还是你的感受
+Dialogue: 0,0:10:09.28,0:10:12.56,EN,,0,0,0,,about your tennis that made you
+Dialogue: 0,0:10:09.28,0:10:12.56,ZH,,0,0,0,,对自己网球的感受 让你
+Dialogue: 0,0:10:12.56,0:10:14.24,EN,,0,0,0,,and the team feel like drastic change
+Dialogue: 0,0:10:12.56,0:10:14.24,ZH,,0,0,0,,和团队觉得必须大改
+Dialogue: 0,0:10:14.24,0:10:15.76,EN,,0,0,0,,was needed and if you can compare
+Dialogue: 0,0:10:14.24,0:10:15.76,ZH,,0,0,0,,才行 你能不能对比一下
+Dialogue: 0,0:10:15.76,0:10:19.84,EN,,0,0,0,,that to just a few weeks later here.
+Dialogue: 0,0:10:15.76,0:10:19.84,ZH,,0,0,0,,几周之后在这里的样子
+Dialogue: 0,0:10:19.84,0:10:23.52,EN,,0,0,0,,Well, even I lost that quali in Toronto.
+Dialogue: 0,0:10:19.84,0:10:23.52,ZH,,0,0,0,,就算我多伦多资格赛输了
+Dialogue: 0,0:10:23.52,0:10:26.24,EN,,0,0,0,,We had a meeting with my coach.
+Dialogue: 0,0:10:23.52,0:10:26.24,ZH,,0,0,0,,我跟教练开了个会
+Dialogue: 0,0:10:26.24,0:10:28.96,EN,,0,0,0,,I talked him like this.
+Dialogue: 0,0:10:26.24,0:10:28.96,ZH,,0,0,0,,我跟他这么说
+Dialogue: 0,0:10:28.96,0:10:30.40,EN,,0,0,0,,I have all the pieces.
+Dialogue: 0,0:10:28.96,0:10:30.40,ZH,,0,0,0,,我的拼图都在那儿
+Dialogue: 0,0:10:30.40,0:10:32.88,EN,,0,0,0,,Like in my tennis, I have all the pieces there.
+Dialogue: 0,0:10:30.40,0:10:32.88,ZH,,0,0,0,,就像我的网球 拼图全都在那儿
+Dialogue: 0,0:10:32.88,0:10:35.92,EN,,0,0,0,,It's just I didn't put them together yet
+Dialogue: 0,0:10:32.88,0:10:35.92,ZH,,0,0,0,,只是我还没把它们拼起来
+Dialogue: 0,0:10:35.92,0:10:38.72,EN,,0,0,0,,or I didn't find a way to put them together,
+Dialogue: 0,0:10:35.92,0:10:38.72,ZH,,0,0,0,,或者说我还没找到拼的办法
+Dialogue: 0,0:10:38.72,0:10:40.96,EN,,0,0,0,,but all the pieces are there.
+Dialogue: 0,0:10:38.72,0:10:40.96,ZH,,0,0,0,,但拼图确实都在那儿
+Dialogue: 0,0:10:40.96,0:10:43.36,EN,,0,0,0,,And then so he told me like, "Okay,
+Dialogue: 0,0:10:40.96,0:10:43.36,ZH,,0,0,0,,然后他就跟我说 好
+Dialogue: 0,0:10:43.36,0:10:45.36,EN,,0,0,0,,so let's go to practice really hard
+Dialogue: 0,0:10:43.36,0:10:45.36,ZH,,0,0,0,,那我们就去好好练
+Dialogue: 0,0:10:45.36,0:10:47.52,EN,,0,0,0,,to helps you put all the pieces
+Dialogue: 0,0:10:45.36,0:10:47.52,ZH,,0,0,0,,帮你把这些拼图拼上
+Dialogue: 0,0:10:47.52,0:10:49.68,EN,,0,0,0,,and then you will show me later
+Dialogue: 0,0:10:47.52,0:10:49.68,ZH,,0,0,0,,然后你再打给我看
+Dialogue: 0,0:10:49.68,0:10:53.44,EN,,0,0,0,,if you really got all the pieces." And I say,
+Dialogue: 0,0:10:49.68,0:10:53.44,ZH,,0,0,0,,看你是不是真都有 我就说
+Dialogue: 0,0:10:53.44,0:10:54.96,EN,,0,0,0,,"Okay, let's do that.
+Dialogue: 0,0:10:53.44,0:10:54.96,ZH,,0,0,0,,行 那就这么办
+Dialogue: 0,0:10:54.96,0:10:56.24,EN,,0,0,0,,That's why you saw like
+Dialogue: 0,0:10:54.96,0:10:56.24,ZH,,0,0,0,,所以你们才看到
+Dialogue: 0,0:10:56.24,0:10:57.84,EN,,0,0,0,,after a match I showed
+Dialogue: 0,0:10:56.24,0:10:57.84,ZH,,0,0,0,,打完比赛我比了
+Dialogue: 0,0:10:57.84,0:10:59.76,EN,,0,0,0,,these that's mean pieces.
+Dialogue: 0,0:10:57.84,0:10:59.76,ZH,,0,0,0,,这个 意思就是拼图
+Dialogue: 0,0:10:59.76,0:11:00.88,EN,,0,0,0,,Yeah.
+Dialogue: 0,0:10:59.76,0:11:00.88,ZH,,0,0,0,,嗯
+Dialogue: 0,0:11:00.88,0:11:06.48,EN,,0,0,0,,But was a really really hard block
+Dialogue: 0,0:11:00.88,0:11:06.48,ZH,,0,0,0,,但那真的是特别苦的一段
+Dialogue: 0,0:11:06.48,0:11:08.32,EN,,0,0,0,,of training over there.
+Dialogue: 0,0:11:06.48,0:11:08.32,ZH,,0,0,0,,在那边的封闭训练
+Dialogue: 0,0:11:08.32,0:11:10.72,EN,,0,0,0,,I mean I mentioned many times.
+Dialogue: 0,0:11:08.32,0:11:10.72,ZH,,0,0,0,,我说过很多次了
+Dialogue: 0,0:11:10.72,0:11:11.20,EN,,0,0,0,,I don't want
+Dialogue: 0,0:11:10.72,0:11:11.20,ZH,,0,0,0,,我不想
+Dialogue: 0,0:11:11.20,0:11:15.44,EN,,0,0,0,,to mention anymore cuz I mean that's
+Dialogue: 0,0:11:11.20,0:11:15.44,ZH,,0,0,0,,再多说了 因为那真的是
+Dialogue: 0,0:11:15.44,0:11:17.68,EN,,0,0,0,,the toughest training I ever
+Dialogue: 0,0:11:15.44,0:11:17.68,ZH,,0,0,0,,那是我练过最苦的训练
+Dialogue: 0,0:11:17.68,0:11:19.36,EN,,0,0,0,,did with him honestly.
+Dialogue: 0,0:11:17.68,0:11:19.36,ZH,,0,0,0,,说实话 是跟他一起练
+Dialogue: 0,0:11:19.36,0:11:19.68,EN,,0,0,0,,Yeah.
+Dialogue: 0,0:11:19.36,0:11:19.68,ZH,,0,0,0,,嗯
+Dialogue: 0,0:11:19.68,0:11:20.48,EN,,0,0,0,,All right. Last two.
+Dialogue: 0,0:11:19.68,0:11:20.48,ZH,,0,0,0,,好 最后两个问题
+Dialogue: 0,0:11:20.48,0:11:23.36,EN,,0,0,0,,Please be direct. Tammani and then Doug.
+Dialogue: 0,0:11:20.48,0:11:23.36,ZH,,0,0,0,,请直接提问 塔玛尼 然后道格
+Dialogue: 0,0:11:23.36,0:11:24.24,EN,,0,0,0,,Congratulations.
+Dialogue: 0,0:11:23.36,0:11:24.24,ZH,,0,0,0,,恭喜
+Dialogue: 0,0:11:24.24,0:11:25.36,EN,,0,0,0,,You
+Dialogue: 0,0:11:24.24,0:11:25.36,ZH,,0,0,0,,你
+Dialogue: 0,0:11:25.36,0:11:27.28,EN,,0,0,0,,this is your third US Open quarterfinal
+Dialogue: 0,0:11:25.36,0:11:27.28,ZH,,0,0,0,,这是你第 3 次进美网 8 强
+Dialogue: 0,0:11:27.28,0:11:28.96,EN,,0,0,0,,but given you know everything you've
+Dialogue: 0,0:11:27.28,0:11:28.96,ZH,,0,0,0,,但你前面讲的这些
+Dialogue: 0,0:11:28.96,0:11:31.28,EN,,0,0,0,,explained I imagine it's quite a unique
+Dialogue: 0,0:11:28.96,0:11:31.28,ZH,,0,0,0,,我想这对你来说挺特别
+Dialogue: 0,0:11:31.28,0:11:32.96,EN,,0,0,0,,experience for you coming from qualifying
+Dialogue: 0,0:11:31.28,0:11:32.96,ZH,,0,0,0,,从资格赛一路打上来
+Dialogue: 0,0:11:32.96,0:11:33.44,EN,,0,0,0,,as well.
+Dialogue: 0,0:11:32.96,0:11:33.44,ZH,,0,0,0,,也是
+Dialogue: 0,0:11:33.44,0:11:34.80,EN,,0,0,0,,I'm curious have have you learned
+Dialogue: 0,0:11:33.44,0:11:34.80,ZH,,0,0,0,,我想问 你有没有学到
+Dialogue: 0,0:11:34.80,0:11:36.24,EN,,0,0,0,,anything new about yourself
+Dialogue: 0,0:11:34.80,0:11:36.24,ZH,,0,0,0,,关于自己的新东西
+Dialogue: 0,0:11:36.24,0:11:38.96,EN,,0,0,0,,or or not during this period.
+Dialogue: 0,0:11:36.24,0:11:38.96,ZH,,0,0,0,,在这段时间里 还是没有
+Dialogue: 0,0:11:38.96,0:11:41.68,EN,,0,0,0,,Oh, I learned a lot about myself,
+Dialogue: 0,0:11:38.96,0:11:41.68,ZH,,0,0,0,,我学到很多 关于我自己
+Dialogue: 0,0:11:41.68,0:11:44.96,EN,,0,0,0,,about tennis, about life, about everything.
+Dialogue: 0,0:11:41.68,0:11:44.96,ZH,,0,0,0,,关于网球 关于生活 关于一切
+Dialogue: 0,0:11:44.96,0:11:46.80,EN,,0,0,0,,You know, for me,
+Dialogue: 0,0:11:44.96,0:11:46.80,ZH,,0,0,0,,你知道 对我来说
+Dialogue: 0,0:11:46.80,0:11:49.68,EN,,0,0,0,,losing a match is not just about tennis.
+Dialogue: 0,0:11:46.80,0:11:49.68,ZH,,0,0,0,,输一场球不只是网球的事
+Dialogue: 0,0:11:49.68,0:11:51.76,EN,,0,0,0,,It's more about something with yourself.
+Dialogue: 0,0:11:49.68,0:11:51.76,ZH,,0,0,0,,更多是你自己身上的事
+Dialogue: 0,0:11:51.76,0:11:54.08,EN,,0,0,0,,And also when you're winning a match,
+Dialogue: 0,0:11:51.76,0:11:54.08,ZH,,0,0,0,,还有你赢下一场球的时候
+Dialogue: 0,0:11:54.08,0:11:56.48,EN,,0,0,0,,you know exactly what you did right
+Dialogue: 0,0:11:54.08,0:11:56.48,ZH,,0,0,0,,你很清楚自己做对了什么
+Dialogue: 0,0:11:56.48,0:11:57.60,EN,,0,0,0,,to win this match.
+Dialogue: 0,0:11:56.48,0:11:57.60,ZH,,0,0,0,,才赢下这场球
+Dialogue: 0,0:11:57.60,0:11:57.92,EN,,0,0,0,,You know,
+Dialogue: 0,0:11:57.60,0:11:57.92,ZH,,0,0,0,,你知道
+Dialogue: 0,0:11:57.92,0:12:00.00,EN,,0,0,0,,all the process you've been through.
+Dialogue: 0,0:11:57.92,0:12:00.00,ZH,,0,0,0,,你走过的整个过程
+Dialogue: 0,0:12:00.00,0:12:01.92,EN,,0,0,0,,You know, all the single point,
+Dialogue: 0,0:12:00.00,0:12:01.92,ZH,,0,0,0,,你知道 每一分
+Dialogue: 0,0:12:01.92,0:12:04.72,EN,,0,0,0,,what you thinking of in in your head.
+Dialogue: 0,0:12:01.92,0:12:04.72,ZH,,0,0,0,,你脑子里在想什么
+Dialogue: 0,0:12:04.72,0:12:06.08,EN,,0,0,0,,I would say right now
+Dialogue: 0,0:12:04.72,0:12:06.08,ZH,,0,0,0,,我觉得眼下
+Dialogue: 0,0:12:06.08,0:12:08.40,EN,,0,0,0,,the most important challenge for me
+Dialogue: 0,0:12:06.08,0:12:08.40,ZH,,0,0,0,,对我来说最重要的挑战
+Dialogue: 0,0:12:08.40,0:12:12.64,EN,,0,0,0,,is to keep this humble and then be there
+Dialogue: 0,0:12:08.40,0:12:12.64,ZH,,0,0,0,,就是保持谦逊 然后待在那儿
+Dialogue: 0,0:12:12.64,0:12:17.12,EN,,0,0,0,,fight like I have nothing okay I come
+Dialogue: 0,0:12:12.64,0:12:17.12,ZH,,0,0,0,,就当自己什么都没有那样拼
+Dialogue: 0,0:12:17.12,0:12:20.64,EN,,0,0,0,,from the qualies this time so I say
+Dialogue: 0,0:12:17.12,0:12:20.64,ZH,,0,0,0,,我这次从资格赛上来 所以我说
+Dialogue: 0,0:12:20.64,0:12:24.80,EN,,0,0,0,,to myself the reality is you are just 125
+Dialogue: 0,0:12:20.64,0:12:24.80,ZH,,0,0,0,,现实就是 你不过就是第 125
+Dialogue: 0,0:12:24.80,0:12:26.96,EN,,0,0,0,,so you are not the top 10 you
+Dialogue: 0,0:12:24.80,0:12:26.96,ZH,,0,0,0,,所以你不是世界前 10 了
+Dialogue: 0,0:12:26.96,0:12:29.12,EN,,0,0,0,,were before don't treat yourself so high you
+Dialogue: 0,0:12:26.96,0:12:29.12,ZH,,0,0,0,,以前是 别把自己看那么高
+Dialogue: 0,0:12:29.12,0:12:31.44,EN,,0,0,0,,are here as everyone else you start
+Dialogue: 0,0:12:29.12,0:12:31.44,ZH,,0,0,0,,你在这儿和大家一样 你也是
+Dialogue: 0,0:12:31.44,0:12:34.24,EN,,0,0,0,,from this the ground so stay there
+Dialogue: 0,0:12:31.44,0:12:34.24,ZH,,0,0,0,,都从最底下开始 所以待在那儿
+Dialogue: 0,0:12:34.24,0:12:35.36,EN,,0,0,0,,and keep fighting.
+Dialogue: 0,0:12:34.24,0:12:35.36,ZH,,0,0,0,,接着拼
+Dialogue: 0,0:12:35.36,0:12:35.68,EN,,0,0,0,,Yeah.
+Dialogue: 0,0:12:35.36,0:12:35.68,ZH,,0,0,0,,嗯
+Dialogue: 0,0:12:35.68,0:12:37.52,EN,,0,0,0,,Okay. Last question in English, Doug.
+Dialogue: 0,0:12:35.68,0:12:37.52,ZH,,0,0,0,,好 最后一个英文提问 道格
+Dialogue: 0,0:12:37.52,0:12:39.44,EN,,0,0,0,,Obviously, players have periods
+Dialogue: 0,0:12:37.52,0:12:39.44,ZH,,0,0,0,,球员肯定都会有一段时间
+Dialogue: 0,0:12:39.44,0:12:41.76,EN,,0,0,0,,of confidence up and confidence down
+Dialogue: 0,0:12:39.44,0:12:41.76,ZH,,0,0,0,,信心高的时候和低的时候
+Dialogue: 0,0:12:41.76,0:12:44.24,EN,,0,0,0,,and it's part of the pieces of the puzzle.
+Dialogue: 0,0:12:41.76,0:12:44.24,ZH,,0,0,0,,这也是拼图的一部分
+Dialogue: 0,0:12:44.24,0:12:47.28,EN,,0,0,0,,So, I'm just curious, what is your idea?
+Dialogue: 0,0:12:44.24,0:12:47.28,ZH,,0,0,0,,所以我想问 你怎么看？
+Dialogue: 0,0:12:47.28,0:12:49.36,EN,,0,0,0,,What is your definition of confidence?
+Dialogue: 0,0:12:47.28,0:12:49.36,ZH,,0,0,0,,你怎么定义信心？
+Dialogue: 0,0:12:49.36,0:12:50.88,EN,,0,0,0,,And when did you start
+Dialogue: 0,0:12:49.36,0:12:50.88,ZH,,0,0,0,,你是从什么时候开始
+Dialogue: 0,0:12:50.88,0:12:52.08,EN,,0,0,0,,to feel it coming back?
+Dialogue: 0,0:12:50.88,0:12:52.08,ZH,,0,0,0,,觉得它回来了？
+Dialogue: 0,0:12:52.08,0:12:53.28,EN,,0,0,0,,If it was in this tournament
+Dialogue: 0,0:12:52.08,0:12:53.28,ZH,,0,0,0,,是在这站比赛里
+Dialogue: 0,0:12:53.28,0:12:56.00,EN,,0,0,0,,or before the tournament.
+Dialogue: 0,0:12:53.28,0:12:56.00,ZH,,0,0,0,,还是在这之前
+Dialogue: 0,0:12:56.00,0:12:59.92,EN,,0,0,0,,Well, my confidence is always there.
+Dialogue: 0,0:12:56.00,0:12:59.92,ZH,,0,0,0,,我的信心一直都在那儿
+Dialogue: 0,0:12:59.92,0:13:02.88,EN,,0,0,0,,Even I've been lost this three four months.
+Dialogue: 0,0:12:59.92,0:13:02.88,ZH,,0,0,0,,哪怕我输了三四个月
+Dialogue: 0,0:13:02.88,0:13:05.36,EN,,0,0,0,,My confidence is always inside me
+Dialogue: 0,0:13:02.88,0:13:05.36,ZH,,0,0,0,,我的信心一直在我心里
+Dialogue: 0,0:13:05.36,0:13:07.52,EN,,0,0,0,,because I always know what I'm capable
+Dialogue: 0,0:13:05.36,0:13:07.52,ZH,,0,0,0,,因为我一直知道自己能
+Dialogue: 0,0:13:07.52,0:13:08.48,EN,,0,0,0,,to do.
+Dialogue: 0,0:13:07.52,0:13:08.48,ZH,,0,0,0,,做到什么
+Dialogue: 0,0:13:08.48,0:13:09.84,EN,,0,0,0,,It's just I need to show
+Dialogue: 0,0:13:08.48,0:13:09.84,ZH,,0,0,0,,只是我需要打给人看
+Dialogue: 0,0:13:09.84,0:13:14.88,EN,,0,0,0,,that and sometimes the tricky things
+Dialogue: 0,0:13:09.84,0:13:14.88,ZH,,0,0,0,,有时候难的地方是
+Dialogue: 0,0:13:14.88,0:13:18.72,EN,,0,0,0,,is I cannot show I'm so confidence
+Dialogue: 0,0:13:14.88,0:13:18.72,ZH,,0,0,0,,我不能表现得太自信
+Dialogue: 0,0:13:18.72,0:13:20.56,EN,,0,0,0,,because you lose a match
+Dialogue: 0,0:13:18.72,0:13:20.56,ZH,,0,0,0,,因为你输了球
+Dialogue: 0,0:13:20.56,0:13:22.32,EN,,0,0,0,,and people doesn't like that.
+Dialogue: 0,0:13:20.56,0:13:22.32,ZH,,0,0,0,,别人不喜欢那样
+Dialogue: 0,0:13:22.32,0:13:24.48,EN,,0,0,0,,And also I try
+Dialogue: 0,0:13:22.32,0:13:24.48,ZH,,0,0,0,,我也会试着
+Dialogue: 0,0:13:24.48,0:13:28.88,EN,,0,0,0,,to tell myself okay stay stay calm stay calm
+Dialogue: 0,0:13:24.48,0:13:28.88,ZH,,0,0,0,,跟自己说 冷静 冷静
+Dialogue: 0,0:13:28.88,0:13:30.24,EN,,0,0,0,,but I always say
+Dialogue: 0,0:13:28.88,0:13:30.24,ZH,,0,0,0,,但我一直说
+Dialogue: 0,0:13:30.24,0:13:32.00,EN,,0,0,0,,without confidence you cannot win
+Dialogue: 0,0:13:30.24,0:13:32.00,ZH,,0,0,0,,没有信心你赢不了
+Dialogue: 0,0:13:32.00,0:13:32.80,EN,,0,0,0,,a match.
+Dialogue: 0,0:13:32.00,0:13:32.80,ZH,,0,0,0,,一场球
+Dialogue: 0,0:13:32.80,0:13:34.64,EN,,0,0,0,,I had lot of tough match
+Dialogue: 0,0:13:32.80,0:13:34.64,ZH,,0,0,0,,我打过很多硬仗
+Dialogue: 0,0:13:34.64,0:13:36.80,EN,,0,0,0,,in the qualies tough match here.
+Dialogue: 0,0:13:34.64,0:13:36.80,ZH,,0,0,0,,资格赛里 这儿也是硬仗
+Dialogue: 0,0:13:36.80,0:13:37.52,EN,,0,0,0,,I think it's
+Dialogue: 0,0:13:36.80,0:13:37.52,ZH,,0,0,0,,我觉得是
+Dialogue: 0,0:13:37.52,0:13:39.52,EN,,0,0,0,,because those confidence helps me
+Dialogue: 0,0:13:37.52,0:13:39.52,ZH,,0,0,0,,因为是那份信心帮我
+Dialogue: 0,0:13:39.52,0:13:41.90,EN,,0,0,0,,to get those match.
+Dialogue: 0,0:13:39.52,0:13:41.90,ZH,,0,0,0,,拿下了那些球
