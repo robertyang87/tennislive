@@ -108,3 +108,9 @@
 禁用文案：中网看人下菜碟、八强才配拿外卡、武网已经保送、武汉把外卡让给北京、奥运冠军无限外卡、全年正赛外卡6次、所有世界前56自动直入。
 
 影片口播与制卡数据：`specs/explainers/zheng-china-wuhan-wildcards.json`。构建脚本：`tools/build_zheng_wildcard_story.py`，复用项目的TTS、真实词级时间轴、字幕及视频合成组件。封面照片沿用仓库已存美网R4资产及来源记录，AP/Seth Wenig；不伪造球员照片或公告。
+
+## 原模板重制与新增一手画面
+
+用户指定参考2026年8月27日瓦林卡《说完再见，外卡才来》：对应仓库 `wawrinka-wildcard`。已移除单独的Pillow卡片版式，直接使用 `explainer._slide_html` 原模板，保持品牌图标、彩色顶边、字体、章节标签和图解内容槽位，并使用 `assets/brand/outro_master.mp4` 原品牌片尾。浏览器采用共享页面加载HTML，只改变运行方式，不覆写模板CSS。
+
+用户提供IMG_4520.jpeg中网官方微博截图、IMG_4521.jpeg官方参赛海报。截图可作为官宣参赛的一手画面，结合截止时排名不足和既有外卡报道，口播明确本次持正赛外卡出战；不把截图中没有出现的字伪装成官方直接引语。原文件完整保留在 `assets/explainer/zheng-wildcards/`；证据卡只展示账号及正文内容区域。
