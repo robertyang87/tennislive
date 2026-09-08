@@ -1,0 +1,332 @@
+{
+  "slug": "gauff-jovic-us-open-2026-r4",
+  "_column": "reel",
+  "layout": "band",
+  "scorebox": [
+    104,
+    887,
+    660,
+    980
+  ],
+  "_scorebox_why": "和同一站同一转播的已发 `bucsa-gauff-us-open-2026-r3` 用同一组值。本条 probe 自己猜的是 `104,888,616,978`——左缘和上下沿几乎一致，右缘 616 偏窄；右缘本来就是渲染时逐段现量的，顶层这份只当兜底，取已经渲过验过的那组。",
+  "tts_backend": "edge",
+  "_tts_backend_why": "Azure 钥匙从 2026-09-03 起连着四条片子 401（keys-bondar 两趟 / zheng-putintseva / tien-monfils / wu-alcaraz），CLAUDE.md 已把「写 spec 那一刻就写上」定成默认动作。这条零代价：没有用 voice.style，也没有 lead_pause，那两样才是 Azure 独有的；本地 --check-narration 跑的就是 edge，量到的余量直接适用，不用再按 6.6% 折算。",
+  "source_url": "https://www.youtube.com/watch?v=l2KhAl0H4ew",
+  "_source": "美网官方 YouTube 频道的单场集锦，1920×1080 / 29.97fps / 209.05s。四处画面自证：①60.5~62.5s 全屏台标写着 `WOMEN'S SINGLES | 4TH ROUND` / `ARTHUR ASHE STADIUM` / `14 IVA JOVIC USA` / `4 COCO GAUFF USA`；②198.5s 收尾台标印着最终比分 `1 4 / 6 6`；③常驻记分条全程烧在左下角，逐格读过和 flashscore Q3OBy5b5 对得上；④206~209s 片尾板是 `FOLLOW US ON SOCIAL MEDIA #USOPEN`。⚠️ 片尾板从 205.94（最后一个 scene_cut）起，probe 量到的静音区 [[205.99, 209.05]] 与之吻合，所有窗口收在 194.40 之前，一帧都没碰到它。",
+  "cover": {
+    "eyebrow": "赛场之上",
+    "topic": "美网第四轮 · 高芙 vs 约维奇",
+    "hook": "首盘三十四分钟\n次盘拖到五十九",
+    "_hook_why": "讲过程不讲身份，而且框的是整场不是某一局：首盘 34 分钟一边倒、次盘 59 分钟被咬住，两盘的用时差正是这场球的形状。比分板就在钩子正下方印着 6-1 6-4，所以钩子一个比分都不写。两行各 7 个字符，`HOOK_MAX_CHARS` 是 10、`SOLO_HOOK_MAX_LINES` 是 2，都在闸内。",
+    "matchup": [
+      {
+        "name": "高芙",
+        "name_en": "coco gauff",
+        "country": "USA",
+        "rank": 4
+      },
+      {
+        "name": "约维奇",
+        "name_en": "iva jovic",
+        "country": "USA",
+        "rank": 14
+      }
+    ],
+    "_matchup_why": "主体高芙排第一位（封面就是她，和同一站已发的 `bucsa-gauff-us-open-2026-r3` 保持一致）。⚠️ 排名是 WTA 官方 players/ranked 查的（rankedAt 2026-08-31）：高芙 #4 6704 分、约维奇 #14 2671 分——**和台标上的种子号 4/14 恰好相同，但这是查过的不是抄台标的**；种子号不是排名，CLAUDE.md 为这个栽过卢布列夫那次。",
+    "winner": "高芙",
+    "result": "6-1 6-4",
+    "scoreboard": {
+      "court": "Arthur Ashe Stadium",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%20%221%3A33%3A00%22%2C%20%22source%22%3A%20%22flashscore%20Q3OBy5b5%20df_sui_1%EF%BC%9ASet%201%200%3A34%20%2B%20Set%202%200%3A59%20%3D%201%3A33%EF%BC%88%E5%88%86%E7%9B%98%E5%8A%A0%E8%B5%B7%E6%9D%A5%E7%AD%89%E4%BA%8E%E5%85%A8%E5%9C%BA%EF%BC%8C%E8%87%AA%E6%B4%BD%EF%BC%89%E3%80%82%E2%9A%A0%EF%B8%8F%20%E6%BA%90%E7%89%87%E8%A7%A3%E8%AF%B4%20189.68s%20%E6%8A%A5%20%601%20hour%20and%2032%20minutes%20required%60%E2%80%94%E2%80%94%E5%B7%AE%E4%B8%80%E5%88%86%E9%92%9F%E6%98%AF%E5%8F%A3%E5%BE%84%E5%B7%AE%EF%BC%88%E8%BD%AC%E6%92%AD%E6%8C%89%201%3A32%3Axx%20%E8%AF%B4%E3%80%81flashscore%20%E8%BF%9B%E4%BD%8D%E5%88%B0%201%3A33%EF%BC%89%E3%80%82%E6%9D%BF%E4%B8%8A%E5%8D%B0%20flashscore%20%E9%82%A3%E4%BB%BD%EF%BC%8C%E5%B0%81%E9%9D%A2%E9%92%A9%E5%AD%90%E7%94%A8%E7%9A%84%E4%B9%9F%E6%98%AF%E5%90%8C%E4%B8%80%E4%BB%BD%E7%9A%84%E5%88%86%E7%9B%98%E6%95%B0%EF%BC%8834%2B59%3D93%EF%BC%89%EF%BC%8C%E5%85%A8%E7%89%87%E4%B8%80%E4%B8%AA%E5%8F%A3%E5%BE%84%EF%BC%8C%E4%B8%8D%E5%88%86%E5%8F%89%E3%80%82%22%7D",
+        "field": "duration"
+      }
+    },
+    "_court_why": "两源一致：源片 60.5s 和 198.5s 两次全屏台标都印着 `ARTHUR ASHE STADIUM`；编排器从美网官方 matches feed 取的 `court` 也是 Arthur Ashe Stadium（草稿 `_production.court`）。",
+    "_duration_why": "flashscore Q3OBy5b5 df_sui_1：Set 1 0:34 + Set 2 0:59 = 1:33（分盘加起来等于全场，自洽）。⚠️ 源片解说 189.68s 报 `1 hour and 32 minutes required`——差一分钟是口径差（转播按 1:32:xx 说、flashscore 进位到 1:33）。板上印 flashscore 那份，封面钩子用的也是同一份的分盘数（34+59=93），全片一个口径，不分叉。",
+    "portrait": {
+      "image": "assets/reel/jovic-gauff-cover.jpg",
+      "_portrait_why": "WTA 官方赛后稿头图，5873×3916，铺 1080×1440 只要 0.368 倍（不是放大，够不着 `_low_res_why` 那道地板）。⚠️ 文件名是编号名不自证，所以打开看过：藏青 New Balance 连衣裙＋同色发带、淡紫 Wilson 球拍、身后 Arthur Ashe 满场看台和 `Harvey` 广告板——和源片里她的装备、球场逐项对得上，是这一场这一晚。四道闸门：①时间地点人物三样对上 ②赛后庆祝、在球场上 ③张嘴向上吼、握拳发力，正是 2026-08-18 那条「握拳咬牙呐喊优先于招手微笑」的那一档，而且情绪对题（这条片子讲的就是她赢下这场）④近景特写、头肩占画面主体、表情读得出，背景仍留着看台和广告板，看得出在球场上。"
+    },
+    "layout": "solo",
+    "subject": "高芙",
+    "_layout_why": "「赛场之上」2026-08-04 起 solo 是默认版式，退回 VS 才要认领。主体放高芙——CLAUDE.md「放刷到这条的人是冲谁来的那个」：她是世界第 4、卫冕过这项赛事的大名字，而且这一场她赢了，封面那张官方实拍正是她赛后的庆祝。",
+    "_heat_why": "两位都过得了热度那道闸的第 ② 档（世界前 20）：高芙 #4、约维奇 #14，WTA 官方 players/ranked rankedAt 2026-08-31。不靠种子号，也不用第 ③ 档的显式认领。",
+    "_no_cover_narration_why": "不写 `cover.narration`，封面走 `COVER_SECONDS` 那 1.2 秒的定长。钩子两行 14 个字，1.2 秒读得完；而这条片子的第 ① 格本来就是无旁白的冷开场，封面再加一句口播会和它抢开头那几秒。"
+  },
+  "_match": {
+    "status": "result_verified",
+    "source": "flashscore_points",
+    "source_id": "Q3OBy5b5",
+    "flashscore_id": "Q3OBy5b5",
+    "participants": [
+      "约维奇",
+      "高芙"
+    ],
+    "set_scores_home_away": [
+      [
+        1,
+        6
+      ],
+      [
+        4,
+        6
+      ]
+    ],
+    "winner": "高芙",
+    "loser": "约维奇",
+    "winner_result": "6-1 6-4",
+    "loser_result": "1-6 4-6",
+    "tiebreaks_home_away": [
+      null,
+      null
+    ]
+  },
+  "_match_order_why": "⚠️ 这一栏和 `stats` 的顺序是**相反**的，CLAUDE.md 2026-09-02 记过这个坑：`participants` 跟 flashscore 的 home/away（约维奇是 home），必须和紧挨着的 `set_scores_home_away` [[1,6],[4,6]] 同序；而 `stats.a/b` 跟 `cover.matchup` 的版式顺序（高芙在前）。",
+  "stats": {
+    "a": {
+      "aces": 2,
+      "df": 2,
+      "winners": 18,
+      "ue": 15,
+      "first_in": 31,
+      "first_won": 21,
+      "first_total": 50,
+      "second_total": 19,
+      "second_won": 11,
+      "bp_conv": 5,
+      "bp_chances": 11,
+      "pts_won": 65,
+      "pts_total": 109,
+      "headshot": "assets/players/headshots/wta-328560.jpg"
+    },
+    "b": {
+      "aces": 0,
+      "df": 1,
+      "winners": 9,
+      "ue": 30,
+      "first_in": 38,
+      "first_won": 16,
+      "first_total": 59,
+      "second_total": 21,
+      "second_won": 10,
+      "bp_conv": 2,
+      "bp_chances": 2,
+      "pts_won": 44,
+      "pts_total": 109,
+      "headshot": "assets/players/headshots/wta-332285.jpg"
+    },
+    "_source": "flashscore Q3OBy5b5 的 df_st_1——这场是大满贯，女子这个 feed 直接带 Winners / Unforced errors（CLAUDE.md 2026-08-14 量过：四大满贯的女子比赛一直拿得到，缺这两项的是 WTA 巡回赛那一档），所以不用去碰 TNNS 或 Match Charting Project。十二项由 `match_stat_hooks --stats-block` 抄出来，不是手抄；`first_total` 按 `first_in + second_total` 算（50 = 31+19、59 = 38+21），不取接口那个 Service Points Won 的分母，一发成功率画的是 first_in/first_total，用和式才自洽。"
+  },
+  "_stats_why": "出处 flashscore Q3OBy5b5 df_st_1，由 `match_stat_hooks --stats-block` 抄出来。⚠️ **a/b 相对自动草稿对调过**：草稿按 feed 的 home/away 排（约维奇在 a），而 `stats.a` 跟的是 `cover.matchup[0]`＝高芙。头像跟着一起换：`wta-328560` 是高芙、`wta-332285` 是约维奇，两个都在已发 spec 里认过（gauff-bejlek / eala-jovic-us-open-2026-r3）。",
+  "_durations": [
+    [
+      "Set 1",
+      "0:34"
+    ],
+    [
+      "Set 2",
+      "0:59"
+    ],
+    [
+      "全场",
+      "1:33"
+    ]
+  ],
+  "_hit_data": [
+    {
+      "label": "总分差",
+      "detail": "高芙 65 - 约维奇 44，净差 21 分",
+      "source": "flashscore df_mh_1"
+    },
+    {
+      "label": "约维奇 制胜分/非受迫失误",
+      "detail": "9 个制胜分对 30 个非受迫失误；高芙是 18 对 15",
+      "source": "flashscore df_st_1"
+    },
+    {
+      "label": "约维奇 一发得分率摆动",
+      "detail": "第 1 盘 29% → 第 2 盘 52%",
+      "source": "flashscore df_st_1 分盘"
+    },
+    {
+      "label": "破发点效率",
+      "detail": "约维奇 2/2（100%），高芙 5/11（45%）",
+      "source": "flashscore df_st_1"
+    },
+    {
+      "label": "约维奇 连续被破",
+      "detail": "3 个发球局",
+      "source": "flashscore df_mh_1 逐局"
+    },
+    {
+      "label": "高芙 连续保发",
+      "detail": "5 个发球局",
+      "source": "flashscore df_mh_1 逐局"
+    },
+    {
+      "label": "交手记录",
+      "detail": "Jovic I. 0 : 2 Gauff C.（含本场）· 红土 0:1 · 硬地 0:1",
+      "source": "flashscore df_hh_1"
+    }
+  ],
+  "_hit_data_why": "挑进正文的是「净差 21 分」和「9 个制胜分对 30 个非受迫失误」（第 ② 段和第 ④ 段）。⚠️ 破发点那一条**故意没写进旁白**：约维奇 2/2、高芙 5/11，读起来像「效率高的人输了」，而真实原因是机会差了五倍多（2 个对 11 个），一句话讲不清楚，塞进 15 秒的窗口只会误导；它留在小红书正文里展开。",
+  "_turning_points": [
+    {
+      "label": "【Set 1】1-1 约维奇发球，高芙拿下（2 个破发点）"
+    },
+    {
+      "label": "【Set 1】1-3 约维奇发球，高芙拿下（2 个破发点）"
+    },
+    {
+      "label": "【Set 1】1-6 高芙发球，高芙拿下（盘点）"
+    },
+    {
+      "label": "【Set 2】2-1 约维奇发球，约维奇拿下（救下 2 个破发点）"
+    },
+    {
+      "label": "【Set 2】4-6 高芙发球，高芙拿下（赛点）"
+    }
+  ],
+  "_turning_points_why": "局号是 flashscore 的 home-away（约维奇在前）且是「打完之后的比分」。首盘两次破发把 6-1 拉开，第二盘约维奇 2-1 那一局救下两个破发点是她唯一一次站住，末局高芙自己发球胜赛局收掉——第 ⑤ ⑦ ⑧ ⑨ 段分别落在这四处上。",
+  "editorial": {
+    "mode": "match_review",
+    "question": "高芙这场只用一小时半，赢的到底是哪一块？",
+    "thesis": "首盘高芙把约维奇的发球局连破三个、自己五个发球局一个没丢，34 分钟就拿走一盘；第二盘约维奇一发得分率从 29% 回到 52%、两个破发点全部抓住，把这一盘拖到 59 分钟，可她 9 个制胜分对 30 个非受迫失误的账已经补不回来，高芙 6-4 收掉。",
+    "beats": [
+      "开场就是一记超长相持，转播说今晚会有不少这样的球——这场球的底子是多拍对抗。",
+      "首盘约维奇连续三个发球局被破，高芙一口气保住五个，34 分钟 6-1。",
+      "第二盘约维奇真的回稳了：一发得分率翻上去，拿到的两个破发点都抓住，把比赛拖长了近一倍。",
+      "可失误账补不回来，高芙在自己的发球胜赛局上收掉，第三次打进美网四分之一决赛。"
+    ],
+    "chapters": [
+      "多拍相持",
+      "首盘连破",
+      "次盘拖长",
+      "发球胜赛局"
+    ],
+    "human_context": {
+      "angle": "全美对决：22 岁的高芙对 18 岁的约维奇，阿瑟·阿什的夜场，转播管这叫 all American affair。",
+      "facts": [
+        "转播 56.88s 原话 `who is dominating the all American affair here on Ash tonight`——两个美国人、Ashe、夜场，三样都由转播自己说出来。",
+        "高芙 2004-03-13 生（22 岁）、约维奇 2007-12-06 生（18 岁），出自 WTA 官方 players/ranked 的 dateOfBirth。",
+        "转播 50.16s 报 `It's a 19th successive set`——高芙连着拿下的第 19 盘。",
+        "转播 168.08s 报 `Coco moves into a third US Open quarterfinal`——她第三次打进美网四分之一决赛。"
+      ],
+      "sources": [
+        "https://www.youtube.com/watch?v=l2KhAl0H4ew",
+        "https://api.wtatennis.com/tennis/players/ranked?type=rankSingles&metric=SINGLES",
+        "https://www.flashscore.com/match/Q3OBy5b5/"
+      ],
+      "_sources_why": "①源片解说逐句（probe 落在 captions.txt，all American affair / 19th successive set / third US Open quarterfinal 三句都在里面）；②WTA 官方排名与生日，rankedAt 2026-08-31；③flashscore Q3OBy5b5 的 df_st_1 / df_mh_1 / df_sui_1 / df_hh_1。"
+    }
+  },
+  "topbar": {
+    "line1": "2026 美网 女单第四轮",
+    "line2": "高芙 6-1 6-4 约维奇"
+  },
+  "push": {
+    "auto": true,
+    "summary": "高芙三十四分钟拿下首盘",
+    "lead": "美网女单第四轮，四号种子高芙直落两盘送走十八岁的约维奇，第三次打进美网四分之一决赛。"
+  },
+  "_push_why": "`auto: true` 写在渲之前——reel 线的 `auto_push_gate` 钉 spec 字节哈希，渲完再补这一行就得整趟重渲（CLAUDE.md 2026-09-06 为这个烧过一趟）。标题只留一层铺垫、收尾动词前不插代词；「三十四分钟拿下首盘」不复读比分板上的 6-1 6-4。",
+  "_editing_why": "**开场三格**：① 167.07→171.80 赛点落地和那一吼，不配旁白靠现场声（全片最强的一格）；② 132.22→138.00 给落点；③ 57.62→64.80 给坐标，画面正好是两次全屏台标。⚠️ ① 是后段冷开场，所以 `_ending_payoff_required: true`，第 ⑨ 段 167.07→175.80 把它整段重放了一遍。\n**每一段都待在同一个镜头里**：十段里八段的起点直接落在 probe 的 scene_cut 上（167.07 / 132.22 / 57.62 / 41.39 / 49.07 / 160.94 / 167.07 / 183.03），另两段（第 ④ 段 18.00、第 ⑦ 段 118.00）落在长镜头内部，也没跨切点。\n**段尾一律留够溶解底料**：`SEG_FADE` 是 0.18，所有段尾离下一个切点至少 0.27s，不是「只差几帧」那种贴法。\n**死球之后再切**：源片只有 `scorebox_guess` 没跑过带 `--scorebox` 的 probe，`point_ends` 是空的，所以死球是逐格读记分条定的——第 ④ 段收在 33.60（32.5s 那格记分条还没翻、34.18 转播自己切了镜头），第 ⑦ 段收在 132.00（132.5s 记分条 30-30、134.5s 翻成 30-40，说明那一分在 132.22 那一刀之前落定）。\n**片尾板不许进画面**：205.94 起是 `FOLLOW US ON SOCIAL MEDIA #USOPEN` 的纯图形板，probe 的静音区 [[205.99, 209.05]] 正是它；最后一段收在 194.40，离它 11 秒以上。",
+  "segments": [
+    {
+      "start": 167.07,
+      "end": 171.8,
+      "narration": "",
+      "score_inset": true,
+      "_ending_payoff_required": true,
+      "fit": "crop",
+      "_why": "**第①格：全片最强的一格。** 赛点那一分落地（167.07 那一刀）→ 168.5s 她笑出来 → 170.5s 张嘴大吼的特写，和封面是同一个动作。不配旁白，靠现场声。\n⚠️ 这是后段冷开场，`_ending_payoff_required: true`：第 ⑨ 段 167.07→175.80 完整覆盖了 167.07→171.80，`ending_payoff_problem` 要的就是这个覆盖关系。\n记分条 168.5s 还在（已经换成收尾形态 `14 JOVIC / 4 GAUFF us open`）、170.5s 之后撤掉，写 true 交给逐段现量自己收。"
+    },
+    {
+      "start": 132.22,
+      "end": 138.0,
+      "narration": "高芙多赢二十一分，非受迫失误少一半。",
+      "score_inset": true,
+      "fit": "crop",
+      "_why": "第②句给落点。画面是那记超长相持刚落定：132.5s 她在网前、134.5s 举手、136.5s 咬牙的特写。\n两个数都是全场账（65:44 净差 21；高芙 15 个非受迫失误、约维奇 30 个，正好一半），所以配在她的情绪上话画对得上，不指某一盘。**不复读钩子**——钩子讲两盘用时，这一句讲分差和失误。\n记分条这一段全程在（`1 2 30 / 6 2 40`）。"
+    },
+    {
+      "start": 57.62,
+      "end": 64.8,
+      "narration": "北京时间九月八号早上七点多，美网女单第四轮，阿瑟·阿什球场。",
+      "score_inset": true,
+      "fit": "crop",
+      "_why": "第③格交代坐标，画面正好是 60.5~62.5s 那两格全屏台标（`WOMEN'S SINGLES | 4TH ROUND` / `ARTHUR ASHE STADIUM`），旁白给的是台标上没有的那一半：中国观众要的北京时间。\n开球时刻取 flashscore `AD=1788822900`＝北京时间 2026-09-08 07:15，按「只说大概不报到分」的档位（分钟 15 落在 10~39）说「早上七点多」。\n轮次写「第四轮」——2026-09-08 账号所有者定的口径，不写十六强。\n记分条：58.5s 无、60.5/62.5 是全屏台标、64.5s 才回来，写 true 交给现量只在有板的那几秒贴。"
+    },
+    {
+      "start": 17.0,
+      "end": 33.6,
+      "narration": "四号种子高芙，对面是十八岁的约维奇，世界第十四。开场这一分两个人来回拉扯，转播说今晚会有不少这样的多拍相持。约维奇全场九个制胜分，三十个非受迫失误。",
+      "score_inset": true,
+      "fit": "crop",
+      "_why": "画面是全片开场那个超长相持的后半段——0→34.18 是一整个不间断的镜头，记分条从头到尾没翻过。\n「转播说今晚会有不少这样的长回合」出自解说 35.20s `going to be a fair few of these extended rallies`。\n⚠️ **没有说这一分打了多少拍，也没说多少秒**：拍数只有大满贯官方 feed 的 `RallyCount` 有，而 usopen.org 在这台沙箱 403 取不到；CLAUDE.md 的口径是拿不到拍数就别写长度，换个说法讲它怎么进行的。\n身份放在这一段而不是坐标那一段，是因为坐标段只有 7.18 秒装不下。「四号种子」出自台标 `4 COCO GAUFF`，「世界第十四」出自 WTA 08-31 榜，和 matchup 的 rank 对得上。\n段尾 33.60 ＋ 0.18 ＝ 33.78，停在 34.18 那一刀之前；那一刀正是转播在这一分落定后切的。\n⚠️ 切词：本地 `--check-narration` 的真 TTS 把「长回合」切成 `长 ｜ 回合`——「长」单独成词时 cháng / zhǎng 有歧义，是 CLAUDE.md 说的那种「假词」。换成「多拍相持」，读音没有歧义，意思也更贴 `extended rallies`。\n⚠️ 起点从 18.00 往前挪到 17.00：换掉那个词之后真 TTS 量到旁白 15.00s、窗口 15.60s 只剩 0.60s 余量，太贴。0→34.18 是一整个镜头，往前挪一秒画面一模一样，余量回到 1.60s。（本地 --check-narration 和 runner 这一趟都走 edge，量到的就是渲染时的数。）"
+    },
+    {
+      "start": 41.39,
+      "end": 48.8,
+      "narration": "四十比零，盘点。约维奇前面连着三个发球局都被破。",
+      "score_inset": true,
+      "fit": "crop",
+      "_why": "记分条这一段挂着黄色 `SET POINT`，读数 `14 JOVIC 1 [0]` / `4 GAUFF 5 [40]`，发球指示的黄箭头在 GAUFF 那一行——高芙 5-1、自己发球、40-0。\n⚠️ 只说「盘点」不说「三个盘点」：40-0 摆着三次机会，但 `_turning_points` 记的是 1 个，两个口径对不上时取记分条自己印着的那一个（40-0），不替它补一个数。\n「连着三个发球局都被破」出自 `_hit_data` 的 `df_mh_1` 逐局。"
+    },
+    {
+      "start": 49.07,
+      "end": 55.1,
+      "narration": "三十四分钟拿下首盘，转播说这是她连赢的第十九盘。",
+      "score_inset": true,
+      "fit": "crop",
+      "_why": "画面：50.5s 她握拳、52.5 和 54.5s 教练席整排站起来鼓掌。\n「第十九盘」出自解说 50.16s `It's a 19th successive set`，就发生在这一段窗口里，画面和话同步。\n「三十四分钟」出自 flashscore df_sui_1 的 Set 1 0:34，和封面钩子、比分板上的 1:33 同一个口径。\n⚠️ 不说「六比一」——比分板和封面都印着，复读一遍白占时间。\n记分条：50.5s 还在（收尾形态）、52.5/54.5 教练席那两格没有，交给现量收。"
+    },
+    {
+      "start": 118.0,
+      "end": 132.0,
+      "narration": "第二盘约维奇找回了手感，一发得分率从百分之二十九，提到了百分之五十二，两个破发点也全都抓住了。这一分拉锯很久，最后是高芙拿下。",
+      "score_inset": true,
+      "fit": "crop",
+      "_why": "画面是第二盘 2-2、30-30 那个超长相持的尾段（91.14→132.22 是一整个镜头，记分条整段没翻）。\n百分比按「百分之N」写，不写「几成几」。两个数出自 `_hit_data` 的分盘一发得分率和破发点。\n⚠️ **旁白不提局分**：约维奇一度 2-1 领先是 `_turning_points` 里的事，而这一格记分条是 2-2，说局分会话画不符，所以只讲统计层面的「回稳」。\n「最后是高芙拿下」有记分条自证：132.5s 还是 `30-30`，134.5s 翻成 `6 2 [40]`——高芙那一栏涨了。\n段尾 132.00 ＋ 0.18 ＝ 132.18，停在 132.22 那一刀之前，而那一刀正是转播在这一分落定后切的。"
+    },
+    {
+      "start": 160.94,
+      "end": 166.8,
+      "narration": "第二盘五比四，高芙自己发球。赛点。",
+      "score_inset": true,
+      "fit": "crop",
+      "_why": "记分条挂着黄色 `MATCH POINT`，读数 `14 JOVIC 1 4 [30]` / `4 GAUFF 6 5 [40]`，发球指示在 GAUFF——第二盘 5-4、她自己的发球胜赛局、40-30。旁白三样和记分条逐项对得上。\n报一次局面而不是逐局念比分：全片十段里只有这一段和第 ⑤ 段提到局分，密度远在那道 25% 的线以下。"
+    },
+    {
+      "start": 167.07,
+      "end": 175.8,
+      "narration": "落地，她吼了出来。转播说，高芙第三次打进美网四分之一决赛。",
+      "score_inset": true,
+      "fit": "crop",
+      "_why": "**兑现结局**：这一段把第 ① 段那个冷开场（167.07→171.80）整段重放，再往后接到 172.5s 约维奇的反应、174.5s 她鼓掌致意、176.04 那一刀之前。\n「第三次打进美网四分之一决赛」是转播 168.08s 的原话 `Coco moves into a third US Open quarterfinal`，就落在这一段窗口里。\n⚠️ 轮次写「四分之一决赛」不写「八强」——2026-09-08 定的口径；旁白要给 TTS 读，所以写中文全称而不是 `1/4决赛` 那种屏幕写法。\n记分条 168.5s 在、170.5s 之后撤掉，交给现量收。\n⚠️ 断句：原来那句「这是高芙第三次打进美网四分之一决赛」有 17 格、超过一行字幕的 16 格，dry-run 报它会被硬切成「…美网四 ｜ 分之一决赛」——把词劈开了。去掉「这是」收到 15 格，一行装得下。",
+      "crosses_cut": "跨 172.09：167.07→172.09 是赛点落地和高芙那一吼（168.5s 笑、170.5s 张嘴大吼的特写），172.09→175.80 切到约维奇的反应（172.5s 酒红帽、174.5s 她鼓掌致意）。⚠️ 两边不是同一个人，所以旁白的顺序是钉着画面走的：「落地，她吼了出来」落在前半段高芙那几秒，「高芙第三次打进美网四分之一决赛」压在约维奇致意的画面上，读起来正是一个晋级一个出局的对照，不是把高芙的动作安在约维奇身上。"
+    },
+    {
+      "start": 183.03,
+      "end": 194.4,
+      "narration": "转播说，从她的反应看得出，她知道这场球不好打。约维奇的美网到这儿结束。下一轮，高芙还能这么顺吗？",
+      "score_inset": false,
+      "_score_inset_why": "183~196 秒这一段左下角全程没有常驻记分条——`score_04.jpg` 的 184.5 / 186.5 / 188.5 / 190.5 / 192.5 / 194.5 六格逐格看过，全是空的（板在 170.5s 之后就撤掉了）。写 true 会把一块看台/球场贴回画面左下角。",
+      "fit": "crop",
+      "_why": "画面：184.5/186.5s 她的近景，188.5~190.5s 看台整排站起来，192.5~194.5s 教练席举拳。\n前两句都是转播原话：197.52s `you can tell by the reaction that Goff knew this could be a trouble match`、177.04s `It's the end of the road for Eva Yovic`。\n收尾落在一问上，而且不是封面那一问的回声——钩子讲两盘用时，这一问讲下一轮。",
+      "crosses_cut": "跨 191.41：两边都是高芙这一侧的人——183.03→191.41 是她的近景（184.5/186.5）和看台整排起立（188.5/190.5），191.41→194.40 是教练席举拳（192.5/194.5）。没有一格切到约维奇，旁白那三句（转播的评价、约维奇出局、下一轮那一问）压在这一串庆祝上都对得上。"
+    }
+  ],
+  "_facts": [
+    "赛果 6-1 6-4（高芙）：flashscore Q3OBy5b5 result_verified；源片 198.5s 收尾台标 `1 4 / 6 6`；解说 192.40s `She's through one and four`——三源一致。",
+    "轮次第四轮：源片 60.5s 全屏台标 `WOMEN'S SINGLES | 4TH ROUND`；编排器从美网官方 matches feed 取的 round 也是第四轮。",
+    "开球北京时间 2026-09-08 07:15（美东 9/7 19:15 夜场）：flashscore 当日总表 `AD=1788822900`。这场在 `f_2_0`（当前比赛日）里，不是上一个比赛日的库存。",
+    "用时 1:33：flashscore df_sui_1 分盘 0:34 + 0:59 自洽；⚠️ 转播 189.68s 报 1:32，差一分钟是进位口径，全片统一用 flashscore 那份。",
+    "世界排名 高芙 #4 / 约维奇 #14：WTA 官方 players/ranked，rankedAt 2026-08-31。⚠️ 和台标的种子号恰好同值，但这两个数是查来的不是抄台标的。",
+    "年龄 22 / 18：WTA 官方 dateOfBirth 2004-03-13 与 2007-12-06。",
+    "「连赢的第十九盘」「第三次打进美网四分之一决赛」「all American affair」：均为源片解说原话，时刻 50.16 / 168.08 / 56.88，写进各段的 `_why`。",
+    "⚠️ 草稿 `_notes` 里那个封面文章 slug 写着 `iva-jovic-returns-to-us-open-quarterfinals`，和赛果矛盾（解说 177.04s 明说约维奇出局）——没有采用它的任何说法；封面图本身打开看过、四要素对得上，那才是判据。",
+    "⚠️ 同样没有采用的还有那个 slug 里的「10 连胜」：`_hit_data` 的近况只给到最近 5 场 5 胜，一个可疑源不足以支撑一个计数断言。"
+  ]
+}
