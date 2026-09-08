@@ -1,0 +1,70 @@
+name: icons-story-publish
+on:
+  push:
+    branches: [codex/zheng-usopen-icons-story]
+    paths: [requests/stories/zheng-usopen-icons.publish.json]
+permissions:
+  contents: write
+  actions: read
+jobs:
+  publish-reviewed-film:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            requests/stories
+            specs/reels
+            docs
+            tools
+            assets/beatcards/zheng-usopen-icons
+      - name: Read reviewed artifact coordinates
+        id: review
+        run: |
+          python - <<'PY'
+          import json, os
+          p=json.load(open('requests/stories/zheng-usopen-icons.publish.json'))
+          assert p['status']=='reviewed'
+          with open(os.environ['GITHUB_OUTPUT'],'a') as f:
+              f.write('run='+str(int(p['run_id']))+'\n')
+          PY
+      - uses: actions/download-artifact@v4
+        with:
+          run-id: ${{ steps.review.outputs.run }}
+          github-token: ${{ github.token }}
+          name: icons-episode-review
+          path: episode-review
+      - name: Verify the exact reviewed film and subtitles
+        run: |
+          python - <<'PY'
+          import hashlib,json
+          from pathlib import Path
+          p=json.load(open('requests/stories/zheng-usopen-icons.publish.json'))
+          q=json.load(open('docs/reviews/zheng-usopen-icons/qc_attestation.json'))
+          assert q['status']=='pass' and q['slug']=='zheng-usopen-icons'
+          for key,path in [('film_sha256','episode-review/zheng-usopen-icons.mp4'),('ass_sha256','episode-review/subtitles.ass'),('spec_sha256','specs/reels/zheng-usopen-icons.json')]:
+              actual=hashlib.sha256(Path(path).read_bytes()).hexdigest()
+              assert actual==q[key],(key,'reviewed bytes differ')
+          assert p['film_sha256']==q['film_sha256']
+          assert Path('episode-review/zheng-usopen-icons.mp4').stat().st_size==q['film_bytes']
+          PY
+      - name: Save reviewed film and reusable episode materials
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG=reel-zheng-usopen-icons
+          if ! gh release view "$TAG" >/dev/null 2>&1; then
+            gh release create "$TAG" --target "$GITHUB_SHA" --title '网球有故事｜美网为什么把郑钦文与乔丹、伍兹并列' --notes '基于美网官方原帖截图的跨项目故事剪辑。保留乔丹、伍兹关键时刻原声与中英文字幕。成片经过画面、字幕和音轨检查。'
+          fi
+          zip -q -r story-annotation-template.zip assets/beatcards/zheng-usopen-icons requests/stories/zheng-usopen-icons.annotations.json tools/render_story_annotation_set.py tools/render_story_info_band.py docs/story-annotations-reuse.md
+          gh release upload "$TAG" episode-review/zheng-usopen-icons.mp4 episode-review/poster.jpg episode-review/subtitles.ass specs/reels/zheng-usopen-icons.xhs.txt story-annotation-template.zip --clobber
+          URL="https://github.com/$GITHUB_REPOSITORY/releases/download/$TAG/zheng-usopen-icons.mp4"
+          READY=0
+          for ATTEMPT in 1 2 3 4 5 6 7 8; do
+            CODE=$(curl -s -o /dev/null -w '%{http_code}' -L -r 0-99 "$URL" || echo 000)
+            if [ "$CODE" = 206 ] || [ "$CODE" = 200 ]; then READY=1; break; fi
+            sleep 5
+          done
+          test "$READY" = 1
+          echo "https://github.com/$GITHUB_REPOSITORY/releases/tag/$TAG" >> "$GITHUB_STEP_SUMMARY"

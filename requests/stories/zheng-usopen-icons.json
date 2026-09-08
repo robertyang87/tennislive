@@ -1,0 +1,24 @@
+{
+  "slug": "zheng-usopen-icons",
+  "status": "source_preparation",
+  "column": "网球有故事",
+  "format": "real-footage montage with original-post evidence",
+  "user_requirements": ["必须使用用户原帖截图", "必须有乔丹与伍兹的针对性视频", "中文叙事与画面共同推进", "辅助贴纸不挡主体，形成通用模板", "沿用tennislive封面和网球时差片尾"],
+  "screenshot": "assets/social/zheng-usopen-icons/usopen-original.jpeg",
+  "sources": {
+    "jordan": {"url":"https://www.youtube.com/watch?v=kwAu78IiixE", "channel":"NBA", "duration":1469, "event":"1998 NBA Finals Game 6, Bulls vs Jazz", "target":"late-game steal, go-ahead jumper, reaction", "metadata_verified":true, "frame_verified":false, "license":"unverified"},
+    "woods": {"url":"https://www.youtube.com/watch?v=ldsAXXuVSSc", "channel":"The Masters", "duration":794, "event":"2019 Masters, Sunday final round, 18th hole", "target":"red shirt, final putt, raised arms and crowd", "metadata_verified":true, "frame_verified":false, "license":"unverified"},
+    "swiatek": {"url":"https://www.youtube.com/watch?v=Md8vyWg60fI", "channel":"US Open Tennis Championships", "reference_spec":"specs/reels/zheng-swiatek-us-open-2026-r4.json", "target":"first-set comeback and final victory", "frame_verified":false, "license":"unverified"},
+    "keys": {"url":"https://www.youtube.com/watch?v=PiuDtMWKU2g", "channel":"US Open Tennis Championships", "reference_spec":"specs/reels/zheng-keys-us-open-2026-r3.json", "target":"saved match point and seven-game comeback", "frame_verified":false, "license":"unverified"}
+  },
+  "fact_sources": {
+    "jordan_example":"https://www.nba.com/news/history-finals-moments-michael-jordan-last-shot-1998",
+    "woods_sunday":"https://www.pgatour.com/article/news/latest/2024/02/12/tiger-woods-announces-new-sun-day-red-clothing-line",
+    "woods_2019":"https://www.pgatour.com/article/news/latest/2020/11/09/remembering-the-final-round-of-the-2019-masters-augusta-national-golf-club-tiger-woods",
+    "zheng_r4":"https://www.usopen.org/en_US/news/articles/2026-09-07/zheng_qinwen_stuns_iga_swiatek_to_reach_2026_us_open_quarterfinals.html",
+    "zheng_r3":"https://www.wtatennis.com/news/4572496/zheng-saves-match-point-rallies-from-5-0-down-in-third-set-to-stun-keys-at-us-open"
+  },
+  "editorial_limits": ["原帖是关键场景的赞叹，不是三人历史地位排名", "1998与2019是典故的具体例子，原帖没有写这两个年份", "乔丹最后一投不是压哨，进球后还剩5.2秒", "伍兹不是每个周日必胜；Sunday指通常的决赛轮", "凯斯一战0-5在决胜盘，赛点在1-5时；斯瓦泰克一战0-5在首盘，救下三个盘点", "不把两次落后都称为距离出局只差一分", "不引用动态浏览量作为传播效果证明"],
+  "gates_remaining": ["下载源片", "逐帧核验跨项素材与剪辑秒数", "完成可渲染spec", "核验贴纸遮挡", "TTS实测", "渲染与成片质检"],
+  "local_download_result": "2026-09-08: media CDN timed out; metadata extraction succeeded for NBA and Masters 1080p formats. No source file obtained."
+}
