@@ -84,12 +84,12 @@ def evidence(filename):
 def segments(data):
     out=[]
     for i,c in enumerate(data['cards'][:-1]):
-        title=['中网外卡来了，武网怎么办？','赛事发卡，球员还要算额度','全年六次，正赛最多三次','已用两次，中网将是第三次','奥运冠军，也要对照豁免条款','同一份成绩，两道截止线','美网成绩，赶得上武网报名','武网如今也是强制参赛','五十六签，不等于前五十六','去年直入线，卡在第四十一','今年的正赛名单，尚未公布','兼顾两站，关键看武网入围','八强不是门槛，胜利增加选择'][i]
+        title=['中网外卡来了，武网怎么办？','赛事发卡，球员还要算额度','全年六次，正赛最多三次','已用两次，中网将是第三次','奥运冠军，也要对照豁免条款','同一份成绩，两道截止线','美网成绩，可计入武网排名','武网如今也是强制参赛','五十六签，不等于前五十六','去年直入线，卡在第四十一','今年的正赛名单，尚未公布','兼顾两站，关键看武网入围','八强不是门槛，胜利增加选择'][i]
         label=c['tag'].split('/')[-1].strip()
         if i==0:
             out.append(E.ExplainerSegment(kind='cover',label='网球有故事',title='中网外卡来了，武网怎么办？',narration=c['narration'],image='assets/reel/zheng-us-open-2026-r4.jpg',credit='AP / Seth Wenig · 美网第四轮'))
-            out.append(E.ExplainerSegment(kind='announcement',label='官宣',title='中网确认，她将出战正赛',narration='中网官宣，郑钦文确认参加今年正赛。她在报名截止时的排名不足以直接入围，这次拿到的是正赛外卡。北京的门打开了，可她今年常规正赛外卡只剩最后一次，武汉怎么办？',diagram=evidence('china-open-announcement.jpg'),credit='用户提供 · 中网ChinaOpen微博截图',points=('截止时排名不足以直接入围','本次凭正赛外卡出战中网')))
-            out.append(E.ExplainerSegment(kind='poster',label='北京之约',title='北京确定了，武汉怎么进？',narration='北京这一站已经明确。接下来的问题是：她还剩多少次接正赛外卡的额度，武汉又能不能靠排名进去？先把规则里的两本账分开。',image='assets/explainer/zheng-wildcards/china-open-poster.jpg',credit='用户提供 · 2026中网郑钦文参赛海报'))
+            out.append(E.ExplainerSegment(kind='announcement',label='官宣',title='中网确认，她将出战正赛',narration='中网官宣郑钦文参加本届正赛。由于报名截止时的排名不足以直接入围，她本次获得的是正赛外卡。北京的参赛身份已经明确，而武汉能否通过排名入围，将影响她对剩余额度的安排。',diagram=evidence('china-open-announcement.jpg'),credit='用户提供 · 中网ChinaOpen微博截图',points=('截止时排名不足以直接入围','本次凭正赛外卡出战中网')))
+            out.append(E.ExplainerSegment(kind='poster',label='北京之约',title='北京席位确定，武汉取决于入围',narration='北京的正赛席位已经确定。武汉的入围方式，则需要结合球员的年度外卡额度、报名截止排名和实际接受名单判断。赛事的发卡数与球员的接卡次数，是两套分别计算的限制。',image='assets/explainer/zheng-wildcards/china-open-poster.jpg',credit='用户提供 · 2026中网郑钦文参赛海报'))
         elif i in (10,12):
             img='assets/venues/wuhan-optics-valley-centre-court.jpg' if i==10 else 'assets/reel/zheng-us-open-2026-r4.jpg'
             pts=('截至9月8日：官方球员名单暂不可用','能否直入，等待截止排名与接受名单') if i==10 else ('八强不是中网外卡的规则门槛','胜利提升排名，也增加参赛选择')
