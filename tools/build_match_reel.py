@@ -2888,7 +2888,7 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
         # contain，而它根本不裁源片——那句「9:8 本来就装得下」说的是源片
         # 画面。带式下它由 cut_still_segment 缩进画面带、上下垫带底色。
         bad_contain = [i + 1 for i, s in enumerate(segments)
-                       if s.fit == "contain" and not s.image]
+                       if s.fit in ("contain", "full_source") and not s.image]
         if bad_contain:
             raise ReelError(
                 f"第 {bad_contain} 段写了 `fit: contain`，和带式版式不兼容——"
@@ -3775,14 +3775,17 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
     # labeled=True 的链自己带 `;` 和输入标签（首个滤镜隐式吃 [0:v]），
     # 拼 -filter_complex 时不能再往前面塞 `[0:v]`。
     labeled = False
-    if seg.fit == "contain":
+    if seg.fit in ("contain", "full_source"):
         native_w, native_h = probe_size(source)
         # 整幅铺进来会只占屏高的三成（1080 宽的 16:9 才 608 高），上下两条死黑，
         # 「冲击力先折一半」。所以两件事一起做：
         #   1. 先横向留 KEEP 的宽度再缩——画面大一圈，而球员仍在窗口内
         #   2. 上下不留纯色，用同一帧放大模糊垫底
         # 模糊垫底比纯色好在：屏幕是满的，眼睛跟着中间那条走，不会被两条黑边切断。
-        keep = contain_keep_width(source_w)
+        # Cross-sport action needs both the athlete and the target in view.
+        # Explicit full_source preserves the complete published frame;
+        # legacy contain retains its existing 62% framing.
+        keep = source_w if seg.fit == "full_source" else contain_keep_width(source_w)
         x = (source_w - keep) // 2
         chain = (
             f"split=2[bg][fg];"
