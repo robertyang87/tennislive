@@ -1,0 +1,122 @@
+name: Zheng wildcard reviewed episode delivery
+on:
+  push:
+    branches: [story/zheng-wildcards-20260908]
+    paths:
+      - tools/build_zheng_wildcard_story.py
+      - tools/package_zheng_wildcard_story.py
+permissions:
+  contents: write
+concurrency:
+  group: zheng-wildcards-reviewed-render
+  cancel-in-progress: false
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    env:
+      OUTDIR: output/2026-09-08/explainer/zheng-china-wuhan-wildcards
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            .github
+            assets
+            src
+            specs
+            tools
+            docs
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: 缓存 apt 包（中文字体 + ffmpeg，绕开镜像抽风）
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/apt-archives
+            ~/.cache/apt-lists
+          key: apt-pkgs-${{ runner.os }}-24.04-explainer-v2-${{ github.run_id }}
+          restore-keys: |
+            apt-pkgs-${{ runner.os }}-24.04-explainer-v2-
+      - name: 安装中文字体（幻灯需要）
+        timeout-minutes: 15
+        run: |
+          source tools/ci_apt_install.sh
+          apt_install_cached fonts-noto-cjk
+
+      - name: 安装 tennislive + edge-tts
+        run: |
+          pip install -q -e ".[webrender]"
+          pip install -q edge-tts
+
+      - name: 缓存 Chromium
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-chromium-${{ runner.os }}-${{ hashFiles('pyproject.toml') }}
+          restore-keys: playwright-chromium-${{ runner.os }}-
+
+      - name: 安装 Chromium
+        timeout-minutes: 10
+        run: |
+          pw_wait_apt() {
+            for _ in $(seq 1 22); do
+              if ! pgrep -x apt-get >/dev/null && ! pgrep -x dpkg >/dev/null; then
+                return 0
+              fi
+              sleep 5
+            done
+            echo "::warning::等了 110 秒 dpkg 锁还没松开——下一次尝试八成会在两秒内死在 Could not get lock，不是 apt 装不上"
+            sudo pkill -9 apt-get 2>/dev/null || true
+            sudo pkill -9 dpkg 2>/dev/null || true
+            sudo dpkg --configure -a 2>/dev/null || true
+          }
+          pw_retry() {
+            for i in 1 2; do
+              timeout 240 python -m playwright install --with-deps chromium && return 0
+              echo "::warning::装 Chromium 第 $i 次没跑完（多半卡在 --with-deps 的 apt）"
+              pw_wait_apt
+            done
+            echo "::error::装 Chromium 两次都没成功"
+            return 1
+          }
+          pw_retry
+
+      - name: 安装 ffmpeg
+        timeout-minutes: 15
+        run: |
+          source tools/ci_apt_install.sh
+          ensure_ffmpeg
+
+      - name: Prepare output checkout before rendering
+        run: git sparse-checkout add "$OUTDIR"
+      - name: Render reviewed native cards and narration
+        run: python tools/build_zheng_wildcard_story.py --outdir "$OUTDIR"
+      - name: Package and validate actual output
+        run: |
+          python tools/package_zheng_wildcard_story.py --outdir "$OUTDIR" --video-url "https://github.com/$GITHUB_REPOSITORY/releases/download/explainer-zheng-china-wuhan-wildcards/explainer.mp4"
+          python tools/check_explainer_voice.py --local "$(dirname "$OUTDIR")" zheng-china-wuhan-wildcards
+          python tools/check_explainer_landed.py --local "$OUTDIR" zheng-china-wuhan-wildcards --says '全年六次，正赛最多三次' '去年直入线，卡在第四十一'
+      - uses: actions/upload-artifact@v4
+        with:
+          name: zheng-wildcards-reviewed-video
+          path: output/2026-09-08/explainer/zheng-china-wuhan-wildcards
+          retention-days: 14
+      - name: Upload validated video to Release
+        run: |
+          TAG=explainer-zheng-china-wuhan-wildcards
+          gh release view "$TAG" >/dev/null 2>&1 || gh release create "$TAG" --target "$GITHUB_SHA" --title '网球有故事｜中网给了外卡，武网怎么办？' --notes '经质检的卡片视频。成片不进入 Git。'
+          cp "$OUTDIR/zheng-wildcards-template.mp4" /tmp/explainer.mp4
+          gh release upload "$TAG" /tmp/explainer.mp4 --clobber
+          curl --fail --location --range 0-99 --output /dev/null "https://github.com/$GITHUB_REPOSITORY/releases/download/$TAG/explainer.mp4"
+      - name: Commit only lightweight delivery files to the feature branch
+        run: |
+          rm -f "$OUTDIR"/*.mp4 "$OUTDIR"/voice_*.mp3 "$OUTDIR"/slide_*.html
+          git config user.name "Claude"
+          git config user.email "noreply@anthropic.com"
+          git add --sparse "$OUTDIR"
+          python tools/check_staged_file_sizes.py
+          git commit -m 'content: reviewed Zheng wildcard delivery package'
+          source tools/git_push_retry.sh
+          push_with_rebase_retry "$GITHUB_REF_NAME" 5
