@@ -1,0 +1,87 @@
+name: Zheng icons approved cover refresh
+on:
+  push:
+    branches: [main]
+    paths: [requests/stories/zheng-usopen-icons.cover-v2.json]
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: icons-cover-v2
+  cancel-in-progress: false
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            assets/reel
+            tools
+            src
+            specs
+            data
+            requests/stories
+            output/2026-09-08/reel/zheng-usopen-icons
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install publish dependencies and encoder
+        run: |
+          pip install -q -e .
+          source tools/ci_apt_install.sh
+          ensure_ffmpeg
+      - uses: actions/download-artifact@v4
+        with:
+          run-id: 34192817751
+          github-token: ${{ github.token }}
+          name: icons-episode-review
+          path: original-review
+      - name: Replace approved opening cover and verify unchanged audio
+        run: python tools/refresh_icons_approved_cover.py
+      - name: Run final film quality gates
+        run: |
+          PYTHONPATH=src python tools/check_reel_landed.py --slug zheng-usopen-icons --film output/2026-09-08/reel/zheng-usopen-icons/zheng-usopen-icons.mp4
+          python tools/push_reel.py --stage page --outdir output/2026-09-08/reel/zheng-usopen-icons --copy specs/reels/zheng-usopen-icons.xhs.txt
+      - name: Publish verified revision
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          OUTDIR=output/2026-09-08/reel/zheng-usopen-icons
+          TAG=reel-zheng-usopen-icons-cover-v2
+          gh release create "$TAG" --target "$GITHUB_SHA" --title '网球有故事｜郑钦文、乔丹、伍兹（三人封面版）' --notes '用户确认的品字型封面；保留原片剪辑与原声，更新小红书文案。重新通过成片质检。'
+          gh release upload "$TAG" "$OUTDIR/zheng-usopen-icons.mp4" "$OUTDIR/poster.jpg" "$OUTDIR/subtitles.ass" specs/reels/zheng-usopen-icons.xhs.txt
+          python - <<'PY'
+          import hashlib,json,subprocess
+          from pathlib import Path
+          out=Path("output/2026-09-08/reel/zheng-usopen-icons")
+          meta=json.loads((out/"render.json").read_text())
+          film=out/"zheng-usopen-icons.mp4"
+          assets=json.loads(subprocess.check_output(["gh","api","repos/robertyang87/tennislive/releases/tags/reel-zheng-usopen-icons-cover-v2"]))["assets"]
+          asset=next(a for a in assets if a["name"]==film.name)
+          assert asset["size"]==film.stat().st_size
+          assert asset["digest"]=="sha256:"+hashlib.sha256(film.read_bytes()).hexdigest()
+          meta.update(video_url=asset["browser_download_url"],video_bytes=asset["size"])
+          (out/"render.json").write_text(json.dumps(meta,ensure_ascii=False,indent=2)+"\n")
+          PY
+      - name: Commit QC and copy page then dispatch WeChat
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          OUTDIR=output/2026-09-08/reel/zheng-usopen-icons
+          git config user.name "Codex"
+          git config user.email "noreply@openai.com"
+          git add "$OUTDIR/poster.jpg" "$OUTDIR/subtitles.ass" "$OUTDIR/render.json" "$OUTDIR/qc_attestation.json" "$OUTDIR/copy.html" "$OUTDIR/cover_revision.json"
+          git commit -m "reel: approved three-person cover and QC for Zheng icons"
+          source tools/git_push_retry.sh
+          push_with_rebase_retry main
+          gh workflow run match-reel.yml --ref main -f mode=push -f slug=zheng-usopen-icons -f push=true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: icons-cover-v2-review
+          path: |
+            output/2026-09-08/reel/zheng-usopen-icons/*.json
+            output/2026-09-08/reel/zheng-usopen-icons/poster.jpg
+          retention-days: 14
