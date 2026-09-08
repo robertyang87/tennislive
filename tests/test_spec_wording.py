@@ -5,9 +5,11 @@ pytest 里，而自动出片链（备料 → 提升 → 渲染 → 发布）用 
 main、**不触发 CI**——模型/自动产的 spec 从生成到发进微信一次都没被扫过。
 已经漏过一条（tiafoe-musetti-cincinnati-2026-qf 带着「7点05分」推送，事后
 挂豁免表），装闸当天又在 pending 里抓到一条现行（musetti-zheng 的「十六强」）。
-⚠️ 轮次那一条**一年翻过三次**（08-02 分数式 → 09-01 N 强 → 09-08 又翻回
-分数式）：现在拦的是「N 强」，放行「1/8决赛 / 1/4决赛 / 半决赛 / 决赛」，
-所以这儿的坏样本用的是 N 强。
+⚠️ 轮次那一条**一年翻过三次、当天又收窄过一档**（08-02 分数式 → 09-01 N 强
+→ 09-08 翻回分数式，同日晚账号所有者收窄成「只拦轮次名，不拦成绩」）：
+现在拦的是**给一场球起轮次名**的那个「N 强」（「美网 16 强」「男单八强」），
+放行**说这个人走到了哪一步**的那个（「打进 8 强」「进 16 强」）。
+所以这儿的坏样本用的是前一种，而后一种单独有一条判据钉住它必须放行。
 
 现在正则/豁免表/扫描面收在 tools/spec_wording.py 一份，三方共用：
 - pytest（全库扫描 + 豁免表自检，判据在 test_reel_editorial / test_match_reel）
@@ -33,7 +35,7 @@ from tools.spec_wording import (  # noqa: E402
 
 def _bad_spec() -> dict:
     return {
-        "cover": {"hook": "他打进8强"},
+        "cover": {"hook": "美网女单8强，阿瑟·阿什球场"},
         "push": {"summary": "一发只进了三成四",
                  "lead": "中英双语字幕，全程。"},
         "segments": [
@@ -51,6 +53,39 @@ def test_八类措辞违规一次全抓出来():
     for needle in ("几成几", "写成了秒", "报到了分钟", "「N 强」", "爱局",
                    "要到", "谁在救", "制作规格"):
         assert needle in joined, f"「{needle}」那一类没抓出来：\n{joined}"
+
+
+def test_打进N强是成绩不许被轮次那道闸拦下():
+    """账号所有者 2026-09-08 当晚收窄这条闸时的原话：「**比如说他打进了 8 强
+    或 16 强，这个是可以的，但是比赛不能说是 16 强的比赛，应该说是……第四轮
+    比赛，或者是 1/4 决赛，或者是 1/8 决赛这种**」。
+
+    也就是说这条规矩管的从来不是「强」这个字，是**「N 强」被当成一个轮次名去
+    指称一场球**。两者在语法上分得开：到达类动词/次数标记 + N 强是成绩，
+    其余是轮次名。
+
+    判据钉两头，缺一头都恒真：**成绩说法必须放行**（只钉另一头的话，把闸退回
+    裸正则照样绿——而那正好把账号所有者点名允许的那一类全判成违规），
+    **轮次名必须照旧拦下**（只钉这一头的话，把闸整个拆掉也绿）。
+    """
+    from tools.spec_wording import strength_round_hits  # noqa: PLC0415
+
+    for good in ("他打进了 8 强", "进 16 强", "首次晋级 WTA1000 四强",
+                 "从资格赛打到十六强", "第一次打进四强", "4 次打进大满贯四强",
+                 "止步洛斯卡沃斯四强", "从病床边的球拍，到美网十六强"):
+        assert not strength_round_hits(good), f"这是成绩不是轮次名，不该拦：{good}"
+
+    for bad in ("16 强的比赛", "美网 16 强", "2026 美网 女单16强",
+                "洛斯卡沃斯 ATP250，男单八强", "美网16强 · 郑钦文 vs 斯瓦泰克",
+                "二〇一九年澳网八强，普利斯科娃对小威廉姆斯",
+                "下一轮八强，对手是郑钦文", "四强对手是大坂直美"):
+        assert strength_round_hits(bad), f"这是在给一场球起轮次名，该拦：{bad}"
+
+    # ⚠️ 收窄的是「成绩」这一档，**不是把排名和形容词那道老收窄放宽了**——
+    # 「世界前十强边缘」是排名、「防守能力最强」是形容词，照旧不许误伤。
+    for innocent in ("世界前十强边缘", "防守能力最强的一批", "延续强势",
+                     "1/8决赛", "1/4决赛", "半决赛", "第四轮"):
+        assert not strength_round_hits(innocent), f"误伤了：{innocent}"
 
 
 def test_文案里不许挂来源注脚():
@@ -195,7 +230,7 @@ def test_出片入口在load_spec之后模式分发之前执法(tmp_path):
     # 小红书正文也在扫描面里：spec 干净、正文违规，同样要红
     ok_spec = {"cover": {}, "push": {}, "segments": [], "topbar": {}}
     (tmp_path / "fresh-model-spec.xhs.txt").write_text(
-        "他一路打进16强。", encoding="utf-8")
+        "美网女单16强，阿瑟·阿什球场。", encoding="utf-8")
     try:
         reel.enforce_spec_wording(ok_spec, spec_path)
     except reel.ReelError as exc:
@@ -206,7 +241,7 @@ def test_出片入口在load_spec之后模式分发之前执法(tmp_path):
 
 def _bad_interview_spec() -> dict:
     return {
-        "push": {"summary": "他打进8强后的场上采访",
+        "push": {"summary": "美网女单8强赛后的场上采访",
                  "lead": "中英双语字幕，全程。一发只进了三成四。",
                  "_note": "注解里的爱局不算数"},
         "takeaway": {"close": {
