@@ -3186,8 +3186,6 @@ _LEGACY_ROUND_NAMES = {
     "swiatek-zheng-us-open-2026-r4-presser.xhs.txt",
     "zheng-swiatek-us-open-2026-r4-interview.json",
     "zheng-swiatek-us-open-2026-r4-interview.xhs.txt",
-    "zheng-swiatek-us-open-2026-r4-presser.json",
-    "zheng-swiatek-us-open-2026-r4-presser.xhs.txt",
 }
 
 
