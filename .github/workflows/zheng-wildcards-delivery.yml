@@ -1,21 +1,23 @@
 name: Zheng wildcard reviewed episode delivery
 on:
   push:
-    branches: [story/zheng-wildcards-20260908]
+    branches: [story/zheng-wildcards-editorial-20260908]
     paths:
+      - .github/workflows/zheng-wildcards-delivery.yml
       - tools/build_zheng_wildcard_story.py
       - tools/package_zheng_wildcard_story.py
 permissions:
   contents: write
 concurrency:
   group: zheng-wildcards-reviewed-render
-  cancel-in-progress: false
+  # Rendering has no WeChat POST; a newer editorial revision supersedes it.
+  cancel-in-progress: true
 jobs:
   render:
     runs-on: ubuntu-latest
     timeout-minutes: 50
     env:
-      OUTDIR: output/2026-09-08/explainer/zheng-china-wuhan-wildcards
+      OUTDIR: output/2026-09-08/explainer/zheng-china-wuhan-wildcards-v2
       GH_TOKEN: ${{ github.token }}
     steps:
       - uses: actions/checkout@v4
@@ -95,17 +97,17 @@ jobs:
         run: python tools/build_zheng_wildcard_story.py --outdir "$OUTDIR"
       - name: Package and validate actual output
         run: |
-          python tools/package_zheng_wildcard_story.py --outdir "$OUTDIR" --video-url "https://github.com/$GITHUB_REPOSITORY/releases/download/explainer-zheng-china-wuhan-wildcards/explainer.mp4"
-          python tools/check_explainer_voice.py --local "$(dirname "$OUTDIR")" zheng-china-wuhan-wildcards
-          python tools/check_explainer_landed.py --local "$OUTDIR" zheng-china-wuhan-wildcards --says '全年六次，正赛最多三次' '去年直入线，卡在第四十一'
+          python tools/package_zheng_wildcard_story.py --outdir "$OUTDIR" --video-url "https://github.com/$GITHUB_REPOSITORY/releases/download/explainer-zheng-china-wuhan-wildcards-v2/explainer.mp4"
+          python tools/check_explainer_voice.py --local "$(dirname "$OUTDIR")" zheng-china-wuhan-wildcards-v2
+          python tools/check_explainer_landed.py --local "$OUTDIR" zheng-china-wuhan-wildcards-v2 --says '全年六次，正赛最多三次' '去年直入线，卡在第四十一'
       - uses: actions/upload-artifact@v4
         with:
           name: zheng-wildcards-reviewed-video
-          path: output/2026-09-08/explainer/zheng-china-wuhan-wildcards
+          path: output/2026-09-08/explainer/zheng-china-wuhan-wildcards-v2
           retention-days: 14
       - name: Upload validated video to Release
         run: |
-          TAG=explainer-zheng-china-wuhan-wildcards
+          TAG=explainer-zheng-china-wuhan-wildcards-v2
           gh release view "$TAG" >/dev/null 2>&1 || gh release create "$TAG" --target "$GITHUB_SHA" --title '网球有故事｜中网给了外卡，武网怎么办？' --notes '经质检的卡片视频。成片不进入 Git。'
           cp "$OUTDIR/zheng-wildcards-template.mp4" /tmp/explainer.mp4
           gh release upload "$TAG" /tmp/explainer.mp4 --clobber
@@ -118,5 +120,16 @@ jobs:
           git add --sparse "$OUTDIR"
           python tools/check_staged_file_sizes.py
           git commit -m 'content: reviewed Zheng wildcard delivery package'
-          source tools/git_push_retry.sh
-          push_with_rebase_retry "$GITHUB_REF_NAME" 5
+          for attempt in 1 2 3 4 5; do
+            if git push origin "HEAD:$GITHUB_REF_NAME"; then exit 0; fi
+            git branch -f rendered HEAD
+            git fetch origin "$GITHUB_REF_NAME"
+            git reset --hard "origin/$GITHUB_REF_NAME"
+            git checkout rendered -- "$OUTDIR"
+            git add --sparse "$OUTDIR"
+            if git diff --cached --quiet; then exit 0; fi
+            git commit -m 'content: reviewed Zheng wildcard delivery package'
+            sleep 3
+          done
+          echo "::error::Reviewed delivery output could not be committed"
+          exit 1

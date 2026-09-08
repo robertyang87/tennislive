@@ -1983,6 +1983,7 @@ _ACADEMY_SPAN_DIAGRAM = _academy_span_diagram()
 # ⚠️ 加进来之前先问一句：这条片子**验过了吗**。加进来之后它就不再经过人的手，
 # 而微信那条消息发出去收不回来。
 AUTO_PUSH_SLUGS: frozenset[str] = frozenset({
+    "zheng-china-wuhan-wildcards-v2",  # Authorized editorial correction; separate delivery receipt.
     # 2026-09-08: local full decode and 15 illustrated native cards reviewed; user authorizes QC -> WeChat.
     "zheng-china-wuhan-wildcards",
     "gauff-right-coco",
