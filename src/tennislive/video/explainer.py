@@ -10058,7 +10058,7 @@ def write_subtitles(cues: Sequence[tuple[float, float, str]], path: Path,
 
     lines = [
         f"Dialogue: 0,{_ass_stamp(start)},{_ass_stamp(end)},TL,,0,0,"
-        f"{_ASS_BILINGUAL_MARGIN_V if is_bilingual(shown) else 0},,"
+        f"{min(margin_v, _ASS_BILINGUAL_MARGIN_V) if is_bilingual(shown) else 0},,"
         + r"\N".join(ass_rows(shown))
         for start, end, shown in cues
     ]

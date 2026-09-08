@@ -122,6 +122,7 @@
   },
   "_reviewed_facts": "本场唯一赛果：萨巴伦卡 7-6(1)、3-6、7-6(7) 击败诺斯科娃。\n首盘抢七小分萨巴伦卡7-1；第二盘诺斯科娃6-3；决胜盘抢十萨巴伦卡10-7。\n本场耗时2小时22分。全场总得分萨巴伦卡113、诺斯科娃105，相差8分。\n破发点兑现萨巴伦卡2/9、诺斯科娃3/6。不要将总分与赢球者写反。\n素材事实：原片51.52秒解说确认萨巴伦卡赢首盘；115.76–124.72确认诺斯科娃赢第二盘；\n172.08–192.32确认萨巴伦卡获胜、淘汰温网冠军、在纽约18连胜并重返四强。\n三个旁白所配的画面分别是：首盘6-1抢七后的最后一分、次盘盘点及诺斯科娃庆祝、决胜盘抢十中段。\n第三条旁白只能讲抢十仍在争夺，不能在赛点之前提前宣告获胜。\n不要写素材没有展示的第三盘局间过程；不要虚构挽救赛点、伤病或赛后引语。\n\nWTA官方赛后报道核实：第三盘萨巴伦卡2-4落后追至4-4，赛点外角二发Ace。温网在本届赛季，不写上个月。",
   "_segments_source": " + MiniMax 冷开场/结尾视觉闸",
+  "_tts_backend_why": "Azure在run34290980601明确返回401；按仓库2026-09-04默认动作改用同名Yunjian的Edge通道。本条不使用Azure专属style或lead_pause；段首延迟改由事实旁白自然铺垫，保留逐段真实语音时长与QC检查。",
   "_visual_evidence": {
     "cold_open": {
       "confidence": 0.95,
@@ -236,11 +237,11 @@
     "result": "7-6(1) 3-6 7-6(7)",
     "scoreboard": {
       "_court_why": "赛果源结构化 court 字段",
-      "_duration_why": "比赛统计结构化全场时长",
+      "_duration_why": "报道为2小时22分钟，传入8520秒，避免二段冒号被误读为分:秒。",
       "court": "Arthur Ashe Stadium",
       "duration_source": {
         "field": "duration",
-        "url": "data:application/json,%7B%22duration%22%3A%222%3A22%22%2C%22source%22%3A%22structured%20match%20statistics%22%7D"
+        "url": "data:application/json,%7B%22duration%22%3A8520%2C%22source%22%3A%22WTA%20report%3A%202%20hours%2022%20minutes%22%2C%22source_url%22%3A%22https%3A%2F%2Fwww.wtatennis.com%2Fnews%2F4573832%2Fsabalenka-escapes-noskova-from-a-break-down-in-decider-at-us-open%22%7D"
       }
     },
     "subject": "萨巴伦卡",
@@ -328,15 +329,21 @@
         }
       ],
       "score_inset": true,
-      "start": 166.67
+      "start": 166.67,
+      "score_inset_windows": [
+        [
+          166.67,
+          172
+        ]
+      ],
+      "_score_inset_why": "contact_04_detail逐帧核对：171.5秒板仍在，172.5秒已收走。自动检测主区间到172.0；排除175秒后衣服与看台误报，宽度继续现量。"
     },
     {
-      "_why": "同场赛后比分板标注女单1/4决赛；对手身份由原声183.68秒核实。",
-      "crosses_cut": "15.65秒切点前后均为萨巴伦卡近景；本段交代整场身份。",
-      "end": 21.35,
-      "narration": "美网四分之一决赛，世界第一迎战温网冠军。",
+      "_why": "源片首个完整回合，14.23秒切镜前结束；同场比赛交代身份与三盘背景。",
+      "end": 14.2,
+      "narration": "美网四分之一决赛，世界第一迎战温网冠军。一场三盘大战，最后要靠抢十决胜。",
       "score_inset": true,
-      "start": 14.3
+      "start": 0.5
     },
     {
       "_why": "自动链机械插的章节卡（review 路线 ⑤）：editorial.chapters 对应这个 beat，插在它的第一段之前",
@@ -352,7 +359,14 @@
       "end": 52.9,
       "narration": "首盘错过发球胜盘局，萨巴伦卡没有松手。抢七六比一，盘点就在眼前。",
       "score_inset": true,
-      "start": 40.3
+      "start": 40.3,
+      "score_inset_windows": [
+        [
+          40.3,
+          50.7
+        ]
+      ],
+      "_score_inset_why": "score_01：50.5秒有板，52.5秒无板。自动主区间到50.6，排除51.8秒之后黑色座椅误报。"
     },
     {
       "_why": "自动链机械插的章节卡（review 路线 ⑤）：editorial.chapters 对应这个 beat，插在它的第一段之前",
@@ -368,8 +382,17 @@
       "crosses_cut": "114.85秒由盘点落地切到诺斯科娃包厢庆祝；120.09秒转观众前收住。",
       "end": 120,
       "narration": "来到第二盘末段，诺斯科娃的发球打开了局面。六比三，温网冠军扳回一盘。",
-      "score_inset": true,
-      "start": 110.4
+      "score_inset": {
+        "x2": 628
+      },
+      "start": 110.4,
+      "score_inset_windows": [
+        [
+          110.4,
+          117.9
+        ]
+      ],
+      "_score_inset_why": "score_02的110.5–116.5秒板含两盘局分和AD小分，118.5秒无板。首版516读数裁掉右侧比分，采用实际较宽读数628的既有人审x2入口，并保留自动消失检测。"
     },
     {
       "_why": "自动链机械插的章节卡（review 路线 ⑤）：editorial.chapters 对应这个 beat，插在它的第一段之前",
@@ -402,7 +425,14 @@
       "fit": "crop",
       "narration": "抢十来到赛点，萨巴伦卡的这记二发直奔外角！换成你，敢这样发二发吗？",
       "score_inset": true,
-      "start": 166.67
+      "start": 166.67,
+      "score_inset_windows": [
+        [
+          166.67,
+          172
+        ]
+      ],
+      "_score_inset_why": "contact_04_detail逐帧核对：171.5秒板仍在，172.5秒已收走。自动检测主区间到172.0；排除175秒后衣服与看台误报，宽度继续现量。"
     }
   ],
   "slug": "sabalenka-noskova",
@@ -447,5 +477,8 @@
     "line2": "萨巴伦卡 7-6(1) 3-6 7-6(7) 诺斯科娃"
   },
   "tts_backend": "edge",
-  "_tts_backend_why": "Azure在run34290980601明确返回401；按仓库2026-09-04默认动作改用同名Yunjian的Edge通道。本条不使用Azure专属style或lead_pause；段首延迟改由事实旁白自然铺垫，保留逐段真实语音时长与QC检查。"
+  "_final_render_repair": {
+    "reason": "逐帧发现封面时长单位、双语水印间距、比分板误贴与裁窄，未推送即修正。",
+    "first_film_sha256": "8ab18ce274681ad8040ded0a21caf1b4d6cbca5d5358b1a308567f2e8cc33e2c"
+  }
 }
