@@ -27,7 +27,15 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/apt-archives
+            ~/.cache/apt-lists
+          key: apt-pkgs-${{ runner.os }}-24.04-ffmpeg-fonts-v2-${{ github.run_id }}
+          restore-keys: apt-pkgs-${{ runner.os }}-24.04-ffmpeg-fonts-v2-
       - name: Install publish dependencies and encoder
+        timeout-minutes: 15
         run: |
           pip install -q -e . numpy
           source tools/ci_apt_install.sh
@@ -41,6 +49,8 @@ jobs:
       - name: Replace approved opening cover and verify unchanged audio
         run: python tools/refresh_icons_approved_cover.py
       - name: Run final film quality gates
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           PYTHONPATH=src python tools/check_reel_landed.py --slug zheng-usopen-icons --film output/2026-09-08/reel/zheng-usopen-icons/zheng-usopen-icons.mp4
           python tools/push_reel.py --stage page --outdir output/2026-09-08/reel/zheng-usopen-icons --copy specs/reels/zheng-usopen-icons.xhs.txt
@@ -70,9 +80,10 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           OUTDIR=output/2026-09-08/reel/zheng-usopen-icons
-          git config user.name "Codex"
-          git config user.email "noreply@openai.com"
+          git config user.name "Claude"
+          git config user.email "noreply@anthropic.com"
           git add "$OUTDIR/poster.jpg" "$OUTDIR/subtitles.ass" "$OUTDIR/render.json" "$OUTDIR/qc_attestation.json" "$OUTDIR/copy.html" "$OUTDIR/cover_revision.json"
+          python tools/check_staged_file_sizes.py
           git commit -m "reel: approved three-person cover and QC for Zheng icons"
           source tools/git_push_retry.sh
           push_with_rebase_retry main

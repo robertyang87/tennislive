@@ -112,6 +112,8 @@ jobs:
         run: |
           PYTHONPATH=src python tools/check_reel_landed.py --slug zheng-usopen-icons --film output/2026-09-08/reel/zheng-usopen-icons/zheng-usopen-icons.mp4
       - name: Build copy page
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: python tools/push_reel.py --stage page --outdir output/2026-09-08/reel/zheng-usopen-icons --copy specs/reels/zheng-usopen-icons.xhs.txt
       - name: Publish verified revision
         env:
@@ -139,12 +141,13 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           OUTDIR=output/2026-09-08/reel/zheng-usopen-icons
-          git config user.name "Codex"
-          git config user.email "noreply@openai.com"
+          git config user.name "Claude"
+          git config user.email "noreply@anthropic.com"
           git add "$OUTDIR/poster.jpg" "$OUTDIR/subtitles.ass" "$OUTDIR/render.json" "$OUTDIR/qc_attestation.json" "$OUTDIR/copy.html"
           if git ls-files --error-unmatch "$OUTDIR/pushed.json" >/dev/null 2>&1; then
             git rm "$OUTDIR/pushed.json"
           fi
+          python tools/check_staged_file_sizes.py
           git commit -m "reel: QC-approved centered square revision; user requested resend"
           source tools/git_push_retry.sh
           push_with_rebase_retry main
