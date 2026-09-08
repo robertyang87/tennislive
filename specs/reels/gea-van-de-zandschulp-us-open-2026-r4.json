@@ -1,0 +1,378 @@
+{
+ "slug": "gea-van-de-zandschulp-us-open-2026-r4",
+ "_column": "赛场之上",
+ "layout": "band",
+ "scorebox": [
+  104,
+  887,
+  740,
+  980
+ ],
+ "_scorebox_why": "美网这一站的常驻记分板位置，和同期已发的美网 band spec 一致（左缘 104、上下沿 887/980）。右缘按五盘那一档给 740（照 `djokovic-navone-us-open-2026-r1` 736 / `fritz-cerundolo-us-open-2026-r3` 740），真正的右缘由 `resolve_board_insets` 每段现量——板每打完一盘会往右长一截，这一场从两列长到五列。",
+ "tts_backend": "edge",
+ "_tts_backend_why": "Azure 的钥匙从 2026-09-03 起连着四条片子都是 `WebSocket upgrade failed: Authentication error (401)`（keys-bondar 两趟 / zheng-putintseva / tien-monfils / wu-alcaraz），一律死在第 2 秒的片尾配音上。这条 spec 没有 `voice.style` 也没有 `lead_pause`，退回 edge-tts 零代价；而且本地 `--check-narration` 在这台沙箱跑的就是 edge，量到的余量直接适用，不用再按「Azure 比 edge 快 6.6%」折算。",
+ "source_url": "https://youtu.be/D-zIPw2ZEnM",
+ "_source": "美网官方频道 `US Open Tennis Championships`（oEmbed 的 `author_name` 自证，不是搬运号），标题 `Arthur Gea vs. Botic van de Zandschulp Highlights | 2026 US Open Round 4`。213.02 秒 / 1920×1080 / 29.97fps。⚠️ 片尾板从 209.91 起（`scene_cuts` 最后一刀 ＋ `silent_audio` `[[209.96, 213.02]]`），所有段落收在 209.2 之前。",
+ "cover": {
+  "matchup": [
+   {
+    "name": "范德赞德舒尔普",
+    "name_en": "Botic van de Zandschulp",
+    "country": "NED",
+    "rank": 70
+   },
+   {
+    "name": "热亚",
+    "name_en": "Arthur Gea",
+    "country": "FRA",
+    "rank": 87
+   }
+  ],
+  "_rank_why": "两个独立源、同一期：美网官方 `players.json` 给 `atpv812` singles_rank **70**、`atpg0ix` singles_rank **87**，两人 `seed` 都是 false；tennisexplorer 球员页当期排名同样是 70 / 87（热亚生涯最高 82，8/3 洛斯卡沃斯夺冠后达到）。⚠️ flashscore 当日表的 `CA÷77` / `CB÷139` **不是排名**（CLAUDE.md 早量过这一条），没有采用。译名两个都现调 `player_zh()`：Arthur Gea→热亚（`player_names_top500.json` 第 897 行）、Botic van de Zandschulp→范德赞德舒尔普（和 `fonseca-van-de-zandschulp` 里同一张头像挂的中文名一致）。⚠️ 两个人都不是种子——这是本届签表这一半的形状。",
+  "_heat_why": "③档「热点/破圈球员」：热亚是这届美网的幸运落败者，资格赛最后一轮出局后靠鲁德退赛递补进正赛，一路打到第四轮——追平了幸运落败者在大满贯的最好成绩（`_claims` 里两个源）。转播解说自己在 36.72s 就把这件事说出来了：`the lucky loser. The 21-year-old`。美网官方为他单独出过两篇稿（`lucky_loser_arthur_gea_beats_michael_zheng...` / `who_is_arthur_gea...`）。他也是这条线做过的人：`gea-shapovalov`（8 月洛斯卡沃斯，生涯首冠）。⚠️ 名次那一档他过不了（87 / 70 都在 20 开外），靠的是这条正在展开的故事线。",
+  "winner": "范德赞德舒尔普",
+  "result": "3-6 6-7(0) 7-6(7) 7-6(3) 6-4",
+  "_result_why": "赢家视角，四处印证：①flashscore 当日表 `ngNeumat`（`AE÷Gea A.` home / `AF÷Van De Zandschulp B.` away）`BA/BB=6/3`、`7/6`、`6/7`、`6/7`、`4/6`，抢七 `DC/DD=7/0`、`DE/DF=7/9`、`DG/DH=3/7`，`AS÷2` away 赢；②单场 `df_sui_1` 逐盘 `IG/IH` 一模一样；③源片 208.5s 的全屏赛果图形 `ARTHUR GEA 6 7 6 6 4 / BOTIC VAN DE ZANDSCHULP 3 6 7 7 6`；④路透/美网系报道写作 `3-6, 6-7(0), 7-6(7), 7-6(3), 6-4`。抢七小分记的是输掉那一盘的人拿到的分：第二盘范德赞德舒尔普 0、第三盘热亚 7、第四盘热亚 3。⚠️ 第五盘 6-4 是局数分出来的，没打到抢十。",
+  "eyebrow": "赛场之上",
+  "layout": "solo",
+  "subject": "热亚",
+  "topic": "美网第四轮 · 热亚 vs 范德赞德舒尔普",
+  "_topic_why": "按账号所有者 2026-09-03「封面左上角的副标题不要写球场号，写对阵双方」写成对阵；球场（Grandstand）在比分板头一行印着。轮次按 2026-09-08 翻回的分数式口径，R16 这一档取「第四轮」那个合法写法（TTS 读得对，账号所有者当天点名认可「用美网第四轮或者用美网 1/8 决赛」）。",
+  "hook": "两盘领先还有赛点\n五小时后他出局",
+  "_hook_why": "讲整场的形状，不是某一个时刻：上一行概括他一路领先到手握赛点（第一盘 6-3、第二盘抢七 7-0、第三盘抢七 6-5 赛点），下一行是落点。⚠️ 不重复比分板——`3-6 6-7(0) 7-6(7) 7-6(3) 6-4` 就印在钩子正下方，所以钩子里不写比分、不写「五盘」。每行 8 / 7 字，都在 10 字上限内，两行也在 `SOLO_HOOK_MAX_LINES` 之内。",
+  "portrait": {
+   "image": "assets/reel/gea-us-open-2026-r4.jpg",
+   "focus": 0.56,
+   "zoom": 1.0,
+   "_low_res_why": "1280×720，铺 1080×1440 要放大 2.0 倍。**这是美网这条渠道的天花板，不是没找够**：`f_` 前缀就是 xlarge 顶格，十二个前缀、六个目录、三种 `?width=` 参数都探过（第三组返回 200 但尺寸一个像素没变）。另外三档同期都查了——AP 通讯社这一场零命中、USA TODAY 每日图集当天那辑还没上线（按比赛日出，往往次日）、赛事官网 WordPress 媒体库大满贯没有。⚠️ 仍然远好过抽帧：这是相机原图，抽帧是压缩转播流再放大。"
+  },
+  "_portrait_why": "**美网官方图片接口的本场实拍**，说明四要素齐：`Arthur Gea reacts during a Men's Singles match on Day Nine of the 2026 US Open at USTA Billie Jean King National Tennis Center on Monday, September 7`，署名 Pete Staples/USTA（`photo-assets.usopen.org/images/pics/large/f_USTA2453708_20260907_PS2_1553.jpg`）。同一场发布的九张里挑这一张：**正面近景、握拳吼出来、眼睛睁开、脸是画面主体**，背景还看得出球场挡板和看台——按 2026-08-18「优先近景特写」和「同批候选里选肢体表情张力更大的那张」两条排的。另外几张：`JD305560` 是侧身握拳（脸朝右，看不到正脸）、`JD105151`/`JD105081` 是击球中的中景（脸太小）、`PS2_1724A` 是正手击球（不是情绪）。⚠️ 他穿的是浅蓝 Lacoste polo——那是前两盘那身（第三盘起换成白衣紫短裤，源片 94.5s 起可见），也就是他领先时的样子，情绪对题。`focus` 0.56 把脸往右挪一点，让开左上角台头那两行字。",
+  "scoreboard": {
+   "court": "Grandstand",
+   "duration_source": {
+    "url": "data:application/json,%7B%22duration%22%3A%20%225%3A13%3A00%22%2C%20%22source%22%3A%20%22US%20Open%20official%20players%2Fmatches%20feed%20atpg0ix_matches.json%20match_id%201402%20duration%205%3A13%EF%BC%9B%E6%BA%90%E7%89%87%20164.5s%20%E5%9C%BA%E8%BE%B9%20ROLEX%20%E5%90%8C%E6%A0%B7%E8%B5%B0%E5%88%B0%205%3A13%22%7D",
+    "field": "duration"
+   },
+   "_duration_why": "⚠️ 两个独立源一致取 5:13，**没有用 flashscore**：`df_sui_1` 报 `RB÷5:18`，比官方长 5 分钟，正是 CLAUDE.md 记过的「flashscore 的用时偏长」。①美网官方 `players/matches/atpg0ix_matches.json` `match_id 1402` 的 `duration: \"5:13\"`（⚠️ 这一场官方没给 setDurations，所以「分盘加起来等于总计」那条自洽判据用不上）；②源片 164.5s 那格画面里场边 ROLEX 走到 `5:13`——那一刻是第五盘 4-5、对手的赛点局，比赛在那之后几分钟结束，两个数自洽。⚠️ data URL 里写 `5:13:00` 三段式：写成 `5:13` 会被解析成「5 分 13 秒」，而它不报错，只有渲出来打开看才发现。",
+   "_court_why": "三处一致：美网官方 matches feed `courtName: Grandstand`；源片 28.5s 和 208.5s 两次全屏图形底下都印着 `GRANDSTAND`；flashscore `df_sui_1` 的 `MIV÷Grandstand`。"
+  }
+ },
+ "topbar": {
+  "line1": "2026 美网 男单第四轮",
+  "line2": "范德赞德舒尔普 3-6 6-7(0) 7-6(7) 7-6(3) 6-4 热亚"
+ },
+ "editorial": {
+  "mode": "match_review",
+  "question": "一个资格赛就出局的人，为什么能两盘领先还手握赛点，最后还是输了？",
+  "thesis": "热亚这场输在两个「一分」上，而不是输在实力差距上：第三盘抢七 6-5 他自己发球、屏幕上已经打出赛点，那一分没拿下；第四盘 5-4 他自己发球胜赛，30-15 之后只再拿到一分就被破。这两局各丢一次，比赛就从三盘变成五盘——而全场他比对手多拿七分（208 比 201），制胜分 43 对 61、非受迫失误 58 对 87，他打得更干净，只是范德赞德舒尔普在最关键的两局比他更敢下手。",
+  "beats": [
+   "前段：第一盘 41 分钟 6-3，第二盘抢七 7-0 一分未失，两盘领先。而他进正赛靠的是鲁德退赛递补——十天前他已经在资格赛最后一轮出局过一次。",
+   "中段：第三盘被逼到 4-5 守住发球局，抢七 6-5 手握赛点没兑现，7-9 丢盘；第四盘 5-4 自己发球胜赛被破，抢七 3-7，两盘平。",
+   "结局：第五盘 4-5 轮到对手发球拿赛点，5 小时 13 分钟结束。七场球二十小时五十七分，他追平了幸运落败者在大满贯的最好成绩，没能越过去。"
+  ],
+  "human_context": {
+   "angle": "这条片子的切口是「来时路」：把他这一届从资格赛第一轮到第四轮的七场球连起来看——输掉的那场只打了 1 小时 41 分，赢下来的三场正赛加起来 9 小时 31 分，最后这一场又是 5 小时 13 分。账号所有者点名要把这条路说清楚。",
+   "facts": [
+    "8/25 资格赛首轮胜纳加尔 1:49、8/26 次轮胜奇德赫 2:43、8/28 最后一轮负巴萨瓦雷迪 1:41（美网官方 matches feed，含资格赛）",
+    "鲁德伤退空出的位置给了他：ESPN 记者当天在裁判长办公室，10:30 签到截止、10:52 赛会医疗主管进门，随后 Casper Ruud 被替换、Arthur Gea 拿到那个位置",
+    "正赛 9/1 胜塞伦多洛 3:06、9/3 胜斯瓦伊达 2:30、9/5 胜郑瑞 3:55、9/7 负范德赞德舒尔普 5:13",
+    "七场合计 20 小时 57 分"
+   ],
+   "sources": [
+    "https://www.usopen.org/en_US/scores/feeds/2026/players/matches/atpg0ix_matches.json",
+    "https://now.core.api.espn.com/v1/sports/news/49797267",
+    "https://www.usopen.org/en_US/news/articles/2026-09-06/who_is_arthur_gea_the_lucky_loser_into_round_4_at_the_2026_us_open.html"
+   ],
+   "voice_label": "幸运落败者"
+  }
+ },
+ "_match": {
+  "flashscore_id": "ngNeumat",
+  "participants": [
+   "热亚",
+   "范德赞德舒尔普"
+  ],
+  "_participants_why": "⚠️ 这一栏跟 flashscore 的 home / away（`AE÷Gea A.` / `AF÷Van De Zandschulp B.`），和 `stats.a/b`（跟 `cover.matchup` 的版式顺序）**正好相反**——它必须和紧挨着的 `set_scores_home_away` 对齐。",
+  "set_scores_home_away": [
+   [
+    6,
+    3
+   ],
+   [
+    7,
+    6
+   ],
+   [
+    6,
+    7
+   ],
+   [
+    6,
+    7
+   ],
+   [
+    4,
+    6
+   ]
+  ],
+  "tiebreaks_home_away": [
+   null,
+   0,
+   7,
+   3,
+   null
+  ],
+  "_tiebreaks_why": "记的是输掉那一盘的人拿到的分：第二盘热亚 7-6，范德赞德舒尔普拿 0；第三盘 6-7，热亚拿 7；第四盘 6-7，热亚拿 3。第一、五盘是局数分出来的，没有抢七。两个源一致：flashscore 当日表 `DC/DD=7/0`、`DE/DF=7/9`、`DG/DH=3/7`，单场 `df_sui_1` 的 `IG/IH` 第二组同样是 7/0、7/9、3/7。⚠️ 第五盘 6-4 结束，没打到大满贯决胜盘的抢十。",
+  "event": "US Open",
+  "round": "第四轮",
+  "date": "2026-09-07"
+ },
+ "stats": {
+  "a": {
+   "headshot": "assets/players/headshots/atp-V812.png",
+   "aces": 15,
+   "df": 9,
+   "winners": 61,
+   "ue": 87,
+   "first_in": 114,
+   "first_won": 80,
+   "first_total": 199,
+   "second_total": 85,
+   "second_won": 35,
+   "bp_conv": 7,
+   "bp_chances": 21,
+   "pts_won": 201,
+   "pts_total": 409
+  },
+  "b": {
+   "headshot": "assets/players/headshots/atp-G0IX.png",
+   "aces": 10,
+   "df": 12,
+   "winners": 43,
+   "ue": 58,
+   "first_in": 126,
+   "first_won": 84,
+   "first_total": 210,
+   "second_total": 84,
+   "second_won": 40,
+   "bp_conv": 7,
+   "bp_chances": 16,
+   "pts_won": 208,
+   "pts_total": 409
+  },
+  "_source": "flashscore `df_st_1`（`ngNeumat`）的 Match 那一栏，`tools/match_stat_hooks.py --stats-block` 机器抄的。⚠️ **a/b 已按 `cover.matchup` 的版式顺序对调过**：工具吐出来的 `a` 是 feed 的 home（热亚），这里 `a` 必须是 matchup[0]（范德赞德舒尔普）。头像跟着数字走：`atp-V812`＝范德赞德舒尔普（和 `fonseca-van-de-zandschulp` 里同一张图挂的中文名一致）、`atp-G0IX`＝热亚（从 ATP 官方 `player-headshot` 端点取的，246 色，验过不是占位剪影；`G0IX` 这个 id 和美网官方 `players.json` 的 `atpg0ix` 对得上）。`first_total` 按 `first_in + second_total` 算（199 / 210），不取接口的分母。"
+ },
+ "_hit_data": "跑过 `tools/match_stat_hooks.py ngNeumat --stats-block`。这一场最狠的那个数是**总得分反着来**：热亚 208、范德赞德舒尔普 201，输的那个人多拿七分（`df_st_1` 的 Total Points Won，两边分母同为 409）。已经写进第 ⑰ 段旁白和小红书正文。另外三个候选没用：制胜分 43 对 61 和非受迫失误 58 对 87 是同一件事的两面（赢家大开大合），进了 `editorial.thesis`；破发点两人各转化 7 次（热亚 7/16、对手 7/21）；一发得分率 67% 对 70%，差得太近撑不起一句话。",
+ "_claims": [
+  {
+   "claim": "热亚是这届美网的幸运落败者：资格赛最后一轮出局，鲁德退赛后递补进正赛",
+   "sources": [
+    "https://now.core.api.espn.com/v1/sports/news/49797267",
+    "https://www.usopen.org/en_US/scores/feeds/2026/players/matches/atpg0ix_matches.json"
+   ],
+   "note": "ESPN 记者 9/2 当天在美网裁判长办公室：10:30 签到截止，10:52 赛会医疗主管进门，Casper Ruud 伤退需要替补，位置给了 Arthur Gea。官方 matches feed 独立印证：`Men's Qual Singles Round 3` 对 N. Basavareddy `won: false`，而正赛 Round 1 照常出现。转播解说 36.72s 也自己说了 `the lucky loser. The 21-year-old`。"
+  },
+  {
+   "claim": "幸运落败者在大满贯走得最远就是第四轮（round of 16），从来没有人打进过四分之一决赛",
+   "sources": [
+    "https://www.tennis365.com/tennis-features/what-lucky-loser-tennis-rules-how-they-are-chosen-tournament-winners",
+    "https://kfgo.com/2022/09/02/tennis-lucky-loser-moutet-makes-history-at-u-s-open/"
+   ],
+   "note": "⚠️ 全称断言，两个独立源。tennis365 原文（正文抓下来读过，不是搜索摘要）：`The best a Lucky Loser has done on Grand Slam tennis is reach the round of 16`。路透（KFGO 转载，2022）报道穆特时写 `the first men's lucky loser to reach the fourth round at any Grand Slam event since another Frenchman, Stephane Robert, did so at the 2014 Australian Open`——同样把第四轮当成天花板。⚠️ tennis365 那句「Dick Norman 是迄今唯一进过第四轮的男子」是旧稿没更新（穆特 2022、罗伯特 2014 都到过），所以片子里只说「最远就到这儿」，不点名谁是第一个、也不数有几个人到过。"
+  },
+  {
+   "claim": "第三盘抢七 6-5，热亚自己发球、手握赛点，没有兑现",
+   "sources": [
+    "源片 80.5~92.5s 记分条",
+    "https://kfgo.com/",
+    "flashscore df_st_1/df_sui_1"
+   ],
+   "note": "**画面自证**：源片 80.5/82.5/84.5/86.5/88.5/90.5/92.5 连着七格，转播把 `MATCH POINT` 烧在左上，记分条 `⚡GEA 6 7 6 [6] / VAN DE ZANDSCHULP 3 6 6 [5]`，发球指示（黄点）在 GEA 那一行。随后 96.5s 起变成 `SET POINT #2`、比分 `[7] / [8]`，最终抢七 7-9。转播解说两处独立印证：92.88s `Damn. He just didn't get him enough, did he?`、110.56s `Can you believe it? … He was down match point`、192.16s `saves match points`。⚠️ 只说「赛点」不说个数——七格显示的是同一个 `MATCH POINT`（没有 `#2`），集锦把抢七中段剪掉了，「一共几个赛点」没有画面证据。"
+  },
+  {
+   "claim": "第四盘 5-4，热亚自己发球胜赛被破；30-15 之后他只再拿到一分",
+   "sources": [
+    "flashscore df_mh_1 逐分",
+    "源片 192.16s 解说"
+   ],
+   "note": "`df_mh_1` 第四盘：`5-4 客队发球，主队拿下 ← 破发、3个破发点`（热亚破发到 5-4），紧接着 `5-5 主队发球，客队拿下 ← 2个破发点`，那一局逐分是 `15:0, 15:15, 30:15, 30:30, 30:40 |B1|, 40:40, 40:A |B1|`——30:15 之后他只再赢下 40:40 那一分。转播解说 192.16s 独立印证：`saves a game where [Gea] is serving for it`（ASR 把 Gea 听成 Ja）。"
+  },
+  {
+   "claim": "全场用时 5 小时 13 分",
+   "sources": [
+    "https://www.usopen.org/en_US/scores/feeds/2026/players/matches/atpg0ix_matches.json",
+    "源片 164.5s 场边 ROLEX"
+   ],
+   "note": "⚠️ 两个源一致取 5:13，**没有用 flashscore**：`df_sui_1` 的 `RB÷5:18` 比官方长 5 分钟，正是 CLAUDE.md 记过的「flashscore 的用时偏长」。美网官方 matches feed 的 `duration` 是 `5:13`；源片 164.5s 那格画面里场边 ROLEX 走到 `5:13`（那一刻是第五盘 4-5、对手的赛点局，比赛在那之后几分钟结束，两个数自洽）。"
+  },
+  {
+   "claim": "热亚这届美网打了七场、合计 20 小时 57 分；第一盘 41 分钟",
+   "sources": [
+    "https://www.usopen.org/en_US/scores/feeds/2026/players/matches/atpg0ix_matches.json",
+    "源片 22.40s 解说"
+   ],
+   "note": "官方 feed 逐场 duration：资格赛 1:49 + 2:43 + 1:41，正赛 3:06 + 2:30 + 3:55 + 5:13 = 20:57。第一盘 41 分钟出自转播解说 22.40s `After 41 minutes, he has managed to wrap it up. Six games to three.`，flashscore `df_sui_1` 的 `RC÷0:42` 与之相差在四舍五入内。「十天前出局」= 纽约时间 8/28 资格赛最后一轮 → 9/7 这一场。"
+  },
+  {
+   "claim": "两人都不是种子；热亚世界第 87、范德赞德舒尔普世界第 70",
+   "sources": [
+    "https://www.usopen.org/en_US/scores/feeds/2026/players/players.json",
+    "tennisexplorer 球员页"
+   ],
+   "note": "美网官方 players.json：`atpg0ix` singles_rank 87 / seed false，`atpv812` singles_rank 70 / seed false。tennisexplorer 球员页当期排名同样 87 / 70。"
+  }
+ ],
+ "segments": [
+  {
+   "start": 80.4,
+   "end": 86.2,
+   "narration": "",
+   "score_inset": true,
+   "_ending_payoff_required": false,
+   "crosses_cut": "跨 82.12（`scene_cuts_loose`）：热亚的正面近景 → 这一分的底线宽景，同一个人、同一分。",
+   "_why": "**第①格：全片最强的一格。** 第三盘抢七 6-5、热亚自己发球，转播把 `MATCH POINT` 烧在画面左上（`score_02.jpg` 的 80.5/82.5/84.5 三格记分条都是 `MATCH POINT ⚡GEA 6 7 6 [6] / VAN DE ZANDSCHULP 3 6 6 [5]`，发球指示在 GEA 行）。80.5 那格是他的正面近景、脸清楚，随后切进那一分的宽景。不配旁白，靠现场声。⚠️ 后段冷开场，`_ending_payoff_required: false`——它预告的是「他手握赛点」，不是结局（谁赢一个字都没露）；正片第 ⑨ 段逐秒重放这一区间，并一路走到 174.89 的最后一球。"
+  },
+  {
+   "start": 2.0,
+   "end": 12.4,
+   "narration": "北京时间九月八号凌晨快五点，美网第四轮。热亚，法国人，二十一岁，世界第八十七位。",
+   "score_inset": true,
+   "_why": "第③格交代坐标。画面是全片第一分的底线宽景（第一盘 3-3，日场光线），两个人都只有几十像素、谁都没露脸，正好放身份。球场名（Grandstand）没进旁白——比分板头一行印着，旁白再说一遍是第二遍；出处见 `cover.scoreboard._court_why`。开球时刻见 `_claims`。 开球时刻按 CLAUDE.md「只说个大概不报到分」那条写：flashscore `AD÷1788813900` ＝ 北京时间 9/8 04:45，分钟落在 40–59 那一档，所以写「快五点」而不是「四点多」（往早了带比往晚了带更糟）；时段词「凌晨」留着——这个栏目的读者就是熬夜看的。"
+  },
+  {
+   "start": 14.4,
+   "end": 22.4,
+   "narration": "第一盘四十一分钟就结束了，六比三。而十天前，他已经在这届美网出局过一次。",
+   "score_inset": true,
+   "crosses_cut": "跨 15.65 / 18.37：近景 → 宽景 → 他自己的庆祝近景，三格都是热亚（浅蓝 Lacoste polo，前两盘的那身）。",
+   "_why": "画面：14.5 他的正手近景 → 16.5 宽景 → 18.5 他握拳（记分条 `SET POINT ⚡GEA 5 [40] / VDZ 3 [0]`，第一盘 5-3、40-0 三个盘点）→ 20.5 他的正面近景。话画合奏：说第一盘怎么收的，画面正是收盘那一局。41 分钟出自转播解说 22.40s `After 41 minutes, he has managed to wrap it up. Six games to three.`，flashscore `df_sui_1` 的 `RC÷0:42` 与之相差在四舍五入内。「十天前」= 8/28 资格赛最后一轮出局 → 9/7 这场，见 `_claims`。"
+  },
+  {
+   "start": 24.4,
+   "end": 30.2,
+   "narration": "三轮资格赛，最后一轮热亚输了，只打了一小时四十一分。",
+   "score_inset": false,
+   "_score_inset_why": "换边段：24.5 团队席、26.5 对手走动、28.5 全屏换边图形，`score_00.jpg` 这三格左下角都没有记分板。",
+   "_why": "**来路第一段。** 画面是 24.5 他的团队席（黄衣）→ 26.5 范德赞德舒尔普走动 → 28.5 换边全屏图形（`MEN'S SINGLES | 4TH ROUND | GRANDSTAND`），全是非回合画面，正好承载场外的来路，不跟任何一分打架。 ⚠️ 主语写成「热亚」不用「他」：这一段中间那格（26.5）是**范德赞德舒尔普**在走动，承前省略主语会让这句讲来路的话压在对手身上（CLAUDE.md「整句旁白压在另一个人身上」那条）。前后两格（团队席、写着 ARTHUR GEA 的换边图形）都是热亚这一头。"
+  },
+  {
+   "start": 30.4,
+   "end": 36.2,
+   "narration": "第二盘抢七，他一分没丢，七比零。",
+   "score_inset": true,
+   "crosses_cut": "跨 31.66（loose）/ 33.92 / 35.24：发球 → 宽景 → 他走动，都是热亚这一头。",
+   "_why": "画面：30.5 他发球（ROLEX 1:38）→ 32.5/34.5 抢七宽景，记分条 `SET POINT ⚡GEA 6 6 [6] / VDZ 3 6 [0]`——屏幕上那个 6-0 就是这句旁白说的抢七比分，话画同步。抢七 7-0 见 `_claims`。"
+  },
+  {
+   "start": 36.4,
+   "end": 42.4,
+   "narration": "鲁德退赛把他捡了回来。幸运落败者，两盘领先。",
+   "score_inset": false,
+   "crosses_cut": "跨 38.22 / 40.94：他的近景 → 团队席两格，讲的是同一件事的两头。",
+   "_score_inset_why": "他的正面近景 + 团队席两格，`score_00.jpg` 的 36.5/38.5/40.5/42.5 四格全空，整段没有板。",
+   "_why": "**来路第二段，画面自证最硬的一段。** 36.5 是他的正面近景，而转播解说在 36.72s 说的正是 `the lucky loser. The 21-year-old`；38.5/40.5 是他团队席起立鼓掌；解说 43.04s 接着说 `Now leads two sets to love in the fourth round`。旁白说的三件事（鲁德退赛、幸运落败者、两盘领先）全部压在对应画面上。这一段没有记分板（近景和看台），`score_inset: false`。"
+  },
+  {
+   "start": 52.4,
+   "end": 60.4,
+   "narration": "第三盘他被逼到四比五，轮到自己发球，丢掉这一局就丢掉这一盘。",
+   "score_inset": true,
+   "_why": "画面是第三盘 4-5 那一局的底线宽景，记分条 `GEA 6 7 [4] / VAN DE ZANDSCHULP 3 6 [5]`（`score_01.jpg` 的 52.5~58.5 逐格）——旁白说的 4-5 就印在画面上。"
+  },
+  {
+   "start": 60.4,
+   "end": 66.4,
+   "narration": "这一局他守住了。解说的原话是，天哪，多好的一分。",
+   "score_inset": true,
+   "crosses_cut": "跨 61.18 / 63.2 / 63.73（后两个是 loose）：那一分的宽景 → 观众席 → 回到球场，同一分的前后。",
+   "_why": "转播解说 59.44s `No way. Oh, it's in. Are you serious?`、63.44s `Gosh, what a point.` 就在这一段里；64.5 那格是观众整片起立。引语只抄解说真说过的那半句（`captions.txt` 里 grep 得到），不替他扩写。"
+  },
+  {
+   "start": 80.4,
+   "end": 90.4,
+   "narration": "抢七六比五，轮到他发球。屏幕上打出赛点两个字——这一分赢下来，比赛就结束了。",
+   "score_inset": true,
+   "crosses_cut": "跨 82.12（loose）：他的近景 → 这一分的宽景。",
+   "_why": "**转折点，也是冷开场那一段的兑现。** 记分条 80.5~92.5 连着七格都是 `MATCH POINT`、比分 `6 7 6 [6] / 3 6 6 [5]`，发球指示在 GEA 行——所以这是热亚自己发球、手握赛点。⚠️ 只写「赛点」不写个数：转播那七格显示的是同一个 `MATCH POINT`（没有 `#2`），而集锦把抢七中段剪掉了，「他一共有几个赛点」没有画面证据，不编。"
+  },
+  {
+   "start": 92.4,
+   "end": 97.0,
+   "narration": "这一分他没能拿下。",
+   "score_inset": true,
+   "crosses_cut": "跨 93.78（loose）：宽景 → 他的近景。",
+   "_why": "画面：92.5 宽景那一分打完 → 94.5 他的击球近景（这时已换成白衣紫短裤）→ 96.5 发球 117 MPH。解说 92.88s 的原话是 `Damn. He just didn't get him enough, did he?`，正压在这一段上。旁白只说「没拿下」这一件事，不提前说第三盘的结果——那要到第 ⑪ 段画面走到 7-9 才说。"
+  },
+  {
+   "start": 110.4,
+   "end": 119.4,
+   "narration": "抢七七比九，第三盘丢了。解说说，你敢信吗，对手刚刚还落后过赛点。",
+   "score_inset": true,
+   "crosses_cut": "跨 110.64 / 114.26 / 116.82：抢七最后一分 → 赢家近景 → 他的团队席，一分的结果接在这一分后面。",
+   "_why": "记分条 96.5~112.5 是 `SET POINT #2 GEA 6 7 6 [7] / VDZ 3 6 6 [8]`，这一段走到抢七收尾；112.5 是范德赞德舒尔普的近景，114.5~118.5 是他的团队席。解说 110.56s `Can you believe it? One game and third come back. He was down match point`、117.68s `and he has taken the third set here` —— 旁白那半句引语按解说原话译，没有扩写。抢七 7-9 见 `_claims`。 ⚠️ 第二句的主语写成「对手」不用「他」：前半句「第三盘丢了」承前省略的主语是热亚，而「落后过赛点」的是范德赞德舒尔普——一句话里两个「他」指两个人，正是 CLAUDE.md「救的人和拿到点的人不是同一个」那条要防的。画面这一段（112.5 起）也确实是范德赞德舒尔普和他的团队席，写成「对手」话画就对上了。"
+  },
+  {
+   "start": 120.4,
+   "end": 130.2,
+   "narration": "第四盘他五比四领先，自己发球胜赛。三十比十五之后，他只再拿到一分。",
+   "score_inset": false,
+   "_score_inset_why": "换边休息：`score_03.jpg` 的 120.5~130.5 六格全空（观众席、他坐在椅子上、全屏图形），整段没有板。 ⚠️ 段尾 130.2 落在换边全屏图形上、不是一分中间，所以 dry-run 那句「切在一分打完之前」不适用——这一段从头到尾没有球在打。",
+   "_why": "**第二个转折点。** 画面是换边：120.5/122.5 观众席 → 124.5~128.5 热亚坐在椅子上 → 130.5 换边全屏图形，整段没有记分板（`score_03.jpg` 的 120.5~130.5 六格全空），所以 `score_inset: false`。这一段讲的是集锦没给画面的第四盘，压在换边这种非回合画面上正合适。判据见 `_claims`：flashscore `df_mh_1` 第四盘 `5-4 客队发球，主队拿下`（热亚破发到 5-4）后 `5-5 主队发球，客队拿下`，那一局逐分 `15:0, 15:15, 30:15, 30:30, 30:40 |B1|, 40:40, 40:A |B1|`——30:15 之后他只再拿到 40:40 那一分。解说 192.16s 也说 `saves a game where [Gea] is serving for it`。"
+  },
+  {
+   "start": 132.4,
+   "end": 143.0,
+   "narration": "那一局被破，抢七三比七，两盘变成两盘平。第五盘从零开始，场上已经过了四个小时。",
+   "score_inset": true,
+   "crosses_cut": "跨 142.69：宽景回合 → 范德赞德舒尔普的近景。",
+   "_why": "画面是第五盘开打的底线宽景，记分条 `GEA 6 7 6 6 [2] / VDZ 3 6 7 7 [1]`——五盘的局数一列一列印在屏幕上，正好配这句「两盘变成两盘平」。四个小时：前四盘 `df_sui_1` 用时 0:42+0:58+1:21+1:06 = 4:07。"
+  },
+  {
+   "start": 148.4,
+   "end": 160.4,
+   "narration": "第五盘三比三，谁也破不掉谁。这一晚他已经打了四个半小时，而这是他这届美网的第七场球。",
+   "score_inset": true,
+   "_why": "画面是第五盘 3-3 那一段的宽景（记分条 `GEA …[3] 40 / VDZ …[3] 40`，`score_03.jpg` 148.5~158.5 逐格都是 40:40，那是个长局）。四个半小时：4:07 加第五盘 1:11 的一半。第七场球：美网官方 `matches` feed 逐条列着资格赛三场 + 正赛四场，见 `_claims`。"
+  },
+  {
+   "start": 164.4,
+   "end": 172.4,
+   "narration": "四比五，对手发球胜赛。赛点亮在对面。场边的钟，五小时十三分。",
+   "score_inset": true,
+   "crosses_cut": "跨 165.53：换边 → 那一局的宽景。",
+   "_why": "记分条 164.5~176.5 连着七格是 `MATCH POINT GEA 6 7 6 6 [4] / ⚡VAN DE ZANDSCHULP 3 6 7 7 [5] AD`——发球指示这次在范德赞德舒尔普那一行，所以赛点是对面的。164.5 那格画面里就挂着 ROLEX `5:13`，和美网官方 feed 的 `duration 5:13` 是同一个数（`_claims` 里两处对过）。 ⚠️ 旁白写「对手发球」不是「他发球」：记分条 164.5~176.5 的发球指示（⚡）在 VAN DE ZANDSCHULP 那一行——这一局是范德赞德舒尔普 5-4 领先、自己发球胜赛，`AD` 是他的赛点。第一版写成「他发球」，承前指热亚，是**事实写反了**，本地预览逐格核记分条时抓到的。（顺带：`df_mh_1` 这一局逐分 `…40:30 |B1|, 40:40, 40:A |B3|`——热亚在 40:30 时还有过一个破发点，窗口装不下就没写。）"
+  },
+  {
+   "start": 172.4,
+   "end": 181.2,
+   "narration": "五小时十三分钟，第五盘的最后一分落地。幸运落败者的美网结束在这里。",
+   "score_inset": true,
+   "crosses_cut": "跨 174.89 / 179.8（loose）：最后一分落地 → 赢家的庆祝 → 输家走开，是同一件事的三格。",
+   "_why": "解说 174.88s `Game set a match`，那一分在 177.38 落地（段尾收在 181.2，落在 181.08 那个死球之后）（`point_ends` 里的倒数第几个）；176.5/178.5 是范德赞德舒尔普握拳庆祝的特写，180.5 切到热亚低头走开。旁白落在热亚身上，而画面这一段前半是赢家庆祝、后半才是他——所以这句话说的是「他的美网结束了」这件事本身，不描述谁在庆祝。"
+  },
+  {
+   "start": 186.4,
+   "end": 193.3,
+   "narration": "网前握手。全场热亚比对手多拿七分，还是输了。",
+   "score_inset": false,
+   "crosses_cut": "跨 192.16：握手 → 赛后。",
+   "_score_inset_why": "赛后网前握手，`score_04.jpg` 的 186.5~190.5 三格没有板（板在 176.5 之后就撤了）。",
+   "_why": "画面是两人在网前握手（186.5~190.5，灯光已经全亮，这场从日场打到夜场）。整段没有记分板，`score_inset: false`。多拿七分：flashscore `df_st_1` 总得分 208 : 201，见 `stats` 和 `_hit_data`。 ⚠️ 主语写成「热亚」不用「他」：这一段后两格（190.5 / 192.5）画面上是范德赞德舒尔普（白帽），承前省略主语会把「多拿七分还是输了」压在赢家身上。"
+  },
+  {
+   "start": 200.4,
+   "end": 209.2,
+   "narration": "七场球，二十小时五十七分。幸运落败者在大满贯最远就到这儿。他还会再来吗？",
+   "score_inset": false,
+   "_score_inset_why": "赛后收拾 + 全屏赛果图形，`score_05.jpg` 的 200.5~208.5 没有常驻记分板。",
+   "_why": "画面：200.5~206.5 热亚收拾东西、弯腰装包 → 208.5 全屏赛果图形 `ARTHUR GEA 6 7 6 6 4 / BOTIC VAN DE ZANDSCHULP 3 6 7 7 6`，整场比分印在最后一屏上。整段没有常驻记分板，`score_inset: false`。⚠️ 末尾收在 209.2，离片尾板那一刀（`scene_cuts` 最后一个 209.91、`silent_audio` 209.96 起）留 0.71 秒，加 `SEG_FADE` 0.18 也不会切进去。二十小时五十七分 = 官方 feed 七场 duration 相加，见 `_claims`。收尾落在一问上。"
+  }
+ ],
+ "push": {
+  "summary": "热亚两盘领先被逆转出局",
+  "_summary_why": "主语（热亚）＋ 一层铺垫（两盘领先）＋ 动词收尾（被逆转出局），11 字，`SUMMARY_MAX=13` 之内。不写「幸运落败者」是因为那五个字会把铺垫叠成两层——身份交给 `lead` 第一句。",
+  "lead": "美网男单第四轮，大看台球场。幸运落败者热亚 6-3、7-6 领先两盘，第三盘抢七 6-5 手握赛点没能兑现，第四盘 5-4 自己发球胜赛又被破，最后 3-6 6-7 7-6 7-6 6-4 输给范德赞德舒尔普，5 小时 13 分钟。全场他比对手多拿 7 分（208 比 201），制胜分 43 对 61、非受迫失误 58 对 87。这是他这届美网的第七场球：8 月 28 日资格赛最后一轮出局，鲁德退赛后递补进正赛，连赢塞伦多洛、斯瓦伊达、郑瑞三场，七场合计 20 小时 57 分。幸运落败者在大满贯最远就到第四轮，他追平了，没能越过去。",
+  "auto": true
+ },
+ "_no_repeat": "同栏目（赛场之上）的邻居是 `gea-shapovalov`（2026-08-02，洛斯卡沃斯 ATP250 决赛，热亚生涯首冠）——那条铺开讲过的是「三年从五百名开外爬上来 ＋ 第一个 ATP 冠军」，**这一条一个字都没碰**：旁白里没有洛斯卡沃斯、没有首冠、没有那条爬升曲线。这条讲的是本届美网这一段来路（资格赛出局→鲁德退赛递补→连赢三场→第四轮两盘领先被逆转），是另一件事。⚠️ 唯一交叠的是「他是谁」这一层（法国人、21 岁、世界第 87），那属于 CLAUDE.md 说的「看不懂这场球所必需的来路，一句带过」，不是铺开重讲。\n⚠️ 另一条同栏目的邻居是 `bu-lucky-loser-story`（网球有故事，布云朝克特的幸运落败者故事）——**不同栏目**，而且不是同一个人、同一件事；措辞上也刻意避开了那条的钩子句式（「五天前出局／五天后赢了种子」）。"
+}
