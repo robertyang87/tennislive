@@ -245,8 +245,6 @@ STRENGTH_ROUND_LEGACY = frozenset({
     "zheng-keys-us-open-2026-r3.json", "zheng-keys-us-open-2026-r3.xhs.txt",
     "zheng-lanlana.xhs.txt", "zheng-swiatek-eight-meetings.json",
     "zheng-swiatek-eight-meetings.xhs.txt",
-    "zheng-swiatek-us-open-2026-r4.json",
-    "zheng-swiatek-us-open-2026-r4.xhs.txt",
 })
 
 YAODAO_LEGACY = frozenset({"zverev-griekspoor.json", "zverev-griekspoor.xhs.txt"})
