@@ -1,5 +1,4 @@
 {
-  "_draft": true,
   "slug": "sabalenka-noskova",
   "_column": "reel",
   "cover": {
@@ -21,7 +20,25 @@
     "result": "7-6(1) 3-6 7-6(7)",
     "portrait": {
       "image": "assets/reel/sabalenka-noskova-cover.jpg",
-      "_portrait_why": "WTA 官方赛后稿头图，自动抓取"
+      "_portrait_why": "同场WTA官方赛后报道高清实拍，橙色裙装、项链及绿底球场与原片一致。",
+      "focus": 0.5,
+      "focus_y": 0.5,
+      "zoom": 1.0,
+      "_photo_url": "https://photoresources.wtatennis.com/wta/photo/2026/09/08/daccd33c-83b0-4b73-b5e5-883218b09d59/Aryna_Sabalenka_-_US_Open_2026_-_Day_10-DSC_2796.jpg"
+    },
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "萨巴伦卡",
+    "hook": "二发Ace破局\n抢十惊险突围",
+    "topic": "美网 1/4决赛",
+    "scoreboard": {
+      "court": "Arthur Ashe Stadium",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%222%3A22%22%2C%22source%22%3A%22structured%20match%20statistics%22%7D",
+        "field": "duration"
+      },
+      "_court_why": "赛果源结构化 court 字段",
+      "_duration_why": "比赛统计结构化全场时长"
     }
   },
   "_production": {
@@ -30,7 +47,8 @@
     "event": "美网",
     "year": 2026,
     "round": "四分之一决赛",
-    "court": "Arthur Ashe Stadium"
+    "court": "Arthur Ashe Stadium",
+    "status": "ready_for_render"
   },
   "source_url": "https://www.youtube.com/watch?v=ChIOgR3JpVQ",
   "_match": {
@@ -158,7 +176,7 @@
       "二发Ace破局",
       "抢十惊险突围"
     ],
-    "question": "火力统计不占优，萨巴伦卡如何赢下这场苦战？",
+    "question": "抢十赛点，换成你敢这样发二发吗？",
     "thesis": "诺斯科娃的Ace和制胜分更多，萨巴伦卡却拿下两盘抢七，用一记二发Ace收官。",
     "beats": [
       "首盘萨巴伦卡抢七七比一，用最干脆的方式收下第一盘。",
@@ -173,20 +191,26 @@
     "human_context": {
       "angle": "世界第一对阵本届温网冠军，两盘抢七决定胜负。",
       "facts": [
+        "萨巴伦卡以7-6(1) 3-6 7-6(7)击败诺斯科娃。",
+        "萨巴伦卡113，诺斯科娃105，相差8分",
+        "萨巴伦卡2/9；诺斯科娃3/6",
         "诺斯科娃为2026温网冠军。",
         "萨巴伦卡决胜盘曾2–4落后，追成4–4。",
         "赛点以外角二发Ace兑现。",
         "萨巴伦卡取得美网18连胜。"
       ],
       "sources": [
+        "https://www.youtube.com/watch?v=ChIOgR3JpVQ",
+        "https://www.flashscore.com/match/tennis/8QYQMw6l/#/match-summary",
         "https://www.wtatennis.com/news/4573832/sabalenka-escapes-noskova-from-a-break-down-in-decider-at-us-open"
       ]
     },
     "narration": [
-      "首盘抢七六比一，萨巴伦卡把盘点握在手里。",
-      "诺斯科娃没有退让，第二盘六比三，比赛回到同一起点。",
-      "决胜盘抢十，每一分都不容有失。温网冠军步步紧逼，萨巴伦卡顶住压力，把悬念留到最后。"
-    ]
+      "首盘错过发球胜盘局，萨巴伦卡没有松手。抢七六比一，盘点就在眼前。",
+      "这位温网冠军没有退让，第二盘六比三，比赛回到同一起点。",
+      "决胜盘抢十，每一分都不容有失。诺斯科娃步步紧逼，萨巴伦卡顶住压力，悬念留到最后。"
+    ],
+    "mode": "match_review"
   },
   "push": {
     "summary": "萨巴伦卡抢十突围",
@@ -228,56 +252,102 @@
       "quote": [
         {
           "at": 3.41,
-          "text": "game. [cheering]\n比赛。[欢呼声]"
+          "end": 5.41,
+          "text": "Game.\n拿下这一局。"
         },
         {
           "at": 5.41,
-          "text": ">> The world number one stretched to the\n>> 世界第一在纽约被逼到极限，"
-        },
-        {
-          "at": 8.37,
-          "text": "limit in New York,\n在纽约被逼到极限，"
+          "end": 10.32,
+          "text": "The world number one stretched\nto the limit in New York.\n世界第一在纽约被逼到极限。"
         }
       ],
       "fit": "crop",
-      "_why": "MiniMax 视觉证据：Frame 167.5s shows 'MATCH POINT' graphic on scoreboard with Sabalenka serving at 7-6(1) 3-6 6-6(7). Frames 169.5s–170.5s show Sabalenka serving the deciding point. Frames 172.5s–176.5s show Sabalenka in orange with head tilted back in emotional winner reaction, scoreboard now showing 7 3 7 final.；英文原声来自 captions.txt。"
+      "_why": "MiniMax 视觉证据：Frame 167.5s shows 'MATCH POINT' graphic on scoreboard with Sabalenka serving at 7-6(1) 3-6 6-6(7). Frames 169.5s–170.5s show Sabalenka serving the deciding point. Frames 172.5s–176.5s show Sabalenka in orange with head tilted back in emotional winner reaction, scoreboard now showing 7 3 7 final.；英文原声来自 captions.txt。",
+      "score_inset": true,
+      "crosses_cut": "保留完整赛点及紧接其后的获胜、对手反应；所有画面同场，具体时码与身份见MiniMax原始通过证据。"
     },
     {
       "start": 14.3,
       "end": 21.35,
-      "narration": "美网八强战，世界第一迎战温网冠军。",
+      "narration": "美网四分之一决赛，世界第一迎战温网冠军。",
       "crosses_cut": "15.65秒切点前后均为萨巴伦卡近景；本段交代整场身份。",
-      "_why": "同场赛后比分板标注女单1/4决赛；对手身份由原声183.68秒核实。"
+      "_why": "同场赛后比分板标注女单1/4决赛；对手身份由原声183.68秒核实。",
+      "score_inset": true
+    },
+    {
+      "title_card": "首盘抢七压制",
+      "kicker": "01",
+      "seconds": 2.0,
+      "_why": "自动链机械插的章节卡（review 路线 ⑤）：editorial.chapters 对应这个 beat，插在它的第一段之前",
+      "narration": "首盘抢七压制",
+      "image": "<title_card>{\"text\": \"首盘抢七压制\", \"kicker\": \"01\"}"
     },
     {
       "start": 40.3,
       "end": 52.9,
-      "narration": "首盘抢七六比一，萨巴伦卡把盘点握在手里。",
+      "narration": "首盘错过发球胜盘局，萨巴伦卡没有松手。抢七六比一，盘点就在眼前。",
       "_beat": 1,
-      "_why": "首盘最后一分，萨巴伦卡抢七6-1领先，落点后赢下首盘。"
+      "_why": "首盘最后一分，萨巴伦卡抢七6-1领先，落点后赢下首盘。",
+      "score_inset": true
+    },
+    {
+      "title_card": "温网冠军反扑",
+      "kicker": "02",
+      "seconds": 2.0,
+      "_why": "自动链机械插的章节卡（review 路线 ⑤）：editorial.chapters 对应这个 beat，插在它的第一段之前",
+      "narration": "温网冠军反扑",
+      "image": "<title_card>{\"text\": \"温网冠军反扑\", \"kicker\": \"02\"}"
     },
     {
       "start": 110.4,
       "end": 125.2,
-      "narration": "诺斯科娃没有退让，第二盘六比三，比赛回到同一起点。",
+      "narration": "这位温网冠军没有退让，第二盘六比三，比赛回到同一起点。",
       "_beat": 2,
       "crosses_cut": "114.85、120.09秒由盘点回合切到诺斯科娃及包厢庆祝，完整交代第二盘结局。",
       "_why": "诺斯科娃盘点及庆祝，英文原声124.72确认6-3。",
-      "voice_lead_pause": 4.5
+      "voice": {
+        "lead_pause": 1.5,
+        "_why": "先留盘点发球现场声；六比三的结果落在114.85秒赢下此分之后。"
+      },
+      "score_inset": true
+    },
+    {
+      "title_card": "抢十寸步不让",
+      "kicker": "03",
+      "seconds": 2.0,
+      "_why": "自动链机械插的章节卡（review 路线 ⑤）：editorial.chapters 对应这个 beat，插在它的第一段之前",
+      "narration": "抢十寸步不让",
+      "image": "<title_card>{\"text\": \"抢十寸步不让\", \"kicker\": \"03\"}"
     },
     {
       "start": 130.4,
       "end": 160.2,
-      "narration": "决胜盘抢十，每一分都不容有失。温网冠军步步紧逼，萨巴伦卡顶住压力，把悬念留到最后。",
+      "narration": "决胜盘抢十，每一分都不容有失。诺斯科娃步步紧逼，萨巴伦卡顶住压力，悬念留到最后。",
       "_beat": 3,
-      "_why": "决胜盘抢十回合；141.32为同一分后的诺斯科娃反应；镜头后进入9-7赛点。"
+      "_why": "决胜盘抢十回合；141.32为同一分后的诺斯科娃反应；镜头后进入9-7赛点。",
+      "crosses_cut": "141.32秒由同一分的场内回合切到诺斯科娃反应，随后继续决胜盘抢十；按原片时间顺序保留。",
+      "score_inset": true
+    },
+    {
+      "stat_card": true,
+      "seconds": 14.0,
+      "narration": "诺斯科娃十八记Ace、四十六个制胜分，两项都更多。萨巴伦卡赢下的，却是两盘抢七。",
+      "_why": "完整数据图展示18比12个Ace、46比42个制胜分；统计反差与两盘抢七结果为复盘论点提供证据。",
+      "image": "<stat_card>"
     },
     {
       "start": 166.67,
-      "end": 192.41,
-      "narration": "火力统计不占优，萨巴伦卡如何赢下这场苦战？",
+      "end": 184.5,
+      "narration": "二发，外角，直接得分！抢十赛点，换成你敢这样发二发吗？",
       "fit": "crop",
-      "_why": "正文重新兑现冷开场的完整结局：Reuses cold-open match point (166.67–176.99: serving + winner reaction), then 179.46–181.5s shows both players walking to net, 182.5s–183.5s shows the handshake at net, 184.5s–185.5s shows Sabalenka waving to the crowd. Ending fully covers cold open window."
+      "_why": "正文重新兑现冷开场的完整结局：Reuses cold-open match point (166.67–176.99: serving + winner reaction), then 179.46–181.5s shows both players walking to net, 182.5s–183.5s shows the handshake at net, 184.5s–185.5s shows Sabalenka waving to the crowd. Ending fully covers cold open window.",
+      "score_inset": true,
+      "crosses_cut": "保留完整赛点及紧接其后的获胜、对手反应；所有画面同场，具体时码与身份见MiniMax原始通过证据。",
+      "_reviewed_ending_boundary": "原片182.5秒两人网前拥抱；184.5秒已经松手分开。按合同在握手完成后的第一个已核实画面边界收住，不接之后挥手和包厢。MiniMax报告保留原文，实际片尾仍完整覆盖166.67–176.99秒冷开场。",
+      "voice": {
+        "lead_pause": 1.0,
+        "_why": "发球先动；得分口播落在169.97秒落点与庆祝之后，握手前说完。"
+      }
     }
   ],
   "_visual_evidence_history": [
@@ -365,5 +435,19 @@
     ],
     "cover_image": "assets/reel/sabalenka-noskova-cover.jpg"
   },
-  "_segments_source": " + MiniMax 冷开场/结尾视觉闸"
+  "_segments_source": " + MiniMax 冷开场/结尾视觉闸",
+  "topbar": {
+    "line1": "2026 美网 1/4决赛",
+    "line2": "萨巴伦卡 7-6(1) 3-6 7-6(7) 诺斯科娃"
+  },
+  "layout": "band",
+  "scorebox": [
+    104,
+    888,
+    736,
+    978
+  ],
+  "_chapter_cards_why": "没插章节卡：spec 里已经手写了 title_card 段",
+  "outro": true,
+  "_editor_review": "人工逐张核对全片接触表和最终比分，修正H2H身份顺序及模型文案不准确表述；模型原文和失败报告保留。"
 }

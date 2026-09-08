@@ -933,7 +933,37 @@ jobs:
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
           MINIMAX_API_KEY: ${{ secrets.MINIMAX_API_KEY }}
         run: |
-          python tools/prepare_sabalenka_noskova.py
+          OUT="${{ steps.paths.outputs.outdir }}"
+          SLUG="${{ github.event.inputs.slug }}"
+          ALIGN_ARGS=""
+          if [ -f "$OUT/pbp.json" ] && [ -f "$OUT/scoreboard.json" ]; then
+            ALIGN_ARGS="--pbp $OUT/pbp.json --scoreboard $OUT/scoreboard.json"
+          fi
+          META_ARGS=()
+          if [ -n "${{ github.event.inputs.home_rank }}" ]; then
+            META_ARGS+=(--home-rank "${{ github.event.inputs.home_rank }}")
+          fi
+          if [ -n "${{ github.event.inputs.away_rank }}" ]; then
+            META_ARGS+=(--away-rank "${{ github.event.inputs.away_rank }}")
+          fi
+          PYTHONPATH=src python tools/assemble_spec.py \
+            --slug "$SLUG" \
+            --home "${{ github.event.inputs.home }}" \
+            --away "${{ github.event.inputs.away }}" \
+            --event "${{ github.event.inputs.event }}" \
+            --year "${{ github.event.inputs.year }}" \
+            --round "${{ github.event.inputs.round }}" \
+            --court "${{ github.event.inputs.court }}" \
+            --home-country "${{ github.event.inputs.home_country }}" \
+            --away-country "${{ github.event.inputs.away_country }}" \
+            --received-at "${{ github.event.inputs.received_at }}" \
+            --captions "$OUT/captions.txt" \
+            --cuts "$OUT/probe.json" \
+            --source-url "${{ github.event.inputs.url }}" \
+            --cover \
+            $ALIGN_ARGS \
+            "${META_ARGS[@]}" \
+            --write
 
       # MiniMax 不是“看过就算”：它要把冷开场、结尾兑现和封面人物/情绪写成
       # 可复核证据；DeepSeek 只翻译这一窗口里真实存在的英文转播字幕。任何一项
