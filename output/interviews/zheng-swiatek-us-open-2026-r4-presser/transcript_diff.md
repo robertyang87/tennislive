@@ -1,118 +1,141 @@
 # 转写交叉校验：zheng-swiatek-us-open-2026-r4-presser
 
 - 第一份：YouTube 自动字幕 **2162** 词
-- 第二份：faster-whisper（medium.en）**2119** 词
-- **对不上 6.1%**（闸门 12%）
+- 第二份：faster-whisper（medium.en）**2117** 词
+- **对不上 6.7%**（闸门 12%）
 
 ⚠️ 上面两个词数和分歧率都是**去掉 erm/uh/uhh/um/umm 这类填词之后**算的：这些词 whisper 系统性地会丢，跟源可不可信无关，留着只会把「说话人有多磕巴」量成「两份转写对不上」。
 
 ## 分歧逐处（左＝YouTube 自动字幕，右＝第二份）
 
 - `thank you` → `—`
+- `like` → `a`
 - `set` → `sets`
+- `okay` → `ok`
 - `0 5` → `low five`
 - `—` → `in`
 - `start` → `started`
-- `felt` → `feel`
+- `start` → `started`
 - `yeah okay` → `—`
+- `yeah like` → `—`
 - `what` → `—`
-- `yes` → `yeah`
 - `—` → `yes`
 - `was like` → `said`
-- `focusing` → `focused on`
+- `focusing` → `focused in`
 - `i` → `—`
 - `so` → `—`
-- `say` → `said`
-- `have` → `has`
-- `yeah` → `—`
+- `say okay` → `said ok`
+- `ball` → `will`
+- `—` → `faber`
 - `qinwen` → `kim wen`
 - `in that` → `—`
 - `have` → `—`
+- `and` → `—`
 - `you` → `—`
-- `a frustrating loss that you would be back to where you wanted to be` → `—`
 - `it` → `—`
 - `it's` → `—`
 - `a` → `—`
 - `—` → `a`
-- `chance` → `chances`
-- `is` → `it's`
-- `sport there is` → `bored there's`
+- `maybe is` → `may be`
+- `—` → `to`
+- `sport` → `bored`
 - `—` → `a`
-- `—` → `a`
+- `wanted` → `want`
 - `to` → `—`
+- `or` → `over`
 - `quali` → `quality`
 - `play` → `played`
-- `—` → `it`
-- `take` → `takes`
+- `—` → `it's`
+- `okay` → `ok`
 - `they` → `to`
-- `dedicate` → `dedicated`
+- `—` → `did`
+- `8 30` → `830`
+- `the` → `—`
 - `8 00` → `eight o 'clock`
-- `a` → `—`
 - `sport` → `sports`
-- `pays` → `piss`
-- `right` → `—`
+- `right congratulations` → `—`
 - `you` → `—`
-- `you` → `—`
-- `i guess now` → `—`
+- `guess now` → `started`
 - `to` → `and`
 - `sit` → `—`
 - `something` → `i mean`
+- `at` → `—`
 - `is` → `it's`
+- `had` → `got`
 - `it` → `—`
-- `play` → `played`
+- `10` → `ten`
 - `has` → `have a`
 - `and` → `—`
 - `needs` → `need`
-- `going to` → `gonna`
+- `—` → `is`
 - `courses i` → `forces`
 - `shows` → `show`
 - `i'm` → `—`
 - `no right` → `now`
 - `—` → `gentlemen`
 - `reinjuring` → `re injuring`
+- `like` → `—`
 - `the` → `—`
 - `—` → `a`
 - `i` → `—`
-- `is` → `if`
-- `it's` → `—`
-- `going to` → `gonna`
+- `is` → `—`
+- `injury it's` → `injuries`
+- `takes more` → `take small`
 - `body is` → `body's`
-- `today` → `the day`
+- `a` → `—`
 - `—` → `a`
-- `body is` → `body's`
 - `needs` → `need`
 - `this` → `that`
+- `we are` → `we're`
+- `yeah` → `—`
 - `tough` → `top`
-- `—` → `then`
 - `i` → `i'm`
-- `going to` → `gonna`
 - `100` → `hundred percent`
-- `going to` → `gonna`
 - `have` → `had`
-- `going to` → `gonna`
 - `i` → `—`
-- `going to makes` → `gonna make`
-- `rybakina` → `robakina`
-- `rybakina` → `robakina`
-- `exit` → `axis`
-- `what's going to` → `what can`
+- `makes` → `make`
+- `yeah` → `—`
+- `rybakina` → `rubakina`
+- `rybakina` → `rubakina`
+- `exit she` → `axis`
+- `makes` → `make`
+- `what's what's going to` → `what can`
+- `all right` → `—`
 - `katherine` → `catherine`
+- `you were` → `you're`
 - `quali` → `quality`
 - `talked` → `told`
+- `then` → `—`
+- `okay` → `ok`
 - `helps` → `help`
+- `okay` → `ok`
+- `that's mean` → `—`
+- `—` → `it`
 - `cuz` → `because`
-- `tammani` → `tamani`
+- `yeah` → `—`
+- `tammani` → `tomani`
 - `you` → `—`
+- `you know` → `—`
 - `have` → `—`
 - `or` → `—`
 - `oh` → `—`
-- `process` → `forces`
-- `you` → `you're`
+- `process` → `courses`
+- `thinking` → `think`
+- `in` → `—`
+- `then` → `—`
+- `okay` → `ok`
 - `qualies` → `quality`
 - `10` → `ten`
-- `okay` → `—`
+- `this` → `—`
+- `yeah okay` → `—`
+- `doug` → `—`
+- `and it's` → `as`
 - `this` → `these`
+- `things` → `thing`
 - `confidence` → `confident`
+- `okay` → `ok`
 - `—` → `a`
-- `qualies` → `qualities`
-- `—` → `i`
+- `match` → `matches`
+- `qualies` → `quality`
+- `match` → `matches`
+- `match` → `matches`
