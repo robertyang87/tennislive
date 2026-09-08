@@ -3065,13 +3065,13 @@ _REAL_FIELDS: dict[str, tuple[str, ...]] = {
              "silent_source",
              "slug", "source_audio", "source_url", "sources", "stats",
              "subtitle_top", "topbar", "tts_backend", "voice", "editorial"),
-    "cover": ("event_badge", "eyebrow", "hook", "layout", "matchup", "meta",
+    "cover": ("approved_image", "event_badge", "eyebrow", "hook", "layout", "matchup", "meta",
               "narration", "portrait", "portrait_above", "result", "round",
               "score", "scoreboard", "scrim", "split", "sub", "subject",
               "tier", "topic", "versus", "winner"),
     "segment": ("bed", "crosses_cut", "crop_zoom", "cx", "end", "fit", "image",
                 "inset", "mute", "narration", "quote", "score_inset",
-                "seconds", "source", "speed", "start", "stat_card", "title_card",
+                "seconds", "source", "speed", "square_pan", "start", "stat_card", "title_card",
                 "kicker", "track", "voice"),
 }
 
