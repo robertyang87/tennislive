@@ -29,7 +29,7 @@ jobs:
           python-version: '3.11'
       - name: Install publish dependencies and encoder
         run: |
-          pip install -q -e .
+          pip install -q -e . numpy
           source tools/ci_apt_install.sh
           ensure_ffmpeg
       - uses: actions/download-artifact@v4
@@ -82,6 +82,7 @@ jobs:
         with:
           name: icons-cover-v2-review
           path: |
+            output/2026-09-08/reel/zheng-usopen-icons/*.mp4
             output/2026-09-08/reel/zheng-usopen-icons/*.json
             output/2026-09-08/reel/zheng-usopen-icons/poster.jpg
           retention-days: 14
