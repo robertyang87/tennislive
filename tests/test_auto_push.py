@@ -21,6 +21,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 import auto_push_gate as gate  # noqa: E402
 
 WORKFLOW = Path(".github/workflows/auto-push-reel.yml")
+MATCH_REEL = Path(".github/workflows/match-reel.yml")
 
 
 def _yaml_only(text: str) -> str:
@@ -513,3 +514,90 @@ def test_自动推送的超时盖得住Pages最坏而且被掐也要告警():
         assert "failure()" in if_line and "cancelled()" in if_line, (
             f"{name} 的告警条件是 `{if_line}`——超时被掐是 cancelled，"
             "只挂 failure() 会让最该告警的那一种静默溜走")
+
+
+# ------------------------------------------------ 闸 3 的例外：表单的强制推送
+#
+# 来路 2026-09-09（微信告警「match-reel.yml 近 10 次失败率 80%、连续失败 4」）：
+# 在这之前 `match-reel.yml` 的派发条件是
+# `(inputs.push == 'true' || render_auto_gate.outputs.found == 'true')`——
+# 勾了强制推送就**整套门禁连跑都不跑**，直接派 `mode=push`。于是
+# `shelton-alcaraz` 那条 08:33 已经推送过的片子，每重渲一趟就派一趟注定撞在
+# `pushed.json` 上的 push，每趟记一条 failure。
+#
+# 现在「强制」的意思收窄成**只放宽意图那一道**，由这四条钉住。
+
+def test_强制推送只放宽没写auto那一道(repo: Path, capsys):
+    """勾了强制推送，spec 没写 `push.auto` 也该发——这是它唯一的作用。"""
+    _spec(repo, {"summary": "伊埃拉进决赛"})
+    assert gate.pick(CHANGED, repo) is None, "前提没了：没勾强制时本来就该拦"
+
+    picked = gate.pick(CHANGED, repo, forced=True)
+    assert picked is not None and picked[0] == "demo", (
+        "勾了强制推送还是不发，那表单上那个开关根本没接上")
+    out = capsys.readouterr().out
+    assert "强制" in out, f"放宽了却不出声，事后查不出这条是怎么发出去的：{out}"
+
+
+def test_强制推送拦不住的只有意图那一道_已经发过了照旧拦(repo: Path, capsys):
+    """**「已经发过了」是事实不是意图，勾选不该放行。**
+
+    这一条就是 2026-09-09 那批 failure 的原形：片子已经推送过，而重渲那趟
+    带着 `push=true`。放宽它的后果不是报表难看，是**同一条微信发第二遍**，
+    而消息发出去收不回来。
+    """
+    _spec(repo, {"auto": True})
+    gate.record(repo / "output/2026-08-03/reel/demo",
+                "https://example/run/1", "2026-08-03T00:00:00Z")
+    _commit_all(repo)
+    assert gate.pick(CHANGED, repo, forced=True) is None, (
+        "勾一下强制推送就能把已经发过的片子再发一遍——微信消息收不回来")
+    assert "已经推过了" in capsys.readouterr().out
+
+
+def test_强制推送也不许放行成片身份对不上的(repo: Path, capsys):
+    """L2 凭证问的是「这条成片是不是质检过的那一版」，同样是事实。
+
+    这一条守的是那个旁路里最危险的一半：`mode=push` 的预检**不查 L2 凭证**，
+    `--reserve` 也不查（它只写账本）。整条链上只有这儿查——把它绕过去，
+    一条 QC 没过的片子勾一下就能发出去。
+    """
+    _spec(repo, {"auto": True})
+    qc = repo / "output/2026-08-03/reel/demo/qc_attestation.json"
+    qc.unlink()
+    _git(repo, "rm", "-q", "--cached", str(qc.relative_to(repo)))
+    _commit_all(repo)
+    assert gate.pick(CHANGED, repo, forced=True) is None, (
+        "强制推送把 L2 凭证也放宽了——那道闸是这条链上唯一查成片身份的地方")
+    assert capsys.readouterr().out.strip(), "拦住了却一个字都不说"
+
+
+def test_派发只认门禁的结论不许再拿表单旁路():
+    """**派发与否只有一个出处。**
+
+    `inputs.push` 一个字都不许出现在派发那步的 `if` 里——它的意图已经交给
+    上一步的 `--forced` 了。留着那个 `||` 就等于在 YAML 里另写一份简化判断，
+    而那份判断简化到只剩一个布尔。
+    """
+    body = MATCH_REEL.read_text(encoding="utf-8")
+    head = "- name: render 质检落库后自动派发微信推送"
+    dispatch = body[body.index(head):]
+    dispatch = dispatch[: dispatch.index("- name: ", 10)]
+    cond = dispatch[dispatch.index("if:"): dispatch.index("env:")]
+    assert "steps.render_auto_gate.outputs.found == 'true'" in cond
+    assert "inputs.push" not in cond, (
+        "派发条件又拿表单旁路了整套发布门禁——2026-09-09 那批 failure 就是这么来的")
+
+    # 而意图必须真的接到门禁上，否则「强制推送」这个勾选就静默失效了
+    gate_step = body[body.index("- name: render 质检落库后读取 spec 自动推送规则"):]
+    gate_step = gate_step[: gate_step.index(head)]
+    gate_step = _yaml_only(gate_step)
+    assert "inputs.push" in gate_step, (
+        "表单的强制推送没接到门禁上——勾了也不会发，而且不吭声")
+    # ⚠️ 不能只断言 `"--forced" in gate_step`：反向验证时把 `$FORCED` 从调用行
+    # 拿掉、只留 `FORCED="--forced"` 那行赋值，那种写法照样含这个串而**开关已经
+    # 失效**——「写了不等于跑过」。所以要钉在**调用那一行**上。
+    call = next(ln for ln in gate_step.splitlines()
+                if "auto_push_gate.py" in ln)
+    assert "--forced" in call or "$FORCED" in call, (
+        f"强制推送的开关没传给门禁，赋值了却没用上：{call.strip()}")
