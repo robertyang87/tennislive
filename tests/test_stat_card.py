@@ -795,3 +795,27 @@ def test_band_data_card_fills_native_picture_region(tmp_path, monkeypatch):
     card = Image.open(materialized[1].image).convert('RGBA')
     _, box = reel.still_canvas_for_layout(card, Image, full_bleed=materialized[1].full_bleed)
     assert box == (0, reel.BAND_TOP, reel.VIDEO_W, reel.BAND_TOP + reel.BAND_PIC_H)
+
+
+def test_full_canvas_data_card_preserves_design_and_covers_overlays(tmp_path, monkeypatch):
+    from PIL import Image
+    reel = _reel()
+    monkeypatch.setattr(reel, 'LAYOUT', 'band')
+    spec = _spec_with_stat_card()
+    spec['stat_card_full_canvas'] = True
+    segs = reel.parse_segments(spec, {'': 1}, '')
+    def render_page(spec, out, *, variant):
+        assert variant == 'film'
+        Image.new('RGB', (2160, 2880), 'white').save(out)
+    materialized = reel._materialize_stat_card(spec, segs, tmp_path, renderer=render_page)
+    page = materialized[1]
+    canvas, box = reel.still_canvas_for_layout(
+        Image.open(page.image).convert('RGBA'), Image, full_canvas=page.full_canvas)
+    assert box == (0, 0, 1080, 1440)
+    assert canvas.getpixel((0, 0)) == (255, 255, 255, 255)
+    assert canvas.getpixel((1079, 1439)) == (255, 255, 255, 255)
+    graph = reel.full_canvas_filtergraph('[0:v]null[out]', materialized, 1.2)
+    start = 1.2 + materialized[0].length
+    assert f"gte(t,{start:.6f})*lt(t,{start + page.length:.6f})" in graph
+    assert '[decorated][clean_canvas]overlay=0:0' in graph
+    assert reel.full_canvas_filtergraph('[0:v]null[out]', segs, 1.2) == '[0:v]null[out]'
