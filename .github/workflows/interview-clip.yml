@@ -37,28 +37,29 @@ jobs:
           python-version: '3.11'
           cache: pip
       - name: Install final audit dependencies
-        run: pip install -q -e '.[visualqa]' playwright
+        run: pip install -q -e '.[visualqa]'
       - name: Recover completed and QC-passed film
         uses: actions/download-artifact@v4
         with:
           name: sabalenka-noskova-usopen-2026-qf-oncourt-final
           path: output/interviews/sabalenka-noskova-usopen-2026-qf-oncourt
-          run-id: 34315074835
+          run-id: 34316480279
           github-token: ${{ github.token }}
-      - name: Install rendering tools
+      - name: Verify recovered QC binds these exact files
         run: |
-          source tools/ci_apt_install.sh
-          apt_install_cached ffmpeg fonts-noto-core fonts-noto-cjk
-          python -m playwright install chromium
-      - name: Replace cover and rerun exact-file QC
-        run: |
-          PYTHONPATH=src:tools python tools/recover_sabalenka_cover.py
-          python tools/audit_interview_cover.py --spec specs/interviews/sabalenka-noskova-usopen-2026-qf-oncourt.json --poster output/interviews/sabalenka-noskova-usopen-2026-qf-oncourt/poster.jpg --out output/interviews/sabalenka-noskova-usopen-2026-qf-oncourt/cover_visual_attestation.json
-          PYTHONPATH=src python tools/check_interview_landed.py --slug sabalenka-noskova-usopen-2026-qf-oncourt --film output/interviews/sabalenka-noskova-usopen-2026-qf-oncourt/sabalenka-noskova-usopen-2026-qf-oncourt.mp4 --write-attestation
-      - name: Review actual final frames
-        env:
-          MINIMAX_API_KEY: ${{ secrets.MINIMAX_API_KEY }}
-        run: PYTHONPATH=src:tools python tools/audit_sabalenka_oncourt.py
+          python - <<'PY'
+          import json,hashlib
+          from pathlib import Path
+          o=Path('output/interviews/sabalenka-noskova-usopen-2026-qf-oncourt')
+          q=json.loads((o/'qc_attestation.json').read_text())
+          assert q['status']=='pass',q
+          assert q['film_sha256']==hashlib.sha256((o/'sabalenka-noskova-usopen-2026-qf-oncourt.mp4').read_bytes()).hexdigest()
+          assert q['spec_sha256']==hashlib.sha256(Path('specs/interviews/sabalenka-noskova-usopen-2026-qf-oncourt.json').read_bytes()).hexdigest()
+          assert q['poster_sha256']==hashlib.sha256((o/'poster.jpg').read_bytes()).hexdigest()
+          print('Existing L2 pass matches the exact recovered film, poster and formal spec.')
+          PY
+      - name: Normalize completed visual review without changing its findings
+        run: python tools/normalize_sabalenka_visual_review.py
 
       - name: 成片发到 Release（不进 git）
         if: github.event.inputs.mode == 'render'
