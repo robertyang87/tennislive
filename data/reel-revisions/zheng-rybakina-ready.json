@@ -46,9 +46,9 @@
     "year": 2026,
     "round": "四分之一决赛",
     "court": "Arthur Ashe Stadium",
-    "status": "waiting_source_quality_decision",
+    "status": "ready_for_render",
     "revision": "process-complete-remake",
-    "blocking_reason": "用户新提供的ESPN长版所有可用格式最高原生1280×720；现有正式制作要求1080p及以上。等待本条明确清晰度取舍或原生高清源，不放大冒充高清，不改质量闸。"
+    "source_quality_approval": "用户明确同意本条使用所提供720p补充源；不扩展到其他片子或来源。"
   },
   "_match": {
     "status": "result_verified",
@@ -557,14 +557,15 @@
   },
   "_editorial_review": {
     "reviewer": "Codex",
-    "status": "revised_pending_render_QC",
+    "status": "reviewed_pending_render_QC",
     "model": "deepseek · deepseek-v4-pro",
     "request": "用户要求完整交代转折、首盘关键破发和收盘焦灼、决胜盘第八局错失机会，且不是流水账。",
     "segment_count_reason": "按用户完整过程要求，将关键发球、相持、失误与后果分开，15段替代自动初稿的5-10段；不删球来凑段数，不改变正式校验器。",
     "source_review": "ESPN长版全部9张contact sheets已看；关键球额外逐秒审阅。原官方源的冷开场与末尾保留原MiniMax通过报告。",
     "full_source_probe": "output/2026-09-10/reel/zheng-rybakina-extended/probe.json",
     "footage_audit": "data/reel-revisions/zheng-rybakina-footage-audit.md",
-    "quality_audit": "所有公开YouTube formats最高1280x720，无1080p，正式渲染暂缓。"
+    "quality_audit": "ESPN原生720p已获用户明确同意；保留真实probe尺寸，原官方源1080p不降采样。",
+    "tts_audit": "本地check-narration实测所有旁白装得下。较长现场声留白用于完整回合，不以删球压时长。"
   },
   "_segments_source": " + MiniMax 冷开场/结尾视觉闸",
   "topbar": {
@@ -573,20 +574,44 @@
   },
   "layout": "band",
   "scorebox": [
-    70,
-    592,
-    491,
-    652
+    104,
+    888,
+    736,
+    978
   ],
   "stat_card_full_canvas": true,
   "_chapter_cards_why": "本条以实战镜头连续推进遗憾主题，不插断比赛的独立章节卡。",
   "tts_backend": "edge",
   "_tts_backend_why": "本条render 34391475743 的Azure在2026-09-09T18:53:01Z明确返回401 Authentication error；按既有回退策略使用edge，同一Yunjian音色，不更改密钥或权限。",
   "sources": {
-    "extended": "https://www.youtube.com/watch?v=-6Gv0033I2I",
-    "original": "https://www.youtube.com/watch?v=HSAAm3UtKDo"
+    "original": "https://www.youtube.com/watch?v=HSAAm3UtKDo",
+    "extended": "https://www.youtube.com/watch?v=-6Gv0033I2I"
   },
   "conform": {
-    "original": "原官方源1920×1080等比缩小至ESPN长版1280×720；同为16:9，无裁边。两源同场同转播画面，比分板缩放后同位。保留原官方源中首盘第四盘点、次盘破发与盘点、完整赛点结尾。"
+    "extended": "用户明确同意这次用所提供的原生720p素材补齐关键过程。1280×720仅等比缩放为合成用1920×1080，与原官方1080p源统一画幅；不新增细节、不宣称原生1080p。原官方源保持原始分辨率。"
+  },
+  "source_quality_exceptions": {
+    "https://www.youtube.com/watch?v=-6Gv0033I2I": {
+      "min_height": 720,
+      "approved_by": "user",
+      "reason": "用户在被告知补充源最高720p和现有1080p要求后明确回复“可以”，授权本条使用该720p素材补齐关键过程。"
+    }
+  },
+  "_manual_source_review": {
+    "source_url": "https://www.youtube.com/watch?v=-6Gv0033I2I",
+    "reviewer": "Codex and footage_audit agent",
+    "coverage": "0–798.581秒全片每5秒抽样；关键回合逐秒复核。",
+    "files": {
+      "contact_00.jpg": "cd8b61a6ef6dcd0ade0aab98271cc1f9919812536f9a902924ed5c2a7dca189d",
+      "contact_01.jpg": "a8cb50d8175bfa11301e5a8c3e7a0a15b8e87b37868a9e43058ffb735b19a59b",
+      "contact_02.jpg": "bf7f95b944b6dace7ce4b762ff7f16a0b50c88cc6218c3d46f5b5939029bf5d8",
+      "contact_03.jpg": "85f97908aa8d3455eed47bccc79441bf22a2a0c6e11bfc865b75bfb6a5fe2341",
+      "contact_04.jpg": "ce150d0f64e373fbf14997d8cc10744810b30696c07aa72e05b8a941d50189f1",
+      "contact_05.jpg": "f340fa1f16260a81ebaf9db376c3ddd24f3510d45d8e46be0d34550c6c76c263",
+      "contact_06.jpg": "e4b5abdde39e9bcd92d044de121b9b49d1c8312dff602f69468d8383b6d5575f",
+      "contact_07.jpg": "ddca89319d4db1c621571d0569ccd428bc7a7dcfc48540ad0ff4c4246025351c",
+      "contact_08.jpg": "53a90108e0a76474110bab2e8c21ddd2953e2d72701f0df802f5bbdc078063f4"
+    },
+    "audit": "data/reel-revisions/zheng-rybakina-footage-audit.md"
   }
 }

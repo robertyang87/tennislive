@@ -5245,6 +5245,45 @@ def silence_findings(spec: dict, segments, probes: dict,
     return hard, soft
 
 
+# 用户本次只授权这一条郑钦文重剪源；不能用声明替别的素材降格。
+_APPROVED_720_SOURCE = "https://www.youtube.com/watch?v=-6Gv0033I2I"
+
+
+def source_quality_exceptions(spec: dict) -> dict[str, dict]:
+    """按精确 URL 记录用户授权；保留原生分辨率，默认门槛仍是 1080p。"""
+    declared = spec.get("source_quality_exceptions", {})
+    if not isinstance(declared, dict):
+        raise ReelError("source_quality_exceptions 必须是按精确源 URL 索引的对象")
+    urls = set(spec_sources(spec).values()) if declared else set()
+    for url, claim in declared.items():
+        if url != _APPROVED_720_SOURCE or url not in urls:
+            raise ReelError(f"source_quality_exceptions 未授权或未引用的源：{url}")
+        if (not isinstance(claim, dict)
+                or type(claim.get("min_height")) is not int
+                or claim["min_height"] != 720
+                or claim.get("approved_by") != "user"
+                or not isinstance(claim.get("reason"), str)
+                or not claim["reason"].strip()):
+            raise ReelError("source_quality_exceptions 要写 min_height: 720、"
+                            "approved_by: user 和非空 reason；仅限本次明确授权")
+    return declared
+
+
+def check_native_quality_exceptions(spec: dict, paths: dict[str, Path]) -> None:
+    """下载后、conform 前复核授权源；旧 probe 和展示放大不能掩盖低清下载。"""
+    claimed = source_quality_exceptions(spec)
+    urls = spec_sources(spec)
+    for key, path in paths.items():
+        claim = claimed.get(urls[key])
+        if claim is None:
+            continue
+        w, h = probe_size(path)
+        if h < claim["min_height"]:
+            raise ReelError(f"源 {key or '(主源)'} 原生 {w}x{h}，低于明确授权的 720p")
+        print(f"[源画质授权] {urls[key]} 原生 {w}x{h}；"
+              f"用户明确授权最低 720p：{claim['reason']}；展示缩放不会增加源细节")
+
+
 def probe_dry_run(spec: dict, segments: list["Segment"]) -> bool:
     """拿已落库的 probe.json 查选段。返回 True 表示**有硬错**。
 
@@ -5288,6 +5327,7 @@ def probe_dry_run(spec: dict, segments: list["Segment"]) -> bool:
 
     ⚠️ **一份都没查成要出声**，别让「没有 probe」和「全都合格」长得一样。
     """
+    quality_claims = source_quality_exceptions(spec)
     probes, missing = probes_for_spec(spec)
     if not probes:
         print("\n[查选段] **一份 probe.json 都没认领上**——这一段没查。\n"
@@ -5388,6 +5428,7 @@ def probe_dry_run(spec: dict, segments: list["Segment"]) -> bool:
     #    那种静图段落跳过），不查 `_cover_frame_spots`——封面走的是完全独立
     #    的「官方高清实拍」硬闸（`cover_photo_problem`），和源片分辨率是
     #    两件事，混在一起会把没写 `frame_at` 的正常封面段落误判成缺分辨率。
+    #    仅 source_quality_exceptions 的精确 URL 用户授权可降至 720p。
     for source_key in sorted(checked_sources):
         probe = probes.get(urls.get(source_key, ""))
         if probe is None:
@@ -5395,13 +5436,19 @@ def probe_dry_run(spec: dict, segments: list["Segment"]) -> bool:
         height = probe.get("height")
         if height is None:
             continue
-        if int(height) < 1080:
+        claim = quality_claims.get(urls.get(source_key, ""))
+        minimum = claim["min_height"] if claim else 1080
+        if claim:
+            print(f"[源画质授权] {urls[source_key]} 原生 {probe.get('width')}x{height}；"
+                  f"用户明确授权最低 {minimum}p：{claim['reason']}")
+        if int(height) < minimum:
             label = source_key or "(主源)"
             hard.append(
-                f"  源 {label}：{probe.get('width')}x{height}，低于 1080p——"
-                "「视频一定要选 1080p 及以上的清晰度，如果没有的话就等」，"
-                "不是拿这一版将就的退路。换一条更高清的源，或者等官方"
-                "发布更清晰的版本再回来。")
+                f"  源 {label}：{probe.get('width')}x{height}，低于 {minimum}p——"
+                + ("用户只授权原生 720p，更低清晰度仍然不合格。" if claim else
+                   "「视频一定要选 1080p 及以上的清晰度，如果没有的话就等」，"
+                   "不是拿这一版将就的退路。换一条更高清的源，或者等官方"
+                   "发布更清晰的版本再回来。"))
 
     # ⑥ 段窗口撞源片静音区——省掉「渲 8 分半才被 QC 静音闸判死」那一类返工。
     s_hard, s_soft = silence_findings(spec, segments, probes, urls)
@@ -6630,6 +6677,7 @@ def validate_spec(
     urls = spec_sources(spec)
     if not urls:
         raise ReelError("spec 里一个源都没有")
+    source_quality_exceptions(spec)
     # 顶栏是画布版式的一部分，先在 dry-run / check-narration 阶段校形状，
     # 不要等到六分钟渲染完才发现两行文字没读到。
     topbar = _topbar_lines(spec)
@@ -6960,6 +7008,7 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
             with stage(f"下载源片 {key or '(主源)'}"):
                 path = download(url, path, archival=key in claimed_archival)
         sources[key] = path
+    check_native_quality_exceptions(spec, sources)
     conform_sources(sources, spec, outdir)
     check_sources_match(sources, spec)
     primary = next(iter(sources))
