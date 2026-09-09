@@ -780,3 +780,18 @@ def test_render按变体开视口_命令行也认变体():
     assert 'viewport={"width": canvas_w, "height": canvas_h}' in body
     assert "VARIANTS[variant]" in body
     assert '"--variant"' in inspect.getsource(sc.main)
+
+
+def test_band_data_card_fills_native_picture_region(tmp_path, monkeypatch):
+    """A DPR=2 statistics page must fill the band, not shrink as a tall poster."""
+    from PIL import Image
+    reel = _reel()
+    monkeypatch.setattr(reel, 'LAYOUT', 'band')
+    segs = reel.parse_segments(_spec_with_stat_card(), {'': 1}, '')
+    def render_native(spec, out, *, variant):
+        assert sc.VARIANTS[variant] == (reel.VIDEO_W, reel.BAND_PIC_H)
+        Image.new('RGB', (2160, 1920), 'white').save(out)
+    materialized = reel._materialize_stat_card(_spec_with_stat_card(), segs, tmp_path, renderer=render_native)
+    card = Image.open(materialized[1].image).convert('RGBA')
+    _, box = reel.still_canvas_for_layout(card, Image, full_bleed=materialized[1].full_bleed)
+    assert box == (0, reel.BAND_TOP, reel.VIDEO_W, reel.BAND_TOP + reel.BAND_PIC_H)

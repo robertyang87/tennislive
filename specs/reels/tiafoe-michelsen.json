@@ -1,0 +1,636 @@
+{
+  "_chapter_cards_why": "没插章节卡：spec 里已经手写了 title_card 段",
+  "_column": "reel",
+  "_cover_brief": {
+    "preferred_moment": "winner_celebration",
+    "preferred_subject": "蒂亚福",
+    "reason": "本场赢家庆祝；按同场官方或通讯社摄影说明核实人物、日期、对手、轮次。"
+  },
+  "_durations": [
+    [
+      "全场",
+      "4:38:00"
+    ]
+  ],
+  "_editor_review": "保留原DeepSeek文案；依据官方视频、Flashscore逐盘统计和ATP赛后稿纠正第四盘连续保发七局等错误，扩充为逐盘复盘。",
+  "_hit_data": [
+    {
+      "detail": "蒂亚福 170 - 米切尔森 173，净差 3 分，米切尔森 领先",
+      "diff": 3,
+      "label": "总分差",
+      "source": "flashscore df_mh_1（总分）"
+    },
+    {
+      "detail": "第1盘53% → 第2盘67% → 第3盘79% → 第4盘63% → 第5盘70%",
+      "label": "蒂亚福 一发得分率摆动",
+      "source": "flashscore df_st_1（分盘一发得分率）",
+      "swing": 26
+    },
+    {
+      "detail": "第1盘78% → 第2盘72% → 第3盘75% → 第4盘67% → 第5盘71%",
+      "label": "米切尔森 一发得分率摆动",
+      "source": "flashscore df_st_1（分盘一发得分率）",
+      "swing": 11
+    },
+    {
+      "detail": "8/17（47%）",
+      "label": "蒂亚福 破发点兑现",
+      "source": "flashscore df_st_1（破发点）"
+    },
+    {
+      "detail": "8/23（35%）",
+      "label": "米切尔森 破发点兑现",
+      "source": "flashscore df_st_1（破发点）"
+    },
+    {
+      "detail": "7 个发球局",
+      "label": "蒂亚福 连续保发",
+      "source": "flashscore df_mh_1（逐局）"
+    },
+    {
+      "detail": "6 个发球局",
+      "label": "米切尔森 连续保发",
+      "source": "flashscore df_mh_1（逐局）"
+    },
+    {
+      "detail": "3 个发球局",
+      "label": "米切尔森 连续被破",
+      "source": "flashscore df_mh_1（逐局）"
+    },
+    {
+      "detail": "Tiafoe F. 3 : 0 Michelsen A.（含本场） · 红土 1:0 · 硬地 2:0",
+      "label": "交手记录",
+      "source": "flashscore df_hh_1"
+    },
+    {
+      "detail": "Tiafoe F. 最近 5 场 5 胜（WWWWW）；Michelsen A. 最近 5 场 4 胜（LWWWW）",
+      "label": "近况",
+      "source": "flashscore df_hh_1 Last matches"
+    }
+  ],
+  "_match": {
+    "_identity_evidence": "df_hh_1 KP=bmsTFvCm confirms FH=Tiafoe F. FK=Michelsen A.; official final score in source 202.5s confirms 5-7 3-6 7-5 6-3 7-6(6).",
+    "_visual_identity": "Tiafoe wears saturated magenta shirt with grey sleeves, magenta headband, dark skin and beard. Michelsen wears pale pink Adidas shirt and white cap. Source 112.5–120.5 shows MATCH POINT, TIAFOE 9 / MICHELSEN 6. 122.5–126.5 winner Tiafoe celebrates. 128.5–152.5 handshake and extended embrace; 154.5 they separate. Review candidate cold 124.48–132.5 and ending 124.48–154.0 against images; reject if images disagree. Do not identify Michelsen second-set celebration at 38.5 as match victory.",
+    "flashscore_id": "bmsTFvCm",
+    "loser": "米切尔森",
+    "loser_result": "7-5 6-3 5-7 3-6 6-7(6)",
+    "participants": [
+      "蒂亚福",
+      "米切尔森"
+    ],
+    "set_scores_home_away": [
+      [
+        5,
+        7
+      ],
+      [
+        3,
+        6
+      ],
+      [
+        7,
+        5
+      ],
+      [
+        6,
+        3
+      ],
+      [
+        7,
+        6
+      ]
+    ],
+    "source": "flashscore_points",
+    "source_id": "bmsTFvCm",
+    "status": "result_verified",
+    "tiebreaks_home_away": [
+      null,
+      null,
+      null,
+      null,
+      [
+        10,
+        6
+      ]
+    ],
+    "winner": "蒂亚福",
+    "winner_result": "5-7 3-6 7-5 6-3 7-6(6)"
+  },
+  "_notes": [
+    "flashscore id：bmsTFvCm（按球员姓反查）",
+    "制胜分/非受迫失误：这场有，已填进 stats",
+    "头像 stats.a（蒂亚福）：已发 spec 里认过，复用 assets/players/headshots/atp-TD51.png",
+    "头像 stats.b（米切尔森）：已发 spec 里认过，复用 assets/players/headshots/atp-M0QI.png",
+    "狠数据候选 10 条",
+    "转折局候选 24 局，取前 5",
+    "赛果事实闸：蒂亚福 5-7 3-6 7-5 6-3 7-6(6) 米切尔森（赢家视角）",
+    "文案通道 deepseek · deepseek-v4-pro",
+    "中文热点：扫 231 条，没有撞上这两位球员",
+    "背景聚合：H2H/近况/排名/中文热点已备齐（年龄/纪录/金句要 human_context 调研补，见 spec 合同）",
+    "推送文案已通过事实校验；默认开启 QC 后自动推送",
+    "窗口起草 6 段",
+    "⚠️ 封面抓取没成（SystemExit: 2026-09-06–2026-09-08 窗口里扫了 112 场，没有同时出现 ['tiafoe', 'michelsen'] 的比赛）——portrait 留空，终审或 render 前再补"
+  ],
+  "_prior_duration": {
+    "flashscore": "4:41:00",
+    "reason": "Flashscore elapsed includes approximately three minutes beyond the official match clock; AP report and visible source Rolex clock in match-winning embrace show 4:38."
+  },
+  "_prior_editorial": {
+    "beats": [
+      "前两盘，米切尔森的一发得分率都在七成以上，分别以七比五和六比三拿下，而蒂亚福首盘一发得分率只有百分之五十三。",
+      "从第三盘起，蒂亚福的一发开始回升，七比五、六比三连扳两盘，并在第四盘一度连续保住七个发球局。",
+      "决胜盘进入抢七，蒂亚福七比六拿下，总分一百七十对一百七十三，净输三分却赢下比赛，这也是他对米切尔森的第三场连胜。"
+    ],
+    "chapters": [
+      "前两盘怎么输的",
+      "怎么从两盘落后翻回来",
+      "决胜盘赢在哪儿"
+    ],
+    "hook": [
+      "输三个总分",
+      "却赢了这场比赛"
+    ],
+    "human_context": "这是蒂亚福在美网的主场之战，他最近五场保持全胜，米切尔森近五场四胜。此前两次交手，蒂亚福保持全胜，并且硬地和红土各赢一次。",
+    "narration": [
+      "前两盘，米切尔森的一发得分率都在七成以上，分别以七比五和六比三拿下，而蒂亚福首盘一发得分率只有百分之五十三。",
+      "从第三盘起，蒂亚福的一发开始回升，七比五、六比三连扳两盘，并在第四盘一度连续保住七个发球局。",
+      "决胜盘进入抢七，蒂亚福七比六拿下，总分一百七十对一百七十三，净输三分却赢下比赛，这也是他对米切尔森的第三场连胜。"
+    ],
+    "question": "总分落后，是怎么把这场五盘大战赢下来的？",
+    "thesis": "米切尔森全场多拿 3 分，但蒂亚福在最后两盘的一发和关键分上完成反转，赢下美网五盘大战。"
+  },
+  "_prior_quote_translation": [
+    {
+      "at": 0.14,
+      "text": ">> for the number 11 seed\n>> 对于11号种子"
+    },
+    {
+      "at": 8.62,
+      "text": ">> game. Tho\n>> 比赛。虽然"
+    },
+    {
+      "at": 11.98,
+      "text": ">> a comeback\n>> 一场逆转"
+    },
+    {
+      "at": 13.74,
+      "text": ">> that is extra special\n>> 这格外特别"
+    }
+  ],
+  "_prior_visual_evidence": [
+    {
+      "cold_open": {
+        "confidence": 0.85,
+        "end": 52.7,
+        "kind": "match_point",
+        "reason": "36.5–38.5s 米切尔森回球失误，比赛结束；38.5–40.5s 米切尔森握拳怒吼庆祝（赢家）；40.5–46.5s 观众席起立鼓掌；48.5–52.5s 比分板显示 MEN'S SINGLES QUARTERFINAL TIAFOE 0 MICHELSEN 0（即将切到颁奖/赛后），场地为 US Open 蓝色硬地。",
+        "start": 36.67,
+        "winner_visible": true
+      },
+      "cover": {
+        "confidence": 0.82,
+        "moment": "winner_celebration",
+        "reason": "画面中穿粉色上衣、戴粉色头巾的选手与第 70–96s、110–120s 的米切尔森一致；现场计分板显示 TIAFOE vs MICHELSEN，US Open 蓝场硬地，与赛果一致。",
+        "same_match": true,
+        "subject": "米切尔森",
+        "wrong_or_old": false
+      },
+      "cover_image": "",
+      "ending": {
+        "confidence": 0.85,
+        "end": 52.7,
+        "kind": "winner_celebration",
+        "reason": "36.5–38.5s 赛点制胜分后米切尔森握拳怒吼（赢家），40.5–46.5s 观众欢呼，48.5–50.5s 现场信息板显示 MEN'S SINGLES QUARTERFINAL — FRANCIS TIAFOE / ALEX MICHELSEN，完整覆盖冷开场窗口。",
+        "start": 36.67,
+        "winner_visible": true
+      },
+      "input_sha256": "8956ec172433b9101befbd195d4be8260645db86a56feb49cbbb9ca189824d07",
+      "inputs": [
+        "contact_00.jpg",
+        "contact_01.jpg",
+        "contact_02.jpg",
+        "contact_03.jpg"
+      ],
+      "model": "MiniMax-M3",
+      "model_attempts": 1,
+      "problems": [
+        "没有官方高清封面候选",
+        "封面人物应为 蒂亚福，模型识别为 米切尔森"
+      ],
+      "retryable": false,
+      "status": "waiting",
+      "visual_status": "waiting"
+    },
+    {
+      "cold_open": {
+        "confidence": 0.97,
+        "end": 127.53,
+        "kind": "match_point",
+        "reason": "112.5–118.5s 比分牌显示 MATCH POINT，TIAFOE 9 / MICHELSEN 6；122.5–126.5s 蒂亚福（饱和品红Lululemon衣+灰袖、品红头带、深肤色与胡须）高举拳/拍庆祝，是制胜分后的赢家庆祝；终止于127.53切点（下一镜为网前致意）。",
+        "start": 112.5,
+        "winner_visible": true
+      },
+      "cover": {
+        "confidence": 0.96,
+        "moment": "winner_celebration",
+        "reason": "封面人物穿饱和品红Lululemon衫、灰袖、品红头带与同色腕带，深肤色与胡须，与集锦中蒂亚福完全一致；双臂高举仰天、表情如释重负，是本场赛点后赢家庆祝；背景蓝色挡板上白色us open字样与现场US Open赛事标识一致。",
+        "same_match": true,
+        "subject": "蒂亚福",
+        "wrong_or_old": false
+      },
+      "cover_image": "assets/reel/tiafoe-michelsen-cover.jpg",
+      "ending": {
+        "confidence": 0.97,
+        "end": 127.53,
+        "kind": "winner_celebration",
+        "reason": "112.5–118.5s 比分牌 MATCH POINT；122.5–126.5s 蒂亚福高举双臂庆祝；终止于127.53切点，完整覆盖冷开场窗口并保持3–30秒收官长度。",
+        "start": 112.5,
+        "winner_visible": true
+      },
+      "input_sha256": "0b01645f554d7c664371d4b608b00530e689e7e32e1dfa3f2bb08a71afbfa47b",
+      "inputs": [
+        "contact_00.jpg",
+        "contact_01.jpg",
+        "contact_02.jpg",
+        "contact_03.jpg",
+        "contact_04_score_detail.jpg"
+      ],
+      "model": "MiniMax-M3",
+      "model_attempts": 2,
+      "problems": [
+        "ending 理由引用窗口外时间：[30.0]"
+      ],
+      "retryable": false,
+      "status": "waiting",
+      "visual_status": "waiting"
+    }
+  ],
+  "_production": {
+    "benchmark_context": "用户计时从本次请求起持续计时，复用之前自动 probe 的源片、字幕及全源接触表；本次加强内容与数据版式。",
+    "court": "Arthur Ashe Stadium",
+    "event": "US Open",
+    "kind": "orchestrated_reel",
+    "received_at": "2026-09-09T00:24:56Z",
+    "round": "Quarter-Finals",
+    "status": "ready_for_render",
+    "year": 2026
+  },
+  "_segments_source": " + MiniMax 冷开场/结尾视觉闸",
+  "_tts_backend_why": "Azure known 401 from prior production; use same Yunjian via Edge from the outset, no Azure-only style/lead_pause.",
+  "_turning_points": [
+    {
+      "density": 6,
+      "label": "【Set 2】3-6  米切尔森发球，米切尔森拿下  密度6  ← 3个盘点",
+      "tags": [
+        "3个盘点"
+      ]
+    },
+    {
+      "density": 6,
+      "label": "【Set 3】7-5  米切尔森发球，蒂亚福拿下  密度6  ← 2个破发点、2个盘点、破发成功",
+      "tags": [
+        "2个破发点",
+        "2个盘点",
+        "破发成功"
+      ]
+    },
+    {
+      "density": 5,
+      "label": "【Set 4】3-2  蒂亚福发球，米切尔森拿下  密度5  ← 5个破发点",
+      "tags": [
+        "5个破发点"
+      ]
+    },
+    {
+      "density": 3,
+      "label": "【Set 1】5-5  蒂亚福发球，蒂亚福拿下  密度3  ← 1个破发点、1个盘点",
+      "tags": [
+        "1个破发点",
+        "1个盘点"
+      ]
+    },
+    {
+      "density": 3,
+      "label": "【Set 1】5-7  蒂亚福发球，米切尔森拿下  密度3  ← 1个破发点、1个盘点",
+      "tags": [
+        "1个破发点",
+        "1个盘点"
+      ]
+    }
+  ],
+  "_visual_evidence": {
+    "_revalidated_why": "Run34296579173 failed because the validator treated duration phrase3–30秒收官长度 as source time30s. Fixed parser excludes explicitly labelled duration ranges; original model timecodes, reasons, identities and confidence are unchanged. Regression checks still reject actual150.5s outside112.5–127.53.",
+    "cold_open": {
+      "confidence": 0.97,
+      "end": 127.53,
+      "kind": "match_point",
+      "reason": "112.5–118.5s 比分牌显示 MATCH POINT，TIAFOE 9 / MICHELSEN 6；122.5–126.5s 蒂亚福（饱和品红Lululemon衣+灰袖、品红头带、深肤色与胡须）高举拳/拍庆祝，是制胜分后的赢家庆祝；终止于127.53切点（下一镜为网前致意）。",
+      "start": 112.5,
+      "winner_visible": true
+    },
+    "cover": {
+      "confidence": 0.96,
+      "moment": "winner_celebration",
+      "reason": "封面人物穿饱和品红Lululemon衫、灰袖、品红头带与同色腕带，深肤色与胡须，与集锦中蒂亚福完全一致；双臂高举仰天、表情如释重负，是本场赛点后赢家庆祝；背景蓝色挡板上白色us open字样与现场US Open赛事标识一致。",
+      "same_match": true,
+      "subject": "蒂亚福",
+      "wrong_or_old": false
+    },
+    "cover_image": "assets/reel/tiafoe-michelsen-cover.jpg",
+    "ending": {
+      "confidence": 0.97,
+      "end": 127.53,
+      "kind": "winner_celebration",
+      "reason": "112.5–118.5s 比分牌 MATCH POINT；122.5–126.5s 蒂亚福高举双臂庆祝；终止于127.53切点，完整覆盖冷开场窗口并保持3–30秒收官长度。",
+      "start": 112.5,
+      "winner_visible": true
+    },
+    "input_sha256": "0b01645f554d7c664371d4b608b00530e689e7e32e1dfa3f2bb08a71afbfa47b",
+    "inputs": [
+      "contact_00.jpg",
+      "contact_01.jpg",
+      "contact_02.jpg",
+      "contact_03.jpg",
+      "contact_04_score_detail.jpg"
+    ],
+    "model": "MiniMax-M3",
+    "model_attempts": 2,
+    "problems": [],
+    "retryable": false,
+    "status": "pass",
+    "visual_status": "pass"
+  },
+  "cover": {
+    "eyebrow": "赛场之上",
+    "hook": "两盘落后\n他三次追了回来",
+    "layout": "solo",
+    "matchup": [
+      {
+        "country": "USA",
+        "name": "蒂亚福",
+        "name_en": "frances tiafoe",
+        "rank": 12
+      },
+      {
+        "country": "USA",
+        "name": "米切尔森",
+        "name_en": "alex michelsen",
+        "rank": 46
+      }
+    ],
+    "portrait": {
+      "_portrait_why": "Frances Tiafoe, of the United States, celebrates winning a match against Alex Michelsen, of the United States, during the quarterfinal round of the U.S. Open tennis championships, Tuesday, Sept. 8, 2026, in New York. (AP Photo/Seth Wenig) Source: https://apnews.com/article/us-open-mens-quarterfinals-tiafoe-shelton-alcaraz-072007b80b81b54e5a86e377ffdbb048; original https://assets.apnews.com/6f/07/b915c7e6cf7d0ffd3e95edac4636/acf0b4582983458da302a711bd9b34da",
+      "image": "assets/reel/tiafoe-michelsen-cover.jpg"
+    },
+    "result": "5-7 3-6 7-5 6-3 7-6(6)",
+    "scoreboard": {
+      "_court_why": "赛果源结构化 court 字段",
+      "_duration_why": "Official on-court match clock reads 4:38 during the final embrace; corroborated by AP, correcting Flashscore elapsed 4:41.",
+      "court": "Arthur Ashe Stadium",
+      "duration_source": {
+        "field": "duration",
+        "url": "data:application/json,%7B%22duration%22%3A%224%3A38%3A00%22%2C%22source%22%3A%22US%20Open%20source%20J1ljGoL7be0%2C%20Rolex%20match%20clock%20visible%20during%20net%20embrace%20at%20source%20153.41s%3B%20AP%20same-match%20report%20corroborates%204h38%22%7D"
+      }
+    },
+    "subject": "蒂亚福",
+    "topic": "2026 美网 1/4决赛",
+    "winner": "蒂亚福"
+  },
+  "editorial": {
+    "beats": [
+      "首盘的差距，不只是五比七。米切尔森十五个制胜分，对手只有四个；蒂亚福的一发得分率，也只有百分之五十三。现在第二盘来到盘点，年轻人继续把球打深，压住对手。拿下这一分，六比三，两盘领先。第一次打大满贯八强，他没有先交学费。这也把问题留给了蒂亚福：想翻回来，光等对手犯错已经不够了。",
+      "第三盘，蒂亚福曾二比四落后。他的一发得分率升到百分之七十九，进攻开始有了支撑。后来米切尔森五比四发球胜赛，没能关上门。蒂亚福连拿三局，七比五续命。到了第四盘，三比一领先的他又面对破发点。看这记反手穿越，把这一分救了回来。这一盘八个破发点，他救下了七个。",
+      "决胜盘，蒂亚福又零比三落后。这一盘他轰出七个Ace，追到五平。但眼前这一分，米切尔森仍在顽强还击。"
+    ],
+    "chapters": [
+      "两盘落后的险境",
+      "胜赛局后的转折",
+      "决胜盘再次追赶"
+    ],
+    "hook": [
+      "两盘落后",
+      "他三次追了回来"
+    ],
+    "human_context": {
+      "angle": "美国德比里，一位第三次闯进美网半决赛，一位第一次来到大满贯八强。",
+      "facts": [
+        "蒂亚福以5-7 3-6 7-5 6-3 7-6(6)击败米切尔森。",
+        "蒂亚福 170 - 米切尔森 173，净差 3 分，米切尔森 领先",
+        "第1盘53% → 第2盘67% → 第3盘79% → 第4盘63% → 第5盘70%",
+        "第1盘78% → 第2盘72% → 第3盘75% → 第4盘67% → 第5盘71%",
+        "8/17（47%）",
+        "蒂亚福28岁、世界第12、11号种子；米切尔森22岁、世界第46。",
+        "第三盘米切尔森5-4发球胜赛；第五盘蒂亚福0-3落后。",
+        "蒂亚福第三次打进美网半决赛。"
+      ],
+      "sources": [
+        "https://www.youtube.com/watch?v=J1ljGoL7be0",
+        "https://www.flashscore.com/match/tennis/bmsTFvCm/#/match-summary",
+        "https://www.atptour.com/en/news/michelsen-tiafoe-us-open-2026-qf-tuesday",
+        "https://www.tennis.com/tournaments/us-open/matches/f-tiafoe-vs-a-michelsen-2026-09-08"
+      ]
+    },
+    "mode": "match_review",
+    "narration": [
+      "首盘的差距，不只是五比七。米切尔森十五个制胜分，对手只有四个；蒂亚福的一发得分率，也只有百分之五十三。现在第二盘来到盘点，年轻人继续把球打深，压住对手。拿下这一分，六比三，两盘领先。第一次打大满贯八强，他没有先交学费。这也把问题留给了蒂亚福：想翻回来，光等对手犯错已经不够了。",
+      "第三盘，蒂亚福曾二比四落后。他的一发得分率升到百分之七十九，进攻开始有了支撑。后来米切尔森五比四发球胜赛，没能关上门。蒂亚福连拿三局，七比五续命。到了第四盘，三比一领先的他又面对破发点。看这记反手穿越，把这一分救了回来。这一盘八个破发点，他救下了七个。",
+      "决胜盘，蒂亚福又零比三落后。这一盘他轰出七个Ace，追到五平。但眼前这一分，米切尔森仍在顽强还击。"
+    ],
+    "question": "两盘落后，又两次被逼到悬崖边，蒂亚福如何翻回来？",
+    "thesis": "第三盘发球胜赛局没守住、第四盘关键保发、第五盘0-3追平后抢十兑现；总得分落后仍可凭关键机会逆转。"
+  },
+  "layout": "band",
+  "push": {
+    "auto": true,
+    "lead": "总得分少三分，怎么赢下五盘？从第三盘发球胜赛局，到决胜盘零比三，再到抢十十比六，逐段复盘蒂亚福逆转米切尔森的关键。",
+    "summary": "蒂亚福让二追三进半决赛"
+  },
+  "scorebox": [
+    104,
+    888,
+    736,
+    978
+  ],
+  "segments": [
+    {
+      "_ending_payoff_required": true,
+      "_quote_kind": "broadcast",
+      "_quote_review": "Manually corrected obvious ASR proper-name error 'Tho' to verified Tiafoe and corresponding mistranslation 虽然; stripped transcript >> markers. Original model translation retained in _prior_quote_translation. No added spoken claim.",
+      "_score_inset_why": "score03 confirms board disappears after matchpoint before winner celebration.",
+      "_why": "MiniMax 视觉证据：112.5–118.5s 比分牌显示 MATCH POINT，TIAFOE 9 / MICHELSEN 6；122.5–126.5s 蒂亚福（饱和品红Lululemon衣+灰袖、品红头带、深肤色与胡须）高举拳/拍庆祝，是制胜分后的赢家庆祝；终止于127.53切点（下一镜为网前致意）。；英文原声来自 captions.txt。",
+      "crosses_cut": "完整赛点从发球准备到回合结束及赢家庆祝；源片114.86和121.96切点均属于同一赛点。",
+      "end": 127.53,
+      "fit": "crop",
+      "narration": "",
+      "quote": [
+        {
+          "at": 0.14,
+          "text": "For the number 11 seed.\n这位 11 号种子的机会。"
+        },
+        {
+          "at": 8.62,
+          "text": "Game, Tiafoe.\n这一局，蒂亚福。"
+        },
+        {
+          "at": 11.98,
+          "text": "A comeback...\n一场逆转……"
+        },
+        {
+          "at": 13.74,
+          "text": "That is extra special.\n意义非凡。"
+        }
+      ],
+      "score_inset": true,
+      "score_inset_windows": [
+        [
+          112.5,
+          121.9
+        ]
+      ],
+      "start": 112.5
+    },
+    {
+      "_why": "首盘完整回合与米切尔森反应，先交代赛事、年龄和背景。",
+      "crosses_cut": "所选窗口跨同场转播回合和随后的反应镜头；旁白区分此刻画面和全盘回顾，按contact和score sheets逐段核实。",
+      "end": 23.35,
+      "narration": "北京时间九月九日凌晨两点半左右，美网男单四分之一决赛。二十八岁的蒂亚福，对上首次闯进大满贯八强的二十二岁米切尔森。这场美国德比，先从年轻人的进攻说起。",
+      "score_inset": true,
+      "start": 3.35
+    },
+    {
+      "_why": "自动链机械插的章节卡（review 路线 ⑤）：editorial.chapters 对应这个 beat，插在它的第一段之前",
+      "image": "<title_card>{\"text\": \"两盘落后的险境\", \"kicker\": \"01\"}",
+      "kicker": "01",
+      "narration": "两盘落后的险境",
+      "seconds": 2.8,
+      "title_card": "两盘落后的险境"
+    },
+    {
+      "_beat": 1,
+      "_score_inset_why": "score_01 shows no board40.5–48.5 and64.5–68.5; transition to board clear by52.5; gate excludes these false positives.",
+      "_why": "完整第二盘盘点与反应，原声说明米切尔森两盘领先；在第三盘第一个回合开始之前收住。",
+      "crosses_cut": "所选窗口跨同场转播回合和随后的反应镜头；旁白区分此刻画面和全盘回顾，按contact和score sheets逐段核实。",
+      "end": 52.6,
+      "narration": "首盘的差距，不只是五比七。米切尔森十五个制胜分，对手只有四个；蒂亚福的一发得分率，也只有百分之五十三。现在第二盘来到盘点，年轻人继续把球打深，压住对手。拿下这一分，六比三，两盘领先。第一次打大满贯八强，他没有先交学费。这也把问题留给了蒂亚福：想翻回来，光等对手犯错已经不够了。",
+      "score_inset": true,
+      "score_inset_windows": [
+        [
+          23.36,
+          39
+        ],
+        [
+          51.5,
+          52.6
+        ]
+      ],
+      "start": 23.36
+    },
+    {
+      "_why": "自动链机械插的章节卡（review 路线 ⑤）：editorial.chapters 对应这个 beat，插在它的第一段之前",
+      "image": "<title_card>{\"text\": \"胜赛局后的转折\", \"kicker\": \"02\"}",
+      "kicker": "02",
+      "narration": "胜赛局后的转折",
+      "seconds": 2.8,
+      "title_card": "胜赛局后的转折"
+    },
+    {
+      "_beat": 2,
+      "_why": "70.57–84.5第三盘2-4，后转第四盘3-1破发点；叙述第三盘结局后清楚报第四盘，不把普通分写成赢盘。",
+      "crosses_cut": "所选窗口跨同场转播回合和随后的反应镜头；旁白区分此刻画面和全盘回顾，按contact和score sheets逐段核实。",
+      "end": 98.05,
+      "narration": "第三盘，蒂亚福曾二比四落后。他的一发得分率升到百分之七十九，进攻开始有了支撑。后来米切尔森五比四发球胜赛，没能关上门。蒂亚福连拿三局，七比五续命。到了第四盘，三比一领先的他又面对破发点。看这记反手穿越，把这一分救了回来。这一盘八个破发点，他救下了七个。",
+      "score_inset": true,
+      "start": 70.57
+    },
+    {
+      "_why": "自动链机械插的章节卡（review 路线 ⑤）：editorial.chapters 对应这个 beat，插在它的第一段之前",
+      "image": "<title_card>{\"text\": \"决胜盘再次追赶\", \"kicker\": \"03\"}",
+      "kicker": "03",
+      "narration": "决胜盘再次追赶",
+      "seconds": 2.8,
+      "title_card": "决胜盘再次追赶"
+    },
+    {
+      "_beat": 3,
+      "_score_inset_why": "score_03 board present120.5 and removed122.5 at winning reaction; no pasted dark shirts after point.",
+      "_why": "第五盘5-5完整回合及反应，在抢十赛点镜头前收住；赛点在最终收官段完整呈现。",
+      "crosses_cut": "所选窗口跨同场转播回合和随后的反应镜头；旁白区分此刻画面和全盘回顾，按contact和score sheets逐段核实。",
+      "end": 111.8,
+      "narration": "决胜盘，蒂亚福又零比三落后。这一盘他轰出七个Ace，追到五平。但眼前这一分，米切尔森仍在顽强还击。",
+      "score_inset": true,
+      "score_inset_windows": [
+        [
+          98.06,
+          111.8
+        ]
+      ],
+      "start": 98.06
+    },
+    {
+      "_why": "用户要求数据页停留10秒；原生1080x960铺满，数字54px，保留完整九项统计。",
+      "image": "<stat_card>",
+      "narration": "总分少三分，失误少十八次。同样破发八次，蒂亚福用的机会更少。",
+      "seconds": 10,
+      "stat_card": true
+    },
+    {
+      "_reviewed_ending_boundary": "Full source contact_02: embrace continues through152.5s; separated154.5s. Keep complete handshake then stop, no later crowd/career segment. Raw model report retained.",
+      "_score_inset_why": "score_03: board present120.5s, absent122.5s onward; do not paste shirts or crowd during embrace.",
+      "_why": "正文重新兑现冷开场的完整结局：112.5–118.5s 比分牌 MATCH POINT；122.5–126.5s 蒂亚福高举双臂庆祝；终止于127.53切点，完整覆盖冷开场窗口并保持3–30秒收官长度。",
+      "crosses_cut": "Same-match winner reaction into net embrace, ending after separation at154.5s.",
+      "end": 154.5,
+      "fit": "crop",
+      "narration": "抢十来到九比六，赛点就在眼前。两个人都已经拼了四个多小时。米切尔森发球，蒂亚福接发，胜负悬在这一分。拿下了！十比六，两盘落后的人，笑到了最后。第三次美网半决赛，蒂亚福是这样一点点挣回来的。再看网前，米切尔森哭了。蒂亚福没有急着走开，把年轻的同胞抱在怀里。第一次大满贯八强，离半决赛只差那么一点。你觉得最大的转折，是第三盘发球胜赛局，还是决胜盘零比三后的追赶？",
+      "score_inset": true,
+      "score_inset_windows": [
+        [
+          112.5,
+          121.9
+        ]
+      ],
+      "start": 112.5
+    }
+  ],
+  "slug": "tiafoe-michelsen",
+  "source_url": "https://www.youtube.com/watch?v=J1ljGoL7be0",
+  "stats": {
+    "_source": "Flashscore df_st_1_bmsTFvCm SH=Tiafoe SI=Michelsen; df_hh_1 current KP verified. Aces 10/21, double faults 4/9 and break conversion 8/17 vs 8/23 independently agree with Tennis.com. Full count definitions retain double faults in second-serve opportunities (88/70); Tennis.com excludes them (84/61) and has inconsistent first-serve total 182, so retain self-consistent Flashscore 93+88=181. Raw feed preserved alongside probe.",
+    "a": {
+      "aces": 10,
+      "bp_chances": 17,
+      "bp_conv": 8,
+      "df": 4,
+      "first_in": 93,
+      "first_total": 181,
+      "first_won": 62,
+      "headshot": "assets/players/headshots/atp-TD51.png",
+      "pts_total": 343,
+      "pts_won": 170,
+      "second_total": 88,
+      "second_won": 46,
+      "ue": 43,
+      "winners": 50
+    },
+    "b": {
+      "aces": 21,
+      "bp_chances": 23,
+      "bp_conv": 8,
+      "df": 9,
+      "first_in": 92,
+      "first_total": 162,
+      "first_won": 67,
+      "headshot": "assets/players/headshots/atp-M0QI.png",
+      "pts_total": 343,
+      "pts_won": 173,
+      "second_total": 70,
+      "second_won": 33,
+      "ue": 61,
+      "winners": 55
+    }
+  },
+  "topbar": {
+    "line1": "2026 美网 1/4决赛",
+    "line2": "蒂亚福 5-7 3-6 7-5 6-3 7-6(6) 米切尔森"
+  },
+  "tts_backend": "edge"
+}
