@@ -1,0 +1,79 @@
+{
+  "_facts": [
+    "已实际读取YouTube watch页videoDetails：videoId 2C7_q05gGUk，频道US Open Tennis Championships / UCXbboag48Qlr78zzz6SkzkQ，官方标题明确Press Conference，描述明确八强负于Elena Rybakina之后，lengthSeconds=324。",
+    "已实际读取美网官方https://www.usopen.org/en_US/scores/feeds/2026/players/matches/wta328120_matches.json；2504场，Women's Singles Quarter-Finals，莱巴金娜胜，郑视角6-3 1-6 4-6，用时2:14，Arthur Ashe Stadium。",
+    "已实际下载该视频英文自动字幕json3：20.40–38.64答八强旅程/决胜盘机会；52.08–78.08答穿越球、接二发和长回合；102.88–148.16答比赛节奏；167.12–190.96答继续战斗/提升；201.44–259.20答性格与外界评判；273.60–314.64答中国赛季。自动字幕仍需第二ASR核对，不能视为语言终审通过。"
+  ],
+  "_notes": [
+    "用户原话：做郑钦文赛后发布会采访。该明确请求优先于旧技能仅场上采访的默认限制，使用仓库已有press_conference类型。",
+    "全片问答保留；核实原片末尾转场位置后去赛事片尾，保留网球时差品牌片尾。不得截断记者问题或回答。",
+    "1080×1440，英文原声与逐句中英字幕；不叠中文配音，不镜像；顶栏须同时有大小标题。",
+    "未听到原声前不编造伤情、心态、技战术或未来安排的引语；字幕由现有双ASR与语言审校流程核验。",
+    "来源、字幕、封面及成片QC通过后按既有授权自动微信推送；成功回执及pushed.json齐全才报交付。正文不重复标题，1000字内。",
+    "end 321.5依据自动字幕最后Thank you 320.88设置的候选，渲染后检查最后尾音与赛事片尾转换；记者姓名Cole/Abel等不要凭ASR猜身份。50 down应结合原声核实five-love；calling US Open应核实qualifying。"
+  ],
+  "cover": {
+    "_why": "30秒只是候选，未声称视觉通过。正式封面必须以本次发布会真实清晰正脸帧经视觉闸确认；文字不得挡脸。标题没有冒充受访者引语。",
+    "frame_at": 30,
+    "sub": "美网女单1/4决赛 赛后发布会",
+    "tag": "郑钦文 · 赛后开麦",
+    "title": [
+      "输球之后",
+      "我还是我"
+    ]
+  },
+  "end": 321.5,
+  "event": "2026 美网 女单1/4决赛",
+  "featured_player": "郑钦文",
+  "interview_kind": "赛后新闻发布会",
+  "match": {
+    "event": "2026 US Open",
+    "event_search": "US Open",
+    "id": "2026:us-open:womens-quarterfinal:elena-rybakina-qinwen-zheng",
+    "loser": "郑钦文",
+    "loser_en": "Qinwen Zheng",
+    "participants": [
+      "莱巴金娜",
+      "郑钦文"
+    ],
+    "round": "Women's Singles Quarterfinal",
+    "winner": "莱巴金娜",
+    "winner_en": "Elena Rybakina",
+    "year": 2026
+  },
+  "opening": {
+    "kind": "none",
+    "why": "用户明确指定赛后发布会；官方标题、频道和描述已核验，直接进入发布会问答。"
+  },
+  "push": {
+    "auto": true,
+    "event": "美网",
+    "lead": "6-3、1-6、4-6，郑钦文止步美网八强。赛后发布会上，她谈到决胜盘错过的机会、接二发应更积极，也坦言成绩不好时曾试着收起自己的性格。谈到变化，她说自己比两三年前更开放，但根本没有改变。",
+    "matchup": "郑钦文 vs 莱巴金娜",
+    "score": "6-3 1-6 4-6",
+    "summary": "郑钦文：我还是我"
+  },
+  "requested_content_type": "press_conference",
+  "slug": "zheng-rybakina-us-open-2026-qf-presser",
+  "source": "US Open",
+  "source_title": "Qinwen Zheng Press Conference | 2026 US Open Quarterfinal",
+  "start": 0,
+  "takeaway": {
+    "close": {
+      "ask": "成绩起伏时 你会收起个性吗？",
+      "point": "她说性格有所收敛 但仍是自己"
+    }
+  },
+  "url": "https://www.youtube.com/watch?v=2C7_q05gGUk",
+  "winner": "莱巴金娜",
+  "xhs": "🎾9.10 赛后开麦｜郑钦文：我还是我\n\n最让人停下来听的，不只是那记错过的穿越球。🎙️\n\n6-3、1-6、4-6，郑钦文负于莱巴金娜，止步美网八强。坐到发布会话筒前，她没有回避遗憾：决胜盘有机会，却没抓住；接对手二发时，可以更积极，也该少一些接发失误。\n\n🎾 她觉得回合拉长时，自己拿到的分更多。可比赛的差别，偏偏就落在那几个关键分上。\n\n记者问她，性格和一两年前有什么不同。\n\n她说，受伤后成绩不理想，自己试着收起一些性格、少表现一点，因为没有好成绩时，人们会评判你。但她还是同一个人，无论赢球还是输球。\n\n比起两三年前，她觉得自己更开放了，但内里的自己没变。\n\n🇨🇳 说到回中国比赛，她既期待，也承认有压力。她给自己的提醒是：冷静下来，一天天训练，一场场打，把注意力放在当下。\n\n这次美网带走了遗憾，也帮她一点点找回比赛的节奏。\n\n成绩起伏的时候，你会选择收起自己的个性吗？\n\n#网球时差 #赛后开麦 #郑钦文 #莱巴金娜 #美网",
+  "source_metadata": {
+    "video_id": "2C7_q05gGUk",
+    "channel_id": "UCXbboag48Qlr78zzz6SkzkQ",
+    "channel": "US Open Tennis Championships",
+    "source_url": "https://www.youtube.com/watch?v=2C7_q05gGUk",
+    "duration_s": 324,
+    "method": "retrieved_youtube_watch_videoDetails",
+    "retrieved_at": "2026-09-09T19:35:12Z"
+  }
+}
