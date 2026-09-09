@@ -1,0 +1,58 @@
+{
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 3.827,
+  "layout": "band",
+  "segments_seconds": 175.75,
+  "topbar": {
+    "line1": "2026 美网 1/4决赛",
+    "line2": "谢尔顿 6-7(5) 6-1 6-3 1-6 7-6(7) 阿尔卡拉斯",
+    "start": 1.2,
+    "end": 176.95
+  },
+  "film_seconds": 180.814,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 2.424,
+    "2": 12.12,
+    "3": 14.016,
+    "4": 2.232,
+    "5": 14.928,
+    "6": 2.112,
+    "7": 11.808,
+    "9": 15.048,
+    "10": 9.096,
+    "11": 5.736
+  },
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "shelton-alcaraz",
+    "received_at": "2026-09-09T08:17:35Z",
+    "artifact_ready_at": "2026-09-09T08:24:35Z",
+    "elapsed_seconds": 420.237,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "9660eb48b0f4f762d3e4fa2cba81c018a6a8347d3a62a5d44fac4bbf5840374b",
+    "spec_sha256": "e172ebd5daaaa870d1f0783c1be2908e95451504295d0c948eedc8fcd1526fb1",
+    "request_received_at": "2026-09-09T07:45:49Z",
+    "request_to_artifact_seconds": 2326.237,
+    "run_id": "34328318645",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-09-09T08:20:14Z",
+        "run_id": "34328318645"
+      }
+    ],
+    "render_seconds": 261.237,
+    "pre_render_seconds": 159.0
+  },
+  "film_sha256": "9660eb48b0f4f762d3e4fa2cba81c018a6a8347d3a62a5d44fac4bbf5840374b",
+  "film_bytes": 94775280,
+  "qc_attestation_sha256": "2c07803a6c9dbbf33d1706d9d33e027bcc47fc0ec435937d4d0e2d151bd1a00e",
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-shelton-alcaraz/shelton-alcaraz.mp4",
+  "video_bytes": 94775280
+}
