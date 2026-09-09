@@ -173,6 +173,19 @@ jobs:
       # **它从 gate 那一步来，不在这儿再算一遍**——这一步和下面推送那一步
       # 各算一次标题，`wait_for_copy_page(expect=title)` 要求两次算出同一句，
       # 跨过上海午夜就会分叉成两个日期，然后等一句永远不出现的话。
+      - name: 郑钦文发布会最终 MiniMax 视觉复核
+        if: steps.gate.outputs.found == 'true' && steps.gate.outputs.slug == 'zheng-rybakina-us-open-2026-qf-presser'
+        timeout-minutes: 12
+        env:
+          MINIMAX_API_KEY: ${{ secrets.MINIMAX_API_KEY }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if ! command -v ffmpeg >/dev/null || ! command -v ffprobe >/dev/null; then
+            source tools/ci_apt_install.sh
+            ensure_ffmpeg
+          fi
+          python tools/audit_zheng_presser_minimax.py
+
       - name: 写复制页（必须排在提交之前）
         if: steps.gate.outputs.found == 'true'
         run: |
