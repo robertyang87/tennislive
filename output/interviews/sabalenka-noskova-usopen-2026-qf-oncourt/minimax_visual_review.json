@@ -1,0 +1,62 @@
+{
+  "status": "pass",
+  "model": "MiniMax-M3",
+  "film_sha256": "9291b3dad9a11a0ec225f4a2419c0137c431933052807fd73d438bcdeedae629",
+  "frames": [
+    "图片1：成片5.00秒，同场赛点",
+    "图片2：成片12.00秒，同场获胜庆祝",
+    "图片3：成片18.00秒，同场网前致意",
+    "图片4：成片53.28秒，采访正文，核对人物、场上场景及中英字幕",
+    "图片5：成片103.27秒，采访正文，核对人物、场上场景及中英字幕",
+    "图片6：成片155.77秒，采访正文，核对人物、场上场景及中英字幕",
+    "图片7：最终封面，仅用这一张判断封面"
+  ],
+  "result": {
+    "content_type": {
+      "value": "on_court",
+      "reason": "图片4–6均显示同一名身穿橙红色Nike背心、佩戴金色项链的女性球员站在硬地球场上，面对印有US Open标志的话筒，背景可见US Open蓝色挡板、观众席及网前工作人员。场景为赛后球场内即时采访，符合on_court定义；非颁奖台、无奖杯、无话筒台，排除ceremony。",
+      "confidence": 0.97
+    },
+    "interviewee": {
+      "value": "萨巴伦卡",
+      "visible": true,
+      "speaking_or_receiving_trophy": true,
+      "reason": "图片4–6中人物面部清晰可见，金发盘头、橄榄色眼睛、金色项链、橙红色Nike背心、左前臂可见纹身，均与Sabalenka已知形象一致；图片5中她闭眼仰头似在说话或回应提问，图片6眼睛张开准备应答，结合图片4手扶额头的赛后放松姿态，可确认为受访者在讲话状态。记分牌显示...LENKA / ...OVA CZE，残部对应SABALENKA / NOSKOVA，与事实包吻合。",
+      "confidence": 0.96
+    },
+    "same_match_lead_in": {
+      "value": true,
+      "reason": "图片1–3（开场）与图片4–6（正文）均出现同一名橙红色背心的球员与同款背心样式；图片1的US Open记分牌明确显示LENKA/OVA CZE及7-6¹ 3-6 7-6⁷比数，与事实包萨巴伦卡7-6¹ 3-6 7-6⁷胜诺斯科娃完全一致；图片2网前拥抱场景中的白色背心球员即为诺斯科娃；图片3虽显示另一橙红色背心人物但与图片2/4–6为同一系列画面。场地均为蓝绿色硬地、同一US Open蓝墙、同一记分牌系统，赛事标志一致。",
+      "confidence": 0.98
+    },
+    "mirrored": {
+      "value": false,
+      "reason": "图片4–6中US Open标志文字、记分牌L/R排列顺序（虽部分被裁切）方向正常，未见左右翻转；图片1记分牌'SABALENKA / NOSKOVA CZE'文字方向可读，IBM、Emirates、J.P.Morgan、Rolex品牌文字正向，证明非镜像。",
+      "confidence": 0.95
+    },
+    "bilingual_subtitles": {
+      "value": true,
+      "reason": "图片2字幕英中分行：'stretched to the limit in New York,' / '在纽约被逼到了极限'；图片3：'but eventually prevails' / '但最终还是赢了下来'；图片4：'and then you went to another gear.' / '随后你又提升了一个档次'；图片5：'Match point, second serve.' / '赛点 面对二发'；图片6：'Maybe a bit better game on the net,' / '也许把网前技术练得更好些'。英文在上、中文在下，文字清晰可读，未被裁切遮挡；中英文逐句一一对应。",
+      "confidence": 0.97
+    },
+    "cover": {
+      "subject": "萨巴伦卡",
+      "same_program": true,
+      "frontal": true,
+      "eyes_open": true,
+      "clear": true,
+      "reason": "图片7（封面）显示Sabalenka正面、睁眼、面部清晰，金发盘头、橄榄色眼睛、金色项链、橙红色Nike背心，与正文图片4–6为同一人物、同一场赛后采访语境；背景可见US Open蓝墙及观众席，与正文场景同场同语境；图片左上角'网球时差·赛后开麦'及副标题'以为要输 反而放开手脚'与正文主题一致，无镜像或模糊；下方文字'以为比赛结束了 反而放开了手脚'与正文最后一帧语境吻合。",
+      "confidence": 0.96
+    }
+  },
+  "issues": [],
+  "normalization": {
+    "fields": [
+      "interviewee.value",
+      "cover.subject"
+    ],
+    "original_value": "Sabalenka",
+    "normalized_value": "萨巴伦卡",
+    "reason": "Canonical English surname to Chinese name for this confirmed Sabalenka interview; all visual booleans and confidence unchanged. Raw response retained."
+  }
+}
