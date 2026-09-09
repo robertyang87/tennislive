@@ -270,9 +270,16 @@ def test_render质检落库后自动派push_only且本趟不直接发送():
 
     dispatch = body[body.index("- name: render 质检落库后自动派发微信推送") :]
     dispatch = dispatch[: dispatch.index("- name: ", 10)]
-    assert "mode == 'render'" in dispatch and "inputs.push == 'true'" in dispatch
+    assert "mode == 'render'" in dispatch
     assert "steps.render_auto_gate.outputs.found == 'true'" in dispatch, (
         "表单默认 push=false 不能压掉 spec 的 push.auto=true；质检通过后必须自动派发")
+    # ⚠️ 主语 2026-09-09 变了：原来这儿还断言 `inputs.push == 'true'` 也在 `if` 里，
+    # 而那一半正是把整套发布门禁旁路掉的那个 `||`（近 10 次失败率 80% 的来路）。
+    # 强制推送的意图现在交给上一步的 `--forced`，派发只认门禁的结论。
+    # 完整来路和反向验证在 tests/test_auto_push.py::test_派发只认门禁的结论不许再拿表单旁路。
+    cond = dispatch[dispatch.index("if:"): dispatch.index("env:")]
+    assert "inputs.push" not in cond, (
+        "派发条件又拿表单旁路了整套发布门禁")
     assert "gh workflow run match-reel.yml" in dispatch
     assert "-f mode=push" in dispatch and "-f push=true" in dispatch
 

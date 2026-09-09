@@ -14,7 +14,9 @@ run 30755226229）。43 秒不值得优化，真正的成本是**人的往返**�
    文件大小完全一致；`render.json` 只是流程信号，不能冒充“质检通过”
 3. spec 里必须显式写 `"push": {"auto": true}` ——**默认关**，
    和 `mixed_fps` / `silent_source` 一个形状：认领这一步把「想清楚了」和
-   「凑合一下」分开
+   「凑合一下」分开。**这是六道里唯一一道 `--forced` 放得宽的**（它问的是
+   意图，而表单上勾「强制推送」就是把意图说出口）；其余五道问的是事实，
+   `--forced` 一道都拦得住——详见 `wants_auto_push` 的 docstring
 4. 这条**没推过**：`<outdir>/pushed.json` 在仓库里就说明发过了。
    查产物，不查信号——「工作流跑过一次」证明不了消息发出去了。
    ⚠️ 查的是 **`git ls-files`，不是 `test -f`**，两个原因缺一不可：
@@ -155,8 +157,36 @@ def validate_qc(repo: Path, slug: str, outdir: Path) -> str:
     return film_hash
 
 
-def wants_auto_push(repo: Path, slug: str, outdir: Path) -> None:
-    """六道闸，过不了就 `Skip`（带理由）。"""
+def wants_auto_push(repo: Path, slug: str, outdir: Path,
+                    forced: bool = False) -> None:
+    """六道闸，过不了就 `Skip`（带理由）。
+
+    `forced` 是**表单上那个「强制推送」勾选**（`match-reel` 的 `push=true`）。
+    它只放宽第 3 道——「spec 里没写 `push.auto=true`」——因为那一道问的是
+    **意图**（这条要不要自动发），而人勾了那个框就是把意图说出口了。
+
+    ⚠️ **其余五道一个字都不松，`forced` 也拦得住**，因为它们问的是**事实**：
+    成片是不是这一版（`validate_qc`）、账本里有没有记录、`pushed.json` 在不在。
+    「已经发过了」是事实不是意图，人再想发一遍也不该由一个勾选来放行——
+    要重发就先把 `pushed.json` 从仓库里删掉，**那才是显式的决定**。
+
+    来路（2026-09-09）：在这之前 `push=true` 不是「放宽一道」，是**整套门禁
+    连跑都不跑**——`match-reel.yml` 的派发条件写着
+    `(inputs.push == 'true' || 门禁说该发)`，前一半为真就直接派 `mode=push`。
+    于是 `shelton-alcaraz` 那条已经推送过的片子，每重渲一趟就派一趟注定撞在
+    `pushed.json` 上的 push，**每趟都记一条 failure**：近 10 次失败率 80%、
+    连续失败 4（微信告警 18:09）。消息一条都没重复发（闸拦住了），可
+    `pipeline_health` 的失败率是按 conclusion 算的，于是**闸生效的样子和真出错
+    长得一模一样**，而一条常年红的告警会把真正的失败淹掉。
+
+    ⚠️ 更要紧的是那个旁路本身：`--reserve` **不做任何校验**（只写账本），
+    而 `mode=push` 那头的预检只查「成片在不在、`pushed.json` 在不在」——
+    **不查 L2 凭证**。也就是说 `pushed.json` 恰好不在时（第一次渲、或有人删了
+    它），勾一下 `push=true` 就能让一条 QC 没过、成片 hash 对不上的片子一路
+    走到 POST。那道门禁的注释自己写着「复用完整发布门禁，不在 YAML 里另写一份
+    简化判断」，而 `inputs.push == 'true'` 正是在 YAML 里另写的一份，
+    简化到只剩一个布尔。
+    """
     # **render.json 必须还在仓库里。** 工作流那头已经用 --diff-filter=AM 滤掉了
     # 删除项，这儿再兜一层：被删的旧产物（清理被顶替的版本）不是新渲完的片子，
     # 它的 spec 往往还写着 auto:true、目录里又没有 pushed.json——不拦的话会
@@ -180,8 +210,12 @@ def wants_auto_push(repo: Path, slug: str, outdir: Path) -> None:
     from push_reel import POSTER_NAME, push_is_auto  # noqa: PLC0415
 
     if not push_is_auto(copy_path):
-        raise Skip(f"{slug}：spec 里没写 push.auto=true，不自动发"
-                   f"（要开：在 {spec.name} 的 push 块里加一行 \"auto\": true）")
+        # 唯一一道 `forced` 放得宽的闸——它问的是意图，而勾选就是意图。
+        if not forced:
+            raise Skip(f"{slug}：spec 里没写 push.auto=true，不自动发"
+                       f"（要开：在 {spec.name} 的 push 块里加一行 \"auto\": true）")
+        print(f"[强制] {slug}：spec 没写 push.auto，但表单勾了强制推送——"
+              "只放宽这一道，成片身份/账本/pushed.json 照旧要过")
     previous = blocking_attempt(repo, LEDGER_COLUMN, slug, film_hash)
     if previous:
         raise Skip(f"{slug}：持久发布账本已有 {previous.get('status')}（"
@@ -237,13 +271,14 @@ def wants_auto_push(repo: Path, slug: str, outdir: Path) -> None:
             "把海报渲回来，它会随 PR 进 main，这条闸自然就过了。")
 
 
-def pick(changed: list[str], repo: Path) -> tuple[str, Path] | None:
+def pick(changed: list[str], repo: Path,
+         forced: bool = False) -> tuple[str, Path] | None:
     """从这次合并带进来的改动里挑出**唯一**该发的那一条。"""
     picked: list[tuple[str, Path]] = []
     for path in changed:
         try:
             slug, outdir = candidate(path.strip(), repo)
-            wants_auto_push(repo, slug, outdir)
+            wants_auto_push(repo, slug, outdir, forced=forced)
         except Skip as why:
             print(f"[跳过] {why}")
             continue
@@ -303,6 +338,9 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--run", default="", help="--record：这次运行的地址")
     ap.add_argument("--now", default="", help="--record：时间戳")
     ap.add_argument("--repo", default=".", help="仓库根目录")
+    ap.add_argument("--forced", action="store_true",
+                    help="表单勾了「强制推送」：只放宽 push.auto 那一道意图闸，"
+                         "成片身份/持久账本/pushed.json 照旧要过")
     args = ap.parse_args(argv)
 
     repo = Path(args.repo)
@@ -315,7 +353,7 @@ def main(argv: list[str] | None = None) -> int:
             record(outdir, args.run, args.now)  # 兼容历史消费者
         return 0
 
-    found = pick(args.changed, repo)
+    found = pick(args.changed, repo, forced=args.forced)
     if found:
         _emit(*found)
     return 0
