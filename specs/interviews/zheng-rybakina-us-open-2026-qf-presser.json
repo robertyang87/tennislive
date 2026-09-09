@@ -1,171 +1,188 @@
 {
-  "slug": "zheng-rybakina-us-open-2026-qf-presser",
+  "_facts": [
+    "已实际读取YouTube watch页videoDetails：videoId 2C7_q05gGUk，频道US Open Tennis Championships / UCXbboag48Qlr78zzz6SkzkQ，官方标题明确Press Conference，描述明确八强负于Elena Rybakina之后，lengthSeconds=324。",
+    "已实际读取美网官方https://www.usopen.org/en_US/scores/feeds/2026/players/matches/wta328120_matches.json；2504场，Women's Singles Quarter-Finals，莱巴金娜胜，郑视角6-3 1-6 4-6，用时2:14，Arthur Ashe Stadium。",
+    "已实际下载该视频英文自动字幕json3：20.40–38.64答八强旅程/决胜盘机会；52.08–78.08答穿越球、接二发和长回合；102.88–148.16答比赛节奏；167.12–190.96答继续战斗/提升；201.44–259.20答性格与外界评判；273.60–314.64答中国赛季。自动字幕仍需第二ASR核对，不能视为语言终审通过。"
+  ],
+  "_notes": [
+    "用户原话：做郑钦文赛后发布会采访。该明确请求优先于旧技能仅场上采访的默认限制，使用仓库已有press_conference类型。",
+    "全片问答保留；核实原片末尾转场位置后去赛事片尾，保留网球时差品牌片尾。不得截断记者问题或回答。",
+    "1080×1440，英文原声与逐句中英字幕；不叠中文配音，不镜像；顶栏须同时有大小标题。",
+    "未听到原声前不编造伤情、心态、技战术或未来安排的引语；字幕由现有双ASR与语言审校流程核验。",
+    "来源、字幕、封面及成片QC通过后按既有授权自动微信推送；成功回执及pushed.json齐全才报交付。正文不重复标题，1000字内。",
+    "终审修订：比分顶栏按赢家莱巴金娜视角3-6 6-1 6-4；封面源270秒；结尾最后Thank you321.14结束，321.5剪点保留。字幕审查基于多份独立转写与编辑判断，不声称直接听核；新一轮来源/字幕/成片QC通过后按既有授权推送。"
+  ],
   "_production": {
     "received_at": ""
   },
-  "url": "https://www.youtube.com/watch?v=2C7_q05gGUk",
-  "source_title": "Qinwen Zheng Press Conference | 2026 US Open Quarterfinal",
-  "start": 0,
-  "end": 321.5,
-  "asr_model": "small.en",
-  "whisper_model": "medium.en",
-  "segment_budget_px": null,
-  "transcript_verified": false,
-  "transcript_verification": "auto_pending",
-  "column": "赛后开麦",
-  "requested_content_type": "press_conference",
-  "interview_kind": "赛后新闻发布会",
-  "event": "2026 美网 女单1/4决赛",
-  "winner": "莱巴金娜",
-  "featured_player": "郑钦文",
-  "ceremony_subtype": null,
-  "topbar_layout": "event_primary",
-  "subject": {},
-  "opening": {
-    "kind": "none",
-    "why": "用户明确指定赛后发布会；官方标题、频道和描述已核验，直接进入发布会问答。"
+  "_request_origin": {
+    "duration": 324.3015,
+    "request": {
+      "_facts": [
+        "已实际读取YouTube watch页videoDetails：videoId 2C7_q05gGUk，频道US Open Tennis Championships / UCXbboag48Qlr78zzz6SkzkQ，官方标题明确Press Conference，描述明确八强负于Elena Rybakina之后，lengthSeconds=324。",
+        "已实际读取美网官方https://www.usopen.org/en_US/scores/feeds/2026/players/matches/wta328120_matches.json；2504场，Women's Singles Quarter-Finals，莱巴金娜胜，郑视角6-3 1-6 4-6，用时2:14，Arthur Ashe Stadium。",
+        "已实际下载该视频英文自动字幕json3：20.40–38.64答八强旅程/决胜盘机会；52.08–78.08答穿越球、接二发和长回合；102.88–148.16答比赛节奏；167.12–190.96答继续战斗/提升；201.44–259.20答性格与外界评判；273.60–314.64答中国赛季。自动字幕仍需第二ASR核对，不能视为语言终审通过。"
+      ],
+      "_notes": [
+        "用户原话：做郑钦文赛后发布会采访。该明确请求优先于旧技能仅场上采访的默认限制，使用仓库已有press_conference类型。",
+        "全片问答保留；核实原片末尾转场位置后去赛事片尾，保留网球时差品牌片尾。不得截断记者问题或回答。",
+        "1080×1440，英文原声与逐句中英字幕；不叠中文配音，不镜像；顶栏须同时有大小标题。",
+        "未听到原声前不编造伤情、心态、技战术或未来安排的引语；字幕由现有双ASR与语言审校流程核验。",
+        "来源、字幕、封面及成片QC通过后按既有授权自动微信推送；成功回执及pushed.json齐全才报交付。正文不重复标题，1000字内。",
+        "end 321.5依据自动字幕最后Thank you 320.88设置的候选，渲染后检查最后尾音与赛事片尾转换；记者姓名Cole/Abel等不要凭ASR猜身份。50 down应结合原声核实five-love；calling US Open应核实qualifying。"
+      ],
+      "cover": {
+        "_why": "30秒只是候选，未声称视觉通过。正式封面必须以本次发布会真实清晰正脸帧经视觉闸确认；文字不得挡脸。标题没有冒充受访者引语。",
+        "frame_at": 30,
+        "sub": "美网女单1/4决赛 赛后发布会",
+        "tag": "郑钦文 · 赛后开麦",
+        "title": [
+          "输球之后",
+          "我还是我"
+        ]
+      },
+      "end": 321.5,
+      "event": "2026 美网 女单1/4决赛",
+      "featured_player": "郑钦文",
+      "interview_kind": "赛后新闻发布会",
+      "match": {
+        "event": "2026 US Open",
+        "event_search": "US Open",
+        "id": "2026:us-open:womens-quarterfinal:elena-rybakina-qinwen-zheng",
+        "loser": "郑钦文",
+        "loser_en": "Qinwen Zheng",
+        "participants": [
+          "莱巴金娜",
+          "郑钦文"
+        ],
+        "round": "Women's Singles Quarterfinal",
+        "winner": "莱巴金娜",
+        "winner_en": "Elena Rybakina",
+        "year": 2026
+      },
+      "opening": {
+        "kind": "none",
+        "why": "用户明确指定赛后发布会；官方标题、频道和描述已核验，直接进入发布会问答。"
+      },
+      "push": {
+        "auto": true,
+        "event": "美网",
+        "lead": "6-3、1-6、4-6，郑钦文止步美网八强。赛后发布会上，她谈到决胜盘错过的机会、接二发应更积极，也坦言成绩不好时曾试着收起自己的性格。谈到变化，她说自己比两三年前更开放，但根本没有改变。",
+        "matchup": "郑钦文 vs 莱巴金娜",
+        "score": "6-3 1-6 4-6",
+        "summary": "郑钦文：我还是我"
+      },
+      "requested_content_type": "press_conference",
+      "slug": "zheng-rybakina-us-open-2026-qf-presser",
+      "source": "US Open",
+      "source_metadata": {
+        "channel": "US Open Tennis Championships",
+        "channel_id": "UCXbboag48Qlr78zzz6SkzkQ",
+        "duration_s": 324,
+        "method": "retrieved_youtube_watch_videoDetails",
+        "retrieved_at": "2026-09-09T19:35:12Z",
+        "source_url": "https://www.youtube.com/watch?v=2C7_q05gGUk",
+        "video_id": "2C7_q05gGUk"
+      },
+      "source_title": "Qinwen Zheng Press Conference | 2026 US Open Quarterfinal",
+      "start": 0,
+      "takeaway": {
+        "close": {
+          "ask": "成绩起伏时 你会收起个性吗？",
+          "point": "她说性格有所收敛 但仍是自己"
+        }
+      },
+      "url": "https://www.youtube.com/watch?v=2C7_q05gGUk",
+      "winner": "莱巴金娜",
+      "xhs": "🎾9.10 赛后开麦｜郑钦文：我还是我\n\n最让人停下来听的，不只是那记错过的穿越球。🎙️\n\n6-3、1-6、4-6，郑钦文负于莱巴金娜，止步美网八强。坐到发布会话筒前，她没有回避遗憾：决胜盘有机会，却没抓住；接对手二发时，可以更积极，也该少一些接发失误。\n\n🎾 她觉得回合拉长时，自己拿到的分更多。可比赛的差别，偏偏就落在那几个关键分上。\n\n记者问她，性格和一两年前有什么不同。\n\n她说，受伤后成绩不理想，自己试着收起一些性格、少表现一点，因为没有好成绩时，人们会评判你。但她还是同一个人，无论赢球还是输球。\n\n比起两三年前，她觉得自己更开放了，但内里的自己没变。\n\n🇨🇳 说到回中国比赛，她既期待，也承认有压力。她给自己的提醒是：冷静下来，一天天训练，一场场打，把注意力放在当下。\n\n这次美网带走了遗憾，也帮她一点点找回比赛的节奏。\n\n成绩起伏的时候，你会选择收起自己的个性吗？\n\n#网球时差 #赛后开麦 #郑钦文 #莱巴金娜 #美网"
+    },
+    "request_sha256": "72f8b56fd96dd926b6bf1bd6ab3711ee07069196a7655fab0d0d8d289e013e73",
+    "revision": null
   },
-  "zh": [
-    "有记者提问吗？",
-    "请这位记者提问。",
-    "很遗憾你今天输掉了比赛，",
-    "但这次征程非常出色，",
-    "从资格赛一路打进八强。",
-    "能否请你回顾一下？",
-    "从当时到现在，",
-    "我知道刚输球，",
-    "很难去想，但你有多自豪？",
-    "从在佛罗里达重新调整，",
-    "然后才一路走到了今天。",
-    "我认为此前取得的那些胜利，",
-    "当然很棒。但今天这场比赛，",
-    "我在决胜盘有很多机会，",
-    "却没有把握住。",
-    "输掉这场比赛，有些遗憾。",
-    "但我也能从中有所收获，",
-    "从今年这次美网之旅中，",
-    "带走这些收获。",
-    "虽然今天输了，",
-    "你觉得今天的关键是什么？",
-    "怎样做，才有机会赢？",
-    "你觉得自己还能做些什么？",
-    "我觉得，那个穿越球，",
-    "没打进，确实影响了结果。",
-    "当然，我也觉得，",
-    "面对她的二发时，",
-    "有些时候我可以更主动，",
-    "接发球也能再少些失误。",
-    "因为回合一旦拉长，",
-    "我觉得自己就更容易得分。",
-    "所以，今天就是几个关键分，",
-    "决定了胜负。就是这样。",
-    "没有更多想说的了。",
-    "钦文，祝贺你这次的表现。",
-    "想问一下你的心态。",
-    "我知道比赛才刚结束，",
-    "但展望今年接下来的赛程，",
-    "还有那些待打的比赛，",
-    "你的心态有多大变化？",
-    "现在的感受，",
-    "比起今年春天，当时你觉得，",
-    "自己始终找不到节奏，",
-    "也很难在比赛中展开争夺。",
-    "好的一点是，现在我知道，",
-    "怎样更好地投入竞争，",
-    "比此前、比年初，",
-    "都做得更好了。",
-    "年初的时候，",
-    "我有点完全脱离了比赛状态，",
-    "找不到比赛节奏。",
-    "这次赛事显然帮助了我，",
-    "让我一点点找回自己。",
-    "至于今天这场比赛，",
-    "输了，也有很多值得学习。",
-    "因为有些决策，",
-    "是在关键时刻做出的，",
-    "而我当时没有做好。",
-    "这场比赛对体能的要求，",
-    "对我来说也很高。",
-    "她的发球很出色，",
-    "所以我必须高度集中，",
-    "认真应对每一次接发球。",
-    "总的来说，",
-    "我能带走一些积极的收获。",
-    "其余的，我可以回去总结，",
-    "看看哪些地方能做得更好。",
-    "祝贺你这次的表现。",
-    "接着刚才问的，哪些收获，",
-    "你会带到接下来的比赛中，",
-    "延续到今年余下赛季和明年？",
-    "尤其是经历了，",
-    "这些精彩的逆转，",
-    "包括盘中0比5落后后的翻盘。",
-    "我觉得，网球一直在教会我，",
-    "只要比赛，",
-    "还没有结束，就要继续战斗。",
-    "因为你不知道会发生什么，",
-    "网球比赛里，一切皆有可能。",
-    "第二点是，我觉得自己，",
-    "还有很多、很多，",
-    "可以提升的地方。",
-    "这也是积极的一面。",
-    "没有更多要说的了。",
-    "我们知道，你在网球方面，",
-    "和一两年前已经有所不同。",
-    "那你的性格发生了哪些变化？",
-    "我想说，在内心深处，",
-    "我并没有改变太多。",
-    "只是受伤之后，",
-    "因为自己的表现不太好，",
-    "所以我试着学着，",
-    "把自己的个性稍微收起来，",
-    "不要展露太多。你也知道，",
-    "当你没有好成绩的时候，",
-    "人们就会评判你。",
-    "但我还是同一个人。",
-    "无论赢球还是输球，",
-    "我的想法都一样。",
-    "我认为，做一个好人很重要，",
-    "在生活中保持谦逊也很重要。",
-    "但有时，人们就是不喜欢，",
-    "你把真实的想法说出来。",
-    "有时候，",
-    "他们反而更喜欢听假话。",
-    "可我不是那样的人。",
-    "我想说，我变得更好了。",
-    "我现在更开放了，相比于，",
-    "两三年前的自己。",
-    "但根本的东西从未改变。",
-    "我还是我自己。对。",
-    "还有最后两位。",
-    "祝贺你。",
-    "接下来你应该有机会，",
-    "在未来几个月回到主场比赛。",
-    "你有多安心，又有多兴奋？",
-    "对于这个机会，",
-    "能带着这次比赛的势头，",
-    "回到主场，",
-    "并希望延续到秋季赛程？",
-    "我一直很期待在中国比赛。",
-    "尤其从美网资格赛出发，",
-    "然后一路打到这里。",
-    "这段旅程非常、非常艰难，",
-    "对我来说确实如此。",
-    "当然，回到主场比赛，",
-    "我总会更有动力，",
-    "同时也会承受一些压力，",
-    "因为我真的很想在那里打好。",
-    "但我想对自己说：保持冷静，",
-    "一天一天地训练，专注，",
-    "一场一场地打，专注当下。",
-    "因为当你的思绪，",
-    "到处飘、想得太多时，",
-    "对打网球是没有帮助的。",
-    "最后一个问题。",
-    "刚才就是你的问题。",
-    "非常感谢。",
-    "谢谢。"
-  ],
+  "_subtitle_review": {
+    "changes": [
+      "Removed repeated numbered question at 69–74; six aligned short lines.",
+      "tennis corrected from Denise, that much from that match, return translated as 接发球.",
+      "Removed invented title-win and commentary claims.",
+      "US Open split lines 18–19 now carry coherent translation.",
+      "Corrected future tournaments rather than tournaments already played.",
+      "All original verification and push state preserved.",
+      "103 speak the reality -> 你说实话。",
+      "112 uses small.en/tiny.en majority That's true; removed conjectural Last two.",
+      "136–137 restore three question exchanges supported by YouTube/medium.en and short-segment tiny.en.",
+      "Source270s cover visually reviewed: eyes open, hands clear of face.",
+      "Score ordered consistently from match winner Rybakina perspective; Zheng-perspective narrative retained."
+    ],
+    "closing_evidence": "Final Thank you ends321.14 in word timestamps, before source trim321.5; source closing preserved.",
+    "editorial_inferences": [
+      {
+        "decision": "Unclear reporter names not expanded into invented identities; neutral Chinese references.",
+        "lines": [
+          2,
+          70
+        ]
+      },
+      {
+        "decision": "that match corrected to that much from grammar and same-answer repeated phrase supported by independent tiny.en at line89.",
+        "lines": [
+          94
+        ]
+      },
+      {
+        "decision": "ASR calling interpreted as quali/qualifying from the sentence and independently verified qualifying-to-quarterfinal run; editorial normalization, not claimed direct listening.",
+        "lines": [
+          122
+        ]
+      },
+      {
+        "decision": "Restore That was my question followed by That was your question using YouTube and medium.en; tiny.en confirms three question exchanges but loses pronouns.",
+        "lines": [
+          136,
+          137
+        ]
+      }
+    ],
+    "line_count": 139,
+    "method": "Editorial review against YouTube captions, full small.en and medium.en transcripts, plus actual finished-film short audio segments independently transcribed by tiny.en. No claim of direct listening verification.",
+    "review_status": "editorial_complete_pending_current_render_qc"
+  },
+  "_tactical_research": {
+    "collected_at": "2026-09-09T19:49:55.252721+00:00",
+    "elapsed_seconds": 1.537,
+    "identity": {
+      "away": "Qinwen Zheng",
+      "event": "US Open",
+      "home": "Elena Rybakina",
+      "source_urls": [],
+      "year": 2026
+    },
+    "source_status": {
+      "atp": "no_matching_article",
+      "australian_open": "no_matching_article",
+      "brain_game": "feed HTTP 403; index HTTP 403",
+      "hugh_clarke": "feed HTTP 403; index HTTP 403",
+      "roland_garros": "ok",
+      "tennis_abstract": "feed HTTP 403; index HTTP 403",
+      "usopen": "no_matching_article",
+      "wimbledon": "no_matching_article",
+      "wta": "ok"
+    },
+    "sources": [
+      {
+        "excerpts": [],
+        "match_verified": false,
+        "note": "读到 32 段",
+        "published_at": "",
+        "scope": "player_background",
+        "status": "read",
+        "text_sha256": "8811c73a181273e93635dcc7f319dbcebc8fffb6037aacb7e9ada3935997aa39",
+        "title": "",
+        "url": "https://www.rolandgarros.com/en-us/article/2026-us-open-third-round-zheng-cerundolo-comebacks-success-keys-fritz"
+      }
+    ],
+    "status": "no_readable_analysis",
+    "version": 1
+  },
   "_zh_draft": [
     "有问题吗？",
     "科尔。",
@@ -308,60 +325,12 @@
     "谢谢"
   ],
   "_zh_draft_note": "第一份 faster-whisper small.en 逐词时间码经正式 segment() 切行后，由 DeepSeek 逐行翻译；render 时用 medium.en 做第二份独立 ASR。",
-  "_notes": [
-    "用户原话：做郑钦文赛后发布会采访。该明确请求优先于旧技能仅场上采访的默认限制，使用仓库已有press_conference类型。",
-    "全片问答保留；核实原片末尾转场位置后去赛事片尾，保留网球时差品牌片尾。不得截断记者问题或回答。",
-    "1080×1440，英文原声与逐句中英字幕；不叠中文配音，不镜像；顶栏须同时有大小标题。",
-    "未听到原声前不编造伤情、心态、技战术或未来安排的引语；字幕由现有双ASR与语言审校流程核验。",
-    "来源、字幕、封面及成片QC通过后按既有授权自动微信推送；成功回执及pushed.json齐全才报交付。正文不重复标题，1000字内。",
-    "end 321.5依据自动字幕最后Thank you 320.88设置的候选，渲染后检查最后尾音与赛事片尾转换；记者姓名Cole/Abel等不要凭ASR猜身份。50 down应结合原声核实five-love；calling US Open应核实qualifying。",
-    "139行已人工对照两份转写修订并通过实际字体排版；仍等待原声待核项与独立ASR及视觉QC，不得推送。"
-  ],
-  "_facts": [
-    "已实际读取YouTube watch页videoDetails：videoId 2C7_q05gGUk，频道US Open Tennis Championships / UCXbboag48Qlr78zzz6SkzkQ，官方标题明确Press Conference，描述明确八强负于Elena Rybakina之后，lengthSeconds=324。",
-    "已实际读取美网官方https://www.usopen.org/en_US/scores/feeds/2026/players/matches/wta328120_matches.json；2504场，Women's Singles Quarter-Finals，莱巴金娜胜，郑视角6-3 1-6 4-6，用时2:14，Arthur Ashe Stadium。",
-    "已实际下载该视频英文自动字幕json3：20.40–38.64答八强旅程/决胜盘机会；52.08–78.08答穿越球、接二发和长回合；102.88–148.16答比赛节奏；167.12–190.96答继续战斗/提升；201.44–259.20答性格与外界评判；273.60–314.64答中国赛季。自动字幕仍需第二ASR核对，不能视为语言终审通过。"
-  ],
-  "_tactical_research": {
-    "version": 1,
-    "identity": {
-      "home": "Elena Rybakina",
-      "away": "Qinwen Zheng",
-      "event": "US Open",
-      "year": 2026,
-      "source_urls": []
-    },
-    "sources": [
-      {
-        "url": "https://www.rolandgarros.com/en-us/article/2026-us-open-third-round-zheng-cerundolo-comebacks-success-keys-fritz",
-        "title": "",
-        "published_at": "",
-        "status": "read",
-        "text_sha256": "8811c73a181273e93635dcc7f319dbcebc8fffb6037aacb7e9ada3935997aa39",
-        "scope": "player_background",
-        "excerpts": [],
-        "note": "读到 32 段",
-        "match_verified": false
-      }
-    ],
-    "source_status": {
-      "brain_game": "feed HTTP 403; index HTTP 403",
-      "tennis_abstract": "feed HTTP 403; index HTTP 403",
-      "hugh_clarke": "feed HTTP 403; index HTTP 403",
-      "atp": "no_matching_article",
-      "wta": "ok",
-      "usopen": "no_matching_article",
-      "australian_open": "no_matching_article",
-      "roland_garros": "ok",
-      "wimbledon": "no_matching_article"
-    },
-    "status": "no_readable_analysis",
-    "collected_at": "2026-09-09T19:49:55.252721+00:00",
-    "elapsed_seconds": 1.537
-  },
+  "asr_model": "small.en",
+  "ceremony_subtype": null,
+  "column": "赛后开麦",
   "cover": {
-    "_why": "30秒只是候选，未声称视觉通过。正式封面必须以本次发布会真实清晰正脸帧经视觉闸确认；文字不得挡脸。标题没有冒充受访者引语。",
-    "frame_at": 30,
+    "_why": "实际成片逐帧目检：源270秒双眼睁开、表情平静、双手不挡脸，保留本场发布会背景。",
+    "frame_at": 270,
     "sub": "美网女单1/4决赛 赛后发布会",
     "tag": "郑钦文 · 赛后开麦",
     "title": [
@@ -369,20 +338,26 @@
       "我还是我"
     ]
   },
-  "takeaway": {
-    "close": {
-      "ask": "成绩起伏时 你会收起个性吗？",
-      "point": "她说性格有所收敛 但仍是自己"
-    }
+  "en_fixed": {
+    "9": "about now, but how proud are you",
+    "10": "of the run, given that big reset you",
+    "16": "It was a bit pity for me to lose this match,",
+    "35": "Congratulations on a nice run, Qinwen.",
+    "39": "the rest of the tournaments to play,",
+    "40": "how different does your",
+    "74": "and those 5–0 down sets?",
+    "75": "I think tennis also gives me a lesson all",
+    "89": "I haven't changed that much.",
+    "94": "that much because you know",
+    "112": "That's true.",
+    "122": "especially coming from qualifying US Open",
+    "136": "Last question. That was my question.",
+    "137": "That was your question."
   },
-  "push": {
-    "auto": false,
-    "event": "美网",
-    "lead": "6-3、1-6、4-6，郑钦文止步美网八强。赛后发布会上，她谈到决胜盘错过的机会、接二发应更积极，也坦言成绩不好时曾试着收起自己的性格。谈到变化，她说自己比两三年前更开放，但根本没有改变。",
-    "matchup": "郑钦文 vs 莱巴金娜",
-    "score": "6-3 1-6 4-6",
-    "summary": "郑钦文：我还是我"
-  },
+  "end": 321.5,
+  "event": "2026 美网 女单1/4决赛",
+  "featured_player": "郑钦文",
+  "interview_kind": "赛后新闻发布会",
   "match": {
     "event": "2026 US Open",
     "event_search": "US Open",
@@ -398,161 +373,194 @@
     "winner_en": "Elena Rybakina",
     "year": 2026
   },
+  "opening": {
+    "kind": "none",
+    "why": "用户明确指定赛后发布会；官方标题、频道和描述已核验，直接进入发布会问答。"
+  },
+  "push": {
+    "auto": true,
+    "event": "美网",
+    "lead": "6-3、1-6、4-6，郑钦文止步美网八强。赛后发布会上，她谈到决胜盘错过的机会、接二发应更积极，也坦言成绩不好时曾试着收起自己的性格。谈到变化，她说自己比两三年前更开放，但根本没有改变。",
+    "matchup": "莱巴金娜 vs 郑钦文",
+    "score": "3-6 6-1 6-4",
+    "summary": "郑钦文：我还是我"
+  },
+  "requested_content_type": "press_conference",
+  "segment_budget_px": null,
+  "slug": "zheng-rybakina-us-open-2026-qf-presser",
+  "source_title": "Qinwen Zheng Press Conference | 2026 US Open Quarterfinal",
   "source_verification": {
-    "source_id": "youtube:2C7_q05gGUk",
-    "source_url": "https://www.youtube.com/watch?v=2C7_q05gGUk",
-    "source": "US Open",
-    "title": "Qinwen Zheng Press Conference | 2026 US Open Quarterfinal",
-    "status": "verified",
+    "attestation_sha256": "f0987401f91b7a3beafe2a2e926aebc1020ff5c67fe03397374d116d097647e1",
     "detected_type": "press_conference",
-    "method": "official_explicit_press_conference",
     "evidence": [
       {
         "kind": "official_explicit_title",
-        "title": "Qinwen Zheng Press Conference | 2026 US Open Quarterfinal",
         "source": "US Open",
+        "title": "Qinwen Zheng Press Conference | 2026 US Open Quarterfinal",
         "video_id": "2C7_q05gGUk"
       }
     ],
     "match_id": "2026:us-open:womens-quarterfinal:elena-rybakina-qinwen-zheng",
-    "attestation_sha256": "f0987401f91b7a3beafe2a2e926aebc1020ff5c67fe03397374d116d097647e1"
+    "method": "official_explicit_press_conference",
+    "source": "US Open",
+    "source_id": "youtube:2C7_q05gGUk",
+    "source_url": "https://www.youtube.com/watch?v=2C7_q05gGUk",
+    "status": "verified",
+    "title": "Qinwen Zheng Press Conference | 2026 US Open Quarterfinal"
   },
-  "_request_origin": {
-    "request_sha256": "72f8b56fd96dd926b6bf1bd6ab3711ee07069196a7655fab0d0d8d289e013e73",
-    "request": {
-      "_facts": [
-        "已实际读取YouTube watch页videoDetails：videoId 2C7_q05gGUk，频道US Open Tennis Championships / UCXbboag48Qlr78zzz6SkzkQ，官方标题明确Press Conference，描述明确八强负于Elena Rybakina之后，lengthSeconds=324。",
-        "已实际读取美网官方https://www.usopen.org/en_US/scores/feeds/2026/players/matches/wta328120_matches.json；2504场，Women's Singles Quarter-Finals，莱巴金娜胜，郑视角6-3 1-6 4-6，用时2:14，Arthur Ashe Stadium。",
-        "已实际下载该视频英文自动字幕json3：20.40–38.64答八强旅程/决胜盘机会；52.08–78.08答穿越球、接二发和长回合；102.88–148.16答比赛节奏；167.12–190.96答继续战斗/提升；201.44–259.20答性格与外界评判；273.60–314.64答中国赛季。自动字幕仍需第二ASR核对，不能视为语言终审通过。"
-      ],
-      "_notes": [
-        "用户原话：做郑钦文赛后发布会采访。该明确请求优先于旧技能仅场上采访的默认限制，使用仓库已有press_conference类型。",
-        "全片问答保留；核实原片末尾转场位置后去赛事片尾，保留网球时差品牌片尾。不得截断记者问题或回答。",
-        "1080×1440，英文原声与逐句中英字幕；不叠中文配音，不镜像；顶栏须同时有大小标题。",
-        "未听到原声前不编造伤情、心态、技战术或未来安排的引语；字幕由现有双ASR与语言审校流程核验。",
-        "来源、字幕、封面及成片QC通过后按既有授权自动微信推送；成功回执及pushed.json齐全才报交付。正文不重复标题，1000字内。",
-        "end 321.5依据自动字幕最后Thank you 320.88设置的候选，渲染后检查最后尾音与赛事片尾转换；记者姓名Cole/Abel等不要凭ASR猜身份。50 down应结合原声核实five-love；calling US Open应核实qualifying。"
-      ],
-      "cover": {
-        "_why": "30秒只是候选，未声称视觉通过。正式封面必须以本次发布会真实清晰正脸帧经视觉闸确认；文字不得挡脸。标题没有冒充受访者引语。",
-        "frame_at": 30,
-        "sub": "美网女单1/4决赛 赛后发布会",
-        "tag": "郑钦文 · 赛后开麦",
-        "title": [
-          "输球之后",
-          "我还是我"
-        ]
-      },
-      "end": 321.5,
-      "event": "2026 美网 女单1/4决赛",
-      "featured_player": "郑钦文",
-      "interview_kind": "赛后新闻发布会",
-      "match": {
-        "event": "2026 US Open",
-        "event_search": "US Open",
-        "id": "2026:us-open:womens-quarterfinal:elena-rybakina-qinwen-zheng",
-        "loser": "郑钦文",
-        "loser_en": "Qinwen Zheng",
-        "participants": [
-          "莱巴金娜",
-          "郑钦文"
-        ],
-        "round": "Women's Singles Quarterfinal",
-        "winner": "莱巴金娜",
-        "winner_en": "Elena Rybakina",
-        "year": 2026
-      },
-      "opening": {
-        "kind": "none",
-        "why": "用户明确指定赛后发布会；官方标题、频道和描述已核验，直接进入发布会问答。"
-      },
-      "push": {
-        "auto": true,
-        "event": "美网",
-        "lead": "6-3、1-6、4-6，郑钦文止步美网八强。赛后发布会上，她谈到决胜盘错过的机会、接二发应更积极，也坦言成绩不好时曾试着收起自己的性格。谈到变化，她说自己比两三年前更开放，但根本没有改变。",
-        "matchup": "郑钦文 vs 莱巴金娜",
-        "score": "6-3 1-6 4-6",
-        "summary": "郑钦文：我还是我"
-      },
-      "requested_content_type": "press_conference",
-      "slug": "zheng-rybakina-us-open-2026-qf-presser",
-      "source": "US Open",
-      "source_title": "Qinwen Zheng Press Conference | 2026 US Open Quarterfinal",
-      "start": 0,
-      "takeaway": {
-        "close": {
-          "ask": "成绩起伏时 你会收起个性吗？",
-          "point": "她说性格有所收敛 但仍是自己"
-        }
-      },
-      "url": "https://www.youtube.com/watch?v=2C7_q05gGUk",
-      "winner": "莱巴金娜",
-      "xhs": "🎾9.10 赛后开麦｜郑钦文：我还是我\n\n最让人停下来听的，不只是那记错过的穿越球。🎙️\n\n6-3、1-6、4-6，郑钦文负于莱巴金娜，止步美网八强。坐到发布会话筒前，她没有回避遗憾：决胜盘有机会，却没抓住；接对手二发时，可以更积极，也该少一些接发失误。\n\n🎾 她觉得回合拉长时，自己拿到的分更多。可比赛的差别，偏偏就落在那几个关键分上。\n\n记者问她，性格和一两年前有什么不同。\n\n她说，受伤后成绩不理想，自己试着收起一些性格、少表现一点，因为没有好成绩时，人们会评判你。但她还是同一个人，无论赢球还是输球。\n\n比起两三年前，她觉得自己更开放了，但内里的自己没变。\n\n🇨🇳 说到回中国比赛，她既期待，也承认有压力。她给自己的提醒是：冷静下来，一天天训练，一场场打，把注意力放在当下。\n\n这次美网带走了遗憾，也帮她一点点找回比赛的节奏。\n\n成绩起伏的时候，你会选择收起自己的个性吗？\n\n#网球时差 #赛后开麦 #郑钦文 #莱巴金娜 #美网",
-      "source_metadata": {
-        "video_id": "2C7_q05gGUk",
-        "channel_id": "UCXbboag48Qlr78zzz6SkzkQ",
-        "channel": "US Open Tennis Championships",
-        "source_url": "https://www.youtube.com/watch?v=2C7_q05gGUk",
-        "duration_s": 324,
-        "method": "retrieved_youtube_watch_videoDetails",
-        "retrieved_at": "2026-09-09T19:35:12Z"
-      }
-    },
-    "revision": null,
-    "duration": 324.3015
+  "start": 0,
+  "subject": {},
+  "takeaway": {
+    "close": {
+      "ask": "成绩起伏时 你会收起个性吗？",
+      "point": "她说性格有所收敛 但仍是自己"
+    }
   },
-  "en_fixed": {
-    "9": "about now, but how proud are you",
-    "10": "of the run, given that big reset you",
-    "16": "It was a bit pity for me to lose this match,",
-    "35": "Congratulations on a nice run, Qinwen.",
-    "39": "the rest of the tournaments to play,",
-    "40": "how different does your",
-    "74": "and those 5–0 down sets?",
-    "75": "I think tennis also gives me a lesson all",
-    "89": "I haven't changed that much.",
-    "94": "that much because you know",
-    "112": "Last two.",
-    "122": "especially coming from qualifying US Open"
-  },
-  "_subtitle_review": {
-    "method": "Editorial review of small.en segmented transcript against YouTube automatic captions; no claim of listening verification. All 139 Chinese lines rewritten.",
-    "line_count": 139,
-    "pending_audio_checks": [
-      {
-        "lines": [
-          2,
-          70
-        ],
-        "issue": "Reporter names are unclear in ASR; Chinese uses neutral references."
-      },
-      {
-        "lines": [
-          112
-        ],
-        "issue": "small.en That is true vs YouTube Bless too; contextual Last two proposed, must check audio."
-      },
-      {
-        "lines": [
-          122
-        ],
-        "issue": "Both ASRs say calling US Open; qualifying inferred from verified qualifier run and context, must check audio."
-      },
-      {
-        "lines": [
-          136,
-          137
-        ],
-        "issue": "YouTube has additional That was my question exchange not in small.en, verify closing audio."
-      }
-    ],
-    "changes": [
-      "Removed repeated numbered question at 69–74; six aligned short lines.",
-      "tennis corrected from Denise, that much from that match, return translated as 接发球.",
-      "Removed invented title-win and commentary claims.",
-      "US Open split lines 18–19 now carry coherent translation.",
-      "Corrected future tournaments rather than tournaments already played.",
-      "All original verification and push state preserved."
-    ]
-  }
+  "topbar_layout": "event_primary",
+  "transcript_verification": "auto_pending",
+  "transcript_verified": false,
+  "url": "https://www.youtube.com/watch?v=2C7_q05gGUk",
+  "whisper_model": "medium.en",
+  "winner": "莱巴金娜",
+  "zh": [
+    "有记者提问吗？",
+    "请这位记者提问。",
+    "很遗憾你今天输掉了比赛，",
+    "但这次征程非常出色，",
+    "从资格赛一路打进八强。",
+    "能否请你回顾一下？",
+    "从当时到现在，",
+    "我知道刚输球，",
+    "很难去想，但你有多自豪？",
+    "从在佛罗里达重新调整，",
+    "然后才一路走到了今天。",
+    "我认为此前取得的那些胜利，",
+    "当然很棒。但今天这场比赛，",
+    "我在决胜盘有很多机会，",
+    "却没有把握住。",
+    "输掉这场比赛，有些遗憾。",
+    "但我也能从中有所收获，",
+    "从今年这次美网之旅中，",
+    "带走这些收获。",
+    "虽然今天输了，",
+    "你觉得今天的关键是什么？",
+    "怎样做，才有机会赢？",
+    "你觉得自己还能做些什么？",
+    "我觉得，那个穿越球，",
+    "没打进，确实影响了结果。",
+    "当然，我也觉得，",
+    "面对她的二发时，",
+    "有些时候我可以更主动，",
+    "接发球也能再少些失误。",
+    "因为回合一旦拉长，",
+    "我觉得自己就更容易得分。",
+    "所以，今天就是几个关键分，",
+    "决定了胜负。就是这样。",
+    "没有更多想说的了。",
+    "钦文，祝贺你这次的表现。",
+    "想问一下你的心态。",
+    "我知道比赛才刚结束，",
+    "但展望今年接下来的赛程，",
+    "还有那些待打的比赛，",
+    "你的心态有多大变化？",
+    "现在的感受，",
+    "比起今年春天，当时你觉得，",
+    "自己始终找不到节奏，",
+    "也很难在比赛中展开争夺。",
+    "好的一点是，现在我知道，",
+    "怎样更好地投入竞争，",
+    "比此前、比年初，",
+    "都做得更好了。",
+    "年初的时候，",
+    "我有点完全脱离了比赛状态，",
+    "找不到比赛节奏。",
+    "这次赛事显然帮助了我，",
+    "让我一点点找回自己。",
+    "至于今天这场比赛，",
+    "输了，也有很多值得学习。",
+    "因为有些决策，",
+    "是在关键时刻做出的，",
+    "而我当时没有做好。",
+    "这场比赛对体能的要求，",
+    "对我来说也很高。",
+    "她的发球很出色，",
+    "所以我必须高度集中，",
+    "认真应对每一次接发球。",
+    "总的来说，",
+    "我能带走一些积极的收获。",
+    "其余的，我可以回去总结，",
+    "看看哪些地方能做得更好。",
+    "祝贺你这次的表现。",
+    "接着刚才问的，哪些收获，",
+    "你会带到接下来的比赛中，",
+    "延续到今年余下赛季和明年？",
+    "尤其是经历了，",
+    "这些精彩的逆转，",
+    "包括盘中0比5落后后的翻盘。",
+    "我觉得，网球一直在教会我，",
+    "只要比赛，",
+    "还没有结束，就要继续战斗。",
+    "因为你不知道会发生什么，",
+    "网球比赛里，一切皆有可能。",
+    "第二点是，我觉得自己，",
+    "还有很多、很多，",
+    "可以提升的地方。",
+    "这也是积极的一面。",
+    "没有更多要说的了。",
+    "我们知道，你在网球方面，",
+    "和一两年前已经有所不同。",
+    "那你的性格发生了哪些变化？",
+    "我想说，在内心深处，",
+    "我并没有改变太多。",
+    "只是受伤之后，",
+    "因为自己的表现不太好，",
+    "所以我试着学着，",
+    "把自己的个性稍微收起来，",
+    "不要展露太多。你也知道，",
+    "当你没有好成绩的时候，",
+    "人们就会评判你。",
+    "但我还是同一个人。",
+    "无论赢球还是输球，",
+    "我的想法都一样。",
+    "我认为，做一个好人很重要，",
+    "在生活中保持谦逊也很重要。",
+    "但有时，人们就是不喜欢，",
+    "你说实话。",
+    "有时候，",
+    "他们反而更喜欢听假话。",
+    "可我不是那样的人。",
+    "我想说，我变得更好了。",
+    "我现在更开放了，相比于，",
+    "两三年前的自己。",
+    "但根本的东西从未改变。",
+    "我还是我自己。对。",
+    "是这样。",
+    "祝贺你。",
+    "接下来你应该有机会，",
+    "在未来几个月回到主场比赛。",
+    "你有多安心，又有多兴奋？",
+    "对于这个机会，",
+    "能带着这次比赛的势头，",
+    "回到主场，",
+    "并希望延续到秋季赛程？",
+    "我一直很期待在中国比赛。",
+    "尤其从美网资格赛出发，",
+    "然后一路打到这里。",
+    "这段旅程非常、非常艰难，",
+    "对我来说确实如此。",
+    "当然，回到主场比赛，",
+    "我总会更有动力，",
+    "同时也会承受一些压力，",
+    "因为我真的很想在那里打好。",
+    "但我想对自己说：保持冷静，",
+    "一天一天地训练，专注，",
+    "一场一场地打，专注当下。",
+    "因为当你的思绪，",
+    "到处飘、想得太多时，",
+    "对打网球是没有帮助的。",
+    "最后一问。那就是我的问题。",
+    "那就是你的问题。",
+    "非常感谢。",
+    "谢谢。"
+  ]
 }
