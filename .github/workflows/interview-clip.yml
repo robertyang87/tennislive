@@ -38,6 +38,13 @@ jobs:
           cache: pip
       - name: Install final audit dependencies
         run: pip install -q -e '.[visualqa]'
+      - name: Ensure video-frame decoder and audit rules
+        run: |
+          source tools/ci_apt_install.sh
+          ensure_ffmpeg
+          ffmpeg -version | head -1
+          test -s skills/tennis-interview-production/SKILL.md
+          PYTHONPATH=src:tools python -c "from interview_skill import model_instructions; from benchmark_interview_models import _image; assert model_instructions('minimax')"
       - name: Recover completed and QC-passed film
         uses: actions/download-artifact@v4
         with:
