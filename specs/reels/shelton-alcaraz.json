@@ -48,7 +48,6 @@
     "court": "Arthur Ashe Stadium",
     "status": "ready_for_render"
   },
-  "source_url": "https://www.youtube.com/watch?v=wYd7I5_tMEs",
   "_match": {
     "status": "result_verified",
     "source": "flashscore_points",
@@ -358,9 +357,9 @@
       "双方决胜盘战至抢十，谢尔顿十比七获胜，卫冕冠军出局。"
     ],
     "chapters": [
-      "抢七之后的反转",
-      "阿卡把悬念拉回",
-      "最后交给抢十"
+      "首盘抢七的争夺",
+      "谢尔顿的反击",
+      "阿卡背水一战"
     ],
     "human_context": {
       "angle": "卫冕冠军的美网征程止步八强。",
@@ -409,64 +408,90 @@
       "fit": "crop",
       "_why": "MiniMax 视觉证据：157.12–163.23 区间内画面显示赢家谢尔顿走向镜头、握拳、张嘴庆祝，时间码烧录在每帧左上角，赛后已成赢家姿态，并非普通回合。；英文原声来自 captions.txt。",
       "score_inset": false,
-      "_score_inset_why": "本段位于125.49秒赛点结束之后，为人物近景、握手或看台反应；原转播此后已收掉比赛计分条，不从画面抠取不存在的比分板。"
+      "_score_inset_why": "本段位于125.49秒赛点结束之后，为人物近景、握手或看台反应；原转播此后已收掉比赛计分条，不从画面抠取不存在的比分板。",
+      "source": "main"
     },
     {
-      "title_card": "抢七之后的反转",
+      "title_card": "首盘抢七的争夺",
       "kicker": "01",
       "seconds": 3.2,
-      "_why": "自动链机械插的章节卡（review 路线 ⑤）：editorial.chapters 对应这个 beat，插在它的第一段之前；Edge真配音首卡实测2.42秒，统一保留至少0.78秒停顿。"
+      "_why": "章节只标识即将播放的真实阶段，不提前宣布下一盘结果。"
     },
     {
-      "start": 2.17,
-      "end": 22.77,
-      "narration": "卫冕冠军先赢抢七，却没能笑到最后。阿卡赢下首盘，谢尔顿没有退。他的发球、接发和大角度进攻，开始一起制造压力。",
-      "_beat": 1,
-      "_why": "首盘抢七连续回合，22.77切点前结束；后半句为随后走势铺垫。",
-      "score_inset": true
+      "source": "set1",
+      "start": 0,
+      "end": 24.3,
+      "narration": "先回到首盘抢七。阿卡六比五拿到盘点，谢尔顿发球。这一分，双方还在争夺首盘的归属。",
+      "score_inset": true,
+      "_why": "本场官方Set1：0秒比分抢七5比6，SET POINT；约19秒回合结束，阿卡拿下首盘。旁白只讲分前状态，结果在下一段回顾。"
     },
     {
-      "start": 30,
-      "end": 58.32,
-      "narration": "谢尔顿以六比一、六比三连下两盘。关键不只在发球威力：用角度拉开防线，再寻找下一拍的进攻空间。阿卡被迫反复防守，也在用进攻寻找出口。",
-      "_beat": 1,
-      "_why": "本段画面是第三盘对攻；第二盘结果用旁白交代，不能把这段说成第二盘。",
-      "score_inset": true
-    },
-    {
-      "title_card": "阿卡把悬念拉回",
+      "title_card": "谢尔顿的反击",
       "kicker": "02",
       "seconds": 3.2,
-      "_why": "自动链机械插的章节卡（review 路线 ⑤）：editorial.chapters 对应这个 beat，插在它的第一段之前；Edge真配音首卡实测2.42秒，统一保留至少0.78秒停顿。"
+      "_why": "章节只标识即将播放的真实阶段，不提前宣布下一盘结果。"
     },
     {
-      "start": 65,
-      "end": 104.1,
-      "narration": "阿卡并没有轻易交出比赛。这些来回奔跑后的反击，仍然能点燃全场。但漂亮的制胜分，不能抹去另一面的失误。随后他以六比一拿下第四盘，重新把悬念拉回。",
-      "_beat": 2,
-      "_why": "65-104.1仍为第三盘：旁白明确用随后过渡到第四盘结果，避免错配时间。",
-      "score_inset": true
+      "source": "set2",
+      "start": 12,
+      "end": 35.8,
+      "narration": "阿卡先拿首盘，第二盘却轮到谢尔顿反击。现在谢尔顿五比一领先，阿卡在自己的发球局面临盘点。",
+      "score_inset": true,
+      "_why": "本场官方Set2：12秒后5比1、40比30、谢尔顿接发盘点；约28秒这一分结束。先回顾已经结束的首盘，再介绍当前第二盘，绝不提前报第二盘结果。",
+      "score_inset_windows": [
+        [
+          12,
+          31.3
+        ]
+      ],
+      "_score_inset_why": "官方Set2约31.3秒后转场为美网标志并撤下比分板；只在此前逐帧检测。"
     },
     {
-      "title_card": "最后交给抢十",
+      "source": "set3",
+      "start": 20,
+      "end": 38,
+      "narration": "谢尔顿六比一扳回一盘。现在来到第三盘，五比三领先的他，又拿到了盘点。这次是自己的发球局。",
+      "score_inset": true,
+      "_why": "本场官方Set3：20秒开始5比3、AD比空白、谢尔顿发球盘点；约33秒回合结束。只回顾已经完成的第二盘，不在第三盘结束前宣布6比3。"
+    },
+    {
+      "title_card": "阿卡背水一战",
       "kicker": "03",
       "seconds": 3.2,
-      "_why": "自动链机械插的章节卡（review 路线 ⑤）：editorial.chapters 对应这个 beat，插在它的第一段之前；Edge真配音首卡实测2.42秒，统一保留至少0.78秒停顿。"
+      "_why": "章节只标识即将播放的真实阶段，不提前宣布下一盘结果。"
     },
     {
-      "start": 104.1,
+      "source": "set4",
+      "start": 18,
+      "end": 42.5,
+      "narration": "谢尔顿又以六比三拿下第三盘，阿卡已经不能再丢一盘。第四盘，他三比一领先，正在自己的发球局争取扩大优势。",
+      "score_inset": true,
+      "_why": "本场官方Set4：18秒3比1、40比30，阿卡发球；约32秒回合结束；36秒左右切至5比1、40比0盘点，约42秒赢下第四盘。旁白在3比1这一个回合内结束。"
+    },
+    {
+      "source": "set4",
+      "start": 46,
+      "end": 53.5,
+      "narration": "六比一，阿卡扳平盘数！四盘过后，胜负要由决胜盘决定。",
+      "score_inset": false,
+      "_why": "本场官方Set4：44.3秒后是第四盘结束的阿卡、团队与看台反应；结果已经发生才讲6比1与盘数2比2。",
+      "_score_inset_why": "从46秒起是团队与看台反应，旧比分板已撤下；避开44至45秒收板动画。"
+    },
+    {
+      "source": "main",
+      "start": 105.9,
       "end": 122.17,
-      "narration": "两盘各自占优，最后还是走到抢十。全场只差五分，已经没有挥霍机会的余地。谢尔顿率先抵达赛点，发球权就在自己手里。",
-      "_beat": 3,
-      "_why": "104.1起决胜盘抢十，122.17开始赛点发球。",
-      "score_inset": true
+      "narration": "最后还是走到决胜盘抢十。此时双方刚刚开打，每一分都可能改变比赛。先看抢十的第一分。",
+      "score_inset": true,
+      "_why": "原视频105.9之后为第五盘6比6、抢十第一分；直到122.17才跳到9比7赛点。删除提前说率先抵达赛点、发球权，以及提前引用全场总分差。"
     },
     {
       "start": 122.17,
       "end": 125.49,
       "narration": "",
       "score_inset": true,
-      "_why": "完整保留真实赛点发球与得分原声，结果旁白从125.49之后才进入。"
+      "_why": "完整保留真实赛点发球与得分原声，结果旁白从125.49之后才进入。",
+      "source": "main"
     },
     {
       "start": 125.49,
@@ -481,16 +506,18 @@
           125.49,
           132.49
         ]
-      ]
+      ],
+      "source": "main"
     },
     {
       "start": 157.12,
       "end": 172.92,
       "narration": "阿卡多打了四个制胜分，却多出十八次非受迫失误。谢尔顿赢下关键分，也把失误控制得更好。",
       "fit": "crop",
-      "_why": "正文重新兑现冷开场的完整结局：157.12–163.23 覆盖谢尔顿赢球庆祝、挥拳咆哮，163.23–172.92 覆盖观众起立欢呼、家属包厢反应与谢尔顿继续庆祝的反应；完全包含 cold_open 窗口。172.92 为握手/赛后内容起点附近的有效切点，不超出。",
+      "_why": "157.12–172.92真实赢家庆祝与看台反应，覆盖冷开场；此时比赛结束，可以回顾全场统计。",
       "score_inset": false,
-      "_score_inset_why": "本段位于125.49秒赛点结束之后，为人物近景、握手或看台反应；原转播此后已收掉比赛计分条，不从画面抠取不存在的比分板。"
+      "_score_inset_why": "本段位于125.49秒赛点结束之后，为人物近景、握手或看台反应；原转播此后已收掉比赛计分条，不从画面抠取不存在的比分板。",
+      "source": "main"
     },
     {
       "stat_card": true,
@@ -514,7 +541,8 @@
     "推送文案已通过事实校验；默认开启 QC 后自动推送",
     "窗口起草 5 段，拦掉 2 段废窗口",
     "⚠️ 封面抓取没成（SystemExit: 2026-09-07–2026-09-09 窗口里扫了 114 场，没有同时出现 ['shelton', 'alcaraz'] 的比赛）——portrait 留空，终审或 render 前再补",
-    "2026-09-09 用户指定同一source_url加急；接续已有probe，未重复下载。已人工改正错配的比分旁白和时间窗。"
+    "2026-09-09 用户指定同一source_url加急；接续已有probe，未重复下载。已人工改正错配的比分旁白和时间窗。",
+    "2026-09-09 网友指出音画错配后重新剪辑；不是仅修改比分贴图。去掉抢十刚开始时提前说赛点与全场差5分。"
   ],
   "_visual_evidence": {
     "model": "MiniMax-M3",
@@ -564,8 +592,8 @@
   },
   "_editorial_review": {
     "status": "reviewed",
-    "source": "Codex contact-sheet and official report review",
-    "notes": "纠正破发5/16与3/11颠倒；删除发球提速无证据推断；更正赛点与庆祝时间；官方时钟4:28；技术统计在完整赢球后。；合并冷开场跨行ASR为完整句，取消赛后近景比分回贴，赛点原声独立保留，结果旁白不抢跑；官方1504统计再次核对。"
+    "source": "Codex native-scoreboard and full set-highlight timeline review",
+    "notes": "撤销上一版只加随后就算匹配的错误结论。补入本场官方Set1/2/3/4真实片段；当前盘只讲已发生状态，上一盘结果在下一段明确回顾；盘点和赛点结果只在得分发生后讲述。"
   },
   "_segments_source": " + MiniMax 冷开场/结尾视觉闸",
   "topbar": {
@@ -587,5 +615,172 @@
     "source": "https://youtu.be/wYd7I5_tMEs",
     "finding": "旧渲染以两票支持的最大右缘统一裁整段，将背景误计为比分板；首盘736应约583，第三盘736应约657。决胜盘需随源图形宽度变化，握手前比分板仍在。",
     "policy": "逐帧透明蒙版；无板帧不贴；稳定多数识别边界而非最大值；不以最大框兜底；保留黄色状态条。"
+  },
+  "sources": {
+    "main": "https://www.youtube.com/watch?v=wYd7I5_tMEs",
+    "set1": "https://usopenvideo.akamaized.net/2026/prd/interviews/1f7d905a-f2ea-4ef1-94a1-0b3d8b05dc4d.mp4",
+    "set2": "https://usopenvideo.akamaized.net/2026/prd/interviews/340563e3-7d47-493b-a5c4-9f6cf4ffd5e8.mp4",
+    "set3": "https://usopenvideo.akamaized.net/2026/prd/interviews/9cc1d1a7-35fb-48e8-918a-71758b539886.mp4",
+    "set4": "https://usopenvideo.akamaized.net/2026/prd/interviews/59689944-4a1f-4de3-98f7-1513edb35669.mp4"
+  },
+  "primary": "main",
+  "mixed_fps": {
+    "set1": "本场美网官方分盘集锦实测1920×1080、60fps；主源59.94fps，统一按主源29.97fps输出，约千分之一时基差，保留真实时长与原声。",
+    "set2": "本场美网官方分盘集锦实测1920×1080、60fps；主源59.94fps，统一按主源29.97fps输出，约千分之一时基差，保留真实时长与原声。",
+    "set3": "本场美网官方分盘集锦实测1920×1080、60fps；主源59.94fps，统一按主源29.97fps输出，约千分之一时基差，保留真实时长与原声。",
+    "set4": "本场美网官方分盘集锦实测1920×1080、60fps；主源59.94fps，统一按主源29.97fps输出，约千分之一时基差，保留真实时长与原声。"
+  },
+  "_narration_alignment": {
+    "version": 1,
+    "scope": "source timeline and spoken claims",
+    "reviewer": "Codex",
+    "sources": {
+      "set1": {
+        "url": "https://www.usopen.org/en_US/video/watch/2026/shelton-vs-alcaraz-2026-quarterfinal-set-1/17889272149721832",
+        "file_sha256": "ce735aa5547a267b97e2e0ef4cf15f2fb37a5661ff2da3098c9d164510c55004"
+      },
+      "set2": {
+        "url": "https://www.usopen.org/en_US/video/watch/2026/shelton-vs-alcaraz-2026-quarterfinal-set-2/17889300149638092",
+        "file_sha256": "11e5eb80cfcf161fe19abec70aefb431d59c17459a46c48151882314bb829a93"
+      },
+      "set3": {
+        "url": "https://www.usopen.org/en_US/video/watch/2026/shelton-vs-alcaraz-2026-quarterfinal-set-3/17889337017902402",
+        "file_sha256": "6ab0a0efd6d6f918c26d3d3e6ed51e0373310bf69ba0124c3904f4745ea81f93"
+      },
+      "set4": {
+        "url": "https://www.usopen.org/en_US/video/watch/2026/shelton-vs-alcaraz-2026-quarterfinal-set-4/17889356643343312",
+        "file_sha256": "81d0309d416df68be4bdf53dd8d07b0f6d5e49d36c096eb99d4eb7e940b862f8"
+      }
+    },
+    "policy": "先读比分与得分动作再安排旁白。已结束盘可明确回顾；当前盘结果不得提前。全场统计限赛后。",
+    "segments": [
+      {
+        "index": 0,
+        "source": "main",
+        "start": 157.12,
+        "end": 163.23,
+        "seconds": null,
+        "narration": "",
+        "basis": "MiniMax 视觉证据：157.12–163.23 区间内画面显示赢家谢尔顿走向镜头、握拳、张嘴庆祝，时间码烧录在每帧左上角，赛后已成赢家姿态，并非普通回合。；英文原声来自 captions.txt。"
+      },
+      {
+        "index": 1,
+        "source": null,
+        "start": null,
+        "end": null,
+        "seconds": 3.2,
+        "narration": "首盘抢七的争夺",
+        "basis": "章节只标识即将播放的真实阶段，不提前宣布下一盘结果。"
+      },
+      {
+        "index": 2,
+        "source": "set1",
+        "start": 0,
+        "end": 24.3,
+        "seconds": null,
+        "narration": "先回到首盘抢七。阿卡六比五拿到盘点，谢尔顿发球。这一分，双方还在争夺首盘的归属。",
+        "basis": "本场官方Set1：0秒比分抢七5比6，SET POINT；约19秒回合结束，阿卡拿下首盘。旁白只讲分前状态，结果在下一段回顾。"
+      },
+      {
+        "index": 3,
+        "source": null,
+        "start": null,
+        "end": null,
+        "seconds": 3.2,
+        "narration": "谢尔顿的反击",
+        "basis": "章节只标识即将播放的真实阶段，不提前宣布下一盘结果。"
+      },
+      {
+        "index": 4,
+        "source": "set2",
+        "start": 12,
+        "end": 35.8,
+        "seconds": null,
+        "narration": "阿卡先拿首盘，第二盘却轮到谢尔顿反击。现在谢尔顿五比一领先，阿卡在自己的发球局面临盘点。",
+        "basis": "本场官方Set2：12秒后5比1、40比30、谢尔顿接发盘点；约28秒这一分结束。先回顾已经结束的首盘，再介绍当前第二盘，绝不提前报第二盘结果。"
+      },
+      {
+        "index": 5,
+        "source": "set3",
+        "start": 20,
+        "end": 38,
+        "seconds": null,
+        "narration": "谢尔顿六比一扳回一盘。现在来到第三盘，五比三领先的他，又拿到了盘点。这次是自己的发球局。",
+        "basis": "本场官方Set3：20秒开始5比3、AD比空白、谢尔顿发球盘点；约33秒回合结束。只回顾已经完成的第二盘，不在第三盘结束前宣布6比3。"
+      },
+      {
+        "index": 6,
+        "source": null,
+        "start": null,
+        "end": null,
+        "seconds": 3.2,
+        "narration": "阿卡背水一战",
+        "basis": "章节只标识即将播放的真实阶段，不提前宣布下一盘结果。"
+      },
+      {
+        "index": 7,
+        "source": "set4",
+        "start": 18,
+        "end": 42.5,
+        "seconds": null,
+        "narration": "谢尔顿又以六比三拿下第三盘，阿卡已经不能再丢一盘。第四盘，他三比一领先，正在自己的发球局争取扩大优势。",
+        "basis": "本场官方Set4：18秒3比1、40比30，阿卡发球；约32秒回合结束；36秒左右切至5比1、40比0盘点，约42秒赢下第四盘。旁白在3比1这一个回合内结束。"
+      },
+      {
+        "index": 8,
+        "source": "set4",
+        "start": 46,
+        "end": 53.5,
+        "seconds": null,
+        "narration": "六比一，阿卡扳平盘数！四盘过后，胜负要由决胜盘决定。",
+        "basis": "本场官方Set4：44.3秒后是第四盘结束的阿卡、团队与看台反应；结果已经发生才讲6比1与盘数2比2。"
+      },
+      {
+        "index": 9,
+        "source": "main",
+        "start": 105.9,
+        "end": 122.17,
+        "seconds": null,
+        "narration": "最后还是走到决胜盘抢十。此时双方刚刚开打，每一分都可能改变比赛。先看抢十的第一分。",
+        "basis": "原视频105.9之后为第五盘6比6、抢十第一分；直到122.17才跳到9比7赛点。删除提前说率先抵达赛点、发球权，以及提前引用全场总分差。"
+      },
+      {
+        "index": 10,
+        "source": "main",
+        "start": 122.17,
+        "end": 125.49,
+        "seconds": null,
+        "narration": "",
+        "basis": "完整保留真实赛点发球与得分原声，结果旁白从125.49之后才进入。"
+      },
+      {
+        "index": 11,
+        "source": "main",
+        "start": 125.49,
+        "end": 150.32,
+        "seconds": null,
+        "narration": "十比七，比赛结束。谢尔顿第一次击败世界前三，阿卡的大满贯十八连胜到此止步。四小时二十八分，两人在网前长久拥抱。输赢之外，他们都把自己拼到了最后。",
+        "basis": "完整赛点、阿卡反应和网前拥抱，125.49之后不再是比赛回合；末尾裁在150.32解说时长前。"
+      },
+      {
+        "index": 12,
+        "source": "main",
+        "start": 157.12,
+        "end": 172.92,
+        "seconds": null,
+        "narration": "阿卡多打了四个制胜分，却多出十八次非受迫失误。谢尔顿赢下关键分，也把失误控制得更好。",
+        "basis": "157.12–172.92真实赢家庆祝与看台反应，覆盖冷开场；此时比赛结束，可以回顾全场统计。"
+      },
+      {
+        "index": 13,
+        "source": null,
+        "start": null,
+        "end": null,
+        "seconds": 10,
+        "narration": "全场总得分，谢尔顿一百六十九比一百六十四，多拿了五分。",
+        "basis": "自动链机械插的证据段：数据统计图剪进片子（review 路线 ④），完整获胜与庆祝之后，全画布10秒，旁白只讲总得分"
+      }
+    ],
+    "method": "逐盘官方集锦原生比分截图+分前分后动作核对；真实Edge逐段合成，所有旁白在匹配窗口内结束。并非单靠模型pass标签。"
   }
 }
