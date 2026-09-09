@@ -218,6 +218,14 @@ def test_matchup_order按flashscore的home归位(monkeypatch):
         "不是命令行传入的顺序——否则 stats.a 会挂在 Dimitrov 名下")
 
 
+def test_matchup_order_selects_requested_match_before_historical_reverse(tool, monkeypatch):
+    body = ("SA÷2¬~KP÷8QYQMw6l¬FH÷Sabalenka A.¬FK÷Noskova L.¬~"
+            "KP÷oldmatch¬FH÷Noskova L.¬FK÷Sabalenka A.¬")
+    monkeypatch.setattr(tool, "fs_feed", lambda *args: body)
+    ordered = tool.matchup_order("Linda Noskova", "Aryna Sabalenka", "8QYQMw6l")
+    assert [name for name, _ in ordered] == ["Aryna Sabalenka", "Linda Noskova"]
+
+
 def test_matchup_order读不到feed退回命令行顺序(monkeypatch):
     import importlib.util
     spec = importlib.util.spec_from_file_location("assemble_spec", _TOOLS / "assemble_spec.py")

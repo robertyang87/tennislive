@@ -34,7 +34,8 @@ jobs:
             ~/.cache/apt-archives
             ~/.cache/apt-lists
           key: apt-pkgs-${{ runner.os }}-24.04-ffmpeg-fonts-v2-${{ github.run_id }}
-          restore-keys: apt-pkgs-${{ runner.os }}-24.04-ffmpeg-fonts-v2-
+          restore-keys: |
+            apt-pkgs-${{ runner.os }}-24.04-ffmpeg-fonts-v2-
       - name: Install publish dependencies and encoder
         timeout-minutes: 15
         run: |

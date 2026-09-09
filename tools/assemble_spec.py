@@ -113,7 +113,22 @@ def matchup_order(home: str, away: str, flashscore_id: str) -> list[tuple[str, s
         body = fs_feed("df_hh_1", flashscore_id)
         # ⚠️ 别只 split("~")[0]：FH/FK 在「Last matches」那条记录里（第一条是
         # SA÷N 的计数行），从整份 body 里找才稳。
-        f = dict(re.findall(r"(F[HK])÷([^¬]*)", body))
+        # FH/FK repeat for every historical match. A whole-feed dict keeps the
+        # oldest meeting, which may reverse home/away (Sabalenka–Noskova 2026).
+        # Select the requested match's KP record before reading its participants.
+        records = [dict(re.findall(r"([A-Z]{2})÷([^¬~]*)", row))
+                   for row in body.split("~")]
+        matches = [row for row in records if row.get("KP") == flashscore_id]
+        if matches:
+            identities = {(row.get("FH"), row.get("FK")) for row in matches}
+            if len(identities) != 1:
+                raise ValueError("conflicting participant order for requested match")
+            f = matches[0]
+        else:
+            # Legacy minimal feeds can contain one unambiguous identity pair.
+            pairs = {(row.get("FH"), row.get("FK")) for row in records
+                     if row.get("FH") and row.get("FK")}
+            f = dict(zip(("FH", "FK"), next(iter(pairs)))) if len(pairs) == 1 else {}
         fs_home, fs_away = f.get("FH", ""), f.get("FK", "")
     except Exception as exc:  # noqa: BLE001 —— 网络失败就退回命令行顺序
         print(f"[matchup] flashscore df_hh_1 读不到（{exc}），退回命令行顺序")

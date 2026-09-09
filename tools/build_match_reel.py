@@ -1442,7 +1442,7 @@ def resolve_board_insets(sources: dict[str, Path], segments: list["Segment"],
     picked: dict[int, tuple[int | None, list[tuple[int, int]], bool]] = {}
     no_board: list[str] = []
     for i, seg in enumerate(segments):
-        if not (seg.score_inset and seg.score_inset_auto):
+        if not (seg.score_inset and (seg.score_inset_auto or seg.score_inset_windows)):
             continue
         src = sources.get(seg.source)
         if src is None or not Path(src).is_file():
@@ -1451,15 +1451,24 @@ def resolve_board_insets(sources: dict[str, Path], segments: list["Segment"],
         span = max(0.1, seg.end - seg.start)
         edges = board_edge_timeline(Path(src), (x0, y0, x1, y1),
                                     seg.start, seg.end, runner)
+        if seg.score_inset_windows:
+            edges = [(t, e if any(a <= t < b for a, b in seg.score_inset_windows) else None,
+                      p and any(a <= t < b for a, b in seg.score_inset_windows))
+                     for t, e, p in edges]
         spans = board_present_spans(edges, span)
+        if seg.score_inset_windows:
+            spans = [(max(a, c), min(b, d)) for a, b in spans
+                     for c, d in seg.score_inset_windows if max(a, c) < min(b, d)]
         if (bad := _claim_board_spans(seg, i, spans, span)):
             no_board.append(bad)
+        if not seg.score_inset_auto:
+            continue
         # ⚠️ 取**每组的中间那一格**（`E // 2`），不是第 0 格：时间轴的时刻是
         # 格心 `(k+0.5)/fps`，所以 6 fps 里 k=1,4,7… 的时刻正好是 0.25、0.75、
         # 1.25——和原来 2 fps 的格心逐个相同。取第 0 格会整体偏早 1/6 秒。
         edge, hist = segment_board_edge(
             [(t, e) for k, (t, e, _p) in enumerate(edges)
-             if k % BOARD_EDGE_EVERY == BOARD_EDGE_EVERY // 2])
+             if _p and k % BOARD_EDGE_EVERY == BOARD_EDGE_EVERY // 2])
         # segment_board_edge 有两票起步的桶时返回的就是那一档——「可信」
         # 由此推出，不用改它的签名
         picked[i] = (edge, hist, edge is not None
@@ -2432,6 +2441,8 @@ class Segment:
     # 照旧整段回贴；非空 ＝ 只在这几段回贴（`overlay` 的 `enable`）。
     # ⚠️ 它是**渲染时现量的**，spec 里写不了——板什么时候淡出是转播的行为。
     score_inset_spans: tuple[tuple[float, float], ...] | None = None
+    # 经源画面复核的允许时段（段内秒），只收窄自动检测，不能强行认领板在场。
+    score_inset_windows: tuple[tuple[float, float], ...] = ()
     # **这一段的 image 是一张按画面区尺寸设计的整幅页**（章节卡），铺满不缩。
     # 由 `_materialize_title_cards` 认领，写 spec 的人碰不到它。为什么不按尺寸
     # 猜：`render_title_card` 出的是 2×（device_scale_factor=2，2160×2880），
@@ -2812,6 +2823,28 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
             '或 {"x2": N}（这一段打到更深的盘、板更宽时单独放宽右缘），'
             f"拿到的是 {raw!r}。")
 
+    def _seg_score_windows(s: dict, i: int) -> tuple[tuple[float, float], ...]:
+        if "score_inset_windows" not in s:
+            return ()
+        raw = s["score_inset_windows"]
+        if not s.get("score_inset") or not str(s.get("_score_inset_why", "")).strip():
+            raise ReelError(f"第 {i + 1} 段 score_inset_windows 要开回贴并注明源画面依据")
+        if not isinstance(raw, list) or not raw:
+            raise ReelError("score_inset_windows 要是非空源片秒数区间列表")
+        result = []
+        previous = float(s["start"])
+        for pair in raw:
+            if (not isinstance(pair, (list, tuple)) or len(pair) != 2
+                    or any(isinstance(v, bool) or not isinstance(v, (int, float))
+                           or not math.isfinite(v) for v in pair)):
+                raise ReelError("score_inset_windows 每项要是两个有限秒数")
+            a, b = pair
+            if not previous <= a < b <= float(s["end"]):
+                raise ReelError("score_inset_windows 必须有序、不重叠且在段内")
+            result.append((a - float(s["start"]), b - float(s["start"])))
+            previous = b
+        return tuple(result)
+
     def _one(s: dict, i: int) -> Segment:
         if s.get("stat_card"):
             # 数据统计图当整屏证据段：形状和 image 段一样，只是图由 render 现渲。
@@ -2828,7 +2861,7 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
             stray = sorted(set(s) & {"start", "end", "source", "track",
                                      "quote", "inset", "speed", "mute", "cx",
                                      "crop_zoom", "fit", "crosses_cut",
-                                     "score_inset"})
+                                     "score_inset", "score_inset_windows"})
             if stray:
                 raise ReelError(f"第 {i + 1} 段是整屏证据段（image），"
                                 f"不认这些窗口类字段：{stray}")
@@ -2856,6 +2889,7 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
                        bed=_seg_bed(s, i),
                        score_inset=_seg_score_inset(s, i),
                        score_inset_auto=s.get("score_inset") is True,
+                       score_inset_windows=_seg_score_windows(s, i),
                        square_pan=tuple((float(t), float(cx)) for t, cx in s.get("square_pan", [])))
 
     segments = [_one(s, i) for i, s in enumerate(spec["segments"])]
@@ -3070,7 +3104,7 @@ _REAL_FIELDS: dict[str, tuple[str, ...]] = {
               "score", "scoreboard", "scrim", "split", "sub", "subject",
               "tier", "topic", "versus", "winner"),
     "segment": ("bed", "crosses_cut", "crop_zoom", "cx", "end", "fit", "image",
-                "inset", "mute", "narration", "quote", "score_inset",
+                "inset", "mute", "narration", "quote", "score_inset", "score_inset_windows",
                 "seconds", "source", "speed", "square_pan", "start", "stat_card", "title_card",
                 "kicker", "track", "voice"),
 }

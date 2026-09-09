@@ -1260,7 +1260,7 @@ def test_赛场之上开场要给出北京时间赛事和轮次():
             if used >= 40.0:
                 break
             opening += seg.get("narration", "")
-            used += float(seg["end"]) - float(seg["start"])
+            used += _reel().seg_seconds(seg)
         # ⚠️ **`两` 必须在这个字集里。** 两点钟中文只说「两点」，没人说「二点」——
         # 而第一版的字集里只有「二」，于是「凌晨两点十分」被判成**没给开球时刻**。
         # 这是一条**假阴性**：它不会告诉你「我拦错了」，只会逼下一个人把对的
