@@ -369,15 +369,6 @@ jobs:
       # 死在第 30 秒而不是第 5 分钟（「返工比慢更贵」那条的 runner 侧半截）。
       # ⚠️ 只给要读 spec 的三档（render / cover / narration）——probe 那档
       # 常常还没有 spec（它自己就是来备料写草稿的），cookies / push 不读 spec。
-      - name: 审核蒂亚福新版证据并一次转正
-        if: github.event.inputs.mode == 'render' && github.event.inputs.slug == 'tiafoe-michelsen'
-        env:
-          MINIMAX_API_KEY: ${{ secrets.MINIMAX_API_KEY }}
-          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
-        run: |
-          git sparse-checkout add output/2026-09-09/reel/tiafoe-michelsen
-          python tools/prepare_tiafoe_michelsen.py
-
       - name: dry-run — 先把 spec 的形状错拦在编码之前
         if: >-
           github.event.inputs.mode == 'render'
