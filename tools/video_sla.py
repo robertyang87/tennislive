@@ -167,7 +167,7 @@ def _parser() -> argparse.ArgumentParser:
 
     mark = sub.add_parser("mark", help="record stage boundary without resetting the production clock")
     mark.add_argument("--timeline", type=Path, required=True)
-    mark.add_argument("--stage", required=True)
+    mark.add_argument("--phase", required=True)
     mark.add_argument("--metadata", type=Path)
 
     remaining = sub.add_parser("remaining", help="print seconds left in the target budget")
@@ -194,7 +194,7 @@ def main() -> int:
     try:
         if args.command == "mark":
             events = json.loads(args.timeline.read_text()) if args.timeline.is_file() else []
-            events.append({"stage": args.stage, "at": utc_text(datetime.now(timezone.utc)),
+            events.append({"stage": args.phase, "at": utc_text(datetime.now(timezone.utc)),
                            "run_id": os.environ.get("GITHUB_RUN_ID", "")})
             args.timeline.parent.mkdir(parents=True, exist_ok=True)
             args.timeline.write_text(json.dumps(events, ensure_ascii=False, indent=2) + "\n")

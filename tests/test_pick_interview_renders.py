@@ -311,3 +311,21 @@ def test_workflow监听正式spec并写明恢复窗口(tool):
         "渲染器修顶栏、封面或发布闸后必须立即唤醒自动重渲")
     assert f"超过 {tool.STALE_MINUTES} 分钟还没有当前成片" in body
     assert "超过 3 小时" not in body
+
+
+def test_已推送的旧请求覆盖不能触发自动重渲(tool):
+    path = tool.SPECS / "a-done.json"
+    _write_qc(tool, "a-done", "old-spec-sha")
+    marker = tool.OUTPUT / "a-done" / "pushed.json"
+    marker.write_text(json.dumps({"status": "accepted", "film_sha256": "published-film"}))
+    ready, _ = tool.todo_slugs()
+    assert "a-done" not in ready
+    spec = json.loads(path.read_text())
+    spec["_publication_revision"] = {"id": "new-user-revision", "base_film_sha256": "published-film"}
+    path.write_text(json.dumps(spec))
+    ready, _ = tool.todo_slugs()
+    assert "a-done" in ready
+    spec["_publication_revision"]["base_film_sha256"] = "older-film"
+    path.write_text(json.dumps(spec))
+    ready, _ = tool.todo_slugs()
+    assert "a-done" not in ready

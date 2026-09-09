@@ -16,13 +16,13 @@ from urllib.parse import urlparse
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'src'))
 from production_cache import atomic_json, digest, root
-from tennislive.research.article import fetch_article
+from tennislive.research.article import fetch_article, _UA
 from tennislive.names import surname_en
 
 SOURCES = {
-    'brain_game': {'domain': 'braingametennis.com', 'feed': 'https://braingametennis.com/feed/', 'role': 'tactical_analysis'},
-    'tennis_abstract': {'domain': 'tennisabstract.com', 'feed': 'https://www.tennisabstract.com/blog/feed/', 'role': 'sampled_analysis'},
-    'hugh_clarke': {'domain': 'hughclarke.substack.com', 'feed': 'https://hughclarke.substack.com/feed', 'role': 'technical_background'},
+    'brain_game': {'domain': 'braingametennis.com', 'feed': 'https://braingametennis.com/feed/', 'index': 'https://braingametennis.com/features/blog/', 'role': 'tactical_analysis'},
+    'tennis_abstract': {'domain': 'tennisabstract.com', 'feed': 'https://www.tennisabstract.com/blog/feed/', 'index': 'https://www.tennisabstract.com/blog/', 'role': 'sampled_analysis'},
+    'hugh_clarke': {'domain': 'hughclarke.substack.com', 'feed': 'https://hughclarke.substack.com/feed', 'index': 'https://hughclarke.substack.com/archive', 'role': 'technical_background'},
     'atp': {'domain': 'atptour.com', 'index': 'https://www.atptour.com/en/news', 'role': 'official_report'},
     'wta': {'domain': 'wtatennis.com', 'index': 'https://www.wtatennis.com/news/analysis', 'role': 'official_report'},
     'usopen': {'domain': 'usopen.org', 'index': 'https://www.usopen.org/en_US/news/index.html', 'role': 'official_report'},
@@ -58,14 +58,19 @@ def collect(payload):
     statuses = {}
     def discover(name, source):
         try:
+            rows = []
+            note = ''
             if 'feed' in source:
-                r = requests.get(source['feed'], timeout=5)
-                r.raise_for_status()
-                rows = feed_items(r.content, payload['home'], payload['away'])
-            else:
+                r = requests.get(source['feed'], headers={'User-Agent': _UA}, timeout=5)
+                if r.status_code == 200:
+                    rows = feed_items(r.content, payload['home'], payload['away'])
+                else:
+                    note = f"feed HTTP {r.status_code}; "
+            if not rows and source.get('index'):
                 # Publisher links only; never follow Google News wrapper pages.
-                r = requests.get(source['index'], timeout=5)
-                r.raise_for_status()
+                r = requests.get(source['index'], headers={'User-Agent': _UA}, timeout=5)
+                if r.status_code != 200:
+                    return name, [], note + f"index HTTP {r.status_code}"
                 from html.parser import HTMLParser
                 from urllib.parse import urljoin
                 class Links(HTMLParser):
@@ -80,7 +85,7 @@ def collect(payload):
                         for u in dict.fromkeys(parser.urls)
                         if any(n in normalize(u) for n in names)]
                 rows = [v for v in rows if allowed(v['url'])][:3]
-            return name, rows, 'ok' if rows else 'no_matching_article'
+            return name, rows, note + ('ok' if rows else 'no_matching_article')
         except Exception as exc:
             return name, [], type(exc).__name__
     candidates = [{'url': u, 'title': '', 'published_at': '', 'provided': True}
@@ -89,9 +94,15 @@ def collect(payload):
         for name, rows, status in pool.map(lambda pair: discover(*pair), SOURCES.items()):
             statuses[name] = status
             candidates.extend(rows)
+    names = [normalize(surname_en(n)) for n in (payload['home'], payload['away'])]
+    def priority(row):
+        url = normalize(row['url'])
+        official = any(v['role'] == 'official_report' and v['domain'] in url for v in SOURCES.values())
+        return (not row.get('provided', False), -sum(n in url for n in names), not official)
+    candidates.sort(key=priority)
     seen = set(); selected = []
     for row in candidates:
-        if row['url'] not in seen:
+        if row['url'] not in seen and not re.search(r'draw|preview|prediction|schedule|where-to-watch', row['url'], re.I):
             seen.add(row['url']); selected.append(row)
     selected = selected[:6]
     def read(row):
@@ -101,10 +112,12 @@ def collect(payload):
         names = [normalize(surname_en(n)) for n in (payload['home'], payload['away'])]
         # Both players must occur in the readable article; a headline alone is insufficient.
         both = all(re.search(r'\b' + re.escape(n) + r'\b', normalize(text)) for n in names)
-        paras = [p for p in text.splitlines() if TACTIC.search(p)]
+        paras = [p for p in text.splitlines()
+                 if len(TACTIC.findall(p)) >= 2
+                 and any(re.search(r'\b' + re.escape(n) + r'\b', normalize(p)) for n in names)]
         paragraphs = sorted(paras, key=lambda p: -len(TACTIC.findall(p)))[:2]
         return {**row, 'status': 'read', 'text_sha256': digest(text),
-                'scope': 'candidate_match_report' if both else 'player_background',
+                'scope': 'candidate_match_report' if both and all(n in normalize(row['url']) for n in names) else 'player_background',
                 'excerpts': [p[:1200] for p in paragraphs], 'note': note,
                 'match_verified': False}
     with ThreadPoolExecutor(max_workers=6) as pool:

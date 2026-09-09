@@ -129,3 +129,31 @@ def test_sla_is_bound_to_new_film_and_keeps_revision_history(tmp_path):
     second = finish(**args)
     assert first['film_sha256'] != second['film_sha256']
     assert json.loads(meta.read_text())['production_sla_history'] == [first]
+
+
+def test_metadata_delta_preserves_refined_caption_and_untouched_cover_fields(tmp_path, monkeypatch):
+    req = {'slug': 'demo', 'url': 'https://youtu.be/x',
+           'cover': {'zoom': 1.5, 'title': '初稿'}, 'xhs': '初稿正文'}
+    spec = {'url': req['url'], 'end': 10, 'zh': ['精修字幕'],
+            'cover': {'zoom': 1.5, 'title': '精修标题'},
+            '_request_origin': {'request': json.loads(json.dumps(req)), 'duration': 10}}
+    path, spec_path, out = setup_request(tmp_path, monkeypatch, spec, req)
+    copy = spec_path.with_suffix('.xhs.txt'); copy.write_text('精修正文')
+    req['cover']['zoom'] = 1.8; path.write_text(json.dumps(req))
+    import interview_source_gate as gate
+    import production_preflight
+    monkeypatch.setattr(gate, 'finalize_source_contract', lambda s: s)
+    monkeypatch.setattr(gate, 'validate_source_contract', lambda s: None)
+    checked = []
+    monkeypatch.setattr(production_preflight, 'check_request', lambda r: checked.append(r))
+    def no_asr(*a, **kw):
+        raise AssertionError('metadata edit must not transcribe')
+    monkeypatch.setattr(builder, '_transcribe_request', no_asr)
+    original_cap = (out / 'cap_asr.json3').read_bytes()
+    builder._build_one(path, object(), write=True)
+    changed = json.loads(spec_path.read_text())
+    assert changed['cover'] == {'zoom': 1.8, 'title': '精修标题'}
+    assert changed['zh'] == ['精修字幕']
+    assert copy.read_text() == checked[0]['xhs'] == '精修正文'
+    assert (out / 'cap_asr.json3').read_bytes() == original_cap
+    assert not builder.is_pending(path)

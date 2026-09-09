@@ -305,7 +305,7 @@ def _download_audio(url: str, workdir: Path) -> Path:
                 timeout=min(60, remaining),
             )
         except subprocess.TimeoutExpired:
-            tail = f"超过 {DOWNLOAD_TIMEOUT}s"
+            tail = f"本档超过 {min(60, remaining):g}s（总预算 {DOWNLOAD_TIMEOUT}s）"
             print(f"[人工请求音频] {label} 没成：{tail}")
             failures.append(f"{label}: {tail}")
             continue
@@ -489,6 +489,21 @@ def build_spec(req: dict, zh: list[str], duration: float) -> dict:
     return spec
 
 
+def _apply_request_delta(current, before, after):
+    """Apply only user-edited leaves; keep refinements to other cover/copy fields."""
+    if not isinstance(before, dict) or not isinstance(after, dict):
+        return after
+    result = dict(current) if isinstance(current, dict) else {}
+    for key in before.keys() | after.keys():
+        if before.get(key) == after.get(key) and (key in before) == (key in after):
+            continue
+        if key not in after:
+            result.pop(key, None)
+        else:
+            result[key] = _apply_request_delta(result.get(key), before.get(key), after[key])
+    return result
+
+
 def _build_one_unlocked(path: Path, chat, *, write: bool) -> tuple[str, int, float]:
     from build_interview_clip import segment, strip_hesitation_lines  # noqa: PLC0415
     from draft_interview_spec import cap_json3, translate  # noqa: PLC0415
@@ -501,22 +516,14 @@ def _build_one_unlocked(path: Path, chat, *, write: bool) -> tuple[str, int, flo
     existing = _read(spec_path) if spec_path.is_file() else {}
     if write and existing and _protected(existing, slug) and not _explicit_revision(req, spec_path, existing):
         raise RuntimeError(f"{slug}: 已确认版本受保护；新修订需 revision 和 expected_spec_sha256")
-    if write:
-        from production_preflight import check_request
-        check_request(req)
     origin = existing.get("_request_origin") or {}
     previous = origin.get("request") or {}
-    transcript_keys = ("url", "start", "end", "segment_budget_px", "max_zh_chars")
+    transcript_keys = ("url", "start", "end", "segment_budget_px", "max_zh_chars",
+                       "source_title", "source", "requested_content_type", "match", "subject")
     metadata_only = (bool(previous) and not req.get("_rebuild_once")
                      and all(previous.get(k) == req.get(k) for k in transcript_keys)
                      and (OUTDIR / slug / "cap_asr.json3").is_file())
     research_job = None
-    if write and not metadata_only and not req.get("_tactical_research"):
-        match = req.get("match") or {}
-        if match.get("winner_en") and match.get("loser_en"):
-            from tactical_research import start_research
-            research_job = start_research(home=match["winner_en"], away=match["loser_en"],
-                event=match.get("event_search") or req.get("event", ""), year=match.get("year", 0))
     if metadata_only:
         # Apply only fields the user changed, preserving refined translations/lead-in.
         spec = dict(existing)
@@ -524,14 +531,29 @@ def _build_one_unlocked(path: Path, chat, *, write: bool) -> tuple[str, int, flo
                     "winner", "subject", "featured_player", "ceremony_subtype",
                     "topbar_layout", "interview_kind", "requested_content_type"):
             if req.get(key) != previous.get(key):
-                spec[key] = req.get(key)
+                spec[key] = _apply_request_delta(spec.get(key), previous.get(key), req.get(key))
         from interview_source_gate import finalize_source_contract, validate_source_contract
         finalize_source_contract(spec)
         validate_source_contract(spec)
+        if write:
+            from production_preflight import check_request
+            copy_path = SPECS / f"{slug}.xhs.txt"
+            copy_text = (str(req.get("xhs") or "") if req.get("xhs") != previous.get("xhs")
+                         else copy_path.read_text(encoding="utf-8"))
+            check_request({**req, **spec, "xhs": copy_text})
         rows = None
         lines = existing.get("zh") or []
         duration = float(origin.get("duration") or existing.get("end") or 0)
     else:
+        if write:
+            from production_preflight import check_request
+            check_request(req)
+        if write and not metadata_only and not req.get("_tactical_research"):
+            match = req.get("match") or {}
+            if match.get("winner_en") and match.get("loser_en"):
+                from tactical_research import start_research
+                research_job = start_research(home=match["winner_en"], away=match["loser_en"],
+                    event=match.get("event_search") or req.get("event", ""), year=match.get("year", 0))
         def transcribe():
             with tempfile.TemporaryDirectory() as td:
                 return _transcribe_request(str(req["url"]), Path(td), model="small.en")
@@ -575,6 +597,13 @@ def _build_one_unlocked(path: Path, chat, *, write: bool) -> tuple[str, int, flo
             spec["_tactical_research"] = research_job.result()
         if any(file_digest(p) != sha for p, sha in observed.items()):
             raise RuntimeError(f"{slug}: 输入或正式稿已被另一任务修改，拒绝覆盖")
+        if _explicit_revision(req, spec_path, existing):
+            marker = OUTDIR / slug / "pushed.json"
+            if marker.is_file():
+                pushed = _read(marker)
+                if pushed.get("film_sha256"):
+                    spec["_publication_revision"] = {
+                        "id": req["revision"], "base_film_sha256": pushed["film_sha256"]}
         spec["_request_origin"] = {
             "request_sha256": _request_identity(req), "request": {
                 k: v for k, v in req.items() if k not in {"_rebuild_once", "expected_spec_sha256"}},

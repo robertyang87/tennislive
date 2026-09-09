@@ -1058,7 +1058,7 @@ jobs:
           # 「判据回喂模型修一轮」那一步当输入，见 dry-run 步的同款注释。
           set -o pipefail
           RENDER_STARTED=$(date -u +%FT%TZ)
-          python tools/video_sla.py mark --timeline "$RUNNER_TEMP/production-timeline.json" --stage render
+          python tools/video_sla.py mark --timeline "$RUNNER_TEMP/production-timeline.json" --phase render
           python tools/build_match_reel.py render \
             --spec "$SPEC" \
             --voice "${{ github.event.inputs.voice }}" \
@@ -1148,7 +1148,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          python tools/video_sla.py mark --timeline "$RUNNER_TEMP/production-timeline.json" --stage qc_passed --metadata "${{ steps.paths.outputs.outdir }}/render.json"
+          python tools/video_sla.py mark --timeline "$RUNNER_TEMP/production-timeline.json" --phase qc_passed --metadata "${{ steps.paths.outputs.outdir }}/render.json"
           OUTDIR="${{ steps.paths.outputs.outdir }}"
           SLUG="${{ github.event.inputs.slug }}"
           REEL="$OUTDIR/$SLUG.mp4"
