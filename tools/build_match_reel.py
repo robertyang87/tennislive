@@ -6804,10 +6804,10 @@ def _materialize_stat_card(spec: dict, segments: list[Segment], outdir: Path,
         out = outdir / STAT_CARD_NAME
         # 片里那一版是 1080×1440（render_stat_card.VARIANTS["film"]）——就是成片的
         # 画幅，缩进去铺满宽度；推送页那张仍是 1080×1920，两张各渲各的。
-        renderer(spec, out, variant="film")
+        renderer(spec, out, variant="film_band" if LAYOUT == "band" else "film")
         if not out.is_file():
             raise ReelError(f"数据统计图没渲出来：{out}")
-    return [replace(s, image=str(outdir / STAT_CARD_NAME))
+    return [replace(s, image=str(outdir / STAT_CARD_NAME), full_bleed=LAYOUT == "band")
             if s.image == STAT_CARD_PLACEHOLDER else s for s in segments]
 
 
