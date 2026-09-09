@@ -36,6 +36,18 @@ def _duration(draft: dict) -> str:
     return ""
 
 
+def _match_duration_seconds(duration: str) -> int:
+    """Full-match structured durations are H:MM (optionally H:MM:SS).
+
+    The poster's generic media parser treats two fields as M:SS. Convert
+    explicitly here so 4:28 cannot silently become a four-minute match.
+    """
+    parts = [int(part) for part in duration.split(":")]
+    if len(parts) not in (2, 3) or any(part >= 60 for part in parts[1:]):
+        raise ValueError(f"Invalid full-match duration: {duration!r}")
+    return parts[0] * 3600 + parts[1] * 60 + (parts[2] if len(parts) == 3 else 0)
+
+
 def _source_urls(draft: dict) -> list[str]:
     urls = []
     source = str(draft.get("source_url") or "").strip()
@@ -421,7 +433,8 @@ def promote(draft: dict) -> dict:
     visual_cover = draft["_visual_evidence"]["cover"]
     duration = _duration(draft)
     duration_data = "data:application/json," + quote(json.dumps(
-        {"duration": duration, "source": "structured match statistics"},
+        {"duration": _match_duration_seconds(duration), "unit": "seconds",
+         "source_value": duration, "source": "structured match statistics"},
         ensure_ascii=False, separators=(",", ":")))
     # ⚠️ 轮次一律过 `round_display`：内部那两套轮次名产的是「半决赛」
     # 「四分之一决赛」，而 topic 和下面的 topbar.line1 都是**会发出去的字段**
