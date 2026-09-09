@@ -1,0 +1,333 @@
+{
+  "audit_revision": "source-attribution-native-crops-v2",
+  "audit_id": "20260909T203723501256Z",
+  "slug": "zheng-rybakina-us-open-2026-qf-presser",
+  "model": "MiniMax-M3",
+  "status": "pass",
+  "pass": true,
+  "created_at": "2026-09-09T20:37:23.501484+00:00",
+  "scope": "sampled final-film visual evidence; not full-film or audio verification",
+  "source_exception": "User explicitly requested this press conference; press_conference is valid; no lead-in required",
+  "issues": [],
+  "spec_sha256": "5e646ae9a6d0fd455e119538d24373a524da6b091cb7ae5865c4cb1638260544",
+  "render_sha256": "2c9cd1d36aa39a5a3b938ae86f8e5cfd859583a1335e0d8db1b0af70adfe940d",
+  "source_attribution": {
+    "featured_player": "郑钦文",
+    "title": "Qinwen Zheng Press Conference | 2026 US Open Quarterfinal",
+    "metadata": {
+      "channel": "US Open Tennis Championships",
+      "channel_id": "UCXbboag48Qlr78zzz6SkzkQ",
+      "duration_s": 324,
+      "method": "retrieved_youtube_watch_videoDetails",
+      "retrieved_at": "2026-09-09T19:35:12Z",
+      "source_url": "https://www.youtube.com/watch?v=2C7_q05gGUk",
+      "video_id": "2C7_q05gGUk"
+    },
+    "verification": {
+      "attestation_sha256": "f0987401f91b7a3beafe2a2e926aebc1020ff5c67fe03397374d116d097647e1",
+      "detected_type": "press_conference",
+      "evidence": [
+        {
+          "kind": "official_explicit_title",
+          "source": "US Open",
+          "title": "Qinwen Zheng Press Conference | 2026 US Open Quarterfinal",
+          "video_id": "2C7_q05gGUk"
+        }
+      ],
+      "match_id": "2026:us-open:womens-quarterfinal:elena-rybakina-qinwen-zheng",
+      "method": "official_explicit_press_conference",
+      "source": "US Open",
+      "source_id": "youtube:2C7_q05gGUk",
+      "source_url": "https://www.youtube.com/watch?v=2C7_q05gGUk",
+      "status": "verified",
+      "title": "Qinwen Zheng Press Conference | 2026 US Open Quarterfinal"
+    },
+    "identity_method": "official-source attribution, not face recognition"
+  },
+  "film_sha256": "ab9b925292a9c239b042920bc5f9fcab08f34a58a38e8a6fce01462adc97138f",
+  "frames": [
+    {
+      "image_id": 1,
+      "seconds": 0.15,
+      "role": "actual opening cover",
+      "path": "minimax_visual_evidence/20260909T203723501256Z/frame_01.jpg",
+      "sha256": "fc9fc913a61b087f0eee319282b23a82cac448a5eee0e8145f36cbd76ffd626c"
+    },
+    {
+      "image_id": 2,
+      "seconds": 8,
+      "role": "press conference opening",
+      "path": "minimax_visual_evidence/20260909T203723501256Z/frame_02.jpg",
+      "sha256": "05b147f96428b2ee5f1514990542d3d4bd66154448c6f41f632f1343f7b6b9f3"
+    },
+    {
+      "image_id": 3,
+      "seconds": 35,
+      "role": "body speaker and subtitles",
+      "path": "minimax_visual_evidence/20260909T203723501256Z/frame_03.jpg",
+      "sha256": "924eaba0c25c328662226623f376c742a74665a3f70b241006435e34821f660c"
+    },
+    {
+      "image_id": 4,
+      "seconds": 75,
+      "role": "body speaker and subtitles",
+      "path": "minimax_visual_evidence/20260909T203723501256Z/frame_04.jpg",
+      "sha256": "af8cbc04d7ca60d679d9f2a4a6c263fce52fcfd79fcc71d51db25718eb3fa0f2"
+    },
+    {
+      "image_id": 5,
+      "seconds": 165,
+      "role": "body speaker and subtitles",
+      "path": "minimax_visual_evidence/20260909T203723501256Z/frame_05.jpg",
+      "sha256": "1be2c7448532df9cb7864dd6b011faabc83e67a91071fc6508b17cc613c0a363"
+    },
+    {
+      "image_id": 6,
+      "seconds": 230,
+      "role": "body speaker and subtitles",
+      "path": "minimax_visual_evidence/20260909T203723501256Z/frame_06.jpg",
+      "sha256": "3512813ffc4a2869e30a869d862c5976b3034e50c930143f2e5b4f2f2147a88a"
+    },
+    {
+      "image_id": 7,
+      "seconds": 295,
+      "role": "body speaker and subtitles",
+      "path": "minimax_visual_evidence/20260909T203723501256Z/frame_07.jpg",
+      "sha256": "636d16f6d34a83d145d42f2cf1b6285814821ad4ddfd1e4e5627d8803626244a"
+    },
+    {
+      "image_id": 8,
+      "seconds": 328.811328,
+      "role": "closing",
+      "path": "minimax_visual_evidence/20260909T203723501256Z/frame_08.jpg",
+      "sha256": "6446cc890904232da4c3247667a0e3a650586bb6ccdeab3824d14b9546715a1c"
+    },
+    {
+      "image_id": 9,
+      "seconds": 331.811328,
+      "role": "brand ending",
+      "path": "minimax_visual_evidence/20260909T203723501256Z/frame_09.jpg",
+      "sha256": "475d5c3674b5b3c2007e1ad35ddd6cf92aa31ca66b3dcf0293d65b6ead383d25"
+    },
+    {
+      "image_id": 10,
+      "seconds": 8,
+      "role": "source backdrop right text",
+      "crop_whxy": "380:200:700:300",
+      "derived_from_image_id": 2,
+      "path": "minimax_visual_evidence/20260909T203723501256Z/frame_10.jpg",
+      "sha256": "e743b974aea9cc46cd0938d73c297eb0113e899336dce140b7190e1badc2289e"
+    },
+    {
+      "image_id": 11,
+      "seconds": 8,
+      "role": "source backdrop left logo",
+      "crop_whxy": "350:300:0:230",
+      "derived_from_image_id": 2,
+      "path": "minimax_visual_evidence/20260909T203723501256Z/frame_11.jpg",
+      "sha256": "0e62839a6058148383eeceb3aa407316500394001d4e626132455ac51c079f66"
+    }
+  ],
+  "raw_result": {
+    "interviewee": {
+      "value": "郑钦文",
+      "confidence": 0.97,
+      "evidence": "官方来源绑定：title='Qinwen Zheng Press Conference | 2026 US Open Quarterfinal', channel='US Open Tennis Championships', video_id=2C7_q05gGUk, featured_player='郑钦文', status='verified', identity_method='official-source attribution, not face recognition'。画面发布语境：背景板为US Open官方蓝底黄logo发布会背景板（见图10截图为'USOPEN.OR'正向拼写，见图11截图为正向US OPEN logo），受采者坐于话筒前并佩戴US Open媒体证带，与'2026 US Open女单1/4决赛赛后新闻发布会'的官方署名场景完全一致。封面及正文显式中文署名'郑钦文·赛后开麦'与'郑钦文·赛后新闻发布会'亦与官方归属吻合。",
+      "image_ids": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        10,
+        11
+      ]
+    },
+    "scene": {
+      "value": "press_conference",
+      "confidence": 0.99,
+      "evidence": "图1-7均为发布会典型构图：受采者坐于白色桌后正对麦克风，背后为US Open官方蓝底logo背景板；图10/11为原像素背景裁切，可见'USOPEN.OR(G)'正向文字与US Open黄色火焰logo正向。受采者胸前挂有US Open媒体出入证件带。",
+      "image_ids": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        10,
+        11
+      ]
+    },
+    "not_mirrored": {
+      "value": true,
+      "confidence": 0.97,
+      "evidence": "原像素背景裁切：图10显示背景文字'USOPEN.OR'为正向前进方向（左侧R字母正常形态），图11显示US Open黄色火焰logo火焰朝右、文字'open'正向前进方向，符合US Open官方标准镜像。两种独立的非镜像背景标识（文本与logo）方向均正常，排除镜像。",
+      "image_ids": [
+        10,
+        11
+      ]
+    },
+    "same_program": {
+      "value": true,
+      "confidence": 0.98,
+      "evidence": "封面（图1）与正文（图2-7）同发布会连续场景：同一受采者、同一件米白色镶红边背心吊带服装、同一US Open蓝底logo背景板、同一白色桌面与黑色鹅颈话筒、同一金红配色Rolex腕表与绿色吊坠项链等配饰均连续一致；视频时序连续（封面0.15s、正文8s/35s/75s/165s/230s/295s），属同一段发布会原片剪辑。",
+      "image_ids": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    "cover_clear_frontal_eyes_open": {
+      "value": true,
+      "confidence": 0.95,
+      "evidence": "图1（actual opening cover, 0.15s）：受采者清晰正脸朝向镜头，双眼自然睁开，瞳孔与眼白可见，无眯眼/闭眼/睡眼状态；面部光线充足无遮挡。",
+      "image_ids": [
+        1
+      ]
+    },
+    "bilingual_subtitles_readable": {
+      "value": true,
+      "confidence": 0.92,
+      "evidence": "图2-7中英双语字幕均为单行排版，英文字幕在上（白色无衬线）、中文字幕在下（亮黄绿色），字号清晰，未见互相重叠、未见截字/截半、未见吞词；如'but it's been a remarkable run'/'但这次征程非常出色，'、'It was a bit pity for me to lose this match,'/'输掉这场比赛，有些遗憾。'等均可完整阅读。",
+      "image_ids": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    "no_face_obstruction": {
+      "value": true,
+      "confidence": 0.93,
+      "evidence": "封面（图1）人脸下半部虽与话筒杆接近，但话筒杆位于下颌/嘴部下方、未遮挡眉眼；'郑钦文·赛后开麦'等角标位于画面下沿深色区域，不覆盖面部。正文（图2-7）中英字幕均落在下方黑色画布条内，人脸完整未被遮挡。",
+      "image_ids": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    "brand_ending": {
+      "value": true,
+      "confidence": 0.97,
+      "evidence": "图9（brand ending, 331.81s）为黑底品牌片尾：中央网球时钟icon + 大字'网球时差'（其中'时差'二字为亮黄绿色高亮），下方slogan'时差归我，好球归你'，底部社交账号'@网球时差 · TENNIS JETLAG'。图8为'赛后开麦'节目落版。两图共同构成网球时差频道品牌片尾。",
+      "image_ids": [
+        8,
+        9
+      ]
+    }
+  },
+  "result": {
+    "interviewee": {
+      "value": "郑钦文",
+      "confidence": 0.97,
+      "evidence": "官方来源绑定：title='Qinwen Zheng Press Conference | 2026 US Open Quarterfinal', channel='US Open Tennis Championships', video_id=2C7_q05gGUk, featured_player='郑钦文', status='verified', identity_method='official-source attribution, not face recognition'。画面发布语境：背景板为US Open官方蓝底黄logo发布会背景板（见图10截图为'USOPEN.OR'正向拼写，见图11截图为正向US OPEN logo），受采者坐于话筒前并佩戴US Open媒体证带，与'2026 US Open女单1/4决赛赛后新闻发布会'的官方署名场景完全一致。封面及正文显式中文署名'郑钦文·赛后开麦'与'郑钦文·赛后新闻发布会'亦与官方归属吻合。",
+      "image_ids": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        10,
+        11
+      ]
+    },
+    "scene": {
+      "value": "press_conference",
+      "confidence": 0.99,
+      "evidence": "图1-7均为发布会典型构图：受采者坐于白色桌后正对麦克风，背后为US Open官方蓝底logo背景板；图10/11为原像素背景裁切，可见'USOPEN.OR(G)'正向文字与US Open黄色火焰logo正向。受采者胸前挂有US Open媒体出入证件带。",
+      "image_ids": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        10,
+        11
+      ]
+    },
+    "not_mirrored": {
+      "value": true,
+      "confidence": 0.97,
+      "evidence": "原像素背景裁切：图10显示背景文字'USOPEN.OR'为正向前进方向（左侧R字母正常形态），图11显示US Open黄色火焰logo火焰朝右、文字'open'正向前进方向，符合US Open官方标准镜像。两种独立的非镜像背景标识（文本与logo）方向均正常，排除镜像。",
+      "image_ids": [
+        10,
+        11
+      ]
+    },
+    "same_program": {
+      "value": true,
+      "confidence": 0.98,
+      "evidence": "封面（图1）与正文（图2-7）同发布会连续场景：同一受采者、同一件米白色镶红边背心吊带服装、同一US Open蓝底logo背景板、同一白色桌面与黑色鹅颈话筒、同一金红配色Rolex腕表与绿色吊坠项链等配饰均连续一致；视频时序连续（封面0.15s、正文8s/35s/75s/165s/230s/295s），属同一段发布会原片剪辑。",
+      "image_ids": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    "cover_clear_frontal_eyes_open": {
+      "value": true,
+      "confidence": 0.95,
+      "evidence": "图1（actual opening cover, 0.15s）：受采者清晰正脸朝向镜头，双眼自然睁开，瞳孔与眼白可见，无眯眼/闭眼/睡眼状态；面部光线充足无遮挡。",
+      "image_ids": [
+        1
+      ]
+    },
+    "bilingual_subtitles_readable": {
+      "value": true,
+      "confidence": 0.92,
+      "evidence": "图2-7中英双语字幕均为单行排版，英文字幕在上（白色无衬线）、中文字幕在下（亮黄绿色），字号清晰，未见互相重叠、未见截字/截半、未见吞词；如'but it's been a remarkable run'/'但这次征程非常出色，'、'It was a bit pity for me to lose this match,'/'输掉这场比赛，有些遗憾。'等均可完整阅读。",
+      "image_ids": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    "no_face_obstruction": {
+      "value": true,
+      "confidence": 0.93,
+      "evidence": "封面（图1）人脸下半部虽与话筒杆接近，但话筒杆位于下颌/嘴部下方、未遮挡眉眼；'郑钦文·赛后开麦'等角标位于画面下沿深色区域，不覆盖面部。正文（图2-7）中英字幕均落在下方黑色画布条内，人脸完整未被遮挡。",
+      "image_ids": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    "brand_ending": {
+      "value": true,
+      "confidence": 0.97,
+      "evidence": "图9（brand ending, 331.81s）为黑底品牌片尾：中央网球时钟icon + 大字'网球时差'（其中'时差'二字为亮黄绿色高亮），下方slogan'时差归我，好球归你'，底部社交账号'@网球时差 · TENNIS JETLAG'。图8为'赛后开麦'节目落版。两图共同构成网球时差频道品牌片尾。",
+      "image_ids": [
+        8,
+        9
+      ]
+    }
+  }
+}
