@@ -1450,18 +1450,32 @@ jobs:
         id: render_auto_gate
         if: github.event.inputs.mode == 'render' && github.ref_name == 'main'
         run: |
-          python tools/auto_push_gate.py \
+          # 表单勾了「强制推送」＝人把**意图**说出口了，交给门禁去放宽那一道
+          # （spec 没写 push.auto），**不是**跳过门禁。见下一步的注释。
+          FORCED=""
+          if [ "${{ github.event.inputs.push }}" = "true" ]; then
+            FORCED="--forced"
+          fi
+          python tools/auto_push_gate.py $FORCED \
             --changed "${{ steps.paths.outputs.outdir }}/render.json"
 
       # render 不在本 job 里直接 POST：那会让 job 级发布锁把多场 render 也全部
-      # 串行。到这里代表 dry-run、成片 L2、Release 探活、提交全过；spec 自动认领
-      # 或表单显式强制推送任一成立，就派一趟只做发布的 mode=push。这些轻量 run
-      # 在 match-reel-publish 组串行。
+      # 串行。到这里代表 dry-run、成片 L2、Release 探活、提交全过；门禁说该发，
+      # 就派一趟只做发布的 mode=push。这些轻量 run 在 match-reel-publish 组串行。
+      #
+      # ⚠️ **派发与否只认门禁的结论，`inputs.push` 一个字都不许出现在这个 `if`
+      # 里。** 上一版写的是 `(inputs.push == 'true' || found == 'true')`——前一半
+      # 为真就直接派发，于是上一步那套「完整发布门禁」被整个绕过去，而它上面
+      # 那行注释还写着「不在 YAML 里另写一份简化判断」。代价 2026-09-09 结了账：
+      # `shelton-alcaraz` 08:33 已经推送过，此后每重渲一趟就派一趟注定撞在
+      # `pushed.json` 上的 push，**每趟一条 failure**（近 10 次失败率 80%、连续
+      # 失败 4）。消息一条没重复发，可**闸生效的样子和真出错在报表上一模一样**。
+      # 强制推送的意图没有丢，它挪到了上一步的 `--forced`——那儿只放宽「意图」
+      # 那一道，「已经发过了」「成片身份对不上」照旧拦得住。
       - name: render 质检落库后自动派发微信推送
         if: >-
           github.event.inputs.mode == 'render' &&
-          (github.event.inputs.push == 'true' ||
-           steps.render_auto_gate.outputs.found == 'true')
+          steps.render_auto_gate.outputs.found == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
