@@ -259,7 +259,8 @@ def quiet_windows(spec: dict, cover: float) -> list[tuple[float, float, float]]:
     t = cover
     for seg in spec["segments"]:
         length = seg_film_seconds(seg)
-        if not seg.get("image") and not str(seg.get("narration", "")).strip():
+        if not (seg.get("image") or seg.get("stat_card") or seg.get("title_card")) \
+                and not str(seg.get("narration", "")).strip():
             out.append((t, length, float(seg["start"])))
         t += length
     return out
