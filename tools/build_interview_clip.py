@@ -1622,7 +1622,7 @@ def assert_topbar_font_log(stderr: str, spec: dict) -> None:
 # ⚠️ **只收单字虚词，而且只在这一行不是句子结尾时才算。**
 # `身体上和心理上都是`（都是＝完整的谓语）、`你也是看着她长大的`（是…的 结构）
 # 都以「虚词」收尾却是完整的——判据宁可窄不可宽，扩大化的判据不吭声。
-_ZH_DANGLE = tuple("的地得和跟与在把被为从对而或让就")
+from interview_zh_tail import has_dangling_tail
 
 
 def en_problems(lines: list[dict]) -> list[str]:
@@ -1651,7 +1651,7 @@ def zh_problems(lines: list[dict], zh: list[str]) -> list[str]:
         # 配的英文那行以句号问号收尾 → 这一句到此为止，中文也该是完整的
         if seg["en"].rstrip().endswith(_SENT_END):
             continue
-        if cn.rstrip().endswith(_ZH_DANGLE):
+        if has_dangling_tail(cn):
             bad.append(f"#{i} 中文吊在「{cn.rstrip()[-1]}」上，意思被劈成两半：{cn}")
     return bad
 

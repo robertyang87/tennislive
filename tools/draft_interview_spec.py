@@ -48,6 +48,7 @@ sys.path.insert(0, str(ROOT / "tools"))
 
 from oncourt_feed import parse_round  # noqa: E402
 from interview_skill import model_instructions  # noqa: E402
+from interview_zh_tail import has_dangling_tail  # noqa: E402
 
 CANDIDATES = ROOT / "data" / "interview_clip_candidates.json"
 SPECS = ROOT / "specs" / "interviews"
@@ -241,13 +242,10 @@ def _translation_system_prompt(max_zh_chars: int | None = None) -> str:
     )
 
 
-_ZH_BAD_TAIL = tuple("的地得和跟与在把被为从对而或让就")
-
-
 def _translation_line_ok(line: str, max_zh_chars: int | None) -> bool:
     text = line.strip()
     return bool(text) and (not max_zh_chars or len(text) <= max_zh_chars) \
-        and not text.endswith(_ZH_BAD_TAIL)
+        and not has_dangling_tail(text)
 
 
 def _translation_line_issue(line: object, max_zh_chars: int | None) -> str:
@@ -257,7 +255,7 @@ def _translation_line_issue(line: object, max_zh_chars: int | None) -> str:
     text = line.strip()
     if max_zh_chars and len(text) > max_zh_chars:
         return f"译文有 {len(text)} 个字符，超过 {max_zh_chars} 字限制"
-    if text.endswith(_ZH_BAD_TAIL):
+    if has_dangling_tail(text):
         return f"译文以虚词“{text[-1]}”收尾，意思悬空"
     return "响应结构不符合要求"
 
