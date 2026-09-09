@@ -30,29 +30,41 @@
     "version": 2,
     "pipeline": "match-reel",
     "slug": "shelton-alcaraz",
-    "received_at": "2026-09-09T08:17:35Z",
-    "artifact_ready_at": "2026-09-09T08:24:35Z",
-    "elapsed_seconds": 420.237,
+    "received_at": "2026-09-09T08:35:21Z",
+    "artifact_ready_at": "2026-09-09T08:43:10Z",
+    "elapsed_seconds": 469.43,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "9660eb48b0f4f762d3e4fa2cba81c018a6a8347d3a62a5d44fac4bbf5840374b",
-    "spec_sha256": "e172ebd5daaaa870d1f0783c1be2908e95451504295d0c948eedc8fcd1526fb1",
+    "film_sha256": "c284ec0e9780d4aab17c860a7e9f4791e6107d1795515e73eb805f4e765a7024",
+    "spec_sha256": "1d0bbc55209eeb9eaa293e1976ab7f85b724fc481c87a136e75a03bff2232384",
     "request_received_at": "2026-09-09T07:45:49Z",
-    "request_to_artifact_seconds": 2326.237,
-    "run_id": "34328318645",
+    "request_to_artifact_seconds": 3441.43,
+    "run_id": "34329942809",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-09-09T08:20:14Z",
-        "run_id": "34328318645"
+        "at": "2026-09-09T08:38:41Z",
+        "run_id": "34329942809"
       }
     ],
-    "render_seconds": 261.237,
-    "pre_render_seconds": 159.0
+    "render_seconds": 269.43,
+    "pre_render_seconds": 200.0
   },
-  "film_sha256": "9660eb48b0f4f762d3e4fa2cba81c018a6a8347d3a62a5d44fac4bbf5840374b",
-  "film_bytes": 94775280,
-  "qc_attestation_sha256": "2c07803a6c9dbbf33d1706d9d33e027bcc47fc0ec435937d4d0e2d151bd1a00e",
+  "film_sha256": "c284ec0e9780d4aab17c860a7e9f4791e6107d1795515e73eb805f4e765a7024",
+  "film_bytes": 94736474,
+  "qc_attestation_sha256": "0d6913f69e42024a57d3412d87eb7d869e03a4777ed05d6df52b408a67c67790",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-09-09T08:38:41Z",
+      "run_id": "34329942809"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-09T08:43:11Z",
+      "run_id": "34329942809"
+    }
+  ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-shelton-alcaraz/shelton-alcaraz.mp4",
-  "video_bytes": 94775280
+  "video_bytes": 94736474
 }
