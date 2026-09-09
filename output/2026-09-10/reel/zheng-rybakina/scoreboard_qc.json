@@ -1,19 +1,19 @@
 {
   "status": "pass",
   "profile": "us-open-navy-v1",
-  "spec_sha256": "b75c1c2b7110f82183fcf0ffb67e71ced0f683a984c9d7267f2c9eca293fc12a",
+  "spec_sha256": "367f48a243ba252fe705863f448aead7370656019e303537b385f9ea31d478f1",
   "segments": [
     {
       "profile": "us-open-navy-v1",
       "source_start": 12.45,
-      "seconds": 14.490000000000002,
+      "seconds": 16.0,
       "fps": 29.97002997002997,
-      "frames": 435,
-      "present_frames": 435,
+      "frames": 480,
+      "present_frames": 480,
       "max_extra_source_px": 4,
       "gap_bridge_frames": 0,
       "mask": "output/2026-09-10/reel/zheng-rybakina/score_masks/segment-02.mkv",
-      "mask_sha256": "3ab4c3e6debb5a63c6cd8d05008160a14e3f09e18409055d37031e66c718c3ea",
+      "mask_sha256": "8a19b7497df160c4be744b4316c2dd1f1c316402297f142fd412527af54a775a",
       "box": [
         104,
         852,
@@ -33,22 +33,201 @@
         },
         {
           "start_frame": 429,
-          "end_frame": 433,
-          "edge": 587
+          "end_frame": 438,
+          "edge": 586
         },
         {
-          "start_frame": 433,
-          "end_frame": 434,
-          "edge": 585
+          "start_frame": 438,
+          "end_frame": 440,
+          "edge": 584
         },
         {
-          "start_frame": 434,
-          "end_frame": 435,
-          "edge": 587
+          "start_frame": 440,
+          "end_frame": 447,
+          "edge": 586
+        },
+        {
+          "start_frame": 447,
+          "end_frame": 448,
+          "edge": 584
+        },
+        {
+          "start_frame": 448,
+          "end_frame": 450,
+          "edge": 586
+        },
+        {
+          "start_frame": 450,
+          "end_frame": 455,
+          "edge": 584
+        },
+        {
+          "start_frame": 455,
+          "end_frame": 465,
+          "edge": 583
+        },
+        {
+          "start_frame": 465,
+          "end_frame": 480,
+          "edge": 584
         }
       ],
       "segment": 1,
       "source_sha256": "69a82b8c4c85137d92c689bedd6039339b45a413a5e3b9c69b9aa2f2059b0f4a"
+    },
+    {
+      "profile": "us-open-navy-v1",
+      "source_start": 222.3,
+      "seconds": 33.46999999999999,
+      "fps": 29.97002997002997,
+      "frames": 1004,
+      "present_frames": 1004,
+      "max_extra_source_px": 4,
+      "gap_bridge_frames": 0,
+      "mask": "output/2026-09-10/reel/zheng-rybakina/score_masks/segment-03.mkv",
+      "mask_sha256": "9c8b0e73fa8b56fec08392df993ff8fa30efaa126daedd97cd4d3c235b0d6f46",
+      "box": [
+        104,
+        852,
+        736,
+        978
+      ],
+      "runs": [
+        {
+          "start_frame": 0,
+          "end_frame": 112,
+          "edge": 586
+        },
+        {
+          "start_frame": 112,
+          "end_frame": 173,
+          "edge": 584
+        },
+        {
+          "start_frame": 173,
+          "end_frame": 265,
+          "edge": 586
+        },
+        {
+          "start_frame": 265,
+          "end_frame": 431,
+          "edge": 584
+        },
+        {
+          "start_frame": 431,
+          "end_frame": 458,
+          "edge": 586
+        },
+        {
+          "start_frame": 458,
+          "end_frame": 594,
+          "edge": 584
+        },
+        {
+          "start_frame": 594,
+          "end_frame": 663,
+          "edge": 586
+        },
+        {
+          "start_frame": 663,
+          "end_frame": 699,
+          "edge": 582
+        },
+        {
+          "start_frame": 699,
+          "end_frame": 773,
+          "edge": 583
+        },
+        {
+          "start_frame": 773,
+          "end_frame": 786,
+          "edge": 584
+        },
+        {
+          "start_frame": 786,
+          "end_frame": 889,
+          "edge": 586
+        },
+        {
+          "start_frame": 889,
+          "end_frame": 918,
+          "edge": 584
+        },
+        {
+          "start_frame": 918,
+          "end_frame": 999,
+          "edge": 583
+        },
+        {
+          "start_frame": 999,
+          "end_frame": 1004,
+          "edge": 584
+        }
+      ],
+      "segment": 2,
+      "source_sha256": "2adc8e1affe11cebabc73275dca32a8554fceab89f7db3b6b10a5fec0814db62"
+    },
+    {
+      "profile": "us-open-navy-v1",
+      "source_start": 255.59,
+      "seconds": 32.830000000000005,
+      "fps": 29.97002997002997,
+      "frames": 984,
+      "present_frames": 984,
+      "max_extra_source_px": 4,
+      "gap_bridge_frames": 0,
+      "mask": "output/2026-09-10/reel/zheng-rybakina/score_masks/segment-04.mkv",
+      "mask_sha256": "adc3730abd26fd47b38da8dc73f2ace844194bd6b1c1868373faa3af78f54710",
+      "box": [
+        104,
+        852,
+        736,
+        978
+      ],
+      "runs": [
+        {
+          "start_frame": 0,
+          "end_frame": 202,
+          "edge": 584
+        },
+        {
+          "start_frame": 202,
+          "end_frame": 307,
+          "edge": 583
+        },
+        {
+          "start_frame": 307,
+          "end_frame": 426,
+          "edge": 586
+        },
+        {
+          "start_frame": 426,
+          "end_frame": 486,
+          "edge": 583
+        },
+        {
+          "start_frame": 486,
+          "end_frame": 678,
+          "edge": 584
+        },
+        {
+          "start_frame": 678,
+          "end_frame": 719,
+          "edge": 583
+        },
+        {
+          "start_frame": 719,
+          "end_frame": 912,
+          "edge": 584
+        },
+        {
+          "start_frame": 912,
+          "end_frame": 984,
+          "edge": 583
+        }
+      ],
+      "segment": 3,
+      "source_sha256": "2adc8e1affe11cebabc73275dca32a8554fceab89f7db3b6b10a5fec0814db62"
     },
     {
       "profile": "us-open-navy-v1",
@@ -59,8 +238,8 @@
       "present_frames": 302,
       "max_extra_source_px": 4,
       "gap_bridge_frames": 0,
-      "mask": "output/2026-09-10/reel/zheng-rybakina/score_masks/segment-03.mkv",
-      "mask_sha256": "65c1425607c943a71652a84ddf025cc536f2baf3c179cd9002c45607fce072e4",
+      "mask": "output/2026-09-10/reel/zheng-rybakina/score_masks/segment-05.mkv",
+      "mask_sha256": "8de2ee9ce7222b414bbd91f492f835fe683982026fdf1401e7d145c4a73493f9",
       "box": [
         104,
         852,
@@ -94,7 +273,7 @@
           "edge": null
         }
       ],
-      "segment": 2,
+      "segment": 4,
       "source_sha256": "69a82b8c4c85137d92c689bedd6039339b45a413a5e3b9c69b9aa2f2059b0f4a"
     },
     {
@@ -106,8 +285,8 @@
       "present_frames": 410,
       "max_extra_source_px": 4,
       "gap_bridge_frames": 0,
-      "mask": "output/2026-09-10/reel/zheng-rybakina/score_masks/segment-04.mkv",
-      "mask_sha256": "76ad185f12699a49af2e9501110fd32fe12915cff218c65868328ef943aca581",
+      "mask": "output/2026-09-10/reel/zheng-rybakina/score_masks/segment-06.mkv",
+      "mask_sha256": "155503b3923d8f9e41aafb9a8b199966809e9dd739087ba0e323033feff7b26b",
       "box": [
         104,
         852,
@@ -136,7 +315,7 @@
           "edge": 620
         }
       ],
-      "segment": 3,
+      "segment": 5,
       "source_sha256": "69a82b8c4c85137d92c689bedd6039339b45a413a5e3b9c69b9aa2f2059b0f4a"
     },
     {
@@ -148,8 +327,8 @@
       "present_frames": 212,
       "max_extra_source_px": 4,
       "gap_bridge_frames": 0,
-      "mask": "output/2026-09-10/reel/zheng-rybakina/score_masks/segment-05.mkv",
-      "mask_sha256": "81c82cabc72ec8f2e4c40fdd50292115f5e4193e2a85c65784515067a697b637",
+      "mask": "output/2026-09-10/reel/zheng-rybakina/score_masks/segment-07.mkv",
+      "mask_sha256": "1b5703de91e2ac4fd8331a86ab8f39b55667590bd61fee176db29eb7b1e5c61a",
       "box": [
         104,
         852,
@@ -188,82 +367,355 @@
           "edge": null
         }
       ],
-      "segment": 4,
-      "source_sha256": "69a82b8c4c85137d92c689bedd6039339b45a413a5e3b9c69b9aa2f2059b0f4a"
-    },
-    {
-      "profile": "us-open-navy-v1",
-      "source_start": 124.59,
-      "seconds": 12.140000000000008,
-      "fps": 29.97002997002997,
-      "frames": 364,
-      "present_frames": 364,
-      "max_extra_source_px": 4,
-      "gap_bridge_frames": 0,
-      "mask": "output/2026-09-10/reel/zheng-rybakina/score_masks/segment-06.mkv",
-      "mask_sha256": "8ede611b91bd941c2b1f6fc61e3d5a9748bf061ec230dfd5de9d4061c6264506",
-      "box": [
-        104,
-        852,
-        736,
-        978
-      ],
-      "runs": [
-        {
-          "start_frame": 0,
-          "end_frame": 362,
-          "edge": 658
-        },
-        {
-          "start_frame": 362,
-          "end_frame": 364,
-          "edge": 657
-        }
-      ],
-      "segment": 5,
-      "source_sha256": "69a82b8c4c85137d92c689bedd6039339b45a413a5e3b9c69b9aa2f2059b0f4a"
-    },
-    {
-      "profile": "us-open-navy-v1",
-      "source_start": 141.07,
-      "seconds": 18.72000000000002,
-      "fps": 29.97002997002997,
-      "frames": 562,
-      "present_frames": 562,
-      "max_extra_source_px": 4,
-      "gap_bridge_frames": 0,
-      "mask": "output/2026-09-10/reel/zheng-rybakina/score_masks/segment-07.mkv",
-      "mask_sha256": "3082f9f3317b5bd3ffe15cf08234c3f8d2048cd015bdc89f3ec691d97f4841b9",
-      "box": [
-        104,
-        852,
-        736,
-        978
-      ],
-      "runs": [
-        {
-          "start_frame": 0,
-          "end_frame": 505,
-          "edge": 657
-        },
-        {
-          "start_frame": 505,
-          "end_frame": 536,
-          "edge": 660
-        },
-        {
-          "start_frame": 536,
-          "end_frame": 558,
-          "edge": 658
-        },
-        {
-          "start_frame": 558,
-          "end_frame": 562,
-          "edge": 657
-        }
-      ],
       "segment": 6,
       "source_sha256": "69a82b8c4c85137d92c689bedd6039339b45a413a5e3b9c69b9aa2f2059b0f4a"
+    },
+    {
+      "profile": "us-open-navy-v1",
+      "source_start": 627.66,
+      "seconds": 19.800000000000004,
+      "fps": 29.97002997002997,
+      "frames": 594,
+      "present_frames": 527,
+      "max_extra_source_px": 4,
+      "gap_bridge_frames": 0,
+      "mask": "output/2026-09-10/reel/zheng-rybakina/score_masks/segment-08.mkv",
+      "mask_sha256": "527918c00dd4b927f849271fd706ab84954a0525d5693c1b0fa51efc7d074dbf",
+      "box": [
+        104,
+        852,
+        736,
+        978
+      ],
+      "runs": [
+        {
+          "start_frame": 0,
+          "end_frame": 67,
+          "edge": null
+        },
+        {
+          "start_frame": 67,
+          "end_frame": 542,
+          "edge": 657
+        },
+        {
+          "start_frame": 542,
+          "end_frame": 554,
+          "edge": 658
+        },
+        {
+          "start_frame": 554,
+          "end_frame": 574,
+          "edge": 657
+        },
+        {
+          "start_frame": 574,
+          "end_frame": 592,
+          "edge": 658
+        },
+        {
+          "start_frame": 592,
+          "end_frame": 594,
+          "edge": 657
+        }
+      ],
+      "segment": 7,
+      "source_sha256": "2adc8e1affe11cebabc73275dca32a8554fceab89f7db3b6b10a5fec0814db62"
+    },
+    {
+      "profile": "us-open-navy-v1",
+      "source_start": 647.28,
+      "seconds": 15.43,
+      "fps": 29.97002997002997,
+      "frames": 463,
+      "present_frames": 463,
+      "max_extra_source_px": 4,
+      "gap_bridge_frames": 0,
+      "mask": "output/2026-09-10/reel/zheng-rybakina/score_masks/segment-09.mkv",
+      "mask_sha256": "ad06f31d156457fe10b357c752e579787fa23282dace7eaecfd60125dbbc0be2",
+      "box": [
+        104,
+        852,
+        736,
+        978
+      ],
+      "runs": [
+        {
+          "start_frame": 0,
+          "end_frame": 208,
+          "edge": 658
+        },
+        {
+          "start_frame": 208,
+          "end_frame": 458,
+          "edge": 657
+        },
+        {
+          "start_frame": 458,
+          "end_frame": 463,
+          "edge": 658
+        }
+      ],
+      "segment": 8,
+      "source_sha256": "2adc8e1affe11cebabc73275dca32a8554fceab89f7db3b6b10a5fec0814db62"
+    },
+    {
+      "profile": "us-open-navy-v1",
+      "source_start": 662.53,
+      "seconds": 7.7700000000000315,
+      "fps": 29.97002997002997,
+      "frames": 233,
+      "present_frames": 233,
+      "max_extra_source_px": 4,
+      "gap_bridge_frames": 0,
+      "mask": "output/2026-09-10/reel/zheng-rybakina/score_masks/segment-10.mkv",
+      "mask_sha256": "c1f4634b9c625ca349b0468d8edf4552b164641e6a4452927797799bf2541a2d",
+      "box": [
+        104,
+        852,
+        736,
+        978
+      ],
+      "runs": [
+        {
+          "start_frame": 0,
+          "end_frame": 9,
+          "edge": 658
+        },
+        {
+          "start_frame": 9,
+          "end_frame": 14,
+          "edge": 657
+        },
+        {
+          "start_frame": 14,
+          "end_frame": 30,
+          "edge": 656
+        },
+        {
+          "start_frame": 30,
+          "end_frame": 38,
+          "edge": 657
+        },
+        {
+          "start_frame": 38,
+          "end_frame": 54,
+          "edge": 656
+        },
+        {
+          "start_frame": 54,
+          "end_frame": 56,
+          "edge": 657
+        },
+        {
+          "start_frame": 56,
+          "end_frame": 74,
+          "edge": 658
+        },
+        {
+          "start_frame": 74,
+          "end_frame": 115,
+          "edge": 656
+        },
+        {
+          "start_frame": 115,
+          "end_frame": 130,
+          "edge": 657
+        },
+        {
+          "start_frame": 130,
+          "end_frame": 157,
+          "edge": 658
+        },
+        {
+          "start_frame": 157,
+          "end_frame": 225,
+          "edge": 657
+        },
+        {
+          "start_frame": 225,
+          "end_frame": 233,
+          "edge": 658
+        }
+      ],
+      "segment": 9,
+      "source_sha256": "2adc8e1affe11cebabc73275dca32a8554fceab89f7db3b6b10a5fec0814db62"
+    },
+    {
+      "profile": "us-open-navy-v1",
+      "source_start": 686.6,
+      "seconds": 14.449999999999982,
+      "fps": 29.97002997002997,
+      "frames": 434,
+      "present_frames": 434,
+      "max_extra_source_px": 4,
+      "gap_bridge_frames": 0,
+      "mask": "output/2026-09-10/reel/zheng-rybakina/score_masks/segment-11.mkv",
+      "mask_sha256": "e6acfe56d7c526c09b8f82e22fa94da16350c7eef20b4ec92fc509f033a243c2",
+      "box": [
+        104,
+        852,
+        736,
+        978
+      ],
+      "runs": [
+        {
+          "start_frame": 0,
+          "end_frame": 434,
+          "edge": 657
+        }
+      ],
+      "segment": 10,
+      "source_sha256": "2adc8e1affe11cebabc73275dca32a8554fceab89f7db3b6b10a5fec0814db62"
+    },
+    {
+      "profile": "us-open-navy-v1",
+      "source_start": 705.15,
+      "seconds": 20.790000000000013,
+      "fps": 29.97002997002997,
+      "frames": 624,
+      "present_frames": 543,
+      "max_extra_source_px": 4,
+      "gap_bridge_frames": 0,
+      "mask": "output/2026-09-10/reel/zheng-rybakina/score_masks/segment-12.mkv",
+      "mask_sha256": "38943389b117f059899210b10a584d6f80059a7fe87effe045317460254e814e",
+      "box": [
+        104,
+        852,
+        736,
+        978
+      ],
+      "runs": [
+        {
+          "start_frame": 0,
+          "end_frame": 137,
+          "edge": 657
+        },
+        {
+          "start_frame": 137,
+          "end_frame": 147,
+          "edge": 656
+        },
+        {
+          "start_frame": 147,
+          "end_frame": 161,
+          "edge": 657
+        },
+        {
+          "start_frame": 161,
+          "end_frame": 162,
+          "edge": 656
+        },
+        {
+          "start_frame": 162,
+          "end_frame": 170,
+          "edge": 657
+        },
+        {
+          "start_frame": 170,
+          "end_frame": 173,
+          "edge": 656
+        },
+        {
+          "start_frame": 173,
+          "end_frame": 352,
+          "edge": 657
+        },
+        {
+          "start_frame": 352,
+          "end_frame": 371,
+          "edge": 658
+        },
+        {
+          "start_frame": 371,
+          "end_frame": 377,
+          "edge": 656
+        },
+        {
+          "start_frame": 377,
+          "end_frame": 378,
+          "edge": 657
+        },
+        {
+          "start_frame": 378,
+          "end_frame": 397,
+          "edge": 658
+        },
+        {
+          "start_frame": 397,
+          "end_frame": 398,
+          "edge": 657
+        },
+        {
+          "start_frame": 398,
+          "end_frame": 402,
+          "edge": 656
+        },
+        {
+          "start_frame": 402,
+          "end_frame": 417,
+          "edge": 657
+        },
+        {
+          "start_frame": 417,
+          "end_frame": 436,
+          "edge": 656
+        },
+        {
+          "start_frame": 436,
+          "end_frame": 543,
+          "edge": 657
+        },
+        {
+          "start_frame": 543,
+          "end_frame": 624,
+          "edge": null
+        }
+      ],
+      "segment": 11,
+      "source_sha256": "2adc8e1affe11cebabc73275dca32a8554fceab89f7db3b6b10a5fec0814db62"
+    },
+    {
+      "profile": "us-open-navy-v1",
+      "source_start": 725.76,
+      "seconds": 12.420000000000009,
+      "fps": 29.97002997002997,
+      "frames": 373,
+      "present_frames": 373,
+      "max_extra_source_px": 4,
+      "gap_bridge_frames": 0,
+      "mask": "output/2026-09-10/reel/zheng-rybakina/score_masks/segment-13.mkv",
+      "mask_sha256": "2aa9d693c5597e1e5d0dc3bcdfcf964b9356edbc1fe35d25f1cc0cf0518df1fa",
+      "box": [
+        104,
+        852,
+        736,
+        978
+      ],
+      "runs": [
+        {
+          "start_frame": 0,
+          "end_frame": 323,
+          "edge": 657
+        },
+        {
+          "start_frame": 323,
+          "end_frame": 348,
+          "edge": 656
+        },
+        {
+          "start_frame": 348,
+          "end_frame": 370,
+          "edge": 657
+        },
+        {
+          "start_frame": 370,
+          "end_frame": 373,
+          "edge": 658
+        }
+      ],
+      "segment": 12,
+      "source_sha256": "2adc8e1affe11cebabc73275dca32a8554fceab89f7db3b6b10a5fec0814db62"
     },
     {
       "profile": "us-open-navy-v1",
@@ -274,8 +726,8 @@
       "present_frames": 343,
       "max_extra_source_px": 4,
       "gap_bridge_frames": 0,
-      "mask": "output/2026-09-10/reel/zheng-rybakina/score_masks/segment-08.mkv",
-      "mask_sha256": "1eab23265c381509f0718cb685769cbc4788a1b1b0151084b2561106a9e076d8",
+      "mask": "output/2026-09-10/reel/zheng-rybakina/score_masks/segment-14.mkv",
+      "mask_sha256": "5bd35f189989b1fc7a45a62ae8cd3755bc60d4310f6029853c49c8c73f117ed0",
       "box": [
         104,
         852,
@@ -294,7 +746,7 @@
           "edge": null
         }
       ],
-      "segment": 7,
+      "segment": 13,
       "source_sha256": "69a82b8c4c85137d92c689bedd6039339b45a413a5e3b9c69b9aa2f2059b0f4a"
     }
   ]
