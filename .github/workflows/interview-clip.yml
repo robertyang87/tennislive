@@ -37,7 +37,7 @@ jobs:
           python-version: '3.11'
           cache: pip
       - name: Install final audit dependencies
-        run: pip install -q -e '.[visualqa]'
+        run: pip install -q -e '.[visualqa]' playwright
       - name: Recover completed and QC-passed film
         uses: actions/download-artifact@v4
         with:
