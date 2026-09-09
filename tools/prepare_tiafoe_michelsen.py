@@ -35,6 +35,9 @@ last['narration']='抢十来到九比六，赛点就在眼前。两个人都已�
 last['_reviewed_ending_boundary']='Full source contact_02: embrace continues through152.5s; separated154.5s. Keep complete handshake then stop, no later crowd/career segment. Raw model report retained.'
 last['crosses_cut']='Same-match winner reaction into net embrace, ending after separation at154.5s.'
 insert_chapter_cards(d)
+for seg in d["segments"]:
+    if seg.get("title_card"):
+        seg["seconds"] = 2.8  # actual Edge speech 2.33–2.45s plus transition room
 # Normalize title/stat placeholders before promote's shape/length validation.
 path.write_text(json.dumps(d,ensure_ascii=False,indent=2)+'\n')
 d=load_spec(path)
