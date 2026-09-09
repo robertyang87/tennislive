@@ -385,6 +385,14 @@ def _verification(req: dict) -> dict:
     if not video_id:
         raise ValueError("人工指定请求目前只接受可核验的 YouTube URL")
     explicit = explicit_title_type(title)
+    # Explicit user requests may use the existing press-conference product.
+    # Keep automatic discovery's title classifier unchanged.
+    if requested == "press_conference":
+        from interview_source_gate import _trusted_source_names
+        if (source not in _trusted_source_names()
+                or not re.search(r"\bpress\s+conference\b", title, re.I)):
+            raise ValueError("发布会请求必须来自已核官方来源且标题明确为 Press Conference")
+        explicit = "press_conference"
     if explicit != requested:
         raise ValueError(
             f"官方标题只能证明 {explicit or 'unknown'}，请求却声明 {requested}：{title}"
@@ -393,6 +401,7 @@ def _verification(req: dict) -> dict:
         "on_court": "official_explicit_oncourt",
         "ceremony": "official_explicit_ceremony",
         "farewell": "official_explicit_farewell",
+        "press_conference": "official_explicit_press_conference",
     }[requested]
     return {
         "source_id": f"youtube:{video_id}",
