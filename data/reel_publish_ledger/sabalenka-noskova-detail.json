@@ -5,9 +5,22 @@
     {
       "key": "pushplus:reel:sabalenka-noskova-detail:c18098c63fa1c6f9db87c94e6cf459fd7131c506fcf1891c5ea6ee399323ab89",
       "fingerprint": "c18098c63fa1c6f9db87c94e6cf459fd7131c506fcf1891c5ea6ee399323ab89",
-      "status": "uncertain",
+      "status": "resend_authorized",
       "at": "2026-09-09T02:34:34Z",
-      "run": "https://github.com/robertyang87/tennislive/actions/runs/34303687387"
+      "run": "https://github.com/robertyang87/tennislive/actions/runs/34303687387",
+      "history": [
+        {
+          "status": "uncertain",
+          "at": "2026-09-09T02:34:34Z",
+          "run": "https://github.com/robertyang87/tennislive/actions/runs/34303687387"
+        }
+      ],
+      "resend_authorization": {
+        "request": "那你全都重新分别推送微信啊",
+        "recorded_at": "2026-09-09T04:20:15.567Z",
+        "scope": "sabalenka-noskova-detail",
+        "one_attempt": true
+      }
     }
   ]
 }
