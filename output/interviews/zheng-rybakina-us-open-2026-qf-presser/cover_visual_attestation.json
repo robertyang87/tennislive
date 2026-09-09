@@ -1,11 +1,11 @@
 {
   "status": "pass",
-  "checked_at": "2026-09-09T20:09:15Z",
+  "checked_at": "2026-09-09T20:29:35Z",
   "auditor": "opencv-haar-v1",
   "expected_subject": "郑钦文",
   "identity_evidence": "L0-bound spec subject + same-source frame_at",
-  "spec_sha256": "34c7e3dbe1ae38a2f15bdcc5096e5c64602f499f1218c87be4951b4c8d58e61b",
-  "poster_sha256": "8ca2683c2ec052e271a5ca193f787bac70452f5746dc664ad1ada941fc3ee56d",
+  "spec_sha256": "5e646ae9a6d0fd455e119538d24373a524da6b091cb7ae5865c4cb1638260544",
+  "poster_sha256": "bfd3fe68072d041f7ad313d18b45f600c7ee261964de61bcaadb4837984e09cf",
   "thresholds": {
     "close_up_zoom": 1.5,
     "face_height_ratio": 0.08,
@@ -31,23 +31,23 @@
     "face": {
       "detector": "frontal-default",
       "box": [
-        378,
-        329,
-        257,
-        257
+        344,
+        313,
+        252,
+        252
       ],
-      "detected_faces": 1,
+      "detected_faces": 2,
       "eyes": 2,
-      "face_height_ratio": 0.31728,
-      "face_area_ratio": 0.0755,
-      "center_x_ratio": 0.46898,
-      "center_y_ratio": 0.37963,
-      "sharpness": 121.687,
-      "contrast": 90.0
+      "face_height_ratio": 0.31111,
+      "face_area_ratio": 0.07259,
+      "center_x_ratio": 0.43519,
+      "center_y_ratio": 0.35679,
+      "sharpness": 110.133,
+      "contrast": 79.0
     },
     "contract": {
       "shot_type": "",
-      "frame_at": 30.0,
+      "frame_at": 270.0,
       "zoom": 1.0,
       "focus_y": 0.5
     }
