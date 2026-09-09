@@ -5,7 +5,7 @@
   },
   "url": "https://www.youtube.com/watch?v=2C7_q05gGUk",
   "source_title": "Qinwen Zheng Press Conference | 2026 US Open Quarterfinal",
-  "start": 0.0,
+  "start": 0,
   "end": 321.5,
   "asr_model": "small.en",
   "whisper_model": "medium.en",
@@ -314,7 +314,8 @@
     "1080×1440，英文原声与逐句中英字幕；不叠中文配音，不镜像；顶栏须同时有大小标题。",
     "未听到原声前不编造伤情、心态、技战术或未来安排的引语；字幕由现有双ASR与语言审校流程核验。",
     "来源、字幕、封面及成片QC通过后按既有授权自动微信推送；成功回执及pushed.json齐全才报交付。正文不重复标题，1000字内。",
-    "end 321.5依据自动字幕最后Thank you 320.88设置的候选，渲染后检查最后尾音与赛事片尾转换；记者姓名Cole/Abel等不要凭ASR猜身份。50 down应结合原声核实five-love；calling US Open应核实qualifying。"
+    "end 321.5依据自动字幕最后Thank you 320.88设置的候选，渲染后检查最后尾音与赛事片尾转换；记者姓名Cole/Abel等不要凭ASR猜身份。50 down应结合原声核实five-love；calling US Open应核实qualifying。",
+    "人工审读发现自动翻译含重复长句与词义错误，暂缓推送，修订完成并重新QC前不得发布。"
   ],
   "_facts": [
     "已实际读取YouTube watch页videoDetails：videoId 2C7_q05gGUk，频道US Open Tennis Championships / UCXbboag48Qlr78zzz6SkzkQ，官方标题明确Press Conference，描述明确八强负于Elena Rybakina之后，lengthSeconds=324。",
@@ -375,7 +376,7 @@
     }
   },
   "push": {
-    "auto": true,
+    "auto": false,
     "event": "美网",
     "lead": "6-3、1-6、4-6，郑钦文止步美网八强。赛后发布会上，她谈到决胜盘错过的机会、接二发应更积极，也坦言成绩不好时曾试着收起自己的性格。谈到变化，她说自己比两三年前更开放，但根本没有改变。",
     "matchup": "郑钦文 vs 莱巴金娜",
