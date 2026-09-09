@@ -572,6 +572,19 @@ def cut_at_tags(copy_text: str) -> str:
     return "\n".join(lines[:last + 1]).strip()
 
 
+def copy_body_only(text: str, title: str) -> str:
+    """Drop a standalone dated column headline; keep real opening paragraphs."""
+    lines = text.strip().splitlines()
+    dated = re.compile(r"^(?:🎾\s*)?\d{1,2}[./月]\d{1,2}(?:日)?\s*(?:赛场之上|赛后开麦|网球有故事)\s*[|｜·丨]")
+    while lines:
+        first = lines[0].strip()
+        if not first or first == title.strip() or dated.match(first):
+            lines.pop(0)
+        else:
+            break
+    return "\n".join(lines).strip()
+
+
 def split_copy(copy_text: str) -> tuple[str, str]:
     """文案的第一行是标题，空一行之后是正文——和 `to_copy_page` 同一套切法。
 
@@ -774,8 +787,7 @@ def main() -> int:
 
     # 格式化标题（`7.28 赛场之上 | 华盛顿 ATP500 首轮 | 锦织圭 2:1 商竣程`）
     # **就是这条帖子的标题**：微信通知栏、推送正文顶部、复制页那一格，三处同一句。
-    # 代价是它比小红书 20 字的上限长，发小红书时要自己删短；文案里原来那句钩子
-    # 退成正文第一行。这是口径选择，不是 bug——问过了，选的就是这样。
+    # 标题单独复制；正文不再带一遍日期、栏目和标题。
     # **算一次，两处共用。** 标题走 column_of、药丸另取一个默认值，就又回到了
     # 「同一条推送里两个栏目名」——那正是 column_of 要修的那个错。
     column = args.column or column_of(Path(args.copy))
@@ -785,6 +797,9 @@ def main() -> int:
     meta = resolve_meta(Path(args.copy), args)
     title = headline(outdir, column, meta["matchup"], meta["score"],
                      meta["event"], meta["summary"], args.date)
+    copy_text = copy_body_only(copy_text, title)
+    if not copy_text:
+        raise SystemExit("正文去掉标题后为空")
     if args.stage == "check":
         print(f"[preflight] title/tags/copy pass: {title}")
         return 0
