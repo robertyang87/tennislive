@@ -1,0 +1,68 @@
+{
+  "scoreboard_qc_sha256": "1ebd22386d053105dd59103921caf67ddd231a97dab2a6be799ef155d8590f9f",
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 3.827,
+  "layout": "band",
+  "segments_seconds": 127.12,
+  "topbar": {
+    "line1": "2026 US OPEN 1/4决赛",
+    "line2": "莱巴金娜 3-6 6-1 6-4 郑钦文",
+    "start": 1.2,
+    "end": 128.32
+  },
+  "film_seconds": 132.165,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 8.496,
+    "2": 10.2,
+    "3": 9.888,
+    "4": 6.912,
+    "5": 8.088,
+    "6": 14.616,
+    "8": 7.872
+  },
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "zheng-rybakina",
+    "received_at": "2026-09-09T19:02:29Z",
+    "artifact_ready_at": "2026-09-09T19:08:27Z",
+    "elapsed_seconds": 358.221,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "2d8440ee42145032cce8f548e40065a96c6b4f7b63321fe1ffd17bb0fbaf27ba",
+    "spec_sha256": "b75c1c2b7110f82183fcf0ffb67e71ced0f683a984c9d7267f2c9eca293fc12a",
+    "request_received_at": "2026-09-09T18:34:39Z",
+    "request_to_artifact_seconds": 2028.221,
+    "run_id": "34392667918",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-09-09T19:05:07Z",
+        "run_id": "34392667918"
+      }
+    ],
+    "render_seconds": 200.221,
+    "pre_render_seconds": 158.0
+  },
+  "film_sha256": "2d8440ee42145032cce8f548e40065a96c6b4f7b63321fe1ffd17bb0fbaf27ba",
+  "film_bytes": 62819841,
+  "qc_attestation_sha256": "0e5303a478509be0d2e76fb46078ae43d9633d159c597a9c46fa23059485ef27",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-09-09T19:05:07Z",
+      "run_id": "34392667918"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-09T19:08:28Z",
+      "run_id": "34392667918"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-zheng-rybakina/zheng-rybakina.mp4",
+  "video_bytes": 62819841
+}
