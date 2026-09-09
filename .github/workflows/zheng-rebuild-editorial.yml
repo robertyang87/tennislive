@@ -1,0 +1,55 @@
+name: zheng-rebuild-editorial
+on:
+  push:
+    branches: [main]
+    paths: [data/reel-revisions/zheng-rybakina-20260910.json]
+permissions:
+  contents: read
+  actions: read
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            tools
+            src
+            skills
+            data/reel-revisions
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -q -e .
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/tennislive-sources
+          key: reel-src-zheng-rybakina-c90c053eb85759c6
+          restore-keys: reel-src-zheng-rybakina-
+      - uses: actions/download-artifact@v4
+        with:
+          name: zheng-rybakina-extended-source
+          run-id: 34396770643
+          github-token: ${{ github.token }}
+          path: extended-source
+      - name: Preserve verified extended media in normal render cache
+        env:
+          TENNISLIVE_SOURCE_CACHE: ~/.cache/tennislive-sources
+        run: |
+          python - <<'PYCODE'
+          import sys
+          from pathlib import Path
+          sys.path.insert(0, 'tools')
+          from build_match_reel import _keep_source
+          _keep_source('https://www.youtube.com/watch?v=-6Gv0033I2I', Path('extended-source/source.mp4'))
+          PYCODE
+      - name: Draft revised narration from verified facts
+        env:
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+        run: python tools/review_zheng_rebuild.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: zheng-rebuild-editorial
+          path: revision-review/
+          retention-days: 3
