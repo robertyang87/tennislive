@@ -5,9 +5,22 @@
     {
       "key": "pushplus:reel:tiafoe-michelsen:838d2a2ea66e56e32d54e375ecd7b9982f64b356786031cc215bbda11d660482",
       "fingerprint": "838d2a2ea66e56e32d54e375ecd7b9982f64b356786031cc215bbda11d660482",
-      "status": "sent",
+      "status": "resend_authorized",
       "at": "2026-09-09T01:30:16Z",
-      "run": "https://github.com/robertyang87/tennislive/actions/runs/34299416140"
+      "run": "https://github.com/robertyang87/tennislive/actions/runs/34299416140",
+      "history": [
+        {
+          "status": "sent",
+          "at": "2026-09-09T01:30:16Z",
+          "run": "https://github.com/robertyang87/tennislive/actions/runs/34299416140"
+        }
+      ],
+      "resend_authorization": {
+        "request": "那你全都重新分别推送微信啊",
+        "recorded_at": "2026-09-09T04:20:15.252Z",
+        "scope": "tiafoe-michelsen",
+        "one_attempt": true
+      }
     }
   ]
 }
