@@ -42,3 +42,35 @@ push_with_rebase_retry() {
   echo "::error::连续 ${attempts} 次都没能推上 origin/${ref}"
   return 1
 }
+
+# 仅用于已提交的采访共享账本；base/ours 必须在 commit 前快照。
+# 每次在远端最新树上重放本次记录，不用文本 rebase 反复撞同一 JSON 冲突。
+push_interview_dispatch_retry() {
+  local ref="$1" base="$2" ours="$3" attempts="${4:-5}"
+  local attempt theirs state="data/interview_render_dispatched.json"
+  theirs=$(mktemp) || return 1
+  for attempt in $(seq 1 "$attempts"); do
+    if git push origin "HEAD:${ref}"; then
+      rm -f "$theirs"
+      return 0
+    fi
+    if [ "$attempt" -eq "$attempts" ]; then break; fi
+    git fetch origin "$ref" || { rm -f "$theirs"; return 1; }
+    git show "FETCH_HEAD:$state" > "$theirs" \
+      || { rm -f "$theirs"; return 1; }
+    python tools/merge_orchestration_state.py --kind interview \
+      --base "$base" --ours "$ours" --theirs "$theirs" --out "$state" \
+      || { rm -f "$theirs"; return 1; }
+    git reset --mixed FETCH_HEAD || { rm -f "$theirs"; return 1; }
+    git add "$state" || { rm -f "$theirs"; return 1; }
+    if git diff --cached --quiet; then
+      rm -f "$theirs"
+      return 0
+    fi
+    git commit -m "data: interview render dispatch 记录" \
+      || { rm -f "$theirs"; return 1; }
+  done
+  rm -f "$theirs"
+  echo "::error::采访 dispatch 账本连续 ${attempts} 次推送失败"
+  return 1
+}
