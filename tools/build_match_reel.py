@@ -2450,6 +2450,7 @@ class Segment:
     # 成片的彩条照旧落在 y≈87，而按 1× 手搓卡验的判据全绿。按长宽比猜也不行：
     # 一张恰好 3:4 的照片会被误当成设计页顶到边。所以显式认领。
     full_bleed: bool = False
+    full_canvas: bool = False
 
     @property
     def length(self) -> float:
@@ -3678,7 +3679,8 @@ def _band_bg_rgb() -> tuple[int, int, int]:
     return ((v >> 16) & 0xFF, (v >> 8) & 0xFF, v & 0xFF)
 
 
-def still_canvas_for_layout(card, Image, *, full_bleed: bool = False):
+def still_canvas_for_layout(card, Image, *, full_bleed: bool = False,
+                            full_canvas: bool = False):
     """整屏证据段的底板：卡缩进**这个版式的画面区**居中，返回 (canvas, 卡的落位框)。
 
     `full_bleed=True`（章节卡，`Segment.full_bleed`）：这张图自己就是按画面区
@@ -3694,7 +3696,11 @@ def still_canvas_for_layout(card, Image, *, full_bleed: bool = False):
     在那之前整屏证据段在带式下**根本过不了闸**（fit 写死 contain 被带式拒掉），
     所以 cut_still_segment 从没在带式上渲过一帧。
     """
-    if LAYOUT == "band":
+    if full_canvas:
+        bg = EVIDENCE_BG
+        top, region_h = 0, VIDEO_H
+        full_bleed = True
+    elif LAYOUT == "band":
         bg = _band_bg_rgb()
         top, region_h = BAND_TOP, BAND_PIC_H
     else:
@@ -3743,7 +3749,8 @@ def cut_still_segment(seg: Segment, dest: Path, tail: float = 0.0) -> Path:
     from PIL import Image  # noqa: PLC0415
 
     card = Image.open(seg.image).convert("RGBA")
-    canvas, box = still_canvas_for_layout(card, Image, full_bleed=seg.full_bleed)
+    canvas, box = still_canvas_for_layout(
+        card, Image, full_bleed=seg.full_bleed, full_canvas=seg.full_canvas)
     still = dest.with_suffix(".evidence.png")
     canvas.convert("RGB").save(still)
     with stage("分段编码"):
@@ -6804,10 +6811,12 @@ def _materialize_stat_card(spec: dict, segments: list[Segment], outdir: Path,
         out = outdir / STAT_CARD_NAME
         # 片里那一版是 1080×1440（render_stat_card.VARIANTS["film"]）——就是成片的
         # 画幅，缩进去铺满宽度；推送页那张仍是 1080×1920，两张各渲各的。
-        renderer(spec, out, variant="film_band" if LAYOUT == "band" else "film")
+        renderer(spec, out, variant="film_band"
+                 if LAYOUT == "band" and not spec.get("stat_card_full_canvas") else "film")
         if not out.is_file():
             raise ReelError(f"数据统计图没渲出来：{out}")
-    return [replace(s, image=str(outdir / STAT_CARD_NAME), full_bleed=LAYOUT == "band")
+    return [replace(s, image=str(outdir / STAT_CARD_NAME), full_bleed=LAYOUT == "band",
+                    full_canvas=bool(spec.get("stat_card_full_canvas")))
             if s.image == STAT_CARD_PLACEHOLDER else s for s in segments]
 
 
@@ -7359,6 +7368,7 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
                       ["-filter_complex",
                        plain_filtergraph(ass, cover_secs, match_end, wm_input),
                        "-map", "[out]"])
+        video_args[1] = full_canvas_filtergraph(video_args[1], segments, cover_secs)
         # **两支都要出声。** 「这个栏目不画」和「渲角标那一步没走到」在成片上
         # 长得一模一样，而后者是个真 bug——只在画的时候打印，等于把不画那一支
         # 变成静默的。
@@ -8202,6 +8212,29 @@ def band_foot_strip(dest: Path) -> Path:
            BAND_FOOT_LABEL, font=fnt, fill=BAND_FOOT_COLOUR + (255,))
     strip.save(dest)
     return dest
+
+
+def full_canvas_filtergraph(graph: str, segments: list[Segment], cover_secs: float) -> str:
+    """Use the undecorated full-frame card during its exact half-open interval.
+
+    The original canvas already contains the complete card design. Restore it after
+    subtitles/topbar/footer so no normal match overlay obscures the data page.
+    Audio is mixed independently and remains intact.
+    """
+    cursor = cover_secs
+    windows = []
+    for seg in segments:
+        end = cursor + seg.length
+        if seg.full_canvas:
+            windows.append(f"gte(t,{cursor:.6f})*lt(t,{end:.6f})")
+        cursor = end
+    if not windows:
+        return graph
+    if not graph.endswith("[out]"):
+        raise ReelError("Full-canvas composition requires the final [out] label")
+    return (graph[:-5] + "[decorated];[0:v]null[clean_canvas];"
+            "[decorated][clean_canvas]overlay=0:0:enable='"
+            + "+".join(windows) + "'[out]")
 
 
 def plain_filtergraph(subtitles_ass: Path, cover_secs: float,
