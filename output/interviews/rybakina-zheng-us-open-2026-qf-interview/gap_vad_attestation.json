@@ -1,0 +1,51 @@
+{
+ "status": "pass",
+ "method": "silero_vad_plus_dual_asr_coverage",
+ "sha256": "8a22f37a89635ff5c706d656c468200959989e7019b4a1bb4c4ba58196c47227",
+ "edge_pad_seconds": 0.35,
+ "max_speech_seconds": 0.12,
+ "results": [
+  {
+   "key": "16.1-19.0",
+   "start": 16.07,
+   "end": 19.02,
+   "speech_seconds": 0.128,
+   "second_asr_words": [],
+   "transcript_covered": false,
+   "caption_timeline_covered": true,
+   "status": "caption_timeline_covered"
+  },
+  {
+   "key": "20.7-23.1",
+   "start": 20.72,
+   "end": 23.05,
+   "speech_seconds": 0,
+   "second_asr_words": [
+    "Elena?"
+   ],
+   "transcript_covered": true,
+   "caption_timeline_covered": true,
+   "status": "transcript_covered"
+  },
+  {
+   "key": "38.7-45.0",
+   "start": 38.67,
+   "end": 45.03,
+   "speech_seconds": 0.248,
+   "second_asr_words": [],
+   "transcript_covered": false,
+   "caption_timeline_covered": false,
+   "status": "speech_detected"
+  },
+  {
+   "key": "64.6-68.7",
+   "start": 64.59,
+   "end": 68.72,
+   "speech_seconds": 0.552,
+   "second_asr_words": [],
+   "transcript_covered": false,
+   "caption_timeline_covered": false,
+   "status": "speech_detected"
+  }
+ ]
+}
