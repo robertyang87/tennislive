@@ -320,22 +320,17 @@
         },
         {
           "at": 5.84,
-          "text": ">> on her first match point.\n>> 在她的第一个赛点上。"
+          "text": "on her first match point.\n在她的第一个赛点上。"
         },
         {
           "at": 7.92,
-          "text": ">> One and done. She's won.\n>> 一次机会就结束。她赢了。"
+          "text": "One and done. She's won.\n一次机会就结束。她赢了。"
         }
       ],
       "fit": "crop",
       "_why": "MiniMax 视觉证据：172.5s莱巴金娜黄衣近景、174.5s郑钦文白Nike上衣凝重正面近景、176.5s郑钦文特写、180.5s网前握手——全部落在171.04–181.5窗口内；莱巴金娜在180.5s握手时清晰可见；英文原声来自 captions.txt。",
-      "score_inset": true
-    },
-    {
-      "title_card": "先看到希望",
-      "kicker": "01",
-      "seconds": 2.0,
-      "_why": "自动链机械插的章节卡（review 路线 ⑤）：editorial.chapters 对应这个 beat，插在它的第一段之前"
+      "score_inset": false,
+      "_score_inset_why": "赛点后的球员近景和握手，无常规完整比分条，不从人物和球场抠贴。"
     },
     {
       "start": 12.45,
@@ -354,12 +349,6 @@
       "score_inset": true
     },
     {
-      "title_card": "比赛被拉回",
-      "kicker": "02",
-      "seconds": 2.0,
-      "_why": "自动链机械插的章节卡（review 路线 ⑤）：editorial.chapters 对应这个 beat，插在它的第一段之前"
-    },
-    {
       "start": 62.15,
       "end": 77.58,
       "narration": "六比三拿下首盘，希望已经打开。可第二盘刚开始，发球局又被逼到破发点。对手的反击，来得很快。",
@@ -374,12 +363,6 @@
       "_beat": 2,
       "_why": "第二盘盘点，仅描述当前发球压力，不提前宣告盘分。",
       "score_inset": true
-    },
-    {
-      "title_card": "遗憾的转折",
-      "kicker": "03",
-      "seconds": 2.0,
-      "_why": "自动链机械插的章节卡（review 路线 ⑤）：editorial.chapters 对应这个 beat，插在它的第一段之前"
     },
     {
       "start": 124.59,
@@ -400,17 +383,31 @@
     {
       "start": 159.61,
       "end": 185.2,
-      "narration": "七连胜之后，郑钦文的遗憾，为何留在决胜盘？",
+      "narration": "",
       "fit": "crop",
-      "_why": "正文重新兑现冷开场的完整结局：159.61–170.5s黄色'MATCH POINT'标记及比分6-3 1-6 4-6完整赛点球（均落在159.61–185.2内），172.5–176.5s郑钦文凝重反应近景，180.5s网前握手，184.5s走向裁判席；完整覆盖冷开场171.04–181.5并延伸至185.2s，莱巴金娜在180.5s握手时可见",
-      "score_inset": true
+      "_why": "正文重新兑现冷开场的完整结局：159.61–170.5s黄色'MATCH POINT'标记及比分6-3 1-6 4-6完整赛点球（均落在159.61–185.2内），172.5–176.5s郑钦文凝重反应近景，180.5s网前握手，184.5s走向裁判席；完整覆盖冷开场171.04–181.5并延伸至185.2s，莱巴金娜在180.5s握手时可见；保留赛点和现场解说原声，不在制胜分结束前宣告结果。",
+      "score_inset": true,
+      "_quote_kind": "broadcast",
+      "quote": [
+        {
+          "at": 15.19,
+          "text": "And that's the celebration\n这就是庆祝时刻"
+        },
+        {
+          "at": 17.27,
+          "text": "on her first match point.\n在她的第一个赛点上。"
+        },
+        {
+          "at": 19.35,
+          "text": "One and done. She's won.\n一次机会就结束。她赢了。"
+        }
+      ]
     },
     {
       "stat_card": true,
-      "seconds": 10.0,
-      "narration": "全场总得分，莱巴金娜八十八比七十九，多拿了九分。",
-      "_why": "自动链机械插的证据段：数据统计图剪进片子（review 路线 ④），完整获胜与庆祝之后，全画布10秒，旁白只讲总得分",
-      "image": "<stat_card>"
+      "seconds": 10,
+      "narration": "总分七十九比八十八。七连胜在这里停下，但从资格赛走到这里，每一步都算数。",
+      "_why": "自动链机械插的证据段：数据统计图剪进片子（review 路线 ④），完整获胜与庆祝之后，全画布10秒，旁白只讲总得分"
     }
   ],
   "_notes": [
@@ -489,7 +486,8 @@
       "删除与事实包不符的百分之七十七。",
       "6个正文窗口按全片contact sheets重新对应，禁止比分提前报结果。",
       "保留原MiniMax失败报告，等新封面触发重新审核，不手写通过状态。"
-    ]
+    ],
+    "final_review": "赛点之前不播结果旁白；收尾原声字幕复用同一源站转录并重新计算偏移。数据页承担结果总结。保留制胜分、郑钦文反应和握手；正文移除制作说明。"
   },
   "_segments_source": " + MiniMax 冷开场/结尾视觉闸",
   "topbar": {
@@ -503,5 +501,6 @@
     736,
     978
   ],
-  "stat_card_full_canvas": true
+  "stat_card_full_canvas": true,
+  "_chapter_cards_why": "本条以实战镜头连续推进遗憾主题，不插断比赛的独立章节卡。"
 }
