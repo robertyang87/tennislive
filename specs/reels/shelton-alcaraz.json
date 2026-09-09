@@ -573,5 +573,7 @@
     736,
     978
   ],
-  "stat_card_full_canvas": true
+  "stat_card_full_canvas": true,
+  "tts_backend": "edge",
+  "_tts_backend_why": "本条render run34327221250的Azure语音返回401鉴权拒绝；按既有故障回退规则使用edge-tts，同一zh-CN-YunjianNeural音色。本spec没有Azure专属style或lead_pause；不更改密钥或权限。"
 }
