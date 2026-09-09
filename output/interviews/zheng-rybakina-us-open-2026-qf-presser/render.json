@@ -63,7 +63,7 @@
         }
       ],
       "render_seconds": 130.766,
-      "pre_render_seconds": 331.0
+      "pre_render_seconds": 331
     }
   ],
   "production_sla": {
@@ -96,6 +96,13 @@
       }
     ],
     "render_seconds": 191.224,
-    "pre_render_seconds": 415.0
+    "pre_render_seconds": 415
+  },
+  "visual_review_retry": {
+    "previous_run": "https://github.com/robertyang87/tennislive/actions/runs/34401388157",
+    "previous_evidence": "visual_audit_history/34401388157.json",
+    "reason": "Supplement official-source attribution and native backdrop crops after identity/mirror confidence failure; normalize exact boolean strings. Thresholds unchanged.",
+    "audit_script_commit": "417d61e8e7faeabd73eaebc9f8deaa5961f45a95",
+    "film_unchanged": true
   }
 }
