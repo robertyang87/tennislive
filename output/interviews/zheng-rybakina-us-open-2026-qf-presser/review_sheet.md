@@ -106,7 +106,7 @@
 | 100 | 3:53.6 | [▶](https://youtu.be/2C7_q05gGUk?t=233) | I think it's important to be a good person | 我认为，做一个好人很重要， |  |
 | 101 | 3:56.3 | [▶](https://youtu.be/2C7_q05gGUk?t=236) | and then stay humble in life. | 在生活中保持谦逊也很重要。 |  |
 | 102 | 3:60.0 | [▶](https://youtu.be/2C7_q05gGUk?t=239) | But sometimes people just don't like | 但有时，人们就是不喜欢， |  |
-| 103 | 4:02.3 | [▶](https://youtu.be/2C7_q05gGUk?t=242) | when you speak the reality | 你把真实的想法说出来。 |  |
+| 103 | 4:02.3 | [▶](https://youtu.be/2C7_q05gGUk?t=242) | when you speak the reality | 你说实话。 |  |
 | 104 | 4:03.9 | [▶](https://youtu.be/2C7_q05gGUk?t=243) | and when you like, | 有时候， |  |
 | 105 | 4:06.3 | [▶](https://youtu.be/2C7_q05gGUk?t=246) | they like more when you speak fake stuff | 他们反而更喜欢听假话。 |  |
 | 106 | 4:08.2 | [▶](https://youtu.be/2C7_q05gGUk?t=248) | but that's not how I am. | 可我不是那样的人。 |  |
@@ -115,7 +115,7 @@
 | 109 | 4:15.1 | [▶](https://youtu.be/2C7_q05gGUk?t=255) | three years ago | 两三年前的自己。 |  |
 | 110 | 4:15.8 | [▶](https://youtu.be/2C7_q05gGUk?t=255) | but the base has never changed. | 但根本的东西从未改变。 |  |
 | 111 | 4:18.4 | [▶](https://youtu.be/2C7_q05gGUk?t=258) | I'm still myself, yeah. | 我还是我自己。对。 |  |
-| 112 | 4:20.7 | [▶](https://youtu.be/2C7_q05gGUk?t=260) | Last two. | 还有最后两位。 | ✏️ 已订正 |
+| 112 | 4:20.7 | [▶](https://youtu.be/2C7_q05gGUk?t=260) | That's true. | 是这样。 | ✏️ 已订正 |
 | 113 | 4:22.6 | [▶](https://youtu.be/2C7_q05gGUk?t=262) | Congratulations. | 祝贺你。 |  |
 | 114 | 4:23.6 | [▶](https://youtu.be/2C7_q05gGUk?t=263) | You'll get a chance to probably play | 接下来你应该有机会， |  |
 | 115 | 4:24.7 | [▶](https://youtu.be/2C7_q05gGUk?t=264) | at home in the next few months | 在未来几个月回到主场比赛。 |  |
@@ -139,8 +139,8 @@
 | 133 | 5:10.6 | [▶](https://youtu.be/2C7_q05gGUk?t=310) | because when your mind's trying | 因为当你的思绪， |  |
 | 134 | 5:12.7 | [▶](https://youtu.be/2C7_q05gGUk?t=312) | to go everywhere, thinking too much, | 到处飘、想得太多时， |  |
 | 135 | 5:14.4 | [▶](https://youtu.be/2C7_q05gGUk?t=314) | that's not helping for tennis. | 对打网球是没有帮助的。 |  |
-| 136 | 5:16.6 | [▶](https://youtu.be/2C7_q05gGUk?t=316) | Last question. | 最后一个问题。 |  |
-| 137 | 5:18.0 | [▶](https://youtu.be/2C7_q05gGUk?t=317) | That was your question. | 刚才就是你的问题。 |  |
+| 136 | 5:16.6 | [▶](https://youtu.be/2C7_q05gGUk?t=316) | Last question. That was my question. | 最后一问。那就是我的问题。 | ✏️ 已订正 |
+| 137 | 5:18.0 | [▶](https://youtu.be/2C7_q05gGUk?t=317) | That was your question. | 那就是你的问题。 | ✏️ 已订正 |
 | 138 | 5:19.8 | [▶](https://youtu.be/2C7_q05gGUk?t=319) | Thank you very much. | 非常感谢。 |  |
 | 139 | 5:20.8 | [▶](https://youtu.be/2C7_q05gGUk?t=320) | Thank you. | 谢谢。 |  |
 
