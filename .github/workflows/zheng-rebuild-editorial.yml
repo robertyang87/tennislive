@@ -38,11 +38,13 @@ jobs:
           TENNISLIVE_SOURCE_CACHE: ~/.cache/tennislive-sources
         run: |
           python - <<'PYCODE'
-          import sys
+          import hashlib, os, shutil
           from pathlib import Path
-          sys.path.insert(0, 'tools')
-          from build_match_reel import _keep_source
-          _keep_source('https://www.youtube.com/watch?v=-6Gv0033I2I', Path('extended-source/source.mp4'))
+          root = Path(os.environ['TENNISLIVE_SOURCE_CACHE']).expanduser()
+          root.mkdir(parents=True, exist_ok=True)
+          # Same content-addressed path as build_match_reel._cached_source.
+          key = hashlib.sha1(b'https://www.youtube.com/watch?v=-6Gv0033I2I').hexdigest()[:16]
+          shutil.copy2('extended-source/source.mp4', root / (key + '.mp4'))
           PYCODE
       - name: Draft revised narration from verified facts
         env:
