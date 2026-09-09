@@ -1,0 +1,59 @@
+{
+  "status": "pass",
+  "model": "MiniMax-M3",
+  "film_sha256": "9e6ca0e75c11775e5cc4e640abfdcac1c6748f0b0d35e99b2029ebb304f983a0",
+  "frames": [
+    "图片1：成片5.00秒，同场赛点",
+    "图片2：成片12.00秒，同场获胜庆祝",
+    "图片3：成片18.00秒，同场网前致意",
+    "图片4：成片53.28秒，采访正文，核对人物、场上场景及中英字幕",
+    "图片5：成片103.27秒，采访正文，核对人物、场上场景及中英字幕",
+    "图片6：成片155.77秒，采访正文，核对人物、场上场景及中英字幕",
+    "图片7：最终封面，仅用这一张判断封面"
+  ],
+  "result": {
+    "content_type": {
+      "value": "on_court",
+      "reason": "图片4–6中可见球员站在球场内蓝色硬地场地上，背景为看台观众和美网蓝色挡板，前方有带us open标识的采访话筒（图片4、6话筒上清晰可见'us open'字样），符合赛后球场即时采访的视觉特征。无奖杯或颁奖台元素，排除ceremony。",
+      "confidence": 0.95
+    },
+    "interviewee": {
+      "value": "萨巴伦卡",
+      "visible": true,
+      "speaking_or_receiving_trophy": true,
+      "reason": "图片4–6中受访者均穿着同款橙色Nike网球背心+装饰项链，发型为金色盘发，与事实包中萨巴伦卡的公开形象一致；图片4话筒前、手扶额头姿势，图片5、6面对话筒呈讲话状态。给定事实包受访者为萨巴伦卡，视觉特征吻合。",
+      "confidence": 0.9
+    },
+    "same_match_lead_in": {
+      "value": true,
+      "reason": "图片1（5.00s）计分牌显示LENKA 7 3 6 9 / 诺斯科娃 6 6 6 7，比分7-6¹ 3-6 7-6⁷，与标题文字一致；图片1背景有IBM 97 MPH发球测速、us open和J.P.Morgan标识；图片2（12.00s）穿白上衣的球员（诺斯科娃）穿网前与橙色背心球员（萨巴伦卡）拥抱致意，背景同样可见us open挡板；图片3（18.00s）两人在网前贴面致意。三张开场图均显示同一片美网蓝色硬地球场、同样的橙色vs白色服装组合，图片4–6采访正文同一片球场、同样的橙色背心和项链，同场证据充分。",
+      "confidence": 0.95
+    },
+    "mirrored": {
+      "value": false,
+      "reason": "图片4–6中话筒上的'us open'字样正向可读（图片4、6清晰可见），图片1计分牌选手姓氏'LENKA'和'OVA'正序显示，图片4、6背景挡板上'ISA'（CASIO部分）正序，未见镜像翻转迹象。",
+      "confidence": 0.9
+    },
+    "bilingual_subtitles": {
+      "value": true,
+      "reason": "图片2–3、4–6均在画面下方白色英文+黄色中文双语字幕一一对应（如'stretched to the limit in New York, / 在纽约被逼到了极限'、'but eventually prevails / 但最终还是赢了下来'、'and then you went to another gear. / 随后你又提升了一个档次'、'Match point, second serve. / 赛点 面对二发'、'Maybe a bit better game on the net, / 也许把网前技术练得更好些'）。中英文字幕颜色区分明显，3:4画布裁切未遮住字幕，未见镜像。",
+      "confidence": 0.92
+    },
+    "cover": {
+      "subject": "萨巴伦卡",
+      "same_program": true,
+      "frontal": true,
+      "eyes_open": true,
+      "clear": true,
+      "reason": "图片7封面中球员正面朝向镜头、双眼睁开、面部清晰，穿与采访一致的橙色Nike背心+装饰项链，背景为美网球场看台和蓝色挡板，可见'网球时差·赛后开麦'节目标识、'以为比赛结束了反而放开了手脚'文案、'萨巴伦卡·美网八强赛后采访'副标题及'2026 美网·赛后开麦'角标。人物、赛事标志（美网）、节目包装均与本场一致，无疑似旧图或错图。",
+      "confidence": 0.92
+    }
+  },
+  "issues": [],
+  "normalization": {
+    "field": "interviewee.speaking_or_receiving_trophy",
+    "original_value": "speaking",
+    "normalized_value": true,
+    "reason": "The model explicitly identified speaking; normalize the descriptive enum to the required boolean without changing its visual judgment. Original response retained in minimax_visual_review_raw.json."
+  }
+}
