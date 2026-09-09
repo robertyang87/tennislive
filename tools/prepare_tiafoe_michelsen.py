@@ -19,6 +19,10 @@ for seg in [d['segments'][0],d['segments'][-1]]:
     if seg['start'] >= 122:
         seg['score_inset'] = False
         seg['_score_inset_why'] = 'Full-source sheets and score_03 show board disappears after match point, before this window.'
+d['segments'][0]['crosses_cut']='完整赛点从发球准备到回合结束及赢家庆祝；源片114.86和121.96切点均属于同一赛点。'
+d['segments'][0]['score_inset']=True
+d['segments'][0]['score_inset_windows']=[[112.5,121.9]]
+d['segments'][0]['_score_inset_why']='score03 confirms board disappears after matchpoint before winner celebration.'
 last=d['segments'][-1]
 # Preserve the audited payoff and include the complete observed embrace, ending
 # at the first source contact frame after the players separate.
@@ -27,7 +31,7 @@ last['end']=154.5
 last['score_inset']=True
 last['score_inset_windows']=[[112.5,121.9]]
 last['_score_inset_why']='score_03: board present120.5s, absent122.5s onward; do not paste shirts or crowd during embrace.'
-last['narration']='抢十九比六，赛点就在眼前。两个人都已经拼了四个多小时。米切尔森发球，蒂亚福接发，胜负悬在这一分。拿下了！十比六，两盘落后的人，笑到了最后。第三次美网半决赛，蒂亚福是这样一点点挣回来的。再看网前，米切尔森哭了。蒂亚福没有急着走开，把年轻的同胞抱在怀里。第一次大满贯八强，离半决赛只差那么一点。你觉得最大的转折，是第三盘发球胜赛局，还是决胜盘零比三后的追赶？'
+last['narration']='抢十来到九比六，赛点就在眼前。两个人都已经拼了四个多小时。米切尔森发球，蒂亚福接发，胜负悬在这一分。拿下了！十比六，两盘落后的人，笑到了最后。第三次美网半决赛，蒂亚福是这样一点点挣回来的。再看网前，米切尔森哭了。蒂亚福没有急着走开，把年轻的同胞抱在怀里。第一次大满贯八强，离半决赛只差那么一点。你觉得最大的转折，是第三盘发球胜赛局，还是决胜盘零比三后的追赶？'
 last['_reviewed_ending_boundary']='Full source contact_02: embrace continues through152.5s; separated154.5s. Keep complete handshake then stop, no later crowd/career segment. Raw model report retained.'
 last['crosses_cut']='Same-match winner reaction into net embrace, ending after separation at154.5s.'
 insert_chapter_cards(d)
