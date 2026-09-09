@@ -9,17 +9,28 @@ permissions:
 jobs:
   inspect:
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
+        with:
+          sparse-checkout: tools
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Cache source inspection apt packages
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/apt-archives
+            ~/.cache/apt-lists
+          key: apt-pkgs-${{ runner.os }}-24.04-zheng-source-v1-${{ github.run_id }}
+          restore-keys: |
+            apt-pkgs-${{ runner.os }}-24.04-zheng-source-v1-
       - name: Install source inspection dependencies
-        timeout-minutes: 4
+        timeout-minutes: 15
         run: |
           pip install -q "yt-dlp[default]"
           source tools/ci_apt_install.sh
