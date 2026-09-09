@@ -106,6 +106,7 @@ def _production_contract(data: dict) -> dict:
             if key in subject
         },
         "opening_kind": opening.get("kind"),
+        "requested_lead_in": data.get("lead_in"),
         "cover": {
             key: cover.get(key)
             for key in ("frame_at", "subject", "title", "sub", "tag", "topic",
@@ -143,6 +144,9 @@ def _request_contract_changed(req: dict, spec_path: Path) -> bool:
     if not (req.get("opening") or {}).get("kind"):
         expected.pop("opening_kind", None)
         actual.pop("opening_kind", None)
+    if "lead_in" not in req:
+        expected.pop("requested_lead_in", None)
+        actual.pop("requested_lead_in", None)
     if not isinstance(req.get("cover"), dict) or not req.get("cover"):
         expected.pop("cover", None)
         actual.pop("cover", None)
@@ -438,6 +442,11 @@ def build_spec(req: dict, zh: list[str], duration: float) -> dict:
     }
     if req.get("caption_gaps_ok"):
         spec["caption_gaps_ok"] = dict(req["caption_gaps_ok"])
+    if req.get("lead_in"):
+        # Preserve the user's reviewed source, time window and bilingual commentary.
+        # The renderer still validates the lead-in and same-match contract.
+        import copy
+        spec["lead_in"] = copy.deepcopy(req["lead_in"])
     finalize_source_contract(spec)
     validate_source_contract(spec)
     return spec
