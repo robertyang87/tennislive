@@ -505,21 +505,14 @@ jobs:
       # 三道闸都在这一步暴露——报告落在 output/interviews/<slug>/
       # {transcript_diff,human_quote_diff,caption_gaps}.md，
       # 失败时看 artifact（下面 `if: always()` 那步会把整个 outdir 传上来）。
-      - name: Reuse this interview preparation source
+      - name: Reuse verified transcript and completed film
         if: github.event.inputs.mode == 'render'
         uses: actions/download-artifact@v4
         with:
-          name: sabalenka-oncourt-preparation
-          path: ${{ runner.temp }}/sabalenka-prepared
-          run-id: 34312818469
+          name: sabalenka-noskova-usopen-2026-qf-oncourt
+          path: output/interviews/sabalenka-noskova-usopen-2026-qf-oncourt
+          run-id: 34313626981
           github-token: ${{ github.token }}
-
-      - name: Extract verification audio from prepared source
-        if: github.event.inputs.mode == 'render'
-        run: |
-          D=output/interviews/sabalenka-noskova-usopen-2026-qf-oncourt
-          cp "$RUNNER_TEMP/sabalenka-prepared/source.mp4" "$D/source.mp4"
-          ffmpeg -hide_banner -loglevel error -y -i "$D/source.mp4" -vn -c:a aac "$D/_audio.m4a"
 
       - name: 转写交叉校验
         if: github.event.inputs.mode == 'render'
@@ -567,8 +560,7 @@ jobs:
           # 600 秒是性能目标，不是发布硬闸。内容完整与质检优先；超线由
           # `finish` 记 FAIL / warning，但后续 L2 与自动发布继续执行。
           RENDER_STARTED=$(date -u +%FT%TZ)
-          PYTHONPATH=src python tools/build_interview_clip.py \
-            --spec "$SPEC" --stage render
+          PYTHONPATH=src python tools/recover_sabalenka_cover.py
           python tools/video_sla.py finish \
             --received-at "${{ steps.production_clock.outputs.received_at }}" \
             --render-started-at "$RENDER_STARTED" \
