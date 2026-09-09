@@ -1,0 +1,195 @@
+{
+  "slug": "tiafoe-michelsen",
+  "requested_changes": [
+    "Richer match-specific analysis before reviewing Sabalenka–Noskova",
+    "Larger full statistics page",
+    "Exactly 10 seconds for statistics recap"
+  ],
+  "received_at": "2026-09-09T00:24:56Z",
+  "benchmark_scope": "Continuous wall clock includes editorial research, cover search, layout/parser fixes, cancelled or failed attempts, render, QA and delivery. Existing full-source probe and cached video predate this request; not a cold-start benchmark.",
+  "source": "https://youtu.be/J1ljGoL7be0",
+  "facts": {
+    "winner": "Frances Tiafoe",
+    "score": "5-7 3-6 7-5 6-3 7-6(6)",
+    "match_tiebreak": "10-6",
+    "flashscore_id": "bmsTFvCm",
+    "duration_note": "Official source Rolex clock during final embrace reads 4:38, corroborated by AP. Final cover corrected to 4:38; original Flashscore 4:41 retained as conflicting raw evidence."
+  },
+  "improvements": [
+    "Three evidence-specific chapters: two-set deficit; third-set recovery and fourth-set break-point defence; fifth-set recovery from 0-3.",
+    "Third-set 5-4 serving-for-match is clearly described as a recap; not falsely identified with visible 2-4 rally.",
+    "Fifth-set 5-5 point correctly attributed to Michelsen, with winning match point reserved for cold open and ending payoff.",
+    "Match point 112.5–127.53 seconds replays fully in 112.5–154.5 ending through the observed embrace.",
+    "Scoreboard inset only while scoreboard is visible, ending at source 121.9; no shirt/crowd inset during celebration.",
+    "All nine validated statistics at native 1080x960 band size; main values 54px rather than shrunken poster values around 30px.",
+    "Recap precisely 10 seconds with 6.79 seconds measured narration.",
+    "Chapter windows 2.8 seconds fit measured 2.33–2.45 second speech without overlap.",
+    "Same-match AP photo 5112x3408; source caption and MiniMax identity verification retained.",
+    "False timestamp extraction of the phrase 3–30 seconds ending length fixed with regression rejecting an actual out-of-range 150.5 second claim.",
+    "Official on-court clock + AP resolves duration to 4:38. Corrected cold-open ASR name Tiafoe and Chinese subtitle; raw model output retained."
+  ],
+  "attempts": [
+    {
+      "run": 34296313976,
+      "status": "cancelled",
+      "reason": "User changed statistics duration to 10 seconds; cancelled before render."
+    },
+    {
+      "run": 34296579173,
+      "status": "failed",
+      "reason": "Earliest gate: MiniMax report duration-language parser false positive; no encoding."
+    },
+    {
+      "run": 34297435319,
+      "status": "rendered_not_delivered",
+      "reason": "Human QA caught ASR proper-name mistranslation and confirmed on-court clock 4:38; repair before merge/push.",
+      "artifact_sha256": "a0ba37446d651faf3a42cec2e12144c6832d174bde669875bf2935dec9b4f4ad"
+    },
+    {
+      "run": 34298343609,
+      "status": "success",
+      "qc_failures": 0,
+      "film_sha256": "838d2a2ea66e56e32d54e375ecd7b9982f64b356786031cc215bbda11d660482"
+    }
+  ],
+  "local_narration_check": "Passed all nine narrated segments after measuring and enlarging chapter windows. Opening and embrace retain 5–6 seconds of crowd/onsite sound, not digital silence.",
+  "optimizations_observed": [
+    "Reuse source cache",
+    "Reuse verified MiniMax evidence after parser-only correction",
+    "TTS duration check before runner encoding",
+    "One main render after content/layout adjustments"
+  ],
+  "remaining_speed_costs": [
+    "Fact and photo retrieval should arrive in one source packet",
+    "Chapter timing estimator underestimated short Edge phrases; actual TTS check prevented another failed render",
+    "Workflow checkout and dependency setup repeat on reruns",
+    "Code/layout migration plus production is not a steady-state throughput result",
+    "Cold-open ASR names and translation must be reviewed before encoding; first final review caught Tho translated as 虽然, causing a rerender."
+  ],
+  "local_narration_check_log": "/tmp/tiafoe-full-tts-check.log",
+  "preflight_scope": "Local temporary candidate checked structure and actual TTS only. Temporary hand translations were never promoted or committed; formal translation is produced by DeepSeek in run34297435319.",
+  "first_render": {
+    "workflow_started_at": "2026-09-09T01:01:07Z",
+    "artifact_ready_at": "2026-09-09T01:07:49Z",
+    "render_wall_seconds": 266.993,
+    "full_request_wall_seconds": 2573.528,
+    "stages_note": "Stage sums overlap because segment encodes run concurrently; do not sum to calculate wall time.",
+    "burn_subtitles_seconds": 124.743,
+    "concat_seconds": 42.182,
+    "tts_seconds": 4.632,
+    "source_cache_seconds": 0.063
+  },
+  "final_render": {
+    "cover_seconds": 1.2,
+    "cover_narrated": false,
+    "outro_seconds": 3.827,
+    "layout": "band",
+    "segments_seconds": 165.89,
+    "topbar": {
+      "line1": "2026 美网 1/4决赛",
+      "line2": "蒂亚福 5-7 3-6 7-5 6-3 7-6(6) 米切尔森",
+      "start": 1.2,
+      "end": 167.09
+    },
+    "film_seconds": 170.937,
+    "narration_voice": "zh-CN-YunjianNeural",
+    "narration_rate": "+6%",
+    "narration_backend": "edge-tts",
+    "narration_seconds": {
+      "1": 14.784,
+      "2": 2.328,
+      "3": 26.664,
+      "4": 2.424,
+      "5": 25.608,
+      "6": 2.448,
+      "7": 10.656,
+      "8": 6.792,
+      "9": 36.192
+    },
+    "production_sla": {
+      "version": 1,
+      "pipeline": "match-reel",
+      "slug": "tiafoe-michelsen",
+      "received_at": "2026-09-09T00:24:56Z",
+      "artifact_ready_at": "2026-09-09T01:20:44Z",
+      "elapsed_seconds": 3348.201,
+      "budget_seconds": 600,
+      "met": false,
+      "render_seconds": 261.201,
+      "pre_render_seconds": 3087
+    },
+    "film_sha256": "838d2a2ea66e56e32d54e375ecd7b9982f64b356786031cc215bbda11d660482",
+    "film_bytes": 100749048,
+    "qc_attestation_sha256": "51acf306c6db456f568cdd9d9337da151352900e05f558aa16d23f14b835546e",
+    "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-tiafoe-michelsen/tiafoe-michelsen.mp4",
+    "video_bytes": 100749048
+  },
+  "final_timing": {
+    "schema": 1,
+    "at": "2026-09-09T01:20:44Z",
+    "pipeline": "match-reel",
+    "slug": "tiafoe-michelsen",
+    "mode": "render",
+    "outcome": "success",
+    "error": null,
+    "elapsed_seconds": 259.576,
+    "last_stage": "烧字幕+成片",
+    "stage_seconds": {
+      "下载源片 (主源)": 0.061,
+      "数据统计对照图（剪进片子）": 1.205,
+      "章节卡（剪进片子）": 3.325,
+      "片尾配音": 0.001,
+      "TTS 合成": 0.003,
+      "封面海报": 2.101,
+      "封面编码": 0.304,
+      "分段编码": 142.244,
+      "片尾渲染": 7.58,
+      "拼接": 41.703,
+      "混音": 4.594,
+      "烧字幕+成片": 123.631
+    },
+    "stage_counts": {
+      "下载源片 (主源)": 1,
+      "数据统计对照图（剪进片子）": 1,
+      "章节卡（剪进片子）": 1,
+      "片尾配音": 1,
+      "TTS 合成": 1,
+      "封面海报": 1,
+      "封面编码": 1,
+      "分段编码": 10,
+      "片尾渲染": 1,
+      "拼接": 1,
+      "混音": 1,
+      "烧字幕+成片": 1
+    },
+    "cpu_count": 4,
+    "run_id": "34298343609",
+    "run_attempt": "1",
+    "on_runner": true
+  },
+  "visual_review": {
+    "status": "pass",
+    "checked_at": "2026-09-09T01:22:56.068Z",
+    "frames": [
+      "review-cover.jpg",
+      "review-cold-open.jpg",
+      "review-stat-card.jpg"
+    ],
+    "verified": [
+      "Same-match cover, unobscured face, five-set score and corrected 4:38 duration",
+      "Game, Tiafoe / 这一局 蒂亚福 appears in final film, no transcript arrows or 虽然 mistranslation",
+      "All nine stat rows readable at native band size, no clipping; interval115.09–125.09, 10.00 seconds",
+      "Earlier full-body review of unchanged windows: 55,94,137,153,166,169 seconds; coherent point identities, clean ending scoreboard removal and brand ending"
+    ],
+    "file_bytes": 100749048,
+    "local_download_sha256": "838d2a2ea66e56e32d54e375ecd7b9982f64b356786031cc215bbda11d660482"
+  },
+  "speed_result": "FAIL: 3348.201 seconds (55m48s) to final owned MP4, versus600 seconds target. Final rendering wall time259.576 seconds. Merge/CI/push delivery time is additional and not included in this MP4-ready measurement.",
+  "optimized_order_for_next_run": [
+    "One verified fact packet including official clock and same-match cover before writing",
+    "Full-source visual review and raw cold-open ASR/name/translation review before encoding",
+    "Actual TTS timing including chapter cards and 10-second recap before encoding",
+    "One render using source/TTS cache",
+    "Final artifact review, latest CI, merge and delivery"
+  ]
+}
