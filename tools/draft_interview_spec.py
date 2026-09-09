@@ -242,10 +242,14 @@ def _translation_system_prompt(max_zh_chars: int | None = None) -> str:
     )
 
 
+_TRANSLATION_NUMBER_PREFIX = re.compile(r"^\d+[.．、)](?:\s+|(?=[\u3400-\u9fff]))")
+
+
 def _translation_line_ok(line: str, max_zh_chars: int | None) -> bool:
     text = line.strip()
     return bool(text) and (not max_zh_chars or len(text) <= max_zh_chars) \
-        and not has_dangling_tail(text)
+        and not has_dangling_tail(text) \
+        and not _TRANSLATION_NUMBER_PREFIX.match(text)
 
 
 def _translation_line_issue(line: object, max_zh_chars: int | None) -> str:
@@ -253,11 +257,28 @@ def _translation_line_issue(line: object, max_zh_chars: int | None) -> str:
     if not isinstance(line, str) or not line.strip():
         return "译文为空"
     text = line.strip()
+    if _TRANSLATION_NUMBER_PREFIX.match(text):
+        return "译文复制了输入行号前缀，请只返回本行译文"
     if max_zh_chars and len(text) > max_zh_chars:
         return f"译文有 {len(text)} 个字符，超过 {max_zh_chars} 字限制"
     if has_dangling_tail(text):
         return f"译文以虚词“{text[-1]}”收尾，意思悬空"
     return "响应结构不符合要求"
+
+
+def _translation_alignment_issue(rows: list[dict], lines: list[str]) -> str:
+    """只拦截明确的长句复制故障；此机械闸不能证明翻译语义正确。"""
+    sources_by_line: dict[str, set[str]] = defaultdict(set)
+    for row, line in zip(rows, lines):
+        # 短语的相同翻译（如 Thanks / Thank you）很常见，不在这里判错。
+        if len(line.strip()) < 40:
+            continue
+        source = " ".join(str(row.get("text") or "").casefold().split())
+        if source:
+            sources_by_line[line.strip()].add(source)
+    if any(len(sources) >= 3 for sources in sources_by_line.values()):
+        return "至少三条不同英文字幕被译成完全相同的长句，疑似整段复制"
+    return ""
 
 
 def _translate_single(row: dict, chat, index: int, sys_prompt: str,
@@ -356,7 +377,8 @@ def _translate_batch(batch: list[dict], chat, offset: int,
     raw = res.get("lines") if isinstance(res, dict) else None
     if isinstance(raw, list) and len(raw) == len(batch):
         cleaned = [line.strip() if isinstance(line, str) else "" for line in raw]
-        if all(_translation_line_ok(line, max_zh_chars) for line in cleaned):
+        if (all(_translation_line_ok(line, max_zh_chars) for line in cleaned)
+                and not _translation_alignment_issue(batch, cleaned)):
             return cleaned
 
     got = len(raw) if isinstance(raw, list) else "无数组"
@@ -395,6 +417,10 @@ def translate(rows: list[dict], chat, max_zh_chars: int | None = None) -> list[s
         ))
     if len(out) != len(rows):
         raise RuntimeError(f"翻译总行数不一致：{len(out)} != {len(rows)}")
+    # 二分后的单行响应及跨批次响应也可能重复整段，必须在汇总后再检查。
+    alignment_issue = _translation_alignment_issue(rows, out)
+    if alignment_issue:
+        raise RuntimeError(f"翻译逐行对齐失败：{alignment_issue}")
     return out
 
 
