@@ -1,0 +1,67 @@
+{
+  "film_sha256": "1d565807557986cfb3f3bf3cfdc31fcdd19a61bd38e44843f48f767437490d51",
+  "film_seconds": 333.811,
+  "production_sla": {
+    "version": 2,
+    "pipeline": "interview-clip",
+    "slug": "zheng-rybakina-us-open-2026-qf-presser",
+    "received_at": "2026-09-09T20:01:33Z",
+    "artifact_ready_at": "2026-09-09T20:09:14Z",
+    "elapsed_seconds": 461.766,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "1d565807557986cfb3f3bf3cfdc31fcdd19a61bd38e44843f48f767437490d51",
+    "spec_sha256": "34c7e3dbe1ae38a2f15bdcc5096e5c64602f499f1218c87be4951b4c8d58e61b",
+    "run_id": "34398549050",
+    "stage_events": [
+      {
+        "stage": "preflight",
+        "at": "2026-09-09T20:02:44Z",
+        "run_id": "34398549050"
+      },
+      {
+        "stage": "asr_verify",
+        "at": "2026-09-09T20:05:00Z",
+        "run_id": "34398549050"
+      },
+      {
+        "stage": "render",
+        "at": "2026-09-09T20:07:04Z",
+        "run_id": "34398549050"
+      }
+    ],
+    "render_seconds": 130.766,
+    "pre_render_seconds": 331.0
+  },
+  "production_stage_events": [
+    {
+      "stage": "preflight",
+      "at": "2026-09-09T20:02:44Z",
+      "run_id": "34398549050"
+    },
+    {
+      "stage": "asr_verify",
+      "at": "2026-09-09T20:05:00Z",
+      "run_id": "34398549050"
+    },
+    {
+      "stage": "render",
+      "at": "2026-09-09T20:07:04Z",
+      "run_id": "34398549050"
+    },
+    {
+      "stage": "qc",
+      "at": "2026-09-09T20:09:15Z",
+      "run_id": "34398549050"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-09T20:09:15Z",
+      "run_id": "34398549050"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/interview-zheng-rybakina-us-open-2026-qf-presser/zheng-rybakina-us-open-2026-qf-presser.mp4?v=1d565807557986cf",
+  "video_bytes": 47205533,
+  "release_asset_digest": "sha256:1d565807557986cfb3f3bf3cfdc31fcdd19a61bd38e44843f48f767437490d51",
+  "qc_attestation_sha256": "855cc47a16cdc5f67620a9c5dc927cb9598bbc744cb3191f548cb67430efb231"
+}
