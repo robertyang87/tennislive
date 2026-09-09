@@ -3020,7 +3020,7 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
         # 产物上长得一模一样（都是左下角一截被裁掉名字的板）。
         undeclared, unclaimed = [], []
         for i, raw in enumerate(spec["segments"]):
-            if raw.get("image"):
+            if raw.get("image") or raw.get("title_card") or raw.get("stat_card"):
                 # 整屏证据段跳过，**为的是不和另一道闸打架**：那道闸把
                 # `score_inset` 列进了 image 段「不认的窗口类字段」，不跳过
                 # 的话这儿会去要一个那边禁止写的键。今天这一支其实走不到
@@ -3095,7 +3095,7 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
 # 出现过的字段名去对，少一个就红。
 _REAL_FIELDS: dict[str, tuple[str, ...]] = {
     "spec": ("archival", "conform", "cover", "crop_y", "crop_zoom",
-             "layout", "mixed_fps", "primary",
+             "layout", "mixed_fps", "primary", "stat_card_full_canvas", "revision_of",
              "music", "outro", "push", "rate", "scorebox", "segments",
              "silent_source",
              "slug", "source_audio", "source_url", "sources", "stats",
@@ -6562,6 +6562,21 @@ def duplicate_match_problem(spec: dict, root: Path | None = None) -> str | None:
     for key in sorted(keys):
         other = published.get(key)
         if other and other != slug and other not in _LEGACY_SAME_MATCH_TWICE:
+            # A requested replacement retains both versions for review. It is not
+            # an unsolicited second story: require an explicit one-hop relationship,
+            # its request provenance, and matching source/match identity on disk.
+            formal = root or Path(__file__).resolve().parents[1] / "specs" / "reels"
+            if Path(other).name == other:
+                try:
+                    prior = json.loads((formal / f"{other}.json").read_text(encoding="utf-8"))
+                except (OSError, ValueError):
+                    prior = {}
+                linked = (
+                    spec.get("revision_of") == other and bool(spec.get("_revision_request"))
+                    or prior.get("revision_of") == slug and bool(prior.get("_revision_request"))
+                )
+                if linked and keys & _match_keys(prior):
+                    continue
             return (
                 f"这一场球「赛场之上」已经有一条了：`{other}`（对上的钥匙 `{key}`）。\n"
                 "同一个栏目里发第二条讲同一场球，就是同一场球发第二条微信，"
