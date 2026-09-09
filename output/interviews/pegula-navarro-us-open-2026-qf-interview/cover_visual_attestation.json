@@ -1,0 +1,56 @@
+{
+  "status": "pass",
+  "checked_at": "2026-09-09T06:07:51Z",
+  "auditor": "opencv-haar-v1",
+  "expected_subject": "佩古拉",
+  "identity_evidence": "L0-bound spec subject + same-source frame_at",
+  "spec_sha256": "1ef128629f5927aa9e750f0b125179aee75db71429ac1186c91f99c12dc2be77",
+  "poster_sha256": "aab696f4b10983264dfecdc80849e26a1e4aa86fdde5ef310e426269de90c386",
+  "thresholds": {
+    "close_up_zoom": 1.5,
+    "face_height_ratio": 0.08,
+    "close_up_face_height_ratio": 0.14,
+    "face_area_ratio": 0.01,
+    "face_sharpness": 45.0,
+    "face_contrast": 32.0,
+    "eyes": 2
+  },
+  "result": {
+    "poster": {
+      "decodable": true,
+      "format": "JPEG",
+      "width": 1080,
+      "height": 1440,
+      "photo_region": [
+        0,
+        150,
+        1080,
+        810
+      ]
+    },
+    "face": {
+      "detector": "frontal-default",
+      "box": [
+        491,
+        237,
+        234,
+        234
+      ],
+      "detected_faces": 1,
+      "eyes": 3,
+      "face_height_ratio": 0.28889,
+      "face_area_ratio": 0.06259,
+      "center_x_ratio": 0.56296,
+      "center_y_ratio": 0.25185,
+      "sharpness": 457.674,
+      "contrast": 144.0
+    },
+    "contract": {
+      "shot_type": "",
+      "frame_at": 36.0,
+      "zoom": 1.0,
+      "focus_y": 0.5
+    }
+  },
+  "issues": []
+}
