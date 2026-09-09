@@ -32,11 +32,11 @@
     "scoreboard": {
       "court": "Arthur Ashe Stadium",
       "duration_source": {
-        "url": "data:application/json,%7B%22duration%22%3A%224%3A28%22%2C%22source%22%3A%22structured%20match%20statistics%22%7D",
+        "url": "data:application/json,%7B%22duration%22%3A16080%2C%22unit%22%3A%22seconds%22%2C%22source%22%3A%22https%3A%2F%2Fwww.usopen.org%2Fen_US%2Fscores%2Ffeeds%2F2026%2Fmatches%2Fcomplete%2F1504.json%22%2C%22source_field%22%3A%22matches%5B0%5D.duration%22%2C%22source_value%22%3A%224%3A28%22%2C%22interpretation%22%3A%22hours%3Aminutes%22%7D",
         "field": "duration"
       },
       "_court_why": "赛果源结构化 court 字段",
-      "_duration_why": "比赛统计结构化全场时长"
+      "_duration_why": "美网官方1504全场时长4:28为小时:分钟，转换为16080秒，避免通用解析器按分:秒误读。"
     }
   },
   "_production": {
