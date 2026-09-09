@@ -240,7 +240,7 @@ STAT_CARD_TAIL_SECONDS = 1.2     # 旁白说完之后留的一口气
 
 
 def insert_stat_card_segment(spec: dict) -> bool:
-    """收官段之前插一段 `{"stat_card": true}`。插了返回 True。
+    """完整收官段之后插一段 `{"stat_card": true}`。插了返回 True。
 
     不插的三种情形都是确定性的：没有 stats/头像（render 会红）、段数已到上限
     （waiting_reasons 会拒）、总得分算不出（没有旁白可念）。已经有一段的不重复插。
@@ -257,12 +257,12 @@ def insert_stat_card_segment(spec: dict) -> bool:
     narration = stat_card_narration(stats, (spec.get("cover") or {}).get("matchup") or [])
     if not narration:
         return False
-    from reel_timing import speech_seconds  # noqa: PLC0415
-    seconds = round(max(4.0, speech_seconds(narration) + STAT_CARD_TAIL_SECONDS), 1)
-    segments.insert(len(segments) - 1, {
+    seconds = 10.0
+    spec["stat_card_full_canvas"] = True
+    segments.append({
         "stat_card": True, "seconds": seconds, "narration": narration,
         "_why": "自动链机械插的证据段：数据统计图剪进片子（review 路线 ④），"
-                "收官段之前、旁白只讲总得分",
+                "完整获胜与庆祝之后，全画布10秒，旁白只讲总得分",
     })
     spec["segments"] = segments
     return True

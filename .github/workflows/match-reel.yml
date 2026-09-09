@@ -285,6 +285,15 @@ jobs:
       # 预算——镜像抽风那天，一条 spec 形状错要等它们跑完才红，「第 30 秒
       # 失败」就成了「第 30 分钟失败」。pip 装依赖只靠 setup-python 的缓存，
       # 不摸 apt 镜像，跟着一起提前。
+      - name: 缓存技战术资料
+        if: github.event.inputs.mode == 'probe'
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/tennislive-production/tactical-reading
+          key: tactical-reading-${{ runner.os }}-v1-${{ github.run_id }}
+          restore-keys: |
+            tactical-reading-${{ runner.os }}-v1-
+
       - name: 装依赖
         run: |
           # **push 模式只装主依赖。** 它不下片、不渲染、不抠图——rembg、opencv、
@@ -369,6 +378,12 @@ jobs:
       # 死在第 30 秒而不是第 5 分钟（「返工比慢更贵」那条的 runner 侧半截）。
       # ⚠️ 只给要读 spec 的三档（render / cover / narration）——probe 那档
       # 常常还没有 spec（它自己就是来备料写草稿的），cookies / push 不读 spec。
+      - name: 发布文案前置检查
+        if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover'
+        env:
+          SLUG: ${{ github.event.inputs.slug }}
+        run: python tools/production_preflight.py --spec "specs/reels/$SLUG.json" --column 赛场之上
+
       - name: dry-run — 先把 spec 的形状错拦在编码之前
         if: >-
           github.event.inputs.mode == 'render'
@@ -1043,12 +1058,13 @@ jobs:
           # 「判据回喂模型修一轮」那一步当输入，见 dry-run 步的同款注释。
           set -o pipefail
           RENDER_STARTED=$(date -u +%FT%TZ)
+          python tools/video_sla.py mark --timeline "$RUNNER_TEMP/production-timeline.json" --phase render
           python tools/build_match_reel.py render \
             --spec "$SPEC" \
             --voice "${{ github.event.inputs.voice }}" \
             --rate "${{ github.event.inputs.rate }}" \
             --outdir "$OUTDIR" 2>&1 | tee -a /tmp/render-findings.log
-          python tools/video_sla.py finish \
+          python tools/video_sla.py finish --spec "$SPEC" --timeline "$RUNNER_TEMP/production-timeline.json" \
             --received-at "${{ steps.production_clock.outputs.received_at }}" \
             --render-started-at "$RENDER_STARTED" \
             --artifact "$OUTDIR/$SLUG.mp4" \
@@ -1132,6 +1148,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          python tools/video_sla.py mark --timeline "$RUNNER_TEMP/production-timeline.json" --phase qc_passed --metadata "${{ steps.paths.outputs.outdir }}/render.json"
           OUTDIR="${{ steps.paths.outputs.outdir }}"
           SLUG="${{ github.event.inputs.slug }}"
           REEL="$OUTDIR/$SLUG.mp4"

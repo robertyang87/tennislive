@@ -248,6 +248,18 @@ def todo_slugs(*, now: datetime | None = None) -> tuple[list[str], list[tuple[st
         except (OSError, ValueError):
             waiting.append((p.stem, ["spec 读不了（JSON 坏了）"]))
             continue
+        pushed_raw = _repo_bytes(OUTPUT / p.stem / "pushed.json")
+        if pushed_raw:
+            try:
+                pushed = json.loads(pushed_raw)
+            except (ValueError, UnicodeDecodeError):
+                waiting.append((p.stem, ["已发布记录无法核对，拒绝自动重渲"]))
+                continue
+            revision = spec.get("_publication_revision") or {}
+            if not (revision.get("id") and revision.get("base_film_sha256")
+                    and revision.get("base_film_sha256") == pushed.get("film_sha256")):
+                # A stale generator changing spec bytes is not a new user request.
+                continue
         missing = missing_for_render(p.stem, spec)
         if missing:
             waiting.append((p.stem, missing))

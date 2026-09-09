@@ -25,7 +25,7 @@ from draft_interview_spec import translate  # noqa: E402
 from interview_source_gate import SourceContractError, validate_source_contract  # noqa: E402
 
 SPECS = ROOT / "specs" / "interviews"
-WINDOW_SECONDS = 28.0
+WINDOW_SECONDS = 12.0
 MAX_CUE_GAP = 12.0
 LEAD_IN_CONTENT_TYPES = frozenset({"on_court", "farewell"})
 
@@ -78,6 +78,10 @@ def select_window(
         tail.insert(0, cue)
     chosen = [c for c in tail if c["b"] > start_floor and c["a"] < end]
     if len(chosen) < 2 or sum(len(c["en"].split()) for c in chosen) < 6:
+        return None
+    while seconds == WINDOW_SECONDS and len(chosen) > 1 and end - chosen[0]["a"] > 15:
+        chosen.pop(0)
+    if seconds == WINDOW_SECONDS and (len(chosen) < 2 or end - chosen[0]["a"] > 15):
         return None
     start = max(0.0, chosen[0]["a"])
     normalized = []
@@ -213,6 +217,8 @@ def main() -> int:
 
     def _one(target: tuple[Path, dict]):
         path, spec = target
+        from production_cache import file_digest
+        observed = file_digest(path)
         try:
             updated = attach(spec, chat)
         except (RuntimeError, SourceContractError, ValueError) as exc:
@@ -224,6 +230,8 @@ def main() -> int:
             # 知道。一条源片的意外只该算它自己「待下一轮」。
             return path, None, f"{type(exc).__name__}: {exc}"
         if args.write:
+            if file_digest(path) != observed:
+                return path, None, "正式稿已更新，拒绝用旧片头覆盖"
             path.write_text(
                 json.dumps(updated, ensure_ascii=False, indent=2) + "\n",
                 encoding="utf-8",

@@ -332,7 +332,7 @@ def test_promote缺数据图头像就留waiting并说怎么补(tmp_path):
     assert not [r for r in promote.waiting_reasons(draft) if "头像" in r]
 
 
-def test_promote转正时在收官段之前机械插一段数据图(tmp_path):
+def test_promote转正时完整收官后全画布展示数据10秒(tmp_path):
     """review 路线 ④：131 条已发 spec 带 stats、0 条烧进片子。DeepSeek 不写
     segments，所以证据段也机械插——收官段之前、旁白只讲总得分（汉字数字给
     TTS 念、方向机械算）。三个不插的情形都是确定性的，各验一头。"""
@@ -340,11 +340,10 @@ def test_promote转正时在收官段之前机械插一段数据图(tmp_path):
     spec = promote.promote(_ready_draft(tmp_path))
     segs = spec["segments"]
     card = [s for s in segs if s.get("stat_card")]
-    # 收官段之前——收官 beat 自己的章节卡（路线 ⑤）插在它前面，数据图再前一格
-    assert len(card) == 1 and segs[-3] is card[0] and segs[-2].get("title_card"), \
-        "要插在收官段之前，只插一段"
+    assert len(card) == 1 and segs[-1] is card[0] and "start" in segs[-2]
+    assert spec["stat_card_full_canvas"] is True
     assert card[0]["narration"] == "全场总得分，乙六十七比五十六，多拿了十一分。"
-    assert card[0]["seconds"] >= 4.0 and "score_inset" not in card[0]
+    assert card[0]["seconds"] == 10.0 and "score_inset" not in card[0]
     assert "image" in card[0] and card[0]["image"] == "<stat_card>", \
         "validate_spec 走了 load_spec 之外的路，占位符要由 parse_segments 归一"
     # ① 段数已到上限不插（waiting_reasons 那条「5-10 段」会拒 11 段）

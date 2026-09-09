@@ -158,6 +158,17 @@ jobs:
           apt_install_cached fonts-noto-core fonts-noto-cjk
           test -f /usr/share/fonts/truetype/noto/NotoSans-Regular.ttf
 
+      - name: 缓存转写模型和生产检查点
+        if: steps.gate.outputs.work == 'true'
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/huggingface/hub
+            ~/.cache/tennislive-production
+          key: interview-preparation-${{ runner.os }}-v1-${{ github.run_id }}
+          restore-keys: |
+            interview-preparation-${{ runner.os }}-v1-
+
       - name: 装依赖
         if: steps.gate.outputs.work == 'true'
         run: pip install -q -e . "yt-dlp[default]>=2026.7.4" faster-whisper
@@ -216,6 +227,8 @@ jobs:
       - name: 提交生成与提升结果
         if: steps.gate.outputs.work == 'true'
         run: |
+          git fetch -q origin "$GITHUB_REF_NAME"
+          python tools/check_production_writes.py --remote "origin/$GITHUB_REF_NAME"
           git config user.name "Claude"
           git config user.email "noreply@anthropic.com"
           git add specs/interviews
