@@ -231,7 +231,10 @@ def clean_report(raw: dict | None, draft: dict, duration: float) -> tuple[dict, 
             problems.append(f"{name} 没有写可复核的画面证据")
         cited = [float(value) for value in re.findall(
             r"(?<![\d.])(\d{2,3}(?:\.\d+)?)\s*(?:s|秒)",
-            str(item.get("reason") or ""))]
+            # A duration constraint is not a source timestamp. Preserve every
+            # actual time citation while excluding e.g. “3–30秒收官长度”.
+            re.sub(r"\d+(?:\.\d+)?\s*[–—~-]\s*\d+(?:\.\d+)?\s*秒(?:的)?(?:收官|窗口)?长度",
+                   "", str(item.get("reason") or "")))]
         outside = [stamp for stamp in cited
                    if stamp < start - 0.5 or stamp > end + 0.5]
         if outside:

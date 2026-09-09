@@ -22,9 +22,12 @@ for seg in [d['segments'][0],d['segments'][-1]]:
 last=d['segments'][-1]
 # Preserve the audited payoff and include the complete observed embrace, ending
 # at the first source contact frame after the players separate.
-assert last['start'] >= 124.48 and last['end'] <= 154.5, 'Review model boundaries before rendering'
+assert last['start'] == 112.5 and last['end'] == 127.53, 'Review model boundaries before rendering'
 last['end']=154.5
-last['narration']='十比六，蒂亚福第三次闯进美网半决赛。网前，米切尔森哭了，他把年轻的同胞抱在怀里。两盘领先没有换来胜利，但第一次大满贯八强走到这一步，已经让人记住了他。你觉得，整场最大的转折是哪一局？'
+last['score_inset']=True
+last['score_inset_windows']=[[112.5,121.9]]
+last['_score_inset_why']='score_03: board present120.5s, absent122.5s onward; do not paste shirts or crowd during embrace.'
+last['narration']='抢十九比六，赛点就在眼前。两个人都已经拼了四个多小时。米切尔森发球，蒂亚福接发，胜负悬在这一分。拿下了！十比六，两盘落后的人，笑到了最后。第三次美网半决赛，蒂亚福是这样一点点挣回来的。再看网前，米切尔森哭了。蒂亚福没有急着走开，把年轻的同胞抱在怀里。第一次大满贯八强，离半决赛只差那么一点。你觉得最大的转折，是第三盘发球胜赛局，还是决胜盘零比三后的追赶？'
 last['_reviewed_ending_boundary']='Full source contact_02: embrace continues through152.5s; separated154.5s. Keep complete handshake then stop, no later crowd/career segment. Raw model report retained.'
 last['crosses_cut']='Same-match winner reaction into net embrace, ending after separation at154.5s.'
 insert_chapter_cards(d)
