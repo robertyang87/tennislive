@@ -1,5 +1,4 @@
 {
-  "_draft": true,
   "slug": "shelton-alcaraz",
   "_column": "reel",
   "cover": {
@@ -24,6 +23,20 @@
       "zoom": 1,
       "_portrait_why": "美网本场官方图库 USTA2466599_20260908_CDC00625；Darren Carroll/USTA；深灰渐变无袖上衣、左臂黑护袖与本场视频一致，正面近景。",
       "_low_res_why": "美网官方发布最高档 f_ 为1280×720；c_实测960×540，无前缀原图404。选择可核本场正面近景，采用官方最高档；不以旧图代替。本场其他官方候选已逐张审视。"
+    },
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "阿尔卡拉斯",
+    "hook": "卫冕冠军出局\n阿卡倒在抢十",
+    "topic": "US Open Quarter-Finals",
+    "scoreboard": {
+      "court": "Arthur Ashe Stadium",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%224%3A28%22%2C%22source%22%3A%22structured%20match%20statistics%22%7D",
+        "field": "duration"
+      },
+      "_court_why": "赛果源结构化 court 字段",
+      "_duration_why": "比赛统计结构化全场时长"
     }
   },
   "_production": {
@@ -32,7 +45,8 @@
     "event": "US Open",
     "year": 2026,
     "round": "Quarter-Finals",
-    "court": "Arthur Ashe Stadium"
+    "court": "Arthur Ashe Stadium",
+    "status": "ready_for_render"
   },
   "source_url": "https://www.youtube.com/watch?v=wYd7I5_tMEs",
   "_match": {
@@ -350,11 +364,18 @@
     "human_context": {
       "angle": "卫冕冠军的美网征程止步八强。",
       "facts": [
+        "谢尔顿以6-7(5) 6-1 6-3 1-6 7-6(7)击败阿尔卡拉斯。",
+        "谢尔顿 169 - 阿尔卡拉斯 164，净差 5 分，谢尔顿 领先",
+        "第1盘50% → 第2盘72% → 第3盘86% → 第4盘58% → 第5盘77%",
+        "第1盘69% → 第2盘48% → 第3盘62% → 第4盘72% → 第5盘87%",
+        "5/16（31%）",
         "谢尔顿首次战胜世界前三球员。",
         "谢尔顿终结阿卡大满贯十八连胜。",
         "谢尔顿半决赛对阵蒂亚福。"
       ],
       "sources": [
+        "https://www.youtube.com/watch?v=wYd7I5_tMEs",
+        "https://www.flashscore.com/match/tennis/8fQuXC5S/#/match-summary",
         "https://www.usopen.org/en_US/news/articles/2026-09-09/shelton_ends_alcarazs_us_open_title_defense_in_late-night_five-setter.html"
       ]
     },
@@ -362,7 +383,8 @@
       "首盘抢七归阿卡，谢尔顿随后连下两盘，比赛彻底变了方向。",
       "阿卡用六比一强势回应，胜负悬念回到同一起点。",
       "决胜盘抢十，谢尔顿十比七拿下，阿卡的卫冕之路到此止步。"
-    ]
+    ],
+    "mode": "match_review"
   },
   "push": {
     "auto": true,
@@ -371,39 +393,97 @@
   },
   "segments": [
     {
+      "start": 157.12,
+      "end": 163.23,
+      "narration": "",
+      "_ending_payoff_required": true,
+      "_quote_kind": "broadcast",
+      "quote": [
+        {
+          "at": 0.0,
+          "text": "the biggest moment of Ben Shelton's\n本·谢尔顿职业生涯中最重要的时刻"
+        },
+        {
+          "at": 3.2,
+          "text": "career\n职业生涯"
+        }
+      ],
+      "fit": "crop",
+      "_why": "MiniMax 视觉证据：157.12–163.23 区间内画面显示赢家谢尔顿走向镜头、握拳、张嘴庆祝，时间码烧录在每帧左上角，赛后已成赢家姿态，并非普通回合。；英文原声来自 captions.txt。",
+      "score_inset": true
+    },
+    {
+      "title_card": "抢七之后的反转",
+      "kicker": "01",
+      "seconds": 2.2,
+      "_why": "自动链机械插的章节卡（review 路线 ⑤）：editorial.chapters 对应这个 beat，插在它的第一段之前"
+    },
+    {
       "start": 2.17,
       "end": 22.77,
       "narration": "卫冕冠军先赢抢七，却没能笑到最后。阿卡赢下首盘，谢尔顿没有退。他的发球、接发和大角度进攻，开始一起制造压力。",
       "_beat": 1,
-      "_why": "首盘抢七连续回合，22.77切点前结束；后半句为随后走势铺垫。"
+      "_why": "首盘抢七连续回合，22.77切点前结束；后半句为随后走势铺垫。",
+      "score_inset": true
     },
     {
       "start": 30,
       "end": 58.32,
       "narration": "谢尔顿以六比一、六比三连下两盘。关键不只在发球威力：用角度拉开防线，再寻找下一拍的进攻空间。阿卡被迫反复防守，也在用进攻寻找出口。",
       "_beat": 1,
-      "_why": "本段画面是第三盘对攻；第二盘结果用旁白交代，不能把这段说成第二盘。"
+      "_why": "本段画面是第三盘对攻；第二盘结果用旁白交代，不能把这段说成第二盘。",
+      "score_inset": true
+    },
+    {
+      "title_card": "阿卡把悬念拉回",
+      "kicker": "02",
+      "seconds": 2.2,
+      "_why": "自动链机械插的章节卡（review 路线 ⑤）：editorial.chapters 对应这个 beat，插在它的第一段之前"
     },
     {
       "start": 65,
       "end": 104.1,
       "narration": "阿卡并没有轻易交出比赛。这些来回奔跑后的反击，仍然能点燃全场。但漂亮的制胜分，不能抹去另一面的失误。随后他以六比一拿下第四盘，重新把悬念拉回。",
       "_beat": 2,
-      "_why": "65-104.1仍为第三盘：旁白明确用随后过渡到第四盘结果，避免错配时间。"
+      "_why": "65-104.1仍为第三盘：旁白明确用随后过渡到第四盘结果，避免错配时间。",
+      "score_inset": true
+    },
+    {
+      "title_card": "最后交给抢十",
+      "kicker": "03",
+      "seconds": 2.0,
+      "_why": "自动链机械插的章节卡（review 路线 ⑤）：editorial.chapters 对应这个 beat，插在它的第一段之前"
     },
     {
       "start": 104.1,
       "end": 122.17,
       "narration": "两盘各自占优，最后还是走到抢十。全场只差五分，已经没有挥霍机会的余地。谢尔顿率先抵达赛点，发球权就在自己手里。",
       "_beat": 3,
-      "_why": "104.1起决胜盘抢十，122.17开始赛点发球。"
+      "_why": "104.1起决胜盘抢十，122.17开始赛点发球。",
+      "score_inset": true
     },
     {
       "start": 122.17,
       "end": 150.32,
       "narration": "十比七，比赛结束。谢尔顿第一次击败世界前三，阿卡的大满贯十八连胜到此止步。四小时二十八分，两人在网前长久拥抱。输赢之外，他们都把自己拼到了最后。",
       "_beat": 3,
-      "_why": "完整赛点、阿卡反应和网前拥抱，125.49之后不再是比赛回合；末尾裁在150.32解说时长前。"
+      "_why": "完整赛点、阿卡反应和网前拥抱，125.49之后不再是比赛回合；末尾裁在150.32解说时长前。",
+      "score_inset": true
+    },
+    {
+      "start": 157.12,
+      "end": 172.92,
+      "narration": "制胜分更多，阿卡为什么还是倒在抢十？",
+      "fit": "crop",
+      "_why": "正文重新兑现冷开场的完整结局：157.12–163.23 覆盖谢尔顿赢球庆祝、挥拳咆哮，163.23–172.92 覆盖观众起立欢呼、家属包厢反应与谢尔顿继续庆祝的反应；完全包含 cold_open 窗口。172.92 为握手/赛后内容起点附近的有效切点，不超出。",
+      "score_inset": true
+    },
+    {
+      "stat_card": true,
+      "seconds": 10.0,
+      "narration": "全场总得分，谢尔顿一六九比一六四，多拿了五分。",
+      "_why": "自动链机械插的证据段：数据统计图剪进片子（review 路线 ④），完整获胜与庆祝之后，全画布10秒，旁白只讲总得分",
+      "image": "<stat_card>"
     }
   ],
   "_notes": [
@@ -424,50 +504,43 @@
   ],
   "_visual_evidence": {
     "model": "MiniMax-M3",
-    "status": "waiting",
-    "visual_status": "waiting",
+    "status": "pass",
+    "visual_status": "pass",
     "retryable": false,
     "cold_open": {
-      "start": 163.23,
-      "end": 167.57,
-      "kind": "match_point",
-      "winner_visible": true,
-      "reason": "163.23–167.57 秒：屏幕记分牌显示 'MATCH POINT'，谢尔顿（白背心、头带，本场赢家）站在网前振臂庆祝并嘶吼；比分字样叠加，场地 US Open 标识一致。",
-      "confidence": 0.95
-    },
-    "ending": {
-      "start": 163.23,
-      "end": 196.58,
+      "start": 157.12,
+      "end": 163.23,
       "kind": "winner_celebration",
       "winner_visible": true,
-      "reason": "163.23–196.58 秒：完整覆盖冷开场；包含赛点致胜、谢尔顿嘶吼庆祝、握手 (172.92–176.31)、看台亲友起立鼓掌 (176.31–178.93)、谢尔顿含泪回望 (180.5–182.5) 与 Rolex 时钟 4:28 (184.5–188.5) 的赛后余波；场地 US Open 角标全程一致。",
-      "confidence": 0.95
+      "reason": "157.12–163.23 区间内画面显示赢家谢尔顿走向镜头、握拳、张嘴庆祝，时间码烧录在每帧左上角，赛后已成赢家姿态，并非普通回合。",
+      "confidence": 0.88
+    },
+    "ending": {
+      "start": 157.12,
+      "end": 172.92,
+      "kind": "winner_celebration",
+      "winner_visible": true,
+      "reason": "157.12–163.23 覆盖谢尔顿赢球庆祝、挥拳咆哮，163.23–172.92 覆盖观众起立欢呼、家属包厢反应与谢尔顿继续庆祝的反应；完全包含 cold_open 窗口。172.92 为握手/赛后内容起点附近的有效切点，不超出。",
+      "confidence": 0.88
     },
     "cover": {
-      "same_match": false,
-      "subject": "",
+      "same_match": true,
+      "subject": "阿尔卡拉斯",
       "moment": "other",
-      "wrong_or_old": true,
-      "reason": "无候选封面照片；按规则无法证明本场同图，输出 same_match=false。",
-      "confidence": 0.5
+      "wrong_or_old": false,
+      "reason": "封面人物为深色无袖 Nike 球衣、长卷发、握拳、表情严肃，与 contact sheet 中 60.5s、102.5s、134.5s 等多个近景帧中阿尔卡拉斯的服装、发型与握拳姿态一致；背景观众席与 US Open 蓝色挡板风格与比赛画面吻合，符合用户主题'卫冕冠军阿卡出局'的封面选人规则。",
+      "confidence": 0.82
     },
-    "problems": [
-      "ending 必须是 3-30 秒的完整收官窗口",
-      "没有官方高清封面候选",
-      "封面无法证明是同一场，或疑似旧图/错图",
-      "封面置信度 0.50 低于 0.80",
-      "封面人物应为 谢尔顿，模型识别为 空",
-      "封面情绪应为 winner_celebration，现在是 other"
-    ],
+    "problems": [],
     "model_attempts": 1,
-    "input_sha256": "4d1bb7646f5c0a21f2fed2d87004a11849cfea5ca11d2b98985cdbbe40b742c2",
+    "input_sha256": "96ddff8e496c68b3ad4fe38ba2b32872f9e9758b6e6507b14b1290ba8daf35dd",
     "inputs": [
       "contact_00.jpg",
       "contact_01.jpg",
       "contact_02.jpg",
       "contact_03.jpg"
     ],
-    "cover_image": ""
+    "cover_image": "assets/reel/shelton-alcaraz-cover.jpg"
   },
   "_cover_brief": {
     "preferred_subject": "阿尔卡拉斯",
@@ -479,5 +552,18 @@
     "status": "reviewed",
     "source": "Codex contact-sheet and official report review",
     "notes": "纠正破发5/16与3/11颠倒；删除发球提速无证据推断；更正赛点与庆祝时间；官方时钟4:28；技术统计在完整赢球后。"
-  }
+  },
+  "_segments_source": " + MiniMax 冷开场/结尾视觉闸",
+  "topbar": {
+    "line1": "2026 US Open Quarter-Finals",
+    "line2": "谢尔顿 6-7(5) 6-1 6-3 1-6 7-6(7) 阿尔卡拉斯"
+  },
+  "layout": "band",
+  "scorebox": [
+    104,
+    888,
+    736,
+    978
+  ],
+  "stat_card_full_canvas": true
 }
