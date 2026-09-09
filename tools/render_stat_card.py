@@ -225,7 +225,7 @@ W, H = 1080, 1920
 #             cut_still_segment 缩进去正好铺满宽度；1920 那版缩进 1440 只剩 713px 宽。
 #             少掉 480px 的账：footer 不要（片里有品牌角标和片尾）、「全场数据对比」
 #             的段标题不要（旁白正在说它）、九行统计的行距从 33/23 收到 20/13。
-VARIANTS = {"poster": (W, H), "film": (W, 1440)}
+VARIANTS = {"poster": (W, H), "film": (W, 1440), "film_band": (W, 960)}
 
 # 「内容到底画到多低」：逐元素取 getBoundingClientRect().bottom 的最大值。
 CONTENT_BOTTOM_JS = (
@@ -454,6 +454,28 @@ def build(spec: dict, *, variant: str = "poster") -> str:
         _stat_row_html(spec_row[0], spec_row[1],
                        *_stat_row(spec_row[2], a, b, *spec_row[3:]))
         for spec_row in rows)
+
+    if variant == "film_band":
+        # Band footage is 1080x960: a 1440px poster shrank every number to ~30px.
+        # Lay out the same validated statistics at native band size instead.
+        names = [html.escape(str(p["name"])) for p in matchup]
+        score_line = " · ".join(vp._sets_html(token) for token in set_tokens)
+        return f"""<!doctype html><html><head><meta charset="utf-8"><style>
+{_font_css()}
+*{{box-sizing:border-box;margin:0}}html,body{{width:1080px;height:960px;overflow:hidden}}
+body{{background:#101525;color:#f4fbf7;font-family:'TL Sans SC',sans-serif;padding:28px 46px}}
+h1{{font-size:34px;text-align:center;color:#c6f65a;margin-bottom:14px}}
+.names{{display:flex;justify-content:space-between;font-size:46px;font-weight:700}}
+.score{{text-align:center;font-family:'TL Score',sans-serif;font-size:36px;margin:8px 0 20px}}
+.setwin{{color:#c6f65a;font-weight:700}}.setlose{{font-weight:300}}.tb{{font-size:.5em;vertical-align:super}}
+.srow{{height:76px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;border-top:1px solid #334052}}
+.sval{{display:flex;align-items:baseline;gap:8px;font-family:'TL Numeral',sans-serif}}
+.sval-r{{justify-content:flex-end}}.smain{{font-size:54px;color:#f4fbf7}}.sfrac{{font-size:20px;color:#b7c4d0}}
+.sval.lead .smain{{color:#c6f65a}}.band .slabel{{font-size:31px;font-weight:700;text-align:center;position:relative;top:-9px}}
+.band .slabel-en{{position:absolute;top:100%;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:16px;font-weight:400;color:#b7c4d0}}
+.band .slabel--solo{{top:0}}
+</style></head><body class="band"><h1>全场数据复盘</h1><div class="names"><span>{names[0]}</span><span>{names[1]}</span></div>
+<div class="score">{score_line}</div>{rows_html}</body></html>"""
 
     def side(meta: dict, raw: dict, where: str) -> str:
         is_win = str(meta["name"]).strip() == winner
