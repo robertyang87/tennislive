@@ -3104,7 +3104,7 @@ _REAL_FIELDS: dict[str, tuple[str, ...]] = {
               "score", "scoreboard", "scrim", "split", "sub", "subject",
               "tier", "topic", "versus", "winner"),
     "segment": ("bed", "crosses_cut", "crop_zoom", "cx", "end", "fit", "image",
-                "inset", "mute", "narration", "quote", "score_inset",
+                "inset", "mute", "narration", "quote", "score_inset", "score_inset_windows",
                 "seconds", "source", "speed", "square_pan", "start", "stat_card", "title_card",
                 "kicker", "track", "voice"),
 }
