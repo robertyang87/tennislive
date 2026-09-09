@@ -1,0 +1,186 @@
+{
+  "slug": "zheng-rybakina-us-open-2026-qf-presser",
+  "model": "MiniMax-M3",
+  "status": "fail",
+  "pass": false,
+  "created_at": "2026-09-09T20:30:44.089367+00:00",
+  "scope": "sampled final-film visual evidence; not full-film or audio verification",
+  "source_exception": "User explicitly requested this press conference; press_conference is valid; no lead-in required",
+  "issues": [
+    "interviewee: failed or insufficient evidence/confidence",
+    "not_mirrored: failed or insufficient evidence/confidence",
+    "same_program: failed or insufficient evidence/confidence",
+    "cover_clear_frontal_eyes_open: failed or insufficient evidence/confidence",
+    "bilingual_subtitles_readable: failed or insufficient evidence/confidence",
+    "no_face_obstruction: failed or insufficient evidence/confidence",
+    "brand_ending: failed or insufficient evidence/confidence"
+  ],
+  "spec_sha256": "5e646ae9a6d0fd455e119538d24373a524da6b091cb7ae5865c4cb1638260544",
+  "render_sha256": "aa2cce9ca7ae0d3a85a076f3aea2de9343dcb7d9105d42b46f513a6fd9987ecf",
+  "film_sha256": "ab9b925292a9c239b042920bc5f9fcab08f34a58a38e8a6fce01462adc97138f",
+  "frames": [
+    {
+      "image_id": 1,
+      "seconds": 0.15,
+      "role": "actual opening cover",
+      "path": "minimax_visual_evidence/frame_01.jpg",
+      "sha256": "fc9fc913a61b087f0eee319282b23a82cac448a5eee0e8145f36cbd76ffd626c"
+    },
+    {
+      "image_id": 2,
+      "seconds": 8,
+      "role": "press conference opening",
+      "path": "minimax_visual_evidence/frame_02.jpg",
+      "sha256": "05b147f96428b2ee5f1514990542d3d4bd66154448c6f41f632f1343f7b6b9f3"
+    },
+    {
+      "image_id": 3,
+      "seconds": 35,
+      "role": "body speaker and subtitles",
+      "path": "minimax_visual_evidence/frame_03.jpg",
+      "sha256": "924eaba0c25c328662226623f376c742a74665a3f70b241006435e34821f660c"
+    },
+    {
+      "image_id": 4,
+      "seconds": 75,
+      "role": "body speaker and subtitles",
+      "path": "minimax_visual_evidence/frame_04.jpg",
+      "sha256": "af8cbc04d7ca60d679d9f2a4a6c263fce52fcfd79fcc71d51db25718eb3fa0f2"
+    },
+    {
+      "image_id": 5,
+      "seconds": 165,
+      "role": "body speaker and subtitles",
+      "path": "minimax_visual_evidence/frame_05.jpg",
+      "sha256": "1be2c7448532df9cb7864dd6b011faabc83e67a91071fc6508b17cc613c0a363"
+    },
+    {
+      "image_id": 6,
+      "seconds": 230,
+      "role": "body speaker and subtitles",
+      "path": "minimax_visual_evidence/frame_06.jpg",
+      "sha256": "3512813ffc4a2869e30a869d862c5976b3034e50c930143f2e5b4f2f2147a88a"
+    },
+    {
+      "image_id": 7,
+      "seconds": 295,
+      "role": "body speaker and subtitles",
+      "path": "minimax_visual_evidence/frame_07.jpg",
+      "sha256": "636d16f6d34a83d145d42f2cf1b6285814821ad4ddfd1e4e5627d8803626244a"
+    },
+    {
+      "image_id": 8,
+      "seconds": 328.811328,
+      "role": "closing",
+      "path": "minimax_visual_evidence/frame_08.jpg",
+      "sha256": "6446cc890904232da4c3247667a0e3a650586bb6ccdeab3824d14b9546715a1c"
+    },
+    {
+      "image_id": 9,
+      "seconds": 331.811328,
+      "role": "brand ending",
+      "path": "minimax_visual_evidence/frame_09.jpg",
+      "sha256": "475d5c3674b5b3c2007e1ad35ddd6cf92aa31ca66b3dcf0293d65b6ead383d25"
+    }
+  ],
+  "result": {
+    "interviewee": {
+      "value": "unknown",
+      "confidence": 0.3,
+      "evidence": "I cannot identify the person by facial features alone. The字幕/标题文字中提到「郑钦文」,但这是用户/后加文字的引用,不是源画面的视觉标识。无法仅凭外观确认身份。",
+      "image_ids": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    "scene": {
+      "value": "press_conference",
+      "confidence": 0.95,
+      "evidence": "图1-7均显示同一蓝色背景板前的人物,面前有话筒、桌面,背景为「sopen®」「USOPEN.O」(应为USOPEN.ORG)赛事标志板,典型赛后新闻发布会布置。图1标题栏文字「美网女单1/4决赛 赛后发布会」亦佐证。",
+      "image_ids": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    "not_mirrored": {
+      "value": "true",
+      "confidence": 0.55,
+      "evidence": "原拍摄背景板上可读出「sopen®」与「USOPEN.O」(应为USOPEN.ORG),字母方向正常(正写、左侧商标在左、右侧文字在右),表明源画面未做水平镜像。后加中文字幕方向无法作为镜像判断依据。",
+      "image_ids": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    "same_program": {
+      "value": "true",
+      "confidence": 0.95,
+      "evidence": "图1与图2-7:同一人物(同一张脸、左颊痣位置一致)、同一服装(米色/白色背心配红色滚边,相同项链叠戴、左手腕金色腕表)、同一赛事背景板(USOPEN标志)与同一桌面话筒。仅姿态/手部动作不同(发言中的自然变化)。图1的「美网女单1/4决赛 赛后发布会」副标题与图2-7顶部信息条「2026 美网 女单1/4决赛」一致,可确认为同一场发布会的连续素材。",
+      "image_ids": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    "cover_clear_frontal_eyes_open": {
+      "value": "true",
+      "confidence": 0.9,
+      "evidence": "仅看图1:正面中近景构图,人物面朝镜头方向,双眼自然睁开(瞳孔可见,眼睑未闭合),面部清晰、无运动模糊或遮挡(仅有底部黑色色块覆盖身体下半部,但不挡脸)。",
+      "image_ids": [
+        1
+      ]
+    },
+    "bilingual_subtitles_readable": {
+      "value": "true",
+      "confidence": 0.85,
+      "evidence": "图2-7下半黑色字幕区均为上英(白色)下中(黄绿色)双语字幕,字号足够、字形完整,未发现截字或中英文互相重叠。如图2「but it's been a remarkable run / 但这次征程非常出色,」、图6「But I'm just the same person. / 但我还是同一个人。」均清晰可读。",
+      "image_ids": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    "no_face_obstruction": {
+      "value": "true",
+      "confidence": 0.9,
+      "evidence": "图1封面面部完整可见,无文字覆盖五官;图2-7顶部信息条位于画面上沿、不遮挡人物面部,字幕位于底部黑色区,亦不挡脸。",
+      "image_ids": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    "brand_ending": {
+      "value": "true",
+      "confidence": 0.95,
+      "evidence": "图9显示深色背景上「网球时差」品牌名、网球/时钟样式logo、「时差归我,好球归你」slogan及底部署名「@网球时差 · TENNIS JETLAG」,为明确的品牌片尾。",
+      "image_ids": [
+        9
+      ]
+    }
+  }
+}
