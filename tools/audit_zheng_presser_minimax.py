@@ -23,7 +23,7 @@ SLUG = 'zheng-rybakina-us-open-2026-qf-presser'
 ENDPOINT = 'https://api.minimaxi.com/v1/chat/completions'
 MODEL = 'MiniMax-M3'
 EXPECTED = {'interviewee': '郑钦文', 'scene': 'press_conference',
-            'not_mirrored': True, 'cover_clear_frontal_eyes_open': True,
+            'not_mirrored': True, 'same_program': True, 'cover_clear_frontal_eyes_open': True,
             'bilingual_subtitles_readable': True, 'no_face_obstruction': True,
             'brand_ending': True}
 
@@ -49,6 +49,8 @@ def assess(result):
                      and all(type(i) is int and 1 <= i <= 9 for i in ids))
         if key == 'cover_clear_frontal_eyes_open':
             valid_ids = valid_ids and ids == [1]
+        if key == 'same_program':
+            valid_ids = valid_ids and 1 in ids and any(2 <= i <= 7 for i in ids)
         if key == 'bilingual_subtitles_readable':
             valid_ids = valid_ids and any(2 <= i <= 7 for i in ids)
         if key == 'brand_ending':
@@ -127,6 +129,7 @@ def run():
 不能仅以后加中文字幕正常方向推断源画面未镜像。看不清标记unknown且低置信度。
 逐项返回JSON对象，每项包含value、confidence(0到1)、evidence(具体可见证据)、image_ids(整数数组)。
 必需项及预期值：interviewee="郑钦文"；scene="press_conference"；not_mirrored=true；
+same_program=true（图1与正文图2-7属于同一美网发布会，须具体比较人物、服装及赛事背景，引用图1及正文图号）；
 cover_clear_frontal_eyes_open=true（仅图1，清晰正脸且双眼自然睁开）；
 bilingual_subtitles_readable=true（正文中英字幕可读、无截字、无明显互相重叠）；
 no_face_obstruction=true（封面和正文文字不挡脸）；brand_ending=true（图9网球时差片尾）。
