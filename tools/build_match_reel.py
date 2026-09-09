@@ -2441,6 +2441,7 @@ class Segment:
     # 照旧整段回贴；非空 ＝ 只在这几段回贴（`overlay` 的 `enable`）。
     # ⚠️ 它是**渲染时现量的**，spec 里写不了——板什么时候淡出是转播的行为。
     score_inset_spans: tuple[tuple[float, float], ...] | None = None
+    score_inset_mask: str = ""
     # 经源画面复核的允许时段（段内秒），只收窄自动检测，不能强行认领板在场。
     score_inset_windows: tuple[tuple[float, float], ...] = ()
     # **这一段的 image 是一张按画面区尺寸设计的整幅页**（章节卡），铺满不缩。
@@ -3957,12 +3958,22 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
                     gate = ":enable='" + "+".join(
                         f"between(t,{a:.3f},{b:.3f})"
                         for a, b in seg.score_inset_spans) + "'"
+                patch = (f"[wb]crop={x1 - x0}:{y1 - y0}:{x0}:{y0},"
+                         f"scale={bw}:{sh}:flags=lanczos[b];")
+                if seg.score_inset_mask:
+                    # Mask is measured frame-by-frame from this exact source.
+                    # Pixels beyond the actual border are transparent, including
+                    # all pixels when the broadcaster removes the score graphic.
+                    patch = (
+                        f"[wb]crop={x1-x0}:{y1-y0}:{x0}:{y0},format=rgb24[bc];"
+                        f"movie='{_escape(Path(seg.score_inset_mask))}':dec_threads=1,format=gray[mask];"
+                        f"[bc][mask]alphamerge,scale={bw}:{sh}:flags=lanczos[b];")
+                    gate = ""
                 chain = (
                     f"split=2[wm][wb];"
                     f"[wm]crop={CROP_W}:{CROP_H}:{x}:{CROP_Y},"
                     f"{_canvas_fit().rstrip(',')}[m];"
-                    f"[wb]crop={x1 - x0}:{y1 - y0}:{x0}:{y0},"
-                    f"scale={bw}:{sh}:flags=lanczos[b];"
+                    + patch +
                     f"[m][b]overlay=0:{oy}{gate},{sp}fps={FPS_EXPR},setsar=1"
                 )
                 labeled = True
@@ -7117,7 +7128,14 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     # **板的右缘现量**（`score_inset: true` 的段）——账号所有者 2026-08-29：
     # 「比分板的宽度会变化的，所以不能固定宽度去切，要自适应」。排在切片之前，
     # 和 track_shots 同一个位置：都是「先把整条量完，再逐段切」。
-    resolve_board_insets(sources, segments)
+    from reel_facts import us_open_match_line
+    if spec.get("layout") == "band" and us_open_match_line((spec.get("topbar") or {}).get("line1", "")):
+        from scoreboard_geometry import resolve_masks
+        resolve_masks(sources, segments, outdir,
+                      Path(__file__).resolve().parents[1] / "specs" / "reels" / f"{spec['slug']}.json",
+                      FPS_EXPR, SEG_FADE)
+    else:
+        resolve_board_insets(sources, segments)
 
     # 跟踪要**先整条镜头跟完再切**，所以排在切片之前统一算（见 track_shots）
     tracks = track_shots(sources, segments, source_w)
@@ -7421,6 +7439,8 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     # 那是**词末**不是 mp3 时长，差着一个 0.83s 的固定尾巴，而且序号在跨次重渲
     # 的目录里会对不上。记在这儿的是闸自己量到的那个数，口径和序号都不用再猜。
     (outdir / "render.json").write_text(json.dumps({
+        "scoreboard_qc_sha256": (hashlib.sha256((outdir / "scoreboard_qc.json").read_bytes()).hexdigest()
+                                 if (outdir / "scoreboard_qc.json").is_file() else None),
         "cover_seconds": round(cover_secs, 3),
         "cover_narrated": cover_voice is not None,
         # **片尾也跟着口播走，光看 spec 同样算不出来**（那句话是常量，但它有多长
