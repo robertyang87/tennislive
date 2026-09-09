@@ -389,7 +389,14 @@ def _verification(req: dict) -> dict:
     # Keep automatic discovery's title classifier unchanged.
     if requested == "press_conference":
         from interview_source_gate import _trusted_source_names
-        if (source not in _trusted_source_names()
+        metadata = req.get("source_metadata") or {}
+        official_usopen = (
+            source == "US Open"
+            and metadata.get("video_id") == video_id
+            and metadata.get("channel_id") == "UCXbboag48Qlr78zzz6SkzkQ"
+            and metadata.get("source_url") == url
+        )
+        if (source not in _trusted_source_names() and not official_usopen
                 or not re.search(r"\bpress\s+conference\b", title, re.I)):
             raise ValueError("发布会请求必须来自已核官方来源且标题明确为 Press Conference")
         explicit = "press_conference"
