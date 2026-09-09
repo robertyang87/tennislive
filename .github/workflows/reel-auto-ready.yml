@@ -3,6 +3,12 @@ name: reel-auto-ready
 # probe 当下缺官方图/视觉证据时，草稿明确留在 pending。赛后官方图片经常晚到；
 # 这条轻量班次只重试仍有机会补齐的 pending，证据全绿后提升并立即 dispatch render。
 on:
+  push:
+    branches: [main]
+    paths:
+      - 'specs/reels/pending/*.draft.json'
+      - 'assets/reel/*-cover.jpg'
+      - '.github/workflows/reel-auto-ready.yml'
   schedule:
     - cron: "6,16,26,36,46,56 * * * *"
   workflow_dispatch: {}
