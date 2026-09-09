@@ -1,0 +1,148 @@
+name: recover-shelton-alcaraz
+'on':
+  push:
+    branches:
+    - main
+    paths:
+    - .github/workflows/recover-shelton-alcaraz.yml
+  workflow_dispatch: {}
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: recover-shelton-alcaraz
+  cancel-in-progress: false
+jobs:
+  recover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        sparse-checkout: 'src
+
+          tools
+
+          specs
+
+          data/reel_publish_ledger
+
+          assets/players
+
+          assets/reel/shelton-alcaraz-cover.jpg
+
+          output/2026-09-09/reel/shelton-alcaraz
+
+          skills
+
+
+          /pyproject.toml
+
+          /README.md
+
+          '
+        sparse-checkout-cone-mode: false
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+    - name: Install only QC and publishing dependencies
+      run: 'pip install -q -e . numpy
+
+        source tools/ci_apt_install.sh
+
+        ensure_ffmpeg
+
+        '
+    - name: Restore exact rendered artifact; reject changed spec or prior publication
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: 'test "$(git hash-object specs/reels/shelton-alcaraz.json)" = 203d488a7b852f220bfa116e2e3b04d6e0681ef8
+
+        test -z "$(git ls-files -- output/2026-09-09/reel/shelton-alcaraz/pushed.json data/reel_publish_ledger/shelton-alcaraz.json)"
+
+        gh api repos/$GITHUB_REPOSITORY/actions/runs/34328318645 > "$RUNNER_TEMP/source-run.json"
+
+        python - "$RUNNER_TEMP/source-run.json" <<''VERIFY''
+
+        import json,sys
+
+        r=json.load(open(sys.argv[1]));assert r[''head_sha'']==''aeff61b9eda172203f7d2367fa231c83844ca4bd'';assert
+        r[''conclusion'']==''failure''
+
+        VERIFY
+
+        gh run download 34328318645 --name reel-shelton-alcaraz-1686 --dir "$RUNNER_TEMP/recovered"
+
+        mkdir -p output/2026-09-09/reel/shelton-alcaraz
+
+        cp -a "$RUNNER_TEMP/recovered/." output/2026-09-09/reel/shelton-alcaraz/
+
+        test -s output/2026-09-09/reel/shelton-alcaraz/shelton-alcaraz.mp4
+
+        test -s output/2026-09-09/reel/shelton-alcaraz/render.json
+
+        sha256sum output/2026-09-09/reel/shelton-alcaraz/shelton-alcaraz.mp4
+
+        '
+    - name: 查成片本身合不合格
+      run: "set -o pipefail\npython tools/check_reel_landed.py \\\n  --slug \"shelton-alcaraz\" \\\n  --film \"\
+        output/2026-09-09/reel/shelton-alcaraz/shelton-alcaraz.mp4\" \\\n  2>&1 | tee -a /tmp/render-findings.log\n"
+    - name: 成片发到 Release（不进 git）
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: "OUTDIR=\"output/2026-09-09/reel/shelton-alcaraz\"\nSLUG=\"shelton-alcaraz\"\nREEL=\"$OUTDIR/$SLUG.mp4\"\
+        \nSZ=$(stat -c%s \"$REEL\")\nTAG=\"reel-$SLUG\"\necho \"成片 $((SZ/1048576)) MiB —— 发到 Release $TAG\"\ngh\
+        \ release view \"$TAG\" >/dev/null 2>&1 \\\n  || gh release create \"$TAG\" --title \"赛场之上 · $SLUG\" \\\n\
+        \       --notes \"竖版成片。成片一律走 Release 附件，不进 git。\"\nUPLOADED=0\nfor i in 1 2 3 4; do\n  if gh release upload\
+        \ \"$TAG\" \"$REEL\" --clobber; then UPLOADED=1; break; fi\n  if [ \"$i\" != 4 ]; then\n    WAIT=$((5 *\
+        \ i * i))\n    echo \"第 $i 次传 Release 附件没成，${WAIT}s 后重试\"\n    sleep \"$WAIT\"\n  fi\ndone\n[ \"$UPLOADED\"\
+        \ = 1 ] || {\n  echo \"::error::Release 附件传了 4 次都没上去\"; exit 1; }\nURL=\"https://github.com/$GITHUB_REPOSITORY/releases/download/$TAG/$SLUG.mp4\"\
+        \nfor i in 1 2 3 4 5 6 7 8; do\n  CODE=$(curl -s -o /dev/null -w '%{http_code}' -L -r 0-99 \"$URL\" || echo\
+        \ 000)\n  if [ \"$CODE\" = \"206\" ] || [ \"$CODE\" = \"200\" ]; then break; fi\n  echo \"第 $i 次探活 $CODE，5s\
+        \ 后重试\"\n  sleep 5\ndone\n[ \"$CODE\" = \"206\" ] || [ \"$CODE\" = \"200\" ] || {\n  echo \"::error::Release\
+        \ 附件 $URL 探不到（$CODE）\"; exit 1; }\necho \"Release 附件可取：$URL\"\npython - \"$OUTDIR/render.json\" \"$URL\"\
+        \ \"$SZ\" <<'PY'\nimport json, sys\nfrom pathlib import Path\npath, url, size = Path(sys.argv[1]), sys.argv[2],\
+        \ int(sys.argv[3])\ndata = json.loads(path.read_text(encoding=\"utf-8\"))\ndata[\"video_url\"] = url\ndata[\"\
+        video_bytes\"] = size\npath.write_text(json.dumps(data, ensure_ascii=False, indent=2) + \"\\n\",\n     \
+        \           encoding=\"utf-8\")\nprint(\"render.json 记下 video_url\")\nPY\nrm -f \"$REEL\"\n"
+    - name: 丢掉不进仓库的中间物
+      run: "OUTDIR=\"output/2026-09-09/reel/shelton-alcaraz\"\nrm -f \"$OUTDIR\"/source* \"$OUTDIR\"/*.part \"$OUTDIR\"\
+        /*.ytdl \\\n  \"$OUTDIR\"/voice_*.mp3 \"$OUTDIR\"/_cover.jpg \"$OUTDIR\"/_cover.html \\\n  \"$OUTDIR\"/poster.html\
+        \ \"$OUTDIR\"/_versus_* \"$OUTDIR\"/_subs* \\\n  \"$OUTDIR\"/cover_candidates/cand_*\nrm -rf \"$OUTDIR\"\
+        /frames\nls -la \"$OUTDIR\" || true\n\nBAD=0\nwhile IFS= read -r f; do\n  echo \"::error::清理之后仍有大文件进仓库：$f（$(stat\
+        \ -c%s \"$f\") 字节）\"\n  BAD=1\ndone < <(find \"$OUTDIR\" -type f -size +8M)\n[ \"$BAD\" = 0 ] || exit 1\n"
+    - name: 提交产物
+      run: "git config user.name \"Claude\"\ngit config user.email \"noreply@anthropic.com\"\nOUTDIR=\"output/2026-09-09/reel/shelton-alcaraz\"\
+        \ngit add \"$OUTDIR\"\nif [ -f \"specs/reels/pending/shelton-alcaraz.draft.json\" ]; then\n  git add \"\
+        specs/reels/pending/shelton-alcaraz.draft.json\"\nfi\nif [ -f \"specs/reels/shelton-alcaraz.json\" ]; then\n\
+        \  git add \"specs/reels/shelton-alcaraz.json\"\nfi\nif [ -f \"specs/reels/shelton-alcaraz.xhs.txt\" ];\
+        \ then\n  git add \"specs/reels/shelton-alcaraz.xhs.txt\"\nfi\ngit add -u \"specs/reels/pending\" 2>/dev/null\
+        \ || true\nCOVER_ASSET=\"assets/reel/shelton-alcaraz-cover.jpg\"\nif [ -f \"$COVER_ASSET\" ]; then\n  git\
+        \ add \"$COVER_ASSET\"\nfi\nif git diff --cached --quiet; then\n  echo \"没有变化\"\n  exit 0\nfi\nBRANCH=\"\
+        ${{ github.ref_name }}\"\nMSG=\"reel: render shelton-alcaraz\"\npython tools/check_staged_file_sizes.py\n\
+        git commit -m \"$MSG\"\nfor attempt in $(seq 1 10); do\n  if git push origin \"HEAD:$BRANCH\"; then\n  \
+        \  exit 0\n  fi\n  echo \"push 被拒（第 $attempt 次），把本次提交动过的文件重放到最新的 $BRANCH 上\"\n  git fetch origin \"$BRANCH\"\
+        \n  git branch -f rendered HEAD\n  git reset --hard \"origin/$BRANCH\"\n  git diff --name-only -z --diff-filter=d\
+        \ rendered^ rendered \\\n    | xargs -0 -r git checkout rendered --\n  git diff --name-only -z --diff-filter=D\
+        \ rendered^ rendered \\\n    | xargs -0 -r git rm -q -f --ignore-unmatch --sparse --\n  python tools/check_staged_file_sizes.py\n\
+        \  git diff --cached --quiet || git commit -m \"$MSG\"\n  sleep $((attempt * 5 + RANDOM % 10))\ndone\necho\
+        \ \"::error::连续 10 次推送失败；成片仍在 artifact 中，未发送微信死链\"\nexit 1\n"
+    - name: render 质检落库后读取 spec 自动推送规则
+      id: render_auto_gate
+      run: "python tools/auto_push_gate.py \\\n  --changed \"output/2026-09-09/reel/shelton-alcaraz/render.json\"\
+        \n"
+    - name: render 质检落库后自动派发微信推送
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: "SENT=0\nfor attempt in 1 2 3; do\n  if gh workflow run match-reel.yml --ref main \\\n    -f mode=push\
+        \ \\\n    -f slug=\"shelton-alcaraz\" \\\n    -f push=true; then\n    SENT=1\n    break\n  fi\n  echo \"\
+        第 $attempt 次派发 push-only 没成，稍后重试\"\n  sleep $((attempt * 5))\ndone\n[ \"$SENT\" = 1 ] || {\n  echo \"::error::成片已质检并落库，但\
+        \ push-only 连续三次派发失败\"; exit 1; }\n"
+      if: steps.render_auto_gate.outputs.found == 'true'
+    - name: Preserve recovered evidence
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: reel-recovered-shelton-alcaraz-${{ github.run_number }}
+        path: output/2026-09-09/reel/shelton-alcaraz
+        retention-days: 14
