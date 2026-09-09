@@ -186,6 +186,16 @@ jobs:
           fi
           python tools/audit_zheng_presser_minimax.py
 
+      - name: 保留本条视觉复核证据
+        if: always() && steps.gate.outputs.found == 'true' && steps.gate.outputs.slug == 'zheng-rybakina-us-open-2026-qf-presser'
+        uses: actions/upload-artifact@v4
+        with:
+          name: zheng-presser-minimax-${{ github.run_id }}
+          path: |
+            output/interviews/zheng-rybakina-us-open-2026-qf-presser/minimax_visual_audit.json
+            output/interviews/zheng-rybakina-us-open-2026-qf-presser/minimax_visual_evidence/*.jpg
+          retention-days: 7
+
       - name: 写复制页（必须排在提交之前）
         if: steps.gate.outputs.found == 'true'
         run: |
