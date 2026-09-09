@@ -28,7 +28,7 @@
     "layout": "solo",
     "subject": "阿尔卡拉斯",
     "hook": "卫冕冠军出局\n阿卡倒在抢十",
-    "topic": "US Open Quarter-Finals",
+    "topic": "美网 1/4决赛",
     "scoreboard": {
       "court": "Arthur Ashe Stadium",
       "duration_source": {
@@ -96,7 +96,8 @@
         10,
         7
       ]
-    ]
+    ],
+    "official_url": "https://www.usopen.org/en_US/scores/feeds/2026/matches/complete/1504.json"
   },
   "stats": {
     "a": {
@@ -335,7 +336,7 @@
       "hugh_clarke": "feed HTTP 403; index HTTP 403",
       "atp": "ok",
       "wta": "no_matching_article",
-      "usopen": "no_matching_article",
+      "usopen": "official_report_and_match_1504_read",
       "australian_open": "no_matching_article",
       "roland_garros": "ok",
       "wimbledon": "no_matching_article"
@@ -376,7 +377,8 @@
       "sources": [
         "https://www.youtube.com/watch?v=wYd7I5_tMEs",
         "https://www.flashscore.com/match/tennis/8fQuXC5S/#/match-summary",
-        "https://www.usopen.org/en_US/news/articles/2026-09-09/shelton_ends_alcarazs_us_open_title_defense_in_late-night_five-setter.html"
+        "https://www.usopen.org/en_US/news/articles/2026-09-09/shelton_ends_alcarazs_us_open_title_defense_in_late-night_five-setter.html",
+        "https://www.usopen.org/en_US/scores/feeds/2026/matches/complete/1504.json"
       ]
     },
     "narration": [
@@ -400,17 +402,14 @@
       "_quote_kind": "broadcast",
       "quote": [
         {
-          "at": 0.0,
-          "text": "the biggest moment of Ben Shelton's\n本·谢尔顿职业生涯中最重要的时刻"
-        },
-        {
-          "at": 3.2,
-          "text": "career\n职业生涯"
+          "at": 0,
+          "text": "The biggest moment of Ben Shelton's career.\n本·谢尔顿职业生涯最重要的时刻"
         }
       ],
       "fit": "crop",
       "_why": "MiniMax 视觉证据：157.12–163.23 区间内画面显示赢家谢尔顿走向镜头、握拳、张嘴庆祝，时间码烧录在每帧左上角，赛后已成赢家姿态，并非普通回合。；英文原声来自 captions.txt。",
-      "score_inset": true
+      "score_inset": false,
+      "_score_inset_why": "本段位于125.49秒赛点结束之后，为人物近景、握手或看台反应；原转播此后已收掉比赛计分条，不从画面抠取不存在的比分板。"
     },
     {
       "title_card": "抢七之后的反转",
@@ -451,7 +450,7 @@
     {
       "title_card": "最后交给抢十",
       "kicker": "03",
-      "seconds": 2.0,
+      "seconds": 2,
       "_why": "自动链机械插的章节卡（review 路线 ⑤）：editorial.chapters 对应这个 beat，插在它的第一段之前"
     },
     {
@@ -464,24 +463,33 @@
     },
     {
       "start": 122.17,
+      "end": 125.49,
+      "narration": "",
+      "score_inset": true,
+      "_why": "完整保留真实赛点发球与得分原声，结果旁白从125.49之后才进入。"
+    },
+    {
+      "start": 125.49,
       "end": 150.32,
       "narration": "十比七，比赛结束。谢尔顿第一次击败世界前三，阿卡的大满贯十八连胜到此止步。四小时二十八分，两人在网前长久拥抱。输赢之外，他们都把自己拼到了最后。",
       "_beat": 3,
       "_why": "完整赛点、阿卡反应和网前拥抱，125.49之后不再是比赛回合；末尾裁在150.32解说时长前。",
-      "score_inset": true
+      "score_inset": false,
+      "_score_inset_why": "本段位于125.49秒赛点结束之后，为人物近景、握手或看台反应；原转播此后已收掉比赛计分条，不从画面抠取不存在的比分板。"
     },
     {
       "start": 157.12,
       "end": 172.92,
-      "narration": "制胜分更多，阿卡为什么还是倒在抢十？",
+      "narration": "阿卡多打了四个制胜分，却多出十八次非受迫失误。谢尔顿赢下关键分，也把失误控制得更好。",
       "fit": "crop",
       "_why": "正文重新兑现冷开场的完整结局：157.12–163.23 覆盖谢尔顿赢球庆祝、挥拳咆哮，163.23–172.92 覆盖观众起立欢呼、家属包厢反应与谢尔顿继续庆祝的反应；完全包含 cold_open 窗口。172.92 为握手/赛后内容起点附近的有效切点，不超出。",
-      "score_inset": true
+      "score_inset": false,
+      "_score_inset_why": "本段位于125.49秒赛点结束之后，为人物近景、握手或看台反应；原转播此后已收掉比赛计分条，不从画面抠取不存在的比分板。"
     },
     {
       "stat_card": true,
-      "seconds": 10.0,
-      "narration": "全场总得分，谢尔顿一六九比一六四，多拿了五分。",
+      "seconds": 10,
+      "narration": "全场总得分，谢尔顿一百六十九比一百六十四，多拿了五分。",
       "_why": "自动链机械插的证据段：数据统计图剪进片子（review 路线 ④），完整获胜与庆祝之后，全画布10秒，旁白只讲总得分",
       "image": "<stat_card>"
     }
@@ -551,11 +559,11 @@
   "_editorial_review": {
     "status": "reviewed",
     "source": "Codex contact-sheet and official report review",
-    "notes": "纠正破发5/16与3/11颠倒；删除发球提速无证据推断；更正赛点与庆祝时间；官方时钟4:28；技术统计在完整赢球后。"
+    "notes": "纠正破发5/16与3/11颠倒；删除发球提速无证据推断；更正赛点与庆祝时间；官方时钟4:28；技术统计在完整赢球后。；合并冷开场跨行ASR为完整句，取消赛后近景比分回贴，赛点原声独立保留，结果旁白不抢跑；官方1504统计再次核对。"
   },
   "_segments_source": " + MiniMax 冷开场/结尾视觉闸",
   "topbar": {
-    "line1": "2026 US Open Quarter-Finals",
+    "line1": "2026 美网 1/4决赛",
     "line2": "谢尔顿 6-7(5) 6-1 6-3 1-6 7-6(7) 阿尔卡拉斯"
   },
   "layout": "band",
