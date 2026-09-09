@@ -60,6 +60,33 @@ def merge_states(base: dict, ours: dict, theirs: dict) -> dict:
     return merged
 
 
+def merge_interview_states(base: dict, ours: dict, theirs: dict) -> dict:
+    """重放本次采访派发；时间和 spec 指纹作为一个记录，不拆开合并。"""
+    merged = json.loads(json.dumps(theirs))
+    slugs = set(theirs.get("slugs", []))
+    def record(state, slug):
+        return (slug in state.get("slugs", []),
+                state.get("at", {}).get(slug),
+                state.get("spec_sha256", {}).get(slug))
+    for slug in ours.get("slugs", []):
+        current = record(ours, slug)
+        if current == record(base, slug):
+            continue
+        remote = record(theirs, slug)
+        # 时间均由 mark_one 写为 UTC ISO；相同时间优先远端，避免旧任务盖新任务。
+        if remote[0] and (remote[1] or "") >= (current[1] or ""):
+            continue
+        slugs.add(slug)
+        for key, value in zip(("at", "spec_sha256"), current[1:]):
+            target = merged.setdefault(key, {})
+            if value is None:
+                target.pop(slug, None)
+            else:
+                target[slug] = value
+    merged["slugs"] = sorted(slugs)
+    return merged
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__.split("\n\n", 1)[0])
     parser.add_argument("--base", type=Path, required=True,
@@ -69,14 +96,29 @@ def main() -> int:
     parser.add_argument("--theirs", type=Path, required=True,
                         help="远端最新的 state（FETCH_HEAD 上那份）")
     parser.add_argument("--out", type=Path, required=True)
+    parser.add_argument("--kind", choices=("orchestration", "interview"),
+                        default="orchestration")
     args = parser.parse_args()
-    merged = merge_states(_load(args.base), _load(args.ours),
-                          _load(args.theirs))
+    if args.kind == "interview":
+        # 账本损坏不能静默当空并覆盖远端，失败时保留快照供恢复。
+        snapshots = [json.loads(p.read_text(encoding="utf-8"))
+                     for p in (args.base, args.ours, args.theirs)]
+        for state in snapshots:
+            if (not isinstance(state, dict)
+                    or not isinstance(state.get("slugs", []), list)
+                    or not isinstance(state.get("at", {}), dict)
+                    or not isinstance(state.get("spec_sha256", {}), dict)):
+                raise ValueError("Invalid interview dispatch state")
+        merged = merge_interview_states(*snapshots)
+    else:
+        merged = merge_states(_load(args.base), _load(args.ours),
+                              _load(args.theirs))
     args.out.write_text(
         json.dumps(merged, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8")
-    added = sorted(set((merged.get("dispatched") or {}))
-                   - set((_load(args.theirs).get("dispatched") or {})))
+    entries_key = "slugs" if args.kind == "interview" else "dispatched"
+    added = sorted(set((merged.get(entries_key) or {}))
+                   - set((_load(args.theirs).get(entries_key) or {})))
     print(f"[merge] 以远端为底，补回本趟条目：{added or '（无新增）'}")
     return 0
 
