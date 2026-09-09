@@ -1,71 +1,73 @@
 {
-  "scoreboard_qc_sha256": "ba0ecbda8ec1f07ff23819a7d3ba12e90a1b5e60dd7e434085daaab542f4b86c",
+  "scoreboard_qc_sha256": "6176e076f781a182cf6a0a3cca872394a5cd52c0583c041188b604858a41c8eb",
   "cover_seconds": 1.2,
   "cover_narrated": false,
   "outro_seconds": 3.827,
   "layout": "band",
-  "segments_seconds": 175.75,
+  "segments_seconds": 184.03,
   "topbar": {
     "line1": "2026 美网 1/4决赛",
     "line2": "谢尔顿 6-7(5) 6-1 6-3 1-6 7-6(7) 阿尔卡拉斯",
     "start": 1.2,
-    "end": 176.95
+    "end": 185.23
   },
-  "film_seconds": 180.814,
+  "film_seconds": 189.089,
   "narration_voice": "zh-CN-YunjianNeural",
   "narration_rate": "+6%",
   "narration_backend": "edge-tts",
   "narration_seconds": {
-    "1": 2.424,
-    "2": 12.12,
-    "3": 14.016,
-    "4": 2.232,
-    "5": 14.928,
-    "6": 2.112,
-    "7": 11.808,
-    "9": 15.048,
-    "10": 9.096,
-    "11": 5.736
+    "1": 2.52,
+    "2": 10.56,
+    "3": 2.136,
+    "4": 9.048,
+    "5": 9.768,
+    "6": 2.184,
+    "7": 10.656,
+    "8": 6.24,
+    "9": 8.952,
+    "11": 15.048,
+    "12": 9.096,
+    "13": 5.304
   },
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "shelton-alcaraz",
-    "received_at": "2026-09-09T09:21:18Z",
-    "artifact_ready_at": "2026-09-09T09:28:15Z",
-    "elapsed_seconds": 417.606,
+    "received_at": "2026-09-09T10:02:31Z",
+    "artifact_ready_at": "2026-09-09T10:10:02Z",
+    "elapsed_seconds": 451.938,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "1a0b7475a00b77b7aac0c7795693edb30c0cca077e23cd29ec15dc54789f0cef",
-    "spec_sha256": "253d22bf13a29a26cca5351e0ee8c69a208245a3c23b42773d97a8ed05ebc9a8",
+    "film_sha256": "6b028c3a1a72f1eb4fd77b30ed7899728fbb8f066288772aaa4a2e41cf7b515b",
+    "spec_sha256": "e59f6c257199e2f10cfb9616f796108d1dcf6ad8aeac4cd629a77878b8f609c9",
     "request_received_at": "2026-09-09T07:45:49Z",
-    "request_to_artifact_seconds": 6146.606,
-    "run_id": "34334226045",
+    "request_to_artifact_seconds": 8653.938,
+    "run_id": "34338063258",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-09-09T09:23:43Z",
-        "run_id": "34334226045"
+        "at": "2026-09-09T10:05:58Z",
+        "run_id": "34338063258"
       }
     ],
-    "render_seconds": 272.606,
-    "pre_render_seconds": 145.0
+    "render_seconds": 244.938,
+    "pre_render_seconds": 207.0
   },
-  "film_sha256": "1a0b7475a00b77b7aac0c7795693edb30c0cca077e23cd29ec15dc54789f0cef",
-  "film_bytes": 93865275,
-  "qc_attestation_sha256": "afc0d9eaf13abc0924997b2805710498706d9eddc59c1f605913a9facba41698",
+  "film_sha256": "6b028c3a1a72f1eb4fd77b30ed7899728fbb8f066288772aaa4a2e41cf7b515b",
+  "film_bytes": 104978943,
+  "qc_attestation_sha256": "c10c610bdf20edd3883f4661ecec6f906d56fa6c2a8f48360bd3fa315bd72357",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-09-09T09:23:43Z",
-      "run_id": "34334226045"
+      "at": "2026-09-09T10:05:58Z",
+      "run_id": "34338063258"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-09-09T09:28:16Z",
-      "run_id": "34334226045"
+      "at": "2026-09-09T10:10:03Z",
+      "run_id": "34338063258"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-shelton-alcaraz/shelton-alcaraz.mp4",
-  "video_bytes": 93865275
+  "video_bytes": 104978943
 }
