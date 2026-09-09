@@ -185,7 +185,7 @@ jobs:
           echo "第二份 ASR 模型：$MODEL"
 
       - name: 缓存第二份 ASR 模型
-        if: github.event.inputs.mode == 'render'
+        if: false
         uses: actions/cache@v4
         with:
           path: ~/.cache/huggingface/hub
@@ -449,7 +449,7 @@ jobs:
       # web/mweb 的媒体流还需要 GVS PO token。match-reel / frame-grab 已经走
       # 这套 provider，这里补齐，避免采访线对同一来源静默退到不可下载客户端。
       - name: 启动 YouTube PO token provider
-        if: github.event.inputs.mode != 'push'
+        if: false
         timeout-minutes: 3
         run: |
           pip install -q bgutil-ytdlp-pot-provider
