@@ -4172,6 +4172,14 @@ def _record_film_seconds(out: Path, outdir: Path) -> Path:
         return out
     path = outdir / "render.json"
     data = json.loads(path.read_text(encoding="utf-8")) if path.is_file() else {}
+    from production_cache import file_digest
+    current_sha = file_digest(out)
+    old_sla = data.get("production_sla") or {}
+    if old_sla and old_sla.get("film_sha256") != current_sha:
+        history = data.setdefault("production_sla_history", [])
+        history.append(data.pop("production_sla"))
+        data["production_sla_history"] = history[-20:]
+    data["film_sha256"] = current_sha
     data["film_seconds"] = round(secs, 3)
     path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n",
                     encoding="utf-8")

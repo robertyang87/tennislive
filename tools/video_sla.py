@@ -10,6 +10,8 @@ from __future__ import annotations
 
 import argparse
 import json
+import hashlib
+import os
 import math
 import sys
 from datetime import datetime, timezone
@@ -78,6 +80,8 @@ def finish(
     budget_seconds: int = DEFAULT_BUDGET_SECONDS,
     render_started_at: str = "",
     now: datetime | None = None,
+    spec: Path | None = None,
+    timeline: Path | None = None,
 ) -> dict:
     if not artifact.is_file() or artifact.stat().st_size <= 0:
         raise SlaError(f"owned MP4 is missing or empty: {artifact}")
@@ -89,7 +93,7 @@ def finish(
         render_started = parse_instant(render_started_at)
         render_seconds = max(0.0, (ready - render_started).total_seconds())
     record = {
-        "version": 1,
+        "version": 2,
         "pipeline": pipeline,
         "slug": slug,
         "received_at": utc_text(started),
@@ -98,6 +102,23 @@ def finish(
         "budget_seconds": int(budget_seconds),
         "met": elapsed <= budget_seconds,
     }
+    def sha(path):
+        h = hashlib.sha256()
+        with path.open('rb') as f:
+            for block in iter(lambda: f.read(1024 * 1024), b''):
+                h.update(block)
+        return h.hexdigest()
+    record["film_sha256"] = sha(artifact)
+    if spec is not None:
+        record["spec_sha256"] = sha(spec)
+        spec_data = json.loads(spec.read_text())
+        request_start = (spec_data.get("_production") or {}).get("received_at")
+        if request_start:
+            record["request_received_at"] = request_start
+            record["request_to_artifact_seconds"] = round(elapsed_seconds(request_start, now=ready), 3)
+    record["run_id"] = os.environ.get("GITHUB_RUN_ID", "")
+    if timeline and timeline.is_file():
+        record["stage_events"] = json.loads(timeline.read_text())
     if render_seconds is not None:
         record["render_seconds"] = round(render_seconds, 3)
         record["pre_render_seconds"] = round(max(0.0, elapsed - render_seconds), 3)
@@ -108,6 +129,11 @@ def finish(
         raise SlaError(f"cannot merge SLA into {metadata}: {exc}") from exc
     if not isinstance(payload, dict):
         raise SlaError(f"metadata must be a JSON object: {metadata}")
+    previous = payload.get("production_sla")
+    if previous and previous != record:
+        history = payload.setdefault("production_sla_history", [])
+        history.append(previous)
+        payload["production_sla_history"] = history[-20:]
     payload["production_sla"] = record
     metadata.parent.mkdir(parents=True, exist_ok=True)
     metadata.write_text(
@@ -128,7 +154,7 @@ def append_summary(path: str, record: dict) -> None:
     )
     if "pre_render_seconds" in record:
         body += (
-            f"- Runner preparation: {record['pre_render_seconds']:.1f}s\n"
+            f"- Before render (includes queue/preparation): {record['pre_render_seconds']:.1f}s\n"
             f"- Render command: {record['render_seconds']:.1f}s\n"
         )
     with Path(path).open("a", encoding="utf-8") as fh:
@@ -139,12 +165,19 @@ def _parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__.split("\n\n", 1)[0])
     sub = parser.add_subparsers(dest="command", required=True)
 
+    mark = sub.add_parser("mark", help="record stage boundary without resetting the production clock")
+    mark.add_argument("--timeline", type=Path, required=True)
+    mark.add_argument("--stage", required=True)
+    mark.add_argument("--metadata", type=Path)
+
     remaining = sub.add_parser("remaining", help="print seconds left in the target budget")
     remaining.add_argument("--received-at", required=True)
     remaining.add_argument("--budget", type=int, default=DEFAULT_BUDGET_SECONDS)
     remaining.add_argument("--reserve", type=int, default=0)
 
     done = sub.add_parser("finish", help="record the owned MP4 time and enforce the budget")
+    done.add_argument("--spec", type=Path)
+    done.add_argument("--timeline", type=Path)
     done.add_argument("--received-at", required=True)
     done.add_argument("--render-started-at", default="")
     done.add_argument("--artifact", type=Path, required=True)
@@ -159,6 +192,17 @@ def _parser() -> argparse.ArgumentParser:
 def main() -> int:
     args = _parser().parse_args()
     try:
+        if args.command == "mark":
+            events = json.loads(args.timeline.read_text()) if args.timeline.is_file() else []
+            events.append({"stage": args.stage, "at": utc_text(datetime.now(timezone.utc)),
+                           "run_id": os.environ.get("GITHUB_RUN_ID", "")})
+            args.timeline.parent.mkdir(parents=True, exist_ok=True)
+            args.timeline.write_text(json.dumps(events, ensure_ascii=False, indent=2) + "\n")
+            if args.metadata and args.metadata.is_file():
+                payload = json.loads(args.metadata.read_text())
+                payload["production_stage_events"] = events
+                args.metadata.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n")
+            return 0
         if args.command == "remaining":
             left = remaining_seconds(
                 args.received_at,
@@ -182,6 +226,7 @@ def main() -> int:
             pipeline=args.pipeline,
             slug=args.slug,
             budget_seconds=args.budget,
+            spec=args.spec, timeline=args.timeline,
         )
         append_summary(args.summary, record)
         print(

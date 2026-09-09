@@ -21,6 +21,9 @@ import re
 import subprocess
 import sys
 import tempfile
+import time
+
+from production_cache import atomic_json, cached_json, digest, file_digest
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
 
@@ -163,15 +166,42 @@ def _request_contract_changed(req: dict, spec_path: Path) -> bool:
     return False
 
 
+def _request_identity(req: dict) -> str:
+    return digest({k: v for k, v in req.items()
+                   if k not in {"_rebuild_once", "expected_spec_sha256"}})
+
+
+def _protected(spec: dict, slug: str) -> bool:
+    return bool(spec.get("transcript_verified") or spec.get("_verified_clean")
+                or _exists_or_tracked(OUTDIR / slug / "pushed.json"))
+
+
+def _explicit_revision(req: dict, spec_path: Path, spec: dict) -> bool:
+    return bool(req.get("revision")
+                and req.get("revision") != (spec.get("_request_origin") or {}).get("revision")
+                and req.get("expected_spec_sha256") == file_digest(spec_path))
+
+
 def is_pending(path: Path) -> bool:
     req = _read(path)
     slug = _slug(req, path)
     spec_path = SPECS / f"{slug}.json"
-    if bool(req.get("_rebuild_once")) or not _exists_or_tracked(spec_path):
+    if not _exists_or_tracked(spec_path):
         return True
-    if _request_contract_changed(req, spec_path):
-        return True
-    return not _exists_or_tracked(OUTDIR / slug / "cap_asr.json3")
+    # A sparse or unreadable formal spec is not permission to overwrite it.
+    if not spec_path.is_file():
+        return False
+    spec = _read(spec_path)
+    origin = spec.get("_request_origin") or {}
+    if _protected(spec, slug) and not _explicit_revision(req, spec_path, spec):
+        return False
+    if origin.get("request_sha256") == _request_identity(req):
+        return bool(req.get("_rebuild_once")) or not _exists_or_tracked(
+            OUTDIR / slug / "cap_asr.json3")
+    if origin.get("request_sha256"):
+        return True  # The request changed, rather than the refined formal spec.
+    return (bool(req.get("_rebuild_once")) or _request_contract_changed(req, spec_path)
+            or not _exists_or_tracked(OUTDIR / slug / "cap_asr.json3"))
 
 
 def pending_paths(only_slug: str = "") -> list[Path]:
@@ -244,7 +274,12 @@ def _download_audio(url: str, workdir: Path) -> Path:
         cookie_args = ["--cookies", cookies]
 
     failures: list[str] = []
+    deadline = time.monotonic() + DOWNLOAD_TIMEOUT
     for label, extra in _download_attempts(url):
+        remaining = deadline - time.monotonic()
+        if remaining <= 0:
+            failures.append("音频下载总预算耗尽")
+            break
         # 失败档可能留下 .part / .ytdl / 原始容器；下一档必须从干净状态开始，
         # 不能把上一档的半截文件误认成这次成功产物。
         for partial in workdir.glob("audio.*"):
@@ -267,7 +302,7 @@ def _download_audio(url: str, workdir: Path) -> Path:
                 check=False,
                 capture_output=True,
                 text=True,
-                timeout=DOWNLOAD_TIMEOUT,
+                timeout=min(60, remaining),
             )
         except subprocess.TimeoutExpired:
             tail = f"超过 {DOWNLOAD_TIMEOUT}s"
@@ -403,6 +438,7 @@ def build_spec(req: dict, zh: list[str], duration: float) -> dict:
     verification = _verification(req)
     spec = {
         "slug": slug,
+        "_production": {"received_at": req.get("received_at") or (req.get("_production") or {}).get("received_at", "")},
         "url": str(req["url"]),
         "source_title": str(req["source_title"]),
         "start": round(start, 2),
@@ -434,6 +470,7 @@ def build_spec(req: dict, zh: list[str], duration: float) -> dict:
         ),
         "_notes": list(req.get("_notes") or []),
         "_facts": list(req.get("_facts") or []),
+        "_tactical_research": dict(req.get("_tactical_research") or {}),
         "cover": dict(req.get("cover") or {}),
         "takeaway": dict(req.get("takeaway") or {}),
         "push": dict(req.get("push") or {}),
@@ -452,58 +489,117 @@ def build_spec(req: dict, zh: list[str], duration: float) -> dict:
     return spec
 
 
-def _build_one(path: Path, chat, *, write: bool) -> tuple[str, int, float]:
+def _build_one_unlocked(path: Path, chat, *, write: bool) -> tuple[str, int, float]:
     from build_interview_clip import segment, strip_hesitation_lines  # noqa: PLC0415
     from draft_interview_spec import cap_json3, translate  # noqa: PLC0415
 
     req = _read(path)
     slug = _slug(req, path)
-    with tempfile.TemporaryDirectory() as td:
-        rows, duration = _transcribe_request(
-            str(req["url"]), Path(td), model="small.en"
-        )
-    if not rows:
-        raise RuntimeError(f"{slug}: 第一份 ASR 为空")
-    start = max(0.0, float(req.get("start") or 0.0))
-    requested_end = req.get("end")
-    end = float(requested_end) if requested_end not in (None, "") else float(duration)
-    end = min(float(duration), end)
-    lines = segment(
-        [(row["t"], row["text"]) for row in rows], start, end,
-        budget=req.get("segment_budget_px"),
-    )
-    # render/verify 会在切行后清掉 um/uh 等犹豫音；初次翻译必须走完全相同的
-    # 正文行，否则长讲话会出现“中文 656 行、英文 673 行”这种必然无法渲染的
-    # spec。清理必须发生在 translate 前，不能事后硬补空行。
-    strip_hesitation_lines(lines)
-    if not lines:
-        raise RuntimeError(f"{slug}: 正式切行为空")
-    zh = translate(
-        [{"t": row["a"], "text": row["en"]} for row in lines], chat,
-        max_zh_chars=req.get("max_zh_chars"),
-    )
-    if len(zh) != len(lines):
-        raise RuntimeError(f"{slug}: 中英文行数不一致 {len(zh)} != {len(lines)}")
-    spec = build_spec(req, zh, duration)
+    spec_path = SPECS / f"{slug}.json"
+    observed = {p: file_digest(p) for p in (
+        path, spec_path, SPECS / f"{slug}.xhs.txt", OUTDIR / slug / "cap_asr.json3")}
+    existing = _read(spec_path) if spec_path.is_file() else {}
+    if write and existing and _protected(existing, slug) and not _explicit_revision(req, spec_path, existing):
+        raise RuntimeError(f"{slug}: 已确认版本受保护；新修订需 revision 和 expected_spec_sha256")
     if write:
-        SPECS.mkdir(parents=True, exist_ok=True)
-        outdir = OUTDIR / slug
-        outdir.mkdir(parents=True, exist_ok=True)
-        (SPECS / f"{slug}.json").write_text(
-            json.dumps(spec, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+        from production_preflight import check_request
+        check_request(req)
+    origin = existing.get("_request_origin") or {}
+    previous = origin.get("request") or {}
+    transcript_keys = ("url", "start", "end", "segment_budget_px", "max_zh_chars")
+    metadata_only = (bool(previous) and not req.get("_rebuild_once")
+                     and all(previous.get(k) == req.get(k) for k in transcript_keys)
+                     and (OUTDIR / slug / "cap_asr.json3").is_file())
+    research_job = None
+    if write and not metadata_only and not req.get("_tactical_research"):
+        match = req.get("match") or {}
+        if match.get("winner_en") and match.get("loser_en"):
+            from tactical_research import start_research
+            research_job = start_research(home=match["winner_en"], away=match["loser_en"],
+                event=match.get("event_search") or req.get("event", ""), year=match.get("year", 0))
+    if metadata_only:
+        # Apply only fields the user changed, preserving refined translations/lead-in.
+        spec = dict(existing)
+        for key in ("cover", "push", "takeaway", "opening", "lead_in", "event",
+                    "winner", "subject", "featured_player", "ceremony_subtype",
+                    "topbar_layout", "interview_kind", "requested_content_type"):
+            if req.get(key) != previous.get(key):
+                spec[key] = req.get(key)
+        from interview_source_gate import finalize_source_contract, validate_source_contract
+        finalize_source_contract(spec)
+        validate_source_contract(spec)
+        rows = None
+        lines = existing.get("zh") or []
+        duration = float(origin.get("duration") or existing.get("end") or 0)
+    else:
+        def transcribe():
+            with tempfile.TemporaryDirectory() as td:
+                return _transcribe_request(str(req["url"]), Path(td), model="small.en")
+        # Dry runs remain isolated and do not persist checkpoints.
+        rows, duration = (cached_json("interview-asr", {
+            "source": _youtube_id(str(req["url"])) or req["url"],
+            "model": "small.en", "implementation": file_digest(Path(__file__)),
+        }, transcribe) if write else transcribe())
+
+        if not rows:
+            raise RuntimeError(f"{slug}: 第一份 ASR 为空")
+        start = max(0.0, float(req.get("start") or 0.0))
+        requested_end = req.get("end")
+        end = float(requested_end) if requested_end not in (None, "") else float(duration)
+        end = min(float(duration), end)
+        lines = segment(
+            [(row["t"], row["text"]) for row in rows], start, end,
+            budget=req.get("segment_budget_px"),
         )
-        (SPECS / f"{slug}.xhs.txt").write_text(
-            str(req.get("xhs") or "").rstrip() + "\n", encoding="utf-8"
-        )
-        (outdir / "cap_asr.json3").write_text(
-            json.dumps(cap_json3(rows), ensure_ascii=False), encoding="utf-8"
-        )
+        # render/verify 会在切行后清掉 um/uh 等犹豫音；初次翻译必须走完全相同的
+        # 正文行，否则长讲话会出现“中文 656 行、英文 673 行”这种必然无法渲染的
+        # spec。清理必须发生在 translate 前，不能事后硬补空行。
+        strip_hesitation_lines(lines)
+        if not lines:
+            raise RuntimeError(f"{slug}: 正式切行为空")
+        translation_rows = [{"t": row["a"], "text": row["en"]} for row in lines]
+        def translate_once():
+            return translate(translation_rows, chat, max_zh_chars=req.get("max_zh_chars"))
+        zh = (cached_json("interview-translation", {
+            "rows": translation_rows, "max_zh_chars": req.get("max_zh_chars"),
+            "channel": getattr(chat, "channel", ""),
+            "model": getattr(chat, "model", os.environ.get("TENNISLIVE_BRIEF_MODEL", "deepseek-chat")),
+            "translator": file_digest(ROOT / "tools/draft_interview_spec.py"),
+            "contract": file_digest(ROOT / "skills/tennis-interview-production/references/deepseek.md"),
+        }, translate_once) if write else translate_once())
+        if len(zh) != len(lines):
+            raise RuntimeError(f"{slug}: 中英文行数不一致 {len(zh)} != {len(lines)}")
+        spec = build_spec(req, zh, duration)
+    if write:
+        if research_job is not None:
+            spec["_tactical_research"] = research_job.result()
+        if any(file_digest(p) != sha for p, sha in observed.items()):
+            raise RuntimeError(f"{slug}: 输入或正式稿已被另一任务修改，拒绝覆盖")
+        spec["_request_origin"] = {
+            "request_sha256": _request_identity(req), "request": {
+                k: v for k, v in req.items() if k not in {"_rebuild_once", "expected_spec_sha256"}},
+            "revision": req.get("revision"), "duration": duration,
+        }
+        atomic_json(spec_path, spec)
+        copy_path = SPECS / f"{slug}.xhs.txt"
+        if not metadata_only or req.get("xhs") != previous.get("xhs"):
+            copy_path.write_text(str(req.get("xhs") or "").rstrip() + "\n", encoding="utf-8")
+        if rows is not None:
+            atomic_json(OUTDIR / slug / "cap_asr.json3", cap_json3(rows))
         if req.pop("_rebuild_once", None) is not None:
-            path.write_text(
-                json.dumps(req, ensure_ascii=False, indent=2) + "\n",
-                encoding="utf-8",
-            )
+            atomic_json(path, req)
     return slug, len(lines), duration
+
+
+def _build_one(path: Path, chat, *, write: bool) -> tuple[str, int, float]:
+    if not write:
+        return _build_one_unlocked(path, chat, write=False)
+    import fcntl
+    lock = OUTDIR / _slug(_read(path), path) / ".request.lock"
+    lock.parent.mkdir(parents=True, exist_ok=True)
+    with lock.open("w") as handle:
+        fcntl.flock(handle, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        return _build_one_unlocked(path, chat, write=True)
 
 
 def main() -> int:

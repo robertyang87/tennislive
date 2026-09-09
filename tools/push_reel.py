@@ -725,7 +725,7 @@ word-break:break-word;margin:0 0 4px">{html.escape(body)}</div>
 
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
-    ap.add_argument("--stage", choices=("page", "push"), default="push",
+    ap.add_argument("--stage", choices=("check", "page", "push"), default="push",
                     help="page=只写复制页（须排在 git commit 之前）；push=发微信")
     ap.add_argument("--outdir", required=True, help="成片所在目录（仓库相对路径）")
     ap.add_argument("--video", default=None, help="成片文件名，默认取目录里唯一的 mp4")
@@ -785,6 +785,9 @@ def main() -> int:
     meta = resolve_meta(Path(args.copy), args)
     title = headline(outdir, column, meta["matchup"], meta["score"],
                      meta["event"], meta["summary"], args.date)
+    if args.stage == "check":
+        print(f"[preflight] title/tags/copy pass: {title}")
+        return 0
     copy_text = f"{title}\n\n{copy_text}"
     page = outdir / "copy.html"
     copy_url = copy_page_url(outdir)
