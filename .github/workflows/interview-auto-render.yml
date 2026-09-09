@@ -290,9 +290,13 @@ jobs:
           git config user.name "Claude"
           git config user.email "noreply@anthropic.com"
           python tools/check_staged_file_sizes.py
+          BASE_STATE="$RUNNER_TEMP/interview_dispatch_base.json"
+          OURS_STATE="$RUNNER_TEMP/interview_dispatch_ours.json"
+          git show HEAD:data/interview_render_dispatched.json > "$BASE_STATE"
+          cp data/interview_render_dispatched.json "$OURS_STATE"
           git commit -m "data: interview render dispatch 记录"
           source tools/git_push_retry.sh
-          if ! push_with_rebase_retry "${GITHUB_REF_NAME}" 5; then
+          if ! push_interview_dispatch_retry "${GITHUB_REF_NAME}" "$BASE_STATE" "$OURS_STATE" 5; then
             echo "::error::dispatch 状态推不上去——这批 slug 下一趟会被重投"
             echo "::error::（interview-clip 的 concurrency 按 slug 去重，代价是把正在跑的那趟掐了重跑）"
             exit 1
