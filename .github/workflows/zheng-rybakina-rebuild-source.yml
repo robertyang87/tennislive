@@ -1,0 +1,56 @@
+name: zheng-rybakina-rebuild-source
+on:
+  push:
+    branches: [main]
+    paths: [.github/workflows/zheng-rybakina-rebuild-source.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install source inspection dependencies
+        run: pip install -q "yt-dlp[default]"
+      - name: Download user-supplied extended footage
+        env:
+          YT_COOKIES_TXT: ${{ secrets.YT_COOKIES_TXT }}
+        run: |
+          mkdir -p source-review
+          python - <<'PY'
+          import os
+          from pathlib import Path
+          from yt_dlp import YoutubeDL
+          opts = {
+              "format": "bestvideo[height<=1080][vcodec^=avc1]+bestaudio/bestvideo[height<=1080]+bestaudio/best[height<=1080]",
+              "outtmpl": "source-review/source.%(ext)s",
+              "merge_output_format": "mp4",
+              "writeinfojson": True,
+              "geo_bypass": False,
+              "js_runtimes": {"node": {}},
+              "retries": 2,
+          }
+          cookie = os.environ.get("YT_COOKIES_TXT", "")
+          if cookie:
+              p = Path(os.environ["RUNNER_TEMP"]) / "yt-cookies.txt"
+              p.write_text(cookie)
+              opts["cookiefile"] = str(p)
+          with YoutubeDL(opts) as ydl:
+              ydl.download(["https://www.youtube.com/watch?v=-6Gv0033I2I"])
+          PY
+      - name: Verify media
+        run: ffprobe -v error -show_entries format=duration:stream=width,height,avg_frame_rate -of json source-review/source.mp4 > source-review/media.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: zheng-rybakina-extended-source
+          path: source-review/
+          retention-days: 3
