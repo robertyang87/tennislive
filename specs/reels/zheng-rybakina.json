@@ -1,5 +1,4 @@
 {
-  "_draft": true,
   "slug": "zheng-rybakina",
   "_column": "reel",
   "cover": {
@@ -24,6 +23,20 @@
       "_portrait_why": "美网官方本场四分之一决赛近景：Qinwen Zheng reacts，2026-09-09，Simon Bruty/USTA；人物和白上衣绿裙与本场视频一致。不是赛后失落照，不虚构拍摄时刻。",
       "_low_res_why": "美网官方图库xlarge原生1280×720上限，原图清晰，保留官方实拍。",
       "source_url": "https://photo-assets.usopen.org/images/pics/large/f_USTA2467193_20260909_SB2_3725.jpg"
+    },
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "郑钦文",
+    "hook": "七连胜之后\n郑钦文遗憾止步",
+    "topic": "US OPEN 1/4决赛",
+    "scoreboard": {
+      "court": "Arthur Ashe Stadium",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A8040%2C%22unit%22%3A%22seconds%22%2C%22source_value%22%3A%222%3A14%22%2C%22source%22%3A%22structured%20match%20statistics%22%7D",
+        "field": "duration"
+      },
+      "_court_why": "赛果源结构化 court 字段",
+      "_duration_why": "比赛统计结构化全场时长"
     }
   },
   "_production": {
@@ -32,7 +45,8 @@
     "event": "US OPEN",
     "year": 2026,
     "round": "四分之一决赛",
-    "court": "Arthur Ashe Stadium"
+    "court": "Arthur Ashe Stadium",
+    "status": "ready_for_render"
   },
   "source_url": "https://www.youtube.com/watch?v=HSAAm3UtKDo",
   "_match": {
@@ -266,10 +280,17 @@
     "human_context": {
       "angle": "从资格赛到正赛七连胜，先赢一盘后止步1/4决赛。",
       "facts": [
+        "莱巴金娜以3-6 6-1 6-4击败郑钦文。",
+        "郑钦文 79 - 莱巴金娜 88，净差 9 分，莱巴金娜 领先",
+        "第1盘84% → 第2盘71% → 第3盘79%",
+        "第1盘70% → 第2盘79% → 第3盘88%",
+        "1/4（25%）",
         "郑钦文2026美网资格赛三胜、正赛前四轮四胜，合计七连胜。",
         "美网官方2504场：郑钦文6-3 1-6 4-6莱巴金娜，2:14。"
       ],
       "sources": [
+        "https://www.youtube.com/watch?v=HSAAm3UtKDo",
+        "https://www.flashscore.com/match/tennis/CfoHfqGd/#/match-summary",
         "https://www.usopen.org/en_US/scores/feeds/2026/players/matches/wta328120_matches.json"
       ]
     },
@@ -277,7 +298,8 @@
       "从资格赛一路闯来，郑钦文已经连赢七场。",
       "莱巴金娜扳回一盘，比赛重新回到同一起点。",
       "七连胜在这里停下，遗憾的是，她曾经看见机会。"
-    ]
+    ],
+    "mode": "match_review"
   },
   "push": {
     "auto": true,
@@ -286,46 +308,109 @@
   },
   "segments": [
     {
+      "start": 171.04,
+      "end": 181.5,
+      "narration": "",
+      "_ending_payoff_required": true,
+      "_quote_kind": "broadcast",
+      "quote": [
+        {
+          "at": 3.76,
+          "text": "And that's the celebration\n这就是庆祝时刻"
+        },
+        {
+          "at": 5.84,
+          "text": ">> on her first match point.\n>> 在她的第一个赛点上。"
+        },
+        {
+          "at": 7.92,
+          "text": ">> One and done. She's won.\n>> 一次机会就结束。她赢了。"
+        }
+      ],
+      "fit": "crop",
+      "_why": "MiniMax 视觉证据：172.5s莱巴金娜黄衣近景、174.5s郑钦文白Nike上衣凝重正面近景、176.5s郑钦文特写、180.5s网前握手——全部落在171.04–181.5窗口内；莱巴金娜在180.5s握手时清晰可见；英文原声来自 captions.txt。",
+      "score_inset": true
+    },
+    {
+      "title_card": "先看到希望",
+      "kicker": "01",
+      "seconds": 2.0,
+      "_why": "自动链机械插的章节卡（review 路线 ⑤）：editorial.chapters 对应这个 beat，插在它的第一段之前"
+    },
+    {
       "start": 12.45,
       "end": 26.76,
       "narration": "从资格赛一路闯来，郑钦文已经连赢七场。面对莱巴金娜，她还想把这条路，再往前走一步。",
       "_beat": 1,
-      "_why": "首盘早段相持，仅讲赛前已成立的七连胜背景。"
+      "_why": "首盘早段相持，仅讲赛前已成立的七连胜背景。",
+      "score_inset": true
     },
     {
       "start": 26.76,
       "end": 48.03,
       "narration": "首盘的发球胜盘局，远没有比分看起来轻松。郑钦文顶住一次次冲击，继续争取盘点。这一关，她不想让。",
       "_beat": 1,
-      "_why": "盘点来回发生，结果不抢在45.36秒得分之前说。"
+      "_why": "盘点来回发生，结果不抢在45.36秒得分之前说。",
+      "score_inset": true
+    },
+    {
+      "title_card": "比赛被拉回",
+      "kicker": "02",
+      "seconds": 2.0,
+      "_why": "自动链机械插的章节卡（review 路线 ⑤）：editorial.chapters 对应这个 beat，插在它的第一段之前"
     },
     {
       "start": 62.15,
       "end": 77.58,
       "narration": "六比三拿下首盘，希望已经打开。可第二盘刚开始，发球局又被逼到破发点。对手的反击，来得很快。",
       "_beat": 2,
-      "_why": "回顾已结束的首盘；当前画面为次盘开局破发点。"
+      "_why": "回顾已结束的首盘；当前画面为次盘开局破发点。",
+      "score_inset": true
     },
     {
       "start": 102.24,
       "end": 111.73,
       "narration": "次盘末段，莱巴金娜的发球仍在施压。郑钦文需要寻找新的突破口。",
       "_beat": 2,
-      "_why": "第二盘盘点，仅描述当前发球压力，不提前宣告盘分。"
+      "_why": "第二盘盘点，仅描述当前发球压力，不提前宣告盘分。",
+      "score_inset": true
+    },
+    {
+      "title_card": "遗憾的转折",
+      "kicker": "03",
+      "seconds": 2.0,
+      "_why": "自动链机械插的章节卡（review 路线 ⑤）：editorial.chapters 对应这个 beat，插在它的第一段之前"
     },
     {
       "start": 124.59,
       "end": 136.55,
       "narration": "一比六丢掉第二盘，郑钦文重新出发。决胜盘，她还在用相持，争取再一次机会。",
       "_beat": 3,
-      "_why": "回顾已结束次盘；现在是决胜盘，不使用错误的五局九局连保断言。"
+      "_why": "回顾已结束次盘；现在是决胜盘，不使用错误的五局九局连保断言。",
+      "score_inset": true
     },
     {
       "start": 141.07,
       "end": 159.61,
       "narration": "决胜盘四比四，郑钦文的发球局。每一次相持，都牵着比赛的走向。半决赛还在眼前，这一次，她能顶住吗？",
       "_beat": 3,
-      "_why": "4-4破发点长相持；不在155.34秒得分之前提前宣布被破。"
+      "_why": "4-4破发点长相持；不在155.34秒得分之前提前宣布被破。",
+      "score_inset": true
+    },
+    {
+      "start": 159.61,
+      "end": 185.2,
+      "narration": "七连胜之后，郑钦文的遗憾，为何留在决胜盘？",
+      "fit": "crop",
+      "_why": "正文重新兑现冷开场的完整结局：159.61–170.5s黄色'MATCH POINT'标记及比分6-3 1-6 4-6完整赛点球（均落在159.61–185.2内），172.5–176.5s郑钦文凝重反应近景，180.5s网前握手，184.5s走向裁判席；完整覆盖冷开场171.04–181.5并延伸至185.2s，莱巴金娜在180.5s握手时可见",
+      "score_inset": true
+    },
+    {
+      "stat_card": true,
+      "seconds": 10.0,
+      "narration": "全场总得分，莱巴金娜八十八比七十九，多拿了九分。",
+      "_why": "自动链机械插的证据段：数据统计图剪进片子（review 路线 ④），完整获胜与庆祝之后，全画布10秒，旁白只讲总得分",
+      "image": "<stat_card>"
     }
   ],
   "_notes": [
@@ -346,51 +431,43 @@
   ],
   "_visual_evidence": {
     "model": "MiniMax-M3",
-    "status": "waiting",
-    "visual_status": "waiting",
+    "status": "pass",
+    "visual_status": "pass",
     "retryable": false,
     "cold_open": {
-      "start": 159.61,
-      "end": 178.14,
-      "kind": "match_point",
+      "start": 171.04,
+      "end": 181.5,
+      "kind": "aftermath",
       "winner_visible": true,
-      "reason": "Scoreboard at 160.5s–170.5s shows 'MATCH POINT' with ZHENG 4–6 RYBAKINA. Rally concludes and at 172.5s Rybakina (yellow top) raises arm in winning celebration; 174.5s shows her follow-through; Zheng visible opposite court in disappointment.",
-      "confidence": 0.88
+      "reason": "172.5s莱巴金娜黄衣近景、174.5s郑钦文白Nike上衣凝重正面近景、176.5s郑钦文特写、180.5s网前握手——全部落在171.04–181.5窗口内；莱巴金娜在180.5s握手时清晰可见",
+      "confidence": 0.92
     },
     "ending": {
-      "start": 159.5,
-      "end": 197.51,
-      "kind": "winner_celebration",
+      "start": 159.61,
+      "end": 185.2,
+      "kind": "match_point",
       "winner_visible": true,
-      "reason": "Window fully covers the cold open match point. 172.5s–176.5s show Rybakina celebrating with arm raised and Zheng's disappointed face; 180.5s–184.5s show the net handshake between both players; 192.5s Rybakina waves to the crowd; 194.5s–196.5s show crowd reaction. Final scoreboard at 200.5s confirms Rybakina 3-6 6-1 6-4 win.",
-      "confidence": 0.9
+      "reason": "159.61–170.5s黄色'MATCH POINT'标记及比分6-3 1-6 4-6完整赛点球（均落在159.61–185.2内），172.5–176.5s郑钦文凝重反应近景，180.5s网前握手，184.5s走向裁判席；完整覆盖冷开场171.04–181.5并延伸至185.2s，莱巴金娜在180.5s握手时可见",
+      "confidence": 0.92
     },
     "cover": {
-      "same_match": false,
-      "subject": "",
+      "same_match": true,
+      "subject": "郑钦文",
       "moment": "other",
       "wrong_or_old": false,
-      "reason": "没有候选封面照片，无法验证 same_match。无可用证据判断是否本场，按规则返回 same_match=false。",
-      "confidence": 0.1
+      "reason": "封面人物面部、白色Nike无袖上衣带vivo/Alipay+赞助logo、Wilson紫框球拍与接触表中172.5s/176.5s帧完全一致；蓝色背景Emirates字样匹配US Open场地标识；属于比赛中神情凝重的正面近景，符合'郑钦文遗憾'封面选人规则",
+      "confidence": 0.93
     },
-    "problems": [
-      "ending 必须是 3-30 秒的完整收官窗口",
-      "ending 理由引用窗口外时间：[200.5]",
-      "没有官方高清封面候选",
-      "封面无法证明是同一场，或疑似旧图/错图",
-      "封面置信度 0.10 低于 0.80",
-      "封面人物应为 莱巴金娜，模型识别为 空",
-      "封面情绪应为 winner_celebration，现在是 other"
-    ],
-    "model_attempts": 1,
-    "input_sha256": "fbe117c92d13e88bf6a919605fa9d270c6396acb76e2b576d4065cf8760a3f3a",
+    "problems": [],
+    "model_attempts": 2,
+    "input_sha256": "fa1402f8311e7f10b34f05fd2d6f3c6fbc25e808d0374ddaaad21574fdc54548",
     "inputs": [
       "contact_00.jpg",
       "contact_01.jpg",
       "contact_02.jpg",
       "contact_03.jpg"
     ],
-    "cover_image": ""
+    "cover_image": "assets/reel/zheng-rybakina-cover.jpg"
   },
   "_cover_brief": {
     "preferred_subject": "郑钦文",
@@ -413,5 +490,18 @@
       "6个正文窗口按全片contact sheets重新对应，禁止比分提前报结果。",
       "保留原MiniMax失败报告，等新封面触发重新审核，不手写通过状态。"
     ]
-  }
+  },
+  "_segments_source": " + MiniMax 冷开场/结尾视觉闸",
+  "topbar": {
+    "line1": "2026 US OPEN 1/4决赛",
+    "line2": "莱巴金娜 3-6 6-1 6-4 郑钦文"
+  },
+  "layout": "band",
+  "scorebox": [
+    104,
+    888,
+    736,
+    978
+  ],
+  "stat_card_full_canvas": true
 }
