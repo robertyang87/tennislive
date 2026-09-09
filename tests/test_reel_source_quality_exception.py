@@ -1,9 +1,14 @@
 """720p is a URL-bound user exception, never a global quality downgrade."""
 from pathlib import Path
+import sys
 
 import pytest
 
-from test_match_reel import _reel
+def _reel():
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
+    import build_match_reel
+
+    return build_match_reel
 
 URL = "https://www.youtube.com/watch?v=-6Gv0033I2I"
 OTHER = "https://www.youtube.com/watch?v=another1080"

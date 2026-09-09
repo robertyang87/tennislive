@@ -115,7 +115,8 @@
       "pts_total": 167,
       "first_total": 73,
       "headshot": "assets/players/headshots/wta-324166.jpg"
-    }
+    },
+    "_source": "https://www.flashscore.com/match/tennis/CfoHfqGd/#/match-summary/match-statistics"
   },
   "_hit_data": [
     {
@@ -343,10 +344,16 @@
       "source": "original",
       "start": 12.45,
       "end": 28.27,
-      "narration": "当地时间二零二六年九月九日，美网女单1/4决赛。郑钦文对阵莱巴金娜，此前已从资格赛打出七连胜。",
+      "narration": "北京时间九月九日晚十一点半的美网日场，女单四分之一决赛，郑钦文对阵莱巴金娜。此前她已从资格赛打出七连胜。",
       "score_inset": true,
       "_why": "完整首盘早段回合。开口说明当地日期、年份、赛事轮次和对阵，再交代资格赛以来七连胜。",
-      "_narration_key": "intro"
+      "_narration_key": "intro",
+      "_start_time_source": {
+        "url": "https://www.usopen.org/amp/en_US/news/articles/2026-09-08/elena_rybakina_and_zheng_qinwen_set_to_meet_in_2026_us_open_quarterfinals.html",
+        "scheduled_local": "2026-09-09T11:30:00-04:00",
+        "scheduled_beijing": "2026-09-09T23:30:00+08:00",
+        "scope": "官方日场第一场安排时间，不声称实际第一球分钟"
+      }
     },
     {
       "source": "extended",
@@ -481,7 +488,7 @@
     {
       "stat_card": true,
       "seconds": 13,
-      "narration": "决胜盘四比三时错过破发点，下一局又未能守住，七连胜的征程就此止步。",
+      "narration": "七连胜止步。决胜盘四比三的破发点，和下一局连救三次后仍丢掉的发球局，哪一刻更让你意难平？",
       "_why": "完整赛点、双方反应与握手之后，全屏统计收束决胜盘错过机会的遗憾。"
     }
   ],
