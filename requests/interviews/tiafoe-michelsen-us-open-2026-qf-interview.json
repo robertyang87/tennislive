@@ -62,13 +62,14 @@
     "全部正文保留英文原声，中英字幕逐条对应，译名沿用仓库。",
     "保留顶部大小标题、近景封面、网球时差品牌片尾；只有完整QC通过才推送。",
     "封面候选及正文同场视觉证据仍需在正式render/QC核验，不把metadata当作视觉pass。",
-    "冷开场英文来自该视频自身json3；仅将明显姓名ASR错误Tho/Mickelson/Francis订正为Tiafoe/Michelsen/Frances。"
+    "冷开场英文来自该视频自身json3；仅将明显姓名ASR错误Tho/Mickelson/Francis订正为Tiafoe/Michelsen/Frances。",
+    "用户最新要求：冷开场40秒太长，改为约12秒。"
   ],
   "lead_in": {
     "url": "https://www.youtube.com/watch?v=J1ljGoL7be0",
-    "start": 114.86,
-    "end": 154.5,
-    "why": "用户指定本源最后画面。已查看同源contact_02：120.5赛点回合尾部，122.5蒂亚福握拳，128.5网前会合，130.5–152.5拥抱，154.5分开；蒂亚福玫红上衣灰袖/玫红头带，米切尔森浅粉上衣。114.86为probe转播切点，收完整最后回合与拥抱后接采访。",
+    "start": 120.5,
+    "end": 132.37,
+    "why": "用户将冷开场从40秒缩短，现用同源120.5–132.37秒，共11.87秒：最后一分结束、蒂亚福握拳庆祝、走向网前开始拥抱，随后直接接采访；已查看同源contact_02逐帧核实人物和场景。",
     "verification": {
       "match_id": "2026:us-open:mens-quarterfinal:tiafoe-michelsen",
       "channel": "US Open Tennis Championships",
@@ -103,18 +104,6 @@
         "b": 130.5,
         "en": "for Frances Tiafoe.",
         "zh": "对弗朗西斯·蒂亚福而言。"
-      },
-      {
-        "a": 144.239,
-        "b": 146.47,
-        "en": "And it's a big brother moment. Michelsen",
-        "zh": "这是大哥哥般的拥抱。米切尔森"
-      },
-      {
-        "a": 146.48,
-        "b": 149.5,
-        "en": "in tears in Frances's arms.",
-        "zh": "在弗朗西斯怀里流下眼泪。"
       }
     ]
   },
