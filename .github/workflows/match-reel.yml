@@ -1039,6 +1039,75 @@ jobs:
             --outdir "${{ steps.paths.outputs.outdir }}"
           ls -la "${{ steps.paths.outputs.outdir }}"
 
+      # One audited remake checkpoint: restore media only, never prior spec/QC/receipt.
+      - name: Restore completed Zheng source transform
+        id: zheng_checkpoint
+        continue-on-error: true
+        timeout-minutes: 5
+        if: github.event.inputs.mode == 'render' && github.event.inputs.slug == 'zheng-rybakina' && steps.paths.outputs.outdir == 'output/2026-09-10/reel/zheng-rybakina'
+        uses: actions/download-artifact@v4
+        with:
+          artifact-ids: 10124538360
+          run-id: 34401744962
+          github-token: ${{ github.token }}
+          path: ${{ runner.temp }}/zheng-conform-checkpoint
+          merge-multiple: true
+
+      - name: Verify Zheng transform checkpoint against native cache
+        timeout-minutes: 5
+        if: steps.zheng_checkpoint.outcome == 'success'
+        env:
+          CHECKPOINT: ${{ runner.temp }}/zheng-conform-checkpoint
+          OUTDIR: ${{ steps.paths.outputs.outdir }}
+        run: |
+          python - <<'PYCODE'
+          import hashlib, json, os, shutil, subprocess
+          from pathlib import Path
+          source_url = 'https://www.youtube.com/watch?v=-6Gv0033I2I'
+          spec = json.loads(Path('specs/reels/zheng-rybakina.json').read_text())
+          if spec.get('sources', {}).get('extended') != source_url or not spec.get('conform', {}).get('extended'):
+              print('Checkpoint no longer matches spec; using normal conform')
+              raise SystemExit(0)
+          root = Path(os.environ['CHECKPOINT'])
+          native = root / 'source_extended.mp4'
+          derived = root / 'source_extended_conform.mp4'
+          cache = Path.home() / '.cache/tennislive-sources' / (hashlib.sha1(source_url.encode()).hexdigest()[:16] + '.mp4')
+          def sha(path):
+              digest = hashlib.sha256()
+              with path.open('rb') as handle:
+                  for chunk in iter(lambda: handle.read(1024 * 1024), b''):
+                      digest.update(chunk)
+              return digest.hexdigest()
+          native_hash = sha(native)
+          if native_hash != sha(cache):
+              raise SystemExit('Checkpoint native source differs from current source cache')
+          def probe(path):
+              return json.loads(subprocess.check_output(['ffprobe', '-v', 'error', '-show_streams', '-show_format', '-of', 'json', str(path)]))
+          before, after = probe(native), probe(derived)
+          def size(info):
+              v = next(s for s in info['streams'] if s['codec_type'] == 'video')
+              return v['width'], v['height']
+          duration = float(before['format']['duration'])
+          if size(before) != (1280, 720) or size(after) != (1920, 1080) or abs(duration - float(after['format']['duration'])) > 0.1:
+              raise SystemExit('Checkpoint dimensions/duration failed')
+          # Decode samples at start, middle and end; hashes bind these verified bytes.
+          for start in (0, duration / 2, duration - 3):
+              subprocess.run(['ffmpeg', '-v', 'error', '-xerror', '-ss', str(start), '-i', str(derived), '-t', '2', '-map', '0:v:0', '-map', '0:a?', '-f', 'null', '-'], check=True)
+          out = Path(os.environ['OUTDIR'])
+          out.mkdir(parents=True, exist_ok=True)
+          shutil.copy2(derived, out / 'source_extended_conform.mp4')
+          manifest = {'run_id': 34401744962, 'artifact_id': 10124538360,
+                      'source_url': source_url, 'native_sha256': native_hash,
+                      'conformed_sha256': sha(derived), 'target': [1920, 1080],
+                      'transform': 'lanczos-increase-crop/libx264-fast-crf16/audio-copy'}
+          (out / 'conform-reuse.json').write_text(json.dumps(manifest, indent=2) + '\n')
+          print('Verified completed transform; original native 720p quality check still runs before reuse')
+          PYCODE
+
+      - name: Report unavailable Zheng checkpoint
+        if: steps.zheng_checkpoint.outcome == 'failure'
+        run: echo 'Transform checkpoint unavailable; normal conform and native quality checks remain enabled'
+
       - name: render — 出成片
         if: github.event.inputs.mode == 'render'
         env:
