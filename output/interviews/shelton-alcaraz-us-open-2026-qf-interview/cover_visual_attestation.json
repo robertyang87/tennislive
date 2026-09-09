@@ -1,0 +1,56 @@
+{
+  "status": "pass",
+  "checked_at": "2026-09-09T09:26:11Z",
+  "auditor": "opencv-haar-v1",
+  "expected_subject": "谢尔顿",
+  "identity_evidence": "L0-bound spec subject + same-source frame_at",
+  "spec_sha256": "6d8ef5b2410053f8ca0cfc4083a1511abca1a5194d42b70b3cd22625472cf71a",
+  "poster_sha256": "ce1c6e33eda8967c028cf0124e04fb94869d74bce143106a5a10ad64c4c1c878",
+  "thresholds": {
+    "close_up_zoom": 1.5,
+    "face_height_ratio": 0.08,
+    "close_up_face_height_ratio": 0.14,
+    "face_area_ratio": 0.01,
+    "face_sharpness": 45.0,
+    "face_contrast": 32.0,
+    "eyes": 2
+  },
+  "result": {
+    "poster": {
+      "decodable": true,
+      "format": "JPEG",
+      "width": 1080,
+      "height": 1440,
+      "photo_region": [
+        0,
+        150,
+        1080,
+        810
+      ]
+    },
+    "face": {
+      "detector": "frontal-default",
+      "box": [
+        356,
+        322,
+        310,
+        310
+      ],
+      "detected_faces": 7,
+      "eyes": 3,
+      "face_height_ratio": 0.38272,
+      "face_area_ratio": 0.10985,
+      "center_x_ratio": 0.47315,
+      "center_y_ratio": 0.4037,
+      "sharpness": 449.999,
+      "contrast": 135.85
+    },
+    "contract": {
+      "shot_type": "",
+      "frame_at": 30.0,
+      "zoom": 1.0,
+      "focus_y": 0.5
+    }
+  },
+  "issues": []
+}

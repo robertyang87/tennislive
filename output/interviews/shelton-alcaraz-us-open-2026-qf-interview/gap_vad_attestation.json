@@ -1,0 +1,55 @@
+{
+ "status": "pass",
+ "method": "silero_vad_plus_dual_asr_coverage",
+ "sha256": "e64f01a62f0e733e125011565a51f35ec7cea47079f6c02bb54ef9a5dd10e973",
+ "edge_pad_seconds": 0.35,
+ "max_speech_seconds": 0.12,
+ "results": [
+  {
+   "key": "11.9-24.0",
+   "start": 11.9,
+   "end": 24.02,
+   "speech_seconds": 1.424,
+   "second_asr_words": [
+    "You"
+   ],
+   "transcript_covered": true,
+   "caption_timeline_covered": false,
+   "status": "transcript_covered"
+  },
+  {
+   "key": "37.6-42.5",
+   "start": 37.6,
+   "end": 42.5,
+   "speech_seconds": 0.006,
+   "second_asr_words": [
+    "With"
+   ],
+   "transcript_covered": true,
+   "caption_timeline_covered": false,
+   "status": "transcript_covered"
+  },
+  {
+   "key": "62.4-69.5",
+   "start": 62.36,
+   "end": 69.49,
+   "speech_seconds": 0.046,
+   "second_asr_words": [],
+   "transcript_covered": false,
+   "caption_timeline_covered": true,
+   "status": "caption_timeline_covered"
+  },
+  {
+   "key": "76.7-80.5",
+   "start": 76.73,
+   "end": 80.51,
+   "speech_seconds": 1.228,
+   "second_asr_words": [
+    "I"
+   ],
+   "transcript_covered": true,
+   "caption_timeline_covered": true,
+   "status": "transcript_covered"
+  }
+ ]
+}

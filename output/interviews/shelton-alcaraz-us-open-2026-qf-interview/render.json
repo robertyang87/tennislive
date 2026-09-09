@@ -1,0 +1,69 @@
+{
+  "film_sha256": "e96fd43071b874ceb9e2f4b3a839a607580b2ae8c42d936926579483319060e1",
+  "film_seconds": 132.221,
+  "production_sla": {
+    "version": 2,
+    "pipeline": "interview-clip",
+    "slug": "shelton-alcaraz-us-open-2026-qf-interview",
+    "received_at": "2026-09-09T09:20:05Z",
+    "artifact_ready_at": "2026-09-09T09:26:10Z",
+    "elapsed_seconds": 365.258,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "e96fd43071b874ceb9e2f4b3a839a607580b2ae8c42d936926579483319060e1",
+    "spec_sha256": "6d8ef5b2410053f8ca0cfc4083a1511abca1a5194d42b70b3cd22625472cf71a",
+    "request_received_at": "2026-09-09T08:52:59.048Z",
+    "request_to_artifact_seconds": 1991.21,
+    "run_id": "34334109696",
+    "stage_events": [
+      {
+        "stage": "preflight",
+        "at": "2026-09-09T09:21:04Z",
+        "run_id": "34334109696"
+      },
+      {
+        "stage": "asr_verify",
+        "at": "2026-09-09T09:22:38Z",
+        "run_id": "34334109696"
+      },
+      {
+        "stage": "render",
+        "at": "2026-09-09T09:23:59Z",
+        "run_id": "34334109696"
+      }
+    ],
+    "render_seconds": 131.258,
+    "pre_render_seconds": 234.0
+  },
+  "production_stage_events": [
+    {
+      "stage": "preflight",
+      "at": "2026-09-09T09:21:04Z",
+      "run_id": "34334109696"
+    },
+    {
+      "stage": "asr_verify",
+      "at": "2026-09-09T09:22:38Z",
+      "run_id": "34334109696"
+    },
+    {
+      "stage": "render",
+      "at": "2026-09-09T09:23:59Z",
+      "run_id": "34334109696"
+    },
+    {
+      "stage": "qc",
+      "at": "2026-09-09T09:26:11Z",
+      "run_id": "34334109696"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-09T09:26:11Z",
+      "run_id": "34334109696"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/interview-shelton-alcaraz-us-open-2026-qf-interview/shelton-alcaraz-us-open-2026-qf-interview.mp4?v=e96fd43071b874ce",
+  "video_bytes": 43873650,
+  "release_asset_digest": "sha256:e96fd43071b874ceb9e2f4b3a839a607580b2ae8c42d936926579483319060e1",
+  "qc_attestation_sha256": "c3cf1606c3e9191f49e17c2adcf053824dde8e41b648979250b8af870f5d3bee"
+}
