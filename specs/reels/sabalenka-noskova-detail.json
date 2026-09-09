@@ -1,0 +1,690 @@
+{
+  "_chapter_cards_why": "没插章节卡：spec 里已经手写了 title_card 段",
+  "_column": "reel",
+  "_cover_brief": {
+    "preferred_moment": "other",
+    "preferred_subject": "萨巴伦卡",
+    "reason": "终审选用本场 WTA 官方赛后稿 5485×3657 高清正手击球照；橙色 Nike 连衣裙和原片一致。动作照适合展现主动进攻；保持真实照片，不将动作照标成庆祝。",
+    "requirements": [
+      "必须是本场",
+      "官方原图",
+      "人物和同场置信度至少0.80"
+    ]
+  },
+  "_durations": [
+    [
+      "Set 1",
+      "0:48"
+    ],
+    [
+      "Set 2",
+      "0:40"
+    ],
+    [
+      "Set 3",
+      "0:54"
+    ],
+    [
+      "全场",
+      "2:22"
+    ]
+  ],
+  "_editor_review": "WTA官方报道逐盘事实+源片接触表及可读比分板核实；首盘抢七7-1、次盘四个盘点、抢十第一分诺斯科娃得分、4-3这分萨巴伦卡得分到5-3。第三盘2-4追平以抢十之前的回顾讲述，不冒充当前镜头。",
+  "_final_render_repair": {
+    "first_film_sha256": "8ab18ce274681ad8040ded0a21caf1b4d6cbca5d5358b1a308567f2e8cc33e2c",
+    "reason": "逐帧发现封面时长单位、双语水印间距、比分板误贴与裁窄，未推送即修正。"
+  },
+  "_hit_data": [
+    {
+      "detail": "萨巴伦卡113，诺斯科娃105，相差8分",
+      "label": "总得分",
+      "source": "df_st_1_8QYQMw6l"
+    },
+    {
+      "detail": "萨巴伦卡2/9；诺斯科娃3/6",
+      "label": "破发点",
+      "source": "df_st_1_8QYQMw6l"
+    }
+  ],
+  "_match": {
+    "_identity_evidence": "df_hh_1 KP=8QYQMw6l: FH=Sabalenka A., FK=Noskova L.; official source video 204.5s final scoreboard: SABALENKA 7 3 7, NOSKOVA 6 6 6; source commentary 172.08–192.32 confirms Sabalenka wins.",
+    "flashscore_id": "8QYQMw6l",
+    "loser": "诺斯科娃",
+    "loser_result": "6-7(1) 6-3 6-7(7)",
+    "participants": [
+      "萨巴伦卡",
+      "诺斯科娃"
+    ],
+    "set_scores_home_away": [
+      [
+        7,
+        6
+      ],
+      [
+        3,
+        6
+      ],
+      [
+        7,
+        6
+      ]
+    ],
+    "source": "flashscore_points",
+    "source_detail": "https://www.wtatennis.com/news/4573832/sabalenka-escapes-noskova-from-a-break-down-in-decider-at-us-open",
+    "source_id": "8QYQMw6l",
+    "status": "result_verified",
+    "tiebreaks_home_away": [
+      [
+        7,
+        1
+      ],
+      null,
+      [
+        10,
+        7
+      ]
+    ],
+    "winner": "萨巴伦卡",
+    "winner_result": "7-6(1) 3-6 7-6(7)",
+    "start_utc": "2026-09-08T15:40:00Z",
+    "start_beijing": "2026-09-08T23:40:00+08:00",
+    "_start_evidence": "Flashscore results AA=8QYQMw6l AD=1788882000; Guardian 11:30 EDT日场首场、11:39入场交叉核实。旁白只说夜里十一点多，不报分钟。"
+  },
+  "_model_editorial": {
+    "beats": [
+      "首盘萨巴伦卡抢七七比一，用最干脆的方式收下第一盘。",
+      "第二盘诺斯科娃六比三扳回一盘，比赛被拖进决胜盘。",
+      "决胜盘抢十，萨巴伦卡十比七拿下，整场总得分只差8分。"
+    ],
+    "chapters": [
+      "抢七一边倒",
+      "温网冠军反扑",
+      "抢十只差八分"
+    ],
+    "hook": [
+      "世界第一",
+      "险胜过关"
+    ],
+    "human_context": "萨巴伦卡世界第一，诺斯科娃世界第六、上个月刚拿温网冠军。原片解说还确认：萨巴伦卡淘汰了温网冠军，在纽约已经18连胜，并重返四强。",
+    "narration": [
+      "首盘抢七，萨巴伦卡七比一，先下一盘。",
+      "第二盘，诺斯科娃六比三，追平盘分。",
+      "决胜盘抢十，萨巴伦卡十比七，艰难晋级。"
+    ],
+    "question": "萨巴伦卡是用什么方式，把自己从悬崖边拉回来？",
+    "thesis": "三盘两抢七，世界第一赢下只有8分的总差距，靠的是决胜盘抢十那10分。"
+  },
+  "_notes": [
+    "纠正整份 H2H 记录被 dict 覆盖后取到历史反向对阵的问题；事实与原片末尾比分板、英文解说一致。",
+    "封面为本场 WTA 官方赛后报道实拍；终审认领动作照，不伪称庆祝。"
+  ],
+  "_production": {
+    "court": "Arthur Ashe Stadium",
+    "event": "美网",
+    "kind": "orchestrated_reel",
+    "received_at": "2026-09-09T01:46:53Z",
+    "round": "四分之一决赛",
+    "status": "ready_for_render",
+    "year": 2026,
+    "benchmark_context": "用户要求精细重制；复用同场已核验封面、完整源片probe、MiniMax证据和源片缓存。"
+  },
+  "_reviewed_facts": "本场唯一赛果：萨巴伦卡 7-6(1)、3-6、7-6(7) 击败诺斯科娃。\n首盘抢七小分萨巴伦卡7-1；第二盘诺斯科娃6-3；决胜盘抢十萨巴伦卡10-7。\n本场耗时2小时22分。全场总得分萨巴伦卡113、诺斯科娃105，相差8分。\n破发点兑现萨巴伦卡2/9、诺斯科娃3/6。不要将总分与赢球者写反。\n素材事实：原片51.52秒解说确认萨巴伦卡赢首盘；115.76–124.72确认诺斯科娃赢第二盘；\n172.08–192.32确认萨巴伦卡获胜、淘汰温网冠军、在纽约18连胜并重返四强。\n三个旁白所配的画面分别是：首盘6-1抢七后的最后一分、次盘盘点及诺斯科娃庆祝、决胜盘抢十中段。\n第三条旁白只能讲抢十仍在争夺，不能在赛点之前提前宣告获胜。\n不要写素材没有展示的第三盘局间过程；不要虚构挽救赛点、伤病或赛后引语。\n\nWTA官方赛后报道核实：第三盘萨巴伦卡2-4落后追至4-4，赛点外角二发Ace。温网在本届赛季，不写上个月。",
+  "_segments_source": " + MiniMax 冷开场/结尾视觉闸",
+  "_tts_backend_why": "Azure在run34290980601明确返回401；按仓库2026-09-04默认动作改用同名Yunjian的Edge通道。本条不使用Azure专属style或lead_pause；段首延迟改由事实旁白自然铺垫，保留逐段真实语音时长与QC检查。",
+  "_visual_evidence": {
+    "cold_open": {
+      "confidence": 0.95,
+      "end": 176.99,
+      "kind": "match_point",
+      "reason": "Frame 167.5s shows 'MATCH POINT' graphic on scoreboard with Sabalenka serving at 7-6(1) 3-6 6-6(7). Frames 169.5s–170.5s show Sabalenka serving the deciding point. Frames 172.5s–176.5s show Sabalenka in orange with head tilted back in emotional winner reaction, scoreboard now showing 7 3 7 final.",
+      "start": 166.67,
+      "winner_visible": true
+    },
+    "cover": {
+      "confidence": 0.82,
+      "moment": "other",
+      "reason": "Cover photo shows a player in the same bright orange Nike mesh dress with crystal-embellished neckline worn by Sabalenka throughout the match footage (e.g., frames at 14.5s, 42.5s, 166.5s, 172.5s). Forehand volley stretch pose on US Open-style hard court (blue court, green surround). Forearm tattoo visible, matching Sabalenka. The photo is an action/forehand shot (not celebration), consistent with the cover rule specifying an action photo rather than celebration.",
+      "same_match": true,
+      "subject": "萨巴伦卡",
+      "wrong_or_old": false
+    },
+    "cover_image": "assets/reel/sabalenka-noskova-cover.jpg",
+    "ending": {
+      "confidence": 0.92,
+      "end": 192.41,
+      "kind": "aftermath",
+      "reason": "Reuses cold-open match point (166.67–176.99: serving + winner reaction), then 179.46–181.5s shows both players walking to net, 182.5s–183.5s shows the handshake at net, 184.5s–185.5s shows Sabalenka waving to the crowd. Ending fully covers cold open window.",
+      "start": 166.67,
+      "winner_visible": true
+    },
+    "input_sha256": "1eada09cd08d1f69b216cf6d02876d1fb0f60133e33144f0ef69eca5ecc91d63",
+    "inputs": [
+      "contact_00.jpg",
+      "contact_01.jpg",
+      "contact_02.jpg",
+      "contact_03.jpg",
+      "contact_04_detail.jpg"
+    ],
+    "model": "MiniMax-M3",
+    "model_attempts": 1,
+    "problems": [],
+    "retryable": false,
+    "status": "pass",
+    "visual_status": "pass"
+  },
+  "_visual_evidence_history": [
+    {
+      "cold_open": {
+        "confidence": 0.98,
+        "end": 192.41,
+        "kind": "winner_celebration",
+        "reason": "180.5s–182.5s 萨巴伦卡与诺斯科娃在网前完成握手；184.5s–190.5s 萨巴伦卡穿橙色连衣裙向看台观众挥手、仰面庆祝，192.5s 仍在举手致意，是赛后的赢家庆祝与握手结局。",
+        "start": 179.46,
+        "winner_visible": true
+      },
+      "cover": {
+        "confidence": 0.94,
+        "moment": "other",
+        "reason": "候选封面清晰呈现萨巴伦卡的面部、橙色 Nike 网眼连衣裙、发髻及正手击球动作，与视频中她的外貌和服装一致；绿色硬地及蓝线场地配色也符合该场比赛场景。照片为击球动作瞬间而非庆祝，视频 204.5s 的赛事比分板和 US Open 标识进一步对应本场。",
+        "same_match": true,
+        "subject": "萨巴伦卡",
+        "wrong_or_old": false
+      },
+      "cover_image": "assets/reel/sabalenka-noskova-cover.jpg",
+      "ending": {
+        "confidence": 0.99,
+        "end": 201.13,
+        "kind": "winner_celebration",
+        "reason": "该窗口完整覆盖冷开场并延续至赛后：180.5s–182.5s 显示两人网前握手，184.5s–192.5s 萨巴伦卡挥手庆祝，194.5s 继续向看台举手，198.5s–200.5s 教练团队鼓掌，202.5s 萨巴伦卡走向球包收拍，204.5s 官方比分板显示 SABALENKA 7 3 7、诺斯科娃 6 6 6。",
+        "start": 179.46,
+        "winner_visible": true
+      },
+      "input_sha256": "bb7dcbe43ae9647ea9ba9ad427d2afca115b51dac4ae2d6d542b79a2a30bdfba",
+      "inputs": [
+        "contact_00.jpg",
+        "contact_01.jpg",
+        "contact_02.jpg",
+        "contact_03.jpg"
+      ],
+      "model": "MiniMax-M3",
+      "model_attempts": 2,
+      "problems": [
+        "ending 理由引用窗口外时间：[202.5, 204.5]"
+      ],
+      "retryable": false,
+      "status": "waiting",
+      "visual_status": "waiting"
+    }
+  ],
+  "cover": {
+    "eyebrow": "赛场之上",
+    "hook": "二发Ace破局\n抢十惊险突围",
+    "layout": "solo",
+    "matchup": [
+      {
+        "country": "BLR",
+        "name": "萨巴伦卡",
+        "name_en": "Aryna Sabalenka",
+        "rank": 1
+      },
+      {
+        "country": "CZE",
+        "name": "诺斯科娃",
+        "name_en": "Linda Noskova",
+        "rank": 6
+      }
+    ],
+    "portrait": {
+      "_photo_url": "https://photoresources.wtatennis.com/wta/photo/2026/09/08/daccd33c-83b0-4b73-b5e5-883218b09d59/Aryna_Sabalenka_-_US_Open_2026_-_Day_10-DSC_2796.jpg",
+      "_portrait_why": "同场WTA官方赛后报道高清实拍，橙色裙装、项链及绿底球场与原片一致。",
+      "focus": 0.5,
+      "focus_y": 0.5,
+      "image": "assets/reel/sabalenka-noskova-cover.jpg",
+      "zoom": 1
+    },
+    "result": "7-6(1) 3-6 7-6(7)",
+    "scoreboard": {
+      "_court_why": "赛果源结构化 court 字段",
+      "_duration_why": "报道为2小时22分钟，传入8520秒，避免二段冒号被误读为分:秒。",
+      "court": "Arthur Ashe Stadium",
+      "duration_source": {
+        "field": "duration",
+        "url": "data:application/json,%7B%22duration%22%3A8520%2C%22source%22%3A%22WTA%20report%3A%202%20hours%2022%20minutes%22%2C%22source_url%22%3A%22https%3A%2F%2Fwww.wtatennis.com%2Fnews%2F4573832%2Fsabalenka-escapes-noskova-from-a-break-down-in-decider-at-us-open%22%7D"
+      }
+    },
+    "subject": "萨巴伦卡",
+    "topic": "2026 美网 1/4决赛",
+    "winner": "萨巴伦卡"
+  },
+  "editorial": {
+    "beats": [
+      "首盘五比四，萨巴伦卡发球胜盘。看诺斯科娃，接发抢得这么早，直接逼到对手脚下。萨巴伦卡这一盘开场三比零，后来还有拉开到五比一的机会，但领先没能一直守住。比赛进了抢七，局面却又变了。诺斯科娃出现双误和失误，萨巴伦卡重新占住主动。现在六比一，接发之后继续压住底线，看她稳住这次回合，等这一分落地。七比一！先拿一盘，但这场球远没有结束。",
+      "第二盘的反扑，不只是发球更猛。看诺斯科娃这次处理：判断出对手的上网路线，用反手把球穿了过去。她还用放短球、切削和主动上网改变节奏，迫使萨巴伦卡不断调整。前半盘顶住破发点，随后取得破发，优势来到了捷克姑娘这一边。但来到盘点，事情又没那么简单。第一个没兑现，萨巴伦卡守住发球局。五比三发球胜盘，第二个盘点，她还在追；第三个，又被救了回来。你看，领先的人也得承受压力，得分机会不会自动变成比分。诺斯科娃没有退回被动防守，还是坚持自己的发球和进攻。从一个盘点，到又一个盘点，两个人都在把对手往极限推。第四个盘点，重新准备。发出去！这次终于拿下，六比三，把比赛带进决胜盘。",
+      "走到抢十之前，萨巴伦卡还闯过一道险关。决胜盘二比四落后，她先守住发球局，再把比分追成四平。关键是重新稳住回合，而不是一拍抢回来。现在看抢十第一分，两人在网前斗得这么细，诺斯科娃先拿一分。镜头来到四比三，萨巴伦卡领先。她继续把球送深，耐心寻找下一次出手，不轻易送掉主动权。这个回合拿下，五比三。胜负还没定，最后仍要靠发球守住优势。"
+    ],
+    "chapters": [
+      "领先怎样被追回",
+      "四个盘点的拉锯",
+      "二比四之后稳住"
+    ],
+    "hook": [
+      "二发Ace破局",
+      "抢十惊险突围"
+    ],
+    "human_context": {
+      "angle": "世界第一对阵本届温网冠军，两盘抢七决定胜负。",
+      "facts": [
+        "萨巴伦卡以7-6(1) 3-6 7-6(7)击败诺斯科娃。",
+        "萨巴伦卡113，诺斯科娃105，相差8分",
+        "萨巴伦卡2/9；诺斯科娃3/6",
+        "诺斯科娃为2026温网冠军。",
+        "萨巴伦卡决胜盘曾2–4落后，追成4–4。",
+        "赛点以外角二发Ace兑现。",
+        "萨巴伦卡取得美网18连胜。"
+      ],
+      "sources": [
+        "https://www.youtube.com/watch?v=ChIOgR3JpVQ",
+        "https://www.flashscore.com/match/tennis/8QYQMw6l/#/match-summary",
+        "https://www.wtatennis.com/news/4573832/sabalenka-escapes-noskova-from-a-break-down-in-decider-at-us-open"
+      ]
+    },
+    "mode": "match_review",
+    "narration": [
+      "首盘五比四，萨巴伦卡发球胜盘。看诺斯科娃，接发抢得这么早，直接逼到对手脚下。萨巴伦卡这一盘开场三比零，后来还有拉开到五比一的机会，但领先没能一直守住。比赛进了抢七，局面却又变了。诺斯科娃出现双误和失误，萨巴伦卡重新占住主动。现在六比一，接发之后继续压住底线，看她稳住这次回合，等这一分落地。七比一！先拿一盘，但这场球远没有结束。",
+      "第二盘的反扑，不只是发球更猛。看诺斯科娃这次处理：判断出对手的上网路线，用反手把球穿了过去。她还用放短球、切削和主动上网改变节奏，迫使萨巴伦卡不断调整。前半盘顶住破发点，随后取得破发，优势来到了捷克姑娘这一边。但来到盘点，事情又没那么简单。第一个没兑现，萨巴伦卡守住发球局。五比三发球胜盘，第二个盘点，她还在追；第三个，又被救了回来。你看，领先的人也得承受压力，得分机会不会自动变成比分。诺斯科娃没有退回被动防守，还是坚持自己的发球和进攻。从一个盘点，到又一个盘点，两个人都在把对手往极限推。第四个盘点，重新准备。发出去！这次终于拿下，六比三，把比赛带进决胜盘。",
+      "走到抢十之前，萨巴伦卡还闯过一道险关。决胜盘二比四落后，她先守住发球局，再把比分追成四平。关键是重新稳住回合，而不是一拍抢回来。现在看抢十第一分，两人在网前斗得这么细，诺斯科娃先拿一分。镜头来到四比三，萨巴伦卡领先。她继续把球送深，耐心寻找下一次出手，不轻易送掉主动权。这个回合拿下，五比三。胜负还没定，最后仍要靠发球守住优势。"
+    ],
+    "question": "发球火力更强的人，为什么没能笑到最后？",
+    "thesis": "对手发球和变化带来压力；萨巴伦卡第三盘从2-4追平，最终靠关键发球与二发回合优势过关。"
+  },
+  "layout": "band",
+  "outro": true,
+  "push": {
+    "auto": true,
+    "lead": "从发球胜盘局被破，到第二盘四个盘点，再到决胜盘二比四后的追赶。逐段看清萨巴伦卡如何扛住诺斯科娃，最后用外角二发Ace收官。",
+    "summary": "萨巴伦卡险胜背后的关键"
+  },
+  "scorebox": [
+    104,
+    888,
+    736,
+    978
+  ],
+  "segments": [
+    {
+      "_ending_payoff_required": true,
+      "_quote_kind": "broadcast",
+      "_score_inset_why": "contact_04_detail逐帧核对：171.5秒板仍在，172.5秒已收走。自动检测主区间到172.0；排除175秒后衣服与看台误报，宽度继续现量。",
+      "_why": "MiniMax 视觉证据：Frame 167.5s shows 'MATCH POINT' graphic on scoreboard with Sabalenka serving at 7-6(1) 3-6 6-6(7). Frames 169.5s–170.5s show Sabalenka serving the deciding point. Frames 172.5s–176.5s show Sabalenka in orange with head tilted back in emotional winner reaction, scoreboard now showing 7 3 7 final.；英文原声来自 captions.txt。",
+      "crosses_cut": "保留完整赛点及紧接其后的获胜、对手反应；所有画面同场，具体时码与身份见MiniMax原始通过证据。",
+      "end": 176.99,
+      "fit": "crop",
+      "narration": "",
+      "quote": [
+        {
+          "at": 3.41,
+          "end": 5.41,
+          "text": "Game.\n拿下这一局。"
+        },
+        {
+          "at": 5.41,
+          "end": 8.37,
+          "text": "The world number one stretched to the\n世界第一在纽约"
+        },
+        {
+          "at": 8.37,
+          "end": 10.32,
+          "text": "limit in New York,\n被逼到了极限"
+        }
+      ],
+      "score_inset": true,
+      "score_inset_windows": [
+        [
+          166.67,
+          172
+        ]
+      ],
+      "start": 166.67
+    },
+    {
+      "_why": "源片首个完整回合，14.23秒切镜前结束；同场比赛交代身份与三盘背景。",
+      "end": 18.0,
+      "narration": "北京时间九月八日夜里十一点多，美网女单四分之一决赛。世界第一萨巴伦卡，对阵温网冠军诺斯科娃。发球火力更强的人，为什么没能笑到最后？",
+      "score_inset": {
+        "x2": 588
+      },
+      "start": 0.5,
+      "_score_inset_why": "Source16.5 closeup removes scoreboard; inset stops before that cut.",
+      "score_inset_windows": [
+        [
+          0.5,
+          15.6
+        ]
+      ]
+    },
+    {
+      "_why": "自动链机械插的章节卡（review 路线 ⑤）：editorial.chapters 对应这个 beat，插在它的第一段之前",
+      "kicker": "01",
+      "narration": "领先怎样被追回",
+      "seconds": 3.2,
+      "title_card": "领先怎样被追回"
+    },
+    {
+      "_beat": 1,
+      "_score_inset_why": "Exclude unscored reaction closeups38.32–40.22 and after52.94.",
+      "_why": "首盘最后一分，萨巴伦卡抢七6-1领先，落点后赢下首盘。",
+      "end": 56.3,
+      "narration": "首盘五比四，萨巴伦卡发球胜盘。看诺斯科娃，接发抢得这么早，直接逼到对手脚下。萨巴伦卡这一盘开场三比零，后来还有拉开到五比一的机会，但领先没能一直守住。比赛进了抢七，局面却又变了。诺斯科娃出现双误和失误，萨巴伦卡重新占住主动。现在六比一，接发之后继续压住底线，看她稳住这次回合，等这一分落地。七比一！先拿一盘，但这场球远没有结束。",
+      "score_inset": true,
+      "start": 21.4,
+      "crosses_cut": "同场完整回合及反应；解说以首盘、第二盘、抢十之前与现在区分回顾和当前画面。contact00–02与score00–04逐点核实。",
+      "score_inset_windows": [
+        [
+          21.4,
+          38.3
+        ],
+        [
+          40.3,
+          52.9
+        ]
+      ]
+    },
+    {
+      "_why": "自动链机械插的章节卡（review 路线 ⑤）：editorial.chapters 对应这个 beat，插在它的第一段之前",
+      "kicker": "02",
+      "narration": "四个盘点的拉锯",
+      "seconds": 3.2,
+      "title_card": "四个盘点的拉锯"
+    },
+    {
+      "_beat": 2,
+      "_score_inset_why": "Score02 confirms board during all four set-point windows and at116.5 winner reaction; stop before117.82 coach cut.",
+      "_why": "诺斯科娃盘点及庆祝，英文原声124.72确认6-3。",
+      "crosses_cut": "同场完整回合及反应；解说以首盘、第二盘、抢十之前与现在区分回顾和当前画面。contact00–02与score00–04逐点核实。",
+      "end": 120.0,
+      "narration": "第二盘的反扑，不只是发球更猛。看诺斯科娃这次处理：判断出对手的上网路线，用反手把球穿了过去。她还用放短球、切削和主动上网改变节奏，迫使萨巴伦卡不断调整。前半盘顶住破发点，随后取得破发，优势来到了捷克姑娘这一边。但来到盘点，事情又没那么简单。第一个没兑现，萨巴伦卡守住发球局。五比三发球胜盘，第二个盘点，她还在追。你看，领先的人也得承受压力，得分机会不会自动变成比分。诺斯科娃没有退回被动防守，还是坚持自己的发球和进攻。从一个盘点，到又一个盘点，两个人都在把对手往极限推。第三个，又被救了回来。第四个盘点，重新准备。发出去！这次终于拿下，六比三，把比赛带进决胜盘。",
+      "score_inset": true,
+      "start": 62.0,
+      "score_inset_windows": [
+        [
+          62.0,
+          117.7
+        ]
+      ]
+    },
+    {
+      "_why": "自动链机械插的章节卡（review 路线 ⑤）：editorial.chapters 对应这个 beat，插在它的第一段之前",
+      "kicker": "03",
+      "narration": "二比四之后稳住",
+      "seconds": 3.2,
+      "title_card": "二比四之后稳住"
+    },
+    {
+      "_beat": 3,
+      "_why": "130.4–141.2秒完整抢十回合；球落地后、141.32秒反应镜头切点前收住。",
+      "end": 163.8,
+      "narration": "走到抢十之前，萨巴伦卡还闯过一道险关。决胜盘二比四落后，她先守住发球局，再把比分追成四平。关键是重新稳住回合，而不是一拍抢回来。刚才抢十第一分，两人在网前斗得这么细，诺斯科娃先拿一分。镜头来到四比三，萨巴伦卡领先。她继续把球送深，耐心寻找下一次出手，不轻易送掉主动权。这个回合还没结束，看她继续稳住回合，再多打一个来回。拿下，五比三！守住发球。",
+      "score_inset": true,
+      "start": 128.0,
+      "crosses_cut": "同场完整回合及反应；解说以首盘、第二盘、抢十之前与现在区分回顾和当前画面。contact00–02与score00–04逐点核实。",
+      "score_inset_windows": [
+        [
+          128.0,
+          163.8
+        ]
+      ],
+      "_score_inset_why": "Score03/04 confirms tiebreak board throughout128.0–163.8; first point0-0→0-1 and later4-3→5-3."
+    },
+    {
+      "_why": "用户明确要求整张数据卡铺满1080×1440画布，不是放大字号；沿用完整film数据卡设计，停留10秒，顶栏字幕脚注不遮挡。",
+      "image": "<stat_card>",
+      "narration": "二发得分率，百分之六十一对四十三。Ace更少，萨巴伦卡在二发回合里拿回优势。",
+      "seconds": 10,
+      "stat_card": true
+    },
+    {
+      "_reviewed_ending_boundary": "原片182.5秒两人网前拥抱；184.5秒已经松手分开。按合同在握手完成后的第一个已核实画面边界收住，不接之后挥手和包厢。MiniMax报告保留原文，实际片尾仍完整覆盖166.67–176.99秒冷开场。",
+      "_score_inset_why": "contact_04_detail逐帧核对：171.5秒板仍在，172.5秒已收走。自动检测主区间到172.0；排除175秒后衣服与看台误报，宽度继续现量。",
+      "_why": "正文重新兑现冷开场的完整结局：Reuses cold-open match point (166.67–176.99: serving + winner reaction), then 179.46–181.5s shows both players walking to net, 182.5s–183.5s shows the handshake at net, 184.5s–185.5s shows Sabalenka waving to the crowd. Ending fully covers cold open window.",
+      "crosses_cut": "保留完整赛点及紧接其后的获胜、对手反应；所有画面同场，具体时码与身份见MiniMax原始通过证据。",
+      "end": 184.5,
+      "fit": "crop",
+      "narration": "赛点，二发。她选择外角！Ace！十比七，萨巴伦卡拿下比赛。她最后五次发球，四次让对手没能回过来。你觉得，这场险胜最关键的一分是哪一分？",
+      "score_inset": true,
+      "score_inset_windows": [
+        [
+          166.67,
+          172
+        ]
+      ],
+      "start": 166.67,
+      "_narration_evidence": "WTA report: match-winning second serve ace out wide, four of last five serves unreturned. Film declares winner only after source169.97."
+    }
+  ],
+  "slug": "sabalenka-noskova-detail",
+  "source_url": "https://www.youtube.com/watch?v=ChIOgR3JpVQ",
+  "stats": {
+    "_source": "Flashscore df_st_1_8QYQMw6l SH/SI ordered Sabalenka/Noskova; identity independently verified against KP=8QYQMw6l and official video scoreboard.",
+    "a": {
+      "aces": 12,
+      "bp_chances": 9,
+      "bp_conv": 2,
+      "df": 4,
+      "first_in": 62,
+      "first_total": 95,
+      "first_won": 48,
+      "headshot": "assets/players/headshots/wta-320760.jpg",
+      "pts_total": 218,
+      "pts_won": 113,
+      "second_total": 33,
+      "second_won": 20,
+      "ue": 30,
+      "winners": 42
+    },
+    "b": {
+      "aces": 18,
+      "bp_chances": 6,
+      "bp_conv": 3,
+      "df": 6,
+      "first_in": 77,
+      "first_total": 123,
+      "first_won": 58,
+      "headshot": "assets/players/headshots/wta-329668.jpg",
+      "pts_total": 218,
+      "pts_won": 105,
+      "second_total": 46,
+      "second_won": 20,
+      "ue": 25,
+      "winners": 46
+    }
+  },
+  "topbar": {
+    "line1": "2026 美网 1/4决赛",
+    "line2": "萨巴伦卡 7-6(1) 3-6 7-6(7) 诺斯科娃"
+  },
+  "tts_backend": "edge",
+  "_prior_revision": {
+    "slug": "sabalenka-noskova",
+    "editorial": {
+      "beats": [
+        "首盘萨巴伦卡抢七七比一，用最干脆的方式收下第一盘。",
+        "第二盘诺斯科娃六比三扳回一盘，比赛被拖进决胜盘。",
+        "决胜盘抢十，萨巴伦卡十比七拿下，整场总得分只差8分。"
+      ],
+      "chapters": [
+        "首盘抢七压制",
+        "温网冠军反扑",
+        "抢十寸步不让"
+      ],
+      "hook": [
+        "二发Ace破局",
+        "抢十惊险突围"
+      ],
+      "human_context": {
+        "angle": "世界第一对阵本届温网冠军，两盘抢七决定胜负。",
+        "facts": [
+          "萨巴伦卡以7-6(1) 3-6 7-6(7)击败诺斯科娃。",
+          "萨巴伦卡113，诺斯科娃105，相差8分",
+          "萨巴伦卡2/9；诺斯科娃3/6",
+          "诺斯科娃为2026温网冠军。",
+          "萨巴伦卡决胜盘曾2–4落后，追成4–4。",
+          "赛点以外角二发Ace兑现。",
+          "萨巴伦卡取得美网18连胜。"
+        ],
+        "sources": [
+          "https://www.youtube.com/watch?v=ChIOgR3JpVQ",
+          "https://www.flashscore.com/match/tennis/8QYQMw6l/#/match-summary",
+          "https://www.wtatennis.com/news/4573832/sabalenka-escapes-noskova-from-a-break-down-in-decider-at-us-open"
+        ]
+      },
+      "mode": "match_review",
+      "narration": [
+        "首盘错过发球胜盘局，萨巴伦卡没有松手。抢七六比一，盘点就在眼前。",
+        "来到第二盘末段，诺斯科娃的发球打开了局面。六比三，温网冠军扳回一盘。",
+        "决胜盘又走到抢十。诺斯科娃步步紧逼，萨巴伦卡把胜负悬念扛到了最后。"
+      ],
+      "question": "抢十赛点，换成你敢这样发二发吗？",
+      "thesis": "诺斯科娃的Ace和制胜分更多，萨巴伦卡却拿下两盘抢七，用一记二发Ace收官。"
+    },
+    "segments": [
+      {
+        "_ending_payoff_required": true,
+        "_quote_kind": "broadcast",
+        "_score_inset_why": "contact_04_detail逐帧核对：171.5秒板仍在，172.5秒已收走。自动检测主区间到172.0；排除175秒后衣服与看台误报，宽度继续现量。",
+        "_why": "MiniMax 视觉证据：Frame 167.5s shows 'MATCH POINT' graphic on scoreboard with Sabalenka serving at 7-6(1) 3-6 6-6(7). Frames 169.5s–170.5s show Sabalenka serving the deciding point. Frames 172.5s–176.5s show Sabalenka in orange with head tilted back in emotional winner reaction, scoreboard now showing 7 3 7 final.；英文原声来自 captions.txt。",
+        "crosses_cut": "保留完整赛点及紧接其后的获胜、对手反应；所有画面同场，具体时码与身份见MiniMax原始通过证据。",
+        "end": 176.99,
+        "fit": "crop",
+        "narration": "",
+        "quote": [
+          {
+            "at": 3.41,
+            "end": 5.41,
+            "text": "Game.\n拿下这一局。"
+          },
+          {
+            "at": 5.41,
+            "end": 8.37,
+            "text": "The world number one stretched to the\n世界第一在纽约"
+          },
+          {
+            "at": 8.37,
+            "end": 10.32,
+            "text": "limit in New York,\n被逼到了极限"
+          }
+        ],
+        "score_inset": true,
+        "score_inset_windows": [
+          [
+            166.67,
+            172
+          ]
+        ],
+        "start": 166.67
+      },
+      {
+        "_why": "源片首个完整回合，14.23秒切镜前结束；同场比赛交代身份与三盘背景。",
+        "end": 14.2,
+        "narration": "北京时间九月八号夜里十一点多，美网四分之一决赛。世界第一迎战温网冠军，最后要靠抢十决胜。",
+        "score_inset": {
+          "x2": 588
+        },
+        "start": 0.5,
+        "_score_inset_why": "score_00.jpg的0.5–14.5秒整段有板。重渲染检测只量到名字区333，切掉局分及小分；同盘真实板右缘约580，采用既有x2人审入口加8像素余量，整段保留完整板。"
+      },
+      {
+        "_why": "自动链机械插的章节卡（review 路线 ⑤）：editorial.chapters 对应这个 beat，插在它的第一段之前",
+        "image": "<title_card>{\"text\": \"首盘抢七压制\", \"kicker\": \"01\"}",
+        "kicker": "01",
+        "narration": "首盘抢七压制",
+        "seconds": 3,
+        "title_card": "首盘抢七压制"
+      },
+      {
+        "_beat": 1,
+        "_score_inset_why": "score_01：50.5秒有板，52.5秒无板。自动主区间到50.6，排除51.8秒之后黑色座椅误报。",
+        "_why": "首盘最后一分，萨巴伦卡抢七6-1领先，落点后赢下首盘。",
+        "end": 52.9,
+        "narration": "首盘错过发球胜盘局，萨巴伦卡没有松手。抢七六比一，盘点就在眼前。",
+        "score_inset": true,
+        "score_inset_windows": [
+          [
+            40.3,
+            50.7
+          ]
+        ],
+        "start": 40.3
+      },
+      {
+        "_why": "自动链机械插的章节卡（review 路线 ⑤）：editorial.chapters 对应这个 beat，插在它的第一段之前",
+        "image": "<title_card>{\"text\": \"温网冠军反扑\", \"kicker\": \"02\"}",
+        "kicker": "02",
+        "narration": "温网冠军反扑",
+        "seconds": 3,
+        "title_card": "温网冠军反扑"
+      },
+      {
+        "_beat": 2,
+        "_score_inset_why": "score_02的110.5–116.5秒板含两盘局分和AD小分，118.5秒无板。首版516读数裁掉右侧比分，采用实际较宽读数628的既有人审x2入口，并保留自动消失检测。",
+        "_why": "诺斯科娃盘点及庆祝，英文原声124.72确认6-3。",
+        "crosses_cut": "114.85秒由盘点落地切到诺斯科娃包厢庆祝；120.09秒转观众前收住。",
+        "end": 120,
+        "narration": "来到第二盘末段，诺斯科娃的发球打开了局面。六比三，温网冠军扳回一盘。",
+        "score_inset": {
+          "x2": 628
+        },
+        "score_inset_windows": [
+          [
+            110.4,
+            117.9
+          ]
+        ],
+        "start": 110.4
+      },
+      {
+        "_why": "自动链机械插的章节卡（review 路线 ⑤）：editorial.chapters 对应这个 beat，插在它的第一段之前",
+        "image": "<title_card>{\"text\": \"抢十寸步不让\", \"kicker\": \"03\"}",
+        "kicker": "03",
+        "narration": "抢十寸步不让",
+        "seconds": 3,
+        "title_card": "抢十寸步不让"
+      },
+      {
+        "_beat": 3,
+        "_why": "130.4–141.2秒完整抢十回合；球落地后、141.32秒反应镜头切点前收住。",
+        "end": 141.2,
+        "narration": "决胜盘又走到抢十。诺斯科娃步步紧逼，萨巴伦卡把胜负悬念扛到了最后。",
+        "score_inset": true,
+        "start": 130.4
+      },
+      {
+        "_why": "完整数据图展示18比12个Ace、46比42个制胜分；统计反差与两盘抢七结果为复盘论点提供证据。",
+        "image": "<stat_card>",
+        "narration": "诺斯科娃的Ace和制胜分都更多。萨巴伦卡赢下的，却是两盘抢七。",
+        "seconds": 10,
+        "stat_card": true
+      },
+      {
+        "_reviewed_ending_boundary": "原片182.5秒两人网前拥抱；184.5秒已经松手分开。按合同在握手完成后的第一个已核实画面边界收住，不接之后挥手和包厢。MiniMax报告保留原文，实际片尾仍完整覆盖166.67–176.99秒冷开场。",
+        "_score_inset_why": "contact_04_detail逐帧核对：171.5秒板仍在，172.5秒已收走。自动检测主区间到172.0；排除175秒后衣服与看台误报，宽度继续现量。",
+        "_why": "正文重新兑现冷开场的完整结局：Reuses cold-open match point (166.67–176.99: serving + winner reaction), then 179.46–181.5s shows both players walking to net, 182.5s–183.5s shows the handshake at net, 184.5s–185.5s shows Sabalenka waving to the crowd. Ending fully covers cold open window.",
+        "crosses_cut": "保留完整赛点及紧接其后的获胜、对手反应；所有画面同场，具体时码与身份见MiniMax原始通过证据。",
+        "end": 184.5,
+        "fit": "crop",
+        "narration": "抢十来到赛点，萨巴伦卡的这记二发直奔外角！换成你，敢这样发二发吗？",
+        "score_inset": true,
+        "score_inset_windows": [
+          [
+            166.67,
+            172
+          ]
+        ],
+        "start": 166.67
+      }
+    ]
+  },
+  "_revision_note": "人工依据WTA官方完整赛后报道与源片逐分画面扩写，保留既有DeepSeek原稿及MiniMax证据。旧版保持可访问，新版独立交付，避免混淆防重记录。",
+  "stat_card_full_canvas": true,
+  "revision_of": "sabalenka-noskova",
+  "_revision_request": "用户明确要求：那去修改萨巴伦卡那比赛的视频呀，做到质量和效果都很好。随后明确：数据页不是放大字号，是把数据卡片在画布上全屏。"
+}
