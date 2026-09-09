@@ -1,0 +1,67 @@
+{
+  "film_sha256": "ac635f2f0792c903648bb8cbed187588283c7d42ca7f328c2c162d0df3a6c240",
+  "film_seconds": 182.181,
+  "production_sla": {
+    "version": 2,
+    "pipeline": "interview-clip",
+    "slug": "rybakina-zheng-us-open-2026-qf-interview",
+    "received_at": "2026-09-09T20:01:32Z",
+    "artifact_ready_at": "2026-09-09T20:10:03Z",
+    "elapsed_seconds": 511.972,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "ac635f2f0792c903648bb8cbed187588283c7d42ca7f328c2c162d0df3a6c240",
+    "spec_sha256": "b3b330ac01ef8e9f643b7bcf7ebf50d9bcca191473a3758c918fd19bfe1d6713",
+    "run_id": "34398546264",
+    "stage_events": [
+      {
+        "stage": "preflight",
+        "at": "2026-09-09T20:03:28Z",
+        "run_id": "34398546264"
+      },
+      {
+        "stage": "asr_verify",
+        "at": "2026-09-09T20:05:29Z",
+        "run_id": "34398546264"
+      },
+      {
+        "stage": "render",
+        "at": "2026-09-09T20:07:22Z",
+        "run_id": "34398546264"
+      }
+    ],
+    "render_seconds": 161.972,
+    "pre_render_seconds": 350.0
+  },
+  "production_stage_events": [
+    {
+      "stage": "preflight",
+      "at": "2026-09-09T20:03:28Z",
+      "run_id": "34398546264"
+    },
+    {
+      "stage": "asr_verify",
+      "at": "2026-09-09T20:05:29Z",
+      "run_id": "34398546264"
+    },
+    {
+      "stage": "render",
+      "at": "2026-09-09T20:07:22Z",
+      "run_id": "34398546264"
+    },
+    {
+      "stage": "qc",
+      "at": "2026-09-09T20:10:04Z",
+      "run_id": "34398546264"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-09T20:10:05Z",
+      "run_id": "34398546264"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/interview-rybakina-zheng-us-open-2026-qf-interview/rybakina-zheng-us-open-2026-qf-interview.mp4?v=ac635f2f0792c903",
+  "video_bytes": 70669304,
+  "release_asset_digest": "sha256:ac635f2f0792c903648bb8cbed187588283c7d42ca7f328c2c162d0df3a6c240",
+  "qc_attestation_sha256": "723c98f60b86ad7a116e2f7c4517a25748fcecd6eba3ef09e5887695f46bfddf"
+}
