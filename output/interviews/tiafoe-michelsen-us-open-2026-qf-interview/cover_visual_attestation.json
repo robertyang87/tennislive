@@ -1,0 +1,56 @@
+{
+  "status": "pass",
+  "checked_at": "2026-09-09T05:14:55Z",
+  "auditor": "opencv-haar-v1",
+  "expected_subject": "蒂亚福",
+  "identity_evidence": "L0-bound spec subject + same-source frame_at",
+  "spec_sha256": "e6224a72864a28e1e2ef4bda78467b5248f1447e5566694aee6dd9d9a2c05791",
+  "poster_sha256": "db06ba8c8562eebcab5bd65a90da1e2362357fcb92adef2b3066a0efa5828640",
+  "thresholds": {
+    "close_up_zoom": 1.5,
+    "face_height_ratio": 0.08,
+    "close_up_face_height_ratio": 0.14,
+    "face_area_ratio": 0.01,
+    "face_sharpness": 45.0,
+    "face_contrast": 32.0,
+    "eyes": 2
+  },
+  "result": {
+    "poster": {
+      "decodable": true,
+      "format": "JPEG",
+      "width": 1080,
+      "height": 1440,
+      "photo_region": [
+        0,
+        150,
+        1080,
+        810
+      ]
+    },
+    "face": {
+      "detector": "frontal-default",
+      "box": [
+        153,
+        225,
+        341,
+        341
+      ],
+      "detected_faces": 2,
+      "eyes": 2,
+      "face_height_ratio": 0.42099,
+      "face_area_ratio": 0.13292,
+      "center_x_ratio": 0.29954,
+      "center_y_ratio": 0.30309,
+      "sharpness": 287.66,
+      "contrast": 117.0
+    },
+    "contract": {
+      "shot_type": "",
+      "frame_at": 28.0,
+      "zoom": 1.0,
+      "focus_y": 0.5
+    }
+  },
+  "issues": []
+}

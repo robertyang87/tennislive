@@ -1,0 +1,110 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1440
+WrapStyle: 0
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: EN,Noto Sans,46,&H00FFFFFF,&H00000000,&H00000000,1,0,0,0,100,100,0,0,1,0,0,8,64,64,1141,1
+Style: ZH,Noto Sans CJK SC,70,&H0074DCC3,&H00000000,&H00000000,1,0,0,0,100,100,0,0,1,0,0,8,64,64,1194,1
+Style: HEADA,得意黑,54,&H00FFFFFF,&H00000000,&H00000000,0,0,0,0,100,100,1,0,1,0,0,8,48,48,24,1
+Style: HEADB,Noto Sans CJK SC,38,&H00DBE2D5,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,1.5,0,8,48,48,92,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 2,0:00:00.00,0:01:35.80,HEADA,,0,0,0,,{\r\fnNoto Sans CJK SC\fs54\c&H8CDC4A&\an8\pos(540,24)}▍{\r\fn得意黑\fs54}2026 美网 男单1/4决赛
+Dialogue: 1,0:00:00.00,0:01:35.80,HEADB,,0,0,0,,{\r\fnNoto Sans CJK SC\fs38\c&H8CDC4A&\an8\pos(540,92)}蒂亚福 {\r\fnTL Score\b300\fs44}5-{\r\fnTL Score\c&H8CDC4A&\b1\fs44}7 {\r\fnTL Score\b300\fs44}3-{\r\fnTL Score\c&H8CDC4A&\b1\fs44}6 {\r\fnTL Score\c&H8CDC4A&\b1\fs44}7-{\r\fnTL Score\b300\fs44}5 {\r\fnTL Score\c&H8CDC4A&\b1\fs44}6-{\r\fnTL Score\b300\fs44}3 {\r\fnTL Score\c&H8CDC4A&\b1\fs44}7-{\r\fnTL Score\b300\fs44}6{\r\fnTL Score\fs44}⁶{\r\fnNoto Sans CJK SC\fs38} 米切尔森 · 赛后场上采访
+Dialogue: 0,0:00:00.14,0:00:04.84,EN,,0,0,0,,Frances, let's go back over two hours ago.
+Dialogue: 0,0:00:00.14,0:00:04.84,ZH,,0,0,0,,弗朗西斯，两个多小时前
+Dialogue: 0,0:00:04.84,0:00:06.88,EN,,0,0,0,,You're down two sets to love.
+Dialogue: 0,0:00:04.84,0:00:06.88,ZH,,0,0,0,,你当时两盘落后
+Dialogue: 0,0:00:06.88,0:00:08.60,EN,,0,0,0,,Alex serving for the match.
+Dialogue: 0,0:00:06.88,0:00:08.60,ZH,,0,0,0,,亚历克斯的发球胜赛局
+Dialogue: 0,0:00:08.60,0:00:10.30,EN,,0,0,0,,What do you tell yourself in that moment
+Dialogue: 0,0:00:08.60,0:00:10.30,ZH,,0,0,0,,那一刻你会怎么提醒自己
+Dialogue: 0,0:00:10.30,0:00:12.70,EN,,0,0,0,,when you're going back to return?
+Dialogue: 0,0:00:10.30,0:00:12.70,ZH,,0,0,0,,准备走回去接发球时
+Dialogue: 0,0:00:12.70,0:00:15.50,EN,,0,0,0,,I hope he gets tight.
+Dialogue: 0,0:00:12.70,0:00:15.50,ZH,,0,0,0,,我希望他紧张起来
+Dialogue: 0,0:00:15.50,0:00:16.38,EN,,0,0,0,,And, you know,
+Dialogue: 0,0:00:15.50,0:00:16.38,ZH,,0,0,0,,然后，你知道
+Dialogue: 0,0:00:16.38,0:00:17.40,EN,,0,0,0,,just play a super tough game.
+Dialogue: 0,0:00:16.38,0:00:17.40,ZH,,0,0,0,,尽力打好这艰难的一局
+Dialogue: 0,0:00:17.40,0:00:18.76,EN,,0,0,0,,Obviously, you know,
+Dialogue: 0,0:00:17.40,0:00:18.76,ZH,,0,0,0,,显然，你知道
+Dialogue: 0,0:00:18.76,0:00:19.82,EN,,0,0,0,,he gave me some gifts with a couple
+Dialogue: 0,0:00:18.76,0:00:19.82,ZH,,0,0,0,,他送了我些机会，几个
+Dialogue: 0,0:00:19.82,0:00:20.74,EN,,0,0,0,,of double faults there.
+Dialogue: 0,0:00:19.82,0:00:20.74,ZH,,0,0,0,,双误帮了忙
+Dialogue: 0,0:00:20.74,0:00:22.62,EN,,0,0,0,,And then I slowly,
+Dialogue: 0,0:00:20.74,0:00:22.62,ZH,,0,0,0,,然后我慢慢
+Dialogue: 0,0:00:22.62,0:00:24.52,EN,,0,0,0,,slowly started to get my rhythm there,
+Dialogue: 0,0:00:22.62,0:00:24.52,ZH,,0,0,0,,慢慢地找到自己的节奏
+Dialogue: 0,0:00:24.52,0:00:25.80,EN,,0,0,0,,snuck out that third set,
+Dialogue: 0,0:00:24.52,0:00:25.80,ZH,,0,0,0,,艰难拿下了第三盘
+Dialogue: 0,0:00:25.80,0:00:27.92,EN,,0,0,0,,and only started playing better and better.
+Dialogue: 0,0:00:25.80,0:00:27.92,ZH,,0,0,0,,接着越打越好
+Dialogue: 0,0:00:27.92,0:00:29.44,EN,,0,0,0,,But he's a hell of a player, man.
+Dialogue: 0,0:00:27.92,0:00:29.44,ZH,,0,0,0,,但他真是个厉害的球员
+Dialogue: 0,0:00:29.44,0:00:32.22,EN,,0,0,0,,I mean, he easily should have won today.
+Dialogue: 0,0:00:29.44,0:00:32.22,ZH,,0,0,0,,他今天本来很有希望赢
+Dialogue: 0,0:00:32.22,0:00:36.24,EN,,0,0,0,,So shout out to Alex Michelsen.
+Dialogue: 0,0:00:32.22,0:00:36.24,ZH,,0,0,0,,向亚历克斯·米切尔森致敬
+Dialogue: 0,0:00:39.74,0:00:40.62,EN,,0,0,0,,In matches like
+Dialogue: 0,0:00:39.74,0:00:40.62,ZH,,0,0,0,,像这样
+Dialogue: 0,0:00:40.62,0:00:42.74,EN,,0,0,0,,this, these are iconic matches, seven, six,
+Dialogue: 0,0:00:40.62,0:00:42.74,ZH,,0,0,0,,这样的经典比赛，七比六
+Dialogue: 0,0:00:42.74,0:00:43.48,EN,,0,0,0,,in the fifth.
+Dialogue: 0,0:00:42.74,0:00:43.48,ZH,,0,0,0,,而且是在决胜盘
+Dialogue: 0,0:00:43.48,0:00:45.94,EN,,0,0,0,,How important is it for this crowd
+Dialogue: 0,0:00:43.48,0:00:45.94,ZH,,0,0,0,,现场观众
+Dialogue: 0,0:00:45.94,0:00:51.06,EN,,0,0,0,,to get behind you in those big moments?
+Dialogue: 0,0:00:45.94,0:00:51.06,ZH,,0,0,0,,在关键时刻支持有多重要
+Dialogue: 0,0:00:57.35,0:00:58.33,EN,,0,0,0,,Yeah, everyone was sleeping
+Dialogue: 0,0:00:57.35,0:00:58.33,ZH,,0,0,0,,是啊，大家都像睡着了
+Dialogue: 0,0:00:58.33,0:00:59.39,EN,,0,0,0,,the first couple of hours.
+Dialogue: 0,0:00:58.33,0:00:59.39,ZH,,0,0,0,,刚开始的那几个小时
+Dialogue: 0,0:00:59.39,0:01:00.57,EN,,0,0,0,,I was like, what's going on?
+Dialogue: 0,0:00:59.39,0:01:00.57,ZH,,0,0,0,,我当时想，怎么回事
+Dialogue: 0,0:01:00.57,0:01:02.57,EN,,0,0,0,,I was asleep with y'all.
+Dialogue: 0,0:01:00.57,0:01:02.57,ZH,,0,0,0,,我也跟你们一起睡着了
+Dialogue: 0,0:01:02.57,0:01:03.99,EN,,0,0,0,,And then as it went along,
+Dialogue: 0,0:01:02.57,0:01:03.99,ZH,,0,0,0,,后来随着比赛进行
+Dialogue: 0,0:01:03.99,0:01:06.91,EN,,0,0,0,,the energy was incredible as it is always.
+Dialogue: 0,0:01:03.99,0:01:06.91,ZH,,0,0,0,,现场能量一如既往地惊人
+Dialogue: 0,0:01:06.91,0:01:08.41,EN,,0,0,0,,Thank you, obviously, two Americans,
+Dialogue: 0,0:01:06.91,0:01:08.41,ZH,,0,0,0,,谢谢，虽然都是美国球员
+Dialogue: 0,0:01:08.41,0:01:09.43,EN,,0,0,0,,but you guys are really for me,
+Dialogue: 0,0:01:08.41,0:01:09.43,ZH,,0,0,0,,但你们特别支持我
+Dialogue: 0,0:01:09.43,0:01:13.11,EN,,0,0,0,,and I really appreciate that.
+Dialogue: 0,0:01:09.43,0:01:13.11,ZH,,0,0,0,,我真的很感激
+Dialogue: 0,0:01:14.88,0:01:16.74,EN,,0,0,0,,And finally, you're into the semifinals
+Dialogue: 0,0:01:14.88,0:01:16.74,ZH,,0,0,0,,最后，你打进了半决赛
+Dialogue: 0,0:01:16.74,0:01:18.22,EN,,0,0,0,,for your third time.
+Dialogue: 0,0:01:16.74,0:01:18.22,ZH,,0,0,0,,这是第三次了
+Dialogue: 0,0:01:18.22,0:01:20.96,EN,,0,0,0,,Tonight, Carlos Alcaraz plays Ben Shelton.
+Dialogue: 0,0:01:18.22,0:01:20.96,ZH,,0,0,0,,今晚阿尔卡拉斯对阵谢尔顿
+Dialogue: 0,0:01:20.96,0:01:23.10,EN,,0,0,0,,You play the winner of that match.
+Dialogue: 0,0:01:20.96,0:01:23.10,ZH,,0,0,0,,你将对阵他们中的胜者
+Dialogue: 0,0:01:23.10,0:01:24.26,EN,,0,0,0,,Are you going to be locked in watching
+Dialogue: 0,0:01:23.10,0:01:24.26,ZH,,0,0,0,,今晚你会专心看
+Dialogue: 0,0:01:24.26,0:01:25.38,EN,,0,0,0,,that match tonight?
+Dialogue: 0,0:01:24.26,0:01:25.38,ZH,,0,0,0,,那场比赛吗
+Dialogue: 0,0:01:25.38,0:01:26.34,EN,,0,0,0,,Let your team watch it.
+Dialogue: 0,0:01:25.38,0:01:26.34,ZH,,0,0,0,,还是让团队去看
+Dialogue: 0,0:01:26.34,0:01:27.16,EN,,0,0,0,,You're going to chill.
+Dialogue: 0,0:01:26.34,0:01:27.16,ZH,,0,0,0,,你自己放松一下
+Dialogue: 0,0:01:27.16,0:01:28.20,EN,,0,0,0,,What's the game plan? Well, hence,
+Dialogue: 0,0:01:27.16,0:01:28.20,ZH,,0,0,0,,有何安排？——嗯，毕竟
+Dialogue: 0,0:01:28.20,0:01:29.18,EN,,0,0,0,,they've got to play right now.
+Dialogue: 0,0:01:28.20,0:01:29.18,ZH,,0,0,0,,他们马上就要打了
+Dialogue: 0,0:01:29.18,0:01:31.54,EN,,0,0,0,,I've already, I played for four hours forty.
+Dialogue: 0,0:01:29.18,0:01:31.54,ZH,,0,0,0,,我已打了四小时四十分钟
+Dialogue: 0,0:01:31.54,0:01:32.54,EN,,0,0,0,,But for sure, I'll watch,
+Dialogue: 0,0:01:31.54,0:01:32.54,ZH,,0,0,0,,不过我肯定会看
+Dialogue: 0,0:01:32.54,0:01:34.26,EN,,0,0,0,,but I'm going to enjoy this one, though.
+Dialogue: 0,0:01:32.54,0:01:34.26,ZH,,0,0,0,,但我要先享受这场胜利
+Dialogue: 0,0:01:34.26,0:01:35.96,EN,,0,0,0,,Let's go!
+Dialogue: 0,0:01:34.26,0:01:35.96,ZH,,0,0,0,,来吧！
