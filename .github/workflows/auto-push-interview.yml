@@ -193,7 +193,7 @@ jobs:
           name: zheng-presser-minimax-${{ github.run_id }}
           path: |
             output/interviews/zheng-rybakina-us-open-2026-qf-presser/minimax_visual_audit.json
-            output/interviews/zheng-rybakina-us-open-2026-qf-presser/minimax_visual_evidence/*.jpg
+            output/interviews/zheng-rybakina-us-open-2026-qf-presser/minimax_visual_evidence/**/*.jpg
           retention-days: 7
 
       - name: 写复制页（必须排在提交之前）
