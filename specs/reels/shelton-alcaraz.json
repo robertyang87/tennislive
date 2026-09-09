@@ -474,8 +474,14 @@
       "narration": "十比七，比赛结束。谢尔顿第一次击败世界前三，阿卡的大满贯十八连胜到此止步。四小时二十八分，两人在网前长久拥抱。输赢之外，他们都把自己拼到了最后。",
       "_beat": 3,
       "_why": "完整赛点、阿卡反应和网前拥抱，125.49之后不再是比赛回合；末尾裁在150.32解说时长前。",
-      "score_inset": false,
-      "_score_inset_why": "本段位于125.49秒赛点结束之后，为人物近景、握手或看台反应；原转播此后已收掉比赛计分条，不从画面抠取不存在的比分板。"
+      "score_inset": true,
+      "_score_inset_why": "逐帧核对本场源片：125.49秒之后比分板仍持续到约131.7秒，随后转为美网转场图形。允许区间只覆盖这段，实际可见边界由逐帧图形检测再收窄；不能因赛点结束就假定比分板已经撤下。",
+      "score_inset_windows": [
+        [
+          125.49,
+          132.49
+        ]
+      ]
     },
     {
       "start": 157.12,
@@ -575,5 +581,11 @@
   ],
   "stat_card_full_canvas": true,
   "tts_backend": "edge",
-  "_tts_backend_why": "本条render run34327221250的Azure语音返回401鉴权拒绝；按既有故障回退规则使用edge-tts，同一zh-CN-YunjianNeural音色。本spec没有Azure专属style或lead_pause；不更改密钥或权限。"
+  "_tts_backend_why": "本条render run34327221250的Azure语音返回401鉴权拒绝；按既有故障回退规则使用edge-tts，同一zh-CN-YunjianNeural音色。本spec没有Azure专属style或lead_pause；不更改密钥或权限。",
+  "_scoreboard_review": {
+    "reviewed": "2026-09-09",
+    "source": "https://youtu.be/wYd7I5_tMEs",
+    "finding": "旧渲染以两票支持的最大右缘统一裁整段，将背景误计为比分板；首盘736应约583，第三盘736应约657。决胜盘需随源图形宽度变化，握手前比分板仍在。",
+    "policy": "逐帧透明蒙版；无板帧不贴；稳定多数识别边界而非最大值；不以最大框兜底；保留黄色状态条。"
+  }
 }

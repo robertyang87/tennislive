@@ -392,6 +392,33 @@ def dead_seconds(levels: list[float], after: int,
     return dead, exempt
 
 
+def scoreboard_geometry_problem(film: Path, spec_path: Path, spec: dict) -> str | None:
+    """New US Open renders must carry frame-mask evidence, not just a QC flag."""
+    line = str((spec.get("topbar") or {}).get("line1", "")).lower()
+    if spec.get("layout") != "band" or not ("美网" in line or "us open" in line):
+        return None
+    meta = json.loads((film.parent / "render.json").read_text(encoding="utf-8"))
+    audit = film.parent / "scoreboard_qc.json"
+    if not audit.is_file() or meta.get("scoreboard_qc_sha256") != _sha256(audit):
+        return "比分板逐帧贴图证据缺失或在渲染后变化"
+    proof = json.loads(audit.read_text(encoding="utf-8"))
+    if proof.get("status") != "pass" or proof.get("spec_sha256") != _sha256(spec_path):
+        return "比分板证据不对应当前 spec"
+    expected = {i for i, seg in enumerate(spec["segments"]) if seg.get("score_inset")}
+    records = proof.get("segments") or []
+    if {r.get("segment") for r in records} != expected:
+        return "比分板扫描没有覆盖所有回贴片段"
+    for record in records:
+        path = film.parent / "score_masks" / Path(record["mask"]).name
+        if not path.is_file() or _sha256(path) != record.get("mask_sha256"):
+            return "比分板透明蒙版缺失或 hash 不一致"
+        if record.get("max_extra_source_px", 999) > 4 or record.get("gap_bridge_frames") != 0:
+            return "比分板仍允许宽裁或跨过已消失的帧"
+        if not record.get("frames") or not record.get("present_frames"):
+            return "比分板证据没有实际检测帧"
+    return None
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--slug", default="nishikori-shang")
@@ -529,6 +556,13 @@ def main() -> int:
         bad += 0 if ok else 1
         print(f"[{'ok' if ok else '不合格'}] 无解说段 {start:.1f}s（源 {src:.1f}s）"
               f"现场声最响 {worst:.1f} dB")
+
+    score_problem = scoreboard_geometry_problem(film, spec_path, spec)
+    if score_problem:
+        bad += 1
+        print(f"[不合格] {score_problem}")
+    else:
+        print("[ok] 比分板逐帧贴图证据与当前成片输入一致")
 
     if bad == 0:
         write_attestation(film, spec_path, spec)
