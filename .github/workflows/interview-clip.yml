@@ -149,6 +149,7 @@ jobs:
             assets
             data
             specs
+            skills
             src
             tools
 
@@ -164,6 +165,16 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+          cache: pip
+
+      - name: 发布文案前置检查
+        if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover'
+        env:
+          SLUG: ${{ github.event.inputs.slug }}
+        run: |
+          pip install -q -e .
+          python tools/video_sla.py mark --timeline "$RUNNER_TEMP/production-timeline.json" --phase preflight
+          python tools/production_preflight.py --spec "specs/interviews/$SLUG.json" --column 赛后开麦
 
       # 第二份 ASR 是开麦链路最大单项：最新成功样本 5m44s。模型本身过去每趟
       # 都从 Hugging Face 重下；这既不增加校验信息，也把成片推到 10m09s。
@@ -512,6 +523,7 @@ jobs:
         run: |
           set -o pipefail
           SPEC="specs/interviews/${{ github.event.inputs.slug }}.json"
+          python tools/video_sla.py mark --timeline "$RUNNER_TEMP/production-timeline.json" --phase asr_verify
           PYTHONPATH=src python tools/build_interview_clip.py --spec "$SPEC" --stage verify
 
       # cookie 从 `COOKIES` 环境变量走（`cookie_args()` 读它）。
@@ -550,10 +562,11 @@ jobs:
           OUTDIR="output/interviews/$SLUG"
           # 600 秒是性能目标，不是发布硬闸。内容完整与质检优先；超线由
           # `finish` 记 FAIL / warning，但后续 L2 与自动发布继续执行。
+          python tools/video_sla.py mark --timeline "$RUNNER_TEMP/production-timeline.json" --phase render
           RENDER_STARTED=$(date -u +%FT%TZ)
           PYTHONPATH=src python tools/build_interview_clip.py \
             --spec "$SPEC" --stage render
-          python tools/video_sla.py finish \
+          python tools/video_sla.py finish --spec "$SPEC" --timeline "$RUNNER_TEMP/production-timeline.json" \
             --received-at "${{ steps.production_clock.outputs.received_at }}" \
             --render-started-at "$RENDER_STARTED" \
             --artifact "$OUTDIR/$SLUG.mp4" \
@@ -588,6 +601,7 @@ jobs:
         run: |
           OUT="output/interviews/${{ github.event.inputs.slug }}/${{ github.event.inputs.slug }}.mp4"
           test -s "$OUT" || { echo "成片不存在或是空的：$OUT"; exit 1; }
+          python tools/video_sla.py mark --timeline "$RUNNER_TEMP/production-timeline.json" --phase qc
           PYTHONPATH=src python tools/check_interview_landed.py \
             --slug "${{ github.event.inputs.slug }}" --film "$OUT" \
             --write-attestation
@@ -624,6 +638,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          python tools/video_sla.py mark --timeline "$RUNNER_TEMP/production-timeline.json" --phase qc_passed --metadata "output/interviews/${{ github.event.inputs.slug }}/render.json"
           SLUG="${{ github.event.inputs.slug }}"
           OUTDIR="output/interviews/$SLUG"
           CLIP="$OUTDIR/$SLUG.mp4"

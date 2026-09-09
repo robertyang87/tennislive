@@ -185,3 +185,9 @@ def sample_digest() -> Digest:
         schedule=[upcoming],
         source="espn",
     )
+
+
+@pytest.fixture(autouse=True)
+def _isolate_production_research(monkeypatch, tmp_path):
+    monkeypatch.setenv("TENNISLIVE_TACTICAL_RESEARCH", "0")
+    monkeypatch.setenv("TENNISLIVE_PRODUCTION_CACHE", str(tmp_path / "production-cache"))

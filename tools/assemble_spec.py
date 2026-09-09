@@ -523,7 +523,9 @@ def assemble(*, slug: str, home: str, away: str, event: str, year: int,
              scoreboard_path: str | None = None,
              cover: bool = False,
              source_url: str = "",
-             background: str = "") -> dict:
+             background: str = "", tactical_packet: dict | None = None) -> dict:
+    from tactical_research import start_research, verified_context
+    research_job = start_research(home=home, away=away, event=event, year=year) if tactical_packet is None else None
     background_param = background
     notes: list[str] = []
     feed_home_zh, feed_away_zh = player_zh(home), player_zh(away)
@@ -679,6 +681,12 @@ def assemble(*, slug: str, home: str, away: str, event: str, year: int,
         notes.append(
             "爆冷封面：优先明星输家赛后失落高清近景；找不到再退赢家庆祝照")
 
+    # Research is optional and timeboxed. A saved packet can carry reviewed,
+    # timecoded claims; freshly discovered articles are not automatically facts.
+    tactical = tactical_packet if tactical_packet is not None else research_job.result()
+    draft["_tactical_research"] = tactical
+    notes.append(f"技战术资料：{tactical.get('status', 'provided')}；未核观点不进入旁白")
+
     # ⑤ 文案（DeepSeek）。facts 用上面算出的狠数据候选喂，background 自动聚合
     #    H2H + 近况 + 排名 + 中文热点（账号所有者：「不光只是 H2H，还有前几轮的
     #    战国、当前的热点，都要作为信息背景，查全了」）。--background 给了就
@@ -706,6 +714,9 @@ def assemble(*, slug: str, home: str, away: str, event: str, year: int,
             draft.get("stats", {}), draft.get("cover", {}).get("matchup", []))
         if points_fact:
             editorial_facts = f"- {points_fact}\n{editorial_facts}".rstrip()
+        tactical_facts = verified_context(tactical, identity={"home": home, "away": away, "event": event, "year": year})
+        if tactical_facts:
+            editorial_facts += "\n" + tactical_facts
         draft["editorial"] = draft_editorial(
             chat, home=home, away=away, event=event, year=year,
             fixture=fixture, facts=editorial_facts, background=background)
@@ -956,6 +967,7 @@ def main() -> int:
                     help="源片 URL（render 硬要求，编排器探测集锦时拿到）")
     ap.add_argument("--background", default="",
                     help="球员背景（排名/年龄/H2H/纪录/金句），有就喂给文案")
+    ap.add_argument("--tactical-packet", type=Path, help="已读报道与经同场/时间码核验的技战术观点 JSON")
     ap.add_argument("--write", action="store_true",
                     help="把草稿落盘到 specs/reels/pending/<slug>.draft.json；不给就只打印")
     args = ap.parse_args()
@@ -971,7 +983,8 @@ def main() -> int:
                      captions_path=args.captions, cuts_path=args.cuts,
                      pbp_path=args.pbp, scoreboard_path=args.scoreboard,
                      cover=args.cover, source_url=args.source_url,
-                     background=args.background)
+                     background=args.background,
+                     tactical_packet=json.loads(args.tactical_packet.read_text()) if args.tactical_packet else None)
 
     print(json.dumps(draft, ensure_ascii=False, indent=2))
     if not args.write:

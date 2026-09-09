@@ -1,0 +1,41 @@
+name: production-research-check
+on:
+  pull_request:
+    paths:
+      - tools/tactical_research.py
+      - .github/workflows/production-research-check.yml
+  workflow_dispatch: {}
+permissions:
+  contents: read
+jobs:
+  read-only-probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            src
+            tools
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+      - run: pip install -q -e .
+      - name: 实测固定来源读取与超时回退
+        run: |
+          python tools/tactical_research.py --home 'Aryna Sabalenka' --away 'Linda Noskova' --event 'US Open' --year 2026 --out /tmp/tactical-probe.json
+          python - <<'PY'
+          import json, os
+          d = json.load(open('/tmp/tactical-probe.json'))
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as f:
+              f.write('```json\n' + json.dumps(d, ensure_ascii=False, indent=2) + '\n```\n')
+          assert d['elapsed_seconds'] < 40
+          if d['status'] != 'ready':
+              print('::warning::实际来源未读到；查看 source_status，不把回退成功称为资料获取成功')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: tactical-source-probe
+          path: /tmp/tactical-probe.json
