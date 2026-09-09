@@ -1,0 +1,592 @@
+{
+  "slug": "zheng-rybakina",
+  "_column": "reel",
+  "cover": {
+    "matchup": [
+      {
+        "name": "郑钦文",
+        "name_en": "qinwen zheng",
+        "country": "CHN",
+        "rank": 121
+      },
+      {
+        "name": "莱巴金娜",
+        "name_en": "elena rybakina",
+        "country": "KAZ",
+        "rank": 2
+      }
+    ],
+    "winner": "莱巴金娜",
+    "result": "3-6 6-1 6-4",
+    "portrait": {
+      "image": "assets/reel/zheng-rybakina-cover.jpg",
+      "_portrait_why": "美网官方本场四分之一决赛近景：Qinwen Zheng reacts，2026-09-09，Simon Bruty/USTA；人物和白上衣绿裙与本场视频一致。不是赛后失落照，不虚构拍摄时刻。",
+      "_low_res_why": "美网官方图库xlarge原生1280×720上限，原图清晰，保留官方实拍。",
+      "source_url": "https://photo-assets.usopen.org/images/pics/large/f_USTA2467193_20260909_SB2_3725.jpg"
+    },
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "郑钦文",
+    "hook": "七连胜之后\n郑钦文遗憾止步",
+    "topic": "US OPEN 1/4决赛",
+    "scoreboard": {
+      "court": "Arthur Ashe Stadium",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A8040%2C%22unit%22%3A%22seconds%22%2C%22source_value%22%3A%222%3A14%22%2C%22source%22%3A%22structured%20match%20statistics%22%7D",
+        "field": "duration"
+      },
+      "_court_why": "赛果源结构化 court 字段",
+      "_duration_why": "比赛统计结构化全场时长"
+    }
+  },
+  "_production": {
+    "kind": "orchestrated_reel",
+    "received_at": "2026-09-09T19:43:00Z",
+    "event": "US OPEN",
+    "year": 2026,
+    "round": "四分之一决赛",
+    "court": "Arthur Ashe Stadium",
+    "status": "waiting_source_quality_decision",
+    "revision": "process-complete-remake",
+    "blocking_reason": "用户新提供的ESPN长版所有可用格式最高原生1280×720；现有正式制作要求1080p及以上。等待本条明确清晰度取舍或原生高清源，不放大冒充高清，不改质量闸。"
+  },
+  "_match": {
+    "status": "result_verified",
+    "source": "flashscore_points",
+    "source_id": "CfoHfqGd",
+    "flashscore_id": "CfoHfqGd",
+    "participants": [
+      "郑钦文",
+      "莱巴金娜"
+    ],
+    "set_scores_home_away": [
+      [
+        6,
+        3
+      ],
+      [
+        1,
+        6
+      ],
+      [
+        4,
+        6
+      ]
+    ],
+    "winner": "莱巴金娜",
+    "loser": "郑钦文",
+    "winner_result": "3-6 6-1 6-4",
+    "loser_result": "6-3 1-6 4-6",
+    "tiebreaks_home_away": [
+      null,
+      null,
+      null
+    ]
+  },
+  "stats": {
+    "a": {
+      "aces": 7,
+      "df": 4,
+      "winners": 18,
+      "ue": 27,
+      "first_in": 45,
+      "first_won": 36,
+      "second_total": 49,
+      "second_won": 23,
+      "bp_conv": 1,
+      "bp_chances": 4,
+      "pts_won": 79,
+      "pts_total": 167,
+      "first_total": 94,
+      "headshot": "assets/players/wta-328120-zheng-qinwen.png"
+    },
+    "b": {
+      "aces": 5,
+      "df": 5,
+      "winners": 20,
+      "ue": 26,
+      "first_in": 40,
+      "first_won": 32,
+      "second_total": 33,
+      "second_won": 21,
+      "bp_conv": 3,
+      "bp_chances": 13,
+      "pts_won": 88,
+      "pts_total": 167,
+      "first_total": 73,
+      "headshot": "assets/players/headshots/wta-324166.jpg"
+    }
+  },
+  "_hit_data": [
+    {
+      "label": "总分差",
+      "detail": "郑钦文 79 - 莱巴金娜 88，净差 9 分，莱巴金娜 领先",
+      "diff": 9,
+      "source": "flashscore df_mh_1（总分）"
+    },
+    {
+      "label": "郑钦文 一发得分率摆动",
+      "detail": "第1盘84% → 第2盘71% → 第3盘79%",
+      "swing": 13,
+      "source": "flashscore df_st_1（分盘一发得分率）"
+    },
+    {
+      "label": "莱巴金娜 一发得分率摆动",
+      "detail": "第1盘70% → 第2盘79% → 第3盘88%",
+      "swing": 18,
+      "source": "flashscore df_st_1（分盘一发得分率）"
+    },
+    {
+      "label": "郑钦文 破发点兑现",
+      "detail": "1/4（25%）",
+      "source": "flashscore df_st_1（破发点）"
+    },
+    {
+      "label": "莱巴金娜 破发点兑现",
+      "detail": "3/13（23%）",
+      "source": "flashscore df_st_1（破发点）"
+    },
+    {
+      "label": "郑钦文 连续保发",
+      "detail": "5 个发球局",
+      "source": "flashscore df_mh_1（逐局）"
+    },
+    {
+      "label": "莱巴金娜 连续保发",
+      "detail": "9 个发球局",
+      "source": "flashscore df_mh_1（逐局）"
+    },
+    {
+      "label": "交手记录",
+      "detail": "Zheng Q. 1 : 5 Rybakina E.（含本场） · 红土 0:1 · 草地 0:1 · 硬地 1:3",
+      "source": "flashscore df_hh_1"
+    },
+    {
+      "label": "近况",
+      "detail": "Zheng Q. 最近 5 场 4 胜（LWWWW）；Rybakina E. 最近 5 场 5 胜（WWWWW）",
+      "source": "flashscore df_hh_1 Last matches"
+    }
+  ],
+  "_durations": [
+    [
+      "Set 1",
+      "0:46"
+    ],
+    [
+      "Set 2",
+      "0:38"
+    ],
+    [
+      "Set 3",
+      "0:50"
+    ],
+    [
+      "全场",
+      "2:14"
+    ]
+  ],
+  "_turning_points": [
+    {
+      "label": "【Set 1】6-3  郑钦文发球，郑钦文拿下  密度13  ← 5个破发点、4个盘点",
+      "density": 13,
+      "tags": [
+        "5个破发点",
+        "4个盘点"
+      ]
+    },
+    {
+      "label": "【Set 3】4-5  郑钦文发球，莱巴金娜拿下  密度4  ← 4个破发点",
+      "density": 4,
+      "tags": [
+        "4个破发点"
+      ]
+    },
+    {
+      "label": "【Set 3】4-6  莱巴金娜发球，莱巴金娜拿下  密度3  ← 1个赛点",
+      "density": 3,
+      "tags": [
+        "1个赛点"
+      ]
+    },
+    {
+      "label": "【Set 1】5-3  莱巴金娜发球，郑钦文拿下  密度2  ← 2个破发点、破发成功",
+      "density": 2,
+      "tags": [
+        "2个破发点",
+        "破发成功"
+      ]
+    },
+    {
+      "label": "【Set 2】1-5  郑钦文发球，莱巴金娜拿下  密度2  ← 2个破发点",
+      "density": 2,
+      "tags": [
+        "2个破发点"
+      ]
+    }
+  ],
+  "_tactical_research": {
+    "version": 1,
+    "identity": {
+      "home": "qinwen zheng",
+      "away": "elena rybakina",
+      "event": "US OPEN",
+      "year": 2026,
+      "source_urls": []
+    },
+    "sources": [
+      {
+        "url": "https://www.rolandgarros.com/en-us/article/2026-us-open-third-round-zheng-cerundolo-comebacks-success-keys-fritz",
+        "title": "",
+        "published_at": "",
+        "status": "read",
+        "text_sha256": "8811c73a181273e93635dcc7f319dbcebc8fffb6037aacb7e9ada3935997aa39",
+        "scope": "player_background",
+        "excerpts": [],
+        "note": "读到 32 段",
+        "match_verified": false
+      }
+    ],
+    "source_status": {
+      "brain_game": "feed HTTP 403; index HTTP 403",
+      "tennis_abstract": "feed HTTP 403; index HTTP 403",
+      "hugh_clarke": "feed HTTP 403; index HTTP 403",
+      "atp": "no_matching_article",
+      "wta": "ok",
+      "usopen": "no_matching_article",
+      "australian_open": "no_matching_article",
+      "roland_garros": "ok",
+      "wimbledon": "no_matching_article"
+    },
+    "status": "no_readable_analysis",
+    "collected_at": "2026-09-09T18:40:02.053379+00:00",
+    "elapsed_seconds": 2.188
+  },
+  "editorial": {
+    "hook": [
+      "七连胜之后",
+      "郑钦文遗憾止步"
+    ],
+    "question": "决胜盘四比三，郑钦文曾拿到破发点，为什么这次机会格外可惜？",
+    "thesis": "郑钦文首盘破发后救五个破发点艰难收盘，次盘被扳平；决胜盘四比三错过破发点，下一局双误被破，七连胜后止步美网1/4决赛。",
+    "beats": [
+      "首盘前七局双方各自保发，郑钦文四比三领先。第八局她完成关键破发，把比分带到五比三。第九局郑钦文先后挽救五个破发点，直到第四个盘点才以六比三拿下首盘。",
+      "第二盘莱巴金娜先保发，郑钦文下一局四十比十五领先仍被破，零比二落后。一比三时郑钦文拿到回破点但未兑现，随后再次被破，一比五。莱巴金娜六比一扳平盘分，本盘制胜分郑钦文一记、莱巴金娜十记。",
+      "决胜盘第八局，郑钦文四比三领先并拿到破发点，但反手直线穿越出底线。莱巴金娜随后保发，追到四比四。下一局郑钦文连救三个破发点，仍在第四个破发点上双误失守。"
+    ],
+    "chapters": [
+      "首盘破发与焦灼",
+      "次盘坠落的盘面",
+      "错过的机会"
+    ],
+    "human_context": {
+      "angle": "首盘破发后艰难收盘，次盘被扳平，决胜盘第八局错过破发点，第九局双误被破。",
+      "facts": [
+        "莱巴金娜以3-6 6-1 6-4击败郑钦文。",
+        "郑钦文 79 - 莱巴金娜 88，净差 9 分，莱巴金娜 领先",
+        "第1盘84% → 第2盘71% → 第3盘79%",
+        "第1盘70% → 第2盘79% → 第3盘88%",
+        "1/4（25%）",
+        "郑钦文2026美网资格赛三胜、正赛前四轮四胜，合计七连胜。",
+        "美网官方2504场：郑钦文6-3 1-6 4-6莱巴金娜，2:14。",
+        "当地时间2026年9月9日美网女单1/4决赛。",
+        "首盘4-3时完成破发，5-3的发球胜盘局救五个破发点、第四个盘点兑现。",
+        "第二盘郑钦文一发进球率35%，制胜分1比10。",
+        "决胜盘第八局4-3的破发点未兑现；第九局连救三个破发点后，第四个破发点双误被破。"
+      ],
+      "sources": [
+        "https://www.youtube.com/watch?v=HSAAm3UtKDo",
+        "https://www.flashscore.com/match/tennis/CfoHfqGd/#/match-summary",
+        "https://www.usopen.org/en_US/scores/feeds/2026/players/matches/wta328120_matches.json",
+        "https://www.youtube.com/watch?v=-6Gv0033I2I"
+      ]
+    },
+    "narration": [
+      "首盘郑钦文保发僵持后，第八局关键破发，六比三艰难拿下。",
+      "第二盘郑钦文制胜分仅有一记，莱巴金娜十记，六比一强势扳平。",
+      "决胜盘四比三的破发点打丢后，郑钦文四比四时双误被破，莱巴金娜六比四终结比赛。"
+    ],
+    "mode": "match_review"
+  },
+  "push": {
+    "auto": true,
+    "summary": "郑钦文错失关键破发点惜败",
+    "lead": "当地时间9月9日，美网女单1/4决赛，郑钦文6-3、1-6、4-6负于莱巴金娜。\n\n首盘4-3时的关键破发，让她带着5-3进入发球胜盘局；这一局救了五个破发点，直到第四个盘点才收下。第二盘一发进球率降至35%，比赛被扳平。\n\n最可惜的是决胜盘第八局：4-3领先时拿到破发点，反手直线穿越却出了底线。错过5-3的机会，接着自己的发球局又在连救三个破发点后因双误失守。资格赛以来的七连胜，就此停在1/4决赛。"
+  },
+  "segments": [
+    {
+      "start": 171.04,
+      "end": 181.5,
+      "narration": "",
+      "_ending_payoff_required": true,
+      "_quote_kind": "broadcast",
+      "quote": [
+        {
+          "at": 3.76,
+          "text": "And that's the celebration\n这就是庆祝时刻"
+        },
+        {
+          "at": 5.84,
+          "text": "on her first match point.\n在她的第一个赛点上。"
+        },
+        {
+          "at": 7.92,
+          "text": "One and done. She's won.\n一次机会就结束。她赢了。"
+        }
+      ],
+      "fit": "crop",
+      "_why": "MiniMax 视觉证据：172.5s莱巴金娜黄衣近景、174.5s郑钦文白Nike上衣凝重正面近景、176.5s郑钦文特写、180.5s网前握手——全部落在171.04–181.5窗口内；莱巴金娜在180.5s握手时清晰可见；英文原声来自 captions.txt。",
+      "score_inset": false,
+      "_score_inset_why": "赛点后的球员近景和握手，无常规完整比分条，不从人物和球场抠贴。",
+      "source": "original"
+    },
+    {
+      "source": "original",
+      "start": 12.45,
+      "end": 28.27,
+      "narration": "当地时间二零二六年九月九日，美网女单1/4决赛。郑钦文对阵莱巴金娜，此前已从资格赛打出七连胜。",
+      "score_inset": true,
+      "_why": "完整首盘早段回合。开口说明当地日期、年份、赛事轮次和对阵，再交代资格赛以来七连胜。",
+      "_narration_key": "intro"
+    },
+    {
+      "source": "extended",
+      "start": 222.3,
+      "end": 255.59,
+      "narration": "首盘前七局双方各自保发，郑钦文四比三领先。这是莱巴金娜的发球局，拿下这一局，郑钦文就能带着五比三进入发球胜盘局。",
+      "score_inset": true,
+      "_why": "首盘4-3接发局的30-30完整相持与破发点镜头，随后5-3的比分确认破发已完成。源片有省略，不将某一球强认作第几个破发点兑现，不声称这是连续完整一局。",
+      "_narration_key": "first_break"
+    },
+    {
+      "source": "extended",
+      "start": 255.59,
+      "end": 288.24,
+      "narration": "关键破发，五比三。郑钦文来到发球胜盘局，可莱巴金娜还在反扑。要守住刚拿到的优势，这一局远没有比分看起来轻松。",
+      "score_inset": true,
+      "_why": "5-3发球胜盘局的多个关键分节选，每个所选回合保留起止；源片省略普通分，不称连续完整一局。包含15-40压力、救破发点发球和第三个盘点未兑现。",
+      "_narration_key": "first_close_pressure"
+    },
+    {
+      "source": "original",
+      "start": 36.69,
+      "end": 48.03,
+      "narration": "这一局已经救回五个破发点，现在是郑钦文的第四个盘点。",
+      "score_inset": true,
+      "_why": "ESPN长版跳过了首盘最后一分，原官方源补齐第四盘点发球和得分后的反应；绝不用省略后的盘分代替得分镜头。",
+      "_narration_key": "first_close_win"
+    },
+    {
+      "source": "original",
+      "start": 62.15,
+      "end": 77.58,
+      "narration": "六比三，郑钦文拿下首盘。但第二盘第一个发球局，四十比十五的领先没能守住，现在反而要面对破发点。",
+      "score_inset": true,
+      "_why": "第二盘0-1郑钦文发球的破发点，完整相持和莱巴金娜制胜球；口播先承接已经结束的首盘6-3。",
+      "_narration_key": "second_break"
+    },
+    {
+      "source": "original",
+      "start": 102.24,
+      "end": 111.73,
+      "narration": "郑钦文已经一比五落后，莱巴金娜来到盘点。",
+      "score_inset": true,
+      "_why": "第二盘1-5盘点完整发球和结果；用35%一发进球率解释本盘发球压力，局分1-6放到下一段已发生后说。",
+      "_narration_key": "second_set_point"
+    },
+    {
+      "source": "extended",
+      "start": 627.66,
+      "end": 647.28,
+      "narration": "第二盘一比六，郑钦文一发进球率仅百分之三十五，制胜分一比十。决胜盘来到四比三，她又等到接发球的机会。",
+      "score_inset": true,
+      "_why": "决胜盘4-3，莱巴金娜发球30-30。完整保留郑钦文打出制胜球得到破发点以及反应，不只从破发点开始。",
+      "_narration_key": "decider_earn_bp"
+    },
+    {
+      "source": "extended",
+      "start": 647.28,
+      "end": 662.53,
+      "narration": "决胜盘第八局，郑钦文拿到破发点。兑现就是五比三，接下来轮到她发球争取拿下比赛。",
+      "score_inset": true,
+      "_why": "完整保留第八局破发点：发球准备、相持、莱巴金娜上网、郑钦文反手直线出底线及663秒后的反应。假设兑现后5-3发球胜赛，不宣称必胜。",
+      "_narration_key": "decider_bp"
+    },
+    {
+      "source": "extended",
+      "start": 662.53,
+      "end": 670.12,
+      "narration": "反手直线出了底线，五比三的机会没能拿下。",
+      "score_inset": true,
+      "_why": "穿越球落地、回合已结束后，才说反手出界；完整保留郑钦文反应，不直接把失去破发点等同于丢掉这一局。",
+      "_narration_key": "decider_bp_reaction"
+    },
+    {
+      "source": "extended",
+      "start": 686.6,
+      "end": 700.87,
+      "narration": "莱巴金娜随后保发，四比四。郑钦文这一局又陷入零比四十，前两个破发点已经救回，这是第三个。",
+      "score_inset": true,
+      "_why": "4-4郑钦文发球30-40，前两个破发点已救回，完整保留第三个破发点的发球、长相持、正手制胜球和反应。不是被破发的那一分。",
+      "_narration_key": "decider_save"
+    },
+    {
+      "source": "extended",
+      "start": 705.15,
+      "end": 725.76,
+      "narration": "三个破发点都救回来了，但这一局还没结束。现在是第四个破发点。",
+      "score_inset": true,
+      "_why": "再次面对破发点，完整保留一发失误、二发准备、双误及对手反应。双误发生在722秒左右，旁白不得在此前说结果。",
+      "_narration_key": "decider_df"
+    },
+    {
+      "source": "extended",
+      "start": 725.76,
+      "end": 738.0,
+      "narration": "双误，连救三个破发点后，这一局还是丢了。四比五，莱巴金娜进入发球胜赛局。",
+      "score_inset": true,
+      "_why": "先交代上段双误使局分4-5，再进入莱巴金娜发球胜赛局，止于赛点准备；结束前没有拿下全场，不提前宣布最终赛果。",
+      "_narration_key": "decider_consequence"
+    },
+    {
+      "start": 159.61,
+      "end": 185.2,
+      "narration": "",
+      "fit": "crop",
+      "_why": "正文重新兑现冷开场的完整结局：159.61–170.5s黄色'MATCH POINT'标记及比分6-3 1-6 4-6完整赛点球（均落在159.61–185.2内），172.5–176.5s郑钦文凝重反应近景，180.5s网前握手，184.5s走向裁判席；完整覆盖冷开场171.04–181.5并延伸至185.2s，莱巴金娜在180.5s握手时可见；保留赛点和现场解说原声，不在制胜分结束前宣告结果。",
+      "score_inset": true,
+      "_quote_kind": "broadcast",
+      "quote": [
+        {
+          "at": 15.19,
+          "text": "And that's the celebration\n这就是庆祝时刻"
+        },
+        {
+          "at": 17.27,
+          "text": "on her first match point.\n在她的第一个赛点上。"
+        },
+        {
+          "at": 19.35,
+          "text": "One and done. She's won.\n一次机会就结束。她赢了。"
+        }
+      ],
+      "score_inset_windows": [
+        [
+          159.61,
+          171.04
+        ]
+      ],
+      "_score_inset_why": "源片 contact_03：159.61–171.04 为最后赛点，保留原生比分板及黄色赛点提示；171.04 后切入球员反应和握手，常规两行比分板已消失，不回贴。",
+      "source": "original"
+    },
+    {
+      "stat_card": true,
+      "seconds": 13,
+      "narration": "决胜盘四比三时错过破发点，下一局又未能守住，七连胜的征程就此止步。",
+      "_why": "完整赛点、双方反应与握手之后，全屏统计收束决胜盘错过机会的遗憾。"
+    }
+  ],
+  "_notes": [
+    "flashscore id：CfoHfqGd（按球员姓反查）",
+    "制胜分/非受迫失误：这场有，已填进 stats",
+    "头像 stats.a（郑钦文）：已发 spec 里认过，复用 assets/players/wta-328120-zheng-qinwen.png",
+    "头像 stats.b（莱巴金娜）：已发 spec 里认过，复用 assets/players/headshots/wta-324166.jpg",
+    "狠数据候选 9 条",
+    "转折局候选 10 局，取前 5",
+    "赛果事实闸：莱巴金娜 3-6 6-1 6-4 郑钦文（赢家视角）",
+    "技战术资料：no_readable_analysis；未核观点不进入旁白",
+    "文案通道 deepseek · deepseek-v4-pro",
+    "背景聚合：H2H/近况/排名/中文热点已备齐（年龄/纪录/金句要 human_context 调研补，见 spec 合同）",
+    "推送文案已通过事实校验；默认开启 QC 后自动推送",
+    "窗口起草 7 段，拦掉 1 段废窗口",
+    "封面官方实拍：比赛页上还没有这一场的赛后稿（页面共 8 篇文章，没有一篇 slug 含这两个姓）。Match Reaction 一般赛后一小时内上线——等会儿再试，别当成「没有实拍」。",
+    "⚠️ 封面没抓到（稿子没挂或没有实拍），portrait 留空，render 前 cover_photo_problem 闸会要求认领 frame_at/_frame_why",
+    "用户明确要求重做，保留旧发布台账；新成片需重新通过QC后才能替换。"
+  ],
+  "_visual_evidence": {
+    "model": "MiniMax-M3",
+    "status": "pass",
+    "visual_status": "pass",
+    "retryable": false,
+    "cold_open": {
+      "start": 171.04,
+      "end": 181.5,
+      "kind": "aftermath",
+      "winner_visible": true,
+      "reason": "172.5s莱巴金娜黄衣近景、174.5s郑钦文白Nike上衣凝重正面近景、176.5s郑钦文特写、180.5s网前握手——全部落在171.04–181.5窗口内；莱巴金娜在180.5s握手时清晰可见",
+      "confidence": 0.92
+    },
+    "ending": {
+      "start": 159.61,
+      "end": 185.2,
+      "kind": "match_point",
+      "winner_visible": true,
+      "reason": "159.61–170.5s黄色'MATCH POINT'标记及比分6-3 1-6 4-6完整赛点球（均落在159.61–185.2内），172.5–176.5s郑钦文凝重反应近景，180.5s网前握手，184.5s走向裁判席；完整覆盖冷开场171.04–181.5并延伸至185.2s，莱巴金娜在180.5s握手时可见",
+      "confidence": 0.92
+    },
+    "cover": {
+      "same_match": true,
+      "subject": "郑钦文",
+      "moment": "other",
+      "wrong_or_old": false,
+      "reason": "封面人物面部、白色Nike无袖上衣带vivo/Alipay+赞助logo、Wilson紫框球拍与接触表中172.5s/176.5s帧完全一致；蓝色背景Emirates字样匹配US Open场地标识；属于比赛中神情凝重的正面近景，符合'郑钦文遗憾'封面选人规则",
+      "confidence": 0.93
+    },
+    "problems": [],
+    "model_attempts": 2,
+    "input_sha256": "fa1402f8311e7f10b34f05fd2d6f3c6fbc25e808d0374ddaaad21574fdc54548",
+    "inputs": [
+      "contact_00.jpg",
+      "contact_01.jpg",
+      "contact_02.jpg",
+      "contact_03.jpg"
+    ],
+    "cover_image": "assets/reel/zheng-rybakina-cover.jpg",
+    "_source_url": "https://www.youtube.com/watch?v=HSAAm3UtKDo",
+    "_reuse_reason": "冷开场、结尾、封面照片均保留上一已审核版同一源文件与同一时间窗。新增ESPN正文已完整采样并人工逐球核实，另存完整probe和镜头审阅记录。未把旧时间码套到新源。"
+  },
+  "_cover_brief": {
+    "preferred_subject": "郑钦文",
+    "preferred_moment": "other",
+    "reason": "用户指定突出郑钦文的遗憾，采用本场正面近景而非赢家庆祝。照片是比赛中神情凝重的反应，不称为赛后失落。",
+    "reviewed_timeline": "人工已看完整4张contact sheet：159.61–171.04为真正赛点，174.5/176.5为郑钦文近景，180.5握手，184.5走向裁判。建议短冷开场171.04–181.5；完整结尾159.61–185.2共25.59秒，覆盖赛点、反应和握手。请独立核对，不以此替代视觉证据。不要引用200.5秒比分板支持185.2秒之前的窗口。"
+  },
+  "_duration_review": {
+    "source": "https://www.usopen.org/en_US/scores/feeds/2026/players/matches/wta328120_matches.json",
+    "match_id": "2504",
+    "reason": "美网官方46+38+50=134分钟；修正Flashscore多算一分钟。"
+  },
+  "_editorial_review": {
+    "reviewer": "Codex",
+    "status": "revised_pending_render_QC",
+    "model": "deepseek · deepseek-v4-pro",
+    "request": "用户要求完整交代转折、首盘关键破发和收盘焦灼、决胜盘第八局错失机会，且不是流水账。",
+    "segment_count_reason": "按用户完整过程要求，将关键发球、相持、失误与后果分开，15段替代自动初稿的5-10段；不删球来凑段数，不改变正式校验器。",
+    "source_review": "ESPN长版全部9张contact sheets已看；关键球额外逐秒审阅。原官方源的冷开场与末尾保留原MiniMax通过报告。",
+    "full_source_probe": "output/2026-09-10/reel/zheng-rybakina-extended/probe.json",
+    "footage_audit": "data/reel-revisions/zheng-rybakina-footage-audit.md",
+    "quality_audit": "所有公开YouTube formats最高1280x720，无1080p，正式渲染暂缓。"
+  },
+  "_segments_source": " + MiniMax 冷开场/结尾视觉闸",
+  "topbar": {
+    "line1": "2026.09.09 美网女单1/4决赛",
+    "line2": "莱巴金娜 3-6 6-1 6-4 郑钦文"
+  },
+  "layout": "band",
+  "scorebox": [
+    70,
+    592,
+    491,
+    652
+  ],
+  "stat_card_full_canvas": true,
+  "_chapter_cards_why": "本条以实战镜头连续推进遗憾主题，不插断比赛的独立章节卡。",
+  "tts_backend": "edge",
+  "_tts_backend_why": "本条render 34391475743 的Azure在2026-09-09T18:53:01Z明确返回401 Authentication error；按既有回退策略使用edge，同一Yunjian音色，不更改密钥或权限。",
+  "sources": {
+    "extended": "https://www.youtube.com/watch?v=-6Gv0033I2I",
+    "original": "https://www.youtube.com/watch?v=HSAAm3UtKDo"
+  },
+  "conform": {
+    "original": "原官方源1920×1080等比缩小至ESPN长版1280×720；同为16:9，无裁边。两源同场同转播画面，比分板缩放后同位。保留原官方源中首盘第四盘点、次盘破发与盘点、完整赛点结尾。"
+  }
+}
