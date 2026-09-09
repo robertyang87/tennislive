@@ -5740,6 +5740,37 @@ def spec_sources(spec: dict) -> dict[str, str]:
     return single
 
 
+def _verified_conform_reuse(source: Path, dst: Path, spec: dict | None,
+                            key: str, target: tuple[int, int], outdir: Path) -> bool:
+    """Reuse only the audited Zheng retry checkpoint, bound to both media bytes."""
+    manifest = outdir / "conform-reuse.json"
+    if not manifest.is_file():
+        return False
+    if (key != "extended" or spec_sources(spec or {}).get(key) != _APPROVED_720_SOURCE
+            or _APPROVED_720_SOURCE not in source_quality_exceptions(spec or {})):
+        return False
+    claim = json.loads(manifest.read_text(encoding="utf-8"))
+    expected = {"run_id": 34401744962, "artifact_id": 10124538360,
+                "source_url": _APPROVED_720_SOURCE, "target": list(target),
+                "transform": "lanczos-increase-crop/libx264-fast-crf16/audio-copy"}
+    if any(claim.get(k) != v for k, v in expected.items()):
+        raise ReelError("conform reuse checkpoint provenance/transform mismatch")
+    def sha(path: Path) -> str:
+        digest = hashlib.sha256()
+        with path.open("rb") as handle:
+            for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+                digest.update(chunk)
+        return digest.hexdigest()
+    if not dst.is_file() or sha(source) != claim.get("native_sha256") or sha(dst) != claim.get("conformed_sha256"):
+        raise ReelError("conform reuse checkpoint media hash mismatch")
+    if probe_size(source) != (1280, 720) or probe_size(dst) != target:
+        raise ReelError("conform reuse checkpoint dimensions mismatch")
+    if abs(probe_duration(source) - probe_duration(dst)) > 0.1:
+        raise ReelError("conform reuse checkpoint duration mismatch")
+    print(f"[conform reuse] {key}: verified native + derivative SHA256; run 34401744962")
+    return True
+
+
 def conform_sources(paths: dict[str, Path], spec: dict | None,
                     outdir: Path) -> None:
     """把声明过的源**等比放大铺满再中央裁**到基准尺寸——尺寸闸的唯一出路。
@@ -5775,6 +5806,9 @@ def conform_sources(paths: dict[str, Path], spec: dict | None,
             print(f"[conform] {key} 已经是 {tw}×{th}，跳过")
             continue
         dst = paths[key].with_name(paths[key].stem + "_conform.mp4")
+        if _verified_conform_reuse(paths[key], dst, spec, key, (tw, th), outdir):
+            paths[key] = dst
+            continue
         with stage(f"统一尺寸 {key}"):
             run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
                 "-i", str(paths[key]),
