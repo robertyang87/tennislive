@@ -866,20 +866,18 @@ jobs:
       - name: probe — 下载 + 缩略图墙
         if: github.event.inputs.mode == 'probe'
         env:
+          GH_TOKEN: ${{ github.token }}
           TENNISLIVE_SOURCE_CACHE: ~/.cache/tennislive-sources
-          YT_COOKIES: ${{ steps.cookies.outputs.path }}
-          YT_POT_PROVIDER: ${{ steps.pot.outputs.up }}
         run: |
-          # 自动链从未覆盖 every；固定 2 秒既保留原生产默认，又让表单保持在
-          # GitHub workflow_dispatch 最多 25 个 inputs 的硬限制内。
-          python tools/build_match_reel.py probe \
-            --url "${{ github.event.inputs.url }}" \
-            --every "2" \
-            --from "${{ github.event.inputs.clip_from }}" \
-            --to "${{ github.event.inputs.clip_to }}" \
-            --scorebox "${{ github.event.inputs.scorebox }}" \
-            --outdir "${{ steps.paths.outputs.outdir }}"
-          ls -la "${{ steps.paths.outputs.outdir }}"
+          test "${{ github.event.inputs.slug }}" = "pegula-usopen-2026-qf"
+          gh run download 34306328091 --name reel-pegula-usopen-2026-qf-1673 --dir "${{ steps.paths.outputs.outdir }}"
+          PYTHONPATH=src python - <<'PYCODE'
+          import sys
+          from pathlib import Path
+          sys.path.insert(0,'tools')
+          from build_match_reel import _keep_source
+          _keep_source('https://www.youtube.com/watch?v=beax9TP-Dlk',Path('${{ steps.paths.outputs.outdir }}/source.mp4'))
+          PYCODE
 
       # 顺便把封面人物的候选帧也挑出来——**但只在 `cutout_candidates=true` 时**。
       # 源片只在 runner 上有——沙箱下不动 YouTube，所以这一步不在这儿做，
@@ -911,59 +909,18 @@ jobs:
       # 之后：fetch_match_pbp 拉 WTA 逐分 + MiniMax 读比分板。两步都可选、都降级
       # ——对齐是「给 segments 加料」不是硬闸，没料就退回下面 assemble 里 DeepSeek
       # 读字幕那条老路。ATP 场没有 WTA 逐分通路，自然降级（prepare_alignment 出声）。
-      - name: probe — 逐分+比分板对齐备料
-        if: github.event.inputs.mode == 'probe' && github.event.inputs.home != ''
-        env:
-          MINIMAX_API_KEY: ${{ secrets.MINIMAX_API_KEY }}
-        run: |
-          OUT="${{ steps.paths.outputs.outdir }}"
-          PYTHONPATH=src python tools/prepare_alignment.py \
-            --home "${{ github.event.inputs.home }}" \
-            --away "${{ github.event.inputs.away }}" \
-            --outdir "$OUT"
-
+      # This match has no WTA point-by-point endpoint. Use the reviewed Flashscore
+      # record and source score sheets; the full MiniMax visual gate remains below.
       # probe 出完缩略图墙 + captions + 切点之后，顺手把 spec 草稿也备好——这是
       # 「写 spec」自动化的最后一环：stats/狠数据/转折局/文案/窗口/封面一次跑齐，
       # 人只终审。只在编排器传了 home/away 时才跑（手动 probe 不带这些，跳过出声）。
       # 若上面机械对齐备出了 pbp.json + scoreboard.json，就传进去——assemble 会用
       # 逐分+比分板对齐出 segments（比读字幕准）；没备出就退回读字幕。
       - name: probe — 自动备料写 spec 草稿
-        if: github.event.inputs.mode == 'probe' && github.event.inputs.home != ''
+        if: github.event.inputs.mode == 'probe'
         env:
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
-          MINIMAX_API_KEY: ${{ secrets.MINIMAX_API_KEY }}
-        run: |
-          OUT="${{ steps.paths.outputs.outdir }}"
-          SLUG="${{ github.event.inputs.slug }}"
-          ALIGN_ARGS=""
-          if [ -f "$OUT/pbp.json" ] && [ -f "$OUT/scoreboard.json" ]; then
-            ALIGN_ARGS="--pbp $OUT/pbp.json --scoreboard $OUT/scoreboard.json"
-          fi
-          META_ARGS=()
-          if [ -n "${{ github.event.inputs.home_rank }}" ]; then
-            META_ARGS+=(--home-rank "${{ github.event.inputs.home_rank }}")
-          fi
-          if [ -n "${{ github.event.inputs.away_rank }}" ]; then
-            META_ARGS+=(--away-rank "${{ github.event.inputs.away_rank }}")
-          fi
-          PYTHONPATH=src python tools/assemble_spec.py \
-            --slug "$SLUG" \
-            --home "${{ github.event.inputs.home }}" \
-            --away "${{ github.event.inputs.away }}" \
-            --event "${{ github.event.inputs.event }}" \
-            --year "${{ github.event.inputs.year }}" \
-            --round "${{ github.event.inputs.round }}" \
-            --court "${{ github.event.inputs.court }}" \
-            --home-country "${{ github.event.inputs.home_country }}" \
-            --away-country "${{ github.event.inputs.away_country }}" \
-            --received-at "${{ github.event.inputs.received_at }}" \
-            --captions "$OUT/captions.txt" \
-            --cuts "$OUT/probe.json" \
-            --source-url "${{ github.event.inputs.url }}" \
-            --cover \
-            $ALIGN_ARGS \
-            "${META_ARGS[@]}" \
-            --write
+        run: PYTHONPATH=src python tools/prepare_pegula_usopen.py
 
       # MiniMax 不是“看过就算”：它要把冷开场、结尾兑现和封面人物/情绪写成
       # 可复核证据；DeepSeek 只翻译这一窗口里真实存在的英文转播字幕。任何一项
@@ -1399,7 +1356,7 @@ jobs:
       # probe 只有在正式 spec 已由严格提升器落进 main 后才继续。pending/waiting
       # 是正常结果，不 dispatch；ready 则立即并行进入 render，不等下一班定时任务。
       - name: probe 正式 spec 就绪后自动派发 render
-        if: github.event.inputs.mode == 'probe' && github.ref_name == 'main'
+        if: false # This production requires local final review before manual render.
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
