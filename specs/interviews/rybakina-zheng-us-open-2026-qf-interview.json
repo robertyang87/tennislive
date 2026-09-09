@@ -5,8 +5,8 @@
   },
   "url": "https://www.youtube.com/watch?v=_Osda85DW-E",
   "source_title": "Elena Rybakina On-Court Interview | 2026 US Open Quarterfinal",
-  "start": 0.0,
-  "end": 159.0,
+  "start": 0,
+  "end": 159,
   "asr_model": "small.en",
   "whisper_model": "medium.en",
   "segment_budget_px": null,
@@ -162,7 +162,8 @@
     "1080×1440；逐句中英字幕；沿用顶部大小标题与网球时差品牌片尾。封面正脸清晰，文字不挡脸。",
     "冷开场10.46秒，保留现场解说并逐句中英字幕；核对末句终点，不截断说话。",
     "小红书正文不复述标题，1000字内；标题、正文分开复制。",
-    "来源、语言、视觉及成片QC全部通过后自动微信推送；只有成功回执与pushed.json齐全才算完成。"
+    "来源、语言、视觉及成片QC全部通过后自动微信推送；只有成功回执与pushed.json齐全才算完成。",
+    "Codex正在复核初稿：103–105秒非受迫性失误ASR分歧，113秒went my way误译，主持人/球员姓名中文不统一。修正且QC通过后恢复自动发布；当前暂缓发布，不等用户审批。"
   ],
   "_facts": [
     "本轮实际读取YouTube oEmbed与watch页videoDetails：官方频道US Open Tennis Championships；描述明确战胜Qinwen Zheng后的八强采访，源长161秒。",
@@ -225,7 +226,7 @@
     }
   },
   "push": {
-    "auto": true,
+    "auto": false,
     "matchup": "莱巴金娜 vs 郑钦文",
     "score": "3-6 6-1 6-4",
     "event": "美网",
