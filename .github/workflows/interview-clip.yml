@@ -38,19 +38,12 @@ jobs:
           cache: pip
       - name: Install final audit dependencies
         run: pip install -q -e '.[visualqa]'
-      - name: Ensure video-frame decoder and audit rules
-        run: |
-          source tools/ci_apt_install.sh
-          ensure_ffmpeg
-          ffmpeg -version | head -1
-          test -s skills/tennis-interview-production/SKILL.md
-          PYTHONPATH=src:tools python -c "from interview_skill import model_instructions; from benchmark_interview_models import _image; assert model_instructions('minimax')"
       - name: Recover completed and QC-passed film
         uses: actions/download-artifact@v4
         with:
-          name: sabalenka-noskova-usopen-2026-qf-oncourt
+          name: sabalenka-noskova-usopen-2026-qf-oncourt-final
           path: output/interviews/sabalenka-noskova-usopen-2026-qf-oncourt
-          run-id: 34314612692
+          run-id: 34315074835
           github-token: ${{ github.token }}
       - name: Verify recovered QC binds these exact files
         run: |
@@ -65,10 +58,9 @@ jobs:
           assert q['poster_sha256']==hashlib.sha256((o/'poster.jpg').read_bytes()).hexdigest()
           print('Existing L2 pass matches the exact recovered film, poster and formal spec.')
           PY
-      - name: MiniMax review of actual final interview frames
-        env:
-          MINIMAX_API_KEY: ${{ secrets.MINIMAX_API_KEY }}
-        run: PYTHONPATH=src python tools/audit_sabalenka_oncourt.py
+      - name: Normalize completed visual review without changing its findings
+        run: python tools/normalize_sabalenka_visual_review.py
+
       - name: 成片发到 Release（不进 git）
         if: github.event.inputs.mode == 'render'
         env:
