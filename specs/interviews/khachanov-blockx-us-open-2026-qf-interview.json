@@ -138,7 +138,7 @@
   "lead_in": {
     "url": "https://www.youtube.com/watch?v=IC6GRK5Pg70",
     "start": 189.88,
-    "end": 202.28,
+    "end": 199.12,
     "subs": [
       {
         "a": 189.88,
@@ -150,28 +150,22 @@
         "a": 193.64,
         "b": 195.04,
         "en": "in very fine fashion. Physically,",
-        "zh": "而且赢得非常漂亮。体能上，"
+        "zh": "而且赢得漂亮 体能上"
       },
       {
         "a": 195.04,
         "b": 197.24,
-        "en": "Blocks",
+        "en": "Blockx",
         "zh": "布洛克斯"
       },
       {
         "a": 197.24,
         "b": 199.12,
         "en": "had nothing left.",
-        "zh": "已经毫无保留。"
-      },
-      {
-        "a": 199.12,
-        "b": 202.28,
-        "en": "But this man",
-        "zh": "但这个男人"
+        "zh": "已经一点都不剩了"
       }
     ],
-    "why": "自动同场核验：Karen Khachanov vs Alexander Blockx，US Open 2026；来源 US Open Tennis Championships，1080p。取官方单场集锦最后一段连续现场解说，随后接赛后场上采访。",
+    "why": "同一场的美网官方集锦（Karen Khachanov vs. Alexander Blockx Highlights，@usopen，205 秒，1080p）的 **189.88~199.12 秒**，一整段连续的赛后画面：storyboard 逐格核过——189~191 秒场边，**193 秒起他转身向看台挥手致意**（转播这时挂出下三分之一台标，印着两个人的名字），195~199 秒继续举手回应全场。解说同一段在说 `He's done so in very fine fashion. Physically, Blockx had nothing left.`——**画面是致意，解说在交代这场是怎么结束的**，对得上。\n⚠️ **末尾从自动配的 202.28 收到 199.12，是逐格量出来的**：storyboard 上 199.1 秒还是他，**201.1 秒已经是 @usopen 的片尾板**；202.28 会把片尾板收进片头。顺带去掉的那条 sub （199.12~202.28 的 `But this man`）本来就是半截话，收在 `had nothing left.` 这个完整句上更干净。\n⚠️ **这一场是退赛，没有「赛点落地」那一下可收**：布洛克斯在第三盘 3-2 时因伤退赛（集锦 155 秒他走向椅子、165~175 秒两人在网前拥抱）。取致意这一段而不是握手那一段，是因为**握手那 10 秒没有解说字幕**——CLAUDE.md：双语字幕片的开头不许压在一段没有字幕的画面上。",
     "verification": {
       "match_id": "2026:us-open:mens-quarterfinals:karen-khachanov-alexander-blockx",
       "channel": "US Open Tennis Championships",
@@ -181,7 +175,8 @@
       "loser_en": "Alexander Blockx",
       "event_search": "US Open",
       "year": 2026
-    }
+    },
+    "_subs_why": "自动挂载给的四条改了三处：\n① `Blocks` → **`Blockx`**：ASR 把姓氏听成了普通词，而这条片子从头到尾在讲他，字幕上写错名字比写错别的都刺眼。\n② `had nothing left.` 原来译成「已经毫无保留」——**意思正好反了**。「毫无保留」在中文里是「全力以赴」；`nothing left` 说的是**他什么都不剩了、身体垮了**，而这正是他退赛的原因，也正是哈恰诺夫在采访里说「他浑身都在难受」那件事。改成「已经一点都不剩了」。\n③ **中文行去标点**（`而且赢得非常漂亮。体能上，` → `而且赢得漂亮 体能上`、`已经毫无保留。` → 无句号）——CLAUDE.md 全站规矩「屏幕上不写标点，只留 ？！」，停顿由换页表达。英文行一个字符没动。"
   },
   "en_fixed": {
     "7": "There's a new Karen Khachanov.",
