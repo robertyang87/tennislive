@@ -12534,6 +12534,76 @@ ASR 比全段，`check_human_quote` 拿赛事官网的人工引语比那几句�
 它回的是**去过缩进**的那一份，和源码原文对不上，一个字都删不掉，**而且不报错**
 （判据看起来装上了，其实什么都没剥掉）。用 `re.sub(r'"""[\s\S]*?"""', ...)`。
 
+##### ⭐⭐ 2026-09-10 最坏的一种：**第一份源根本不是他说的话**——`en` 是改写轨，`en-orig` 才是原始 ASR
+
+哈恰诺夫那条（`khachanov-blockx-us-open-2026-qf-interview`）栽的。YouTube 对同一条
+片子给**两条英文轨**，而 `fetch_words` 的 `--sub-langs "en"` 一直只要那条改写的：
+
+    en-orig  「English (Original)」——原始 ASR，逐词时间戳是量出来的
+    en        原始轨再过一遍翻译管线的**改写版**
+
+三个数把它钉死（同一条片子，同一天量的）：
+
+| | `en` | `en-orig` |
+|---|---|---|
+| 逐词间距**完全等距** | **56 / 56** | **0 / 54** |
+| 词数 | 385 | **416** |
+| `uh` / `um` 填词 | **0 个** | **14 个** |
+
+⚠️ **等距就是判据**——逐词 `tOffsetMs` 是拿整条 `dDurationMs` 除以词数摊出来的
+（442、294、229…每条内部一个间距到底），不是量出来的。真 ASR 的词时间戳不可能等距。
+
+逐处看也对得上，而**两两读音一点不像**：`on the one hand`／`from one side`、
+`for that confrontation`／`for that matchup`、`conserve my energy`／
+`keep the energy still there`、`I can't even get up`／`I cannot I cannot stand up`
+——是同一句话的两种写法，不是 ASR 认错词（ASR 认错是音近：`Khachanov`→`hatch enough`、
+`serve`→`surf`，**那两条只出现在 whisper 那一列**）。而 `en-orig` 那一列和第二份
+ASR（whisper `medium.en`）**逐句吻合**，也就是他真说的是后者。
+
+⚠️⚠️ **这条线把英文烧进画面当他的原话**，所以用改写轨等于**替受访者编了一遍措辞**
+——CLAUDE.md「引用源片的话，落笔之前 grep 一次」那条的最坏形状：不是引错一句，
+是整份英文都是别人重写的，**而它读起来比原文更地道，所以更没人会去查**。
+
+⚠️ **四道本地闸一道都没响**（L0／冷开场／复制页／断行全绿，核对表 65 行满）。
+**唯一响的是 `verify_transcript`**：报 **27.5%**，越过 `TRANSCRIPT_DISAGREE_CEILING`
+的 18%，而它的报错正确地说了「这个量级不是虚词能解释的，必然有整段对不上——
+**认领挡不住，去查源**」。那句话是对的，照做就查到了根子。
+
+⚠️ **本文件上面那句「YouTube 全留着 `uh`/`um`，whisper 系统性地会丢」说的是
+`en-orig`**。真拿到改写轨时它是**反过来**的（`en` 一个填词都没有），所以
+「填词多不多」也能当一个快速探针：**第一份源里 `uh`/`um` 是 0，先怀疑拿错了轨**。
+
+**两半都要改，缺一半等于没改**：`--sub-langs` 要点名 `en-orig`，而**挑文件也要
+偏向它**——`sorted()` 里 `cap_X.en-orig.json3` 排在 `cap_X.en.json3` **前面**
+（`-` 是 0x2D，`.` 是 0x2E），原来那句 `files[-1]` 正好取到改写轨。冷开场那条
+（`attach_interview_lead_in`）本来 `--sub-langs "en.*,en"` 两条都下，可 `files[-1]`
+同样取错。两处收成一个出处 `CAPTION_LANGS` / `pick_caption`。判据
+`test_第一份转写要用原始ASR轨不许用YouTube的改写轨` 钉三头，三个方向分别反向
+验证过、各红在自己的断言行。
+
+⚠️ **返工的代价照实记**：切行 65 → **69 行**，中文全部重写、`en_fixed` 重挂；
+**小红书正文里引的三句英文也是从改写轨抄的**，一起换掉——那一条最容易漏，
+因为正文不过任何一道闸。
+
+###### ⚠️ 顺带：手写 `lead_in.subs` 的时间码，别拿 `dDurationMs` 当结束
+
+同一条片子的第二个错。YouTube 的滚动字幕**每条 cue 的 `dDurationMs` 是重叠的**
+（两行滚动窗口），一条 cue 的真实显示窗口是**「到下一条 `tStartMs` 为止」**：
+
+    189.88 → 193.64  He's done so                        ← dDuration 报到 193.64
+    191.40 → 195.04  in very fine fashion. Physically,   ← 而下一条 191.40 就开始了
+    193.64 → 197.24  Blocks
+    195.04 → 199.12  had nothing left.
+
+拿 `dDuration` 当结束，第 2、3、4 句就各挂到了**后一格**的时刻上——文本全对，
+**每一句晚将近两秒出**，而闸只查「时长在 0~40 秒之间」，一个字都不说。
+⚠️ `attach_interview_lead_in` 的 `parse_json3` 走的也是 `a + dur`，只是
+`select_window` 随后按 `prev_b` 归一化把重叠压掉了；**手写的那一条没有这一步**。
+
+⚠️ 窗口的末尾要收在**一句话说完的地方**，不是收在一个好看的秒数上：这条
+199.12 正好把 `But this man is the one that moves through.` 劈成两半，收到
+197.24（`had nothing left.` 说完）才是完整的一句。
+
 ##### ⚠️ `_yt_at` 做对了自己那一半，调用方在外面一层又破了一次
 
 `_yt_at` 对非 YouTube 的源**故意**回一句带汉字的说明（`<url>（片内 18.7 秒）`），
