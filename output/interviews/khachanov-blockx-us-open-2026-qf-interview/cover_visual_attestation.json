@@ -1,0 +1,56 @@
+{
+  "status": "pass",
+  "checked_at": "2026-09-10T03:57:08Z",
+  "auditor": "opencv-haar-v1",
+  "expected_subject": "哈恰诺夫",
+  "identity_evidence": "L0-bound spec subject + same-source frame_at",
+  "spec_sha256": "d9724e2d1253d8c853873424e5745dd5a292db98dacb76eda3d9c5ff03381531",
+  "poster_sha256": "a0b60ffac72634684e0cb05353aff821bee49e1f8ae445ba9e97ced4a8de1ab7",
+  "thresholds": {
+    "close_up_zoom": 1.5,
+    "face_height_ratio": 0.08,
+    "close_up_face_height_ratio": 0.14,
+    "face_area_ratio": 0.01,
+    "face_sharpness": 45.0,
+    "face_contrast": 32.0,
+    "eyes": 2
+  },
+  "result": {
+    "poster": {
+      "decodable": true,
+      "format": "JPEG",
+      "width": 1080,
+      "height": 1440,
+      "photo_region": [
+        0,
+        150,
+        1080,
+        810
+      ]
+    },
+    "face": {
+      "detector": "frontal-default",
+      "box": [
+        266,
+        277,
+        296,
+        296
+      ],
+      "detected_faces": 2,
+      "eyes": 2,
+      "face_height_ratio": 0.36543,
+      "face_area_ratio": 0.10016,
+      "center_x_ratio": 0.38333,
+      "center_y_ratio": 0.33951,
+      "sharpness": 1105.651,
+      "contrast": 128.0
+    },
+    "contract": {
+      "shot_type": "",
+      "frame_at": 123.0,
+      "zoom": 1.0,
+      "focus_y": 0.5
+    }
+  },
+  "issues": []
+}
