@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>9.10 赛后开麦 | 兹维列夫早上6点45才睡</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>兹维列夫 6-2 7-5 6-1 拿下范德赞德舒尔普，场边转播打出的字幕写着：第 13 次打进大满贯四强。但赛后这段场上采访，他几乎没聊这场球。
+
+主持人先问：今年四大满贯你全都打进四强以上，法网夺冠、温网拿到亚军，打大满贯的心态有什么不一样？
+
+他说&quot;是也不是&quot;。前两轮他打得很差——&quot;换成别的赛事我首轮就出局了，但在这里我能打满五盘，打四个半小时再反打回来。&quot;
+
+真正的落点在第二问：今年美网的深夜场次。他有一场打到凌晨两点十五。主持人问，那之后是什么流程？
+
+&quot;泡冰浴，吃饭，跟媒体聊——你们也是其中一员，而我很不喜欢这件事。&quot;然后做治疗，然后睡觉。
+
+接着是这段采访里最狠的一句：
+
+&quot;我最晚一次是早上六点四十五才睡，就在上个星期。所以我有点像在倒时差，感觉自己是在纽约打澳网。&quot;
+
+第三问问他，今晚终于能好好睡一觉了吧，纽约这么好的城市，会不会出去逛逛。他的回答是：昨晚看谢尔顿打阿尔卡拉斯看到凌晨三点半，根本没睡——&quot;反正我要睡到下午一点。&quot;
+
+一个刚打进大满贯四强的世界第二，赛后被问起的不是战术，是几点睡觉。深夜赛程到底成就了谁，又消耗了谁？
+
+#网球时差 #美网 #兹维列夫 #赛后开麦 #ATP</textarea>
+    </section>
+    
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
