@@ -115,7 +115,8 @@
       "pts_total": 189,
       "first_total": 103,
       "headshot": "assets/players/headshots/wta-328560.jpg"
-    }
+    },
+    "_source": "flashscore `df_st_1`（美网女单 1/4 决赛，flashscore_id: SMJls6Ki）——大满贯的女子比赛这个 feed 一直带 Winners / Unforced errors。十三项全部用 `python3 tools/match_stat_hooks.py SMJls6Ki --stats-block` 复算过，和这里逐个一字不差；`first_total` 不取接口的 Service Points Won 分母，按 `first_in + second_total` 算（58+28=86 / 61+42=103）。"
   },
   "_hit_data": [
     {
@@ -383,7 +384,9 @@
     "⚠️ 窗口起草没成（FileNotFoundError: [Errno 2] No such file or directory: 'output/2026-09-10/reel/andreeva-gauff/captions.txt'）",
     "无字幕窗口兜底 3 段：全部单镜头且装得下旁白",
     "封面官方实拍：已存 assets/reel/andreeva-gauff-cover.jpg（7927×5285，22.1 MB），文章 /news/4574376/gauff-saves-two-match-points-storms-past-andreeva-into-us-open-semis；⚠️ 文件名不自证（编号名）——靠文章 slug 自证，用之前打开看一眼",
-    "人工纠错：第二盘胜者是高芙，盘比分7-6(7)，抢七小分9-7。原稿 editorial、segments、push 同时写反，已统一更正；此更正不代表剪辑窗口获准或 QC 通过。"
+    "人工纠错：第二盘胜者是高芙，盘比分7-6(7)，抢七小分9-7。原稿 editorial、segments、push 同时写反，已统一更正；此更正不代表剪辑窗口获准或 QC 通过。",
+    "⚠️ stats._source 是 2026-09-10 事后补的：原稿漏了这一栏（全库 157 条带 stats 的 spec 只有这一条缺，不是自动链的系统缺口）。数字一个都没动——拿 `python3 tools/match_stat_hooks.py SMJls6Ki --stats-block` 重跑一遍，十三项和 spec 里逐个相同，所以这一栏是查出来的不是编的。",
+    "⚠️ 补上面那一栏之后这条 spec 的 qc_attestation 哈希链断了（`auto_push_gate.validate_qc` 比的是 spec 的字节）：这条 2026-09-10T00:43:27Z 已经推送（台账 sent），本来就不会再推；真要再推一次必须重渲。这是认领过的取舍——为一栏注解重渲一趟不值，而 `_source` 缺着会让 `test_有stats的spec都要有headshot文件和全部字段` 常年红。"
   ],
   "_visual_evidence": {
     "model": "MiniMax-M3",
