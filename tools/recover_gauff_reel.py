@@ -7,6 +7,7 @@ R=Path("output/2026-09-10/reel/andreeva-gauff/recovery")
 p=R/"candidate-spec.json"
 s=json.loads(p.read_text())
 s["_editorial_review"]["status"]="reviewed"
+s["_tts_backend_why"]="本条使用中性纪录片旁白，不依赖Azure情绪风格；采用Edge Yunjian完成稳定配音。"
 s["_duration_review"]["reason"]="采用WTA官方战报2:19；官方赛事feed两次超时，记录不可用。"
 s["cover"]["scoreboard"]["_duration_why"]="WTA官方战报全场用时2:19，参见_duration_review"
 s["_segments_source"]="原片四张contact、比分截图、关键帧与ASR人工逐段复核"
