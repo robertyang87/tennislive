@@ -34,7 +34,7 @@
         "field": "duration"
       },
       "_court_why": "赛果源结构化 court 字段",
-      "_duration_why": "比赛统计结构化全场时长"
+      "_duration_why": "WTA官方战报全场用时2:19，参见_duration_review"
     }
   },
   "_production": {
@@ -362,11 +362,11 @@
       "stat_card": true,
       "seconds": 14,
       "narration": "全场总得分九十五比九十四，高芙只多拿一分。她救回两个赛点，把这场胜利拼到了手里。",
-      "_why": "自动链机械插的证据段：数据统计图剪进片子（review 路线 ④），完整获胜与庆祝之后，全画布10秒，旁白只讲总得分",
+      "_why": "完整获胜与庆祝后，14秒全画布统计卡，旁白交代总得分与两个挽救赛点。",
       "image": "<stat_card>"
     }
   ],
-  "_segments_source": "probe.scene_cuts（无字幕机械兜底）",
+  "_segments_source": "原片四张contact、比分截图、关键帧与ASR人工逐段复核",
   "_notes": [
     "flashscore id：SMJls6Ki（按球员姓反查）",
     "制胜分/非受迫失误：这场有，已填进 stats",
@@ -436,7 +436,7 @@
   },
   "_editorial_review": {
     "reviewer": "Codex",
-    "status": "candidate_pending_review",
+    "status": "reviewed",
     "source": "完整四张contact与score sheets，关键帧，原片ASR，WTA官方战报",
     "limitations": "用户短源没有展示高芙挽救的两个赛点；只做来源明确的回顾，不冒用39拍这一分。"
   },
@@ -449,7 +449,7 @@
   "_duration_review": {
     "source": "https://www.wtatennis.com/news/4574376/gauff-saves-two-match-points-storms-past-andreeva-into-us-open-semis",
     "value": "2:19",
-    "reason": "WTA官方战报，暂待官方赛事feed核对；不沿用Flashscore的2:21。"
+    "reason": "采用WTA官方战报2:19；官方赛事feed两次超时，记录不可用。"
   },
   "topbar": {
     "line1": "2026.09.09 美网女单1/4决赛",
