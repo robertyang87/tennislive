@@ -522,6 +522,38 @@ def _tile_sheet(tiles: list, step: float, cols: int, dest: Path) -> Path:
     return dest
 
 
+# YouTube 的自动字幕对同一条片子给**两条英文轨**，而它们不是同一个东西：
+#
+#     en-orig  「English (Original)」——原始 ASR，逐词时间戳是量出来的
+#     en        原始轨再过一遍翻译管线的**改写版**
+#
+# ⚠️ **改写版读起来更像英文，而那正是它不能用的理由**：这条线把英文烧进画面
+# 当他的原话，而改写版换的是措辞不是意思。哈恰诺夫那条实测（2026-09-10）：
+#
+#     en       385 词，填词 uh/um **0 个**，56/56 条事件的逐词间距**完全等距**
+#     en-orig  416 词，填词 **14 个**，0/54 条等距
+#
+# 等距就是判据——逐词偏移是拿整条时长除以词数摊出来的，不是量出来的。逐处看
+# 也对得上：`on the one hand`／`from one side`、`for that confrontation`／
+# `for that matchup`、`conserve my energy`／`keep the energy still there`
+# ——两两读音一点不像，是同一句话的两种写法，而 `en-orig` 那一列和第二份
+# ASR（whisper medium.en）**逐句吻合**。也就是说他真说的是后者。
+#
+# 这个错**不吭声**：字幕照样出、核对表照样满、四道本地闸全绿；唯一响的是
+# `verify_transcript`——那趟报 27.5%，越过 18% 的天花板，而报错正确地说了
+# 「必然有整段对不上，认领挡不住，去查源」。
+#
+# ⚠️ **两半都要改，缺一半等于没改**：`--sub-langs` 要点名 `en-orig`，而挑文件
+# 也要偏向它——`sorted()` 里 `cap_X.en-orig.json3` 排在 `cap_X.en.json3`
+# **前面**（`-` 是 0x2D，`.` 是 0x2E），原来那句 `files[-1]` 正好取到改写版。
+CAPTION_LANGS = "en-orig,en"
+
+
+def pick_caption(files: list[Path]) -> Path:
+    """一堆 `cap_*.json3` 里挑第一份转写该用的那条：**原始 ASR 优先**。"""
+    return next((f for f in files if ".en-orig." in f.name), files[-1])
+
+
 def fetch_words(url: str, workdir: Path,
                 spec: dict | None = None) -> list[tuple[float, str]]:
     """拉自动字幕，返回 [(秒, 词)]。**用 json3，理由见模块注释。**
@@ -595,7 +627,7 @@ def fetch_words(url: str, workdir: Path,
             proc = subprocess.run(
                 ["yt-dlp", "--no-warnings", "--js-runtimes", "node",
                  "--skip-download", "--write-auto-subs",
-                 "--sub-langs", "en", "--sub-format", "json3",
+                 "--sub-langs", CAPTION_LANGS, "--sub-format", "json3",
                  *cookie_args(spec or {}), *extra,
                  "-o", str(workdir / "cap_%(id)s"), url],
                 capture_output=True, text=True, timeout=300)
@@ -618,7 +650,7 @@ def fetch_words(url: str, workdir: Path,
                 f"{len(tried)} 档 client 都拿不到自动字幕：\n" + "\n".join(tried)
                 + "\n先用 `yt-dlp --list-subs` 确认这条片子有没有，"
                 "再判断是「没有」还是「被挡了」。")
-    data = json.loads(files[-1].read_text())
+    data = json.loads(pick_caption(files).read_text())
     out = []
     for ev in data.get("events", []):
         base = ev.get("tStartMs", 0)
@@ -673,7 +705,7 @@ def _caption_spans(workdir: Path) -> list[list[float]]:
     """
     if not (files := sorted(workdir.glob("cap_*.json3"))):
         return []
-    data = json.loads(files[-1].read_text())
+    data = json.loads(pick_caption(files).read_text())
     spans: list[list[float]] = []
     for ev in data.get("events", []):
         text = "".join((s.get("utf8") or "") for s in ev.get("segs") or []).strip()

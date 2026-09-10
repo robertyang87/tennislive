@@ -25,6 +25,7 @@ import pytest
 
 from tools.build_interview_clip import (
     CANVAS_H,
+    CAPTION_LANGS,
     CROP_RATIO,
     CROP_SHIFT_MAX,
     CAPTION_GAP_SECS,
@@ -40,6 +41,7 @@ from tools.build_interview_clip import (
     check_source_contract,
     gap_key,
     header_lines,
+    pick_caption,
     review_sheet,
     segment,
     transcript_fingerprint,
@@ -161,6 +163,68 @@ def _lines(en: list[str]) -> list[dict]:
 
 
 # ---------------------------------------------------------------- 人工引语
+
+def _cap_track(tmp_path, name: str, text: str) -> Path:
+    """按 json3 的形状造一份字幕，正文只放一句好认的话。"""
+    path = tmp_path / name
+    path.write_text(json.dumps(
+        {"events": [{"tStartMs": 0, "dDurationMs": 2000,
+                     "segs": [{"utf8": text}]}]}, ensure_ascii=False),
+        encoding="utf-8")
+    return path
+
+
+def test_第一份转写要用原始ASR轨不许用YouTube的改写轨(tmp_path):
+    """YouTube 对同一条片子给两条英文轨，而 `en` 是改写过的那一条。
+
+    2026-09-10 哈恰诺夫那条实测：`en` 385 词、填词 0 个、56/56 条事件的逐词
+    间距**完全等距**（拿时长除词数摊的）；`en-orig` 416 词、填词 14 个、
+    0/54 等距。逐处看也对得上——`on the one hand`／`from one side`、
+    `for that confrontation`／`for that matchup` 是同一句话的两种写法，而
+    `en-orig` 那一列和第二份 ASR 逐句吻合。**这条线把英文烧进画面当他的原话，
+    所以只能用原始轨。**
+
+    ⚠️ **三头缺一不可**，反向验证各红在自己的断言行：
+
+    - 只钉「下载时点名了 en-orig」→ 挑文件那句 `files[-1]` 照样取到改写轨
+      （`cap_X.en-orig.json3` 在 `sorted()` 里排在 `cap_X.en.json3` **前面**，
+      因为 `-` 是 0x2D、`.` 是 0x2E）
+    - 只钉 `pick_caption` 的行为 → 两个出口忘了调它照样绿（本仓库
+      「一个数写两处必分叉」的老账）
+    - 只钉这一条工具 → 冷开场那条自己抄了一份 `--sub-langs`，会静静分叉
+    """
+    src = (ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8")
+    lead = (ROOT / "tools" / "attach_interview_lead_in.py").read_text(encoding="utf-8")
+
+    # ① 下载时点名原始轨，而且两条线共用同一个出处
+    assert "en-orig" in CAPTION_LANGS, "第一份转写没点名 en-orig，拿到的会是改写轨"
+    assert '"--sub-langs", CAPTION_LANGS' in src
+    assert "CAPTION_LANGS," in lead and '"en.*,en"' not in lead, \
+        "冷开场那条又自己抄了一份语言列表——写两处必分叉"
+
+    # ② 挑文件要偏向原始轨。**故意造成 `files[-1]` 会取错的那种顺序**
+    files = sorted([_cap_track(tmp_path, "cap_X.en.json3", "polished"),
+                    _cap_track(tmp_path, "cap_X.en-orig.json3", "raw uh raw")])
+    assert files[-1].name == "cap_X.en.json3", "排序前提变了，这条判据要重写"
+    assert pick_caption(files) is files[0]
+    only_en = [f for f in files if f.name == "cap_X.en.json3"]
+    assert pick_caption(only_en) is only_en[0], "没有原始轨时要退回 en，不能抛"
+
+    # ③ 两个读字幕的出口都真的走了它——查源码文本防不住「它从来没工作过」，
+    #    所以用 AST 认调用，注释里提到这个名字不算数
+    called = {
+        node.func.id
+        for fn in ast.walk(ast.parse(src))
+        if isinstance(fn, ast.FunctionDef) and fn.name in {"fetch_words", "_caption_spans"}
+        for node in ast.walk(fn)
+        if isinstance(node, ast.Call) and isinstance(node.func, ast.Name)
+    }
+    assert "pick_caption" in called, "读字幕的出口没调 pick_caption，挑的还是改写轨"
+    for fn in ast.walk(ast.parse(src)):
+        if isinstance(fn, ast.FunctionDef) and fn.name in {"fetch_words", "_caption_spans"}:
+            body = ast.get_source_segment(src, fn) or ""
+            assert "files[-1]" not in body, f"{fn.name} 还留着 files[-1]，会取到改写轨"
+
 
 def test_人工引语能抓出ASR听错的介词(tmp_path):
     """这是真实踩到的那一处，反向验证过：去掉 en_fixed 这条测试立刻红。
