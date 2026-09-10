@@ -23,6 +23,7 @@ sys.path.insert(0, str(ROOT / "tools"))
 from detect_highlights import find_highlight, probe_meta  # noqa: E402
 from draft_interview_spec import translate  # noqa: E402
 from interview_source_gate import SourceContractError, validate_source_contract  # noqa: E402
+from build_interview_clip import CAPTION_LANGS, pick_caption  # noqa: E402
 
 SPECS = ROOT / "specs" / "interviews"
 WINDOW_SECONDS = 12.0
@@ -107,7 +108,9 @@ def _download_subtitles(url: str, directory: Path) -> Path:
         "--write-subs",
         "--write-auto-subs",
         "--sub-langs",
-        "en.*,en",
+        # 和第一份转写走**同一个出处**：`en` 是 YouTube 的改写轨，
+        # 措辞被润色过、逐词时间戳是摊出来的。见 `pick_caption` 上面那段。
+        CAPTION_LANGS,
         "--sub-format",
         "json3",
         "-o",
@@ -122,7 +125,7 @@ def _download_subtitles(url: str, directory: Path) -> Path:
     if proc.returncode or not files:
         tail = (proc.stderr or proc.stdout or "没有输出").strip().splitlines()[-1]
         raise RuntimeError(f"同场集锦拿不到英文字幕：{tail[:180]}")
-    return files[-1]
+    return pick_caption(files)
 
 
 def attach(spec: dict, chat) -> dict:
