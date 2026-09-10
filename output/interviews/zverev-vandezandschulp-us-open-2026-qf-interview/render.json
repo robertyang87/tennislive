@@ -1,0 +1,67 @@
+{
+  "film_sha256": "e4f57aa44ef44c7e9e3f25a11c5f26ad35ca4ad3f2560a53f257c4f2bf3ae960",
+  "film_seconds": 153.611,
+  "production_sla": {
+    "version": 2,
+    "pipeline": "interview-clip",
+    "slug": "zverev-vandezandschulp-us-open-2026-qf-interview",
+    "received_at": "2026-09-10T04:05:27Z",
+    "artifact_ready_at": "2026-09-10T04:12:04Z",
+    "elapsed_seconds": 397.504,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "e4f57aa44ef44c7e9e3f25a11c5f26ad35ca4ad3f2560a53f257c4f2bf3ae960",
+    "spec_sha256": "3721ab4598c09edbdc7375f4609c29b6322aec62e4666fea37d2bb1d3a20dc18",
+    "run_id": "34435763349",
+    "stage_events": [
+      {
+        "stage": "preflight",
+        "at": "2026-09-10T04:06:18Z",
+        "run_id": "34435763349"
+      },
+      {
+        "stage": "asr_verify",
+        "at": "2026-09-10T04:07:58Z",
+        "run_id": "34435763349"
+      },
+      {
+        "stage": "render",
+        "at": "2026-09-10T04:09:39Z",
+        "run_id": "34435763349"
+      }
+    ],
+    "render_seconds": 145.504,
+    "pre_render_seconds": 252.0
+  },
+  "production_stage_events": [
+    {
+      "stage": "preflight",
+      "at": "2026-09-10T04:06:18Z",
+      "run_id": "34435763349"
+    },
+    {
+      "stage": "asr_verify",
+      "at": "2026-09-10T04:07:58Z",
+      "run_id": "34435763349"
+    },
+    {
+      "stage": "render",
+      "at": "2026-09-10T04:09:39Z",
+      "run_id": "34435763349"
+    },
+    {
+      "stage": "qc",
+      "at": "2026-09-10T04:12:05Z",
+      "run_id": "34435763349"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-10T04:12:05Z",
+      "run_id": "34435763349"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/interview-zverev-vandezandschulp-us-open-2026-qf-interview/zverev-vandezandschulp-us-open-2026-qf-interview.mp4?v=e4f57aa44ef44c7e",
+  "video_bytes": 57591783,
+  "release_asset_digest": "sha256:e4f57aa44ef44c7e9e3f25a11c5f26ad35ca4ad3f2560a53f257c4f2bf3ae960",
+  "qc_attestation_sha256": "86631afb2280fea5c9d830d41d15ed9ed9c1b89f3ca1b3fa86be7a83890a80f1"
+}

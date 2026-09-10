@@ -1,0 +1,133 @@
+{
+  "film_sha256": "f2277da848daec1583176dedadfdad62c1f28740545512a7ead13d233e110bf7",
+  "film_seconds": 182.691,
+  "production_stage_events": [
+    {
+      "stage": "preflight",
+      "at": "2026-09-10T03:57:44Z",
+      "run_id": "34435257647"
+    },
+    {
+      "stage": "asr_verify",
+      "at": "2026-09-10T03:59:23Z",
+      "run_id": "34435257647"
+    },
+    {
+      "stage": "render",
+      "at": "2026-09-10T04:00:39Z",
+      "run_id": "34435257647"
+    },
+    {
+      "stage": "qc",
+      "at": "2026-09-10T04:02:55Z",
+      "run_id": "34435257647"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-10T04:02:55Z",
+      "run_id": "34435257647"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/interview-gauff-andreeva-us-open-2026-qf-interview/gauff-andreeva-us-open-2026-qf-interview.mp4?v=f2277da848daec15",
+  "video_bytes": 75764975,
+  "release_asset_digest": "sha256:f2277da848daec1583176dedadfdad62c1f28740545512a7ead13d233e110bf7",
+  "qc_attestation_sha256": "87feac84481a328f4eee29540ec49b43efac9a0a5f001a6413bf6be1e5d0604c",
+  "production_sla_history": [
+    {
+      "version": 2,
+      "pipeline": "interview-clip",
+      "slug": "gauff-andreeva-us-open-2026-qf-interview",
+      "received_at": "2026-09-10T02:55:34Z",
+      "artifact_ready_at": "2026-09-10T03:02:55Z",
+      "elapsed_seconds": 441.433,
+      "budget_seconds": 600,
+      "met": true,
+      "film_sha256": "74490a167ee013be20bd6d50408b489106d9bbbc1bc7e0a0e80f7956935df104",
+      "spec_sha256": "adabce85c3f49b8bcfeafab625ffe07e49b5e036f354c777ef2a7c4858706c7a",
+      "run_id": "34431330274",
+      "stage_events": [
+        {
+          "stage": "preflight",
+          "at": "2026-09-10T02:56:28Z",
+          "run_id": "34431330274"
+        },
+        {
+          "stage": "asr_verify",
+          "at": "2026-09-10T02:58:16Z",
+          "run_id": "34431330274"
+        },
+        {
+          "stage": "render",
+          "at": "2026-09-10T03:00:02Z",
+          "run_id": "34431330274"
+        }
+      ],
+      "render_seconds": 173.433,
+      "pre_render_seconds": 268.0
+    },
+    {
+      "version": 2,
+      "pipeline": "interview-clip",
+      "slug": "gauff-andreeva-us-open-2026-qf-interview",
+      "received_at": "2026-09-10T03:17:12Z",
+      "artifact_ready_at": "2026-09-10T03:23:07Z",
+      "elapsed_seconds": 355.479,
+      "budget_seconds": 600,
+      "met": true,
+      "film_sha256": "ee71442923ef66e7a3212a85d5fd9057536a92467c7f6d27f2ad7d4d4198480b",
+      "spec_sha256": "330a54d4b17166d9651dc8a08764f81a56d394285d0989440110fe3c15ce33e1",
+      "run_id": "34432737443",
+      "stage_events": [
+        {
+          "stage": "preflight",
+          "at": "2026-09-10T03:18:03Z",
+          "run_id": "34432737443"
+        },
+        {
+          "stage": "asr_verify",
+          "at": "2026-09-10T03:19:40Z",
+          "run_id": "34432737443"
+        },
+        {
+          "stage": "render",
+          "at": "2026-09-10T03:20:55Z",
+          "run_id": "34432737443"
+        }
+      ],
+      "render_seconds": 132.479,
+      "pre_render_seconds": 223.0
+    }
+  ],
+  "production_sla": {
+    "version": 2,
+    "pipeline": "interview-clip",
+    "slug": "gauff-andreeva-us-open-2026-qf-interview",
+    "received_at": "2026-09-10T03:56:54Z",
+    "artifact_ready_at": "2026-09-10T04:02:54Z",
+    "elapsed_seconds": 360.527,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "f2277da848daec1583176dedadfdad62c1f28740545512a7ead13d233e110bf7",
+    "spec_sha256": "c0c0f4491260247072842e349141dd7e5cf92f92fd118cb8ed3bcef302efbf8d",
+    "run_id": "34435257647",
+    "stage_events": [
+      {
+        "stage": "preflight",
+        "at": "2026-09-10T03:57:44Z",
+        "run_id": "34435257647"
+      },
+      {
+        "stage": "asr_verify",
+        "at": "2026-09-10T03:59:23Z",
+        "run_id": "34435257647"
+      },
+      {
+        "stage": "render",
+        "at": "2026-09-10T04:00:39Z",
+        "run_id": "34435257647"
+      }
+    ],
+    "render_seconds": 135.527,
+    "pre_render_seconds": 225.0
+  }
+}

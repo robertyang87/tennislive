@@ -1,0 +1,310 @@
+{
+  "slug": "khachanov-blockx-us-open-2026-qf",
+  "_column": "赛场之上",
+  "layout": "band",
+  "scorebox": [
+    104,
+    888,
+    740,
+    978
+  ],
+  "_scorebox_why": "左缘 104、上下沿 888/978 和同期已发的美网 band spec 一致（`gea-van-de-zandschulp` 是 104/887/980）。**右缘取 740，和那条一样**——别按「这场只打到三盘、板窄一点」去收窄它。\n\n⚠️⚠️ **收窄过一次，当场把 render 打死了。** 第一版照 probe 猜的候选写了 **579**，理由是「这场只打到三盘、板只长到三列」——听起来合理，而 `tools/scoreboard_geometry.py`（2026-09-09 起的逐帧 alpha 蒙版）把右缘当成**两样东西**用，两样都被 579 咬到：\n① **硬上界**——`scan_mask` 里 `if any(e > x1): raise 'Verified graphic exceeds source box'`；\n② **扫描带的宽度**——`scan_width = min(源片宽 - x0, (x1-x0) + 100)`，板比这条带还宽时 `right_edge` 找不到缺口，返回 -1（「满宽」），而连着 66 帧 -1 又凑不出局部多数，`stabilize` 直接 `RuntimeError: Unresolved scoreboard geometry at frame 0; no wide fallback`。\n\n**拿源片在本地把 `scan_mask` 真跑了一遍**（10 段各一次），两个宽度的对照：\n  x1=579 → 第 1、12 段「no wide fallback」，其余 8 段全部「exceeds source box」，**10/10 全红**\n  x1=740 → **10/10 全绿**，逐段量到的**绝对**右缘是 583（两盘板）／620（三列板）／657 和 683（第 1、12 段：前 2.2 秒是 `BREAK POINTS WON` 统计面板，比常规板宽一截）\n\n⚠️ 也就是说 579 比真实的板还窄 4 个像素——**它连最窄的那一档都装不下**，而「板窄一点」那句话读起来完全站得住。真正的右缘由 `scan_mask` 逐帧量，这四个数里的右缘只是上界和扫描带宽度，**宁可给宽**。",
+  "tts_backend": "edge",
+  "_tts_backend_why": "Azure 的钥匙从 2026-09-03 起连着四条片子都是 `WebSocket upgrade failed: Authentication error (401)`，一律死在第 2 秒的片尾配音上。这条 spec 没有 `voice.style` 也没有 `lead_pause`，退回 edge-tts 零代价；而且本地 `--check-narration` 在这台沙箱跑的就是 edge，量到的余量直接适用，不用再按「Azure 比 edge 快 6.6%」折算。",
+  "source_url": "https://www.youtube.com/watch?v=IC6GRK5Pg70",
+  "_source": "**美网官方 YouTube 频道**（oEmbed 的 `author_name` 是 `US Open Tennis Championships`，`author_url` 是 `youtube.com/@usopen`），标题 `Karen Khachanov vs. Alexander Blockx Highlights | 2026 US Open Quarterfinal`，**205.36 秒、1920×1080 @ 29.97 fps**（probe 实测，过得了「1080p 及以上」那道硬门槛）。\n\n⚠️ 大满贯的集锦版权归赛事自己，**既不上巡回赛的官方频道，也不上那家转播商的频道**——所以这一场没有「同一场两版挑长的那一版」可比，官方频道这一条就是唯一的。⚠️ 这句话**故意不写那家转播商的名字**（连引用判据名字都不写）：那条「用转播商的源片要说清片尾和台标怎么剪掉」的判据（`_uses_tennistv`）扫的就是 `_source` 和 `_editing_why` 这两栏的**裸字符串**，只要出现那两个词就算「用了」——于是「这一条不是那家的」会被判成「这一条是那家的」，当场红。又一次「判据被自己的注释误伤」，只不过这次被误伤的是 spec 的注解；真正的钥匙其实是 `source_url`（那家的源要么是它自己站上的页面地址、要么是它那个频道的视频），而判据现在读的是散文——**这个缺口记在 PR 正文里，不在一条时效片中途改共享判据**。\n\n**四处画面自证**：①记分条整场烧着 `KHACHANOV / 28 BLOCKX BEL`，比分从首盘 `1 15 / 1 40` 一路到第三盘 `6 7 2 AD / 2 5 2`，逐格和 flashscore 的逐分（`df_mh_1_hjrxLF3k`）对得上；②**196.5~200.5 秒的全屏赛果台标**逐字读得出 `MEN'S SINGLES | QUARTERFINAL` / `ARTHUR ASHE STADIUM` / `KAREN KHACHANOV 6 7 3` / `28 ALEXANDER BLOCKX BEL RET. 2 5 2`——轮次、球场、比分、种子号、国别、退赛标记全由转播自己写死；③**160.16 秒场内广播**「Ladies and gentlemen, due to injury, Mr. Blockx is forced to retire. Game, set, and match, Khachanov.」（`captions.txt`），退赛在声音里也自证；④场边背板 `J.P.Morgan` / `Emirates` / `IBM` / `Chubb` / `Deloitte` / `FAGE` / `American Express`，是美网的赞助商阵容。\n\n⚠️ 解说 133.00 秒那句 `Looking ominous for the Argentinian` 是**口误或 ASR 错**——布洛克斯是比利时人（记分条和台标都印着 `BEL`），这句一个字都没引用。",
+  "_editing_why": "第二趟 probe 带 `--scorebox` 重跑过，`point_ends` 拿到 35 个候选；`--dry-run` 据此报了 9 段「像是切在一分打完之前」——**拿源片逐帧打开核过，没有一段真的切在球还在飞的时候**，分三类：\n\n① **第 1、12 段（151.3–156.6）：这是全场最后一球，而球在 156.1 秒就死了。**逐帧看（156.10 / 156.30 / 156.45 / 156.55）：球落在布洛克斯半场、他没去追、球拍垂下站住不动，哈恰诺夫在对面底线停着——**段尾 156.6 落在球死之后 0.5 秒**，而转播自己那一刀在 156.72。被点名的 158.16 **不是球落地，是记分板收起来的动画**：157.80 那一帧板还写着 `6 7 2 AD / 2 5 2`，158.40 已经在收。⚠️ 这一条我先前按「151 秒之后都是退赛画面」判过，**是错的**——151.3–156.6 是实打实的活球，而且正是那个把比分变成 3-2 的破发点（AD 在哈恰诺夫那一行、发球指示在布洛克斯那一行），和第 12 段旁白「二比二，他的发球局被破」逐帧对得上。\n\n② **第 7、9 段：段尾落在源片自己的镜头边界上，而记分条在下一个镜头里才翻牌。**第 7 段 end=79.80 而切点在 **79.93**；第 9 段 end=132.40 而切点在 **132.55**。被点名的候选（80.18 / 133.53）落在**切点之后**，也就是下一个镜头里那块更新过的比分图形。这两段讲的正是两个盘点的兑现，**「下一个镜头把盘分改成 6-2 / 7-5」本身就证明这一分打完了**——记分条滞后是这条线记过的老账。再往后延就跨切点，而「每一段都要待在同一个镜头里」优先级更高。\n\n③ **第 10、11 段画面上没有记分条**（所以 `score_inset` 写 `false`），检测器读的是一块没有板的区域；**第 13、16、17 段在退赛之后**（162 秒布洛克斯在裁判椅边、165 秒两人到网前、**168 秒哈恰诺夫在网前抱了他很久**、191~193 秒收拾球包、197 秒起是全屏赛果台标），一个球都没在打。那几个候选是图形进出画面时的跳变。判「是噪音」的判据是密度：135.94~139.74 这 3.8 秒里报了 5 个、146.55~148.35 这 1.8 秒里报了 3 个——真实的分不可能这么密。\n\n**冷开场那 5.3 秒里前 2.2 秒挂着 `BREAK POINTS WON` 统计面板**（`KHACHANOV 3/5 60% / BLOCKX 0/2 0%`），153.5 秒左右换回常规记分板——所以第 1、12 段量到的右缘有 683 和 657 两档，见 `_scorebox_why`。留着不剪：那块面板说的正是这条片子的核心（他只面对过 2 个破发点、对手一个都没兑现），而球在 156.1 才死，冷开场最强的那一下仍在窗口里。\n\n**片尾**：源片 205.36 秒，最后一个切点在 **202.24**，之后 3.1 秒是美网官方的片尾板——第 17 段收在 **202.0**，整块片尾板一帧都没进来。",
+  "cover": {
+    "matchup": [
+      {
+        "name": "哈恰诺夫",
+        "name_en": "Karen Khachanov",
+        "country": "RUS",
+        "rank": 50
+      },
+      {
+        "name": "布洛克斯",
+        "name_en": "Alexander Blockx",
+        "country": "BEL",
+        "rank": 34
+      }
+    ],
+    "_rank_why": "**三个独立源、同一期**：①美网官方 `players.json` 给 `atpke29` singles_rank **50**（`seed: false`）、`atpb0pg` singles_rank **34**（`seed: true`）；②tennisexplorer 的 ATP 榜单页（页眉自报 `ATP rankings on - 31.08.2026`，也就是美网期间在用的那期）同样是 50 / 34；③**转播解说自己在 86.56 秒报了出来**——`It's been a fine start from the world number 50`。\n\n⚠️ **布洛克斯是 28 号种子而排名 34，两个数都对，别混成一件事**（CLAUDE.md「种子序号不是排名」）：种子按报名截止那周排，他当时排名更高。台标上那个 `28` 是种子号。\n\n⚠️ flashscore `df_hh_1` 的 `CA÷8` / `CB÷32` **不是排名**——`CA` 配着 `FU÷World`、`CB` 配着 `FV÷Belgium`，那是国家 id（哈恰诺夫在赛事里是中立身份）。CLAUDE.md 早量过这一条，没有采用。\n\n译名两个都现调 `player_zh()`：Karen Khachanov→哈恰诺夫、Alexander Blockx→布洛克斯，和 `kovacevic-khachanov` / `cobolli-blockx` 里同一张官方头像挂的中文名一致。`country` 取美网官方登记的 `RUS` / `BEL`（和 `kovacevic-khachanov` 一致）。",
+    "winner": "哈恰诺夫",
+    "result": "6-2 7-5 3-2 ret.",
+    "_result_why": "赢家视角，四处印证：①flashscore 当日表 `hjrxLF3k`（`AE÷Khachanov K.` home / `AF÷Blockx A.` away）`BA/BB=6/2`、`7/5`、`3/2`；②单场 `df_sui_1` 逐盘 `IG/IH` 一模一样（`Set 1 6/2`、`Set 2 7/5`、`Set 3 3/2`）；③**源片 196.5~200.5 秒的全屏台标** `KAREN KHACHANOV 6 7 3 / 28 ALEXANDER BLOCKX BEL RET. 2 5 2`；④美网官方 `players/matches/atpke29_matches.json` `match_id 1502` 的 `scores.sets` 给 `[[6,2],[7,5],[3,2]]`、`status: \"Retired\"`。\n\n⚠️ 三盘一个抢七都没有（`tiebreakDisplay` 全是 null），所以不写小分。⚠️ 第三盘 3-2 停在那儿——大满贯男子五盘三胜，3-2 既不满足「六局净胜二」也不是抢七，按网球规则本身就是退赛，官方 `status` 也写着 `Retired`。\n\n⚠️ 退赛写成末尾一个 `ret.` 词元，不写中文「退赛」——`versus_poster` 的比分板要求每一段都是可拆的盘分，中文「退赛」会被当成一盘去解析并当场报错（本地渲封面时撞到的）。`ret.` 也正是转播台标上印的那个词（`28 ALEXANDER BLOCKX BEL RET. 2 5 2`）。",
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "哈恰诺夫",
+    "topic": "美网1/4决赛 · 哈恰诺夫 vs 布洛克斯",
+    "_topic_why": "按账号所有者 2026-09-03「封面左上角的副标题不要写球场号，写对阵双方」写成对阵；球场（阿瑟·阿什）在比分板头一行印着。轮次按 2026-09-08 翻回的分数式口径写「1/4决赛」，不写「八强」——而 `roundCode` 官方给的是 `Q` / `Quarter-Finals`。",
+    "hook": "他一个发球局没丢\n对手打到身体罢工",
+    "_hook_why": "讲整场的形状，不是某一局：上一行是全场最硬的那个过程数（12 个发球局 12 个全保，`df_st_1` 的 `Service games won 100% (12/12)`），下一行是这场球的落点（布洛克斯第三盘退赛，赛后原话「我的身体罢工了」）。⚠️ 不重复比分板——`6-2 7-5 3-2 退赛` 就印在钩子正下方，所以钩子里不写比分、不写「退赛」两个字之外的赛果。每行 8 / 8 字，都在 10 字上限内，两行也在 `SOLO_HOOK_MAX_LINES` 之内。",
+    "portrait": {
+      "image": "assets/reel/khachanov-us-open-2026-qf.jpg",
+      "focus": 0.5,
+      "zoom": 1.0,
+      "_low_res_why": "1280×720，铺 1080×1440 要放大 2.0 倍。**这是美网这条渠道的天花板，不是没找够**：`f_` 前缀就是 xlarge 顶格，十二个前缀、六个目录、三种 `?width=` 参数 CLAUDE.md 都探到底过（第三组返回 200 但尺寸一个像素没变）。另外三档同期都跑了——AP 通讯社这一场零命中、USA TODAY 每日图集按「us-open」筛剩的那一辑没有对得上的、赛事官网 WordPress 媒体库大满贯没有（`usopen.org` 是 JS 壳）。⚠️ 仍然远好过抽帧：这是相机原图，抽帧是压缩转播流再放大。"
+    },
+    "_portrait_why": "**美网官方图片接口的本场实拍**（`photo-assets.usopen.org/images/pics/large/f_USTA2471933_20260909_CDC03104_B.jpg`），说明四要素齐：`Karen Khachanov gestures towards the crowd after a Men's Singles quarterfinal match on Day Eleven of the 2026 US Open at USTA Billie Jean King National Tennis Center`，署名 `Darren Carroll/USTA`。\n\n**四道闸门逐条过**：①精准——时间（2026-09-09）、地点（美网）、人物（哈恰诺夫）、事件（男单 1/4 决赛赛后）全由官方说明写死，图库把它挂在 `K. Khachanov vs. A. Blockx | QF` 名下；②在比赛中——赛后向观众致意，人在球场上、背景是看台观众（同一批候选里 `CDC04966` / `CDC03892` 是**场外签名**，第 2 道就出局）；③有冲击力——头肩填满画面大半、脸清楚、双臂张开，情绪正对这一屏要讲的事（他打进半决赛）；④清晰度——1280×720 是这条渠道的顶格，见 `_low_res_why`。\n\n**选它而不选另外两张 `in action`**（`CDC03012_B` / `CDC03017_B`）：那两张是击球中的中景，人只占画面左侧三分之一，缩到信息流的小图里脸只剩几个像素；这一屏讲的是「他进了半决赛」，赛后致意比击球更对题（CLAUDE.md「这条片子讲什么，封面就要是那个情绪」）。⚠️ 这一批没有握拳咬牙那一档——**这场球是对手退赛结束的，胜者的克制正是那一刻该有的样子**，不是「情绪不够用力」。\n\n⚠️ **眼睛睁着、表情读得出**（账号所有者 2026-08-21「封面图一定不要闭眼的」）。\n\n⚠️ **裁切按真实数学核过，不是按印象**：1280×720 竖向铺满 1440 是 2.0 倍，横向取中间 1080，也就是原图 x 370~910 那一段。脸落在输出 y≈300~700——**台头带（0~170）和钩子带（790~1100）之间**，两条带子都不压脸（CLAUDE.md 2026-08-31「挑封面之前先把钩子那条带叠上去」）。举起的手掌被裁在窗口外，张开双臂的姿态还在，不影响情绪读取。",
+    "_heat_why": "②档「世界前 20」他过不了（第 50），走③档**显式认领**：这条正在展开的故事线是「非种子的深跑」——ESPN 原文写着他**2018 年以来第一次以非种子身份打大满贯**，而这个赛季四大满贯全部至少打进第三轮（生涯首次）、其他赛事只有 10 胜 15 负、**来纽约之前三站硬地全部首轮出局**。刷到这条的人认得他：2022 年美网四强、2023 年澳网四强、2018 年巴黎大师赛冠军，这条线上做过他（`kovacevic-khachanov`，8 月辛辛那提首轮）。对手布洛克斯是 21 岁的 28 号种子、生涯第一次打进大满贯 1/4 决赛，本身也在故事线上（`cobolli-blockx`，8 月辛辛那提）。\n\n⚠️ 不拿「他是种子」当理由（2026-08-16 收紧时点名否掉的那条）——他根本不是种子，而这恰恰是热度本身。",
+    "scoreboard": {
+      "court": "Arthur Ashe Stadium",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%20%221%3A38%3A00%22%2C%20%22source%22%3A%20%22US%20Open%20official%20players%2Fmatches%20feed%20atpke29_matches.json%20match_id%201502%20duration%201%3A38%EF%BC%8CsetDurations%2033%2B43%2B22%3D98%20%E5%88%86%E8%87%AA%E6%B4%BD%22%7D",
+        "field": "duration"
+      },
+      "_duration_why": "⚠️ 取美网官方的 **1:38**，**没有用 flashscore**：`df_sui_1` 报 `RB÷1:33`（分盘 `0:33 / 0:40 / 0:20`），比官方短 5 分钟。判据是**自洽**不是「哪个源更眼熟」——官方 `players/matches/atpke29_matches.json` `match_id 1502` 给 `duration: \"1:38\"` 且 `setDurations: [\"33\",\"43\",\"22\"]`，**三个分盘加起来 98 分正好等于总计 1:38**，三个数互相印证；flashscore 只有分盘和总计两个数，而它们出自同一次计算，对上了也不说明什么（CLAUDE.md「比赛用时不要只信 flashscore」记的正是这个形状，只是这次官方更长）。\n\n⚠️ data URL 里写 `1:38:00` 三段式：写成 `1:38` 会被解析成「1 分 38 秒」，而它不报错，只有渲出来打开看才发现。",
+      "_court_why": "三处一致：美网官方 matches feed `courtName: \"Arthur Ashe Stadium\"`；源片 196.5~200.5 秒的全屏台标底下印着 `ARTHUR ASHE STADIUM`；flashscore `df_sui_1` 的 `MIT÷VEN / MIV÷Arthur Ashe Stadium`。"
+    }
+  },
+  "topbar": {
+    "line1": "2026 美网 男单1/4决赛",
+    "line2": "哈恰诺夫 6-2 7-5 3-2 ret. 布洛克斯"
+  },
+  "editorial": {
+    "mode": "match_review",
+    "question": "一个来纽约前三站硬地全是首轮出局的非种子，怎么在美网连赢五场打进半决赛？",
+    "thesis": "哈恰诺夫这场赢在发球局一分不让：全场 12 个发球局 12 个全保，只面对过 2 个破发点、两个都救下来了，一发得分率 89%（36 个一发赢下 32 分）——布洛克斯从头到尾没能在他的发球局里咬下一块。反过来他自己转化了 4 个破发点、每一盘都破到对手一次。而布洛克斯带着从第四轮就有的肋伤上场，第三盘 2-2 被破之后身体撑不住，1 小时 38 分钟以退赛结束。",
+    "beats": [
+      "前段：第一盘布洛克斯 1-2 时自己发球 0-40 落后，三个破发点全救下来还两次占先保住了发球局；可那之后哈恰诺夫连破两次，33 分钟 6-2 拿下第一盘。",
+      "中段：第二盘布洛克斯咬得很紧，一路追到 5-5，哈恰诺夫的发球局始终一个没丢；6-5 时他自己发球 40-0 拿到三个盘点，第一个就兑现，7-5，43 分钟。",
+      "结局：第三盘布洛克斯的身体先垮了，场边接受治疗；2-2 时他的发球局被破，3-2 之后场内广播「due to injury, Mr. Blockx is forced to retire」。两人在网前抱了很久。哈恰诺夫时隔 2022 年重回美网半决赛，下一场对兹维列夫。"
+    ],
+    "human_context": {
+      "angle": "这一场独有的切口是**退赛那一方的态度**：布洛克斯赛后说的不是懊恼，是「说实话，比赛中我觉得挺好笑的，只能一笑了之，因为一直在出新状况」——他的身体开始代偿、做出跟平时不一样的动作只为躲开疼。而这是他生涯第一次打进大满贯 1/4 决赛。另一头哈恰诺夫的反差同样是这一场独有的：一个 2018 年以来第一次以非种子身份打大满贯的人，在这个赛季其他赛事只有 10 胜 15 负、来纽约前三站硬地全部首轮出局，却把四大满贯全部打进了第三轮，现在进了半决赛。",
+      "facts": [
+        "布洛克斯原话「I think my body just gave up」「To be honest, during the match, it was quite funny to me. I just had to laugh it off, because it was just something new the whole time」（ESPN 原文，articleId 49885774）",
+        "他在上一场（第四轮）就差点因伤停下来，带着肋伤上场，退赛时腿、肋、背都有问题（ESPN 原文）",
+        "哈恰诺夫这个赛季四大满贯全部至少打进第三轮（生涯首次），其他赛事 10 胜 15 负，来纽约前三站硬地全部首轮出局（ESPN 原文）",
+        "哈恰诺夫 2018 年以来第一次以非种子身份打大满贯（ESPN 原文）",
+        "哈恰诺夫这一届五场用时合计 12 小时 30 分（美网官方 matches feed：1:35 + 3:17 + 2:10 + 3:50 + 1:38）"
+      ],
+      "sources": [
+        "https://now.core.api.espn.com/v1/sports/news/49885774",
+        "https://www.usopen.org/en_US/news/articles/2026-09-09/khachanov_moves_on_to_2026_us_open_semifinal_as_blockx_retires.html",
+        "https://www.usopen.org/en_US/news/articles/2026-09-09/alexander_blockx_on_his_2026_us_open_qf_retirement_it_just_kept_getting_worse.html",
+        "https://www.usopen.org/en_US/scores/feeds/2026/players/matches/atpke29_matches.json"
+      ],
+      "voice_label": "非种子"
+    }
+  },
+  "_match": {
+    "flashscore_id": "hjrxLF3k",
+    "participants": [
+      "哈恰诺夫",
+      "布洛克斯"
+    ],
+    "_participants_why": "⚠️ 这一栏跟 flashscore 的 home / away（`AE÷Khachanov K.` / `AF÷Blockx A.`），必须和紧挨着的 `set_scores_home_away` 对齐。这一场 home 恰好也是 `cover.matchup[0]`（赢家在前），所以和 `stats.a/b` 的版式顺序**碰巧一致**——那是巧合不是规矩，别照着推下一条。",
+    "set_scores_home_away": [
+      [
+        6,
+        2
+      ],
+      [
+        7,
+        5
+      ],
+      [
+        3,
+        2
+      ]
+    ],
+    "tiebreaks_home_away": [
+      null,
+      null,
+      null
+    ],
+    "_tiebreaks_why": "三盘一个抢七都没有：flashscore `df_sui_1` 的 `IG/IH` 是 6/2、7/5、3/2，美网官方 `scores.sets` 的 `tiebreakDisplay` 三盘全是 null。第三盘 3-2 是退赛停在那儿，不是打完的比分。",
+    "event": "US Open",
+    "round": "1/4决赛",
+    "date": "2026-09-09"
+  },
+  "stats": {
+    "a": {
+      "headshot": "assets/players/headshots/atp-KE29.png",
+      "aces": 6,
+      "df": 2,
+      "winners": 26,
+      "ue": 21,
+      "first_in": 36,
+      "first_won": 32,
+      "first_total": 66,
+      "second_total": 30,
+      "second_won": 19,
+      "bp_conv": 4,
+      "bp_chances": 6,
+      "pts_won": 80,
+      "pts_total": 140
+    },
+    "b": {
+      "headshot": "assets/players/headshots/atp-B0PG.png",
+      "aces": 8,
+      "df": 4,
+      "winners": 21,
+      "ue": 26,
+      "first_in": 41,
+      "first_won": 29,
+      "first_total": 74,
+      "second_total": 33,
+      "second_won": 16,
+      "bp_conv": 0,
+      "bp_chances": 2,
+      "pts_won": 60,
+      "pts_total": 140
+    },
+    "_source": "flashscore `df_st_1`（`hjrxLF3k`）的 Match 那一栏，`tools/match_stat_hooks.py hjrxLF3k --stats-block` 机器抄的，一个数没手打。⚠️ **a/b 不用对调**：工具吐出来的 `a` 是 feed 的 home（哈恰诺夫），而 `cover.matchup[0]` 也是哈恰诺夫——这一场两个顺序碰巧一致。自证：`a` 的 `Service games won 100% (12/12)`、`Break Points Converted 4/6`，对得上 6-2 7-5 3-2 里他一个发球局没丢、破了对手四次。头像跟着数字走：`atp-KE29`＝哈恰诺夫、`atp-B0PG`＝布洛克斯，两张在别的 spec 里各自只挂过这一个中文名（扫过 `specs/reels/*.json`）。`first_total` 按 `first_in + second_total` 算（66 / 74），不取接口的分母。"
+  },
+  "_hit_data": "跑过 `tools/match_stat_hooks.py hjrxLF3k --stats-block`。这一场最狠的那个数是**发球局零丢分**：12 个发球局 12 个全保，全场只面对过 2 个破发点、两个都救下来了（`df_st_1` 的 `Service games won 100% (12/12)`、`Break Points Saved 2/2`），而对手 13 个发球局丢了 4 个。已经写进钩子、第 ⑧ 段旁白和小红书正文。另外三个候选没用：一发得分率 89%(32/36) 对 71%(29/41) 进了第 ⑦ 段旁白；总得分 80 比 60 和上面那条说的是同一件事（发球局锁死），只写进正文；跑动距离布洛克斯 1316 米比哈恰诺夫 1113 米多两百米——**这条和退赛是同一件事的两面，但它容易被读成「他更拼」而不是「他在硬撑」**，所以只写进正文并配上伤情，不进旁白。",
+  "_claims": [
+    "「他一个发球局没丢 / 十二个发球局全保 / 只面对过两个破发点」——flashscore `df_st_1_hjrxLF3k` 的 `Service games won SH÷100% (12/12)`、`Break Points Saved SH÷2/2`；逐分 `df_mh_1_hjrxLF3k` 里哈恰诺夫的发球局逐局核过，没有一局出现 `HH÷1`（home 被破）。两个口径同一份 feed 的不同块，互相印证。",
+    "「一发得分率百分之八十九」——`df_st_1` 的 `1st serve points won SH÷89% (32/36)`。",
+    "「第三次大满贯半决赛 / 时隔 2022 年重回美网半决赛」——两个独立源：①ESPN 原文（articleId 49885774）「sending Khachanov to his third Grand Slam semifinal」「The Russian got to the semifinals of the US Open in 2022 and the Australian Open in 2023」；②美网官方稿 description「At 30, Karen Khachanov returns to the US Open semifinals for the first time since 2022」。⚠️ **美网半决赛是第二次、大满贯半决赛是第三次，两个数不能混。**",
+    "「来纽约前三站硬地全部首轮出局 / 其他赛事 10 胜 15 负 / 四大满贯全部至少第三轮」——ESPN 原文：「He reached at least the third round of all four majors for the first time but is just 10-15 in other events, with losses in the opening rounds of all three hard-court events before coming to New York.」⚠️ 只有这一个源，所以**旁白里只用「三站硬地都是一轮游」和「十胜十五负」这两个可核的具体数**，不写「2018 年以来第一次非种子」那句全称断言（同样只有 ESPN 一个源，放正文并注明出处）。",
+    "「布洛克斯生涯第一次打进大满贯 1/4 决赛」——美网官方稿 description「Alexander Blockx retired in the third set of his first US Open quarterfinal against Karen Khachanov」＋ ESPN 原文上下文。⚠️ 搜索摘要里还有一句「比利时人在美网的最深纪录」，**没有拿到原文，一个字都没用**。",
+    "「退赛 / 伤在腿、肋、背 / 从第四轮就带着肋伤」——ESPN 原文「Blockx stopped playing in the third set Wednesday because of injuries to his leg, ribs and back」「Blockx said he nearly stopped in his last match because of his injuries」；美网官方 matches feed `status: \"Retired\"`；源片 160.16 秒场内广播。",
+    "「用时 1 小时 38 分」——美网官方 `players/matches/atpke29_matches.json` `match_id 1502`，`duration: \"1:38\"` 且 `setDurations` 33+43+22＝98 分自洽。⚠️ flashscore `df_sui_1` 报 1:33，没有采用，理由见 `cover.scoreboard._duration_why`。",
+    "「开球时刻 北京时间 9/10 凌晨五点多」——flashscore 当日表 `hjrxLF3k` 的 `AD÷1788988200` ＝ 2026-09-09 21:10 UTC ＝ 北京时间 9/10 05:10；美网官方 feed `epoch: 1788993908000` 是比赛结束/记录时刻。分钟落在 10–39 那一档，按 CLAUDE.md「只说个大概不报到分」写「五点多」。"
+  ],
+  "segments": [
+    {
+      "start": 153.6,
+      "end": 156.6,
+      "narration": "",
+      "score_inset": true,
+      "_ending_payoff_required": true,
+      "_why": "**第①格：全片最强的一格。** 第三盘 2-2、布洛克斯发球，哈恰诺夫拿到破发点并破发——**这是这场球的最后一分**，之后布洛克斯退赛。不配旁白，靠现场声（154.80 秒解说报 `Game, Khachanov`）。窗口落在 `scene_cuts` 的 151.3 和 156.72 之间，一刀没跨。\n\n⚠️ **起点从 151.3 挪到 153.6，是打开成片看出来的**：151.3~153.5 那 2.2 秒转播挂着 `BREAK POINTS WON` 统计面板，而它的黄色表头在源片里落在 x 184~445，**够不着 `scan_mask` 那句 `cols[:50]`（表头必须从板的左缘附近起）**，于是表头那一行整行不回贴；居中窗口从 x=353 起，透出来的就是半截「TS WON」。板身（名字和数字）是完整的，**只有那条黄标是断的**——放在片子开头的三秒里不合适，所以让开它。第 ⑫ 段仍从 151.3 起（那块面板写的正是「哈恰诺夫 3/5、布洛克斯 0/2」，和那一段的旁白同一件事），冷开场只取常规记分板那一段。\n\n⚠️ 球在 **156.1 秒就死了**（逐帧：156.10 球已落在布洛克斯半场、156.30/156.45 球在地上、他球拍垂下站住不动），段尾 156.6 落在球死之后 0.5 秒。\n\n⚠️ 记分条自证：154.5/156.5 两格是 `KHACHANOV 6 7 2 [AD] / 28 BLOCKX BEL 🎾 2 5 2`，**发球指示那颗黄球在 BLOCKX 行**（裁出来放大读过——缩略图上看着像在 KHACHANOV 行），和逐分 `HC÷3 HE÷2 HG÷2 HH÷2` 的 away 发球、home 破发完全一致。\n\n⚠️ **后段冷开场且含最后一球，所以 `_ending_payoff_required: true`**——正文第 ⑫ 段重放同一区间（151.3~156.6 完整覆盖这一段），并一路走到 202.0 的赛果台标。"
+    },
+    {
+      "start": 2.0,
+      "end": 12.0,
+      "narration": "北京时间九月十号凌晨五点多，美网男单四分之一决赛。哈恰诺夫，三十岁，世界第五十位，非种子。",
+      "score_inset": true,
+      "_why": "第③格交代坐标。画面是第一盘开场的底线宽景（记分条 `1 15 / 1 40`），两个人都只有几十像素、谁都没露脸，正好放身份。球场名（阿瑟·阿什）没进旁白——比分板头一行印着，旁白再说一遍是第二遍。轮次旁白写「四分之一决赛」让 TTS 读得对，封面和顶栏写「1/4决赛」。开球时刻见 `_claims`。窗口在 `scene_cuts` 1.95 和 25.68 之间。"
+    },
+    {
+      "start": 41.2,
+      "end": 45.5,
+      "narration": "来纽约前的三站，他全是一轮游。",
+      "score_inset": true,
+      "_why": "第②格的落点句（画面要人脸才压得住）：42.5 秒是哈恰诺夫的正面近景，脸清楚，旁白 3 秒出头正好落在这一格里。窗口在 `scene_cuts` 41.02 和 45.65 之间，同一个镜头段没跨刀。⚠️ **「硬地」这两个字被拿掉了，是合成器逼的**：写「三站硬地都是」`--check-narration` 的切词表报 `硬 ｜ 帝都 ｜ 是`（「帝都」是真词、读音全变），改成「三站硬地，全是」之后整段短到 9 个字、切词器拿不到上下文，又报 `硬 ｜ 帝` —— 两次都是 CLAUDE.md 记过的「硬地→硬帝」那一族。所以这一句只说「三站」，「硬地」两个字交给小红书正文（那儿是给眼睛读的，不过 TTS）。"
+    },
+    {
+      "start": 12.2,
+      "end": 21.4,
+      "narration": "开场第三局，布洛克斯四十比十五，手里两个保发的机会。",
+      "score_inset": true,
+      "_why": "**记分条逐格核过**（`score_00.jpg` 的 12.5/14.5/16.5/20.5 四格）：`KHACHANOV 1 [15] / 28 BLOCKX BEL 🎾 1 [40]`——局分 1-1、**发球指示在布洛克斯行**、他 40-15 领先。逐分 `df_mh_1` 同一局是 `0:15, 0:30, 0:40, 15:40, 30:40, 40:40, 40:A, 40:40, 40:A`（`HL` 是 home:away ＝ 哈恰诺夫:布洛克斯，和记分条对得上）。⚠️ **这一局是布洛克斯占上风，不是他落后**——第一版旁白把主语说反了，是 `preview_segments_local` 把记分条和旁白并排摆出来才看见的。窗口末尾卡在 21.4，避开 `scene_cuts_loose` 的 21.54。"
+    },
+    {
+      "start": 25.8,
+      "end": 33.0,
+      "narration": "哈恰诺夫全追了回来。可布洛克斯两次占先，还是保住了这一局。",
+      "score_inset": true,
+      "_why": "**同一局的后半段**——`score_00.jpg` 的 26.5/32.5 两格是 `KHACHANOV 1 [ ] / 28 BLOCKX BEL 🎾 1 [AD]`，布洛克斯占先；逐分里这一局两次 `40:A`（away 占先）最后保发。⚠️ **12.5 到 42.5 秒整整三十秒都是这一局**（局分一直 1-1），是第一盘篇幅最长的一局——第一版把 25.8~33.0 写成「连破两个发球局」，而那时候还没到破发，记分条一比就露馅。主语两处都写出来（CLAUDE.md「谁救的必须写出来」同族）。"
+    },
+    {
+      "start": 46.0,
+      "end": 52.0,
+      "narration": "",
+      "score_inset": true,
+      "_why": "不配旁白的一段现场声，让前面那句「六比二」落地。画面是第二盘的底线回合。窗口在 `scene_cuts` 45.65 和 61.39 之间。⚠️ CLAUDE.md「旁白不许把每一局都念一遍」——这条线上现场声（球声、观众）本来就是内容。"
+    },
+    {
+      "start": 68.0,
+      "end": 79.8,
+      "narration": "第一盘五比二，哈恰诺夫自己发球，拿到盘点。三十三分钟拿下第一盘。他这场的一发得分率是百分之八十九。",
+      "score_inset": true,
+      "_why": "**记分条自证是第一盘的盘点局**（`score_01.jpg` 的 64.5~78.5 八格全挂着黄标 `SET POINT` ＋ `KHACHANOV 🎾 5 [AD] / 28 BLOCKX BEL 2`）：5-2、哈恰诺夫自己发球、占先。分盘用时取美网官方 `setDurations` 的第一个数 `33`。一发得分率 89%(32/36) 出自 `df_st_1`，按 CLAUDE.md「百分比写百分之多少，不写几成几」。窗口在 `scene_cuts` 67.7 和 79.93 之间。 ⚠️ 主语写出来不用「他」：这一段是宽景回合，近端是布洛克斯（浅色）、远端才是哈恰诺夫（红衣），而拿到盘点的是哈恰诺夫（记分条发球指示在 KHACHANOV 行）——CLAUDE.md「整句旁白压在对手身上」那一族，预览把画面和旁白并排摆出来才看见。"
+    },
+    {
+      "start": 110.0,
+      "end": 119.6,
+      "narration": "第二盘两个人一路交替保发。哈恰诺夫的发球局全场十二个，一个没丢。",
+      "score_inset": true,
+      "_why": "**记分条逐格核过**（`score_02.jpg`）：94.5~108.5 那几格是 `KHACHANOV 6 3 / BLOCKX🎾 2 3`（第二盘 3-3），110.5~118.5 是 `KHACHANOV🎾 6 3 / BLOCKX 2 4`（3-4）。⚠️ **起点从 108.0 挪到 110.0**，就是为了让整段落在同一局里（108.5 那格还是 3-3，110.5 起才是 3-4）。⚠️ 第一版这一段写「一路追到五平」，而画面上是 3-3/3-4——**5-5 那一段集锦里根本没有**（120.5/122.5 还是 3-4，124.5 直接跳到 6-5），说「五平」会让人以为画面就是五平，所以挪到下一段当铺垫。后半句是这条片子的中心判断（`editorial.thesis`），也是钩子的上一行。窗口在 `scene_cuts` 107.19 和 119.85 之间。"
+    },
+    {
+      "start": 124.0,
+      "end": 132.4,
+      "narration": "布洛克斯一路咬到五平。六比五哈恰诺夫发球，四十比零。三个盘点，第一个就拿下。",
+      "score_inset": true,
+      "_why": "第二盘的收尾，也是全场的转折点。⚠️ 记分条逐格自证（`score_03.jpg` 124.5/126.5/128.5/130.5/132.5 五格）：`SET POINT` 黄标 ＋ `KHACHANOV 🎾 6 6 [40] / 28 BLOCKX BEL 2 5 [0]`，发球指示在 KHACHANOV 行，和逐分 `HC÷7 HE÷5 HG÷1 HL÷15:0, 30:0, 40:0 |B2|` 一致（他自己发球、40-0、`|B2|` 盘点）。「一路咬到五平」这一句从上一段挪过来当铺垫——5-5 集锦里没有画面，放在这儿是交代画面之外的走势，而紧接着的 6-5 正是这一段的记分条。131.56 秒解说报 `Game, second set, Khachanov`，窗口收在 132.4，死球之后、`scene_cuts` 132.55 之前。"
+    },
+    {
+      "start": 136.0,
+      "end": 139.6,
+      "narration": "",
+      "score_inset": false,
+      "_score_inset_why": "这一段是布洛克斯的特写和场边，`score_04.jpg` / `score_03.jpg` 的 136.5/138.5 两格左下角**没有常驻记分板**（转播切走了）。贴回去会在画面上糊一块球场。",
+      "_why": "不配旁白，让他的表情自己说话——这是全片第一次看见他撑不住。窗口在 `scene_cuts_loose` 135.44 和 `scene_cuts` 139.82 之间。"
+    },
+    {
+      "start": 140.0,
+      "end": 146.8,
+      "narration": "第三盘一开始，布洛克斯的身体先撑不住了。",
+      "score_inset": false,
+      "_score_inset_why": "场边治疗的镜头，`score_03.jpg` 的 140.5/142.5/144.5/146.5 四格全是球场地面和器材，没有记分板。",
+      "_why": "画面是他在场边椅子旁接受处理。⚠️ 旁白只说画面外的事实（伤），不复读观众看得见的动作——CLAUDE.md 禁的是指示语，不是描述情绪。伤情出处见 `_claims`：腿、肋、背，肋伤从第四轮就带着。窗口在 `scene_cuts` 139.82 和 151.3 之间。"
+    },
+    {
+      "start": 151.3,
+      "end": 156.6,
+      "narration": "二比二，他的发球局被破。",
+      "score_inset": true,
+      "_why": "**正片重放冷开场那一区间，兑现 `_ending_payoff_required`。** 窗口 151.3~156.6 完整覆盖第①段的 153.6~156.6，这次配一句旁白点明是谁的发球局——CLAUDE.md「盘点赛点谁救的必须写出来」同族：破发点是哈恰诺夫拿到的，被破的是布洛克斯的发球局，主语必须写出来。记分条自证见第①段。\n\n⚠️ 这一段比第①段多出来的前 2.2 秒挂着 `BREAK POINTS WON` 面板（`KHACHANOV 3/5 60% / BLOCKX 0/2 0%`）——**留着是有理由的**：它说的正是这条片子的核心（他只面对过 2 个破发点、对手一个都没兑现），摆在「他的发球局被破」这句话旁边正好。那条黄标断在半截的账见第①段，放在正片中段可以接受，放在开头不行。"
+    },
+    {
+      "start": 157.0,
+      "end": 161.0,
+      "narration": "",
+      "quote": [
+        "Due to injury, Mr. Blockx is forced to retire.\n因为伤病，布洛克斯先生被迫退赛。"
+      ],
+      "_quote_kind": "broadcast",
+      "score_inset": false,
+      "_score_inset_why": "158.5 秒是布洛克斯的特写、160.5 秒两人已经走到网前，`score_03.jpg`/`score_04.jpg` 这两格左下角都没有常驻记分板。",
+      "_why": "**这场球真正的结束在这儿**：160.16 秒场内广播（主裁）宣报 `Ladies and gentlemen, due to injury, Mr. Blockx is forced to retire. Game, set, and match, Khachanov.`，`captions.txt` 逐字有。⚠️ `_quote_kind: \"broadcast\"`——这是转播/场内原声，不是赛后采访（CLAUDE.md「赛场之上的 quote 段不许是赛后采访」）。中文一行、英文一行，两行各自都在 16 格宽度之内。窗口在 `scene_cuts` 156.72 和 161.24 之间。"
+    },
+    {
+      "start": 161.5,
+      "end": 170.0,
+      "narration": "哈恰诺夫走过去，在网前抱了他很久。布洛克斯二十一岁，第一次打进大满贯四分之一决赛。",
+      "score_inset": false,
+      "_score_inset_why": "赛后网前的近景和地面镜头，`score_04.jpg` 的 162.5~168.5 全格没有记分板。",
+      "_why": "这场球唯一的强情绪落点：赢的那个人先去安慰输的那个人。⚠️ 这一句是**描述关键情绪**不是指示语（CLAUDE.md 明确区分过：「球落地，他放下球拍，双手掩面」是好台词，「画面里是」才是禁的）。留 5 秒现场声（掌声）。窗口在 `scene_cuts` 161.24 和 185.39 之间。 ⚠️ 后半句加了年龄并在「二十一岁」后断开，是为了让字幕切在该断的地方——上一版「这是布洛克斯第一次打进大满贯四分之一决赛」被 `--dry-run` 报成 20 格硬切（`这是布洛克斯 ｜ 第一次打进大满贯四分之一决赛`）。"
+    },
+    {
+      "start": 186.0,
+      "end": 190.3,
+      "narration": "",
+      "score_inset": false,
+      "_score_inset_why": "赛后收拾东西的镜头，`score_04.jpg` 的 186.5/188.5/190.5 三格没有记分板。",
+      "_why": "不配旁白。188.5 秒哈恰诺夫双手抱头那一格——赢了却不是狂喜，正是这场球该有的样子。窗口在 `scene_cuts` 185.39 和 190.47 之间。"
+    },
+    {
+      "start": 190.7,
+      "end": 194.5,
+      "narration": "其他赛事，他十胜十五负。",
+      "score_inset": false,
+      "_score_inset_why": "同上，赛后收拾的镜头没有记分板。",
+      "_why": "把反差摆出来：出处见 `_claims`（ESPN 原文 `just 10-15 in other events`）。窗口在 `scene_cuts` 190.47 和 `scene_cuts_loose` 194.78 之间。"
+    },
+    {
+      "start": 196.0,
+      "end": 202.0,
+      "narration": "四大满贯他全部打进第三轮。半决赛，他能走多远？",
+      "score_inset": false,
+      "_score_inset_why": "196.5~200.5 是**全屏赛果台标**（`MEN'S SINGLES | QUARTERFINAL` / `KAREN KHACHANOV 6 7 3` / `28 ALEXANDER BLOCKX BEL RET. 2 5 2`），那是全屏图形不是常驻记分板，回贴会在它上面糊一块。",
+      "crosses_cut": "跨 200.03（`scene_cuts_loose`）：196.5 哈恰诺夫举手致意 → 198.5 双手合十向观众鞠躬 → 200.5 全屏台标定版，同一个人、同一段赛后致意，转播只是换了机位。",
+      "_why": "收尾。全屏台标把赛果、轮次、球场、退赛标记全印在最后一屏上，是这条片子最硬的一处自证。⚠️ 末尾收在 202.0，离片尾板那一刀（`scene_cuts` 最后一个 202.24、`silent_audio` 202.32 起）留 0.24 秒，加 `SEG_FADE` 0.18 也不会切进片尾板。半决赛对手兹维列夫：ESPN 原文「Khachanov will play top-seeded Alexander Zverev in a bid for his first major final」，译名现调 `player_zh('Alexander Zverev')`。 ⚠️ 收尾落在一问上，不停在数据上（`test_收尾要落在一问上不能停在数据上`）。 ⚠️ 真语音量到上一版「…半决赛对兹维列夫，他能走多远？」是 6.67s、超窗口 0.67s，所以把对手的名字让给小红书正文（那儿不受窗口限制）。收尾落在一问上。"
+    }
+  ],
+  "push": {
+    "summary": "对手退赛哈恰诺夫进半决赛",
+    "_summary_why": "一层铺垫（对手退赛）＋ 主语 ＋ 动词收尾（进半决赛），12 字，`SUMMARY_MAX=13` 之内。轮次写「半决赛」不写「四强」（2026-09-08 的口径）。不写「非种子」是因为那三个字会把铺垫叠成两层——身份交给 `lead` 第一句。",
+    "lead": "美网男单1/4决赛，阿瑟·阿什球场。世界第五十位、非种子的哈恰诺夫，6-2、7-5 拿下前两盘，第三盘 2-2 破掉对手发球局之后，28 号种子布洛克斯因伤退赛，1 小时 38 分钟。全场哈恰诺夫 12 个发球局 12 个全保，只面对过 2 个破发点、两个都救下来了；一发得分率 89%（36 个一发赢下 32 分），总得分 80 比 60。布洛克斯带着从第四轮就有的肋伤上场，退赛时腿、肋、背都有问题，全场比对手多跑了两百米（1316 米比 1113 米）。他赛后说「我的身体罢工了」，又说比赛中只能一笑了之，因为一直在出新状况。这是他生涯第一次打进大满贯 1/4 决赛。哈恰诺夫这个赛季其他赛事只有 10 胜 15 负、来纽约前三站硬地全部首轮出局，却把四大满贯全部打进了第三轮，现在时隔 2022 年重回美网半决赛，下一场对兹维列夫。",
+    "auto": true
+  },
+  "_no_repeat": "这条线上做过这两个人各一次，都是八月辛辛那提，讲的不是这一场：`kovacevic-khachanov`（哈恰诺夫首轮 5-7 6-3 7-6 险胜科瓦切维奇）、`cobolli-blockx`（布洛克斯第三轮输给科博利）。那两条里铺开讲过的东西——科瓦切维奇那场的抢七、布洛克斯和科博利的过山车——这一条一个字都不碰。哈恰诺夫的 2022 美网四强只在收尾一句带过（看懂「重回半决赛」所必需的来路），不展开。"
+}
