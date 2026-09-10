@@ -1,67 +1,101 @@
 {
-  "film_sha256": "74490a167ee013be20bd6d50408b489106d9bbbc1bc7e0a0e80f7956935df104",
+  "film_sha256": "ee71442923ef66e7a3212a85d5fd9057536a92467c7f6d27f2ad7d4d4198480b",
   "film_seconds": 182.691,
+  "production_stage_events": [
+    {
+      "stage": "preflight",
+      "at": "2026-09-10T03:18:03Z",
+      "run_id": "34432737443"
+    },
+    {
+      "stage": "asr_verify",
+      "at": "2026-09-10T03:19:40Z",
+      "run_id": "34432737443"
+    },
+    {
+      "stage": "render",
+      "at": "2026-09-10T03:20:55Z",
+      "run_id": "34432737443"
+    },
+    {
+      "stage": "qc",
+      "at": "2026-09-10T03:23:08Z",
+      "run_id": "34432737443"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-10T03:23:08Z",
+      "run_id": "34432737443"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/interview-gauff-andreeva-us-open-2026-qf-interview/gauff-andreeva-us-open-2026-qf-interview.mp4?v=ee71442923ef66e7",
+  "video_bytes": 75760449,
+  "release_asset_digest": "sha256:ee71442923ef66e7a3212a85d5fd9057536a92467c7f6d27f2ad7d4d4198480b",
+  "qc_attestation_sha256": "998ad5708c8b30ab166be52a5cb6e19cf7a668f7c837fb8040442085854cdc79",
+  "production_sla_history": [
+    {
+      "version": 2,
+      "pipeline": "interview-clip",
+      "slug": "gauff-andreeva-us-open-2026-qf-interview",
+      "received_at": "2026-09-10T02:55:34Z",
+      "artifact_ready_at": "2026-09-10T03:02:55Z",
+      "elapsed_seconds": 441.433,
+      "budget_seconds": 600,
+      "met": true,
+      "film_sha256": "74490a167ee013be20bd6d50408b489106d9bbbc1bc7e0a0e80f7956935df104",
+      "spec_sha256": "adabce85c3f49b8bcfeafab625ffe07e49b5e036f354c777ef2a7c4858706c7a",
+      "run_id": "34431330274",
+      "stage_events": [
+        {
+          "stage": "preflight",
+          "at": "2026-09-10T02:56:28Z",
+          "run_id": "34431330274"
+        },
+        {
+          "stage": "asr_verify",
+          "at": "2026-09-10T02:58:16Z",
+          "run_id": "34431330274"
+        },
+        {
+          "stage": "render",
+          "at": "2026-09-10T03:00:02Z",
+          "run_id": "34431330274"
+        }
+      ],
+      "render_seconds": 173.433,
+      "pre_render_seconds": 268.0
+    }
+  ],
   "production_sla": {
     "version": 2,
     "pipeline": "interview-clip",
     "slug": "gauff-andreeva-us-open-2026-qf-interview",
-    "received_at": "2026-09-10T02:55:34Z",
-    "artifact_ready_at": "2026-09-10T03:02:55Z",
-    "elapsed_seconds": 441.433,
+    "received_at": "2026-09-10T03:17:12Z",
+    "artifact_ready_at": "2026-09-10T03:23:07Z",
+    "elapsed_seconds": 355.479,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "74490a167ee013be20bd6d50408b489106d9bbbc1bc7e0a0e80f7956935df104",
-    "spec_sha256": "adabce85c3f49b8bcfeafab625ffe07e49b5e036f354c777ef2a7c4858706c7a",
-    "run_id": "34431330274",
+    "film_sha256": "ee71442923ef66e7a3212a85d5fd9057536a92467c7f6d27f2ad7d4d4198480b",
+    "spec_sha256": "330a54d4b17166d9651dc8a08764f81a56d394285d0989440110fe3c15ce33e1",
+    "run_id": "34432737443",
     "stage_events": [
       {
         "stage": "preflight",
-        "at": "2026-09-10T02:56:28Z",
-        "run_id": "34431330274"
+        "at": "2026-09-10T03:18:03Z",
+        "run_id": "34432737443"
       },
       {
         "stage": "asr_verify",
-        "at": "2026-09-10T02:58:16Z",
-        "run_id": "34431330274"
+        "at": "2026-09-10T03:19:40Z",
+        "run_id": "34432737443"
       },
       {
         "stage": "render",
-        "at": "2026-09-10T03:00:02Z",
-        "run_id": "34431330274"
+        "at": "2026-09-10T03:20:55Z",
+        "run_id": "34432737443"
       }
     ],
-    "render_seconds": 173.433,
-    "pre_render_seconds": 268.0
-  },
-  "production_stage_events": [
-    {
-      "stage": "preflight",
-      "at": "2026-09-10T02:56:28Z",
-      "run_id": "34431330274"
-    },
-    {
-      "stage": "asr_verify",
-      "at": "2026-09-10T02:58:16Z",
-      "run_id": "34431330274"
-    },
-    {
-      "stage": "render",
-      "at": "2026-09-10T03:00:02Z",
-      "run_id": "34431330274"
-    },
-    {
-      "stage": "qc",
-      "at": "2026-09-10T03:02:56Z",
-      "run_id": "34431330274"
-    },
-    {
-      "stage": "qc_passed",
-      "at": "2026-09-10T03:02:56Z",
-      "run_id": "34431330274"
-    }
-  ],
-  "video_url": "https://github.com/robertyang87/tennislive/releases/download/interview-gauff-andreeva-us-open-2026-qf-interview/gauff-andreeva-us-open-2026-qf-interview.mp4?v=74490a167ee013be",
-  "video_bytes": 75750285,
-  "release_asset_digest": "sha256:74490a167ee013be20bd6d50408b489106d9bbbc1bc7e0a0e80f7956935df104",
-  "qc_attestation_sha256": "4299db69905034466d59f091e05e9876ef5afabb00d5dcf1e02a76aab7374e0c"
+    "render_seconds": 132.479,
+    "pre_render_seconds": 223.0
+  }
 }

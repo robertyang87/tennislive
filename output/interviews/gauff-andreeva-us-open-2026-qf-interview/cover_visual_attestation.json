@@ -1,11 +1,11 @@
 {
   "status": "pass",
-  "checked_at": "2026-09-10T03:02:56Z",
+  "checked_at": "2026-09-10T03:23:08Z",
   "auditor": "opencv-haar-v1",
   "expected_subject": "高芙",
   "identity_evidence": "L0-bound spec subject + same-source frame_at",
-  "spec_sha256": "adabce85c3f49b8bcfeafab625ffe07e49b5e036f354c777ef2a7c4858706c7a",
-  "poster_sha256": "f0c924dc53edb0391c76cad1d59e9638993276e39f9e3435162f5bd9827db571",
+  "spec_sha256": "330a54d4b17166d9651dc8a08764f81a56d394285d0989440110fe3c15ce33e1",
+  "poster_sha256": "86cb6c83230347bbb16d49354a6ec88acfb33aae51d20374eb030c1fb0a1781b",
   "thresholds": {
     "close_up_zoom": 1.5,
     "face_height_ratio": 0.08,
@@ -31,23 +31,23 @@
     "face": {
       "detector": "frontal-default",
       "box": [
-        305,
-        207,
-        271,
-        271
+        592,
+        230,
+        162,
+        162
       ],
-      "detected_faces": 2,
+      "detected_faces": 3,
       "eyes": 2,
-      "face_height_ratio": 0.33457,
-      "face_area_ratio": 0.08395,
-      "center_x_ratio": 0.40787,
-      "center_y_ratio": 0.23765,
-      "sharpness": 621.329,
-      "contrast": 171.0
+      "face_height_ratio": 0.2,
+      "face_area_ratio": 0.03,
+      "center_x_ratio": 0.62315,
+      "center_y_ratio": 0.19877,
+      "sharpness": 274.86,
+      "contrast": 144.0
     },
     "contract": {
       "shot_type": "",
-      "frame_at": 33.3,
+      "frame_at": 37.0,
       "zoom": 1.0,
       "focus_y": 0.5
     }
