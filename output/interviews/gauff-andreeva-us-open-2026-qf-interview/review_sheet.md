@@ -5,8 +5,8 @@
 | # | 片内 | 跳到源片 | 英文 | 中文 | 判据 |
 |--:|:--|:--|:--|:--|:--|
 | 1 | 0:02.4 | [▶](https://youtu.be/gy3k_t65oak?t=2) | You know how to thrill Arthur Ashe Stadium | 你最懂怎么点燃阿瑟·阿什球场 | ✏️ 已订正 |
-| 2 | 0:05.6 | [▶](https://youtu.be/gy3k_t65oak?t=5) | and you gave us another example | 今天你又演了一次 |  |
-| 3 | 0:07.0 | [▶](https://youtu.be/gy3k_t65oak?t=7) | of it today. | 给所有人看 |  |
+| 2 | 0:05.6 | [▶](https://youtu.be/gy3k_t65oak?t=5) | and you gave us another example | 今天你又让我们 |  |
+| 3 | 0:07.0 | [▶](https://youtu.be/gy3k_t65oak?t=7) | of it today. | 见识了一次 |  |
 | 4 | 0:09.7 | [▶](https://youtu.be/gy3k_t65oak?t=9) | First set was a little bit scratchy by | 以你的标准 第一盘 |  |
 | 5 | 0:12.2 | [▶](https://youtu.be/gy3k_t65oak?t=12) | your standards and you continued to fight. | 打得有点糙 但你一直在拼 |  |
 | 6 | 0:14.9 | [▶](https://youtu.be/gy3k_t65oak?t=14) | You never gave up. | 你从没放弃 |  |
@@ -31,7 +31,7 @@
 | 25 | 0:53.5 | [▶](https://youtu.be/gy3k_t65oak?t=53) | would come, | 会是什么样 |  |
 | 26 | 0:53.9 | [▶](https://youtu.be/gy3k_t65oak?t=53) | but really, really, really thank you | 但真的真的太谢谢 |  |
 | 27 | 0:56.0 | [▶](https://youtu.be/gy3k_t65oak?t=56) | to you guys. | 你们了 |  |
-| 28 | 0:56.5 | [▶](https://youtu.be/gy3k_t65oak?t=56) | that she really helped me pull this one | 是你们真的把我 |  |
+| 28 | 0:56.5 | [▶](https://youtu.be/gy3k_t65oak?t=56) | You really helped me pull this one | 是你们真的把我 | ✏️ 已订正 |
 | 29 | 0:57.8 | [▶](https://youtu.be/gy3k_t65oak?t=57) | through. | 拉过来的 |  |
 | 30 | 1:03.0 | [▶](https://youtu.be/gy3k_t65oak?t=63) | Throughout the match, | 整场比赛 |  |
 | 31 | 1:04.2 | [▶](https://youtu.be/gy3k_t65oak?t=64) | we saw you look at your team to try | 我们看到你一直看向团队 |  |
