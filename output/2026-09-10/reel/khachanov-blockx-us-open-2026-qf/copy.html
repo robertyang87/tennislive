@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>9.10 赛场之上 | 对手退赛哈恰诺夫进半决赛</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>哈恰诺夫 6-2 7-5 3-2 退赛过关，时隔四年重回美网半决赛
+
+美网男单1/4决赛，阿瑟·阿什球场，1 小时 38 分钟。
+
+这场球的形状很干净：哈恰诺夫全场 12 个发球局，12 个全保，只面对过 2 个破发点，两个都救下来了。一发得分率 89%，36 个一发赢下 32 分；对面这一头是 71%。他自己转化了 4 个破发点，每一盘都破到对手一次。总得分 80 比 60。
+
+第一盘布洛克斯其实开了个好头：1-2 时自己发球 0-40 落后，三个破发点一个没给，还两次占先把这一局保了下来。可那之后哈恰诺夫连破两次，33 分钟拿下第一盘。第二盘他咬得很紧，一路追到 5-5，直到 6-5 时哈恰诺夫自己发球 40-0，三个盘点第一个就兑现。
+
+第三盘他的身体先垮了。场边接受治疗，2-2 时发球局被破，3-2 之后场内广播响起来：因为伤病，布洛克斯先生被迫退赛。他带着从第四轮就有的肋伤上场，退赛时腿、肋、背都有问题；全场比对手多跑了两百米，1316 米对 1113 米。
+
+哈恰诺夫走过去，在网前抱了他很久。
+
+这是布洛克斯生涯第一次打进大满贯1/4决赛，21 岁，28 号种子。赛后他说的不是懊恼：「我觉得我的身体罢工了。」又说，说实话比赛中他觉得挺好笑，只能一笑了之，因为一直在出新状况——身体开始代偿，做出跟平时不一样的动作，只为躲开疼。
+
+另一头的反差同样值得说。哈恰诺夫今年 30 岁，世界第 50 位，非种子，据 ESPN 报道这是他 2018 年以来第一次以非种子身份打大满贯。这个赛季他在其他赛事只有 10 胜 15 负，来纽约之前三站硬地全部首轮出局；可四大满贯他全部打进了第三轮，这是生涯第一次。现在他站在美网半决赛，生涯第三次大满贯四强，上一次来到这里是 2022 年。
+
+下一场对兹维列夫。一个赛季在巡回赛上打成这样的人，能在大满贯里走到哪儿？
+
+#网球时差 #美网 #哈恰诺夫 #布洛克斯 #赛场之上</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>半决赛，他能走多远？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
