@@ -55,7 +55,7 @@
 | 49 | 1:27.7 | [▶](https://youtu.be/FwQ-D77OMs4?t=87) | I feel like I'm playing the Australian Open | 感觉自己是在纽约 |  |
 | 50 | 1:29.1 | [▶](https://youtu.be/FwQ-D77OMs4?t=89) | in New York right now. | 打澳网 |  |
 | 51 | 1:30.0 | [▶](https://youtu.be/FwQ-D77OMs4?t=90) | But, as long as I'm still here, | 但只要我还留在这里 |  |
-| 52 | 1:31.8 | [▶](https://youtu.be/FwQ-D77OMs4?t=91) | as long as I'm in the semi-finals, | 只要我还在四强里 |  |
+| 52 | 1:31.8 | [▶](https://youtu.be/FwQ-D77OMs4?t=91) | as long as I'm in the semi-finals, | 只要我还在半决赛里 |  |
 | 53 | 1:33.1 | [▶](https://youtu.be/FwQ-D77OMs4?t=93) | that's that's all that matters. | 那就是最重要的 |  |
 | 54 | 1:34.3 | [▶](https://youtu.be/FwQ-D77OMs4?t=94) | You're going | 今晚你终于 |  |
 | 55 | 1:34.6 | [▶](https://youtu.be/FwQ-D77OMs4?t=94) | to get a proper bedtime tonight. | 能好好睡一觉了 |  |
