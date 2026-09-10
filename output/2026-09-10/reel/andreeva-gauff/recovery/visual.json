@@ -1,0 +1,42 @@
+{
+  "model": "MiniMax-M3",
+  "status": "pass",
+  "visual_status": "pass",
+  "retryable": false,
+  "cold_open": {
+    "start": 163.33,
+    "end": 168.94,
+    "kind": "winner_celebration",
+    "winner_visible": true,
+    "reason": "163.33至168.94持续显示赢家高芙的赛后庆祝、俯身及握拳反应。",
+    "confidence": 0.99
+  },
+  "ending": {
+    "start": 156.5,
+    "end": 174.5,
+    "kind": "winner_celebration",
+    "winner_visible": true,
+    "reason": "156.5至162.5显示高芙完成最后一分，163.33至168.94显示其庆祝，170.5至172.5继续近景庆祝，174.5显示高芙与对手走到网前准备握手；该窗口完整覆盖冷开场并重新兑现逆转结局。",
+    "confidence": 0.98
+  },
+  "cover": {
+    "same_match": true,
+    "subject": "高芙",
+    "moment": "winner_celebration",
+    "wrong_or_old": false,
+    "reason": "候选封面中高芙的浅黄色New Balance球衣、米白色发带和黄色护腕，与集锦164.5、166.5、170.5等赛后画面一致；美网蓝色场挡、US Open标识及同场观众场景相符，且画面采用赢家庆祝姿态。",
+    "confidence": 0.95
+  },
+  "problems": [],
+  "model_attempts": 1,
+  "input_sha256": "b30e115dc4322f0d0e17b221e3bd201c1cee6c3f27c2071928961fe70f04fd94",
+  "inputs": [
+    "output/2026-09-10/reel/andreeva-gauff/contact_00.jpg",
+    "output/2026-09-10/reel/andreeva-gauff/contact_01.jpg",
+    "output/2026-09-10/reel/andreeva-gauff/contact_02.jpg",
+    "output/2026-09-10/reel/andreeva-gauff/contact_03.jpg"
+  ],
+  "cover_image": "output/2026-09-10/reel/andreeva-gauff/recovery/cover-review.jpg",
+  "original_cover": "assets/reel/andreeva-gauff-cover.jpg",
+  "original_cover_sha256": "7121cd4e7ecdc2322458a45f93dc778f060f6b212183b9a31d2afb39ea5cc19e"
+}
