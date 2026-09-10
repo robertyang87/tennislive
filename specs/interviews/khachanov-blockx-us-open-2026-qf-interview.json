@@ -13,7 +13,7 @@
   "featured_player": "哈恰诺夫",
   "opening": {
     "kind": "none",
-    "why": "【待核占位】标题是 On-Court Interview，按这条线的惯例正文源多半从第一帧就是采访；**还没打开源片看过**，subs 那趟的 storyboard 回来之后逐格核，核完把这句话换成实测。"
+    "why": "源片从第一帧就是采访：storyboard 按 1.95 秒一格排完 129 秒全片核过——0.0 秒他已经站在写着 KHACHANOV 的蓝色背景板前、手边是美网那支蓝色话筒，穿的还是比赛那件红色 polo，采访者在画外；到 121.2 秒都是他的近景，**一帧比赛画面都没有**。123.1 秒起是 @usopen 的片尾板（FOLLOW US ON SOCIAL MEDIA）。所以比赛结束那一段只能从同场官方集锦接（见 lead_in）。"
   },
   "match": {
     "id": "2026:us-open:mens-quarterfinals:karen-khachanov-alexander-blockx",
@@ -48,30 +48,6 @@
     ],
     "match_id": "2026:us-open:mens-quarterfinals:karen-khachanov-alexander-blockx",
     "attestation_sha256": "22f7c05787f979e211412867e772195b8afaf88e02459c7f335a22040438e582"
-  },
-  "lead_in": {
-    "url": "https://www.youtube.com/watch?v=IC6GRK5Pg70",
-    "start": 100.0,
-    "end": 120.0,
-    "why": "【待核占位】同一场的美网官方集锦（Karen Khachanov vs. Alexander Blockx Highlights | 2026 US Open Quarterfinal，@usopen）。窗口是估的，**还没打开看过**；subs 回来之后按真实帧定「对手退赛那一刻 → 握手 → 解说交代」那一段。",
-    "verification": {
-      "match_id": "2026:us-open:mens-quarterfinals:karen-khachanov-alexander-blockx",
-      "winner_en": "Karen Khachanov",
-      "loser_en": "Alexander Blockx",
-      "event_search": "US Open",
-      "year": 2026,
-      "method": "official_exact_match_highlight",
-      "height": 1080,
-      "channel": "US Open Tennis Championships"
-    },
-    "subs": [
-      {
-        "a": 100.5,
-        "b": 103.0,
-        "en": "PLACEHOLDER",
-        "zh": "占位待核"
-      }
-    ]
   },
   "zh": {},
   "cover": {},
