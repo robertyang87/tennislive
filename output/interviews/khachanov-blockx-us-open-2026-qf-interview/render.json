@@ -1,0 +1,67 @@
+{
+  "film_sha256": "f5adff5ec69c2a009389e1b9cee409db41fdb5fbaadb3be6bf42244c36f510b2",
+  "film_seconds": 143.861,
+  "production_sla": {
+    "version": 2,
+    "pipeline": "interview-clip",
+    "slug": "khachanov-blockx-us-open-2026-qf-interview",
+    "received_at": "2026-09-10T04:35:28Z",
+    "artifact_ready_at": "2026-09-10T04:41:51Z",
+    "elapsed_seconds": 383.355,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "f5adff5ec69c2a009389e1b9cee409db41fdb5fbaadb3be6bf42244c36f510b2",
+    "spec_sha256": "a4760df953254bbb74085441cc64593d5c0305ce7b44107372429eb86afb0411",
+    "run_id": "34437764690",
+    "stage_events": [
+      {
+        "stage": "preflight",
+        "at": "2026-09-10T04:36:25Z",
+        "run_id": "34437764690"
+      },
+      {
+        "stage": "asr_verify",
+        "at": "2026-09-10T04:37:54Z",
+        "run_id": "34437764690"
+      },
+      {
+        "stage": "render",
+        "at": "2026-09-10T04:39:29Z",
+        "run_id": "34437764690"
+      }
+    ],
+    "render_seconds": 142.355,
+    "pre_render_seconds": 241.0
+  },
+  "production_stage_events": [
+    {
+      "stage": "preflight",
+      "at": "2026-09-10T04:36:25Z",
+      "run_id": "34437764690"
+    },
+    {
+      "stage": "asr_verify",
+      "at": "2026-09-10T04:37:54Z",
+      "run_id": "34437764690"
+    },
+    {
+      "stage": "render",
+      "at": "2026-09-10T04:39:29Z",
+      "run_id": "34437764690"
+    },
+    {
+      "stage": "qc",
+      "at": "2026-09-10T04:41:52Z",
+      "run_id": "34437764690"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-10T04:41:52Z",
+      "run_id": "34437764690"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/interview-khachanov-blockx-us-open-2026-qf-interview/khachanov-blockx-us-open-2026-qf-interview.mp4?v=f5adff5ec69c2a00",
+  "video_bytes": 67918693,
+  "release_asset_digest": "sha256:f5adff5ec69c2a009389e1b9cee409db41fdb5fbaadb3be6bf42244c36f510b2",
+  "qc_attestation_sha256": "44b06dfd608abaa2912d375606805bca49fa07897f9ea1db90d88c9d9ab0d4f6"
+}
