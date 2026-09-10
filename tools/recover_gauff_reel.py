@@ -4,7 +4,7 @@ from PIL import Image, ImageDraw
 import hashlib, json, os, subprocess, sys
 import requests
 sys.path[:0]=["tools","src"]
-from analyze_reel_visuals import verified_minimax_report, evidence_hash
+from analyze_reel_visuals import ask_minimax, clean_report, evidence_hash
 from tennislive.research.brief import Chat
 from draft_spec import draft_editorial, draft_push
 from promote_reel_draft import promote
@@ -15,50 +15,31 @@ def save(name,data): (R/name).write_text(json.dumps(data,ensure_ascii=False,inde
 d=json.loads(Path("specs/reels/pending/andreeva-gauff.draft.json").read_text())
 facts=json.loads((R/"official.json").read_text())
 probe=json.loads((OUT/"probe.json").read_text())
-d["_cover_brief"]={"preferred_subject":"高芙","preferred_moment":"winner_celebration","reason":"用户指定高芙复盘，官方同场庆祝照。","reviewed_timeline":"源片ASR在169.15—174.04报出Two six seven six six two。为保留完整英文解说，请核验cold_open=168.94—174.5的赛后余波；此前报告已确认170.5、172.5近景和174.5走向网前。ending可沿用156.5—174.5的证据窗口。正式剪辑会从136.02开始额外保留完整第二个赛点的发球准备、回合及庆祝，绝不从156.5半途中切入。独立审查，不能为过闸猜测。"}
-frames=sorted(OUT.glob("contact_*.jpg"))
-# Add newly reviewed native closeups with explicit timestamps; this is new evidence,
-# not a third retry against unchanged contact sheets.
-sheet=Image.new("RGB",(960,540*3))
-draw=ImageDraw.Draw(sheet)
-for i,t in enumerate([168,173,175]):
-    sheet.paste(Image.open(R/f"frame-{t}.jpg").convert("RGB"),(0,540*i))
-    draw.rectangle((0,540*i,145,540*i+38),fill="black")
-    draw.text((8,540*i+7),f"source {t}.0 s",fill="white",stroke_width=1)
-extra=R/"late-closeups.jpg"
-sheet.save(extra,quality=94)
-frames.append(extra)
-d["_cover_brief"]["reviewed_timeline"]="新增最后一张是原片168.0、173.0、175.0秒的高清近景，并烧录了准确时间。请独立核验cold_open=168.0至175.2的赛后余波；此窗包含169.15至174.04的完整英文报分。ending建议156.5至175.2；正式剪辑另外向前扩展到136.02以保留完整发球和最后一分。所有理由引用必须在各自窗口内；不能在168.0开始的窗引用更早的时间。"
+d["_cover_brief"]={"preferred_subject":"高芙","preferred_moment":"winner_celebration","reason":"WTA署名高芙的同场庆祝照，按衣服及背景与原片核对。","reviewed_timeline":"冷开场168.0至175.2涵盖英文报分；正文赛点实际从136.02开始，视觉审核ending可覆盖156.5至175.2。不要声称看到了发球、拥抱教练、整理发带、具体回球落点等图片不能证明的动作。"}
+frames=sorted(OUT.glob("contact_*.jpg"))+[R/"late-closeups.jpg"]
 cover=R/"cover-review.jpg"
-report,problems=verified_minimax_report(d,frames,cover,probe,os.environ["MINIMAX_API_KEY"])
-report.update(input_sha256=evidence_hash(frames,cover),inputs=[str(p) for p in frames],cover_image=str(cover),original_cover=d["cover"]["portrait"]["image"],original_cover_sha256=hashlib.sha256(Path(d["cover"]["portrait"]["image"]).read_bytes()).hexdigest(),problems=problems)
-save("visual-bilingual.json",report)
-if problems: raise SystemExit("Visual evidence remains blocked: "+str(problems))
+previous=json.loads((R/"visual-bilingual.json").read_text())
+feedback=["人工逐帧复核：166.5秒是高芙弯腰低头，画面里没有教练，原理由的拥抱教练不成立。","172.5秒是站立/走动近景，没有证据证明整理发带；168.0秒没有和教练包厢互动证据。","156.5秒已是最后一分相持，不是发球；标记为MATCH POINT #2，不是MATCH POINT ON SERVE。不要猜测162.5秒具体球路/落点。","仅保留图上确实可见的证据：末段相持、163.33后高芙庆祝、168弯腰、173近景、174.5双方在网前、175握手。前述动作要归属到各自窗口，不能引用窗外时间。"]
+raw=ask_minimax(d,frames,cover,probe,os.environ["MINIMAX_API_KEY"],previous=previous,validation_problems=feedback)
+report,problems=clean_report(raw,d,float(probe["duration"]))
+report.update(model_attempts=2,input_sha256=evidence_hash(frames,cover),inputs=[str(p) for p in frames],cover_image=str(cover),original_cover=d["cover"]["portrait"]["image"],original_cover_sha256=hashlib.sha256(Path(d["cover"]["portrait"]["image"]).read_bytes()).hexdigest(),problems=problems,human_correction_feedback=feedback)
+save("visual-final.json",report)
+if problems: raise SystemExit("Visual correction remains blocked: "+str(problems))
 cold=report["cold_open"]
-if not (cold["start"]<=169.15 and cold["end"]>=174.04): raise SystemExit("Approved opening does not contain complete verified spoken score")
-# Official match feed is an independent source for elapsed time. Preserve only matched records.
-url="https://www.usopen.org/en_US/scores/feeds/2026/players/matches/wta328560_matches.json"
-try:
-    resp=requests.get(url,timeout=10)
-    feed=resp.json() if resp.status_code==200 else None
-    save("official-match-feed.json",{"url":url,"status":resp.status_code,"data":feed})
-except (requests.RequestException,ValueError) as exc:
-    save("official-match-feed.json",{"url":url,"status":"unavailable","error":type(exc).__name__,"duration_source":"WTA official 2:19"})
+if not (cold["start"]<=169.15 and cold["end"]>=174.04): raise SystemExit("Opening does not contain complete verified spoken score")
 packet={"result":d["_match"],"stats":d["stats"],"official_wta":facts["facts"],"source_url":d["source_url"],"footage":{"0-19.6":"首盘高芙0-3落后；无其他首盘画面","19.6-85.5":"第二盘抢七高芙4-3到5-3的一次39拍长回合；不是两个赛点的画面","85.5-105":"决胜盘高芙0-1，自己的发球局0-15这一分输后0-30","105-118":"同局高芙由0-30追到40-30，再次争取保发","118-136.02":"高芙5-2，40-15第一赛点未拿下","136.02-175.2":"第二赛点30-40，准备、完整回合、庆祝和握手；结果必须等163.33之后才交代"}}
-chat=Chat(provider="deepseek")
-e=draft_editorial(chat,home="米拉·安德烈耶娃",away="高芙",event="US OPEN",year=2026,fixture="当地2026年9月9日女单1/4决赛，高芙逆转",facts=json.dumps(packet,ensure_ascii=False))
-push=draft_push(chat,editorial=e,facts=json.dumps(packet,ensure_ascii=False)) if e else None
-base={
-"intro":"当地时间九月九日，美网女单四分之一决赛。高芙对阵安德烈耶娃，开场已零比三落后。",
-"grind":"首盘二比六落后，高芙把第二盘拖进抢七。四比三领先，这是她的发球分。接下来，是一场三十九拍的拉锯。长回合里，守住落点和深度，才能逼对手再多打一拍。别急着说谁占上风，这一分还没结束。",
-"escape":"这一分过后，抢七还没有结束。随后高芙救回两个赛点，九比七扳平盘分。现在决胜盘零比一，她要先守住发球局。",
-"hold":"从零比三十追到四十比三十，高芙要先把这一局保住。",
-"close":"高芙已经五比二领先，来到发球胜赛局。四十比十五，两个赛点。但安德烈耶娃还在追。",
-"stats":"全场总得分九十五比九十四，高芙只多拿一分。她救回两个赛点，把这场胜利拼到了手里。"}
-schema={"type":"object","properties":{k:{"type":"string"} for k in base},"required":list(base),"additionalProperties":False}
-n=chat.ask("你是网球时差的解说编辑。润色给定旁白，增强叙事但不得增加任何事实、比喻、球路细节或数字。保留各段时态及画面范围，不能把39拍一分说成挽救赛点，不能在制胜分前宣布结果。intro须保留日期赛事轮次。grind须保留39拍与4比3，具体球路不能编。每子句至多16汉字，数字念成汉字。返回相同键的JSON。字数上限intro60/grind150/escape70/hold35/close55/stats55。",json.dumps({"facts":packet,"narration":base},ensure_ascii=False),schema=schema,max_tokens=2500)
-if not e or not push or not n or set(n)!=set(base): raise SystemExit("DeepSeek candidate incomplete")
-save("copy-candidate.json",{"model":chat.channel,"editorial":e,"push":push,"narration":n,"packet":packet})
+copy=json.loads((R/"copy-candidate.json").read_text())
+n=copy["narration"]
+e={
+"hook":["三十九拍拉锯","高芙救赛点逆转"],
+"question":"首盘失利、抢七面对两个赛点，高芙怎样把比赛赢回来？",
+"thesis":"高芙先在抢七中保住逆转的机会，再赢下决胜盘；全场总分仅多一分，说明拿下关键分比总分差更决定结局。",
+"beats":["首盘开局零比三落后，高芙以二比六丢掉首盘。","第二盘抢七四比三的三十九拍回合后，高芙以五比三领先；之后她挽救两个赛点，九比七赢下抢七。","决胜盘高芙从零比一来到五比二，在第二个赛点上收下比赛，六比二完成逆转。"],
+"human_context":"WTA官方战报确认，这场之后高芙对安德烈耶娃的交手记录为六胜零负；她本赛季已十二次逆转获胜。",
+"narration":["高芙开局零比三落后，二比六丢掉首盘。","抢七先拿下三十九拍拉锯，之后救回两个赛点，九比七扳平盘分。","决胜盘来到五比二，高芙兑现第二个赛点，六比二完成逆转。"]
+}
+push={"summary":"高芙救两赛点逆转","lead":"两次只差一分出局，高芙还是把比赛抢了回来。🎾\n\n当地时间9月9日，美网女单1/4决赛，她以2-6、7-6(7)、6-2逆转安德烈耶娃。首盘开局就0-3落后，这场比赛从一开始就不轻松。\n\n最让人屏住呼吸的是第二盘抢七：4-3时，两人展开39拍拉锯，高芙拿下这一分，来到5-3。但真正脱险还在后面——她随后救回两个赛点，才以9-7把比赛拖进决胜盘。\n\n决胜盘从0-1走到5-2，高芙来到发球胜赛局。第一个赛点被救回，她最终在第二个赛点上结束战斗。\n\n全场总得分95比94，她只多拿1分；12个双误也让这场胜利更显艰难。网球有时就是这样：赢下关键的那一分，比总共多赢多少分更重要。\n\n高芙对安德烈耶娃的交手纪录来到6-0。接下来，等待她的是莱巴金娜。"}
+save("copy-reviewed.json",{"model":copy["model"],"reviewer":"Codex","editorial":e,"push":push,"narration":n,"rejected_claims":["把安德烈耶娃的5个双误写给高芙","把全场42个失误写成首盘数据","把39拍回合冒充救赛点","编造决胜盘零双误、破发点全兑现"],"method":"逐项按WTA官方事实、结构化双方统计与时间码纠错；保留核验无误的逐段旁白。"})
 # All segment windows are human-reviewed source windows, never chosen by a text model.
 d["editorial"]=e
 d["editorial"].pop("chapters",None)
@@ -69,7 +50,7 @@ d["_durations"]=[["全场","2:19"]]
 d["_duration_review"]={"source":facts["url"],"value":"2:19","reason":"WTA官方战报，暂待官方赛事feed核对；不沿用Flashscore的2:21。"}
 quote={"at":round(169.15-cold["start"],2),"end":round(174.04-cold["start"],2),"text":"Two six, seven six, six two.\n二比六、七比六、六比二。"}
 d["segments"]=[
-{"start":cold["start"],"end":cold["end"],"narration":"","quote":[quote],"_quote_kind":"broadcast","_ending_payoff_required":True,"score_inset":False,"_why":"MiniMax通过的短余波与原声报分；英文来自small.en原片ASR，数字与正式赛果一致。"},
+{"start":cold["start"],"end":cold["end"],"narration":"","quote":[quote],"_quote_kind":"broadcast","_ending_payoff_required":True,"score_inset":False,"_score_inset_why":"168.0后为球员近景和握手，常规两行比分条已收走；不抠取人物局部回贴。","_why":"MiniMax通过的短余波与原声报分；英文来自small.en原片ASR，数字与正式赛果一致。"},
 {"start":0,"end":19.6,"narration":n["intro"],"score_inset":True,"_why":"原片完整开场首盘0-3片段与反应，旁白交代日期、赛事、轮次。"},
 {"start":19.6,"end":85.5,"narration":n["grind"],"score_inset":True,"_why":"完整39拍长回合，抢七高芙4-3至5-3；没有剪掉中间拍数，不冒充挽救赛点画面。"},
 {"start":85.5,"end":105,"narration":n["escape"],"score_inset":True,"_why":"抢七已经结束后的决胜盘开局；回顾官方证实但此短源省略的救两个赛点，不称当前画面为救赛点。"},
@@ -82,6 +63,7 @@ try:
     spec=promote(d)
     spec["topbar"]["line1"]="2026.09.09 美网女单1/4决赛"
     spec["tts_backend"]="edge"
+    spec["editorial"]["human_context"]["sources"].append(facts["url"])
     spec["stat_card_full_canvas"]=True
     for seg in spec["segments"]:
         if seg.get("stat_card"):
