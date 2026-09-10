@@ -118,7 +118,14 @@
   ],
   "cover": {
     "frame_at": 123.0,
-    "_why": "**拿真帧挑的，不是照 storyboard 挑的。** frame-grab（run 34434066434）抽 117~129 秒每 0.5 秒一帧、1920 宽：117 / 121 / 123 秒都是正面睁眼，125 秒他抬手挥手把脸挡了一半，119 秒正在说话嘴张着。**123.0 这一格**：正面、两只眼睛都看得清、表情放松；而且那一刻画外正是采访者在说 `congratulations, semi-finalist Karen Khachanov`（122.69~124.06），背景板上「KAREN K…NOV」也在画面里。\n⚠️ **没有照 storyboard 那 66 格挑**：那面墙一格 1.95 秒、约 164×101 像素，分辨不出眼睛开合（CLAUDE.md：「封面帧一律不许闭眼——storyboard 的粒度盖不住几分之一秒的眨眼」），而且**这条片子实测它的标签早了约 3 秒**（墙上标 123.1s 那格已经是片尾板，真实片尾板在 126.0s），照它挑必然错位。"
+    "_why": "**拿真帧挑的，不是照 storyboard 挑的。** frame-grab（run 34434066434）抽 117~129 秒每 0.5 秒一帧、1920 宽：117 / 121 / 123 秒都是正面睁眼，125 秒他抬手挥手把脸挡了一半，119 秒正在说话嘴张着。**123.0 这一格**：正面、两只眼睛都看得清、表情放松；而且那一刻画外正是采访者在说 `congratulations, semi-finalist Karen Khachanov`（122.69~124.06），背景板上「KAREN K…NOV」也在画面里。\n⚠️ **没有照 storyboard 那 66 格挑**：那面墙一格 1.95 秒、约 164×101 像素，分辨不出眼睛开合（CLAUDE.md：「封面帧一律不许闭眼——storyboard 的粒度盖不住几分之一秒的眨眼」），而且**这条片子实测它的标签早了约 3 秒**（墙上标 123.1s 那格已经是片尾板，真实片尾板在 126.0s），照它挑必然错位。",
+    "title": [
+      "对手退赛 他进了四强",
+      "「但我不想喊加油」"
+    ],
+    "sub": "美网男单1/4决赛 · 赛后场上采访",
+    "tag": "哈恰诺夫 · 赛后开麦",
+    "_title_why": "两行走「反差 ＋ 他自己的话」，和这条线已发的几条同形（`zheng-keys` 是「决胜盘 0-5 落后 她连赢七局」＋引语，`tiafoe-michelsen` 是引语＋说明）。第一行给这场球的形状（对手退赛、他进四强），第二行用他原话里最反直觉的那半句——**赢了却不想喊加油**，那正是这条采访的落点。\n⚠️ 「进了四强」是到达类动词 ＋ N 强的成绩说法，不是给这一场起轮次名；轮次名在 `sub` 里写的是 **1/4决赛**（CLAUDE.md 2026-09-08 的口径）。"
   },
   "push": {
     "matchup": "哈恰诺夫 vs 布洛克斯",
@@ -194,6 +201,6 @@
     "**「成功率不太高」**（他在第 53 行说的）：flashscore `df_st_1_hjrxLF3k` —— **一发成功率 55%**（对手也是 55%），而一发进了之后得分率 **89%（32/36）**，二发 63%（19/30），**破发点 2/2 全部救下**，Ace 6 个、双误 2 个，一发均速 187 km/h。他说的那个「percentage」对得上：55% 在巡回赛层面确实偏低。",
     "**半决赛对手**：美网官方 `draws/MS.json` 里男单半决赛是 **A. Zverev（1 号种子）vs K. Khachanov**，另一边是 F. Tiafoe（11 号种子）vs B. Shelton（8 号种子）。写这条 spec 时半决赛还没打（status 空）。⚠️ 这也是第 42~43 行 `Sasha vs. Botic` 的核验依据：兹维列夫的 1/4 决赛对手是 Botic van de Zandschulp（6-2 7-5 6-1），赛会没有 Bautista 打到这一轮。"
   ],
-  "_notes": "① 账号所有者点名要做这一条（直接给的 YouTube 链接）。**去重查过**：`specs/interviews/` 下一条哈恰诺夫都没有；`specs/reels/` 有 `kovacevic-khachanov`（另一站的另一场球）和两条 pending 草稿，都不是这一场。\n② **比赛日**：这场球北京时间 2026-09-10 06:45 打完（美东 9/9 18:45，epoch 1788993908），源片当天上传——是当前比赛日的内容，不是翻库存。\n③ **沙箱这一轮 YouTube 媒体和字幕都下不动**（429 + `Sign in to confirm you're not a bot`，五个 player_client 全废），**只有 storyboard 那条 `web_embedded` 通**。所以字幕是 runner 的`mode=subs` 取的，冷开场是 `attach_interview_lead_in` 在 runner 上配的。⚠️ CLAUDE.md 里「沙箱现在又下得动 YouTube 字幕了」那句今天不成立——**这条结论一年里翻过三次，引用之前跑一次**。\n④ **美网官方 feed 在沙箱里是通的**（`usopen.org/en_US/scores/feeds/...` 全部 200），而 CLAUDE.md 记的是「沙箱恒 403，runner 通」——那句今天也不成立，这条 spec 的事实全是本地拉的。\n⑤ 顺手发现、**没有在这条时效任务里展开修**的一个问题：`specs/reels/pending/auger-aliassime-khachanov.draft.json` 把第二轮那场的赢家判成了阿利亚西姆（`winner: 阿利亚西姆`、`set_scores_home_away: [[7,6],[3,6],[2,6],[2,6]]`），**而美网官方 feed 明确是哈恰诺夫赢**（`team2.won: true`）。那是 reel 线的另一条草稿，记在这儿。",
+  "_notes": "① 账号所有者点名要做这一条（直接给的 YouTube 链接）。**去重查过**：`specs/interviews/` 下一条哈恰诺夫都没有；`specs/reels/` 有 `kovacevic-khachanov`（另一站的另一场球）和两条 pending 草稿，都不是这一场。\n② **比赛日**：这场球北京时间 2026-09-10 06:45 打完（美东 9/9 18:45，epoch 1788993908），源片当天上传——是当前比赛日的内容，不是翻库存。\n③ **沙箱这一轮 YouTube 媒体和字幕都下不动**（429 + `Sign in to confirm you're not a bot`，五个 player_client 全废），**只有 storyboard 那条 `web_embedded` 通**。所以字幕是 runner 的`mode=subs` 取的，冷开场是 `attach_interview_lead_in` 在 runner 上配的。⚠️ CLAUDE.md 里「沙箱现在又下得动 YouTube 字幕了」那句今天不成立——**这条结论一年里翻过三次，引用之前跑一次**。\n④ **美网官方 feed 在沙箱里是通的**（`usopen.org/en_US/scores/feeds/...` 全部 200），而 CLAUDE.md 记的是「沙箱恒 403，runner 通」——那句今天也不成立，这条 spec 的事实全是本地拉的。\n⑤ 顺手发现、**没有在这条时效任务里展开修**的一个问题：`specs/reels/pending/auger-aliassime-khachanov.draft.json` 把第二轮那场的赢家判成了阿利亚西姆（`winner: 阿利亚西姆`、`set_scores_home_away: [[7,6],[3,6],[2,6],[2,6]]`），**而美网官方 feed 明确是哈恰诺夫赢**（`team2.won: true`）。那是 reel 线的另一条草稿，记在这儿。\n⑥ ⚠️ **`cover` 缺 `title` 本地一道闸都不报**：`--stage subs` 四道闸（L0/opening/lead_in/copy_page）全绿，`KeyError: 'title'` 要等 `mode=cover` 真去渲海报那一刻才炸（run 34434761120，第 84 秒）。这和 CLAUDE.md 记的「`cover.matchup` 的字段名 `validate_spec` 不查，只有真渲封面时才用得上」是同一个形状——**所以 `mode=cover` 那 2 分钟不是可选项**，它替 render 那 9 分钟挡下了这一类。",
   "_window_why": "**末尾是逐帧量出来的，不是照 storyboard 估的。** frame-grab（run 34434066434）抽 117~129 秒每 0.5 秒一帧、1920 宽，量整幅灰度均值：117.0~125.5 秒一路 83~88（他还在画面里），**126.0 秒掉到 10.6（黑场一帧）**，126.5 秒起 46.5 并稳住（@usopen 的 FOLLOW US ON SOCIAL MEDIA 片尾板）。所以片尾板从 **126.0 秒**起，`end` 收在 125.4，留 0.6 秒余量。\n⚠️ **storyboard 在这一头骗了我 3 秒**：66 格那面墙上标着 123.1s 的那一格已经是片尾板，照它收 `end=122.7` 会把收尾那句 `congratulations, semi-finalist Karen Khachanov.` 切成半截（第一版就是这么切的）。CLAUDE.md 记过「缩略图墙的标签早一格」，这一条实测早了约 1.5 格。**「离源片末尾还有 N 秒」不是对片尾板的余量**——129−125.4=3.6 秒里有 3 秒正是片尾板本身。"
 }
