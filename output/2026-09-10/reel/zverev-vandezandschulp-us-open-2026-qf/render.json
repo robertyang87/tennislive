@@ -1,0 +1,71 @@
+{
+  "scoreboard_qc_sha256": "c63e3708fb2e8031fc8ad0c34dc90f179d016f1ef1dbe68b384059b5b0797121",
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 3.827,
+  "layout": "band",
+  "segments_seconds": 132.69,
+  "topbar": {
+    "line1": "2026 美网 1/4决赛",
+    "line2": "兹维列夫 6-2 7-5 6-1 范德赞德舒尔普",
+    "start": 1.2,
+    "end": 133.89
+  },
+  "film_seconds": 137.738,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 7.224,
+    "2": 11.952,
+    "3": 13.392,
+    "4": 4.992,
+    "5": 11.52,
+    "6": 17.616,
+    "7": 20.16,
+    "8": 2.928,
+    "9": 3.36,
+    "10": 9.912,
+    "11": 3.6,
+    "12": 5.928
+  },
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "zverev-vandezandschulp-us-open-2026-qf",
+    "received_at": "2026-09-10T04:28:30Z",
+    "artifact_ready_at": "2026-09-10T04:34:37Z",
+    "elapsed_seconds": 367.959,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "123b679115f553951217990a48f9a7ebf6ca13be88d61896c5706ca784250992",
+    "spec_sha256": "79d44604e5ea032f882478f271ace063bae510f8d09beee5b5a868727a22728c",
+    "run_id": "34437313787",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-09-10T04:30:53Z",
+        "run_id": "34437313787"
+      }
+    ],
+    "render_seconds": 224.959,
+    "pre_render_seconds": 143.0
+  },
+  "film_sha256": "123b679115f553951217990a48f9a7ebf6ca13be88d61896c5706ca784250992",
+  "film_bytes": 81619877,
+  "qc_attestation_sha256": "397f605e79448a9630a222e35b49718df61d7fa1af6e41ee7a9571cd7e2e6e97",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-09-10T04:30:53Z",
+      "run_id": "34437313787"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-10T04:34:38Z",
+      "run_id": "34437313787"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-zverev-vandezandschulp-us-open-2026-qf/zverev-vandezandschulp-us-open-2026-qf.mp4",
+  "video_bytes": 81619877
+}
