@@ -1,5 +1,6 @@
 """Build a reviewable Gauff candidate from verified source evidence; no publication."""
 from pathlib import Path
+from PIL import Image, ImageDraw
 import hashlib, json, os, subprocess, sys
 import requests
 sys.path[:0]=["tools","src"]
@@ -16,6 +17,18 @@ facts=json.loads((R/"official.json").read_text())
 probe=json.loads((OUT/"probe.json").read_text())
 d["_cover_brief"]={"preferred_subject":"高芙","preferred_moment":"winner_celebration","reason":"用户指定高芙复盘，官方同场庆祝照。","reviewed_timeline":"源片ASR在169.15—174.04报出Two six seven six six two。为保留完整英文解说，请核验cold_open=168.94—174.5的赛后余波；此前报告已确认170.5、172.5近景和174.5走向网前。ending可沿用156.5—174.5的证据窗口。正式剪辑会从136.02开始额外保留完整第二个赛点的发球准备、回合及庆祝，绝不从156.5半途中切入。独立审查，不能为过闸猜测。"}
 frames=sorted(OUT.glob("contact_*.jpg"))
+# Add newly reviewed native closeups with explicit timestamps; this is new evidence,
+# not a third retry against unchanged contact sheets.
+sheet=Image.new("RGB",(960,540*3))
+draw=ImageDraw.Draw(sheet)
+for i,t in enumerate([168,173,175]):
+    sheet.paste(Image.open(R/f"frame-{t}.jpg").convert("RGB"),(0,540*i))
+    draw.rectangle((0,540*i,145,540*i+38),fill="black")
+    draw.text((8,540*i+7),f"source {t}.0 s",fill="white",stroke_width=1)
+extra=R/"late-closeups.jpg"
+sheet.save(extra,quality=94)
+frames.append(extra)
+d["_cover_brief"]["reviewed_timeline"]="新增最后一张是原片168.0、173.0、175.0秒的高清近景，并烧录了准确时间。请独立核验cold_open=168.0至175.2的赛后余波；此窗包含169.15至174.04的完整英文报分。ending建议156.5至175.2；正式剪辑另外向前扩展到136.02以保留完整发球和最后一分。所有理由引用必须在各自窗口内；不能在168.0开始的窗引用更早的时间。"
 cover=R/"cover-review.jpg"
 report,problems=verified_minimax_report(d,frames,cover,probe,os.environ["MINIMAX_API_KEY"])
 report.update(input_sha256=evidence_hash(frames,cover),inputs=[str(p) for p in frames],cover_image=str(cover),original_cover=d["cover"]["portrait"]["image"],original_cover_sha256=hashlib.sha256(Path(d["cover"]["portrait"]["image"]).read_bytes()).hexdigest(),problems=problems)
@@ -25,10 +38,12 @@ cold=report["cold_open"]
 if not (cold["start"]<=169.15 and cold["end"]>=174.04): raise SystemExit("Approved opening does not contain complete verified spoken score")
 # Official match feed is an independent source for elapsed time. Preserve only matched records.
 url="https://www.usopen.org/en_US/scores/feeds/2026/players/matches/wta328560_matches.json"
-resp=requests.get(url,timeout=40)
-try: feed=resp.json()
-except ValueError: feed=None
-save("official-match-feed.json",{"url":url,"status":resp.status_code,"data":feed})
+try:
+    resp=requests.get(url,timeout=10)
+    feed=resp.json() if resp.status_code==200 else None
+    save("official-match-feed.json",{"url":url,"status":resp.status_code,"data":feed})
+except (requests.RequestException,ValueError) as exc:
+    save("official-match-feed.json",{"url":url,"status":"unavailable","error":type(exc).__name__,"duration_source":"WTA official 2:19"})
 packet={"result":d["_match"],"stats":d["stats"],"official_wta":facts["facts"],"source_url":d["source_url"],"footage":{"0-19.6":"首盘高芙0-3落后；无其他首盘画面","19.6-85.5":"第二盘抢七高芙4-3到5-3的一次39拍长回合；不是两个赛点的画面","85.5-105":"决胜盘高芙0-1，自己的发球局0-15这一分输后0-30","105-118":"同局高芙由0-30追到40-30，再次争取保发","118-136.02":"高芙5-2，40-15第一赛点未拿下","136.02-175.2":"第二赛点30-40，准备、完整回合、庆祝和握手；结果必须等163.33之后才交代"}}
 chat=Chat(provider="deepseek")
 e=draft_editorial(chat,home="米拉·安德烈耶娃",away="高芙",event="US OPEN",year=2026,fixture="当地2026年9月9日女单1/4决赛，高芙逆转",facts=json.dumps(packet,ensure_ascii=False))
