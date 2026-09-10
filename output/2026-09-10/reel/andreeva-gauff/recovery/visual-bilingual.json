@@ -4,37 +4,38 @@
   "visual_status": "pass",
   "retryable": false,
   "cold_open": {
-    "start": 168.94,
-    "end": 174.5,
-    "kind": "winner_celebration",
+    "start": 168.0,
+    "end": 175.2,
+    "kind": "aftermath",
     "winner_visible": true,
-    "reason": "168.5–174.5s 赛后余波：168.5s 高芙弯腰/低头，170.5s 高芙黄色 NB 裙近景抬头，172.5s 高芙持拍行走近景，174.5s 两位球员走向网前。高芙为胜方，赛后庆祝/握手动作清晰可见。",
-    "confidence": 0.92
+    "reason": "168.0s窗口内画面显示高芙（黄裙）低头弯腰、与教练包厢及观众互动的赛后画面；172.5s高芙站立整理发带；174.5s高芙与安德烈耶娃在网前走近，完整覆盖169.15-174.04秒英文报分区间，属于match point紧接的赛后余波，赢家高芙可见。",
+    "confidence": 0.9
   },
   "ending": {
-    "start": 168.94,
-    "end": 188.61,
-    "kind": "winner_celebration",
+    "start": 156.5,
+    "end": 175.2,
+    "kind": "match_point",
     "winner_visible": true,
-    "reason": "168.5–174.5s 高芙赛后走向网前与近景；176.5s、178.5s 观众席鼓掌、高芙近景；180.5s、182.5s 教练席方向鼓掌与高芙持拍背影；184.5s 高芙双手指天庆祝姿态近景，186.5s 高芙脸部分析镜头，188.5s 观众起立鼓掌。窗口完整覆盖 cold_open，呈现胜方庆祝、观众反应。",
-    "confidence": 0.93
+    "reason": "156.5-162.5s为发球与最后一分击球（含MATCH POINT ON SERVE字样，162.5s安德烈耶娃回球出界）；166.5s高芙拥抱教练；168.0-174.5s高芙低头收拾、与安德烈耶娃走向网前；174.5s双方握手，完整覆盖cold_open全部区间，赢家高芙始终可见，含赛点+庆祝+握手，纪录片式落幕。",
+    "confidence": 0.95
   },
   "cover": {
     "same_match": true,
     "subject": "高芙",
     "moment": "winner_celebration",
     "wrong_or_old": false,
-    "reason": "封面为高芙持拍仰头庆祝姿态：黄色 New Balance 连衣裙、浅色发带、黄色腕带、握拍姿势，与片中 184.5–188.5s 庆祝近景一致；背景 US Open/Chase 品牌板与片中同场相符；高芙即本场胜方，符合封面选人规则（preferred_subject=高芙，moment=winner_celebration）。",
-    "confidence": 0.94
+    "reason": "封面黄裙选手面庞与168.0-175.2s及174.5s握手镜头中的高芙一致；US Open硬地球场、New Balance标志、黄裙同款、赛后捏耳庆祝姿态均与本场match point后的余波画面吻合；底板'#USOPEN'标识亦相符，确认为本场同图。",
+    "confidence": 0.9
   },
   "problems": [],
-  "model_attempts": 2,
-  "input_sha256": "b30e115dc4322f0d0e17b221e3bd201c1cee6c3f27c2071928961fe70f04fd94",
+  "model_attempts": 1,
+  "input_sha256": "1ee6fad87fe8fa3df33c71de1566bbebac643d516d6e0aedd37be61a7da65dc2",
   "inputs": [
     "output/2026-09-10/reel/andreeva-gauff/contact_00.jpg",
     "output/2026-09-10/reel/andreeva-gauff/contact_01.jpg",
     "output/2026-09-10/reel/andreeva-gauff/contact_02.jpg",
-    "output/2026-09-10/reel/andreeva-gauff/contact_03.jpg"
+    "output/2026-09-10/reel/andreeva-gauff/contact_03.jpg",
+    "output/2026-09-10/reel/andreeva-gauff/recovery/late-closeups.jpg"
   ],
   "cover_image": "output/2026-09-10/reel/andreeva-gauff/recovery/cover-review.jpg",
   "original_cover": "assets/reel/andreeva-gauff-cover.jpg",
