@@ -1,0 +1,211 @@
+{
+  "slug": "zverev-vandezandschulp-us-open-2026-qf-interview",
+  "url": "https://www.youtube.com/watch?v=FwQ-D77OMs4",
+  "source_title": "Alexander Zverev On-Court Interview | 2026 US Open Round Quarterfinal（US Open 官方频道）",
+  "start": 0.0,
+  "end": 131.0,
+  "asr_model": "small.en",
+  "whisper_model": "medium.en",
+  "column": "赛后开麦",
+  "interview_kind": "赛后场上采访",
+  "requested_content_type": "on_court",
+  "event": "2026 美网 男单1/4决赛",
+  "winner": "兹维列夫",
+  "featured_player": "兹维列夫",
+  "source_verification": {
+    "status": "verified",
+    "detected_type": "on_court",
+    "method": "official_explicit_oncourt",
+    "source_url": "https://www.youtube.com/watch?v=FwQ-D77OMs4",
+    "evidence": [
+      {
+        "kind": "official_explicit_title",
+        "source": "US Open",
+        "title": "Alexander Zverev On-Court Interview | 2026 US Open Round Quarterfinal",
+        "video_id": "FwQ-D77OMs4"
+      }
+    ],
+    "match_id": "2026:us-open:mens-quarterfinal:zverev-van-de-zandschulp",
+    "attestation_sha256": "2ecb37bf041f5758743f5d45beaa295121393e26b9a92b17562065b489b0cd6a"
+  },
+  "match": {
+    "id": "2026:us-open:mens-quarterfinal:zverev-van-de-zandschulp",
+    "event": "2026 US Open",
+    "event_search": "US Open",
+    "round": "Quarterfinal",
+    "winner": "兹维列夫",
+    "winner_en": "Alexander Zverev",
+    "loser": "范德赞德舒尔普",
+    "loser_en": "Botic van de Zandschulp",
+    "participants": [
+      "兹维列夫",
+      "范德赞德舒尔普"
+    ],
+    "score": "6-2 7-5 6-1",
+    "court": "Arthur Ashe Stadium",
+    "duration": "2:17",
+    "year": 2026
+  },
+  "opening": {
+    "kind": "none",
+    "why": "正文源片从第 0.4 秒起就是主持人举着话筒在场上提问（『Sasha, well done tonight』），背景是刚打完的 Ashe 球场和还没散场的看台，全片 136 秒里一帧比赛画面都没有——所以本条源收不到比赛结尾。比赛结束那一段从同场官方集锦借，见 lead_in。"
+  },
+  "lead_in": {
+    "url": "https://www.youtube.com/watch?v=2Su4qc7pGNE",
+    "start": 159.6,
+    "end": 169.12,
+    "subs": [
+      {
+        "a": 159.6,
+        "b": 161.28,
+        "en": "That's a pretty nice way to finish it.",
+        "zh": "这个收尾相当漂亮"
+      },
+      {
+        "a": 161.28,
+        "b": 164.72,
+        "en": "Alexander Zverev is back in the semis",
+        "zh": "兹维列夫重回半决赛"
+      },
+      {
+        "a": 164.72,
+        "b": 169.12,
+        "en": "in New York. 6-2, 7-5, 6-1.",
+        "zh": "就在纽约 6-2 7-5 6-1"
+      }
+    ],
+    "verification": {
+      "channel": "US Open Tennis Championships",
+      "event_search": "US Open",
+      "year": 2026,
+      "winner_en": "Alexander Zverev",
+      "loser_en": "Botic van de Zandschulp",
+      "match_id": "2026:us-open:mens-quarterfinal:zverev-van-de-zandschulp",
+      "method": "official_exact_match_highlight",
+      "height": 1080
+    },
+    "why": "同场官方集锦（2Su4qc7pGNE，199 秒，US Open 官方频道，标题写明 vs. Botic van de Zandschulp Highlights | 2026 US Open Quarterfinal，ffprobe 实测 1920×1080）。**逐帧打开看过**（frame-grab run 34434199001，155–171 秒每秒一格）：155–158 是赛点宽景，记分条烧着 MATCH POINT #2 ＋ ZVEREV 6 7 5 AD / VAN DE ZANDSCHULP 2 5 1；159 起是他粉衣近景庆祝（背板 J.P.Morgan / us open），161–162 举手，163–166 切对手白衣近景，167–169 两人网前握手。所以 159.6–169.12 是一整段连续的赛后画面（庆祝 → 对手 → 握手），不是回合拼接。⚠️ 起点故意不取赛点那一帧：155–159 那 4.6 秒解说只有一个「game.」，而那几秒屏幕上会几乎什么都没有——「更早」和「更好」在这条线上不是一回事。⚠️ 记分条上的比分是这场赛果的第三个独立印证（美网官方 matches feed、解说报出的 6-2 7-5 6-1、烧在画面上的记分条）。"
+  },
+  "cover": {
+    "frame_at": 110.0,
+    "_why": "打开 frame-grab 抽出来的 68 张候选帧逐张比过（run 34434195898，每 2 秒一格，1920×1080 原样不放大）。同一辑里另外三张够得上的：86 秒正面但表情平静、嘴闭着；88 秒正面讲话中；122 秒眼睛几乎垂下来——封面不用闭眼的那一条直接排除它。选 110 秒这一格：他笑开了、两只眼睛都看得见、牙齿露出来，情绪是全片最外露的一刻，而那一秒他正说到「我根本没睡」（第 66 行 111.28 起）——笑着讲自己熬夜看球，和这条片子「深夜作息」的落点完全对题。⚠️ 缩略图墙判不了眼神（一格里眼睛只有几个像素），这四张是裁出人脸区放大到 520px 并排比的。",
+    "title": [
+      "上周最晚睡到早上六点四十五",
+      "「感觉像在纽约打澳网」"
+    ],
+    "sub": "美网男单1/4决赛 · 赛后场上采访",
+    "tag": "兹维列夫 · 赛后开麦",
+    "_copy_why": "两行都是他自己的原话，扣的是这段采访真正的落点——深夜赛程把作息打碎。第一行『I went to bed as late as 6:45 a.m. in the last week』是可核的具体数字；第二行『I feel like I'm playing the Australian Open in New York right now』是他自己下的判断，而它和本号名「网球时差」天然同构。⚠️ 不写「世界第二」「头号种子」这类身份，顶栏已经交代赛事轮次和赛果。"
+  },
+  "takeaway": {
+    "close": {
+      "point": "深夜赛程把作息打碎 他说像在纽约打澳网",
+      "ask": "球员该为收视率熬到凌晨吗？"
+    }
+  },
+  "push": {
+    "matchup": "兹维列夫 vs 范德赞德舒尔普",
+    "score": "6-2 7-5 6-1",
+    "event": "",
+    "summary": "兹维列夫早上6点45才睡",
+    "lead": "2026 美网男单1/4决赛，兹维列夫 6-2 7-5 6-1 拿下范德赞德舒尔普，第 13 次打进大满贯四强。但赛后场上采访他几乎没聊这场球——被问起今年美网的深夜场次时，他说：「我最晚一次是早上六点四十五才睡，就在上个星期。所以我有点像在倒时差，感觉自己是在纽约打澳网。」昨晚他还看谢尔顿打阿尔卡拉斯看到凌晨三点半，理由是「反正我要睡到下午一点」。",
+    "auto": true,
+    "_auto_why": "渲之前就写好——CLAUDE.md：auto 这一行不进成片，但 qc_attestation 比的是 spec 的字节哈希，渲完再补就得整趟重渲。这条来源、赛果、分辨率、双语都已核完，闸过了就该发。"
+  },
+  "zh": [
+    "萨沙 今晚打得漂亮",
+    "你是今年唯一一个",
+    "四大满贯全都打进四强以上",
+    "包括法网夺冠",
+    "以及温网决赛",
+    "打大满贯的心态",
+    "和打别的赛事",
+    "有什么不一样吗？",
+    "是也不是",
+    "我想",
+    "前两轮你们都看到了",
+    "我打得真的不好",
+    "在大满贯我可以",
+    "更多地依靠身体",
+    "比在别的赛事更能靠它",
+    "换成别的赛事",
+    "我首轮就出局了",
+    "但在这里我能打满五盘",
+    "打四个半小时再反打回来",
+    "然后想办法赢下这场球",
+    "想办法把自己带进状态",
+    "接着",
+    "我会在整个赛事里",
+    "越打越好",
+    "能打进四强我当然很高兴",
+    "但我当然还想走得更远",
+    "那么",
+    "今年一个热门话题",
+    "就是这些深夜才结束的比赛",
+    "你就碰上过几场",
+    "有一场打到凌晨两点十五",
+    "能讲讲那之后",
+    "你的流程吗？",
+    "两点十五打完",
+    "你会正经吃一顿吗？",
+    "实际几点才睡下？",
+    "是这样",
+    "你要去泡冰浴",
+    "吃饭 然后跟媒体聊",
+    "你们也是其中",
+    "一员 而我很不喜欢这件事",
+    "不过那也没什么",
+    "再之后",
+    "做一些治疗",
+    "然后去睡觉",
+    "最晚一次早上六点四十五才睡",
+    "就在上个星期",
+    "所以我有点像在倒时差",
+    "感觉自己是在纽约",
+    "打澳网",
+    "但只要我还留在这里",
+    "只要我还在半决赛里",
+    "那就是最重要的",
+    "今晚你终于",
+    "能好好睡一觉了",
+    "你正待在世界上",
+    "最好的城市之一",
+    "你隔一晚就来这儿",
+    "那另外那些晚上呢",
+    "你会出去在城里吃个饭",
+    "逛逛纽约",
+    "有意思的地方吗？",
+    "我看谢尔顿打阿尔卡拉斯",
+    "看到凌晨三点半",
+    "就在昨天晚上",
+    "我根本没睡",
+    "我一直熬着",
+    "我在看电视 因为反正",
+    "我要睡到下午一点",
+    "总之要给本点个赞",
+    "他那场球打得难以置信",
+    "还有后天",
+    "我想那会是",
+    "两个美国人之间的精彩半决赛",
+    "我们对两边都很期待",
+    "恭喜你今晚",
+    "挺进半决赛",
+    "萨沙 兹维列夫"
+  ],
+  "transcript_verified": false,
+  "_facts": [
+    "赛果取自美网官方 matches feed（atpz355_matches.json）：Quarter-Finals，Arthur Ashe Stadium，用时 2:17，兹维列夫（1 号种子）6-2 7-5 6-1 胜 Botic van de Zandschulp。分盘用时 37+65+35＝137 分钟，和总用时 2:17 自洽。",
+    "同一份赛果由同场官方集锦的解说独立印证：159.6 起『Alexander Zverev is back in the semis in New York, 6-2, 7-5, 6-1』。",
+    "兹维列夫美网身份：官方 players.json 记 singles_rank 2、seed true（美网 1 号种子）。⚠️ 种子号和世界排名是两个数，别混着说。",
+    "源片分辨率在 runner 上实测（沙箱 IP 被 YouTube 挡着，五个 player_client 全部只返回降级格式表，android_vr 报的 360p 是 n-challenge 失败后的残表，不是真实分辨率）：frame-grab 的 ffprobe 对两条源片都报 [源片] 1920x1080 → 抽帧宽 1920（原样）——采访正片 run 34434195898、片头集锦 run 34434199001。1080p 硬门槛通过。"
+  ],
+  "_notes": [
+    "正文完整保留英文原声，中英字幕逐行对应；不能改写英文或编造采访金句。",
+    "本条是本号美网 1/4 决赛采访系列的第四条（前三条 pegula-navarro / rybakina-zheng / shelton-alcaraz 已发），videoId 各不相同，不重复。"
+  ],
+  "en_fixed": {
+    "4": "including the win in Roland Garros",
+    "63": "I watched I watched Shelton Alcaraz until",
+    "78": "Sasha Zverev."
+  }
+}
