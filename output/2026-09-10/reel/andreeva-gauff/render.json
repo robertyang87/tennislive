@@ -1,0 +1,67 @@
+{
+  "scoreboard_qc_sha256": "d6ef7ad0dc8325946ab1d14b7f990b286729ebee59ca390cce46aa44a9a823f8",
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 3.827,
+  "layout": "band",
+  "segments_seconds": 196.4,
+  "topbar": {
+    "line1": "2026.09.09 美网女单1/4决赛",
+    "line2": "高芙 2-6 7-6(7) 6-2 米拉·安德烈耶娃",
+    "start": 1.2,
+    "end": 197.6
+  },
+  "film_seconds": 201.468,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 7.896,
+    "2": 18.6,
+    "3": 11.04,
+    "4": 5.112,
+    "5": 8.64,
+    "7": 8.28
+  },
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "andreeva-gauff",
+    "received_at": "2026-09-10T00:34:47Z",
+    "artifact_ready_at": "2026-09-10T00:41:08Z",
+    "elapsed_seconds": 381.211,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "ab1ec4376fc65e019b23b3c8764500488718d32950891f363198090f28531a40",
+    "spec_sha256": "c8aeb28606cb1e81bbdbfb2bd479b9f15869198692ccb80184b3f306e938247f",
+    "request_received_at": "2026-09-09T21:09:10Z",
+    "request_to_artifact_seconds": 12718.211,
+    "run_id": "34421892257",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-09-10T00:37:25Z",
+        "run_id": "34421892257"
+      }
+    ],
+    "render_seconds": 223.211,
+    "pre_render_seconds": 158.0
+  },
+  "film_sha256": "ab1ec4376fc65e019b23b3c8764500488718d32950891f363198090f28531a40",
+  "film_bytes": 85286846,
+  "qc_attestation_sha256": "8aa25ca27c7ddeef56800f9f8ce1f91a7c86e2a84674b8e75d9f406fc3be3cdc",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-09-10T00:37:25Z",
+      "run_id": "34421892257"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-10T00:41:09Z",
+      "run_id": "34421892257"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-andreeva-gauff/andreeva-gauff.mp4",
+  "video_bytes": 85286846
+}
