@@ -1,0 +1,470 @@
+{
+  "slug": "andreeva-gauff",
+  "_column": "reel",
+  "cover": {
+    "matchup": [
+      {
+        "name": "米拉·安德烈耶娃",
+        "name_en": "mirra andreeva",
+        "country": "RUS",
+        "rank": 5
+      },
+      {
+        "name": "高芙",
+        "name_en": "coco gauff",
+        "country": "USA",
+        "rank": 4
+      }
+    ],
+    "winner": "高芙",
+    "result": "2-6 7-6(7) 6-2",
+    "portrait": {
+      "image": "assets/reel/andreeva-gauff-cover.jpg",
+      "_portrait_why": "WTA 官方赛后稿头图，自动抓取"
+    },
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "高芙",
+    "hook": "三十九拍拉锯\n高芙救赛点逆转",
+    "topic": "US OPEN 1/4决赛",
+    "scoreboard": {
+      "court": "Arthur Ashe Stadium",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A8340%2C%22unit%22%3A%22seconds%22%2C%22source_value%22%3A%222%3A19%22%2C%22source%22%3A%22structured%20match%20statistics%22%7D",
+        "field": "duration"
+      },
+      "_court_why": "赛果源结构化 court 字段",
+      "_duration_why": "WTA官方战报全场用时2:19，参见_duration_review"
+    }
+  },
+  "_production": {
+    "kind": "orchestrated_reel",
+    "received_at": "2026-09-09T21:09:10Z",
+    "event": "US OPEN",
+    "year": 2026,
+    "round": "四分之一决赛",
+    "court": "Arthur Ashe Stadium",
+    "status": "ready_for_render"
+  },
+  "source_url": "https://www.youtube.com/watch?v=eBTlK8A4IDE",
+  "_match": {
+    "status": "result_verified",
+    "source": "flashscore_points",
+    "source_id": "SMJls6Ki",
+    "flashscore_id": "SMJls6Ki",
+    "participants": [
+      "米拉·安德烈耶娃",
+      "高芙"
+    ],
+    "set_scores_home_away": [
+      [
+        6,
+        2
+      ],
+      [
+        6,
+        7
+      ],
+      [
+        2,
+        6
+      ]
+    ],
+    "winner": "高芙",
+    "loser": "米拉·安德烈耶娃",
+    "winner_result": "2-6 7-6(7) 6-2",
+    "loser_result": "6-2 6-7(7) 2-6",
+    "tiebreaks_home_away": [
+      null,
+      [
+        7,
+        9
+      ],
+      null
+    ]
+  },
+  "stats": {
+    "a": {
+      "aces": 3,
+      "df": 5,
+      "winners": 25,
+      "ue": 42,
+      "first_in": 58,
+      "first_won": 36,
+      "second_total": 28,
+      "second_won": 15,
+      "bp_conv": 4,
+      "bp_chances": 9,
+      "pts_won": 94,
+      "pts_total": 189,
+      "first_total": 86,
+      "headshot": "assets/players/headshots/wta-331809.jpg"
+    },
+    "b": {
+      "aces": 4,
+      "df": 12,
+      "winners": 22,
+      "ue": 42,
+      "first_in": 61,
+      "first_won": 44,
+      "second_total": 42,
+      "second_won": 16,
+      "bp_conv": 4,
+      "bp_chances": 5,
+      "pts_won": 95,
+      "pts_total": 189,
+      "first_total": 103,
+      "headshot": "assets/players/headshots/wta-328560.jpg"
+    }
+  },
+  "_hit_data": [
+    {
+      "label": "总分差",
+      "detail": "米拉·安德烈耶娃 94 - 高芙 95，净差 1 分，高芙 领先",
+      "diff": 1,
+      "source": "flashscore df_mh_1（总分）"
+    },
+    {
+      "label": "米拉·安德烈耶娃 一发得分率摆动",
+      "detail": "第1盘87% → 第2盘55% → 第3盘50%",
+      "swing": 37,
+      "source": "flashscore df_st_1（分盘一发得分率）"
+    },
+    {
+      "label": "高芙 一发得分率摆动",
+      "detail": "第1盘78% → 第2盘68% → 第3盘80%",
+      "swing": 12,
+      "source": "flashscore df_st_1（分盘一发得分率）"
+    },
+    {
+      "label": "米拉·安德烈耶娃 破发点兑现",
+      "detail": "4/9（44%）",
+      "source": "flashscore df_st_1（破发点）"
+    },
+    {
+      "label": "高芙 破发点兑现",
+      "detail": "4/5（80%）",
+      "source": "flashscore df_st_1（破发点）"
+    },
+    {
+      "label": "米拉·安德烈耶娃 连续保发",
+      "detail": "6 个发球局",
+      "source": "flashscore df_mh_1（逐局）"
+    },
+    {
+      "label": "高芙 连续保发",
+      "detail": "5 个发球局",
+      "source": "flashscore df_mh_1（逐局）"
+    },
+    {
+      "label": "交手记录",
+      "detail": "Andreeva M. 0 : 6 Gauff C.（含本场） · 红土 0:4 · 硬地 0:2",
+      "source": "flashscore df_hh_1"
+    },
+    {
+      "label": "近况",
+      "detail": "Andreeva M. 最近 5 场 4 胜（LWWWW）；Gauff C. 最近 5 场 5 胜（WWWWW）",
+      "source": "flashscore df_hh_1 Last matches"
+    }
+  ],
+  "_durations": [
+    [
+      "全场",
+      "2:19"
+    ]
+  ],
+  "_turning_points": [
+    {
+      "label": "【Set 3】2-6  高芙发球，高芙拿下  密度6  ← 2个赛点",
+      "density": 6,
+      "tags": [
+        "2个赛点"
+      ]
+    },
+    {
+      "label": "【Set 2】3-4  高芙发球，米拉·安德烈耶娃拿下  密度3  ← 3个破发点、破发成功",
+      "density": 3,
+      "tags": [
+        "3个破发点",
+        "破发成功"
+      ]
+    },
+    {
+      "label": "【Set 2】4-5  高芙发球，米拉·安德烈耶娃拿下  密度3  ← 1个破发点、1个盘点、破发成功",
+      "density": 3,
+      "tags": [
+        "1个破发点",
+        "1个盘点",
+        "破发成功"
+      ]
+    },
+    {
+      "label": "【Set 1】6-2  米拉·安德烈耶娃发球，米拉·安德烈耶娃拿下  密度2  ← 1个盘点",
+      "density": 2,
+      "tags": [
+        "1个盘点"
+      ]
+    },
+    {
+      "label": "【Set 1】1-0  高芙发球，米拉·安德烈耶娃拿下  密度1  ← 1个破发点、破发成功",
+      "density": 1,
+      "tags": [
+        "1个破发点",
+        "破发成功"
+      ]
+    }
+  ],
+  "_tactical_research": {
+    "version": 1,
+    "identity": {
+      "home": "mirra andreeva",
+      "away": "coco gauff",
+      "event": "US OPEN",
+      "year": 2026,
+      "source_urls": []
+    },
+    "sources": [],
+    "source_status": {
+      "brain_game": "feed HTTP 403; index HTTP 403",
+      "tennis_abstract": "feed HTTP 403; index HTTP 403",
+      "hugh_clarke": "feed HTTP 403; index HTTP 403",
+      "atp": "no_matching_article",
+      "wta": "ok",
+      "usopen": "no_matching_article",
+      "australian_open": "no_matching_article",
+      "roland_garros": "ok",
+      "wimbledon": "no_matching_article"
+    },
+    "status": "no_readable_analysis",
+    "collected_at": "2026-09-09T21:14:24.750993+00:00",
+    "elapsed_seconds": 0.898
+  },
+  "editorial": {
+    "hook": [
+      "三十九拍拉锯",
+      "高芙救赛点逆转"
+    ],
+    "question": "首盘失利、抢七面对两个赛点，高芙怎样把比赛赢回来？",
+    "thesis": "高芙先在抢七中保住逆转的机会，再赢下决胜盘；全场总分仅多一分，说明拿下关键分比总分差更决定结局。",
+    "beats": [
+      "首盘开局零比三落后，高芙以二比六丢掉首盘。",
+      "第二盘抢七四比三的三十九拍回合后，高芙以五比三领先；之后她挽救两个赛点，九比七赢下抢七。",
+      "决胜盘高芙从零比一来到五比二，在第二个赛点上收下比赛，六比二完成逆转。"
+    ],
+    "human_context": {
+      "angle": "WTA官方战报确认，这场之后高芙对安德烈耶娃的交手记录为六胜零负；她本赛季已十二次逆转获胜。",
+      "facts": [
+        "高芙以2-6 7-6(7) 6-2击败米拉·安德烈耶娃。",
+        "米拉·安德烈耶娃 94 - 高芙 95，净差 1 分，高芙 领先",
+        "第1盘87% → 第2盘55% → 第3盘50%",
+        "第1盘78% → 第2盘68% → 第3盘80%",
+        "4/9（44%）"
+      ],
+      "sources": [
+        "https://www.youtube.com/watch?v=eBTlK8A4IDE",
+        "https://www.flashscore.com/match/tennis/SMJls6Ki/#/match-summary",
+        "https://www.wtatennis.com/news/4574376/gauff-saves-two-match-points-storms-past-andreeva-into-us-open-semis"
+      ]
+    },
+    "narration": [
+      "高芙开局零比三落后，二比六丢掉首盘。",
+      "抢七先拿下三十九拍拉锯，之后救回两个赛点，九比七扳平盘分。",
+      "决胜盘来到五比二，高芙兑现第二个赛点，六比二完成逆转。"
+    ],
+    "mode": "match_review"
+  },
+  "push": {
+    "summary": "高芙救两赛点逆转",
+    "lead": "两次只差一分出局，高芙还是把比赛抢了回来。🎾\n\n当地时间9月9日，美网女单1/4决赛，她以2-6、7-6(7)、6-2逆转安德烈耶娃。首盘开局就0-3落后，这场比赛从一开始就不轻松。\n\n最让人屏住呼吸的是第二盘抢七：4-3时，两人展开39拍拉锯，高芙拿下这一分，来到5-3。但真正脱险还在后面——她随后救回两个赛点，才以9-7把比赛拖进决胜盘。\n\n决胜盘从0-1走到5-2，高芙来到发球胜赛局。第一个赛点被救回，她最终在第二个赛点上结束战斗。\n\n全场总得分95比94，她只多拿1分；12个双误也让这场胜利更显艰难。网球有时就是这样：赢下关键的那一分，比总共多赢多少分更重要。\n\n高芙对安德烈耶娃的交手纪录来到6-0。接下来，等待她的是莱巴金娜。",
+    "auto": true
+  },
+  "segments": [
+    {
+      "start": 168,
+      "end": 175.2,
+      "narration": "",
+      "quote": [
+        {
+          "at": 1.15,
+          "end": 6.04,
+          "text": "Two six, seven six, six two.\n二比六、七比六、六比二。"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_ending_payoff_required": true,
+      "score_inset": false,
+      "_score_inset_why": "168.0后为球员近景和握手，常规两行比分条已收走；不抠取人物局部回贴。",
+      "_why": "MiniMax通过的短余波与原声报分；英文来自small.en原片ASR，数字与正式赛果一致。"
+    },
+    {
+      "start": 0,
+      "end": 19.6,
+      "narration": "当地时间九月九日，美网女单四分之一决赛。高芙对阵安德烈耶娃，开场已零比三落后。",
+      "score_inset": true,
+      "_why": "原片完整开场首盘0-3片段与反应，旁白交代日期、赛事、轮次。"
+    },
+    {
+      "start": 19.6,
+      "end": 85.5,
+      "narration": "首盘二比六落后，高芙把第二盘拖进抢七。四比三领先，这是她的发球分。接下来，是一场三十九拍的拉锯。长回合里，守住落点和深度，才能逼对手再多打一拍。别急着说谁占上风，这一分还没结束。",
+      "score_inset": true,
+      "_why": "完整39拍长回合，抢七高芙4-3至5-3；没有剪掉中间拍数，不冒充挽救赛点画面。"
+    },
+    {
+      "start": 85.5,
+      "end": 105,
+      "narration": "这一分过后，抢七还没有结束。随后高芙救回两个赛点，九比七扳平盘分。现在决胜盘零比一，她要先守住发球局。",
+      "score_inset": true,
+      "_why": "抢七已经结束后的决胜盘开局；回顾官方证实但此短源省略的救两个赛点，不称当前画面为救赛点。"
+    },
+    {
+      "start": 105,
+      "end": 118,
+      "narration": "从零比三十追到四十比三十，高芙要先把这一局保住。",
+      "score_inset": true,
+      "_why": "同一发球局40-30的完整一分，先讲此前0-30追分，不提前讲结果。"
+    },
+    {
+      "start": 118,
+      "end": 136.02,
+      "narration": "高芙已经五比二领先，来到发球胜赛局。四十比十五，两个赛点。但安德烈耶娃还在追。",
+      "score_inset": true,
+      "_why": "5-2发球胜赛局第一个赛点完整回合；尚未获胜。"
+    },
+    {
+      "start": 136.02,
+      "end": 175.2,
+      "narration": "",
+      "quote": [
+        {
+          "at": 2.38,
+          "end": 4.56,
+          "text": "Second match point now for Gauff.\n现在是高芙的第二个赛点。"
+        },
+        {
+          "at": 33.13,
+          "end": 38.02,
+          "text": "Two six, seven six, six two.\n二比六、七比六、六比二。"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "score_inset": true,
+      "score_inset_windows": [
+        [
+          136.02,
+          163.33
+        ]
+      ],
+      "_score_inset_why": "136.02起源比分条仍在，140.02后完整最后回合；163.33切庆祝即关闭回贴，避免切到人体。",
+      "_why": "在MiniMax通过的156.5—174.5证据窗前扩展到136.02，保留第二赛点准备、整分、庆祝与握手；全部contact及关键帧人工核对。"
+    },
+    {
+      "stat_card": true,
+      "seconds": 14,
+      "narration": "全场总得分九十五比九十四，高芙只多拿一分。她救回两个赛点，把这场胜利拼到了手里。",
+      "_why": "完整获胜与庆祝后，14秒全画布统计卡，旁白交代总得分与两个挽救赛点。",
+      "image": "<stat_card>"
+    }
+  ],
+  "_segments_source": "原片四张contact、比分截图、关键帧与ASR人工逐段复核",
+  "_notes": [
+    "flashscore id：SMJls6Ki（按球员姓反查）",
+    "制胜分/非受迫失误：这场有，已填进 stats",
+    "头像 stats.a（米拉·安德烈耶娃）：已发 spec 里认过，复用 assets/players/headshots/wta-331809.jpg",
+    "头像 stats.b（高芙）：已发 spec 里认过，复用 assets/players/headshots/wta-328560.jpg",
+    "狠数据候选 9 条",
+    "转折局候选 14 局，取前 5",
+    "赛果事实闸：高芙 2-6 7-6(7) 6-2 米拉·安德烈耶娃（赢家视角）",
+    "技战术资料：no_readable_analysis；未核观点不进入旁白",
+    "文案通道 deepseek · deepseek-v4-pro",
+    "中文热点：扫 232 条，没有撞上这两位球员",
+    "背景聚合：H2H/近况/排名/中文热点已备齐（年龄/纪录/金句要 human_context 调研补，见 spec 合同）",
+    "推送文案已通过事实校验；默认开启 QC 后自动推送",
+    "⚠️ 窗口起草没成（FileNotFoundError: [Errno 2] No such file or directory: 'output/2026-09-10/reel/andreeva-gauff/captions.txt'）",
+    "无字幕窗口兜底 3 段：全部单镜头且装得下旁白",
+    "封面官方实拍：已存 assets/reel/andreeva-gauff-cover.jpg（7927×5285，22.1 MB），文章 /news/4574376/gauff-saves-two-match-points-storms-past-andreeva-into-us-open-semis；⚠️ 文件名不自证（编号名）——靠文章 slug 自证，用之前打开看一眼",
+    "人工纠错：第二盘胜者是高芙，盘比分7-6(7)，抢七小分9-7。原稿 editorial、segments、push 同时写反，已统一更正；此更正不代表剪辑窗口获准或 QC 通过。"
+  ],
+  "_visual_evidence": {
+    "model": "MiniMax-M3",
+    "status": "pass",
+    "visual_status": "pass",
+    "retryable": false,
+    "cold_open": {
+      "start": 168,
+      "end": 175.2,
+      "kind": "winner_celebration",
+      "winner_visible": true,
+      "reason": "窗口内168.0s画面显示高芙（黄色NB裙）弯腰低头俯身，未与教练互动；170.5s/172.5s为高芙站立/行走的近景镜头；173.0s高芙仍为站姿近景；174.5s双方球员走向网前；属于match point紧接的赛后庆祝与走向网前阶段，赢家高芙始终可见。",
+      "confidence": 0.85
+    },
+    "ending": {
+      "start": 156.5,
+      "end": 175.2,
+      "kind": "winner_celebration",
+      "winner_visible": true,
+      "reason": "窗口内156.5-162.5s显示最后一分相持阶段（屏幕左下可见MATCH POINT #2字样）；163.33s切点之后高芙开始庆祝动作；168.0s高芙弯腰低头；170.5-173.0s高芙站立/行走近景；174.5s双方在网前相遇；完整覆盖cold_open的168.0-175.2区间，含赛点最后一分+赢家庆祝余波，纪录片式落幕。",
+      "confidence": 0.85
+    },
+    "cover": {
+      "same_match": true,
+      "subject": "高芙",
+      "moment": "winner_celebration",
+      "wrong_or_old": false,
+      "reason": "封面选手为黄色NB无袖连衣裙搭配黄发带，与168.0-175.2s、174.5s镜头中高芙的着装一致；US Open硬地球场、Chase/US Open广告板背景与本场相同；封面捏耳/调整发带的庆祝姿态与cold_open窗口内弯腰俯身后的庆祝场景吻合；底板可辨US Open赛事标识，确认本场同图。",
+      "confidence": 0.82
+    },
+    "problems": [],
+    "model_attempts": 2,
+    "input_sha256": "1ee6fad87fe8fa3df33c71de1566bbebac643d516d6e0aedd37be61a7da65dc2",
+    "inputs": [
+      "output/2026-09-10/reel/andreeva-gauff/contact_00.jpg",
+      "output/2026-09-10/reel/andreeva-gauff/contact_01.jpg",
+      "output/2026-09-10/reel/andreeva-gauff/contact_02.jpg",
+      "output/2026-09-10/reel/andreeva-gauff/contact_03.jpg",
+      "output/2026-09-10/reel/andreeva-gauff/recovery/late-closeups.jpg"
+    ],
+    "cover_image": "output/2026-09-10/reel/andreeva-gauff/recovery/cover-review.jpg",
+    "original_cover": "assets/reel/andreeva-gauff-cover.jpg",
+    "original_cover_sha256": "7121cd4e7ecdc2322458a45f93dc778f060f6b212183b9a31d2afb39ea5cc19e",
+    "human_correction_feedback": [
+      "人工逐帧复核：166.5秒是高芙弯腰低头，画面里没有教练，原理由的拥抱教练不成立。",
+      "172.5秒是站立/走动近景，没有证据证明整理发带；168.0秒没有和教练包厢互动证据。",
+      "156.5秒已是最后一分相持，不是发球；标记为MATCH POINT #2，不是MATCH POINT ON SERVE。不要猜测162.5秒具体球路/落点。",
+      "仅保留图上确实可见的证据：末段相持、163.33后高芙庆祝、168弯腰、173近景、174.5双方在网前、175握手。前述动作要归属到各自窗口，不能引用窗外时间。"
+    ]
+  },
+  "_editorial_review": {
+    "reviewer": "Codex",
+    "status": "reviewed",
+    "source": "完整四张contact与score sheets，关键帧，原片ASR，WTA官方战报",
+    "limitations": "用户短源没有展示高芙挽救的两个赛点；只做来源明确的回顾，不冒用39拍这一分。",
+    "natural_sound_reason": "39拍回合的旁白结束后保留完整击球、脚步和观众原声，不用无依据解说填满；其余回合保留死球与反应。"
+  },
+  "_cover_brief": {
+    "preferred_subject": "高芙",
+    "preferred_moment": "winner_celebration",
+    "reason": "WTA署名高芙的同场庆祝照，按衣服及背景与原片核对。",
+    "reviewed_timeline": "冷开场168.0至175.2涵盖英文报分；正文赛点实际从136.02开始，视觉审核ending可覆盖156.5至175.2。不要声称看到了发球、拥抱教练、整理发带、具体回球落点等图片不能证明的动作。"
+  },
+  "_duration_review": {
+    "source": "https://www.wtatennis.com/news/4574376/gauff-saves-two-match-points-storms-past-andreeva-into-us-open-semis",
+    "value": "2:19",
+    "reason": "采用WTA官方战报2:19；官方赛事feed两次超时，记录不可用。"
+  },
+  "topbar": {
+    "line1": "2026.09.09 美网女单1/4决赛",
+    "line2": "高芙 2-6 7-6(7) 6-2 米拉·安德烈耶娃"
+  },
+  "layout": "band",
+  "scorebox": [
+    104,
+    888,
+    736,
+    978
+  ],
+  "stat_card_full_canvas": true,
+  "_chapter_cards_why": "没插章节卡：editorial 没有 chapters（旧合同产的草稿）",
+  "tts_backend": "edge",
+  "_tts_backend_why": "本条使用中性纪录片旁白，不依赖Azure情绪风格；采用Edge Yunjian完成稳定配音。"
+}
