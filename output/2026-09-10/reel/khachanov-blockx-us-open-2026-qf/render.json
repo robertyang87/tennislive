@@ -1,0 +1,71 @@
+{
+  "scoreboard_qc_sha256": "57182fc5240f9689085c4fd728eed7ef33e3b66599cc89d42f5d6b3f8d813fc3",
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 3.827,
+  "layout": "band",
+  "segments_seconds": 111.8,
+  "topbar": {
+    "line1": "2026 美网 男单1/4决赛",
+    "line2": "哈恰诺夫 6-2 7-5 3-2 ret. 布洛克斯",
+    "start": 1.2,
+    "end": 113.0
+  },
+  "film_seconds": 116.85,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 9.36,
+    "2": 3.648,
+    "3": 5.592,
+    "4": 6.264,
+    "6": 10.536,
+    "7": 7.032,
+    "8": 8.376,
+    "10": 4.416,
+    "11": 2.928,
+    "13": 7.752,
+    "15": 3.24,
+    "16": 5.88
+  },
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "khachanov-blockx-us-open-2026-qf",
+    "received_at": "2026-09-10T03:40:08Z",
+    "artifact_ready_at": "2026-09-10T03:45:33Z",
+    "elapsed_seconds": 325.008,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "17407c23adbfb2abd75cc9cc1edc5b7023fdbafbe5d2583d21a40473ea4c3d15",
+    "spec_sha256": "576130431eb8c00e2d35a8407da34746e279d96986ca4adc1890215ca2187323",
+    "run_id": "34434193713",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-09-10T03:42:32Z",
+        "run_id": "34434193713"
+      }
+    ],
+    "render_seconds": 181.008,
+    "pre_render_seconds": 144.0
+  },
+  "film_sha256": "17407c23adbfb2abd75cc9cc1edc5b7023fdbafbe5d2583d21a40473ea4c3d15",
+  "film_bytes": 60999219,
+  "qc_attestation_sha256": "a669d5e8771c1fd94bff7f3dde2546f787acd82deeb6c541b748d0d2007d15fa",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-09-10T03:42:32Z",
+      "run_id": "34434193713"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-10T03:45:33Z",
+      "run_id": "34434193713"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-khachanov-blockx-us-open-2026-qf/khachanov-blockx-us-open-2026-qf.mp4",
+  "video_bytes": 60999219
+}
