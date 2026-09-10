@@ -49,7 +49,9 @@ def official():
     r=requests.get(url,timeout=40)
     from bs4 import BeautifulSoup
     text=BeautifulSoup(r.text,"html.parser").get_text(" ",strip=True)
-    save("official.json",{"url":url,"status":r.status_code,"text":text[:45000]})
+    schema={"type":"object","properties":{"match_date":{"type":"string"},"facts":{"type":"array","items":{"type":"string"}}},"required":["match_date","facts"]}
+    facts=Chat(provider="deepseek").ask("Extract only verifiable tennis match facts: date, result, saved match points and exact score states, rally shot count, rankings, elapsed time, deciding-set breaks. No quotations or article prose. Return concise structured Chinese facts; omit anything not stated.",text[:45000],schema=schema,max_tokens=2000) if r.status_code==200 else None
+    save("official.json",{"url":url,"status":r.status_code,"facts":facts})
     return {"official_status":r.status_code}
 results=[]
 with cf.ThreadPoolExecutor(max_workers=3) as pool:
