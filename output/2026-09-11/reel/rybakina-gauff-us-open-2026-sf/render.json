@@ -1,0 +1,69 @@
+{
+  "scoreboard_qc_sha256": "241a1702a0fff79aed27a0af4ac758218f03685173843455ac8c872c97ea492d",
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 3.827,
+  "layout": "band",
+  "segments_seconds": 101.93,
+  "topbar": {
+    "line1": "2026 美网 女单半决赛",
+    "line2": "莱巴金娜 3-6 6-4 6-4 高芙",
+    "start": 1.2,
+    "end": 103.13
+  },
+  "film_seconds": 106.974,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 6.888,
+    "2": 9.24,
+    "3": 9.6,
+    "4": 8.304,
+    "5": 5.424,
+    "6": 7.92,
+    "7": 5.256,
+    "8": 18.744,
+    "9": 2.712,
+    "10": 9.408
+  },
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "rybakina-gauff-us-open-2026-sf",
+    "received_at": "2026-09-11T04:23:25Z",
+    "artifact_ready_at": "2026-09-11T04:28:53Z",
+    "elapsed_seconds": 328.978,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "42b48ee732d2bc48216b5755b2b6fefb9f2c132c450ac98d0e05f294f2483e2b",
+    "spec_sha256": "ca0348b7fe4fa43a9d8953def43c478e939d81694ee2043913448c4878657e69",
+    "run_id": "34562008859",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-09-11T04:26:00Z",
+        "run_id": "34562008859"
+      }
+    ],
+    "render_seconds": 173.978,
+    "pre_render_seconds": 155.0
+  },
+  "film_sha256": "42b48ee732d2bc48216b5755b2b6fefb9f2c132c450ac98d0e05f294f2483e2b",
+  "film_bytes": 59466523,
+  "qc_attestation_sha256": "c6f4727f352b6192473ba36c014124d5f43f1428e429a75b5e98f6003e214876",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-09-11T04:26:00Z",
+      "run_id": "34562008859"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-11T04:28:54Z",
+      "run_id": "34562008859"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-rybakina-gauff-us-open-2026-sf/rybakina-gauff-us-open-2026-sf.mp4",
+  "video_bytes": 59466523
+}
