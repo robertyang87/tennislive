@@ -1,0 +1,62 @@
+{
+  "slug": "sabalenka-pegula-us-open-2026-sf-interview",
+  "url": "https://www.youtube.com/watch?v=CdYAB1RnWas",
+  "source_title": "Aryna Sabalenka On-Court Interview | 2026 US Open Semifinal",
+  "source": "US Open",
+  "requested_content_type": "on_court",
+  "event": "2026 美网 女单半决赛",
+  "winner": "萨巴伦卡",
+  "featured_player": "萨巴伦卡",
+  "start": 0,
+  "match": {
+    "id": "2026:us-open:womens-semifinal:aryna-sabalenka-jessica-pegula",
+    "event": "2026 US Open",
+    "event_search": "US Open",
+    "round": "Women's Singles Semifinal",
+    "year": 2026,
+    "winner": "萨巴伦卡",
+    "winner_en": "Aryna Sabalenka",
+    "loser": "佩古拉",
+    "loser_en": "Jessica Pegula",
+    "participants": ["萨巴伦卡", "佩古拉"]
+  },
+  "opening": {
+    "kind": "none",
+    "why": "官方独立场上采访视频，源片本身没有比赛画面（一上来就是主持人递话筒）；比赛结尾另从同场官方集锦 1WAjW7l89YQ 接入。"
+  },
+  "_facts": [
+    "美网官方赛程 feed（schedule19.json，Day 19 = 2026-09-10）：Women's Singles Semifinals，Arthur Ashe Stadium，status Completed；team1 Aryna Sabalenka（1 号种子，won=true）7-5 6-2 team2 Jessica Pegula（3 号种子）。",
+    "同一份 feed 的 setDurations 是 43 + 37 分钟，和 duration 字段 1:20 自洽（三个数互相印证）。",
+    "同场官方集锦：Aryna Sabalenka vs. Jessica Pegula Highlights | 2026 US Open Semifinal（1WAjW7l89YQ，US Open Tennis Championships 频道），冷开场从它接。",
+    "同一比赛日另一场半决赛（高芙 vs 莱巴金娜）在取数时仍是 In Progress——这条采访是当前比赛日刚打完的内容，不是库存。"
+  ],
+  "_notes": [
+    "文案与封面为第一版占位：runner 转写落库后按她实际说的话精修，走 metadata_only 路径重建 spec（不重新转写），定稿后再 render。",
+    "冷开场留空，由 attach_interview_lead_in.py 自动从同场官方集锦补窗口与双语解说字幕。"
+  ],
+  "cover": {
+    "frame_at": 30,
+    "zoom": 1.5,
+    "focus_y": 0.6,
+    "shot_type": "close_up",
+    "title": ["第一盘缠斗到5平", "第二盘只用了37分钟"],
+    "sub": "萨巴伦卡 · 美网半决赛赛后采访",
+    "tag": "2026 美网 · 赛后开麦",
+    "_why": "第一版占位帧，出片前按缩略图墙与成片逐帧核对人物、正面睁眼与清晰度后再定。"
+  },
+  "takeaway": {
+    "close": {
+      "point": "首盘缠斗到5平 她连下两局把节奏拿了回来",
+      "ask": "这场球的转折 你觉得在哪一局？"
+    }
+  },
+  "push": {
+    "auto": true,
+    "matchup": "萨巴伦卡 vs 佩古拉",
+    "score": "7-5 6-2",
+    "event": "",
+    "summary": "萨巴伦卡闯进美网决赛",
+    "lead": "萨巴伦卡7-5、6-2战胜佩古拉，闯进美网决赛。首盘缠斗43分钟，第二盘只用了37分钟。完整听她的赛后回答。"
+  },
+  "xhs": "🎾9.11 赛后开麦｜萨巴伦卡7-5 6-2 佩古拉，闯进美网决赛\n\n首盘打了43分钟，第二盘只用了37分钟。\n\n萨巴伦卡在阿瑟·阿什球场战胜3号种子佩古拉，全场用时1小时20分。第一盘两个人一路缠斗到5平，她在这之后连下两局拿走首盘；第二盘节奏彻底拉开，6-2结束战斗。\n\n走到话筒前，她谈了这场球。\n\n你觉得这场球的转折在哪一局？\n\n#网球时差 #赛后开麦 #萨巴伦卡 #美网 #佩古拉"
+}
