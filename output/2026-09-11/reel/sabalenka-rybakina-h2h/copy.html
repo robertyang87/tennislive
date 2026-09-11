@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>9.11 网球有故事 | 六次决赛萨巴伦卡赢两次</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>萨巴伦卡对莱巴金娜，美网决赛是她们第三次在大满贯决赛碰面
+
+十七次交手，萨巴伦卡十胜七负。
+可只要打到决赛，这笔账就反过来——六次决赛，她只赢过两次。
+
+两次大满贯决赛，正好是这条线的两头。
+
+2023 年 1 月 28 日，墨尔本。第四个冠军点落地，萨巴伦卡甩开球拍躺倒在硬地上。4-6 6-3 6-4，打满三盘才拿下来。那一年她二十四岁，在这之前，一个大满贯都没有。决赛对手，莱巴金娜。
+
+三年后，同一块场地，同样是决赛。2026 年 1 月 31 日，决胜盘 3-3，莱巴金娜拿到破发点反超，最后 6-4 收尾。6-4 4-6 6-4——和三年前一样打满三盘，一样是决胜盘 6-4，只是这一次捧杯的换了人。那是莱巴金娜的第二个大满贯，离 2022 年温网那一个隔了三年半。
+
+中间这几年也没闲着。
+
+2025 年 6 月柏林，草地 1/4 决赛。莱巴金娜的赛点在记分条上一路数到第五个，萨巴伦卡一个都没给，7-6(6) 3-6 7-6(6)，两个抢七把这场球拖了回来。
+
+五个月后的利雅得，年终总决赛的决赛。莱巴金娜 6-3 7-6 拿下生涯第一个年终总冠军——第二盘那个抢七，萨巴伦卡一分都没拿到。
+
+现在是第十八次。
+
+北京时间 9 月 13 日凌晨四点，纽约。萨巴伦卡在这里连赢了两年，想拿第三个；莱巴金娜二十七岁，第一次打进美网决赛。世界第一对世界第二。
+
+第三次大满贯决赛，你押谁？
+
+#网球时差 #美网 #萨巴伦卡 #莱巴金娜 #网球有故事</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>第三次大满贯决赛，你押谁？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
