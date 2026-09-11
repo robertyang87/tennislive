@@ -1,0 +1,67 @@
+{
+  "film_sha256": "28bc93952cb5290a4a1fa0f468cb398bf3a099dd27d75a61c0975c0362db62c3",
+  "film_seconds": 186.861,
+  "production_sla": {
+    "version": 2,
+    "pipeline": "interview-clip",
+    "slug": "rybakina-gauff-us-open-2026-sf-interview",
+    "received_at": "2026-09-11T04:06:51Z",
+    "artifact_ready_at": "2026-09-11T04:13:30Z",
+    "elapsed_seconds": 399.74,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "28bc93952cb5290a4a1fa0f468cb398bf3a099dd27d75a61c0975c0362db62c3",
+    "spec_sha256": "d59767814781c7c63d1cc9c4d9c42c588453b8085785510138864a44e5959cc2",
+    "run_id": "34560964359",
+    "stage_events": [
+      {
+        "stage": "preflight",
+        "at": "2026-09-11T04:07:42Z",
+        "run_id": "34560964359"
+      },
+      {
+        "stage": "asr_verify",
+        "at": "2026-09-11T04:09:09Z",
+        "run_id": "34560964359"
+      },
+      {
+        "stage": "render",
+        "at": "2026-09-11T04:10:49Z",
+        "run_id": "34560964359"
+      }
+    ],
+    "render_seconds": 161.74,
+    "pre_render_seconds": 238.0
+  },
+  "production_stage_events": [
+    {
+      "stage": "preflight",
+      "at": "2026-09-11T04:07:42Z",
+      "run_id": "34560964359"
+    },
+    {
+      "stage": "asr_verify",
+      "at": "2026-09-11T04:09:09Z",
+      "run_id": "34560964359"
+    },
+    {
+      "stage": "render",
+      "at": "2026-09-11T04:10:49Z",
+      "run_id": "34560964359"
+    },
+    {
+      "stage": "qc",
+      "at": "2026-09-11T04:13:31Z",
+      "run_id": "34560964359"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-11T04:13:32Z",
+      "run_id": "34560964359"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/interview-rybakina-gauff-us-open-2026-sf-interview/rybakina-gauff-us-open-2026-sf-interview.mp4?v=28bc93952cb5290a",
+  "video_bytes": 62695219,
+  "release_asset_digest": "sha256:28bc93952cb5290a4a1fa0f468cb398bf3a099dd27d75a61c0975c0362db62c3",
+  "qc_attestation_sha256": "691468a438c2565efde4a08c1ad2b286c8c5f0d4716ad586fbeee4e814f570b1"
+}

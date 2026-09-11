@@ -1,0 +1,56 @@
+{
+  "status": "pass",
+  "checked_at": "2026-09-11T04:13:31Z",
+  "auditor": "opencv-haar-v1",
+  "expected_subject": "莱巴金娜",
+  "identity_evidence": "L0-bound spec subject + same-source frame_at",
+  "spec_sha256": "d59767814781c7c63d1cc9c4d9c42c588453b8085785510138864a44e5959cc2",
+  "poster_sha256": "45c7ae05f7fad83c69da413c3a43a02de6c41c56a8e4353b2ddce6b1260d46d8",
+  "thresholds": {
+    "close_up_zoom": 1.5,
+    "face_height_ratio": 0.08,
+    "close_up_face_height_ratio": 0.14,
+    "face_area_ratio": 0.01,
+    "face_sharpness": 45.0,
+    "face_contrast": 32.0,
+    "eyes": 2
+  },
+  "result": {
+    "poster": {
+      "decodable": true,
+      "format": "JPEG",
+      "width": 1080,
+      "height": 1440,
+      "photo_region": [
+        0,
+        150,
+        1080,
+        810
+      ]
+    },
+    "face": {
+      "detector": "frontal-default",
+      "box": [
+        443,
+        309,
+        223,
+        223
+      ],
+      "detected_faces": 1,
+      "eyes": 2,
+      "face_height_ratio": 0.27531,
+      "face_area_ratio": 0.05685,
+      "center_x_ratio": 0.51343,
+      "center_y_ratio": 0.33395,
+      "sharpness": 158.722,
+      "contrast": 123.0
+    },
+    "contract": {
+      "shot_type": "",
+      "frame_at": 141.2,
+      "zoom": 1.0,
+      "focus_y": 0.5
+    }
+  },
+  "issues": []
+}
