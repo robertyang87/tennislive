@@ -1,0 +1,67 @@
+{
+  "film_sha256": "7df0ad418f5ca227cce5db22e1f5cfaded85833d9052455aba8e418c31e38de2",
+  "film_seconds": 154.101,
+  "production_sla": {
+    "version": 2,
+    "pipeline": "interview-clip",
+    "slug": "sabalenka-pegula-us-open-2026-sf-interview",
+    "received_at": "2026-09-11T02:36:52Z",
+    "artifact_ready_at": "2026-09-11T02:43:17Z",
+    "elapsed_seconds": 385.648,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "7df0ad418f5ca227cce5db22e1f5cfaded85833d9052455aba8e418c31e38de2",
+    "spec_sha256": "ba665762f53fb48b8cba4cd173540fded33dd9ffc7dd9e362da50f1eeb1d9033",
+    "run_id": "34555286330",
+    "stage_events": [
+      {
+        "stage": "preflight",
+        "at": "2026-09-11T02:37:46Z",
+        "run_id": "34555286330"
+      },
+      {
+        "stage": "asr_verify",
+        "at": "2026-09-11T02:39:30Z",
+        "run_id": "34555286330"
+      },
+      {
+        "stage": "render",
+        "at": "2026-09-11T02:40:50Z",
+        "run_id": "34555286330"
+      }
+    ],
+    "render_seconds": 147.648,
+    "pre_render_seconds": 238.0
+  },
+  "production_stage_events": [
+    {
+      "stage": "preflight",
+      "at": "2026-09-11T02:37:46Z",
+      "run_id": "34555286330"
+    },
+    {
+      "stage": "asr_verify",
+      "at": "2026-09-11T02:39:30Z",
+      "run_id": "34555286330"
+    },
+    {
+      "stage": "render",
+      "at": "2026-09-11T02:40:50Z",
+      "run_id": "34555286330"
+    },
+    {
+      "stage": "qc",
+      "at": "2026-09-11T02:43:18Z",
+      "run_id": "34555286330"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-11T02:43:19Z",
+      "run_id": "34555286330"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/interview-sabalenka-pegula-us-open-2026-sf-interview/sabalenka-pegula-us-open-2026-sf-interview.mp4?v=7df0ad418f5ca227",
+  "video_bytes": 69293827,
+  "release_asset_digest": "sha256:7df0ad418f5ca227cce5db22e1f5cfaded85833d9052455aba8e418c31e38de2",
+  "qc_attestation_sha256": "79727bedf93b7ba8df9e1e1893217c92ab952fb87ddf2d9579c355b41eb730dc"
+}
