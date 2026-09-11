@@ -1,0 +1,283 @@
+{
+  "slug": "rybakina-gauff-us-open-2026-sf",
+  "_column": "reel",
+  "layout": "band",
+  "scorebox": [
+    104,
+    888,
+    700,
+    978
+  ],
+  "_scorebox_why": "⚠️ **不是抄别条片子的**（CLAUDE.md 2026-09-10：板宽由这一场打了几盘、转播那一版图形多宽决定）。拿本场 probe 的 `score_*.jpg` 逐格量的（74 个样本，navy 掩码找右缘再除以 520/806 换回源片像素）：**583 / 618 / 655** 三档，间隔约 35px，正是「每打完一盘 +38px」——三盘三档，最宽 655。取 700 = 655 + 余量。\n⚠️ probe 自己猜的是 `104,888,616,978`，**616 正好落在第二盘那一档，决胜盘的 655 会被截断**——那就是「窄了必炸」（`scan_mask` 报 exceeds source box）。\n⚠️ 另有一簇 808~812（14 个样本）**不是板**：那些格子 navy 占比 0.80~0.95，整条扫描带全是深蓝，是近景贴 J.P.Morgan 深蓝挡板和末段的全屏图形（时刻集中在 166.5~202.5s 的赛后段）。\n上下沿 888/978 和本届美网已发的几条一致。右缘只是兜底，真正的右缘由 `resolve_board_insets` 每段现量。",
+  "tts_backend": "edge",
+  "_tts_backend_why": "仓库的 `AZURE_SPEECH_KEY` 自 2026-09-03 起被 Azure 401 拒，最近八条 spec 全部写着 `edge`。这一条退回 edge 零代价：没用 `voice.style`，也没用 `lead_pause`；本地 `--check-narration` 在这台沙箱跑的就是 edge-tts，量到的余量直接就是成片的真实情况。钥匙修好之后删掉这两个键就回到 Azure。",
+  "source_url": "https://www.youtube.com/watch?v=Uokrq2th_Ew",
+  "_source": "美网官方 YouTube 频道 `US Open Tennis Championships`（oEmbed `author_name` 权威），标题 `Coco Gauff vs. Elena Rybakina Highlights | 2026 US Open Semifinal`，2026-09-11 上传。probe 实测 202.97 秒 / 1920×1080 / 29.97fps。\n画面自证四处：① 记分条全程 `4 GAUFF USA / 2 RYBAKINA KAZ`（4 和 2 是种子号）；② 34.5s 全屏图形 `WOMEN'S SINGLES | SEMIFINAL · ARTHUR ASHE STADIUM` 首盘 `6 / 3`；③ 114.5s 同一版图形 `6 4 0 / 3 6 0`（进决胜盘）；④ 194.5~198.5s 终局图形 `6 4 4 / 3 6 6`。\n⚠️ 末尾 199.87s 起是 US Open 的订阅片尾板（`silent_audio` 199.93~202.97 印证），一帧都没收。\n⚠️ 168~178s 是赛后挥手和网前拥抱，**没有场上采访**——「赛场之上不要赛后采访」那条不受影响。",
+  "_sources_why": "账号所有者另给了一条 https://youtu.be/hp98Ok5E_5k（「可以加上这个」），逐条量完**没有采用，因为它一帧新画面都没有**：它是主源 140–199s 的另一个剪法，时间轴偏移恒为约 140 秒。三条证据——① 字幕逐句相同（clip2 25.68s『books her ticket to a first US Open final』＝主源 164.96s；clip2 48.56s『2 hours and 8 minutes』＝主源 191.28s；clip2 56.48s『crowd was firmly behind Coco』＝主源 195.28s）；② 缩略图墙逐格对得上（clip2 0.5–20.5s 的赛点回合和主源 140.5–160.5s 是同一分，记分条都写着 MATCH POINT · GAUFF 6 4 4 15 / RYBAKINA 3 6 6 40；clip2 26.5s 她在 CHASE 背板前的特写＝主源 164.5s；clip2 30.5s 高芙摸头（Emirates）＝主源 168.5s；clip2 34.5s 网前拥抱＝主源 174.5s）；③ clip2 全长 64.04s，主源同一段 140–199.87s 是 59.9s，而主源多出片尾板之前那一截。加进来只会把同一段画面放两遍，撞上「不要平白叙事」。probe 产物仍在 output/2026-09-11/reel/rybakina-gauff-us-open-2026-sf-clip2/ 可复核。",
+  "cover": {
+    "matchup": [
+      {
+        "name": "莱巴金娜",
+        "name_en": "Elena Rybakina",
+        "country": "KAZ",
+        "rank": 2
+      },
+      {
+        "name": "高芙",
+        "name_en": "Coco Gauff",
+        "country": "USA",
+        "rank": 4
+      }
+    ],
+    "_rank_why": "两人当期排名同一期、同一个权威源：WTA 官方 `players/ranked`（`rankedAt=2026-08-31T00:00:00Z`）——Elena Rybakina 第 2（8141 分）、Coco Gauff 第 4（6704 分）。画面印证：记分条名字前的种子号就是 `2` 和 `4`（114.5s 全屏图形同样是 `2 ELENA RYBAKINA` / `4 COCO GAUFF`）。",
+    "_heat_why": "②档：两人都在世界前 20（第 2 和第 4），而且这是大满贯半决赛——「半决赛级别的都要做」那条本身就够格。另外莱巴金娜两天前（9/9 打败郑钦文那场）已经锁定新的 WTA 世界第一，终结萨巴伦卡 99 周在位；这一场她第一次打进美网决赛，决赛对手正是被她取代的萨巴伦卡。",
+    "winner": "莱巴金娜",
+    "result": "3-6 6-4 6-4",
+    "_result_why": "赢家视角，三处印证：① flashscore 当日表 `EcWMiPz8` `AE÷Gauff C.`(home) / `AF÷Rybakina E.`(away)，`BA/BB=6/3 BC/BD=4/6 BE/BF=4/6`，`AG÷1 / AH÷2` 盘数 1:2，`AS÷2` 赢家是 away 莱巴金娜；② 源片 194.5~198.5s 终局全屏图形 `COCO GAUFF 6 4 4 / ELENA RYBAKINA 3 6 6`；③ 外部源交叉：搜索结果一致报「Rybakina defeated Gauff 3-6, 6-4, 6-4 in the semifinal」。\n三盘都是局数分出的，没有抢七（`df_sui_1` 的 `IG/IH` 是 6/3、4/6、4/6，都不是 7-6）。",
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "莱巴金娜",
+    "topic": "美网半决赛 · 莱巴金娜 vs 高芙",
+    "_topic_why": "按 2026-09-03「封面左上角的副标题不要写球场号，写对阵双方」。球场（Arthur Ashe）印在比分板头一行。",
+    "hook": "先丢一盘她翻了回来\n全场只多赢六分",
+    "_hook_why": "两行框住的是**整场**（2026-08-31 那条：不是某一个时刻）：第一行是这场球的形状（先丢一盘再翻回来），第二行是它有多险——全场 170 分她只多赢 6 分（88:82，`df_mh_1` 总分）。\n⚠️ 不重复比分板：比分板就在钩子正下方印着 `莱巴金娜 3-6 6-4 6-4 高芙`，所以钩子里不写盘分。\n⚠️ 不写身份：排名（第 2 / 第 4）已经印在比分板的名条上，钩子再写一遍是白占那 10 个字。\n最长行 9 个字符（`先丢一盘她翻了回来`），两行——`hook_title_px` 给 94px，过 `SOLO_HOOK_MAX_LINES=2`。",
+    "portrait": {
+      "image": "assets/reel/rybakina-us-open-2026-sf.jpg",
+      "fit": "cover",
+      "focus": 0.476,
+      "focus_y": 0.0,
+      "zoom": 1.0,
+      "_photo_why": "USA TODAY 每日图集这一场的实拍（`find_cover_photo.py --player Rybakina --event \"US Open\" --date 2026-09-10`），原图 2173×1440，署名 `Geoff Burke, IMAGN IMAGES via Reuters`。莱巴金娜正手击球的近景特写：球就在拍前、脸是画面主体、表情读得出、眼睛睁开（2026-08-21 那条），背景是美网蓝底 `us open` 板，赛事自证。四道闸门逐条过：时间地点人物对得上、在比赛中、近景有冲击力、相机原图。\n⚠️⚠️ **这一辑的图片说明和图整体错位一位**——挂着 `Kazakhstan's Elena Rybakina in action` 那张打开是高芙（黄色 New Balance 球衣），而这张的说明写的是 `Coco Gauff looks on`。9 张全下下来拼一面墙才分得出：真正的莱巴金娜只有 2 张（浅肤金发辫、Yonex/IZI 黄绿上衣、白帽），另一张是入场背包照，过不了第 2 道闸。**说明自带四要素、看着完全可信，仍然要打开看。**\n⚠️ 同一时刻 WTA `photo-resources`、AP 通讯社、美网官方图片接口这一场**都还没发**（夜场的官方图约 24 小时才上线，莱巴金娜 2026 年在美网官方接口里有 68 条，只是没有这一场）——那是「还没发」不是「没有」。",
+      "_fit_why": "原图 2173×1440，铺 1080×1440 正好 **1.00x**（竖向不放大，`cover_photo_problem` 的地板就是 1.00），所以不用写 `_low_res_why`。竖向正好铺满 → `focus_y` 在 zoom=1.0 时是死的，只有横向可调。\n`focus 0.476` 把她的脸放在画布中心：脸在原图 x≈1035/2173。渲出来量过，脸落在输出 y 196~501——台头带（0~170）之下、钩子带（790~1100）之上，两条带子都躲开了（2026-08-31「挑封面之前先把钩子那条带叠上去」）。"
+    },
+    "scoreboard": {
+      "court": "Arthur Ashe Stadium",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%20%222%3A08%3A00%22%2C%20%22source%22%3A%20%22%E8%BD%AC%E6%92%AD%E8%A7%A3%E8%AF%B4%20191.28s%20%E5%8E%9F%E8%AF%9D%20two%20hours%20and%20eight%20minutes%EF%BC%9Bflashscore%20%E5%BD%93%E6%97%A5%E8%A1%A8%20AD%3D1789088400%20%2F%20AO%3D1789096130%20%E7%9B%B8%E5%B7%AE%207730%20%E7%A7%92%20%3D%202%3A08.8%22%7D",
+        "field": "duration"
+      },
+      "_court_why": "画面自证：源片 114.5s 和 194.5~198.5s 的全屏图形都印着 `WOMEN'S SINGLES | SEMIFINAL` 下面一行 `ARTHUR ASHE STADIUM`（裁出来放大读过）。美网女单半决赛本来就排在阿瑟·阿什球场。",
+      "_duration_why": "**2:08**，两个独立源一致：① 转播解说 191.28s 原话 `recovers from a set down to prevail in two hours and eight minutes`；② flashscore 当日表的时间戳 `AD÷1789088400`（开赛）和 `AO÷1789096130`（结束）相差 7730 秒 = 128.8 分 = 2:08.8。\n⚠️ flashscore `df_sui_1` 的分盘用时是 0:39 + 0:44 + 0:47 = 2:10，比上面两个源多约 2 分钟——CLAUDE.md 早记过「比赛用时不要只信 flashscore，它偏长」，这次又是同一个方向。美网官方 feed 在这台沙箱恒 403，拿不到 `setDurations` 那一份；**转播自己报的那个数是最硬的**，取 2:08。"
+    }
+  },
+  "_match": {
+    "status": "result_verified",
+    "source": "flashscore_points",
+    "source_id": "EcWMiPz8",
+    "flashscore_id": "EcWMiPz8",
+    "participants": [
+      "高芙",
+      "莱巴金娜"
+    ],
+    "set_scores_home_away": [
+      [
+        6,
+        3
+      ],
+      [
+        4,
+        6
+      ],
+      [
+        4,
+        6
+      ]
+    ],
+    "tiebreaks_home_away": [
+      null,
+      null,
+      null
+    ],
+    "winner": "莱巴金娜",
+    "loser": "高芙",
+    "winner_result": "3-6 6-4 6-4",
+    "loser_result": "6-3 4-6 6-4",
+    "_direction_why": "flashscore `AE÷Gauff C.` 是 home、`AF÷Rybakina E.` 是 away；`AG÷1 / AH÷2` 盘数 1:2；`AS÷2` 直接指明赢家是 away。源片 194.5~198.5s 的终局全屏图形 `COCO GAUFF 6 4 4 / ELENA RYBAKINA 3 6 6` 逐格读过。",
+    "_order_why": "⚠️ `participants` 跟 flashscore 的 home/away（高芙是 home），**和 `cover.matchup` 正好相反**——`participants[0]=高芙` 对齐 `set_scores_home_away[0]=[6,3]`（home 首盘 6 局）。而 `stats.a` 跟的是 `cover.matchup[0]`＝莱巴金娜，所以那一块是把 `match_stat_hooks` 吐出来的 a/b **对调**抄的。",
+    "_tiebreak_why": "三盘都是局数分出的，一盘抢七都没有（`df_sui_1` 的 `IG/IH` 是 6/3、4/6、4/6）。"
+  },
+  "stats": {
+    "a": {
+      "aces": 5,
+      "df": 2,
+      "winners": 22,
+      "ue": 39,
+      "first_in": 42,
+      "first_won": 32,
+      "first_total": 76,
+      "second_total": 34,
+      "second_won": 19,
+      "bp_conv": 4,
+      "bp_chances": 6,
+      "pts_won": 88,
+      "pts_total": 170,
+      "headshot": "assets/players/headshots/wta-324166.jpg"
+    },
+    "b": {
+      "aces": 4,
+      "df": 4,
+      "winners": 20,
+      "ue": 32,
+      "first_in": 55,
+      "first_won": 32,
+      "first_total": 94,
+      "second_total": 39,
+      "second_won": 25,
+      "bp_conv": 3,
+      "bp_chances": 5,
+      "pts_won": 82,
+      "pts_total": 170,
+      "headshot": "assets/players/headshots/wta-328560.jpg"
+    },
+    "_source": "flashscore `df_st_1_EcWMiPz8`，由 `tools/match_stat_hooks.py --stats-block` 机器抄出（不是手抄）。大满贯女子这个 feed 一直有 Winners / Unforced errors。",
+    "_order_why": "⚠️ 工具吐出来的 `a` 是 flashscore 的 home＝**高芙**、`b` 是 away＝**莱巴金娜**，而 `stats.a` 必须跟 `cover.matchup[0]`＝莱巴金娜（版式顺序，不是 feed 顺序）——所以这里是**对调**之后填的。自证：`a.headshot` 是 `wta-324166`（莱巴金娜，和封面工具报的 WTA id 一致），`b.headshot` 是 `wta-328560`（高芙）。"
+  },
+  "_hit_data": "`tools/match_stat_hooks.py EcWMiPz8` 跑出来 9 条候选，挑进文案的是前两条：\n① **总分差**：全场 170 分，莱巴金娜 88、高芙 82，**只多赢 6 分**（`df_mh_1` 总分）——进了封面钩子第二行和小红书首段。\n② **一发得分率逐盘交叉**：莱巴金娜 69% → 71% → **87%**，高芙 73% → 54% → **52%**（`df_st_1` 分盘）——这是「她是怎么赢的」的技战术归因，进了第 ④ 段和第 ⑨ 段旁白。\n没用上的：破发点兑现（高芙 3/5、莱巴金娜 4/6）、连续保发（6 / 5）、交手记录（含本场 2:2，也就是本场之前高芙 2:1 领先）、近况（莱巴金娜近 5 场全胜）。",
+  "_no_repeat": "同栏目的邻居是 `zheng-rybakina`（同一届美网 1/4 决赛，9/9，莱巴金娜 3-6 6-1 6-4 逆转郑钦文）。那条是**从郑钦文的视角**讲的：她的七连胜、她错失的破发点、她的双误——**一个字都没提莱巴金娜锁定世界第一**，所以这条讲「新科世界第一」不算重讲。\n⚠️ 但「上一轮逆转郑钦文」那件事那条铺开讲过，这条**一句都不提**，连「她连着两轮都是先丢一盘再逆转」这个很好用的对照也没写进旁白。",
+  "_durations": "分盘用时 0:39 / 0:44 / 0:47（flashscore `df_sui_1` 的 RC/RD/RE）。第 ② 段旁白说的「开场四十分钟」就是首盘那 39 分钟。⚠️ 全场用时不取这三个数的和（2:10），取 2:08，理由见 `cover.scoreboard._duration_why`。",
+  "_turning_points": "逐分 `df_mh_1` 排出来的走势（HC=高芙局数 / HE=莱巴金娜局数，都是「这一局打完之后」的比分）：\n**第一盘** 高芙 6-3：3-2 之后高芙在第 6 局破发（`HH÷2`），5-2、6-3 收下（末局带 `|B2|` 盘点）。\n**第二盘** 莱巴金娜 6-4：她 1-3 先破（`HH÷1`），高芙 3-4 回破（`HH÷2`，两个 `|B1|`），末局 4-6 她再破发拿下（`|B1| |B2|`）。\n**决胜盘** 莱巴金娜 6-4，最后三局连续破发：\n  · 3-5 —— 莱巴金娜领先，轮到她**发球胜赛局**，40-30 被高芙拿到破发点（`|B1|`）并破掉 → 4-5。记分条 128.5~134.5s 印着 `BREAK POINT` ＋ `6 4 3 [40] / 3 6 5 [30]`，发球指示在 RYBAKINA 行。\n  · 4-5 —— 换高芙发球，莱巴金娜 15-40 拿到**两个赛点**（`|B1| |B3|`），第一个就收下 → 4-6。记分条 140.5~160.5s 印着 `MATCH POINT` ＋ `6 4 4 [15] / 3 6 5 [40]`。\n⚠️ `df_mh_1` **不列制胜的那一分**，所以最后一局只列到 `15:40`，之后那一分她赢了。",
+  "_turning_points_why": "全片的落点选在决胜盘最后两局：她先丢掉自己的发球胜赛局，再到对手发球局上破发收场。这一对（错失 → 换个地方拿下）就是钩子第一行「先丢一盘她翻了回来」在决胜盘里的回声，也是第 ⑧ 段和第 ⑨ 段旁白的骨架。",
+  "editorial": {
+    "mode": "match_review",
+    "hook": [
+      "先丢一盘她翻了回来",
+      "全场只多赢六分"
+    ],
+    "_hook_why": "这一栏和 `cover.hook` 必须逐字相同。理由见 `cover._hook_why`。",
+    "question": "先丢一盘、决胜盘又把自己的发球胜赛局送掉，莱巴金娜是靠什么把这场半决赛翻回来的？",
+    "thesis": "靠一发。三盘她的一发得分率是 69% → 71% → 87%，而高芙从 73% 一路掉到 52%——决胜盘两个人的一发几乎调了个个儿。所以哪怕全场 170 分她只多赢 6 分（88:82）、非受迫失误还比高芙多 7 个（39:32），最关键的那两局仍然是她说了算：3-5 自己的发球胜赛局被破之后，她立刻在高芙的发球局 15-40 拿到两个赛点，第一个就收下。",
+    "beats": [
+      "首盘 39 分钟 3-6 丢掉：高芙一发得分率 73%，第 6 局破发之后一路 6-3。",
+      "第二盘她的一发开始进去（71%），高芙掉到 54%；1-3 先破、被回破到 3-4 之后，末局再破发 6-4 扳平。",
+      "决胜盘 5-3 领先、发球胜赛局 40-30 被破 → 4-5；换高芙发球，15-40 两个赛点，第一个收下 6-4。决胜盘她的一发得分率 87%，全场最高的一盘。"
+    ],
+    "human_context": {
+      "angle": "她两天前（9/9 1/4 决赛胜郑钦文）就已经锁定新的 WTA 世界第一，终结萨巴伦卡 99 周在位——**这场半决赛不是她升第一的那场**；这场给她的是另一样东西：**生涯第一次打进美网决赛**。而决赛对手正是被她取代的那个世界第一萨巴伦卡。",
+      "facts": [
+        "WTA 官方 players/ranked（rankedAt 2026-08-31）：Rybakina 第 2（8141 分）、Gauff 第 4（6704 分）",
+        "转播解说 164.96s 原话：books her ticket to a first US Open final",
+        "转播解说 179.60s 原话：The final will be contested by the top two seeds on the women's side",
+        "转播解说 191.28s 原话：recovers from a set down to prevail in two hours and eight minutes",
+        "外部交叉：莱巴金娜 9/9 战胜郑钦文的 1/4 决赛即锁定世界第一，排名 9/14 正式生效；决赛对阵萨巴伦卡"
+      ],
+      "_angle_why": "⚠️ 转播那句 `the incoming world number one` 差一点被读成「赢下这场她成了世界第一」——去查才发现她 **9/9 就锁定了**，`incoming` 说的是排名下周一才生效。CLAUDE.md「写纪录先看它什么时候生效：这场创的，还是早就成立的」正是拦这一类：世界第一是**这场之前**就成立的（写成身份，一句带过），第一次进美网决赛才是**这场创的**（可以写「第一次」）。",
+      "sources": [
+        "https://global.flashscore.ninja/2/x/feed/f_2_0_0_en_1（当日表 EcWMiPz8：赛果、种子、开赛/结束时间戳）",
+        "https://global.flashscore.ninja/2/x/feed/df_st_1_EcWMiPz8（技术统计，含 Winners / Unforced errors）",
+        "https://global.flashscore.ninja/2/x/feed/df_mh_1_EcWMiPz8（逐分，破发点/盘点/赛点标记）",
+        "https://api.wtatennis.com/tennis/players/ranked?metric=SINGLES（rankedAt 2026-08-31：Rybakina 2、Gauff 4）",
+        "https://www.youtube.com/watch?v=Uokrq2th_Ew（美网官方集锦，转播解说原话 + 三处全屏图形自证）",
+        "https://www.usopen.org/en_US/news/articles/2026-09-09/elena_rybakina_defeats_zheng_in_2026_us_open_quarterfinals_to_clinch_no_1_ranking.html（她 9/9 就锁定世界第一）",
+        "https://sports.yahoo.com/articles/world-no-1-elena-rybakina-031143154.html（3-6 6-4 6-4 赛果 + 首次进美网决赛的外部交叉）"
+      ]
+    }
+  },
+  "topbar": {
+    "line1": "2026 美网 女单半决赛",
+    "line2": "莱巴金娜 3-6 6-4 6-4 高芙"
+  },
+  "push": {
+    "summary": "莱巴金娜先丢一盘逆转高芙",
+    "_summary_why": "主语（莱巴金娜）＋ 一层铺垫（先丢一盘）＋ 动词收尾（逆转高芙），12 个字位。按 2026-08-20「一句只留一层铺垫，别把代词插进原本连读的节奏里」：铺垫只有「先丢一盘」一层，「逆转」前面没有插代词。哪一站交给 `lead` 第一句。",
+    "lead": "美网女单半决赛，阿瑟·阿什球场。世界第二莱巴金娜 3-6 6-4 6-4 逆转世界第四高芙，两小时零八分，生涯第一次打进美网决赛。\n首盘 39 分钟就 3-6 丢掉。转折在一发：三盘她的一发得分率 69%、71%、87%，高芙从 73% 一路掉到 52%。\n决胜盘最后三局连着破发——她 5-3 领先、自己的发球胜赛局 40-30 被破回 4-5；换高芙发球，15-40 她拿到两个赛点，第一个就收下。\n全场 170 分她只多赢 6 分（88:82），非受迫失误还比高芙多 7 个。决赛对手是萨巴伦卡——两天前的 1/4 决赛之后，莱巴金娜已经锁定接替她的世界第一。",
+    "auto": true
+  },
+  "segments": [
+    {
+      "start": 158.0,
+      "end": 165.4,
+      "narration": "",
+      "score_inset": true,
+      "crosses_cut": "跨 161.23 一个切点——那一刀正是赛点落地的那一帧，两边是同一件事（这一分的最后几拍 / 她的反应），死球 161.26 和它差 0.03 秒互相印证。",
+      "_ending_payoff_required": true,
+      "_why": "**第①格：全片最强的一格。** 赛点那一分的最后几拍 → 球落地 → 她转身双手握拳（162.5s 那格，背景 CHASE 板）。不配旁白，靠现场声。记分条此时是 `MATCH POINT 6 4 4 [15] / 3 6 5 [40]`。\n⚠️ 后段冷开场：正文第 ⑨ 段（141.14→161.26）＋ 第 ⑩ 段（161.26→165.47）把 158.0→165.4 整段重新走了一遍，`ending_payoff_problem` 要的就是这个覆盖关系。",
+      "fit": "crop"
+    },
+    {
+      "start": 29.13,
+      "end": 36.64,
+      "narration": "开场四十分钟，莱巴金娜先丢了一盘。此前三次交手，高芙赢了两次。",
+      "score_inset": false,
+      "_score_inset_why": "32.5~36.5 这四格板都不在画面里（全屏图形和她坐着的近景），`board_present_spans` 现量也收不到——整段不贴。",
+      "_why": "第②句给落点。窗口 29.13（死球）→ 36.64（死球），一个镜头内（切点 28.18~36.64）：28.5/30.5s 阿瑟·阿什球场的全景 → 34.5s 首盘结束的全屏图形（`WOMEN'S SINGLES | SEMIFINAL · ARTHUR ASHE STADIUM`，`COCO GAUFF 6 / ELENA RYBAKINA 3`）→ 36.5s 高芙近景。「四十分钟」＝首盘用时 0:39（`df_sui_1` 的 `RC`）。\n⚠️ **主语必须写成「莱巴金娜」不能写「她」**：这一段两格画面上都是高芙，写「她先丢了一盘」会被读成高芙丢的——CLAUDE.md「整句旁白压在对手身上」那条。这是 `preview_segments_local` 第二遍（旁白定稿后）才抓出来的，`--dry-run` 和全量测试都不出声。\n⚠️ 末句的 H2H 配着高芙的近景讲「高芙赢了两次」，话和画面对得上。数据出处：`match_stat_hooks` 的 `[交手记录] Gauff C. 2 : 2 Rybakina E.（含本场）`——**含本场**，所以本场之前是高芙 2:1 领先，写「三次交手高芙赢了两次」。",
+      "fit": "crop"
+    },
+    {
+      "start": 2.0,
+      "end": 12.91,
+      "narration": "北京时间九月十一号上午九点，美网女单半决赛。莱巴金娜两天前刚锁定世界第一，对面是世界第四高芙。",
+      "score_inset": true,
+      "_why": "第③格给坐标。窗口两端 2.0 / 12.91 既是切点也是死球，完整一个镜头。\n⚠️ 开球时刻按 2026-08-17「只说个大概不报到分」：开赛 09:00（北京），分钟落在 0~9 档，说「上午九点」。美东是 9/10 21:00 的夜场。\n⚠️「锁定世界第一」是精确说法——她 9/9 的 1/4 决赛就锁定了，排名 9/14 生效，不是这一场赢来的。",
+      "fit": "crop"
+    },
+    {
+      "start": 38.5,
+      "end": 48.83,
+      "narration": "第二盘她的一发开始进去了。高芙的一发得分率从百分之七十三掉到百分之五十四。而这是高芙的主场。",
+      "score_inset": true,
+      "_why": "第二盘开始的底线回合。技战术归因的第一半（`_hit_data` 的第②条）。\n⚠️ 段尾切在镜头边界 48.83（scene_cut），不是切在死球 50.05 上——50.05 落在**下一个**镜头（换边走动）里，收进来就跨切点了。CLAUDE.md「窗口本来就该切在源片自己的镜头边界上」。\n⚠️ 百分比按 2026-08-16 写「百分之七十三」不写「七成三」。\n⚠️ 末句「而这是高芙的主场」是语境不是数据（dry-run 报中段 88% 在报数据），而且正好补上这一段 dry-run 报的「偏空」。有据：转播 195.28s 原话 `So this crowd was firmly behind Coco Gauff understandably`。",
+      "fit": "crop"
+    },
+    {
+      "start": 91.64,
+      "end": 100.6,
+      "narration": "这一局是她的盘点。六比四，她把这一盘拿了回来，一盘平。第二盘她多破了一个发球局。",
+      "score_inset": true,
+      "_why": "第二盘的盘点长回合（90.5~100.5s 记分条一直挂着 `SET POINT` 黄标）。两端 91.64 是切点、100.6 在切点 100.63 之前。\n⚠️ 段尾没有切在死球 100.7 上——它比切点 100.63 晚 0.07 秒（记分条翻牌滞后于镜头切换，CLAUDE.md「比分板会滞后」），收到 100.7 就跨切点了，所以收在 100.6。",
+      "fit": "crop"
+    },
+    {
+      "start": 110.23,
+      "end": 116.32,
+      "narration": "一盘平，进决胜盘。这一盘两个人谁也没能拉开。",
+      "score_inset": false,
+      "_score_inset_why": "102.5~114.5 这一段板整个不在画面里（高芙近景、换边、全屏图形），只有 116.5 那一格板刚回来——整段基本没板，写 false；写 true 的话会把换边时的球场画面当板贴回左下。",
+      "_why": "换边 ＋ 114.5s 的全屏图形（`6 4 0 / 3 6 0`，进决胜盘的自证）。110.23 是切点，116.32 是死球。",
+      "fit": "crop"
+    },
+    {
+      "start": 118.5,
+      "end": 128.93,
+      "narration": "决胜盘前六局各自保发。三比三之后她连下两局，五比三——发球胜赛局就在眼前。",
+      "score_inset": true,
+      "_why": "决胜盘从 0-0 走到 3-5 的回合（记分条 120.5s `6 4 2 / 3 6 2`、128.5s `6 4 3 / 3 6 5`）。两端 118.5 / 128.93 既是切点也是死球。",
+      "fit": "crop"
+    },
+    {
+      "start": 130.6,
+      "end": 136.44,
+      "narration": "可这一局她没守住。四十比三十，高芙破了回来。",
+      "score_inset": true,
+      "_why": "**转折点：她自己的发球胜赛局被破。** 130.6 是切点，136.44 是死球（切点 136.85 在它之后，不跨）。\n记分条 128.5~134.5s：`BREAK POINT` ＋ `6 4 3 [40] / 3 6 5 [30]`，发球指示在 RYBAKINA 行——她发球、高芙 40-30 拿到破发点并破掉。逐分 `HC÷4 HE÷5 HG÷2 HH÷2 HK÷1 HL÷…40:30 |B1|` 一致。",
+      "fit": "crop"
+    },
+    {
+      "start": 141.14,
+      "end": 161.26,
+      "narration": "五比四，高芙发球。十五比四十，莱巴金娜手里两个赛点。这一分两个人在底线反复拉扯，谁也不肯先下手。这是纽约，整座球场都站在高芙那边。决胜盘，莱巴金娜一发得分率百分之八十七，三盘里最高。",
+      "score_inset": true,
+      "crosses_cut": "跨 161.23 仅 0.03 秒——赛点落地的那一帧，和第①段同一个理由。",
+      "_why": "**全片的高潮：赛点上那一分。** 两端 141.14 / 161.26 **都是死球时刻**，中间是一个完整的镜头（切点 141.06 起、161.23 止），记分条整段不变（`MATCH POINT 6 4 4 [15] / 3 6 5 [40]`）——也就是这 20 秒都是同一分。\n⚠️ 按 2026-08-16「一个球说打了多少拍，不说多少秒」，旁白里**没有**说这一分打了多少秒；拍数在公开源里拿不到，所以只说「反复拉扯」这个看得见的事实。\n⚠️ 段尾 161.26 比切点 161.23 晚 0.03 秒（不到一帧），那正是赛点落地那一瞬。\n⚠️ 旁白补长是为了解 dry-run 报的哑场（20.1s 画面、原稿只估 14.6s，余量 5.49s 越过 4.0 门槛）。补进来的「整座球场都站在高芙那边」**有出处**：转播 195.28s 原话 `So this crowd was firmly behind Coco Gauff understandably`——它同时是中段唯一一句纯情绪的话。",
+      "fit": "crop"
+    },
+    {
+      "start": 161.26,
+      "end": 165.47,
+      "narration": "第一个赛点，她收下了。",
+      "score_inset": false,
+      "_score_inset_why": "162.5s 起板已经淡出（`board_present_spans` 的分界正好在这儿），整段不贴。",
+      "_why": "**兑现结局**：球落地 → 她转身握拳（162.5s）→ 平静下来（164.5s）。两端都是死球时刻。\n逐分最后一局列到 `15:40 |B1| |B3|` 为止（`df_mh_1` 不列制胜的那一分），所以她是在 40 那一档的**第一个**赛点上拿下的。",
+      "fit": "crop"
+    },
+    {
+      "start": 169.87,
+      "end": 180.0,
+      "narration": "两小时零八分，她第一次进美网决赛。对手萨巴伦卡，正是她刚取代的世界第一。这次她拿得下吗？",
+      "score_inset": false,
+      "_score_inset_why": "赛后段板早已淡出，整段不贴。",
+      "_why": "收尾：走向球网 → 网前拥抱（172.5~176.5s）→ 向观众致意。169.87 是死球，180.0 在切点 186.29 之前。\n⚠️ 赛后段没有「死球」可言（不再有回合），段尾按镜头内容收在拥抱之后、离场之前。\n⚠️ 末屏落在一问上（CLAUDE.md：收尾要落在一问上，不能停在数据上），而且这一问和封面那一问不重复——封面钩子讲的是这场怎么翻回来的，这一问指向决赛。\n⚠️「两小时零八分」的两个源见 `cover.scoreboard._duration_why`。",
+      "fit": "crop"
+    }
+  ],
+  "_editing_why": "段落边界全部落在 probe 实测的**死球时刻**或**镜头切点**上（第二轮 probe 带 `--scorebox 104,888,700,978` 量出 53 个 `point_ends`）。账号所有者 2026-08-19 重申过「剪辑的时候要等死球了再去切下一段视频，切记」，所以第一轮没给 scorebox、`point_ends` 为 0 之后又跑了一轮。\n11 段合计 98.4 秒。逐段都显式表态了 `score_inset`（美网带式版式的硬要求）——板在不在是逐格量出来的，不是看着定的：`0.5~20.5 / 38.5~52.5 / 58.5~70.5 / 74.5~100.5 / 116.5~134.5 / 140.5~160.5` 板在，其余（高芙近景、换边、三处全屏图形、赛后段）板不在。\n⚠️ 片尾板（199.87s 起，`silent_audio` 199.93~202.97 印证）一帧都没收。\n⚠️ 168~178s 是赛后挥手和网前拥抱，没有场上采访。"
+}
