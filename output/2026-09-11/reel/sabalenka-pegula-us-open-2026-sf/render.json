@@ -1,0 +1,79 @@
+{
+  "scoreboard_qc_sha256": "5241e8750dfd484455f4237aac38596464e4ac627e3e72156a34912e39015d43",
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 3.827,
+  "layout": "band",
+  "segments_seconds": 155.77,
+  "topbar": {
+    "line1": "2026 美网 女单半决赛",
+    "line2": "萨巴伦卡 7-5 6-2 佩古拉",
+    "start": 1.2,
+    "end": 156.97
+  },
+  "film_seconds": 160.827,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 6.96,
+    "2": 8.496,
+    "3": 6.648,
+    "4": 9.12,
+    "5": 6.72,
+    "6": 8.28,
+    "7": 8.184,
+    "8": 4.176,
+    "9": 8.544,
+    "10": 6.84,
+    "11": 2.928,
+    "12": 6.216,
+    "13": 6.888,
+    "14": 6.456,
+    "15": 2.88,
+    "16": 4.968,
+    "17": 4.344,
+    "18": 3.264,
+    "19": 3.864,
+    "20": 5.28
+  },
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "sabalenka-pegula-us-open-2026-sf",
+    "received_at": "2026-09-11T02:24:42Z",
+    "artifact_ready_at": "2026-09-11T02:32:00Z",
+    "elapsed_seconds": 438.748,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "60e9138e726bd2e0947959cf3047b928c75ffc467f93ecd3b4f449d2dca04210",
+    "spec_sha256": "3ccdffddccc2d88136841ca0e76e2cff8fad813b08dd1320df0bca4554b3e0c7",
+    "run_id": "34554506792",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-09-11T02:27:17Z",
+        "run_id": "34554506792"
+      }
+    ],
+    "render_seconds": 283.748,
+    "pre_render_seconds": 155.0
+  },
+  "film_sha256": "60e9138e726bd2e0947959cf3047b928c75ffc467f93ecd3b4f449d2dca04210",
+  "film_bytes": 84474072,
+  "qc_attestation_sha256": "37b0c0bfd9ca6f9da2d25a21637367e3dc63e772577a605a3d616683784e8781",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-09-11T02:27:17Z",
+      "run_id": "34554506792"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-11T02:32:01Z",
+      "run_id": "34554506792"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-sabalenka-pegula-us-open-2026-sf/sabalenka-pegula-us-open-2026-sf.mp4",
+  "video_bytes": 84474072
+}

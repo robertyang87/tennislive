@@ -143,7 +143,26 @@ def resolve_masks(sources,segments,outdir,spec_path,fps,tail):
         dest=Path(outdir)/'score_masks'/f'segment-{i+1:02d}.mkv'
         x0,y0,x1,y1=seg.score_inset
         seg.score_inset=(x0,max(0,y0-36),x1,y1)
-        record=scan_mask(sources[seg.source],seg.score_inset,seg.start,seg.end-seg.start+tail*seg.speed,dest,fps,seg.score_inset_windows,body_top=y0-seg.score_inset[1])
+        try:
+            record=scan_mask(sources[seg.source],seg.score_inset,seg.start,seg.end-seg.start+tail*seg.speed,dest,fps,seg.score_inset_windows,body_top=y0-seg.score_inset[1])
+        except RuntimeError as exc:
+            # 报错要说出**是哪一段**。`scan_mask` 只知道秒数，不知道段号，于是原来这
+            # 一句是一条没有主语的错——2026-09-11 为它白烧过一趟 render：日志里只有
+            # 「Scoreboard has no stable, majority-supported geometry」，而 21 段里开了
+            # 回贴的有 13 段，要挨个猜。它最常见的成因就一个：**近景贴着深蓝挡板时，
+            # 板的右缘和背景同色**，`right_edge()` 找不到那 8 列缺口（CLAUDE.md
+            # 「板不在和量不出右缘是两回事」记过）。出路也只有两条，一并写进来。
+            raise RuntimeError(
+                f"第 {i+1} 段（源片 {seg.start:.2f}→{seg.end:.2f}s）量不出记分板的几何：{exc}\n"
+                "最常见的成因是**这一段是近景、板右边就是同色的深蓝挡板**，"
+                "`right_edge()` 找不到板右缘那 8 列缺口。两条出路：\n"
+                f'  ① 整段都是这种画面 → 这一段写 "score_inset": false ＋ 一句 '
+                '"_score_inset_why"（代价是居中窗口会露出半条板、名字被裁掉，照实写进去）\n'
+                f'  ② 只有一段是 → 写 "score_inset_windows": [[a, b]] 把回贴收到板右缘'
+                "量得出来的那几秒（**边界要落在真实的 scene_cut 上**，落在镜头中间会看见板突然换样子）\n"
+                "⚠️ 别去调宽兜底右缘：右缘在色彩上根本不可分辨，调多宽都是猜，"
+                "而猜错就是把那面蓝墙当成板贴回左下。"
+            ) from exc
         seg.score_inset_mask=str(dest.resolve())
         record['segment']=i
         record['source_sha256']=source_hashes[seg.source]
