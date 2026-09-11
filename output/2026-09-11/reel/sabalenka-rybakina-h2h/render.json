@@ -1,0 +1,62 @@
+{
+  "scoreboard_qc_sha256": null,
+  "cover_seconds": 3.922,
+  "cover_narrated": true,
+  "outro_seconds": 3.827,
+  "layout": "full",
+  "segments_seconds": 120.1,
+  "topbar": null,
+  "film_seconds": 127.88,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 11.64,
+    "2": 9.648,
+    "3": 12.048,
+    "4": 11.904,
+    "5": 12.168,
+    "6": 13.584,
+    "7": 8.88,
+    "8": 14.328
+  },
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "sabalenka-rybakina-h2h",
+    "received_at": "2026-09-11T08:17:59Z",
+    "artifact_ready_at": "2026-09-11T08:24:22Z",
+    "elapsed_seconds": 383.409,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "17134d75c573c63778809cf110244745a17993c4956aec5a12425e7413b20f11",
+    "spec_sha256": "00e48604273e3209cbb7e46e607aa93988036d8518840adeb2ea9e1afc79aeec",
+    "run_id": "34578485065",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-09-11T08:20:20Z",
+        "run_id": "34578485065"
+      }
+    ],
+    "render_seconds": 242.409,
+    "pre_render_seconds": 141.0
+  },
+  "film_sha256": "17134d75c573c63778809cf110244745a17993c4956aec5a12425e7413b20f11",
+  "film_bytes": 84333403,
+  "qc_attestation_sha256": "95cf7a3ba44abef495d944df3843ee2cb6cc9aa8602537d170df9d5b2ea50150",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-09-11T08:20:20Z",
+      "run_id": "34578485065"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-11T08:24:23Z",
+      "run_id": "34578485065"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-sabalenka-rybakina-h2h/sabalenka-rybakina-h2h.mp4",
+  "video_bytes": 84333403
+}
