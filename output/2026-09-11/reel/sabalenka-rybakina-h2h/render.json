@@ -1,62 +1,65 @@
 {
   "scoreboard_qc_sha256": null,
-  "cover_seconds": 3.922,
+  "cover_seconds": 4.45,
   "cover_narrated": true,
   "outro_seconds": 3.827,
   "layout": "full",
-  "segments_seconds": 120.1,
+  "segments_seconds": 138.0,
   "topbar": null,
-  "film_seconds": 127.88,
+  "film_seconds": 146.32,
   "narration_voice": "zh-CN-YunjianNeural",
   "narration_rate": "+6%",
   "narration_backend": "edge-tts",
   "narration_seconds": {
-    "1": 11.64,
-    "2": 9.648,
-    "3": 12.048,
-    "4": 11.904,
-    "5": 12.168,
-    "6": 13.584,
-    "7": 8.88,
-    "8": 14.328
+    "0": 10.536,
+    "1": 10.392,
+    "2": 9.912,
+    "3": 10.872,
+    "4": 8.808,
+    "5": 11.616,
+    "7": 7.752,
+    "8": 7.272,
+    "9": 10.368,
+    "10": 7.944,
+    "11": 11.736
   },
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "sabalenka-rybakina-h2h",
-    "received_at": "2026-09-11T08:17:59Z",
-    "artifact_ready_at": "2026-09-11T08:24:22Z",
-    "elapsed_seconds": 383.409,
+    "received_at": "2026-09-11T11:19:28Z",
+    "artifact_ready_at": "2026-09-11T11:24:57Z",
+    "elapsed_seconds": 329.897,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "17134d75c573c63778809cf110244745a17993c4956aec5a12425e7413b20f11",
-    "spec_sha256": "00e48604273e3209cbb7e46e607aa93988036d8518840adeb2ea9e1afc79aeec",
-    "run_id": "34578485065",
+    "film_sha256": "6a53c2242ae19095213a95701261c91eb960ce60560901b4a58aa4f96d0afd65",
+    "spec_sha256": "b01b689a7dadec5470ec54507e7dd4a154610d8b1c15a21cdcfccce1fc518b0c",
+    "run_id": "34593448711",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-09-11T08:20:20Z",
-        "run_id": "34578485065"
+        "at": "2026-09-11T11:22:00Z",
+        "run_id": "34593448711"
       }
     ],
-    "render_seconds": 242.409,
-    "pre_render_seconds": 141.0
+    "render_seconds": 177.897,
+    "pre_render_seconds": 152.0
   },
-  "film_sha256": "17134d75c573c63778809cf110244745a17993c4956aec5a12425e7413b20f11",
-  "film_bytes": 84333403,
-  "qc_attestation_sha256": "95cf7a3ba44abef495d944df3843ee2cb6cc9aa8602537d170df9d5b2ea50150",
+  "film_sha256": "6a53c2242ae19095213a95701261c91eb960ce60560901b4a58aa4f96d0afd65",
+  "film_bytes": 103486187,
+  "qc_attestation_sha256": "998ae11a22348a144180422da687ecab77f7fc4b899592b5c09762f4f3fb5caa",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-09-11T08:20:20Z",
-      "run_id": "34578485065"
+      "at": "2026-09-11T11:22:00Z",
+      "run_id": "34593448711"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-09-11T08:24:23Z",
-      "run_id": "34578485065"
+      "at": "2026-09-11T11:24:58Z",
+      "run_id": "34593448711"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-sabalenka-rybakina-h2h/sabalenka-rybakina-h2h.mp4",
-  "video_bytes": 84333403
+  "video_bytes": 103486187
 }

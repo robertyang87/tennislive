@@ -12722,6 +12722,90 @@ def test_整屏证据卡的出图宽度要跟着画布算不能各写各的():
         card.build_html({"kind": "photo", "image": "x.png"})
 
 
+def test_对峙卡的绿给领先那一边而且条宽按比例():
+    """`kind: "versus"` 的全部意思是**哪一边领先，绿就在哪一边**。
+
+    来路：账号所有者 2026-09-11 看完 `facts` 版的 10-7 交手记录卡说「页面太单调了，
+    没有美感」。根子不是配色——是**这一屏讲的是对比，而版式一点对比感都没有**：
+    三个数字一样地竖着堆，「10-7」只是一个数，看不出 10 是谁的、7 是谁的。
+    versus 把每一行渲成一根按比例分成两段的满宽条，领先那一段给品牌绿，于是
+    「总账绿在左、决赛账绿在右」这个反转不用读字就看得见。
+
+    所以判据钉的是**绿落在哪一边**和**条有多宽**，不是「源码里有没有 versus 这个词」：
+    把 win/lose 判反，渲出来仍然是一张有条有数的卡，只是它在说反话。
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import render_evidence_card as card  # noqa: PLC0415
+
+    html = card.build_html({
+        "kind": "versus", "left": "萨巴伦卡", "right": "莱巴金娜",
+        "rows": [{"label": "十七次交手", "left": 10, "right": 7},
+                 {"label": "六次决赛", "left": 2, "right": 4},
+                 {"label": "两次大满贯决赛", "left": 1, "right": 1}],
+        "note": "WTA 官方交手记录"})
+    assert "萨巴伦卡" in html and "莱巴金娜" in html
+
+    # ⚠️ 按起始标签切，别用非贪婪的 `(.*?)</div></div>`——那会停在 vs-line 的
+    #    收尾上，切出来的块里一根条都没有，判据当场变成 IndexError（踩过）。
+    rows = html.split('<div class="vs-row">')[1:]
+    assert len(rows) == 3, f"三行应该各渲一块，实际 {len(rows)}"
+
+    # ① 条宽按各自占总数的比例——分界点的位置就是这一行的意思
+    wide = [[float(w) for w in re.findall(r'width:([\d.]+)%', r)] for r in rows]
+    assert abs(wide[0][0] - 10 / 17 * 100) < 0.05, f"10:7 的左段该占 58.82%，实际 {wide[0][0]}"
+    assert abs(wide[1][0] - 2 / 6 * 100) < 0.05, f"2:4 的左段该占 33.33%，实际 {wide[1][0]}"
+    assert abs(wide[2][0] - 50.0) < 0.05, "1:1 该正好中分"
+    for got in wide:
+        assert abs(sum(got) - 100.0) < 0.05, f"两段加起来要满宽，实际 {got}"
+
+    # ② 绿落在领先那一边：第一行左、第二行右、第三行两边都不绿
+    def segs(block):
+        return re.findall(r'<div class="vs-seg ([a-z]*)"', block)
+
+    assert segs(rows[0]) == ["win", "lose"], "总账 10-7 是左边领先，绿该在左"
+    assert segs(rows[1]) == ["lose", "win"], "决赛账 2-4 是右边领先，绿该跳到右"
+    assert segs(rows[2]) == ["tie", "tie"], "1-1 是平手，哪一边都不许绿"
+
+    # ③ 数字的颜色跟着同一个判断走（绿只给领先的那个数）
+    nums = [re.findall(r'<div class="vs-num ?([a-z ]*)">?', r) for r in rows]
+    assert "win" in nums[0][0] and "win" not in nums[0][1], "第一行该是左边的数发绿"
+    assert "win" not in nums[1][0] and "win" in nums[1][1], "第二行该是右边的数发绿"
+
+    # ④ 没有名字 / 没有 rows / 两边都是 0 都要当场报错——不是渲一张读不懂的卡出来
+    with pytest.raises(SystemExit) as noname:
+        card.build_html({"kind": "versus", "rows": [{"left": 1, "right": 2}]})
+    assert "left" in str(noname.value) or "名字" in str(noname.value)
+    with pytest.raises(SystemExit):
+        card.build_html({"kind": "versus", "left": "甲", "right": "乙", "rows": []})
+    with pytest.raises(SystemExit):
+        card.build_html({"kind": "versus", "left": "甲", "right": "乙",
+                         "rows": [{"label": "x", "left": 0, "right": 0}]})
+
+    # ⑤ 一屏只留一个强调色：品牌绿只出现在 CSS 的定义里，不许第二种亮色混进来
+    accents = set(re.findall(r'#[0-9a-fA-F]{6}', html))
+    assert card.GREEN in accents
+    assert accents <= {card.GREEN, card.INK, card.MUTED}, (
+        f"这一屏冒出了第三种颜色：{accents}")
+
+    # ⑥ 头像：给了就要真的渲出来，给一个不存在的路径要**当场报错**——
+    #    卡渲完是透明底 PNG，裂图在深绿底上就是一块空白，和「这条没给头像」
+    #    长得一模一样（账号所有者 2026-09-11：「这个页面把两人头像也加在上面」）。
+    withpic = card.build_html({
+        "kind": "versus", "left": "甲", "right": "乙",
+        "left_photo": "assets/players/headshots/wta-320760.jpg",
+        "right_photo": "assets/players/headshots/wta-324166.jpg",
+        "rows": [{"label": "x", "left": 1, "right": 2}]})
+    assert withpic.count('class="vs-photo"') == 2, "两个人各一张头像"
+    assert "wta-320760" in withpic and "wta-324166" in withpic
+    with pytest.raises(SystemExit) as nofile:
+        card.build_html({"kind": "versus", "left": "甲", "right": "乙",
+                         "left_photo": "assets/players/headshots/wta-000000.jpg",
+                         "rows": [{"label": "x", "left": 1, "right": 2}]})
+    assert "头像" in str(nofile.value)
+    # 不给头像照旧渲得出来（这两个字段是可省的）
+    assert 'class="vs-photo"' not in html
+
+
 def test_算不出标题时文案字数不许估得比真推送松():
     """dry-run 的正文字数必须和真推送量的是**同一段文字**。
 
