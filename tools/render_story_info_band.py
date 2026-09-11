@@ -68,6 +68,35 @@ VARIANTS = {"timeline", "player", "stat", "chapter"}
 # 6-3、13:11、7.5）。只有这种串换成 TL Score，「决胜盘」「赛点」照旧 Noto。
 _SCORE_RUN = re.compile(r"\d[\d\-–:./]*\d|\d")
 
+# 整场比分的一盘：`6-3`、`7-6`、`7-6(6)`。**不认别的**——认宽了会把
+# 「决胜盘 1-5」这种「这一刻的局分」也当成整场比分去按盘上色，而那一档
+# 没有「赢没赢」可言。
+_SET_TOKEN = re.compile(r"^(\d+)-(\d+)(?:\((\d+)\))?$")
+#: 按盘画时两盘之间的间隔（整场比分走 advance 宽度，不走墨迹框）。
+_SET_GAP = 18
+
+
+def set_score_wins(metric: str) -> list[bool] | None:
+    """`4-6 6-3 6-4` → `[False, True, True]`；不是纯整场比分串就返回 None。
+
+    **metric 是从 headline 那个人的视角写的**（新的内容合同里 headline 只写
+    赢家），所以「前面那个数大」就是这一盘赢了——判据是机械的，不依赖任何
+    外部数据，也不需要再传一个「谁赢了」进来（传两处必分叉）。
+
+    ⚠️ 认得窄是故意的：`决胜盘 1-5 赛点` 这种「画面上这一刻的局分」必须
+    落回老路径（整块一个强调色），按盘上色对它没有意义。
+    """
+    tokens = metric.split()
+    if not tokens:
+        return None
+    wins: list[bool] = []
+    for token in tokens:
+        matched = _SET_TOKEN.match(token)
+        if not matched:
+            return None
+        wins.append(int(matched.group(1)) > int(matched.group(2)))
+    return wins
+
 
 def display_units(text: str) -> float:
     """Approximate how much horizontal room a mixed Chinese/Latin line needs."""
@@ -166,6 +195,15 @@ def _metric_fonts(size: int) -> tuple[ImageFont.FreeTypeFont, ImageFont.FreeType
 def _metric_width(draw: ImageDraw.ImageDraw, metric: str, size: int,
                   *, stroke: int) -> int:
     cjk, score = _metric_fonts(size)
+    wins = set_score_wins(metric)
+    if wins is not None:
+        # 整场比分按盘画，盘之间要真的留出间隔——所以量的是 **advance 宽度**
+        # （`textlength`）不是墨迹框（`textbbox`）：空格的墨迹框宽度是 0，
+        # 拿墨迹框摞下去，三盘会挤成一串。
+        _score = _font(SCORE, int(round(size * 1.2)))
+        tokens = metric.split()
+        total = sum(int(round(draw.textlength(t, font=_score))) for t in tokens)
+        return total + _SET_GAP * (len(tokens) - 1)
     total = 0
     for chunk, is_score in metric_runs(metric):
         f = score if is_score else cjk
@@ -230,9 +268,14 @@ def render(kicker: str, headline: str, detail: str, out: Path, *,
             f"headline「{headline}」加 metric「{metric}」一行装不下"
             f"（缩到 {headline_font.size}px 仍宽 {head_box[2] - x} > {headline_room}）："
             "metric 写短一点，或者把后半句挪进 detail")
-    detail_font = _fit_font(REGULAR, 50, 40, detail, WIDTH - x - 104, stroke=_STROKE_SMALL)
+    detail_font = _fit_font(REGULAR, 50, 40, detail, WIDTH - x - 28, stroke=_STROKE_SMALL)
 
-    _draw_text(draw, (x, 30), kicker, font=kicker_font, fill=BRAND_GREEN,
+    # **绿色只给「这一屏最该被记住的那一样」。** 有 metric 时那一样在 metric 上
+    # （整场比分＝赢下的那几盘，其余＝那个硬数据），kicker 退成白色——它是坐标，
+    # 不是记忆点，和 metric 一起涂绿就是一屏两个强调色。没有 metric 时绿退回
+    # 给 kicker，免得整张卡除了短轨一点强调都没有。
+    kicker_fill = WHITE if metric else BRAND_GREEN
+    _draw_text(draw, (x, 30), kicker, font=kicker_font, fill=kicker_fill,
                stroke=_STROKE_SMALL, shadow_layer=shadow)
     _draw_text(draw, (x, 86), headline, font=headline_font, fill=WHITE,
                stroke=_STROKE_HEAD, shadow_layer=shadow)
@@ -241,17 +284,29 @@ def render(kicker: str, headline: str, detail: str, out: Path, *,
         baseline = 86 + ascent
         mx = head_box[2] + 36
         cjk, score = _metric_fonts(metric_size)
-        # 数字串和汉字共用一条基线（anchor="ls"），两种字体才对得齐。
-        for chunk, is_score in metric_runs(metric):
-            f = score if is_score else cjk
-            _draw_text(draw, (mx, baseline), chunk, font=f, fill=BRAND_GREEN,
-                       stroke=_STROKE_SMALL, anchor="ls", shadow_layer=shadow)
-            mx = draw.textbbox((mx, baseline), chunk, font=f,
-                               stroke_width=_STROKE_SMALL, anchor="ls")[2]
-    # The short hairline connects the evidence line to the headline without
-    # enclosing either in a UI-looking panel.
-    draw.rounded_rectangle((x, 271, x + 56, 276), radius=2, fill=BRAND_GREEN)
-    _draw_text(draw, (x + 76, 246), detail, font=detail_font, fill=MUTED,
+        wins = set_score_wins(metric)
+        if wins is not None:
+            # **整场比分按盘上色**：赢下的那几盘给品牌绿，丢掉的盘白色。
+            # 和封面比分板的 `.setwin` 是同一条规矩（赢盘绿），所以贴图和
+            # 海报是一套系统，不是两套。绿在这儿有意义——它就是「赢了哪几盘」，
+            # 不再只是给标签上个色。
+            for token, won in zip(metric.split(), wins):
+                _draw_text(draw, (mx, baseline), token, font=score,
+                           fill=BRAND_GREEN if won else WHITE,
+                           stroke=_STROKE_SMALL, anchor="ls", shadow_layer=shadow)
+                mx += int(round(draw.textlength(token, font=score))) + _SET_GAP
+        else:
+            # 数字串和汉字共用一条基线（anchor="ls"），两种字体才对得齐。
+            for chunk, is_score in metric_runs(metric):
+                f = score if is_score else cjk
+                _draw_text(draw, (mx, baseline), chunk, font=f, fill=BRAND_GREEN,
+                           stroke=_STROKE_SMALL, anchor="ls", shadow_layer=shadow)
+                mx = draw.textbbox((mx, baseline), chunk, font=f,
+                                   stroke_width=_STROKE_SMALL, anchor="ls")[2]
+    # 证据行直接对齐主标题的左缘，**不再垫一截绿色短横线**（账号所有者
+    # 2026-09-11 给的参考样式里没有它）：短轨已经把这一块的左缘立住了，
+    # 再加一截同色短横就是第二个绿元素，而绿现在有明确的语义（赢下的盘）。
+    _draw_text(draw, (x, 246), detail, font=detail_font, fill=MUTED,
                stroke=_STROKE_SMALL, shadow_layer=shadow)
 
     image.alpha_composite(shadow.filter(ImageFilter.GaussianBlur(_SHADOW_BLUR)))
