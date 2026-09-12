@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>9.12 赛后开麦 | 兹维列夫六年后重回决赛</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>兹维列夫6-3、7-6(7)、7-6(6)直落三盘击败哈恰诺夫，六年后重回美网决赛。
+
+两小时五十九分钟，211分他只多赢了3分。他自己在发布会上的说法是：二三盘谁赢都说得通，我只是在这儿那儿多赢了几分。
+
+第二盘抢七，哈恰诺夫先救掉他两个盘点，他靠一个34拍的回合把这一盘拿了下来；第三盘抢七，哈恰诺夫一度3-0、5-2领先。
+
+有记者问起2020年。那年他也站在这片球场的决赛里，赢下前两盘，第五盘抢七落败，离冠军只差两分。这六年留下过什么吗？
+
+他的回答很短：有，直到我在巴黎赢了那一个。
+
+今年六月，他在罗兰加洛斯拿到生涯第一个大满贯，此后又打进温网决赛。周日是他本赛季第三个大满贯决赛。
+
+被问到打法为什么比以前更主动，他说那不是比赛里的决定——网球里每两拍之间最多只有一秒，你没有时间想；能在比赛里自动发生的事，都是在训练里练出来的。
+
+意大利记者说他赢下巴黎之后像变了个人，笑得更多，连他父亲也在笑。他说没什么变化，赢一个本来是终极目标，但现在想要的更多。
+
+决赛对手在谢尔顿和蒂亚福之间产生，发布会时那场半决赛还没开打。他说他很期待——在座无虚席的阿瑟·阿什球场打决赛会是一种美妙的感觉，而2020年那一场，看台上一个人都没有。
+
+六年之后重回同一片球场，你觉得这次会不一样吗？
+
+#网球时差 #兹维列夫 #美网 #USOpen #赛后开麦</textarea>
+    </section>
+    
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
