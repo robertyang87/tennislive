@@ -37,13 +37,13 @@ jobs:
           sudo apt-get install -y -qq ffmpeg gh fonts-noto-cjk
           ffmpeg -version | head -1
           gh --version | head -1
-      - name: Restore reviewed images and original narration
+      - name: Restore photos and audience-facing narration
         run: |
           unzip -q assets/explainer/hewitt-911-25/production-inputs.zip -d /tmp/hewitt-inputs
           cp /tmp/hewitt-inputs/photos/* assets/explainer/hewitt-911-25/
           mkdir -p /tmp/hewitt-final
           cp /tmp/hewitt-inputs/voice/* /tmp/hewitt-final/
-      - name: Render with reviewed original audio
+      - name: Render Wawrinka card style with reviewed narration
         run: |
           python tools/build_hewitt_911_story.py --outdir /tmp/hewitt-final --use-existing-audio
           python tools/publish_hewitt_911.py prepare --outdir /tmp/hewitt-final
@@ -51,8 +51,8 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release view hewitt-911-25-20260912 >/dev/null 2>&1 || gh release create hewitt-911-25-20260912 --target "$GITHUB_SHA" --title '网球有故事｜休伊特的纽约告别' --notes '九一一25周年。15页历史照片图卡，中文旁白、字幕和原创轻配乐。'
-          gh release upload hewitt-911-25-20260912 /tmp/hewitt-final/hewitt-911-25.mp4 /tmp/hewitt-final/hewitt-911-25-cards.zip /tmp/hewitt-final/xiaohongshu.txt /tmp/hewitt-final/qc.json
+          gh release view hewitt-911-25-wawrinka-style-20260912 >/dev/null 2>&1 || gh release create hewitt-911-25-wawrinka-style-20260912 --target "$GITHUB_SHA" --title '网球有故事｜休伊特的纽约告别' --notes '九一一25周年。15页历史照片图卡，中文旁白、字幕和原创轻配乐。'
+          gh release upload hewitt-911-25-wawrinka-style-20260912 /tmp/hewitt-final/hewitt-911-25.mp4 /tmp/hewitt-final/hewitt-911-25-cards.zip /tmp/hewitt-final/xiaohongshu.txt /tmp/hewitt-final/qc.json
       - name: Push to WeChat once and persist receipt
         env:
           GH_TOKEN: ${{ github.token }}
