@@ -1,0 +1,65 @@
+{
+  "scoreboard_qc_sha256": null,
+  "cover_seconds": 4.834,
+  "cover_narrated": true,
+  "outro_seconds": 3.827,
+  "layout": "full",
+  "segments_seconds": 112.9,
+  "topbar": null,
+  "film_seconds": 121.6,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "0": 7.968,
+    "1": 9.432,
+    "2": 10.416,
+    "3": 10.008,
+    "4": 9.36,
+    "5": 9.168,
+    "6": 7.512,
+    "7": 11.472,
+    "8": 4.56,
+    "9": 8.112,
+    "10": 9.504
+  },
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "shelton-zverev-h2h",
+    "received_at": "2026-09-12T10:59:12Z",
+    "artifact_ready_at": "2026-09-12T11:04:16Z",
+    "elapsed_seconds": 304.981,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "fb14d4122d548f4ce3320fca3b0c97ed376b2b998e9ee5cb164fb9ff271242e0",
+    "spec_sha256": "ecfee45a12b0fdaf712f1ded07791a3addc243dc5b7d8ee9a51e14fa120ad2f8",
+    "run_id": "34689847263",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-09-12T11:01:16Z",
+        "run_id": "34689847263"
+      }
+    ],
+    "render_seconds": 180.981,
+    "pre_render_seconds": 124.0
+  },
+  "film_sha256": "fb14d4122d548f4ce3320fca3b0c97ed376b2b998e9ee5cb164fb9ff271242e0",
+  "film_bytes": 93597170,
+  "qc_attestation_sha256": "84063f8c40c55acc2f3a2c1b73b0ac6ec62e37566f6eac5c322b58478a161df1",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-09-12T11:01:16Z",
+      "run_id": "34689847263"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-12T11:04:18Z",
+      "run_id": "34689847263"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-shelton-zverev-h2h/shelton-zverev-h2h.mp4",
+  "video_bytes": 93597170
+}
