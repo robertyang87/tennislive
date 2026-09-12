@@ -1,0 +1,56 @@
+{
+  "status": "pass",
+  "checked_at": "2026-09-12T01:01:45Z",
+  "auditor": "opencv-haar-v1",
+  "expected_subject": "兹维列夫",
+  "identity_evidence": "L0-bound spec subject + same-source frame_at",
+  "spec_sha256": "7ba33173ead6b06262ab7675fdd95162c3284b2b207d8a6969132e8ef7b4dc7e",
+  "poster_sha256": "f519729820993162daa37782945996d7ff4d2e5eb3a22e970e47dd125f969f8c",
+  "thresholds": {
+    "close_up_zoom": 1.5,
+    "face_height_ratio": 0.08,
+    "close_up_face_height_ratio": 0.14,
+    "face_area_ratio": 0.01,
+    "face_sharpness": 45.0,
+    "face_contrast": 32.0,
+    "eyes": 2
+  },
+  "result": {
+    "poster": {
+      "decodable": true,
+      "format": "JPEG",
+      "width": 1080,
+      "height": 1440,
+      "photo_region": [
+        0,
+        150,
+        1080,
+        810
+      ]
+    },
+    "face": {
+      "detector": "frontal-default",
+      "box": [
+        456,
+        182,
+        270,
+        270
+      ],
+      "detected_faces": 6,
+      "eyes": 2,
+      "face_height_ratio": 0.33333,
+      "face_area_ratio": 0.08333,
+      "center_x_ratio": 0.54722,
+      "center_y_ratio": 0.20617,
+      "sharpness": 310.946,
+      "contrast": 138.0
+    },
+    "contract": {
+      "shot_type": "",
+      "frame_at": 91.1,
+      "zoom": 1.0,
+      "focus_y": 0.5
+    }
+  },
+  "issues": []
+}
