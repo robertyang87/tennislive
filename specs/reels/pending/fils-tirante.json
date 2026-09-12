@@ -1,0 +1,190 @@
+{
+  "slug": "fils-tirante",
+  "source_url": "https://youtu.be/iDT22qnj6UU",
+  "_source": "Tennis TV 官方 YouTube 频道单场集锦《Arthur Fils vs Thiago Agustin Tirante for Semi-Final Spot | Cincinnati 2026 Highlights》（oEmbed 确认 `author_name: \"Tennis TV\"`）。probe 实测 363.67 秒、1920×1080、25fps。\n\n**画面自证**：112.5~118.5s 换边镜头挂出全屏赛事图形，清楚写着『QUARTER-FINAL | P&G STADIUM COURT』；记分条从头到尾烧着 TIRANTE／FILS 两行，逐格核对与 flashscore `zuBGL3cl` 逐分记录完全吻合（0.5s 起首盘 0-0/0-0，104.5~118.5s 定格『TIRANTE 3 / FILS 6』首盘赛果图形；202.5~210.5s 次盘『TIRANTE 1 / FILS 2』，292.5s 起『TIRANTE 2 / FILS 5』——蒂兰特这一局保发，对应逐分记录『2-5 蒂兰特发球，蒂兰特拿下 ← 1个破发点、1个赛点』）；325.88~353.62s 是单个连续镜头，覆盖赛点、庆祝、网前交流，直到 353.62s 之后画面切入 Tennis TV 的『MORE / TAP TO SUBSCRIBE』收尾卡（`contact_06.jpg` 联系表核对过），所有段落 `end` 不超过 353.5，见 `_tennistv_trim`。\n\n⚠️ **这份 spec 重写过一次**：另一位会话（`codex/fils-tirante-probe-20260821` 分支）留下的探测产物（`probe.json`／`scoreboard.json`／`cover_candidates/`）本身是真实数据，本条复用；但那份草稿的 `editorial`／`_hit_data`／`push` 文案把两位球员的总得分**写反了**——草稿称『蒂兰特总分多拿23分、被菲斯逆转』，而真实 flashscore 数据是**菲斯**59分、**蒂兰特**36分（`Service Points Won Tirante 54%(26/48) Fils 79%(37/47)` + `Return Points Won Tirante 21%(10/47) Fils 46%(22/48)`，36+59=95=`pts_total`），菲斯拿分更多、也是赢家，赛果和总分方向一致，草稿描述的『蒂兰特总分领先却告负』这个反差从未发生过。`stats.a`/`stats.b` 数值块本身codex是对的（按 `render_stat_card.py` 第19行 a 对应 `matchup[0]` 的规矩已经排对），只是叙事文字把两个人的数字读反了——这条 spec 的 `editorial`／`push`／小红书文案全部重新按真实数据撰写。",
+  "_tennistv_trim": "源片是 Tennis TV 的 YouTube 官方视频，两样都躲开了：\n\n**① 片尾**——`contact_06.jpg` 逐格看过：352.5 秒还是庆祝画面，354.5~362.5 秒已经是纯色底上的『MORE / TAP TO SUBSCRIBE』订阅卡。所有段落 `end` 不超过 353.5 秒。\n\n**② 台标**——Tennis TV 的水印烧在右上角，3:4 取景窗只从 1920 里取 810px，全部段落 `cx` 钉在 0.5（居中），右上角那块结构性地落在窗外。",
+  "_column": "赛场之上",
+  "topbar": {
+    "line1": "ATP1000 辛辛那提 1/4决赛",
+    "line2": "菲斯 6-3 6-2 蒂兰特"
+  },
+  "_topbar_why": "第二行和 `cover.winner`（菲斯）、`cover.result`（6-3 6-2，菲斯自己的比分在前）、`cover.matchup` 两个名字机械一致。轮次来自源片 112.5~118.5s 烧死的赛事图形『QUARTER-FINAL | P&G STADIUM COURT』（画面自证，比任何二手报道都硬），与 Tennis TV 标题《…for Semi-Final Spot》（赢下这场就晋级半决赛，反推这场是1/4决赛）互相印证。",
+  "editorial": {
+    "mode": "match_review",
+    "question": "菲斯的发球局，蒂兰特一次机会都没摸到——这场1/4决赛能有多一边倒？",
+    "thesis": "菲斯打出了他本站最完整的一场比赛：六十六分钟里，蒂兰特一次都没能在他的发球局上拿到破发点；反过来，菲斯自己三次兑现破发机会，六比三、六比二直落两盘，终结了蒂兰特这周淘汰德约科维奇和门西克、首进大师赛1/4决赛的这段奇迹。",
+    "beats": [
+      "首盘，双方缠斗到三比五，蒂兰特发球局被破，菲斯六比三先下一城。",
+      "次盘，菲斯连扳数局一路拉开到五比一。",
+      "蒂兰特救下一个赛点稍作延缓，但菲斯很快六比二锁定胜利。"
+    ],
+    "human_context": {
+      "angle": "22岁的法国新星菲斯这一站正处在职业生涯的上升期；对面的蒂兰特，25岁的阿根廷人，本周刚淘汰过德约科维奇和2025年迈阿密冠军门西克，打进了自己生涯第一个大师赛1/4决赛——今天，这段奇迹画上了句号。",
+      "facts": [
+        "蒂兰特世界排名50（生涯最高排名，tennisexplorer 球员页当期数据），本站淘汰过科因斯基、德约科维奇（本仓库已发 `djokovic-tirante`）、兰达卢塞（本仓库已发 `tirante-landaluce`）、门西克（本仓库已发 `tirante-mensik`），首次打进ATP大师赛1/4决赛（flashscore 交手记录 `df_hh_1_zuBGL3cl` Last matches 逐场核对：科因斯基2:1、德约科维奇1:2、兰达卢塞2:0、门西克2:1，均为胜方 `WIS÷w`）",
+          "菲斯世界排名21（生涯最高第14，tennisexplorer 球员页当期数据）",
+        "全场技术统计：菲斯总得分59分、蒂兰特36分（服务分+接发分相加，flashscore `df_st_1_zuBGL3cl`）；菲斯破发点3/5兑现，蒂兰特全场0次拿到破发点（`Break Points Saved` 一栏菲斯是0/0，代表一次都没被逼到破发点）；菲斯制胜分14、非受迫失误18，蒂兰特制胜分11、非受迫失误22（发球ACE蒂兰特反而更多，6比3，但其余各项均落后）",
+        "比赛用时1小时6分（flashscore `df_sui_1_zuBGL3cl` 分盘用时0:30+0:36=1:06）",
+        "半决赛，菲斯将迎战淘汰保罗晋级的科博利（本仓库已发 `paul-cobolli`；flashscore 当日赛程 `f_2_1_0_en_1` 确认对阵）"
+      ],
+      "sources": [
+        "https://global.flashscore.ninja/2/x/feed/zuBGL3cl",
+        "https://global.flashscore.ninja/2/x/feed/df_hh_1_zuBGL3cl",
+        "https://global.flashscore.ninja/2/x/feed/df_st_1_zuBGL3cl",
+        "https://www.tennisexplorer.com/player/fils/",
+        "https://www.tennisexplorer.com/player/tirante/"
+      ]
+    }
+  },
+  "_no_repeat": "辛辛那提这一站已经发了六十多条，`djokovic-tirante`／`tirante-landaluce`／`tirante-mensik` 三条已经讲过蒂兰特本周淘汰德约科维奇、兰达卢塞、门西克的过程——这条只用一句带过（『本周淘汰过德约科维奇和门西克』），不重讲那几场怎么赢的，主体全部落在菲斯这场如何终结这段奇迹上。总分差／破发点兑现这类数据反差在本站已经出现过多次（`boulter-volynets`／`halys-deminaur` 等），但这条的数据本身就是钩子的构成部分（『一个破发点都没让对方拿到』），不是另找的噱头。",
+  "_hit_data": "跑过 `match_stat_hooks.py`／`match_feed.py show zuBGL3cl --home Tirante --away Fils`，核过全部技术统计。**总分差**（菲斯59:蒂兰特36，净差23分）是全场最硬的数据，但真正独一无二的是**菲斯全场 0 次被逼到破发点**（`Break Points Saved Fils 0/0`）——这个『发球一次都没被摸到』的绝对控制感，比单纯的总分差更能说明这场比赛有多一边倒，钩子和 thesis 都走这条线。",
+  "_match": {
+    "flashscore_id": "zuBGL3cl",
+    "atp_player_ids": "菲斯 F0F1 · 蒂兰特 T0A1",
+    "_why": "逐分（`df_mh_1_zuBGL3cl`）、统计（`df_st_1_`）、分盘用时（`df_sui_1_`）、交手（`df_hh_1_`）都从这个 id 取。当日总表 `f_2_-1_0_en_1` 里 `AE÷Tirante T. A.`／`AF÷Fils A.`——**home（主队）是蒂兰特**。\n\n⚠️⚠️ **stats.a/b 已按 `cover.matchup` 顺序（菲斯在前，赢家在前）手动对调，不是照抄 home/away**——`match_stat_hooks --stats-block` 吐出来的 a（主队/蒂兰特）、b（客队/菲斯）和 `matchup[0]`（菲斯）正好相反，已互换，见 `stats._source` 对照表。这正是 CLAUDE.md 反复点名的 `tsitsipas-royer` 那类坑，这次在这条 spec 上没有再犯——`nakashima-borges`／`tiafoe-tien` 这两条同一批次的片子都各自撞过一次。\n\n开球时刻取自当日总表的 `AD÷1787272800`（UNIX 时间戳）＝ UTC 2026-08-21 00:40:00 ＝ 北京时间 **2026-08-21 08:40**，按『开球时刻只说个大概』写成『早上快九点』（40分落在40~59的『快X+1点』区间）。比赛用时取 `df_sui_1_zuBGL3cl` 自己记录的『全场: 1:06』。\n\n两个 ATP id：菲斯 F0F1 沿用 `fils-deminaur.json`／`lehecka-fils.json` 已验证过的头像；蒂兰特 T0A1 沿用 `tirante-mensik.json` 已验证过的头像。均为已存在资产，不是本轮新查。",
+    "_ranking_why": "菲斯当期世界第21、生涯最高第14；蒂兰特当期世界第50，与生涯最高并列——均取自 `tennisexplorer.com` 球员页当期『Current/Highest rank』字段，2026-08-21 当场拉取，非旧数据。⚠️ flashscore 当日总表里的 `CA`/`CB` 字段**不是排名**（本仓库反复验证过这两个字段的含义不明确，`shang-rublev` 那次已经栽过一次），这次没有沿用，改用 tennisexplorer 独立核实。"
+  },
+  "stats": {
+    "a": {
+      "aces": 3,
+      "df": 0,
+      "winners": 14,
+      "ue": 18,
+      "first_in": 29,
+      "first_won": 24,
+      "second_total": 18,
+      "second_won": 13,
+      "bp_conv": 3,
+      "bp_chances": 5,
+      "pts_won": 59,
+      "pts_total": 95,
+      "first_total": 47,
+      "headshot": "assets/players/headshots/atp-F0F1.png"
+    },
+    "b": {
+      "aces": 6,
+      "df": 1,
+      "winners": 11,
+      "ue": 22,
+      "first_in": 22,
+      "first_won": 15,
+      "second_total": 26,
+      "second_won": 11,
+      "bp_conv": 0,
+      "bp_chances": 0,
+      "pts_won": 36,
+      "pts_total": 95,
+      "first_total": 48,
+      "headshot": "assets/players/headshots/atp-T0A1.png"
+    },
+    "_source": "flashscore `zuBGL3cl` `df_st_1`。**home（主队）是蒂兰特，away（客队）是菲斯**——`match_stat_hooks --stats-block` 原始输出的 a=蒂兰特、b=菲斯，与 `cover.matchup`（菲斯在前，赢家在前，对齐 `paul-vallejo`／`zverev-atmane` 两条先例）**顺序相反**，已手动对调成 a=菲斯（matchup[0]）、b=蒂兰特（matchup[1]）：\n\n    flashscore 原始（a=蒂兰特/b=菲斯）  →  本 spec 的 a（菲斯）  本 spec 的 b（蒂兰特）\n    aces 6/3                          →  3                    6\n    df 1/0                            →  0                    1\n    winners 11/14                     →  14                   11\n    ue 22/18                          →  18                   22\n    first_in 22/29                    →  29                   22\n    first_won 15/24                   →  24                   15\n    second_total 26/18                →  18                   26\n    second_won 11/13                  →  13                   11\n    bp_conv 0/3                       →  3                    0\n    bp_chances 0/5                    →  5                    0\n    pts_won 36/59                     →  59                   36\n    pts_total 95/95                   →  95                   95\n    first_total 48/47                 →  47                   48\n\nfirst_total 按 first_in+second_total 算（菲斯 29+18=47，蒂兰特 22+26=48）。这条对调是本 spec 最容易出错的一步（`tsitsipas-royer`／`nakashima-borges`／`tiafoe-tien` 都在这上面栽过），已交叉核对 `pts_won` 两项相加=95=`pts_total`、蒂兰特 aces 6 比菲斯 3 更多（画面/数据均确认，尽管蒂兰特最终告负）。"
+  },
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "菲斯",
+    "_heat_why": "菲斯世界第21，差一位够不着 `HEAT_TOP_RANK=20`，需要认领：他是本仓库已多次覆盖的法国新星（`fils-deminaur`／`lehecka-fils`／`jodar-fils-montreal-qf`），本场是大师赛1/4决赛、赢下即进半决赛，赛事本身的分量足够；对面蒂兰特这周淘汰德约科维奇和2025迈阿密冠军门西克、首进大师赛1/4决赛的故事线也已经是本站的常设人物（三条既有 spec）。这条不是靠种子号或数据反常撑热度，是这场球本身的赛果分量和两位球员的既有故事线撑起来的。",
+    "hook": "全场，蒂兰特\n一个破发点都没拿到",
+    "_hook_why": "两行都是过程事实，不是身份——最长行『全场，蒂兰特』5字符、『一个破发点都没拿到』9字符，都在 `HOOK_MAX_CHARS=10` 之内。这是全场最硬的一个数据事实（菲斯 Break Points Saved 0/0），而不是总分差这类本站已经讲滥的形状。",
+    "_subject_why": "菲斯是赢的一方，也是这条片子全部关注度所在（六十六分钟打出全场最完整的表现），封面直接放赢家。`winner`／`result`／`matchup` 一个字没动。",
+    "topic": "辛辛那提ATP1000 · 男单1/4决赛",
+    "winner": "菲斯",
+    "result": "6-3 6-2",
+    "matchup": [
+      {
+        "name": "菲斯",
+        "name_en": "Arthur Fils",
+        "country": "FRA",
+        "rank": 21
+      },
+      {
+        "name": "蒂兰特",
+        "name_en": "Thiago Agustin Tirante",
+        "country": "ARG",
+        "rank": 50
+      }
+    ],
+    "_name_why": "两个中文名都走 `player_zh()`：`player_zh(\"Arthur Fils\")` → 菲斯，`player_zh(\"Thiago Agustin Tirante\")` → 蒂兰特（`src/tennislive/zh/player_names_top500.json`，与已发的 `fils-deminaur`／`tirante-mensik`／`tirante-landaluce` 用的是同一个名字），没有手打。",
+    "portrait": {
+      "image": "PENDING",
+      "fit": "cover",
+      "focus": 0.5,
+      "focus_y": 0.4,
+      "zoom": 1.0
+    },
+    "_portrait_why": "⚠️⚠️ **这是占位，不是最终封面。** 这场比赛北京时间 2026-08-21 早上快九点才结束（今天当天），赛事官方图库照惯例要到次日 UTC 00:00~03:00 才批量上线，所以现在必然是空的——这是有意的，正是这条 spec 被放进 `specs/reels/pending/` 而不是 `specs/reels/` 的唯一理由。\n\n**已实测过三条渠道，全部还没有今天这场的实拍**：\n① `tools/find_cover_photo.py --player Fils --event Cincinnati --site cincinnatiopen.com --date 2026-08-20`／`--player Tirante ...` 各跑一遍：赛事官网 WordPress 媒体库当天（2026-08-20 Cincinnati 本地日历日）已有 91~115 张新上传，逐条按 `alt_text` 扫过『fils』／『tirante』——命中的 4 张（`Fils-relishing-return-to-form1~4.jpg`）上传时刻是 2026-08-20T17:53，**早于这场比赛北京时间 08:40（UTC 00:40）开球**，是别的稿子配图，不是这场的实拍；\n② AP 通讯社、The Enquirer 当日图集两条渠道都跑过，没有对得上的；\n③ 赛事图库『day-N-best-of-photos』这批文章要到次日 UTC 00:00~03:00 才批量上线（`day-10-best-of-photos` 是 2026-08-21T02:44 发的，覆盖的是前一天 8/19 的内容——按这条线一贯的滞后量，覆盖今天这场 8/20 晚场的那一批，大概率要等到 8/21 深夜或 8/22。\n\n**下一步**：8/22 前后再查一次（同样的三条命令），找到之后把这份 spec `git mv` 回 `specs/reels/`，`cover.portrait.image` 换成 `assets/reel/fils-cincinnati-2026-qf.jpg` 这类命名，其余内容不用动。",
+    "scoreboard": {
+      "court": "P&G Stadium Court",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%20%221%3A06%3A00%22%2C%20%22source_page%22%3A%20%22match_feed%3AzuBGL3cl%20%28flashscore%20%5Cu5206%5Cu76d8%5Cu7528%5Cu65f6%200%3A30%2B0%3A36%3D1%3A06%29%22%7D",
+        "field": "duration",
+        "source_page": "match_feed:zuBGL3cl"
+      },
+      "_court_why": "源片 112.5~118.5s 烧死的赛事换边图形直接写明『QUARTER-FINAL | P&G STADIUM COURT』，画面自证，不靠二手报道推断。",
+      "_duration_why": "1:06:00 取自 `df_sui_1_zuBGL3cl` 自己记录的分盘用时之和 0:30+0:36=1:06，这是 flashscore 自己算出来的比赛用时。"
+    }
+  },
+  "segments": [
+    {
+      "start": 325.88,
+      "end": 334.71,
+      "_why": "冷开场，不配旁白，交给现场声。这段落在一个单独的连续镜头内（`probe.json` 的 `scene_cuts` 在 306.98 和 325.88 之间没有别的切点，325.88 之后一路到 353.62 才是下一个切点，也就是从赛点到庆祝到网前交流是同一个连续镜头），画面是赛点落地后菲斯的反应和庆祝——全片情绪最强的一格。"
+    },
+    {
+      "start": 334.71,
+      "end": 341.84,
+      "narration": "全场，菲斯的发球局，蒂兰特一个破发点都没拿到。",
+      "_why": "落点：全场最硬的数据事实，落在冷开场之后第一句。窗口紧接冷开场，仍在同一个连续镜头内（325.88~353.62），画面是两人网前的庆祝／交流。"
+    },
+    {
+      "start": 26.5,
+      "end": 37.2,
+      "narration": "北京时间八月二十一号早上快九点，辛辛那提大师赛男单1/4决赛，菲斯迎战蒂兰特。",
+      "_why": "坐标段。窗口是 `scene_cuts` 里的一个完整单镜头（26.5~37.2），首盘早期回合的宽景，没有specific score需要对齐，适合承载纯坐标信息。"
+    },
+    {
+      "start": 86.36,
+      "end": 103.36,
+      "narration": "首盘打到三比五，这是蒂兰特本盘唯一一次被破发；菲斯随后发球胜盘局，六比三先下一城。",
+      "_why": "窗口是单个连续镜头（86.36~103.36），紧接着 103.36~118.62 是首盘赛果换边图形（`TIRANTE 3 / FILS 6`），本段收在图形出现之前，把赛果讲清楚但画面留给回合本身。",
+      "crosses_cut": "`--dry-run` 报的 96.48s 不是真的换镜头，是回合中球员来回跑动触发的帧差阈值——两边都是同一片场地、同一场比赛（`score_02.jpg` 逐格核过，记分条从 15-15 一路读到 15-40 再到赛果 3-6，连续不间断）。"
+    },
+    {
+      "start": 176.2,
+      "end": 203.52,
+      "narration": "次盘，蒂兰特保发开局，但很快被菲斯追平；随后蒂兰特的发球局一分未得就被破发，一比二落后。",
+      "_why": "窗口是单个连续镜头，覆盖次盘开局到 1-2 破发（contact_02/03 联系表核对：138.5s 记分条读 1-1、202.5~210.5s 读 1-2，本段收在这个转折刚发生之后）。"
+    },
+    {
+      "start": 239.7,
+      "end": 260.02,
+      "narration": "此后菲斯又连下三局，蒂兰特次盘的发球局两次被攻破，比分迅速拉开到五比一。",
+      "_why": "窗口是单个连续镜头，contact_04 联系表 240.5~250.5s 记分条读 1-3、262~274.5s 读 1-5——本段收在五比一确立之后。"
+    },
+    {
+      "start": 292.84,
+      "end": 306.98,
+      "narration": "一比五落后的发球局里，蒂兰特救下了自己面对的赛点，才把这一局拖了过去——这也是全场他唯一一次挽救赛点。",
+      "_why": "窗口是单个连续镜头，紧接换边休息（276~292s）之后，contact_04 联系表 292.5~298.5s 记分条读 2-5，对应逐分记录『2-5 蒂兰特发球，蒂兰特拿下 ← 1个破发点、1个赛点』。"
+    },
+    {
+      "start": 306.98,
+      "end": 325.88,
+      "narration": "但下一局，菲斯发球稳稳拿下，六比二结束比赛，全场用时一小时零六分钟。",
+      "_why": "窗口是单个连续镜头，紧接上一段之后，一路带到赛点（325.88 之后即冷开场那段庆祝画面），首尾相接、不重复画面。"
+    },
+    {
+      "start": 341.84,
+      "end": 353.5,
+      "narration": "这周他淘汰过德约科维奇和门西克，首进大师赛1/4决赛——奇迹画上句号。半决赛对阵科博利，这股势头还能延续吗？",
+      "_why": "收尾问句，落在冷开场同一个连续镜头（325.88~353.62）里更靠后的部分（网前交流延续、庆祝画面），不是照搬冷开场的原始窗口，因为这句收尾比冷开场长得多，需要更长的窗口才装得下——两段共享同一个镜头，画面上不会有跳跃感。以『？』收尾，不停在数据上。"
+    }
+  ],
+  "push": {
+    "summary": "菲斯直落两盘终结蒂兰特奇迹",
+    "lead": "菲斯6-3 6-2直落两盘击败蒂兰特，晋级辛辛那提1000大师赛男单半决赛，用时1小时6分。全场，蒂兰特一次都没能在菲斯的发球局上拿到破发点；反过来，菲斯自己三次兑现破发机会，打出他本站最完整的一场比赛。蒂兰特这周淘汰过德约科维奇和2025迈阿密冠军门西克，本场是他生涯第一个大师赛1/4决赛——今天，这段奇迹画上了句号。半决赛，菲斯将对阵淘汰保罗晋级的科博利。",
+    "auto": false,
+    "_no_auto_why": "这批片子走『渲完先审』的流程，不走自动推送——渲完之后由人工核对成片画面再手动 `mode=push push=true`。另外这份 spec 目前在 `specs/reels/pending/`，封面还是 PENDING，本来就渲不出来，`auto` 在这个阶段没有意义，等换了官方实拍、挪回 `specs/reels/` 之后再决定是否打开。",
+    "_why": "『菲斯直落两盘终结蒂兰特奇迹』13字，卡在 `SUMMARY_MAX=13` 上限。只写 summary 和 lead，matchup/score/event 由封面算。"
+  }
+}
