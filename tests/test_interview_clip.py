@@ -1976,6 +1976,20 @@ _KEEP_SUFFIX = {".mp4", ".jpg", ".ass", ".md", ".json", ".json3"}
 # 落进来就误报了——**判据宁可窄不可宽，但「窄」要窄在对的那一维上**。
 _KEEP_NAMES = {"copy.html"}
 _DROP_NAMES = {"cover.html", "whisper.json"}
+# ⚠️ **目录要另走一张表，按后缀判对它没有意义。**
+# 上面那两行判的是文件；`p.suffix` 拿到目录上，一个叫 `evidence` 的目录必红、
+# 一个叫 `foo.json` 的目录必绿——**两种都是碰巧，不是判断**。这一条 2026-09-12
+# 才露面（`audit_zheng_presser_minimax.py` 那次一次性视觉核查往出片目录里写了
+# 两个目录），而它在这之前一直是 CI 上唯一那条红。
+#
+# 留这两个是因为**报告自己引着它们**：`minimax_visual_audit.json`（本来就按
+# `.json` 留着）的 `frames[].path` 逐帧指向 `minimax_visual_evidence/<audit_id>/`，
+# 还记着每帧的 sha256——删掉证据、留下结论，等于把一份可复核的记录变成一句
+# 没法复核的断言。`visual_audit_history/` 是同一份报告的历次快照。
+#
+# ⚠️ **不许改成「目录一律跳过」**：那会让下一个中间物目录静静地进仓库，
+# 而这条判据存在的全部意义就是「新增一个中间物，这条会红」。
+_KEEP_DIRS = {"minimax_visual_evidence", "visual_audit_history"}
 
 
 @pytest.mark.parametrize("path", _specs(), ids=lambda p: p.stem)
@@ -1991,9 +2005,15 @@ def test_中间物不许进仓库(path):
     outdir = ROOT / "output" / "interviews" / spec["slug"]
     if not outdir.exists():
         pytest.skip("这条还没出过片")
-    bad = [p.name for p in outdir.iterdir()
-           if p.name in _DROP_NAMES or p.name.startswith(("source.", "_"))
-           or (p.suffix not in _KEEP_SUFFIX and p.name not in _KEEP_NAMES)]
+    bad = []
+    for p in outdir.iterdir():
+        if p.is_dir():                       # 目录走 `_KEEP_DIRS`，见上面那段
+            if p.name not in _KEEP_DIRS:
+                bad.append(p.name + "/")
+            continue
+        if (p.name in _DROP_NAMES or p.name.startswith(("source.", "_"))
+                or (p.suffix not in _KEEP_SUFFIX and p.name not in _KEEP_NAMES)):
+            bad.append(p.name)
     assert not bad, f"{outdir} 里有中间物：{bad}——工作流的清理步骤要跟着加"
 
 

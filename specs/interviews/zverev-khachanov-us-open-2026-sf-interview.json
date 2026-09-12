@@ -1,0 +1,202 @@
+{
+  "slug": "zverev-khachanov-us-open-2026-sf-interview",
+  "url": "https://www.youtube.com/watch?v=1naf0eR9cC8",
+  "source_title": "Alexander Zverev On-Court Interview | 2026 US Open Semifinal（US Open 官方频道）",
+  "start": 0.0,
+  "end": 100.0,
+  "_window_why": "源片 105 秒（yt-dlp 实测）。⚠️ 末尾是 US Open 的片尾板（蓝底 us open ＋ FOLLOW US ON SOCIAL MEDIA），按缩略图墙逐格量出来的：100.0s 那一格他还在场上鼓掌，100.9s 已经整屏是片尾板。所以收在 100.4——第一版写的 104.2 是照『最后一条字幕事件收在 104.76』推的，而那正是 CLAUDE.md 记过的坑：『离源片末尾还有 N 秒』不是余量，那往往正好就是片尾板；字幕的 dDurationMs 是这一行在屏幕上挂多久，不是他说到第几秒。主持人最后那句 Congratulations 说到一半画面就切走了，所以片子收在上一句『好的 晋级决赛』。　⚠️ 收在 100.0 而不是 100.4：主持人最后那句『Congratulations, Sasha Zverev』起于 100.08、被工具延到 101.58，而画面 100.9 就整屏切片尾板了——留着它等于让 1.5 秒的字幕配 0.3 秒的画面。片尾板一帧都不许进（那是别人的品牌页），所以片子收在上一句『好的 晋级决赛』，最后一格画面是他在场上鼓掌。这句客套不是这段采访的落点，落点在他自己那两个玩笑上。",
+  "asr_model": "small.en",
+  "whisper_model": "medium.en",
+  "_asr_why": "第一份是 YouTube 的 en-orig 轨（原始 ASR，不是改写轨——逐词间距 0/43 等距、带 8 个 uh/um，两条判据都指向真 ASR；CLAUDE.md 2026-09-10 那条要求的验证做过了）。第二份换 medium.en，两份必须不同模型，否则那道闸是空的。",
+  "column": "赛后开麦",
+  "interview_kind": "赛后场上采访",
+  "requested_content_type": "on_court",
+  "event": "2026 美网 男单半决赛",
+  "winner": "兹维列夫",
+  "featured_player": "兹维列夫",
+  "source_verification": {
+    "status": "verified",
+    "detected_type": "on_court",
+    "method": "official_explicit_oncourt",
+    "source_url": "https://www.youtube.com/watch?v=1naf0eR9cC8",
+    "evidence": [
+      {
+        "kind": "official_explicit_title",
+        "source": "US Open",
+        "title": "Alexander Zverev On-Court Interview | 2026 US Open Semifinal",
+        "video_id": "1naf0eR9cC8"
+      }
+    ],
+    "match_id": "2026:us-open:mens-semifinal:zverev-khachanov",
+    "attestation_sha256": "71cd959d8112f61014aa3e71042ece335aad0234f3af2f2d5c1b4ea66bda514d"
+  },
+  "match": {
+    "id": "2026:us-open:mens-semifinal:zverev-khachanov",
+    "event": "2026 US Open",
+    "event_search": "US Open",
+    "round": "Semifinal",
+    "winner": "兹维列夫",
+    "winner_en": "Alexander Zverev",
+    "loser": "哈恰诺夫",
+    "loser_en": "Karen Khachanov",
+    "participants": [
+      "兹维列夫",
+      "哈恰诺夫"
+    ],
+    "score": "6-3 7-6(7) 7-6(6)",
+    "court": "Arthur Ashe Stadium",
+    "duration": "2:59",
+    "year": 2026,
+    "flashscore_id": "6k4MeS57",
+    "_score_why": "赛果和抢七小分取自 flashscore 单场 df_sui_1（6k4MeS57）：Set1 IG÷6/IH÷3、Set2 IG÷7,9 / IH÷6,7、Set3 IG÷7,8 / IH÷6,6，全场 RB÷2:59。抢七小分按仓库口径记输掉那一盘的人拿到的分——第二盘哈恰诺夫 7 分写 (7)、第三盘 6 分写 (6)。⚠️ 这两个抢七都是普通盘不是决胜盘（3-0 没打满距离，输家赢的盘数 0 ≠ 赢家 3 − 1），所以是抢 7 不是大满贯决胜盘的抢 10。集锦解说 182.72 秒自己报的『63 76 76』和这份数据一致，两个源对得上。"
+  },
+  "opening": {
+    "kind": "none",
+    "why": "正文源片从第 0.08 秒起就是主持人在场上提问（『You've been at the very very top of the game』），画面是刚打完的 Ashe 球场、他站在网前拿着话筒，全片 105 秒里一帧比赛画面都没有——这条采访是从赛后仪式那一刻单独剪出来的。所以比赛结束那一段要从同场官方集锦借，见 lead_in。"
+  },
+  "lead_in": {
+    "url": "https://www.youtube.com/watch?v=uuLC8AhqDx0",
+    "start": 177.04,
+    "end": 191.5,
+    "subs": [
+      {
+        "a": 177.04,
+        "b": 180.24,
+        "en": "...blinks, and Alexander Zverev",
+        "zh": "一眨眼 兹维列夫"
+      },
+      {
+        "a": 180.24,
+        "b": 182.72,
+        "en": "is back in the US Open final.",
+        "zh": "又回到了美网决赛"
+      },
+      {
+        "a": 182.72,
+        "b": 185.52,
+        "en": "6-3, 7-6, 7-6.",
+        "zh": "六比三 七比六 七比六"
+      },
+      {
+        "a": 185.52,
+        "b": 188.16,
+        "en": "It's the sixth major final of",
+        "zh": "这是这位德国人生涯里"
+      },
+      {
+        "a": 188.16,
+        "b": 189.6,
+        "en": "the German's career",
+        "zh": "第六个大满贯决赛"
+      },
+      {
+        "a": 189.6,
+        "b": 191.5,
+        "en": "and his third this year.",
+        "zh": "今年的第三个"
+      }
+    ],
+    "verification": {
+      "channel": "US Open Tennis Championships",
+      "event_search": "US Open",
+      "year": 2026,
+      "winner_en": "Alexander Zverev",
+      "loser_en": "Karen Khachanov",
+      "match_id": "2026:us-open:mens-semifinal:zverev-khachanov",
+      "method": "official_exact_match_highlight",
+      "height": 1080
+    },
+    "why": "同场官方集锦（uuLC8AhqDx0，213 秒，US Open 官方频道，标题写明 Alexander Zverev vs. Karen Khachanov Highlights | 2026 US Open Semifinal）的尾巴。取 177.04–191.5 共 14.5 秒，按源片逐词时间戳拆成 6 条（拆分点 185.52 是 It's 那个词的起点、189.60 是 and 的起点——第一版只拆 4 条，第 3、4 条的中文 1167px / 1136px 双双超过 952px 的可用宽度，闸当场报『别缩字号、照逐词时间戳拆开』）——起点切在解说开口报赛果那一句上，不切在赛点那一帧：150–177 秒之间一个字幕事件都没有（赛点之后整段只有欢呼），而这条线的片子屏幕上一直有字，收进来就是一段什么都没有的画面（CLAUDE.md arango-venus 那条记的正是这个）。终点收在 191.5，因为 191.5–197.92 之间又是 6 秒无字幕的空档。这 14.5 秒里解说把赛果、生涯第六个大满贯决赛、今年第三个全交代了，正好接住采访第一句『你今年打进了连续三个大满贯决赛』。⚠️ ASR 把 Zverev 听成 ZV、把比分写成裸的 63 76 76，两处都在 subs 里按真实赛果订正过。"
+  },
+  "en_fixed": {
+    "4": "back-to-back-to-back finals of majors,",
+    "5": "including the win in Roland Garros.",
+    "37": "to be incredible, incredibly special.",
+    "38": "Um especially these two guys, Frances"
+  },
+  "_en_fixed_why": "五处都是 ASR 听错，不是他说错。4『backto backto back』是 back-to-back-to-back 被连写；5『Roland Geros』→ Roland Garros；37『incredible special, incredibly special』语法不成立，他实际说的是 incredible, incredibly special（这一行改完从 45 字符缩到 37，只会更窄不会超宽）；38『Francis』→ Frances（Frances Tiafoe 的正确拼写）。⚠️ 原来还有一处 49『Sasha Verz』→ Sasha Zverev，窗口收到 100.0 之后那一行不在片内了，订正跟着删掉——留着一条指不到任何行的订正，下一个人会以为它在生效。⚠️ 44 行那句『hopefully I can I cannot make』是他真实的改口，一个字都没动——那正是这段采访最好笑的一下，改通顺了反而没了。⚠️ 全部走 en_fixed 不走 word_fix：五处改完最长的一行 38 字符，短于本来就存在的 45 字符行，不会撞英文超宽；而 word_fix 会让切行重排，49 行的中文要全部重对。",
+  "zh": [
+    "你稳居这项运动的最顶端",
+    "已经有一段时间了",
+    "但今年你打进了",
+    "连续三个大满贯决赛",
+    "其中还拿下了法网冠军",
+    "有什么东西变了吗",
+    "今年 和过去四五年",
+    "比起来",
+    "是啊 去年年底",
+    "我上了你的播客",
+    "那节目叫 Nothing Major",
+    "然后我决定去拿几个大满贯",
+    "因为我不想",
+    "再上一次那个播客",
+    "不过说实话",
+    "有时候事情就是会站在你这边",
+    "我觉得我在大满贯这一关",
+    "挣扎了很久",
+    "太多次都只差一点点",
+    "也许今年是上天",
+    "告诉我 这一年",
+    "是属于你的 好好享受",
+    "在球场上的每一刻",
+    "我确实在享受",
+    "我喜欢打这种大决赛",
+    "我已经等不及周日了",
+    "最后一个问题 周日",
+    "你要在这里对上一个美国人",
+    "气氛一定会非常疯狂",
+    "我不太确定",
+    "你能得到多少",
+    "现场的支持 但你期待吗",
+    "期待周日在这片场地上",
+    "对上一个美国人",
+    "打这场决赛",
+    "是啊 我觉得那会",
+    "非常特别 特别特别",
+    "尤其是这两个人 蒂亚福",
+    "和谢尔顿 他们在纽约",
+    "是所有人的宠儿",
+    "所有人都爱他们 我觉得今晚",
+    "会是一场史诗级的半决赛",
+    "我很期待看这场球",
+    "希望我能 我不会",
+    "让美国梦在周日成真",
+    "你今晚会看那场球吗",
+    "当然 所有人都会看",
+    "好的 晋级决赛"
+  ],
+  "cover": {
+    "frame_at": 93.0,
+    "_why": "⚠️ 这一格改过两次，两次的坑不一样，都记下来。\n① 第一版 91.1 是按 0.98 秒一格的缩略图墙挑的，渲出来他**眼睛闭着**、嘴张在说话中途。账号所有者 2026-08-21「封面图一定不要闭眼的」；CLAUDE.md 2026-09-03 已经写过为什么墙上挑不出来——160×90 的格子里脸只有约 25px 高、眼睛约 2px。\n② 第二版我把成片拉回本地按帧挑，挑对了画面却**写错了时刻**：换算写成「成片 = 源片 + 14.46（冷开场）」，漏掉了成片开头还有 **1.8 秒封面**。真实换算是 `成片 = 1.8 + 14.46 + 源片`，所以我在接触表上标成「src 94.8」的那一格，真实源片时刻是 **93.0**——照 94.8 写会抽到节目册特写那一带。这正是 CLAUDE.md 那条：『算段在成片里的偏移要三项，别拿片长减段合计当封面长度』，而采访线的 render.json 里没有 cover_seconds 这一项，只能从成片自己量（逐帧 meandiff：0.0~1.6 秒完全静止、1.8 秒起开始动）。\n换算验证过，不是推的：源片 91.1 按这个式子落在成片 107.36，抽出来那一帧和第一版 poster 是同一个闭眼表情——已知点对上了，式子才敢用。\n93.0 这一格：笑、眼睛清楚睁着、脸正而且是画面主体，笑容是完整的笑不是说话口型。同批放大比过的另外两个（源片 90.6 脸偏左下巴低、91.0 嘴张得大像说话中途）都不如它。情绪对题：这一带正是他说完『希望我能……我不会让美国梦在周日成真』之后全场笑的那一段（源片 92.56 的自动字幕标着 [laughter]），而封面钩子讲的就是他这段采访里的玩笑。",
+    "title": [
+      "那播客叫 Nothing Major",
+      "所以我去拿了几个 major"
+    ],
+    "sub": "美网男单半决赛 · 赛后场上采访",
+    "tag": "兹维列夫 · 赛后开麦",
+    "_copy_why": "两行都是他自己的原话（第 11 行 which is called Nothing Major、第 12 行 I decided to have some majors in me）。这个梗的全部力量在那个双关——播客名 Nothing Major 字面是『无关紧要』，而 major 就是大满贯；他说『我上了那个播客，然后决定给自己搞几个 major，因为不想再上第二次』。中文里这个双关直译会散架，所以两行都保留英文原词，让屏幕上那行英文原文自己把梗讲完。⚠️ 没有写排名、年龄、国籍这类身份——封面别处（sub 那一行）已经印着轮次，而钩子这两行讲的是这段采访里真实发生的一次反转。"
+  },
+  "takeaway": {
+    "close": {
+      "point": "三次亚军之后 他终于不用再上那个播客",
+      "ask": "周日决赛 你站他还是美国人？"
+    }
+  },
+  "push": {
+    "matchup": "兹维列夫 vs 哈恰诺夫",
+    "score": "6-3 7-6(7) 7-6(6)",
+    "event": "",
+    "summary": "兹维列夫为躲播客进决赛",
+    "lead": "2026 美网男单半决赛，兹维列夫 6-3 7-6(7) 7-6(6) 拿下哈恰诺夫，生涯第六次打进大满贯决赛。赛后场上采访他被问『今年和过去四五年比，有什么东西变了』，他的回答是一个梗：去年年底他上了一档叫 Nothing Major 的播客，然后决定去拿几个 major，因为不想再上第二次。玩笑收住之后是实话——『我在大满贯这一关挣扎了很久，太多次都只差一点点』。",
+    "auto": true,
+    "_auto_why": "渲之前就写好。CLAUDE.md：push.auto 一个像素都不进成片，但 qc_attestation 比的是 spec 的字节哈希，渲完再补这一行就得整趟重渲（zheng-liutova 那条为它白付了七分钟）。这条的来源、赛果、双语、冷开场都已经核过，没有理由不发。"
+  },
+  "transcript_verified": false,
+  "_facts": [
+    "赛果 6-3 7-6(7) 7-6(6)、用时 2:59、抢七小分：flashscore df_sui_1（6k4MeS57）；集锦解说 182.72 秒报『63 76 76』，两源一致。",
+    "2026 法网男单冠军（6-1 4-6 6-4 6-7(5-7) 6-1 胜科博利），生涯首个大满贯，此前三次大满贯亚军：维基百科 2026 French Open – Men's singles。这条同时是采访第 5 行『including the win in Roland Garros』和第 17-19 行『我在大满贯这一关挣扎了很久，太多次都只差一点点』的出处。",
+    "2026 温网男单亚军（负辛纳 6-7(7-9) 7-6(7-2) 6-3 6-4）；他是公开赛年代最年长的、四大满贯全部打进过决赛的男子（29 岁 81 天）：维基百科 2026 Wimbledon Championships – Men's singles。",
+    "『生涯第六个大满贯决赛、今年第三个』：同场官方集锦解说 182.72–190.64 秒原话，写进 lead_in 字幕；⚠️ 这是解说的结论不是我们独立核过的计数，所以只作为原声引用出现在字幕里，没有写进推送正文。",
+    "⚠️ 周日决赛的对手，写这条 spec 时还没定——另一场半决赛谢尔顿对蒂亚福此刻正在打（flashscore SYNayX0T，AB÷2 进行中，首盘 4-3）。所以文案里一个字都没提决赛对手是谁，采访里他说的『这两个人』『今晚会是史诗级半决赛』本身就是那个悬念。"
+  ]
+}
