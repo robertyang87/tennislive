@@ -14,7 +14,7 @@
     "0": 7.968,
     "1": 9.432,
     "2": 10.416,
-    "3": 9.216,
+    "3": 10.008,
     "4": 9.36,
     "5": 9.168,
     "6": 7.512,
@@ -27,39 +27,39 @@
     "version": 2,
     "pipeline": "match-reel",
     "slug": "shelton-zverev-h2h",
-    "received_at": "2026-09-12T10:37:47Z",
-    "artifact_ready_at": "2026-09-12T10:44:25Z",
-    "elapsed_seconds": 398.771,
+    "received_at": "2026-09-12T10:59:12Z",
+    "artifact_ready_at": "2026-09-12T11:04:16Z",
+    "elapsed_seconds": 304.981,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "0f9e8c095315d597ff0c311d1f15b9e01444273239740497c72ca7a5d053a326",
-    "spec_sha256": "467beb91b68397a59754f3a5e8f398750d27bc856961cdd61828610d97e6874d",
-    "run_id": "34688949494",
+    "film_sha256": "fb14d4122d548f4ce3320fca3b0c97ed376b2b998e9ee5cb164fb9ff271242e0",
+    "spec_sha256": "ecfee45a12b0fdaf712f1ded07791a3addc243dc5b7d8ee9a51e14fa120ad2f8",
+    "run_id": "34689847263",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-09-12T10:39:32Z",
-        "run_id": "34688949494"
+        "at": "2026-09-12T11:01:16Z",
+        "run_id": "34689847263"
       }
     ],
-    "render_seconds": 293.771,
-    "pre_render_seconds": 105.0
+    "render_seconds": 180.981,
+    "pre_render_seconds": 124.0
   },
-  "film_sha256": "0f9e8c095315d597ff0c311d1f15b9e01444273239740497c72ca7a5d053a326",
-  "film_bytes": 94507993,
-  "qc_attestation_sha256": "008e0338a20b8d3a3fdcc0044013e48fda2a3d621a5a59864fd00ccb606ede54",
+  "film_sha256": "fb14d4122d548f4ce3320fca3b0c97ed376b2b998e9ee5cb164fb9ff271242e0",
+  "film_bytes": 93597170,
+  "qc_attestation_sha256": "84063f8c40c55acc2f3a2c1b73b0ac6ec62e37566f6eac5c322b58478a161df1",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-09-12T10:39:32Z",
-      "run_id": "34688949494"
+      "at": "2026-09-12T11:01:16Z",
+      "run_id": "34689847263"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-09-12T10:44:26Z",
-      "run_id": "34688949494"
+      "at": "2026-09-12T11:04:18Z",
+      "run_id": "34689847263"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-shelton-zverev-h2h/shelton-zverev-h2h.mp4",
-  "video_bytes": 94507993
+  "video_bytes": 93597170
 }
