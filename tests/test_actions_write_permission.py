@@ -150,7 +150,8 @@ def test_给了actions_write的工作流都真的要点Pages():
     granted, needed = set(), {}
     pages_only = set()
     for path in files:
-        body = _yaml_only(path.read_text(encoding="utf-8"))
+        text = path.read_text(encoding="utf-8")
+        body = _yaml_only(text)
         if re.search(r"^\s*actions:\s*write", body, re.M):
             granted.add(path.name)
         # ⚠️ `hits` 只吃 `_run_scripts`，不吃整份 `body`——见 `_run_scripts`
