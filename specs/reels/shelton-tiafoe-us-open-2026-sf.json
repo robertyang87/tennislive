@@ -1,0 +1,329 @@
+{
+  "slug": "shelton-tiafoe-us-open-2026-sf",
+  "_column": "赛场之上",
+  "layout": "band",
+  "scorebox": [
+    104,
+    888,
+    860,
+    978
+  ],
+  "_scorebox_why": "**右缘是拿这条源片自己的 `score_*.jpg` 量的，没有抄别的片子**（CLAUDE.md 2026-09-10：`x1` 是个钳位，给窄了 `scan_mask` 会抛 `Verified graphic exceeds source box`，而它死在 render 第 12 秒、dry-run 全绿）。六张 score 墙逐格扫深蓝板的右缘，分布分成四簇：613~623（22 格，前两盘）／643~660（13 格）／688~697（32 格，主体）／**801~810（8 格，最宽）**——正是本文件写过的「板每打完一盘 +38px」，这一场打满四盘所以比三盘的片子宽一截（`eala-jovic-us-open-2026-r3` 是 660，**照抄它必炸**）。取最宽 810 ＋ `BOARD_EDGE_PAD` 8 ＋ 余量 = 860：宽了不要紧（`scan_mask` 逐帧出 alpha 蒙版，板以外一律透明），窄了必炸。左缘/上下沿沿用这条线的通用值（板本身的几何不随盘数变）。",
+  "sources": {
+    "main": "https://www.youtube.com/watch?v=0pIbqXVaV04",
+    "walk": "https://www.youtube.com/watch?v=FVhRVX-BDag"
+  },
+  "_source": "两条都出自**美网官方 YouTube 频道**（oEmbed 的 `author_name` 逐条查过，都是 `US Open Tennis Championships`——四大满贯官方频道，2026-08-26 起在 `OFFICIAL_CHANNELS` 里）。`main` 是单场集锦《Frances Tiafoe vs. Ben Shelton Highlights | 2026 US Open Semifinal》201.29s；`walk` 是入场仪式《Ben Shelton vs. Frances Tiafoe Walk-Out | 2026 US Open Semifinal》205.61s。四要素由频道和标题自证：赛事、轮次、双方全在标题里，日期由 probe 落库的 2026-09-12 产物目录和 flashscore `SYNayX0T` 的开赛戳 1789170300（UTC 2026-09-11 23:45）对上。",
+  "mixed_fps": {
+    "walk": "**帧率一致，不重采样——这一条是记录不是取舍。** 两条源片各自 probe 量过：`main` 1920×1080 / 30000÷1001 ＝ 29.97fps，`walk` 1920×1080 / 30000÷1001 ＝ 29.97fps，`check_sources_match` 的尺寸和帧率两头都不会报。照 `eala-jovic-us-open-2026-r3` 的先例仍然写下来：**认领的价值在于它证明两条都量过了**，而不是证明它们不一样。"
+  },
+  "tts_backend": "edge",
+  "_tts_backend_why": "Azure 的钥匙从 2026-09-03 起连着四条片子都在第 2 秒红在 `WebSocket upgrade failed: Authentication error (401)`（`keys-bondar` 两趟、`zheng-putintseva`、`tien-monfils`、`wu-alcaraz`），CLAUDE.md 已经把「写 spec 那一刻就写上」定成默认动作。**这一条退回 edge 零代价，而那是两条机械判据**：全片没有一段用 `voice.style`、也没有一段用 `voice.lead_pause`（Azure 独有的那两样），所以 edge 给出的就是同一把 `zh-CN-YunjianNeural`；而本地 `--check-narration` 在这台沙箱跑的本来就是 edge-tts，量到的余量直接适用，不用再按「Azure 比 edge 快 6.6%」折算一遍。",
+  "cover": {
+    "matchup": [
+      {
+        "name": "谢尔顿",
+        "name_en": "Ben Shelton",
+        "country": "USA",
+        "rank": 9
+      },
+      {
+        "name": "蒂亚福",
+        "name_en": "Frances Tiafoe",
+        "country": "USA",
+        "rank": 12
+      }
+    ],
+    "_rank_why": "即时世界排名取**美网官方 players feed**（`/en_US/scores/feeds/2026/players/players.json`）的 `singles_rank`：谢尔顿 `atps0s1` 第 9、蒂亚福 `atptd51` 第 12。⚠️ **那份 feed 的 `seed` 字段是布尔不是号码**，种子号另取自官方 matches feed 的 `team1/team2.seed`：蒂亚福 11 号种子、谢尔顿 8 号种子——Tennis Majors 的赛前预告逐字写着 `Frances Tiafoe (United States), the No. 11 seed, against Ben Shelton (United States), the No. 8 seed`，两个源对上。**种子号不是排名**，钩子和 `push.summary` 里一个都没写。",
+    "winner": "谢尔顿",
+    "result": "4-6 6-3 6-3 7-5",
+    "_result_why": "**三个源逐字对过**：① 美网官方 matches feed（`atptd51_matches.json` 的 Semi-Finals 那条，team1 蒂亚福 `6 3 3 5`／team2 谢尔顿 `4 6 6 7`，`won: true` 在 team2）；② flashscore `SYNayX0T` 的 `BA..BH`（6:4／3:6／3:6／5:7，`AS=2` 客场赢）；③ NBC Sports 赛后稿原文 `Shelton defeated fellow American Frances Tiafoe, 4-6, 6-3, 6-3, 7-5`。**没有抢七**，所以不涉及「大满贯决胜盘抢十」那条；**打满四盘而不是五盘**，所以第四盘不是决胜盘（大满贯男子五盘三胜），旁白里一个「决胜盘」都没有。",
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "谢尔顿",
+    "_subject_why": "封面放谢尔顿：他是赢家，也是这条片子的主角——「谁把人拉进来」在这一场上没有歧义，全部话题都在他身上（生涯首个大满贯决赛、阿什之后第一人）。",
+    "hook": "先丢一盘\n他回敬二十个Ace",
+    "_hook_why": "**概括整场，不是某一个时刻**（CLAUDE.md 2026-08-31）：「先丢一盘」是这场球的开头，「二十个 Ace」是全场累计（flashscore `df_st_1` 的 Match 那一栏 `Aces 3 | 20`，谢尔顿 20 个对蒂亚福 3 个），两句合起来正好框住「怎么走的 ＋ 结果」。**不重复比分板**：比分板就在钩子正下方印着 `4-6 6-3 6-3 7-5`，所以钩子里不写「三比一」「逆转」这种把赛果再说一遍的话。**行长**：第一行 4 字、第二行 9 字符（`Ace` 算 3 个），都在 10 以内，`hook_title_px` 给满 94px。**不写身份**（排名、种子、国籍）——那些海报别处已经印着了。",
+    "topic": "美网半决赛 · 谢尔顿 vs 蒂亚福",
+    "_topic_why": "台头底下那一行写「赛事轮次 · 对阵双方」，不写球场号（CLAUDE.md 2026-09-03 账号所有者定的）——球场名已经在比分板的头一行印着。轮次写「半决赛」，不写「四强」。",
+    "portrait": {
+      "image": "assets/reel/shelton-tiafoe-us-open-2026-sf.jpg",
+      "fit": "cover",
+      "focus": 0.4,
+      "_frame_why": "**官方高清实拍，不是抽帧**（2026-08-17 起 `cover.portrait.frame_at` 一律红）。来源是**美网官方图片接口**：按球员 tag 查 `relatedcontent/rest/v2/uso_v1/en/tag?tags=atps0s1&type=photo`，200 条里 `title` 等于 `F. Tiafoe vs. B. Shelton | SF` 的有 **55 张**（`title` 才是「这一场」的钥匙，按球员 tag 查会混进别的场次）。选中 `USTA2489120_20260911_GE408933`，说明逐字是 `Ben Shelton reacts during a Men's Singles semifinal match on Day Thirteen of the 2026 US Open at USTA Billie Jean King National Tennis Center on Friday, September 11, 2026 in Flushing, NY`——球员、轮次、赛事、场馆、日期五要素齐。\n\n**同一辑里另外几张、为什么挑这张**：`20260911_CDC07569B`／`CDC07569`（赢球后摊开双手仰头）情绪也对题，但姿态松弛、背景杂着观众和裁判椅的脚；`MDC02045_B`／`MDC02048_B`／`MDC02041_B` 三张握拳怒吼的是**俯拍全身**，缩到信息流的小图里脸只剩几个像素；`CDC07622B` 是两人拥抱（好画面，但主体是两个人，不是封面该有的单人特写）。这张是唯一一张**近景特写 ＋ 情绪外露**的：头肩占掉大半个画幅、张嘴怒吼、白发带，背景是美网蓝底和 `US OPEN` 标志（干净，还顺带自证场地）——正是 2026-08-18 账号所有者点名的那一档「握拳、咬牙、呐喊这类用力的姿态」。\n\n**`focus: 0.4` 是叠着三条带子渲出来挑的，不是拍的**（CLAUDE.md 2026-08-31：脸落进钩子带是几何决定的，事后调不动）。原图 1280×720 铺 1080×1440 竖向正好铺满（2.0×），所以 `focus_y` 是死的，只有横向可调。四档 0.30／0.40／0.50／0.62 各渲一版、把台头带（y0~170，左起到 x≈700）和钩子带（y790~1023）叠上去比：0.50 和 0.62 他的卷发顶进台头带右侧、会和「网球时差 · 赛场之上」那行字撞上；0.30 人被推到画面右缘。0.40 是唯一一档**脸完整、台头让开、钩子带压在躯干上**的。",
+      "_low_res_why": "1280×720 铺 1080×1440 是 **2.0× 放大**，够不着 `cover_photo_problem` 的 1.00× 地板。**这是美网这条渠道的天花板，不是没找够**：`f_` 前缀就是顶（另外十二个前缀、六个目录、三种 `?width=` 参数 CLAUDE.md 都探到底了，第三组返回 200 但尺寸一个像素没变）。两条高分辨率渠道这一场**当时都还没发**，不是没有——`tools/find_cover_photo.py` 按 `--date 2026-09-11` 和 `2026-09-12` 各跑了一趟：**AP 通讯社**两天都「没有对得上的」（它一天只发几场的图），**USA TODAY 每日图集**两天翻到的辑子里没有一辑带 us-open（那一辑按比赛日出，当天的往往次日才上线）。夜场打完到现在还不到这两条渠道的上线窗口。**宁可用一张 0.50× 的官方实拍，也不退回抽帧**——抽帧是压缩转播流再放大，比这更软，而且 2026-08-17 起本来就一律红。"
+    },
+    "scoreboard": {
+      "court": "Arthur Ashe Stadium",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%223%3A17%3A00%22%2C%22source%22%3A%22%E7%BE%8E%E7%BD%91%E5%AE%98%E6%96%B9%20players%2Fmatches%20feed%EF%BC%9Aduration%20%3D%203%3A17%EF%BC%8CsetDurations%2045%2B34%2B53%2B65%20%3D%20197%20%E5%88%86%20%3D%203%3A17%EF%BC%8C%E4%B8%A4%E4%B8%AA%E5%AD%97%E6%AE%B5%E4%BA%92%E7%9B%B8%E5%8D%B0%E8%AF%81%22%7D",
+        "_why": "**用时不只信 flashscore**（CLAUDE.md 2026-08-15：一天里它错了两场，方向都是偏长）。这里取**美网官方 matches feed**，而且它**自洽**：`duration` 字段写着 `3:17`，`setDurations` 是 `[45, 34, 53, 65]`，加起来 197 分 = 3 小时 17 分——两个数出自同一份 feed 的不同字段而且对得上，比 flashscore 那种「分盘和总计出自同一次计算」硬。"
+      }
+    }
+  },
+  "_match": {
+    "status": "result_verified",
+    "source": "usopen_official_matches_feed",
+    "source_id": "SYNayX0T",
+    "flashscore_id": "SYNayX0T",
+    "participants": [
+      "蒂亚福",
+      "谢尔顿"
+    ],
+    "set_scores_home_away": [
+      [
+        6,
+        4
+      ],
+      [
+        3,
+        6
+      ],
+      [
+        3,
+        6
+      ],
+      [
+        5,
+        7
+      ]
+    ],
+    "winner": "谢尔顿",
+    "loser": "蒂亚福",
+    "winner_result": "4-6 6-3 6-3 7-5",
+    "loser_result": "6-4 3-6 3-6 5-7",
+    "_order_why": "⚠️ **`participants` 跟的是 flashscore 的 home/away，和 `cover.matchup` 正好相反**（CLAUDE.md 2026-09-02 `eala-stoiana` 那次被 `verified_result_problem` 当场抓下来的形状）：`AE=Tiafoe F.` 是 home、`AF=Shelton B.` 是 away，所以这里蒂亚福在前，和紧挨着的 `set_scores_home_away`（home 蒂亚福 6-4、3-6、3-6、5-7）同序；而 `cover.matchup[0]` 是版式顺序，放的是谢尔顿。**判据是「这个字段旁边放着什么」**，不是这条 spec 用的哪个顺序。"
+  },
+  "stats": {
+    "a": {
+      "name": "谢尔顿",
+      "headshot": "assets/players/headshots/atp-S0S1.png",
+      "aces": 20,
+      "df": 3,
+      "winners": 47,
+      "ue": 31,
+      "first_in": 86,
+      "first_total": 114,
+      "first_won": 66,
+      "second_total": 28,
+      "second_won": 15,
+      "bp_conv": 5,
+      "bp_chances": 11,
+      "pts_won": 128,
+      "pts_total": 235
+    },
+    "b": {
+      "name": "蒂亚福",
+      "headshot": "assets/players/headshots/atp-TD51.png",
+      "aces": 3,
+      "df": 2,
+      "winners": 27,
+      "ue": 28,
+      "first_in": 69,
+      "first_total": 121,
+      "first_won": 54,
+      "second_total": 52,
+      "second_won": 20,
+      "bp_conv": 2,
+      "bp_chances": 7,
+      "pts_won": 107,
+      "pts_total": 235
+    },
+    "_source": "flashscore `df_st_1_SYNayX0T` 的 Match 那一栏，由 `tools/match_stat_hooks.py SYNayX0T --stats-block` 机器抄出来（不手抄）。⚠️ **a/b 相对工具的输出对调过**：工具按 feed 的 home/away 排（a=蒂亚福、b=谢尔顿），而 `render_stat_card` 的 `a` 对应 **`cover.matchup[0]`＝谢尔顿**。对调之后头像跟着走：`atp-S0S1.png` 挂谢尔顿、`atp-TD51.png` 挂蒂亚福，和 `shelton-alcaraz`／`tiafoe-michelsen` 两条已发 spec 里同一张头像挂的中文名一致（`test_数据图的头像和matchup里的名字必须是同一个人` 那道闸比的就是这个）。`first_total` 按 `first_in + second_total` 算（86+28=114 / 69+52=121），不取接口的 `Service Points Won` 分母——一发成功率画的是 `first_in / first_total`，用和式才自洽。**这一场大满贯有 Winners/UE**（男子大满贯 `df_st_1` 一直给），所以不用跑 TNNS。"
+  },
+  "_hit_data": "`match_stat_hooks` 跑出来最狠的一条是**发球**：谢尔顿 20 个 Ace 对蒂亚福 3 个，一发均速 199 km/h 对 187，二发均速 165 km/h 对 142（**二发快 23 公里**）。这条进了钩子和 `push.summary`。⚠️ **这里原来写的是「二发比对手的一发还快」，是假的**——165 比 187 慢，写的时候拿两个数一减就露馅了；留在这儿免得下一个人又把这句顺口的话捡回去。其余候选：总分 128:107（差 21 分，不算悬殊，没用）；制胜分 47:27；一发成功率百分之七十五对百分之五十七。**第四盘那一栏才是这场球真正的骨头**：蒂亚福拿到 3 个破发点、`Break Points Converted 0/3`，而谢尔顿 `Break Points Saved 3/3` 全救下来，这一盘他还发了 8 个 Ace、一发得分率百分之八十五。",
+  "_durations": "美网官方 matches feed：全场 3:17，分盘 45 / 34 / 53 / 65 分钟。**第四盘 65 分钟是全场最长的一盘**，比首盘还长 20 分钟——旁白第 11 段那句「第四盘打了一个多小时」出处在这儿。",
+  "_turning_points": "**逐分取自 flashscore `df_mh_1_SYNayX0T`，关键分的标记逐个读过**（`|B1|` 破发点 `|B2|` 盘点 `|B3|` 赛点），并且和源片里烧死的记分条逐格对过：\n\n① **第三盘的收尾局是全场最长的一局**：`df_mh_1` Set 3 最后一局的 `HL` 有 18 分——`0:15, 0:30, 15:30, 30:30, 30:40 |B1| |B2|, 40:40, 40:A |B1| |B2|, 40:40, A:40, 40:40, 40:A |B1| |B2|, 40:40, A:40, 40:40, A:40, 40:40, 40:A |B1| |B2|`，也就是**四次盘点**（`|B2|` 出现四回）、六次平分才拿下。统计那一栏对得上：第三盘蒂亚福 `Break Points Saved 5/7`、谢尔顿 `Break Points Converted 2/7`。\n\n② **第四盘蒂亚福三个破发点一个都没兑现**（`Break Points Converted 0/3`），而谢尔顿 `3/3` 全救下。\n\n③ **结束方式**：第四盘 5-6、蒂亚福发球（记分条 128.5s 起 `MATCH POINT`，箭头在 `TIAFOE` 那一行，比分 `0:40`——**赛点是谢尔顿在接发球局上拿到的，一次三个**）。逐分 `0:40 |B1| |B3|, 15:40 |B1| |B3|` 两分都带赛点标记；记分条 140.5s 变成 `15:40`、144.5s 亮出 `MATCH POINT #2`。统计 `Match points saved` 蒂亚福 1 / 谢尔顿 0，**也就是他救回第一个赛点，第二个上没救成**。逐分序列停在 `15:40`（CLAUDE.md：逐分不列制胜的那一分），而源片解说在 165.28 秒逐字说的是 `And what a pity it had to end on a double fault.`——**这场球是蒂亚福的一个双误结束的**，画面和解说两个源对上。",
+  "editorial": {
+    "mode": "match_review",
+    "question": "先丢一盘的谢尔顿，是靠什么把这场全美德比拧回来的？",
+    "thesis": "首盘他自己送掉十四个非受迫失误，之后三盘换了个人：靠发球（全场 20 个 Ace、二发均速比对手的一发还快）稳住自己的发球局，靠接发球把蒂亚福逼到第三盘那一局的四次盘点，最后在对手的发球局上拿到三个赛点收走比赛。",
+    "beats": [
+      "首盘：谢尔顿十四个非受迫失误，四比六丢掉",
+      "第二、三盘：制胜分和失误彻底反过来，第三盘那一局四次盘点才拿下",
+      "第四盘：三个破发点全救下、8 个 Ace，最后在对手发球局上三个赛点收走"
+    ],
+    "human_context": {
+      "angle": "这场球打在**阿瑟·阿什球场**，而它本身就是阿什留下的那条线上的一站：大满贯历史上第一次由两个美国黑人球员打进同一场半决赛，赢的那个人成了阿什 1972 年之后第一个站上美网决赛的美国黑人男子。入场仪式上大屏打出的是比利·简·金那句 `PRESSURE IS A PRIVILEGE`。",
+      "facts": [
+        "谢尔顿是阿什 1972 年之后第一个打进美网决赛的美国黑人男子（NBC Sports 赛后稿原文：`Shelton is also the first Black American man to reach a US Open final since Arthur Ashe in 1972.`）",
+        "这是大满贯史上第一场全部由美国黑人球员组成的半决赛（Tennis Majors 原文：`Friday is the first all-Black American semifinal at a tennis Grand Slam.`），而且就打在以阿什命名的球场上（同文：`They play on Friday, on the court named after him`）",
+        "在他之前，最接近的一次是马利瓦伊·华盛顿 1996 年打进温网决赛（Tennis Majors 原文：`The nearest anyone has come is MaliVai Washington, a Wimbledon finalist in 1996.`）",
+        "这是谢尔顿生涯第一个大满贯决赛（NBC Sports：`to reach his first Grand Slam final`）",
+        "决赛对手是兹维列夫，今年法网刚拿下自己的第一个大满贯（NBC Sports：`Shelton will face No. 1 seed Alexander Zverev, who won his first Grand Slam title at the French Open in June, on Sunday.`）",
+        "美国男子上一次赢下大满贯还是罗迪克 2003 年美网（CBS Sports：`no American man has won a major singles title since Andy Roddick captured the US Open in 2003`）",
+        "入场仪式上全场播报员说的是：谢尔顿周三凌晨三点多淘汰了卫冕冠军阿尔卡拉斯（`walk` 源片 30.96 秒起，播报原话 `Wednesday morning 3:33 a.m. he knocked out defending champion Carlos Alcaraz and tonight returns for his second US Open semifinal`）"
+      ],
+      "sources": [
+        "https://www.nbcsports.com/tennis/news/ben-shelton-defeats-frances-tiafoe-reaches-first-us-open-final",
+        "https://www.tennismajors.com/us-open-news/fifty-eight-years-after-ashes-triumph-two-black-americans-meet-for-a-place-in-the-us-open-final-860715.html",
+        "https://www.cbssports.com/tennis/news/ben-shelton-vs-frances-tiafoe-us-open-2026-american-grand-slam-drought/"
+      ]
+    }
+  },
+  "_claims": {
+    "大满贯历史上第一次由两个美国黑人球员打进同一场半决赛": "Tennis Majors 赛前稿逐字：`Friday is the first all-Black American semifinal at a tennis Grand Slam.`，同文还写明这场就打在以阿什命名的球场上（`They play on Friday, on the court named after him`）—— https://www.tennismajors.com/us-open-news/fifty-eight-years-after-ashes-triumph-two-black-americans-meet-for-a-place-in-the-us-open-final-860715.html ；NBC Sports 赛后稿从结果这一头印证同一件事（`Shelton is also the first Black American man to reach a US Open final since Arthur Ashe in 1972.`，两人之中赢的那个成了阿什之后第一人，前提正是两人都进了半决赛）—— https://www.nbcsports.com/tennis/news/ben-shelton-defeats-frances-tiafoe-reaches-first-us-open-final",
+    "生涯第一个大满贯决赛": "NBC Sports 赛后稿逐字：`Shelton defeated fellow American Frances Tiafoe, 4-6, 6-3, 6-3, 7-5, on Friday to reach his first Grand Slam final` —— https://www.nbcsports.com/tennis/news/ben-shelton-defeats-frances-tiafoe-reaches-first-us-open-final ；Tennis Majors 从另一头穷举了这条线上的历史（`The nearest anyone has come is MaliVai Washington, a Wimbledon finalist in 1996.`，也就是谢尔顿之前没有人走到过这一步）—— https://www.tennismajors.com/us-open-news/fifty-eight-years-after-ashes-triumph-two-black-americans-meet-for-a-place-in-the-us-open-final-860715.html",
+    "阿什一九七二年之后第一个站上美网决赛的美国黑人男子": "NBC Sports 赛后稿逐字：`Shelton is also the first Black American man to reach a US Open final since Arthur Ashe in 1972.` —— https://www.nbcsports.com/tennis/news/ben-shelton-defeats-frances-tiafoe-reaches-first-us-open-final ；Tennis Majors 赛前稿逐字：`the winner will be the first Black American man in a US Open final since Ashe himself` —— https://www.tennismajors.com/us-open-news/fifty-eight-years-after-ashes-triumph-two-black-americans-meet-for-a-place-in-the-us-open-final-860715.html",
+    "_why": "全称断言一个反例就倒，所以每条两个不同主机的原文（不是搜索摘要——CLAUDE.md「别拿搜索摘要顶替原文」）。\n\n⚠️ **有一条被核掉了，记在这儿免得下一个人再捡回来**：搜索摘要里反复出现「自罗迪克以来第一个打进大满贯决赛的美国男子」，听起来很响——**而 NBC 原文里没有这句话**，它只说罗迪克 2003 年**赢下**过大满贯。去查 CBS 那篇专门讲 drought 的稿子，逐字写着 `an American man will appear in a grand slam final for the first time since Taylor Fritz reached the 2024 US Open championship match`——**弗里茨 2024 年刚进过决赛，才两年**。所以「23 年」那个数只对**夺冠**成立，对**打进决赛**是假的。片子里因此只说「美国男子上一次拿下大满贯还是二〇〇三年的罗迪克」，一个字都没提「第一个进决赛」。"
+  },
+  "topbar": {
+    "line1": "2026 美网 半决赛",
+    "line2": "谢尔顿 4-6 6-3 6-3 7-5 蒂亚福"
+  },
+  "push": {
+    "auto": true,
+    "summary": "谢尔顿首进大满贯决赛",
+    "lead": "美网男单半决赛，谢尔顿4-6 6-3 6-3 7-5逆转蒂亚福，拿到生涯第一个大满贯决赛。全场20个Ace对3个，二发均速比对手快23公里；第四盘他把蒂亚福的3个破发点全救下来，自己在对手的发球局上拿到三个赛点。周日决赛对兹维列夫。",
+    "_summary_why": "10 个字位，在 `SUMMARY_MAX=13` 以内。**只留最硬的那个结果**：不是「逆转蒂亚福」（那是过程，比分板上有），是「首进大满贯决赛」——这条片子唯一一件会被记住的事。铺垫只有一层（「首进」），收尾动词前面没有插代词。"
+  },
+  "segments": [
+    {
+      "start": 153.45,
+      "end": 159.2,
+      "source": "main",
+      "narration": "",
+      "score_inset": false,
+      "_score_inset_why": "这一段跨了最后一分落定的那一刻：153.45~154.7 记分条还在（`score` 墙 154.5s 那格读得到 `6 3 3 5 [15] / 4 6 6 6 [40]`），而 155.86 那个切点之后转成赛后的人物特写，常驻记分条撤了（`contact_02.jpg` 156.5s / 158.5s 两格左下角全是空的）。**整段开着回贴会在后半截贴一块球场地面上去**，所以整段关掉；代价是前 1.2 秒居中窗口只露出板的右半截，名字被裁——在一段没有旁白、只有现场声的冷开场上，这个代价比贴错画面小。",
+      "_ending_payoff_required": true,
+      "_why": "**第 ① 格：全片最强的一格，不配旁白，靠现场声。** 画面是赛点落定之后谢尔顿的反应——`contact_02.jpg` 156.5s / 158.5s 两格都是他的正面特写，在笑；而这一段正压在解说 `159.04 >> is in the championship match of the 2026 US` 那句之前，观众听到的是全场的声音。**没有取源片开头**（`test_冷开场不许随手取源片开头`）：官方集锦按时间顺序剪，开头是首盘的普通回合，戏剧性最低。"
+    },
+    {
+      "start": 48.6,
+      "end": 56.05,
+      "source": "walk",
+      "narration": "他走进这座球场的时候还不知道，等在后面的是生涯第一个大满贯决赛。",
+      "score_inset": false,
+      "_score_inset_why": "入场仪式，源片里从头到尾没有记分条——`walk` 那条的画面是球员通道、干冰和大屏。没有板可贴。",
+      "_why": "**第 ② 句：把落点说出来，不是坐标。** 画面是谢尔顿走进阿什球场（`walk` 的 contact_00：48.5s 他从干冰里走出来、50.5s 走向球场、52.5s 背影、54.5s 全景满场），旁白说的正是这一刻他还不知道的事。话和画是合奏不是复读——画面给「走进去」，旁白给「等在后面的是什么」。"
+    },
+    {
+      "start": 12.2,
+      "end": 19.6,
+      "source": "walk",
+      "narration": "北京时间九月十二号快八点，阿瑟·阿什球场，美网男单半决赛。",
+      "score_inset": false,
+      "_score_inset_why": "同上，入场仪式没有记分条。",
+      "_why": "**第 ③ 格：坐标。** 画面是大屏打出比利·简·金那句 `PRESSURE IS A PRIVILEGE`（`walk` 的 contact_00 12.5s 那一格）、干冰喷起（14.5s）、蒂亚福走进球场向看台挥手（16.5~18.5s）——正好给「这是哪儿、哪一场」当底。⚠️ **start 从 12.60 挪到 12.20 是预览墙抓出来的**：缩略图的第一格是 `start` **之后**的第一格，12.60 起跑会把 12.5s 那块大屏挤到窗口外，而这条 `_why` 正是靠它立着的。**开球时刻只说大概不报到分**（CLAUDE.md 2026-08-17）：flashscore 开赛戳 1789170300 ＝ UTC 2026-09-11 23:45 ＝ 北京 2026-09-12 07:45，45 分按「快 X+1 点」的口径说成「快八点」。"
+    },
+    {
+      "start": 2.35,
+      "end": 11.5,
+      "source": "main",
+      "narration": "场上是两个美国人。大满贯历史上第一次，半决赛由两个美国黑人球员包办。",
+      "score_inset": true,
+      "_why": "画面回到比赛：首盘的回合（`contact_00.jpg` 2.5~10.5s 六格都是底线相持，记分条在左下角写着 `TIAFOE / SHELTON`）。旁白给这场球的历史坐标——Tennis Majors 原文 `Friday is the first all-Black American semifinal at a tennis Grand Slam`，两个源核过（见 `_claims`）。**「包办」而不是「打进同一场半决赛」**：后者切出来是 18 格，超过字幕一行的 16 格会被硬切。"
+    },
+    {
+      "start": 11.6,
+      "end": 21.0,
+      "source": "main",
+      "narration": "首盘是蒂亚福的。谢尔顿送掉十四个非受迫失误，四比六丢掉这一盘。",
+      "score_inset": true,
+      "_why": "十四个非受迫失误是 `df_st_1` 的 Set 1 那一栏逐字读的（`Unforced errors 3 | 14`）——**这一盘蒂亚福只有 3 个**。⚠️ 末尾带上「这一盘」是为了断行：原来写「四比六丢掉」会被切成「谢尔顿送掉14个非受迫失误」（14 格）＋「4比6丢掉」（4 格），后半读起来是半截话。⚠️ **段尾 21.00 落在切点 21.02 之前，而最近的死球在 21.52**——也就是源片自己在这一分打完之前就切了镜头（CLAUDE.md 2026-08-12：源片不完整时不强求等死球）。"
+    },
+    {
+      "start": 25.53,
+      "end": 34.8,
+      "source": "main",
+      "narration": "第二盘他像换了个人。制胜分十三比六，非受迫失误从十四个掉到四个。",
+      "score_inset": true,
+      "_why": "两个数都出自 `df_st_1` 的 Set 2 那一栏（`Winners 6 | 13`、`Unforced errors 6 | 4`）。**和上一段构成对照**：同一个人，一盘之隔，失误从 14 掉到 4。"
+    },
+    {
+      "start": 38.1,
+      "end": 46.2,
+      "source": "main",
+      "narration": "六比三，扳回一盘。二发均速他一百六十五公里，蒂亚福一百四十二。",
+      "score_inset": true,
+      "_why": "⚠️ **这句话改过两次。** 第一版写的是「二发比蒂亚福的一发还快」——**那是假的**：`df_st_1` 的 `Average 2nd serve speed 142 | 165`、`Average 1st serve speed 187 | 199`，谢尔顿二发 165 **比**蒂亚福一发 187 **慢**，两个数一减就露馅。第二版改成「比蒂亚福快了二十三公里」，**`--check-narration` 的真语音切词报了假词**：`比蒂亚福` 被合成器骑成一个词（多带了「比」）。现在把两个数直接摆出来，人名前面有逗号撑开边界——**数字比「快了多少」更硬，也顺带躲开了那个边界**。"
+    },
+    {
+      "start": 46.3,
+      "end": 53.0,
+      "source": "main",
+      "narration": "整场下来，蒂亚福的二发只拿到百分之三十八的分。",
+      "score_inset": true,
+      "_why": "`df_st_1` Match 那一栏 `2nd serve points won 38% (20/52) | 54% (15/28)`。**百分比写「百分之三十八」不写「三成八」**（CLAUDE.md 2026-08-16）。"
+    },
+    {
+      "start": 56.21,
+      "end": 64.5,
+      "source": "main",
+      "narration": "第三盘更胶着。蒂亚福救下七个破发点里的五个，还是没守住。",
+      "score_inset": true,
+      "_why": "`df_st_1` 的 Set 3：`Break Points Saved 5/7`（蒂亚福）、`Break Points Converted 2/7`（谢尔顿）。**主语写清楚了**（CLAUDE.md 那条读者吐槽的教训：救的人和拿到点的人不是同一个）——救的是蒂亚福，破发点是谢尔顿拿到的。"
+    },
+    {
+      "start": 72.1,
+      "end": 83.0,
+      "source": "main",
+      "narration": "六比三，第三盘也归了谢尔顿，盘数二比一。但这场球还没完，第四盘是全场最长的一盘。",
+      "score_inset": true,
+      "_why": "⚠️ **这一段的旁白改过一次，是预览墙抓出来的话画不符。** 原来写的是「这一盘的最后一局打了十八分，四次盘点，六次平分」——讲的是第三盘的收尾局，**而这一段的画面已经是第四盘了**：把 `contact_01.jpg` 的 60.5~74.5 八格记分条逐格裁出来放大读，68.5s 还是 `6 3 2 [0] / 4 6 2 [30]`（第三盘 2-2），70.5s 直接跳成 `6 3 3 1 / 4 6 6 2`（第三盘已完、第四盘 1-2）——**集锦把第三盘 2-2 到 6-3 的全部画面剪掉了**，那 18 分的局在源片里根本不存在。记分条是烧在画面上的，观众一眼看得出。现在旁白只说记分条上读得到的：第三盘那一列 `3 : 6`、盘数 2-1、第四盘刚开始。**那 18 分、四次盘点、六次平分没有丢**，它留在 `_turning_points` 和小红书正文里——画面兑现不了的事实，不进旁白。\n\n⚠️ **补长过一次**：第一版改完之后 dry-run 报这一段哑场（余量 +4.20s，门槛 4.0s）。补的那半句「可蒂亚福没有走」是这条片子中段少数不报数的句子之一，而且有依据不是抒情——第四盘他打了 65 分钟、拿到 3 个破发点、自己的发球局一个没丢（`df_st_1` Set 4）。\n\n⚠️ **补长那半句又改了一次**：写成「可蒂亚福没有走」时 `--check-narration` 的真语音切词报假词（`可蒂亚福` 被骑成一个词）。**换个说法避开人名边界，比在名字前加逗号稳**——这条片子里「比蒂亚福」已经栽过同一个形状一次。"
+    },
+    {
+      "start": 87.25,
+      "end": 96.5,
+      "source": "main",
+      "narration": "打了一个多小时。蒂亚福拿到三个破发点，一个都没兑现。谁也不肯先松手。",
+      "score_inset": true,
+      "_why": "65 分钟出自美网官方 feed 的 `setDurations`（45/34/53/65，第四盘最长）；三个破发点 0 兑现出自 `df_st_1` 的 Set 4（蒂亚福 `Break Points Converted 0/3`）。画面是第四盘的回合，记分条 88.5s 读得到 `6 3 3 1 / 4 6 6 2`——**和「第四盘」对得上**。**数的是「对手没兑现几个」**，不是「谁只兑现了几个」（后者在赢球序列里是同义反复，CLAUDE.md 2026-08-19 点名过）。\n\n⚠️ **补长过一次**：dry-run 报哑场（余量 +4.02s）。末句「谁也不肯先松手」同时解掉 dry-run 的另一条「中段 79% 的旁白在报数据」——它是这一段唯一不报数的句子，依据是第四盘两边的发球局都没丢（蒂亚福 0/3、谢尔顿救下 3/3）。"
+    },
+    {
+      "start": 107.29,
+      "end": 118.0,
+      "source": "main",
+      "narration": "谢尔顿这一盘发了八个Ace，一发得分率百分之八十五。自己面对的三个破发点，全部救下。",
+      "score_inset": true,
+      "_why": "`df_st_1` 的 Set 4：谢尔顿 `Aces 2 | 8`、`1st serve points won 74% | 85%`、`Break Points Saved 3/3`。画面是第四盘中段的回合，记分条 112.5~116.5 读得到 `6 3 3 2 / 4 6 6 4`——仍然是第四盘，**和「这一盘」对得上**。**百分比写「百分之八十五」不写「八成五」**（CLAUDE.md 2026-08-16）。**「自己面对的三个破发点」主语写出来了**——救的人和拿到点的人不是同一个。"
+    },
+    {
+      "start": 129.98,
+      "end": 138.0,
+      "source": "main",
+      "narration": "五比六，蒂亚福发球。零比四十——谢尔顿一口气拿到三个赛点。",
+      "score_inset": true,
+      "_why": "**比分和画面逐格对过**：记分条 128.5s 起亮出 `MATCH POINT`，`11 TIAFOE ➜ 6 3 3 5 [0] / 8 SHELTON 4 6 6 6 [40]`——箭头在蒂亚福那一行，所以**是他在发球**，赛点是谢尔顿在接发球局上拿到的。逐分 `df_mh_1` Set 4 最后一局 `0:40 |B1| |B3|` 对得上（`|B3|` 是赛点标记）。窗口收在 129.88 和 138.04 两个切点之间。"
+    },
+    {
+      "start": 138.14,
+      "end": 144.5,
+      "source": "main",
+      "narration": "蒂亚福救回来一个。十五比四十，还剩两个。",
+      "score_inset": true,
+      "_why": "记分条 140.5s 变成 `15:40`、144.5s 亮出 `MATCH POINT #2`；统计 `Match points saved` 蒂亚福 1 / 谢尔顿 0，**和「救回来一个」一字不差**。**主语写出来了**：救的是蒂亚福。"
+    },
+    {
+      "start": 149.82,
+      "end": 159.2,
+      "source": "main",
+      "narration": "第二个赛点上，蒂亚福双误。三小时十七分，比赛就这样结束了。",
+      "score_inset": false,
+      "_why": "**这一段兑现第 ① 段那个冷开场**（正文重新走完 153.45~159.20，不是只在开头预告一次）。「双误结束」两个源：源片解说 165.28 秒逐字 `And what a pity it had to end on a double fault.`（`captions.txt` grep 得到），以及 `df_mh_1` 的逐分停在 `15:40`（逐分不列制胜的那一分）＋统计里蒂亚福全场 2 个双误。用时 3:17 出自美网官方 feed。",
+      "_score_inset_why": "和第 1 段同一个理由：这一段横跨最后一分落定（153.35 / 154.7 / 155.86 三个切点挤在这儿），155.86 之后常驻记分条就撤了，整段开着回贴会在后半截贴一块球场地面上去。",
+      "crosses_cut": "跨 153.35 这个切点。两边分别是最后一分的回合和赛后的反应——**而这一段旁白讲的正是这一分怎么结束的**，画面从蒂亚福（`contact_02.jpg` 154.5s，粉色球衣，站在底线）切到谢尔顿的笑（156.5s / 158.5s），和「蒂亚福双误 → 比赛结束」的叙述顺序一致。",
+      "_ending_payoff_required": true
+    },
+    {
+      "start": 163.3,
+      "end": 174.0,
+      "source": "main",
+      "narration": "赢的那个人没有先庆祝。两个美国人在网前抱了很久。解说的原话是，他抱住了自己的朋友。",
+      "score_inset": false,
+      "_why": "画面是两人在网前拥抱（`contact_02.jpg` 166.5s / 168.5s / 170.5s 三格，粉色和黑白两件球衣抱在一起，172.5s 还在）。⚠️ **原来这句写的是「两个从小一起打球的美国人」——那是编的**：蒂亚福 1998 年生、谢尔顿 2002 年生，差四岁，源片解说只说了 `his friend`，没有任何一个源说过他们从小一起打球。现在只留解说真说过的那一句：`Francis wrapping his friend in a fierce hug.`（`captions.txt` 174.88 秒，grep 得到），而且**明写是解说的原话**，不当成我们自己的结论。窗口跟着拉到 174.00（同一镜头内，切点 190.61 还在后面）。",
+      "_score_inset_why": "赛后，常驻记分条已经撤了——`contact_02.jpg` 164.5~178.5 八格左下角全是空的。"
+    },
+    {
+      "start": 178.6,
+      "end": 190.5,
+      "source": "main",
+      "narration": "阿什一九七二年打进美网决赛。之后五十四年，再没有美国黑人男子站上过这里。周日对兹维列夫，他拿得下吗？",
+      "score_inset": false,
+      "_why": "**收尾落在一问上，不停在数据上。** 阿什 1972 两个源核过（见 `_claims`）；五十四年是 2026−1972 算出来的。**这一问不是封面那一问的回声**——封面钩子讲这场球怎么赢的（先丢一盘、二十个 Ace），末屏问的是下一场。决赛对手出自 NBC 原文。⚠️ 「站上过这里」而不是「站上过这个决赛」：后者切出来 17 格，超过字幕一行的 16 格。",
+      "_score_inset_why": "同上，赛后无板。"
+    }
+  ],
+  "_editing_why": "**选段按「死球之后再切」和「一段待在同一个镜头里」两条走**（切点取自 probe 的 `scene_cuts`：2.25, 21.02, 25.43, 56.11, 87.15, 107.19, 123.86, 126.78, 129.88, 138.04, 147.11, 149.72, 153.35, 159.29, 163.2, 190.61, 195.65, 198.18）。除了第 14 段显式认领的那一次，每一段都收在相邻两个切点之间。\n\n**末尾避开片尾板**：`silent_audio` 报 `[[198.26, 201.29]]`，`contact_03.jpg` 198.5s / 200.5s 两格正是美网的 `FOLLOW US ON SOCIAL MEDIA` 片尾板。最后一段收在 190.5，离 198.26 还有 7.7 秒，加 `SEG_FADE` 0.18 也够不着。\n\n**`walk` 那条源片只用两段、共 15.85 秒**（占正片不到 9%）：它是入场仪式，给的是「这是哪儿、这一场有多重」的语境；主体仍然是比赛本身。\n\n⚠️ **死球时刻这一轮还没量到**：第一趟 probe 没给 `--scorebox`，所以 `point_ends` 是空的（**「没量」不是「量出来一个都没有」**）。已经拿 probe 自己猜的 `104,888,645,978` 重发了一趟带 `--scorebox` 的 probe，落库之后 `--dry-run` 会把段尾离死球多远报出来。",
+  "_no_repeat": "同栏目的上一条是 `shelton-alcaraz`（同一届美网的 1/4 决赛，谢尔顿五盘淘汰卫冕冠军阿尔卡拉斯、决胜盘抢十 10:7）。那条已经**铺开讲过**的东西这里一个字都不碰：抢十的逐分、制胜分 38:34 对非受迫失误 53:35 那组对比、四小时二十八分、网前长久拥抱。\n\n**只留一句带过的来路**：入场播报员提到的「周三凌晨三点多淘汰卫冕冠军」——它是看懂这场球分量所必需的（刷到这一条的人多半没看过上一条），而且是**全场播报员自己说的**（`walk` 30.96 秒），不是我们把上一条的内容再讲一遍。⚠️ 这句话最后**没有进旁白**，只留在 `editorial.human_context.facts` 和小红书正文里——正片的篇幅要留给这一场。"
+}
