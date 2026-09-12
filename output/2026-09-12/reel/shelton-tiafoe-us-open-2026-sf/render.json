@@ -1,76 +1,75 @@
 {
-  "scoreboard_qc_sha256": "5b12ea40277fd7efa438c9a9407806b05ad6ffc0fb42c52a739f78d1d816e02b",
+  "scoreboard_qc_sha256": "e0b54449a46a8ee72c83cc5e25a5cad7860c71e77b7d42e8d42c5aa5348be603",
   "cover_seconds": 1.2,
   "cover_narrated": false,
   "outro_seconds": 3.827,
   "layout": "band",
-  "segments_seconds": 153.18,
+  "segments_seconds": 197.72,
   "topbar": {
     "line1": "2026 美网 半决赛",
     "line2": "谢尔顿 4-6 6-3 6-3 7-5 蒂亚福",
     "start": 1.2,
-    "end": 154.38
+    "end": 198.92
   },
-  "film_seconds": 158.225,
+  "film_seconds": 202.769,
   "narration_voice": "zh-CN-YunjianNeural",
   "narration_rate": "+6%",
   "narration_backend": "edge-tts",
   "narration_seconds": {
     "1": 6.216,
     "2": 5.904,
-    "3": 6.984,
-    "4": 6.768,
-    "5": 7.128,
-    "6": 6.816,
-    "7": 4.632,
-    "8": 6.312,
-    "9": 8.544,
-    "10": 7.488,
-    "11": 7.872,
-    "12": 5.976,
-    "13": 5.232,
-    "14": 6.192,
-    "15": 9.192,
-    "16": 7.896,
-    "17": 6.552
+    "3": 9.648,
+    "4": 6.792,
+    "5": 11.04,
+    "6": 17.088,
+    "7": 6.744,
+    "8": 15.336,
+    "9": 15.648,
+    "10": 12.504,
+    "11": 5.976,
+    "12": 10.128,
+    "13": 5.976,
+    "14": 9.192,
+    "15": 7.896,
+    "16": 6.552
   },
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "shelton-tiafoe-us-open-2026-sf",
-    "received_at": "2026-09-12T04:10:08Z",
-    "artifact_ready_at": "2026-09-12T04:16:35Z",
-    "elapsed_seconds": 387.309,
+    "received_at": "2026-09-12T10:22:34Z",
+    "artifact_ready_at": "2026-09-12T10:29:59Z",
+    "elapsed_seconds": 445.04,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "afe7e7da4f82bbe74082920c77da927fa732b8920e0424da1305ab1d6a1b5316",
-    "spec_sha256": "f14d44af9cc0381f7b3469645a2593e13682ce0a2cc17e38194b584832640b3c",
-    "run_id": "34672282490",
+    "film_sha256": "bcaa336468a7cc0f756e168d9d6a66cbd7747e7ea590424bea75cf0696044396",
+    "spec_sha256": "b914b3480fd4aa9cf15518e5f26d13d472e1d63e90ef1ad4f62694475afcb960",
+    "run_id": "34688262844",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-09-12T04:12:22Z",
-        "run_id": "34672282490"
+        "at": "2026-09-12T10:24:30Z",
+        "run_id": "34688262844"
       }
     ],
-    "render_seconds": 253.309,
-    "pre_render_seconds": 134.0
+    "render_seconds": 329.04,
+    "pre_render_seconds": 116.0
   },
-  "film_sha256": "afe7e7da4f82bbe74082920c77da927fa732b8920e0424da1305ab1d6a1b5316",
-  "film_bytes": 104753257,
-  "qc_attestation_sha256": "fe5980c224d8337227bed891a5c523cde5612b5cf4a5527d356bd2e6dc34d5f6",
+  "film_sha256": "bcaa336468a7cc0f756e168d9d6a66cbd7747e7ea590424bea75cf0696044396",
+  "film_bytes": 128904757,
+  "qc_attestation_sha256": "bc0578a89f78f04fcdbd9c83e00f193eb9155bf8b904e5238df5254d788e2758",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-09-12T04:12:22Z",
-      "run_id": "34672282490"
+      "at": "2026-09-12T10:24:30Z",
+      "run_id": "34688262844"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-09-12T04:16:36Z",
-      "run_id": "34672282490"
+      "at": "2026-09-12T10:30:00Z",
+      "run_id": "34688262844"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-shelton-tiafoe-us-open-2026-sf/shelton-tiafoe-us-open-2026-sf.mp4",
-  "video_bytes": 104753257
+  "video_bytes": 128904757
 }
