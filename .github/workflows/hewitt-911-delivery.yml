@@ -34,7 +34,9 @@ jobs:
         run: |
           pip install -q -e . numpy playwright
           python -m playwright install --with-deps chromium
-          sudo apt-get install -y -qq fonts-noto-cjk
+          sudo apt-get install -y -qq ffmpeg gh fonts-noto-cjk
+          ffmpeg -version | head -1
+          gh --version | head -1
       - name: Restore reviewed images and original narration
         run: |
           unzip -q assets/explainer/hewitt-911-25/production-inputs.zip -d /tmp/hewitt-inputs
