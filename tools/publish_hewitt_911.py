@@ -2,7 +2,7 @@ from pathlib import Path
 import argparse, json, subprocess, os, sys, html, wave, shutil, zipfile
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'src'))
-TAG='hewitt-911-25-20260912'
+TAG='hewitt-911-25-wawrinka-style-20260912'
 REPO='robertyang87/tennislive'
 REL=f'https://github.com/{REPO}/releases/download/{TAG}'
 COPY='https://robertyang87.github.io/tennislive/output/2026-09-12/explainer/hewitt-911-25/copy.html'
@@ -50,7 +50,9 @@ def prepare(out):
         w.setnchannels(1);w.setsampwidth(2);w.setframerate(sr);w.writeframes((np.clip(x,-1,1)*32767).astype('<i2').tobytes())
     run(['ffmpeg','-v','error','-y','-i',str(out/'hewitt-911-25-dry.mp4'),'-i',str(out/'music.wav'),'-filter_complex','[0:a]loudnorm=I=-16:TP=-1.5:LRA=8[voice];[voice][1:a]amix=inputs=2:duration=first:normalize=0,alimiter=limit=0.95[a]','-map','0:v','-map','[a]','-c:v','copy','-c:a','aac','-b:a','128k','-ar','48000','-movflags','+faststart',str(out/'hewitt-911-25.mp4')])
     probe=json.loads(subprocess.check_output(['ffprobe','-v','error','-show_streams','-show_format','-of','json',str(out/'hewitt-911-25.mp4')]))
-    assert 262<float(probe['format']['duration'])<265
+    assert abs(float(probe['format']['duration']) - (sum(ds)+6.222)) < 0.5
+    v=next(s for s in probe['streams'] if s['codec_type']=='video')
+    assert (v['width'],v['height']) == (1080,1920)
     assert len(list(out.glob('slide_*.jpg')))==15
     assert '九一一事件' in (out/'sub_00.ass').read_text()
     shutil.copy(out/'slide_00.jpg',out/'cover.jpg')
@@ -61,7 +63,7 @@ def prepare(out):
         for p in sorted(out.glob('slide_*.jpg')):z.write(p,p.name)
         z.write(ROOT/'assets/explainer/hewitt-911-25/sources.json','sources.json')
         z.write(ROOT/'specs/explainers/hewitt-911-25.json','script.json')
-    (out/'qc.json').write_text(json.dumps({'status':'passed','duration':probe['format']['duration'],'photos':15,'original_audio_reused':True},ensure_ascii=False))
+    (out/'qc.json').write_text(json.dumps({'status':'passed','duration':probe['format']['duration'],'photos':15,'style_reference':'wawrinka-wildcard 2026-08-27','audience_copy_reviewed':True,'width':1080,'height':1920},ensure_ascii=False))
 
 def push_once(out):
     from tennislive.publish.pushplus import push
