@@ -1,0 +1,106 @@
+# 转写交叉校验：zverev-khachanov-us-open-2026-sf-presser
+
+- 第一份：ASR（small.en） **1351** 词
+- 第二份：faster-whisper（medium.en）**1337** 词
+- **对不上 10.4%**（闸门 12%）
+
+⚠️ 上面两个词数和分歧率都是**去掉 erm/uh/uhh/um/umm 这类填词之后**算的：这些词 whisper 系统性地会丢，跟源可不可信无关，留着只会把「说话人有多磕巴」量成「两份转写对不上」。
+
+## 分歧逐处（左＝ASR（small.en），右＝第二份）
+
+- `a` → `—`
+- `win` → `when`
+- `—` → `and`
+- `fought` → `falling incredibly`
+- `set` → `said`
+- `i'm` → `—`
+- `referenced` → `reference`
+- `—` → `at`
+- `at an extreme height it's a` → `—`
+- `i` → `i've`
+- `here` → `year`
+- `i` → `—`
+- `tournament` → `term`
+- `—` → `it's it's it's`
+- `the tournament` → `determined`
+- `going to` → `gonna`
+- `—` → `sitting`
+- `—` → `for`
+- `—` → `can`
+- `going to` → `gonna`
+- `well done sasha` → `—`
+- `—` → `i just i`
+- `—` → `like`
+- `—` → `that was`
+- `i mean are you trying to get it like a seven` → `—`
+- `—` → `i'm not like`
+- `it` → `i`
+- `—` → `i`
+- `semifinal` → `semi final`
+- `ok` → `okay`
+- `got to` → `gotta`
+- `—` → `like`
+- `—` → `then`
+- `ok` → `okay now`
+- `i can start` → `look it's`
+- `going to` → `gonna`
+- `played` → `play`
+- `—` → `just just`
+- `what` → `but`
+- `going to` → `gonna`
+- `—` → `you know`
+- `—` → `in a`
+- `did 2020 leave` → `—`
+- `it` → `or you`
+- `there was` → `those`
+- `whether` → `when`
+- `going to` → `gonna`
+- `i've` → `i`
+- `one` → `—`
+- `ok there hi alexander at the end of last year` → `okay`
+- `—` → `is`
+- `you did at the end of the match today` → `—`
+- `or` → `with`
+- `—` → `it's`
+- `you've` → `you`
+- `—` → `it's`
+- `—` → `really`
+- `at ashe` → `a`
+- `frances` → `francis`
+- `frances` → `oh francis something`
+- `—` → `they`
+- `a` → `the`
+- `—` → `so it was`
+- `ben is` → `then and it's`
+- `ground strokes` → `groundstrokes`
+- `—` → `so it's`
+- `is` → `—`
+- `no` → `know`
+- `playing french in paris bercy` → `—`
+- `fery` → `ferry`
+- `in` → `—`
+- `—` → `i mean there's no`
+- `—` → `they`
+- `—` → `over that`
+- `—` → `abaldo`
+- `ciao` → `—`
+- `you smile` → `i use my`
+- `really` → `—`
+- `didn't it's very rare` → `mean`
+- `is` → `it's`
+- `—` → `are`
+- `the old spirit` → `they all spread of`
+- `—` → `it was the`
+- `—` → `we want to`
+- `—` → `we're`
+- `—` → `in their`
+- `last question in english matt so you have` → `less questioning which meant`
+- `grand slam` → `fun more grandson`
+- `jannik` → `yannick`
+- `and then is that` → `that's`
+- `have` → `—`
+- `—` → `or i i thought it's but`
+- `is` → `it's`
+- `jannik going to` → `yannick gonna`
+- `—` → `which`
+- `let's switch to german thank you thank you` → `—`

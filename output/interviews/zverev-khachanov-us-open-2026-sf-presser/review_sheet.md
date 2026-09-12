@@ -251,18 +251,18 @@
 
 ## 自动字幕的空档（≥2 秒连一个事件都没有）
 
-- **32.9–34.9 秒**（片内，2.0 秒空白，[跳过去](https://youtu.be/FwIUgX3NQRU?t=32)）　**还没销账**
-- **56.4–58.9 秒**（片内，2.5 秒空白，[跳过去](https://youtu.be/FwIUgX3NQRU?t=56)）　**还没销账**
-- **70.7–73.3 秒**（片内，2.7 秒空白，[跳过去](https://youtu.be/FwIUgX3NQRU?t=70)）　**还没销账**
-- **105.5–107.7 秒**（片内，2.2 秒空白，[跳过去](https://youtu.be/FwIUgX3NQRU?t=105)）　**还没销账**
-- **153.4–158.3 秒**（片内，4.9 秒空白，[跳过去](https://youtu.be/FwIUgX3NQRU?t=153)）　**还没销账**
-- **289.9–292.9 秒**（片内，3.0 秒空白，[跳过去](https://youtu.be/FwIUgX3NQRU?t=289)）　**还没销账**
-- **326.8–328.8 秒**（片内，2.0 秒空白，[跳过去](https://youtu.be/FwIUgX3NQRU?t=326)）　**还没销账**
-- **336.2–338.6 秒**（片内，2.4 秒空白，[跳过去](https://youtu.be/FwIUgX3NQRU?t=336)）　**还没销账**
-- **367.6–369.6 秒**（片内，2.1 秒空白，[跳过去](https://youtu.be/FwIUgX3NQRU?t=367)）　**还没销账**
-- **392.5–394.7 秒**（片内，2.2 秒空白，[跳过去](https://youtu.be/FwIUgX3NQRU?t=392)）　**还没销账**
-- **473.5–476.6 秒**（片内，3.1 秒空白，[跳过去](https://youtu.be/FwIUgX3NQRU?t=473)）　**还没销账**
-- **494.7–497.6 秒**（片内，2.9 秒空白，[跳过去](https://youtu.be/FwIUgX3NQRU?t=494)）　**还没销账**
-- **508.2–511.0 秒**（片内，2.8 秒空白，[跳过去](https://youtu.be/FwIUgX3NQRU?t=508)）　**还没销账**
+- **32.9–34.9 秒**（片内，2.0 秒空白，[跳过去](https://youtu.be/FwIUgX3NQRU?t=32)）　⚠️ 没听音轨（沙箱取不到 YouTube 媒体），判据是**第二份转写**（YouTube en-orig 轨，逐词时间戳）：这 2.0 秒**两份 ASR 都没有任何词**——主持人说完「Questions.」到第一位记者开口之间的停顿。
+- **56.4–58.9 秒**（片内，2.5 秒空白，[跳过去](https://youtu.be/FwIUgX3NQRU?t=56)）　⚠️ 没听音轨（沙箱取不到 YouTube 媒体），判据是**第二份转写**（YouTube en-orig 轨，逐词时间戳）：这 2.5 秒**两份 ASR 都没有任何词**——他说完「That's a great question. Um,」之后的停顿。
+- **70.7–73.3 秒**（片内，2.7 秒空白，[跳过去](https://youtu.be/FwIUgX3NQRU?t=70)）　⚠️ 没听音轨（沙箱取不到 YouTube 媒体），判据是**第二份转写**（YouTube en-orig 轨，逐词时间戳）：这 2.7 秒只有犹豫音「Um,」和转折词「but」，而「But I think the improvement」whisper 转到了（#33）。
+- **105.5–107.7 秒**（片内，2.2 秒空白，[跳过去](https://youtu.be/FwIUgX3NQRU?t=105)）　⚠️ 没听音轨（沙箱取不到 YouTube 媒体），判据是**第二份转写**（YouTube en-orig 轨，逐词时间戳）：这 2.2 秒里只有主持人叫下一位提问记者的名字「Matt,」，管线那份 whisper 没转出来。不是受访者的话，不补。
+- **153.4–158.3 秒**（片内，4.9 秒空白，[跳过去](https://youtu.be/FwIUgX3NQRU?t=153)）　⚠️ 没听音轨（沙箱取不到 YouTube 媒体），判据是**第二份转写**（YouTube en-orig 轨，逐词时间戳）：这 4.9 秒里只有主持人叫「Doug,」（下一位记者），其余是换人提问的间隙。不是受访者的话，不补。
+- **289.9–292.9 秒**（片内，3.0 秒空白，[跳过去](https://youtu.be/FwIUgX3NQRU?t=289)）　⚠️ 没听音轨（沙箱取不到 YouTube 媒体），判据是**第二份转写**（YouTube en-orig 轨，逐词时间戳）：这 3.0 秒里只有主持人一句「Really,」和下一位记者开口的「as」——「As you mentioned」那句 whisper 转到了（#140）。不是受访者的话，不补。
+- **326.8–328.8 秒**（片内，2.0 秒空白，[跳过去](https://youtu.be/FwIUgX3NQRU?t=326)）　⚠️ 没听音轨（沙箱取不到 YouTube 媒体），判据是**第二份转写**（YouTube en-orig 轨，逐词时间戳）：这 2.0 秒只有一个犹豫音「Um,」和连词「and」，而「And Ben is just a big, powerful guy」whisper 转到了（#158）。这条线本来就去语气词。
+- **336.2–338.6 秒**（片内，2.4 秒空白，[跳过去](https://youtu.be/FwIUgX3NQRU?t=336)）　⚠️ 没听音轨（沙箱取不到 YouTube 媒体），判据是**第二份转写**（YouTube en-orig 轨，逐词时间戳）：这 2.4 秒是一段结巴「So, it's they're」，而「They're a bit of a different style」whisper 转到了（#161）。
+- **367.6–369.6 秒**（片内，2.1 秒空白，[跳过去](https://youtu.be/FwIUgX3NQRU?t=367)）　⚠️ 没听音轨（沙箱取不到 YouTube 媒体），判据是**第二份转写**（YouTube en-orig 轨，逐词时间戳）：这 2.0 秒只有一个犹豫音「Um,」。
+- **392.5–394.7 秒**（片内，2.2 秒空白，[跳过去](https://youtu.be/FwIUgX3NQRU?t=392)）　⚠️ 没听音轨（沙箱取不到 YouTube 媒体），判据是**第二份转写**（YouTube en-orig 轨，逐词时间戳）：这 2.2 秒只有一个犹豫音「Um」，在主持人点完名、意大利记者开口之前。
+- **473.5–476.6 秒**（片内，3.1 秒空白，[跳过去](https://youtu.be/FwIUgX3NQRU?t=473)）　⚠️ 没听音轨（沙箱取不到 YouTube 媒体），判据是**第二份转写**（YouTube en-orig 轨，逐词时间戳）：这 3.1 秒是记者问句的结巴尾巴「or Um」加他开口的「I I」，而「I believed in it」whisper 转到了（#224）。
+- **494.7–497.6 秒**（片内，2.9 秒空白，[跳过去](https://youtu.be/FwIUgX3NQRU?t=494)）　⚠️ 没听音轨（沙箱取不到 YouTube 媒体），判据是**第二份转写**（YouTube en-orig 轨，逐词时间戳）：这 2.9 秒只有一个犹豫音「Um」。
+- **508.2–511.0 秒**（片内，2.8 秒空白，[跳过去](https://youtu.be/FwIUgX3NQRU?t=508)）　⚠️ 没听音轨（沙箱取不到 YouTube 媒体），判据是**第二份转写**（YouTube en-orig 轨，逐词时间戳）：这 2.8 秒是他向主持人道谢「Thank you, Jen.」——whisper 转成了「Thank you. Thank you.」（#238），少的只有主持人的名字。不补。
 
 打开源片听这几秒：**有人说话就是漏了**，掌声／欢呼就不是。结论写进 spec 的 `caption_gaps_ok`（键 `起-止`，秒，一位小数）。
