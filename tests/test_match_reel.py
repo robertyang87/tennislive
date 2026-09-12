@@ -4283,6 +4283,67 @@ _DIST_TO_MODULE = {
 }
 
 
+def test_测试按包名导入的tools模块要能在tools不在sys_path时导入():
+    """**`tools/` 要自己挂上 `sys.path`，不能指望调用方顺手插过。**
+
+    2026-09-12 真红在 CI 上一次：`tools/build_interview_clip.py` 的
+    `from interview_zh_tail import ...` 写成了**模块级的裸兄弟 import**。
+    直接 `python tools/xxx.py` 跑时 Python 把脚本所在目录放进 `sys.path[0]`，
+    它从不出错；而测试里这些模块是按 `tools.xxx` 这个**包名**导入的，
+    `tools/` 本身不在 `sys.path` 上——除非**另一个**测试文件恰好先插过它
+    （`test_preview_segments.py` 就插）。
+
+    ⚠️ **所以它红不红是抛硬币**：`-n auto --dist loadfile` 下取决于同一个
+    worker 里先跑到谁。⚠️ 而它在 xdist 的汇总里**长得像「某一条参数化用例
+    挂了」**——整份文件收集失败只报一行 FAILED，读报告的人会去查那条用例，
+    查不出任何问题（那次就是这么绕了一圈）。
+
+    ⚠️ **判据自己从测试文件推，不维护名单**：凡是测试里写过
+    `from tools.X import` / `import tools.X` 的，都要在一个**没有 `tools/`**
+    的干净解释器里 import 得动。装上当天扫出第二处（`build_match_reel` 的
+    `from reel_timing import ...`）——同一类的两处，一处已经发作。
+
+    ⚠️ **必须开子进程，不能在本进程里 `importlib` 一遍**：这会儿 `tools/`
+    早就被别的测试插进 `sys.path` 了（这条判据要验的恰恰是「没插过会怎样」），
+    在本进程里验等于验了一个和 CI 不一样的环境——那正是这个 bug 能躺这么久
+    的原因。
+    """
+    root = Path(__file__).resolve().parents[1]
+
+    def _imported(path: Path) -> set[str]:
+        """⚠️ **用 AST 不用正则**：这条判据自己的 docstring 里就写着
+        `from tools.X import`，按文本扫会把「把坑记下来」判成「又踩了这个坑」
+        ——第一版正是这么红的（`tools.X` 这个不存在的模块），而这个仓库为
+        同一个形状栽过六次。注释和 docstring 根本不进 AST。"""
+        found = set()
+        for node in ast.walk(ast.parse(path.read_text(encoding="utf-8"))):
+            if isinstance(node, ast.ImportFrom) and (node.module or "").startswith("tools."):
+                found.add(node.module.split(".", 1)[1].split(".")[0])
+            elif isinstance(node, ast.Import):
+                for a in node.names:
+                    if a.name.startswith("tools."):
+                        found.add(a.name.split(".", 1)[1].split(".")[0])
+        return found
+
+    mods = sorted({m for f in (root / "tests").glob("test_*.py")
+                   for m in _imported(f)})
+    assert len(mods) >= 10, f"判据失效了：只扫到 {len(mods)} 个 tools 模块"
+
+    env = {"PYTHONPATH": str(root / "src"), "PATH": "/usr/bin:/bin"}
+    bad = []
+    for m in mods:
+        r = subprocess.run([sys.executable, "-c", f"import tools.{m}"],
+                           cwd=root, env=env, capture_output=True, text=True)
+        if r.returncode:
+            bad.append(f"tools.{m} → {r.stderr.strip().splitlines()[-1]}")
+    assert not bad, (
+        "这几个模块只在「别的测试恰好先把 tools/ 插进 sys.path」时才导入得动：\n"
+        + "\n".join(bad)
+        + "\n修法：模块级的 import 前面补一句 "
+          "`sys.path.insert(0, str(Path(__file__).resolve().parent))`；"
+          "只在一个函数里用的，连 insert 一起挪进那个函数。")
+
+
 def test_测试里不许import没声明的包():
     """**本地装着不等于 CI 装着。** 沙箱是长期攒出来的环境，runner 每次都是
     干净的——这个文件里一度写了 `import yaml`，沙箱里绿、CI 里

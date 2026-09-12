@@ -1649,13 +1649,6 @@ def assert_topbar_font_log(stderr: str, spec: dict) -> None:
                 f"顶栏字体预检中 {label} 没有落到 Noto：{matches[-1].strip()}")
 
 
-# 中文行尾吊在这些字上，就是把一个意思劈成两半——和英文那边
-# `beat your ／ same opponent` 是同一个毛病，只是换了种语言。
-# ⚠️ **只收单字虚词，而且只在这一行不是句子结尾时才算。**
-# `身体上和心理上都是`（都是＝完整的谓语）、`你也是看着她长大的`（是…的 结构）
-# 都以「虚词」收尾却是完整的——判据宁可窄不可宽，扩大化的判据不吭声。
-from interview_zh_tail import has_dangling_tail
-
 
 def en_problems(lines: list[dict]) -> list[str]:
     """英文那一行的硬要求：不超宽。
@@ -1675,7 +1668,31 @@ def en_problems(lines: list[dict]) -> list[str]:
 
 
 def zh_problems(lines: list[dict], zh: list[str]) -> list[str]:
-    """中文那一行的两条硬要求：不超宽、行尾不吊在虚词上。"""
+    """中文那一行的两条硬要求：不超宽、行尾不吊在虚词上。
+
+    行尾那条的判据在 `tools/interview_zh_tail.py`：中文行尾吊在单字虚词上，
+    就是把一个意思劈成两半——和英文那边 `beat your ／ same opponent` 是同一个
+    毛病，只是换了种语言。⚠️ **只收单字虚词，而且只在这一行不是句子结尾时
+    才算**：`身体上和心理上都是`（都是＝完整的谓语）、`你也是看着她长大的`
+    （是…的 结构）都以「虚词」收尾却是完整的——判据宁可窄不可宽，扩大化的
+    判据不吭声。
+
+    ⚠️ **`tools/` 要自己确保在 `sys.path` 上，而且这句 insert 必须留在函数里。**
+    和 `_ytdlp_ladder()` / `check_source_contract()` 那两条注释是同一个坑，
+    只是这一处原来写成了**模块级的裸 import**：直接
+    `python tools/build_interview_clip.py` 跑时 Python 把脚本所在目录放进
+    `sys.path[0]`，它从不出错；而测试里这个模块是按 `tools.build_interview_clip`
+    这个包名导入的，`tools/` 本身不在 `sys.path` 上——**除非另一个测试文件恰好
+    先插过它**（`test_interview_zh_tail.py` / `test_preview_segments.py` 都插）。
+    于是它在 `-n auto --dist loadfile` 下是不是红，取决于同一个 worker 里先跑
+    到谁——⚠️ **而「整份文件收集失败」在 xdist 的汇总里长得像「某一条参数化
+    用例挂了」**，读报告的人会去查那条用例，查不出任何问题。
+    """
+    import sys  # noqa: PLC0415
+
+    sys.path.insert(0, str(ROOT / "tools"))
+    from interview_zh_tail import has_dangling_tail  # noqa: PLC0415
+
     bad = []
     for i, (seg, cn) in enumerate(zip(lines, zh), 1):
         if (w := _zh_width(cn)) > _LINE_PX:

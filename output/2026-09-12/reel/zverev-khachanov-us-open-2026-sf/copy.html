@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>9.12 赛场之上 | 兹维列夫两个抢七全拿下</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>兹维列夫两个抢七全拿下，打进美网决赛
+
+全场两百一十一分，他只比哈恰诺夫多赢了三分。
+
+比分却是 6-3 7-6(7) 7-6(6)，直落三盘。
+
+这场球真正的形状不在比分上。第一盘只用了三十七分钟，兹维列夫一发得分率百分之八十七，哈恰诺夫一个破发点都没拿到。可从第二盘开始，两个人的小分几乎就没分开过——第二盘 43 比 44、第三盘 35 比 40，后面这两盘他赢的分其实都更少。
+
+第二盘结束换边的时候，转播在屏幕左下角打出了总得分：兹维列夫 99，哈恰诺夫 100。赢下两盘的那个人，小分还落后一分。
+
+差别全在两个抢七。
+
+第二盘他一度三比五落后，一分一分追了回来，还先拿到了盘点；记分条上那行黄字挂了很久，哈恰诺夫把盘点一个一个救了回来，把比分追成七平。最后是一个三十四拍的相持，九比七，这一盘才归了他。
+
+第三盘更极端：两个人的发球局一个都没被破过，整盘一个破发点都没有，直接进抢七。而这一次落后的是他——哈恰诺夫一度三比零、五比二领先，记分条上写着一比四。他一分一分追了回来，八比六。
+
+六年前的同一片阿瑟·阿什球场，他在美网决赛先赢两盘，最后在第五盘的抢七里把冠军丢了。今天他赢的，正是两个抢七。
+
+今年的法网，他拿到了生涯第一个大满贯。在那之前，他一直被叫做最好的无大满贯球员。温网又打进决赛，现在是美网——一年之内第三次。
+
+周日的决赛，他拿得下第二个大满贯吗？
+
+#网球时差 #美网 #兹维列夫 #哈恰诺夫 #赛场之上</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>周日的决赛，他拿得下第二个大满贯吗？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
