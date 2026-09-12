@@ -1,11 +1,11 @@
 {
   "status": "pass",
-  "checked_at": "2026-09-12T01:01:45Z",
+  "checked_at": "2026-09-12T01:16:52Z",
   "auditor": "opencv-haar-v1",
   "expected_subject": "兹维列夫",
   "identity_evidence": "L0-bound spec subject + same-source frame_at",
-  "spec_sha256": "7ba33173ead6b06262ab7675fdd95162c3284b2b207d8a6969132e8ef7b4dc7e",
-  "poster_sha256": "f519729820993162daa37782945996d7ff4d2e5eb3a22e970e47dd125f969f8c",
+  "spec_sha256": "143da3e9c391c3627a78d43a12d34f3766461745fb5b8bfe12dc055d0b523f90",
+  "poster_sha256": "9f35d04748d2345cee8d8ed339f699118bc9c62e40b7755f4a379565db56d855",
   "thresholds": {
     "close_up_zoom": 1.5,
     "face_height_ratio": 0.08,
@@ -29,25 +29,25 @@
       ]
     },
     "face": {
-      "detector": "frontal-default",
+      "detector": "frontal-alt2",
       "box": [
-        456,
-        182,
-        270,
-        270
+        452,
+        249,
+        251,
+        251
       ],
-      "detected_faces": 6,
+      "detected_faces": 8,
       "eyes": 2,
-      "face_height_ratio": 0.33333,
-      "face_area_ratio": 0.08333,
-      "center_x_ratio": 0.54722,
-      "center_y_ratio": 0.20617,
-      "sharpness": 310.946,
-      "contrast": 138.0
+      "face_height_ratio": 0.30988,
+      "face_area_ratio": 0.07202,
+      "center_x_ratio": 0.53472,
+      "center_y_ratio": 0.27716,
+      "sharpness": 395.47,
+      "contrast": 151.0
     },
     "contract": {
       "shot_type": "",
-      "frame_at": 91.1,
+      "frame_at": 93.0,
       "zoom": 1.0,
       "focus_y": 0.5
     }
