@@ -1,0 +1,66 @@
+name: hewitt-911-delivery
+on:
+  push:
+    branches: [codex/hewitt-911-25-delivery]
+    paths: [.github/workflows/hewitt-911-delivery.yml]
+permissions:
+  contents: write
+concurrency:
+  group: hewitt-911-25-delivery
+  cancel-in-progress: false
+jobs:
+  deliver:
+    if: github.run_attempt == 1
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            src
+            tools
+            specs/explainers
+            assets/fonts
+            assets/logo
+            assets/brand
+            assets/explainer/hewitt-911-25
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install rendering dependencies
+        run: |
+          pip install -q -e . numpy playwright
+          python -m playwright install --with-deps chromium
+          sudo apt-get install -y -qq fonts-noto-cjk
+      - name: Restore reviewed images and original narration
+        run: |
+          unzip -q assets/explainer/hewitt-911-25/production-inputs.zip -d /tmp/hewitt-inputs
+          cp /tmp/hewitt-inputs/photos/* assets/explainer/hewitt-911-25/
+          mkdir -p /tmp/hewitt-final
+          cp /tmp/hewitt-inputs/voice/* /tmp/hewitt-final/
+      - name: Render with reviewed original audio
+        run: |
+          python tools/build_hewitt_911_story.py --outdir /tmp/hewitt-final --use-existing-audio
+          python tools/publish_hewitt_911.py prepare --outdir /tmp/hewitt-final
+      - name: Publish video and cards to Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release view hewitt-911-25-20260912 >/dev/null 2>&1 || gh release create hewitt-911-25-20260912 --target "$GITHUB_SHA" --title '网球有故事｜休伊特的纽约告别' --notes '九一一25周年。15页历史照片图卡，中文旁白、字幕和原创轻配乐。'
+          gh release upload hewitt-911-25-20260912 /tmp/hewitt-final/hewitt-911-25.mp4 /tmp/hewitt-final/hewitt-911-25-cards.zip /tmp/hewitt-final/xiaohongshu.txt /tmp/hewitt-final/qc.json
+      - name: Push to WeChat once and persist receipt
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
+          TENNISLIVE_PUSHPLUS_IMAGE_SETTLE_SECONDS: '5'
+        run: python tools/publish_hewitt_911.py push --outdir /tmp/hewitt-final
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: hewitt-911-delivery-evidence
+          path: |
+            /tmp/hewitt-final/qc.json
+            /tmp/hewitt-final/push-intent.json
+            /tmp/hewitt-final/push-receipt.json
+            /tmp/hewitt-final/contact-sheet.jpg
