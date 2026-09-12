@@ -2520,6 +2520,12 @@ _ON_PURPOSE = {
     # 「亚历山德罗娃」——**两个都是真人，判据分不出来**，只能显式声明。
     # 它是全部 1106 段存量里唯一一条误报，所以那条判据是收得住的。
     "亚历山德拉",
+    # `zverev-khachanov-us-open-2026-sf-presser.json`：记者用兹维列夫的名
+    # （Alexander）跟他打招呼「Hi, Alexander.」。判据把它读成「亚历山德拉」
+    # （Alexandra Eala 的名，上一条）——又是「两个都是真人，判据分不出来」
+    # 那个形状。表里登记的是姓「兹维列夫」，而这一行是同一个人的另一种叫法，
+    # 所以按这张表的规矩显式声明，不是往 `zh/players.py` 里补一个新名字。
+    "亚历山大",
     # `pegula-eala-dc2026-final.json`：赛事工作人员的名字（Christina/Kristina，
     # 两份 ASR 拼法不同，`_zh_why` 里已经写明「不是球员，译名表里没有」）。
     # 表里的「克里斯蒂安」是另一个真人（WTA 球员 Jaqueline Cristian），只差
