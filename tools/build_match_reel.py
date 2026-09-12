@@ -5047,6 +5047,20 @@ def silent_stretches(segments, spoken_of: dict[int, float]) -> list[str]:
 #: `narration_backend` 和它对不上的产物，不能拿来校这个模型（差的是后端不是
 #: 模型）。换后端要连这个名字一起改，判据会跟着换一批样本。
 SPEECH_FITTED_BACKEND = "azure"
+# ⚠️ **`tools/` 要自己挂上 `sys.path`，不能指望调用方顺手插过。**
+# 直接 `python tools/build_match_reel.py` 跑时 Python 把脚本所在目录放进
+# `sys.path[0]`，这条 import 从不出错；而测试里这个模块是按
+# `tools.build_match_reel` 这个包名导入的，`tools/` 本身不在 `sys.path` 上
+# ——**除非另一个测试文件恰好先插过它**（`test_preview_segments.py` 就插）。
+# 于是它在 `-n auto --dist loadfile` 下红不红，取决于同一个 worker 里先跑到谁。
+# 2026-09-12 量过：把 `tools/` 从 `sys.path` 拿掉，测试会按包名导入的 20 个
+# tools 模块里**只有这一个 import 不动**，而同一天采访线那条
+# （`interview_zh_tail`）已经真红在 CI 上了——同一类的两处，一处已经发作。
+# ⚠️ 这几个是**模块级常量的再导出**，`speech_seconds` 一类在全模块到处用，
+# 挪不进某一个函数，所以 insert 只能留在模块级（和 `draft_interview_spec.py`
+# 那几行同一个形状）。⚠️ 写法跟这个文件别处一致（它没有模块级的 `ROOT`，
+# 一律 `Path(__file__).resolve().parent`，那就是 `tools/`）。
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 from reel_timing import (  # noqa: E402
     SPEECH_PER_CHAR,
     SPEECH_PER_LATIN,
