@@ -1,0 +1,69 @@
+{
+ "status": "pass",
+ "method": "silero_vad_plus_dual_asr_coverage",
+ "sha256": "82f930362928726083f7f2b1f88105f56457c426e0fe03d632f76482ee005b32",
+ "edge_pad_seconds": 0.35,
+ "max_speech_seconds": 0.12,
+ "results": [
+  {
+   "key": "10.0-14.5",
+   "start": 9.96,
+   "end": 14.48,
+   "speech_seconds": 0,
+   "second_asr_words": [
+    "Talk"
+   ],
+   "transcript_covered": true,
+   "caption_timeline_covered": false,
+   "status": "transcript_covered"
+  },
+  {
+   "key": "94.0-98.7",
+   "start": 93.96,
+   "end": 98.72,
+   "speech_seconds": 0,
+   "second_asr_words": [
+    "So"
+   ],
+   "transcript_covered": true,
+   "caption_timeline_covered": true,
+   "status": "transcript_covered"
+  },
+  {
+   "key": "146.3-149.7",
+   "start": 146.28,
+   "end": 149.68,
+   "speech_seconds": 0,
+   "second_asr_words": [
+    "this"
+   ],
+   "transcript_covered": true,
+   "caption_timeline_covered": false,
+   "status": "transcript_covered"
+  },
+  {
+   "key": "159.2-161.4",
+   "start": 159.24,
+   "end": 161.44,
+   "speech_seconds": 0,
+   "second_asr_words": [
+    "I'm"
+   ],
+   "transcript_covered": true,
+   "caption_timeline_covered": false,
+   "status": "transcript_covered"
+  },
+  {
+   "key": "172.2-174.9",
+   "start": 172.2,
+   "end": 174.88,
+   "speech_seconds": 0,
+   "second_asr_words": [
+    "and"
+   ],
+   "transcript_covered": true,
+   "caption_timeline_covered": false,
+   "status": "transcript_covered"
+  }
+ ]
+}

@@ -1,0 +1,67 @@
+{
+  "film_sha256": "59b9b89c0f9cb78105c190412684439deac3b1f968ae024f3ed25f12b078b973",
+  "film_seconds": 223.861,
+  "production_sla": {
+    "version": 2,
+    "pipeline": "interview-clip",
+    "slug": "shelton-tiafoe-us-open-2026-sf-interview",
+    "received_at": "2026-09-12T04:33:03Z",
+    "artifact_ready_at": "2026-09-12T04:40:20Z",
+    "elapsed_seconds": 437.461,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "59b9b89c0f9cb78105c190412684439deac3b1f968ae024f3ed25f12b078b973",
+    "spec_sha256": "1f7553457d7d78f19f650beed89ae06cec20fbc409d89a8b28128698a3521798",
+    "run_id": "34673294504",
+    "stage_events": [
+      {
+        "stage": "preflight",
+        "at": "2026-09-12T04:33:50Z",
+        "run_id": "34673294504"
+      },
+      {
+        "stage": "asr_verify",
+        "at": "2026-09-12T04:35:20Z",
+        "run_id": "34673294504"
+      },
+      {
+        "stage": "render",
+        "at": "2026-09-12T04:37:12Z",
+        "run_id": "34673294504"
+      }
+    ],
+    "render_seconds": 188.461,
+    "pre_render_seconds": 249.0
+  },
+  "production_stage_events": [
+    {
+      "stage": "preflight",
+      "at": "2026-09-12T04:33:50Z",
+      "run_id": "34673294504"
+    },
+    {
+      "stage": "asr_verify",
+      "at": "2026-09-12T04:35:20Z",
+      "run_id": "34673294504"
+    },
+    {
+      "stage": "render",
+      "at": "2026-09-12T04:37:12Z",
+      "run_id": "34673294504"
+    },
+    {
+      "stage": "qc",
+      "at": "2026-09-12T04:40:21Z",
+      "run_id": "34673294504"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-12T04:40:22Z",
+      "run_id": "34673294504"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/interview-shelton-tiafoe-us-open-2026-sf-interview/shelton-tiafoe-us-open-2026-sf-interview.mp4?v=59b9b89c0f9cb781",
+  "video_bytes": 83340556,
+  "release_asset_digest": "sha256:59b9b89c0f9cb78105c190412684439deac3b1f968ae024f3ed25f12b078b973",
+  "qc_attestation_sha256": "e1ab07a8e5f1578ca0a9aa7c70b363b33d991ce4ff97eb995bcd0f653b7ba4d2"
+}

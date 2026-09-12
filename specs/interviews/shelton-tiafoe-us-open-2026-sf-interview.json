@@ -1,0 +1,246 @@
+{
+  "slug": "shelton-tiafoe-us-open-2026-sf-interview",
+  "column": "赛后开麦",
+  "url": "https://www.youtube.com/watch?v=NJL86sutFlk",
+  "source_title": "Ben Shelton On-Court Interview | 2026 US Open Semifinal",
+  "interview_kind": "赛后场上采访",
+  "requested_content_type": "on_court",
+  "event": "2026 美网 男单半决赛",
+  "featured_player": "谢尔顿",
+  "winner": "谢尔顿",
+  "start": 0.0,
+  "end": 202.7,
+  "asr_model": "small.en",
+  "whisper_model": "medium.en",
+  "transcript_verified": false,
+  "transcript_verification": null,
+  "ceremony_subtype": null,
+  "segment_budget_px": null,
+  "subject": null,
+  "topbar_layout": null,
+  "match": {
+    "id": "2026:us-open:mens-semifinal:shelton-tiafoe",
+    "event": "2026 US Open",
+    "event_search": "US Open",
+    "round": "Semifinal",
+    "winner": "谢尔顿",
+    "winner_en": "Ben Shelton",
+    "loser": "蒂亚福",
+    "loser_en": "Frances Tiafoe",
+    "participants": [
+      "谢尔顿",
+      "蒂亚福"
+    ],
+    "score": "4-6 6-3 6-3 7-5",
+    "court": "Arthur Ashe Stadium",
+    "duration": "3:18",
+    "year": 2026,
+    "flashscore_id": "SYNayX0T"
+  },
+  "source_verification": {
+    "status": "verified",
+    "detected_type": "on_court",
+    "method": "official_explicit_oncourt",
+    "source_url": "https://www.youtube.com/watch?v=NJL86sutFlk",
+    "evidence": [
+      {
+        "kind": "official_explicit_title",
+        "source": "US Open",
+        "title": "Ben Shelton On-Court Interview | 2026 US Open Semifinal",
+        "video_id": "NJL86sutFlk"
+      }
+    ],
+    "match_id": "2026:us-open:mens-semifinal:shelton-tiafoe",
+    "attestation_sha256": "a5c3569fa47e8130ca3575a128462f86b0435daf60df3edc25b9f54eda65bd17"
+  },
+  "opening": {
+    "kind": "none",
+    "why": "正文源片从第 1.04 秒起就是场上主持人提问（『Well, Ben, you've just made your very first Grand Slam final and you've done it on home soil』），画面是刚打完的 Arthur Ashe 球场、他站着拿话筒受访，全片 206 秒里一帧比赛画面都没有——这条是从赛后仪式单独剪出来的采访。所以比赛结束那一段从同场官方集锦借，见 lead_in。"
+  },
+  "cover": {
+    "frame_at": 136.7,
+    "title": [
+      "没有奶奶 就没有今天的我",
+      "这一个 是为她赢的"
+    ],
+    "sub": "美网男单半决赛 · 赛后场上采访",
+    "tag": "谢尔顿 · 赛后开麦",
+    "_why": "136.7 秒。**已验**：run 34672654559（mode=cover）的『验封面视觉』硬闸 success，而且把 poster 拉回本地打开看过——CLAUDE.md 2026-09-03 写过闸放行不等于睁眼（Haar 在半闭的眼睑上照样检出两只眼），所以这一步不能省。看到的是：眼睛清楚睁着、正面、脸是画面主体、背景是 Ashe 的看台（看得出在球场上）、话筒在嘴前。表情是动情而专注，不是笑——这一段他正在讲奶奶，笑反而不对题。⚠️ 这一格是先从缩略图墙挑的姿态窗口（墙 1.98 秒一格，160×90 里眼睛只有约 2px，墙上选不了眼神），再用 mode=cover 渲一张出来验的；顺序不能反。情绪对题：136.7 落在他讲奶奶那一整段（124.6–150.7）里，而封面钩子讲的就是这一段。",
+    "_copy_why": "两行都是他自己的原话：60/61 行『Without her, you know, there's no Ben Shelton standing here today.』、62 行『So, this one is for her.』。⚠️ 没写排名、年龄、国籍这类身份——sub 那一行已经印了轮次，钩子留给这段采访里真实发生的那一下。⚠️ 『奶奶』是他父亲的母亲（Regina Ann Shelton），和原话 my dad lost his mom 对得上。"
+  },
+  "push": {
+    "matchup": "谢尔顿 vs 蒂亚福",
+    "score": "4-6 6-3 6-3 7-5",
+    "event": "",
+    "summary": "谢尔顿说这场为奶奶赢",
+    "lead": "2026 美网男单半决赛，谢尔顿 4-6 6-3 6-3 7-5 拿下蒂亚福，生涯第一次打进大满贯决赛。赛后场上采访被问到周日要去争第一个大满贯冠军时，他讲的不是冠军：父亲今年失去了母亲，而正是这位老人当年让他父亲有机会打网球。『没有她，就没有今天站在这儿的谢尔顿。这一个，是为她赢的。』他把这句话说了两遍，中间停下来，转播把镜头给了看台上的家人。",
+    "auto": true,
+    "_auto_why": "渲之前就写好。CLAUDE.md：push.auto 一个像素都不进成片，但 qc_attestation 比的是 spec 的字节哈希，渲完再补这一行就得整趟重渲。来源（官方频道 + 标题明写 On-Court Interview）、赛果（flashscore SYNayX0T 与 Yahoo/CBS 两个独立源一致）、冷开场（同场官方集锦）都核过。"
+  },
+  "takeaway": {
+    "close": {
+      "point": "没有奶奶 就没有今天的谢尔顿",
+      "ask": "周日那一个 他能替她拿下吗？"
+    }
+  },
+  "zh": [
+    "谢尔顿 你刚刚打进了",
+    "生涯第一个大满贯决赛",
+    "而且是在自己的主场",
+    "跟我聊聊这场球",
+    "意味着什么",
+    "尤其是这一场",
+    "你要跟蒂亚福这样的好朋友",
+    "争一个决赛席位",
+    "嗯 首先说蒂亚福",
+    "他对我来说就像大哥一样",
+    "说实话 每一次",
+    "我们能一起站上阿瑟·阿什",
+    "在这儿交手 都意义非凡",
+    "但我们想站的就是这个位置",
+    "在一项赛事",
+    "打到最后的时候",
+    "这是我们俩最爱的赛事",
+    "也是我们最爱的球场",
+    "能在你们面前",
+    "把这儿点燃",
+    "是世上最好的感觉",
+    "三年前你在这儿打进半决赛",
+    "今年你又一次打进半决赛",
+    "2026 年的谢尔顿",
+    "和第一次闯进美网半决赛的他",
+    "有什么不一样？",
+    "嗯 我觉得我长大了",
+    "更成熟 也更专注",
+    "我知道我的目标是什么",
+    "知道我在这儿的任务是什么",
+    "百分之百扑在那些目标上",
+    "在这儿打球本来就不容易",
+    "这里是阿瑟·阿什球场",
+    "你打球的时候 台下坐着",
+    "全是你最喜欢的运动员",
+    "还有电影明星",
+    "所以能一直低着头",
+    "专注三个多小时",
+    "真的不是件容易的事",
+    "我总是忍不住抬头",
+    "看那块大屏幕 心想 哎呀",
+    "布伦森也来了 那我得问这个",
+    "上一次美国男子拿下这个冠军",
+    "还是 2003 年",
+    "而上一次有黑人球员",
+    "打进美网决赛",
+    "要追溯到 1972 年的阿瑟·阿什",
+    "周日你将踏上",
+    "阿瑟·阿什球场",
+    "去争夺生涯第一个大满贯冠军",
+    "当你听到这些",
+    "在为周日做准备的时候",
+    "心里会想些什么？",
+    "嗯 百感交集",
+    "我爸爸 我妈妈为我付出了太多",
+    "才有我今天站在这里",
+    "我爸爸今年早些时候",
+    "失去了他的母亲 而正是因为她",
+    "他才有机会打网球",
+    "没有她",
+    "就没有今天站在这儿的谢尔顿",
+    "所以 这一个是为她赢的",
+    "这一个 是为她",
+    "周日我需要你们",
+    "把气氛给我点起来",
+    "我会全力去拼",
+    "把所有东西都留在球场上",
+    "希望你们能来支持我",
+    "为美国 我们一起拿下",
+    "还有一件事",
+    "今天这个日子",
+    "站在这儿打球其实很不容易",
+    "我的心和祈祷 送给所有",
+    "被 9/11 影响的家庭",
+    "这里是",
+    "世界上最伟大的城市之一",
+    "也承受过最大的悲剧之一",
+    "还是那句 心和祈祷",
+    "送给每一个受影响的人",
+    "谢谢你们",
+    "放心 周日整个纽约",
+    "都会为你而来 女士们先生们",
+    "他闯进了生涯第一个美网决赛"
+  ],
+  "lead_in": {
+    "url": "https://www.youtube.com/watch?v=0pIbqXVaV04",
+    "start": 159.04,
+    "end": 167.95,
+    "subs": [
+      {
+        "a": 159.04,
+        "b": 161.2,
+        "en": "...is in the championship match",
+        "zh": "…他打进了决赛"
+      },
+      {
+        "a": 161.2,
+        "b": 165.28,
+        "en": "of the 2026 US Open.",
+        "zh": "2026 年美网"
+      },
+      {
+        "a": 165.28,
+        "b": 166.88,
+        "en": "And what a pity it had to end",
+        "zh": "可惜这场球的收尾"
+      },
+      {
+        "a": 166.88,
+        "b": 167.95,
+        "en": "on a double fault.",
+        "zh": "是一个双误"
+      }
+    ],
+    "verification": {
+      "channel": "US Open Tennis Championships",
+      "event_search": "US Open",
+      "year": 2026,
+      "winner_en": "Ben Shelton",
+      "loser_en": "Frances Tiafoe",
+      "match_id": "2026:us-open:mens-semifinal:shelton-tiafoe",
+      "method": "official_exact_match_highlight",
+      "height": 1080
+    },
+    "why": "本场官方集锦（Frances Tiafoe vs. Ben Shelton Highlights | 2026 US Open Semifinal）159.04–167.95 这 8.91 秒：解说报出他进了 2026 美网决赛，接着交代这场球是以一个双误收场。⚠️ 起点不取更早的赛点那一刻，因为 155.76 那一行 ASR 只有一串 `46375`（解说报比分被听错），拿它当字幕会在屏幕上印一串没有意义的数字；159.04 是解说开口交代赛果的第一个完整词。⚠️ 终点不拉到 180 秒把『蒂亚福紧紧抱住他的朋友』那句收进来，虽然那是这场球最好的画面——167.95 到 174.88 之间整整 6.9 秒源片一个字幕事件都没有（只有欢呼），而开头不许压在一段没有字幕事件的画面上（这条线每一行都要有对照的译文）。那个拥抱留给正文第一问去讲。"
+  },
+  "word_fix": {
+    "Ash": "Ashe",
+    "Francis": "Frances"
+  },
+  "_word_fix_why": "`Ash`→`Ashe`：全文 4 处 `Arthur Ash`、`Ashe` 零命中，ASR 整齐地丢了词尾 e，而 Arthur Ashe Stadium 是这座球场的正式名字（也是这条采访的全部语境），订正是确定性的。⚠️ key 不带标点——`_fix()` 会看穿尾标点，而带标点的 key 反而静默失效（CLAUDE.md 2026-09-03）。`Francis`→`Frances`：主持人说的是 Frances Tiafoe，ASR 拼成了男名 Francis。",
+  "caption_gaps_ok": {
+    "10.0-14.5": "起草时是从缩略图墙和转写结构推的（沙箱下不动媒体），判据：上一行是记者说完『and you've done it on home soil.』，那是最招欢呼的一句；墙上 9.9／11.9／13.9 秒三格都是他站着不说话、背景是人群，下一个字幕事件（14.48）是记者接着问下一题。颁奖致辞类素材被掌声打断是常态。　✅ **已核**：run 34672896670 的 `[空档 VAD] 5/5 处由静音或相邻字幕覆盖证明销账`（Silero VAD，证据在 gap_vad_attestation.json）。⚠️ 第二份 ASR 在这几处各报出一个词，**但它们全是下一行的首词**（`Talk`／`So`／`this`／`I'm`／`and`），是时间戳边界抖动不是漏词。",
+    "94.0-98.7": "起草时推的，判据：他刚讲完那个玩笑（抬头看大屏幕发现布伦森坐在场边），墙上 95.1 秒那一格他手举在脸旁边、姿态是笑着摆手，97.1 秒仍是他——全场在笑。下一个事件（98.72）已经换成主持人开口问下一题。　✅ **已核**：run 34672896670 的 `[空档 VAD] 5/5 处由静音或相邻字幕覆盖证明销账`（Silero VAD，证据在 gap_vad_attestation.json）。⚠️ 第二份 ASR 在这几处各报出一个词，**但它们全是下一行的首词**（`Talk`／`So`／`this`／`I'm`／`and`），是时间戳边界抖动不是漏词。",
+    "146.3-149.7": "起草时推的，判据：**这一处是全片情绪最重的地方，而画面自己给了判据**：墙上 144.6 和 146.6 两格转播把镜头切给了看台上激动鼓掌的家人，148.6 切给两位戴蓝色球帽的男性。而他前后两行说的是同一句话——62 行『So, this one is for her.』（140.7 起）、63 行『This one is for her.』（149.68 起）：说完一遍、停下来平复、再说一遍，中间这 3.4 秒是停顿加全场掌声，不是漏词。　✅ **已核**：run 34672896670 的 `[空档 VAD] 5/5 处由静音或相邻字幕覆盖证明销账`（Silero VAD，证据在 gap_vad_attestation.json）。⚠️ 第二份 ASR 在这几处各报出一个词，**但它们全是下一行的首词**（`Talk`／`So`／`this`／`I'm`／`and`），是时间戳边界抖动不是漏词。",
+    "159.2-161.4": "起草时推的，判据：他刚说完『周日我需要你们把气氛点起来』——那是直接朝看台喊话的一句，墙上 158.5 秒那一格镜头正在观众席上。　✅ **已核**：run 34672896670 的 `[空档 VAD] 5/5 处由静音或相邻字幕覆盖证明销账`（Silero VAD，证据在 gap_vad_attestation.json）。⚠️ 第二份 ASR 在这几处各报出一个词，**但它们全是下一行的首词**（`Talk`／`So`／`this`／`I'm`／`and`），是时间戳边界抖动不是漏词。",
+    "172.2-174.9": "起草时推的，判据：他说完『还有一件事』（69 行，168.56）之后停了一下，才转到 9/11 那一段（71 行起）。墙上 172.3／174.3 两格都是他本人、没有换镜头，是他自己在组织语言的停顿。　✅ **已核**：run 34672896670 的 `[空档 VAD] 5/5 处由静音或相邻字幕覆盖证明销账`（Silero VAD，证据在 gap_vad_attestation.json）。⚠️ 第二份 ASR 在这几处各报出一个词，**但它们全是下一行的首词**（`Talk`／`So`／`this`／`I'm`／`and`），是时间戳边界抖动不是漏词。"
+  },
+  "_facts": [
+    "来源：YouTube oEmbed 确认标题『Ben Shelton On-Court Interview | 2026 US Open Semifinal』、频道『US Open Tennis Championships』（@usopen 官方）；缩略图墙元数据报真实片长 208 秒。",
+    "赛果 4-6 6-3 6-3 7-5：flashscore 单场 SYNayX0T（分盘 IG/IH 6-4、3-6、3-6、5-7，home 是蒂亚福）与 Yahoo Sports、CBS Sports 赛后稿一致，两个独立源。",
+    "全场用时 3:18：flashscore df_sui_1 的 RB÷3:18，且分盘 0:45+0:35+0:53+1:05 自己加得起来；⚠️ 另一个口径（当日表 AD→AO 时间戳差）是 3:14，两者差 4 分钟。交叉核的第三个源是他自己在第 38 行说的『focus for over 3 hours』——超过三小时，两边都支持。所以文案里只写『三个多小时』，不写到分。",
+    "『1972 年阿瑟·阿什之后第一个打进美网男单决赛的黑人美国球员』：CNN、Yahoo Sports、Yardbarker、Sunday Guardian 多源一致。⚠️ 记者在第 45 行的原话是『a black man』（没有限定美国），而准确表述是『黑人美国球员』——字幕照实译记者的话，我们自己的文案（push.lead / xhs）用准确说法。",
+    "『2003 年以来美国男子没拿过美网冠军』（罗迪克）：同上多源一致。",
+    "奶奶 Regina Ann Shelton 2026-03-27 去世、享年 90 岁，4 月 27 日在阿拉巴马下葬；他当时在 Instagram 写过『没有她，我根本不会打网球，更别说打职业』。和他第 57–59 行说的『我爸爸今年早些时候失去了他的母亲，而正是因为她他才有机会打网球』对得上，是同一件事的两次陈述。",
+    "决赛对手兹维列夫：同日另一场半决赛他 6-3 7-6(7) 7-6(6) 胜哈恰诺夫（已发 specs/interviews/zverev-khachanov-us-open-2026-sf-interview）。",
+    "布伦森（Jaylen Brunson，NBA 尼克斯）在场边：他自己在第 41–42 行说的，ASR 拼写正确。"
+  ],
+  "_notes": [
+    "正文完整保留英文原声，逐行对照译文；不改写英文、不编造金句。",
+    "⚠️ 第 9 行 `first on FO` 挂在 suspect 里等第二份 ASR 核，核不出来就保留 ASR 原样。",
+    "5 处字幕空档已由 runner 的 Silero VAD 全部销账（5/5），起草时的推断和 VAD 的结论一致。",
+    "封面 136.7 秒是墙上挑的姿态窗口，眼神还没验；先 `--stage cover` 过 audit 再定。",
+    "第 9 行 `first on FO` 由第二份 ASR（medium.en）核出 `FO`=`Foe`，走 en_fixed 只改这一处；`first on` 两份 ASR 一致，起草时那个 `first off` 的推断作废，没有改。"
+  ],
+  "en_fixed": {
+    "9": "Yeah, I mean, first on Foe,"
+  },
+  "_en_fixed_why": "第 9 行只改 `FO`→`Foe`，**`first on` 一个字都没动**。判据是 run 34672896670 的双 ASR 分歧表：`fo` → `foe` 在分歧列表里（第二份 medium.en 听成 foe），而 `first on` **两份一致、不在分歧列表里**。⚠️ 我起草时推断这半截是 `first off`（固定短语），而两份 ASR 都不支持——CLAUDE.md『核不出来就保留 ASR 原样，不许按推断改』，所以推断作废，只采纳有第二份 ASR 背书的那一处。`Foe` 是蒂亚福的公认昵称，和下一行『he's like a big brother to me』以及全文 `Frances` 只出现在主持人那一句都对得上。"
+}
