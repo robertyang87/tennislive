@@ -74,7 +74,7 @@
 | 68 | 2:22.2 | [▶](https://youtu.be/FwIUgX3NQRU?t=142) | in a while, and it goes up | 然后它又涨上去 |  |
 | 69 | 2:23.2 | [▶](https://youtu.be/FwIUgX3NQRU?t=143) | to, I don't know what number it is. | 涨到我不知道是多少了 |  |
 | 70 | 2:24.9 | [▶](https://youtu.be/FwIUgX3NQRU?t=144) | What happens that makes you stop | 发生什么会让你停下来 |  |
-| 71 | 2:26.3 | [▶](https://youtu.be/FwIUgX3NQRU?t=146) | and makes you be like, OK, now I got it out, | 让你觉得，好，情绪出来了 |  |
+| 71 | 2:26.3 | [▶](https://youtu.be/FwIUgX3NQRU?t=146) | and makes you be like, OK, now I got it out, | 让你觉得，好，颠够了 |  |
 | 72 | 2:29.3 | [▶](https://youtu.be/FwIUgX3NQRU?t=149) | and now I can start? | 现在我可以开始了？ |  |
 | 73 | 2:29.8 | [▶](https://youtu.be/FwIUgX3NQRU?t=149) | No clue. | 不知道 |  |
 | 74 | 2:31.1 | [▶](https://youtu.be/FwIUgX3NQRU?t=151) | Honestly, like really honestly, no idea. | 说真的，完全没头绪 |  |
@@ -206,7 +206,7 @@
 | 200 | 6:59.8 | [▶](https://youtu.be/FwIUgX3NQRU?t=419) | I didn't see that. | 我没看到那个。 |  |
 | 201 | 7:00.7 | [▶](https://youtu.be/FwIUgX3NQRU?t=420) | Yeah, so is also the team more confident, | 那团队是不是也更有信心 |  |
 | 202 | 7:04.1 | [▶](https://youtu.be/FwIUgX3NQRU?t=424) | I mean, more relaxed | 我的意思是，更放松 |  |
-| 203 | 7:05.8 | [▶](https://youtu.be/FwIUgX3NQRU?t=425) | when you are with your brother, father? | 当你和兄弟、父亲在一起？ |  |
+| 203 | 7:05.8 | [▶](https://youtu.be/FwIUgX3NQRU?t=425) | when you are with your brother, father? | 和你哥哥、父亲在一起时？ |  |
 | 204 | 7:09.9 | [▶](https://youtu.be/FwIUgX3NQRU?t=429) | The old spirit have changed or not? | 原来那种劲头变了没有？ |  |
 | 205 | 7:14.1 | [▶](https://youtu.be/FwIUgX3NQRU?t=434) | No, I think not much has changed, | 不，我觉得没有太大改变 |  |
 | 206 | 7:15.6 | [▶](https://youtu.be/FwIUgX3NQRU?t=435) | to be honest. | 说实话。 |  |
