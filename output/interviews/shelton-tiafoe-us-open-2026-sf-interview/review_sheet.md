@@ -76,13 +76,13 @@
 | 70 | 2:48.6 | [▶](https://youtu.be/NJL86sutFlk?t=168) | And one more thing. | 还有一件事 |  |
 | 71 | 2:54.9 | [▶](https://youtu.be/NJL86sutFlk?t=174) | And one more thing, it's a it's | 今天这个日子 |  |
 | 72 | 2:57.8 | [▶](https://youtu.be/NJL86sutFlk?t=177) | a difficult day to be out here playing. | 站在这儿打球其实很不容易 |  |
-| 73 | 2:59.6 | [▶](https://youtu.be/NJL86sutFlk?t=179) | My thoughts and prayers go out to all | 我的心和祈祷 献给所有 |  |
+| 73 | 2:59.6 | [▶](https://youtu.be/NJL86sutFlk?t=179) | My thoughts and prayers go out to all | 我的心和祈祷 送给所有 |  |
 | 74 | 3:01.8 | [▶](https://youtu.be/NJL86sutFlk?t=181) | the families who are impacted by 9/11. | 被 9/11 影响的家庭 |  |
 | 75 | 3:04.4 | [▶](https://youtu.be/NJL86sutFlk?t=184) | This is one | 这里是 |  |
 | 76 | 3:08.0 | [▶](https://youtu.be/NJL86sutFlk?t=188) | of the greatest greatest cities in the world | 世界上最伟大的城市之一 |  |
 | 77 | 3:09.9 | [▶](https://youtu.be/NJL86sutFlk?t=189) | and one of the biggest tragedies, | 也承受过最大的悲剧之一 |  |
-| 78 | 3:11.5 | [▶](https://youtu.be/NJL86sutFlk?t=191) | but, yeah, thoughts and prayers | 愿我们的思念和祈祷 |  |
-| 79 | 3:13.8 | [▶](https://youtu.be/NJL86sutFlk?t=193) | to everyone involved and affected. | 陪着每一个经历过的人 |  |
+| 78 | 3:11.5 | [▶](https://youtu.be/NJL86sutFlk?t=191) | but, yeah, thoughts and prayers | 还是那句 心和祈祷 |  |
+| 79 | 3:13.8 | [▶](https://youtu.be/NJL86sutFlk?t=193) | to everyone involved and affected. | 送给每一个受影响的人 |  |
 | 80 | 3:16.3 | [▶](https://youtu.be/NJL86sutFlk?t=196) | Thank you guys. | 谢谢你们 |  |
 | 81 | 3:17.0 | [▶](https://youtu.be/NJL86sutFlk?t=197) | Rest assured, New York's going to come out | 放心 周日整个纽约 |  |
 | 82 | 3:18.6 | [▶](https://youtu.be/NJL86sutFlk?t=198) | for you on Sunday, ladies and gentlemen, | 都会为你而来 女士们先生们 |  |
