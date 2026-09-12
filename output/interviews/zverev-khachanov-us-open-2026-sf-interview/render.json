@@ -1,0 +1,101 @@
+{
+  "film_sha256": "d00c68de9b193ecc63c1111c984f9d4e92a21c0756a2d7ce07e44fb4301fbc8d",
+  "film_seconds": 127.371,
+  "production_stage_events": [
+    {
+      "stage": "preflight",
+      "at": "2026-09-12T01:11:52Z",
+      "run_id": "34664042781"
+    },
+    {
+      "stage": "asr_verify",
+      "at": "2026-09-12T01:13:23Z",
+      "run_id": "34664042781"
+    },
+    {
+      "stage": "render",
+      "at": "2026-09-12T01:14:41Z",
+      "run_id": "34664042781"
+    },
+    {
+      "stage": "qc",
+      "at": "2026-09-12T01:16:52Z",
+      "run_id": "34664042781"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-12T01:16:53Z",
+      "run_id": "34664042781"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/interview-zverev-khachanov-us-open-2026-sf-interview/zverev-khachanov-us-open-2026-sf-interview.mp4?v=d00c68de9b193ecc",
+  "video_bytes": 55797130,
+  "release_asset_digest": "sha256:d00c68de9b193ecc63c1111c984f9d4e92a21c0756a2d7ce07e44fb4301fbc8d",
+  "qc_attestation_sha256": "0ddb3f8612cd1251dc628f802d25151241e16127ef0d8f9aac4098492b87cb21",
+  "production_sla_history": [
+    {
+      "version": 2,
+      "pipeline": "interview-clip",
+      "slug": "zverev-khachanov-us-open-2026-sf-interview",
+      "received_at": "2026-09-12T00:55:37Z",
+      "artifact_ready_at": "2026-09-12T01:01:44Z",
+      "elapsed_seconds": 367.187,
+      "budget_seconds": 600,
+      "met": true,
+      "film_sha256": "cf511463521c69b9be79c50c8b8ebba475fba032233d793d5a80c27661169414",
+      "spec_sha256": "7ba33173ead6b06262ab7675fdd95162c3284b2b207d8a6969132e8ef7b4dc7e",
+      "run_id": "34663215926",
+      "stage_events": [
+        {
+          "stage": "preflight",
+          "at": "2026-09-12T00:56:32Z",
+          "run_id": "34663215926"
+        },
+        {
+          "stage": "asr_verify",
+          "at": "2026-09-12T00:58:09Z",
+          "run_id": "34663215926"
+        },
+        {
+          "stage": "render",
+          "at": "2026-09-12T00:59:30Z",
+          "run_id": "34663215926"
+        }
+      ],
+      "render_seconds": 134.187,
+      "pre_render_seconds": 233.0
+    }
+  ],
+  "production_sla": {
+    "version": 2,
+    "pipeline": "interview-clip",
+    "slug": "zverev-khachanov-us-open-2026-sf-interview",
+    "received_at": "2026-09-12T01:11:03Z",
+    "artifact_ready_at": "2026-09-12T01:16:51Z",
+    "elapsed_seconds": 348.86,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "d00c68de9b193ecc63c1111c984f9d4e92a21c0756a2d7ce07e44fb4301fbc8d",
+    "spec_sha256": "143da3e9c391c3627a78d43a12d34f3766461745fb5b8bfe12dc055d0b523f90",
+    "run_id": "34664042781",
+    "stage_events": [
+      {
+        "stage": "preflight",
+        "at": "2026-09-12T01:11:52Z",
+        "run_id": "34664042781"
+      },
+      {
+        "stage": "asr_verify",
+        "at": "2026-09-12T01:13:23Z",
+        "run_id": "34664042781"
+      },
+      {
+        "stage": "render",
+        "at": "2026-09-12T01:14:41Z",
+        "run_id": "34664042781"
+      }
+    ],
+    "render_seconds": 130.86,
+    "pre_render_seconds": 218.0
+  }
+}
