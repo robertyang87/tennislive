@@ -1,0 +1,56 @@
+{
+  "status": "pass",
+  "checked_at": "2026-09-13T02:00:04Z",
+  "auditor": "opencv-haar-v1",
+  "expected_subject": "萨巴伦卡",
+  "identity_evidence": "L0-bound spec subject + same-source frame_at",
+  "spec_sha256": "3b089f1a5180e04c260bde6aaef88f781310c3d17e58c89d452fa78c01a011fa",
+  "poster_sha256": "97be3409c0c1ef3c89e0719536fa5c20c0aa464c25f12dc77bc7f12cfb198871",
+  "thresholds": {
+    "close_up_zoom": 1.5,
+    "face_height_ratio": 0.08,
+    "close_up_face_height_ratio": 0.14,
+    "face_area_ratio": 0.01,
+    "face_sharpness": 45.0,
+    "face_contrast": 32.0,
+    "eyes": 2
+  },
+  "result": {
+    "poster": {
+      "decodable": true,
+      "format": "JPEG",
+      "width": 1080,
+      "height": 1440,
+      "photo_region": [
+        0,
+        150,
+        1080,
+        810
+      ]
+    },
+    "face": {
+      "detector": "frontal-default",
+      "box": [
+        316,
+        362,
+        370,
+        370
+      ],
+      "detected_faces": 3,
+      "eyes": 3,
+      "face_height_ratio": 0.45679,
+      "face_area_ratio": 0.15649,
+      "center_x_ratio": 0.46389,
+      "center_y_ratio": 0.49012,
+      "sharpness": 142.981,
+      "contrast": 131.0
+    },
+    "contract": {
+      "shot_type": "close_up",
+      "frame_at": 75.2,
+      "zoom": 1.5,
+      "focus_y": 0.72
+    }
+  },
+  "issues": []
+}
