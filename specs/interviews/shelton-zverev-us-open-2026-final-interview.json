@@ -65,7 +65,7 @@
     ],
     "sub": "美网男单决赛 · 赛后场上采访",
     "tag": "谢尔顿 · 赛后开麦",
-    "_why": "⚠️ 占位，等 `mode=cover` 渲出来把 poster 拉回本地打开看过再定版。51.0 秒是按**内容**挑的窗口：46.7『My successes are a gift』→ 50.3『the failures are a gift』→ 51.5『and being here playing in front of you guys is a gift』，51.0 正落在这三句排比的中间，而封面钩子讲的就是这一段。⚠️ 这条片子的缩略图墙在沙箱里下不下来（`-f sb0` 报 `Requested format is not available`），所以这一格**不是从墙上挑的姿态窗口**，是按转写时间轴推的——CLAUDE.md 2026-09-03 写过『闸放行不等于睁眼』，渲完必须打开看眼睛睁没睁开、脸是不是画面主体。",
+    "_why": "51.0 秒。**已验**：run 34790416990（mode=cover）的『验封面视觉』硬闸 pass（脸高比 0.336 / 门槛 0.14、清晰度 228 / 门槛 45、对比度 117 / 门槛 32、检出 3 只眼），而且把 poster 拉回本地打开看过——CLAUDE.md 2026-09-03 写过闸放行不等于睁眼（Haar 在半闭的眼睑上照样检出眼睛），所以这一步不能省。看到的是：眼睛清楚睁着、正面稍偏、头肩占画面大半宽度、背景是印着 `US Open finals` 的蓝色背板（看得出这是哪儿）、话筒在嘴前、嘴微张正在说话。表情是沉静的认真，不是笑——这一段他讲的正是『我的成功是礼物，失败也是礼物』，笑反而不对题。⚠️ 这一格**不是从缩略图墙挑的**（这条源片的墙在沙箱下不下来，`-f sb0` 报 Requested format is not available），是按转写时间轴推的：46.7『My successes are a gift』→ 50.3『the failures are a gift』→ 51.5『and being here playing in front』，51.0 正落在这三句排比中间，情绪和钩子讲的是同一段。",
     "_copy_why": "两行都是他自己的原话（第 11、12 行 `My successes are a gift,` / `the failures are a gift,`）。刚输掉生涯第一个大满贯决赛的人，把成功和失败并排放进同一句话——这一屏要的就是这个反差。⚠️ 没写排名、年龄、国籍这类身份：sub 那一行已经印了赛事和轮次，钩子留给这段致辞里真实说出口的那一句。"
   },
   "push": {
@@ -203,7 +203,7 @@
     "第 17 行 `Grand ST slam`→`Grand Slam` 走 en_fixed（见 _en_fixed_why），其余口吃重复一个都没动。",
     "⚠️ 第 52 行 `To the USA` 和第 69 行 `everyone at the USA`：按语境他说的是办赛那一方（下一句就是『you guys have done it again, put together an amazing tournament』），听感上更像 `USTA`——但两份字幕轨都写 `USA`，**没有第二份 ASR 背书就不改英文**；中文取『美网』这个两种读法都成立的说法。render 那一趟的双 ASR 分歧表如果把它核成 USTA，再走 en_fixed 改英文。",
     "⚠️ 10 处字幕空档全部是起草时从转写结构推的（沙箱只下得动字幕、下不动媒体），判据逐条写在 caption_gaps_ok 里，等 render 那一趟的 Silero VAD 销账。颁奖致辞被掌声打断是常态，最长那处 12.5 秒落在主持人自己那句串词的上下半句之间。",
-    "⚠️ 封面 51.0 秒是按转写时间轴推的，**不是从缩略图墙挑的**——这条源片的墙在沙箱里下不下来（`-f sb0` 报 Requested format is not available）。`mode=cover` 渲完必须把 poster 拉回本地打开看：眼睛睁没睁开、脸是不是画面主体、情绪对不对题。"
+    "封面 51.0 秒：起草时按转写时间轴推（这条源片的缩略图墙在沙箱下不下来），**已经跑过 mode=cover 并把 poster 拉回本地打开看过**，结论写在 cover._why 里。"
   ],
   "lead_in": {
     "url": "https://www.youtube.com/watch?v=hY1epQDmhGQ",
