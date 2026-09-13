@@ -6552,6 +6552,80 @@ def test_多源spec每一段都要说清自己从哪条源片剪(tmp_path):
         raise AssertionError("既没有 sources 也没有 source_url，应当报错")
 
 
+def test_回贴的开关不许在镜头中间翻转():
+    """来路：2026-09-13 `rybakina-sabalenka-us-open-2026-final` 的第 4/5 段。
+
+    第 4 段窗口 `[[1.8, 17.5]]` 贴着、第 5 段写成不回贴，而两段**同源、首尾
+    相接**（17.5 接 17.5），画面上是同一个底线宽景。把成片从 Release 拉回来
+    逐帧看：38.90s 板是满的（`SET POINT #2` 那条黄头 ＋ 两个名字都在），
+    39.30s 只剩「4 / 5 AD」，**而镜头切点在 39.95s 才到**——也就是在镜头中间
+    板忽然少掉一截，正是 `resolve_masks` 那句报错里写的「边界要落在真实的
+    scene_cut 上，落在镜头中间会看见板忽然换样子」。
+
+    ⚠️⚠️ **它当时一道闸都没响**：`--dry-run`、全量测试、`check_reel_landed`、
+    `scoreboard_qc` 全绿——板贴得对、几何也对（右缘全程单值 583），错的只有
+    **什么时候开始贴**。而这件事**只读 spec ＋ probe 就能判**，本来就该在
+    dry-run 那 0.2 秒里报出来，不该等渲完 8 分钟再把成片拉回来逐帧看。
+    账号所有者 2026-09-13：「质量还是优先的。但质检要提前发现」。
+
+    ⚠️ **只报不拦**，和 `crosses_cut`、死球那几条一个待遇：`scene_cuts` 是
+    **下限不是上限**（官方集锦点与点之间常用溶解，任何帧间差阈值都够不着），
+    做成硬闸会在那类源片上误报，而**一条天天误报的闸会把人训练成不看它**。
+
+    ⚠️ **分两层**，理由见 `board_paste_flips_mid_shot` 的 docstring：存量
+    55 条带 `score_inset` 的 spec 量过，不分层是 19 条 / 34 处，读的人会开始
+    不看它；`drawn`（至少一边写了 `score_inset_windows`，也就是**人画的线**）
+    只占 11 处，剩下 23 处是整段 true/false 的翻转，多半是转播自己撤了板。
+    """
+    reel = _reel()
+    urls = {"a": "u://a", "b": "u://b"}
+    probes = {"u://a": {"scene_cuts": [18.35], "scene_cuts_loose": [40.0]},
+              "u://b": {"scene_cuts": [3.0]}}
+
+    def seg(start, end, *, source="a", inset=True, windows=None):
+        s = _seg(reel, start, end)
+        s.source, s.score_inset, s.score_inset_windows = source, inset, windows or []
+        return s
+
+    # ① 段界：同源、首尾相接、贴／不贴翻转，而那一刻不在切点上 —— 就是那个 bug
+    bad = [seg(0.3, 17.5, windows=[[0.0, 17.2]]), seg(17.5, 24.0, inset=False)]
+    drawn, broadcast = reel.board_paste_flips_mid_shot(bad, probes, urls)
+    assert len(drawn) == 1 and not broadcast, (drawn, broadcast)
+    assert "第 1/2 段之间" in drawn[0] and "18.35" in drawn[0], drawn[0]
+
+    # 段界落在切点上 —— 那就是一次真的镜头切换，翻转看不出来，不许报
+    ok = [seg(0.3, 18.35, windows=[[0.0, 18.05]]), seg(18.35, 24.0, inset=False)]
+    assert reel.board_paste_flips_mid_shot(ok, probes, urls) == ([], [])
+
+    # 两段**不同源**：本来就是硬切，回贴跟着变一点都看不出来
+    cross = [seg(0.3, 17.5, windows=[[0.0, 17.2]]),
+             seg(17.5, 24.0, source="b", inset=False)]
+    assert reel.board_paste_flips_mid_shot(cross, probes, urls) == ([], [])
+
+    # 两段同源但**时间跳开了**（第二段从别处剪来）：同上
+    jump = [seg(0.3, 17.5, windows=[[0.0, 17.2]]), seg(60.0, 70.0, inset=False)]
+    assert reel.board_paste_flips_mid_shot(jump, probes, urls) == ([], [])
+
+    # ② 段内：窗口自己的两头也是翻转点
+    inner = [seg(0.0, 30.0, windows=[[5.0, 25.0]])]
+    drawn, broadcast = reel.board_paste_flips_mid_shot(inner, probes, urls)
+    assert len(drawn) == 2 and not broadcast, drawn
+    assert "5.00s" in drawn[0] and "25.00s" in drawn[1], drawn
+    # 贴满整段（没写窗口）就没有段内翻转点
+    assert reel.board_paste_flips_mid_shot([seg(0.0, 30.0)], probes, urls) == ([], [])
+    # 窗口顶到段的两头 = 段界，交给 ①，别在这儿重复报一遍
+    assert reel.board_paste_flips_mid_shot(
+        [seg(0.0, 30.0, windows=[[0.0, 30.0]])], probes, urls) == ([], [])
+
+    # ③ 两层要分开：两边都是整段 true/false 的，进 broadcast 那一层
+    whole = [seg(0.3, 17.5), seg(17.5, 24.0, inset=False)]
+    drawn, broadcast = reel.board_paste_flips_mid_shot(whole, probes, urls)
+    assert not drawn and len(broadcast) == 1, (drawn, broadcast)
+
+    # ④ **没有 probe 一律跳过**——「查不成」和「不在切点上」不许长得一样
+    assert reel.board_paste_flips_mid_shot(bad, {}, urls) == ([], [])
+
+
 def test_每一段都要待在同一个镜头里():
     """跨场景切点的那一段中途会换镜头，而换过去的那个镜头里常常是另一个人。
 
@@ -7211,6 +7285,67 @@ def test_零封的局不许翻译成爱局():
     assert not offenders, (
         f"这些地方把 love game 字面直译成了「爱局」：{offenders}。"
         "改成「零封」，或者直接靠前面的逐分（15:0/30:0/40:0）讲清楚，不用另造标签。")
+
+
+def test_ACE不许写成中文音译():
+    """账号所有者 2026-09-13：「**ACE 不要用中文**」「**记住了下次**」。
+
+    来路：`rybakina-sabalenka-us-open-2026-final` 的第 9 段旁白写着「她用全场
+    第十二个**爱司**结束了比赛」，片子已经推送出去，他看完要求换掉重发。
+
+    ⚠️ **这条不是文风偏好，它同时修掉一个真的切词坑**：edge-tts 把「爱司」
+    切成 `一 ｜ 记 ｜ 爱 ｜ 司赢 ｜ 下`——「司赢」是个不存在的词，读出来是
+    「一记爱，司赢下萨巴伦卡」。那条 spec 当初为此专门加了一个逗号去撑开边界
+    （理由写在它自己的 `_why` 里）；换成 ACE 之后切成一个干净的 token `ACE`，
+    **加不加逗号都对**，那个逗号跟着去掉了。
+
+    ⚠️ **TTS 读得对是量出来的，不是听出来的**（edge-tts、`zh-CN-YunjianNeural`
+    ＋6%，同一句只换这一个词）：`爱司` 那个词 0.401s（两音节）、`诶斯` 0.342s
+    （两音节参照组）、`诶西伊` 被切成 `诶 ｜ 西伊`（逐字母念的参照组），而
+    **`ACE` 只有 0.177s**——装不下三个字母，所以它读的是英文那个词。而它确实
+    读了：整句去掉这个词短 0.13s，把那 0.177 秒切出来量是 max −14.4 dB，
+    不是数字静音。
+
+    ⚠️ **只拦音译，不拦这件事本身**：ACE 该讲还是讲，全库早就一路写着
+    `Ace` / `ACE`（`altmaier-musetti` 的旁白「一个 Ace 都没发出来」已经发过）。
+
+    只查会发出去的字段（旁白 / 封面 / 顶栏 / 推送 / 小红书正文），和上面那条
+    同一套 `outward_deep()`——`_why` 这类写给下一个人看的注解**允许**提到
+    「爱司」这个反例本身，那正是教训的存放处，不算违规。
+    """
+    from tools.spec_wording import ACE_IN_CHINESE as bad  # noqa: PLC0415
+    from tools.spec_wording import ACE_IN_CHINESE_LEGACY as legacy  # noqa: PLC0415
+    from tools.spec_wording import outward_deep as outward  # noqa: PLC0415
+
+    offenders, still_hit = {}, set()
+    for path in sorted(Path("specs/reels").glob("*.json")):
+        hits = sorted({m.group(0) for text in outward(
+            json.loads(path.read_text(encoding="utf-8"))) for m in bad.finditer(text)})
+        if hits:
+            if path.name in legacy:
+                still_hit.add(path.name)
+            else:
+                offenders[path.name] = hits
+    for path in sorted(Path("specs/reels").glob("*.xhs.txt")):
+        hits = sorted({m.group(0)
+                       for m in bad.finditer(path.read_text(encoding="utf-8"))})
+        if hits:
+            if path.name in legacy:
+                still_hit.add(path.name)
+            else:
+                offenders[path.name] = hits
+
+    assert not offenders, (
+        f"这些地方把 ACE 写成了中文音译：{offenders}。写 ACE——"
+        "TTS 实测读成英文那个词（0.177s 一个音节），而「爱司」还会被切成"
+        "「爱 ｜ 司赢」那种不存在的词。")
+
+    # 豁免表自检：写错一个名字，豁免就成了一盏恒真的绿灯（**只许减不许加**）
+    assert still_hit == set(legacy), (
+        f"`ACE_IN_CHINESE_LEGACY` 和实际对不上：表里有 {sorted(legacy)}，"
+        f"而真正还带着音译的是 {sorted(still_hit)}。"
+        "多出来的那几个已经改干净了，从表里删掉；对不上的那几个是名字写错了，"
+        "而写错的名字等于一条没人守的规矩。")
 
 
 #: 规矩之前就发出去的片子。账号所有者 2026-08-06：「**历史视频就不要那个管了**」

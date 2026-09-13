@@ -5174,6 +5174,10 @@ def probes_for_spec(spec: dict) -> tuple[dict[str, dict], list[str]]:
 #: CLAUDE.md 说该做的事（「窗口本来就该切在源片自己的镜头边界上」）。
 #: 0.15 落在 0.12 和 0.16 中间那道缝里。
 CUT_EDGE_TOL = 0.15
+# 回贴的开关在镜头中间翻转，判「那一刻算不算一个镜头切换」的容差。和
+# `CUT_EDGE_TOL` 同一个量级、故意分开写：那个管「段体跨没跨切点」，这个管
+# 「贴／不贴翻转得干不干净」，两件事以后可能各自要调。
+BOARD_FLIP_TOL = 0.15
 
 
 def silence_risk(seg_start: float, seg_end: float, speech_est: float | None,
@@ -5469,6 +5473,10 @@ def probe_dry_run(spec: dict, segments: list["Segment"]) -> bool:
     hard.extend(s_hard)
     soft.extend(s_soft)
 
+    # ⑦ 回贴的开关在镜头中间翻转——2026-09-13 补的，理由见
+    #    `board_paste_flips_mid_shot` 的 docstring。**只报不拦。**
+    flips_drawn, flips_broadcast = board_paste_flips_mid_shot(segments, probes, urls)
+
     if mid:
         mid.sort(reverse=True)          # 越靠中间越可疑，排前面
         print(f"\n[查选段] {len(mid)} 处窗口中途换了镜头（**只报不拦**，"
@@ -5480,6 +5488,16 @@ def probe_dry_run(spec: dict, segments: list["Segment"]) -> bool:
         print("  拿缩略图墙对一眼：两边还是同一个人就没事，写一句 "
               "`\"crosses_cut\": \"<为什么>\"` 挂账；"
               "**换了人就是整句旁白压在别人身上**，那要改窗口。")
+    if flips_drawn:
+        print(f"\n[查选段] {len(flips_drawn)} 处**人画的回贴窗口**在镜头中间翻转"
+              "（**只报不拦**）——观众会看见板忽然多出／少掉名字那一截。"
+              "板自己在那一刻淡出的话翻转看不见，去 `score_*.jpg` 对一眼：")
+        print("\n".join(flips_drawn))
+    if flips_broadcast:
+        print(f"  另有 {len(flips_broadcast)} 处整段 true／false 的翻转也不在切点上"
+              "——多半是转播自己撤了板、作者跟着分的段，翻转看不见。"
+              "真要核就翻 `score_*.jpg`：" + "、".join(
+                  line.strip().split("（", 1)[0] for line in flips_broadcast))
     if soft:
         print("\n[查选段] 另外这几条也只报不拦：")
         print("\n".join(soft))
@@ -5492,6 +5510,143 @@ def probe_dry_run(spec: dict, segments: list["Segment"]) -> bool:
     print("  选段这一层没有硬伤（片长、分辨率）。**挑段仍然要看缩略图墙**——"
           "「近端是谁」「情绪对不对题」机器判不了。")
     return False
+
+
+
+def board_paste_on_at(seg, when: float) -> bool:
+    """这一刻回贴开着没有。`when` 是**源片绝对秒数**。
+
+    ⚠️ `seg.score_inset_windows` 存的是**段内秒**（`_seg_score_windows` 减过
+    `seg.start`），而切点和段落边界都是源片绝对秒数——换算收在这儿一处，
+    别让调用方各换各的。
+    """
+    if not seg.score_inset:
+        return False
+    if not seg.score_inset_windows:
+        return True
+    rel = when - seg.start
+    return any(a <= rel < b for a, b in seg.score_inset_windows)
+
+
+def board_paste_flips_mid_shot(segments, probes: dict,
+                               urls: dict) -> tuple[list[str], list[str]]:
+    """回贴的开关在**镜头中间**翻转的那几处。只报不拦。
+
+    来路：2026-09-13 `rybakina-sabalenka-us-open-2026-final`。第 4 段窗口
+    `[[1.8, 17.5]]` 贴着、第 5 段写成不回贴，而两段**同源、首尾相接**
+    （17.5 接 17.5），画面上是同一个底线宽景——把成片从 Release 拉回来逐帧
+    看：38.90s 板是满的（`SET POINT #2` 那条黄头 ＋ 两个名字都在），39.30s
+    只剩「4 / 5 AD」，**而镜头切点在 39.95s 才到**。也就是在镜头中间板忽然
+    少掉一截，正是 `resolve_masks` 那句报错里写的「边界要落在真实的
+    scene_cut 上，落在镜头中间会看见板忽然换样子」。
+
+    ⚠️⚠️ **它当时一道闸都没响**：`--dry-run`、全量测试、`check_reel_landed`、
+    `scoreboard_qc` 全绿——板贴得对、几何也对（右缘全程单值 583），错的只有
+    **什么时候开始贴**。而这件事**只读 spec ＋ probe 就能判**，本来就该在
+    dry-run 那 0.2 秒里报出来，不该等渲完 8 分钟再把成片拉回来逐帧看。
+    账号所有者 2026-09-13：「质量还是优先的。但质检要提前发现」。
+
+    判据是**贴／不贴翻转的那一刻，画面上有没有一个镜头切换**，两处会翻转：
+
+    | 翻转点 | 什么时候算干净 |
+    |---|---|
+    | 段内窗口的两头（`a` 开、`b` 关） | 落在 `scene_cuts`／`scene_cuts_loose` 上 |
+    | 段界（第 k 段尾 ↔ 第 k+1 段头） | 同上；**两段不同源或时间不连续就不算**——那本来就是硬切，翻转看不出来 |
+
+    ⚠️ **只报不拦**，和 `crosses_cut`、死球那几条一个待遇：`scene_cuts` 是
+    **下限不是上限**（官方集锦点与点之间常用溶解，任何帧间差阈值都够不着，
+    CLAUDE.md「`scene_cuts` 是下限，不是上限」记过），做成硬闸会在那类源片上
+    误报，而**一条天天误报的闸会把人训练成不看它**，顺手把它真想拦的那一类
+    一起关掉。
+
+    ⚠️ 还有一种翻转是**看不见**的：板自己淡出的那一刻停止回贴。机器分不出
+    「板没了」和「我把窗口切在这儿」——所以这一条只负责把翻转点摆出来，
+    要不要改，去翻 `score_*.jpg` 看一眼那几秒板还在不在。
+
+    **于是返回两层，别把信号淹掉**（存量 55 条带 `score_inset` 的 spec 量过：
+    不分层是 19 条 / 34 处，读的人会开始不看它）：
+
+    | 层 | 是什么 | 为什么分开 |
+    |---|---|---|
+    | `drawn` | 翻转的两边**至少一边写了 `score_inset_windows`** | 窗口是**人画的线**——2026-09-13 那个 bug 正是这种，而现有的闸不强制为每个边界表态 |
+    | `broadcast` | 两边都是整段 `true`／`false` | 多半是**转播自己撤了板**，作者跟着分的段，翻转看不见；而整段 `false` 本来就被美网那道闸逼着写过 `_score_inset_why` |
+
+    量出来 34 处里 `drawn` 只占 11 处（5 条 spec），`broadcast` 23 处。
+    ⚠️ **`broadcast` 那层不是噪音、不许删掉**——它只是判不了，所以收成一行
+    计数让人自己去翻图，而不是逐条刷屏。
+
+    ⚠️ **没有 probe 的源一律跳过**，别让「查不成」和「不在切点上」长得一样。
+    """
+    drawn: list[str] = []
+    broadcast: list[str] = []
+
+    def cuts_of(source: str) -> list[float] | None:
+        probe = probes.get(urls.get(source, ""))
+        if probe is None:
+            return None
+        return ([float(c) for c in probe.get("scene_cuts") or []]
+                + [float(c) for c in probe.get("scene_cuts_loose") or []])
+
+    def nearest_cut(source: str, when: float) -> tuple[bool, float | None]:
+        """(这一刻算不算落在切点上, 最近那个切点)。没有 probe 一律当成落上了。"""
+        cuts = cuts_of(source)
+        if cuts is None:
+            return True, None
+        if not cuts:
+            return False, None
+        near = min(cuts, key=lambda c: abs(c - when))
+        return abs(near - when) < BOARD_FLIP_TOL, near
+
+    def say(where: str, when: float, source: str, turning: str,
+            why: str, fix: str, *, by_hand: bool) -> None:
+        _, near = nearest_cut(source, when)
+        tail = ('；最近的切点在 {near:.2f}s（差 {gap:.2f}s）'.format(near=near, gap=abs(near - when))
+                if near is not None else "；这条源片一个切点都没检出")
+        (drawn if by_hand else broadcast).append(
+            '  {where}（源片 {source} {when:.2f}s）回贴{turning}，而那一刻**不在任何切点上**{tail}。\n    {why}\n    {fix}'.format(where=where, source=source, when=when,
+                             turning=turning, tail=tail, why=why, fix=fix))
+
+    # ① 段内：窗口的两头。落在段界上的交给 ② —— 只有那儿才判得了下一段贴不贴。
+    for index, seg in enumerate(segments, 1):
+        if seg.image or not seg.score_inset or not seg.score_inset_windows:
+            continue
+        for a, b in seg.score_inset_windows:
+            for rel, turning in ((a, "从「不贴」翻到「贴」"),
+                                 (b, "从「贴」翻到「不贴」")):
+                when = seg.start + rel
+                if abs(when - seg.start) < 1e-6 or abs(when - seg.end) < 1e-6:
+                    continue
+                if nearest_cut(seg.source, when)[0]:
+                    continue
+                say("第 %d 段窗口内" % index, when, seg.source, turning,
+                    "窗口的边界落在镜头中间，观众会看见板忽然多出／少掉名字那一截。",
+                    "把边界挪到最近的切点上；或者去 `score_*.jpg` 确认板本来就在"
+                    "那一刻消失了——那样翻转看不见，可以不改。", by_hand=True)
+
+    # ② 段界。**只有同源且首尾相接才算同一个镜头**——跳到别的时间、换了源片，
+    #    本来就是硬切，回贴状态跟着变一点都看不出来。
+    for index in range(len(segments) - 1):
+        before_seg, after_seg = segments[index], segments[index + 1]
+        if before_seg.image or after_seg.image:
+            continue
+        if before_seg.source != after_seg.source:
+            continue
+        if abs(before_seg.end - after_seg.start) > BOARD_FLIP_TOL:
+            continue
+        before = board_paste_on_at(before_seg, before_seg.end - 1e-3)
+        after = board_paste_on_at(after_seg, after_seg.start)
+        if before == after:
+            continue
+        if nearest_cut(before_seg.source, before_seg.end)[0]:
+            continue
+        say("第 %d/%d 段之间" % (index + 1, index + 2), before_seg.end,
+            before_seg.source,
+            "从「贴」翻到「不贴」" if before else "从「不贴」翻到「贴」",
+            "两段**同源且首尾相接**，画面上是同一个镜头。",
+            "让两段的回贴状态一致；或者把段界挪到最近的切点上。",
+            by_hand=bool(before_seg.score_inset_windows
+                         or after_seg.score_inset_windows))
+    return drawn, broadcast
 
 
 def _cover_frame_spots(spec: dict) -> list[tuple[str, dict]]:
