@@ -1,0 +1,67 @@
+{
+  "film_sha256": "583dbcb7ef5525badf96798e0319137d0199c1c31d8b5f77b6fa0cdf79b462b9",
+  "film_seconds": 149.141,
+  "production_sla": {
+    "version": 2,
+    "pipeline": "interview-clip",
+    "slug": "sabalenka-rybakina-us-open-2026-final-interview",
+    "received_at": "2026-09-13T01:55:01Z",
+    "artifact_ready_at": "2026-09-13T02:00:04Z",
+    "elapsed_seconds": 303.114,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "583dbcb7ef5525badf96798e0319137d0199c1c31d8b5f77b6fa0cdf79b462b9",
+    "spec_sha256": "3b089f1a5180e04c260bde6aaef88f781310c3d17e58c89d452fa78c01a011fa",
+    "run_id": "34731706816",
+    "stage_events": [
+      {
+        "stage": "preflight",
+        "at": "2026-09-13T01:55:27Z",
+        "run_id": "34731706816"
+      },
+      {
+        "stage": "asr_verify",
+        "at": "2026-09-13T01:57:02Z",
+        "run_id": "34731706816"
+      },
+      {
+        "stage": "render",
+        "at": "2026-09-13T01:57:57Z",
+        "run_id": "34731706816"
+      }
+    ],
+    "render_seconds": 127.114,
+    "pre_render_seconds": 176.0
+  },
+  "production_stage_events": [
+    {
+      "stage": "preflight",
+      "at": "2026-09-13T01:55:27Z",
+      "run_id": "34731706816"
+    },
+    {
+      "stage": "asr_verify",
+      "at": "2026-09-13T01:57:02Z",
+      "run_id": "34731706816"
+    },
+    {
+      "stage": "render",
+      "at": "2026-09-13T01:57:57Z",
+      "run_id": "34731706816"
+    },
+    {
+      "stage": "qc",
+      "at": "2026-09-13T02:00:05Z",
+      "run_id": "34731706816"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-13T02:00:05Z",
+      "run_id": "34731706816"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/interview-sabalenka-rybakina-us-open-2026-final-interview/sabalenka-rybakina-us-open-2026-final-interview.mp4?v=583dbcb7ef5525ba",
+  "video_bytes": 48993828,
+  "release_asset_digest": "sha256:583dbcb7ef5525badf96798e0319137d0199c1c31d8b5f77b6fa0cdf79b462b9",
+  "qc_attestation_sha256": "8ea8fa1cc68ac2ba36f9eefac0677a2b85d69268cdb024a8495fa4be38653d6c"
+}
