@@ -1,0 +1,44 @@
+{
+ "status": "pass",
+ "method": "silero_vad_plus_dual_asr_coverage",
+ "sha256": "4088d6c1a68c98c5335825b75ddd68554e3f60bc1908ec3cb810f42572d4e16d",
+ "edge_pad_seconds": 0.35,
+ "max_speech_seconds": 0.12,
+ "results": [
+  {
+   "key": "11.2-13.8",
+   "start": 11.19,
+   "end": 13.76,
+   "speech_seconds": 0,
+   "second_asr_words": [],
+   "transcript_covered": false,
+   "caption_timeline_covered": false,
+   "status": "no_speech"
+  },
+  {
+   "key": "19.1-29.8",
+   "start": 19.05,
+   "end": 29.84,
+   "speech_seconds": 0,
+   "second_asr_words": [
+    "Arena,"
+   ],
+   "transcript_covered": false,
+   "caption_timeline_covered": false,
+   "status": "speech_detected"
+  },
+  {
+   "key": "48.5-51.8",
+   "start": 48.53,
+   "end": 51.84,
+   "speech_seconds": 0,
+   "second_asr_words": [
+    "We",
+    "saw"
+   ],
+   "transcript_covered": true,
+   "caption_timeline_covered": false,
+   "status": "transcript_covered"
+  }
+ ]
+}
