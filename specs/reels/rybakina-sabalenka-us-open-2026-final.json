@@ -1,0 +1,415 @@
+{
+  "slug": "rybakina-sabalenka-us-open-2026-final",
+  "_column": "reel",
+  "layout": "band",
+  "scorebox": [
+    104,
+    888,
+    700,
+    978
+  ],
+  "_scorebox_why": "右缘**是拿这八条源片自己的 `score_*.jpg` 量的，不是抄别的片子**（CLAUDE.md 2026-09-10 那条：抄来的右缘窄了会被 `scan_mask` 当场判 `never truncate`）。逐条量出来分三簇，正是「板每打完一盘 +38px」：一盘 578（set1 / rybwinner / 主集锦）→ 两盘 615（set2 / dropshot）→ 三盘 653（pom / champpoint）。最宽的真实簇 653，加 `BOARD_EDGE_PAD` 再留余量取 700。\n⚠️ 量到的 804 那一簇不参与定值：519≈tile 满宽，是入场蓝幕和全屏比分图形被当成了板，而那几格所在的段都写着 `score_inset: false`。",
+  "tts_backend": "edge",
+  "_tts_backend_why": "Azure 钥匙从 2026-09-03 起连着四条片子 401（keys-bondar 两趟、zheng-putintseva、tien-monfils、wu-alcaraz），按 CLAUDE.md「写 spec 那一刻就把 tts_backend 写上，别等 render 红了再补」。这一条**退回 edge 零代价**：没有 `voice.style`、没有 `lead_pause`（Azure 独有的那两样都没用），而本地 `--check-narration` 在这台沙箱跑的本来就是 edge-tts，量到的余量直接适用，不用再按「Azure 比 edge 快 6.6%」折算。",
+  "sources": {
+    "champ": "https://www.youtube.com/watch?v=_1dOo30-iAM",
+    "walk": "https://www.youtube.com/watch?v=NwZhU23qtM4",
+    "set1": "https://www.youtube.com/watch?v=dOlQOLU-vws",
+    "set2": "https://www.youtube.com/watch?v=X_qznwgHuIU",
+    "drop": "https://www.youtube.com/watch?v=UnG5RG4m1Kw",
+    "pom": "https://www.youtube.com/watch?v=tCKWg7CkQAU"
+  },
+  "_source": "八条全部来自美网官方频道 `US Open Tennis Championships`（oEmbed 的 `author_name` 逐条查过，2026-09-13）。四要素由频道和标题自证：`Championship Point | Elena Rybakina Wins the Women's Singles Title | 2026 US Open`、`Aryna Sabalenka vs. Elena Rybakina Walk-Out | Final`、`Elena Rybakina Wins Opening Set in Final`、`Aryna Sabalenka Wins the Second Set!`、`Drop Shot Perfection from Aryna Sabalenka`、`Elena Rybakina Wins Point of the Match!`、`Elena Rybakina Crushes Winner`。\n⚠️ **八条逐条 probe 过，全是 1920×1080 / 30000/1001（29.97fps），完全一致**——`check_sources_match` 的尺寸那一关直接过，帧率也不用写 `mixed_fps`。",
+  "_sources_why": "主源取 `champ`（冠军点那条，253.05s）：冷开场和结局兑现都在它的时间轴上，而 `ending_payoff_problem` 只在**同一条源片**里比时间码。\n⚠️ **只登记真正用到的六条**：账号所有者给的八条里，主集锦 `YCAQnmJBJIk`（214.27s）和「莱巴金娜制胜分」`MPcZmWcingI`（26.31s）**没有登记**——`check_sources_match` 会把登记的每一条都下下来，登记了不用就是白下一条几十 MB 的源片。两条不用的理由：主集锦的回合和这六条单点片段大量重叠，而单点片段每条都是官方按「一个点」剪的，窗口边界天然落在死球上；`MPcZmWcingI` 那个盘点和 `set1` 讲的是同一件事（首盘的盘点），留着会和第④拍重复。\n⚠️ 主集锦仍然是**转写的出处**（`output/2026-09-13/reel/sabalenka-rybakina/captions.txt` 里那两句画面自证：58.08s「to the new number one come Monday」、205.60s「That is the third Grand Slam title for Elena Rybakina」），只是没有一帧画面进片子。\n⚠️ 每条源片末尾都有美网的片尾板（`FOLLOW US ON SOCIAL MEDIA / #USOPEN`），起点就是各自 probe 的静音区起点（champ 249.5 / set1 35.7 / set2 26.0 / drop 28.4 / walk 184.3；pom 没有片尾板）——**所有窗口都收在它前面，一帧都没进**。",
+  "_match": {
+    "status": "result_verified",
+    "source": "flashscore_points",
+    "source_id": "rDbVIO5l",
+    "flashscore_id": "rDbVIO5l",
+    "participants": [
+      "萨巴伦卡",
+      "莱巴金娜"
+    ],
+    "set_scores_home_away": [
+      [
+        4,
+        6
+      ],
+      [
+        7,
+        5
+      ],
+      [
+        2,
+        6
+      ]
+    ],
+    "winner": "莱巴金娜",
+    "loser": "萨巴伦卡",
+    "winner_result": "6-4 5-7 6-2",
+    "loser_result": "4-6 7-5 2-6",
+    "tiebreaks_home_away": [
+      null,
+      null,
+      null
+    ]
+  },
+  "_match_why": "⚠️ `participants` 跟 **home/away**（和同一块里的 `set_scores_home_away` 同序），而 `stats.a/b` 跟 `cover.matchup[0]`——**这两个顺序在这条 spec 里正好相反**，CLAUDE.md 2026-09-02 `eala-stoiana` 那条栽的就是这个。\nflashscore 当日表 `f_2_-1` 的 `rDbVIO5l`：`AE÷Sabalenka A.`(home) / `AF÷Rybakina E.`(away)，`BA/BB=4/6 BC/BD=7/5 BE/BF=2/6`，`AG÷1 / AH÷2`（盘数 1:2）。三盘都是局数分出来的，没有抢七。",
+  "cover": {
+    "matchup": [
+      {
+        "name": "莱巴金娜",
+        "name_en": "Elena Rybakina",
+        "country": "KAZ",
+        "rank": 2
+      },
+      {
+        "name": "萨巴伦卡",
+        "name_en": "Aryna Sabalenka",
+        "country": "BLR",
+        "rank": 1
+      }
+    ],
+    "_rank_why": "同一期、同一个权威源：WTA 官方 `players/ranked`（`rankedAt=2026-08-31T00:00:00Z`）——Sabalenka 第 1（8575 分）、Rybakina 第 2（8141 分）。**画面自证**：源片 `champ` 40.5~44.5s 的全屏赛果图形印着 `1 ARYNA SABALENKA` / `2 ELENA RYBAKINA`，`set1` 34.5s 那张同样。\n⚠️ **这是「这场球打的时候」的名次，不是赛后的。** 莱巴金娜 9/9 那场 1/4 决赛就已经锁定接替萨巴伦卡的世界第一（终结她 99 周在位），而榜单 9/14 周一才生效——转播 `sabalenka-rybakina/captions.txt` 58.08s 的原话正是「to the new number one **come Monday**」。所以封面印 (2)(1) 和「她已经是新科世界第一」两件事都成立，前者是官方榜和种子号，后者写进旁白（那里有上下文交代得清）。",
+    "_heat_why": "②档 ＋ 轮次本身就够格：两人是世界第 1 和第 2，而这是**大满贯决赛**——「半决赛级别的都要做」那条本身就盖住了。另外这一场给了莱巴金娜生涯第三个大满贯、第一个美网冠军，同时终结萨巴伦卡的美网三连冠。",
+    "winner": "莱巴金娜",
+    "result": "6-4 5-7 6-2",
+    "_result_why": "赢家视角，四处印证：① flashscore `rDbVIO5l` 逐盘（见 `_match`）；② 源片 `champ` 40.5~44.5s 全屏图形 `WOMEN'S SINGLES | CHAMPIONSHIP` / `1 ARYNA SABALENKA 4 7 2` / `2 ELENA RYBAKINA 6 5 6`；③ 120.5~136.5s 的 `MATCH SUMMARY` 全屏统计台标同样印着 `6-4 5-7 6-2`；④ WTA 官方赛后稿「With a 6-4, 5-7, 6-2 victory」。",
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "莱巴金娜",
+    "topic": "美网决赛 · 莱巴金娜 vs 萨巴伦卡",
+    "_topic_why": "按 2026-09-03「封面左上角的副标题不要写球场号，写对阵双方」。球场（阿瑟·阿什）印在比分板头一行。",
+    "hook": "被扳回一盘之后\n发球局只丢三分",
+    "_hook_why": "两行框住的是**整场**（2026-08-31 那条：不是某一个时刻）：第一行是这场球的形状（她先拿下首盘、次盘被萨巴伦卡扳回），第二行是决胜盘的落点——她的发球局一共只丢三分。每行 7 个字，都在 10 字上限内，两行。\n⚠️ **不重复比分板**：比分板就在钩子正下方印着 `莱巴金娜 6-4 5-7 6-2 萨巴伦卡`，所以钩子里不写盘分。\n⚠️ **不写身份**：排名、第几个大满贯、世界第一都是身份，海报别处和旁白里有；钩子只讲这场球是怎么走的。",
+    "portrait": {
+      "image": "assets/reel/rybakina-us-open-2026-final.jpg",
+      "focus": 0.5,
+      "focus_y": 0.42,
+      "zoom": 1.0
+    },
+    "_portrait_why": "官方高清实拍，**4000×2667，铺 1080×1440 只要 0.54 倍缩小**，不用写 `_low_res_why`。出处：WTA 官方 CDN `photoresources.wtatennis.com/photo-resources/2026/09/12/758fa66f-5d83-48d0-891f-ff1801c5316e/GettyImages-2294950499.jpg?width=4000`，挂在 WTA 她的球员页上当期头图，目录日期 2026/09/12 就是决赛日。\n**四道闸门**：① 精准——球衣（黄绿背心＋黑裙）和美网官方决赛照 `f_USTA2496488`（赛后拥抱教练）逐项对得上，目录日期是决赛日；② 在比赛中——赛后向看台致意，人在球场上，背景是满场看台；③ 有冲击力——**近景特写**，头肩占画面主体，笑着挥手，表情读得出（2026-08-18 账号所有者点名要的那一档）；④ 清晰度 4000px。\n**同一辑里另外几张为什么没选**（CLAUDE.md 要求写清）：美网官方图库那批夺冠照全部封顶 1280×720，铺满要放大 **2.00 倍**，正是被判「太软」的那一档——`f_USTA2497124`（高举奖杯 ＋ 礼花，情绪最对题）、`f_USTA2497157`（举杯**背影**，看不见脸）、`f_USTA2496488`（拥抱教练，人物侧背）。奖杯那张只输在分辨率；账号所有者三次强调「封面一定要选高清大图，不然没人愿意点进去看」，所以取 4000px 这张。AP 和 USA TODAY 这一天**还没发**（不是没有，隔几小时会有），跑过 `find_cover_photo.py` 全查过一遍。",
+    "scoreboard": {
+      "court": "Arthur Ashe Stadium",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%20%222%3A21%3A00%22%2C%20%22source%22%3A%20%22%E8%BD%AC%E6%92%AD%E5%85%A8%E5%B1%8F%E7%BB%9F%E8%AE%A1%E5%8F%B0%E6%A0%87%20MATCH%20SUMMARY%EF%BC%88champ%20%E6%BA%90%E7%89%87%20120.5~136.5s%EF%BC%89%E5%8D%B0%E7%9D%80%206-4%205-7%206-2%20%202h%2021m%EF%BC%9B%E5%9C%BA%E8%BE%B9%20Rolex%20%E9%92%9F%20champ%2014.5s%20%2F%20158.5s%20%2F%20164.5s%20%E4%B8%89%E6%AC%A1%E6%98%BE%E7%A4%BA%202%3A21%EF%BC%9BWTA%20%E5%AE%98%E6%96%B9%E8%B5%9B%E5%90%8E%E7%A8%BF%20a%206-4%2C%205-7%2C%206-2%20victory%20in%202%20hours%20and%2021%20minutes%E3%80%82%E4%B8%89%E6%96%B9%E4%B8%80%E8%87%B4%E3%80%82flashscore%20%E5%88%86%E7%9B%98%200%3A45%2B0%3A57%2B0%3A41%3D2%3A23%20%E5%81%8F%E9%95%BF%202%20%E5%88%86%E9%92%9F%EF%BC%8C%E6%9C%AA%E9%87%87%E7%94%A8%E3%80%82%22%7D",
+        "field": "duration"
+      },
+      "_court_why": "画面自证：源片 champ 40.5~44.5s 的全屏图形印着 `WOMEN'S SINGLES | CHAMPIONSHIP` 下面一行 `ARTHUR ASHE STADIUM`（裁出来放大读过），set1 34.5s 那张同样。美网女单决赛本来就排在阿瑟·阿什球场。",
+      "_duration_why": "**2 小时 21 分，两处画面自证 ＋ 一处官方稿，三方一致**：① 源片 `champ` 14.5s 那一格，场边 Rolex 钟正面显示 `2:21`（158.5~168.5s 又出现两次）；② 120.5~136.5s 的 `MATCH SUMMARY` 全屏统计台标印着 `6-4 5-7 6-2  2h 21m`；③ WTA 官方赛后稿「a 6-4, 5-7, 6-2 victory in **2 hours and 21 minutes**」。\n⚠️ **flashscore 报的是 2:23，偏长 2 分钟，没有采用**——CLAUDE.md「比赛用时不要只信 flashscore，它自己加得起来所以单看它看不出问题」那条的又一个实例。它的分盘 `RC/RD/RE = 0:45 / 0:57 / 0:41` 加起来正好 2:23，而转播台标和 WTA 官方都是 2:21。"
+    }
+  },
+  "stats": {
+    "a": {
+      "aces": 12,
+      "df": 5,
+      "winners": 36,
+      "ue": 24,
+      "first_in": 41,
+      "first_won": 35,
+      "first_total": 87,
+      "second_total": 46,
+      "second_won": 27,
+      "bp_conv": 3,
+      "bp_chances": 12,
+      "pts_won": 103,
+      "pts_total": 193,
+      "headshot": "assets/players/headshots/wta-324166.jpg"
+    },
+    "b": {
+      "aces": 6,
+      "df": 3,
+      "winners": 32,
+      "ue": 35,
+      "first_in": 62,
+      "first_won": 43,
+      "first_total": 106,
+      "second_total": 44,
+      "second_won": 22,
+      "bp_conv": 1,
+      "bp_chances": 3,
+      "pts_won": 90,
+      "pts_total": 193,
+      "headshot": "assets/players/headshots/wta-320760.jpg"
+    },
+    "_source": "flashscore `df_st_1`（`rDbVIO5l`），`match_stat_hooks --stats-block` 抄出来的那一份。",
+    "_ab_why": "⚠️ **a/b 跟 `cover.matchup[0]`，不是 feed 的 home/away**——matchup[0] 是莱巴金娜（封面主体），所以 `a` 是她，`b` 是萨巴伦卡；而 feed 的 home 是萨巴伦卡。草稿里 a/b 是按 home/away 排的，这里**对调过**。判据：`headshot` 跟着数字走，`wta-324166` 是莱巴金娜、`wta-320760` 是萨巴伦卡。\n**四项和转播 120.5~136.5s 的 `MATCH SUMMARY` 全屏台标逐项吻合**：制胜分 36 : 32、非受迫失误 24 : 35、破发点 3/12 : 1/3。`first_total = first_in + second_total` 两边都对得上（41+46=87、62+44=106）。"
+  },
+  "_hit_data": [
+    {
+      "label": "决胜盘发球局只丢三分",
+      "detail": "转播解说 champ 53.92s 原话：She was absolutely perfect in that final set. Only lost three points on her serve in total. Two were doubles in that last game due to nerves.——也就是萨巴伦卡在她的发球局里靠回球只赢下 1 分。",
+      "source": "美网官方转播解说（champ 源片 53.92~63.76s）"
+    },
+    {
+      "label": "plus 12",
+      "detail": "解说 champ 65.84s：finished this match at plus 12——制胜分减非受迫失误 36−24=+12，和 flashscore 的统计逐数吻合；萨巴伦卡是 32−35=−3。",
+      "source": "转播解说 ＋ flashscore df_st_1 互证"
+    },
+    {
+      "label": "第十二个爱司收尾",
+      "detail": "解说 champ 70.32s：including an ace on match point。全场 12 记 ace，最后一分正是其中之一；WTA 稿补了一句 mirroring how she converted match point at the Australian Open eight months ago。",
+      "source": "转播解说 ＋ WTA 官方赛后稿"
+    },
+    {
+      "label": "总分差",
+      "detail": "莱巴金娜 103 : 萨巴伦卡 90，净差 13 分。",
+      "source": "flashscore df_mh_1"
+    },
+    {
+      "label": "首盘一发只进 27%",
+      "detail": "WTA 稿：despite landing just 27% of her first serves（首盘），她仍然拿下了这一盘。",
+      "source": "WTA 官方赛后稿"
+    }
+  ],
+  "_no_hit_data_why": "跑过，不是没查：`_hit_data` 头一条就是这条片子的狠数据。",
+  "_durations": [
+    [
+      "Set 1",
+      "0:45"
+    ],
+    [
+      "Set 2",
+      "0:57"
+    ],
+    [
+      "Set 3",
+      "0:41"
+    ],
+    [
+      "全场",
+      "2:21"
+    ]
+  ],
+  "_durations_why": "分盘取 flashscore `df_sui_1` 的 `RC/RD/RE`；**全场取 2:21**（转播台标 ＋ Rolex 钟 ＋ WTA 官方），不取 flashscore 自己加出来的 2:23，见 `cover._duration_why`。",
+  "_no_repeat": "同栏目的邻居是 `rybakina-gauff-us-open-2026-sf`（同一届美网半决赛，9/11，莱巴金娜 3-6 6-4 6-4 胜高芙）。那条**铺开讲过**「她锁定新的 WTA 世界第一、终结萨巴伦卡 99 周在位」和「生涯第一次打进美网决赛」——所以这条**一句带过，不展开**：只在第 ③ 格的坐标句里说一句「已经是新科世界第一」，用来交代对面那个 (1) 是怎么回事，不再讲 99 周、不再讲是哪一场锁定的。\n⚠️ 按 2026-08-05 账号所有者收窄的那条读法：看不懂这场球所必需的来路（为什么世界第二打世界第一、而她却已经是第一）要一句带过，别整段躲开。\n另一条邻居 `sabalenka-rybakina-h2h`（9/11 发的）是**网球有故事**栏目的赛前 H2H 前瞻，不同栏目，不构成重复。",
+  "_turning_points": [
+    {
+      "label": "【Set 1】第二个盘点，一个长回合拿下首盘",
+      "why": "set1 源片 0.5s 记分条 `SET POINT #2 / SABALENKA 4 / RYBAKINA 5 AD`，随后 2.5~16.5s 是一个横跨全场的长回合，18.5s 她举拍。34.5s 全屏图形 `ARYNA SABALENKA 4 / ELENA RYBAKINA 6`。"
+    },
+    {
+      "label": "【Set 2】5-5 救下两个盘点，两局后仍被破",
+      "why": "WTA 稿：While she saved two set points on serve to hold for 5-5, Sabalenka broke two games later to steal the set。草稿 `_turning_points` 里密度最高的两条正是这一局（2 个破发点 ＋ 2 个盘点）。"
+    },
+    {
+      "label": "【Set 3】2-1 破发、5-2 截击再破、12 号爱司收尾",
+      "why": "WTA 稿：she put it all together to break for 2-1 in the third. She came up with a volley winner to break again for 5-2... sealed with her 12th ace。"
+    }
+  ],
+  "editorial": {
+    "mode": "match_review",
+    "hook": [
+      "被扳回一盘之后",
+      "发球局只丢三分"
+    ],
+    "_hook_why": "这一栏和 `cover.hook` 必须逐字相同。理由见 `cover._hook_why`。",
+    "question": "第二盘被萨巴伦卡扳回去之后，莱巴金娜是靠什么把决胜盘打成一边倒的？",
+    "thesis": "靠发球。决胜盘她的发球局一共只丢三分，其中两分还是最后一局紧张造成的双误——也就是说萨巴伦卡在她的发球局里靠回球只赢下一分。全场她 36 记制胜分对 24 次非受迫失误（正差 12），萨巴伦卡是 32 对 35（负差 3）；最后一分她用全场第十二个爱司结束比赛，和八个月前澳网决赛的收尾方式一模一样。",
+    "beats": [
+      "首盘：一发只进百分之二十七，却在第二个盘点上靠一个长回合 6-4 拿下。",
+      "第二盘：她把一发提到百分之六十一，可两个破发点没兑现；5-5 那局救下两个盘点，两局后还是被破，萨巴伦卡 7-5 扳回。",
+      "决胜盘：2-1 先破，5-2 一记截击再破，最后用第十二个爱司收尾 6-2。发球局全盘只丢三分。"
+    ],
+    "human_context": {
+      "angle": "她二〇一五年第一次来美网，此后十年一次都没打进过决赛；这次带着伤来——辛辛那提八强对斯瓦泰克那场她中途退赛。领奖时她说的第一句话是「我来这儿十年了，从来没成功过，差得远」。",
+      "facts": [
+        "WTA 官方赛后稿引语：I was coming here for the last 10 years, and it was never successful. Nothing close to that, and it's just incredible. I'm falling in love with New York more and more.",
+        "WTA 官方赛后稿：Rybakina entered the tournament with the aforementioned injury concerns after retiring from her Cincinnati quarterfinal against Iga Swiatek.",
+        "转播解说（主集锦 205.60s）：That is the third Grand Slam title for Elena Rybakina.",
+        "WTA 官方赛后稿：bookended her Grand Slam season with her third major title；2022 温网、2026 澳网、2026 美网。"
+      ],
+      "sources": [
+        "https://www.wtatennis.com/news/4575707/rybakina-halts-sabalenkas-three-peat-bid-to-capture-first-us-open-title",
+        "https://www.wtatennis.com/players/324166/elena-rybakina"
+      ]
+    }
+  },
+  "topbar": {
+    "line1": "2026 美网 女单决赛",
+    "line2": "莱巴金娜 6-4 5-7 6-2 萨巴伦卡"
+  },
+  "push": {
+    "summary": "莱巴金娜首夺美网冠军",
+    "_summary_why": "主语（莱巴金娜）＋ 一层铺垫（首夺）＋ 宾语收尾（美网冠军），10 个字位。按 2026-08-20「一句只留一层铺垫，别把代词插进原本连读的节奏里」：铺垫只有「首夺」一层，收尾前没有插代词。\n⚠️ 用「首夺」不用「第三个大满贯」：这一场给她的是**第一个美网冠军**（WTA 稿标题就是 `capture first US Open title`），而「第三个大满贯」是生涯计数，留给正文。",
+    "lead": "美网女单决赛，阿瑟·阿什球场。莱巴金娜 6-4 5-7 6-2 击败萨巴伦卡，两小时二十一分，拿下生涯第三个大满贯，也是她的第一个美网冠军。\n首盘她的一发只进了百分之二十七，仍然在第二个盘点上拿下。第二盘一发提到百分之六十一，两个破发点却没兑现——5-5 救下两个盘点保住发球局，两局之后还是被破，萨巴伦卡 7-5 扳回一盘。\n决胜盘是一边倒：她 2-1 先破，5-2 一记截击再破，最后用全场第十二个爱司结束比赛。整个决胜盘她的发球局只丢三分，其中两分还是最后一局的双误——萨巴伦卡靠回球只从她的发球局里赢走一分。\n全场她 36 记制胜分对 24 次非受迫失误，萨巴伦卡是 32 对 35。领奖时她说：我来这儿十年了，从来没成功过，差得远。",
+    "auto": true
+  },
+  "segments": [
+    {
+      "source": "champ",
+      "start": 8.0,
+      "end": 13.6,
+      "narration": "",
+      "score_inset": true,
+      "score_inset_windows": [
+        [
+          8.0,
+          10.48
+        ]
+      ],
+      "_score_inset_why": "板量得出右缘的只有 8.0→10.48 这一段（源片 6.34 的切点之后是底线宽景，板压在绿色外场上，右缘实测稳定在 549）。10.48 是**真切点**，之后转成她举拍庆祝的近景、背景是深蓝挡板——板还在，可右缘和背景同色量不出来（实测 -1），再往后板撤掉、只剩场地上刷的 us open 图标，而那个图标会被当成另一块板（实测边界 389，第一趟 render 正是死在这儿）。所以回贴收在切点上，之后不贴。",
+      "_ending_payoff_required": true,
+      "_why": "**第①格：全片最强的一格。** 冠军点那一分的最后一击 → 球落地 → 10.5s 她举拍 → 12.5s 转身握拳。不配旁白，靠现场声（观众爆发）。记分条此时是 `CHAMPIONSHIP POINT #2 / SABALENKA 4 7 2 / RYBAKINA 6 5 5`。\n⚠️ **后段冷开场**：正文第 ⑨ 段（champ 0.3→13.6）把 8.0→13.6 整段重新走了一遍，`ending_payoff_problem` 要的就是这个覆盖关系。",
+      "fit": "crop",
+      "_head_open_why": "**这条源片的开头就是全片最强的那一格，不是「集锦的开头」。** 那条规矩防的是「官方集锦按时间顺序剪，开头＝比赛的开头＝戏剧性最低」——而 `champ` 是美网官方的**冠军点专题片**（标题 `Championship Point | Elena Rybakina Wins the Women's Singles Title`），它的第 0 秒就是第二个冠军点那一分，8.0~13.6 正好是「最后一击落地 → 10.5s 举拍 → 12.5s 握拳」。记分条自证：0.5~8.5s 一直写着 `CHAMPIONSHIP POINT #2 / SABALENKA 4 7 2 / RYBAKINA 6 5 5`。\n⚠️ 真正「按时间顺序剪的集锦」是 `YCAQnmJBJIk`，而它一段都没用（见 `_sources_why`）。",
+      "crosses_cut": "跨 10.48 那一刀：两边是同一件事的两个机位——8.5s 全场那一击落地，切到 10.5s 她举拍的近景。**没有换人**，两格都是莱巴金娜（黄绿背心），记分条也还是同一个 `CHAMPIONSHIP POINT #2`。"
+    },
+    {
+      "source": "walk",
+      "start": 13.2,
+      "end": 18.1,
+      "narration": "通道尽头的牌子写着：压力，是一种荣幸。",
+      "score_inset": false,
+      "_score_inset_why": "球员通道和标语牌，整段没有记分条——转播这一段是入场专题，板还没挂出来。",
+      "_why": "第②句给落点，而这一格自己就是落点：16.5s 那一格是 `PRESSURE IS A PRIVILEGE` 的标语牌 ＋ 美网奖杯（Tiffany & Co. 的底座），那是比利·简·金的名言，立在她走向球场的路上。窗口两端都在切点内的同一个镜头里。\n⚠️ 旁白不复读画面（不写「画面里是一块牌子」），而是把牌子上那句话念出来——它是这条片子后面那句「我来这儿十年了」的引子。\n⚠️ 窗口和旁白都按**真 TTS** 调过：`--check-narration`（edge-tts，和 runner 同一个后端）第一轮量到画面 4.4s / 旁白 4.56s、**超出 0.16s**——离线估当时报的是 +0.17s 富余，方向正好反。现在窗口 4.9s、旁白收到 19 字。",
+      "fit": "crop"
+    },
+    {
+      "source": "walk",
+      "start": 18.2,
+      "end": 28.4,
+      "narration": "北京时间九月十三号凌晨四点多，美网女单决赛。莱巴金娜已经是新科世界第一，对面是世界第一萨巴伦卡。",
+      "score_inset": false,
+      "_score_inset_why": "入场烟雾和打在场地上的名字动画，没有记分条。",
+      "_why": "第③格给坐标。18.5~20.5s 是烟雾柱和她走进球场，22.5~26.5s 是 `ELENA RYBAKINA` 打在球场上的大字。\n⚠️ 开球时刻按 2026-08-17「只说个大概不报到分」：flashscore `AD÷1789244100` ＝ UTC 2026-09-12 20:15 ＝ 北京 9/13 **04:15**，分钟落在 10~39 档，所以说「凌晨四点多」。\n⚠️ **「已经是新科世界第一」这半句必须有**：封面和比分板上印着萨巴伦卡是 (1)，不交代的话读者看不懂为什么第二打第一却说她是第一。按 `_no_repeat`，只这一句带过，99 周和是哪一场锁定的都不讲（那是半决赛那条铺开过的）。",
+      "fit": "crop"
+    },
+    {
+      "source": "set1",
+      "start": 0.3,
+      "end": 17.5,
+      "narration": "首盘她的一发只进了百分之二十七。可在这个盘点上，她把萨巴伦卡拖进了长回合。她是带着伤来的：辛辛那提四分之一决赛，她对斯瓦泰克中途退了赛。而这一分，决定了第一盘。",
+      "score_inset": true,
+      "score_inset_windows": [
+        [
+          1.8,
+          17.5
+        ]
+      ],
+      "_score_inset_why": "源片 0.3→1.8 是另一个机位，板压在深蓝上、右缘量出来是 -1（和背景同色）；1.8 是**真切点**，之后整段是底线宽景、板压在绿色外场上，右缘实测稳定在 475。所以回贴从这个切点起，一直到段尾。",
+      "crosses_cut": "跨 set1 的几个切点——那几刀全在同一个长回合里（转播在宽景和近景之间切），两边是同一分，记分条从头到尾是 `SET POINT #2 / SABALENKA 4 / RYBAKINA 5 AD`。",
+      "_why": "第④拍：首盘的胜负手。0.5s 记分条写着第二个盘点、她 AD；2.5~16.5s 是那个长回合（两人在底线来回跑），18.4 收在她举拍之前。\n「百分之二十七」是 WTA 官方赛后稿的原话（despite landing just 27% of her first serves），指首盘的一发进球率。按 2026-08-16「百分比写百分之多少，不写几成几」。\n⚠️ 旁白补长到 16.4s（画面 18.1s）是为了填掉 dry-run 报的哑场：补的是**已经核过的事实**（WTA 稿的伤病那一段：retiring from her Cincinnati quarterfinal against Iga Swiatek），不是凑字数。\n⚠️ 「一个长回合，满场地跑」中间那个逗号是为字幕断行加的——不加的话「她把萨巴伦卡拖进了一个满场跑的长回合」是 18 格，宽过一行字幕（16 格）只能硬切。",
+      "fit": "crop"
+    },
+    {
+      "source": "set1",
+      "start": 17.5,
+      "end": 24.0,
+      "narration": "六比四，第一盘四十五分钟，归她。",
+      "score_inset": true,
+      "score_inset_windows": [
+        [
+          17.5,
+          18.35
+        ]
+      ],
+      "_score_inset_why": "这一段跨源片 18.35 那个**真切点**：切点之前还是上一段那个底线宽景（板右缘 475，和第 4 段连着的同一个镜头，所以回贴要接着贴，断在段界上会在同一个镜头里看见板忽然换样子）；切点之后转近景和慢镜，板先淡出、随后场地上刷的 us open 图标会被当成另一块板（实测 -1）。所以回贴只留切点之前那 0.85 秒。",
+      "_why": "第⑤拍：首盘落定。18.5s 她举拍，20.5~24.5s 是她的近景。窗口和上一段首尾相接（都在 18.4），`cut_segment` 每段多切 `SEG_FADE` 当溶解底料，叠的是同一条源片的同一段，逐帧相同、看不出接缝。\n「四十五分钟」＝ `df_sui_1` 的 `RC÷0:45`。⚠️ 说「四十五分钟」不说「四十五分」——CLAUDE.md「分不许读成分钟」那条反过来：这里是时长，说「分钟」才对。",
+      "fit": "crop",
+      "crosses_cut": "跨 18.35 那一刀：18.5s 她举拍的近景切到 20.5~22.5s 她走回底线的近景，两边都是莱巴金娜本人，讲的也是同一件事（首盘落定）。"
+    },
+    {
+      "source": "set2",
+      "start": 1.9,
+      "end": 9.3,
+      "narration": "第二盘莱巴金娜的一发提到百分之六十一，两个破发点却没兑现。",
+      "score_inset": true,
+      "crosses_cut": "跨 set2 的 9.33 之前那几刀，都在同一分/同一局的转播切换里。",
+      "_why": "第⑥拍：次盘的账。窗口收在 9.3（解说 9.04s 正好说 `Game and the second set`），下一段接它。\n事实出处全是 WTA 官方赛后稿：In the second, she posted a much-improved first-serve percentage (61%) but failed to capitalize on a pair of break points. That came back to haunt her. While she saved two set points on serve to hold for 5-5, Sabalenka broke two games later to steal the set。\n⚠️ **主语必须写成「莱巴金娜」不能写「她」**：这一段画面上跑动的是穿橙色的萨巴伦卡（记分条 `SET POINT #3`，是她的盘点），写「她的一发」会被读成萨巴伦卡——CLAUDE.md「整句旁白压在对手身上」那条。`preview_segments_local` 第二遍（旁白定稿后）才看得出来。",
+      "fit": "crop"
+    },
+    {
+      "source": "drop",
+      "start": 1.7,
+      "end": 17.6,
+      "narration": "萨巴伦卡这一分打得极好，一记小球放在她够不着的地方。第二盘五比五。莱巴金娜在自己的发球局，救下两个盘点。可两局之后还是被破，七比五，一盘扳回。",
+      "score_inset": true,
+      "score_inset_windows": [
+        [
+          1.7,
+          13.5
+        ]
+      ],
+      "_score_inset_why": "1.7→13.5 是底线宽景，板压在绿色外场上，右缘实测稳定在 512。13.5 起转看台和萨巴伦卡的庆祝近景，板还在、但背景换成人群，右缘实测在 550 和 486 之间跳（这一段源片只有 1.65 和 28.31 两个真切点，13.5 是疑似切点——翻缩略图墙确认过它是真的换了机位）。所以回贴收在那儿。",
+      "crosses_cut": "跨 drop 的 1.65 那一刀之后是同一分的完整回合，转播没有换场次。",
+      "_why": "第⑦拍：给对手应有的篇幅——这条片子讲的是一场对决，不是一个人的独角戏。这一分是萨巴伦卡的小球制胜分，转播解说 13.20s 连喊两句 `What a shot. What a shot to pull off at this moment.`（主集锦 96.16s 同一句，两条源片是同一分的两个剪法）。\n⚠️ 窗口收在 17.0，避开 28.31 那一刀之后的片尾板（静音区 28.38 起）。",
+      "fit": "crop"
+    },
+    {
+      "source": "pom",
+      "start": 9.0,
+      "end": 25.6,
+      "narration": "而这一分，莱巴金娜一步都没慌。对手的小球又放到网前，她追上去，反手把球挑回底线。全场她三十六个制胜分，对二十四次非受迫失误；萨巴伦卡是三十二对三十五。",
+      "score_inset": true,
+      "score_inset_windows": [
+        [
+          9.0,
+          15.38
+        ]
+      ],
+      "_score_inset_why": "9.0→15.38 板一直在，右缘实测稳定在 549（宽景压绿色外场，14.5 秒那一格转近景压蓝色场内，右缘照样量得出）。15.38 之后转另一个机位，转播把常驻记分条整个撤了（16.5 秒起实测量不到板）。所以回贴收在板消失那一刻。",
+      "_why": "第⑧拍：和上一拍构成一对——同样是小球，这次是她化解。这条源片 25.94s **零切点**，整条是一个镜头的长回合。解说 15.68s：And Rebachina though just so cool, calm, and collected. didn't panic with the drop shot and knew Seavanka was going to get there but held her。\n⚠️ 窗口收在 25.0，源片 25.94 就到头（这条没有片尾板，静音区是空的）。\n⚠️ 「三十六**个**制胜分」不写「三十六**记**制胜分」：`--check-narration` 的切词报告显示后者被切成 `三十六 ｜ 记制 ｜ 胜分`，「记制」「胜分」都不是词。\n⚠️ 窗口按真 TTS 放宽到 9.0~25.6：第一轮量到余量只有 +0.52s，太贴闸。这条源片 25.94s 到头且没有片尾板（静音区是空的），25.6 留 0.34s。\n⚠️ 首句点名「莱巴金娜」同理：这一段画面里动得最多的是萨巴伦卡（橙色），只有 14.5s 那一格是莱巴金娜。点了名之后，后面的「她追上去」才接得对。",
+      "fit": "crop"
+    },
+    {
+      "source": "champ",
+      "start": 0.3,
+      "end": 13.6,
+      "narration": "决胜盘她的发球局一共只丢了三分，其中两分还是最后一局的双误。第二个冠军点，她用全场第十二个爱司结束了比赛。",
+      "score_inset": true,
+      "score_inset_windows": [
+        [
+          6.34,
+          10.48
+        ]
+      ],
+      "_score_inset_why": "源片 0.3→6.34 是她发球前的面部近景，背景是深蓝挡板加场地上刷的白色大字——板的右缘和它们连成一片，实测边界在 549 和 597 之间跳（597 换算回源片是 705，已经超出 scorebox 的 700，会直接撞「Verified graphic exceeds source box」）。6.34 和 10.48 都是**真切点**，中间这一段是底线宽景、板压在绿色外场上，右缘稳定在 549。所以回贴只留这四秒；10.48 之后的庆祝近景和第 1 段同一个理由，不贴。",
+      "_why": "**第⑨拍：兑现结局。** 完整走一遍冠军点那一分：0.5~4.5s 她准备发球的近景（记分条 `CHAMPIONSHIP POINT #2`）→ 6.5~8.5s 全场那一击 → 10.5s 举拍 → 12.5s 握拳。\n⚠️ 这一段的窗口 0.3→13.6 **完整覆盖**第①段的 8.0→13.6，`ending_payoff_problem` 要的就是这个。\n数据出处是转播解说自己说的（champ 53.92~70.32s）：Only lost three points on her serve in total. Two were doubles in that last game due to nerves... including an ace on match point。和 flashscore 的分盘一发数据互证。",
+      "fit": "crop",
+      "crosses_cut": "跨 6.34 和 10.48 两刀：0.5~4.5s 她准备发球的近景 → 6.5~8.5s 全场那一击 → 10.5s 举拍近景。**三段都是同一分**（记分条全程 `CHAMPIONSHIP POINT #2`），转播在近景和全场之间切机位，没有换人。"
+    },
+    {
+      "source": "champ",
+      "start": 18.6,
+      "end": 26.0,
+      "narration": "两小时二十一分。网前那一握，萨巴伦卡的美网三连冠没了。",
+      "score_inset": false,
+      "_score_inset_why": "18.5s 是萨巴伦卡的特写、20.5~24.5s 是两人在网前握手，转播这一段已经撤掉常驻记分条。",
+      "_why": "第⑩拍：给对手一个交代。18.5s 萨巴伦卡闭眼的特写、20.5~22.5s 两人网前握手。\n「三连冠没了」出处：WTA 稿 `she denied the two-time defending champion a third straight title`——萨巴伦卡是 2024、2025 两届美网冠军，这次冲三连冠。⚠️ 「两小时二十一分」在这儿说，配的正是 14.5s 之后那块 Rolex 钟所在的同一个镜头段落。",
+      "fit": "crop",
+      "crosses_cut": "跨 19.45 那一刀：两边是同一件事的两个机位——18.5s 萨巴伦卡闭眼的特写，切到 20.5~22.5s 两人在网前握手。**没有换人**，说的和画面上都是她们俩，不是「整句旁白压在别人身上」那一类。"
+    },
+    {
+      "source": "champ",
+      "start": 186.5,
+      "end": 200.5,
+      "narration": "她爬上看台，抱住了教练和家人。这是她的第三个大满贯，也是第一个美网冠军。八个月前的澳网决赛，她也是用一记爱司，赢下萨巴伦卡的。",
+      "score_inset": false,
+      "_score_inset_why": "看台上的拥抱，整段没有记分条。",
+      "_why": "第⑪拍：情绪落点。188.5s 她笑着向观众挥手、190.5~200.5s 爬上看台逐个拥抱团队。\n「第三个大满贯」两个独立源：转播解说（主集锦 205.60s：That is the third Grand Slam title for Elena Rybakina）＋ WTA 官方赛后稿（bookended her Grand Slam season with her third major title）。她的三个是 2022 温网、2026 澳网、2026 美网。\n⚠️ 按 CLAUDE.md 2026-09-12 那条：「他还没拿过 X」是训练数据里的常识而它已经过期——写之前专门查了，2026 澳网她也赢了萨巴伦卡，所以是第三个不是第二个。\n⚠️ 末句「八个月前的澳网决赛，她也是用一记爱司赢下萨巴伦卡的」呼应第⑨拍那个第十二个爱司，出处是 WTA 稿：mirroring how she converted match point at the Australian Open eight months ago；而 who also beat Sabalenka in the Australian Open final in January 是同一篇里的另一句。\n⚠️ **原来这儿写的是「二〇〇二年小威以来第一次有人在美网决赛掀翻卫冕冠军」，撤掉了**——那是全称断言，而我手上只有 WTA 一篇稿，够不上「两个独立源」。换成的这一条是两件具体的事（澳网决赛赢的是谁、怎么结束的），每一件都查得到。\n⚠️ 「一记爱司**，**赢下」那个逗号是切词逼出来的：不加的话切成 `一 ｜ 记 ｜ 爱 ｜ 司赢 ｜ 下`——**「司赢」是个不存在的词**，读出来是「一记爱，司赢下萨巴伦卡」。CLAUDE.md「加逗号把边界钉死」那条。",
+      "fit": "crop"
+    },
+    {
+      "source": "champ",
+      "start": 218.5,
+      "end": 232.0,
+      "narration": "领奖的时候她说，我来这儿十年了，从来没成功过，差得远。她说，这一程一直在跟伤病周旋，可所有事情都站到了她这边。",
+      "score_inset": false,
+      "_score_inset_why": "看台致意的近景，没有记分条。",
+      "_why": "第⑫拍：收在她自己的话上，不收在数据上。220.5s 她举拳向看台致意、222.5~230.5s 是笑脸近景。\n引语出处 WTA 官方赛后稿原文：I was coming here for the last 10 years, and it was never successful. Nothing close to that, and it's just incredible。⚠️ 只抄引语不抄结论（CLAUDE.md「编辑稿的引语可以抄，结论不可以」）。\n⚠️ 窗口收在 232.0，离片尾板（249.5 起）还有十几秒。",
+      "fit": "crop"
+    },
+    {
+      "source": "champ",
+      "start": 232.0,
+      "end": 244.8,
+      "narration": "二〇二二年温网，今年一月的澳网，加上今天的纽约。四大满贯，她只差一个法网。红土那一座，她拿得下吗？",
+      "score_inset": false,
+      "_score_inset_why": "笑脸近景，没有记分条。",
+      "_why": "**末拍：开一扇新门。** 232.5~238.5s 是她向看台挥手和笑脸的近景。\n「只差一个法网」出处 WTA 官方赛后稿：The 27-year-old now sits one Roland Garros trophy away from completing the Career Slam。温网 2022、澳网 2026、美网 2026 都拿过，只剩法网。\n⚠️ **收尾落在一问上，不停在数据上**（`test_收尾要落在一问上不能停在数据上`）：前三句把她拿过的三座摆出来，末句把门开向还没拿到的那一座。这一问接的是片子里刚说过的具体事实（只差法网），不是凭空发问；封面钩子不是问句，所以也不构成「末屏那一问是封面那一问的回声」。\n⚠️ 这是**全称断言的安全写法**：不说「她是第几个」「史上唯一」，只说她自己拿过哪三个、还差哪一个——每一项都可查。\n⚠️ 窗口 232.0→244.8：**真 TTS 量到 243.0 那一版余量只剩 +0.39s**，太贴闸，往后拉了 1.8 秒（离线估当时报 +1.34s，又是偏乐观的那一头）。244.5/246.5/248.5 三格缩略图都还是她的笑脸近景，**片尾板 249.5 才开始**，仍留 4.7 秒。\n⚠️ 「把四大满贯集齐」不写「集齐四大满贯」：后者被切成 `集 ｜ 齐四 ｜ 大满贯`，「齐四」是假词。",
+      "fit": "crop"
+    }
+  ],
+  "_editing_why": "⚠️ **每条源片的片尾板都没进窗口**：美网官方每条片子末尾都有 `FOLLOW US ON SOCIAL MEDIA / #USOPEN` 的蓝底板，起点就是 probe 静音区的起点（champ 249.5 / walk 184.3 / set1 35.7 / set2 26.0 / drop 28.4 / pom 无 / ryb 无）。最靠近的是末段 243.0，离 249.5 有 6.5 秒。\n⚠️ **段尾尽量落在死球或镜头边界上**：set1 那两段接在她举拍前后、set2 收在解说报出 `Game and the second set` 的 9.3、drop 和 pom 都收在那一分打完之后。\n⚠️ **话画对得上**：第⑩拍讲萨巴伦卡三连冠没了，配的正是她的特写和握手；第④拍讲首盘一发，配的正是首盘那个盘点的长回合；第⑦拍讲萨巴伦卡的小球，画面就是她打那一球。**旁白定稿之后要再跑一遍 `preview_segments_local.py`**（CLAUDE.md：第二遍专门查「这句话说的那个人，是不是画面里那个人」）。"
+}

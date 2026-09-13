@@ -1,0 +1,71 @@
+{
+  "scoreboard_qc_sha256": "d307e1b5d378c17d22a1f342465dd3c48b78ee90720b01ebc3941569a3e404be",
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 3.827,
+  "layout": "band",
+  "segments_seconds": 145.3,
+  "topbar": {
+    "line1": "2026 美网 女单决赛",
+    "line2": "莱巴金娜 6-4 5-7 6-2 萨巴伦卡",
+    "start": 1.2,
+    "end": 146.5
+  },
+  "film_seconds": 150.35,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 4.344,
+    "2": 9.48,
+    "3": 16.248,
+    "4": 3.696,
+    "5": 5.904,
+    "6": 14.712,
+    "7": 15.336,
+    "8": 10.728,
+    "9": 6.12,
+    "10": 12.888,
+    "11": 11.16,
+    "12": 10.608
+  },
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "rybakina-sabalenka-us-open-2026-final",
+    "received_at": "2026-09-13T01:47:39Z",
+    "artifact_ready_at": "2026-09-13T01:53:44Z",
+    "elapsed_seconds": 365.036,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "1fa2056f20fb6f90f23f952c5eafd8c02e7e0d734f8ad5031f7467682504e1a0",
+    "spec_sha256": "70736cbbeb59a46106edd1437b340237d17bd7f9b309897bb5801f1faf40e9cc",
+    "run_id": "34731411958",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-09-13T01:49:42Z",
+        "run_id": "34731411958"
+      }
+    ],
+    "render_seconds": 242.036,
+    "pre_render_seconds": 123.0
+  },
+  "film_sha256": "1fa2056f20fb6f90f23f952c5eafd8c02e7e0d734f8ad5031f7467682504e1a0",
+  "film_bytes": 94294029,
+  "qc_attestation_sha256": "10849cb3a9fb6703cf83fcf28fbd875e3c5932325aa2134727f6a74b7325b087",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-09-13T01:49:42Z",
+      "run_id": "34731411958"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-13T01:53:45Z",
+      "run_id": "34731411958"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-rybakina-sabalenka-us-open-2026-final/rybakina-sabalenka-us-open-2026-final.mp4",
+  "video_bytes": 94294029
+}
