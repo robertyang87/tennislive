@@ -23,6 +23,7 @@ Apply a reviewed ASR name-alias correction deterministically before translation,
 Name a round only as 决赛, 半决赛, 1/4决赛, 1/8决赛, or 第一轮/第二轮/第三轮/第四轮 — at a Grand Slam the round of 16 may also be written 第四轮. Describe how far a player went only as 冠军, 亚军, 半决赛, 1/4决赛, 1/8决赛, or 第N轮 — a player who reached the final without winning it is 亚军, so never leave that result vague by saying only that they reached the final. These are the sole permitted forms in every outward field; a deterministic wording gate rejects the alternatives and the draft cannot be promoted.
 
 Write percentages in every voice-bound editorial field as spoken Chinese, such as “百分之八十二”, never `82%` or `82％`. PushPlus display copy may retain the symbol.
+Write the tennis term ACE with Latin letters (`ACE`) in every outward-facing field; never transliterate it into Chinese. The TTS voice reads `ACE` as the English word (measured: 0.177s, one syllable), and the Chinese transliteration gets tokenised into a non-existent word.
 
 Write natural continuous Chinese for every voice-bound field. Do not insert English-style whitespace between Chinese words; for example, write `今天他` rather than `今天 他`.
 
