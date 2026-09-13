@@ -1,0 +1,101 @@
+{
+  "film_sha256": "4ba12299df290fbbd94666723dd6b96fb3475c2f5bf85cc1703d609e60f138b2",
+  "film_seconds": 198.401,
+  "production_stage_events": [
+    {
+      "stage": "preflight",
+      "at": "2026-09-13T01:26:56Z",
+      "run_id": "34730529530"
+    },
+    {
+      "stage": "asr_verify",
+      "at": "2026-09-13T01:28:28Z",
+      "run_id": "34730529530"
+    },
+    {
+      "stage": "render",
+      "at": "2026-09-13T01:29:01Z",
+      "run_id": "34730529530"
+    },
+    {
+      "stage": "qc",
+      "at": "2026-09-13T01:31:26Z",
+      "run_id": "34730529530"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-13T01:31:26Z",
+      "run_id": "34730529530"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/interview-rybakina-sabalenka-us-open-2026-final-ceremony/rybakina-sabalenka-us-open-2026-final-ceremony.mp4?v=4ba12299df290fbb",
+  "video_bytes": 62763722,
+  "release_asset_digest": "sha256:4ba12299df290fbbd94666723dd6b96fb3475c2f5bf85cc1703d609e60f138b2",
+  "qc_attestation_sha256": "b98582522605f20dc1cbb8884222711f1c4d6a391fbcca9c1c7496ddd1960acb",
+  "production_sla_history": [
+    {
+      "version": 2,
+      "pipeline": "interview-clip",
+      "slug": "rybakina-sabalenka-us-open-2026-final-ceremony",
+      "received_at": "2026-09-13T00:54:09Z",
+      "artifact_ready_at": "2026-09-13T00:59:59Z",
+      "elapsed_seconds": 350.582,
+      "budget_seconds": 600,
+      "met": true,
+      "film_sha256": "926bcbfdfb2a47f21deb0ab5e0eb560b02db7e76ee156aafd5baff3bfd41b20c",
+      "spec_sha256": "71776dc2ec1df35fe4f93b71ed229467c1617f63c16c4baea8ae6314ca16bfa0",
+      "run_id": "34729150878",
+      "stage_events": [
+        {
+          "stage": "preflight",
+          "at": "2026-09-13T00:54:41Z",
+          "run_id": "34729150878"
+        },
+        {
+          "stage": "asr_verify",
+          "at": "2026-09-13T00:56:26Z",
+          "run_id": "34729150878"
+        },
+        {
+          "stage": "render",
+          "at": "2026-09-13T00:57:09Z",
+          "run_id": "34729150878"
+        }
+      ],
+      "render_seconds": 170.582,
+      "pre_render_seconds": 180.0
+    }
+  ],
+  "production_sla": {
+    "version": 2,
+    "pipeline": "interview-clip",
+    "slug": "rybakina-sabalenka-us-open-2026-final-ceremony",
+    "received_at": "2026-09-13T01:26:31Z",
+    "artifact_ready_at": "2026-09-13T01:31:25Z",
+    "elapsed_seconds": 294.553,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "4ba12299df290fbbd94666723dd6b96fb3475c2f5bf85cc1703d609e60f138b2",
+    "spec_sha256": "67a998d881a94a4782e2d6c3e2de60abb5e6d5cadf053a7317e512d9946f438e",
+    "run_id": "34730529530",
+    "stage_events": [
+      {
+        "stage": "preflight",
+        "at": "2026-09-13T01:26:56Z",
+        "run_id": "34730529530"
+      },
+      {
+        "stage": "asr_verify",
+        "at": "2026-09-13T01:28:28Z",
+        "run_id": "34730529530"
+      },
+      {
+        "stage": "render",
+        "at": "2026-09-13T01:29:01Z",
+        "run_id": "34730529530"
+      }
+    ],
+    "render_seconds": 144.553,
+    "pre_render_seconds": 150.0
+  }
+}

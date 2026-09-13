@@ -1,0 +1,212 @@
+{
+  "slug": "rybakina-sabalenka-us-open-2026-final-ceremony",
+  "url": "https://www.youtube.com/watch?v=L7EtjUS4IwY",
+  "source_title": "Elena Rybakina On-Court Interview | 2026 US Open Final（@usopen 官方频道）",
+  "start": 7.9,
+  "end": 160.0,
+  "column": "赛后开麦",
+  "event": "2026 美网女单决赛",
+  "interview_kind": "赛后捧杯致辞",
+  "requested_content_type": "ceremony",
+  "_window_why": "源片总长 **165 秒**（`--stage subs` 拿到的视频元数据实测，upload_date 20260912），自动字幕流到 163.15 秒。\n`start` 取 7.9——8.16 秒主持人开口「Elena, boy, you're good. How did you put together a year like that? How did you beat the two-time defending champion the way you did?」，这一问本身就把「她击败两冠卫冕冠军」这个背景交代了，必须收；7.9 起画面先出来 0.26 秒就接上第一条字幕，不会压在一段没有字幕的画面上（CLAUDE.md 那条硬约束）。0~7.9 只有两条 `[cheering]` 噪声标记（不上屏）；缩略图墙上这一段是她在球场上举手致意、走向颁奖台、和 J.P.Morgan 背景板前的颁奖队列——**画面本身不差，但它不该由正文来交代「她赢了」**，片子开头是 `lead_in` 的捧杯。\n`end` 取 160.0。⚠️ **片尾板这次是缩略图墙自证的，不是按同频道经验值推的**：墙上 **161.1s 和 163.0s 两格都是美网的「FOLLOW US ON SOCIAL MEDIA」深蓝片尾板**（可以直接认出来），而 157.1s / 159.1s 两格是**球场夜景全景**（转播的收尾镜头，她这时还在说话——字幕 157.76「come back next year. Thank you.」覆盖到 161.13）。\n⚠️ **按两种读法里更早的那个取**：缩略图墙的秒数可能整体早一格（CLAUDE.md 2026-09-03），不偏的话片尾板从 161.1 起、偏一格的话从 163.0 起——取更早的 161.1，160.0 留 1.1 秒余量。最后一行字幕在 158.7（「Thank you.」），到 160.0 还有 1.3 秒，不会被窗口截掉尾巴。\n⚠️ 本库多条已发 spec 逐帧量过同一个片尾板（`zheng-swiatek-us-open-2026-r4-interview` 约 5 秒、`khachanov-blockx` 126.0 起、`zheng-liutova` 201.68 起、`bu-jodar` 190.1 起）——这次墙上直接看得见，但**格子的分辨率是 1.96 秒**，所以渲完仍然要按 CLAUDE.md「⭐ 而『抽帧看』现在在本地就能做」把成片从 Release 拉回来，在窗口末尾逐帧量整幅均值确认一帧片尾板都没收进来（片尾板是一帧跳上去的，和人物画面差一个量级）。",
+  "source_verification": {
+    "source_id": "youtube:L7EtjUS4IwY",
+    "source_url": "https://www.youtube.com/watch?v=L7EtjUS4IwY",
+    "source": "US Open",
+    "title": "Elena Rybakina On-Court Interview | 2026 US Open Final",
+    "status": "verified",
+    "detected_type": "ceremony",
+    "method": "official_explicit_ceremony",
+    "evidence": [
+      {
+        "kind": "official_explicit_title",
+        "title": "Elena Rybakina On-Court Interview | 2026 US Open Final",
+        "source": "US Open",
+        "video_id": "L7EtjUS4IwY"
+      }
+    ],
+    "match_id": "2026:us-open:womens-final:elena-rybakina-aryna-sabalenka",
+    "attestation_sha256": "421b7831e6e29b2080ac2129536e5c984436b9a107338a76dee178c5ec73eb00"
+  },
+  "match": {
+    "id": "2026:us-open:womens-final:elena-rybakina-aryna-sabalenka",
+    "event": "美网",
+    "round": "决赛",
+    "winner": "莱巴金娜",
+    "loser": "萨巴伦卡",
+    "participants": [
+      "莱巴金娜",
+      "萨巴伦卡"
+    ]
+  },
+  "winner": "莱巴金娜",
+  "opening": {
+    "kind": "none",
+    "why": "这条源片是美网官方从颁奖典礼里单独剪出来的冠军致辞段落：从 7.9 秒主持人开口提问起，全程是颁奖台上的人物镜头（她拿着话筒说话，背景是颁奖台和看台），没有一帧球场内的回合或赛点画面。判据是它和完整颁奖典礼那条（`tZp5mhbvVHY`）的时间轴对得上——颁奖那条 290.56 秒的「beat the twotime defending champion the」和这条 15.12 秒那一句逐字相同，偏移约 275 秒，也就是这条正是颁奖典礼 275~440 秒那一段的官方单独剪辑版，而颁奖典礼本身 0 秒起就在台上。所以比赛结束／夺冠那一刻不在这条源片自己的窗口里，从同一场颁奖典礼的完整版接（见 `lead_in`）。"
+  },
+  "lead_in": {
+    "url": "https://youtu.be/tZp5mhbvVHY",
+    "start": 460.5,
+    "end": 494.0,
+    "why": "⭐ **账号所有者点名要的那一段**：「加上这里面捧杯的部分视频」，源片是美网官方的完整颁奖典礼（videoId tZp5mhbvVHY，标题「Full Trophy Presentation | Elena Rybakina is Crowned Champion | 2026 US Open」，和正文那条出自**同一个官方频道** @usopen，两条都是 2026-09-12 上传——oEmbed 的 `author_name` 两条都回 `US Open Tennis Championships`，这是频道自证不是看标题猜的）。\n窗口 460.5~494.0 收的是**颁奖典礼的捧杯那一段**：460.88 司仪说「And now, Maria Sharapova, the 2006 champion here, will present Elena Rybakina with the trophy」（2006 年美网冠军莎拉波娃上台颁奖），473.6~482.5 这 9 秒没有任何字幕事件——那正是递奖杯和全场欢呼本身（CLAUDE.md「没人说话很正常啊，可能是大家在欢呼之类的」），482.56 起司仪宣布「your 2026 US Open women's singles champion, Elena Rybakina」，也就是她举起奖杯那一刻。收在 494.0，避开 497.28 起转播解说开始复盘（「What a moment for this young lady here」那一整段属于另一个语境，收进来会变成集锦式解说）。33.5 秒，在 `_OPENING_LEAD_MAX`（40 秒）之内。\n⚠️ **这一段在时间线上发生在致辞之后，而它被放在片子最前面，是认领过的取舍不是手滑**：`lead_in` 这个机制只做片头（`_lead_in_segment` 拼在封面之后、正片之前），没有「接在结尾」这一档。而把捧杯放在第 ① 格恰好满足 CLAUDE.md 两条硬要求——「开场第 ① 格是全片最强的那一格画面」「刷到这条的人不用先搞清『这是谁、赢了谁』才听得懂采访」：司仪那句「你们的 2026 美网女单冠军」把人物、赛事、结果一次交代完，而正文第一句主持人的提问（「你是怎么击败两冠卫冕冠军的」）紧接着就接得上。\n⚠️ **这一条不是「比赛结尾」，所以它不兑现 CLAUDE.md 那条「冷开场只是预告，正文必须重新兑现结局」**——那条规矩的主语是「赛场之上」的 `match_review`（冷开场放了赛点，正文必须按时间顺序重新走到赛点）。这条片子的正文是一整段致辞，它的「结局」就是致辞本身讲完，没有被预告掉的东西。",
+    "_subs_why": "转写来自这条源片自己的官方自动字幕（`cap_tZp5mhbvVHY.en-orig.json3`，沙箱下得动字幕、下不动音视频流）。⚠️ **时刻按「到下一条 `tStartMs` 为止」重排过，不用 `dDurationMs`**——CLAUDE.md 记过这个坑：YouTube 的滚动字幕每条 cue 的 `dDurationMs` 是重叠的（这一段里 460.88 那条报到 468.56，而下一条 465.44 就开始了），拿 `dDurationMs` 当结束会让每一句都晚将近两秒出，而闸只查「时长在 0~40 秒之间」，一个字都不说。\n⚠️ **ASR 把两个人名都转错了，按译名表和官方拼写校回来**（CLAUDE.md「ASR 会把人名念错，而且错得离谱」「双语字幕的英文要按发音校正」）：`Maria Sherupovo` / `Sherupova` → **Maria Sharapova**（`player_zh(\"Maria Sharapova\")` = 莎拉波娃）；`Elena Rebakina` / `Rebakana` / `Revakina` → **Elena Rybakina**（`player_zh(\"Elena Rybakina\")` = 莱巴金娜）。这两个名字是司仪反复念到的，属于明显的 ASR 听误，订正不改变句意。\n⚠️ **六条 cue 的边界是按逐词时间戳（json3 的 `segs[].tOffsetMs`）切的，不是按 cue 边界切的**——原始 cue 的边界正好把句子劈开（`460.88` 那条收在 `the 2006`、下一条 `465.44` 从 `champion here,` 起），照 cue 切出来读是半截话。逐词实测：`460.88=And 461.12=now, 462.32=Maria 462.80=Sharapova, 464.16=the 464.64=2006 / 465.44=champion 465.92=here, 466.80=will 467.04=present 468.16=Elena / 468.56=Rybakina / 470.24=with 470.40=the 470.64=trophy, / 482.56=your 483.20=2026 / 484.72=US 485.36=Open 485.92=women 486.48=singles 487.20=champion / 489.12=Elena 490.08=Rybakina.`，所以切点落在 464.16（`the` 之前）、466.80（`will` 之前）、485.92（`women` 之前）。\n⚠️ **第一版写成四条，本地 `--stage subs` 当场报三处超宽**（`#1 英文 1139px`／`#3 英文 1024px`／`#1 中文 1182px`，可用 952），按报错正文那句「一行装不下就照源片的逐词时间戳把它拆成两条，别去缩字号、也别硬塞」拆成六条。⚠️ **宽度不是按字符数算的，是按真实字体量的**：`will present Elena Rybakina with the trophy.`（44 字符）过得了，而 `Your 2026 US Open women's singles champion,`（42 字符）超宽——大写字母和撇号更宽。所以拆完要再跑一次 subs 确认，不能按字符数估。\n473.6~482.5 那 9 秒故意不配字幕——那一段是递奖杯和现场欢呼，没有可转写的人声对白，和 `gauff-pegula-cin2026-final` 的 `lead_in` 同一个处置。\n⚠️ 最后一条的中文写**姓**「莱巴金娜」不写全名——CLAUDE.md「人名要以译名表为准」，`player_zh(\"Elena Rybakina\")` 给的是「莱巴金娜」；2026-09-12 那次撞车的账里「按译名表用姓」正是赢的那一半。",
+    "subs": [
+      {
+        "a": 460.88,
+        "b": 464.16,
+        "en": "And now, Maria Sharapova,",
+        "zh": "接下来 请出莎拉波娃"
+      },
+      {
+        "a": 464.16,
+        "b": 466.8,
+        "en": "the 2006 champion here,",
+        "zh": "2006 年的本站冠军"
+      },
+      {
+        "a": 466.8,
+        "b": 473.6,
+        "en": "will present Elena Rybakina with the trophy.",
+        "zh": "为莱巴金娜颁出冠军奖杯"
+      },
+      {
+        "a": 482.56,
+        "b": 485.92,
+        "en": "Your 2026 US Open",
+        "zh": "你们的 2026 年美网"
+      },
+      {
+        "a": 485.92,
+        "b": 489.12,
+        "en": "women's singles champion,",
+        "zh": "女单冠军"
+      },
+      {
+        "a": 489.12,
+        "b": 493.5,
+        "en": "Elena Rybakina.",
+        "zh": "莱巴金娜"
+      }
+    ]
+  },
+  "word_fix": {
+    "arena": "Aryna",
+    "arena,": "Aryna,",
+    "Arena": "Aryna",
+    "Arena,": "Aryna,",
+    "twotime": "two-time",
+    "Rebakina": "Rybakina",
+    "Rebakina,": "Rybakina,",
+    "Revakina": "Rybakina",
+    "Revakina.": "Rybakina.",
+    "Rebakana": "Rybakina",
+    "Sherupova": "Sharapova",
+    "Sherupova.": "Sharapova.",
+    "Sherupovo": "Sharapova",
+    "Sherupovo,": "Sharapova,"
+  },
+  "_word_fix_why": "⚠️ **带标点的 key 和裸词都要写**——CLAUDE.md 2026-09-03 记过：`word_fix` 里带标点的 key 会**静默失效**（那一轮 `Mory.` / `Hanjo.` / `Lena?` 三条一个都没换掉，而同一份表里不带标点的全部生效），所以两种写法都列上。\n`arena` → `Aryna`：她对萨巴伦卡说「I just want to say Aryna you are great champion」，ASR 把对手的名字听成了普通名词 arena（球场），而这一句是整段致辞里最有分量的一句——她夺冠之后先夸对手。不改的话烧在画面上的英文是「say arena you are great champion」，读的人会以为她在说球场。\n`twotime` → `two-time`：主持人那句「beat the twotime defending champion」，ASR 把连字符吃掉了；这条线发的是英语学习素材，`two-time` 是正确拼法。\n⚠️ **她念团队名字那一行没有走 `word_fix`，走的是 `en_fixed`**（见 `_en_fixed_why`）：`word_fix` 在切行之前逐词修、会让行重排，而 `zh` 是逐行手写的，行数一变整段对不上。第一版这里写着「查不到哪一种拼法是对的，按原样留着」——**那句话已经过期**：渲完之后拿第三个模型重听 ＋ 查公开的团队名单，`Stefano, Stas, Stefan` 三个名字定下来了。\n⚠️ **中文那一行的音译换过两次**：第一版写「斯蒂芬纳斯」，`test_人名要以译名表为准` 当场红——「斯蒂芬纳」和译名表里的真实球员「斯蒂芬斯」（Sloane Stephens）只差一个字，读者会以为字幕在说那个人；第二版「斯特凡纳斯 斯特凡 尼克」是照 ASR 的音译的，名字核准之后换成现在的「斯特凡诺 斯塔斯 斯特凡 尼克」。",
+  "zh": [
+    "埃琳娜 你真了不起",
+    "这样的一年 你是怎么做到的？",
+    "你是怎么击败",
+    "那位两连冠的卫冕冠军",
+    "而且赢得这么漂亮？",
+    "你是怎么做到的？",
+    "这会儿真的找不到词",
+    "说实话 我完全没想到会是这样",
+    "来打这站比赛的时候",
+    "我一直带着点",
+    "伤在身上",
+    "可不知怎么 一切都对上了",
+    "全站到了我这边 我想说",
+    "阿丽娜 你是了不起的冠军",
+    "跟你打真的太难了",
+    "你把我逼到了极限",
+    "我在场上一直在扑救 只想",
+    "把每一个能碰到的球都救回来",
+    "也要恭喜你",
+    "恭喜你拿到的这一切",
+    "也恭喜你的团队",
+    "你们做得非常出色",
+    "我现在真的找不到词",
+    "抱歉",
+    "接下来我当然要谢谢",
+    "这么好的观众们",
+    "谢谢这么棒的气氛",
+    "说实话 我一直来这儿",
+    "来了整整十年",
+    "从来没有成功过",
+    "甚至都不接近",
+    "所以这真的太不可思议了",
+    "我越来越爱",
+    "越来越爱纽约 这对我来说",
+    "是一段美好的回忆",
+    "谢谢你们",
+    "当然",
+    "我要谢谢那些人",
+    "没有他们 我站不到这儿",
+    "那就是我的团队",
+    "太谢谢你们了",
+    "斯特凡诺 斯塔斯 斯特凡 尼克",
+    "我的体能教练 他在家",
+    "守在电视机前",
+    "当然 我的家人也在家里",
+    "还有我所有的朋友 谢谢你们",
+    "真的谢谢",
+    "你们是最好的",
+    "没有你们 这一切都不可能",
+    "最后我想",
+    "谢谢所有的人",
+    "谢谢他们办起了这项赛事",
+    "这是一项了不起的赛事",
+    "我还是找不到词",
+    "这里的气氛",
+    "真的让人难以置信",
+    "到现在都觉得不像是真的",
+    "所以真的谢谢每一个人",
+    "我也很期待",
+    "明年再回到这里",
+    "谢谢大家"
+  ],
+  "cover": {
+    "frame_at": 153.2,
+    "_why": "153.2 秒——**缩略图墙逐格看过之后挑的，不是从转写猜的**（`output/interviews/<slug>/storyboard.jpg`，84 格、每格 1.96 秒，`--stage subs` 顺手出的）。\n⚠️ **第一版猜的 96.5 是错的，而错法正是 CLAUDE.md 警告过的那种**：我按「95.92 起她说 I'm falling in love in New York，这句最轻快」从转写推了一帧，而把 88.4~100.2 那六格放大看——**萨巴伦卡（橙红球衣）全程站在她旁边**，那一带是双人画面，不是单人近景，过不了「优先近景特写」。「看过缩略图」和「看过那一帧」是两件事，而「从转写猜的」连缩略图都没看过。\n**143~155 秒才是全片最长的一段单人正脸近景**：143.4 / 147.3 / 149.3 / 151.2 / 153.2 / 155.2 六格逐格放大看过，同一个机位、同一个景别，她戴白帽穿白外套配黄领巾，背景是「us open finals」蓝色背景板，萨巴伦卡不在画面里（只有画面最左缘露出一小条橙红，4:3 裁切切掉左右各 12.5% 正好去掉它，所以**不需要 `crop_shift_x`**）。\n⚠️ **挑 153.2 不挑 155.2，是按偏一格的风险选的**（CLAUDE.md 2026-09-03「缩略图墙烧上去的秒数整体早了一格」，而那条偏移只在一条片子上余量像样、并没有改共享工具，所以两种读法都要站得住）：\n  · 155.2 那一格她**嘴角明显上扬在笑**，是这一段里表情最好的一格——但偏一格的话它实际是 **157.1 秒**，    而 157.1 那一格是**球场全景**（转播的收尾镜头），封面会变成一张没有人的空镜。\n  · 153.2 不偏是它自己那一格（正脸、眼睛睁着、嘴微张在说话、表情平和），偏一格退到 155.2（正脸、笑）    ——**两种读法都落在这段单人近景里，都可用**。\n  · 147.3 **不能用**：放大看她眼睑垂着、眼睛向下（CLAUDE.md 2026-08-21「封面图一定不要闭眼的」，    而 `audit_interview_cover` 的 Haar eye cascade 在半闭的眼睑上照样命中，这一关只能靠眼睛）。\n语义上 153.2 落在「and doesn't feel real for now」（到现在都觉得不像是真的）和「So thank you so much to everyone」之间，是她感慨的那一下，和这条片子的情绪对题。\n⚠️ **仍然要渲完核对**：缩略图墙每格 1.96 秒，眨眼只占几分之一秒，墙上看不出来（CLAUDE.md「缩略图墙只能选姿态窗口，选不了眼神」）。出片之后把成片从 Release 拉回本地、在 153.2 前后按 0.1 秒逐帧抽一遍，挑一帧眼睛睁着的；整段 143~155 都是同一个机位，换帧不会换景别。",
+    "title": [
+      "三次说「找不到词」",
+      "来了十年 她第一次捧杯"
+    ],
+    "sub": "莱巴金娜 6-4 5-7 6-2 胜两冠卫冕的萨巴伦卡",
+    "_copy_why": "钩子取的是这段致辞自己最反常的一处**过程**，不是身份（CLAUDE.md「钩子要有剧情的跌宕」「身份海报别处已经印着了」）：一个刚夺冠的人，在 163 秒里**三次说自己找不到词**——23.04「it's tough to find words right now」、61.36「I can't find the words now. Sorry.」、144.72「I can't find words」。这三处是逐条数出来的，不是印象。第二行给落点，接的是她自己那句「I honestly was coming here for last 10 years and it was never successful」——来美网十年，这一次她第一次捧杯。\n两行 9 字位和 11 字位，interview 线的 `.title` 是 74px 固定字号、会换行、行长到 16 字（CLAUDE.md「赛后开麦的封面标题不跟着 reel 的 10 字上限」），装得下。\n`sub` 补封面钩子没提的硬事实：比分和对手的分量。⚠️ **写「两冠卫冕」不写「世界第一」**——后者我核不了：WTA 官方榜单拿到的是 **2026-08-31** 那一期（萨巴伦卡 8575 分第一、莱巴金娜 8141 分第二），而决赛后那一期还没发布；颁奖典礼的转播解说给过「她配得上世界第一」这个说法，但那是**解说的结论不是官方榜单**（CLAUDE.md「编辑稿的引语可以抄、结论不可以」），原话记在 `_facts` 里。\n⚠️ **这段说明第一版直接引了那句英文原话，被 `test_封面引的话必须在片子里` 当场拦下**（最像的只有 0.14）——那条判据扫的是 `cover._copy_why` 里引的英文，要求它能在 `lines.json` 里找到，而那句话出自**颁奖典礼那条源片的解说**，不在正文这条源片里。判据是对的：封面注引的英文是作者声称的出处，出处必须存在于这条片子。「两冠卫冕」有两个独立出处，见 `_facts`。",
+    "tag": "2026 美网决赛 · 莱巴金娜"
+  },
+  "takeaway": {
+    "close": {
+      "point": "来纽约十年 她第一次没空手走",
+      "ask": "四个大满贯只剩法网 她拿得下吗？"
+    }
+  },
+  "push": {
+    "auto": true,
+    "_auto_why": "这条片子做出来就是要发的——CLAUDE.md「片子做完就合并、就推微信，不要再问一遍」定的默认终点是 `渲 → 质检 → 合并 → 推送`。⚠️ **必须在 `mode=render` 之前写**：`auto_push_interview_gate.wants_auto_push` 要求 `push` 块里显式写 `\"auto\": true`，而同一个函数下面几行钉着 `qc_attestation.spec_sha256 == sha256(当前 spec 的字节)`——渲完再补这一行会断哈希链，代价是一整趟 render（CLAUDE.md「⭐ 采访线：`push.auto` 要写在渲之前，补一行就得重渲一趟」）。手动 `mode=push` 走的也是同一个 `wants_auto_push`，不写两条路一起拦住。",
+    "matchup": "莱巴金娜 vs 萨巴伦卡",
+    "score": "6-4 5-7 6-2",
+    "event": "",
+    "summary": "十年了 莱巴金娜首夺美网",
+    "lead": "2026 美网女单决赛，2 号种子莱巴金娜 6-4 5-7 6-2 击败赛前排在世界第一的萨巴伦卡，拿下生涯第三个大满贯，也是她今年的第二个——一月在澳网，九月在纽约。全场 2 小时 23 分，三盘分别打了 45、57、41 分钟。这是她第一次打进美网决赛，而对手在这里连拿了两年冠军。捧杯致辞里她三次说自己找不到词，最动人的一句是：「说实话，过去十年我一直来这儿，从来没有成功过，甚至都不接近。」她先夸了对手：「阿丽娜，你是了不起的冠军，跟你打太难了，你把我逼到了极限，我在场上一直在扑救。」奖杯由 2006 年的本站冠军莎拉波娃颁出。",
+    "_why": "`matchup`/`score` 和 `winner`、`match` 块一致，赢家在前（CLAUDE.md「赢家在前，从 `cover.winner` 挑」）。`summary` 12 字（`SUMMARY_MAX` 是 13——⚠️ 第一版写的「十年了 莱巴金娜终于赢下美网」是 14 字，本地实调 `push_reel.SUMMARY_MAX` 当场超，去掉「终于」并把「赢下」换成「首夺」：一层铺垫（「十年了」）＋ 主语 ＋ 动词，收尾动词前面没有插多余的代词（CLAUDE.md 2026-08-20「标题要通顺：一句只留一层铺垫，别把代词插进原本连读的节奏里」）；而且首行点出了球员名字（2026-09-02 那条：solo 封面的中文名在双列瀑布流的缩略图里只剩 8.2px，滑到这一屏的人看得见钩子、看不见名字）。\n`lead` 把比分、生涯意义、用时和致辞里最动人的两句分开说，比分放最前面不剧透致辞内容。⚠️ **没有写「世界第一」**，理由见 `cover._copy_why`；轮次按 2026-09-08 的口径写「决赛」。"
+  },
+  "caption_gaps_ok": {
+    "104.2-106.6": "掌声和欢呼，不是漏词。判据是自动字幕自己给的：100.56 那条事件的文本就是「you guys. [applause and cheering]」，而它一直覆盖到下一条 106.56——也就是说 ASR 自己把这 6 秒标成了掌声和欢呼，空档（104.2~106.6）整段落在它里面；106.56 她**重新起头**说「Of course, I want to say thank you to the people without who I wouldn't be here」，这是掌声打断致辞再接上的标准形状（CLAUDE.md「颁奖致辞这类素材，被掌声打断是常态而不是异常」那一条记的两个判据：两头夹着噪声标记 ＋ 随后重新起头）。前一句是「It's an amazing memories for me. Thank you guys.」——她谢完观众，全场鼓掌，这个位置鼓掌完全合理。\n⚠️ **这是推的，不是听的**：沙箱下不动这条源片的音视频流（只下得动字幕），所以我没有听过这 2.4 秒，也没有量过响度。`--stage verify` 在 runner 上跑第二份 ASR ＋ Silero VAD 之后要回来核一遍——那条路才有音轨。\n⚠️ **这一栏的每个键都会被当成空档键去核**（`test_销掉的空档得真的是空档` 拿当前字幕重算一遍空档，销了而现在没有的键当场红）——所以说明只能写进值里，不能另起一个 `_why` 键。第一版就是这么写的，当场红在 `['_why']`。",
+    "133.0-136.3": "同上，掌声。131.00 那条事件的文本就是「[applause]」，空档（133.0~136.3）紧跟在它后面；136.32 她重新起头说「And last I want to say thank you to all people who made this tournament possible」。前一句是「And without you, it won't be possible.」——她谢完团队和家人，全场鼓掌。\n⚠️ 同样是推的不是听的，等 `--stage verify` 的 VAD 结果核。"
+  },
+  "_facts": "这条片子里每个事实的出处（全称断言按 CLAUDE.md「查得够深、查得够广、两个源对得上」各给两个不同主机的源）：\n\n【赛果 6-4 5-7 6-2，莱巴金娜胜】\n  → flashscore 当日总表 `global.flashscore.ninja/2/x/feed/f_2_-1_0_en_1`，比赛 id `rDbVIO5l`：\n    `AE÷Sabalenka A.`（home）`BA÷4 BC÷7 BE÷2`、`AF÷Rybakina E.`（away）`BB÷6 BD÷5 BF÷6`，\n    `AG÷1 AH÷2`（盘数 1:2）、`AW÷1`（完赛）——按赢家视角是 6-4 5-7 6-2\n  → flashscore 单场 feed（`tools/match_feed.py show rDbVIO5l`，另一个 feed）：分盘用时 0:45 / 0:57 / 0:41、\n    全场 2:23，**三个分盘加起来 143 分钟 = 2:23 自洽**（CLAUDE.md「判据是『自洽』不是『加得起来』」）；\n    逐分走势里第一盘末局 `4-6 客队发球，客队拿下 ← 2个盘点`，和 6-4 对得上\n  → 颁奖典礼源片的转播解说（`tZp5mhbvVHY` 530.56）「She struck the ball so well today.\n    She handled the pressure beautifully towards the end.」和「第二盘被扳回、决胜盘 6-2 拿下」这个走向一致（旁证，不是比分源）\n\n【生涯第三个大满贯；今年第二个（澳网 + 美网）】\n  → WTA 官方 bio `api.wtatennis.com/tennis/players/320760/headtohead/324166` 的 `CareerHighlights`：\n    莱巴金娜 `Winner (13): 2026 - Stuttgart, Australian Open / 2025 - WTA Finals, Ningbo, Strasbourg /\n    2024 - Brisbane, Abu Dhabi, Stuttgart / 2023 - Indian Wells, Rome / 2022 - Wimbledon / 2020 - Hobart /\n    2019 - Bucharest`——大满贯只有 **2022 温网** 和 **2026 澳网**，加上这一场正好第三个；\n    今年（2026）的冠军里大满贯是澳网，加美网是两个\n  → 颁奖典礼解说（`tZp5mhbvVHY` 500.16）「Now a threetime Grand Slam champion and a US Open champion」、\n    548.88「she's completed the year, bookended it with the Australian Open, and now the US Open」\n\n【第一次打进美网决赛】\n  → 同一份 WTA bio 的 `Finalist (12)` 里没有任何一条 US Open\n  → 本库已发的 `specs/reels/sabalenka-rybakina-h2h.json` 的 `_claims` 已经独立核过同一条结论\n\n【萨巴伦卡是两冠卫冕冠军（2024、2025 美网）；赛前世界第一】\n  → 同一份 WTA bio：萨巴伦卡 `Winner (24)` 含 `2025 - US Open`、`2024 - US Open`\n  → WTA 官方排名接口 `api.wtatennis.com/tennis/players/ranked?...&metric=SINGLES`，\n    `rankedAt` **2026-08-31**（美网开打那周）：1 萨巴伦卡 8575 / 2 莱巴金娜 8141\n  → 正文源片主持人自己的提问（7.9 窗口内，15.12）「How did you beat the two-time defending champion\n    the way you did?」\n  → 美网官方 feed `usopen.org/en_US/scores/feeds/2026/players/matches/wta324166_matches.json`：\n    莱巴金娜 `seed: 2`（沙箱对这个 feed 恒 403，这一条是一次命中时读到的，之后重试都 403）\n\n【莱巴金娜赛前世界第二，2 号种子】\n  → 同上两条（WTA 榜单第 2 ＋ 美网 feed `seed: 2`）\n\n【奖杯由 2006 年本站冠军莎拉波娃颁出；奖金 550 万美元】\n  → 颁奖典礼源片司仪原话（`tZp5mhbvVHY` 460.88「Maria Sharapova, the 2006 champion here, will present\n    Elena Rybakina with the trophy」、448.32「a check for $5.5 million in prize money」）\n  ⚠️ 奖金这个数**只有这一个源**（司仪念的），所以只写进 `_facts` 不写进产物\n\n【四个大满贯只剩法网（`takeaway.close.ask` 用到）】\n  → 同一份 WTA bio 的 `Winner (13)` 列表里没有 Roland Garros / French Open\n\n⚠️ **没有写进产物的两件事，理由各自记着**：\n  ① **「世界第一」**——颁奖解说说了「she's the deserved world number one」「someone who got the world\n     number one ranking and then went on to actually win the tournament」，但那是**解说的结论**；\n     我手上的 WTA 官方榜单是 2026-08-31 那一期（萨巴伦卡第一），决赛后那一期还没发布，\n     按积分推算她会登顶但**那是我自己的算术不是源**（CLAUDE.md「只讲确认过的，不要多说没确认的」）。\n     产物里写的是有榜单自证的那一半：她掀翻的是**赛前世界第一 ＋ 两冠卫冕冠军**。\n  ② **她的伤**——31.68「I've been dealing a little bit with the injury」是她自己说的，进了正文字幕；\n     但具体是什么伤、影响多大没有第二个源，所以不写进 `push.lead` 和封面。\n\n⚠️ 排名是快照不是常量，重渲这条片子之前要重查（CLAUDE.md）。",
+  "_copy_note": "这条片子的来路：账号所有者 2026-09-13 给了两条 YouTube 链接，「做夺冠后致辞」＋「加上这里面捧杯的部分视频」。第一条 `L7EtjUS4IwY` 是正文（官方单独剪出来的冠军致辞），第二条 `tZp5mhbvVHY` 是完整颁奖典礼，捧杯那一段走 `lead_in` 接在片头。\n⚠️ **去重查过**（CLAUDE.md「判据是『发之前再查一次』」）：`git ls-tree origin/main specs/interviews/` 里莱巴金娜有 7 条（辛辛那提 R2/R3、多伦多 QF/SF/决赛两条、美网 QF/SF），**没有这场决赛**；`specs/reels/` 里有一条 `sabalenka-rybakina-h2h`（赛前 H2H 展望，网球有故事栏目）和各轮的赛场之上，也没有这场决赛的片子。⚠️ 发之前要再查一次。",
+  "_caption_gaps_why": "正文窗口（7.9~160.0）里两处空档的销账。两处都是**掌声打断致辞**，判据是自动字幕自己的噪声标记（`[applause and cheering]` / `[applause]`）加上她随后重新起头，不是「这里没问题」这种抹平（CLAUDE.md「销账留判据，不许抹平」）。\n⚠️ **两处都标了「这是推的」**：沙箱听不了音轨，而 CLAUDE.md 那一节明写「摆出你的判据就够，但要标出软硬，别装成听过」。`--stage verify` 在 runner 上跑第二份 ASR 和语言无关的 Silero VAD，只有核心区无人声才自动销账；VAD 检出人声的一律继续红灯——那一关才是硬的。",
+  "_zh_why": "⚠️ **第 7 行从「现在真的很难找到词」改成「这会儿真的找不到词」，是为了让中文和封面钩子自洽**。\n封面钩子和小红书正文都写着「三次说『找不到词』」，而这个数是从**英文原话**数出来的，逐行核过——`#7 Well, it's tough to find words right now.`／`#23 really I can't find the words now.`／`#54 and yeah it's I can't find words.`，确实三次。\n但中文那头第一版把 #7 译成「很难找到词」（更贴 `tough to find` 的字面），于是**屏幕上只有两次「找不到词」**——而读者数的是中文字幕，不是英文。一个封面上写着「三次」、字幕里只数得出两次的片子，被发现只是时间问题（CLAUDE.md 那条读者当众指出「什么叫三个盘点都没救下来」的教训就是这么来的）。\n口语里「很难找到词」和「找不到词」等价，改这一句不损原意，换来的是封面、正文、字幕三处说的是同一件事。\n⚠️ 其余 60 行没动。她的口吃（`It's it's` / `I honestly I honestly`）照原样保留——那是她真实的说话状态，这条线发的是她说的话，不是整理稿。",
+  "en_fixed": {
+    "42": "Stefano, Stas, Stefan, Nick,",
+    "44": "in front of the TV."
+  },
+  "_en_fixed_why": "两处都是**渲完拉回成片、拿第三个模型在那几秒上重听**定下来的，不是按语感改的。\n\n**第 42 行 `Stephanas, Stephan, Nick,` → `Stefano, Stas, Stefan, Nick,`**（她谢团队时念的名字）。三份 ASR 各给一种拼法：YouTube `Stephanas, Stephan, Nick`／small.en `stefanostas stefanik`／medium.en **四个错开的窗口全部一致**给出 `Stefan Hostas, Stefan Nick`。三份的共同点是「Stefan- 的音出现两次、中间夹一个 -tas/-as、末尾一个 nik/Nick」。而她的团队是公开的：**Stefano Vukov（主教练）、Stas Khmarskyi（助教）、Stefan Duell（理疗师，随队）**，体能教练 **Aldo Chiari** 没随队——正好对上紧接着的下一行「my fitness coach, he's back home」。`Stefano, Stas, Stefan` 三个名字同时被三份 ASR 的音和这份公开名单支持，而 `Stephanas` 根本不是一个英文名——这条线发的是英语学习素材，不能印一个不存在的名字。\n⚠️ **`Nick` 原样留着，没有去掉也没有坐实**：三份 ASR 都听到了这个音，去掉等于删她致谢的一个人；而公开名单里查不到对应的人，所以只照音写，不替她认人。\n\n**第 44 行 `was tracing in front of the TV.` → `in front of the TV.`**（去掉那个动词）。`was tracing in front of the TV` 语法上说不通，而**四次读数给了三种词**：YouTube `tracing`、small.en `tracing`、medium.en 三个错开窗口给 `stressing`／`stressing`／`tracing`。也就是**这个词在音频上本身就模糊**，我没有第三方源能定死它（`pacing` 最地道，但那是我推的，没有任何一份读数支持）。CLAUDE.md「编出来的判据 ＋ 正确的结论」记的正是这个形状——烧一个核不出来的实词上去，比不烧更糟。去掉那个动词之后，留下的 `in front of the TV` 是**四次读数全部一致**的部分，而且和上一行连读是通的（`my fitness coach, he's back home in front of the TV.`），中文「守在电视机前」一个字不用改——那句意译对 tracing／stressing／pacing 三个候选都成立。\n⚠️ 走 `en_fixed` 不走 `word_fix`：两处都是**整行读起来不对**且不变宽的订正，而 `word_fix` 在切行之前生效、会让行重排，`zh` 是逐行手写的，行数一变整段都对不上。"
+}
