@@ -1,0 +1,93 @@
+{
+  "slug": "zverev-shelton-us-open-2026-final-ceremony",
+  "url": "https://www.youtube.com/watch?v=Pc7pQQvkAzU",
+  "source_title": "Alexander Zverev On-Court Interview | 2026 US Open Final",
+  "start": 0.0,
+  "end": 422.5,
+  "asr_model": "small.en",
+  "whisper_model": "medium.en",
+  "column": "赛后开麦",
+  "requested_content_type": "ceremony",
+  "interview_kind": "赛后捧杯致辞",
+  "event": "2026 美网 男单决赛",
+  "winner": "兹维列夫",
+  "featured_player": "兹维列夫",
+  "topbar_layout": "event_primary",
+  "transcript_verified": false,
+  "zh": [],
+  "opening": {
+    "kind": "none",
+    "why": "源片从 0.00 秒起就是颁奖典礼台上——司仪第一句就是「现在有请我们的冠军上台」，整条都在阿瑟·阿什球场的颁奖台前录，没有一帧是回合或赛点画面。比赛结尾由 `lead_in` 从同场官方集锦接入。"
+  },
+  "lead_in": {
+    "url": "https://www.youtube.com/watch?v=hY1epQDmhGQ",
+    "start": 180.9,
+    "end": 199.5,
+    "why": "待定：等 frame-grab 逐帧看过再写。"
+  },
+  "cover": {
+    "frame_at": 216.0,
+    "title": [
+      "待定",
+      "待定"
+    ],
+    "sub": "美网男单决赛 · 捧杯致辞",
+    "tag": "兹维列夫 · 赛后开麦",
+    "_why": "待定：等 frame-grab 逐帧看过再写。"
+  },
+  "takeaway": {
+    "close": {
+      "point": "待定",
+      "ask": "待定"
+    }
+  },
+  "push": {
+    "matchup": "兹维列夫 vs 谢尔顿",
+    "score": "6-3 7-6(2) 5-7 6-2",
+    "event": "",
+    "summary": "待定",
+    "lead": "待定"
+  },
+  "match": {
+    "id": "2026:us-open:mens-final:zverev-shelton",
+    "event": "2026 US Open",
+    "event_search": "US Open",
+    "round": "Final",
+    "year": 2026,
+    "winner": "兹维列夫",
+    "winner_en": "Alexander Zverev",
+    "loser": "谢尔顿",
+    "loser_en": "Ben Shelton",
+    "participants": ["兹维列夫", "谢尔顿"],
+    "score": "6-3 7-6(2) 5-7 6-2",
+    "court": "Arthur Ashe Stadium",
+    "duration": "3:36",
+    "flashscore_id": "MyyzpiYp"
+  },
+  "source_verification": {
+    "status": "verified",
+    "detected_type": "ceremony",
+    "method": "official_explicit_ceremony",
+    "source_url": "https://www.youtube.com/watch?v=Pc7pQQvkAzU",
+    "source_id": "youtube:Pc7pQQvkAzU",
+    "source": "US Open",
+    "title": "Alexander Zverev On-Court Interview | 2026 US Open Final",
+    "evidence": [
+      {
+        "kind": "official_explicit_title",
+        "source": "US Open",
+        "title": "Alexander Zverev On-Court Interview | 2026 US Open Final",
+        "video_id": "Pc7pQQvkAzU"
+      }
+    ],
+    "match_id": "2026:us-open:mens-final:zverev-shelton"
+  },
+  "_facts": [
+    "赛果（flashscore df_sui_1，比赛 id MyyzpiYp）：2026 美网男单决赛，兹维列夫 6-3 7-6(2) 5-7 6-2 胜谢尔顿。分盘用时 0:41、1:11、1:00、0:44，全场 3:36 —— 四个分盘加起来正好等于全场，是三个数互相印证不是同一次计算，按 CLAUDE.md 那条「自洽不等于加得起来」的口径这一份自洽。第二盘抢七小分取 df_sui_1 的第二组 IG/IH（7-2），(N) 记的是输掉那一盘的谢尔顿拿到的分。",
+    "场地 Arthur Ashe Stadium，主裁 Veljovic M.（塞尔维亚）——同一份 df_sui_1 的 MIT/MIV 块。",
+    "官方转播解说在赛点后自己交代了赛果和分量（源片 hY1epQDmhGQ 188.16–195.44，两份 ASR 逐词一致）：「he finishes off Ben Shelton in four sets and wins his second major of the year, his first US Open」——四盘击败谢尔顿，本赛季第二个大满贯，生涯首个美网冠军。"
+  ],
+  "_notes": [
+    "用户原话：「做兹维列夫赛后采访」，给的就是这条 Pc7pQQvkAzU。标题写的是 On-Court Interview，而内容整条是颁奖典礼上的冠军致辞（司仪请他上台、他逐个致谢、最后主持人说「你还没完呢」要请他举杯），没有一个记者提问 —— 所以 requested_content_type 按人工判断写 ceremony，不按标题的 on_court。CLAUDE.md「人工判成发布会优先级高于标题规则」是同一条。"
+  ]
+}
