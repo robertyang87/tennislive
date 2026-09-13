@@ -175,6 +175,41 @@ def round_display(round_name: str | None) -> str:
 #: love game 的字面直译。要用一个词就写「零封」。
 LOVE_GAME = re.compile(r"爱局")
 
+#: ACE 的中文音译。账号所有者 2026-09-13：「**ACE 不要用中文**」「**记住了下次**」。
+#:
+#: 来路：`rybakina-sabalenka-us-open-2026-final` 的旁白写着「她用全场第十二个
+#: 爱司结束了比赛」，片子已经推送出去，他看完要求换掉重发。
+#:
+#: ⚠️ **这条不是文风偏好，它同时修掉一个切词坑**：「爱司」在 edge-tts 那儿会被
+#: 切成 `爱 ｜ 司赢`（那条 spec 当初为此专门加了一个逗号去撑开边界，理由写在它的
+#: `_why` 里）；换成 ACE 之后实测切成一个干净的 token `ACE`，加不加逗号都对。
+#:
+#: ⚠️ **TTS 读得对，这是量出来的不是听出来的**（edge-tts，`zh-CN-YunjianNeural`
+#: ＋6%，同一句只换这一个词）：
+#:
+#:     爱司     全句 3.91s   那个词 0.401s（两个音节）
+#:     ACE      全句 3.75s   那个词 **0.177s** ← 一个音节，也就是英文那个词
+#:     诶斯     全句 3.81s   那个词 0.342s（两音节参照组）
+#:     诶西伊   全句 4.11s   ← 逐个字母念的参照组，切成 `诶 ｜ 西伊`
+#:
+#: 0.177 秒装不下三个字母，所以它读的是英文的 ace 不是 A-C-E；而**它确实读了**：
+#: 整句去掉这个词是 3.62s（差 +0.13s），把那 0.177 秒切出来量是 mean −27.4 /
+#: max −14.4 dB——不是数字静音。⚠️ 生产走 Azure，这几个数是 edge-tts 量的
+#: （这条 spec 自己 `tts_backend: "edge"`），Azure 那头没复现过。
+#:
+#: ⚠️ **只拦音译，不拦这件事本身**：ACE 该讲还是讲，全库早就一路写着
+#: `Ace` / `ACE`（`altmaier-musetti` 的旁白「一个 Ace 都没发出来」已经发过）。
+#: 大小写不管——账号所有者自己写的是 ACE，而语料里两种都有，那是文风不是规矩。
+ACE_IN_CHINESE = re.compile(r"爱司球?")
+
+#: 这条规矩（2026-09-13）之前发出去的。`maria-yastremska` 写的是「爱司球」，
+#: 2026-08-16 就推送了——已发的不为措辞重渲（消息发出去收不回来，
+#: `push.summary` 还要和已发的 `copy.html` 逐字相同）。**只许减不许加**，
+#: 自检在 pytest 那头（每个名字都要真的还命中）。
+ACE_IN_CHINESE_LEGACY = frozenset({
+    "maria-yastremska.json", "maria-yastremska.xhs.txt",
+})
+
 #: 「要到 N 个破发点」——点一律写「拿到」。中间最多隔一个数量词。
 YAODAO_POINT = re.compile(r"要到[^。！？\n]{0,8}?(破发点|盘点|赛点|局点)")
 
@@ -577,6 +612,15 @@ def check_spec_wording(spec: dict, slug: str,
         problems.append(
             f"love game 被字面直译成了「爱局」：{hits}——写「零封」，"
             f"或者靠逐分（15:0/30:0/40:0）讲清楚，不另造标签")
+
+    if spec_name not in ACE_IN_CHINESE_LEGACY:
+        if hits := _hits(ACE_IN_CHINESE, list(outward_deep(spec))):
+            problems.append(
+                f"ACE 写成了中文音译：{hits}——写 ACE（TTS 实测读成英文那个词，"
+                f"0.177s 一个音节；而「爱司」还会被切成「爱 ｜ 司赢」那种假词）")
+    if xhs_text and xhs_name not in ACE_IN_CHINESE_LEGACY:
+        if hits := _hits(ACE_IN_CHINESE, [xhs_text]):
+            problems.append(f"小红书正文把 ACE 写成了中文音译：{hits}")
 
     if spec_name not in YAODAO_LEGACY:
         if hits := _hits(YAODAO_POINT, outward_flat(spec)):
