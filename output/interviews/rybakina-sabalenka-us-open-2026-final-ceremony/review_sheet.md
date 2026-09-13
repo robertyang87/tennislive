@@ -45,9 +45,9 @@
 | 39 | 1:41.5 | [▶](https://youtu.be/L7EtjUS4IwY?t=109) | without who I wouldn't be here. | 没有他们 我站不到这儿 |  |
 | 40 | 1:42.9 | [▶](https://youtu.be/L7EtjUS4IwY?t=110) | It's my team. | 那就是我的团队 |  |
 | 41 | 1:43.8 | [▶](https://youtu.be/L7EtjUS4IwY?t=111) | Thank you so much, guys. | 太谢谢你们了 |  |
-| 42 | 1:45.6 | [▶](https://youtu.be/L7EtjUS4IwY?t=113) | Stephanas, Stephan, Nick, | 斯特凡纳斯 斯特凡 尼克 |  |
+| 42 | 1:45.6 | [▶](https://youtu.be/L7EtjUS4IwY?t=113) | Stefano, Stas, Stefan, Nick, | 斯特凡诺 斯塔斯 斯特凡 尼克 | ✏️ 已订正 |
 | 43 | 1:49.2 | [▶](https://youtu.be/L7EtjUS4IwY?t=117) | my fitness coach, he's back home | 我的体能教练 他在家 |  |
-| 44 | 1:51.6 | [▶](https://youtu.be/L7EtjUS4IwY?t=119) | was tracing in front of the TV. | 守在电视机前 |  |
+| 44 | 1:51.6 | [▶](https://youtu.be/L7EtjUS4IwY?t=119) | in front of the TV. | 守在电视机前 | ✏️ 已订正 |
 | 45 | 1:53.4 | [▶](https://youtu.be/L7EtjUS4IwY?t=121) | Of course, my family also back home. | 当然 我的家人也在家里 |  |
 | 46 | 1:55.9 | [▶](https://youtu.be/L7EtjUS4IwY?t=123) | And all my friends, thank you so much, | 还有我所有的朋友 谢谢你们 |  |
 | 47 | 1:58.0 | [▶](https://youtu.be/L7EtjUS4IwY?t=125) | guys. | 真的谢谢 |  |
