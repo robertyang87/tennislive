@@ -135,7 +135,7 @@
     "一天都没缺席",
     "谢谢你们",
     "爱你们",
-    "致美国网协",
+    "致美网",
     "你们又做到了",
     "办了一届了不起的大赛",
     "我一年里最喜欢的赛事",
@@ -152,7 +152,7 @@
     "对美国网球的付出",
     "把这项赛事办成",
     "世界第一 难以置信",
-    "谢谢美国网协的每一个人",
+    "谢谢美网的每一个人",
     "我要谢谢",
     "所有赞助商",
     "是他们让这项赛事办得起来",
@@ -188,8 +188,23 @@
     "我还会回到这里",
     "非常感谢大家"
   ],
-  "_facts": [],
-  "_notes": [],
+  "_facts": [
+    "来源：YouTube oEmbed 确认标题『Ben Shelton On-Court Interview | 2026 US Open Final』、频道『US Open Tennis Championships』（@usopen 官方）；yt-dlp 元数据报真实片长 290 秒、上传日 20260913。",
+    "赛果 6-3 7-6(2) 5-7 6-2（兹维列夫胜）：flashscore 单场 MyyzpiYp（home 是兹维列夫，分盘 6-3/7-6/5-7/6-2，抢七小分 DC÷7 DD÷2 → 7-6(2)）与 ESPN 赛后稿『beating Ben Shelton 6-3, 7-6 (2), 5-7, 6-2』逐项一致，两个独立源。⚠️ 第二盘的抢七是普通抢七不是抢十：这场 3-1 结束、没打满五盘，最后一盘不是决胜盘。",
+    "谢尔顿是亚军，这是他第一次打进大满贯决赛：主持人在第 5–6 行说的『your first and certainly not your last major final』，ESPN 赛后稿写作『his first major final』。",
+    "兹维列夫今年先拿法网，美网是他一年里第二个大满贯：ESPN 赛后稿『Zverev finally broke through in the majors by winning this year's French Open and followed up by adding the title in New York』。⚠️ 这一条 CLAUDE.md 2026-09-12 专门记过——训练数据里『兹维列夫还没有大满贯』是个已经过期的常识，账号所有者当场纠正过一次，别再照那个写。同一篇还写着他是公开赛年代第四个把头两个大满贯放在同一年拿下的男子球员（前三是康纳斯 1974、维拉斯 1977、辛纳 2024）。",
+    "美国男子上一次拿到大满贯冠军是 2003 年的罗迪克（在同一片法拉盛草场）：ESPN 赛后稿『the first Grand Slam title by an American man since 2003』『Andy Roddick won in Flushing Meadows in 2003』。",
+    "他第 95 行说的『熬到凌晨四点的人』有出处：1/4 决赛他五盘淘汰卫冕冠军阿尔卡拉斯，那场球凌晨 3 点 33 分结束，是美网历史上结束最晚的一场（ESPN 赛后稿『a five-set quarterfinal that ended at 3:33 a.m., the latest finish in US Open history』）。⚠️ 那一场我们已经发过（shelton-alcaraz-us-open-2026-qf-interview，讲的正是他替熬夜亲友请假），所以这条片子只把它当来路一句带过，不重讲。",
+    "兹维列夫赢下最后一分时自己没反应过来：ESPN『He finished the match on his serve but didn't seem to realize it, dropping back behind the baseline as if set to return』，与本场官方集锦解说 166.56–173.12『He doesn't even know he's won. / There you go.』是同一件事的两个独立记录。",
+    "谢尔顿夸对手那段（第 19–21 行）『你是世界上最好的球员之一，也许是今年世界上最好的那一个』被 ESPN 赛后稿原样引用，可以互证转写没听错。"
+  ],
+  "_notes": [
+    "正文完整保留英文原声，逐行对照译文；不改写英文、不编造金句。全片 103 行，`--stage subs` 报 0 处待听。",
+    "第 17 行 `Grand ST slam`→`Grand Slam` 走 en_fixed（见 _en_fixed_why），其余口吃重复一个都没动。",
+    "⚠️ 第 52 行 `To the USA` 和第 69 行 `everyone at the USA`：按语境他说的是办赛那一方（下一句就是『you guys have done it again, put together an amazing tournament』），听感上更像 `USTA`——但两份字幕轨都写 `USA`，**没有第二份 ASR 背书就不改英文**；中文取『美网』这个两种读法都成立的说法。render 那一趟的双 ASR 分歧表如果把它核成 USTA，再走 en_fixed 改英文。",
+    "⚠️ 10 处字幕空档全部是起草时从转写结构推的（沙箱只下得动字幕、下不动媒体），判据逐条写在 caption_gaps_ok 里，等 render 那一趟的 Silero VAD 销账。颁奖致辞被掌声打断是常态，最长那处 12.5 秒落在主持人自己那句串词的上下半句之间。",
+    "⚠️ 封面 51.0 秒是按转写时间轴推的，**不是从缩略图墙挑的**——这条源片的墙在沙箱里下不下来（`-f sb0` 报 Requested format is not available）。`mode=cover` 渲完必须把 poster 拉回本地打开看：眼睛睁没睁开、脸是不是画面主体、情绪对不对题。"
+  ],
   "lead_in": {
     "url": "https://www.youtube.com/watch?v=hY1epQDmhGQ",
     "start": 189.44,
