@@ -228,7 +228,7 @@
       "method": "official_exact_match_highlight",
       "height": 1080
     },
-    "why": "同场官方集锦 hY1epQDmhGQ（US Open 官方频道，标题写明 vs. Ben Shelton Highlights | 2026 US Open Final；yt-dlp 走 tv_embedded client 实测 1080p / 223 秒）。**逐帧打开看过**（frame-grab run 34789778650，155–204 秒每秒一格）：156–160 记分板烧着 CHAMPIONSHIP POINT ＋ ZVEREV 6 7 5 5 AD / SHELTON 3 6 7 2；161–169 他赢下这一分却还站在原地没反应过来，170 才举起右臂；174–176 是谢尔顿闭眼仰头的特写；179–190 两人在网前长时间拥抱；191–194 和主裁握手；198–202 他张开双臂面向看台。⚠️ 收的是 180.5–199.6 这 19.1 秒而不是从 156 的赛点起：156–161.5 那 5.5 秒一个字幕事件都没有（解说 161.52 才开口），而这是双语字幕片，开头不许压在没有字幕的画面上——CLAUDE.md arango-venus 那条的判据，「更早」和「更好」在这条线上不是一回事。⚠️ 而 161.5–180 那几句解说没收进来，是因为**两份 ASR 对它们不一致**（hY1 给 'Zverev/76 doesn't know he's **won**'，b40hO04eyLo 那条官方 Winning Moment 给 'doesn't know he's **playing/winning**'）——烧进画面的英文是学习对象本身，措辞拿不准就不写。现在这 6 条是**两份 ASR 逐词一致**的那一段，时刻按 json3 的逐词 tOffsetMs 切，全程无空档。"
+    "why": "同场官方集锦 hY1epQDmhGQ（US Open 官方频道，标题写明 vs. Ben Shelton Highlights | 2026 US Open Final；yt-dlp 走 tv_embedded client 实测 1080p / 223 秒）。**逐帧打开看过**（frame-grab run 34789778650，155–204 秒每秒一格）：156–160 记分板烧着 CHAMPIONSHIP POINT ＋ ZVEREV 6 7 5 5 AD / SHELTON 3 6 7 2；161–169 他赢下这一分却还站在原地没反应过来，170 才举起右臂；174–176 是谢尔顿闭眼仰头的特写；179–190 两人在网前长时间拥抱；191–194 和主裁握手；198–202 他张开双臂面向看台。⚠️ 收的是 180.5–199.6 这 19.1 秒而不是从 156 的赛点起：156–161.5 那 5.5 秒一个字幕事件都没有（解说 161.52 才开口），而开头不许压在一段没有字幕的画面上——CLAUDE.md arango-venus 那条的判据，「更早」和「更好」在这条线上不是一回事。⚠️ 而 161.5–180 那几句解说没收进来，是因为**两份 ASR 对它们不一致**（hY1 给 'Zverev/76 doesn't know he's **won**'，b40hO04eyLo 那条官方 Winning Moment 给 'doesn't know he's **playing/winning**'）——烧进画面的英文是学习对象本身，措辞拿不准就不写。现在这 6 条是**两份 ASR 逐词一致**的那一段，时刻按 json3 的逐词 tOffsetMs 切，全程无空档。"
   },
   "cover": {
     "frame_at": 225.0,
@@ -242,8 +242,8 @@
   },
   "takeaway": {
     "close": {
-      "point": "医生说他打不了球 母亲把那句话挡了回去",
-      "ask": "第一个等到 29 岁 第二个只隔三个月 下一个呢？"
+      "point": "他把最重的一段留给了母亲",
+      "ask": "三个月两个大满贯 下一个在哪？"
     }
   },
   "push": {
