@@ -135,7 +135,7 @@
     "一天都没缺席",
     "谢谢你们",
     "爱你们",
-    "致美网",
+    "致美国网协",
     "你们又做到了",
     "办了一届了不起的大赛",
     "我一年里最喜欢的赛事",
@@ -152,7 +152,7 @@
     "对美国网球的付出",
     "把这项赛事办成",
     "世界第一 难以置信",
-    "谢谢美网的每一个人",
+    "谢谢美国网协的每一位",
     "我要谢谢",
     "所有赞助商",
     "是他们让这项赛事办得起来",
@@ -201,8 +201,8 @@
   "_notes": [
     "正文完整保留英文原声，逐行对照译文；不改写英文、不编造金句。全片 103 行，`--stage subs` 报 0 处待听。",
     "第 17 行 `Grand ST slam`→`Grand Slam` 走 en_fixed（见 _en_fixed_why），其余口吃重复一个都没动。",
-    "⚠️ 第 52 行 `To the USA` 和第 69 行 `everyone at the USA`：按语境他说的是办赛那一方（下一句就是『you guys have done it again, put together an amazing tournament』），听感上更像 `USTA`——但两份字幕轨都写 `USA`，**没有第二份 ASR 背书就不改英文**；中文取『美网』这个两种读法都成立的说法。render 那一趟的双 ASR 分歧表如果把它核成 USTA，再走 en_fixed 改英文。",
-    "⚠️ 10 处字幕空档全部是起草时从转写结构推的（沙箱只下得动字幕、下不动媒体），判据逐条写在 caption_gaps_ok 里，等 render 那一趟的 Silero VAD 销账。颁奖致辞被掌声打断是常态，最长那处 12.5 秒落在主持人自己那句串词的上下半句之间。",
+    "第 52 行 `To the USA` 和第 69 行 `everyone at the USA`：**已核**——run 34790630802 的双 ASR 分歧表里 `usa` → `usta` 出现两次，第二份 ASR 两处都听成 USTA，英文和中文都已改准，见 _en_fixed_why。",
+    "10 处字幕空档起草时从转写结构推（沙箱只下得动字幕、下不动媒体），判据逐条写在 caption_gaps_ok 里；**已核**：run 34790630802 的 Silero VAD 销账 status=pass，10 处全部由静音或相邻字幕覆盖证明（`speech_seconds` 全为 0）。⚠️ 第二份 ASR 在几处各报出一个词（`You've`／`Sasha` 这类），**都是下一行的首词**，是时间戳边界抖动不是漏词。",
     "封面 51.0 秒：起草时按转写时间轴推（这条源片的缩略图墙在沙箱下不下来），**已经跑过 mode=cover 并把 poster 拉回本地打开看过**，结论写在 cover._why 里。"
   ],
   "lead_in": {
@@ -242,9 +242,11 @@
     "why": "本场官方集锦（Alexander Zverev vs. Ben Shelton Highlights | 2026 US Open Final，223 秒）189.44–199.40 这 9.96 秒：解说一句话把赛果交代完整——四盘负、兹维列夫拿下今年第二个大满贯和生涯第一个美网。⚠️ 起点不取更早的 180.88（解说那段『他赢了自己都不知道』），虽然那是这场决赛最有记忆点的细节：那 8.5 秒讲的全是兹维列夫的心理状态，而这是谢尔顿的片子，冷开场的职责是让刷到的人知道『比赛结束了、结果是什么』，不是替对手做心理描写。⚠️ 终点不拉到 208.96（『After the way this man started this tournament』），因为 199.40→208.96 之间 9.5 秒源片一个字幕事件都没有（只有欢呼），而开头不许压在一段没有字幕的画面上——这条线每一行都要有对照的译文。⚠️ 三行的时间码按『到下一条 tStartMs 为止』算，不按 dDurationMs（YouTube 滚动字幕的 dDuration 是重叠的，照它算每一句会整体晚将近两秒）。英文行实测 925/823/373px，可用 952，最长那行余量 27px。"
   },
   "en_fixed": {
-    "17": "Your second Grand Slam title,"
+    "17": "Your second Grand Slam title,",
+    "52": "To the USTA,",
+    "69": "So, thank you all everyone at the USTA."
   },
-  "_en_fixed_why": "第 17 行只改 `Grand ST slam`→`Grand Slam`：ASR 在 `Grand` 和 `Slam` 之间插了一个不存在的 `ST`，而这是网球里最常见的固定词组、上下文（『你的第二个…冠军，一年里两个』）也把它钉死了，订正是确定性的，且**不改行长**（`Grand ST slam` → `Grand Slam` 变窄，不会撞英文超宽那道闸）。⚠️ 其余口吃重复（`first first`／`on on`／`to to`／`This this is is`／`I I`／`Put put`／`the to the`／`in in`）**一个都没动**——那是他真实的语流，CLAUDE.md『不改写英文、不编造金句』，等第二份 ASR 的分歧表再说。",
+  "_en_fixed_why": "三处，每一处都有背书，**其余口吃重复一个都没动**（`first first`／`on on`／`to to`／`This this is is`／`I I`／`Put put`／`the to the`／`in in` 是他真实的语流，CLAUDE.md『不改写英文、不编造金句』）。\n① 第 17 行 `Grand ST slam`→`Grand Slam`：ASR 在 `Grand` 和 `Slam` 之间插了一个不存在的 `ST`，网球里最常见的固定词组、上下文（『你的第二个…冠军，一年里两个』）也把它钉死，订正是确定性的。\n② ③ 第 52/69 行 `USA`→`USTA`：**判据是 run 34790630802 的双 ASR 分歧表**——`usa` → `usta` 在分歧列表里出现**两次**，也就是第二份 ASR（medium.en，更大的模型）两处都听成了 USTA，和语境完全一致：下一句就是『you guys have done it again, put together an amazing tournament』，**一个国家不会「办一届赛事」**，办美网的是 USTA（美国网球协会），球员在颁奖台上点名感谢 USTA 是惯例。⚠️ 起草时我只有语境推断、没有第二份 ASR 背书，按 CLAUDE.md『核不出来就保留 ASR 原样』先没改英文、中文取了个两种读法都成立的『美网』；现在核出来了，英文和中文一起改准。英文实测 268.0px / 837.5px（可用 952）。",
   "caption_gaps_ok": {
     "9.1-21.6": "主持人刚说完『Congratulations, Ben.』（5.28），下一个事件是他接着说『You've had an amazing two weeks here.』（21.6）——**主持人自己的话被打断了 12.5 秒**，那只可能是全场起立鼓掌：谢尔顿刚在主场打完生涯第一个大满贯决赛走上颁奖台。判据是这段空档两头都是主持人同一段串词的上下半句，不是某个人的话说了一半没了。⚠️ 起草时从转写结构推的（沙箱下不动媒体，只下得动字幕），等 render 那一趟的 Silero VAD 销账。",
     "35.5-41.7": "他接过话筒开口『Yeah. Well,』（30.5）之后、说出『first and most importantly』（41.7）之前的 6.2 秒。判据：前后是同一句话的起头和续接（`Well,` → `first and most importantly, I want to thank God`），中间是他刚输掉决赛站上台的平复停顿加掌声，不是掉了一整句——真掉了一句的话，`Well,` 后面接不上 `first`。⚠️ 起草时从转写结构推的（沙箱下不动媒体，只下得动字幕），等 render 那一趟的 Silero VAD 销账。",

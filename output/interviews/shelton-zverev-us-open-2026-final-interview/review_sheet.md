@@ -55,7 +55,7 @@
 | 49 | 2:29.0 | [▶](https://youtu.be/UWq7lH7it6Y?t=149) | of my career. | 一天都没缺席 |  |
 | 50 | 2:30.1 | [▶](https://youtu.be/UWq7lH7it6Y?t=150) | I appreciate you guys. | 谢谢你们 |  |
 | 51 | 2:31.4 | [▶](https://youtu.be/UWq7lH7it6Y?t=151) | Love you guys. | 爱你们 |  |
-| 52 | 2:38.4 | [▶](https://youtu.be/UWq7lH7it6Y?t=158) | To the USA, | 致美网 |  |
+| 52 | 2:38.4 | [▶](https://youtu.be/UWq7lH7it6Y?t=158) | To the USTA, | 致美国网协 | ✏️ 已订正 |
 | 53 | 2:40.1 | [▶](https://youtu.be/UWq7lH7it6Y?t=160) | you guys have done it again. | 你们又做到了 |  |
 | 54 | 2:41.4 | [▶](https://youtu.be/UWq7lH7it6Y?t=161) | Put put together an amazing tournament. | 办了一届了不起的大赛 |  |
 | 55 | 2:44.1 | [▶](https://youtu.be/UWq7lH7it6Y?t=164) | My favorite tournament of the year. | 我一年里最喜欢的赛事 |  |
@@ -72,7 +72,7 @@
 | 66 | 3:11.0 | [▶](https://youtu.be/UWq7lH7it6Y?t=190) | American success running | 对美国网球的付出 |  |
 | 67 | 3:13.3 | [▶](https://youtu.be/UWq7lH7it6Y?t=193) | this tournament to to to be the greatest | 把这项赛事办成 |  |
 | 68 | 3:15.7 | [▶](https://youtu.be/UWq7lH7it6Y?t=195) | in the world is is unbelievable. | 世界第一 难以置信 |  |
-| 69 | 3:17.4 | [▶](https://youtu.be/UWq7lH7it6Y?t=197) | So, thank you all everyone at the USA. | 谢谢美网的每一个人 |  |
+| 69 | 3:17.4 | [▶](https://youtu.be/UWq7lH7it6Y?t=197) | So, thank you all everyone at the USTA. | 谢谢美国网协的每一位 | ✏️ 已订正 |
 | 70 | 3:19.4 | [▶](https://youtu.be/UWq7lH7it6Y?t=199) | I want | 我要谢谢 |  |
 | 71 | 3:19.7 | [▶](https://youtu.be/UWq7lH7it6Y?t=199) | to thank the sponsors all the sponsors | 所有赞助商 |  |
 | 72 | 3:23.6 | [▶](https://youtu.be/UWq7lH7it6Y?t=203) | for making this tournament possible, | 是他们让这项赛事办得起来 |  |
