@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>9.14 赛后开麦 | 兹维列夫夺冠先谢母亲</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>兹维列夫 6-3 7-6(2) 5-7 6-2 击败谢尔顿，拿下生涯第一个美网冠军。捧杯致辞讲到一半，他说还要谢一个人——&quot;这个人从来不看我的比赛，却是我网球生涯里、也是我人生里最重要的那一个。&quot;
+
+然后他讲了一件跟这座奖杯没什么关系的事。
+
+&quot;当你四岁的儿子被诊断出糖尿病，诊室里的医生告诉你，这孩子的生活和运动都会非常非常受限——得是一位非常坚强的母亲，才能走出那间诊室，然后说：我儿子，他想成为什么就成为什么。&quot;
+
+&quot;他想打网球，他就去打网球。他想做别的，就去做别的。但这个病定义不了我们。&quot;
+
+说到&quot;我儿子&quot;那三个字，他停住了。近七秒没有声音，然后只挤出一个&quot;我的&quot;，又隔三秒才把整句话说完——那几秒他的手一直搭在头顶上。
+
+&quot;我的母亲是最重要的那个人，也是我见过最坚强的人。得是个坚强得难以想象的女人，才做得到她做过的事。&quot;
+
+这条致辞里还有几处，单独拎出来都能立住。
+
+他对谢尔顿说：&quot;这是你第一次打大满贯决赛，但我已经跟你说过，你还会站上来很多很多次。要是让我押上所有身家，我敢赌你总有一天会举起这座奖杯。&quot;谢尔顿今年 23 岁，父亲布莱恩·谢尔顿是前 ATP 球员。
+
+他说自己差点走不到这里：&quot;我差两分就输掉了第一轮那场球。我很庆幸赢下了那场，否则今天的结果就完全不一样了。&quot;六年前他也站在这片球场的决赛里，赢下前两盘，第五盘抢七输掉。今年六月他在罗兰加洛斯拿到第一个大满贯，三个月后拿到第二个。
+
+他还替熬夜的人道了歉：&quot;很抱歉是因为我，你们很多人才要凌晨四五点才上床。&quot;整场 3 小时 36 分钟。
+
+最后是观众：&quot;我知道今天 99.9% 的人都希望谢尔顿赢。首先很抱歉，其次——在这样的氛围里打球太棒了。虽然我知道全场都不站在我这边，但观众始终非常公道。&quot;
+
+第一个大满贯他等到 29 岁，第二个只隔了三个月。下一个会在哪儿？
+
+#网球时差 #赛后开麦 #兹维列夫 #美网 #ATP</textarea>
+    </section>
+    
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
