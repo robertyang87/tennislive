@@ -1767,8 +1767,13 @@ def write_ass(lines: list[dict], zh: list[str], clip_start: float, path: Path,
     盖住多长（调用方通常就是这一段的 `end - start`），`ev` 只有 HEADA/HEADB
     两条事件，没有 EN/ZH。
 
-    `duration` 只在 `lines` 为空时用得上；`lines` 非空时顶栏的收尾仍然按
-    最后一句台词的时刻算（和原来一样），`duration` 会被忽略。
+    ⚠️ **这段原来写着「`duration` 只在 `lines` 为空时用得上，非空时会被忽略」
+    ——那是假的，代码里 `duration` 一直优先。** 而它害了一次：`trail_in`
+    （捧杯那一段）的台词只有司仪报冠军名那 7.6 秒，窗口却是 19 秒，调用方
+    照着这句注释没传 `duration`，于是**顶栏在举杯、焰火、亲奖杯那 11.4 秒
+    上整个消失**（账号所有者 2026-08-22：「除了封面不用，其他后面都要带上顶」）。
+    渲染不报错、L2 全绿，只有把成片拉回来逐帧看才发现。
+    **跨源那两段一律传 `duration=end-start`**，顶栏盖住整段，不跟着台词收尾。
     """
     if len(zh) != len(lines):
         raise SystemExit(
@@ -4048,7 +4053,11 @@ def _side_segment(spec: dict, outdir: Path, key: str = "lead_in") -> Path | None
         ass = outdir / f"{prefix}.ass"
         lines = [{"a": cue["a"], "b": cue["b"], "en": cue["en"]} for cue in subs]
         zh = [cue["zh"] for cue in subs]
-        write_ass(lines, zh, lead["start"], ass, spec=spec)
+        # ⚠️ **`duration=dur` 不能省。** 不传的话顶栏跟着**最后一句台词**收尾，
+        # 而跨源这两段的台词往往只占窗口的一小截——`trail_in` 那 19 秒里司仪
+        # 只说了 7.6 秒，剩下 11.4 秒（举杯、焰火、亲奖杯）顶栏整个没了，
+        # 而 ffmpeg 和 L2 一个字都不报，只有逐帧看成片才看得见。
+        write_ass(lines, zh, lead["start"], ass, spec=spec, duration=dur)
         use_ass = True
     elif wants_topbar(spec):
         # 没有台词，但顶栏默认要印——单独烧一份只有 HEADA/HEADB 的 ASS，
