@@ -15893,26 +15893,66 @@ def test_审片版的成片链接只从render_json那一处读():
     assert "releases/download" not in code, "别自己拼 Release 链接，读 render.json"
 
 
-def _an_interview_released_slug() -> tuple[str, str]:
-    """赛后开麦那条线上，任意一条走过 Release 的片子。"""
-    for meta in sorted(Path("output/interviews").glob("*/render.json"), reverse=True):
+def _one_released_slug_per_column() -> dict[str, tuple[str, str]]:
+    """每条出片线各挑一条**真的走了 Release** 的片子：栏目 → (slug, video_url)。
+
+    ⚠️ **不维护名单——栏目是从真产物自己推出来的。** 上一版这里是一张写死的
+    两条线的表（reel + interviews），而全库实际有四种形状：
+
+        output/<日期>/reel/<slug>        output/<日期>/explainer/<slug>
+        output/interviews/<slug>         output/preview/<slug>
+
+    加第五条线时它不会自己红，只会安安静静少验一条——而漏掉的那条线报出来是
+    「output/ 里找不到这个 slug」，读起来完全像名字写错了。
+
+    ⚠️ `output/**/*.json` 在 CI 的稀疏检出里（2026-08-23 那次改宽），所以这条
+    在 CI 上真的走得到——「测试不许拿 output/ 当判据的主语」那条防的是**它不在**
+    的情形，这一格在。
+
+    ⚠️ **只挑 slug 唯一的那些**：`fetch_released_film` 按 slug 反查，同名 slug
+    落在两条线上时它取排序第一个，那时「拉的是不是这一条」这个断言本身就没意义。
+    """
+    from collections import defaultdict
+
+    where: dict[str, list[Path]] = defaultdict(list)
+    for meta in Path("output").glob("**/render.json"):
         try:
             url = str(json.loads(meta.read_text(encoding="utf-8")).get("video_url") or "")
         except (json.JSONDecodeError, OSError):
             continue
         if url:
-            return meta.parent.name, url
-    return "", ""
+            where[meta.parent.name].append(meta)
+
+    picked: dict[str, tuple[str, str]] = {}
+    for slug, metas in where.items():
+        if len(metas) != 1:          # 同名 slug 落在两条线上，跳过（见上面那条 ⚠️）
+            continue
+        meta = metas[0]
+        column = meta.parent.parent.name
+        if column in picked:
+            continue
+        url = str(json.loads(meta.read_text(encoding="utf-8")).get("video_url") or "")
+        picked[column] = (slug, url)
+    return picked
 
 
-def test_审片版两条线的产物目录都找得到(monkeypatch):
-    """⚠️ **规矩写对了、实现只盖住一半，而缺的那一半长得像「slug 写错了」。**
+def test_审片版每一条出片线的产物目录都找得到(monkeypatch):
+    """⚠️ **规矩写对了、实现只盖住一部分，而缺的那部分长得像「slug 写错了」。**
 
     来路：2026-09-05 账号所有者定下「每条片子渲完就跑一趟 `review_copy --slug`
     把审片版发进对话」（微信里那个 ▶ 指向 GitHub 的 Release CDN，他在国内点
     不开）。而 `fetch_released_film` 当时只 glob `output/*/reel/<slug>`——
-    **赛后开麦的产物落在 `output/interviews/<slug>`，一条都找不到**，报出来
-    是「output/ 里找不到这个 slug」，读起来完全像名字写错了。
+    **赛后开麦的产物落在 `output/interviews/<slug>`，一条都找不到**。
+
+    ⚠️⚠️ 补上那条之后**这个坑又原样来了第二次**：2026-09-14 `shelton-ncaa-story`
+    推完要发审片版，报「output/ 里找不到」——**解说片还漏着**。而当时那段注释
+    自己就写着「规矩写对了、实现只盖住一半，正是这个仓库反复记的那个形状」，
+    **它写着这句话，同时正漏着第三条线**。根子是那两行 glob 是**一张名单**，
+    而名单会过期、过期时不吭声。
+
+    所以实现改成按形状找（`output/*/*/<slug>` + `output/*/<slug>`，带
+    `render.json` 的才算），判据也跟着改成**从真产物推出全部栏目、每条各验一次**
+    ——加第六条线自动盖住，一个字都不用改。
 
     判据**真跑一次**并用真产物：查源码里有没有那句 glob 只能防「有人把它删了」，
     防不住「它从来没工作过」；而手搓一个假目录验不了它和真产物对不对得上
@@ -15922,25 +15962,54 @@ def test_审片版两条线的产物目录都找得到(monkeypatch):
     import review_copy  # noqa: PLC0415
     import urllib.request  # noqa: PLC0415
 
-    slug, url = _an_interview_released_slug()
-    # 判据自己的判据：主语没了要出声，不许变成一条恒真的绿灯
-    assert slug, "output/interviews/ 里一条走 Release 的片子都没有——主语没了，换判据"
+    picked = _one_released_slug_per_column()
+    # 判据自己的判据：主语没了要出声，不许变成一条恒真的绿灯。
+    # 3 是**量出来的下界**（2026-09-14 实测 reel 243 / interviews 96 /
+    # explainer 54 / preview 1，四条），不是拍的；掉到 3 以下说明产物那头塌了。
+    assert len(picked) >= 3, (
+        f"只推出 {len(picked)} 条出片线（{sorted(picked)}）——这条判据的主语没了，换判据")
 
-    got: dict[str, str] = {}
+    for column, (slug, url) in sorted(picked.items()):
+        got: dict[str, str] = {}
 
-    def _fake(src, dest):  # noqa: ANN001
-        got["src"] = src
-        Path(dest).write_bytes(b"\0" * 1024)
-        return dest, None
+        def _fake(src, dest, _got=got):  # noqa: ANN001
+            _got["src"] = src
+            Path(dest).write_bytes(b"\0" * 1024)
+            return dest, None
 
-    monkeypatch.setattr(urllib.request, "urlretrieve", _fake)
-    film = review_copy.fetch_released_film(slug)
+        monkeypatch.setattr(urllib.request, "urlretrieve", _fake)
+        film = review_copy.fetch_released_film(slug)
 
-    assert got["src"] == url, "拉的不是那条采访片 render.json 里记的链接"
-    assert film.is_file(), "说拉回来了，文件却不在"
-    # 顺带钉住上一条判据守的那一头：拉回来的原片不许落进仓库的 output/
-    assert Path("output").resolve() not in film.resolve().parents, (
-        f"采访片这条路把原片下到了仓库的 output/ 底下（{film}）")
+        assert got.get("src") == url, f"{column} 这条线拉的不是 render.json 里记的那一条"
+        assert film.is_file(), f"{column} 这条线说拉回来了，文件却不在"
+        # 顺带钉住上一条判据守的那一头：拉回来的原片不许落进仓库的 output/
+        assert Path("output").resolve() not in film.resolve().parents, (
+            f"{column} 这条路把原片下到了仓库的 output/ 底下（{film}）")
+
+
+def test_审片版反查产物目录不许写死栏目名():
+    """⚠️ 上一条验的是**今天这几条线都找得到**，这一条拦的是**下一条线**。
+
+    只留前者的话，有人把 glob 退回「reel + interviews + explainer」三行名单，
+    它照样全绿（今天这几条确实都在名单里）——而第五条线仍然一个都找不到。
+    两条缺一不可。
+    """
+    src = Path("tools/review_copy.py").read_text(encoding="utf-8")
+    tree = ast.parse(src)
+    fn = next((n for n in ast.walk(tree)
+               if isinstance(n, ast.FunctionDef) and n.name == "fetch_released_film"), None)
+    assert fn is not None, "fetch_released_film 没了——主语变了就得换判据"
+
+    # ⚠️ 只看代码，不看 docstring 和注释：这条教训的来路就写在它自己的注释里，
+    # 连注释一起扫会把「把坑记下来」判成「又踩了这个坑」（这个仓库为它栽过五次）。
+    body = fn.body[1:] if (fn.body and isinstance(fn.body[0], ast.Expr)
+                           and isinstance(fn.body[0].value, ast.Constant)) else fn.body
+    code = "\n".join(ast.unparse(n) for n in body)
+    for column in ("reel", "interviews", "explainer", "preview"):
+        assert f"output/{column}/" not in code and f"/{column}/" not in code, (
+            f"反查产物目录时点名了栏目「{column}」——那是一张会过期的名单，"
+            "而过期时它不吭声（少验一条线，报出来像 slug 写错了）。"
+            "按形状找：output/*/*/<slug> + output/*/<slug>，带 render.json 的才算。")
 
 
 def test_合语音喂的是speakable之后那份不是原文(monkeypatch, tmp_path):

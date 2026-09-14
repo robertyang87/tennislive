@@ -552,8 +552,13 @@ def check_content_length(html_content: str) -> None:
         f"{CONTENT_MAX_CHARS} 字上限 {chars - CONTENT_MAX_CHARS} 字——"
         "发出去只会拿到 code=999，而账本已经预占。"
         "正文长度几乎全由图片数量决定（每张图三条完整 URL：src / data-src / "
-        "「点此打开原图」，都出自 knowledge_push_html_from_parts），"
-        "实测 15 张图约 17000 字节、25 张就越线；要发得先减图或缩短 URL。"
+        "「点此打开原图」，都出自 knowledge_push_html_from_parts）。"
+        "2026-09-14 走完整条发送路量过：ref 钉 10 位时**每张图 679 字符**，"
+        "基座就是这一条的正文本身（那次 2172 字符），所以 26 张还过得去、"
+        "27 张越线。⚠️ 这两个数是拿一条片子量的，正文写得长的片子分界更早——"
+        "别照着「多少张图」判，跑一次这条闸（pin_asset_revision → "
+        "prepare_image_delivery → check_content_length），它量的正是发送那一份。"
+        "要发得先减图或缩短 URL。"
     )
 
 
