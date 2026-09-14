@@ -2239,7 +2239,7 @@ ledger，等到了、还打开看了——**差点就报「发出去了」**：
 
 | | |
 |---|---|
-| `ASSET_REVISION_PIN_LEN = 10` | 钉进 URL 的 sha 取前 10 位。`gcore.jsdelivr.net` 实测 40/12/10/7 位**全部 200**（jsDelivr 按 GitHub 的 ref 解析）；省 75×30 = 2250。⚠️ **万一短 sha 撞车，失败是安全的**：另一个 commit 上没有这个带日期和 slug 的路径 → 404 → `wait_for_images` 在 POST 之前拦住 |
+| `cdn.pin_ref()` / `ASSET_REVISION_PIN_LEN = 10` | 钉进 URL 的 sha 取前 10 位。`gcore.jsdelivr.net` 实测 40/12/10/7 位**全部 200**（jsDelivr 按 GitHub 的 ref 解析）；省 75×30 = 2250。⚠️ **万一短 sha 撞车，失败是安全的**：另一个 commit 上没有这个带日期和 slug 的路径 → 404 → `wait_for_images` 在 POST 之前拦住 |
 | `pushplus.check_content_length()` | POST 之前自己量一次。⚠️ **必须排在 `prepare_image_delivery` 之后**——撑爆上限的正是那之间的钉版本，排前面量到的是个偏小的数，放行之后照样被拒，**而它看起来验过了** |
 
 ⚠️ **口径按字符（`len`）不按字节，而这是个还没结掉的账**：服务端那句话说的是
@@ -2257,6 +2257,34 @@ ledger，等到了、还打开看了——**差点就报「发出去了」**：
 正好相反——上面那条规矩自己就写着「`code != 200` 是明确拒绝」。分开它要让
 `publish pushplus` 用不同的退出码或留个标记文件，是一次单独的改动。在那之前，
 撞上这一类只能照日志手动把账本那条改成 `rejected`（不在 `BLOCKING` 里）。
+
+##### ⚠️⚠️ 而第一版只改了两处中的一处，补发那一趟白发——**钉 sha 有两个实现**
+
+改完 `pin_asset_revision`、判据绿了、全量 3312 绿了、合并了、补发了——
+**日志里量出来仍然是 21404 字符，和没改一模一样。**
+
+因为钉 sha **有两处**，而且它们是串着跑的：
+
+    ① pushmsg.pin_asset_revision    正则把 `@main/` 换成 `@<rev>/`
+    ② pushplus._pages_image_url     **自己**从 TENNISLIVE_ASSET_REV 读 40 位重拼 URL，
+      随后 _jsdelivr_fallback_delivery 按**整个 URL 字符串全文替换**
+      （`html.replace(source, replacement)`）→ src / data-src / href **三处全换回长的**
+
+**② 把 ① 的结果整个盖掉了。** 这是「一个数写两处必分叉」，而这次分叉的样子
+最难看：**改对了的那一半在产物上完全看不出来**——`pin_asset_revision` 的单元
+测试全绿，因为它测的正是**没被盖掉的那一处**。
+
+修法是把「截断」这个**动作**收成一处（`cdn.pin_ref()`）。放在 `cdn.py` 是因为
+`jsdelivr_base()` 本来就是两处拼 URL 的共同出口——② 走它，所以自动跟上。
+
+⚠️⚠️ **判据必须走完整条路，不能只测其中一处**：
+`test_钉短sha要走完整条发送路否则被第二处盖回去` 真跑
+`pin_asset_revision` → `prepare_image_delivery`，量**最后那一份**里的 ref。
+这跟「查产物，不查信号」是同一条，只是这次的「信号」是**我自己那半个改动的
+单元测试**。
+
+**改一个数之前先数一遍它有几个出处**（`grep TENNISLIVE_ASSET_REV`），
+别改完一处就以为改完了——而这个仓库为「一个数写两处」已经栽过十几次。
 
 **推送正文里的每个链接，指向的文件都必须在推送之前进仓库。** 复制页那一句
 `write_text` 藏在推送步骤里，而推送步骤排在提交**之后**——文件只活在 runner 的
