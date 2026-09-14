@@ -5686,6 +5686,48 @@ def test_片头和片尾各写各的中间物不许撞文件名(tmp_path, monkey
     assert abs(m.probe_duration(trail) - 5.0) < 0.4, m.probe_duration(trail)
 
 
+def test_跨源那一段的顶栏要盖住整段不跟着台词收尾(tmp_path, monkeypatch):
+    """账号所有者 2026-08-22：「除了封面不用，其他后面都要带上顶。」
+
+    ⚠️ **这条是逐帧看成片才发现的**：`write_ass` 不传 `duration` 时，顶栏跟着
+    **最后一句台词**收尾。正片和 `lead_in` 的台词几乎占满各自的窗口，所以这
+    从来没咬过人；而 `trail_in`（捧杯）那 19 秒里司仪只说了 7.6 秒——顶栏在
+    举杯、焰火、亲奖杯那 11.4 秒上整个消失，**而渲染不报错、L2 全绿**。
+
+    判据钉在 ASS 事件本身：HEADA/HEADB 的收尾时刻必须盖到整段末尾，
+    不是最后一条 EN 的收尾。
+    """
+    import build_interview_clip as m
+
+    src_dir = tmp_path / "out"
+    src_dir.mkdir()
+    monkeypatch.setattr(m, "yt_download",
+                        lambda url, dest, fmt, spec: _fake_lead_source(src_dir))
+    spec = _lead_in_topbar_spec()
+    # 窗口 5.0~17.0（12 秒），台词只占前 2 秒——正是 `trail_in` 的形状
+    spec["trail_in"] = {
+        "url": "https://youtu.be/ceremony", "start": 5.0, "end": 17.0,
+        "why": "捧杯那一段，逐帧看过",
+        "subs": [{"a": 5.2, "b": 7.0, "en": "Your 2026 US Open champion,",
+                  "zh": "你们的 2026 美网冠军"}],
+    }
+    assert m._side_segment(spec, src_dir, "trail_in") is not None
+    ass = (src_dir / "_trail.ass").read_text(encoding="utf-8")
+
+    def _end(style: str) -> float:
+        for ln in ass.splitlines():
+            if ln.startswith("Dialogue:") and f",{style},," in ln:
+                h, mm, s = ln.split(",")[2].split(":")
+                return int(h) * 3600 + int(mm) * 60 + float(s)
+        raise AssertionError(f"ASS 里没有 {style} 事件")
+
+    assert _end("EN") < 3.0, "台词本来就只占前 2 秒，这条用例没立起来"
+    for style in ("HEADA", "HEADB"):
+        assert _end(style) >= 11.9, (
+            f"顶栏 {style} 收在 {_end(style):.2f}s，而这一段有 12 秒——"
+            "顶栏跟着台词收尾了，捧杯那几秒会没有顶栏")
+
+
 def test_捧杯那一段走的核验路径和片头不是同一条():
     """`lead_in` 认 `official_exact_match_highlight`（同场官方集锦的最后一分），
     `trail_in` 认 `official_trophy_ceremony`（赛事官方的完整颁奖典礼录像）。
