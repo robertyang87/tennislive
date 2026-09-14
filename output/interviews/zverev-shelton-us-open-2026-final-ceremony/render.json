@@ -1,0 +1,67 @@
+{
+  "film_sha256": "6ee8d217fc25aa0a278b9a40d5caf3d2bbc96149521946ef21f1c6850c81c0ca",
+  "film_seconds": 453.721,
+  "production_sla": {
+    "version": 2,
+    "pipeline": "interview-clip",
+    "slug": "zverev-shelton-us-open-2026-final-ceremony",
+    "received_at": "2026-09-13T23:55:52Z",
+    "artifact_ready_at": "2026-09-14T00:07:14Z",
+    "elapsed_seconds": 682.788,
+    "budget_seconds": 600,
+    "met": false,
+    "film_sha256": "6ee8d217fc25aa0a278b9a40d5caf3d2bbc96149521946ef21f1c6850c81c0ca",
+    "spec_sha256": "02cac8d36c7b050fa6f3624cb5eb4cfa47b29ea8193a3c80e72d0fc35fb40db8",
+    "run_id": "34791089971",
+    "stage_events": [
+      {
+        "stage": "preflight",
+        "at": "2026-09-13T23:56:18Z",
+        "run_id": "34791089971"
+      },
+      {
+        "stage": "asr_verify",
+        "at": "2026-09-13T23:57:46Z",
+        "run_id": "34791089971"
+      },
+      {
+        "stage": "render",
+        "at": "2026-09-14T00:01:40Z",
+        "run_id": "34791089971"
+      }
+    ],
+    "render_seconds": 334.788,
+    "pre_render_seconds": 348.0
+  },
+  "production_stage_events": [
+    {
+      "stage": "preflight",
+      "at": "2026-09-13T23:56:18Z",
+      "run_id": "34791089971"
+    },
+    {
+      "stage": "asr_verify",
+      "at": "2026-09-13T23:57:46Z",
+      "run_id": "34791089971"
+    },
+    {
+      "stage": "render",
+      "at": "2026-09-14T00:01:40Z",
+      "run_id": "34791089971"
+    },
+    {
+      "stage": "qc",
+      "at": "2026-09-14T00:07:15Z",
+      "run_id": "34791089971"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-14T00:07:16Z",
+      "run_id": "34791089971"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/interview-zverev-shelton-us-open-2026-final-ceremony/zverev-shelton-us-open-2026-final-ceremony.mp4?v=6ee8d217fc25aa0a",
+  "video_bytes": 139344563,
+  "release_asset_digest": "sha256:6ee8d217fc25aa0a278b9a40d5caf3d2bbc96149521946ef21f1c6850c81c0ca",
+  "qc_attestation_sha256": "ed323ff7b1eeb28d9b96fc442fb1e7d9f87141bbf51bed2def78071e82b58161"
+}
