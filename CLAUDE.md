@@ -2151,9 +2151,50 @@ ledger，等到了、还打开看了——**差点就报「发出去了」**：
 
 | 这条线 | 判据 |
 |---|---|
-| 解说片 `data/explainer_publish_ledger/` | 文件出现即可（单笔，POST 之后） |
+| 解说片 `data/explainer_publish_ledger/` | ⚠️ **「文件出现即可」不够，见下面 09-14 那条**——单笔是真的，可那一笔也可能是 `rejected` |
 | **竖版短片 `data/reel_publish_ledger/`** | ⚠️ **也是两笔**，见下——要 `attempts[-1].status == "sent"` |
 | **采访 `data/interview_publish_ledger/`** | **`attempts[-1].status` 要走出 `sending`**（`accepted` / `delivered`），并且带着 `pushplus_receipt` |
+
+##### ⚠️⚠️ 2026-09-14 修正：解说片那一行也不够——**账本在，状态却是 `rejected`**
+
+「单笔、排在 POST 之后」是真的，所以「文件出现 ＝ 发过了」当年读起来天经地义。
+`shelton-ncaa-story` 撞穿了它：那一笔**写了，而消息一个字没发出去**
+（PushPlus `code=999` 服务端拒收，正文超 2 万字）。也就是
+
+    文件出现  ≠  发过了          ← 它只说明「这条线走到过发送那一步」
+    attempts[-1].status == "sent"  ← 这才是判据
+
+⚠️ 所以这张表三条线现在是同一句话：**判据一律落到 `attempts[-1].status`**，
+别再按「记几笔」分。记几笔决定的是**中间态长什么样**（解说片没有 `sending`
+那一笔），不决定「怎么判发没发出去」。
+
+###### ⚠️⚠️ 而手动补发那条路**根本不写账本**——这张表对它整个是哑的
+
+同一天更贵的一半。`auto_push_explainer_gate` 自己的报错里指着一条出路：
+
+> 这一趟带进来 N 条……**要发请走 push-existing 手动推。**
+
+而 `push-existing.yml` 跑的是 `tennislive publish pushplus --dir`，**一个字节
+都不写账本**（预占和记账都在 `auto_push_*_gate` 那条链上）。于是：
+
+| | 发出去了 | 账本上 |
+|---|---|---|
+| 走自动链 | ✅ | `sent` |
+| **走 push-existing** | ✅ | **原样停在上一个状态** |
+
+`shelton-ncaa-story` 补发成功之后账本仍然写着 `rejected`——**而 `rejected` 和
+「没发过」在查的人眼里长得一模一样**，下一个人照着它再发一次就是同一条微信
+发两遍，而消息收不回来。
+
+**判据：走 `push-existing` 补发完，手工补一笔进账本**（照 `write()` 的形状：
+每个 slug 一行，`status`/`at`/`run` 更新，被拒那次的来路并进同一行的 `note`
+——全库账本没有「同 key 两行」的先例，别在这儿开第一个）。补完验一次
+`blocking_attempt(...)` 真的挡得住重发。
+
+⚠️ **这是个还没修的缺口，不是一条可以一直手工绕过去的规矩**：补账这一步
+**忘了不吭声**，而它发生在一次不可撤回的 POST 之后。真要修，形状是让
+`publish pushplus` 自己落一笔（或者 `push-existing` 在它之后调一次
+`ledger_status`）——那要动工作流、配判据，是一次单独的改动。
 
 ##### ⚠️ 2026-09-03 修正：竖版短片那一行原来写的是「同上」，而它也是两笔
 
