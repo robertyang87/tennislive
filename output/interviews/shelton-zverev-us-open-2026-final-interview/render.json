@@ -1,0 +1,101 @@
+{
+  "film_sha256": "afbc2c210b45e88fafed2ef77873dbd041b4879bb900e286a539a573b70d43c6",
+  "film_seconds": 310.171,
+  "production_stage_events": [
+    {
+      "stage": "preflight",
+      "at": "2026-09-14T00:04:02Z",
+      "run_id": "34791458272"
+    },
+    {
+      "stage": "asr_verify",
+      "at": "2026-09-14T00:05:35Z",
+      "run_id": "34791458272"
+    },
+    {
+      "stage": "render",
+      "at": "2026-09-14T00:07:56Z",
+      "run_id": "34791458272"
+    },
+    {
+      "stage": "qc",
+      "at": "2026-09-14T00:11:39Z",
+      "run_id": "34791458272"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-14T00:11:39Z",
+      "run_id": "34791458272"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/interview-shelton-zverev-us-open-2026-final-interview/shelton-zverev-us-open-2026-final-interview.mp4?v=afbc2c210b45e88f",
+  "video_bytes": 85197147,
+  "release_asset_digest": "sha256:afbc2c210b45e88fafed2ef77873dbd041b4879bb900e286a539a573b70d43c6",
+  "qc_attestation_sha256": "d757e592aa0929eddba1f16416da8d5d6c9bc3f4f56e9a78989318a473d2c98d",
+  "production_sla_history": [
+    {
+      "version": 2,
+      "pipeline": "interview-clip",
+      "slug": "shelton-zverev-us-open-2026-final-interview",
+      "received_at": "2026-09-13T23:45:55Z",
+      "artifact_ready_at": "2026-09-13T23:52:27Z",
+      "elapsed_seconds": 392.051,
+      "budget_seconds": 600,
+      "met": true,
+      "film_sha256": "78314fc99e254af0912ab3825c169499350539b15435fc7cc45830dc917d0a98",
+      "spec_sha256": "523eb61f49766a0e905cf446cd1fe6525d8bd2927594ec4f38399efa821c9b70",
+      "run_id": "34790630802",
+      "stage_events": [
+        {
+          "stage": "preflight",
+          "at": "2026-09-13T23:46:21Z",
+          "run_id": "34790630802"
+        },
+        {
+          "stage": "asr_verify",
+          "at": "2026-09-13T23:47:50Z",
+          "run_id": "34790630802"
+        },
+        {
+          "stage": "render",
+          "at": "2026-09-13T23:49:29Z",
+          "run_id": "34790630802"
+        }
+      ],
+      "render_seconds": 178.051,
+      "pre_render_seconds": 214.0
+    }
+  ],
+  "production_sla": {
+    "version": 2,
+    "pipeline": "interview-clip",
+    "slug": "shelton-zverev-us-open-2026-final-interview",
+    "received_at": "2026-09-14T00:03:36Z",
+    "artifact_ready_at": "2026-09-14T00:11:38Z",
+    "elapsed_seconds": 482.282,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "afbc2c210b45e88fafed2ef77873dbd041b4879bb900e286a539a573b70d43c6",
+    "spec_sha256": "b1c4c5477f697a1ac1476657b99bae2133c2382c8eaeda6883bf76fdf4686009",
+    "run_id": "34791458272",
+    "stage_events": [
+      {
+        "stage": "preflight",
+        "at": "2026-09-14T00:04:02Z",
+        "run_id": "34791458272"
+      },
+      {
+        "stage": "asr_verify",
+        "at": "2026-09-14T00:05:35Z",
+        "run_id": "34791458272"
+      },
+      {
+        "stage": "render",
+        "at": "2026-09-14T00:07:56Z",
+        "run_id": "34791458272"
+      }
+    ],
+    "render_seconds": 222.282,
+    "pre_render_seconds": 260.0
+  }
+}
