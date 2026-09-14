@@ -135,10 +135,8 @@ def make_cards(spec, out):
     from playwright.sync_api import sync_playwright
     # Reuse the existing native template. No new global CSS or brand system.
     with sync_playwright() as pw:
-        exe=os.environ.get('TENNISLIVE_CHROMIUM')
-        local=Path('/root/.cache/ms-playwright/chromium_headless_shell-1161/chrome-linux/headless_shell')
-        if not exe and local.is_file():exe=str(local)
-        browser=pw.chromium.launch(executable_path=exe,args=['--no-sandbox'])
+        from tennislive.chromium import launch_chromium
+        browser=launch_chromium(pw,args=['--no-sandbox'])
         page=browser.new_page(viewport={'width':1080,'height':1440},device_scale_factor=1)
         for i,b in enumerate(spec['beats']):
             v=b['visual'];photo='';frame=None
@@ -221,7 +219,7 @@ def main():
             response.raise_for_status();dest.write_bytes(response.content)
     if not (WORK/'ncaa-2021.mp4').is_file():
         media=json.loads((ASSETS/'media-sources.json').read_text())['ncaa_2021']
-        run(['ffmpeg','-v','error','-i',media['media_url'],'-map','0:v:0','-map','0:a:0','-c','copy','-y',str(WORK/'ncaa-2021.mp4')])
+        run(['ffmpeg','-v','error','-i',media['media_url'],'-t','326','-map','0:v:0','-map','0:a:0','-c','copy','-y',str(WORK/'ncaa-2021.mp4')])
     spec=json.loads((ROOT/'specs/explainers/shelton-ncaa-story.json').read_text())
     if not a.assemble_only:make_cards(spec,out)
     if a.cards_only:return

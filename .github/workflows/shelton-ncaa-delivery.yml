@@ -1,0 +1,134 @@
+name: Shelton NCAA release and WeChat
+on:
+  push:
+    branches: [codex/shelton-ncaa-publish-20260914, main]
+    paths:
+      - .github/workflows/shelton-ncaa-delivery.yml
+      - tools/build_shelton_ncaa_story.py
+      - tools/check_shelton_release.py
+      - output/2026-09-14/explainer/shelton-ncaa-story/narration.json
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: shelton-ncaa-release-and-push
+  cancel-in-progress: false
+jobs:
+  render:
+    if: github.ref_name == 'codex/shelton-ncaa-publish-20260914'
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            .github
+            assets
+            src
+            specs
+            tools
+            docs
+            output/2026-09-14/explainer/shelton-ncaa-story
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install rendering dependencies
+        run: |
+          pip install -q -e ".[webrender]" edge-tts numpy
+          source tools/ci_apt_install.sh
+          ensure_ffmpeg
+          python -m playwright install --with-deps chromium
+      - name: Reproduce final approved editorial revision
+        run: python tools/build_shelton_ncaa_story.py
+      - name: Check all cards, fixed headers and complete decode
+        run: python tools/check_shelton_release.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: shelton-ncaa-final-review
+          path: |
+            work/shelton-ncaa/render/shelton-ncaa-story.mp4
+            work/shelton-ncaa/render/contact-sheet.jpg
+            output/2026-09-14/explainer/shelton-ncaa-story/render.json
+          retention-days: 14
+      - name: Upload checked video and production materials to Release
+        run: |
+          TAG=explainer-shelton-ncaa-story
+          gh release view "$TAG" >/dev/null 2>&1 || gh release create "$TAG" --target "$GITHUB_SHA" --title '网球有故事｜谢尔顿：大学通往美网' --notes '最终修订脚本生成；图卡与既有审定图片比对、72处顶栏比对、全片解码通过。'
+          cp work/shelton-ncaa/render/shelton-ncaa-story.mp4 /tmp/explainer.mp4
+          zip -q -r /tmp/shelton-ncaa-sources.zip assets/explainer/shelton-ncaa specs/explainers/shelton-ncaa-story.json specs/explainers/shelton-ncaa-story.xhs.txt tools/build_shelton_ncaa_story.py docs/reviews/shelton-ncaa-story docs/shelton-ncaa-story-production.md
+          gh release upload "$TAG" /tmp/explainer.mp4 work/shelton-ncaa/render/cover.png /tmp/shelton-ncaa-sources.zip --clobber
+          curl --fail --location --range 0-99 --output /dev/null "https://github.com/$GITHUB_REPOSITORY/releases/download/$TAG/explainer.mp4"
+      - name: Record verified Release on feature branch
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('output/2026-09-14/explainer/shelton-ncaa-story/render.json');r=json.loads(p.read_text());r['delivery_status']='release_verified';p.write_text(json.dumps(r,ensure_ascii=False,indent=2))
+          PY
+          git config user.name Codex
+          git config user.email noreply@openai.com
+          git add --sparse output/2026-09-14/explainer/shelton-ncaa-story/render.json
+          git commit -m 'content: verify Shelton NCAA Release'
+          source tools/git_push_retry.sh
+          push_with_rebase_retry "$GITHUB_REF_NAME" 5
+  push-wechat:
+    if: github.ref_name == 'main' && github.run_attempt == 1
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      GITHUB_TOKEN: ${{ github.token }}
+      PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
+      OUTDIR: output/2026-09-14/explainer/shelton-ncaa-story
+      RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+      TENNISLIVE_ASSET_REV: ${{ github.sha }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            .github
+            src
+            assets
+            data/explainer_publish_ledger
+            tools
+            output/2026-09-14/explainer/shelton-ncaa-story
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install -q -e .
+      - name: Check release and reserve the standard publication ledger
+        id: reserve
+        run: |
+          python - <<'PY'
+          import json,os,hashlib,requests
+          from pathlib import Path
+          r=json.loads((Path(os.environ['OUTDIR'])/'render.json').read_text())
+          assert r['delivery_status']=='release_verified'
+          response=requests.get(r['video_url'],timeout=120);response.raise_for_status()
+          assert hashlib.sha256(response.content).hexdigest()==r['video_sha256']
+          PY
+          python tools/auto_push_explainer_gate.py --reserve "$OUTDIR" --run "$RUN_URL" --now "$(date -u +%FT%TZ)"
+          git config user.name Codex
+          git config user.email noreply@openai.com
+          git add --sparse data/explainer_publish_ledger/shelton-ncaa-story.json
+          git commit -m 'explainer: reserve Shelton NCAA WeChat delivery'
+          source tools/git_push_retry.sh
+          push_with_rebase_retry main 5
+      - name: Send the existing native webpage template to WeChat
+        run: tennislive publish pushplus --dir "$OUTDIR"
+      - name: Record the actual receipt
+        run: |
+          python tools/auto_push_explainer_gate.py --record "$OUTDIR" --run "$RUN_URL" --now "$(date -u +%FT%TZ)"
+          git add --sparse "$OUTDIR" data/explainer_publish_ledger/shelton-ncaa-story.json
+          git commit -m 'explainer: record Shelton NCAA WeChat receipt'
+          source tools/git_push_retry.sh
+          push_with_rebase_retry main 5
+      - name: Preserve uncertain send status
+        if: failure() && steps.reserve.outcome == 'success'
+        run: |
+          python tools/auto_push_explainer_gate.py --uncertain "$OUTDIR" --run "$RUN_URL" --now "$(date -u +%FT%TZ)"
+          git add --sparse data/explainer_publish_ledger/shelton-ncaa-story.json
+          git commit -m 'explainer: retain uncertain Shelton NCAA delivery state' || exit 0
+          source tools/git_push_retry.sh
+          push_with_rebase_retry main 5
