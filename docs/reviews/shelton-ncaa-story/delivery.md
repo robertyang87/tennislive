@@ -6,7 +6,9 @@
 - SHA-256：`6b72456490ef8210664938c10c24ddad8a1cdcceaf102982f98d30ed6cb8ad63`。
 - 文件名：`explainer.mp4`，发布目标为 `explainer-shelton-ncaa-story` Release。
 - 旁白与出处：`docs/shelton-ncaa-story-production.md`；素材来源与时间窗：`assets/explainer/shelton-ncaa/credits.json`、`media-sources.json`。
-- 成片未放入 Git。当前待上传经用户确认的同一份视频至 Release；尚无微信发送回执，不得标记为已发送。
+- 成片不进 Git，走 Release `explainer-shelton-ncaa-story`；本地拉回来量过，sha256 和 `render.json` 的 `video_sha256` 逐字相同。
+- **2026-09-14 13:26:38Z 已推送微信，流水号 `e3804b2d40a04f94a8dbbb3ebab35147`**（run 34849158901，投递通道 wechat／图片通道 jsdelivr）。账本记在 `data/explainer_publish_ledger/shelton-ncaa-story.json`，前两趟为什么没发出去也写在那条 note 里。
+  ⚠️ 「接口收下」不等于「手机收到」：投递查询要 secretKey ＋ 开放接口开关 ＋ 安全 IP 白名单，当前工作流不具备，手机送达状态仍是 unverified。
 
 ## 已修正的呈现问题
 

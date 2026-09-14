@@ -5,10 +5,11 @@
     {
       "key": "pushplus:explainer:shelton-ncaa-story:3adf921fbe1cdee0c548a91121e0f3f385beac8e06deb4d7ffa8e749cd416189",
       "fingerprint": "3adf921fbe1cdee0c548a91121e0f3f385beac8e06deb4d7ffa8e749cd416189",
-      "status": "rejected",
-      "at": "2026-09-14T12:25:41Z",
-      "run": "https://github.com/robertyang87/tennislive/actions/runs/34843211265",
-      "note": "PushPlus 服务端验证阶段拒收，消息未进投递队列——不是「状态不明」：{'code': 999, 'data': '发送内容过大，不能超过2万字', 'msg': '服务端验证错误'}。正文 21404 字符 / 24032 字节，越线 1404。日志为据（见 run）。工作流的 failure 分支把「明确拒绝」和「没送到」都记成 uncertain，而 uncertain 在 BLOCKING 里会永久挡住重发，所以这条按实际结果改成 rejected。"
+      "status": "sent",
+      "at": "2026-09-14T13:26:38Z",
+      "run": "https://github.com/robertyang87/tennislive/actions/runs/34849158901",
+      "note": "三趟才发出去，经过记在这儿——同一份产物（fingerprint 不变）所以是同一条记录，不是三条：\n① run 34843211265 被 PushPlus 服务端在**验证阶段**拒收，消息没进投递队列：{'code': 999, 'data': '发送内容过大，不能超过2万字'}。正文 21404 字符 / 24032 字节。真因不是文案，是钉版本那一步把 `@main`（5 字符）换成 `@` ＋ 40 位 sha（41 字符），每张图三条 URL、75 处共多出 2700 字符。\n② run 34846417341 白发一趟：钉 sha **有两处实现**，上一版只改了 pushmsg 那处，而 pushplus 的 `_pages_image_url` 从 TENNISLIVE_ASSET_REV 重拼 40 位、随后整串替换把它盖回去，量出来仍是 21404。收进 `cdn.pin_ref()` 一处出处（#895）。\n③ run 34849158901 **发出去了**，流水号 e3804b2d40a04f94a8dbbb3ebab35147，投递通道 wechat、图片通道 jsdelivr，正文 19154 字符 / 21782 字节。\n⚠️ 顺带定案 PushPlus「2万字」的口径：③ 这趟**字节越线 1782 而照样收下**，所以数的是字符不是 UTF-8 字节（官方文档没写，只有错误码表）。\n⚠️ 这条是**人工补记**的：push-existing.yml 是 `permissions: contents: read`，只发不写账本。\n⚠️ 「接口收下」不等于「手机收到」——投递查询要 secretKey ＋ 开放接口开关 ＋ 安全 IP 白名单，当前工作流不具备，手机送达状态仍是 unverified。",
+      "pushplus_receipt": "e3804b2d40a04f94a8dbbb3ebab35147"
     }
   ]
 }
