@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import logging
+import re
 from unittest.mock import Mock
 
 import pytest
@@ -694,3 +695,98 @@ def test_钉进URL的sha取短的否则图一多就把正文顶过平台上限()
     assert "@main/" not in pinned, "钉版本没生效，图片会被微信的缓存混起来"
     # 太短会撞车，太长省不下来——两头都钉住，别让它悄悄漂回 40
     assert 7 <= ASSET_REVISION_PIN_LEN <= 12, ASSET_REVISION_PIN_LEN
+
+
+def test_钉短sha要走完整条发送路否则被第二处盖回去(tmp_path, monkeypatch):
+    """⚠️⚠️ **这条判据是上一轮漏掉的那一条，而漏掉它的代价是一次白发的补发。**
+
+    钉 sha 在这个仓库里有**两处**：
+
+    1. `pushmsg.pin_asset_revision` —— 正则把 `@main/` 换成 `@<rev>/`
+    2. `pushplus._pages_image_url` —— **自己**从 `TENNISLIVE_ASSET_REV` 读 sha
+       重拼 URL，随后 `_jsdelivr_fallback_delivery` 按**整个 URL 字符串全文
+       替换**（`html.replace(source, replacement)`）
+
+    第一版只改了 ①，判据也只测了 ①——**绿得很漂亮**。而真发的时候 ② 把
+    `src` / `data-src` / `href` 三处全换回 40 位，正文长度和没改一模一样
+    （21404 字符），补发那一趟照样被闸拦下。
+
+    所以判据必须**走完整条路**：`pin_asset_revision` → `prepare_image_delivery`，
+    量最后那一份里的 ref。只测其中一处，改对了的那一半看不出来。
+    """
+    from tennislive.cdn import ASSET_REVISION_PIN_LEN
+    from tennislive.render.pushmsg import pin_asset_revision
+
+    sha = "741e7a6449b4198ddb26f1e15b57d08b80a5d9df"
+    monkeypatch.setenv("TENNISLIVE_ASSET_REV", sha)
+    monkeypatch.setenv("GITHUB_REPOSITORY", "robertyang87/tennislive")
+    monkeypatch.delenv("PUSHPLUS_SECRET_KEY", raising=False)
+
+    out = tmp_path / "output/2026-09-14/explainer/demo"
+    out.mkdir(parents=True)
+    (out / "slide_00.jpg").write_bytes(b"\xff\xd8\xff\xe0jpeg")
+    url = ("https://gcore.jsdelivr.net/gh/robertyang87/tennislive@main/"
+           "output/2026-09-14/explainer/demo/slide_00.jpg")
+    html = f'<img src="{url}" data-src="{url}"><a href="{url}">原图</a>'
+
+    pinned = pin_asset_revision(html, sha)
+    delivered, provider = prepare_image_delivery(
+        pinned, asset_dir=out, token="dummy", timeout=5)
+
+    assert provider == "jsdelivr", provider
+    refs = set(re.findall(r"tennislive@([0-9a-f]+)/", delivered))
+    assert refs == {sha[:ASSET_REVISION_PIN_LEN]}, (
+        f"走完整条路之后 ref 不是短的——第二处把第一处盖回去了：{refs}")
+    assert sha not in delivered, "整整 40 位又回来了，图一多就会顶过 2 万字"
+    # 三处 URL 都要跟着钉住，一处漏掉就是新旧内容被微信的图片缓存混起来
+    assert delivered.count(f"@{sha[:ASSET_REVISION_PIN_LEN]}/") == 3, delivered
+
+
+def test_读了资产版本号的地方都要经过同一处截断():
+    """⚠️ **这条判据是上一轮那个 bug 的防复发闸，自己从源码推导、不维护名单。**
+
+    `TENNISLIVE_ASSET_REV` 在 `src/` 里有三个消费者（`cmd_publish_pushplus`、
+    `cmd_publish_flash`、`_jsdelivr_fallback_delivery`），而 2026-09-14 第一版
+    只让其中一个走了短 sha——另外那个随后按整个 URL 全文替换，**把它盖了回去**，
+    补发那一趟量出来和没改一模一样。
+
+    判据：读了这个变量的**每个函数**，都要把它交给 `pin_asset_revision` /
+    `jsdelivr_base` / `pin_ref`（三者都经过 `cdn.pin_ref`）。自己拼 `@{rev}/`
+    的一律红——新增第四个消费者时，这条会替人记得。
+
+    ⚠️⚠️ **第一版按「文件」扫，是一条恒真的绿灯**：`cli.py` 里有两个消费者，
+    只要其中一个调了共用出口，另一个拼错了也照样过——反向验证时把
+    `cmd_publish_flash` 改成自己拼 URL，**测试纹丝不动**。分叉是按**函数**
+    发生的，判据的粒度就得是函数。
+    """
+    import ast
+    from pathlib import Path
+
+    # 三个直接出口 ＋ 一个间接的：`_pages_image_url` 自己把 revision 交给
+    # `jsdelivr_base`，所以把 revision 传给它一样安全。⚠️ 这四个名字不是
+    # 随手维护的白名单——每一个都真的落在 `cdn.pin_ref` 那条路上，加第五个
+    # 之前先确认它也是（否则这条判据就退化成一盏绿灯）。
+    WAYS = {"pin_asset_revision", "jsdelivr_base", "pin_ref", "_pages_image_url"}
+    offenders, checked = [], []
+    for path in sorted(Path("src").rglob("*.py")):
+        text = path.read_text(encoding="utf-8")
+        if "TENNISLIVE_ASSET_REV" not in text or path.name == "cdn.py":
+            continue  # 截断本身就住在 cdn.py
+        for node in ast.walk(ast.parse(text)):
+            if not isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                continue
+            body = ast.dump(node)
+            if "TENNISLIVE_ASSET_REV" not in body:
+                continue
+            checked.append(f"{path.name}::{node.name}")
+            calls = {
+                sub.func.id for sub in ast.walk(node)
+                if isinstance(sub, ast.Call) and isinstance(sub.func, ast.Name)
+            }
+            if not calls & WAYS:
+                offenders.append(f"{path}::{node.name}")
+
+    assert len(checked) >= 3, f"判据失效了：只扫到 {checked}"
+    assert not offenders, (
+        "这些函数读了资产版本号却没走共用的截断，钉出来会是整整 40 位，"
+        f"图一多就把推送顶过 PushPlus 的 2 万字上限：{offenders}")
