@@ -7,7 +7,12 @@ from tennislive.digest import Digest
 from tennislive.models import MatchStats, MatchStatus, StatPair, Tour
 from tennislive.render.common import group_by_tournament, result_line, schedule_line
 from tennislive.render.focus import focus_comparison, has_detailed_stats
-from tennislive.render.pushmsg import pin_asset_revision, to_copy_page, to_push_html
+from tennislive.render.pushmsg import (
+    ASSET_REVISION_PIN_LEN,
+    pin_asset_revision,
+    to_copy_page,
+    to_push_html,
+)
 from tennislive.render.wechat import article_title, to_html, to_markdown
 from tennislive.render.xiaohongshu import plan_post, post_title, to_post
 
@@ -425,7 +430,11 @@ def test_pin_asset_revision_only_rewrites_valid_jsdelivr_main_urls():
 
     pinned = pin_asset_revision(html, revision)
 
-    assert f"tennislive@{revision}/output/" in pinned
+    # 钉的是 revision 的**前缀**（见 ASSET_REVISION_PIN_LEN：整整 40 位会把
+    # 图多的推送顶过 PushPlus 的 2 万字上限）。这条守的是「只改合法的
+    # jsDelivr @main、别的一个字不动」，位数是实现细节，跟着常量走。
+    assert f"tennislive@{revision[:ASSET_REVISION_PIN_LEN]}/output/" in pinned
+    assert "@main/" not in pinned
     assert "https://example.com/image.png" in pinned
     assert pin_asset_revision(html, "abc123") == html
     assert pin_asset_revision(html, "not-a-commit") == html

@@ -5,9 +5,10 @@
     {
       "key": "pushplus:explainer:shelton-ncaa-story:3adf921fbe1cdee0c548a91121e0f3f385beac8e06deb4d7ffa8e749cd416189",
       "fingerprint": "3adf921fbe1cdee0c548a91121e0f3f385beac8e06deb4d7ffa8e749cd416189",
-      "status": "uncertain",
+      "status": "rejected",
       "at": "2026-09-14T12:25:41Z",
-      "run": "https://github.com/robertyang87/tennislive/actions/runs/34843211265"
+      "run": "https://github.com/robertyang87/tennislive/actions/runs/34843211265",
+      "note": "PushPlus 服务端验证阶段拒收，消息未进投递队列——不是「状态不明」：{'code': 999, 'data': '发送内容过大，不能超过2万字', 'msg': '服务端验证错误'}。正文 21404 字符 / 24032 字节，越线 1404。日志为据（见 run）。工作流的 failure 分支把「明确拒绝」和「没送到」都记成 uncertain，而 uncertain 在 BLOCKING 里会永久挡住重发，所以这条按实际结果改成 rejected。"
     }
   ]
 }
