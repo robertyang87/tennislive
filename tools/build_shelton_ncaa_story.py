@@ -219,7 +219,39 @@ def main():
             response.raise_for_status();dest.write_bytes(response.content)
     if not (WORK/'ncaa-2021.mp4').is_file():
         media=json.loads((ASSETS/'media-sources.json').read_text())['ncaa_2021']
-        run(['ffmpeg','-v','error','-i',media['media_url'],'-t','326','-map','0:v:0','-map','0:a:0','-c','copy','-y',str(WORK/'ncaa-2021.mp4')])
+        # Select one rendition explicitly: probing the master also opens broken
+        # alternate renditions in this archived CMAF manifest.
+        from urllib.parse import urljoin
+        master_url=media['media_url']
+        response=requests.get(master_url,timeout=60);response.raise_for_status()
+        lines=response.text.splitlines()
+        def attributes(line):
+            return {k: quoted or plain for k,quoted,plain in
+                    re.findall(r'([A-Z0-9-]+)=(?:"([^"]*)"|([^,]*))',line)}
+        variants=[]
+        for index,line in enumerate(lines):
+            if line.startswith('#EXT-X-STREAM-INF:'):
+                attrs=attributes(line)
+                uri=next(item.strip() for item in lines[index+1:]
+                         if item.strip() and not item.startswith('#'))
+                variants.append((int(attrs.get('BANDWIDTH','0')),attrs,urljoin(master_url,uri)))
+        if not variants:
+            raise RuntimeError('Expected NCAA master playlist with video renditions')
+        _,selected,video_url=max(variants,key=lambda item:item[0])
+        audio_url=None
+        for line in lines:
+            if line.startswith('#EXT-X-MEDIA:'):
+                attrs=attributes(line)
+                if (attrs.get('TYPE')=='AUDIO' and
+                    attrs.get('GROUP-ID')==selected.get('AUDIO') and attrs.get('URI')):
+                    audio_url=urljoin(master_url,attrs['URI'])
+                    if attrs.get('DEFAULT')=='YES':break
+        print('NCAA selected rendition',selected,flush=True)
+        inputs=['-i',video_url]
+        if audio_url:inputs+=['-i',audio_url]
+        run(['ffmpeg','-v','error',*inputs,'-t','326','-map','0:v:0',
+             '-map','1:a:0' if audio_url else '0:a:0','-c','copy','-y',
+             str(WORK/'ncaa-2021.mp4')])
     spec=json.loads((ROOT/'specs/explainers/shelton-ncaa-story.json').read_text())
     if not a.assemble_only:make_cards(spec,out)
     if a.cards_only:return
