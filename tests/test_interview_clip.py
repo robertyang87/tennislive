@@ -1663,8 +1663,15 @@ def test_转载源色彩校正显式且片头不继承():
     src_txt = (ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8")
     assert src_txt.count("_video_eq_filter(spec)") == 2, \
         "封面和采访正文必须走同一组色彩校正"
-    assert '_video_eq_filter(lead, "lead_in")' in src_txt, \
-        "跨视频片头只能读取自己的 video_eq，不能继承转载正文"
+    # ⚠️ 主语换过一次：2026-09-14 加 `trail_in`（捧杯那一段）之后，片头和片尾
+    # 收成同一个 `_side_segment`，原来那句写死的 `_video_eq_filter(lead,
+    # "lead_in")` 在源码里不存在了。**判据跟着主语走，而且比原来硬**——原来
+    # 只钉住「片头这一处传了 lead」，现在钉住「跨源那段传进去的是 `lead`
+    # 这个块本身」：传 `spec` 就是继承了转载正文的调色，正是这条要防的。
+    assert "_video_eq_filter(lead, key)" in src_txt, \
+        "跨源接进来的片头/片尾只能读取自己的 video_eq，不能继承转载正文"
+    assert "_video_eq_filter(spec, key)" not in src_txt, \
+        "跨源那一段把 `spec` 传了进去——那就是继承正文的调色"
 
 
 def test_关掉顶栏要显式认领而且默认不许变(tmp_path):
@@ -5410,13 +5417,24 @@ def test_量字幕宽度那份判据只有一处():
     src = Path("tools/build_interview_clip.py").read_text(encoding="utf-8")
     tree = ast.parse(src)
     fns = {n.name: n for n in ast.walk(tree) if isinstance(n, ast.FunctionDef)}
-    for name in ("check_lead_in", "write_ass"):
+    # ⚠️ 主语换过一次：2026-09-14 起 `lead_in`/`trail_in` 共用
+    # `_check_side_block`，量宽度那一句从 `check_lead_in` 搬了进去。
+    for name in ("_check_side_block", "write_ass"):
         fn = fns.get(name)
         assert fn is not None, f"{name} 没了——主语变了就得换判据"
         called = {n.func.id for n in ast.walk(fn)
                   if isinstance(n, ast.Call) and isinstance(n.func, ast.Name)}
         assert "en_problems" in called, (
             f"{name} 没调 en_problems，自己又量了一遍宽度——写两处必分叉")
+    # 而两个入口都必须**委托**给它，不许自己再实现一遍：只钉
+    # `_check_side_block` 的话，有人把宽度检查抄回 `check_lead_in` 里照样绿。
+    for name in ("check_lead_in", "check_trail_in"):
+        fn = fns.get(name)
+        assert fn is not None, f"{name} 没了——主语变了就得换判据"
+        called = {n.func.id for n in ast.walk(fn)
+                  if isinstance(n, ast.Call) and isinstance(n.func, ast.Name)}
+        assert "_check_side_block" in called, (
+            f"{name} 没走 `_check_side_block`，自己又写了一份窗口校验")
 
 
 def test_lead_in字幕的老债只许减不许加():
@@ -5522,7 +5540,7 @@ def test_lead_in不带subs时仍要烧顶栏():
     这儿，不因为没有对白就被绕开。`subtitles=` 因此不再是「有 subs 才有」
     的单一条件分支，而是「有 subs，或者顶栏要印」两条路都要有。"""
     src = (ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8")
-    body = _code_only(src.split("def _lead_in_segment(")[1].split("\ndef ")[0])
+    body = _code_only(src.split("def _side_segment(")[1].split("\ndef ")[0])
     assert "elif wants_topbar(spec)" in body, "没有 subs 时要有单独烧顶栏那一支"
     assert "subtitles=" in body, "有 subs 时必须保留正文字幕滤镜"
     assert "_subject_topbar_png(spec, outdir)" in body, (
@@ -5550,7 +5568,7 @@ def test_lead_in带subs时字幕和顶栏都要烧出来(tmp_path, monkeypatch):
 
     spec = _lead_in_topbar_spec(subs=[
         {"a": 3.0, "b": 5.0, "en": "What a shot", "zh": "这一拍真漂亮"}])
-    lead = m._lead_in_segment(spec, src_dir)
+    lead = m._side_segment(spec, src_dir, "lead_in")
     assert lead is not None and lead.is_file()
 
     ass_text = (src_dir / "_lead.ass").read_text(encoding="utf-8")
@@ -5574,7 +5592,7 @@ def test_lead_in不带subs时真烧出顶栏(tmp_path, monkeypatch):
                          lambda url, dest, fmt, spec: _fake_lead_source(src_dir))
 
     spec = _lead_in_topbar_spec()  # 没有 subs
-    lead = m._lead_in_segment(spec, src_dir)
+    lead = m._side_segment(spec, src_dir, "lead_in")
     assert lead is not None and lead.is_file()
 
     ass_text = (src_dir / "_lead.ass").read_text(encoding="utf-8")
@@ -5602,7 +5620,7 @@ def test_lead_in关掉顶栏时不带subs也真的不烧字幕(tmp_path, monkeyp
             "topbar": False, "_no_topbar_why": "测试用，故意关掉",
             "lead_in": {"url": "https://youtu.be/highlights", "start": 2.0,
                         "end": 9.0, "why": "测试"}}
-    lead = m._lead_in_segment(spec, src_dir)
+    lead = m._side_segment(spec, src_dir, "lead_in")
     assert lead is not None and lead.is_file()
     assert not (src_dir / "_lead.ass").exists(), (
         "顶栏关掉又没有 subs，不该生成 ass 文件")
@@ -5613,9 +5631,128 @@ def test_lead_in进拼接清单排在正片之前():
     之前进清单——「先交代比赛结束，再接采访」，顺序反了这句话就不成立。"""
     src = (ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8")
     render_body = src.split("def render(")[1].split("\ndef ")[0]
-    lead_at = render_body.index("_lead_in_segment(spec, outdir)")
+    lead_at = render_body.index('_side_segment(spec, outdir, "lead_in")')
     body_at = render_body.index("parts.append(body)")
     assert lead_at < body_at, "跨视频片头排在了正片之后，顺序反了"
+
+
+def test_trail_in进拼接清单排在正片之后但在解读卡之前():
+    """捧杯那一段（`trail_in`）的位置是**反过来**的：颁奖典礼的真实顺序是
+    「致辞 → 递杯 → 举杯」，所以它必须排在 `parts.append(body)` 之后。
+
+    ⚠️ 还要排在**收尾解读卡之前**——解读卡是这条片子自己的话，捧杯是现场
+    画面；反过来会变成「我们先下结论，再放一段素材」，而这条线的结构一直是
+    「现场 → 我们的解读 → 品牌片尾」。
+
+    ⚠️ 两头都要钉：只钉「在正片之后」的话，把它挪到品牌片尾后面也过得了。
+    """
+    src = (ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8")
+    render_body = src.split("def render(")[1].split("\ndef ")[0]
+    body_at = render_body.index("parts.append(body)")
+    trail_at = render_body.index('_side_segment(spec, outdir, "trail_in")')
+    close_at = render_body.index('_takeaway_segments(spec, outdir, "close")')
+    outro_at = render_body.index("_build_outro(outdir)")
+    assert body_at < trail_at, "捧杯那一段排到了正片之前——那是 `lead_in` 的位置"
+    assert trail_at < close_at < outro_at, (
+        "捧杯那一段排到了收尾解读卡/品牌片尾之后，顺序反了")
+
+
+def test_片头和片尾各写各的中间物不许撞文件名(tmp_path, monkeypatch):
+    """**真跑两遍 `_side_segment`**，一次 `lead_in` 一次 `trail_in`，确认它们
+    落的是两个不同的文件。
+
+    ⚠️ 这一条不是洁癖：两段共用同一个 `_lead.mp4` 的话，后跑的那一段会**原地
+    盖掉**先跑的那一段，而 `parts` 里仍然是两个条目——成片会把同一段画面放两遍，
+    ffmpeg 一个字都不报。查源码里有没有 `prefix` 只能防「有人把它删了」，
+    防不住「它从来没工作过」（这个仓库为同一个形状栽过好几次）。
+    """
+    import build_interview_clip as m
+
+    src_dir = tmp_path / "out"
+    src_dir.mkdir()
+    monkeypatch.setattr(m, "yt_download",
+                        lambda url, dest, fmt, spec: _fake_lead_source(src_dir))
+    spec = _lead_in_topbar_spec()
+    spec["trail_in"] = {"url": "https://youtu.be/ceremony", "start": 11.0,
+                        "end": 16.0, "why": "捧杯那一段，逐帧看过"}
+
+    lead = m._side_segment(spec, src_dir, "lead_in")
+    trail = m._side_segment(spec, src_dir, "trail_in")
+    assert lead is not None and trail is not None
+    assert lead != trail, "片头和片尾落到了同一个文件——后一段会盖掉前一段"
+    assert lead.exists() and trail.exists()
+    # 时长不同才证明两个文件真的是各自那一段，不是同一份被复制了两次
+    assert abs(m.probe_duration(lead) - 7.0) < 0.4, m.probe_duration(lead)
+    assert abs(m.probe_duration(trail) - 5.0) < 0.4, m.probe_duration(trail)
+
+
+def test_捧杯那一段走的核验路径和片头不是同一条():
+    """`lead_in` 认 `official_exact_match_highlight`（同场官方集锦的最后一分），
+    `trail_in` 认 `official_trophy_ceremony`（赛事官方的完整颁奖典礼录像）。
+
+    ⚠️ **两者不许互相顶替，而这不是洁癖**：官方单场集锦里根本没有奖杯
+    （2026-09-14 逐帧量过 `hY1epQDmhGQ`，220 秒起已经是社媒片尾卡），
+    所以拿集锦去填 `trail_in` 必然拿不到捧杯；反过来拿颁奖典礼去填
+    `lead_in`，「片头先交代比赛怎么结束」那条就变成一句空话——观众一上来
+    看见的就是奖杯，没看到他是怎么赢的。
+    """
+    import build_interview_clip as clip
+
+    match = {"id": "m1", "winner_en": "A", "loser_en": "B",
+             "event_search": "US Open", "year": 2026}
+    block = {
+        "url": "https://www.youtube.com/watch?v=x", "start": 10.0, "end": 29.0,
+        "why": "捧杯那一段，逐帧看过",
+        "subs": [{"a": 10.5, "b": 13.0, "en": "Your 2026 US Open champion,",
+                  "zh": "你们的 2026 美网冠军"}],
+        "verification": {"channel": "US Open Tennis Championships",
+                         "event_search": "US Open", "year": 2026,
+                         "winner_en": "A", "loser_en": "B", "match_id": "m1",
+                         "method": "official_trophy_ceremony", "height": 1080},
+    }
+    base = {"slug": "新片", "requested_content_type": "on_court", "match": match}
+
+    clip.check_trail_in({**base, "trail_in": block})          # 不许抛
+    clip.check_trail_in(base)                                 # 没写就是没有，不许抛
+
+    # 把片头那条路径填进来 → 必须红（反过来同理，见下）
+    wrong = {**block, "verification": {**block["verification"],
+                                       "method": "official_exact_match_highlight"}}
+    with pytest.raises(SystemExit, match="official_trophy_ceremony"):
+        clip.check_trail_in({**base, "trail_in": wrong})
+
+    lead = {**block, "verification": {**block["verification"],
+                                      "method": "official_trophy_ceremony"}}
+    with pytest.raises(SystemExit, match="official_exact_match_highlight"):
+        clip.check_lead_in({**base, "lead_in": lead, "opening": {"kind": "none"},
+                            "interview_kind": "赛后场上采访"})
+
+
+def test_片头字幕的老债不许顺手赦免片尾():
+    """`_LEGACY_LEAD_IN_SUBS` 记的是这条规矩立起来之前**已经发出去的片头**。
+
+    `trail_in` 是 2026-09-14 才有的字段，一条新字段不该天生带着旧债的赦免——
+    否则表里任何一个 slug 写了 `trail_in`，它的片尾字幕就跟着免检了。
+    """
+    import build_interview_clip as clip
+
+    assert clip._LEGACY_LEAD_IN_SUBS, "豁免表空了，这条判据的主语没了"
+    slug = sorted(clip._LEGACY_LEAD_IN_SUBS)[0]
+    match = {"id": "m1", "winner_en": "A", "loser_en": "B",
+             "event_search": "US Open", "year": 2026}
+    # 一行故意超宽的英文：片头那头因为挂账放行，片尾那头必须照红
+    fat = {"a": 10.5, "b": 13.0,
+           "en": "and he finishes off Ben Shelton in four sets to win the title",
+           "zh": "他四盘送走谢尔顿拿下冠军"}
+    block = {"url": "https://www.youtube.com/watch?v=x", "start": 10.0, "end": 29.0,
+             "why": "逐帧看过", "subs": [fat],
+             "verification": {"channel": "US Open Tennis Championships",
+                              "event_search": "US Open", "year": 2026,
+                              "winner_en": "A", "loser_en": "B", "match_id": "m1",
+                              "method": "official_trophy_ceremony", "height": 1080}}
+    base = {"slug": slug, "requested_content_type": "on_court", "match": match}
+    with pytest.raises(SystemExit, match="超宽"):
+        clip.check_trail_in({**base, "trail_in": block})
 
 
 def test_lead_in片段和正片拼得起来(tmp_path, monkeypatch):
@@ -5640,7 +5777,7 @@ def test_lead_in片段和正片拼得起来(tmp_path, monkeypatch):
                          lambda url, dest, fmt, spec: _fake_lead_source(src_dir))
 
     spec = _lead_in_topbar_spec()  # 没有 subs，走默认顶栏那条路
-    lead = m._lead_in_segment(spec, src_dir)
+    lead = m._side_segment(spec, src_dir, "lead_in")
     assert lead is not None and lead.is_file()
 
     probe = subprocess.run(
@@ -5677,7 +5814,7 @@ def test_lead_in片段和正片拼得起来(tmp_path, monkeypatch):
         f"音轨 {_dur('a:0'):.2f}s vs 画面 {_dur('v:0'):.2f}s——concat 丢了一条流")
 
     # 没有 lead_in 就该是 None，别凭空冒出一段
-    assert m._lead_in_segment({"slug": "x"}, tmp_path) is None
+    assert m._side_segment({"slug": "x"}, tmp_path, "lead_in") is None
 
 
 def _top_level_boxes(path: Path) -> list[str]:
