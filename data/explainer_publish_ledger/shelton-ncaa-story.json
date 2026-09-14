@@ -5,10 +5,11 @@
     {
       "key": "pushplus:explainer:shelton-ncaa-story:3adf921fbe1cdee0c548a91121e0f3f385beac8e06deb4d7ffa8e749cd416189",
       "fingerprint": "3adf921fbe1cdee0c548a91121e0f3f385beac8e06deb4d7ffa8e749cd416189",
-      "status": "rejected",
-      "at": "2026-09-14T12:25:41Z",
-      "run": "https://github.com/robertyang87/tennislive/actions/runs/34843211265",
-      "note": "PushPlus 服务端验证阶段拒收，消息未进投递队列——不是「状态不明」：{'code': 999, 'data': '发送内容过大，不能超过2万字', 'msg': '服务端验证错误'}。正文 21404 字符 / 24032 字节，越线 1404。日志为据（见 run）。工作流的 failure 分支把「明确拒绝」和「没送到」都记成 uncertain，而 uncertain 在 BLOCKING 里会永久挡住重发，所以这条按实际结果改成 rejected。"
+      "status": "sent",
+      "at": "2026-09-14T14:11:55Z",
+      "run": "https://github.com/robertyang87/tennislive/actions/runs/34853952712",
+      "note": "2026-09-14 14:11:55Z 发出去了（流水号 93a7d00643d64118ad3734605c264972，投递通道 wechat，图片通道 jsdelivr，msg=执行成功）。⚠️ 这一行是**手工补的**：走的是 push-existing.yml（workflow_dispatch，scope=explainer），而那条路只发不记账——账本这一笔不补，下一个人查到的就是「还停在 rejected」，而那和「没发过」长得一模一样。\n\n来路（这一版内容的完整历史，别删）：同一份内容 12:25:41Z 先被 PushPlus 拒收过一次（run 34843211265，{'code': 999, 'data': '发送内容过大，不能超过2万字'}），当时正文 21404 字符 / 24032 字节，越线 1404——撑爆它的不是正文本身（push.html 只有 18704 字符），是 pin_asset_revision 把 @main 换成 @<40 位 sha>，而每张图有三条完整 URL（src / data-src / 「点此打开原图」），75 处各多 36 字符。修法两处（#894 把钉进 URL 的 sha 截到 10 位、POST 之前自己量一次长度；#895 补上第二处钉 sha 的实现——第一版只改了一处，被 pushplus._pages_image_url 整个盖回去，补发那趟白发）。这一趟日志里两个判据都出声了：「推送正文 19154 字符 / 21782 字节（PushPlus 上限 20000 字）」，以及 75 处 ref 全是 10 位。\n\n工作流那个还没修的缺口照旧记在 CLAUDE.md：auto-push-explainer 的 `if: failure()` 把「服务端明确拒绝」和「没送到」都记成 uncertain，而 uncertain 在 BLOCKING 里会永久挡住重发——12:25 那次的 uncertain 就是照日志手动改成 rejected 才解开的。",
+      "pushplus_receipt": "93a7d00643d64118ad3734605c264972"
     }
   ]
 }

@@ -72,21 +72,34 @@ def fetch_released_film(slug: str) -> Path:
     import push_reel  # noqa: PLC0415  # 只为复用那一处出处，不在模块顶层拖依赖
 
     root = Path(__file__).resolve().parent.parent
-    # ⚠️ **两条线的产物目录形状不一样，两处都要找。** 竖版短片按日期分格
-    # （`output/<日期>/reel/<slug>`），赛后开麦不分日期（`output/interviews/<slug>`）。
-    # 只找前一条的话，采访片一律报「output/ 里找不到」——**而它长得像 slug 写错了**，
-    # 于是那半条线的审片版会一直发不出去。CLAUDE.md 把这条命令写成了「每条片子
-    # 渲完就跑一趟」的常规动作，规矩写对了、实现只盖住一半，正是这个仓库反复
-    # 记的那个形状。
+    # ⚠️⚠️ **不点名任何一条线——按形状找，别维护名单。**
+    #
+    # 三条出片线的产物目录深浅不一：竖版短片和解说片按日期分格
+    # （`output/<日期>/reel/<slug>`、`output/<日期>/explainer/<slug>`），
+    # 赛后开麦不分日期（`output/interviews/<slug>`）。
+    #
+    # 这一行原来是**一张两条线的名单**（reel + interviews），于是解说片一律报
+    # 「output/ 里找不到」——**而它长得像 slug 写错了**。同一段注释当时还写着
+    # 「规矩写对了、实现只盖住一半，正是这个仓库反复记的那个形状」，**而它自己
+    # 正漏着第三条**：2026-09-14 `shelton-ncaa-story` 推完要发审片版才撞出来。
+    # 名单会过期而且过期时不吭声，所以改成两个 glob 盖住「`output/` 下两层或
+    # 三层的那个 slug 目录」——加第四条线自动跟上，一个字都不用改。
+    #
     # 日期目录按上海时间分而沙箱跑在 UTC，别去算「今天」——排序取最新的那一天，
     # 两种时区下都对（和 `render_cover_local.find_outdir` 同一个理由）。
-    hits = sorted(root.glob(f"output/*/reel/{slug}"), reverse=True)
-    hits += sorted(root.glob(f"output/interviews/{slug}"), reverse=True)
+    #
+    # ⚠️ **先按「有 render.json」筛一道**：两种深度混在一起排序没有意义，而
+    # `render.json` 正是下一步要读的那份产物——筛掉的必然也用不了。
+    found = {*root.glob(f"output/*/*/{slug}"), *root.glob(f"output/*/{slug}")}
+    hits = sorted((d for d in found if (d / "render.json").is_file()),
+                  key=lambda d: d.as_posix(), reverse=True)
     if not hits:
         raise SystemExit(
             f"output/ 里找不到 {slug} 的产物目录"
-            "（竖版短片 output/<日期>/reel/ 和赛后开麦 output/interviews/ 两处都查过）。\n"
-            "  slug 写错了？还是这条片子的产物没在这个工作区里（先 git fetch/checkout）？")
+            "（扫的是 output/<日期>/<栏目>/<slug> 和 output/<栏目>/<slug>，"
+            "带 render.json 的才算）。\n"
+            "  slug 写错了？这条片子还没渲完？"
+            "还是产物没在这个工作区里（先 git fetch/checkout）？")
     outdir = hits[0]
 
     url = push_reel.released_video_url(outdir)
