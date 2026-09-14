@@ -502,18 +502,23 @@ def test_换镜像之后校验和钉版本都还认得出jsDelivr(monkeypatch):
     """
     from tennislive.cdn import DEFAULT_JSDELIVR_HOST, jsdelivr_host
     from tennislive.publish.pushplus import jsdelivr_link_sources
-    from tennislive.render.pushmsg import pin_asset_revision
+    from tennislive.render.pushmsg import ASSET_REVISION_PIN_LEN, pin_asset_revision
 
     assert DEFAULT_JSDELIVR_HOST != "cdn.jsdelivr.net", "这条测试的前提没了"
 
     rev = "37853825db235e7290df16fe890d00d556327d94"
+    # ⚠️ 钉进去的是 rev 的**前缀**不是整整 40 位（2026-09-14 起，见
+    # `ASSET_REVISION_PIN_LEN`：整串会把图多的推送顶过 PushPlus 的 2 万字上限）。
+    # 这条测试守的不变量是「钉住了版本、`@main` 没了」，位数是实现细节——
+    # 所以断言跟着常量走，别再写死一个数。
     for host in ("cdn.jsdelivr.net", DEFAULT_JSDELIVR_HOST, "fastly.jsdelivr.net"):
         url = f"https://{host}/gh/robertyang87/tennislive@main/output/x/a.mp4"
         html = f'<a href="{url}">片子</a><img src="{url[:-4]}.jpg">'
 
         assert jsdelivr_link_sources(html) == [url], f"{host} 的链接没被收进校验"
         pinned = pin_asset_revision(html, rev)
-        assert f"@{rev}/" in pinned, f"{host} 的资源没被钉住版本"
+        assert f"@{rev[:ASSET_REVISION_PIN_LEN]}/" in pinned, (
+            f"{host} 的资源没被钉住版本")
         assert "@main/" not in pinned, f"{host} 还有没钉住的 @main"
 
     # 环境变量能换镜像，写错的域名要退回默认——发出去一封全是裂图的推送，
@@ -627,3 +632,65 @@ def test_推送成功要把流水号打进日志(monkeypatch, capsys):
         f"没说清为什么当前不能核验手机送达：{out!r}")
     assert "unverified" in out and "没有公开的投递查询接口" not in out, (
         "不能把当前缺查询凭据误写成官方没有查询能力")
+
+
+def test_正文超过平台上限要在POST之前拦下而不是拿一次预占去换服务端拒收():
+    """2026-09-14 `shelton-ncaa-story`（25 页图卡）撞出来的。
+
+    PushPlus 在**服务端验证阶段**回 `{'code': 999, 'data': '发送内容过大，
+    不能超过2万字'}`——消息一个字没发出去，而这条线是**先预占账本再发送**的，
+    所以账本上已经留下一条 `uncertain`，而 `uncertain` 在 `BLOCKING` 里
+    ——**这条片子从此被自己的安全机制挡住，改完内容也发不出去**。
+
+    这个上限只有平台知道：官方文档没有写 content 的长度限制，只有错误码表里
+    那一句。所以判据不是「别写太长」，是**发之前自己量一次**。
+    """
+    long_body = "字" * (pushplus.CONTENT_MAX_CHARS + 1)
+    with pytest.raises(PushPlusError) as e:
+        pushplus.check_content_length(long_body)
+    said = str(e.value)
+    assert "20000" in said and "超过" in said, f"没说清上限是多少：{said!r}"
+    # 报错要说出路：下一个撞上的人得知道长度几乎全由图片数量决定
+    assert "图片数量" in said or "减图" in said, f"没说清怎么办：{said!r}"
+    # 正常长度不许被误伤
+    pushplus.check_content_length("字" * (pushplus.CONTENT_MAX_CHARS - 1))
+
+
+def test_量正文长度要排在钉版本之后否则量到的是个偏小的数():
+    """⚠️ 只测行为拦不住位置错——而位置错的样子是「闸放行了，服务端照样拒」。
+
+    撑爆上限的**正是钉版本那一步**（`@main` → `@<sha>`，`shelton-ncaa-story`
+    那条 75 处、多出 2250~2700 字符）。`prepare_image_delivery` 走图床那条路时
+    还会再换一轮 URL。闸排在它们前面，量到的是一个偏小的数，放行之后照样被拒
+    ——**那比没有闸更坏，因为它看起来验过了**。
+    """
+    import inspect
+
+    src = inspect.getsource(pushplus.push)
+    prepare = src.index("prepare_image_delivery")
+    check = src.index("check_content_length")
+    post = src.index("requests.post")
+    assert prepare < check < post, (
+        "量长度必须排在 prepare_image_delivery 之后、POST 之前，"
+        f"现在的顺序是 prepare={prepare} check={check} post={post}")
+
+
+def test_钉进URL的sha取短的否则图一多就把正文顶过平台上限():
+    """`shelton-ncaa-story` 的 `push.html` 本身 18704 字符，**合规**；
+    是钉版本把它撑到 21404 的。
+
+    ⚠️ 判据钉的是**渲出来的那一份**，不是常量——常量改对了而 `pin_asset_revision`
+    没用上它，同样是一条恒真的绿灯。`gcore.jsdelivr.net` 实测 40/12/10/7 位
+    全部 HTTP 200（jsDelivr 按 GitHub 的 ref 解析），所以短 sha 不会换来死链。
+    """
+    from tennislive.render.pushmsg import ASSET_REVISION_PIN_LEN, pin_asset_revision
+
+    sha = "741e7a6449b4198ddb26f1e15b57d08b80a5d9df"
+    html = ('<img src="https://gcore.jsdelivr.net/gh/o/r@main/a.jpg" '
+            'data-src="https://gcore.jsdelivr.net/gh/o/r@main/a.jpg" />')
+    pinned = pin_asset_revision(html, sha)
+    assert sha not in pinned, "钉的还是整整 40 位，图一多就会顶过 2 万字"
+    assert f"@{sha[:ASSET_REVISION_PIN_LEN]}/" in pinned, pinned
+    assert "@main/" not in pinned, "钉版本没生效，图片会被微信的缓存混起来"
+    # 太短会撞车，太长省不下来——两头都钉住，别让它悄悄漂回 40
+    assert 7 <= ASSET_REVISION_PIN_LEN <= 12, ASSET_REVISION_PIN_LEN

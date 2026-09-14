@@ -94,10 +94,38 @@ _JSDELIVR_MAIN_RE = re.compile(
 )
 
 
+# 钉进 URL 的那串 sha 取前 10 位，不是调用方传进来的整整 40 位。
+#
+# ⚠️ **这不是洁癖，是它真的把一条推送顶过了平台的上限。** 2026-09-14
+# `shelton-ncaa-story`（25 页图卡）被 PushPlus 当场拒收：
+#
+#     {'code': 999, 'data': '发送内容过大，不能超过2万字', 'msg': '服务端验证错误'}
+#
+# 而 `push.html` 本身只有 18704 字符——**是钉版本这一步把它撑到 21404 的**：
+# 每张图有三条 URL（`src` / `data-src` / 「点此打开原图」的 `<a href>`，都出自
+# `knowledge_push_html_from_parts`），`@main`（5 字符）换成 `@<40 位 sha>`
+# （41 字符）每处多 36 字符，75 处就是 **2700 字符**。
+# ⚠️ **而这个膨胀只在发送那一刻发生**：本地打开 push.html 一切正常，
+# 超限只有平台知道，而撞上它的时候发布账本已经预占了。
+#
+# 10 位是量出来的折中：`gcore.jsdelivr.net` 实测 40 / 12 / 10 / 7 位**全部
+# HTTP 200**（jsDelivr 按 GitHub 的 ref 解析，短 sha 一样认）；取 10 位省下
+# 75×30 = 2250 字符，而碰撞概率在这个规模的仓库上可以忽略——**而且万一真撞上，
+# 失败是安全的**：另一个 commit 上没有这个带日期和 slug 的路径，jsDelivr 回
+# 404，`wait_for_images` 在 POST 之前就拦住了。
+#
+# ⚠️ **别把它当成上限问题的解法**——它只省下 2250。图片数量本身才是那条线性
+# 增长的主因（全库 55 条解说片推送量过：字节 ≈ 5767 + 图数×700，15 张图的
+# `zheng-china-wuhan-wildcards-v2` 是 16953 字节，25 张必然撞）。真正的判据是
+# `push()` 里那道长度闸。
+ASSET_REVISION_PIN_LEN = 10
+
+
 def pin_asset_revision(html_content: str, revision: str) -> str:
     """Pin jsDelivr GitHub assets to an immutable commit revision."""
     if not _ASSET_REVISION_RE.fullmatch(revision):
         return html_content
+    revision = revision[:ASSET_REVISION_PIN_LEN]
     return _JSDELIVR_MAIN_RE.sub(rf"\g<1>@{revision}/", html_content)
 
 

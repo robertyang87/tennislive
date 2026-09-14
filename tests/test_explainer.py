@@ -2109,7 +2109,10 @@ def test_成片链接和图片走同一条_CDN(tmp_path):
     """
     import datetime
 
-    from tennislive.render.pushmsg import pin_asset_revision
+    from tennislive.render.pushmsg import (
+        ASSET_REVISION_PIN_LEN,
+        pin_asset_revision,
+    )
     from tennislive.video import explainer as E
 
     outdir = tmp_path / "output/2026-07-27/explainer/shang-nishikori"
@@ -2129,8 +2132,10 @@ def test_成片链接和图片走同一条_CDN(tmp_path):
     rel = "output/2026-07-27/explainer/shang-nishikori"
     rev = "37853825db235e7290df16fe890d00d556327d94"
     pinned = pin_asset_revision(html, rev)
-    assert f"@{rev}/{rel}/explainer.mp4" in pinned, "视频没跟着图片一起钉版本"
-    assert f"@{rev}/{rel}/slide_00.jpg" in pinned, "图片没被钉住"
+    # 钉的是 rev 的前缀，见 ASSET_REVISION_PIN_LEN
+    short = rev[:ASSET_REVISION_PIN_LEN]
+    assert f"@{short}/{rel}/explainer.mp4" in pinned, "视频没跟着图片一起钉版本"
+    assert f"@{short}/{rel}/slide_00.jpg" in pinned, "图片没被钉住"
     assert "@main/" not in pinned
 
 
@@ -2158,7 +2163,10 @@ def test_推送里的成片链接优先读render_json的video_url(tmp_path):
     import datetime
 
     from tennislive.cdn import jsdelivr_host
-    from tennislive.render.pushmsg import pin_asset_revision
+    from tennislive.render.pushmsg import (
+        ASSET_REVISION_PIN_LEN,
+        pin_asset_revision,
+    )
     from tennislive.video import explainer as E
 
     segs = E.explainer_script(find_story_by_slug("hawkeye"))
@@ -2186,7 +2194,8 @@ def test_推送里的成片链接优先读render_json的video_url(tmp_path):
     rev = "37853825db235e7290df16fe890d00d556327d94"
     pinned = pin_asset_revision(body, rev)
     assert release_url in pinned, "pin_asset_revision 把 Release 链接改坏了"
-    assert f"@{rev}/" in pinned and "@main/" not in pinned, "图片没被钉住"
+    assert f"@{rev[:ASSET_REVISION_PIN_LEN]}/" in pinned and "@main/" not in pinned, (
+        "图片没被钉住")
 
     # ③ 没有 render.json → 老路兜底；坏 JSON → 老路兜底而且要出声
     bare = tmp_path / "bare/output/2026-08-13/explainer/hawkeye"
