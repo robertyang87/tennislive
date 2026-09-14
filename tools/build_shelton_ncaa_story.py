@@ -4,6 +4,12 @@
 The official NCAA footage is archival 2021 and labelled as such. The US Open
 web-page video was rejected after visual inspection: its scoreboard did not
 support the page's 2026 identity. Never substitute that video for this year's SF.
+
+⚠️ 这条片子**没有专用工作流**，重渲是手动两步（渲 → 查），成片传到 Release
+`explainer-shelton-ncaa-story`；发微信走标准的 `auto-push-explainer.yml`。
+原来那条 `shelton-ncaa-delivery.yml` 违反七条既有判据、而且它自己推的提交拿不到
+CI，于是 PR 一直开着、微信一个字没发——来路和现在的形状写在
+`docs/reviews/shelton-ncaa-story/delivery.md`。
 """
 import argparse
 import concurrent.futures
