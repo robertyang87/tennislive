@@ -3609,34 +3609,68 @@ def check_lead_in(spec: dict) -> None:
                 "发布会／演播室不受这条规则影响；已有旧片债只能从"
                 " `_LEGACY_ONCOURT_NO_LEAD_IN` 逐条移除，不能加入新 slug。")
         return
+    _check_side_block(spec, "lead_in", "official_exact_match_highlight")
+
+
+def check_trail_in(spec: dict) -> None:
+    """跨视频接一段**片尾**——正片之后、解读卡之前的那一段。
+
+    ⚠️ **它和 `lead_in` 是同一个机制的两头，但管的不是同一件事。**
+    `lead_in` 补的是「这场球是怎么结束的」（同场官方集锦的最后一分），
+    所以它认的是 `official_exact_match_highlight`；`trail_in` 补的是
+    **致辞之后发生的事**——决赛这条线上就是捧杯，而捧杯永远不在单场集锦里
+    （官方集锦到庆祝和赛果图形就收尾了，2026-09-14 逐帧量过
+    `hY1epQDmhGQ`：220 秒起已经是社媒片尾卡，一帧奖杯都没有）。
+    所以它认的是 `official_trophy_ceremony`——赛事官方的完整颁奖典礼录像。
+
+    ⚠️ **两个 method 不许互相顶替。** 拿颁奖典礼去填 `lead_in.verification`
+    会让「片头必须交代比赛结束」那条规矩变成一句空话（画面上直接就捧着杯，
+    观众看不到他是怎么赢的）；反过来拿集锦去填 `trail_in` 则根本拿不到捧杯。
+
+    没写 `trail_in` 时什么都不做——它是可选的，绝大多数采访（非决赛）本来
+    就没有捧杯这一段。
+    """
+    if spec.get("trail_in") is None:
+        return
+    _check_side_block(spec, "trail_in", "official_trophy_ceremony")
+
+
+def _check_side_block(spec: dict, key: str, method: str) -> None:
+    """`lead_in` / `trail_in` 共用的那份窗口 + 字幕校验。
+
+    ⚠️ **一份实现，不是两份**——写两处必分叉，而分叉的样子是「片头的字幕过了
+    宽度闸、片尾的没过」，那一类要等主体编码完才报（`zheng-keys-us-open-2026-
+    r3-interview` 为它烧掉一整趟 render）。
+    """
+    lead = spec[key]
     slug = spec.get("slug", "?")
     if not isinstance(lead, dict):
-        raise SystemExit(f"{slug} 的 `lead_in` 必须是一个对象（url/start/end/why）。")
+        raise SystemExit(f"{slug} 的 `{key}` 必须是一个对象（url/start/end/why）。")
     if not str(lead.get("url", "")).strip():
-        raise SystemExit(f"{slug} 的 `lead_in` 缺 `url`——片头从哪条源片接，没人说。")
+        raise SystemExit(f"{slug} 的 `{key}` 缺 `url`——这一段从哪条源片接，没人说。")
     start, end = lead.get("start"), lead.get("end")
     if (not isinstance(start, (int, float)) or not isinstance(end, (int, float))
             or end <= start):
         raise SystemExit(
-            f"{slug} 的 `lead_in.start`/`end` 是 {start!r}/{end!r}——必须是数字，"
+            f"{slug} 的 `{key}.start`/`end` 是 {start!r}/{end!r}——必须是数字，"
             "且 end 大于 start。")
     dur = end - start
     if not 0 < dur <= _OPENING_LEAD_MAX:
         raise SystemExit(
-            f"{slug} 的 `lead_in` 长 {dur:.1f} 秒，必须在 0～{_OPENING_LEAD_MAX} 秒之间"
-            "——这是「先交代比赛结束」的片头，不是集锦，收多了就变成另一个栏目"
-            "（「赛场之上」）。")
+            f"{slug} 的 `{key}` 长 {dur:.1f} 秒，必须在 0～{_OPENING_LEAD_MAX} 秒之间"
+            "——这是交代「比赛怎么结束」「致辞之后发生了什么」的一小段，不是集锦，"
+            "收多了就变成另一个栏目（「赛场之上」）。")
     if not str(lead.get("why", "")).strip():
         raise SystemExit(
-            f"{slug} 的 `lead_in` 没写 `why`——说清收的是哪一段（起点、画面里发生"
+            f"{slug} 的 `{key}` 没写 `why`——说清收的是哪一段（起点、画面里发生"
             "了什么、为什么要从这条源片接，而不是 `spec['url']` 自己的画面），\n"
             "写不出来就说明还没打开源片看过。")
     if spec.get("requested_content_type") == "on_court":
         verification = lead.get("verification")
         if not isinstance(verification, dict):
             raise SystemExit(
-                f"{slug} 的 `lead_in` 缺同场来源 verification——新自动采访必须证明"
-                "片头是同场官方 1080p 单场集锦，不能只填一条看起来像的 URL。")
+                f"{slug} 的 `{key}` 缺同场来源 verification——新自动采访必须证明"
+                "这一段是同场官方 1080p 录像，不能只填一条看起来像的 URL。")
         match = spec.get("match") or {}
         expected = {
             "match_id": match.get("id"),
@@ -3649,16 +3683,16 @@ def check_lead_in(spec: dict) -> None:
                  if not value or verification.get(key) != value]
         if wrong:
             raise SystemExit(
-                f"{slug} 的 `lead_in.verification` 与当前比赛不一致：{', '.join(wrong)}")
-        if verification.get("method") != "official_exact_match_highlight":
-            raise SystemExit(f"{slug} 的片头不是 official_exact_match_highlight 核验路径。")
+                f"{slug} 的 `{key}.verification` 与当前比赛不一致：{', '.join(wrong)}")
+        if verification.get("method") != method:
+            raise SystemExit(f"{slug} 的 `{key}` 不是 {method} 核验路径。")
         if float(verification.get("height") or 0) < 1080:
-            raise SystemExit(f"{slug} 的片头来源不足 1080p，不制作，等高清源。")
+            raise SystemExit(f"{slug} 的 `{key}` 来源不足 1080p，不制作，等高清源。")
         if not str(verification.get("channel") or "").strip():
-            raise SystemExit(f"{slug} 的片头没有记录官方频道，不能回查来源。")
+            raise SystemExit(f"{slug} 的 `{key}` 没有记录官方频道，不能回查来源。")
         if not lead.get("subs"):
             raise SystemExit(
-                f"{slug} 的正式场上采访片头缺 `lead_in.subs`——获胜画面的原声解说"
+                f"{slug} 的正式场上采访 `{key}` 缺 `subs`——跨源接进来的现场画面"
                 "必须配中英文字幕；不能用无字幕 B-roll 降级发布。")
     # 老片/non-formal 的 `subs` 可选；正式 on_court 上面已经提升为必填。写了就要
     # 按正片那套字幕规矩过：时刻落在窗口内、按时间排好、英文/中文都不能是空的，
@@ -3677,37 +3711,40 @@ def check_lead_in(spec: dict) -> None:
     subs = lead.get("subs")
     if subs is not None:
         if not isinstance(subs, list) or not subs:
-            raise SystemExit(f"{slug} 的 `lead_in.subs` 必须是非空数组。")
+            raise SystemExit(f"{slug} 的 `{key}.subs` 必须是非空数组。")
         prev_b = start
         for i, cue in enumerate(subs, 1):
             if not isinstance(cue, dict):
-                raise SystemExit(f"{slug} 的 `lead_in.subs[{i}]` 必须是对象（a/b/en/zh）。")
+                raise SystemExit(f"{slug} 的 `{key}.subs[{i}]` 必须是对象（a/b/en/zh）。")
             a, b = cue.get("a"), cue.get("b")
             if (not isinstance(a, (int, float)) or not isinstance(b, (int, float))
                     or b <= a):
                 raise SystemExit(
-                    f"{slug} 的 `lead_in.subs[{i}]` 的 a/b 是 {a!r}/{b!r}——"
+                    f"{slug} 的 `{key}.subs[{i}]` 的 a/b 是 {a!r}/{b!r}——"
                     "必须是数字，且 b 大于 a。")
             if a < prev_b:
                 raise SystemExit(
-                    f"{slug} 的 `lead_in.subs[{i}]` 起点 {a} 早于上一条的终点 "
+                    f"{slug} 的 `{key}.subs[{i}]` 起点 {a} 早于上一条的终点 "
                     f"{prev_b}——两条字幕在时间轴上叠住了。")
             if a < start or b > end:
                 raise SystemExit(
-                    f"{slug} 的 `lead_in.subs[{i}]`（{a}~{b}）落在 `lead_in` 窗口"
+                    f"{slug} 的 `{key}.subs[{i}]`（{a}~{b}）落在 `{key}` 窗口"
                     f"（{start}~{end}）之外——原声解说的字幕不能比片头本身还长。")
             if not str(cue.get("en", "")).strip():
-                raise SystemExit(f"{slug} 的 `lead_in.subs[{i}]` 没写 `en`。")
+                raise SystemExit(f"{slug} 的 `{key}.subs[{i}]` 没写 `en`。")
             if not str(cue.get("zh", "")).strip():
-                raise SystemExit(f"{slug} 的 `lead_in.subs[{i}]` 没写 `zh`。")
+                raise SystemExit(f"{slug} 的 `{key}.subs[{i}]` 没写 `zh`。")
             prev_b = b
         cue_lines = [{"en": str(cue["en"])} for cue in subs]
         cue_zh = [str(cue["zh"]) for cue in subs]
-        bad = ([] if slug in _LEGACY_LEAD_IN_SUBS
+        # ⚠️ 豁免表**只对 `lead_in` 有效**：它记的是这条规矩立起来之前已经发出去
+        # 的那几条片头，而 `trail_in` 是 2026-09-14 才有的字段——一条新字段不该
+        # 天生带着旧债的赦免（否则表里任何一个 slug 都会顺手把它的片尾也放过去）。
+        bad = ([] if key == "lead_in" and slug in _LEGACY_LEAD_IN_SUBS
                else en_problems(cue_lines) + zh_problems(cue_lines, cue_zh))
         if bad:
             raise SystemExit(
-                f"{slug} 的 `lead_in.subs` 过不了正片那套字幕规矩：\n  "
+                f"{slug} 的 `{key}.subs` 过不了正片那套字幕规矩：\n  "
                 + "\n  ".join(bad)
                 + "\n⚠️ 一行装不下就**照源片的逐词时间戳把它拆成两条**，"
                 "别去缩字号、也别硬塞——libass 只会默默折行压到中文那一行上。")
@@ -3932,8 +3969,22 @@ def ours_ratio(spec: dict) -> tuple[float, float]:
     return ours, ours + lead_secs + (spec["end"] - spec["start"])
 
 
-def _lead_in_segment(spec: dict, outdir: Path) -> Path | None:
-    """片头那一段——从另一条源片剪来的比赛结尾，接在封面之后、正片之前。
+#: 跨源接进来的那两段，`lead_in` 在正片之前、`trail_in` 在正片之后。
+#: 两段走的是**同一个** `_side_segment`——写两处必分叉，而分叉的样子是
+#: 「片头有角标、片尾没有」这类只有打开成片才看得见的东西（`watermark_filter`
+#: 的 docstring 里记的正是第一版只接了正片那一次）。
+_SIDE_KEYS = {"lead_in": "_lead", "trail_in": "_trail"}
+
+
+def _side_segment(spec: dict, outdir: Path, key: str = "lead_in") -> Path | None:
+    """跨源接进来的一段画面——`lead_in` 接在正片之前，`trail_in` 接在正片之后。
+
+    ⚠️ **`trail_in` 是 2026-09-14 补的，补的是一个结构性的缺口**：这条线原来
+    只有 `lead_in`（正片之前），而**颁奖典礼上的捧杯是在致辞之后发生的**——
+    账号所有者要「加上一些捧杯画面」时，管线里没有任何一个位置放得下它。
+    `parts` 的顺序因此是 `封面 → 解读卡(open) → lead_in → 正片 → trail_in
+    → 解读卡(close) → 品牌片尾`：捧杯接在致辞后面，和真实时间顺序一致，
+    不用把它倒插进冷开场里当预告。
 
     走的是和 `body` 完全一样的裁切／缩放／叠加链（同一块品牌深绿底、同一个
     画布尺寸、同一套编码参数），这样 `-f concat -c copy` 才拼得上。
@@ -3966,9 +4017,10 @@ def _lead_in_segment(spec: dict, outdir: Path) -> Path | None:
     `crop_shift_x`/`mirrored`/`logo_box` 没道理是同一个数，写两处才不会一条
     源片的画面被另一条源片的裁切窗口切歪。
 
-    没有 `lead_in` 时返回 `None`——`render()` 据此决定要不要把它塞进 `parts`。
+    这一块没写时返回 `None`——`render()` 据此决定要不要把它塞进 `parts`。
     """
-    lead = spec.get("lead_in")
+    prefix = _SIDE_KEYS[key]
+    lead = spec.get(key)
     if lead is None:
         return None
     # ⚠️ **文件名要带 `_` 前缀，不能叫 `source_lead.mp4`。** 工作流的清理步骤
@@ -3976,31 +4028,32 @@ def _lead_in_segment(spec: dict, outdir: Path) -> Path | None:
     # 中间物——两条都是**按文件名的前缀/通配匹配**，不是「删掉源片这一类东西」。
     # `source_lead.mp4` 两条都不命中（`source.*` 要求「source」后面紧跟一个
     # 点，`_lead.mp4` 才吃后一条），会静静地跟着成片一起进仓库。
-    src = yt_download(lead["url"], outdir / "_lead_source.mp4",
+    src = yt_download(lead["url"], outdir / f"{prefix}_source.mp4",
                       "bv*[height<=1080]+ba/b[height<=1080]", spec)
     dur = lead["end"] - lead["start"]
     ratio = lead.get("crop_ratio", CROP_RATIO)
     vh = int(CANVAS_W / ratio)
     logo = ""
     if box := lead.get("logo_box"):
-        m = logo_mask(src, box, outdir / "_lead_logo_mask.png", bool(lead.get("mirrored")))
+        m = logo_mask(src, box, outdir / f"{prefix}_logo_mask.png",
+                      bool(lead.get("mirrored")))
         logo = f"removelogo=filename={m},"
     flip = "hflip," if lead.get("mirrored") else ""
-    grade = _video_eq_filter(lead, "lead_in")
+    grade = _video_eq_filter(lead, key)
     keep = float(lead.get("crop_keep_top", 1.0))
     shift = float(lead.get("crop_shift_x", 0.0))
     subs = lead.get("subs")
     use_ass = False
     if subs:
-        ass = outdir / "_lead.ass"
+        ass = outdir / f"{prefix}.ass"
         lines = [{"a": cue["a"], "b": cue["b"], "en": cue["en"]} for cue in subs]
         zh = [cue["zh"] for cue in subs]
         write_ass(lines, zh, lead["start"], ass, spec=spec)
         use_ass = True
     elif wants_topbar(spec):
         # 没有台词，但顶栏默认要印——单独烧一份只有 HEADA/HEADB 的 ASS，
-        # 盖住整段 `lead_in` 的时长（`dur`，见上面 `dur = lead["end"] - lead["start"]`）。
-        ass = outdir / "_lead.ass"
+        # 盖住整段的时长（`dur`，见上面 `dur = lead["end"] - lead["start"]`）。
+        ass = outdir / f"{prefix}.ass"
         write_ass([], [], lead["start"], ass, spec=spec, duration=dur)
         use_ass = topbar_layout(spec) != "subject_primary"
     topbar_png = _subject_topbar_png(spec, outdir)
@@ -4016,7 +4069,7 @@ def _lead_in_segment(spec: dict, outdir: Path) -> Path | None:
         f"[bg][fg]overlay=0:{VIDEO_TOP}[base];{topbar_filter};"
         f"{watermark_filter(outdir, spec)}{finish}"
     )
-    dest = outdir / "_lead.mp4"
+    dest = outdir / f"{prefix}.mp4"
     subprocess.run(
         # `-color_range tv` 显式钉死——理由见 `_still_segment` 那份注释，
         # 这儿是同一份「参数逐项一致」，别让这一段单独漂
@@ -4148,9 +4201,15 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
         parts.append(_still_segment(cover_poster(spec, src, outdir, logo),
                                     COVER_SECONDS, outdir / "_cover.mp4"))
     parts += _takeaway_segments(spec, outdir, "open")
-    if (lead := _lead_in_segment(spec, outdir)) is not None:
+    if (lead := _side_segment(spec, outdir, "lead_in")) is not None:
         parts.append(lead)
     parts.append(body)
+    # ⚠️ **捧杯接在正片之后，不是接在冷开场里。** 颁奖典礼的真实顺序是
+    # 「致辞 → 主办方递杯 → 举杯」，所以 `trail_in` 排在 `body` 后面；
+    # 倒插进 `lead_in` 当预告会让片头同时承担「比赛结束」和「已经捧杯」
+    # 两件事，而 `lead_in` 那道闸要的恰恰是前者（同场官方集锦的最后一分）。
+    if (trail := _side_segment(spec, outdir, "trail_in")) is not None:
+        parts.append(trail)
     parts += _takeaway_segments(spec, outdir, "close")
     if (outro := _build_outro(outdir)) is not None:
         parts.append(outro)
@@ -4321,6 +4380,7 @@ def main() -> int:
     # 而不是等九分钟的 render 出片之后再由人看出来「怎么一上来就有人在说话」。
     check_opening(spec)
     check_lead_in(spec)
+    check_trail_in(spec)
     check_copy_page(spec)
     outdir = OUTDIR / spec["slug"]
     outdir.mkdir(parents=True, exist_ok=True)

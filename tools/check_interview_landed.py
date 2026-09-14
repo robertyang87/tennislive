@@ -136,6 +136,31 @@ def bilingual_lead_ok(ass: Path, spec: dict) -> tuple[bool, str]:
                 f"逐 cue 时间 {'一致' if en_times == zh_times else '不一致'}")
 
 
+def bilingual_trail_ok(ass: Path, spec: dict) -> tuple[bool, str]:
+    """片尾那一段（捧杯）的原声也要逐 cue 中英成对。
+
+    ⚠️ 和 `bilingual_lead_ok` 的**默认相反**：冷开场对正式场上采访是必填的
+    （没有它就等于没交代比赛怎么结束），而 `trail_in` 只有决赛这类有颁奖
+    典礼的片子才有——所以没写 `trail_in` 时这一项直接过，不算不合格。
+
+    ⚠️ 但**写了就必须真的烧出来**：只在 spec 里声明、`_trail.ass` 却是空的，
+    成片上就是一段没有字幕的 B-roll，而这条线是双语字幕片。那种失败在成片上
+    只表现为「捧杯那几秒没有字」，没有任何东西会报错。
+    """
+    if not spec.get("trail_in"):
+        return True, "这条片子没有 `trail_in`（多数采访没有颁奖典礼），跳过"
+    expected = len(((spec.get("trail_in") or {}).get("subs") or []))
+    if expected == 0:
+        return False, "spec.trail_in.subs 为空"
+    events = _ass_body_events(ass)
+    en, zh = events["EN"], events["ZH"]
+    en_times = [(a, b) for a, b, text in en if text]
+    zh_times = [(a, b) for a, b, text in zh if text]
+    ok = en_times == zh_times and len(en_times) == expected
+    return ok, (f"EN {len(en_times)} / ZH {len(zh_times)} / trail_in.subs {expected}，"
+                f"逐 cue 时间 {'一致' if en_times == zh_times else '不一致'}")
+
+
 def check_film(film: Path, spec: dict, ass: Path) -> int:
     """给 --film 时，量成片本身。返回不合格项数。"""
     bad = 0
@@ -179,6 +204,10 @@ def check_film(film: Path, spec: dict, ass: Path) -> int:
     ok, detail = bilingual_lead_ok(lead_ass, spec)
     bad += 0 if ok else 1
     print(f"[{'ok' if ok else '不合格'}] 冷开场原解说双语字幕 {detail}")
+
+    ok, detail = bilingual_trail_ok(film.parent / "_trail.ass", spec)
+    bad += 0 if ok else 1
+    print(f"[{'ok' if ok else '不合格'}] 片尾捧杯原声双语字幕 {detail}")
 
     meta = film.parent / "render.json"
     if meta.is_file():
@@ -280,6 +309,10 @@ def write_attestation(film: Path, spec_path: Path, spec: dict,
             _sha256(outdir / "_lead.ass")
             if (outdir / "_lead.ass").is_file() else ""
         ),
+        "trail_ass_sha256": (
+            _sha256(outdir / "_trail.ass")
+            if (outdir / "_trail.ass").is_file() else ""
+        ),
         "film_sha256": _sha256(film),
         "film_bytes": film.stat().st_size,
         "checks": {
@@ -288,6 +321,7 @@ def write_attestation(film: Path, spec_path: Path, spec: dict,
             "silence_floor_db": SILENCE_FLOOR_DB,
             "bilingual_body_cues": len(_ass_body_events(ass)["EN"]),
             "bilingual_lead_cues": len(_ass_body_events(outdir / "_lead.ass")["EN"]),
+            "bilingual_trail_cues": len(_ass_body_events(outdir / "_trail.ass")["EN"]),
             "cover_subject": cover_proof["expected_subject"],
             "cover_subject_prominent": True,
         },
