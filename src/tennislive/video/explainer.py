@@ -2007,6 +2007,15 @@ AUTO_PUSH_SLUGS: frozenset[str] = frozenset({
     # 数字都转成了阿拉伯数字）；第一趟报出来的四处假词（「讲布｜云朝」「定首｜轮」
     # 「辛辛那｜提伤」「了兹维列夫」）在第二趟的 words.json 里一处都没有了。
     "bu-lucky-loser",
+    # 2026-09-14 验过才加进来的（同上那句「加进来之前先问一句：这条片子验过了吗」）：
+    # 账号所有者当天已确认最终修订版并授权合入主线、沿用既有网页模板推送微信
+    # （docs/reviews/shelton-ncaa-story/delivery.md）。成片走 Release，本地拉回来量过——
+    # 329.76 秒、1080×1440、22,403,105 字节，sha256 和 render.json 的 video_sha256
+    # 逐字相同；`silencedetect -60dB` 全片 **0 处**数字静音（max −1.5 / mean −19.4 dB）；
+    # 十帧抽帧墙逐格看过（24 页顶栏一致、示意图的七分制和小红书正文对得上、收尾落在一问上）。
+    # ⚠️ 这条**不是** `_SCRIPTS` 产的，是 `tools/build_shelton_ncaa_story.py` 单独渲的；
+    # `AUTO_PUSH_SLUGS` 只管「这条片子准不准自动发」，和谁渲的无关。
+    "shelton-ncaa-story",
 })
 
 
