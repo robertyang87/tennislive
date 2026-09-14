@@ -518,6 +518,45 @@ def wait_for_images(
     )
 
 
+#: PushPlus 服务端对 content 的硬上限。**这个数不是查文档查来的，是被拒出来的**
+#: ——官方文档没有写 content 的长度限制，只有错误码表里那一句
+#: 「999：发送内容过大，不能超过2万字」。
+CONTENT_MAX_CHARS = 20000
+
+
+def check_content_length(html_content: str) -> None:
+    """POST 之前量一次正文长度——超了在本地报，别拿一次预占去换服务端的拒收。
+
+    2026-09-14 `shelton-ncaa-story`（25 页图卡）撞上的，而它的代价不只是
+    「白跑一趟」：`auto-push-explainer` 是**先预占账本再发送**的，所以服务端
+    拒收时账本上已经留下一条 `uncertain`，而 `uncertain` 在 `BLOCKING` 里
+    ——**这条片子从此被自己的安全机制挡住，改完内容也发不出去，要手动清**。
+
+    ⚠️ **这道闸必须排在 `prepare_image_delivery` 之后**：撑爆上限的正是钉版本
+    那一步（`@main` → `@<sha>`，75 处），而它就发生在这中间。排在前面量到的是
+    一个偏小的数，放行之后照样被拒——那比没有闸更坏，因为它看起来验过了。
+
+    ⚠️ **口径按字符（`len`），不按 UTF-8 字节。** 服务端那句话说的是「字」，
+    而官方文档没写清；这条片子被拒时是 **21404 字符 / 24032 字节**，两个数都
+    越线，所以那一次分不出口径。按字符是"照它自己的措辞"的读法，**而日志里
+    两个数都打出来**：哪天真出现「字符没超、字节超了」被拒的那一次，日志里就
+    有现成的反证，不用再猜一遍。
+    """
+    chars, byts = len(html_content), len(html_content.encode("utf-8"))
+    logger.info("推送正文 %d 字符 / %d 字节（PushPlus 上限 %d 字）",
+                chars, byts, CONTENT_MAX_CHARS)
+    if chars <= CONTENT_MAX_CHARS:
+        return
+    raise PushPlusError(
+        f"推送正文 {chars} 字符（{byts} 字节），超过 PushPlus 的 "
+        f"{CONTENT_MAX_CHARS} 字上限 {chars - CONTENT_MAX_CHARS} 字——"
+        "发出去只会拿到 code=999，而账本已经预占。"
+        "正文长度几乎全由图片数量决定（每张图三条完整 URL：src / data-src / "
+        "「点此打开原图」，都出自 knowledge_push_html_from_parts），"
+        "实测 15 张图约 17000 字节、25 张就越线；要发得先减图或缩短 URL。"
+    )
+
+
 def push(
     title: str,
     html_content: str,
@@ -536,6 +575,7 @@ def push(
         timeout=timeout,
     )
     wait_for_images(html_content)
+    check_content_length(html_content)
     # 这是一个不可撤回、平台又没有幂等键的 POST。连接异常、读超时、5xx 并不
     # 证明平台没收下：自动重发会把同一条消息送进微信多次。因此只尝试一次；
     # 没拿到明确的 code=200 + 流水号就交给发布账本记 uncertain，禁止盲重发。
