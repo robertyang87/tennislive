@@ -228,7 +228,14 @@ def test_publish_flash_pins_committed_card_revision(tmp_path, monkeypatch):
     assert cli.cmd_publish_flash(args) == 0
 
     assert len(sent) == 1
-    assert "@d5a809e19988db7a69cac573842367bd07c900ad/output/" in sent[0][1]
+    # 钉的是 sha 的**前缀**（见 `cdn.pin_ref`：整整 40 位会把图多的推送顶过
+    # PushPlus 的 2 万字上限）。这条守的是「卡片图钉在已提交的 revision 上，
+    # 不是 @main」——位数是实现细节，跟着常量走。
+    from tennislive.cdn import ASSET_REVISION_PIN_LEN
+
+    rev = "d5a809e19988db7a69cac573842367bd07c900ad"
+    assert f"@{rev[:ASSET_REVISION_PIN_LEN]}/output/" in sent[0][1]
+    assert "@main/" not in sent[0][1], "卡片图没被钉住版本"
     assert "备选标题" in sent[0][1]
 
 
