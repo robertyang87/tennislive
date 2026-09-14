@@ -1,0 +1,133 @@
+{
+  "film_sha256": "9575776db896d285f3dee635b115cfb64f246a1c152d4852e3b9f29f4e5af462",
+  "film_seconds": 472.841,
+  "production_stage_events": [
+    {
+      "stage": "preflight",
+      "at": "2026-09-14T00:58:27Z",
+      "run_id": "34794335399"
+    },
+    {
+      "stage": "asr_verify",
+      "at": "2026-09-14T01:00:09Z",
+      "run_id": "34794335399"
+    },
+    {
+      "stage": "render",
+      "at": "2026-09-14T01:03:59Z",
+      "run_id": "34794335399"
+    },
+    {
+      "stage": "qc",
+      "at": "2026-09-14T01:10:18Z",
+      "run_id": "34794335399"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-14T01:10:19Z",
+      "run_id": "34794335399"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/interview-zverev-shelton-us-open-2026-final-ceremony/zverev-shelton-us-open-2026-final-ceremony.mp4?v=9575776db896d285",
+  "video_bytes": 150436289,
+  "release_asset_digest": "sha256:9575776db896d285f3dee635b115cfb64f246a1c152d4852e3b9f29f4e5af462",
+  "qc_attestation_sha256": "a45bb56600c210013af2da97e4e30279534bb4d09e8e61081ba06d47c97741d9",
+  "production_sla_history": [
+    {
+      "version": 2,
+      "pipeline": "interview-clip",
+      "slug": "zverev-shelton-us-open-2026-final-ceremony",
+      "received_at": "2026-09-13T23:55:52Z",
+      "artifact_ready_at": "2026-09-14T00:07:14Z",
+      "elapsed_seconds": 682.788,
+      "budget_seconds": 600,
+      "met": false,
+      "film_sha256": "6ee8d217fc25aa0a278b9a40d5caf3d2bbc96149521946ef21f1c6850c81c0ca",
+      "spec_sha256": "02cac8d36c7b050fa6f3624cb5eb4cfa47b29ea8193a3c80e72d0fc35fb40db8",
+      "run_id": "34791089971",
+      "stage_events": [
+        {
+          "stage": "preflight",
+          "at": "2026-09-13T23:56:18Z",
+          "run_id": "34791089971"
+        },
+        {
+          "stage": "asr_verify",
+          "at": "2026-09-13T23:57:46Z",
+          "run_id": "34791089971"
+        },
+        {
+          "stage": "render",
+          "at": "2026-09-14T00:01:40Z",
+          "run_id": "34791089971"
+        }
+      ],
+      "render_seconds": 334.788,
+      "pre_render_seconds": 348.0
+    },
+    {
+      "version": 2,
+      "pipeline": "interview-clip",
+      "slug": "zverev-shelton-us-open-2026-final-ceremony",
+      "received_at": "2026-09-14T00:39:06Z",
+      "artifact_ready_at": "2026-09-14T00:51:24Z",
+      "elapsed_seconds": 738.473,
+      "budget_seconds": 600,
+      "met": false,
+      "film_sha256": "3d9572204f7b0d4a67f2bebfe50b88695adc4fa68a012677f98c7acababf42f9",
+      "spec_sha256": "1f0cf4a966780ebf8d148a031ea0024b93f9368fada90a74ec65f5784caf1f67",
+      "run_id": "34793360848",
+      "stage_events": [
+        {
+          "stage": "preflight",
+          "at": "2026-09-14T00:39:36Z",
+          "run_id": "34793360848"
+        },
+        {
+          "stage": "asr_verify",
+          "at": "2026-09-14T00:41:19Z",
+          "run_id": "34793360848"
+        },
+        {
+          "stage": "render",
+          "at": "2026-09-14T00:45:08Z",
+          "run_id": "34793360848"
+        }
+      ],
+      "render_seconds": 376.473,
+      "pre_render_seconds": 362.0
+    }
+  ],
+  "production_sla": {
+    "version": 2,
+    "pipeline": "interview-clip",
+    "slug": "zverev-shelton-us-open-2026-final-ceremony",
+    "received_at": "2026-09-14T00:57:53Z",
+    "artifact_ready_at": "2026-09-14T01:10:17Z",
+    "elapsed_seconds": 744.693,
+    "budget_seconds": 600,
+    "met": false,
+    "film_sha256": "9575776db896d285f3dee635b115cfb64f246a1c152d4852e3b9f29f4e5af462",
+    "spec_sha256": "1f0cf4a966780ebf8d148a031ea0024b93f9368fada90a74ec65f5784caf1f67",
+    "run_id": "34794335399",
+    "stage_events": [
+      {
+        "stage": "preflight",
+        "at": "2026-09-14T00:58:27Z",
+        "run_id": "34794335399"
+      },
+      {
+        "stage": "asr_verify",
+        "at": "2026-09-14T01:00:09Z",
+        "run_id": "34794335399"
+      },
+      {
+        "stage": "render",
+        "at": "2026-09-14T01:03:59Z",
+        "run_id": "34794335399"
+      }
+    ],
+    "render_seconds": 378.693,
+    "pre_render_seconds": 366.0
+  }
+}
