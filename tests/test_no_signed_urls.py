@@ -114,6 +114,47 @@ def test_仓库里不许留签名URL的凭据部分():
           "整个删掉那个字段的话，下一个人会以为它本来就没有源片。")
 
 
+def test_CI签名扫描的文本产物必须在sparse_checkout中():
+    """签名扫描的 output 文本必须真在 sparse checkout 块里，不能只写在注释里。
+
+    工作树缺文件时，扫描会逐个回退到 ``git show``；部分克隆随后为每个 blob
+    单独联网，**真实 CI 曾因此从约 0.4 秒退化到约 370 秒**。这里只读取实际配置块，
+    避免模式仅残留在说明文字里时测试仍然假绿。
+
+    ⚠️ 这条是 2026-09-15 从 #514 移植过来的（那条 PR 基于历史重写之前的 main，
+    **不能 merge**——合并会把整份旧历史重新挂回 main，所以只把改动重新落一次）。
+    优化本身早就在 main 上了，缺的一直是这道防回退的闸。
+
+    ⚠️ 移植时修掉了原版一个脆弱点：它把 marker 写成十个空格开头的字面量，
+    **ci.yml 改一层缩进这条判据就恒假**（它 assert 的是 `count(marker) == 1`，
+    找不到会红——但改成缩进敏感的写法之后，任何重排都会变成一条要人去改判据的
+    假警报）。现在按 `.strip()` 认那一行，缩进由块内的相对关系决定。
+    """
+    workflow = (ROOT / ".github/workflows/ci.yml").read_text("utf-8")
+    lines = workflow.splitlines()
+    marks = [i for i, l in enumerate(lines) if l.strip() == "sparse-checkout: |"]
+    assert len(marks) == 1, "ci.yml 的 sparse-checkout 块缺失或不唯一"
+
+    start = marks[0]
+    indent = len(lines[start]) - len(lines[start].lstrip())
+    sparse_patterns: set[str] = set()
+    for line in lines[start + 1:]:
+        if not line.strip():
+            continue
+        if len(line) - len(line.lstrip()) <= indent:
+            break
+        sparse_patterns.add(line.strip())
+
+    required = {"/output/**/*.json", "/output/**/*.md", "/output/**/*.txt"}
+    missing = required - sparse_patterns
+    assert not missing, (
+        f"ci sparse-checkout 缺 {sorted(missing)}；签名 URL 扫描会退回逐文件 git show，"
+        "实测能从 0.4 秒退化到 370 秒")
+    assert "!/output/" in sparse_patterns, "必须先排除整个 output，再只批量检出文本产物"
+    assert not ({"/output/", "/output/**", "/output/**/*"} & sparse_patterns), (
+        "不许为提速把整个 output 检出；历史成片和图片会把 CI checkout 撑大")
+
+
 def test_这条判据不许误伤对凭据形状的描述():
     """反向锚点：**这个仓库的注释就是教训的存放处**，里面必然写着当年那些串。
 

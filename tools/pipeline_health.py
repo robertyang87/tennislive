@@ -28,12 +28,12 @@ DEFAULT_WORKFLOWS = (
     "auto-push-interview.yml",
     "auto-push-reel.yml",
     "auto-push-explainer.yml",
-    # 解说片那条线原来整个不在监控里：`explainer.yml` 是它唯一的出片入口，
-    # `knowledge-adhoc.yml` 是全库唯一的**定时产出线**（每日知识，一天一班）——
-    # 它 2026-08-26 之前九天里六天红在同一句「素材预检失败」，而这份报表一个字
-    # 都没说（review 2026-09-03 §2.2）。
+    # 解说片那条线原来整个不在监控里：`explainer.yml` 是它唯一的出片入口。
+    # ⚠️ 这儿原来还有一条 `knowledge-adhoc.yml`（图文知识帖，全库唯一的定时
+    # 产出线）——**那条线 2026-09-15 随瘦身停产、工作流文件删掉了，而这份名单
+    # 没跟着改**，于是监控表一直在点名一个不存在的工作流。删了东西不改它的
+    # 消费者，是这个仓库的老形状。判据 `test_监控名单不许点名不存在的工作流`。
     "explainer.yml",
-    "knowledge-adhoc.yml",
 )
 
 
@@ -91,10 +91,24 @@ def workflow_health(api: GitHubAPI, workflow: str, limit: int,
     durations = [v for row in runs
                  if (v := elapsed(row.get("created_at"), row.get("updated_at"))) is not None]
     conclusions = [str(row.get("conclusion") or "") for row in runs]
-    bad = [c for c in conclusions if c not in {"success", "skipped", "neutral"}]
+    # ⚠️ `cancelled` **不是失败**，而这条报表原来把它当失败算。
+    #
+    # 名单里的 `interview-clip.yml` / `explainer.yml` 都开着
+    # `cancel-in-progress: true`：同一个 slug 重渲一版，旧 run 会被**主动取消**。
+    # 于是一条片子返工三次，报表就报「近 10 次失败率 50%、连续失败 3」——
+    # **一条天天喊狼来了的告警，最后的下场是没人看**，而它要守的那些真失败
+    # 就藏在噪音里（这条来自 #573，2026-09-15 移植；那条 PR 基于历史重写之前的
+    # main，不能 merge，只能把改动重新落一次）。
+    #
+    # ⚠️ 同时把这个集合收成**一处出处**：它原来在这个函数里写了三遍
+    # （bad / streak / latest_failure），而「一个数写两处必分叉」。
+    ok = {"success", "skipped", "neutral"}
+    # 取消既不算成功也不算失败：从失败率、连续失败、最新状态里一并排除。
+    judged = [c for c in conclusions if c != "cancelled"]
+    bad = [c for c in judged if c not in ok]
     streak = 0
-    for conclusion in conclusions:
-        if conclusion in {"success", "skipped", "neutral"}:
+    for conclusion in judged:
+        if conclusion in ok:
             break
         streak += 1
     health = WorkflowHealth(
@@ -104,8 +118,7 @@ def workflow_health(api: GitHubAPI, workflow: str, limit: int,
         consecutive_failures=streak,
         # 是否重复发微信由跨 run 的 active_keys 判断；这里必须保持“仍异常”，
         # 直到一趟成功 run 真正把它恢复，不能按一小时后自动过期。
-        latest_failure=bool(
-            conclusions and conclusions[0] not in {"success", "skipped", "neutral"}),
+        latest_failure=bool(judged and judged[0] not in ok),
     )
     steps: list[dict] = []
     for run in runs[:step_runs]:

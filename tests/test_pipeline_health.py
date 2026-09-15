@@ -33,9 +33,24 @@ def test_health_monitor_covers_every_auto_publish_column():
 
 
 def test_health_monitor_covers_the_explainer_line_and_the_only_cron_producer():
-    """解说片线原来整个不在监控里；`knowledge-adhoc.yml` 是全库唯一的定时
-    产出线，它连红六天（2026-08-26 之前）报表一个字没说。"""
-    assert {"explainer.yml", "knowledge-adhoc.yml"} <= set(DEFAULT_WORKFLOWS)
+    """解说片线原来整个不在监控里——`explainer.yml` 是它唯一的出片入口。
+
+    ⚠️ **这条判据 2026-09-15 收窄了一档，而收窄的过程本身值得记。**
+
+    原文断言 `{"explainer.yml", "knowledge-adhoc.yml"} <= set(DEFAULT_WORKFLOWS)`，
+    理由是「`knowledge-adhoc.yml` 是全库唯一的定时产出线」。那条线随瘦身停产、
+    **工作流文件删掉了**，于是这个前提不成立了。
+
+    ⚠️⚠️ **而它在那次删除时一声都没吭**：它只查「这个名字在不在名单里」，
+    不查「这个文件在不在」——名单和文件同时腐烂，它两头都够不着。于是监控表
+    带着一个指向不存在工作流的条目跑了下去，**拿回来的永远是空，而「空」和
+    「这条线很健康」长得一模一样**。
+
+    所以真正管用的那一半在 `test_监控名单不许点名不存在的工作流`：
+    **按文件存不存在推导，不维护名字白名单**。这条只留它管得住的那件事——
+    解说片那条出片入口不许再从监控里掉出去。
+    """
+    assert "explainer.yml" in DEFAULT_WORKFLOWS
 
 
 def test_stale_publication_is_reported():
@@ -165,3 +180,77 @@ def test_持久故障超过一小时仍是active而不是假恢复():
                          latest_failure=True)
     _report, alerts = render_report([row], [], (0, 0, 0), [])
     assert any("match-reel.yml" in item for item in alerts)
+
+
+def test_取消的run不算失败():
+    """**`cancelled` 不是失败，而这条报表原来把它当失败算。**
+
+    监控名单里的 `interview-clip.yml` / `explainer.yml` 都开着
+    `cancel-in-progress: true`——同一个 slug 重渲一版，旧 run 会被**主动取消**。
+    于是一条片子返工三次，报表就报「近 10 次失败率 50%、连续失败 3」。
+
+    ⚠️ **一条天天喊狼来了的告警，最后的下场是没人看**，而它要守的那些真失败
+    就藏在噪音里。这是从 #573 移植过来的（那条 PR 基于 2026-09-15 历史重写
+    之前的 main，**不能 merge**——合并会把整份旧历史重新挂回 main）。
+    """
+    from tools.pipeline_health import workflow_health  # noqa: PLC0415
+
+    class _FakeApi:
+        def __init__(self, concs):
+            self._concs = concs
+
+        def get(self, path):
+            if "/runs?" in path:
+                return {"workflow_runs": [
+                    {"id": i, "conclusion": c,
+                     "created_at": "2026-09-15T00:00:00Z",
+                     "updated_at": "2026-09-15T00:05:00Z"}
+                    for i, c in enumerate(self._concs)]}
+            return {"jobs": []}
+
+    # 三次返工取消 + 一次成功：一个失败都没有
+    h, _ = workflow_health(_FakeApi(["cancelled", "cancelled", "cancelled", "success"]),
+                           "explainer.yml", limit=10, step_runs=0)
+    assert h.failures == 0, f"取消被当成失败了：failures={h.failures}"
+    assert h.consecutive_failures == 0, (
+        f"取消把连续失败撑起来了：{h.consecutive_failures}——正是 #573 报的那个假警报")
+    assert not h.latest_failure, "最新一条是取消，不该报成仍在失败"
+
+    # ⚠️ 反向那一头：取消**不许遮住**它后面的真失败
+    h2, _ = workflow_health(_FakeApi(["cancelled", "failure", "failure", "success"]),
+                            "explainer.yml", limit=10, step_runs=0)
+    assert h2.failures == 2, f"真失败被一起吞了：failures={h2.failures}"
+    assert h2.consecutive_failures == 2, (
+        f"最新一条是取消就把后面的连续失败清零了：{h2.consecutive_failures}")
+    assert h2.latest_failure, "取消之后紧接着就是真失败，必须仍报异常"
+
+
+def test_监控名单不许点名不存在的工作流():
+    """**删了工作流不改它的消费者**——这个仓库的老形状，2026-09-15 又犯一次。
+
+    `knowledge-adhoc.yml`（图文知识帖，全库唯一的定时产出线）随瘦身停产、
+    工作流文件删掉了，而 `DEFAULT_WORKFLOWS` 还在点名它。监控表点名一个不存在
+    的工作流，**拿回来的永远是空**——而「空」和「这条线很健康」长得一模一样。
+
+    判据**自己推导，不维护白名单**：名单里每一条都必须在 `.github/workflows/`
+    下真的存在。
+    """
+    import pathlib  # noqa: PLC0415
+    import re  # noqa: PLC0415
+
+    src = pathlib.Path("tools/pipeline_health.py").read_text("utf-8")
+    block = re.search(r"DEFAULT_WORKFLOWS = \((.*?)^\)", src, re.S | re.M)
+    assert block, "DEFAULT_WORKFLOWS 找不到了——判据的主语没了"
+    # ⚠️ 只认真正的字符串项，不扫注释：这个仓库的注释正是教训的存放处，
+    # 上面那段就写着被删掉的 `knowledge-adhoc.yml`，连注释一起扫会把
+    # 「把坑记下来」判成「又踩了这个坑」。
+    body = "\n".join(l for l in block.group(1).splitlines()
+                     if not l.lstrip().startswith("#"))
+    listed = re.findall(r'"([^"]+\.yml)"', body)
+    assert len(listed) >= 6, f"只解析出 {len(listed)} 条，判据可能失效了"
+
+    missing = [w for w in listed
+               if not (pathlib.Path(".github/workflows") / w).exists()]
+    assert not missing, (
+        f"监控名单点名了不存在的工作流 {missing}——拿回来的永远是空，"
+        "而「空」和「这条线很健康」长得一模一样")
