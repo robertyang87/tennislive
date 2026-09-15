@@ -157,7 +157,7 @@ Variables：`WECHAT_MODE` = `off`（默认，只生成文件）/ `draft` / `publ
 | ESPN 公开比分接口 | **赛程赛果主源** | 无需鉴权，聚合 ATP/WTA；适合在 Actions 里跑 |
 | flashscore feed | **逐分与赛果交叉源** | 一次请求管两个巡回赛；比赛用时不要只信它（实测偏长过） |
 | WTA / ATP 官方接口 | **排名、签表、技术统计** | WTA `players/ranked`（参数少一个就 400）、ATP 走 protennislive posting |
-| 大满贯官方 feed | **轮次、场地、逐场** | `official_schedule.py` / `official_stats.py`；runner 上通，沙箱恒 403 |
+| 大满贯官方 feed | **轮次、场地** | `tools/slam_feed.py`——编排器 dispatch 之前用它补齐 round/court（flashscore 不给这两个字段）。runner 上通，**沙箱恒 403**，别拿沙箱的结果下结论 |
 | TNNS Live | **统计补源** | 单独一档，不塞进常规链 |
 | SofaScore | 赛程赛果备用 | 数据较全但可能限制数据中心 IP；失败原因进覆盖报告 |
 | Sportradar Tennis v3 | 授权技术统计 | 配了 key 才启用，补总得分、发球、Ace/双误、破发点 |
