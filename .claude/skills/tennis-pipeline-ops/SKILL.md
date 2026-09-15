@@ -3467,6 +3467,57 @@ Anthropic 那条路）。判据 `test_不许改走DeepSeek的Anthropic兼容端�
   `git stash`。**别拿重置类命令当「对齐」用**
 
 
+## ⭐⭐ 2026-08-26 无人值守链整体盘点：四类静默坏，判据都落了
+
+账号所有者要求「完整 review 当前库里的自动化无人值守任务」。9 条定时 + 4 条
+push 触发的链路逐条核过**真实运行记录**（不是只读 YAML），修了四类：
+
+**① 共享 JSON 的 state 推送，`git pull --rebase` 重试是死路。** run #360：
+orchestrate 点完 run 提交 state，push 被拒 → rebase 撞
+`data/orchestration_state.json` 自己的内容冲突（另一方是 match-reel 的失败自愈
+release claim）→ **abort 之后什么都没变，重试五次全撞同一个冲突** → state 丢，
+下一班重复 dispatch。修法是 JSON 级三方合并（`tools/merge_orchestration_state.py`，
+以远端为底、只加 ours−base 的新增），在 FETCH_HEAD 上重建提交。
+⚠️ **不做裸 union**：远端刚 release 的 claim 会被 union 复活，那条失败的
+probe 永远不重试。判据 `test_merge_orchestration_state.py` +
+`test_编排工作流并发锁pipefail和state推送重试`。
+
+**② workflow_dispatch 的 inputs 超过 25 个，整份工作流文件失效。**
+match-reel 就是这么连死 14 趟的：每个 run（含 push 触发的）0 秒 failure，
+run 的 `name` 退化成裸文件路径——**「表单加一个输入」能把这条工作流的所有
+触发一起打死，而且报不出原因**。#606 修的是 match-reel 一个文件；
+`test_所有工作流的dispatch表单都不许超过github的25项硬限制` 把那一类防住
+（自己推导，不维护名单）。
+
+**③ push 重试当时在八个工作流里有四种写法，三种是坏的。** 没 `|| abort` 的
+`pull --rebase`（bash -e 下一失败整步死，或半截 rebase 毒死后续重试）、干脆
+没重试的裸 push（auto-push 链由 push 事件触发，**失败没有任何东西会重触发**，
+撞车一次那条片子就静默不发）。收成 `tools/git_push_retry.sh`（照
+ci_apt_install.sh 的先例），七条链换装；判据 `test_git_push_retry.py`。
+⚠️ 它只管「各写各的文件」的提交；共享 JSON 走 ①，match-reel/interview-clip
+的「重取远端重放修改」循环各有自己的判据，不许换。
+
+**④ 预检失败没有记忆，同样的坏候选每天重试。** knowledge-adhoc 九天里六天
+红在同一句「素材预检失败」——trivia 池的同两条候选天天排最前、天天被同两条
+判据拒掉，每日知识栏目一半天数静默停更。修法：被拒 slug 记进 story_state 的
+`__visual_backoff__`（3 天），候选排序**降到队尾不剔除**（池子空了还轮得到，
+素材修好它自己回来）；⚠️ **失败路径要单独把 state 提交回仓库**——生成步骤
+红了常规提交步整个跳过，记忆只活在 runner 上等于没记。判据
+`test_visual_backoff.py`。
+
+顺带核实过、不用再查的：oncourt-interviews / interview-auto-render /
+reel-auto-ready / official-social-images / pipeline-health / source-health /
+auto-push-* / pages 近期运行全部健康；interview-clip 的 47% 失败率**全是
+发布门禁在正常拦截**（没有废片发出去，按「闸拦下来和真出错分开数」的口径
+不是故障）；orchestrate 长时间不 dispatch 是候选侧真空（集锦没发/已有 spec），
+不是 dispatcher 坏了。
+⚠️ 顺带一个我当场犯的错：给 oncourt-interviews 补 workflow 级并发锁——被
+`test_oncourt_only_serializes_collect_and_commits_cursor_and_claims` 当场打红。
+**它是故意不锁整条 workflow 的**（draft 矩阵的长 ASR 会阻住下一轮扫描），
+共享 JSON 的提交只在 collect job，那儿早有 job 级锁。判据救回了一次
+「按直觉改别人想清楚过的设计」。
+
+
 ### ⭐ 产出慢的账（2026-08-26 深夜量的）：瓶颈是返工轮数，不是渲染速度
 
 账号所有者：「当前产出视频太慢了」。拿链条上三条真实片子拆完：单趟机器时间
@@ -3720,7 +3771,6 @@ rebase 撞上 CLAUDE.md 冲突——别的会话把同一条发布台账的发�
 ⚠️ **改 spec 一个字节就断哈希链，必须重渲**（`auto_push_interview_gate` 比的是字节，
 `_notes` 这种纯注解也算）。所以**两版合并要一次改完**：这一轮我分了两次改，白烧了一趟
 十分钟的 render——第二次改的正是上表最后一行那句被我编理由否掉的 `ask`。
-
 
 
 ### ⭐⭐ 2026-09-01：而「同一栏目内」现在有闸了——自动链会替你把同一场球再做一遍

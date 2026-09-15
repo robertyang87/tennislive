@@ -32,6 +32,11 @@
 别凭记忆写。** 标题和子目录原样留在原位，所以这份文件同时是一张「什么内容在哪儿」
 的索引，`docs/` 里指向本文章节的指针照旧指得到。
 
+指针的写法是 **`📖 <skill 名> · 正文 N 行`**，仅此一种。⚠️ 这句话上面说过一次，
+就**不在每条指针后面再重复一遍**——原来那 163 条各自带着一句「做这类工作前先用
+Skill 工具加载它。以下是子目录，正文在 skill 里」，同一句话在一份**每次全量注入**
+的文件里印了 163 遍，本身就是这份文件反对的那件事。
+
 ⚠️ **别把档案搬回来，也别改用 `@import`**：`@path` 那条路**一个 token 都不省**
 （导入是在 session 启动时递归展开、全量注入的）。**skills 是唯一真按需加载的机制**
 ——平时只有 `description` 进上下文（七个加起来约 1k），正文只在被调用时才加载。
@@ -145,15 +150,13 @@ dry-run 自己那句话——**只要它报了「第 [N] 段落在估算的误�
 
 ### ⚠️⚠️ 2026-09-03：而这一轮最后是**撤稿收场**——同一场球被并发做了两遍
 
-📖 **正文（97 行）搬进 `.claude/skills/tennis-pipeline-ops/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是子目录，正文在 skill 里。
+📖 **tennis-pipeline-ops** · 正文 97 行
 
-### ⚠️⚠️ 2026-09-03：而这一轮最后是**撤稿收场**——同一场球被并发做了两遍
 ##### ⚠️⚠️ 同一次撞车的第三层账：解冲突时「合并重复段落」，**静默删掉了 121 行**
 ### ⭐⭐ 2026-09-12 撞车的第四种形状：**同一条 spec 被两个会话各改了一遍，而且两边各有对的**
 
-📖 **正文（41 行）搬进 `.claude/skills/tennis-pipeline-ops/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是子目录，正文在 skill 里。
+📖 **tennis-pipeline-ops** · 正文 41 行
 
-### ⭐⭐ 2026-09-12 撞车的第四种形状：**同一条 spec 被两个会话各改了一遍，而且两边各有对的**
 ## ⭐ 校验要按改动的风险分级，不要默认拉满——赛果视频尤其要快
 
 账号所有者 2026-08-21：「我期望的是保证质量的前提下，不要过度设计和校验。
@@ -183,9 +186,8 @@ dry-run 自己那句话——**只要它报了「第 [N] 段落在估算的误�
 
 ### 顺手发现的无关问题：记下来，别在时效任务里展开修
 
-📖 **正文（15 行）搬进 `.claude/skills/tennis-dev-practices/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是子目录，正文在 skill 里。
+📖 **tennis-dev-practices** · 正文 15 行
 
-### 顺手发现的无关问题：记下来，别在时效任务里展开修
 ### 赛果视频有时效性，默认走"产物自证"的快路径，别习惯性地加码
 
 已经建好的三级校验本身就是这条线上最便宜的组合，**按顺序走完就够，不要额外
@@ -201,9 +203,8 @@ dry-run 自己那句话——**只要它报了「第 [N] 段落在估算的误�
 
 ### 哑场那道闸：拿真实产物判，别在离线估阶段死磕
 
-📖 **正文（20 行）搬进 `.claude/skills/tennis-video-craft/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是子目录，正文在 skill 里。
+📖 **tennis-video-craft** · 正文 20 行
 
-### 哑场那道闸：拿真实产物判，别在离线估阶段死磕
 ## 片子做完就合并、就推微信，不要再问一遍
 
 账号所有者 2026-08-04 的原话：「**以后都不要问，直接 merge 完就推微信啊**」。
@@ -290,30 +291,16 @@ dry-run 自己那句话——**只要它报了「第 [N] 段落在估算的误�
 
 ### ⭐⭐ 2026-09-01：而「同一栏目内」现在有闸了——自动链会替你把同一场球再做一遍
 
-📖 **正文（40 行）搬进 `.claude/skills/tennis-pipeline-ops/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是子目录，正文在 skill 里。
+📖 **tennis-pipeline-ops** · 正文 40 行
 
-### ⭐⭐ 2026-09-01：而「同一栏目内」现在有闸了——自动链会替你把同一场球再做一遍
 ### ⚠️ 上面这两个 slug 都是解说片——有一条同名的 reel，别混
 
-2026-08-13 核出来的：`shang-rublev` 是**两条片子**，同名不同栏目、讲的还不是
-同一场球。实跑 `explainer_column()` 量的，不是推的：
-
-| 哪一条 | 栏目 | 讲哪场 |
-|---|---|---|
-| `_SCRIPTS["shang-rublev"]`（解说片） | **开球之前** | 8/2 胜巴列霍 6-3 6-3 ＋ 前瞻卢布列夫 |
-| `specs/reels/shang-rublev.json` | **赛场之上** | 8/5 胜卢布列夫 7-5 4-6 7-6(5) |
-
-`shang-nishikori` 也是解说片，也是「开球之前」——所以上面那句话点的是
-**解说片内部的同栏目一对**，跟 reel 那条无关。⚠️ **按 slug 认领规矩、产物或
-豁免，在这条上会静默认错人**（本文件里「voice 文件按序号认领」「render.json
-按序号认领」是同一个形状，都是认领的钥匙不唯一）。reel 那条要找同栏目的邻居，
-看的是 `nishikori-shang`，不是 `shang-nishikori`。
+📖 **tennis-editorial** · 正文 13 行
 
 ### ⚠️ 2026-08-05 账号所有者收窄了这条的读法——是划边界，不是撤销
 
-📖 **正文（21 行）搬进 `.claude/skills/tennis-editorial/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是子目录，正文在 skill 里。
+📖 **tennis-editorial** · 正文 21 行
 
-### ⚠️ 2026-08-05 账号所有者收窄了这条的读法——是划边界，不是撤销
 ## 后台任务：开了就要关
 
 等 GitHub Actions 出结果时会开后台轮询任务。**拿到结果或改变思路后，立刻 `TaskStop` 关掉。**
@@ -322,9 +309,8 @@ dry-run 自己那句话——**只要它报了「第 [N] 段落在估算的误�
 
 ### ⚠️ `until ! pgrep -f 'X'` 会匹配到它自己，于是永远退不出
 
-📖 **正文（30 行）搬进 `.claude/skills/tennis-dev-practices/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是子目录，正文在 skill 里。
+📖 **tennis-dev-practices** · 正文 30 行
 
-### ⚠️ `until ! pgrep -f 'X'` 会匹配到它自己，于是永远退不出
 ## 上下文会满，满之前自己压
 
 账号所有者：「上下文满的时候，自己压缩一下……不然信息会丢失，而且你会做得很慢。」
@@ -381,68 +367,22 @@ spec 才没丢——但它后来过时了，所以**写进去还要记得改**�
 
 #### ⚠️ shell 的 cwd 跨调用留着，而 `git ls-files` 在子目录里只列该目录
 
-2026-09-03 拉 probe 产物时栽的，**四轮命令全在「修」一个不存在的问题**：
-
-    git ls-files | wc -l         →  12
-    git cat-file -p HEAD^{tree}  →  完整的仓库（specs/ src/ tests/ 都在）
-    git status --short           →  干净
-
-据此判定 **index 坏了**，然后一路加码：`git reset --hard HEAD` 没用 →
-`git sparse-checkout disable` 没用 → `git read-tree --reset -u HEAD` 还是没用，
-差一点去重新 clone。
-
-真相是 **shell 的当前目录在几步之前漂到了产物子目录**（Bash 工具的 cwd
-跨调用持久化，而前面某条 `cd output/… && …` 成功了）。`git ls-files`
-**在子目录里默认只列该目录下的文件**——那 12 条正是那个目录里的 12 个产物。
-index 从头到尾是好的。
-
-- **判据是 `pwd`，一秒钟。** 「ls-files 12 条」和「index 坏了」长得一模一样，
-  而 `pwd` / `git rev-parse --show-toplevel` 一比就露馅
-- ⚠️ **同一个漂移还把相对路径写歪了**：`git show HEAD:output/<date>/<slug>/x`
-  重定向到 `output/<date>/<slug>/x`，实际落在
-  `output/<date>/<slug>/output/<date>/<slug>/x`——一个嵌套的假目录，
-  而 `git status` 只报一句 `?? output/`，读起来像「产物还没提交」
-- **这就是上一条的同族**：两个数对不上（HEAD 树完整、ls-files 只有 12）说明
-  **探测错了，不是数据坏了**——而我先动手去修数据，还越修越重。
-  重置类命令（`reset --hard` / `read-tree --reset -u` / `checkout -B`）
-  **在诊断没落地之前一条都不该发**，本文件为它们单独记过一节
-- 往后跨目录操作**要么用绝对路径，要么每条命令自己带
-  `cd /home/user/tennislive &&`**
+📖 **tennis-dev-practices** · 正文 27 行
 
 #### ⚠️ 同族第三个：`grep -nE` 只打印匹配的行——**被滤掉的那两行正是答案**
 
-2026-09-04 `wu-alcaraz-us-open-2026-r3` 差点把 H2H 写成「首次交手」。我在 flashscore 的
-`df_hh_1` 上跑
-
-    grep -nE '^K[AB]÷' hh.txt
-    → 105:KB÷Head-to-head matches
-      108:KA÷Clay
-
-105 和 108 挨在一起，据此判定这一段是空的。**而 106、107 两行是 `KC÷` 开头的真交手条目，
-被我的模式滤掉了**——grep 只打印匹配的行，中间隔了几行它一个字都不说。
-
-⚠️ **「扫得太窄」和「真的没有」在 grep 输出上长得一模一样**，而这次连行号都在骗人：
-105 和 108 中间明明差 3，我读成了「相邻」。
-
-**救回它的还是「两个数打架」**：`match_stat_hooks` 同一趟报
-`Wu Y. 0 : 2 Alcaraz C.（含本场）`，和我的「首次交手」正面冲突。真交手记录是
-2024-10-06 上海大师赛，阿尔卡拉斯 7-6(5) 6-3——**那一场吴易昺把首盘拖进了抢七**，
-比「首次交手」这个假事实好用得多。
-
-**判据：扫一段结构化 feed，先 `sed -n '105,110p'` 把那一段整个打出来**，别拿一个只认
-两三种前缀的正则去问「这一段有没有东西」。⚠️ 这跟本文件里「非空 ≠ 对题」是反的那一面
-——那条说的是收到东西不等于对题，这条说的是**收不到不等于没有，可能只是我的筛子太密**。
+📖 **tennis-dev-practices** · 正文 21 行
 
 ### ⭐ 源有三类，查空一类不等于查空全部
 
-📖 **正文（154 行）搬进 `.claude/skills/tennis-media-sources/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-media-sources** · 正文 154 行
 
 #### ⭐⭐ ESPN 的**正文**取得到——文章页是 JS 壳，真入口是它自己的新闻接口
 #### ⚠️ 比赛用时**不要只信 flashscore**——2026-08-15 一天里它错了两场，方向都是偏长
 #### ⭐ 2026-08-14 修正：上面那句「flashscore 没有 UE/Winner」**范围写宽了**
 ### ⭐⭐ 2026-08-16：这张表少了一行，而那一行有——**TNNS Live**
 
-📖 **正文（346 行）搬进 `.claude/skills/tennis-media-sources/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-media-sources** · 正文 346 行
 
 ##### ⭐⭐ 2026-08-15 再修正一次：**它根本不按巡回赛分，是一场一场的**
 ##### ⭐ `stats.a` 跟的是 `cover.matchup[0]`，**不是 feed 的 home/away**——填反了那张图会把赢家印成输家
@@ -640,9 +580,8 @@ CLAUDE.md，省下一次重查；那是它该待的地方。（`wawrinka-wildcar
 
 ### ⚠️⚠️ 2026-09-03 它又被违反了一次——而挡住我的不是「要不要发」，是**会话级的分支策略被读宽了**
 
-📖 **正文（33 行）搬进 `.claude/skills/tennis-pipeline-ops/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是子目录，正文在 skill 里。
+📖 **tennis-pipeline-ops** · 正文 33 行
 
-### ⚠️⚠️ 2026-09-03 它又被违反了一次——而挡住我的不是「要不要发」，是**会话级的分支策略被读宽了**
 ## 出了问题当场解决，别等人来问
 
 账号所有者 2026-08-02：「**以后出了问题去解决不要等**」。
@@ -666,9 +605,8 @@ CLAUDE.md，省下一次重查；那是它该待的地方。（`wawrinka-wildcar
 
 ### ⚠️ 0 秒的 failure ＋ 工作流名显示成文件路径 ＝ **这个 yml 本身无效**
 
-📖 **正文（36 行）搬进 `.claude/skills/tennis-pipeline-ops/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是子目录，正文在 skill 里。
+📖 **tennis-pipeline-ops** · 正文 36 行
 
-### ⚠️ 0 秒的 failure ＋ 工作流名显示成文件路径 ＝ **这个 yml 本身无效**
 ## ⭐ 封面选图和文案：**贴近比赛事实，且有吸引力**
 
 账号所有者 2026-08-05，紧接着「以后都不用让我看」那句给的：
@@ -711,9 +649,8 @@ CLAUDE.md，省下一次重查；那是它该待的地方。（`wawrinka-wildcar
 
 ### 二、有吸引力：**钩子要有剧情的跌宕，不是把两个身份摆在一起**
 
-📖 **正文（192 行）搬进 `.claude/skills/tennis-editorial/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是子目录，正文在 skill 里。
+📖 **tennis-editorial** · 正文 192 行
 
-### 二、有吸引力：**钩子要有剧情的跌宕，不是把两个身份摆在一起**
 #### ⭐⭐ 2026-08-31 收窄一层：钩子讲的过程要是**整场**的，不是某一个时刻
 #### ⭐ 而**每行几个字**是量得出来的：solo 封面的钩子，每行 ≤ 10 个字符
 ##### ⭐ 2026-08-31 补上另一半：**行数**也有硬上限，solo 最多两行
@@ -722,17 +659,15 @@ CLAUDE.md，省下一次重查；那是它该待的地方。（`wawrinka-wildcar
 ##### ⚠️ 而同一天早些时候，我拿数据把这条否掉过一次
 ### 三、选图：判据是**情绪对不对题**，不是大头行不行
 
-📖 **正文（126 行）搬进 `.claude/skills/tennis-cover-photos/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是子目录，正文在 skill 里。
+📖 **tennis-cover-photos** · 正文 126 行
 
-### 三、选图：判据是**情绪对不对题**，不是大头行不行
 #### ⭐⭐ 2026-08-18：而在「情绪对题」之内，**优先近景特写**
 #### ⭐ 封面标题带着指控时，**放谁的脸就是在指认谁**
 #### ⭐ 候选之间怎么排：近景特写、情绪外露的那张优先
 ### 四、标题要通顺：一句只留一层铺垫，别把代词插进原本连读的节奏里
 
-📖 **正文（36 行）搬进 `.claude/skills/tennis-editorial/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是子目录，正文在 skill 里。
+📖 **tennis-editorial** · 正文 36 行
 
-### 四、标题要通顺：一句只留一层铺垫，别把代词插进原本连读的节奏里
 ## ⭐ 渲完 → 质检 → **直接推微信**，不要停下来等他看
 
 账号所有者 2026-08-05，两句话隔了一小时，**后一句改掉了前一句**：
@@ -773,7 +708,7 @@ CLAUDE.md，省下一次重查；那是它该待的地方。（`wawrinka-wildcar
 
 ### ⭐ 采访线：`push.auto` 要写在**渲之前**，补一行就得重渲一趟
 
-📖 **正文（200 行）搬进 `.claude/skills/tennis-pipeline-ops/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-pipeline-ops** · 正文 200 行
 
 #### ⭐ 而链子里**只有 spec 和 poster.jpg**——`.xhs.txt` 不在，改文案不用重渲
 #### ⚠️⚠️ 2026-09-06：**竖版短片那条线有同一条哈希链，而它只写在采访线名下**
@@ -783,15 +718,13 @@ CLAUDE.md，省下一次重查；那是它该待的地方。（`wawrinka-wildcar
 ###### ⚠️ 同一族的缺口顺手量了三个，只有一个是真的——而它早就记着了
 ### ⭐⭐ 2026-09-03 做发布会撞出来的四件事
 
-📖 **正文（83 行）搬进 `.claude/skills/tennis-video-craft/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是子目录，正文在 skill 里。
+📖 **tennis-video-craft** · 正文 83 行
 
-### ⭐⭐ 2026-09-03 做发布会撞出来的四件事
 ##### ⭐ 2026-09-06 第六种：`broadcaster_interview`（赛后转播商专访）——同一个形状，而它多一条风险
 ### ⚠️ `mode=push` 不发微信——还要 `push=true`，只拨一个 run 照样绿
 
-📖 **正文（26 行）搬进 `.claude/skills/tennis-pipeline-ops/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是子目录，正文在 skill 里。
+📖 **tennis-pipeline-ops** · 正文 26 行
 
-### ⚠️ `mode=push` 不发微信——还要 `push=true`，只拨一个 run 照样绿
 ## 「做完了」要查产物，不要查信号
 
 判断一次 Actions 生成有没有真的落地，一晚上错了三次，全是拿间接信号当结论：
@@ -816,33 +749,11 @@ CLAUDE.md，省下一次重查；那是它该待的地方。（`wawrinka-wildcar
 
 #### 三个当场骗过我的变种（2026-08-06 同一条片子上）
 
-**① 「三个变体的文件大小完全相同」＝ 根本没重渲。** 本地比封面 `focus` 三档时，
-我循环里渲完就 `cp poster.jpg`——而 `render_cover_local.py` 写的是
-**`poster_local.jpg`**，`poster.jpg` 是 runner 那趟留下的旧文件。三次复制到的
-是同一个文件，字节数一模一样（273921）。**判据不是「命令跑完了」，是「产物变了没有」**
-——三个数一样就该立刻停下来查，而不是打开图去比「哪版好看」。
-
-**② `list_workflow_runs` 按 `status` 过滤会撞 queued→in_progress 的空档。**
-刚 dispatch 完查 `status=queued` 和 `status=in_progress` **都返回 0**，看起来像
-「没跑起来」。不带过滤查才看见它在 `in_progress`。⚠️ 这跟「204 是信号，运行记录
-才是产物」是一家的，但**处置相反**：「查不到」不许当成「没跑起来」去重发——
-`concurrency` 按 slug 分组且 `cancel-in-progress`，重发会把正在跑的那趟掐掉。
-
-**③ 一条命令报了错，后面两条却都「成功」了。** 同步分支时
-`git rebase origin/main` 报 `Could not apply ...`，而紧跟着的 `git log` 和
-`git push` 都返回 0——看起来像已经对齐了。真查：`.git/rebase-merge` 还在，
-两个 spec 文件挂着 `AA` 冲突。**同一轮里两个信号打架时，一律去查状态本身**
-（`git status` / `test -d .git/rebase-merge`），别拿后一条命令的退出码去追认前一条。
-
-**「已推送」要等第 12 步返回，不是触发的时候说。** 触发只是把 run 排进队列——合成旁白、
-渲卡、ffmpeg 拼片要跑六分钟，PushPlus 是**最后一步**。有一次我在触发的同时说「推送已发出」，
-对方在这六分钟里一直等一条还没发出的消息，回了句「没有收到」。日志上的时间线一清二楚：
-`06:31:10` 触发 → `06:36:49` 成片 → `06:37:14` PushPlus 返回 200。
-**触发成功是信号，第 12 步的 success 才是产物**，又是同一个毛病。
+📖 **tennis-dev-practices** · 正文 23 行
 
 ### ⚠️ 反过来的那一面：**job 状态接口会滞后好几分钟，而滞后长得像「还在跑」**
 
-📖 **正文（290 行）搬进 `.claude/skills/tennis-pipeline-ops/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-pipeline-ops** · 正文 290 行
 
 #### ⚠️⚠️ 2026-09-02：上面这句在**采访线**上不成立——那条线记两笔，第一笔在 POST **之前**
 ##### ⚠️⚠️ 2026-09-14 修正：解说片那一行也不够——**账本在，状态却是 `rejected`**
@@ -852,7 +763,7 @@ CLAUDE.md，省下一次重查；那是它该待的地方。（`wawrinka-wildcar
 ##### ⚠️⚠️ 而第一版只改了两处中的一处，补发那一趟白发——**钉 sha 有两个实现**
 ### 第六次：等待窗口结构性地短于 Pages 的发布时间
 
-📖 **正文（190 行）搬进 `.claude/skills/tennis-pipeline-ops/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-pipeline-ops** · 正文 190 行
 
 #### 第七次：换成 Actions 部署之后，触发器对唯一重要的那条路径是空的
 ##### ⚠️ 204 是信号，运行记录才是产物
@@ -862,7 +773,7 @@ CLAUDE.md，省下一次重查；那是它该待的地方。（`wawrinka-wildcar
 ##### ⚠️ 那条「自己推导不维护白名单」的测试，是伪装成推导的白名单
 ### 第五次，是「等」和「重来」：复制页排在渲染之后，推送要重渲一遍
 
-📖 **正文（359 行）搬进 `.claude/skills/tennis-pipeline-ops/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-pipeline-ops** · 正文 359 行
 
 #### 合进 main 就自动发：`push.auto`（2026-08-02）
 #### ⚠️ `versus.names` 是版式顺序，不是赛果顺序——我照着它拼标题，赛果说反了
@@ -876,124 +787,124 @@ CLAUDE.md，省下一次重查；那是它该待的地方。（`wawrinka-wildcar
 #### 成片链接从来没有被校验过——而它是这条推送的全部
 ### 同一条源片会被下两到三次——一半的 render 时间花在重下上
 
-📖 **正文（75 行）搬进 `.claude/skills/tennis-pipeline-ops/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-pipeline-ops** · 正文 75 行
 
 #### ⚠️ `~` 不展开：两趟绿的 run，一个字节都没缓存
 #### ⚠️ 我写的这条注释当场打红了六条测试
 ### checkout 拉 1.36 GB 是全仓库的问题，不是这一条线的
 
-📖 **正文（33 行）搬进 `.claude/skills/tennis-pipeline-ops/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-pipeline-ops** · 正文 33 行
 
 ### 定时的频次要从产出倒推，别从「越勤越好」倒推
 
-📖 **正文（52 行）搬进 `.claude/skills/tennis-pipeline-ops/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-pipeline-ops** · 正文 52 行
 
 #### 2026-08-02：内容雷达和场外/选题雷达的定时都停了
 ### 昨日一分整条拿掉（2026-07-31）——先查根因再决定
 
-📖 **正文（33 行）搬进 `.claude/skills/tennis-pipeline-ops/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-pipeline-ops** · 正文 33 行
 
 ### `tennislive digest` 删了；覆盖率报告抽成自己的命令
 
-📖 **正文（14 行）搬进 `.claude/skills/tennis-pipeline-ops/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-pipeline-ops** · 正文 14 行
 
 ### 删历史产物也要按栏目分——我差点报错一个数量级
 
-📖 **正文（31 行）搬进 `.claude/skills/tennis-pipeline-ops/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-pipeline-ops** · 正文 31 行
 
 ### ⭐ 2026-08-13 的历史清理：`output/` 下的 mp4 和图片从**全史**抹掉
 
-📖 **正文（31 行）搬进 `.claude/skills/tennis-pipeline-ops/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-pipeline-ops** · 正文 31 行
 
 ### 「是不是这一版」那道闸恒真了一个月——因为判据喂的是假产物
 
-📖 **正文（31 行）搬进 `.claude/skills/tennis-pipeline-ops/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-pipeline-ops** · 正文 31 行
 
 ### ⭐ ESPN 也会倒——`fetch_day` 只挂了两个源，两个同时被拉黑就彻底没数据
 
-📖 **正文（36 行）搬进 `.claude/skills/tennis-media-sources/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-media-sources** · 正文 36 行
 
 ### ⭐ 上面那条"ATP 没有免费可达的候选"是查早了——flashscore 一次请求管两个巡回赛
 
-📖 **正文（51 行）搬进 `.claude/skills/tennis-media-sources/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-media-sources** · 正文 51 行
 
 ### ⭐ TNNS 接进来了——但是单独一档，不是塞进常规链
 
-📖 **正文（53 行）搬进 `.claude/skills/tennis-media-sources/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-media-sources** · 正文 53 行
 
 #### `probe_tnns.py` 迭代出的三个通用发现，比 TNNS 本身更值钱
 #### `sid` 是巡回赛，不是常量——靠交叉女子球员姓名验出来的
 ### 查询留着，卡片图和推送不留
 
-📖 **正文（28 行）搬进 `.claude/skills/tennis-pipeline-ops/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-pipeline-ops** · 正文 28 行
 
 ### 停一条线要**按产品分**，不是按工作流分
 
-📖 **正文（34 行）搬进 `.claude/skills/tennis-pipeline-ops/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-pipeline-ops** · 正文 34 行
 
 ### ⚠️ 反向验证救回一条恒真的断言
 
-📖 **正文（14 行）搬进 `.claude/skills/tennis-dev-practices/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-dev-practices** · 正文 14 行
 
 ### 日报停产了（2026-07-31）：`daily.yml` 整个删掉
 
-📖 **正文（39 行）搬进 `.claude/skills/tennis-pipeline-ops/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-pipeline-ops** · 正文 39 行
 
 ### 全仓库都改成稀疏检出：两个写法，一个静默陷阱
 
-📖 **正文（47 行）搬进 `.claude/skills/tennis-pipeline-ops/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-pipeline-ops** · 正文 47 行
 
 ### 冠名商在前的赛事名：级别表又漏了两站
 
-📖 **正文（29 行）搬进 `.claude/skills/tennis-pipeline-ops/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-pipeline-ops** · 正文 29 行
 
 ### 判据扫得太宽，一天之内犯了四次——三次是被自己的注释误伤
 
-📖 **正文（16 行）搬进 `.claude/skills/tennis-dev-practices/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-dev-practices** · 正文 16 行
 
 ### ⚠️ rebase 之后要重跑全量——你跑过的那棵树不是你要推的那棵树
 
-📖 **正文（22 行）搬进 `.claude/skills/tennis-dev-practices/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-dev-practices** · 正文 22 行
 
 ### ⭐ 两个 worktree 同时持有一个分支：在另一个里 rebase，主工作区凭空长出一大片删除
 
-📖 **正文（38 行）搬进 `.claude/skills/tennis-pipeline-ops/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-pipeline-ops** · 正文 38 行
 
 ### 测试自己也吃「本地装着不等于 CI 装着」
 
-📖 **正文（17 行）搬进 `.claude/skills/tennis-dev-practices/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-dev-practices** · 正文 17 行
 
 ### 别的线上没有「双份编码」和「重渲一遍」
 
-📖 **正文（12 行）搬进 `.claude/skills/tennis-pipeline-ops/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-pipeline-ops** · 正文 12 行
 
 ### 中间产物要花的是比特，不是时间
 
-📖 **正文（26 行）搬进 `.claude/skills/tennis-pipeline-ops/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-pipeline-ops** · 正文 26 行
 
 ### 多轮重渲时，微信里的海报还是第一版——而且不吭声
 
-📖 **正文（16 行）搬进 `.claude/skills/tennis-pipeline-ops/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-pipeline-ops** · 正文 16 行
 
 ### 段落写过源片末尾：ffmpeg 退出码 0，只会悄悄出一段短的
 
-📖 **正文（12 行）搬进 `.claude/skills/tennis-pipeline-ops/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-pipeline-ops** · 正文 12 行
 
 ### TTS 和旁白超长那道闸，挪到编码之前
 
-📖 **正文（11 行）搬进 `.claude/skills/tennis-pipeline-ops/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-pipeline-ops** · 正文 11 行
 
 ### ⚠️「一次成功率」要把「闸拦下来」和「真出错」分开数
 
-📖 **正文（23 行）搬进 `.claude/skills/tennis-dev-practices/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-dev-practices** · 正文 23 行
 
 ### ⭐⭐ 2026-08-16：「能不能多线程」——能，但**能并行的和不能并行的要分清**
 
-📖 **正文（47 行）搬进 `.claude/skills/tennis-pipeline-ops/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-pipeline-ops** · 正文 47 行
 
 ### ⭐ 一条片子为什么要一个半小时——**慢的不是 run，是趟数**
 
-📖 **正文（180 行）搬进 `.claude/skills/tennis-pipeline-ops/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-pipeline-ops** · 正文 180 行
 
 #### 为什么封面非上 runner 不可——只有一个原因，而且已经拆掉了
 #### 旁白检查同样不必上 runner——「edge-tts 同理」那半句是推出来的
@@ -1004,7 +915,7 @@ CLAUDE.md，省下一次重查；那是它该待的地方。（`wawrinka-wildcar
 ##### ⭐ 全量测试要排在 `mode=render` **之前**，不是和它并行
 ### ⚠️ 渲之前**仍然看不见**的，就这几样——别拿本地那几条当渲完了
 
-📖 **正文（180 行）搬进 `.claude/skills/tennis-pipeline-ops/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-pipeline-ops** · 正文 180 行
 
 #### 后半段：成片渲完到微信还有 21 分钟，CI 卡在每次合并前面
 ##### ⭐ 2026-08-14：这一步的耗时**主要不由代码决定**，别拿它去追一个不存在的回归
@@ -1014,13 +925,13 @@ CLAUDE.md，省下一次重查；那是它该待的地方。（`wawrinka-wildcar
 ##### ⚠️ 而这次卡住暴露了更要命的一条：`--with-deps` 也跑 apt，却没人管它
 ### ⚠️⚠️ apt 镜像抽风，最终解法不是重试，是别碰它——`tools/ci_apt_install.sh`
 
-📖 **正文（157 行）搬进 `.claude/skills/tennis-pipeline-ops/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-pipeline-ops** · 正文 157 行
 
 #### ⭐⭐ 2026-08-29 第四次变体：**`source` 了共享脚本，却没调 `ensure_ffmpeg`**
 ##### ⭐⭐ 补上 ffmpeg 之后，**同一条路上排队的第二个坑立刻露出来了**
 ### ⭐ 选段的机械判据早就算好并落库了，只是没人在写 spec 的时候用
 
-📖 **正文（285 行）搬进 `.claude/skills/tennis-pipeline-ops/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-pipeline-ops** · 正文 285 行
 
 #### ⚠️ 我本来做成了硬闸，是数据把它否掉的
 ##### ⚠️ 而这条唯一的硬闸，当时在两处各写了一遍——两处算的不是同一件事
@@ -1034,7 +945,7 @@ CLAUDE.md，省下一次重查；那是它该待的地方。（`wawrinka-wildcar
 #### ⭐⭐ 2026-08-25：**过了一千格，整墙的顺序是乱的**——而每一格烧的秒数还是真的
 ### 返工比慢更贵：把「渲到一半才发现」变成「第 5 秒报错」
 
-📖 **正文（159 行）搬进 `.claude/skills/tennis-pipeline-ops/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-pipeline-ops** · 正文 159 行
 
 #### ⚠️ 而这两个开关落地当天就够不着了——工作流的 `mode` 没跟着改
 #### 渲完的成片会因为清理那一步失败而整趟丢掉
@@ -1042,29 +953,29 @@ CLAUDE.md，省下一次重查；那是它该待的地方。（`wawrinka-wildcar
 #### ⭐⭐ 而这条线的耗时报表，结构上只统计得到成功那一半——所以它永远是绿的
 ### 能并行的是安装，不是编码——x264 已经吃满四核
 
-📖 **正文（28 行）搬进 `.claude/skills/tennis-pipeline-ops/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-pipeline-ops** · 正文 28 行
 
 ### 单趟 filter_complex：算了一遍，省 9%，不值得拿结构换
 
-📖 **正文（19 行）搬进 `.claude/skills/tennis-pipeline-ops/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-pipeline-ops** · 正文 19 行
 
 ### 60 fps 那条：算了一遍，不值得换
 
-📖 **正文（40 行）搬进 `.claude/skills/tennis-pipeline-ops/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-pipeline-ops** · 正文 40 行
 
 #### ⚠️ 2026-08-21 账号所有者的 f7b2501（「把渲染稳定压到 10 分钟内」）把这条路重新走了一遍——不是没看过上面这段，是权衡的东西变了
 ### 哑场闸软化成提示，同一次提交、同一个理由
 
-📖 **正文（20 行）搬进 `.claude/skills/tennis-pipeline-ops/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-pipeline-ops** · 正文 20 行
 
 ### 反向验证之后要清 `__pycache__`，还原可能是隐形的
 
-📖 **正文（41 行）搬进 `.claude/skills/tennis-dev-practices/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-dev-practices** · 正文 41 行
 
 #### ⚠️ 更阴的一种：连着做两次反向验证，它们会互相遮蔽
 ### 20 MB 不是硬指标，别拿画质去换
 
-📖 **正文（300 行）搬进 `.claude/skills/tennis-pipeline-ops/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-pipeline-ops** · 正文 300 行
 
 #### ⚠️ crf 不许动，preset 是另一件事——2026-08-14 按实测从 `slow` 换成 `medium`
 #### 100 MiB 是 git 的限制，不是内容的限制——超了换一条路，别砍片长
@@ -1073,18 +984,18 @@ CLAUDE.md，省下一次重查；那是它该待的地方。（`wawrinka-wildcar
 #### ⭐⭐ 第三个根子，在**封面**上：一层为「居中的那一问」垫的椭圆，而那一问早搬走了
 ### ⚠️ 微信推送卡底部那颗红按钮：**不要动它**
 
-📖 **正文（36 行）搬进 `.claude/skills/tennis-pipeline-ops/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-pipeline-ops** · 正文 36 行
 
 ### CDN 主机名一个地方定，判据别按 `cdn.` 写死
 
-📖 **正文（92 行）搬进 `.claude/skills/tennis-pipeline-ops/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-pipeline-ops** · 正文 92 行
 
 #### ⭐⭐ 2026-09-05：**两个按钮都指着 GitHub 的域名，而他在国内**——「文案打不开，视频也下不下来」
 ##### ⚠️⚠️ 而这一类失败，那道现成的闸**结构性地探不到**
 ##### ⭐ 落成动作：**渲完在对话里发一份审片版**（账号所有者 2026-09-05 选的）
 ### ~~`PUSHPLUS_SECRET_KEY` 配着，代价是**图片 30 天后删**——账号所有者认领过~~
 
-📖 **正文（131 行）搬进 `.claude/skills/tennis-pipeline-ops/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-pipeline-ops** · 正文 131 行
 
 #### ⚠️ 而那句告警自己站错了位置：配了 key 就喊，不管图有没有真传上去
 ## ⭐ 赛后开麦：提炼一直在写，只是写在了平台看不见的地方
@@ -1141,46 +1052,40 @@ spec 里另写一个数。合不出语音退回字数估，**但要说一声**�
 
 ### ⭐ WTA 集锦带不带场上采访，看**时长**就知道——310 秒是定长的纯集锦
 
-📖 **正文（84 行）搬进 `.claude/skills/tennis-media-sources/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-media-sources** · 正文 84 行
 
 #### ⭐⭐ 2026-08-16：这条判据**不只对 WTA 成立**，只是每个频道的基线不一样
 ##### ⭐ Tennis TV 还有第二条路：标题里带 🎙️ 的就是**独立**采访
 ### ⭐⭐ 赛后采访片**从比赛结束那一刻开头**，不从第一个问题开头
 
-📖 **正文（68 行）搬进 `.claude/skills/tennis-video-craft/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是子目录，正文在 skill 里。
+📖 **tennis-video-craft** · 正文 68 行
 
-### ⭐⭐ 赛后采访片**从比赛结束那一刻开头**，不从第一个问题开头
 ##### ⚠️ 这个上界一开始按**一条片子**定成 30，紧接着的下一条就咬人
 ### ⭐ 封面顶栏：抄 CSS 要连它**依赖的前提**一起抄
 
-📖 **正文（52 行）搬进 `.claude/skills/tennis-poster-layout/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是子目录，正文在 skill 里。
+📖 **tennis-poster-layout** · 正文 52 行
 
-### ⭐ 封面顶栏：抄 CSS 要连它**依赖的前提**一起抄
 #### ⚠️ 而我抄漏了一样，它一个字都不报
 #### ⚠️ 一个**反向验证不了**的守卫，和一条恒真的绿灯长得一模一样
 ### ⭐ 烧进画面的英文里不许有语气词——而它只能**在切行之后**去
 
-📖 **正文（57 行）搬进 `.claude/skills/tennis-video-craft/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是子目录，正文在 skill 里。
+📖 **tennis-video-craft** · 正文 57 行
 
-### ⭐ 烧进画面的英文里不许有语气词——而它只能**在切行之后**去
 #### ⚠️ 位置是这条改动的全部风险：切行**之前**去是对的，但会砸掉存量
 #### ⚠️ 这个模块里已经有**三份**口头语名单，宽窄不同，别互相搬
 #### 两个细节
 ### 提炼是**量**出来的，不是想出来的
 
-📖 **正文（22 行）搬进 `.claude/skills/tennis-editorial/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是子目录，正文在 skill 里。
-
-### 提炼是**量**出来的，不是想出来的
-### 三道闸，都只吃 spec 不读产物
-
-📖 **正文（30 行）搬进 `.claude/skills/tennis-video-craft/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是子目录，正文在 skill 里。
+📖 **tennis-editorial** · 正文 22 行
 
 ### 三道闸，都只吃 spec 不读产物
+
+📖 **tennis-video-craft** · 正文 30 行
+
 ### ⚠️ 加解读卡时，「两支各拼一次」这个坑要第三次发生
 
-📖 **正文（16 行）搬进 `.claude/skills/tennis-video-craft/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是子目录，正文在 skill 里。
+📖 **tennis-video-craft** · 正文 16 行
 
-### ⚠️ 加解读卡时，「两支各拼一次」这个坑要第三次发生
 ### ⚠️ 而我给这套写的第一条判据，是被自己的说明文字满足的假绿
 
 `test_提炼工具要把没说的词也打出来` 第一版断言 `"一次都没提" in rep`——
@@ -1205,7 +1110,7 @@ spec 里另写一个数。合不出语音退回字数估，**但要说一声**�
 
 ### ⚠️ 加口播时抖出四个 bug，三个被退路吞了真因
 
-📖 **正文（241 行）搬进 `.claude/skills/tennis-video-craft/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-video-craft** · 正文 241 行
 
 #### ⚠️ 第五个，一周后才现形：runner 上根本没装 `edge-tts`
 #### ⭐ 而「抽帧看」现在**在本地就能做**：成片从 Release 拉得回来
@@ -1217,127 +1122,53 @@ spec 里另写一个数。合不出语音退回字数估，**但要说一声**�
 #### ⚠️ dispatch 之前先跑一遍这条 spec 自己的测试——两条本该拦住的红都在本地过了
 ### ⭐ 2026-08-08：`MIN_OURS_RATIO` 拒渲那道闸撤销了——完整性优先于占比
 
-📖 **正文（53 行）搬进 `.claude/skills/tennis-video-craft/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是子目录，正文在 skill 里。
+📖 **tennis-video-craft** · 正文 53 行
 
-### ⭐ 2026-08-08：`MIN_OURS_RATIO` 拒渲那道闸撤销了——完整性优先于占比
 #### ⭐ 2026-08-12：进一步定死——采访片**没有时长上限**，别过度剪辑
 ### ⭐ 封面帧一律不许闭眼——storyboard 的粒度盖不住几分之一秒的眨眼
 
-📖 **正文（79 行）搬进 `.claude/skills/tennis-cover-photos/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是子目录，正文在 skill 里。
+📖 **tennis-cover-photos** · 正文 79 行
 
-### ⭐ 封面帧一律不许闭眼——storyboard 的粒度盖不住几分之一秒的眨眼
 #### ⭐⭐ 2026-09-03 补上这条的另外三半：闸放行 ≠ 睁眼，缩略图墙的标签早一格，格子根本分辨不出眼睛
 ### 文案不许再提中英双语字幕——那是制作规格，不是这场球的内容
 
-📖 **正文（20 行）搬进 `.claude/skills/tennis-editorial/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是子目录，正文在 skill 里。
-
-### 文案不许再提中英双语字幕——那是制作规格，不是这场球的内容
-### ⭐ 同一族的第二条：**文案不挂「数据来源：」注脚**
-
-📖 **正文（71 行）搬进 `.claude/skills/tennis-editorial/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是子目录，正文在 skill 里。
+📖 **tennis-editorial** · 正文 20 行
 
 ### ⭐ 同一族的第二条：**文案不挂「数据来源：」注脚**
+
+📖 **tennis-editorial** · 正文 71 行
+
 #### ⚠️⚠️ 2026-08-29 它又被违反了一次——而**闸只在转正那一刻跑，手改在闸后面**
 ## ⭐⭐ 而「赛场之上」不画这块角标——同一句话在一帧里印了两遍
 
-账号所有者 2026-09-02：「**赛场之上视频就不要加左上角的栏目信息了。
-因为下面已经有了**」。
-
-来路是 `eala-stoiana-us-open-2026-r1` 那条刚发的成片。抽一帧出来看，
-**「网球时差 · 赛场之上」在同一帧上印了两遍**：
-
-| 在哪 | 印的什么 |
-|---|---|
-| 画面左上角（常驻角标） | 球标 ＋ 「网球时差 · 赛场之上」 ＋ 副标题「只丢三局的硬仗」 |
-| **底带（品牌脚注）** | 球标 ＋ **「网球时差 · 赛场之上」** ← `BAND_FOOT_LABEL` |
-
-⚠️ **拿掉的是整块，不是只拿掉中间那一行。** 左上角那一块是「封面台头」
-（球标 ＋ 栏目行 ＋ `cover.topic`），账号所有者指的是**这一块所在的那个角**。
-只删中间那行会剩下「一个球标 ＋ 一句没有主语的副标题」——那是个谁都没要求过
-的新版式。所以下一节 2026-09-01 那条「副标题不要消失啊」**在这个栏目上跟着这
-一块一起撤掉；别的栏目一个字没动**（那一节其余部分照旧有效）。
-
-⚠️ **按栏目分，不按 layout 分**（`WATERMARK_OFF_COLUMNS`）：按 layout 分的
-样子是「同一个栏目的片子一半有角标一半没有」，而读者认的是栏目不是版式。
-
-⚠️⚠️ **这条规矩自带一个代价，别让它变成静默的**：底带脚注**只在带式
-（`layout: "band"`）＋ 有顶栏时才渲**，而带式是美网期间的规矩。也就是说
-**`赛场之上` 一旦回到全出血版式，正片区间就一个品牌标识都没有了**
-（封面和品牌片尾照旧有）。量过：177 条赛场之上里 **160 条是全出血、17 条带式**
-——所以这不是个假想的情形。render 那一支会**把这句话打进日志**
-（「⚠️ 而这条片子也没有底带脚注……」）。真到那时候要么把脚注也搬到全出血上
-（⚠️ y=1330 会撞上全出血的字幕锚 1284，不是挪个数就行），要么账号所有者说
-那时候可以没有。
-
-⚠️ 「不画」那一支**必须出声**：只在画的时候打印，等于让「这个栏目不画」和
-「渲角标那一步没走到」在日志上长得一模一样，而后者是个真 bug。
-
-判据 `test_赛场之上不画左上角角标而别的栏目照画` 钉四头（行为／两条编码路都
-真的少了那次 overlay 而 `[out]` 还在／render 真的读了判据**而且那路 ffmpeg
-输入跟着走**／不画那一支要出声），四个方向分别反向验证过，各红在自己的断言行。
-另外真渲了一帧量墨：左上角 0.1189 → **0.0000**，底带脚注 0.1120 **一点没动**。
-
-⚠️ 顺带把「出处只许有一处」那条判据**从前缀名单换成自己推导**：它原来扫
-`^(WATERMARK|BRAND_ICON|BRAND_GAP|BRAND_TEXT)_\w*\s*=`，于是把
-`WATERMARK_OFF_COLUMNS`（**这条线的编辑规矩**，和尺寸阴影一点关系没有）也判成
-了「抄了一份常量」。前缀是个会误伤的代理；真要拦的是**同名**——现在从
-`video/watermark.py` 里实际定义的常量名推，不维护名单。
+📖 **tennis-poster-layout** · 正文 42 行
 
 ### ⭐⭐ 同一天晚些时候「赛后开麦」也进了名单——于是名单挪进了共享模块
 
-📖 **正文（44 行）搬进 `.claude/skills/tennis-poster-layout/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是子目录，正文在 skill 里。
+📖 **tennis-poster-layout** · 正文 44 行
 
-### ⭐⭐ 同一天晚些时候「赛后开麦」也进了名单——于是名单挪进了共享模块
 ## ⭐⭐ 常驻角标：播放时左上角一直挂着网球时差的 logo
 
-账号所有者 2026-09-01：「**视频播放时候左上角保留网球时差的 logo**」，
-随后一句「**用封面上的 logo 和位置**」。
-
-⚠️ **第二句推翻了第一版。** 第一版我自己挑了一张横版 lockup（球标 ＋ 网球时差 ＋
-TENNIS JETLAG）贴在 (22, 22)——**另一个 logo、另一个位置**。现在它就是**封面台头
-那一块**原样搬到播放画面上：
-
-    球标 52px ── gap 14 ── 「网球时差 · <栏目>」38px 得意黑
-    落位 left 70 / top 44
-
-尺寸、阴影、几何**只有一处出处**：`src/tennislive/video/watermark.py`。
-两条出片线（竖版短片、赛后开麦）都从那儿拿——「一个数写两处必分叉」，而分叉的
-样子是**同一个账号出去的片子 logo 一大一小**，没有任何东西会报错。
-
-| | |
-|---|---|
-| 用哪张 | `assets/logo/brand/**icon.png**`（球标）。⚠️ 同一个目录里还有横版 lockup，长得也像「网球时差的 logo」——**拿错的样子是角标比封面那一块宽一倍还多一行英文**，而它照样渲得出来 |
-| 多大／什么字 | 逐项对着封面的 CSS：`.brand-icon{52px}` / `.brandwrap{gap:14px}` / `.brand{font-size:38px; letter-spacing:1px; color:#f4fbf7; font-family:'TL Display SC'}`（＝得意黑 `SmileySans-Oblique.ttf`） |
-| 贴哪儿 | 封面 `.head` 的 `left:70 / top:44`，**纵向再让开顶部那条带**（band 让开 `BAND_TOP`、全出血带顶栏让开 `TOPBAR_H`、赛后开麦让开 `VIDEO_TOP`；没顶栏时和封面逐像素相同） |
-| 盖多久 | **只盖比赛画面**。封面自己就印着这一块、品牌片尾整屏就是这个 logo，那两处再压一遍是把同一个标识说三遍 |
-| 栏目名从哪来 | 和**封面同一处**（reel 是 `cover.eyebrow`，采访是 `spec.column`）——各读各的会让封面和播放画面写着两个栏目 |
-
-⚠️ **判据拿真封面比，不是比 CSS 里那几个数**：测试真渲一张海报
-（`render_poster`），量球标的墨和字标的墨落在哪儿，角标贴上去必须落在同一处
-（±2px）。手搓一份 CSS 去比，验的是「我抄对了自己写的那份」，验不了「它和封面
-对不对得上」（本仓库为手搓 fixture 栽过一次）。
+📖 **tennis-poster-layout** · 正文 26 行
 
 ### ⭐⭐ 「副标题不要消失啊」——台头是**一块**，不是那一行
 
-📖 **正文（94 行）搬进 `.claude/skills/tennis-poster-layout/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-poster-layout** · 正文 94 行
 
 ##### ⚠️ 而「没消失」不等于「读得清」——亮画面上它只有 2.1:1，这是已知的弱点
 ##### ⚠️⚠️ 副标题的长度有**两条**约束，我只量了其中一条
 ### ⚠️⚠️ 一条链里写两个 `overlay=`，第二个的主画面会被接成那张角标
 
-📖 **正文（20 行）搬进 `.claude/skills/tennis-poster-layout/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是子目录，正文在 skill 里。
-
-### ⚠️⚠️ 一条链里写两个 `overlay=`，第二个的主画面会被接成那张角标
-### ⚠️ 加这条时才发现：赛后开麦有**两条**出画面的路
-
-📖 **正文（17 行）搬进 `.claude/skills/tennis-poster-layout/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是子目录，正文在 skill 里。
+📖 **tennis-poster-layout** · 正文 20 行
 
 ### ⚠️ 加这条时才发现：赛后开麦有**两条**出画面的路
+
+📖 **tennis-poster-layout** · 正文 17 行
+
 ### ⚠️⚠️ 渲染那条提交是**测试看得见**的，而它永远拿不到 CI——`get_check_runs` 回 0
 
-📖 **正文（24 行）搬进 `.claude/skills/tennis-pipeline-ops/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是子目录，正文在 skill 里。
+📖 **tennis-pipeline-ops** · 正文 24 行
 
-### ⚠️⚠️ 渲染那条提交是**测试看得见**的，而它永远拿不到 CI——`get_check_runs` 回 0
 ## ⚠️ 一条能读的推送，和两条只有链接的推送
 
 账号所有者 2026-08-05：「目前推送的内容还有两块，英文媒体一份中文一份，
@@ -1359,37 +1190,25 @@ TENNIS JETLAG）贴在 (22, 22)——**另一个 logo、另一个位置**。现�
 
 ### ⚠️ Google News 的链接抓不到正文，而它返回 200
 
-📖 **正文（29 行）搬进 `.claude/skills/tennis-pipeline-ops/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是子目录，正文在 skill 里。
-
-### ⚠️ Google News 的链接抓不到正文，而它返回 200
-### ⚠️ GitHub Models 正在退役——两个消费者都清干净了（2026-08-05）
-
-📖 **正文（49 行）搬进 `.claude/skills/tennis-pipeline-ops/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是子目录，正文在 skill 里。
+📖 **tennis-pipeline-ops** · 正文 29 行
 
 ### ⚠️ GitHub Models 正在退役——两个消费者都清干净了（2026-08-05）
+
+📖 **tennis-pipeline-ops** · 正文 49 行
+
 ### ⭐ 换成 DeepSeek：兼容端点看着最省事，而它废掉的正好是唯一的保证
 
-📖 **正文（117 行）搬进 `.claude/skills/tennis-pipeline-ops/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-pipeline-ops** · 正文 117 行
 
 #### ⭐ 人工角度表算出来了，却没喂给写 `angle` 的那次调用
 #### ⚠️ 而我在同一轮里用 `git reset --hard` 把这三处改动全抹了
 ### ⚠️ `read -t N -u 3 3</dev/null` 一秒都不等——我据此报了个错结论
 
-📖 **正文（22 行）搬进 `.claude/skills/tennis-dev-practices/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是子目录，正文在 skill 里。
+📖 **tennis-dev-practices** · 正文 22 行
 
-### ⚠️ `read -t N -u 3 3</dev/null` 一秒都不等——我据此报了个错结论
 ### ⚠️ 「拒绝但带着半截文本」——只有这一种情况那道闸才是活的
 
-`stop_reason == "refusal"` 那道闸，第一版的测试喂的是**空 content**——
-而空串本来就会在 `json.loads` 那儿抛、被兜住返回 None。于是把整道闸拆掉，
-**测试照样绿**。
-
-真正只有它拦得住的是**拒绝了但仍带着半截文本**：那半截能解析成合法 JSON，
-不拦就会被当成一条正常要点用上去。
-
-又一次「判据自己也要有判据」。⚠️ 配套：`caplog` 必须收在 **WARNING**——
-那句告警就是 WARNING，收在 ERROR 上它根本进不了 caplog（本仓库栽过一次：
-坏代码 + 错档位，测试照样绿）。
+📖 **tennis-dev-practices** · 正文 10 行
 
 ### ⭐ 查得够深、查得够广、两个源对得上——否则那句话不许发
 
@@ -1461,7 +1280,7 @@ TENNIS JETLAG）贴在 (22, 22)——**另一个 logo、另一个位置**。现�
 生涯统计页上**，是这个断言最该查的那一张表。
 
 
-📖 **以下子节的正文（210 行）搬进 `.claude/skills/tennis-editorial/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是子目录，正文在 skill 里。
+📖 **tennis-editorial** · 以下子节正文 210 行
 
 ##### ⭐ 改法：把范围亮出来，别把反例藏掉
 ###### ⚠️ 我本来想把词表放宽，是数据把它否掉的
@@ -1500,15 +1319,7 @@ prompt（`research/glossary.py`）。⚠️ **按姓氏匹配**，因为标题�
 
 ## 推分支吃 HTTP 413：先 fetch 再 rebase
 
-`git push` 报 `RPC failed; HTTP 413`，重试、调 `postBuffer` 都没用。原因不是网络：
-**本地缺 `origin/main` 的最新提交时，git 找不到可用的协商基线，就把两百多个提交
-（含 mp4/jpg）整包重发**，几个 G，代理直接拒。
-
-- 判据是**对象数**：`git rev-list --objects origin/main..HEAD | wc -l`。自己那一个
-  提交只有 33 个对象，却推不上去，说明打包的范围不对，不是内容太大
-- 修法：`git fetch origin main` 再 `git rebase origin/main`，pack 就只剩自己那些对象
-- **纯 ref 移动也会 413**，别以为"只挪个指针"就没事——同样要先 fetch
-- rebase 过之后要用 `--force-with-lease` 推
+📖 **tennis-dev-practices** · 正文 9 行
 
 ## 并行的生成任务：只碰自己那一块
 
@@ -1654,7 +1465,7 @@ viewBox 里正文不小于 26、标题 34 起、一屏最多一个强调色、�
 
 ### 从官方比赛视频抽帧配图：一条现在真的通了的路
 
-📖 **正文（132 行）搬进 `.claude/skills/tennis-cover-photos/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-cover-photos** · 正文 132 行
 
 ##### ⚠️ 要谁的近景，就抽他**赢的**那一场
 ##### ⚠️ 场边广告板上的年份，可能是**下一届**的预告
@@ -1663,7 +1474,7 @@ viewBox 里正文不小于 26、标题 34 起、一屏最多一个强调色、�
 #### 「他没打」是拍不出来的——这才是示意图的触发条件
 ### ⭐ 2026-08-16：封面大图**一律**用官方高清实拍——这条现在有闸了
 
-📖 **正文（1027 行）搬进 `.claude/skills/tennis-cover-photos/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-cover-photos** · 正文 1027 行
 
 #### ⭐⭐ 大满贯那半边：**美网有自己的图片接口**，页面永远是 JS 壳（2026-08-25 实测）
 ##### ⭐⭐ 同一套 feed 还能穷举一个人的历史——**把全称断言换成可核实的序列**
@@ -1705,11 +1516,11 @@ viewBox 里正文不小于 26、标题 34 起、一屏最多一个强调色、�
 ###### 一条能直接抄的命令
 ### ⚠️ 2026-08-16：用 Tennis TV 的源片，**片尾和台标都要剪掉**
 
-📖 **正文（21 行）搬进 `.claude/skills/tennis-media-sources/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-media-sources** · 正文 21 行
 
 ### 封面用真实照片，不要从视频里抽帧
 
-📖 **正文（222 行）搬进 `.claude/skills/tennis-cover-photos/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-cover-photos** · 正文 222 行
 
 #### ⭐ WTA 官网自己的「Match Reaction」赛后稿，配的头图往往就是这场球的实拍
 ##### ⚠️ 球衣颜色不能当认人判据，场地颜色可以
@@ -1720,7 +1531,7 @@ viewBox 里正文不小于 26、标题 34 起、一屏最多一个强调色、�
 #### ⚠️ 上面这条只管「整帧铺满」，不管「抠出来的人」
 ### ⭐ 封面裁图：人物放正中间，放大到接近铺满，四周留一点点空间
 
-📖 **正文（185 行）搬进 `.claude/skills/tennis-cover-photos/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-cover-photos** · 正文 185 行
 
 #### ⭐⭐ 2026-08-31：**挑封面之前先把钩子那条带叠上去**——脸落进带里是几何决定的，事后调不动
 ##### ⭐ 同一条片子第三版：**撞哪条带子，由主体在源图里的高低决定**
@@ -1729,7 +1540,7 @@ viewBox 里正文不小于 26、标题 34 起、一屏最多一个强调色、�
 ##### ⚠️⚠️ 而「裁在哪儿」我并排看了四档，仍然把主语切掉了 523px
 ### 栏目决定封面模板，不是素材凑手决定
 
-📖 **正文（632 行）搬进 `.claude/skills/tennis-poster-layout/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-poster-layout** · 正文 632 行
 
 ##### ⭐⭐ 2026-08-29 换版式：**两行、赢家那一行整条高亮**，格子和框线整块拿掉
 ###### ⭐⭐ 第二轮（同一天）：**完整复刻，不要自己配色**
@@ -1746,23 +1557,21 @@ viewBox 里正文不小于 26、标题 34 起、一屏最多一个强调色、�
 ######## ⭐ 球场图标高度 1.35em → **1.0em**（比例不动）
 ### 封面停多久，跟着封面那句配音走
 
-📖 **正文（91 行）搬进 `.claude/skills/tennis-poster-layout/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-poster-layout** · 正文 91 行
 
 ##### ⚠️ 而这个「去标点后比对」用错了函数——只差一个问号就判成另说一件事
 #### ⚠️ 所以**改钩子就必须连 `cover.narration` 一起改**，两处是一句话
 ### 让当事人自己说：`quote`
 
-📖 **正文（19 行）搬进 `.claude/skills/tennis-video-craft/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是子目录，正文在 skill 里。
-
-### 让当事人自己说：`quote`
-### 多源剪辑：尺寸没有出路，帧率要认领
-
-📖 **正文（19 行）搬进 `.claude/skills/tennis-video-craft/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是子目录，正文在 skill 里。
+📖 **tennis-video-craft** · 正文 19 行
 
 ### 多源剪辑：尺寸没有出路，帧率要认领
+
+📖 **tennis-video-craft** · 正文 19 行
+
 ### 「赛场之上」的封面是固定海报，不是每条现搓
 
-📖 **正文（137 行）搬进 `.claude/skills/tennis-poster-layout/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-poster-layout** · 正文 137 行
 
 #### ⭐ 官方头像／抠图上哪儿拿（2026-08-04 记，别再重新踩一遍）
 ##### ⚠️ ID 猜错时返回的是**占位剪影**，而它和真头像长得一模一样
@@ -1770,11 +1579,11 @@ viewBox 里正文不小于 26、标题 34 起、一屏最多一个强调色、�
 #### 没有官方抠图，就退回照片版——别拿头像凑
 ### 精准之外，还要有冲击力
 
-📖 **正文（83 行）搬进 `.claude/skills/tennis-cover-photos/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-cover-photos** · 正文 83 行
 
 ### 封面上每个名字旁边都要有国旗，后面括号里是即时世界排名
 
-📖 **正文（256 行）搬进 `.claude/skills/tennis-poster-layout/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-poster-layout** · 正文 256 行
 
 #### ⭐⭐ WTA 排名：`players/ranked` 这个接口，**参数少一个就 400**
 #### ⭐⭐ ATP 排名去**官方 posting** 拿：`protennislive.com/posting/<年>/<赛事id>/`
@@ -1786,7 +1595,7 @@ viewBox 里正文不小于 26、标题 34 起、一屏最多一个强调色、�
 #### ⚠️ 编辑稿的**引语**可以抄，**结论**不可以
 ### ⭐⭐ 轮次写「1/8决赛 / 1/4决赛 / 半决赛 / 决赛」，不写「N 强」
 
-📖 **正文（240 行）搬进 `.claude/skills/tennis-editorial/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-editorial** · 正文 240 行
 
 #### ⭐⭐ 同日晚上他自己收窄了一档：**拦的是轮次名，不是「强」这个字**
 #### ⚠️ 而翻面之后才发现，这条规矩最该盖住的那一面本来不在扫描面里
@@ -2012,7 +1821,7 @@ ATP 巡回赛），「第三盘＝决胜盘」是一个**默认成立到不会�
 **素材单薄不是不做的理由**，这条说的是**过期是**。
 
 
-📖 **以下子节的正文（104 行）搬进 `.claude/skills/tennis-editorial/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是子目录，正文在 skill 里。
+📖 **tennis-editorial** · 以下子节正文 104 行
 
 ##### ⭐⭐ 2026-08-18 量出来两件事：**换日的那一刀在傍晚，不在午夜**；而且两个 feed 是**重叠**的
 ###### ⚠️⚠️ 2026-09-04 修正：**大满贯的夜场会被 `f_2_0` 劈成两半**，判据要换成赛事自己的比赛日
@@ -2113,7 +1922,7 @@ players/matches/<id>_matches.json`）**在 runner 上是通的**（沙箱恒 403
 **素材单薄不是不做的理由；没有人关心才是。**
 
 
-📖 **以下子节的正文（99 行）搬进 `.claude/skills/tennis-editorial/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是子目录，正文在 skill 里。
+📖 **tennis-editorial** · 以下子节正文 99 行
 
 ##### ⭐⭐ 2026-08-16 收紧：「是种子」不算热度——**WTA1000 有 32 个种子**
 ###### ⭐⭐ 而热点长什么样：**一条正在展开的故事线**，不是名次
@@ -2145,7 +1954,7 @@ players/matches/<id>_matches.json`）**在 runner 上是通的**（沙箱恒 403
 
 ### ⭐ ATP 也能查了——YouTube 优先，WTA 同理要挑 1080p 那版
 
-📖 **正文（390 行）搬进 `.claude/skills/tennis-media-sources/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-media-sources** · 正文 390 行
 
 #### ATP：YouTube 优先，Tennis TV 订阅制那条路降级为兜底
 ##### ⭐⭐ 2026-08-16 补上第三档：Tennis TV 的**短集锦是免费的**，YouTube 缺场时用它
@@ -2260,60 +2069,52 @@ players/matches/<id>_matches.json`）**在 runner 上是通的**（沙箱恒 403
 
 ### 不要用假设句，用真实的例子
 
-📖 **正文（25 行）搬进 `.claude/skills/tennis-editorial/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是子目录，正文在 skill 里。
-
-### 不要用假设句，用真实的例子
-### 不要平白叙事——情绪是结构做出来的，不是形容词堆出来的
-
-📖 **正文（43 行）搬进 `.claude/skills/tennis-editorial/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是子目录，正文在 skill 里。
+📖 **tennis-editorial** · 正文 25 行
 
 ### 不要平白叙事——情绪是结构做出来的，不是形容词堆出来的
+
+📖 **tennis-editorial** · 正文 43 行
+
 ### 要渲染整个比赛的艰难，赢球后多给情绪一点篇幅
 
-📖 **正文（24 行）搬进 `.claude/skills/tennis-editorial/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是子目录，正文在 skill 里。
-
-### 要渲染整个比赛的艰难，赢球后多给情绪一点篇幅
-### 抓人心的三个具体写法：留白、峰值不被列表淹没、损失框架
-
-📖 **正文（28 行）搬进 `.claude/skills/tennis-editorial/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是子目录，正文在 skill 里。
+📖 **tennis-editorial** · 正文 24 行
 
 ### 抓人心的三个具体写法：留白、峰值不被列表淹没、损失框架
+
+📖 **tennis-editorial** · 正文 28 行
+
 ### ⚠️ 「不解说画面」拦的是指示语，不是描述动作——两条线不一样
 
-📖 **正文（26 行）搬进 `.claude/skills/tennis-editorial/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是子目录，正文在 skill 里。
-
-### ⚠️ 「不解说画面」拦的是指示语，不是描述动作——两条线不一样
-### ⭐ 一个球说打了多少**拍**，不说多少秒
-
-📖 **正文（27 行）搬进 `.claude/skills/tennis-editorial/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是子目录，正文在 skill 里。
+📖 **tennis-editorial** · 正文 26 行
 
 ### ⭐ 一个球说打了多少**拍**，不说多少秒
+
+📖 **tennis-editorial** · 正文 27 行
+
 ### ⭐ 百分比写「百分之 N」，不写「几成几」
 
-📖 **正文（58 行）搬进 `.claude/skills/tennis-editorial/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是子目录，正文在 skill 里。
+📖 **tennis-editorial** · 正文 58 行
 
-### ⭐ 百分比写「百分之 N」，不写「几成几」
 #### ⚠️ 而上面那张表的第一行，我写的时候没跑过——真烧出来是「100分之34」
 ### ⭐ 「love game」不要字面直译成中文
 
-📖 **正文（74 行）搬进 `.claude/skills/tennis-editorial/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-editorial** · 正文 74 行
 
 #### ⭐⭐ 同一族的下一条：**ACE 不写中文**
 ### ⭐ 「三个盘点都没救下来」——救的人和拿到点的人不是同一个
 
-📖 **正文（126 行）搬进 `.claude/skills/tennis-editorial/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-editorial** · 正文 126 行
 
 #### ⭐⭐ 「三个赛点只兑现了一个」——这个比例锁死在 1/N，不是选手的短板
 #### ⭐ 小红书正文是**纯文本**，不许用 markdown
 #### ⭐ 破发点／盘点／赛点一律写「拿到」，不写「要到」
 ### 旁白不解说画面
 
-📖 **正文（19 行）搬进 `.claude/skills/tennis-editorial/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是子目录，正文在 skill 里。
+📖 **tennis-editorial** · 正文 19 行
 
-### 旁白不解说画面
 ### 停顿全部来自标点——没有 SSML break，标点就是唯一的杠杆
 
-📖 **正文（180 行）搬进 `.claude/skills/tennis-video-craft/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-video-craft** · 正文 180 行
 
 #### ⭐ 切词错了不用靠耳朵猜：`voice_NN.words.json` 就是合成器自己报的切词
 #### ⚠️ 加逗号**撑得开**两个该分的词，**合不拢**一个该合的词
@@ -2346,19 +2147,16 @@ Ostapenko 又被写成「奥斯塔片科」（表里是**奥斯塔彭科**）发
 
 ### 末屏那个问题，旁白必须问出来
 
-📖 **正文（15 行）搬进 `.claude/skills/tennis-editorial/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是子目录，正文在 skill 里。
-
-### 末屏那个问题，旁白必须问出来
-### 末屏那一问，不能是封面那一问的回声
-
-📖 **正文（14 行）搬进 `.claude/skills/tennis-editorial/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是子目录，正文在 skill 里。
+📖 **tennis-editorial** · 正文 15 行
 
 ### 末屏那一问，不能是封面那一问的回声
+
+📖 **tennis-editorial** · 正文 14 行
+
 ### 末屏问句还有两种没系统用过的写法：身份代入、评判型立场
 
-📖 **正文（19 行）搬进 `.claude/skills/tennis-editorial/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是子目录，正文在 skill 里。
+📖 **tennis-editorial** · 正文 19 行
 
-### 末屏问句还有两种没系统用过的写法：身份代入、评判型立场
 ### 小标要带信息，纯指示词不算
 
 「那一边 / 这一边 / 这一场 / 那一周」——商竣程那条六个小标里有四个是这种，排比看着整齐，
@@ -2377,56 +2175,56 @@ Ostapenko 又被写成「奥斯塔片科」（表里是**奥斯塔彭科**）发
 
 ### 卡上的字少，是因为旁白会讲；那就必须有字幕
 
-📖 **正文（96 行）搬进 `.claude/skills/tennis-video-craft/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-video-craft** · 正文 96 行
 
 ### 最好的出处，是图注自己把时刻写死了
 
-📖 **正文（12 行）搬进 `.claude/skills/tennis-cover-photos/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-cover-photos** · 正文 12 行
 
 ### 分不出是哪一场的照片，不能拿来讲某一场
 
-📖 **正文（10 行）搬进 `.claude/skills/tennis-cover-photos/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-cover-photos** · 正文 10 行
 
 ### 赛事官网的图可能根本不是照片
 
-📖 **正文（25 行）搬进 `.claude/skills/tennis-cover-photos/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-cover-photos** · 正文 25 行
 
 ### 官方图库把它挂在这一站名下，不等于拍的是这个场地
 
-📖 **正文（26 行）搬进 `.claude/skills/tennis-cover-photos/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-cover-photos** · 正文 26 行
 
 ### 一张能用的图找不到时，新闻台的成片是个被忽略的源
 
-📖 **正文（12 行）搬进 `.claude/skills/tennis-cover-photos/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-cover-photos** · 正文 12 行
 
 ### 新闻成片里会混进资料画面，抽帧要看场地上写的是什么
 
-📖 **正文（17 行）搬进 `.claude/skills/tennis-cover-photos/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-cover-photos** · 正文 17 行
 
 ### 图库路径 404，不等于这个站没有图库
 
-📖 **正文（17 行）搬进 `.claude/skills/tennis-cover-photos/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-cover-photos** · 正文 17 行
 
 ### 背景图一律是中心球场全景；地标只是欠着的账
 
-📖 **正文（27 行）搬进 `.claude/skills/tennis-cover-photos/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-cover-photos** · 正文 27 行
 
 ### 竖版卡里的"全景"，取决于拍摄视角，不是原图有多宽
 
-📖 **正文（19 行）搬进 `.claude/skills/tennis-cover-photos/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-cover-photos** · 正文 19 行
 
 ### 画出来的那一屏，也要够大够直观
 
-📖 **正文（39 行）搬进 `.claude/skills/tennis-video-craft/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-video-craft** · 正文 39 行
 
 #### ⚠️ viewBox 的**高度**也有上限：高 20px 就撞进序号药丸那一行
 ### 一屏只留一个强调色
 
-📖 **正文（15 行）搬进 `.claude/skills/tennis-video-craft/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-video-craft** · 正文 15 行
 
 ### 条形图上不要写字，一个字都别写
 
-📖 **正文（6 行）搬进 `.claude/skills/tennis-video-craft/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-video-craft** · 正文 6 行
 
 ### 讲一串同类的事，挑最有代表性的一两个讲透
 
@@ -2440,11 +2238,11 @@ Ostapenko 又被写成「奥斯塔片科」（表里是**奥斯塔彭科**）发
 
 ### 小红书正文卡在 1000 字，而且要「提炼在前、原话在后」
 
-📖 **正文（35 行）搬进 `.claude/skills/tennis-editorial/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-editorial** · 正文 35 行
 
 ### 收口要按组轮流取，不能按全局分量一路取到底
 
-📖 **正文（18 行）搬进 `.claude/skills/tennis-editorial/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-editorial** · 正文 18 行
 
 ## 验证
 
@@ -2455,20 +2253,20 @@ Ostapenko 又被写成「奥斯塔片科」（表里是**奥斯塔彭科**）发
 
 ### ⚠️⚠️ 跑一趟测试会改到**跟踪进仓库的数据**，而 stop hook 会催你把它推上去
 
-📖 **正文（35 行）搬进 `.claude/skills/tennis-dev-practices/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-dev-practices** · 正文 35 行
 
 ### 环境不用每次现配：`.claude/hooks/session-start.sh`
 
-📖 **正文（48 行）搬进 `.claude/skills/tennis-dev-practices/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-dev-practices** · 正文 48 行
 
 #### ⚠️ 顺带两条，都是 CI 替我逮到的（run 30971701644）
 ### 沙箱跑全量测试前先装依赖，别把缺依赖当成「已知红」
 
-📖 **正文（49 行）搬进 `.claude/skills/tennis-dev-practices/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-dev-practices** · 正文 49 行
 
 ### 交叉校验只比得上「说错了」，比不到「什么都没说」
 
-📖 **正文（231 行）搬进 `.claude/skills/tennis-video-craft/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-video-craft** · 正文 231 行
 
 #### 但这道闸只是「让你看一眼」，不是「必须查实」
 ##### ⭐ 沙箱听不了音轨，但「是不是掌声」是**量得出来 + 看得出来**的
@@ -2479,7 +2277,7 @@ Ostapenko 又被写成「奥斯塔片科」（表里是**奥斯塔彭科**）发
 ##### ⚠️ `_yt_at` 做对了自己那一半，调用方在外面一层又破了一次
 ### 有原声的片子：说话时压，不说话时放开
 
-📖 **正文（368 行）搬进 `.claude/skills/tennis-video-craft/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-video-craft** · 正文 368 行
 
 #### ⚠️ 而上面那条「收尾提前起」保住的几秒，被闪避自己吃掉了——七条片子
 #### ⚠️ 淡入淡出 ≠ 淡到黑：转场是**溶解**，中间一帧黑都不许有
@@ -2497,7 +2295,7 @@ Ostapenko 又被写成「奥斯塔片科」（表里是**奥斯塔彭科**）发
 #### 上面这两个缺陷，本来都该被拦下——检查脚本一次都没被调用过
 ### 剪辑：死球之后再切，别在球还在飞的时候走
 
-📖 **正文（257 行）搬进 `.claude/skills/tennis-video-craft/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-video-craft** · 正文 257 行
 
 #### 而这个工具一直是零调用方——它要的源片渲完就被删了
 #### ⚠️⚠️ 2026-08-19：猜到的候选只印在日志里，我自己就漏过一次
@@ -2510,7 +2308,7 @@ Ostapenko 又被写成「奥斯塔片科」（表里是**奥斯塔彭科**）发
 #### ⚠️ 冷开场只是预告，正文必须重新兑现结局
 ### ⭐ 平台整改后的「赛场之上」：从高光剪辑改成原创比赛复盘
 
-📖 **正文（571 行）搬进 `.claude/skills/tennis-editorial/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-editorial** · 正文 571 行
 
 #### ⭐⭐ 美网期间的「赛场之上」：比分板走带式 ＋ 逐段现量，账在 `docs/us-open-scoreboard-aspect.md`
 ##### ⭐⭐ 2026-09-10：`scorebox` 的右缘**不许抄别的片子**，要拿这条源片的 `score_*.jpg` 量
@@ -2527,15 +2325,13 @@ Ostapenko 又被写成「奥斯塔片科」（表里是**奥斯塔彭科**）发
 #### 比分顶栏仍然保留，但它是版式信息，不是原创增量
 ### 旁白要把比赛走向讲清楚
 
-📖 **正文（51 行）搬进 `.claude/skills/tennis-editorial/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是子目录，正文在 skill 里。
+📖 **tennis-editorial** · 正文 51 行
 
-### 旁白要把比赛走向讲清楚
 #### ⚠️ 「四个点」不是「每一局」——被读者当众吐槽的那次
 ### ⭐ 旁白要有技战术拆解，不能只停在比分走势上
 
-📖 **正文（39 行）搬进 `.claude/skills/tennis-editorial/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是子目录，正文在 skill 里。
+📖 **tennis-editorial** · 正文 39 行
 
-### ⭐ 旁白要有技战术拆解，不能只停在比分走势上
 ### ⭐ 采访不进复盘——集锦尾巴的采访是赛后开麦的素材，不是复盘的情绪佐料
 
 账号所有者 2026-08-10 review 当天的片子：「**比赛信息很少，很难把比赛过程
@@ -2580,7 +2376,7 @@ swiatek-kostyuk 各一段），共同点很整齐：**quote 窗口全部落在�
 
 ### 别人怎么配文案：真实数据 + 城市背景 + 情绪落点，不是把比分再抄一遍
 
-📖 **正文（393 行）搬进 `.claude/skills/tennis-editorial/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-editorial** · 正文 393 行
 
 #### 边界：只学文案和叙事、剪辑节奏，字幕的位置和配色不学
 ##### 2026-08-24：屏幕贴文案定稿为 `story_text`，大块信息板废弃
@@ -2595,14 +2391,12 @@ swiatek-kostyuk 各一段），共同点很整齐：**quote 窗口全部落在�
 ##### ⚠️ 抖音那条取数路子变了：`?from_ssr=1` 已经死了
 ### ⭐ 开场三格的顺序：画面爆点 → 落点 → 坐标
 
-📖 **正文（52 行）搬进 `.claude/skills/tennis-editorial/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是子目录，正文在 skill 里。
-
-### ⭐ 开场三格的顺序：画面爆点 → 落点 → 坐标
-### 「赛场之上」开场先给坐标：北京时间、赛事、轮次
-
-📖 **正文（60 行）搬进 `.claude/skills/tennis-editorial/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是子目录，正文在 skill 里。
+📖 **tennis-editorial** · 正文 52 行
 
 ### 「赛场之上」开场先给坐标：北京时间、赛事、轮次
+
+📖 **tennis-editorial** · 正文 60 行
+
 #### ⭐⭐ 开球时刻**只说个大概，不报到分**——这不是文风，是精确到了错的东西
 ### 音频那套默认不开，别接进出片流程
 
@@ -2678,17 +2472,16 @@ swiatek-kostyuk 各一段），共同点很整齐：**quote 窗口全部落在�
 
 ### 转折点不许剪掉
 
-📖 **正文（66 行）搬进 `.claude/skills/tennis-video-craft/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-video-craft** · 正文 66 行
 
 #### ⭐ 「这是第几盘」不能靠看画面——两盘长得一模一样，只能裁记分条放大读
 ### 动作句只挑**能渲染情绪**的那几个
 
-📖 **正文（24 行）搬进 `.claude/skills/tennis-editorial/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是子目录，正文在 skill 里。
+📖 **tennis-editorial** · 正文 24 行
 
-### 动作句只挑**能渲染情绪**的那几个
 ### 源片按巡回赛分：WTA 用官方频道，Tennis TV 是 ATP 那条线
 
-📖 **正文（303 行）搬进 `.claude/skills/tennis-media-sources/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-media-sources** · 正文 303 行
 
 #### ⚠️ 顶栏次行的灰绿是为**实色卡**定的，压在虚化画面上不成立
 #### ⭐ ATP 的**场上采访**：Tennis TV 的免费条目自己就解得开（2026-08-05 记）
@@ -2707,15 +2500,15 @@ swiatek-kostyuk 各一段），共同点很整齐：**quote 窗口全部落在�
 #### `list_workflow_runs` 连 `per_page=1` 都吐 40 万字符
 ### 走势数据从哪儿取：`tools/match_feed.py`
 
-📖 **正文（47 行）搬进 `.claude/skills/tennis-media-sources/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-media-sources** · 正文 47 行
 
 ### 封面别停太久
 
-📖 **正文（16 行）搬进 `.claude/skills/tennis-video-craft/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-video-craft** · 正文 16 行
 
 ### 竖版短片的取景：铺满、钉死、跟着源片的帧率
 
-📖 **正文（346 行）搬进 `.claude/skills/tennis-video-craft/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-video-craft** · 正文 346 行
 
 #### ⭐ 双打是例外：「回合镜头也铺满，不走 contain」只对单打成立
 #### 画幅：赛场之上是 3:4，不是 9:16
@@ -2733,21 +2526,21 @@ swiatek-kostyuk 各一段），共同点很整齐：**quote 窗口全部落在�
 #### 推送版式照着知识解说那条，海报铺满
 ### ATP 总站封，赛事域名镜像着同一批图
 
-📖 **正文（55 行）搬进 `.claude/skills/tennis-cover-photos/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-cover-photos** · 正文 55 行
 
 #### 场馆全景先试这一条：`tournament-images` 是**全站共享**的，不是各站各自的
 ### 加新能力就要同时改三处：代码、工作流的依赖、开跑前的预检
 
-📖 **正文（40 行）搬进 `.claude/skills/tennis-dev-practices/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-dev-practices** · 正文 40 行
 
 #### 「三处」里，每个工作流各算一处
 ### 开一条新线，先把阶段表画出来，再写第一行代码
 
-📖 **正文（44 行）搬进 `.claude/skills/tennis-dev-practices/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-dev-practices** · 正文 44 行
 
 ### 失败在哪一段，就从哪一段接着跑
 
-📖 **正文（26 行）搬进 `.claude/skills/tennis-dev-practices/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-dev-practices** · 正文 26 行
 
 ### 失败之后要防住**那一类**，不是那一个
 
@@ -2782,121 +2575,70 @@ swiatek-kostyuk 各一段），共同点很整齐：**quote 窗口全部落在�
 
 ### 新接一条「只能在 runner 上跑」的线，先搭本地替身，再推第一次
 
-📖 **正文（31 行）搬进 `.claude/skills/tennis-dev-practices/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-dev-practices** · 正文 31 行
 
 ### 查 PR 的 CI 别用 `get_status`：那张表在这个仓库恒空
 
-📖 **正文（48 行）搬进 `.claude/skills/tennis-dev-practices/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-dev-practices** · 正文 48 行
 
 #### ⭐ 而「拿一次 run id」也不用付那 400 KB——按 `status` 过滤
 ### 这台沙箱的两条硬限制，别再重新发现
 
-📖 **正文（11 行）搬进 `.claude/skills/tennis-dev-practices/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-dev-practices** · 正文 11 行
 
 ### yt-dlp 的 `-o` 是模板不是保证
 
-📖 **正文（14 行）搬进 `.claude/skills/tennis-dev-practices/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-dev-practices** · 正文 14 行
 
 ### Chromium 的路径：先问 playwright，它答错了再自己找
 
-📖 **正文（17 行）搬进 `.claude/skills/tennis-dev-practices/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-dev-practices** · 正文 17 行
 
 ### 查工作流的测试要看 `run:` 脚本，不能搜整份 yml 的文本
 
-📖 **正文（13 行）搬进 `.claude/skills/tennis-dev-practices/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-dev-practices** · 正文 13 行
 
 ### 「写了」不等于「跑过」——源码文本断言证明不了这一点
 
-📖 **正文（46 行）搬进 `.claude/skills/tennis-dev-practices/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-dev-practices** · 正文 46 行
 
 ### 同一个常量赋两次，ruff 和测试都不吭声
 
-📖 **正文（15 行）搬进 `.claude/skills/tennis-dev-practices/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-dev-practices** · 正文 15 行
 
 ### 字体名写「正规」的那个，等于写一个不存在的字体
 
-📖 **正文（62 行）搬进 `.claude/skills/tennis-video-craft/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-video-craft** · 正文 62 行
 
 #### ⚠️ 例外：这一行上有 `\t()` 动画时，`\r` 会把动画一起清掉
 ## ⭐⭐ 2026-08-26 无人值守链整体盘点：四类静默坏，判据都落了
 
-账号所有者要求「完整 review 当前库里的自动化无人值守任务」。9 条定时 + 4 条
-push 触发的链路逐条核过**真实运行记录**（不是只读 YAML），修了四类：
-
-**① 共享 JSON 的 state 推送，`git pull --rebase` 重试是死路。** run #360：
-orchestrate 点完 run 提交 state，push 被拒 → rebase 撞
-`data/orchestration_state.json` 自己的内容冲突（另一方是 match-reel 的失败自愈
-release claim）→ **abort 之后什么都没变，重试五次全撞同一个冲突** → state 丢，
-下一班重复 dispatch。修法是 JSON 级三方合并（`tools/merge_orchestration_state.py`，
-以远端为底、只加 ours−base 的新增），在 FETCH_HEAD 上重建提交。
-⚠️ **不做裸 union**：远端刚 release 的 claim 会被 union 复活，那条失败的
-probe 永远不重试。判据 `test_merge_orchestration_state.py` +
-`test_编排工作流并发锁pipefail和state推送重试`。
-
-**② workflow_dispatch 的 inputs 超过 25 个，整份工作流文件失效。**
-match-reel 就是这么连死 14 趟的：每个 run（含 push 触发的）0 秒 failure，
-run 的 `name` 退化成裸文件路径——**「表单加一个输入」能把这条工作流的所有
-触发一起打死，而且报不出原因**。#606 修的是 match-reel 一个文件；
-`test_所有工作流的dispatch表单都不许超过github的25项硬限制` 把那一类防住
-（自己推导，不维护名单）。
-
-**③ push 重试当时在八个工作流里有四种写法，三种是坏的。** 没 `|| abort` 的
-`pull --rebase`（bash -e 下一失败整步死，或半截 rebase 毒死后续重试）、干脆
-没重试的裸 push（auto-push 链由 push 事件触发，**失败没有任何东西会重触发**，
-撞车一次那条片子就静默不发）。收成 `tools/git_push_retry.sh`（照
-ci_apt_install.sh 的先例），七条链换装；判据 `test_git_push_retry.py`。
-⚠️ 它只管「各写各的文件」的提交；共享 JSON 走 ①，match-reel/interview-clip
-的「重取远端重放修改」循环各有自己的判据，不许换。
-
-**④ 预检失败没有记忆，同样的坏候选每天重试。** knowledge-adhoc 九天里六天
-红在同一句「素材预检失败」——trivia 池的同两条候选天天排最前、天天被同两条
-判据拒掉，每日知识栏目一半天数静默停更。修法：被拒 slug 记进 story_state 的
-`__visual_backoff__`（3 天），候选排序**降到队尾不剔除**（池子空了还轮得到，
-素材修好它自己回来）；⚠️ **失败路径要单独把 state 提交回仓库**——生成步骤
-红了常规提交步整个跳过，记忆只活在 runner 上等于没记。判据
-`test_visual_backoff.py`。
-
-顺带核实过、不用再查的：oncourt-interviews / interview-auto-render /
-reel-auto-ready / official-social-images / pipeline-health / source-health /
-auto-push-* / pages 近期运行全部健康；interview-clip 的 47% 失败率**全是
-发布门禁在正常拦截**（没有废片发出去，按「闸拦下来和真出错分开数」的口径
-不是故障）；orchestrate 长时间不 dispatch 是候选侧真空（集锦没发/已有 spec），
-不是 dispatcher 坏了。
-⚠️ 顺带一个我当场犯的错：给 oncourt-interviews 补 workflow 级并发锁——被
-`test_oncourt_only_serializes_collect_and_commits_cursor_and_claims` 当场打红。
-**它是故意不锁整条 workflow 的**（draft 矩阵的长 ASR 会阻住下一轮扫描），
-共享 JSON 的提交只在 collect job，那儿早有 job 级锁。判据救回了一次
-「按直觉改别人想清楚过的设计」。
+📖 **tennis-pipeline-ops** · 正文 47 行
 
 ### ⭐⭐ 同一轮的下半场：模型内容线（DeepSeek 文案 / MiniMax 视觉）的执法缺口
 
-📖 **正文（39 行）搬进 `.claude/skills/tennis-pipeline-ops/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是子目录，正文在 skill 里。
-
-### ⭐⭐ 同一轮的下半场：模型内容线（DeepSeek 文案 / MiniMax 视觉）的执法缺口
-### ⭐⭐ 同一天的结果复盘：模型线第一条自动成片，把**反向比分**推上了微信
-
-📖 **正文（44 行）搬进 `.claude/skills/tennis-pipeline-ops/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是子目录，正文在 skill 里。
+📖 **tennis-pipeline-ops** · 正文 39 行
 
 ### ⭐⭐ 同一天的结果复盘：模型线第一条自动成片，把**反向比分**推上了微信
+
+📖 **tennis-pipeline-ops** · 正文 44 行
+
 ### ⭐ 产出慢的账（2026-08-26 深夜量的）：瓶颈是返工轮数，不是渲染速度
 
-📖 **正文（116 行）搬进 `.claude/skills/tennis-pipeline-ops/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-pipeline-ops** · 正文 116 行
 
 ##### ⚠️⚠️ 2026-09-05：而这道预判**结构性地够不着「源片不静音、成片这一秒静音」那一类**
 #### ⭐⭐ 上面那句「下一步」2026-08-27 做掉了：render 红了判据自动回喂，修一轮再自渲
 ### ⭐⭐ 2026-08-27「编排器 25 小时没点过 run」：一半是真空，另一半是 **GitHub 在丢弃 schedule 事件**
 
-📖 **正文（49 行）搬进 `.claude/skills/tennis-pipeline-ops/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是子目录，正文在 skill 里。
+📖 **tennis-pipeline-ops** · 正文 49 行
 
-### ⭐⭐ 2026-08-27「编排器 25 小时没点过 run」：一半是真空，另一半是 **GitHub 在丢弃 schedule 事件**
 ### ⭐⭐ 2026-08-27 字幕分行/分屏/TTS 断句的机器味清理：五处根子一次修掉
 
-📖 **正文（171 行）搬进 `.claude/skills/tennis-video-craft/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是这一节的子目录，正文在 skill 里。
+📖 **tennis-video-craft** · 正文 171 行
 
 #### ⭐⭐ 2026-08-31 第二轮：**两处贪心**——从左往右塞满，把尾巴挤成三个字
 ##### ⭐⭐ 而这次真正的教训：**改一个全库都要走的算法，只拿四个例子对比过就合并了**
 ### ⚠️⚠️ 2026-08-27 第一条真 pending 草稿把 reel-auto-ready 炸了：import 一个工具不许要求教材在盘上
 
-📖 **正文（32 行）搬进 `.claude/skills/tennis-pipeline-ops/SKILL.md`** —— 做这类工作前先用 Skill 工具加载它。以下是子目录，正文在 skill 里。
-
-### ⚠️⚠️ 2026-08-27 第一条真 pending 草稿把 reel-auto-ready 炸了：import 一个工具不许要求教材在盘上
+📖 **tennis-pipeline-ops** · 正文 32 行
