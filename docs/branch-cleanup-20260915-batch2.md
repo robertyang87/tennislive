@@ -1,4 +1,30 @@
-# 2026-09-15 第二批：已关 PR 的分支清理名单
+# 2026-09-15 第二批：已关 PR 的分支清理（**已执行**）
+
+**327 → 5 条**（main ＋ 三个还开着的 PR ＋ 当时的工作分支）。
+
+## ⭐ 最终的账：**main 自己只有 1.02 GiB**
+
+一路量下来：
+
+| 量的是什么 | 体积 |
+|---|---|
+| purge 之前的 `.git` | 3.0 GB |
+| **只 clone main（全 history）** | **1.02 GiB** ← purge 真正的成绩 |
+| 全量 clone（带上所有分支） | 3.05 GiB |
+
+**purge 掉了三分之二。** 全量 clone 里多出来的那 2 GB，是剩下三条分支钉着的
+——它们基于 purge 之前的 main，各自还带着已经从 main 全史抹掉的图：
+
+    codex/production-review-20260909                      7631 张
+    claude/grand-slam-qualifier-best-performance-z4ogyg   5151 张
+    claude/tennis-news-video-ideas-ftpd2r                 5057 张
+
+⚠️ **那三条不是残枝，是还开着的活**（#824 一份生产复盘、#674 一版等着看 spec 的
+内容、#634 一条渲完没发的样板片 ＋ 一个 skill 目录）。它们合并、关闭或 rebase 到
+重写后的 main，那 2 GB 才会跟着走——**那是内容决定，不是清理动作。**
+
+⚠️ 而 **CI 走的从来不是全量 clone**：`--depth 1 --single-branch` 现在 20 秒 / 1.6G，
+那一维早就不受这三条分支影响了。
 
 上一批清掉 310 条残枝之后，全新 clone 只从 3.44 GiB 掉到 3.26 GiB——**剩下的体积
 不是残枝，是 15 个还开着的 PR 的分支**，它们基于 purge 之前的 main，整份旧历史都在上面。
