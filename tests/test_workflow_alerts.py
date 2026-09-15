@@ -725,17 +725,25 @@ def test_不提交产物也不发Release的工作流不许要写权限():
             continue
         commits = "git commit" in body
         releases = bool(re.search(r"gh release|action-gh-release", body))
-        # ⚠️ **第三个正当理由，2026-09-15 登记的**：**删 ref**。
+        # ⚠️ **删 ref 是第三个正当理由**（2026-09-15 登记）。当时
         # `branch-cleanup-oneshot.yml` 拿 `gh api -X DELETE …/git/refs/heads/…`
-        # 清遗留分支，那同样吃 `contents: write`，而它既不 commit 也不发 Release
-        # ——于是被这条判据判成越权，报错还教人把它改成 `contents: read`，
-        # 照做的话每一次删除都会 403，而**403 被 `>/dev/null 2>&1` 吞掉之后
-        # 长得就像「删过了」**（做这次清理的会话正是这么被自己骗过一次：批量
-        # 删除打了 8 个 ✅，而分支一条没少）。
+        # 清 310 条遗留分支，那同样吃 `contents: write`，而它既不 commit 也不发
+        # Release——于是被这条判据判成越权，报错还教人改成 `contents: read`，
+        # 照做的话每一次删除都会 403，而 **403 被 `>/dev/null 2>&1` 吞掉之后
+        # 长得就像「删过了」**（那个会话正是这么被自己骗过一次：批量删除打了
+        # 8 个 ✅，而分支一条没少）。
         #
-        # 和 `test_actions_write_permission.py` 里 `orchestrate.yml` 那次同一个
-        # 处置：**不放宽成「谁要谁拿」，是把新理由显式登记进来**，两个方向照旧
-        # 都钉——给了就必须落在这三类里的某一类。
+        # ⚠️ **那条工作流跑完就删了，所以这一支现在零命中——故意留着**：
+        # 和上面「发 Release 那一支是故意留着的」同一个理由，下一条要删 ref 的
+        # 工作流不该再被误判一次。**零命中的分支不等于没用的分支**，但也**不许
+        # 假装它验过了**：它现在没有活的样本。
+        #
+        # 处置照 `test_actions_write_permission.py` 里 `orchestrate.yml`
+        # 2026-08-16 那次：**不放宽成「谁要谁拿」，是把新理由显式登记进来**。
+        #
+        # ⚠️ 这一行**删不得**：下面那个 `and` 会短路，`commits` 为真时根本求值不到
+        # 它，于是「定义没了」在 pytest 里是一片绿——改这段注释时我真把它删过一次，
+        # 是 `test_没有名字是凭空来的`（ruff F821）逮出来的。
         deletes_refs = bool(re.search(r"-X\s+DELETE[^\n]*git/refs", body))
         if not commits and not releases and not deletes_refs:
             offenders.append(path.name)
