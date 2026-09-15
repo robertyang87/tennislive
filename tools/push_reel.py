@@ -57,6 +57,8 @@ from tennislive.render.hashtags import (  # noqa: E402
 )
 from tennislive.render.pushmsg import (  # noqa: E402
     _PAGES,
+    XHS_BODY_MAX,
+    split_xhs,
     to_copy_page,
     trigger_pages_build,
 )
@@ -75,7 +77,10 @@ TITLE_MAX = 20
 SUMMARY_MAX = 13
 # 小红书正文那一格的硬上限。超了**粘不进去**，复制页的按钮点了也没用。
 # 不是编辑口味，是平台定的——要长就去提炼，别来改这个数。
-BODY_MAX = 1000
+# ⚠️ **出处在 `pushmsg.XHS_BODY_MAX`，这儿只是个别名。** 2026-09-15 之前这儿
+# 自己写着一个 1000，而解说片那条线（走 `to_copy_page`）压根没有这道闸——
+# 「一个数写两处必分叉」，而这次分叉的样子是**一条线拦得住、另一条线拦不住**。
+BODY_MAX = XHS_BODY_MAX
 # 封面海报的文件名，和 `build_match_reel.POSTER_NAME` 是同一个。推送正文的
 # 第一屏就是它——**没有它的推送只有两个按钮，看不出这是谁打谁**。
 POSTER_NAME = "poster.jpg"
@@ -603,18 +608,15 @@ def split_copy(copy_text: str) -> tuple[str, str]:
     ⚠️ **2026-08-15 起正文里不再有 AI 生成合成内容标识**（账号所有者：
     「以后不要出现这些东西」，见 `render.ai_disclosure` 顶上那段）。所以这
     1000 字**整个都是正文自己的**，不用再从里面扣 47 字。
+
+    ⚠️ **2026-09-15 起实现搬进了 `pushmsg.split_xhs`，这儿只剩一层委托。**
+    原因是这道闸当时只护着竖版短片这一条线：解说片走
+    `cli.py` → `explainer_xiaohongshu()` → `to_copy_page()`，一道长度闸都不过，
+    于是 `second-serve-clock` 带着 1118 字的正文发了出去。规矩是跨线的（同一个
+    小红书账号、同一个 1000 字的格子），而闸是按线装的——收进四条线共用的那个
+    出口才护得全。
     """
-    lines = copy_text.splitlines()
-    title = lines[0].strip() if lines else ""
-    start = 2 if len(lines) > 1 and not lines[1].strip() else 1
-    body = "\n".join(lines[start:]).strip()
-    if len(body) > BODY_MAX:
-        raise SystemExit(
-            f"小红书正文 {len(body)} 字，超过 {BODY_MAX} 字上限，粘不进去。\n"
-            "别放宽这个数——它是平台定的，不是可调的。\n"
-            "把原文整段搬进正文正是超标的原因：\n"
-            "前面写提炼过的要点、总结和给读者的启发，后面只留最值得抄的那几句原话。")
-    return title, body
+    return split_xhs(copy_text)
 
 
 def poster_url(outdir: Path, name: str = POSTER_NAME) -> str:

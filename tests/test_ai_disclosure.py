@@ -47,6 +47,18 @@ from tennislive.render.ai_disclosure import (
 # 判据就锚在这个谓词上。它**窄**：`video/pipeline.py` 切字幕 cue 用的是
 # `lines[2:]`、`qa.py` 用的是 `lines[1:]`，两个都不含这个谓词，不会被误伤。
 _SPLIT_MARK = "not lines[1].strip()"
+# ⚠️ **委托也算一个切法出口。** 2026-09-15 把那套切法收进
+# `pushmsg.split_xhs`（1000 字的闸要四条线共用，见它的 docstring）之后，
+# `to_copy_page` 和 `push_reel.split_copy` 里就只剩一行委托、不再含
+# `_SPLIT_MARK`——**而它们照样是发布出口**：
+#
+#     def split_copy(copy_text):
+#         title, body = split_xhs(copy_text)
+#         return title, body + AI_DISCLOSURE     # ← 只认 _SPLIT_MARK 就抓不到
+#
+# 只按「谁自己写了那套切法」推导，会在实现收敛的那一刻**静静地少扫两个出口**，
+# 而少扫的样子是一片绿灯。谓词要跟着实现走。
+_DELEGATE_MARK = "split_xhs("
 
 # 扫哪些文件。`tools/` 只扫 push_reel——别的工具不发正文，整个 tools 扫进来
 # 只会制造误伤（判据宁可窄，不可宽）。
@@ -89,7 +101,7 @@ def _copy_splitters() -> dict[str, str]:
             if not isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
                 continue
             code = _code_without_docstrings(node)
-            if _SPLIT_MARK in code:
+            if _SPLIT_MARK in code or _DELEGATE_MARK in code:
                 found[f"{path.relative_to(ROOT)}::{node.name}"] = code
     return found
 
@@ -105,8 +117,14 @@ def test_不许再往发出去的文案里加AI标识():
     常量名：只扫函数名的话，有人手写 `text += AI_DISCLOSURE` 就绕过去了。
     """
     splitters = _copy_splitters()
-    # 判据自己的判据：主语没了要出声，而不是变成一条恒真的绿灯。今天是七处，
+    # 判据自己的判据：主语没了要出声，而不是变成一条恒真的绿灯。今天是**八处**，
     # 分布在 pushmsg / knowledge / cli / push_reel 四个文件里。
+    # ⚠️ 2026-09-15 之前是七处：那天把切法收进 `pushmsg.split_xhs`，
+    # `to_copy_page` 和 `split_copy` 变成只剩一行委托——**出口一个没少，
+    # 而只认 `_SPLIT_MARK` 的老谓词会少扫掉这两处**（文件数当场从 4 掉到 3，
+    # 正是下面那条断言报出来的）。谓词跟着实现走之后反而多覆盖了一处
+    # （`split_xhs` 自己）。**撞上这两条断言时先问一句：是推导范围缩了，
+    # 还是实现收敛了？** 前者要修谓词，后者才轮得到动这两个数。
     assert len(splitters) >= 6, (
         f"只推导出 {len(splitters)} 处切法：{sorted(splitters)}。"
         "谓词大概变了，判据要跟着主语走")
