@@ -5,7 +5,6 @@
     tennislive results --date yesterday  # 昨日赛果
     tennislive schedule --date tomorrow  # 明日赛程
     tennislive live                      # 进行中的比赛
-    tennislive digest                    # 生成今日内容包（公众号+小红书+卡片图）
     tennislive publish wechat --dir output/2026-07-16 [--publish]
     tennislive publish pushplus --dir output/2026-07-16
 """
@@ -759,11 +758,7 @@ def cmd_content(args) -> int:
 # ---------- 发布 ----------
 
 def cmd_publish_wechat(args) -> int:
-    from .publish.wechat_mp import (
-        WeChatError,
-        publish_article,
-        publish_image_post,
-    )
+    from .publish.wechat_mp import WeChatError, publish_image_post
     from .render.terminal import console
 
     d = Path(args.dir)
@@ -779,43 +774,29 @@ def cmd_publish_wechat(args) -> int:
     )
 
     try:
-        if args.style == "pic":
-            # 小红书式图片消息：竖版卡片轮播 + 文案
-            xhs_f = d / "xiaohongshu.txt"
-            if not cards:
-                console.print(f"[red]{cards_dir} 里没有卡片图[/red]")
-                return 1
-            content = ""
-            if xhs_f.exists():
-                # 切法用全仓库那一个惯用法（空行才跳两行）：原来写死跳两行，
-                # 文案没空行时会把正文第一句一起吃掉——而那个错不报错。
-                lines = xhs_f.read_text(encoding="utf-8").splitlines()
-                body_start = 2 if len(lines) > 1 and not lines[1].strip() else 1
-                content = "\n".join(lines[body_start:]).strip()
-            result = publish_image_post(
-                title=title,
-                content=content,
-                images=cards,
-                do_publish=args.publish,
-            )
-        else:
-            html_f = d / "wechat.html"
-            if not html_f.exists():
-                console.print(f"[red]{html_f} 不存在，请先运行 tennislive digest[/red]")
-                return 1
-            cover = next((p for p in cards if "cover" in p.name), None)
-            if cover is None:
-                console.print("[red]找不到封面卡片（图文消息必须有封面）[/red]")
-                return 1
-            content_images = [p for p in cards if "cover" not in p.name]
-            result = publish_article(
-                title=title,
-                html_content=html_f.read_text(encoding="utf-8"),
-                cover_image=cover,
-                content_images=content_images,
-                digest=title,
-                do_publish=args.publish,
-            )
+        # 只剩图片消息这一种：竖版卡片轮播 + 文案。
+        # ⚠️ 传统「图文消息」那条路 2026-09-15 删了——它读 `wechat.html`，而写这个
+        # 文件的 `render/wechat.py` 是**日报时代的渲染器**，日报 2026-07-31 停产之后
+        # 就没有任何东西再生成它了。那半条路的报错还写着「请先运行 tennislive digest」，
+        # 而那个命令本身也早就删掉了：**一条报错指向不存在的命令，读的人会去查一个
+        # 不存在的东西**。
+        xhs_f = d / "xiaohongshu.txt"
+        if not cards:
+            console.print(f"[red]{cards_dir} 里没有卡片图[/red]")
+            return 1
+        content = ""
+        if xhs_f.exists():
+            # 切法用全仓库那一个惯用法（空行才跳两行）：原来写死跳两行，
+            # 文案没空行时会把正文第一句一起吃掉——而那个错不报错。
+            lines = xhs_f.read_text(encoding="utf-8").splitlines()
+            body_start = 2 if len(lines) > 1 and not lines[1].strip() else 1
+            content = "\n".join(lines[body_start:]).strip()
+        result = publish_image_post(
+            title=title,
+            content=content,
+            images=cards,
+            do_publish=args.publish,
+        )
     except WeChatError as e:
         console.print(f"[red]{e}[/red]")
         return 1
@@ -837,11 +818,12 @@ def cmd_publish_pushplus(args) -> int:
     d = Path(args.dir)
     title_f = d / "wechat_title.txt"
     xhs_f = d / "xiaohongshu.txt"
-    # 优先用手机推送专用模板；老目录没有时回退公众号 HTML
-    push_f, html_f = d / "push.html", d / "wechat.html"
-    src = push_f if push_f.exists() else html_f
+    # ⚠️ 原来这儿会在 push.html 缺席时回退到 `wechat.html`——那个回退 2026-09-15
+    # 删了：日报停产之后没有任何东西再生成 wechat.html，回退过去只会把「产物没生成」
+    # 报成「另一个也不存在的文件不存在」。
+    src = d / "push.html"
     if not src.exists():
-        console.print(f"[red]{src} 不存在，请先运行 tennislive digest[/red]")
+        console.print(f"[red]{src} 不存在[/red]")
         return 1
     title = "网球时差"
     if xhs_f.exists():
@@ -1152,12 +1134,6 @@ def build_parser() -> argparse.ArgumentParser:
     spw = pub_sub.add_parser("wechat", help="公众号：上传素材并创建草稿")
     spw.add_argument("--dir", required=True, help="digest 生成的内容目录，如 output/2026-07-16")
     spw.add_argument("--publish", action="store_true", help="创建草稿后直接提交发布")
-    spw.add_argument(
-        "--style",
-        choices=["pic", "article"],
-        default="pic",
-        help="pic=图片消息（小红书式竖图+文字，默认）；article=传统图文",
-    )
     spp = pub_sub.add_parser("pushplus", help="通过 PushPlus 推送到自己微信")
     spp.add_argument("--dir", required=True, help="digest 生成的内容目录")
     spc = pub_sub.add_parser("content", help="发送已提交的内容待发布包")
