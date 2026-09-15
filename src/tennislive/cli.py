@@ -105,94 +105,6 @@ def cmd_today(args) -> int:
 
 # ---------- 内容生成 ----------
 
-def cmd_knowledge_adhoc(args) -> int:
-    """按指定 slug 单独生成一篇知识帖，不占用当天常规知识帖的位置。
-
-    可指定 slug 从预先写好、事实核验过的选题池里精确选取；留空 --slug
-    则复用常规每日流程同一套自动选题逻辑
-    （tournament_story.tournament_story_candidates）——按当日真实赛事/
-    球员热度、时效性与冷却期排序候选，逐个尝试配图，配图不达标的候选
-    自动跳过换下一个，直到找到能完整发布的选题为止，无需人工挑 slug。
-    知识帖要求可核实的事实与已授权配图，不支持凭空生成全新话题。
-    """
-    from .render.knowledge import generate_knowledge_package
-    from .render.terminal import console
-    from .render.tournament_story import (
-        VISUAL_BACKOFF_DAYS,
-        clear_visual_backoff,
-        find_story_by_slug,
-        mark_adhoc_knowledge_published,
-        mark_story_used,
-        mark_visual_backoff_from_report,
-    )
-
-    def _backoff_rejected(outdir: Path, today) -> None:
-        """把这一趟被素材闸拒掉的候选记进退避——没有这一步，明天的排序
-        还会把同样的坏候选端到最前面（2026-08-18~08-24 六天同因拦停）。"""
-        slugs = mark_visual_backoff_from_report(outdir, today)
-        if slugs:
-            console.print(
-                f"[yellow]素材预检拒掉的候选已记入 {VISUAL_BACKOFF_DAYS} 天退避："
-                f"{'、'.join(slugs)}[/yellow]")
-
-    story = None
-    if args.slug:
-        story = find_story_by_slug(args.slug)
-        if story is None:
-            console.print(f"[red]未找到 slug 为 “{args.slug}” 的选题。[/red]")
-            return 2
-        if not story.image.exists():
-            console.print(f"[red]选题 “{args.slug}” 缺少配图素材：{story.image}[/red]")
-            return 2
-
-    d = parse_date_arg(args.date)
-    if story is not None:
-        # 指定 slug 时选题已经定死，下游只会用 digest.today 取日期（拼标题、
-        # 校验"截至<年份>"这类时效claims）——不会碰 results/live/schedule/rankings。
-        # build_digest 要 ESPN 和 SofaScore 两个外部源都通；任一被限流/403，
-        # 就会把一篇跟当日赛程毫无关系的选题一起拖死（真实事故：两边同一天都
-        # 403，run 31263560107）。指定 slug 就不必付这个代价，直接用一个只带
-        # 日期的 digest。
-        digest = Digest(today=d)
-    else:
-        try:
-            digest = build_digest(d, prefer=args.source)
-        except SourceError as e:
-            console.print(f"[red]抓取失败：{e}[/red]")
-            return 1
-
-    outdir = Path(args.outdir)
-    try:
-        generated = generate_knowledge_package(digest, outdir, theme=args.theme, story=story)
-    except Exception as e:  # noqa: BLE001 - surface the real reason before failing
-        console.print(f"[red]知识帖生成失败：{e}[/red]")
-        # ⚠️ 失败也要记退避，而且 data/story_state.json 要由工作流的失败
-        # 分支提交回仓库（knowledge-adhoc.yml「失败也提交素材退避」那步）
-        # ——不落库的话这份记忆只活在 runner 上，明天照旧同因拦停。
-        _backoff_rejected(outdir, digest.today)
-        detail_path = outdir / "visual_sources.json"
-        if detail_path.is_file():
-            console.print(f"[yellow]失败详情（{detail_path}）：[/yellow]")
-            console.print(detail_path.read_text("utf-8"))
-        return 2
-    if generated is None:
-        reason = f"{outdir}" if args.slug else "没有找到时效匹配、配图达标的候选选题（已按热度试遍候选池）"
-        console.print(f"[red]知识帖生成失败：{reason}[/red]")
-        return 2
-
-    # 成功换题时，被拒的候选同样记退避（拒绝是事实，跟这一趟最终成没成无关）；
-    # 选中的这条如果曾在退避里，摘掉——素材包显然已经够格了。
-    _backoff_rejected(outdir, digest.today)
-    clear_visual_backoff(generated.slug)
-    mark_story_used(generated.slug, digest.today)
-    # A deliberate/hotspot ad-hoc post claims today's knowledge slot so the
-    # daily digest won't auto-select a second, unrelated knowledge post on top
-    # of it. Ad-hoc itself never checks this marker — a hotspot can always ship.
-    mark_adhoc_knowledge_published(digest.today)
-    console.print(f"[green]知识帖已生成：{outdir}（slug={generated.slug}）[/green]")
-    return 0
-
-
 def cmd_flash_card(args) -> int:
     """生成一张"单图快讯卡"（及时新闻 → 一张图即时输出），并附小红书文案。
 
@@ -1106,22 +1018,6 @@ def build_parser() -> argparse.ArgumentParser:
     sp.add_argument("--source", default="auto")
     sp.add_argument("--outdir", default="output")
     sp = sub.add_parser(
-        "knowledge-adhoc",
-        help="按指定 slug 单独生成一篇知识帖（不占用当天常规知识帖位置）",
-    )
-    sp.add_argument(
-        "--slug",
-        default="",
-        help="选题池里的 slug（见 tournament_story.py 的 STORIES）；留空则按当日热度/时效自动选题并在配图不达标时自动换下一个候选",
-    )
-    sp.add_argument("--date", default="today", help="基准日期（北京时间，默认 today）")
-    sp.add_argument("--outdir", default="output/knowledge_adhoc", help="输出目录")
-    sp.add_argument("--source", choices=["espn", "sofascore"], help="优先数据源")
-    sp.add_argument(
-        "--theme", choices=["dark", "light"], default="dark", help="卡片主题（默认 dark）"
-    )
-
-    sp = sub.add_parser(
         "flash-card",
         help="单图快讯卡：一条及时网球新闻 → 一张品牌图 + 小红书文案（敏感话题默认转人工）",
     )
@@ -1291,8 +1187,6 @@ def main(argv: list[str] | None = None) -> int:
         return cmd_content(args)
     if args.command == "coverage":
         return cmd_coverage(args)
-    if args.command == "knowledge-adhoc":
-        return cmd_knowledge_adhoc(args)
     if args.command == "flash-card":
         return cmd_flash_card(args)
     if args.command == "brief":
