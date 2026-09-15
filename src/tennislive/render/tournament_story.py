@@ -2496,6 +2496,27 @@ STORIES = STORIES + (
             "ATP 自 2023 年起在新生代总决赛试行一发至二发最多 8 秒并配可视计时器，"
             "2024、2025 两届沿用；25 秒计时器本身亦于 2017 年首现于该赛事，"
             "2018 年进入大满贯正赛，2019 年铺开至巡回赛。",
+            # ⚠️ 这三组数逐个从原文核过（摘要只能用来找论文，不能当出处——
+            # CLAUDE.md「12040」那条记的就是照抄摘要的代价）：
+            #   Kolbinger, Großmann & Lames，Journal of Sports Analytics 2018，
+            #     doi:10.3233/JSA-180277，2016 澳网男单 3475 个发球，20 秒限制。
+            #     摘要原话：average time between points was 21.5 seconds and time
+            #     rule violations were found for 58.5% of the serves；受罚的
+            #     only two (0.1%)，发生在 23.5 和 25.6 秒。
+            #   Mühlberger & Kolbinger，Journal of Human Sport and Exercise 16(3)，
+            #     doi:10.14198/jhse.2021.163.05，2018 美网男单 2135 分，25 秒计时器。
+            #     摘要原话：the share of rule violations decreased (26.3%), but the
+            #     average time did not (21.6s)。
+            #   Jeff Sackmann，Tennis Abstract《Another Slam, Another Pointless
+            #     Serve Clock》2019-01-31，澳网男单 2018→2019：40.2→41.0 秒
+            #     （女子 40.4→40.3）。⚠️ 它量的是**整分**（含回合），和上面
+            #     21 秒那个**分间间隔**不是一个口径，写在一起必须点明。
+            "计时器并未让比赛变快：Kolbinger 等对 2016 年澳网男单 3475 个发球的统计显示，"
+            "20 秒限制下超时率 58.5%、分间平均 21.5 秒，而主裁全程仅判罚 2 次；"
+            "Mühlberger 与 Kolbinger 对 2018 年美网男单 2135 分的统计显示，"
+            "改用 25 秒计时器后超时率降至 26.3%，分间平均仍为 21.6 秒。"
+            "另据 Tennis Abstract 按整分统计，澳网男子每分平均耗时由 2018 年的 40.2 秒"
+            "升至 2019 年的 41.0 秒。",
         ),
         moments=(
             ChampionMoment(
@@ -2569,7 +2590,9 @@ STORIES = STORIES + (
         image_keys=(),
         source_label=(
             "LTA 裁判手册 / ITF 规则 29a / ESPN / AP / AFP / "
-            "Served with Andy Roddick / Next Gen ATP Finals"
+            "Served with Andy Roddick / Next Gen ATP Finals / "
+            "Journal of Sports Analytics 2018 / "
+            "Journal of Human Sport and Exercise 2021 / Tennis Abstract"
         ),
         image_credit="Darren Carroll/USTA · usopen.org 官方图",
         source_url=(
