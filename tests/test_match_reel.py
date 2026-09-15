@@ -16142,3 +16142,82 @@ def test_合语音喂的是speakable之后那份不是原文(monkeypatch, tmp_pa
     fed.clear()
     reel.synth_outro(tmp_path, "v", "+0%")
     assert fed and fed[-1] == reel.speakable(reel.OUTRO_NARRATION), "片尾那句没过 speakable"
+
+
+def test_证据卡不许压在字幕上():
+    """**居中铺的卡 vs 上锚的字幕——竖图证据卡几何上必然压字幕。**
+
+    `cut_still_segment` 把整屏证据卡**居中**铺进画布（最多 94%×88%），而字幕是
+    **上锚**在 `_REEL_MARGIN_V`。两个数各管各的，于是卡一旦是被**高度**卡住的
+    （细长的竖图），底边恒定落在字幕下面——**跟具体是哪张图无关**。
+
+    来路：`wawrinka-farewell-story` 第一版把一张 1132×1788 的整屏截图当证据卡，
+    渲出来「最后一句是——永远感激，永远纽约」那行字幕**正好压在它引的那句证据上**。
+
+    ⚠️ **四道本地闸一道都没响**：`--dry-run` 只看 spec 形状、`--check-narration`
+    只量长度、预览工具**显式跳过整屏证据段**（它没有源片窗口）、`check_reel_landed`
+    量的是画布和响度。**只有把成片拉回来抽帧才看得见**——这正是这道闸存在的理由。
+
+    ⚠️ 2026-09-15 从 #634 移植（那条 PR 不能 merge，见 PR 正文）。判据钉三头：
+    竖图要被拦、正常比例的卡不许误伤、而且**这道闸要真的接在 `validate_spec` 上**
+    ——一道没有调用方的闸和没有闸是一回事（这个仓库栽过）。
+    """
+    import tempfile  # noqa: PLC0415
+
+    from PIL import Image  # noqa: PLC0415
+
+    reel = _reel()
+
+    with tempfile.TemporaryDirectory() as tmp:
+        tall = Path(tmp) / "tall.png"
+        Image.new("RGB", (1132, 1788), "white").save(tall)
+        wide = Path(tmp) / "wide.png"
+        Image.new("RGB", (1600, 900), "white").save(wide)
+
+        # ① 竖图：必须被拦，而且要说清该裁到多高
+        msg = reel.evidence_card_overlaps_subtitle(
+            {"segments": [{"image": str(tall)}]})
+        assert msg, "1132×1788 的整屏证据卡没被拦——这正是 wawrinka 那次的那张"
+        assert "裁矮" in msg, "报错要给出路（裁矮），不是只说「不行」"
+        assert "subtitle_top" in msg, (
+            "要明说别去改 `subtitle_top`——那是整条片子的，为一屏改它会把其余"
+            "每一段的字幕一起抬走")
+
+        # ② 横图：不许误伤（判据宁可窄不可宽）
+        assert not reel.evidence_card_overlaps_subtitle(
+            {"segments": [{"image": str(wide)}]}), "16:9 的卡被误伤了"
+
+    # ③ ⚠️ 这道闸必须真的接在 validate_spec 上——没有调用方的闸等于没有闸
+    src = inspect.getsource(reel.validate_spec)
+    assert "evidence_card_overlaps_subtitle(" in src, (
+        "闸写出来了却没人调——这个仓库栽过：`find_point_ends` 那个工具一直是"
+        "零调用方，而「写了」和「跑过」是两件事")
+
+    # ④ ⚠️ **豁免表的自检**：表里每个 slug 必须真的还在违规。
+    #
+    # 修好了却留在表里，它就会**悄悄替新的违规兜底**——一张只进不出的豁免表
+    # 和一条恒真的闸是同一个毛病，而这个仓库明写着「人会写豁免去压噪音，
+    # 把闸唯一想拦的那一类一起关掉」。
+    import json  # noqa: PLC0415
+
+    for slug in reel._EVIDENCE_CARD_LEGACY:
+        path = Path("specs/reels") / f"{slug}.json"
+        assert path.is_file(), f"豁免表里的 {slug} 已经没有 spec 了，该从表里删掉"
+        spec = json.loads(path.read_text("utf-8"))
+        bare = {k: v for k, v in spec.items() if k != "slug"}
+        assert reel.evidence_card_overlaps_subtitle(bare), (
+            f"豁免表里的 {slug} **已经不违规了**——把它从 `_EVIDENCE_CARD_LEGACY` "
+            "里删掉。留着它等于给未来的违规留了个后门")
+
+    # ⑤ 全库扫一遍：豁免表之外不许有新的违规（新片子必须守住这道闸）
+    fresh = []
+    for path in sorted(Path("specs").rglob("*.json")):
+        try:
+            spec = json.loads(path.read_text("utf-8"))
+        except Exception:  # noqa: BLE001
+            continue
+        if isinstance(spec, dict) and reel.evidence_card_overlaps_subtitle(spec):
+            fresh.append(path.name)
+    assert not fresh, (
+        f"这几条 spec 的证据卡会压字幕：{fresh}。"
+        "把图裁矮（顺带它会被放得更大、更读得清），别改 `subtitle_top`")

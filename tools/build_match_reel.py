@@ -6742,6 +6742,83 @@ def ending_payoff_problem(
         "第一波庆祝必须真的出现在正文里。")
 
 
+#: 装闸之前**已经发出去**的两条，按「已发的不重渲」豁免（消息收不回来）。
+#:
+#: ⚠️ **只许减不许加**，表自带自检（`test_证据卡不许压在字幕上`）：每个 slug
+#: 必须**真的还在违规**——修好了就该从表里删掉，不然它会悄悄替新的违规兜底，
+#: 那正是「写豁免去压噪音，把闸唯一想拦的那类一起关掉」的老路。
+#:
+#: ⚠️ 这两条本身就是这道闸的价值证明：#634 装闸那天扫 `specs/` 是**零命中**，
+#: 三周后有两条——**它们发出去之前本来能被拦住**。
+_EVIDENCE_CARD_LEGACY = frozenset({
+    "osaka-four-slams-2026",   # 第 13 段 2481×3097
+    "zheng-usopen-icons",      # 第 1 段 1080×1440
+})
+
+
+def evidence_card_overlaps_subtitle(spec: dict) -> str:
+    """整屏证据段的卡片底边不许压到字幕上。返回一句话或空串。
+
+    `cut_still_segment` 把卡**居中**铺进 1080×1440（最多占 94%×88%），而字幕是
+    **上锚**在 `_REEL_MARGIN_V`。两个数各管各的，于是够高的卡会直接盖住字幕。
+
+    ⚠️ **它是一整类，不是一次手滑**：卡一旦是被**高度**卡住的（细长的竖图），
+    铺出来必然是 1267 高、顶边 86、底边 **1353**——而字幕在 1284。也就是说
+    **任何竖图证据卡都会压字幕**，跟具体是哪张图无关。
+
+    来路：`wawrinka-farewell-story` 第一版把那篇告别帖的整屏截图
+    （1132×1788）当证据卡，渲出来「最后一句是——永远感激，永远纽约」这行字幕
+    **正好压在时间戳行上**——旁白引的那句证据，被引它的那行字盖住了。
+    四道本地闸一道都没响：`--dry-run` 只看 spec 的形状、`--check-narration`
+    只量长度、预览工具**跳过整屏证据段**（它没有源片窗口）、`check_reel_landed`
+    量的是画布和响度。**只有把成片拉回来抽帧才看得见。**
+
+    出路是**把图裁矮**（顺带它会被放得更大、更读得清），不是挪字幕——
+    `subtitle_top` 是整条片子的，为一屏改它会把其余二十七段的字幕一起抬走。
+
+    装闸这天拿 `specs/` 扫过：11 张证据卡**零命中**，所以不需要豁免表。
+
+    ⚠️ 2026-09-15 从 #634 移植过来的——那条 PR 基于历史重写之前的 main，
+    **不能 merge**（合并会把整份旧历史重新挂回 main），所以只把这道闸重新落一次。
+    #634 里别的东西没跟着来，各有各的理由：**配乐那半被账号所有者 2026-08-29
+    的「第二种方案」推翻了**（现在是走平台曲库、不烧进片子，判据
+    `test_背景音乐默认走平台曲库不烧进片子` 钉着）；快放那半放开的是一个
+    它自己也没用上的能力。**只有这道闸拦的是几何上必然发生的一整类**。
+    """
+    if str(spec.get("slug") or "") in _EVIDENCE_CARD_LEGACY:
+        return ""          # 已发的不重渲，见 `_EVIDENCE_CARD_LEGACY`
+    margin = int(spec.get("subtitle_top", _REEL_MARGIN_V))
+    for index, seg in enumerate(spec.get("segments") or (), 1):
+        if not isinstance(seg, dict) or not seg.get("image"):
+            continue
+        path = Path(str(seg["image"]))
+        if not path.is_file():
+            continue          # 图不在归 parse_segments 报，别在这儿抢
+        try:
+            from PIL import Image  # noqa: PLC0415
+            width, height = Image.open(path).size
+        except Exception:  # noqa: BLE001 — 读不出尺寸不该把 dry-run 带崩
+            continue
+        scale = min(VIDEO_W * 0.94 / width, VIDEO_H * 0.88 / height)
+        fitted = int(height * scale)
+        bottom = (VIDEO_H - fitted) // 2 + fitted
+        if bottom <= margin:
+            continue
+        # 裁到多高才不压：底边 = (H-h)/2 + h ≤ margin → h ≤ 2*margin - H
+        room = 2 * margin - VIDEO_H
+        want = int(width * room / (VIDEO_W * 0.94))
+        return (
+            f"第 {index} 段那张证据卡 {width}×{height} 铺进画布之后底边落在 "
+            f"{bottom}px，而字幕上锚在 {margin}px——**字幕会压在卡上**。\n"
+            f"  卡是居中铺的、字幕是上锚的，两个数各管各的；竖图尤其躲不开"
+            f"（被高度卡住时底边恒为 {(VIDEO_H - int(VIDEO_H * 0.88)) // 2 + int(VIDEO_H * 0.88)}px）。\n"
+            f"  出路是**把图裁矮**：这个宽度下高度要 ≤ 约 {want}px"
+            f"（裁矮之后它还会被放得更大、更读得清）。\n"
+            f"  别去改 `subtitle_top` —— 那是整条片子的，为一屏改它会把其余"
+            f"每一段的字幕一起抬走。")
+    return ""
+
+
 def music_problem(spec: dict, base: Path = Path(".")) -> str | None:
     """背景音乐这一路的形状闸——**只读 spec 和磁盘，不碰源片**，所以
     `--dry-run` 0.2 秒就能报，不用等到第 5 分钟的混音那一步才炸。
@@ -6908,6 +6985,12 @@ def validate_spec(
     music = music_problem(spec)
     if music:
         raise ReelError(music)
+    # ⚠️ 排在 `parse_segments` **之前**：0.2 秒就报，别等渲完拉回成片抽帧才看见。
+    # 这道闸拦的是几何上必然发生的一整类（居中铺的卡 vs 上锚的字幕），
+    # 而四道本地闸一道都拦不住它——详见 `evidence_card_overlaps_subtitle`。
+    card = evidence_card_overlaps_subtitle(spec)
+    if card:
+        raise ReelError(card)
     segments = parse_segments(spec, urls, next(iter(urls)))
     raw_percent = [
         (index, seg.narration)
