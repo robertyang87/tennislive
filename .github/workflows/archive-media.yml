@@ -349,36 +349,67 @@ jobs:
           # 上，会把整条老历史重新拽进每一个 clone
           git push --force origin --tags
 
-      - name: 验收：clone 掉一个量级、老提交的图还活着
+      - name: 验收：重写真的生效了、已发推送的图还取得到
         if: inputs.mode == 'purge'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          # 全新 bare clone 的体积是「瘦下来了没有」唯一算数的判据
-          # （purge 前 .git 6.0 GB，判据是掉一个量级）
-          git clone --bare "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" /tmp/verify
-          du -sh /tmp/verify
-          # 「老提交还取得到」要拿真链接验：从重写后 HEAD 的复制页里抽最多
-          # 3 条钉了 40 位 SHA 的 jsDelivr 图片 URL。⚠️ jsDelivr 有缓存，
-          # 探它可能是缓存在答话——改写成 raw.githubusercontent.com 再探一次
-          # 才是「隐藏 ref 保住了老对象」的真判据。
-          RE='https://cdn\.jsdelivr\.net/gh/[^/@]+/[^/@]+@[0-9a-f]{40}/[^") ]+\.jpg'
-          URLS=$(grep -rhoE "$RE" output --include='*.html' 2>/dev/null | sort -u | head -3 || true)
+          # ⚠️⚠️ **这一步 2026-09-15 重写过，因为它上一版是恒真的、放行了一次真事故。**
+          #
+          # 那天 purge 之后**所有已发微信推送里的图当场 404**，而这一步打了
+          # 「验收通过」。三个缺陷叠在一起：
+          #
+          #   ① 正则写死 `cdn\.jsdelivr\.net` ＋ 40 位 SHA。而这个仓库的推送页
+          #      用的是 `gcore.jsdelivr.net/...@main/...`——**主机名可配**
+          #      （`TENNISLIVE_JSDELIVR_HOST`，默认早就是 gcore），**而且钉的是
+          #      分支不是 SHA**。于是一条都抽不到。
+          #   ② 抽不到只 `echo` 一句「空 ≠ 验过」然后**继续往下走**，`BAD` 保持 0。
+          #   ③ 体积只 `du -sh` 打印，**不断言**——所以「没瘦下来」也照样绿。
+          #
+          # **按分支钉死的链接才是 purge 会打断的那一种**（SHA 那种被 refs/keep/
+          # 引着，本来就不会断）。上一版偏偏只找 SHA 那种，等于专挑不会出事的验。
+          set -o pipefail
+
+          # ---- ① 重写真的生效了吗：全新 clone 的 main 上不许再有 output 媒体 ----
+          git clone --quiet --depth 1 --single-branch --branch main \
+            "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" /tmp/verify_main
+          LEFT=$(cd /tmp/verify_main && git ls-files 'output' | grep -cE '\.(mp4|webm|mov|jpg|jpeg|png)$' || true)
+          echo "重写后 main 上残留的 output 媒体：${LEFT} 个"
+          if [ "$LEFT" != "0" ]; then
+            echo "::error::重写没生效——main 上还有 ${LEFT} 个 output 媒体。回退见 ${KEEP_REF}"
+            exit 1
+          fi
+
+          # ---- ② 体积：打印，并说清它为什么可能没瘦 ----
+          git clone --quiet --bare "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" /tmp/verify
+          echo "全新 bare clone：$(du -sh /tmp/verify | cut -f1)"
+          BRANCHES=$(git -C /tmp/verify for-each-ref --format='%(refname)' refs/heads | wc -l)
+          echo "全新 depth-1 单分支 checkout（CI 走的就是这条）：$(du -sh /tmp/verify_main | cut -f1)"
+          # ⚠️ **filter-repo 只 force-push 了 main 和 tags**，遗留分支仍指着重写前的
+          # 历史、把老对象全钉着。2026-09-15 实测：main 树干净了，全量 clone 仍 3.5G，
+          # 因为有 ~700 条 claude/* codex/* 分支。所以「全量 clone 掉一个量级」
+          # **不是这一步能保证的事**，只打印不断言；真要瘦下来得另外清分支。
+          echo "远端分支数：${BRANCHES}（>50 的话全量 clone 不会明显变小：遗留分支还钉着旧历史）"
+
+          # ---- ③ 已发推送的图还取得到吗：这是唯一的安全性质 ----
+          # 主机名不写死（CLAUDE.md：「CDN 主机名一个地方定，判据别按 cdn. 写死」），
+          # ref 段既收 @main 这种分支引用，也收 40 位 SHA。
+          RE='https://[a-z]+\.jsdelivr\.net/gh/[^/@]+/[^/@]+@[^/]+/output/[^") ]+\.(jpg|jpeg|png)'
+          URLS=$(grep -rhoE "$RE" output --include='*.html' 2>/dev/null | sort -u | head -8 || true)
           if [ -z "$URLS" ]; then
-            echo "⚠️ 一条钉了 40 位 SHA 的 jsDelivr 图片 URL 都没抽到——空 ≠ 验过：这层「老提交还取得到」没验上，去老推送里挑一条图片链接手动探一次"
+            echo "::error::一条已发推送的图片链接都没抽到——**空 ≠ 验过**。这一层是整趟 purge 唯一的安全性质，抽不到样本就不能算验过，所以这里红而不是放行。回退见 ${KEEP_REF}"
+            exit 1
           fi
           BAD=0
           for u in $URLS; do
-            J=$(curl -s -o /dev/null -w '%{http_code}' -L -r 0-99 "$u" || echo 000)
-            RAW=$(printf '%s' "$u" | sed -E 's#^https://cdn\.jsdelivr\.net/gh/([^/@]+)/([^/@]+)@([0-9a-f]{40})/#https://raw.githubusercontent.com/\1/\2/\3/#')
+            # jsDelivr 有缓存，探它可能是缓存在答话；raw 才是真相。
+            RAW=$(printf '%s' "$u" | sed -E 's#^https://[a-z]+\.jsdelivr\.net/gh/([^/@]+)/([^/@]+)@([^/]+)/#https://raw.githubusercontent.com/\1/\2/\3/#')
             R=$(curl -s -o /dev/null -w '%{http_code}' -L -r 0-99 "$RAW" || echo 000)
-            echo "jsDelivr $J ｜ raw $R ← $u"
-            if [ "$R" != "206" ] && [ "$R" != "200" ]; then
-              BAD=1
-            fi
+            echo "raw ${R} ← ${u}"
+            if [ "$R" != "206" ] && [ "$R" != "200" ]; then BAD=1; fi
           done
           if [ "$BAD" = 1 ]; then
-            echo "::error::老提交上的图片从 raw 已经取不到——隐藏 ref 没保住老对象。回退命令：git push --force origin '${KEEP_REF}:refs/heads/main'"
+            echo "::error::已发推送里的图取不到了。**按分支钉死的链接（@main）会被 purge 直接打断**，refs/keep/ 只保住按 SHA 钉的那种。回退命令：git push --force origin '${KEEP_REF}:refs/heads/main'"
             exit 1
           fi
-          echo "验收通过：clone 体积见上，老提交的图片从 raw 仍取得到"
+          echo "验收通过：重写生效（main 上 0 个 output 媒体），已发推送的图仍取得到"
