@@ -1468,142 +1468,6 @@ def test_story_card_uses_spacious_single_flow(tmp_path):
     assert "网球冷知识" not in body
 
 
-def test_knowledge_package_is_standalone_post(tmp_path, sample_digest, monkeypatch):
-    from dataclasses import replace
-
-    from PIL import Image
-
-    from tennislive.render import knowledge
-    from tennislive.render.tournament_story import STORIES
-
-    fake_img = tmp_path / "story.jpg"
-    Image.new("RGB", (1200, 800), "white").save(fake_img)
-    story = replace(next(s for s in STORIES if s.slug == "umag"), image=fake_img)
-    monkeypatch.setenv("TENNISLIVE_VISUAL_FETCH", "off")
-    monkeypatch.setenv("TENNISLIVE_VISUAL_STRICT", "off")
-    monkeypatch.setattr(
-        knowledge,
-        "_screenshot_pages",
-        lambda pages, _theme: [
-            (kind, Image.new("RGB", (1080, 1440), "black"))
-            for kind, _body in pages
-        ],
-    )
-
-    selected = knowledge.generate_knowledge_package(
-        sample_digest,
-        tmp_path / "knowledge",
-        story=story,
-    )
-
-    assert selected is story
-    card_names = (
-        "card_00_knowledge.jpg",
-        "card_01_story.jpg",
-        "card_02_explainer.jpg",
-        "card_03_today.jpg",
-    )
-    assert all(
-        (tmp_path / "knowledge" / "cards" / card_name).exists()
-        for card_name in card_names
-    )
-    xhs = (tmp_path / "knowledge" / "xiaohongshu.txt").read_text("utf-8")
-    push = (tmp_path / "knowledge" / "push.html").read_text("utf-8")
-    copy = (tmp_path / "knowledge" / "copy.html").read_text("utf-8")
-    pinned = (tmp_path / "knowledge" / "pinned_comment.txt").read_text("utf-8")
-    assert xhs.startswith("📖")
-    assert any(label in xhs for label in ("🎬", "⚡", "👤", "🔎", "🕰️"))
-    assert "先猜" not in xhs and "记住这3点" not in xhs
-    assert "💬 " in xhs
-    assert "今天单独讲一个网球知识点" not in xhs
-    assert story.hero_fact in xhs
-    assert story.source_label not in xhs
-    assert all(f"/knowledge/cards/{card_name}" in push for card_name in card_names)
-    assert push.count("<img ") == 4
-    assert "第1张未显示？点此打开原图" in push
-    assert 'referrerpolicy="no-referrer"' in push
-    assert "/knowledge/copy.html" in push
-    assert "分别复制标题 / 正文 / 置顶评论" in push
-    assert "记住这3点" not in push
-    assert pinned in copy
-    story_data = __import__("json").loads(
-        (tmp_path / "knowledge" / "story.json").read_text("utf-8")
-    )
-    evidence = __import__("json").loads(
-        (tmp_path / "knowledge" / "evidence.json").read_text("utf-8")
-    )
-    visual_qa = __import__("json").loads(
-        (tmp_path / "knowledge" / "visual_qa.json").read_text("utf-8")
-    )
-    assert story_data["card_count"] == 4
-    assert evidence["story_slug"] == story.slug
-    assert evidence["claims"] and evidence["sources"]
-    visual_sources = __import__("json").loads(
-        (tmp_path / "knowledge" / "visual_sources.json").read_text("utf-8")
-    )
-    assert visual_qa["status"] == "pass"
-    assert visual_qa["photo_uses"] == 1
-    assert len(visual_qa["rendered_cards"]) == 4
-    assert visual_sources["status"] == "pass"
-    assert not (tmp_path / "knowledge" / "visuals").exists()
-
-
-def test_knowledge_adhoc_push_links_point_at_its_own_output_dir(
-    tmp_path, sample_digest, monkeypatch
-):
-    """An ad-hoc post's push.html must reference its own cards/copy page.
-
-    A hardcoded "knowledge" segment here would silently point every
-    knowledge-adhoc push at whatever story the same-day daily digest wrote
-    to output/<date>/knowledge/ instead of the story actually being pushed.
-    """
-    from dataclasses import replace
-
-    from PIL import Image
-
-    from tennislive.render import knowledge
-    from tennislive.render.tournament_story import STORIES
-
-    fake_img = tmp_path / "story.jpg"
-    Image.new("RGB", (1200, 800), "white").save(fake_img)
-    story = replace(next(s for s in STORIES if s.slug == "umag"), image=fake_img)
-    monkeypatch.setenv("TENNISLIVE_VISUAL_FETCH", "off")
-    monkeypatch.setenv("TENNISLIVE_VISUAL_STRICT", "off")
-    monkeypatch.setattr(
-        knowledge,
-        "_screenshot_pages",
-        lambda pages, _theme: [
-            (kind, Image.new("RGB", (1080, 1440), "black"))
-            for kind, _body in pages
-        ],
-    )
-
-    # A same-day daily digest post already sitting in the sibling
-    # "knowledge" directory, with the same card filenames but different
-    # (wrong, if ever referenced by the adhoc push) content.
-    sibling = tmp_path / "knowledge" / "cards"
-    sibling.mkdir(parents=True)
-    for card_name in (
-        "card_00_knowledge.jpg",
-        "card_01_story.jpg",
-        "card_02_explainer.jpg",
-        "card_03_today.jpg",
-    ):
-        Image.new("RGB", (1080, 1440), "red").save(sibling / card_name)
-
-    knowledge.generate_knowledge_package(
-        sample_digest,
-        tmp_path / "knowledge_adhoc",
-        story=story,
-    )
-
-    push = (tmp_path / "knowledge_adhoc" / "push.html").read_text("utf-8")
-    assert "/knowledge_adhoc/cards/card_00_knowledge.jpg" in push
-    assert "/knowledge_adhoc/copy.html" in push
-    assert "/knowledge/cards/" not in push
-    assert "/knowledge/copy.html" not in push
-
-
 def test_knowledge_deck_uses_one_verified_photo_and_structured_inner_pages(tmp_path):
     from dataclasses import replace
 
@@ -1638,8 +1502,14 @@ def test_knowledge_deck_uses_one_verified_photo_and_structured_inner_pages(tmp_p
     assert evaluate_knowledge_visuals(story, bodies)["status"] == "pass"
 
 
-def test_public_cards_and_copy_hide_source_credits_but_evidence_keeps_urls(sample_digest):
-    from tennislive.render.knowledge import _knowledge_evidence, knowledge_copy
+def test_public_cards_hide_source_credits(sample_digest):
+    """公开产物里一律不许露出图源署名。
+
+    ⚠️ 原名叫 `..._but_evidence_keeps_urls`，后半截盯的是知识帖生成器的
+    `_knowledge_evidence`——2026-09-15 图文知识帖停产，那个函数连同
+    `knowledge_copy` 一起删了，所以这条只剩「不许露署名」这一半。
+    主语还在（封面卡、知识帖卡、日报三种文本），不是空壳测试。
+    """
     from tennislive.render.tournament_story import STORIES
     from tennislive.render.webcards import cover_body, knowledge_deck_bodies
 
@@ -1665,7 +1535,6 @@ def test_public_cards_and_copy_hide_source_credits_but_evidence_keeps_urls(sampl
     public_outputs = [
         cover,
         *(body for _kind, body in deck),
-        knowledge_copy(story, sample_digest),
         to_markdown(sample_digest),
         to_html(sample_digest),
         to_post(sample_digest),
@@ -1685,9 +1554,6 @@ def test_public_cards_and_copy_hide_source_credits_but_evidence_keeps_urls(sampl
     assert all(
         marker not in output for output in public_outputs for marker in forbidden
     )
-    evidence = _knowledge_evidence(story, sample_digest)
-    assert evidence["sources"]
-    assert all(url.startswith("https://") for url in evidence["sources"])
 
 
 def test_visual_qa_rejects_internal_generation_labels(tmp_path):
@@ -1957,24 +1823,6 @@ def test_longest_match_deck_uses_event_specific_visuals_and_large_facts(tmp_path
     assert evaluate_knowledge_visuals(story, pages)["status"] == "pass"
 
 
-def test_hawkeye_publish_validation_rejects_stale_scope(sample_digest):
-    from dataclasses import replace
-
-    import pytest
-
-    from tennislive.render.knowledge import _validate_story_for_publish
-    from tennislive.render.tournament_story import STORIES
-
-    story = next(s for s in STORIES if s.slug == "hawkeye")
-    stale = replace(
-        story,
-        facts=story.facts[:-1] + ("目前只剩法网仍保留人工司线。",),
-    )
-
-    with pytest.raises(ValueError, match="事实校验失败"):
-        _validate_story_for_publish(stale, sample_digest)
-
-
 def test_longest_match_story_uses_official_cross_checked_facts():
     from urllib.parse import urlparse
 
@@ -2060,7 +1908,14 @@ def test_没有媒体搜索信号时台账要说自己走的是兜底那一支(s
 
 
 def test_knowledge_titles_are_specific_and_fit_xiaohongshu(sample_digest):
-    from tennislive.render.knowledge import knowledge_copy, knowledge_title
+    """每条「网球有故事」的标题都要具体、且塞得进小红书那 20 个字位。
+
+    ⚠️ 这是**名单型**判据：主语是 `STORIES` 这张表加上 `knowledge_title`，
+    两者都还活着（`tournament_story.py` 写 fixture 时的注释就指着这条测试）。
+    2026-09-15 图文知识帖停产删掉的是 `knowledge_copy`，所以原来跟在后面、
+    逐字核鹰眼那篇正文的半截一并去掉了——那半截的主语没了。
+    """
+    from tennislive.render.knowledge import knowledge_title
     from tennislive.render.tournament_story import STORIES
     from tennislive.render.xiaohongshu import xhs_title_len
 
@@ -2070,16 +1925,6 @@ def test_knowledge_titles_are_specific_and_fit_xiaohongshu(sample_digest):
     assert "很多人会答错" not in "\n".join(titles.values())
     assert "网球有故事｜误判催生网球鹰眼" in titles["hawkeye"]
     assert "的来路" in titles["alcaraz"]
-
-    hawkeye = next(story for story in STORIES if story.slug == "hawkeye")
-    post = knowledge_copy(hawkeye, sample_digest)
-    assert "🧠 先猜" not in post and "🎾 答案" not in post
-    assert "2004｜" in post and "2006｜" in post
-    assert not any(marker in post for marker in ("①", "②", "③", "④"))
-    assert "2D 视觉处理与 3D 三角测量" in post
-    assert "回放动画数秒内生成" not in post
-    assert "四大满贯只剩法网保留人工司线" in post
-    assert "今天单独讲一个网球知识点" not in post
 
 
 def test_all_knowledge_stories_use_semantic_markers_without_ordinals(tmp_path):
@@ -2157,43 +2002,6 @@ def test_cover_rejects_abbreviated_year_marker(tmp_path):
         )
 
 
-def test_all_knowledge_copy_is_plain_mobile_first_and_not_numbered():
-    from tennislive.render.knowledge import (
-        _validate_copy_for_publish,
-        knowledge_copy,
-    )
-    from tennislive.render.tournament_story import STORIES
-
-    digest = Digest(today=date(2026, 7, 22))
-    for story in STORIES:
-        copy = knowledge_copy(story, digest)
-        _validate_copy_for_publish(copy)
-        assert not any(marker in copy for marker in ("①", "②", "③", "④")), story.slug
-        assert "💬" in copy, story.slug
-        assert len([part for part in copy.split("\n\n") if part.strip()]) >= 6, story.slug
-
-
-def test_knowledge_story_openings_vary_by_date_and_story_kind():
-    from datetime import timedelta
-
-    from tennislive.render.knowledge import _story_opening
-    from tennislive.render.tournament_story import STORIES
-
-    representatives = {
-        kind: next(story for story in STORIES if story.kind == kind)
-        for kind in ("player", "tournament", "trivia")
-    }
-    for kind, story in representatives.items():
-        labels = {
-            _story_opening(
-                story,
-                Digest(today=date(2026, 7, 22) + timedelta(days=offset)),
-            )[0]
-            for offset in range(14)
-        }
-        assert len(labels) >= 3, kind
-
-
 def test_golden_slam_weak_scoreboard_cover_is_rejected_in_strict_mode(monkeypatch, tmp_path):
     from tennislive.render.tournament_story import STORIES
     from tennislive.research.visual_sources import resolve_story_visuals
@@ -2218,219 +2026,6 @@ def test_golden_slam_cover_uses_graf_1988_as_headline_year():
 
     assert "<b>1988</b>" in body
     assert "<b>1969</b>" not in body
-
-
-def test_knowledge_copy_rotates_structure_and_bans_quiz_boilerplate(sample_digest):
-    from dataclasses import replace
-    from datetime import timedelta
-
-    from tennislive.render.knowledge import knowledge_copy
-    from tennislive.render.tournament_story import STORIES
-
-    story = next(story for story in STORIES if story.slug == "hawkeye")
-    copies = {
-        knowledge_copy(story, replace(sample_digest, today=sample_digest.today + timedelta(days=day)))
-        for day in range(7)
-    }
-    combined = "\n".join(copies)
-
-    assert len(copies) >= 3
-    assert all(phrase not in combined for phrase in ("先别往下滑", "🧠 先猜", "🎾 答案", "记住这3点"))
-
-
-def test_knowledge_special_copy_uses_xhs_emoji_rhythm_and_at_most_five_tags(
-    sample_digest,
-):
-    from tennislive.render.hashtags import hashtag_count
-    from tennislive.render.knowledge import (
-        _KNOWLEDGE_EMOJI_MARKERS,
-        _validate_copy_for_publish,
-        knowledge_copy,
-    )
-    from tennislive.render.tournament_story import STORIES
-
-    for slug in ("golden-slam", "longest-match"):
-        story = next(story for story in STORIES if story.slug == slug)
-        copy = knowledge_copy(story, sample_digest)
-        _validate_copy_for_publish(copy)
-        body = "\n".join(copy.splitlines()[1:])
-        markers = {
-            marker for marker in _KNOWLEDGE_EMOJI_MARKERS if marker in body
-        }
-
-        assert 3 <= len(markers) <= 8
-        assert hashtag_count(copy) <= 5
-
-
-def test_knowledge_generation_switches_topic_after_visual_preflight_failure(
-    tmp_path, sample_digest, monkeypatch
-):
-    from dataclasses import replace
-    import json
-
-    from PIL import Image
-
-    from tennislive.render import knowledge
-    from tennislive.render.tournament_story import STORIES
-
-    cover = tmp_path / "cover.jpg"
-    Image.new("RGB", (1200, 800), "white").save(cover)
-    rejected = replace(next(s for s in STORIES if s.slug == "golden-slam"), image=cover)
-    selected = replace(next(s for s in STORIES if s.slug == "umag"), image=cover)
-    monkeypatch.setattr(
-        knowledge,
-        "tournament_story_candidates",
-        lambda _digest: [rejected, selected],
-    )
-
-    def fake_resolve(story, _folder):
-        if story.slug == rejected.slug:
-            return {}, {
-                "status": "fail",
-                "errors": ["封面人物不匹配"],
-                "missing_pages": ["story", "explainer", "today"],
-                "attempts": [],
-            }
-        return {}, {"status": "pass", "attempts": [], "errors": []}
-
-    monkeypatch.setattr(knowledge, "resolve_story_visuals", fake_resolve)
-    monkeypatch.setattr(
-        knowledge,
-        "_screenshot_pages",
-        lambda pages, _theme: [
-            (kind, Image.new("RGB", (1080, 1440), "black")) for kind, _body in pages
-        ],
-    )
-
-    result = knowledge.generate_knowledge_package(sample_digest, tmp_path / "knowledge")
-    sources = json.loads((tmp_path / "knowledge" / "visual_sources.json").read_text("utf-8"))
-
-    assert result.slug == selected.slug
-    assert sources["rejected_candidates"][0]["story_slug"] == rejected.slug
-
-
-def test_knowledge_generation_retries_same_topic_with_failed_sources_excluded(
-    tmp_path, sample_digest, monkeypatch
-):
-    from dataclasses import replace
-    import json
-
-    from PIL import Image
-
-    from tennislive.render import knowledge
-    from tennislive.render.tournament_story import STORIES
-
-    cover = tmp_path / "cover.jpg"
-    Image.new("RGB", (1200, 800), "white").save(cover)
-    selected = replace(next(s for s in STORIES if s.slug == "umag"), image=cover)
-    monkeypatch.setattr(
-        knowledge,
-        "tournament_story_candidates",
-        lambda _digest: [selected],
-    )
-    monkeypatch.setenv("TENNISLIVE_VISUAL_RETRIES_PER_TOPIC", "2")
-    resolver_calls = []
-
-    def fake_resolve(_story, _folder, *, excluded_source_urls=None):
-        excluded = set(excluded_source_urls or ())
-        resolver_calls.append(excluded)
-        source = (
-            "https://media.example/good.jpg"
-            if excluded
-            else "https://media.example/bad.jpg"
-        )
-        return {}, {
-            "schema_version": 1,
-            "status": "pass",
-            "attempts": [{"status": "selected", "source_url": source}],
-            "errors": [],
-        }
-
-    qa_results = iter(
-        [
-            {"status": "fail", "errors": ["image mismatch"]},
-            {"status": "pass", "errors": []},
-            {"status": "pass", "errors": [], "rendered_cards": []},
-        ]
-    )
-    monkeypatch.setattr(knowledge, "resolve_story_visuals", fake_resolve)
-    monkeypatch.setattr(
-        knowledge,
-        "evaluate_knowledge_visuals",
-        lambda *_args, **_kwargs: next(qa_results),
-    )
-    monkeypatch.setattr(
-        knowledge,
-        "_screenshot_pages",
-        lambda pages, _theme: [
-            (kind, Image.new("RGB", (1080, 1440), "black"))
-            for kind, _body in pages
-        ],
-    )
-
-    result = knowledge.generate_knowledge_package(
-        sample_digest,
-        tmp_path / "knowledge",
-    )
-    sources = json.loads(
-        (tmp_path / "knowledge" / "visual_sources.json").read_text("utf-8")
-    )
-
-    assert result.slug == selected.slug
-    assert resolver_calls == [
-        set(),
-        {"https://media.example/bad.jpg"},
-    ]
-    assert sources["recovery"]["status"] == "recovered"
-    assert sources["selection_evidence"]["same_topic_attempt"] == 2
-
-
-def test_knowledge_generation_exhaustion_keeps_diagnostics_not_stale_publish_files(
-    tmp_path, sample_digest, monkeypatch
-):
-    from dataclasses import replace
-    import json
-
-    from PIL import Image
-    import pytest
-
-    from tennislive.render import knowledge
-    from tennislive.render.tournament_story import STORIES
-
-    cover = tmp_path / "cover.jpg"
-    Image.new("RGB", (1200, 800), "white").save(cover)
-    candidate = replace(next(s for s in STORIES if s.slug == "umag"), image=cover)
-    outdir = tmp_path / "knowledge"
-    outdir.mkdir()
-    (outdir / "push.html").write_text("stale", "utf-8")
-    monkeypatch.setattr(
-        knowledge,
-        "tournament_story_candidates",
-        lambda _digest: [candidate],
-    )
-    monkeypatch.setenv("TENNISLIVE_VISUAL_RETRIES_PER_TOPIC", "2")
-    monkeypatch.setattr(
-        knowledge,
-        "resolve_story_visuals",
-        lambda *_args, **_kwargs: (
-            {},
-            {
-                "status": "fail",
-                "errors": ["no exact image"],
-                "missing_pages": ["story"],
-                "attempts": [],
-            },
-        ),
-    )
-
-    with pytest.raises(ValueError, match="自动恢复已耗尽"):
-        knowledge.generate_knowledge_package(sample_digest, outdir)
-
-    failure = json.loads((outdir / "visual_sources.json").read_text("utf-8"))
-    assert failure["status"] == "fail"
-    assert failure["same_topic_attempt_limit"] == 2
-    assert len(failure["attempts"]) == 2
-    assert not (outdir / "push.html").exists()
 
 
 def test_cover_promotes_overnight_lead_and_multiple_highlights(sample_digest):
