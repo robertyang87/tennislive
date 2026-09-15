@@ -328,7 +328,11 @@ def test_neutral_compact_opinion_rotates_by_day():
     """无中国球员的压缩兜底文案必须按日轮换，否则会撞上7天防重复 FATAL 闸门。
 
     生产环境曾因这句话固定不变，连续多天对同一场无中国球员的比赛
-    生成完全相同的兜底文案，被 history_dedupe 判定为复用长句而阻断发布。
+    生成完全相同的兜底文案，被当年的文案查重闸判定为复用长句而阻断发布。
+    ⚠️ 那个查重模块（`render/history_dedupe.py`）2026-09-15 随日报那条线一起删了
+    ——它读的是 `output/<日期>/xiaohongshu.txt` 这种日报一天一期的形状，而活着的线
+    把正文写在深一层，就算调它也只返回空。**事故是真的，闸没有了**，所以这条判据
+    现在是这句话不重复的唯一看守。
     """
     from datetime import date
 
@@ -1468,38 +1472,6 @@ def test_story_card_uses_spacious_single_flow(tmp_path):
     assert "网球冷知识" not in body
 
 
-def test_knowledge_deck_uses_one_verified_photo_and_structured_inner_pages(tmp_path):
-    from dataclasses import replace
-
-    from PIL import Image
-
-    from tennislive.render.knowledge_visual_qa import evaluate_knowledge_visuals
-    from tennislive.render.tournament_story import STORIES
-    from tennislive.render.webcards import knowledge_deck_bodies
-
-    fake_img = tmp_path / "alcaraz.jpg"
-    Image.new("RGB", (1200, 800), "white").save(fake_img)
-    story = replace(next(s for s in STORIES if s.slug == "alcaraz"), image=fake_img)
-    bodies = knowledge_deck_bodies(
-        story,
-        "07.21 · 周二",
-        question="你第一次记住他，是哪一场球？",
-        year=2026,
-    )
-
-    import re
-
-    assert sum(
-        len(re.findall(r'data-photo-source="[^"]+"', body))
-        for _kind, body in bodies
-    ) == 1
-    assert 'class="knowledge-cover-bg"' in bodies[0][1]
-    assert "--knowledge-cover-focus:50% 22%" in bodies[0][1]
-    assert 'class="knowledge-photo' not in bodies[0][1]
-    assert 'data-visual="narrative-timeline"' in bodies[1][1]
-    assert 'data-visual="player-explainer"' in bodies[2][1]
-    assert 'data-visual="history-timeline"' in bodies[3][1]
-    assert evaluate_knowledge_visuals(story, bodies)["status"] == "pass"
 
 
 def test_public_cards_hide_source_credits(sample_digest):
@@ -1508,10 +1480,11 @@ def test_public_cards_hide_source_credits(sample_digest):
     ⚠️ 原名叫 `..._but_evidence_keeps_urls`，后半截盯的是知识帖生成器的
     `_knowledge_evidence`——2026-09-15 图文知识帖停产，那个函数连同
     `knowledge_copy` 一起删了，所以这条只剩「不许露署名」这一半。
-    主语还在（封面卡、知识帖卡、日报三种文本），不是空壳测试。
+    ⚠️ 2026-09-15 又摘掉一项：知识帖卡的渲染器（`knowledge_deck_bodies`）
+    也随线删了。主语仍然在——封面卡 ＋ 日报三种文本，不是空壳测试。
     """
     from tennislive.render.tournament_story import STORIES
-    from tennislive.render.webcards import cover_body, knowledge_deck_bodies
+    from tennislive.render.webcards import cover_body
 
     story = next(item for item in STORIES if item.slug == "golden-slam")
     cover = cover_body(
@@ -1526,15 +1499,8 @@ def test_public_cards_hide_source_credits(sample_digest):
             "source_url": "https://example.com/photo",
         },
     )
-    deck = knowledge_deck_bodies(
-        story,
-        "07.16 · 周四",
-        question="金满贯和世界第一，你觉得哪个更难？",
-        year=2026,
-    )
     public_outputs = [
         cover,
-        *(body for _kind, body in deck),
         to_markdown(sample_digest),
         to_html(sample_digest),
         to_post(sample_digest),
@@ -1556,271 +1522,18 @@ def test_public_cards_hide_source_credits(sample_digest):
     )
 
 
-def test_visual_qa_rejects_internal_generation_labels(tmp_path):
-    from dataclasses import replace
-
-    from PIL import Image
-
-    from tennislive.render.knowledge_visual_qa import evaluate_knowledge_visuals
-    from tennislive.render.tournament_story import STORIES
-    from tennislive.render.webcards import knowledge_deck_bodies
-
-    fake_img = tmp_path / "story.jpg"
-    Image.new("RGB", (1200, 800), "white").save(fake_img)
-    story = replace(next(s for s in STORIES if s.slug == "umag"), image=fake_img)
-    bodies = knowledge_deck_bodies(
-        story,
-        "07.21 · 周二",
-        question="你最想去现场看哪一场？",
-        year=2026,
-    )
-    bodies[2] = (bodies[2][0], bodies[2][1].replace("</div>", "程序生成信息图</div>", 1))
-
-    report = evaluate_knowledge_visuals(story, bodies)
-
-    assert report["status"] == "fail"
-    assert any("生产描述：程序生成" in error for error in report["errors"])
 
 
-def test_visual_qa_rejects_reused_inner_page_photo(tmp_path):
-    from dataclasses import replace
-
-    from PIL import Image
-
-    from tennislive.render.knowledge_visual_qa import evaluate_knowledge_visuals
-    from tennislive.render.tournament_story import STORIES
-    from tennislive.render.webcards import knowledge_deck_bodies
-
-    fake_img = tmp_path / "story.jpg"
-    Image.new("RGB", (1200, 800), "white").save(fake_img)
-    story = replace(next(s for s in STORIES if s.slug == "umag"), image=fake_img)
-    bodies = knowledge_deck_bodies(
-        story,
-        "07.21 · 周二",
-        question="你最想见证谁的第一冠？",
-        year=2026,
-    )
-    duplicated = list(bodies)
-    source = story.image_source_url
-    duplicated[1] = (
-        "story",
-        duplicated[1][1].replace(
-            'data-visual="narrative-timeline"',
-            'data-visual="narrative-timeline"><div class="knowledge-photo" '
-            f'data-photo-source="{source}"',
-            1,
-        ),
-    )
-
-    report = evaluate_knowledge_visuals(story, duplicated)
-    assert report["status"] == "fail"
-    assert any("重复使用" in error for error in report["errors"])
 
 
-def test_knowledge_deck_accepts_three_distinct_licensed_page_photos(tmp_path):
-    from dataclasses import replace
-
-    from PIL import Image
-
-    from tennislive.render.knowledge_visual_qa import evaluate_knowledge_visuals
-    from tennislive.render.tournament_story import STORIES
-    from tennislive.render.webcards import knowledge_deck_bodies
-
-    cover = tmp_path / "cover.jpg"
-    Image.new("RGB", (1200, 800), "white").save(cover)
-    story = replace(next(s for s in STORIES if s.slug == "umag"), image=cover)
-    page_visuals = {}
-    for index, page in enumerate(("story", "explainer", "today"), 1):
-        path = tmp_path / f"{page}.jpg"
-        Image.new("RGB", (1200, 800), (index * 30, 90, 120)).save(path)
-        page_visuals[page] = {
-            "path": path,
-            "source_url": f"https://example.com/{page}",
-            "credit": f"Photographer {index}",
-            "license": "CC BY-SA 4.0",
-            "focus": "50% 30%",
-        }
-
-    bodies = knowledge_deck_bodies(
-        story,
-        "07.21 · 周二",
-        question="你最想见证谁的第一冠？",
-        year=2026,
-        page_visuals=page_visuals,
-    )
-    report = evaluate_knowledge_visuals(
-        story,
-        bodies,
-        page_visuals=page_visuals,
-    )
-
-    assert report["status"] == "pass"
-    assert report["photo_uses"] == 4
-    assert len(set(report["photo_sources"])) == 4
-    assert len(report["resolved_visuals"]) == 3
 
 
-def test_knowledge_visual_qa_missing_credit_license_is_recorded_not_failed(tmp_path):
-    """授权只记录不拦截：缺作者/许可给信息性 warning，不再是 fail 条件。"""
-    from dataclasses import replace
-
-    from PIL import Image
-
-    from tennislive.render.knowledge_visual_qa import evaluate_knowledge_visuals
-    from tennislive.render.tournament_story import STORIES
-    from tennislive.render.webcards import knowledge_deck_bodies
-
-    cover = tmp_path / "cover.jpg"
-    Image.new("RGB", (1200, 800), "white").save(cover)
-    story = replace(
-        next(s for s in STORIES if s.slug == "umag"),
-        image=cover,
-        image_credit="",
-    )
-    page_visuals = {}
-    for index, page in enumerate(("story", "explainer", "today"), 1):
-        path = tmp_path / f"{page}.jpg"
-        Image.new("RGB", (1200, 800), (index * 30, 90, 120)).save(path)
-        page_visuals[page] = {
-            "path": path,
-            "source_url": f"https://example.com/{page}",
-            "credit": "",
-            "license": "",
-            "focus": "50% 30%",
-        }
-
-    bodies = knowledge_deck_bodies(
-        story,
-        "07.21 · 周二",
-        question="你最想见证谁的第一冠？",
-        year=2026,
-        page_visuals=page_visuals,
-    )
-    report = evaluate_knowledge_visuals(story, bodies, page_visuals=page_visuals)
-
-    assert report["status"] == "pass", report["errors"]
-    assert not any("授权" in error or "作者" in error for error in report["errors"])
-    assert any("unknown" in warning for warning in report["warnings"])
-    assert any("unverified" in warning for warning in report["warnings"])
-    assert all(
-        item["credit"] == "unknown" and item["license"] == "unverified"
-        for item in report["resolved_visuals"]
-    )
 
 
-def test_knowledge_deck_missing_inner_visual_degrades_page_not_topic(tmp_path):
-    """strict 缺页降级：内页没图时该页走示意图/时间线，只有封面缺图才弃题。"""
-    from dataclasses import replace
-
-    from PIL import Image
-
-    from tennislive.render.knowledge_visual_qa import evaluate_knowledge_visuals
-    from tennislive.render.tournament_story import STORIES
-    from tennislive.render.webcards import knowledge_deck_bodies
-
-    cover = tmp_path / "cover.jpg"
-    Image.new("RGB", (1200, 800), "white").save(cover)
-    story = replace(next(s for s in STORIES if s.slug == "umag"), image=cover)
-    page_visuals = {}
-    for index, page in enumerate(("story", "explainer"), 1):
-        path = tmp_path / f"{page}.jpg"
-        Image.new("RGB", (1200, 800), (index * 40, 90, 120)).save(path)
-        page_visuals[page] = {
-            "path": path,
-            "source_url": f"https://example.com/{page}",
-            "credit": f"Photographer {index}",
-            "license": "CC BY-SA 4.0",
-            "focus": "50% 30%",
-        }
-
-    bodies = knowledge_deck_bodies(
-        story,
-        "07.25 · 周六",
-        question="你最想见证谁的第一冠？",
-        year=2026,
-        page_visuals=page_visuals,
-    )
-    report = evaluate_knowledge_visuals(story, bodies, page_visuals=page_visuals)
-
-    assert report["status"] == "pass", report["errors"]
-    # 封面 + 两张内页；缺图的 today 页降级为时间线而不是整题作废
-    assert report["photo_uses"] == 3
-    today = next(page for page in report["pages"] if page["kind"] == "today")
-    assert today["photo_count"] == 0
-    assert today["visual"] == "history-timeline"
 
 
-def test_hawkeye_knowledge_deck_uses_official_process_and_current_scope(tmp_path):
-    from dataclasses import replace
-
-    from PIL import Image
-
-    from tennislive.render.tournament_story import STORIES
-    from tennislive.render.webcards import knowledge_deck_bodies
-
-    fake_img = tmp_path / "hawkeye.jpg"
-    Image.new("RGB", (1200, 800), "white").save(fake_img)
-    story = replace(next(s for s in STORIES if s.slug == "hawkeye"), image=fake_img)
-
-    pages = knowledge_deck_bodies(
-        story,
-        "07.21 · 周二",
-        question="四大满贯只剩法网保留人工司线，红土球印足够可靠吗？",
-        year=2026,
-    )
-    kinds = [kind for kind, _body in pages]
-    combined = "\n".join(body for _kind, body in pages)
-
-    assert kinds == ["knowledge", "story", "explainer", "today"]
-    assert "2D VISION" in combined and "X / Y / Z" in combined
-    assert "8–12台" in combined and "最高340fps" in combined
-    assert "实时电子司线" in combined and "四大满贯中" in combined
-    assert "主裁第一判断" not in combined
-    assert "技术没有替比赛做决定" not in combined
 
 
-def test_longest_match_deck_uses_event_specific_visuals_and_large_facts(tmp_path):
-    from dataclasses import replace
-
-    from PIL import Image
-
-    from tennislive.render.knowledge_visual_qa import evaluate_knowledge_visuals
-    from tennislive.render.tournament_story import STORIES
-    from tennislive.render.webcards import knowledge_deck_bodies
-
-    fake_img = tmp_path / "isner-mahut.jpg"
-    Image.new("RGB", (1200, 800), "white").save(fake_img)
-    story = replace(
-        next(s for s in STORIES if s.slug == "longest-match"),
-        image=fake_img,
-        image_source_url="https://www.wimbledon.com/en_GB/about/history/2010s",
-        image_credit="Wimbledon archive",
-        diagram_type="marathon",
-    )
-
-    pages = knowledge_deck_bodies(
-        story,
-        "07.23 · 周四",
-        question="如果没有抢十，你愿意再看一场11小时的比赛吗？",
-        year=2026,
-    )
-    combined = "\n".join(body for _kind, body in pages)
-
-    assert [kind for kind, _body in pages] == [
-        "knowledge",
-        "story",
-        "explainer",
-        "today",
-    ]
-    assert 'class="marathon-story-visual"' in pages[1][1]
-    assert 'class="marathon-scoreline"' in pages[2][1]
-    assert 'class="marathon-records"' in pages[2][1]
-    assert 'class="marathon-today-visual"' in pages[3][1]
-    assert "6月22日" in combined and "6月24日" in combined
-    assert "11:05" in combined and "183" in combined and "216" in combined
-    assert "70-68" in combined and "2022" in combined and "10分抢十" in combined
-    assert not re.search(r"<(?:i|small)[^>]*>\s*0[1-9]\s*</", combined)
-    assert evaluate_knowledge_visuals(story, pages)["status"] == "pass"
 
 
 def test_longest_match_story_uses_official_cross_checked_facts():
@@ -1927,43 +1640,6 @@ def test_knowledge_titles_are_specific_and_fit_xiaohongshu(sample_digest):
     assert "的来路" in titles["alcaraz"]
 
 
-def test_all_knowledge_stories_use_semantic_markers_without_ordinals(tmp_path):
-    from dataclasses import replace
-
-    from PIL import Image
-
-    from tennislive.render.knowledge_visual_qa import evaluate_knowledge_visuals
-    from tennislive.render.tournament_story import STORIES
-    from tennislive.render.webcards import knowledge_deck_bodies
-
-    image = tmp_path / "story.jpg"
-    Image.new("RGB", (1200, 800), "white").save(image)
-    forbidden = ("三道窄门", "三次转折", "三个坐标", "把这件事放回历史")
-    for source in STORIES:
-        story = replace(
-            source,
-            image=image,
-            image_source_url=f"https://example.com/{source.slug}",
-            image_credit="Example archive",
-        )
-        bodies = knowledge_deck_bodies(
-            story,
-            "07.22 · 周三",
-            question="这段历史里，你最想记住哪个瞬间？",
-            year=2026,
-        )
-        combined = "\n".join(body for _kind, body in bodies)
-        assert 'class="semantic-marker' in combined, story.slug
-        assert not re.search(r"<(?:i|small)[^>]*>\s*0[1-9]\s*</", combined), story.slug
-        assert not any(marker in combined for marker in ("①", "②", "③", "④")), story.slug
-        assert not any(phrase in combined for phrase in forbidden), story.slug
-        for marker in re.findall(
-            r'data-marker-kind="year"[^>]*>.*?<small>([^<]+)</small>',
-            combined,
-            flags=re.DOTALL,
-        ):
-            assert re.fullmatch(r"(?:18|19|20)\d{2}", marker), (story.slug, marker)
-        assert evaluate_knowledge_visuals(story, bodies)["status"] == "pass", story.slug
 
 
 def test_semantic_year_marker_keeps_full_year_next_to_chinese_text():
@@ -1976,30 +1652,6 @@ def test_semantic_year_marker_keeps_full_year_next_to_chinese_text():
     assert "<small>88</small>" not in marker
 
 
-def test_cover_rejects_abbreviated_year_marker(tmp_path):
-    from dataclasses import replace
-
-    import pytest
-    from PIL import Image
-
-    from tennislive.render.tournament_story import STORIES
-    from tennislive.render.webcards import knowledge_deck_bodies
-
-    image = tmp_path / "story.jpg"
-    Image.new("RGB", (1200, 800), "white").save(image)
-    story = replace(
-        next(story for story in STORIES if story.slug == "golden-slam"),
-        image=image,
-        hero_marker="88",
-    )
-
-    with pytest.raises(ValueError, match="四位年份"):
-        knowledge_deck_bodies(
-            story,
-            "07.22 · 周三",
-            question="哪一冠最难？",
-            year=2026,
-        )
 
 
 def test_golden_slam_weak_scoreboard_cover_is_rejected_in_strict_mode(monkeypatch, tmp_path):
@@ -2017,15 +1669,6 @@ def test_golden_slam_weak_scoreboard_cover_is_rejected_in_strict_mode(monkeypatc
     assert any("封面" in error for error in report["errors"])
 
 
-def test_golden_slam_cover_uses_graf_1988_as_headline_year():
-    from tennislive.render.tournament_story import STORIES
-    from tennislive.render.webcards import _knowledge_cover_body
-
-    story = next(story for story in STORIES if story.slug == "golden-slam")
-    body = _knowledge_cover_body(story, "7.22 · 周三")
-
-    assert "<b>1988</b>" in body
-    assert "<b>1969</b>" not in body
 
 
 def test_cover_promotes_overnight_lead_and_multiple_highlights(sample_digest):

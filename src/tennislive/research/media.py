@@ -155,19 +155,3 @@ def apply_media_briefs(digest: Digest, *, path: Path = DEFAULT_PATH) -> int:
     return applied
 
 
-def synthesis_for_digest(digest: Digest, *, path: Path = DEFAULT_PATH) -> dict:
-    items = []
-    seen: set[str] = set()
-    for match in digest.results + digest.live + digest.schedule:
-        brief = brief_for_match(match, digest.today, path=path)
-        if brief is None or match.match_id in seen:
-            continue
-        seen.add(match.match_id)
-        item = brief.to_dict()
-        item["match_id"] = match.match_id
-        items.append(item)
-    return {
-        "edition": digest.today.isoformat(),
-        "mode": "reviewed-paraphrase",
-        "items": items,
-    }
