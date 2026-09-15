@@ -7,6 +7,89 @@ description: 网球时差｜开发实践档案：反向验证怎么做才算数�
 
 > 从 `CLAUDE.md` 原样搬来，一个字没改。**规矩本身仍在 CLAUDE.md**，这里是撞上问题时才查的档案。
 
+#### ⚠️ shell 的 cwd 跨调用留着，而 `git ls-files` 在子目录里只列该目录
+
+2026-09-03 拉 probe 产物时栽的，**四轮命令全在「修」一个不存在的问题**：
+
+    git ls-files | wc -l         →  12
+    git cat-file -p HEAD^{tree}  →  完整的仓库（specs/ src/ tests/ 都在）
+    git status --short           →  干净
+
+据此判定 **index 坏了**，然后一路加码：`git reset --hard HEAD` 没用 →
+`git sparse-checkout disable` 没用 → `git read-tree --reset -u HEAD` 还是没用，
+差一点去重新 clone。
+
+真相是 **shell 的当前目录在几步之前漂到了产物子目录**（Bash 工具的 cwd
+跨调用持久化，而前面某条 `cd output/… && …` 成功了）。`git ls-files`
+**在子目录里默认只列该目录下的文件**——那 12 条正是那个目录里的 12 个产物。
+index 从头到尾是好的。
+
+- **判据是 `pwd`，一秒钟。** 「ls-files 12 条」和「index 坏了」长得一模一样，
+  而 `pwd` / `git rev-parse --show-toplevel` 一比就露馅
+- ⚠️ **同一个漂移还把相对路径写歪了**：`git show HEAD:output/<date>/<slug>/x`
+  重定向到 `output/<date>/<slug>/x`，实际落在
+  `output/<date>/<slug>/output/<date>/<slug>/x`——一个嵌套的假目录，
+  而 `git status` 只报一句 `?? output/`，读起来像「产物还没提交」
+- **这就是上一条的同族**：两个数对不上（HEAD 树完整、ls-files 只有 12）说明
+  **探测错了，不是数据坏了**——而我先动手去修数据，还越修越重。
+  重置类命令（`reset --hard` / `read-tree --reset -u` / `checkout -B`）
+  **在诊断没落地之前一条都不该发**，本文件为它们单独记过一节
+- 往后跨目录操作**要么用绝对路径，要么每条命令自己带
+  `cd /home/user/tennislive &&`**
+
+
+#### ⚠️ 同族第三个：`grep -nE` 只打印匹配的行——**被滤掉的那两行正是答案**
+
+2026-09-04 `wu-alcaraz-us-open-2026-r3` 差点把 H2H 写成「首次交手」。我在 flashscore 的
+`df_hh_1` 上跑
+
+    grep -nE '^K[AB]÷' hh.txt
+    → 105:KB÷Head-to-head matches
+      108:KA÷Clay
+
+105 和 108 挨在一起，据此判定这一段是空的。**而 106、107 两行是 `KC÷` 开头的真交手条目，
+被我的模式滤掉了**——grep 只打印匹配的行，中间隔了几行它一个字都不说。
+
+⚠️ **「扫得太窄」和「真的没有」在 grep 输出上长得一模一样**，而这次连行号都在骗人：
+105 和 108 中间明明差 3，我读成了「相邻」。
+
+**救回它的还是「两个数打架」**：`match_stat_hooks` 同一趟报
+`Wu Y. 0 : 2 Alcaraz C.（含本场）`，和我的「首次交手」正面冲突。真交手记录是
+2024-10-06 上海大师赛，阿尔卡拉斯 7-6(5) 6-3——**那一场吴易昺把首盘拖进了抢七**，
+比「首次交手」这个假事实好用得多。
+
+**判据：扫一段结构化 feed，先 `sed -n '105,110p'` 把那一段整个打出来**，别拿一个只认
+两三种前缀的正则去问「这一段有没有东西」。⚠️ 这跟本文件里「非空 ≠ 对题」是反的那一面
+——那条说的是收到东西不等于对题，这条说的是**收不到不等于没有，可能只是我的筛子太密**。
+
+
+#### 三个当场骗过我的变种（2026-08-06 同一条片子上）
+
+**① 「三个变体的文件大小完全相同」＝ 根本没重渲。** 本地比封面 `focus` 三档时，
+我循环里渲完就 `cp poster.jpg`——而 `render_cover_local.py` 写的是
+**`poster_local.jpg`**，`poster.jpg` 是 runner 那趟留下的旧文件。三次复制到的
+是同一个文件，字节数一模一样（273921）。**判据不是「命令跑完了」，是「产物变了没有」**
+——三个数一样就该立刻停下来查，而不是打开图去比「哪版好看」。
+
+**② `list_workflow_runs` 按 `status` 过滤会撞 queued→in_progress 的空档。**
+刚 dispatch 完查 `status=queued` 和 `status=in_progress` **都返回 0**，看起来像
+「没跑起来」。不带过滤查才看见它在 `in_progress`。⚠️ 这跟「204 是信号，运行记录
+才是产物」是一家的，但**处置相反**：「查不到」不许当成「没跑起来」去重发——
+`concurrency` 按 slug 分组且 `cancel-in-progress`，重发会把正在跑的那趟掐掉。
+
+**③ 一条命令报了错，后面两条却都「成功」了。** 同步分支时
+`git rebase origin/main` 报 `Could not apply ...`，而紧跟着的 `git log` 和
+`git push` 都返回 0——看起来像已经对齐了。真查：`.git/rebase-merge` 还在，
+两个 spec 文件挂着 `AA` 冲突。**同一轮里两个信号打架时，一律去查状态本身**
+（`git status` / `test -d .git/rebase-merge`），别拿后一条命令的退出码去追认前一条。
+
+**「已推送」要等第 12 步返回，不是触发的时候说。** 触发只是把 run 排进队列——合成旁白、
+渲卡、ffmpeg 拼片要跑六分钟，PushPlus 是**最后一步**。有一次我在触发的同时说「推送已发出」，
+对方在这六分钟里一直等一条还没发出的消息，回了句「没有收到」。日志上的时间线一清二楚：
+`06:31:10` 触发 → `06:36:49` 成片 → `06:37:14` PushPlus 返回 200。
+**触发成功是信号，第 12 步的 success 才是产物**，又是同一个毛病。
+
+
 ### ⚠️ 反向验证救回一条恒真的断言
 
 给「即时赛果停掉」写测试时，第一版喂了一场 `conftest.make_match` 的默认比赛
@@ -144,6 +227,33 @@ PYTHONPATH=src:tools python3 -c "import build_match_reel as r; print(r.FINAL_CRF
 - **每一次反向验证之间都要清**，不只是最后还原的时候
 - 一道闸拆掉却还绿，**先怀疑缓存，再怀疑判据**——两者的表现完全一样，
   而「判据恒真」这个结论会让人把一条好测试删掉
+
+
+### ⚠️ 「拒绝但带着半截文本」——只有这一种情况那道闸才是活的
+
+`stop_reason == "refusal"` 那道闸，第一版的测试喂的是**空 content**——
+而空串本来就会在 `json.loads` 那儿抛、被兜住返回 None。于是把整道闸拆掉，
+**测试照样绿**。
+
+真正只有它拦得住的是**拒绝了但仍带着半截文本**：那半截能解析成合法 JSON，
+不拦就会被当成一条正常要点用上去。
+
+又一次「判据自己也要有判据」。⚠️ 配套：`caplog` 必须收在 **WARNING**——
+那句告警就是 WARNING，收在 ERROR 上它根本进不了 caplog（本仓库栽过一次：
+坏代码 + 错档位，测试照样绿）。
+
+
+## 推分支吃 HTTP 413：先 fetch 再 rebase
+
+`git push` 报 `RPC failed; HTTP 413`，重试、调 `postBuffer` 都没用。原因不是网络：
+**本地缺 `origin/main` 的最新提交时，git 找不到可用的协商基线，就把两百多个提交
+（含 mp4/jpg）整包重发**，几个 G，代理直接拒。
+
+- 判据是**对象数**：`git rev-list --objects origin/main..HEAD | wc -l`。自己那一个
+  提交只有 33 个对象，却推不上去，说明打包的范围不对，不是内容太大
+- 修法：`git fetch origin main` 再 `git rebase origin/main`，pack 就只剩自己那些对象
+- **纯 ref 移动也会 413**，别以为"只挪个指针"就没事——同样要先 fetch
+- rebase 过之后要用 `--force-with-lease` 推
 
 
 ### ⚠️⚠️ 跑一趟测试会改到**跟踪进仓库的数据**，而 stop hook 会催你把它推上去
