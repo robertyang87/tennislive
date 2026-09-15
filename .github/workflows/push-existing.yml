@@ -9,8 +9,12 @@ name: Push existing content to PlusPlus
 #   这是赛程包唯一的发布出口，删掉它就等于这个栏目不再发出去
 #
 # 盯 `output/**/knowledge/**` 的 push 触发也一起删了（永远不会再触发）。
-# 只剩 `grand-slam` 一个 scope。每日知识现在由 `knowledge-adhoc.yml` 自己
-# 定时产、自己推，不再走这条。
+# 只剩 `grand-slam` 一个 scope。
+#
+# ⚠️ 这儿原来写着「每日知识现在由 `knowledge-adhoc.yml` 自己定时产、自己推」
+# ——**2026-09-15 那条工作流连同整条图文知识帖线一起停产了**（账号所有者：
+# 「旧样式图片式的知识讲解内容线都移除吧」「只保留赛场之上、赛后开麦、
+# 网球有故事这三个栏目」）。每日知识现在哪儿都不产。
 
 on:
   # Explicit one-time resend requested by the account owner after copy correction.

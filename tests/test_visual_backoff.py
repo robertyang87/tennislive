@@ -92,18 +92,3 @@ def test_从visual_sources报告记退避两条失败路都不抛(monkeypatch, t
     assert ts.mark_visual_backoff_from_report(outdir, TODAY) == []
 
 
-def test_工作流失败也要把退避提交回仓库():
-    """CLI 在失败路上写了 state，但生成步骤红了「提交内容到仓库」整个跳过
-    ——不单独补一步的话退避只活在 runner 上，明天照旧同因拦停。"""
-    body = Path(".github/workflows/knowledge-adhoc.yml").read_text("utf-8")
-    anchor = "- name: 失败也提交素材退避"
-    assert anchor in body, "失败路径没有提交 story_state 的步骤"
-    block = body.split(anchor, 1)[1].split("\n      - name:", 1)[0]
-    assert "if: failure()" in block
-    assert "data/story_state.json" in block
-    assert "push_with_rebase_retry" in block, (
-        "失败收尾的这条 push 也要走共享重试——它撞车丢掉的是明天的记忆")
-    # CLI 那头要真调用了记退避（接线判据；行为判据在上面三条）
-    cli = Path("src/tennislive/cli.py").read_text("utf-8")
-    assert "mark_visual_backoff_from_report" in cli
-    assert "clear_visual_backoff" in cli
