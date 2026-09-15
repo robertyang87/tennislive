@@ -1239,7 +1239,13 @@ def build_parser() -> argparse.ArgumentParser:
     sp.add_argument("--subtitles", required=True, help="本地原文 SRT 字幕")
     sp.add_argument("--rights", required=True, help="与视频绑定的授权清单 JSON")
     sp.add_argument("--outdir", required=True, help="中文字幕、成片与授权审计输出目录")
-    sp.add_argument("--model", help="GitHub Models 模型，默认 openai/gpt-4.1")
+    # ⚠️ **不是 GitHub Models**：`models.github.ai/inference` 2026-08-05 实测
+    # 返回 HTTP 410 `github_models_retirement_brownout`，已退役。字幕翻译走的是
+    # 和热点简报同一条通道（`research.brief.Chat`），默认由那边决定。
+    sp.add_argument(
+        "--model",
+        help="翻译模型；留空＝按通道默认（DeepSeek 走 deepseek-v4-pro，Anthropic 走 claude-opus-5）",
+    )
     sp.add_argument("--bilingual", action="store_true", help="生成原文+中文双语字幕")
     sp.add_argument("--no-burn", action="store_true", help="只生成 SRT，不调用 ffmpeg")
     sp.add_argument("--overwrite", action="store_true", help="覆盖已存在的输出文件")
