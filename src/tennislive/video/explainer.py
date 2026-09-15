@@ -2016,6 +2016,22 @@ AUTO_PUSH_SLUGS: frozenset[str] = frozenset({
     # ⚠️ 这条**不是** `_SCRIPTS` 产的，是 `tools/build_shelton_ncaa_story.py` 单独渲的；
     # `AUTO_PUSH_SLUGS` 只管「这条片子准不准自动发」，和谁渲的无关。
     "shelton-ncaa-story",
+    # 2026-09-15 验过才加进来的（同上那句「加进来之前先问一句：这条片子验过了吗」）：
+    # 在分支上渲的那趟（run 34924032694，explainer.yml push=false）落库成功；成片从
+    # Release 拉回本地量过——316.07 秒、1080×1920、8,757,721 字节和 render.json 的
+    # video_bytes 逐位相同、音画差 0.033 秒、全片 mean −24.1 / max −2.4 dB；
+    # 九屏抽帧墙逐格看过（字幕逐条读过，四个小数 58.5% / 21.5秒 / 26.3% / 40.2秒
+    # 都烧对了，没有假词）；`check_explainer_landed --ref HEAD` 报「已落地」，
+    # `narration.json` 是代码默认的云健 +22%。
+    #
+    # ⚠️ **哑场这一栏别照抄上面那几条的「全片 0 处数字静音」——那句话用这条命令
+    # 复现不出来。** `silencedetect=noise=-60dB:d=1` 在这条片子上报 2 处
+    # （309.69 +2.37 和 314.87 +1.21），而**两处都在品牌片尾那一段**：前一处是
+    # 末屏最后一个字到片尾出声之间的空当（≈ LEAD 0.6 ＋ TAIL 1.5），后一处就是
+    # 片尾本身的收尾静音。判它不是缺陷靠的是**控制组**：同一条命令跑已经推送过的
+    # `shelton-ncaa-story`，报 **16 处**，而且尾巴那两处形状一模一样
+    # （324.68 +1.03 / 328.55 +1.15）。比它少，不是多。
+    "second-serve-clock",
 })
 
 
