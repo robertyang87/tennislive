@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>🎾9.15 网球有故事｜三巨头一起跌出了前十</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>9 月 14 日新一期 ATP 排名，德约科维奇从第 5 掉到第 12——前十里，费德勒、纳达尔、德约科维奇一个都没有了。
+上一次出现这种情况是 2002 年 10 月：那个月的世界第一还是休伊特，费德勒才刚刚第一次挤进前十，纳达尔 16 岁、德约科维奇 15 岁，都还没出道。
+二十四年里他们把顶上那几个位置坐满了：纳达尔连续 912 周待在前十（2005 年 4 月到 2023 年 3 月，将近十八年没掉出去过），费德勒连续 237 周排在世界第一，德约科维奇累计 428 周。这三个数来自三种不同的算法，摆在一起不是一张排行榜，是同一件事的三个样子。
+费德勒 2022 年在拉沃尔杯退役，41 岁，职业生涯最后一场打的是双打，搭档是纳达尔；两年后纳达尔在戴维斯杯告别，38 岁。现在只剩德约科维奇还在打，39 岁。
+半个月前的美网首轮，他输给世界第 49 的纳沃内，那是他职业生涯第一次在美网第一轮就出局。赛后他说：过去那些成就他一直很骄傲，但是现在就是现在。走出球场的时候，人群里有人举着一块牌子——谢谢你曾经激励过我。
+而今天排在前十的那些人里，辛纳和阿尔卡拉斯今年都因为伤病缺席过大满贯，阿尔卡拉斯还说往后打算多给自己留一点休息。
+
+1️⃣ 今天：德约掉到第十二
+· 9 月 14 日 第 5 掉到第 12
+· 前十里三巨头一个都没有
+· 上一次这样 是 2002 年 10 月
+
+2️⃣ 上一次：那年费德勒刚进前十
+· 那个月的世界第一是休伊特
+· 费德勒那时才刚挤进前十
+· 纳达尔 16 岁 德约 15 岁
+
+3️⃣ 待了多久：纳达尔连续九百一十二周
+· 纳达尔 连续 912 周在前十
+· 费德勒 连续 237 周世界第一
+· 德约 累计 428 周世界第一
+
+4️⃣ 怎么走的：先是费德勒，后是纳达尔
+· 费德勒 2022 年 41 岁 拉沃尔杯
+· 最后一场双打 搭档纳达尔
+· 纳达尔 2024 年 38 岁 戴维斯杯
+
+5️⃣ 他怎么说：现在就是现在
+· 他说 过去很骄傲 但现在就是现在
+· 牌子上写着 谢谢你曾经激励过我
+· 新一代今年也都缺席过大满贯
+
+💬 留个答案
+这一代，还会有人坐这么久吗？
+
+这里是 @网球时差｜网球有故事。
+
+#网球 #网球时差 #德约科维奇 #三巨头 #网球冷知识</textarea>
+    </section>
+    
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
