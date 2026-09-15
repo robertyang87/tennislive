@@ -1,5 +1,23 @@
 # 「这一分，值回放」自动项目
 
+> ⚠️⚠️ **这条线 2026-07-31 整个拿掉了，本文是历史存档，不是还在跑的设计。**
+>
+> 停的理由查过根因，不是频次问题：十个检索源有五个直接 error（全是 YouTube 系，
+> 和 match-reel 那条「机房 IP 被挡」同一个病），唯一能拿到候选的 Tennis TV 卡在缺
+> `TENNISTV_JWT`——**11 天 66 趟只出 3 条片**。出路是接源不是降频，账号所有者选了
+> 整条拿掉。当天删掉的：`.github/workflows/yesterday-point.yml`、`tennislive point`
+> 命令、`src/tennislive/video/daily_point.py`（1937 行）、`tests/test_daily_point.py`
+> （57 条）、45 个历史产物。**下面写到的工作流、命令、`output/` 路径、manifest
+> 一个都不存在了**，照着做会扑空。
+>
+> 2026-09-15 账号所有者把栏目收敛到三个（`赛场之上` / `赛后开麦` / `网球有故事`），
+> 「昨日好球」不复活——它的承诺（一个回合）已经被「赛场之上」的慢放回放吸收。
+> 判据 `tests/test_match_reel.py::test_昨日一分这条线不许回来` 钉着「别长回来」。
+> 现行栏目口径见 [`docs/columns.md`](columns.md)。
+>
+> **本文一个字不删**（仓库惯例：原话留着当来路）——留着是因为它记着这条线为什么
+> 不通，省得下一个人再把同一条路走一遍。
+
 公开栏目名为「这一分，值回放」；内部任务名保留 `yesterday-point`。`tennislive point` 与日报、网球故事分开运行，输出到
 `output/YYYY-MM-DD/yesterday-point/`。
 
