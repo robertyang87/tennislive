@@ -115,6 +115,50 @@ def pin_asset_revision(html_content: str, revision: str) -> str:
     return _JSDELIVR_MAIN_RE.sub(rf"\g<1>@{pin_ref(revision)}/", html_content)
 
 
+#: 小红书正文那一格的硬上限。账号所有者：「之前你给的那个文案里的正文超过了
+#: 1000 字，然后不能直接复制」——超了**粘不进去**，于是复制页那颗按钮点了也
+#: 没用，而复制页正是文案唯一的出口，整条推送的内容就这么传不出去。
+#:
+#: ⚠️ **这不是编辑口味，是平台定的，不许放宽。** 真要长，办法是**提炼**不是
+#: 调这个数：前面写提炼过的要点和给读者的启发，后面只留最值得抄的那几句原话。
+XHS_BODY_MAX = 1000
+
+
+def split_xhs(xhs_text: str) -> tuple[str, str]:
+    """把小红书文案切成（标题, 正文）：首行是标题，空一行之后是正文。
+
+    ⚠️ **这是四条线唯一的那一套切法和那一个上限。** 复制页（`to_copy_page`，
+    解说片／知识帖／内容雷达／竖版短片共用）和竖版短片的推送正文
+    （`push_reel.split_copy`）都调它——两处各写一遍必然分叉，而分叉的样子是
+    「推送里印的和复制页里复制到的不是同一段」，或者「一条线拦得住、另一条线
+    拦不住」。
+
+    ⚠️ **2026-09-15 这道闸才补到解说片这条线上，之前它只活在竖版短片那条线里。**
+    来路：`second-serve-clock` 的正文 1118 字发了出去，账号所有者「可复制的
+    正文超出 1000 字了，后续要改进」。查下来 `split_copy` 只有
+    `tools/build_match_reel.py` 一个调用方，而解说片走
+    `cli.py` → `explainer_xiaohongshu()` → 这儿，**一道长度闸都没有**——
+    规矩是跨线的（同一个小红书账号、同一个 1000 字的格子），而闸是按线装的。
+    装在这儿是因为**这儿才是四条线真正的交汇点**（见 `to_copy_page` 的
+    docstring：「复制页是四条线共用的那个出口，也是文案真正被粘到小红书的
+    地方」）。装上当天扫过全库 455 份已发复制页，超标的只有 4 份、全是闸装上
+    之前的老片子，所以**零豁免表**。
+    """
+    lines = xhs_text.splitlines()
+    title = lines[0].strip() if lines else ""
+    body_start = 2 if len(lines) > 1 and not lines[1].strip() else 1
+    body = "\n".join(lines[body_start:]).strip()
+    if len(body) > XHS_BODY_MAX:
+        raise SystemExit(
+            f"小红书正文 {len(body)} 字，超过 {XHS_BODY_MAX} 字上限，粘不进去。\n"
+            "别放宽这个数——它是平台定的，不是可调的。\n"
+            "把原文整段搬进正文正是超标的原因：\n"
+            "前面写提炼过的要点、总结和给读者的启发，后面只留最值得抄的那几句原话。\n"
+            "⚠️ 同一个事实在开头那段和底下的要点里各印一遍，也是常见的超标来源——"
+            "开头留结论，数字交给要点那几行。")
+    return title, body
+
+
 def to_copy_page(
     xhs_text: str,
     alt_titles: list[str] | None = None,
@@ -129,10 +173,7 @@ def to_copy_page(
     加在这儿的，**2026-08-15 起不加了**（账号所有者：「以后不要出现这些东西」，
     见 `ai_disclosure` 顶上那段）。
     """
-    lines = xhs_text.splitlines()
-    title = lines[0].strip() if lines else ""
-    body_start = 2 if len(lines) > 1 and not lines[1].strip() else 1
-    body = "\n".join(lines[body_start:]).strip()
+    title, body = split_xhs(xhs_text)
     safe_title = html.escape(title)
     safe_body = html.escape(body)
     safe_comment = html.escape((pinned_comment or "").strip())

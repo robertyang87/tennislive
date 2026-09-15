@@ -4098,3 +4098,125 @@ def test_不再做比赛前瞻():
         "⚠️ 账号所有者定过：**不要做比赛前瞻，这不是网球有故事的内容**。\n"
         "比赛还没打的前瞻不做了——想讲这两个人，等球打完做「赛场之上」，"
         "或者把他们的来路做成常青的「网球有故事」。")
+
+
+def test_解说片的小红书正文不许超一千字():
+    """正文那一格是 1000 字，超了**粘不进去**——而这条线原来一道闸都没有。
+
+    来路：`second-serve-clock` 带着 **1118 字**的正文发了出去，账号所有者
+    「可复制的正文超出 1000 字了，后续要改进」。查下来根子不是谁写长了，
+    是**判据和闸的扫描面都比规矩窄**：
+
+    - 闸 `push_reel.split_copy` 的调用方只有 `tools/build_match_reel.py`
+      （竖版短片那条线），而解说片走
+      `cli.cmd_explainer` → `explainer_xiaohongshu()` → `to_copy_page()`；
+    - 判据 `test_小红书正文不许超一千字` 扫的是 `specs/*/*.xhs.txt`，
+      而解说片的文案活在 `_CAPTIONS` 里，**根本不在那个目录下**。
+
+    规矩是跨线的（同一个小红书账号、同一个 1000 字的格子），而闸和判据都是
+    按线装的——CLAUDE.md「判据的扫描面往往比规矩的适用面窄」的又一次。
+
+    ⚠️ **这一条是「早报」那一半**：闸装在 `to_copy_page`，而那一步排在
+    `generate_explainer_video()` **之后**（`cli.py` 里先渲片再写文案），
+    红在那儿要白烧一趟渲染。这条测试只跑纯函数，44 条秒级出结果——改文案
+    那一刻就红，不用等 TTS 和 ffmpeg。
+    """
+    import time
+
+    from tennislive.render.pushmsg import XHS_BODY_MAX, split_xhs
+    from tennislive.video.explainer import _CAPTIONS, explainer_xiaohongshu
+
+    # ⚠️ **先把这个数钉住，再拿它去量**（抄的是 interview 线那条判据的教训）：
+    # 只写 `len(body) <= XHS_BODY_MAX` 的话，把上限调大会让闸和断言**一起松**，
+    # 测试照样绿。而「超标了就去调上限」正是最顺手的那个错改法。
+    assert XHS_BODY_MAX == 1000, (
+        f"XHS_BODY_MAX 被改成了 {XHS_BODY_MAX}。这是小红书那一格的平台限制，"
+        "不是我们的口味参数——调高它不会让文案粘得进去，只会让这道闸变成摆设。"
+        "正文超了要去提炼：开头留结论，数字交给底下的要点那几行。")
+
+    t0 = time.monotonic()
+    checked, over = 0, []
+    for slug in sorted(_CAPTIONS):
+        story = find_story_by_slug(slug)
+        # ⚠️ 找不到 story 要出声，不许静静跳过——「这条选题没注册」和
+        # 「这条文案没被校到」在一个 continue 底下长得一模一样。
+        assert story is not None, f"{slug} 在 _CAPTIONS 里，却找不到对应的选题"
+        segments = explainer_script(story)
+        # 真跑一遍产文案的那个函数，不是只量 hook：正文 = hook ＋ 八屏要点
+        # ＋ 收尾 ＋ tag，超标可能来自任何一段（`second-serve-clock` 那次
+        # 超的是 hook，而它只占正文的 38%）。
+        xhs = explainer_xiaohongshu(story, segments, "9.15")
+        checked += 1
+        try:
+            _title, body = split_xhs(xhs)      # 超了它自己就 SystemExit
+        except SystemExit as e:
+            over.append(f"{slug}: {e}")
+            continue
+        assert len(body) <= XHS_BODY_MAX, f"{slug} 正文 {len(body)} 字"
+
+    assert not over, "这些解说片的正文粘不进小红书：\n" + "\n".join(over)
+
+    # 判据自己的判据：主语没了（`_CAPTIONS` 改名、选题注册断了）的样子就是
+    # 一条都没校到，而那时上面整个循环会安安静静地全绿。
+    assert checked >= 40, f"只校到 {checked} 条解说片文案，判据大概没找对主语"
+    # ⚠️ 这条测试**必须够快**才配当「早报」。真跑 44 条实测 1 秒上下；
+    # 慢到几十秒就会有人把它挪出常跑的那一档，那它就回到了「渲完才知道」。
+    assert time.monotonic() - t0 < 30, "校 44 条文案不该要这么久，它是给人早报用的"
+
+
+def test_那一千字的闸是四条线共用的一处出处():
+    """复制页是解说片／知识帖／内容雷达／竖版短片**共用**的那个出口。
+
+    闸装在这儿，四条线一处全护住；写两处必分叉，而 2026-09-15 之前分叉的
+    样子就是**竖版短片拦得住、解说片拦不住**（`split_copy` 里自己写着一个
+    `BODY_MAX = 1000`，而 `to_copy_page` 里是另抄的一套切法、不查长度）。
+
+    三头都要钉，缺一头都是恒真：
+
+    ① 行为——`to_copy_page` 真的拦得住一份 1001 字的正文；
+    ② 位置——它走的是共用的 `split_xhs`，不是自己再内联一套切法
+       （只钉①的话，有人把切法抄回去、顺手把长度检查带上，也能绿——
+       而那就又是两处实现了）；
+    ③ 竖版短片那条委托是真的，`BODY_MAX` 不再是第二个写死的 1000。
+    """
+    import ast
+    import sys
+
+    from tennislive.render import pushmsg
+    from tennislive.render.pushmsg import XHS_BODY_MAX, to_copy_page
+
+    # ① 行为：顶格放行、多一个字就拦
+    at_cap = "标题\n\n" + "字" * XHS_BODY_MAX
+    assert "字" * 20 in to_copy_page(at_cap), "顶格那一份应该照常渲出来"
+    with pytest.raises(SystemExit) as e:
+        to_copy_page("标题\n\n" + "字" * (XHS_BODY_MAX + 1))
+    msg = str(e.value)
+    assert str(XHS_BODY_MAX) in msg, "报错要把上限那个数印出来"
+    # 报错要说出路——撞上它的人只读得到这一段（CLAUDE.md「报错要说出路」）。
+    assert "提炼" in msg, "报错只说『超了』没用，要说清怎么办"
+
+    # ② 位置：用 AST 找真正的调用，不按文本扫——这个模块的注释里正写着
+    # `split_xhs` 这个名字（记这次教训），按文本扫会把「把坑记下来」判成
+    # 「它接上了」。
+    src = Path(pushmsg.__file__).read_text(encoding="utf-8")
+    fn = next(n for n in ast.walk(ast.parse(src))
+              if isinstance(n, ast.FunctionDef) and n.name == "to_copy_page")
+    called = {c.func.id for c in ast.walk(fn)
+              if isinstance(c, ast.Call) and isinstance(c.func, ast.Name)}
+    assert "split_xhs" in called, (
+        "to_copy_page 不再走共用的 split_xhs 了——切法和上限又变成两处，"
+        "而分叉的样子是『一条线拦得住、另一条线拦不住』")
+
+    # ③ 竖版短片那条只剩委托，不许再有第二个写死的 1000
+    root = Path(__file__).resolve().parents[1]
+    sys.path.insert(0, str(root / "tools"))
+    import push_reel  # noqa: PLC0415
+
+    assert push_reel.BODY_MAX == XHS_BODY_MAX
+    assert push_reel.split_copy is not None
+    reel_src = Path(push_reel.__file__).read_text(encoding="utf-8")
+    split_fn = next(n for n in ast.walk(ast.parse(reel_src))
+                    if isinstance(n, ast.FunctionDef) and n.name == "split_copy")
+    reel_called = {c.func.id for c in ast.walk(split_fn)
+                   if isinstance(c, ast.Call) and isinstance(c.func, ast.Name)}
+    assert "split_xhs" in reel_called, "split_copy 又自己写了一套切法"
