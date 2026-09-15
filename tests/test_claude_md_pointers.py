@@ -7,12 +7,12 @@
 |---|---|
 | 166 条 📖 指针各自带着同一句「做这类工作前先用 Skill 工具加载它。以下是子目录，正文在 skill 里」 | 7498 字符 |
 | 53 处在指针后面把自己的标题又原样印一遍 | 2009 字符 |
-| **336 行纯目录标题**——它们在 skill 正文里**各有一份一字不差的拷贝** | 14900 字符 |
+| **175 行 h5 及更深的纯目录标题**——它们在 skill 正文里**各有一份一字不差的拷贝** | 约 8.2k 字符 |
 
-第三类推翻了这份文件原来那句「标题一律留在原位」（账号所有者 2026-09-15 要求）。
-**留在 CLAUDE.md 的是有正文的标题；子目录归 skill 自己**——一条 skill 的目录印在
-一份每次全量注入的文件里，等于为「万一要查」天天付钱，而 skill 的 `description`
-和开头那张七行表已经够把人routed 过去。
+第三类推翻了这份文件原来那句「标题一律留在原位」（账号所有者 2026-09-15 要求），
+而**分层是同一天量出来的**：h4 那一层（160 行）是「这个 📖 底下大致有些什么」，
+判断该不该加载 skill 要靠它，所以留着；**h5 及更深**不加载 skill 也看不出所以然，
+而 skill 正文里一字不差地有，所以删。
 
 这里钉四条，都窄：
 
@@ -20,8 +20,8 @@
 2. **指针指得到**——它点名的 skill 里必须真的有这一节的标题（`test_docs_pointers.py`
    为 `docs/` 指针记过同一个形状的账：**指错比过期更坏**，读者没有第二个地方可以对）；
 3. **同一个标题不许连印两遍**——那 53 处就是这么来的；
-4. **纯目录标题不许长回来**——自己一行正文都没有的标题，正文必然在别处，
-   那它就该待在别处。这一条是「防住那一类」，不是防那一个。
+4. **纯目录标题不许深过 h4**——h5 及更深的纯目录，正文必然在 skill 里，
+   那它就该只待在那儿。这一条是「防住那一类」，不是防那一个。
 
 ⚠️ **不扫 skill 正文里的 `📖`**：skill 是档案，里面引用别的 skill 是正常的。
 ⚠️ 这四条都不管「该不该搬」——那是判断题，机械挡不住（本仓库为此故意没给
@@ -134,36 +134,52 @@ def test_同一个标题不许连印两遍():
         last_heading = ln
 
 
-def test_纯目录标题不许长回来():
-    """自己一行正文都没有的标题，正文必然在别处，那它就该待在别处。
+def test_纯目录标题不许深过h4():
+    """h5 及更深的纯目录标题，正文必然在 skill 里，那它就该只待在那儿。
 
-    2026-09-15 删掉 336 行这样的标题（14900 字符，占当时全文 19.9%），
-    它们在 skill 正文里**各有一份一字不差的拷贝**——印在一份每次全量注入的文件里
-    等于为「万一要查」天天付钱。
+    2026-09-15 删掉 175 行这样的标题（约 8.2k 字符）。**h4 那一层留着**——它是
+    「这个 📖 底下大致有些什么」，判断该不该加载 skill 要靠它；再深一层就不加载
+    skill 也看不出所以然了，而 skill 正文里一字不差地有。
 
     ⚠️ 带 `📖` 指针的标题**不算**纯目录：指针那一行就是它的正文，它交代了
-    正文去了哪个 skill，那是每次都该看见的路标。
+    正文去了哪个 skill，那是每次都该看见的路标。所以这条拦的只有「既没正文、
+    又深过 h4」的那一类。
     """
     lines = _lines()
-    empty: list[tuple[int, str]] = []
+    deep: list[tuple[int, str]] = []
     for i, ln in enumerate(lines):
-        if not _HEADING.match(ln):
+        m = _HEADING.match(ln)
+        if not m:
+            continue
+        if len(ln) - len(ln.lstrip("#")) <= 4:
             continue
         end = next(
             (j for j in range(i + 1, len(lines)) if _HEADING.match(lines[j])), len(lines)
         )
         if not "".join(lines[i + 1 : end]).strip():
-            empty.append((i + 1, ln))
+            deep.append((i + 1, ln))
 
-    assert not empty, (
-        "CLAUDE.md 里又出现了自己一行正文都没有的标题："
-        + "；".join(f"第 {n} 行 {h!r}" for n, h in empty[:5])
-        + "。子目录归 skill 自己——它的 `description` 和本文开头那张七行表已经够把人"
-        "引过去，把目录再抄一份进这份**每次全量注入**的文件，是在为「万一要查」天天付钱。"
+    assert not deep, (
+        "CLAUDE.md 里又出现了 h5 及更深的纯目录标题："
+        + "；".join(f"第 {n} 行 {h!r}" for n, h in deep[:5])
+        + "。深到这一层，不加载 skill 也看不出所以然，而 skill 正文里一字不差地有"
+        "——把它再抄一份进这份**每次全量注入**的文件，是在为「万一要查」天天付钱。"
     )
 
-    # 主语没了就出声：标题全没了的话上面那条会假装严格。
-    assert sum(1 for ln in lines if _HEADING.match(ln)) >= 100, "标题数不对，判据失效了"
+    # 主语没了就出声：h4 那层索引被人顺手删光的话，这条会假装严格。
+    h4_index = sum(
+        1
+        for i, ln in enumerate(lines)
+        if _HEADING.match(ln)
+        and len(ln) - len(ln.lstrip("#")) == 4
+        and not "".join(
+            lines[i + 1 : next(
+                (j for j in range(i + 1, len(lines)) if _HEADING.match(lines[j])),
+                len(lines),
+            )]
+        ).strip()
+    )
+    assert h4_index >= 100, f"h4 那层索引只剩 {h4_index} 行，它是该留下的那一层"
 
 
 def test_这几条判据自己不是恒真的():
@@ -192,6 +208,8 @@ def test_这几条判据自己不是恒真的():
     heads = [ln for ln in fake if _HEADING.match(ln)]
     assert heads[0] == heads[1], "样本自己就不重复，验不了这条"
 
-    # ④ 纯目录：一个标题紧跟着另一个标题，就是没有正文
-    seq = ["### 只有标题", "#### 又一个标题", "有正文了"]
+    # ④ 纯目录：一个标题紧跟着另一个标题，就是没有正文；而层级决定拦不拦
+    seq = ["##### 深的纯目录", "###### 更深的", "有正文了"]
     assert _HEADING.match(seq[0]) and _HEADING.match(seq[1]), "样本验不了这条"
+    assert len(seq[0]) - len(seq[0].lstrip("#")) == 5, "h5 才是这条要拦的那一层"
+    assert len("#### x") - len("#### x".lstrip("#")) == 4, "h4 是放行的那一层"
