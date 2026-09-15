@@ -152,6 +152,9 @@ class ExplainerSegment:
     # 赛前片的封面被单独截图转发时，大问题本身说不清「哪一场、几点」——
     # 这两行把比赛坐标钉在同一屏上。由 `_fixture_lines()` 从结构化字段拼出来，
     # 不手写，免得日期和轮次在几处各写各的。
+    # ⚠️ 「开球之前」2026-09-15 撤掉了（见 `_RETIRED_COLUMNS`），所以这一路
+    # **只剩存量在用**：新片子写了 `fixture` 会被判据拦下（常青栏目的封面
+    # 不许印比赛坐标），它留着是为了那 9 条已发的片子还渲得出当年那张卡。
     fixture: tuple[str, ...] = ()
     # 封面大标题底下的一行小字，用来给标题里的缩写或行话当场作注。
     # 和 `fixture` 分开是因为那一路被钉死给「开球之前」了（常青栏目的封面
@@ -8029,10 +8032,13 @@ class Column:
     """A named strand of the account, printed on every card it produces.
 
     A column is a promise, not a decoration: the reader who sees 网球有故事
-    expects something that will still be true next year, and the one who sees
-    开球之前 expects a match that has not started yet. Mixing them costs the
-    label its meaning — a preview published under 网球有故事 is stale the
-    moment play begins, and nothing on the card would have said so.
+    expects something that will still be true next year. Mixing promises costs
+    the label its meaning — a match preview published under 网球有故事 would be
+    stale the moment play begins, and nothing on the card would have said so.
+
+    ⚠️ 2026-09-15 起解说视频这条线**只剩 `网球有故事` 一个**（见 `COLUMNS`）。
+    `perishable` 这一维是「开球之前」留下来的，撤掉的那个栏目还在
+    `_RETIRED_COLUMNS` 里给已发的片子用，所以这个字段照旧要有。
     """
 
     name: str
@@ -8049,11 +8055,14 @@ COLUMNS: dict[str, Column] = {
         promise="一个人人见过、没人讲得清的网球现象，讲清它的来历和现在。",
         perishable=False,
     ),
-    "开球之前": Column(
-        name="开球之前",
-        promise="一场还没开打的比赛，把两边这几年的来路摆在一起；不预测结果。",
-        perishable=True,
-    ),
+    # ⚠️ **2026-09-15 账号所有者把栏目收敛到三个**：只保留「赛场之上」「赛后开麦」
+    # 「网球有故事」，而且「**不光是停掉，还要将代码和配套的测试都拿掉**」。
+    # 解说视频这条线名下原来有两个，「开球之前」（比赛前瞻）2026-08-17 就不再做
+    # 新的了，现在从这张表里整个拿掉——**不在这张表里 ＝ 生产不出来**：
+    # `column_of` 查不到就抛 KeyError，`_OPENINGS` 里写上它也挂不上去。
+    # 它名下已经发出去的 9 条挂在 `_RETIRED_COLUMNS` / `_ARCHIVED_DECKS` 底下，
+    # 那儿写着为什么那 9 条留着。判据 `test_解说视频的栏目只剩网球有故事一个`。
+    #
     # 一度还有 First Serve / Second Serve 两个英文栏目（专收「讲一个人」的片子），
     # 以及「握手之后」（一场刚打完的比赛对两个人各意味着什么）。三个都撤了，
     # 理由是同一条：**五个栏目读者记不住**。栏目是承诺，多一个就薄一分。
@@ -8076,6 +8085,35 @@ COLUMNS: dict[str, Column] = {
 
 DEFAULT_COLUMN = "网球有故事"
 
+#: 撤掉的栏目，**只为已经发出去的片子留着**——不是一张「还能用」的表。
+#:
+#: 「开球之前」2026-08-17 停止做新的、2026-09-15 整个撤销（账号所有者把栏目
+#: 收敛到三个）。它名下 9 条片子已经推送出去了，卡上印的就是这个名字，所以
+#: 这条记录还要查得到：`column_of` 对**那 9 条**照旧返回当年那份承诺，别的
+#: 一律抛 KeyError。换句话说这张表**只许减不许加**，而且它不参与生产——
+#: `COLUMNS` 才是「现在还能做哪些栏目」的那张表。
+_RETIRED_COLUMNS: dict[str, Column] = {
+    "开球之前": Column(
+        name="开球之前",
+        promise="一场还没开打的比赛，把两边这几年的来路摆在一起；不预测结果。",
+        perishable=True,
+    ),
+}
+
+#: 挂在撤掉的栏目名下、**已经推送出去**的那些片子。**只许减不许加。**
+#:
+#: ⚠️ 为什么这 9 条的 deck 定义没跟着栏目一起删掉：`_SCRIPTS` 里的 slug 是
+#: **别处名单的主语**——`tests/test_explainer_budget.py` 的 `_OVER_BUDGET` /
+#: `_COVER_TWO_LINES`、`tests/test_cover_resolution.py` 的 `_UNDERSIZED` 和那条
+#: 「够铺满但推不动」的集合里各挂着其中几条，那些名单都有「名单里的片子必须
+#: 真的存在」的自检。把 deck 删掉，那两条线的判据当场红，而红的原因跟它们要
+#: 守的事一点关系都没有。删它们要和那两个文件一起改，不是这一处的事。
+_ARCHIVED_DECKS = frozenset({
+    "eala-anisimova", "eala-mcnally", "fonseca-oconnell", "shang-nishikori",
+    "shang-rublev", "venus-potapova", "wang-sabalenka", "wong-lehecka",
+    "zheng-eala",
+})
+
 
 def explainer_column(slug: str) -> str:
     """The column a deck is published under."""
@@ -8085,12 +8123,21 @@ def explainer_column(slug: str) -> str:
 def column_of(slug: str) -> Column:
     """The column record behind a deck. Raises on a name nobody registered."""
     name = explainer_column(slug)
-    try:
+    if name in COLUMNS:
         return COLUMNS[name]
-    except KeyError:  # a typo here would silently invent a third column
+    # 撤掉的栏目只认它名下**已经发出去**的那几条：新片子挂上去要当场炸，
+    # 否则「这个栏目不做了」就只是一句写在文档里的话。
+    if name in _RETIRED_COLUMNS and slug in _ARCHIVED_DECKS:
+        return _RETIRED_COLUMNS[name]
+    if name in _RETIRED_COLUMNS:
         raise KeyError(
-            f"{slug} 声明的栏目「{name}」没有登记在 COLUMNS 里"
-        ) from None
+            f"「{name}」这个栏目撤掉了，不再往里加新的片子（{slug}）——"
+            "球打完做「赛场之上」，只讲来路做「网球有故事」"
+        )
+    # a typo here would silently invent a column nobody promised
+    raise KeyError(
+        f"{slug} 声明的栏目「{name}」没有登记在 COLUMNS 里"
+    )
 
 
 # The first seconds decide whether anyone stays, and a deck that opens on
