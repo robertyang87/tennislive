@@ -1,9 +1,32 @@
-# tennislive 🎾
+# tennislive 🎾 · 网球时差
 
-WTA / ATP 巡回赛每日赛程与赛果同步工具（北京时间）：
+一个网球内容账号的**生产线**：从赛程赛果数据出发，选题、写稿、配音、剪辑、质检、
+推送，整条链跑在 GitHub Actions 上。底层是一套 WTA / ATP 巡回赛的北京时间
+赛程赛果 CLI——它现在是这条线的取数底座，不再是这个仓库的主业。
 
-- **终端 CLI**：随时查询今日赛程、实时比分、昨日赛果
-- **自动内容任务**（GitHub Actions）：晨报定时生成；热点雷达全天检测并生成小红书单场待发布包
+> ⚠️ **动手之前先读 [`CLAUDE.md`](CLAUDE.md)**，不是这份。那里是协作约定：
+> 授权边界、不可逆动作的闸、选题与栏目口径、方法论；更深一层的档案按主题分在
+> `.claude/skills/`（封面、源片、流水线、版式、出片手艺、文案、开发实践七份，
+> 撞上那类工作时才加载）。
+>
+> 这份 README 只回答一件事：**这个仓库里有什么，怎么跑起来。**
+
+## 栏目
+
+栏目名印在每张卡的片头、封面小标签和小红书落款上。它是**对读者的承诺**，
+所以哪条片子归哪个栏目是内容问题，不是排版问题。锚点只有一个动作——**握手**：
+
+| 栏目 | 相对握手 | 承诺 | 单位 | 生产线 |
+|---|---|---|---|---|
+| **赛场之上** | 打到握手为止 | 比赛本身：集锦画面 ＋ 配音讲清走势、转折和回应 | 一场 | 集锦视频 |
+| **赛后开麦** | 话筒递过来 | 打完的人自己怎么说 | 一句话 | 采访视频 |
+| **昨日好球** | —— | 昨夜官方剪出来的那一个回合 | 一分 | 单分视频 |
+| **网球有故事** | —— | 一个人人见过、没人讲得清的网球现象，讲清它的来历和现在 | 一个现象 | 解说视频 |
+| **历史上的今天** | —— | 这一天发生过的那件事 | 一个日子 | 图文知识帖 |
+| ~~**开球之前**~~ | 之前 | ~~还没开打的比赛，把两边这几年的来路摆在一起~~ **2026-08-17 起不做新的**（判据 `test_不再做比赛前瞻`） | 一场 | 解说视频 |
+
+栏目怎么选、撤掉过哪些、为什么只留这几个，见 [`docs/columns.md`](docs/columns.md)；
+日常运营口径见 [`docs/column-operations.md`](docs/column-operations.md)。
 
 ## 快速开始（本地 CLI）
 
@@ -14,242 +37,250 @@ tennislive today                    # 今日总览：赛果 + 进行中 + 赛程
 tennislive results --date yesterday # 昨日赛果
 tennislive schedule --date tomorrow # 明日赛程
 tennislive live                     # 进行中的比赛
-tennislive digest                   # 生成今日内容包到 output/YYYY-MM-DD/
-tennislive content                  # 自动选题并生成完整待发布内容包
+tennislive coverage                 # 数据源与赛事覆盖报告（一张 coverage.txt）
+tennislive brief                    # 网球热点简报：扫新闻 → 聚热点 → 中文要点 → 一条推送
+tennislive content                  # 内容雷达：赛前焦点的完整小红书内容包
 ```
 
-所有时间均为北京时间；`--date` 支持 `YYYY-MM-DD` / `today` / `yesterday` / `tomorrow` / `±N`。
-`--json` 输出原始 JSON。生成卡片图需要中文字体（Ubuntu：`sudo apt install fonts-noto-cjk`）。
+所有时间均为北京时间；`--date` 支持 `YYYY-MM-DD` / `today` / `yesterday` /
+`tomorrow` / `±N`，`--json` 输出原始 JSON。渲卡片图要中文字体
+（Ubuntu：`sudo apt install fonts-noto-cjk fonts-noto-color-emoji`）。
 
-## 内容生成任务
+还有几条底层命令，日常不直接用：`topic-radar` / `flash-radar`（只出候选队列，
+日常走 `brief`）、`flash-card`（单图快讯卡）、`knowledge-adhoc`（单篇知识帖）、
+`explainer`（解说视频）、`video`（已授权素材中文化）、`publish`（发布）。
 
-⚠️ **日报（`daily.yml`）已于 2026-07-31 停产并删除**——形式落后、任务重且没收益。
-下面这段留作历史说明；现在还在跑的自动内容是 `news-brief.yml`（热点简报）、
-`flash.yml`（内容雷达）、`match-reel.yml`（赛场之上 / 网球有故事）和
-`explainer.yml`（知识解说视频）。
+> `tennislive digest` 已删除：它的产物没人用，覆盖率报告抽成了 `coverage` 自己一条。
 
-<details><summary>已停产：每日晨报（历史说明）</summary>
+## 三条视频生产线
 
+片子的内容写在 `specs/` 里的一份 JSON（**spec 是内容的唯一真相**：窗口、旁白、
+封面、比分、推送文案都在里面），工作流按 spec 出片。
 
-1. 抓取昨日赛果 + 今日赛程（含凌晨刚结束的欧美比赛）
-2. 生成内容包并提交到仓库 `output/YYYY-MM-DD/`：
+| 线 | 工作流 | spec | mode |
+|---|---|---|---|
+| **赛场之上**（集锦复盘） | `match-reel.yml` | `specs/reels/<slug>.json` | `probe` 下源片出缩略图墙和死球切点 → `cover` 只出封面 → `narration` 只查旁白装不装得下 → `render` 出成片 → `push` 推已落库的成片 |
+| **赛后开麦**（采访） | `interview-clip.yml` | `specs/interviews/<slug>.json` | `subs` 取字幕切行 → `cover` → `render` → `push` |
+| **网球有故事**（解说） | `explainer.yml` | 脚本在 `video/explainer.py` 的 `_SCRIPTS` | 直接 `slug` 出片 |
 
-| 文件 | 用途 |
-|---|---|
-| `wechat_title.txt` | 公众号文章标题（自动挑亮点：中国球员优先） |
-| `wechat.md` | 公众号文章 Markdown（配合 md2wechat 等工具排版） |
-| `wechat.html` | 内联样式 HTML，可直接粘贴进公众号编辑器或走 API 发草稿 |
-| `xiaohongshu.txt` | 小红书文案（标题 ≤20 字、正文 ≤1000 字、话题标签） |
-| `copy.html` | 手机文案复制页（标题、正文可分别一键复制） |
-| `pinned_comment.txt` | 小红书置顶评论，可在复制页单独一键复制 |
-| `cards/*.png` | 1080×1440 竖版卡片图：封面 + 赛果页 + 赛程页 |
-| `source_manifest.json` | 本期来源清单：比分、人物背景和外媒分析各自用于什么 |
-| `fact_ledger.json` | 可机械回查的赛果、媒体共识、分歧、数据点和编辑判断 |
-| `editorial_decision.json` | 头条与今晚焦点的选择理由、评分拆解和内容约束 |
-| `media_synthesis.json` | 外媒多源原创摘要及原文链接，不保存或复制媒体正文 |
-| `coverage.txt` | ATP/WTA 赛事覆盖与每个数据源的健康状态 |
-| `digest.json` | 当期原始数据快照 |
+配套的小红书正文是同名的 `.xhs.txt`（改文案不用重渲，它不在渲染那条哈希链上）。
 
-首次运行还会生成 `output/profile/`：主页简介 `bio.txt`、品牌背景图
-`background.png` 和三篇置顶规划 `pinned_plan.md`。这些是一次性主页配置物料，
-不会自动修改或提交小红书账号设置。
+出片之前**先在本地把便宜的闸跑满**，别拿 runner 当第一道检查：
 
-每次日报通过质量检查后，系统会把头条人物与结果追加到
-`data/editorial_memory.json`。后续同一球员再次出现时，文案会把最近一次已发布
-记录与已核验的球员/赛事档案接起来；所有历史数字仍需通过事实闸门。
+```bash
+python3 tools/build_match_reel.py --slug <slug> --dry-run           # 0.2 秒，查 spec 形状
+python3 tools/build_match_reel.py --slug <slug> --check-narration   # 约 1 分钟，真 TTS 量每段余量
+pytest -q -n auto                                                    # 全量，约 2 分钟
+```
 
-3. 按配置执行发布（见下节）。
+⚠️ `--dry-run` 报「第 N 段落在估算的误差里」＝**判不了**，不是没问题——那时必须
+补跑 `--check-narration`。一趟 render 是 7~15 分钟，本地这几秒买的是不用重来。
+整条快路的账（为什么慢的是趟数不是渲染）见
+[`docs/thirty-minute-pipeline.md`](docs/thirty-minute-pipeline.md) 和
+[`docs/video-production-fast-path.md`](docs/video-production-fast-path.md)。
 
-</details>
+## 无人值守编排
 
-### GitHub Actions 自主产出边界
+`orchestrate.yml` 每 10 分钟扫一次赛果赛程，打分、路由、去重，再自动 dispatch
+probe 并备料；候选报告写进 job summary，不用翻日志。往下接
+`reel-auto-ready.yml`（草稿转正）、`reel-dispatch-queue.yml`、
+`auto-push-reel.yml` / `auto-push-interview.yml` / `auto-push-explainer.yml`
+（合进 main 之后按 `push.auto` 自动推送）。
 
-（已停产）无人参与时，`daily.yml` 曾自动完成比分抓取与跨源去重、规则选题、已审核背景库与媒体摘要的匹配、原创文案、卡片渲染、事实/版式质检、证据包归档，以及按配置推送到微信或公众号草稿箱。Action 会显式检查上述四个 JSON 证据文件；缺失任一文件即视为生成失败。
+状态看板和复制页共用一个 GitHub Pages 部署（`pages.yml`），
+观测口径见 [`docs/orchestration-observability.md`](docs/orchestration-observability.md)。
 
-知识帖配图会先读取 ATP/WTA/赛事或史料来源页的公开元数据用于核对，再从官方媒体、Wikimedia Commons、Openverse 等多源检索高清图。来源与署名全程记录——许可名称、作者、来源 URL 写进 `visual_sources.json` 与 credits（缺失记 `unknown` / `unverified`），检索不以授权状态过滤；发布前的权利判断由人工检验环节负责。球员故事还要求照片标题/分类匹配具体赛事锚点，例如美网、法网或奥运会；只匹配到“球员名 + 年份”的泛相关照片会被拒绝。没有同时通过分辨率、去重和事件相关性检查时，该页自动改用主题专属时间轴或规则示意图。每次生成都会输出 `knowledge/visual_sources.json` 与 `knowledge/visual_qa.json`，Action 在推送前强制检查。
+仓库里一共 50 条工作流，其余多是一次性的补救、探测和自检（`probe.yml`、
+`source-health.yml`、`pipeline-health.yml`、`pushplus-selftest.yml`…）。
 
-它不会在运行时自由浏览新闻并把未经审核的说法写进正文，也不会在小红书自动发帖。图片检索不以授权状态过滤，但每张图的许可、作者与来源 URL 全程记录；发布前的权利判断由人工检验环节负责。某日没有匹配的已审核媒体摘要时，内容会降级到比分、赛程和已核验档案，不会让模型补写“权威评价”。最终发布前仍建议人工核对事实、观感和素材权利。
+## 发布链路
 
-## 发布渠道配置（GitHub Secrets / Variables）
+一条片子的默认终点是**发出去**，不是等指示：
 
-### 方案 A：PushPlus 推送到微信（最简单，推荐起步）
+    渲（push=false，在分支上）→ 质检 → 合进 main → 自动推送微信
 
-把排版好的内容推到你自己的微信：点击按钮复制标题/正文，卡片图逐张保存后导入发布：
+顺序不能反：**推必须排在合并之后**，GitHub Pages 只服务 `main`，复制页那个按钮
+在分支上永远是 404。质检清单（`check_reel_landed` 0 项不合格、全量绿、旁白装得下、
+切词没假词、成片链接探得到）写在 `CLAUDE.md`「渲完 → 质检 → 直接推微信」那一节。
+
+产物各走各的通道，别混：
+
+| 东西 | 去哪儿 | 为什么 |
+|---|---|---|
+| 成片 mp4 | **GitHub Release** | 不进 git（仓库里 0 个 mp4）；git 的 100 MiB 限制不该拿片长去换 |
+| 卡片图 / 海报 | **jsDelivr**（`src/tennislive/cdn.py`） | 钉在 commit 上、永久可取；主机名一个地方定，用 `TENNISLIVE_JSDELIVR_HOST` 换镜像 A/B |
+| 复制页 / 看板 | **GitHub Pages** | 手机上一键复制标题和正文 |
+
+### PushPlus 推送到微信
 
 1. 在 [pushplus.plus](https://www.pushplus.plus) 微信扫码注册，复制 token
 2. 仓库 Settings → Secrets and variables → Actions → 新建 Secret：`PUSHPLUS_TOKEN`
-3. 为保证微信稳定显示卡片图，在 PushPlus「开发设置」启用开放接口并设置
-   `secretKey`，再新建 GitHub Secret：`PUSHPLUS_SECRET_KEY`。配置后 Action
-   会把每张成图先上传至 PushPlus 原生图片 CDN；未配置时使用带版本戳的
-   GitHub Pages 图片地址。
+3. 仓库 Settings → Pages 选择 `main` 分支根目录发布（复制页要它）
 
-推送里的复制按钮由 GitHub Pages 承载；仓库需在 Settings → Pages 中选择 `main` 分支根目录发布。
+⚠️ **不要配 `PUSHPLUS_SECRET_KEY`**（这里原来教人配，是反的）。配上它就走 PushPlus
+自己的图床，而那条路：①图片 **30 天后自动删**，老推送到期变裂图；②要会员；
+③开放接口默认禁用，开完还有一道安全 IP 白名单，而 GitHub runner 的出口 IP 每趟
+都不一样。实测配着它反而每趟先吃一个 `code=401`，再退回 jsDelivr。
+不配＝直接走 jsDelivr，严格更好。判据 `test_不许再给工作流配PUSHPLUS_SECRET_KEY`。
 
-### 方案 B：公众号 API 自动存草稿 / 发布
+### 公众号 API（可选，存草稿 / 发布）
 
-**前提**：已认证的公众号（个人未认证订阅号无草稿/发布接口权限）。
+**前提**：已认证的公众号（个人未认证订阅号没有草稿/发布接口权限）。
 
-Secrets：
-
-| 名称 | 说明 |
+| Secret | 说明 |
 |---|---|
-| `WECHAT_APPID` | 公众号 AppID |
-| `WECHAT_APPSECRET` | 公众号 AppSecret |
-| `WECHAT_API_PROXY` | （见下方 IP 白名单说明）固定出口 IP 的 HTTP 代理，如 `http://user:pass@1.2.3.4:8080` |
-| `ATP_PROTENNISLIVE_TOKEN` | ATP ProTennisLive Bearer JWT（需 Tournament Claims）；用于 ATP 焦点赛官方逐场技术统计 |
-| `SPORTRADAR_API_KEY` | Sportradar Tennis API key，作为 ATP/WTA 焦点赛技术统计备用源 |
+| `WECHAT_APPID` / `WECHAT_APPSECRET` | 公众号 AppID / AppSecret |
+| `WECHAT_API_PROXY` | 固定出口 IP 的 HTTP 代理，如 `http://user:pass@1.2.3.4:8080`（见下） |
+| `ATP_PROTENNISLIVE_TOKEN` | ATP ProTennisLive Bearer JWT（需 Tournament Claims），用于官方逐场技术统计 |
+| `SPORTRADAR_API_KEY` | Sportradar Tennis API key，技术统计备用源 |
 
-Variables（非敏感）：`WECHAT_MODE` = `off`（默认，只生成文件）/ `draft`（自动存草稿箱，后台一键群发）/ `publish`（直接发布，慎用）；`SPORTRADAR_ACCESS_LEVEL` = API 套餐级别，试用账号默认为 `trial`；`TENNISLIVE_VISUAL_FETCH` = `on`（默认，多源检索图片，授权信息仅记录）/ `off`（完全使用本地图片与程序生成信息图）。
+Variables：`WECHAT_MODE` = `off`（默认，只生成文件）/ `draft` / `publish`（慎用）；
+`SPORTRADAR_ACCESS_LEVEL`（试用账号默认 `trial`）；`TENNISLIVE_VISUAL_FETCH` =
+`on`（默认，多源检索图片，授权信息仅记录）/ `off`。
 
-> ⚠️ **IP 白名单**：微信获取 access_token 要求调用方 IP 在公众号后台白名单内，而 GitHub Actions 出口 IP 不固定。两种解法：
-> 1. 购买/自建一个固定 IP 的 HTTP 代理，配置 `WECHAT_API_PROXY` 并把代理 IP 加入白名单（公众号后台 → 基本配置）；
-> 2. 不走 API：用方案 A 或直接复制 `wechat.html` 到公众号编辑器（1 分钟的事）。
-
-流程：上传封面卡片为素材 → 上传赛果/赛程卡片进正文 → `draft/add` 存草稿 →（`publish` 模式下）`freepublish/submit`。
+> ⚠️ **IP 白名单**：微信取 access_token 要求调用方 IP 在公众号后台白名单内，而
+> GitHub Actions 出口 IP 不固定。两种解法：①自建固定 IP 代理，配
+> `WECHAT_API_PROXY` 并把代理 IP 加进白名单；②不走 API——用 PushPlus，或直接把
+> `wechat.html` 粘进公众号编辑器（1 分钟的事）。
 
 ### 小红书
 
-小红书**没有对个人创作者开放发帖 API**，第三方自动发帖工具有封号风险，因此本项目生成"复制即发"的内容包：
+小红书**没有对个人创作者开放发帖 API**，第三方自动发帖有封号风险，所以这里只生成
+「复制即发」的内容包：`xiaohongshu.txt` 第一行是标题、其余是正文，`cards/` 里的
+竖版图按顺序配图。不使用模拟登录或第三方群控。
+写法口径见 [`docs/xiaohongshu-playbook.md`](docs/xiaohongshu-playbook.md)。
 
-1. 手机打开仓库（或 Actions artifact）里的 `output/日期/`
-2. `xiaohongshu.txt` 第一行是标题，其余是正文（复制粘贴）
-3. `cards/` 里的竖版卡片图按顺序作为配图（封面图放第一张）
+## 数据源
 
-配合 PushPlus，内容生成后可直接推到微信里，发帖前人工确认一次即可。
+| 源 | 角色 | 说明 |
+|---|---|---|
+| ESPN 公开比分接口 | **赛程赛果主源** | 无需鉴权，聚合 ATP/WTA；适合在 Actions 里跑 |
+| flashscore feed | **逐分与赛果交叉源** | 一次请求管两个巡回赛；比赛用时不要只信它（实测偏长过） |
+| WTA / ATP 官方接口 | **排名、签表、技术统计** | WTA `players/ranked`（参数少一个就 400）、ATP 走 protennislive posting |
+| 大满贯官方 feed | **轮次、场地、逐场** | `official_schedule.py` / `official_stats.py`；runner 上通，沙箱恒 403 |
+| TNNS Live | **统计补源** | 单独一档，不塞进常规链 |
+| SofaScore | 赛程赛果备用 | 数据较全但可能限制数据中心 IP；失败原因进覆盖报告 |
+| Sportradar Tennis v3 | 授权技术统计 | 配了 key 才启用，补总得分、发球、Ace/双误、破发点 |
+| Google News 官方域名索引 | 媒体热点信号 | 只读官方域名与白名单媒体的标题、来源、时间，不复制正文 |
+| Google Trends / 中文平台热搜 | 搜索升温信号 | 用于加权选题，不作为比赛事实 |
 
-### 网球热点简报（`news-brief.yml` → `tennislive brief`）
+程序会聚合可用的比分源，按球员、项目和北京时间日期跨源去重。`coverage.txt` 列出
+各级别赛事命中场次、每个源的健康状态、专业统计有没有授权——**不静默降级**。
 
-**一份简报，一条推送。** 2026-08-05 之前这条线一天发**两条**微信——
-「场外网球快讯候选」（8 条英文标题 + 链接）和「今日选题候选」（大多数日子是空的），
-两条合起来的信息量等于一份英文标题列表，想知道发生了什么得逐条点开英文页面。
+⚠️ **空结果 ≠ 不存在**：限流、分类名猜错、解析层级写错，看起来和「没有」一模一样。
+查空要先自证是真空，判据和踩过的坑在 `.claude/skills/tennis-media-sources/`。
 
-现在一趟做完：
+本项目不在 Actions 里自动抓取 ATP、WTA、TDI 或大满贯的**网站页面**。官网适合人工
+核查，批量自动访问需遵守各站条款；要稳定可发布的逐场技术统计，请配置有使用权的
+供应商 API。
 
-1. **扫**：官方 RSS（ATP/WTA/四大满贯，经 Google News）+ 发布方原生 RSS
-   （BBC / Guardian / Sky Sports / Tennis Majors）+ Google Trends + 中文平台热搜
-2. **去噪**：摘掉官网的常青导航页（`What is the Washington schedule?` 这类
-   永远不是新闻），摘掉几条也写进产物
-3. **聚类排热度**：几家在报 / 连着第几天 / 撞上哪条中文热搜
-4. **深挖每一条**（默认全挖，`--deep N` 可收口）：把原文抓下来，出**中文标题 +
-   3~5 条中文要点 + 为什么值得知道 + 可做的角度**；撞上人工角度表（`research/topic_radar.ANGLES`）的还会带上
-   「底下压着的常青线」和去哪儿核实
-5. **其余至少给中译标题**，原标题留在下面一行供核实
-6. **渲成一条 HTML** 推到微信——读者不点开任何链接也知道今天发生了什么
+## 模型通道
 
-⚠️ **发现和阅读走两路**：Google News 覆盖广（含 ATP/WTA 官网）但它给的 `link` 是
-JS 包装页，正文永远抓不到；发布方原生 RSS 源少但链接是真地址。两路一起进聚类，
-同一件事自然并成一簇。详见 `research/newsfeeds.py`。
-
-⚠️ **中译和要点要一个模型密钥，两条通道二选一**：
+中译、要点提炼、字幕翻译共用一条通道（`research/brief.py` 的 `Chat`）：
 
 | 通道 | 密钥 | 默认模型 | 要装什么 |
 |---|---|---|---|
 | **DeepSeek**（默认） | `DEEPSEEK_API_KEY` | `deepseek-v4-pro` | **什么都不用装**，走 OpenAI 格式的 HTTP |
 | Anthropic | `ANTHROPIC_API_KEY` | `claude-opus-5` | `pip install -e ".[brief]"` |
 
-两个都配走 DeepSeek，要反过来用 `TENNISLIVE_BRIEF_PROVIDER=anthropic`；
-换模型用 `TENNISLIVE_BRIEF_MODEL`。**跑了哪条会写进 `brief.json` 的 notes
-和推送正文底部**——判据是「走了哪条」，不是「配了什么」。
+两个都配走 DeepSeek，反过来用 `TENNISLIVE_BRIEF_PROVIDER=anthropic`；换模型用
+`TENNISLIVE_BRIEF_MODEL`。**跑了哪条会写进产物**（`brief.json` 的 notes、推送正文
+底部、字幕的审计文件）——判据是「走了哪条」，不是「配了什么」。两个都没配不会让它
+失败，简报退回「只有英文标题和热度」并照实写出来。
 
-两个都没配不会让它失败，简报退回「只有英文标题和热度」，并在推送正文底部照实
-写出来——每一层退化都出声，不静默降级。
-
-⚠️ **不要改走 DeepSeek 的 Anthropic 兼容端点**（`/anthropic`），哪怕那样两条路
-能共用一个 SDK：官方文档写明 `output_config` 只支持 `effort`（`format` 里的
-json_schema **收下就忽略**），而且不认识的模型名会**自动映射成
-`deepseek-v4-flash`**。两条都不报错。判据在
+⚠️ **不是 `GITHUB_MODELS_TOKEN`**：`models.github.ai/inference` 2026-08-05 实测返回
+HTTP 410 `github_models_retirement_brownout`，已退役。
+⚠️ **也不要改走 DeepSeek 的 Anthropic 兼容端点**（`/anthropic`），哪怕那样两条路能
+共用一个 SDK：`output_config` 只支持 `effort`（json_schema **收下就忽略**），不认识
+的模型名会**自动映射成 `deepseek-v4-flash`**，两件事都不报错。判据
 `test_不许改走DeepSeek的Anthropic兼容端点`。
 
-定时**没有开**（2026-08-02 停的，改内容形态没有推翻那个决定），手动
-`workflow_dispatch` 跑一趟。
-
-### 内容雷达（`flash.yml` → `tennislive content`）
-
-赛前焦点的**完整小红书内容包**（文案 + 4~5 张 1080×1440 卡片），和上面那条简报
-不是一回事：简报是「今天有什么」，这条是「一条可以直接发的稿」。同样只留手动。
-
-- 实时热度合并：比赛价值 + ATP/WTA/大满贯官方域名近期报道 + 主流媒体白名单报道 + Google Trends 搜索升温
-- 高关联门槛：完整姓名、双方球员或“球员 + 赛事”获得高权重；短姓名和只有城市重合的泛热搜不会触发选题
-- 时效衰减：官网/媒体报道只保留 72 小时，搜索趋势只保留 36 小时，越新权重越高
-- 赛前焦点：**排期一出来就能定**（2026-08-05 起）——窗口从「开赛前 45–210 分钟」
-  放宽到「开赛前 45 分钟 ~ 48 小时」，判据变成「官方给没给时间」而不是
-  「是不是快开赛了」。热度分 ≥ 38 的门槛没动。
-  **同一天起也不再限「每天 1 条」**——那个 1 是冷启动期的频控，不是编辑判断；
-  现在的闸就是热度分和排期。⚠️ 一条 item 一条微信，嫌吵就提门槛或调小
-  `PREVIEW_DAILY_LIMIT` / `RUN_LIMIT`
-- **完赛热点这一半已关**（`RESULT_DAILY_LIMIT = 0`）——账号所有者 2026-07-31：
-  「可以用命令查赛果，但没必要做卡片图然后推送微信了」
-- 内容包提交到 `output/YYYY-MM-DD/queue/`，同时上传 Actions artifact 并推送到微信
-
-晨报在无强热点时仍会按现有规则自动选取赛事知识/场馆故事，承担常青内容供给。
-人只需在微信或 artifact 中检查事实与观感，然后在小红书确认发布；不使用模拟登录
-或第三方群控，避免账号风险。
-
-## 数据源
-
-| 源 | 角色 | 说明 |
-|---|---|---|
-| Sportradar Tennis v3 | **授权技术统计** | 配置 API key 后为焦点复盘补齐总得分、发球、Ace/双误、破发点及套餐支持的击球统计 |
-| ESPN 公开比分接口 | **赛程赛果主源** | 无需鉴权，聚合 ATP/WTA 的赛程、比分与赛果，适合在 GitHub Actions 中运行 |
-| SofaScore | **赛程赛果备用** | 数据较全但可能限制数据中心 IP；失败原因会显示在覆盖报告中 |
-| Google News 官方域名索引 | **媒体热点信号** | 只读取 ATP/WTA/四大满贯官方域名及主流媒体白名单的标题、来源和发布时间，不复制文章正文 |
-| Google Trends Trending Now | **搜索升温信号** | 读取官方 RSS 中香港、美国、英国、澳大利亚的实时趋势；用于加权选题，不作为比赛事实 |
-
-程序会聚合可用的比分源，并按球员、项目和北京时间日期跨源去重。`coverage.txt` 会列出 ATP/WTA 各级别赛事命中场次、每个源的健康状态，以及专业统计是否已授权，避免静默降级。
-
-本项目不在 GitHub Actions 中自动抓取 ATP、WTA、TDI 或大满贯网站页面。官网适合人工核查，批量自动访问需遵守各站条款；需要稳定、可发布的逐场技术统计时，请配置有相应使用权的供应商 API。
-
-## 外媒摘要与视频中文化
-
-外媒内容采用“研究后入库、Action 只消费”的方式：人工或受控研究流程先把同一事件的多篇报道整理为原创中文摘要，只保存标题、媒体名、发布日期、原文链接、报道角度，以及可核验的共识/分歧/数据点；不保存媒体文章正文。每日任务命中对应比赛时，才把这些信息加入图文卡和证据包。
-
-视频翻译、中文字幕和剪辑不改变原视频的版权状态。只有自有素材、明确书面授权、公共领域素材，或许可条款明确允许改编并在目标平台再发布的素材，才可以进入视频中文化流程。每条视频在处理前都应留下权利记录：
-
-- 原始链接、权利人和素材取得方式；
-- 许可名称或书面授权凭证，以及适用平台、地域、期限；
-- 是否允许下载、改编、翻译、加字幕和再次发布；
-- 必须展示的署名、许可链接和其他限制。
-
-权利不清时只输出原创文字摘要和原文链接，不下载、不烧录字幕、不导出待发布视频。ATP/WTA、赛事方、转播商和媒体账号“公开可看”的视频不等于“允许搬运”；翻译和加字幕也不能替代授权。
-
-已确认授权后，可在仓库内准备视频、原文 SRT 和授权清单，手动运行
-`.github/workflows/video-localize.yml`；Action 会生成中文字幕、带字幕成片、署名文本和
-`rights-audit.json` artifact。授权清单格式与本地命令见
-[`docs/video-localization.md`](docs/video-localization.md)。该工作流没有下载器，也不会绕过平台水印或访问控制。
+⚠️ **译名不交给模型判断**：模型会把 Rybakina 译成「里巴金娜」（表里是**莱巴金娜**），
+而且每次译法还可能不一样。先扫出名字当硬约束塞进 prompt（`research/glossary.py`）。
 
 ## 中文化
 
-- 球员译名 300+（`src/tennislive/zh/players.py`，中国球员全覆盖）
-- 全年 200+ 赛事中文名与级别（大满贯/1000/500/250，合办站按巡回赛区分）
-- 轮次/场地/项目术语、国家中文名与旗帜 emoji
+- 球员译名 **1126 条**：`zh/player_names_top500.json`（ATP/WTA 各 500，
+  按官方排名快照生成，**它说了算**）＋ `zh/players.py` 的 `PLAYER_ZH` 452 条兜底
+- 赛事中文名 **225 站**、级别 219 条（大满贯 / 1000 / 500 / 250，合办站按巡回赛区分）
+- 轮次、场地、项目术语，国家中文名与旗帜 emoji
 - 未收录的名字自动回退英文原名，不影响运行；欢迎 PR 补充
+
+⚠️ **写稿时人名不要手打，先查表**；改译名**两张表都要看**，判断改没改对直接调
+`player_zh()`，别看文件内容。判据 `test_人名要以译名表为准`。
 
 ## 项目结构
 
 ```
 src/tennislive/
 ├── cli.py            # 命令行入口
-├── digest.py         # 每日摘要组装（昨日赛果+今日赛程）
 ├── models.py         # 统一数据模型
 ├── timeutil.py       # 北京时间工具
-├── sources/          # ESPN / SofaScore 比分聚合 + 可选授权技术统计
-├── zh/               # 中文化：球员/赛事/轮次/国家
-├── render/           # 终端表格 / 公众号 / 小红书 / Pillow 卡片图
+├── cdn.py            # jsDelivr 主机名（一个地方定）
+├── qa.py             # 质检
+├── sources/          # ESPN / flashscore / SofaScore / TNNS / 官方赛程与统计 / 排名
+├── zh/               # 中文化：球员 / 赛事 / 轮次 / 国家
+├── research/         # 新闻聚类、正文抓取、模型通道、选题雷达、配图检索
+├── render/           # 终端表格 / 公众号 / 小红书 / 卡片图 / 推送 / 封面
+├── video/            # 解说视频、TTS、字幕、示意图、水印、片尾
 └── publish/          # 公众号草稿 API / PushPlus
-.github/workflows/
-├── news-brief.yml    # 网球热点简报（扫新闻 → 抓正文 → 中文要点 → 一条微信）
-├── flash.yml         # 内容雷达（赛前焦点的完整小红书包）
-├── ci.yml            # 测试 + 真实抓取冒烟
-└── probe.yml         # 数据源诊断（手动触发）
+
+specs/                # 片子的内容真相：reels 239 / interviews 100 / explainers 2
+tools/                # 181 个脚本：出片、探测、质检、编排（别每次现搓）
+tests/                # 161 个测试文件——仓库里几乎每条规矩都在这儿有判据
+docs/                 # 栏目、快路、版式、取材、复盘
+.claude/skills/       # 七份主题档案，按需加载
+.github/workflows/    # 50 条：生产线、自动推送、编排、探测与自检
 ```
 
 ## 开发
 
 ```bash
-pip install -e ".[dev]"
-pytest -v
+pip install -e ".[dev,webrender,visualqa]" "yt-dlp[default]"   # 和 ci.yml 那行对齐
+pytest -q -n auto
 ```
+
+`ruff` 不用单独跑：它是**由测试调起来的**（`test_match_reel.py` 里那条
+`ruff check --select F821`，整个仓库不许有未定义的名字）。`pytest` 就是唯一入口。
+
+⚠️ `pytest -n auto` 的**退出码会骗人**——判据是输出最后那行统计
+（`N failed, M passed`），不是 `exited with code 0`。
+
+⚠️ `yt-dlp` 必须装 `[default]`，它才带 `yt-dlp-ejs`。少了它不报「装少了」，而是
+`n challenge solving failed` + `Only images are available`，**看起来像「这个视频没有
+格式」或者「cookie 过期了」**。判据 `test_装yt_dlp一律要带default`。
+
+Claude Code on the web 的一次性容器由 `.claude/hooks/session-start.sh` 自动配齐
+（项目依赖、中文字体、ffmpeg），装的东西和 `ci.yml` 对齐，判据
+`test_会话启动钩子装的东西要和CI对齐`。
+
+**规则要落成测试，别只写在文档里**——而且写完要**反向验证**：把错误放回去，确认
+那条测试真的会红。恒真的断言和绿灯长得一模一样。
+
+## 权利与合规
+
+**图片**：来源以来源自己的描述/分类为准，**不靠看图推断**；时间、地点、人物三样都要
+对得上。许可名、作者、来源 URL 全程记录（缺失记 `unknown` / `unverified`），检索不以
+授权状态过滤，发布前的权利判断由人工检验环节负责。画面上不烧录署名，出处记在
+`assets/**/credits.json` 和 `visual_sources.json`。
+
+**外媒内容**采用「研究后入库、Action 只消费」：只保存标题、媒体名、发布日期、原文
+链接、报道角度，以及可核验的共识 / 分歧 / 数据点，**不保存媒体文章正文**。
+
+**视频中文化**不改变原视频的版权状态。只有自有素材、明确书面授权、公共领域素材，或
+许可条款明确允许改编并在目标平台再发布的素材，才可以进入流程；每条在处理前留下权利
+记录（原始链接、权利人、取得方式、许可名称与适用范围、是否允许下载/改编/翻译/再发布、
+必须展示的署名与限制）。权利不清时只输出原创文字摘要和原文链接，不下载、不烧字幕、
+不导出成片。ATP/WTA、赛事方、转播商和媒体账号「公开可看」不等于「允许搬运」，翻译和
+加字幕也不能替代授权。
+
+授权确认后，在仓库里准备视频、原文 SRT 和授权清单，手动跑
+`.github/workflows/video-localize.yml`；它会生成中文字幕、带字幕成片、署名文本和
+`rights-audit.json`。清单格式与本地命令见
+[`docs/video-localization.md`](docs/video-localization.md)。**该工作流没有下载器**，
+也不会绕过平台水印或访问控制。
 
 ## 免责声明
 
-公开比分仅供个人学习与资讯参考，请以赛事官方信息为准；技术统计仅在配置授权 API 后启用。发布到社交平台时请遵守平台规则、供应商许可与数据来源的使用条款。
+公开比分仅供个人学习与资讯参考，请以赛事官方信息为准；技术统计仅在配置授权 API 后
+启用。发布到社交平台时请遵守平台规则、供应商许可与数据来源的使用条款。
