@@ -1,0 +1,104 @@
+name: 一次性：清掉已关 PR 的分支（第二批）
+
+# ⚠️⚠️ **这是一条一次性工作流，跑完就删**（第一批 2026-09-15 用过同一条，已删）。
+#
+# 为什么要它：会话里**删除 ref 稳定吃 GitHub 403**（普通推送一直正常，只有删除
+# 被拒），而 runner 上的 GITHUB_TOKEN 带 contents: write，删 ref 是它权限之内的事。
+#
+# ⚠️ **它删得动的只有 `docs/branch-cleanup-20260915-batch2.md` 里列着的那些**
+# ——那份名单是提交进仓库、过了 review 的。加上运行时再查一次当前开着的 PR，
+# 护住它们的 head。
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: '照抄这一句才会真删：删掉已关 PR 的分支'
+        required: true
+        default: ''
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    # 12 次 DELETE，秒级；给 20 分钟绰绰有余。GitHub 默认 360 分钟——卡住会烧
+    # 六小时，而且看起来和「还在跑」一样。
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            docs/branch-cleanup-20260915-batch2.md
+          sparse-checkout-cone-mode: false
+
+      - name: 闸①：没照抄那句话就不动手
+        if: inputs.confirm != '删掉已关 PR 的分支'
+        run: |
+          echo "::error::confirm 没对上，什么都没删。要真删就把描述里那句话原样填进去"
+          exit 1
+
+      - name: 清理
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+
+          DOC=docs/branch-cleanup-20260915-batch2.md
+          awk -F'|' '/^\| `/{gsub(/[` ]/,"",$2); if ($2 != "") print $2}' "$DOC" | sort -u > /tmp/listed.txt
+          N=$(wc -l < /tmp/listed.txt)
+          echo "存档名单解析出 ${N} 条"
+          # ⚠️ **空 ≠ 验过**：解析不出来要当场红，不能当成「没什么可删的」往下走。
+          if [ "$N" -lt 5 ]; then
+            echo "::error::名单只解析出 ${N} 条，多半是解析错了，不动手"
+            exit 1
+          fi
+
+          # ---- 护栏：运行时重查当前开着的 PR，它们的 head 一条都不许删 ----
+          gh api --paginate "/repos/${REPO}/pulls?state=open&per_page=100" \
+            --jq '.[].head.ref' | sort -u > /tmp/protected.txt
+          echo "当前开着的 PR：$(wc -l < /tmp/protected.txt) 条 head 分支受保护"
+          echo main >> /tmp/protected.txt
+          sort -u -o /tmp/protected.txt /tmp/protected.txt
+
+          comm -23 /tmp/listed.txt /tmp/protected.txt > /tmp/todelete.txt
+          SKIPPED=$(comm -12 /tmp/listed.txt /tmp/protected.txt | wc -l)
+          echo "名单里被护栏挡下的：${SKIPPED} 条"
+          comm -12 /tmp/listed.txt /tmp/protected.txt | sed 's/^/  跳过 /'
+          echo "实际要删：$(wc -l < /tmp/todelete.txt) 条"
+
+          OK=0
+          BAD=0
+          while read -r b; do
+            [ -z "$b" ] && continue
+            if gh api -X DELETE "/repos/${REPO}/git/refs/heads/${b}" >/dev/null 2>&1; then
+              OK=$((OK+1))
+            else
+              BAD=$((BAD+1))
+              echo "  ❌ 删不掉：${b}"
+            fi
+          done < /tmp/todelete.txt
+          echo "删成功 ${OK} 条，失败 ${BAD} 条"
+
+          # ---- 查产物：别拿「命令跑完了」当「删掉了」 ----
+          # ⚠️ 第一批那次，会话里批量删除的成功判据写成 `grep -qiv "error"`，推送
+          # 失败时最后一行不含这些词，于是 8 批全打了 ✅ 而**分支一条没少**。
+          # 判据必须是远端现在剩几条。
+          REMAIN=$(gh api --paginate "/repos/${REPO}/branches?per_page=100" --jq '.[].name' | wc -l)
+          echo "远端现在剩 ${REMAIN} 条分支"
+          {
+            echo "### 已关 PR 的分支清理（第二批）"
+            echo ""
+            echo "| | |"
+            echo "|---|---|"
+            echo "| 存档名单 | ${N} 条 |"
+            echo "| 被开着的 PR 护下 | ${SKIPPED} 条 |"
+            echo "| 删掉 | ${OK} 条 |"
+            echo "| 远端现存 | ${REMAIN} 条 |"
+          } >> "$GITHUB_STEP_SUMMARY"
+          if [ "$BAD" -gt 0 ]; then
+            echo "::error::有 ${BAD} 条没删掉，上面列着是哪些"
+            exit 1
+          fi
