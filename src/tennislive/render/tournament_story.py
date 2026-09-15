@@ -2474,6 +2474,96 @@ STORIES = STORIES + (
         ),
     ),
     _trivia_story(
+        slug="second-serve-clock",
+        title="二发为什么没有钟",
+        subtitle="网球观察 · 规则篇",
+        identity="一发 25 秒，二发只有两个词",
+        chips=("只对一发生效", "without delay", "新生代 8 秒"),
+        hero=(
+            "发球计时器只对一发生效：一发触网重发与二发都没有钟，"
+            "2026 大满贯规则书对二发的全部要求只有「without delay」，"
+            "拍球次数也未设上限。ATP 已在新生代总决赛试行一发至二发最多 8 秒。"
+        ),
+        facts=(
+            "ATP、大满贯、ITF 与 WTA 通用的《发球计时程序》A-2 条写明："
+            "计时器只在一发时运行，触网重发的一发与二发都不设计时器；"
+            "2026 大满贯规则书对二发仅要求「without delay」，且未限制拍球次数。",
+            "ITF《网球规则》第 29 条 a 款规定，分间 25 秒自上一分结束起算、"
+            "至一发被击出为止，因此一发出手到二发之间不落在任何计时窗口内；"
+            "同一份计时程序 A-4 条另写明，接发球员仍有责任配合发球方的合理节奏。",
+            "ATP 自 2023 年起在新生代总决赛试行一发至二发最多 8 秒并配可视计时器，"
+            "2024、2025 两届沿用；25 秒计时器本身亦于 2017 年首现于该赛事，"
+            "2018 年进入大满贯正赛，2019 年铺开至巡回赛。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2026-09-13",
+                player="谢尔顿",
+                age="美网决赛",
+                headline="「二发不该是无限的」",
+                detail=(
+                    "决赛 1-3 负于兹维列夫后，他表示一发可以用满 25 秒，"
+                    "但二发应当有所限制；据 ESPN 统计，"
+                    "兹维列夫本届美网至半决赛前共拍球 12,040 次。"
+                ),
+                source_url=(
+                    "https://www.espn.com/tennis/story/_/id/49935287/"
+                    "ben-shelton-addressing-alexander-zverev-second-serve-routine-unlimited"
+                ),
+            ),
+            ChampionMoment(
+                date="2026-09-11",
+                player="哈恰诺夫",
+                age="美网半决赛",
+                headline="「每一分都要重新做一次分腿垫步」",
+                detail=(
+                    "半决赛负于兹维列夫后他表示：准备完毕后对手再拍十余下球，"
+                    "接发方只能重新准备、重新完成分腿垫步；"
+                    "他同时承认这一做法并不违反规则。"
+                ),
+                source_url=(
+                    "https://www.espn.com/tennis/story/_/id/49935287/"
+                    "ben-shelton-addressing-alexander-zverev-second-serve-routine-unlimited"
+                ),
+            ),
+            ChampionMoment(
+                date="1989-06",
+                player="张德培",
+                age="17 岁",
+                headline="喝水被判时间违例，随后继续",
+                detail=(
+                    "法网第四轮对伦德尔，他在换边饮水超时被判时间违例后继续饮水，"
+                    "同场并使用下手发球；末分伦德尔在两个赛点上一发失误、"
+                    "二发触网出界。张德培其后夺冠，为史上最年轻男单大满贯冠军。"
+                ),
+                source_url=(
+                    "https://www.tennis.com/news/articles/"
+                    "french-open-memories-2-michael-chang-d-ivan-lendl-1989"
+                ),
+            ),
+            ChampionMoment(
+                date="2023-11",
+                player="ATP",
+                age="新生代总决赛",
+                headline="一发到二发，最多 8 秒",
+                detail=(
+                    "自吉达一届起，一发与二发之间最多允许 8 秒并配可视计时器；"
+                    "此前球员在一发失误后可无限用时。2024、2025 两届沿用该规则。"
+                ),
+                source_url=(
+                    "https://www.nextgenatpfinals.com/en/event/rules-and-innovations"
+                ),
+            ),
+        ),
+        image_keys=(),
+        source_label="LTA 裁判手册 / ITF 规则 29a / ESPN / Next Gen ATP Finals",
+        image_credit="Darren Carroll/USTA · usopen.org 官方图",
+        source_url=(
+            "https://www.lta.org.uk/494f0e/siteassets/lta-officials/my-resources/"
+            "role-specific-resources/serve-shot-clock-procedures-2023.pdf"
+        ),
+    ),
+    _trivia_story(
         slug="zheng-eala",
         title="郑钦文首轮VS伊埃拉",
         subtitle="赛事前瞻 · WTA 500",
