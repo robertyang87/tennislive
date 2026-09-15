@@ -4607,38 +4607,49 @@ def test_今日赛程没有发布出口了():
             f"{path.name} 又给今日赛程开了发布出口")
 
 
-def test_每日网球知识分出来单独跑():
-    """**「所以要分开啊……其他的可以保留」。**
+def test_图文知识帖那条线停产了():
+    """**2026-09-15：「旧样式图片式的知识讲解内容线都移除吧，目前都不需要了。
+    这几天还在发」。**
 
-    知识帖一直搭日报的顺风车（同一趟 `tennislive digest`，分两条 PushPlus 推），
-    所以我第一版把 daily 整个删掉时，它跟着一起没了。账号所有者纠正的正是这个：
-    **要拿掉的是昨日赛果和今日赛程，不是 daily 干的每一件事。**
+    ~~知识帖一直搭日报的顺风车，2026-07-31 分到 `knowledge-adhoc.yml` 上单独跑，
+    每天 08:37 自动选题、渲四宫格静态卡、推微信。2026-08-11 我曾把这条定时错误
+    地停过一天（PR #282），账号所有者当场纠正「自动选题的定时任务可以留着啊」，
+    并划清：**要淘汰的是「自动选出的题一律渲成静态卡片」这个输出形态，不是每天
+    自动选题这件事本身**——「具体怎么把自动选题接上视频管线还没有答案，先按已有
+    形态继续跑」。~~
 
-    分出来几乎不用改代码——`knowledge-adhoc.yml` 跑的就是同一个
-    `generate_knowledge_package`，而且本来就支持 slug 留空自动选题。缺的只是
-    一个定时。
+    ⚠️ **那个悬着的问题 2026-09-15 由账号所有者关掉了**：不是「先按已有形态继续
+    跑」，是这条线**不要了**。量出来的实据是那句「这几天还在发」——`output/`
+    下 09-08 到 09-15 每一天都有 `knowledge_adhoc/`，包括当天。
 
-    ⚠️ **2026-08-11 这条定时被错误地停过一天。** 那天 cincinnati 那条静态卡片
-    撞上了「网球有故事视频优先」的新决定，我把**输出形态该改**和**定时该停**
-    这两件事合成了一个决定去处理，停掉了定时（PR #282）。账号所有者当场纠正：
-    「自动选题的定时任务可以留着啊」——**要淘汰的是「自动选出的题一律渲成
-    静态卡片」这个输出形态，不是每天自动选题这件事本身**。两者是两个独立的
-    问题，只有前者需要解决（具体怎么解决还没有答案），后者不该被一起停掉。
-    这条测试因此断言恢复原样：cron 必须在。
+    **停的是产品，不是底下那套工具**（`daily.yml` 那次的教训，本文件另有一节）：
+
+    | 东西 | 处置 | 为什么 |
+    |---|---|---|
+    | `knowledge-adhoc.yml` | ❌ 删 | 它是这条线唯一的定时生产 ＋ 推送出口 |
+    | CLI 的 `knowledge-adhoc` | ❌ 删 | 这条线的手动入口 |
+    | `render/knowledge.py` | ✅ **留** | **视频解说片的微信推送页就是用它拼的**（`video/explainer.py` import `knowledge_push_html_from_parts`）——删了会打断视频线 |
+    | `render/tournament_story.py` | ✅ 留 | `research/visual_sources.py` 和两个工具还在 import |
+    | `render/cards.py` | ✅ 留 | 三条线共用的渲染器 |
+
+    ⚠️ 划掉的那段**原话不删**（仓库惯例）：来路留着，口径以划线后面这段为准。
+
+    要恢复，从 git 历史里把 `knowledge-adhoc.yml` 取回来，**并且改掉这条测试**
+    ——和 `daily.yml` 那次一样，让它是一次看得见的决定。
     """
-    text = Path(".github/workflows/knowledge-adhoc.yml").read_text(encoding="utf-8")
-    body = _yaml_only(text)
-    assert "schedule:" in body and "cron:" in body, (
-        "knowledge-adhoc 没有定时——每日网球知识就断了")
-    cron = re.search(r'cron:\s*"([^"]+)"', body).group(1)
-    minute, hour = cron.split()[0], cron.split()[1]
-    assert minute not in ("0", "30"), (
-        f"定时落在 :{minute}——GitHub 在整点半点最容易延迟或丢弃，"
-        "这是 daily 当年留下的经验")
-    # 推送那一步不能被定时触发挡住（schedule 事件下 inputs.push 是空的）
-    push_block = text[text.index("- name: PushPlus 推送到微信"):]
-    assert "inputs.push != 'false'" in push_block, (
-        "推送条件改了——定时触发时 inputs.push 是空的，别写成 == 'true'")
+    assert not Path(".github/workflows/knowledge-adhoc.yml").exists(), (
+        "knowledge-adhoc.yml 又回来了——图文知识帖这条线 2026-09-15 停产了")
+
+    # 主语还在：视频线那三条生产线一条都不许受牵连
+    for name in ("match-reel", "interview-clip", "explainer"):
+        assert Path(f".github/workflows/{name}.yml").is_file(), (
+            f"{name}.yml 不见了——停的是图文知识帖，不是视频线")
+
+    # 共用工具留着，而且视频线确实还在用它
+    from tennislive.render.knowledge import knowledge_push_html_from_parts  # noqa: F401
+    explainer = Path("src/tennislive/video/explainer.py").read_text(encoding="utf-8")
+    assert "knowledge_push_html_from_parts" in explainer, (
+        "视频线不再用知识帖的推送模板了——那 render/knowledge.py 的保留理由要重写")
 
 
 def test_查赛果的命令留着卡片和推送不留():

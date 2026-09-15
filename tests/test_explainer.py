@@ -716,16 +716,25 @@ def test_标题不靠代词指人():
 def test_栏目是登记过的并且赛前片子写清了日期():
     """栏目名不是装饰，是对读者的承诺，所以它必须是登记过的那几个之一。
 
-    「开球之前」和「网球有故事」并行，两者的保质期完全不同：知识片明年再翻出来
-    也还成立，赛前片在开球那一刻就过期了。所以易逝栏目多一条硬要求——**片子里
-    必须写出比赛日期**，读者一眼能判断这条还算不算数。没有日期的赛前片，过期之后
-    看起来和没过期一模一样。
+    ⚠️ 2026-09-15 起解说视频这条线只剩「网球有故事」一个（`COLUMNS`），
+    「开球之前」整个撤掉了。名下 9 条已经推送出去的片子挂在 `_RETIRED_COLUMNS`
+    底下——**查得到，但生产不出来**，见 `test_解说视频的栏目只剩网球有故事一个`。
+
+    易逝栏目多一条硬要求——**片子里必须写出比赛日期**，读者一眼能判断这条还算
+    不算数。没有日期的赛前片，过期之后看起来和没过期一模一样。撤掉的那个正是
+    易逝的，所以这一条现在守的是那 9 条存量：它们印出去的日期不许被改没了。
     """
-    from tennislive.video.explainer import COLUMNS, column_of, explainer_column
+    from tennislive.video.explainer import (
+        COLUMNS,
+        _RETIRED_COLUMNS,
+        column_of,
+        explainer_column,
+    )
 
     for slug in _SCRIPTED:
         name = explainer_column(slug)
-        assert name in COLUMNS, f"{slug} 用了没登记的栏目「{name}」"
+        assert name in COLUMNS or name in _RETIRED_COLUMNS, (
+            f"{slug} 用了没登记的栏目「{name}」")
         col = column_of(slug)
         if not col.perishable:
             continue
@@ -790,17 +799,22 @@ def test_赛前片的封面要写清是哪一场():
         7.30  09:00  ATP250 洛斯卡沃斯  16 强
         黄泽林  VS  莱赫奇卡
 
-    这一条只管「开球之前」——知识片没有一场比赛可以钉，印上去反而是噪点，
+    这一条管的是易逝栏目——知识片没有一场比赛可以钉，印上去反而是噪点，
     所以常青栏目必须**没有**这两行。
+
+    ⚠️ 2026-09-15「开球之前」整个撤掉之后，这条判据的两头分别是：
+    **易逝那一头守的是 9 条存量**（已经推送出去了，卡上印的坐标不许被改没了，
+    见 `_ARCHIVED_DECKS`）；**常青那一头仍然是活的**——它拦的是「谁给一条
+    `网球有故事` 加了两行比赛坐标」，那是这条线现在唯一还在产的栏目。
 
     时刻允许缺（三条已发的前瞻当时没记下官方开赛时刻，宁可不印也不猜），
     日期、赛事、轮次、两个人的名字一个都不能缺：少了任何一样，这两行就
     回答不了它唯一要回答的问题。名字一律查译名表。
     """
     from tennislive.video.explainer import (
-        COLUMNS,
         _OPENINGS,
         _slide_html,
+        column_of,
         explainer_column,
     )
     from tennislive.zh import _ranked_player_names
@@ -819,7 +833,7 @@ def test_赛前片的封面要写清是哪一场():
     for slug in _SCRIPTED:
         cover = explainer_script(find_story_by_slug(slug))[0]
         column = explainer_column(slug)
-        if not COLUMNS[column].perishable:
+        if not column_of(slug).perishable:
             assert not cover.fixture, f"{slug} 是常青栏目「{column}」，封面不该印比赛坐标"
             continue
         assert len(cover.fixture) == 2, f"{slug} 的封面缺了那两行小字"
@@ -840,29 +854,12 @@ def test_赛前片的封面要写清是哪一场():
         assert when in doc and who in doc, f"{slug} 的封面小字没渲进卡片"
 
 
-def test_赛前片只做巡回赛级别的比赛():
-    """账号所有者定的选题门槛：「**需要巡回赛级别，250 以上**」。
-
-    这条不是排版规矩，是**选题规矩**——它决定哪一场值得做一条片子。低于这个
-    门槛的（WTA 125、挑战赛、ITF）不做：读者认不出赛事，两边的来路也摆不出
-    什么份量。同一条线在今日赛程那边早就有了（`TOUR_LEVELS`，2026-07-28 那天
-    一个罗马尼亚的 WTA 125 混进来，13 场比三个巡回赛级别的赛事加起来还多），
-    这里复用**同一份**名单，免得两处各定一套门槛然后慢慢漂开。
-
-    判据落在封面小字的 `level` 上：那是唯一一处把级别写成机器可读的地方，
-    而且它会印在卡上——门槛和产物是同一个数，改不动其中一个而不动另一个。
-    """
-    from tennislive.render.webcards import TOUR_LEVELS
-    from tennislive.video.explainer import COLUMNS, _OPENINGS, explainer_column
-
-    for slug in _SCRIPTED:
-        column = explainer_column(slug)
-        if not COLUMNS[column].perishable:
-            continue
-        level = (_OPENINGS[slug].get("fixture") or {}).get("level")
-        assert level in TOUR_LEVELS, (
-            f"{slug} 的赛事级别是「{level}」，不在巡回赛级别里。"
-            f"「开球之前」只做 250 及以上，见 TOUR_LEVELS。")
+# ⚠️ 这儿原来有 `test_赛前片只做巡回赛级别的比赛`（账号所有者定的选题门槛：
+# 「需要巡回赛级别，250 以上」，判据落在封面小字的 `level` 上，比着
+# `render.webcards.TOUR_LEVELS` 查）。2026-09-15「开球之前」整个撤掉之后
+# **它的主语没了**——选题门槛管的是「下一条前瞻该不该做」，而不会再有下一条；
+# 剩下那 9 条存量的 `level` 早就印在发出去的卡上了，再验一遍验的是历史。
+# 判据没了不等于规矩没了：今日赛程那条线仍然按 `TOUR_LEVELS` 挑赛事。
 
 
 def test_成片旁边记下用的是哪个声音(tmp_path, monkeypatch):
@@ -1246,7 +1243,7 @@ def test_冷开场台头要和幻灯片台头同一份样式(tmp_path):
           "-pix_fmt", "yuv420p", "-c:a", "aac", "-ar", "24000", "-ac", "1",
           str(intro)])
 
-    badge = E._render_intro_badge("测试标题", "开球之前", tmp_path)
+    badge = E._render_intro_badge("测试标题", "网球有故事", tmp_path)
     assert badge is not None and badge.is_file(), "Chromium 装着的话台头必须渲得出来"
     im = Image.open(badge)
     assert im.mode == "RGBA", "台头必须是带透明通道的 PNG，不然叠上去会是一块实心矩形"
@@ -1315,7 +1312,7 @@ def test_冷开场台头不许把片头拖到台头图那么长(tmp_path):
           "-pix_fmt", "yuv420p", "-c:a", "aac", "-ar", "24000", "-ac", "1",
           str(intro)])
 
-    badge = E._render_intro_badge("测试标题", "开球之前", tmp_path)
+    badge = E._render_intro_badge("测试标题", "网球有故事", tmp_path)
     assert badge is not None and badge.is_file()
 
     def _dur(path):
@@ -1472,7 +1469,7 @@ def test_intro_cx显式给定的比例决定哪一段源片落在画面中心(tm
 
 
 def test_同一天可以并存多条片子():
-    """一天不止一条「开球之前」——两条前瞻不能互相覆盖。
+    """一天不止一条解说片——同一天的两条不能互相覆盖。
 
     这条测试盯的是工作流，不是 Python：成片路径、并发分组、提交范围三处只要有一处
     丢掉 slug，同一天的第二条片子就会把第一条盖掉。三处都是事故换来的：
@@ -1498,12 +1495,12 @@ def test_同一天可以并存多条片子():
     assert 'git checkout rendered -- "$OUTDIR"' in yml
     assert "git checkout rendered -- output/" not in yml
 
-    # 并且「开球之前」这个栏目此刻确实挂着不止一条片子——不是理论上支持而已。
-    from tennislive.video.explainer import explainer_column
-
-    previews = [s for s in _SCRIPTED if explainer_column(s) == "开球之前"]
-    assert len(previews) >= 2, f"开球之前只有 {previews}，多场并存没有真的被用起来"
-    assert len(set(previews)) == len(previews)
+    # 并且这条线此刻确实挂着不止一条片子——不是理论上支持而已。
+    # ⚠️ 原来这里数的是「开球之前」名下有几条（那时一天能出两条前瞻）。
+    # 2026-09-15 那个栏目撤掉之后，主语换成解说片本身：并发分组要防的是
+    # **同一天两条片子**互相盖，跟它们挂在哪个栏目下从来没有关系。
+    assert len(_SCRIPTED) >= 2, f"解说片只有 {_SCRIPTED}，多条并存没有真的被用起来"
+    assert len(set(_SCRIPTED)) == len(_SCRIPTED)
     assert Path("assets/explainer").is_dir()
 
 
@@ -4115,56 +4112,73 @@ def test_封面不许再压一层居中的阴影(tmp_path):
         "顶/中/底量出来没有差别——底片或取样列选错了，这两条断言等于恒真")
 
 
-#: 「开球之前」名下已经发过的片子。**只许减不许加**——这条栏目不再做新的了，
-#: 见下面那条判据。表自己有自检：名字写错、或者某条其实已经不是这个栏目了，
-#: 都会当场红（一个会过期的名单和一条常年红的检查是同一个毛病）。
-_LEGACY_PREVIEWS = frozenset({
-    "eala-anisimova", "eala-mcnally", "fonseca-oconnell", "shang-nishikori",
-    "shang-rublev", "venus-potapova", "wang-sabalenka", "wong-lehecka",
-    "zheng-eala",
-})
+def test_解说视频的栏目只剩网球有故事一个(monkeypatch):
+    """账号所有者 2026-09-15：只保留「赛场之上」「赛后开麦」「网球有故事」三个栏目，
+    而且「**不光是停掉，还要将代码和配套的测试都拿掉**」。
 
+    解说视频这条线名下原来有两个。「开球之前」（比赛前瞻）2026-08-17 就不再做
+    新的了（账号所有者：「不要做比赛前瞻，这不是网球有故事的内容」），现在整个
+    从 `COLUMNS` 里拿掉——**不在那张表里 ＝ 生产不出来**。
 
-def test_不再做比赛前瞻():
-    """账号所有者 2026-08-17：「**不要做比赛前瞻，这不是网球有故事的内容**」。
+    ⚠️ 原来那条判据 `test_不再做比赛前瞻` 连同它的豁免表 `_LEGACY_PREVIEWS`
+    一起删了：它守的是「这个栏目还登记着，只是别再往里加」，**栏目整个没了，
+    那句话的主语也就没了**。它守的那件事没丢，落到下面第三段——挂在撤掉的
+    栏目名下的，只有已经发出去的那 9 条，第 10 条当场炸。
 
-    来路：我扫完当天的比赛日，挑了威廉姆斯姐妹重组打双打那条，做成了一条
-    「开球之前」——事实全部两个源核过、四道选图闸门逐条走过、全量绿、PR 都开了。
-    **东西没做错，是这个品类不该做。** 账号所有者看到之后一句话把它停掉。
-
-    ⚠️ **为什么要落成判据，而不是记在对话里。** 写这条的时候，`开球之前` 名下
-    已经有 9 条，其中三条（`eala-anisimova` / `fonseca-oconnell` /
-    `wang-sabalenka`）是**当天别的会话刚推上 main 的**——也就是说这条线正在被
-    好几个会话同时生产。一条只活在某一次对话里的决定，拦不住下一个会话，
-    也拦不住换了上下文之后的我自己。CLAUDE.md 那句「要长期记住的东西，写进文件，
-    别留在上下文里」说的正是这个。
-
-    ⚠️ **停的是栏目，不是底下那套工具**（和日报那次同一个形状）：`COLUMNS` 里
-    那一条、封面的比赛坐标两行、`perishable` 那套过期逻辑全部留着——已经发出去的
-    9 条还要能渲、能查。**变的只有「不再往里加新的」。**
-
-    真要恢复：把这条测试连同它的理由一起改掉，别只往豁免表里塞一个名字。
+    ⚠️⚠️ **这条判据两头都钉，不能只钉一头。** 只写「开球之前不在 COLUMNS 里」的话，
+    谁把整张表清空它照样绿——**一次误删和一次正确的删除长得一模一样**。所以同时
+    钉住「网球有故事还在、`DEFAULT_COLUMN` 指得到它、承诺还是那一句」：那是这条线
+    现在唯一还在产的栏目，掉了就一条片子都渲不出来，而且没有任何别的判据会出声。
     """
-    from tennislive.video.explainer import _SCRIPTS, explainer_column
+    from tennislive.video.explainer import (
+        _ARCHIVED_DECKS,
+        _OPENINGS,
+        _RETIRED_COLUMNS,
+        COLUMNS,
+        DEFAULT_COLUMN,
+        column_of,
+        explainer_column,
+    )
 
-    now = {s for s in _SCRIPTS if explainer_column(s) == "开球之前"}
+    # ① 在产的只剩一个，而且就是它——两头一起钉。
+    assert set(COLUMNS) == {"网球有故事"}, (
+        f"解说视频的栏目表现在是 {sorted(COLUMNS)}。"
+        "账号所有者 2026-09-15 把栏目收敛到三个，解说视频这条线只剩「网球有故事」——"
+        "多出来的那个是不是又有人往回加了？")
+    assert DEFAULT_COLUMN == "网球有故事" and DEFAULT_COLUMN in COLUMNS, (
+        f"不写 column 的片子会落到「{DEFAULT_COLUMN}」，而它不在 COLUMNS 里——"
+        "`column_of` 会对**每一条**片子抛 KeyError")
+    kept = COLUMNS["网球有故事"]
+    assert kept.name == "网球有故事" and not kept.perishable, (
+        "「网球有故事」是常青栏目：明年翻出来也还成立，所以它不该是易逝的")
+    assert kept.promise.strip(), "栏目是承诺，承诺那一栏不能是空的"
 
-    # 判据自己的判据①：豁免表里的每一条都得真的存在、真的还是这个栏目。
-    # 少了这一条，写错一个名字就等于凭空多放行一条新片子。
-    stale = _LEGACY_PREVIEWS - now
-    assert not stale, (
-        f"豁免表里这几条已经不是「开球之前」了（或者名字写错了）：{sorted(stale)}。"
-        "表要跟着现实走——一个会过期的名单和一条常年红的检查是同一个毛病")
+    # ② 撤掉的那个不许回到生产表里。
+    assert set(_RETIRED_COLUMNS) == {"开球之前"}, (
+        f"撤掉的栏目表变了：{sorted(_RETIRED_COLUMNS)}")
+    assert not set(_RETIRED_COLUMNS) & set(COLUMNS), (
+        "同一个名字既在产又被撤掉了——这两张表的分工就是「能不能做新的」")
 
-    # 判据自己的判据②：表不能是空的，否则下面那句是在拿空集比空集。
-    assert _LEGACY_PREVIEWS, "豁免表空了，这条判据失效了"
+    # ③ 撤掉的名字只对**已经推送出去**的那 9 条有效。
+    # 产物在 output/ 和 Release 里，仓库惯例是已发的不动，所以它们的 deck
+    # 还留在 `_SCRIPTS` 里；名单要跟现实对得上——写错一个名字就等于凭空
+    # 多放行一条新片子（一个会过期的名单和一条常年红的检查是同一个毛病）。
+    archived = {s for s in _SCRIPTED if explainer_column(s) in _RETIRED_COLUMNS}
+    assert archived == set(_ARCHIVED_DECKS), (
+        f"存量名单和现实对不上：代码里是 {sorted(_ARCHIVED_DECKS)}，"
+        f"实际挂着撤掉的栏目的是 {sorted(archived)}")
+    assert len(_ARCHIVED_DECKS) == 9, (
+        f"存量前瞻是 9 条，现在数出来 {len(_ARCHIVED_DECKS)} 条。"
+        "这张表**只许减不许加**：减了就把这个数一起改小")
+    for slug in sorted(archived):
+        col = column_of(slug)
+        assert col.name == "开球之前" and col.perishable, (
+            f"{slug} 是已发的前瞻，卡上印的就是「开球之前」，查得到的得是那一份承诺")
 
-    fresh = sorted(now - _LEGACY_PREVIEWS)
-    assert not fresh, (
-        f"这几条是新的「开球之前」：{fresh}\n"
-        "⚠️ 账号所有者定过：**不要做比赛前瞻，这不是网球有故事的内容**。\n"
-        "比赛还没打的前瞻不做了——想讲这两个人，等球打完做「赛场之上」，"
-        "或者把他们的来路做成常青的「网球有故事」。")
+    # ④ 第 10 条挂不上去——这一句是「不再做比赛前瞻」现在唯一的闸。
+    monkeypatch.setitem(_OPENINGS, "__新写的一条前瞻__", {"column": "开球之前"})
+    with pytest.raises(KeyError, match="不再往里加新的片子"):
+        column_of("__新写的一条前瞻__")
 
 
 def test_解说片的小红书正文不许超一千字():

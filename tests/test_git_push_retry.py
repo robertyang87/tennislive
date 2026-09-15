@@ -5,7 +5,7 @@
   立刻死，重试循环一次都轮不到（interview-auto-render、oncourt-interviews）
 - 干脆没有重试：auto-push 链由 push 事件触发，失败没有任何东西会重触发，
   裸 push 撞车一次那条片子就静默不发了（auto-push-explainer 的预占/记账、
-  auto-push-reel 的复制页/记账、knowledge-adhoc 的每日知识帖）
+  auto-push-reel 的复制页/记账）
 - `pull --rebase || abort` 再重试：对同一个文件的内容冲突无解——那一类
   （orchestration_state）走 tools/merge_orchestration_state.py 的三方合并，
   不归这份脚本管
@@ -30,7 +30,6 @@ CONVERTED = [
     "interview-auto-render.yml",
     "oncourt-interviews.yml",
     "reel-auto-ready.yml",
-    "knowledge-adhoc.yml",
 ]
 
 

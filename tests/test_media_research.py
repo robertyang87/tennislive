@@ -2,11 +2,9 @@ from __future__ import annotations
 
 import json
 from datetime import date
-from types import SimpleNamespace
 
 from conftest import make_match
 from tennislive.digest import Digest
-from tennislive.render.evidence import evidence_artifacts
 from tennislive.render.narrative import editor_takeaway, preview_angle
 from tennislive.research.media import apply_media_briefs, brief_for_match
 
@@ -88,25 +86,3 @@ def test_narrative_uses_reviewed_brief_and_has_an_editorial_judgment(monkeypatch
     assert preview_angle(_match(), date(2026, 7, 20)) == "This title ended a 16-month wait."
     assert editor_takeaway(_match(), date(2026, 7, 20)).startswith("A new starting point")
 
-
-def test_evidence_package_keeps_media_links_separate_from_copy(monkeypatch, tmp_path):
-    path = _brief_file(tmp_path)
-    match = _match()
-    digest = Digest(today=date(2026, 7, 20), results=[match], source="espn")
-    monkeypatch.setattr("tennislive.render.evidence.brief_for_match", lambda m, d: brief_for_match(m, d, path=path))
-    monkeypatch.setattr("tennislive.render.evidence.synthesis_for_digest", lambda d: {"edition": d.today.isoformat(), "mode": "reviewed-paraphrase", "items": []})
-
-    artifacts = evidence_artifacts(digest, SimpleNamespace(evidence=()))
-    manifest = artifacts["source_manifest.json"]
-
-    assert set(artifacts) == {
-        "source_manifest.json",
-        "fact_ledger.json",
-        "editorial_decision.json",
-        "media_synthesis.json",
-    }
-    assert {source["url"] for source in manifest["sources"]} >= {
-        "https://example.com/atp",
-        "https://example.com/as",
-    }
-    assert "article bodies" not in json.dumps(artifacts, ensure_ascii=False).casefold()

@@ -43,21 +43,28 @@ def test_image_sources_keeps_unique_remote_images_in_order():
     ]
 
 
+# 下面这几条的 URL 只是**夹具**——它们测的是 PushPlus 自己的链接抠取和发前探活
+# （哪些链接要探、哪些不许探、探不到要不要拦下推送），成片是哪条线的无所谓。
+#
+# ⚠️ 原来这里一律写的是 `output/2026-07-24/yesterday-point/yesterday-point.mp4`，
+# 而「昨日好球」那条线 2026-07-31 就整个拿掉了（判据 `test_昨日一分这条线不许回来`）。
+# **主语没变、名单变了**：夹具挪到还活着的 `reel` 那条线，测试本身一条都不删——
+# 删掉的话，`wait_for_images` 的三个分支就没人盯了。
 def test_jsdelivr_link_sources_finds_video_link_but_not_pages_link():
     html = (
         '<a href="https://cdn.jsdelivr.net/gh/robertyang87/tennislive@main/'
-        'output/2026-07-24/yesterday-point/yesterday-point.mp4">打开</a>'
+        'output/2026-07-28/reel/nishikori-shang/nishikori-shang.mp4">打开</a>'
         '<a href="https://robertyang87.github.io/tennislive/output/'
-        '2026-07-24/yesterday-point/copy.html">复制</a>'
+        '2026-07-28/reel/nishikori-shang/copy.html">复制</a>'
     )
 
     assert jsdelivr_link_sources(html) == [
         "https://cdn.jsdelivr.net/gh/robertyang87/tennislive@main/"
-        "output/2026-07-24/yesterday-point/yesterday-point.mp4"
+        "output/2026-07-28/reel/nishikori-shang/nishikori-shang.mp4"
     ]
 
 
-def test_wait_for_images_retries_until_hot_shots_video_link_is_ready(monkeypatch):
+def test_wait_for_images_retries_until_reel_video_link_is_ready(monkeypatch):
     unavailable = Mock(ok=False, headers={})
     ready = Mock(ok=True, headers={"Content-Type": "video/mp4"})
     get = Mock(side_effect=[unavailable, ready])
@@ -66,7 +73,7 @@ def test_wait_for_images_retries_until_hot_shots_video_link_is_ready(monkeypatch
 
     wait_for_images(
         '<a href="https://cdn.jsdelivr.net/gh/robertyang87/tennislive@main/'
-        'output/2026-07-24/yesterday-point/yesterday-point.mp4">打开</a>',
+        'output/2026-07-28/reel/nishikori-shang/nishikori-shang.mp4">打开</a>',
         attempts=2,
         delay=0,
     )
@@ -80,7 +87,7 @@ def test_wait_for_images_never_checks_github_pages_links(monkeypatch):
 
     wait_for_images(
         '<a href="https://robertyang87.github.io/tennislive/output/'
-        '2026-07-24/yesterday-point/copy.html">复制</a>'
+        '2026-07-28/reel/nishikori-shang/copy.html">复制</a>'
     )
 
     get.assert_not_called()
@@ -97,7 +104,7 @@ def test_wait_for_images_blocks_push_when_video_link_never_resolves(monkeypatch)
     with pytest.raises(PushPlusError, match="取消本次推送"):
         wait_for_images(
             '<a href="https://cdn.jsdelivr.net/gh/robertyang87/tennislive@main/'
-            'output/2026-07-24/yesterday-point/yesterday-point.mp4">打开</a>',
+            'output/2026-07-28/reel/nishikori-shang/nishikori-shang.mp4">打开</a>',
             attempts=2,
             delay=0,
         )
