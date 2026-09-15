@@ -148,3 +148,49 @@ def test_upload要有重试探活和体积闸():
     assert commit != -1, "找不到 git commit——判据的主语没了"
     assert gate < commit, (
         "体积闸排在了 git commit 之后——staged 的检查要在 commit 前跑才算数")
+
+
+def test_验收那层抽不到样本要红而不是放行():
+    """**2026-09-15 这一步恒真过一次，放行了一次真事故。**
+
+    那天 purge 之后**所有已发微信推送里的图当场 404**，而验收打了「验收通过」。
+    三个缺陷叠在一起：
+
+    ① 正则写死 `cdn\\.jsdelivr\\.net` ＋ 40 位 SHA。而推送页用的是
+       `gcore.jsdelivr.net/...@main/...`——主机名可配（`TENNISLIVE_JSDELIVR_HOST`
+       默认早就是 gcore，CLAUDE.md 专门记过「判据别按 `cdn.` 写死」），而且
+       **钉的是分支不是 SHA**。于是一条都抽不到；
+    ② 抽不到只 `echo` 一句「空 ≠ 验过」然后继续走，`BAD` 保持 0；
+    ③ 体积只 `du -sh` 打印，不断言。
+
+    **按分支钉死的那种才是 purge 会打断的**——SHA 那种被 `refs/keep/` 引着，
+    本来就不会断。上一版偏偏只找不会出事的那种。
+
+    这条钉三头，缺一头它就又变回恒真：抽不到要 `exit 1`、主机名不许写死、
+    ref 段要能收分支引用。
+    """
+    body = _body()
+
+    # ① 抽不到样本必须红。锚在「空 ≠ 验过」那句和它后面的 exit 1 上。
+    idx = body.find("空 ≠ 验过")
+    assert idx != -1, "那句「空 ≠ 验过」不见了——判据的主语没了"
+    # ⚠️ 窗口要**前后都取**：`::error::` 在那句话前面（同一行 echo 里），
+    # 只取后面会把这条判据自己写成假红。
+    tail = body[max(0, idx - 300):idx + 400]
+    assert "::error::" in tail and "exit 1" in tail, (
+        "抽不到样本时只打印不退出——那正是 2026-09-15 放行事故的那个缺陷："
+        "这一层是整趟 purge 唯一的安全性质，没样本就不能算验过")
+
+    # ② 主机名不许写死成 cdn.
+    assert "cdn\\.jsdelivr\\.net/gh/" not in body, (
+        "URL 正则又按 `cdn.` 写死了——主机名是可配的（TENNISLIVE_JSDELIVR_HOST），"
+        "默认是 gcore，写死就一条都抽不到")
+
+    # ③ ref 段要收得住分支引用（@main），不能只认 40 位 SHA
+    assert "@[^/]+/output/" in body, (
+        "URL 正则的 ref 段只认 SHA 了——**按分支钉死的链接才是 purge 会打断的那种**")
+
+    # ④ 重写有没有生效，要真查 main 上的残留，不能只看体积
+    assert "git ls-files 'output'" in body, (
+        "没有「重写后 main 上还剩几个 output 媒体」这一查——"
+        "只看 clone 体积判不出重写生效没有（遗留分支会让体积不变）")
