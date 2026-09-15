@@ -2487,7 +2487,9 @@ STORIES = STORIES + (
         facts=(
             "ATP、大满贯、ITF 与 WTA 通用的《发球计时程序》A-2 条写明："
             "计时器只在一发时运行，触网重发的一发与二发都不设计时器；"
-            "2026 大满贯规则书对二发仅要求「without delay」，且未限制拍球次数。",
+            "2026 大满贯规则书对二发仅要求「without delay」，且未限制拍球次数。"
+            "不设计时器不等于不受约束：二发是否过慢由主裁自由裁量，"
+            "兹维列夫本届半决赛即因此被判一次时间违例。",
             "ITF《网球规则》第 29 条 a 款规定，分间 25 秒自上一分结束起算、"
             "至一发被击出为止，因此一发出手到二发之间不落在任何计时窗口内；"
             "同一份计时程序 A-4 条另写明，接发球员仍有责任配合发球方的合理节奏。",
@@ -2501,10 +2503,19 @@ STORIES = STORIES + (
                 player="谢尔顿",
                 age="美网决赛",
                 headline="「二发不该是无限的」",
+                # ⚠️ 这里原来写「据 ESPN 统计……共拍球 12,040 次」，两处都不对：
+                # ESPN 决赛稿原文是「a statistic that was **circulating** that he
+                # had recorded **over 12,000** pre-serve bounces in his first five
+                # matches」——是一个在流传的统计、兹维列夫自己提到过（还说
+                # "quite funny"），**不是 ESPN 自己的统计**；而「12,040」这个
+                # 精确数只在搜索摘要里出现，ESPN 三篇稿子（决赛 49935287、
+                # 半决赛 49907649、1/4 49887449）全文搜过一处都没有。
+                # 所以知识帖这一栏只留**他自己说的话**（引语可以抄，结论不可以）；
+                # 那个量级的数只在视频旁白里出现，且说成「一万多下」。
                 detail=(
                     "决赛 1-3 负于兹维列夫后，他表示一发可以用满 25 秒，"
-                    "但二发应当有所限制；据 ESPN 统计，"
-                    "兹维列夫本届美网至半决赛前共拍球 12,040 次。"
+                    "但二发不应无限；并称对手二发前从不少于 10 下球，"
+                    "多时 20 至 25 下。"
                 ),
                 source_url=(
                     "https://www.espn.com/tennis/story/_/id/49935287/"
@@ -2556,7 +2567,10 @@ STORIES = STORIES + (
             ),
         ),
         image_keys=(),
-        source_label="LTA 裁判手册 / ITF 规则 29a / ESPN / Next Gen ATP Finals",
+        source_label=(
+            "LTA 裁判手册 / ITF 规则 29a / ESPN / AP / AFP / "
+            "Served with Andy Roddick / Next Gen ATP Finals"
+        ),
         image_credit="Darren Carroll/USTA · usopen.org 官方图",
         source_url=(
             "https://www.lta.org.uk/494f0e/siteassets/lta-officials/my-resources/"

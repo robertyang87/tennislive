@@ -30,7 +30,7 @@ def gap_timeline() -> str:
     return f"""
 <svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">
   <text x="450" y="46" text-anchor="middle" font-size="34" font-weight="700"
-        fill="{INK}">一分之间，钟只走前半段</text>
+        fill="{INK}">25 秒从哪儿算到哪儿</text>
 
   <circle cx="72" cy="196" r="11" fill="{SOFT}"/>
   <text x="72" y="160" text-anchor="middle" font-size="25" fill="{SOFT}">上一分结束</text>
@@ -103,43 +103,6 @@ def rule_quotes() -> str:
 """
 
 
-def clock_ends_at_first() -> str:
-    """屏 3：25 秒的终点写的是「一发被击出」，所以二发天然在计时之外。"""
-    return f"""
-<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">
-  <text x="450" y="44" text-anchor="middle" font-size="34" font-weight="700"
-        fill="{INK}">不是漏写，是终点画在了一发上</text>
-
-  <text x="52" y="96" font-size="24" fill="{SOFT}">国际网联《网球规则》第 29 条 a 款</text>
-
-  <rect x="52" y="118" width="796" height="104" rx="12"
-        fill="{FILL}" fill-opacity="0.16" stroke="{FILL}" stroke-width="2" stroke-opacity="0.7"/>
-  <text x="76" y="160" font-size="24" fill="{SOFT}">…until the <tspan font-weight="700"
-        fill="{LIME}">first service is struck</tspan></text>
-  <text x="76" y="198" font-size="24" fill="{SOFT}">直到一发被击出——这 25 秒就到头了</text>
-
-  <circle cx="90" cy="290" r="10" fill="{SOFT}"/>
-  <text x="90" y="262" text-anchor="middle" font-size="23" fill="{SOFT}">一分结束</text>
-  <line x1="90" y1="290" x2="470" y2="290" stroke="{FILL}" stroke-width="5"/>
-  <text x="280" y="326" text-anchor="middle" font-size="26" font-weight="800" fill="{FILL}">这 25 秒</text>
-
-  <circle cx="470" cy="290" r="14" fill="{LIME}"/>
-  <text x="470" y="262" text-anchor="middle" font-size="23" font-weight="700" fill="{LIME}">一发击出</text>
-  <text x="470" y="356" text-anchor="middle" font-size="25" font-weight="800" fill="{LIME}">计时到此为止</text>
-
-  <line x1="470" y1="290" x2="830" y2="290" stroke="{SOFT}" stroke-width="3" stroke-dasharray="9 8"/>
-  <text x="660" y="326" text-anchor="middle" font-size="25" fill="{SOFT}">一发失误之后</text>
-
-  <line x1="52" y1="396" x2="848" y2="396" stroke="{SOFT}" stroke-opacity=".35" stroke-width="2"/>
-
-  <text x="450" y="440" text-anchor="middle" font-size="27" font-weight="700" fill="{INK}">
-    这一分还没打完，计时却已经走完了</text>
-  <text x="450" y="478" text-anchor="middle" font-size="25" fill="{SOFT}">
-    所以二发那一段，不属于任何一个钟</text>
-</svg>
-"""
-
-
 def slow_play_history() -> str:
     """屏 5：拿时间做文章不是新鲜事。
 
@@ -158,7 +121,7 @@ def slow_play_history() -> str:
     out = [
         '<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">',
         f'<text x="450" y="46" text-anchor="middle" font-size="34" '
-        f'font-weight="700" fill="{INK}">拿时间做文章，一直都有</text>',
+        f'font-weight="700" fill="{INK}">三十七年，四次拉扯</text>',
         f'<line x1="70" y1="212" x2="846" y2="212" stroke="{SOFT}" '
         f'stroke-opacity=".55" stroke-width="3"/>',
     ]
@@ -197,7 +160,7 @@ def next_gen_lab() -> str:
     out = [
         '<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">',
         f'<text x="450" y="46" text-anchor="middle" font-size="34" '
-        f'font-weight="700" fill="{INK}">同一块试验田，这条路走过一次</text>',
+        f'font-weight="700" fill="{INK}">上面是一发，下面是二发</text>',
         f'<text x="70" y="118" font-size="25" font-weight="700" fill="{SOFT}">一发的 25 秒</text>',
         f'<line x1="150" y1="176" x2="690" y2="176" stroke="{FILL}" stroke-width="4"/>',
     ]
