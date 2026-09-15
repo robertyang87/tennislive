@@ -235,59 +235,13 @@ class WeChatPublisher:
         return str(publish_id)
 
 
-def _rehost_external_flags(pub: "WeChatPublisher", html: str) -> str:
-    """把正文里的外链旗帜小图（flagcdn.com）转存为微信图片 URL.
-
-    微信会过滤非微信域名的正文图片；每面旗帜只上传一次。
-    """
-    urls = sorted(set(re.findall(r'https://flagcdn\.com/[^"]+\.png', html)))
-    for url in urls:
-        try:
-            resp = requests.get(url, timeout=15)
-            resp.raise_for_status()
-            with tempfile.NamedTemporaryFile(suffix=".png", delete=False) as f:
-                f.write(resp.content)
-                tmp = f.name
-            wx_url = pub.upload_content_image(tmp)
-            html = html.replace(url, wx_url)
-            os.unlink(tmp)
-        except Exception as e:  # 单面旗帜失败不阻塞发文
-            logger.warning("旗帜图转存失败 %s: %s", url, e)
-    return html
-
-
-def publish_article(
-    title: str,
-    html_content: str,
-    cover_image: str | Path,
-    content_images: list[Path] | None = None,
-    digest: str = "",
-    do_publish: bool = False,
-) -> dict:
-    """一站式：上传封面/正文图 → 建草稿 →（可选）发布.
-
-    正文中若引用本地图片，会先上传并把 <img src> 替换为微信 URL：
-    在 html_content 里用占位符 {{IMAGE:文件名}} 引用 content_images 中的图片。
-    """
-    pub = WeChatPublisher()
-    thumb_id = pub.upload_thumb(cover_image)
-    html_content = _rehost_external_flags(pub, html_content)
-
-    for img in content_images or []:
-        placeholder = f"{{{{IMAGE:{img.name}}}}}"
-        if placeholder in html_content:
-            url = pub.upload_content_image(img)
-            html_content = html_content.replace(
-                placeholder,
-                f'<img src="{url}" style="width:100%;display:block;margin:12px 0;" />',
-            )
-
-    media_id = pub.add_draft(title, html_content, thumb_id, digest=digest)
-    result = {"draft_media_id": media_id}
-    if do_publish:
-        result["publish_id"] = pub.publish_draft(media_id)
-    return result
-
+# ⚠️ 2026-09-15 这儿删掉了 `publish_article` 和它专用的 `_rehost_external_flags`
+# （传统图文消息那条路）。它读 `wechat.html`，而写这个文件的 `render/wechat.py`
+# 是**日报时代的渲染器**——日报 2026-07-31 停产之后就零生产调用方了。
+# 公众号这条链现在只剩图片消息一种：`publish_image_post`。
+#
+# ⚠️ 真正在用的推送通道是 **PushPlus**（工作流里 4 处引用）；公众号这条
+# **零工作流调用方**，只有手动 CLI 能走。
 
 def publish_image_post(
     title: str,

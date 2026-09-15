@@ -13,7 +13,6 @@ from tennislive.render.pushmsg import (
     to_copy_page,
     to_push_html,
 )
-from tennislive.render.wechat import article_title, to_html, to_markdown
 from tennislive.render.xiaohongshu import plan_post, post_title, to_post
 
 from conftest import make_match
@@ -88,26 +87,6 @@ def test_scoreboard_tournament_level_is_compact_and_precedes_name():
     assert "ATP 250" not in atp_card
     # 级别数字不能连着巡回赛名一起印，那是旧的纯文字药丸
     assert "ATP250" not in atp_card and "WTA1000" not in wta_card
-
-
-def test_wechat_markdown(sample_digest):
-    md = to_markdown(sample_digest)
-    assert "中国军团" in md          # 郑钦文在赛果里 → 中国军团板块
-    assert "昨夜焦点赛果" in md
-    assert "今晚焦点" in md
-    assert "郑钦文" in md
-    assert "北京时间" in md
-
-
-def test_wechat_html_inline_styles_only(sample_digest):
-    html = to_html(sample_digest)
-    assert "<style" not in html      # 公众号会剥离 style 块，必须全内联
-    assert 'style="' in html
-    assert "郑钦文" in html
-
-
-def test_wechat_title_length(sample_digest):
-    assert len(article_title(sample_digest)) <= 64
 
 
 def test_xhs_post(sample_digest):
@@ -382,7 +361,6 @@ def test_xhs_preview_replaces_long_player_name_before_shortening(sample_digest, 
 def test_professional_focus_is_published_only_with_detailed_stats(sample_digest):
     match = sample_digest.results[1]
     assert not has_detailed_stats(match)
-    assert "焦点复盘" not in to_markdown(sample_digest)
 
     match.stats = MatchStats(
         source="Sportradar 授权网球数据",
@@ -395,7 +373,6 @@ def test_professional_focus_is_published_only_with_detailed_stats(sample_digest)
 
     assert has_detailed_stats(match)
     assert "一场球看细一点" in to_post(sample_digest)
-    assert "焦点复盘" in to_markdown(sample_digest)
 
 
 def test_push_copy_page_and_button(sample_digest):
@@ -1501,8 +1478,6 @@ def test_public_cards_hide_source_credits(sample_digest):
     )
     public_outputs = [
         cover,
-        to_markdown(sample_digest),
-        to_html(sample_digest),
         to_post(sample_digest),
     ]
     forbidden = (

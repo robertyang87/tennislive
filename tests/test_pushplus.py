@@ -797,3 +797,51 @@ def test_读了资产版本号的地方都要经过同一处截断():
     assert not offenders, (
         "这些函数读了资产版本号却没走共用的截断，钉出来会是整整 40 位，"
         f"图一多就把推送顶过 PushPlus 的 2 万字上限：{offenders}")
+
+
+def test_发布器不许读没人生成的文件用法清单不许有幽灵命令():
+    """**2026-09-15：公众号那条链有一半是够不着的，而它一个字都不报。**
+
+    `cmd_publish_wechat` 的「图文消息」那条路读 `d / "wechat.html"`，而写这个文件的
+    `src/tennislive/render/wechat.py` 是**日报时代的渲染器**（函数全接 `Digest`：
+    `_china_matches`、`_tonight`）。日报 2026-07-31 停产、`tennislive digest` 命令
+    也删了之后，**没有任何东西再生成 wechat.html**——那条路只在真去跑的时候才现形。
+
+    ⚠️ 更能骗人的是**报错指向一个不存在的命令**（「请先运行 tennislive digest」）：
+    读的人会先去查那个命令、再怀疑自己记错了，最后才发现整条路是死的。
+    而查这条的时候抖出同族更靠前的一个——**CLI 自己的用法清单第一屏就在推荐
+    `tennislive digest`**，那是用户看到的第一样东西。
+
+    所以第 ② 条判据不写成「不许出现这个词」（那只防得住这一次），写成
+    **用法清单里的每条命令都必须真实注册**——防的是这一类。
+
+    ⚠️ 这不是「把公众号停掉」：图片消息（`publish_image_post`，用 `cards/` ＋
+    `xiaohongshu.txt`）**是好的，留着**。收掉的只是够不着的那一半。
+    """
+    import ast
+    import pathlib
+    import re
+
+    src = pathlib.Path("src/tennislive/cli.py").read_text("utf-8")
+    code = "\n".join(
+        line for line in src.splitlines() if not line.lstrip().startswith("#")
+    )
+
+    # ① 发布路径里不许再读 wechat.html——写它的渲染器已经不在了
+    assert "wechat.html" not in code, (
+        "发布路径里又出现了 `wechat.html`——写它的 `render/wechat.py` 是日报时代的"
+        "渲染器，日报停产后零生产调用方，这个文件不会再被生成"
+    )
+
+    # ② 用法清单里的每条命令都要真实注册（防的是「幽灵命令」这一类）
+    doc = ast.get_docstring(ast.parse(src)) or ""
+    advertised = set(re.findall(r"^\s*tennislive ([a-z-]+)", doc, re.M))
+    registered = set(re.findall(r'\w*sub\.add_parser\("([a-z-]+)"', src))
+    ghosts = advertised - registered
+    assert not ghosts, (
+        f"用法清单在推荐不存在的命令 {sorted(ghosts)}——"
+        "**用户看到的第一样东西指向一个查不到的命令**，比没有文档更费时间"
+    )
+
+    # ③ 图片消息那条路必须还在（收的是死的那一半，不是整条公众号）
+    assert "publish_image_post" in code, "图片消息那条路是好的，不该被一起收掉"
