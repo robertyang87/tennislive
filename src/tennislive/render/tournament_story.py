@@ -2474,6 +2474,133 @@ STORIES = STORIES + (
         ),
     ),
     _trivia_story(
+        slug="second-serve-clock",
+        title="二发为什么没有钟",
+        subtitle="网球观察 · 规则篇",
+        identity="一发 25 秒，二发只有两个词",
+        chips=("只对一发生效", "without delay", "新生代 8 秒"),
+        hero=(
+            "发球计时器只对一发生效：一发触网重发与二发都没有钟，"
+            "2026 大满贯规则书对二发的全部要求只有「without delay」，"
+            "拍球次数也未设上限。ATP 已在新生代总决赛试行一发至二发最多 8 秒。"
+        ),
+        facts=(
+            "ATP、大满贯、ITF 与 WTA 通用的《发球计时程序》A-2 条写明："
+            "计时器只在一发时运行，触网重发的一发与二发都不设计时器；"
+            "2026 大满贯规则书对二发仅要求「without delay」，且未限制拍球次数。"
+            "不设计时器不等于不受约束：二发是否过慢由主裁自由裁量，"
+            "兹维列夫本届半决赛即因此被判一次时间违例。",
+            "ITF《网球规则》第 29 条 a 款规定，分间 25 秒自上一分结束起算、"
+            "至一发被击出为止，因此一发出手到二发之间不落在任何计时窗口内；"
+            "同一份计时程序 A-4 条另写明，接发球员仍有责任配合发球方的合理节奏。",
+            "ATP 自 2023 年起在新生代总决赛试行一发至二发最多 8 秒并配可视计时器，"
+            "2024、2025 两届沿用；25 秒计时器本身亦于 2017 年首现于该赛事，"
+            "2018 年进入大满贯正赛，2019 年铺开至巡回赛。",
+            # ⚠️ 这三组数逐个从原文核过（摘要只能用来找论文，不能当出处——
+            # CLAUDE.md「12040」那条记的就是照抄摘要的代价）：
+            #   Kolbinger, Großmann & Lames，Journal of Sports Analytics 2018，
+            #     doi:10.3233/JSA-180277，2016 澳网男单 3475 个发球，20 秒限制。
+            #     摘要原话：average time between points was 21.5 seconds and time
+            #     rule violations were found for 58.5% of the serves；受罚的
+            #     only two (0.1%)，发生在 23.5 和 25.6 秒。
+            #   Mühlberger & Kolbinger，Journal of Human Sport and Exercise 16(3)，
+            #     doi:10.14198/jhse.2021.163.05，2018 美网男单 2135 分，25 秒计时器。
+            #     摘要原话：the share of rule violations decreased (26.3%), but the
+            #     average time did not (21.6s)。
+            #   Jeff Sackmann，Tennis Abstract《Another Slam, Another Pointless
+            #     Serve Clock》2019-01-31，澳网男单 2018→2019：40.2→41.0 秒
+            #     （女子 40.4→40.3）。⚠️ 它量的是**整分**（含回合），和上面
+            #     21 秒那个**分间间隔**不是一个口径，写在一起必须点明。
+            "计时器并未让比赛变快：Kolbinger 等对 2016 年澳网男单 3475 个发球的统计显示，"
+            "20 秒限制下超时率 58.5%、分间平均 21.5 秒，而主裁全程仅判罚 2 次；"
+            "Mühlberger 与 Kolbinger 对 2018 年美网男单 2135 分的统计显示，"
+            "改用 25 秒计时器后超时率降至 26.3%，分间平均仍为 21.6 秒。"
+            "另据 Tennis Abstract 按整分统计，澳网男子每分平均耗时由 2018 年的 40.2 秒"
+            "升至 2019 年的 41.0 秒。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2026-09-13",
+                player="谢尔顿",
+                age="美网决赛",
+                headline="「二发不该是无限的」",
+                # ⚠️ 这里原来写「据 ESPN 统计……共拍球 12,040 次」，两处都不对：
+                # ESPN 决赛稿原文是「a statistic that was **circulating** that he
+                # had recorded **over 12,000** pre-serve bounces in his first five
+                # matches」——是一个在流传的统计、兹维列夫自己提到过（还说
+                # "quite funny"），**不是 ESPN 自己的统计**；而「12,040」这个
+                # 精确数只在搜索摘要里出现，ESPN 三篇稿子（决赛 49935287、
+                # 半决赛 49907649、1/4 49887449）全文搜过一处都没有。
+                # 所以知识帖这一栏只留**他自己说的话**（引语可以抄，结论不可以）；
+                # 那个量级的数只在视频旁白里出现，且说成「一万多下」。
+                detail=(
+                    "决赛 1-3 负于兹维列夫后，他表示一发可以用满 25 秒，"
+                    "但二发不应无限；并称对手二发前从不少于 10 下球，"
+                    "多时 20 至 25 下。"
+                ),
+                source_url=(
+                    "https://www.espn.com/tennis/story/_/id/49935287/"
+                    "ben-shelton-addressing-alexander-zverev-second-serve-routine-unlimited"
+                ),
+            ),
+            ChampionMoment(
+                date="2026-09-11",
+                player="哈恰诺夫",
+                age="美网半决赛",
+                headline="「每一分都要重新做一次分腿垫步」",
+                detail=(
+                    "半决赛负于兹维列夫后他表示：准备完毕后对手再拍十余下球，"
+                    "接发方只能重新准备、重新完成分腿垫步；"
+                    "他同时承认这一做法并不违反规则。"
+                ),
+                source_url=(
+                    "https://www.espn.com/tennis/story/_/id/49935287/"
+                    "ben-shelton-addressing-alexander-zverev-second-serve-routine-unlimited"
+                ),
+            ),
+            ChampionMoment(
+                date="1989-06",
+                player="张德培",
+                age="17 岁",
+                headline="喝水被判时间违例，随后继续",
+                detail=(
+                    "法网第四轮对伦德尔，他在换边饮水超时被判时间违例后继续饮水，"
+                    "同场并使用下手发球；末分伦德尔在两个赛点上一发失误、"
+                    "二发触网出界。张德培其后夺冠，为史上最年轻男单大满贯冠军。"
+                ),
+                source_url=(
+                    "https://www.tennis.com/news/articles/"
+                    "french-open-memories-2-michael-chang-d-ivan-lendl-1989"
+                ),
+            ),
+            ChampionMoment(
+                date="2023-11",
+                player="ATP",
+                age="新生代总决赛",
+                headline="一发到二发，最多 8 秒",
+                detail=(
+                    "自吉达一届起，一发与二发之间最多允许 8 秒并配可视计时器；"
+                    "此前球员在一发失误后可无限用时。2024、2025 两届沿用该规则。"
+                ),
+                source_url=(
+                    "https://www.nextgenatpfinals.com/en/event/rules-and-innovations"
+                ),
+            ),
+        ),
+        image_keys=(),
+        source_label=(
+            "LTA 裁判手册 / ITF 规则 29a / ESPN / AP / AFP / "
+            "Served with Andy Roddick / Next Gen ATP Finals / "
+            "Journal of Sports Analytics 2018 / "
+            "Journal of Human Sport and Exercise 2021 / Tennis Abstract"
+        ),
+        image_credit="Darren Carroll/USTA · usopen.org 官方图",
+        source_url=(
+            "https://www.lta.org.uk/494f0e/siteassets/lta-officials/my-resources/"
+            "role-specific-resources/serve-shot-clock-procedures-2023.pdf"
+        ),
+    ),
+    _trivia_story(
         slug="zheng-eala",
         title="郑钦文首轮VS伊埃拉",
         subtitle="赛事前瞻 · WTA 500",
