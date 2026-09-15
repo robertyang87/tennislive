@@ -2676,7 +2676,213 @@ _WAWRINKA_FINALS_DIAGRAM = """
 """
 
 
+# 「上一次是什么时候」这一屏：2002 年 10 月和今天并排。
+# 照片讲不清「那一年的世界什么样」——这一屏要的正好是两列可以逐行对读的
+# 事实，所以画。四个年龄都是按出生日期算的（纳达尔 1986-06-03、德约
+# 1987-05-22），不是抄来的。
+_BIG3_THEN_NOW_DIAGRAM = """
+<svg viewBox="0 0 900 640" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="40" text-anchor="middle" font-size="34" font-weight="700" fill="#f4fbf7">上一次前十没有他们仨</text>
+  <text x="450" y="76" text-anchor="middle" font-size="26" fill="#cfe6d8">中间隔了二十四年</text>
+
+  <rect x="286" y="100" width="258" height="330" rx="12" fill="#8fd6a8" fill-opacity="0.07"/>
+  <rect x="576" y="100" width="258" height="330" rx="12" fill="#c6f65a" fill-opacity="0.10"/>
+
+  <text x="415" y="140" text-anchor="middle" font-size="27" font-weight="700" fill="#cfe6d8">2002 年 10 月</text>
+  <text x="705" y="140" text-anchor="middle" font-size="27" font-weight="700" fill="#c6f65a">2026 年 9 月</text>
+
+  <text x="66" y="202" font-size="27" fill="#cfe6d8">世界第一</text>
+  <text x="415" y="202" text-anchor="middle" font-size="28" fill="#f4fbf7">休伊特</text>
+  <text x="705" y="202" text-anchor="middle" font-size="28" fill="#f4fbf7">辛纳</text>
+
+  <text x="66" y="264" font-size="27" fill="#cfe6d8">费德勒</text>
+  <text x="415" y="264" text-anchor="middle" font-size="28" fill="#f4fbf7">刚进前十</text>
+  <text x="705" y="264" text-anchor="middle" font-size="28" fill="#f4fbf7">退役四年</text>
+
+  <text x="66" y="326" font-size="27" fill="#cfe6d8">纳达尔</text>
+  <text x="415" y="326" text-anchor="middle" font-size="28" fill="#f4fbf7">十六岁</text>
+  <text x="705" y="326" text-anchor="middle" font-size="28" fill="#f4fbf7">退役两年</text>
+
+  <text x="66" y="388" font-size="27" fill="#cfe6d8">德约科维奇</text>
+  <text x="415" y="388" text-anchor="middle" font-size="28" fill="#f4fbf7">十五岁</text>
+  <text x="705" y="388" text-anchor="middle" font-size="28" font-weight="700" fill="#c6f65a">第 12</text>
+
+  <line x1="66" y1="466" x2="834" y2="466" stroke="#8fd6a8" stroke-width="2" stroke-opacity="0.45"/>
+  <text x="450" y="516" text-anchor="middle" font-size="28" fill="#f4fbf7">那年的世界第一休伊特，儿子今年十七岁</text>
+  <text x="450" y="560" text-anchor="middle" font-size="26" fill="#c6f65a">克鲁兹·休伊特已经在打职业巡回赛</text>
+</svg>
+"""
+
+# 三个人各自的纪录。条长按周数线性，**条上不写字**，数字右对齐钉在右边——
+# 左对齐排出去会顶出 900 的画布。副标题那句「不是一张排行榜」不能省：
+# 三个数来自三套不同的算法，摆在一起容易被读成名次。
+_BIG3_REIGN_DIAGRAM = """
+<svg viewBox="0 0 900 640" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="40" text-anchor="middle" font-size="34" font-weight="700" fill="#f4fbf7">他们在顶上待了多久</text>
+  <text x="450" y="76" text-anchor="middle" font-size="26" fill="#cfe6d8">三种不同的纪录，不是一张排行榜</text>
+
+  <text x="66" y="142" font-size="27" fill="#cfe6d8">纳达尔 · 连续待在前十</text>
+  <rect x="66" y="158" width="600" height="48" rx="8" fill="#8fd6a8"/>
+  <text x="834" y="196" text-anchor="end" font-size="34" font-weight="700" fill="#c6f65a">912 周</text>
+
+  <text x="66" y="272" font-size="27" fill="#cfe6d8">德约科维奇 · 累计世界第一</text>
+  <rect x="66" y="288" width="282" height="48" rx="8" fill="#8fd6a8" fill-opacity="0.72"/>
+  <text x="834" y="326" text-anchor="end" font-size="34" font-weight="700" fill="#f4fbf7">428 周</text>
+
+  <text x="66" y="402" font-size="27" fill="#cfe6d8">费德勒 · 连续世界第一</text>
+  <rect x="66" y="418" width="156" height="48" rx="8" fill="#8fd6a8" fill-opacity="0.72"/>
+  <text x="834" y="456" text-anchor="end" font-size="34" font-weight="700" fill="#f4fbf7">237 周</text>
+
+  <line x1="66" y1="512" x2="834" y2="512" stroke="#8fd6a8" stroke-width="2" stroke-opacity="0.45"/>
+  <text x="450" y="560" text-anchor="middle" font-size="26" fill="#cfe6d8">纳达尔那一段从 2005 年 4 月到 2023 年 3 月</text>
+</svg>
+"""
+
+# 收尾那一屏：把今天的前十整份列出来，德约单独排在框外。
+# 「名单上没有他们」这件事，任何一张照片都表达不了，只有名单本身能。
+_BIG3_TODAY_TEN_DIAGRAM = """
+<svg viewBox="0 0 900 500" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="36" text-anchor="middle" font-size="34" font-weight="700" fill="#f4fbf7">2026 年 9 月 14 日 · ATP 前十</text>
+  <text x="450" y="70" text-anchor="middle" font-size="26" fill="#cfe6d8">这份名单上，三巨头一个都没有</text>
+
+  <rect x="56" y="90" width="788" height="268" rx="14" fill="#8fd6a8" fill-opacity="0.07" stroke="#8fd6a8" stroke-width="3"/>
+
+  <text x="128" y="134" text-anchor="end" font-size="26" fill="#cfe6d8">1</text>
+  <text x="152" y="134" font-size="28" fill="#f4fbf7">辛纳</text>
+  <text x="528" y="134" text-anchor="end" font-size="26" fill="#cfe6d8">6</text>
+  <text x="552" y="134" font-size="28" fill="#f4fbf7">梅德韦杰夫</text>
+
+  <text x="128" y="178" text-anchor="end" font-size="26" fill="#cfe6d8">2</text>
+  <text x="152" y="178" font-size="28" fill="#f4fbf7">兹维列夫</text>
+  <text x="528" y="178" text-anchor="end" font-size="26" fill="#cfe6d8">7</text>
+  <text x="552" y="178" font-size="28" fill="#f4fbf7">科博利</text>
+
+  <text x="128" y="222" text-anchor="end" font-size="26" fill="#cfe6d8">3</text>
+  <text x="152" y="222" font-size="28" fill="#f4fbf7">阿尔卡拉斯</text>
+  <text x="528" y="222" text-anchor="end" font-size="26" fill="#cfe6d8">8</text>
+  <text x="552" y="222" font-size="28" fill="#f4fbf7">蒂亚福</text>
+
+  <text x="128" y="266" text-anchor="end" font-size="26" fill="#cfe6d8">4</text>
+  <text x="152" y="266" font-size="28" fill="#f4fbf7">谢尔顿</text>
+  <text x="528" y="266" text-anchor="end" font-size="26" fill="#cfe6d8">9</text>
+  <text x="552" y="266" font-size="28" fill="#f4fbf7">德米纳尔</text>
+
+  <text x="128" y="310" text-anchor="end" font-size="26" fill="#cfe6d8">5</text>
+  <text x="152" y="310" font-size="28" fill="#f4fbf7">阿利亚西姆</text>
+  <text x="528" y="310" text-anchor="end" font-size="26" fill="#cfe6d8">10</text>
+  <text x="552" y="310" font-size="28" fill="#f4fbf7">弗里茨</text>
+
+  <text x="128" y="420" text-anchor="end" font-size="30" font-weight="700" fill="#c6f65a">12</text>
+  <text x="152" y="420" font-size="32" font-weight="700" fill="#c6f65a">德约科维奇</text>
+  <text x="834" y="420" text-anchor="end" font-size="26" fill="#cfe6d8">24 个大满贯</text>
+
+  <text x="450" y="476" text-anchor="middle" font-size="26" fill="#cfe6d8">辛纳和阿尔卡拉斯今年都因伤缺席过大满贯</text>
+</svg>
+"""
+
+
 _SCRIPTS: dict[str, tuple[tuple, ...]] = {
+    # 2026-09-14 新一期 ATP 排名：德约从第 5 掉到第 12，三巨头同时不在前十,
+    # 上一次这样是 2002 年 10 月。两个独立源对上（ESPN 新闻接口 49938566 /
+    # IANS「drops seven places」5−7=12），当期前十另从 tennisexplorer 的
+    # 14.09.2026 榜单逐行核过。三个纪录（费德勒连续 237 周 No.1、纳达尔连续
+    # 912 周前十、德约累计 428 周 No.1）ESPN ＋ 统计站两处一致。
+    # ⚠️ 四个年龄都是按出生日期算的，不是抄的。
+    "big-three": (
+        (
+            "now",
+            "今天",
+            "德约掉到第十二",
+            "九月十四号，新一期 ATP 排名出来了。德约科维奇从第五掉到第十二。"
+            "前十里面，费德勒、纳达尔、德约科维奇，一个都没有。"
+            "上一次出现这种情况，是二〇〇二年十月。"
+            "半个月前的美网首轮，他输给了世界第四十九的纳沃内。"
+            "那是他职业生涯里，第一次在美网第一轮就出局。",
+            "assets/explainer/big-three/djokovic-usopen-2026-r1.jpg",
+            "AP Photo／Frank Franklin II · 2026 年 8 月 30 日，美网首轮，德约科维奇",
+            (
+                "9 月 14 日 第 5 掉到第 12",
+                "前十里三巨头一个都没有",
+                "上一次这样 是 2002 年 10 月",
+            ),
+        ),
+        (
+            "then",
+            "上一次",
+            "那年费德勒刚进前十",
+            "二〇〇二年十月是个什么概念。"
+            "那个月的世界第一是休伊特，欧元刚开始流通不到一年，"
+            "布雷迪刚拿到他的第一个超级碗。"
+            "而费德勒，正是在那个十月第一次挤进前十。"
+            "那时候纳达尔十六岁，德约科维奇十五岁，两个人都还没出道。"
+            "二十四年过去，休伊特的儿子克鲁兹，今年十七岁，已经在打职业巡回赛了。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "那个月的世界第一是休伊特",
+                "费德勒那时才刚挤进前十",
+                "纳达尔 16 岁 德约 15 岁",
+            ),
+            _BIG3_THEN_NOW_DIAGRAM,
+        ),
+        (
+            "reign",
+            "待了多久",
+            "纳达尔连续九百一十二周",
+            "他们在顶上待了多久。"
+            "纳达尔从二〇〇五年四月进前十，一直待到二〇二三年三月。"
+            "连续九百一十二周没掉出去过，将近十八年。"
+            "费德勒连续二百三十七周排在世界第一，德约科维奇累计四百二十八周。"
+            "这三个数来自三种不同的算法，摆在一起不是一张排行榜，"
+            "是同一件事的三个样子。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "纳达尔 连续 912 周在前十",
+                "费德勒 连续 237 周世界第一",
+                "德约 累计 428 周世界第一",
+            ),
+            _BIG3_REIGN_DIAGRAM,
+        ),
+        (
+            "exit",
+            "怎么走的",
+            "先是费德勒，后是纳达尔",
+            "二〇二二年，费德勒在拉沃尔杯退役，四十一岁。"
+            "他职业生涯的最后一场打的是双打，搭档是纳达尔。"
+            "两年之后，纳达尔在戴维斯杯告别，三十八岁，"
+            "后来罗兰加洛斯为他办了一场告别仪式。"
+            "现在只剩德约科维奇还在打，三十九岁。",
+            "assets/explainer/big-three/nadal-roland-garros-farewell.jpg",
+            "罗兰加洛斯为纳达尔办的告别仪式 · 出处未核实（unverified）",
+            (
+                "费德勒 2022 年 41 岁 拉沃尔杯",
+                "最后一场双打 搭档纳达尔",
+                "纳达尔 2024 年 38 岁 戴维斯杯",
+            ),
+        ),
+        (
+            "today",
+            "他怎么说",
+            "现在就是现在",
+            "美网输掉那天，德约科维奇说，"
+            "过去那些成就他一直很骄傲，但是现在就是现在。"
+            "他走出球场的时候，人群里有人举着一块牌子，"
+            "上面写着：谢谢你曾经激励过我。"
+            "而今天排在前十的那些人里，"
+            "辛纳和阿尔卡拉斯今年都缺席过大满贯，都是因为伤。"
+            "阿尔卡拉斯还说，往后他打算多给自己留一点休息。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "他说 过去很骄傲 但现在就是现在",
+                "牌子上写着 谢谢你曾经激励过我",
+                "新一代今年也都缺席过大满贯",
+            ),
+            _BIG3_TODAY_TEN_DIAGRAM,
+            "这一代，还会有人坐这么久吗？",
+        ),
+    ),
     "second-serve-clock": (
         (
             "rule", "规则", "一发有钟，二发没有",
@@ -7420,6 +7626,26 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
 # 这个洞。判据落在 test_每条片子的标签都放满五个。
 _DEFAULT_TAGS = ("网球", "网球时差", "网球冷知识", "网球科普", "网球运动")
 _CAPTIONS: dict[str, dict] = {
+    "big-three": {
+        "hook": (
+            "9 月 14 日新一期 ATP 排名，德约科维奇从第 5 掉到第 12——"
+            "前十里，费德勒、纳达尔、德约科维奇一个都没有了。\n"
+            "上一次出现这种情况是 2002 年 10 月：那个月的世界第一还是休伊特，"
+            "费德勒才刚刚第一次挤进前十，纳达尔 16 岁、德约科维奇 15 岁，都还没出道。\n"
+            "二十四年里他们把顶上那几个位置坐满了：纳达尔连续 912 周待在前十"
+            "（2005 年 4 月到 2023 年 3 月，将近十八年没掉出去过），"
+            "费德勒连续 237 周排在世界第一，德约科维奇累计 428 周。"
+            "这三个数来自三种不同的算法，摆在一起不是一张排行榜，是同一件事的三个样子。\n"
+            "费德勒 2022 年在拉沃尔杯退役，41 岁，职业生涯最后一场打的是双打，搭档是纳达尔；"
+            "两年后纳达尔在戴维斯杯告别，38 岁。现在只剩德约科维奇还在打，39 岁。\n"
+            "半个月前的美网首轮，他输给世界第 49 的纳沃内，"
+            "那是他职业生涯第一次在美网第一轮就出局。赛后他说：过去那些成就他一直很骄傲，"
+            "但是现在就是现在。走出球场的时候，人群里有人举着一块牌子——谢谢你曾经激励过我。\n"
+            "而今天排在前十的那些人里，辛纳和阿尔卡拉斯今年都因为伤病缺席过大满贯，"
+            "阿尔卡拉斯还说往后打算多给自己留一点休息。"
+        ),
+        "tags": ("网球", "网球时差", "德约科维奇", "三巨头", "网球冷知识"),
+    },
     "second-serve-clock": {
         "hook": (
             "谢尔顿在美网决赛后要求给二发设个时限——"
@@ -7848,6 +8074,27 @@ def column_of(slug: str) -> Column:
 # beat one makes the viewer work out the subject for themselves. Every deck
 # now opens on the question it answers, said out loud and set large.
 _OPENINGS: dict[str, dict] = {
+    "big-three": {
+        "topic": "三巨头一起跌出了前十",
+        # ⚠️ 封面这一问指向**上一次是哪一年**（2002 年 10 月），末屏那一问指向
+        # **新一代能待多久**——两件事。回声那道判据按字集重合度算。
+        # 封面每一屏都带着台头「三巨头一起跌出了前十」，所以大标题不必再说一遍
+        # 主语——和台头连读是「三巨头一起跌出了前十／上一次这样，是哪一年？」。
+        # ⚠️ 上一版写的是「前十多久没有他们仨了？」：一句里叠了两层铺垫
+        # （前十／多久），又插了个代词「他们仨」，念出来不顺。
+        "question": "上一次这样，是哪一年？",
+        # 口播要自带语境（只听声音的人没有台头可看），所以比画面上那一问长一截。
+        "narration": "三巨头一起跌出前十，上一次是哪一年？"
+        "答案是二〇〇二年十月——那个月，费德勒才刚刚第一次挤进去。",
+        # 账号所有者点名用三巨头合体的拼图当封面。1080×1440 正好铺满 3:4，
+        # 放大 1.00 倍，不用写 _low_res_why。
+        "image": "assets/trivia/trivia-big-three.jpg",
+        "credit": "Getty Images／Imagn via Sports Illustrated · "
+        "费德勒 2017 温网第八冠、纳达尔 2022 法网第十四冠、德约科维奇 2012 澳网决赛后",
+        # ⚠️ 标签必须专属：默认那五个和别的冷知识片一字不差，
+        # `test_文案的开场和标签属于它自己的选题` 会当场红。
+        "tags": ("网球", "网球时差", "德约科维奇", "三巨头", "网球冷知识"),
+    },
     "second-serve-clock": {
         "topic": "一发有钟，二发没有",
         # ⚠️ 这一问原来写的是「12040 下球，算违规吗？」，账号所有者一句
