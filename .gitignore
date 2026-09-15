@@ -54,3 +54,9 @@ output/**/storyboard.jpg
 # 多一张「本地渲的封面」和多一张真产物，下一个人分不出来哪张是发出去的那张。
 output/**/poster_local.jpg
 output/**/segments_local_*.jpg
+
+# Claude Code 的 agent worktree：并行 agent 各自的仓库副本，临时工作区。
+# **不许提交**——三个 agent 跑起来光数三层就 1672 个文件，而且里面是嵌套的
+# git 仓库。stop hook 看见未跟踪文件会催「请提交并推送」，这一条就是给它的答案：
+# 该忽略，不是该提交。
+.claude/worktrees/
