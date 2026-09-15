@@ -8105,7 +8105,11 @@ _OPENINGS: dict[str, dict] = {
         # 主语——和台头连读是「三巨头一起跌出了前十／上一次这样，是哪一年？」。
         # ⚠️ 上一版写的是「前十多久没有他们仨了？」：一句里叠了两层铺垫
         # （前十／多久），又插了个代词「他们仨」，念出来不顺。
-        "question": "上一次这样，是哪一年？",
+        # 2026-09-15 账号所有者定的两行：**选题也要进大标题**。原来它只在左上角
+        # 那行小台头里，而台头在信息流的缩略图里读不出来（#726 量过 8.2px），
+        # 于是刷到这一屏的人看得见钩子、看不见这条片子在讲谁。
+        # 两行各 10/11 字，都在一行 16 字的上限里。
+        "question": "三巨头一起跌出了前十\n上一次这样，是哪一年？",
         # 口播要自带语境（只听声音的人没有台头可看），所以比画面上那一问长一截。
         "narration": "三巨头一起跌出前十，上一次是哪一年？"
         "答案是二〇〇二年十月——那个月，费德勒才刚刚第一次挤进去。",
@@ -9106,8 +9110,41 @@ _COVER_WIDTH_MARGIN = 0.985
 _COVER_MIN_ONE_LINE_PX = 84
 
 
+def cover_title_lines(title: str) -> list[str]:
+    """封面大标题的行。带 `\n` 就是**显式声明两行**，不带就是老样子一行。
+
+    2026-09-15 账号所有者要求把「三巨头一起跌出了前十」也放进大标题：
+    它原来只在左上角那行小台头里，而**台头在信息流的缩略图里读不出来**
+    （#726 量过：solo 封面的中文名 52px 缩到约 170px 宽的瀑布流只剩 8.2px），
+    于是刷到那一屏的人看得见钩子、看不见这条片子在讲谁。
+
+    ⚠️ **为什么是显式换行，不是靠 `text-wrap:balance` 自己断**：底下那段注释
+    自己写着「中文没有词边界，浏览器可以在任意两个汉字之间断……两行版必然会
+    在某处把一个词劈开」。balance 只保证两行长度接近，**不保证断在哪儿**——
+    而这一条要的正好是断在某个确定的地方。声明出来，断点就不再是猜的。
+    """
+    return [line for line in title.split("\n") if line.strip()] or [title]
+
+
+def explainer_wechat_title(story_title: str, cover_title: str) -> str:
+    """微信标题：「选题｜封面大标题」，**同一句话不印两遍**。
+
+    封面大标题现在可以是两行，而第一行往往就是选题本身（big-three 那条就是）。
+    不去重的话标题会变成「三巨头一起跌出了前十｜三巨头一起跌出了前十｜……」。
+    `dict.fromkeys` 保序去重：没有重复时它一个字都不改，老片子走的正是那一支。
+    """
+    return "｜".join(dict.fromkeys([story_title, *cover_title_lines(cover_title)]))
+
+
 def _cover_title_em(title: str) -> float:
-    """封面标题按上面那三个实测字宽折算成多少个 em。"""
+    """封面标题按上面那三个实测字宽折算成多少个 em。
+
+    ⚠️ 多行标题按**最长那一行**算，不是把所有字加起来——加起来会把字号算成
+    实际需要的一半，两行小字而不是两行大字。
+    """
+    lines = cover_title_lines(title)
+    if len(lines) > 1:
+        return max(_cover_title_em(line) for line in lines)
     total = 0.0
     for ch in title:
         if ch == " ":
@@ -9294,12 +9331,21 @@ def _slide_html(
         # 就是 `text-wrap:balance` 断出来的，「挑战」被切成两半。缩 7% 字号让
         # 整句落在一行上，比断在词中间好得多。装不下才退回两行（那时 balance
         # 至少保证两行长度接近，不会甩出一个三字符的孤行）。
-        one_line = int(usable_px * _COVER_WIDTH_MARGIN / _cover_title_em(segment.title))
-        title_px = min(96, one_line) if one_line >= _COVER_MIN_ONE_LINE_PX else min(
-            96, int(usable_px * 2 / max(len(segment.title), 1))
-        )
+        fits = int(usable_px * _COVER_WIDTH_MARGIN / _cover_title_em(segment.title))
+        if len(cover_title_lines(segment.title)) > 1:
+            # 已经显式声明了在哪儿断，就不必再为「装不下才退两行」留余地——
+            # 按最长那一行给满字号即可。
+            title_px = min(96, fits)
+        else:
+            title_px = min(96, fits) if fits >= _COVER_MIN_ONE_LINE_PX else min(
+                96, int(usable_px * 2 / max(len(segment.title), 1))
+            )
     else:
         title_px = min(62, int(usable_px / max(len(segment.title), 1)))
+    # 多行标题用 <br> 硬断，**逐行转义**（整串转义再塞 <br> 会把标签自己转掉）。
+    title_html = "<br>".join(
+        html.escape(line) for line in cover_title_lines(segment.title)
+    )
     question_html = (
         f'<div class="ask">{html.escape(segment.question)}</div>'
         if segment.question
@@ -9496,7 +9542,7 @@ body{{font-family:'TL Sans SC','Noto Sans CJK SC','Noto Sans SC',sans-serif;}}
 <div class="slide{cover_cls}">{hero}<div class="bar"></div>
 <div class="head"><div class="brandwrap">{brand_icon}<div class="brandlines"><span class="brand">网球时差 · {html.escape(column)}</span>{topic_html}</div></div></div>
 <div class="copy">{chip_html}
-<div class="title">{html.escape(segment.title)}</div>{gloss_html}{fixture_html}{points_html}{question_html}{tail_html}</div>
+<div class="title">{title_html}</div>{gloss_html}{fixture_html}{points_html}{question_html}{tail_html}</div>
 </div></body></html>"""
 
 
