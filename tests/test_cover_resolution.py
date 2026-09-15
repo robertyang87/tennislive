@@ -288,7 +288,11 @@ def test_能推近的片子是算出来的不是手写的():
     # ⚠️ 2026-09-15 从 12 变 13：`second-serve-clock` 的封面从示意图换成同一条
     # 渠道的 1280×720 实拍（账号所有者点名要兹维列夫发球那张），形状和上一条
     # 一模一样——`_PHOTO_COVERS` 和「在放大」那一档同时各多一条。
-    assert len(eligible) == len(_PHOTO_COVERS) - 13
+    # ⚠️ 同日从 13 变 14：`big-three` 的封面是三巨头合体拼图
+    # （assets/trivia/trivia-big-three.jpg，账号所有者点名用它），**原图正好
+    # 1080×1440**，铺满 1.00x、推不动——和 `mandatory-1000` 那张天生 3:4 的
+    # 一样，落在「够铺满但推不动」那一档，不是素材不够清晰。
+    assert len(eligible) == len(_PHOTO_COVERS) - 14
     for slug in _UNDERSIZED:
         assert slug not in eligible, f"{slug} 本来就在放大，不该被判成能推近"
 
@@ -322,8 +326,11 @@ def test_够铺满但推不动的要能被单独认出来():
     # （两人官方抠图 + 国旗 + 即时排名），**渲染器的输出就是 1080×1440**，
     # 所以铺满 1.00x、推不动是必然的，跟素材够不够清晰无关：想让它推得动，
     # 只能把海报渲成更大的画布，而画布尺寸是版式定死的那一部分。
+    # big-three 用的是三巨头合体拼图（三张捧杯照并排），而那张**原图就是
+    # 1080×1440**——和 mandatory-1000 一样天生 3:4，铺满 1.00x、零垫层，
+    # 推不动是画幅决定的，不是分辨率不够。
     assert static_only == {
-        "lucky-loser", "mandatory-1000", "queue", "shang-rublev",
+        "big-three", "lucky-loser", "mandatory-1000", "queue", "shang-rublev",
         "ten-champions", "wildcard",
     }, (
         f"够铺满但推不动的这一档变了：现在是 {sorted(static_only)}。"

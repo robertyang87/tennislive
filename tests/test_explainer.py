@@ -19,6 +19,7 @@ from tennislive.video.explainer import (
     ExplainerSegment,
     ExplainerVideoError,
     _slide_html,
+    cover_title_lines,
     explainer_script,
 )
 
@@ -510,6 +511,66 @@ def test_文案标题带上品牌语且不超小红书上限():
         assert xhs_title_len(head) <= 20, f"{slug} 标题 {xhs_title_len(head)} 字，超小红书上限"
 
 
+def test_封面大标题声明了两行就真的断在那儿():
+    """两行是**声明**出来的，不是 `text-wrap:balance` 碰巧断对的。
+
+    2026-09-15 账号所有者要求把选题「三巨头一起跌出了前十」也放进封面大标题
+    ——它原来只在左上角那行小台头里，而台头在信息流的缩略图里读不出来。
+
+    ⚠️ 这条钉三头，缺一头都是恒真：
+
+    1. **真的断了**：markup 里两行之间要有 `<br>`。只断言「每一行都在页面里」
+       拦不住——把 `<br>` 拿掉、整串转义之后 `\n` 在 HTML 里塌成一个空格，
+       每一行照样是子串，而画面上是一行长字。
+    2. **字号按最长那一行算**：把两行的字加起来算 em，22 个字会把字号算成
+       52px 上下（两行小字），而不是 96（两行大字）。
+    3. **单行标题一个字节都不变**：这条改的是多行那一支，不许把 44 条老片子的
+       封面一起改了。
+    """
+    from tennislive.video.explainer import _cover_title_em, explainer_column
+    from tennislive.render.tournament_story import find_story_by_slug
+
+    segments = explainer_script(find_story_by_slug("big-three"))
+    cover = segments[0]
+    lines = cover_title_lines(cover.title)
+    assert lines == ["三巨头一起跌出了前十", "上一次这样，是哪一年？"], lines
+
+    doc = _slide_html(0, cover, column=explainer_column("big-three"))
+    title_markup = re.search(r'<div class="title">(.*?)</div>', doc, re.S).group(1)
+    # ① 断点是声明出来的
+    assert f"{lines[0]}<br>{lines[1]}" == title_markup, title_markup
+
+    # ② 字号按最长那一行，不是两行加起来
+    assert _cover_title_em(cover.title) == max(_cover_title_em(x) for x in lines)
+    px = int(re.search(r"font-size:(\d+)px;line-height:1\.2", doc).group(1))
+    assert px == 96, f"两行大字应该给满 96，拿到 {px}"
+
+    # ③ 单行标题原样：既不加 <br>，字号也还是老算法
+    single = "球压没压线，到底谁说了算？"
+    assert cover_title_lines(single) == [single]
+    assert _cover_title_em(single) == sum(
+        0.80 if not ch.isascii() else 0.45 for ch in single
+    )
+
+
+def test_封面大标题的第一行和选题重了_微信标题不许印两遍():
+    """标题是「选题｜封面大标题」，而大标题的第一行现在可能**就是**选题。
+
+    不去重的话 big-three 那条的标题会变成
+    「三巨头一起跌出了前十｜三巨头一起跌出了前十｜上一次这样，是哪一年？」。
+    ⚠️ 另一头同样要钉：没有重复时它一个字都不许改——44 条老片子走的是那一支。
+    """
+    from tennislive.video.explainer import explainer_wechat_title as wechat_title
+
+    assert wechat_title(
+        "三巨头一起跌出了前十", "三巨头一起跌出了前十\n上一次这样，是哪一年？"
+    ) == "三巨头一起跌出了前十｜上一次这样，是哪一年？"
+    # 没有重复的那一支（老片子的形状）原样
+    assert wechat_title("一发有钟，二发没有", "二发前拍20下球，算违规吗？") == (
+        "一发有钟，二发没有｜二发前拍20下球，算违规吗？"
+    )
+
+
 def test_每条片子都以问题开场():
     """Nobody watches past three seconds if they cannot tell what this is about.
 
@@ -522,14 +583,20 @@ def test_每条片子都以问题开场():
         cover = segments[0]
         assert cover.kind == "cover", f"{slug} 第一屏不是开场问题卡"
         assert cover.title.endswith("？"), f"{slug} 开场没有问出一个问题：{cover.title}"
-        assert len(cover.title) <= 16, f"{slug} 开场问题太长：{cover.title}"
+        # ⚠️ 16 字这个上限管的是**一行**，不是整串。2026-09-15 起封面大标题可以
+        # 显式写成两行（`cover_title_lines`），而两行各自都得读得出来——按整串量
+        # 会把一条合法的两行标题误判成「太长」，而它每一行都没超。
+        for line in cover_title_lines(cover.title):
+            assert len(line) <= 16, f"{slug} 开场问题有一行太长：{line}"
         assert cover.title[:6] in cover.narration or "？" in cover.narration
         assert not cover.points  # the cover states the question, nothing else
 
         from tennislive.video.explainer import explainer_column
 
         doc = _slide_html(0, cover, column=explainer_column(slug))
-        assert cover.title in doc
+        # 多行标题在页面里是用 <br> 接起来的，整串（带 \n）搜不到——逐行搜。
+        for line in cover_title_lines(cover.title):
+            assert line in doc, f"{slug} 封面少了这一行：{line}"
         assert "① " not in doc  # the cover carries no beat number
         assert explainer_column(slug) in doc
         # ...and the first real beat still starts the count at one.

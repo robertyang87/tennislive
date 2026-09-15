@@ -375,6 +375,7 @@ def cmd_explainer(args) -> int:
     from .video.explainer import (
         explainer_push_html,
         explainer_script,
+        explainer_wechat_title,
         explainer_xiaohongshu,
     )
 
@@ -396,8 +397,12 @@ def cmd_explainer(args) -> int:
         explainer_push_html(segments, outdir, date=d, xhs_text=xhs_text),
         encoding="utf-8",
     )
+    # 标题是「选题｜封面大标题」。⚠️ 大标题现在可以是两行，而第一行往往**就是**
+    # 选题本身（big-three 那条就是：账号所有者要求把选题也放进大标题，因为台头
+    # 在信息流缩略图里读不出来）。不去重的话标题会把同一句话印两遍。
+    # 用 dict.fromkeys 保序去重：没有重复时它一个字都不改。
     (outdir / "wechat_title.txt").write_text(
-        f"{story.title}｜{segments[0].title}", encoding="utf-8"
+        explainer_wechat_title(story.title, segments[0].title), encoding="utf-8"
     )
     console.print(f"[green]解说视频已生成：{out}[/green]")
     return 0
