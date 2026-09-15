@@ -213,3 +213,52 @@ def test_这几条判据自己不是恒真的():
     assert _HEADING.match(seq[0]) and _HEADING.match(seq[1]), "样本验不了这条"
     assert len(seq[0]) - len(seq[0].lstrip("#")) == 5, "h5 才是这条要拦的那一层"
     assert len("#### x") - len("#### x".lstrip("#")) == 4, "h4 是放行的那一层"
+
+
+_README = Path("README.md")
+
+# 指向 README 的那一段：从「在 [`README.md`](README.md)**：」那行的**下一行**起，
+# 到「**这儿是规矩」那行**之前**为止。这一刀不能省——那两行里各有一对不是小节名的
+# 「」（「这个仓库里有什么、怎么跑起来」「该怎么做」「东西在哪」），
+# 整段一起扫会把它们当成 README 的小节，然后永远红。
+_README_LEAD = "在 [`README.md`](README.md)**："
+_README_TAIL = "**这儿是规矩"
+_QUOTED = re.compile(r"「([^」]+)」")
+
+
+def _readme_section_names() -> list[str]:
+    """CLAUDE.md 那段指针里点名的 README 小节。"""
+    lines = _lines()
+    starts = [i for i, ln in enumerate(lines) if _README_LEAD in ln]
+    assert len(starts) == 1, (
+        f"CLAUDE.md 里指向 README 的那一段有 {len(starts)} 处，应该正好 1 处。"
+        "主语没了这条判据就成了空转——所以它在这儿出声，而不是安安静静放行。"
+    )
+    ends = [i for i, ln in enumerate(lines) if ln.startswith(_README_TAIL)]
+    assert ends and ends[0] > starts[0], "「这儿是规矩」那一行不见了，段落边界没法切"
+
+    names: list[str] = []
+    for ln in lines[starts[0] + 1 : ends[0]]:
+        names.extend(_QUOTED.findall(ln))
+    return names
+
+
+def test_CLAUDE_md_点名的README小节真的存在():
+    """指错比过期更坏——读者顺着它翻 README，找不到那一节。
+
+    和 `test_指针点名的skill真的存在而且真的有这一节` 同一个形状，只是这次
+    指向的是 README 而不是 skill：README 改版式、改标题时，这条会红。
+    """
+    names = _readme_section_names()
+    assert len(names) >= 5, f"只扫到 {len(names)} 个小节名，判据失效了"
+
+    headings = {
+        ln.lstrip("#").strip()
+        for ln in _README.read_text("utf-8").split("\n")
+        if _HEADING.match(ln)
+    }
+    for name in names:
+        assert name in headings, (
+            f"CLAUDE.md 指向 README 的「{name}」，而 README.md 里没有这个标题。"
+            "改 README 的小节名要把这条指针一起改——它是读者唯一的对照。"
+        )
