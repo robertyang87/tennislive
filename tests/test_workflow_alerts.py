@@ -725,7 +725,19 @@ def test_不提交产物也不发Release的工作流不许要写权限():
             continue
         commits = "git commit" in body
         releases = bool(re.search(r"gh release|action-gh-release", body))
-        if not commits and not releases:
+        # ⚠️ **第三个正当理由，2026-09-15 登记的**：**删 ref**。
+        # `branch-cleanup-oneshot.yml` 拿 `gh api -X DELETE …/git/refs/heads/…`
+        # 清遗留分支，那同样吃 `contents: write`，而它既不 commit 也不发 Release
+        # ——于是被这条判据判成越权，报错还教人把它改成 `contents: read`，
+        # 照做的话每一次删除都会 403，而**403 被 `>/dev/null 2>&1` 吞掉之后
+        # 长得就像「删过了」**（做这次清理的会话正是这么被自己骗过一次：批量
+        # 删除打了 8 个 ✅，而分支一条没少）。
+        #
+        # 和 `test_actions_write_permission.py` 里 `orchestrate.yml` 那次同一个
+        # 处置：**不放宽成「谁要谁拿」，是把新理由显式登记进来**，两个方向照旧
+        # 都钉——给了就必须落在这三类里的某一类。
+        deletes_refs = bool(re.search(r"-X\s+DELETE[^\n]*git/refs", body))
+        if not commits and not releases and not deletes_refs:
             offenders.append(path.name)
     assert not offenders, (
         f"这几条要了 `contents: write`，却既不 `git commit` 也不发 Release："
