@@ -4301,3 +4301,95 @@ def test_那一千字的闸是四条线共用的一处出处():
     reel_called = {c.func.id for c in ast.walk(split_fn)
                    if isinstance(c, ast.Call) and isinstance(c.func, ast.Name)}
     assert "split_xhs" in reel_called, "split_copy 又自己写了一套切法"
+
+
+#: 「合成器自己报的切词」里确认过、而且**读音真的变了**的那几个串。
+#:
+#: 这张表**只收读音变了的**，不收「重音偏了」那一档——`tennis-video-craft`
+#: 那节写得很清楚：人名内部切错（`阿尔卡拉 ｜ 斯`）、单字铺开（`抢 ｜ 七`）
+#: 音都没变，为它们硬改译名/句式是拿误报换噪音，而**一条天天误报的闸会被人
+#: 写豁免压掉，把它唯一想拦的那一类一起关掉**。
+#:
+#: ⚠️ 判据是**切词器自己报的边界**（`voice_NN.words.json`），不是我读着像。
+#: 两条都是 2026-09-16 在 promotional-fees 第一趟成片的 words.json 里量到的。
+_FAKE_WORDS = {
+    # 「规则书写着」→ 切成「规则 ｜ 书写 ｜ 着」，而「书写」是个真词，念
+    # shūxiě，整句意思变成「规则在书写」。修法：补一个「里」撑开（「规则书里
+    # 写着」）。这是 tennis-video-craft 假词表的第一条，写在那儿一年多了。
+    "规则书写": "「书写」念 shūxiě，意思全变——写「规则书里写着」",
+    # 「直接或者间接给的钱」→ 切成「间 ｜ 接给」：「给」被黏进来，「间」落单。
+    # 「间」单独站着念 jiān，而「间接」是 jiàn。⚠️ 加逗号没用——逗号撑得开两个
+    # 该分的词，合不拢一个该合的词（词边界事件里本来就没有标点）。把「给」挪走。
+    "间接给": "「间」落单念 jiān（「间接」是 jiàn）——把「给」挪走",
+}
+
+#: 上面那两个串在**已经发出去的**片子里各有一处。已发的不重渲（消息收不回来），
+#: 所以挂在这儿。**只许减不许加**，底下有自检。
+_FAKE_WORDS_LEGACY = {
+    # 挑战赛那条第 ④ 屏：「规则书写着挑战赛必须给正赛球员提供免费房间」。
+    ("challenger-climb", "floor", "规则书写"),
+    # 强制大师赛那条的**封面**旁白：「规则书写着自动生效、不可申诉」。
+    ("mandatory-1000", "__cover__", "规则书写"),
+}
+
+
+def _spoken_texts():
+    """所有**会过 TTS** 的文本，按 (slug, 段) 报出来。
+
+    ⚠️ 两个面，漏一个这条闸就只盖住一半：段旁白在 `_SCRIPTS` 里，**封面旁白在
+    `_OPENINGS[slug]["narration"]`**——`mandatory-1000` 那处正是落在封面上的。
+    ⚠️ 而 `_CAPTIONS`（小红书正文、微信标题）**不在这儿**：那些字没人念，
+    切词管不着它们。
+    """
+    from tennislive.video import explainer as E  # noqa: PLC0415
+
+    for slug, beats in E._SCRIPTS.items():
+        for beat in beats:
+            narration = beat[3] if len(beat) > 3 else ""
+            if isinstance(narration, str) and narration:
+                yield slug, beat[0], narration
+    for slug, opening in E._OPENINGS.items():
+        narration = opening.get("narration", "")
+        if isinstance(narration, str) and narration:
+            yield slug, "__cover__", narration
+
+
+def test_旁白里不许出现读音会变的假词():
+    """切词器把这几个串念错，而**渲出来一个像素都看不出来**——只有耳朵和
+    `words.json` 知道。
+
+    来路：2026-09-16 `promotional-fees` 第一趟成片，读它自己的 `words.json`
+    读出来两处（`规则 ｜ 书写 ｜ 着`、`间 ｜ 接给`）。前一条在
+    `.claude/skills/tennis-video-craft/SKILL.md` 的假词表里**是第一行**，
+    写在那儿一年多，而这条线上没有任何东西拦得住它再写一遍——于是它在
+    `challenger-climb` 和 `mandatory-1000` 各躺了一处，两条都推过微信。
+
+    **这条闸的射程只有「已知的、量过的」那几个串**，天生补不全。补不全的那部分
+    靠的还是渲完读一遍 `voice_NN.words.json`（`tennis-video-craft` 那节的
+    「闭环是重渲之后再读一遍」）。
+    """
+    hits = [
+        (slug, seg, pat, why)
+        for slug, seg, text in _spoken_texts()
+        for pat, why in _FAKE_WORDS.items()
+        if pat in text and (slug, seg, pat) not in _FAKE_WORDS_LEGACY
+    ]
+    assert not hits, "旁白里有会被念错的假词：\n" + "\n".join(
+        f"  {slug} / {seg}：「{pat}」——{why}" for slug, seg, pat, why in hits)
+
+
+def test_假词豁免表自证它豁免的还在违规():
+    """⚠️ **豁免表要自证它豁免的是真的还在违规。**
+
+    一个已经改掉、却还留在表里的条目，是一盏永远亮着的绿灯：它让这条闸看起来
+    盖住了一处，其实那处早就没了，而真出事的时候它一声不吭。这个仓库为
+    「恒真的判据」栽过不止一次。
+    """
+    spoken = {(slug, seg): text for slug, seg, text in _spoken_texts()}
+    stale = [
+        (slug, seg, pat) for slug, seg, pat in _FAKE_WORDS_LEGACY
+        if pat not in spoken.get((slug, seg), "")
+    ]
+    assert not stale, (
+        f"{stale} 已经不违规了（或者 slug/段名写错了），从 _FAKE_WORDS_LEGACY "
+        "里删掉——这张表只许减不许加")
