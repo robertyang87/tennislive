@@ -44,4 +44,19 @@ ITF 官方频道（`UCsyvlpbK0BTEc3jec6nhPyQ`）就是戴维斯杯的影像档�
 
 ## 封面
 
-Wikimedia Commons《2024 11 24 Copa Davis Tenis.jpg》（Junta de Andalucía，CC BY-SA 2.0）：2024-11-24 马拉加决赛颁奖台，银碗在前景、意大利队在后、拱门大字自证。`fit: width`（同 comeback），钩子落在下方模糊垫层上，不压奖杯。Commons 原图接口 429，按它自己的提示取缩略图档 3840×2560（0.28 倍缩小）。本地 `render_cover_local.py` 打开看过。
+账号所有者点的是「上届戴维斯杯捧杯的图片」——上届是 **2025 博洛尼亚**（意大利三连冠），不是 2024 马拉加。用 FITP/SuperTennis 官方实拍 `assets/reel/davis-cup-italy-2025-trophy-bologna.jpg`（2000×1333，图注自证：2025-11-23 博洛尼亚决赛颁奖，意大利队举银碗），`fit: width` + `focus_y: 0.2`，钩子落在下方垫层上不压奖杯；出处记在 `assets/reel/credits.json`。第一版用的 Commons 2024 马拉加那张已经删掉。本地 `render_cover_local.py` 打开看过。
+
+## 渲了四趟的账（runner 上才够得着的三道红）
+
+| 趟 | run | 红在哪 | 改了什么 |
+|---|---|---|---|
+| 1 | 35072955589 | `check_sources_match` 报 pathe33 / ruud / kjaer「尺寸对不上」——横幅存档源原来只在**竖版**时免检 | 横幅存档源全部 `fit: contain` 时也免检；ruud / kjaer 走 `conform` 统一到 1920×1080。判据 `test_横幅的存档源整幅铺时不受尺寸闸管` |
+| 2 | 35074495144 | ffmpeg `crop=1190:1080` 对 640×480 的 pathe33 非法——contain 分支套的是主源的几何 | contain 分支按本源 `native_w/native_h` 算。判据 `test_横幅存档源contain时几何按它自己的尺寸算`（真切一段 640×480） |
+| 3 | 35076316702 | `check_reel_landed`：`封面之后还有 1 秒是数字静音：[209]` | 从 artifact 里的成片按 0.25s 量 RMS：第 26 段（kjaer 104.0–110.0）尾巴 108.6 起是源片剪辑点前的数字静音，窗口前挪到 103.3–109.0 |
+| 4 | 35078793069 | —— | 见下 |
+
+三道全是 `--dry-run` 和全量测试**够不着**的：前两道要真解码源片才知道尺寸，第三道要真渲出成片才量得到静音。第三趟的 18 帧抽帧墙逐格看过：封面、百代那屏的黑边＋年份角标、金字塔、中国队赛点记分条、庆祝、鲁德/谢尔、末屏都对。
+
+⚠️ **第三趟红着的 artifact 有 3.2 GB**——账号所有者点出来的。上传带 `always()`（前面红了成片也要传上来），而删源片的清理步骤隐式 `success()`，前面一红它就没跑，于是九条源片 2.45 GB ＋ conform 中间物 0.9 GB 全进了 artifact。上传那一步现在自己排除 `source*` 和 `frames/**`（`interview-clip.yml` 同形，一并排除 `source.*`），判据 `test_失败时的artifact不许带源片`。
+
+两条顺手记下、这次没做的：`probe_dry_run` 该从 `probe.json` 的尺寸把第 1、2 趟那两道在本地就报出来；`conform_sources` 该只重编码用到的窗口（kjaer 整条 conform 花了 327s，片子里只用了 6s）。
