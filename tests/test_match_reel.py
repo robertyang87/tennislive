@@ -3781,6 +3781,64 @@ def test_渲完的成片不许因为清理那一步失败而整趟丢掉():
         "上传排在清理之前——那会把 392 MB 的源片一起传上去")
 
 
+@pytest.mark.parametrize("workflow,job,outdir,must_drop,must_keep", [
+    (WORKFLOW, "reel", "${{ steps.paths.outputs.outdir }}",
+     ["source_china.mp4", "source_ruud_conform.mp4", "source.f137.mp4.part",
+      "source_av.mp4", "source.mp4", "source.f251.webm.ytdl", "frames/f_0001.png"],
+     ["davis-cup-china-first-world-group-1.mp4", "render.json", "poster.jpg",
+      "voice_03.mp3", "probe.json", "thumbs_format.jpg", "narration.json"]),
+    (Path(".github/workflows/interview-clip.yml"), "render",
+     "output/interviews/${{ github.event.inputs.slug }}/",
+     ["source.mp4", "source.f137.mp4.part", "source.webm"],
+     ["render.json", "storyboard.jpg", "poster.jpg", "subs.json", "copy.html"]),
+])
+def test_失败时的artifact不许带源片(workflow, job, outdir, must_drop, must_keep):
+    """2026-09-16 戴维斯杯那条 render 红在质检上，artifact **3.2 GB**。
+
+    上一条判据要求上传带 `always()`——前面红了成片也要传上来。**它的另一面**：
+    删源片的那一步（「丢掉不进仓库的中间物」／采访线的「提交成片」）自己不带
+    状态函数，隐式 `success()`，所以前面一红它就没跑，artifact 装的是出片目录
+    的全部——九条源片 2.45 GB ＋ conform 中间物 0.9 GB，都是能重下／重算的。
+
+    所以上传那一步要**自己**排除源片，用和清理那一步同一个 glob（`source*`：
+    conform 叫 `source_<键>_conform.mp4`、半成品叫 `source.fNNN.mp4.part`，
+    「逐个列名字连着栽了四次」那条老账）。判据两头都钉：
+
+    - 源片这一族**每一个真实的落盘名**都要被某条 `!` 模式盖住（按 glob 语义验，
+      不验字面）
+    - 排查红了的 run 要看的东西（成片、render.json、poster、voice、缩略图墙）
+      **一个都不许被顺手排除掉**——那 1 秒数字静音正是从 artifact 里的成片量出来的
+    - 第一行仍然是出片目录本身：artifact 的根不许变（下载下来的判据脚本
+      `check_reel_landed` 按顶层文件名找东西）
+    """
+    import yaml  # noqa: PLC0415
+
+    spec = yaml.safe_load(workflow.read_text(encoding="utf-8"))
+    steps = [s for s in spec["jobs"][job]["steps"]
+             if "actions/upload-artifact" in str(s.get("uses", ""))]
+    assert len(steps) == 1, f"{workflow} 里上传 artifact 的步骤有 {len(steps)} 个"
+    step = steps[0]
+    assert "always()" in str(step.get("if", ""))
+    lines = [ln.strip() for ln in str(step["with"]["path"]).splitlines() if ln.strip()]
+    assert lines[0].rstrip("/") == outdir.rstrip("/"), (
+        f"第一行必须是出片目录本身，artifact 的根不许变：{lines[0]!r}")
+    root = outdir.rstrip("/") + "/"
+    excludes = []
+    for ln in lines[1:]:
+        assert ln.startswith("!" + root), f"排除模式要钉在出片目录下：{ln!r}"
+        excludes.append(ln[len("!" + root):])
+    assert excludes, f"{workflow} 的上传没有排除任何东西——源片会跟着上去"
+
+    def dropped(name: str) -> bool:
+        return any(fnmatch(name, pat) or fnmatch(name, pat.rstrip("/**") + "/*")
+                   for pat in excludes)
+
+    for name in must_drop:
+        assert dropped(name), f"{name} 没被 {excludes} 里任何一条排除——它会进 artifact"
+    for name in must_keep:
+        assert not dropped(name), f"{name} 被 {excludes} 误伤了——排查红了的 run 要看它"
+
+
 def test_现场声不许在最后一句话结束时断掉(tmp_path):
     """**九条已发的成片里七条，结尾 2~4.5 秒完全没有声音。**
 

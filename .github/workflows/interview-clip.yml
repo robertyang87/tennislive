@@ -1068,8 +1068,15 @@ jobs:
       # Release 后 `rm` 掉（见「成片发到 Release」那一步），要看成片去
       # `render.json` 的 `video_url`。别把这个读成「render 没出片」——
       # 真没出片的话「验成片」那一步早就红了。
+      # ⚠️ 同一个形状的另一半（2026-09-16，match-reel 那条 3.2 GB 的 artifact
+      # 抖出来的）：`always()` 让这一步在前面红了的时候也跑，**而「提交成片」
+      # 那一步里的 `rm -f "$D"/source.*` 此时没跑过**，于是整条源片跟着上传。
+      # 按同一个 glob 排除掉；storyboard、字幕、render.json 照旧传——排查要的
+      # 是这些。判据 `test_失败时的artifact不许带源片`。
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: ${{ github.event.inputs.slug }}
-          path: output/interviews/${{ github.event.inputs.slug }}/
+          path: |
+            output/interviews/${{ github.event.inputs.slug }}/
+            !output/interviews/${{ github.event.inputs.slug }}/source.*
