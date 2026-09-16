@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>🎾9.17 网球有故事｜总决赛为什么总在搬家</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>年终总决赛去过 15 座城市——温网在同一块地上打了一百多年，而它一次都没留住过。
+根子不在网球：WTA 招标的第一条标准就是「有没有能力出资」，而撑住那笔奖金的，从来不是赛事自己挣的。
+
+1️⃣ 这一天：第七座城市
+· 9 月 16 日官宣
+· 2027 起落户夏洛特
+· 2019 年以来第七座城市
+
+2️⃣ 第一层：它从来就没有自己的场地
+· 1972 年至今 15 座城市
+· 举办权每隔几年招一次标
+· 温网法网美网澳网都不搬
+
+3️⃣ 第二层：标书上第一条写的就是钱
+· 第一条标准：能不能出资
+· 第二条：撑不撑得起涨奖金
+· 700 万到 1525 万的跳法
+
+4️⃣ 第三层：那笔钱不是网球挣来的
+· 深圳那份由地产商中标
+· 利雅得由沙特主权基金冠名
+· 钱来自赛事之外
+
+5️⃣ 后果：断了之后，只能临时找
+· 2022 年开赛前八周才定
+· 坎昆 4300 座，史上最小
+· 开赛前几天才完工
+
+6️⃣ 这一次：第一次，是自己搬进去
+· 印第安维尔斯只签一年
+· 夏洛特最少三年
+· WTA 总部一起搬过去
+
+7️⃣ 那深圳呢：同一座场馆，下周又是决赛夜
+· 十年合同只办成一届
+· 2027 和 2028 归夏洛特
+· 比利·简·金杯下周开打
+
+💬 留个答案
+深圳还等得到那座奖杯吗？
+
+这里是 @网球时差｜网球有故事。
+
+#网球 #网球时差 #年终总决赛 #深圳 #网球冷知识</textarea>
+    </section>
+    
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
