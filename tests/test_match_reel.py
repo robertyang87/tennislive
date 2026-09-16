@@ -16370,3 +16370,110 @@ def test_证据卡不许压在字幕上():
     assert not fresh, (
         f"这几条 spec 的证据卡会压字幕：{fresh}。"
         "把图裁矮（顺带它会被放得更大、更读得清），别改 `subtitle_top`")
+
+
+def test_全出血的字幕带要垫一层柔性渐变(tmp_path, monkeypatch):
+    """2026-09-16 戴维斯杯那条整体视觉 review：68px 黑体＋3px 描边、底下什么都
+    没有，压在忙背景上就糊（146.9~155s 那句直接压在「广州市南沙区文化广电旅游体育局」
+    的白绿横幅上）。全出血的字幕带现在垫一层**渐变**，不是黑条。判据钉五头：
+
+    ① PNG 本身：从字幕上锚往上 SUB_SCRIM_LEAD_PX 起 alpha 0，单调爬到
+      SUB_SCRIM_ALPHA 再铺到底；**没有硬边**（相邻两行 alpha 差 ≤ 4/255）、
+      坡至少 200px；字幕锚被 `subtitle_top` 抬高时垫跟着抬
+    ② 没顶栏那条路：垫是烧字幕**之前**的一条链（字幕压在垫上面），只盖比赛区间
+      （`enable=`），一条链仍然只有一个 overlay，`[out]` 还在
+    ③ 有顶栏那条路：全出血挂在 `[match_flat]` 链上（封面/片尾不带）；**带式跳过**
+      ——那儿的字幕本来就在实色底带里
+    ④ render 真的接上了：造 PNG、按 LAYOUT 分支、`scrim_input=` 传进两条路
+    ⑤ 真跑一次 ffmpeg：纯白画面，比赛区间的底部真的暗了、顶部没动、
+      封面和片尾区间一个像素都没动——只查滤镜图字符串防不住「写了没接上」
+    """
+    reel = _reel()
+    from PIL import Image  # noqa: PLC0415
+
+    monkeypatch.setattr(reel, "LAYOUT", "full")
+    anchor = reel._REEL_MARGIN_V
+    png, top = reel.subtitle_scrim(tmp_path / "_subs_scrim.png", anchor)
+    assert top == anchor - reel.SUB_SCRIM_LEAD_PX
+    im = Image.open(png)
+    assert im.size == (reel.VIDEO_W, reel.VIDEO_H - top)
+    a = [im.getpixel((540, y))[3] for y in range(im.height)]
+    assert a[0] == 0, "坡顶不透明就是一条看得见的横线"
+    assert a[-1] == round(255 * reel.SUB_SCRIM_ALPHA), a[-1]
+    assert all(b >= c for b, c in zip(a[1:], a)), "alpha 要单调，不许中途回亮"
+    assert len([v for v in a if 0 < v < a[-1]]) >= 200, "坡太短就是硬边"
+    assert max(b - c for b, c in zip(a[1:], a)) <= 4, "相邻两行跳得太多，是硬边不是渐变"
+    _, top2 = reel.subtitle_scrim(tmp_path / "s2.png", anchor - 100)
+    assert top2 == top - 100, "字幕锚抬高了，垫要跟着抬"
+
+    # ② 没顶栏那条路
+    g = reel.plain_filtergraph(Path("s.ass"), 0.4, 1.0, 2, scrim_input=3, scrim_y=top)
+    assert f"[3:v]overlay=0:{top}:enable='between(t,0.400,1.000)'" in g, g
+    assert g.index("[3:v]overlay=") < g.index("subtitles="), "垫要在字幕底下，不是盖在字上"
+    assert "[2:v]overlay=" in g and g.endswith("[out]")
+    for chain in g.split(";"):
+        assert chain.count("overlay=") <= 1, f"一条链里两个 overlay：{chain}"
+    g0 = reel.plain_filtergraph(Path("s.ass"), 0.4, 1.0, None, scrim_input=2, scrim_y=top)
+    assert "[2:v]overlay=" in g0 and "subtitles=" in g0 and g0.endswith("[out]"), g0
+
+    # ③ 有顶栏那条路：全出血挂上，带式跳过
+    bar = reel.topbar_filtergraph(0.4, 0.6, Path("t.ass"), Path("s.ass"),
+                                  foot_input=None, wm_input=2, scrim_input=3, scrim_y=top)
+    assert f"[3:v]overlay=0:{top}" in bar and "match_scrim" in bar, bar
+    for chain in bar.split(";"):
+        assert chain.count("overlay=") <= 1, f"一条链里两个 overlay：{chain}"
+    monkeypatch.setattr(reel, "LAYOUT", "band")
+    band = reel.topbar_filtergraph(0.4, 0.6, Path("t.ass"), Path("s.ass"),
+                                   foot_input=2, wm_input=None, scrim_input=3, scrim_y=top)
+    assert "[3:v]overlay=" not in band and "match_scrim" not in band, (
+        f"带式的字幕在实色底带里，不该再垫：{band}")
+    monkeypatch.setattr(reel, "LAYOUT", "full")
+
+    # ④ render 接上了
+    body = inspect.getsource(reel.render)
+    assert "subtitle_scrim(" in body and "scrim_input=scrim_input" in body, (
+        "render 没造垫、或者没把它传进滤镜图——写了不等于接上了")
+    assert 'if LAYOUT != "band":' in body.split("subtitle_scrim(")[0].rsplit("\n", 6)[0] or \
+        'LAYOUT != "band"' in body, "垫只给全出血，带式要跳过"
+
+    # ⑤ 真跑一次：纯白画面 3s，封面 0.5s、比赛到 2.5s、之后是片尾
+    ass = tmp_path / "empty.ass"
+    ass.write_text(
+        "[Script Info]\nScriptType: v4.00+\nPlayResX: 1080\nPlayResY: 1440\n\n"
+        "[V4+ Styles]\n"
+        "Format: Name, Fontname, Fontsize, PrimaryColour, OutlineColour, "
+        "BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, "
+        "Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, "
+        "Encoding\n"
+        "Style: TL,Noto Sans CJK SC,68,&H00FFFFFF,&H000000FF,&H00000000,&H00000000,"
+        "1,0,0,0,100,100,0,0,1,3,0,8,150,150,1284,1\n\n"
+        "[Events]\nFormat: Layer, Start, End, Style, Name, MarginL, MarginR, "
+        "MarginV, Effect, Text\n", encoding="utf-8")
+
+    def _ff(*args):
+        subprocess.run(["ffmpeg", "-y", "-hide_banner", "-loglevel", "error", *args],
+                       check=True)
+
+    white = tmp_path / "white.mp4"
+    _ff("-f", "lavfi", "-i", "color=c=white:s=1080x1440:r=25:d=3",
+        "-c:v", "libx264", "-preset", "ultrafast", "-pix_fmt", "yuv420p", str(white))
+    out = tmp_path / "out.mp4"
+    graph = reel.plain_filtergraph(ass, 0.5, 2.5, None, scrim_input=1, scrim_y=top)
+    _ff("-i", str(white), "-i", str(png), "-filter_complex", graph, "-map", "[out]",
+        "-c:v", "libx264", "-preset", "ultrafast", "-pix_fmt", "yuv420p", str(out))
+
+    def lum(t: float, y0: int, y1: int) -> float:
+        frame = tmp_path / f"f_{t:.1f}.png"
+        _ff("-ss", f"{t:.2f}", "-i", str(out), "-frames:v", "1", str(frame))
+        fr = Image.open(frame).convert("L")
+        box = fr.crop((0, y0, reel.VIDEO_W, y1))
+        return sum(box.getdata()) / (box.width * box.height)
+
+    assert lum(0.2, 1400, 1440) > 240, "封面区间不许被垫"
+    assert lum(2.8, 1400, 1440) > 240, "片尾区间不许被垫"
+    bottom = lum(1.5, 1400, 1440)
+    assert bottom < 255 * (1 - reel.SUB_SCRIM_ALPHA) + 25, (
+        f"比赛区间的底部没暗下来：{bottom:.1f}")
+    assert lum(1.5, 200, 400) > 240, "垫只管字幕那一条，画面上半不许动"
+    mid = lum(1.5, top + 40, top + 80)
+    assert 200 < mid < 250, f"坡顶那一截应该只是略暗（渐变），量到 {mid:.1f}"
