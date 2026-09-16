@@ -21,15 +21,9 @@
     "用在哪": "第 ④ 屏「第三层」。走信箱式（宽高比 1.90 ≥ 1.2，正片自动 letterbox）——地上那个城市名是这一屏的全部证据，裁掉就没了。",
     "⚠️ 入库前裁掉了上沿 560px，而这个数是量出来的": "第一版原图直接入库，渲出来 RIYADH 被序号药丸「④ 第三层」压掉了前两个字母，只剩「YADH」——**而它正是这一屏唯一的证据**。信箱式的纵向位置写死在代码里（`background-position:center 34%`），改它会波及全部存量，所以改图不改代码。账号: 字母在原图的第 1975~2237 行（扫亮度剖面量的，不是估的）；药丸顶在卡上第 ~795 行（扫绿色药丸量的）。裁掉上沿 T 之后，RIYADH 底边落在 `(1440-h)*0.34 + h*(2237-T)/(2666-T)`，其中 `h = 1080*(2666-T)/4000`。T=560 → 底边 749，离药丸还有 46px；**而 560 这一刀正好切在 LED 条（原图 218~545 行）下方**，不会留下半截字幕条。渲完重新抽帧确认过整个词都在。"
   },
-  "indian-wells-stadium1.jpg": {
-    "credit": "WTA 官方图 · 印第安维尔斯网球花园中心球场（Stadium 1）",
-    "source_url": "https://photoresources.wtatennis.com/photo-resources/2026/06/26/0b72d942-15e2-4104-8d49-45ec19bbee20/808_Finals-Indian-Wells-Hero-1-.jpg?width=4000",
-    "article": "https://www.wtatennis.com/tournaments/wta-finals",
-    "what": "印第安维尔斯网球花园 Stadium 1 满场，从看台高处沿长轴俯拍",
-    "license": "unverified",
-    "四要素": "地点=Indian Wells Tennis Garden Stadium 1（WTA 自己把它挂成 2026 年终总决赛赛事页的头图，文件名 808_Finals-Indian-Wells-Hero）；事件=比赛进行中、满场",
-    "⚠️ 年份和场次": "**这不是年终总决赛的照片**——2026 年那一届 11 月才打。它是 WTA 用来代表这座球场的主视觉，拍的多半是三月的 BNP 帕里巴公开赛。所以旁白和画面文字**只许把它说成「这座球场」**，一个字都不许说成「某一年的某一场」。CLAUDE.md「官方图库把它挂在这一站名下，不等于拍的是这个场地/这一年」那条。",
-    "gates": "① 精准 ✅ 只当场馆图用 ② 场景图，不主张某一场 ③ 冲击力 ✅ 满场，和坎昆那 4300 座正好构成对照 ④ 清晰度 4000×1638",
-    "用在哪": "2026 印第安维尔斯那一屏。4000×1638 宽高比 2.44，正片自动走信箱式。"
+  "_弃用": {
+    "indian-wells-stadium1.jpg": "WTA 赛事页的 4000×1638 头图，第一版用在「这一次」那一屏。2026-09-16 账号所有者「多用图片少用文字」那一轮换成了仓库已有的 assets/venues/indianwells-centre-court.jpg——**不是因为它更清晰**（那张只有 2400×983），是因为它的场地前场刷着 INDIAN WELLS，和利雅得那张的 RIYADH、瓜达拉哈拉那张的 GUADALAJARA 连成一条母题。这条片子讲的就是那个名字每隔两三年换一次。",
+    "Swiatek-trophy-Jimmie.jpg": "https://photoresources.wtatennis.com/photo-resources/2023/11/07/634811e3-68c6-4609-89f2-e3755baf6fc1/Swiatek-trophy-Jimmie.jpg —— 2023 坎昆的官方冠军图，探到了也下下来看了，**弃用**：是影棚肖像（木门前抱杯的半身），画面里没有任何坎昆的信息，讲不了「临时球场搭在酒店场地上」那一屏。坎昆那一屏因此留着示意图——Commons 搜 `Cancun tennis stadium 2023 WTA Finals Estadio Paradisus`（namespace 6）**零命中**，这条路走过了，别再走。",
+    "2019 年深圳的三张": "挂在 WTA 奖金稿上，文件名是 mVEivgZT.jpg 这种无意义串（没有四要素自证），打开看是斯维托丽娜在纯黑背景前的特写，分不出是深圳 2019 还是新加坡 2018。"
   }
 }
