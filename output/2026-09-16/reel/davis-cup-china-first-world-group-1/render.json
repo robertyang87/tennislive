@@ -1,0 +1,85 @@
+{
+  "scoreboard_qc_sha256": null,
+  "cover_seconds": 4.426,
+  "cover_narrated": true,
+  "outro_seconds": 3.827,
+  "layout": "full",
+  "segments_seconds": 256.5,
+  "topbar": null,
+  "film_seconds": 264.8,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "0": 5.664,
+    "1": 5.232,
+    "2": 5.856,
+    "3": 11.208,
+    "4": 7.704,
+    "5": 6.912,
+    "6": 6.936,
+    "7": 5.496,
+    "8": 10.368,
+    "9": 6.168,
+    "10": 7.728,
+    "11": 3.816,
+    "12": 8.28,
+    "13": 5.112,
+    "14": 10.632,
+    "15": 5.4,
+    "16": 4.608,
+    "17": 2.832,
+    "18": 6.888,
+    "19": 4.608,
+    "20": 7.32,
+    "21": 7.392,
+    "22": 7.272,
+    "23": 6.024,
+    "24": 9.744,
+    "25": 5.232,
+    "26": 7.584,
+    "27": 5.472,
+    "28": 9.888,
+    "29": 10.104,
+    "30": 7.344
+  },
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "davis-cup-china-first-world-group-1",
+    "received_at": "2026-09-16T09:19:58Z",
+    "artifact_ready_at": "2026-09-16T09:40:36Z",
+    "elapsed_seconds": 1238.554,
+    "budget_seconds": 600,
+    "met": false,
+    "film_sha256": "4280449354990ebd17b143aa90c4749e673ee7c5a87473d70047029857ef64e4",
+    "spec_sha256": "5396857550afc86343e6b0cbf9ef093ea3b7f3e21f30963516743717bf06a037",
+    "run_id": "35078793069",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-09-16T09:22:21Z",
+        "run_id": "35078793069"
+      }
+    ],
+    "render_seconds": 1095.554,
+    "pre_render_seconds": 143.0
+  },
+  "film_sha256": "4280449354990ebd17b143aa90c4749e673ee7c5a87473d70047029857ef64e4",
+  "film_bytes": 214101047,
+  "qc_attestation_sha256": "eaca3a9eddda9575fa5139ce1f66479fab88e3326162c8835bac20c630a326c0",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-09-16T09:22:21Z",
+      "run_id": "35078793069"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-16T09:40:37Z",
+      "run_id": "35078793069"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-davis-cup-china-first-world-group-1/davis-cup-china-first-world-group-1.mp4",
+  "video_bytes": 214101047
+}
