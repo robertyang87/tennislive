@@ -994,3 +994,65 @@ def test_信箱式封面的钩子让到照片下边缘之外不压主体(
     assert tops_board == ["790"], (
         f"有比分板的封面被挪了：{tops_board}。往下让会把输家那一行推出画布，"
         "而推出画布不报错——只有渲出来才看得见")
+
+
+def test_钩子重点词可选品牌绿_一屏只留一处(tmp_path):
+    """⭐ 2026-09-16 戴维斯杯那条整体视觉 review：钩子两行 94px 纯白、没有层级，
+    「第一次」三个字是卖点却和别的字一个颜色。版式坐标冻结的是字号/行数/位置
+    （`test_封面版式定版冻结…`），**颜色没有被冻结**——`cover.hook_accent` 是可选
+    能力，不写就逐字节和原来一样。判据钉四头：
+
+    ① 写了：那一截包成 `.accent`，solo 和 VS 两套 CSS 都给它品牌绿；其余字照旧
+    ② 不写：HTML 里一个 `accent` 都没有（老封面一个像素不变）
+    ③ 出现 0 次 / 2 次都当场报——0 次是「以为高亮了其实什么都没变」，2 次是两处都亮
+    ④ 真渲一张海报：钩子那一带（y 790~1030）出现品牌绿的墨，不写就没有
+    """
+    import html as _html  # noqa: PLC0415
+    from PIL import Image  # noqa: PLC0415
+
+    vp = versus_poster
+    cover = {"eyebrow": "网球有故事", "topic": "台头那一行", "subject": "戴维斯杯",
+             "hook": "银碗传了一百二十六年\n中国队第一次升上来",
+             "portrait": {"image": "assets/reel/davis-cup-italy-2025-trophy-bologna.jpg"}}
+    # ② 不写：一个 accent 都没有
+    body, css = vp._solo_body(cover)
+    assert "accent" not in body, "没写 hook_accent 也冒出了 span——老封面会跟着变"
+    assert ".storytitle .accent{color:#c6f65a}" in css, "CSS 规则要一直在（只是没人用）"
+    # ① 写了
+    body, _ = vp._solo_body({**cover, "hook_accent": "第一次"})
+    assert '<div>中国队<span class="accent">第一次</span>升上来</div>' in body, body
+    assert "<div>银碗传了一百二十六年</div>" in body, "没认领的那一行不许动"
+    # 转义不能丢：重点词前后的字照旧过 html.escape
+    body, _ = vp._solo_body({**cover, "hook": "A<B\n他第一次赢", "hook_accent": "第一次"})
+    assert f"<div>{_html.escape('A<B')}</div>" in body
+    # ③ 0 次 / 2 次
+    for bad in ("第二次", "一"):
+        with pytest.raises(SystemExit, match="正好一次"):
+            vp.hook_html(["银碗传了一百二十六年", "中国队第一次升上来"], bad)
+    # VS 那一套也认（赛场之上的封面）
+    src = Path("tools/versus_poster.py").read_text("utf-8")
+    assert ".hook .accent{{color:#c6f65a}}" in src, "VS 模板的 CSS 没给 accent 上色"
+    assert src.count("hook_html(") >= 3, "solo 和 VS 两处钩子都要走 hook_html"
+
+    # ④ 真渲一张，量钩子那一带有没有品牌绿
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import build_match_reel as reel  # noqa: PLC0415
+
+    def green_ink(spec: dict) -> int:
+        poster = tmp_path / f"p{len(list(tmp_path.iterdir()))}.jpg"
+        try:
+            reel.render_poster(spec, poster, "solo")
+        except Exception as exc:                      # noqa: BLE001
+            pytest.skip(f"渲不出封面（多半是没装 Chromium）：{exc}")
+        im = Image.open(poster).convert("RGB")
+        band = im.crop((0, vp.STORYCOPY_TOP, 1080, vp.STORYCOPY_TOP + 240))
+        return sum(1 for r, g, b in band.getdata()
+                   if g > 200 and r > 150 and b < 140 and g - b > 80)
+
+    hero = tmp_path / "hero.jpg"
+    Image.new("RGB", (1080, 1440), (14, 34, 24)).save(hero)
+    base = {**cover, "portrait": {"image": str(hero)}}
+    plain = green_ink(base)
+    accented = green_ink({**base, "hook_accent": "第一次"})
+    assert plain < 50, f"没写 hook_accent 钩子带里就有品牌绿墨 {plain} 像素"
+    assert accented > 600, f"写了 hook_accent 钩子带里只有 {accented} 像素品牌绿——没渲上去"
