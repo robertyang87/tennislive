@@ -5,19 +5,19 @@
   "cover": {
     "matchup": [
       {
-        "name": "郑钦文",
-        "name_en": "qinwen zheng",
-        "country": "CHN",
-        "rank": 121
-      },
-      {
         "name": "凯斯",
         "name_en": "madison keys",
         "country": "USA",
         "rank": 24
+      },
+      {
+        "name": "郑钦文",
+        "name_en": "qinwen zheng",
+        "country": "CHN",
+        "rank": 121
       }
     ],
-    "winner": "凯斯",
+    "winner": "郑钦文",
     "result": "1-6 7-6(3) 7-5",
     "portrait": {
       "image": "assets/reel/keys-zheng-cover.jpg",
@@ -39,8 +39,8 @@
     "source_id": "8QdDaEc5",
     "flashscore_id": "8QdDaEc5",
     "participants": [
-      "郑钦文",
-      "凯斯"
+      "凯斯",
+      "郑钦文"
     ],
     "set_scores_home_away": [
       [
@@ -56,8 +56,8 @@
         7
       ]
     ],
-    "winner": "凯斯",
-    "loser": "郑钦文",
+    "winner": "郑钦文",
+    "loser": "凯斯",
     "winner_result": "1-6 7-6(3) 7-5",
     "loser_result": "6-1 6-7(3) 5-7",
     "tiebreaks_home_away": [
@@ -84,7 +84,7 @@
       "pts_won": 97,
       "pts_total": 195,
       "first_total": 107,
-      "headshot": "assets/players/wta-328120-zheng-qinwen.png"
+      "headshot": "assets/players/headshots/wta-316959.jpg"
     },
     "b": {
       "aces": 2,
@@ -100,7 +100,7 @@
       "pts_won": 98,
       "pts_total": 195,
       "first_total": 90,
-      "headshot": "assets/players/headshots/wta-316959.jpg"
+      "headshot": "assets/players/wta-328120-zheng-qinwen.png"
     }
   },
   "_hit_data": [
@@ -316,7 +316,8 @@
     "背景聚合：H2H/近况/排名/中文热点已备齐（年龄/纪录/金句要 human_context 调研补，见 spec 合同）",
     "推送文案已通过事实校验；默认开启 QC 后自动推送",
     "窗口起草 8 段",
-    "封面官方实拍：已存 assets/reel/keys-zheng-cover.jpg（4700×3174，6.7 MB），文章 /news/4572496/zheng-saves-match-point-rallies-from-5-0-down-in-third-set-to-stun-keys-at-us-open；✅ 文件名自证（含球员姓氏）"
+    "封面官方实拍：已存 assets/reel/keys-zheng-cover.jpg（4700×3174，6.7 MB），文章 /news/4572496/zheng-saves-match-point-rallies-from-5-0-down-in-third-set-to-stun-keys-at-us-open；✅ 文件名自证（含球员姓氏）",
+    "⚠️ 2026-09-16 人工订正：这份草稿把赢家记反了（原记「凯斯 1-6 7-6(3) 7-5 郑钦文」）。根因是生成它时 matchup_order 读 df_hh_1 用的是整份 feed 的 dict，取到的是最早那次交手的 home/away（代码里那条 Sabalenka–Noskova 注释说的正是这个形状），于是 matchup 排成了「郑钦文 vs 凯斯」，而逐盘比分来自 df_mh_1 的 home/away（home=凯斯）——两份 feed 错位，verified_match_fact 照着算就把赢家算反了。该修已经在 3642d09d 落地（按 KP 认领本场记录），但这份草稿是修之前生成的，没有重跑。三个独立源核过赢家是郑钦文：WTA 稿 /news/4572496/zheng-saves-match-point-rallies-from-5-0-down-in-third-set-to-stun-keys-at-us-open、美联社（9 月 5 日）、以及 flashscore 逐分表本身（home 决胜盘 5-0 领先、5-2 有一个赛点，之后连丢七局）。cover.matchup 顺序、stats 两个头像一并翻回 flashscore 的 home/away。"
   ],
   "_visual_evidence": {
     "model": "MiniMax-M3",
