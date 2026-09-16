@@ -1358,12 +1358,28 @@ jobs:
       # `success()`，于是上一步「丢掉不进仓库的中间物」末尾那个体积兜底一
       # exit 1（栽过四次），**成片明明已经渲完了，却既不上传也不提交**。
       # ⚠️ 位置不许往前挪：清理是先 rm 再检查，挪到前面会把源片一起传。
+      #
+      # ⚠️⚠️ 2026-09-16：**而 `always()` 的另一面是，前面一红，清理那一步就没跑**
+      # （它自己不带状态函数，隐式 `success()`），于是 artifact 装的是 `$OUTDIR`
+      # 的全部。戴维斯杯那条 render 红在质检上，artifact **3.2 GB**：九条源片
+      # 2.45 GB ＋ conform 中间物（crf16）0.9 GB ＋ 成片 214 MB。源片能重下
+      # （还有 actions/cache 那份），conform 是从源片算出来的——都不该传。
+      # 所以这儿用**和清理那一步同一个 glob** `source*` 排除：conform 落盘叫
+      # `source_<键>_conform.mp4`、yt-dlp 半成品叫 `source.fNNN.mp4.part`、
+      # 分轨合流叫 `source_av.mp4`，一个 glob 全盖住（清理那一步的注释里
+      # 「逐个列名字连着栽了四次」说的就是这个）；`frames/` 同理。
+      # 成片、render.json、poster、voice、缩略图墙、probe.json 照旧上传——
+      # 排查红了的 run 要的就是这些（第 209 秒那 1 秒数字静音正是从 artifact
+      # 里的成片量出来的）。判据 `test_失败时的artifact不许带源片`。
       - name: 上传 artifact
         if: always() && github.event.inputs.mode != 'narration' && github.event.inputs.mode != 'cookies'
         uses: actions/upload-artifact@v4
         with:
           name: reel-${{ github.event.inputs.slug }}-${{ github.run_number }}
-          path: ${{ steps.paths.outputs.outdir }}
+          path: |
+            ${{ steps.paths.outputs.outdir }}
+            !${{ steps.paths.outputs.outdir }}/source*
+            !${{ steps.paths.outputs.outdir }}/frames/**
           retention-days: 14
 
       # probe 失败（下不动源片）时，把 slug 从编排器 state 里摘掉——否则它已被

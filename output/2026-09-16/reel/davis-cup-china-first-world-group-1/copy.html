@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>9.16 网球有故事 | 中国男网首进世界一组</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>戴维斯杯这只银碗传了126年，中国男网第一次升上世界一组
+一九〇〇年，哈佛大学几个学生想跟英国人打一场，其中一个叫德怀特·戴维斯，自己掏钱订了一只纯银的大碗当奖品。第一届在波士顿开打，美国队三比零。那只碗从此有了名字：戴维斯杯。
+
+今年是它的第一百二十六年，一百五十多个国家和地区报名，是全世界规模最大的年度团体赛事。它和巡回赛完全不一样：开打之前先奏国歌，队长坐在场边、换边时就在你身边；一次对阵打五场，四场单打一场双打，先拿三分的赢；主队挑地点、挑场地，所以它的主场是真的主场。
+
+它也是很多传奇的舞台。一九八五年亚松森，巴拉圭三比二淘汰法国，球迷冲进场把佩奇举了起来。二〇〇八年，西班牙把半决赛放进马德里的斗牛场，纳达尔在那儿拿下对美国的一分，那一年西班牙第三次捧杯。二〇二四年十一月，纳达尔职业生涯的最后一场球，也留在了戴维斯杯——他输给范德赞德舒尔普，可全场没有人在意比分。冠军榜上美国三十二次、澳大利亚二十八次都是老账了，现在轮到意大利：二〇二三、二四、二五三连冠，今年十一月的决赛阶段在博洛尼亚，他们在自己家里卫冕。
+
+说回中国队。戴维斯杯是一座金字塔：最顶上是决赛阶段，往下是资格赛，再往下才是世界一组。「世界一组」听着像第一级，其实是第三级，中国男网以前从没上过这一层。二〇二三年他们试过一次，客场对巴西零比四。三年后的今年二月，最强阵容在广州南沙到齐：吴易昺拿下一分，张之臻单双打独得两分，三比一葡萄牙，第一次升上来。
+
+这一周的对手是挪威，客场，特隆赫姆。挪威队领衔的是鲁德，三次大满贯亚军，世界第十八；二单布德科夫·谢尔，世界第一百四十七。中国队这边，吴易昺第一百，布云朝克特第一百一十四，张之臻第一百五十二。
+
+所以这场球的算术很清楚：鲁德那两分先算给挪威。中国队要赢，得在另外三场里拿两场——对谢尔的单打，加上双打。二月那场的反超，靠的正是张之臻和周意的双打。赢了，明年进资格赛，离决赛阶段只剩一步；输了，退回附加赛，重来一年。
+
+北京时间九月十九日凌晨十二点开打。一百二十六年，中国男网第一次坐到这张桌子边上，你觉得他们守得住吗？
+
+#网球时差 #戴维斯杯 #张之臻 #吴易昺 #网球有故事</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>你觉得，他们守得住吗？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>

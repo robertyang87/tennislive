@@ -730,6 +730,36 @@ def test_多源对不上时尺寸没有出路帧率要认领(monkeypatch):
     reel.check_sources_match({"a": p["a"]}, {})
 
 
+def test_横幅的存档源整幅铺时不受尺寸闸管(monkeypatch):
+    """2026-09-16 戴维斯杯那条：英国百代 1933 新闻片 640×480（横幅）、`archival`
+    认领、三段全 `fit: contain`，却被 check_sources_match 判成「尺寸对不上，
+    裁切会静默裁错」（run 35072955589）——而 contain 那条路整幅缩进画布，根本
+    不裁。原来的豁免多要了一条「必须竖屏」，那是给手机录屏写的。
+
+    钉三头：横幅 contain 存档放行；同一条源只要有一段不是 contain 就照旧红
+    （几何又回到按窗口裁）；没认领 archival 的横幅低清源照旧红。
+    """
+    import pytest  # noqa: PLC0415
+
+    reel = _reel()
+    table = {"a": (1920, 1080, "25/1", 25.0), "old": (640, 480, "25/1", 25.0)}
+    monkeypatch.setattr(reel, "probe_size", lambda p: table[p.stem][:2])
+    monkeypatch.setattr(reel, "resolve_fps", lambda p: table[p.stem][2:])
+    paths = {k: Path(f"{k}.mp4") for k in table}
+    contain = {"archival": {"old": "1933 年新闻片只有这么高"},
+               "segments": [{"source": "old", "start": 1, "end": 3, "fit": "contain"},
+                            {"source": "old", "start": 5, "end": 8, "fit": "contain"},
+                            {"source": "a", "start": 0, "end": 2}]}
+    reel.check_sources_match(paths, contain)          # 横幅 + 全 contain：放行
+    mixed = {**contain, "segments": [dict(contain["segments"][0], fit="crop"),
+                                     *contain["segments"][1:]]}
+    with pytest.raises(reel.ReelError, match="尺寸没有出路"):
+        reel.check_sources_match(paths, mixed)         # 有一段按窗口裁：照旧红
+    unclaimed = {"segments": contain["segments"]}
+    with pytest.raises(reel.ReelError, match="尺寸没有出路"):
+        reel.check_sources_match(paths, unclaimed)     # 没认领 archival：照旧红
+
+
 def test_帧率相同但ffprobe写法不同不算不一样(monkeypatch):
     """`resolve_fps` 对同一个数值有时报 `"25/1"`、有时报 `"25"`（不同容器/remux
     路径写法不同）——`tiafoe-story` 的 qf2026 就撞过这个假阳性。25 和 25/1
@@ -3749,6 +3779,64 @@ def test_渲完的成片不许因为清理那一步失败而整趟丢掉():
     up = next(i for i, n in enumerate(names) if "上传 artifact" in n)
     assert clean < up, (
         "上传排在清理之前——那会把 392 MB 的源片一起传上去")
+
+
+@pytest.mark.parametrize("workflow,job,outdir,must_drop,must_keep", [
+    (WORKFLOW, "reel", "${{ steps.paths.outputs.outdir }}",
+     ["source_china.mp4", "source_ruud_conform.mp4", "source.f137.mp4.part",
+      "source_av.mp4", "source.mp4", "source.f251.webm.ytdl", "frames/f_0001.png"],
+     ["davis-cup-china-first-world-group-1.mp4", "render.json", "poster.jpg",
+      "voice_03.mp3", "probe.json", "thumbs_format.jpg", "narration.json"]),
+    (Path(".github/workflows/interview-clip.yml"), "render",
+     "output/interviews/${{ github.event.inputs.slug }}/",
+     ["source.mp4", "source.f137.mp4.part", "source.webm"],
+     ["render.json", "storyboard.jpg", "poster.jpg", "subs.json", "copy.html"]),
+])
+def test_失败时的artifact不许带源片(workflow, job, outdir, must_drop, must_keep):
+    """2026-09-16 戴维斯杯那条 render 红在质检上，artifact **3.2 GB**。
+
+    上一条判据要求上传带 `always()`——前面红了成片也要传上来。**它的另一面**：
+    删源片的那一步（「丢掉不进仓库的中间物」／采访线的「提交成片」）自己不带
+    状态函数，隐式 `success()`，所以前面一红它就没跑，artifact 装的是出片目录
+    的全部——九条源片 2.45 GB ＋ conform 中间物 0.9 GB，都是能重下／重算的。
+
+    所以上传那一步要**自己**排除源片，用和清理那一步同一个 glob（`source*`：
+    conform 叫 `source_<键>_conform.mp4`、半成品叫 `source.fNNN.mp4.part`，
+    「逐个列名字连着栽了四次」那条老账）。判据两头都钉：
+
+    - 源片这一族**每一个真实的落盘名**都要被某条 `!` 模式盖住（按 glob 语义验，
+      不验字面）
+    - 排查红了的 run 要看的东西（成片、render.json、poster、voice、缩略图墙）
+      **一个都不许被顺手排除掉**——那 1 秒数字静音正是从 artifact 里的成片量出来的
+    - 第一行仍然是出片目录本身：artifact 的根不许变（下载下来的判据脚本
+      `check_reel_landed` 按顶层文件名找东西）
+    """
+    import yaml  # noqa: PLC0415
+
+    spec = yaml.safe_load(workflow.read_text(encoding="utf-8"))
+    steps = [s for s in spec["jobs"][job]["steps"]
+             if "actions/upload-artifact" in str(s.get("uses", ""))]
+    assert len(steps) == 1, f"{workflow} 里上传 artifact 的步骤有 {len(steps)} 个"
+    step = steps[0]
+    assert "always()" in str(step.get("if", ""))
+    lines = [ln.strip() for ln in str(step["with"]["path"]).splitlines() if ln.strip()]
+    assert lines[0].rstrip("/") == outdir.rstrip("/"), (
+        f"第一行必须是出片目录本身，artifact 的根不许变：{lines[0]!r}")
+    root = outdir.rstrip("/") + "/"
+    excludes = []
+    for ln in lines[1:]:
+        assert ln.startswith("!" + root), f"排除模式要钉在出片目录下：{ln!r}"
+        excludes.append(ln[len("!" + root):])
+    assert excludes, f"{workflow} 的上传没有排除任何东西——源片会跟着上去"
+
+    def dropped(name: str) -> bool:
+        return any(fnmatch(name, pat) or fnmatch(name, pat.rstrip("/**") + "/*")
+                   for pat in excludes)
+
+    for name in must_drop:
+        assert dropped(name), f"{name} 没被 {excludes} 里任何一条排除——它会进 artifact"
+    for name in must_keep:
+        assert not dropped(name), f"{name} 被 {excludes} 误伤了——排查红了的 run 要看它"
 
 
 def test_现场声不许在最后一句话结束时断掉(tmp_path):
@@ -13194,6 +13282,35 @@ def test_不许再印没验证过的投递查询接口():
         "这个查询接口官方文档里没有、实测 903——不许再印给下一个人")
     assert "不代表微信推到了手机上" in body, (
         "「接口收下 ≠ 微信送达」这句不能跟着删——它是真的")
+
+
+def test_横幅存档源contain时几何按它自己的尺寸算(tmp_path):
+    """2026-09-16 戴维斯杯那条：640×480 的百代新闻片（`archival`、全 contain）
+    过了 check_sources_match，却在 cut_segment 里被裁成 `crop=1190:1080`——
+    contain 分支拿的是调用方传进来的**基准**宽 1920 和全局 CROP_H 1080，
+    ffmpeg 当场拒掉「Invalid too big or non positive size」（run 35074495144）。
+    修法是 contain 分支一律按 `probe_size(source)` 量出来的本源尺寸算。
+
+    这条测试真切一段 640×480 走 contain：修之前抛 ReelError（和 run 里同一句），
+    修之后出一段 1080×1440。反向验证：把 `native_w/native_h` 换回
+    `source_w/CROP_H` 当场红在 cut_segment 那一行。
+    """
+    reel = _reel()
+
+    def _ff(*args):
+        subprocess.run(["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+                        *args], check=True)
+
+    src = tmp_path / "pathe.mp4"
+    _ff("-f", "lavfi", "-i", "testsrc2=size=640x480:rate=25:duration=4",
+        "-f", "lavfi", "-i", "sine=frequency=440:duration=4",
+        "-c:v", "libx264", "-preset", "ultrafast", "-crf", "35",
+        "-c:a", "aac", "-shortest", str(src))
+    seg = reel.Segment(0.5, 2.5, None, "", fit="contain", track=False)
+    out = tmp_path / "part.mp4"
+    reel.cut_segment(src, seg, out, 1920)          # 1920 是主源的宽，故意传它
+    assert out.is_file() and out.stat().st_size > 0
+    assert reel.probe_size(out) == (reel.VIDEO_W, reel.VIDEO_H)
 
 
 def test_contain的横向窗口要从源片宽度算不许写死1920():

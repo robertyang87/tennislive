@@ -78,3 +78,30 @@ def test_downloaded_native_height_is_checked_before_conform(monkeypatch, capsys)
     import inspect
     body = inspect.getsource(reel.render)
     assert body.index("check_native_quality_exceptions(") < body.index("conform_sources(")
+
+
+def test_授权是按URL各配一档的_不是全局放宽到720():
+    """2026-09-16 账号所有者为戴维斯杯那条 story 按 URL 授权了三条低清源，
+    其中英国百代那条只有 640×480。表里每条各有自己的下限：
+    写高了（480 的源写 720）或写低了（720 的源写 480）都拦；
+    表外的 URL 照旧一条都放不过。"""
+    reel = _reel()
+    pathe = "https://www.youtube.com/watch?v=ogv43WCXQSo"
+    ruud = "https://www.youtube.com/watch?v=qBtBKmKmQZc"
+    assert reel.APPROVED_LOW_RES_SOURCES[pathe] == 480
+    assert reel.APPROVED_LOW_RES_SOURCES[ruud] == 720
+
+    def spec(url, floor):
+        return {"sources": {"a": url},
+                "source_quality_exceptions": {
+                    url: {"min_height": floor, "approved_by": "user",
+                          "reason": "账号所有者 2026-09-16 为戴维斯杯那条授权"}},
+                "segments": [{"source": "a", "start": 1, "end": 3, "narration": "x"}]}
+
+    assert reel.source_quality_exceptions(spec(pathe, 480))[pathe]["min_height"] == 480
+    assert reel.source_quality_exceptions(spec(ruud, 720))[ruud]["min_height"] == 720
+    for url, wrong in ((pathe, 720), (ruud, 480)):
+        with pytest.raises(reel.ReelError, match="source_quality_exceptions"):
+            reel.source_quality_exceptions(spec(url, wrong))
+    with pytest.raises(reel.ReelError, match="未授权"):
+        reel.source_quality_exceptions(spec("https://www.youtube.com/watch?v=notapproved", 720))

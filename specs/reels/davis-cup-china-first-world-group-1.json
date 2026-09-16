@@ -1,0 +1,462 @@
+{
+ "_note": "网球有故事 · 戴维斯杯：一只银碗传了 126 年，中国男网第一次升上世界一组（2026-09-18/19 客场对挪威，特隆赫姆）。账号所有者 2026-09-16 点的题：「详细介绍下戴维斯杯，并结合中国男队的情况做些预测，全部用视频剪辑拼接的方式做，讲述历史和经典比赛，以及一些传奇故事」「要先从戴维斯杯的历史说起」。栏目和模板：网球有故事 ＋ 多源剪辑 story 变体（同 cincinnati-story / zheng-from-low-to-us-open-comeback），走 match-reel.yml，不走 explainer.yml 的卡片式——它本来就是「全部视频剪辑拼接」。",
+ "_column": "网球有故事。五幕：① 银碗从哪来（1900 哈佛学生戴维斯买碗、第一届波士顿、1933 老胶片）→ ② 它长成了什么（126 年、150 多个国家和地区、国歌、场边队长、五场三胜、真主场）→ ③ 经典与传奇（2008 马德里斗牛场的纳达尔、1985 巴拉圭球迷冲场、2024 纳达尔最后一场、意大利三连冠 + 博洛尼亚卫冕）→ ④ 中国队（金字塔第三层、2023 客场 0-4 巴西、2026 南沙 3-1 葡萄牙第一次升上世界一组）→ ⑤ 这一周的算术（鲁德 18 vs 吴易昺 100；谢尔 147 夹在布云 114 和张之臻 152 之间；鲁德两分先算给挪威、中国队要在另外三场拿两场；赢了进资格赛、输了退附加赛）→ 末屏一问。预测口径是账号所有者选的「算术式判断」，不报比分。",
+ "_sources_why": "十条 probe（output/2026-09-16/reel/dc-story-*/）里用了九条：trophy24（ITF 官方 2024 颁奖全程，1920×1080/25fps）、pathe33（英国百代 1933 新闻片，640×480，archival）、format（Davis Cup 官方赛制讲解，1920×1080）、madrid08（ITF 官方 2008 半决赛纳达尔 v 奎雷伊决定性几局，1920×1080）、paraguay85（ITF 官方 1985 佩奇 v 勒孔特最后十分钟，1920×1080 容器）、nadal24（ITF 官方「Rafa's Last Professional Match」，1920×1080）、china（ITF 官方全场重播「Zhizhen Zhang HEROICS in Guangzhou」，1920×1080/29.97fps，probe 只扫 3900~4435 那段：赛点与庆祝）、ruud / kjaer（ITF 官方 highlights，1280×720，账号所有者按 URL 授权）。没用的两条：dc-story-anthem-2025 / dc-story-italy-2025 都是 720p 且没有单独授权——国歌和捧杯在 trophy24 里都有 1080p 的。⚠️ ITF 频道的规律：**全场重播 1080p，highlights 720p**——下次找戴维斯杯素材先找 Full Replay。",
+ "_facts": "全部 2026-09-16 核过，两源以上：\n· 起源：1900 年，哈佛四名学生发起对英国的挑战，其中德怀特·戴维斯自己买了纯银奖杯（Shreve, Crump & Low 制，约 1000 美元）；首届 1900 年在波士顿 Longwood Cricket Club，美国队开局 3-0 不可逆转——daviscup.com/en/about/history ＋ en.wikipedia.org/wiki/Davis_Cup\n· 规模：官方「the world's largest annual international team competition in sport, with 157 nations entering in 2025」；维基写 155 nations（2025）——两源数字差 2，旁白用「一百五十多个」\n· 冠军榜：美国 32、澳大利亚 28、英国 10、法国 10、瑞典 7、西班牙 6（2000/2004/2008/2009/2011/2019）、意大利 4（1976/2023/2024/2025）——同上两源；意大利 2023-2025 三连冠：daviscup.com history「winning the last three championships (2023-2025)」＋ ITF 官方 YouTube《The HISTORIC final game as Cobolli won Italy the Davis Cup | v Spain | 2025 Davis Cup Final 8》\n· 2026 日程：资格赛第一轮 2/5-8、第二轮 9/18-20；世界一组 9/18-20；决赛阶段 11/24-29 博洛尼亚 SuperTennis Arena（东道主意大利 + 7 支资格赛胜者）——en.wikipedia.org/wiki/2026_Davis_Cup ＋ daviscup.com/en/calendar\n· 层级（官方赛制片 8.5s 金字塔图自证）：Final 8 → Qualifiers → World Group I → World Group II → Regional Groups III-V；世界一组的 13 支胜者进次年资格赛、13 支负者进次年世界一组附加赛——tennis.com.au「Brisbane 2026 World Group I: Australia v Poland」＋ lta.org.uk「Davis Cup 2026: Beginner's guide」\n· 五场三胜、单双打：四场单打一场双打，三盘两胜——中新网 2026-02-05 赛前稿「五场三胜制，6 日两场单打，7 日一场双打和最多两场单打」＋ 官方赛制片\n· 中国队阶梯：2023-02 世界一组附加赛客场 0-4 巴西（特日格乐、崔杰、张择出场，张之臻吴易昺未去）——sport.gov.cn 2023-02-06；2025-09-13/14 世界二组客场 3-1 爱尔兰（都柏林，崔杰/孙发京等）——rte.ie ＋ irishexaminer.com；2026-02-06/07 世界一组附加赛主场（广州南沙国际网球中心，硬地）3-1 葡萄牙：布云朝克特 4-6 4-6 负罗沙；吴易昺 6-1 7-6 胜博尔热斯；张之臻/周意 6-4 3-6 6-4 胜博尔热斯/卡布拉尔；张之臻 7-5 6-4 胜博尔热斯——en.wikipedia.org/wiki/2026_Davis_Cup_World_Group_I_play-offs ＋ chinanews.com.cn 2026-02-07 ＋ ITF 全场重播 4422.5s 记分条 CHN 7|6 / PRT 5|4；队长吴迪，名单布云朝克特、吴易昺、周意、商竣程、张之臻——bjd.com.cn 2026-02-05\n· 「首次」：光明网 m.gmw.cn 2026-02-07「中国队首进网球戴维斯杯世界Ⅰ组」＋ 中新网「首次晋级世界Ⅰ组」＋ 羊城晚报「现有赛制下中国队首次跻身」；旧赛制：en.wikipedia.org/wiki/China_Davis_Cup_team「has never competed in the World Group」（1924 首次参赛，1983 起以 PRC 名义）\n· 挪威对阵：世界一组第一轮，挪威 v 中国，2026-09-18（18:00 当地）/ 09-19（15:30 当地），Trondheim Spektrum（室内），抽签 9/17；挪威由鲁德和布德科夫·谢尔领衔（鲁德原话「It is always special to play with the flag on your chest」）——挪威网协 NTB 新闻稿 18950715 / 19055028 ＋ visitnorway.com ＋ daviscup.com 队伍页「Norway · 18-19 Sep · World Group I Round 1」＋ 腾讯新闻 2026-02-14「中国队 9 月将客场对阵由三届大满贯亚军鲁德领衔的挪威队」。⚠️ 场地类型三个源都没写，旁白不提硬地红土。⚠️ 挪威 2 月资格赛第一轮负英国时鲁德退赛（daviscup.com「Ruud withdrawal gives visitors edge」）——所以正式名单要等抽签日，旁白只说「领衔」\n· 鲁德三次大满贯亚军：2022 法网、2022 美网、2023 法网——en.wikipedia.org/wiki/Casper_Ruud ＋ 腾讯新闻同上\n· 排名（ATP 2026-09-14 那期，src/tennislive/sources/rankings.py 走 tennisexplorer 抓）：鲁德 18、吴易昺 100、布云朝克特 114、布德科夫·谢尔 147、张之臻 152、商竣程 227、周意 242\n· 1985 巴拉圭 3-2 法国（亚松森，第五场佩奇胜勒孔特 6-3 6-4 3-6 7-5）：ITF 官方视频标题《CRAZY final game in Paraguay | Victor Pecci v Henri Leconte | Davis Cup 1985》＋ 画面 608.5s 记分牌「Pecci 6 6 3 7 / Leconte 3 4 6 5」、614.5s「FINAL SCORE PARAGUAY 3 FRANCE 2」\n· 2008 马德里半决赛西班牙 v 美国在拉斯班塔斯斗牛场，纳达尔胜奎雷伊：ITF 官方视频《PRIME Nadal in Madrid | Rafael Nadal v Sam Querrey | Davis Cup 2008》＋ 画面 514.5s 记分条「DAVIS CUP 2008 NADAL ESP / QUERREY USA」；2008 是西班牙第三冠（2000、2004、2008）——冠军榜同上\n· 纳达尔最后一场：2024-11-19 马拉加决赛阶段 1/4 决赛，负范德赞德舒尔普 4-6 4-6，荷兰 2-1 西班牙——ITF 官方视频《Rafa's Last Professional Match | Rafael Nadal v Botic Van De Zandschulp Highlights | Davis Cup 2024》＋ en.wikipedia.org/wiki/2024_Davis_Cup_Finals\n· 时区：特隆赫姆 9 月为 CEST（UTC+2），9/18 18:00 = 北京时间 9/19 00:00；9/19 15:30 = 北京 21:30",
+ "_claims": {
+  "全世界规模最大的年度团体赛事": "两个独立源：https://www.daviscup.com/en/about/history（『the world's largest annual international team competition in sport』）；https://en.wikipedia.org/wiki/Davis_Cup（『the world's largest annual team sporting competition』）。",
+  "中国男网以前从没上过这一层／第一次升上戴维斯杯世界一组": "现行赛制：https://m.gmw.cn/2026-02/07/content_1304335904.htm（『中国队首进网球戴维斯杯世界Ⅰ组』）；https://www.chinanews.com.cn/ty/2026/02-07/10568068.shtml（『首次晋级世界Ⅰ组』）。旧赛制（2019 年前的世界组）：https://en.wikipedia.org/wiki/China_Davis_Cup_team（『has never competed in the World Group』）。三个不同主机。",
+  "纳达尔职业生涯的最后一场球，就是戴维斯杯": "https://www.youtube.com/watch?v=QBHu1YenNPc（ITF 官方：『Rafa's Last Professional Match | Rafael Nadal v Botic Van De Zandschulp | Davis Cup 2024』）；https://en.wikipedia.org/wiki/2024_Davis_Cup_Finals。",
+  "意大利二〇二三、二四、二五三连冠": "https://www.daviscup.com/en/about/history（『winning the last three championships (2023-2025)』）；https://www.youtube.com/watch?v=58k-k0ngRqo（ITF 官方：『Cobolli won Italy the Davis Cup | v Spain | 2025 Davis Cup Final 8』）。",
+  "美国三十二次、澳大利亚二十八次": "https://www.daviscup.com/en/about/history；https://en.wikipedia.org/wiki/Davis_Cup（两处冠军榜一致）。"
+ },
+ "slug": "davis-cup-china-first-world-group-1",
+ "sources": {
+  "format": "https://www.youtube.com/watch?v=VTbZiRC1cxg",
+  "trophy24": "https://www.youtube.com/watch?v=tX2h3LEFOCY",
+  "pathe33": "https://www.youtube.com/watch?v=ogv43WCXQSo",
+  "madrid08": "https://www.youtube.com/watch?v=RsHQwr_qVks",
+  "paraguay85": "https://www.youtube.com/watch?v=2_hFhefpO3E",
+  "nadal24": "https://www.youtube.com/watch?v=QBHu1YenNPc",
+  "china": "https://www.youtube.com/watch?v=lX6f7jGNSTo",
+  "ruud": "https://www.youtube.com/watch?v=qBtBKmKmQZc",
+  "kjaer": "https://www.youtube.com/watch?v=E-MWVXF9ET0"
+ },
+ "primary": "format",
+ "_primary_why": "primary（sources 的第一个键）是官方赛制片 format：它是图形片，没有「比赛的时间线」，所以 ending_payoff 那道给比赛复盘写的闸（冷开场预告了结局、正文要重放）不会把奖杯特写当成「从后段抽来的冷开场」。trophy24 当主源时闸把 158.5 那段银碗特写读成结局预告——这条片子不是一场球，没有结局要兑现。fps 上 format 和 trophy24 一样是 25，mixed_fps 的账不变（只有 china 是 29.97）。",
+ "mixed_fps": {
+  "china": "主源 format（官方赛制片）是 25fps，china（ITF 全场重播）是 29.97fps，降到 25 是 6:5 丢帧。用它的九段里五段是近景（发球准备、庆祝、板凳席），三段回合全景各只有几秒、且都压着旁白在讲历史/排名，不是要盯着走位看的关键回合。反过来把主源换成 china 的话，其余八条 25fps 源全要 1:6 补帧，顿挫出现在颁奖全景和老胶片上，更糟。"
+ },
+ "archival": {
+  "pathe33": "英国百代（British Pathé）1933 年新闻片《Britain's Great Tennis Triumph In The Davis Cup!》的官方 YouTube 上传，最高只有 640×480（yt-dlp -F 列过格式表；probe run 落库 640x480/25fps/163s）。1930 年代的戴维斯杯影像只有新闻片这一种存在形式，等不出更高的。账号所有者 2026-09-16 按 URL 授权（见 source_quality_exceptions）。三段一律 fit contain，年份角标烧在右上。"
+ },
+ "conform": {
+  "ruud": "ITF 官方 highlights 只有 1280×720（账号所有者按 URL 授权，见 source_quality_exceptions），和基准 1920×1080 同为 16:9，等比放大 1.5× 一个像素都不裁。用它的那一段是鲁德近景和网前握手，不是要盯走位的回合。渲染那趟（run 35072955589）被 check_sources_match 拦下后加的认领。",
+  "kjaer": "同上：1280×720 → 1920×1080，同比例放大 1.5×，不裁。用它的一段是布德科夫·谢尔的近景。"
+ },
+ "source_quality_exceptions": {
+  "https://www.youtube.com/watch?v=qBtBKmKmQZc": {
+   "min_height": 720,
+   "approved_by": "user",
+   "reason": "账号所有者 2026-09-16：「给这条片子开 720p/档案授权」。ITF 官方频道的戴维斯杯 highlights 一律只有 1280×720（逐条 yt-dlp -F 查过 2025、2026 两场挪威的全部 highlights），没有全场重播；这是鲁德在戴维斯杯的唯一一类官方画面。"
+  },
+  "https://www.youtube.com/watch?v=E-MWVXF9ET0": {
+   "min_height": 720,
+   "approved_by": "user",
+   "reason": "同上：布德科夫·谢尔 2026 资格赛 v 费恩利，ITF 官方 highlights 1280×720，没有更高的版本。"
+  },
+  "https://www.youtube.com/watch?v=ogv43WCXQSo": {
+   "min_height": 480,
+   "approved_by": "user",
+   "reason": "同上：1933 年英国百代新闻片，官方上传 640×480，存档素材本来就只有这么高（archival 认领、整幅铺）。"
+  }
+ },
+ "tts_backend": "edge",
+ "_tts_backend_why": "沿用 comeback-five-love-down 那条的口径：2026-09-03 起 Azure 钥匙 401，退回 edge-tts 的开关走 spec（CLAUDE.md「退回 edge-tts 的开关走 spec，不走工作流输入」）。",
+ "cover": {
+  "eyebrow": "网球有故事",
+  "layout": "solo",
+  "subject": "戴维斯杯",
+  "hook": "银碗传了一百二十六年\n中国队第一次升上来",
+  "_hook_why": "两行各 10 / 9 字，都在 solo 钩子每行 ≤10 的上限内，两行。讲的是过程和反差，不讲身份：上一行是这项赛事本身（一只碗、126 年），下一行是这条片子的落点（中国队第一次到这一层）——两行之间的落差就是剧情。不写「世界一组」四个字：那是片子里要解释的东西，印在封面上读者反而以为是第一级。",
+  "narration": "银碗传了一百二十六年，中国队第一次升上来。",
+  "_narration_why": "念的就是海报上那句钩子，不另排字幕（同 cincinnati-story）。",
+  "topic": "戴维斯杯 · 126 年的银碗，和中国队的第一次",
+  "portrait": {
+   "image": "assets/reel/davis-cup-italy-2025-trophy-bologna.jpg",
+   "fit": "width",
+   "focus": 0.5,
+   "focus_y": 0.2,
+   "zoom": 1.0,
+   "_why": "账号所有者 2026-09-16：「封面用上届戴维斯杯捧杯的图片」。FITP/SuperTennis 官方配图（意大利网协是这场决赛的主办协会），2025-11-23 博洛尼亚决赛颁奖：贝雷蒂尼把银碗举过头顶、全队举手、礼花、背景牌子 DAVIS CUP FINALS 2025、台前 2025 WORLD CHAMPIONS——画面自己写着时间地点人物。四道闸门：精准 ✅；捧杯（「讲夺冠用捧杯照」）✅；冲击力（举杯那一刻 + 礼花 + 整队）✅；清晰度 2000×1333，按宽度铺是 0.54 倍**缩小**。走 fit width（同 comeback-five-love-down）：横图按 1080 宽铺、上下垫模糊，整幅（六个人 + 举起的碗 + 两块 2025 牌子）都在，钩子两行落在下方垫层上、不压人。⚠️ 找图的账：AFP（novanews 转载）和 Getty（NBC）同一刻的图都只拿得到 1200~1440 宽；Commons 对 2025 决赛零收录（Coppa Davis 2025 / Davis Cup 2025 Bologna 两个词都是 0 hits）；FITP 官方稿页面挂的是 767 宽的 preview_ 版，去掉前缀才是 2000 宽的原图。",
+   "_low_res_why": "cover_photo_problem 按整幅铺满算：1333/1440 = 0.93 倍，差 7% 才够 1.0。但这张封面走的是 fit width——照片按 1080 宽铺是 0.54 倍缩小，一个像素都不放大；那 0.93 只在「铺满整张卡」那条路上才成立，而这条不走那条路。同一时刻的照片里这张是能拿到的最大原图（AFP 1200、Getty 经 NBC 1440、IMAGO 1279），而账号所有者点名要的就是这一刻。"
+  },
+  "scrim": "clear",
+  "_layout_why": "「网球有故事」默认 solo。这条讲的是一项赛事不是一个人，封面主体就是那只碗——和 cincinnati-story 拿园区夜景当主体是同一个判断：讲赛事的片子封面就是赛事。"
+ },
+ "editorial": {
+  "mode": "match_review",
+  "question": "一只一九〇〇年由哈佛学生买下的银碗，怎么长成了全世界最大的年度团体赛——而中国男网为什么等了一百二十六年，才在这一周第一次打到「世界一组」这一层？",
+  "thesis": "戴维斯杯的独特性全部来自「你代表的不是自己」：国歌、场边的队长、五场三胜、主队选场地——所以它才有 1985 亚松森的球迷冲场、2008 马德里斗牛场里的纳达尔、2024 纳达尔把职业生涯最后一场留在这儿。而「世界一组」在官方金字塔图上是第三层，不是第一层：中国男网 2023 年客场 0-4 巴西没上去，2026 年 2 月南沙 3-1 葡萄牙（张之臻单双打两分）才第一次上来。这一周客场对挪威的算术是硬的：鲁德（世界第 18）那两分先算给挪威，中国队最高的吴易昺第 100、挪威二单谢尔第 147 夹在布云朝克特 114 和张之臻 152 之间——中国队要赢就得在另外三场里拿两场：对谢尔的单打，加上双打（二月的反超正是靠张之臻/周意那场双打）。赢了进 2027 资格赛，输了退回附加赛。",
+  "beats": [
+   "① 银碗从哪来：1900 年哈佛学生戴维斯自己买碗、第一届波士顿美国 3-0；1933 年英国百代新闻片里那只碗的特写和满场看台——历史先讲（账号所有者点名的顺序）。",
+   "② 它长成了什么：126 年、150 多个国家和地区；和巡回赛的四个不同——国歌（2024 马拉加意大利队闭眼唱）、队长坐场边（南沙葡萄牙板凳席起立）、五场三胜（官方赛制字卡）、真主场（2008 马德里斗牛场全景 + 记分条自证）。",
+   "③ 经典与传奇：2008 纳达尔双拳举向斗牛场；1985 巴拉圭 3-2 法国球迷冲进场、佩奇被举起（记分牌自证）；2024 纳达尔告别挥手、全场起立；意大利三连冠、11 月博洛尼亚卫冕。",
+   "④ 中国队：官方金字塔图上 WORLD GROUP I 高亮在第三层；2023 客场 0-4 巴西；2026 年 2 月南沙最强阵容、张之臻 MATCH POINT（记分条 Ad 7|5 / 40 5|4）、这一球落地 3-1、板凳席起立。",
+   "⑤ 这一周的算术：鲁德近景（三次大满贯亚军、第 18）、谢尔近景（第 147）、中国队三人排名；鲁德两分先算给挪威、另外三场拿两场；北京时间 9/19 凌晨十二点开打、赢了进资格赛输了退附加赛；末屏一问「守得住吗」。"
+  ],
+  "human_context": {
+   "angle": "这条片子唯一不能从任何一篇赛前稿里抄到的东西，是把「世界一组」这个名字拆开：它听起来是第一级，官方赛制片自己的金字塔图上它在第三层——而中国男网连这一层都是第一次上。第二个切口是三年的对照：2023 年客场 0-4 巴西（张之臻、吴易昺都没去）和 2026 年 2 月最强阵容 3-1 葡萄牙，同一道门，两次结果。预测不报比分，报算术：鲁德两分先算给挪威，剩下三场拿两场的路只有一条——这是账号所有者选的口径。",
+   "facts": [
+    "戴维斯杯层级（官方赛制片 8.5s 金字塔图）：Final 8 → Qualifiers → World Group I → World Group II → Regional Groups III–V；世界一组胜者进次年资格赛，负者进次年世界一组附加赛（tennis.com.au Brisbane 2026 WG I 稿 ＋ LTA Beginner's guide）。",
+    "2023-02 世界一组附加赛：中国队客场 0-4 巴西，特日格乐 1-6 2-6、崔杰 3-6 4-6、张择/崔杰 2-6 3-6，张之臻、吴易昺均未参赛（sport.gov.cn 2023-02-06）。",
+    "2026-02-06/07 世界一组附加赛（广州南沙，硬地）：中国 3-1 葡萄牙——布云朝克特 4-6 4-6 负罗沙；吴易昺 6-1 7-6 胜博尔热斯；张之臻/周意 6-4 3-6 6-4 胜博尔热斯/卡布拉尔；张之臻 7-5 6-4 胜博尔热斯（en.wikipedia 2026 WG I play-offs ＋ 中新网 ＋ ITF 全场重播记分条）。队长吴迪；名单布云朝克特、吴易昺、周意、商竣程、张之臻（北京日报 2026-02-05）。",
+    "挪威 v 中国：世界一组第一轮，2026-09-18 18:00 / 09-19 15:30 当地，Trondheim Spektrum（室内），抽签 9/17；挪威由鲁德和布德科夫·谢尔领衔（挪威网协 NTB 新闻稿 18950715 / 19055028；visitnorway.com；daviscup.com 队伍页）。挪威 2 月资格赛负英国时鲁德退赛（daviscup.com 赛前稿标题「Ruud withdrawal gives visitors edge」），所以正式名单以抽签日为准。",
+    "ATP 排名 2026-09-14：鲁德 18、吴易昺 100、布云朝克特 114、布德科夫·谢尔 147、张之臻 152、商竣程 227、周意 242（src/tennislive/sources/rankings.py → tennisexplorer）。",
+    "鲁德三次大满贯亚军：2022 法网、2022 美网、2023 法网（en.wikipedia Casper Ruud ＋ 腾讯新闻 2026-02-14「三届大满贯亚军鲁德」）。",
+    "纳达尔最后一场：2024-11-19 马拉加决赛阶段 1/4 决赛，4-6 4-6 负范德赞德舒尔普，荷兰 2-1 西班牙（ITF 官方视频标题 ＋ en.wikipedia 2024 Davis Cup Finals）。",
+    "1985 巴拉圭 3-2 法国，第五场佩奇 6-3 6-4 3-6 7-5 勒孔特（ITF 官方视频标题 ＋ 画面 608.5s/614.5s 记分牌）；2008 半决赛西班牙 v 美国在马德里拉斯班塔斯斗牛场，纳达尔胜奎雷伊（ITF 官方视频标题 ＋ 画面 514.5s 记分条）。"
+   ],
+   "sources": [
+    "https://www.daviscup.com/en/about/history",
+    "https://en.wikipedia.org/wiki/Davis_Cup",
+    "https://en.wikipedia.org/wiki/2026_Davis_Cup",
+    "https://en.wikipedia.org/wiki/2026_Davis_Cup_World_Group_I_play-offs",
+    "https://www.chinanews.com.cn/ty/2026/02-07/10568068.shtml",
+    "https://m.gmw.cn/2026-02/07/content_1304335904.htm",
+    "https://www.sport.gov.cn/n20001280/n20067662/n20067613/c25174364/content.html",
+    "https://news.bjd.com.cn/2026/02/05/11568258.shtml",
+    "https://news.qq.com/rain/a/20260214A007TI00",
+    "https://kommunikasjon.ntb.no/pressemelding/18950715/casper-ruud-til-trondelag-norge-moter-kina-i-vm-i-tennis-i-trondheim-spektrum",
+    "https://kommunikasjon.ntb.no/pressemelding/19055028/paminnelse-akkreditering-til-davis-cup-mellom-norge-og-kina",
+    "https://www.visitnorway.com/events//davis-cup/506786/",
+    "https://www.daviscup.com/en/teams/ccb66d3e-80e6-4f7c-a19a-b1c38c2647eb",
+    "https://www.tennis.com.au/fan-zone/team-australia/davis-cup/brisbane-2026-world-group-i--australia-v-poland",
+    "https://www.lta.org.uk/fan-zone/davis-cup/news/beginners-guide-to-the-tournament/",
+    "https://en.wikipedia.org/wiki/China_Davis_Cup_team",
+    "https://www.youtube.com/watch?v=QBHu1YenNPc",
+    "https://www.youtube.com/watch?v=2_hFhefpO3E",
+    "https://www.youtube.com/watch?v=RsHQwr_qVks"
+   ]
+  }
+ },
+ "push": {
+  "summary": "中国男网首进世界一组",
+  "lead": "戴维斯杯这只银碗，是一九〇〇年一个哈佛学生自己掏钱买的，今年打到第一百二十六年，一百五十多个国家和地区报名。这条片子从那只碗讲起：为什么它和巡回赛完全不一样（奏国歌、队长坐在场边、五场三胜、真主场），一九八五年巴拉圭球迷冲进场、二〇〇八年马德里斗牛场里的纳达尔、二〇二四年他职业生涯最后一场也留在这儿；然后说回中国队——「世界一组」听着像第一级，官方金字塔图上它在第三层，中国男网以前从没上到过：二〇二三年客场零比四输给巴西，今年二月南沙三比一葡萄牙，张之臻一个人拿了两分。北京时间九月十九日凌晨十二点，客场特隆赫姆对鲁德领衔的挪威：鲁德世界第十八，中国队最高的吴易昺第一百；挪威二单谢尔第一百四十七，夹在布云朝克特和张之臻之间。鲁德那两分先算给挪威，中国队要在另外三场里拿两场——对谢尔的单打，加上双打。赢了进明年的资格赛，输了退回附加赛。",
+  "auto": true,
+  "_why": "summary 10 字：整句标题「M.DD 网球有故事 | …」要 ≤20 字位，日期＋栏目占 9，所以 summary 最多 11；「首进」是光明网 2026-02-07 标题的原词，点出「中国男网」——首行是标题不是正文开头，刷到的人要知道这是谁的事。lead 与视频同一条事实链，全部出自 _facts。预测口径是账号所有者 2026-09-16 选的「算术式判断」。"
+ },
+ "_crop_zoom_why": "九条源片里除 china 的近景外全是全景/图形/老胶片，不写 crop_zoom（默认 1.0）——图形类源片（format）放大会切掉金字塔图的边。",
+ "segments": [
+  {
+   "source": "trophy24",
+   "start": 0.5,
+   "end": 8.3,
+   "fit": "crop",
+   "narration": "这只银碗，是一百二十六年前，一个大学生自己掏钱买的。",
+   "_why": "开场直接给主角——那只碗。0.5~2.5 是聚光灯下放在台上的奖杯，之后官方片自己溶解到意大利队走出通道、国旗入场（4.5~8.5）。收在 8.3：--check-narration 量出旁白 5.66s，10.3s 的窗口会空 4.6s；收到 7.8s 剩 2.1s 换气。账号所有者要求「先从戴维斯杯的历史说起」，所以不做中国队的冷开场，第一句就是历史。⚠️ 原来这段用的是 158.5~168.0 那组银碗特写，ending_payoff 那道闸把「第一段取自同源靠后的窗口」读成比赛复盘的冷开场倒叙、要求正文重放结局——这条片子没有结局要兑现，于是把靠后的窗口换到片尾（第 30 段），开场取源片最前面的奖杯。",
+   "inset": {
+    "image": "assets/beatcards/davis-cup-china-first-world-group-1/italy-2024.png",
+    "kind": "story_text",
+    "corner": "tr",
+    "width": 0.56,
+    "pad": 0.085,
+    "show_for": 3.8,
+    "motion": "editorial"
+   }
+  },
+  {
+   "source": "pathe33",
+   "start": 21.0,
+   "end": 28.0,
+   "fit": "contain",
+   "narration": "一九〇〇年，哈佛大学的几个学生，想跟英国人打一场。",
+   "_why": "英国百代 1933 年新闻片（挑战轮，巴黎，英国夺回奖杯）。22.5~28.5 是颁奖：一排白衣球员和官员站在那只碗旁边。起点 21.0 贴着 scene_cuts 20.96。⚠️ 画面是 1933 不是 1900——用的是它里面那只碗本身（同一只碗，1900 年戴维斯买的那只），年份标签烧在右上角，不冒充 1900 的画面。640×480 存档素材，archival 认领，整幅铺。",
+   "inset": {
+    "image": "assets/beatcards/davis-cup-china-first-world-group-1/pathe-1933.png",
+    "kind": "story_text",
+    "corner": "tr",
+    "width": 0.56,
+    "pad": 0.085,
+    "show_for": 3.8,
+    "motion": "editorial"
+   }
+  },
+  {
+   "source": "pathe33",
+   "start": 28.0,
+   "end": 35.0,
+   "fit": "contain",
+   "narration": "其中一个叫德怀特·戴维斯，他去订了一只纯银的大碗当奖品。",
+   "_why": "30.5 那一格是**那只碗的特写**（碗里插着花），是全片唯一一张老胶片上的银碗近景，正对着这句「订了一只纯银的大碗」。跨 30.36、32.0 两刀：新闻片自己的蒙太奇（颁奖→碗特写→球场全景）。",
+   "crosses_cut": "跨 30.36、32.0——百代新闻片自己的剪辑：颁奖台→银碗特写→球场全景，同一段新闻片的连续叙事。"
+  },
+  {
+   "source": "pathe33",
+   "start": 35.0,
+   "end": 47.0,
+   "fit": "contain",
+   "narration": "第一届在波士顿开打，美国队三比零。那只碗从此有了名字：戴维斯杯。三十年代，它已经是欧美之间最大的一场球。",
+   "_why": "34.5~58.5 是 1933 年巴黎的比赛全景：白衣球员、满场戴帽子的观众。「三十年代它已经是最大的一场球」这句正对着画面里的满场看台。scene_cuts 在 32.0 之后到 67.56 才有下一刀，中间只有 42.96 一处 loose。",
+   "crosses_cut": "跨 42.96（loose）——同一机位的球场全景，回合之间的接点。"
+  },
+  {
+   "source": "trophy24",
+   "start": 24.0,
+   "end": 34.5,
+   "fit": "crop",
+   "narration": "一百二十六年过去，它成了全世界规模最大的年度团体赛事，一百五十多个国家和地区报名。",
+   "_why": "24.5~34.5 马拉加决赛阶段的场馆全景：两队走进场、国旗、满场看台——「规模最大」用今天的场面说。scene_cuts 23.32 之后到 34.64 没有刀，窗口两头都贴着切点。"
+  },
+  {
+   "source": "trophy24",
+   "start": 139.5,
+   "end": 147.0,
+   "fit": "crop",
+   "narration": "它和巡回赛最不一样的地方：你代表的不是自己。开打之前，先奏国歌。",
+   "_why": "140.5~146.5：颁奖前的意大利国歌，贝雷蒂尼闭着眼、辛纳在唱——「代表的不是自己」这句落在球员唱国歌的脸上。125~170 无切点。"
+  },
+  {
+   "source": "china",
+   "start": 3912.2,
+   "end": 3921.0,
+   "fit": "crop",
+   "narration": "场边坐着队长和队友，换边的时候他就在你身边。这是巡回赛里没有的。",
+   "_why": "3912.5~3914.5 葡萄牙板凳席整排起立鼓掌（PORTUGAL 队服），3918.5~3922.5 场上球员回头看板凳——「队友在场边」用真的板凳席说。起点 3912.2 贴 scene_cuts 3912.24、终点收在 3921.0（--check-narration：旁白 6.94s，11.3s 的窗口空 4.4s，收到 8.8s）。⚠️ 原来想写「场边有人支招在别的比赛里要吃警告」——2025 年起巡回赛已经允许场外指导，那句是过期常识，改成「队长坐在场边、换边时就在身边」这个至今只有团体赛才有的事实。",
+   "crosses_cut": "跨 3917.11——板凳席鼓掌→场上球员回望板凳，同一次换边的两个机位。",
+   "inset": {
+    "image": "assets/beatcards/davis-cup-china-first-world-group-1/china-2026.png",
+    "kind": "story_text",
+    "corner": "tr",
+    "width": 0.56,
+    "pad": 0.085,
+    "show_for": 3.8,
+    "motion": "editorial"
+   }
+  },
+  {
+   "source": "format",
+   "start": 60.0,
+   "end": 66.1,
+   "fit": "crop",
+   "narration": "一次对阵打五场：四场单打，一场双打，先拿三分的赢。",
+   "_why": "Davis Cup 官方赛制讲解片（1080p）。60.0 起是「WORLD GROUP II TIE / CONTEST BEST OF」那组字卡，讲的正是一场对阵怎么打。两头贴 scene_cuts 60.0 / 66.12。全屏图形，crop 到 3:4 之后字仍在中间。"
+  },
+  {
+   "source": "madrid08",
+   "start": 504.5,
+   "end": 515.8,
+   "fit": "crop",
+   "narration": "而且主队挑地点、挑场地。二〇〇八年，西班牙把半决赛放进了马德里的斗牛场——戴维斯杯的主场，是真的主场。",
+   "_why": "506.5~514.5 是拉斯班塔斯斗牛场的大全景（红土铺在斗牛场里、看台坐满），514.5 那格记分条自证「DAVIS CUP 2008 · NADAL ESP / QUERREY USA」。490~516 无切点。源片总长 516.0，溶解底料要再往后取 0.18s，所以收在 515.8。",
+   "inset": {
+    "image": "assets/beatcards/davis-cup-china-first-world-group-1/madrid-2008.png",
+    "kind": "story_text",
+    "corner": "tr",
+    "width": 0.56,
+    "pad": 0.085,
+    "show_for": 3.8,
+    "motion": "editorial"
+   }
+  },
+  {
+   "source": "madrid08",
+   "start": 495.0,
+   "end": 504.0,
+   "fit": "crop",
+   "narration": "纳达尔在那儿拿下了对美国的一分。那一年，西班牙第三次捧杯。",
+   "_why": "500.5~504.5 纳达尔双拳举向看台（红色无袖球衣，2008 年的他）。这一段在源片里排在上一段之前（495→504 早于 504.5→516），片里先给斗牛场全景再给人，是叙事顺序不是时间顺序；两段窗口不重叠。"
+  },
+  {
+   "source": "paraguay85",
+   "start": 603.5,
+   "end": 612.5,
+   "fit": "crop",
+   "narration": "一九八五年的巴拉圭，观众把球场变成了球市：巴拉圭三比二淘汰法国，球迷冲进了场里。",
+   "_why": "起点贴 scene_cuts 603.4。604.5 看台起立、606.5~612.5 球迷涌进场、608.5 记分牌「Pecci 6 6 3 7 / Leconte 3 4 6 5」自证第五场。1985 年转播画面，源片本身是 1080p 容器（ITF 官方上传），画质是那个年代的，年份烧在角标上。",
+   "inset": {
+    "image": "assets/beatcards/davis-cup-china-first-world-group-1/paraguay-1985.png",
+    "kind": "story_text",
+    "corner": "tr",
+    "width": 0.56,
+    "pad": 0.085,
+    "show_for": 3.8,
+    "motion": "editorial"
+   }
+  },
+  {
+   "source": "paraguay85",
+   "start": 616.4,
+   "end": 620.9,
+   "fit": "crop",
+   "narration": "赢下第五场的佩奇，被人群举了起来。",
+   "_why": "616.36 那一刀之后是佩奇被球迷扛在肩上的近景（618.5、620.5）。源片 621.1 结束，溶解底料要再往后取 0.18s，窗口收在 620.9。"
+  },
+  {
+   "source": "nadal24",
+   "start": 375.0,
+   "end": 384.4,
+   "fit": "crop",
+   "narration": "它也是许多人的最后一站。二〇二四年十一月，纳达尔职业生涯的最后一场球，就是戴维斯杯。",
+   "_why": "376.5~382.5：纳达尔穿红色西班牙队服向看台挥手告别的近景（378.5、380.5）。终点贴 scene_cuts 384.4。",
+   "inset": {
+    "image": "assets/beatcards/davis-cup-china-first-world-group-1/nadal-2024.png",
+    "kind": "story_text",
+    "corner": "tr",
+    "width": 0.56,
+    "pad": 0.085,
+    "show_for": 3.8,
+    "motion": "editorial"
+   }
+  },
+  {
+   "source": "nadal24",
+   "start": 387.8,
+   "end": 393.9,
+   "fit": "crop",
+   "narration": "他输给了范德赞德舒尔普。可全场没有人在意比分。",
+   "_why": "387.8 起：家人、西班牙队席、全场起立鼓掌（392.5 满场站着）。两头贴 scene_cuts 387.8 / 393.92。",
+   "crosses_cut": "跨 391.76——家人近景→西班牙队席+全场起立，同一次告别的两个机位。"
+  },
+  {
+   "source": "trophy24",
+   "start": 127.0,
+   "end": 139.0,
+   "fit": "crop",
+   "narration": "冠军榜上，美国三十二次、澳大利亚二十八次，都是老账了。现在轮到意大利：二〇二三、二四、二五，三连冠。",
+   "_why": "128.5~134.5 意大利队挂着奖牌在「2024 WORLD CHAMPIONS」拱门前排成一排、银碗在前景。125~170 无切点。⚠️ 画面是 2024 马拉加那次捧杯，旁白讲的是三连冠——角标标 2024，旁白里三个年份说全。"
+  },
+  {
+   "source": "trophy24",
+   "start": 37.0,
+   "end": 43.2,
+   "fit": "crop",
+   "narration": "今年十一月的决赛阶段在博洛尼亚，他们在自己家里卫冕。",
+   "_why": "36.5~42.5 颁奖台上给意大利队员挂奖牌、奖杯在台上。两头贴 scene_cuts 36.96 / 43.24。",
+   "crosses_cut": "跨 41.16——挂奖牌的近景→颁奖台全景，官方颁奖片自己的机位切换。"
+  },
+  {
+   "source": "format",
+   "start": 7.3,
+   "end": 12.5,
+   "fit": "crop",
+   "narration": "说回中国队。戴维斯杯是一座金字塔。",
+   "_why": "8.5、10.5 两格是官方赛制片的**金字塔图**：从上到下 FINAL 8 / QUALIFIERS / WORLD GROUP I / WORLD GROUP II / REGIONAL EVENTS。两头贴 scene_cuts 7.28 / 12.52。这张图是下面那句「世界一组其实是第三级」的证据本身。"
+  },
+  {
+   "source": "format",
+   "start": 90.8,
+   "end": 93.9,
+   "fit": "crop",
+   "narration": "再往下，是世界一组。",
+   "_why": "92.5 那格：同一张金字塔，**WORLD GROUP I 那一层高亮成绿色**——正是我们要指的那一层。终点贴 scene_cuts 93.92（之后切到阿根廷球迷）。起点 91.0 落在高亮动画开始之前（loose 91.68 是那一格变绿的动画，不是换镜头），2.9 秒，旁白只留这半句。"
+  },
+  {
+   "source": "china",
+   "start": 3923.6,
+   "end": 3931.7,
+   "fit": "crop",
+   "narration": "「世界一组」听着像第一级，其实是第三级。中国男网以前从没上过这一层。",
+   "_why": "3924.5~3930.5 张之臻发球前的近景：红色 CHINA 队服、胸前国旗、3930.5 抬头那一格。两头贴 scene_cuts 3923.55 / 3931.73。⚠️「从没上过这一层」是全称断言，两个源在 _claims 里：光明网/中新网「首次晋级世界Ⅰ组」（现行赛制）＋ 英文维基「never competed in the World Group」（旧赛制的顶级 16 强组）——两套赛制下都没到过这一级或以上。"
+  },
+  {
+   "source": "china",
+   "start": 3931.7,
+   "end": 3937.2,
+   "fit": "crop",
+   "narration": "二〇二三年他们试过一次：客场对巴西，零比四。",
+   "_why": "3932.5~3936.5 底线回合全景。两头贴 scene_cuts 3931.73 / 3937.17。事实出处 sport.gov.cn 2023-02-06「中国队无缘晋级世界一组」：客场 0-4 巴西，张之臻、吴易昺都没去。"
+  },
+  {
+   "source": "china",
+   "start": 3937.2,
+   "end": 3945.9,
+   "fit": "crop",
+   "narration": "三年后的今年二月，最强阵容到齐：吴易昺拿下一分，张之臻单双打独得两分。",
+   "_why": "3938.5 张之臻准备接发的近景（胸前国旗）→ 3940.5~3944.5 回合全景。两头贴 scene_cuts 3937.17 / 3945.94。四场比分见 _facts。",
+   "crosses_cut": "跨 3939.67——接发近景→回合全景，转播的标准回合剪辑。"
+  },
+  {
+   "source": "china",
+   "start": 4386.0,
+   "end": 4393.8,
+   "fit": "crop",
+   "narration": "第四场，张之臻对葡萄牙一单博尔热斯。七比五之后，第二盘五比四，赛点。",
+   "_why": "4386.5~4392.5 记分条上打着 MATCH POINT，CHN Ad 7|5 / PRT 40 5|4——七比五、五比四 Ad，画面自证。张之臻走向底线的近景、看台上 CHINA 字样的球迷。两头贴 scene_cuts 4386.01 / 4393.82。"
+  },
+  {
+   "source": "china",
+   "start": 4417.5,
+   "end": 4425.3,
+   "fit": "crop",
+   "narration": "赛点。这一球落地，七比五、六比四，三比一。张之臻举起了球拍。",
+   "_why": "4417.5~4421.2 赛点回合全景，4421.18 那一刀切到张之臻举拍、双臂张开的近景（4422.5），4424.5 鼓掌。终点收在 scene_cuts 4425.39 之前。⚠️ 第一版只留「这一球落地，三比一」十个字、想把现场声全让出来，--check-narration 量出 7.8s 没人说话，超过 4s 的哑场门槛；补上比分（记分条 4422.5 自证 7|6 / 5|4）和一句动作——「举起了球拍」是 4422.5 那格真做了的动作，不是编的。",
+   "crosses_cut": "跨 4421.18——赛点回合全景→张之臻庆祝近景，赢球那一刻转播必然的一刀。"
+  },
+  {
+   "source": "china",
+   "start": 4425.4,
+   "end": 4434.0,
+   "fit": "crop",
+   "narration": "板凳席全站起来了。中国男网，第一次升上戴维斯杯世界一组。",
+   "_why": "4426.5、4428.5 中国队板凳席整排起立（红色队服），4430.5~4432.5 网前握手。起点贴 scene_cuts 4425.39。记分条 CHN 7|6 / PRT 5|4 自证 7-5 6-4。",
+   "crosses_cut": "跨 4430.53——板凳席→网前握手，赛后的连续镜头。"
+  },
+  {
+   "source": "ruud",
+   "start": 229.0,
+   "end": 240.0,
+   "fit": "crop",
+   "narration": "这一周的对手是挪威，客场，特隆赫姆。挪威队领衔的是鲁德：三次大满贯亚军，现在世界第十八。",
+   "_why": "2025 年挪威 v 阿根廷（ITF 官方 highlights，720p，账号所有者按 URL 授权）。230.5~234.5 鲁德近景（白发带、擦汗、赢球后的表情），236.5~238.5 网前握手、NORWAY 队服和挪威国旗入画。起点贴 scene_cuts 228.8，之后到源片末尾没有硬切。",
+   "inset": {
+    "image": "assets/beatcards/davis-cup-china-first-world-group-1/ruud-2025.png",
+    "kind": "story_text",
+    "corner": "tr",
+    "width": 0.56,
+    "pad": 0.085,
+    "show_for": 3.8,
+    "motion": "editorial"
+   }
+  },
+  {
+   "source": "kjaer",
+   "start": 103.3,
+   "end": 109.0,
+   "fit": "crop",
+   "narration": "挪威的二单，布德科夫·谢尔，世界第一百四十七。",
+   "_why": "2026 年 2 月挪威 v 英国资格赛（ITF 官方 highlights，720p，授权同上）。106.5 布德科夫·谢尔（红衣白帽）近景，身后是英国观众；108.5 特写。终点贴 scene_cuts 110.0。⚠️ 年龄故意不说：能查到的只有「2024 温网青少年夺冠时 17 岁」，没有生日的一手出处，「只讲确认过的」。 ⚠️ 第一版写「二单布德科夫·谢尔」，edge-tts 切成「二 ｜ 单布 ｜ 德科夫」——「单布」是个假词；加「挪威的」和一个逗号把「二单」和人名撑开。 ⚠️ 第三趟 render（run 35076316702）成片质检红在这一段的尾巴：成片 209.0~210.3s 是 −58~−65 dB 的数字静音——旁白 208.9s 说完之后放开的现场声，正好落在这条 ITF highlights 音轨的一处空档（源片 108.6~110.0，紧挨着 110.0 那一刀，剪辑点前的静音）。把成片拉回本地按 0.25s 量出来的。窗口往前挪 0.7s、尾巴收到 109.0：旁白仍装得下（5.23s / 5.7s），旁白说完之后露出的那一截源片声（107.8~108.6）量过是 −27~−36 dB，有声。",
+   "inset": {
+    "image": "assets/beatcards/davis-cup-china-first-world-group-1/kjaer-2026.png",
+    "kind": "story_text",
+    "corner": "tr",
+    "width": 0.56,
+    "pad": 0.085,
+    "show_for": 3.8,
+    "motion": "editorial"
+   }
+  },
+  {
+   "source": "china",
+   "start": 3900.0,
+   "end": 3910.0,
+   "fit": "crop",
+   "narration": "中国队这边，最高的吴易昺世界第一百，布云朝克特第一百一十四，张之臻第一百五十二。",
+   "_why": "3900.5~3904.5 回合全景，3905.8 那一刀之后是张之臻背身走向底线、CHINA 字样（3906.5~3910.5）。终点收在 3910.0（--check-narration：旁白 7.58s，12.2s 空 4.6s，收到 10s）。排名是 2026-09-14 那期 ATP 榜（tennisexplorer 抓的，`fetch_rankings` 同一条路）。",
+   "crosses_cut": "跨 3905.8——回合全景→张之臻走位近景。"
+  },
+  {
+   "source": "china",
+   "start": 4393.8,
+   "end": 4401.5,
+   "fit": "crop",
+   "narration": "所以这场球的算术很清楚：鲁德那两分，先算给挪威。",
+   "_why": "4394.5~4400.5 张之臻赛点前拍球、抬头的近景——紧绷的脸配「算术」。起点贴 scene_cuts 4393.82，到 4410.94 之间无刀。"
+  },
+  {
+   "source": "china",
+   "start": 4401.5,
+   "end": 4413.0,
+   "fit": "crop",
+   "narration": "中国队要赢，得在另外三场里拿两场：对谢尔的单打，加上双打——二月的反超，靠的正是张之臻和周意那场双打。",
+   "_why": "4402.5~4410.5 张之臻发球准备的近景，4410.94 之后切回赛点回合的全景。⚠️ 这段讲的是双打而画面是单打——同一站、同一天的画面，且这条全场重播里没有双打；旁白的主语是「二月那场双打」这件事，不指画面。",
+   "crosses_cut": "跨 4410.94——发球准备近景→回合全景，转播的标准发球剪辑。"
+  },
+  {
+   "source": "trophy24",
+   "start": 158.0,
+   "end": 169.5,
+   "fit": "crop",
+   "narration": "北京时间十九号凌晨十二点开打。赢了，明年进资格赛，离决赛阶段一步；输了，退回附加赛，重来一年。",
+   "_why": "160.5~166.5 全是银碗特写（挂着奖牌的意大利队员在后），125~170 无切点，窗口放到 11.5s（--check-narration：旁白 10.10s，原 9.5s 的窗口超 0.6s）——「赌注」这句正对着奖杯本身：赢了离它一步，输了退一年。开球时刻：挪威网协新闻稿 9/18 18:00 当地（CEST，UTC+2）= 北京时间 9/19 00:00，分钟是 0，按规矩说「凌晨十二点」。升降规则出处见 _facts。"
+  },
+  {
+   "source": "china",
+   "start": 3945.9,
+   "end": 3956.0,
+   "fit": "crop",
+   "narration": "一百二十六年，中国男网第一次坐到这张桌子边上。你觉得，他们守得住吗？",
+   "_why": "3946.5~3956.5 记分条打着 BREAK POINT 的张之臻近景：拍球、撑腰、抬头——一张绷着的脸收尾，正对着「守得住吗」。起点贴 scene_cuts 3945.94，之后这一串近景到 3958.5 都没刀。末屏一问旁白念出来。"
+  }
+ ]
+}

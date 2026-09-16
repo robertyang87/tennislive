@@ -3853,14 +3853,19 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
         # Cross-sport action needs both the athlete and the target in view.
         # Explicit full_source preserves the complete published frame;
         # legacy contain retains its existing 62% framing.
-        keep = source_w if seg.fit == "full_source" else contain_keep_width(source_w)
-        x = (source_w - keep) // 2
+        # ⚠️ 几何一律按**这条源自己**的尺寸算（`native_w`/`native_h`），不用调用方
+        # 传进来的基准宽和全局 `CROP_H`——那两个数是主源的。2026-09-16 戴维斯杯
+        # 那条的 640×480 百代新闻片走到这儿被裁成 `crop=1190:1080`，ffmpeg 当场拒掉
+        # （run 35074495144）：`check_sources_match` 放行横幅存档源的前提正是
+        # 「contain 不套主源几何」，而这一行还套着。同尺寸的源两个数相等，一格不变。
+        keep = native_w if seg.fit == "full_source" else contain_keep_width(native_w)
+        x = (native_w - keep) // 2
         chain = (
             f"split=2[bg][fg];"
-            f"[bg]crop={keep}:{CROP_H}:{x}:0,"
+            f"[bg]crop={keep}:{native_h}:{x}:0,"
             f"scale={VIDEO_W}:{VIDEO_H}:force_original_aspect_ratio=increase,"
             f"crop={VIDEO_W}:{VIDEO_H},boxblur=42:2,eq=brightness=-0.20[bgb];"
-            f"[fg]crop={keep}:{CROP_H}:{x}:0,"
+            f"[fg]crop={keep}:{native_h}:{x}:0,"
             f"scale={VIDEO_W}:-2:flags=lanczos[fgs];"
             f"[bgb][fgs]overlay=(W-w)/2:(H-h)/2,{sp}fps={FPS_EXPR},setsar=1"
         )
@@ -5263,7 +5268,20 @@ def silence_findings(spec: dict, segments, probes: dict,
     return hard, soft
 
 
-# 用户本次只授权这一条郑钦文重剪源；不能用声明替别的素材降格。
+# **用户按精确 URL 逐条授权的低清源**，值是授权到的最低高度。不在这张表里的
+# URL 写了 `source_quality_exceptions` 也过不了——不能用声明替别的素材降格。
+#
+# 第一条是 2026-08 郑钦文重剪那次；后三条是 2026-09-16 账号所有者为戴维斯杯
+# 那条「网球有故事」授权的（原话：「给这条片子开 720p/档案授权」）——
+# 戴维斯杯的官方影像档案（ITF 频道）highlights 一律只有 720p、没有全场重播，
+# 1930 年代的英国百代新闻片只有 640×480，**这两档「等」也等不出 1080p**。
+APPROVED_LOW_RES_SOURCES: dict[str, int] = {
+    "https://www.youtube.com/watch?v=-6Gv0033I2I": 720,   # 郑钦文重剪源
+    "https://www.youtube.com/watch?v=qBtBKmKmQZc": 720,   # ITF：鲁德 v 埃切维里，挪威 v 阿根廷 2025
+    "https://www.youtube.com/watch?v=E-MWVXF9ET0": 720,   # ITF：布德科夫·克耶尔 v 费恩利，挪威 v 英国 2026
+    "https://www.youtube.com/watch?v=ogv43WCXQSo": 480,   # British Pathé：1933 戴维斯杯挑战轮新闻片
+}
+# 郑钦文那条的 conform 复用检查点还按这个名字认（`_verified_conform_reuse`）。
 _APPROVED_720_SOURCE = "https://www.youtube.com/watch?v=-6Gv0033I2I"
 
 
@@ -5274,16 +5292,18 @@ def source_quality_exceptions(spec: dict) -> dict[str, dict]:
         raise ReelError("source_quality_exceptions 必须是按精确源 URL 索引的对象")
     urls = set(spec_sources(spec).values()) if declared else set()
     for url, claim in declared.items():
-        if url != _APPROVED_720_SOURCE or url not in urls:
+        floor = APPROVED_LOW_RES_SOURCES.get(url)
+        if floor is None or url not in urls:
             raise ReelError(f"source_quality_exceptions 未授权或未引用的源：{url}")
         if (not isinstance(claim, dict)
                 or type(claim.get("min_height")) is not int
-                or claim["min_height"] != 720
+                or claim["min_height"] != floor
                 or claim.get("approved_by") != "user"
                 or not isinstance(claim.get("reason"), str)
                 or not claim["reason"].strip()):
-            raise ReelError("source_quality_exceptions 要写 min_height: 720、"
-                            "approved_by: user 和非空 reason；仅限本次明确授权")
+            raise ReelError(f"source_quality_exceptions 要写 min_height: {floor}、"
+                            "approved_by: user 和非空 reason；仅限账号所有者按 URL "
+                            "明确授权过的那几条（见 APPROVED_LOW_RES_SOURCES）")
     return declared
 
 
@@ -5297,9 +5317,11 @@ def check_native_quality_exceptions(spec: dict, paths: dict[str, Path]) -> None:
             continue
         w, h = probe_size(path)
         if h < claim["min_height"]:
-            raise ReelError(f"源 {key or '(主源)'} 原生 {w}x{h}，低于明确授权的 720p")
+            raise ReelError(f"源 {key or '(主源)'} 原生 {w}x{h}，"
+                            f"低于明确授权的 {claim['min_height']}p")
         print(f"[源画质授权] {urls[key]} 原生 {w}x{h}；"
-              f"用户明确授权最低 720p：{claim['reason']}；展示缩放不会增加源细节")
+              f"用户明确授权最低 {claim['min_height']}p：{claim['reason']}；"
+              "展示缩放不会增加源细节")
 
 
 def probe_dry_run(spec: dict, segments: list["Segment"]) -> bool:
@@ -5446,7 +5468,7 @@ def probe_dry_run(spec: dict, segments: list["Segment"]) -> bool:
     #    那种静图段落跳过），不查 `_cover_frame_spots`——封面走的是完全独立
     #    的「官方高清实拍」硬闸（`cover_photo_problem`），和源片分辨率是
     #    两件事，混在一起会把没写 `frame_at` 的正常封面段落误判成缺分辨率。
-    #    仅 source_quality_exceptions 的精确 URL 用户授权可降至 720p。
+    #    仅 `APPROVED_LOW_RES_SOURCES` 里按 URL 授权过的源可降到各自的那一档（720 或 480）。
     for source_key in sorted(checked_sources):
         probe = probes.get(urls.get(source_key, ""))
         if probe is None:
@@ -5463,7 +5485,7 @@ def probe_dry_run(spec: dict, segments: list["Segment"]) -> bool:
             label = source_key or "(主源)"
             hard.append(
                 f"  源 {label}：{probe.get('width')}x{height}，低于 {minimum}p——"
-                + ("用户只授权原生 720p，更低清晰度仍然不合格。" if claim else
+                + (f"用户只授权到原生 {minimum}p，更低清晰度仍然不合格。" if claim else
                    "「视频一定要选 1080p 及以上的清晰度，如果没有的话就等」，"
                    "不是拿这一版将就的退路。换一条更高清的源，或者等官方"
                    "发布更清晰的版本再回来。"))
@@ -6018,12 +6040,21 @@ def check_sources_match(paths: dict[str, Path], spec: dict | None = None) -> Non
     rw, rh, rf, rfv = seen[ref_key]
     rows = "\n  ".join(f"{k or '(主源)'}: {w}×{h} @ {f}"
                        for k, (w, h, f, _) in seen.items())
-    # 只有明确认领、全部整幅展示的竖屏存档使用独立几何；比赛源继续严格同尺寸。
+    # 只有明确认领、**全部整幅展示**（每一段都 `fit: contain`）的存档源使用独立
+    # 几何；比赛源继续严格同尺寸。
+    # ⚠️ 2026-09-16 之前这儿还多一条「而且必须是竖屏（w < h）」——那是给手机录屏
+    # 那类存档写的，可 contain 那条路对横竖一视同仁：整幅缩进 1080×1440，不裁
+    # 不取窗口，几何和基准源无关。戴维斯杯那条的英国百代 1933 新闻片是 640×480
+    # 横幅、三段全 contain、`archival` 认领过、账号所有者按 URL 授权过，却在这儿
+    # 被判成「尺寸对不上，裁切会静默裁错」（run 35072955589）——而它根本不裁。
+    # 用 conform 走不通：640×480 等比放大铺满再中央裁到 16:9 会切掉四分之一的
+    # 画面高度，正是存档素材最不该丢的东西。判据
+    # `test_横幅的存档源整幅铺时不受尺寸闸管`。
     archival = archival_claims(spec)
     native_archives = set()
     for key in archival:
         uses = [s for s in (spec or {}).get("segments", []) if s.get("source") == key]
-        if key in seen and seen[key][0] < seen[key][1] and uses and all(
+        if key in seen and uses and all(
                 s.get("fit") == "contain" for s in uses):
             native_archives.add(key)
     bad_size = [k for k, (w, h, _, _) in seen.items()

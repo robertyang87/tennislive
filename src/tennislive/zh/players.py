@@ -20,6 +20,10 @@ PLAYER_ZH: dict[str, str] = {
     "Lorenzo Musetti": "穆塞蒂",
     "Alexander Bublik": "布勃利克",
     "Casper Ruud": "鲁德",
+    # 戴维斯杯那条「网球有故事」（2026-09-16）点到的三位老球员，表里原来没有：
+    "Victor Pecci": "佩奇",          # 巴拉圭，1985 戴维斯杯第五场胜勒孔特
+    "Henri Leconte": "勒孔特",       # 法国
+    "Sam Querrey": "奎雷伊",         # 美国，2008 戴维斯杯半决赛负纳达尔
     "Andrey Rublev": "卢布列夫",
     "Jiri Lehecka": "莱赫奇卡",
     "Luciano Darderi": "达尔代里",
