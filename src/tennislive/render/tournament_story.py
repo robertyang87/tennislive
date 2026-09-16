@@ -1609,6 +1609,71 @@ STORIES = STORIES + (
         source_url="https://www.puntodebreak.com/en/2026/07/22/the-us-open-2026-gets-underway-surprises-among-the-registered-tennis-players",
     ),
     _trivia_story(
+        slug="wuhan-alternate",
+        title="替补第七位，进得去吗",
+        subtitle="网球观察 · 规则篇",
+        identity="三条路，以及强制参赛到底管不管她",
+        chips=("规则与名额", "WTA 千分赛", "2026 武网"),
+        hero=(
+            "2026 武网首批 43 人名单公布，郑钦文以世界第 52 排在正赛替补第 7 位。"
+            "她还剩三条路：等 7 个人退赛递补、靠中网四强拿到整站唯一的特殊豁免、"
+            "或者十月十号自己去打资格赛——"
+            "而去年武网，因为退赛把位置让给别人的那个人，正是她自己。"
+        ),
+        facts=(
+            "武网正赛 56 个签位：**43 个按排名直接入围**，8 个资格赛出线，4 张外卡，"
+            "1 个特殊豁免，前 8 号种子首轮轮空。"
+            "报名截止是正赛周周一往前推 **4 周**（不是大满贯那个 6 周），"
+            "正赛 10 月 12 日周一开打，倒推即 **9 月 14 日**——"
+            "那天她刚靠美网八强从第 121 涨回**第 52**，仍然差 7 位。",
+            "**替补递补的窗口到资格赛开打为止**：之前退的从替补名单补，"
+            "之后退的补进来的是幸运落败者。2025 武网共 10 人退赛，"
+            "**其中 8 人退在资格赛之前**，位置全给了替补；2024 年整届 17 人退赛。"
+            "**而 2025 年那张退赛表上有一行是郑钦文**，位置递补给了博萨斯·马内罗。",
+            "**特殊豁免整站只有 1 个**。条文要求：报了本站资格赛、"
+            "资格赛签到截止时仍在上一站（须为千分赛或大满贯）比赛，"
+            "且已进决赛或刚赢下一场。中网打到 10 月 11 日、武网资格赛 10 月 10–11 日，"
+            "**所以她要打进中网四强**；另有两个前提——"
+            "**9 月 21 日前须先报上武网资格赛**，且不止一人够格时按排名高的先拿。",
+            "**强制参赛抓的是够得着的人。** 规则书写的是"
+            "「报名截止那天被接受、或本应被接受进入正赛」的球员必须参赛，"
+            "**她那天够不上，所以不去不记 0 分**。"
+            "但同一条列着五个身份——直接入围、资格赛出线、特殊豁免、幸运落败者、特殊排名"
+            "——**从那三条路任何一条进去，立刻被绑定**；"
+            "进去后再退，0 分要记，罚款按报名截止日排名分档（前 10 两万美元，51–100 两千五）。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2026-09-09", player="郑钦文", age="23 岁",
+                headline="从资格赛打进美网八强",
+                detail=(
+                    "赛前排名第 121，从资格赛打起，十六强击败斯瓦泰克，"
+                    "八强负于莱巴金娜。赛后排名回到第 52。"
+                ),
+                source_url="https://www.usopen.org/en_US/news/articles/2026-09-07/zheng_qinwen_stuns_iga_swiatek_to_reach_2026_us_open_quarterfinals.html",
+            ),
+            ChampionMoment(
+                date="2026-09-16", player="郑钦文", age="23 岁",
+                headline="武网名单公布，她在替补第 7 位",
+                detail=(
+                    "首批 43 人名单，世界前十悉数出战，莱巴金娜领衔。"
+                    "王欣瑜凭排名直接入围，郑钦文以世界第 52 排在正赛替补第 7 位。"
+                ),
+                source_url="https://sports.sina.cn/2026-09-16/detail-inirzshx3682267.d.html",
+            ),
+        ),
+        image_keys=(),
+        image_credit="WTA 官方图（photoresources.wtatennis.com）",
+        source_label="WTA 2026 官方规则书 · 武网官方公告",
+        source_url="https://photoresources.wtatennis.com/wta/document/2025/12/24/b300b2a4-8d71-4346-969f-1f6b9399661f/2026-WTA-Rulebook-12-22-2025-.pdf",
+        evidence_urls=(
+            "https://en.wikipedia.org/wiki/2025_Wuhan_Open_%E2%80%93_Singles",
+            "https://en.wikipedia.org/wiki/2024_Wuhan_Open_%E2%80%93_Singles",
+            "https://en.wikipedia.org/wiki/2026_WTA_1000_tournaments",
+            "https://k.sina.cn/article_7879923300_1d5ae166406801i8jo.html",
+        ),
+    ),
+    _trivia_story(
         slug="mandatory-1000",
         title="强制赛为什么可以不去",
         subtitle="网球观察 · 规则篇",
