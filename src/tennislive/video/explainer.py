@@ -2001,6 +2001,19 @@ _ACADEMY_SPAN_DIAGRAM = _academy_span_diagram()
 # ⚠️ 加进来之前先问一句：这条片子**验过了吗**。加进来之后它就不再经过人的手，
 # 而微信那条消息发出去收不回来。
 AUTO_PUSH_SLUGS: frozenset[str] = frozenset({
+    # 2026-09-16 验过才加进来的（下面那句「加进来之前先问一句：这条片子验过了吗」）：
+    # 在分支上渲的**第四趟**（run 35126806203，explainer.yml push=false）落库成功，
+    # 工作流自带的两道闸都过了、微信那步 skipped（push=false，对的）。
+    # 成片从 Release 拉回本地量过——242.33 秒、1080×1920、30fps、8,900,390 字节；
+    # 音画等长（差 0.06 秒）；全片 mean −24.2 / max −3.5 dB，九个采样窗峰值
+    # −8.1~−4.5 dB，**没有哑场**；`narration.json` 确认是代码默认的云健 +22%。
+    # 九屏本地逐屏渲出来看过，另从成片抽九帧拼墙逐格看过。
+    # ⚠️ 前三趟各修掉一件事，都是**看产物**才发现的，不是判据报的：
+    #   ① 地上的 RIYADH 被序号药丸压掉前两个字母（裁源图上沿 560px）
+    #   ② 字幕半中半洋（`二〇二五到2027年` / `一万6000人`）——补了转换器两个形状
+    #   ③ 最后一处「三条标准」——`条` 不在量词表里
+    # 第四趟把这三处逐条回读确认：`3条标准` / `16000人` / `2025年到2027年`。
+    "finals-venues",
     "zheng-china-wuhan-wildcards-v2",  # Authorized editorial correction; separate delivery receipt.
     # 2026-09-08: local full decode and 15 illustrated native cards reviewed; user authorizes QC -> WeChat.
     "zheng-china-wuhan-wildcards",
