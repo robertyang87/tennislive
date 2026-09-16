@@ -161,6 +161,21 @@ class ExplainerSegment:
     # 不该印比赛坐标），而作注这件事和赛前片没关系。
     # **加在最后**：`_SCRIPTS` 里的 beat 是按位置解包的，插中间会整体错位。
     gloss: str = ""
+    # 封面文案摆在哪儿。默认 ""＝贴底（`.copy` 的基准锚点）。
+    #
+    # ⚠️⚠️ **这个字段是一次翻面的产物，翻的方向和当初那次正好相反，而理由
+    # 是同一个「别挡住人」**，所以两次都记下来：
+    #
+    #   原来  `top:50%` 垂直居中
+    #   翻面  账号所有者「这个文案移到底部，类似之前『赛场之上』的双人封面」
+    #         ——居中那一版正好压在人脸那一带（`.cover .title` 那段注释里的账）
+    #   现在  账号所有者 2026-09-16「钩子文案移到中间吧，这样不遮挡人物」
+    #
+    # **不矛盾，因为几何变了**：这一条的封面是两张实拍上下拼的，正中间是那条
+    # 接缝，是整张图里唯一没有人的一条带；而单人封面的正中间就是脸。
+    # 所以它是**逐条认领的开关，不是把全局翻回去**——全局翻回去会把其余
+    # 那四十几条重新弄坏一遍，那正是上一次翻面要修的东西。
+    copy_at: str = ""
 
 
 # Original, labelled schematic for the "how Hawk-Eye works" beat — clearly a
@@ -8374,6 +8389,12 @@ _OPENINGS: dict[str, dict] = {
                      "但整本规则书里，只有两档赛事可以这么做——"
                      "大满贯和大师赛，一分都不许给。",
         "image": "assets/explainer/promotional-fees/split-cover.jpg",
+        # 账号所有者 2026-09-16：「钩子文案移到中间吧，这样不遮挡人物」。
+        # 这张封面是两张实拍上下拼的，**正中间那条接缝是整张图里唯一没有人的
+        # 一条带**——所以居中在这一条上恰恰是「不挡人」，和当初把文案从居中
+        # 挪到贴底的那次不矛盾（那次针对的是单人封面，正中间就是脸）。
+        # 完整的两次翻面记在 `ExplainerSegment.copy_at` 的注释里。
+        "copy_at": "middle",
         "credit": "ATP 官方图 · 2025 年北京与东京，辛纳与阿尔卡拉斯各自捧杯",
         "tags": ["网球", "网球时差", "网球规则", "ATP500", "网球冷知识"],
     },
@@ -9278,6 +9299,7 @@ def _opening_segment(story, beats: list[ExplainerSegment]) -> ExplainerSegment:
         question="",
         fixture=_fixture_lines(spec),
         gloss=spec.get("gloss", ""),
+        copy_at=spec.get("copy_at", ""),
     )
 
 
@@ -9625,6 +9647,8 @@ def _slide_html(
         else ""
     )
     cover_cls = " cover" if cover else ""
+    if cover and segment.copy_at == "middle":
+        cover_cls += " cover--mid"
     # 台头和封面小字讲的是同一件事（「黄泽林 VS 莱赫奇卡：洛斯卡沃斯站 16 强」
     # 对「7.30 09:00 ATP250 洛斯卡沃斯 16 强／黄泽林 VS 莱赫奇卡」），同一屏印两遍
     # 是噪点，而小字那份还多一个开赛时刻。所以封面有小字时台头让位，正文各屏照常。
@@ -9725,6 +9749,11 @@ body{{font-family:'TL Sans SC','Noto Sans CJK SC','Noto Sans SC',sans-serif;}}
    （见 tools/versus_poster.py 的模块 docstring）。封面卡现在跟它对齐，
    回到 `.copy` 那个基准的贴底锚点，不再单独覆盖。 */
 .cover .copy{{gap:34px;}}
+/* 逐条认领的封面文案居中。⚠️ 只有挂了 `cover--mid` 的才走这一支——全局那条
+   贴底的锚点是上一次翻面的结果（理由写在上面那段：居中会压在人脸上），
+   这一支是给**上下拼图**那种封面开的：正中间是两张图的接缝，唯一没有人的
+   一条带。判据在 `ExplainerSegment.copy_at` 的注释里，两次翻面都记着。 */
+.cover--mid .copy{{bottom:auto;top:50%;transform:translateY(-50%);}}
 /* The cover used to sit under a flat 62-78% wash, which made every deck
    open on the same dark green rectangle with a photo faintly behind it —
    the one frame that has to stop a thumb was the least visible. Darken
