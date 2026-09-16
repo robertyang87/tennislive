@@ -730,6 +730,36 @@ def test_多源对不上时尺寸没有出路帧率要认领(monkeypatch):
     reel.check_sources_match({"a": p["a"]}, {})
 
 
+def test_横幅的存档源整幅铺时不受尺寸闸管(monkeypatch):
+    """2026-09-16 戴维斯杯那条：英国百代 1933 新闻片 640×480（横幅）、`archival`
+    认领、三段全 `fit: contain`，却被 check_sources_match 判成「尺寸对不上，
+    裁切会静默裁错」（run 35072955589）——而 contain 那条路整幅缩进画布，根本
+    不裁。原来的豁免多要了一条「必须竖屏」，那是给手机录屏写的。
+
+    钉三头：横幅 contain 存档放行；同一条源只要有一段不是 contain 就照旧红
+    （几何又回到按窗口裁）；没认领 archival 的横幅低清源照旧红。
+    """
+    import pytest  # noqa: PLC0415
+
+    reel = _reel()
+    table = {"a": (1920, 1080, "25/1", 25.0), "old": (640, 480, "25/1", 25.0)}
+    monkeypatch.setattr(reel, "probe_size", lambda p: table[p.stem][:2])
+    monkeypatch.setattr(reel, "resolve_fps", lambda p: table[p.stem][2:])
+    paths = {k: Path(f"{k}.mp4") for k in table}
+    contain = {"archival": {"old": "1933 年新闻片只有这么高"},
+               "segments": [{"source": "old", "start": 1, "end": 3, "fit": "contain"},
+                            {"source": "old", "start": 5, "end": 8, "fit": "contain"},
+                            {"source": "a", "start": 0, "end": 2}]}
+    reel.check_sources_match(paths, contain)          # 横幅 + 全 contain：放行
+    mixed = {**contain, "segments": [dict(contain["segments"][0], fit="crop"),
+                                     *contain["segments"][1:]]}
+    with pytest.raises(reel.ReelError, match="尺寸没有出路"):
+        reel.check_sources_match(paths, mixed)         # 有一段按窗口裁：照旧红
+    unclaimed = {"segments": contain["segments"]}
+    with pytest.raises(reel.ReelError, match="尺寸没有出路"):
+        reel.check_sources_match(paths, unclaimed)     # 没认领 archival：照旧红
+
+
 def test_帧率相同但ffprobe写法不同不算不一样(monkeypatch):
     """`resolve_fps` 对同一个数值有时报 `"25/1"`、有时报 `"25"`（不同容器/remux
     路径写法不同）——`tiafoe-story` 的 qf2026 就撞过这个假阳性。25 和 25/1

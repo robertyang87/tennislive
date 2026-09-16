@@ -23,11 +23,16 @@
   "kjaer": "https://www.youtube.com/watch?v=E-MWVXF9ET0"
  },
  "primary": "format",
+ "_primary_why": "primary（sources 的第一个键）是官方赛制片 format：它是图形片，没有「比赛的时间线」，所以 ending_payoff 那道给比赛复盘写的闸（冷开场预告了结局、正文要重放）不会把奖杯特写当成「从后段抽来的冷开场」。trophy24 当主源时闸把 158.5 那段银碗特写读成结局预告——这条片子不是一场球，没有结局要兑现。fps 上 format 和 trophy24 一样是 25，mixed_fps 的账不变（只有 china 是 29.97）。",
  "mixed_fps": {
   "china": "主源 format（官方赛制片）是 25fps，china（ITF 全场重播）是 29.97fps，降到 25 是 6:5 丢帧。用它的九段里五段是近景（发球准备、庆祝、板凳席），三段回合全景各只有几秒、且都压着旁白在讲历史/排名，不是要盯着走位看的关键回合。反过来把主源换成 china 的话，其余八条 25fps 源全要 1:6 补帧，顿挫出现在颁奖全景和老胶片上，更糟。"
  },
  "archival": {
   "pathe33": "英国百代（British Pathé）1933 年新闻片《Britain's Great Tennis Triumph In The Davis Cup!》的官方 YouTube 上传，最高只有 640×480（yt-dlp -F 列过格式表；probe run 落库 640x480/25fps/163s）。1930 年代的戴维斯杯影像只有新闻片这一种存在形式，等不出更高的。账号所有者 2026-09-16 按 URL 授权（见 source_quality_exceptions）。三段一律 fit contain，年份角标烧在右上。"
+ },
+ "conform": {
+  "ruud": "ITF 官方 highlights 只有 1280×720（账号所有者按 URL 授权，见 source_quality_exceptions），和基准 1920×1080 同为 16:9，等比放大 1.5× 一个像素都不裁。用它的那一段是鲁德近景和网前握手，不是要盯走位的回合。渲染那趟（run 35072955589）被 check_sources_match 拦下后加的认领。",
+  "kjaer": "同上：1280×720 → 1920×1080，同比例放大 1.5×，不裁。用它的一段是布德科夫·谢尔的近景。"
  },
  "source_quality_exceptions": {
   "https://www.youtube.com/watch?v=qBtBKmKmQZc": {
@@ -58,12 +63,13 @@
   "_narration_why": "念的就是海报上那句钩子，不另排字幕（同 cincinnati-story）。",
   "topic": "戴维斯杯 · 126 年的银碗，和中国队的第一次",
   "portrait": {
-   "image": "assets/reel/davis-cup-trophy-italy-2024-malaga.jpg",
+   "image": "assets/reel/davis-cup-italy-2025-trophy-bologna.jpg",
    "fit": "width",
    "focus": 0.5,
    "focus_y": 0.2,
    "zoom": 1.0,
-   "_why": "Wikimedia Commons《2024 11 24 Copa Davis Tenis.jpg》（Junta de Andalucía，CC BY-SA 2.0），图注自带四要素：2024-11-24 马拉加，戴维斯杯决赛意大利 v 荷兰，颁奖台上意大利队与奖杯，背景弧形字『DAVIS CUP 2024 WORLD CHAMPIONS』。3840×2560（Commons 缩略图档，原图 3936×2624；原图接口当天 429，Commons 自己的提示是改用缩略图尺寸）。四道闸门：精准（图注自证）✅；对题——钩子讲的是那只银碗，图里银碗就是视觉落点，奖杯占前景、冠军队在后，是「讲夺冠用捧杯照」那条的赛事版 ✅；冲击力（聚光灯下的奖杯 + 整队 + 拱门大字）✅；清晰度：按宽度铺是 0.28 倍缩小，铺满也只要 0.56 倍，不放大 ✅。走 fit width（同 comeback-five-love-down）：横图按宽度铺、上下垫模糊，整幅（六个人 + 奖杯 + 拱门字）都在，钩子两行落在下方垫层上、不压奖杯；focus_y 0.2 让照片落在 y≈144~864，奖杯（原图竖向 64%~86%）落到 y≈600~760，在钩子带上方。⚠️ 渲出来要打开看：奖杯和钩子会不会擦到（render_cover_local.py 本地 7 秒）。"
+   "_why": "账号所有者 2026-09-16：「封面用上届戴维斯杯捧杯的图片」。FITP/SuperTennis 官方配图（意大利网协是这场决赛的主办协会），2025-11-23 博洛尼亚决赛颁奖：贝雷蒂尼把银碗举过头顶、全队举手、礼花、背景牌子 DAVIS CUP FINALS 2025、台前 2025 WORLD CHAMPIONS——画面自己写着时间地点人物。四道闸门：精准 ✅；捧杯（「讲夺冠用捧杯照」）✅；冲击力（举杯那一刻 + 礼花 + 整队）✅；清晰度 2000×1333，按宽度铺是 0.54 倍**缩小**。走 fit width（同 comeback-five-love-down）：横图按 1080 宽铺、上下垫模糊，整幅（六个人 + 举起的碗 + 两块 2025 牌子）都在，钩子两行落在下方垫层上、不压人。⚠️ 找图的账：AFP（novanews 转载）和 Getty（NBC）同一刻的图都只拿得到 1200~1440 宽；Commons 对 2025 决赛零收录（Coppa Davis 2025 / Davis Cup 2025 Bologna 两个词都是 0 hits）；FITP 官方稿页面挂的是 767 宽的 preview_ 版，去掉前缀才是 2000 宽的原图。",
+   "_low_res_why": "cover_photo_problem 按整幅铺满算：1333/1440 = 0.93 倍，差 7% 才够 1.0。但这张封面走的是 fit width——照片按 1080 宽铺是 0.54 倍缩小，一个像素都不放大；那 0.93 只在「铺满整张卡」那条路上才成立，而这条不走那条路。同一时刻的照片里这张是能拿到的最大原图（AFP 1200、Getty 经 NBC 1440、IMAGO 1279），而账号所有者点名要的就是这一刻。"
   },
   "scrim": "clear",
   "_layout_why": "「网球有故事」默认 solo。这条讲的是一项赛事不是一个人，封面主体就是那只碗——和 cincinnati-story 拿园区夜景当主体是同一个判断：讲赛事的片子封面就是赛事。"
@@ -452,6 +458,5 @@
    "narration": "一百二十六年，中国男网第一次坐到这张桌子边上。你觉得，他们守得住吗？",
    "_why": "3946.5~3956.5 记分条打着 BREAK POINT 的张之臻近景：拍球、撑腰、抬头——一张绷着的脸收尾，正对着「守得住吗」。起点贴 scene_cuts 3945.94，之后这一串近景到 3958.5 都没刀。末屏一问旁白念出来。"
   }
- ],
- "_primary_why": "primary（sources 的第一个键）是官方赛制片 format：它是图形片，没有「比赛的时间线」，所以 ending_payoff 那道给比赛复盘写的闸（冷开场预告了结局、正文要重放）不会把奖杯特写当成「从后段抽来的冷开场」。trophy24 当主源时闸把 158.5 那段银碗特写读成结局预告——这条片子不是一场球，没有结局要兑现。fps 上 format 和 trophy24 一样是 25，mixed_fps 的账不变（只有 china 是 29.97）。"
+ ]
 }

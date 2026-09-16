@@ -6035,12 +6035,21 @@ def check_sources_match(paths: dict[str, Path], spec: dict | None = None) -> Non
     rw, rh, rf, rfv = seen[ref_key]
     rows = "\n  ".join(f"{k or '(主源)'}: {w}×{h} @ {f}"
                        for k, (w, h, f, _) in seen.items())
-    # 只有明确认领、全部整幅展示的竖屏存档使用独立几何；比赛源继续严格同尺寸。
+    # 只有明确认领、**全部整幅展示**（每一段都 `fit: contain`）的存档源使用独立
+    # 几何；比赛源继续严格同尺寸。
+    # ⚠️ 2026-09-16 之前这儿还多一条「而且必须是竖屏（w < h）」——那是给手机录屏
+    # 那类存档写的，可 contain 那条路对横竖一视同仁：整幅缩进 1080×1440，不裁
+    # 不取窗口，几何和基准源无关。戴维斯杯那条的英国百代 1933 新闻片是 640×480
+    # 横幅、三段全 contain、`archival` 认领过、账号所有者按 URL 授权过，却在这儿
+    # 被判成「尺寸对不上，裁切会静默裁错」（run 35072955589）——而它根本不裁。
+    # 用 conform 走不通：640×480 等比放大铺满再中央裁到 16:9 会切掉四分之一的
+    # 画面高度，正是存档素材最不该丢的东西。判据
+    # `test_横幅的存档源整幅铺时不受尺寸闸管`。
     archival = archival_claims(spec)
     native_archives = set()
     for key in archival:
         uses = [s for s in (spec or {}).get("segments", []) if s.get("source") == key]
-        if key in seen and seen[key][0] < seen[key][1] and uses and all(
+        if key in seen and uses and all(
                 s.get("fit") == "contain" for s in uses):
             native_archives.add(key)
     bad_size = [k for k, (w, h, _, _) in seen.items()
