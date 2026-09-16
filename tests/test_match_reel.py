@@ -15623,9 +15623,10 @@ def test_score_inset的形状校验和scorebox的死键闸(capsys):
     """`score_inset` / `scorebox` 的形状规矩全在 parse_segments（--dry-run
     0.2 秒就报，不用等下载）：
 
-    - score_inset 只在带式里有意义；带式外写了当场报（不是静默不生效）
+    - ⭐ 2026-09-16 起 score_inset **全出血也认**（原来只认带式）：没顶层
+      scorebox 照样当场报，报的还是「开了 score_inset 却没有 scorebox」
     - 开了 score_inset 就必须有 spec 顶层 scorebox（格式 [x0,y0,x1,y1]）
-    - scorebox 写在非带式 spec 里是死键，当场报
+    - scorebox 写着却没有一段开 score_inset 是死键，当场报（任何版式）
     - `{"x2": N}` 把这一段的板右缘**钉死**，解析成 (x0,y0,N,y1)。⭐ 它退成
       「现量不准时人来钉」的口子了——主路是 `true`＋渲染时现量
       （`resolve_board_insets`，账号所有者 2026-08-29：「不能固定宽度去切，
@@ -15640,11 +15641,17 @@ def test_score_inset的形状校验和scorebox的死键闸(capsys):
     srcs = {"r1": Path("a.mp4")}
     box = [104, 888, 616, 978]
 
-    with pytest.raises(reel.ReelError, match="score_inset"):
+    with pytest.raises(reel.ReelError, match="score_inset.*scorebox"):
         reel.parse_segments(
             {"cover": {}, "segments": [
                 {"start": 1, "end": 7, "source": "r1", "score_inset": True}]},
             srcs, "r1")
+    # 全出血 + scorebox + score_inset：现在是合法的，box 原样落到那一段
+    full = reel.parse_segments(
+        {"cover": {}, "scorebox": box, "segments": [
+            {"start": 1, "end": 7, "source": "r1", "score_inset": True},
+            {"start": 7, "end": 9, "source": "r1"}]}, srcs, "r1")
+    assert full[0].score_inset == (104, 888, 616, 978) and full[1].score_inset is None
     with pytest.raises(reel.ReelError, match="scorebox"):
         reel.parse_segments(
             {"cover": {}, "layout": "band", "segments": [
@@ -16405,6 +16412,11 @@ def test_全出血的字幕带要垫一层柔性渐变(tmp_path, monkeypatch):
     assert max(b - c for b, c in zip(a[1:], a)) <= 4, "相邻两行跳得太多，是硬边不是渐变"
     _, top2 = reel.subtitle_scrim(tmp_path / "s2.png", anchor - 100)
     assert top2 == top - 100, "字幕锚抬高了，垫要跟着抬"
+    # 抬过锚的片子起坡短一档（render 按「锚低于默认」挑 lead）
+    _, top3 = reel.subtitle_scrim(tmp_path / "s3.png", anchor - 260, reel.SUB_SCRIM_LIFTED_LEAD_PX)
+    assert top3 == anchor - 260 - reel.SUB_SCRIM_LIFTED_LEAD_PX
+    assert reel.SUB_SCRIM_LIFTED_LEAD_PX < reel.SUB_SCRIM_LEAD_PX
+    assert "SUB_SCRIM_LIFTED_LEAD_PX" in inspect.getsource(reel.render), "render 没按锚挑 lead"
 
     # ② 没顶栏那条路
     g = reel.plain_filtergraph(Path("s.ass"), 0.4, 1.0, 2, scrim_input=3, scrim_y=top)
@@ -16477,3 +16489,84 @@ def test_全出血的字幕带要垫一层柔性渐变(tmp_path, monkeypatch):
     assert lum(1.5, 200, 400) > 240, "垫只管字幕那一条，画面上半不许动"
     mid = lum(1.5, top + 40, top + 80)
     assert 200 < mid < 250, f"坡顶那一截应该只是略暗（渐变），量到 {mid:.1f}"
+
+
+def test_全出血也能回贴记分条_字幕抬到板上方(tmp_path, monkeypatch):
+    """⭐ 2026-09-16 戴维斯杯那条整体视觉 review：3:4 居中裁切把 ITF 转播的板裁得
+    只剩「7|4 / 5|4」四个数字＋半截名字，全片 94.6s（37%）都这样。回贴那条路
+    （`score_inset`）原来只认带式，全出血走「cx 排除」——而全库 177 条赛场之上里
+    160 条是全出血。现在全出血也回贴：
+
+    - 板照旧贴在**自然落点** `y0×比例`（只有贴在那儿才盖得住居中窗口留下的残条；
+      带式多加一个 BAND_TOP，一格不动）
+    - 全出血下那个落点（≈1307）撞上字幕上锚 1284——解法是**把字幕整条抬到板上方**
+      （`subtitle_margin_for_boards`：板顶 − 间距 − 两行字幕的高），不是挪板
+
+    判据真切一段：造一条 1920×1080 的源片，左下画一块纯色「板」，全出血 crop 走
+    `score_inset`，量成片里那块颜色：整条板的宽度都贴出来了（居中窗口本来只含得住
+    右半截）、顶边在自然落点、**没有第二份板**；再量字幕锚被抬到板上方。
+    """
+
+    reel = _reel()
+    from PIL import Image  # noqa: PLC0415
+
+    def _ff(*args):
+        subprocess.run(["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+                        *args], check=True)
+
+    monkeypatch.setattr(reel, "LAYOUT", "full")
+    reel.resolve_crop(1920, 1080, None, "", layout="full")
+    src = tmp_path / "src.mp4"
+    # 绿底 + 左下一块洋红「板」[30,980]~[700,1050]：源片 1920 宽，居中 810 窗口
+    # 的左缘在 555——板的左半截（30~555）本来被裁掉
+    x0, y0, x1, y1 = 30, 980, 700, 1050
+    _ff("-f", "lavfi", "-i", "color=c=0x1f6f3f:s=1920x1080:r=25:d=3",
+        "-f", "lavfi", "-i", "sine=frequency=440:duration=3",
+        "-vf", f"drawbox=x={x0}:y={y0}:w={x1 - x0}:h={y1 - y0}:color=0xff00ff:t=fill",
+        "-c:v", "libx264", "-preset", "ultrafast", "-crf", "16", "-pix_fmt", "yuv420p",
+        "-c:a", "aac", "-shortest", str(src))
+    seg = reel.Segment(0.5, 2.5, 0.5, "", track=False)
+    seg.score_inset = (x0, y0, x1, y1)
+    out = tmp_path / "part.mp4"
+    reel.cut_segment(src, seg, out, 1920)
+    frame = tmp_path / "f.png"
+    _ff("-ss", "1.0", "-i", str(out), "-frames:v", "1", str(frame))
+    im = Image.open(frame).convert("RGB")
+    assert im.size == (reel.VIDEO_W, reel.VIDEO_H)
+
+    def magenta_rows(x: int) -> list[int]:
+        return [y for y in range(im.height)
+                if (lambda p: p[0] > 180 and p[2] > 180 and p[1] < 90)(im.getpixel((x, y)))]
+
+    ratio = reel.VIDEO_W / reel.CROP_W
+    sh = -(-int(round((y1 - y0) * ratio)) // 2) * 2
+    natural = int(round(y0 * ratio))
+    rows = magenta_rows(20)          # 板的最左边——居中窗口原本裁掉的那一截
+    assert rows, "全出血没贴板：左下角一个洋红像素都没有（板被居中窗口裁掉了）"
+    assert abs(min(rows) - natural) <= 3, (
+        f"板顶边在 y={min(rows)}，该在自然落点 {natural}（y0×比例）——贴在别处就盖不住残条")
+    assert max(rows) <= natural + sh + 3, f"板比原比例高：底边 {max(rows)}"
+    bw = -(-int(round((x1 - x0) * ratio)) // 2) * 2
+    assert magenta_rows(bw - 12) and not magenta_rows(bw + 30), (
+        "贴出来的板不是整条原比例（右缘不在 (x1−x0)×比例 处）")
+    # 只有一份板：贴的那份正好盖在残条上，上方不许再冒出一份
+    assert not [y for y in magenta_rows(bw - 12) if y < natural - 3], (
+        "板上方还有一份洋红——贴到别处去了，残条没被盖住")
+
+    # 字幕锚整条抬到板上方，留够两行字幕的高和一口气；带式不动
+    lifted = reel.subtitle_margin_for_boards([seg], reel._REEL_MARGIN_V)
+    assert lifted + reel.SUB_BLOCK_H_PX + reel.SCORE_INSET_GAP_PX <= natural, (
+        f"字幕锚 {lifted} 加两行字幕还压进板里（板顶 {natural}）")
+    assert lifted < reel._REEL_MARGIN_V, "有板却没抬字幕"
+    seg2 = reel.Segment(0.5, 2.5, 0.5, "", track=False)
+    assert reel.subtitle_margin_for_boards([seg2], reel._REEL_MARGIN_V) == reel._REEL_MARGIN_V, (
+        "没有段回贴时字幕锚不许动")
+    monkeypatch.setattr(reel, "LAYOUT", "band")
+    assert reel.subtitle_margin_for_boards([seg], 1124) == 1124, "带式的字幕在底带里，不抬"
+    monkeypatch.setattr(reel, "LAYOUT", "full")
+    body_src = inspect.getsource(reel.render)
+    assert "subtitle_margin_for_boards(segments" in body_src, "render 没把抬锚接上"
+
+    # 带式那条路的几何一格不动：oy = BAND_TOP + y0×比例
+    src_txt = inspect.getsource(reel.cut_segment)
+    assert '(BAND_TOP if LAYOUT == "band" else 0) + int(round(y0 * ratio))' in src_txt

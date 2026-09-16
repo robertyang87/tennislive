@@ -1043,6 +1043,29 @@ def suggest_scorebox(source: Path) -> str | None:
 # （8 源片像素＝画面带上 6.7px）。8 是按已发那条片子对出来的——手量的三档
 # 583/618/656，检出是 578/617/652，最坏差 5。
 BOARD_EDGE_PAD = 8
+#: 全出血回贴时字幕底边离板顶边的间距（带式的字幕在底带里，不用它）。
+SCORE_INSET_GAP_PX = 24
+#: 字幕最多两行、每行 FontSize 68 → 抬锚时按两行留位，别按一行——两行的段
+#: 会压进板里，而那正是回贴要避免的「两层白字叠在一起」。
+SUB_BLOCK_H_PX = 2 * 68
+
+
+def subtitle_margin_for_boards(segments: list["Segment"], default_margin: int) -> int:
+    """全出血 + 有段回贴记分条时，字幕上锚要抬到板的自然落点之上。
+
+    板贴在自然落点（`y0 × VIDEO_W/CROP_W`，全出血 ≈ 1307）才盖得住居中窗口
+    留下的残条；而字幕上锚默认 1284——两层白字叠在一起（`subtitle_top` 那条老账
+    说的就是这个）。带式没有这个问题（字幕在底带里），所以只管全出血。
+    返回的是整条片子共用的一个锚：段落之间字幕跳位比抬高几十像素更难看。
+    """
+    if LAYOUT == "band":
+        return default_margin
+    tops = [int(round(seg.score_inset[1] * VIDEO_W / CROP_W))
+            for seg in segments if seg.score_inset]
+    if not tops:
+        return default_margin
+    lifted = min(tops) - SCORE_INSET_GAP_PX - SUB_BLOCK_H_PX
+    return min(default_margin, max(0, lifted))
 # 一列要有多少行「不是球场色」才算板。板本身是实心图形，这个数很松。
 _BOARD_ROW_HIT = 0.5
 # 离球场色多远才算「不是球场」（RGB 欧氏距离）。
@@ -2795,11 +2818,11 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
         raw = s.get("score_inset")
         if raw is None or raw is False:
             return None
-        if spec.get("layout") != "band":
-            raise ReelError(
-                f"第 {i + 1} 段写了 score_inset，但它只在带式版式"
-                f'（spec 顶层 `"layout": "band"`）里有意义——全出血下记分条的'
-                "处置见 docs/us-open-scoreboard-aspect.md（cx 排除那条路）。")
+        # ⭐ 2026-09-16 起全出血也能回贴（原来只认带式，全出血走「cx 排除」）。
+        # 来路：戴维斯杯那条整体视觉 review——3:4 居中裁切把 ITF 转播的板裁得
+        # 只剩「7|4 / 5|4」四个数字＋半截名字，全片 94.6s（37%）都这样；而全库
+        # 177 条赛场之上里 160 条是全出血，这不是美网期间才有的形状。全出血的
+        # 板贴在字幕带**上方**（几何见 cut_segment），带式照旧贴画面带左下。
         box = _scorebox4(spec.get("scorebox"))
         if box is None:
             raise ReelError(
@@ -2935,10 +2958,11 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
                 "构图要挪窗口就写 seg.cx，别用 contain。")
     scorebox = spec.get("scorebox")
     if scorebox is not None:
-        if layout != "band":
+        if layout != "band" and not any(g.get("score_inset") for g in spec["segments"]):
             raise ReelError(
-                "spec.scorebox 只配合带式版式（layout: band）的 score_inset "
-                "回贴用——全出血不读它，写了就是个不吭声的死键。")
+                "spec.scorebox 只给 score_inset 回贴用，而这条 spec 没有一段开了 "
+                "score_inset——写了就是个不吭声的死键。要回贴就在比赛画面的段上写 "
+                '"score_inset": true（全出血贴在字幕带上方，带式贴画面带左下）。')
         if _scorebox4(scorebox) is None:
             raise ReelError(
                 f"scorebox 要写 [x0, y0, x1, y1]（源片像素坐标，x0<x1、"
@@ -3101,7 +3125,7 @@ _REAL_FIELDS: dict[str, tuple[str, ...]] = {
              "silent_source",
              "slug", "source_audio", "source_url", "source_quality_exceptions", "sources", "stats",
              "subtitle_top", "topbar", "tts_backend", "voice", "editorial"),
-    "cover": ("approved_image", "event_badge", "eyebrow", "hook", "layout", "matchup", "meta",
+    "cover": ("approved_image", "event_badge", "eyebrow", "hook", "hook_accent", "layout", "matchup", "meta",
               "narration", "portrait", "portrait_above", "result", "round",
               "score", "scoreboard", "scrim", "split", "sub", "subject",
               "tier", "topic", "versus", "winner"),
@@ -3930,7 +3954,12 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
 
                 sh = _even((y1 - y0) * ratio)
                 bw = _even((x1 - x0) * ratio)      # 整条板，原比例
-                oy = BAND_TOP + int(round(y0 * ratio))
+                # 两种版式都贴在板的**自然落点**（这样才盖得住居中窗口留下的
+                # 残条）：带式加画面带的顶偏移，全出血直接按比例。全出血下这个
+                # 落点（≈1307）和字幕上锚 1284 撞在一起——解法不是挪板，是把
+                # **字幕抬到板上方**（`subtitle_margin_for_boards`，render 里算，
+                # 整条片子一个锚）；字幕垫跟着锚一起抬。
+                oy = (BAND_TOP if LAYOUT == "band" else 0) + int(round(y0 * ratio))
                 strip = _even((x1 - x) * ratio)    # 居中窗口天然含住的那一条
                 # ⭐ 2026-08-28 一天里这块地方被账号所有者点了四次，最后定在
                 # 「**按板的实际大小裁，原比例贴回左下角，纵坐标不变**」。
@@ -3949,7 +3978,8 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
                 # 逐段用 `score_inset: {"x2": N}` 收窄）：写宽了会把板右边的
                 # 球场也抠进贴片，再贴到画面上另一个位置。
                 print(f"    [score] {seg.start:.1f}s 段回贴记分条 "
-                      f"[{x0},{y0},{x1},{y1}] → 画面带 (0,{oy})，"
+                      f"[{x0},{y0},{x1},{y1}] → "
+                      f"{'画面带' if LAYOUT == 'band' else '画面'} 左下 (0,{oy})，"
                       f"原比例 {bw}×{sh}px；盖住残条 {strip}px 之外"
                       f"再多占 {bw - strip}px 球场（认领过的代价）")
                 # ⭐ 板中途淡出的那几秒**不贴**（`enable`）——贴上去是一块
@@ -7677,10 +7707,16 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     # `subtitle_top` 的人工覆盖照旧最大——那是「源片自己烧了记分条要让开」的口子。
     default_margin = default_margin_v()
     margin_v = int(spec.get("subtitle_top", default_margin))
+    # 全出血回贴了记分条的片子，字幕整条抬到板上方（人工 `subtitle_top` 照旧最大）。
+    board_margin = subtitle_margin_for_boards(segments, default_margin)
+    if "subtitle_top" not in spec:
+        margin_v = board_margin
     ass = write_subtitles(cues, outdir / "subtitles.ass",
                           height=VIDEO_H, margin_v=margin_v)
     moved = "" if margin_v == default_margin else (
-        f"，比默认抬高 {default_margin - margin_v}px 让开源片自己的记分条")
+        f"，比默认抬高 {default_margin - margin_v}px "
+        + ("让开回贴在左下的记分条" if margin_v == board_margin != default_margin
+           else "让开源片自己的记分条"))
     print(f"字幕 {len(cues)} 行 → {ass.name}（画布 {VIDEO_W}×{VIDEO_H}，"
           f"上锚 MarginV={margin_v}{moved}，"
           f"左右 {_ASS_MARGIN_H}）")
@@ -7772,7 +7808,8 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     scrim_png: Path | None = None
     scrim_y = 0
     if LAYOUT != "band":
-        scrim_png, scrim_y = subtitle_scrim(outdir / "_subs_scrim.png", margin_v)
+        lead = SUB_SCRIM_LEAD_PX if margin_v >= default_margin else SUB_SCRIM_LIFTED_LEAD_PX
+        scrim_png, scrim_y = subtitle_scrim(outdir / "_subs_scrim.png", margin_v, lead)
         print(f"[字幕垫] 全出血：字幕带底下垫一层渐变（y {scrim_y}→{VIDEO_H}，"
               f"alpha 0→{SUB_SCRIM_ALPHA:.2f}），只盖 {cover_secs:.2f}~{match_end:.2f}s")
     else:
@@ -8688,18 +8725,24 @@ def full_canvas_filtergraph(graph: str, segments: list[Segment], cover_secs: flo
 #: 两样都碰不到它。
 SUB_SCRIM_ALPHA = 0.60
 SUB_SCRIM_LEAD_PX = 220
+#: 字幕锚被抬高过（回贴了记分条 / 人工 `subtitle_top`）时起坡短一档：锚已经在
+#: 画面里往上走了一百多像素，再往上起 220px 的坡会把下半幅整个压暗。两档并排
+#: 合到赛点那一帧上比过，取短的那档。
+SUB_SCRIM_LIFTED_LEAD_PX = 120
 SUB_SCRIM_FULL_PX = 60
 
 
-def subtitle_scrim(dest: Path, margin_v: int) -> tuple[Path, int]:
+def subtitle_scrim(dest: Path, margin_v: int,
+                   lead: int = SUB_SCRIM_LEAD_PX) -> tuple[Path, int]:
     """PIL 渲字幕带的渐变垫（透明底 PNG），返回 (路径, 贴在画布上的 y)。
 
     宽度铺满画布，高度从渐变起点一直到画布底；`margin_v` 是这条片子字幕的上锚
-    （`subtitle_top` 人工抬高了它就跟着抬）。alpha 逐行 smoothstep，没有硬边。
+    （`subtitle_top` 人工抬高了它就跟着抬），`lead` 是从上锚往上起坡的距离。
+    alpha 逐行 smoothstep，没有硬边。
     """
     from PIL import Image  # noqa: PLC0415
 
-    top = max(0, int(margin_v) - SUB_SCRIM_LEAD_PX)
+    top = max(0, int(margin_v) - int(lead))
     full = min(VIDEO_H, int(margin_v) + SUB_SCRIM_FULL_PX)
     height = VIDEO_H - top
     rows: list[int] = []

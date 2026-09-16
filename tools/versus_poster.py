@@ -1176,6 +1176,38 @@ def hook_title_px(lines: list[str]) -> int:
     return min(HOOK_TITLE_PX, int(TITLE_WIDTH_PX / max(hook_line_width(ln) for ln in lines)))
 
 
+def hook_html(lines: list[str], accent: str = "") -> str:
+    """钩子那几行的 HTML：每行一个 `<div>`，`accent` 那一截包成 `.accent`（品牌绿）。
+
+    ⭐ 2026-09-16 戴维斯杯那条整体视觉 review：两行 94px 纯白、没有层级，
+    「第一次」三个字是整条片子的卖点却和别的字一个颜色。版式坐标是冻结的
+    （字号/行数/位置，`test_封面版式定版冻结…`），**颜色没有被冻结**——所以给
+    `cover.hook_accent` 一个可选能力：一条片子最多一处，让扫信息流的人第一眼
+    落在那几个字上。不写就和原来逐字节相同。
+
+    ⚠️ `accent` 必须在钩子里**正好出现一次**：出现零次是写错了（以为高亮了，
+    海报上什么都没变），两次是两处都亮（一屏只留一个强调色）。都当场报。
+    """
+    accent = str(accent or "").strip()
+    if not accent:
+        return "".join(f"<div>{html.escape(ln)}</div>" for ln in lines)
+    hits = sum(ln.count(accent) for ln in lines)
+    if hits != 1:
+        raise SystemExit(
+            f"cover.hook_accent「{accent}」在钩子里出现了 {hits} 次，要正好一次"
+            "（0 次＝什么都没高亮，2 次＝两处都亮，一屏只留一个强调色）。"
+            f"钩子是：{' / '.join(lines)}")
+    out = []
+    for ln in lines:
+        if accent in ln:
+            a, b = ln.split(accent, 1)
+            out.append(f"<div>{html.escape(a)}<span class=\"accent\">"
+                       f"{html.escape(accent)}</span>{html.escape(b)}</div>")
+        else:
+            out.append(f"<div>{html.escape(ln)}</div>")
+    return "".join(out)
+
+
 def hook_line_width(line: str) -> float:
     """这一行占几个「字位」：全角记 1，半角记 0.5。
 
@@ -1426,7 +1458,7 @@ def _solo_body(cover: dict) -> tuple[str, str]:
     # 一个意思；要把暗角**加回来**才需要显式写 `scrim: "dim"`。
     dim_centre = str(cover.get("scrim", "")).strip().lower() == "dim"
     lines = [ln.strip() for ln in str(cover.get("hook", "")).split("\n") if ln.strip()]
-    hook = "".join(f"<div>{html.escape(ln)}</div>" for ln in lines)
+    hook = hook_html(lines, str(cover.get("hook_accent", "")))
     # 标题字号按**最长那一行**算，别写死——算法和它的来路全在 `hook_title_px()`
     # 的 docstring 里。这里只调用，不复制那个公式。
     #
@@ -1538,6 +1570,8 @@ __SCRIM__
  line-height:1.24;font-weight:400;color:#f4fbf7;white-space:nowrap;
  text-shadow:0 2px 6px rgba(0,0,0,.9),0 6px 30px rgba(0,0,0,.85),
  0 0 60px rgba(6,28,20,.7)}
+/* 钩子里认领的那一截重点词（cover.hook_accent）：品牌绿，一屏只留一个强调色 */
+.storytitle .accent{color:#c6f65a}
 /* 标题底下那一行赛果。`.storycopy` 是 column flex 且 gap 34px，所以这一行
    自己不用再加 margin——加了就和钩子之间多出一截，看着像两块东西。 */
 .storyscore{display:flex;align-items:baseline;gap:20px;white-space:nowrap;
@@ -2032,7 +2066,7 @@ def build_poster(cover: dict, out: Path, layout: str = "diagonal") -> Path:
 
     hook_lines = [ln.strip() for ln in str(cover.get("hook", "")).split("\n")
                   if ln.strip()]
-    hook = "".join(f"<div>{line}</div>" for line in hook_lines)
+    hook = hook_html(hook_lines, str(cover.get("hook_accent", "")))
     # ⭐ **VS 那几版的钩子字号和 solo 走同一个出处。** 账号所有者 2026-08-31
     # 把钩子收成一个数（`HOOK_TITLE_PX`）之后：「钩子文案大小修改后，同步到
     # 全局」——`.hook` 原来写死 100px，和 solo 的 94px 差着一档，同一个栏目
@@ -2124,6 +2158,7 @@ body{{width:{VIDEO_W}px;height:{VIDEO_H}px;overflow:hidden;background:{INK};
 .copy{{position:absolute;left:66px;right:66px;bottom:150px;z-index:6}}
 .hook{{font-family:'TL Display SC','TL Sans SC',sans-serif;font-size:{vs_hook_px}px;
   line-height:1.14;color:{TEXT};text-shadow:0 4px 30px rgba(0,0,0,.6)}}
+.hook .accent{{color:#c6f65a}}
 .score{{margin-top:26px;font-family:'TL Numeral','TL Sans SC',sans-serif;
   font-weight:600;font-size:50px;color:{BRAND}}}
 .sub{{margin-top:12px;font-size:32px;color:{DIM};letter-spacing:2px}}
