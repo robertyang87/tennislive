@@ -1335,6 +1335,52 @@ def test_冷开场台头不许把片头拖到台头图那么长(tmp_path):
     )
 
 
+#: 显式写着要 9:16 的片子。**只许减不许加。**
+#:
+#: 2026-09-16 默认值翻面时这张表是**空的**——49 条 `_OPENINGS` 里没有一条
+#: 声明 9:16。留着它是为了让「某条片子要回 9:16」变成一次看得见的决定，
+#: 而不是又一次悄悄落回默认值。
+_CANVAS_9X16 : set[str] = set()
+
+
+def test_解说片的画布默认是三比四():
+    """账号所有者：「我要求**所有**视频都是 3:4 的比例画面啊」。
+
+    ⚠️ 这条 2026-08-07 就说过一次（「画面还不是 3:4 的啊」），当时的修法是加了
+    `_OPENINGS[slug]["canvas"] = "3:4"` 这个**写了才换**的开关，默认留在 9:16。
+    量出来那个修法没解决问题：**49 条里只有 3 条写了那一行**，其余 46 条
+    （含 `second-serve-clock` / `big-three` / `promotional-fees` / `finals-venues` /
+    `wuhan-alternate`，逐条拉 Release 的成片 ffprobe 过）全是 1080×1920。
+
+    所以默认翻了面。这条测试钉两头：**不写就是 3:4**，而且**没有人偷偷写 9:16**。
+    """
+    from tennislive.video import explainer as E
+
+    # ⚠️ 问的是**生产代码那一个出处**（`canvas_height`），不是在这儿自己再算
+    # 一遍——第一版就是自己算的，反向验证时把默认值退回 9:16 它照样绿。
+    resolved = E.canvas_height
+
+    # ① 不写 canvas 的，解析出来必须是 3:4
+    bare = [s for s in E._OPENINGS if not (E._OPENINGS.get(s) or {}).get("canvas")]
+    assert bare, "一条都没有的话这条断言是恒真的"
+    wrong = [s for s in bare if resolved(s) != E.CARD_H]
+    assert not wrong, (
+        f"这些片子没写 canvas，却没落到 3:4：{'、'.join(wrong)}。\n"
+        f"默认值 2026-09-16 已经翻成 3:4——不写就是 3:4，要 9:16 得显式写出来。")
+
+    # ② 没有人偷偷写 9:16；真要写，得同时加进上面那张只许减不许加的表
+    declared = {s for s in E._OPENINGS
+                if (E._OPENINGS.get(s) or {}).get("canvas") == "9:16"}
+    assert declared <= _CANVAS_9X16, (
+        f"{'、'.join(sorted(declared - _CANVAS_9X16))} 声明了 9:16，却没进 "
+        f"_CANVAS_9X16。账号所有者要的是**所有**视频都 3:4——真要例外，"
+        f"把它写进那张表并说清为什么。")
+
+    # ③ 判据自己的判据：表里不许留幽灵条目
+    ghosts = _CANVAS_9X16 - set(E._OPENINGS)
+    assert not ghosts, f"_CANVAS_9X16 里这些片子已经不存在了：{'、'.join(sorted(ghosts))}"
+
+
 def test_canvas_h传CARD_H画布真的变成三比四不留黑边(tmp_path):
     """账号所有者看完铺满版：「画面还不是 3:4 的啊」。铺满只是把内容裁进
     9:16 画布，画布本身没变——`canvas_h` 才是真正换画布的开关。

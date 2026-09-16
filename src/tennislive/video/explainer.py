@@ -11908,9 +11908,13 @@ def assemble_explainer_video(
 
     ⚠️ 2026-08-07 又加了一处：账号所有者看完铺满版还是说「画面还不是 3:4 的
     啊」——铺满只是把内容裁进 9:16 画布，画布本身没有变。`canvas_h` 就是
-    干这个的：传 `CARD_H`（1440）画布就变成 1080×1440（3:4），传默认的
-    `VIDEO_H`（1920）还是原来的 9:16。默认值不改，是因为「网球有故事」
-    「知识解说」这些纯卡片片子还在用 9:16，改了默认值会把它们也一起改掉。
+    干这个的：传 `CARD_H`（1440）画布就变成 1080×1440（3:4），传 `VIDEO_H`
+    （1920）是老的 9:16。
+
+    ⚠️ **2026-09-16：调用方那一侧的默认已经翻成 3:4 了**（见
+    `generate_explainer_video` 里那段注释——46/49 条从没写过那个开关，说明
+    默认值本身是错的）。这个函数自己的形参默认仍是 `VIDEO_H`，因为它是
+    通用装配器、几条线都在调；**画幅的口径在调用方，不在这儿**。
 
     卡片本来就是 1080×1440 渲的（`W, H`），画布一旦也是 1080×1440，
     pad 那段的 `scale...decrease,pad...` 会变成没有效果的空操作——卡片
@@ -12108,6 +12112,21 @@ def assemble_explainer_video(
     return output
 
 
+def canvas_height(slug: str) -> int:
+    """这条片子的**视频画布**多高——画幅的口径只有这一处。
+
+    ⚠️ **抽成函数是被判据逼出来的。** 翻面那天我先把测试写成「自己再算一遍
+    `canvas == "9:16"` 然后比 `CARD_H`」，反向验证时把生产代码的默认值退回
+    9:16，**测试照样绿**——它测的是自己那份拷贝，不是真正跑的那一行。
+    CLAUDE.md 记过这个形状（「判据喂的是假产物」「一条恒真的绿灯」）。
+    现在只有这一个出处，测试和 `generate_explainer_video` 问的是同一句话。
+    """
+    canvas = (_OPENINGS.get(slug) or {}).get("canvas")
+    if canvas not in (None, "3:4", "9:16"):
+        raise ExplainerVideoError(f"认不出来的 canvas「{canvas}」，只认 3:4 / 9:16")
+    return VIDEO_H if canvas == "9:16" else CARD_H
+
+
 def generate_explainer_video(
     story,
     outdir: str | Path,
@@ -12210,13 +12229,25 @@ def generate_explainer_video(
         encoding="utf-8",
     )
     outro = _build_outro_clip(outdir, voice=voice, rate=rate, pitch=pitch)
-    # 画布默认还是 9:16——「网球有故事」「知识解说」这些纯卡片片子在用，改
-    # 默认值会把它们一起改掉。`_OPENINGS[slug]["canvas"] = "3:4"` 是显式认领
-    # （和 `mixed_fps` / `silent_source` 一个形状）：写了才换，不写就是老样子。
-    canvas = (_OPENINGS.get(story.slug) or {}).get("canvas")
-    if canvas not in (None, "3:4", "9:16"):
-        raise ExplainerVideoError(f"认不出来的 canvas「{canvas}」，只认 3:4 / 9:16")
-    canvas_h = CARD_H if canvas == "3:4" else VIDEO_H
+    # ⚠️⚠️ **2026-09-16 默认值翻面：3:4 是默认，9:16 变成要显式认领的例外。**
+    #
+    # 来路：账号所有者「我要求**所有**视频都是 3:4 的比例画面啊」。而这句话
+    # 2026-08-07 他就说过一次（「画面还不是 3:4 的啊」，原话记在 `eala-mcnally`
+    # 那条 `canvas` 旁边）——当时的修法是加了这个「写了才换」的开关，默认留在
+    # 9:16，理由写的是「改默认会把纯卡片片子一起改掉」。
+    #
+    # **那个修法没解决问题。** 量出来：49 条里只有 3 条写了这一行
+    # （`gauff-right-coco` / `eala-mcnally` / `heat-rule`），其余 46 条全部落回
+    # 9:16——`second-serve-clock`、`big-three`、`promotional-fees`、
+    # `finals-venues`、`wuhan-alternate` 逐条拉 Release 的成片 ffprobe 过，
+    # 都是 1080×1920。CLAUDE.md 早写过这个形状：**一个几乎没人会去写的开关，
+    # 本身就说明那个默认值是错的**（`scrim: "clear"` 那次 74/100 手动关掉，
+    # 这次是 46/49 根本没写，更彻底）。
+    #
+    # 所以现在反过来：不写 = 3:4，要 9:16 必须**显式写出来**。
+    # ⚠️ 那 3 条写着 `"3:4"` 的**不要删**——它们现在和不写一个意思，但删掉
+    # 之后翻面之前的历史就读不出来了（同 `scrim: "clear"` 那 74 行的处置）。
+    canvas_h = canvas_height(story.slug)
     # `intro_cx` 同理显式认领：默认 0.5（几何居中，老行为不变），写了才换。
     # 见 `assemble_explainer_video` 里那条注释——单条实拍片头常常不止一个
     # 镜头，这个数是折中值，不是每一帧都精确跟踪的结果。
