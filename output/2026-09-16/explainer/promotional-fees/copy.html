@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>🎾9.16 网球有故事｜请得动球星的那条规则</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>九月三十号那一周，辛纳在北京，阿尔卡拉斯在东京——同一天开打，同一天结束，都是 ATP500。
+翻开 ATP 二〇二六年的规则书，第一章一点一六条，标题是「推广费」。默认是一分都不许收；而整本书只给了一个例外：ATP500 和 ATP250 这两档赛事，可以支付推广服务费。
+也就是说大满贯不许，大师赛不许——不是因为它们更干净，是因为那几档强制参赛，人本来就得来，不用买。而这两档不强制，这把工具是它们唯一能抢人的东西。
+规矩有牙：违规给钱，球员那头罚到六万美元并追缴，最多停赛三年；赛事那头要交出全部记录接受查账，不交罚十万、可以终止会籍。
+可整本书里有一个数字自始至终没出现——到底给了多少。那一栏从来不公布。
+最后说清楚一句：这条片子讲的是规则本身。辛纳和阿尔卡拉斯为什么各去一站，他们自己给的理由是赛程和球场，没有任何公开记录说这里面有推广费。
+
+1️⃣ 这一周：两个人，去了两个城市
+· 9 月 30 日 两站同周开打
+· 北京和东京 都是 ATP500
+· 去年这一周 他们也是分开的
+
+2️⃣ 另一边：想去一个没打过的球场
+· 2024 在北京夺冠 2025 改去东京
+· 今年回东京卫冕
+· 北京来了 7 个世界前十
+
+3️⃣ 规则书：它不叫出场费，叫推广费
+· 1.16 条 标题是「推广费」
+· 默认：一分都不许收
+· 全书没有「出场费」这个词
+
+4️⃣ 那个例外：级别越高，反而越不许
+· 500 和 250 可以给
+· 大满贯和大师赛 一律不许
+· 高的那几档 靠强制不靠买
+
+5️⃣ 有多认真：罚最重的，是不许给的那一档
+· 挑战赛 2 万 · 250 三万
+· 500 四万 · 大师赛 6 万
+· 另追缴那笔钱 最多停赛三年
+
+6️⃣ 查得动吗：查得动，可金额从来不公布
+· ATP 可以要求查账
+· 不交 罚 10 万 并可终止会籍
+· 给了多少 从来不公布
+
+7️⃣ 回到看台：你买那张票，是为了谁
+· 能不能给 规则书说了
+· 给没给 给了多少 没人公布
+· 而票是你买的
+
+💬 留个答案
+你买那张票是为了看某一个人——他来不来，该由一个你永远看不到的数字决定吗？
+
+这里是 @网球时差｜网球有故事。
+
+#网球 #网球时差 #网球规则 #ATP500 #网球冷知识</textarea>
+    </section>
+    
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
