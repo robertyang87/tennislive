@@ -2001,6 +2001,19 @@ _ACADEMY_SPAN_DIAGRAM = _academy_span_diagram()
 # ⚠️ 加进来之前先问一句：这条片子**验过了吗**。加进来之后它就不再经过人的手，
 # 而微信那条消息发出去收不回来。
 AUTO_PUSH_SLUGS: frozenset[str] = frozenset({
+    # 2026-09-16 验过才加进来的（下面那句「加进来之前先问一句：这条片子验过了吗」）：
+    # 在分支上渲的**第四趟**（run 35126806203，explainer.yml push=false）落库成功，
+    # 工作流自带的两道闸都过了、微信那步 skipped（push=false，对的）。
+    # 成片从 Release 拉回本地量过——242.33 秒、1080×1920、30fps、8,900,390 字节；
+    # 音画等长（差 0.06 秒）；全片 mean −24.2 / max −3.5 dB，九个采样窗峰值
+    # −8.1~−4.5 dB，**没有哑场**；`narration.json` 确认是代码默认的云健 +22%。
+    # 九屏本地逐屏渲出来看过，另从成片抽九帧拼墙逐格看过。
+    # ⚠️ 前三趟各修掉一件事，都是**看产物**才发现的，不是判据报的：
+    #   ① 地上的 RIYADH 被序号药丸压掉前两个字母（裁源图上沿 560px）
+    #   ② 字幕半中半洋（`二〇二五到2027年` / `一万6000人`）——补了转换器两个形状
+    #   ③ 最后一处「三条标准」——`条` 不在量词表里
+    # 第四趟把这三处逐条回读确认：`3条标准` / `16000人` / `2025年到2027年`。
+    "finals-venues",
     "zheng-china-wuhan-wildcards-v2",  # Authorized editorial correction; separate delivery receipt.
     # 2026-09-08: local full decode and 15 illustrated native cards reviewed; user authorizes QC -> WeChat.
     "zheng-china-wuhan-wildcards",
@@ -2843,7 +2856,299 @@ _BIG3_TODAY_TEN_DIAGRAM = """
 """
 
 
+
+# ── finals-venues（网球有故事）的四张示意图 ────────────────────────────────
+#
+# ⚠️⚠️ 这条片子的主语是「**为什么**变来变去」，不是「第 N 年去了哪」。
+# 第一版按编年史写，账号所有者当场顶回来：「要讲出为什么会变来变去」。
+# 所以四张图分工是「一条因果链的四截」，不是四段流水账：
+#
+#   B 没有家（结构）→ C 标书第一条是钱（机制）→ D 断了之后什么样（后果）
+#   A 只是把后果摆出来当开场证据
+#
+# 全套出处在 research/wta-finals-venues-2026.md，改之前先读那份。
+
+# 开场的证据：近八届落在七座城市。**它是后果，不是原因**——原因在 B 和 C。
+_FINALS_CITIES_DIAGRAM = """
+<svg viewBox="0 0 900 540" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="40" text-anchor="middle" font-size="34" font-weight="700" fill="#f4fbf7">2019 年以来，7 座城市</text>
+  <text x="450" y="76" text-anchor="middle" font-size="26" fill="#cfe6d8">2020 年因疫情停办</text>
+
+  <text x="190" y="150" text-anchor="end" font-size="26" fill="#cfe6d8">2019</text>
+  <text x="212" y="150" font-size="30" fill="#c6f65a">深圳</text>
+  <text x="190" y="214" text-anchor="end" font-size="26" fill="#cfe6d8">2021</text>
+  <text x="212" y="214" font-size="30" fill="#f4fbf7">瓜达拉哈拉</text>
+  <text x="190" y="278" text-anchor="end" font-size="26" fill="#cfe6d8">2022</text>
+  <text x="212" y="278" font-size="30" fill="#f4fbf7">沃斯堡</text>
+  <text x="190" y="342" text-anchor="end" font-size="26" fill="#cfe6d8">2023</text>
+  <text x="212" y="342" font-size="30" fill="#f4fbf7">坎昆</text>
+
+  <text x="608" y="150" text-anchor="end" font-size="26" fill="#cfe6d8">2024</text>
+  <text x="630" y="150" font-size="30" fill="#f4fbf7">利雅得</text>
+  <text x="608" y="214" text-anchor="end" font-size="26" fill="#cfe6d8">2025</text>
+  <text x="630" y="214" font-size="30" fill="#f4fbf7">利雅得</text>
+  <text x="608" y="278" text-anchor="end" font-size="26" fill="#cfe6d8">2026</text>
+  <text x="630" y="278" font-size="30" fill="#f4fbf7">印第安维尔斯</text>
+  <text x="608" y="342" text-anchor="end" font-size="26" fill="#cfe6d8">2027</text>
+  <text x="630" y="342" font-size="30" fill="#c6f65a">夏洛特</text>
+
+  <line x1="66" y1="404" x2="834" y2="404" stroke="#8fd6a8" stroke-width="2" stroke-opacity="0.45"/>
+  <text x="450" y="456" text-anchor="middle" font-size="26" fill="#cfe6d8">而在这之前，新加坡连办了 5 年</text>
+</svg>
+"""
+
+# ⚠️ 这儿原来还有第三张 `_FINALS_NO_HOME_DIAGRAM`（温网/法网/美网/澳网 各自
+# 「XXXX 年起，同一块地」＋ 年终总决赛「15 座城市」的五行对照表）。
+# 账号所有者 2026-09-16：「**多用图片少用文字**」——而这一条恰好是**用一张照片
+# 讲得更好**的那种：温网中央球场满场那张，本身就是「这块地一百年没挪过窝」。
+# 四个年份退回旁白里讲，屏幕上不再摆表。
+#
+# ⚠️ 留下的两张示意图是**照片讲不清**的那两件事（CLAUDE.md「示意图的触发条件
+# 是照片讲不清，不是照片找不到」）：哪一年在哪座城（名单），和奖金的跳法（数）。
+
+# 第二层：标书第一条是钱，所以奖金每换一个东家就跳一次。
+# ⚠️ 条上不写字（CLAUDE.md「条形图上不要写字」），数字一律摆在条右边。
+_FINALS_PRIZE_DIAGRAM = """
+<svg viewBox="0 0 900 560" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="40" text-anchor="middle" font-size="34" font-weight="700" fill="#f4fbf7">谁撑得起奖金，谁拿走这一周</text>
+  <text x="450" y="76" text-anchor="middle" font-size="26" fill="#cfe6d8">总奖金，单位：万美元</text>
+
+  <text x="66" y="150" font-size="28" fill="#cfe6d8">新加坡</text>
+  <rect x="240" y="128" width="212" height="30" rx="6" fill="#8fd6a8" fill-opacity="0.72"/>
+  <text x="834" y="150" text-anchor="end" font-size="28" fill="#f4fbf7">700</text>
+
+  <text x="66" y="212" font-size="28" fill="#cfe6d8">深圳</text>
+  <rect x="240" y="190" width="424" height="30" rx="6" fill="#8fd6a8"/>
+  <text x="834" y="212" text-anchor="end" font-size="28" fill="#f4fbf7">1400</text>
+
+  <text x="66" y="274" font-size="28" fill="#cfe6d8">瓜达拉哈拉</text>
+  <rect x="240" y="252" width="152" height="30" rx="6" fill="#8fd6a8" fill-opacity="0.72"/>
+  <text x="834" y="274" text-anchor="end" font-size="28" fill="#c6f65a">500</text>
+
+  <text x="66" y="336" font-size="28" fill="#cfe6d8">沃斯堡</text>
+  <rect x="240" y="314" width="152" height="30" rx="6" fill="#8fd6a8" fill-opacity="0.72"/>
+  <text x="834" y="336" text-anchor="end" font-size="28" fill="#c6f65a">500</text>
+
+  <text x="66" y="398" font-size="28" fill="#cfe6d8">坎昆</text>
+  <rect x="240" y="376" width="273" height="30" rx="6" fill="#8fd6a8" fill-opacity="0.72"/>
+  <text x="834" y="398" text-anchor="end" font-size="28" fill="#f4fbf7">900</text>
+
+  <text x="66" y="460" font-size="28" fill="#cfe6d8">利雅得</text>
+  <rect x="240" y="438" width="462" height="30" rx="6" fill="#8fd6a8"/>
+  <text x="834" y="460" text-anchor="end" font-size="28" fill="#f4fbf7">1525</text>
+
+  <text x="450" y="524" text-anchor="middle" font-size="26" fill="#cfe6d8">招标第一条：有没有能力出资办一场世界级赛事</text>
+</svg>
+"""
+
+# 后果那一屏。⚠️ 引语一字不许改：萨巴伦卡的原话是
+# 「another level of disrespect」，出处见 research 那份第三节。
+_FINALS_CANCUN_DIAGRAM = """
+<svg viewBox="0 0 900 550" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="40" text-anchor="middle" font-size="34" font-weight="700" fill="#f4fbf7">2023 年，坎昆</text>
+  <text x="450" y="76" text-anchor="middle" font-size="26" fill="#cfe6d8">球场是临时搭在一家酒店的场地上</text>
+
+  <text x="90" y="166" font-size="30" fill="#f4fbf7">4300 个座位，这项赛事史上最小</text>
+  <text x="90" y="238" font-size="30" fill="#f4fbf7">看台和场地，开赛前几天才完工</text>
+  <text x="90" y="310" font-size="30" fill="#f4fbf7">风雨不断，决赛被推到了周一</text>
+
+  <line x1="66" y1="368" x2="834" y2="368" stroke="#8fd6a8" stroke-width="2" stroke-opacity="0.45"/>
+
+  <text x="450" y="436" text-anchor="middle" font-size="32" font-weight="700" fill="#c6f65a">「另一个层级的不尊重」</text>
+  <text x="450" y="486" text-anchor="middle" font-size="26" fill="#cfe6d8">——萨巴伦卡，当时的世界第一</text>
+</svg>
+"""
+
+
 _SCRIPTS: dict[str, tuple[tuple, ...]] = {
+    # 2026-09-16 选题：WTA 当天官宣年终总决赛 2027–2029 落户夏洛特。
+    #
+    # ⚠️⚠️ **这条片子回答的是「为什么变来变去」，不是「哪一年在哪」。**
+    # 第一版我按编年史写（① 官宣 ② 深圳 ③ 那三年 ④ 坎昆 ⑤ 利雅得…），
+    # 账号所有者当场顶回来：「**要讲出为什么会变来变去**」。改完之后的骨架是
+    # **一条三层因果**，编年史降级成它的证据：
+    #
+    #   ① 后果（七座城市）→ ② 第一层：它没有自己的场地，举办权是招标来的
+    #   → ③ 第二层：标书第一条就是「能不能出资」→ ④ 第三层：撑住那笔钱的
+    #   不是赛事自己，所以外面一变合同就断 → ⑤ 断了之后是什么样
+    #   → ⑥ 这次哪里不一样（总部搬过去）→ ⑦ 那深圳呢
+    #
+    # ⚠️ 第 ④ 屏是因果链的底层，**不是道德判断**——片子不指控任何一方，
+    # 说的是一个结构事实。「中东战事」那半句必须写成「报道说」（媒体归因，
+    # 不是 WTA 给的理由）；「深圳那份合同还有效／已作废」两句都不许写
+    # （WTA 从未公开过它的法律状态，英文报道三种说法互相打架）。
+    #
+    # 全套账在 research/wta-finals-venues-2026.md，改文案之前先读那份。
+    "finals-venues": (
+        (
+            "now",
+            "这一天",
+            "第七座城市",
+            "九月十六号，WTA 官宣：年终总决赛二〇二七年到二〇二九年落户夏洛特，"
+            "打在 NBA 黄蜂队的主场，连全球总部都从佛罗里达搬过去。"
+            "听起来是个大手笔。可把日历往回翻一页："
+            "从二〇一九年算起，夏洛特是第七座城市。"
+            "四大满贯每年都在同一块地上打，大师赛也钉死在城市上，"
+            "只有这一项，几乎每两三年就换一次。为什么？",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "9 月 16 日官宣夏洛特",
+                "2019 年以来第七座城市",
+            ),
+            _FINALS_CITIES_DIAGRAM,
+        ),
+        (
+            "home",
+            "第一层",
+            "它从来就没有自己的场地",
+            "第一层原因，说出来很简单：它从来就没有过自己的场地。"
+            "这是温网的中央球场，一九二二年就在这儿了，一百多年没挪过窝。"
+            "法网一九二八年，美网一九七八年，澳网一九八八年，"
+            "各自钉死在自己那块地上。"
+            "而年终总决赛没有那块地——一九七二年办到今天，它去过十五座城市，"
+            "举办权每隔几年就重新拿出来招一次标。"
+            "二〇一二年那一轮，四十三座城市表示过兴趣。"
+            "所以它不是落户在哪儿，是被买走几年。",
+            "assets/venues/wimbledon-centre-court.jpg",
+            "Daniel Cooper / Wikimedia Commons · CC BY-SA 2.0 · "
+            "2023 年温网男单决赛，全英俱乐部中央球场",
+            (
+                "温网 1922 年起没挪过窝",
+                "总决赛去过 15 座城市",
+            ),
+        ),
+        (
+            "money",
+            "第二层",
+            "标书上第一条写的就是钱",
+            "第二层：那份标书上，第一条写的是什么。"
+            "WTA 自己的通稿里列着三条标准。"
+            "第一条，有没有能力出资办一场世界级的赛事。"
+            "第二条，支不支持 WTA 把奖金大幅涨上去。"
+            "第三条才是长期承诺。"
+            "所以每换一个东家，奖金就跳一次："
+            "新加坡时代七百万美元，深圳一千四百万，"
+            "瓜达拉哈拉和沃斯堡各五百万，坎昆九百万，"
+            "利雅得一千五百二十五万。"
+            "谁撑得起这个数，谁就拿走这一周。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "第一条标准：能不能出资",
+                "700 万到 1525 万的跳法",
+            ),
+            _FINALS_PRIZE_DIAGRAM,
+        ),
+        (
+            "outside",
+            "第三层",
+            "那笔钱不是网球挣来的",
+            "第三层，也是真正的那一层：撑住那笔奖金的，不是这项赛事自己挣的。"
+            "深圳那份十年合同，中标的是一家地产商，承诺给赛事建一座球场。"
+            "利雅得那三年，赛事的全称叫 WTA Finals Riyadh presented by PIF，"
+            "PIF 是沙特的主权财富基金。"
+            "钱来自赛事之外，所以外面一变，合同就断。"
+            "深圳撞上疫情，又撞上彭帅那件事，"
+            "WTA 二〇二一年底暂停了在中国的全部赛事；"
+            "利雅得这边，报道把它和中东的战事连在一起，"
+            "二〇二六年这一届是 WTA 主动要求换地的，提前了整整一年。"
+            "两次都不是网球本身出了问题。",
+            "assets/explainer/finals-venues/riyadh-court-2025.jpg",
+            "WTA 官方图 · 2025 年 11 月 8 日利雅得，"
+            "莱巴金娜与冠军奖杯，场地上印着 RIYADH",
+            (
+                "深圳由地产商中标",
+                "利雅得由沙特主权基金冠名",
+            ),
+        ),
+        (
+            "fallout",
+            "后果",
+            "断了之后，只能临时找",
+            "合同一断，就只能临时找地方，而且一次比一次晚。"
+            "二〇二一年九月十三号才宣布挪到瓜达拉哈拉，就是这座球场，"
+            "距离开赛还剩不到两个月。"
+            "第二年九月六号才宣布去沃斯堡，只剩八周，"
+            "首场比赛场内座位连百分之二十都没坐满。"
+            "奖金也跟着掉回五百万——深圳那一届的三分之一多一点。",
+            "assets/venues/guadalajara-centre-court.jpg",
+            # ⚠️ 这是**场馆图**，不是 2021 年那一届的现场图（转载，摄影师未署名，
+            # 拍的多半是瓜达拉哈拉公开赛）。所以旁白说的是「就是这座球场」，
+            # 一个字都不许说成「那一届的某一场」——CLAUDE.md「官方图库把它挂在
+            # 这一站名下，不等于拍的是这个场地/这一年」那条。
+            "Complejo Panamericano de Tenis 中心球场（转载，摄影师未署名）· "
+            "2021 年总决赛临时挪去的就是这座球场",
+            (
+                "开赛前不到两个月才定",
+                "奖金掉回 500 万",
+            ),
+        ),
+        (
+            "cancun",
+            "最难看的一届",
+            "球场搭在酒店的场地上",
+            "二〇二三年更狠。坎昆那一届的球场，"
+            "是临时搭在一家酒店的场地上的，四千三百个座位，"
+            "这项赛事史上最小，看台和场地开赛前几天才完工。"
+            "萨巴伦卡当时说，这是 WTA 对球员另一个层级的不尊重，"
+            "球员在那块场地上移动，有时候都觉得不安全。"
+            "那一周风雨不断，决赛被一路推到了周一。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "4300 座，史上最小",
+                "开赛前几天才完工",
+            ),
+            _FINALS_CANCUN_DIAGRAM,
+        ),
+        (
+            "charlotte",
+            "这一次",
+            "第一次，是自己搬进去",
+            "二〇二六年这一届去印第安维尔斯，一座能坐一万六千人的球场，"
+            "总奖金一千五百五十万——可合同只有一年，"
+            "WTA 自己管它叫通往下一章的桥。"
+            "真正的下一章是夏洛特。而那份合同里，"
+            "有一样以前从来没有过的东西：WTA 把全球总部搬过去。"
+            "以前是把这一周卖给一座城市，这一次是自己住进去。"
+            "他们还说，如果当地建成专用的网球场馆，"
+            "二〇二九年之后再加一站五百级别的赛事。"
+            "主席卡米洛给这件事定的目标是，"
+            "把它做成女子体育的超级碗。",
+            "assets/venues/indianwells-centre-court.jpg",
+            # ⚠️ 同上，场馆图不是某一场。这一张的好处是**场地前场刷着
+            # INDIAN WELLS**——和利雅得那张的 RIYADH、瓜达拉哈拉那张的
+            # GUADALAJARA 连成一条母题：每一屏的地板上都刷着一个城市的名字，
+            # 而这条片子讲的就是这个名字每隔两三年换一次。
+            "WTA 官方图库 · 印第安维尔斯网球花园 1 号球场，"
+            "场地前场刷着 INDIAN WELLS",
+            (
+                "印第安维尔斯只签一年",
+                "WTA 总部一起搬过去",
+            ),
+        ),
+        (
+            "shenzhen",
+            "那深圳呢",
+            "同一座场馆，下周又是决赛夜",
+            "那深圳呢？二〇一八年宣布的是二〇一九年到二〇二八年，整整十年。"
+            "到今天，那十年里只办成了一届——"
+            "而二〇二七年和二〇二八年，已经归夏洛特了。"
+            "不过深圳湾体育中心并没有空着。"
+            "比利·简·金杯的决赛，二〇二五年到二〇二七年就落在那儿，"
+            "和二〇一九年那一届总决赛，是同一座场馆。"
+            "今年这一届，下周就开打。",
+            "assets/venues/shenzhen-bay-bjk-cup-centre-court.jpg",
+            "深圳湾体育中心，比利·简·金杯决赛（转载，摄影师未署名）",
+            (
+                "10 年合同只办成一届",
+                "比利·简·金杯下周开打",
+            ),
+            "",
+            "深圳还等得到那座奖杯吗？",
+        ),
+    ),
     # 2026-09-14 新一期 ATP 排名：德约从第 5 掉到第 12，三巨头同时不在前十,
     # 上一次这样是 2002 年 10 月。两个独立源对上（ESPN 新闻接口 49938566 /
     # IANS「drops seven places」5−7=12），当期前十另从 tennisexplorer 的
@@ -7853,6 +8158,17 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
 # 这个洞。判据落在 test_每条片子的标签都放满五个。
 _DEFAULT_TAGS = ("网球", "网球时差", "网球冷知识", "网球科普", "网球运动")
 _CAPTIONS: dict[str, dict] = {
+    "finals-venues": {
+        # ⚠️ 两行讲的是**因果**不是编年史：第一行摆反常（十五座城市 vs 温网一百年
+        # 没挪过），第二行把原因说出来（招标第一条就是出资）。
+        "hook": (
+            "年终总决赛去过 15 座城市——温网在同一块地上打了 100 多年，"
+            "而它一次都没留住过。\n"
+            "根子不在网球：WTA 招标的第一条标准就是「有没有能力出资」，"
+            "而撑住那笔奖金的，从来不是赛事自己挣的。"
+        ),
+        "tags": ("网球", "网球时差", "年终总决赛", "深圳", "网球冷知识"),
+    },
     "big-three": {
         "hook": (
             "9 月 14 日新一期 ATP 排名，德约科维奇从第 5 掉到第 12——"
@@ -8367,6 +8683,32 @@ def column_of(slug: str) -> Column:
 # beat one makes the viewer work out the subject for themselves. Every deck
 # now opens on the question it answers, said out loud and set large.
 _OPENINGS: dict[str, dict] = {
+    "finals-venues": {
+        # ⚠️ 台头挂在每一屏上，所以它得自己说得清。不写「它从来就没有自己的家」
+        # ——裸的「它」在台头里没有指代对象。摆事实那一句才站得住
+        # （和 `一发有钟，二发没有`、`28 度也能叫极端高温` 同一个形状）。
+        "topic": "总决赛去过 15 座城市",
+        # ⚠️⚠️ 大标题第二行问的是**为什么**，不是「又换了一次」。账号所有者
+        # 2026-09-16：「要讲出为什么会变来变去」——封面这一问就是那句话，
+        # 片子里 ②③④ 三屏分三层回答它。
+        # 两行各 10/11 字，都在一行 16 字的上限里。
+        "question": "总决赛去过 15 座城市\n为什么没有一座留得住？",
+        # 口播自带语境（只听声音的人看不见台头），所以比画面上那一问长一截。
+        "narration": "总决赛去过十五座城市，为什么没有一座留得住？"
+                     "根子不在网球——它从来就没有过自己的场地，"
+                     "举办权每隔几年，就要重新招一次标。",
+        # ⚠️ 封面是 `background-size:cover` **一律铺满、居中裁**
+        # （`letterbox = wide and not cover`），所以挑的是这张近景：
+        # 4000×2449 裁成 3:4（x=1082..2918）奖杯从底座到顶饰整支在框内。
+        # 那张印着 RIYADH 的全景**不能当封面**——居中裁只剩中间 50%，
+        # 地上那个城市名会被切成「IYAD」；它改在第 ④ 屏当证据，
+        # 正片的宽图走信箱式，一个字都不裁。
+        "image": "assets/explainer/finals-venues/rybakina-trophy-riyadh-2025.jpg",
+        "credit": "WTA 官方图 · 2025 年 11 月 8 日利雅得，"
+                  "莱巴金娜亲吻比利·简·金杯冠军奖杯",
+        # ⚠️ 标签必须专属，`test_文案的开场和标签属于它自己的选题` 会当场红。
+        "tags": ["网球", "网球时差", "年终总决赛", "深圳", "网球冷知识"],
+    },
     "big-three": {
         "topic": "三巨头一起跌出了前十",
         # ⚠️ 封面这一问指向**上一次是哪一年**（2002 年 10 月），末屏那一问指向
@@ -10269,7 +10611,12 @@ _NUM_CHARS = set(_DIGIT) | {"十", "百", "千", "两"}
 # ⚠️ **只补「次」，别顺手补「分」「发」「强」「成」**——同一轮扫出来的那几个
 # 必须不转：「三分之一」会变成「3分之一」，而「一发」「二发」「四强」是术语
 # 不是数数。「十七分」本来就转，走的是「含十百千」那条，不靠这张表。
-_NUM_UNITS = "年月日天岁个位局盘场记座枚块届轮周号点次"
+# ⚠️ **「条」是 2026-09-16 补的**：账号所有者「给用户看的文案里的数字不要用
+# 汉字」那一轮，字幕里还剩「三条标准」没换。量过，全库只动 4 段，全是
+# 「3 条标准／3 条里程碑／3 条判例／3 条线」这类真数量词；**「第一条」是序数**，
+# 由上面 `before == "第"` 那条挡着，照旧留中文。「一条」「两条」走裸
+# 「一/两」的豁免，也不受影响。
+_NUM_UNITS = "年月日天岁个位局盘场记座枚块届轮周号点次条"
 _STRUCTURED = set("十百千")
 
 
@@ -10382,11 +10729,49 @@ def arabic_numerals(text: str) -> str:
     # 不写「几成几」，所以从那天起**每一条带百分比的 spec 都会走到这儿**。
     text = re.sub(rf"百分之([{''.join(_NUM_CHARS)}点]+)", percent, text)
 
-    def year(m: re.Match) -> str:
-        return "".join(_DIGIT[c] for c in m.group(1))
+    def year_of(run: str) -> str:
+        return "".join(_DIGIT[c] for c in run)
 
-    # 四位年份：一九八九、二〇二四。它们不含十/百/千，只能靠「后面跟着年」认出来。
-    text = re.sub(rf"([{''.join(_DIGIT)}]{{4}})(?=年|赛季|届)", year, text)
+    # 四位年份：一九八九、二〇二四。它们不含十/百/千，要另外认。
+    #
+    # ⚠️⚠️ **两条判据，缺第二条就会半中半洋。** 原来只有第一条（后面跟着
+    # 年／赛季／届），于是「二〇二五**到**二〇二七年」里只有后一个换得掉，
+    # 屏幕上是 `二〇二五到2027年`；「二〇二四**和**二〇二五两届」两个都换不掉。
+    # 2026-09-16 `finals-venues` 渲完抽帧才看见前一种。
+    #
+    # 第二条按 **`〇`** 认：中文里 `〇` 只在逐位写数（年份、编号）时出现，
+    # 「一〇一」这种三位的进不来（要满四位），所以这一条窄得很。
+    # 不含 `〇` 又没跟着年的（「一九八九」裸写）照旧不碰——判据宁可窄不可宽。
+    text = re.sub(
+        rf"([{''.join(_DIGIT)}]{{4}})(?=年|赛季|届)|(?=[^〇]*〇)([{''.join(_DIGIT)}]{{4}})",
+        lambda m: year_of(m.group(1) or m.group(2)),
+        text,
+    )
+
+    def compound(m: re.Match) -> str:
+        """`万`/`亿` 带零头的复合数：一万六千 → 16000、两万五千 → 25000。
+
+        ⚠️⚠️ `万` 不在 `_NUM_CHARS` 里（下面那一轮**故意**在「万」处收住，
+        否则「七十万英镑」会变成 700000），所以通用那一轮只匹配得到后半截
+        「六千」，换出来是 **「一万6000人」**——半个中文半个阿拉伯。
+        2026-09-16 `finals-venues` 渲完抽帧才看见；同一轮扫出仓库里另有四处
+        会撞上它，**不是这一条片子的特例**。
+
+        ⚠️ **只认「万/亿 后面还有零头」这一种**：`七十万英镑`、`一千六百万美元`
+        的零头是空的，匹配不上，照旧由下面那一轮换成 `70万` / `1600万`
+        ——那两个已经是阿拉伯数字了，不用动。
+        """
+        head, unit, tail = m.group(1), m.group(2), m.group(3)
+        base = _num_value(head)
+        rest = _num_value(tail)
+        if base is None or rest is None:
+            return m.group(0)
+        scale = 10_000 if unit == "万" else 100_000_000
+        return str(int(base) * scale + int(rest))
+
+    text = re.sub(
+        rf"([{''.join(_NUM_CHARS)}]+)([万亿])([{''.join(_NUM_CHARS)}]+)", compound, text
+    )
 
     # 小数：二十一点六秒 → 21.6秒、每小时一点三公里 → 1.3公里、三十点一以上 → 30.1以上。
     #
