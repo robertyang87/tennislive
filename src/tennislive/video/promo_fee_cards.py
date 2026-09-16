@@ -20,61 +20,6 @@ from .diagram_palette import AMBER, FILL, INK, LIME, SOFT
 #: 压住。抄 `serve_clock_cards.INK_BOTTOM` 那个量出来的数，别另定一个。
 INK_BOTTOM = 480
 
-#: 封面没有序号药丸，可以铺到更低。同样抄 `serve_clock_cards`。
-COVER_INK_BOTTOM = 560
-
-
-def tier_cover() -> str:
-    """封面：一条规矩把赛事切成两半，整条片子的全部内容就是这一刀。
-
-    ⚠️ **封面故意不用球员照片。** 封面那一问是「花钱请球星来，犯规吗？」，
-    把辛纳或阿尔卡拉斯的脸压在这句话下面，等于替读者认定了他就是那个
-    收了钱的人——而**没有任何一手证据支持那句话**（查证过程在
-    `research/promotional-fees-2026.md`）。CLAUDE.md「封面标题带着指控时，
-    放谁的脸就是在指认谁」说的正是这一类，`gamesmanship` 是同一个先例。
-    他俩的 ATP 官方实拍留在第 ①②	屏，那两屏只有赛程、比分和他们自己的原话。
-
-    （顺带：那两张都是 1920×1080，铺满封面要放大 133%，本来也过不了
-    `test_封面图不许被放大` 的 1.00x 地板。**但换掉它的理由是上一条，
-    分辨率只是碰巧站在同一边**——别混，混了下次找到一张大图就会把脸放回去。）
-    """
-    rows = (
-        (150, "大满贯", "不许", False),
-        (236, "大师赛 1000", "不许", False),
-        (322, "ATP 500", "可以", True),
-        (408, "ATP 250", "可以", True),
-    )
-    body = []
-    for y, name, verdict, allowed in rows:
-        colour = LIME if allowed else SOFT
-        body.append(
-            f'  <rect x="52" y="{y}" width="796" height="68" rx="13" '
-            f'fill="{FILL}" fill-opacity="{0.22 if allowed else 0.06}" '
-            f'stroke="{colour}" stroke-width="{4 if allowed else 2}" '
-            f'stroke-opacity="{1 if allowed else 0.40}"/>'
-        )
-        body.append(
-            f'  <text x="88" y="{y + 45}" font-size="33" '
-            f'font-weight="{800 if allowed else 600}" fill="{INK}" '
-            f'fill-opacity="{1 if allowed else 0.66}">{name}</text>'
-        )
-        body.append(
-            f'  <text x="812" y="{y + 45}" text-anchor="end" font-size="34" '
-            f'font-weight="800" fill="{colour}" '
-            f'fill-opacity="{1 if allowed else 0.66}">{verdict}</text>'
-        )
-    return f"""
-<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">
-  <text x="450" y="52" text-anchor="middle" font-size="36" font-weight="700"
-        fill="{INK}">花钱请球员来参赛</text>
-  <text x="450" y="102" text-anchor="middle" font-size="26" fill="{SOFT}">ATP
-        2026 规则书 · 第一章 1.16 推广费</text>
-{chr(10).join(body)}
-  <text x="450" y="{COVER_INK_BOTTOM}" text-anchor="middle" font-size="30"
-        font-weight="800" fill="{LIME}">四档赛事，只有两档可以</text>
-</svg>
-"""
-
 
 def who_may_pay() -> str:
     """屏 ③：谁可以给钱。一条规矩把四档赛事切成两半，这一屏就是那一刀。
