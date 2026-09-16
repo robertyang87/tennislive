@@ -12888,48 +12888,80 @@ def test_conform声明的源要真的被统一到基准尺寸(tmp_path):
     """`conform: {源键: 为什么}` 是尺寸闸的唯一出路——等比放大铺满再中央裁。
 
     真造两条不同高度的源片跑一遍：查源码只能防「有人删了它」，防不住
-    「它从来没工作过」。四头都钉：
-    ① 声明过的源变成基准尺寸，之后 check_sources_match 放行
+    「它从来没工作过」。六头都钉：
+    ① 声明过的源按基准尺寸算（`effective_size`），之后 check_sources_match 放行
     ② 没声明的尺寸不一致照样红（闸没有被顺手放松）
     ③ 全部声明进去要报错（没有基准）
     ④ 光列名字不写原因要报错（认领要留下判据）
     ⑤ render() 里 conform 必须排在尺寸闸**前面**——①~④都是直接调函数，
-      拆掉 render() 里的调用它们照样绿（反向验证时抓到的），所以位置单独钉。
+      拆掉 render() 里的调用它们照样绿（反向验证时抓到的），所以位置单独钉
+    ⑥ **不落盘**，而且切出来的和落盘那条老路一样：2026-09-16 之前这儿把整条
+      源片重编成 `*_conform.mp4`（戴维斯杯那条两条 720p 集锦各用 6 秒，conform
+      却编了整条——516s，占那趟 render 的 47%，中间文件 0.9 GB）。现在放大裁边
+      前置到切段那条链里。判据是**真切一段**：`paths` 原样、目录里没有
+      `*_conform.mp4`，切出来是成片画幅，而且和「先整条 conform 再切」的老路
+      切出来的帧逐像素均差在编码噪声以内——两条路是同一条滤镜，差的只有
+      中间那次 crf16 量化
     """
     sys.path.insert(0, str(Path("tools").resolve()))
     import build_match_reel as reel  # noqa: PLC0415
+    from PIL import Image, ImageChops, ImageStat  # noqa: PLC0415
 
     def _ff(*args):
         subprocess.run(["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
                         *args], check=True)
 
     wide, tall = tmp_path / "src_a.mp4", tmp_path / "src_b.mp4"
-    _ff("-f", "lavfi", "-i", "testsrc2=size=960x506:rate=24:duration=2",
-        "-c:v", "libx264", "-preset", "ultrafast", str(wide))       # 电影画幅
-    _ff("-f", "lavfi", "-i", "testsrc2=size=960x540:rate=24:duration=2",
+    _ff("-f", "lavfi", "-i", "testsrc2=size=1920x1012:rate=24:duration=3",
+        "-f", "lavfi", "-i", "sine=frequency=440:duration=3",
+        "-c:v", "libx264", "-preset", "ultrafast", "-c:a", "aac", "-shortest",
+        str(wide))                                                  # 电影画幅
+    _ff("-f", "lavfi", "-i", "testsrc2=size=1920x1080:rate=24:duration=3",
         "-c:v", "libx264", "-preset", "ultrafast", str(tall))       # 基准
 
     # ② 不声明：照样红
     with pytest.raises(reel.ReelError, match="尺寸"):
         reel.check_sources_match({"a": wide, "b": tall}, {})
 
-    # ① 声明了：统一到基准，闸放行
+    # ① 声明了：按基准尺寸算，闸放行；⑥ 不落盘
     paths = {"a": wide, "b": tall}
     spec = {"conform": {"a": "电影画幅的宣传片，1.07×放大加两侧裁边对b-roll可用"}}
-    reel.conform_sources(paths, spec, tmp_path)
-    assert reel.probe_size(paths["a"]) == (960, 540), "conform 没把尺寸统一到基准"
-    assert paths["a"] != wide, "conform 应该产出新文件，不许原地改写缓存过的源片"
+    reel.conform_sources(paths, spec)
+    assert reel.effective_size(paths["a"]) == (1920, 1080), "conform 没把尺寸统一到基准"
+    assert reel.probe_size(wide) == (1920, 1012), "原生源片不许被改写"
+    assert paths["a"] == wide and not list(tmp_path.glob("*_conform*")), (
+        "conform 不许再落盘整条中间文件——它是那 0.9 GB 和 516 秒的来路")
     reel.check_sources_match(paths, spec)  # 不抛 = 放行
+
+    # ⑥ 真切一段，和落盘的老路比帧
+    reel.resolve_crop(1920, 1080, None, "", layout="full")
+    seg = reel.Segment(0.5, 2.0, 0.5, "", track=False)   # 居中裁，默认那条 crop 路
+    new_cut = tmp_path / "new.mp4"
+    reel.cut_segment(wide, seg, new_cut, 1920)
+    assert reel.probe_size(new_cut) == (reel.VIDEO_W, reel.VIDEO_H)
+
+    legacy = tmp_path / "legacy_conform.mp4"
+    _ff("-i", str(wide),
+        "-vf", "scale=1920:1080:force_original_aspect_ratio=increase:flags=lanczos,crop=1920:1080",
+        "-c:v", "libx264", "-preset", "fast", "-crf", "16", "-c:a", "copy", str(legacy))
+    reel.conform_sources({"legacy": legacy, "b": tall}, {})   # 老路的文件本来就是基准尺寸
+    old_cut = tmp_path / "old.mp4"
+    reel.cut_segment(legacy, seg, old_cut, 1920)
+    frames = []
+    for cut in (new_cut, old_cut):
+        png = cut.with_suffix(".png")
+        _ff("-ss", "0.8", "-i", str(cut), "-frames:v", "1", str(png))
+        frames.append(Image.open(png).convert("RGB"))
+    diff = ImageStat.Stat(ImageChops.difference(*frames)).mean
+    assert max(diff) < 4, f"现场放大和落盘老路切出来的帧对不上：均差 {diff}"
 
     # ③ 全声明进去：没有基准
     with pytest.raises(reel.ReelError, match="基准"):
-        reel.conform_sources({"a": wide, "b": tall},
-                             {"conform": {"a": "x", "b": "y"}}, tmp_path)
+        reel.conform_sources({"a": wide, "b": tall}, {"conform": {"a": "x", "b": "y"}})
 
     # ④ 不写原因：认领不算数
     with pytest.raises(reel.ReelError, match="判据"):
-        reel.conform_sources({"a": wide, "b": tall},
-                             {"conform": {"a": ""}}, tmp_path)
+        reel.conform_sources({"a": wide, "b": tall}, {"conform": {"a": ""}})
 
     # ⑤ 位置：conform 排在尺寸闸前面，且真的在 render() 里被调用
     body = inspect.getsource(reel.render)
