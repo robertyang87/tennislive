@@ -13237,6 +13237,8 @@ def test_横幅存档源contain时几何按它自己的尺寸算(tmp_path):
     修之后出一段 1080×1440。反向验证：把 `native_w/native_h` 换回
     `source_w/CROP_H` 当场红在 cut_segment 那一行。
     """
+    reel = _reel()
+
     def _ff(*args):
         subprocess.run(["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
                         *args], check=True)
