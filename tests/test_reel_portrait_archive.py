@@ -22,6 +22,12 @@ def test_native_archive_requires_claim_and_every_use_contained(monkeypatch):
     with pytest.raises(reel.ReelError, match="尺寸"):
         reel.check_sources_match(paths, spec)
     spec["segments"].pop()
+    # 2026-09-16 起横幅的存档源同样放行：contain 整幅缩进画布、不裁不取窗口，
+    # 几何和横竖无关（戴维斯杯那条的 640×480 百代新闻片，run 35072955589）。
+    # 原来这儿断言 854×480 要红——那条「必须竖屏」是给手机录屏写的，去掉了。
+    # 横幅那一头的三个方向钉在 test_match_reel.py::test_横幅的存档源整幅铺时不受尺寸闸管。
     sizes["archive"] = (854, 480)
+    reel.check_sources_match(paths, spec)
+    spec["segments"].append({"source": "archive", "fit": "crop"})
     with pytest.raises(reel.ReelError, match="尺寸"):
         reel.check_sources_match(paths, spec)
