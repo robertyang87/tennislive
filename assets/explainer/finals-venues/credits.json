@@ -1,0 +1,35 @@
+{
+  "rybakina-trophy-riyadh-2025.jpg": {
+    "credit": "WTA 官方图 · 2025 年 11 月 8 日利雅得，莱巴金娜亲吻比利·简·金杯冠军奖杯",
+    "source_url": "https://photoresources.wtatennis.com/photo-resources/2025/11/08/2350cb8c-b352-4de6-868e-5f3388f48603/Elena_Rybakina_-_WTA_Finals_Riyadh_2025_-_Day_8-DSC_8238.jpg?width=4000",
+    "article": "https://www.wtatennis.com/news/4398606/elena-rybakina-wins-record-womens-sports-payout-at-wta-finals",
+    "what": "2025 WTA 年终总决赛决赛后，莱巴金娜亲吻奖杯（6-3 7-6(0) 胜萨巴伦卡），彩带与场馆灯光为背景",
+    "license": "unverified",
+    "四要素": "人物=莱巴金娜、赛事=WTA Finals、地点=Riyadh、年份=2025、比赛日=Day 8（决赛日）——**五样全写在 WTA 自己的文件名里**：Elena_Rybakina_-_WTA_Finals_Riyadh_2025_-_Day_8-DSC_8238.jpg",
+    "gates": "① 精准 ✅ 文件名自证 ② 在比赛中 ✅ 捧杯（四道闸门第 2 道的例外：这一屏讲的是这座奖杯本身） ③ 冲击力 ✅ 近景特写，奖杯从底座到顶饰整支在框内、是画面落点 ④ 清晰度 4000×2449",
+    "用在哪": "封面。3:4 居中裁切模拟过（裁框 x=1082..2918），奖杯与侧脸全在框内，底部留给文案。",
+    "⚠️ 为什么封面不用那张印着 RIYADH 的": "封面是 `background-size:cover` **一律铺满、居中裁**（`letterbox = wide and not cover`），4000×2666 裁成 3:4 只剩中间 50%，场地上那个 RIYADH 会被切成「IYAD」。那张改在正片里当证据用——正片的宽图走信箱式，一个字都不裁。"
+  },
+  "riyadh-court-2025.jpg": {
+    "credit": "WTA 官方图 · 2025 年 11 月 8 日利雅得，莱巴金娜与奖杯，场地上印着 RIYADH",
+    "source_url": "https://photoresources.wtatennis.com/photo-resources/2025/11/08/7ea67a0c-e48c-4e2c-bd3f-c6830bfc6348/Elena_Rybakina_-_WTA_Finals_Riyadh_2025_-_Day_8-DSC_6000A.jpg?width=4000",
+    "article": "https://www.wtatennis.com/news/4398606/elena-rybakina-wins-record-womens-sports-payout-at-wta-finals",
+    "what": "2025 WTA 年终总决赛决赛后的全景：莱巴金娜蹲在球场中央捧杯，前景地胶上印着大写的 RIYADH，网前横幅 WTA FINALS，满地彩带",
+    "license": "unverified",
+    "四要素": "同上，WTA 文件名自证（Elena_Rybakina_-_WTA_Finals_Riyadh_2025_-_Day_8）；另有画面自证：地胶上的 RIYADH、网前的 WTA FINALS、大屏上的 ELENA RYBAKINA 与 WTA FINALS RIYADH 台标",
+    "gates": "① 精准 ✅ 文件名 ＋ 画面双重自证 ② 在比赛中 ✅ 夺冠时刻 ③ 冲击力 ✅ 城市名印在地上，正是这条片子的主语 ④ 清晰度 4000×2106（原图 4000×2666，见下）",
+    "用在哪": "第 ④ 屏「第三层」。走信箱式（宽高比 1.90 ≥ 1.2，正片自动 letterbox）——地上那个城市名是这一屏的全部证据，裁掉就没了。",
+    "⚠️ 入库前裁掉了上沿 560px，而这个数是量出来的": "第一版原图直接入库，渲出来 RIYADH 被序号药丸「④ 第三层」压掉了前两个字母，只剩「YADH」——**而它正是这一屏唯一的证据**。信箱式的纵向位置写死在代码里（`background-position:center 34%`），改它会波及全部存量，所以改图不改代码。账号: 字母在原图的第 1975~2237 行（扫亮度剖面量的，不是估的）；药丸顶在卡上第 ~795 行（扫绿色药丸量的）。裁掉上沿 T 之后，RIYADH 底边落在 `(1440-h)*0.34 + h*(2237-T)/(2666-T)`，其中 `h = 1080*(2666-T)/4000`。T=560 → 底边 749，离药丸还有 46px；**而 560 这一刀正好切在 LED 条（原图 218~545 行）下方**，不会留下半截字幕条。渲完重新抽帧确认过整个词都在。"
+  },
+  "indian-wells-stadium1.jpg": {
+    "credit": "WTA 官方图 · 印第安维尔斯网球花园中心球场（Stadium 1）",
+    "source_url": "https://photoresources.wtatennis.com/photo-resources/2026/06/26/0b72d942-15e2-4104-8d49-45ec19bbee20/808_Finals-Indian-Wells-Hero-1-.jpg?width=4000",
+    "article": "https://www.wtatennis.com/tournaments/wta-finals",
+    "what": "印第安维尔斯网球花园 Stadium 1 满场，从看台高处沿长轴俯拍",
+    "license": "unverified",
+    "四要素": "地点=Indian Wells Tennis Garden Stadium 1（WTA 自己把它挂成 2026 年终总决赛赛事页的头图，文件名 808_Finals-Indian-Wells-Hero）；事件=比赛进行中、满场",
+    "⚠️ 年份和场次": "**这不是年终总决赛的照片**——2026 年那一届 11 月才打。它是 WTA 用来代表这座球场的主视觉，拍的多半是三月的 BNP 帕里巴公开赛。所以旁白和画面文字**只许把它说成「这座球场」**，一个字都不许说成「某一年的某一场」。CLAUDE.md「官方图库把它挂在这一站名下，不等于拍的是这个场地/这一年」那条。",
+    "gates": "① 精准 ✅ 只当场馆图用 ② 场景图，不主张某一场 ③ 冲击力 ✅ 满场，和坎昆那 4300 座正好构成对照 ④ 清晰度 4000×1638",
+    "用在哪": "2026 印第安维尔斯那一屏。4000×1638 宽高比 2.44，正片自动走信箱式。"
+  }
+}
