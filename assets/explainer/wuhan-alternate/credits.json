@@ -1,0 +1,40 @@
+{
+  "_why": "「郑钦文在武网替补第七位，还有几条路」这条片子的三张照片。六屏里四屏是示意图——一张签表怎么切、两年的退赛数、两站日程咬在一起、规则书那句话的主语是谁，这四样任何一张照片都表达不了，正是 CLAUDE.md 那条「示意图的触发条件是照片讲不清，不是照片找不到」。照片只承担两件能被一张脸讲清楚的事：她今年从资格赛打进美网八强（第 ④ 屏），和她此刻在等的这件事（封面与末屏）。",
+  "_渠道": "三张全部出自 WTA 官方 photo-resources（`?width=4000` 取原图，实测上限就是 4000）。⚠️ 这个 CDN 用 `requests` 恒 403、用 curl 恒 200——是 HTTP 客户端指纹的问题，不是「取不到」，CLAUDE.md「换完 UA 还 403 就换一个 HTTP 客户端」记过同一个坑。⚠️ 另外 `Accept: image/webp` 会让它返回 WebP，取 JPEG 要用裸 curl。",
+  "_摄影师": "⚠️ 这三张的文件名里**没有摄影师**（对比 `Zheng-Q3-Jimmie.jpg` 那种带名字的），所以署名只写到 WTA 官方图这一层，**不编摄影师**。",
+  "_为什么封面放脸": "封面那一问是「郑钦文进得了武网正赛吗？」——问的就是这一个人，所以放她的脸是对题的。CLAUDE.md「封面标题带着指控时，放谁的脸就是在指认谁」那条不适用：这一屏没有指控，讲的是她被一条规则挡在门外。",
+  "zheng_uso2026_day9_hands.jpg": {
+    "title": "郑钦文双手捂住口鼻，2026 年 9 月 7 日美网第九比赛日（十六强胜斯瓦泰克后）",
+    "source": "WTA 官方图库（photoresources.wtatennis.com）",
+    "source_url": "https://photoresources.wtatennis.com/photo-resources/2026/09/07/743d748e-ff24-486e-85bc-57ba91646d53/Qinwen_Zheng_-_US_Open_2026_-_Day_9-DSC_0031.jpg?width=4000",
+    "page": "https://www.wtatennis.com/players/328120/qinwen-zheng",
+    "license": "WTA 官方编辑图（照 photoresources 惯例使用，发布前人工判断）",
+    "size": "4000x2504（原样存，没有裁）",
+    "四要素": "**文件名和路径自证**：`Qinwen_Zheng_-_US_Open_2026_-_Day_9`、路径日期 `2026/09/07`。美网官方图片接口对同一天的描述是 `Day Nine of the 2026 US Open ... on Monday, September 7, 2026`，两个独立源对上；而 9 月 7 日正是她十六强 7-5 6-3 胜斯瓦泰克那一场（usopen.org 当日赛报标题写着 stuns Iga Swiatek to reach quarterfinals）。",
+    "checked": "2026-09-16 缩图打开看过：她双手捂住口鼻、头微仰，左手举着球拍（拍框整个在画面里），白色背心印 Alipay+ / Nike / vivo，薄荷绿护腕，背景是虚化的满场看台。四道闸门：①精准——路径、文件名、官方接口三处写死人物赛事日期②在比赛中——是赢下这一分之后的场上即时反应，不是发布会或场外③冲击力——近景，情绪外露那一侧（不敢相信）④清晰度 4000×2504。",
+    "用在": "封面"
+  },
+  "zheng_uso2026_day9_fist.jpg": {
+    "title": "郑钦文坐在场地上举拳，2026 年 9 月 7 日美网第九比赛日（十六强胜斯瓦泰克后）",
+    "source": "WTA 官方图库（photoresources.wtatennis.com）",
+    "source_url": "https://photoresources.wtatennis.com/photo-resources/2026/09/07/56ab65eb-661f-4f25-8a10-523f60f25977/Qinwen_Zheng_-_US_Open_2026_-_Day_9-DSC_9850.jpg?width=4000",
+    "page": "https://www.wtatennis.com/players/328120/qinwen-zheng",
+    "license": "WTA 官方编辑图（照 photoresources 惯例使用，发布前人工判断）",
+    "size": "4000x2476（原样存，没有裁）",
+    "四要素": "同上一张：`Qinwen_Zheng_-_US_Open_2026_-_Day_9` ＋ 路径 `2026/09/07`。",
+    "checked": "2026-09-16 缩图打开看过：她坐在球场上、右手握拳举起、笑着，左手撑地，白色背心＋薄荷绿短裙与护腕，背景是深蓝挡风布。眼睛睁着、表情读得出来（CLAUDE.md「封面帧一律不许闭眼」那条的同一条判据）。四道闸门全过，清晰度 4000×2476。",
+    "用在": "第 ④ 屏（资格赛那一屏——这一屏讲的正是她今年从资格赛打进八强）"
+  },
+  "zheng_uso2026_day7_stand.jpg": {
+    "title": "郑钦文持拍站立，2026 年 9 月 5 日美网第七比赛日",
+    "source": "WTA 官方图库（photoresources.wtatennis.com）",
+    "source_url": "https://photoresources.wtatennis.com/photo-resources/2026/09/05/2933ffc5-a70d-4f87-9b42-68c36cb54535/Qinwen_Zheng_-_US_Open_2026_-_Day_7-DSC_9444.jpg?width=4000",
+    "page": "https://www.wtatennis.com/players/328120/qinwen-zheng",
+    "license": "WTA 官方编辑图（照 photoresources 惯例使用，发布前人工判断）",
+    "size": "4000x2701（原样存，没有裁）",
+    "四要素": "**文件名和路径自证**：`Qinwen_Zheng_-_US_Open_2026_-_Day_7`、路径日期 `2026/09/05`。",
+    "checked": "2026-09-16 缩图打开看过：她左手持拍站在底线附近，侧头望向前方，表情平静，白色背心＋薄荷绿短裙，背景是深蓝挡风布（印着 J.P. Morgan 的大字）。**末屏故意用这一张而不是庆祝照**：那一屏问的是「这套规则算公平吗」，一张在等、在看的脸比一张庆祝的脸更贴题。四道闸门全过，清晰度 4000×2701。",
+    "用在": "第 ⑥ 屏（末屏那一问）"
+  },
+  "_封面为什么用闭着眼的那张": "⚠️ 封面那张她双眼是闭的，而 CLAUDE.md 有「封面帧一律不许闭眼」。**这条仍然成立，但它的边界在同一节里写着**：那条防的是「从缩略图墙里挑帧、不小心挑到一个眨眼瞬间」（表情读不出来、看着像渲坏了），而「判据是这张脸在表达什么，不是眼皮开着没有」。这一张是双手捂住口鼻、头微仰的不敢相信，情绪一眼读得到，属于后一类。⚠️ 备选是同一天的举拳照（zheng_uso2026_day9_fist.jpg，眼睛睁着、在笑）——两版都渲出来看过：举拳那张是坐姿宽景，铺到封面脸小一大圈，撞 2026-08-18 那条「优先近景特写」。所以举拳那张放到第 ④ 屏（那一屏讲的正是她从资格赛打进八强），封面留给近景这张。"
+}
