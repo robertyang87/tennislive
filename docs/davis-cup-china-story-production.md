@@ -59,4 +59,6 @@ ITF 官方频道（`UCsyvlpbK0BTEc3jec6nhPyQ`）就是戴维斯杯的影像档�
 
 ⚠️ **第三趟红着的 artifact 有 3.2 GB**——账号所有者点出来的。上传带 `always()`（前面红了成片也要传上来），而删源片的清理步骤隐式 `success()`，前面一红它就没跑，于是九条源片 2.45 GB ＋ conform 中间物 0.9 GB 全进了 artifact。上传那一步现在自己排除 `source*` 和 `frames/**`（`interview-clip.yml` 同形，一并排除 `source.*`），判据 `test_失败时的artifact不许带源片`。
 
-两条顺手记下、这次没做的：`probe_dry_run` 该从 `probe.json` 的尺寸把第 1、2 趟那两道在本地就报出来；`conform_sources` 该只重编码用到的窗口（kjaer 整条 conform 花了 327s，片子里只用了 6s）。
+账号所有者接着说「3.2G 也太大了」——另一半（0.9 GB 的 conform 中间物）随后也拿掉了：`conform_sources` 不再把整条源片重编成 `*_conform.mp4`，只登记「这条源按基准尺寸算」，放大裁边那一截前置到每一条读它的 ffmpeg 链里（切段、抓帧、记分条抠框各自只处理自己那几秒）。这趟 render 里 `统一尺寸 ruud` 165s ＋ `统一尺寸 kjaer` 351s ＝ 516s（47%）整个消失。判据 `test_conform声明的源要真的被统一到基准尺寸` 真切一段和落盘老路逐像素比。
+
+顺手记下、还没做的：`probe_dry_run` 该从 `probe.json` 的尺寸把第 1、2 趟那两道在本地就报出来。

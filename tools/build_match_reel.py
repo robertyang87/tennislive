@@ -1303,7 +1303,7 @@ def board_right_edges(source: Path, box: tuple[int, int, int, int],
     import numpy as np  # noqa: PLC0415
 
     x0, y0, _x1, y1 = box
-    w, h = probe_size(source)
+    w, h = effective_size(source)
     bw, bh = w - x0, y1 - y0
     out: list[tuple[float, int | None]] = []
     short = 0
@@ -1311,7 +1311,7 @@ def board_right_edges(source: Path, box: tuple[int, int, int, int],
         proc = runner(
             ["ffmpeg", "-v", "error", "-ss", f"{max(0.0, t):.3f}",
              "-i", str(source), "-frames:v", "1",
-             "-vf", f"format=rgb24,crop={bw}:{bh}:{x0}:{y0}",
+             "-vf", f"{conform_prefilter(source)}format=rgb24,crop={bw}:{bh}:{x0}:{y0}",
              "-f", "rawvideo", "-"],
             capture_output=True, check=False)
         raw = proc.stdout or b""
@@ -3820,7 +3820,7 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
     # 拼 -filter_complex 时不能再往前面塞 `[0:v]`。
     labeled = False
     if seg.fit == "square":
-        native_w, native_h = probe_size(source)
+        native_w, native_h = effective_size(source)
         side = min(native_w, native_h) // 2 * 2
         center = 0.5 if seg.cx is None else seg.cx
         points = seg.square_pan or ((0.0, center),)
@@ -3844,7 +3844,7 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
         )
         labeled = True
     elif seg.fit in ("contain", "full_source"):
-        native_w, native_h = probe_size(source)
+        native_w, native_h = effective_size(source)
         # 整幅铺进来会只占屏高的三成（1080 宽的 16:9 才 608 高），上下两条死黑，
         # 「冲击力先折一半」。所以两件事一起做：
         #   1. 先横向留 KEEP 的宽度再缩——画面大一圈，而球员仍在窗口内
@@ -3986,6 +3986,9 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
                 chain = (f"crop={CROP_W}:{CROP_H}:{x}:{CROP_Y},"
                          f"{_canvas_fit()}"
                          f"{sp}fps={FPS_EXPR},setsar=1")
+    # 认领了 conform 的源：放大裁边前置到这条链最前面，只处理这一段用到的几秒
+    # （`conform_sources` 不再落盘整条中间文件）。
+    chain = conform_prefilter(source) + chain
     # 所有 -i 必须排在滤镜/输出选项前面，否则 ffmpeg 会把 -vf 当成下一个输入的
     # 选项直接报错。源片是纯视频轨（人从网盘传来的那份就是），所以补一条静音轨
     # 进去——后面混音那步要求每段都有音频流。
@@ -4289,6 +4292,7 @@ def resolve_cover_payload(cover: dict, workdir: Path, *,
         with stage(f"VS 抓帧 {tag}（源 {key or '主'}）"):
             run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
                 "-ss", f"{float(spot['frame_at']):.2f}", "-i", str(sources[key]),
+                *conform_vf_args(sources[key]),
                 "-frames:v", "1", "-q:v", "2", str(grab))
         print(f"    [封面素材] {tag} 新抓 {grab.name}"
               f"（{float(spot['frame_at']):.2f}s）")
@@ -4450,6 +4454,7 @@ def _cut_person(source: Path, panel: dict, tag: str, workdir: Path,
     with stage(f"VS 抠帧 {tag}"):
         run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
             "-ss", f"{float(panel['frame_at']):.2f}", "-i", str(source),
+            *conform_vf_args(source),
             "-frames:v", "1", str(raw))
         im = Image.open(raw).convert("RGB")
         box = panel.get("box")
@@ -5281,8 +5286,6 @@ APPROVED_LOW_RES_SOURCES: dict[str, int] = {
     "https://www.youtube.com/watch?v=E-MWVXF9ET0": 720,   # ITF：布德科夫·克耶尔 v 费恩利，挪威 v 英国 2026
     "https://www.youtube.com/watch?v=ogv43WCXQSo": 480,   # British Pathé：1933 戴维斯杯挑战轮新闻片
 }
-# 郑钦文那条的 conform 复用检查点还按这个名字认（`_verified_conform_reuse`）。
-_APPROVED_720_SOURCE = "https://www.youtube.com/watch?v=-6Gv0033I2I"
 
 
 def source_quality_exceptions(spec: dict) -> dict[str, dict]:
@@ -5931,39 +5934,46 @@ def spec_sources(spec: dict) -> dict[str, str]:
     return single
 
 
-def _verified_conform_reuse(source: Path, dst: Path, spec: dict | None,
-                            key: str, target: tuple[int, int], outdir: Path) -> bool:
-    """Reuse only the audited Zheng retry checkpoint, bound to both media bytes."""
-    manifest = outdir / "conform-reuse.json"
-    if not manifest.is_file():
-        return False
-    if (key != "extended" or spec_sources(spec or {}).get(key) != _APPROVED_720_SOURCE
-            or _APPROVED_720_SOURCE not in source_quality_exceptions(spec or {})):
-        return False
-    claim = json.loads(manifest.read_text(encoding="utf-8"))
-    expected = {"run_id": 34401744962, "artifact_id": 10124538360,
-                "source_url": _APPROVED_720_SOURCE, "target": list(target),
-                "transform": "lanczos-increase-crop/libx264-fast-crf16/audio-copy"}
-    if any(claim.get(k) != v for k, v in expected.items()):
-        raise ReelError("conform reuse checkpoint provenance/transform mismatch")
-    def sha(path: Path) -> str:
-        digest = hashlib.sha256()
-        with path.open("rb") as handle:
-            for chunk in iter(lambda: handle.read(1024 * 1024), b""):
-                digest.update(chunk)
-        return digest.hexdigest()
-    if not dst.is_file() or sha(source) != claim.get("native_sha256") or sha(dst) != claim.get("conformed_sha256"):
-        raise ReelError("conform reuse checkpoint media hash mismatch")
-    if probe_size(source) != (1280, 720) or probe_size(dst) != target:
-        raise ReelError("conform reuse checkpoint dimensions mismatch")
-    if abs(probe_duration(source) - probe_duration(dst)) > 0.1:
-        raise ReelError("conform reuse checkpoint duration mismatch")
-    print(f"[conform reuse] {key}: verified native + derivative SHA256; run 34401744962")
-    return True
+# conform 认领的源 → 基准尺寸。**只登记，不落盘**：放大裁边那一截前置到每一条读
+# 这条源的 ffmpeg 链最前面（`conform_prefilter`），几何一律按 `effective_size` 算。
+_CONFORM_TARGETS: dict[Path, tuple[int, int]] = {}
 
 
-def conform_sources(paths: dict[str, Path], spec: dict | None,
-                    outdir: Path) -> None:
+def conform_target(source: Path) -> tuple[int, int] | None:
+    """这条源认领过 conform 就给基准尺寸，没有就 None。"""
+    return _CONFORM_TARGETS.get(Path(source))
+
+
+def conform_prefilter(source: Path) -> str:
+    """读这条源的滤镜链要前置的那一截（带尾逗号）；没认领 conform 就是空串。
+
+    和原来落盘那一版**同一条滤镜**（等比放大铺满再中央裁，lanczos），只是
+    从「整条源片编一遍」变成「切到哪几秒就做哪几秒」。
+    """
+    target = conform_target(source)
+    if not target:
+        return ""
+    tw, th = target
+    return (f"scale={tw}:{th}:force_original_aspect_ratio=increase:flags=lanczos,"
+            f"crop={tw}:{th},")
+
+
+def conform_vf_args(source: Path) -> tuple[str, ...]:
+    """单独抓一帧那种 ffmpeg 调用用的 `-vf` 参数对；没认领就是空元组。"""
+    pre = conform_prefilter(source)
+    return ("-vf", pre.rstrip(",")) if pre else ()
+
+
+def effective_size(source: Path) -> tuple[int, int]:
+    """这条源在滤镜链里的尺寸：认领了 conform 的按基准算，其余按原生量。
+
+    conform 之后凡是拿尺寸算几何的地方（尺寸闸、裁切窗口、记分条抠框、
+    contain 几何）都要走这儿，别直接 `probe_size`——那量到的是原生的 720p。
+    """
+    return conform_target(source) or probe_size(source)
+
+
+def conform_sources(paths: dict[str, Path], spec: dict | None) -> None:
     """把声明过的源**等比放大铺满再中央裁**到基准尺寸——尺寸闸的唯一出路。
 
     来路：cincinnati-story 的场馆官方宣传片是 1920×1012（电影画幅），和两条
@@ -5975,8 +5985,20 @@ def conform_sources(paths: dict[str, Path], spec: dict | None,
 
     - 基准 = 第一个**没被声明**的源的尺寸；全声明了要报错（总得有基准）
     - 已经同尺寸的跳过并出声（幂等：缓存恢复后每趟都会走到这儿）
-    - `crf 16 / preset fast`：中间产物花比特不花时间，成片还会再编一次
+
+    ⚠️⚠️ 2026-09-16 起**不再落盘**。原来这儿把整条源片重编一遍
+    （`source_<键>_conform.mp4`，crf 16）：戴维斯杯那条两条 720p 的 ITF 集锦
+    片子里各用了 6 秒，conform 却把整条编了——`统一尺寸 ruud` 165s ＋
+    `统一尺寸 kjaer` 351s，占那趟 render 1095s 的 **47%**，中间文件 0.9 GB
+    （render 红了还跟着进 artifact，那个 3.2 GB 的一半就是它）。现在只在
+    `_CONFORM_TARGETS` 里登记「这条源按基准尺寸算」，放大裁边那一截由
+    `conform_prefilter` 前置到每一条读它的 ffmpeg 链里——切段、抓帧、
+    记分条抠框各自只处理自己用到的那几秒。判据
+    `test_conform声明的源要真的被统一到基准尺寸`：切出来的帧和落盘那条老路
+    逐像素对得上，而目录里一个 `*_conform.mp4` 都没有。
     """
+    for path in paths.values():
+        _CONFORM_TARGETS.pop(Path(path), None)
     declared = (spec or {}).get("conform") or {}
     if not declared:
         return
@@ -5996,20 +6018,9 @@ def conform_sources(paths: dict[str, Path], spec: dict | None,
         if (w, h) == (tw, th):
             print(f"[conform] {key} 已经是 {tw}×{th}，跳过")
             continue
-        dst = paths[key].with_name(paths[key].stem + "_conform.mp4")
-        if _verified_conform_reuse(paths[key], dst, spec, key, (tw, th), outdir):
-            paths[key] = dst
-            continue
-        with stage(f"统一尺寸 {key}"):
-            run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
-                "-i", str(paths[key]),
-                "-vf", (f"scale={tw}:{th}:force_original_aspect_ratio="
-                        f"increase:flags=lanczos,crop={tw}:{th}"),
-                "-c:v", "libx264", "-preset", "fast", "-crf", "16",
-                "-c:a", "copy", str(dst))
-        paths[key] = dst
+        _CONFORM_TARGETS[Path(paths[key])] = (tw, th)
         print(f"[conform] {key} {w}×{h} → {tw}×{th}"
-              f"（等比放大铺满再中央裁）——{why}")
+              f"（等比放大铺满再中央裁，切到哪几秒做哪几秒，不落盘）——{why}")
 
 
 def check_sources_match(paths: dict[str, Path], spec: dict | None = None) -> None:
@@ -6035,7 +6046,8 @@ def check_sources_match(paths: dict[str, Path], spec: dict | None = None) -> Non
     """
     if len(paths) < 2:
         return
-    seen = {k: (*probe_size(p), *resolve_fps(p)) for k, p in paths.items()}
+    # 尺寸按 `effective_size`：认领了 conform 的源在滤镜链里就是基准尺寸。
+    seen = {k: (*effective_size(p), *resolve_fps(p)) for k, p in paths.items()}
     ref_key = next(iter(seen))
     rw, rh, rf, rfv = seen[ref_key]
     rows = "\n  ".join(f"{k or '(主源)'}: {w}×{h} @ {f}"
@@ -7326,7 +7338,7 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
                 path = download(url, path, archival=key in claimed_archival)
         sources[key] = path
     check_native_quality_exceptions(spec, sources)
-    conform_sources(sources, spec, outdir)
+    conform_sources(sources, spec)
     check_sources_match(sources, spec)
     primary = next(iter(sources))
     source = sources[primary]
@@ -7347,7 +7359,7 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     # 多源：几何必须一致，否则一套裁切窗口套在两种画幅上，剪出来一段满一段不满。
     # 这里**宁可报错也不自动缩放**——自动缩放会把「素材选错了」变成一个看不见的
     # 画质问题，而报错能让人当场发现。
-    sizes = {name: probe_size(path) for name, path in sources.items()}
+    sizes = {name: effective_size(path) for name, path in sources.items()}
     # check_sources_match 已校验；整幅竖屏存档由 cut_segment 使用其原生尺寸。
     source_w, source_h = sizes[next(iter(sources))]
 
