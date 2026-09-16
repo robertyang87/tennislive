@@ -2034,6 +2034,22 @@ AUTO_PUSH_SLUGS: frozenset[str] = frozenset({
     # ⚠️ 这条**不是** `_SCRIPTS` 产的，是 `tools/build_shelton_ncaa_story.py` 单独渲的；
     # `AUTO_PUSH_SLUGS` 只管「这条片子准不准自动发」，和谁渲的无关。
     "shelton-ncaa-story",
+    # 2026-09-16 验过才加进来的（同上那句「加进来之前先问一句：这条片子验过了吗」）：
+    # 在分支上渲的**第二趟**（run 35063801507，explainer.yml push=false）落库成功，
+    # 工作流自带的产物闸（第 12 步）过了、微信那步 skipped（push=false，对的）；
+    # 成片从 Release 拉回本地量过——191.60 秒、1080×1920、6,029,828 字节和
+    # render.json 的 video_bytes 逐位相同、音画差 0.034 秒、全片 mean −24.0 /
+    # max −4.0 dB，24 个 8 秒窗逐窗量过（−4.0 ~ −6.7），没有哑场；
+    # 八屏逐屏抽帧看过（封面拼图两张脸都没被钩子带压住、规则书那屏的高亮条文读得清、
+    # 四张卡的数字都烧对了）；`check_explainer_landed` 七条小标全部报「已落地」、
+    # `check_explainer_voice` 确认是代码默认的云健 +22%。
+    #
+    # ⚠️ **第一趟（run 35062135492）上面这些全是绿的，而它念错了两个词。**
+    # 读它自己的 `voice_NN.words.json` 才看得见：`规则 ｜ 书写 ｜ 着`（「书写」念
+    # shūxiě）和 `间 ｜ 接给`（「间」落单念 jiān）。dB、音画差、抽帧、两个 checker
+    # **一个都拦不住**——渲出来一个像素都看不出来。第二趟的 words.json 里两处都没了，
+    # 判据补在 `test_旁白里不许出现读音会变的假词`。
+    "promotional-fees",
     # 2026-09-15 验过才加进来的（同上那句「加进来之前先问一句：这条片子验过了吗」）：
     # 在分支上渲的那趟（run 34924032694，explainer.yml push=false）落库成功；成片从
     # Release 拉回本地量过——316.07 秒、1080×1920、8,757,721 字节和 render.json 的
