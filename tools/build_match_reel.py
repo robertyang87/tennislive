@@ -7768,16 +7768,41 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     wm_png = (brand_watermark(outdir / "_watermark.png", wm_column, wm_topic)
               if wants_watermark(wm_column) else None)
     match_end = cover_secs + sum(s.length for s in segments)
+    # 全出血的字幕带垫一层柔性渐变（见 SUB_SCRIM_ALPHA 上面的来路）；带式不需要。
+    scrim_png: Path | None = None
+    scrim_y = 0
+    if LAYOUT != "band":
+        scrim_png, scrim_y = subtitle_scrim(outdir / "_subs_scrim.png", margin_v)
+        print(f"[字幕垫] 全出血：字幕带底下垫一层渐变（y {scrim_y}→{VIDEO_H}，"
+              f"alpha 0→{SUB_SCRIM_ALPHA:.2f}），只盖 {cover_secs:.2f}~{match_end:.2f}s")
+    else:
+        print("[字幕垫] 带式版式：字幕在实色底带里，不另垫渐变")
     with stage("烧字幕+成片"):
+        # 输入按 `-i` 的顺序编号：0 画面、1 混音，之后依次是脚注、角标、字幕垫
+        # ——**谁在就占下一个号**，别再写 `3 if foot else 2` 那种手算。每一路
+        # 各自一个列表，不画的那路是空列表（判据钉着 `*wm_inputs` 跟着门禁走：
+        # 无条件塞一个没人消费的 `-i` 会把后面所有输入的序号错开，ffmpeg 不报）。
         foot_inputs = ["-i", str(foot_png)] if foot_png else []
         wm_inputs = ["-i", str(wm_png)] if wm_png else []
-        wm_input = (3 if foot_png else 2) if wm_png else None
+        scrim_inputs = ["-i", str(scrim_png)] if scrim_png else []
+        next_input = 2
+        foot_input: int | None = None
+        wm_input: int | None = None
+        scrim_input: int | None = None
+        if foot_inputs:
+            foot_input, next_input = next_input, next_input + 1
+        if wm_inputs:
+            wm_input, next_input = next_input, next_input + 1
+        if scrim_inputs:
+            scrim_input, next_input = next_input, next_input + 1
         video_args = (["-filter_complex", topbar_filtergraph(
             cover_secs, sum(s.length for s in segments), topbar_ass, ass,
-            foot_input=2 if foot_png else None, wm_input=wm_input),
+            foot_input=foot_input, wm_input=wm_input,
+            scrim_input=scrim_input, scrim_y=scrim_y),
                        "-map", "[out]"] if topbar_ass else
                       ["-filter_complex",
-                       plain_filtergraph(ass, cover_secs, match_end, wm_input),
+                       plain_filtergraph(ass, cover_secs, match_end, wm_input,
+                                         scrim_input=scrim_input, scrim_y=scrim_y),
                        "-map", "[out]"])
         video_args[1] = full_canvas_filtergraph(video_args[1], segments, cover_secs)
         # **两支都要出声。** 「这个栏目不画」和「渲角标那一步没走到」在成片上
@@ -7794,7 +7819,7 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
                      "顶栏），所以正片区间一个品牌标识都不带——只剩封面和片尾"))
         run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
             "-i", str(silent), "-i", str(mixed), *foot_inputs,
-            *wm_inputs, *video_args,
+            *wm_inputs, *scrim_inputs, *video_args,
             "-map", "1:a:0",
             "-c:v", "libx264", "-preset", FINAL_PRESET, "-crf", FINAL_CRF,
             "-pix_fmt", "yuv420p",
@@ -8650,8 +8675,50 @@ def full_canvas_filtergraph(graph: str, segments: list[Segment], cover_secs: flo
             + "+".join(windows) + "'[out]")
 
 
+#: 全出血字幕带底下那层柔性渐变垫：从字幕上锚往上 SUB_SCRIM_LEAD_PX 处 alpha 0
+#: 起，smoothstep 爬到上锚下 SUB_SCRIM_FULL_PX 处的 SUB_SCRIM_ALPHA，再一路铺到底。
+#:
+#: 来路：2026-09-16 戴维斯杯那条整体视觉 review。68px 黑体＋3px 描边、没有任何
+#: 垫底，压在忙背景上就糊——146.9~155s「中国男网以前从没上过这一层」直接压在
+#: 「广州市南沙区文化广电旅游体育局」的白绿横幅上，第 0 段压在地面的 ITA 大字上。
+#: 带式版式的字幕本来就在实色底带里，不需要它（`topbar_filtergraph` 按 LAYOUT 跳过）。
+#: 0.60 是把 0.45/0.60/0.75 三档合到那两帧上并排比出来的：0.45 横幅还在抢，
+#: 0.75 像一条黑带。**是渐变不是黑条**——和封面比分板那条 500px 的坡同一个思路，
+#: 硬边会在画面上多出一道横线。封面和片尾不带（各自版式自己管），角标在左上角，
+#: 两样都碰不到它。
+SUB_SCRIM_ALPHA = 0.60
+SUB_SCRIM_LEAD_PX = 220
+SUB_SCRIM_FULL_PX = 60
+
+
+def subtitle_scrim(dest: Path, margin_v: int) -> tuple[Path, int]:
+    """PIL 渲字幕带的渐变垫（透明底 PNG），返回 (路径, 贴在画布上的 y)。
+
+    宽度铺满画布，高度从渐变起点一直到画布底；`margin_v` 是这条片子字幕的上锚
+    （`subtitle_top` 人工抬高了它就跟着抬）。alpha 逐行 smoothstep，没有硬边。
+    """
+    from PIL import Image  # noqa: PLC0415
+
+    top = max(0, int(margin_v) - SUB_SCRIM_LEAD_PX)
+    full = min(VIDEO_H, int(margin_v) + SUB_SCRIM_FULL_PX)
+    height = VIDEO_H - top
+    rows: list[int] = []
+    for yy in range(height):
+        t = min(1.0, (yy) / max(1, full - top))
+        s = t * t * (3 - 2 * t)
+        rows.append(int(round(255 * SUB_SCRIM_ALPHA * s)))
+    alpha = Image.new("L", (VIDEO_W, height))
+    alpha.putdata([v for v in rows for _ in range(VIDEO_W)])
+    im = Image.new("RGBA", (VIDEO_W, height), (0, 0, 0, 0))
+    im.putalpha(alpha)
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    im.save(dest)
+    return dest, top
+
+
 def plain_filtergraph(subtitles_ass: Path, cover_secs: float,
-                      match_end: float, wm_input: int | None) -> str:
+                      match_end: float, wm_input: int | None,
+                      scrim_input: int | None = None, scrim_y: int = 0) -> str:
     """没有顶栏那条路：烧字幕 ＋ 压常驻角标（`wm_input=None` 就只烧字幕）。
 
     ⚠️ 原来这条路是 `-vf subtitles=…` 一句话。改成 `-filter_complex` 是因为
@@ -8663,7 +8730,15 @@ def plain_filtergraph(subtitles_ass: Path, cover_secs: float,
     上是同一个范围：封面和片尾不带。
     """
     fontsdir = _escape(str(Path(__file__).resolve().parents[1] / "assets" / "fonts"))
-    subbed = f"[0:v]subtitles={_escape(subtitles_ass)}:fontsdir={fontsdir}"
+    # 字幕的渐变垫要压在**字幕底下**、只盖比赛区间——所以它是烧字幕之前的一条链，
+    # 自己带 `enable=`（和角标同一个范围：封面和片尾不带）。一条链一个 overlay。
+    src = "[0:v]"
+    scrim = ""
+    if scrim_input is not None:
+        scrim = (f"[0:v][{scrim_input}:v]overlay=0:{scrim_y}:"
+                 f"enable='between(t,{cover_secs:.3f},{match_end:.3f})'[scrimmed];")
+        src = "[scrimmed]"
+    subbed = f"{scrim}{src}subtitles={_escape(subtitles_ass)}:fontsdir={fontsdir}"
     # `wm_input is None` ＝ 这个栏目不画角标（`WATERMARK_OFF_COLUMNS`）。
     # ⚠️ **输出照旧要打 `[out]` 标签**：不打的话 `-map 0:v:0` 取的是原始流，
     # 连字幕都被绕过去，而且它不报错。
@@ -8680,7 +8755,8 @@ def plain_filtergraph(subtitles_ass: Path, cover_secs: float,
 def topbar_filtergraph(cover_secs: float, segments_secs: float,
                        topbar_ass: Path, subtitles_ass: Path,
                        foot_input: int | None = None,
-                       wm_input: int | None = None) -> str:
+                       wm_input: int | None = None,
+                       scrim_input: int | None = None, scrim_y: int = 0) -> str:
     """给比赛画面加画外顶栏，保留封面和品牌片尾的原始版式。
 
     `silent` 的时间轴是：封面 → 比赛段落 → 片尾。只变换中间这一段：
@@ -8707,6 +8783,11 @@ def topbar_filtergraph(cover_secs: float, segments_secs: float,
     # 第一个 overlay 之所以能那么写，是因为它两路输入的标签都是显式的。
     steps: list[str] = []
     label = "match_flat"
+    # 字幕的渐变垫（全出血才有：带式的字幕本来就在实色底带里）。排在脚注和角标
+    # 之前——它是垫在最底下的那一层；字幕在 concat 之后才烧，自然压在它上面。
+    if scrim_input is not None and LAYOUT != "band":
+        steps.append(f"[{label}][{scrim_input}:v]overlay=0:{scrim_y}[match_scrim]")
+        label = "match_scrim"
     if foot_input is not None:
         steps.append(f"[{label}][{foot_input}:v]"
                      f"overlay=(W-w)/2:{BAND_FOOT_Y}-h/2[match_foot]")
