@@ -3853,14 +3853,19 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
         # Cross-sport action needs both the athlete and the target in view.
         # Explicit full_source preserves the complete published frame;
         # legacy contain retains its existing 62% framing.
-        keep = source_w if seg.fit == "full_source" else contain_keep_width(source_w)
-        x = (source_w - keep) // 2
+        # ⚠️ 几何一律按**这条源自己**的尺寸算（`native_w`/`native_h`），不用调用方
+        # 传进来的基准宽和全局 `CROP_H`——那两个数是主源的。2026-09-16 戴维斯杯
+        # 那条的 640×480 百代新闻片走到这儿被裁成 `crop=1190:1080`，ffmpeg 当场拒掉
+        # （run 35074495144）：`check_sources_match` 放行横幅存档源的前提正是
+        # 「contain 不套主源几何」，而这一行还套着。同尺寸的源两个数相等，一格不变。
+        keep = native_w if seg.fit == "full_source" else contain_keep_width(native_w)
+        x = (native_w - keep) // 2
         chain = (
             f"split=2[bg][fg];"
-            f"[bg]crop={keep}:{CROP_H}:{x}:0,"
+            f"[bg]crop={keep}:{native_h}:{x}:0,"
             f"scale={VIDEO_W}:{VIDEO_H}:force_original_aspect_ratio=increase,"
             f"crop={VIDEO_W}:{VIDEO_H},boxblur=42:2,eq=brightness=-0.20[bgb];"
-            f"[fg]crop={keep}:{CROP_H}:{x}:0,"
+            f"[fg]crop={keep}:{native_h}:{x}:0,"
             f"scale={VIDEO_W}:-2:flags=lanczos[fgs];"
             f"[bgb][fgs]overlay=(W-w)/2:(H-h)/2,{sp}fps={FPS_EXPR},setsar=1"
         )

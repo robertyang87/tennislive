@@ -13226,6 +13226,33 @@ def test_不许再印没验证过的投递查询接口():
         "「接口收下 ≠ 微信送达」这句不能跟着删——它是真的")
 
 
+def test_横幅存档源contain时几何按它自己的尺寸算(tmp_path):
+    """2026-09-16 戴维斯杯那条：640×480 的百代新闻片（`archival`、全 contain）
+    过了 check_sources_match，却在 cut_segment 里被裁成 `crop=1190:1080`——
+    contain 分支拿的是调用方传进来的**基准**宽 1920 和全局 CROP_H 1080，
+    ffmpeg 当场拒掉「Invalid too big or non positive size」（run 35074495144）。
+    修法是 contain 分支一律按 `probe_size(source)` 量出来的本源尺寸算。
+
+    这条测试真切一段 640×480 走 contain：修之前抛 ReelError（和 run 里同一句），
+    修之后出一段 1080×1440。反向验证：把 `native_w/native_h` 换回
+    `source_w/CROP_H` 当场红在 cut_segment 那一行。
+    """
+    def _ff(*args):
+        subprocess.run(["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+                        *args], check=True)
+
+    src = tmp_path / "pathe.mp4"
+    _ff("-f", "lavfi", "-i", "testsrc2=size=640x480:rate=25:duration=4",
+        "-f", "lavfi", "-i", "sine=frequency=440:duration=4",
+        "-c:v", "libx264", "-preset", "ultrafast", "-crf", "35",
+        "-c:a", "aac", "-shortest", str(src))
+    seg = reel.Segment(0.5, 2.5, None, "", fit="contain", track=False)
+    out = tmp_path / "part.mp4"
+    reel.cut_segment(src, seg, out, 1920)          # 1920 是主源的宽，故意传它
+    assert out.is_file() and out.stat().st_size > 0
+    assert reel.probe_size(out) == (reel.VIDEO_W, reel.VIDEO_H)
+
+
 def test_contain的横向窗口要从源片宽度算不许写死1920():
     """`keep = int(1920 * CONTAIN_KEEP)` 隐含「源片一定是 1920 宽」。
 
