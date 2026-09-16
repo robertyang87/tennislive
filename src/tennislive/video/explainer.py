@@ -2014,6 +2014,21 @@ AUTO_PUSH_SLUGS: frozenset[str] = frozenset({
     #   ③ 最后一处「三条标准」——`条` 不在量词表里
     # 第四趟把这三处逐条回读确认：`3条标准` / `16000人` / `2025年到2027年`。
     "finals-venues",
+    # 2026-09-16 验过才加进来的（同上那句「加进来之前先问一句：这条片子验过了吗」）：
+    # 在分支上渲的那趟（run 35128704061，explainer.yml push=false）落库成功，
+    # 5 分 33 秒跑完；`check_explainer_landed --ref <分支>` 报「已落地」（四个关键词
+    # 「替补第七」「特殊豁免」「强制参赛」「手铐」在 copy/push/字幕/words/文案里都在），
+    # `check_explainer_voice` 确认是代码默认的云健 `zh-CN-YunjianNeural +22% +0Hz`、七段。
+    # 成片从 Release 拉回本地量过——285.60 秒、1080×1920、30fps、7,649,377 字节，
+    # 音画差 0.051 秒（视频 285.600 / 音频 285.549）；十个 30 秒采样窗全程
+    # −3.7~−5.5 dB、整片 mean −24.0 dB，**没有数字静音**；
+    # 六屏先在本地逐屏渲出来看过（并据此修掉两处版式 bug：第 ③ 屏日期标签叠成
+    # 「101周日0 日」、第 ⑤ 屏罚款表两列相撞且整图压进序号药丸），成片又抽七帧复看；
+    # 225 种多字切词逐个扫过，没有读音变了的假词。
+    # ⚠️ 留一条给下一个人：旁白里「正赛周周一往前推四周」念出来是
+    # zhèng-sài-zhōu zhōu-yī，容易听成「每周周一」。没有闸拦它（不是假词，读音没变），
+    # 后一句「十月十二号周一开打，倒推四周」把它兜住了，所以这一版没为它重渲。
+    "wuhan-alternate",
     "zheng-china-wuhan-wildcards-v2",  # Authorized editorial correction; separate delivery receipt.
     # 2026-09-08: local full decode and 15 illustrated native cards reviewed; user authorizes QC -> WeChat.
     "zheng-china-wuhan-wildcards",
