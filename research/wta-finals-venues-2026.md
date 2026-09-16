@@ -231,6 +231,43 @@ WTA 自己 2024 年宣布利雅得那份通稿里，白纸黑字列了三条评�
 ⚠️ **一条查空的路，别再走**：Wikimedia Commons 搜 `WTA Finals Shenzhen`
 （namespace 6）只回一个文件，和这条片子无关。深圳 2019 的实拍在 Commons 上没有。
 
+## 九、这个选题的配图：哪几条路通，哪几条是死路
+
+2026-09-16 实测。账号所有者当天要的是「**多用图片少用文字**」，所以把能用的实拍
+全扫了一遍，结果记在这儿，别重扫。
+
+**通的**：
+
+| 用在哪 | 图 | 来源 |
+|---|---|---|
+| 封面 | 莱巴金娜亲吻奖杯（利雅得 2025 Day 8） | WTA `photoresources`，文件名自带五要素 |
+| 第三层 | 莱巴金娜与奖杯全景，**地上印着 RIYADH** | 同上 |
+| 第一层 | 温网中央球场满场 | 仓库已有 `assets/venues/wimbledon-centre-court.jpg` |
+| 后果 | 瓜达拉哈拉中心球场，**地上印着 GUADALAJARA** | 仓库已有 `assets/venues/guadalajara-centre-court.jpg` |
+| 这一次 | 印第安维尔斯 1 号球场，**地上印着 INDIAN WELLS** | 仓库已有 `assets/venues/indianwells-centre-court.jpg` |
+| 那深圳呢 | 深圳湾体育中心，比利·简·金杯 | 仓库已有 `assets/venues/shenzhen-bay-bjk-cup-centre-court.jpg` |
+
+⭐ **母题**：这几张里有四张的**场地前场都刷着城市名**。这条片子讲的就是那个名字
+每隔两三年换一次——所以选图优先挑「地板上有城市名」的那一张，哪怕它分辨率更低
+（印第安维尔斯那张 2400×983，比 WTA 赛事页头图的 4000×1638 小，仍然取它）。
+
+⚠️ **WTA `photoresources` 怎么翻到旧年份的图**：赛事年份页
+（`/tournaments/808/wta-finals/2023`）**一律只回当年的主视觉**，翻不到历史图；
+真正带当届实拍的是**单条「Champions Reel」视频页**
+（`/videos/<id>/champions-reel-...`）。2023 坎昆、2022 沃斯堡都是这么找到的。
+
+**死路（别再走）**：
+
+- **坎昆那块临时球场**：Commons 搜 `Cancun tennis stadium 2023 WTA Finals
+  Estadio Paradisus`（namespace 6）**零命中**；WTA 官方的坎昆冠军图
+  （`Swiatek-trophy-Jimmie.jpg`）是**影棚肖像**（木门前抱杯的半身），
+  画面里没有任何坎昆的信息。所以那一屏只能画示意图。
+- **深圳 2019 的现场图**：Commons 搜 `WTA Finals Shenzhen`（namespace 6）
+  只回一个无关文件；WTA 图库那三张见下。
+- **新加坡 2014–2018**：仓库里那张 `singapore-centre-court.jpg` 是
+  **Kallang Tennis Hub**，而 2014–2018 那五届在 **Singapore Indoor Stadium**
+  ——不是同一座场馆，**不能拿来讲那五年**。
+
 ⚠️ **WTA 官方图库挂在 2019 年那篇奖金稿上的三张照片不能用**：文件名是
 `mVEivgZT.jpg` 这种无意义串（没有四要素自证），打开看是斯维托丽娜在纯黑背景前的
 特写，**分不出是深圳 2019 还是新加坡 2018**——「分不出是哪一场的照片，
