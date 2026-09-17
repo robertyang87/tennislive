@@ -16441,12 +16441,14 @@ def test_全出血的字幕带要垫一层柔性渐变(tmp_path, monkeypatch):
         f"带式的字幕在实色底带里，不该再垫：{band}")
     monkeypatch.setattr(reel, "LAYOUT", "full")
 
-    # ④ render 接上了
+    # ④ render 接上了——⚠️ 2026-09-17 起是 **spec 认领才垫**（`subtitle_scrim: true`），
+    #    见 `test_字幕垫默认关_描边加厚_spec认领才垫`；这儿只钉「认领了就真的接上」
     body = inspect.getsource(reel.render)
     assert "subtitle_scrim(" in body and "scrim_input=scrim_input" in body, (
         "render 没造垫、或者没把它传进滤镜图——写了不等于接上了")
-    assert 'if LAYOUT != "band":' in body.split("subtitle_scrim(")[0].rsplit("\n", 6)[0] or \
-        'LAYOUT != "band"' in body, "垫只给全出血，带式要跳过"
+    before = body.split("subtitle_scrim(outdir")[0]
+    assert "wants_subtitle_scrim(spec)" in before[-600:], (
+        "垫要 spec 认领才垫（2026-09-17 账号所有者：字幕下面的背景可以不要了）")
 
     # ⑤ 真跑一次：纯白画面 3s，封面 0.5s、比赛到 2.5s、之后是片尾
     ass = tmp_path / "empty.ass"
@@ -16490,6 +16492,58 @@ def test_全出血的字幕带要垫一层柔性渐变(tmp_path, monkeypatch):
     mid = lum(1.5, top + 40, top + 80)
     assert 200 < mid < 250, f"坡顶那一截应该只是略暗（渐变），量到 {mid:.1f}"
 
+
+def test_字幕垫默认关_描边加厚_spec认领才垫(tmp_path, monkeypatch):
+    """账号所有者 2026-09-17 看完德约回北京那条：「我建议以后字幕下面的背景可以
+    不要了」，选了「默认关＋描边加厚＋忙背景单独认领」那条路。
+
+    来路：那层渐变垫从字幕上锚往上 220px 起坡，在 3:4 的画布上 y=1064 就开始压暗
+    ——画面下四分之一整个蒙一层，奖杯特写和 BEIJING 那两格看着像加了一条暗带；
+    而字幕只占一行，真需要垫的远比它盖住的小。
+
+    判据钉四头：
+    ① `render` 默认不造垫；spec 写 `subtitle_scrim: true` 才造，且带式照旧跳过
+      （不读源码猜——monkeypatch 掉 `subtitle_scrim`，看它被不被调用）
+    ② 竖版短片的字幕描边 4px＋1px 影（`SUB_OUTLINE_PX` / `SUB_SHADOW_PX`），
+      `write_subtitles` 真把它写进 Style 行；解说片那头的默认 3/0 一个字不变
+    ③ `subtitle_scrim` 是真字段（`_REAL_FIELDS`），写成 `_subtitle_scrim` 会被拦
+    ④ 垫本身的形状没动（上一条测试照旧管它）
+    """
+    reel = _reel()
+    from tennislive.video import explainer as E  # noqa: PLC0415
+
+    # ② Style 行
+    ass = E.write_subtitles([(0.0, 1.0, "六行里有五个")], tmp_path / "a.ass",
+                            height=reel.VIDEO_H, margin_v=1284,
+                            outline=reel.SUB_OUTLINE_PX, shadow=reel.SUB_SHADOW_PX)
+    style = next(ln for ln in ass.read_text(encoding="utf-8").splitlines()
+                 if ln.startswith("Style: TL"))
+    fields = style.split(",")
+    # Format: …, Angle(14), BorderStyle(15), Outline(16), Shadow(17), Alignment(18)
+    assert fields[15] == "1" and fields[16] == "4" and fields[17] == "1", style
+    assert reel.SUB_OUTLINE_PX > 3 and reel.SUB_SHADOW_PX >= 1
+    default = next(ln for ln in E._ass_header().splitlines() if ln.startswith("Style: TL"))
+    assert default.split(",")[16] == "3" and default.split(",")[17] == "0", (
+        f"解说片的默认描边不许跟着变：{default}")
+    body = inspect.getsource(reel.render)
+    assert "outline=SUB_OUTLINE_PX, shadow=SUB_SHADOW_PX" in body, (
+        "render 写字幕时没把加厚的描边传进去——写了常量不等于用上了")
+
+    # ③ 真字段
+    assert "subtitle_scrim" in reel._REAL_FIELDS["spec"]
+
+    # ① 默认不垫、认领才垫、带式跳过、非严格布尔不算认领；render 按同一个函数分支
+    monkeypatch.setattr(reel, "LAYOUT", "full")
+    assert reel.wants_subtitle_scrim({}) is False
+    assert reel.wants_subtitle_scrim({"subtitle_scrim": True}) is True
+    assert reel.wants_subtitle_scrim({"subtitle_scrim": "yes"}) is False
+    assert reel.wants_subtitle_scrim({"subtitle_scrim": 1}) is False
+    monkeypatch.setattr(reel, "LAYOUT", "band")
+    assert reel.wants_subtitle_scrim({"subtitle_scrim": True}) is False
+    monkeypatch.setattr(reel, "LAYOUT", "full")
+    before = body.split("subtitle_scrim(outdir")[0]
+    assert "wants_subtitle_scrim(spec)" in before[-600:], (
+        "render 造垫那一支没走 wants_subtitle_scrim——两处各写一遍就会分叉")
 
 def test_全出血也能回贴记分条_字幕抬到板上方(tmp_path, monkeypatch):
     """⭐ 2026-09-16 戴维斯杯那条整体视觉 review：3:4 居中裁切把 ITF 转播的板裁得

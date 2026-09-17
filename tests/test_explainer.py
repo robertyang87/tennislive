@@ -7,6 +7,7 @@ from unittest import mock
 
 import pytest
 
+from tennislive.zh.tts_fake_words import FAKE_WORDS
 from tennislive.render.tournament_story import STORIES, find_story_by_slug
 from tennislive.video.explainer import (
     H,
@@ -4620,25 +4621,11 @@ def test_那一千字的闸是四条线共用的一处出处():
     assert "split_xhs" in reel_called, "split_copy 又自己写了一套切法"
 
 
-#: 「合成器自己报的切词」里确认过、而且**读音真的变了**的那几个串。
-#:
-#: 这张表**只收读音变了的**，不收「重音偏了」那一档——`tennis-video-craft`
-#: 那节写得很清楚：人名内部切错（`阿尔卡拉 ｜ 斯`）、单字铺开（`抢 ｜ 七`）
-#: 音都没变，为它们硬改译名/句式是拿误报换噪音，而**一条天天误报的闸会被人
-#: 写豁免压掉，把它唯一想拦的那一类一起关掉**。
-#:
-#: ⚠️ 判据是**切词器自己报的边界**（`voice_NN.words.json`），不是我读着像。
-#: 两条都是 2026-09-16 在 promotional-fees 第一趟成片的 words.json 里量到的。
-_FAKE_WORDS = {
-    # 「规则书写着」→ 切成「规则 ｜ 书写 ｜ 着」，而「书写」是个真词，念
-    # shūxiě，整句意思变成「规则在书写」。修法：补一个「里」撑开（「规则书里
-    # 写着」）。这是 tennis-video-craft 假词表的第一条，写在那儿一年多了。
-    "规则书写": "「书写」念 shūxiě，意思全变——写「规则书里写着」",
-    # 「直接或者间接给的钱」→ 切成「间 ｜ 接给」：「给」被黏进来，「间」落单。
-    # 「间」单独站着念 jiān，而「间接」是 jiàn。⚠️ 加逗号没用——逗号撑得开两个
-    # 该分的词，合不拢一个该合的词（词边界事件里本来就没有标点）。把「给」挪走。
-    "间接给": "「间」落单念 jiān（「间接」是 jiàn）——把「给」挪走",
-}
+#: 「合成器自己报的切词」里确认过、而且**读音真的变了**的那几个串——单一出处在
+#: `tennislive.zh.tts_fake_words.FAKE_WORDS`（2026-09-17 起两条产线共用：这张表
+#: 原来只活在这个测试文件里，竖版短片的 spec 旁白一个字都不扫，「五行」就是这么
+#: 从 dry-run 一路绿到推送的）。判据是切词器自己报的边界（`voice_NN.words.json`）。
+_FAKE_WORDS = FAKE_WORDS
 
 #: 上面那两个串在**已经发出去的**片子里各有一处。已发的不重渲（消息收不回来），
 #: 所以挂在这儿。**只许减不许加**，底下有自检。
