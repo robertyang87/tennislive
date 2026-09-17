@@ -1209,6 +1209,111 @@ def test_冷开场实拍片段要铺满不留黑边(tmp_path):
         assert px[0] > 120, f"这个角 {px} 看着像信箱黑边，不是源片自己的颜色"
 
 
+def test_台头和副标题在每一屏上都常驻():
+    """账号所有者 2026-09-17：「我们自己的网球有故事的抬头和副标题，不用变也可以常驻」。
+
+    来路：拆 KeeKtennis 那条参考片时量到它把标题常驻在右上角（见
+    `tennis-editorial` 的「第七个账号」），回头查我们自己的——`_slide_html` 的
+    `.head` 本来就在**每一屏**上，也就是这条要求我们一直在做。**而它一条判据
+    都没有**：把 `show_topic` 整个改成 `False`（副标题从每一屏上消失），
+    `test_explainer.py` ＋ `test_explainer_budget.py` ＋ `test_cover_resolution.py`
+    合计 **306 个判据全绿**（2026-09-17 实测）。「一直是对的」和「有人在管」
+    在产物上长得一模一样。
+
+    ⚠️ **台头是一块，不是那一行**——竖版短片那条线为这句话栽过一次
+    （CLAUDE.md「『副标题不要消失啊』——台头是一块，不是那一行」），
+    这里把同一条钉在解说片上。
+
+    钉三头，缺哪一头它都能变成恒真：
+
+      ① 品牌行「网球时差 · <栏目>」每一屏都在；
+      ② 副标题（`_OPENINGS[slug]["topic"]`）每一屏都在，而且**钉在 `.topic`
+         那一行上**——不是「整份 HTML 里出现过」：同样的字正文里也会出现，
+         那种写法会被自己的正文满足（本仓库记过「被自己的注释满足的假绿」）；
+      ③ 真的扫到了东西（slug 数和屏数的下界），否则下一个人把循环写空，
+         它会安安静静地假装严格。
+
+    ⚠️ **唯一的例外是已归档的「开球之前」封面**：那一屏 topic 让位给
+    `fixture`（时间/对阵）那一块，`show_topic` 里写着。命中的正好是
+    `_ARCHIVED_DECKS` 这 9 条，一条不多一条不少——而那个栏目不再加新的
+    （`test_解说视频的栏目只剩网球有故事一个`），所以这张豁免表**只许减不许加**，
+    这条判据自己就是它的自检：哪天多出来第 10 条，它当场红。
+    """
+    from tennislive.video.explainer import (  # noqa: PLC0415
+        _ARCHIVED_DECKS,
+        _OPENINGS,
+        explainer_column,
+    )
+
+    topic_span = re.compile(r'<span class="topic">(.*?)</span>')
+    slugs = slides = 0
+    missing_brand: list[str] = []
+    missing_topic: list[str] = []
+    fixture_covers: set[str] = set()
+
+    for slug in _SCRIPTED:
+        topic = (_OPENINGS.get(slug) or {}).get("topic", "")
+        assert topic, f"{slug} 没有 topic——台头的副标题是从它来的"
+        column = explainer_column(slug)
+        brand = f"网球时差 · {html.escape(column)}"
+        segments = explainer_script(find_story_by_slug(slug))
+        slugs += 1
+        for index, seg in enumerate(segments):
+            markup = _slide_html(index, seg, topic=topic, column=column)
+            slides += 1
+            if brand not in markup:
+                missing_brand.append(f"{slug} 第 {index} 屏")
+            got = [html.unescape(x) for x in topic_span.findall(markup)]
+            if got == [topic]:
+                continue
+            if index == 0 and seg.fixture and not got:
+                fixture_covers.add(slug)   # 赛前片的封面，topic 让位给 fixture
+                continue
+            missing_topic.append(f"{slug} 第 {index} 屏拿到 {got!r}，该是 {topic!r}")
+
+    assert not missing_brand, (
+        "这几屏上没有品牌行「网球时差 · <栏目>」："
+        + "；".join(missing_brand[:6])
+        + "。台头是一块，不是那一行——账号所有者要的是它常驻。"
+    )
+    assert not missing_topic, (
+        "这几屏上的副标题不对："
+        + "；".join(missing_topic[:6])
+        + "。副标题和品牌行是同一块，不许只留半块。"
+    )
+    assert fixture_covers == set(_ARCHIVED_DECKS), (
+        f"「封面让位给 fixture」这条例外命中的是 {sorted(fixture_covers)}，"
+        f"而存量前瞻是 {sorted(_ARCHIVED_DECKS)}。多出来的那条要么是新写的赛前片"
+        "（那个栏目已经停了），要么是常青片的封面把副标题弄丢了。"
+    )
+    # 主语没了就出声：循环写空的话上面三条断言全是恒真的。
+    assert slugs >= 40, f"只扫到 {slugs} 个选题，判据失效了"
+    assert slides >= 300, f"只扫到 {slides} 屏，判据失效了"
+
+
+def test_冷开场台头上的副标题真的进了像素(tmp_path):
+    """上面那条钉的是幻灯片，这条钉的是台头的**另一个出口**——冷开场那几秒
+    画面上挂的是 `_render_intro_badge` 出的透明 PNG，不是幻灯片。
+
+    ⚠️ 已有的 `test_冷开场台头要和幻灯片台头同一份样式` 验的是「渲出来了、
+    有不透明像素」，**把副标题整行拆掉它照样绿**：品牌行还在，alpha 极值也还在。
+    这条问的是另一句话——**副标题真的被画上去了吗**：同一个栏目、两个不同的
+    topic，渲出来的两张 PNG 必须不一样。
+    """
+    from PIL import Image  # noqa: PLC0415
+
+    from tennislive.video import explainer as E  # noqa: PLC0415
+
+    a = E._render_intro_badge("一发有钟，二发没有", "网球有故事", tmp_path / "a")
+    b = E._render_intro_badge("总决赛去过 15 座城市", "网球有故事", tmp_path / "b")
+    assert a is not None and b is not None, "Chromium 装着的话台头必须渲得出来"
+    pa, pb = Image.open(a).convert("RGBA"), Image.open(b).convert("RGBA")
+    assert pa.size == pb.size, f"同一个栏目渲出两个尺寸：{pa.size} / {pb.size}"
+    assert pa.tobytes() != pb.tobytes(), (
+        "换了 topic，台头图逐字节相同——副标题那一行根本没画进去。"
+    )
+
+
 def test_冷开场台头要和幻灯片台头同一份样式(tmp_path):
     """`_render_intro_badge` 渲的是和 `_slide_html` 里 `.head` 像素级一致的
     台头——图标、品牌字、topic 行，透明背景叠上去。这条测试钉住两头：
