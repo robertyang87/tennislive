@@ -1,0 +1,74 @@
+{
+  "scoreboard_qc_sha256": null,
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 3.827,
+  "layout": "full",
+  "segments_seconds": 173.64,
+  "topbar": null,
+  "film_seconds": 178.68,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 3.36,
+    "2": 6.696,
+    "3": 8.184,
+    "4": 6.672,
+    "5": 7.44,
+    "6": 6.192,
+    "7": 7.944,
+    "8": 6.672,
+    "9": 3.984,
+    "11": 6.168,
+    "12": 6.0,
+    "13": 8.928,
+    "14": 7.872,
+    "15": 8.592,
+    "16": 9.768,
+    "17": 9.408,
+    "18": 8.4,
+    "19": 5.832,
+    "20": 5.376,
+    "21": 5.904
+  },
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "zhang-shuai-story",
+    "received_at": "2026-09-17T16:11:57Z",
+    "artifact_ready_at": "2026-09-17T16:21:23Z",
+    "elapsed_seconds": 566.109,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "52069aeac8da3e194724936b9cdfddca0bea304736b3bde9234af8c09c604567",
+    "spec_sha256": "51163336ff0160a56ef362485222486813ac7e9c180e73bfa6f9cccb6d767b56",
+    "run_id": "35245068155",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-09-17T16:14:33Z",
+        "run_id": "35245068155"
+      }
+    ],
+    "render_seconds": 410.109,
+    "pre_render_seconds": 156.0
+  },
+  "film_sha256": "52069aeac8da3e194724936b9cdfddca0bea304736b3bde9234af8c09c604567",
+  "film_bytes": 116726117,
+  "qc_attestation_sha256": "b18c78bdd906d4fd24dc4af254dca3599399cf19374dca18b82382d2b7bfc77d",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-09-17T16:14:33Z",
+      "run_id": "35245068155"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-17T16:21:24Z",
+      "run_id": "35245068155"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-zhang-shuai-story/zhang-shuai-story.mp4",
+  "video_bytes": 116726117
+}
