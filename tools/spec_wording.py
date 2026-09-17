@@ -210,6 +210,11 @@ ACE_IN_CHINESE_LEGACY = frozenset({
     "maria-yastremska.json", "maria-yastremska.xhs.txt",
 })
 
+#: 合成器会念错的假词（`tennislive.zh.tts_fake_words`，两条产线共用）。
+#: 「五行」念成 wǔxíng 那条已经推过微信（djokovic-beijing-return 第 4 段），已发
+#: 不为措辞重渲；挂在这儿**只许减不许加**，自检在 pytest 那头。
+FAKE_WORDS_LEGACY = frozenset({"djokovic-beijing-return"})
+
 #: 「要到 N 个破发点」——点一律写「拿到」。中间最多隔一个数量词。
 YAODAO_POINT = re.compile(r"要到[^。！？\n]{0,8}?(破发点|盘点|赛点|局点)")
 
@@ -382,6 +387,18 @@ CAPTION_LEAD_LEGACY = frozenset({
 })
 
 # ── 三种扫描面（故意不合并，见模块 docstring）──────────────────────────────
+
+
+def spoken_texts(spec: dict) -> list[str]:
+    """真的会过 TTS 的那两处：封面旁白 ＋ 每段 `narration`。
+
+    ⚠️ 比 `voiced_texts` 窄：钩子、push、顶栏没人念，切词管不着它们；`quote`
+    是原声，也不过合成器。假词那道闸只扫这一面。
+    """
+    texts = [str((spec.get("cover") or {}).get("narration") or "")]
+    texts += [str(s.get("narration") or "") for s in spec.get("segments") or []
+              if isinstance(s, dict)]
+    return texts
 
 
 def voiced_texts(spec: dict) -> list[str]:
@@ -648,6 +665,16 @@ def check_spec_wording(spec: dict, slug: str,
                 f"知道这是谁。封面钩子不写身份是因为海报上印着，而缩略图缩到 "
                 f"170px 时那个名字只剩 8.2px，前提在这儿不成立。"
                 f"把「谁」补进这一行，钩子留在后半句")
+
+    if slug not in FAKE_WORDS_LEGACY:
+        from tennislive.zh.tts_fake_words import fake_word_hits  # noqa: PLC0415
+        bad = [(i, pat, why) for i, text in enumerate(spoken_texts(spec))
+               for pat, why in fake_word_hits(text)]
+        if bad:
+            problems.append(
+                "旁白里有合成器会念错的假词（渲出来一个像素都看不出来）：" + "；".join(
+                    f"{'封面' if i == 0 else f'第 {i} 段'}「{pat}」——{why}"
+                    for i, pat, why in bad))
 
     if hits := _hits(BILINGUAL_MENTION, voiced):
         problems.append(

@@ -26,6 +26,7 @@ sys.path.insert(0, str(Path("tools").resolve()))
 
 from tools.spec_wording import (  # noqa: E402
     CLOCK_MINUTE_LEGACY,
+    FAKE_WORDS_LEGACY,
     RALLY_SECONDS_LEGACY,
     check_interview_copy_wording,
     check_spec_wording,
@@ -380,3 +381,48 @@ def test_注解里提字幕规格不许让这条spec红():
     }
     problems = check_spec_wording(spec, "unit-test-slug", None)
     assert not any("字幕" in p for p in problems), problems
+
+
+SPECS = Path(__file__).resolve().parents[1] / "specs" / "reels"
+
+
+def test_旁白里的假词在dry_run就红_豁免表只许减():
+    """账号所有者 2026-09-17 听出来的：「六行里有五行是同一个名字」——「五行」被
+    合成器读成 wǔxíng（金木水火土）。这张假词表原来只活在 `tests/test_explainer.py`
+    里、只扫解说片脚本，竖版短片的 spec 旁白一个字都不扫，于是它从 `--dry-run`
+    一路绿到推送。现在两条线读同一张表（`tennislive.zh.tts_fake_words`）。
+
+    ① 新 spec 的旁白（封面旁白和段旁白）命中就红，报出是第几段、为什么、怎么改
+    ② 没人念的字段（钩子 / push / 顶栏 / quote 原声）不扫——切词管不着它们
+    ③ 豁免表里每个 slug 都要**真的还命中**（已发不重渲；表只许减不许加）
+    ④ 表的三条都真在共用表里，且和解说片那头的 `_FAKE_WORDS` 是同一个对象
+    """
+    from tennislive.zh.tts_fake_words import FAKE_TOKENS, FAKE_WORDS, fake_token_hits
+
+    spec = {"cover": {"hook": "六行里有五行", "narration": "封面这句没问题"},
+            "push": {"summary": "六行里有五行"},
+            "topbar": {"line1": "六行里有五行"},
+            "segments": [{"narration": "北京。"},
+                         {"quote": [{"at": 0, "text": "六行里有五行"}]},
+                         {"narration": "从二〇〇九年起，六行里有五行是同一个名字。"}]}
+    problems = check_spec_wording(spec, "fresh-slug")
+    fake = [p for p in problems if "假词" in p]
+    assert len(fake) == 1 and "第 3 段「五行」" in fake[0] and "wǔxíng" in fake[0], problems
+    assert "封面" not in fake[0], "封面旁白没问题却被报了"
+    # ② 只有旁白那一面
+    quiet = dict(spec, segments=[{"narration": "北京。"}])
+    assert not [p for p in check_spec_wording(quiet, "fresh-slug") if "假词" in p]
+    cover = dict(spec, segments=[], cover={"narration": "六行里有五行"})
+    assert "封面「五行」" in next(p for p in check_spec_wording(cover, "fresh-slug") if "假词" in p)
+    # ③ 豁免自证
+    for slug in FAKE_WORDS_LEGACY:
+        legacy = json.loads((SPECS / f"{slug}.json").read_text(encoding="utf-8"))
+        assert not [p for p in check_spec_wording(legacy, slug) if "假词" in p], slug
+        assert [p for p in check_spec_wording(legacy, slug + "-x") if "假词" in p], (
+            f"{slug} 已经不违规了，从 FAKE_WORDS_LEGACY 里删掉——这张表只许减不许加")
+    # ④ 共用表
+    assert {"规则书写", "间接给", "五行"} <= set(FAKE_WORDS)
+    assert "五行" in FAKE_TOKENS
+    assert fake_token_hits(["六行里", "有", "五行", "是"]) == [("五行", FAKE_TOKENS["五行"])]
+    import tests.test_explainer as te  # noqa: PLC0415
+    assert te._FAKE_WORDS is FAKE_WORDS

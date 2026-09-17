@@ -11691,12 +11691,17 @@ _ASS_ALIGN = 8
 # 减 156 而不是更小：这样**两行的兜底情况**（1524+78×2=1680）也正好还在卡内。
 _ASS_MARGIN_V = CARD_TOP + CARD_H - 156
 # ASS 的颜色是 &HAABBGGRR：#e7f3ec → ecf3e7，深底 #141e18 → 181e14。
-def _ass_header(height: int = VIDEO_H, margin_v: int = _ASS_MARGIN_V) -> str:
+def _ass_header(height: int = VIDEO_H, margin_v: int = _ASS_MARGIN_V, *,
+                outline: float = 3, shadow: float = 0) -> str:
     """ASS 头。**画布高度和上锚位置要能换。**
 
     赛场之上的竖版片是 3:4（1080×1440），不是解说片的 9:16。`PlayResY` 写错，
     libass 会按它和真实画面的比例把整套坐标缩一遍，字幕整体跑位——而且不报错。
     默认值保持解说片原样，那组数是量真成片量出来的，别动。
+
+    `outline` / `shadow`：描边和投影的像素数。解说片的字幕压在实色卡上，3/0 够；
+    竖版短片 2026-09-17 起撤掉字幕底下那层渐变垫（账号所有者：「字幕下面的背景
+    可以不要了」），靠 4px 描边＋1px 影在忙背景上站住，由调用方传进来。
     """
     return f"""[Script Info]
 ScriptType: v4.00+
@@ -11710,7 +11715,7 @@ Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour,
 BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, \
 BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
 Style: TL,{_ASS_FONT},{_ASS_SIZE},&H00ECF3E7,&H000000FF,&H00181E14,&H00000000,\
-1,0,0,0,100,100,0,0,1,3,0,{_ASS_ALIGN},{_ASS_MARGIN_H},{_ASS_MARGIN_H},{margin_v},1
+1,0,0,0,100,100,0,0,1,{outline:g},{shadow:g},{_ASS_ALIGN},{_ASS_MARGIN_H},{_ASS_MARGIN_H},{margin_v},1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
@@ -11719,7 +11724,8 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 
 def write_subtitles(cues: Sequence[tuple[float, float, str]], path: Path,
                     *, height: int = VIDEO_H,
-                    margin_v: int = _ASS_MARGIN_V) -> Path:
+                    margin_v: int = _ASS_MARGIN_V,
+                    outline: float = 3, shadow: float = 0) -> Path:
     # **换行是「这一条要排两行」，不是一个空格。** 原来这儿写的是
     # `shown.replace(chr(10), ' ')`，于是中英双语那种「上英下中」的字幕被压成
     # 一行，只能靠 `WrapStyle=0` 自动折——折点落在最后一个装得下的空格上，
@@ -11755,7 +11761,8 @@ def write_subtitles(cues: Sequence[tuple[float, float, str]], path: Path,
         + r"\N".join(ass_rows(shown))
         for start, end, shown in cues
     ]
-    path.write_text(_ass_header(height, margin_v) + "\n".join(lines) + "\n",
+    path.write_text(_ass_header(height, margin_v, outline=outline, shadow=shadow)
+                    + "\n".join(lines) + "\n",
                     encoding="utf-8")
     return path
 
