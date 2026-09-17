@@ -5318,6 +5318,9 @@ APPROVED_LOW_RES_SOURCES: dict[str, int] = {
     # 德约回北京（djokovic-beijing-return）：账号所有者 2026-09-17「低清的视频可以用」
     "https://www.youtube.com/watch?v=TCB-Yj85A5E": 720,   # ATP 官方：2015 北京决赛集锦（片头奖杯底座刻名）
     "https://www.youtube.com/watch?v=V9mgmdBtbNc": 470,   # 2009 北京决赛集锦，854×470
+    # 他自己的官宣视频（中网官方制作、他转发到 Instagram Story；X 用户 @pavyg 的转录，
+    # 账号所有者 2026-09-17 亲自给的链接），720×960 竖版
+    "https://x.com/pavyg/status/2100236978620928375": 960,
 }
 
 
