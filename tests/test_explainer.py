@@ -27,6 +27,24 @@ from tennislive.video.explainer import (
 # was fixed into rather than only being checked the day it ships.
 _SCRIPTED = tuple(_SCRIPTS)
 
+# 2026-09-17 之前用**字卡**做的 40 条「网球有故事」。⚠️ **只许减不许加**：
+# 新片的默认是**视频剪辑**那条路（`specs/reels/<slug>.json` ＋
+# `build_match_reel.py`，`cover.eyebrow` 写「网球有故事」）。真要走字卡，
+# 在 `_OPENINGS[slug]["cards_why"]` 里写清为什么，别往这张表里加名字。
+# 见 `test_新的网球有故事默认走视频剪辑_走字卡要认领理由`。
+_CARD_DECK_LEGACY = frozenset({
+    "ball-pick", "big-three", "bu-lucky-loser", "challenger-climb",
+    "comeback-middle", "cramp-timeout", "entry-deadline", "equal-pay",
+    "finals-venues", "gamesmanship", "gauff-right-coco", "golden-masters",
+    "hawkeye", "heat-rule", "kostyuk-champion-test", "longest-match",
+    "lucky-loser", "mandatory-1000", "masters-format", "nadal-academy",
+    "pr-allowance", "promotional-fees", "protected-ranking", "qualifier-ceiling",
+    "queue", "roof", "rufus", "second-serve-clock",
+    "shot-clock", "special-exempt", "svitolina-handshake", "ten-champions",
+    "thiem-football", "tour-balls", "wawrinka-wildcard", "weeks-at-no1",
+    "wildcard", "wimbledon-whites", "wuhan-alternate", "yellow-ball",
+})
+
 
 def _beats(slug):
     """The content beats, without the opening question card."""
@@ -1207,6 +1225,73 @@ def test_冷开场实拍片段要铺满不留黑边(tmp_path):
     # 明显偏红/偏亮，就证明没有信箱黑边——旧写法这四个角会是深绿。
     for px in corners:
         assert px[0] > 120, f"这个角 {px} 看着像信箱黑边，不是源片自己的颜色"
+
+
+def test_新的网球有故事默认走视频剪辑_走字卡要认领理由():
+    """账号所有者 2026-09-17：「**不要总用字卡来做视频，最好用视频剪辑的方式呈现**」。
+
+    ⚠️⚠️ **这是他第二次说同一句话。** 2026-08-09 的原话是「视频时代我更希望是
+    视频的剪辑，最好不要用卡片方式」，当时落在
+    `docs/column-differentiation-design.md` §0.5——**一份设计文档，没有闸**。
+    量出来它确实没拦住（按产物目录日期数「网球有故事」）：
+
+        9/01–9/12   视频剪辑 11 : 字卡 3
+        9/15–9/17   **字卡 5 : 视频剪辑 1**   ← 三天之内又滑回去了
+        全部 69 条  字卡 45 : 视频剪辑 24
+
+    **两条路都活着，而没有任何东西说哪条是默认**，于是它跟着谁在写摇摆：
+
+        字卡      `_SCRIPTS[slug]` ＋ `explainer.py`      一屏一张静图，40 条
+        视频剪辑  `specs/reels/<slug>.json` ＋ `build_match_reel.py`
+                  （`cover.eyebrow` 写「网球有故事」）      真源片剪窗口，22 条
+
+    所以这条闸只做一件事：**新写的字卡稿必须认领 `cards_why`**，说清它属于
+    2026-08-09 定死的哪一种例外——**天然图表题材**（规则原文、时间线、数据
+    对比这类照片和视频都表达不了的），或**完全找不到可用画面的兜底**。
+
+    ⚠️ **故意不做成「禁止字卡」**：他两次说的都是「不要**总**」「**最好**不要」，
+    不是不许；而本仓库「示意图的触发条件是『照片讲不清』」那条也认同头一种例外。
+    **认领是为了把「想过了」和「顺手就这么做了」分开**——和 `_layout_why` /
+    `_heat_why` / `_score_inset_why` 一个形状，闸不替人做决定。
+
+    钉两头：新稿要认领；那张存量表里的名字**必须还是真的字卡稿**，
+    否则它会悄悄变成一张过期的名单（本仓库「一个会过期的名单和一条常年红的
+    检查是同一个毛病」）。
+    """
+    from tennislive.video.explainer import (  # noqa: PLC0415
+        _ARCHIVED_DECKS,
+        _OPENINGS,
+    )
+
+    live = {s for s in _SCRIPTED if s not in _ARCHIVED_DECKS}
+    # 主语没了就先出声：`live` 空掉的话，下面三条里最先红的会是「存量表全过期了」
+    # ——那句话是假的，读的人会去删表。所以这一条排在最前面。
+    assert len(live) >= 35, f"只扫到 {len(live)} 条字卡稿，判据失效了"
+
+    unclaimed = sorted(
+        s
+        for s in live - _CARD_DECK_LEGACY
+        if not str((_OPENINGS.get(s) or {}).get("cards_why", "")).strip()
+    )
+    assert not unclaimed, (
+        "这几条新的「网球有故事」走了字卡，却没说为什么："
+        + "、".join(unclaimed)
+        + "。默认那条路是**视频剪辑**（`specs/reels/<slug>.json`，"
+        "`cover.eyebrow` 写「网球有故事」）。真要走字卡，在 "
+        '`_OPENINGS[slug]["cards_why"]` 里写清是哪一种例外：天然图表题材，'
+        "或者完全找不到可用画面。⚠️ 别往 `_CARD_DECK_LEGACY` 里加名字——"
+        "那张表是 2026-09-17 之前的存量，只许减不许加。"
+    )
+
+    stale = sorted(_CARD_DECK_LEGACY - live)
+    assert not stale, (
+        f"存量表里这几个已经不是在跑的字卡稿了：{stale}。"
+        "名字留着不删，这张表就会慢慢变成一张谁也不敢动的过期名单。"
+    )
+    assert len(_CARD_DECK_LEGACY) <= 40, (
+        f"存量表长到了 {len(_CARD_DECK_LEGACY)} 条——它 2026-09-17 冻结在 40，"
+        "只许减不许加。新稿要认领 `cards_why`，不是往这儿添名字。"
+    )
 
 
 def test_台头和副标题在每一屏上都常驻():
