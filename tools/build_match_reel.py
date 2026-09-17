@@ -5315,6 +5315,9 @@ APPROVED_LOW_RES_SOURCES: dict[str, int] = {
     "https://www.youtube.com/watch?v=qBtBKmKmQZc": 720,   # ITF：鲁德 v 埃切维里，挪威 v 阿根廷 2025
     "https://www.youtube.com/watch?v=E-MWVXF9ET0": 720,   # ITF：布德科夫·克耶尔 v 费恩利，挪威 v 英国 2026
     "https://www.youtube.com/watch?v=ogv43WCXQSo": 480,   # British Pathé：1933 戴维斯杯挑战轮新闻片
+    # 德约回北京（djokovic-beijing-return）：账号所有者 2026-09-17「低清的视频可以用」
+    "https://www.youtube.com/watch?v=TCB-Yj85A5E": 720,   # ATP 官方：2015 北京决赛集锦（片头奖杯底座刻名）
+    "https://www.youtube.com/watch?v=V9mgmdBtbNc": 470,   # 2009 北京决赛集锦，854×470
 }
 
 
