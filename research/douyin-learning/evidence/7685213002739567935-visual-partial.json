@@ -1,0 +1,102 @@
+{
+  "schema_version": 1,
+  "observed_at": "2026-09-18T15:09:00Z",
+  "aweme_id": "7685213002739567935",
+  "permanent_url": "https://www.douyin.com/video/7685213002739567935",
+  "author": "美国网球公开赛USOpen",
+  "status": "partial",
+  "media": {
+    "acquisition": "Actual HTTPS currentSrc read from rendered video; direct download without cookies",
+    "signed_url_persisted": false,
+    "sha256": "61c1f8d4487ea5765c256e2f2cf7bc32dcb9eee865f625905da27d8f0de9e1df",
+    "bytes": 1114222,
+    "duration_seconds": 21.081995,
+    "video": {
+      "codec": "h264",
+      "width": 576,
+      "height": 1024,
+      "fps": 30
+    },
+    "audio": {
+      "codec": "aac",
+      "sample_rate": 44100,
+      "channels": 2
+    },
+    "full_media_acquired": true,
+    "full_media_reviewed": false
+  },
+  "visual_sampling": {
+    "method": "ffmpeg select=not(mod(n,60)); source timestamps preserved; 4x3 contact sheet",
+    "timestamps_seconds": [
+      0,
+      2,
+      4,
+      6,
+      8,
+      10,
+      12,
+      14,
+      16,
+      18,
+      20
+    ],
+    "contact_sheet_sha256": "2f58f37eaa1441b202cc0c4eac9f99e9e0f8a8b3ea41ee2189fb3390f7c9b85f",
+    "discarded_preview": "Earlier fps=1/2 sheet excluded from findings because frame resampling can shift source-frame selection."
+  },
+  "dimensions": {
+    "composition": {
+      "status": "sampled_partial",
+      "evidence": "0,2,...20s: centered seated upper-body portrait, blue backdrop, subject dominates vertical canvas; white subtitles on lower chest and separate bottom blue branded strip."
+    },
+    "text_stickers": {
+      "status": "sampled_partial",
+      "evidence": "0s question subtitle; 4s score 5-1, 6s served twice, 8s not 6-2; 10/12/14s pressure explanation; 16/18s miscount callback; 20s no subtitle. Single-line white text visible; not a verbatim spoken transcript."
+    },
+    "subject_layout": {
+      "status": "sampled_partial",
+      "evidence": "At sampled points face remains above subtitle region, visible microphone near center, USOpen logo in bottom strip; this is not a template to copy into current 3:4 brand layout."
+    },
+    "editing_rhythm": {
+      "status": "pending",
+      "evidence": "Sparse samples do not establish edit cadence; scene threshold scan yielded zero candidates but does not prove absence of cuts."
+    },
+    "speed": {
+      "status": "pending",
+      "reason": "No original unedited source comparison; player rate and 30fps do not establish original playback speed."
+    },
+    "zoom_focus": {
+      "status": "pending",
+      "reason": "Similar framing in samples cannot prove absence of continuous zoom."
+    },
+    "transitions_splices": {
+      "status": "pending",
+      "evidence": "ffmpeg scene>0.25 scan yielded zero candidate frames; threshold misses/subtle jump cuts remain possible."
+    },
+    "voiceover_logic": {
+      "status": "pending",
+      "subtitle_only_hypothesis": "Question -> score misunderstanding -> less pressure -> callback; inferred from sampled on-screen Chinese text only; translation not checked against speech."
+    },
+    "voice_location_bgm_sfx": {
+      "status": "pending",
+      "reason": "Mixed audio track acquired; no listening or independent stems. No claim on music, ducking, emotion, loudness or silence."
+    },
+    "counterexamples": {
+      "status": "supported_applicability_check",
+      "rule_id": "evidence-inset-focus-v1",
+      "rule_version": 1,
+      "evidence": "At 0/10/20s interview portrait contains no document evidence needing enlargement; face/subtitle/brand are protected. Existing inset hypothesis is not applicable, with no effect-size claim."
+    }
+  },
+  "production": {
+    "consumed": false,
+    "treatment_work_id": null,
+    "observation_window_hours": 72,
+    "window_started": false,
+    "primary_metric": null,
+    "rollback": "Omit inset and keep original baseline.",
+    "promotion": false
+  },
+  "retention": null,
+  "completion_rate": null,
+  "growth_effect": null
+}
