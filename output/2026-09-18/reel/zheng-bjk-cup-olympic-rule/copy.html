@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>9.18 网球有故事 | 郑钦文为什么非打不可</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>郑钦文为什么非打不可：一分积分都不算的比赛，她美网打完就飞回了深圳
+
+美网从资格赛连赢 7 场之后，别人去休假，郑钦文飞回了深圳——9 月 24 日比利·简·金杯 1/4决赛，中国对意大利。这场球一分排名积分都不算。
+
+为什么要打？答案不在「爱国」两个字里，写在 ITF 的奥运参赛规则里。想打 2028 洛杉矶，这个周期必须至少两次进国家队名单并到场，其中一次要落在 2027 或 2028，一届总决赛不管打几场只算一次。周期从 2024 年 8 月 5 日起算：她 2024 长沙那一次在这之前，不算；去年深圳她进了名单却在开赛前退赛，不到场，也不算。所以这一趟是她新周期的第一次，明年还得再来一次。规则里也有豁免条款，她没去走那条路。
+
+同一条规则也卡着辛纳和阿尔卡拉斯：两个人这个周期各只有一次，都还差一次。辛纳去年宣布不打博洛尼亚的总决赛；这周西班牙客场对智利，阿尔卡拉斯也没去。
+
+再说深圳。去年 9 月 16 日同一块场地，中国 0-2 输给意大利：袁悦决胜盘 5-2 领先被连追 5 局，王欣瑜决胜盘 4-2 领先被连追 4 局，两场都打了两个半小时以上。那一周郑钦文不在场上，7 月做的肘部手术还没好。
+
+意大利是卫冕冠军，6 座奖杯，冲三连冠。两队之前交手过两次，2007 年一次、去年一次，中国一场没赢过。当年在场上赢了张帅的加尔宾，今天是意大利的队长；张帅，还在中国队名单里。而郑钦文对意大利球员 20 战 20 胜：保利尼 4-0，埃拉尼 3-0，其中两次 6-0 6-0。
+
+五档门票全部售罄。她自己说：「在主场比赛的时候，我总是会更有动力。与此同时，也会承受一些压力，因为我真的非常希望自己能够在那里表现得很好。」
+
+同一条规则，有人选择不来，她飞回来补上。换作是你，会怎么选？
+
+#网球时差 #郑钦文 #比利简金杯 #网球有故事 #奥运资格</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>换作是你，会怎么选？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>

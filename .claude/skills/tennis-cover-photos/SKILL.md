@@ -2096,3 +2096,36 @@ Release 拉回本地，在候选时间点前后逐帧抽样**（0.5~1 秒一格�
 GET 签的，HEAD 过不去，而 401 看起来像「没权限」。带 `Range: bytes=0-2047`
 的 GET 回 **206** ＋ 真的 mp4 头。**别拿 HEAD 的 401 得出「下不动」的结论。**
 
+
+### ⭐⭐ 2026-09-18：**比利·简·金杯官网的图在 Contentful 上，原图 5000~7000px**——页面是 JS 壳，图不是
+
+给 `zheng-bjk-cup-olympic-rule` 挑封面时挖出来的（AP 当天整站 Cloudflare 挑战页、WTA `photo-resources`
+只回一张 2026 美网 Day 9 闭眼图、美网官方接口封顶 1280×720——三条主路都不成，才去翻的）。
+`billiejeankingcup.com` 是 Next.js（RSC），**图全在 Contentful**：
+
+    页面挂的      https://contentfulproxy.stadion.io/gd35ic6j47k5/<id>/<hash>/<文件名>.jpg?fm=webp&w=1024…
+    原图          https://images.ctfassets.net/gd35ic6j47k5/<id>/<hash>/<文件名>.jpg      ← 去掉全部参数
+    实测尺寸      cdqizheng_24oly_h7206.JPG 5332×3555 ／ BJK_SLO_ESP_260411_10091_VID.jpg 5895×3932 ／
+                  0V1A0186_J2lzCkB5.JPG 5238×3509 ／ pzzheng_qinwen_24us_h10.jpg 4206×3155
+
+**三条取图的路，按用处排：**
+
+| 要什么 | 怎么拿 |
+|---|---|
+| 某篇文章**正文里的每一张图 ＋ 图注 ＋ 尺寸** | `curl -H "RSC: 1" https://www.billiejeankingcup.com/en/news/<slug>` → 文本里 `"caption":"…","width":W,"height":H,"url":"https://images.ctfassets.net/…"`（`\"` 要先反转义）。⚠️ 不带 `RSC: 1` 的 HTML 里**只有 og:image 和赞助商 logo**，正文的图一张都没有 |
+| **全站文章索引**（874 篇，2019 至今） | `/en/news?page=N` **服务端分页可用**（每页 12 篇，第 78 页空），每篇卡片附两张图（相邻文章的图会串进同一段 HTML，按 slug 前后 2500 字符切） |
+| 站内搜索 / 球员页 / 队伍页 | ❌ `/en/player/<slug>`、`/en/team/<code>`、`/en/news?q=` 返回的是**同一份通用壳**（字节数一样），别用 |
+
+⚠️ **文件名前缀有规律，能当四要素的第一层线索**：`pz<姓名>_<yy><赛事>_h<N>`（`24oly` 巴黎奥运、`24us` 美网、
+`24aus` 澳网，像是 ITF 从图片库按人拉的资料图）、`cd…`（同一套，`cdqizheng_24oly_h7206` 就是举国旗那张）、
+`BJK_<队>_<队>_<yymmdd>_<序号>`（赛事自己的实拍，日期在名字里）、`ZZZ_/0V1A/ZHE_/FSG_`（摄影师相机原名，
+要靠 alt/caption 定四要素）。**alt 常常就是四要素**（「Zheng with China flag at Olympics」
+「Wang Xinyu against Italy」），caption 有时是 `$undefined`。
+
+⚠️ **2025 深圳中意那一场的实拍这儿全有**（`china-v-italy-billie-jean-king-cup-quarter-final-report-result`、
+`liu-feng-hopes-china-learn-from-dramatic-billie-jean-king-cup-finals-exit`、`wang-xinyu-seeking-home-town-upset-…`）：
+王欣瑜 4786×3275、刘丰 5238×3509、加尔宾捧杯 4733×3155、空场馆 5000×3333。**2024 长沙那两篇的头图不是郑钦文**
+（一张场边签名、一张不是她）——「长沙那一站有她」不等于「长沙那一站有她的图」。
+
+索引脚本和这一轮下过的候选都在 `research/zheng-bjk-cup-olympic-rule-2026.md` §七 指的那台沙箱的
+scratchpad 里，没进仓库；要重跑，上面三条命令就够。

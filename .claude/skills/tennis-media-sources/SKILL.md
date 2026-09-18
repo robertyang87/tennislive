@@ -1501,6 +1501,27 @@ TNNS 和 Sportradar 够不着（见工具文档）。
   每一分怎么结束记下来的」——**那句话我从来没验证过**，是从「它是个专业比分
   app」推出来的，然后追着它跑了三轮。文档里的每一句都会被下一个人当判据用
 
+### ⭐⭐ 2026-09-18：金杯 / 戴维斯杯官网的视频库是 StayLive，接口是公开的
+
+`billiejeankingcup.com/en/video` 是 JS 壳，WebFetch 和 curl 只拿得到导航。**真入口是
+`api.staylive.tv`**，两条：
+
+    GET /tags/videos/feed?limit=1000&sort=desc&page=N[&tags=highlights]
+        必须带 x-staylive-channels: <频道号,逗号分隔>   ← 少了它回「No channel ID given」
+    GET /videos/<id>   → playback_url（带 token 的 HLS master，约 12 小时有效，1080p）
+
+那个请求头**在 Playwright 的 `request.all_headers()` 里看不见**，是 CDP
+`Network.requestWillBeSentExtraInfo` 抓到的（预检里先露了 `Access-Control-Request-Headers:
+x-staylive-channels`）。频道号是扫 3000–7400 扫出来的，都在 `tools/staylive_bjk.py` 顶部：
+金杯 5662（2024 总决赛）/ 6417（2025 整季，含深圳）/ 7179（2026）；戴维斯杯 6261、6263–6268、7078–7080。
+
+- **集锦（约 3 分钟一场，1080p）不锁地域**，ffmpeg 加 `Referer` 直接下，验过 1920×1080 25fps
+- ⚠️ **整节直播回放（「A vs. B」、7 个多小时一条）锁地域**：`geo_restricted.allowed=false`，
+  沙箱和 GitHub runner 都是美国 IP，两边都拿不到 `playback_url`
+- ⚠️ **库从 2025-03 起才有货**，更老的比赛（2024 长沙、2022 韦莱涅）不在里面，别再翻
+- 戴维斯杯集锦只有 720p
+
+用法见文件 docstring；判据 `tests/test_staylive_bjk.py`（只测不联网的分类和过滤）。
 ### ⭐⭐ 戴维斯杯的正式名单和抽签：daviscup.com 是 JS 壳，数据在 ITF 的 tieCentre 接口（2026-09-18）
 
 `davis-cup-china-first-world-group-1` 第三版查阵容时量出来的：
