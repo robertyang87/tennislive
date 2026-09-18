@@ -1,0 +1,143 @@
+{
+  "schema_version": 1,
+  "observed_at": "2026-09-18T12:02:27.427Z",
+  "role": "own_production_applicability_and_adoption_audit",
+  "status": "eligible_visual_found_but_rule_not_consumed_and_window_missed",
+  "rule_id": "evidence-inset-focus-v1",
+  "rule_version": 1,
+  "rule_spec_blob_sha": "b3cfc452d02383fd71304d2f539dc98d9f528e4d",
+  "production": {
+    "slug": "bjk-cup-story",
+    "column": "网球有故事",
+    "main_commit": "d1ad746e2f0c434814d0d5c56ee99851c25274a3",
+    "spec_path": "specs/reels/bjk-cup-story.json",
+    "spec_sha256": "ad65e87e2c39a306f2d79523d96350ca4dcdcb381cf8ee73954dcbc62b937e44",
+    "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-bjk-cup-story/bjk-cup-story.mp4",
+    "film_sha256": "6da2b4cc71b179da28d775882260a30ba0b6b653e8cd696843e04d058e72c640",
+    "bytes": 136088184,
+    "duration_seconds": 248.56,
+    "canvas": [
+      1080,
+      1440
+    ],
+    "fps": 25,
+    "streams": [
+      "h264_video",
+      "aac_audio"
+    ],
+    "hash_matches_project_receipt": true,
+    "existing_qc": {
+      "status": "pass",
+      "path": "output/2026-09-18/reel/bjk-cup-story/qc_attestation.json",
+      "checked_at": "2026-09-18T10:43:29Z",
+      "note": "Existing production QC, not candidate-treatment QC."
+    },
+    "delivery": {
+      "kind": "project_push_receipt",
+      "path": "output/2026-09-18/reel/bjk-cup-story/pushed.json",
+      "at": "2026-09-18T10:53:50Z",
+      "note": "Does not establish a Douyin treatment item or outcome window."
+    }
+  },
+  "adoption_trace": {
+    "applied": false,
+    "complete_spec_terms_checked": [
+      "evidence-inset-focus-v1",
+      "explain-one-tactical-question",
+      "learning_rule"
+    ],
+    "matches": 0,
+    "learned_rule_registry_at_main": "empty",
+    "existing_segment_0_inset": "story_text context card; unrelated to tested evidence magnifier",
+    "douyin_treatment_item_id": null,
+    "creator_content_lookup": "No exact matching treatment item resolved; no private creator metrics stored.",
+    "actual_production_consumption": false
+  },
+  "visual_evidence": [
+    {
+      "at_seconds": 55,
+      "frame_sha256": "4310aefd5a7ffa439bfa12f38e84eb0d782c9781b367da6ed6e7237d6d3d6557",
+      "segment_index_zero_based": 6,
+      "asset": "assets/reel/bjk-king.png",
+      "classification": "not_applicable",
+      "observation": "Designed full-frame facts card with oversized 1963, 52胜4负, 10次捧杯 and 1973 hierarchy; focal emphasis already built into typography."
+    },
+    {
+      "at_seconds": 115,
+      "frame_sha256": "085d82e40a11b2bb416a9ddd7c655bcfdf089c380563adaf20b029842758e189",
+      "segment_index_zero_based": 11,
+      "asset": "assets/reel/bjk-cup-titles.png",
+      "classification": "not_applicable",
+      "observation": "Designed large-type title-count card; highlighted Italy row already establishes focus."
+    },
+    {
+      "at_seconds": 192,
+      "frame_sha256": "b343a25edc635dad3281ebe37a2f14ec470702a213acc3d260c6e8e2ea2ba803",
+      "segment_index_zero_based": 20,
+      "asset": "assets/reel/bjk-china-road.png",
+      "classification": "not_applicable",
+      "observation": "Designed timeline card with large lime dates and plain-language labels."
+    },
+    {
+      "at_seconds": 214,
+      "frame_sha256": "7711cede275e65db4534f74994ae2ff8e35204725ff8418deaeb0812fa2af401",
+      "segment_index_zero_based": 22,
+      "asset": "assets/reel/bjk-china-2026.png",
+      "classification": "not_applicable",
+      "observation": "Designed roster card with large names, highlighted lead player and provenance; duplicate magnification would compete with hierarchy."
+    },
+    {
+      "at_seconds": 224,
+      "frame_sha256": "df2832a60253d031e5583e288dba26e1cc4f1603598fec304ed0ab74fd99b78d",
+      "segment_index_zero_based": 23,
+      "asset": "assets/reel/bjk-cup-2026-draw.jpg",
+      "classification": "potentially_applicable_future_pattern",
+      "observation": "Dense official draw graphic is displayed inside the 3:4 canvas; the target ITA-v-CHN quarterfinal is a small top-left subsection while narration and bottom subtitle name that matchup. A timed magnified inset could focus the evidence while retaining the full draw and provenance.",
+      "limitations": [
+        "Single sampled frame; no continuous motion or audio listening review",
+        "No treatment render or project QC",
+        "Published/delivered production cannot be retroactively counted as a trial"
+      ]
+    }
+  ],
+  "decision": {
+    "candidate_applied": false,
+    "result": "missed_prepublication_window_do_not_rerender_or_republish",
+    "candidate_scope_refinement": "Skip authored large-type facts/timeline/roster cards. Consider only dense official source graphics or documents whose narrated focal detail remains too small at final 3:4 render.",
+    "prepublication_gate": [
+      "Explicit rule_id and version in production spec before render",
+      "Crop/placement reviewed against top brand, provenance, faces, scores and bottom subtitles",
+      "A/B render changes only timed focal inset",
+      "Existing project QC passes for treatment",
+      "Normal Douyin publication yields real item ID before 72h outcome window"
+    ],
+    "forbidden": [
+      "Retroactive attribution to this release",
+      "Reuse old 9:16 coordinates",
+      "Cover provenance or target context",
+      "Treat push receipt as Douyin outcome"
+    ],
+    "rollback": "Remove the timed inset and retain the full official graphic."
+  },
+  "outcomes": {
+    "status": "not_started",
+    "window_hours": 72,
+    "window_starts_at": null,
+    "primary_metric": "Per-item average watch time under a fixed post-publication window",
+    "effect": null,
+    "causal_claim": false
+  },
+  "review_coverage": {
+    "media_hash_and_probe": "complete",
+    "visual": "five timestamped frames across all full-frame evidence cards",
+    "continuous_video": "not_completed",
+    "audio_listening": "unsupported",
+    "private_metrics_included": false
+  },
+  "boundaries": {
+    "published_by_this_run": false,
+    "rerendered_by_this_run": false,
+    "messages_sent_by_this_run": false,
+    "discovery_watermark_advanced": false
+  }
+}
