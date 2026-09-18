@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "reference_id": "7673039156256020474",
+  "source_url": "https://www.douyin.com/video/7673039156256020474",
+  "source_sha256": "86cf137567b93641690f77fbaecb2350e9322227129af53243177b4ebb979967",
+  "reviewed_at": "2026-09-18T05:55:26.796Z",
+  "scope": {
+    "start_seconds": 136.5,
+    "end_seconds": 138,
+    "decoded_frames_reviewed": 45,
+    "method": "Ordered contact sheet of adjacent decoded frames plus 10-frame detailed cut sheet; not continuous audiovisual playback."
+  },
+  "event": {
+    "last_court_frame_seconds": 137.3,
+    "first_reaction_frame_seconds": 137.333333,
+    "classification": "local_hard_cut",
+    "observations": [
+      "Complete court view directly changes to near red-shirt player's reaction shot between consecutive frames.",
+      "No blended/black transition frame visible within the inspected interval.",
+      "The same bottom subtitle crosses the picture cut; subtitle changes afterward. This does not establish audio J/L editing."
+    ],
+    "confidence": "high_for_this_local_picture_boundary",
+    "unknowns": [
+      "Whether this cut originated in source broadcast or subsequent editing",
+      "Audio continuity and exact voice/music relationship",
+      "Other full-video cuts",
+      "Camera zoom versus post-production reframing"
+    ]
+  },
+  "production_guard": {
+    "action": "Do not replace existing production segment-dissolve rules with the reference hard cut.",
+    "reason": "Source-broadcast camera cut and our assembled-segment transition are different editing layers; reference craft does not override current project rules.",
+    "source": ".claude/skills/tennis-video-craft/SKILL.md / 淡入淡出 ≠ 淡到黑"
+  },
+  "reproduction": {
+    "contact_sheet_start": 136.5,
+    "contact_sheet_duration": 1.5,
+    "frame_selection": "all decoded frames in interval, not fps subsampling",
+    "detail_selection": "between(t,137.16,137.50)",
+    "source_frame_timestamps_verified": true
+  },
+  "overall_review_status": "partial",
+  "growth_validated": false
+}
