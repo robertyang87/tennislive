@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
+from reference_learning import model_learning_instructions
+
 ROOT = Path(__file__).resolve().parent.parent
 SKILL_ROOT = ROOT / "skills" / "tennis-interview-production"
 
@@ -22,4 +24,5 @@ def model_instructions(role: str) -> str:
     shared = _read("SKILL.md")
     reference = _read(f"references/{role}.md")
     gates = _read("references/quality-gates.md")
-    return f"\n\n【赛后开麦制作 Skill】\n{shared}\n\n{reference}\n\n{gates}\n"
+    return f"\n\n【赛后开麦制作 Skill】\n{shared}\n\n{reference}\n\n{gates}\n" + model_learning_instructions(SKILL_ROOT, role)
+
