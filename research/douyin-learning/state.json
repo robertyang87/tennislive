@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "timezone": "Asia/Shanghai",
+  "stage": "auth_required",
+  "watchlist": [],
+  "discovery_seeds": [
+    {
+      "name": "林林林妹668",
+      "status": "unverified",
+      "source": "docs/short-video-benchmark-strategy.md"
+    },
+    {
+      "name": "赛场网球观",
+      "status": "unverified",
+      "source": "docs/short-video-benchmark-strategy.md"
+    },
+    {
+      "name": "篮球中场秀",
+      "status": "unverified",
+      "source": "docs/short-video-benchmark-strategy.md"
+    }
+  ],
+  "queries": [
+    "网球复盘",
+    "网球人物故事",
+    "网球赛后采访",
+    "体育人物故事"
+  ],
+  "items": {},
+  "strategies": {},
+  "successful_watermarks": {},
+  "pending_windows": [],
+  "runs": [
+    {
+      "run_id": "bootstrap-2026-09-18T02:44:37.169Z",
+      "started_at": "2026-09-18T02:44:37.169Z",
+      "ended_at": "2026-09-18T02:44:37.169Z",
+      "probes": [
+        {
+          "source": "github",
+          "status": "success"
+        },
+        {
+          "source": "douyin_web_search",
+          "url": "https://www.douyin.com/search/%E7%BD%91%E7%90%83",
+          "status": "auth_required",
+          "evidence": "Submitting the visible search button returned 登录后即可搜索更多精彩视频; no work list."
+        },
+        {
+          "source": "douyin_cli",
+          "status": "not_tested"
+        }
+      ],
+      "discovered": 0,
+      "collected": 0,
+      "analyzed": 0,
+      "proposed": 0,
+      "promoted": 0,
+      "earliest_blocker": "douyin_search_auth_required"
+    }
+  ],
+  "last_notification_fingerprint": "douyin_search_auth_required",
+  "production_integration": {
+    "status": "not_integrated",
+    "reason": "No directly analyzed works or validated strategies yet. Research data alone does not alter production skills."
+  }
+}
