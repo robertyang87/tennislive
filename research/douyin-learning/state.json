@@ -222,6 +222,20 @@
             ]
           ],
           "limitation": "Mixed signal only; not proof of speech pauses or music ducking."
+        },
+        "transition_review": {
+          "status": "local_picture_boundary_verified",
+          "path": "research/douyin-learning/evidence/7673039156256020474-transition-review.json",
+          "reviewed_at": "2026-09-18T05:55:26.796Z",
+          "interval_seconds": [
+            136.5,
+            138
+          ],
+          "frames_reviewed": 45,
+          "cut_seconds": 137.333333,
+          "cut_type": "hard_cut",
+          "audio_status": "not_reviewed",
+          "full_video_review_status": "partial"
         }
       }
     },
@@ -639,14 +653,14 @@
       "next_action": "Evaluate on a new applicable production spec; record adoption and real published ID before collecting 72h results; research task does not publish.",
       "technical_qc_status": "rendered_qc_passed",
       "last_adoption_check": {
-        "checked_at": "2026-09-18T05:02:22.238Z",
+        "checked_at": "2026-09-18T05:55:26.796Z",
         "main_sha": "98a009e14dc265c71fd7cbcc6b0c563e08249eb4",
         "rule_registries_empty": true,
         "latest_release_tags": [
           "reel-zhang-shuai-story",
           "reel-djokovic-beijing-return"
         ],
-        "result": "No recorded adoption; both latest releases predate trial."
+        "result": "No recorded adoption; main unchanged, latest releases still predate trial."
       }
     }
   },
@@ -803,6 +817,42 @@
         "9f4fb4c151ab70aa637147255e6e826f68722817"
       ],
       "note": "No private creator analytics stored. No publication. Discovery watermark not advanced because publication dates for inventory are not completely verified."
+    },
+    {
+      "run_id": "scheduled-transition-review-2026-09-18T05:55:26.796Z",
+      "started_at": "2026-09-18T05:51:59Z",
+      "ended_at": "2026-09-18T05:55:56.737Z",
+      "discovered": 0,
+      "collected": 0,
+      "analyzed_complete": 0,
+      "analyzed_partial": 1,
+      "rendered_experiments": 0,
+      "promoted": 0,
+      "probes": [
+        {
+          "source": "main_and_release_adoption",
+          "status": "unchanged_no_adoption"
+        },
+        {
+          "source": "reference_media_sha256",
+          "status": "matched"
+        },
+        {
+          "source": "local_adjacent_frame_transition_review",
+          "status": "success",
+          "verified_interval": [
+            136.5,
+            138
+          ]
+        }
+      ],
+      "earliest_blocker": "trial_awaiting_production_no_published_treatment_id",
+      "persistence_receipts": [
+        "deb97a9b09446b4e15624050b69abfa1fc6b2897",
+        "5319e8a7c189bc836fe4535a0c0a2f629b8a582e"
+      ],
+      "notification": "suppressed_minor_evidence_refinement_no_new_high_value_rule_or_blocker_change",
+      "next_action": "Keep no-publish boundary; advance next applicable production preview/adoption audit. Do not repeat unchanged adoption notifications or treat local visual review as listening."
     }
   ],
   "last_notification_fingerprint": "same_author_control_7674475492078579963_verified",
