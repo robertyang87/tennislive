@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "timezone": "Asia/Shanghai",
-  "stage": "same_author_controls_saved_trial_awaiting_production",
+  "stage": "new_own_production_audited_trial_awaiting_eligible_production",
   "watchlist": [
     {
       "name": "河岸",
@@ -653,15 +653,38 @@
       "next_action": "Evaluate on a new applicable production spec; record adoption and real published ID before collecting 72h results; research task does not publish.",
       "technical_qc_status": "rendered_qc_passed",
       "last_adoption_check": {
-        "checked_at": "2026-09-18T05:55:26.796Z",
-        "main_sha": "98a009e14dc265c71fd7cbcc6b0c563e08249eb4",
+        "checked_at": "2026-09-18T09:01:27.331Z",
+        "main_sha": "2b4d862f6970680bbfcb5d10e96ca6ca5bb59db6",
         "rule_registries_empty": true,
-        "latest_release_tags": [
-          "reel-zhang-shuai-story",
-          "reel-djokovic-beijing-return"
+        "production_slug": "zheng-bjk-cup-olympic-rule",
+        "production_video_sha256": "d1633cb3aba71edae7c8108073eb2f9b298d4beacaa93aa9ccef44b82ef432d7",
+        "actual_frame_review_seconds": [
+          50
         ],
-        "result": "No recorded adoption; main unchanged, latest releases still predate trial."
-      }
+        "audit_path": "research/douyin-learning/evidence/production-adoption-zheng-bjk-cup-olympic-rule.json",
+        "result": "New own story checked: rule not consumed; designed large-type rule card is not applicable to small-heading inset trial. No treated Douyin item ID.",
+        "status": "checked_not_applicable_no_adoption"
+      },
+      "adoption_checks": [
+        {
+          "checked_at": "2026-09-18T05:55:26.796Z",
+          "main_sha": "98a009e14dc265c71fd7cbcc6b0c563e08249eb4",
+          "rule_registries_empty": true,
+          "latest_release_tags": [
+            "reel-zhang-shuai-story",
+            "reel-djokovic-beijing-return"
+          ],
+          "result": "No recorded adoption; main unchanged, latest releases still predate trial."
+        }
+      ],
+      "counterexamples": [
+        {
+          "production_slug": "zheng-bjk-cup-olympic-rule",
+          "evidence_path": "research/douyin-learning/evidence/production-adoption-zheng-bjk-cup-olympic-rule.json",
+          "scope": "Already-large designed facts card; do not duplicate as magnifier overlay.",
+          "at_seconds": 50
+        }
+      ]
     }
   },
   "successful_watermarks": {},
@@ -853,9 +876,46 @@
       ],
       "notification": "suppressed_minor_evidence_refinement_no_new_high_value_rule_or_blocker_change",
       "next_action": "Keep no-publish boundary; advance next applicable production preview/adoption audit. Do not repeat unchanged adoption notifications or treat local visual review as listening."
+    },
+    {
+      "run_id": "scheduled-adoption-audit-2026-09-18T08:55:11Z",
+      "started_at": "2026-09-18T08:55:11Z",
+      "ended_at": "2026-09-18T09:01:50.798Z",
+      "authors_checked": 0,
+      "discovered": 0,
+      "collected": 0,
+      "analyzed_complete": 0,
+      "analyzed_partial": 0,
+      "own_production_audits": 1,
+      "rendered_experiments": 0,
+      "promoted": 0,
+      "probes": [
+        {
+          "source": "current_main_constraints_and_spec",
+          "status": "success"
+        },
+        {
+          "source": "production_media_download_hash_probe",
+          "status": "matched_project_receipt"
+        },
+        {
+          "source": "actual_render_frame_at_50s_and_source_card",
+          "status": "inspected_candidate_not_applicable"
+        },
+        {
+          "source": "candidate_adoption_trace",
+          "status": "not_consumed"
+        }
+      ],
+      "earliest_blocker": "trial_awaiting_production_no_published_treatment_id",
+      "persistence_receipts": [
+        "661953f578871463e9cb586792378e2eda3b6be5"
+      ],
+      "note": "Own production audit, not external discovery or new candidate treatment. Existing project QC pass is not a new trial QC. No watermark advanced; no private metrics stored; no publication.",
+      "next_action": "Monitor new unpublished eligible document-based story. Require explicit rule/version consumption and actual treatment QC; only normal publication with a real item ID starts 72h window."
     }
   ],
-  "last_notification_fingerprint": "same_author_control_7674475492078579963_verified",
+  "last_notification_fingerprint": "focus_not_applicable_zheng_bjk_large_type_card_50s_v1",
   "production_integration": {
     "status": "consumer_merged_no_validated_rules",
     "pr": "https://github.com/robertyang87/tennislive/pull/937",
