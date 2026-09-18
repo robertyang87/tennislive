@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "observed_at": "2026-09-18T09:01:27.331Z",
+  "role": "own_production_applicability_audit",
+  "status": "checked_not_applicable_no_adoption",
+  "rule_id": "evidence-inset-focus-v1",
+  "rule_version": 1,
+  "rule_spec_blob_sha": "b3cfc452d02383fd71304d2f539dc98d9f528e4d",
+  "single_variable": "Timed 2x inset of a source document heading, with original composition/audio/timeline retained",
+  "production": {
+    "slug": "zheng-bjk-cup-olympic-rule",
+    "title": "郑钦文为什么非打不可",
+    "column": "网球有故事",
+    "main_commit": "2b4d862f6970680bbfcb5d10e96ca6ca5bb59db6",
+    "spec_path": "specs/reels/zheng-bjk-cup-olympic-rule.json",
+    "spec_sha256": "13fc99803042de31867610bd70ba31a024743371c000bbda295cd9e03915931a",
+    "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-zheng-bjk-cup-olympic-rule/zheng-bjk-cup-olympic-rule.mp4",
+    "film_sha256": "d1633cb3aba71edae7c8108073eb2f9b298d4beacaa93aa9ccef44b82ef432d7",
+    "bytes": 114396126,
+    "duration_seconds": 217.48,
+    "canvas": [
+      1080,
+      1440
+    ],
+    "fps": 25,
+    "streams": [
+      "h264_video",
+      "aac_audio"
+    ],
+    "hash_matches_project_receipt": true
+  },
+  "evidence": [
+    {
+      "kind": "production_spec_inspection",
+      "segment_index_zero_based": 4,
+      "asset": "assets/reel/zheng-bjk-la28-rule.png",
+      "duration_seconds": 19.5,
+      "observation": "Full-frame designed facts card rather than a small source-document reproduction."
+    },
+    {
+      "kind": "source_image_visual_review",
+      "asset": "assets/reel/zheng-bjk-la28-rule.png",
+      "sha256": "aefd5e33efef57d4f94984057f4316501e986488e12b7afa80f4b41ad7b50fac",
+      "observation": "Four left-aligned, oversized numeric anchors, first lime highlighted; explanations below each and provenance at bottom. Already has typographic emphasis."
+    },
+    {
+      "kind": "actual_render_frame_visual_review",
+      "at_seconds": 50,
+      "frame_sha256": "1f169b747524d409de6a5c019ed21324659ce69d5a77bdce3332f404b6812151",
+      "reproduce": "ffmpeg -ss 50 -i zheng-bjk-cup-olympic-rule.mp4 -frames:v 1 frame.png",
+      "observation": "Actual 3:4 frame retains brand at top, large 2次 / 2027/2028 / 1次 / 2024.8.5起 anchors, provenance, and bottom narration subtitle. No separate enlarged heading inset in this frame.",
+      "limitation": "One frame, not continuous full-video QC or proof of audio/motion quality."
+    },
+    {
+      "kind": "adoption_trace_check",
+      "observation": "Complete production spec contains no evidence-inset-focus-v1, explain-one-tactical-question, or learning_rule reference. Existing cold-open story_text inset (segment 0) is contextual information, not the tested document-heading magnifier. Both learned-rules.json registries at the recorded main commit remain empty."
+    },
+    {
+      "kind": "existing_project_qc_receipt",
+      "path": "output/2026-09-18/reel/zheng-bjk-cup-olympic-rule/qc_attestation.json",
+      "status": "pass",
+      "checked_at": "2026-09-18T07:59:26Z",
+      "note": "Existing pipeline receipt read and media hash independently matched. Not a new project QC run; not QC of our candidate treatment."
+    }
+  ],
+  "decision": {
+    "candidate_applied": false,
+    "applicability": "not_applicable_to_this_rules_card",
+    "reason": "Designed large-type facts already direct attention; the tested hypothesis addresses a small source-document heading. Adding a duplicate zoom layer here would test a different intervention, with potential hierarchy/provenance interference.",
+    "scope": "Only this inspected card/production; candidate remains awaiting_production, not rejected globally.",
+    "next_eligible_case": "New unpublished document-based story with demonstrably small focal text and reviewed safe empty space. Re-layout for current 3:4; never copy old 9:16 coordinates.",
+    "rollback": "No change applied; retain existing production."
+  },
+  "outcomes": {
+    "treatment_douyin_item_id": null,
+    "published_at": null,
+    "window_hours": 72,
+    "window_starts_at": null,
+    "primary_metric": "Per-item average watch time under a fixed post-publication window",
+    "control": "Matched own untreated item by topic, duration and publication age, selected before results",
+    "actual_production_consumption": false,
+    "effect": null,
+    "causal_claim": false
+  },
+  "pending": [
+    "Eligible unpublished treatment spec and audited production consumption",
+    "Full treatment/control render and project QC",
+    "Actual normally published treatment ID and comparable 72h outcome receipts",
+    "Authorized audio listening capability"
+  ],
+  "boundaries": {
+    "published_by_this_run": false,
+    "rerendered_by_this_run": false,
+    "private_analytics_included": false,
+    "discovery_watermark_advanced": false
+  }
+}
