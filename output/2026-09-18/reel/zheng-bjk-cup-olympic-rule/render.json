@@ -1,0 +1,71 @@
+{
+  "scoreboard_qc_sha256": null,
+  "cover_seconds": 3.706,
+  "cover_narrated": true,
+  "outro_seconds": 3.827,
+  "layout": "full",
+  "segments_seconds": 209.9,
+  "topbar": null,
+  "film_seconds": 217.48,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 8.4,
+    "2": 9.0,
+    "3": 7.032,
+    "4": 17.04,
+    "5": 3.816,
+    "6": 16.992,
+    "7": 9.288,
+    "8": 15.696,
+    "9": 6.792,
+    "10": 6.864,
+    "12": 5.88,
+    "13": 9.576,
+    "14": 10.272,
+    "15": 7.2,
+    "16": 10.272,
+    "17": 9.624,
+    "18": 6.912
+  },
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "zheng-bjk-cup-olympic-rule",
+    "received_at": "2026-09-18T07:51:59Z",
+    "artifact_ready_at": "2026-09-18T07:59:25Z",
+    "elapsed_seconds": 446.446,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "d1633cb3aba71edae7c8108073eb2f9b298d4beacaa93aa9ccef44b82ef432d7",
+    "spec_sha256": "13fc99803042de31867610bd70ba31a024743371c000bbda295cd9e03915931a",
+    "run_id": "35321499570",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-09-18T07:54:12Z",
+        "run_id": "35321499570"
+      }
+    ],
+    "render_seconds": 313.446,
+    "pre_render_seconds": 133.0
+  },
+  "film_sha256": "d1633cb3aba71edae7c8108073eb2f9b298d4beacaa93aa9ccef44b82ef432d7",
+  "film_bytes": 114396126,
+  "qc_attestation_sha256": "c1321297bf5c6cbbeae9d34893ffee848f1971db3a5872cce90571c4694e2bf8",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-09-18T07:54:12Z",
+      "run_id": "35321499570"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-18T07:59:26Z",
+      "run_id": "35321499570"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-zheng-bjk-cup-olympic-rule/zheng-bjk-cup-olympic-rule.mp4",
+  "video_bytes": 114396126
+}
