@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "timezone": "Asia/Shanghai",
-  "stage": "media_acquired_visual_sampling_complete",
+  "stage": "analysis_partial_production_adapter_merged_feedback_access_verified",
   "watchlist": [
     {
       "name": "河岸",
@@ -171,16 +171,23 @@
             ]
           }
         ],
-        "audio_status": "asr_complete_editorial_and_music_review_pending",
+        "audio_status": "asr_complete_partial_subtitle_check_listening_unavailable",
         "audio_blocker": "Automatic approval review rejected incidental Microsoft telemetry in transcription/model-download flow; do not retry or bypass.",
-        "next_action": "Correct ASR against audiovisual evidence; complete music/mix review and single-variable experiment.",
+        "next_action": "Use an authorized audio-capable review surface for music/mix/vocal delivery; no direct audio input support in current model. Render and QC a real eligible trial before claiming adoption.",
         "audio_recovery": {
           "method": "Existing local faster-whisper small; local_files_only=true, HF offline, vad_filter=false; onnxruntime not imported",
           "duration_seconds": 144.82425,
           "transcript_path": "research/douyin-learning/evidence/7673039156256020474-asr-local.json",
           "segments": 70,
           "quality": "Uncorrected terms and likely ending repetition hallucinations; no music or listening conclusions."
-        }
+        },
+        "review_path": "research/douyin-learning/reviews/7673039156256020474.md",
+        "subtitle_crosscheck": {
+          "verified_excerpts": 26,
+          "quarantined_ending_segments": 4,
+          "path": "research/douyin-learning/evidence/7673039156256020474-transcript-crosscheck.json"
+        },
+        "technical_path": "research/douyin-learning/evidence/7673039156256020474-technical.json"
       }
     }
   },
@@ -206,7 +213,8 @@
       "control": "保持现有制作规则的同类作品；发布时间和观察窗事前固定",
       "stopping_rule": "先完成原片验证及至少3条可比自有试验；缺后台数据不升级为validated，3条不代表统计因果证明",
       "rollback": "撤掉新增问答段，恢复原spec版本；不改事实和完整结尾",
-      "validation_receipts": []
+      "validation_receipts": [],
+      "experiment_path": "research/douyin-learning/experiments/question-evidence-v1.json"
     }
   },
   "successful_watermarks": {},
@@ -295,12 +303,49 @@
       "status": "asr_complete_needs_editorial_review",
       "duration_seconds": 144.82425,
       "next_action": "Correct ASR against audiovisual evidence; complete music/mix review and single-variable experiment."
+    },
+    {
+      "timestamp": "2026-09-18T04:21:43.935Z",
+      "stage": "analysis_partial_production_adapter_merged_feedback_access_verified",
+      "status": "partial",
+      "probes": [
+        {
+          "source": "production_consumer",
+          "status": "merged_ci_passed"
+        },
+        {
+          "source": "creator_metrics",
+          "status": "read_success"
+        },
+        {
+          "source": "direct_audio_input",
+          "status": "unsupported"
+        }
+      ],
+      "next_action": "Complete listening, integrate story consumer, render/QC real single-variable experiment, then collect its actual outcomes."
     }
   ],
   "last_notification_fingerprint": "media_recovered_full_analysis_pending",
   "production_integration": {
-    "status": "not_integrated",
-    "reason": "Timestamped sampled evidence and hypothesis exist; no actual experiment render/QC/outcome receipts or validated production rule yet."
+    "status": "consumer_merged_no_validated_rules",
+    "pr": "https://github.com/robertyang87/tennislive/pull/937",
+    "merge_commit": "98a009e14dc265c71fd7cbcc6b0c563e08249eb4",
+    "ci": {
+      "run_id": 35306048269,
+      "passed": 3321,
+      "skipped": 169,
+      "conclusion": "success"
+    },
+    "columns": [
+      "赛场之上",
+      "赛后开麦"
+    ],
+    "not_integrated": [
+      "网球有故事"
+    ],
+    "validated_rules": 0,
+    "rendered_experiments": 0,
+    "reason": "Actual production prompt consumers deployed, but no candidate has actual render/QC/outcome receipts yet."
   },
   "automation": {
     "cadence_hours": 3,
@@ -321,5 +366,13 @@
     ],
     "protocol": "tennis-reference-learning/references/deep-review.md",
     "priority": "unfinished_analysis_then_experiments_and_outcomes_then_discovery"
+  },
+  "feedback_access": {
+    "status": "verified_authenticated_creator_ui",
+    "checked_at": "2026-09-18T04:21:43.935Z",
+    "overview_url": "https://creator.douyin.com/creator-micro/data/stats/overview",
+    "item_url": "https://creator.douyin.com/creator-micro/content/manage",
+    "private_metrics_storage": "User private Library; do not publish analytics to this public repository",
+    "limitations": "Resolve item IDs and comparable post-publication windows before outcome comparisons; no trial outcomes yet."
   }
 }
