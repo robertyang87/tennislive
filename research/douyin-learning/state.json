@@ -1022,6 +1022,15 @@
       ],
       "note": "No publication, rerender, message or private creator metrics stored. Project push receipt is not a Douyin treatment outcome. Discovery watermark not advanced because no new time-window work was found and wider query coverage remains incomplete.",
       "next_action": "On the next unpublished production containing a dense official source graphic or small document focal detail, tag rule_id/version in the spec before render, run isolated A/B and full project QC, then wait for a normal Douyin item ID before starting the fixed 72h outcome window. Do not retrofit bjk-cup-story."
+    },
+    {
+      "run_id": "user-scope-correction-2026-09-18T14:33:28.292Z",
+      "stage": "cross_author_discovery_policy_updated",
+      "discovered": 0,
+      "collected": 0,
+      "new_authors_verified": 0,
+      "promoted": 0,
+      "note": "Updated recurring task and state to require broader external author discovery; no claim that additional authors have already been verified."
     }
   ],
   "last_notification_fingerprint": "bjk_story_224_dense_official_draw_eligible_but_unconsumed_v1",
@@ -1085,5 +1094,34 @@
       "last_checked_at": "2026-09-18T12:02:27.427Z",
       "new_items_since_previous_snapshot": 0
     }
+  },
+  "discovery_policy": {
+    "version": 2,
+    "updated_at": "2026-09-18T14:33:28.292Z",
+    "reason": "User explicitly requested not focusing on one creator.",
+    "required_each_run": true,
+    "target_distinct_authors_per_run": 5,
+    "target_new_verified_authors_per_expansion_run": 2,
+    "target_verified_watchlist_size": 12,
+    "categories": [
+      "网球复盘",
+      "网球人物故事",
+      "赛后采访",
+      "其他体育人物故事"
+    ],
+    "max_authors": 20,
+    "max_candidates": 30,
+    "max_deep_reviews": 3,
+    "default_max_deep_reviews_per_author": 1,
+    "exceptions": "A necessary same-author control must state its purpose.",
+    "priority": "Briefly advance actionable unfinished work, then reserve work for cross-author discovery every run; pending listening/production must not starve discovery.",
+    "repeat_policy": "Retain 河岸 as historical control; do not routinely refresh unchanged old items each run.",
+    "verification": "Targets are not achievements; keep unverified seeds separate and record shortfalls honestly.",
+    "report_fields": [
+      "authors_checked",
+      "new_authors_verified",
+      "categories_covered",
+      "new_permanent_work_urls"
+    ]
   }
 }
