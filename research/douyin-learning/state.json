@@ -145,6 +145,35 @@
             "observation": "采样帧主要保持球场视角，底部字幕解释变线风险、机会与回球位置，内容随回合推进。不能由抽帧断言零切点或配音/音乐特征。"
           }
         ]
+      },
+      "deep_review_followup": {
+        "status": "partial",
+        "local_probe": {
+          "sha256": "86cf137567b93641690f77fbaecb2350e9322227129af53243177b4ebb979967",
+          "duration_seconds": 144.833333,
+          "scene_threshold": 0.35,
+          "scene_candidates_seconds": [
+            137.333
+          ],
+          "limitation": "Candidates are not an exhaustive or verified cut list."
+        },
+        "visual_observations": [
+          {
+            "start": 135,
+            "end": 144,
+            "coverage": "9 sampled frames at roughly 1-second spacing, not continuous playback",
+            "observation": "Court-wide rally view followed by red-shirt player reaction shot. White subtitles with dark outline near bottom center, then absent in later samples. Reaction framing becomes wider in successive samples.",
+            "unknowns": [
+              "Exact cut shape and timing need adjacent-frame review",
+              "Cannot identify camera zoom versus post-production scale",
+              "No exact playback-speed evidence",
+              "No audio listening"
+            ]
+          }
+        ],
+        "audio_status": "blocked_pending_authorized_method",
+        "audio_blocker": "Automatic approval review rejected incidental Microsoft telemetry in transcription/model-download flow; do not retry or bypass.",
+        "next_action": "Finish continuous visual and authorized audio review, then issue single-variable experiment spec with actual QC/outcome receipts."
       }
     }
   },
@@ -245,16 +274,38 @@
       "promoted": 0,
       "earliest_blocker": "audio_transcription_and_full_review_pending",
       "recovery": "Read matching visible video element currentSrc through browser DOM, download its HTTPS asset using Python urllib with ordinary User-Agent and Douyin Referer; no credentials exported. ffprobe verified full duration and streams. Signed source URL not persisted."
+    },
+    {
+      "timestamp": "2026-09-18T03:09:27.595Z",
+      "stage": "deep_review_protocol_and_local_probe",
+      "status": "partial",
+      "evidence": "Local ffprobe/ffmpeg completed for acquired sample; nine ending frames reviewed; audio remains blocked.",
+      "next_action": "Complete missing review dimensions and actual experiment/QC/outcome loop."
     }
   ],
   "last_notification_fingerprint": "media_recovered_full_analysis_pending",
   "production_integration": {
     "status": "not_integrated",
-    "reason": "No directly analyzed works or validated strategies yet. Research data alone does not alter production skills."
+    "reason": "Timestamped sampled evidence and hypothesis exist; no actual experiment render/QC/outcome receipts or validated production rule yet."
   },
   "automation": {
     "cadence_hours": 3,
     "status": "enabled",
     "title": "网球时差作品学习"
+  },
+  "deep_review_requirements": {
+    "dimensions": [
+      "composition_subject_layout",
+      "text_graphics_style",
+      "editing_rhythm",
+      "speed_changes",
+      "zoom_focus",
+      "transitions",
+      "voiceover_logic",
+      "voice_music_sound_mix",
+      "counterexamples"
+    ],
+    "protocol": "tennis-reference-learning/references/deep-review.md",
+    "priority": "unfinished_analysis_then_experiments_and_outcomes_then_discovery"
   }
 }
