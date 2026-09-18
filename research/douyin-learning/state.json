@@ -707,8 +707,8 @@
       "category": "网球人物故事",
       "title": "成为比利·简·金｜上半场",
       "title_is_source_claim": true,
-      "published_at_display": "6月19日",
-      "published_at": null,
+      "published_at_display": "2026-06-19 23:28",
+      "published_at": "2026-06-19T23:28:00+08:00",
       "duration_seconds": 297,
       "duration_evidence": "search_display_or_unknown",
       "role": "historical_craft",
@@ -731,8 +731,9 @@
         }
       ],
       "analysis": {
-        "status": "not_started",
-        "coverage": "Title/profile metadata only; no audiovisual conclusions."
+        "status": "partial",
+        "coverage": "Live detail chapters and one browser frame at approximately 12.57 seconds. Blob currentSrc not downloaded; full media and audiovisual review pending.",
+        "review_path": "research/douyin-learning/reviews/7653113325659671851.md"
       }
     },
     "7653687567606500635": {
@@ -744,8 +745,8 @@
       "title_is_source_claim": true,
       "published_at_display": null,
       "published_at": null,
-      "duration_seconds": null,
-      "duration_evidence": "search_display_or_unknown",
+      "duration_seconds": 318,
+      "duration_evidence": "Visible detail playlist label 05:18",
       "role": "publication_date_pending",
       "observations": [
         {
@@ -941,8 +942,11 @@
         }
       ],
       "analysis": {
-        "status": "not_started",
-        "coverage": "Title/profile metadata only; no audiovisual conclusions."
+        "status": "partial",
+        "coverage": "Full mixed audiovisual media downloaded and probed; 11 source-timestamp frames reviewed at 0..20s. Audio listening, continuous editing/zoom/speed/translation remain pending.",
+        "review_path": "research/douyin-learning/reviews/7685213002739567935.md",
+        "evidence_path": "research/douyin-learning/evidence/7685213002739567935-visual-partial.json",
+        "media_sha256": "61c1f8d4487ea5765c256e2f2cf7bc32dcb9eee865f625905da27d8f0de9e1df"
       }
     },
     "7666769547982081314": {
@@ -1404,7 +1408,7 @@
     },
     {
       "run_id": "2026-09-18T14:57:34Z-cross-author",
-      "stage": "cross_author_discovery_saved",
+      "stage": "cross_author_discovery_and_partial_reviews_saved",
       "observed_at": "2026-09-18T15:05:37Z",
       "authors_checked": 5,
       "new_authors_verified": 5,
@@ -1419,10 +1423,28 @@
         "其他体育人物故事"
       ],
       "evidence_path": "research/douyin-learning/evidence/cross-author-discovery-20260918T145734Z.json",
-      "watermark_advanced": false
+      "watermark_advanced": false,
+      "full_media_acquired": 1,
+      "partial_reviews": 2,
+      "deep_review_started": 2,
+      "rule_applicability_checks": [
+        {
+          "rule_id": "evidence-inset-focus-v1",
+          "rule_version": 1,
+          "work_id": "7685213002739567935",
+          "applicable": false,
+          "reason": "No document evidence requiring enlargement; portrait/subtitle/brand protected."
+        }
+      ],
+      "verified_rotation_pool_size": 6,
+      "rotation_pool_target": 12,
+      "remaining_rotation_pool_gap": 6,
+      "production_status": "awaiting_production",
+      "treatment_work_id": null,
+      "new_login_or_permission_blocker": false
     }
   ],
-  "last_notification_fingerprint": "bjk_story_224_dense_official_draw_eligible_but_unconsumed_v1",
+  "last_notification_fingerprint": "cross-author-5-new-9-candidates-usopen-media-partial-20260918T145734Z",
   "production_integration": {
     "status": "consumer_merged_no_validated_rules",
     "pr": "https://github.com/robertyang87/tennislive/pull/937",
