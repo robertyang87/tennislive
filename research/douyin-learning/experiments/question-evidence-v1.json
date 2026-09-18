@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "id": "question-evidence-v1",
+  "status": "experiment_ready",
+  "production_render_status": "not_started",
+  "rule_id": "explain-one-tactical-question",
+  "version": "1",
+  "column": "赛场之上",
+  "evidence": [
+    "research/douyin-learning/reviews/7673039156256020474.md"
+  ],
+  "single_variable": "将一个关键回合解释段的首句由陈述改为观众视角的战术问题；后续用同一回合可见证据回答",
+  "control": "保留原陈述式首句；其余画面、时长、字幕风格、配音音色和音乐一致",
+  "assignment": "下一条有完整关键回合且事实与素材已核实的赛场之上，先保存基线spec再生成试验spec；素材不满足则跳过并记录原因",
+  "constraints": [
+    "不改整场结果和完整结尾",
+    "不把球员意图写成事实",
+    "只调整一个主要变量",
+    "不重复发布同一视频"
+  ],
+  "qc": [
+    "问题有同回合可见证据回答",
+    "问答时长以实际配音测量",
+    "既有事实/视觉/字幕/封面/结尾QC全部通过"
+  ],
+  "primary_metric": "平均播放时长",
+  "observation_window_hours": 72,
+  "minimum_exploratory_comparable_videos": 3,
+  "confounders": [
+    "选题热度",
+    "时长",
+    "发布时间",
+    "分发量",
+    "观众构成"
+  ],
+  "promotion": "读取真实后台回执和QC回执后复核；三条只是探索，不作因果证明；缺失数据保持awaiting_outcomes",
+  "rollback": "恢复保存的基线spec，撤回规则版本；不改已发布视频",
+  "receipts": {
+    "baseline_spec": null,
+    "experiment_spec": null,
+    "render": null,
+    "qc": null,
+    "outcomes": null
+  }
+}
