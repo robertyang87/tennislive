@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "timezone": "Asia/Shanghai",
-  "stage": "offline_focus_trial_rendered_qc_passed_outcomes_pending",
+  "stage": "same_author_controls_saved_trial_awaiting_production",
   "watchlist": [
     {
       "name": "河岸",
@@ -68,7 +68,7 @@
       "published_at": null,
       "duration_seconds": 144.833333,
       "role": "historical_craft_reference",
-      "selection_note": "Search returned an older sample. Not a newly published item; creator-relative performance unknown.",
+      "selection_note": "Historical craft reference; 13 directly observed same-author rally titles now available. It has higher displayed likes, but publication-age/duration matching and causal attribution remain unverified.",
       "observations": [
         {
           "observed_at": "2026-09-18T02:56:16.447Z",
@@ -86,11 +86,27 @@
           },
           "collection_status": "success",
           "note": "Earlier modal showed 3519 collections; later detail showed 3518. Keep observed values; do not invent growth."
+        },
+        {
+          "observed_at": "2026-09-18T05:02:22.238Z",
+          "source_url": "https://www.douyin.com/user/MS4wLjABAAAAM41lmKhccITuQiRsVOYTqd3n3dawULd9o1t5RsskGCM",
+          "evidence_kind": "direct_author_grid",
+          "metrics": {
+            "likes": null,
+            "likes_display": "3.9万",
+            "likes_estimate": 39000,
+            "plays": null,
+            "completion_rate": null,
+            "comments": null,
+            "collections": null,
+            "shares": null
+          },
+          "collection_status": "success"
         }
       ],
       "analysis": {
         "status": "partial",
-        "coverage": "Downloaded full 144.833333s file, verified video/audio streams and inspected contact sheet sampled every 10 seconds across duration. Sampling is not full audiovisual review; audio transcription pending.",
+        "coverage": "Full 144.833333s media acquired; sampled frames and offline ASR with partial subtitle crosscheck completed. Continuous audiovisual review and music listening incomplete; see deep_review_followup.",
         "timestamped_observations": [
           {
             "at_seconds": 17,
@@ -117,7 +133,7 @@
           "观众讨论变线的风险与收益",
           "有观众表达收藏学习意图"
         ],
-        "transcript_provenance": null,
+        "transcript_provenance": "research/douyin-learning/evidence/7673039156256020474-asr-local.json; local offline ASR, not fully corrected.",
         "media_hash": "86cf137567b93641690f77fbaecb2350e9322227129af53243177b4ebb979967",
         "media": {
           "width": 1080,
@@ -208,6 +224,379 @@
           "limitation": "Mixed signal only; not proof of speech pauses or music ducking."
         }
       }
+    },
+    "7674475492078579963": {
+      "permanent_url": "https://www.douyin.com/video/7674475492078579963",
+      "author": "河岸",
+      "title": "德约科维奇vs阿尔卡拉斯 比赛解读（长多拍）",
+      "published_at_display": "2026-08-16 13:04",
+      "published_at": null,
+      "duration_seconds": 125.133333,
+      "role": "historical_same_author_control",
+      "observations": [
+        {
+          "observed_at": "2026-09-18T05:02:22.238Z",
+          "source_url": "https://www.douyin.com/video/7674475492078579963",
+          "evidence_kind": "direct_author_grid_and_detail",
+          "metrics": {
+            "likes": 814,
+            "likes_display": "814",
+            "likes_estimate": null,
+            "plays": null,
+            "completion_rate": null,
+            "comments": 13,
+            "collections": 142,
+            "shares": 109
+          },
+          "collection_status": "success"
+        }
+      ],
+      "analysis": {
+        "status": "partial",
+        "coverage": "Direct detail and single browser frame at approximately 10–12 seconds; no continuous audiovisual review.",
+        "review_path": "research/douyin-learning/reviews/7674475492078579963.md"
+      }
+    },
+    "7673457000739865765": {
+      "permanent_url": "https://www.douyin.com/video/7673457000739865765",
+      "author": "河岸",
+      "title": "纳达尔VS德约科维奇 长多拍对决",
+      "published_at_display": null,
+      "published_at": null,
+      "duration_seconds": null,
+      "role": "same_author_comparison_candidate_date_unverified",
+      "observations": [
+        {
+          "observed_at": "2026-09-18T05:02:22.238Z",
+          "source_url": "https://www.douyin.com/user/MS4wLjABAAAAM41lmKhccITuQiRsVOYTqd3n3dawULd9o1t5RsskGCM",
+          "evidence_kind": "direct_author_grid",
+          "metrics": {
+            "likes": 641,
+            "likes_display": "641",
+            "likes_estimate": null,
+            "plays": null,
+            "completion_rate": null,
+            "comments": null,
+            "collections": null,
+            "shares": null
+          },
+          "collection_status": "success"
+        }
+      ],
+      "analysis": {
+        "status": "not_started",
+        "coverage": "Author grid metadata only"
+      }
+    },
+    "7673173639415929211": {
+      "permanent_url": "https://www.douyin.com/video/7673173639415929211",
+      "author": "河岸",
+      "title": "瓦林卡VS德约科维奇 长多拍对决",
+      "published_at_display": null,
+      "published_at": null,
+      "duration_seconds": null,
+      "role": "same_author_comparison_candidate_date_unverified",
+      "observations": [
+        {
+          "observed_at": "2026-09-18T05:02:22.238Z",
+          "source_url": "https://www.douyin.com/user/MS4wLjABAAAAM41lmKhccITuQiRsVOYTqd3n3dawULd9o1t5RsskGCM",
+          "evidence_kind": "direct_author_grid",
+          "metrics": {
+            "likes": 3003,
+            "likes_display": "3003",
+            "likes_estimate": null,
+            "plays": null,
+            "completion_rate": null,
+            "comments": null,
+            "collections": null,
+            "shares": null
+          },
+          "collection_status": "success"
+        }
+      ],
+      "analysis": {
+        "status": "not_started",
+        "coverage": "Author grid metadata only"
+      }
+    },
+    "7670847490648367793": {
+      "permanent_url": "https://www.douyin.com/video/7670847490648367793",
+      "author": "河岸",
+      "title": "纳达尔vs德约科维奇 超长多拍对决",
+      "published_at_display": null,
+      "published_at": null,
+      "duration_seconds": null,
+      "role": "same_author_comparison_candidate_date_unverified",
+      "observations": [
+        {
+          "observed_at": "2026-09-18T05:02:22.238Z",
+          "source_url": "https://www.douyin.com/user/MS4wLjABAAAAM41lmKhccITuQiRsVOYTqd3n3dawULd9o1t5RsskGCM",
+          "evidence_kind": "direct_author_grid",
+          "metrics": {
+            "likes": 716,
+            "likes_display": "716",
+            "likes_estimate": null,
+            "plays": null,
+            "completion_rate": null,
+            "comments": null,
+            "collections": null,
+            "shares": null
+          },
+          "collection_status": "success"
+        }
+      ],
+      "analysis": {
+        "status": "not_started",
+        "coverage": "Author grid metadata only"
+      }
+    },
+    "7670474698882315961": {
+      "permanent_url": "https://www.douyin.com/video/7670474698882315961",
+      "author": "河岸",
+      "title": "费德勒vs尼古拉达维登科 巅峰牛的长多拍",
+      "published_at_display": null,
+      "published_at": null,
+      "duration_seconds": null,
+      "role": "same_author_comparison_candidate_date_unverified",
+      "observations": [
+        {
+          "observed_at": "2026-09-18T05:02:22.238Z",
+          "source_url": "https://www.douyin.com/user/MS4wLjABAAAAM41lmKhccITuQiRsVOYTqd3n3dawULd9o1t5RsskGCM",
+          "evidence_kind": "direct_author_grid",
+          "metrics": {
+            "likes": 158,
+            "likes_display": "158",
+            "likes_estimate": null,
+            "plays": null,
+            "completion_rate": null,
+            "comments": null,
+            "collections": null,
+            "shares": null
+          },
+          "collection_status": "success"
+        }
+      ],
+      "analysis": {
+        "status": "not_started",
+        "coverage": "Author grid metadata only"
+      }
+    },
+    "7670383484234898097": {
+      "permanent_url": "https://www.douyin.com/video/7670383484234898097",
+      "author": "河岸",
+      "title": "张之臻VS辛纳 长多拍对决",
+      "published_at_display": null,
+      "published_at": null,
+      "duration_seconds": null,
+      "role": "same_author_comparison_candidate_date_unverified",
+      "observations": [
+        {
+          "observed_at": "2026-09-18T05:02:22.238Z",
+          "source_url": "https://www.douyin.com/user/MS4wLjABAAAAM41lmKhccITuQiRsVOYTqd3n3dawULd9o1t5RsskGCM",
+          "evidence_kind": "direct_author_grid",
+          "metrics": {
+            "likes": 1882,
+            "likes_display": "1882",
+            "likes_estimate": null,
+            "plays": null,
+            "completion_rate": null,
+            "comments": null,
+            "collections": null,
+            "shares": null
+          },
+          "collection_status": "success"
+        }
+      ],
+      "analysis": {
+        "status": "not_started",
+        "coverage": "Author grid metadata only"
+      }
+    },
+    "7667562529023978619": {
+      "permanent_url": "https://www.douyin.com/video/7667562529023978619",
+      "author": "河岸",
+      "title": "阿卡VS辛纳 双子星长多拍对决",
+      "published_at_display": null,
+      "published_at": null,
+      "duration_seconds": null,
+      "role": "same_author_comparison_candidate_date_unverified",
+      "observations": [
+        {
+          "observed_at": "2026-09-18T05:02:22.238Z",
+          "source_url": "https://www.douyin.com/user/MS4wLjABAAAAM41lmKhccITuQiRsVOYTqd3n3dawULd9o1t5RsskGCM",
+          "evidence_kind": "direct_author_grid",
+          "metrics": {
+            "likes": 2174,
+            "likes_display": "2174",
+            "likes_estimate": null,
+            "plays": null,
+            "completion_rate": null,
+            "comments": null,
+            "collections": null,
+            "shares": null
+          },
+          "collection_status": "success"
+        }
+      ],
+      "analysis": {
+        "status": "not_started",
+        "coverage": "Author grid metadata only"
+      }
+    },
+    "7621558452401610427": {
+      "permanent_url": "https://www.douyin.com/video/7621558452401610427",
+      "author": "河岸",
+      "title": "蒂姆vs纳达尔 长多拍",
+      "published_at_display": null,
+      "published_at": null,
+      "duration_seconds": null,
+      "role": "same_author_comparison_candidate_date_unverified",
+      "observations": [
+        {
+          "observed_at": "2026-09-18T05:02:22.238Z",
+          "source_url": "https://www.douyin.com/user/MS4wLjABAAAAM41lmKhccITuQiRsVOYTqd3n3dawULd9o1t5RsskGCM",
+          "evidence_kind": "direct_author_grid",
+          "metrics": {
+            "likes": 731,
+            "likes_display": "731",
+            "likes_estimate": null,
+            "plays": null,
+            "completion_rate": null,
+            "comments": null,
+            "collections": null,
+            "shares": null
+          },
+          "collection_status": "success"
+        }
+      ],
+      "analysis": {
+        "status": "not_started",
+        "coverage": "Author grid metadata only"
+      }
+    },
+    "7618591146004843953": {
+      "permanent_url": "https://www.douyin.com/video/7618591146004843953",
+      "author": "河岸",
+      "title": "德约科维奇VS纳达尔 长多拍",
+      "published_at_display": null,
+      "published_at": null,
+      "duration_seconds": null,
+      "role": "same_author_comparison_candidate_date_unverified",
+      "observations": [
+        {
+          "observed_at": "2026-09-18T05:02:22.238Z",
+          "source_url": "https://www.douyin.com/user/MS4wLjABAAAAM41lmKhccITuQiRsVOYTqd3n3dawULd9o1t5RsskGCM",
+          "evidence_kind": "direct_author_grid",
+          "metrics": {
+            "likes": 1634,
+            "likes_display": "1634",
+            "likes_estimate": null,
+            "plays": null,
+            "completion_rate": null,
+            "comments": null,
+            "collections": null,
+            "shares": null
+          },
+          "collection_status": "success"
+        }
+      ],
+      "analysis": {
+        "status": "not_started",
+        "coverage": "Author grid metadata only"
+      }
+    },
+    "7612321821329494437": {
+      "permanent_url": "https://www.douyin.com/video/7612321821329494437",
+      "author": "河岸",
+      "title": "费德勒vs德约科维奇 盘点长多拍",
+      "published_at_display": null,
+      "published_at": null,
+      "duration_seconds": null,
+      "role": "same_author_comparison_candidate_date_unverified",
+      "observations": [
+        {
+          "observed_at": "2026-09-18T05:02:22.238Z",
+          "source_url": "https://www.douyin.com/user/MS4wLjABAAAAM41lmKhccITuQiRsVOYTqd3n3dawULd9o1t5RsskGCM",
+          "evidence_kind": "direct_author_grid",
+          "metrics": {
+            "likes": 440,
+            "likes_display": "440",
+            "likes_estimate": null,
+            "plays": null,
+            "completion_rate": null,
+            "comments": null,
+            "collections": null,
+            "shares": null
+          },
+          "collection_status": "success"
+        }
+      ],
+      "analysis": {
+        "status": "not_started",
+        "coverage": "Author grid metadata only"
+      }
+    },
+    "7611485464318495866": {
+      "permanent_url": "https://www.douyin.com/video/7611485464318495866",
+      "author": "河岸",
+      "title": "德约科维奇VS纳达尔 超长多拍对决",
+      "published_at_display": null,
+      "published_at": null,
+      "duration_seconds": null,
+      "role": "same_author_comparison_candidate_date_unverified",
+      "observations": [
+        {
+          "observed_at": "2026-09-18T05:02:22.238Z",
+          "source_url": "https://www.douyin.com/user/MS4wLjABAAAAM41lmKhccITuQiRsVOYTqd3n3dawULd9o1t5RsskGCM",
+          "evidence_kind": "direct_author_grid",
+          "metrics": {
+            "likes": 4167,
+            "likes_display": "4167",
+            "likes_estimate": null,
+            "plays": null,
+            "completion_rate": null,
+            "comments": null,
+            "collections": null,
+            "shares": null
+          },
+          "collection_status": "success"
+        }
+      ],
+      "analysis": {
+        "status": "not_started",
+        "coverage": "Author grid metadata only"
+      }
+    },
+    "7611047827242742885": {
+      "permanent_url": "https://www.douyin.com/video/7611047827242742885",
+      "author": "河岸",
+      "title": "经典费纳决长多拍",
+      "published_at_display": null,
+      "published_at": null,
+      "duration_seconds": null,
+      "role": "same_author_comparison_candidate_date_unverified",
+      "observations": [
+        {
+          "observed_at": "2026-09-18T05:02:22.238Z",
+          "source_url": "https://www.douyin.com/user/MS4wLjABAAAAM41lmKhccITuQiRsVOYTqd3n3dawULd9o1t5RsskGCM",
+          "evidence_kind": "direct_author_grid",
+          "metrics": {
+            "likes": 2385,
+            "likes_display": "2385",
+            "likes_estimate": null,
+            "plays": null,
+            "completion_rate": null,
+            "comments": null,
+            "collections": null,
+            "shares": null
+          },
+          "collection_status": "success"
+        }
+      ],
+      "analysis": {
+        "status": "not_started",
+        "coverage": "Author grid metadata only"
+      }
     }
   },
   "strategies": {
@@ -236,7 +625,7 @@
       "experiment_path": "research/douyin-learning/experiments/question-evidence-v1.json"
     },
     "evidence-inset-focus-v1": {
-      "status": "rendered_qc",
+      "status": "awaiting_production",
       "column": "网球有故事",
       "single_variable": "Timed 2x inset of source document heading",
       "experiment_path": "research/douyin-learning/experiments/evidence-inset-focus-v1.json",
@@ -247,7 +636,18 @@
       "published": false,
       "production_item_id": null,
       "outcome_window_starts_at": null,
-      "next_action": "Evaluate on a new applicable production spec; record adoption and real published ID before collecting 72h results; research task does not publish."
+      "next_action": "Evaluate on a new applicable production spec; record adoption and real published ID before collecting 72h results; research task does not publish.",
+      "technical_qc_status": "rendered_qc_passed",
+      "last_adoption_check": {
+        "checked_at": "2026-09-18T05:02:22.238Z",
+        "main_sha": "98a009e14dc265c71fd7cbcc6b0c563e08249eb4",
+        "rule_registries_empty": true,
+        "latest_release_tags": [
+          "reel-zhang-shuai-story",
+          "reel-djokovic-beijing-return"
+        ],
+        "result": "No recorded adoption; both latest releases predate trial."
+      }
     }
   },
   "successful_watermarks": {},
@@ -366,9 +766,46 @@
       "outcomes_available": false,
       "promoted": 0,
       "next_action": "Evaluate on a new applicable production spec; record adoption and real published ID before collecting 72h results; research task does not publish."
+    },
+    {
+      "run_id": "scheduled-followup-2026-09-18T05:02:22.238Z",
+      "started_at": "2026-09-18T04:58:33Z",
+      "ended_at": "2026-09-18T05:03:02.528Z",
+      "authors_checked": 1,
+      "visible_inventory_items": 16,
+      "new_items_collected": 12,
+      "detail_pages_collected": 1,
+      "analyzed_complete": 0,
+      "analyzed_partial": 1,
+      "rendered_experiments": 0,
+      "promoted": 0,
+      "earliest_blocker": "trial_awaiting_production_no_published_treatment_id",
+      "probes": [
+        {
+          "source": "main_rules_and_releases",
+          "status": "read_success_no_new_adoption"
+        },
+        {
+          "source": "douyin_author_inventory",
+          "status": "success"
+        },
+        {
+          "source": "douyin_control_detail",
+          "status": "success"
+        },
+        {
+          "source": "browser_link_click",
+          "status": "locator_no_match_recovered_via_observed_href"
+        }
+      ],
+      "persistence_receipts": [
+        "15030aad20e7d9b5c1ad347fed2fc9a5450b4b28",
+        "9f4fb4c151ab70aa637147255e6e826f68722817"
+      ],
+      "note": "No private creator analytics stored. No publication. Discovery watermark not advanced because publication dates for inventory are not completely verified."
     }
   ],
-  "last_notification_fingerprint": "media_recovered_full_analysis_pending",
+  "last_notification_fingerprint": "same_author_control_7674475492078579963_verified",
   "production_integration": {
     "status": "consumer_merged_no_validated_rules",
     "pr": "https://github.com/robertyang87/tennislive/pull/937",
@@ -417,5 +854,14 @@
     "item_url": "https://creator.douyin.com/creator-micro/content/manage",
     "private_metrics_storage": "User private Library; do not publish analytics to this public repository",
     "limitations": "Resolve item IDs and comparable post-publication windows before outcome comparisons; no trial outcomes yet."
+  },
+  "author_cohorts": {
+    "hean": {
+      "path": "research/douyin-learning/evidence/hean-cohort-20260918.json",
+      "observed_at": "2026-09-18T05:02:22.238Z",
+      "visible_inventory": 16,
+      "relevant_items": 13,
+      "window_date_coverage": "incomplete"
+    }
   }
 }
