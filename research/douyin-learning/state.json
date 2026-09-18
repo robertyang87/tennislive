@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "timezone": "Asia/Shanghai",
-  "stage": "collection_working_media_analysis_partial",
+  "stage": "media_acquired_visual_sampling_complete",
   "watchlist": [
     {
       "name": "河岸",
@@ -90,12 +90,12 @@
       ],
       "analysis": {
         "status": "partial",
-        "coverage": "One screenshot near 00:17 plus direct page title, chapters and comment themes; full video and audio not inspected.",
+        "coverage": "Downloaded full 144.833333s file, verified video/audio streams and inspected contact sheet sampled every 10 seconds across duration. Sampling is not full audiovisual review; audio transcription pending.",
         "timestamped_observations": [
           {
             "at_seconds": 17,
-            "kind": "direct_frame",
-            "observation": "画面上下分为两个球场视角，带球员名字与长多拍文字；新手导航遮罩和弹幕覆盖了部分画面。不能判断这是否贯穿全片。"
+            "kind": "browser_frame",
+            "observation": "竖屏球场画面附球员名字及长多拍文字，部分内容被平台新手遮罩和弹幕覆盖。先前把同一球场上下两端误读为双视角，已由源片抽帧纠正。"
           }
         ],
         "platform_chapters": [
@@ -118,7 +118,33 @@
           "有观众表达收藏学习意图"
         ],
         "transcript_provenance": null,
-        "media_hash": null
+        "media_hash": "86cf137567b93641690f77fbaecb2350e9322227129af53243177b4ebb979967",
+        "media": {
+          "width": 1080,
+          "height": 1920,
+          "duration_seconds": 144.833333,
+          "bytes": 15665242,
+          "audio_stream_present": true,
+          "storage": "temporary research input; reacquire from source if needed"
+        },
+        "sampled_visual_observations": [
+          {
+            "range_seconds": [
+              0,
+              40
+            ],
+            "timing_precision": "10-second sampling, approximate",
+            "observation": "球场全景上放球员名字、长多拍标题及底部短字幕；其中一个采样帧用红色箭头指向球员站位。"
+          },
+          {
+            "range_seconds": [
+              40,
+              140
+            ],
+            "timing_precision": "10-second sampling, approximate",
+            "observation": "采样帧主要保持球场视角，底部字幕解释变线风险、机会与回球位置，内容随回合推进。不能由抽帧断言零切点或配音/音乐特征。"
+          }
+        ]
       }
     }
   },
@@ -131,6 +157,12 @@
           "url": "https://www.douyin.com/video/7673039156256020474",
           "kind": "direct_page_text",
           "scope": "title, platform chapter outline, comment themes; not full video"
+        },
+        {
+          "url": "https://www.douyin.com/video/7673039156256020474",
+          "kind": "sampled_source_video_frames",
+          "scope": "Samples spanning full duration; visible question/decision subtitles and positioning arrow, audio not analyzed",
+          "sha256": "86cf137567b93641690f77fbaecb2350e9322227129af53243177b4ebb979967"
         }
       ],
       "proposed_change": "为一次关键回合提出一个普通观众会问的技战术问题，用对应实际画面与统计解释选择的条件，再交代结果；不把整场复盘改成纯教学。",
@@ -200,9 +232,22 @@
       "promoted": 0,
       "earliest_blocker": "media_download_tool_error",
       "note": "Authentication recovered. One historical work verified; query coverage not complete, watermarks not advanced."
+    },
+    {
+      "run_id": "media-recovery-2026-09-18T02:59:14.678Z",
+      "started_at": "2026-09-18T02:59:14.678Z",
+      "ended_at": "2026-09-18T02:59:14.678Z",
+      "collected": 0,
+      "media_acquired": 1,
+      "analyzed_complete": 0,
+      "analyzed_partial": 1,
+      "proposed": 0,
+      "promoted": 0,
+      "earliest_blocker": "audio_transcription_and_full_review_pending",
+      "recovery": "Read matching visible video element currentSrc through browser DOM, download its HTTPS asset using Python urllib with ordinary User-Agent and Douyin Referer; no credentials exported. ffprobe verified full duration and streams. Signed source URL not persisted."
     }
   ],
-  "last_notification_fingerprint": "collection_recovered_media_download_tool_error",
+  "last_notification_fingerprint": "media_recovered_full_analysis_pending",
   "production_integration": {
     "status": "not_integrated",
     "reason": "No directly analyzed works or validated strategies yet. Research data alone does not alter production skills."
