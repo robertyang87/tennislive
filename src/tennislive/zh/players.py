@@ -24,6 +24,9 @@ PLAYER_ZH: dict[str, str] = {
     "Victor Pecci": "佩奇",          # 巴拉圭，1985 戴维斯杯第五场胜勒孔特
     "Henri Leconte": "勒孔特",       # 法国
     "Sam Querrey": "奎雷伊",         # 美国，2008 戴维斯杯半决赛负纳达尔
+    # 2026-09 戴维斯杯世界一组客场对挪威，ITF 正式名单里的两位（表里原来没有）：
+    "Rigele Te": "特日格乐",          # 中国，单打；ATP/ITF 写作 Rigele Te
+    "Fnu Nidunjianzan": "尼敦坚赞",   # 中国（拉萨出生），普林斯顿；百度百科词条「尼敦坚赞」
     "Andrey Rublev": "卢布列夫",
     "Jiri Lehecka": "莱赫奇卡",
     "Luciano Darderi": "达尔代里",
