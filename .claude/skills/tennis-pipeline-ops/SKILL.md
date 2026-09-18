@@ -4184,3 +4184,18 @@ orchestrate.yml -f apply=true -f max=N` 一趟就能把积压的候选踢出去�
 而且它挂在失败步之后照样跑到（`if: always()` 那一支的价值）；schedule 丢弃
 在 06:46（窗口外）仍然发生——「17:00–03:00 最饿」是实测的重灾区，不是边界。
 
+
+### ⚠️ 2026-09-18：本地 `--dry-run` 的 `--outdir` 要按 `output/YYYY-MM-DD/<slug>` 给——否则小红书字数那一层是哑的
+
+`bjk-cup-story` 第一趟 render 第 65 秒红在「小红书正文 1031 字，超过 1000 字上限」，
+而本地 `--dry-run` 跑了四遍全绿。差在 `--outdir`：我给的是一个临时目录，dry-run 从路径里
+取不到日期，就**跳过了拼推送标题和算正文字数那一步**（它只印一句「算不出真推送会拼的标题」
+——而我 grep 的是 ReelError／形状那几行，没看见）。
+
+    # 哑的：这一层不查
+    --outdir /tmp/x/dry
+    # 查的：和 runner 上同一个数
+    --outdir /tmp/x/dry/output/2026-09-18/bjk-cup-story
+
+顺带：**字数按闸自己的算法算**（`push_reel.split_copy`），不是 `len()`——我按去掉标题和
+tag 行的字符数量出 953，闸算出 1031。要这个数就让 dry-run 印，别自己数。
