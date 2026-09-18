@@ -1522,4 +1522,21 @@ x-staylive-channels`）。频道号是扫 3000–7400 扫出来的，都在 `too
 - 戴维斯杯集锦只有 720p
 
 用法见文件 docstring；判据 `tests/test_staylive_bjk.py`（只测不联网的分类和过滤）。
+### ⭐⭐ 戴维斯杯的正式名单和抽签：daviscup.com 是 JS 壳，数据在 ITF 的 tieCentre 接口（2026-09-18）
+
+`davis-cup-china-first-world-group-1` 第三版查阵容时量出来的：
+
+- **daviscup.com 的赛事页、队伍页、`draws-results` 全是 Next.js 壳**——WebFetch 和带 UA 的 curl 只拿得到导航和赞助商，`Line-ups` 那个 tab 是客户端组件 `$L33` 现拉的。沙箱里的 Chromium（`/opt/pw-browsers/chromium-1194`）渲出来也只有 424 个字符的壳，别在那条路上耗
+- 真入口是 ITF 的 sports-data 接口，从页面 JS 里抠出来的（`` `${cQ}/custom/tieCentre/${tieId}` ``）：
+
+      https://api.itf-production.sports-data.stadion.io/custom/tieCentre/<tieId>
+
+  `tieId` 就是赛事页 URL 里那串（`/en/tie/d3de5d2f-…`）。**不用 token，带浏览器 UA 就通**，一次 89 KB，全在 `data` 下：
+  - `data.nominations[]`：按 `countryId` 分两条，`captain._name`、`players[]._name`、`oomSinglesRankingPro` / `oomDoublesRankingPro`（`oomRankDate` 写着是哪一期）、`date`（**名单落库的时刻**——这次是抽签当天 12:27Z）
+  - `data.tie.matches[]`：五场，`dateStartLocal` ＋ `orderInSchedule` ＋ `scheduleText`（`Starting at 18:00` / `After 15 min`）；**谁打谁在 `sides[].sidePlayer[].player._name`**，`person.country.ISOcode` 给国籍。抽签之前 `sides` 是空的，抽完当场就有
+  - `tie.tieStatus`（To be played / In Progress / Complete）、`winnerTeamId`；⚠️ **场地类型这个接口不给**（`formatInformationLabelSurface` 只是页面的字典），场地要另找
+- **第二源**拿 flashscore：抽完签它当天就建好单场页（`Casper Ruud v Rigele Te 18/09/2026 | Davis Cup - World Group I`），搜「<名> v <名> flashscore」就到
+- 中文媒体在抽签当天**没有**跟进稿（腾讯／新浪／搜狐／中新网／CTA 官网全搜过，CTA 官网沙箱里 SSL 直接断）；挪威网协 NTB 的稿子只写到「谁领衔」和媒体日安排。**名单这件事只有 ITF 自己说了算，别指望编辑稿**
+
+⚠️ **顺手的教训**：`_facts` 里写着「正式名单要等抽签日」，而重发那趟名单已经公布了 58 分钟——**写了「要等」的事实，重发之前要回头查**。规矩在 CLAUDE.md「前瞻类事实要在它定下来之后再核一次」。
 
