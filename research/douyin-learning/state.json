@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "timezone": "Asia/Shanghai",
-  "stage": "analysis_partial_production_adapter_merged_feedback_access_verified",
+  "stage": "offline_focus_trial_rendered_qc_passed_outcomes_pending",
   "watchlist": [
     {
       "name": "河岸",
@@ -187,7 +187,26 @@
           "quarantined_ending_segments": 4,
           "path": "research/douyin-learning/evidence/7673039156256020474-transcript-crosscheck.json"
         },
-        "technical_path": "research/douyin-learning/evidence/7673039156256020474-technical.json"
+        "technical_path": "research/douyin-learning/evidence/7673039156256020474-technical.json",
+        "mixed_audio_low_level_candidates": {
+          "threshold_db": -35,
+          "min_duration_seconds": 0.3,
+          "intervals": [
+            [
+              13.0067,
+              13.4151
+            ],
+            [
+              17.5722,
+              18.0926
+            ],
+            [
+              42.7011,
+              43.2588
+            ]
+          ],
+          "limitation": "Mixed signal only; not proof of speech pauses or music ducking."
+        }
       }
     }
   },
@@ -215,6 +234,20 @@
       "rollback": "撤掉新增问答段，恢复原spec版本；不改事实和完整结尾",
       "validation_receipts": [],
       "experiment_path": "research/douyin-learning/experiments/question-evidence-v1.json"
+    },
+    "evidence-inset-focus-v1": {
+      "status": "rendered_qc",
+      "column": "网球有故事",
+      "single_variable": "Timed 2x inset of source document heading",
+      "experiment_path": "research/douyin-learning/experiments/evidence-inset-focus-v1.json",
+      "qc_path": "research/douyin-learning/evidence/evidence-inset-focus-v1-qc.json",
+      "runner": "research/douyin-learning/scripts/render_focus_trial.py",
+      "scope": "12-second offline preview; not full production adoption",
+      "validated": false,
+      "published": false,
+      "production_item_id": null,
+      "outcome_window_starts_at": null,
+      "next_action": "Evaluate on a new applicable production spec; record adoption and real published ID before collecting 72h results; research task does not publish."
     }
   },
   "successful_watermarks": {},
@@ -323,6 +356,16 @@
         }
       ],
       "next_action": "Complete listening, integrate story consumer, render/QC real single-variable experiment, then collect its actual outcomes."
+    },
+    {
+      "timestamp": "2026-09-18T04:57:25.981Z",
+      "stage": "offline_focus_trial_rendered_qc_passed_outcomes_pending",
+      "rendered_experiments": 1,
+      "technical_qc_passed": true,
+      "negative_source_hash_test": "passed",
+      "outcomes_available": false,
+      "promoted": 0,
+      "next_action": "Evaluate on a new applicable production spec; record adoption and real published ID before collecting 72h results; research task does not publish."
     }
   ],
   "last_notification_fingerprint": "media_recovered_full_analysis_pending",
@@ -344,8 +387,8 @@
       "网球有故事"
     ],
     "validated_rules": 0,
-    "rendered_experiments": 0,
-    "reason": "Actual production prompt consumers deployed, but no candidate has actual render/QC/outcome receipts yet."
+    "rendered_experiments": 1,
+    "reason": "One actual offline story preview rendered and isolation QC passed. Native story production consumer and full production QC/outcomes remain pending."
   },
   "automation": {
     "cadence_hours": 3,
