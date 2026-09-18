@@ -1,0 +1,27 @@
+{
+  "rule_id": "evidence-inset-focus-v1",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/explainer-promotional-fees/explainer.mp4",
+  "source_sha256": "5cebc111089e3517d4f31addc45e343bb9f376fef2dd8946ecd71408794d234e",
+  "start_seconds": 60,
+  "duration_seconds": 12,
+  "crop_xywh": [
+    40,
+    690,
+    420,
+    64
+  ],
+  "inset_xy": [
+    120,
+    460
+  ],
+  "scale": 2,
+  "visible_seconds": [
+    1,
+    9
+  ],
+  "single_variable": "Add a timed 2x inset of the visible rulebook heading; retain the complete original document, narration and timeline.",
+  "status": "candidate",
+  "applicability": "Static document card with reviewed empty space; never overlay faces, balls, scores or subtitles.",
+  "rollback": "Omit the inset filter; use A-baseline.",
+  "evidence": "Reference 7673039156256020474 sampled annotations at 31-43s and 46-54s motivate guiding attention. This inset is an original implementation hypothesis, not an observed exact effect."
+}
