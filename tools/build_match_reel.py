@@ -3124,7 +3124,8 @@ _REAL_FIELDS: dict[str, tuple[str, ...]] = {
              "music", "outro", "push", "rate", "scorebox", "segments",
              "silent_source",
              "slug", "source_audio", "source_url", "source_quality_exceptions", "sources", "stats",
-             "subtitle_top", "topbar", "tts_backend", "voice", "editorial"),
+             "subtitle_scrim", "subtitle_top", "topbar", "tts_backend", "voice",
+             "editorial"),
     "cover": ("approved_image", "event_badge", "eyebrow", "hook", "hook_accent", "layout", "matchup", "meta",
               "narration", "portrait", "portrait_above", "result", "round",
               "score", "scoreboard", "scrim", "split", "sub", "subject",
@@ -4812,6 +4813,15 @@ def _print_word_splits(splits) -> None:
               "这几段读音风险最高：")
         for item in singles:
             print(f"  {item}")
+    from tennislive.zh.tts_fake_words import fake_token_hits  # noqa: PLC0415
+    fake = [(i, hits) for i, _, _, _, _, toks in splits
+            if (hits := fake_token_hits(toks))]
+    if fake:
+        print("\n⚠️⚠️ 切词里有**读音变了的假词**——这是合成器自己报的，不是猜的：")
+        for index, hits in fake:
+            for tok, why in hits:
+                print(f"  第 {index + 1:>2d} 段  「{tok}」：{why}")
+        print("  改法：换句式让那两个字不再相邻（`tennislive.zh.tts_fake_words`）。")
     if crossing:
         print("\n⚠️ 有 token 骑在人名的边界上——念出来会把名字和邻字连读成一个"
               "不存在的词：")
@@ -5315,6 +5325,12 @@ APPROVED_LOW_RES_SOURCES: dict[str, int] = {
     "https://www.youtube.com/watch?v=qBtBKmKmQZc": 720,   # ITF：鲁德 v 埃切维里，挪威 v 阿根廷 2025
     "https://www.youtube.com/watch?v=E-MWVXF9ET0": 720,   # ITF：布德科夫·克耶尔 v 费恩利，挪威 v 英国 2026
     "https://www.youtube.com/watch?v=ogv43WCXQSo": 480,   # British Pathé：1933 戴维斯杯挑战轮新闻片
+    # 德约回北京（djokovic-beijing-return）：账号所有者 2026-09-17「低清的视频可以用」
+    "https://www.youtube.com/watch?v=TCB-Yj85A5E": 720,   # ATP 官方：2015 北京决赛集锦（片头奖杯底座刻名）
+    "https://www.youtube.com/watch?v=V9mgmdBtbNc": 470,   # 2009 北京决赛集锦，854×470
+    # 他自己的官宣视频（中网官方制作、他转发到 Instagram Story；X 用户 @pavyg 的转录，
+    # 账号所有者 2026-09-17 亲自给的链接），720×960 竖版
+    "https://x.com/pavyg/status/2100236978620928375": 960,
 }
 
 
@@ -7712,7 +7728,8 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     if "subtitle_top" not in spec:
         margin_v = board_margin
     ass = write_subtitles(cues, outdir / "subtitles.ass",
-                          height=VIDEO_H, margin_v=margin_v)
+                          height=VIDEO_H, margin_v=margin_v,
+                          outline=SUB_OUTLINE_PX, shadow=SUB_SHADOW_PX)
     moved = "" if margin_v == default_margin else (
         f"，比默认抬高 {default_margin - margin_v}px "
         + ("让开回贴在左下的记分条" if margin_v == board_margin != default_margin
@@ -7804,16 +7821,21 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     wm_png = (brand_watermark(outdir / "_watermark.png", wm_column, wm_topic)
               if wants_watermark(wm_column) else None)
     match_end = cover_secs + sum(s.length for s in segments)
-    # 全出血的字幕带垫一层柔性渐变（见 SUB_SCRIM_ALPHA 上面的来路）；带式不需要。
+    # 字幕底下那层渐变垫**默认不垫**（见 SUB_SCRIM_ALPHA 上面的来路）：spec 写
+    # `subtitle_scrim: true` 认领才垫，而且只有全出血才有（带式的字幕在实色底带里）。
     scrim_png: Path | None = None
     scrim_y = 0
-    if LAYOUT != "band":
+    if LAYOUT == "band":
+        print("[字幕垫] 带式版式：字幕在实色底带里，不垫渐变")
+    elif wants_subtitle_scrim(spec):
         lead = SUB_SCRIM_LEAD_PX if margin_v >= default_margin else SUB_SCRIM_LIFTED_LEAD_PX
         scrim_png, scrim_y = subtitle_scrim(outdir / "_subs_scrim.png", margin_v, lead)
-        print(f"[字幕垫] 全出血：字幕带底下垫一层渐变（y {scrim_y}→{VIDEO_H}，"
-              f"alpha 0→{SUB_SCRIM_ALPHA:.2f}），只盖 {cover_secs:.2f}~{match_end:.2f}s")
+        print(f"[字幕垫] spec 认领了 subtitle_scrim：字幕带底下垫一层渐变"
+              f"（y {scrim_y}→{VIDEO_H}，alpha 0→{SUB_SCRIM_ALPHA:.2f}），"
+              f"只盖 {cover_secs:.2f}~{match_end:.2f}s")
     else:
-        print("[字幕垫] 带式版式：字幕在实色底带里，不另垫渐变")
+        print(f"[字幕垫] 默认不垫（2026-09-17 起）：字幕靠 {SUB_OUTLINE_PX}px 描边＋"
+              f"{SUB_SHADOW_PX}px 影站住；忙背景真压不住再在 spec 写 subtitle_scrim: true")
     with stage("烧字幕+成片"):
         # 输入按 `-i` 的顺序编号：0 画面、1 混音，之后依次是脚注、角标、字幕垫
         # ——**谁在就占下一个号**，别再写 `3 if foot else 2` 那种手算。每一路
@@ -8712,8 +8734,20 @@ def full_canvas_filtergraph(graph: str, segments: list[Segment], cover_secs: flo
             + "+".join(windows) + "'[out]")
 
 
+#: 竖版短片字幕的描边和投影（像素）。解说片那头是 3/0（`explainer._ass_header`
+#: 的默认值），这儿厚一档：2026-09-17 账号所有者看完德约回北京那条说「字幕下面的
+#: 背景可以不要了」——底下那层渐变垫从 y=1064 起就把 3:4 画面的下四分之一整个压暗，
+#: 奖杯和 BEIJING 那两格看着像加了一条暗带。垫撤成可选之后，字幕在忙背景上要靠
+#: 描边自己站住：4px 描边＋1px 影，在 shelton-zverev-h2h（9/12，没垫）两格忙背景上并排比过 3/0 与 4/1。
+SUB_OUTLINE_PX = 4
+SUB_SHADOW_PX = 1
+
 #: 全出血字幕带底下那层柔性渐变垫：从字幕上锚往上 SUB_SCRIM_LEAD_PX 处 alpha 0
 #: 起，smoothstep 爬到上锚下 SUB_SCRIM_FULL_PX 处的 SUB_SCRIM_ALPHA，再一路铺到底。
+#:
+#: ⚠️ **2026-09-17 起默认不垫**，spec 写 `subtitle_scrim: true` 才垫（账号所有者：
+#: 「以后字幕下面的背景可以不要了」，选的是「默认关＋描边加厚＋忙背景单独认领」）。
+#: 垫本身的形状没动，下面这段来路留着，是给认领的时候看的。
 #:
 #: 来路：2026-09-16 戴维斯杯那条整体视觉 review。68px 黑体＋3px 描边、没有任何
 #: 垫底，压在忙背景上就糊——146.9~155s「中国男网以前从没上过这一层」直接压在
@@ -8730,6 +8764,12 @@ SUB_SCRIM_LEAD_PX = 220
 #: 合到赛点那一帧上比过，取短的那档。
 SUB_SCRIM_LIFTED_LEAD_PX = 120
 SUB_SCRIM_FULL_PX = 60
+
+
+def wants_subtitle_scrim(spec: dict) -> bool:
+    """这条 spec 要不要垫：**默认不垫**，`subtitle_scrim: true`（严格布尔）才垫，
+    带式永远不垫（字幕在实色底带里）。render 那头就按它分支，别在那儿另写一遍。"""
+    return LAYOUT != "band" and spec.get("subtitle_scrim") is True
 
 
 def subtitle_scrim(dest: Path, margin_v: int,

@@ -369,6 +369,9 @@ PLAYER_ZH: dict[str, str] = {
     "Erin Routliffe": "劳特利夫",
     "Ons Jabeur": "贾巴尔",
     "Simona Halep": "哈勒普",
+    # 2026-09-17 补：`zhang-shuai-story` 讲 2016 澳网，八强对手是她。
+    # CLAUDE.md「表里没有的，定下来之后补进表里，别只写在稿子里」。
+    "Johanna Konta": "孔塔",
     # ===== 补充批次：巡回赛常客 / 挑战赛升组球员（新华社式音译） =====
     # ATP
     "Alex Molcan": "莫尔坎",

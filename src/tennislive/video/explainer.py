@@ -2001,6 +2001,40 @@ _ACADEMY_SPAN_DIAGRAM = _academy_span_diagram()
 # ⚠️ 加进来之前先问一句：这条片子**验过了吗**。加进来之后它就不再经过人的手，
 # 而微信那条消息发出去收不回来。
 AUTO_PUSH_SLUGS: frozenset[str] = frozenset({
+    # 2026-09-16 验过才加进来的（下面那句「加进来之前先问一句：这条片子验过了吗」）：
+    # 在分支上渲的**第四趟**（run 35126806203，explainer.yml push=false）落库成功，
+    # 工作流自带的两道闸都过了、微信那步 skipped（push=false，对的）。
+    # 成片从 Release 拉回本地量过——242.33 秒、1080×1920、30fps、8,900,390 字节；
+    # 音画等长（差 0.06 秒）；全片 mean −24.2 / max −3.5 dB，九个采样窗峰值
+    # −8.1~−4.5 dB，**没有哑场**；`narration.json` 确认是代码默认的云健 +22%。
+    # 九屏本地逐屏渲出来看过，另从成片抽九帧拼墙逐格看过。
+    # ⚠️ 前三趟各修掉一件事，都是**看产物**才发现的，不是判据报的：
+    #   ① 地上的 RIYADH 被序号药丸压掉前两个字母（裁源图上沿 560px）
+    #   ② 字幕半中半洋（`二〇二五到2027年` / `一万6000人`）——补了转换器两个形状
+    #   ③ 最后一处「三条标准」——`条` 不在量词表里
+    # 第四趟把这三处逐条回读确认：`3条标准` / `16000人` / `2025年到2027年`。
+    "finals-venues",
+    # 2026-09-16 验过才加进来的（同上那句「加进来之前先问一句：这条片子验过了吗」）。
+    # ⚠️ 记的是**第二趟**的数：第一趟（run 35128704061）之后按 CLAUDE.md
+    # 「给人看的字一律阿拉伯数字」把上屏文字全改了，那一版作废，重渲了一趟。
+    # 第二趟 run 35132768293（explainer.yml push=false）落库成功，4 分 38 秒；
+    # `check_explainer_landed --ref <分支> --says 替补第 7 / 5 个身份 / 0 分` 报「已落地」，
+    # `check_explainer_voice` 确认是代码默认的云健 `zh-CN-YunjianNeural +22% +0Hz`、七段。
+    # 成片从 Release 拉回本地量过——285.60 秒、1080×1920、30fps、7,618,797 字节，
+    # 音画差 0.051 秒（视频 285.600 / 音频 285.549）；八个 30 秒采样窗全程
+    # −3.7~−5.5 dB、整片 mean −24.0 dB，**没有数字静音**；
+    # 六屏本地逐屏渲出来看过（据此修掉两处版式 bug：第 ③ 屏日期标签叠成
+    # 「101周日0 日」、第 ⑤ 屏罚款表两列相撞且整图压进序号药丸），
+    # 成片再抽五帧**逐格确认阿拉伯数字真的烧进了画面**（封面「替补第 7」、
+    # ①「43 个」、②「7 个人／8 个」、⑤「5 个身份／0 分」、⑥「10 月 10 号／3 条路」）；
+    # 225 种多字切词扫过，没有读音变了的假词。
+    # ⚠️ 留两条给下一个人：
+    #   ① 旁白「正赛周周一往前推四周」念出来是 zhèng-sài-zhōu zhōu-yī，容易听成
+    #      「每周周一」。没有闸拦它（不是假词，读音没变），后一句「十月十二号周一
+    #      开打，倒推四周」把它兜住了，所以没为它重渲。
+    #   ② 封面大标题是「替补第 7」而它底下的字幕是「替补第七」——`arabic_numerals`
+    #      的「排名」只认「世界第N」，详见那个函数的 docstring。
+    "wuhan-alternate",
     "zheng-china-wuhan-wildcards-v2",  # Authorized editorial correction; separate delivery receipt.
     # 2026-09-08: local full decode and 15 illustrated native cards reviewed; user authorizes QC -> WeChat.
     "zheng-china-wuhan-wildcards",
@@ -2843,7 +2877,574 @@ _BIG3_TODAY_TEN_DIAGRAM = """
 """
 
 
+
+# ── finals-venues（网球有故事）的四张示意图 ────────────────────────────────
+#
+# ⚠️⚠️ 这条片子的主语是「**为什么**变来变去」，不是「第 N 年去了哪」。
+# 第一版按编年史写，账号所有者当场顶回来：「要讲出为什么会变来变去」。
+# 所以四张图分工是「一条因果链的四截」，不是四段流水账：
+#
+#   B 没有家（结构）→ C 标书第一条是钱（机制）→ D 断了之后什么样（后果）
+#   A 只是把后果摆出来当开场证据
+#
+# 全套出处在 research/wta-finals-venues-2026.md，改之前先读那份。
+
+# 开场的证据：近八届落在七座城市。**它是后果，不是原因**——原因在 B 和 C。
+_FINALS_CITIES_DIAGRAM = """
+<svg viewBox="0 0 900 540" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="40" text-anchor="middle" font-size="34" font-weight="700" fill="#f4fbf7">2019 年以来，7 座城市</text>
+  <text x="450" y="76" text-anchor="middle" font-size="26" fill="#cfe6d8">2020 年因疫情停办</text>
+
+  <text x="190" y="150" text-anchor="end" font-size="26" fill="#cfe6d8">2019</text>
+  <text x="212" y="150" font-size="30" fill="#c6f65a">深圳</text>
+  <text x="190" y="214" text-anchor="end" font-size="26" fill="#cfe6d8">2021</text>
+  <text x="212" y="214" font-size="30" fill="#f4fbf7">瓜达拉哈拉</text>
+  <text x="190" y="278" text-anchor="end" font-size="26" fill="#cfe6d8">2022</text>
+  <text x="212" y="278" font-size="30" fill="#f4fbf7">沃斯堡</text>
+  <text x="190" y="342" text-anchor="end" font-size="26" fill="#cfe6d8">2023</text>
+  <text x="212" y="342" font-size="30" fill="#f4fbf7">坎昆</text>
+
+  <text x="608" y="150" text-anchor="end" font-size="26" fill="#cfe6d8">2024</text>
+  <text x="630" y="150" font-size="30" fill="#f4fbf7">利雅得</text>
+  <text x="608" y="214" text-anchor="end" font-size="26" fill="#cfe6d8">2025</text>
+  <text x="630" y="214" font-size="30" fill="#f4fbf7">利雅得</text>
+  <text x="608" y="278" text-anchor="end" font-size="26" fill="#cfe6d8">2026</text>
+  <text x="630" y="278" font-size="30" fill="#f4fbf7">印第安维尔斯</text>
+  <text x="608" y="342" text-anchor="end" font-size="26" fill="#cfe6d8">2027</text>
+  <text x="630" y="342" font-size="30" fill="#c6f65a">夏洛特</text>
+
+  <line x1="66" y1="404" x2="834" y2="404" stroke="#8fd6a8" stroke-width="2" stroke-opacity="0.45"/>
+  <text x="450" y="456" text-anchor="middle" font-size="26" fill="#cfe6d8">而在这之前，新加坡连办了 5 年</text>
+</svg>
+"""
+
+# ⚠️ 这儿原来还有第三张 `_FINALS_NO_HOME_DIAGRAM`（温网/法网/美网/澳网 各自
+# 「XXXX 年起，同一块地」＋ 年终总决赛「15 座城市」的五行对照表）。
+# 账号所有者 2026-09-16：「**多用图片少用文字**」——而这一条恰好是**用一张照片
+# 讲得更好**的那种：温网中央球场满场那张，本身就是「这块地一百年没挪过窝」。
+# 四个年份退回旁白里讲，屏幕上不再摆表。
+#
+# ⚠️ 留下的两张示意图是**照片讲不清**的那两件事（CLAUDE.md「示意图的触发条件
+# 是照片讲不清，不是照片找不到」）：哪一年在哪座城（名单），和奖金的跳法（数）。
+
+# 第二层：标书第一条是钱，所以奖金每换一个东家就跳一次。
+# ⚠️ 条上不写字（CLAUDE.md「条形图上不要写字」），数字一律摆在条右边。
+_FINALS_PRIZE_DIAGRAM = """
+<svg viewBox="0 0 900 560" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="40" text-anchor="middle" font-size="34" font-weight="700" fill="#f4fbf7">谁撑得起奖金，谁拿走这一周</text>
+  <text x="450" y="76" text-anchor="middle" font-size="26" fill="#cfe6d8">总奖金，单位：万美元</text>
+
+  <text x="66" y="150" font-size="28" fill="#cfe6d8">新加坡</text>
+  <rect x="240" y="128" width="212" height="30" rx="6" fill="#8fd6a8" fill-opacity="0.72"/>
+  <text x="834" y="150" text-anchor="end" font-size="28" fill="#f4fbf7">700</text>
+
+  <text x="66" y="212" font-size="28" fill="#cfe6d8">深圳</text>
+  <rect x="240" y="190" width="424" height="30" rx="6" fill="#8fd6a8"/>
+  <text x="834" y="212" text-anchor="end" font-size="28" fill="#f4fbf7">1400</text>
+
+  <text x="66" y="274" font-size="28" fill="#cfe6d8">瓜达拉哈拉</text>
+  <rect x="240" y="252" width="152" height="30" rx="6" fill="#8fd6a8" fill-opacity="0.72"/>
+  <text x="834" y="274" text-anchor="end" font-size="28" fill="#c6f65a">500</text>
+
+  <text x="66" y="336" font-size="28" fill="#cfe6d8">沃斯堡</text>
+  <rect x="240" y="314" width="152" height="30" rx="6" fill="#8fd6a8" fill-opacity="0.72"/>
+  <text x="834" y="336" text-anchor="end" font-size="28" fill="#c6f65a">500</text>
+
+  <text x="66" y="398" font-size="28" fill="#cfe6d8">坎昆</text>
+  <rect x="240" y="376" width="273" height="30" rx="6" fill="#8fd6a8" fill-opacity="0.72"/>
+  <text x="834" y="398" text-anchor="end" font-size="28" fill="#f4fbf7">900</text>
+
+  <text x="66" y="460" font-size="28" fill="#cfe6d8">利雅得</text>
+  <rect x="240" y="438" width="462" height="30" rx="6" fill="#8fd6a8"/>
+  <text x="834" y="460" text-anchor="end" font-size="28" fill="#f4fbf7">1525</text>
+
+  <text x="450" y="524" text-anchor="middle" font-size="26" fill="#cfe6d8">招标第一条：有没有能力出资办一场世界级赛事</text>
+</svg>
+"""
+
+# 后果那一屏。⚠️ 引语一字不许改：萨巴伦卡的原话是
+# 「another level of disrespect」，出处见 research 那份第三节。
+_FINALS_CANCUN_DIAGRAM = """
+<svg viewBox="0 0 900 550" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="40" text-anchor="middle" font-size="34" font-weight="700" fill="#f4fbf7">2023 年，坎昆</text>
+  <text x="450" y="76" text-anchor="middle" font-size="26" fill="#cfe6d8">球场是临时搭在一家酒店的场地上</text>
+
+  <text x="90" y="166" font-size="30" fill="#f4fbf7">4300 个座位，这项赛事史上最小</text>
+  <text x="90" y="238" font-size="30" fill="#f4fbf7">看台和场地，开赛前几天才完工</text>
+  <text x="90" y="310" font-size="30" fill="#f4fbf7">风雨不断，决赛被推到了周一</text>
+
+  <line x1="66" y1="368" x2="834" y2="368" stroke="#8fd6a8" stroke-width="2" stroke-opacity="0.45"/>
+
+  <text x="450" y="436" text-anchor="middle" font-size="32" font-weight="700" fill="#c6f65a">「另一个层级的不尊重」</text>
+  <text x="450" y="486" text-anchor="middle" font-size="26" fill="#cfe6d8">——萨巴伦卡，当时的世界第一</text>
+</svg>
+"""
+
+
+# ── 武网替补那条片子的四张示意图 ──────────────────────────────────────────
+# 这四屏讲的东西照片都表达不了：一张签表怎么切、两年的退赛数、两站日程咬在
+# 一起、以及规则书那句话的主语是谁。CLAUDE.md「示意图的触发条件是照片讲不清，
+# 不是照片找不到」说的正是这一类。
+
+# 56 个签位怎么分。数字全部来自 2026 WTA 规则书：V.A.5.d（56 签 8 个轮空）、
+# III.C.2.a.i（48/56 签的 1000 强制赛 4 张外卡）、V.A.4 那张表（56 签配 32 签
+# 两轮资格赛、出 8 个）、V.A.4.a.vii（每站 1 个特殊豁免）。43 是减出来的，
+# 而武网官方公布的「43 个直接入围名额」与它逐字对上——两个独立源。
+_WUHAN_DRAW_DIAGRAM = """
+<svg viewBox="0 0 900 560" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="42" text-anchor="middle" font-size="34" font-weight="700" fill="#f4fbf7">武网正赛 56 个签位</text>
+  <text x="450" y="78" text-anchor="middle" font-size="26" fill="#cfe6d8">按排名直接入围的，只有 43 个</text>
+
+  <text x="66" y="146" font-size="27" fill="#cfe6d8">按排名直接入围</text>
+  <rect x="66" y="162" width="600" height="46" rx="8" fill="#8fd6a8"/>
+  <text x="834" y="199" text-anchor="end" font-size="34" font-weight="700" fill="#f4fbf7">43</text>
+
+  <text x="66" y="262" font-size="27" fill="#cfe6d8">资格赛打上来</text>
+  <rect x="66" y="278" width="112" height="46" rx="8" fill="#8fd6a8" fill-opacity="0.72"/>
+  <text x="834" y="315" text-anchor="end" font-size="34" font-weight="700" fill="#f4fbf7">8</text>
+
+  <text x="66" y="378" font-size="27" fill="#cfe6d8">外卡</text>
+  <rect x="66" y="394" width="56" height="46" rx="8" fill="#8fd6a8" fill-opacity="0.72"/>
+  <text x="834" y="431" text-anchor="end" font-size="34" font-weight="700" fill="#f4fbf7">4</text>
+
+  <text x="66" y="482" font-size="27" fill="#cfe6d8">特殊豁免</text>
+  <rect x="66" y="486" width="14" height="46" rx="6" fill="#8fd6a8" fill-opacity="0.72"/>
+  <text x="834" y="523" text-anchor="end" font-size="34" font-weight="700" fill="#c6f65a">1</text>
+</svg>
+"""
+
+# 两年的实际退赛数，以及她需要的那个数。条上不写字（CLAUDE.md「条形图上不要
+# 写字，一个字都别写」），数字一律收在右端条外。
+# 2024=17 人、2025=10 人（其中 8 人退在资格赛之前、2 人的空位补的是幸运落败者）
+# 逐行数自维基 2024/2025 Wuhan Open – Singles 的 Withdrawals 表。
+_WUHAN_WITHDRAWALS_DIAGRAM = """
+<svg viewBox="0 0 900 520" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="42" text-anchor="middle" font-size="34" font-weight="700" fill="#f4fbf7">武网赛前退赛，这两年的真实数字</text>
+  <text x="450" y="78" text-anchor="middle" font-size="26" fill="#cfe6d8">她需要 7 个，去年那一档是 8 个</text>
+
+  <text x="66" y="150" font-size="27" fill="#cfe6d8">2024 年 · 全部退赛</text>
+  <rect x="66" y="166" width="612" height="44" rx="8" fill="#8fd6a8" fill-opacity="0.72"/>
+  <text x="834" y="202" text-anchor="end" font-size="34" font-weight="700" fill="#f4fbf7">17</text>
+
+  <text x="66" y="266" font-size="27" fill="#cfe6d8">2025 年 · 全部退赛</text>
+  <rect x="66" y="282" width="360" height="44" rx="8" fill="#8fd6a8" fill-opacity="0.72"/>
+  <text x="834" y="318" text-anchor="end" font-size="34" font-weight="700" fill="#f4fbf7">10</text>
+
+  <text x="66" y="382" font-size="27" fill="#cfe6d8">其中 退在资格赛开打之前</text>
+  <rect x="66" y="398" width="288" height="44" rx="8" fill="#8fd6a8"/>
+  <text x="834" y="434" text-anchor="end" font-size="34" font-weight="700" fill="#c6f65a">8</text>
+
+  <line x1="66" y1="466" x2="834" y2="466" stroke="#8fd6a8" stroke-width="2" stroke-opacity="0.45"/>
+  <text x="450" y="504" text-anchor="middle" font-size="26" fill="#cfe6d8">去年那张退赛表上，有一行写着郑钦文</text>
+</svg>
+"""
+
+# 两站日程咬在一起——特殊豁免那条路的全部前提。日期来自 WTA 官方赛历
+# （中网 9/30–10/11、武网 10/12–18）与武网官方公告（资格赛 10/10–11）。
+_WUHAN_CLASH_DIAGRAM = """
+<svg viewBox="0 0 900 480" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="42" text-anchor="middle" font-size="34" font-weight="700" fill="#f4fbf7">两站咬在一起的那两天</text>
+  <text x="450" y="78" text-anchor="middle" font-size="26" fill="#cfe6d8">中网还没打完，武网资格赛已经开打</text>
+
+  <text x="66" y="150" font-size="27" fill="#cfe6d8">中网正赛</text>
+  <rect x="66" y="166" width="560" height="44" rx="8" fill="#8fd6a8" fill-opacity="0.72"/>
+  <text x="66" y="238" font-size="26" fill="#cfe6d8">9 月 30 日</text>
+  <text x="626" y="238" text-anchor="end" font-size="26" fill="#cfe6d8">10 月 11 日</text>
+
+  <text x="66" y="308" font-size="27" fill="#cfe6d8">武网资格赛</text>
+  <rect x="540" y="324" width="86" height="44" rx="8" fill="#c6f65a"/>
+  <text x="583" y="396" text-anchor="middle" font-size="26" fill="#c6f65a">10 月 10、11 日</text>
+
+  <line x1="66" y1="428" x2="834" y2="428" stroke="#8fd6a8" stroke-width="2" stroke-opacity="0.45"/>
+  <text x="450" y="464" text-anchor="middle" font-size="26" fill="#cfe6d8">打进中网四强，才会压到这两天</text>
+</svg>
+"""
+
+# 规则书那句话的主语，以及晚退赛罚款按排名分的档。
+# 原文：2026 WTA 规则书 Section II.A（Player Commitment）与 IV.A.3.b.ii（罚款表）。
+_WUHAN_COMMITMENT_DIAGRAM = """
+<svg viewBox="0 0 900 560" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="42" text-anchor="middle" font-size="34" font-weight="700" fill="#f4fbf7">强制参赛，管的是谁</text>
+
+  <rect x="56" y="70" width="788" height="126" rx="14" fill="#8fd6a8" fill-opacity="0.07" stroke="#8fd6a8" stroke-width="3"/>
+  <text x="450" y="108" text-anchor="middle" font-size="26" fill="#cfe6d8">2026 WTA 规则书 第二章 A 节</text>
+  <text x="450" y="146" text-anchor="middle" font-size="28" fill="#f4fbf7">报名截止那天够得上直接进正赛的人</text>
+  <text x="450" y="184" text-anchor="middle" font-size="28" font-weight="700" fill="#c6f65a">必须参赛，缺席记 0 分</text>
+
+  <text x="450" y="248" text-anchor="middle" font-size="27" fill="#cfe6d8">她那天排在替补第 7，这一条管不着她</text>
+
+  <line x1="66" y1="278" x2="834" y2="278" stroke="#8fd6a8" stroke-width="2" stroke-opacity="0.45"/>
+  <text x="450" y="318" text-anchor="middle" font-size="28" fill="#f4fbf7">但同一条写着 5 个身份都必须打</text>
+  <text x="450" y="354" text-anchor="middle" font-size="26" fill="#cfe6d8">直接入围 · 资格赛出线 · 特殊豁免</text>
+  <text x="450" y="388" text-anchor="middle" font-size="26" fill="#cfe6d8">幸运落败者 · 特殊排名</text>
+
+  <line x1="66" y1="418" x2="834" y2="418" stroke="#8fd6a8" stroke-width="2" stroke-opacity="0.45"/>
+  <text x="450" y="454" text-anchor="middle" font-size="26" fill="#cfe6d8">进去之后再退，罚款按报名截止那天的排名</text>
+  <text x="170" y="506" font-size="28" fill="#f4fbf7">第 1 到 10</text>
+  <text x="730" y="506" text-anchor="end" font-size="28" font-weight="700" fill="#f4fbf7">20000 美元</text>
+  <text x="170" y="546" font-size="28" fill="#f4fbf7">第 51 到 100</text>
+  <text x="730" y="546" text-anchor="end" font-size="28" font-weight="700" fill="#c6f65a">2500 美元</text>
+</svg>
+"""
+
 _SCRIPTS: dict[str, tuple[tuple, ...]] = {
+    # 2026-09-16 选题：WTA 当天官宣年终总决赛 2027–2029 落户夏洛特。
+    #
+    # ⚠️⚠️ **这条片子回答的是「为什么变来变去」，不是「哪一年在哪」。**
+    # 第一版我按编年史写（① 官宣 ② 深圳 ③ 那三年 ④ 坎昆 ⑤ 利雅得…），
+    # 账号所有者当场顶回来：「**要讲出为什么会变来变去**」。改完之后的骨架是
+    # **一条三层因果**，编年史降级成它的证据：
+    #
+    #   ① 后果（七座城市）→ ② 第一层：它没有自己的场地，举办权是招标来的
+    #   → ③ 第二层：标书第一条就是「能不能出资」→ ④ 第三层：撑住那笔钱的
+    #   不是赛事自己，所以外面一变合同就断 → ⑤ 断了之后是什么样
+    #   → ⑥ 这次哪里不一样（总部搬过去）→ ⑦ 那深圳呢
+    #
+    # ⚠️ 第 ④ 屏是因果链的底层，**不是道德判断**——片子不指控任何一方，
+    # 说的是一个结构事实。「中东战事」那半句必须写成「报道说」（媒体归因，
+    # 不是 WTA 给的理由）；「深圳那份合同还有效／已作废」两句都不许写
+    # （WTA 从未公开过它的法律状态，英文报道三种说法互相打架）。
+    #
+    # 全套账在 research/wta-finals-venues-2026.md，改文案之前先读那份。
+    "finals-venues": (
+        (
+            "now",
+            "这一天",
+            "第七座城市",
+            "九月十六号，WTA 官宣：年终总决赛二〇二七年到二〇二九年落户夏洛特，"
+            "打在 NBA 黄蜂队的主场，连全球总部都从佛罗里达搬过去。"
+            "听起来是个大手笔。可把日历往回翻一页："
+            "从二〇一九年算起，夏洛特是第七座城市。"
+            "四大满贯每年都在同一块地上打，大师赛也钉死在城市上，"
+            "只有这一项，几乎每两三年就换一次。为什么？",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "9 月 16 日官宣夏洛特",
+                "2019 年以来第七座城市",
+            ),
+            _FINALS_CITIES_DIAGRAM,
+        ),
+        (
+            "home",
+            "第一层",
+            "它从来就没有自己的场地",
+            "第一层原因，说出来很简单：它从来就没有过自己的场地。"
+            "这是温网的中央球场，一九二二年就在这儿了，一百多年没挪过窝。"
+            "法网一九二八年，美网一九七八年，澳网一九八八年，"
+            "各自钉死在自己那块地上。"
+            "而年终总决赛没有那块地——一九七二年办到今天，它去过十五座城市，"
+            "举办权每隔几年就重新拿出来招一次标。"
+            "二〇一二年那一轮，四十三座城市表示过兴趣。"
+            "所以它不是落户在哪儿，是被买走几年。",
+            "assets/venues/wimbledon-centre-court.jpg",
+            "Daniel Cooper / Wikimedia Commons · CC BY-SA 2.0 · "
+            "2023 年温网男单决赛，全英俱乐部中央球场",
+            (
+                "温网 1922 年起没挪过窝",
+                "总决赛去过 15 座城市",
+            ),
+        ),
+        (
+            "money",
+            "第二层",
+            "标书上第一条写的就是钱",
+            "第二层：那份标书上，第一条写的是什么。"
+            "WTA 自己的通稿里列着三条标准。"
+            "第一条，有没有能力出资办一场世界级的赛事。"
+            "第二条，支不支持 WTA 把奖金大幅涨上去。"
+            "第三条才是长期承诺。"
+            "所以每换一个东家，奖金就跳一次："
+            "新加坡时代七百万美元，深圳一千四百万，"
+            "瓜达拉哈拉和沃斯堡各五百万，坎昆九百万，"
+            "利雅得一千五百二十五万。"
+            "谁撑得起这个数，谁就拿走这一周。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "第一条标准：能不能出资",
+                "700 万到 1525 万的跳法",
+            ),
+            _FINALS_PRIZE_DIAGRAM,
+        ),
+        (
+            "outside",
+            "第三层",
+            "那笔钱不是网球挣来的",
+            "第三层，也是真正的那一层：撑住那笔奖金的，不是这项赛事自己挣的。"
+            "深圳那份十年合同，中标的是一家地产商，承诺给赛事建一座球场。"
+            "利雅得那三年，赛事的全称叫 WTA Finals Riyadh presented by PIF，"
+            "PIF 是沙特的主权财富基金。"
+            "钱来自赛事之外，所以外面一变，合同就断。"
+            "深圳这边撞上疫情，赛事停办，后面几年再也没能回去；"
+            "利雅得这边，报道把它和中东的战事连在一起，"
+            "二〇二六年这一届是 WTA 主动要求换地的，提前了整整一年。"
+            "两次都不是网球本身出了问题。",
+            "assets/explainer/finals-venues/riyadh-court-2025.jpg",
+            "WTA 官方图 · 2025 年 11 月 8 日利雅得，"
+            "莱巴金娜与冠军奖杯，场地上印着 RIYADH",
+            (
+                "深圳由地产商中标",
+                "利雅得由沙特主权基金冠名",
+            ),
+        ),
+        (
+            "fallout",
+            "后果",
+            "断了之后，只能临时找",
+            "合同一断，就只能临时找地方，而且一次比一次晚。"
+            "二〇二一年九月十三号才宣布挪到瓜达拉哈拉，就是这座球场，"
+            "距离开赛还剩不到两个月。"
+            "第二年九月六号才宣布去沃斯堡，只剩八周，"
+            "首场比赛场内座位连百分之二十都没坐满。"
+            "奖金也跟着掉回五百万——深圳那一届的三分之一多一点。",
+            "assets/venues/guadalajara-centre-court.jpg",
+            # ⚠️ 这是**场馆图**，不是 2021 年那一届的现场图（转载，摄影师未署名，
+            # 拍的多半是瓜达拉哈拉公开赛）。所以旁白说的是「就是这座球场」，
+            # 一个字都不许说成「那一届的某一场」——CLAUDE.md「官方图库把它挂在
+            # 这一站名下，不等于拍的是这个场地/这一年」那条。
+            "Complejo Panamericano de Tenis 中心球场（转载，摄影师未署名）· "
+            "2021 年总决赛临时挪去的就是这座球场",
+            (
+                "开赛前不到两个月才定",
+                "奖金掉回 500 万",
+            ),
+        ),
+        (
+            "cancun",
+            "最难看的一届",
+            "球场搭在酒店的场地上",
+            "二〇二三年更狠。坎昆那一届的球场，"
+            "是临时搭在一家酒店的场地上的，四千三百个座位，"
+            "这项赛事史上最小，看台和场地开赛前几天才完工。"
+            "萨巴伦卡当时说，这是 WTA 对球员另一个层级的不尊重，"
+            "球员在那块场地上移动，有时候都觉得不安全。"
+            "那一周风雨不断，决赛被一路推到了周一。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "4300 座，史上最小",
+                "开赛前几天才完工",
+            ),
+            _FINALS_CANCUN_DIAGRAM,
+        ),
+        (
+            "charlotte",
+            "这一次",
+            "第一次，是自己搬进去",
+            "二〇二六年这一届去印第安维尔斯，一座能坐一万六千人的球场，"
+            "总奖金一千五百五十万——可合同只有一年，"
+            "WTA 自己管它叫通往下一章的桥。"
+            "真正的下一章是夏洛特。而那份合同里，"
+            "有一样以前从来没有过的东西：WTA 把全球总部搬过去。"
+            "以前是把这一周卖给一座城市，这一次是自己住进去。"
+            "他们还说，如果当地建成专用的网球场馆，"
+            "二〇二九年之后再加一站五百级别的赛事。"
+            "主席卡米洛给这件事定的目标是，"
+            "把它做成女子体育的超级碗。",
+            "assets/venues/indianwells-centre-court.jpg",
+            # ⚠️ 同上，场馆图不是某一场。这一张的好处是**场地前场刷着
+            # INDIAN WELLS**——和利雅得那张的 RIYADH、瓜达拉哈拉那张的
+            # GUADALAJARA 连成一条母题：每一屏的地板上都刷着一个城市的名字，
+            # 而这条片子讲的就是这个名字每隔两三年换一次。
+            "WTA 官方图库 · 印第安维尔斯网球花园 1 号球场，"
+            "场地前场刷着 INDIAN WELLS",
+            (
+                "印第安维尔斯只签一年",
+                "WTA 总部一起搬过去",
+            ),
+        ),
+        (
+            "shenzhen",
+            "那深圳呢",
+            "同一座场馆，下周又是决赛夜",
+            "那深圳呢？二〇一八年宣布的是二〇一九年到二〇二八年，整整十年。"
+            "到今天，那十年里只办成了一届——"
+            "而二〇二七年和二〇二八年，已经归夏洛特了。"
+            "不过深圳湾体育中心并没有空着。"
+            "比利·简·金杯的决赛，二〇二五年到二〇二七年就落在那儿，"
+            "和二〇一九年那一届总决赛，是同一座场馆。"
+            "今年这一届，下周就开打。",
+            "assets/venues/shenzhen-bay-bjk-cup-centre-court.jpg",
+            "深圳湾体育中心，比利·简·金杯决赛（转载，摄影师未署名）",
+            (
+                "10 年合同只办成一届",
+                "比利·简·金杯下周开打",
+            ),
+            "",
+            "深圳还等得到那座奖杯吗？",
+        ),
+    ),
+    # 2026-09-16 武网公布首批 43 人名单，郑钦文以世界第 52 排在正赛替补第 7 位。
+    # 三条路（等退赛递补 / 特殊豁免 / 打资格赛）＋「武网强制参赛到底管不管她」。
+    #
+    # ⚠️ 规则一律读 2026 WTA 官方规则书原文，不转述二手报道，因为二手至少错了两处：
+    #   ① 「奥运冠军可以拿特殊豁免外卡」——III.C.4.d 写的是 past singles champion
+    #      of the WTA Finals or a Grand Slam，**奥运不在条款里**，而且还要求报名截止
+    #      时排名 21–50（她第 52）。所以她走的就是普通限额 6 张 / 正赛 3 张（III.C.3.a.i）。
+    #   ② 「中网打进四强就符合特殊豁免条款」——四强是**从日程推出来的**，不是条文。
+    #      条文（V.A.4.a.vii）要的是：报了本站资格赛、资格赛签到截止时仍在上一站比赛，
+    #      且「已进决赛」或「刚赢下一场」或「因天气改期到资格赛首日」。
+    #
+    # 交叉验证过的数：56 签 = 43 直入 + 8 资格赛 + 4 外卡 + 1 豁免（规则书减出来，
+    # 与武网官方公布的 43 逐字对上）；8 个轮空（V.A.5.d）；报名截止 = 正赛周周一
+    # 往前 4 周 = 9/14（规则书 III.A.2.a.i ＋ 正赛 10/12 周一，python 算过）；
+    # 2025 武网退赛 10 人、其中 8 人退在资格赛前，2024 年 17 人（维基逐行数）；
+    # 罚款表 IV.A.3.b.ii；武网是十站强制千分赛之一（维基 2026 WTA 1000 ＋ 规则书
+    # 里没有「非强制的 WTA 1000」这个类别，167 处全写作 WTA 1000 Mandatory）。
+    "wuhan-alternate": (
+        (
+            "list",
+            "那张名单",
+            "郑钦文不在那 43 个里",
+            "先看这张名单是怎么切的。武网是千分赛，正赛五十六个签位："
+            "四十三个按排名直接入围，八个从资格赛打上来，四张外卡，"
+            "还留一个位置给特殊豁免。前八号种子首轮轮空。"
+            # ⚠️ 四周，不是大满贯那个六周——两条写在规则书同一节的相邻两段里。
+            "关键是哪一天切。规则书里写着，千分赛的正赛报名截止，"
+            "是正赛周周一往前推四周，不是大满贯那个六周。"
+            "武网正赛十月十二号周一开打，倒推四周，就是九月十四号。"
+            "那一天她的世界排名是第五十二，刚靠美网八强从一百二十一位涨回来。"
+            "四十三个名额切下去，她排在替补第七。"
+            "外卡那条路今年已经关上，她的正赛外卡额度用完了，最后一张给了中网。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "56 个签位 只有 43 个按排名",
+                "9 月 14 日切的名单",
+                "她第 52，排在替补第 7",
+            ),
+            _WUHAN_DRAW_DIAGRAM,
+        ),
+        (
+            "wait",
+            "等 7 个人",
+            "去年赛前，退了 8 个",
+            "替补第七位，意思是要有七个直接入围的人在她之前退赛。"
+            "听上去很多，可这件事每年都在发生。"
+            "规则把窗口切得很干净：资格赛开打之前退的，空位从替补名单上补；"
+            "资格赛开打之后再退的，补进来的就不是替补，是幸运落败者。"
+            "去年武网一共十个人退赛。其中八个退在资格赛之前，八个位置全给了替补；"
+            "另外两个的位置补的是幸运落败者，按规则，那意味着她们退在资格赛开始之后。"
+            "前年更多，那一届十七个人退赛，斯瓦泰克、莱巴金娜、贾巴尔都在里面。"
+            "她要七个，去年那一档是八个。"
+            # ⚠️ 这一句是全片的落点之一：同一件事，她去年在名单的另一头。
+            "而去年那张退赛名单上，有一行写着郑钦文。"
+            "右肘手术之后她没能恢复，退出了武网，位置递补给了西班牙人博萨斯·马内罗。"
+            "今年她站在这张名单的另一头。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "资格赛前退 替补补位",
+                "资格赛后退 幸运落败者补",
+                "去年赛前退了 8 个",
+            ),
+            _WUHAN_WITHDRAWALS_DIAGRAM,
+        ),
+        (
+            "exempt",
+            "那 1 个位置",
+            "整站只留 1 个，而且得先报资格赛",
+            "第二条路叫特殊豁免，整站只留一个位置。"
+            "它专门给这么一种人：她报了这一站的资格赛，"
+            "可资格赛开打那天，她还在上一站打着球，来不了。"
+            "今年这两站正好咬在一起。中网打到十月十一号，"
+            "而武网资格赛就是十月十号和十一号。"
+            "规则书规定，武网这一档的特殊豁免，上一站必须是千分赛或者大满贯，"
+            "中网正好是千分赛。"
+            "所以条件很具体：她得在中网打进四强，比赛才会压到武网资格赛那两天；"
+            "而且到武网资格赛签到截止的时候，她要么刚赢下一场，要么已经站在决赛里。"
+            # ⚠️ 这两条二手报道全都没提，而它们各自都能单独把这条路取消掉。
+            "还有两个前提最容易被漏掉。"
+            "第一，她必须先报上武网的资格赛，报名截止是九月二十一号，"
+            "不报名，这条路根本不存在。"
+            "第二，这个位置只有一个，要是有不止一个人够格，按排名高的先拿。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "整站只有 1 个位置",
+                "中网打进四强才够得着",
+                "9 月 21 日前要先报资格赛",
+            ),
+            _WUHAN_CLASH_DIAGRAM,
+        ),
+        (
+            "quali",
+            "两头挂着",
+            "资格赛和替补名单，可以同时占着",
+            "第三条路最朴素：去打资格赛。三十二个签位，两轮，出八个人，她要连赢两场。"
+            # ⚠️ 规则书 III.B.2.b：正赛没被接受的人，留在她所入围资格赛那一站的
+            # 正赛替补名单上。所以这两条路不是二选一，这一点最容易被讲错。
+            "而规则允许她两头挂着。进了资格赛签表之后，"
+            "她同时还留在正赛的替补名单上。"
+            "人在资格赛场地，如果正赛那边正好退够了人，她可以被直接叫进正赛。"
+            "这两条路不是二选一。"
+            "这种打法她今年刚走过一次。美网她就是从资格赛打起的，一路打进八强，"
+            "十六强赢下斯瓦泰克，八强输给莱巴金娜。"
+            "而莱巴金娜在那届美网之后登上世界第一，这次领衔武网的正是她。",
+            "assets/explainer/wuhan-alternate/zheng_uso2026_day9_fist.jpg",
+            "WTA 官方图（photoresources.wtatennis.com）· 2026 年 9 月 7 日美网第九比赛日，郑钦文胜斯瓦泰克后",
+            (
+                "32 签 2 轮 出 8 个",
+                "资格赛和替补名单 同时占着",
+                "美网她就是这么打进八强的",
+            ),
+            None,
+        ),
+        (
+            "rule",
+            "强制参赛管谁",
+            "它抓的是够得着的人",
+            "最后说强制参赛。武网是强制参赛的千分赛，全年一共十站，缺席要记一个零分。"
+            "这一条是真的，但它的主语要看清楚。"
+            # ⚠️ 规则书 Section II.A 原文：accepted, or would have been accepted if
+            # they had entered, into the Singles Main Draw at the Tournament's
+            # entry deadline。主语是「够得着直入的人」，不是「所有人」。
+            "规则书原文写的是：报名截止那天，排名够得上直接进正赛、"
+            "或者本来就该进正赛的球员，必须参赛。"
+            "也就是说，强制条款抓的是够得着的人。"
+            "郑钦文在替补第七位，报名截止那天她够不上，所以这一条对她不成立。"
+            "她不去武网，不会被记零分。"
+            "可同一条规则的下半句列着五个身份：直接入围、资格赛出线、特殊豁免、"
+            "幸运落败者，还有特殊排名。这五种身份的人，都必须打。"
+            "换句话说，强制参赛对她不是一道门槛，是一副手铐。"
+            "进不去的时候它管不着她；从那三条路里任何一条进去的那一刻，它立刻生效。"
+            "真进去了再退赛，零分要记，罚款按报名截止那天的排名分档，"
+            "前十那一档两万美元，她所在的五十一到一百那一档，两千五。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "强制只管够得着的人",
+                "她够不上 所以不记 0 分",
+                "进去之后 5 个身份都必须打",
+            ),
+            _WUHAN_COMMITMENT_DIAGRAM,
+        ),
+        (
+            "close",
+            "10 月 10 号",
+            "那天之前，答案就出来了",
+            "所以答案是三条路，而且没有一条完全在她自己手里："
+            "等七个人退赛，等中网把她送进四强，"
+            "或者十月十号自己去资格赛连赢两场。"
+            "这也不是她一个人的处境。"
+            "排名这套规则对每一个从伤病里回来的人都是同一个算法："
+            "停下来的那段时间不还给你，回来之后涨的分，也赶不上报名截止那一天。"
+            "她九月十四号涨到第五十二，而第五十二这个数，正好就是那天用来切名单的。"
+            # 末屏这一问是评判型立场，不是封面那一问的回声（封面问的是「进不进得去」）。
+            "一个刚打完大满贯八强的人，要靠别人退赛，才进得了家门口那张签表。"
+            "你觉得这套规则，算公平吗？",
+            "assets/explainer/wuhan-alternate/zheng_uso2026_day7_stand.jpg",
+            "WTA 官方图（photoresources.wtatennis.com）· 2026 年 9 月 5 日美网第七比赛日，郑钦文",
+            (
+                "3 条路 没有一条全在她手里",
+                "伤停的时间 排名不还给你",
+                "10 月 10 日 资格赛开打",
+            ),
+            None,
+            "你觉得这套规则，算公平吗？",
+        ),
+    ),
     # 2026-09-14 新一期 ATP 排名：德约从第 5 掉到第 12，三巨头同时不在前十,
     # 上一次这样是 2002 年 10 月。两个独立源对上（ESPN 新闻接口 49938566 /
     # IANS「drops seven places」5−7=12），当期前十另从 tennisexplorer 的
@@ -7853,6 +8454,40 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
 # 这个洞。判据落在 test_每条片子的标签都放满五个。
 _DEFAULT_TAGS = ("网球", "网球时差", "网球冷知识", "网球科普", "网球运动")
 _CAPTIONS: dict[str, dict] = {
+    "finals-venues": {
+        # ⚠️ 两行讲的是**因果**不是编年史：第一行摆反常（十五座城市 vs 温网一百年
+        # 没挪过），第二行把原因说出来（招标第一条就是出资）。
+        "hook": (
+            "年终总决赛去过 15 座城市——温网在同一块地上打了 100 多年，"
+            "而它一次都没留住过。\n"
+            "根子不在网球：WTA 招标的第一条标准就是「有没有能力出资」，"
+            "而撑住那笔奖金的，从来不是赛事自己挣的。"
+        ),
+        "tags": ("网球", "网球时差", "年终总决赛", "深圳", "网球冷知识"),
+    },
+    "wuhan-alternate": {
+        # ⚠️ 小红书正文卡 1000 字（平台定的，不是可调的），而正文 = 这段 hook
+        # ＋ 六屏要点 ＋ 收尾 ＋ tag，**自动那部分就占 483 字**。所以这里只写
+        # 结论和那个最耐人寻味的细节，**数字交给底下的要点那几行**——把旁白
+        # 整段搬过来正是超标的原因（第一版 887 字，合起来 1370，当场红）。
+        "hook": (
+            "武网正赛入围名单已出，郑钦文替补第 7 位，还有机会进正赛吗？\n"
+            "9 月 16 日武网公布首批 43 人名单，世界前 10 悉数出战。郑钦文不在这 43 个人里，"
+            "以世界第 52 排在正赛替补第 7 位。报名截止那天是 9 月 14 日，"
+            "她刚靠美网八强从第 121 涨回第 52，还是差 7 位。\n"
+            "3 条路：等 7 个直接入围的人退赛递补；靠中网打进四强，拿到整站唯一那个特殊豁免；"
+            "或者 10 月 10 日自己去打资格赛连赢 2 场。"
+            "而且第一条和第三条不冲突——规则允许她两头挂着。\n"
+            "最耐人寻味的是去年：2025 武网那张退赛名单上，有一行写着郑钦文。"
+            "右肘手术后没能恢复，她退出武网，位置递补给了博萨斯·马内罗。"
+            "今年她站在同一张名单的另一头。\n"
+            "还有很多人问的那个：武网是强制千分赛，不去会记 0 分吗？"
+            "规则书那句话的主语是「报名截止那天够得上直接进正赛的人」——她那天够不上，"
+            "所以不去不记 0 分。但从那 3 条路里任何一条进去的那一刻，这一条立刻生效。"
+            "对她来说，强制参赛不是一道门槛，是一副手铐。"
+        ),
+        "tags": ("网球", "网球时差", "郑钦文", "武网", "网球冷知识"),
+    },
     "big-three": {
         "hook": (
             "9 月 14 日新一期 ATP 排名，德约科维奇从第 5 掉到第 12——"
@@ -8367,6 +9002,48 @@ def column_of(slug: str) -> Column:
 # beat one makes the viewer work out the subject for themselves. Every deck
 # now opens on the question it answers, said out loud and set large.
 _OPENINGS: dict[str, dict] = {
+    "finals-venues": {
+        # ⚠️ 台头挂在每一屏上，所以它得自己说得清。不写「它从来就没有自己的家」
+        # ——裸的「它」在台头里没有指代对象。摆事实那一句才站得住
+        # （和 `一发有钟，二发没有`、`28 度也能叫极端高温` 同一个形状）。
+        "topic": "总决赛去过 15 座城市",
+        # ⚠️⚠️ 大标题第二行问的是**为什么**，不是「又换了一次」。账号所有者
+        # 2026-09-16：「要讲出为什么会变来变去」——封面这一问就是那句话，
+        # 片子里 ②③④ 三屏分三层回答它。
+        # 两行各 10/11 字，都在一行 16 字的上限里。
+        "question": "总决赛去过 15 座城市\n为什么没有一座留得住？",
+        # 口播自带语境（只听声音的人看不见台头），所以比画面上那一问长一截。
+        "narration": "总决赛去过十五座城市，为什么没有一座留得住？"
+                     "根子不在网球——它从来就没有过自己的场地，"
+                     "举办权每隔几年，就要重新招一次标。",
+        # ⚠️ 封面是 `background-size:cover` **一律铺满、居中裁**
+        # （`letterbox = wide and not cover`），所以挑的是这张近景：
+        # 4000×2449 裁成 3:4（x=1082..2918）奖杯从底座到顶饰整支在框内。
+        # 那张印着 RIYADH 的全景**不能当封面**——居中裁只剩中间 50%，
+        # 地上那个城市名会被切成「IYAD」；它改在第 ④ 屏当证据，
+        # 正片的宽图走信箱式，一个字都不裁。
+        "image": "assets/explainer/finals-venues/rybakina-trophy-riyadh-2025.jpg",
+        "credit": "WTA 官方图 · 2025 年 11 月 8 日利雅得，"
+                  "莱巴金娜亲吻比利·简·金杯冠军奖杯",
+        # ⚠️ 标签必须专属，`test_文案的开场和标签属于它自己的选题` 会当场红。
+        "tags": ["网球", "网球时差", "年终总决赛", "深圳", "网球冷知识"],
+    },
+    "wuhan-alternate": {
+        "topic": "43 人直接入围，郑钦文不在其中",
+        # ⚠️ 两行的断点**自己钉死**，不交给浏览器：中文没有词边界，浏览器可以在
+        # 任意两个汉字之间断，`_COVER_TWO_LINES` 那条注释记的就是被劈开的样子。
+        # 按最长那行算 96px，高于 84px 的门槛（14 字一行只有 82px，差 2px 就断词）。
+        "question": "武网正赛入围名单已出\n郑钦文替补第 7 进得去吗？",
+        # ⚠️ 第一句 24 字，落在 26 字的 5 秒决定窗口内。量过再写的。
+        "narration": (
+            "武网正赛入围名单已出，郑钦文替补第七，还进得去吗？"
+            "今天公布的首批名单里，四十三个直接入围的名额没有她。"
+            "而去年武网，因为退赛把位置让给别人的那个人，正是她自己。"
+        ),
+        "image": "assets/explainer/wuhan-alternate/zheng_uso2026_day9_hands.jpg",
+        "credit": "WTA 官方图（photoresources.wtatennis.com）· 2026 年 9 月 7 日美网第九比赛日，郑钦文胜斯瓦泰克后",
+        "tags": ("网球", "网球时差", "郑钦文", "武网", "网球冷知识"),
+    },
     "big-three": {
         "topic": "三巨头一起跌出了前十",
         # ⚠️ 封面这一问指向**上一次是哪一年**（2002 年 10 月），末屏那一问指向
@@ -10269,7 +10946,12 @@ _NUM_CHARS = set(_DIGIT) | {"十", "百", "千", "两"}
 # ⚠️ **只补「次」，别顺手补「分」「发」「强」「成」**——同一轮扫出来的那几个
 # 必须不转：「三分之一」会变成「3分之一」，而「一发」「二发」「四强」是术语
 # 不是数数。「十七分」本来就转，走的是「含十百千」那条，不靠这张表。
-_NUM_UNITS = "年月日天岁个位局盘场记座枚块届轮周号点次"
+# ⚠️ **「条」是 2026-09-16 补的**：账号所有者「给用户看的文案里的数字不要用
+# 汉字」那一轮，字幕里还剩「三条标准」没换。量过，全库只动 4 段，全是
+# 「3 条标准／3 条里程碑／3 条判例／3 条线」这类真数量词；**「第一条」是序数**，
+# 由上面 `before == "第"` 那条挡着，照旧留中文。「一条」「两条」走裸
+# 「一/两」的豁免，也不受影响。
+_NUM_UNITS = "年月日天岁个位局盘场记座枚块届轮周号点次条"
 _STRUCTURED = set("十百千")
 
 
@@ -10341,6 +11023,18 @@ def arabic_numerals(text: str) -> str:
       「一」「两」一律不碰，多字的串也必须含十/百/千或是四位年份才认
     - 「第二盘」「第三轮」「第一次」这类序数保持中文——「第 2 盘」读着别扭；
       但「世界第四」要写成「世界第 4」，那是个排名
+
+      ⚠️ **而「排名」这一档目前只认「世界第N」这一个说法。** 2026-09-16
+      `wuhan-alternate` 撞上：封面大标题手写的是「替补第 7」，而它正下方由这里
+      转出来的字幕是「替补第七」——**同一屏、同一个数、两种写法**。
+      「替补第七」和「世界第四」是同一类（名次），可它不以「世界」打头，
+      于是落进了上面那条序数的口子里。
+      ⚠️ 这个缺口**只有渲完抽帧看画面才看得见**：`check_explainer_landed`
+      查的是文案文件，那几份手写的已经是阿拉伯数字，闸一路绿。
+      没有顺手改，是因为这里是两条产线共用的函数，放宽它会动到存量字幕
+      （CLAUDE.md「判据宁可窄，不可宽」＋「顺手发现的无关问题别在时效任务里展开修」）。
+      真要补，判据是**能分开「第七座城市」（序数，留）和「替补第七」（名次，转）**，
+      而那要一张「名次前缀」的表，不是放宽正则。
     - 「七十万英镑」在「万」处收住，不然会变成 700000
     """
     def percent(m: re.Match) -> str:
@@ -10382,11 +11076,49 @@ def arabic_numerals(text: str) -> str:
     # 不写「几成几」，所以从那天起**每一条带百分比的 spec 都会走到这儿**。
     text = re.sub(rf"百分之([{''.join(_NUM_CHARS)}点]+)", percent, text)
 
-    def year(m: re.Match) -> str:
-        return "".join(_DIGIT[c] for c in m.group(1))
+    def year_of(run: str) -> str:
+        return "".join(_DIGIT[c] for c in run)
 
-    # 四位年份：一九八九、二〇二四。它们不含十/百/千，只能靠「后面跟着年」认出来。
-    text = re.sub(rf"([{''.join(_DIGIT)}]{{4}})(?=年|赛季|届)", year, text)
+    # 四位年份：一九八九、二〇二四。它们不含十/百/千，要另外认。
+    #
+    # ⚠️⚠️ **两条判据，缺第二条就会半中半洋。** 原来只有第一条（后面跟着
+    # 年／赛季／届），于是「二〇二五**到**二〇二七年」里只有后一个换得掉，
+    # 屏幕上是 `二〇二五到2027年`；「二〇二四**和**二〇二五两届」两个都换不掉。
+    # 2026-09-16 `finals-venues` 渲完抽帧才看见前一种。
+    #
+    # 第二条按 **`〇`** 认：中文里 `〇` 只在逐位写数（年份、编号）时出现，
+    # 「一〇一」这种三位的进不来（要满四位），所以这一条窄得很。
+    # 不含 `〇` 又没跟着年的（「一九八九」裸写）照旧不碰——判据宁可窄不可宽。
+    text = re.sub(
+        rf"([{''.join(_DIGIT)}]{{4}})(?=年|赛季|届)|(?=[^〇]*〇)([{''.join(_DIGIT)}]{{4}})",
+        lambda m: year_of(m.group(1) or m.group(2)),
+        text,
+    )
+
+    def compound(m: re.Match) -> str:
+        """`万`/`亿` 带零头的复合数：一万六千 → 16000、两万五千 → 25000。
+
+        ⚠️⚠️ `万` 不在 `_NUM_CHARS` 里（下面那一轮**故意**在「万」处收住，
+        否则「七十万英镑」会变成 700000），所以通用那一轮只匹配得到后半截
+        「六千」，换出来是 **「一万6000人」**——半个中文半个阿拉伯。
+        2026-09-16 `finals-venues` 渲完抽帧才看见；同一轮扫出仓库里另有四处
+        会撞上它，**不是这一条片子的特例**。
+
+        ⚠️ **只认「万/亿 后面还有零头」这一种**：`七十万英镑`、`一千六百万美元`
+        的零头是空的，匹配不上，照旧由下面那一轮换成 `70万` / `1600万`
+        ——那两个已经是阿拉伯数字了，不用动。
+        """
+        head, unit, tail = m.group(1), m.group(2), m.group(3)
+        base = _num_value(head)
+        rest = _num_value(tail)
+        if base is None or rest is None:
+            return m.group(0)
+        scale = 10_000 if unit == "万" else 100_000_000
+        return str(int(base) * scale + int(rest))
+
+    text = re.sub(
+        rf"([{''.join(_NUM_CHARS)}]+)([万亿])([{''.join(_NUM_CHARS)}]+)", compound, text
+    )
 
     # 小数：二十一点六秒 → 21.6秒、每小时一点三公里 → 1.3公里、三十点一以上 → 30.1以上。
     #
@@ -10959,12 +11691,17 @@ _ASS_ALIGN = 8
 # 减 156 而不是更小：这样**两行的兜底情况**（1524+78×2=1680）也正好还在卡内。
 _ASS_MARGIN_V = CARD_TOP + CARD_H - 156
 # ASS 的颜色是 &HAABBGGRR：#e7f3ec → ecf3e7，深底 #141e18 → 181e14。
-def _ass_header(height: int = VIDEO_H, margin_v: int = _ASS_MARGIN_V) -> str:
+def _ass_header(height: int = VIDEO_H, margin_v: int = _ASS_MARGIN_V, *,
+                outline: float = 3, shadow: float = 0) -> str:
     """ASS 头。**画布高度和上锚位置要能换。**
 
     赛场之上的竖版片是 3:4（1080×1440），不是解说片的 9:16。`PlayResY` 写错，
     libass 会按它和真实画面的比例把整套坐标缩一遍，字幕整体跑位——而且不报错。
     默认值保持解说片原样，那组数是量真成片量出来的，别动。
+
+    `outline` / `shadow`：描边和投影的像素数。解说片的字幕压在实色卡上，3/0 够；
+    竖版短片 2026-09-17 起撤掉字幕底下那层渐变垫（账号所有者：「字幕下面的背景
+    可以不要了」），靠 4px 描边＋1px 影在忙背景上站住，由调用方传进来。
     """
     return f"""[Script Info]
 ScriptType: v4.00+
@@ -10978,7 +11715,7 @@ Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour,
 BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, \
 BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
 Style: TL,{_ASS_FONT},{_ASS_SIZE},&H00ECF3E7,&H000000FF,&H00181E14,&H00000000,\
-1,0,0,0,100,100,0,0,1,3,0,{_ASS_ALIGN},{_ASS_MARGIN_H},{_ASS_MARGIN_H},{margin_v},1
+1,0,0,0,100,100,0,0,1,{outline:g},{shadow:g},{_ASS_ALIGN},{_ASS_MARGIN_H},{_ASS_MARGIN_H},{margin_v},1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
@@ -10987,7 +11724,8 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 
 def write_subtitles(cues: Sequence[tuple[float, float, str]], path: Path,
                     *, height: int = VIDEO_H,
-                    margin_v: int = _ASS_MARGIN_V) -> Path:
+                    margin_v: int = _ASS_MARGIN_V,
+                    outline: float = 3, shadow: float = 0) -> Path:
     # **换行是「这一条要排两行」，不是一个空格。** 原来这儿写的是
     # `shown.replace(chr(10), ' ')`，于是中英双语那种「上英下中」的字幕被压成
     # 一行，只能靠 `WrapStyle=0` 自动折——折点落在最后一个装得下的空格上，
@@ -11023,7 +11761,8 @@ def write_subtitles(cues: Sequence[tuple[float, float, str]], path: Path,
         + r"\N".join(ass_rows(shown))
         for start, end, shown in cues
     ]
-    path.write_text(_ass_header(height, margin_v) + "\n".join(lines) + "\n",
+    path.write_text(_ass_header(height, margin_v, outline=outline, shadow=shadow)
+                    + "\n".join(lines) + "\n",
                     encoding="utf-8")
     return path
 
@@ -11176,9 +11915,13 @@ def assemble_explainer_video(
 
     ⚠️ 2026-08-07 又加了一处：账号所有者看完铺满版还是说「画面还不是 3:4 的
     啊」——铺满只是把内容裁进 9:16 画布，画布本身没有变。`canvas_h` 就是
-    干这个的：传 `CARD_H`（1440）画布就变成 1080×1440（3:4），传默认的
-    `VIDEO_H`（1920）还是原来的 9:16。默认值不改，是因为「网球有故事」
-    「知识解说」这些纯卡片片子还在用 9:16，改了默认值会把它们也一起改掉。
+    干这个的：传 `CARD_H`（1440）画布就变成 1080×1440（3:4），传 `VIDEO_H`
+    （1920）是老的 9:16。
+
+    ⚠️ **2026-09-16：调用方那一侧的默认已经翻成 3:4 了**（见
+    `generate_explainer_video` 里那段注释——46/49 条从没写过那个开关，说明
+    默认值本身是错的）。这个函数自己的形参默认仍是 `VIDEO_H`，因为它是
+    通用装配器、几条线都在调；**画幅的口径在调用方，不在这儿**。
 
     卡片本来就是 1080×1440 渲的（`W, H`），画布一旦也是 1080×1440，
     pad 那段的 `scale...decrease,pad...` 会变成没有效果的空操作——卡片
@@ -11376,6 +12119,21 @@ def assemble_explainer_video(
     return output
 
 
+def canvas_height(slug: str) -> int:
+    """这条片子的**视频画布**多高——画幅的口径只有这一处。
+
+    ⚠️ **抽成函数是被判据逼出来的。** 翻面那天我先把测试写成「自己再算一遍
+    `canvas == "9:16"` 然后比 `CARD_H`」，反向验证时把生产代码的默认值退回
+    9:16，**测试照样绿**——它测的是自己那份拷贝，不是真正跑的那一行。
+    CLAUDE.md 记过这个形状（「判据喂的是假产物」「一条恒真的绿灯」）。
+    现在只有这一个出处，测试和 `generate_explainer_video` 问的是同一句话。
+    """
+    canvas = (_OPENINGS.get(slug) or {}).get("canvas")
+    if canvas not in (None, "3:4", "9:16"):
+        raise ExplainerVideoError(f"认不出来的 canvas「{canvas}」，只认 3:4 / 9:16")
+    return VIDEO_H if canvas == "9:16" else CARD_H
+
+
 def generate_explainer_video(
     story,
     outdir: str | Path,
@@ -11478,13 +12236,25 @@ def generate_explainer_video(
         encoding="utf-8",
     )
     outro = _build_outro_clip(outdir, voice=voice, rate=rate, pitch=pitch)
-    # 画布默认还是 9:16——「网球有故事」「知识解说」这些纯卡片片子在用，改
-    # 默认值会把它们一起改掉。`_OPENINGS[slug]["canvas"] = "3:4"` 是显式认领
-    # （和 `mixed_fps` / `silent_source` 一个形状）：写了才换，不写就是老样子。
-    canvas = (_OPENINGS.get(story.slug) or {}).get("canvas")
-    if canvas not in (None, "3:4", "9:16"):
-        raise ExplainerVideoError(f"认不出来的 canvas「{canvas}」，只认 3:4 / 9:16")
-    canvas_h = CARD_H if canvas == "3:4" else VIDEO_H
+    # ⚠️⚠️ **2026-09-16 默认值翻面：3:4 是默认，9:16 变成要显式认领的例外。**
+    #
+    # 来路：账号所有者「我要求**所有**视频都是 3:4 的比例画面啊」。而这句话
+    # 2026-08-07 他就说过一次（「画面还不是 3:4 的啊」，原话记在 `eala-mcnally`
+    # 那条 `canvas` 旁边）——当时的修法是加了这个「写了才换」的开关，默认留在
+    # 9:16，理由写的是「改默认会把纯卡片片子一起改掉」。
+    #
+    # **那个修法没解决问题。** 量出来：49 条里只有 3 条写了这一行
+    # （`gauff-right-coco` / `eala-mcnally` / `heat-rule`），其余 46 条全部落回
+    # 9:16——`second-serve-clock`、`big-three`、`promotional-fees`、
+    # `finals-venues`、`wuhan-alternate` 逐条拉 Release 的成片 ffprobe 过，
+    # 都是 1080×1920。CLAUDE.md 早写过这个形状：**一个几乎没人会去写的开关，
+    # 本身就说明那个默认值是错的**（`scrim: "clear"` 那次 74/100 手动关掉，
+    # 这次是 46/49 根本没写，更彻底）。
+    #
+    # 所以现在反过来：不写 = 3:4，要 9:16 必须**显式写出来**。
+    # ⚠️ 那 3 条写着 `"3:4"` 的**不要删**——它们现在和不写一个意思，但删掉
+    # 之后翻面之前的历史就读不出来了（同 `scrim: "clear"` 那 74 行的处置）。
+    canvas_h = canvas_height(story.slug)
     # `intro_cx` 同理显式认领：默认 0.5（几何居中，老行为不变），写了才换。
     # 见 `assemble_explainer_video` 里那条注释——单条实拍片头常常不止一个
     # 镜头，这个数是折中值，不是每一帧都精确跟踪的结果。

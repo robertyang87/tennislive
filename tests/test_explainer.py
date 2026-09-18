@@ -7,6 +7,7 @@ from unittest import mock
 
 import pytest
 
+from tennislive.zh.tts_fake_words import FAKE_WORDS
 from tennislive.render.tournament_story import STORIES, find_story_by_slug
 from tennislive.video.explainer import (
     H,
@@ -26,6 +27,24 @@ from tennislive.video.explainer import (
 # Every hand-authored deck, so a new topic inherits the rules the last one
 # was fixed into rather than only being checked the day it ships.
 _SCRIPTED = tuple(_SCRIPTS)
+
+# 2026-09-17 之前用**字卡**做的 40 条「网球有故事」。⚠️ **只许减不许加**：
+# 新片的默认是**视频剪辑**那条路（`specs/reels/<slug>.json` ＋
+# `build_match_reel.py`，`cover.eyebrow` 写「网球有故事」）。真要走字卡，
+# 在 `_OPENINGS[slug]["cards_why"]` 里写清为什么，别往这张表里加名字。
+# 见 `test_新的网球有故事默认走视频剪辑_走字卡要认领理由`。
+_CARD_DECK_LEGACY = frozenset({
+    "ball-pick", "big-three", "bu-lucky-loser", "challenger-climb",
+    "comeback-middle", "cramp-timeout", "entry-deadline", "equal-pay",
+    "finals-venues", "gamesmanship", "gauff-right-coco", "golden-masters",
+    "hawkeye", "heat-rule", "kostyuk-champion-test", "longest-match",
+    "lucky-loser", "mandatory-1000", "masters-format", "nadal-academy",
+    "pr-allowance", "promotional-fees", "protected-ranking", "qualifier-ceiling",
+    "queue", "roof", "rufus", "second-serve-clock",
+    "shot-clock", "special-exempt", "svitolina-handshake", "ten-champions",
+    "thiem-football", "tour-balls", "wawrinka-wildcard", "weeks-at-no1",
+    "wildcard", "wimbledon-whites", "wuhan-alternate", "yellow-ball",
+})
 
 
 def _beats(slug):
@@ -1209,6 +1228,178 @@ def test_冷开场实拍片段要铺满不留黑边(tmp_path):
         assert px[0] > 120, f"这个角 {px} 看着像信箱黑边，不是源片自己的颜色"
 
 
+def test_新的网球有故事默认走视频剪辑_走字卡要认领理由():
+    """账号所有者 2026-09-17：「**不要总用字卡来做视频，最好用视频剪辑的方式呈现**」。
+
+    ⚠️⚠️ **这是他第二次说同一句话。** 2026-08-09 的原话是「视频时代我更希望是
+    视频的剪辑，最好不要用卡片方式」，当时落在
+    `docs/column-differentiation-design.md` §0.5——**一份设计文档，没有闸**。
+    量出来它确实没拦住（按产物目录日期数「网球有故事」）：
+
+        9/01–9/12   视频剪辑 11 : 字卡 3
+        9/15–9/17   **字卡 5 : 视频剪辑 1**   ← 三天之内又滑回去了
+        全部 69 条  字卡 45 : 视频剪辑 24
+
+    **两条路都活着，而没有任何东西说哪条是默认**，于是它跟着谁在写摇摆：
+
+        字卡      `_SCRIPTS[slug]` ＋ `explainer.py`      一屏一张静图，40 条
+        视频剪辑  `specs/reels/<slug>.json` ＋ `build_match_reel.py`
+                  （`cover.eyebrow` 写「网球有故事」）      真源片剪窗口，22 条
+
+    所以这条闸只做一件事：**新写的字卡稿必须认领 `cards_why`**，说清它属于
+    2026-08-09 定死的哪一种例外——**天然图表题材**（规则原文、时间线、数据
+    对比这类照片和视频都表达不了的），或**完全找不到可用画面的兜底**。
+
+    ⚠️ **故意不做成「禁止字卡」**：他两次说的都是「不要**总**」「**最好**不要」，
+    不是不许；而本仓库「示意图的触发条件是『照片讲不清』」那条也认同头一种例外。
+    **认领是为了把「想过了」和「顺手就这么做了」分开**——和 `_layout_why` /
+    `_heat_why` / `_score_inset_why` 一个形状，闸不替人做决定。
+
+    钉两头：新稿要认领；那张存量表里的名字**必须还是真的字卡稿**，
+    否则它会悄悄变成一张过期的名单（本仓库「一个会过期的名单和一条常年红的
+    检查是同一个毛病」）。
+    """
+    from tennislive.video.explainer import (  # noqa: PLC0415
+        _ARCHIVED_DECKS,
+        _OPENINGS,
+    )
+
+    live = {s for s in _SCRIPTED if s not in _ARCHIVED_DECKS}
+    # 主语没了就先出声：`live` 空掉的话，下面三条里最先红的会是「存量表全过期了」
+    # ——那句话是假的，读的人会去删表。所以这一条排在最前面。
+    assert len(live) >= 35, f"只扫到 {len(live)} 条字卡稿，判据失效了"
+
+    unclaimed = sorted(
+        s
+        for s in live - _CARD_DECK_LEGACY
+        if not str((_OPENINGS.get(s) or {}).get("cards_why", "")).strip()
+    )
+    assert not unclaimed, (
+        "这几条新的「网球有故事」走了字卡，却没说为什么："
+        + "、".join(unclaimed)
+        + "。默认那条路是**视频剪辑**（`specs/reels/<slug>.json`，"
+        "`cover.eyebrow` 写「网球有故事」）。真要走字卡，在 "
+        '`_OPENINGS[slug]["cards_why"]` 里写清是哪一种例外：天然图表题材，'
+        "或者完全找不到可用画面。⚠️ 别往 `_CARD_DECK_LEGACY` 里加名字——"
+        "那张表是 2026-09-17 之前的存量，只许减不许加。"
+    )
+
+    stale = sorted(_CARD_DECK_LEGACY - live)
+    assert not stale, (
+        f"存量表里这几个已经不是在跑的字卡稿了：{stale}。"
+        "名字留着不删，这张表就会慢慢变成一张谁也不敢动的过期名单。"
+    )
+    assert len(_CARD_DECK_LEGACY) <= 40, (
+        f"存量表长到了 {len(_CARD_DECK_LEGACY)} 条——它 2026-09-17 冻结在 40，"
+        "只许减不许加。新稿要认领 `cards_why`，不是往这儿添名字。"
+    )
+
+
+def test_台头和副标题在每一屏上都常驻():
+    """账号所有者 2026-09-17：「我们自己的网球有故事的抬头和副标题，不用变也可以常驻」。
+
+    来路：拆 KeeKtennis 那条参考片时量到它把标题常驻在右上角（见
+    `tennis-editorial` 的「第七个账号」），回头查我们自己的——`_slide_html` 的
+    `.head` 本来就在**每一屏**上，也就是这条要求我们一直在做。**而它一条判据
+    都没有**：把 `show_topic` 整个改成 `False`（副标题从每一屏上消失），
+    `test_explainer.py` ＋ `test_explainer_budget.py` ＋ `test_cover_resolution.py`
+    合计 **306 个判据全绿**（2026-09-17 实测）。「一直是对的」和「有人在管」
+    在产物上长得一模一样。
+
+    ⚠️ **台头是一块，不是那一行**——竖版短片那条线为这句话栽过一次
+    （CLAUDE.md「『副标题不要消失啊』——台头是一块，不是那一行」），
+    这里把同一条钉在解说片上。
+
+    钉三头，缺哪一头它都能变成恒真：
+
+      ① 品牌行「网球时差 · <栏目>」每一屏都在；
+      ② 副标题（`_OPENINGS[slug]["topic"]`）每一屏都在，而且**钉在 `.topic`
+         那一行上**——不是「整份 HTML 里出现过」：同样的字正文里也会出现，
+         那种写法会被自己的正文满足（本仓库记过「被自己的注释满足的假绿」）；
+      ③ 真的扫到了东西（slug 数和屏数的下界），否则下一个人把循环写空，
+         它会安安静静地假装严格。
+
+    ⚠️ **唯一的例外是已归档的「开球之前」封面**：那一屏 topic 让位给
+    `fixture`（时间/对阵）那一块，`show_topic` 里写着。命中的正好是
+    `_ARCHIVED_DECKS` 这 9 条，一条不多一条不少——而那个栏目不再加新的
+    （`test_解说视频的栏目只剩网球有故事一个`），所以这张豁免表**只许减不许加**，
+    这条判据自己就是它的自检：哪天多出来第 10 条，它当场红。
+    """
+    from tennislive.video.explainer import (  # noqa: PLC0415
+        _ARCHIVED_DECKS,
+        _OPENINGS,
+        explainer_column,
+    )
+
+    topic_span = re.compile(r'<span class="topic">(.*?)</span>')
+    slugs = slides = 0
+    missing_brand: list[str] = []
+    missing_topic: list[str] = []
+    fixture_covers: set[str] = set()
+
+    for slug in _SCRIPTED:
+        topic = (_OPENINGS.get(slug) or {}).get("topic", "")
+        assert topic, f"{slug} 没有 topic——台头的副标题是从它来的"
+        column = explainer_column(slug)
+        brand = f"网球时差 · {html.escape(column)}"
+        segments = explainer_script(find_story_by_slug(slug))
+        slugs += 1
+        for index, seg in enumerate(segments):
+            markup = _slide_html(index, seg, topic=topic, column=column)
+            slides += 1
+            if brand not in markup:
+                missing_brand.append(f"{slug} 第 {index} 屏")
+            got = [html.unescape(x) for x in topic_span.findall(markup)]
+            if got == [topic]:
+                continue
+            if index == 0 and seg.fixture and not got:
+                fixture_covers.add(slug)   # 赛前片的封面，topic 让位给 fixture
+                continue
+            missing_topic.append(f"{slug} 第 {index} 屏拿到 {got!r}，该是 {topic!r}")
+
+    assert not missing_brand, (
+        "这几屏上没有品牌行「网球时差 · <栏目>」："
+        + "；".join(missing_brand[:6])
+        + "。台头是一块，不是那一行——账号所有者要的是它常驻。"
+    )
+    assert not missing_topic, (
+        "这几屏上的副标题不对："
+        + "；".join(missing_topic[:6])
+        + "。副标题和品牌行是同一块，不许只留半块。"
+    )
+    assert fixture_covers == set(_ARCHIVED_DECKS), (
+        f"「封面让位给 fixture」这条例外命中的是 {sorted(fixture_covers)}，"
+        f"而存量前瞻是 {sorted(_ARCHIVED_DECKS)}。多出来的那条要么是新写的赛前片"
+        "（那个栏目已经停了），要么是常青片的封面把副标题弄丢了。"
+    )
+    # 主语没了就出声：循环写空的话上面三条断言全是恒真的。
+    assert slugs >= 40, f"只扫到 {slugs} 个选题，判据失效了"
+    assert slides >= 300, f"只扫到 {slides} 屏，判据失效了"
+
+
+def test_冷开场台头上的副标题真的进了像素(tmp_path):
+    """上面那条钉的是幻灯片，这条钉的是台头的**另一个出口**——冷开场那几秒
+    画面上挂的是 `_render_intro_badge` 出的透明 PNG，不是幻灯片。
+
+    ⚠️ 已有的 `test_冷开场台头要和幻灯片台头同一份样式` 验的是「渲出来了、
+    有不透明像素」，**把副标题整行拆掉它照样绿**：品牌行还在，alpha 极值也还在。
+    这条问的是另一句话——**副标题真的被画上去了吗**：同一个栏目、两个不同的
+    topic，渲出来的两张 PNG 必须不一样。
+    """
+    from PIL import Image  # noqa: PLC0415
+
+    from tennislive.video import explainer as E  # noqa: PLC0415
+
+    a = E._render_intro_badge("一发有钟，二发没有", "网球有故事", tmp_path / "a")
+    b = E._render_intro_badge("总决赛去过 15 座城市", "网球有故事", tmp_path / "b")
+    assert a is not None and b is not None, "Chromium 装着的话台头必须渲得出来"
+    pa, pb = Image.open(a).convert("RGBA"), Image.open(b).convert("RGBA")
+    assert pa.size == pb.size, f"同一个栏目渲出两个尺寸：{pa.size} / {pb.size}"
+    assert pa.tobytes() != pb.tobytes(), (
+        "换了 topic，台头图逐字节相同——副标题那一行根本没画进去。"
+    )
+
+
 def test_冷开场台头要和幻灯片台头同一份样式(tmp_path):
     """`_render_intro_badge` 渲的是和 `_slide_html` 里 `.head` 像素级一致的
     台头——图标、品牌字、topic 行，透明背景叠上去。这条测试钉住两头：
@@ -1333,6 +1524,52 @@ def test_冷开场台头不许把片头拖到台头图那么长(tmp_path):
         f"接上台头之后成片长了 {grew:.2f}s——台头图的 `-t 60` 把片头本身的"
         "长度拖长了，overlay 那句里是不是漏了 shortest=1？"
     )
+
+
+#: 显式写着要 9:16 的片子。**只许减不许加。**
+#:
+#: 2026-09-16 默认值翻面时这张表是**空的**——49 条 `_OPENINGS` 里没有一条
+#: 声明 9:16。留着它是为了让「某条片子要回 9:16」变成一次看得见的决定，
+#: 而不是又一次悄悄落回默认值。
+_CANVAS_9X16 : set[str] = set()
+
+
+def test_解说片的画布默认是三比四():
+    """账号所有者：「我要求**所有**视频都是 3:4 的比例画面啊」。
+
+    ⚠️ 这条 2026-08-07 就说过一次（「画面还不是 3:4 的啊」），当时的修法是加了
+    `_OPENINGS[slug]["canvas"] = "3:4"` 这个**写了才换**的开关，默认留在 9:16。
+    量出来那个修法没解决问题：**49 条里只有 3 条写了那一行**，其余 46 条
+    （含 `second-serve-clock` / `big-three` / `promotional-fees` / `finals-venues` /
+    `wuhan-alternate`，逐条拉 Release 的成片 ffprobe 过）全是 1080×1920。
+
+    所以默认翻了面。这条测试钉两头：**不写就是 3:4**，而且**没有人偷偷写 9:16**。
+    """
+    from tennislive.video import explainer as E
+
+    # ⚠️ 问的是**生产代码那一个出处**（`canvas_height`），不是在这儿自己再算
+    # 一遍——第一版就是自己算的，反向验证时把默认值退回 9:16 它照样绿。
+    resolved = E.canvas_height
+
+    # ① 不写 canvas 的，解析出来必须是 3:4
+    bare = [s for s in E._OPENINGS if not (E._OPENINGS.get(s) or {}).get("canvas")]
+    assert bare, "一条都没有的话这条断言是恒真的"
+    wrong = [s for s in bare if resolved(s) != E.CARD_H]
+    assert not wrong, (
+        f"这些片子没写 canvas，却没落到 3:4：{'、'.join(wrong)}。\n"
+        f"默认值 2026-09-16 已经翻成 3:4——不写就是 3:4，要 9:16 得显式写出来。")
+
+    # ② 没有人偷偷写 9:16；真要写，得同时加进上面那张只许减不许加的表
+    declared = {s for s in E._OPENINGS
+                if (E._OPENINGS.get(s) or {}).get("canvas") == "9:16"}
+    assert declared <= _CANVAS_9X16, (
+        f"{'、'.join(sorted(declared - _CANVAS_9X16))} 声明了 9:16，却没进 "
+        f"_CANVAS_9X16。账号所有者要的是**所有**视频都 3:4——真要例外，"
+        f"把它写进那张表并说清为什么。")
+
+    # ③ 判据自己的判据：表里不许留幽灵条目
+    ghosts = _CANVAS_9X16 - set(E._OPENINGS)
+    assert not ghosts, f"_CANVAS_9X16 里这些片子已经不存在了：{'、'.join(sorted(ghosts))}"
 
 
 def test_canvas_h传CARD_H画布真的变成三比四不留黑边(tmp_path):
@@ -2016,6 +2253,56 @@ def test_末屏那一问不能是封面那一问的回声():
         )
 
 
+def test_同一句里不许一个年份是中文另一个是阿拉伯数字():
+    """「二〇二五到2027年」这种半中半洋，只有渲完看字幕才发现。
+
+    根子是年份那一轮**靠「后面跟着年／赛季／届」才认得出年份**（`〇` 不含
+    十百千，没有别的特征）。所以「二〇二五年到二〇二七年」两个都换，而
+    「二〇二五到二〇二七年」只换得到后一个——屏幕上是
+    `二〇二五到2027年`，一个没人这么写的东西。
+
+    2026-09-16 `finals-venues` 就是这么渲出去一版的，抽帧才看见。
+
+    ⚠️ **转换器那一头已经修好了**（年份多了一条按 `〇` 认的判据），所以这条
+    在今天是绿的。留着它不是多余：上面那条测的是 `arabic_numerals` 这个函数，
+    这一条测的是**每条片子真正会烧上屏幕的那份字幕**——函数对了而某条旁白
+    写出一个两条判据都认不出的形状时，只有这一条拦得住。
+
+    ⚠️ **判据只拦「混着」，不拦「没换」**，宁可窄不可宽：真正刺眼的是同一句里
+    一个中文一个阿拉伯。写宽了就要配豁免表，而一条天天误报的闸会被人写豁免压掉。
+    """
+    import re
+
+    from tennislive.render.tournament_story import find_story_by_slug
+    from tennislive.video.explainer import _SCRIPTS, arabic_numerals as A
+    from tennislive.video.explainer import explainer_script
+
+    # 中文年份和阿拉伯年份被一个连接词夹在一起，两个方向都要拦。
+    mixed = re.compile(
+        r"(?:[一二三四五六七八九〇]{4}\s*[到至和与、]\s*\d{4})"
+        r"|(?:\d{4}\s*年?\s*[到至和与、]\s*[一二三四五六七八九〇]{4})"
+    )
+    checked, offenders = 0, []
+    for slug in _SCRIPTS:
+        story = find_story_by_slug(slug)
+        if story is None:
+            continue
+        try:
+            segments = explainer_script(story)
+        except Exception:  # noqa: BLE001 — 别让别的选题的毛病挡住这一条
+            continue
+        checked += 1
+        for index, segment in enumerate(segments):
+            shown = A(segment.narration)
+            for hit in mixed.finditer(shown):
+                offenders.append(f"{slug} 第 {index} 段：…{hit.group(0)}…")
+    # 防「选题一个都没扫到 → 恒真的绿灯」，这份文件里记过好几次。
+    assert checked >= 20, f"只扫到 {checked} 个选题，判据没真的跑起来"
+    assert offenders == [], "字幕里年份半中半洋（写成「二〇二五年到二〇二七年」）：" + str(
+        offenders
+    )
+
+
 def test_字幕里的数字用阿拉伯数字():
     """屏幕上「19 岁」比「十九岁」好读，但只在它真的是个数字的时候。
 
@@ -2041,6 +2328,37 @@ def test_字幕里的数字用阿拉伯数字():
     # 一半汉字，账号所有者一眼看出来。「一天」「第二天」不受影响。
     assert A("三天前华盛顿首轮") == "3天前华盛顿首轮"
     assert A("四天前她升到生涯最高") == "4天前她升到生涯最高"
+
+    # ⚠️⚠️ **`万` 带零头要算成一个数。** `万` 不在 `_NUM_CHARS` 里（通用那一轮
+    # 故意在「万」处收住，否则「七十万英镑」变成 700000），于是它只匹配得到
+    # 后半截「六千」，换出来是 **「一万6000人」**——半个中文半个阿拉伯。
+    # 2026-09-16 `finals-venues` 渲完抽帧才看见（「一座能坐一万6000人的球场」），
+    # 同一轮扫出仓库里另有四处会撞上它，**不是这一条片子的特例**。
+    assert A("一座能坐一万六千人的球场") == "一座能坐16000人的球场"
+    assert A("两万五千座") == "25000座"
+    assert A("三万一千次") == "31000次"
+    # ⚠️ **另一半：零头是空的那种不许被带走。** 这两条已经是阿拉伯数字了
+    # （`70万` / `1600万`），只钉上面三条的话，一个「凡是带万就算总值」也能过，
+    # 而那正是 docstring 第三条要防的 700000。
+    assert A("七十万英镑") == "70万英镑"
+    assert A("一千六百万美元") == "1600万美元"
+    assert A("二十万人") == "20万人"
+
+    # ⚠️⚠️ **四位年份有两条认法，缺第二条就会半中半洋。** 原来只认「后面跟着
+    # 年／赛季／届」，于是「二〇二五**到**二〇二七年」只换得掉后一个
+    # （屏幕上是 `二〇二五到2027年`），「二〇二四**和**二〇二五两届」两个都换不掉。
+    # 第二条按 `〇` 认——中文里 `〇` 只在逐位写数时出现。
+    assert A("二〇二五到二〇二七年") == "2025到2027年"
+    assert A("二〇一九到二〇二八") == "2019到2028"
+    assert A("二〇二四和二〇二五两届") == "2024和2025两届"
+    # 不含 `〇` 又没跟着年的裸四位串照旧不碰——判据宁可窄不可宽
+    assert A("一九八九") == "一九八九"
+
+    # 「条」也算量词（2026-09-16 补）：「三条标准」原来换不掉。
+    # ⚠️ 序数那一头一起钉着——「第一条」不许跟着变成「第1条」。
+    assert A("通稿里列着三条标准") == "通稿里列着3条标准"
+    assert A("第一条，能不能出资") == "第一条，能不能出资"
+    assert A("这一条他没做到") == "这一条他没做到"
 
     # 不能碰的
     assert A("唯一一次打进大满贯单打决赛") == "唯一一次打进大满贯单打决赛"
@@ -4303,25 +4621,11 @@ def test_那一千字的闸是四条线共用的一处出处():
     assert "split_xhs" in reel_called, "split_copy 又自己写了一套切法"
 
 
-#: 「合成器自己报的切词」里确认过、而且**读音真的变了**的那几个串。
-#:
-#: 这张表**只收读音变了的**，不收「重音偏了」那一档——`tennis-video-craft`
-#: 那节写得很清楚：人名内部切错（`阿尔卡拉 ｜ 斯`）、单字铺开（`抢 ｜ 七`）
-#: 音都没变，为它们硬改译名/句式是拿误报换噪音，而**一条天天误报的闸会被人
-#: 写豁免压掉，把它唯一想拦的那一类一起关掉**。
-#:
-#: ⚠️ 判据是**切词器自己报的边界**（`voice_NN.words.json`），不是我读着像。
-#: 两条都是 2026-09-16 在 promotional-fees 第一趟成片的 words.json 里量到的。
-_FAKE_WORDS = {
-    # 「规则书写着」→ 切成「规则 ｜ 书写 ｜ 着」，而「书写」是个真词，念
-    # shūxiě，整句意思变成「规则在书写」。修法：补一个「里」撑开（「规则书里
-    # 写着」）。这是 tennis-video-craft 假词表的第一条，写在那儿一年多了。
-    "规则书写": "「书写」念 shūxiě，意思全变——写「规则书里写着」",
-    # 「直接或者间接给的钱」→ 切成「间 ｜ 接给」：「给」被黏进来，「间」落单。
-    # 「间」单独站着念 jiān，而「间接」是 jiàn。⚠️ 加逗号没用——逗号撑得开两个
-    # 该分的词，合不拢一个该合的词（词边界事件里本来就没有标点）。把「给」挪走。
-    "间接给": "「间」落单念 jiān（「间接」是 jiàn）——把「给」挪走",
-}
+#: 「合成器自己报的切词」里确认过、而且**读音真的变了**的那几个串——单一出处在
+#: `tennislive.zh.tts_fake_words.FAKE_WORDS`（2026-09-17 起两条产线共用：这张表
+#: 原来只活在这个测试文件里，竖版短片的 spec 旁白一个字都不扫，「五行」就是这么
+#: 从 dry-run 一路绿到推送的）。判据是切词器自己报的边界（`voice_NN.words.json`）。
+_FAKE_WORDS = FAKE_WORDS
 
 #: 上面那两个串在**已经发出去的**片子里各有一处。已发的不重渲（消息收不回来），
 #: 所以挂在这儿。**只许减不许加**，底下有自检。
