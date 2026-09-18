@@ -1,8 +1,16 @@
 {
   "schema_version": 1,
   "timezone": "Asia/Shanghai",
-  "stage": "auth_required",
-  "watchlist": [],
+  "stage": "collection_working_media_analysis_partial",
+  "watchlist": [
+    {
+      "name": "河岸",
+      "sec_uid": "MS4wLjABAAAAM41lmKhccITuQiRsVOYTqd3n3dawULd9o1t5RsskGCM",
+      "url": "https://www.douyin.com/user/MS4wLjABAAAAM41lmKhccITuQiRsVOYTqd3n3dawULd9o1t5RsskGCM",
+      "verified_at": "2026-09-18T02:56:16.447Z",
+      "source_url": "https://www.douyin.com/video/7673039156256020474"
+    }
+  ],
   "discovery_seeds": [
     {
       "name": "林林林妹668",
@@ -18,6 +26,31 @@
       "name": "篮球中场秀",
       "status": "unverified",
       "source": "docs/short-video-benchmark-strategy.md"
+    },
+    {
+      "name": "TACTICS网球志",
+      "status": "name_observed_in_live_search_profile_pending",
+      "source": "Douyin authenticated 网球复盘 search"
+    },
+    {
+      "name": "网球分蜥师傅",
+      "status": "name_observed_in_live_search_profile_pending",
+      "source": "Douyin authenticated 网球复盘 search"
+    },
+    {
+      "name": "TennisMag",
+      "status": "name_observed_in_live_search_profile_pending",
+      "source": "Douyin authenticated 网球复盘 search"
+    },
+    {
+      "name": "我是ptt不是ppt",
+      "status": "name_observed_in_live_search_profile_pending",
+      "source": "Douyin authenticated 网球复盘 search"
+    },
+    {
+      "name": "小朱聊网球",
+      "status": "name_observed_in_live_search_profile_pending",
+      "source": "Douyin authenticated 网球复盘 search"
     }
   ],
   "queries": [
@@ -26,8 +59,88 @@
     "网球赛后采访",
     "体育人物故事"
   ],
-  "items": {},
-  "strategies": {},
+  "items": {
+    "7673039156256020474": {
+      "permanent_url": "https://www.douyin.com/video/7673039156256020474",
+      "author": "河岸",
+      "title": "德约科维奇vs兹韦列夫 长多拍解读",
+      "published_at_display": "2026-08-12 16:10",
+      "published_at": null,
+      "duration_seconds": 144.833333,
+      "role": "historical_craft_reference",
+      "selection_note": "Search returned an older sample. Not a newly published item; creator-relative performance unknown.",
+      "observations": [
+        {
+          "observed_at": "2026-09-18T02:56:16.447Z",
+          "source_url": "https://www.douyin.com/video/7673039156256020474",
+          "evidence_kind": "direct_page",
+          "metrics": {
+            "likes": null,
+            "likes_display": "3.9万",
+            "likes_estimate": 39000,
+            "comments": 1655,
+            "collections": 3518,
+            "shares": 6505,
+            "plays": null,
+            "completion_rate": null
+          },
+          "collection_status": "success",
+          "note": "Earlier modal showed 3519 collections; later detail showed 3518. Keep observed values; do not invent growth."
+        }
+      ],
+      "analysis": {
+        "status": "partial",
+        "coverage": "One screenshot near 00:17 plus direct page title, chapters and comment themes; full video and audio not inspected.",
+        "timestamped_observations": [
+          {
+            "at_seconds": 17,
+            "kind": "direct_frame",
+            "observation": "画面上下分为两个球场视角，带球员名字与长多拍文字；新手导航遮罩和弹幕覆盖了部分画面。不能判断这是否贯穿全片。"
+          }
+        ],
+        "platform_chapters": [
+          {
+            "at_seconds": 0,
+            "title": "引言"
+          },
+          {
+            "at_seconds": 14,
+            "title": "不变线的原因"
+          },
+          {
+            "at_seconds": 67,
+            "title": "变线的时机与效果"
+          }
+        ],
+        "chapter_provenance": "Platform-generated summary on detail page; not independently verified transcript",
+        "comment_themes": [
+          "观众讨论变线的风险与收益",
+          "有观众表达收藏学习意图"
+        ],
+        "transcript_provenance": null,
+        "media_hash": null
+      }
+    }
+  },
+  "strategies": {
+    "explain-one-tactical-question": {
+      "status": "hypothesis",
+      "column": "赛场之上",
+      "evidence": [
+        {
+          "url": "https://www.douyin.com/video/7673039156256020474",
+          "kind": "direct_page_text",
+          "scope": "title, platform chapter outline, comment themes; not full video"
+        }
+      ],
+      "proposed_change": "为一次关键回合提出一个普通观众会问的技战术问题，用对应实际画面与统计解释选择的条件，再交代结果；不把整场复盘改成纯教学。",
+      "primary_metric": "同题材与相近时长视频的平均播放时长",
+      "control": "保持现有制作规则的同类作品；发布时间和观察窗事前固定",
+      "stopping_rule": "先完成原片验证及至少3条可比自有试验；缺后台数据不升级为validated，3条不代表统计因果证明",
+      "rollback": "撤掉新增问答段，恢复原spec版本；不改事实和完整结尾",
+      "validation_receipts": []
+    }
+  },
   "successful_watermarks": {},
   "pending_windows": [],
   "runs": [
@@ -57,11 +170,46 @@
       "proposed": 0,
       "promoted": 0,
       "earliest_blocker": "douyin_search_auth_required"
+    },
+    {
+      "run_id": "authenticated-probe-2026-09-18T02:56:16.447Z",
+      "started_at": "2026-09-18T02:56:16.447Z",
+      "ended_at": "2026-09-18T02:56:16.447Z",
+      "probes": [
+        {
+          "source": "douyin_search",
+          "status": "success",
+          "query": "网球复盘"
+        },
+        {
+          "source": "douyin_detail",
+          "status": "success",
+          "url": "https://www.douyin.com/video/7673039156256020474"
+        },
+        {
+          "source": "browser_downloadMedia",
+          "status": "tool_error",
+          "error": "Protocol error (Fetch.failRequest): Fetch domain is not enabled"
+        }
+      ],
+      "discovered": 1,
+      "collected": 1,
+      "analyzed_complete": 0,
+      "analyzed_partial": 1,
+      "proposed": 1,
+      "promoted": 0,
+      "earliest_blocker": "media_download_tool_error",
+      "note": "Authentication recovered. One historical work verified; query coverage not complete, watermarks not advanced."
     }
   ],
-  "last_notification_fingerprint": "douyin_search_auth_required",
+  "last_notification_fingerprint": "collection_recovered_media_download_tool_error",
   "production_integration": {
     "status": "not_integrated",
     "reason": "No directly analyzed works or validated strategies yet. Research data alone does not alter production skills."
+  },
+  "automation": {
+    "cadence_hours": 3,
+    "status": "enabled",
+    "title": "网球时差作品学习"
   }
 }
