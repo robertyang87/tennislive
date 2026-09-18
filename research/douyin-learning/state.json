@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "timezone": "Asia/Shanghai",
-  "stage": "new_own_production_audited_trial_awaiting_eligible_production",
+  "stage": "eligible_pattern_identified_trial_still_awaiting_prepublication_consumption",
   "watchlist": [
     {
       "name": "河岸",
@@ -102,6 +102,23 @@
             "shares": null
           },
           "collection_status": "success"
+        },
+        {
+          "observed_at": "2026-09-18T12:02:27.427Z",
+          "source_url": "https://www.douyin.com/video/7673039156256020474",
+          "evidence_kind": "direct_detail",
+          "metrics": {
+            "likes": null,
+            "likes_display": "4.0万",
+            "likes_estimate": 40000,
+            "comments": 1659,
+            "collections": 3526,
+            "shares": 6518,
+            "plays": null,
+            "completion_rate": null
+          },
+          "collection_status": "success",
+          "note": "Rounded likes label crossed from 3.9万 to 4.0万; do not infer an exact 1000-like delta."
         }
       ],
       "analysis": {
@@ -261,6 +278,22 @@
             "comments": 13,
             "collections": 142,
             "shares": 109
+          },
+          "collection_status": "success"
+        },
+        {
+          "observed_at": "2026-09-18T12:02:27.427Z",
+          "source_url": "https://www.douyin.com/video/7674475492078579963",
+          "evidence_kind": "direct_detail",
+          "metrics": {
+            "likes": 817,
+            "likes_display": "817",
+            "likes_estimate": null,
+            "comments": 13,
+            "collections": 144,
+            "shares": 109,
+            "plays": null,
+            "completion_rate": null
           },
           "collection_status": "success"
         }
@@ -650,20 +683,24 @@
       "published": false,
       "production_item_id": null,
       "outcome_window_starts_at": null,
-      "next_action": "Evaluate on a new applicable production spec; record adoption and real published ID before collecting 72h results; research task does not publish.",
+      "next_action": "On the next unpublished production containing a dense official source graphic or small document focal detail, tag rule_id/version in the spec before render, run isolated A/B and full project QC, then wait for a normal Douyin item ID before starting the fixed 72h outcome window. Do not retrofit bjk-cup-story.",
       "technical_qc_status": "rendered_qc_passed",
       "last_adoption_check": {
-        "checked_at": "2026-09-18T09:01:27.331Z",
-        "main_sha": "2b4d862f6970680bbfcb5d10e96ca6ca5bb59db6",
+        "checked_at": "2026-09-18T12:02:27.427Z",
+        "main_sha": "d1ad746e2f0c434814d0d5c56ee99851c25274a3",
         "rule_registries_empty": true,
-        "production_slug": "zheng-bjk-cup-olympic-rule",
-        "production_video_sha256": "d1633cb3aba71edae7c8108073eb2f9b298d4beacaa93aa9ccef44b82ef432d7",
+        "production_slug": "bjk-cup-story",
+        "production_video_sha256": "6da2b4cc71b179da28d775882260a30ba0b6b653e8cd696843e04d058e72c640",
         "actual_frame_review_seconds": [
-          50
+          55,
+          115,
+          192,
+          214,
+          224
         ],
-        "audit_path": "research/douyin-learning/evidence/production-adoption-zheng-bjk-cup-olympic-rule.json",
-        "result": "New own story checked: rule not consumed; designed large-type rule card is not applicable to small-heading inset trial. No treated Douyin item ID.",
-        "status": "checked_not_applicable_no_adoption"
+        "audit_path": "research/douyin-learning/evidence/production-adoption-bjk-cup-story.json",
+        "result": "Rule not consumed. Four authored large-type cards are not applicable; dense official draw at 224s is a concrete potentially eligible future pattern, but this production was already delivered and cannot be retroactively counted or republished.",
+        "status": "eligible_pattern_found_missed_prepublication_window_no_adoption"
       },
       "adoption_checks": [
         {
@@ -675,6 +712,19 @@
             "reel-djokovic-beijing-return"
           ],
           "result": "No recorded adoption; main unchanged, latest releases still predate trial."
+        },
+        {
+          "checked_at": "2026-09-18T09:01:27.331Z",
+          "main_sha": "2b4d862f6970680bbfcb5d10e96ca6ca5bb59db6",
+          "rule_registries_empty": true,
+          "production_slug": "zheng-bjk-cup-olympic-rule",
+          "production_video_sha256": "d1633cb3aba71edae7c8108073eb2f9b298d4beacaa93aa9ccef44b82ef432d7",
+          "actual_frame_review_seconds": [
+            50
+          ],
+          "audit_path": "research/douyin-learning/evidence/production-adoption-zheng-bjk-cup-olympic-rule.json",
+          "result": "New own story checked: rule not consumed; designed large-type rule card is not applicable to small-heading inset trial. No treated Douyin item ID.",
+          "status": "checked_not_applicable_no_adoption"
         }
       ],
       "counterexamples": [
@@ -683,6 +733,15 @@
           "evidence_path": "research/douyin-learning/evidence/production-adoption-zheng-bjk-cup-olympic-rule.json",
           "scope": "Already-large designed facts card; do not duplicate as magnifier overlay.",
           "at_seconds": 50
+        }
+      ],
+      "eligible_patterns": [
+        {
+          "source_production_slug": "bjk-cup-story",
+          "at_seconds": 224,
+          "evidence_path": "research/douyin-learning/evidence/production-adoption-bjk-cup-story.json",
+          "condition": "Dense official draw graphic with narrated target matchup rendered too small within full 3:4 context.",
+          "status": "future_prepublication_candidate_only"
         }
       ]
     }
@@ -913,9 +972,59 @@
       ],
       "note": "Own production audit, not external discovery or new candidate treatment. Existing project QC pass is not a new trial QC. No watermark advanced; no private metrics stored; no publication.",
       "next_action": "Monitor new unpublished eligible document-based story. Require explicit rule/version consumption and actual treatment QC; only normal publication with a real item ID starts 72h window."
+    },
+    {
+      "run_id": "scheduled-adoption-and-cohort-check-2026-09-18T11:56:06Z",
+      "started_at": "2026-09-18T11:56:06Z",
+      "ended_at": "2026-09-18T12:03:00.675Z",
+      "authors_checked": 1,
+      "visible_inventory_items": 16,
+      "new_items_collected": 0,
+      "detail_pages_collected": 2,
+      "discovered": 0,
+      "collected": 0,
+      "analyzed_complete": 0,
+      "analyzed_partial": 0,
+      "own_production_audits": 1,
+      "own_production_frames_reviewed": 5,
+      "rendered_experiments": 0,
+      "promoted": 0,
+      "probes": [
+        {
+          "source": "current_main_constraints_integration_and_new_production",
+          "status": "read_success"
+        },
+        {
+          "source": "production_media_download_hash_probe",
+          "status": "matched_project_receipt"
+        },
+        {
+          "source": "bjk-cup-story_timestamped_visual_applicability",
+          "status": "potentially_eligible_official_draw_found_but_not_consumed"
+        },
+        {
+          "source": "creator_content_exact_treatment_resolution",
+          "status": "no_exact_treatment_item_resolved"
+        },
+        {
+          "source": "douyin_verified_author_inventory",
+          "status": "success_no_new_items"
+        },
+        {
+          "source": "douyin_reference_and_control_details",
+          "status": "success_fresh_public_metrics"
+        }
+      ],
+      "earliest_blocker": "eligible_trial_not_consumed_before_production_and_no_douyin_treatment_id",
+      "persistence_receipts": [
+        "ccf3be2e6396d5d1db21d5bcbac4a331eeadae1a",
+        "229c74a02de6938788fbc01fa4a63bf6016a0079"
+      ],
+      "note": "No publication, rerender, message or private creator metrics stored. Project push receipt is not a Douyin treatment outcome. Discovery watermark not advanced because no new time-window work was found and wider query coverage remains incomplete.",
+      "next_action": "On the next unpublished production containing a dense official source graphic or small document focal detail, tag rule_id/version in the spec before render, run isolated A/B and full project QC, then wait for a normal Douyin item ID before starting the fixed 72h outcome window. Do not retrofit bjk-cup-story."
     }
   ],
-  "last_notification_fingerprint": "focus_not_applicable_zheng_bjk_large_type_card_50s_v1",
+  "last_notification_fingerprint": "bjk_story_224_dense_official_draw_eligible_but_unconsumed_v1",
   "production_integration": {
     "status": "consumer_merged_no_validated_rules",
     "pr": "https://github.com/robertyang87/tennislive/pull/937",
@@ -971,7 +1080,10 @@
       "observed_at": "2026-09-18T05:02:22.238Z",
       "visible_inventory": 16,
       "relevant_items": 13,
-      "window_date_coverage": "incomplete"
+      "window_date_coverage": "incomplete",
+      "last_metric_snapshot_path": "research/douyin-learning/evidence/hean-metric-snapshot-20260918T1156Z.json",
+      "last_checked_at": "2026-09-18T12:02:27.427Z",
+      "new_items_since_previous_snapshot": 0
     }
   }
 }
