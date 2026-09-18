@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "observed_at": "2026-09-18T12:02:27.427Z",
+  "author": {
+    "name": "河岸",
+    "sec_uid": "MS4wLjABAAAAM41lmKhccITuQiRsVOYTqd3n3dawULd9o1t5RsskGCM",
+    "url": "https://www.douyin.com/user/MS4wLjABAAAAM41lmKhccITuQiRsVOYTqd3n3dawULd9o1t5RsskGCM"
+  },
+  "inventory": {
+    "visible_items": 16,
+    "new_items_since_previous_snapshot": 0,
+    "evidence_kind": "direct_authenticated_author_grid",
+    "note": "24 video links were present in DOM, but 8 were recommendation/footer links; author work count remained 16."
+  },
+  "items": {
+    "7673039156256020474": {
+      "permanent_url": "https://www.douyin.com/video/7673039156256020474",
+      "evidence_kind": "direct_detail",
+      "metrics": {
+        "likes": null,
+        "likes_display": "4.0万",
+        "likes_estimate": 40000,
+        "comments": 1659,
+        "collections": 3526,
+        "shares": 6518,
+        "plays": null,
+        "completion_rate": null
+      },
+      "comparison_to_previous": {
+        "previous_observed_at": "2026-09-18T02:56:16.447Z",
+        "previous_likes_display": "3.9万",
+        "comments_delta": 4,
+        "collections_delta": 8,
+        "shares_delta": 13,
+        "note": "Displayed likes are rounded; 4.0万 minus 3.9万 is not an exact like-growth count."
+      }
+    },
+    "7674475492078579963": {
+      "permanent_url": "https://www.douyin.com/video/7674475492078579963",
+      "evidence_kind": "direct_detail",
+      "metrics": {
+        "likes": 817,
+        "likes_display": "817",
+        "likes_estimate": null,
+        "comments": 13,
+        "collections": 144,
+        "shares": 109,
+        "plays": null,
+        "completion_rate": null
+      },
+      "comparison_to_previous": {
+        "previous_observed_at": "2026-09-18T05:02:22.238Z",
+        "likes_delta": 3,
+        "comments_delta": 0,
+        "collections_delta": 2,
+        "shares_delta": 0
+      }
+    }
+  },
+  "inference_boundaries": [
+    "Public engagement is not retention or completion",
+    "Different publication ages and unknown play counts prevent causal performance comparison",
+    "No new author work; discovery watermark remains unchanged"
+  ]
+}
