@@ -171,9 +171,16 @@
             ]
           }
         ],
-        "audio_status": "blocked_pending_authorized_method",
+        "audio_status": "asr_complete_editorial_and_music_review_pending",
         "audio_blocker": "Automatic approval review rejected incidental Microsoft telemetry in transcription/model-download flow; do not retry or bypass.",
-        "next_action": "Finish continuous visual and authorized audio review, then issue single-variable experiment spec with actual QC/outcome receipts."
+        "next_action": "Correct ASR against audiovisual evidence; complete music/mix review and single-variable experiment.",
+        "audio_recovery": {
+          "method": "Existing local faster-whisper small; local_files_only=true, HF offline, vad_filter=false; onnxruntime not imported",
+          "duration_seconds": 144.82425,
+          "transcript_path": "research/douyin-learning/evidence/7673039156256020474-asr-local.json",
+          "segments": 70,
+          "quality": "Uncorrected terms and likely ending repetition hallucinations; no music or listening conclusions."
+        }
       }
     }
   },
@@ -281,6 +288,13 @@
       "status": "partial",
       "evidence": "Local ffprobe/ffmpeg completed for acquired sample; nine ending frames reviewed; audio remains blocked.",
       "next_action": "Complete missing review dimensions and actual experiment/QC/outcome loop."
+    },
+    {
+      "timestamp": "2026-09-18T03:47:27.878Z",
+      "stage": "local_asr_recovery",
+      "status": "asr_complete_needs_editorial_review",
+      "duration_seconds": 144.82425,
+      "next_action": "Correct ASR against audiovisual evidence; complete music/mix review and single-variable experiment."
     }
   ],
   "last_notification_fingerprint": "media_recovered_full_analysis_pending",
