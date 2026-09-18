@@ -1,0 +1,65 @@
+{
+  "rule_id": "evidence-inset-focus-v1",
+  "status": "rendered_qc",
+  "source_sha256": "5cebc111089e3517d4f31addc45e343bb9f376fef2dd8946ecd71408794d234e",
+  "spec": {
+    "rule_id": "evidence-inset-focus-v1",
+    "source_url": "https://github.com/robertyang87/tennislive/releases/download/explainer-promotional-fees/explainer.mp4",
+    "source_sha256": "5cebc111089e3517d4f31addc45e343bb9f376fef2dd8946ecd71408794d234e",
+    "start_seconds": 60,
+    "duration_seconds": 12,
+    "crop_xywh": [
+      40,
+      690,
+      420,
+      64
+    ],
+    "inset_xy": [
+      120,
+      460
+    ],
+    "scale": 2,
+    "visible_seconds": [
+      1,
+      9
+    ],
+    "single_variable": "Add a timed 2x inset of the visible rulebook heading; retain the complete original document, narration and timeline.",
+    "status": "candidate",
+    "applicability": "Static document card with reviewed empty space; never overlay faces, balls, scores or subtitles.",
+    "rollback": "Omit the inset filter; use A-baseline.",
+    "evidence": "Reference 7673039156256020474 sampled annotations at 31-43s and 46-54s motivate guiding attention. This inset is an original implementation hypothesis, not an observed exact effect."
+  },
+  "audio_pcm_identical": true,
+  "frame_checks": [
+    {
+      "at": 0.5,
+      "active": false,
+      "changed_inside": 0,
+      "changed_outside": 0,
+      "passed": true
+    },
+    {
+      "at": 5.0,
+      "active": true,
+      "changed_inside": 107520,
+      "changed_outside": 0,
+      "passed": true
+    },
+    {
+      "at": 10.5,
+      "active": false,
+      "changed_inside": 0,
+      "changed_outside": 0,
+      "passed": true
+    }
+  ],
+  "technical_qc_passed": true,
+  "files": {
+    "A-baseline.mp4": "6463b2588e19aaa2fd4772e565802b0a35bef1f0d67ea82088220f4342cb513e",
+    "B-focus.mp4": "eb9e1661dfa6da9d502f954dd58ab49f10cb5f0c325f0ac551f1932e89e43be8"
+  },
+  "human_audio_review": false,
+  "growth_validated": false,
+  "published": false,
+  "limitation": "12-second offline craft preview, not a full production video or audience experiment."
+}
