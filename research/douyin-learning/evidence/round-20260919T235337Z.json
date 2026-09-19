@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "run_id": "2026-09-19T23:53:37Z",
+  "observed_at": "2026-09-19T23:55:40Z",
+  "production_constraints": {
+    "claude_sha": "9c2d451dd20cdfa041251efd5777d312a682fbe7",
+    "integration_sha": "9fc16b15e7ac5c1b58c6ea4dd4d181e7ff270e40",
+    "reel_registry_sha": "03e4c4b63a58cf4d432890815fa42c673d460329",
+    "interview_registry_sha": "03e4c4b63a58cf4d432890815fa42c673d460329",
+    "registries_empty": true
+  },
+  "discovery": {
+    "public_search": {
+      "status": "success_no_usable_creator_content",
+      "queries": [
+        "site:douyin.com/video 温布尔登网球锦标赛 网球",
+        "site:douyin.com/video 酱紫网球",
+        "site:douyin.com/video 体育人物谈 网球",
+        "site:douyin.com/video 体育故事汇 运动员"
+      ],
+      "boundary": "Irrelevant search results were not counted as profiles, authors or works."
+    },
+    "browser": {
+      "selected_browser_id": "4",
+      "initial_result": "CDP operation get tabs timed out after 20000ms",
+      "recovery_attempts": 1,
+      "recovery_action": "Created one fresh tab and navigated directly to the user-priority permanent work https://www.douyin.com/video/7673455991492529458",
+      "recovery_result": "JS execution timed out; kernel reset",
+      "rendered_site_content": false,
+      "bot_detection": null,
+      "login_state": null,
+      "captcha_state": null
+    }
+  },
+  "counts": {
+    "authors_checked": 0,
+    "new_authors_verified": 0,
+    "works_discovered": 0,
+    "works_collected": 0,
+    "deep_reviews_started": 0,
+    "deep_reviews_completed": 0,
+    "local_review_authors": 0,
+    "proposed": 0,
+    "promoted": 0
+  },
+  "watermark_advanced": false,
+  "next_action": "On the next run make one fresh browser probe; if recovered, prioritize rotated authors and four stable-ID additions before any further single-author local review. Do not count search hits or tab titles."
+}
