@@ -118,7 +118,7 @@
       "headshot": "assets/players/headshots/atp-T0HA.png"
     },
     "_source": "flashscore 本场 tEDgPVU9 的 df_st_1，整块由 `python3 tools/match_stat_hooks.py tEDgPVU9 --home Mensik --away Tien --stats-block` 机器抄出，**没有手打**。⚠️ a 跟的是 cover.matchup[0]=门西克，flashscore 的 home 也是 Mensik——两个顺序一致，a/b **不用对调**。锚点核过：`Break Points Converted` 主队 1/4（=a=门西克）、客队 4/7（=b=钱）；`Total Points Won` 44/106 对 62/106。头像沿用 specs/reels/pending/mensik-tien.draft.json 里已经落库的两张官方头像 atp-M0NI（门西克）、atp-T0HA（钱）。",
-    "_winners_ue_why": "flashscore df_st_1 这场只有 17 项（Aces / DF / 一二发 / 破发点 / 总分 / 分局），**没有 Winners / Unforced errors**，按 `render_stat_card.OPTIONAL_FIELDS` 在数据卡上留空。⚠️ 两个源都查过：TNNS 那一趟没跑——`tnns-stats.yml` 要真浏览器过 Cloudflare、只能在 runner 上跑一趟，而戴维斯杯资格赛不在它验过的 ATP/WTA 巡回赛覆盖范围里，这条要赶比赛日当天。**非受迫失误的数字本身是有的**（门西克 34、钱 15），来自 AP 和 ČTK 两个独立源（见 `_claims`），所以它进了旁白第 11 段，只是没进数据卡。"
+    "_winners_ue_why": "flashscore df_st_1 这场只有 17 项（Aces / DF / 一二发 / 破发点 / 总分 / 分局），**没有 Winners / Unforced errors**，按 `render_stat_card.OPTIONAL_FIELDS` 在数据卡上留空。\n⚠️ **不用再一场一场去找了**：`.claude/skills/tennis-media-sources` 2026-09-19 那一节《戴维斯杯结构性地没有制胜分和非受迫失误》是一次查到底的记录——这一轮 flashscore 15 场逐场量过**零场**有这两维，daviscup.com 的前端 bundle 里压根没建模这两个字段，`custom/pointByPoint` 的 outcome 只有 POINT/ACE/DOUBLE_FAULT，TNNS `hasExtendedStats=False`，四个版本的画面里也都没有统计图。**下次戴维斯杯直接引那一节**，别重探。所以这一条不是「TNNS 没跑所以留空」，是「这项赛事没有这一维」。\n⚠️ **而非受迫失误这个数本身是有的，只是不在任何结构化接口里**：AP 赛报「Tien had only 15 unforced errors to Mensik's 34」＋ ČTK「Menšík udělal 34 nevynucených chyb」两个独立源都写了（记者拿的是现场发的技术统计单）。所以 34:15 进了旁白第 11 段和小红书正文、在 `_claims` 里认领了两个主机，**但没有进数据卡**——数据卡那一栏的数只从机器抄出来的 `stats` 块走，不手填。"
   },
   "_durations": [
     [
