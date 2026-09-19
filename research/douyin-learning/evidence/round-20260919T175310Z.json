@@ -1,0 +1,182 @@
+{
+  "schema_version": 1,
+  "run_id": "2026-09-19T17:53:10Z",
+  "observed_at": "2026-09-19T17:58:01Z",
+  "production_constraints": {
+    "claude_sha": "9c2d451dd20cdfa041251efd5777d312a682fbe7",
+    "integration_sha": "9fc16b15e7ac5c1b58c6ea4dd4d181e7ff270e40",
+    "rule_registries": [
+      "03e4c4b63a58cf4d432890815fa42c673d460329",
+      "03e4c4b63a58cf4d432890815fa42c673d460329"
+    ],
+    "registries_empty": true
+  },
+  "browser_probe": {
+    "public_search_succeeded": true,
+    "existing_tab_list_result": "CDP get tabs timed out after 20000ms",
+    "recovery": "fresh tab created successfully",
+    "direct_priority_navigation": "Page.navigate timed out",
+    "second_tab_list_check": "CDP get tabs timed out after 20000ms",
+    "actual_profile_or_work_content_read": 0,
+    "bot_detection_evidence": null,
+    "interpretation": "Browser connection/navigation timeout; not evidence of a Douyin CAPTCHA, logout, account restriction or bot block in this run.",
+    "retries_stopped": true
+  },
+  "local_review": {
+    "platform": "douyin",
+    "work_id": "7686680149357579529",
+    "author": "GOAT Anatomy",
+    "permanent_url": "https://www.douyin.com/video/7686680149357579529",
+    "media_sha256": "b291bd5cae52d2f6721279b2268c8724ea6acc0e0d14462f1ffe7f0d28369dbd",
+    "media_duration_seconds": 442.566667,
+    "source_dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "sampling": {
+      "interval_seconds": 10,
+      "timestamps_seconds": [
+        0,
+        10,
+        20,
+        30,
+        40,
+        50,
+        60,
+        70,
+        80,
+        90,
+        100,
+        110,
+        120,
+        130,
+        140,
+        150,
+        160,
+        170,
+        180,
+        190,
+        200,
+        210,
+        220,
+        230,
+        240,
+        250,
+        260,
+        270,
+        280,
+        290,
+        300,
+        310,
+        320,
+        330,
+        340,
+        350,
+        360,
+        370,
+        380,
+        390,
+        400,
+        410,
+        420,
+        430,
+        440
+      ],
+      "sampled_frames": 45,
+      "coverage": "decoded frame at each listed source timestamp; not continuous review"
+    },
+    "contact_sheets": [
+      {
+        "range_seconds": [
+          0,
+          120
+        ],
+        "file": "goat-0-120-10s.jpg",
+        "sha256": "84405ee7c70ba2d159babaad7c552e16fb424f5d306547f4d034b10d2d3aacfa"
+      },
+      {
+        "range_seconds": [
+          120,
+          240
+        ],
+        "file": "goat-120-240-10s.jpg",
+        "sha256": "80bfd9bd560ccd72046e78be8c62a7bc6208a623a754fefe4bfdf94fa7af6e6d"
+      },
+      {
+        "range_seconds": [
+          240,
+          360
+        ],
+        "file": "goat-240-360-10s.jpg",
+        "sha256": "33a4a3ec02638d9d4d0b1603417d2848675715d09af393b2df88ad747c9f6f97"
+      },
+      {
+        "range_seconds": [
+          360,
+          442.566667
+        ],
+        "file": "goat-360-442-10s.jpg",
+        "sha256": "3595f43f2663478a294fbb9609b0848df7e270a0d091e9d0002afa2a8fcd0886"
+      }
+    ],
+    "direct_visual_observations": [
+      {
+        "start": 0,
+        "end": 440,
+        "dimension": "composition",
+        "observation": "Across the 45 sampled timestamps, archival sports, interviews, family footage and photos alternate; most sampled moments use full-frame archival imagery, while a minority use a smaller archival window on a dark decorative background.",
+        "confidence": "high for sampled frames only"
+      },
+      {
+        "start": 50,
+        "end": 430,
+        "dimension": "text_graphics",
+        "observation": "Sampled frames repeatedly show centered lower-third Chinese subtitles in white with a dark edge/shadow; smaller English text appears immediately below in many, but not all, sampled frames. A small GOAT mark remains near the top-right in sampled content frames.",
+        "confidence": "high for sampled frames; subtitle presence between samples unknown"
+      },
+      {
+        "start": 80,
+        "end": 150,
+        "dimension": "layout_modes",
+        "observation": "At sampled timestamps around 80, 100, 130 and 150 seconds, archival footage or photos are presented inside a bordered window over a dark patterned background; other sampled timestamps return to full-frame material.",
+        "confidence": "high at listed timestamps"
+      },
+      {
+        "start": 240,
+        "end": 350,
+        "dimension": "evidence_sequence",
+        "observation": "Sampled images move from rink practice and ceremony to family/home images, an object close-up, a personal-photo collage, skating achievements and a medal close-up, visually supporting a life-story progression rather than a single-match recap.",
+        "confidence": "medium; semantic order is visible, exact narration alignment pending"
+      },
+      {
+        "start": 380,
+        "end": 440,
+        "dimension": "ending",
+        "observation": "The sampled ending moves from window/lake imagery to solo performance, walking-with-child imagery, a red-tinted archival frame with large Chinese text at about 430 seconds, then near-black at 440 seconds.",
+        "confidence": "high for sampled frames"
+      }
+    ],
+    "non_claims": [
+      "No median shot length or complete cut list from 10-second sampling.",
+      "No precise speed change without source comparison.",
+      "No continuous zoom or transition-form claim from isolated frames.",
+      "No voice, live sound, BGM or effect claim; audio was not listened to.",
+      "No effectiveness or retention claim from public interactions."
+    ],
+    "strategy_implication": {
+      "rule_id": "archival-subtitle-separation-v1",
+      "status": "hypothesis_unchanged",
+      "finding": "Decorative inset mode is segment-specific in sampled evidence; any subtitle-band treatment must be conditional on an existing inset layout and must not be applied globally to full-frame archival segments.",
+      "production_consumed": false
+    }
+  },
+  "counters": {
+    "authors_checked": 0,
+    "new_authors_verified": 0,
+    "local_review_authors": 1,
+    "deep_review_started": 1,
+    "deep_review_completed": 0,
+    "partial_reviews": 1
+  },
+  "watermark_advanced": false
+}
