@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "timezone": "Asia/Shanghai",
-  "stage": "partial_cross_author_discovery_saved_deep_review_pending",
+  "stage": "partial_discovery_and_opening_transition_review_saved",
   "watchlist": [
     {
       "name": "河岸",
@@ -1859,6 +1859,35 @@
             "voiceover_audit",
             "music_and_mix_listening",
             "J_L_audio_edit"
+          ]
+        },
+        "opening_review": {
+          "observed_at": "2026-09-19T09:11:00Z",
+          "range_seconds": [
+            0,
+            8
+          ],
+          "transition_detail_range_seconds": [
+            2.3,
+            5.1
+          ],
+          "sampled_frames": 44,
+          "scene_candidate_timestamps_seconds": [
+            2.53333,
+            3.23333,
+            4,
+            4.9
+          ],
+          "evidence_path": "research/douyin-learning/evidence/7686680149357579529-opening-20260919.json",
+          "conclusions": [
+            "人物故事开场按动作、关系命题、人物面孔递进",
+            "密集倾斜多窗与闪变不适用于球路/比分解释"
+          ],
+          "pending": [
+            "speed_changes",
+            "continuous_zoom_mechanism",
+            "voiceover_logic",
+            "voice_music_sound_mix"
           ]
         }
       }
@@ -4024,7 +4053,7 @@
     {
       "run_id": "2026-09-19T08:54:04Z-cross-author",
       "started_at": "2026-09-19T08:54:04Z",
-      "stage": "partial_cross_author_discovery_saved_deep_review_pending",
+      "stage": "partial_discovery_and_opening_transition_review_saved",
       "authors_checked": 5,
       "authors_target": 15,
       "authors_gap": 10,
@@ -4056,10 +4085,31 @@
       },
       "production_status": "awaiting_production",
       "treatment_work_id": null,
-      "persistence_receipt": "pending_write_response"
+      "persistence_receipt": "pending_final_write_response",
+      "ended_at": "2026-09-19T09:13:00Z",
+      "partial_reviews": 1,
+      "sampled_frames_reviewed": 44,
+      "review_evidence_path": "research/douyin-learning/evidence/7686680149357579529-opening-20260919.json",
+      "full_media_acquired": 0,
+      "proposed": 0,
+      "category_coverage_status": "not_met",
+      "remaining_blockers": [
+        "transient_browser_connection_timeout_after_one_recovery",
+        "audio_listening_capability_unavailable",
+        "production_treatment_id_absent"
+      ],
+      "production_check": {
+        "claude_sha": "1f6464ad1b176265fa5e5597d6fe3d00e6f26f3b",
+        "integration_doc_sha": "9fc16b15e7ac5c1b58c6ea4dd4d181e7ff270e40",
+        "production_search": "evidence-inset-focus-v1",
+        "search_results": 0,
+        "registries": "both empty",
+        "result": "No recorded adoption found; not proof of absence across every production artifact.",
+        "treatment_id": null
+      }
     }
   ],
-  "last_notification_fingerprint": "12-authors-2-new-49-continuous-frames-20260919T055338Z",
+  "last_notification_fingerprint": "5-authors-4-new-goat-opening-44frames-browser-timeout-20260919T0913Z",
   "production_integration": {
     "status": "consumer_merged_no_validated_rules",
     "pr": "https://github.com/robertyang87/tennislive/pull/937",
