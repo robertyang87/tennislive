@@ -1674,6 +1674,88 @@ STORIES = STORIES + (
         ),
     ),
     _trivia_story(
+        slug="ranking-math",
+        title="积分不是全年加起来",
+        subtitle="网球观察 · 规则篇",
+        identity="一年打多少个，算进排名的只有那几个",
+        chips=("积分与排名", "ATP 19 / WTA 18", "2026 两本规则书"),
+        hero=(
+            "ATP 的世界排名只数 19 个成绩，WTA 只数 18 个。"
+            "一年打 25 个赛事也可以，可位置就那么多——第 20 个打得再好，"
+            "也得先挤掉已经在里面的某一个。这套算法奖励的从来不是出勤，是高度。"
+        ),
+        facts=(
+            "**ATP 19 个**（9.03）：4 个大满贯，8 个强制大师赛，年终总决赛，"
+            "再加**最好 6 个**（联合杯、ATP 500、250、Challenger、ITF）。"
+            "官网 FAQ 的说法是 `18 events for all players` 外加总决赛作第 19 个，"
+            "**和规则书 9.03 B 逐条对得上**。",
+            "**大师赛有 9 个，强制的只有 8 个**：规则书 1.08 D 写死"
+            "`the Monte Carlo Masters 1000 will be included in the minimum "
+            "requirements for the 500 category`——**蒙特卡洛在承诺和排名两头都按 "
+            "500 那一档算**，它的成绩要去和 500／250 抢那 6 个自选位置。",
+            "**WTA 18 个**（Section VIII.A.4.a.i）：4 个大满贯 ＋ **6 个男女合办 "
+            "1000**（7 站取 6）＋ **1 个女子独办 1000**（3 站取 1）＋ 最好 7 个。"
+            "第四个桶的原文是 `best seven (7) results from **all WTA 1000 "
+            "Mandatory**, WTA 500, ...`——**没取中的 1000 不作废，掉进这个池子接着抢**。",
+            "**中网和武网不在同一个桶里**：中网（北京）是男女合办，属 7 选 6 那一桶；"
+            "武网是女子独办，和多哈、迪拜同属 3 选 1 那一桶。"
+            "⚠️ 多哈和迪拜的档次**逐年在 1000 和 500 之间轮换**（规则书 XIV.B.3.c），"
+            "2026 赛季两站都是 1000，名单每年要重查。",
+            "**年终总决赛两边算法相反**：ATP 占掉第 19 个位置；WTA 单打**不占**那 18 个，"
+            "是额外加上去的奖励赛事；而 WTA 双打又反过来，要挤进最好的 12 个里。"
+            "**同一座奖杯，男单、女单、女双三种算法。**",
+            "**被承诺绑住的人不一样**：ATP 只绑**前 30**（按上一年 11 月 10 日排名钉死，"
+            "全年不变）；WTA **不设门槛**，`all players must play ... if they are "
+            "accepted`——排名够得着正赛就被绑住，不打记 0 分、挂满 52 周。",
+            "**2026 年 ATP 又收紧了一档**：2025 版写的是 `his best **seven (7)** "
+            "results`，2026 版改成 `**six (6)**`——两本逐字比对过，"
+            "**自选的位置少了一个**，留给低级别赛事的空间跟着变小。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2025-12-19", player="ATP", age="2026 版规则书",
+                headline="自选档从 7 个减到 6 个",
+                detail=(
+                    "9.03 A/B 的 `best seven (7) results` 改成 `best six (6)`；"
+                    "同时新增 Note 3：连着缺 2 个或以上强制赛事，"
+                    "可向医疗委员会申请抹掉最多 3 个大师赛零分。"
+                ),
+                source_url="https://www.atptour.com/-/media/files/rulebook/2026/2026-rulebook_19dec25.pdf",
+            ),
+            ChampionMoment(
+                date="2026-07-27", player="WTA", age="2026 版规则书",
+                headline="积分表换版，而排名构成一字未改",
+                detail=(
+                    "官网当前挂的是 7-27-2026 版（577 页）。与年初的 12-22-2025 版"
+                    "逐条比对：排名构成、承诺阶梯、年龄阶梯、Top 10 限制、双打、"
+                    "年终总决赛积分**全部未改**；唯一实质变化是积分表标题改成 2026，"
+                    "并新增一行「96 签主赛／32 签资格赛」。"
+                ),
+                source_url="https://www.wtatennis.com/wta-rules",
+            ),
+            ChampionMoment(
+                date="2025-11-08", player="莱巴金娜", age="26 岁",
+                headline="年终总决赛夺冠，而这一冠不占她那 18 个名额",
+                detail=(
+                    "利雅得决赛 6-3 7-6(0) 胜萨巴伦卡。按 WTA 规则，"
+                    "年终总决赛是**额外加上去的奖励赛事**——"
+                    "也就是说女子的顶尖球员实际上能拿到 19 项的分。"
+                ),
+                source_url="https://www.wtatennis.com/news/4398606/elena-rybakina-wins-record-womens-sports-payout-at-wta-finals",
+            ),
+        ),
+        image_keys=(),
+        image_credit="Wikimedia Commons / WTA 官方图",
+        source_label="ATP 2026 官方规则书 / WTA 2026 官方规则书（7-27-2026 版）",
+        source_url="https://www.atptour.com/-/media/files/rulebook/2026/2026-rulebook_19dec25.pdf",
+        evidence_urls=(
+            "https://www.atptour.com/en/rankings/rankings-faq",
+            "https://www.wtatennis.com/rankings-explained",
+            "https://www.wtatennis.com/wta-rules",
+            "https://wtafiles.wtatennis.com/pdf/rankings/RaceRules.pdf",
+        ),
+    ),
+    _trivia_story(
         slug="mandatory-1000",
         title="强制赛为什么可以不去",
         subtitle="网球观察 · 规则篇",

@@ -3088,6 +3088,198 @@ _WUHAN_COMMITMENT_DIAGRAM = """
 """
 
 _SCRIPTS: dict[str, tuple[tuple, ...]] = {
+    # 2026-09-19。⚠️ 和同栏目的 `mandatory-1000` 的分界（CLAUDE.md「同一件事，
+    # 不同栏目各讲一次不算重复」那条的**同栏目**那一半）：那条铺开讲的是
+    # **缺席一站大师赛的账单**（零分 ＋ 奖金池按缺席站数扣 25/50/75/100%
+    # ＋ 9.03 Note 3 那扇门）；这一条讲的是**积分怎么算出来的**，零分只在
+    # 第 ④ 屏**一句带过**、且落点是「两边绑的人不一样」（ATP 只绑前 30，
+    # WTA 够得着正赛就绑）——那一层 `mandatory-1000` 一个字都没讲，
+    # 它整条只谈 ATP。**奖金池那套这条一个字不碰。**
+    "ranking-math": (
+        (
+            "cap",
+            "上限",
+            "打满一年，只算 19 个",
+            "先说一件很多人没想过的事。网球的世界排名，不是把一年打下来的分数全"
+            "加起来。男子这边，ATP 只数十九个成绩；女子这边，WTA 只数十八个。一年"
+            "打二十五个赛事、三十个赛事都可以，可算进排名的位置就那么多——第二十"
+            "个、第二十五个打得再好，也得先挤掉已经在里面的某一个，否则一分都加"
+            "不上。所以这套规则从一开始就不奖励谁打得更多，它只问你最好的那几个"
+            "赛事打成什么样。",
+            "assets/explainer/masters-format/sinner.jpg",
+            "FFT / Roland-Garros 官方 · 2026 年 5 月 28 日，法网次轮，辛纳抽筋后独自站在场上",
+            (
+                "ATP 只数 19 个成绩",
+                "WTA 只数 18 个",
+                "多打的那些 不自动加分",
+            ),
+        ),
+        (
+            "frame",
+            "骨架",
+            "一多半位置，轮不到你挑",
+            "那这十九个里，有几个是自己能挑的。男子这边，四个大满贯加八个强制的"
+            "大师赛，十二个位置是钉死的——只要进了正赛签表，打没打都算你的；再加"
+            "上年终总决赛，十三个。剩下六个，才从联合杯、五百赛、二百五十赛、挑战"
+            "赛和更低一级的赛事里挑最好的。女子那边更紧：四个大满贯加七个一千赛，"
+            "十一个钉死，剩七个自己挑。这里还有一个常被记错的地方——大师赛有九个，"
+            "强制的只有八个，蒙特卡洛不在里面，它在承诺和排名两头都是按五百赛那一"
+            "档算的。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "ATP 12 个钉死 加总决赛",
+                "WTA 11 个钉死",
+                "蒙特卡洛不在强制里",
+            ),
+            """
+<svg viewBox="0 0 900 560" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="46" text-anchor="middle" fill="#f4fbf7"
+        font-size="36" font-weight="800">一年只数这么多个成绩</text>
+  <text x="450" y="92" text-anchor="middle" fill="#cfe6d8"
+        font-size="26" font-weight="700">左边是钉死的，右边才是自己挑的</text>
+
+  <text x="60" y="176" fill="#f4fbf7" font-size="30" font-weight="800">ATP</text>
+  <text x="60" y="212" fill="#cfe6d8" font-size="26" font-weight="700">19 个</text>
+  <rect x="200" y="150" width="138.9" height="72" fill="#8fd6a8"/>
+  <rect x="338.9" y="150" width="277.9" height="72" fill="#8fd6a8" opacity=".62"/>
+  <rect x="616.8" y="150" width="34.7" height="72" fill="#c6f65a"/>
+  <rect x="651.6" y="150" width="208.4" height="72" fill="none"
+        stroke="rgba(244,251,247,.34)" stroke-width="3"/>
+
+  <text x="60" y="306" fill="#f4fbf7" font-size="30" font-weight="800">WTA</text>
+  <text x="60" y="342" fill="#cfe6d8" font-size="26" font-weight="700">18 个</text>
+  <rect x="200" y="280" width="146.7" height="72" fill="#8fd6a8"/>
+  <rect x="346.7" y="280" width="256.7" height="72" fill="#8fd6a8" opacity=".62"/>
+  <rect x="603.3" y="280" width="256.7" height="72" fill="none"
+        stroke="rgba(244,251,247,.34)" stroke-width="3"/>
+
+  <rect x="60" y="404" width="30" height="30" fill="#8fd6a8"/>
+  <text x="102" y="428" fill="#cfe6d8" font-size="26" font-weight="700">4 个大满贯</text>
+  <rect x="470" y="404" width="30" height="30" fill="#8fd6a8" opacity=".62"/>
+  <text x="512" y="428" fill="#cfe6d8" font-size="26" font-weight="700">强制的 1000</text>
+
+  <rect x="60" y="474" width="30" height="30" fill="#c6f65a"/>
+  <text x="102" y="498" fill="#cfe6d8" font-size="26" font-weight="700">ATP 年终总决赛</text>
+  <rect x="470" y="474" width="30" height="30" fill="none"
+        stroke="rgba(244,251,247,.34)" stroke-width="3"/>
+  <text x="512" y="498" fill="#cfe6d8" font-size="26" font-weight="700">自己挑最好的</text>
+</svg>
+""",
+        ),
+        (
+            "pool",
+            "两个桶",
+            "7 个里挑 6 个，落选的不作废",
+            "女子这边还有一层，是最容易被讲错的。那七个必算的一千赛其实分成两桶。"
+            "男女合办的有七个——印第安维尔斯、迈阿密、马德里、罗马、多伦多或者"
+            "蒙特利尔、辛辛那提、中网，这七个里只取最好的六个。女子独办的有三个——"
+            "多哈、迪拜、武网，这三个里只取最好的一个。注意中网在合办那一桶，武网"
+            "在独办那一桶，两站都在中国，却不在同一个桶里。而没被取中的那几个并不"
+            "作废：它们会掉进后面那个自选池，跟五百赛、二百五十赛、一百二十五赛"
+            "一起抢剩下的七个位置。所以都去打从来不会白打，只是从保送变成了竞争。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "合办 7 个 取最好的 6 个",
+                "独办 3 个 取最好的 1 个",
+                "落选的 掉进自选池继续抢",
+            ),
+            """
+<svg viewBox="0 0 900 560" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="46" text-anchor="middle" fill="#f4fbf7"
+        font-size="36" font-weight="800">WTA 的 1000 分两桶装</text>
+  <text x="450" y="92" text-anchor="middle" fill="#cfe6d8"
+        font-size="26" font-weight="700">实心＝占住必算的位置　空心＝这一桶没取中</text>
+
+  <text x="60" y="168" fill="#cfe6d8" font-size="26" font-weight="700">男女合办</text>
+  <rect x="300" y="132" width="52" height="52" rx="8" fill="#8fd6a8"/>
+  <rect x="364" y="132" width="52" height="52" rx="8" fill="#8fd6a8"/>
+  <rect x="428" y="132" width="52" height="52" rx="8" fill="#8fd6a8"/>
+  <rect x="492" y="132" width="52" height="52" rx="8" fill="#8fd6a8"/>
+  <rect x="556" y="132" width="52" height="52" rx="8" fill="#8fd6a8"/>
+  <rect x="620" y="132" width="52" height="52" rx="8" fill="#8fd6a8"/>
+  <rect x="684" y="132" width="52" height="52" rx="8" fill="none"
+        stroke="rgba(244,251,247,.34)" stroke-width="3"/>
+  <text x="790" y="168" fill="#cfe6d8" font-size="26" font-weight="700">取 6</text>
+
+  <text x="60" y="286" fill="#cfe6d8" font-size="26" font-weight="700">女子独办</text>
+  <rect x="300" y="250" width="52" height="52" rx="8" fill="#8fd6a8"/>
+  <rect x="364" y="250" width="52" height="52" rx="8" fill="none"
+        stroke="rgba(244,251,247,.34)" stroke-width="3"/>
+  <rect x="428" y="250" width="52" height="52" rx="8" fill="none"
+        stroke="rgba(244,251,247,.34)" stroke-width="3"/>
+  <text x="790" y="286" fill="#cfe6d8" font-size="26" font-weight="700">取 1</text>
+
+  <path d="M 470 320 L 470 386" stroke="#c6f65a" stroke-width="4" fill="none"/>
+  <path d="M 458 374 L 470 392 L 482 374 Z" fill="#c6f65a"/>
+  <text x="510" y="368" fill="#c6f65a" font-size="26" font-weight="800">落选的 3 个转到这儿</text>
+
+  <rect x="120" y="410" width="660" height="96" rx="12" fill="none"
+        stroke="#c6f65a" stroke-width="3"/>
+  <text x="450" y="452" text-anchor="middle" fill="#f4fbf7"
+        font-size="30" font-weight="800">自选池：最好的 7 个</text>
+  <text x="450" y="490" text-anchor="middle" fill="#cfe6d8"
+        font-size="26" font-weight="700">和 500 / 250 / 125 / ITF 一起抢</text>
+</svg>
+""",
+        ),
+        (
+            "zero",
+            "代价",
+            "不去，记的是 0",
+            "再说不去的代价。强制的赛事不去，记的不是没有分，是一个零分，而且要在"
+            "排名上挂满五十二周。两边绑的人不一样。男子这边只绑前三十，按上一年"
+            "十一月十号那份排名钉死，一整年不变，规则书管这批人叫承诺球员；女子"
+            "这边不设这个门槛，只要你的排名够得着正赛，你就被绑住了。所以同样是"
+            "世界第五十位，男子可以自己安排赛程，女子不行。女子那边还有一张五百赛"
+            "的阶梯表：够得着六个就得打六个，够得着三个就打三个，少一个记一个零分。",
+            "assets/explainer/mandatory-1000/monfils_montreal_2026.jpg",
+            "Tennis Canada 官方图 · 2026 年 8 月，加拿大大师赛蒙特利尔站，孟菲尔斯走向球场",
+            (
+                "不打 记 0 分 挂满 52 周",
+                "ATP 只绑前 30",
+                "WTA 够得着正赛就被绑",
+            ),
+        ),
+        (
+            "finals",
+            "总决赛",
+            "同一座奖杯，三种算法",
+            "年终总决赛这一项，两边的算法正好相反。男子这边，它占掉第十九个位置，"
+            "是那十九个里的一个；女子这边，单打不占那十八个名额，打了就是额外加"
+            "上去的——也就是说女子的顶尖球员实际上能拿到十九项的分。可女子的双打"
+            "又反了过来，总决赛的分要挤进最好的十二个里去抢位置。同一座奖杯，男单、"
+            "女单、女双三种算法。这也是为什么两边的排名不能直接拿来比：它们连算"
+            "几个成绩都不是同一件事。",
+            "assets/explainer/finals-venues/rybakina-trophy-riyadh-2025.jpg",
+            "WTA 官方图 · 2025 年 11 月 8 日利雅得，莱巴金娜亲吻比利·简·金杯冠军奖杯",
+            (
+                "ATP 总决赛 占第 19 个",
+                "WTA 单打 不占名额",
+                "WTA 双打 要挤进 12 个",
+            ),
+        ),
+        (
+            "ask",
+            "落点",
+            "奖励的是高度，不是出勤",
+            "把这套算法连起来看，它在说一件很明确的事：排名奖励的不是出勤，是高度。"
+            "多打一个赛事换不来分，除非那一个比你手里最差的那个成绩更好。而二〇二六"
+            "年男子这边又收紧了一档，自选的位置从七个减到了六个，留给低级别赛事的"
+            "空间更小了。那么问题来了：这套只数最好那几个成绩的算法，到底是在保护"
+            "球员的身体，还是在把中小赛事推得更远？",
+            "assets/explainer/protected-ranking/zheng_athens_qf_2026.jpg",
+            "赛事官方图库 · 2026 年 7 月 17 日，雅典站 1/4 决赛，郑钦文横向救球",
+            (
+                "2026 ATP 自选档 7 减到 6",
+                "排名奖励高度 不是出勤",
+                "低级别赛事 空间更小",
+            ),
+            None,
+            "是在保护球员的身体，还是在把中小赛事推得更远？",
+        ),
+    ),
     # 2026-09-16 选题：WTA 当天官宣年终总决赛 2027–2029 落户夏洛特。
     #
     # ⚠️⚠️ **这条片子回答的是「为什么变来变去」，不是「哪一年在哪」。**
@@ -8454,6 +8646,13 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
 # 这个洞。判据落在 test_每条片子的标签都放满五个。
 _DEFAULT_TAGS = ("网球", "网球时差", "网球冷知识", "网球科普", "网球运动")
 _CAPTIONS: dict[str, dict] = {
+    "ranking-math": {
+        "hook": "ATP 一年只数 19 个成绩，WTA 只数 18 个——打第 20 个、第 25 个赛事，"
+        "再好也不一定加得上分。\n"
+        "中网和武网都在中国，却不在同一个桶里：中网是男女合办，7 个里取 6 个；"
+        "武网是女子独办，3 个里取 1 个。没被取中的不作废，掉进自选池接着抢。",
+        "tags": ["网球", "网球时差", "ATP", "WTA", "网球冷知识"],
+    },
     "finals-venues": {
         # ⚠️ 两行讲的是**因果**不是编年史：第一行摆反常（十五座城市 vs 温网一百年
         # 没挪过），第二行把原因说出来（招标第一条就是出资）。
@@ -9002,6 +9201,24 @@ def column_of(slug: str) -> Column:
 # beat one makes the viewer work out the subject for themselves. Every deck
 # now opens on the question it answers, said out loud and set large.
 _OPENINGS: dict[str, dict] = {
+    "ranking-math": {
+        "topic": "积分不是加法：打得多，不等于算得多",
+        "question": "打了一年，为什么只算19个？",
+        "narration": "打了一年，为什么只算十九个？男子的世界排名只数十九个成绩，"
+        "女子只数十八个——多打出来的那些能不能算上，要看它够不够好。",
+        "gloss": "Best 19 = 只数最好的 19 个",
+        "image": "assets/explainer/wuhan-alternate/zheng_uso2026_day9_fist.jpg",
+        "credit": "WTA 官方图 · 2026 年 9 月 7 日美网第九比赛日，郑钦文胜斯瓦泰克后坐在场上举拳",
+        # 2026-09-19 认领：走**字卡**而不是默认的视频剪辑那条路。
+        # 属于 2026-08-09 定死的第一种例外——**天然图表题材**。
+        # 这一条的主语是两套积分公式（ATP 19 项 / WTA 18 项的构成、7 选 6、
+        # 3 选 1、落选的转进自选池），**是结构不是动作**：没有任何一段比赛画面
+        # 拍得出「这 6 个位置钉死、那 7 个要抢」，而两张示意图一眼就说清了。
+        # 和 `mandatory-1000` / `pr-allowance` 同族（规则原文 ＋ 数据对比）。
+        "cards_why": "天然图表题材：讲的是两套积分公式的构成（19 项 / 18 项、"
+        "7 选 6、3 选 1、落选转进自选池），是结构不是动作，比赛画面拍不出来；"
+        "两张示意图承担主要信息，照片只负责让人看见当事人。",
+    },
     "finals-venues": {
         # ⚠️ 台头挂在每一屏上，所以它得自己说得清。不写「它从来就没有自己的家」
         # ——裸的「它」在台头里没有指代对象。摆事实那一句才站得住
