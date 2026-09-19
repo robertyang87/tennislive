@@ -5335,6 +5335,11 @@ APPROVED_LOW_RES_SOURCES: dict[str, int] = {
     # 这条 URL 说「做这个赛场之上」——ITF 官方频道 World Tennis 的戴维斯杯 highlights
     # 照旧只有 1280×720（yt-dlp -F 逐档查过，最高 398/609 两档都是 720p），等不出 1080p
     "https://www.youtube.com/watch?v=rhxnJFSz4Go": 720,
+    # 海德 v 瓦林卡（heide-wawrinka-davis-cup-2026-wg1）：同一天、同一个频道、同一个
+    # 形状——账号所有者 2026-09-19 直接给了这条 URL 说「看看这场瓦林卡的，很遗憾输了，
+    # 做赛场之上」。`yt-dlp --dump-json` 逐档查过：232 / 609 / 247 / 398 四档并列最高，
+    # 全是 1280×720，没有 1080p。
+    "https://www.youtube.com/watch?v=MXHsmdEMbcc": 720,
 }
 
 

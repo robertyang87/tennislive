@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>9.19 赛场之上 | 谢尔顿10个接发局全丢</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>美网决赛第5天，谢尔顿10个接发局一局没赢🎾
+
+北京时间9月18日深夜开球、打到19日凌晨，戴维斯杯资格赛第二轮，布拉格 O2 竞技场，捷克主场：莱赫奇卡 6-4、6-4 胜谢尔顿，1小时32分钟。捷克把这轮扳成 1-1。
+
+先把日程摆出来。9月13日，谢尔顿在纽约打完美网决赛，0-3 输给兹维列夫，排名升到生涯最高的世界第 4；5天后，他飞到布拉格，在一个坐满捷克人的室内馆里打客场。这是他美网之后的第一场球。对面是世界第 24 的莱赫奇卡，捷克队的一号。
+
+他不是发球崩了。这一场他的一发进球率 79%，是全场最高的一个数，10个发球局只丢 2 个。
+
+垮的是接发。莱赫奇卡的一发只进了 56%，比他低 23 个百分点——可赢下来的有 88%，谢尔顿只有 71%。一发进得多，不等于压得住。
+
+两盘的破发都来得很早。第一盘他的第二个发球局连救三个破发点，看上去这一关顶过去了；两局之后 40-15，只有一个破发点，他没守住。第二盘 1-1，同样的位置，同样的结果，2-1。
+
+然后是这场球最硬的一个数：紧接着的那一局，谢尔顿拿到 15-40，两个破发点——那是他整场唯一一次拿到破发点，两个都没兑现。从那儿到结束，他再没碰到过对方的发球局。10个接发局，一局没赢。
+
+5-4 发球胜赛局，莱赫奇卡打了三个赛点，谢尔顿救掉两个，第三个没再给机会。
+
+谢尔顿赛后说：他打了一场好球，功劳都是他的，今天他把我打穿了——发球好，接发好，网前也打得好。莱赫奇卡说：一点都不轻松，我就是稳住自己，每一分都相信自己能拿下来。美国队队长鲍勃·布莱恩的说法是：莱赫奇卡今天手感滚烫，需要发球的时候发球就到。
+
+首日 1-1。今晚北京时间 8 点，双打先打，再是两场单打，美国队要拿下其中两场才能出线。赢的那一队去 11 月博洛尼亚的总决赛，那里只剩 8 支队伍。你觉得他们扳得回来吗？
+
+#网球时差 #戴维斯杯 #谢尔顿 #莱赫奇卡 #赛场之上</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>你觉得他们扳得回来吗？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
