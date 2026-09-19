@@ -7193,6 +7193,42 @@ def duplicate_match_problem(spec: dict, root: Path | None = None) -> str | None:
     return None
 
 
+def _narration_craft(spec: dict) -> None:
+    """⭐⭐ 文案手艺的三道闸：技战术、复读、句式模子。
+
+    来路：账号所有者 2026-09-19 转达读者——「**文案不专业，剪辑也不专业，
+    技战术也交代不清楚**」。三条判据和量出来的账都在 `reel_craft` 的模块
+    docstring 里，这儿只管接线。
+
+    | 谁写的 | 怎么办 |
+    |---|---|
+    | 手写的新 spec | **硬**——三条各有各的认领口 / 改法 |
+    | 三张 `*_LEGACY` 里已发的老片子 | 放行（已发的不重渲） |
+    | 自动产的 spec（`_production.status == ready_for_render`） | **只报**——那一头没有人写 `_tactics_why`，做成硬的会让自动链卡成「今天没有候选」（`mid_point_findings` 同样的理由） |
+
+    ⚠️ 坐在 `validate_spec` 里而不是 `enforce_spec_wording`：这三条只读
+    `segments[].narration`，`--dry-run` 0.2 秒就能报，不用等 render。
+    """
+    from reel_craft import (ECHO_LEGACY, MOLD_LEGACY,  # noqa: PLC0415
+                            SHOT_CRAFT_LEGACY, echo_narration_problem,
+                            sentence_mold_problem, shot_craft_problem)
+
+    auto = (spec.get("_production") or {}).get("status") == "ready_for_render"
+    found = [
+        shot_craft_problem(spec, legacy=SHOT_CRAFT_LEGACY),
+        echo_narration_problem(spec, legacy=ECHO_LEGACY),
+        sentence_mold_problem(spec, legacy=MOLD_LEGACY),
+    ]
+    hits = [f for f in found if f]
+    if not hits:
+        return
+    body = "\n".join(f"  - {f}" for f in hits)
+    if auto:
+        print(f"[craft] 自动 spec，只报不拦：\n{body}")
+        return
+    raise ReelError("旁白手艺不合格（读者 2026-09-19：文案不专业、技战术交代不清楚）：\n" + body)
+
+
 def validate_spec(
     spec: dict, *, allow_published_legacy: bool = False,
 ) -> list[Segment]:
@@ -7250,6 +7286,7 @@ def validate_spec(
     music = music_problem(spec)
     if music:
         raise ReelError(music)
+    _narration_craft(spec)
     # ⚠️ 排在 `parse_segments` **之前**：0.2 秒就报，别等渲完拉回成片抽帧才看见。
     # 这道闸拦的是几何上必然发生的一整类（居中铺的卡 vs 上锚的字幕），
     # 而四道本地闸一道都拦不住它——详见 `evidence_card_overlaps_subtitle`。
