@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "at": "2026-09-19T12:24:50Z",
+  "pipeline": "match-reel",
+  "slug": "asian-games-vs-china-open",
+  "mode": "render",
+  "outcome": "success",
+  "error": null,
+  "elapsed_seconds": 195.586,
+  "last_stage": "烧字幕+成片",
+  "stage_seconds": {
+    "下载源片 eala": 0.053,
+    "下载源片 eala_dc": 0.077,
+    "下载源片 tjen": 0.048,
+    "片尾配音": 0.001,
+    "TTS 合成": 0.003,
+    "封面海报": 2.271,
+    "封面编码": 0.25,
+    "分段编码": 102.245,
+    "片尾渲染": 7.206,
+    "拼接": 33.642,
+    "混音": 3.908,
+    "烧字幕+成片": 116.786
+  },
+  "stage_counts": {
+    "下载源片 eala": 1,
+    "下载源片 eala_dc": 1,
+    "下载源片 tjen": 1,
+    "片尾配音": 1,
+    "TTS 合成": 1,
+    "封面海报": 1,
+    "封面编码": 1,
+    "分段编码": 13,
+    "片尾渲染": 1,
+    "拼接": 1,
+    "混音": 1,
+    "烧字幕+成片": 1
+  },
+  "cpu_count": 4,
+  "run_id": "35442502071",
+  "run_attempt": "1",
+  "on_runner": true
+}
