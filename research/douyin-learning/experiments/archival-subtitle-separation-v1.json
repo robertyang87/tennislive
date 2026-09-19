@@ -1,0 +1,58 @@
+{
+  "rule_id": "archival-subtitle-separation-v1",
+  "version": 1,
+  "status": "hypothesis",
+  "column": "网球有故事",
+  "single_primary_variable": "档案小窗段的字幕位置：覆盖资料窗 vs 放入现有窗外字幕带",
+  "source_evidence": [
+    {
+      "url": "https://www.douyin.com/video/7686680149357579529",
+      "time_seconds": [
+        94,
+        97.5
+      ],
+      "kind": "eight_sampled_video_frames",
+      "sha256": "b291bd5cae52d2f6721279b2268c8724ea6acc0e0d14462f1ffe7f0d28369dbd"
+    }
+  ],
+  "applicability": "未来未发布的3:4人物故事，已存在档案资料小窗和可用字幕带，字幕可以完整留在安全区；仅使用自有或获准素材",
+  "change": "只移动字幕锚点，字幕内容/字号/行数/显隐时间、资料窗几何、音频、叙事均保持一致；先选固定6–12秒区间",
+  "control": "A现有字幕覆盖档案窗；B同一字幕放到已经存在的窗外字幕带。若A本来就在窗外则跳过，不能人为制造差的对照。",
+  "parameters": {
+    "canvas": [
+      1080,
+      1440
+    ],
+    "window_geometry": "由当前正式spec继承，不改变",
+    "subtitle_anchor_A": null,
+    "subtitle_anchor_B": null,
+    "reason_null": "未选中合格自有新片，不虚构具体坐标"
+  },
+  "qc": [
+    "核对档案与人物身份及时间",
+    "A/B解码PCM一致",
+    "除字幕受影响矩形区域之外逐帧像素一致",
+    "字幕不遮挡主体/比分/品牌，不越过安全区",
+    "执行项目现有渲染与完整QC"
+  ],
+  "primary_metric": "单条作品发布72小时的平均播放时长",
+  "observation_window_hours": 72,
+  "comparison": "预先选至少3条同栏目相近题材、时长与发布年龄作品作探索性对照，记录题材与分发混杂因素；不声称随机试验因果",
+  "guardrails": [
+    "翻译准确",
+    "品牌保留",
+    "禁止镜像",
+    "完整结尾",
+    "正文与字幕内容保持一致"
+  ],
+  "rollback": "字幕越界、字号需缩小、遮挡其他信息或完整QC失败即撤回B；效果阈值必须在选择处理作品前写定，未定义不进入效果验证。",
+  "outcome_threshold": null,
+  "production_consumed": false,
+  "production_spec": null,
+  "render_receipt": null,
+  "qc_receipt": null,
+  "treatment_work_id": null,
+  "outcome_receipt": null,
+  "next_action": "当前inset试验优先。本候选先匹配未发布且确有字幕遮挡档案细节的新片，写定坐标与效果阈值后再渲染。",
+  "promotion_allowed": false
+}
