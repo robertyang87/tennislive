@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>9.19 赛场之上 | 郑泫三小时逆转纳加尔</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>郑泫 3 小时逆转纳加尔，被背伤毁掉的生涯还没完🎾
+
+北京时间 9 月 18 日下午 3 点多开球，戴维斯杯资格赛第二轮，韩国主场首尔奥林匹克网球场：郑泫 2-6、6-4、7-5 胜纳加尔，3 小时 06 分。韩国首日 2-0 领先。
+
+先说这个人。2017 年，他拿下首届新生代总决赛冠军；2018 年澳网，他连过兹维列夫和德约科维奇打进半决赛，是韩国第一个进大满贯四强的球员，最高世界第 19。然后是背伤：2020 年法网资格赛之后，他两年半没打过一场单打，从 ITF 一级一级往回爬。今年 2 月世界第 392，现在第 549。韩国队长把他排在这场关键的单打，理由是「他这一路走上来出了大力，我判断他打得了」。
+
+对面的纳加尔，印度单打第一人，世界第 247，2024 年澳网淘汰过 31 号种子布勃利克。
+
+首盘郑泫开局就崩：前两个发球局都被破，0-4 落后。他的二发只拿到 33% 的分，纳加尔是 73%。2-6，43 分钟。
+
+第二盘他换了打法：一发进球率从 50% 提到 79%，反手直线一次次打穿对面。2-1 那一局他 0-40 拿到三个破发点，纳加尔三个全救了回来；3-3 他自己的发球局，六次拿到局点全没拿下，第七个平分之后反而被破，3-4——这是整场最长的一局，也是他离崩盘最近的时候。下一局他立刻回破，再零封保发，5-4，第一个盘点就是破发点，一分拿下，6-4。解说的原话：前世界第 19，不可思议。
+
+决胜盘 2-1 他一个破发点就兑现，4-1 领先。然后自己的发球局又被破，4-3；4-3 那一局他又拿到三个破发点，纳加尔又是三个全救，4-4。剩下的全靠他自己的发球局顶住：4-4 两个局点保住第二个，5-5 一板反手直线打出占先，6-5。纳加尔发球保命，40-30，第一个赛点也是破发点，郑泫一次拿下。
+
+差距全在关键分上：他 11 个破发点兑现 5 个，纳加尔 8 个兑现 5 个；他从头到尾没面对过一个赛点。赛后他自己说：5-5 之后没什么战术，是意志力的较量，谁扛得住谁赢。
+
+解说赛后那句话是：他的生涯曾经被彻底毁掉，而今天他宣告，还没完。赢下来的话，韩国队就是队史第一次打进戴维斯杯总决赛八强。30 岁的郑泫，你觉得他还能回到前 100 吗？
+
+#网球时差 #戴维斯杯 #郑泫 #纳加尔 #赛场之上</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>三十岁的郑泫，你觉得他还能回到前一百吗？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
