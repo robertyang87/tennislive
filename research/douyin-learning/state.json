@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "timezone": "Asia/Shanghai",
-  "stage": "browser_connection_timeout_local_full_duration_sample_saved",
+  "stage": "browser_connection_timeout_goat_opening_30s_partial_saved",
   "watchlist": [
     {
       "name": "河岸",
@@ -1795,7 +1795,7 @@
       ],
       "analysis": {
         "status": "partial",
-        "coverage": "45 decoded source-timestamp frames 0..440 at 10-second intervals, plus prior 0–8s, 19.1–19.7s, 51.5–52.466667s and 94–97.5s denser reviews; no full continuous review or audio listening",
+        "coverage": "45 decoded source-timestamp frames 0..440 at 10-second intervals; opening 0–30s at 1fps with 18–30s at 2fps; prior dense ranges 0–8s, 19.1–19.7s, 51.5–52.466667s and 94–97.5s; no full continuous review or audio listening",
         "media_sha256": "b291bd5cae52d2f6721279b2268c8724ea6acc0e0d14462f1ffe7f0d28369dbd",
         "media": {
           "sha256": "b291bd5cae52d2f6721279b2268c8724ea6acc0e0d14462f1ffe7f0d28369dbd",
@@ -1818,7 +1818,8 @@
           "transcript",
           "audio_listening",
           "own_outcomes",
-          "full_audio_listening"
+          "full_audio_listening",
+          "opening_exact_shot_boundaries"
         ],
         "transition_followup": {
           "source_sha256": "b291bd5cae52d2f6721279b2268c8724ea6acc0e0d14462f1ffe7f0d28369dbd",
@@ -2052,6 +2053,47 @@
             "J_L_audio_edit",
             "own_outcomes"
           ]
+        },
+        "opening_30s_review": {
+          "observed_at": "2026-09-19T21:00:28Z",
+          "status": "partial",
+          "evidence_path": "research/douyin-learning/evidence/round-20260919T205550Z.json",
+          "ranges": [
+            {
+              "start": 0,
+              "end": 30,
+              "sampling_fps": 1,
+              "frames": 30,
+              "sha256": "3b676effe89f5a09e3815abbc5bc2c92f3f7c11e0ee88f4312fd0418a4b5489a"
+            },
+            {
+              "start": 18,
+              "end": 22,
+              "sampling_fps": 2,
+              "frames": 8,
+              "sha256": "86d0c9d42713f97489ea2af74268309e9c45f73ac5ffcad00cabcc79ff0300e3"
+            },
+            {
+              "start": 22,
+              "end": 30,
+              "sampling_fps": 2,
+              "frames": 16,
+              "sha256": "baf8704fa58b2a5924a771c402bc215334ef57cea37152fb63bacd77a36e4986"
+            }
+          ],
+          "observations": [
+            "8–19s continues from close-ups to full-body rink and award/ceremony footage, sustaining the public-success setup.",
+            "About 19.5–22s uses a black intertitle 可命运偏偏最见不得圆满 as an explicit reversal.",
+            "About 22.5–27.5s uses visible RGB-split/glitch-like portrait transitions.",
+            "About 27.5–30s returns to full-body archival skating and begins a dated 1995 fact after the reversal card."
+          ],
+          "limitations": [
+            "sampling does not establish exact shot durations or every transition frame",
+            "no source-footage comparison for speed",
+            "no audio listening or voice/music/effect/J-L evidence",
+            "single sample cannot justify a general production rule"
+          ],
+          "production_consumed": false
         }
       }
     },
@@ -3964,6 +4006,19 @@
       "overlap_required_hours": 24,
       "watermark_advanced": false,
       "next_action": "On the next run make one fresh browser probe; if recovered, prioritize four stable-ID new authors to reach a 30-author pool and rotate 15 actual author checks. Do not count search hits or tab titles."
+    },
+    {
+      "run_id": "2026-09-19T20:55:50Z",
+      "query_scope": [
+        "15-author rotation",
+        "4 new stable-ID authors to reach pool 30",
+        "追风客 full media and author ID",
+        "小红书 JJ文森特 note detail"
+      ],
+      "reason": "browser_cdp_tab_list_and_refresh_timeout_after_one_fresh-tab_recovery",
+      "overlap_required_hours": 24,
+      "watermark_advanced": false,
+      "next_action": "Make one fresh browser probe next run; if recovered, spend the discovery phase on rotated authors and four stable-ID additions before any further single-author local expansion. Do not count search hits or tab titles."
     }
   ],
   "runs": [
@@ -4786,9 +4841,63 @@
       "watermark_advanced": false,
       "watermark_reason": "No profile or work content read; local existing-media review does not advance discovery watermarks.",
       "persistence_receipt": "evidence d7ef8c7ae5026f95216e450f588c0a506739cb14; review c1385d54d7770a0f48feb0ac546d47a900ddc1a9"
+    },
+    {
+      "run_id": "2026-09-19T20:55:50Z",
+      "started_at": "2026-09-19T20:55:50Z",
+      "ended_at": "2026-09-19T21:00:28Z",
+      "stage": "browser_connection_timeout_goat_opening_30s_partial_saved",
+      "authors_checked": 0,
+      "local_review_authors": 1,
+      "new_authors_verified": 0,
+      "authors_target": 15,
+      "new_authors_target": 5,
+      "verified_rotation_pool_size": 26,
+      "category_author_counts": {
+        "网球复盘": 0,
+        "网球人物故事": 0,
+        "赛后采访": 0,
+        "其他体育人物故事": 0
+      },
+      "public_search_queries": 8,
+      "works_observed_with_permanent_links": 0,
+      "discovered": 0,
+      "collected": 0,
+      "deep_review_started": 1,
+      "deep_review_completed": 0,
+      "partial_reviews": 1,
+      "sampled_frames_reviewed": 54,
+      "full_media_acquired": 0,
+      "proposed": 0,
+      "promoted": 0,
+      "evidence_path": "research/douyin-learning/evidence/round-20260919T205550Z.json",
+      "review_path": "research/douyin-learning/reviews/7686680149357579529.md",
+      "earliest_blocker": {
+        "fingerprint": "browser-cdp-get-tabs-and-refresh-timeout-after-fresh-tab",
+        "kind": "transient_browser_connection_timeout",
+        "first_error": "CDP operation get tabs timed out after 20000ms",
+        "recovery_attempts": 1,
+        "recovery_result": "One fresh tab was created and a focused Douyin user search navigation was attempted; refresh tabs timed out after 20000ms before rendered content was returned.",
+        "site_bot_signal": null,
+        "note": "No rendered site page was returned; this is not evidence of CAPTCHA, logout, account restriction or bot detection."
+      },
+      "production_check": {
+        "claude_sha": "9c2d451dd20cdfa041251efd5777d312a682fbe7",
+        "integration_sha": "9fc16b15e7ac5c1b58c6ea4dd4d181e7ff270e40",
+        "rule_registries": [
+          "03e4c4b63a58cf4d432890815fa42c673d460329",
+          "03e4c4b63a58cf4d432890815fa42c673d460329"
+        ],
+        "registries_empty": true,
+        "treatment_work_id": null,
+        "status": "awaiting_production"
+      },
+      "watermark_advanced": false,
+      "watermark_reason": "No rendered profile or work content was read; local existing-media review does not advance discovery watermarks.",
+      "persistence_receipt": "evidence 852ab0e8ee10f368ebe2212ca00dc521bf2c5b42; review e21f8889f247edf83eb72e3c5b4f86f416b41237"
     }
   ],
-  "last_notification_fingerprint": "browser-cdp-timeout-goat-full-duration-sampling-20260919T175310Z",
+  "last_notification_fingerprint": "goat-opening-reversal-factual-sequencing-20260919T205550Z",
   "production_integration": {
     "status": "consumer_merged_no_validated_rules",
     "pr": "https://github.com/robertyang87/tennislive/pull/937",
