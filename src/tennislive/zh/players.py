@@ -41,6 +41,10 @@ PLAYER_ZH: dict[str, str] = {
     "Karen Khachanov": "哈恰诺夫",
     "Jack Draper": "德雷珀",
     "Holger Rune": "鲁内",
+    # 保加利亚戴维斯杯队 2008 年生的小将，2026 世界一组第一轮对丹麦首日负鲁内、
+    # 第五盘决胜对默勒。译名按保加利亚姓 Радулов 的通行中文写法（同姓的伊万·
+    # 拉杜洛夫是保加利亚 70 年代的头号球员，中文媒体一贯写「拉杜洛夫」）。
+    "Iliyan Radulov": "拉杜洛夫",
     "Joao Fonseca": "丰塞卡",
     "Stefanos Tsitsipas": "西西帕斯",
     "Grigor Dimitrov": "迪米特洛夫",

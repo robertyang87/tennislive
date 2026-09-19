@@ -1,0 +1,236 @@
+{
+ "_draft": true,
+ "slug": "rune-dimitrov-davis-cup-2026-wg1",
+ "_column": "赛场之上",
+ "source_url": "https://www.youtube.com/watch?v=kwm7wpVFQzE",
+ "sources": {
+  "main": "https://www.youtube.com/watch?v=kwm7wpVFQzE"
+ },
+ "source_quality_exceptions": {
+  "https://www.youtube.com/watch?v=kwm7wpVFQzE": {
+   "min_height": 720,
+   "approved_by": "user",
+   "reason": "账号所有者 2026-09-19 直接给了这条 URL：「https://youtu.be/kwm7wpVFQzE 做这个赛场之上」。ITF 官方频道 World Tennis 的戴维斯杯 highlights 照旧只有 1280×720——yt-dlp -F 在沙箱里逐档查过（元数据拿得到、媒体流拿不到），视频档最高就是 232/136/398 三条 1280×720@25fps，没有 1080p。和 ruud-te-davis-cup-2026-wg1 / heide-wawrinka-davis-cup-2026-wg1 / davis-cup-china-first-world-group-1 那几条 ITF 源同一个天花板，等不出更高的版本。"
+  }
+ },
+ "_source": "ITF 官方 YouTube 频道 World Tennis（@worldtennisofficial，和 ruud-te / heide-wawrinka 同一个频道）单场集锦《Tie-Break DRAMA! | Holger Rune v Grigor Dimitrov | Highlights | Davis Cup World Group 1 2026》，1280×720 / 25fps / 722s（yt-dlp 元数据），upload_date 20260919。简介自证：「It was a thrilling finale between Holger Rune and Grigor Dimitrov as the action went all the way to a tie-break! Rune's Denmark trailed Bulgaria 1-2 and needed a win to level it up.」⚠️ **画面自证这一层还没做**——源片一帧都还没下下来（见 `_blocked`），记分条、球衣、场边挡板的四要素核对要等 probe。",
+ "_blocked": {
+  "what": "源片下不下来，所以 probe 没跑成，`segments` 还是空的。",
+  "why": "仓库的 `YT_COOKIES_TXT` 过期了。yt-dlp 自己报的原话：`WARNING: [youtube] The provided YouTube account cookies are no longer valid. They have likely been rotated in the browser as a security measure.`，随后 8 种 player client 一律 `Sign in to confirm you're not a bot`。",
+  "evidence": [
+   "run 35457535761（mode=probe，runner 1000019258）：8 种 client 全红。",
+   "run 35457775140（mode=probe，runner 1000019264，换了一台机器）：同样全红——**不是间歇性 IP 挡**，tennis-pipeline-ops 那条「重试一次通常就过」这次不成立。",
+   "run 35457908134（mode=cookies，**用的是那条与本片无关的默认视频 HyKTXynnI9c**）：一样红，并打印出 cookie 失效那句警告。**这一趟是判据**——它把「这条视频的问题」排除掉了，剩下的只有凭证。",
+   "沙箱本地 yt-dlp 同样拿不到媒体流（429 + 同一句 bot 验证），所以不是 runner 独有。"
+  ],
+  "fix": "账号所有者从一个登录过 YouTube 的浏览器重新导一份 cookies.txt，更新仓库 Secret `YT_COOKIES_TXT`。改完之后这条片子只差一趟 `match-reel.yml mode=probe`（slug=rune-dimitrov-davis-cup-2026-wg1，url 同上），拿到缩略图墙就能把 `segments` 补上。",
+  "not_this": "不是这条视频被限制、不是 runner IP 偶发被挡、也不是 yt-dlp 少装 `[default]`（工作流那行装的是 `yt-dlp[default]`，PO token provider 也起来了、第 22 步绿）。"
+ },
+ "cover": {
+  "eyebrow": "赛场之上",
+  "layout": "solo",
+  "subject": "鲁内",
+  "hook": "11个月前跟腱断了\n先丢一盘打到抢七",
+  "_hook_why": "按 CLAUDE.md 2026-09-19 那条「**用人的来路当影子**」写：第一行是这个人的经历（跟腱断裂、停了 11 个月），第二行才是这场球的形状（先丢一盘，一路打到决胜盘抢七）。两行之间有落差，不是同一件事说两遍。⚠️ 照那条同日的规矩，**钩子里不拿「全场只差几分」说事**——这场 178 分里鲁内只多赢 6 分，正是他点名不要的那种写法；差距写在关键分上（12 个破发点只兑现 3 个），放在旁白和正文里。⚠️ 不重复比分板：比分板就印着 3-6 6-3 7-6(4)，所以钩子里不写盘分和抢七小分。排名、年龄、国籍照旧不上钩子。最长行 8 个字符，≤ HOOK_MAX_CHARS=10，两行。主语是封面上的鲁内，和 `subject` 一致。",
+  "topic": "戴维斯杯世界一组 · 丹麦 vs 保加利亚",
+  "winner": "鲁内",
+  "result": "3-6 6-3 7-6(4)",
+  "matchup": [
+   {
+    "name": "鲁内",
+    "name_en": "Holger Rune",
+    "country": "DEN",
+    "rank": 144
+   },
+   {
+    "name": "迪米特洛夫",
+    "name_en": "Grigor Dimitrov",
+    "country": "BUL",
+    "rank": 128
+   }
+  ],
+  "_matchup_rank_why": "两个名次**两个独立源逐字一致**：①tennisexplorer.com/ranking/atp-men/（本仓库 `sources/rankings.py` 的 ATP 主源，atptour.com 对本环境恒 403），榜单日期页面上写着 **14.09.2026**——鲁内 144、迪米特洛夫 128；②**美网官方 feed** `usopen.org/en_US/scores/feeds/2026/players/players.json` 的 `singles_rank`——`Holger Rune atpr0dg 144`、`Grigor Dimitrov atpd875 128`。tennisexplorer 的两人交手页同一组数字第三次印证。⚠️ **ITF 官方 tieCentre 的 `oomSinglesRankingPro` 这次拿不到**（CloudFront 对本沙箱 403，urllib 和 requests 两个客户端都试过，和 slam_feed 同一个形状），所以没用它当源——这里说清楚，不含糊过去。⚠️ 戴维斯杯没有种子，不存在种子号和排名混淆的问题。",
+  "_name_why": "两个中文名都走 `player_zh()`：`player_zh(\"Holger Rune\")` → 鲁内，`player_zh(\"Grigor Dimitrov\")` → 迪米特洛夫。没有手打。⚠️ **鲁内不是鲁德**——`player_zh(\"Casper Ruud\")` 是鲁德，同一周同一项赛事里两个人都在打（ruud-te-davis-cup-2026-wg1 就是鲁德），头像 id 也差一个字母（鲁内 atp-R0DG、鲁德 atp-RH16），别混。",
+  "_subject_why": "封面放**鲁内**：他赢了这场，是丹麦主场的主角，也是这条片子钩子的主语（跟腱断裂复出）。迪米特洛夫这一侧的故事（十多年没打戴维斯杯、35 岁、曾经世界第 3）放进旁白和小红书正文。",
+  "_heat_why": "过的是「②顶级球员」和「③热点球员」两档：两个人都是**前世界前四**（鲁内生涯最高第 4 / 2023-08-21，迪米特洛夫生涯最高第 3 / 2017-11-20，两处都取自各自维基信息框），当期排名 144 和 128 都在 100 开外——「曾经的前四如今一起掉到 100 开外，在戴维斯杯上碰头」本身就是话题。外加这一场是**决定丹麦出不出局的那一分**（丹麦 1-2 落后，输了就出局）。⚠️ 不是靠「排名够高」进来的——那一档进不了，靠的是话题这一支。",
+  "portrait": {
+   "image": "PENDING",
+   "_why": "⚠️ **周六这场的官方高清实拍还没上线**，按 CLAUDE.md「没封面先把视频做好等封面」＋ pending/README「它不是废稿箱，是候车室」先挂在这儿。这一趟查过的（写清楚查了什么，不许写成「都翻过」）：①**daviscup.com 的 Contentful**——周五那篇 wrap-up《World Group wrap-up: Rune, Dimitrov shine on return…》（date 2026-09-19T08:30Z）的头图 `OH1_4153_SmwcwlIF.JPG` 是**鲁内本场次的实拍、5392×3592**，红色丹麦队服、白色反戴帽、室内蓝场、背景挡板 `ROAD TO BOLOGNA`，在比赛中、睁眼、锐利——**但它是周五那一场（鲁内 6-3 6-3 胜拉杜洛夫）的图，过不了第 1 道闸门的「时间」**，不拿它顶周六这一场（资料图那个坑）；②**周六的赛报还没发**——`/en/news` 列表里最新的戴维斯杯稿仍是那篇周五 wrap-up；③**主办国网协 Flickr**（tennis-cover-photos 那条团体赛主路，巴西站就是这么拿到 3543×2362 的）——丹麦这边 `flickr.com/photos/{dansktennisforbund,tennisdanmark,danishtennis}` 三个都 404，`tags=daviscup` 的公开源停在 2025-07；④**丹麦媒体**——dr.dk / sport.tv2.dk / ekstrabladet / bold.dk 首页扫不到本场稿，bt.dk 有戴维斯杯报道但图走自家带 token 的 CDN（`akamai-aptoma-production.bmcdn.dk`），取不到原图也没有四要素说明。**结论是「还没发」，不是「没有」**——ITF 周五那批是当晚发的，周六这批按同一节奏今晚会来。",
+   "_low_res_why": "占位，等换上真图之后按实际尺寸重写或删掉。"
+  },
+  "scoreboard": {
+   "court": "Royal Stage",
+   "_court_why": "en.wikipedia.org/wiki/2026_Davis_Cup_World_Group_I 的 Denmark vs. Bulgaria 一格：`venue=Royal Stage, Hillerød, Denmark`、`surface=Hard (i)`（室内硬地）、`date=18–19 September 2026`，脚注引的正是 daviscup.com 这条 tie 的页面。daviscup.com 的 tie 页 RSC 载荷里 `event.name = \"World Group I - Denmark vs Bulgaria\"` 对得上。⚠️ ITF tieCentre 的 `venue.name` 这次拿不到（403），所以场馆名取自维基那一格，没有第二个官方源——这一条比 ruud-te 那条弱一档，写明。",
+   "duration": "2:02",
+   "_duration_why": "两个独立视角：①flashscore `df_sui_1`（KOEgUHC6）分盘 0:22 + 0:38 + 1:02，全场 **2:02**；②同一份当日表的起止时间戳 `AD÷1789824300`（13:25:00Z）→ `AO÷1789831647`（15:27:27Z），相减 7347 秒 = 122.45 分钟 = 2:02。两者自洽。⚠️ CLAUDE.md 记过「比赛用时不要只信 flashscore」，这里第二个视角是它自己的时间戳而不是第三方——等 probe 之后还能拿源片记分条的计时器再核一次。"
+  },
+  "_result_why": "第三盘抢七小分 (4) 进了 cover.result / topbar.line2 / _match。**三个源**：①flashscore 当日表 `BE÷7 BF÷6` ＋ `DE÷7 DF÷4`（第三盘那对槽位）；②flashscore 逐分流 `df_mh_1` 的 `HB÷Tiebreak - Set 3` 那一段，逐分爬到 `HC÷7 HE÷4`——**和当日表是两个不同的字段族**，正好避开 CLAUDE.md 记过的「`D*` 槽位每盘步进两个字母、抄错一格」那个坑；③tennisexplorer 两人交手页把这场记成 `3 6 7 / 6 3 6⁴`。(4) 是**输掉那一盘的人**拿到的分——迪米特洛夫输了第三盘，他拿 4 分。⚠️ 戴维斯杯世界一组是三盘两胜，鲁内 2-1 **打满了距离，第三盘就是决胜盘**；而**决胜盘抢十只对四大满贯成立**，戴维斯杯照旧抢 7，所以 7-4 合法（CLAUDE.md「大满贯的决胜盘抢 10 分」那条的边界）。"
+ },
+ "topbar": {
+  "line1": "2026 戴维斯杯世界一组 第一轮",
+  "line2": "鲁内 3-6 6-3 7-6(4) 迪米特洛夫"
+ },
+ "_topbar_why": "line1 的轮次按 ITF 口径写「第一轮」，依据是**同一批次的两条姊妹 tie 都已经从 tieCentre 核实过**：`heide-wawrinka-davis-cup-2026-wg1` 记着 `tie.name = \"M-DC-2026-WG1-M-BRA-SUI-01\"`、`tie.round.name = \"Round 1\"`，`ruud-te-davis-cup-2026-wg1`（挪威 v 中国，9/18-19）同样是第一轮；丹麦 v 保加利亚和这两条在 daviscup.com 同一篇《World Group I and II: where to watch》的同一张表里、同一个周末（9/18-19）。⚠️ **本条自己的 tieCentre 拿不到（403），所以这是从同批次推的，不是直接读到的**——写明这一层，别让下一个人以为核过了。⚠️ 源片 YouTube 简介里只写 `Davis Cup World Group 1 2026`，没有轮次；heide-wawrinka 那条记过「源片简介里的轮次会是错的」，所以本来也不该照抄。line2 由 cover.winner / result / matchup 机械拼出。",
+ "_match": {
+  "status": "result_verified",
+  "source": "flashscore_points",
+  "source_id": "KOEgUHC6",
+  "flashscore_id": "KOEgUHC6",
+  "participants": [
+   "鲁内",
+   "迪米特洛夫"
+  ],
+  "set_scores_home_away": [
+   [
+    3,
+    6
+   ],
+   [
+    6,
+    3
+   ],
+   [
+    7,
+    6
+   ]
+  ],
+  "tiebreaks_home_away": [
+   null,
+   null,
+   [
+    7,
+    4
+   ]
+  ],
+  "winner": "鲁内",
+  "loser": "迪米特洛夫",
+  "winner_result": "3-6 6-3 7-6(4)",
+  "loser_result": "6-3 3-6 6-7(4)",
+  "_direction_why": "flashscore 当日表 f_2_0（KOEgUHC6）：`AE=Rune H.`（home，`CC÷Denmark`）、`AF=Dimitrov G.`（away，`FV÷Bulgaria`），`BA/BB=3:6`、`BC/BD=6:3`、`BE/BF=7:6`、`DE/DF=7:4`、`AG/AH=2:1`，`AS÷1` 指向 home 获胜。第二源 en.wikipedia《2026 Davis Cup World Group I》Denmark vs. Bulgaria 的 R4：Holger Rune `3 6 7` / Grigor Dimitrov `6 3 6⁴`。第三源 tennisexplorer 交手页，交手史由 2-2 变成**鲁内 3-2**。⚠️ participants 跟 flashscore 的 home/away（和 set_scores_home_away 同序），这一场也和 cover.matchup 的版式顺序一致。⚠️ 主队是鲁内，因为**这是丹麦主场**（希勒勒 Royal Stage），不是随手排的顺序。"
+ },
+ "stats": {
+  "a": {
+   "aces": 5,
+   "df": 2,
+   "first_in": 51,
+   "first_won": 42,
+   "second_total": 29,
+   "second_won": 14,
+   "bp_conv": 3,
+   "bp_chances": 12,
+   "pts_won": 92,
+   "pts_total": 178,
+   "first_total": 80,
+   "headshot": "assets/players/headshots/atp-R0DG.png"
+  },
+  "b": {
+   "aces": 11,
+   "df": 3,
+   "first_in": 64,
+   "first_won": 44,
+   "second_total": 31,
+   "second_won": 17,
+   "bp_conv": 3,
+   "bp_chances": 4,
+   "pts_won": 86,
+   "pts_total": 178,
+   "first_total": 95,
+   "headshot": "assets/players/headshots/atp-D875.png"
+  },
+  "_source": "flashscore 本场 KOEgUHC6 的 df_st_1，整块由 `python3 tools/match_stat_hooks.py KOEgUHC6 --home Rune --away Dimitrov --stats-block` 机器抄出，**没有手打**。⚠️ a 跟的是 cover.matchup[0]=鲁内，flashscore 的 home 也是 Rune——两个顺序一致，a/b **不用对调**。锚点核过：`Break Points Saved 主队 1/4`（鲁内被破 3 次）对上 `Break Points Converted 客队 3/4`（=b 的 bp_conv/bp_chances），`Break Points Saved 客队 9/12` 对上 `Break Points Converted 主队 3/12`（=a）；两边 `Service games won` 都是 12/15，`Total games won` 15/15，和 3-6 6-3 7-6 的 15-15 局数自洽。`first_total` 按 `first_in + second_total` 算（51+29=80、64+31=95），**不取接口的 Service Points Won 分母**（那两个数是 82 和 96，差 2 和 1，是 flashscore 一贯的口径差；rublev-virtanen 那条已经记过同一件事）。头像：鲁内 `atp-R0DG`（ATP id 从**美网官方 players.json** 的 `atpr0dg` 反查到，`fetch_official_headshot.py atp --id R0DG --via mubadaladcopen.com` 取的官方头像，255 种颜色、打开核过是本人、白色反戴帽和周五那张实拍对得上，不是占位剪影）、迪米特洛夫 `atp-D875`（仓库既有）。",
+  "_winners_ue_why": "**故意不填**。flashscore df_st_1 这场把 `Winners` 和 `Unforced errors` 两行都返回了，但**两边都是 0**——一场打了 178 分的球不可能零制胜分，所以 0 是「没统计」不是「统计出来是零」。`match_stat_hooks.py` 打出的那句「这场有，必须填」是按**字段在不在**判的，不是按值，别照着它填 0：真填进去数据图上会画出一行「0 : 0」，比缺那一行更坏。按 `render_stat_card.OPTIONAL_FIELDS = {winners, ue}` 两边都缺 → 整行不画，其余 7 行够 `MIN_ROWS=7`。第二源也没有：ITF 的 `custom/pointByPoint/<matchId>` 按 tennis-media-sources 记的**只标 ACE / 双误 / 普通分，没有制胜分和非受迫失误**，而且那套接口这次还 403。"
+ },
+ "_hit_data": "跑过 `match_stat_hooks.py KOEgUHC6`。挑进正文的那个数：**鲁内全场拿到 12 个破发点，只兑现 3 个；迪米特洛夫拿到 4 个，兑现 3 个**（df_st_1：Break Points Converted 主队 3/12、客队 3/4；等价地 Break Points Saved 迪米特洛夫 9/12、鲁内 1/4）——两个人各被破 3 次，局数 15-15，而鲁内是用三倍的机会换来同样的收成。这句正是账号所有者 2026-09-19 要的那种写法：**差距落在关键分上，不是总分差**。⚠️ 与之配套，全场总分 92-86（只多 6 分）**只能写在这条注解里，不许上钩子、不许上封面**（同一天他点名说了「以后尽量避免比较全场得分只差几分」）。备选：迪米特洛夫 11 个 ACE 对鲁内 5 个；鲁内一发得分率 82%（42/51）对迪米特洛夫 69%（44/64）。",
+ "_durations": "flashscore df_sui_1 分盘 0:22 / 0:38 / **1:02**——决胜盘比头两盘加起来还长 2 分钟，正是这条片子的形状：前两盘各自一边倒，第三盘咬了一个多小时。",
+ "_turning_points": [
+  "**首盘：鲁内 5 个破发点，一个没兑现。** df_mh_1 首盘：0-1 那局（迪米特洛夫发球）`A:40 |B1|` 两次、1-2 那局 `40:30 |B1|, A:40 |B1|, A:40 |B1|` 三次——五个破发点全被救（df_st_1 第一盘 Break Points Saved 客队 **5/5**）。而迪米特洛夫这一盘只拿到 1 个破发点：3-4 鲁内发球那局 `15:40 |B1|`，一次就破掉，接着 3-6 发球胜盘（`15:40 |B2|`）。第一盘 5 个 ACE 也是迪米特洛夫的（鲁内 2 个）。",
+  "**第二盘：鲁内连破两次。** df_mh_1：1-0 保发后 2-0 那局 `15:0, 30:0, 40:0 |B1|` **零封破发**；2-1 被回破（`15:40 |B1|, 30:40 |B1|`）；3-1 那局 `40:0 |B1|, 40:15 |B1|` 再破。之后各自保发到 6-3，盘点 `40:0 |B2|`。",
+  "**决胜盘 4-2：两个破发点没拿下，这是这场球的分水岭。** 鲁内一上来就破发（1-0，`40:0 |B1|` 零封），4-2 时在迪米特洛夫发球局里打到 `40:15 |B1|, 40:30 |B1|`——再破一次就是双破发、基本锁定；迪米特洛夫从 15-40 连拿四分保下来（`40:40, 40:A`），4-3。",
+  "**决胜盘 5-4：鲁内的发球胜赛局被破。** df_mh_1 `HC÷5 HE÷5 HG÷1 HH÷1 HK÷2 HL÷0:15, 0:30, 15:30, 15:40 |B1|`——鲁内发球（HG÷1=主队发球），0-30 落后、15-40 被破，5-5。接着迪米特洛夫 5-5 保发到 love（`0:15, 0:30, 0:40`），5-6。**鲁内 5-6 那一局是发球保命局**，从 15-30 落后连拿三分保下来（`0:15, 15:15, 15:30, 30:30, 40:30`），6-6。",
+  "**抢七：4-4 之后最后三分全是鲁内的。** df_mh_1 `HB÷Tiebreak - Set 3` 逐分（HK÷1=鲁内得分、HK÷2=迪米特洛夫得分）：0-1、1-1、1-2、2-2、3-2、3-3、4-3、4-4、5-4、6-4（`HM÷3,1` ＝三个赛点）、7-4。迪米特洛夫两次领先（1-0、2-1），4-4 平之后鲁内连拿三分，第一个赛点就落地。"
+ ],
+ "editorial": {
+  "mode": "match_review",
+  "hook": [
+   "11个月前跟腱断了",
+   "先丢一盘打到抢七"
+  ],
+  "question": "两个都在往回爬的人碰上，决胜盘 5-4 那一局，谁的手更沉？",
+  "thesis": "首盘鲁内在迪米特洛夫的发球局里拿到 5 个破发点，一个都没兑现，自己的发球局被一个破发点破掉，3-6。第二盘他连破两次，6-3 扳平。决胜盘他一上来就破发，4-2 时手握两个破发点想再破一次，被迪米特洛夫从 15-40 救回去；5-4 自己的发球胜赛局又被破掉，5-6 靠一个保命的保发才留在场上。抢七 4-4 之后最后三分全是他的，7-4。全场 12 个破发点只兑现 3 个，迪米特洛夫 4 个兑现 3 个——差距就在这几分上。2 小时 02 分，丹麦总分扳成 2-2；随后默勒 6-2 6-4 赢下决胜的第 5 盘，丹麦 3-2 过关。",
+  "beats": [
+   "北京时间 9 月 19 日晚上 21 点 25 开球，丹麦希勒勒的 Royal Stage 室内硬地，戴维斯杯世界一组第一轮。丹麦 1-2 落后保加利亚，鲁内这一场输了，丹麦就出局。场上两个人都是回来的人：11 个月前跟腱断裂、这才是复出第 2 场的鲁内，和十多年没打过戴维斯杯的迪米特洛夫。",
+   "首盘是迪米特洛夫的。他发了 5 个 ACE，把鲁内拿到的 5 个破发点全部救下来；轮到鲁内 3-4 发球，他只要了 1 个破发点。3-6。",
+   "第二盘鲁内把回发球压了上去：2-0 那一局零封破发，2-1 被回破之后 3-1 再破一次，6-3 扳平。",
+   "决胜盘咬了 1 小时 02 分，比前两盘加起来还长。鲁内一上来就破发，4-2 时两个破发点没拿下；5-4 发球胜赛局被破回去，5-6 那一局从 15-30 落后保发才活下来。抢七 4-4 平，最后三分全是他的，7-6(4)。",
+   "全场 12 个破发点只兑现 3 个，迪米特洛夫 4 个兑现 3 个。2 小时 02 分，鲁内把总分扳成 2-2，决定权交给最后一场——默勒 6-2 6-4 拿下，丹麦 3-2 过关。"
+  ],
+  "_hook_why": "这一栏和 cover.hook 逐行相同（闸要求）。理由见 cover._hook_why。",
+  "_question_why": "末屏那一问不是封面那一问的回声：封面讲的是「伤了 11 个月的人先丢一盘」，末屏问的是**两个人都在往回爬**这件事，落点在 5-4 那一局（他发球胜赛局被破）——是评判型立场，不是复述比分。",
+  "human_context": {
+   "angle": "这场球的场外主角是**两个人的来路**，而且方向一样：鲁内 2025 年斯德哥尔摩半决赛领先一盘时跟腱撕裂、赛季报销，伤停 11 个月，排名从生涯最高的世界第 4 掉到 144，这是他复出的第 2 场比赛（第 1 场是前一天 6-3 6-3 胜拉杜洛夫）；迪米特洛夫 35 岁，生涯最高世界第 3，2026 年一度掉出前 100（自 2012 年 3 月以来第一次），大满贯要打资格赛，现排名 128，而这是他十多年来第一次打戴维斯杯。两个曾经的世界前四，在一个丹麦小城的室内硬地上，为一张世界一组的门票打了 2 小时 02 分。",
+   "facts": [
+    "赛事与场地：en.wikipedia《2026 Davis Cup World Group I》Denmark vs. Bulgaria — venue `Royal Stage, Hillerød, Denmark`，surface `Hard (i)`，date `18–19 September 2026`，脚注引 daviscup.com 这条 tie；daviscup.com tie 页 RSC `event.name = World Group I - Denmark vs Bulgaria`。",
+    "这一场的位置：daviscup.com 官方稿《World Group wrap-up: Rune, Dimitrov shine on return…》(2026-09-19T08:30Z) ＋ 源片 YouTube 简介「Rune's Denmark trailed Bulgaria 1-2 and needed a win to level it up」——第 4 盘、首盘反向单打。R1 迪米特洛夫 7-6(2) 3-6 6-4 胜默勒、R2 鲁内 6-3 6-3 胜拉杜洛夫、R3 保加利亚双打取胜（维基 R1-R5 表 ＋ flashscore 前一日表 f_2_-1）。",
+    "鲁内的伤：en.wikipedia/Holger Rune「At the 2025 Stockholm Open Rune reached the semifinals but retired in his match against Ugo Humbert leading by a set, with a season-ending torn Achilles tendon injury」＋「2026: Recovery, out of top 100」；daviscup.com 同一篇官方稿写他周五那场是「on his return to competitive action after an 11-month injury layoff」。生涯最高 No. 4（2023-08-21，维基信息框）。",
+    "迪米特洛夫：daviscup.com 官方稿「playing his first Davis Cup match in over a decade」；en.wikipedia/Grigor Dimitrov 2026 一节「This was the first time since March 2012 that Dimitrov was ranked outside the Top 100 and thus was only able to play through qualifying in Grand Slam events」；生涯最高 No. 3（2017-11-20，维基信息框）；1991-05-16 生（tennisexplorer 交手页）。",
+    "交手史：赛前 2-2（daviscup.com 官方稿「This will be their fifth meeting, with the head-to-head tied at 2-2」），赛后 tennisexplorer 交手页记成 **鲁内 3-2**。",
+    "赛果与用时：flashscore KOEgUHC6 鲁内 3-6 6-3 7-6(4)、分盘 0:22/0:38/1:02、全场 2:02，起止 13:25:00Z→15:27:27Z（北京 21:25→23:27）。",
+    "这条 tie 的最终结果：**丹麦 3-2 保加利亚**。五盘逐条都有出处，加起来自洽——R1 迪米特洛夫 7-6(2) 3-6 6-4 胜默勒、R2 鲁内 6-3 6-3 胜拉杜洛夫（以上 flashscore 前一日表 f_2_-1 ＋ 维基 R1-R5 表）、R3 保加利亚双打取胜（多恩斯基/内斯特罗夫 4-6 6-2 7-6(6) 胜霍尔姆格伦/英吉尔森——flashscore `xE4mDHQr` 丹麦 `BA÷6 BC÷2 BE÷6 DE÷6` / 保加利亚 `BB÷4 BD÷6 BF÷7 DF÷8`，末盘抢七 8-6；维基 R3 记成丹麦 `6 2 6⁶` / 保加利亚 `4 6 7`，两源一致）、R4 本场、R5 默勒 6-2 6-4 胜拉杜洛夫（flashscore `SlI1SesJ`，AO÷1789838411 ＝ 16:40:11Z 结束）；flashscore 的队伍记录 `z9ClPbVI` 报 `AG÷3 AH÷2`、`AC÷3`（已结束）。⚠️ **维基那一页此时还停在 2-2、R5 空着**（更新有滞后），所以这一条以 flashscore 的逐盘 ＋ 队伍记录为准，而「五盘各自的赢家加起来正好是 3-2」本身就是一次交叉自洽。⚠️ 鲁内赢完的**那一刻**总分是 2-2，第 5 盘还没打——旁白写成「扳成 2-2，决定权交给最后一场」再接上最终 3-2，两句都成立，不会把后发生的事说成同时发生。"
+   ],
+   "sources": [
+    "https://www.flashscore.com/match/tennis/KOEgUHC6/",
+    "https://www.daviscup.com/en/news/world-group-wrap-up-rune-dimitrov-shine-on-return-brazil-surge-ahead-of-switzerland",
+    "https://www.daviscup.com/en/tie/2c8bc18c-0f58-429c-a16f-982350245d62",
+    "https://en.wikipedia.org/wiki/2026_Davis_Cup_World_Group_I",
+    "https://en.wikipedia.org/wiki/Holger_Rune",
+    "https://en.wikipedia.org/wiki/Grigor_Dimitrov",
+    "https://www.tennisexplorer.com/mutual/rune-holger/dimitrov-grigor/",
+    "https://www.tennisexplorer.com/ranking/atp-men/",
+    "https://www.usopen.org/en_US/scores/feeds/2026/players/players.json",
+    "https://www.youtube.com/watch?v=kwm7wpVFQzE"
+   ]
+  }
+ },
+ "_claims": [
+  {
+   "claim": "这是鲁内跟腱断裂伤停 11 个月之后复出的第 2 场比赛",
+   "sources": [
+    "daviscup.com 官方稿（2026-09-19T08:30Z）：「Rune, however, quickly restored parity, dispatching Iliyan Radulov 6-3, 6-3 in less than 90 minutes on his return to competitive action after an 11-month injury layoff.」——周五那场是复出第 1 场，本场是第 2 场",
+    "en.wikipedia.org/wiki/Holger_Rune：2025 斯德哥尔摩半决赛领先一盘退赛、跟腱撕裂赛季报销；2026 一节标题就是「Recovery, out of top 100」"
+   ]
+  },
+  {
+   "claim": "迪米特洛夫十多年来第一次打戴维斯杯",
+   "sources": [
+    "daviscup.com 官方稿：「Dimitrov, playing his first Davis Cup match in over a decade…」——**ITF 是这项赛事的主办方，这是它对自己赛事的表述**",
+    "en.wikipedia.org/wiki/Grigor_Dimitrov 的 Davis Cup 一节：叙述停在「would return to Davis Cup competition in 2012」，此后只写队伍成绩、没有他本人的出场记录"
+   ],
+   "_why": "⚠️ 第二个源**只是没有反例，不是正面证实**——维基那一节没有逐年出场表，我没能穷举他 2013 年之后的戴维斯杯记录（ITF 的 tieCentre / 球员接口对本沙箱 403）。所以旁白里这句按官方稿的口径写「十多年没打过戴维斯杯」，不写「自 2012 年以来第一次」这种带确切年份的强断言。"
+  },
+  {
+   "claim": "第三盘是决胜盘，抢七 7-4 合法（不是抢十）",
+   "sources": [
+    "赛制：戴维斯杯世界一组三盘两胜；鲁内 2-1 获胜 ＝ 输家赢的盘数 == 赢家 − 1，**打满了距离**，所以第三盘是决胜盘（CLAUDE.md 判决胜盘的机械判据）",
+    "「决胜盘抢 10 分」那条**只对四大满贯成立**（CLAUDE.md 2026-09-01，男女都一样）；本场是戴维斯杯，决胜盘照旧抢 7，`DE÷7 DF÷4` 与逐分流 `HC÷7 HE÷4` 都落在 7 分制里"
+   ]
+  }
+ ],
+ "_no_repeat": "同栏目这一周已经发过两条戴维斯杯世界一组：`ruud-te-davis-cup-2026-wg1`（挪威 v 中国，讲那块专门铺的室内红土）和 `heide-wawrinka-davis-cup-2026-wg1`（巴西 v 瑞士，讲瓦林卡最后一次戴维斯杯）。这一条**一句都不讲**那两条铺开过的东西——不讲红土、不讲瓦林卡告别、不讲中国队升组，只讲丹麦这条 tie 和这两个人的伤病来路。`davis-cup-china-first-world-group-1` 是**网球有故事**栏目的解说片，按「同一件事不同栏目各讲一次不算重复」不构成重复。",
+ "push": {
+  "summary": "鲁内发球胜赛局被破",
+  "lead": "戴维斯杯世界一组第一轮，丹麦主场希勒勒 Royal Stage。丹麦 1-2 落后，鲁内这一场输了就出局。跟腱断裂停了 11 个月、这才是复出第 2 场的鲁内，首盘拿到 5 个破发点一个没兑现，3-6 先丢一盘；第二盘连破两次 6-3 扳平；决胜盘 4-2 手握两个破发点没拿下，5-4 发球胜赛局被破回去，5-6 那一局从 15-30 落后保发才活下来。抢七 4-4 之后最后三分全是他的，7-6(4)。2 小时 02 分，全场 12 个破发点只兑现 3 个，对面 4 个兑现 3 个。总分扳成 2-2 之后，默勒赢下决胜的第 5 盘，丹麦 3-2 过关。",
+  "matchup": "鲁内 vs 迪米特洛夫",
+  "score": "3-6 6-3 7-6(4)",
+  "auto": true
+ },
+ "_push_summary_why": "9 字位，主语是鲁内（封面上也是他，这一场的主角只有一个，不像 ruud-te 那条要把两张脸分开站）。「发球胜赛局被破」是这场球最抓人的那一格，而比分板上印着他赢了 3-6 6-3 7-6(4)——**一行字和一张比分板合起来就是那个钩子**：他丢了发球胜赛局，最后还是赢了。铺垫只有一层，没有代词插在动词前。标题里不写排名，所以不受「钩子和文案里写的排名要和 matchup 对得上」那条约束。⚠️ 不写全场总分差（178 分只多 6 分）——账号所有者 2026-09-19 点名不要那种写法。",
+ "segments": [],
+ "_segments_blocked_why": "⚠️ **空的，等 probe。** 选段必须靠眼睛（`match-reel.yml` 的 docstring 第一句就是这个），而源片到现在一帧都没下下来——见顶层 `_blocked`。cookie 换掉之后跑一趟 `mode=probe` 拿到缩略图墙和 `scene_cuts` / `point_ends_guess`，再按这几条填：①开场三格「画面爆点 → 落点 → 坐标」；②每一段收在**一分打完、记分条翻牌之后**（`mid_point_findings` 是硬闸，新写的 spec 红了要么挪 `end`、要么写 `point_end_ok` 认领）；③按 `reel_craft.shot_craft_problem`，**至少 2 段要有真正的球路描述**（「他退台半步，把回发球兜回对角」这种只属于这一分的话，不是「三个破发点全救了」这种换一场球也成立的比分话）——决胜盘 4-2 那两个破发点、5-4 那个发球胜赛局、抢七最后三分是三个现成的落点；④相邻两段旁白相似度不许 > 0.80，同一句式不许用超过 4 次；⑤按 CLAUDE.md 2026-09-19「精彩的原声解说要留下来」，找一段解说声调起来的（赛点落地那一声多半就是）做 `quote`，配**原文一行、中文一行**的双语字幕，`_quote_kind` 写 `broadcast`；真没有就在顶层写 `_no_quote_why`。⚠️ 旁白里的数字写汉字（喂 TTS 的），烧上屏和给人复制的写阿拉伯数字。",
+ "mixed_fps": {
+  "main": "单源，25fps（yt-dlp 元数据：232/136/398 三条视频档都是 1280x720 @ 25），不存在混帧率问题。⚠️ 这一栏等 probe 之后拿 ffprobe 的实测帧率再确认一次。"
+ },
+ "_voice_why": "沿用这条线的默认：云见（`zh-CN-YunjianNeural`）＋6%，不设 `style`。⚠️ 这一栏叫 `_voice_why` 不叫 `_voice`。",
+ "tts_backend": "edge",
+ "_tts_backend_why": "Azure 的钥匙目前是 401——同一天 run 35439554767（`asian-games-vs-china-open`）就是在片尾口播那一步撞上 `WebSocket upgrade failed: Authentication error (401)` 之后退回 edge-tts 的，和 2026-09-03、2026-09-17 那两次同一个错，钥匙还没恢复。本条不用情绪风格，edge 够用；而且本地 `--check-narration` 量的就是 edge 的时长，余量按 edge 算反而更准。钥匙恢复后把 `tts_backend` 和这一栏一起删掉即可。",
+ "_notes": "手写 spec（不是编排器草稿）。开工前按 CLAUDE.md 跑过 `tools/find_pending_draft.py --who Rune,Dimitrov`——扫了 104 份，没有匹配的草稿，这一场自动链没 probe 过，所以是从零写的。放在 `pending/` 的理由有两条，**两条都还没解开**：①周六这场的官方高清实拍还没上线（pending/README 说的那个「候车室」的本义）；②源片下不下来（`_blocked`）。两条都解开之后 `git mv` 回 `specs/reels/`，它才参与那批判据、才会被 `auto-push-reel` 认领。"
+}
