@@ -189,6 +189,18 @@
       "verified_at": "2026-09-19T02:59:53.424Z",
       "evidence_kind": "direct_profile_id_and_work_grid",
       "last_work_check_at": "2026-09-19T02:59:53.424Z"
+    },
+    {
+      "name": "JJ文森特",
+      "platform": "xiaohongshu",
+      "platform_user_id": "60376dd80000000001008b25",
+      "xiaohongshu_id": "Cubes_Vincent",
+      "url": "https://xhslink.cn/o/2uqNFJ39dBt",
+      "verified_at": "2026-09-19T05:26:29.804Z",
+      "evidence_kind": "direct_profile_identity_and_12_work_card_titles",
+      "category": "网球内容与运动装备测评",
+      "last_work_check_at": "2026-09-19T05:26:29.804Z",
+      "verification_limit": "Identity and work titles verified; note detail login-gated; no full video review."
     }
   ],
   "discovery_seeds": [
@@ -3036,6 +3048,18 @@
       "watermark_advanced": false,
       "reason_no_watermark": "Read bounded profile grids; publication-age coverage of all selected cards not established.",
       "persistence_receipt": "pending_write_response"
+    },
+    {
+      "run_id": "user-added-jj-vincent-2026-09-19T05:26:29.804Z",
+      "stage": "xiaohongshu_profile_verified_note_details_login_pending",
+      "authors_checked": 1,
+      "new_authors_verified": 1,
+      "work_cards_read": 12,
+      "collected": 0,
+      "deep_review_completed": 0,
+      "promoted": 0,
+      "watermark_advanced": false,
+      "note": "User-directed supplemental research; not a full scheduled discovery round."
     }
   ],
   "last_notification_fingerprint": "15-authors-5-new-goat-full-media-partial-subtitle-candidate-20260919T025527Z",
@@ -3128,6 +3152,58 @@
       "categories_covered",
       "new_permanent_work_urls"
     ],
-    "min_authors_per_category": 3
+    "min_authors_per_category": 3,
+    "platforms": [
+      "douyin",
+      "xiaohongshu"
+    ],
+    "cross_platform_dedup_key": "platform+work_id"
+  },
+  "cross_platform_research": {
+    "jj_vincent": {
+      "platform": "xiaohongshu",
+      "observed_at": "2026-09-19T05:26:29.804Z",
+      "source_url": "https://xhslink.cn/o/2uqNFJ39dBt",
+      "followers": {
+        "user_reported": 28000,
+        "page_display": "1万+",
+        "exact": null
+      },
+      "status": "profile_verified_note_details_awaiting_login",
+      "priority_titles": [
+        "为什么连顶尖运动员，也常被网球打崩溃？",
+        "德约眼中的辛纳，像极了当年的自己",
+        "网球比赛中那些温暖片段"
+      ],
+      "other_observed_titles": [
+        "你现有的运动鞋，能打网球吗",
+        "ROGER Pro 3实战测评：又重又稳还能快",
+        "昂跑Fire网球鞋：性能不差，为什么不建议买？",
+        "昂跑Roger Pro 2: 速度鞋，不快但很稳",
+        "WILSON DEFYER，是否值得全网吹爆？",
+        "WILSON DEFYER：赤影降世，破局者胜",
+        "Roger Pro 3网球鞋，我感觉是在玩反差",
+        "昂跑Roger Pro Ace网球鞋实战测评",
+        "打完球，他换上了 Roger Pro Ace"
+      ],
+      "work_ids": null,
+      "permanent_work_urls": null,
+      "media_acquired": 0,
+      "deep_reviews_completed": 0,
+      "all_audiovisual_dimensions": "pending",
+      "blocker": {
+        "fingerprint": "xiaohongshu-note-detail-login-required",
+        "kind": "login_required",
+        "visible_message": "登录即可查看 Ta 的笔记",
+        "bot_detection": false
+      },
+      "research_focus": [
+        "开头问题如何建立",
+        "观点与实拍证据如何对应",
+        "人物故事的情绪与事实组织",
+        "构图字幕剪辑变速缩放转场与声音设计"
+      ],
+      "cross_platform_identity": "Bilibili same-name search hits remain unverified; do not merge"
+    }
   }
 }
