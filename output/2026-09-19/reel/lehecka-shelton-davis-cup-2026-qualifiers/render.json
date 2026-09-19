@@ -16,15 +16,15 @@
   "narration_rate": "+6%",
   "narration_backend": "edge-tts",
   "narration_seconds": {
-    "1": 7.752,
+    "1": 8.064,
     "2": 9.12,
     "3": 8.952,
-    "4": 7.392,
-    "5": 10.656,
-    "6": 10.344,
-    "7": 8.736,
-    "8": 8.328,
-    "9": 9.24,
+    "4": 7.776,
+    "5": 10.08,
+    "6": 9.936,
+    "7": 8.52,
+    "8": 9.6,
+    "9": 9.432,
     "10": 11.16,
     "11": 9.768
   },
@@ -32,39 +32,39 @@
     "version": 2,
     "pipeline": "match-reel",
     "slug": "lehecka-shelton-davis-cup-2026-qualifiers",
-    "received_at": "2026-09-19T07:59:34Z",
-    "artifact_ready_at": "2026-09-19T08:04:50Z",
-    "elapsed_seconds": 316.334,
+    "received_at": "2026-09-19T09:58:20Z",
+    "artifact_ready_at": "2026-09-19T10:03:14Z",
+    "elapsed_seconds": 294.483,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "bef959f8a7159824b8ccc4f70a1cb76f8e92c55416311a1c766535e8c9b21b3c",
-    "spec_sha256": "917cd70db6bee8f12daa7b123cd65b6524f0d0cd2bb46f203e53596326b88f52",
-    "run_id": "35430761089",
+    "film_sha256": "2208764683c8fe9bd31eb9e78fe989b3285aaa47788a7f8c1e98356f91d3028f",
+    "spec_sha256": "c3e62dfa209e9c7bac0c746b99a74dd5697bef94230984aad41ede37b3640a41",
+    "run_id": "35436120182",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-09-19T08:01:49Z",
-        "run_id": "35430761089"
+        "at": "2026-09-19T10:00:44Z",
+        "run_id": "35436120182"
       }
     ],
-    "render_seconds": 181.334,
-    "pre_render_seconds": 135.0
+    "render_seconds": 150.483,
+    "pre_render_seconds": 144.0
   },
-  "film_sha256": "bef959f8a7159824b8ccc4f70a1cb76f8e92c55416311a1c766535e8c9b21b3c",
-  "film_bytes": 85131857,
-  "qc_attestation_sha256": "a645055b5066e1af8666f5582a17f4829c90e80317f12e3bb2c3c418adb8bc07",
+  "film_sha256": "2208764683c8fe9bd31eb9e78fe989b3285aaa47788a7f8c1e98356f91d3028f",
+  "film_bytes": 85111074,
+  "qc_attestation_sha256": "0839bd4e62ffa48bddcb9c2456ea41bc33cda0531fd342c483c6b76f0753cec2",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-09-19T08:01:49Z",
-      "run_id": "35430761089"
+      "at": "2026-09-19T10:00:44Z",
+      "run_id": "35436120182"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-09-19T08:04:51Z",
-      "run_id": "35430761089"
+      "at": "2026-09-19T10:03:15Z",
+      "run_id": "35436120182"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-lehecka-shelton-davis-cup-2026-qualifiers/lehecka-shelton-davis-cup-2026-qualifiers.mp4",
-  "video_bytes": 85131857
+  "video_bytes": 85111074
 }
