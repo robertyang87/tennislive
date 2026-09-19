@@ -351,5 +351,7 @@
     "main": "单源，25fps，不存在混帧率问题。这一栏按 spec 形状留着说明已经核过。"
   },
   "_voice_why": "沿用这条线的默认：云见（`zh-CN-YunjianNeural`）＋6%，不设 `style`。⚠️ 这一栏叫 `_voice_why` 不叫 `_voice`。",
-  "_narration_why": "旁白用本地 edge-tts（zh-CN-YunjianNeural +6%）真跑过一遍量长度和切词（`--check-narration`）。14 段全部装得下，哑场单段最长 3.72s（门槛 4.0s），没有 token 骑在人名边界上。按报告改的两处：①第 5 段原来那句「两局都是在鲁德的第三个破发点上才被破掉的」20 格宽过一行字幕只能硬切，改成「鲁德每一次，都是到第三个破发点才破掉他」；②第 4 段原来 28 字、真语音 6.36s 对 6.6s 画面只剩 +0.24s（「很紧」），去掉「平时」两个字。⚠️ 本地 edge-tts 比 runner 上的 Azure 慢约 6.6%，所以这里的余量对 Azure 偏保守。切词里「抢｜七」「网｜前」读音不变，按 CLAUDE.md 那一档不动。 ③第 3 段按 `test_赛场之上开场要给出北京时间赛事和轮次` 补了「第一轮」（+3 字，真语音 10.32s 对 11.8s 画面，加三个字仍有约 +0.8s）。"
+  "_narration_why": "旁白用本地 edge-tts（zh-CN-YunjianNeural +6%）真跑过一遍量长度和切词（`--check-narration`）。14 段全部装得下，哑场单段最长 3.72s（门槛 4.0s），没有 token 骑在人名边界上。按报告改的两处：①第 5 段原来那句「两局都是在鲁德的第三个破发点上才被破掉的」20 格宽过一行字幕只能硬切，改成「鲁德每一次，都是到第三个破发点才破掉他」；②第 4 段原来 28 字、真语音 6.36s 对 6.6s 画面只剩 +0.24s（「很紧」），去掉「平时」两个字。⚠️ 本地 edge-tts 比 runner 上的 Azure 慢约 6.6%，所以这里的余量对 Azure 偏保守。切词里「抢｜七」「网｜前」读音不变，按 CLAUDE.md 那一档不动。 ③第 3 段按 `test_赛场之上开场要给出北京时间赛事和轮次` 补了「第一轮」（+3 字，真语音 10.32s 对 11.8s 画面，加三个字仍有约 +0.8s）。",
+  "tts_backend": "edge",
+  "_tts_backend_why": "run 35410646682 在片尾口播那一步 Azure 401（WebSocket upgrade failed: Authentication error），和 2026-09-17 bjk-cup-story / zheng-bjk-cup-olympic-rule 那次同一个错——钥匙还没恢复，退回 edge-tts 的开关走 spec。本条不用情绪风格，edge 够用；本地 --check-narration 量的就是 edge 的时长，余量按 edge 算反而更准。钥匙恢复后删掉这两个键即可。"
 }
