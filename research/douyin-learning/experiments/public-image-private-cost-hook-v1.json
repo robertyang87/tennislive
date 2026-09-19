@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "rule_id": "public-image-private-cost-hook-v1",
+  "version": "1.0.0-experiment",
+  "status": "experiment_ready",
+  "target_column": "网球有故事",
+  "evidence": [
+    {
+      "platform": "douyin",
+      "work_id": "7673455991492529458",
+      "permanent_url": "https://www.douyin.com/video/7673455991492529458",
+      "review": "research/douyin-learning/reviews/7673455991492529458.md",
+      "evidence_scope": "direct rendered title and chapter summary only",
+      "limitation": "No original-media visual/audio review; factual claims require independent sourcing."
+    }
+  ],
+  "hypothesis": "For fact-checked athlete biographies, opening with a single contrast between the public sports label and the documented private cost may improve early comprehension and sustained viewing versus a chronological résumé opening.",
+  "applicability": [
+    "网球有故事",
+    "人物经历已有当事人或权威来源",
+    "作品计划时长约 3–5 分钟",
+    "反差不依赖夸大死亡、疾病、关系或心理状态"
+  ],
+  "disallowed": [
+    "赛场之上比赛复盘",
+    "赛后开麦忠实翻译",
+    "没有可靠来源的私人经历",
+    "仅凭评论区推断人物关系或心理"
+  ],
+  "single_primary_variable": {
+    "name": "opening_frame",
+    "control": "前 12 秒按履历或比赛成绩顺序介绍人物",
+    "treatment": "前 12 秒只用一句“公众竞技标签 vs 已核实私人代价”的反差问题；12 秒后与对照脚本完全相同"
+  },
+  "held_constant": [
+    "题材与事实来源",
+    "总时长",
+    "画面顺序",
+    "字幕、配音、BGM、音效和响度",
+    "发布时间窗与发布渠道",
+    "封面与标题除开场句外不变"
+  ],
+  "primary_metric": {
+    "name": "average_play_percentage",
+    "source": "Douyin creator single-work analytics when the label is actually exposed",
+    "observation_window": "72 hours after normal publication",
+    "comparison": "median of at least 3 similar athlete-story videos, matched on duration band and publication window",
+    "caveat": "Average play percentage is not completion rate."
+  },
+  "guardrails": [
+    "2-second exit rate, if exposed, must not worsen materially",
+    "fact corrections or credible accuracy complaints trigger immediate rejection regardless of retention"
+  ],
+  "qc_requirements": [
+    "Every private-life claim linked to an authoritative source with date",
+    "No mirrored source footage",
+    "Accurate translation for any retained original-language quote",
+    "Complete ending retained",
+    "Only the opening copy differs between A and B"
+  ],
+  "rollback": {
+    "condition": "Reject if the treatment average play percentage is at least 5 percentage points below the matched-control median after 72 hours, or if any material factual error is confirmed.",
+    "action": "Remove the treatment hook and return to the chronological, source-led opening; keep evidence and failure receipt."
+  },
+  "production_consumption": {
+    "status": "awaiting_applicable_unpublished_production",
+    "spec_consumed_by": null,
+    "rendered_artifact": null,
+    "qc_receipt": null,
+    "treatment_work_id": null,
+    "outcome_receipt": null
+  },
+  "integration": "pending; do not add to production learned-rules registries before rendered QC and real outcome review"
+}
