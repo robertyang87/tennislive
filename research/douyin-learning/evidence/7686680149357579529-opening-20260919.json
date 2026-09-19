@@ -1,0 +1,140 @@
+{
+  "schema_version": 1,
+  "work_id": "7686680149357579529",
+  "platform": "douyin",
+  "permanent_url": "https://www.douyin.com/video/7686680149357579529",
+  "author": "GOAT Anatomy",
+  "observed_at": "2026-09-19T09:11:00Z",
+  "evidence_level": "full_local_media_targeted_visual_review_audio_pending",
+  "media": {
+    "sha256": "b291bd5cae52d2f6721279b2268c8724ea6acc0e0d14462f1ffe7f0d28369dbd",
+    "duration_seconds": 442.566667,
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "video_codec": "h264",
+    "audio_codec": "aac"
+  },
+  "methods": [
+    {
+      "range_seconds": [
+        0,
+        8
+      ],
+      "sampling": "2 fps",
+      "frames": 16,
+      "purpose": "opening composition and text/layout states"
+    },
+    {
+      "range_seconds": [
+        2.3,
+        5.1
+      ],
+      "sampling": "10 fps",
+      "frames": 28,
+      "purpose": "inspect continuity around fast layout transitions"
+    },
+    {
+      "range_seconds": [
+        0,
+        8
+      ],
+      "method": "ffmpeg select scene>0.25",
+      "candidate_timestamps_seconds": [
+        2.53333,
+        3.23333,
+        4,
+        4.9
+      ],
+      "caveat": "algorithmic candidates, not confirmed shot count"
+    }
+  ],
+  "timestamped_findings": [
+    {
+      "range_seconds": [
+        0,
+        2.4
+      ],
+      "dimension": [
+        "composition_subject_layout",
+        "text_graphics_style"
+      ],
+      "finding": "Full-bleed pairs skating keeps both bodies and motion visible. A large white Chinese premise sits upper-left with smaller English below; creator mark remains upper-right.",
+      "limits": "Exact font, margins, and transition start are not measured production parameters."
+    },
+    {
+      "range_seconds": [
+        2.5,
+        3.2
+      ],
+      "dimension": [
+        "transitions",
+        "composition_subject_layout"
+      ],
+      "finding": "A bright blurred flash leads to a repeated GOAT-pattern black background and a tilted portrait inset; 10 fps samples show blur resolving into the inset.",
+      "limits": "No sound listening, so no claim that the flash lands on music or an effect."
+    },
+    {
+      "range_seconds": [
+        3.2,
+        4.8
+      ],
+      "dimension": [
+        "transitions",
+        "zoom_focus",
+        "text_graphics_style"
+      ],
+      "finding": "Several overlapping archival windows slide/occlude one another while small identity labels appear. Continuous geometry change explains why scene detection emits candidates here.",
+      "limits": "Do not label these all as camera cuts or continuous zooms; source layers and edit project are unavailable."
+    },
+    {
+      "range_seconds": [
+        4.9,
+        5.1
+      ],
+      "dimension": [
+        "transitions"
+      ],
+      "finding": "A second bright/blurred transition resolves to a full-frame pair portrait.",
+      "limits": "Transition duration is bounded only by 10 fps visual samples."
+    },
+    {
+      "range_seconds": [
+        5,
+        7.5
+      ],
+      "dimension": [
+        "editing_rhythm",
+        "composition_subject_layout",
+        "text_graphics_style"
+      ],
+      "finding": "The opening moves from paired portrait to alternating close-ups with bottom-centered subtitles; this creates a premise-to-character sequence within the first eight seconds.",
+      "limits": "2 fps sampling is not enough to report every cut or exact shot length."
+    }
+  ],
+  "deep_review_dimensions": {
+    "composition_subject_layout": "partial_with_timestamped_visual_evidence",
+    "text_graphics_style": "partial_with_timestamped_visual_evidence",
+    "editing_rhythm": "partial_first_8_seconds_only",
+    "speed_changes": "pending_no_source_timeline_comparison",
+    "zoom_focus": "pending_layer_geometry_seen_but_zoom_mechanism_unproven",
+    "transitions": "partial_10fps_review_and_scene_candidates",
+    "voiceover_logic": "pending_no_listening_or_new_asr_in_this_run",
+    "voice_music_sound_mix": "pending_mixed_aac_present_no_listening_or_stems",
+    "counterexamples": "confirmed_dense_collage_not_suitable_for_ball_trajectory_or_scoreboard_explanation"
+  },
+  "applicability": {
+    "useful_for": [
+      "人物故事开头把事件动作、关系命题、人物面孔依次建立的结构研究"
+    ],
+    "do_not_copy_into": [
+      "赛场之上的球路/站位解释",
+      "需要保持比分牌和完整球员身体的主机位"
+    ],
+    "reason": "Tilted overlapping windows and flash/blur can obscure ball path, body orientation, or scoreboard; one-author evidence cannot become a general rule."
+  },
+  "strategy_decision": {
+    "new_rule_proposed": false,
+    "reason": "This is a single-author partial opening review and mainly strengthens an inapplicability boundary. Existing pending experiments remain higher priority; no production skill promotion."
+  }
+}
