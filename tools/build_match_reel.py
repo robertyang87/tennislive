@@ -5331,6 +5331,10 @@ APPROVED_LOW_RES_SOURCES: dict[str, int] = {
     # 他自己的官宣视频（中网官方制作、他转发到 Instagram Story；X 用户 @pavyg 的转录，
     # 账号所有者 2026-09-17 亲自给的链接），720×960 竖版
     "https://x.com/pavyg/status/2100236978620928375": 960,
+    # 鲁德 v 特日格乐（ruud-te-davis-cup-2026-wg1）：账号所有者 2026-09-19 直接给了
+    # 这条 URL 说「做这个赛场之上」——ITF 官方频道 World Tennis 的戴维斯杯 highlights
+    # 照旧只有 1280×720（yt-dlp -F 逐档查过，最高 398/609 两档都是 720p），等不出 1080p
+    "https://www.youtube.com/watch?v=rhxnJFSz4Go": 720,
 }
 
 
