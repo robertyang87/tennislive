@@ -1,0 +1,336 @@
+{
+  "slug": "lehecka-shelton-davis-cup-2026-qualifiers",
+  "_column": "赛场之上",
+  "sources": {
+    "main": "https://www.youtube.com/watch?v=SVJUKAPpNp8"
+  },
+  "_source": "ITF 官方 YouTube 频道 World Tennis（oEmbed `author_name=World Tennis`，@worldtennisofficial，和 ruud-te-davis-cup-2026-wg1 / davis-cup-china-first-world-group-1 同一个频道）单场集锦《Home THRILLS! 🎾 | Jiri Lehecka v Ben Shelton | Highlights | Davis Cup Qualifiers 2026》，**1920×1080 / 25fps / 413.73s**（probe 实测）。⚠️ 这条**不写 `source_quality_exceptions`**：同一个频道的 ruud-te 那条封顶 1280×720，所以上一条写了画质豁免；而这一条 probe.json 直接报 `width 1920 / height 1080`，「1080p 及以上是硬门槛」那条自然满足——**别照抄上一条的豁免**，那会把一条合格的源片记成不合格。3:4 竖版窗口从 1920 里取 810px 只放大 1.33 倍。四要素自证：①左下角常驻记分条烧着 `CZE 🇨🇿 / USA 🇺🇸` 两行国旗、盘分和局分，`•` 标发球方，逐格读过（见 `_turning_points`）；②自动字幕 17.04s 解说自报「here in Prague」、232.16s「this O2 arena is throbbing」；③398.88s 解说念出赛果「64 64 one a piece」，和 flashscore / AP 逐字一致；④球衣：谢尔顿红色 On 上衣胸前美国国旗，莱赫奇卡捷克蓝 Wilson，150.5s 与 400.5s 的赛事图形印着 `CZECHIA / USA / MATCH 2 / O2 ARENA`。有自动字幕（captions.txt，70 行）。⚠️ **0–6.0s 是戴维斯杯片头动画、409.64s 起是片尾板**，两头都没有任何窗口碰到（最早的窗口起点 36.4，最末一段收在 399.5）。",
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "谢尔顿",
+    "hook": "10个接发局\n一局也没拿下",
+    "_hook_why": "两行讲的都是**整场的形状**，不是某一个时刻：谢尔顿全场 10 个接发局一局没赢（flashscore `df_st_1` 全场 `Return games won` 客队 `0% (0/10)`）。⚠️ 不重复比分板——比分板就在钩子底下印着 6-4 6-4，所以钩子里不写「六比四」。主语是封面上的谢尔顿，和 `subject` 一致。「10」按「给人看的字一律阿拉伯数字」那条写成阿拉伯数字——烧上屏的手写文案没有自动转换的闸，得自己写对。两行分别 6 个字符，≤ HOOK_MAX_CHARS=10。",
+    "topic": "戴维斯杯资格赛 · 捷克 vs 美国",
+    "winner": "莱赫奇卡",
+    "result": "6-4 6-4",
+    "matchup": [
+      {
+        "name": "莱赫奇卡",
+        "name_en": "Jiri Lehecka",
+        "country": "CZE",
+        "rank": 24
+      },
+      {
+        "name": "谢尔顿",
+        "name_en": "Ben Shelton",
+        "country": "USA",
+        "rank": 4
+      }
+    ],
+    "_matchup_rank_why": "两个名次两个独立源对上了：① **tennisexplorer ATP 榜**（`sources/rankings.py` 用的那条，榜单日期 **14.09.2026**）——`4. Shelton Ben USA 4680`、`24. Lehecka Jiri Czech Republic 2120`；② **AP 通稿**（clickorlando / journal-news 转载）写着「beaten 6-4, 6-4 by **24th-ranked** Jiri Lehecka」，以及谢尔顿美网决赛后「reached a **career-high No. 4** ranking」。⚠️ 戴维斯杯没有种子，不存在种子号和排名混淆的问题。",
+    "_name_why": "两个中文名都走 `player_zh()`：`player_zh(\"Jiri Lehecka\")` → 莱赫奇卡，`player_zh(\"Ben Shelton\")` → 谢尔顿。**不是读文件内容判的，是真调了那个函数**（`players.py` 和 `player_names_top500.json` 两张表以后者优先）。没有手打。",
+    "_subject_why": "封面放**谢尔顿**——输的那个，但他是这条片子的主语（账号所有者点的题就是「谢尔顿输球」），也是刷到的人认得的名字：五天前的美网亚军、生涯最高世界第 4。钩子讲的是他的接发，「封面标题带着指控时，放谁的脸就是在指认谁」这条正好成立——这一屏要指认的就是他。",
+    "_heat_why": "过的是「② 顶级球员」那一档：谢尔顿世界第 4，在 `HEAT_TOP_RANK = 20` 以内；莱赫奇卡第 24 也贴着。外加这一场自己的话题：**这是谢尔顿美网决赛之后的第一场球**（AP：「first match since US Open final」，中间隔了 5 天），而他输了，捷克把这轮资格赛扳成 1-1。赢的那一队去 11 月 24–29 日博洛尼亚的八强总决赛。",
+    "portrait": {
+      "image": "assets/reel/lehecka-shelton-davis-cup-2026-qualifiers.jpg",
+      "focus": 0.72,
+      "focus_y": 0.5,
+      "zoom": 1.0,
+      "_why": "横图 4000×2667 铺 3:4 竖版：竖向正好铺满（`zoom=1.0` 时 `focus_y` 是死的），所以只有 `focus` 有用。取景窗宽 = 1080 × (2667/1440) = **2000px**，`focus=0.72` 取的是原图 x 1880~3880。**本地 `render_cover_local.py` 一共渲了 6 版比出来的**（0.54 / 0.66 / 0.72 / 0.78 三档取景 ＋ 另外两张候选），0.72 这一版：拍面完整地留在右上、球也在画面里、伸展的对角线从左下的后腿一直拉到右上的球拍，脸在画面左中、离台头文字很远，左下有一块干净的蓝正好落钩子那两行。0.66 那版球拍被右边缘切掉一截，0.54 那版整个拍子都没了，0.78 又把人挤得太靠左。台头带（0~170）压的是画面顶部的蓝色空档和他头发的最上缘，**一个字都没压到脸**；钩子带那两行落在左侧的蓝色空档和他的小腿外缘上，脸离它很远。眼睛睁着。",
+      "_portrait_why": "AP 本场实拍（**Petr David Josek / AP**），图注原文「United States' Ben Shelton returns the ball to Czechia's Jiri Lehecka during the Davis Cup second round qualifier match between the Czech Republic and the United States, in Prague, Friday, Sept. 18, 2026.」——人物、赛事、地点、时刻四要素**全写在图注里**，不靠看图推断。原图 4000×2667（townnews CDN `?resize=4000%2C2667`，默认只给 1763×1175）。四道闸门：①精准——图注自证；②在比赛中——`returns the ball ... during the ... match`；③冲击力——**全身极限伸展的救球**，红衣压在蓝场上、球在画面里，是这一批里唯一有动势的一张；④清晰度——4000×2667，铺 1080×1440 是 1.85×，远过 1.00× 地板。**打开看过，也渲成封面看过**。\n⚠️⚠️ **第一版选的是另一张近景特写（同摄影师同场，`image_8b1761e9`「returns a ball」），账号所有者一句「封面图太丑了」否掉了。** 那不是选错了图，是我把「⭐⭐ 情绪对题之内优先近景特写」读成了「越近越好」——而 CLAUDE.md 同一节里白纸黑字记着这条的下界：**「❌ 太近：整屏只有一张脸」**，而且那正是账号所有者上一次亲口否掉的形状（「这个太近景了」）。**一条规矩和它的反例写在同一节里，我只用了前半句。**近景特写要的是「情绪外露」（吼、捂脸、瞪眼），不是「脸占得满」；这一张脸更小，但整个身体在说话。"
+    },
+    "scoreboard": {
+      "court": "O2 Arena",
+      "_court_why": "布拉格 O2 竞技场，室内硬地。三个源一致：①源片 150.5s / 400.5s 的赛事图形自己印着 `O2 ARENA`；②AP 图注「in Prague」；③o2arena.cz 的赛事页《Davis Cup Qualifiers – Česko vs. USA》写着周五 15:00、周六 14:00 开场。戴维斯杯这一场没有更细的球场名，所以印场馆名。",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%20%221%3A32%3A00%22%2C%20%22source%22%3A%20%22tennisnow.com%20%E8%B5%9B%E6%8A%A5%E3%80%8ALehecka%20Stops%20Shelton%20to%20Level%20Czechia%20with%20USA%20in%20Davis%20Cup%E3%80%8B%EF%BC%9A1%20hour%2C%2032%20minutes%22%2C%20%22cross_check%22%3A%20%22flashscore%20df_sui_1%20%E6%8A%A5%201%3A35%EF%BC%88%E5%88%86%E7%9B%98%200%3A49%20%2B%200%3A46%EF%BC%89%EF%BC%8C%E5%B7%AE%203%20%E5%88%86%E9%92%9F%EF%BC%9B%E6%8C%89%20CLAUDE.md%E3%80%8C%E6%AF%94%E8%B5%9B%E7%94%A8%E6%97%B6%E4%B8%8D%E8%A6%81%E5%8F%AA%E4%BF%A1%20flashscore%E3%80%8D%E5%8F%96%E9%9D%9E%20flashscore%20%E7%9A%84%E9%82%A3%E4%B8%AA%22%7D",
+        "field": "duration"
+      },
+      "_duration_why": "⚠️ **两个源差 3 分钟，这一栏是有意选的，不是抄来的**：flashscore `df_sui_1` 报 `RB÷1:35`（分盘 `RC÷0:49` ＋ `RD÷0:46`），tennisnow.com 的赛报写「1 hour, 32 minutes」。取 **1:32**，三条理由：①CLAUDE.md「比赛用时不要只信 flashscore」那条记过它**一天里错了两场、方向都是偏长**，这次正好又是 flashscore 更长；②flashscore 的 `DC÷1789743000` 换算是 **14:50:00 UTC 整**——一个整点整分的数，像**排定**的开赛时刻而不是实际开拍，拿它减 `DD÷1789748702`（16:25:02）得到的 1:35:02 会把开赛前的空档一起算进去；③它那三个数（总计／分盘／起止时刻）出自同一家，按那条规矩「加得起来不等于自洽」，不构成交叉验证。⚠️ ITF 官方 tieCentre 是最权威的第三个源，但**这台沙箱对 `api.itf-production.sports-data.stadion.io` 恒 403**（两个端点都试过，返回 CloudFront 的 `403 ERROR / Request blocked`），这一轮拿不到，不是没查。⚠️ **用时只印在比分板上，旁白里一个字都不提**——一个还有分歧的数不该用嘴说出去。",
+      "_scorebox_probe_why": "⚠️ 这一趟 probe 传的 `--scorebox 67,600,425,673` 是照 ruud-te 那条 **1280×720** 源片抄的，而这条是 **1920×1080**——区域没对上，`probe.json` 的 `point_ends` 给了 161 个、间距稳定在 0.8 秒，而全场统共只有 119 分，**这一栏不可信，一个窗口都没用它**。切点一律按 `scene_cuts` ＋ 2 秒一格的缩略图墙定（ruud-te 那条的 `point_ends` 本来就是空的，这条线从来没依赖过它）。`score_*.jpg` 那 11 张记分条裁图倒是拍到了记分条，逐格读得出来，`_turning_points` 用的就是它。"
+    },
+    "_result_why": "两盘都没有抢七——flashscore `df_sui_1` 只有 `Set 1 IG÷6 IH÷4 RC÷0:49` 和 `Set 2 IG÷6 IH÷4 RD÷0:46`，没有任何 `D*` 抢七槽位，所以 `cover.result` 不带小括号。⚠️ 戴维斯杯资格赛是**三盘两胜**，这场 2-0 **没有打满距离**（输家赢的盘数 0 ≠ 赢家 2 − 1），所以**不存在决胜盘**——「大满贯男子五盘三胜」和「决胜盘抢十分」那两条在这儿都不适用，旁白和文案里一个「决胜盘」都没有。"
+  },
+  "topbar": {
+    "line1": "2026 戴维斯杯资格赛 第二轮",
+    "line2": "莱赫奇卡 6-4 6-4 谢尔顿"
+  },
+  "_topbar_why": "line1：赛事按 ITF 的正式名称「Davis Cup Qualifiers, Second Round」——flashscore 的赛事分组写着 `ATP - SINGLES: Davis Cup - World Group (World) - Qualification`，AP 图注写「Davis Cup **second round qualifier** match」，源片标题写「Davis Cup **Qualifiers** 2026」，三处一致。⚠️ 轮次写「第二轮」不写「N 强」：戴维斯杯资格赛本来就是按轮编号的，不是淘汰赛阶梯，没有「八强／四强」这一层。line2 由 `cover.winner` / `result` / `matchup` 机械拼出。",
+  "_match": {
+    "status": "result_verified",
+    "source": "flashscore_points",
+    "source_id": "lvH1N9aM",
+    "flashscore_id": "lvH1N9aM",
+    "participants": [
+      "莱赫奇卡",
+      "谢尔顿"
+    ],
+    "set_scores_home_away": [
+      [
+        6,
+        4
+      ],
+      [
+        6,
+        4
+      ]
+    ],
+    "tiebreaks_home_away": [
+      null,
+      null
+    ],
+    "winner": "莱赫奇卡",
+    "loser": "谢尔顿",
+    "winner_result": "6-4 6-4",
+    "loser_result": "4-6 4-6",
+    "_direction_why": "flashscore 当日表 `f_2_-1_2_en_1`：`AA÷lvH1N9aM`、`AE÷Lehecka J.`（home）、`AF÷Shelton B.`（away）、`BA/BB÷6:4`、`BC/BD÷6:4`、`AG/AH÷2:0`。第二源：AP 通稿「beaten 6-4, 6-4 by 24th-ranked Jiri Lehecka」。第三源：源片自动字幕 398.88s 解说念出「64 64 one a piece」，以及 400.5–408.5s 的赛果图形 `CZECHIA 6 6 / USA 4 4`。⚠️ `participants` 跟 flashscore 的 **home/away**（和紧挨着它的 `set_scores_home_away` 同序），这一场恰好也和 `cover.matchup` 的版式顺序一致。"
+  },
+  "stats": {
+    "a": {
+      "aces": 3,
+      "df": 1,
+      "first_in": 32,
+      "first_won": 28,
+      "second_total": 25,
+      "second_won": 15,
+      "bp_conv": 2,
+      "bp_chances": 6,
+      "pts_won": 66,
+      "pts_total": 119,
+      "first_total": 57,
+      "headshot": "assets/players/headshots/atp-L0BV.png"
+    },
+    "b": {
+      "aces": 3,
+      "df": 2,
+      "first_in": 49,
+      "first_won": 35,
+      "second_total": 13,
+      "second_won": 6,
+      "bp_conv": 0,
+      "bp_chances": 2,
+      "pts_won": 56,
+      "pts_total": 119,
+      "first_total": 62,
+      "headshot": "assets/players/headshots/atp-S0S1.png"
+    },
+    "_source": "flashscore 本场 `lvH1N9aM` 的 `df_st_1`，整块由 `tools/match_stat_hooks.py lvH1N9aM --home Lehecka --away Shelton --stats-block` **机器抄出，没有手打**。⚠️ `a` 跟的是 `cover.matchup[0]` = 莱赫奇卡，而 flashscore 的 home 也是 Lehecka——两个顺序这一次**恰好一致，a/b 不用对调**。锚点核过：一发进球率 `first_in/first_total` 莱赫奇卡 32/57 = 56%、谢尔顿 49/62 = 79%，和 feed 里那两行 `1st serve percentage 56% / 79%` 对得上；`bp_chances` 谢尔顿只有 2（= feed 的 `Break Points Converted` 客队 `0/2`），正是这条片子的核心数。头像：谢尔顿 `atp-S0S1.png` 取自已发的 `shelton-mensik` 与 `zverev-shelton-us-open-2026-final`（两条都挂「谢尔顿」），莱赫奇卡 `atp-L0BV.png` 取自 `lehecka-fils`（matchup 是[菲斯, 莱赫奇卡]，所以 b = 莱赫奇卡）。**制胜分 / 非受迫失误这场 flashscore 没有**（17 项那一档），按 `render_stat_card.OPTIONAL_FIELDS` 留空——TNNS 那一趟见 `_tnns_why`。",
+    "_winners_ue_why": "跑过 tnns-stats（id=74798718），hasExtendedStats=False，TNNS 这场也没有这两行；flashscore 同样没有。 ⚠️ 这一行是 `tools/tnns_stats.py` 的 run 日志原样抄的（run 35416697753，job 105826626474），不是转述。 第一趟 run 35416287717 红在「今天的赛程里没有这一场」——TNNS 按 **UTC** 分日，这场北京时间是 9/19 凌晨、UTC 还在 9/18，补 `--date 2026-09-18` 才认到。**那次红是查错了日子，不是「这场没有」**——两者长得一模一样。"
+  },
+  "_hit_data": "跑过 `match_stat_hooks.py lvH1N9aM`。挑进正文的两个：①**谢尔顿全场只拿到 2 个破发点、一个都没兑现，10 个接发局一局没赢**（`Break Points Converted` 客队 0/2、`Return games won` 客队 0% (0/10)）——进了封面钩子、第 8 段和第 9 段旁白；②**一发的反差**：谢尔顿一发进球率 79%（49/62）是全场最高的一个数，可一发得分率只有 71%（35/49）；莱赫奇卡一发只进 56%（32/57），一发得分率却有 88%（28/32）——进了第 6 段旁白，**这是「一发进得多不等于压得住」这条技战术的账**。备选没用上的：谢尔顿二发得分率 46%（6/13）对莱赫奇卡 60%（15/25）；总得分 66:56；`Match points saved` 客队 2（进了第 10 段，但那是逐分不是统计）。",
+  "_durations": "flashscore 分盘 0:49 + 0:46 = 1:35，tennisnow 报 1:32——**两个源差 3 分钟**，取舍和理由全写在 `cover.scoreboard._duration_why` 里。两盘用时几乎一样长（0:49 / 0:46），和比分一样对称，这也是这条片子没有「第二盘翻盘」那种形状的原因：它从头到尾是同一个样子。",
+  "_turning_points": [
+    "**第一盘第三局（谢尔顿发球，1-2）：连救三个破发点。** 逐分 `df_mh_1`：`15:0, 30:0, 30:15, 30:30, 40:30 |B1|, 40:40, A:40 |B1|, 40:40, A:40 |B1|, 40:40, 40:A` —— 三个 `|B1|`，全部救下。第二源 tennisnow：「Shelton fended off **three** break points in his second service game」。⚠️ **这一局集锦没剪进来**（记分条从 40.5s 的 `•CZE 0 40 / USA 1 30`（第二局）直接跳到 56.5s 的 `CZE 2 15 / •USA 2 0`，也就是第五局），所以第 4 段旁白讲它、画面走的是第五局，**旁白不指认画面上的任何一个动作**。",
+    "**第一盘第五局（谢尔顿发球，2-2）：第一个破发点就丢了。** 逐分 `15:0, 30:0, 30:15, 40:15 |B1|` —— 只有一个破发点，直接被破。源片记分条 56.5–74.5s 读 `CZE 2 15 / •USA 2 0`（一个十八秒的长回合），76.5–82.5s 读 `CZE 2 40 / •USA 2 15`，正是那个破发点；自动字幕 79.52s「And he's dragged that wide. And **there is the break**. And Czechia finally have a foothold in this tie.」",
+    "**第一盘第十局（莱赫奇卡发球，5-4）：零封保发拿下盘点。** 源片记分条 92.5–110.5s 一路读 `•CZE 5 0 / USA 4 0`（又一个近二十秒的长回合），128.5s 那一格记分条底下挂出 `SET POINT`，134.0s 之后是莱赫奇卡特写和捷克队席。自动字幕 113.76s 解说自报「Lehecka **serving for the set**」、139.68s「What a set of tennis he put together against the US Open finalist Ben Shelton to **take it 6-4**」。",
+    "**第二盘第三局（谢尔顿发球，1-1）：又是早早被破。** 逐分 `0:15, 15:15, 15:30, 30:30, 30:40, 40:40, A:40 |B1|` —— 一个破发点，兑现。源片记分条 200.5–204.5s 读 `CZE 6 1 40 / •USA 4 1 40`（平分），**206.5s 那一格记分条底下挂出 `BREAK POINT` 横幅**，208.5–212.5s 读 `CZE 6 1 AD / •USA 4 1 40`。自动字幕 210.56s「And there it is. **There is the break.** Could it be the decisive one?」AP：「Lehecka broke Shelton's serve **early in each set**」。",
+    "**第二盘第四局（莱赫奇卡发球，2-1）：谢尔顿全场仅有的两个破发点，都在这一局。** 逐分 `0:15, 0:30, 15:30, 15:40 |B1|, 30:40 |B1|, 40:40, A:40` —— 两个 `|B1|` 都在这儿，莱赫奇卡救下并保发。第二源 tennisnow：「Lehecka faced **two** break points while serving at 2-1 in the second set but held」「Shelton earned **two** break points at 1-2 in the second set」。⚠️ **集锦没剪进 15-40 那两分**（记分条从 212.5s 的破发直接跳到 222.5s 的 `•CZE 6 2 AD / USA 4 1 40`，也就是这一局的占先），所以第 8 段旁白讲这两个破发点、画面是同一局的尾巴——**同一局，不同一分**，旁白没有指认画面上任何一个动作。",
+    "**第二盘第十局（莱赫奇卡发球胜赛局，5-4）：三个赛点，谢尔顿救掉两个。** 逐分 `0:15, 15:15, 30:15, 30:30, 40:30 |B3|, 40:40, A:40 |B3|, 40:40, A:40 |B3|`（`|B3|` 是赛点；逐分不列制胜的那一分，所以第三个赛点之后那一分没写出来）。统计 `Match points saved` 客队 **2**。源片记分条把这一局逐格印全了：320.5s `•CZE 6 5 40 / USA 4 4 30`（第一个赛点），324.5 / 326.5 / 328.5s 记分条底下挂着 `MATCH POINT`，340.5–352.5s 退回 `40 / 40`（平分），354.5–376.5s 又是 `AD`（第三个赛点），377 秒前后结束。**画面、逐分、统计三处对同一件事说的是同一个数。**"
+  ],
+  "editorial": {
+    "mode": "match_review",
+    "hook": [
+      "10个接发局",
+      "一局也没拿下"
+    ],
+    "question": "这轮资格赛回到一比一，今晚双打加两场单打，美国队得拿下其中两场才能去博洛尼亚——他们扳得回来吗？",
+    "thesis": "谢尔顿不是发球崩了：他一发进球率 79%，全场最高，10 个发球局只丢 2 个。垮的是接发——莱赫奇卡一发只进 56%，却赢下其中 88%，谢尔顿 10 个接发局一局没赢、整场只拿到 2 个破发点（都在第二盘第四局，都没兑现）。两盘的破发都来得很早（第一盘第五局、第二盘第三局），剩下的时间谁也破不了谁，于是 6-4、6-4。1 小时 32 分，美网决赛之后的第五天，捷克把这轮资格赛扳成 1-1。",
+    "beats": [
+      "北京时间 9 月 18 日深夜开球、打到 19 日凌晨，戴维斯杯资格赛第二轮，布拉格 O2 竞技场，捷克主场。这是谢尔顿美网决赛输给兹维列夫之后的第一场球，中间隔了 5 天，世界排名刚升到生涯最高的第 4。",
+      "第一盘他的第二个发球局连救三个破发点，看上去顶住了；两局之后 40-15，只有一个破发点，他没守住。莱赫奇卡 5-4 零封保发拿下盘点，6-4。",
+      "第二盘 1-1 又被破，而且同样早。紧接着的一局谢尔顿拿到 15-40——那是他整场球唯一一次拿到破发点，两个都没兑现，莱赫奇卡保发到 3-1，从那儿到结束再没让他碰到过发球局。",
+      "5-4 发球胜赛局打了三个赛点，谢尔顿救掉两个，第三个没再给机会。6-4 6-4，1 小时 32 分。捷克 1-1 扳平，今晚还有三场，赢的那一队去 11 月博洛尼亚的八强总决赛。"
+    ],
+    "_hook_why": "这一栏和 `cover.hook` 逐行相同（闸要求）。理由见 `cover._hook_why`。",
+    "human_context": {
+      "angle": "这条片子的场外主角是**日程**：谢尔顿 9 月 13 日在纽约打完美网决赛（0-3 负于兹维列夫，`zverev-shelton-us-open-2026-final`），排名升到生涯最高的世界第 4，5 天后飞到布拉格，在一个坐满捷克人的室内馆里打客场。AP 那句「first match since US Open final」是这场球被写成新闻的唯一理由——而他输了，输给世界第 24。对面的莱赫奇卡是捷克队的一号，队长是**贝尔迪赫**（源片 136.5s 那个蓝衣站在队席前的人），美国队队长是**鲍勃·布莱恩**（268.5s 戴白帽鼓掌那个）。",
+      "_angle_why": "队长两个名字都不是靠看图认的：贝尔迪赫见 AP 图注「Lehecka celebrates with teammates」那一批里的队席描述与 daviscup.com 的 Czechia 队页；布莱恩见 tennisnow 赛报里引的「U.S. Captain Bob Bryan: 『Lehecka was red-hot today and served well when he needed to.』」。⚠️ **两个名字都没写进旁白和上屏文案**，只留在这一栏和小红书正文里——画面上认人只能靠球衣颜色，旁白不指认。",
+      "facts": [
+        "赛果与场地：flashscore `lvH1N9aM` 莱赫奇卡 6-4 6-4 胜，home=Lehecka / away=Shelton；AP 通稿「beaten 6-4, 6-4 by 24th-ranked Jiri Lehecka」。布拉格 O2 竞技场，室内硬地——源片 150.5s / 400.5s 的赛事图形自己印着 `CZECHIA / USA / MATCH 2 / O2 ARENA`，o2arena.cz 的赛事页《Davis Cup Qualifiers – Česko vs. USA》写周五 15:00、周六 14:00 开场。用时两个源分歧（flashscore 1:35 / tennisnow 1:32），取舍见 `cover.scoreboard._duration_why`。",
+        "这场球的由来：谢尔顿 2026-09-13 打完美网决赛（flashscore `MyyzpiYp`，兹维列夫 3:1），排名升到生涯最高世界第 4，5 天后在布拉格打客场——AP「This was Shelton's first match following his U.S. Open final loss to Alexander Zverev on Sunday」。AP 另记他戴维斯杯生涯战绩 0 胜 3 负（此前两场负于澳大利亚，2024 年 1/4 决赛的单打与双打）——⚠️ **这一条只有 AP 一个源，所以旁白和上屏文案里一个字都没提**，只留在这儿。",
+        "这一轮的算术：戴维斯杯资格赛第二轮，五场三胜制。首日 9/18 两场单打——勒纳·钱 6-2 6-4 胜门西克（flashscore `tEDgPVU9`，美国先下一城），莱赫奇卡 6-4 6-4 胜谢尔顿扳成 **1-1**（ATP 官网同日赛报逐条对上）。次日 9/19 双打 ＋ 两场反向单打，当地 14:00 开始 = 北京 20:00；flashscore 今日表 `pA2XHmNq Mensik J. vs Shelton B.` 13:30 UTC（北京 21:30）、`WQ0uGRid Lehecka J. vs Tien L.` 15:00 UTC（北京 23:00）。赢的那一队进 11 月 24–29 日博洛尼亚的八强总决赛，与卫冕的意大利会合。",
+        "两个人的名次：tennisexplorer ATP 榜（榜单日期 14.09.2026）谢尔顿第 4（4680 分）、莱赫奇卡第 24（2120 分）；AP 同样写「24th-ranked」与「career-high No. 4」。两源一致。",
+        "技术统计（flashscore `df_st_1`，`match_stat_hooks.py` 机器抄）：谢尔顿一发 49/62 = 79%，一发得分 35/49 = 71%，二发得分 6/13 = 46%，ACE 3、双误 2，破发点 0/2，接发局 0/10，总得分 56/119；莱赫奇卡一发 32/57 = 56%，一发得分 28/32 = 88%，二发得分 15/25 = 60%，ACE 3、双误 1，破发点 2/6，发球局 10/10，总得分 66/119。⚠️ 这场 flashscore 没有制胜分与非受迫失误（17 项那一档）。",
+        "双方赛后原话：谢尔顿（ATP 官网赛报）「I thought he played a great match. A lot of credit to him. He outplayed me today. He served great. Returned great. Volleyed really well.」；莱赫奇卡（tennisnow）「Definitely wasn't easy at all... I just kept my ground. I just believed in every point.」；美国队队长鲍勃·布莱恩（tennisnow）「Lehecka was red-hot today and served well when he needed to.」⚠️ 引语可以抄，结论不可以——这三句只进小红书正文，旁白里没有转述任何一句当结论。"
+      ],
+      "sources": [
+        "https://www.flashscore.com/match/tennis/lvH1N9aM/",
+        "https://www.atptour.com/en/news/lehecka-shelton-davis-cup-2026-qualifiers-froday",
+        "https://www.clickorlando.com/sports/2026/09/18/south-korea-leads-india-2-0-in-davis-cup-shelton-to-play-for-us-at-czech-republic/",
+        "https://tennisnow.com/lehecka-stops-shelton-to-level-czechia-with-usa-in-davis-cup/",
+        "https://www.idahostatejournal.com/sports/national/czech-republic-usa-davis-cup-tennis/image_8b1761e9-748f-50f7-b1a7-9a835341b694.html",
+        "https://www.o2arena.cz/en/events/davis-cup-qualifiers-cesko-vs-usa-en/",
+        "https://www.tennisexplorer.com/ranking/atp-men/",
+        "https://www.youtube.com/watch?v=SVJUKAPpNp8"
+      ],
+      "voice_label": "十个接发局的那一边"
+    }
+  },
+  "_claims": [
+    {
+      "claim": "谢尔顿整场只拿到过两个破发点，而且都在第二盘第四局（旁白第 8 段「这是他整场唯一一次拿到破发点」）",
+      "sources": [
+        "flashscore `df_st_1`（lvH1N9aM）：全场 `Break Points Converted` 客队 `0/2`；分盘看，`Set 1` 客队 `0/0`、`Set 2` 客队 `0/2`——也就是第一盘他一个破发点都没拿到过，两个全在第二盘。逐分 `df_mh_1` 里莱赫奇卡发球的十局中，只有第二盘第四局出现 `|B1|`，出现两次（`15:40 |B1|, 30:40 |B1|`）",
+        "tennisnow.com 赛报《Lehecka Stops Shelton to Level Czechia with USA in Davis Cup》：「Lehecka faced **two** break points while serving at 2-1 in the second set but held」「Shelton earned **two** break points at 1-2 in the second set but missed a leaping high smash on the second」——不同主机，独立成稿，和上面那条逐分指的是同一局"
+      ]
+    },
+    {
+      "claim": "谢尔顿十个接发局一局也没赢（封面钩子 ＋ 旁白第 9 段）",
+      "sources": [
+        "flashscore `df_st_1`（lvH1N9aM）：全场 `Return games won` 客队 `0% (0/10)`、`Service games won` 主队 `100% (10/10)`；逐分 `df_mh_1`：莱赫奇卡发球的十局（第一盘 2/4/6/8/10、第二盘 2/4/6/8/10）每一局的 `HK` 都指向 home",
+        "源片记分条逐格读（`score_*.jpg` 11 张，2 秒一格）：莱赫奇卡每一个发球局之后 CZE 那一格都 +1——92.5–110.5s `•CZE 5 0 / USA 4 0` → 126.5s 之后 6-4；222.5–232.5s `•CZE 6 2 AD` → 240.5s `CZE 6 3`；354.5–376.5s `•CZE 6 5 AD` → 400.5s 赛果图形 `6 6 / 4 4`。**全片没有出现过一格「USA 领先且 CZE 在发球」的读数**"
+      ]
+    },
+    {
+      "claim": "这是谢尔顿美网决赛之后的第一场球，中间隔了五天（旁白第 2、11 段）",
+      "sources": [
+        "AP 通稿（clickorlando.com / journal-news.com 转载）：「This was Shelton's **first match following his U.S. Open final loss** to Alexander Zverev on Sunday」",
+        "flashscore 逐场：`MyyzpiYp` 美网决赛 `KC÷1789323600`（2026-09-13）兹维列夫 3:1 谢尔顿，下一场就是本场 `lvH1N9aM` `KC÷1789743000`（2026-09-18）——中间没有别的场次，两个时间戳差 5 天"
+      ]
+    }
+  ],
+  "_no_repeat": "同栏目此前发过的相关片子：`zverev-shelton-us-open-2026-final`（美网决赛，谢尔顿输给兹维列夫）、`shelton-tiafoe-us-open-2026-sf`、`shelton-mensik`、`shelton-alcaraz`、`shelton-nakashima-montreal-final` —— 这一条**不重讲**美网那一路怎么走到决赛、也不重讲他和门西克的旧账，美网只在第 2 段和第 11 段各出现一句「美网决赛打完第五天」，是这场球的**时间坐标**不是内容。莱赫奇卡那边发过 `lehecka-fils`、`wong-lehecka`，这条一句都不碰。⚠️ `ruud-te-davis-cup-2026-wg1` 是**同一天、同一个 ITF 频道、同一个戴维斯杯周末**的另一条「赛场之上」（挪威 vs 中国，世界一组），讲的是另一场球另一个对阵，按「同一件事不同栏目各讲一次不算重复」之外的那一层——**不同场次本来就不算重复**；这一条一个字都不提特日格乐和那块红土。`davis-cup-china-first-world-group-1` 是「网球有故事」栏目的解说片，另一个栏目。",
+  "push": {
+    "summary": "谢尔顿10个接发局全丢",
+    "lead": "戴维斯杯资格赛第二轮，布拉格 O2 竞技场，捷克主场。美网决赛打完第 5 天，世界第 4 的谢尔顿第一次回到球场，被世界第 24 的莱赫奇卡 6-4 6-4 直落两盘。他的一发进球率 79% 是全场最高，可 10 个接发局一局没赢，整场只拿到 2 个破发点、一个都没兑现。1 小时 32 分，捷克把这轮扳成 1-1。",
+    "matchup": "莱赫奇卡 vs 谢尔顿",
+    "score": "6-4 6-4",
+    "auto": true
+  },
+  "_push_summary_why": "`summary` 里写的「10个接发局」和封面钩子同一个数，来源同一处（`df_st_1` 的 `Return games won` 0/10）；`lead` 里的两个排名（第 4 / 第 24）和 `cover.matchup` 的 `rank` 逐字一致——「钩子和文案里写的排名要和 matchup 对得上」那道闸扫的就是这两处。数字一律阿拉伯数字。",
+  "segments": [
+    {
+      "source": "main",
+      "start": 373.0,
+      "end": 385.5,
+      "cx": 0.5,
+      "crosses_cut": "378.16 —— 最后一分落地（373–377 还在打，376.5s 记分条仍读 `•CZE 6 5 AD / USA 4 4 40`）接莱赫奇卡转身向捷克队席嘶吼（378.5s 仰头、380.5s 张嘴喊、382.5s 双臂张开）。同一个时刻的两半，断在这一刀上会把「这一分结束」和「他喊出来」劈开——正是该跨的那种。",
+      "quote": [
+        {
+          "at": 4.9,
+          "end": 7.4,
+          "text": "Game on in Prague.\n布拉格又活过来了。"
+        },
+        {
+          "at": 7.5,
+          "end": 8.7,
+          "text": "and then some.\n而且远不止如此。"
+        },
+        {
+          "at": 8.8,
+          "end": 10.4,
+          "text": "A primal scream\n一声嘶吼——"
+        },
+        {
+          "at": 10.5,
+          "end": 12.3,
+          "text": "from Jiri Lehecka.\n来自莱赫奇卡。"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_why": "冷开场：全片情绪最重的一格——赛点落地 ＋ 莱赫奇卡的嘶吼。不配旁白，走**英文转播原声 ＋ 中英双语字幕**。四条 cue 按 `at`（段内秒数）钉在真实时刻上，不按字数摊：源片自动字幕 377.84s「Game on in Prague and then some. A」、381.76s「primal screen from Yuri Letchka.」，减去段起点 373.0 得 4.84 / 8.76，取 4.9 / 8.8。⚠️ **英文按发音校正过**：ASR 的 `primal screen` → `primal scream`、`Yuri Letchka` → `Jiri Lehecka`、`Czecha` → `Czechia`，不照抄 `captions.txt`。四行英文的 `_sub_width(_sub_display(...))` 分别是 12.2 / 9.5 / 10.2 / 12.2，都 ≤ `_SUB_MAX` 16，不会自动折行。按「开场三格：画面爆点 → 落点 → 坐标」，落点和坐标交给第 2、3 段。",
+      "_ending_payoff_required": true,
+      "_ending_payoff_why": "冷开场用的是赛点落地那一刻，所以正文必须重新走到：第 10 段 322.6–333.0 是三个赛点里的前两个，第 11 段 373.0–385.5 和冷开场**同一段画面、这一次配旁白**（结局在这儿重新兑现一次），第 12 段 388.0–399.5 是两人网前握手。"
+    },
+    {
+      "source": "main",
+      "start": 36.4,
+      "end": 45.3,
+      "cx": 0.5,
+      "narration": "世界第四，对世界第二十四。美网决赛打完第五天，谢尔顿回到球场，两盘就输了。",
+      "_why": "② **落点**：两个排名的落差 ＋ 整场的结论。画面是第一盘第二局（莱赫奇卡发球 40-30）的底线宽景，记分条 40.5–44.5s 读 `•CZE 0 40 / USA 1 30`，两个人都在场上，没有指认谁。镜头 36.08–45.48 之内，不跨切点。"
+    },
+    {
+      "source": "main",
+      "start": 45.7,
+      "end": 56.0,
+      "cx": 0.5,
+      "narration": "北京时间九月十八号夜里快十一点开球，打到十九号凌晨。戴维斯杯资格赛第二轮，布拉格，捷克主场。",
+      "_why": "③ **坐标**：北京时间 ＋ 开球钟点 ＋ 日期 ＋ 赛事 ＋ 轮次 ＋ 地点（`test_赛场之上开场要给出北京时间赛事和轮次` 要的四样都在）。时刻按 flashscore `DC÷1789743000` = 14:50 UTC = **北京 9/18 22:50 开球**，`DD÷1789748702` = 16:25 UTC = **北京 9/19 00:25 结束**——所以写「十八号夜里快十一点开球，打到十九号凌晨」，两头都是真的。⚠️ **第一版写的是「深夜开球」，被那条判据打红了**：22:50 落在 50 分上，不在「十到三十九分说 X 点多」的口径里，我就退成了一个没有钟点的说法——而那条测试要的正是一个钟点（正则 `[一二三四五六七八九十两〇零百]+\\s*[点时]`）。「快十一点」同时满足两条：它是个钟点，又没有报到分（22:50 差 10 分钟到 11 点）。**规矩之间看着打架的时候，多半是我把其中一条读窄了。**画面是 45.48–56.32 那一个镜头（46.5s 莱赫奇卡握拳、48.5s 戴捷克国旗假发的观众、54.5s 场馆宽景），正好是「捷克主场」这句话的底。不跨切点。"
+    },
+    {
+      "source": "main",
+      "start": 56.6,
+      "end": 67.5,
+      "cx": 0.5,
+      "narration": "第一盘他的第二个发球局，莱赫奇卡连着拿到三个破发点，谢尔顿一个一个救了回来，看上去这一关是顶过去了。",
+      "_why": "④ 第一盘第一句。画面是第一盘**第五局**（谢尔顿发球 2-2，记分条 56.5–74.5s 读 `CZE 2 15 / •USA 2 0`）的长回合宽景；旁白讲的是**第三局**那三个破发点（集锦没剪进来，见 `_turning_points` 第 1 条）。⚠️ 旁白不解说画面、不指认动作，所以讲另一局不构成话画不符——但也因此这一段一个「你看」「这一分」都没有。「拿到破发点」按那条口径写「拿到」不写「要到」。镜头 56.32–70.56 之内，不跨切点。"
+    },
+    {
+      "source": "main",
+      "start": 75.1,
+      "end": 83.5,
+      "cx": 0.5,
+      "narration": "两局之后，四十比十五，他又一次面对破发点。这一次只有一个，他没守住。",
+      "_why": "⑤ 第一盘的破发。记分条 76.5–82.5s 读 `CZE 2 40 / •USA 2 15`——正是逐分里那个 `40:15 |B1|`，画面和数据指的是同一分。自动字幕 79.52s「there is the break」落在窗口正中。",
+      "crosses_cut": "81.12 —— 破发那一分落地接捷克队席和观众的反应（82.5s 记分条还挂在莱赫奇卡的近景上，84.5s 已是场边绿色广告板）。同一个时刻的两半，和第 1 段那一刀同一个性质。"
+    },
+    {
+      "source": "main",
+      "start": 89.2,
+      "end": 100.5,
+      "cx": 0.5,
+      "narration": "五比四，莱赫奇卡，发球胜盘。谢尔顿这场一发进了百分之七十九，比对手高二十多个百分点；可赢下来的只有百分之七十一。",
+      "_why": "⑥ 第一盘收尾 ＋ **技战术拆解**（不停在比分走势上）。画面是第一盘第十局（莱赫奇卡 5-4 发球胜盘局）的长回合，记分条 92.5–110.5s 一路读 `•CZE 5 0 / USA 4 0`。数字全部来自 `stats`：谢尔顿 `first_in/first_total` = 49/62 = 79%、`first_won/first_in` = 35/49 = 71%；莱赫奇卡 32/57 = 56%，79 − 56 = **23 个百分点**，所以写「高二十多个百分点」。⚠️ 百分比按「百分之 N」写，不写「几成几」。镜头 89.0–107.76 之内，不跨切点。"
+    },
+    {
+      "source": "main",
+      "start": 199.95,
+      "end": 211.9,
+      "cx": 0.5,
+      "narration": "第二盘一比一，他的发球局又被拖进平分。莱赫奇卡拿到破发点，一次就够——二比一。两盘的破发都来得这么早。",
+      "_why": "⑦ 第二盘第一句。画面就是这一局：记分条 200.5–204.5s 读 `CZE 6 1 40 / •USA 4 1 40`（平分），**206.5s 那一格底下挂着 `BREAK POINT` 横幅**，208.5–210.5s 读 `AD`。自动字幕 210.56s「There is the break.」收在窗口末尾。末句的依据是 AP「broke Shelton's serve early in each set」＋ 逐分（第一盘第五局、第二盘第三局）。镜头 199.8–212.16 之内，不跨切点。"
+    },
+    {
+      "source": "main",
+      "start": 221.2,
+      "end": 231.0,
+      "cx": 0.5,
+      "narration": "紧接着这一局，谢尔顿拿到十五比四十，两个破发点。这是他整场唯一的一次，两个都没兑现。",
+      "_why": "⑧ 全片最硬的那个数。画面是**同一局**（莱赫奇卡发球 2-1）的尾巴：记分条 222.5–230.5s 读 `•CZE 6 2 AD / USA 4 1 40`，也就是他救掉那两个破发点之后的占先。⚠️ 15-40 那两分集锦没剪进来（见 `_turning_points` 第 5 条），所以是**同一局、不同一分**，旁白不指认画面。「唯一」是全称断言，两个不同主机的源认领在 `_claims` 第 1 条。镜头 220.96–231.24 之内，不跨切点。"
+    },
+    {
+      "source": "main",
+      "start": 239.0,
+      "end": 249.3,
+      "cx": 0.5,
+      "narration": "整场下来，他十个接发局一局都没赢下来。不是他发球崩了——是他一直没找到对方发球的办法。",
+      "_why": "⑨ 收口——把第 8 段那个数摊成整场的形状，也就是封面钩子那句话的出处。画面是第二盘第五局（谢尔顿发球，记分条 240.5–248.5s 读 `CZE 6 3 0 / •USA 4 1 30`）的底线宽景。「一局都没赢」是全称断言，认领在 `_claims` 第 2 条。镜头 238.6–249.76 之内，不跨切点。"
+    },
+    {
+      "source": "main",
+      "start": 322.6,
+      "end": 333.0,
+      "cx": 0.5,
+      "narration": "五比四，莱赫奇卡，发球胜赛局。四十比三十，第一个赛点——谢尔顿救掉了；接着第二个，又救掉了。",
+      "_why": "⑩ 赛点。画面逐格对得上：320.5s 记分条 `•CZE 6 5 40 / USA 4 4 30`（第一个赛点），**324.5 / 326.5 / 328.5s 底下挂着 `MATCH POINT` 横幅**，330.5s 仍是 `AD`。自动字幕 326.80s 解说只说了两个字「Match point.」。`Match points saved` 客队 = 2，和逐分里三个 `|B3|` 对得上。⚠️ 这场是三盘两胜且 2-0 结束，**没有决胜盘**，所以这儿写「发球胜赛局」不写「决胜盘」。镜头 322.4–338.2 之内，不跨切点。"
+    },
+    {
+      "source": "main",
+      "start": 373.0,
+      "end": 385.5,
+      "cx": 0.5,
+      "narration": "第三个赛点，他没再给机会。六比四，六比四。美网决赛之后的第一场球，谢尔顿没能赢下来；这轮资格赛回到一比一。",
+      "crosses_cut": "378.16 —— 和第 1 段同一刀，同一个理由：最后一分落地接莱赫奇卡的嘶吼。",
+      "_why": "⑪ **结局在这儿重新兑现**（第 1 段 `_ending_payoff_required` 指的就是这一段）：和冷开场同一段画面，这一次配旁白。⚠️ 用时（1:32 还是 1:35 两个源有分歧）**一个字都不提**，只印在比分板上——见 `cover.scoreboard._duration_why`。"
+    },
+    {
+      "source": "main",
+      "start": 388.0,
+      "end": 399.5,
+      "cx": 0.5,
+      "narration": "今晚八点还有三场，美国队得赢两场才能出线。谢尔顿排着还要再打一场单打。你觉得他们扳得回来吗？",
+      "_why": "⑫ 收尾 ＋ **末屏那一问，旁白必须问出来**（和 `editorial.question` 同义）。⚠️ 不是封面那一问的回声：封面讲的是他的接发，这一问问的是这一轮还扳不扳得回来。画面是赛后握手（388.5s 网前、390.5s 两人握手近景、394.5–398.5s 莱赫奇卡走向队席），**近景在这儿就是内容**。镜头 387.48–402.68 之内，不跨切点；末段收在 399.5，离 409.64 那一刀（戴维斯杯片尾板）还有 10.1 秒，片尾板一帧不进。",
+      "_facts_to_recheck": "⚠️ **这一段讲的是还没发生的事，render 之前必须回头查一次**（「前瞻类事实要在它定下来之后再核一次」）：①第二比赛日的开赛时刻——o2arena.cz 写「周六 14:00」当地 = **北京 20:00**，所以写「今晚八点」；②还剩三场（双打 ＋ 两场单打），美国队 1-1 需要再赢两场才到 3 分出线；③谢尔顿排在反向单打里（flashscore `f_2_0_2_en_1` 今日表：`pA2XHmNq Mensik J. vs Shelton B.` 13:30 UTC = 北京 21:30、`WQ0uGRid Lehecka J. vs Tien L.` 15:00 UTC = 北京 23:00）。⚠️ 旁白**故意不点门西克的名字**——戴维斯杯的反向单打阵容开赛前一小时还能改，点名就是押一个还没定死的事；「还要再打一场单打」在任何一种换人下都成立。 ✅ **render 之前回查过一次：北京时间 2026-09-19 10:58**，flashscore 今日表 `f_2_0_2_en_1` 里`Mensik J. vs Shelton B.` 北京 21:30、`Lehecka J. vs Tien L.` 北京 23:00 两场都还挂着（状态码 1 = 未开赛），阵容没改；双打不在单打分类里，开赛时刻按 o2arena.cz 的「周六 14:00」＝北京 20:00。旁白那三句（今晚八点／还有三场／美国队要赢两场）逐条对得上。"
+    }
+  ],
+  "_editing_why": "正片 12 段，画面合计 **128.8 秒**，加片尾 3.8 秒，成片约 129.9 秒（`--dry-run` 与 `--check-narration` 实测，不是估的）。按「开场三格：画面爆点 → 落点 → 坐标」排：第 1 段是赛点落地 ＋ 嘶吼（不配旁白，英文转播原声 ＋ 中英双语字幕），第 2 段落点，第 3 段坐标，之后按时间顺序走两盘，第 11 段回到冷开场那一格兑现结局，第 12 段赛后握手 ＋ 末屏一问。⚠️ **切点用 `scene_cuts`（55 刀）＋ 2 秒一格的缩略图墙定，一处都没有用 `point_ends`**——那一栏这趟是坏的，理由写在 `cover.scoreboard._scorebox_probe_why`；也因此 `--dry-run` 报的那几条「段尾切在一分打完之前」全部是那份坏数据的噪音，逐段预览（`preview_segments_local.py`，两张墙都看过）确认每一段的末格要么落在源片自己的切点上、要么落在反应镜头里。两处跨切点（第 1/11 段的 378.16、第 5 段的 81.12）各写了 `crosses_cut`，都是「这一分落地接反应」这种同一时刻的跨法。⚠️ **近景不是一格都没用，而是只在四处进了窗口，每一处都是「这一分的结果」本身**（逐段预览一格一格核过）：第 5 段末尾 82.5s 莱赫奇卡破发后的近景、第 7 段开头 200.5–202.5s 他在同一局里赢下一分的握拳、第 10 段开头 324.5–326.5s 他发赛点球前的近景（记分条底下正挂着 `MATCH POINT`）、以及第 1/11/12 段赛后那一串。⚠️ **旁白里没有一句压在近景上指认谁**：在宽景之外认人只能靠球衣颜色（谢尔顿红上衣、莱赫奇卡捷克蓝），而这四处近景全是莱赫奇卡，旁白在那几秒讲的要么是比分、要么是谢尔顿的数据，没有「替谁说话」压在对手脸上。**其余人物特写一格都没用**：134.5s 莱赫奇卡特写、136.5s 贝尔迪赫、138.5–150.5s 捷克队席、250.5–252.5s 谢尔顿特写、268.5s 布莱恩、270.5–276.5s 两队队席、296.5s 莱赫奇卡特写。⚠️ **两头的品牌画面一帧不进**：0–6.0s 是戴维斯杯片头动画（最早的窗口起点是 36.4），409.64s 起是片尾板（最晚的窗口终点是 399.5，留了 10.1 秒）。",
+  "mixed_fps": {
+    "main": "单源，25fps（probe 实测 `fps 25/1`），不存在混帧率问题。这一栏按 spec 形状留着说明已经核过。"
+  },
+  "_voice_why": "沿用这条线的默认：云见（`zh-CN-YunjianNeural`）＋6%，不设 `style`。⚠️ 这一栏叫 `_voice_why` 不叫 `_voice`。",
+  "tts_backend": "edge",
+  "_tts_backend_why": "沿用同一天 `ruud-te-davis-cup-2026-wg1` 的处置：Azure 钥匙在 run 35410646682 上报 401（WebSocket upgrade failed: Authentication error），和 2026-09-17 那两条解说片同一个错，钥匙还没恢复，退回 edge-tts 的开关走 spec。本条不用情绪风格，edge 够用；本地 `--check-narration` 量的就是 edge 的时长，余量按 edge 算反而更准。钥匙恢复后删掉这两个键即可。",
+  "_narration_why": "旁白用本地 edge-tts（`zh-CN-YunjianNeural` +6%）**真跑过三遍** `--check-narration` 量时长和切词。终版：11 段全部装得下，最紧的第 6 段余量 **+0.64s**，哑场单段最长 **1.97s**（门槛 4.0s），`[查切词]` 报「没有 token 骑在人名边界上」。按报告改的四处：①**假词**——第 6 段「莱赫奇卡发球胜盘」被合成器切成 `莱赫奇 ｜ 卡发球`、第 10 段「莱赫奇卡发球胜赛局」切成 `莱赫奇 ｜ 卡发`，「卡发球」「卡发」都是不存在的词，念出来是连读的错音；按 CLAUDE.md 那条**在名字后面加逗号撑开**，改成「莱赫奇卡，发球胜盘」「莱赫奇卡，发球胜赛局」，重跑确认两处都变成干净的 `莱赫奇卡 ｜ 发球 ｜ 胜盘`——**改完重跑验过，不是改完就算**。②第 2 段真语音 8.02s 对 8.0s 画面，余量 **−0.02s**（离线估当时报的是 +0.19s，**方向都反了**——「落在误差带里」不等于「没问题」这条又应验一次）：窗口从 37.0–45.0 放宽到 36.4–45.3（仍在 36.08–45.48 这一个镜头里），旁白「谢尔顿回到球场，直落两盘输了」减成「两盘就输了」，终版余量 +1.15s。③第 7 段余量 +0.20s「很紧」：窗口放宽到 199.95–211.9，并删掉「这一局丢掉」四个字，终版 +1.61s。④第 9 段余量 +0.27s「很紧」、第 12 段 +0.63s：两段窗口各往镜头边界放宽（239.0–249.3、388.0–399.5），终版 +1.97s / +1.73s。⑤第 3 段的开球时刻：第一版写「深夜开球」，被 `test_赛场之上开场要给出北京时间赛事和轮次` 打红——那条判据要一个**钟点**（正则 `[一二三四五六七八九十两〇零百]+\\s*[点时]`），而我为了不违反「开球时刻只说个大概、不报到分」退成了一个没有钟点的说法。22:50 改写成「夜里快十一点」，两条规矩同时满足（是钟点，又没报到分），重跑余量 +1.18s。⚠️ **全量测试的退出码是 0，而统计行写着 `1 failed, 3324 passed`**——CLAUDE.md 记过这个坑，判据是那一行不是退出码；这一条就是那么抓到的。⚠️ 这条按 CLAUDE.md「只要 dry-run 报了『第 [N] 段落在估算的误差里』，就跑一次 `--check-narration` 再发 render」办的——dry-run 把 11 段全报进了误差带，那一分钟必须花，而它确实抓到了第 2 段那个负余量和两处假词，**四处都是 render 红了才会发现的**。⚠️ 本地 edge-tts 比 runner 上的 Azure 慢约 6.6%，而这条 spec 认领了 `tts_backend=edge`（Azure 钥匙还是 401），所以这里量的就是 runner 上真正要用的那个合成器，余量不用再打折。"
+}
