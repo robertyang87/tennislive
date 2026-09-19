@@ -1,0 +1,424 @@
+{
+  "slug": "chung-nagal-davis-cup-2026",
+  "_column": "赛场之上",
+  "sources": {
+    "main": "https://www.youtube.com/watch?v=HFZpgC4C1sc"
+  },
+  "_source": "ITF 官方 YouTube 频道 World Tennis（oEmbed author_name=World Tennis，@worldtennisofficial，和 ruud-te-davis-cup-2026-wg1 / davis-cup-china-first-world-group-1 用的同一个频道）单场集锦《INCREDIBLE COMEBACK! 🤩 | Hyeon Chung v Sumit Nagal | Highlights | Davis Cup Qualifiers 2026》，**1920×1080 / 25fps / 435.10s**（probe 实测；yt-dlp -F 最高档 1080p，这条不用 source_quality_exceptions），upload_date 20260918。账号所有者 2026-09-19 直接给的 URL。四要素自证：①左下角常驻记分条烧着 `KOR / IND` 两行国旗、分数和盘分，6.5s 读 `•KOR 0 30 / IND 0 40`，358.5s 读 `KOR 2 6 6 0 / •IND 6 4 5 0`，376.5s 读 `KOR 2 6 6 40 / •IND 6 4 5 30`（赛点）——赛果和 flashscore 逐字一致；②场地地面刷着 `SEOUL`，场边挡板 `DAVIS CUP by GENERALI` / `World Tennis` / `VISA` / `하나증권`（韩国赞助商）；③球衣：郑泫深蓝 KOREA（背后 `KOREA`，戴白框眼镜，198.5s / 388.5s 近景），纳加尔白色 INDIA（背后 `INDIA`，38.5s / 302.5s 近景）；④414.5s 起转播赛果板 `KOREA, REP. 2 6 7 / INDIA 6 4 5 · MATCH 2 · OLYMPIC TENNIS COURT, SEOUL`。自动字幕（captions.txt）是英文解说，末尾 395.2~424.1s 那段解说交代了赛果和意义。⚠️ 0~5.0s 是 ITF 片头动画（KOREA, REP. v INDIA），430.08s 起是 ITF 片尾动画（430.5s 起绿色抽象画面、434.5s `DAVIS CUP by GENERALI` 板）——窗口一律收在 430.0 之前、5.0 之后。",
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "郑泫",
+    "hook": "一盘落后翻上来\n全场只多赢一分",
+    "hook_accent": "一分",
+    "_hook_why": "两行讲的都是**整场的形状**：第一行是走势（首盘 2-6 落后、后两盘翻回来），第二行是这场球的狠数据（207 分他只赢了 104 分，多一分）。不是某一个时刻，也不是身份——排名、轮次在台头和比分板上印着。主语是封面上的郑泫，和 `subject` 一致。⚠️ 不重复比分板：比分板就在钩子底下印着 2-6 6-4 7-5，所以钩子里不写「二比六」「七比五」。最长行 7 个字符，≤ HOOK_MAX_CHARS=10，两行。`hook_accent` 点亮「一分」——这条片子的卖点就是那一分，钩子里正好出现一次。",
+    "topic": "戴维斯杯资格赛第二轮 · 韩国 vs 印度",
+    "winner": "郑泫",
+    "result": "2-6 6-4 7-5",
+    "matchup": [
+      {
+        "name": "郑泫",
+        "name_en": "Hyeon Chung",
+        "country": "KOR",
+        "rank": 549
+      },
+      {
+        "name": "纳加尔",
+        "name_en": "Sumit Nagal",
+        "country": "IND",
+        "rank": 247
+      }
+    ],
+    "_matchup_rank_why": "两个名次都取 **ITF 官方 tieCentre 接口** `data.nominations[].players[].oomSinglesRankingPro`（oomRankDate 2026-09-14，tieId 984ef5cc-d54e-406a-887c-e2be8e845171）：Hyeon Chung 549、Sumit Nagal 247。第二源：tennisabstract 球员页 `currentrank` 549 / 247（2026-09-19 查），en.wikipedia.org/wiki/Chung_Hyeon 信息框 549（Sep 2026）；京乡新闻 9/18 赛后稿写「세계 549위」。⚠️ 纳加尔的维基信息框还停在 236（8/31 那期）——过期，不取。⚠️ 戴维斯杯没有种子，不存在种子号和排名混淆的问题。",
+    "_name_why": "两个中文名都走 `player_zh()`：`player_zh(\"Hyeon Chung\")` → 郑泫（`player_zh(\"Chung Hyeon\")` 同样给郑泫），`player_zh(\"Sumit Nagal\")` → 纳加尔。没有手打。⚠️ 账号所有者的消息里写的是「郑玄」，译名表（`src/tennislive/zh/players.py` 第 524 行，注着「정현，韩国人，2018 澳网第四轮淘汰德约科维奇」）写的是**郑泫**，按表来——「人名不要手打，先查仓库里的译名表」。",
+    "_subject_why": "封面放**郑泫**——赢的那个，也是这条片子的主语（前世界第 19、背伤两年半没打单打、从 ITF 一级一级打回来的人）。账号所有者点名要做的就是他的「赛场之上＋高光生涯回顾」。",
+    "_heat_why": "郑泫既不是 CHN 也不在前 20，走 ③ 显式认领：他身上有一条**正在展开的复出线**（「突破、复出、第一人」三种形状里的复出）——2017 年首届新生代总决赛冠军、2018 年澳网掀翻德约科维奇打进半决赛、世界第 19，然后背伤让他两年半没打一场单打、从 ITF 一级一级打回来（2026-02 排名 392、9 月 549）；这场球是他复出之后在戴维斯杯主场首尔、韩国队冲击博洛尼亚总决赛的关键一分，解说原话是「his career has been completely derailed, but he serves notice that he is not done yet」。刷到的人认得这张戴白框眼镜的脸——2018 年那两周他上过所有体育版的头条。外加账号所有者亲自点题。",
+    "portrait": {
+      "image": "assets/reel/chung-nagal-davis-cup-2026.jpg",
+      "focus": 0.545,
+      "focus_y": 0.42,
+      "zoom": 1.0,
+      "_why": "AP 通讯社本场实拍（AP Photo/Ahn Young-joon），AP 通稿《South Korea leads India 2-0 in Davis Cup》经 ABC News 转载（abcnews.com/Sports/wireStory/…-136559454，图床 i.abcnewsfe.com `?w=8000` 给到原生 4608×3072），图注原文「South Korea's Hyeon Chung celebrates after winning against India's Sumit Nagal during a Davis Cup second round qualifier between South Korea and India, in Seoul, South Korea, Friday, Sept. 18, 2026. (AP Photo/Ahn Young-joon)」——人物、对手、赛事、轮次、地点、日期六样全在图注里；画面里深蓝 KOREA 球衣＋太极旗胸标＋白框眼镜＋红色 Yonex 球拍＋背后 `World Tennis` 绿色 LED 板，和源片 388.5s / 198.5s 的郑泫近景逐项一致。原图 4608×3072，铺 1080×1440 是 min(4608/1080, 3072/1440)=2.13×（也就是缩小到 0.47），远过 1.00× 地板，不需要 `_low_res_why`。情绪：赢下赛点之后双臂张开、咧嘴大笑、眼睛睁着看向左上方——正是这条片子「三小时零六分钟之后」那一刻的脸，和钩子「一盘落后翻上来」对题。",
+      "_portrait_why": "候选一共四张够得上「本场＋比赛中／庆祝＋≥2000px」的门槛里只有两张：①AP 这张庆祝近景 4608×3072；②路透（ⓒ 로이터/연합뉴스，OhmyNews 经 Daum 图床 t1.daumcdn.net 原图 3000×2068）的正手击球中景，图注「18일 서울 송파구 올림픽공원 테니스경기장… 정현 선수가 인도의 수밋 나갈 선수에 맞서 경기를 펼치고 있다」。按「优先近景特写、情绪外露」挑 ①：头肩填满画面、表情读得出；②是击球中的中景、脸小一档，留作备选。落选的：daviscup.com 官方赛报（Contentful 空间 0gg9pgt9u0k4）那张同一时刻的庆祝照只上传了 1752×985，高不够 1440；AP 另外四张郑泫击球中的经 BLOX 报纸镜像只有 1763px（`?resize=4000` 是插值放大，拉普拉斯方差 54 对原图 160）；大韩网球协会发给韩媒的照片 ≤1280px 且他闭着眼。官方 og:image `CSJ11945`（5341×3561）打开是权纯雨（白帽、无眼镜、日场 Fila 球衣），不是郑泫——按文件名认人会认错。",
+      "_zoom_why": "横图 4608×3072 铺 3:4 竖版：竖向正好铺满（zoom=1.0 时 focus_y 是死的），只有 focus 有用。脸在原图水平 0.545 处（眼镜在 x≈2510/4608），focus=0.545 时取景窗是原图 x 1360~3660，头肩、太极旗胸标、右臂大半、左手举拍的前臂都在窗内；两只手掌落在窗外（原图 x≈560 和 4220），代价是「放大到接近铺满」换来的。纵向：头顶在原图 y≈0.29 → 画布 y≈418，眼睛 y≈0.40 → 576，下巴 y≈0.49 → 706；台头带 0~170 压不到头顶，钩子带从 790 起、离下巴 84px，脸落在两条带子之间的空当里。本地 render_cover_local 渲出来核过。"
+    },
+    "scoreboard": {
+      "court": "Olympic Tennis Court",
+      "_court_why": "ITF 官方 tieCentre 接口 `tie.venue` = Seoul Olympic Park Tennis Center，court name `Olympic Tennis Court`；转播赛果板（源片 414.5~426.5s）印着 `OLYMPIC TENNIS COURT, SEOUL`，场地地面刷着 `SEOUL`。室外硬地（khelnow 前瞻「outdoor hard court surface」；维基 2026 Davis Cup Qualifiers second round 表列 `Hard`，不是 `Hard (i)`）。",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%20%223%3A06%3A00%22%2C%20%22source%22%3A%20%22ITF%20%E5%AE%98%E6%96%B9%20tieCentre%20%E6%8E%A5%E5%8F%A3%20match%20duration%2003%3A06%3A30%EF%BC%88actualStartDate%202026-09-18T07%3A46%3A59Z%20%E2%86%92%20actualEndDate%2010%3A53%3A29Z%EF%BC%89%EF%BC%9B%E4%BA%AC%E4%B9%A1%E6%96%B0%E9%97%BB%209/18%E3%80%8C3%EC%8B%9C%EA%B0%84%206%EB%B6%84%E3%80%8D%22%2C%20%22cross_check%22%3A%20%22flashscore%20df_sui_1%EF%BC%88QTHU8ApT%EF%BC%89%E5%85%A8%E5%9C%BA%203%3A07%EF%BC%88%E5%88%86%E7%9B%98%200%3A43%20%2B%201%3A05%20%2B%201%3A19%EF%BC%89%E2%80%94%E2%80%94%E6%AF%94%20ITF%20%E5%A4%9A%2030%20%E7%A7%92%EF%BC%8C%E6%98%AF%E5%AE%83%E6%8A%8A%203%3A06%3A30%20%E8%BF%9B%E4%BD%8D%E4%BA%86%EF%BC%9B%E6%8C%89%E5%AE%98%E6%96%B9%E5%8F%96%E6%95%B4%E5%88%B0%E5%88%86%E5%8D%B0%203%3A06%22%7D",
+        "field": "duration"
+      },
+      "_duration_why": "ITF 官方 tieCentre `matches[].duration = 03:06:30`（actualStartDate 07:46:59Z → actualEndDate 10:53:29Z，自洽）；韩媒（京乡新闻）写 3 小时 6 分；flashscore df_sui_1 报 0:43 + 1:05 + 1:19 = 3:07（把 30 秒进位了）。三源一致到分钟以内，印官方的 3:06。"
+    },
+    "_result_why": "flashscore 当日表 f_2_-1：AE=Chung H.（home）AG=2 / AF=Nagal S.（away）AH=1，BA/BB=2:6、BC/BD=6:4、BE/BF=7:5；df_sui_1 三盘 IG/IH = 2/6、6/4、7/5（都是局数，没有抢七）。源片记分条 358.5s `KOR 2 6 6 / IND 6 4 5`、414.5s 赛果板 `2 6 7 / 6 4 5` 第三处印证。"
+  },
+  "topbar": {
+    "line1": "2026 戴维斯杯资格赛 第二轮",
+    "line2": "郑泫 2-6 6-4 7-5 纳加尔"
+  },
+  "_topbar_why": "line1：赛事按 ITF 的正式名称「Davis Cup 2026 Qualifiers, Round 2」（ITF 内部名 `M-DC-2026-QLS-M-IND-KOR-01`，round `Round 2`；维基「2026 Davis Cup Qualifiers second round」；韩媒叫「데이비스컵 2차 최종 본선 진출전」）。⚠️ flashscore 的赛事头把这场标成「Davis Cup - World Group I」，是它自己标错了——赢家进 11 月博洛尼亚的 Final 8，那是资格赛第二轮的去向，不是世界一组的。line2 由 cover.winner / result / matchup 机械拼出。",
+  "_match": {
+    "status": "result_verified",
+    "source": "flashscore_points",
+    "source_id": "QTHU8ApT",
+    "flashscore_id": "QTHU8ApT",
+    "participants": [
+      "郑泫",
+      "纳加尔"
+    ],
+    "set_scores_home_away": [
+      [
+        2,
+        6
+      ],
+      [
+        6,
+        4
+      ],
+      [
+        7,
+        5
+      ]
+    ],
+    "tiebreaks_home_away": [
+      null,
+      null,
+      null
+    ],
+    "winner": "郑泫",
+    "loser": "纳加尔",
+    "winner_result": "2-6 6-4 7-5",
+    "loser_result": "6-2 4-6 5-7",
+    "_direction_why": "flashscore 当日表 f_2_-1：AE=Chung H.（home）、AF=Nagal S.（away），BA/BB=2:6、BC/BD=6:4、BE/BF=7:5、AG/AH=2:1。df_mh_1 第三盘最后一局 `HC÷7 HE÷5 … 40:30 |B1| |B3|`（home 拿到赛点即破发点并兑现）。源片 414.5s 赛果板 `KOREA, REP. 2 6 7 / INDIA 6 4 5`。⚠️ participants 跟 flashscore 的 home/away（和 set_scores_home_away 同序），这一场恰好也和 cover.matchup 的版式顺序一致。"
+  },
+  "stats": {
+    "a": {
+      "aces": 3,
+      "df": 4,
+      "first_in": 69,
+      "first_won": 45,
+      "second_total": 34,
+      "second_won": 16,
+      "bp_conv": 5,
+      "bp_chances": 11,
+      "pts_won": 104,
+      "pts_total": 207,
+      "first_total": 103,
+      "headshot": "assets/players/headshots/atp-CH27.png"
+    },
+    "b": {
+      "aces": 3,
+      "df": 8,
+      "first_in": 66,
+      "first_won": 44,
+      "second_total": 26,
+      "second_won": 13,
+      "bp_conv": 5,
+      "bp_chances": 8,
+      "pts_won": 103,
+      "pts_total": 207,
+      "first_total": 92,
+      "headshot": "assets/players/headshots/atp-N897.png"
+    },
+    "_source": "flashscore 本场 QTHU8ApT 的 df_st_1，整块由 `match_stat_hooks.py QTHU8ApT --stats-block` 机器抄出，没有手打。**这一场 flashscore 没有制胜分和非受迫失误**（17 项那一档），按 render_stat_card.OPTIONAL_FIELDS 留空。⚠️ a 跟的是 cover.matchup[0]=郑泫，flashscore 的 home 也是 Chung——两个顺序这一次恰好一致，a/b **不用对调**。锚点核过：Double Faults 8 是纳加尔的（=b，SI 列）、Break Points Converted 5/11 是郑泫的（=a，SH 列）、Total Points Won 104/207 vs 103/207。first_total 按 first_in + second_total 算（69+34=103、66+26=92）。头像：郑泫 atp-CH27、纳加尔 atp-N897，`fetch_official_headshot.py atp --via https://www.mubadaladcopen.com` 取的官方头像（颜色数 256 / 256，都不是 2 色占位剪影；两张都打开看过是本人——郑泫戴白框眼镜那张）。",
+    "_winners_ue_why": "flashscore df_st_1 这场只有 17 项（Aces / DF / 一二发 / 破发点 / 总分 / 局数），没有 Winners / Unforced errors；TNNS 那一趟没跑——戴维斯杯的场次 TNNS 覆盖不确定（ruud-te-davis-cup-2026-wg1 同样没跑），而这条要赶比赛日。旁白里不引这两个数。"
+  },
+  "_hit_data": "跑过 `match_stat_hooks.py QTHU8ApT --stats-block`。挑进正文的：**全场 207 分，郑泫 104 比 103，只多赢一分**（df_st_1 Total Points Won 50% (104/207) / 50% (103/207)）——进了封面钩子、第 2 段旁白和小红书首行；**首盘二发得分率 33% 对 73%**（df_st_1 Set 1：2nd serve points won 33% (4/12) / 73% (8/11)）——进了第 4 段；**第二盘一发进球率从 50% 提到 79%**（df_st_1 Set 1 1st serve percentage 50% → Set 2 79%）——进了第 7 段；**第二盘 3-3 那一局六个局点全丢、第七个平分之后被破**（df_mh_1 Set 2 `HC÷3 HE÷4`：`A:40` 六次、`40:A |B1|` 一次）——进了第 9/10 段；**决胜盘 4-3 那一局纳加尔救下三个破发点**（df_mh_1 Set 3 `HC÷4 HE÷4`：`|B1|` 三次、最后 `40:A` 保发）——进了第 14 段。备选：破发点兑现 5/11 对 5/8；双误 4 对 8；用时 3:07（分盘 0:43 / 1:05 / 1:19，决胜盘最长）。",
+  "_durations": "flashscore df_sui_1：0:43 + 1:05 + 1:19 = 3:07。决胜盘 1 小时 19 分，比首盘长一倍——正是这条片子的形状：越打越长、越打越咬。",
+  "_turning_points": [
+    "首盘 0-2 郑泫发球（第 3 局）：逐分 `15:0, 15:15, 15:30, 15:40 |B1|, 30:40 |B1|, 40:40, A:40, 40:40, 40:A |B1|`——救下两个破发点、占先，第三个破发点被破，0-3。源片 20.5~36.5s 记分条 `•KOR 0 AD / IND 2 40`（占先那一分，二十多秒的底线相持，解说 37s「Oh, he has time on that forehand. Sumit has been devastating」是纳加尔扳成平分），42.5~50.5s `•KOR 0 40 / IND 2 AD`（第三个破发点，解说 50.8s「it is a big advantage now for Sumit Nagal… Breaks for the second time」）。",
+    "首盘 2-5 纳加尔发球胜盘（第 8 局）：`0:15, 0:30, 15:30, 15:40 |B2|, 30:40 |B2|, 40:40, 40:A |B2|, 40:40, 40:A |B2|`——四个盘点，第四个拿下（解说 87.4s「gets it done on the fourth time of asking」）。源片 58.5~70.5s `KOR 2 15 / •IND 5 30`，76.5~86.5s `KOR 2 40 / •IND 5 AD` 下方挂着 `SET POINT`。",
+    "第二盘 2-1 纳加尔发球（第 4 局）：`15:0, 30:0, 40:0 |B1|, 40:15 |B1|, 40:30 |B1|, 40:40, 40:A`——郑泫 0-40 拿到三个破发点，纳加尔三个全救回来保发。源片 138.5~146.5s `KOR 2|2 30 / •IND 6|1 0`，150.5s `40 / 0`（解说 145.1s「Oh, that's brilliant」）。",
+    "第二盘 3-3 郑泫发球（第 7 局，整场最长的一局）：`0:15, 0:30, 15:30, 30:30, 40:30, 40:40, A:40, 40:40, A:40, 40:40, A:40, 40:40, A:40, 40:40, A:40, 40:40, A:40, 40:40, 40:A |B1|`——六个局点全没拿下，第七个平分之后第一个破发点就被破，3-4。源片 154.5~178.5s `•KOR 2|3 40 / IND 6|3 40`（平分那一分的长回合，解说 177.4s「This time it's Sumit forced to defend for his life」），184.5~192.5s `•KOR AD`（回放，解说 191.3s「Advantage to Korea」）。⚠️ 被破的那一分集锦没剪进来。",
+    "第二盘 3-4 → 4-4（第 8 局，纳加尔发球）：`0:15, 15:15, 15:30, 15:40, 30:40, 40:40, 40:A, 40:40, A:40 |B1|`——纳加尔两个局点，郑泫救下、第一个破发点回破。集锦没剪，直接跳到 194.5s 的 `KOR 5 15 / •IND 4 0`。",
+    "第二盘 5-4 纳加尔发球（第 10 局）：`15:0, 30:0, 30:15, 40:15 |B1| |B2|`——第一个盘点就是破发点，拿下 6-4。源片 206.5~238.5s `KOR 2|5 40 / •IND 6|4 15` 下方 `SET POINT`（一个镜头 205.36–239.52，34 秒的一分），解说 238.7s「And there is the set. One set a piece. INCREDIBLE WORK from the former world number 19」。",
+    "决胜盘 2-1 纳加尔发球（第 4 局）：`15:0, 30:0, 30:15, 40:15 |B1|`——第一个破发点就兑现，3-1。源片 252.5~272.5s `KOR 2 6 2 15 / •IND 6 4 1 0`（二十秒的相持，解说 272.7s「Rolling back the years. Here's Chung」），276.5s 起已是 4-1。",
+    "决胜盘 4-2 郑泫发球被破（第 7 局）：`0:15, 0:30, 15:30, 15:40 |B1|`——4-3。集锦没剪这一局，288.5s 直接是 4-3。",
+    "决胜盘 4-3 纳加尔发球（第 8 局）：`0:15, 15:15, 15:30, 30:30, 40:30 |B1|, 40:40, A:40 |B1|, 40:40, 40:A, 40:40, A:40 |B1|, 40:40, 40:A`——郑泫三个破发点，纳加尔三个全救，4-4。源片 288.5~300.5s `KOR 2 6 4 AD / •IND 6 4 3 40`（一个破发点，解说 300.8s「that was very clever. Perhaps the last shot a little tight」——郑泫没拿下），302.5~304.5s 纳加尔低头近景，306.5s 起 `4 / 4`。",
+    "决胜盘 4-4 郑泫发球（第 9 局）：`15:0, 15:15, 30:15, 30:30, 40:30, 40:40, A:40, 40:40, A:40`——两个局点，第二个保住，5-4。源片 306.5~334.5s `•KOR 2 6 4 AD / IND 6 4 4 40`（一个镜头 306.08–335.76，三十秒的一分），解说 334.8s「What a game. Extraordinary stuff」。",
+    "决胜盘 5-5 郑泫发球（第 11 局）：`15:0, 30:0, 30:15, 40:15, 40:30, 40:40, A:40`——6-5。源片 342.5~346.5s `•KOR 2 6 5 AD / IND 6 4 5 40`，解说 347.3s「talk about dialed in. That is a scorcher. And we've seen that backhand up the line multiple times today」。",
+    "决胜盘 6-5 纳加尔发球（第 12 局）：`15:0, 30:0, 30:15, 30:30, 40:30 |B1| |B3|`——第一个赛点（也是破发点）就拿下，7-5。源片 358.5~368.5s `KOR 2 6 6 0 / •IND 6 4 5 0`（第一分，解说 369.0s「Chung lands the first blow in this 12th game」），376.5~384.5s `KOR 40 / •IND 30`（赛点），384.5s 郑泫举臂，解说 385.4s「And Chung doubles Korea's lead here in Seoul」。"
+  ],
+  "editorial": {
+    "mode": "match_review",
+    "hook": [
+      "一盘落后翻上来",
+      "全场只多赢一分"
+    ],
+    "question": "首盘 2-6、二发得分率只有 33% 的郑泫，是怎么在决胜盘 4-1 领先被追平之后，靠全场多赢的那一分把这场球咬下来的？",
+    "thesis": "首盘他被纳加尔的二发压住（自己二发只拿 33% 的分，对面 73%），0-4 落后、2-6 丢盘。第二盘他把一发进球率从 50% 提到 79%、反手直线一次次打穿对面，可 3-3 那一局六个局点全丢被破——他立刻回破、保发、在第一个盘点上破发拿下 6-4。决胜盘 4-1 领先又被追到 4-4，4-3 那一局三个破发点全被纳加尔救掉；他靠自己的发球局顶住（4-4 两个局点、5-5 又一个占先），6-5 第一个赛点就是破发点，一次兑现。3 小时 07 分，207 分里他拿了 104 分，只多一分。",
+    "beats": [
+      "北京时间 9 月 18 日下午 3 点多，戴维斯杯，韩国主场首尔奥林匹克网球场。郑泫的前两个发球局都被破，0-4 落后，二发只拿 33% 的分，首盘 2-6 只用 43 分钟。",
+      "第二盘换了打法：一发进球率从 50% 提到 79%，反手直线打穿纳加尔；2-1 那一局 0-40 三个破发点全被救掉，3-3 自己的发球局六个局点全丢被破——但下一局立刻回破、再保发，5-4 第一个盘点就是破发点，6-4。",
+      "决胜盘 2-1 破发、4-1 领先，又被破回 4-3，4-3 那一局三个破发点全被纳加尔救掉。4-4 两个局点、5-5 一个占先，他把自己的发球局一次次顶住。",
+      "6-5，纳加尔发球保命，第一个赛点也是破发点，郑泫一次拿下：2-6 6-4 7-5，3 小时 07 分。韩国 2-0 领先，离 11 月博洛尼亚的总决赛只差一场。"
+    ],
+    "_hook_why": "这一栏和 cover.hook 逐行相同（闸要求）。理由见 cover._hook_why。",
+    "human_context": {
+      "angle": "这场球的场外主角是**郑泫这个人的来路**：2017 年首届新生代总决赛冠军（5 战全胜、两次击败卢布列夫）、2018 年澳网第四轮淘汰德约科维奇打进半决赛（对费德勒因脚底水泡退赛）、2018 年 4 月世界第 19——然后是反复发作的下背伤，2020 年法网之后整整三年多没打过一场单打，排名清零，从 ITF 和挑战赛一级一级打回来。解说赛后那一段原话：「What a victory for Chung who struggled for so long with a back problem. His career has been completely derailed, but he serves notice that he is not done yet.」另一层是戴维斯杯的算术：韩国主场，首日权纯雨 3-6 6-3 6-4 胜苏雷什，郑泫这一分把韩国队推到 2-0，解说说「they need one more match to secure a passage through to Bologna in November」。",
+      "facts": [
+        "生涯高光：2017 年 11 月首届新生代总决赛（米兰）冠军，5 战全胜、决赛 3-4(5) 4-3(2) 4-2 4-2 胜卢布列夫——en.wikipedia.org/wiki/2017_Next_Gen_ATP_Finals ＋ Sky Sports《South Korea's Chung Hyeon claims inaugural Next Gen ATP Finals title》。2018 年澳网非种子（世界第 58）第三轮 5-7 7-6(3) 2-6 6-3 6-0 胜 4 号种子兹维列夫、第四轮 7-6(4) 7-5 7-6(3) 胜 14 号种子德约科维奇（2018-01-22）、1/4 决赛胜桑德格伦、半决赛 1-6 2-5 落后费德勒时因脚底水泡退赛——维基 2018 澳网男单签表 ＋ SI《Hyeon Chung upsets Novak Djokovic》＋ ausopen.com《Federer final: Chung retires》；韩国男女球员里第一个打进大满贯半决赛的人（维基引 SMH ＋ ausopen.com）。生涯最高排名第 19（2018-04-02）——维基 ＋ tennisabstract `peakrank 19 / peakfirst 20180402`。生日 1996-05-19（水原），30 岁——维基 ＋ tennisabstract `dob 19960519`。",
+        "伤病与复出：2020 年法网资格赛（2020-10）之后因反复发作的下背伤停赛，2023 年 5 月首尔挑战赛外卡单打复出（负汤普森）——atptour.com《Chung makes singles comeback in Seoul》「first singles match in two and a half years」＋ tennisuptodate 同题稿；两年半没打一场单打是两源一致的说法。2022 年 9 月首尔 ATP250 曾和权纯雨搭档打过双打。2023 年夏又停，2024 年 9 月从 ITF 巡回赛再次复出，2024 年 10 月台北挑战赛时排名 1447（tennisasiamedia，单源——旁白里不引这个数）。2025 年 1 月 M25 巴厘岛拿到 2019 年成都挑战赛之后的第一个冠军——维基 ＋ lastwordonsports《Hyeon Chung comeback》。2026-02-02 排名 392，4 月光州挑战赛时 644，9 月 14 日那期 549——koreaherald 10722383 ＋ ITF tieCentre。年终排名 2018 第 25、2021 第 487（维基 performance timeline）。",
+        "这一场与对阵：ITF tieCentre（tieId 984ef5cc-d54e-406a-887c-e2be8e845171）：2026 戴维斯杯资格赛第二轮，韩国主场，首尔奥林匹克公园网球场（Olympic Tennis Court），9/18–19；rubber 2，actualStartDate 07:46:59Z（北京 15:47），duration 03:06:30，Chung 2-6 6-4 7-5 Nagal。赢家进 11 月博洛尼亚（SuperTennis Arena, Bologna Fiera）的 Final 8 总决赛，输家掉回 2027 资格赛第一轮——维基 2026_Davis_Cup_Qualifiers_second_round ＋ olympics.com 前瞻；解说 404.0s「they need one more match to secure a passage through to Bologna in November」。韩国队史从 1960 年参赛以来从未打进过总决赛八强（1981/1987/2008 世界组第一轮止步；2022、2023 总决赛小组赛未出线）——维基 South_Korea_Davis_Cup_team ＋ tennis.co.kr 53718 ＋ SBS。⚠️ AP 通稿和韩媒写的「亚洲第一支打进 Final 8 的队伍」不能照抄：哈萨克斯坦打过 2021 年总决赛 1/4 决赛、日本打过 2014 年世界组 1/4 决赛，那句话只在 2023 年起的「Final 8」这个名目下成立——正文只写「韩国队史首次」。韩国队长郑钟三（starnews 9/17）：「정현이 지금까지 쌓아온 커리어도 있고… 충분히 잘할 수 있다고 판단해 출전시키게 됐다」。",
+        "赛果与用时：flashscore QTHU8ApT 2-6 6-4 7-5，分盘 0:43 / 1:05 / 1:19，全场 3:07；ITF 03:06:30；总分 104:103（df_st_1）；赛点 0 个被救（Match points saved 0/0）——郑泫全场没面对过赛点。同日首场权纯雨 3-6 6-3 6-4 胜苏雷什（flashscore I3EMAWFG，ITF 2h05m），韩国首日 2-0（flashscore 对阵 xCimWwmS `AG÷2 / AH÷0`）。第二日 9/19 12:00 当地（北京 11:00）双打先打（南志成/朴宜成 vs 巴拉吉/普纳查），再是权纯雨 vs 纳加尔、郑泫 vs 苏雷什（ITF timesOfPlay ＋ flashscore f_2_0）。⚠️ 写这条时（9/19 02:00Z）第二日还没开打，`tieStatus: In Progress`——推送前要回头查一次对阵定了没有。",
+        "郑泫赛后原话（京乡新闻 202609182211003）：「일단 팀에 소중한 1점을 가지고 온 거여서 정말 다행이라고 생각한다」（先给队里拿回宝贵的一分，真的很庆幸）；说到 5-5 之后：「작전 같은 건 없었다… 정신력 싸움이었다. 그냥 버티는 사람이 이긴다고 봤다」（没什么战术，是意志力的较量，我觉得谁扛得住谁赢）。同一篇写纳加尔 5-5 起出现抽筋症状（单源）。",
+        "纳加尔：印度单打第一人，生涯最高第 68（2024-07-15），2024 年澳网以资格赛球员身份 6-4 6-2 7-6(5) 胜 31 号种子布勃利克——1989 年以来第一个在大满贯淘汰种子的印度人（outlookindia ＋ ESPN）；生日 1997-08-16，29 岁——维基 ＋ tennisabstract。"
+      ],
+      "sources": [
+        "https://api.itf-production.sports-data.stadion.io/custom/tieCentre/984ef5cc-d54e-406a-887c-e2be8e845171",
+        "https://www.flashscore.com/match/tennis/QTHU8ApT/",
+        "https://www.youtube.com/watch?v=HFZpgC4C1sc",
+        "https://en.wikipedia.org/wiki/2026_Davis_Cup_Qualifiers_second_round",
+        "https://en.wikipedia.org/wiki/Chung_Hyeon",
+        "https://www.tennisabstract.com/cgi-bin/player.cgi?p=HyeonChung",
+        "https://en.wikipedia.org/wiki/2018_Australian_Open_%E2%80%93_Men%27s_singles",
+        "https://www.si.com/tennis/2018/01/22/hyeon-chung-upsets-novak-djokovic-australian-open",
+        "https://ausopen.com/articles/match-report/federer-final-chung-retires",
+        "https://en.wikipedia.org/wiki/2017_Next_Gen_ATP_Finals",
+        "https://www.skysports.com/tennis/news/12110/11123220/south-koreas-chung-hyeon-claims-inaugural-next-gen-atp-finals-title",
+        "https://www.atptour.com/en/news/chung-singles-comeback-2023-challenger",
+        "https://tennisuptodate.com/atp/former-australian-open-semi-finalist-hyeon-chung-returns-to-singles-for-first-time-in-three-years",
+        "https://lastwordonsports.com/tennis/2025/01/05/hyeon-chung-comeback/",
+        "https://www.koreaherald.com/article/10722383",
+        "https://sports.khan.co.kr/article/202609182211003/",
+        "https://www.starnewskorea.com/sports/2026/09/17/2026091711153058152",
+        "https://en.wikipedia.org/wiki/South_Korea_Davis_Cup_team",
+        "https://abcnews.com/Sports/wireStory/south-korea-leads-india-2-0-davis-cup-136559454",
+        "https://www.olympics.com/en/news/davis-cup-2026-india-vs-south-korea-tennis-qualifiers-time-live-streaming"
+      ],
+      "voice_label": "多赢一分的人"
+    }
+  },
+  "_claims": [
+    {
+      "claim": "全场 207 分郑泫只多赢一分（104 比 103）",
+      "sources": [
+        "flashscore df_st_1（QTHU8ApT）：Total Points Won 50% (104/207) / 50% (103/207)",
+        "flashscore df_st_1 分盘：22/52 + 40/75 + 42/80 = 104，30/52 + 35/75 + 38/80 = 103，三盘加起来自洽"
+      ]
+    },
+    {
+      "claim": "第二盘 3-3 那一局是整场最长的一局，郑泫六个局点全丢",
+      "sources": [
+        "flashscore df_mh_1 逐分 Set 2 `HC÷3 HE÷4`：20 条记录（`A:40` 出现六次），比第二长的决胜盘 4-3 那一局（14 条）多六分",
+        "源片 154.5~192.5s 记分条 `•KOR 2|3 40 / IND 6|3 40` → `AD`，解说 177.4s / 183.4s / 191.3s 三处都在这一局"
+      ]
+    },
+    {
+      "claim": "郑泫两年半没打过一场单打（2020 年法网资格赛之后到 2023 年 5 月首尔挑战赛复出）",
+      "sources": [
+        "atptour.com《Chung makes singles comeback in Seoul》：first singles match in two and a half years",
+        "tennisuptodate.com 同题稿：returns to singles for first time in three years（按月数算是两年半，取保守的那个）；en.wikipedia.org/wiki/Chung_Hyeon 逐年成绩表 2021、2022 单打空白"
+      ]
+    },
+    {
+      "claim": "2018 年澳网他是韩国男女球员里第一个打进大满贯半决赛的人",
+      "sources": [
+        "en.wikipedia.org/wiki/Chung_Hyeon（引 Sydney Morning Herald）",
+        "ausopen.com《Federer final: Chung retires》/ Bleacher Report：first Korean to reach the semi-finals at a major"
+      ]
+    },
+    {
+      "claim": "韩国队从 1960 年参赛以来从未打进过戴维斯杯总决赛八强",
+      "sources": [
+        "en.wikipedia.org/wiki/South_Korea_Davis_Cup_team：最好成绩世界组第一轮（1981 / 1987 / 2008），2022、2023 总决赛小组赛未出线",
+        "tennis.co.kr 53718 ＋ SBS 赛后稿：1960 年参赛以来从未进过总决赛八强"
+      ]
+    }
+  ],
+  "_no_repeat": "同栏目此前发过 ruud-te-davis-cup-2026-wg1（鲁德胜特日格乐，讲的是红土和特日格乐的第二盘）——这一条一个字不讲挪威那场。davis-cup-china-first-world-group-1 是**网球有故事**栏目的解说片，另一个栏目不算重复。郑泫这个人在这个账号是第一次做。",
+  "push": {
+    "summary": "郑泫三小时逆转纳加尔",
+    "lead": "戴维斯杯资格赛第二轮，韩国主场首尔。世界第 549 的郑泫首盘 2-6、0-4 落后，第二盘 3-3 六个局点全丢被破，下一局立刻回破；决胜盘 4-1 领先被追平，6-5 第一个赛点就是破发点，一次拿下。207 分里他赢了 104 分，只多一分，3 小时 06 分。前世界第 19、背伤两年半没打单打的人，把韩国队推到首日 2-0。",
+    "matchup": "郑泫 vs 纳加尔",
+    "score": "2-6 6-4 7-5",
+    "auto": true
+  },
+  "_push_summary_why": "10 字位，主语是郑泫——微信标题和小红书首行是刷到的人唯一读到的一行，按「首行是标题，要点出是谁」写。铺垫只有一层（三小时），没有代词插在动词前。标题里不写排名，所以不受排名对齐那条约束。",
+  "segments": [
+    {
+      "source": "main",
+      "start": 383.0,
+      "end": 391.7,
+      "cx": 0.5,
+      "crosses_cut": "384.84 —— 赛点落地（376.08–384.84 那个镜头的末尾，384.5s 郑泫举臂）接他自己的反应（386.5s 转播小比分板叠上来、他往底线走；388.5s 戴眼镜的近景，眼睛睁着、长舒一口气；390.5s 走向网前）。同一个时刻同一个人的两个机位，正是该跨的那种切点；断在切点上会把「赢下赛点」和「赢下之后的脸」劈成两半。收在 391.7，391.8 那一刀之后是网前握手的另一个机位。",
+      "_why": "冷开场：全片情绪最重的一格——不是赛点那一分（宽景里两个人都只有几十像素），是打完之后那张脸：三小时零七分钟之后他抬头长出一口气。不配旁白，靠现场声（385.4s 解说「And Chung doubles Korea's lead here in Seoul」和全场的欢呼）。按「开场三格：画面爆点 → 落点 → 坐标」，落点和坐标交给第 2、3 段。",
+      "_ending_payoff_required": true,
+      "_ending_payoff_why": "冷开场用的是赛点落地和赛后的脸，所以正文必须重新走到：第 18 段 376.1–384.84 是赛点那一分，第 19 段 384.84–396.0 和冷开场同一段画面、这次配旁白并走到网前握手；两段首尾相接，并集 376.1–396.0 完整盖住冷开场 383.0–391.7。"
+    },
+    {
+      "source": "main",
+      "start": 23.5,
+      "end": 36.6,
+      "cx": 0.5,
+      "narration": "两百零七分，郑泫只比对手多赢了一分。首盘二比六，决胜盘四比一领先被追平——这场球，他咬了三个小时零六分钟。",
+      "_why": "② **落点**：这一场的狠数据（207 分只多一分）＋ 整场的形状。画面是首盘 0-2 郑泫发球局占先那一分的底线宽景（记分条 `•KOR 0 AD / IND 2 40`，20.5~36.5s 十格都是这个读数），二十多秒的长回合，两个人都在场上，没有指认谁。镜头 20.24–38.2 之内，收在 36.6——38.2 那一刀之后 38.5s 是纳加尔的近景。"
+    },
+    {
+      "source": "main",
+      "start": 42.6,
+      "end": 55.0,
+      "cx": 0.5,
+      "crosses_cut": "51.84 —— 第三个破发点那一分（42.52–51.84，记分条 `•KOR 0 40 / IND 2 AD`）接郑泫被破之后的反应近景（52.5s 手捂着脸、54.5s 转身，戴白框眼镜的是他）。输的人那一分和输的人的脸，同一个时刻。收在 55.0，55.04 那一道 loose 切之后 56.5s 是纳加尔的近景。",
+      "narration": "北京时间九月十八号下午三点多，戴维斯杯资格赛第二轮，韩国主场首尔。开场，郑泫的前两个发球局都被破了，零比三。",
+      "_why": "③ **坐标**：北京时间、赛事、轮次、主场。画面正是首盘第 3 局的第三个破发点——逐分 `40:A |B1|` 那一分，解说 50.8s「It's wide and it is a big advantage now for Sumit Nagal in India. Breaks for the second time」。开球时刻按 ITF actualStartDate 07:46:59Z = 北京 15:47（flashscore AD 07:45Z），按「十到三十九分说 X 点多」写「下午三点多」。「零比三」：这一分之后记分条翻成 0-3（pbp 第 3 局 HK÷2）。"
+    },
+    {
+      "source": "main",
+      "start": 60.0,
+      "end": 71.9,
+      "cx": 0.5,
+      "narration": "首盘他的二发只拿到百分之三十三的分，纳加尔是百分之七十三。二比六，四十三分钟。",
+      "_why": "首盘 2-5 纳加尔发球那一局的 15-30（记分条 `KOR 2 15 / •IND 5 30`，58.5~70.5s 七格同一读数），底线宽景。镜头 57.68–72.0 之内，收在 71.9——72.0 那一刀之后 72.5s 是纳加尔和看台的近景。二发得分率见 df_st_1 Set 1：2nd serve points won 33% (4/12) / 73% (8/11)；43 分钟见 df_sui_1 `RC÷0:43`。「他」承前指郑泫（上一段的主语）。"
+    },
+    {
+      "source": "main",
+      "start": 76.5,
+      "end": 90.4,
+      "cx": 0.5,
+      "crosses_cut": "86.96 —— 第四个盘点那一分（76.48–86.96，记分条 `KOR 2 40 / •IND 5 AD` 下挂 `SET POINT`）接纳加尔拿下这一盘的反应（88.5s 举拍近景，白衣是他）。赢盘的一分接赢盘的人，同一个时刻。收在 90.4，90.5s 起是他回到印度队席的另一个机位（93.2 那一刀之前）。",
+      "narration": "第四个盘点，纳加尔拿下了。八年前的澳网，郑泫掀翻了德约科维奇打进半决赛，最高世界第十九——那个人，现在一盘落后。",
+      "_why": "盘点那一分（逐分第 8 局 `40:A |B2|` 的第四个，解说 87.4s「Sumit gets it done on the fourth time of asking… Sumit in front by a set to love」）。生涯回顾的第一拍放在这里：一盘落后的这一刻，正好把「这个人是谁」交代出来。2018 澳网四强、世界第 19 见 human_context.facts。"
+    },
+    {
+      "source": "main",
+      "start": 93.3,
+      "end": 98.7,
+      "cx": 0.5,
+      "narration": "然后是背伤，两年半没打一场单打。",
+      "_why": "盘间休息，郑泫走向自己的座位的近景（94.5s 戴白框眼镜的正脸、96.5s 弯腰、98.5s 背影，背后 `KOREA`）。生涯回顾的第二拍——伤病那几年——压在他自己的脸上，不指认别人。镜头 93.2–98.76 之内，收在 98.7；98.76 那一刀之后 100.5s 是纳加尔的教练席（`INDIA` 外套），不进来。两年半没打单打见 human_context.facts / _claims（2020-10 法网资格赛 → 2023-05 首尔挑战赛，ATP 官方稿原话 two and a half years）。"
+    },
+    {
+      "source": "main",
+      "start": 105.5,
+      "end": 116.0,
+      "cx": 0.5,
+      "narration": "第二盘他换了打法：一发进球率从百分之五十提到百分之七十九，那一板反手直线，一次次打穿纳加尔。",
+      "_why": "第二盘第一局郑泫发球 30-30 的底线宽景（记分条 `•KOR 2|0 30 / IND 6|0 30`，102.5~124.5s 同一读数——这一分很长，解说 125.4s「That's a corker」才落地）。镜头 100.92–126.4 之内，这里取前半段，收在 116.0。一发进球率见 df_st_1：Set 1 `1st serve percentage 50%` → Set 2 `79%`。反手直线：解说 197.6s「That backhand down the line… has just come alive」、349.5s「we've seen that backhand up the line multiple times today」，两处都是转播自己说的。"
+    },
+    {
+      "source": "main",
+      "start": 138.6,
+      "end": 147.9,
+      "cx": 0.5,
+      "narration": "二比一，纳加尔的发球局，零比四十——三个破发点，纳加尔三个全救了回来。",
+      "_why": "第二盘 2-1 纳加尔发球 30-0（记分条 `KOR 2|2 30 / •IND 6|1 0`，138.5~146.5s），底线宽景，解说 145.1s「Oh, that's brilliant」是郑泫拿下这一分到 40-0。逐分第 4 局 `40:0 |B1|, 40:15 |B1|, 40:30 |B1|, 40:40, 40:A` → 纳加尔保发。镜头 126.4–147.96 之内（126.5~136.5s 是上一分的回放低机位，不取），收在 147.9；147.96 那一刀之后 148.5s 是韩国队席的近景。「纳加尔三个全救了回来」按「救的人是拿到点的人的对手」那条写，主语写出来。"
+    },
+    {
+      "source": "main",
+      "start": 155.5,
+      "end": 166.5,
+      "cx": 0.5,
+      "narration": "三比三，郑泫自己的发球局，整场球最长的一局：六个局点，他一个都没拿下。",
+      "_why": "第二盘 3-3 郑泫发球平分（记分条 `•KOR 2|3 40 / IND 6|3 40`，154.5~178.5s 十三格同一读数——一个 26 秒的底线相持，解说 177.4s「This time it's Sumit forced to defend for his life」）。镜头 152.68–178.76 之内，这一段和下一段首尾相接（166.5），同一个镜头拆成两段配两句旁白。逐分第 7 局 `A:40` 六次。「整场最长的一局」见 _claims。"
+    },
+    {
+      "source": "main",
+      "start": 166.5,
+      "end": 178.7,
+      "cx": 0.5,
+      "narration": "第七次平分之后，反而是他被破了，三比四。就在这一局，比赛差点又滑回第一盘的样子。",
+      "_why": "同一个长回合的后半段（镜头 152.68–178.76，收在 178.7，178.76 那一刀之后 180.5s 是看台）。逐分第 7 局末尾 `40:40, 40:A |B1|` → HK÷2，被破 3-4。⚠️ 被破的那一分集锦没剪进来，旁白只说结果、不指认画面里这一分的归属。"
+    },
+    {
+      "source": "main",
+      "start": 197.7,
+      "end": 205.3,
+      "cx": 0.5,
+      "narration": "他立刻回破，四比四，再保发，五比四。",
+      "_why": "198.5s 郑泫的近景（白框眼镜、深蓝球衣，正脸）→ 200.5~204.5s 韩国球迷起立挥臂；记分条 `KOR 2|5 15 / •IND 6|4 0`——画面上已经是 5-4，和旁白「五比四」对得上。镜头 197.64–205.36 之内，收在 205.3。逐分：第 8 局 `A:40 |B1|` 回破 4-4，第 9 局 `15:0, 30:0, 40:0` 零封保发 5-4。解说 197.6s「playing extraordinary tennis」。"
+    },
+    {
+      "source": "main",
+      "start": 228.5,
+      "end": 239.5,
+      "cx": 0.5,
+      "narration": "五比四，郑泫的盘点，纳加尔发球。这一分两个人拉了半分钟，最后是他拿下的。",
+      "_why": "第二盘盘点那一分（记分条 `KOR 2|5 40 / •IND 6|4 15` 下挂 `SET POINT`，206.5~238.5s 十七格同一读数——一个镜头 205.36–239.52，34 秒的一分），这里取末尾 11 秒，收在 239.5 那一刀之前（239.52 之后 240.5s 是郑泫的庆祝近景）。「拉了半分钟」按镜头长度说，不说拍数（拿不到拍数就不写长度那条的例外：这里写的是时长而且是量出来的镜头长度——⚠️ 若闸拦「秒」就删掉这半句）。逐分第 10 局 `40:15 |B1| |B2|`，解说 238.7s「And there is the set. One set a piece」。"
+    },
+    {
+      "source": "main",
+      "start": 240.0,
+      "end": 250.9,
+      "cx": 0.5,
+      "narration": "六比四，一比一。解说喊的是：前世界第十九，不可思议。看台上的首尔，站了起来。",
+      "_why": "拿下第二盘之后：240.5s 郑泫（`KOREA`）转身，242.5s 走向裁判椅，244.5s 他背后韩国队席和球迷全站着鼓掌，246.5~250.5s 挥旗的球迷。镜头 239.52–251.12 之内（244.88 / 248.44 两道 loose 切是同一时刻的看台机位），收在 250.9。解说 241.7s「INCREDIBLE WORK from the former world number 19」；「首尔站起来了」是 244.5~250.5s 看台上的画面（球迷起立、挥旗、鼓掌）。"
+    },
+    {
+      "source": "main",
+      "start": 264.0,
+      "end": 276.0,
+      "cx": 0.5,
+      "crosses_cut": "272.8 —— 决胜盘 2-1 那一分落地接郑泫的反应（274.5s `KOREA` 背影近景走向底线）。赢这一分的人和这一分，同一个时刻。收在 276.0，276.0 那一刀之后 276.5s 是纳加尔抬头看天的近景。",
+      "narration": "决胜盘，二比一，纳加尔的发球局。郑泫拿到破发点，一次就兑现，三比一。解说说：时光倒流。",
+      "_why": "决胜盘 2-1 纳加尔发球 15-0（记分条 `KOR 2 6 2 15 / •IND 6 4 1 0`，252.5~272.5s 同一读数，二十秒的相持），解说 272.7s「Rolling back the years. Here's Chung」——「时光倒流」是转播自己说的。逐分第 4 局 `40:15 |B1|` 一次兑现 → 3-1；下一格 276.5s 记分条已是 4-1。"
+    },
+    {
+      "source": "main",
+      "start": 288.5,
+      "end": 301.6,
+      "cx": 0.5,
+      "narration": "四比一之后，他自己的发球局被破了，四比三。这一局他又拿到三个破发点，纳加尔三个全救了回来。四比四。",
+      "_why": "决胜盘 4-3 纳加尔发球，郑泫占先（记分条 `KOR 2 6 4 AD / •IND 6 4 3 40`，288.5~300.5s 同一读数），解说 300.8s「that was very clever. Perhaps the last shot a little tight」——郑泫没拿下这个破发点。镜头 288.48–301.68 之内，收在 301.6；之后 302.5s 是纳加尔低头的近景。逐分：第 7 局郑泫发球 `15:40 |B1|` 被破 4-3；第 8 局 `|B1|` 三次、末尾 `40:A` 纳加尔保发 4-4。"
+    },
+    {
+      "source": "main",
+      "start": 328.5,
+      "end": 340.5,
+      "cx": 0.5,
+      "crosses_cut": "335.76 —— 4-4 那一局第二个局点落地接郑泫保发之后的反应（336.5s 他背后看台起立、338.5s 裁判椅、340.5s 韩国队席鼓掌）。赢下这一局的一分接赢的人和看台，同一个时刻。339.32 是 loose 切（看台机位换到队席）。收在 340.5，340.56 那一刀之后是 5-5 那一局。",
+      "narration": "四比四，郑泫的发球局。第一个局点被救掉，第二个局点又是一个长回合——这一次，是他拿下来的。五比四。",
+      "_why": "决胜盘 4-4 郑泫发球占先（记分条 `•KOR 2 6 4 AD / IND 6 4 4 40`，306.5~334.5s 同一读数——一个镜头 306.08–335.76，三十秒的一分），这里取末尾 10 秒，解说 334.8s「What a game. Extraordinary stuff」。逐分第 9 局 `40:40, A:40, 40:40, A:40` → 第二个局点保住 5-4。"
+    },
+    {
+      "source": "main",
+      "start": 344.0,
+      "end": 355.9,
+      "cx": 0.5,
+      "crosses_cut": "347.12 —— 5-5 占先那一板反手直线落地接郑泫的反应（348.5s `KOREA` 近景）和韩国队席起立（350.5~354.5s，350.52 是 loose 切）。赢的一分接赢的人，同一个时刻。收在 355.9，356.04 那一刀之后是 6-5 那一局。",
+      "narration": "五比五，郑泫占先。又是那一板反手直线，打穿了纳加尔。六比五，压力全到了对面。",
+      "_why": "决胜盘 5-5 郑泫发球占先（记分条 `•KOR 2 6 5 AD / IND 6 4 5 40`，342.5~346.5s），解说 347.3s「talk about dialed in. That is a scorcher. And we've seen that backhand up the line multiple times today」——「反手直线」是转播说的。逐分第 11 局 `40:40, A:40` → 6-5。"
+    },
+    {
+      "source": "main",
+      "start": 360.0,
+      "end": 368.7,
+      "cx": 0.5,
+      "narration": "六比五，纳加尔的发球局，输掉就出局。第一分，是郑泫的。",
+      "_why": "决胜盘 6-5 纳加尔发球 0-0 的第一分（记分条 `KOR 2 6 6 0 / •IND 6 4 5 0`，358.5~368.5s），解说 369.0s「Chung lands the first blow in this 12th game of the third set」。镜头 356.04–368.8 之内，收在 368.7；之后 370.5s 是郑泫的近景。「输掉就出局」：三盘两胜的决胜盘 6-5，这一局丢了就是 5-7——赛制先核过（戴维斯杯资格赛三盘两胜）。"
+    },
+    {
+      "source": "main",
+      "start": 376.1,
+      "end": 384.84,
+      "cx": 0.5,
+      "narration": "四十比三十，赛点，也是破发点。第一个赛点，他就拿下了。",
+      "_why": "赛点那一分（记分条 `KOR 2 6 6 40 / •IND 6 4 5 30`，376.5~384.5s，384.5s 郑泫在底线举臂）。镜头 376.08–384.84 整段，收在 384.84 和下一段首尾相接。逐分第 12 局 `40:30 |B1| |B3|` 一次兑现。"
+    },
+    {
+      "source": "main",
+      "start": 384.84,
+      "end": 396.0,
+      "cx": 0.5,
+      "narration": "二比六，六比四，七比五，三小时零六分钟。韩国队首日二比零，离十一月博洛尼亚的总决赛，只差一场。",
+      "_why": "赛点落地之后：386.5s 转播小比分板叠在 VISA 板上、他往底线走；388.5s 白框眼镜的近景，长出一口气；390.5s 走向网前；392.5~394.5s 和纳加尔在网前握手（391.8 是 loose 切，网前机位）。镜头 384.84–396.04 之内，收在 396.0。这一段和上一段首尾相接、并集盖住冷开场 383.0–391.7（_ending_payoff）。「首日二比零」按第一天打完的事实说（写这条时第二日还没开打，推送前回头核一次）；「博洛尼亚」见 human_context.facts（解说 404.0s「they need one more match to secure a passage through to Bologna in November」）。"
+    },
+    {
+      "source": "main",
+      "start": 407.8,
+      "end": 420.0,
+      "cx": 0.5,
+      "narration": "解说说，他的生涯曾经被彻底毁掉，而今天他宣告：还没完。三十岁的郑泫，你觉得他还能回到前一百吗？",
+      "_why": "赛后：408.5s 教练席拥抱、410.5~412.5s 郑泫和队友（`KOREA`）、414.5s 起转播赛果板 `KOREA, REP. 2 6 7 / INDIA 6 4 5 · MATCH 2 · OLYMPIC TENNIS COURT, SEOUL` 叠在画面下方（自证赛果和场地）。镜头 407.72–430.08 之内，收在 420.0；430.08 起是 ITF 片尾动画，一帧不进。解说原话 414.6s「What a victory for Chung who struggled for so long with a back problem. His career has been completely derailed, but he serves notice that he is not done yet」。末屏那一问按「末屏那个问题旁白必须问出来」，问的是评论区能站队的一件事，不是封面那一问的回声。 三十岁：生日 1996-05-19（维基 ＋ tennisabstract），比赛日 2026-09-18 是 30 岁。「前一百」：他现在世界第 549（ITF tieCentre 2026-09-14 那期）。"
+    }
+  ],
+  "_editing_why": "正片 20 段（含冷开场）合计约 240 秒。按「开场三格：画面爆点 → 落点 → 坐标」排：第 1 段是赛点之后他的脸（不配旁白，现场声），第 2 段落点（207 分只多一分 ＋ 整场形状），第 3 段坐标，之后按时间顺序走三盘，生涯回顾拆成两拍压在首盘丢盘之后（第 5、6 段：2018 澳网四强 → 背伤三年）和末段（解说原话）。⚠️ 这条源片是 ITF 官方剪的 435 秒集锦，几乎全是同一机位的底线宽景，切点稀（阈值 0.35 共 42 刀），所以每一段都按 `scene_cuts` / `scene_cuts_loose` 划出的镜头收在同一个镜头里；六处跨切点各写了 crosses_cut，全是「这一分落地接赢的人（或输的人）的反应」这种同一时刻的跨法。⚠️ 近景只在两种情况进来：赛后（近景就是内容，第 1 / 19 / 20 段）和盘间／局间的反应（第 3 段郑泫捂脸、第 5 段纳加尔举拍、第 6 段郑泫走向座位、第 11 段郑泫近景＋球迷、第 12 段庆祝、第 13 / 15 / 16 段反应）——每一处 `_why` 都写了近景里是谁（白框眼镜＋深蓝 KOREA 是郑泫，白衣 INDIA 是纳加尔），旁白里没有一句压在对方脸上替郑泫说话。⚠️ 两处同源首尾相接（154.5/166.5、376.1/384.84/396.0），溶解底料逐帧相同看不出接缝。⚠️ 末段收在 420.0，430.08 起的 ITF 片尾动画一帧不进；开头 0~5.0s 的片头动画同样不进。⚠️ probe 没给 `--scorebox`，`point_ends` 为空（`scorebox_guess` 188,897,335,985）——段尾按记分条缩略图墙和解说的时间戳定：每一段的末尾都落在一分打完之后（解说报出结果的那一句之后）或镜头自己的切点上。⚠️ 没有用 `score_inset`：这条 ITF 转播的板在源片 x≈190~470，3:4 居中窗口取的是 x 555~1365，板整块落在窗外，成片上没有半截板；而全出血回贴那条路在绿板绿场上的检出没有验过（存量全是美网 band 的深蓝板），赶比赛日不冒这个险。",
+  "mixed_fps": {
+    "main": "单源，25fps，不存在混帧率问题。这一栏按 spec 形状留着说明已经核过。"
+  },
+  "_voice_why": "沿用这条线的默认：云见（`zh-CN-YunjianNeural`）＋6%，不设 `style`。⚠️ 这一栏叫 `_voice_why` 不叫 `_voice`。",
+  "_narration_why": "旁白用本地 edge-tts（zh-CN-YunjianNeural +6%）真跑过一遍量长度和切词（`--check-narration`）。第一版报三处：①第 6 段（背伤那句）5.62s 对 5.4s 画面超 0.22s——砍掉「一切从头开始」；②第 2/7/9/16 段哑场 4.1~4.8s——窗口起点各往后收 1~3 秒（23.5 / 105.5 / 155.5 / 328.5），末尾不动（末尾都收在一分打完或镜头切点上）；③切词：「掀｜翻德约科维奇」动词黏进人名→「掀翻了德约科维奇」，「拿｜到局｜点」→「六个局点，他一个都没拿下」，「首尔站｜起来」（「首尔站」是个真实存在的假词）→「看台上的首尔，站了起来」，「郑泫先｜拿下」→「第一分，是郑泫的」。第二遍 --check-narration 的数见 render.json / run 日志。⚠️ 本地 edge-tts 和 runner 上退回 edge 的是同一个后端（tts_backend=edge），余量直接适用，不用折算。",
+  "tts_backend": "edge",
+  "_tts_backend_why": "同一把 Azure 钥匙 2026-09-17 起一直 401（ruud-te-davis-cup-2026-wg1 的 run 35410646682、bjk-cup-story、zheng-bjk-cup-olympic-rule 都撞过），按「写 spec 那一刻就把 tts_backend 写上」的默认动作退回 edge-tts。本条不用 `voice.style` 也不用 `lead_pause`，退回 edge 零代价；本地 --check-narration 量的就是 edge 的时长，余量按 edge 算反而更准。钥匙恢复后删掉这两个键即可。"
+}
