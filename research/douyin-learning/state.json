@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "timezone": "Asia/Shanghai",
-  "stage": "cross_author_discovery_saved_priority_text_partial_captcha_blocked",
+  "stage": "browser_connection_timeout_local_full_duration_sample_saved",
   "watchlist": [
     {
       "name": "河岸",
@@ -1795,7 +1795,7 @@
       ],
       "analysis": {
         "status": "partial",
-        "coverage": "23 decoded source-timestamp frames 0..440 at 20s interval plus eight frames 94..97.5 at 0.5s interval; no full continuous review or audio listening",
+        "coverage": "45 decoded source-timestamp frames 0..440 at 10-second intervals, plus prior 0–8s, 19.1–19.7s, 51.5–52.466667s and 94–97.5s denser reviews; no full continuous review or audio listening",
         "media_sha256": "b291bd5cae52d2f6721279b2268c8724ea6acc0e0d14462f1ffe7f0d28369dbd",
         "media": {
           "sha256": "b291bd5cae52d2f6721279b2268c8724ea6acc0e0d14462f1ffe7f0d28369dbd",
@@ -1817,7 +1817,8 @@
           "transitions",
           "transcript",
           "audio_listening",
-          "own_outcomes"
+          "own_outcomes",
+          "full_audio_listening"
         ],
         "transition_followup": {
           "source_sha256": "b291bd5cae52d2f6721279b2268c8724ea6acc0e0d14462f1ffe7f0d28369dbd",
@@ -2019,6 +2020,38 @@
           "sampling_fps": 2,
           "quote_attribution": "pending",
           "audio": "pending"
+        },
+        "full_duration_visual_sampling": {
+          "observed_at": "2026-09-19T17:58:01Z",
+          "evidence_path": "research/douyin-learning/evidence/round-20260919T175310Z.json",
+          "interval_seconds": 10,
+          "sampled_frames": 45,
+          "range_seconds": [
+            0,
+            440
+          ],
+          "contact_sheet_hashes": [
+            "84405ee7c70ba2d159babaad7c552e16fb424f5d306547f4d034b10d2d3aacfa",
+            "80bfd9bd560ccd72046e78be8c62a7bc6208a623a754fefe4bfdf94fa7af6e6d",
+            "33a4a3ec02638d9d4d0b1603417d2848675715d09af393b2df88ad747c9f6f97",
+            "3595f43f2663478a294fbb9609b0848df7e270a0d091e9d0002afa2a8fcd0886"
+          ],
+          "conclusions": [
+            "Most sampled timestamps use full-frame archival material; bordered inset mode appears only in a minority of sampled segments.",
+            "Centered lower-third white Chinese subtitles with dark edge/shadow recur across sampled content; smaller English often appears below.",
+            "The sampled late sequence moves from practice/ceremony to family imagery, personal objects/photos, achievements, loss and retrospective closure.",
+            "Ten-second samples do not establish shot duration, exact speed, continuous zoom, transition form or audio design."
+          ],
+          "pending": [
+            "continuous_editing",
+            "exact_speed_source_comparison",
+            "zoom_provenance",
+            "transition_forms",
+            "voiceover_audit",
+            "music_and_mix_listening",
+            "J_L_audio_edit",
+            "own_outcomes"
+          ]
         }
       }
     },
@@ -3809,7 +3842,13 @@
       "next_action": "当前inset试验优先；为本候选匹配未发布且有字幕遮挡档案细节的自有新片，预注册对照作品和坐标后渲染。",
       "promotion_allowed": false,
       "experiment_path": "research/douyin-learning/experiments/archival-subtitle-separation-v1.json",
-      "review_path": "research/douyin-learning/reviews/7686680149357579529.md"
+      "review_path": "research/douyin-learning/reviews/7686680149357579529.md",
+      "scope_refinement": {
+        "checked_at": "2026-09-19T17:58:01Z",
+        "evidence_path": "research/douyin-learning/evidence/round-20260919T175310Z.json",
+        "finding": "Decorative inset layout is segment-specific across full-duration 10-second samples. Apply only when an existing inset and external subtitle band are already present; do not impose it on full-frame archival footage.",
+        "status": "hypothesis_unchanged"
+      }
     },
     "public-image-private-cost-hook-v1": {
       "status": "experiment_ready",
@@ -3912,6 +3951,19 @@
       "overlap_required_hours": 24,
       "watermark_advanced": false,
       "next_action": "Rotate at least five not-recently-checked authors in every category; verify four more stable-ID authors; after the site challenge clears, resume Zhuifengke full-media acquisition without reusing the blocked signed asset."
+    },
+    {
+      "run_id": "2026-09-19T17:53:10Z",
+      "query_scope": [
+        "15-author rotation",
+        "5-new-author expansion",
+        "追风客 media",
+        "小红书 JJ文森特 note detail"
+      ],
+      "reason": "browser_cdp_tab_list_and_navigation_timeout_after_fresh_tab",
+      "overlap_required_hours": 24,
+      "watermark_advanced": false,
+      "next_action": "On the next run make one fresh browser probe; if recovered, prioritize four stable-ID new authors to reach a 30-author pool and rotate 15 actual author checks. Do not count search hits or tab titles."
     }
   ],
   "runs": [
@@ -4682,9 +4734,61 @@
       "watermark_advanced": false,
       "watermark_reason": "New-author target not met and priority media verification blocked after one recovery.",
       "persistence_receipt": "evidence 01c14fe9e8a5b13b3875fff5b0092456f009776e; review a9281aafb1e0db8aa1547f98d33d361fded5cefc; experiment 05cd728892f808c6fc734c0b48a2e3a07b75ad64"
+    },
+    {
+      "run_id": "2026-09-19T17:53:10Z",
+      "started_at": "2026-09-19T17:53:10Z",
+      "ended_at": "2026-09-19T17:58:01Z",
+      "stage": "browser_connection_timeout_local_full_duration_sample_saved",
+      "authors_checked": 0,
+      "local_review_authors": 1,
+      "new_authors_verified": 0,
+      "authors_target": 15,
+      "new_authors_target": 5,
+      "verified_rotation_pool_size": 26,
+      "category_author_counts": {
+        "网球复盘": 0,
+        "网球人物故事": 0,
+        "赛后采访": 0,
+        "其他体育人物故事": 0
+      },
+      "discovered": 0,
+      "collected": 0,
+      "deep_review_started": 1,
+      "deep_review_completed": 0,
+      "partial_reviews": 1,
+      "sampled_frames_reviewed": 45,
+      "full_media_acquired": 0,
+      "proposed": 0,
+      "promoted": 0,
+      "evidence_path": "research/douyin-learning/evidence/round-20260919T175310Z.json",
+      "review_path": "research/douyin-learning/reviews/7686680149357579529.md",
+      "earliest_blocker": {
+        "fingerprint": "browser-cdp-get-tabs-and-navigation-timeout-after-fresh-tab",
+        "kind": "transient_browser_connection_timeout",
+        "first_error": "CDP operation get tabs timed out after 20000ms",
+        "recovery_attempts": 1,
+        "recovery_result": "Fresh tab created, but direct priority navigation timed out; subsequent tab listing also timed out.",
+        "site_bot_signal": null,
+        "note": "No rendered site page was returned in this run, so this is not evidence of CAPTCHA, logout, account restriction or bot detection."
+      },
+      "production_check": {
+        "claude_sha": "9c2d451dd20cdfa041251efd5777d312a682fbe7",
+        "integration_sha": "9fc16b15e7ac5c1b58c6ea4dd4d181e7ff270e40",
+        "rule_registries": [
+          "03e4c4b63a58cf4d432890815fa42c673d460329",
+          "03e4c4b63a58cf4d432890815fa42c673d460329"
+        ],
+        "registries_empty": true,
+        "treatment_work_id": null,
+        "status": "awaiting_production"
+      },
+      "watermark_advanced": false,
+      "watermark_reason": "No profile or work content read; local existing-media review does not advance discovery watermarks.",
+      "persistence_receipt": "evidence d7ef8c7ae5026f95216e450f588c0a506739cb14; review c1385d54d7770a0f48feb0ac546d47a900ddc1a9"
     }
   ],
-  "last_notification_fingerprint": "cross-author-17-youku-added-zhuifengke-text-partial-captcha-20260919T145414Z",
+  "last_notification_fingerprint": "browser-cdp-timeout-goat-full-duration-sampling-20260919T175310Z",
   "production_integration": {
     "status": "consumer_merged_no_validated_rules",
     "pr": "https://github.com/robertyang87/tennislive/pull/937",
