@@ -1532,11 +1532,96 @@ x-staylive-channels`）。频道号是扫 3000–7400 扫出来的，都在 `too
       https://api.itf-production.sports-data.stadion.io/custom/tieCentre/<tieId>
 
   `tieId` 就是赛事页 URL 里那串（`/en/tie/d3de5d2f-…`）。**不用 token，带浏览器 UA 就通**，一次 89 KB，全在 `data` 下：
+
+  ⚠️⚠️ **而「那串怎么拿到」是个独立的坑，2026-09-19 做 `heide-wawrinka-davis-cup-2026-wg1`
+  时花了好几轮**——daviscup.com 是 JS 壳，`/en/tie/<uuid>` 这个链接**在页面上抓不到**，
+  `draws-results` 那一页的 Next.js payload 里也只有 **nomination 级的 uuid，没有 tieId**
+  （我照着那儿的 `"id":"a85b67d9-…"` 去请求 tieCentre，回的是 41 字节的空壳
+  `{"data":{"nominations":[],"tie":null}}`——**空得不像错，像「这场没有数据」**）。
+  真正带着 `/en/tie/<uuid>` 的地方是**那一周的「where to watch」新闻稿里的表格**：
+
+      curl -H "RSC: 1" https://www.daviscup.com/en/news/world-group-i-and-ii-where-to-watch
+        → …"value":"Brazil v Switzerland"…"hyperlink","data":{"uri":"https://www.daviscup.com/en/tie/2fb37a7c-48d3-4a81-b28f-513fc51f73e0"}
+
+  **`RSC: 1` 这个头是关键**（和下面 BJK Cup 那条同一个机制）：不带它拿到的 HTML 里
+  只有 og:image 和赞助商，正文表格一个字都没有。稿子的 slug 每周不一样，先
+  `/en/news?page=1..3` 带 `RSC: 1` 列一遍 slug，认 `where-to-watch` / `preview` 那几条。
   - `data.nominations[]`：按 `countryId` 分两条，`captain._name`、`players[]._name`、`oomSinglesRankingPro` / `oomDoublesRankingPro`（`oomRankDate` 写着是哪一期）、`date`（**名单落库的时刻**——这次是抽签当天 12:27Z）
   - `data.tie.matches[]`：五场，`dateStartLocal` ＋ `orderInSchedule` ＋ `scheduleText`（`Starting at 18:00` / `After 15 min`）；**谁打谁在 `sides[].sidePlayer[].player._name`**，`person.country.ISOcode` 给国籍。抽签之前 `sides` 是空的，抽完当场就有
-  - `tie.tieStatus`（To be played / In Progress / Complete）、`winnerTeamId`；⚠️ **场地类型这个接口不给**（`formatInformationLabelSurface` 只是页面的字典），场地要另找
+  - `tie.tieStatus`（To be played / In Progress / Complete）、`winnerTeamId`
+
+  ⚠️⚠️ **上面原来写着「场地类型这个接口不给，场地要另找」——那句是错的，2026-09-19 改掉。**
+  当时大概只翻了 `data.tie` 的第一层；**场地、场馆、赛事全名、轮次、逐场用时全在
+  `tie.round.draw.event` 和 `tie.matches[]` 里，往下再走两层就是**：
+
+  | 要什么 | 在哪儿 | BRA v SUI 实测 |
+  |---|---|---|
+  | **地面** | `tie.round.draw.event.surface.name` ／ `.surfaceFriendlyName` | `Hard` ／ `GreenSet Tour` |
+  | **场馆＋城市** | `tie.round.draw.event.venue.name` / `.city` / `.utcOffset` | `Farmasi Arena` / `Rio de Janeiro` / `-05:00:00` |
+  | **赛事全名** | `tie.round.draw.event.name` | `World Group I - Brazil vs Switzerland` |
+  | **轮次** | `tie.round.name`（＝`roundType.displayName`） | `Round 1` |
+  | **赛事代号** | `tie.name` | `M-DC-2026-WG1-M-BRA-SUI-01`（`WG1` 就是世界一组） |
+  | **逐场用时／起止** | `tie.matches[].duration` / `.actualStartDate` / `.actualEndDate` | `02:38:04`，20:47:39Z → 23:25:43Z（**相减自洽**） |
+  | **团体比分** | `tie.teams[].score` | Brazil 2 / Switzerland 0 |
+
+  ⚠️ **用时优先取这儿，别取 flashscore 的总计**：flashscore 的 `RB` 是分盘各自取整之后
+  相加的（这一场 0:37+1:06+0:57 报 `2:40`），比官方的 `02:38:04` 多 2 分钟。
+  ⚠️ **轮次也优先取这儿**：这一场源片 YouTube 简介写的是「Second Round Qualifiers」，
+  **是错的**——ITF 自己的稿子（`/en/news/davis-cup-world-group-preview`）把这一周的
+  Qualifiers 2nd Round（另外七场）和 World Group I / II ties 分得很清楚，赢的 2027 年 2 月
+  打 Qualifiers 1st Round、输的打 World Group I Play-off。**官方接口 ＋ 官方稿子对得上，
+  简介对不上，就按接口写。**
+  ⚠️ `nominations[].players[].oomSinglesRankingPro` 顺带是**排名的第一源**（`oomRankDate`
+  写着是哪一期）：2026-09-14 那期海德 123 / 瓦林卡 134，和 `rankings.py`（tennisexplorer
+  同期）逐字相同——而**维基和 ESPN 上瓦林卡那个 127 是 8/31 的旧快照**，两处都没更新，
+  别照抄百科。
 - **第二源**拿 flashscore：抽完签它当天就建好单场页（`Casper Ruud v Rigele Te 18/09/2026 | Davis Cup - World Group I`），搜「<名> v <名> flashscore」就到
 - 中文媒体在抽签当天**没有**跟进稿（腾讯／新浪／搜狐／中新网／CTA 官网全搜过，CTA 官网沙箱里 SSL 直接断）；挪威网协 NTB 的稿子只写到「谁领衔」和媒体日安排。**名单这件事只有 ITF 自己说了算，别指望编辑稿**
 
 ⚠️ **顺手的教训**：`_facts` 里写着「正式名单要等抽签日」，而重发那趟名单已经公布了 58 分钟——**写了「要等」的事实，重发之前要回头查**。规矩在 CLAUDE.md「前瞻类事实要在它定下来之后再核一次」。
+
+#### ⭐⭐ 戴维斯杯**结构性地没有制胜分和非受迫失误**——别再一场一场去找（2026-09-19 查到底）
+
+账号所有者要 `chung-nagal-davis-cup-2026` 的数据图带这两行，一路找到底的结论：
+**这项赛事根本没采集这一维**。判据是「换一场还成不成立」，不是「这一场我没找到」：
+
+| 查什么 | 结果 |
+|---|---|
+| **flashscore 这一轮 15 场逐场量** | **零场**有 Winners/UE（项数 24~32，全是发球和得分那套） |
+| **ITF 自己的前端代码** | daviscup.com 3.8 MB bundle 里 `winners` 全是 `winnerSideId`/`isWinner`，`unforced` 全是 Apollo 的 `onlyRunForcedResolvers`——**平台没建模这两个字段** |
+| `custom/pointByPoint/<matchId>` | 全部 414 个点只有三类 `outcome`：`POINT` / `ACE` / `DOUBLE_FAULT` |
+| TNNS | `hasExtendedStats=False` |
+| Match Charting Project | 两位球员最近标注停在 2017 / 2024 |
+| **画面自证（四个版本）** | 官方 3:43（StayLive）／7:16／**扩展版 14:27**（YouTube）＋ 韩国 ENA SPORTS 转播版 14:53，**片尾和盘间都没有统计图**；转播记分条本身也不带统计 |
+
+⚠️ **「大满贯女子有、WTA 巡回赛没有」那条规律不要外推到戴维斯杯**——上面这张表是
+一次真正查到底的记录，下次戴维斯杯直接引它，别再重探这六处。
+
+##### ⭐ 同一轮挖到的三条通用发现
+
+- **`custom/pointByPoint/<matchId>` 是 `stats` 块的第二个独立源。** `matchId` 在 tieCentre 的
+  `data.tie.matches[].id`（打完的那条 `matchStatus._name` 是 `Complete`）。按它数 ACE / 双误 /
+  得分，和 flashscore 逐项对得上——核 `stats` 块不用再找第二个站点。
+- ⚠️ **StayLive 的整节回放锁地域，而它照样把 Mux 的签名地址吐出来——但那不是入口**：
+  `/videos/<id>` 在 `allowed=false` 时仍然返回 `storyboard` 和 `gif` 的 URL，**token 是钉死的**
+  （gif 的 payload 写着 `start:0,end:10`，storyboard 的 `aud:"s"`），换不了时间点，
+  也签不出 `thumbnail`。**别在这条上耗**。
+- ⚠️⚠️ **沙箱里 yt-dlp 现在元数据拿得到、媒体流仍然 403**（装了 `yt-dlp[default]` 也一样）。
+  「能 `-J` 出 176 个格式」**不等于**「下得动」——要帧就发 `frame-grab.yml` 上 runner。
+  ⚠️ 而 `frame-grab` 的产物是**提交进仓库**的：`every=3` 抽一条 15 分钟的片子就是 **50 MB**，
+  两条 103 MB。**只为读一个数据图就抽帧的话，`every` 给大（10~15），读完当趟删掉。**
+
+#### ⭐ 同一套接口还有**逐分**：`custom/pointByPoint/<matchId>`——只标 ACE / 双误 / 普通分，**没有制胜分和非受迫失误**（2026-09-19）
+
+`chung-nagal-davis-cup-2026` 找制胜分／UE 时探出来的。`matchId` 在 tieCentre 的
+`data.tie.matches[].id`（打完的那条 `matchStatus._name` 是 `Complete`、`duration` 是
+`03:06:30` 这种）。载荷 78 KB，按 set → games → sides → points 排，每个点一个 `outcome`，
+**全场只出现三种值：`POINT` / `DOUBLE_FAULT` / `ACE`**（每个点两边各记一遍，
+`isServer` 标谁在发）。按它数出来 ACE 3/3、双误 4/8、得分 104/103，和 flashscore
+`df_st_1` 逐项相同——所以它是 `stats` 块的**第二个独立源**，但它给不了 winner/UE。
+
+戴维斯杯这场制胜分／UE 的五类源全查空，逐条记在那条 spec 的 `stats._winners_ue_why`
+里（flashscore 17 项、TNNS `hasExtendedStats=False`、MCP 0 场、ITF 两个接口、
+五家编辑稿只有定性描述、集锦片尾没有统计图）。**下次戴维斯杯别再重探这五处**；
+真要这两个数，只剩「等 MCP 志愿者标」这一条路（它落后约三天）。
 

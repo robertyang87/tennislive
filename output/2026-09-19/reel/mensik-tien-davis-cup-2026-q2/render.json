@@ -1,0 +1,72 @@
+{
+  "scoreboard_qc_sha256": null,
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 3.827,
+  "layout": "full",
+  "segments_seconds": 133.53,
+  "topbar": {
+    "line1": "2026 戴维斯杯资格赛 第二轮",
+    "line2": "勒纳·钱 6-2 6-4 门西克",
+    "start": 1.2,
+    "end": 134.73
+  },
+  "film_seconds": 138.6,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 7.104,
+    "2": 6.408,
+    "3": 7.176,
+    "4": 7.68,
+    "5": 5.856,
+    "6": 6.096,
+    "7": 8.76,
+    "8": 9.6,
+    "9": 8.832,
+    "10": 7.944,
+    "11": 10.56,
+    "12": 8.904,
+    "13": 9.792
+  },
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "mensik-tien-davis-cup-2026-q2",
+    "received_at": "2026-09-19T03:39:27Z",
+    "artifact_ready_at": "2026-09-19T03:45:28Z",
+    "elapsed_seconds": 361.464,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "9f93fc3e15d82b9cd2c069d8d076fb3d6c58324cd0f2a4ef21c7cd317fad4768",
+    "spec_sha256": "0183c3c6d51eca093d18d33648c2e4c30432539d846bd1ef67c909fc7d6c4c6a",
+    "run_id": "35419159452",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-09-19T03:41:43Z",
+        "run_id": "35419159452"
+      }
+    ],
+    "render_seconds": 225.464,
+    "pre_render_seconds": 136.0
+  },
+  "film_sha256": "9f93fc3e15d82b9cd2c069d8d076fb3d6c58324cd0f2a4ef21c7cd317fad4768",
+  "film_bytes": 103972462,
+  "qc_attestation_sha256": "486e5b79a4d113b08db48faee2a2fe44ef9553679b54f86dd5657d6f105d3c84",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-09-19T03:41:43Z",
+      "run_id": "35419159452"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-19T03:45:29Z",
+      "run_id": "35419159452"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-mensik-tien-davis-cup-2026-q2/mensik-tien-davis-cup-2026-q2.mp4",
+  "video_bytes": 103972462
+}

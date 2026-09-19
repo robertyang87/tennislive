@@ -1,0 +1,317 @@
+{
+  "slug": "heide-wawrinka-davis-cup-2026-wg1",
+  "_column": "赛场之上",
+  "sources": {
+    "main": "https://www.youtube.com/watch?v=MXHsmdEMbcc"
+  },
+  "source_quality_exceptions": {
+    "https://www.youtube.com/watch?v=MXHsmdEMbcc": {
+      "min_height": 720,
+      "approved_by": "user",
+      "reason": "账号所有者 2026-09-19 直接给了这条 URL：「https://youtu.be/MXHsmdEMbcc 看看这场瓦林卡的，很遗憾输了，做赛场之上」。ITF 官方频道 World Tennis 的戴维斯杯 highlights 照旧只有 1280×720（`yt-dlp --dump-json` 逐档查过：232/609/247/398 四档全部封顶 720p，没有 1080p），和 ruud-te-davis-cup-2026-wg1、davis-cup-china-first-world-group-1 用的 ITF 源同一个天花板，等不出更高的版本。"
+    }
+  },
+  "_source": "ITF 官方 YouTube 频道 World Tennis（和 ruud-te-davis-cup-2026-wg1 的 rhxnJFSz4Go 同一个频道）单场加长集锦《Final Set DRAMA! | Gustavo Heide v Stan Wawrinka | Highlights | Davis Cup World Group 1 2026》，1280×720 / 25fps / 615.91s（probe 实测），upload_date 20260918。四要素自证：①左下角常驻记分条烧着 `BRA`／`SUI` 两行国旗、局分和盘分，20.5s 读 `•BRA 0 30 / SUI 1 0`，580.5s 读 `4 7 6 / 6 6 4`——赛果和 ITF/flashscore 逐字一致；②场边挡板 `DAVISCUP` / `World Tennis` / `STELLA ARTOIS` / `VISA` / `#BRAxSUI`；③球衣：海德深藏青 ＋ 白帽 ＋ 胸前 `ENGIE`（巴西队赞助商），瓦林卡红色 ＋ `SWISSQUOTE` ＋ YONEX 短裤，两个人的认人判据见 `cover.portrait._why`；④蓝色室内硬地＋红色看台，和 ITF tieCentre 的 `surfaceFriendlyName=GreenSet Tour`、Swiss Tennis 公告的 `Farmasi Arena, Rio de Janeiro` 对得上。⚠️ 没有自动字幕（`captions=None`），转写那一层这条没有。⚠️ 末尾 582.5~615.9 是巴西方的庆祝（拥抱、国旗、球迷、队友），**没有社媒片尾板**；最后一格 614.5s 是海德向看台举手，窗口收在 612.9 那一刀之前。⚠️ 这条源片是 ITF 按主队视角剪的，瓦林卡的赛后反应只有 588.5~595 网前握手那一段。",
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "瓦林卡",
+    "hook": "他只丢了 1 个发球局\n就是最后那一局",
+    "_hook_why": "两行讲的都是**整场的形状**，不是某一个时刻：16 个发球局丢 1 个（flashscore df_st_1『Service games won 94% (15/16)』）＋ 丢的那一个是全场最后一局（逐分 df_mh_1 第三盘末局 `40:15 |B1| |B3|, 40:30 |B1| |B3|` 被破）。主语是封面上的瓦林卡，和 `subject` 一致。⚠️ 不重复比分板：比分板就在钩子底下印着 4-6 7-6(4) 6-4，所以钩子里不写比分。⚠️ 数字按 CLAUDE.md『给人看的字一律阿拉伯数字』写成 `1`，不写『一个』。字位：第一行 9.0（「他只丢了」4 ＋ 空格 0.5 ＋「1」0.5 ＋「个发球局」4），第二行 7.0，都 ≤ HOOK_MAX_CHARS=10，两行 ≤ SOLO_HOOK_MAX_LINES=2。",
+    "topic": "戴维斯杯世界一组 · 巴西 vs 瑞士",
+    "winner": "海德",
+    "result": "4-6 7-6(4) 6-4",
+    "matchup": [
+      {
+        "name": "海德",
+        "name_en": "Gustavo Heide",
+        "country": "BRA",
+        "rank": 123
+      },
+      {
+        "name": "瓦林卡",
+        "name_en": "Stan Wawrinka",
+        "country": "SUI",
+        "rank": 134
+      }
+    ],
+    "_matchup_rank_why": "两个名次都取 **ITF 官方 tieCentre 接口** `data.nominations[].players[].oomSinglesRankingPro`（tie `2fb37a7c-48d3-4a81-b28f-513fc51f73e0`，`oomRankDate` 2026-09-14）：BRA 一侧 123 是海德（同队 Fonseca 29 / Pucinelli 249 / Matos 883），SUI 一侧 134 是瓦林卡（同队 Stricker 187 / 262 / 284 / 1076，他是瑞士队里排名最高的）。第二源：`src/tennislive/sources/rankings.py`（tennisexplorer 本周那期 ATP 300 人榜）逐字相同——`ATP 123 Heide Gustavo` / `ATP 134 Wawrinka Stan`。⚠️ **维基和 ESPN 上写的瓦林卡『127』是 2026-08-31 那期的旧快照**，不是这一周；两处都还没更新，别照抄。⚠️ 123 同时是海德的**生涯最高排名**（en.wikipedia.org/wiki/Gustavo_Heide：Current = Highest = No. 123, 14 September 2026）。⚠️ 戴维斯杯没有种子，不存在种子号和排名混淆的问题。",
+    "_name_why": "两个中文名都走 `player_zh()`：`player_zh(\"Stan Wawrinka\")` → 瓦林卡，`player_zh(\"Gustavo Heide\")` → 海德。没有手打。",
+    "_subject_why": "封面放**瓦林卡**——输的那个，但他是刷到的人唯一认得的名字（三届大满贯冠军、生涯最高世界第 3、正在打职业生涯最后一个赛季），也是账号所有者这一条点名要的主体（原话「看看这场瓦林卡的，很遗憾输了」）。⚠️ 这和 `ruud-te-davis-cup-2026-wg1` 那条「封面放赢的那个」不冲突：那一条里『赢的』和『认得的名字』是同一个人，这一条两者分开了，而这条线的上位判据是**这一屏讲谁的故事**。海德这边的官方实拍其实更好（CBT 相册里他有正脸近景 55536732984、庆祝 55536686873、名字打在 LED 上的 55536965170），但片子讲的是瓦林卡，放海德的脸等于把主语换掉。",
+    "_heat_why": "瓦林卡过的是「③ 热点／破圈球员」那一档，而且是最硬的一种：**2026 是他职业生涯最后一个赛季，他自己 2025-12 宣布的**，巴塞尔 ATP500（10/26–11/1）已经定为生涯最后一站。同栏目两周前刚发过他的美网最后一场大满贯（`berrettini-wawrinka-us-open-2026-r1`），说明这条线上他本来就有读者。另一边海德是本周刚刷到生涯最高排名 123 的 24 岁巴西人。⚠️ 轮次这一档不成立（世界一组第一轮不是半决赛级别），走的是话题这一档。",
+    "scoreboard": {
+      "court": "Farmasi Arena",
+      "_court_why": "ITF 官方 tieCentre `tie.round.draw.event.venue.name = \"Farmasi Arena\"`（`_admin_name = \"Farmasi Arena - Rio De Janeiro\"`、`city = \"Rio de Janeiro\"`、`utcOffset = -05:00:00`）。Swiss Tennis 官方公告第二源：x.com/swiss_tennis/status/2097235966029189496「BRA vs. SUI ⏰ 18 | 19 September 2026 🌏 Farmasi Arena, Rio de Janeiro」。⚠️ 这块场地没有更细的球场名（tieCentre 的 `matches[].court.name` 只叫 `Match Court`），所以印场馆名，和 ruud-te-davis-cup-2026-wg1 印 `Trondheim Spektrum` 同一个处理。地面是硬地：`event.surface.name = \"Hard\"`、`surfaceFriendlyName = \"GreenSet Tour\"`，lastwordonsports 前瞻写的是 `a fast indoor hard court`。",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%20%222%3A38%3A00%22%2C%20%22source%22%3A%20%22ITF%20%E5%AE%98%E6%96%B9%20tieCentre%20%E6%8E%A5%E5%8F%A3%20match%20duration%2002%3A38%3A04%EF%BC%88actualStartDate%202026-09-18T20%3A47%3A39Z%20%E2%86%92%20actualEndDate%2023%3A25%3A43Z%EF%BC%8C%E4%B8%A4%E8%80%85%E7%9B%B8%E5%87%8F%E6%AD%A3%E5%A5%BD%202%3A38%3A04%EF%BC%8C%E8%87%AA%E6%B4%BD%EF%BC%89%22%2C%20%22cross_check%22%3A%20%22flashscore%20df_sui_1%EF%BC%88r1QMcHqC%EF%BC%89%E5%88%86%E7%9B%98%200%3A37%20%2B%201%3A06%20%2B%200%3A57%EF%BC%8C%E5%AE%83%E8%87%AA%E5%B7%B1%E7%9A%84%20RB%20%E6%8A%A5%202%3A40%E2%80%94%E2%80%94%E9%82%A3%E6%98%AF%E5%88%86%E7%9B%98%E5%90%84%E8%87%AA%E5%8F%96%E6%95%B4%E4%B9%8B%E5%90%8E%E7%9B%B8%E5%8A%A0%E7%9A%84%E6%95%B0%EF%BC%8C%E6%AF%94%E5%AE%98%E6%96%B9%E5%A4%9A%202%20%E5%88%86%E9%92%9F%E3%80%82%E5%8D%B0%E7%9A%84%E6%98%AF%20ITF%20%E5%AE%98%E6%96%B9%E9%82%A3%E4%B8%AA%EF%BC%8C%E5%8F%96%E6%95%B4%E5%88%B0%E5%88%86%E3%80%82%22%7D",
+        "field": "duration"
+      },
+      "_duration_why": "ITF 官方 tieCentre `matches[3].duration = 02:38:04`，而且和 actualStartDate 20:47:39Z → actualEndDate 23:25:43Z 自洽；flashscore 分盘 0:37 + 1:06 + 0:57，它的 RB 报 2:40（分盘取整相加，多 2 分钟）。**两源不完全一致，取官方那个**，印 2:38。旁白和 push.lead 里写的也是「两小时三十八分」，三处同一个数。"
+    },
+    "scrim": "clear",
+    "portrait": {
+      "image": "assets/reel/wawrinka-davis-cup-2026-bra-sui.jpg",
+      "focus": 0.49,
+      "focus_y": 0.41,
+      "zoom": 1.25,
+      "_why": "**巴西网球协会（CBT）官方 Flickr 本场实拍**，相册标题一字不差写着「Brasil vs Suíça - Copa Davis 2026 - Grupo Mundial I」，图片说明 `Fotos: Luiz Candido/CBT`（CBT 官方摄影师），photo id 55536607578，原图 **3543×2362**，铺 1080×1440 只要 **0.61×**，不需要 `_low_res_why`。四要素：赛事和对阵由相册标题自证、日期由 `date_taken 2026-09-18` 自证、人物见下、地点由画面里 `#BRAxSUI` / `STELLA ARTOIS` 挡板和蓝色室内硬地自证。**画面自己还多给一层**：左侧转播记分牌烧着 `MATCH TIME 01:23`，也就是这一张拍在开赛 1 小时 23 分左右，正落在第二盘。\n⚠️ **认人是这一轮最花时间的一步，判据记在这儿别再重来一遍**：瑞士队两个人都穿红色 SUISSE，我一开始差点把施特里克（第一场对丰塞卡那位）当成瓦林卡。分界有三条，任意一条就够——**施特里克是左手持拍**（55536549105 那张握拍在左手）、戴白色反戴棒球帽、ASICS 全套；**瓦林卡右手、不戴帽、胸前 `SWISSQUOTE`、YONEX 短裤、发际线后退带胡茬**。最后是拿网前握手那张（55536965195，和海德同框、两人特征都看得清）把他钉死的。\n⚠️ **整本相册（102 个候选逐张看过）里瓦林卡的场上实拍只有 5 张**，而另外 4 张（55536607518 / 55536607558 / 55536651219 / 55536885305）是同一种构图——隔着两个 SUISSE 队友的后背拍，他在画面中段、被前景挡掉大半，做封面人太小。**这一张是唯一一张他不被遮挡、全身在框内、脸看得见的**。\n⚠️ 几何不是算出来的，是**本地渲出来四版摆一起比**的（`render_cover_local.py`，一版 7 秒）。`zoom=1.0` 那一版他太小、四周全是虚化看台，撞上 CLAUDE.md『放大到接近铺满整个画布，四周留一点点空间』；`zoom=1.45` 那一版球拍头被顶边切掉、脚也进了比分板。**定在 `zoom=1.25`**：总放大 0.61 × 1.25 = **0.76×，仍然是缩小，没有放大源图**。`focus_y` 又单独比过 0.44 / 0.41 / 0.38 三档（只裁顶部 520px 并排看）：0.44 球拍头被切且压在台头文字上，0.38 头偏低，**0.41 是球拍完整、又不撞台头的那一档**。渲出来确认：他的头顶在输出 y≈260、下巴 y≈360，**台头带（0~170）和钩子带（790 起）都躲开了**，钩子压的是他的短裤和大腿。`focus=0.49` 是他的身体中线的横向位置。\n⚠️ 亮度量过：整幅 mean 65.8 / median 37（背景是暗看台和虚化的队友后背），但**主体本身是亮的**（红衣白裤在场灯下），不是那种 median=0 的逆光剪影。渲出来确认过。"
+    }
+  },
+  "topbar": {
+    "line1": "2026 戴维斯杯世界一组 第一轮",
+    "line2": "海德 4-6 7-6(4) 6-4 瓦林卡"
+  },
+  "_topbar_why": "line1 按 **ITF 官方 tieCentre** 写：`tie.name = \"M-DC-2026-WG1-M-BRA-SUI-01\"`（WG1 ＝ World Group I）、`tie.round.name = \"Round 1\"`、`tie.round.draw.event.name = \"World Group I - Brazil vs Switzerland\"`。⚠️ **源片 YouTube 简介里那句『Second Round Qualifiers』是错的**，别照抄——ITF 自己的稿子 `daviscup.com/en/news/davis-cup-world-group-preview` 把两件事分得很清楚：这一周的 Qualifiers 2nd Round 是**另外七场**，而「World Group I and World Group II ties」是另一档（赢的 2027 年 2 月打 Qualifiers 1st Round，输的打 World Group I Play-off）。CBT 官方相册也写的是「Grupo Mundial I」。和同一周的 `ruud-te-davis-cup-2026-wg1`（挪威 v 中国）是同一个赛事同一轮。line2 由 cover.winner / result / matchup 机械拼出。",
+  "_match": {
+    "status": "result_verified",
+    "source": "flashscore_points",
+    "source_id": "r1QMcHqC",
+    "flashscore_id": "r1QMcHqC",
+    "participants": [
+      "海德",
+      "瓦林卡"
+    ],
+    "set_scores_home_away": [
+      [
+        4,
+        6
+      ],
+      [
+        7,
+        6
+      ],
+      [
+        6,
+        4
+      ]
+    ],
+    "tiebreaks_home_away": [
+      null,
+      [
+        7,
+        4
+      ],
+      null
+    ],
+    "winner": "海德",
+    "loser": "瓦林卡",
+    "winner_result": "4-6 7-6(4) 6-4",
+    "loser_result": "6-4 6-7(4) 4-6",
+    "_direction_why": "flashscore 当日表 f_2_-1：`AA÷r1QMcHqC`、`CX÷Heide G.`（home，`CC÷Brazil`）、`AF÷Wawrinka S.`（away，`FV÷Switzerland`）、`AG÷2 AH÷1`（盘 2-1 主队）、`BA÷4 BC÷7 BE÷6`（主队三盘）、`BB÷6 BD÷6 BF÷4`（客队三盘）、`DC÷7 DD÷4`（抢七 7-4）、`AS÷1 AZ÷1`（主队获胜）。ITF 官方 tieCentre 第二源：`tie.teams[0] Brazil score=2 / teams[1] Switzerland score=0`，这一场 `matches[3].winnerSideId` 指向 sideOrder 1。源片记分条第三处印证：580.5s 读 `4 7 6 / 6 6 4`。⚠️ participants 跟 flashscore 的 home/away（和 set_scores_home_away 同序），这一场恰好也和 cover.matchup 的版式顺序、以及转播记分条上 BRA 在上 SUI 在下的顺序一致。⚠️ 抢七只在第二盘，不是决胜盘，也不是大满贯——`decider_tiebreak_problem` 那条『决胜盘抢十』的前置条件在这儿不成立。"
+  },
+  "stats": {
+    "a": {
+      "aces": 6,
+      "df": 1,
+      "first_in": 49,
+      "first_won": 42,
+      "second_total": 33,
+      "second_won": 26,
+      "bp_conv": 1,
+      "bp_chances": 9,
+      "pts_won": 95,
+      "pts_total": 185,
+      "first_total": 82,
+      "headshot": "assets/players/headshots/itf-HEI1441075.jpg"
+    },
+    "b": {
+      "aces": 13,
+      "df": 2,
+      "first_in": 54,
+      "first_won": 44,
+      "second_total": 46,
+      "second_won": 31,
+      "bp_conv": 1,
+      "bp_chances": 2,
+      "pts_won": 90,
+      "pts_total": 185,
+      "first_total": 100,
+      "headshot": "assets/players/headshots/atp-W367.png"
+    },
+    "_source": "flashscore 本场 r1QMcHqC 的 df_st_1，整块由 `match_stat_hooks.py r1QMcHqC --home Heide --away Wawrinka --stats-block` 机器抄出，没有手打。**这一场 flashscore 没有制胜分和非受迫失误**（只有 17 项那一档），按 `render_stat_card.OPTIONAL_FIELDS` 留空；TNNS 那一趟没跑（戴维斯杯的场次不在 `tnns-stats.yml` 验过的 ATP/WTA 巡回赛范围里，而这条要赶当天）。⚠️ a 跟的是 cover.matchup[0]=海德，flashscore 的 home 也是 Heide——两个顺序这一次恰好一致，a/b **不用对调**。锚点核过（这一步是这条最容易出事的地方，因为『救下』和『拿到』的主语是反的）：`Break Points Saved SH÷1/2 SI÷8/9` 里 **8/9 是瓦林卡救下的**，`Break Points Converted SH÷1/9 SI÷1/2` 里 **1/9 是海德拿到并兑现的**——所以 `a.bp_conv/bp_chances = 1/9` 是海德，`b.bp_conv/bp_chances = 1/2` 是瓦林卡。`Total Points Won SH÷95 SI÷90`，赢的那个多 5 分。first_total 按 first_in + second_total 算（49+33=82、54+46=100）。头像：瓦林卡 `atp-W367.png` 是仓库里已有的 ATP 官方头像（300×300，242 色，不是占位剪影）；海德**ATP 没有头像**（`--id H0DU --via mubadaladcopen.com` 取回来只有 2 色的占位剪影，`fetch_official_headshot.py` 自己拦下来了），改用 **ITF 官方肖像** `assetbank.itf-production.sports-data.stadion.io/HEI1441075`（690×1035，34344 色，CBT 队服正装照），按 `atp-W367.png` 的取景裁成 300×300（头高约占 82%）。",
+    "_winners_ue_why": "flashscore df_st_1 这场只有 17 项（Aces / DF / 一二发 / 破发点 / 总分 / 局数），没有 Winners / Unforced errors；TNNS 没跑，理由同上。"
+  },
+  "_hit_data": "跑过 `match_stat_hooks.py r1QMcHqC`，这一场的数据反差是整条片子的骨架。挑进正文的：**瓦林卡 16 个发球局只丢 1 个**（`Service games won SI÷94% (15/16)`），而丢的那一个是全场最后一局（逐分 df_mh_1 第三盘末局 `40:15 |B1| |B3|, 40:30 |B1| |B3|`，`|B3|` 是赛点标记）——进了第 12 段；**他救下 9 个破发点里的 8 个**（`Break Points Saved SI÷8/9`），其中第二盘 3/3、决胜盘 5/6——进了第 6、9 段；**还救下 1 个赛点**（`Match points saved SI÷1`）——进了第 11 段；**13 个 ACE，光决胜盘就有 9 个**（分盘 Aces：第一盘 SI÷0、第二盘 SI÷4、第三盘 SI÷9）——进了第 10 段，是这条片子唯一的技战术层；**总分 90:95，只差 5 分**（`Total Points Won`）——进了第 12 段。备选没用上的：全场 32 局两人各 16 局、`Last 10 balls SH÷8 SI÷2`（最后十分海德拿了八分）、海德二发得分率 79%（26/33）对瓦林卡 67%（31/46）。",
+  "_durations": "**ITF 官方 02:38:04**（tieCentre `matches[3].duration`，而且和 `actualStartDate 2026-09-18T20:47:39Z` → `actualEndDate 2026-09-18T23:25:43Z` 自洽，差 2:38:04 整）。flashscore df_sui_1 给的分盘是 `Set 1 0:37 / Set 2 1:06 / Set 3 0:57`、总计 `RB÷2:40`——那是**分盘四舍五入之后相加**的数，比官方多 2 分钟。旁白用 ITF 的「两小时三十八分」。⚠️ 第二盘 1:06 比第一盘 0:37 长了将近一倍，第三盘 0:57，形状就是「越打越长」。同一个 tie 的第一场（丰塞卡 v 施特里克）官方用时 01:59:53。",
+  "_turning_points": [
+    "首盘 4-5、海德发球：逐分 df_mh_1 `15:0, 15:15, 15:30, 15:40 |B1| |B2|, 30:40 |B1| |B2|` 之后被破——15:40 是**两个盘点**，30:40 是救掉一个之后剩的那个，第二个兑现。源片记分条 114.5~148.5s 挂着 `•BRA 4 15 / SUI 5 15`，150.5s 翻成 `SUI 5 30`，152.5~162.5s 是 `•BRA 4 30 / SUI 5 40`（盘点），**164.5s 记分条整块翻成 `BRA 4 0 0 / •SUI 6 0 0`**，瓦林卡 6-4 拿下第一盘。",
+    "第二盘 3-3、瓦林卡发球：`40:30 |B1|, 40:40, 40:A, 40:40, A:40 |B1|, 40:40, A:40 |B1|, 40:40, 40:A` ——海德连着拿到**三个破发点，一个都没兑现**（分盘 `Break Points Saved SI÷3/3`）。源片 274.5~296.5s 记分条 `BRA 4 3 15 / •SUI 6 3 15`、298.5s `BRA 4 3 30`，**那几拍平分集锦没剪进来**（300.5s 直接跳到 `•BRA 4 3 30 / SUI 6 4 15`，已经 3-4），所以旁白只说「连着拿到三个破发点」，不指认画面。",
+    "第二盘抢七：`0-1 0-2 1-2 1-3 1-4`——**瓦林卡 4-1 领先，再拿 3 分这场球就结束了**（他已经拿下第一盘，三盘两胜）；然后 `2-4 3-4 4-4 5-4 6-4 7-4`，**海德从 1-4 连拿 6 分**。源片记分条 378.5~390.5s 读 `•BRA 4 6 1 / SUI 6 6 4`（1-4），394.5~406.5s 读 `•BRA 4 6 5 / SUI 6 6 4`（5-4），408.5~418.5s `6-4`，**420.5s 翻成 `BRA 4 7 / SUI 6 6`**。",
+    "决胜盘 3-2、瓦林卡发球：`40:15 |B1|, 40:30 |B1|, 40:40, A:40 |B1|, ..., A:40 |B1|, 40:40, 40:A` ——海德在这**一局里拿到四个破发点，四个全被救掉**（分盘 `Break Points Saved SI÷5/6`，这一局占 4 个）。源片 458.5~466.5s 记分条 `BRA 4 7 3 / •SUI 6 6 2 Ad`，「Ad」就是他救回来之后占先的读数，直接烧在画面上。",
+    "决胜盘 4-5、瓦林卡发球（全场最后一局）：`0:15, 15:15, 30:15, 40:15 |B1| |B3|, 40:30 |B1| |B3|` ——40:15 是**两个赛点**，`|B3|` 是赛点标记；救掉第一个之后 40:30，第二个被兑现。源片 504.5~516.5s `BRA 4 7 5 15 / •SUI 6 6 4 15`，524.5s `40 / 15`（双赛点），528.5~578.5s 一直挂着 `40 / 30`（救掉一个之后），**578.5s 那一刀之后海德举起双臂，580.5s 记分条翻成 `4 7 6 / 6 6 4`**。这是瓦林卡全场丢掉的唯一一个发球局。"
+  ],
+  "editorial": {
+    "mode": "match_review",
+    "hook": [
+      "他只丢了 1 个发球局",
+      "就是最后那一局"
+    ],
+    "question": "两小时三十八分钟，瓦林卡 16 个发球局只丢了 1 个，总分只少 5 分——他是怎么输掉这场球的？",
+    "thesis": "他什么都守住了，只有最后一局没守住。首盘他在海德的发球胜盘局上破发，6-4；第二盘 3-3 救下海德连着拿到的三个破发点，抢七一度 4-1 领先，再拿 3 分这场球就结束了——然后连丢 6 分，7-4 丢掉这一盘；决胜盘 3-2 那一局又救下四个破发点，靠 9 个 ACE 把发球局一路顶到 4-5，最后一局 40-15 落后救掉一个赛点，没救掉第二个。全场 32 局两人各丢一个发球局，他丢的那个是最后一局；总分 90 比 95。2 小时 38 分，4-6 7-6(4) 6-4，巴西首日 2-0。",
+    "beats": [
+      "开场先交代这是谁：41 岁的瓦林卡，正在打职业生涯最后一个赛季；北京时间 9 月 19 日凌晨，戴维斯杯世界一组第一轮，巴西主场里约的室内硬地。",
+      "首盘 4-5 海德发球，瓦林卡拿到两个盘点，第一个没兑现，第二个破掉发球局，6-4 先下一盘。",
+      "第二盘 3-3 他的发球局救下海德连着拿到的三个破发点；进抢七之后 4-1 领先，再拿 3 分比赛就结束——接下来 6 分全是海德的，7-4，一盘一比一。",
+      "决胜盘 3-2 那一局再救四个破发点，13 个 ACE 里有 9 个在这一盘；4-5 那一局 40-15 落后救掉一个赛点，第二个被破。全场 32 局各丢一个发球局，他丢的那个是最后一局，总分只少 5 分。落点回到 2014：那年他在戴维斯杯决赛里为瑞士拿下第一分。"
+    ],
+    "_hook_why": "这一栏和 cover.hook 逐行相同（闸要求）。理由见 cover._hook_why。",
+    "human_context": {
+      "angle": "这一场的场外主角是**时间**：瓦林卡 41 岁，2025 年 12 月他自己在社交媒体上宣布 2026 是职业生涯最后一个赛季（原话「最后一次努力。每本书都需要一个结局」），生涯最后一站已经定了是 10 月 26 日到 11 月 1 日的巴塞尔 ATP500；美网首轮负于贝雷蒂尼之后，他的大满贯生涯已经结束。而 2014 年，正是他在戴维斯杯决赛首场四盘胜特松加、又和费德勒拿下双打，帮瑞士拿到队史唯一一座戴维斯杯。十二年后在里约，他拿下的第一盘没能保住。对面是 24 岁的海德，本周刚刷到生涯最高排名 123——比瓦林卡的 134 还高 11 位，而瓦林卡的生涯最高是世界第 3。",
+      "facts": [
+        "退役：瓦林卡 2025-12 在社交媒体宣布 2026 为最后一个赛季（腾讯新闻 20251220A05KVU00《前大满贯得主瓦林卡：明年将是我征战职业网坛的最后一季》、tennis.com《\"One last push\": Stan Wawrinka confirms 2026 will be final season》、en.wikipedia.org/wiki/Stan_Wawrinka 信息框 `Retired: 2026`）；最后一站定为巴塞尔 ATP500，10/26–11/1，首场 10/26「超级星期一」并有专门致敬（tennistemple《Official: Stan Wawrinka Names Basel as His Final Tournament》）。",
+        "2014 戴维斯杯：瑞士夺冠（队史唯一一座），决赛对法国，瓦林卡首场四盘胜特松加，随后和费德勒拿下双打把比分变成 2-1，费德勒第三日锁定冠军——en.wikipedia.org/wiki/Stan_Wawrinka。",
+        "生涯：1985-03-28 生，41 岁；三座大满贯单打冠军（2014 澳网、2015 法网、2016 美网）；生涯最高单打排名世界第 3（2014-01-27）——同上。",
+        "排名：ITF tieCentre `oomSinglesRankingPro`（oomRankDate 2026-09-14）瓦林卡 134、海德 123；`rankings.py`（tennisexplorer 同期）逐字相同。海德的 123 同时是他的生涯最高（en.wikipedia.org/wiki/Gustavo_Heide）。",
+        "场地与赛事：ITF tieCentre `tie.round.draw.event.surfaceFriendlyName = GreenSet Tour`（硬地）、`event.name = World Group I - Brazil vs Switzerland`、`tie.round.name = Round 1`、`tie.name = M-DC-2026-WG1-M-BRA-SUI-01`；场馆 Farmasi Arena, Rio de Janeiro（Swiss Tennis 官方公告 x.com/swiss_tennis/status/2097235966029189496：「BRA vs. SUI ⏰ 18 | 19 September 2026 🌏 Farmasi Arena, Rio de Janeiro」）；室内快速硬地（lastwordonsports 2026-09-18 前瞻原文 `a fast indoor hard court`）。",
+        "赛果与用时：ITF tieCentre `matches[3]` 20:47:39Z 开打、23:25:43Z 结束、duration 02:38:04，`winnerSideId` 指向海德那一侧；flashscore r1QMcHqC 同比分、分盘 0:37/1:06/0:57。开球北京时间 2026-09-19 04:47（里约 9/18 17:47，UTC-3）。",
+        "同日第一场：丰塞卡胜施特里克（ITF tieCentre `matches[2]`，用时 01:59:53），所以这一场打完巴西 2-0——`tie.teams[0] Brazil score=2 / teams[1] Switzerland score=0`，`tieStatus = In Progress`（9/19 还有双打和两场单打）。"
+      ],
+      "sources": [
+        "https://api.itf-production.sports-data.stadion.io/custom/tieCentre/2fb37a7c-48d3-4a81-b28f-513fc51f73e0",
+        "https://www.daviscup.com/en/tie/2fb37a7c-48d3-4a81-b28f-513fc51f73e0",
+        "https://www.daviscup.com/en/news/davis-cup-world-group-preview",
+        "https://www.flashscore.com/match/tennis/r1QMcHqC/",
+        "https://en.wikipedia.org/wiki/Stan_Wawrinka",
+        "https://en.wikipedia.org/wiki/Gustavo_Heide",
+        "https://news.qq.com/rain/a/20251220A05KVU00",
+        "https://www.tennis.com/news/articles/stan-wawrinka-confirms-2026-final-season-retirement",
+        "https://www.metropoles.com/esportes/gustavo-heide-vence-wawrinka-e-coloca-brasil-em-vantagem-na-copa-davis",
+        "https://www.flickr.com/photos/cbtenis/albums/72177720335647852",
+        "https://www.youtube.com/watch?v=MXHsmdEMbcc"
+      ]
+    }
+  },
+  "_claims": [
+    {
+      "claim": "2026 是瓦林卡职业生涯最后一个赛季",
+      "sources": [
+        "https://news.qq.com/rain/a/20251220A05KVU00 —— 他 2025-12 在社交媒体上的原话「最后一次努力。每本书都需要一个结局。……2026 将是我巡回赛的最后一年」",
+        "https://en.wikipedia.org/wiki/Stan_Wawrinka —— 信息框 `Retired: 2026`，生涯章节小标题「2025–2026: Retirement」"
+      ]
+    },
+    {
+      "claim": "2014 年瓦林卡帮瑞士拿下戴维斯杯，决赛首场他拿下第一分",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Stan_Wawrinka —— 决赛对法国，他四盘胜特松加拿下首场，随后与费德勒拿下双打",
+        "https://www.daviscup.com/en/teams/… 瑞士队史 ＋ 2014 年决赛记录（同一届决赛第三日由费德勒锁定冠军）"
+      ]
+    }
+  ],
+  "_no_repeat": "⚠️ 同栏目两周前刚发过 `berrettini-wawrinka-us-open-2026-r1`（瓦林卡最后一场大满贯，首轮负于贝雷蒂尼），**这一条必须躲开它铺开过的东西**：13 个破发点只兑现 2 个那组数字、两盘都进抢七、温网首轮也是同一个贝雷蒂尼、6-0 的第三盘、以及那条片子的立论「他不是被打垮的，是被守住的」。⚠️ **这一条的立论正好是它的镜像**——那一次是他拿到点守不住，这一次是**他守住了所有点，只有最后一局没守住**；两条讲的是不同的比赛、不同的数据、不同的结论，不算重复，但写的时候要刻意不去复述那组破发点兑现率（所以本条的 `_hit_data` 主线是**发球局**和 **ACE**，不是破发点兑现率）。⚠️ 另外还发过解说片 `wawrinka-wildcard`（网球有故事，讲美网外卡是怎么来的），本条一个字都不碰八张外卡的来回、2016 美网决赛胜德约的细节、四次大满贯决赛那张表、8 月 25 日那篇告别长文。**来路只留一句带过**（41 岁、最后一个赛季），落点那句 2014 戴维斯杯是这三条里**第一次讲**，不重复。⚠️ 和同一周同一赛事的 `ruud-te-davis-cup-2026-wg1`（挪威 v 中国）是不同的 tie、不同的人，只共用「戴维斯杯世界一组第一轮」这个坐标，不重复那条的红土、钢板、40 吨那一整套。⚠️ 同一个周末这条线上还有两条戴维斯杯：`ruud-te-davis-cup-2026-wg1`（挪威 v 中国，**同一个赛事同一轮**）和 `chung-nagal-davis-cup-2026`（韩国 v 印度，**资格赛第二轮**，是另一档——ITF 自己的稿子把 Qualifiers 2nd Round 和 World Group I ties 分得很清楚）。三条是三个不同的 tie、六个不同的人，只共用「戴维斯杯」这个赛事名，不构成同栏目重复；写的时候只在坐标那一句里出现赛事和轮次，不去复述另外两条各自的来路（挪威那块室内红土、韩国那条的人生经历）。",
+  "push": {
+    "summary": "瓦林卡赢了首盘，还是输了",
+    "lead": "戴维斯杯世界一组第一轮，巴西主场里约的室内硬地。41 岁的瓦林卡正在打职业生涯最后一个赛季：他 6-4 先拿下首盘，第二盘抢七 4-1 领先、再拿 3 分就赢了这场球，然后连丢 6 分；决胜盘一局里救下 4 个破发点，13 个 ACE 有 9 个在这一盘。2 小时 38 分，16 个发球局他只丢了 1 个——就是全场最后那一局。4-6 7-6(4) 6-4，24 岁的海德拿下，巴西首日 2-0。",
+    "matchup": "海德 vs 瓦林卡",
+    "score": "4-6 7-6(4) 6-4",
+    "auto": true
+  },
+  "_push_summary_why": "12 个字位，在 `SUMMARY_MAX = 13` 之内。主语是瓦林卡——微信标题和小红书首行是刷到的人唯一读到的一行，而这个号的读者认得的是他，不是海德。一层铺垫（赢了首盘）＋一个落点（还是输了），没有叠三层限定语，也没有在收尾动词前插一个原本不需要的代词。⚠️ 标题里不写排名，所以不受「钩子和文案里写的排名要和 matchup 对得上」那条约束；`lead` 里写的 41 岁、2 小时 38 分、13 个 ACE、4-1、6 分、1 个发球局全部出自 `_hit_data` 和 `_durations`。",
+  "segments": [
+    {
+      "source": "main",
+      "start": 587.0,
+      "end": 595.0,
+      "_ending_payoff_required": true,
+      "_why": "冷开场：全片情绪最重的一格——不是赛点那一分（542~578 是同一个底线宽景，两个人都只有几十像素），是打完之后网前握手。588.5s 海德走向网前、590.5s 两个人握手（瑞士队长在旁边）、592.5s 瓦林卡转身离开。不配旁白，靠现场声（满场掌声）。按「开场三格：画面爆点 → 落点 → 坐标」的第一格。镜头边界：loose cut 584.64 → 595.08，整段收在同一个镜头里。⚠️ 这也是全片唯一一段瓦林卡的赛后反应——这条源片是 ITF 按主队视角剪的，582.5s 之后几乎全是巴西方的庆祝。⚠️ 起点从 584.8 挪到 587.0，是因为 584.8~586.5 那两格画面里还是**海德**在庆祝（本地 `preview_segments_local.py` 逐格看出来的），而这一段和末段共用窗口，末段那句旁白的主语是瓦林卡。"
+    },
+    {
+      "source": "main",
+      "start": 21.0,
+      "end": 30.5,
+      "narration": "四十一岁的瓦林卡，正在打职业生涯最后一个赛季。这场球他先赢一盘，只丢了一个发球局。",
+      "_why": "② **落点**：他是谁 ＋ 整场的形状。画面是首盘第二局海德发球 30-0 那一分的底线宽景（记分条 20.5~36.5s 十格都读 `•BRA 0 30 / SUI 1 0`，逐分 `HC÷1|HE÷1|HG÷1|HL÷15:0, 30:0, 40:0` 对得上）。镜头 19.72–50.6 之内。「先赢一盘」和「只丢了一个发球局」两件事都在下面的段落里兑现，不是这儿的结论。"
+    },
+    {
+      "source": "main",
+      "start": 30.8,
+      "end": 41.0,
+      "narration": "北京时间九月十九号凌晨四点多，戴维斯杯世界一组第一轮，巴西主场里约热内卢，室内硬地球场。",
+      "_why": "③ **坐标**：北京时间 ＋ 开球时刻 ＋ 日期 ＋ 赛事 ＋ 轮次，`test_赛场之上开场要给出北京时间赛事和轮次` 那条闸要的四样都在。⚠️ **第一版只写了「凌晨」，被那条闸红了**——它要的是一个真的钟点（正则 `[一二三四五六七八九十两〇零百]+\\s*[点时]`），而 CLAUDE.md『开球时刻只说个大概，不报到分』要的也正是「四点多」这种写法。开球时刻按 ITF `actualStartDate 2026-09-18T20:47:39Z` 换算成北京时间是 9/19 04:47，所以说「凌晨四点多」。\n同一个长镜头（镜头 19.72–50.6，probe 的粗切点和 loose 切点在这中间都没有一刀）。⚠️ 窗口从 37.5 放长到 41.0，是因为补上钟点之后旁白装不下了——**先去核了一遍 37.5~46.5 是不是还是同一个镜头**：缩略图 34.5 / 36.5 / 38.5 / 40.5 / 42.5 / 44.5 / 46.5 七格全是同一个底线机位在打同一分，38.5~42.5 那几格记分条不在画面上只是两分之间熄掉了，不是换镜头。地面按 ITF `event.surface.name = \"Hard\"` 写「室内硬地」。"
+    },
+    {
+      "source": "main",
+      "start": 115.0,
+      "end": 125.0,
+      "narration": "首盘四比五，海德发球。瓦林卡全场只拿到两个破发点，都在这一局——而且都是盘点。",
+      "_why": "首盘第 10 局（海德发球保不住的那一局）。记分条 114.5~148.5s 十八格都读 `•BRA 4 15 / SUI 5 15`——正是逐分 `15:0, 15:15` 之后那个 15-15。镜头 100.32–149.52 之内。「两个盘点」出自逐分 `15:40 |B1| |B2|`（B2 是盘点标记），「第一个没兑现」出自紧跟着的 `30:40 |B1| |B2|`。"
+    },
+    {
+      "source": "main",
+      "start": 152.0,
+      "end": 162.2,
+      "narration": "第一个没兑现，第二个上他破掉了海德的发球局。六比四，第一盘是瓦林卡的，三十七分钟。",
+      "_why": "记分条 152.5~162.5s 读 `•BRA 4 30 / SUI 5 40`——**盘点那一刻就烧在画面上**；164.5s 整块翻成 `BRA 4 0 0 / •SUI 6 0 0`，第一盘落定。镜头 150.68–162.36 之内，收在 162.36 那一刀前 0.16s。"
+    },
+    {
+      "source": "main",
+      "start": 277.0,
+      "end": 288.0,
+      "narration": "第二盘三比三，海德在瓦林卡的发球局上，连拿三个破发点——瓦林卡三个全救了回来。",
+      "_why": "记分条 274.5~296.5s 读 `BRA 4 3 15 / •SUI 6 3 15`——3-3、瓦林卡发球，正是那一局。镜头 274.56–296.32 之内。三个破发点出自逐分 `40:30 |B1| … A:40 |B1| … A:40 |B1|` ＋ 分盘统计 `Break Points Saved SI÷3/3`。⚠️ **那几拍平分集锦没剪进来**（300.5s 直接跳到 3-4），所以旁白说「连着拿到」不指认画面里的某一分。"
+    },
+    {
+      "source": "main",
+      "start": 378.0,
+      "end": 390.3,
+      "narration": "第二盘打进抢七。瓦林卡四比一领先——他已经拿下第一盘，三盘两胜，再拿三分这场球就结束了。",
+      "_why": "记分条 378.5~390.5s 读 `•BRA 4 6 1 / SUI 6 6 4`——**抢七 1-4，也就是瓦林卡 4-1 领先，烧在画面上**。镜头 377.2–390.52 之内。「再拿三分这场球就结束了」是算出来的、不是修辞：他已经 6-4 拿下第一盘，三盘两胜，抢七从 4 分到 7 分正好 3 分。"
+    },
+    {
+      "source": "main",
+      "start": 395.0,
+      "end": 407.0,
+      "narration": "接下来的六分，全是海德的。从一比四到七比四，瓦林卡再没拿到一分。一盘一比一，比赛拖进决胜盘。",
+      "_why": "记分条 394.5~406.5s 读 `•BRA 4 6 5 / SUI 6 6 4`——已经 5-4 反超。镜头 394.04–407.2 之内。「六分」出自逐分抢七那一段 `1-4 → 2-4 3-4 4-4 5-4 6-4 7-4`，海德连拿 6 分；420.5s 记分条翻成 `BRA 4 7 / SUI 6 6`。"
+    },
+    {
+      "source": "main",
+      "start": 457.6,
+      "end": 465.3,
+      "narration": "决胜盘三比二，海德又拿到四个破发点，瓦林卡四个全救回来了。",
+      "_why": "记分条 458.5~466.5s 读 `BRA 4 7 3 / •SUI 6 6 2 Ad`——**「Ad」就是他救回来之后占先的读数**，3-2、他发球。镜头 457.48–465.44 之内。四个破发点出自逐分那一局的四个 `|B1|` ＋ 分盘 `Break Points Saved SI÷5/6`（这一局占 4 个）。"
+    },
+    {
+      "source": "main",
+      "start": 468.5,
+      "end": 477.5,
+      "narration": "决胜盘三比二，海德又拿到四个破发点，瓦林卡四个又全救了回来。",
+      "_why": "记分条 468.5~477s 读 `BRA 4 7 4 0 / •SUI 6 6 3 40`——他 3-4 发球 40-0（逐分 `0:15, 0:30, 0:40`，零封保发到 4-4）。镜头 467.68–477.72 之内。这是全片唯一的技战术层（CLAUDE.md「旁白要有技战术拆解，不能只停在比分走势上」）：13 个 ACE 出自 df_st_1 `Aces SI÷13`，分盘 `Set1 SI÷0 / Set2 SI÷4 / Set3 SI÷9`。⚠️ ACE 按 CLAUDE.md「ACE 不写中文」保留英文，`--check-narration` 要确认 TTS 没把它读坏。"
+    },
+    {
+      "source": "main",
+      "start": 528.0,
+      "end": 537.3,
+      "narration": "他这场球十三个ACE，光是决胜盘就有九个。四十一岁，他靠一发顶住了这一盘。",
+      "_why": "记分条 528.5~537s 读 `BRA 4 7 5 40 / •SUI 6 6 4 30`——**40-30，正是救掉第一个赛点之后的读数**。镜头 527.4–537.48 之内。两个赛点出自逐分末局 `40:15 |B1| |B3|`（`|B3|` 是赛点标记），救掉一个出自紧跟的 `40:30 |B1| |B3|` ＋ df_st_1 `Match points saved SI÷1`。"
+    },
+    {
+      "source": "main",
+      "start": 568.0,
+      "end": 578.4,
+      "narration": "全场三十二局，两个人各自只丢一个发球局，总分只差五分。而瓦林卡丢的那一个，是最后一局。",
+      "_why": "最后一局收尾前的底线宽景，镜头 541.16–578.48 之内，收在 578.48 那一刀前 0.08s（那一刀之后海德就举起双臂了）。三个数都出自 df_st_1：`Total games won SH÷16/32 SI÷16/32`、`Service games won SH÷15/16 SI÷15/16`、`Total Points Won SH÷95 SI÷90`。这是全片的立论句。"
+    },
+    {
+      "source": "main",
+      "start": 578.6,
+      "end": 584.6,
+      "narration": "六比四，海德拿下。巴西首日二比零领先。",
+      "_why": "578.48 那一刀之后：海德举拍、双臂张开，580.5s 记分条翻成 `4 7 6 / 6 6 4`，582.5s 起是看台。镜头 578.48–584.64 之内。「二比零」出自 ITF tieCentre `tie.teams[0] Brazil score=2 / teams[1] Switzerland score=0`。"
+    },
+    {
+      "source": "main",
+      "start": 587.0,
+      "end": 595.0,
+      "narration": "二〇一四年的戴维斯杯决赛，第一分是他拿的。你想看他怎么收尾？",
+      "_why": "和冷开场同一段画面（镜头 584.64–595.08），这次配旁白落点 ＋ 末屏那一问。⚠️ **起点是量出来的，不是估的**：`preview_segments_local.py` 逐格看过，584.8~586.5 画面里还是海德在庆祝，588.5s 才是海德走向网前、590.5s 握手、592.5s 瓦林卡转身。真语音里「二〇一四年的戴维斯杯决赛，」约 2.7 秒，所以**「第一分是他拿的」那句正好落在 589.7 之后的网前那几格上**——话画对得上，「他」不会压在海德脸上。第一版起点写的是 584.8，那一版「他」落在海德的庆祝上，是本地预览抓出来的。⚠️ 末屏这一问不是封面那一问的回声：封面问的是「他是怎么输掉这场球的」（这条片子自己回答），这一问指向的是他还没打完的那几站——第 2 段已经交代过「职业生涯最后一个赛季」，所以这一问有锚。巴塞尔是最后一站那条事实留在小红书正文里，旁白装不下（窗口 8.0 秒）。两条事实的出处见 `_claims`。"
+    }
+  ],
+  "_editing_why": "正片 13 段合计约 123 秒（冷开场 7.0 秒另算）。按「开场三格：画面爆点 → 落点 → 坐标」排：第 1 段是赛后网前握手（不配旁白，现场声），第 2 段落点（他是谁 ＋ 整场形状），第 3 段坐标，之后严格按时间顺序走三盘。⚠️ 这条源片是 ITF 官方剪的 615.9 秒加长集锦，几乎全是同一机位的底线宽景，粗切点只有 49 刀，所以每一段都按 `scene_cuts` ＋ `scene_cuts_loose` 两张表合起来划出的镜头收在同一个镜头里，**没有一段跨切点**。⚠️ 近景和回放一律排除在窗口之外（166.5~180.5、422.5~438.5、496~504、540.5 那一格都是），除了赛后握手那两段——那儿近景就是内容；旁白里没有一句压在近景上指认谁。⚠️ 末段收在 595.0（loose cut 595.08 前 0.08s），595 之后是巴西队的庆祝、国旗和球迷，和这条片子的落点对不上，一帧不进；这一版源片没有社媒片尾板。⚠️ 第 12 段收在 578.4 是刻意的：578.48 那一刀之后是海德的庆祝，而那一句旁白的主语是瓦林卡，话画要合得上。⚠️ **第 13、14 段的边界是本地 `preview_segments_local.py` 逐格看出来的，不是估的**：第一版第 14 段从 584.8 起，而 584.8~586.5 那两格画面里还是**海德**在庆祝，旁白那句「第一分是他拿的」的主语却是瓦林卡——话画当场就是反的。现在第 13 段收在 584.6（海德举拍 ＋ 看台），第 14 段和冷开场共用 587.0–595.0（海德走向网前 → 握手 → 瓦林卡转身），真语音里「二〇一四年的戴维斯杯决赛，」约 2.7 秒，「他」正好落在 589.7 之后的网前那几格上。⚠️ dry-run 还提示第 11~14 段的 `end` 像是切在死球之前（537.30/578.40/584.60/595.00 vs 最近死球 537.52/580.24/584.64/595.20）——**这四条是误报**：第 11、12 段收在那儿是为了把整句旁白留在同一个镜头里，第 13、14 段根本不是回合，是庆祝和握手，「这分归谁」在那儿不成立。",
+  "mixed_fps": {
+    "main": "单源，25fps，不存在混帧率问题。这一栏按 spec 形状留着说明已经核过。"
+  },
+  "_voice_why": "沿用这条线的默认：云见（`zh-CN-YunjianNeural`）＋6%，不设 `style`。⚠️ 这一栏叫 `_voice_why` 不叫 `_voice`。",
+  "_narration_why": "旁白用本地 edge-tts（zh-CN-YunjianNeural +6%）真跑过一遍量长度和切词（`--check-narration`）。**13 段全部装得下**，最紧的是第 3 段 +0.58s、第 2 段 +0.93s；哑场单段最长 3.51s（门槛 4.0s），合计 24.7s / 130.1s（19%）；没有 token 骑在人名边界上。⚠️ 这条 spec 认领了 `tts_backend: edge`，**runner 上跑的是同一个合成器**，所以这里量到的时长可以直接搬，不用按「本地 edge 比 Azure 慢 6.6%」再折算。\n按第一轮 dry-run 和 check-narration 的报告改过五处：\n① 第 4、6、7、8 段离线估就是哑场（余量 4.3~6.3s），**把旁白补长**而不是收窗口——补进去的全是 `_hit_data` 里已经有出处的事实（瓦林卡全场只有 2 个破发点且都在首盘那一局、首盘 37 分钟、三盘两胜再拿 3 分就结束、从 1-4 到 7-4 再没拿到一分）；\n② 第 6、9 段撞上 `enforce_spec_wording` 那条「拿到 N 个点之后接『救』，要写出是谁在救」——我原来写的是「三个全被他救掉了」「四个又全被救掉了」，主语会被读成拿到点的海德，改成「瓦林卡三个全救了回来」「瓦林卡四个又全救了回来」；\n③ 第 6 段「海德在瓦林卡的发球局上连拿3个破发点」18 格宽过一行字幕、只能硬切，在「发球局上」后面加了个逗号；\n④ 切词报告里抓到两个假词，各加一个字撑开：第 10 段「光决 ｜ 胜盘」→「光**是**决胜盘」，第 9 段「全救 ｜ 回来」→「全救了回来」。⚠️「抢 ｜ 七」「打进 ｜ 抢 ｜ 七」读音不变，按 CLAUDE.md 那一档不动；第 14 段「二〇一四年」合成器读成「二零一四年」，是当年份认出来的，不是逐字念；\n⑤ 第 14 段原来写着「他说巴塞尔是最后一站」，被 dry-run 的断句检查报出「他为瑞士拿下过戴维斯杯决赛的 ｜ 第一分」这种半截切法，而且窗口也装不下——现在那条事实只留在小红书正文里，旁白收成「二〇一四年的戴维斯杯决赛，第一分是他拿的。你想看他怎么收尾？」。",
+  "tts_backend": "edge",
+  "_tts_backend_why": "沿用同一天 `ruud-te-davis-cup-2026-wg1` 的判断：Azure 钥匙 2026-09-17 起 401（WebSocket upgrade failed: Authentication error），到今天还没恢复，退回 edge-tts 的开关走 spec。本条不用情绪风格，edge 够用；本地 `--check-narration` 量的就是 edge 的时长，余量按 edge 算反而更准。钥匙恢复后删掉这两个键即可。"
+}

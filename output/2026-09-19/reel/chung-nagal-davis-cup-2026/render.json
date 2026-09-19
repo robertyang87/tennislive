@@ -1,0 +1,79 @@
+{
+  "scoreboard_qc_sha256": null,
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 3.827,
+  "layout": "full",
+  "segments_seconds": 230.8,
+  "topbar": {
+    "line1": "2026 戴维斯杯资格赛 第二轮",
+    "line2": "郑泫 2-6 6-4 7-5 纳加尔",
+    "start": 1.2,
+    "end": 232.0
+  },
+  "film_seconds": 235.84,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 13.56,
+    "2": 10.848,
+    "3": 8.256,
+    "4": 11.448,
+    "5": 3.696,
+    "6": 8.688,
+    "7": 6.696,
+    "8": 7.344,
+    "9": 8.424,
+    "10": 4.224,
+    "11": 7.656,
+    "12": 8.448,
+    "13": 9.816,
+    "14": 9.984,
+    "15": 9.84,
+    "16": 9.192,
+    "17": 6.336,
+    "18": 6.288,
+    "19": 9.888,
+    "20": 10.152
+  },
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "chung-nagal-davis-cup-2026",
+    "received_at": "2026-09-19T02:13:26Z",
+    "artifact_ready_at": "2026-09-19T02:20:58Z",
+    "elapsed_seconds": 452.923,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "e00062ca0602b7e85aaaba0602db832186bb107aab57ea882a35deec6b0cb508",
+    "spec_sha256": "9dcd1b1e031b4bff8c6bfc6645f03f0a6bacdc1a9b50412bc7fd4c3b496cfec9",
+    "run_id": "35415014838",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-09-19T02:15:51Z",
+        "run_id": "35415014838"
+      }
+    ],
+    "render_seconds": 307.923,
+    "pre_render_seconds": 145.0
+  },
+  "film_sha256": "e00062ca0602b7e85aaaba0602db832186bb107aab57ea882a35deec6b0cb508",
+  "film_bytes": 136819381,
+  "qc_attestation_sha256": "2d0c213bb96702a04699881b89c03d8105303c0df0b2acc7a31af2a017dd8c0c",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-09-19T02:15:51Z",
+      "run_id": "35415014838"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-19T02:21:00Z",
+      "run_id": "35415014838"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-chung-nagal-davis-cup-2026/chung-nagal-davis-cup-2026.mp4",
+  "video_bytes": 136819381
+}
