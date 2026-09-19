@@ -45,14 +45,17 @@
     "完整结尾",
     "正文与字幕内容保持一致"
   ],
-  "rollback": "字幕越界、字号需缩小、遮挡其他信息或完整QC失败即撤回B；效果阈值必须在选择处理作品前写定，未定义不进入效果验证。",
-  "outcome_threshold": null,
+  "rollback": "恢复A字幕锚点；任何QC失败立即回滚；3条可比处理作品72小时平均播放时长汇总相对锁定对照下降至少10%时撤回。",
+  "outcome_threshold": {
+    "exploratory_pass": "至少3条实际消费该规则的可比作品，72小时平均播放时长相对事先锁定对照组中位数提升至少5%，并通过QC；仍需人工审查混杂因素，阈值达成不等于因果证明",
+    "rollback": "任一技术QC失败立即回滚；3条可比处理作品汇总平均播放时长相对对照下降10%及以上则撤回候选"
+  },
   "production_consumed": false,
   "production_spec": null,
   "render_receipt": null,
   "qc_receipt": null,
   "treatment_work_id": null,
   "outcome_receipt": null,
-  "next_action": "当前inset试验优先。本候选先匹配未发布且确有字幕遮挡档案细节的新片，写定坐标与效果阈值后再渲染。",
+  "next_action": "当前inset试验优先；为本候选匹配未发布且有字幕遮挡档案细节的自有新片，预注册对照作品和坐标后渲染。",
   "promotion_allowed": false
 }
