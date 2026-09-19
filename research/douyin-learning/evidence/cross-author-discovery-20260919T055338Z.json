@@ -338,7 +338,8 @@
           "published_at": null,
           "duration_seconds": null
         }
-      ]
+      ],
+      "observation_time_precision": "approximate tool-call interval; minute accurate"
     },
     {
       "name": "小朱聊网球",
@@ -374,12 +375,6 @@
     "authors_checked": 12,
     "new_authors_verified": 2,
     "candidate_cards_checked": 24
-  },
-  "categories": {
-    "网球复盘": 4,
-    "网球人物故事": 3,
-    "赛后采访": 3,
-    "其他体育人物故事": 2
   },
   "targets": {
     "authors": 15,
@@ -417,5 +412,15 @@
   "xiaohongshu": {
     "checked_this_run": false,
     "status": "prior_login_block_carried_forward_not_retested"
+  },
+  "category_author_cohort_counts": {
+    "网球复盘": 4,
+    "网球人物故事": 3,
+    "赛后采访": 3,
+    "其他体育人物故事": 2
+  },
+  "category_content_coverage": {
+    "status": "partial",
+    "note": "Author cohort counts do not prove all sampled works match the cohort. USOpen selected cards are champion moments, not interviews; philosopher sampled cards are stories/records. Four-type minimum is not claimed met."
   }
 }
