@@ -16624,3 +16624,306 @@ def test_全出血也能回贴记分条_字幕抬到板上方(tmp_path, monkeypa
     # 带式那条路的几何一格不动：oy = BAND_TOP + y0×比例
     src_txt = inspect.getsource(reel.cut_segment)
     assert '(BAND_TOP if LAYOUT == "band" else 0) + int(round(y0 * ratio))' in src_txt
+
+
+# ⭐⭐ 精彩的原声解说要留下来，配中英双语字幕（账号所有者 2026-09-19）
+# ──────────────────────────────────────────────────────────────────────────
+#
+# 原话：「以后精彩的原声解说，你配上中英文字幕保留下来就行了，这样感觉更有
+# 氛围感。**不用全部留解说，就是留精彩的解说。把这个作为一个全局的要求。**」
+#
+# ⚠️ **机制早就有了，是习惯没跟上。** 量出来（2026-09-19）：218 条「赛场之上」
+# 里只有 **28 条**带 `quote` 段（13%），而那 28 条**全部**已经是
+# `"英文\n中文"` 的双语写法——也就是说写对过，只是绝大多数片子根本没想起来留。
+# 一条只活在对话里的要求拦不住下一个会话，所以落成两道闸。
+_NO_BROADCAST_QUOTE_LEGACY = {
+    "alcaraz-faria-us-open-2026-r2",
+    "alexandrova-sabalenka",
+    "altmaier-musetti",
+    "andreeva-bartunkova-us-open-2026-r3",
+    "anisimova-bartunkova",
+    "anisimova-eala",
+    "anisimova-noskova",
+    "arango-venus",
+    "auger-aliassime-cerundolo",
+    "baez-dimitrov",
+    "bartunkova-charaeva",
+    "bejlek-pliskova",
+    "bejlek-sabalenka",
+    "bencic-eala",
+    "bencic-townsend",
+    "berrettini-wawrinka-us-open-2026-r1",
+    "boisson-krueger",
+    "borges-rublev",
+    "boulter-volynets",
+    "bouzkova-jovic",
+    "bu-jodar-us-open-2026-r1",
+    "bu-zhengmichael-us-open-2026-r2",
+    "bucsa-chwalinska",
+    "bucsa-gauff-us-open-2026-r3",
+    "chung-nagal-davis-cup-2026",
+    "chwalinska-gibson",
+    "chwalinska-townsend-us-open-2026-r1",
+    "cirstea-bartunkova",
+    "cirstea-kalinskaya",
+    "cirstea-pegula",
+    "cobolli-blockx",
+    "cobolli-jodar",
+    "djokovic-navone-us-open-2026-r1",
+    "djokovic-tirante",
+    "eala-anisimova",
+    "eala-fernandez",
+    "eala-jovic-us-open-2026-r3",
+    "eala-mcnally",
+    "eala-osaka",
+    "eala-parks",
+    "eala-ruse",
+    "eala-stoiana-us-open-2026-r1",
+    "eala-svitolina",
+    "eala-zheng",
+    "faria-shelton",
+    "fernandez-andreeva",
+    "fery-deminaur",
+    "fils-deminaur",
+    "fils-tiafoe-cincinnati-2026-final",
+    "fils-tirante",
+    "fonseca-ruud",
+    "fonseca-van-de-zandschulp",
+    "fritz-cerundolo-us-open-2026-r3",
+    "fritz-merida",
+    "fritz-michelsen",
+    "fritz-oconnell",
+    "gauff-bouzkova",
+    "gauff-jovic-us-open-2026-r4",
+    "gauff-korneeva",
+    "gauff-li",
+    "gauff-sakkari",
+    "gauff-samsonova",
+    "gea-shapovalov",
+    "gea-van-de-zandschulp-us-open-2026-r4",
+    "halys-deminaur",
+    "hijikata-monfils",
+    "jodar-fils-montreal-qf",
+    "jodar-shapovalov",
+    "jodar-tabilo",
+    "kenin-lys",
+    "keys-bondar-us-open-2026-r2",
+    "kostyuk-andreeva",
+    "kovacevic-khachanov",
+    "krejcikova-bejlek",
+    "landaluce-draper",
+    "lehecka-fils",
+    "maria-yastremska",
+    "medvedev-damm",
+    "medvedev-zandschulp",
+    "monfils-vallejo-us-open-2026-r1",
+    "musetti-faria",
+    "nakashima-borges",
+    "nakashima-jodar-montreal-sf",
+    "nakashima-medvedev",
+    "navarro-kalinina",
+    "nishikori-shang",
+    "noskova-boulter",
+    "noskova-mcnally",
+    "noskova-tauson",
+    "osaka-fernandez",
+    "osaka-mertens",
+    "osaka-mertens-us-open-2026-r3",
+    "ostapenko-frech",
+    "parry-mertens",
+    "paul-cobolli",
+    "pegula-anisimova",
+    "pegula-navarro",
+    "pegula-rakhimova",
+    "pegula-swiatek-cincinnati-2026-sf",
+    "pegula-waltert",
+    "potapova-anisimova-us-open-2026-r3",
+    "potapova-venus",
+    "putintseva-bencic-us-open-2026-r1",
+    "rakhimova-krejcikova-us-open-2026-r1",
+    "rublev-merida-us-open-2026-r2",
+    "rublev-virtanen-us-open-2026-r1",
+    "ruud-te-davis-cup-2026-wg1",
+    "rybakina-frech",
+    "rybakina-gauff-toronto-sf",
+    "rybakina-gauff-us-open-2026-sf",
+    "rybakina-kasatkina",
+    "rybakina-li",
+    "rybakina-osaka",
+    "rybakina-osaka-us-open-2026-r4",
+    "rybakina-sabalenka-us-open-2026-final",
+    "rybakina-samsonova",
+    "rybakina-shnaider",
+    "sabalenka-gibson",
+    "sabalenka-pegula-us-open-2026-sf",
+    "sabalenka-wang",
+    "safiullin-alcaraz-us-open-2026-r1",
+    "shang-darderi-montreal-2026",
+    "shang-rublev",
+    "shang-vallejo",
+    "shelton-fonseca",
+    "shelton-mensik",
+    "shelton-nakashima-montreal-final",
+    "shelton-tiafoe-us-open-2026-sf",
+    "shelton-tien-montreal-sf",
+    "shnaider-chwalinska",
+    "shnaider-pegula",
+    "snigur-keys",
+    "sonmez-anisimova",
+    "sonmez-kasatkina",
+    "stearns-tauson",
+    "svitolina-alexandrova",
+    "svitolina-anisimova",
+    "svitolina-valentova",
+    "swiatek-arango",
+    "swiatek-bouzkova-us-open-2026-r3",
+    "swiatek-golubic",
+    "swiatek-kostyuk",
+    "swiatek-parry",
+    "swiatek-rybakina-toronto-final",
+    "swiatek-sakkari",
+    "swiatek-shnaider",
+    "swiatek-svitolina-toronto-sf",
+    "tiafoe-auger-aliassime",
+    "tien-monfils-us-open-2026-r2",
+    "tirante-fritz",
+    "tirante-landaluce",
+    "tirante-mensik",
+    "townsend-osorio",
+    "townsend-rybakina",
+    "trungelliti-medvedev",
+    "tsitsipas-auger-aliassime",
+    "tsitsipas-fils-us-open-2026-r1",
+    "tsitsipas-royer",
+    "wang-arango-us-open-2026-r1",
+    "wang-kalinskaya-us-open-2026-r2",
+    "wang-kasatkina",
+    "wang-pareja",
+    "wang-samsonova",
+    "wang-vandewinkel",
+    "wang-vekic",
+    "wangxiyu-fernandez",
+    "wangxiyu-keys",
+    "wangxiyu-swiatek-us-open-2026-r1",
+    "wangxiyu-timofeeva",
+    "williams-kenin-us-open-2026-r1",
+    "williams-sisters-cincinnati",
+    "wong-brooksby",
+    "wong-gea",
+    "wong-lehecka",
+    "wong-paul-us-open-2026-r1",
+    "wu-alcaraz-us-open-2026-r3",
+    "wu-duckworth-us-open-2026-r2",
+    "wu-walton-us-open-2026-r1",
+    "zhang-day",
+    "zhang-fernandez-us-open-2026-r1",
+    "zhang-li",
+    "zhang-ostapenko",
+    "zhang-putintseva",
+    "zhang-sabalenka",
+    "zheng-keys-us-open-2026-r3",
+    "zheng-liutova-us-open-2026-r1",
+    "zheng-putintseva-us-open-2026-r2",
+    "zverev-atmane",
+    "zverev-griekspoor",
+    "zverev-khachanov-us-open-2026-sf",
+    "zverev-norrie",
+    "zverev-paul",
+    "zverev-shelton-us-open-2026-final",
+    "zverev-sonego-us-open-2026-r1",
+    "zverev-vandezandschulp-us-open-2026-qf",
+}
+
+# 中文一行、原文一行——`hewitt-washington` 第 5 段是一整段中文转述，已发不重渲
+_QUOTE_NOT_BILINGUAL_LEGACY = {("hewitt-washington", 5)}
+
+
+def _iter_quote_cues():
+    """(slug, 段序号, 这一条字幕的文本) —— `quote` 可以是字符串，也可以是列表，
+    列表元素可以是字符串或 {"at": .., "text": ..}。三种写法都要扫到。"""
+    for p in sorted(Path("specs/reels").glob("*.json")):
+        spec = json.loads(p.read_text(encoding="utf-8"))
+        for i, seg in enumerate(spec.get("segments") or [], 1):
+            raw = seg.get("quote")
+            if not raw:
+                continue
+            items = [raw] if isinstance(raw, str) else list(raw)
+            for it in items:
+                text = it if isinstance(it, str) else str(it.get("text") or "")
+                yield p.stem, i, text
+
+
+def test_赛场之上要留一段精彩的原声解说_不留要写明为什么():
+    """账号所有者 2026-09-19：「精彩的原声解说……配上中英文字幕保留下来」。
+
+    ⚠️ **闸只要求「认领」，不替人决定该不该留**——他说的是「不用全部留解说，
+    就是留精彩的解说」，而「这一场的解说精不精彩」是判断题，机械挡不住。
+    和 `cover._layout_why` / `_heat_why` / `cards_why` 一个形状：要么真的留了
+    一段 `_quote_kind: "broadcast"` 的原声，要么在 spec 顶层写一句
+    `_no_quote_why` 说清为什么没留（源片是纯音乐集锦、解说全程平淡、
+    窗口里那几句全是报比分……）。
+
+    ⚠️ **只认 `broadcast`。** `ceremony`（颁奖现场声）留着仍然合法，但它兑现不了
+    「解说的氛围感」这一条；赛后采访本来就不许进复盘（见
+    `test_赛场之上的quote段不许是赛后采访`）。
+
+    存量 195 条挂 legacy 表，**只许减不许加**，表自带自检。
+    """
+    checked = 0
+    legacy_seen = set()
+    for p in sorted(Path("specs/reels").glob("*.json")):
+        spec = json.loads(p.read_text(encoding="utf-8"))
+        if (spec.get("cover") or {}).get("eyebrow") != "赛场之上":
+            continue
+        checked += 1
+        has = any(seg.get("quote") and seg.get("_quote_kind") == "broadcast"
+                  for seg in spec.get("segments") or [])
+        if has:
+            continue
+        if p.stem in _NO_BROADCAST_QUOTE_LEGACY:
+            legacy_seen.add(p.stem)
+            continue
+        assert (spec.get("_no_quote_why") or "").strip(), (
+            f"{p.name} 没留原声解说，也没写 `_no_quote_why`。\n"
+            f"账号所有者 2026-09-19：「精彩的原声解说，配上中英文字幕保留下来，"
+            f"这样感觉更有氛围感」——这是全局要求。\n"
+            f"留：挑一段解说真的起来的窗口，写成\n"
+            f'    "quote": [{{"at": 1.2, "text": "What a shot!\\n好球！"}}],\n'
+            f'    "_quote_kind": "broadcast"\n'
+            f"（那一段不许再写 narration——两个人同时开口）。\n"
+            f"真没有就写一句 `_no_quote_why`：源片是纯音乐集锦 / 解说全程在报比分 …")
+    assert checked >= 200, f"只扫到 {checked} 条赛场之上，spec 目录像是不对"
+    stale = _NO_BROADCAST_QUOTE_LEGACY - legacy_seen
+    assert not stale, (
+        f"这几条已经留了 broadcast 原声（或者 spec 没了），从表里删掉：{sorted(stale)}"
+        f"——这张表只许减不许加")
+
+
+def test_原声解说的字幕一律中英双语():
+    """同一句话的下半条：留下来的原声**必须配双语字幕**，不是只给中文。
+
+    判据是**这一条字幕里既有带汉字的一行、也有不带汉字的一行**（原文那一行
+    可能是纯数字，`fritz-jodar-final` 的 `"7-6, 6-4\n七比六，六比四"` 就是
+    合格的——所以不能按「有没有英文字母」判，那条会误伤它）。
+
+    ⚠️ 这一条**不限赛场之上**：赛后开麦、网球有故事的剪辑片，凡是留了原声的
+    都走同一条。量下来 246 条字幕里只有 1 条不合格（`hewitt-washington`
+    第 5 段是整段中文转述），已发不重渲，挂表。
+    """
+    cjk = re.compile(r"[\u4e00-\u9fff]")
+    checked = 0
+    legacy_seen = set()
+    for slug, seg_no, text in _iter_quote_cues():
+        checked += 1
+        if (slug, seg_no) in _QUOTE_NOT_BILINGUAL_LEGACY:
+            legacy_seen.add((slug, seg_no))
+            continue
+        lines = [x for x in text.split("\n") if x.strip()]
+        assert len(lines) >= 2 and any(cjk.search(x) for x in lines) \
+            and any(not cjk.search(x) for x in lines), (
+            f"{slug} 段{seg_no} 的原声字幕不是双语：{text[:60]!r}\n"
+            f"写成「原文\\n中文」两行——原声段的氛围感靠的就是听得见原话、"
+            f"同时读得懂意思")
+    assert checked >= 200, f"只扫到 {checked} 条原声字幕，扫描面像是不对"
+    stale = _QUOTE_NOT_BILINGUAL_LEGACY - legacy_seen
+    assert not stale, f"这几条已经改成双语了，从表里删掉：{sorted(stale)}"
