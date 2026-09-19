@@ -951,8 +951,42 @@ def silent_audio_spans(path: Path, floor_db: float = -60.0,
     return [[round(a, 2), round(b, 2)] for a, b in zip(starts, ends)]
 
 
-def point_end_candidates(source: Path, scorebox: str) -> list[float]:
+def measure_point_ends(source: Path, scorebox: str,
+                       ) -> tuple[list[float], str | None, list[float] | None]:
+    """probe 那一趟量死球时刻的**全部**：返回 `(point_ends, scorebox_guess, point_ends_guess)`。
+
+    ⚠️⚠️ **2026-09-19 账号所有者第四次重申「视频剪辑要完整一分结束再切画面」。**
+    根子量出来了：全库 478 份 probe.json 里 **只有 53 份**（11%）的 `point_ends`
+    是有数的——`--scorebox` 要人给，而人几乎从不给；于是 `--dry-run` 那条
+    「切在一分打完之前」的检查**在 89% 的片子上根本没有数据可查**。
+    `ruud-te-davis-cup-2026-wg1` 正是这样：probe 猜到了 `67,600,425,673`，
+    dry-run 报了「猜过、还没人重跑」，我照旧按缩略图墙定段尾，发了出去。
+
+    所以现在**没给 `--scorebox` 时，拿猜到的框顺手量一遍**，存进
+    `point_ends_guess`（和 `point_ends` 分开存——猜的框量出来的是候选不是判据，
+    读的人要知道它是猜的）。多花的只是 96 秒片子 7.5 秒那一档的采样，
+    换来的是 dry-run 在每一条片子上都有数可查，不必再等一趟 probe。
+
+    - 给了 `--scorebox`：照旧只量 `point_ends`，不猜（`scorebox_guess=None`）
+    - 没给、猜到了：`point_ends=[]`，`point_ends_guess` 是按猜的框量的
+    - 没给、猜不到：三个都是空的，probe 会说清是「猜不出记分条」
+    """
+    scorebox_guess = None
+    ends_guess = None
+    if not str(scorebox).strip():
+        scorebox_guess = suggest_scorebox(source)
+    ends = point_end_candidates(source, scorebox)
+    if scorebox_guess:
+        ends_guess = point_end_candidates(source, scorebox_guess, guessed=True)
+    return ends, scorebox_guess, ends_guess
+
+
+def point_end_candidates(source: Path, scorebox: str, *,
+                         guessed: bool = False) -> list[float]:
     """量一遍死球时刻，写进 `probe.json`——**趁源片还在**。
+
+    `guessed=True` 表示这个框是 `suggest_scorebox()` 猜的（见
+    `measure_point_ends`）：量法一样，只是打印出来要标明是猜的框。
 
     `find_point_ends.py` 一直是**零调用方**：它的 `--video` 指的是源片，而源片
     渲完就被清理那一步删掉，于是想用它得自己另下一份 400 MB。结果是段尾切错
@@ -967,15 +1001,16 @@ def point_end_candidates(source: Path, scorebox: str) -> list[float]:
     量出来的数**也要打印分布**：检测不到和方法不成立是两回事，只有把数摆出来
     才分得清（成片那条「找球场对称轴」的教训就是这么来的）。
     """
+    tag = "[死球·猜的框]" if guessed else "[死球]"
     if not str(scorebox).strip():
         print("[死球] 没给 --scorebox（记分条位置每家转播不一样，认不出来），"
-              "这一项跳过。段尾就只能靠缩略图墙用眼睛定。")
+              "这一项跳过——有猜到的候选会按猜的框再量一遍（point_ends_guess）。")
         return []
     sys.path.insert(0, str(Path(__file__).resolve().parent))
     try:
         import find_point_ends as fpe  # noqa: PLC0415
     except ImportError as exc:  # pragma: no cover - 依赖缺失才会走到
-        print(f"[死球] 取不到 find_point_ends（{exc}），跳过")
+        print(f"{tag} 取不到 find_point_ends（{exc}），跳过")
         return []
     try:
         box = tuple(int(v) for v in str(scorebox).split(","))
@@ -984,10 +1019,11 @@ def point_end_candidates(source: Path, scorebox: str) -> list[float]:
     except ValueError:
         raise ReelError(
             f"--scorebox 要写成 x0,y0,x1,y1（源片像素），给的是「{scorebox}」")
-    with stage("量死球"):
+    with stage("量死球（猜的框）" if guessed else "量死球"):
         rows = fpe.scan(source, box, 0.1)
         ends = fpe.point_ends(rows, fpe.CHANGE, fpe.DARK_SHARE, fpe.MERGE)
-    print(f"[死球] 采样 {len(rows)} 点，记分条跳变 {len(ends)} 次")
+    print(f"{tag} 采样 {len(rows)} 点，记分条跳变 {len(ends)} 次"
+          + ("（框是 suggest_scorebox 猜的，存进 point_ends_guess）" if guessed else ""))
     if ends:
         print("  " + " ".join(f"{t:.1f}" for t in ends[:40])
               + (" …" if len(ends) > 40 else ""))
@@ -2885,7 +2921,7 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
             # 窗口类字段一概不许——它没有源片窗口，写了就是没被读的死键。
             stray = sorted(set(s) & {"start", "end", "source", "track",
                                      "quote", "inset", "speed", "mute", "cx",
-                                     "crop_zoom", "fit", "crosses_cut",
+                                     "crop_zoom", "fit", "crosses_cut", "point_end_ok",
                                      "score_inset", "score_inset_windows"})
             if stray:
                 raise ReelError(f"第 {i + 1} 段是整屏证据段（image），"
@@ -3131,7 +3167,8 @@ _REAL_FIELDS: dict[str, tuple[str, ...]] = {
               "score", "scoreboard", "scrim", "split", "sub", "subject",
               "tier", "topic", "versus", "winner"),
     "segment": ("bed", "crosses_cut", "crop_zoom", "cx", "end", "fit", "image",
-                "inset", "mute", "narration", "quote", "score_inset", "score_inset_windows",
+                "inset", "mute", "narration", "point_end_ok", "quote", "score_inset",
+                "score_inset_windows",
                 "seconds", "source", "speed", "square_pan", "start", "stat_card", "title_card",
                 "kicker", "track", "voice"),
 }
@@ -5180,6 +5217,136 @@ SPEECH_EST_ERR = 2.20
 #: 段尾落在死球**之前**，观众就不知道这一分归谁——而那是回合镜头唯一的作用。
 POINT_TAIL = 1.2
 
+#: 段尾之后这么近的翻牌不算「切在一分中间」：段尾正落在点与点的边界上时，
+#: 记分条往往在紧接着的下一个镜头的第一帧才换成新比分（官方集锦点与点之间
+#: 是溶解，见 tennis-video-craft「一分的边界根本不在 scene_cuts 里」）。
+#: 0.3 秒 ≈ 溶解的一半再多一点——比它远的翻牌就是这一分真的还没打完。
+POINT_END_EDGE_TOL = 0.3
+
+#: 2026-09-19 把「段尾切在一分打完之前」做成硬闸那天，**已经发出去**的片子里
+#: 仍会红的那些（消息收不回来，按「已发的不重渲」豁免）。
+#:
+#: ⚠️ **只许减不许加**，表自带自检（`test_段尾切在一分打完之前_新片子是硬闸`）：
+#: 每个 slug 的 spec 必须还在；probe 在盘上的话还必须真的仍然会红——修好了
+#: 就该从表里删掉，不然它会悄悄替新的违规兜底。
+#:
+#: ⚠️ 这张表的长度本身就是这条闸的价值证明：它只报不拦的那一个月里，
+#: 这么多条片子带着「对局放一半戛然而止」发了出去，读者当众吐槽过两次。
+_MID_POINT_LEGACY = frozenset({
+    # 装闸那天全库扫出来的：53 份有 point_ends 的 probe 里 42 条 spec、270 段。
+    # ⚠️ `shelton-tiafoe-us-open-2026-sf`（9/12 被读者吐槽后按「一分的完整弧」
+    # 重剪的那条）**不在表里**——它一段都不命中，正说明这条判据量的是对的东西。
+    "anisimova-eala",
+    "berrettini-wawrinka-us-open-2026-r1",
+    "bu-jodar-us-open-2026-r1",
+    "bu-zhengmichael-us-open-2026-r2",
+    "chwalinska-townsend-us-open-2026-r1",
+    "cirstea-bartunkova",
+    "cirstea-pegula",
+    "eala-anisimova",
+    "eala-pegula-final",
+    "eala-stoiana-us-open-2026-r1",
+    "fonseca-ruud",
+    "fritz-jodar-final",
+    "fritz-oconnell",
+    "gauff-bejlek-cincinnati-2026-sf",
+    "gea-van-de-zandschulp-us-open-2026-r4",
+    "keys-bondar-us-open-2026-r2",
+    "khachanov-blockx-us-open-2026-qf",
+    "kostyuk-andreeva",
+    "osaka-mertens-us-open-2026-r3",
+    "rakhimova-krejcikova-us-open-2026-r1",
+    "rublev-merida-us-open-2026-r2",
+    "rybakina-gauff-us-open-2026-sf",
+    "rybakina-osaka-us-open-2026-r4",
+    "sabalenka-pegula-us-open-2026-sf",
+    "swiatek-bouzkova-us-open-2026-r3",
+    "swiatek-parry",
+    "tien-monfils-us-open-2026-r2",
+    "tsitsipas-fils-us-open-2026-r1",
+    "wang-arango-us-open-2026-r1",
+    "wangxiyu-keys",
+    "wangxiyu-swiatek-us-open-2026-r1",
+    "wangxiyu-timofeeva",
+    "williams-kenin-us-open-2026-r1",
+    "wong-paul-us-open-2026-r1",
+    "wu-alcaraz-us-open-2026-r3",
+    "wu-duckworth-us-open-2026-r2",
+    "wu-walton-us-open-2026-r1",
+    "zhang-fernandez-us-open-2026-r1",
+    "zhang-sabalenka",
+    "zheng-keys-us-open-2026-r3",
+    "zheng-liutova-us-open-2026-r1",
+    "zheng-pridankina-us-open-2026-q3",
+})
+
+
+def mid_point_findings(spec: dict, segments, probes: dict,
+                       urls: dict) -> tuple[list[str], list[str]]:
+    """段尾切在一分打完之前的判定，返回 `(硬, 软)`。probe_dry_run 的第 ③ 条。
+
+    ⚠️⚠️ **账号所有者 2026-09-19 第四次说这件事：「记住视频剪辑要完整一分结束
+    再切画面」**（前三次：2026-08 初「很多球没有播放完成就切到下一个了」、
+    2026-08-19「剪辑的时候要等死球了再去切下一段视频，切记」、2026-09-12 读者
+    当众吐槽「对局放一半戛然而止都不知道谁得分」）。前三次都落成了「只报不拦」，
+    而第四次的来路正是那条只报不拦被我按「只报」放过去：`ruud-te` 那条
+    dry-run 报了「猜过、还没人重跑」，我照旧发了。**一条报了三次都被放过去的
+    软提示，和没有提示是同一回事。**
+
+    判据：段尾之后 `(POINT_END_EDGE_TOL, POINT_TAIL × 2.5]` 秒内记分条翻了牌
+    ——翻牌那一刻才是这一分被判死的时刻，段尾落在它前面就是观众看不出这分归谁。
+    近于 `POINT_END_EDGE_TOL` 的翻牌不算：那是段尾正好切在点与点的溶解上、
+    新比分出现在下一个镜头第一帧，本来就是对的。
+
+    严格程度：
+
+    | 谁写的 | 怎么办 |
+    |---|---|
+    | 手写的新 spec | **硬**——要么把 `end` 挪到翻牌之后再留 `POINT_TAIL`，要么在那一段写 `"point_end_ok": "<为什么>"`（看过缩略图墙，说清这一分为什么在段尾前就已经判死）认领 |
+    | `_MID_POINT_LEGACY` 里已发的老片子 | 只报（已发的不重渲） |
+    | 自动产的 spec（`_production.status == ready_for_render`） | 只报——那一头没有人写 `point_end_ok`，做成硬的会让自动链卡成「今天没有候选」 |
+
+    数据来源：`point_ends`（人给的 `--scorebox`）优先，空着就用
+    `point_ends_guess`（probe 按猜的框量的），报出来时标明是猜的。
+    ⚠️ 为什么不像 `crosses_cut` 那次一样留在软的：那条的判据「跨没跨切点」
+    对一半的合格段落都成立，做硬必然变成墙；这条的判据是「段尾之后不到三秒
+    记分条翻了牌」，合格的段落（等到翻牌再切）**结构上不会命中**。
+    """
+    hard: list[str] = []
+    soft: list[str] = []
+    slug = str(spec.get("slug") or "")
+    auto = (spec.get("_production") or {}).get("status") == "ready_for_render"
+    strict = not auto and slug not in _MID_POINT_LEGACY
+    raw_segments = spec.get("segments") or []
+    for index, seg in enumerate(segments):
+        if seg.image:
+            continue
+        probe = probes.get(urls.get(seg.source, "")) or {}
+        ends = [float(t) for t in probe.get("point_ends") or []]
+        guessed = False
+        if not ends:
+            ends = [float(t) for t in probe.get("point_ends_guess") or []]
+            guessed = bool(ends)
+        cut_mid = [t for t in ends
+                   if seg.end + POINT_END_EDGE_TOL < t <= seg.end + POINT_TAIL * 2.5]
+        if not cut_mid:
+            continue
+        nearest = min(cut_mid)
+        raw = raw_segments[index] if index < len(raw_segments) else {}
+        why = str((raw or {}).get("point_end_ok") or "").strip()
+        where = "（按猜的记分条框量的）" if guessed else ""
+        line = (f"  第 {index + 1} 段 end={seg.end:.2f}s 切在一分打完之前"
+                f"——记分条在 {nearest:.2f}s 才翻牌{where}，观众看不出这分归谁；"
+                f"end 至少要挪到 {nearest + POINT_TAIL:.1f}s（翻牌后再留 {POINT_TAIL}s 反应）")
+        if why:
+            soft.append(f"{line}\n    已认领 point_end_ok：{why}")
+        elif strict:
+            hard.append(f"{line}\n    这是硬闸（账号所有者四次重申「完整一分结束再切」）："
+                        "改 end，或看过缩略图墙后写 `\"point_end_ok\": \"<为什么>\"` 认领")
+        else:
+            soft.append(line)
+    return hard, soft
+
 
 def claim_probes(spec: dict) -> tuple[dict[str, tuple[Path, dict]], list[str]]:
     """按**源片 URL** 认领已落库的 probe.json。返回 (url→(目录, probe), 没查成的源键)。
@@ -5385,7 +5552,7 @@ def probe_dry_run(spec: dict, segments: list["Segment"]) -> bool:
     | 段落／`frame_at` 写过源片末尾 | `duration` | **硬** |
     | 段体跨镜头切点又没写 `crosses_cut` | `scene_cuts` | 只报，**按离边界多远排序** |
     | 溶解底料跨切点 | 同上 | 只报 |
-    | 段尾切在一分打完之前 | `point_ends` | 只报 |
+    | 段尾切在一分打完之前 | `point_ends`／`point_ends_guess` | **新的手写 spec 硬**（2026-09-19，账号所有者第四次重申），老片子与自动 spec 只报——见 `mid_point_findings` |
     | 这条源片的死球时刻整个没量过 | `point_ends`／`scorebox_guess` | 只报，**见下** |
     | 源片分辨率不到 1080p | `height` | **硬**，2026-08-23 补的，见下 |
     | 段窗口撞源片静音区、旁白盖不住 | `silent_audio` | 必红的对谁都硬；大概率红的**自动 spec 硬、手写只报**（`silence_findings`） |
@@ -5471,23 +5638,18 @@ def probe_dry_run(spec: dict, segments: list["Segment"]) -> bool:
         soft.append(f"  第 {hit['index'] + 1} 段的溶解底料跨了切点"
                     f"（段尾 {hit['end']:.2f}s 之后 {SEG_FADE}s 内）")
 
-    # ③ 段尾切在一分打完之前——**只报不拦**，理由见 docstring。
-    for index, seg in enumerate(segments):
-        if seg.image:
-            continue
-        probe = probes.get(urls.get(seg.source, ""))
-        ends = [float(t) for t in (probe or {}).get("point_ends") or []]
-        cut_mid = [t for t in ends if seg.end < t <= seg.end + POINT_TAIL * 2.5]
-        if cut_mid:
-            soft.append(
-                f"  第 {index + 1} 段 end={seg.end:.2f}s 像是切在一分打完之前"
-                f"（最近的死球在 {min(cut_mid):.2f}s）——观众看不出这分归谁")
+    # ③ 段尾切在一分打完之前——2026-09-19 起**新的手写 spec 是硬闸**，
+    #    理由和边界见 `mid_point_findings`。
+    m_hard, m_soft = mid_point_findings(spec, segments, probes, urls)
+    hard.extend(m_hard)
+    soft.extend(m_soft)
 
-    # ④ 这条源片的 point_ends 整个是空的——**只报不拦，理由同③**，但要分清
-    #    「没量」和「量出来是空的」（`probe.json` 里 `point_ends: []` 两种
-    #    情况长得一样）。`scorebox_guess` 是那唯一的分界：有它就是「猜到了
-    #    候选、没人拿去重跑一轮 probe」，没它才是「量过、真的没找到」。
-    #    bouzkova-jovic 那条就是前一种——猜到的候选埋在 probe 那趟的 run 日志
+    # ④ 这条源片的死球时刻整个没量过——**只报不拦**，但要分清「没量」和
+    #    「量出来是空的」（`probe.json` 里 `point_ends: []` 两种情况长得一样）。
+    #    2026-09-19 起 probe 会按猜到的框顺手量一份 `point_ends_guess`，所以
+    #    「猜到了候选、没人拿去重跑」这一档只剩老 probe 才会碰到；新 probe
+    #    要么有数（猜的框），要么是「猜不出记分条」。
+    #    bouzkova-jovic 那条是老的那种——猜到的候选埋在 probe 那趟的 run 日志
     #    里，没人再翻，`--dry-run` 当时对这一层完全没吭声。
     checked_sources: set[str] = set()
     for seg in segments:
@@ -5495,14 +5657,19 @@ def probe_dry_run(spec: dict, segments: list["Segment"]) -> bool:
             continue
         checked_sources.add(seg.source)
         probe = probes.get(urls.get(seg.source, ""))
-        if probe is None or probe.get("point_ends"):
+        if probe is None or probe.get("point_ends") or probe.get("point_ends_guess"):
             continue
         guess = probe.get("scorebox_guess")
         label = seg.source or "(主源)"
-        if guess:
+        if guess and probe.get("point_ends_guess") is None:
             soft.append(
                 f"  源 {label}：死球时刻还没量过——probe 猜过 "
-                f"--scorebox {guess}，还没有人拿它重跑一轮 probe 确认")
+                f"--scorebox {guess}，还没有人拿它重跑一轮 probe 确认"
+                "（老 probe；新 probe 会按猜的框自己量一遍）")
+        elif guess:
+            soft.append(
+                f"  源 {label}：按猜的框 --scorebox {guess} 量过，一次跳变都没有"
+                "——框多半猜错了，拿 score_*.jpg 对一眼再给一次 --scorebox")
         else:
             soft.append(
                 f"  源 {label}：死球时刻还没量过，而且猜不出记分条在哪"
@@ -9053,10 +9220,11 @@ def main() -> int:
         # 开缩略图墙自己数像素，也让 `--dry-run` 有得翻（见 `probe_dry_run`）。
         # 不参与这一趟 `point_ends` 的计算：猜错了不影响本轮结果，
         # 猜对了下一轮 probe 抄一下就行。
-        scorebox_guess = None
-        if not str(args.scorebox).strip():
-            scorebox_guess = suggest_scorebox(source)
-        ends = point_end_candidates(source, args.scorebox)
+        #
+        # ⚠️ 2026-09-19 起**猜到的框也顺手量一遍**（`point_ends_guess`）——
+        # 「猜对了下一轮 probe 抄一下」那一轮从来没有人跑过（478 份 probe 里
+        # 只有 53 份有数），见 `measure_point_ends`。
+        ends, scorebox_guess, ends_guess = measure_point_ends(source, args.scorebox)
         # **音频静音区间也趁源片还在的时候量**（见 silent_audio_spans 的来路）。
         # 三种结果都要出声：「没音轨」「量过为空」「有区间」在 probe.json 里
         # 分别是 None / [] / [[a,b]...]，读的人不用猜。
@@ -9079,6 +9247,10 @@ def main() -> int:
             # 的那一趟，这里都是 None——和 `point_ends` 一样别把「没猜」和
             # 「猜了没有」混成一回事。
             "scorebox_guess": scorebox_guess,
+            # 按猜的框量出来的死球时刻（None=这趟没猜／给了 --scorebox；
+            # []=按猜的框量过、没有跳变）。dry-run 在 `point_ends` 空着时拿它
+            # 查「段尾切在一分打完之前」，报出来时会标明是猜的框。
+            "point_ends_guess": ends_guess,
             # 源片音频的静音区间（None=没音轨；[]=量过没有）。dry-run 拿它
             # 预判「段窗口撞静音、旁白盖不住」那一类渲后必红（silence_findings）。
             "silent_audio": silent_audio,

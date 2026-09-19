@@ -5177,9 +5177,12 @@ def test_没量过死球的源片要把猜到的候选翻出来提醒(tmp_path):
 
     账号所有者 2026-08-19：「剪辑的时候要等死球了再去切下一段视频，切记」——
     这条把猜到的候选存进 `probe.json`（`scorebox_guess`），`--dry-run` 翻出来
-    当提醒。⚠️ **仍然只报不拦**：`--scorebox` 给了也可能因为记分条滞后／
-    镜头切走而检出为空，做成硬闸会重复 `crosses_cut` 那次的错
-    （见 `probe_dry_run` 的 docstring）。
+    当提醒。⚠️ **「没量过」这一条仍然只报不拦**：`--scorebox` 给了也可能因为
+    记分条滞后／镜头切走而检出为空，做成硬闸会重复 `crosses_cut` 那次的错
+    （见 `probe_dry_run` 的 docstring）。⚠️ 2026-09-19 起 probe 会按猜到的框
+    自己量一份 `point_ends_guess`，「猜过、还没人重跑」只剩老 probe 才会报；
+    而**量到了数、段尾却切在翻牌之前**那一条对新手写 spec 是硬的
+    （`test_段尾切在一分打完之前_新片子是硬闸`）。
     """
     reel = _reel()
     spec = {
@@ -16624,3 +16627,141 @@ def test_全出血也能回贴记分条_字幕抬到板上方(tmp_path, monkeypa
     # 带式那条路的几何一格不动：oy = BAND_TOP + y0×比例
     src_txt = inspect.getsource(reel.cut_segment)
     assert '(BAND_TOP if LAYOUT == "band" else 0) + int(round(y0 * ratio))' in src_txt
+
+
+def test_没给scorebox时probe要按猜的框顺手量一遍死球(monkeypatch):
+    """账号所有者 2026-09-19 第四次重申「视频剪辑要完整一分结束再切画面」。
+
+    根子：全库 478 份 probe.json 里只有 53 份的 `point_ends` 有数——`--scorebox`
+    要人给，人几乎从不给，于是 dry-run 那条「切在一分打完之前」在 89% 的片子上
+    根本没数据可查。`ruud-te-davis-cup-2026-wg1` 就是：probe 猜到了框，
+    「猜对了下一轮 probe 抄一下」那一轮从来没人跑。
+
+    现在 `measure_point_ends` 在没给 `--scorebox` 时拿猜到的框自己量一遍，
+    存进 `point_ends_guess`（和 `point_ends` 分开，读的人要知道它是猜的）。
+    """
+    reel = _reel()
+    calls: list[tuple[str, bool]] = []
+
+    def _fake_candidates(_source, scorebox, *, guessed=False):
+        calls.append((scorebox, guessed))
+        return [12.5, 30.0] if scorebox else []
+
+    monkeypatch.setattr(reel, "point_end_candidates", _fake_candidates)
+    monkeypatch.setattr(reel, "suggest_scorebox", lambda _s: "67,600,425,673")
+
+    # 没给 --scorebox：猜到框 → 按猜的框量，结果落在 point_ends_guess
+    ends, guess, ends_guess = reel.measure_point_ends(Path("x.mp4"), "")
+    assert ends == [] and guess == "67,600,425,673" and ends_guess == [12.5, 30.0], (
+        f"没按猜的框量：{(ends, guess, ends_guess)}")
+    assert ("67,600,425,673", True) in calls, f"猜的框没被量，或者没标成 guessed：{calls}"
+
+    # 给了 --scorebox：照旧只量 point_ends，不猜、不量第二遍
+    calls.clear()
+    ends, guess, ends_guess = reel.measure_point_ends(Path("x.mp4"), "1,2,3,4")
+    assert ends == [12.5, 30.0] and guess is None and ends_guess is None, (
+        f"给了 --scorebox 还去猜了：{(ends, guess, ends_guess)}")
+    assert calls == [("1,2,3,4", False)]
+
+    # 没给、也猜不到：三个都空，别把「猜不出」写成「量过为空」
+    monkeypatch.setattr(reel, "suggest_scorebox", lambda _s: None)
+    assert reel.measure_point_ends(Path("x.mp4"), "") == ([], None, None)
+
+    # ⚠️ probe 那条路必须真的走这个函数，并把 point_ends_guess 写进 probe.json
+    # ——闸写出来了没人调，这个仓库栽过（find_point_ends 零调用方一个月）
+    src = inspect.getsource(reel.main)
+    assert "measure_point_ends(source, args.scorebox)" in src, "probe 没接上 measure_point_ends"
+    assert '"point_ends_guess": ends_guess' in src, "point_ends_guess 没写进 probe.json"
+
+
+def test_段尾切在一分打完之前_新片子是硬闸():
+    """账号所有者 2026-09-19：「记住视频剪辑要完整一分结束再切画面」——第四次。
+
+    前三次都落成「只报不拦」，而第四次的来路正是那条软提示被我按「只报」放过：
+    **一条报了三次都被放过去的软提示，和没有提示是同一回事。** 所以新的手写
+    spec 做成硬闸（`mid_point_findings`），老片子挂 `_MID_POINT_LEGACY`、
+    自动产的 spec 只报。
+
+    每个方向都反向验证过：拆掉 `POINT_END_EDGE_TOL` 那一刀，第 ② 组红；
+    拆掉 `point_ends_guess` 那条退路，第 ③ 组红；拆掉 legacy／auto 分支，
+    第 ④⑤ 组红。
+    """
+    reel = _reel()
+    import io  # noqa: PLC0415
+    from contextlib import redirect_stdout  # noqa: PLC0415
+
+    def _run(spec, probe_extra):
+        segs = reel.parse_segments(spec, {"": Path("x")}, "")
+        probe = {"url": spec["source_url"], "duration": 60.0, "scene_cuts": [],
+                 "point_ends": [], **probe_extra}
+        monkey = pytest.MonkeyPatch()
+        monkey.setattr(reel, "probes_for_spec",
+                       lambda _s: ({probe["url"]: probe}, []))
+        buf = io.StringIO()
+        try:
+            with redirect_stdout(buf):
+                hard = reel.probe_dry_run(spec, segs)
+        finally:
+            monkey.undo()
+        return hard, buf.getvalue()
+
+    base = {"slug": "brand-new-hand-written", "source_url": "https://x.invalid/a.mp4",
+            "segments": [{"start": 10.0, "end": 20.0, "narration": "一句话"}]}
+
+    # ① 段尾 20.0，记分条 21.5 才翻牌——这一分没打完就切走了：硬
+    hard, out = _run(base, {"point_ends": [21.5]})
+    assert hard is True, f"新手写 spec 切在一分中间没被拦：{out}"
+    assert "切在一分打完之前" in out and "21.50s 才翻牌" in out, out
+    assert f"挪到 {21.5 + reel.POINT_TAIL:.1f}s" in out, "没告诉人 end 该挪到哪"
+
+    # ② 翻牌就在段尾之后 0.2s——段尾正落在点与点的溶解上，新比分在下一镜头
+    #    首帧出现，本来就是对的：不许误伤
+    hard, out = _run(base, {"point_ends": [20.2]})
+    assert hard is False and "切在一分打完之前" not in out, f"边界对齐的段尾被误伤：{out}"
+    # 窗口另一头：翻牌远在 3 秒之外，和这一段无关
+    hard, out = _run(base, {"point_ends": [20.0 + reel.POINT_TAIL * 2.5 + 0.1]})
+    assert hard is False and "切在一分打完之前" not in out
+
+    # ③ 人没给 --scorebox、只有按猜的框量的 point_ends_guess——也要查，并标明是猜的
+    hard, out = _run(base, {"point_ends": [], "scorebox_guess": "1,2,3,4",
+                            "point_ends_guess": [21.5]})
+    assert hard is True and "猜的记分条框" in out, f"猜的框量出来的数没被用上：{out}"
+    assert "还没有人拿它重跑" not in out, f"已经按猜的框量过了，不该还催重跑：{out}"
+    # 按猜的框量过、一次跳变都没有——框多半猜错了，要说出来（软）
+    hard, out = _run(base, {"point_ends": [], "scorebox_guess": "1,2,3,4",
+                            "point_ends_guess": []})
+    assert hard is False and "框多半猜错了" in out, out
+    # 老 probe（没有 point_ends_guess 这个键）——照旧提醒去重跑
+    hard, out = _run(base, {"point_ends": [], "scorebox_guess": "1,2,3,4"})
+    assert hard is False and "还没有人拿它重跑" in out, out
+
+    # ④ 看过缩略图墙、写了 point_end_ok 认领——软，并把理由印出来
+    claimed = {**base, "segments": [{**base["segments"][0],
+                                     "point_end_ok": "翻牌滞后，19.3s 球已落地"}]}
+    hard, out = _run(claimed, {"point_ends": [21.5]})
+    assert hard is False and "已认领 point_end_ok：翻牌滞后" in out, out
+    # point_end_ok 是真字段，validate 那层不许把它当死键
+    assert "point_end_ok" in reel._REAL_FIELDS["segment"]
+
+    # ⑤ 已发的老片子（legacy）和自动产的 spec 只报不拦
+    legacy_slug = sorted(reel._MID_POINT_LEGACY)[0]
+    hard, out = _run({**base, "slug": legacy_slug}, {"point_ends": [21.5]})
+    assert hard is False and "切在一分打完之前" in out, f"legacy 该只报：{out}"
+    auto = {**base, "_production": {"status": "ready_for_render"}}
+    hard, out = _run(auto, {"point_ends": [21.5]})
+    assert hard is False and "切在一分打完之前" in out, f"自动 spec 该只报：{out}"
+
+    # ⑥ 豁免表自检：只许减不许加——spec 必须还在；probe 在盘上的话必须仍然会红
+    for slug in reel._MID_POINT_LEGACY:
+        path = Path("specs/reels") / f"{slug}.json"
+        assert path.is_file(), f"豁免表里的 {slug} 已经没有 spec 了，该从表里删掉"
+        spec = json.loads(path.read_text("utf-8"))
+        probes, _missing = reel.probes_for_spec(spec)
+        if not probes:
+            continue  # CI 的稀疏检出没有 output/，本地有 probe 才核这一半
+        with redirect_stdout(io.StringIO()):   # parse_segments 会印一屏 [score]
+            segs = reel.parse_segments(spec, {"": Path("x")}, "")
+        urls = dict(spec.get("sources") or {}) or {"": str(spec.get("source_url", ""))}
+        _h, soft = reel.mid_point_findings(spec, segs, probes, urls)
+        assert soft, (f"豁免表里的 {slug} **已经不违规了**——把它从 `_MID_POINT_LEGACY` "
+                      "里删掉，留着等于给未来的违规留后门")
