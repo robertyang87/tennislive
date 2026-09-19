@@ -7450,6 +7450,59 @@ def test_ACE不许写成中文音译():
         "而写错的名字等于一条没人守的规矩。")
 
 
+def test_接发球局不许说丢():
+    """账号所有者 2026-09-19：「你要针对 10 个接发球全丢的这种**不专业**的文案」。
+
+    来路：`lehecka-shelton-davis-cup-2026-qualifiers` 的 `push.summary` 写着
+    「谢尔顿10个接发局全丢」，封面钩子第一版是同一句话的另一种说法，**片子已经
+    推到微信才被叫停**，账号所有者要了一条置顶更正贴出去。
+
+    ⚠️ **数字没错，错的是动词。** 0/10 是真的（flashscore `Return games won`
+    客队 `0% (0/10)`），但**接发球局本来就不是你的，没有「丢」这回事，只有破
+    没破**——说「接发局全丢」等于把一个不存在的失误安在他头上。合格的写法全库
+    到处都是，用的都是另一半：`boisson-krueger` 的旁白「九个接发球局，一个都
+    没赢」、`gauff-sakkari` 的「每个接发局都拿下破发」。
+
+    ⚠️ **判据宁可窄，不可宽**：两者之间不许有任何标点。第一版允许跨 `，；`，
+    全库两处误伤，**而且两处都是对的句子**——`rybakina-osaka` 的「…丢，大坂9次
+    接发球局…」、`zhang-fernandez` 的「…丢；张帅的9个接发局…」，前半句说的是
+    自己的发球局、后半句才转到接发球局。收紧之后全库命中 0，**所以这条没有
+    豁免表**（这条 spec 自己已经改成「美网决赛5天后，一局没破」）。
+
+    ⚠️ 只查会发出去的字段 ＋ 小红书正文。`_why` 这类注解里正引着「10个接发局
+    全丢」这个反例本身——那是教训的存放处，连它一起扫就是「判据被自己的注释
+    误伤」，这个仓库记过六次。
+    """
+    from tools.spec_wording import RETURN_GAME_LOST as bad  # noqa: PLC0415
+    from tools.spec_wording import outward_deep as outward  # noqa: PLC0415
+
+    offenders = {}
+    for path in sorted(Path("specs/reels").glob("*.json")):
+        hits = sorted({m.group(0) for text in outward(
+            json.loads(path.read_text(encoding="utf-8")))
+            for m in bad.finditer(text)})
+        if hits:
+            offenders[path.name] = hits
+    for path in sorted(Path("specs").glob("*/*.xhs.txt")):
+        hits = sorted({m.group(0)
+                       for m in bad.finditer(path.read_text(encoding="utf-8"))})
+        if hits:
+            offenders[path.name] = hits
+    assert not offenders, (
+        f"这些地方把接发球局说成「丢」了：{offenders}。"
+        "「丢」只配自己的发球局；接发球局不存在丢不丢，只有破没破——"
+        "写「一次都没破」／「一个都没赢」／「都拿下破发」。")
+
+    # 两头都要钉，只钉一头是恒真的：拦得住那一族说法 ＋ 不许误伤合格写法
+    for s in ("谢尔顿10个接发局全丢", "10个接发球局丢了", "接发局全丢",
+              "他把接发局丢光了"):
+        assert bad.search(s), f"这条该被拦下却没有：{s}"
+    for s in ("丢，大坂9次接发球局", "丢；张帅的9个接发局",
+              "10个接发球局一次都没破", "九个接发球局一个都没赢",
+              "10个发球局只丢 2 个", "每个接发局都拿下破发"):
+        assert not bad.search(s), f"合格写法被误伤了：{s}"
+
+
 #: 规矩之前就发出去的片子。账号所有者 2026-08-06：「**历史视频就不要那个管了**」
 #: 「**保证以后正常就行**」——微信那条消息收不回来，不为一个动词重渲。
 #: **只许减不许加**，而且下面有自检：写错一个名字，豁免就成了一盏恒真的绿灯。

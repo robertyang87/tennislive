@@ -218,6 +218,33 @@ FAKE_WORDS_LEGACY = frozenset({"djokovic-beijing-return"})
 #: 「要到 N 个破发点」——点一律写「拿到」。中间最多隔一个数量词。
 YAODAO_POINT = re.compile(r"要到[^。！？\n]{0,8}?(破发点|盘点|赛点|局点)")
 
+#: 「接发球局全丢」——**「丢」只配自己的发球局**。
+#:
+#: 账号所有者 2026-09-19：「你要针对 10 个接发球全丢的这种**不专业**的文案」。
+#: 来路：`lehecka-shelton-davis-cup-2026-qualifiers` 的 `push.summary` 写着
+#: 「谢尔顿10个接发局全丢」，封面钩子第一版是同一句话的另一种说法。
+#:
+#: ⚠️ **数字没错，错的是动词。** 0/10 是真的（flashscore `Return games won`
+#: 客队 `0% (0/10)`），但**接发球局本来就不是你的，没有「丢」这回事，只有破没破**
+#: ——说「接发局全丢」等于把一个不存在的失误安在他头上。全库的合格写法都在
+#: 用另一半：`boisson-krueger` 的旁白「九个接发球局，一个都没赢」、
+#: `gauff-sakkari` 的「每个接发局都拿下破发」。
+#:
+#: ⚠️ **判据宁可窄，不可宽**：两者之间不许有任何标点。第一版允许跨 `，；`，
+#: 全库两处误伤，**而且两处都是真新闻**——`rybakina-osaka` 的「…丢，大坂9次
+#: 接发球局…」和 `zhang-fernandez` 的「…丢；张帅的9个接发局…」，前半句说的是
+#: 自己的发球局、后半句才转到接发球局，各自都对。收紧之后全库命中 **0**，
+#: 所以**没有豁免表**。
+#:
+#: ⚠️ 只拦「丢」这一族动词，不拦「接发局」这个词本身——它在全库的合格写法里
+#: 到处都是。⚠️ 顺带一条**故意没做成闸**的：「接发局」这个简写容易被读成
+#: 「接发球」（一场球接了上百个发球，10 个接发球是句荒唐话），所以**烧上屏和
+#: 给人复制的那几处写全「接发球局」，或者干脆用「破发」说**——而「哪一处该写全」
+#: 要看那句话有没有上下文，机器分不出来。
+RETURN_GAME_LOST = re.compile(
+    r"(接发球?局[^。！？；，、\n]{0,4}?(?:全丢|丢掉|丢了|丢光|没保住)"
+    r"|丢[^。！？；，、\n]{0,4}?接发球?局)")
+
 #: 盘点主语：「拿到/要到/得到/握有 N 个点」之后 26 字内出现「救/保住」而
 #: 中间没有点出是谁在救——读者会把主语接成拿到点的那个人。
 OWN_POINT = re.compile(r"(要到|拿到|得到|握有)[^。！？\n]{0,12}?"
@@ -646,6 +673,13 @@ def check_spec_wording(spec: dict, slug: str,
     if xhs_text and xhs_name not in YAODAO_LEGACY:
         if hits := _hits(YAODAO_POINT, [xhs_text]):
             problems.append(f"小红书正文写了「要到…点」：{hits}——一律写「拿到」")
+
+    if hits := _hits(RETURN_GAME_LOST, list(outward_deep(spec)) +
+                     ([xhs_text] if xhs_text else [])):
+        problems.append(
+            f"把接发球局说成「丢」了：{hits}——**「丢」只配自己的发球局**，"
+            f"接发球局不存在丢不丢，只有破没破。写「一次都没破」"
+            f"／「一个都没赢」／「都拿下破发」")
 
     text = "".join(str(s.get("narration", ""))
                    for s in spec.get("segments") or [] if isinstance(s, dict))
