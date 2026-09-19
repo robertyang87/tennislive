@@ -1,0 +1,357 @@
+{
+  "slug": "ruud-te-davis-cup-2026-wg1",
+  "_column": "赛场之上",
+  "sources": {
+    "main": "https://www.youtube.com/watch?v=rhxnJFSz4Go"
+  },
+  "source_quality_exceptions": {
+    "https://www.youtube.com/watch?v=rhxnJFSz4Go": {
+      "min_height": 720,
+      "approved_by": "user",
+      "reason": "账号所有者 2026-09-19 直接给了这条 URL：「https://youtu.be/rhxnJFSz4Go 做这个赛场之上」。ITF 官方频道 World Tennis 的戴维斯杯 highlights 照旧只有 1280×720（yt-dlp -F 逐档查过：398/609 两档封顶 720p，没有 1080p），和 davis-cup-china-first-world-group-1 那三条 ITF 源同一个天花板，等不出更高的版本。"
+    }
+  },
+  "_source": "ITF 官方 YouTube 频道 World Tennis（oEmbed author_name=World Tennis，@worldtennisofficial，和 davis-cup-china-first-world-group-1 用的 qBtBKmKmQZc 同一个频道）单场集锦《BIG Showing from Casper ✅ | Casper Ruud v Rigele Te | Highlights | Davis Cup World Group 1 2026》，1280×720 / 25fps / 636.41s（probe 实测），upload_date 20260918。四要素自证：①左下角常驻记分条烧着 `NOR / CHN` 两行国旗、分数和盘分，0.5s 读 `NOR ●30 0 / CHN 15 0`，614.5s 读 `NOR 0 6|7 / CHN 0 1|6`——赛果和 ITF/flashscore 逐字一致；②场边挡板 `DAVIS CUP by GENERALI` / `World Tennis` / `VISA` / `SalMar`（挪威三文鱼商，主场赞助）；③球衣：鲁德红色 Yonex 背后 `NORGE`（200.5s、466.5s），特日格乐红色 adidas 白发带背后 `CHINA`（26.5s、254.5s、262.5s、628.5s）；④红土＋室内看台，和 NRK / NTB 稿里「特隆赫姆 Spektrum 室内红土」对得上。⚠️ 没有自动字幕（captions=None），转写那一层这条没有。⚠️ 末尾 622.5~636.4 是握手、和队长握手、`VISA` 板虚化收尾，没有社媒片尾板；最后一格 634.5s 是虚化的 VISA 板，窗口收在 632.5 之前。",
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "鲁德",
+    "hook": "首盘只丢一局\n第二盘被拖进抢七",
+    "_hook_why": "两行讲的都是**整场的形状**（首盘一边倒 → 第二盘拉锯到抢七），不是某一个时刻，也不是身份——排名、轮次在台头和比分板上印着。主语是封面上的鲁德（他丢一局、他被拖进抢七），和 `subject` 一致；讲特日格乐的那一层放在 push.summary 和小红书首行（「特日格乐拖鲁德进抢七」）。⚠️ 不重复比分板：比分板就在钩子底下印着 6-1 7-6(1)，所以钩子里不写「六比一」「七比六」。最长行 8 个字符，≤ HOOK_MAX_CHARS=10，两行。",
+    "topic": "戴维斯杯世界一组 · 挪威 vs 中国",
+    "winner": "鲁德",
+    "result": "6-1 7-6(1)",
+    "matchup": [
+      {
+        "name": "鲁德",
+        "name_en": "Casper Ruud",
+        "country": "NOR",
+        "rank": 18
+      },
+      {
+        "name": "特日格乐",
+        "name_en": "Rigele Te",
+        "country": "CHN",
+        "rank": 835
+      }
+    ],
+    "_matchup_rank_why": "两个名次都取 **ITF 官方 tieCentre 接口** `data.nominations[].players[].oomSinglesRankingPro`（oomRankDate 2026-09-14）：Casper Ruud 18、Rigele Te 835。第二源：鲁德 18 见 davis-cup-china-first-world-group-1 的 `_facts`（rankings.py 走 tennisexplorer 抓的 2026-09-14 那期）；特日格乐 835 见 en.wikipedia.org/wiki/Te_Rigele「Current ranking No. 835 (September 2026)」。⚠️ 戴维斯杯没有种子，不存在种子号和排名混淆的问题。",
+    "_name_why": "两个中文名都走 `player_zh()`：`player_zh(\"Casper Ruud\")` → 鲁德，`player_zh(\"Rigele Te\")` → 特日格乐（`player_zh(\"Te Rigele\")` 同样给特日格乐）。没有手打。",
+    "_subject_why": "封面放**鲁德**——赢的那个，也是刷到的人认得的名字（世界第 18、三次大满贯亚军）。⚠️ 本来更想放特日格乐（中国观众冲他来的），但这场球特日格乐的官方高清实拍一张都没找到：NRK 两篇稿的图全是赛前训练／发布会／中国队合影（Jøte Toftaker / NRK，赛前拍的，过不了第 2 道闸门「在比赛中」）；daviscup.com 的新闻索引到写这条为止（9/19 00:35Z）还没有挪威 v 中国的赛报；腾讯／新浪当天只有文字稿。唯一一张本场实拍是 NTB 的鲁德，所以主体跟着图走。",
+    "_heat_why": "特日格乐 `country == \"CHN\"`，过的是「① 中国球员，不看名次」那一档；另一边鲁德世界第 18 也在 `HEAT_TOP_RANK = 20` 以内。⚠️ 外加一层这一场自己的话题：这是中国男队**历史上第一次**打世界一组（光明网／中新网 2026-02-07，见 davis-cup-china-first-world-group-1 `_facts`），而对手为这一周专门在室内铺了北欧第一块红土。",
+    "portrait": {
+      "image": "assets/reel/ruud-te-davis-cup-2026-wg1.jpg",
+      "focus": 0.4,
+      "focus_y": 0.5,
+      "zoom": 1.0,
+      "_why": "NTB 通讯社本场实拍（Ole Martin Wold / NTB），Polaris 系报纸（folkebladet.no / gauldalsposten.no 的 NTB 稿《Ruud og Kjær sikret norsk drømmestart i Davis Cup》，datePublished 2026-09-18T17:46:43Z，也就是这场球打完三分钟后）的头图，图注原文「Casper Ruud spilte Davis Cup-kvalifisering i Trondheim fredag kveld」——人物、赛事、地点、时刻（周五晚，9/18）四要素全在图注里；画面里红土＋红色 Yonex/SalMar 球衣＋白护腕，和源片 200.5s / 466.5s 的鲁德近景逐项一致。原图 7097×4731（页面 props 里写的 imageAsset.size），CDN 对外封顶 `w=3200`，拿到 3200×2133；铺 1080×1440 是 min(3200/1080, 2133/1440)=1.48×，过 1.00× 地板，不需要 `_low_res_why`。情绪：一分打完他抬头看向远处、嘴微张，是这场球「赢了但不轻松」的那种神情——和钩子「第二盘被拖进抢七」对题；眼睛睁着。",
+      "_portrait_why": "同一批候选只有这一张是本场比赛中的实拍。NRK 的六张（Jøte Toftaker / NRK 三张鲁德、一张中国队合影、一张红土施工、一张训练）全是赛前；dagbladet / NRK 赛前稿的两张 2000px 是发布会。按四道闸门第 2 道（在比赛中），赛前那批一张都过不了，所以没有「同一辑里挑近景」这一步。",
+      "_zoom_why": "横图 3200×2133 铺 3:4 竖版：竖向正好铺满（zoom=1.0 时 focus_y 是死的），只有 focus 有用。人在原图水平 0.40 处（头在 x≈1296/3200），focus=0.40 时取景窗是原图 x 480~2080，整个人、左手的球拍、右手都在窗内。头顶在源图 y≈0.07 → 画布 y≈100、眼睛 y≈230、下巴 y≈420：头顶那一截落进台头带（0~170），但台头文字收在 x≈420，而头在画布 x≈460~640，**不压脸**；钩子带从 790 起，脸离它 370px。本地 render_cover_local 渲出来核过。"
+    },
+    "scoreboard": {
+      "court": "Trondheim Spektrum",
+      "_court_why": "ITF 官方 tieCentre 接口 `tie.venue._admin_name = \"Trondheim Spektrum - Trondheim\"`、`venueType = Indoor`、`surface = Clay`；NTB 稿写「den røde grusen i Trondheim Spektrum」。这块场地没有更细的球场名（tieCentre 的 court 只叫 `Match Court`），所以印场馆名。",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%20%221%3A28%3A00%22%2C%20%22source%22%3A%20%22ITF%20%E5%AE%98%E6%96%B9%20tieCentre%20%E6%8E%A5%E5%8F%A3%20match%20duration%2001%3A28%3A09%EF%BC%88actualStartDate%202026-09-18T16%3A15%3A35Z%20%E2%86%92%20actualEndDate%2017%3A43%3A44Z%EF%BC%89%22%2C%20%22cross_check%22%3A%20%22flashscore%20df_sui_1%EF%BC%88xxw7wjQ0%EF%BC%89%E5%85%A8%E5%9C%BA%201%3A28%EF%BC%88%E5%88%86%E7%9B%98%200%3A29%20%2B%200%3A59%EF%BC%89%EF%BC%8C%E4%B8%A4%E6%BA%90%E4%B8%80%E8%87%B4%EF%BC%8C%E5%8F%96%E6%95%B4%E5%88%B0%E5%88%86%22%7D",
+        "field": "duration"
+      },
+      "_duration_why": "ITF 官方 tieCentre `matches[].duration = 01:28:09`（actualStartDate 16:15:35Z → actualEndDate 17:43:44Z，自洽）；flashscore df_sui_1 报 0:29 + 0:59 = 1:28。两源一致，印 1:28。"
+    },
+    "_result_why": "第二盘抢七小分 (1) 进了 cover.result / topbar.line2 / _match。小分双源：ITF tieCentre `sideSets[setNumber=2].setTieBreakScore` 鲁德 7 / 特日格乐 1；flashscore 当日表 `DC÷7 / DD÷1`（第二盘那对槽位）。源片 592.5s 记分条读 `NOR 6 / CHN ●1`（赛点），614.5s 读 `6|7 / 1|6`。(1) 是**输掉那一盘的人**拿到的分——特日格乐输了第二盘，他拿 1 分。⚠️ 戴维斯杯世界一组是三盘两胜，这场 2-0 没打满距离，第二盘不是决胜盘，走普通抢七，7-1 合法。"
+  },
+  "topbar": {
+    "line1": "2026 戴维斯杯世界一组 第一轮",
+    "line2": "鲁德 6-1 7-6(1) 特日格乐"
+  },
+  "_topbar_why": "line1：赛事按 ITF 的正式名称「Davis Cup World Group I, Round 1」（挪威 v 中国是第一轮，9/18-19 特隆赫姆）。line2 由 cover.winner / result / matchup 机械拼出。",
+  "_match": {
+    "status": "result_verified",
+    "source": "flashscore_points",
+    "source_id": "xxw7wjQ0",
+    "flashscore_id": "xxw7wjQ0",
+    "participants": [
+      "鲁德",
+      "特日格乐"
+    ],
+    "set_scores_home_away": [
+      [
+        6,
+        1
+      ],
+      [
+        7,
+        6
+      ]
+    ],
+    "tiebreaks_home_away": [
+      null,
+      [
+        7,
+        1
+      ]
+    ],
+    "winner": "鲁德",
+    "loser": "特日格乐",
+    "winner_result": "6-1 7-6(1)",
+    "loser_result": "1-6 6-7(1)",
+    "_direction_why": "flashscore 当日表 f_2_-1：AE=Ruud C.（home）、AF=Te R.（away），BA/BB=6:1、BC/BD=7:6、DC/DD=7:1、AG/AH=2:0。ITF 官方 tieCentre：sideOrder 1 = Casper Ruud (NOR) sets 6 / 7(7)，sideOrder 2 = Rigele Te (CHN) sets 1 / 6(1)，winnerSideId 指向鲁德那一侧。源片 614.5s 记分条 `NOR 6|7 / CHN 1|6` 第三处印证。⚠️ participants 跟 flashscore 的 home/away（和 set_scores_home_away 同序），这一场恰好也和 cover.matchup 的版式顺序一致。"
+  },
+  "stats": {
+    "a": {
+      "aces": 3,
+      "df": 0,
+      "first_in": 36,
+      "first_won": 32,
+      "second_total": 13,
+      "second_won": 12,
+      "bp_conv": 2,
+      "bp_chances": 9,
+      "pts_won": 74,
+      "pts_total": 120,
+      "first_total": 49,
+      "headshot": "assets/players/headshots/atp-RH16.png"
+    },
+    "b": {
+      "aces": 2,
+      "df": 3,
+      "first_in": 41,
+      "first_won": 31,
+      "second_total": 27,
+      "second_won": 10,
+      "bp_conv": 0,
+      "bp_chances": 0,
+      "pts_won": 46,
+      "pts_total": 120,
+      "first_total": 68,
+      "headshot": "assets/players/headshots/atp-TG30.png"
+    },
+    "_source": "flashscore 本场 xxw7wjQ0 的 df_st_1，整块由 `match_stat_hooks.py xxw7wjQ0 --home Ruud --away Te --stats-block` 机器抄出，没有手打。**这一场 flashscore 没有制胜分和非受迫失误**（17 项那一档），按 render_stat_card.OPTIONAL_FIELDS 留空；TNNS 那一趟没跑（戴维斯杯的场次 TNNS 覆盖不确定，而这条要赶当天）。⚠️ a 跟的是 cover.matchup[0]=鲁德，flashscore 的 home 也是 Ruud——两个顺序这一次恰好一致，a/b **不用对调**。锚点核过：Service Points Won 44/49 是鲁德的（=a，赢家零破发点），Break Points Saved 7/9 是特日格乐的（=b）。first_total 按 first_in + second_total 算（36+13=49、41+27=68）。头像：鲁德 atp-RH16、特日格乐 atp-TG30，`fetch_official_headshot.py atp --via mubadaladcopen.com` 取的官方头像（颜色数 244 / 22083，都不是占位剪影）。",
+    "_winners_ue_why": "flashscore df_st_1 这场只有 17 项（Aces / DF / 一二发 / 破发点 / 总分），没有 Winners / Unforced errors；TNNS 没跑——戴维斯杯世界一组不在 tnns-stats.yml 验过的 ATP/WTA 巡回赛范围里，这条按时效先出。"
+  },
+  "_hit_data": "跑过 `match_stat_hooks.py xxw7wjQ0`。挑进正文的：**鲁德 49 个发球分只丢 5 分（44/49，90%），全场没有面对一个破发点**（Break Points Converted 客队 0/0，逐分 df_mh_1 里鲁德的发球局没有一个 |B1|）——进了第 10 段旁白；**抢七 1-0 落后之后连拿 7 分**（源片记分条 578.5s `NOR 0 / CHN 1` → 592.5s `NOR 6 / CHN 1` → 614.5s 7-6(1)）——进了第 12 段。备选：特日格乐二发得分率 37%（10/27）对鲁德 92%（12/13）；特日格乐救下 7 个破发点（7/9）。",
+  "_durations": "官方 1:28:09（ITF），flashscore 分盘 0:29 + 0:59——第二盘是第一盘的两倍长，正是这条片子的形状。",
+  "_turning_points": [
+    "首盘 3-1 那一局（特日格乐发球）：逐分 df_mh_1 `40:30 |B1|, 40:40, 40:A, 40:40, A:40 |B1|, 40:40, A:40 |B1|`——三个破发点，前两个救下，第三个被破。源片 106.5~116.5s 记分条 `NOR 40 |2 / CHN ●40 |1`（那一局的平分），118.5~146.5s 是这一分的近景和回放（140.5s 特日格乐上网、144.5s 网前扑救）。",
+    "首盘 5-1（特日格乐发球）：`40:0 |B1|, 40:15 |B1|, 40:30 |B1|`——又是第三个破发点上被破。集锦从 148.5s（4-1，15-0）跳到 174.5s 的 `NOR 40 / CHN ●30`（第三个破发点）→ 186.5s 已是 5-1 鲁德发球 40-0（盘点）。",
+    "第二盘 2-2（特日格乐发球）：`40:15 |B1|, 40:30 |B1|, 40:40, 40:A` → 保发。源片 358.5~366.5s 记分条 `NOR 40 |2 / CHN ●30 |2`（第二个破发点），378.5~398.5s `NOR 40 / CHN ●Ad`（救回之后占先），402.5s 起 `6|3 / 1|3`。**这是鲁德第二盘仅有的两个破发点**，之后 df_mh_1 里再没有 |B1|。",
+    "抢七 1-0（特日格乐先拿一分）→ 7-1：源片 578.5s `NOR ●0 / CHN 1`，592.5s 直接是 `NOR 6 / CHN ●1`（赛点），614.5s `6|7 / 1|6`。中间五分集锦没剪进来，所以旁白只说「连续七分全是鲁德的」，不指认画面。"
+  ],
+  "editorial": {
+    "mode": "match_review",
+    "hook": [
+      "首盘只丢一局",
+      "第二盘被拖进抢七"
+    ],
+    "question": "挪威人为这一周专门在室内铺了一块红土，世界第 835 的特日格乐首盘只赢了一局——第二盘他是怎么把世界第 18 的鲁德拖进抢七的？",
+    "thesis": "首盘他两个发球局都被破，但都是在鲁德的第三个破发点上才丢的；第二盘他把发球局顶住了：六个发球局一个没丢，2-2 那一局救下鲁德仅有的两个破发点，一路保到 6-6。差距在鲁德那边——鲁德 49 个发球分只丢 5 分、全场没面对一个破发点，抢七 1-0 落后之后连拿 7 分。1 小时 28 分，6-1 7-6(1)，挪威首日 2-0。",
+    "beats": [
+      "北京时间 9 月 19 日凌晨 12 点多开球，特隆赫姆 Spektrum，一块从匈牙利运来红土、垫着 40 吨钢板的室内红土场——挪威人铺它的理由就是中国球员平时不练红土。",
+      "首盘 6-1：特日格乐的两个发球局都丢了，但都是鲁德的第三个破发点才破掉；鲁德这盘一分没让他碰到发球局，5-1 零封保发拿下盘点。这是鲁德背伤退出美网之后的第一场球。",
+      "第二盘换了个样：特日格乐第一局从平分保到 1-0，2-2 救下鲁德连着拿到的两个破发点，六个发球局一个没丢；鲁德那边 49 个发球分只丢 5 分，没面对过一个破发点，5-6 零封保发进抢七。",
+      "抢七第一分是特日格乐的，1-0——然后连续七分全是鲁德的，7-1。1 小时 28 分，鲁德拿下挪威第一分，当晚谢尔再胜崔杰，挪威 2-0；第二天还有三场。"
+    ],
+    "_hook_why": "这一栏和 cover.hook 逐行相同（闸要求）。理由见 cover._hook_why。",
+    "human_context": {
+      "angle": "这场球的场外主角是**脚下那块红土**：挪威网协在特隆赫姆 Spektrum 室内铺了北欧第一块红土场——400 块每块 100 公斤的钢板（约 40 吨）垫底，红土从匈牙利运来，花了 70 万克朗——理由赛事经理自己说了：中国球员打得又平又快，红土不是他们的朋友。特日格乐赛后原话：「这对挪威显然是个优势，我们平时练得多的是硬地，红土练得不多。」而鲁德自己说，铺红土是计划的一部分，目的是避开中国的头号球员们——「计划成功了」。另一层：这是鲁德 8 月辛辛那提背伤退赛、退出美网之后的第一场正式比赛；而这是中国男队历史上第一次打世界一组。",
+      "facts": [
+        "场地：ITF 官方 tieCentre 接口 surface=Clay、venueType=Indoor、venue=Trondheim Spektrum；NRK 2026-09-18《Historisk grep for Casper Ruud – aldri blitt gjort før》：400 块各 100 公斤的钢板（约 40 吨）、红土从匈牙利运来，北欧第一次室内铺红土；NRK 赛后稿《Punget ut for kynisk grep》：红土进口花了 70 万克朗。dagbladet（NTB）同日稿同一组数字。",
+        "赛事经理 Franck Fog（NRK/NTB）：中国球员打得又平又快，红土对他们不友好，铺红土成本更高但值得。特日格乐（NRK 赛后稿）：「It's clearly an advantage for Norway. We train a lot on hardcourt, not much on clay.」鲁德（同稿）：「The plan was to try to avoid their biggest stars, and we managed that.」",
+        "鲁德伤情：ESPN 2026-08-30《Casper Ruud withdraws from US Open with back injury》＋ atptour.com《Casper Ruud, Marin Cilic withdraw from the US Open》——辛辛那提第二轮对奥康奈尔第二盘退赛，美网首轮开赛前几分钟退出；dagbladet 赛前稿他自己说「差不多完全恢复了」；lastwordonsports 9/18 前瞻写这是他伤后第一场比赛。",
+        "特日格乐：1997-10-09 生于呼和浩特，蒙古族，1.88 米，右手双反，生涯最高单打排名 395（2018-10-22），现排名 835，9 个 ITF 单打冠军——en.wikipedia.org/wiki/Te_Rigele ＋ 百度百科「特日格乐」两源一致。",
+        "赛果与用时：ITF tieCentre 鲁德 6-1 7-6(7-1) 胜，duration 01:28:09；flashscore xxw7wjQ0 同比分、1:28。同日第二场布德科夫·谢尔 4-6 6-4 6-4 胜崔杰，挪威 2-0（ITF tieCentre ＋ 腾讯新闻 20260919A02V5E00）。第二日 9/19 15:30 当地（北京 21:30）双打先打（ITF tieCentre scheduleText）。"
+      ],
+      "sources": [
+        "https://api.itf-production.sports-data.stadion.io/custom/tieCentre/d3de5d2f-8ed4-4569-9179-20c18127c3e2",
+        "https://www.flashscore.com/match/tennis/xxw7wjQ0/",
+        "https://www.nrk.no/sport/punget-ut-for-kynisk-grep_-_-kan-si-at-planen-var-funket-godt-1.18028530",
+        "https://www.nrk.no/sport/historisk-grep-for-casper-ruud-_-aldri-blitt-gjort-for-1.18028843",
+        "https://www.dagbladet.no/sport/historisk-grep-for-casper-ruud/85170438",
+        "https://www.folkebladet.no/norgeogverden/n/y5oRaK/ruud-sikret-norsk-davis-cup-ledelse-paa-favorittunderlaget",
+        "https://www.espn.com/tennis/story/_/id/49773844/casper-ruud-withdraws-us-open-back-injury",
+        "https://en.wikipedia.org/wiki/Te_Rigele",
+        "https://news.qq.com/rain/a/20260919A02V5E00",
+        "https://www.youtube.com/watch?v=rhxnJFSz4Go"
+      ],
+      "voice_label": "红土上的第 835 位"
+    }
+  },
+  "_claims": [
+    {
+      "claim": "鲁德全场没有面对一个破发点",
+      "sources": [
+        "flashscore df_st_1（xxw7wjQ0）：Break Points Converted 客队 0/0、Break Points Saved 主队 0/0",
+        "flashscore df_mh_1 逐分：鲁德发球的七局（1-0、2-1、4-1、6-1、1-1、2-2、3-3、4-4、5-5、6-6）里没有一个 |B1| 标记；源片记分条从 0.5s 到 610.5s 逐格读过，鲁德发球局里没有出现过 CHN 40 / Ad 领先的读数"
+      ]
+    },
+    {
+      "claim": "第二盘特日格乐六个发球局一个都没丢",
+      "sources": [
+        "flashscore df_mh_1 第二盘：0-1、1-2、2-3、3-4、4-5、5-6 六局全是「客队发球，客队拿下」",
+        "源片记分条：206.5s `1|0`（第一局保发后 264.5s 读 `6|0 / 1|1`）、402.5s `6|3 / 1|3`、426.5s `6|3 / 1|4`、488.5s `6|5 / 1|5`、512.5s `6|5 / 1|6`——每一次特日格乐的发球局之后 CHN 那一格都 +1"
+      ]
+    },
+    {
+      "claim": "这是北欧第一次在室内铺红土场",
+      "sources": [
+        "NRK 2026-09-18《Historisk grep for Casper Ruud – aldri blitt gjort før》（NRK 自采，Jøte Toftaker）：aldri blitt gjort før i Norden",
+        "dagbladet.no 同日 NTB 稿《Historisk grep for Casper Ruud》：the first clay court ever built in the Nordic region（Adresseavisen 首报）"
+      ]
+    },
+    {
+      "claim": "抢七 1-0 落后之后鲁德连拿七分",
+      "sources": [
+        "源片记分条 578.5s `NOR ●0 / CHN 1` → 592.5s `NOR 6 / CHN ●1`（赛点）→ 614.5s `NOR 0 6|7 / CHN 0 1|6`",
+        "ITF tieCentre setTieBreakScore 7 : 1 ＋ flashscore DC/DD 7/1——总分 7-1 而特日格乐先拿了第一分，剩下的七分只能全是鲁德的"
+      ]
+    },
+    {
+      "claim": "这是鲁德背伤退出美网之后的第一场比赛",
+      "sources": [
+        "ESPN 2026-08-30 + atptour.com：辛辛那提对奥康奈尔第二盘退赛，美网首轮赛前退出（此后没有参赛记录）",
+        "lastwordonsports 2026-09-18 前瞻《Davis Cup Day 1 Predictions: Norway vs China》：playing his first match back from injury；dagbladet 赛前稿他自己说背伤恢复得差不多了"
+      ]
+    }
+  ],
+  "_no_repeat": "同栏目此前发过 fonseca-ruud（丰塞卡胜鲁德，讲的是丰塞卡的抢七逆转）——这一条不重讲那条铺开过的东西（丰塞卡、本赛季第二次击败鲁德）。davis-cup-china-first-world-group-1 是**网球有故事**栏目的解说片，讲戴维斯杯的历史和这一周的算术（鲁德两分先算给挪威）；那是另一个栏目，按「同一件事不同栏目各讲一次不算重复」不算重复，但这一条一句都不讲银碗和中国队升组的来路，只留一句「中国男队第一次打世界一组」在小红书正文里。",
+  "push": {
+    "summary": "特日格乐拖鲁德进抢七",
+    "lead": "戴维斯杯世界一组，挪威主场特隆赫姆，一块专门为中国队铺的室内红土。世界第 835 的特日格乐首盘 1-6，第二盘六个发球局一个没丢、救下鲁德的两个破发点，把背伤复出的鲁德拖进抢七——抢七 1-0 领先之后连丢 7 分，6-1 7-6(1)。挪威首日 2-0。",
+    "matchup": "鲁德 vs 特日格乐",
+    "score": "6-1 7-6(1)",
+    "auto": true
+  },
+  "_push_summary_why": "10 字位，主语是特日格乐——微信标题和小红书首行是刷到的人唯一读到的一行，按「首行是标题，要点出是谁」写；封面钩子的主语是鲁德（封面上的人），两处各自站在自己那张脸的一边，讲的是同一场球。铺垫只有一层（拖进抢七），没有代词插在动词前。标题里不写排名，所以不受排名对齐那条约束。",
+  "segments": [
+    {
+      "source": "main",
+      "start": 612.0,
+      "end": 622.3,
+      "cx": 0.5,
+      "crosses_cut": "617.36 —— 赛点落地后鲁德的反应（612.5s 走向底线、614.5s 手抹脸、616.5s 举毛巾）接特日格乐走向网前和两人握手（618.5s、620.5s）。同一个时刻两个人各自的反应，正是该跨的那种切点；断在切点上会把「赢的人」和「输的人走过来」劈成两半。",
+      "_why": "冷开场：全片情绪最重的一格——不是赛点那一分（宽景里两个人都只有几十像素），是打完之后：鲁德抹脸、特日格乐戴着白发带走到网前、握手。不配旁白，靠现场声（掌声）。按「开场三格：画面爆点 → 落点 → 坐标」，落点和坐标交给第 2、3 段。",
+      "_ending_payoff_required": true,
+      "_ending_payoff_why": "冷开场用的是赛后握手，所以正文必须重新走到：第 11 段 596.0–606.0 是赛点那一分，第 13 段 612.0–622.3 和冷开场同一段画面、这次配旁白，第 14 段 624.7–632.5 是和队长的握手。"
+    },
+    {
+      "source": "main",
+      "start": 30.5,
+      "end": 40.0,
+      "cx": 0.5,
+      "narration": "世界第八百三十五，对世界第十八。首盘只赢了一局的特日格乐，第二盘把鲁德拖进了抢七。",
+      "_why": "② **落点**：两个排名的落差 ＋ 整场的形状。画面是首盘第二局特日格乐发球 40-0 那一分的底线宽景（记分条 `NOR 0 |1 / CHN ●40 |0`），一个二十多秒的长回合，两个人都在场上，没有指认谁。镜头 29.0–61.36 之内。"
+    },
+    {
+      "source": "main",
+      "start": 40.2,
+      "end": 52.0,
+      "cx": 0.5,
+      "narration": "北京时间九月十九号凌晨十二点多，戴维斯杯世界一组第一轮，挪威主场。脚下这块红土，是挪威人专门为这一周铺的。",
+      "_why": "③ **坐标**。同一个长回合的后半段（记分条仍是 `CHN ●40`），镜头 29.0–61.36 之内。开球时刻按 ITF actualStartDate 16:15:35Z = 北京 00:15，按「零点十几分说凌晨十二点多」的口径。"
+    },
+    {
+      "source": "main",
+      "start": 54.7,
+      "end": 61.3,
+      "cx": 0.5,
+      "narration": "四十吨钢板，红土从匈牙利运来，因为对面的人不怎么练红土。",
+      "_why": "首盘第三局鲁德发球 15-15 的底线宽景（记分条 `NOR ●15 |1 / CHN 15 |1`），镜头 29.0–61.36 之内，收在 61.36 那一刀前 0.06s——⚠️ 61.36 之后 62.5s 那格是鲁德在 Domino's 挡板前的近景，不进来。「不怎么练红土」是特日格乐自己对 NRK 说的（We train a lot on hardcourt, not much on clay）；40 吨、匈牙利见 human_context.facts。"
+    },
+    {
+      "source": "main",
+      "start": 106.5,
+      "end": 116.6,
+      "cx": 0.5,
+      "narration": "首盘，特日格乐的两个发球局都丢了，鲁德每一次，都是到第三个破发点才破掉他。六比一。",
+      "_why": "首盘 2-1 特日格乐发球那一局的平分（记分条 `NOR 40 |2 / CHN ●40 |1`，106.5~116.5s 十格都是这个读数）——正是「第三个破发点」那一局。逐分 df_mh_1 那一局 `40:30 |B1|, 40:40, 40:A, 40:40, A:40 |B1|, 40:40, A:40 |B1|`，5-1 那一局 `40:0 |B1|, 40:15 |B1|, 40:30 |B1|`，两局都在第三个破发点上被破。镜头 63.2–140.48 之内（118.5s 起是鲁德击球的近景和回放，不进来）。 ⚠️ 第一版收在 118.0，run 35410902315 的 QC 报成片第 50 秒数字静音（−61.7 dB）——那正是这一段旁白说完之后的最后一秒，源片 117.1~118.0 在切进回放之前把现场声压没了（同一份逐秒表里 49s 是 −41.7）。收到 116.6，旁白也砍掉「但丢得都不轻松」那半句，让说话盖住整段。"
+    },
+    {
+      "source": "main",
+      "start": 186.5,
+      "end": 193.5,
+      "cx": 0.5,
+      "narration": "五比一，盘点。这是鲁德背伤退出美网后的第一场球。",
+      "_why": "记分条 `NOR ●40 |5 / CHN 0 |1`——鲁德发球 40-0 盘点，逐分那一局 `15:0, 30:0, 40:0 |B2|`（零封保发）。镜头 184.76–194.0 之内，收在 194.0 那一刀前。伤情两源见 _claims。"
+    },
+    {
+      "source": "main",
+      "start": 224.0,
+      "end": 234.0,
+      "cx": 0.5,
+      "narration": "第二盘他把发球局顶住了。第一局打到平分，占先，保发，一比零领先。",
+      "_why": "第二盘第一局特日格乐发球（记分条 `NOR 30 6|0 / CHN ●40 1|0`，222.5~242.5s），逐分 `0:15, 0:30, 15:30, 30:30, 30:40, 40:40, 40:A` → 保发。镜头 204.56–253.92 之内。「他」承前指特日格乐（上一句主语），画面是底线宽景，不指认。"
+    },
+    {
+      "source": "main",
+      "start": 358.5,
+      "end": 367.0,
+      "cx": 0.5,
+      "narration": "二比二，特日格乐发球，鲁德连着拿到两个破发点。",
+      "_why": "记分条 `NOR 40 6|2 / CHN ●30 1|2`——第二个破发点（逐分 `40:15 |B1|, 40:30 |B1|`）。镜头 357.48–367.44 之内，收在 367.44 那一刀前。"
+    },
+    {
+      "source": "main",
+      "start": 378.5,
+      "end": 389.0,
+      "cx": 0.5,
+      "narration": "两个都被他救了回来。占先，保发，三比二。这一盘他的六个发球局，一个都没丢。",
+      "_why": "记分条翻成 `NOR 40 / CHN ●Ad`（378.5~398.5s）——救回之后占先的读数就烧在画面上。镜头 377.44–399.92 之内。「他」承前指特日格乐（拿到点的是鲁德，救的是特日格乐，主语写明是「他」＝上一段的发球者，这一段开头再点一次「被他救了回来」）。六个发球局见 _claims。"
+    },
+    {
+      "source": "main",
+      "start": 512.5,
+      "end": 522.2,
+      "cx": 0.5,
+      "narration": "五比六，鲁德发球。他这一场四十九个发球分，只丢了五个，没面对过一个破发点。六比六。",
+      "_why": "记分条 `NOR ●15 6|5 / CHN 0 1|6`——鲁德 5-6 发球局 15-0（逐分 `15:0, 30:0, 40:0`，零封保发到 6-6）。镜头 508.04–522.44 之内。44/49 见 stats。 ⚠️ 第一版写「只丢五分」，烧出来是「49个发球分只丢五分」——`arabic_numerals` 对「N 分」（得分）故意不换，同一行半中半洋；改成「只丢了五个」→「5个」。窗口收到 522.2（522.44 那一刀前 0.24s）给多出来的两个字留余量。"
+    },
+    {
+      "source": "main",
+      "start": 553.0,
+      "end": 560.5,
+      "cx": 0.5,
+      "narration": "抢七。第一分是特日格乐的，一比零，这是整场球他离鲁德最近的一刻。",
+      "_why": "记分条 `NOR 0 6|6 / CHN ●0 1|6`——抢七第一分，特日格乐发球。镜头 549.04–576.4 之内。"
+    },
+    {
+      "source": "main",
+      "start": 579.0,
+      "end": 588.5,
+      "cx": 0.5,
+      "narration": "然后是连续七分，全是鲁德的。从一比零到一比七，特日格乐再没拿到一分。",
+      "_why": "记分条 `NOR ●0 6|6 / CHN 1 1|6`——抢七 0-1，鲁德发球。镜头 578.88–589.12 之内。⚠️ 中间那五分集锦没剪进来（592.5s 直接是 6-1），所以这一句只讲结果，不指认画面。"
+    },
+    {
+      "source": "main",
+      "start": 596.0,
+      "end": 606.0,
+      "cx": 0.5,
+      "narration": "六比一，赛点。八十八分钟，六比一、七比六，鲁德拿下挪威的第一分。",
+      "_why": "记分条 `NOR 6 6|6 / CHN ●1 1|6`（592.5~610.5s 整段挂着赛点读数），特日格乐发球。镜头 594.88–611.52 之内。用时两源见 _duration_why。 ⚠️ 第一版写「一小时二十八分钟」，烧出来是「一小时28分钟」（转换器只换了后半截）；1:28 就是 88 分钟，改说「八十八分钟」→「88分钟」，一行里不再半中半洋。"
+    },
+    {
+      "source": "main",
+      "start": 612.0,
+      "end": 622.3,
+      "cx": 0.5,
+      "crosses_cut": "617.36 —— 同第 1 段：鲁德赛后的反应接特日格乐走到网前握手，同一时刻两个人的反应。",
+      "narration": "特日格乐走向网前。世界第八百三十五，在对手专门铺的红土上，把差距压到了一个抢七。",
+      "_why": "和冷开场同一段画面，这次配旁白落点。612.5~616.5s 鲁德抹脸、举毛巾，618.5s 起特日格乐（白发带、adidas）走到网前，620.5s 握手——「走向网前」正落在他出现的那几格上。"
+    },
+    {
+      "source": "main",
+      "start": 624.7,
+      "end": 632.5,
+      "cx": 0.5,
+      "narration": "首日零比二落后。今晚九点多还有三场，你觉得中国队还有机会吗？",
+      "_why": "624.6 那一刀之后：626.5s 鲁德和中国队队长握手、628.5s 特日格乐回到中国队席（背后 `CHINA`）、630.5s 鲁德和吴迪握手。镜头 624.6–636.4 之内，收在 632.5——634.5s 那格已是虚化的 VISA 板。零比二：同日谢尔 4-6 6-4 6-4 胜崔杰（ITF tieCentre）；第二日 15:30 当地 = 北京 21:30，按「十到三十九分说 X 点多」写「九点多」。"
+    }
+  ],
+  "_editing_why": "正片 14 段合计约 132 秒。按「开场三格：画面爆点 → 落点 → 坐标」排：第 1 段是赛后握手（不配旁白，现场声），第 2 段落点（两个排名 ＋ 整场形状），第 3 段坐标，第 4 段红土的来路，之后按时间顺序走两盘。⚠️ 这条源片是 ITF 官方剪的 636 秒长集锦，几乎全是同一机位的底线宽景，切点稀（阈值 0.35 只有 17 刀），所以每一段都按 `scene_cuts_loose` 划出的镜头收在同一个镜头里；两处跨切点（612.0–622.3 那段的 617.36，用了两次）各写了 crosses_cut，都是「赢的人的反应接输的人走过来」这种同一时刻的跨法。⚠️ 近景全部排除在窗口之外，除了赛后那两段（近景就是内容）；118.5~146.5s、158.5~172.5s、254.5~262.5s、368.5~376.5s、438.5~442.5s、478.5~486.5s、502.5~506.5s、522.5~530.5s、542.5~548.5s 那些回放和网前近景一律没用——在宽景之外认人只能靠发带，旁白里没有一句压在近景上指认谁。⚠️ 末段收在 632.5，634.5s 起的虚化 VISA 板一帧不进；这一版源片没有社媒片尾板。",
+  "mixed_fps": {
+    "main": "单源，25fps，不存在混帧率问题。这一栏按 spec 形状留着说明已经核过。"
+  },
+  "_voice_why": "沿用这条线的默认：云见（`zh-CN-YunjianNeural`）＋6%，不设 `style`。⚠️ 这一栏叫 `_voice_why` 不叫 `_voice`。",
+  "_narration_why": "旁白用本地 edge-tts（zh-CN-YunjianNeural +6%）真跑过一遍量长度和切词（`--check-narration`）。14 段全部装得下，哑场单段最长 3.72s（门槛 4.0s），没有 token 骑在人名边界上。按报告改的两处：①第 5 段原来那句「两局都是在鲁德的第三个破发点上才被破掉的」20 格宽过一行字幕只能硬切，改成「鲁德每一次，都是到第三个破发点才破掉他」；②第 4 段原来 28 字、真语音 6.36s 对 6.6s 画面只剩 +0.24s（「很紧」），去掉「平时」两个字。⚠️ 本地 edge-tts 比 runner 上的 Azure 慢约 6.6%，所以这里的余量对 Azure 偏保守。切词里「抢｜七」「网｜前」读音不变，按 CLAUDE.md 那一档不动。 ③第 3 段按 `test_赛场之上开场要给出北京时间赛事和轮次` 补了「第一轮」（+3 字，真语音 10.32s 对 11.8s 画面，加三个字仍有约 +0.8s）。 ④第 5 段按 run 35410902315 的 QC（第 50 秒数字静音）收窗口到 116.6、砍掉「但丢得都不轻松」——真语音约 8.6s 对 10.1s 画面。 ⑤成片抽帧看字幕之后又改两处：第 10 段「只丢五分」→「只丢了五个」（窗口 521.5→522.2）、第 13 段「一小时二十八分钟」→「八十八分钟」——两处原来都烧成半中半洋，规矩是给人看的字一律阿拉伯数字。",
+  "tts_backend": "edge",
+  "_tts_backend_why": "run 35410646682 在片尾口播那一步 Azure 401（WebSocket upgrade failed: Authentication error），和 2026-09-17 bjk-cup-story / zheng-bjk-cup-olympic-rule 那次同一个错——钥匙还没恢复，退回 edge-tts 的开关走 spec。本条不用情绪风格，edge 够用；本地 --check-narration 量的就是 edge 的时长，余量按 edge 算反而更准。钥匙恢复后删掉这两个键即可。"
+}
