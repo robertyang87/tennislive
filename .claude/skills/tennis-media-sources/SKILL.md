@@ -1532,9 +1532,49 @@ x-staylive-channels`）。频道号是扫 3000–7400 扫出来的，都在 `too
       https://api.itf-production.sports-data.stadion.io/custom/tieCentre/<tieId>
 
   `tieId` 就是赛事页 URL 里那串（`/en/tie/d3de5d2f-…`）。**不用 token，带浏览器 UA 就通**，一次 89 KB，全在 `data` 下：
+
+  ⚠️⚠️ **而「那串怎么拿到」是个独立的坑，2026-09-19 做 `heide-wawrinka-davis-cup-2026-wg1`
+  时花了好几轮**——daviscup.com 是 JS 壳，`/en/tie/<uuid>` 这个链接**在页面上抓不到**，
+  `draws-results` 那一页的 Next.js payload 里也只有 **nomination 级的 uuid，没有 tieId**
+  （我照着那儿的 `"id":"a85b67d9-…"` 去请求 tieCentre，回的是 41 字节的空壳
+  `{"data":{"nominations":[],"tie":null}}`——**空得不像错，像「这场没有数据」**）。
+  真正带着 `/en/tie/<uuid>` 的地方是**那一周的「where to watch」新闻稿里的表格**：
+
+      curl -H "RSC: 1" https://www.daviscup.com/en/news/world-group-i-and-ii-where-to-watch
+        → …"value":"Brazil v Switzerland"…"hyperlink","data":{"uri":"https://www.daviscup.com/en/tie/2fb37a7c-48d3-4a81-b28f-513fc51f73e0"}
+
+  **`RSC: 1` 这个头是关键**（和下面 BJK Cup 那条同一个机制）：不带它拿到的 HTML 里
+  只有 og:image 和赞助商，正文表格一个字都没有。稿子的 slug 每周不一样，先
+  `/en/news?page=1..3` 带 `RSC: 1` 列一遍 slug，认 `where-to-watch` / `preview` 那几条。
   - `data.nominations[]`：按 `countryId` 分两条，`captain._name`、`players[]._name`、`oomSinglesRankingPro` / `oomDoublesRankingPro`（`oomRankDate` 写着是哪一期）、`date`（**名单落库的时刻**——这次是抽签当天 12:27Z）
   - `data.tie.matches[]`：五场，`dateStartLocal` ＋ `orderInSchedule` ＋ `scheduleText`（`Starting at 18:00` / `After 15 min`）；**谁打谁在 `sides[].sidePlayer[].player._name`**，`person.country.ISOcode` 给国籍。抽签之前 `sides` 是空的，抽完当场就有
-  - `tie.tieStatus`（To be played / In Progress / Complete）、`winnerTeamId`；⚠️ **场地类型这个接口不给**（`formatInformationLabelSurface` 只是页面的字典），场地要另找
+  - `tie.tieStatus`（To be played / In Progress / Complete）、`winnerTeamId`
+
+  ⚠️⚠️ **上面原来写着「场地类型这个接口不给，场地要另找」——那句是错的，2026-09-19 改掉。**
+  当时大概只翻了 `data.tie` 的第一层；**场地、场馆、赛事全名、轮次、逐场用时全在
+  `tie.round.draw.event` 和 `tie.matches[]` 里，往下再走两层就是**：
+
+  | 要什么 | 在哪儿 | BRA v SUI 实测 |
+  |---|---|---|
+  | **地面** | `tie.round.draw.event.surface.name` ／ `.surfaceFriendlyName` | `Hard` ／ `GreenSet Tour` |
+  | **场馆＋城市** | `tie.round.draw.event.venue.name` / `.city` / `.utcOffset` | `Farmasi Arena` / `Rio de Janeiro` / `-05:00:00` |
+  | **赛事全名** | `tie.round.draw.event.name` | `World Group I - Brazil vs Switzerland` |
+  | **轮次** | `tie.round.name`（＝`roundType.displayName`） | `Round 1` |
+  | **赛事代号** | `tie.name` | `M-DC-2026-WG1-M-BRA-SUI-01`（`WG1` 就是世界一组） |
+  | **逐场用时／起止** | `tie.matches[].duration` / `.actualStartDate` / `.actualEndDate` | `02:38:04`，20:47:39Z → 23:25:43Z（**相减自洽**） |
+  | **团体比分** | `tie.teams[].score` | Brazil 2 / Switzerland 0 |
+
+  ⚠️ **用时优先取这儿，别取 flashscore 的总计**：flashscore 的 `RB` 是分盘各自取整之后
+  相加的（这一场 0:37+1:06+0:57 报 `2:40`），比官方的 `02:38:04` 多 2 分钟。
+  ⚠️ **轮次也优先取这儿**：这一场源片 YouTube 简介写的是「Second Round Qualifiers」，
+  **是错的**——ITF 自己的稿子（`/en/news/davis-cup-world-group-preview`）把这一周的
+  Qualifiers 2nd Round（另外七场）和 World Group I / II ties 分得很清楚，赢的 2027 年 2 月
+  打 Qualifiers 1st Round、输的打 World Group I Play-off。**官方接口 ＋ 官方稿子对得上，
+  简介对不上，就按接口写。**
+  ⚠️ `nominations[].players[].oomSinglesRankingPro` 顺带是**排名的第一源**（`oomRankDate`
+  写着是哪一期）：2026-09-14 那期海德 123 / 瓦林卡 134，和 `rankings.py`（tennisexplorer
+  同期）逐字相同——而**维基和 ESPN 上瓦林卡那个 127 是 8/31 的旧快照**，两处都没更新，
+  别照抄百科。
 - **第二源**拿 flashscore：抽完签它当天就建好单场页（`Casper Ruud v Rigele Te 18/09/2026 | Davis Cup - World Group I`），搜「<名> v <名> flashscore」就到
 - 中文媒体在抽签当天**没有**跟进稿（腾讯／新浪／搜狐／中新网／CTA 官网全搜过，CTA 官网沙箱里 SSL 直接断）；挪威网协 NTB 的稿子只写到「谁领衔」和媒体日安排。**名单这件事只有 ITF 自己说了算，别指望编辑稿**
 
