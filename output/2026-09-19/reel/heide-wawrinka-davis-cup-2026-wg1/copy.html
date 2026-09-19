@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>9.19 赛场之上 | 瓦林卡赢了首盘，还是输了</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>瓦林卡赢了首盘，还是输了🎾
+
+北京时间9月19日凌晨开球，戴维斯杯世界一组第一轮，巴西主场里约热内卢的Farmasi Arena，室内硬地：海德 4-6、7-6(4)、6-4 胜瓦林卡，2小时38分。巴西首日 2-0 领先。
+
+先说这场球上的两个人。瓦林卡41岁，三座大满贯单打冠军，生涯最高世界第3——而2026是他职业生涯的最后一个赛季，是他自己去年12月宣布的，原话是&quot;每本书都需要一个结局&quot;。美网首轮输给贝雷蒂尼之后，他的大满贯生涯已经走完，最后一站定在10月底的巴塞尔。对面的海德24岁，巴西人，这一周刚刷到生涯最高排名123，比瓦林卡现在的134还高11位。
+
+首盘4-5，海德发球。瓦林卡全场只拿到2个破发点，都在这一局，而且都是盘点——第一个没兑现，第二个上他破掉了对手的发球局。6-4，37分钟，第一盘是他的。
+
+第二盘3-3，海德在他的发球局上连拿3个破发点，瓦林卡3个全救了回来。这一盘一路拖进抢七，而抢七里瓦林卡4-1领先——他已经拿下第一盘，三盘两胜，再拿3分这场球就结束了。接下来的6分全是海德的，从1-4到7-4，他再没拿到一分。
+
+决胜盘3-2，海德又拿到4个破发点，瓦林卡4个全救回来了。他这场球发了13个ACE，光决胜盘就有9个，41岁靠一发把这一盘顶到了4-5。最后一局40-15落后，两个赛点，他救掉第一个，没救掉第二个。
+
+全场32局，两个人各自只丢1个发球局；总分90比95，只差5分。而瓦林卡丢的那一个，是全场最后一局。
+
+2014年那场戴维斯杯决赛，第一分是他拿的——四盘胜特松加，随后又和费德勒拿下双打，那一年瑞士捧起了戴维斯杯。12年后的里约，他先拿下的那一盘，没能守住。
+
+他说巴塞尔是最后一站。你想看他怎么收尾？</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>你想看他怎么收尾？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
