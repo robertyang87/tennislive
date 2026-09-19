@@ -1540,6 +1540,37 @@ x-staylive-channels`）。频道号是扫 3000–7400 扫出来的，都在 `too
 
 ⚠️ **顺手的教训**：`_facts` 里写着「正式名单要等抽签日」，而重发那趟名单已经公布了 58 分钟——**写了「要等」的事实，重发之前要回头查**。规矩在 CLAUDE.md「前瞻类事实要在它定下来之后再核一次」。
 
+#### ⭐⭐ 戴维斯杯**结构性地没有制胜分和非受迫失误**——别再一场一场去找（2026-09-19 查到底）
+
+账号所有者要 `chung-nagal-davis-cup-2026` 的数据图带这两行，一路找到底的结论：
+**这项赛事根本没采集这一维**。判据是「换一场还成不成立」，不是「这一场我没找到」：
+
+| 查什么 | 结果 |
+|---|---|
+| **flashscore 这一轮 15 场逐场量** | **零场**有 Winners/UE（项数 24~32，全是发球和得分那套） |
+| **ITF 自己的前端代码** | daviscup.com 3.8 MB bundle 里 `winners` 全是 `winnerSideId`/`isWinner`，`unforced` 全是 Apollo 的 `onlyRunForcedResolvers`——**平台没建模这两个字段** |
+| `custom/pointByPoint/<matchId>` | 全部 414 个点只有三类 `outcome`：`POINT` / `ACE` / `DOUBLE_FAULT` |
+| TNNS | `hasExtendedStats=False` |
+| Match Charting Project | 两位球员最近标注停在 2017 / 2024 |
+| **画面自证（四个版本）** | 官方 3:43（StayLive）／7:16／**扩展版 14:27**（YouTube）＋ 韩国 ENA SPORTS 转播版 14:53，**片尾和盘间都没有统计图**；转播记分条本身也不带统计 |
+
+⚠️ **「大满贯女子有、WTA 巡回赛没有」那条规律不要外推到戴维斯杯**——上面这张表是
+一次真正查到底的记录，下次戴维斯杯直接引它，别再重探这六处。
+
+##### ⭐ 同一轮挖到的三条通用发现
+
+- **`custom/pointByPoint/<matchId>` 是 `stats` 块的第二个独立源。** `matchId` 在 tieCentre 的
+  `data.tie.matches[].id`（打完的那条 `matchStatus._name` 是 `Complete`）。按它数 ACE / 双误 /
+  得分，和 flashscore 逐项对得上——核 `stats` 块不用再找第二个站点。
+- ⚠️ **StayLive 的整节回放锁地域，而它照样把 Mux 的签名地址吐出来——但那不是入口**：
+  `/videos/<id>` 在 `allowed=false` 时仍然返回 `storyboard` 和 `gif` 的 URL，**token 是钉死的**
+  （gif 的 payload 写着 `start:0,end:10`，storyboard 的 `aud:"s"`），换不了时间点，
+  也签不出 `thumbnail`。**别在这条上耗**。
+- ⚠️⚠️ **沙箱里 yt-dlp 现在元数据拿得到、媒体流仍然 403**（装了 `yt-dlp[default]` 也一样）。
+  「能 `-J` 出 176 个格式」**不等于**「下得动」——要帧就发 `frame-grab.yml` 上 runner。
+  ⚠️ 而 `frame-grab` 的产物是**提交进仓库**的：`every=3` 抽一条 15 分钟的片子就是 **50 MB**，
+  两条 103 MB。**只为读一个数据图就抽帧的话，`every` 给大（10~15），读完当趟删掉。**
+
 #### ⭐ 同一套接口还有**逐分**：`custom/pointByPoint/<matchId>`——只标 ACE / 双误 / 普通分，**没有制胜分和非受迫失误**（2026-09-19）
 
 `chung-nagal-davis-cup-2026` 找制胜分／UE 时探出来的。`matchId` 在 tieCentre 的
