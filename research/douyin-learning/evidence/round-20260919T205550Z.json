@@ -1,0 +1,135 @@
+{
+  "schema_version": 1,
+  "run_id": "2026-09-19T20:55:50Z",
+  "observed_at": "2026-09-19T21:00:28Z",
+  "platform_probes": [
+    {
+      "platform": "web_search",
+      "status": "success_but_no_usable_creator_pages",
+      "queries": [
+        "site:douyin.com/user 网球人物故事 抖音 体育人物谈",
+        "site:douyin.com/user 网球复盘 抖音 酱紫网球",
+        "site:douyin.com/user 网球赛后采访 抖音 温布尔登网球锦标赛",
+        "site:douyin.com/user 体育人物故事 抖音 体育故事汇",
+        "site:douyin.com/user 温布尔登网球锦标赛",
+        "site:douyin.com/user 欧阳说网球",
+        "site:douyin.com/user 大海爱体育",
+        "site:douyin.com/user 体育故事汇"
+      ],
+      "result_boundary": "Search results were irrelevant or generic; no hit was counted as an author check or collection."
+    },
+    {
+      "platform": "douyin_browser",
+      "status": "transient_connection_timeout",
+      "selected_browser_id": "3",
+      "first_error": "CDP operation get tabs timed out after 20000ms",
+      "recovery_attempts": 1,
+      "recovery": "Created one fresh tab and attempted the focused Douyin user search for 温布尔登网球锦标赛.",
+      "recovery_result": "CDP operation refresh tabs timed out after 20000ms",
+      "rendered_site_content": false,
+      "bot_detection": null,
+      "login_state": null,
+      "counted_authors": 0
+    }
+  ],
+  "local_review": {
+    "platform": "douyin",
+    "work_id": "7686680149357579529",
+    "permanent_url": "https://www.douyin.com/video/7686680149357579529",
+    "author": "GOAT Anatomy",
+    "media_sha256": "b291bd5cae52d2f6721279b2268c8724ea6acc0e0d14462f1ffe7f0d28369dbd",
+    "media": {
+      "duration_seconds": 442.566667,
+      "width": 1920,
+      "height": 1080,
+      "fps": "30/1",
+      "video_codec": "h264",
+      "audio_codec": "aac"
+    },
+    "coverage": [
+      {
+        "range_seconds": [
+          0,
+          30
+        ],
+        "sampling_fps": 1,
+        "frames": 30,
+        "contact_sheet": "goat-opening-0-30-1s.jpg",
+        "sha256": "3b676effe89f5a09e3815abbc5bc2c92f3f7c11e0ee88f4312fd0418a4b5489a"
+      },
+      {
+        "range_seconds": [
+          18,
+          22
+        ],
+        "sampling_fps": 2,
+        "frames": 8,
+        "contact_sheet": "goat-opening-18-22-2fps.jpg",
+        "sha256": "86d0c9d42713f97489ea2af74268309e9c45f73ac5ffcad00cabcc79ff0300e3"
+      },
+      {
+        "range_seconds": [
+          22,
+          30
+        ],
+        "sampling_fps": 2,
+        "frames": 16,
+        "contact_sheet": "goat-opening-22-30-2fps.jpg",
+        "sha256": "baf8704fa58b2a5924a771c402bc215334ef57cea37152fb63bacd77a36e4986"
+      }
+    ],
+    "direct_observations": [
+      {
+        "start": 8,
+        "end": 12,
+        "dimension": "composition_and_editing",
+        "observation": "Character close-ups give way to a wide full-body rink view, preserving both skaters and movement space."
+      },
+      {
+        "start": 12,
+        "end": 19,
+        "dimension": "editing_and_story_logic",
+        "observation": "Podium/ceremony and archival rink/ceremony shots continue the public-success setup; lower-third Chinese with smaller English remains visible on multiple sampled frames."
+      },
+      {
+        "start": 19.5,
+        "end": 22,
+        "dimension": "text_graphics_and_transition",
+        "observation": "A black intertitle reads 可命运偏偏最见不得圆满; sampled frames show a preceding blur and a change from white to dark red/blue-edged text. Exact animation and audio synchronization remain unverified."
+      },
+      {
+        "start": 22.5,
+        "end": 27.5,
+        "dimension": "transition_and_subject",
+        "observation": "Female and male portrait close-ups are connected with RGB-split/glitch-like color separation and fades; this is a visual effect description, not a claim about the plugin or sound."
+      },
+      {
+        "start": 27.5,
+        "end": 30,
+        "dimension": "evidence_timing",
+        "observation": "The story returns to full-body archival skating while a lower-third begins a dated fact about 1995 and the male skater's death, placing the factual event after the contrast intertitle rather than in the first seconds."
+      }
+    ],
+    "interpretation": "The first 30 seconds move from athletic action and partnership success to an explicit reversal card, then portraits and a dated event. This supports a story-level setup-to-reversal sequence, but one author/sample cannot justify a production rule.",
+    "pending": [
+      "continuous review beyond sampled frames",
+      "exact shot boundaries",
+      "speed versus source footage",
+      "zoom provenance",
+      "voiceover transcript and logic",
+      "human/model audio listening",
+      "BGM/ambient/effect coordination",
+      "outcome evidence"
+    ],
+    "counterexample": "Do not use the black emotional intertitle or RGB-split portrait effect in match tactics or interview translation; it would interrupt action evidence and can overdramatize sensitive facts."
+  },
+  "counts": {
+    "authors_checked": 0,
+    "new_authors_verified": 0,
+    "works_collected": 0,
+    "local_review_authors": 1,
+    "partial_reviews": 1,
+    "deep_reviews_completed": 0
+  },
+  "watermarks_advanced": false
+}
