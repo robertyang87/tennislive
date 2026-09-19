@@ -1540,3 +1540,17 @@ x-staylive-channels`）。频道号是扫 3000–7400 扫出来的，都在 `too
 
 ⚠️ **顺手的教训**：`_facts` 里写着「正式名单要等抽签日」，而重发那趟名单已经公布了 58 分钟——**写了「要等」的事实，重发之前要回头查**。规矩在 CLAUDE.md「前瞻类事实要在它定下来之后再核一次」。
 
+#### ⭐ 同一套接口还有**逐分**：`custom/pointByPoint/<matchId>`——只标 ACE / 双误 / 普通分，**没有制胜分和非受迫失误**（2026-09-19）
+
+`chung-nagal-davis-cup-2026` 找制胜分／UE 时探出来的。`matchId` 在 tieCentre 的
+`data.tie.matches[].id`（打完的那条 `matchStatus._name` 是 `Complete`、`duration` 是
+`03:06:30` 这种）。载荷 78 KB，按 set → games → sides → points 排，每个点一个 `outcome`，
+**全场只出现三种值：`POINT` / `DOUBLE_FAULT` / `ACE`**（每个点两边各记一遍，
+`isServer` 标谁在发）。按它数出来 ACE 3/3、双误 4/8、得分 104/103，和 flashscore
+`df_st_1` 逐项相同——所以它是 `stats` 块的**第二个独立源**，但它给不了 winner/UE。
+
+戴维斯杯这场制胜分／UE 的五类源全查空，逐条记在那条 spec 的 `stats._winners_ue_why`
+里（flashscore 17 项、TNNS `hasExtendedStats=False`、MCP 0 场、ITF 两个接口、
+五家编辑稿只有定性描述、集锦片尾没有统计图）。**下次戴维斯杯别再重探这五处**；
+真要这两个数，只剩「等 MCP 志愿者标」这一条路（它落后约三天）。
+
