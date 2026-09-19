@@ -309,6 +309,45 @@
       "name": "小朱聊网球",
       "status": "name_observed_in_live_search_profile_pending",
       "source": "Douyin authenticated 网球复盘 search"
+    },
+    {
+      "name": "追风客",
+      "platform": "douyin",
+      "source": "user_shared_work",
+      "source_url": "https://v.douyin.com/NNAorAKwy3E/",
+      "user_supplied_title_excerpt": "萨巴伦卡：全网都在夸她的无解发球，却没人看懂她笑着...",
+      "status": "priority_identity_and_work_pending",
+      "requested_at": "2026-09-19T09:45:22.968Z",
+      "priority": "user_directed",
+      "author_id": null,
+      "work_id": null,
+      "permanent_url": null,
+      "media_acquired": false,
+      "analysis": {
+        "status": "blocked_before_content_read",
+        "dimensions": {
+          "composition": "pending",
+          "text_graphics": "pending",
+          "editing": "pending",
+          "speed": "pending",
+          "zoom": "pending",
+          "transitions": "pending",
+          "voiceover_logic": "pending",
+          "sound_music": "pending"
+        },
+        "text_only_hypothesis": "用户分享标题以外界关注的发球与未被理解的人物情绪建立反差；这是标题修辞判断，不是全片叙事或人物心理事实。"
+      },
+      "blocker": {
+        "fingerprint": "douyin-shortlink-navigation-timeout-browser-recovery",
+        "first_error": "Timed out waiting for tab 28 to navigate",
+        "recovery_attempts": 1,
+        "recovery_error": "CDP operation refresh tabs was superseded by browser recovery"
+      },
+      "next_actions": [
+        "Resolve share URL through supported browser and verify permanent work ID and author profile.",
+        "Read other tennis works from this author for matched comparison.",
+        "Acquire authorized media and complete timestamped deep review before proposing visual/audio rules."
+      ]
     }
   ],
   "queries": [
@@ -4111,6 +4150,22 @@
         "registries": "both empty",
         "result": "No recorded adoption found; not proof of absence across every production artifact.",
         "treatment_id": null
+      }
+    },
+    {
+      "run_id": "user-added-zhuifengke-2026-09-19T09:45:22.968Z",
+      "stage": "user_priority_seed_saved_content_read_blocked",
+      "authors_checked": 0,
+      "new_authors_verified": 0,
+      "collected": 0,
+      "deep_review_completed": 0,
+      "watermark_advanced": false,
+      "source_url": "https://v.douyin.com/NNAorAKwy3E/",
+      "blocker": {
+        "fingerprint": "douyin-shortlink-navigation-timeout-browser-recovery",
+        "first_error": "Timed out waiting for tab 28 to navigate",
+        "recovery_attempts": 1,
+        "recovery_error": "CDP operation refresh tabs was superseded by browser recovery"
       }
     }
   ],
