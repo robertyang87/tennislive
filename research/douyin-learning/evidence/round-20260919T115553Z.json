@@ -1,0 +1,125 @@
+{
+  "schema_version": 1,
+  "run_id": "2026-09-19T11:55:53Z",
+  "observed_at": "2026-09-19T12:00:10.360Z",
+  "discovery": {
+    "authors_actually_checked": 0,
+    "new_authors_verified": 0,
+    "candidates_collected": 0,
+    "targets": {
+      "authors": 15,
+      "new_authors": 5,
+      "pool": 30
+    },
+    "category_counts": {
+      "网球复盘": 0,
+      "网球人物故事": 0,
+      "赛后采访": 0,
+      "其他体育人物故事": 0
+    },
+    "pool_size": 25,
+    "attempted": "Read prioritized Zhuifengke detail; browser timeout and one recovery also timed out before cross-author DOM reads.",
+    "discovered_link": {
+      "share_url": "https://v.douyin.com/NNAorAKwy3E/",
+      "observed_tab_url": "https://www.douyin.com/video/7673455991492529458",
+      "observed_tab_title": "萨巴伦卡：全网都在夸她的无解发球，却没人看懂她笑着扛下的两次 生死离别#萨巴伦卡 #网球 #体育 #科普 - 抖音",
+      "evidence_kind": "tab_metadata_only",
+      "author": "追风客",
+      "author_source": "user_share_unverified",
+      "counts_as_collection": false
+    }
+  },
+  "blocker": {
+    "fingerprint": "douyin-browser-cdp-timeout-after-one-recovery",
+    "kind": "transient_connection_timeout",
+    "first_error": "js execution timed out; kernel reset",
+    "recovery_attempts": 1,
+    "recovery_result": "tab list returned; actual detail DOM timed out again",
+    "site_bot_signal": null,
+    "note": "Other existing tabs had verification titles, but those pages were not read; this timeout does not establish bot detection."
+  },
+  "local_review": {
+    "author": "GOAT Anatomy",
+    "work_id": "7686680149357579529",
+    "permanent_url": "https://www.douyin.com/video/7686680149357579529",
+    "media_sha256": "b291bd5cae52d2f6721279b2268c8724ea6acc0e0d14462f1ffe7f0d28369dbd",
+    "duration_seconds": 442.566667,
+    "resolution": [
+      1920,
+      1080
+    ],
+    "fps": 30,
+    "status": "partial",
+    "review_kind": "ending_sampled_visuals_only",
+    "nominal_sample_seconds": {
+      "start": 430,
+      "end": 442,
+      "step": 0.5,
+      "count": 25
+    },
+    "reproduction": "ffmpeg -ss 430 -i SOURCE -vf 'fps=2,scale=320:-1,tile=5x5:padding=4:margin=4' -frames:v 1 ending.jpg",
+    "contact_sha256": "351d340788239790cbd6693db42a1348ac0a997d280f6af086cb0e649068369f",
+    "observations": [
+      {
+        "seconds": [
+          430.5,
+          433
+        ],
+        "dimension": "composition_text",
+        "visible": "Handwritten page fills frame; bottom Chinese caption expresses wishing to live life backwards; small GOAT mark remains at top right."
+      },
+      {
+        "seconds": [
+          433.5,
+          437.5
+        ],
+        "dimension": "composition_text",
+        "visible": "Image of seated person replaces handwritten page; captions continue reverse-time sequence."
+      },
+      {
+        "seconds": [
+          438,
+          440.5
+        ],
+        "dimension": "ending_narrative",
+        "visible": "Pairs-skating photograph fills frame; subtitle returns to first meeting Sergei.",
+        "interpretation": "Text and images suggest returning the ending to the relationship's beginning.",
+        "attribution": "Subtitle speaker and quotation source not verified; no assumption that these are athlete's authenticated words."
+      },
+      {
+        "seconds": [
+          441,
+          442
+        ],
+        "dimension": "ending_luminance",
+        "visible": "Sampled photograph/caption darken, final sampled cell black; no assertion of exact fade duration or complete final half-second."
+      }
+    ],
+    "dimensions": {
+      "composition": "partial",
+      "text_graphics": "partial",
+      "editing_rhythm": "pending_exact_cuts",
+      "speed_changes": "pending",
+      "zoom_focus": "pending",
+      "transitions": "pending_continuous_review",
+      "voiceover_logic": "partial_subtitle_sequence_only",
+      "voice_music_sound_mix": "pending_no_listening",
+      "counterexamples": "Do not use mourning/reverse-time rhetoric for ordinary match loss; do not present unsourced subtitles as the athlete's own quotation."
+    },
+    "production_decision": "No new rule or promotion; quotation provenance unresolved, existing single-variable trials remain pending."
+  },
+  "production_check": {
+    "claude_sha": "9c2d451dd20cdfa041251efd5777d312a682fbe7",
+    "integration_sha": "9fc16b15e7ac5c1b58c6ea4dd4d181e7ff270e40",
+    "rule_registries": [
+      "03e4c4b63a58cf4d432890815fa42c673d460329",
+      "03e4c4b63a58cf4d432890815fa42c673d460329"
+    ],
+    "registries_empty": true,
+    "rule_search_results": 0,
+    "interpretation": "No explicit adoption evidence found within checked sources; code-search absence does not prove every production was checked.",
+    "treatment_work_id": null,
+    "status": "awaiting_production"
+  },
+  "watermark_advanced": false
+}
