@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "timezone": "Asia/Shanghai",
-  "stage": "browser_connection_timeout_goat_opening_30s_partial_saved",
+  "stage": "browser_connection_timeout_cross_author_probe_saved",
   "watchlist": [
     {
       "name": "河岸",
@@ -4019,6 +4019,19 @@
       "overlap_required_hours": 24,
       "watermark_advanced": false,
       "next_action": "Make one fresh browser probe next run; if recovered, spend the discovery phase on rotated authors and four stable-ID additions before any further single-author local expansion. Do not count search hits or tab titles."
+    },
+    {
+      "run_id": "2026-09-19T23:53:37Z",
+      "query_scope": [
+        "15-author rotation",
+        "4 new stable-ID authors to reach pool 30",
+        "追风客 full media and author ID",
+        "小红书 JJ文森特 note detail"
+      ],
+      "reason": "browser_cdp_get_tabs_timeout_then_fresh_tab_navigation_kernel_reset",
+      "overlap_required_hours": 24,
+      "watermark_advanced": false,
+      "next_action": "Use one fresh browser probe next run. If recovered, prioritize rotated cross-author reads and four stable-ID additions before returning to GOAT Anatomy."
     }
   ],
   "runs": [
@@ -4895,6 +4908,58 @@
       "watermark_advanced": false,
       "watermark_reason": "No rendered profile or work content was read; local existing-media review does not advance discovery watermarks.",
       "persistence_receipt": "evidence 852ab0e8ee10f368ebe2212ca00dc521bf2c5b42; review e21f8889f247edf83eb72e3c5b4f86f416b41237"
+    },
+    {
+      "run_id": "2026-09-19T23:53:37Z",
+      "started_at": "2026-09-19T23:53:37Z",
+      "ended_at": "2026-09-19T23:55:40Z",
+      "stage": "browser_connection_timeout_cross_author_probe_saved",
+      "authors_checked": 0,
+      "local_review_authors": 0,
+      "new_authors_verified": 0,
+      "authors_target": 15,
+      "new_authors_target": 5,
+      "verified_rotation_pool_size": 26,
+      "category_author_counts": {
+        "网球复盘": 0,
+        "网球人物故事": 0,
+        "赛后采访": 0,
+        "其他体育人物故事": 0
+      },
+      "public_search_queries": 4,
+      "works_observed_with_permanent_links": 0,
+      "discovered": 0,
+      "collected": 0,
+      "deep_review_started": 0,
+      "deep_review_completed": 0,
+      "partial_reviews": 0,
+      "full_media_acquired": 0,
+      "proposed": 0,
+      "promoted": 0,
+      "evidence_path": "research/douyin-learning/evidence/round-20260919T235337Z.json",
+      "earliest_blocker": {
+        "fingerprint": "browser-cdp-get-tabs-timeout-then-fresh-tab-kernel-reset",
+        "kind": "transient_browser_connection_timeout",
+        "first_error": "CDP operation get tabs timed out after 20000ms",
+        "recovery_attempts": 1,
+        "recovery_result": "One fresh tab was created for the user-priority permanent work; navigation did not return rendered content and JS execution timed out with kernel reset.",
+        "site_bot_signal": null,
+        "note": "No rendered site page was returned; this is not evidence of CAPTCHA, logout, account restriction or bot detection."
+      },
+      "production_check": {
+        "claude_sha": "9c2d451dd20cdfa041251efd5777d312a682fbe7",
+        "integration_sha": "9fc16b15e7ac5c1b58c6ea4dd4d181e7ff270e40",
+        "rule_registries": [
+          "03e4c4b63a58cf4d432890815fa42c673d460329",
+          "03e4c4b63a58cf4d432890815fa42c673d460329"
+        ],
+        "registries_empty": true,
+        "treatment_work_id": null,
+        "status": "awaiting_production"
+      },
+      "watermark_advanced": false,
+      "watermark_reason": "No rendered profile or work content was read; no discovery watermarks advanced.",
+      "persistence_receipt": "evidence 071b62dd4eea2155d40dcceb696a3427de18ef32"
     }
   ],
   "last_notification_fingerprint": "goat-opening-reversal-factual-sequencing-20260919T205550Z",
