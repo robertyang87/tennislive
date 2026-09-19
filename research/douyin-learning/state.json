@@ -4085,7 +4085,12 @@
       },
       "production_status": "awaiting_production",
       "treatment_work_id": null,
-      "persistence_receipt": "pending_final_write_response",
+      "persistence_receipt": {
+        "status": "readback_confirmed",
+        "checked_at": "2026-09-19T09:14:00Z",
+        "state_blob_sha_before_receipt": "9b64ee6a4c282a8f64178d1e1d7678e2e3d0e5d8",
+        "opening_evidence_blob_sha": "3d6eea3768f4d19bced96b3c25ced5d0bab04f0d"
+      },
       "ended_at": "2026-09-19T09:13:00Z",
       "partial_reviews": 1,
       "sampled_frames_reviewed": 44,
