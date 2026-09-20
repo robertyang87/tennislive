@@ -69,8 +69,6 @@
     "_layout_why": "「网球有故事」讲一个现象，本来就是 solo。⚠️ **不做 VS 版式**：伊埃拉和曾丽美不是对手、没有交手，用对阵版式会让人以为这是一场球。"
   },
   "_voice": "整条片子走工作流默认的云见 +6%（解说腔），不在 spec 里另写一个不被读的键——`eala-story` 顶层那个 `voice` 就是「写了等于没写」的现成反例。",
-  "tts_backend": "edge",
-  "_tts_backend_why": "**Azure 在这一趟 render 上回 401**（run 35439265172，报错原文「WebSocket upgrade failed: Authentication error (401). Please check subscription information and region name」，而 `azure_tts` 自己接的那句是「Azure 明确拒绝（密钥／区域／权限），重试没有意义」）。⚠️ **这不是这条片子的问题，是仓库凭证的问题**——CLAUDE.md 记过同一件事（2026-09-03，同一把钥匙那天也是突然 401），当时账号所有者定的处置就是「换 edge tts」，开关走 spec 不走工作流。\n\n⚠️ **这一条退回 edge-tts 的代价是零，而且是可以论证的**：\n· 这条片子**一段情绪风格都没用**（13 段里 `style` 键零命中），而情绪风格是 Azure 唯一不可替代的东西\n· 旁白时长**本来就是拿 edge-tts 量的**——沙箱没有 Azure 钥匙，`--check-narration` 跑的是真 edge-tts。也就是说切到 edge 之后，runner 上的真实时长和我量到的那一份是同一个引擎，比走 Azure 更准\n（CLAUDE.md 那条「本地 `--check-narration` 和 runner 上的 render 不是同一个 TTS」，这一趟反而对上了）\n\n⚠️ Azure 钥匙修好之后把这两个键删掉即可，不用改别的。",
   "editorial": {
     "mode": "match_review",
     "_mode_why": "`mode` 只有 `match_review` 一个合法值，这条闸认的是**素材构成**不是栏目（报错原话：「平台不读 `cover.eyebrow`」）。五条源全是别人的画面，所以合同照填；只是 `beats` 排的不是一场球的走势，是这条新闻的走势。",

@@ -9,8 +9,6 @@
     980
   ],
   "_scorebox_why": "和同一站同一转播的已发 `bucsa-gauff-us-open-2026-r3` 用同一组值。本条 probe 自己猜的是 `104,888,616,978`——左缘和上下沿几乎一致，右缘 616 偏窄；右缘本来就是渲染时逐段现量的，顶层这份只当兜底，取已经渲过验过的那组。",
-  "tts_backend": "edge",
-  "_tts_backend_why": "Azure 钥匙从 2026-09-03 起连着四条片子 401（keys-bondar 两趟 / zheng-putintseva / tien-monfils / wu-alcaraz），CLAUDE.md 已把「写 spec 那一刻就写上」定成默认动作。这条零代价：没有用 voice.style，也没有 lead_pause，那两样才是 Azure 独有的；本地 --check-narration 跑的就是 edge，量到的余量直接适用，不用再按 6.6% 折算。",
   "source_url": "https://www.youtube.com/watch?v=l2KhAl0H4ew",
   "_source": "美网官方 YouTube 频道的单场集锦，1920×1080 / 29.97fps / 209.05s。四处画面自证：①60.5~62.5s 全屏台标写着 `WOMEN'S SINGLES | 4TH ROUND` / `ARTHUR ASHE STADIUM` / `14 IVA JOVIC USA` / `4 COCO GAUFF USA`；②198.5s 收尾台标印着最终比分 `1 4 / 6 6`；③常驻记分条全程烧在左下角，逐格读过和 flashscore Q3OBy5b5 对得上；④206~209s 片尾板是 `FOLLOW US ON SOCIAL MEDIA #USOPEN`。⚠️ 片尾板从 205.94（最后一个 scene_cut）起，probe 量到的静音区 [[205.99, 209.05]] 与之吻合，所有窗口收在 194.40 之前，一帧都没碰到它。",
   "cover": {

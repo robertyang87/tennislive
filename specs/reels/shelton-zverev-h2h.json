@@ -17,8 +17,6 @@
     "sfzverev": "同上：30000/1001 → 25，最后一球 + 张开双臂庆祝 + 赛后向看台致意，重采样看不出来。"
   },
   "_mixed_fps_why": "⚠️⚠️ **主源是 `sources` 里的第一条，不是 `primary` 字段**——`check_sources_match` 和 render 取的\n都是 `next(iter(sources))`，`spec[\"primary\"]` 在 render 这条路上一个字都不读（女单那条 run\n34588603072 就是这么红的）。\n**所以 25fps 的 cin24 排第一，这一刀是有理由的，不是为了让闸闭嘴**：成片跟主源走，\n  主源取 sfshelton（29.97）→ 四条 25fps 的源全要重采样到 29.97，而那四条里装着**全部的回合\n    镜头**（四场交手的最后一球）——25 → 29.97 是非整数倍插帧，CLAUDE.md 早写过「回合镜头一眼\n    能看出一顿一顿」\n  主源取 cin24（25）→ 重采样只落在 sfshelton / sfzverev 那四段（①②⑩⑪），而那四段全是\n    **最后一球之后的庆祝和赛后向看台致意**——静态、慢，29.97 → 25 感知不到\n尺寸全是 1920×1080，所以尺寸那道闸不用出路。",
-  "tts_backend": "edge",
-  "_tts_backend_why": "Azure 的钥匙 2026-09-03 起恒 401（CLAUDE.md 记着连着四条片子死在片尾配音的第 2 秒），退回\nedge-tts。这条 spec 没有 voice.style、也没有 lead_pause——那两样是 Azure 独有的，所以退回去\n零代价；而本地 --check-narration 在这台沙箱跑的本来就是 edge-tts，量到的余量直接适用。",
   "editorial": {
     "mode": "match_review",
     "question": "谢尔顿第一次打进大满贯决赛，而挡在门口的兹维列夫，他交手五次一场都没赢过——这五次都发生了什么？",
