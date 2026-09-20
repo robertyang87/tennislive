@@ -1,0 +1,356 @@
+{
+  "slug": "jovic-stearns-guadalajara-2026-final",
+  "_column": "赛场之上",
+  "sources": {
+    "main": "https://www.youtube.com/watch?v=CgTatzO1WpQ"
+  },
+  "_source": "WTA 官方 YouTube 频道单场集锦《Peyton Stearns vs. Iva Jovic | 2026 Guadalajara Final | WTA Match Highlights》（oEmbed `author_name=WTA`、`author_url=https://www.youtube.com/@WTA`，权威署名不是搬运号）。**1920×1080 / 25fps / 308.29s**，`probe.json` 实测——「1080p 及以上是硬门槛」那条自然满足，不用写 `source_quality_exceptions`。⚠️ **308.29s 落在 WTA 纯集锦那条 310 秒的基线上**（`tennis-media-sources`「WTA 集锦带不带场上采访，看时长就知道」），逐格看过缩略图墙确认：比赛画面到 ~257s 结束，之后全是庆祝、握手、转播图形和 296.5s 的全屏赛果板，**没有场上采访**——所以「赛场之上不要赛后采访」那条在这条片子上不存在风险。⚠️ 末尾 298.2→308.29 是 WTA 的订阅片尾卡（`silent_audio` 报 298.26 起数字静音，`scene_cuts` 在 298.2 / 300.16 各有一刀），**所有窗口都收在 297.5 之前**。\n⚠️ 源片四要素自证：记分条整场烧着 `P. STEARNS` / `I. JOVIC [2]`（种子号和 flashscore `PSPA÷2` 对得上）、场地地面印着 `GUADALAJARA`、挡板上是 `Santander` / `MAZDA` / `Zapopan` 市徽（本站冠名与主办地），154.5s 和 296.5s 两张全屏赛果板分别印着第一盘 `4 / 6` 和全场 `4 2 / 6 6`。",
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "约维奇",
+    "hook": "两个冠军都在同一座城\n对手一个破发点没拿到",
+    "topic": "瓜达拉哈拉决赛 · 约维奇 vs 斯特恩斯",
+    "winner": "约维奇",
+    "result": "6-4 6-2",
+    "matchup": [
+      {
+        "name": "约维奇",
+        "name_en": "Iva Jovic",
+        "country": "USA",
+        "rank": 16
+      },
+      {
+        "name": "斯特恩斯",
+        "name_en": "Peyton Stearns",
+        "country": "USA",
+        "rank": 60
+      }
+    ],
+    "_hook_why": "按 2026-09-19 那条「用人的来路当影子」写的：**第一行是这个人的经历，第二行才是这场球的形状**。\n第一行「两个冠军都在同一座城」——她生涯只拿过两个巡回赛冠军（2025 瓜达拉哈拉胜阿朗戈 6-4 6-1、2026 瓜达拉哈拉胜斯特恩斯 6-4 6-2），两次都在这一站，认领在 `_claims` 里。**这是来路不是身份**，排名、年龄、国籍一个都没上钩子。\n第二行「对手一个破发点没拿到」——这场球的形状：她 9 个发球局全保，斯特恩斯**整场一个破发点都没拿到**（flashscore `df_st_1`：约维奇 `Break Points Saved 0/0`、斯特恩斯 `Break Points Converted 0/0`、`Return games won 0% (0/9)`；WTA 官方 `/stats` 的 `breakptsplayeda=0` 同一个数）。\n两行之间有落差：一句讲三百六十五天的来路，一句讲这一个半小时的碾压。\n⚠️ **不写总分差**（2026-09-19 账号所有者：「以后尽量避免比较全场得分只差几分」）——61:47 这个数一个字都没进钩子和旁白。\n⚠️ **不重复海报别处已经印着的东西**：比分板印着 6-4 6-2 和 1:27，台头印着赛事轮次，名条印着两个排名，钩子一个都不碰。\n⚠️ 两行各 10 个字符，都在 `HOOK_MAX_CHARS = 10` 以内，2 行在 `SOLO_HOOK_MAX_LINES = 2` 以内。",
+    "_subject_why": "封面放**约维奇**——赢的那个，也是这条片子的主语。钩子两行说的都是她（她的两个冠军、她的发球局），「放谁的脸就是在指认谁」在这条上正好成立。",
+    "_matchup_order_why": "`matchup` 是**版式顺序**，这一场把赢家排在前面（约维奇 → 斯特恩斯），**而 flashscore 的 home 是斯特恩斯、away 才是约维奇**——两个顺序相反，所以：\n· `stats.a/b` 跟 `cover.matchup[0]`，**a 是约维奇**，从 `match_stat_hooks --stats-block` 的输出里**对调过来**（那份输出的 `a` 是 home ＝ 斯特恩斯）；\n· `_match.participants` 跟 flashscore 的 home/away，**是 `[\"斯特恩斯\", \"约维奇\"]`**，和同一块里的 `set_scores_home_away` 同序。\n⚠️ 这两个顺序在同一份 spec 里是**反的**，CLAUDE.md 的 `tennis-media-sources` 档案里 `eala-stoiana` 那条就是抄完 `stats` 转手写 `_match` 时把同一条规矩又套了一遍才红的。判据是「这个字段旁边放着什么」：`stats.a` 紧挨着 `headshot`（跟 matchup），`participants` 紧挨着 `set_scores_home_away`（跟 home/away）。",
+    "_matchup_rank_why": "两个名次来自**当周生效的那张 WTA 官方榜**（`tennislive.sources.rankings.fetch_rankings()`，`wta_at = 2026-09-14`，也就是这一站开赛那一周）：`RankEntry(rank=16, name='Iva Jovic', points=2390)`、`RankEntry(rank=60, name='Peyton Stearns', points=1001)`。第二个源：Tennis Majors 2026-09-19 的稿子写约维奇「a new career high of No. 13 **next week, up from No. 14**」——⚠️ **那两个数说的都不是这一刻**：13 是下周一才生效的新榜，14 是她 2026-08-24 摸到过的生涯最高，而**这一周她在榜上是第 16**（英文维基的 infobox 写「career-high No. 14 achieved 24 August 2026」，和榜上的 16 不矛盾，是两件事）。海报括号里印的是**比赛当周的名次 16 / 60**，生涯新高第 13 留给旁白最后一段和正文，并且明说是「下周一的新榜」。\n⚠️ **种子不是排名**：约维奇是**2 号种子**（记分条整场印着 `I. JOVIC [2]`、flashscore `df_sui_1` `PSPA÷2`、WTA 官方赛果串 `[2]I. Jovic d P. Stearns`，三处一致），斯特恩斯**非种子**（没有 `PSPH`）。钩子和旁白里一次都没把「2 号种子」说成「世界第二」。",
+    "_name_why": "两个中文名都**实调 `player_zh()` 确认**（不看文件内容，CLAUDE.md 那条）：`player_zh(\"Iva Jovic\")` → 约维奇、`player_zh(\"Peyton Stearns\")` → 斯特恩斯，两张表以 `player_names_top500.json` 优先。和已发的 `bouzkova-jovic` / `eala-jovic-us-open-2026-r3` / `gauff-jovic-us-open-2026-r4`（约维奇）、`stearns-tauson`（斯特恩斯）逐字一致——同一张官方头像不许挂两个中文名那道闸对得上。",
+    "_result_why": "约维奇 6-4 6-2 斯特恩斯。四处印证：① flashscore 当日表 `f_2_0` `AA÷jTbYg7wR`，`AE=Stearns P.`（home）`AF=Jovic I.`（away），分盘 `BA/BB=4:6`、`BC/BD=2:6`，`AW÷1`＋`AS÷2` 指向客队赢；② WTA 官方 `tournaments/2075/2026/matches` 的 `LS001` 赛果串 `[2]I. Jovic d P. Stearns 6-4,6-2`；③ **源片自证**——296.5s 的全屏赛果板印着 `PEYTON STEARNS 4 2 / IVA JOVIC 6 6`，154.5s 那张第一盘的板印着 `4 / 6`；④ 转播解说收尾一句「Iva Jovic our champion here in Mexico. 6-4 6-2.」（`captions.txt` 292.08–295.92）。\n⚠️ **两盘都没有抢七**：`df_sui_1` 里没有任何 `D*` 抢七小分槽位，分盘比分 6-4 / 6-2 本身也不到 6-6，所以 `cover.result` 不带小括号。⚠️ 这是**三盘两胜打了两盘**，2-0 没打满距离，**第二盘不是决胜盘**——旁白里一次都没出现「决胜盘」（CLAUDE.md「判哪一盘是决胜盘按有没有打满距离算」）。",
+    "portrait": {
+      "image": "assets/reel/jovic-stearns-guadalajara-2026-final.jpg",
+      "focus": 0.46,
+      "focus_y": 0.5,
+      "zoom": 1.0,
+      "_why": "**WTA 官方图库本场实拍**（`photoresources.wtatennis.com/photo-resources/**2026/09/20**/311afff2-539b-43a9-99fd-349774b1c029/GettyImages-2295584327.jpg`，Getty Images / WTA）。这张图就挂在 WTA 官网**这一站的赛事页和这一场的比分页**（`/tournaments/2075/guadalajara-500/2026` 与 `/scores/LS001`）上，路径日期 `2026/09/20` ＝ 决赛落幕那一刻（北京 08:35 ＝ UTC 00:35，当地 9/19 夜里）——**人物、赛事、时刻三处由 WTA 自己的路径和挂载位置写死**。\n⚠️ **四道闸门逐条走过**：① 精准——她手里那座木座 ＋ 银质 agave 花冠的奖杯就是瓜达拉哈拉站的冠军杯，牌面上印着 `GDL … OPEN … WINNER`；② 这一屏讲的是**夺冠**，按「捧杯优先于击球中」这一条走，而且**奖杯是整屏的视觉落点**（占画面左侧一大块，不是「一张脸和半个杯」那种太近景）；③ 冲击力——墨西哥的 charro 宽檐帽、漫天金色纸屑和身后的烟火，**咧嘴大笑，眼睛是睁的**（裁到脸放大看过，不是闭眼那一帧）；④ 清晰度 **4000×2667**，铺 1080×1440 是 `max(1080/2000, 1440/2667) = 0.54×` **缩小**，不放大。\n⚠️ **不是从源片抽的帧**（那条硬闸），也不是赛事官网媒体库那一版——`guadalajaraopen.com` 的 WP 媒体库里同一时刻有一张 1280×853 的 `WhatsApp-Image-2026-09-19-at-7.27.44-PM-2.jpeg`，构图几乎一样但只有 1280 宽，铺 3:4 要放大 1.69 倍。**同一个瞬间两个渠道都有时挑分辨率高的那个**，所以取 WTA 这一版。\n⚠️ **取原图要带 `?width=4000`**：裸地址回 400（`x-cache: Error from cloudfront`），`?width=2400` 回 2400×1590、`?width=4000` 回 4000×2667——这条渠道的「原图」是靠参数要出来的，不是去掉参数。",
+      "_focus_why": "原图 4000×2667（3:2），铺 3:4 按高度满铺、水平裁出 `2667×3/4 = 2000` 宽，也就是原图宽度的**一半**。`focus 0.46` 让窗口落在 `x ∈ [0.21, 0.71]`：奖杯木座在 0.16~0.38、她的脸在 0.60、宽檐帽右缘在 0.855——**奖杯和脸两样都框得进来**，帽檐右侧裁掉一截（那一截是纯背景和帽沿，不是落点）。`focus_y` 在满铺时不起作用，留 0.5。\n⚠️ **钩子那条带叠上去核过**（CLAUDE.md「挑封面之前先把钩子那条带叠上去」）：脸落在画面上部（裁后 y ≈ 0.28~0.50，折算 1440 高是 400~720），钩子带从 `STORYCOPY_TOP = 790` 起——**脸不落进带里**，带下面压的是她的手臂和外套。"
+    },
+    "scoreboard": {
+      "court": "Centro Panamericano de Tenis",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%20%221%3A27%3A00%22%2C%20%22source%22%3A%20%22WTA%20%E5%AE%98%E6%96%B9%20matches%20%E6%8E%A5%E5%8F%A3%20LS001%20MatchTimeTotal%3D01%3A26%3A58%EF%BC%9Bflashscore%20df_sui_1%20RC%200%3A46%20%2B%20RD%200%3A41%20%3D%20RB%201%3A27%22%2C%20%22cross_check%22%3A%20%22%E4%B8%A4%E4%B8%AA%E7%8B%AC%E7%AB%8B%E6%BA%90%E5%AF%B9%E4%B8%8A%EF%BC%9AWTA%20%E5%AE%98%E6%96%B9%201%3A26%3A58%EF%BC%88%E7%AC%AC%E4%B8%80%E7%9B%98%20settime%2000%3A45%3A59%EF%BC%89%EF%BC%8Cflashscore%201%3A27%22%7D",
+        "field": "duration"
+      },
+      "_court_why": "赛事在 **Zapopan 的 Centro Panamericano de Tenis**（Panamerican Tennis Center）。两处印证：① WTA 官方赛事页和英文维基《2026 Guadalajara Open》都写 held at the Panamerican Tennis Center, Zapopan；② **源片自证**——挡板上印着 `Zapopan` 市徽（frame 132s 右侧清晰可读），场地地面印着 `GUADALAJARA`。⚠️ flashscore 这一场的 `df_sui_1` **没有 `MIT`/`MIV` 场馆字段**，所以场地名不取它。⚠️ 不写主球场的冠名（往年叫 Akron Stadium，而 2026 年这一站的冠名商换成了 Santander，没查实主球场今年叫什么——**没查实的就写场馆本名**）。",
+      "_duration_why": "取 **1:27**。两个独立源对上了：WTA 官方 `tournaments/2075/2026/matches` 里 `LS001` 的 `MatchTimeTotal = 01:26:58`（分盘 `settime` 第一盘 `00:45:59`），flashscore `df_sui_1` 的 `RC 0:46 + RD 0:41 = RB 1:27`。CLAUDE.md 记着「比赛用时不要只信 flashscore，它偏长」——这一场两个源只差 2 秒，是取整差不是系统性偏长，所以按 1:27 印。"
+    }
+  },
+  "topbar": {
+    "line1": "2026 瓜达拉哈拉 WTA500 决赛",
+    "line2": "约维奇 6-4 6-2 斯特恩斯"
+  },
+  "_topbar_why": "line1 的级别按 WTA 官方赛事接口写的 `GUADALAJARA 500 / level: WTA 500`（`api.wtatennis.com/tennis/tournaments/?from=2026-09-10&to=2026-09-25` 里 `tournamentGroup.id=2075`、`city=GUADALAJARA`、`startDate 2026-09-13 / endDate 2026-09-19`），城市按 `city` 字段印「瓜达拉哈拉」（CLAUDE.md：`name` 和 `city` 打架时以 `city` 为准）。**源片自证**：挡板上两侧各印着一块 `WTA 500`。轮次写「决赛」（2026-09-08 那条阶梯的最后一格，不写「N 强」）。line2 和 `cover.winner` / `cover.result` / `cover.matchup` 机械一致，赢家在前，两盘都没有抢七所以不带小括号。",
+  "_match": {
+    "status": "result_verified",
+    "source": "flashscore_points",
+    "source_id": "jTbYg7wR",
+    "flashscore_id": "jTbYg7wR",
+    "participants": [
+      "斯特恩斯",
+      "约维奇"
+    ],
+    "set_scores_home_away": [
+      [
+        4,
+        6
+      ],
+      [
+        2,
+        6
+      ]
+    ],
+    "tiebreaks_home_away": [
+      null,
+      null
+    ],
+    "winner": "约维奇",
+    "loser": "斯特恩斯",
+    "winner_result": "6-4 6-2",
+    "loser_result": "4-6 2-6",
+    "_direction_why": "flashscore 当日表 `f_2_0`：`AE=Stearns P.`（home）、`AF=Jovic I.`（away），分盘 `BA/BB=4:6`、`BC/BD=2:6`，`df_sui_1` 两盘同序（`IG/IH` 4:6、2:6）。第二源 WTA 官方 `LS001` 的赛果串 `[2]I. Jovic d P. Stearns 6-4,6-2`（赢家视角，方向一致），第三处是源片 296.5s 的全屏赛果板。`participants` 跟 flashscore 的 home/away，和 `set_scores_home_away` 同序——⚠️ **和 `cover.matchup` 的版式顺序是反的**，理由写在 `cover._matchup_order_why` 里。⚠️ **两盘都没有抢七**：`df_sui_1` 里没有任何 `D*` 槽位，逐分表第一盘最后一局是 `5-4 客队发球、客队拿下`（`0:40 |B2|` → `15:40 |B2|` 兑现），不是 6-6 之后的抢七。"
+  },
+  "_durations": {
+    "sets": [
+      "0:46",
+      "0:41"
+    ],
+    "total": "1:27",
+    "_source": "flashscore `df_sui_1` 的 `RC` / `RD` / `RB`，和 WTA 官方 `LS001` 的 `MatchTimeTotal=01:26:58`（第一盘 `settime=00:45:59`，反推第二盘 40:59 ≈ 0:41）逐盘对得上——两个独立源只差 2 秒。"
+  },
+  "stats": {
+    "a": {
+      "aces": 4,
+      "df": 3,
+      "first_in": 32,
+      "first_won": 25,
+      "second_total": 26,
+      "second_won": 16,
+      "bp_conv": 3,
+      "bp_chances": 5,
+      "pts_won": 61,
+      "pts_total": 108,
+      "first_total": 58,
+      "headshot": "assets/players/headshots/wta-332285.jpg"
+    },
+    "b": {
+      "aces": 5,
+      "df": 4,
+      "first_in": 29,
+      "first_won": 18,
+      "second_total": 22,
+      "second_won": 12,
+      "bp_conv": 0,
+      "bp_chances": 0,
+      "pts_won": 47,
+      "pts_total": 108,
+      "first_total": 51,
+      "headshot": "assets/players/headshots/wta-327573.jpg"
+    },
+    "_source": "flashscore 本场 `jTbYg7wR` 的 `df_st_1`，整块由 `python3 tools/match_stat_hooks.py jTbYg7wR --stats-block` **机器抄出，没有手打**。⚠️ **a/b 对调过**：那份输出的 `a` 跟的是 flashscore 的 home ＝ **斯特恩斯**，而 `stats.a` 必须跟 `cover.matchup[0]` ＝ **约维奇**（`render_stat_card` 第 19 行：版式顺序，不是赢家顺序也不是 feed 顺序）。锚点核过：`a.pts_won + b.pts_won = 61 + 47 = 108 = pts_total` ✅；`first_total` 按 `first_in + second_total` 算（约维奇 32+26=58、斯特恩斯 29+22=51），不取接口的 Service Points Won 分母。头像：`wta-332285.jpg` 在 `bouzkova-jovic` / `eala-jovic-us-open-2026-r3` / `gauff-jovic-us-open-2026-r4` 三条里挂的都是「约维奇」，`wta-327573.jpg` 在 `stearns-tauson` 里挂的是「斯特恩斯」——同一张官方头像不许挂两个中文名那道闸对得上。\n⚠️ **两个源在两个数上不一致，这里照 flashscore 印，记在这儿别让下一个人重查**：WTA 官方 `/matches/LS001/stats` 给约维奇 `dblfltb=2`、`ptsplayed1stservb=31`，flashscore 给双误 3、一发进球 32。其余十项（ACE 5/4、总得分 47/61、发球分 51/57、破发点 0/0 与 3/5、发球局 9/9）两边逐项相同。WTA 那份自洽性更好（31+26=57＝她的发球分总数，而 flashscore 的 32+26=58 多一分，正是 CLAUDE.md 记过的 let 记法差异）；**这条片子的旁白和正文一次都没有引用她的双误和一发进球数**，所以这个 1 的分歧不会落到读者眼前。",
+    "_winners_ue_why": "**制胜分和非受迫失误这场拿不到**，三处查到底：① flashscore `df_st_1` 只有 17 项（`Match` 那一栏数 `SG÷`），没有 `Winners` / `Unforced errors`——和 CLAUDE.md 档案里「WTA 巡回赛这一档常年缺这两项」对得上；② WTA 官方 `/matches/LS001/stats` 的字段表逐个打出来过，32 个字段里不含 `winner` / `unforced` / `error`；③ **画面自证**——源片 308 秒整份缩略图墙逐格看过，片尾是全屏赛果板 ＋ WTA 订阅卡，**盘间和片尾都没有统计图**。TNNS 那条（`tnns-stats.yml`）要真浏览器过 Cloudflare、只能上 runner，而这一场**是决赛当天做的时效片，没有为这两行再烧一趟 run**；Match Charting Project 结构性落后约三天（档案里量过），当天做的片子必然查空。所以数据图按 `render_stat_card.OPTIONAL_FIELDS` 留空这两行。"
+  },
+  "_hit_data": {
+    "picked": "斯特恩斯全场 0 个破发点 ＋ 约维奇 9 个发球局全保",
+    "candidates": [
+      "[斯特恩斯破发点] **0/0**——`Return games won 0% (0/9)`，整场一个破发点都没拿到 ← **选中**",
+      "[约维奇发球局] 9 个全保，`Break Points Saved 0/0`（一次都没被逼到破发点）",
+      "[约维奇一发得分率] 78%（25/32），斯特恩斯 62%（18/29）",
+      "[约维奇破发点兑现] 3/5（60%），三次破发分别在第一盘第九局、第二盘第一局、第二盘第七局",
+      "[赛点] 约维奇 5-2 发球胜赛局 40-0 拿到三个赛点，斯特恩斯救下两个（`Match points saved 主队 2`）",
+      "[总分差] 约维奇 61 - 斯特恩斯 47，净差 14 分 ← ⚠️ **故意不用**：CLAUDE.md 2026-09-19 账号所有者「以后尽量避免比较全场得分只差几分」",
+      "[ACE] 斯特恩斯 5、约维奇 4 ← 不用，赢的那个还更少，说不出这场球的形状",
+      "[整周] 四场全部直落两盘，8 个盘一盘未失（WTA 官方 `LS015` / `LS007` / `LS003` / `LS001` 四条赛果串）"
+    ],
+    "_source": "`python3 tools/match_stat_hooks.py jTbYg7wR --stats-block` ＋ flashscore `df_st_1` / `df_mh_1`，挑哪条是人的判断。挑中的那条三处互相印证：`df_st_1` 全场 `Break Points Converted 主队 0/0`、`Return games won 主队 0% (0/9)`、`Service games won 客队 100% (9/9)`；逐分表 `df_mh_1` 里**没有任何 `|B1|` 落在约维奇的发球局上**；WTA 官方 `/stats` 的 `breakptsplayeda=0` 是第二个独立源。"
+  },
+  "_turning_points": {
+    "set1_game9": "4-4、斯特恩斯发球。这是**第一盘出现的第一个破发点**——逐分 `df_mh_1` 第一盘前八局没有任何 `|B1|`，第九局打到 `30:40 |B1|` 才出现，而且**一次就兑现**，4-5。源片自证：记分条从 110.5s 到 132.5s 一直挂着 `4 / 4`，134.5s 那一格已经是 `4 15 / 5 40 · SET POINT #2`。",
+    "set1_game10": "5-4 换约维奇发球。`0:40 |B2|` ＝ 一口气三个盘点，`15:40 |B2|` 是第二个，兑现。**源片把序号直接印在画面上**：134.5s~142.5s 记分条左上角烧着 `SET POINT #2`。6-4。",
+    "set2_game1": "第二盘第一局约维奇就完成破发（`15:40 |B1|`，第一个破发点就拿下），0-1。⚠️ **这一局不在集锦里**——155.68s 的镜头切换之后直接跳到第二局（156.5s 记分条已经是 `4 0 15 / 6 1 40`），所以旁白只把它当一句交代，不配画面细节。",
+    "set2_game7": "2-4、斯特恩斯发球。`0:40 |B1|` 三个破发点，**斯特恩斯救下前两个**（`Break Points Saved 2/5` 那两个就在这儿），第三个没救成，2-5。源片记分条从 196.5s 到 210.5s 一直挂着 `BREAK POINT #2`。",
+    "set2_game8": "5-2 约维奇发球胜赛局，`0:40 |B3|` ＝ 三个赛点连着来。源片把三个序号逐一印出来：`CHAMPIONSHIP POINT`（212.5~224.5s，40-0）→ `CHAMPIONSHIP POINT #2`（226.5~244.5s，40-15）→ `CHAMPIONSHIP POINT #3`（246.5~256.5s，40-30），**第三个才落地**（`Match points saved 主队 2`）。6-2。",
+    "_source": "flashscore `df_mh_1` 逐分（`|B1|` 破发点、`|B2|` 盘点、`|B3|` 赛点）＋ `df_st_1` 分盘统计，**每一条都拿源片烧死的记分条对过一格**——这条源片的记分条会把 `BREAK POINT #N` / `SET POINT #N` / `CHAMPIONSHIP POINT #N` 的序号直接印出来，是逐分数据最硬的一个交叉源。⚠️ 逐分的局号是「打完之后的比分」不是场上比分（CLAUDE.md 那条踩过的坑），所以写进旁白的每一个比分都按记分条那一格写。"
+  },
+  "_claims": {
+    "两个冠军都在同一座城（生涯两个巡回赛冠军都在瓜达拉哈拉）": "两个独立源的穷举表：① 英文维基 `Iva Jovic` 的 WTA career finals 表整表两行——2025 Guadalajara Open Akron（胜 Emiliana Arango 6-4 6-1）与 2026 Guadalajara Open（胜 Peyton Stearns 6-4 6-2），**没有第三个冠军** https://en.wikipedia.org/wiki/Iva_Jovic ；② WTA 官方这一站的 past-winners 页 ＋ 官方稿《Jovic becomes youngest champion this season with Guadalajara title》（2025）与本站 2026 赛果 `LS001`，两年的冠军都是她 https://www.wtatennis.com/tournaments/2075/guadalajara/2026/past-winners 。⚠️ 这是「一共只 N 次，N 次全 X」那种**计数式全称断言**——`_ABSOLUTE_CLAIM_RE` 的词表认不出它（CLAUDE.md 2026-08-27 记过这个缺口），所以**主动认领**，不是被闸逼出来的。",
+    "整整一周一盘都没丢": "两个独立源：① WTA 官方 `tournaments/2075/2026/matches?states=C` 的四条赛果串穷举——`LS015 [2]I. Jovic d Z. Sonmez 7-6(5),6-4`、`LS007 [2]I. Jovic d [7]M. Frech 6-2,6-1`、`LS003 [2]I. Jovic d [6]C. Bucsa 6-4,6-1`、`LS001 [2]I. Jovic d P. Stearns 6-4,6-2`，**四场八盘全胜，2 号种子首轮轮空**；② 源片里英国转播的解说原声（`captions.txt` 277.44–280.24）「she wins this title without dropping a set all week」。"
+  },
+  "_claims_why": "这条片子里被 `_ABSOLUTE_CLAIM_RE` 直接命中的全称断言**一句都没有**（零胜／唯一一个／史上第一／从来没有那一族）。上面两条是**主动认领**的：一条是计数式（两个冠军都在一座城），闸的词表认不出它；一条是闭区间穷举（这一周四场八盘）。\n⚠️ 钩子第二行「对手一个破发点没拿到」和旁白里的「九个发球局一个没丢」是**这一场之内的闭集断言**（逐分表和分盘统计本身就是穷举），按 CLAUDE.md 那条用 flashscore `df_st_1` ＋ `df_mh_1` ＋ WTA 官方 `/stats` 三处互相印证就够，不占 `_claims`。\n⚠️ **「下周一升到世界第十三、生涯新高」这一句两个源**：Tennis Majors 2026-09-19「a new career high of No. 13 next week, up from No. 14」 https://www.tennismajors.com/wta-tour-news/jovic-returns-to-the-guadalajara-final-and-a-career-high-no-13-and-will-meet-stearns-for-the-title-861230.html ；Sunday Guardian 2026-09-20 赛后稿标题「…Reaches Career-High World No. 13」 https://sundayguardianlive.com/sports/iva-jovic-beats-peyton-stearns-to-win-guadalajara-open-2026-title-reaches-career-high-world-no-13-288644/ 。**写进旁白时明说是「下周一的新榜」**，不写成「她现在是世界第十三」——那个排名这一刻还没生效，海报名条印的仍然是当周的 16。\n⚠️ **有一条查到了但故意不写**：Tennis Majors 同一篇写她半决赛那一胜是「her 36th at WTA level in 2026, the joint-most of any player this season alongside Iga Swiatek」——赢下决赛之后这个数变成 37，而「是不是全巡回赛最多」要看同期斯瓦泰克打没打，**只有一个源、而且一天之内就会变**，按「只讲确认过的」撤掉，记在这儿省下次重查。",
+  "_no_repeat": "同栏目讲过约维奇的有三条，各自铺开过的东西这条一个字都不碰：① **`bouzkova-jovic`**（辛辛那提第三轮，布兹科娃 7-6(0) 7-6(5) 胜）铺开讲过「三个赛点只兑现了一个」——**这条片子里赛点那一段刻意换了口径**：写的是「斯特恩斯救下前两个」（把主语放在救球的人身上），而不是「三个赛点只兑现了一个」那个锁死在 1/N 的写法（CLAUDE.md 那条老账），而且连钩子都没碰赛点；② **`eala-jovic-us-open-2026-r3`**（美网第三轮）铺开讲过伊埃拉的两个赛点救回一个；③ **`gauff-jovic-us-open-2026-r4`**（美网第四轮）铺开讲过两盘用时的对比。**这三条都是她输的比赛**，这一条是她赢下一个冠军，主体完全不同。\n⚠️ `specs/reels/pending/jovic-frech.draft.json` 是**同一站 1/4 决赛**的自动草稿（`tools/find_pending_draft.py --who Jovic,Stearns` 报 pending 里没有这一场的草稿，扫了 106 份），那条从来没有渲过也没有发过，不构成重复；这条片子里那一场只作为「整周一盘未失」的一个数据点出现，不讲细节。",
+  "editorial": {
+    "mode": "match_review",
+    "hook": [
+      "两个冠军都在同一座城",
+      "对手一个破发点没拿到"
+    ],
+    "question": "一个十八岁的人，生涯只拿过两个冠军，而两个都在同一座城市——这一次她是怎么把决赛打成一场不让对手碰到发球局的比赛的？",
+    "thesis": "她赢下这场球靠的不是把对手打崩，是**从头到尾没给过对手一次机会**。九个发球局全部保下来，斯特恩斯整场一个破发点都没拿到，回合里一直被顶在底线后面；而约维奇自己拿到的五个破发点兑现了三个——第一盘第九局第一次拿到就兑现，第二盘第一局再破，第二盘第七局连着三个破发点、斯特恩斯往前压救下两个之后还是没能守住。最后自己发球胜赛，四十比零三个赛点，斯特恩斯冲上网前救掉两个，第三个才落地。一小时二十七分，六比四、六比二，整整一周八盘一盘未失。",
+    "beats": [
+      "北京时间今天一早，墨西哥的瓜达拉哈拉，两个美国人打这一站的决赛。",
+      "第一盘前八局两边的发球局一个都没丢，八局打完破发点一个都没出现；四比四斯特恩斯发球那一局，约维奇第一次拿到破发点，一次就兑现。",
+      "五比四换她发球，四十比零三个盘点，斯特恩斯救下第一个，第二个没救下来，六比四。",
+      "第二盘第一局她又破发，自己的发球局被拖进平分、两次占先才保下来；二比四那一局斯特恩斯把站位一步步往前推，三个破发点救下前两个，第三个没救成。",
+      "五比二发球胜赛局，四十比零三个赛点：第一个斯特恩斯冲上网前一拍截击救回来，第二个又扛了下来，第三个她从底线角上一记双手反手顶了回去，球没能再回来。"
+    ],
+    "human_context": {
+      "angle": "这条片子的切口不是「她多强」，是**一个十八岁的人把同一座城市打成了自己的主场**——她生涯只有两个冠军，两次都在瓜达拉哈拉，而且两次的对手都没能从她手里拿走一盘以外的任何东西：2025 年她是非种子，2026 年她是 2 号种子回来卫冕。",
+      "facts": [
+        "约维奇 2007 年 12 月 6 日出生于加利福尼亚州托兰斯，现居洛杉矶，这场球时 18 岁（英文维基 `Iva Jovic` 条目）",
+        "2025 年她**非种子**在这一站夺冠，决赛 6-4 6-1 胜阿朗戈，当时 17 岁，是那个赛季最年轻的冠军（WTA 官方稿《Jovic becomes youngest champion this season with Guadalajara title》）",
+        "2026 年她以 **2 号种子**回来，首轮轮空，四场全部直落两盘：第二轮 7-6(5) 6-4 胜森梅兹、1/4 决赛 6-2 6-1 胜弗雷赫、半决赛 6-4 6-1 胜布兹科娃、决赛 6-4 6-2 胜斯特恩斯（WTA 官方 `tournaments/2075/2026/matches`）",
+        "斯特恩斯这一周是**非种子**，半决赛 7-6(7) 6-2 淘汰 8 号种子萨姆索诺娃；这是她和约维奇的**第一次交手**（WTA 官方赛前稿「will face-off for the first time」，flashscore `df_hh_1` 里没有 mutual 这一块）",
+        "这场球之后约维奇下周一的新榜上升到世界第 13，生涯新高（Tennis Majors / Sunday Guardian 两处）",
+        "颁奖仪式下过雨，她把致辞说得很短（Sunday Guardian 赛后稿）"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Iva_Jovic",
+        "https://www.wtatennis.com/news/4578541/jovic-stearns-set-all-american-final-in-guadalajara",
+        "https://www.tennismajors.com/wta-tour-news/jovic-returns-to-the-guadalajara-final-and-a-career-high-no-13-and-will-meet-stearns-for-the-title-861230.html",
+        "https://sundayguardianlive.com/sports/iva-jovic-beats-peyton-stearns-to-win-guadalajara-open-2026-title-reaches-career-high-world-no-13-288644/"
+      ],
+      "voice_label": "把一座城打成主场的十八岁"
+    },
+    "_hook_why": "和 `cover.hook` 同一份，理由写在 `cover._hook_why` 里，不在这儿重复。"
+  },
+  "push": {
+    "summary": "约维奇零破发点卫冕",
+    "lead": "瓜达拉哈拉 WTA500 决赛，全美国内战。18 岁的 2 号种子约维奇 6-4 6-2 击败非种子斯特恩斯卫冕，1 小时 27 分。这场球最硬的一个数是 0：斯特恩斯整场一个破发点都没拿到，约维奇 9 个发球局全保，一发得分率 78%。第一盘前八局两边都没丢发球局，4-4 斯特恩斯发球那一局约维奇第一次拿到破发点就兑现，随后 5-4 三个盘点拿下第二个，6-4。第二盘第一局再破，2-4 那一局斯特恩斯把站位往前压救下两个破发点，第三个没救成。5-2 发球胜赛局 40-0 三个赛点，斯特恩斯冲上网前一拍截击救回第一个、又扛下第二个，第三个才落地。这是约维奇生涯第二个巡回赛冠军，两个都在瓜达拉哈拉——2025 年她非种子夺冠时 17 岁，这一次她整整一周 8 盘一盘未失。下周一的新榜上她升到世界第 13，生涯新高。",
+    "matchup": "约维奇 vs 斯特恩斯",
+    "score": "6-4 6-2",
+    "auto": true
+  },
+  "_push_summary_why": "首行必须点出是谁（「小红书首行是标题，不是正文的开头」那条闸，`CAPTION_LEAD_LEGACY`）——「约维奇」在第一个词。标题写的是这场球的形状（对手零破发点 ＋ 卫冕），不是身份也不是比分复述，9 个字位在推送标题上限之内。⚠️ 正文里的数字一律**阿拉伯数字**（18 岁、6-4 6-2、78%、9 个、第 13），旁白那一份才写汉字——CLAUDE.md 2026-09-16「给人看的字一律阿拉伯数字，只有 TTS 底稿写汉字」。⚠️ 正文**不挂「数据来源：」注脚**（2026-09-03 那条），来源写在 spec 的 `_source` / `_hit_data` / `_claims` 里。⚠️ 正文里**不提中英双语字幕**（那是制作规格不是这场球的内容）。",
+  "mixed_fps": false,
+  "_tts_backend_why": "不写 `tts_backend`——有 Azure 钥匙就自动走 Azure，这个键只在 Azure 401 时用来降级到 edge（CLAUDE.md 2026-09-03 那条）。",
+  "segments": [
+    {
+      "source": "main",
+      "start": 253.0,
+      "end": 266.4,
+      "cx": 0.5,
+      "quote": [
+        {
+          "at": 3.24,
+          "text": "Gets it this time.\n这一次，她拿下了。"
+        },
+        {
+          "at": 6.04,
+          "text": "It is glory in Guadalajara again\n瓜达拉哈拉，又一次是她的荣耀"
+        },
+        {
+          "at": 10.12,
+          "text": "for Iva Jovic, who defends her title from 12 months ago.\n伊娃·约维奇卫冕了 12 个月前的这座冠军。"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_why": "冷开场：**第三个赛点落地 ＋ 她把拍子扔在场地上、双手举过头顶**。不配旁白，用英文转播原声 ＋ 中英双语字幕（CLAUDE.md 2026-09-19「精彩的原声解说要留下来，配中英双语字幕」那条全局要求）。画面自证这一分就是赛点：记分条从 246.5s 到 256.5s 一直烧着 `CHAMPIONSHIP POINT #3`（抽帧 `frame_0254s.jpg` / `frame_0256s.jpg` 逐帧读过）。解说三句钉在真实时刻上（`captions.txt` 256.24 / 259.04 / 263.12，减去段起点 253.0 得 3.24 / 6.04 / 10.12）。⚠️ 英文按发音校正过：自动字幕把她的名字转成了 `Eva Yovic` / `Ibovi` / `Ivoic`，双语字幕里写回 `Iva Jovic`（CLAUDE.md「自动字幕把名字全转错了，双语字幕的英文要按发音校正」）。按「开场三格：画面爆点 → 落点 → 坐标」，这是第一格。",
+      "crosses_cut": "257.2 —— 赛点那一分落地接她转身张开双臂，是同一时刻的跨法（球在 256.2 前后结束，反应在 257.2 之后的镜头里），不跨就只剩一拍反手没有落点。",
+      "point_end_ok": "**这一分是全场最后一分，之后再没有比分翻牌**——记分条在 256.5s 之后整个消失（抽帧 `frame_0256s.jpg` 还在、之后的缩略图墙 258.5s 起已经没有记分条）。`point_ends_guess` 在 266.7~269.4 之间那一格（267.36）是庆祝镜头切换被猜成翻牌的假阳性，不是一分打到一半。",
+      "_ending_payoff_required": true,
+      "_payoff_why": "冷开场里有赛点落地和她的反应，所以是 true——正文倒数第三段（252.0→266.4）把**同一分完整重放一遍**，而且比冷开场多含 252.0~253.0 那一秒（记分条还印着 `CHAMPIONSHIP POINT #3` 的那一拍反手起手）。冷开场给的是解说原声，正文那一段给的是中文旁白，两段各讲一半：预告只说「这一次她拿下了」，兑现才说清楚这是第几个赛点、那一球是怎么打的。"
+    },
+    {
+      "source": "main",
+      "start": 282.5,
+      "end": 285.7,
+      "cx": 0.5,
+      "narration": "十八岁，她卫冕了。",
+      "_why": "开场第二格：**落点**。画面是转播打出她的名字条（缩略图墙 282.5s / 284.5s，底部横条印着 `IVA JOVIC` 和美国国旗），主语一眼就认得出是谁——旁白讲她，画面上写着她的名字，不存在「把话压在对手身上」的风险。**落点只留一句**：第二个冠军、生涯新高这些都压到最后一段，那里才有足够的窗口把话说完并收在一问上。",
+      "point_end_ok": "比赛在 ~257s 就结束了，这一段是赛后转播图形，画面上**没有记分条**。`point_ends_guess` 在 288.7~291.4 之间那一格（290.0）是图形切换被猜成翻牌的假阳性。"
+    },
+    {
+      "source": "main",
+      "start": 8.9,
+      "end": 19.0,
+      "cx": 0.5,
+      "narration": "北京时间九月二十号早上七点，墨西哥的瓜达拉哈拉，这一站的决赛，两个美国人。",
+      "_why": "开场第三格：**坐标**（北京时间的开球时刻、日期、地点、轮次）。画面是第二局全景主机位的一个长回合（缩略图墙 10.5s~18.5s 全是底线相持的宽景），场地地面印着 `GUADALAJARA`、挡板两侧各一块 `WTA 500`，和这句话逐字对题。\n⚠️ **开球时刻只说个大概不报到分**（CLAUDE.md 那条）：这场球北京时间 2026-09-20 **07:05** 开赛、08:35 结束（flashscore `AD÷1789859100` / `AO÷1789864520` 换算），旁白说「早上七点」。⚠️ **不说倒计时**，只说绝对时刻。\n⚠️ **窗口从 0.6~7.0 换到这儿**，是因为坐标那四样（北京时间／日期／钟点／轮次）一句话装不进 6.4 秒的窗口——`test_赛场之上开场要给出北京时间赛事和轮次` 的四条正则要全中。",
+      "point_end_ok": "段起点 8.9 正落在 `point_ends_guess` 的 8.88 之后（上一分刚翻完牌），段尾 19.0 落在**这一分的中途**——而这一分要到 28.96 才结束，离段尾 9.96 秒，**不在「翻牌前 0.3~3 秒」那个窗口里**。记分条从 10.5s 到 28.5s 一直挂着 `1 0 / 0 40` 没有动过（缩略图墙九格逐格看过），这一段是从一个长回合里截的一段宽景做坐标底料，不是「一分打到一半就切走」。"
+    },
+    {
+      "source": "main",
+      "start": 68.0,
+      "end": 77.3,
+      "cx": 0.5,
+      "narration": "第一盘前八局，两边的发球局一个都没丢。八局打完，场上一个破发点都没出现过。",
+      "_why": "第一盘的形状：谁也破不了谁。逐分表 `df_mh_1` 第一盘前八局**没有任何 `|B1|`**，第一个破发点要到第九局才出现——这是这句话的穷举依据（闭集，不占 `_claims`）。画面是 3-3 斯特恩斯发球那一局（记分条 62.5s~92.5s 一直挂着 `3 40 / 3 15`→`3 30`），正好是「互保」的样子。",
+      "crosses_cut": "73.36 和 75.56 —— 同一分里的正反打（底线相持接一个近端反应镜头），记分条两边都是 `3 / 3`，旁白说的是「八局都没丢发球局」这个整段判断，主语在两边都成立。",
+      "point_end_ok": "段尾 77.3 落在 `point_ends_guess` 76.0 之后 1.3 秒——比分翻牌之后留足了 1.2 秒才切（那一格正是这一局 40-15 → 40-30 的翻牌）。往后 77.6~80.3 之间没有任何一格。"
+    },
+    {
+      "source": "main",
+      "start": 124.0,
+      "end": 134.7,
+      "cx": 0.5,
+      "narration": "四比四，斯特恩斯发球。整个第一盘的第一个破发点，出现在这一局，约维奇一次就兑现。",
+      "_why": "第一个转折点。逐分 `df_mh_1` 第一盘第九局 `0:15, 15:15, 30:15, 30:30, 30:40 |B1|`——**整盘第一个破发点**，而且兑现了（`Break Points Converted 客队 3/5`，这是第一个）。源片自证：记分条从 110.5s 到 132.5s 一直挂着 `4 / 4`（抽帧 `frame_0128s.jpg` / `frame_0132s.jpg` 逐帧读过，`frame_0128s.jpg` 里斯特恩斯正手击球、比赛用时 0:37），134.5s 那一格已经跳到 `4 15 / 5 40 · SET POINT #2`。⚠️ **比分按记分条那一格写，不按逐分表的行标**（逐分的局号是「打完之后的比分」，CLAUDE.md 那条踩过的坑）。",
+      "point_end_ok": "段尾 134.7 落在 `point_ends_guess` 133.44 之后 1.26 秒——这一分翻牌之后留了 1.2 秒以上才切。⚠️ 往后 135.0~137.7 之间确实有一格（136.4），**那是下一局（发球胜盘局）第一分的翻牌，不是这一分**：134.5s 起记分条已经换成 `5 40 · SET POINT #2`，局号变了。"
+    },
+    {
+      "source": "main",
+      "start": 134.7,
+      "end": 145.2,
+      "cx": 0.5,
+      "narration": "五比四换她发球，四十比零，三个盘点摆在面前。斯特恩斯救下第一个，第二个就没能救下来。",
+      "_why": "发球胜盘局。逐分 `df_mh_1` 第一盘第十局 `0:15, 0:30, 0:40 |B2|, 15:40 |B2|`——`0:40` 是一口气三个盘点，`15:40` 说明斯特恩斯救下了第一个，第二个兑现。**源片把序号直接印在画面上**：记分条 134.5s~142.5s 左上角烧着 `SET POINT #2`（抽帧 `frame_0140s.jpg` 清晰可读，比赛用时 0:45）。解说 143.76s 跟着说「a big step closer to this title defense. Six games to four.」。⚠️ **不写「三个盘点只兑现了一个」**——那个比例锁死在 1/N（CLAUDE.md 那条），而且 `bouzkova-jovic` 已经用过那个口径；这里把主语放在救球的人身上。",
+      "point_end_ok": "段尾 145.2 落在 `point_ends_guess` 143.84 之后 1.36 秒——盘点兑现、第一盘结束之后才切。⚠️ 往后 145.5~148.2 之间那一格（147.84）是**第一盘打完之后的观众席镜头和回放**（缩略图墙 144.5s / 146.5s 两格全是看台，148.5s 起是慢镜），记分条已经不在画面上，不是一分打到一半。",
+      "crosses_cut": "144.52 —— 盘点兑现之后接看台的庆祝镜头（缩略图墙 144.5s / 146.5s 两格都是观众席），是同一件事的落点和反应，不是换人：旁白「第二个没救下来」的落点就在这一刀之前，刀之后那 0.68 秒是第一盘结束后全场站起来的样子。"
+    },
+    {
+      "source": "main",
+      "start": 158.0,
+      "end": 170.0,
+      "cx": 0.5,
+      "narration": "第二盘第一局她又完成破发。接着轮到自己发球，这一局被拖进平分，连着两次占先才保下来，二比零。",
+      "_why": "第二盘的开局。逐分 `df_mh_1` 第二盘第一局 `15:40 |B1|`——**第一个破发点就拿下**，0-1；第二局是她自己的发球局，`40:40, 40:A, 40:40, 40:A` ＝ 平分之后**两次占先**才保下来，0-2。⚠️ **第一局不在集锦里**：155.68s 的镜头切换之后画面直接跳到第二局（156.5s 记分条已经是 `4 0 15 / 6 1 40`），所以破发只当一句交代带过，画面配的是第二局那个长局——旁白后半句说的正是画面上这一局。\n⚠️ **段尾卡在 170.2 那一刀之前**：刀之后是斯特恩斯的特写（缩略图墙 170.5s，白色 Wilson 帽檐），而这一段旁白从头到尾的主语是约维奇——「旁白不许把话压在对手身上」那条，所以宁可把窗口收在刀前，也不让「才保下来」落在对手脸上。",
+      "point_end_ok": "段尾 170.0 正落在 `scene_cuts` 的 170.2 之前。**这一分的翻牌被集锦自己剪掉了**：168.5s 记分条还是 `4 0 15 / 6 1 40`，170.5s 已经跳成 `4 1 Ad / 6 3`——局分从 1-0 跳到了 1-3，也就是那一刀之后画面换成了第二盘后面的局。`point_ends_guess` 的 171.6 落在**跳过之后那一局**里，不是这一分。窗口里能给的就到这一刀为止。"
+    },
+    {
+      "source": "main",
+      "start": 200.0,
+      "end": 211.9,
+      "cx": 0.5,
+      "narration": "二比四，斯特恩斯发球，零比四十，三个破发点。她把站位一步步往前推，前两个硬是救了回来——第三个没能救成，五比二。",
+      "_why": "**技战术那一段之一**。逐分 `df_mh_1` 第二盘第七局 `0:40 |B1|, 15:40 |B1|, 30:40 |B1|` ＝ 一口气三个破发点，斯特恩斯救下前两个（全场 `Break Points Saved 2/5` 那两个就在这儿），第三个没守住，2-5。**源片把序号印在画面上**：记分条 196.5s~210.5s 一直烧着 `BREAK POINT #2`。「把站位一步步往前推」是**画面自证的**：抽帧 `frame_0204s.jpg` 里斯特恩斯已经站到自己的发球线上（离底线两米多）、约维奇被顶在远端底线角上；`frame_0208s.jpg` 她走回去准备下一分时仍然贴着底线内侧。⚠️ 这句话里没有百分比也没有「N 比 M」的对数写法，「站位」是实打实的球路描述不是统计行。",
+      "crosses_cut": "无跨切——`scene_cuts` 在 196.2 和 210.64，这一段整个落在两刀之间。",
+      "point_end_ok": "段尾 211.9 落在 `point_ends_guess` 210.64 之后 1.26 秒（那一格同时也是 `scene_cuts` 的一刀，正是破发落定、局分翻成 5-2 的那一下）。⚠️ 往后 212.15~214.85 之间那一格（212.48）是**下一局第一个赛点**的记分条出现（212.5s 起画面上是 `CHAMPIONSHIP POINT`、局分 `6 5 / 2`），局号变了，不是这一分。"
+    },
+    {
+      "source": "main",
+      "start": 214.5,
+      "end": 226.9,
+      "cx": 0.5,
+      "narration": "五比二，轮到她发球胜赛。四十比零，三个赛点一起摆了出来。第一个赛点，斯特恩斯冲上了网前，一拍截击，救了回来。",
+      "_why": "**技战术那一段之二**。逐分 `df_mh_1` 第二盘第八局 `0:40 |B3|` ＝ 四十比零三个赛点。**源片把序号印在画面上**：记分条 212.5s~224.5s 烧着 `CHAMPIONSHIP POINT`（无序号 ＝ 第一个），局分 `4 2 0 / 6 5 40`。「冲上网前、一拍截击」是**画面自证的**：抽帧 `frame_0220s.jpg` 里斯特恩斯已经跨过发球线站到网前中路、球拍举在身前，约维奇在远端底线外侧被调动出去；`frame_0222s.jpg` 她就站在网带前，约维奇被甩到画面右下角出界位置。解说 222.08s 跟着说「And [Stearns] takes care of one of them.」——**画面和原声同一个结论**。⚠️ 「网前」「截击」都是球路描述，这句话里没有统计数字。",
+      "crosses_cut": "225.72 —— 这一分救下之后接她走回底线的反应镜头，是同一分的落点和反应，记分条两边都是 `CHAMPIONSHIP POINT` / `5 40`。",
+      "point_end_ok": "段尾 226.9 落在 `point_ends_guess` 225.76 之后 1.14 秒——赛点被救、比分从 40-0 翻成 40-15 之后才切（226.5s 记分条已经换成 `CHAMPIONSHIP POINT #2` / `4 2 15`）。往后 227.26~229.96 之间没有任何一格。"
+    },
+    {
+      "source": "main",
+      "start": 238.0,
+      "end": 246.2,
+      "cx": 0.5,
+      "narration": "第二个赛点，斯特恩斯又扛了下来。离冠军只剩一分，而这一分迟迟不肯落地。",
+      "_why": "逐分 `df_mh_1` 第二盘第八局 `15:40 |B3|` → `30:40 |B3|`：第二个赛点也被救下。**源片把序号印在画面上**：记分条 226.5s~244.5s 烧着 `CHAMPIONSHIP POINT #2`、局分 `4 2 15 / 6 5 40`，246.5s 起换成 `CHAMPIONSHIP POINT #3` / `4 2 30`。\n⚠️ **这一段是全片唯一一句不报数的旁白**，故意的：dry-run 的「节奏」那一条提醒中段报数比例过高，而 CLAUDE.md「不要平白叙事」说的正是这件事——赛点被连着救掉两个，观众要的是那口气，不是又一行比分。四十比零被追到四十比三十这个细节留在小红书正文里。\n⚠️ **不和上一段复读**：上一段说的是第一个赛点**怎么**被救下（上网截击），这一段说的是**局面**。",
+      "point_end_ok": "段尾 246.2 落在 `point_ends_guess` 245.04 之后 1.16 秒——第二个赛点被救、比分翻成 40-30 之后才切。⚠️ 往后 246.5~249.2 之间那两格（249.2 / 250.0）落在**第三个赛点那一分的回合当中**，是长回合里镜头切换被猜成翻牌的假阳性：记分条从 246.5s 到 256.5s 一直是 `4 2 30 / 6 5 40` **没有动过**（抽帧 `frame_0254s.jpg` 读过），真正的翻牌只有 256 秒那一下。",
+      "crosses_cut": "245.76 —— 第二个赛点救下之后接第三个赛点的开始（记分条从 `CHAMPIONSHIP POINT #2` 换成 `#3`），是同一局连着两分，两边都是同一对人，离段尾只有 0.44 秒。"
+    },
+    {
+      "source": "main",
+      "start": 252.0,
+      "end": 266.4,
+      "cx": 0.5,
+      "narration": "第三个赛点。她退到底线角上，一记双手反手顶了回去，球没能再回来。拍子落在场地上，双手举过头顶。一小时二十七分，六比四、六比二。",
+      "_why": "**技战术那一段之三，同时是冷开场的兑现**。逐分 `df_mh_1` 第二盘第八局 `30:40 |B3|` ＝ 第三个赛点，兑现（`Match points saved 主队 2` ＝ 斯特恩斯只救下两个）。「退到底线角上、一记双手反手」是**画面自证的**：抽帧 `frame_0254s.jpg` 里约维奇站在自己底线内侧的角上、双手握拍完成反手击球，球在中场飞行，斯特恩斯在远端底线；`frame_0256s.jpg` 里她已经跑到发球线、双臂举过头顶，球拍扔在身前的场地上。⚠️ **不写球打到了哪个角**——两帧之间看不出落点方向，只写看得见的：她从底线角上用双手反手把球顶回去，而这一分之后比分没有再变（记分条整个消失）。\n⚠️ **这一段比冷开场多含 252.0~253.0 那一秒**（反手起手那一拍），满足 `_ending_payoff_required` 的「正文把同一分完整重放一遍」：冷开场给英文原声，这里给中文旁白，两段各讲一半。用时 1:27 两个独立源对上（WTA 官方 `MatchTimeTotal=01:26:58` ＋ flashscore `RB 1:27`）。",
+      "crosses_cut": "257.2 —— 和冷开场同一刀：赛点落地接她张开双臂，是同一时刻的两个镜头，旁白「球没能再回来」的落点就在切之后那一帧上。",
+      "point_end_ok": "**这是全场最后一分**，之后没有任何比分翻牌，记分条在 256.5s 之后整个消失（`frame_0256s.jpg` 还在、缩略图墙 258.5s 起已经没有）。`point_ends_guess` 在 266.7~269.4 之间那一格（267.36）是庆祝镜头切换的假阳性。"
+    },
+    {
+      "source": "main",
+      "start": 272.0,
+      "end": 282.4,
+      "cx": 0.5,
+      "quote": [
+        {
+          "at": 1.2,
+          "text": "And for Jovic, she sees off Peyton Stearns in straight sets\n约维奇直落两盘送走了斯特恩斯"
+        },
+        {
+          "at": 5.44,
+          "text": "and she wins this title without dropping a set all week.\n整整一周，她一盘都没丢。"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_why": "第二段**精彩原声解说**（CLAUDE.md 2026-09-19 全局要求：解说声调起来的那几句留下来，配中英双语字幕；报比分念名字那种不留）。这两句是这条片子事实上的落点——「整整一周一盘都没丢」这个判断由解说自己说出来，比旁白再说一遍更有氛围。两句钉在真实时刻上（`captions.txt` 273.20 / 277.44，减去段起点 272.0 得 1.20 / 5.44）。画面是两个人在网前各自向看台致意、随后镜头回到约维奇（缩略图墙 272.5s / 274.5s / 276.5s / 278.5s / 280.5s）。⚠️ **这一段不配旁白**——同一段不许既写 `narration` 又写 `quote`。⚠️ 英文按发音校正过（自动字幕把 Stearns 转成 `Sterns`、Jovic 转成 `Yovic`）。⚠️ 「一周一盘未失」这句在 `_claims` 里认领了两个独立源。",
+      "point_end_ok": "比赛在 ~257s 就结束了，这一段是赛后画面，**记分条已经不在画面上**。`point_ends_guess` 在 282.7~285.4 之间那几格（282.8 / 283.6 / 284.48 / 285.36）密集得不像翻牌——那是转播打名字条时的图形动画被猜成了记分条变化，是假阳性。",
+      "crosses_cut": "278.52 —— 刀之前是斯特恩斯在网前向看台致意（缩略图墙 272.5s / 274.5s），刀之后回到约维奇（276.5s 起她举着手臂、278.5s 在笑）。**这一刀和解说原声是对上的**：第一句「she sees off Peyton Stearns」念的正是斯特恩斯那两格，第二句「she wins this title without dropping a set all week」（277.44s）落在画面切回约维奇之后。⚠️ 这一段是 `quote` 不是 `narration`——「旁白不许把话压在对手身上」那条的主语是 `narration`（CLAUDE.md 那条写得很死），而这里画面和原声本来就是转播同一刻的同一份。"
+    },
+    {
+      "source": "main",
+      "start": 285.8,
+      "end": 297.5,
+      "cx": 0.5,
+      "narration": "这是她生涯第二个冠军。下周一她升到世界第十三位，生涯新高。两个冠军都在这座城市，下一座还会在这儿吗？",
+      "_why": "收尾，而且**收在球场上**（缩略图墙 286.5s 是全景主机位的球场、288.5s 同样、290.5s / 292.5s 是她的笑脸特写、294.5s 是她站在场地中间、296.5s 是全屏赛果板 `PEYTON STEARNS 4 2 / IVA JOVIC 6 6`）。\n第一句是这场球换来的东西，**明说是「下周一」**——这一刻她在榜上仍然是第 16（海报名条印的就是 16），第 13 要下周一才生效（Tennis Majors「a new career high of No. 13 next week, up from No. 14」＋ Sunday Guardian 标题，两个源）。⚠️ **不写成「她现在是世界第十三」**，那是「写纪录先看它什么时候生效」那条。\n最后一句回到钩子那条「影子」并**落在一问上**（`test_收尾要落在一问上不能停在数据上`）：她生涯两个巡回赛冠军都在瓜达拉哈拉（`_claims` 里两个独立源认领过），而下一座会不会还在这儿，是留给评论区的那一问。",
+      "point_end_ok": "比赛在 ~257s 就结束了，这一段是赛后画面和全屏赛果板，**没有记分条**。`point_ends_guess` 在 297.8~300.5 之间那两格（298.08 / 300.24）是 WTA 订阅片尾卡切入时的画面突变，不是翻牌。",
+      "_tail_why": "段尾 297.5 离片尾卡那一刀（`scene_cuts` 298.2、`silent_audio` 从 298.26 起数字静音）还有 0.7 秒，加上 `SEG_FADE` 0.18 之后是 297.68，**离刀还剩 0.52 秒**——CLAUDE.md「卡在那一刀前面要留半秒，别留几帧」那条的下界。⚠️ WTA 的订阅片尾卡一帧都不许进片子。"
+    }
+  ],
+  "_tts_wording_why": "切词按合成器自己报的那一份（`--check-narration` 的 `voice_NN.words.json`）改过三处假词，不是凭耳朵猜（CLAUDE.md「切词错了不用靠耳朵猜」那条）：\n① 第 3 段「墨西哥瓜达拉哈拉」被切成 `墨西哥瓜 ｜ 达拉哈 ｜ 拉`——**「墨西哥瓜」是个假词**，中间加一个「的」撑开成「墨西哥的瓜达拉哈拉」；\n② 第 9 段「一拍截击救了回来」被切成 `一 ｜ 拍 ｜ 截击救 ｜ 了 ｜ 回来`——**「截击救」是假词**，「截击」后面加一个逗号断开；\n③ 第 6、8 段的「没救下来 / 没救成」被切出 `没救` 这个 token——「没救」本身是个真实存在的词（读起来像「无可救药」），和这里要说的「没有救下来」是两个意思，改成「没能救下来 / 没能救成」。\n⚠️ 这三处都是**读音变了的那一类**，`--dry-run` 的离线估看不见，只有真 TTS 的切词报告报得出来。"
+}
