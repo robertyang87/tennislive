@@ -30,6 +30,16 @@
     "_hook_why": "两行是「来路当影子 ＋ 这场球的形状」（CLAUDE.md 2026-09-19 那条）：第一行是门西克的来路——前一天他刚 2-6 4-6 输给勒纳·钱；第二行是这场球真实的收尾方式——解说 391.60s~396.72s 「another chance to seal the deal … with an ace」。两行之间有落差（输过 → 自己一记 ACE 结束），不是同一件事说两遍。⚠️ 不重复比分板：板上就印着 5-7 6-4 6-3，所以钩子里不写盘数和比分。⚠️ 不写身份和排名（第 4、第 15 都在名条上）。⚠️ ACE 按仓库口径不译成中文。最长行 9 个字符，≤ HOOK_MAX_CHARS=10。",
     "_matchup_rank_why": "两个名次都取这一周（2026-09-14/15 那一期）的 ATP 榜，且都在本仓库同一条 tie 的兄弟 spec 里各自双源核过，直接引用不重查：谢尔顿 4 见 `lehecka-shelton-davis-cup-2026-qualifiers` 的 `_matchup_rank_why`（tennisexplorer 榜 `4. Shelton Ben USA 4680` ＋ AP 通稿「career-high No. 4」）；门西克 15 见 `mensik-tien-davis-cup-2026-q2` 的 `_matchup_rank_why`（tennisexplorer 同期 ＋ crushrushnews 赛前稿「the 21-year-old Mensik, who is ranked No. 15」）。⚠️ 戴维斯杯没有种子，不存在种子号和排名混淆的问题。",
     "_name_why": "两个中文名都走译名表，没有手打：门西克、谢尔顿在 `mensik-tien-davis-cup-2026-q2` 和 `lehecka-shelton-davis-cup-2026-qualifiers` 里已经是这两个写法，本条沿用同一张表。",
+    "_heat_why": "谢尔顿世界第 4，落在 `HEAT_TOP_RANK = 20` 以内，走的是「② 顶级球员」那一档；门西克世界第 15 同样在内。外加这一场自己的话题：它是这条 tie 的第四场，赢了就把 2-1 扳成 2-2、把整条对阵拖进决胜的第五场，也就是美国队能不能进十一月博洛尼亚 Final 8 的直接分水岭——不是「没话题、排名又不高」那一类。⚠️ 两个人都不是中国球员，所以不走「① 中国球员」那一档。",
+    "scoreboard": {
+      "court": "布拉格 O2 竞技场",
+      "_court_why": "赛果板自证：源片 430.5s 起画面左下角叠的 ITF 赛果条印着 `CZECHIA 5 6 6 / USA 7 4 3 · MATCH 4 · O2 ARENA`（缩略图墙 contact_07.jpg 读得到）；sofascore 这场的场地栏写 O2 Arena, Prague, Czechia；o2arena.cz 官网的活动页就是《Davis Cup Qualifiers – Česko vs. USA》。同一条 tie 的兄弟 spec `lehecka-shelton-davis-cup-2026-qualifiers` 记的也是这块场地。",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%20%222%3A13%3A00%22%2C%20%22source%22%3A%20%22%C4%8CTK%20%E9%80%9A%E7%A8%BF%EF%BC%88ceskenoviny.cz%202876600%20%EF%BC%8F%20denik.cz%20%E5%90%8C%E4%B8%80%E5%8F%A5%EF%BC%89%E3%80%8CJednadvacetilet%C3%BD%20Men%C5%A1%C3%ADk%20zdolal%20Sheltona%20za%20dv%C4%9B%20hodiny%20a%2013%20minut.%E3%80%8D%22%2C%20%22cross_check%22%3A%20%22iSport.cz%20480042%20%E7%9A%84%E7%9B%B4%E6%92%AD%E6%B5%81%E6%B0%B4%EF%BC%9A%E7%AC%AC%E4%BA%8C%E6%AF%94%E8%B5%9B%E6%97%A5%E5%8F%8C%E6%89%93%2014%3A00%20%E5%BD%93%E5%9C%B0%E5%BC%80%E6%89%93%EF%BC%8C%E9%97%A8%E8%A5%BF%E5%85%8B%E5%AF%B9%E8%B0%A2%E5%B0%94%E9%A1%BF%E7%BA%A6%2017%3A29%20%E5%BC%80%E5%A7%8B%E3%80%81%E8%8E%B1%E8%B5%AB%E5%A5%87%E5%8D%A1%E5%AF%B9%E5%8B%92%E7%BA%B3%C2%B7%E9%92%B1%E7%BA%A6%2020%3A07%20%E5%BC%80%E5%A7%8B%E2%80%94%E2%80%9417%3A29%20%2B%202%3A13%20%3D%2019%3A42%EF%BC%8C%E5%92%8C%E4%B8%8B%E4%B8%80%E5%9C%BA%E4%B9%8B%E9%97%B4%E5%8F%AA%E9%9A%94%E6%8D%A2%E5%9C%BA%E6%97%B6%E9%97%B4%EF%BC%8C%E8%87%AA%E6%B4%BD%E3%80%82%E2%9A%A0%EF%B8%8F%20ITF%20%E5%AE%98%E6%96%B9%20tieCentre%20%E6%8E%A5%E5%8F%A3%E8%BF%99%E4%B8%80%E6%AC%A1%E6%B2%99%E7%AE%B1%E5%92%8C%20GitHub%20runner%20%E5%8F%8C%E5%8F%8C%20403%EF%BC%88run%2035480350304%20%E5%AE%9E%E6%B5%8B%EF%BC%89%EF%BC%8C%E6%8B%BF%E4%B8%8D%E5%88%B0%20duration/actualStartDate%20%E9%82%A3%E4%B8%80%E5%B1%82%E3%80%82%22%7D",
+        "field": "duration"
+      },
+      "_duration_why": "2 小时 13 分。ČTK 通稿写死了这一句（ceskenoviny.cz 2876600、denik.cz 转的是同一句，**算一个源**）；第二个方向是 iSport.cz 480042 的直播流水时刻——17:29 当地开打、下一场 20:07 开始，17:29+2:13=19:42，中间只隔换场，自洽。⚠️ ITF 官方 tieCentre 沙箱 403、**runner 上也 403**（run 35480350304），这条线上第一次拿不到官方那一层，所以印的是通稿的数，不是官方接口的数。"
+    },
     "_subject_why": "封面放**门西克**——赢的那个，也是这条片子的主语（前一天输过、这一晚自己收掉）。⚠️ 封面大图还没定：按仓库规矩要官方高清实拍，戴维斯杯这一档 ITF 官网赛报的头图和 AP 图库是两条已知路子，probe 这一趟没产封面候选帧，挑图另走一步。"
   },
   "topbar": {
@@ -87,8 +97,8 @@
       "source": "main",
       "start": 18.0,
       "end": 32.0,
-      "narration": "北京时间九月十九号晚上，布拉格。戴维斯杯资格赛第二轮，第二个比赛日。开打之前美国队二比一领先，谢尔顿这一场赢下来，美国就出线了。",
-      "_why": "开场三格的第三格：坐标。时间、地点、赛事轮次一次给全，顺带交代赌注。⚠️ 原来「资格赛第二轮的第二个比赛日」连成一个 17 格的子句，字幕只能硬切，加了一个逗号断开。段尾 32.0，最近的翻牌 17.36 在前、54.32 在后，都离得远。 ⚠️ **只说「晚上」不报钟点**：两个赛前源给的开球时刻对不上（scores24 写 13:10Z、sofascore 写 15:15Z，换成北京是 21:10 和 23:15），ITF 官方接口沙箱和 runner 都是 403，核不到准确时刻。按「开球时刻只说个大概，不报到分」的口径，两个候选都落在「晚上」里，就只说到这一档。"
+      "narration": "北京时间九月十九号深夜，布拉格。戴维斯杯资格赛第二轮，第二个比赛日。开打之前美国队二比一领先，谢尔顿这一场赢下来，美国就出线了。",
+      "_why": "开场三格的第三格：坐标。时间、地点、赛事轮次一次给全，顺带交代赌注。⚠️ **只说「深夜」不报钟点**：iSport.cz 480042 的直播流水写这一场当地约 17:29 开打（布拉格 CEST＝UTC+2，换成北京是 23:29），sofascore 的赛前排期写 15:15Z（北京 23:15），两个对得上但都不是官方落库时刻——ITF tieCentre 沙箱和 runner 都 403。按「开球时刻只说个大概，不报到分」的口径，就只说到「深夜」这一档。⚠️ 原来「资格赛第二轮的第二个比赛日」连成一个 17 格的子句，字幕只能硬切，加了一个逗号断开。段尾 32.0，最近的翻牌 17.36 在前、54.32 在后，都离得远。"
     },
     {
       "source": "main",
