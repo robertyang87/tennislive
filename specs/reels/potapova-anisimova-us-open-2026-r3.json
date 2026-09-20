@@ -9,8 +9,6 @@
     980
   ],
   "_scorebox_why": "美网这一届同一条频道同一套转播图形，和已发的 `zheng-keys-us-open-2026-r3` / `wu-alcaraz-us-open-2026-r3`（104 / 887 / 660 / 980）逐条相同；本场 probe 的 `scorebox_guess` 是 `104,888,579,978`（右缘 579 是猜的，只有一盘时板窄）。⚠️ 右缘 660 只是兜底，真正的右缘是 `resolve_board_insets` 每段现量的（这块板每打完一盘右缘 +38px）。",
-  "tts_backend": "edge",
-  "_tts_backend_why": "仓库的 `AZURE_SPEECH_KEY` 自 2026-09-03 起被 Azure 401 拒（`keys-bondar` / `zheng-putintseva` / `wu-alcaraz` 连着死在第 2 秒的片尾配音上；昨天 `zheng-keys-us-open-2026-r3` / `comeback-five-love-down` 都是 edge 渲的），账号所有者定的是「换 edge tts」。这一条退回 edge 零代价：没用 `voice.style`，也没用 `lead_pause`。本地 `--check-narration` 在这台沙箱跑的就是 edge-tts，量到的余量就是成片的真实情况。",
   "source_url": "https://www.youtube.com/watch?v=MbMPFIDunzs",
   "_source": "US Open 官方 YouTube 频道（oEmbed `author_name: US Open Tennis Championships`）本场官方集锦，probe 实测 193.77s / 1920×1080 / 29.97fps（过 1080p 硬闸）。画面自证四处：\n① 记分条 `24 POTAPOVA AUT / 10 ANISIMOVA USA` 逐格比分和 flashscore `p0Zrr3Z0` 的逐分记录对得上（18.5s 首盘 `2 / 1` 波塔波娃发球、32.5s `3 [0] / 1 [15]` 阿尼西莫娃发球、44.5s `3 [15] / 2 [30]` 波塔波娃发球、68.5s `SET POINT #4 5 [AD] / 2` 波塔波娃发球、86.5s 第二盘 `6 1 [15] / 2 0 [30]`、106.5s `BREAK POINT 6 2 [30] / 2 1 [40]` 波塔波娃发球、132.5s `MATCH POINT 6 6 [40] / 2 5 [30]` 波塔波娃发球）；\n② 84.5s / 186.5s 两次全屏图形，印着 `WOMEN'S SINGLES | 3RD ROUND · LOUIS ARMSTRONG STADIUM / 24 ANASTASIA POTAPOVA / 10 AMANDA ANISIMOVA`，186.5s 那一张比分 `6 7 / 2 5`；180.5s 场边 LED 打着 `ANASTASIA POTAPOVA`；\n③ 球衣可分：波塔波娃红色 Wilson 连衣裙＋白色遮阳帽（Wilson 标）；阿尼西莫娃薄荷绿 Nike 背心裙＋薄荷绿遮阳帽——转播 12.5s 发球近景、160.5s 低头近景都是薄荷绿；\n④ 片尾 190.64s 起是美网品牌板（`silent_audio` 报 190.7s 之后数字静音），已排除在所有段之外。\n⚠️ 解说把两个人的名字都念歪了（`Pipova` / `Podapova` / `Potterova`、`Isimova` / `Misimova` / `Amandaova`），自动字幕照写，认人靠球衣和记分条。",
   "cover": {

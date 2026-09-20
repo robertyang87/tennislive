@@ -4199,3 +4199,50 @@ orchestrate.yml -f apply=true -f max=N` 一趟就能把积压的候选踢出去�
 
 顺带：**字数按闸自己的算法算**（`push_reel.split_copy`），不是 `len()`——我按去掉标题和
 tag 行的字符数量出 953，闸算出 1031。要这个数就让 dry-run 印，别自己数。
+
+### ⭐⭐ 2026-09-19：`Sign in to confirm you're not a bot` 的**另一半**——重试两次都红，就不是 IP，是 cookie 过期
+
+这份档案里写着「会间歇性撞……**重试一次通常就过**」，那条是真的，但它只覆盖了一半。
+做 `rune-dimitrov-davis-cup-2026-wg1` 时撞上的是另一半：**同一句报错，重试救不回来**，
+而两种情形在日志里**第一眼长得一模一样**（8 种 player client 全红，逐条都是那句话）。
+
+**分辨它只要一趟，而且工作流里早就有这个模式**——`match-reel.yml` 的 `mode=cookies`：
+
+    mode=cookies + url 留空   → 它会去下**一条与本片无关的默认视频**（HyKTXynnI9c）的前 3 秒
+
+判据就是这一趟的结果，因为它把「这条视频的问题」整个摘掉了：
+
+| `mode=cookies`（默认视频） | 说明什么 |
+|---|---|
+| **绿** | 下载链是通的 → 红的是**你那条视频**（受限／会员／地区） |
+| **红** | 下载链本身断了 → 和视频无关，往下看它打印了什么 |
+
+而 yt-dlp 自己会把真因说出来，**只是它是 `WARNING` 不是 `ERROR`，在几十行 client
+失败里很容易被滑过去**：
+
+    WARNING: [youtube] The provided YouTube account cookies are no longer valid.
+             They have likely been rotated in the browser as a security measure.
+    ERROR:   [youtube] …: Sign in to confirm you're not a bot.
+
+⚠️⚠️ **那句 WARNING 才是判据，那句 ERROR 是症状。** 这一轮的实测账：
+
+| 趟 | 模式 | runner | 结果 |
+|---|---|---|---|
+| 35457535761 | probe | 1000019258 | 8 种 client 全红 |
+| 35457775140 | probe | **换了一台** 1000019264 | 一模一样 → **排除「这台机器的 IP」** |
+| 35457908134 | **cookies（默认视频）** | 1000019266 | 同样红 ＋ 打印那句 WARNING → **排除「这条视频」** |
+| 沙箱本地 | yt-dlp 直接下 | —— | 429 ＋ 同一句 bot 验证 → 不是 runner 独有 |
+
+⚠️ **这一条不推翻上面那条，是给它划边界**：
+**红一次 → 重试**（多半就过）；**红两次、而且是两台不同的 runner → 别再重试了**，
+去跑 `mode=cookies`，然后按它说的办。
+
+**修法只有一个，而且我做不了**：从一个登录过 YouTube 的浏览器重新导一份 cookies.txt，
+更新仓库 Secret `YT_COOKIES_TXT`（工作流第 23 步会把它落成文件并通过 `YT_COOKIES` 传进去；
+日志里那句 `带 cookie 试（25 行）` 说明**文件是在的**——**「cookie 存在」和「cookie 有效」
+是两件事**，而前者看起来完全正常）。
+
+⚠️ **这段时间里别去找「别的源」兜底**：戴维斯杯这条线上 daviscup.com 的 `/en/videos`
+就是嵌 YouTube，StayLive 的整节回放对美国 IP 锁区（沙箱和 runner 都是美国 IP，
+这份档案早记过）——**YouTube 断了就是整条断了**，正确的动作是报出来等换 cookie，
+把不依赖画面的活（spec 的赛果、统计、转折点、文案、封面渠道）先做完。

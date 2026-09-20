@@ -1611,6 +1611,66 @@ x-staylive-channels`）。频道号是扫 3000–7400 扫出来的，都在 `too
   ⚠️ 而 `frame-grab` 的产物是**提交进仓库**的：`every=3` 抽一条 15 分钟的片子就是 **50 MB**，
   两条 103 MB。**只为读一个数据图就抽帧的话，`every` 给大（10~15），读完当趟删掉。**
 
+#### ⭐⭐ `tieId` 上哪儿拿：**官方稿和维基各给一份，7 个逐字相同**——而「列一遍 slug」那条已经不通（2026-09-20）
+
+上面那段记着「tieId 只能从 where-to-watch 稿子的表格里抠，先 `/en/news?page=1..3` 列一遍
+slug 认它」，2026-09-19 为此花了好几轮。今天查 Final 8 席位时把这条路重走了一遍，
+**稿子还在，坏掉的是列 slug 那一步**：
+
+    /en/news?page=1  带 RSC: 1  → 108 KB，里面**只有导航菜单的 slug**
+                                  （about / format / history / calendar 这类），稿子一条都没有
+
+也就是说「列一遍 slug」现在**必然空手而归，而那和『这周没发稿』长得一模一样**。
+稿子本身两条都是 200，**slug 的命名是稳定的**，直接拼就行（这一轮两条各带 7 个 tie 链接）：
+
+    curl -s -H "RSC: 1" -H "User-Agent: <浏览器 UA>" \
+      https://www.daviscup.com/en/news/qualifiers-2nd-round-preview
+      #                                 qualifiers-2nd-round-where-to-watch  ← 同样 7 个
+    | grep -oE '/en/tie/[0-9a-f-]{36}' | sort -u
+
+**第二条路更短，而且顺带给出官方稿的 URL**：维基该轮页面的每个 tie 各带一条 `<ref>`，
+里面就是 `daviscup.com/en/tie/<uuid>`，一次七场全给：
+
+    curl -s "https://en.wikipedia.org/w/api.php?action=parse&page=2026_Davis_Cup_Qualifiers_second_round&prop=wikitext&format=json&formatversion=2" \
+      -H "User-Agent: tennislive/0.1 (<邮箱>)"
+    → {{cite news|url=https://www.daviscup.com/en/tie/d33d6e4e-…|title=Chile vs Spain}}
+
+两边的 7 个 uuid **逐字相同**（对过），所以这条捷径是可信的。⚠️ 维基 API 会 **429**，
+退避重试（2s/4s/8s/16s）第四次才 200——**限流和「这一页不存在」长得一样**。
+
+⚠️⚠️ **维基只拿 uuid，不拿结论。** 同一页用 WebFetch 读了一次摘要，它把智利 0-2 西班牙和
+英国 2-0 厄瓜多尔都报成 `completed`——**团体赛 5 场 3 胜，拿到 2 分不可能完赛**；
+它还一边写「Five nations」一边列了六个。**拿 uuid 去问官方接口，别问摘要**
+（本文件「别拿搜索摘要顶替它」记的是同一件事）。
+
+⚠️⚠️ **flashscore 的 `AB` 判不了一场 tie 完没完。** 这一轮七场里四场已完、三场进行中，
+而 `AB` **全是 3**。完没完只有两条判据：
+
+    ITF     tie.tieStatus  = In Progress / Complete，配 winnerTeamId（未决时是 null）
+    规则反推 有一方拿到 3 分（5 场 3 胜）——1:1 / 2:0 / 0:2 都是还没打完
+
+#### ⭐ 赛季日历和 Final 8 的赛制：两页，都带 `RSC: 1`（2026-09-20）
+
+    /en/calendar                               → "promoTitle":"<阶段>","summary":"<日期>" 成对
+    /en/davis-cup-final-8-all-you-need-to-know → 赛制正文
+        ⚠️ **它不在 `/en/news/` 下面**，拼成 `/en/news/davis-cup-final-8-…` 是 404
+
+2026 这一季量出来的：
+
+| 阶段 | 日期 |
+|---|---|
+| Qualifiers 1st Round ／ World Group I & II Play-offs | 6-7 或 7-8 February |
+| **Qualifiers 2nd Round** ／ World Group I & II | **18-19 或 19-20 September** |
+| **Final 8** | **24-29 November，博洛尼亚** |
+
+**Final 8 的八个席位 ＝ 东道主意大利（外卡，三连冠）＋ Qualifiers 2nd Round 的七个胜者**
+——官方原文「They will be joined by seven other teams, who will be the nations that win in
+the Qualifiers 2nd Round in September.」⚠️ 所以**九月这一周才是定席位的那一周**；
+而**各队 Final 8 的提名阵容要等赛前才落库**，资格赛这一轮的名单就是抽签当天 12:27Z 才进
+tieCentre 的（CLAUDE.md「前瞻类事实要在它定下来之后再核一次」记的正是这件事）。
+⚠️ 席位没定全的时候，「总决赛名单」这句话有两个意思——**参赛队**和**球员阵容**，
+答之前先分清问的是哪一个。
+
 #### ⭐ 同一套接口还有**逐分**：`custom/pointByPoint/<matchId>`——只标 ACE / 双误 / 普通分，**没有制胜分和非受迫失误**（2026-09-19）
 
 `chung-nagal-davis-cup-2026` 找制胜分／UE 时探出来的。`matchId` 在 tieCentre 的

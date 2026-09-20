@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "at": "2026-09-20T03:02:02Z",
+  "pipeline": "match-reel",
+  "slug": "jovic-stearns-guadalajara-2026-final",
+  "mode": "render",
+  "outcome": "success",
+  "error": null,
+  "elapsed_seconds": 211.613,
+  "last_stage": "数据统计对照图",
+  "stage_seconds": {
+    "下载源片 main": 0.074,
+    "下载源片 ceremony": 0.022,
+    "片尾配音": 0.001,
+    "TTS 合成": 0.004,
+    "封面海报": 2.041,
+    "封面编码": 0.307,
+    "分段编码": 110.225,
+    "片尾渲染": 7.204,
+    "拼接": 36.333,
+    "混音": 4.337,
+    "烧字幕+成片": 129.576,
+    "数据统计对照图": 1.48
+  },
+  "stage_counts": {
+    "下载源片 main": 1,
+    "下载源片 ceremony": 1,
+    "片尾配音": 1,
+    "TTS 合成": 1,
+    "封面海报": 1,
+    "封面编码": 1,
+    "分段编码": 17,
+    "片尾渲染": 1,
+    "拼接": 1,
+    "混音": 1,
+    "烧字幕+成片": 1,
+    "数据统计对照图": 1
+  },
+  "cpu_count": 4,
+  "run_id": "35485272855",
+  "run_attempt": "1",
+  "on_runner": true
+}

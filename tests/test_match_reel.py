@@ -8190,8 +8190,14 @@ def test_双语字幕要真的排成两行(tmp_path):
     一个拉丁词、包上字号标签，画面上多出一个字母 N。所以要**按行分别过
     `_ass_text` 再拼**。
 
-    判据真写一份 ASS 出来读，钉两头：双行的要有换行符、**单行的一个字节都不许
-    变**（存量的解说片和赛场之上都走这个写入器）。
+    ⚠️ **2026-09-20 加的第三头：双语事件要下锚（`\\an2` ＋ 底边距 86）。**
+    账号所有者「两行英文字母、两行中文字幕的最下面的中文字幕没有显示全」那条
+    ——上锚时行数只往下长，四行从 1240 长到 1488，画布只有 1440。下锚之后
+    往上长，底下那行中文钉死在原地。86 是量出来的，见
+    `explainer.bilingual_bottom_margin`。
+
+    判据真写一份 ASS 出来读，钉三头：双行的要有换行符和下锚、**单行的一个字节
+    都不许变**（存量的解说片和赛场之上都走这个写入器）。
     """
     sys.path.insert(0, str(Path("src").resolve()))
     from tennislive.video.explainer import write_subtitles  # noqa: PLC0415
@@ -8213,13 +8219,94 @@ def test_双语字幕要真的排成两行(tmp_path):
         f"双语字幕的英文仍按单行字幕放大，会折行把中文顶出画布：{rows[0]}"
     assert r"{\fs78}" not in head, \
         f"英文行里的逐词放大标签盖掉了双语小字号：{rows[0]}"
-    assert ",0,0,1240,," in rows[0], \
-        f"双语事件没有单独抬高，第二行仍可能被长英文挤出安全区：{rows[0]}"
+    assert ",0,0,86,," in rows[0] and r"{\an2}" in rows[0], \
+        f"双语事件没有下锚，多出来的行会把最下面那行中文顶出画布：{rows[0]}"
+    assert r"{\an2}" not in rows[1], \
+        f"单行旁白被一起改成下锚了，一行两行会落在不同高度、跳来跳去：{rows[1]}"
     assert chr(92) + "{" not in rows[0], \
         f"换行符被当成拉丁词包了字号标签，画面上会多出个 N：{rows[0]}"
 
     assert rows[1].endswith(",普通单行字幕"), \
         f"单行的输出变了，会连累解说片那条线：{rows[1]}"
+
+
+def test_双语字幕下锚_行数再多也切不掉最下面那行中文(tmp_path):
+    """账号所有者 2026-09-20：「**两行英文字母、两行中文字幕的最下面的中文
+    字幕没有显示全**」。
+
+    上锚（`\\an8`）是「从这条线往下长」，而双语 cue 的行数**不由写 spec 的人
+    定**：英文参照行由 libass 按 `WrapStyle: 0` 在空格处自己折，中文行里混进
+    一个标点换来的空格（`_quote_display` 把 `·` 换成空格）也会折。
+    `jovic-stearns` 冷开场那条折成了四行，从 MarginV 1240 往下长到 1488——
+    画布只有 1440，最下面那行中文被切掉一多半（墨迹 1421–1439，本该到 1466）。
+
+    下锚（`\\an2`）之后行数只往**上**长，底下那行中文钉死在原地。
+
+    ⚠️ **判据烧帧量，不读 ASS 文本。** 位置对不对只有渲出来才知道——
+    `min(margin_v, 1240)` 那个写法当初读起来也很对，它只是把锚点算错了一头。
+    钉两头：① 出事的那条四行 cue 整块都落在画布里；② 最常见的两行 cue
+    **和上锚那一版落在同一排像素上**（已发的片子全是这个形状，位置不许动）。
+    """
+    import shutil  # noqa: PLC0415
+    import subprocess  # noqa: PLC0415
+    assert shutil.which("ffmpeg"), "没有 ffmpeg，这条判据跑不了：apt install ffmpeg"
+    np = pytest.importorskip("numpy")
+    pil = pytest.importorskip("PIL.Image")
+    sys.path.insert(0, str(Path("src").resolve()))
+    from tennislive.video import explainer as E  # noqa: PLC0415
+
+    reel = _reel()
+    height, margin_v = 1440, reel.default_margin_v()
+
+    def bands(ass: Path) -> list[tuple[int, int]]:
+        """渲一帧，把墨迹按行归段返回。"""
+        png = ass.with_suffix(".png")
+        subprocess.run(
+            ["ffmpeg", "-v", "error", "-y", "-f", "lavfi",
+             "-i", f"color=c=black:s={E.VIDEO_W}x{height}:d=2",
+             "-vf", f"subtitles={ass}", "-ss", "0.7", "-frames:v", "1", str(png)],
+            check=True)
+        a = np.asarray(pil.open(png).convert("L"))
+        ys = np.where((a > 40).any(axis=1))[0]
+        assert ys.size, "一个字都没渲出来——多半是没装 fonts-noto-cjk"
+        out, start, prev = [], int(ys[0]), int(ys[0])
+        for y in ys[1:]:
+            if y > prev + 3:
+                out.append((start, prev))
+                start = int(y)
+            prev = int(y)
+        out.append((start, prev))
+        return out
+
+    def burn(text: str, name: str) -> list[tuple[int, int]]:
+        return bands(E.write_subtitles(
+            [(0.0, 2.0, text)], tmp_path / f"{name}.ass", height=height,
+            margin_v=margin_v, outline=reel.SUB_OUTLINE_PX,
+            shadow=reel.SUB_SHADOW_PX))
+
+    # ① 账号所有者报的那一条：英文折两行、中文也折两行
+    four = ("for Iva Jovic, who defends her title from 12 months ago.\n"
+            "伊娃 约维奇卫冕了 12 个月前的这座冠军")
+    got = burn(four, "four")
+    assert len(got) == 4, f"这条本来就该折成四行，不然这条测试测不出东西：{got}"
+    assert got[-1][1] < height - 1, (
+        f"最下面那行中文顶到了画布底边（墨迹到 {got[-1][1]}，画布 {height}）"
+        "——被切掉的就是它。双语字幕要下锚，见 explainer.bilingual_bottom_margin")
+
+    # ② 最常见的两行：和上锚那一版逐像素一样，已发片子的位置不许动
+    two = "A first ever tour title\n生涯第一个巡回赛冠军"
+    rows = [f"{{\\fs{E._ASS_BILINGUAL_EN_SIZE}}}A first ever tour title"
+            f"{{\\fs{E._ASS_SIZE}}}", E._ass_text("生涯第一个巡回赛冠军")]
+    old = tmp_path / "old.ass"
+    old.write_text(
+        E._ass_header(height, margin_v, outline=reel.SUB_OUTLINE_PX,
+                      shadow=reel.SUB_SHADOW_PX)
+        + f"Dialogue: 0,0:00:00.00,0:00:02.00,TL,,0,0,"
+          f"{min(margin_v, E._ASS_BILINGUAL_MARGIN_V)},,"
+        + (chr(92) + "N").join(rows) + "\n", encoding="utf-8")
+    assert burn(two, "two") == bands(old), (
+        "两行双语的位置动了——已发的片子全是这个形状，"
+        "下锚的边距要让它落在上锚那一版的同一排像素上")
 
 
 def test_缓存源片的开关要在工作流里够得着():

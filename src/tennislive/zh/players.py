@@ -41,6 +41,18 @@ PLAYER_ZH: dict[str, str] = {
     "Karen Khachanov": "哈恰诺夫",
     "Jack Draper": "德雷珀",
     "Holger Rune": "鲁内",
+    # 保加利亚戴维斯杯队 2008 年生的小将，2026 世界一组第一轮对丹麦首日负鲁内、
+    # 第五盘决胜对默勒。译名按保加利亚姓 Радулов 的通行中文写法（同姓的伊万·
+    # 拉杜洛夫是保加利亚 70 年代的头号球员，中文媒体一贯写「拉杜洛夫」）。
+    "Iliyan Radulov": "拉杜洛夫",
+    # 2026 戴维斯杯世界一组第一轮丹麦 vs 保加利亚这条 tie 上的另外两位，
+    # 写置顶评论时发现表里没有、`player_zh` 原样返回英文名，按规矩补进来。
+    # ⚠️ **这两个是按音译规则定的，没找到中文媒体的既有写法**（不像拉杜洛夫那样
+    # 有 70 年代的同姓前辈可依）——下次看到权威中文稿用了别的写法，以那个为准。
+    # Донски 的 Дон 按「顿河 Don」的通行对法写「顿」；Ingildsen 是丹麦姓，
+    # 按 In-gild-sen 三节写「因吉尔森」。
+    "Alexander Donski": "顿斯基",
+    "Johannes Ingildsen": "因吉尔森",
     "Joao Fonseca": "丰塞卡",
     "Stefanos Tsitsipas": "西西帕斯",
     "Grigor Dimitrov": "迪米特洛夫",
@@ -546,4 +558,13 @@ PLAYER_ZH: dict[str, str] = {
     "Michael Chang": "张德培",
     "Shuai Peng": "彭帅",
     "Jie Zheng": "郑洁",
+    # 2026 名古屋亚运会中国网球队那份名单上的人，表里原来没有（前四位不在 top500，
+    # 所以 player_names_top500.json 也兜不住）。前四位是本人的名字、不是音译，
+    # 英文写法按报名表的「名 姓」序；王蔷是 2018 雅加达亚运会女单金牌得主。
+    "Qiang Wang": "王蔷",
+    "Weiyi Kong": "孔维一",
+    "Tianhui Zhang": "张天汇",
+    "Fanming Meng": "孟凡茗",
+    "Fumin Jiang": "姜福民",
+    "Denis Istomin": "伊斯托明",   # 乌兹别克斯坦，2018 雅加达亚运会男单金牌
 }

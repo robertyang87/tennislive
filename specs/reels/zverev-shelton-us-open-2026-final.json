@@ -12,8 +12,6 @@
  "sources": {
   "main": "https://www.youtube.com/watch?v=hY1epQDmhGQ"
  },
- "tts_backend": "edge",
- "_tts_backend_why": "Azure 钥匙自 2026-09-03 起恒 401（keys-bondar / zheng-putintseva / tien-monfils / wu-alcaraz 连着四条都死在片尾配音第 2 秒），按 CLAUDE.md 2026-09-04「写 spec 那一刻就把 tts_backend 写上，别等 render 红了再补」。**这一条退回 edge 零代价**（两条机械判据）：spec 里没有 `voice.style`、没有 `lead_pause`，那两样是 Azure 独有的；而本地 `--check-narration` 在这台沙箱跑的本来就是 edge-tts，量到的余量直接适用，不用再按「Azure 比 edge 快 6.6%」折算。",
  "_source": "美网官方 YouTube 频道（US Open Tennis Championships）单场决赛集锦 `hY1epQDmhGQ`，222.82s / 1920×1080 / 29.97fps（probe 落库 output/2026-09-14/reel/zverev-shelton）。**四处自证**：① 板上逐帧烧着 `1 ZVEREV GER` / `8 SHELTON USA`；② 218.5s 转播全屏台标 `MEN'S SINGLES | CHAMPIONSHIP` ＋ `ARTHUR ASHE STADIUM` ＋ `ALEXANDER ZVEREV GER 6 7 5 6 / BEN SHELTON USA 3 6 7 2`；③ 板上的逐分走势和 flashscore 逐分（`MyyzpiYp`）逐个对得上；④ 解说 190.80~195.44s 自己报出 `wins his second major of the year, his first US Open`。\n⚠️ **1080p**，过得了「源片一定要 1080p 及以上」那条闸（账号所有者 2026-08-18）。",
  "cover": {
   "matchup": [

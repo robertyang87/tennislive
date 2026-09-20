@@ -200,5 +200,21 @@
     "license": "WTA 官方图库（photoresources.wtatennis.com）的 WTA 授权副本，本号自媒体使用",
     "mirror": "https://photoresources.wtatennis.com/wta/photo/2026/08/04/90a50729-a172-49c7-8d8d-5f12894779a0/GettyImages-2288166823.jpg",
     "note": "WTA 官网稿件 `week-in-review-eala-levels-up-in-dc-while-liutova-breaks-through-in-memphis` 的 twitter:image，路径日期 2026/08/04 ＝ 华盛顿夺冠那一周。**6000×4000**，真实相机分辨率不是放大，铺 1080×1440 是 0.36× 缩小。**画面自证**：场边广告是 `Mubadala Citi DC Open` 的赞助商阵容、右下角是华盛顿站那个国会山圆顶标志；她穿的绿色上衣配绿帽和华盛顿那一周同一套。⚠️ **背景看台上飘着菲律宾国旗**——这条片子引的那句「为了旗帜和国家」，画面里就有那面旗。四道闸门：时间地点人物由 WTA 自己的稿和路径写死；比赛进行中（赢球那一刻的场上反应，不是发布会不是训练）；有冲击力（仰头吼出来，情绪外露，放大到脸也是锐的）；够清晰（6000px）。⚠️ **眼睛是睁的**——裁到脸放大看过，不是闭眼那一帧。"
+  },
+  "jovic-stearns-guadalajara-2026-final.jpg": {
+    "artist": "Getty Images / WTA",
+    "license": "WTA 官方图库（photoresources.wtatennis.com）的 WTA 授权副本，本号自媒体使用",
+    "source": "WTA 官网 2026 瓜达拉哈拉站的赛事页（/tournaments/2075/guadalajara-500/2026）和这一场的比分页（/scores/LS001）都挂着这张图，路径日期 `2026/09/20` ＝ 决赛落幕那一刻（北京 08:35 ＝ UTC 00:35）。⚠️ 取原图要带 `?width=4000`：裸地址回 400（`x-cache: Error from cloudfront`），`?width=2400` 回 2400×1590、`?width=4000` 回 **4000×2667**。",
+    "page": "https://www.wtatennis.com/tournaments/2075/guadalajara-500/2026/scores/LS001",
+    "url": "https://photoresources.wtatennis.com/photo-resources/2026/09/20/311afff2-539b-43a9-99fd-349774b1c029/GettyImages-2295584327.jpg?width=4000",
+    "date": "2026-09-20",
+    "note": "用在 `specs/reels/jovic-stearns-guadalajara-2026-final.json` 的 `cover.portrait`（solo 版式，focus 0.46）。画面：约维奇戴着墨西哥 charro 宽檐帽举起瓜达拉哈拉站的冠军杯，漫天金色纸屑和身后的烟火，咧嘴大笑、**眼睛是睁的**（裁到脸放大看过）。⚠️ 同一时刻赛事官网 WP 媒体库也有一张（`guadalajaraopen.com/wp-content/uploads/2026/09/WhatsApp-Image-2026-09-19-at-7.27.44-PM-2.jpeg`，构图几乎一样）但只有 **1280×853**，铺 3:4 要放大 1.69 倍——两个渠道都有时挑分辨率高的那个，所以没用它。⚠️ 画面上不烧署名，出处只记在这儿。"
+  },
+  "zhang-asian-games-2026.jpg": {
+    "artist": "Julian Avram / WTA",
+    "license": "WTA 官方图库（photoresources.wtatennis.com），本号自媒体使用",
+    "mirror": "https://photoresources.wtatennis.com/photo-resources/2026/08/07/b83b67fe-62d7-482e-8b50-b5d3fd3117db/Zhang-R3-Julian-Avram.jpg?width=4000",
+    "note": "WTA 官网 2026-08-07 那篇「Zhang snaps seven-match losing streak to Putintseva」视频页挂的头图，文件名 `Zhang-R3-Julian-Avram.jpg` 自证**球员、轮次、摄影师**，路径日期 2026/08/07 ＝ 多伦多 WTA1000 第三轮的比赛日。4000×2667，铺 1080×1440 是 0.54× 缩小，不用写 `_low_res_why`。\n\n四道闸门：① 精准——WTA 自己的 CMS 把这张图挂在这条集锦上，文件名里的 `Zhang` 在 WTA 赛事里只可能是张帅（张之臻是 ATP）；② 在比赛中——反手击球中，球在拍面上；③ 冲击力——近景特写，表情用力，李宁帽和队服看得清，背景是 NATIONAL BANK OPEN 的深蓝挡风布；④ 清晰度——4000px 相机原图。\n\n⚠️ **取原图必须带 `?width=4000`**：不带参数是 400 Bad Request，换成 og:image 那个 `/wta/photo/<uuid>/` 前缀是 403——两种失败都不长得像「这张图不存在」。",
+    "page": "https://www.wtatennis.com/videos/4553297/zhang-snaps-seven-match-losing-streak-to-putintseva-into-toronto-second-round"
   }
 }

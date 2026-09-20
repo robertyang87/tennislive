@@ -1,0 +1,80 @@
+{
+  "scoreboard_qc_sha256": null,
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 3.827,
+  "layout": "full",
+  "segments_seconds": 125.9,
+  "topbar": {
+    "line1": "2026 戴维斯杯世界一组 第一轮",
+    "line2": "鲁内 3-6 6-3 7-6(4) 迪米特洛夫",
+    "start": 1.2,
+    "end": 127.1
+  },
+  "film_seconds": 130.96,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 4.416,
+    "2": 4.392,
+    "3": 5.184,
+    "4": 2.88,
+    "5": 4.44,
+    "6": 2.808,
+    "7": 5.304,
+    "8": 5.064,
+    "9": 4.656,
+    "10": 3.888,
+    "11": 4.368,
+    "12": 3.672,
+    "13": 5.136,
+    "14": 4.056,
+    "15": 4.296,
+    "16": 2.52,
+    "17": 3.504,
+    "18": 10.728,
+    "19": 3.6,
+    "20": 4.272,
+    "21": 4.632
+  },
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "rune-dimitrov-davis-cup-2026-wg1",
+    "received_at": "2026-09-20T02:04:52Z",
+    "artifact_ready_at": "2026-09-20T02:10:31Z",
+    "elapsed_seconds": 339.122,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "624eb6f4bd61dc022d6501713f1b0b141bee8a3a18725f3b1663341742d8ba09",
+    "spec_sha256": "a0d6157a86ef80074295b3a31dc48c9cd371243f8b7c4de1d412a23a3cde1bc4",
+    "run_id": "35483036642",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-09-20T02:07:24Z",
+        "run_id": "35483036642"
+      }
+    ],
+    "render_seconds": 187.122,
+    "pre_render_seconds": 152.0
+  },
+  "film_sha256": "624eb6f4bd61dc022d6501713f1b0b141bee8a3a18725f3b1663341742d8ba09",
+  "film_bytes": 88028233,
+  "qc_attestation_sha256": "8e8a2735b3ece8f24e827f36d13101e77cfcd34121d05e73bfb557c1dba498c4",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-09-20T02:07:24Z",
+      "run_id": "35483036642"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-20T02:10:32Z",
+      "run_id": "35483036642"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-rune-dimitrov-davis-cup-2026-wg1/rune-dimitrov-davis-cup-2026-wg1.mp4",
+  "video_bytes": 88028233
+}

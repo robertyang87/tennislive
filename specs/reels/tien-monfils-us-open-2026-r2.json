@@ -9,8 +9,6 @@
   978
  ],
  "_scorebox_why": "板在源片里的位置。probe 这一趟 `scorebox_guess` 是 null（没猜出来），四个数取的是**同一座球场、同一个人、同一届**那条已发的 `monfils-vallejo-us-open-2026-r1`（104/888/700/978，阿姆斯特朗球场的同一套转播图形包）。\n⚠️ **右缘 660 只是兜底**：真正的右缘是渲染时 `resolve_board_insets` 每段现量的——美网这块板每打完一盘右缘 +38px，本场从一盘走到三盘会经过三档，写死一个数必然有两档是错的。R1 那条是四盘球所以兜底写 700，这一条三盘，按同为三盘的 `zandschulp-deminaur-us-open-2026-r2` 取 660。\n⚠️ `SET POINT` / `MATCH POINT #N` 那条黄标在 y<888 之外，按 docs/us-open-scoreboard-aspect.md 的口径不扩窗——赛点那几段旁白本来就讲。",
- "tts_backend": "edge",
- "_tts_backend_why": "仓库的 `AZURE_SPEECH_KEY` 现在被 Azure 401 拒（2026-09-03 `keys-bondar-us-open-2026-r2` 连挂两趟、2026-09-04 `zheng-putintseva-us-open-2026-r2` 又挂一趟，都是 `WebSocket upgrade failed: Authentication error (401)`），账号所有者当天定的是「换 edge tts」。\n这一条退回 edge 没有代价：**没用 `voice.style`，也没用 `lead_pause`**——Azure 独有的那两样一个都没碰，同一把嗓子（`zh-CN-YunjianNeural`）edge 也有；而旁白长度本来就是拿 edge 真跑量过的（本地 `--check-narration` 在这台沙箱走的就是 edge-tts）。\n⚠️ 钥匙修好之后把 `tts_backend` 和这一段删掉就回到 Azure。",
  "source_url": "https://youtu.be/g7Hs91AJsX0",
  "_source": "美网官方 YouTube 频道（US Open Tennis Championships）的单场集锦，212.74s / 1920×1080 / 30000/1001 fps——过得了「1080p 及以上是硬门槛」那道闸。\n⚠️ `source_url` 和 `output/2026-09-04/reel/tien-monfils-us-open-2026-r2/probe.json` 的 `url` **逐字节相同**（都写成 `youtu.be/<id>`）——`--dry-run` 按 URL 认领 probe.json，写成 `watch?v=` 那一种会认不上，报「一份 probe.json 都没认领上」。\n画面自证：记分条一行 `MONFILS FRA`、一行 `14 LEARNER TIEN USA`；122.5s 有一张全屏图形写着 `MEN'S SINGLES | 2ND ROUND / LOUIS ARMSTRONG STADIUM`；208.5s 收尾图形印着 `GAEL MONFILS FRA 3 4 3 / 14 LEARNER TIEN USA 6 6 6`。\n⚠️ `silent_audio = [[209.67, 212.74]]` 是美网的社媒片尾板，所有段落都收在 209.6 之前。",
  "cover": {

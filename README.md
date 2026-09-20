@@ -174,6 +174,20 @@ Variables：`WECHAT_MODE` = `off`（默认，只生成文件）/ `draft` / `publ
 核查，批量自动访问需遵守各站条款；要稳定可发布的逐场技术统计，请配置有使用权的
 供应商 API。
 
+### 源片：YouTube 的登录态 `YT_COOKIES_TXT`
+
+源片全来自 YouTube，而机房 IP 一律被按机器人挡掉——唯一的通行证是仓库 Secret
+`YT_COOKIES_TXT` 里那份登录态 cookie（Netscape 格式的 cookies.txt 原样粘进去）。
+**它会过期**，过期之后赛场之上、赛后开麦、场上采访、frame-grab、编排器一起停摆。
+
+⚠️ 滚到眼前的报错是 `Sign in to confirm you're not a bot`，**读起来像视频本身要登录**，
+其实指向三件事里的某一件：这份 cookie 真的死了、这一阵子被限流、或者缺
+`yt-dlp[default]`（那条见「开发」那节）。别猜——`match-reel` 的 `mode=cookies`
+什么都不产、**51 秒**，它真取 3 秒媒体流并按日志替你分因。
+⚠️ **也别急着重导**：2026-09-19 有过四趟全红、secret 一个字没改、五小时后自己好了。
+
+重新导出和更新的步骤在 [`docs/youtube-cookies-refresh.md`](docs/youtube-cookies-refresh.md)。
+
 ## 模型通道
 
 中译、要点提炼、字幕翻译共用一条通道（`research/brief.py` 的 `Chat`）：

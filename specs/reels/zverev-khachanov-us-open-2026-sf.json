@@ -16,8 +16,6 @@
     "final": "https://www.youtube.com/watch?v=XLMetYRuseA"
   },
   "_sources_why": "四条都是**美网官方频道** `US Open Tennis Championships`（oEmbed 的 `author_name` 实调确认，不是看标题猜的）：\n- `main` `uuLC8AhqDx0`《… Highlights | 2026 US Open Semifinal》212.86s\n- `walkout` `qNvQ254t9vQ`《… Walk-Out …》93.04s\n- `setpoint` `GNtRnLTQQps`《Epic Set Point Save! …》66.99s\n- `final` `XLMetYRuseA`《Alexander Zverev Reaches The Final …》87.19s\n⚠️ **四条同规格所以不用写 `mixed_fps`**：probe 实测都是 1920×1080、30000/1001 fps（`check_sources_match` 只比尺寸，对不上没有出路，所以先量了再接）。\n⚠️ **后两条和 `main` 大面积重复，量过之后只取各自多出来的那一截**——这一步不做就是同一段画面在片子里出现两遍：\n  · `setpoint[0:32.98]` **就是** `main[65.84:98.83]`（解说 `Oh, that was/is exceptional tennis` 对齐 → 偏移 65.84；切点 32.98 ↔ 98.83 逐一对上）。多出来的是 **32.98 之后**：哈恰诺夫救下盘点后的庆祝、观众席，以及 **44.49~63.9 那一分的回放**——第 ⑨ 段取的就是回放这一段。\n  · `final[0:68.04]` ≈ `main[141.7:209.74]`（解说逐句对齐，偏移 141.7）。多出来的是 **68.04~84.08**：`main` 的正片到 209.74 就接片尾板了，而 `final` 的解说一直讲到 84.08——第 ⑮ 段取的就是这一截。\n⚠️ **四条的片尾板都要躲开**（每条的最后一个 `scene_cut` ＝ 片尾板起点，`silent_audio` 独立印证）：main 209.74 / walkout 89.94 / setpoint 63.9 / final 84.08。所有窗口都收在各自那个数之前，并按 `SEG_FADE=0.18` 留足余量（最紧的是第 ⑮ 段 83.4＋0.18＝83.58，离 84.08 还有 0.5 秒）。",
-  "tts_backend": "edge",
-  "_tts_backend_why": "Azure 钥匙从 2026-09-03 起连着四条片子都是第 2 秒 401（`keys-bondar` 两趟 / `zheng-putintseva` / `tien-monfils` / `wu-alcaraz`），CLAUDE.md 已把「写 spec 那一刻就写上」定成默认动作。**这条退回 edge 零代价**：两条机械判据都不占——全片没有一处 `voice.style`、没有一处 `lead_pause`（Azure 独有的那两样）；而且本地 `--check-narration` 在这台沙箱跑的本来就是 edge-tts，量到的余量直接适用，不用再按「Azure 比 edge 快 6.6%」折算。",
   "_source": "美网官方频道的半决赛集锦（212.86s）＋ 同场的官方入场片（93.04s）。四要素由**转播自己烧在画面上的记分条**自证：`1 ZVEREV GER` / `KHACHANOV`（含种子号与国别）、右上角 `us open` 台标、右侧 `9/11/26` 日期戳；入场片由**现场播报员**自证（「From Germany, the number one seed, Alexander Zverev」）。",
   "cover": {
     "matchup": [

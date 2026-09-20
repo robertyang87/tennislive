@@ -1,7 +1,11 @@
 """`tools/gh_runs.py`：把 GitHub MCP 那坨返回体挑成几行能看的。
 
-这个脚本存在的理由本身就是一条判据：沙箱 `curl` 到 `api.github.com` 是 403，
-只有 MCP 通；而 MCP 的 `actions_list` 三条 run 就 400 KB，只能落文件再挑字段。
+⚠️ **2026-09-20 更正**：原来这儿写「沙箱 `curl` 到 `api.github.com` 是 403，
+只有 MCP 通」——实测两种都是 **HTTP 200**（带 token、不带 token、连 artifact 的
+zip 都 200），那条限制已经不成立，详见 `tools/gh_runs.py` 的 docstring。
+
+脚本本身没作废：走 MCP 时 `actions_list` 三条 run 仍是 400 KB（REST 直取只要
+46 KB），超上下文就只能落文件再挑字段，而它吃任何一份存下来的 JSON。
 于是每次查 CI 都要现搓同一段 python——2026-08-02 一天搓了五遍。
 """
 

@@ -395,10 +395,8 @@
   "mixed_fps": {
     "main": "单源，1920×1080 / 25fps（probe 实测），不存在混帧率问题。"
   },
-  "tts_backend": "edge",
   "_voice_why": "沿用这条线的默认：云见（`zh-CN-YunjianNeural`）＋6%，不设 `style`。⚠️ 这一栏叫 `_voice_why` 不叫 `_voice`。",
   "_narration_why": "12 段旁白（第 1 段冷开场不配旁白，共 15 段画面）。每段字数按 5.5 字/秒估，都留了余量；发 render 之前跑过本地 `--check-narration`（真 TTS）逐段核实际时长。数字在旁白底稿里一律写汉字（给 TTS 定读法），烧上屏的字幕由 `arabic_numerals` 自动转成阿拉伯数字。",
   "_editing_why": "源片 348.65s，**窗口全部收在 336.0 之前**——343.6s 起是 `DAVIS CUP by GENERALI` 片尾台标（344.5s、346.5s 两格），按 CLAUDE.md「用 ITF/Tennis TV 的源片，片尾和台标都要剪掉」整段排除。开头 0~12.24s 是片头板和抽签/队长镜头（2.5s、4.5s 两格是 `CZECHIA v USA` 标题板），也整段排除，第一个取景窗从 16.5s 起。每一段都待在同一个镜头里（镜头边界取 probe 的 scene_cuts），只有第 1 段冷开场是有意跨切点的；切点都落在 probe 的 point_ends（死球）上。",
-  "_tts_backend_why": "和同一天的 ruud-te-davis-cup-2026-wg1 同一个理由：Azure 钥匙还没恢复（run 35410646682 在片尾口播那一步 Azure 401 — WebSocket upgrade failed: Authentication error，和 2026-09-17 bjk-cup-story / zheng-bjk-cup-olympic-rule 那次同一个错），退回 edge-tts 的开关走 spec。本条不用情绪风格，edge 够用；本地 --check-narration 量的就是 edge 的时长，余量按 edge 算反而更准。钥匙恢复后删掉 `tts_backend` / `_tts_backend_why` 这两个键即可。",
   "_tennistv_trim": "**片尾**：源片 348.65s，片尾板从 **343.6s** 起（probe 的 scene_cuts 有 343.6 / 344.56 / 346.52 三刀，缩略图墙 344.5s、346.5s 两格是绿色 `DAVIS CUP by GENERALI` 台标卡）。最后一段窗口收在 **337.45s**，离片尾板还有 6.15s，十四段没有一段碰到它。开头 0~12.24s 的 `CZECHIA v USA` 标题板同样整段排除，第一个取景窗从 16.5s 起。\n**台标**：这条源片**没有常驻的转播台标**。唯一常驻的烧录物是左下角的记分条，而它落在取景窗外面——赛场之上是 3:4，1920×1080 的源片按 `cx=0.5` 居中裁，取景窗是源图 **x 555~1365**；记分条在 x≈30~320（缩略图墙逐格量的，右边缘离取景窗左边还有 230px 以上）。实测过：把 contact_03 的第一格还原成 1920 宽、按 555~1365 裁出来看，画面里只有球场和两个人，记分条整条不在（/tmp 里那张 crop34.png）。\n⚠️ 画面顶部那条绿色 `World Tennis` / `DAVIS CUP by GENERALI` / `VISA` 是**场边的实体 LED 挡板**，不是转播台标——它长在球场里，剪不掉也不该剪，ruud-te-davis-cup-2026-wg1 那条同一个频道的源片也是这样。"
 }

@@ -9,8 +9,6 @@
   980
  ],
  "_scorebox_why": "美网这一站的常驻记分板位置，和同期已发的美网 band spec 一致（左缘 104、上下沿 887/980）。右缘按五盘那一档给 740（照 `djokovic-navone-us-open-2026-r1` 736 / `fritz-cerundolo-us-open-2026-r3` 740），真正的右缘由 `resolve_board_insets` 每段现量——板每打完一盘会往右长一截，这一场从两列长到五列。",
- "tts_backend": "edge",
- "_tts_backend_why": "Azure 的钥匙从 2026-09-03 起连着四条片子都是 `WebSocket upgrade failed: Authentication error (401)`（keys-bondar 两趟 / zheng-putintseva / tien-monfils / wu-alcaraz），一律死在第 2 秒的片尾配音上。这条 spec 没有 `voice.style` 也没有 `lead_pause`，退回 edge-tts 零代价；而且本地 `--check-narration` 在这台沙箱跑的就是 edge，量到的余量直接适用，不用再按「Azure 比 edge 快 6.6%」折算。",
  "source_url": "https://youtu.be/D-zIPw2ZEnM",
  "_source": "美网官方频道 `US Open Tennis Championships`（oEmbed 的 `author_name` 自证，不是搬运号），标题 `Arthur Gea vs. Botic van de Zandschulp Highlights | 2026 US Open Round 4`。213.02 秒 / 1920×1080 / 29.97fps。⚠️ 片尾板从 209.91 起（`scene_cuts` 最后一刀 ＋ `silent_audio` `[[209.96, 213.02]]`），所有段落收在 209.2 之前。",
  "cover": {
