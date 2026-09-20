@@ -1,0 +1,36 @@
+{
+  "_note": "戴维斯杯官方 Instagram（@daviscup）的「BOLOGNA BOUND」系列：每支晋级 Final 8 的队各一张，构图统一——DAVIS CUP by GENERALI 台头 ＋ BOLOGNA BOUND ＋ 该队球员抠图 ＋ 博洛尼亚天际线（圣佩特罗尼奥教堂穹顶与阿西内利斜塔）＋ 一张 BOARDING PASS 登机牌（FINAL 8 / 24-29 NOVEMBER / 本国旗→意大利旗 / BLG2026 / 队名 ＋ 五人名单）。",
+  "_怎么取的": "⚠️ Instagram 的 feed 接口给的直链带裁切参数（`stp=c217.0.653.652a_..._s640x640`），下回来是 **640×640 方形**，标题被切成 `OLOGNA BOUN`；改 stp 或换 s1080x1080 一律 403（签名绑定裁切参数）。完整竖版要走老接口：`https://www.instagram.com/p/<code>/media/?size=l`（带 Referer: https://www.instagram.com/），回 **1080×1350**。账号主页 `/daviscup/` 是 302 需登录，列不出帖子，所以只能按给定的帖子链接逐条取。",
+  "_四要素怎么自证": "帖子的 og:url 写死账号是 `instagram.com/daviscup/`，twitter:title 是 `Davis Cup (@daviscup) • Instagram photo`；画面里 DAVIS CUP by GENERALI 是赛事官方冠名，登机牌上的 FINAL 8 / 24-29 NOVEMBER / BLG2026 与官方日历（11 月 24-29 日、博洛尼亚）逐字一致。",
+  "_名单的口径": "⚠️ 登机牌上印的五个人是**该队打 9 月资格赛第二轮的阵容**，官方拿它做了 Final 8 的宣传图——**不等于 11 月 Final 8 的正式提名名单**（那个要等赛前才公布，去年是 10 月 20 日）。引用时别写成「Final 8 名单」。",
+  "bolognabound-gbr.jpg": {
+    "team": "英国", "posted": "2026-09-20",
+    "caption": "Back in the Final 8! 🇬🇧 Great Britain defeat Ecuador to book their ticket to Bologna!",
+    "登机牌名单": "ARTHUR FERY / TOBY SAMUEL / HARRY WENDELKEN / HENRY PATTEN / NEAL SKUPSKI",
+    "size": "1080x1350"
+  },
+  "bolognabound-can.jpg": {
+    "team": "加拿大", "posted": "2026-09-19",
+    "caption": "Bologna bound after a historic weekend in Quebec City 🇨🇦 Canada records its first Davis Cup victory over France…",
+    "⭐事实": "官方口径：加拿大**队史首次**在戴维斯杯击败法国",
+    "size": "1080x1334"
+  },
+  "bolognabound-cze.jpg": {
+    "team": "捷克", "posted": "2026-09-19",
+    "caption": "Czechia are through to the Final 8 of the Davis Cup 🇨🇿 See you in Bologna 👋",
+    "size": "1080x1334"
+  },
+  "bolognabound-aut.jpg": {
+    "team": "奥地利", "posted": "2026-09-19",
+    "caption": "Austria are in the Final 8 for the second year in a row 🇦🇹 See you in Bologna 🤝",
+    "⭐事实": "官方口径：奥地利**连续第二年**进 Final 8（与 2025 Final 8 名单对得上）",
+    "size": "1080x1350"
+  },
+  "bolognabound-kor.jpg": {
+    "team": "韩国", "posted": "2026-09-18",
+    "caption": "Welcome to the Final 8, Korea, Rep. 🇰🇷 They advance to the quarter-finals for the first time after defeating India in S…",
+    "⭐事实": "官方口径：韩国**队史首次**打进八强（quarter-finals）。⚠️ 这条补上了我原先不敢写的断言——之前只敢写「去年八强全是欧洲和阿根廷」，因为 2019-2023 是 16/18 队赛制、没有可比的「八强」阶段；官方用的正是 quarter-finals 这个精确措辞，加上 2024/2025 两届八强名单都没有韩国，两头对上。",
+    "登机牌名单": "SOONWOO KWON / HYEON CHUNG / UISUNG PARK / JISUNG NAM / SEONGCHAN HONG",
+    "size": "1080x1334"
+  }
+}
