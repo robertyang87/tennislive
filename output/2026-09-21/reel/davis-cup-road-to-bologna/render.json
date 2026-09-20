@@ -45,39 +45,39 @@
     "version": 2,
     "pipeline": "match-reel",
     "slug": "davis-cup-road-to-bologna",
-    "received_at": "2026-09-20T18:32:01Z",
-    "artifact_ready_at": "2026-09-20T18:40:30Z",
-    "elapsed_seconds": 509.279,
+    "received_at": "2026-09-20T18:51:56Z",
+    "artifact_ready_at": "2026-09-20T18:59:29Z",
+    "elapsed_seconds": 453.685,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "77172e586051bdda2f93672dbf5b02d19eac17a6a5ef1eac271f701b7b7a8b30",
+    "film_sha256": "6f48420de48cfe92214e5843d3131d0a0925c279292089051e7a53df838cd446",
     "spec_sha256": "356bad2ef917258e6a190561ecc83cc1eb2607d00dd9ac17d7e11c70973ec119",
-    "run_id": "35529360142",
+    "run_id": "35530422444",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-09-20T18:34:23Z",
-        "run_id": "35529360142"
+        "at": "2026-09-20T18:54:45Z",
+        "run_id": "35530422444"
       }
     ],
-    "render_seconds": 367.279,
-    "pre_render_seconds": 142.0
+    "render_seconds": 284.685,
+    "pre_render_seconds": 169.0
   },
-  "film_sha256": "77172e586051bdda2f93672dbf5b02d19eac17a6a5ef1eac271f701b7b7a8b30",
-  "film_bytes": 180836127,
-  "qc_attestation_sha256": "968d010fc3aec4f9a9e4794db2376f57a94b46b8bcb6118a25746e85b5bac298",
+  "film_sha256": "6f48420de48cfe92214e5843d3131d0a0925c279292089051e7a53df838cd446",
+  "film_bytes": 180766816,
+  "qc_attestation_sha256": "641fa7030dedc19744adbe13033e7b2287c34451d19cddfe070bd180bbcc1c34",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-09-20T18:34:23Z",
-      "run_id": "35529360142"
+      "at": "2026-09-20T18:54:45Z",
+      "run_id": "35530422444"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-09-20T18:40:31Z",
-      "run_id": "35529360142"
+      "at": "2026-09-20T18:59:30Z",
+      "run_id": "35530422444"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-davis-cup-road-to-bologna/davis-cup-road-to-bologna.mp4",
-  "video_bytes": 180836127
+  "video_bytes": 180766816
 }
