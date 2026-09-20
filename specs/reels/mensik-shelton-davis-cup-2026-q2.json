@@ -340,9 +340,10 @@
       "start": 351.36,
       "end": 358.0,
       "cx": 0.5,
-      "narration": "五比三，他破掉谢尔顿的发球局，轮到自己发球胜赛。",
+      "narration": "五比三，他破掉了谢尔顿的发球局。接下来，轮到他自己发球胜赛了。",
       "point_end_ok": "段尾 358.00 落在 `point_ends_guess` 的 357.9 之后 0.1 秒；下一格猜到的死球在 361.6，离段尾 3.6 秒，在翻牌窗口之外。",
-      "_why": "第三盘的决定性一局。逐分：第三盘 `5-3 客队发球，主队拿下 ← 破发、1个破发点`（A:40 `|B1|`）。解说 342.24 前后说「Czechia amazingly are within a game of taking this tie to a fifth and final match」。"
+      "_why": "第三盘的决定性一局。逐分：第三盘 `5-3 客队发球，主队拿下 ← 破发、1个破发点`（A:40 `|B1|`）。解说 342.24 前后说「Czechia amazingly are within a game of taking this tie to a fifth and final match」。",
+      "_narration_why": "⚠️ **第一版 23 字，`check_reel_landed` 报「封面之后还有 2 秒是数字静音：[74, 75]」**——那两秒正落在这一段旁白说完之后的尾巴上（成片 74~75s ＝ 源片 356~358s，逐秒响度 −62.5 / −63.0 dB）。源片那一段本身现场声就弱，而闪避把它压得更低（CLAUDE.md 的档案里「收尾提前起保住的几秒被闪避自己吃掉」记过同一个形状）。⚠️ **没有收窗口**：351.36~358.00 是一个完整镜头（下一刀在 365.68），中间没有任何 `point_ends_guess`，往回收就是切在球还在飞的时候。改成把旁白加长到 30 字填满这 6.64 秒。"
     },
     {
       "source": "main",
