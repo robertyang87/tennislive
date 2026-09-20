@@ -233,11 +233,40 @@ Tournaments and ITF W15+ events`，**开头那个 all WTA 1000 Mandatory 就是�
 和武网/多哈/迪拜放在一起是常见的误读——武网虽然也在中国、也在同一段亚洲赛季，
 但它是**女子独办**，归「3 选 1」那个桶。
 
-⚠️ **多哈和迪拜的档位每年会变。** 规则书 XIV.B.3.c 明写
-`Tournaments that Annually Rotate Between All Other WTA 1000 Mandatory and WTA 500 Tier
-Levels (e.g., Doha and Dubai)`——它们在 1000 Mandatory 和 500 两档之间轮换。
-**2026 赛季两站都是 WTA 1000**（连续第二年如此），所以本年度「3 选 1」那个桶确实是
-多哈站、迪拜站、武汉网球公开赛三站。**名单不是一成不变的，每年要重查。**
+⚠️⚠️ **2026-09-20 更正：上面这一段原来写的是「多哈和迪拜的档位每年会变／名单每年要重查」，
+是错的——轮换 2024 年就停了，读者 @污里纳豆 指出来的。**
+
+| | |
+|---|---|
+| 2009~2023 | 多哈和迪拜**逐年**在 Premier 5／Premier（即今天的 1000／500）之间轮换 |
+| **2024 起** | **两站同时固定为 WTA 1000**，到 2026 已是第三个赛季 |
+
+两个独立源（2026-09-20 查）：
+
+- **WTA 官网 `rankings-explained`**：女子独办 1000 列的就是 `Doha, Dubai, Wuhan` 三站，
+  **全文没有任何轮换的说法**
+- **维基 `WTA Qatar Open`**：`the two tournaments alternated between Premier 5 and Premier
+  (now known as WTA 1000 and WTA 500) status every year **until 2024**, when both events
+  were held as WTA 1000 events`
+
+⚠️⚠️ **而错的根子值得单记：我拿一条「奖金公式」当成了「现状」。**
+XIV.B.3.c 的全名是 `Tournaments that Annually Rotate Between All Other WTA 1000 Mandatory
+and WTA 500 Tier Levels (e.g., Doha and Dubai)`，它坐在 **SECTION XIV – PRIZE MONEY
+FORMULA** 里，讲的是**「一个会轮换档次的赛事，最低奖金怎么算」**——是个**条件条款**，
+括号里的 Doha and Dubai 只是个**写进去之后就没再更新过的举例**。
+
+**最硬的那个判据：整本 577 页的规则书里，`Doha` 和 `Dubai` 各只出现一次**，
+就是那个括号。**规则书从头到尾没有给这两站定过档**——也就是说我去问它「它们现在是
+几档」，本来就问错了表；那个答案在日历／`rankings-explained` 里。
+
+⚠️⚠️ **更该记的是：仓库里早就写对了，我没查。**
+`src/tennislive/video/masters_grid.py` 第 185 行那条注释（标着「维基 WTA 1000
+tournaments，2026-08-14 查」）写着「2024 …… 多哈和迪拜同时成为常设 1000——**十站到
+这一年才定型**」。**写新东西之前先 grep 一遍仓库里有没有人查过这件事**，
+这条 CLAUDE.md 在工作流那一头记过（「抄结构也要抄注释」），这次撞在事实上。
+
+所以本年度「3 选 1」那个桶是多哈站、迪拜站、武汉网球公开赛三站——**而这不是因为
+今年恰好如此，是 2024 年定型之后的常设名单。**
 
 **年终总决赛是奖励项，不占 18 个名额**——这是和 ATP 最大的结构差异。
 
