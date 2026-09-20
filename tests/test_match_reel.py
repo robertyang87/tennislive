@@ -3112,6 +3112,22 @@ def test_封面念的就是海报上那句钩子就不另排字幕():
     bu = json.loads(Path("specs/reels/bu-lucky-loser-story.json").read_text("utf-8"))["cover"]
     assert r.same_line_as_printed(bu["narration"], bu["hook"])
 
+    # ⚠️ 数字写法不同，仍然是同一句。CLAUDE.md 那条「给人看的字一律阿拉伯数字，
+    # 只有 TTS 底稿写汉字」保证了钩子写 `8张`、`cover.narration` 写 `八张`——
+    # 逐字节比的话**凡是钩子带数字的封面都会多叠一行**把同一句话写第二遍。
+    # davis-cup-road-to-bologna 第一趟渲出来正是三行字摞在一起（2026-09-20 抽帧看到的）。
+    assert r.same_line_as_printed(
+        "八张门票发完了，只有一张是送的。", "8张门票发完了\n只有1张是送的"), (
+        "「八张」和「8张」被判成两句话了——封面会在海报的大字上再叠一行小字")
+    assert r.same_line_as_printed(
+        "第一届只有十六个国家，今年一百四十八个国家来抢。",
+        "第一届只有16个国家\n今年148个国家来抢"), (
+        "bjk-cup-story 的封面也是这个形状（16 vs 十六），一样不许多叠一行")
+    # 而数字**本身**不同的，照旧是两句话——归一化不许把它抹平
+    assert not r.same_line_as_printed(
+        "八张门票发完了，只有三张是送的。", "8张门票发完了\n只有1张是送的"), (
+        "数字归一化归过头了：`1张` 和 `三张` 被判成同一句，那一屏就没字幕了")
+
     spec = json.loads(Path("specs/reels/hewitt-washington.json").read_text("utf-8"))
     cover = spec["cover"]
     assert cover.get("narration"), "休伊特那条封面没有配音——那就又是一屏哑的"
