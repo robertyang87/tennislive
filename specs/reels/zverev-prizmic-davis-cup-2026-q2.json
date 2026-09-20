@@ -1,0 +1,361 @@
+{
+ "slug": "zverev-prizmic-davis-cup-2026-q2",
+ "_column": "赛场之上",
+ "sources": {
+  "main": "https://www.youtube.com/watch?v=Ao6F5dgyJ2I"
+ },
+ "_source": "ITF 官方 YouTube 频道 World Tennis（`@worldtennisofficial`，oEmbed `author_name=World Tennis`）单场集锦《Zverev PERFECTION! 👏 | Alexander Zverev v Dino Prizmic | Davis Cup Qualifiers 2026》，**1920×1080 / 468.9s / 25fps**（probe 实测；yt-dlp `--print` 报 `469s 1080p`，upload_date 20260920，比赛结束后约一小时发布）。1080p 硬门槛自然满足，不写 `source_quality_exceptions`。⚠️ 别搜成 `@WorldTennis`（不带 official）——那是巴西的跑鞋零售商，两个频道 oEmbed 的 `author_name` 都叫「World Tennis」，只有 handle 分得开。",
+ "cover": {
+  "eyebrow": "赛场之上",
+  "layout": "solo",
+  "subject": "兹维列夫",
+  "hook": "上周刚拿下美网\n77分钟送德国晋级",
+  "topic": "戴维斯杯资格赛 · 德国 vs 克罗地亚",
+  "winner": "兹维列夫",
+  "result": "6-2 6-4",
+  "matchup": [
+   {
+    "name": "兹维列夫",
+    "name_en": "Alexander Zverev",
+    "country": "GER",
+    "rank": 2
+   },
+   {
+    "name": "普里兹米奇",
+    "name_en": "Dino Prizmic",
+    "country": "CRO",
+    "rank": 103
+   }
+  ],
+  "portrait": {
+   "image": "assets/reel/zverev-prizmic-davis-cup-2026-q2.jpg",
+   "focus": 0.5,
+   "focus_y": 0.5,
+   "zoom": 1.0,
+   "_why": "AP 本场实拍（Christoph Reichwein/dpa via AP），图注原文「Germany's Alexander Zverev plays Croatia's Dino Prizmic during their Davis Cup tennis match in Halle, Germany, Sunday, Sept. 20, 2026.」——人物、对手、地点、时刻四要素全在图注里，而且明写 `during their … match`（过第 2 道闸门）。画面：兹维列夫俯身在网前击球的**近景特写**，球就在他胸前、球网横在前景，眼神盯着球，**眼睛睁着**（CLAUDE.md「封面帧一律不许闭眼」）。画面自证是这一场：白色 adidas 球衣 ＋ 白色 adidas 发带 ＋ 金项链，背景是德国队横幅（德国国旗 ＋ `DAVIS CUP TEAM`）和室内绿色背板，和源片 46.5s / 398.5s 两格的兹维列夫逐项一致。",
+   "_portrait_why": "四道闸门逐条走过。同一批 dpa/AP 图里另有一张**德国队合影**（「The German tennis team from left, Daniel Altmaier, Kevin Krawietz, Michael Kohlmann, Alexander Zverev, Yannick Hanfmann, and Tim Puetz celebrates after defeating Croatia」）——那是**赛后合影**，过不了第 2 道闸门「最好是比赛进行中的画面」，而且主体是六个人不是他。这一屏讲的是这场球的效率和统治力（钩子「77分钟送德国晋级」），按 CLAUDE.md「这一屏在讲某一次击球、某一分 → 击球中是第一选择」，击球中的近景正对题。",
+   "_resolution_why": "**6172×4117**，铺 1080×1440 只要 `max(1080/6172, 1440/4117) = 0.35×`——不用放大，裁的余量很大。⚠️⚠️ **这一趟挖到一条新渠道，比档案里记的那条高一档**：`find_cover_photo.py` 的 WTA / AP 两档都报空（这场在德国，dpa 供图，美国 TownNews 系报纸没转载），图是从 **WRAL（AP 转载站）** 拿到的——它的 og:image 是 `https://images.wral.com/<uuid>?w=1200&h=630`，**把查询参数整个去掉就是 AP 原图 6172×4117**。档案里记的 springfieldnewssun 那条是 4913×3275，TownNews 其余站只有 1763×1175。**下次 AP 那条路把 images.wral.com 排在最前面试。**",
+   "_focus_why": "原图 6172×4117（3:2），铺 3:4 按高度满铺、水平裁出 `4117×3/4 = 3088` 宽（原图宽度的一半）。`focus 0.5` 让窗口落在 `x ∈ [0.25, 0.75]`：脸在 0.48、球在 0.50、持拍的右手在 0.36，都框得进来。`focus_y` 在满铺时不起作用，留 0.5。⚠️ 脸落在原图 y 0.18~0.42，而钩子那条带从 `STORYCOPY_TOP = 790`（画布 1440）起 ＝ 0.55，**不会压到脸**。"
+  },
+  "_hook_why": "两行都是**海报别处没印的东西**（CLAUDE.md 2026-09-19 的第四问）——比分板印着 6-2 6-4、名条印着两个排名（2 / 103）、台头印着赛事轮次，钩子一个都不重复。第一行是**来路当影子**（2026-09-19 那条：「用人的经历作为影子」）——上周他刚在美网决赛赢下谢尔顿，而这场是他从纽约直接飞回德国主场打的第一周；解说 432.64 原话正是「He came straight to Halle from the US Open and kept on winning」。第二行是**整场的形状 ＋ 落点**：77 分钟（flashscore `df_sui_1` 0:34＋0:43＝1:17，和 AP 稿「took just 77 minutes」对得上），赢下这一分德国 3-1 晋级 11 月博洛尼亚的总决赛。两行之间有落差：刚拿完大满贯的人 → 回到主场只花了一个多小时就把队伍送出线。⚠️ **故意不用「对手一个破发点都没拿到」**——那是真的（普里兹米奇全场 `Break Points Converted 0/0`），但同栏目上一条 `mensik-shelton` 的钩子就是「后两盘一个破发点没给」，连着两条用同一个角度会读成雷同。每行 7 / 9 个字符，都在 `HOOK_MAX_CHARS = 10` 以内。",
+  "_subject_why": "封面放**兹维列夫**——赢的那个，也是这条片子的主语（世界第 2、上周的美网冠军、把德国送进总决赛的那一分）。普里兹米奇世界第 103，是这场的对手不是主体。",
+  "_matchup_rank_why": "两个名次两个独立源对上了：① **tennisexplorer ATP 榜**（`tennislive.sources.rankings.fetch_rankings()`，这场球当周那一期）——`2. Zverev Alexander`、`103. Prizmic Dino`；② AP 赛后稿（WRAL / TSN / iNFOnews 三处转载同一篇）写「Prizmic, who was ranked **more than 100 places below** the U.S. Open and French Open champion」——**103 − 2 = 101，和「超过 100 位」逐位对得上**，是个很硬的交叉印证。",
+  "_name_why": "两个中文名都走 `player_zh()`：`player_zh(\"Alexander Zverev\")` → 兹维列夫，`player_zh(\"Dino Prizmic\")` → **普里兹米奇**（带变音符的 `Dino Prizmić` 也给同一个结果）。**不是读文件内容判的，是真调了那个函数**，没有手打。⚠️ 我第一版在这儿写的是「普里兹米奇不在两张译名表里，所以按发音定名并已补进 players.py」——**那整句是编的**：表里本来就有，我也没补过任何东西。一并编错的还有他的头像文件名（写成 `atp-P0LM.png`，真实的是 `atp-p0hw.png`，ATP id 是 **p0hw**，用 `tools/fetch_official_headshot.py atp \"Dino Prizmic\" --id p0hw --via <赛事域名>` 抓的）。CLAUDE.md 记的「编出来的判据 ＋ 正确的结论」正是这个形状——译名结论碰巧是对的，所以那句假理由差点没人有理由去查它。**写 spec 时文件名和「表里有没有」都要真跑一次再写。**",
+  "_matchup_order_why": "`matchup` 是版式顺序，跟 flashscore 的 home/away（home=Zverev、away=Prizmic），和 `_match.set_scores_home_away`、`stats.a/b` 三处同序——这一场赢家恰好也是 home，三处不用对调。",
+  "_result_why": "兹维列夫 6-2 6-4 普里兹米奇。四处印证：① flashscore 当日表 `f_2_0`（**这场还在「今天」这个比赛日里**）`AE=Zverev A.`（home）`AF=Prizmic D.`（away），`BA/BB=6:2`、`BC/BD=6:4`；② `df_sui_1` 两盘用时 0:34 / 0:43，全场 1:17，**没有任何 `D*` 抢七槽位**，所以不带小括号；③ AP 赛后稿「a 6-2, 6-4 victory over Prizmic」；④ **源片画面自证**——缩略图墙 444.5 / 446.5 两格是全屏比分板 `GERMANY 6 6 / CROATIA 2 4`，底部还烧着 `MATCH 4` 和 `HERISTO-ARENA, GERMANY`。⚠️ 戴维斯杯资格赛三盘两胜，这场 2-0 **没有打满距离**（输家赢的盘数 0 ≠ 赢家 2 − 1），所以**不存在决胜盘**，旁白和文案里一个「决胜盘」都没有。",
+  "scoreboard": {
+   "court": "Heristo Arena",
+   "_court_why": "德国哈雷的 Heristo Arena（兹维列夫的主场周）。三处印证：① **源片自己的全屏比分板**——缩略图墙 444.5 / 446.5 两格底部烧着 `HERISTO-ARENA, GERMANY`；② 解说 385.68 原话「What a treat for the Germany fans inside the **Heristo Arena**」；③ daviscup.com 的赛前稿《Germany v Croatia: Zverev's Davis Cup Halle homecoming》写明 tie 在 Halle 的 Heristo Arena、9 月 19–20 两天。场地是**室内硬地**（flashscore 队际块 `AM=Played indoor on hard.`）。",
+   "duration_source": {
+    "url": "data:application/json,%7B%22duration%22%3A%20%221%3A17%3A00%22%2C%20%22source%22%3A%20%22flashscore%20df_sui_1%EF%BC%88OE4oiLI0%EF%BC%89%EF%BC%9ASet%201%200%3A34%20%2B%20Set%202%200%3A43%20%3D%20%E5%85%A8%E5%9C%BA%201%3A17%22%2C%20%22cross_check%22%3A%20%22AP%20%E8%B5%9B%E5%90%8E%E7%A8%BF%EF%BC%88WRAL%20/%20TSN%20/%20iNFOnews%20%E4%B8%89%E5%A4%84%E8%BD%AC%E8%BD%BD%EF%BC%89%E5%86%99%E3%80%8CZverev%20took%20just%20**77%20minutes**%E3%80%8D%E2%80%94%E2%80%9434%2B43%3D77%20%E5%88%86%E9%92%9F%EF%BC%8C%E4%B8%A4%E4%B8%AA%E7%8B%AC%E7%AB%8B%E6%BA%90%E9%80%90%E5%88%86%E9%92%9F%E5%AF%B9%E5%BE%97%E4%B8%8A%E3%80%82%22%7D"
+   }
+  }
+ },
+ "topbar": {
+  "line1": "2026 戴维斯杯资格赛 第二轮",
+  "line2": "兹维列夫 6-2 6-4 普里兹米奇"
+ },
+ "_topbar_why": "line1 按 CLAUDE.md 的戴维斯杯档次口径写「资格赛 第二轮」——⚠️ 「资格赛」在「世界组」**上面**，是离 11 月博洛尼亚总决赛最近的那一档，不是预选。line2 和 `cover.winner` / `cover.result` / `cover.matchup` 机械一致，赢家在前。",
+ "_match": {
+  "status": "result_verified",
+  "source": "flashscore_points",
+  "source_id": "OE4oiLI0",
+  "flashscore_id": "OE4oiLI0",
+  "participants": [
+   "兹维列夫",
+   "普里兹米奇"
+  ],
+  "set_scores_home_away": [
+   [
+    6,
+    2
+   ],
+   [
+    6,
+    4
+   ]
+  ],
+  "tiebreaks_home_away": [
+   null,
+   null
+  ],
+  "winner": "兹维列夫",
+  "loser": "普里兹米奇",
+  "winner_result": "6-2 6-4",
+  "loser_result": "2-6 4-6",
+  "_direction_why": "flashscore 当日表 `f_2_0`：`AE=Zverev A.`（home）、`AF=Prizmic D.`（away），`BA/BB=6:2`、`BC/BD=6:4`；`df_sui_1` 两盘同序。第二源 AP 赛后稿「a 6-2, 6-4 victory over Prizmic」（赢家视角，方向一致），第三处是源片 444.5s 的全屏比分板 `GERMANY 6 6 / CROATIA 2 4`。`participants` 跟 flashscore 的 home/away，和 `set_scores_home_away` 同序。⚠️ **两盘都没有抢七**：`df_sui_1` 里没有任何 `D*` 抢七小分字段，逐分表第一盘最后一局是 `6-2 主队发球，主队拿下`（15:0→40:15 盘点兑现）。"
+ },
+ "_durations": {
+  "sets": [
+   "0:34",
+   "0:43"
+  ],
+  "total": "1:17",
+  "_source": "flashscore `df_sui_1` 的 RB/RC/RD。两盘相加 34+43=77 分钟，和 flashscore 自己报的总计 1:17 逐分钟自洽；AP 稿的「just 77 minutes」是第二个独立源，**三个数一致**，不存在 CLAUDE.md 记的那种「flashscore 偏长」的取整叠加偏差。"
+ },
+ "stats": {
+  "a": {
+   "aces": 6,
+   "df": 0,
+   "first_in": 34,
+   "first_won": 27,
+   "second_total": 11,
+   "second_won": 9,
+   "bp_conv": 3,
+   "bp_chances": 9,
+   "pts_won": 59,
+   "pts_total": 99,
+   "first_total": 45,
+   "headshot": "assets/players/headshots/atp-Z355.png"
+  },
+  "b": {
+   "aces": 4,
+   "df": 0,
+   "first_in": 41,
+   "first_won": 26,
+   "second_total": 13,
+   "second_won": 5,
+   "bp_conv": 0,
+   "bp_chances": 0,
+   "pts_won": 40,
+   "pts_total": 99,
+   "first_total": 54,
+   "headshot": "assets/players/headshots/atp-p0hw.png"
+  },
+  "_source": "flashscore 本场 `OE4oiLI0` 的 `df_st_1`，整块由 `python3 tools/match_stat_hooks.py OE4oiLI0 --home Zverev --away Prizmic --stats-block` **机器抄出，没有手打**。⚠️ `a` 跟的是 `cover.matchup[0]` ＝ 兹维列夫，flashscore 的 home 也是 Zverev——两个顺序一致，a/b **不用对调**。锚点核过：`59 + 40 = 99 = pts_total` ✅；`first_total` 按 `first_in + second_total` 算（34+11=45、41+13=54）。⚠️ **两个人全场都是 0 个双误**，不是漏抄。",
+  "_winners_ue_why": "**这两项没有，而且是查到底的结论**：CLAUDE.md 的 `tennis-media-sources` 档案里 2026-09-19 有一整节《戴维斯杯结构性地没有制胜分和非受迫失误》——flashscore 那一轮 15 场逐场量过零场有；ITF 前端 bundle 里没建模这两个字段；`custom/pointByPoint` 只有 `POINT`/`ACE`/`DOUBLE_FAULT` 三类 outcome；TNNS `hasExtendedStats=False`；MCP 两位球员的标注都停在更早。**这一趟按那条档案直接引用，没有重探**（档案原话：「下次戴维斯杯直接引它，别再重探」）。数据图按 `render_stat_card.OPTIONAL_FIELDS` 留空这两行。"
+ },
+ "_hit_data": {
+  "picked": "77 分钟 ＋ 二发得分率 82% 对 38%",
+  "candidates": [
+   "[用时] 77 分钟（两盘 34+43），AP 稿也写 just 77 minutes",
+   "[二发得分率] 兹维列夫 82%（9/11）对 普里兹米奇 38%（5/13）——碾压的根子",
+   "[破发点] 兹维列夫 3/9；普里兹米奇 **0 个破发点机会**（Break Points Saved 主队 0/0）",
+   "[双误] 两个人全场都是 0",
+   "[总分] 59 : 40 ← ⚠️ **故意不用**，CLAUDE.md 2026-09-19「避免比较全场得分」",
+   "[排名差] 世界第 2 对第 103，相差 101 位"
+  ],
+  "_source": "`tools/match_stat_hooks.py OE4oiLI0 --home Zverev --away Prizmic` ＋ `df_st_1` 分盘统计。挑中的两条：77 分钟有 AP 稿当第二源；二发得分率 82%/38% 直接来自 `df_st_1` 的 `2nd serve points won`。"
+ },
+ "_turning_points": {
+  "set1_game3": "2-1 局（普里兹米奇发球）兹维列夫**一口气拿到三个破发点**（逐分 40:0 连着三个 `|B1|`），第一个就兑现——解说 93.60「Yes, Zverev strikes first for Germany」、106.64「he breaks, leads 2-1」。",
+  "set1_game8": "5-2 再破一次（40:15 `|B1|`）。解说 172.00 原话「**The strength one point, the speed the next.** He breaks for a second time in this opening set」——这一句是第 6 段旁白球路描述的出处。",
+  "set2_game3": "2-1 又是普里兹米奇的发球局被破（40:30 `|B1|`）。解说 295.92「the break rather conceded by Dino Prizmic」、301.04「Things are moving quickly here this afternoon **and all in one direction**」。",
+  "set2_game10": "⚠️ **全片唯一一处卡住**：5-4 普里兹米奇发球，兹维列夫 40:0 一口气拿到**四个赛点**（逐分 `|B1| |B3|` 连着三个，占先时又一个）——**一个都没兑现**，普里兹米奇连救四个保下发球局。兹维列夫回到自己的发球局 6-4，第二个赛点才收掉（40:15 `|B3|`）。",
+  "_source": "flashscore `df_mh_1` 逐分（`|B1|` 破发点、`|B2|` 盘点、`|B3|` 赛点）＋ `df_st_1` 分盘统计 ＋ 源片解说原声。⚠️ 逐分的局号是「打完之后的比分」不是场上比分。"
+ },
+ "_claims": [],
+ "_claims_why": "这条片子里**没有全称断言**（零胜／唯一一个／史上第一／从来没有／一共只 N 次那一族）。最像的是「普里兹米奇全场一个破发点都没拿到」——那是**闭集**断言（这一场之内，逐分数据本身就是穷举），`df_st_1` 的 `Break Points Converted 客队 0/0` 和逐分表两处互相印证就够，不占 `_claims`。⚠️ 旁白里没写「他今年拿了两个大满贯」这种跨赛季的话：那要一张穷举表才敢说，而这条片子不需要它。",
+ "_no_repeat": "同栏目最近的邻居是 **`mensik-shelton-davis-cup-2026-q2`**（同一周戴维斯杯资格赛第二轮，9/19 门西克胜谢尔顿）。两条不冲突——不同的 tie、不同的人、不同的落点（那条是「1-2 落后、输了就出局」的背水一战，这条是「上周刚拿完美网、77 分钟送队伍出线」的统治）。⚠️ **唯一要躲的是角度**：那条的钩子是「后两盘一个破发点没给」，而这一场普里兹米奇**全场**零破发点——同样成立，但连着两条用同一个说法会读成雷同，所以钩子改走「来路当影子 ＋ 用时」，破发点那条只在旁白里一句带过。另：`zverev-atmane` / `zverev-griekspoor` / `zverev-khachanov-us-open-2026-sf` / `zverev-shelton-us-open-2026-final` 讲的都是别的赛事，这条一个字都不碰它们铺开过的东西。",
+ "editorial": {
+  "mode": "match_review",
+  "hook": [
+   "上周刚拿下美网",
+   "77分钟送德国晋级"
+  ],
+  "question": "刚在纽约拿下大满贯的人，回到德国主场打戴维斯杯，会是什么样子？",
+  "thesis": "77 分钟，两盘，三次破发，一个破发点都没让出去。兹维列夫第一盘第三局就拿到三个破发点、第一个便兑现，第八局再破一次，34 分钟拿下首盘；第二盘第三局又破。全场他的二发得分率百分之八十二，普里兹米奇只有百分之三十八——差距不在一发上，在第二发球之后的那一拍。唯一卡住的一处是第二盘 5-4：他在对手发球局一口气拿到四个赛点，被连救四个，回到自己发球局才收掉。德国三比一淘汰克罗地亚，进了十一月博洛尼亚的总决赛。",
+  "beats": [
+   "北京时间 9 月 20 日快到晚上八点，德国哈雷的 Heristo 竞技场。德国 2-1 领先，兹维列夫赢下这一分，德国就出线。",
+   "第一盘第三局他就拿到三个破发点，第一个直接兑现；第八局再破一次，34 分钟 6-2 拿下首盘。",
+   "第二盘第三局又破。全场他的二发得分率 82%，对手 38%——差距在第二发球之后那一拍。",
+   "唯一卡住的是 5-4 那一局：四个赛点被连救四个。回到自己的发球局，第二个赛点才收掉。6-4，77 分钟，德国进了总决赛。"
+  ],
+  "human_context": {
+   "angle": "**他是从纽约直接飞回来的**。上周日他刚在美网决赛赢下谢尔顿，这一周回到德国主场打戴维斯杯——解说自己把这条线说了出来：「He came straight to Halle from the US Open and kept on winning.」这条片子的切口不是「世界第 2 打世界第 103」，是「刚拿完大满贯的人回家，用 77 分钟把队伍送出线」。",
+   "facts": [
+    "兹维列夫上周在美网决赛击败谢尔顿夺冠，这是本站 `zverev-shelton-us-open-2026-final` 做过的那场；AP 赛前稿也写「Zverev's first match since winning the U.S. Open final last weekend」",
+    "德国 3-1 淘汰克罗地亚，兹维列夫这一分是决定性的第四分——第五场 Altmaier vs Dodig 因此没有打（flashscore 里状态一直是「待定」）",
+    "tie 在德国哈雷的 Heristo Arena，9 月 19–20 两天，室内硬地（daviscup.com 赛前稿 ＋ flashscore 队际块 `Played indoor on hard.`）",
+    "赢家去 11 月博洛尼亚的戴维斯杯总决赛，和卫冕冠军意大利会合（daviscup.com）"
+   ],
+   "sources": [
+    "https://www.wral.com/news/ap/e9dcd-zverev-powers-germany-into-davis-cup-final-8-with-a-swift-win-over-prizmic-britain-also-advances/",
+    "https://www.tsn.ca/tennis/article/zverev-powers-germany-into-davis-cup-final-8-with-swift-win-over-prizmic-and-croatia-britain-also-advances-over-ecuador/",
+    "https://www.daviscup.com/en/news/ger-cro-preview-2026"
+   ],
+   "voice_label": "从纽约直接飞回来的人"
+  },
+  "_hook_why": "和 `cover.hook` 同一份，理由写在 `cover._hook_why` 里，不在这儿重复。"
+ },
+ "push": {
+  "summary": "兹维列夫77分钟送德国晋级",
+  "lead": "戴维斯杯资格赛第二轮，德国主场哈雷 Heristo 竞技场。德国 2-1 领先，兹维列夫这一分赢下就出线——而他上周刚在美网决赛拿下谢尔顿，是从纽约直接飞回来的。第一盘第三局他一口气拿到 3 个破发点、第一个就兑现，第八局再破一次，34 分钟 6-2 收下首盘；第二盘第三局又破。全场二发得分率 82% 对 38%，6 个 ACE、0 个双误，世界第 103 的普里兹米奇**一个破发点都没拿到**。唯一卡住的是 5-4 那局：四个赛点被连救四个，回到自己发球局第二个赛点才收掉。6-2 6-4，77 分钟。德国 3-1 淘汰克罗地亚，进了 11 月博洛尼亚的总决赛。",
+  "matchup": "兹维列夫 vs 普里兹米奇",
+  "score": "6-2 6-4",
+  "auto": true
+ },
+ "_push_summary_why": "首行点出是谁（`CAPTION_LEAD_LEGACY` 那道闸要求）——「兹维列夫」在第一个词，标题 12 个字位，在推送标题 13 的上限以内。⚠️ 正文里的数字一律**阿拉伯数字**（82%、38%、3 个、77 分钟、6-2 6-4），旁白那一份才写汉字。⚠️ 正文**不挂「数据来源：」注脚**，来源写在 spec 的 `_source` / `_hit_data` 里。",
+ "mixed_fps": false,
+ "_tts_backend_why": "不写 `tts_backend`——有 Azure 钥匙就自动走 Azure，这个键只在 Azure 401 时用来降级到 edge。",
+ "segments": [
+  {
+   "source": "main",
+   "start": 393.5,
+   "end": 399.24,
+   "cx": 0.5,
+   "quote": [
+    {
+     "at": 4.66,
+     "text": "Germany can set sail for Bologna.\n德国可以启程去博洛尼亚了。"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "_ending_payoff_required": true,
+   "crosses_cut": "397.04 —— 赛点那一分落地接他转身的反应，同一时刻的跨法；不跨就只剩回合没有落点。",
+   "point_end_ok": "赛点是本场最后一分，之后再没有比分翻牌；缩略图墙 398.5 那一格已经是他赛后的近景。",
+   "_payoff_why": "冷开场里有赛点落地，所以 true——正文第 13 段（391.08→399.24）把**同一分完整重放**，而且比冷开场多含 391.08~393.5 那一段（场馆大屏正打着 `MATCH POINT`）。冷开场给解说原声，正文给中文旁白，两段各讲一半。",
+   "_why": "冷开场：**赛点落地 ＋ 他的反应**。不配旁白，用英文转播原声＋中英双语字幕（CLAUDE.md 2026-09-19 那条全局要求）。画面自证这一分是赛点：缩略图墙 388.5 / 390.5 两格场馆大屏滚动打着 `MATCH POINT`。解说钉在真实时刻（captions.txt 398.16 −393.50 = 4.66）。⚠️ ASR 把这句尾巴转成了「Bologna 62」，那个 62 是比分误转，双语字幕按发音校正掉了；同一份 ASR 还把 Zverev 转成 Zerv/Serev/ZV/Sparev、Prizmic 转成 Prismic/Kris/Pismic，引用时一律写回正确拼法。"
+  },
+  {
+   "source": "main",
+   "start": 403.04,
+   "end": 408.0,
+   "cx": 0.5,
+   "narration": "七十七分钟，兹维列夫把德国送进了总决赛。",
+   "point_end_ok": "比赛已经结束，这一段是网前握手（缩略图墙 404.5 / 406.5 两格），不含任何一分。",
+   "_why": "开场第二格：**落点**。画面是两人网前握手，背景横幅写着 `GERMANY QUALIFIES FOR FINALS 2026`，和旁白对题。"
+  },
+  {
+   "source": "main",
+   "start": 15.64,
+   "end": 19.8,
+   "cx": 0.5,
+   "narration": "北京时间九月二十号，快到晚上八点。",
+   "point_end_ok": "比赛还没开始，这一段是兹维列夫入场（缩略图墙 16.5 / 18.5 两格），不含任何一分。",
+   "_why": "开场第三格：**坐标**。画面是兹维列夫入场，场馆大屏上是他的脸、背景墙写着 `GERMANY`。⚠️ 起点 15.64 是 `scene_cuts` 的刀；**0~5.0 那段是 `GERMANY v CROATIA` 片头板**（缩略图墙 2.5 / 4.5 两格），按「用 ITF 的源片，片尾和台标都要剪掉」整段排除。⚠️ 开球时刻按 flashscore 这场的 `AD` 换成北京时间是 **19:55**，按 CLAUDE.md「只说个大概，不报到分」那张表，分钟 55 落在 40–59 档取「快 X+1 点」，所以写「快到晚上八点」，不写「晚上八点」（那会偏晚）也不写「七点多」（那会偏早）。"
+  },
+  {
+   "source": "main",
+   "start": 21.92,
+   "end": 27.0,
+   "cx": 0.5,
+   "narration": "德国二比一领先，他赢下这一分，德国就出线。",
+   "point_end_ok": "段尾 27.00 落在 `point_ends_guess` 的 26.88 之后 0.12 秒；下一个猜到的死球在 30.6，离段尾 3.6 秒，在 0.3~3 秒的翻牌窗口之外。",
+   "_why": "坐标的后半句：**赌注**。这是这个 tie 的第四场，德国此前 2-1 领先（9/19 兹维列夫胜多迪格、阿尔特迈尔负普里兹米奇，9/20 双打克拉维茨／普茨获胜）。解说开场 14.48 原话就是这句：「The second win for Alexander Zverev this week and Germany will have completed the job. They'll be on the plane effectively to Bologna.」"
+  },
+  {
+   "source": "main",
+   "start": 88.0,
+   "end": 96.96,
+   "cx": 0.5,
+   "narration": "第一盘第三局，他一口气拿到三个破发点。第一个就兑现——对手盯着底线看。球是进的。",
+   "point_end_ok": "段尾 96.96 **就是**猜到的那次记分条翻牌，也是 `scene_cuts` 的那一刀——这一分已经落定、比分已经翻过。之后 97.76/98.64/99.52… 那串每隔 0.8 秒一格的「翻牌」是机器在读德国队长鼓掌那个镜头里的另一块图形，不是比分在动（缩略图墙 98.5/100.5/102.5 三格都没有球场）。⚠️ 原窗口 94.12–102.64 的后 5.7 秒全压在队长脸上，所以整段前移。",
+   "_why": "**第一盘的第一个转折**。逐分：2-1 那一局（普里兹米奇发球）兹维列夫 40:0 连着三个 `|B1|`，第一个便兑现。解说 93.60「Yes, Zverev strikes first for Germany」、106.64「he breaks, leads 2-1」。⚠️ 旁白最后那半句「对手盯着底线看，球是进的」是解说 100.16 的原话转述（他以为球出界、但没停下这一分），**不是看图推的**——这是球路细节不是统计行。",
+   "crosses_cut": "窗口跨 94.12 那一刀，两边都是兹维列夫：前半是他兑现这个破发点的那一分（75.92 起的整段回合镜头，缩略图墙 88.5/90.5/92.5 都是这一分），后半是他转身握拳（94.5/96.5 两格）。"
+  },
+  {
+   "source": "main",
+   "start": 158.0,
+   "end": 166.0,
+   "cx": 0.5,
+   "narration": "第八局他又破了一次。一分靠力量，下一分靠速度。",
+   "point_end_ok": "段尾 166.0 就是 `scene_cuts` 的那一刀，刀口之后就是兹维列夫握拳（缩略图墙 166.5）——这一分正是他破发的那一分。猜到的死球离段尾最近的一格在 171.2，5.2 秒开外，在翻牌窗口之外。",
+   "_why": "**第一盘的第二次破发**。旁白是解说 172.00 的原话「**The strength one point, the speed the next.** He breaks for a second time in this opening set」——力量和速度这两条是解说自己说的，不是看图推的；解说 166.08 还补了一句「There's the dynamic power of Sasha」。⚠️ 窗口取的是 157.96–166.00 这一整个直播回合镜头（缩略图墙 158.5/160.5/162.5/164.5 四格都是同一分），**不是** 166 之后那段庆祝和看台——把一句技战术压在人群镜头上，正是读者说的「剪辑不专业」。"
+  },
+  {
+   "source": "main",
+   "start": 187.84,
+   "end": 193.28,
+   "cx": 0.5,
+   "narration": "三十四分钟，六比二，第一盘结束。",
+   "point_end_ok": "这一段是首盘结束后的镜头，解说 189.12「That is an excellent set of tennis from Alexander Zverev」压在这一盘打完之后。",
+   "_why": "第一盘的结果。用时取 `df_sui_1` 的 `Set 1 0:34`。"
+  },
+  {
+   "source": "main",
+   "start": 234.2,
+   "end": 241.0,
+   "cx": 0.5,
+   "narration": "第二盘第三局，普里兹米奇的发球局又丢了。",
+   "point_end_ok": "段尾 241.00 落在 `point_ends_guess` 的 240.88 之后 0.12 秒；下一格猜到的死球在 244.6，离段尾 3.6 秒，在翻牌窗口之外。",
+   "_why": "第二盘的转折。逐分：第二盘 2-1 那一局（普里兹米奇发球）40:30 `|B1|` 兑现。解说 233.44 在这一段前面说「Vital first game, second set. doesn't strike me as the kind of character who's going to melt away today」——对手没有崩，只是挡不住。"
+  },
+  {
+   "source": "main",
+   "start": 252.0,
+   "end": 259.96,
+   "cx": 0.5,
+   "narration": "全场他的二发得分率百分之八十二，对手只有百分之三十八。",
+   "point_end_ok": "段尾 259.96 就是 `scene_cuts` 的那一刀；245.4–259.96 是一整个直播回合镜头（缩略图墙 246.5 到 258.5 七格都是同一个机位的这一分）。猜到的死球最近的一格在 281.92，22 秒开外。",
+   "_why": "**碾压的根子**。`df_st_1`：`2nd serve points won 主队 82% (9/11) / 客队 38% (5/13)`——差距不在一发（两人一发成功率都是 76%），在第二发球之后那一拍。解说 301.04「Things are moving quickly here this afternoon **and all in one direction**」、307.68「Germany leading 2-1 in the tie and up now a set and a break in match four」。⚠️ 百分比写「百分之八十二」是给 TTS 的底稿写法，字幕会自动换成 `82%`。"
+  },
+  {
+   "source": "main",
+   "start": 341.0,
+   "end": 346.04,
+   "cx": 0.5,
+   "narration": "能跑一整天的引擎，很少失误的反手。",
+   "point_end_ok": "段尾 346.04 就是 `scene_cuts` 的那一刀，而这一分的记分条已在 345.28 翻过牌（40-30），段尾落在翻牌之后 0.76 秒；下一格 346.08 离段尾 0.04 秒，在 0.3 秒的溶解容差之内。⚠️ 原来的窗口 343.16–347.68 会把后 1.64 秒压在德国队长鼓掌的反应镜头上——整句赞誉落在别人脸上，所以往前挪。",
+   "_why": "**技战术描述之三**。出处是解说 343.92 的原话「**An engine that will go all day. A backhand that very seldom fails. What a combination.**」——反手这一条是解说自己说的，不是看图推的。",
+   "crosses_cut": "窗口跨 343.16 那一刀，但两边都是兹维列夫：前半是他打的那一分的收尾（332.24 起的整段回合镜头），后半是他拿着球走回发球位（白衣 GERMANY，身后克罗地亚旗只是看台上的球迷横幅）。解说 343.92 的这句赞誉正压在这个镜头上。"
+  },
+  {
+   "source": "main",
+   "start": 364.12,
+   "end": 372.0,
+   "cx": 0.5,
+   "narration": "离出线只剩一局，而他全场一个破发点都没让出去。",
+   "point_end_ok": "段尾 372.00 落在 `point_ends_guess` 的 371.84 之后 0.16 秒；下一格猜到的死球在 375.5，离段尾 3.5 秒，在翻牌窗口之外。",
+   "_why": "收束前的铺垫。解说 367.92 原话「One game away from the final eight. This has been **imperious** from Alexander Zverev」。⚠️ 「一个破发点都没让出去」是**闭集**事实：`df_st_1` 的 `Break Points Saved 主队 0/0`、`Break Points Converted 客队 0/0`，逐分表里也没有任何 `|B1|` 落在兹维列夫的发球局上——两处互相印证。这条只在旁白里一句带过，**没有放进钩子**（理由见 `cover._hook_why`：上一条 `mensik-shelton` 的钩子就是这个角度）。"
+  },
+  {
+   "source": "main",
+   "start": 387.04,
+   "end": 391.08,
+   "cx": 0.5,
+   "narration": "五比四，四个赛点。",
+   "point_end_ok": "段尾 391.08 就是 `scene_cuts` 的那一刀，这一段是赛点局开始前的场馆镜头（缩略图墙 388.5 / 390.5 两格大屏滚动打着 `MATCH POINT`），不含完整的一分。",
+   "_why": "**全片唯一卡住的那一处的铺垫**。逐分：第二盘 5-4 普里兹米奇发球，兹维列夫 40:0 一口气拿到四个赛点（连着三个 `|B3|`，占先时又一个）。画面自证：场馆大屏这两格正滚动打着 `MATCH POINT`。"
+  },
+  {
+   "source": "main",
+   "start": 391.08,
+   "end": 399.24,
+   "cx": 0.5,
+   "narration": "普里兹米奇四个全救了下来。兹维列夫回到自己的发球局，第二个赛点才落地。",
+   "crosses_cut": "397.04 —— 「赛点那一分」接「他转身的反应」，同一时刻的跨法；这一段的职责正是把赛点完整放一遍，断在这一刀上只剩半截。",
+   "point_end_ok": "赛点是本场最后一分，段尾 399.24 之后再没有比分翻牌。",
+   "_why": "**兑现结局**（第 1 段冷开场的 `_ending_payoff_required: true`）。逐分：那四个赛点普里兹米奇连救四个保下发球局，兹维列夫回到自己的发球局 6-4，40:15 第二个赛点（`|B3|`）才兑现。⚠️ 这一段和冷开场重叠是**有意的**：冷开场给解说原声当预告，这里用中文旁白把「几个赛点、怎么结束」讲清楚。⚠️ 按 CLAUDE.md 2026-08-19「N 个赛点只兑现 1 个是同义反复」那条——这里写的不是那个框架，是**对手救下了几个**（四个全救下来），那个数从 0 到 N-1 都有可能，是真的有信息量。",
+   "_narration_why": "⚠️ 主语必须显式写出来：第 12 段刚说「五比四，四个赛点」（**兹维列夫拿到的**），这一段接「全救了下来」——救的人是**普里兹米奇**，不是拿到点的那个人。CLAUDE.md 那条「三个盘点都没救下来」是第一条真实读者反馈换来的规矩（「什么叫三个盘点都没救下来」），判据是「点前面那个动词」：**拿到/要到的点是他自己的，救它的必然是对手**。第一版我在小红书正文里写成「拿到4个赛点，被连救4个」，`enforce_spec_wording` 当场拦下——闸是对的。"
+  },
+  {
+   "source": "main",
+   "start": 408.0,
+   "end": 413.96,
+   "cx": 0.5,
+   "narration": "六比四。全场七十七分钟，德国三比一。",
+   "point_end_ok": "比赛已经结束，这一段是两人网前并肩走（缩略图墙 408.5 / 410.5 / 412.5 三格），不含任何一分。",
+   "_why": "结果。77 分钟两个独立源对上（flashscore `df_sui_1` 34+43，AP 稿「just 77 minutes」）。德国 3-1——第五场阿尔特迈尔对多迪格因此没有打。"
+  },
+  {
+   "source": "main",
+   "start": 429.04,
+   "end": 437.96,
+   "cx": 0.5,
+   "quote": [
+    {
+     "at": 3.6,
+     "text": "He came straight to Halle from the US Open\n他从美网直接来到哈雷"
+    },
+    {
+     "at": 6.16,
+     "text": "and kept on winning.\n然后一直在赢。"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "point_end_ok": "比赛已经结束，这一段是他赛后的正面近景（缩略图墙 430.5 / 432.5 两格），不含任何一分。",
+   "_why": "**全片最该留的一句原声**。解说 432.64 / 435.20 原话——它一句话说出了这条片子的切口（上周美网夺冠，这周直接飞回德国主场打戴维斯杯），也正是封面钩子第一行的出处。⚠️ **拆成两条是被闸逼出来的，而拆完更好**：第一版整句写成一条，中文行「他从美网直接来到哈雷，然后一直在赢。」17 字、折算宽度 16.7 超过一行上限 16，`_quote_lines_fit_the_frame` 当场拦下（它拦的是「折行之后把整块字幕顶出画布底边，而渲染不报错」）。拆成两条之后各自钉在解说真正说这半句的时刻上（432.64 / 435.20，减去段起点 429.04 得 3.60 / 6.16），本来就比按字数摊更同步。段尾因此从 434.56 延到 437.96 装得下第二条。⚠️ ASR 把 Halle 转成了 `Hal`，双语字幕按发音校正回 `Halle`。",
+   "crosses_cut": "434.56 —— 「他赛后的正面近景」接「看台上的德国球迷」，是同一时刻的两个视角（解说这句话正压在这两格上），主语没有换人。"
+  },
+  {
+   "source": "main",
+   "start": 458.84,
+   "end": 463.84,
+   "cx": 0.5,
+   "narration": "这样的戴维斯杯，值得他飞这一趟吗？",
+   "point_end_ok": "比赛已经结束，这一段是德国队举横幅合影（缩略图墙 460.5 / 462.5 两格，横幅写着 `GERMANY QUALIFIED — SEE YOU IN THE FINAL 8`），不含任何一分。",
+   "_why": "末屏一问，必须由旁白问出来。⚠️ **不是封面那一问的回声**：封面钩子讲的是这场球的形状（上周刚拿美网／77 分钟送德国晋级），这一问问的是**这件事值不值**——把刚拿完大满贯的人立刻拉回团体赛这件事本身抛给读者。⚠️ 段尾 463.84 就是 `scene_cuts` 的那一刀，之后 464.5 起是绿色片尾转场和 `DAVIS CUP by GENERALI` 台标，按「片尾和台标都要剪掉」整段排除。 ⚠️ 2026-09-20 改短：原句「大满贯刚拿完就飞回来。这样的戴维斯杯，值吗？」真 TTS 量到 5.40s，而这一段的画面只有 5.0s（458.84–463.84 就是德国队举横幅那一整个镜头，往后 464.8 起是转播的片尾包装，接不上），**超出 0.40s**。改短之后顺带撤掉了和封面钩子重复的那半句「大满贯刚拿完」——刚拿完美网这件事，前一段 429.04 的解说原声已经说过了。"
+  }
+ ]
+}
