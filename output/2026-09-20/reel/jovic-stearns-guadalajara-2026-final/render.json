@@ -4,14 +4,14 @@
   "cover_narrated": false,
   "outro_seconds": 3.827,
   "layout": "full",
-  "segments_seconds": 138.2,
+  "segments_seconds": 152.3,
   "topbar": {
     "line1": "2026 瓜达拉哈拉 WTA500 决赛",
     "line2": "约维奇 6-4 6-2 斯特恩斯",
     "start": 1.2,
-    "end": 139.4
+    "end": 153.5
   },
-  "film_seconds": 143.24,
+  "film_seconds": 157.36,
   "narration_voice": "zh-CN-YunjianNeural",
   "narration_rate": "+6%",
   "narration_backend": "edge-tts",
@@ -26,45 +26,49 @@
     "8": 10.968,
     "9": 7.752,
     "10": 13.56,
-    "12": 10.536
+    "12": 7.344,
+    "13": 5.64,
+    "14": 3.84,
+    "15": 3.648,
+    "16": 2.904
   },
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "jovic-stearns-guadalajara-2026-final",
-    "received_at": "2026-09-20T02:40:44Z",
-    "artifact_ready_at": "2026-09-20T02:46:22Z",
-    "elapsed_seconds": 338.779,
+    "received_at": "2026-09-20T02:48:10Z",
+    "artifact_ready_at": "2026-09-20T02:53:32Z",
+    "elapsed_seconds": 322.482,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "9ae63f1e0301c09d0e7c56ee71e732bd15cc81b944a9e876d127f1f18e5afda4",
-    "spec_sha256": "bf893f265745f71415623e2ad9a58529d7ed88e59ddd1dfcbcb32d40fd45ba8a",
-    "run_id": "35484604688",
+    "film_sha256": "a98dd32dcea8d6145e4de145391a1d055f45cb9f8a697cb7ad423fedf02b7ec3",
+    "spec_sha256": "8e903a3e78534ccc12cd6e9fd8bbf56bbc16c9b253f3e8808db817271e5bfc3b",
+    "run_id": "35484924487",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-09-20T02:43:11Z",
-        "run_id": "35484604688"
+        "at": "2026-09-20T02:50:38Z",
+        "run_id": "35484924487"
       }
     ],
-    "render_seconds": 191.779,
-    "pre_render_seconds": 147.0
+    "render_seconds": 174.482,
+    "pre_render_seconds": 148.0
   },
-  "film_sha256": "9ae63f1e0301c09d0e7c56ee71e732bd15cc81b944a9e876d127f1f18e5afda4",
-  "film_bytes": 83469176,
-  "qc_attestation_sha256": "79b069e1f76b5ebeed9a29ac7aa322af18a366fd7d253a1eba0943b1e194e58b",
+  "film_sha256": "a98dd32dcea8d6145e4de145391a1d055f45cb9f8a697cb7ad423fedf02b7ec3",
+  "film_bytes": 102638499,
+  "qc_attestation_sha256": "873ef6dbb7310c0a3ead9e73d01ddec10d0ae1a5dafcb427fb12ff09e30a0cbb",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-09-20T02:43:11Z",
-      "run_id": "35484604688"
+      "at": "2026-09-20T02:50:38Z",
+      "run_id": "35484924487"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-09-20T02:46:23Z",
-      "run_id": "35484604688"
+      "at": "2026-09-20T02:53:33Z",
+      "run_id": "35484924487"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-jovic-stearns-guadalajara-2026-final/jovic-stearns-guadalajara-2026-final.mp4",
-  "video_bytes": 83469176
+  "video_bytes": 102638499
 }
