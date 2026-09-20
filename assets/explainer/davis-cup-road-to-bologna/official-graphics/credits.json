@@ -1,0 +1,41 @@
+{
+ "_note": "戴维斯杯官方 Instagram（@daviscup）的四张 2026 资格赛/决赛圈制图，账号所有者 2026-09-20 给的链接。全部 1080 宽的完整竖版（不是 feed 接口那种 640×640 裁过的）。",
+ "_怎么取的": "和 bologna-bound 那批同一条路：feed 接口的直链带 `stp=c…_s640x640` 裁切参数，下回来是方图；完整竖版走老接口 `https://www.instagram.com/p/<code>/media/?size=l`（带 Referer: https://www.instagram.com/）。⚠️ 帖子页的 og 标签这次一个都取不到（账号 302 需登录），**图注拿不到**——好在这四张的文字全烧在画面里，四要素靠画面自证。",
+ "dc-2026-bracket.jpg": {
+  "shortcode": "DdhIVZ8h3s_",
+  "画面内容": "完整对阵树：左右两侧 QUALIFIERS 1R（6-8 FEB）和 QUALIFIERS 2R（18-20 SEP），中间 DAVIS CUP by GENERALI / FINAL 8 / BOLOGNA 24-29 NOVEMBER，八支晋级队的国旗围着银碗。西班牙在 1R 那一格写着 BYE。",
+  "size": "1080x1334",
+  "用在": "第 6 段（整屏证据段），裁成 dc-2026-bracket-crop.jpg",
+  "⭐为什么值钱": "官方赛制片那张金字塔图给的是**层级**，这张给的是**路径**——而这条片子的标题就是「通往决赛圈之路」。两张各管一半。"
+ },
+ "dc-2026-bracket-crop.jpg": {
+  "来源": "从 dc-2026-bracket.jpg 按内容边界裁 y=88~1278，得 1080x1190",
+  "为什么裁": "整屏证据段缩进 1015×1267 的盒子。原图 1334 高时底边会落到 1347px，越过字幕上锚 1284px，`evidence_card_problem` 当场红（四张登机牌拼版那次就是这么红的）。裁到 1190 之后底边 1279px，只差 5px。",
+  "size": "1080x1190"
+ },
+ "dc-2026-q2-results.jpg": {
+  "shortcode": "DdhNUh3Nn24",
+  "画面内容": "QUALIFIERS 2ND ROUND RESULTS：CHILE * 0-4 SPAIN / CANADA * 3-1 FRANCE / GERMANY * 3-1 CROATIA / CZECHIA * 3-2 USA / GREAT BRITAIN * 4-0 ECUADOR / KOREA, REP * 3-1 INDIA / AUSTRIA * 3-1 BELGIUM，脚注 * HOST NATION。",
+  "size": "1080x1334",
+  "用在": "第 23 段（整屏证据段），裁成 dc-2026-q2-results-crop.jpg",
+  "⚠️⚠️这张图纠了一个已发出去的错": "它写着 CHILE * 0-4 SPAIN，而这条片子第一版（已推微信）按英文维基的 `score2=3` 写成「客场三比零」。ITF 官方 tieCentre 接口复核：`teams[].score` = 0/4，R1/R2/R3/R5 `COMPLETE`、R4 `Not Played`——维基那一页把 R4/R5 的 `np=` 标反了。见 spec 的 `_claims`。"
+ },
+ "dc-2026-q2-results-crop.jpg": {
+  "来源": "从 dc-2026-q2-results.jpg 裁 y=150~1330，得 1080x1180（去掉顶部 logo 留白）",
+  "size": "1080x1180"
+ },
+ "gbr-three-steps.jpg": {
+  "shortcode": "DdhKT7Xhfcp",
+  "画面内容": "英国队三张合影叠成三级台阶：WORLD GROUP I | SEPTEMBER 2025 · D. POLAND 3-1 → QUALIFIERS FIRST ROUND | FEBRUARY 2026 · D. NORWAY 4-0 → QUALIFIERS SECOND ROUND | SEPTEMBER 2026 · D. ECUADOR 4-0（第三张就是举 QUALIFIED 牌子那一刻）。",
+  "size": "1080x1334",
+  "用在": "**这一版没用**",
+  "为什么没用": "它讲的是一支队十二个月爬了三层——是这条片子主题的缩影，内容很好。但这一版已经有三张整屏静片（签表树、七场的账、登机牌），而账号所有者 2026-09-17 的口径是「网球有故事默认走视频剪辑，不要总用字卡」；英国那一幕现在是两段 1080p 实拍（决胜双打的最后一分 ＋ 铜箱馆的米字旗看台），静图顶不过它。留在这儿给下一条用。"
+ },
+ "kor-first-asian-nation.jpg": {
+  "shortcode": "Ddd_klkCMD0",
+  "画面内容": "韩国队三格拼图：权纯雨仰面躺在场上、队友握手、全队举 KOREA, REPUBLIC QUALIFIED / SEE YOU IN THE FINAL 8 的牌子，底部大字 FIRST ASIAN NATION TO REACH THE DAVIS CUP FINAL 8。",
+  "size": "1080x1350",
+  "用在": "**这一版没用**",
+  "为什么没用": "两个理由。① 画面上：片子里韩国那一幕用的正是这三格的**动态原片**（korea 源 335.85~341.55 躺倒＋全队压上、343.35~347.45 举牌），静图是它的下位替代。② 断言上：`FIRST ASIAN NATION` 的范围是 **Final 8 赛制（2024 起）**——2019-2023 的 Finals 是 16/18 队、日本进过。中文写「第一个打进决赛圈的亚洲国家」读者看不出这层范围，而这正是 `chwalinska-gibson` 那次被读者当众指出的形状（全称断言没把范围亮出来）。范围写清楚（「八强赛制以来」）就能用，两个独立源已经核过、记在 spec 的 `_claims` 里。"
+ }
+}
