@@ -3143,7 +3143,7 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             "你的分，打没打都算。所以大满贯这四个位置，从来不是要不要打的选择题，它们"
             "在你进签表那一刻就已经占住了。",
             "assets/explainer/entry-deadline/us_open_court_34.jpg",
-            "Wikimedia Commons · 美网亚瑟·阿什球场俯瞰，满场看台",
+            "美网官方图 · 亚瑟·阿什球场俯瞰，满场看台",
             (
                 "4 个大满贯 男女都必算",
                 "进了签表 打没打都算",
@@ -3182,9 +3182,9 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
 
   <text x="60" y="306" fill="#f4fbf7" font-size="30" font-weight="800">WTA</text>
   <text x="60" y="342" fill="#cfe6d8" font-size="26" font-weight="700">18 个</text>
-  <rect x="200" y="280" width="146.7" height="72" fill="#8fd6a8"/>
-  <rect x="346.7" y="280" width="256.7" height="72" fill="#8fd6a8" opacity=".62"/>
-  <rect x="603.3" y="280" width="256.7" height="72" fill="none"
+  <rect x="200" y="280" width="138.9" height="72" fill="#8fd6a8"/>
+  <rect x="338.9" y="280" width="243.1" height="72" fill="#8fd6a8" opacity=".62"/>
+  <rect x="582.0" y="280" width="243.1" height="72" fill="none"
         stroke="rgba(244,251,247,.34)" stroke-width="3"/>
 
   <rect x="60" y="404" width="30" height="30" fill="#8fd6a8"/>
@@ -3210,8 +3210,8 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             "两头，都按五百赛那一档算。也就是说你在蒙特卡洛打得再好，那个成绩也要去和"
             "五百赛、二百五十赛抢自选的位置，不像另外八个那样自动占住一格。女子那边没"
             "有这个例外。",
-            "assets/explainer/thiem-football/monte_carlo_2023.jpg",
-            "Wikimedia Commons · 2023 年 4 月蒙特卡洛大师赛的红土场",
+            "assets/venues/montecarlo-centre-court.jpg",
+            "montecarlotennismasters.com 官方图库 · 蒙特卡洛乡村俱乐部雷尼尔三世球场，背景是地中海",
             (
                 "大师赛 9 个 强制只有 8 个",
                 "蒙特卡洛 按 500 那档算",
