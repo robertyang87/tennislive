@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>9.21 网球有故事 | 8 张门票发完了</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>戴维斯杯8张门票发完了，只有1张是送的
+
+11月24号到29号，戴维斯杯的决赛圈在博洛尼亚开打，8支队伍。这条片子讲的是这8张门票各自怎么来的。
+
+先看清楚这项赛事的形状。它是一座塔：塔尖是决赛圈，往下第一层叫「资格赛」——名字听着像预赛，其实是离奖杯最近的那一层，打赢两轮就进决赛圈；再往下才是世界组一组、二组，和按大洲分的地区赛。今年2月，26支队伍从资格赛第一轮开打，活下来13支；9月18到20号，这13支加上去年的亚军西班牙，14支队伍打7场对阵，主客场制、5场3胜，7个胜者直接拿到门票。
+
+7场里有6场在第四场之前就定了。
+
+德国在哈雷3比1。兹维列夫两场单打全赢，最后一场6比2、6比4；而真正把这场对阵拧过来的是第三场双打，克拉维茨和皮茨7比5、6比2赢了梅克蒂奇和帕维奇。
+
+英国在伦敦铜箱馆4比0，门票在第三场双打就拿到了，帕滕和斯库普斯基6比3、6比4。
+
+奥地利在维也纳的红土上3比1。罗季奥诺夫一个人赢了两场单打，最后一场7比6、6比3，打完直接躺在了场上。官方的说法是：奥地利连续第二年进决赛圈。
+
+韩国在首尔3比1。最后一场权纯雨6比1、6比2再赢纳加尔一次，球一落地他就躺下了，整支队压了上来。官方那条帖子写着：他们队史第一次打进这个阶段。
+
+加拿大在魁北克城3比1，奥热-阿利亚西姆一个人拿了两分，最后一场先丢一盘、抢七扳回来、第三盘6比4。他们举的那块牌子是法语的——CANADA QUALIFIÉ。官方说，这是加拿大队史第一次在戴维斯杯赢下法国。
+
+西班牙那张是在客场拿的。圣地亚哥，红土，满场智利球迷：梅里达先丢一盘，然后连赢两盘掀翻智利一单塔比洛；霍达尔6比0、6比2再添一分；双打6比0、6比3收工，3比0。
+
+只有布拉格打满了。前四场2比2，第五场是活的——莱赫奇卡6比3、7比5拿下勒纳·钱，捷克3比2。被他们送走的那支队叫美国，32次冠军，这项赛事历史上最成功的国家。
+
+第八张门票没打过：东道主意大利直接进，他们连着三年把这座杯子留在了家里，而今年的决赛圈又摆在自己的主场。
+
+11月的规矩和前面两关都不一样：不再是5场3胜，改成3场2胜，两场单打加一场双打；也不再有主客场，8支队伍抽完签直接单败淘汰，输一场就回家。
+
+而这个签，现在还没抽。
+
+#网球时差 #戴维斯杯 #决赛圈 #兹维列夫 #网球有故事</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>签还没抽——这一次，谁能把它从意大利手里带走？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
