@@ -1,0 +1,70 @@
+{
+  "scoreboard_qc_sha256": null,
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 3.827,
+  "layout": "full",
+  "segments_seconds": 138.2,
+  "topbar": {
+    "line1": "2026 瓜达拉哈拉 WTA500 决赛",
+    "line2": "约维奇 6-4 6-2 斯特恩斯",
+    "start": 1.2,
+    "end": 139.4
+  },
+  "film_seconds": 143.24,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 2.688,
+    "2": 6.96,
+    "3": 7.704,
+    "4": 7.632,
+    "5": 8.328,
+    "6": 9.72,
+    "7": 10.968,
+    "8": 10.968,
+    "9": 7.752,
+    "10": 13.56,
+    "12": 10.536
+  },
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "jovic-stearns-guadalajara-2026-final",
+    "received_at": "2026-09-20T02:40:44Z",
+    "artifact_ready_at": "2026-09-20T02:46:22Z",
+    "elapsed_seconds": 338.779,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "9ae63f1e0301c09d0e7c56ee71e732bd15cc81b944a9e876d127f1f18e5afda4",
+    "spec_sha256": "bf893f265745f71415623e2ad9a58529d7ed88e59ddd1dfcbcb32d40fd45ba8a",
+    "run_id": "35484604688",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-09-20T02:43:11Z",
+        "run_id": "35484604688"
+      }
+    ],
+    "render_seconds": 191.779,
+    "pre_render_seconds": 147.0
+  },
+  "film_sha256": "9ae63f1e0301c09d0e7c56ee71e732bd15cc81b944a9e876d127f1f18e5afda4",
+  "film_bytes": 83469176,
+  "qc_attestation_sha256": "79b069e1f76b5ebeed9a29ac7aa322af18a366fd7d253a1eba0943b1e194e58b",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-09-20T02:43:11Z",
+      "run_id": "35484604688"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-20T02:46:23Z",
+      "run_id": "35484604688"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-jovic-stearns-guadalajara-2026-final/jovic-stearns-guadalajara-2026-final.mp4",
+  "video_bytes": 83469176
+}
