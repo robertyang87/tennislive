@@ -1317,30 +1317,20 @@ def test_几成几的豁免表只许减不许加():
 
 
 def _quote_overflow_offenders():
-    """{slug: [超宽的行, ...]}——`quote` 里手写的、没有空格、`_sub_width`
-    超过 `_SUB_MAX` 的行。和 `_quote_lines_fit_the_frame` 用同一套判定，
-    但这里不看豁免表，为的是能把豁免表自己的自检也建在它上面。
+    """{slug: [超宽的行, ...]}——**直接调闸自己用的那个 `quote_overflow_rows`**，
+    只是不看豁免表，为的是能把豁免表的自检也建在它上面。
+
+    ⚠️ 原来这儿抄了一份判定逻辑（「没有空格、`_sub_width` 超 `_SUB_MAX`」）。
+    2026-09-20 闸收窄成「中文行的空格不算断点」之后，抄的那份就和闸分叉了
+    ——而分叉的样子是「测试绿着，闸在拦别的东西」。一个判据写两处必分叉，
+    这次直接调过来。
     """
     reel = _build_match_reel()
     out = {}
     for slug, spec in _specs():
-        hits = []
-        for seg in spec.get("segments") or []:
-            if not isinstance(seg, dict):
-                continue
-            raw = seg.get("quote")
-            if not isinstance(raw, list):
-                continue
-            for item in raw:
-                text = item["text"] if isinstance(item, dict) else str(item)
-                for row in str(text).split("\n"):
-                    row = row.strip()
-                    if not row or " " in row:
-                        continue
-                    if reel._sub_width(row) > reel._SUB_MAX:
-                        hits.append(row)
-        if hits:
-            out[slug] = hits
+        rows = [row for _, row, _, _, _ in reel.quote_overflow_rows(spec)]
+        if rows:
+            out[slug] = rows
     return out
 
 
@@ -1387,13 +1377,13 @@ def test_quote超宽豁免表只许减不许加():
         f"——这张表只许减不许加")
 
 
-def test_quote宽度闸只拦没有空格的行不许误伤带空格的长句():
-    """带空格的行（比如长英文句子）libass 自己能在空格处断，`_sub_width`
-    超了不代表会溢出——fils-cobolli 那条的英文行（`_sub_width` 45.3，远超
-    16）渲出来两侧都留了 200px 以上的边距，就是靠这个自动换行。
+def test_quote宽度闸放行带空格的长英文行_那是词与词之间的分界():
+    """英文行的空格是词与词之间的分界，libass 断在那儿读起来是对的——
+    fils-cobolli 那条的英文行（`_sub_width` 45.3，远超 16）渲出来两侧都留了
+    200px 以上的边距，靠的就是这个自动换行。
 
     误拦这类会逼着下一个人把一句本来没事的英文台词硬拆两半，判据宁可窄，
-    不可宽——这条钉住「拦的只是没有空格的行」这个边界。
+    不可宽——这条钉住「英文行带空格就不拦」这个边界。
     """
     reel = _build_match_reel()
     long_english = ("It is Fils into the final here in Cincinnati. "
@@ -1401,7 +1391,67 @@ def test_quote宽度闸只拦没有空格的行不许误伤带空格的长句():
     assert reel._sub_width(long_english) > reel._SUB_MAX, \
         "这句英文本来就该超过 sub_width 上限，不然这条测试测不出东西"
     spec = {"segments": [{"quote": [{"at": 0.0, "text": long_english}]}]}
-    reel._quote_lines_fit_the_frame(spec)  # 不许抛——带空格的行不拦
+    reel._quote_lines_fit_the_frame(spec)  # 不许抛——英文行的空格是真断点
+
+
+def test_中文行带空格照样要拦_那个空格是标点换来的不是断点():
+    """账号所有者 2026-09-20：「**两行英文字母、两行中文字幕的最下面的中文
+    字幕没有显示全**」。
+
+    `jovic-stearns` 冷开场那条中文行是 `伊娃·约维奇卫冕了 12 个月前的这座冠军`
+    ——`_quote_display` 把 `·` 换成空格（换而不是删，否则两边会糊成一坨），
+    于是屏幕上那行**带空格、宽 19.4**，被第一版闸的「带空格的不拦」放了过去。
+    libass 在那个空格上折了一行，四行从 MarginV 1240 往下长到 1488，而画布
+    只有 1440，最下面那行中文被切掉一多半。
+
+    两头都钉：**拦得住那一行**，而且**是按屏幕上那份量的**——拿 spec 里的
+    原文去量（`·` 还是 `·`、没有空格）会走进另一条分支，测的就不是这个 bug。
+    """
+    reel = _build_match_reel()
+    raw = "伊娃·约维奇卫冕了 12 个月前的这座冠军"
+    shown = reel._quote_display(reel.readable(raw))
+    assert " " in shown, "屏幕上那份该带着标点换来的空格，不然这条测试测不出东西"
+    assert reel._sub_width(shown) > reel._SUB_MAX
+
+    text = "for Iva Jovic, who defends her title from 12 months ago.\n" + raw
+    spec = {"segments": [{"quote": [{"at": 0.0, "text": text}]}]}
+    try:
+        reel._quote_lines_fit_the_frame(spec)
+        raise AssertionError("中文行带空格也会被折行顶出画布，应该拦住，却放行了")
+    except reel.ReelError as exc:
+        assert "第 1 段" in str(exc)
+
+    short = "for Iva Jovic, who defends her title from 12 months ago.\n伊娃卫冕了这座冠军"
+    reel._quote_lines_fit_the_frame(
+        {"segments": [{"quote": [{"at": 0.0, "text": short}]}]})  # 不许抛
+
+    # 第三头：**只有拿原文量才超**的那种，不许误伤。中文行去标点之后会变窄
+    # （标点换成空格，空格比汉字窄），拿 spec 里的原文当判据就会拦下一行
+    # 屏幕上其实装得下的字。
+    punctuated = "她说，这是她打过的最难的一场比赛。"
+    assert reel._sub_width(punctuated) > reel._SUB_MAX, \
+        "这行按原文量本来就该超，不然这一头测不出东西"
+    assert reel._sub_width(reel._quote_display(reel.readable(punctuated))) \
+        <= reel._SUB_MAX, "去完标点本来就该不超，不然这一头测不出东西"
+    reel._quote_lines_fit_the_frame({"segments": [{"quote": [
+        {"at": 0.0, "text": "She said it was the hardest match\n" + punctuated}]}]})
+
+
+def test_英文参照行按它自己的46px折算_不拿68px那把尺子误伤():
+    """双语的英文行整行渲成 `_ASS_BILINGUAL_EN_SIZE`（46），而 `_sub_width`
+    是按主读行标定的（汉字 68、数字西文 78）——直接拿它量英文参照行，
+    宽度会高估四成半，一句正常长度的英文台词就被判成超宽。
+
+    判据钉在一行**没有空格**（走不到带空格那条豁免）、按 68 算超、按 46 算
+    不超的字符串上：闸必须放行它。
+    """
+    reel = _build_match_reel()
+    en = "A" * 30          # 没有空格，逼它走宽度那条路
+    assert reel._sub_width(en) > reel._SUB_MAX, "按 68 那把尺子这行本来就该超"
+    assert reel._sub_width(en) * 46 / reel._ASS_SIZE <= reel._SUB_MAX, \
+        "按 46 折算之后本来就不该超，不然这条测试测不出东西"
+    spec = {"segments": [{"quote": [{"at": 0.0, "text": en + "\n中文那一行"}]}]}
+    reel._quote_lines_fit_the_frame(spec)  # 不许抛
 
 
 def test_quote宽度闸真的拦得住原始那句_也真的放行改后的():

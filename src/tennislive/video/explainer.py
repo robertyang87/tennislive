@@ -11967,6 +11967,56 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 """
 
 
+def is_bilingual_cue(shown: str) -> bool:
+    """这一条字幕是不是「上英下中」的双语原声：第一行英文原文，底下是中文。
+
+    ⚠️ **从 `write_subtitles` 的函数体里提到模块顶层，是为了让写字幕的这一头
+    和 `--dry-run` 那道闸用同一个判定。** 闸要量一行有多宽，就得先知道它按
+    `_ASS_BILINGUAL_EN_SIZE` 渲还是按 `_ASS_SIZE` 渲——两处各写一份必分叉，
+    而分叉那天闸会放过一条真会出事的字幕，还不报错。
+    """
+    rows = shown.split("\n")
+    return (len(rows) >= 2
+            and bool(re.search(r"[A-Za-z]", rows[0]))
+            and any(re.search(r"[\u3400-\u9fff]", row)
+                    for row in rows[1:]))
+
+
+def ass_row_size(shown: str, index: int) -> int:
+    """这一条字幕的第 `index` 行渲出来是多大字号——`ass_rows` 套的就是它。
+
+    双语的第一行是英文参照行（`_ASS_BILINGUAL_EN_SIZE`，整行同一个字号）；
+    其余都是主读行（`_ASS_SIZE`，行内的数字和西文被 `_ass_text` 放大到
+    `_ASS_NUM_SIZE`）。
+    """
+    return (_ASS_BILINGUAL_EN_SIZE if is_bilingual_cue(shown) and index == 0
+            else _ASS_SIZE)
+
+
+def bilingual_bottom_margin(height: int, margin_v: int) -> int:
+    """双语字幕**下锚**（`\\an2`）时离底边留多少。
+
+    ⚠️ **为什么双语这一档要下锚，而单行旁白照旧上锚。** 上锚是「从这条线往下
+    长」，多一行就往下多长一行——而双语 cue 的行数**不是写 spec 的人定的**：
+    英文参照行由 libass 按 `WrapStyle: 0` 自己在空格处折，中文行里只要混进一个
+    空格（`_quote_display` 把中文标点换成空格，见那儿的注释）也会折。
+    2026-09-20 账号所有者看片子看出来的那条就是这么来的：「两行英文字母、
+    两行中文字幕的最下面的中文字幕没有显示全」——四行从 1240 往下长到
+    1488，而画布只有 1440，**最后那行中文被画布底边切掉了一多半**（烧帧量的：
+    墨迹 1421–1439，本该到 1466）。
+
+    下锚之后行数只往**上**长，底下那行中文钉死在原地——它是主读行，这反而比
+    上锚更稳：今天英文折不折行，中文那行的位置会跟着跳 46px。
+
+    留多少是量出来的，不是推的：`height - top - 英文行 - 中文行`，也就是
+    「按最常见的两行算，底下那行中文落在上锚时的同一个位置」。1080×1440 的
+    竖版片实测 `1440 − 1240 − 46 − 68 = 86`，渲出来墨迹 1300–1344，和上锚
+    那一版**逐像素一样**。
+    """
+    top = min(margin_v, _ASS_BILINGUAL_MARGIN_V)
+    return max(0, height - top - _ASS_BILINGUAL_EN_SIZE - _ASS_SIZE)
+
+
 def write_subtitles(cues: Sequence[tuple[float, float, str]], path: Path,
                     *, height: int = VIDEO_H,
                     margin_v: int = _ASS_MARGIN_V,
@@ -11982,16 +12032,9 @@ def write_subtitles(cues: Sequence[tuple[float, float, str]], path: Path,
     #
     # 单行的 cue 一个字节都不变（`split("\\n")` 只有一段），所以解说片那条线
     # 不受影响——存量里 `subtitle_cues` 产出的每一条本来就是一行。
-    def is_bilingual(shown: str) -> bool:
-        rows = shown.split("\n")
-        return (len(rows) >= 2
-                and bool(re.search(r"[A-Za-z]", rows[0]))
-                and any(re.search(r"[\u3400-\u9fff]", row)
-                        for row in rows[1:]))
-
     def ass_rows(shown: str) -> list[str]:
         rows = shown.split("\n")
-        if is_bilingual(shown):
+        if is_bilingual_cue(shown):
             # 英文行不用 `_ass_text`：它会把每个拉丁词重新放大到 78px，外面套
             # 一个小字号也会被里面的标签逐词覆盖。中文行仍走原逻辑，数字照常
             # 放大；末尾还原 68px，避免样式泄到下一行。
@@ -12000,12 +12043,16 @@ def write_subtitles(cues: Sequence[tuple[float, float, str]], path: Path,
                     + [_ass_text(row) for row in rows[1:]])
         return [_ass_text(row) for row in rows]
 
-    lines = [
-        f"Dialogue: 0,{_ass_stamp(start)},{_ass_stamp(end)},TL,,0,0,"
-        f"{min(margin_v, _ASS_BILINGUAL_MARGIN_V) if is_bilingual(shown) else 0},,"
-        + r"\N".join(ass_rows(shown))
-        for start, end, shown in cues
-    ]
+    # 双语那一档下锚（`\\an2` ＋ 底边距），别的照旧走样式里的上锚（MarginV=0
+    # 就是「用样式那个数」）。理由和那个边距怎么来的，见 `bilingual_bottom_margin`。
+    lines = []
+    for start, end, shown in cues:
+        bilingual = is_bilingual_cue(shown)
+        margin = bilingual_bottom_margin(height, margin_v) if bilingual else 0
+        anchor = r"{\an2}" if bilingual else ""
+        lines.append(
+            f"Dialogue: 0,{_ass_stamp(start)},{_ass_stamp(end)},TL,,0,0,"
+            f"{margin},," + anchor + r"\N".join(ass_rows(shown)))
     path.write_text(_ass_header(height, margin_v, outline=outline, shadow=shadow)
                     + "\n".join(lines) + "\n",
                     encoding="utf-8")
