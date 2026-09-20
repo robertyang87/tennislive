@@ -5507,6 +5507,13 @@ APPROVED_LOW_RES_SOURCES: dict[str, int] = {
     # 做赛场之上」。`yt-dlp --dump-json` 逐档查过：232 / 609 / 247 / 398 四档并列最高，
     # 全是 1280×720，没有 1080p。
     "https://www.youtube.com/watch?v=MXHsmdEMbcc": 720,
+    # 鲁内 v 迪米特洛夫（rune-dimitrov-davis-cup-2026-wg1）：同一批的第三条——
+    # 账号所有者 2026-09-19 直接给了这条 URL 说「做这个赛场之上视频」。同一个
+    # ITF 官方频道 World Tennis，同一个天花板：`yt-dlp -F` 逐档查过，视频档最高
+    # 是 232 / 136 / 398 三条并列的 1280×720 @25fps，没有 1080p。
+    # ⚠️ 这条源片和前两条还有一点不同：它**不是全场集锦**，是第三盘最后一局 ＋
+    # 整个决胜抢七的近实时长片（722.5 秒），0.5 秒的记分条就读 `DEN 3 6 5 / BUL 6 3 6`。
+    "https://www.youtube.com/watch?v=kwm7wpVFQzE": 720,
 }
 
 
