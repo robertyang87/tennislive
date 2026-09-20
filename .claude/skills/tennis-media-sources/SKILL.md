@@ -1058,6 +1058,45 @@ Tennis TV 的 YouTube 版和赛事官方频道并列成了「主路 / 备选」�
 ⚠️ **判据是「查过 YouTube 频道、当时没有这一场」，不是「我先搜到的是站内版」**
 ——两者在 `_source` 里长得一模一样，而前者是等过的、后者是没找。
 
+##### ⭐⭐ 2026-09-20：戴维斯杯那条「ITF 的 highlights 一律 720p」**已经不成立了**——逐条 probe，别按规律推
+
+`davis-cup-china-first-world-group-1` 的 `_sources_why` 2026-09-16 记着一句：
+
+> ⚠️ ITF 频道的规律：**全场重播 1080p，highlights 720p**——下次找戴维斯杯素材先找 Full Replay。
+
+`build_match_reel.APPROVED_LOW_RES_SOURCES` 上面那段注释也是这么写的
+（「戴维斯杯的官方影像档案（ITF 频道）highlights 一律只有 720p……『等』也等不出 1080p」），
+账号所有者据此为那条片子按 URL 开过 720p 授权。
+
+**2026 年 9 月资格赛第二轮这一批不是这样了。** 同一个 World Tennis 频道、同一周的上传，
+`davis-cup-road-to-bologna` 逐条 probe 出来的账：
+
+| 1920×1080 ✅ | 1280×720 ❌ |
+|---|---|
+| `Ao6F5dgyJ2I` Zverev v Prizmic（7:49） | `57oAzbN-Z_k` Rodionov v Bergs（8:02） |
+| `avOYJIHC3EI` FAA v Rinderknech（6:18） | `EleuaLjw39Y` Lehecka v Tien（18:02） |
+| `C-etb0PiDOw` Best of Korea v India（5:55） | `0cedMGtQYIM` GB 双打 Patten/Skupski（8:11） |
+| `ILwJjZPr5so` The Story of Czechia v USA（7:56） | `Y9cknCFyNik` / `EyDztGBdyXg` / `6ICDsdWkSfs` 2025 年那批意大利／西班牙 |
+| `SbIus2_PaF8` Best of Austria v Belgium（7:02） | |
+| `Hs-XoifbNZI` Tabilo v Merida（6:00）、`OwL0QG8uo_4` GB 当日转播（14:49） | |
+| `HFZpgC4C1sc` Chung v Nagal、`Vq6SNZ5dvEg` Mensik v Tien、`bXbK9H5f6fI`、`SVJUKAPpNp8` | |
+
+⚠️⚠️ **一条规律在它成立的那一批上成立，不等于下一批还成立**——而「按规律推」和「逐条查过」
+在 `_sources_why` 里长得一模一样（本文件上一节那句「前者是等过的、后者是没找」是同一个形状）。
+这一轮要是按旧规律推，`davis-cup-road-to-bologna` 九条源会有四条白白降成 720p，
+或者白白去要一次根本不需要的低清授权。
+
+**能直接照做的三条：**
+
+- **戴维斯杯的源片一条一条 probe，不按频道规律推。** 一趟 probe 4~5 分钟，而且
+  `match-reel.yml` 的 `concurrency` 分组带 slug，**用不同 slug 可以一口气并行发七八趟**
+  （这次就是这么干的：`dcroad-canada` / `dcroad-austria` / `dcroad-gb` …）
+- **同一场对阵往往有好几条上传，分辨率各不一样**：单场 highlights、`Best of X v Y`、
+  `The Story of X v Y`、当日转播。**720p 的那条不要就此放弃这场球**——
+  这次奥地利、捷克、英国三条都是「单场 highlights 是 720p，而同一场对阵的合集/转播是 1080p」
+- **先查仓库里已经探过的**：`output/**/probe.json` 有四百多份，`url` 字段一比就知道探没探过。
+  这次九条源里有六条是现成的（三条来自同期的「赛场之上」，三条来自 2026-09-16 那条戴维斯杯）
+
 ⚠️ 720p 的代价是实的：3:4 竖版窗口从 1080p 取只放大 1.33 倍，从 720p 取要
 **2.0 倍**；封面那一头更狠——1080p 抽帧铺 1080×1440 是 1.33 倍，720p 是 2.0 倍，
 两个都过不了「封面一律用官方高清实拍」那道闸，但 720p 连退路都更差。
