@@ -3118,89 +3118,234 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
     # 它整条只谈 ATP。**奖金池那套这条一个字不碰。**
     "ranking-math": (
         (
-            'cap',
-            '上限',
-            '打满一年，只算 19 个',
-            '先说一件很多人没想过的事。网球的世界排名，不是把一年打下来的分数全加起来。男子这边，ATP 只数十九个成绩；女子这边，WTA 只数十八个。一年打二十五个赛事、三十个赛事都可以，可算进排名的位置就那么多——第二十个、第二十五个打得再好，也得先挤掉已经在里面的某一个，否则一分都加不上。所以这套规则从一开始就不奖励谁打得更多，它只问你最好的那几个赛事打成什么样。',
-            'assets/explainer/masters-format/sinner.jpg',
-            'FFT / Roland-Garros 官方 · 2026 年 5 月 28 日，法网次轮，辛纳抽筋后独自站在场上',
-            ('ATP 只数 19 个成绩', 'WTA 只数 18 个', '多打的那些 不自动加分'),
+            "cap",
+            "上限",
+            "打满一年，只算 19 个",
+            "先说一件很多人没想过的事。网球的世界排名，不是把一年打下来的分数全加起来"
+            "。男子这边，ATP 只数十九个成绩；女子这边，WTA 只数十八个。一年打"
+            "二十五个赛事、三十个赛事都可以，可算进排名的位置就那么多——第二十个、第"
+            "二十五个打得再好，也得先挤掉已经在里面的某一个，否则一分都加不上。所以这"
+            "套规则从一开始就不奖励谁打得更多，它只问你最好的那几个赛事打成什么样。",
+            "assets/explainer/masters-format/sinner.jpg",
+            "FFT / Roland-Garros 官方 · 2026 年 5 月 28 日，法网次轮，辛纳抽筋后独自站在场上",
+            (
+                "ATP 只数 19 个成绩",
+                "WTA 只数 18 个",
+                "多打的那些 不自动加分",
+            ),
         ),
         (
-            'slam',
-            '底座',
-            '4 个大满贯，谁都跑不掉',
-            '先看钉死的那一半。四个大满贯——澳网、法网、温网、美网——男子女子两边都必算。这里有一条很多人不知道的规矩：只要你的名字进了正赛签表，这一站就算你的分，打没打都算。所以大满贯这四个位置，从来不是要不要打的选择题，它们在你进签表那一刻就已经占住了。',
-            'assets/explainer/entry-deadline/us_open_court_34.jpg',
-            'Wikimedia Commons · 美网亚瑟·阿什球场俯瞰，满场看台',
-            ('4 个大满贯 男女都必算', '进了签表 打没打都算', '不是要不要打的选择题'),
+            "slam",
+            "底座",
+            "4 个大满贯，谁都跑不掉",
+            "先看钉死的那一半。四个大满贯——澳网、法网、温网、美网——男子女子两边都"
+            "必算。这里有一条很多人不知道的规矩：只要你的名字进了正赛签表，这一站就算"
+            "你的分，打没打都算。所以大满贯这四个位置，从来不是要不要打的选择题，它们"
+            "在你进签表那一刻就已经占住了。",
+            "assets/explainer/entry-deadline/us_open_court_34.jpg",
+            "Wikimedia Commons · 美网亚瑟·阿什球场俯瞰，满场看台",
+            (
+                "4 个大满贯 男女都必算",
+                "进了签表 打没打都算",
+                "不是要不要打的选择题",
+            ),
         ),
         (
-            'frame',
-            '骨架',
-            '一多半位置，轮不到你挑',
-            '把这十九个摆开看，结构就清楚了。男子这边，四个大满贯加八个强制的大师赛，十二个位置是钉死的；再加上年终总决赛，十三个。剩下六个，才是自己挑的。女子那边更紧：四个大满贯加七个一千赛，十一个钉死，剩七个自己挑。也就是说两边都有一多半的位置轮不到你选——能靠多打几个赛事去改变的，只有右边那一小截。',
-            '',
-            '示意图 · 网球时差绘制',
-            ('ATP 12 个钉死 加总决赛', 'WTA 11 个钉死', '剩下的才是自己挑'),
-            '\n<svg viewBox="0 0 900 560" xmlns="http://www.w3.org/2000/svg">\n  <text x="450" y="46" text-anchor="middle" fill="#f4fbf7"\n        font-size="36" font-weight="800">一年只数这么多个成绩</text>\n  <text x="450" y="92" text-anchor="middle" fill="#cfe6d8"\n        font-size="26" font-weight="700">左边是钉死的，右边才是自己挑的</text>\n\n  <text x="60" y="176" fill="#f4fbf7" font-size="30" font-weight="800">ATP</text>\n  <text x="60" y="212" fill="#cfe6d8" font-size="26" font-weight="700">19 个</text>\n  <rect x="200" y="150" width="138.9" height="72" fill="#8fd6a8"/>\n  <rect x="338.9" y="150" width="277.9" height="72" fill="#8fd6a8" opacity=".62"/>\n  <rect x="616.8" y="150" width="34.7" height="72" fill="#c6f65a"/>\n  <rect x="651.6" y="150" width="208.4" height="72" fill="none"\n        stroke="rgba(244,251,247,.34)" stroke-width="3"/>\n\n  <text x="60" y="306" fill="#f4fbf7" font-size="30" font-weight="800">WTA</text>\n  <text x="60" y="342" fill="#cfe6d8" font-size="26" font-weight="700">18 个</text>\n  <rect x="200" y="280" width="146.7" height="72" fill="#8fd6a8"/>\n  <rect x="346.7" y="280" width="256.7" height="72" fill="#8fd6a8" opacity=".62"/>\n  <rect x="603.3" y="280" width="256.7" height="72" fill="none"\n        stroke="rgba(244,251,247,.34)" stroke-width="3"/>\n\n  <rect x="60" y="404" width="30" height="30" fill="#8fd6a8"/>\n  <text x="102" y="428" fill="#cfe6d8" font-size="26" font-weight="700">4 个大满贯</text>\n  <rect x="470" y="404" width="30" height="30" fill="#8fd6a8" opacity=".62"/>\n  <text x="512" y="428" fill="#cfe6d8" font-size="26" font-weight="700">强制的 1000</text>\n\n  <rect x="60" y="474" width="30" height="30" fill="#c6f65a"/>\n  <text x="102" y="498" fill="#cfe6d8" font-size="26" font-weight="700">ATP 年终总决赛</text>\n  <rect x="470" y="474" width="30" height="30" fill="none"\n        stroke="rgba(244,251,247,.34)" stroke-width="3"/>\n  <text x="512" y="498" fill="#cfe6d8" font-size="26" font-weight="700">自己挑最好的</text>\n</svg>\n',
+            "frame",
+            "骨架",
+            "一多半位置，轮不到你挑",
+            "把这十九个摆开看，结构就清楚了。男子这边，四个大满贯加八个强制的大师赛，"
+            "十二个位置是钉死的；再加上年终总决赛，十三个。剩下六个，才是自己挑的。女"
+            "子那边更紧：四个大满贯加七个一千赛，十一个钉死，剩七个自己挑。也就是说两"
+            "边都有一多半的位置轮不到你选——能靠多打几个赛事去改变的，只有右边那一小"
+            "截。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "ATP 12 个钉死 加总决赛",
+                "WTA 11 个钉死",
+                "剩下的才是自己挑",
+            ),
+            """<svg viewBox="0 0 900 560" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="46" text-anchor="middle" fill="#f4fbf7"
+        font-size="36" font-weight="800">一年只数这么多个成绩</text>
+  <text x="450" y="92" text-anchor="middle" fill="#cfe6d8"
+        font-size="26" font-weight="700">左边是钉死的，右边才是自己挑的</text>
+
+  <text x="60" y="176" fill="#f4fbf7" font-size="30" font-weight="800">ATP</text>
+  <text x="60" y="212" fill="#cfe6d8" font-size="26" font-weight="700">19 个</text>
+  <rect x="200" y="150" width="138.9" height="72" fill="#8fd6a8"/>
+  <rect x="338.9" y="150" width="277.9" height="72" fill="#8fd6a8" opacity=".62"/>
+  <rect x="616.8" y="150" width="34.7" height="72" fill="#c6f65a"/>
+  <rect x="651.6" y="150" width="208.4" height="72" fill="none"
+        stroke="rgba(244,251,247,.34)" stroke-width="3"/>
+
+  <text x="60" y="306" fill="#f4fbf7" font-size="30" font-weight="800">WTA</text>
+  <text x="60" y="342" fill="#cfe6d8" font-size="26" font-weight="700">18 个</text>
+  <rect x="200" y="280" width="146.7" height="72" fill="#8fd6a8"/>
+  <rect x="346.7" y="280" width="256.7" height="72" fill="#8fd6a8" opacity=".62"/>
+  <rect x="603.3" y="280" width="256.7" height="72" fill="none"
+        stroke="rgba(244,251,247,.34)" stroke-width="3"/>
+
+  <rect x="60" y="404" width="30" height="30" fill="#8fd6a8"/>
+  <text x="102" y="428" fill="#cfe6d8" font-size="26" font-weight="700">4 个大满贯</text>
+  <rect x="470" y="404" width="30" height="30" fill="#8fd6a8" opacity=".62"/>
+  <text x="512" y="428" fill="#cfe6d8" font-size="26" font-weight="700">强制的 1000</text>
+
+  <rect x="60" y="474" width="30" height="30" fill="#c6f65a"/>
+  <text x="102" y="498" fill="#cfe6d8" font-size="26" font-weight="700">ATP 年终总决赛</text>
+  <rect x="470" y="474" width="30" height="30" fill="none"
+        stroke="rgba(244,251,247,.34)" stroke-width="3"/>
+  <text x="512" y="498" fill="#cfe6d8" font-size="26" font-weight="700">自己挑最好的</text>
+</svg>
+
+""",
         ),
         (
-            'mandatory',
-            '例外',
-            '9 个大师赛，强制的只有 8 个',
-            '再看第二块，这儿有个常被记错的地方。男子的一千分大师赛一共有九个，可强制的只有八个——蒙特卡洛不在里面。规则书把它写得很死：蒙特卡洛在承诺和排名两头，都按五百赛那一档算。也就是说你在蒙特卡洛打得再好，那个成绩也要去和五百赛、二百五十赛抢自选的位置，不像另外八个那样自动占住一格。女子那边没有这个例外。',
-            'assets/explainer/thiem-football/monte_carlo_2023.jpg',
-            'Wikimedia Commons · 2023 年 4 月蒙特卡洛大师赛的红土场',
-            ('大师赛 9 个 强制只有 8 个', '蒙特卡洛 按 500 那档算', 'WTA 没有这个例外'),
+            "mandatory",
+            "例外",
+            "9 个大师赛，强制的只有 8 个",
+            "再看第二块，这儿有个常被记错的地方。男子的一千分大师赛一共有九个，可强制"
+            "的只有八个——蒙特卡洛不在里面。规则书把它写得很死：蒙特卡洛在承诺和排名"
+            "两头，都按五百赛那一档算。也就是说你在蒙特卡洛打得再好，那个成绩也要去和"
+            "五百赛、二百五十赛抢自选的位置，不像另外八个那样自动占住一格。女子那边没"
+            "有这个例外。",
+            "assets/explainer/thiem-football/monte_carlo_2023.jpg",
+            "Wikimedia Commons · 2023 年 4 月蒙特卡洛大师赛的红土场",
+            (
+                "大师赛 9 个 强制只有 8 个",
+                "蒙特卡洛 按 500 那档算",
+                "WTA 没有这个例外",
+            ),
         ),
         (
-            'pool',
-            '两个桶',
-            '7 个里挑 6 个，落选的不作废',
-            '女子这边还有一层，是最容易被讲错的。那七个必算的一千赛其实分成两桶。男女合办的有七个——印第安维尔斯、迈阿密、马德里、罗马、多伦多或者蒙特利尔、辛辛那提、中网，这七个里只取最好的六个。女子独办的有三个——多哈、迪拜、武网，这三个里只取最好的一个。注意中网在合办那一桶，武网在独办那一桶，两站都在中国，却不在同一个桶里。而没被取中的那几个并不作废：它们会掉进后面那个自选池，跟五百赛、二百五十赛、一百二十五赛一起抢剩下的七个位置。所以都去打从来不会白打，只是从保送变成了竞争。',
-            '',
-            '示意图 · 网球时差绘制',
-            ('合办 7 个 取最好的 6 个', '独办 3 个 取最好的 1 个', '落选的 掉进自选池继续抢'),
-            '\n<svg viewBox="0 0 900 560" xmlns="http://www.w3.org/2000/svg">\n  <text x="450" y="46" text-anchor="middle" fill="#f4fbf7"\n        font-size="36" font-weight="800">WTA 的 1000 分两桶装</text>\n  <text x="450" y="92" text-anchor="middle" fill="#cfe6d8"\n        font-size="26" font-weight="700">实心＝占住必算的位置\u3000空心＝这一桶没取中</text>\n\n  <text x="60" y="168" fill="#cfe6d8" font-size="26" font-weight="700">男女合办</text>\n  <rect x="300" y="132" width="52" height="52" rx="8" fill="#8fd6a8"/>\n  <rect x="364" y="132" width="52" height="52" rx="8" fill="#8fd6a8"/>\n  <rect x="428" y="132" width="52" height="52" rx="8" fill="#8fd6a8"/>\n  <rect x="492" y="132" width="52" height="52" rx="8" fill="#8fd6a8"/>\n  <rect x="556" y="132" width="52" height="52" rx="8" fill="#8fd6a8"/>\n  <rect x="620" y="132" width="52" height="52" rx="8" fill="#8fd6a8"/>\n  <rect x="684" y="132" width="52" height="52" rx="8" fill="none"\n        stroke="rgba(244,251,247,.34)" stroke-width="3"/>\n  <text x="790" y="168" fill="#cfe6d8" font-size="26" font-weight="700">取 6</text>\n\n  <text x="60" y="286" fill="#cfe6d8" font-size="26" font-weight="700">女子独办</text>\n  <rect x="300" y="250" width="52" height="52" rx="8" fill="#8fd6a8"/>\n  <rect x="364" y="250" width="52" height="52" rx="8" fill="none"\n        stroke="rgba(244,251,247,.34)" stroke-width="3"/>\n  <rect x="428" y="250" width="52" height="52" rx="8" fill="none"\n        stroke="rgba(244,251,247,.34)" stroke-width="3"/>\n  <text x="790" y="286" fill="#cfe6d8" font-size="26" font-weight="700">取 1</text>\n\n  <path d="M 470 320 L 470 386" stroke="#c6f65a" stroke-width="4" fill="none"/>\n  <path d="M 458 374 L 470 392 L 482 374 Z" fill="#c6f65a"/>\n  <text x="510" y="368" fill="#c6f65a" font-size="26" font-weight="800">落选的 3 个转到这儿</text>\n\n  <rect x="120" y="410" width="660" height="96" rx="12" fill="none"\n        stroke="#c6f65a" stroke-width="3"/>\n  <text x="450" y="452" text-anchor="middle" fill="#f4fbf7"\n        font-size="30" font-weight="800">自选池：最好的 7 个</text>\n  <text x="450" y="490" text-anchor="middle" fill="#cfe6d8"\n        font-size="26" font-weight="700">和 500 / 250 / 125 / ITF 一起抢</text>\n</svg>\n',
+            "pool",
+            "两个桶",
+            "7 个里挑 6 个，落选的不作废",
+            "女子这边还有一层，是最容易被讲错的。那七个必算的一千赛其实分成两桶。男女"
+            "合办的有七个——印第安维尔斯、迈阿密、马德里、罗马、多伦多或者蒙特利尔、"
+            "辛辛那提、中网，这七个里只取最好的六个。女子独办的有三个——多哈、迪拜、"
+            "武网，这三个里只取最好的一个。注意中网在合办那一桶，武网在独办那一桶，两"
+            "站都在中国，却不在同一个桶里。而没被取中的那几个并不作废：它们会掉进后面"
+            "那个自选池，跟五百赛、二百五十赛、一百二十五赛一起抢剩下的七个位置。所以"
+            "都去打从来不会白打，只是从保送变成了竞争。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "合办 7 个 取最好的 6 个",
+                "独办 3 个 取最好的 1 个",
+                "落选的 掉进自选池继续抢",
+            ),
+            """<svg viewBox="0 0 900 560" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="46" text-anchor="middle" fill="#f4fbf7"
+        font-size="36" font-weight="800">WTA 的 1000 分两桶装</text>
+  <text x="450" y="92" text-anchor="middle" fill="#cfe6d8"
+        font-size="26" font-weight="700">实心＝占住必算的位置　空心＝这一桶没取中</text>
+
+  <text x="60" y="168" fill="#cfe6d8" font-size="26" font-weight="700">男女合办</text>
+  <rect x="300" y="132" width="52" height="52" rx="8" fill="#8fd6a8"/>
+  <rect x="364" y="132" width="52" height="52" rx="8" fill="#8fd6a8"/>
+  <rect x="428" y="132" width="52" height="52" rx="8" fill="#8fd6a8"/>
+  <rect x="492" y="132" width="52" height="52" rx="8" fill="#8fd6a8"/>
+  <rect x="556" y="132" width="52" height="52" rx="8" fill="#8fd6a8"/>
+  <rect x="620" y="132" width="52" height="52" rx="8" fill="#8fd6a8"/>
+  <rect x="684" y="132" width="52" height="52" rx="8" fill="none"
+        stroke="rgba(244,251,247,.34)" stroke-width="3"/>
+  <text x="790" y="168" fill="#cfe6d8" font-size="26" font-weight="700">取 6</text>
+
+  <text x="60" y="286" fill="#cfe6d8" font-size="26" font-weight="700">女子独办</text>
+  <rect x="300" y="250" width="52" height="52" rx="8" fill="#8fd6a8"/>
+  <rect x="364" y="250" width="52" height="52" rx="8" fill="none"
+        stroke="rgba(244,251,247,.34)" stroke-width="3"/>
+  <rect x="428" y="250" width="52" height="52" rx="8" fill="none"
+        stroke="rgba(244,251,247,.34)" stroke-width="3"/>
+  <text x="790" y="286" fill="#cfe6d8" font-size="26" font-weight="700">取 1</text>
+
+  <path d="M 470 320 L 470 386" stroke="#c6f65a" stroke-width="4" fill="none"/>
+  <path d="M 458 374 L 470 392 L 482 374 Z" fill="#c6f65a"/>
+  <text x="510" y="368" fill="#c6f65a" font-size="26" font-weight="800">落选的 3 个转到这儿</text>
+
+  <rect x="120" y="410" width="660" height="96" rx="12" fill="none"
+        stroke="#c6f65a" stroke-width="3"/>
+  <text x="450" y="452" text-anchor="middle" fill="#f4fbf7"
+        font-size="30" font-weight="800">自选池：最好的 7 个</text>
+  <text x="450" y="490" text-anchor="middle" fill="#cfe6d8"
+        font-size="26" font-weight="700">和 500 / 250 / 125 / ITF 一起抢</text>
+</svg>
+
+""",
         ),
         (
-            'zero',
-            '代价',
-            '不去，记的是 0',
-            '再说不去的代价。强制的赛事不去，记的不是没有分，是一个零分，而且要在排名上挂满五十二周。两边绑的人不一样。男子这边只绑前三十，按上一年十一月十号那份排名钉死，一整年不变，规则书管这批人叫承诺球员；女子这边不设这个门槛，只要你的排名够得着正赛，你就被绑住了。所以同样是世界第五十位，男子可以自己安排赛程，女子不行。女子那边还有一张五百赛的阶梯表：够得着六个就得打六个，够得着三个就打三个，少一个记一个零分。',
-            'assets/explainer/mandatory-1000/monfils_montreal_2026.jpg',
-            'Tennis Canada 官方图 · 2026 年 8 月，加拿大大师赛蒙特利尔站，孟菲尔斯走向球场',
-            ('不打 记 0 分 挂满 52 周', 'ATP 只绑前 30', 'WTA 够得着正赛就被绑'),
+            "zero",
+            "代价",
+            "不去，记的是 0",
+            "再说不去的代价。强制的赛事不去，记的不是没有分，是一个零分，而且要在排名"
+            "上挂满五十二周。两边绑的人不一样。男子这边只绑前三十，按上一年十一月十号"
+            "那份排名钉死，一整年不变，规则书管这批人叫承诺球员；女子这边不设这个门槛"
+            "，只要你的排名够得着正赛，你就被绑住了。所以同样是世界第五十位，男子可以"
+            "自己安排赛程，女子不行。女子那边还有一张五百赛的阶梯表：够得着六个就得打"
+            "六个，够得着三个就打三个，少一个记一个零分。",
+            "assets/explainer/mandatory-1000/monfils_montreal_2026.jpg",
+            "Tennis Canada 官方图 · 2026 年 8 月，加拿大大师赛蒙特利尔站，孟菲尔斯走向球场",
+            (
+                "不打 记 0 分 挂满 52 周",
+                "ATP 只绑前 30",
+                "WTA 够得着正赛就被绑",
+            ),
         ),
         (
-            'floor',
-            '池子',
-            '自己挑的那几个，从哪儿挑',
-            '那自己挑的那几个位置，能从哪儿挑。池子比很多人想的宽：男子这边是联合杯、蒙特卡洛、五百赛、二百五十赛，再往下还有挑战赛和更低一级的赛事；女子那边是所有一千赛、五百赛、二百五十赛、一百二十五赛，再加上低一级的赛事。也就是说排名不高的球员，一整年都在这个池子里攒分，他们的十九个成绩里可能一个大满贯正赛都没有。同一套算法，顶尖球员拿它做减法，往上爬的人拿它做加法。',
-            'assets/explainer/challenger-climb/zhang_usopen_2023.jpg',
-            'Wikimedia Commons · 2023 年 8 月 28 日美网首轮，张之臻在外场发球',
-            ('池子一直通到挑战赛', '排名不高的 全年在这儿攒分', '顶尖做减法 往上爬的做加法'),
+            "floor",
+            "池子",
+            "自己挑的那几个，从哪儿挑",
+            "那自己挑的那几个位置，能从哪儿挑。池子比很多人想的宽：男子这边是联合杯、"
+            "蒙特卡洛、五百赛、二百五十赛，再往下还有挑战赛和更低一级的赛事；女子那边"
+            "是所有一千赛、五百赛、二百五十赛、一百二十五赛，再加上低一级的赛事。也就"
+            "是说排名不高的球员，一整年都在这个池子里攒分，他们的十九个成绩里可能一个"
+            "大满贯正赛都没有。同一套算法，顶尖球员拿它做减法，往上爬的人拿它做加法。",
+            "assets/explainer/challenger-climb/zhang_usopen_2023.jpg",
+            "Wikimedia Commons · 2023 年 8 月 28 日美网首轮，张之臻在外场发球",
+            (
+                "池子一直通到挑战赛",
+                "排名不高的 全年在这儿攒分",
+                "顶尖做减法 往上爬的做加法",
+            ),
         ),
         (
-            'finals',
-            '总决赛',
-            '同一座奖杯，三种算法',
-            '年终总决赛这一项，两边的算法正好相反。男子这边，它占掉第十九个位置，是那十九个里的一个；女子这边，单打不占那十八个名额，打了就是额外加上去的——也就是说女子的顶尖球员实际上能拿到十九项的分。可女子的双打又反了过来，总决赛的分要挤进最好的十二个里去抢位置。同一座奖杯，男单、女单、女双三种算法。这也是为什么两边的排名不能直接拿来比：它们连算几个成绩都不是同一件事。',
-            'assets/explainer/finals-venues/rybakina-trophy-riyadh-2025.jpg',
-            'WTA 官方图 · 2025 年 11 月 8 日利雅得，莱巴金娜亲吻比利·简·金杯冠军奖杯',
-            ('ATP 总决赛 占第 19 个', 'WTA 单打 不占名额', 'WTA 双打 要挤进 12 个'),
+            "finals",
+            "总决赛",
+            "同一座奖杯，三种算法",
+            "年终总决赛这一项，两边的算法正好相反。男子这边，它占掉第十九个位置，是那"
+            "十九个里的一个；女子这边，单打不占那十八个名额，打了就是额外加上去的——"
+            "也就是说女子的顶尖球员实际上能拿到十九项的分。可女子的双打又反了过来，总"
+            "决赛的分要挤进最好的十二个里去抢位置。同一座奖杯，男单、女单、女双三种算"
+            "法。这也是为什么两边的排名不能直接拿来比：它们连算几个成绩都不是同一件事"
+            "。",
+            "assets/explainer/finals-venues/rybakina-trophy-riyadh-2025.jpg",
+            "WTA 官方图 · 2025 年 11 月 8 日利雅得，莱巴金娜亲吻比利·简·金杯冠军奖杯",
+            (
+                "ATP 总决赛 占第 19 个",
+                "WTA 单打 不占名额",
+                "WTA 双打 要挤进 12 个",
+            ),
         ),
         (
-            'ask',
-            '落点',
-            '奖励的是高度，不是出勤',
-            '把这套算法连起来看，它在说一件很明确的事：排名奖励的不是出勤，是高度。多打一个赛事换不来分，除非那一个比你手里最差的那个成绩更好。而二〇二六年男子这边又收紧了一档，自选的位置从七个减到了六个，留给低级别赛事的空间更小了。那么问题来了：这套只数最好那几个成绩的算法，到底是在保护球员的身体，还是在把中小赛事推得更远？',
-            'assets/explainer/fonseca-oconnell/cincinnati_outer_court_2026.jpg',
-            'Cincinnati Open 官方图库 · 2026 年 8 月 16 日，辛辛那提外场满场',
-            ('2026 ATP 自选档 7 减到 6', '排名奖励高度 不是出勤', '低级别赛事 空间更小'),
-            None,
-            '是在保护球员的身体，还是在把中小赛事推得更远？',
+            "ask",
+            "落点",
+            "奖励的是高度，不是出勤",
+            "把这套算法连起来看，它在说一件很明确的事：排名奖励的不是出勤，是高度。多"
+            "打一个赛事换不来分，除非那一个比你手里最差的那个成绩更好。而二〇二六年男"
+            "子这边又收紧了一档，自选的位置从七个减到了六个，留给低级别赛事的空间更小"
+            "了。那么问题来了：这套只数最好那几个成绩的算法，到底是在保护球员的身体，"
+            "还是在把中小赛事推得更远？",
+            "assets/explainer/fonseca-oconnell/cincinnati_outer_court_2026.jpg",
+            "Cincinnati Open 官方图库 · 2026 年 8 月 16 日，辛辛那提外场满场",
+            (
+                "2026 ATP 自选档 7 减到 6",
+                "排名奖励高度 不是出勤",
+                "低级别赛事 空间更小",
+            ),
+            "",
+            "是在保护球员的身体，还是在把中小赛事推得更远？",
         ),
     ),
     # 2026-09-16 选题：WTA 当天官宣年终总决赛 2027–2029 落户夏洛特。
