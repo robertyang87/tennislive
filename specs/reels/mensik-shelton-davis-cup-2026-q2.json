@@ -112,8 +112,8 @@
       "source": "main",
       "start": 137.0,
       "end": 152.0,
-      "narration": "首盘打到五比四，门西克在谢尔顿的发球局上，拿到了一个盘点。那一分谢尔顿没有退，正面把球压了回去，救下来之后立刻完成全场第一次破发。",
-      "_why": "技战术第一段：写的是这一分怎么丢的，不是比分。两源一致——flashscore 赛报「Shelton won the first set after saving a set point at 5-4」；解说 137.44s「Having faced down a set point, he now has the opportunity on serve to take a one set to love lead」。⚠️ 起点从 135.0 挪到 137.0：原来 17 秒窗口只装得下 9.4 秒旁白，估出来是哑场。⚠️ 「门西克在谢尔顿的发球局上拿到一个盘点」原来是 18 格的子句，加了逗号断开。段尾 152.0，最近翻牌 150.72 在前 1.28 秒、164.56 在后 12.56 秒。",
+      "narration": "首盘打到五比四，门西克在谢尔顿的发球局上，拿到了一个盘点。那一分谢尔顿没有退，正面把它压了回去，救下来之后立刻完成全场第一次破发。",
+      "_why": "技战术第一段：写的是这一分怎么丢的，不是比分。两源一致——flashscore 赛报「Shelton won the first set after saving a set point at 5-4」；解说 137.44s「Having faced down a set point, he now has the opportunity on serve to take a one set to love lead」。⚠️ 起点从 135.0 挪到 137.0：原来 17 秒窗口只装得下 9.4 秒旁白，估出来是哑场。⚠️ 「门西克在谢尔顿的发球局上拿到一个盘点」原来是 18 格的子句，加了逗号断开。段尾 152.0，最近翻牌 150.72 在前 1.28 秒、164.56 在后 12.56 秒。 ⚠️ 这一处的措辞是按 run 35480678442 的 `[查切词]` 改的——那是合成器自己报的切词，不是我凭耳朵猜的。原来写「正面把球压了回去」，切词报的是 `把 ｜ 球压 ｜ 了 ｜ 回去`——`球压` 是个假词，换成「把它压了回去」。",
       "crosses_cut": true
     },
     {
@@ -137,8 +137,8 @@
       "source": "main",
       "start": 328.0,
       "end": 343.4,
-      "narration": "决胜盘四比三，谢尔顿的发球局，门西克手里握着破发点。谢尔顿挑起一记很刁的高球，他退回去，把球直接穿了过去。全场站起来了。",
-      "_why": "技战术第三段，写球路不写比分：解说 328.72s「Well played Jakob Mensik. That was a testing lob. And he passed it with flying colors. And listen to the crowd on their feet」。**是破发点不是普通分**——记分条裁剪 score_08.jpg 在 320.5~332.5s 读得到 `CZE 5 6 4 AD / •USA 7 4 3 40`（点在 USA 一侧＝谢尔顿发球，AD 在捷克一行＝门西克的破发点），到 350.5s 变成 `•CZE 5 6 5 40 / USA 7 4 3 30 · MATCH POINT`，破成了。⚠️ 段尾从 340.6 挪到 343.4：dry-run 报 342.16 才翻牌，按硬闸往后留 1.2 秒。",
+      "narration": "决胜盘四比三，谢尔顿的发球局，门西克手里握着破发点。谢尔顿放了一记很刁的高球，他退回去，把球直接穿了过去。全场站起来了。",
+      "_why": "技战术第三段，写球路不写比分：解说 328.72s「Well played Jakob Mensik. That was a testing lob. And he passed it with flying colors. And listen to the crowd on their feet」。**是破发点不是普通分**——记分条裁剪 score_08.jpg 在 320.5~332.5s 读得到 `CZE 5 6 4 AD / •USA 7 4 3 40`（点在 USA 一侧＝谢尔顿发球，AD 在捷克一行＝门西克的破发点），到 350.5s 变成 `•CZE 5 6 5 40 / USA 7 4 3 30 · MATCH POINT`，破成了。⚠️ 段尾从 340.6 挪到 343.4：dry-run 报 342.16 才翻牌，按硬闸往后留 1.2 秒。 ⚠️ 这一处的措辞是按 run 35480678442 的 `[查切词]` 改的——那是合成器自己报的切词，不是我凭耳朵猜的。原来写「谢尔顿挑起一记很刁的高球」，切词报回来的是 `选起`——「挑」是多音字，合成器读成了 tiāo 那一支，意思整个变了。换成「放了一记很刁的高球」，「放高球」本来就是这一拍的中文叫法。",
       "crosses_cut": true
     },
     {
@@ -152,8 +152,8 @@
       "source": "main",
       "start": 360.0,
       "end": 372.6,
-      "narration": "谢尔顿在这一局打出两记正手，一记比一记不讲道理，第一个赛点就被他救了回去。全场刚站起来，又坐了回去。",
-      "_why": "技战术第四段：解说 362.08s「that is just magnificent from Shelton. There's two points this game where he's produced some magic forehands」；记分条 score_09.jpg 360.5s 还是 `40 : 30`（赛点），366.5s 变成 `40 : 40`——救下来了，两处对得上。flashscore 赛报写门西克是「on his second match point」才结束比赛，也是同一件事。⚠️ 原来写「连着两记正手把球打回到线上，赛点没了」，「连着」源片和解说都没说，改掉。段尾 372.6 在翻牌 371.36 之后 1.24 秒。 ⚠️ 末句是这段中段唯一一句纯情绪、不报数的话——dry-run 的[节奏]提示说中段全在报数据，这一句是特意留的那个停顿。",
+      "narration": "谢尔顿在这一局打出两记正手，两记都不讲道理，第一个赛点就被他救了回去。全场刚站起来，又坐了回去。",
+      "_why": "技战术第四段：解说 362.08s「that is just magnificent from Shelton. There's two points this game where he's produced some magic forehands」；记分条 score_09.jpg 360.5s 还是 `40 : 30`（赛点），366.5s 变成 `40 : 40`——救下来了，两处对得上。flashscore 赛报写门西克是「on his second match point」才结束比赛，也是同一件事。⚠️ 原来写「连着两记正手把球打回到线上，赛点没了」，「连着」源片和解说都没说，改掉。段尾 372.6 在翻牌 371.36 之后 1.24 秒。 ⚠️ 末句是这段中段唯一一句纯情绪、不报数的话——dry-run 的[节奏]提示说中段全在报数据，这一句是特意留的那个停顿。 ⚠️ 这一处的措辞是按 run 35480678442 的 `[查切词]` 改的——那是合成器自己报的切词，不是我凭耳朵猜的。原来写「一记比一记不讲道理」，切词报的是 `一 ｜ 记比 ｜ 一 ｜ 记`——`记比` 是个假词，换成「两记都不讲道理」。",
       "crosses_cut": true
     },
     {
@@ -178,8 +178,8 @@
       "source": "main",
       "start": 410.0,
       "end": 429.7,
-      "narration": "谢尔顿这两天打了两场单打，一场都没赢下来。解说说他打得并不差，只是什么都没留下。整条对阵被拖进第五场，最后一场是勒纳·钱对莱赫奇卡——前一天赢过门西克的人，对上前一天赢过谢尔顿的人。",
-      "_why": "收尾：解说 406.72s「Ben Shelton played some great tennis again, but he's got nothing to show for his two matches here in singles. And we'll need a fifth and final one to decide this tie」。第五场的对阵（勒纳·钱 v 莱赫奇卡）和首日那两场的赢家都两源核过；**第五场的赛果不在这条源片里，所以只说谁对谁，不说结果**。⚠️ 起点从 408.0 挪到 410.0，给旁白配一个装得下的窗口。段尾 429.7 在翻牌 428.48 之后 1.22 秒，下一次翻牌 434.24 在 4.5 秒后；430.5s 起画面叠的是赛果板，442.5s 起是 ITF 片尾动画，都不进窗口。",
+      "narration": "谢尔顿这两天打了两场单打，一场都没赢下来。解说说他打得并不差，只是这两场球什么也没换来。整条对阵被拖进第五场，最后一场是勒纳·钱对莱赫奇卡——前一天赢过门西克的人，对阵前一天赢过谢尔顿的人。",
+      "_why": "收尾：解说 406.72s「Ben Shelton played some great tennis again, but he's got nothing to show for his two matches here in singles. And we'll need a fifth and final one to decide this tie」。第五场的对阵（勒纳·钱 v 莱赫奇卡）和首日那两场的赢家都两源核过；**第五场的赛果不在这条源片里，所以只说谁对谁，不说结果**。⚠️ 起点从 408.0 挪到 410.0，给旁白配一个装得下的窗口。段尾 429.7 在翻牌 428.48 之后 1.22 秒，下一次翻牌 434.24 在 4.5 秒后；430.5s 起画面叠的是赛果板，442.5s 起是 ITF 片尾动画，都不进窗口。 ⚠️ 这一处的措辞是按 run 35480678442 的 `[查切词]` 改的——那是合成器自己报的切词，不是我凭耳朵猜的。两处：「什么都没留下」被切成 `什么都没留 ｜ 下`，换成「什么也没换来」；「对上前一天」被切成 `对 ｜ 上前 ｜ 一天`，`上前` 是个假词，换成「对阵前一天」。",
       "crosses_cut": true
     }
   ],
