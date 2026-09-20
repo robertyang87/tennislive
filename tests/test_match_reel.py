@@ -1536,7 +1536,14 @@ def test_旁白不许用指示语指画面():
             for text in (seg.get("narration") or "", _quote_str(seg.get("quote"))):
                 m = pointing.search(text)
                 if m:
-                    bad.append(f"{slug} @{seg['start']}: …{m.group(0)}…")
+                    # ⚠️ 整屏证据段（`image`）没有 `start`——直接 `seg['start']`
+                    # 会让这条判据**崩掉而不是报出问题**（KeyError，不是断言失败）。
+                    # 2026-09-20 才第一次踩到：在那之前没有哪个 image 段的旁白带
+                    # 指示语，这个洞一直看不见。而整屏证据段恰恰是最容易犯这条的
+                    # ——图就在眼前，顺手就想指它（那次写的是「这张图把整条路画完了」）。
+                    where = (f"图 {seg['image'].rsplit('/', 1)[-1]}"
+                             if seg.get("image") else f"@{seg.get('start')}")
+                    bad.append(f"{slug} {where}: …{m.group(0)}…")
     assert not bad, "旁白用指示语指画面：\n  " + "\n  ".join(bad)
 
     # 反面锚点：这句必须**过**——它是描述动作和情绪，不是指示语
