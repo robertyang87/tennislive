@@ -12,8 +12,6 @@
   "sources": {
     "main": "https://youtu.be/2Su4qc7pGNE"
   },
-  "tts_backend": "edge",
-  "_tts_backend_why": "Azure 钥匙自 2026-09-03 起恒 401（keys-bondar / zheng-putintseva / tien-monfils / wu-alcaraz 连着四条都死在片尾配音那一步），按 CLAUDE.md「写 spec 那一刻就把 tts_backend 写上，别等 render 红了再补」。这条**退回 edge 零代价**：全篇没有 voice.style、没有 lead_pause（Azure 独有的那两样），而本地 --check-narration 在这台沙箱跑的本来就是 edge-tts，量到的余量直接适用，不用再按「Azure 比 edge 快 6.6%」折算。",
   "_source": "US Open 官方 YouTube 频道单场集锦（频道名 `US Open Tennis Championships`，upload_date 20260910），1920×1080 / 29.97fps / 198.41s（probe 实测）。四要素自证：①常驻记分条整场烧着 `1 ZVEREV GER` / `VAN DE ZANDSCHULP NED` 和逐盘比分；②60.5s、122.5s、192.5s 三处全屏台标，末一处写着 `MEN'S SINGLES | QUARTERFINAL` `ARTHUR ASHE STADIUM` ＋ `ALEXANDER ZVEREV 6 7 6 / BOTIC VAN DE ZANDSCHULP 2 5 1`（完整赛果）；③自动字幕里解说报出 `very comfortable so far for the number one seed`、`Alexander Zverev is back in the semis in New York`；④画面右上角常驻 us open 台标。⚠️ 末尾 195.38 起是社媒片尾板（`silent_audio` 也正好是 [[195.38, 198.41]]），窗口一律收在 195.3 那个切点之前。",
   "cover": {
     "matchup": [

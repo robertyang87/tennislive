@@ -9,8 +9,6 @@
     978
   ],
   "_scorebox_why": "右缘**是拿这八条源片自己的 `score_*.jpg` 量的，不是抄别的片子**（CLAUDE.md 2026-09-10 那条：抄来的右缘窄了会被 `scan_mask` 当场判 `never truncate`）。逐条量出来分三簇，正是「板每打完一盘 +38px」：一盘 578（set1 / rybwinner / 主集锦）→ 两盘 615（set2 / dropshot）→ 三盘 653（pom / champpoint）。最宽的真实簇 653，加 `BOARD_EDGE_PAD` 再留余量取 700。\n⚠️ 量到的 804 那一簇不参与定值：519≈tile 满宽，是入场蓝幕和全屏比分图形被当成了板，而那几格所在的段都写着 `score_inset: false`。",
-  "tts_backend": "edge",
-  "_tts_backend_why": "Azure 钥匙从 2026-09-03 起连着四条片子 401（keys-bondar 两趟、zheng-putintseva、tien-monfils、wu-alcaraz），按 CLAUDE.md「写 spec 那一刻就把 tts_backend 写上，别等 render 红了再补」。这一条**退回 edge 零代价**：没有 `voice.style`、没有 `lead_pause`（Azure 独有的那两样都没用），而本地 `--check-narration` 在这台沙箱跑的本来就是 edge-tts，量到的余量直接适用，不用再按「Azure 比 edge 快 6.6%」折算。",
   "sources": {
     "champ": "https://www.youtube.com/watch?v=_1dOo30-iAM",
     "walk": "https://www.youtube.com/watch?v=NwZhU23qtM4",

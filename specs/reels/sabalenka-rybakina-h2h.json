@@ -18,8 +18,6 @@
     "sfryb": "同上：30000/1001 → 25，最后一球 + 庆祝特写，重采样看不出来。"
   },
   "_mixed_fps_why": "⚠️⚠️ **主源是 `sources` 里的第一条，不是 `primary` 字段**——`check_sources_match` 和 render 取的都是 `next(iter(sources))`（`build_match_reel.py` 第 5848 / 7048 行），`spec[\"primary\"]` 在 render 这条路上**一个字都不读**。\n这是 run 34588603072 量出来的：那一趟 `sources` 的第一条是 sfsab，于是报\n  `ReelError: 这些源片的帧率和主源 sfsab（30000/1001）不一样：['ao2023', 'ao2023cup', 'berlin25', 'ao2026', 'ao2026cup']`\n——**而我的 `mixed_fps` 是按「主源 25fps」写的**，正好反了。\n\n**所以 25fps 的那条排第一，这一刀是有理由的，不是为了让闸闭嘴**：成片跟主源走，\n  主源取 sfsab（29.97）→ 五条 25fps 的源全要重采样到 29.97，而那五条里装着**全部的\n    回合镜头**（两次冠军点、柏林的决胜盘抢七）——25 → 29.97 是非整数倍插帧，\n    CLAUDE.md 早写过「回合镜头一眼能看出一顿一顿」\n  主源取 ao2026（25）→ 重采样只落在 sfsab / sfryb 那四段（①②⑪⑫），而那四段全是\n    **最后一球之后的庆祝和赛后向看台挥手**——静态、慢，29.97 → 25 感知不到\n\n两条美网半决赛源片 yt-dlp 下到的是 **60000/1001**，`resolve_fps` 整除降到 30000/1001（日志：`高帧率源整除降采样：60000/1001 / 2 → 30000/1001`）；其余五条是 `25/1`。尺寸全是 1920×1080，所以尺寸那道闸不用出路。\n⚠️ **`primary: \"ao2026\"` 留着**（`parse_segments` 拿它当段的默认 source），但它和这道闸无关——每一段都显式写了 `source`，所以它今天只是个说明。",
-  "tts_backend": "edge",
-  "_tts_backend_why": "Azure 的钥匙 2026-09-03 起恒 401（CLAUDE.md 记着连着四条片子死在片尾配音的第 2 秒），退回 edge-tts。这条 spec 没有 voice.style、也没有 lead_pause——那两样是 Azure 独有的，所以退回去零代价；而本地 --check-narration 在这台沙箱跑的本来就是 edge-tts，量到的余量直接适用。",
   "editorial": {
     "mode": "match_review",
     "question": "萨巴伦卡和莱巴金娜刚刚各自闯进美网决赛——她们之前已经打过十七次，这十七次都发生了什么？",

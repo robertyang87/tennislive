@@ -418,7 +418,5 @@
     "main": "单源，25fps，不存在混帧率问题。这一栏按 spec 形状留着说明已经核过。"
   },
   "_voice_why": "沿用这条线的默认：云见（`zh-CN-YunjianNeural`）＋6%，不设 `style`。⚠️ 这一栏叫 `_voice_why` 不叫 `_voice`。",
-  "_narration_why": "旁白用本地 edge-tts（zh-CN-YunjianNeural +6%）真跑过一遍量长度和切词（`--check-narration`）。第一版报三处：①第 6 段（背伤那句）5.62s 对 5.4s 画面超 0.22s——砍掉「一切从头开始」；②第 2/7/9/16 段哑场 4.1~4.8s——窗口起点各往后收 1~3 秒（23.5 / 105.5 / 155.5 / 328.5），末尾不动（末尾都收在一分打完或镜头切点上）；③切词：「掀｜翻德约科维奇」动词黏进人名→「掀翻了德约科维奇」，「拿｜到局｜点」→「六个局点，他一个都没拿下」，「首尔站｜起来」（「首尔站」是个真实存在的假词）→「看台上的首尔，站了起来」，「郑泫先｜拿下」→「第一分，是郑泫的」。第二遍 --check-narration 的数见 render.json / run 日志。⚠️ 本地 edge-tts 和 runner 上退回 edge 的是同一个后端（tts_backend=edge），余量直接适用，不用折算。",
-  "tts_backend": "edge",
-  "_tts_backend_why": "同一把 Azure 钥匙 2026-09-17 起一直 401（ruud-te-davis-cup-2026-wg1 的 run 35410646682、bjk-cup-story、zheng-bjk-cup-olympic-rule 都撞过），按「写 spec 那一刻就把 tts_backend 写上」的默认动作退回 edge-tts。本条不用 `voice.style` 也不用 `lead_pause`，退回 edge 零代价；本地 --check-narration 量的就是 edge 的时长，余量按 edge 算反而更准。钥匙恢复后删掉这两个键即可。"
+  "_narration_why": "旁白用本地 edge-tts（zh-CN-YunjianNeural +6%）真跑过一遍量长度和切词（`--check-narration`）。第一版报三处：①第 6 段（背伤那句）5.62s 对 5.4s 画面超 0.22s——砍掉「一切从头开始」；②第 2/7/9/16 段哑场 4.1~4.8s——窗口起点各往后收 1~3 秒（23.5 / 105.5 / 155.5 / 328.5），末尾不动（末尾都收在一分打完或镜头切点上）；③切词：「掀｜翻德约科维奇」动词黏进人名→「掀翻了德约科维奇」，「拿｜到局｜点」→「六个局点，他一个都没拿下」，「首尔站｜起来」（「首尔站」是个真实存在的假词）→「看台上的首尔，站了起来」，「郑泫先｜拿下」→「第一分，是郑泫的」。第二遍 --check-narration 的数见 render.json / run 日志。⚠️ 本地 edge-tts 和 runner 上是同一个后端（全线走 edge-tts（Azure 试用订阅 2026-09-20 到期、F0 资源被禁用，仓库的 `AZURE_SPEECH_KEY` 已删）），余量直接适用，不用折算。"
 }

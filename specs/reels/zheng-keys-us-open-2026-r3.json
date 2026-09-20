@@ -9,8 +9,6 @@
     980
   ],
   "_scorebox_why": "美网这一届同一条频道同一套转播图形，和已发的 `keys-bondar-us-open-2026-r2` / `wu-alcaraz-us-open-2026-r3`（104 / 887 / 660 / 980）逐条相同；本场 probe 就是带着这组数跑的，`point_ends` 报了 65 个死球时刻。⚠️ 右缘 660 只是兜底，真正的右缘是 `resolve_board_insets` 每段现量的（这块板每打完一盘右缘 +38px，本场三盘会经过三档）。",
-  "tts_backend": "edge",
-  "_tts_backend_why": "仓库的 `AZURE_SPEECH_KEY` 自 2026-09-03 起被 Azure 401 拒（`keys-bondar` / `zheng-putintseva` / `wu-alcaraz` 连着四条都死在第 2 秒的片尾配音上），账号所有者定的是「换 edge tts」。这一条退回 edge 零代价：没用 `voice.style`，也没用 `lead_pause`。本地 `--check-narration` 在这台沙箱跑的就是 edge-tts，量到的余量直接就是成片的真实情况。钥匙修好之后删掉这两个键就回到 Azure。",
   "source_url": "https://www.youtube.com/watch?v=PiuDtMWKU2g",
   "_source": "US Open 官方 YouTube 频道（oEmbed `author_name: US Open Tennis Championships`，yt-dlp `%(channel)s` 同）本场官方集锦 `Madison Keys vs. Qinwen Zheng Highlights | 2026 US Open Round 3`，probe 实测 215.09s / 1920×1080 / 29.97fps（过 1080p 硬闸），上传日期 20260905。画面自证四处：\n① 记分条 `22 KEYS USA / ZHENG CHN` 逐格比分和 flashscore `8QdDaEc5` 的逐分记录对得上（20.5s 首盘 `2 [15] / 1 [0]`、24.5s `SET POINT 5 [40] / 1 [15]` 凯斯发球、48.5s `7 POINT TIEBREAK 6 6 [2] / 1 6 [2]`、88.5s `SET POINT 6 6 [3] / 1 6 [6]`、116.5s 决胜盘 `6 6 1 [AD] / 1 7 0`、138.5s `MATCH POINT 6 6 5 [40] / 1 7 1 [30]` 凯斯发球、150.5s `BREAK POINT 6 6 5 / 1 7 1 [AD]`、174.5s `MATCH POINT 6 6 5 [30] / 1 7 6 [40]` 郑钦文发球）；\n② 44.5s / 112.5s / 172.5s 三次全屏图形，印着 `WOMEN'S SINGLES | 3RD ROUND · GRANDSTAND / 22 MADISON KEYS / QINWEN ZHENG`；38.5s 场边时钟 `0:23`（首盘用时），68.5s `1:22`，150.5s `2:0x`，190.5s `2:2x`；\n③ 球衣可分：郑钦文白背心＋薄荷绿短裙、无帽；凯斯薄荷绿连衣裙＋黑帽——两个人都穿薄荷绿，认人看帽子和上衣；\n④ 片尾 211.96s 起是美网品牌板（`silent_audio` 报 212.05s 之后数字静音），已排除在所有段之外。\n⚠️ 同一天同一频道只发了这一版（`Highlights`，215 秒）。",
   "cover": {

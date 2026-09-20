@@ -9,8 +9,6 @@
     980
   ],
   "_scorebox_why": "板在源片里的位置。这一趟 probe 传了 `--scorebox 100,886,660,980`，`point_ends` 量出来 33 处，说明框住了；四个数取的是同一届同一套转播图形包（`zheng-putintseva-us-open-2026-r2` 100/886/660/980、`zheng-liutova-us-open-2026-r1` 104/887/978、`zheng-pridankina-us-open-2026-q3` 104/888/978，三条对得上）。\n⚠️ **右缘 660 只是兜底**，真正的右缘是渲染时 `resolve_board_insets` 每段现量的——美网这块板每打完一盘 +38px，本场是四盘球，会经过四档。\n⚠️ `SET POINT` / `MATCH POINT #N` 那条黄标在 y<886 之外，按 docs/us-open-scoreboard-aspect.md 的口径不扩窗。",
-  "tts_backend": "edge",
-  "_tts_backend_why": "仓库的 `AZURE_SPEECH_KEY` 现在被 Azure 401 拒（2026-09-03 起连挂三趟，都是 `WebSocket upgrade failed: Authentication error (401)`），账号所有者当天定的是「换 edge tts」。\n这一条退回 edge 没有代价：**没用 `voice.style`，也没用 `lead_pause`**，同一把嗓子 edge 也有；旁白长度本来就是拿 edge 真跑量过的。⚠️ 钥匙修好之后把这两个键删掉就回到 Azure。",
   "source_url": "https://youtu.be/qNVYg_pAfzQ",
   "_source": "美网官方 YouTube 频道的单场集锦，201.36s / 1920×1080 / 30000/1001 fps——过得了「1080p 及以上是硬门槛」那道闸。\n⚠️ `source_url` 和 probe.json 的 `url` **逐字节相同**（都写成 `youtu.be/<id>`），否则 `--dry-run` 认领不上。\n画面自证：42.5/76.5/114.5/170.5 四处全屏图形的顶栏写着 `MEN'S SINGLES | 2ND ROUND`、下面小字 **`COURT 12`**；118.5s 场边 IBM 屏印着 `Y. BU / CHINA`、`M. ZHENG / UNITED STATES OF AMERICA`；170.5s 的最终图形是 `YUNCHAOKETE BU CHN 3 6 2 3 / MICHAEL ZHENG USA 6 2 6 6`。\n⚠️ **这条源片没有自动字幕**（八档 client 全报 `There are no subtitles`），所以没有解说原话可引，画面自证只能靠记分条和图形。\n⚠️ `silent_audio = [[198.33, 201.36]]` 是美网社媒片尾板，所有段落都收在它之前。",
   "cover": {

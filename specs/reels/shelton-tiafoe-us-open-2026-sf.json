@@ -19,8 +19,6 @@
     "walk": "**帧率一致，不重采样——这一条是记录不是取舍。** 两条源片各自 probe 量过：`main` 1920×1080 / 30000÷1001 ＝ 29.97fps，`walk` 1920×1080 / 30000÷1001 ＝ 29.97fps，`check_sources_match` 的尺寸和帧率两头都不会报。照 `eala-jovic-us-open-2026-r3` 的先例仍然写下来：**认领的价值在于它证明两条都量过了**，而不是证明它们不一样。",
     "cheer": "**帧率一致，不重采样——这一条是记录不是取舍。** probe 量的：`cheer` 1920×1080 / 30000÷1001 ＝ 29.97fps，和 `main` / `walk` 逐项相同，`check_sources_match` 的尺寸和帧率两头都不会报。写下来是为了证明第三条也量过了，不是为了证明它不一样。"
   },
-  "tts_backend": "edge",
-  "_tts_backend_why": "Azure 的钥匙从 2026-09-03 起连着四条片子都在第 2 秒红在 `WebSocket upgrade failed: Authentication error (401)`（`keys-bondar` 两趟、`zheng-putintseva`、`tien-monfils`、`wu-alcaraz`），CLAUDE.md 已经把「写 spec 那一刻就写上」定成默认动作。**这一条退回 edge 零代价，而那是两条机械判据**：全片没有一段用 `voice.style`、也没有一段用 `voice.lead_pause`（Azure 独有的那两样），所以 edge 给出的就是同一把 `zh-CN-YunjianNeural`；而本地 `--check-narration` 在这台沙箱跑的本来就是 edge-tts，量到的余量直接适用，不用再按「Azure 比 edge 快 6.6%」折算一遍。",
   "cover": {
     "matchup": [
       {
