@@ -1,15 +1,33 @@
 #!/usr/bin/env python3
-"""把 GitHub MCP 返回的那坨 JSON 挑成几行能看的。
+"""把 GitHub 返回的那坨 JSON 挑成几行能看的。
 
-**为什么要有这个脚本**，两条限制叠在一起：
+⚠️⚠️ **2026-09-20 更正：原来写在这儿的第一条理由已经不成立了。**
 
-1. 这台沙箱 `curl` 到 `api.github.com` 是 403（`GitHub access is not enabled
-   for this session`），只有 MCP 那条路通——所以没法写一个自己去抓的工具
-2. 而 MCP 的 `actions_list` 给每条 run 塞一整份 repository 元数据：
-   **三条 run 就 400 KB**，直接超上下文，只能落到文件里
+原文是「这台沙箱 `curl` 到 `api.github.com` 是 403（`GitHub access is not
+enabled for this session`），只有 MCP 那条路通——所以没法写一个自己去抓的
+工具」。**今天实测不是这样**，两种都通：
 
-于是每次查 CI 都要现搓一段 `json.load` + 挑字段的 python。今天搓了五遍，
-每遍都一样。收在这儿。
+    curl 带 $GITHUB_TOKEN   /repos/<owner>/<repo>/actions/runs   ->  HTTP 200
+    curl 不带 token          同上                                 ->  HTTP 200
+    curl 带 token -L         /actions/artifacts/<id>/zip          ->  HTTP 200（494 KB 真下下来了）
+
+也就是说**自己去抓这条路现在是通的，而且比 MCP 省得多**：同样三条 run，
+REST 直取 **46 KB**，而 MCP 的 `actions_list` 要 400 KB（它给每条 run 塞一整份
+repository 元数据）。查 CI 优先直接 curl，别默认走 MCP。
+
+⚠️ **但这个脚本没有作废**，第二条理由还在：走 MCP 的时候返回体照样会超上下文、
+照样得落成文件再挑字段。它吃的是**任何一份存下来的 JSON**，不关心是谁抓的。
+
+⚠️ **这条 403 的说法在仓库里还有别处**（`frame-grab.yml`、`grab_frames.py`、
+`probe_tnns.py`、`tnns-stats.yml`、`tests/conftest.py`、两份 skill），本轮只改了
+这儿和 `tests/test_gh_runs.py`。**那几处里有四处是拿它当「产物必须提交进仓库」
+的理由的**——那是口径选择，不是随手能改的事实，别只看到这条更正就去动它们。
+
+⚠️ **教训**：这条 403 是 2026-08-02 量的，之后**没人再量过，却被抄进了九个地方**。
+环境限制会变，而写死在注释里的限制不会自己过期——
+**引用一条环境限制之前，先花十秒钟重量一次。**
+
+用法：每次查 CI 都要现搓一段 `json.load` + 挑字段的 python，收在这儿。
 
     # MCP 调用超上下文时会把返回体存成文件，把那个路径喂进来
     python3 tools/gh_runs.py <那个文件> --branch main --limit 5
