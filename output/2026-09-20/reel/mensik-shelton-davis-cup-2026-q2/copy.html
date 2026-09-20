@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>9.20 赛场之上 | 门西克后两盘封死谢尔顿</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>门西克后两盘封死谢尔顿
+
+戴维斯杯和巡回赛最不一样的地方，是你输掉的不只是自己那一场。
+
+9月19日傍晚，布拉格 O2 竞技场，戴维斯杯资格赛第二轮第四场。捷克 1-2 落后，门西克这一分输掉，捷克就出局。而他前一天刚刚输过一场。
+
+第一盘他一直领先到 5-4。第十局谢尔顿发球，他 40-30 同时拿到破发点和盘点——再赢一分就能拿走这一盘。没兑现。谢尔顿连救两个占先保住发球局，紧接着破掉门西克的发球局，7-5 拿走第一盘。
+
+那也是门西克全场唯一一次被破发。
+
+第二盘第十局，同样是谢尔顿发球，同样的位置。这次他拿到两个盘点，第一个没拿下，第二个用一记正手斜线制胜分收掉，6-4。
+
+从那一刻起，世界第 4 的谢尔顿一个破发点都没再拿到。
+
+后两盘门西克 10 个发球局全保。第三盘他的一发成功率 83%、一发得分率 90%，4 个 ACE，5-3 那一局破掉谢尔顿的发球局，轮到自己发球胜赛。第一个赛点被谢尔顿救下，第二个，他发出一记 ACE。
+
+5-7 6-4 6-3，2 小时 13 分。2-2。
+
+全场数据：门西克 9 个 ACE、2 个双误、一发得分率 88%，一发得分率从第一盘的 82% 升到 93%、90%；谢尔顿 4 个 ACE、1 个双误，全场只拿到 1 个破发点，兑现了——就是丢掉第一盘那一次。
+
+当晚莱赫奇卡 6-3 7-5 拿下决胜一分，捷克 3-2 淘汰美国，进了 11 月 24 日到 29 日博洛尼亚的总决赛。
+
+英国转播的解说在第三盘说了一句，大概是这条片子最准的注脚：
+
+&quot;Unrecognizable from the player we saw 24 hours ago.&quot;
+和 24 小时前那个人判若两人。
+
+赛点落地之后他又说了一句：
+&quot;Jakub Mensik, back from the lows of yesterday to the stratospheric highs of right now.&quot;
+雅库布·门西克，从昨天的低谷，到此刻的云端。
+
+一天而已。
+
+#网球时差 #戴维斯杯 #门西克 #谢尔顿 #赛场之上</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>戴维斯杯的分量，是不是就在这儿？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
