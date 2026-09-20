@@ -1,0 +1,392 @@
+{
+  "slug": "mensik-shelton-davis-cup-2026-q2",
+  "_column": "赛场之上",
+  "sources": {
+    "main": "https://www.youtube.com/watch?v=bXbK9H5f6fI"
+  },
+  "_source": "ITF 官方 YouTube 频道 World Tennis（oEmbed `author_name=World Tennis`，@worldtennisofficial，和 mensik-tien-davis-cup-2026-q2 / lehecka-shelton-davis-cup-2026-qualifiers 是同一个频道）单场集锦《Mensik BRILLIANCE! | Jakub Mensik v Ben Shelton | Highlights | Davis Cup Qualifiers 2026》，**1920×1080 / 446s**（yt-dlp `--print '%(duration)ss %(height)sp'` 实测 `446s 1080p`，upload_date 20260919）。⚠️ **这条不写 `source_quality_exceptions`**：同一个频道同一天的 `FKaF0SlGBA4`（兹维列夫）和 `HjXNe_vr0NQ`（西西帕斯）封顶 720p，而这一条 probe 直接报 1080p——「1080p 及以上是硬门槛」那条自然满足。**分辨率按条算，不是这个频道的属性**，别照抄别条的豁免（CLAUDE.md「同一个频道分辨率按条算」，lehecka-shelton 那条也特地写过同一句）。⚠️ 同一场另有 `XTrJDT3G1cA`《Final 20 Minutes》1221s，**但它只有 720p**——「取可用画面最长的那条」和「1080p 硬门槛」冲突时按硬门槛走，取这条 446s 的。",
+  "_youtube_scan_why": "账号所有者 2026-09-20 点名要查 World Tennis 频道有没有这场。⚠️ 记一个坑：`@WorldTennis`（不带 official）是**巴西的跑鞋零售商**（30 条全是 Olympikus 测评、葡萄牙语），ITF 官方那个是 **`@worldtennisofficial`**，两个 oEmbed 的 `author_name` 都叫「World Tennis」，**只有 handle 分得开**。频道 `/videos` 页扫 30 条、逐条走 oEmbed 拿权威标题（不按字符距离凑标题，CLAUDE.md 记过那个坑），这一周戴维斯杯几乎每场都有单场集锦，upload_date 全是比赛当天。",
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "门西克",
+    "hook": "输了捷克就出局\n后两盘一个破发点没给",
+    "topic": "戴维斯杯资格赛 · 捷克 vs 美国",
+    "winner": "门西克",
+    "result": "5-7 6-4 6-3",
+    "matchup": [
+      {
+        "name": "门西克",
+        "name_en": "Jakub Mensik",
+        "country": "CZE",
+        "rank": 15
+      },
+      {
+        "name": "谢尔顿",
+        "name_en": "Ben Shelton",
+        "country": "USA",
+        "rank": 4
+      }
+    ],
+    "portrait": {
+      "image": "assets/reel/mensik-shelton-davis-cup-2026-q2.jpg",
+      "focus": 0.58,
+      "focus_y": 0.5,
+      "zoom": 1.0,
+      "_why": "AP 通讯社本场实拍（AP Photo / Petr David Josek），图注原文「Czechia's Jakub Mensik celebrates after defeating United States' Ben Shelton during the Davis Cup second round qualifier match between the Czech Republic and the United States, in Prague, Saturday, Sept. 19, 2026.」——人物、事件、地点、时刻四要素全在图注里，而且明写 `during the … match`（过第 2 道闸门）。情绪：侧脸、张嘴吼出来、右手握拳、**眼睛睁着**（CLAUDE.md「封面帧一律不许闭眼」），背景是站起来的满场观众——赢下这一分把捷克扳成 2-2 之后的那一下，和钩子「输了捷克就出局」对题。画面自证是这一场：蓝色捷克队服 ＋ 左胸 adidas ＋ 袖口 `Prostějov`（门西克家乡的赞助商）＋ 白色反戴球帽 ＋ 绿色 Wilson 球拍 ＋ 右腕白护腕。",
+      "_portrait_why": "四道闸门逐条走过。AP（Petr David Josek）当日这一辑至少六张，逐张读过图注：①`8346a7dd` 门西克 celebrates after winning a point（在比赛中、主体对，**1763×1175**）；②`c7ea080d` / `04881b33` 门西克 returns the ball（在比赛中，但没有情绪，1763×1175）；③`d03293ca` 门西克 **fails to return** the ball（赢家配一个失误动作，情绪反了）；④`0047748f` 谢尔顿 serves（主体不对，见 `_subject_why`）；⑤`47e7883a` 是**勒纳·钱**庆祝（那是 9/18 对门西克那一场，过不了第 1 道闸门「时间地点人物都要对」）；⑥就是这张。按「情绪对题 ＋ 优先近景特写」，只有这张同时占住「在比赛中」「主体是门西克」「近景 ＋ 情绪外露」「4913×3275」四头。",
+      "_resolution_why": "**4913×3275**，铺 1080×1440 只要 `max(1080/4913, 1440/3275) = 0.44×`——不用放大，还有裁的余量，`zoom` 留在 1.0。⚠️ **渠道上有一条值得记的账**：CLAUDE.md 的档案里写着 TownNews 系报纸存的是 1763×1175，而**同一辑在 springfieldnewssun.com 上存的是全尺寸原图 4913×3275**（dailyrecordnews / idahostatejournal / hjnews 三个站都是 1763×1175）。下次 AP 那条路先试 springfieldnewssun。`find_cover_photo.py` 的 WTA photo-resources 和 AP 两档这一趟都报空——⚠️ 那是「AP 一天只发几场的图」，不是这条渠道不行，图是从 AP 在 TownNews 系的转载页拿到的。",
+      "_focus_why": "原图 4913×3275（3:2），铺 3:4 按高度满铺、水平裁出 `3275×3/4 = 2456` 宽，也就是原图宽度的一半。`focus 0.58` 让窗口落在 `x ∈ [0.33, 0.83]`：人脸在 0.575、握拳的右手在 0.72、球拍框在 0.80，三样都框得进来，左边留出虚化的看台。`focus_y` 在满铺时不起作用，留 0.5。⚠️ 钩子那条带从 `STORYCOPY_TOP = 790` 起，而脸落在画面上部（原图 y 0.04~0.32），**不会落进钩子带里**（CLAUDE.md「挑封面之前先把钩子那条带叠上去」）。"
+    },
+    "_hook_why": "两行都是**海报别处没印的东西**（CLAUDE.md 2026-09-19 第四问：「这句话，海报上别处是不是已经印着了？」）——比分板印着 5-7 6-4 6-3、台头印着赛事轮次、名条印着两个排名，钩子一个都不重复。第一行是**赌注**：捷克当时 1-2 落后，这是第四点，**他输了就是 1-3，捷克出局**（tennisnow / local10 两处赛报都写 trailed 1-2 → leveled 2-2）。第二行是**落点**：第一盘他让谢尔顿拿到过 1 个破发点、而且丢了整盘；**第二、三盘谢尔顿一个破发点都没拿到**（flashscore df_st_1 分盘：Set2 `Break Points Saved 主队 0/0`、Set3 同样 `0/0`，逐分表里那两盘也没有任何 `|B1|` 落在门西克的发球局上——两处互相印证）。两行之间有落差：生死处境 → 碾压式的回应。⚠️ 不写总分差（CLAUDE.md 2026-09-19：「以后尽量避免比较全场得分只差几分」），⚠️ 不写身份（21 岁、迈阿密冠军、世界第 15 都留给旁白和正文）。每行 7 / 10 个字符，都在 `HOOK_MAX_CHARS = 10` 以内，2 行在 `SOLO_HOOK_MAX_LINES = 2` 以内。",
+    "_subject_why": "封面放**门西克**——赢的那个，也是这条片子的主语：队伍 1-2 落后时扛第四点的人，而且**他前一天刚输给勒纳·钱**（9/18，6-2 6-4，就是 `mensik-tien-davis-cup-2026-q2` 那条片子）。钩子讲的是他后两盘没让出一个破发点，「放谁的脸就是在指认谁」在这条上正好成立——这一屏要认的就是他。",
+    "_matchup_rank_why": "两个名次两个独立源对上了：① **tennisexplorer ATP 榜**（`tennislive.sources.rankings.fetch_rankings()` 用的那条，榜单日期 **14.09.2026**，也就是这场球当周）——`4. Shelton Ben`、`15. Mensik Jakub`；② 谢尔顿第 4 在同一个 tie 的 `lehecka-shelton-davis-cup-2026-qualifiers` 里已经用 AP 通稿核过（「career-high No. 4」），门西克第 15 在 `mensik-tien-davis-cup-2026-q2` 里用 crushrushnews 2026-09-15 前瞻稿核过（「the 21-year-old Mensik, who is ranked No. 15」），**两条都是同一周、同一个 tie 的稿子**。⚠️ **英文维基写的是「No. 18 as of 31 August 2026」——那是旧快照，别照抄**：CLAUDE.md 的档案里 `heide-wawrinka` 那条正好记过同一个坑（瓦林卡的 127 也是 8/31 的旧快照，维基和 ESPN 两处都没更新）。排名以当周 ATP 榜为准。",
+    "_name_why": "两个中文名都走 `player_zh()`：`player_zh(\"Jakub Mensik\")` → 门西克，`player_zh(\"Ben Shelton\")` → 谢尔顿。**不是读文件内容判的，是真调了那个函数**（`from tennislive.zh import player_zh`，两张表以 `player_names_top500.json` 优先）。没有手打。",
+    "_matchup_order_why": "`matchup` 是版式顺序，跟 flashscore 的 home/away（home=Mensik、away=Shelton），和 `_match.set_scores_home_away`、`stats.a/b` 三处同序——这一场赢家恰好也是 home，所以三处不用对调。赛果顺序（赢家在前）只体现在 `topbar.line2` 和 `cover.result`。",
+    "_result_why": "门西克 5-7 6-4 6-3 谢尔顿。三处印证：① flashscore 当日表 `f_2_-1` `AE=Mensik J.`（home）`AF=Shelton B.`（away），`BA/BB=5:7`、`BC/BD=6:4`、`BE/BF=6:3`；② `df_sui_1` 三盘用时 0:49 / 0:44 / 0:40，全场 2:13，**没有任何 `D*` 抢七槽位**，所以 `cover.result` 不带小括号；③ tennisnow 与 local10 两篇赛报都写「Mensik beat Shelton 5-7, 6-4, 6-3」。⚠️ 戴维斯杯资格赛是**三盘两胜**，这场 2-1 **打满了距离**（输家赢的盘数 1 ＝ 赢家 2 − 1），所以第三盘**确实是决胜盘**，旁白里可以这么叫；而它 6-3 结束、没打到抢七，「大满贯决胜盘抢十分」那条在这儿不适用。",
+    "scoreboard": {
+      "court": "O2 Arena",
+      "_court_why": "布拉格 O2 竞技场，和同一个 tie 的 `mensik-tien-davis-cup-2026-q2` 是同一片场地、同一周。三处印证：① **这条源片自己的记分条**——缩略图墙 430.5 / 432.5 两格记分条底部烧着 `MATCH 4` 和 `O2 ARENA`（顺带自证这是这个 tie 的第四场，和旁白第四段「这是第四场」对得上）；② o2arena.cz 官网挂着《Davis Cup Qualifiers – Česko vs. USA》这场活动页；③ ČTK／iSport.cz 当日稿都写 O2 arena。",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%20%222%3A13%3A00%22%2C%20%22source%22%3A%20%22flashscore%20df_sui_1%EF%BC%88pA2XHmNq%EF%BC%89%EF%BC%9ASet%201%200%3A49%20%2B%20Set%202%200%3A44%20%2B%20Set%203%200%3A40%20%3D%20%E5%85%A8%E5%9C%BA%202%3A13%22%2C%20%22cross_check%22%3A%20%22%E4%B8%89%E7%9B%98%E7%9B%B8%E5%8A%A0%2049%2B44%2B40%3D133%20%E5%88%86%E9%92%9F%EF%BC%8C%E5%92%8C%20flashscore%20%E8%87%AA%E5%B7%B1%E6%8A%A5%E7%9A%84%E6%80%BB%E8%AE%A1%202%3A13%EF%BC%88133%20%E5%88%86%E9%92%9F%EF%BC%89%E9%80%90%E5%88%86%E9%92%9F%E8%87%AA%E6%B4%BD%E2%80%94%E2%80%94CLAUDE.md%20%E8%AE%B0%E7%9D%80%E3%80%8C%E6%AF%94%E8%B5%9B%E7%94%A8%E6%97%B6%E4%B8%8D%E8%A6%81%E5%8F%AA%E4%BF%A1%20flashscore%EF%BC%8C%E5%AE%83%E5%81%8F%E9%95%BF%E3%80%8D%EF%BC%8C%E9%82%A3%E4%B8%AA%E5%81%8F%E5%B7%AE%E6%9D%A5%E8%87%AA%E5%88%86%E7%9B%98%E5%90%84%E8%87%AA%E5%8F%96%E6%95%B4%E5%86%8D%E7%9B%B8%E5%8A%A0%EF%BC%8C%E8%80%8C%E8%BF%99%E4%B8%80%E5%9C%BA%E4%B8%8D%E5%AD%98%E5%9C%A8%E3%80%82tennisnow%20/%20local10%20%E4%B8%A4%E7%AF%87%E8%B5%9B%E6%8A%A5%E9%83%BD%E6%B2%A1%E5%86%99%E7%94%A8%E6%97%B6%EF%BC%8C%E6%89%80%E4%BB%A5%E6%B2%A1%E6%9C%89%E7%AC%AC%E4%B8%89%E4%B8%AA%E6%95%B0%E5%8F%AF%E6%AF%94%E3%80%82%22%7D"
+      }
+    }
+  },
+  "topbar": {
+    "line1": "2026 戴维斯杯资格赛 第二轮",
+    "line2": "门西克 5-7 6-4 6-3 谢尔顿"
+  },
+  "_topbar_why": "line1 按 CLAUDE.md 的戴维斯杯档次口径写「资格赛 第二轮」——⚠️ **「资格赛」在「世界组」上面**，是离 11 月博洛尼亚总决赛最近的那一档，不是预选（2026-09-19 有读者在 `lehecka-shelton` 评论区问过「为什么美国队要打资格赛」，档案里记着这个误会）。line2 和 `cover.winner` / `cover.result` / `cover.matchup` 机械一致，赢家在前。",
+  "_match": {
+    "status": "result_verified",
+    "source": "flashscore_points",
+    "source_id": "pA2XHmNq",
+    "flashscore_id": "pA2XHmNq",
+    "participants": [
+      "门西克",
+      "谢尔顿"
+    ],
+    "set_scores_home_away": [
+      [
+        5,
+        7
+      ],
+      [
+        6,
+        4
+      ],
+      [
+        6,
+        3
+      ]
+    ],
+    "tiebreaks_home_away": [
+      null,
+      null,
+      null
+    ],
+    "winner": "门西克",
+    "loser": "谢尔顿",
+    "winner_result": "5-7 6-4 6-3",
+    "loser_result": "7-5 4-6 3-6",
+    "_direction_why": "flashscore 当日表 `f_2_-1`：`AE=Mensik J.`（home）、`AF=Shelton B.`（away），分盘 `BA/BB=5:7`、`BC/BD=6:4`、`BE/BF=6:3`；`df_sui_1` 三盘同序。第二源 tennisnow 赛报「Mensik … beat Shelton 5-7, 6-4, 6-3」（赢家视角，方向一致），第三处是 local10 的 AP 稿。`participants` 跟 flashscore 的 home/away，和 `set_scores_home_away` 同序；这一场也和 `cover.matchup` 的版式顺序一致。⚠️ **三盘都没有抢七**：`df_sui_1` 里没有任何 `D*` 抢七小分字段，逐分表第一盘最后一局是 `5-7 客队发球，客队拿下`（15:0→15:40 盘点兑现），不是 6-6 之后的抢七。"
+  },
+  "_durations": {
+    "sets": [
+      "0:49",
+      "0:44",
+      "0:40"
+    ],
+    "total": "2:13",
+    "_source": "flashscore `df_sui_1` 的 RB/RC/RD/RE。⚠️ CLAUDE.md 记着「比赛用时不要只信 flashscore，它偏长」，而这一场三盘相加（49+44+40=133 分钟）和总计 2:13（133 分钟）**自洽**，不存在取整叠加的偏差。ITF tieCentre 接口的 `tie.matches[].duration` 是更硬的第一源，但那要先从 daviscup.com 的 news 稿里抠 tieId（档案里记着那条路），这一场没走——两个数自洽就没再多花一趟。"
+  },
+  "stats": {
+    "a": {
+      "aces": 9,
+      "df": 2,
+      "first_in": 51,
+      "first_won": 45,
+      "second_total": 23,
+      "second_won": 17,
+      "bp_conv": 2,
+      "bp_chances": 7,
+      "pts_won": 94,
+      "pts_total": 169,
+      "first_total": 74,
+      "headshot": "assets/players/headshots/atp-M0NI.png"
+    },
+    "b": {
+      "aces": 4,
+      "df": 1,
+      "first_in": 62,
+      "first_won": 44,
+      "second_total": 30,
+      "second_won": 17,
+      "bp_conv": 1,
+      "bp_chances": 1,
+      "pts_won": 75,
+      "pts_total": 169,
+      "first_total": 92,
+      "headshot": "assets/players/headshots/atp-S0S1.png"
+    },
+    "_source": "flashscore 本场 `pA2XHmNq` 的 `df_st_1`，整块由 `python3 tools/match_stat_hooks.py pA2XHmNq --home Mensik --away Shelton --stats-block` **机器抄出，没有手打**。⚠️ `a` 跟的是 `cover.matchup[0]` ＝ 门西克，flashscore 的 home 也是 Mensik——两个顺序一致，a/b **不用对调**。锚点核过：`a.pts_won + b.pts_won = 94 + 75 = 169 = pts_total` ✅；`first_total` 按 `first_in + second_total` 算（门西克 51+23=74、谢尔顿 62+30=92），不取接口的 Service Points Won 分母。头像：`atp-M0NI.png` 在 `mensik-tien-davis-cup-2026-q2` 里挂的就是「门西克」，`atp-S0S1.png` 在 `zverev-shelton-us-open-2026-final` / `shelton-tiafoe-us-open-2026-sf` 等五条里挂的都是「谢尔顿」——同一张官方头像不许挂两个中文名那道闸对得上。",
+    "_winners_ue_why": "**这两项没有，而且是查到底的结论，不是这一场没找到**：CLAUDE.md 的 `tennis-media-sources` 档案里 2026-09-19 有一整节《戴维斯杯结构性地没有制胜分和非受迫失误》——flashscore 这一轮 15 场逐场量过**零场**有 Winners/UE；ITF 自己的前端 bundle 里根本没建模这两个字段；`custom/pointByPoint/<matchId>` 全部只有 `POINT` / `ACE` / `DOUBLE_FAULT` 三类 outcome；TNNS `hasExtendedStats=False`；Match Charting Project 这两位最近标注停在 2017 / 2024；四个版本的官方集锦片尾和盘间都没有统计图。**这一趟按那条档案直接引用，没有重探这六处**（档案原话：「下次戴维斯杯直接引它，别再重探」）。所以数据图按 `render_stat_card.OPTIONAL_FIELDS` 留空这两行。"
+  },
+  "_hit_data": {
+    "picked": "后两盘谢尔顿零个破发点 ＋ 门西克连续保发 10 个发球局",
+    "candidates": [
+      "[总分差] 门西克 94 - 谢尔顿 75，净差 19 分 ← ⚠️ **故意不用**：CLAUDE.md 2026-09-19 账号所有者「以后尽量避免比较全场得分只差几分」，总分差说不出这场球的形状",
+      "[门西克一发得分率摆动] 第1盘 82% → 第2盘 93% → 第3盘 90%",
+      "[门西克破发点兑现] 2/7（29%）",
+      "[谢尔顿破发点兑现] 1/1（100%）——全场唯一一次机会，就是丢掉第一盘那一次",
+      "[门西克连续保发] 10 个发球局",
+      "[谢尔顿连续保发] 10 个发球局",
+      "[交手记录] 门西克 3:2 谢尔顿（含本场）· 红土 1:0 · **硬地 1:2**",
+      "[近况] 门西克最近 5 场 3 胜（WLLWW）；谢尔顿最近 5 场 2 胜（LLLWW）"
+    ],
+    "_source": "`python3 tools/match_stat_hooks.py pA2XHmNq --home Mensik --away Shelton`（8 条候选全列在上面，挑哪条是人的判断）。挑中的那条另外两处印证：flashscore `df_st_1` 分盘 Set2/Set3 `Break Points Saved 主队 0/0`，以及逐分表那两盘没有任何 `|B1|` 落在门西克的发球局上。"
+  },
+  "_turning_points": {
+    "set1_game10": "5-4 门西克领先、谢尔顿发球，门西克 40:30 **同时拿到破发点和盘点**（逐分 `|B1| |B2|`）——**没兑现**。谢尔顿连救，40:40 → 40:A → 40:40 → 40:A 保下这一局 5-5。紧接着 5-6 门西克自己的发球局被破（15:40 `|B1|`），5-7 谢尔顿发球胜盘。**全场唯一一次被破发就在这里，而它换走了一整盘。**",
+    "set2_game10": "同样是第 10 局、同样是谢尔顿发球，门西克这次 40:15 拿到**两个盘点**（`|B1| |B2|` 连着两分），第一个没拿下、第二个 40:30 兑现——tennisnow 赛报写的是「closed it with a crosscourt forehand winner」（一记正手斜线制胜分）。6-4 扳平。**和第一盘第 10 局是同一个位置、同一个对手发球，结果相反。**",
+    "set3_game8": "3-3 之后谢尔顿的发球局门西克 40:30 拿到破发点没兑现（40:40→40:A 被保下）；**下一个谢尔顿发球局 5-3 他兑现了**（逐分 A:40 `|B1|`），直接发球胜赛局。",
+    "set3_game9": "6-3 那一局门西克自己发球，40:30 第一个赛点（`|B3|`）**被谢尔顿救下**（flashscore `Match points saved 客队 1`），40:40 → A:40 第二个赛点兑现。",
+    "_source": "flashscore `df_mh_1` 逐分（`|B1|` 破发点、`|B2|` 盘点、`|B3|` 赛点）＋ `df_st_1` 分盘统计。⚠️ 逐分的局号是「打完之后的比分」不是场上比分，写进旁白的比分要拿源片记分条对一格（CLAUDE.md 那条踩过的坑）。"
+  },
+  "_claims": [],
+  "_claims_why": "这条片子里**没有全称断言**（`_ABSOLUTE_CLAIM_RE` 那一族：零胜／唯一一个／史上第一／从来没有／一共只 N 次）。钩子和旁白里最像的一句是「后两盘一个破发点没给」——那是**闭集**断言（这一场之内，逐分数据本身就是穷举），按 CLAUDE.md 那条「数的是这一场／这一盘之内的不需要两个独立源」，用 flashscore 分盘统计 ＋ 逐分表两处互相印证就够了，不占 `_claims`。",
+  "_no_repeat": "同栏目的邻居有两条，都在同一个 tie 上，各自铺开过的东西这条一个字都不碰：① **`mensik-tien-davis-cup-2026-q2`**（9/18，钱 6-2 6-4 胜门西克）铺开讲过「两盘都是钱先破发」「门西克非受迫失误 34 比 15」「戴维斯杯隔了 13 年才回到布拉格 O2」「两个 2005 年出生的人第三次碰面」——**这条只把「他前一天刚输过一场」当一句必要的来路带过**（CLAUDE.md 2026-08-05 收窄过：看不懂这场球所必需的来路要一句带过，不是整段躲开），不重讲那场的任何细节；② **`lehecka-shelton-davis-cup-2026-qualifiers`**（9/18，莱赫奇卡 6-4 6-4 胜谢尔顿）铺开讲过谢尔顿的美网决赛、「五天前还在美网决赛」、他那场 10 个接发局一局没拿下——**这条一个字都不碰谢尔顿的美网**，他在这条里只是对手。⚠️ 这条和 ① 不是重复，是**续集**：那条讲门西克输，这条讲他第二天把队伍从出局边缘拉回来。",
+  "editorial": {
+    "mode": "match_review",
+    "hook": [
+      "输了捷克就出局",
+      "后两盘一个破发点没给"
+    ],
+    "question": "队伍一比二落后、输了就出局，而他前一天自己刚刚输过一场——门西克是怎么在丢掉第一盘之后，把这一分抢回来的？",
+    "thesis": "他把第一盘没兑现的那个盘点，在第二盘同一个位置兑现了。第一盘 5-4 领先、谢尔顿发球的第十局，门西克四十比三十同时拿到破发点和盘点，没拿下，反被连追三局丢掉整盘——那也是全场唯一一次被破发。第二盘第十局同样是谢尔顿发球，他拿到两个盘点，用一记正手斜线制胜分收下。从那一刻起谢尔顿再没拿到过一个破发点：后两盘门西克十个发球局全保，一发得分率从百分之八十二升到百分之九十三、百分之九十，全场九个 ACE。两小时十三分，捷克二比二扳平，当晚莱赫奇卡拿下决胜一分，捷克三比二进了十一月博洛尼亚的总决赛。",
+    "beats": [
+      "北京时间 9 月 19 日傍晚，布拉格 O2 竞技场，戴维斯杯资格赛第二轮第四场。捷克 1-2 落后，门西克这一分输掉，捷克就出局；而他前一天刚刚输过一场。",
+      "第一盘他一直领先到 5-4，第十局四十比三十拿到破发点兼盘点——没兑现。谢尔顿连救两个占先保下发球局，紧接着破了门西克的发球局，7-5 拿走第一盘。那是门西克全场唯一一次被破发。",
+      "第二盘第十局，同样是谢尔顿发球，同样的位置。这次门西克拿到两个盘点，用一记正手斜线制胜分收下 6-4。从这一刻起谢尔顿一个破发点都没再拿到。",
+      "第三盘门西克一发成功率百分之八十三、五个发球局全保、四个 ACE，5-3 那一局破发之后直接发球胜赛局；第一个赛点被谢尔顿救下，第二个兑现。两小时十三分，2-2。当晚莱赫奇卡 6-3 7-5 拿下决胜一分，捷克进了总决赛。"
+    ],
+    "human_context": {
+      "angle": "门西克扛的是**第四点**——队伍 1-2 落后、输了就出局的那一分，而他自己前一天刚在同一片场地输给勒纳·钱。这条片子的切口不是「谁更强」，是「一天之内从输球到救队」。",
+      "facts": [
+        "捷克在这一分之前 1-2 落后，门西克赢下之后扳成 2-2（tennisnow / local10 两篇赛报都写 trailed 1-2 → leveled 2-2）",
+        "门西克 2005 年 9 月 1 日出生，这场球时刚满 21 岁；2025 年迈阿密大师赛决赛 7-6(4) 7-6(4) 胜德约科维奇，那是他生涯至今最大的一冠（英文维基 Jakub Menšík 条目）",
+        "这是门西克第五次碰谢尔顿、第三次赢（flashscore df_hh_1：3:2，其中硬地 1:2、红土 1:0）",
+        "捷克随后 3-2 淘汰美国，晋级 11 月 24–29 日博洛尼亚的总决赛（tennisnow）"
+      ],
+      "sources": [
+        "https://tennisnow.com/lehecka-and-mensik-break-american-hearts-again-lift-czechia-to-davis-cup-final-8/",
+        "https://www.local10.com/sports/2026/09/19/shelton-loses-again-in-davis-cup-as-czechs-level-series-with-us-zverev-wins-for-germany/",
+        "https://en.wikipedia.org/wiki/Jakub_Men%C5%A1%C3%ADk"
+      ],
+      "voice_label": "扛第四点的人"
+    },
+    "_hook_why": "和 `cover.hook` 同一份，理由写在 `cover._hook_why` 里，不在这儿重复。"
+  },
+  "push": {
+    "summary": "门西克后两盘封死谢尔顿",
+    "lead": "戴维斯杯资格赛第二轮，捷克主场布拉格 O2 竞技场。捷克 1-2 落后，门西克这一分输了就出局——而他前一天刚输过一场。第一盘 5-4 领先时他拿到破发点兼盘点没兑现，反被连追三局丢掉整盘，那也是他全场唯一一次被破发。第二盘第十局同样的位置，他用一记正手斜线制胜分收下 6-4，从那以后世界第 4 的谢尔顿一个破发点都没再拿到：后两盘门西克 10 个发球局全保，一发得分率从 82% 升到 93%、90%，全场 9 个 ACE。5-7 6-4 6-3，2 小时 13 分，2-2 扳平。当晚莱赫奇卡 6-3 7-5 拿下决胜一分，捷克 3-2 进了 11 月博洛尼亚的总决赛。",
+    "matchup": "门西克 vs 谢尔顿",
+    "score": "5-7 6-4 6-3",
+    "auto": true
+  },
+  "_push_summary_why": "⚠️ 第一版写的是「门西克后两盘没让谢尔顿拿到破发点」，dry-run 报它 16 个字位、超过推送标题 13 的上限，收成 11 字位。首行必须点出是谁（CLAUDE.md「小红书首行是标题，不是正文的开头」那条闸，`CAPTION_LEAD_LEGACY`）——「门西克」在第一个词。标题写的是这场球的形状（后两盘零破发点），不是身份也不是比分复述。⚠️ 正文里的数字一律**阿拉伯数字**（82%、93%、10 个、9 个、5-7 6-4 6-3），旁白那一份才写汉字——CLAUDE.md 2026-09-16「给人看的字一律阿拉伯数字，只有 TTS 底稿写汉字」。⚠️ 正文**不挂「数据来源：」注脚**（2026-09-03 那条），来源写在 spec 的 `_source` / `_hit_data` 里。",
+  "mixed_fps": false,
+  "segments": [
+    {
+      "source": "main",
+      "start": 393.6,
+      "end": 400.4,
+      "cx": 0.5,
+      "quote": [
+        {
+          "at": 0.0,
+          "text": "And another chance to seal the deal.\n又一个机会，把它终结掉。"
+        },
+        {
+          "at": 3.12,
+          "text": "With an ace.\n一记 ACE。"
+        },
+        {
+          "at": 5.28,
+          "text": "Magnificent, Jakub Mensik.\n了不起，雅库布·门西克。"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "crosses_cut": "397.76 —— 赛点那一分落地接他仰头吼出来，是同一时刻的跨法（球落地在 397 前后，反应在 397.76 之后的镜头里），不跨就只剩发球没有落点。",
+      "point_end_ok": "这一段收在 400.40，而赛点就是本场最后一分，之后再没有比分翻牌——`point_ends_guess` 在 400 之后到 432 之间没有任何一格，缩略图墙 398.5/400.5 两格是他和队席的庆祝。",
+      "_why": "冷开场：**赛点 ACE 落地 ＋ 他仰头吼出来**。不配旁白，用英文转播原声＋中英双语字幕（CLAUDE.md 2026-09-19「精彩的原声解说要留下来，配中英双语字幕」那条全局要求）。记分条在缩略图墙 392.5 / 394.5 / 396.5 三格都印着 `MATCH POINT`，画面自证这一分就是赛点。解说三句钉在真实时刻上（captions.txt 393.52 / 396.72 / 398.88，减去段起点 393.60 得 0.0 / 3.12 / 5.28）。⚠️ 英文按发音校正过：ASR 把 Menšík 转成了 `Mench` / `Menic` / `Menik`，双语字幕里写回 `Mensik`（CLAUDE.md「自动字幕把名字全转错了，双语字幕的英文要按发音校正」）。按「开场三格：画面爆点 → 落点 → 坐标」，这是第一格。",
+      "_ending_payoff_required": true,
+      "_payoff_why": "冷开场里有赛点落地和他的反应，所以是 true——正文第 15 段（392.50→400.40）把**同一分完整重放一遍**，而且比冷开场多含 392.5~393.6 那一段（记分条印着 `MATCH POINT` 的发球准备）。冷开场给的是解说原声，正文那一段给的是中文旁白，两段各讲一半：预告只说「了不起」，兑现才说清楚是第几个赛点、怎么结束的。"
+    },
+    {
+      "source": "main",
+      "start": 400.4,
+      "end": 405.0,
+      "cx": 0.5,
+      "narration": "输了就出局的那一分，门西克拿下了。",
+      "point_end_ok": "赛点之后没有下一分，不存在翻牌；这一段是庆祝镜头（缩略图墙 400.5 队席挥拳、402.5 队席振臂、404.5 他弯腰）。",
+      "_why": "开场第二格：**落点**。画面是捷克队席站起来振臂，和旁白「拿下了」对题。旁白只说落点，不说身份（排名、年龄都留给正文）。",
+      "crosses_cut": "402.64 —— 「捷克队席振臂」接「门西克弯腰喘气」，是同一场庆祝的两个视角（缩略图墙 400.5 队席挥拳、402.5 队席振臂、404.5 他弯腰），旁白「门西克拿下了」的主语在两边都成立。"
+    },
+    {
+      "source": "main",
+      "start": 6.2,
+      "end": 11.16,
+      "cx": 0.5,
+      "narration": "北京时间九月十九号傍晚，布拉格，O2 竞技场。",
+      "point_end_ok": "这一段在比赛开打之前（入场），没有任何一分在进行，不存在段尾切在一分打完之前的问题。",
+      "_why": "开场第三格：**坐标**。画面是门西克背着球包入场（缩略图墙 6.5 / 8.5 / 10.5 三格），镜头边界取 scene_cuts 8.16 两侧同一段入场画面。⚠️ 起点从 5.00 挪到 6.20：5.0 那一刀之前是 `CZECHIA v USA` 片头板（缩略图墙 2.5 / 4.5 两格），按 CLAUDE.md「用 ITF 的源片，片尾和台标都要剪掉」整段排除。",
+      "crosses_cut": "8.16 —— 缩略图墙 6.5 / 8.5 / 10.5 三格**都是门西克**（背着球包进场、跑进场、走向座位），只是机位换了，没有换人。"
+    },
+    {
+      "source": "main",
+      "start": 13.4,
+      "end": 18.4,
+      "cx": 0.5,
+      "narration": "资格赛第二轮，捷克一比二落后，这是第四场。",
+      "point_end_ok": "赛前合影和抛硬币，比赛还没开始。",
+      "_why": "坐标的后半句：**处境**。画面是两人在网前合影（缩略图墙 14.5，谢尔顿红衣、门西克蓝衣）接抛硬币（16.5），正好对上「捷克一比二落后，这是第四场」——谁对谁一眼看得出。⚠️ 这一句是这条片子的赌注，钩子「输了捷克就出局」说的就是它。"
+    },
+    {
+      "source": "main",
+      "start": 76.08,
+      "end": 84.0,
+      "cx": 0.5,
+      "narration": "第一盘门西克三次拿到破发点，谢尔顿三次全救了下来。",
+      "point_end_ok": "段尾 84.00 落在 `point_ends_guess` 的 83.84 之后 0.16 秒，是这一分打完之后；下一格猜到的死球在 86.6，不在 0.3~3 秒的翻牌窗口里。",
+      "_why": "第一盘的形状。⚠️ 事实核过、而且我差点写反：flashscore `df_st_1` 第一盘 `Break Points Saved 主队 0/1、客队 3/3`，也就是**谢尔顿救下三个、门西克面对的那一个没救下**——解说 79.20「that's why this year he is as good as he is. Breakpoint saved.」说的正是谢尔顿救下破发点，不是门西克。"
+    },
+    {
+      "source": "main",
+      "start": 130.52,
+      "end": 137.36,
+      "cx": 0.5,
+      "narration": "他拿到过一个盘点，没兑现。紧接着自己的发球局被破。",
+      "point_end_ok": "段尾 137.36 就是 `scene_cuts` 的那一刀，这一分（谢尔顿破发那一分）在 135.9 前后落地——解说 135.92「There is the breakthrough for the American」正压在这一分结束之后，之后镜头切到谢尔顿的反应。",
+      "_why": "**第一盘的转折**。逐分：5-5 那一局门西克四十比三十同时拿到破发点和盘点（`|B1| |B2|`），谢尔顿连救两个占先保下；紧接着 5-6 门西克自己的发球局被破（15:40 `|B1|`）。解说 135.92 原话「There is the breakthrough for the American. **Having faced down a set point**, he now has the opportunity on serve to take a one set to love lead」——「顶住了一个盘点之后」那半句，正是旁白第一句的出处。"
+    },
+    {
+      "source": "main",
+      "start": 137.36,
+      "end": 143.0,
+      "cx": 0.55,
+      "narration": "七比五，第一盘归谢尔顿。那是他全场唯一一次被破发。",
+      "point_end_ok": "这一段是破发之后的反应镜头（缩略图墙 138.5 谢尔顿正面近景、140.5 他走向座位），不含任何一分。",
+      "_why": "第一盘的结果。画面是谢尔顿的近景和走动——这一句的主语前半是谢尔顿（他拿下这一盘），后半的「他」指门西克。⚠️ 主语换了人，所以第二句显式写了「全场唯一一次被破发」这个只属于门西克的事实，不靠代词承前（CLAUDE.md「跨段的省略主语要按观众听到的判」）。`cx` 给 0.55 跟住近景里偏右的人。"
+    },
+    {
+      "source": "main",
+      "start": 240.5,
+      "end": 244.5,
+      "cx": 0.5,
+      "narration": "第二盘第十局，同样是谢尔顿发球。",
+      "point_end_ok": "段尾 244.50 落在 `point_ends_guess` 的 244.4 之后 0.1 秒；下一个猜到的死球在 247.9，离段尾 3.4 秒，在 0.3~3 秒的翻牌窗口之外。",
+      "_why": "第二盘的转折铺垫。⚠️ 画面自证：缩略图墙 242.5 那一格记分条印着 `SET POINT`——这一局就是门西克拿到盘点的那一局，和第一盘第十局是同一个位置、同一个人发球。"
+    },
+    {
+      "source": "main",
+      "start": 266.44,
+      "end": 274.28,
+      "cx": 0.5,
+      "narration": "这次他拿到两个盘点。一记正手的斜线制胜分，六比四。",
+      "point_end_ok": "段尾 274.28 就是 `scene_cuts` 的那一刀，第二盘最后一分在 273 前后落地——解说 273.20「we'll need a final set」正压在这一分之后。",
+      "_why": "**全片的转折点，和第六段对称**。逐分：第二盘 6-4 那一局门西克四十比十五拿到两个盘点（`|B1| |B2|`），第一个没拿下、第二个四十比三十兑现。球路出处是 tennisnow 赛报原文「closed it with a **crosscourt forehand winner**」——正手斜线制胜分。⚠️ 这是这条片子的技战术描述之一（`shot_craft_problem` 那道闸要求球路描述不少于两段），不是统计行。",
+      "_narration_why": "⚠️ 第一版写「一记正手斜线制胜分」，`--check-narration` 报的切词是 `正 ｜ 手斜线`——**「手斜线」是个不存在的词**，读出来有歧义。按 CLAUDE.md「加一个字撑开两个该分的词」的办法插了个「的」（和档案里「世界第三手里」被切成 `第三手 ｜ 里` 是同一个形状）。"
+    },
+    {
+      "source": "main",
+      "start": 282.16,
+      "end": 286.04,
+      "cx": 0.5,
+      "quote": [
+        {
+          "at": 1.2,
+          "text": "It's one set all, and this tie is back to life.\n一比一平，这场对决活过来了。"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "point_end_ok": "第二盘已经打完，这一段是盘间（缩略图墙 282.5 门西克背影、284.5 两人在网前换边），不含任何一分。",
+      "_why": "第二个原声段。解说 283.36 原话「It's one set all and this tie is back to life.」——一句话把盘分和这一分对整个 tie 的意义都说了，比旁白复述一遍强。`at 1.2` ＝ 283.36 − 282.16。"
+    },
+    {
+      "source": "main",
+      "start": 306.32,
+      "end": 312.56,
+      "cx": 0.5,
+      "narration": "第三盘谢尔顿也在打好球，一记精彩的截击。",
+      "point_end_ok": "段尾 312.56 就是 `scene_cuts` 的那一刀；这一分在 306 前后落地，解说 306.32「wide and what a brilliant volley that was」压在球落地之后。",
+      "_why": "技战术描述之二，而且**主语是谢尔顿**——这条片子不把对手写成陪练。解说 306.32 原话「wide and what a brilliant volley that was. What a volley from Shelton.」。⚠️ 旁白说「落在边线外沿」是照解说的 `wide` 写的（球出界），不是自己编的落点。",
+      "crosses_cut": "308.96 和 310.68 两刀。缩略图墙对过：306.5 / 308.5 是这一分的回合，310.5 是谢尔顿的近景，312.5 是美国队席鼓掌——**三个镜头的主语都是谢尔顿**（打出这一球的人、他的反应、他的队席），旁白这一句的主语也是他，没有压在别人身上。",
+      "_narration_why": "⚠️ 第一版写的是「一记截击**落在边线外沿**」，那是照解说 306.32 的 `wide and what a brilliant volley that was` 里的 `wide` 写的——**而那个 wide 有歧义**（可能是上一拍出界，也可能是截击的角度很开）。缩略图墙 312.5 那一格是**美国队席在鼓掌**，说明这一分是谢尔顿赢的；写成「落在边线外沿」读起来像他打飞了，和画面打架。改成只说解说确定说过的那半句（`brilliant volley`），不碰落点。"
+    },
+    {
+      "source": "main",
+      "start": 329.96,
+      "end": 334.4,
+      "cx": 0.5,
+      "narration": "一记刁钻的高吊球，他稳稳接了回去。",
+      "point_end_ok": "段尾 334.40 就是 `scene_cuts` 的那一刀；解说 328.72「Well played Jakob Mensik. That was a testing lob.」压在这一分落地之后。",
+      "_why": "技战术描述之三。解说 328.72 原话「Well played Jakob Mensik. That was a **testing lob**. And he passed it with flying colors. And listen to the crowd on their feet.」——高吊球和「满场站起来」两样都是解说自己说的，不是看图推的。",
+      "_narration_why": "⚠️ 第一版写的是「可门西克接住了一记刁钻的高吊，满场站了起来」，`--dry-run` 的 `[断句]` 报它被切成「一行贴满(14 格) ／ 三两个字(6 格)」，后半读起来是半截话。改成两个 7 格的短句。⚠️ 同时砍掉了「满场站了起来」——那句是解说说的（328.72「listen to the crowd on their feet」），**可这一段的画面是回合不是看台**，说了就是话画不符。 ⚠️ 第二版：`--check-narration` 报「高吊」被切成 `高 ｜ 吊` 两段，改成网球里更常用的「高吊球」让它成一个词。"
+    },
+    {
+      "source": "main",
+      "start": 351.36,
+      "end": 358.0,
+      "cx": 0.5,
+      "narration": "五比三，他破掉谢尔顿的发球局，轮到自己发球胜赛。",
+      "point_end_ok": "段尾 358.00 落在 `point_ends_guess` 的 357.9 之后 0.1 秒；下一格猜到的死球在 361.6，离段尾 3.6 秒，在翻牌窗口之外。",
+      "_why": "第三盘的决定性一局。逐分：第三盘 `5-3 客队发球，主队拿下 ← 破发、1个破发点`（A:40 `|B1|`）。解说 342.24 前后说「Czechia amazingly are within a game of taking this tie to a fifth and final match」。"
+    },
+    {
+      "source": "main",
+      "start": 382.16,
+      "end": 386.32,
+      "cx": 0.5,
+      "quote": [
+        {
+          "at": 3.44,
+          "text": "Unrecognizable from the player we saw 24 hours ago.\n和二十四小时前那个人判若两人。"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "point_end_ok": "这一段是他握拳之后的反应镜头（缩略图墙 382.5 门西克握拳、384.5 看台鼓掌），段尾 386.32 就是 `scene_cuts` 的那一刀。",
+      "_why": "**全片最该留的一句原声**。解说 385.60 原话「Unrecognizable from the player we saw 24 hours ago.」——它一句话说出了这条片子的论点（前一天他刚 6-2 6-4 输给勒纳·钱），比旁白讲一遍有力得多。`at 3.44` ＝ 385.60 − 382.16。"
+    },
+    {
+      "source": "main",
+      "start": 392.5,
+      "end": 400.4,
+      "cx": 0.5,
+      "narration": "第一个赛点被谢尔顿救掉。第二个，他一记 ACE 结束了比赛。",
+      "crosses_cut": "393.60 和 397.76 两刀。前一刀是「记分条印着赛点的发球准备」接「这一分」，后一刀是「球落地」接「他仰头吼出来」——都是同一时刻的跨法，而这一段的职责正是把整个赛点完整放一遍，断在任何一刀上都只剩半截。",
+      "point_end_ok": "赛点就是本场最后一分，段尾 400.40 之后再没有比分翻牌；`point_ends_guess` 在 400 到 432 之间没有任何一格。",
+      "_why": "**兑现结局**（第 1 段冷开场的 `_ending_payoff_required: true`）。逐分：第三盘 6-3 那一局门西克自己发球，四十比三十第一个赛点（`|B3|`）**被谢尔顿救下**（flashscore `Match points saved 客队 1` 这一栏就是它），四十平之后占先，第二个赛点兑现。球路出处是解说 396.72 原话「another chance to seal the deal, **with an ace**」。⚠️ 画面自证：缩略图墙 392.5 / 394.5 / 396.5 三格记分条都印着 `MATCH POINT`。"
+    },
+    {
+      "source": "main",
+      "start": 414.5,
+      "end": 420.0,
+      "cx": 0.5,
+      "narration": "后两盘，世界第四一个破发点都没拿到。二比二。",
+      "point_end_ok": "比赛已经结束，这一段是网前握手（缩略图墙 414.5 / 416.5 / 418.5 三格），不含任何一分。",
+      "_why": "收束，也是钩子第二行的兑现。⚠️ 数字核过两处：flashscore `df_st_1` 第二盘 `Break Points Saved 主队 0/0`、第三盘同样 `0/0`，逐分表那两盘也没有任何 `|B1|` 落在门西克的发球局上。"
+    },
+    {
+      "source": "main",
+      "start": 426.5,
+      "end": 434.28,
+      "cx": 0.5,
+      "narration": "昨天输球，今天救队，只隔了一天。戴维斯杯的分量，是不是就在这儿？",
+      "point_end_ok": "比赛已经结束，这一段是赛后的拥抱和庆祝（缩略图墙 426.5 / 428.5 / 430.5 / 432.5 四格），不含任何一分。",
+      "_why": "末屏一问，必须由旁白问出来（CLAUDE.md「末屏那个问题，旁白必须问出来」）。⚠️ **不是封面那一问的回声**：封面钩子讲的是这场球的形状（输了就出局／后两盘一个破发点没给），这一问问的是「一天之内的落差意味着什么」，接的是第 14 段那句解说原声「和二十四小时前那个人判若两人」。⚠️ 段尾从 432.60 挪到 434.28：第一版 39 字的旁白离线估 7.86s，而画面只有 6.1s——`--dry-run` 报余量 −1.76s。砍到 31 字的同时把画面延到 432.68 之后那个镜头（他正面吼），两头一起调才有余量。",
+      "crosses_cut": "432.68 —— 「他和队友拥抱、走向队伍席」接「他正面吼出来」，是同一段情绪的延续，而末屏这一问的落点正该压在那个吼上。"
+    }
+  ],
+  "_tts_backend_why": "不写 tts_backend——有 Azure 钥匙就自动走 Azure，这个键只在 Azure 401 时用来降级到 edge（CLAUDE.md 2026-09-03 那条）。"
+}
