@@ -2118,26 +2118,30 @@ AUTO_PUSH_SLUGS: frozenset[str] = frozenset({
     # 第 ⑤、⑥ 屏，确认登机牌逐字可读、字幕烧进画面。
     # `fake_word_hits` 扫七段切词，**全片 0 处假词**。
     "davis-cup-road-to-bologna",
-    # 2026-09-19 验过才加进来的（下面那句「加进来之前先问一句：这条片子验过了吗」）：
-    # 在分支上渲的第一趟 **run 35441881952**（explainer.yml push=false）落库成功，
-    # 微信那步没跑（push=false，对的）。
-    # 成片从 Release 拉回本地量过——**208.10 秒、1080×1440、30fps、6,050,388 字节**；
-    # 音画等长（视频 208.100 / 音频 208.062，差 **0.038 秒**）；
-    # 全片 mean −24.4 / max −3.7 dB，九个采样窗峰值 **−6.9~−5.0 dB，没有哑场**
-    # （数字静音是 −91）。`check_explainer_voice --ref <分支>` 确认是代码默认的
-    # 云健 `zh-CN-YunjianNeural +22% +0Hz`、**7 段**。
-    # `check_explainer_landed --ref <分支>` 逐词查过（「19 个」「19个」「自选池」
-    # 「取最好的 6 个」全部已落地），⚠️ **并拿一个不存在的词做过负对照**，
-    # 它报「一个文件都没有」——证明这道检查不是恒真的绿灯。
-    # 七屏本地逐屏渲出来看过（据此修掉示意图一处缺陷：WTA 那条原来三档透明度
-    # 而图例只有四项，第三档没有对应），成片另抽 7 帧拼墙逐格看过，
-    # **确认阿拉伯数字真的烧进了画面**（封面「19个」、②「19个里」、③「7个必算的
-    # 1000赛」、④「52 周／前 30」、⑤「12 个」、⑥「2026／7 减到 6」）。
-    # 225 种多字切词扫过，`fake_word_hits` 全片 0 处假词。
-    # ⚠️ 留一条给下一个人：**画布是 1080×1440**，不是上面 `finals-venues` 那条
-    # 记的 1920——`canvas_height()` 默认返回 `CARD_H`(1440)，只有 `_OPENINGS`
-    # 里显式写 `"canvas": "9:16"` 才是 1920，而**活着的 41 条一条都没写**。
-    # 照抄那条记录去核画布会得出「渲错了」的假结论。
+    # 2026-09-20 重做之后重验（账号所有者：「重新做视频／不要有逻辑漏洞和让人误解
+    # 的地方／把专业性内容讲透」）：在分支上渲的 **run 35508110551**
+    # （explainer.yml push=false）落库成功，微信那步没跑（push=false，对的）。
+    # 成片从 Release 拉回本地量过——**363.43 秒、1080×1440、30fps、12,127,945 字节**；
+    # ⚠️ 前一趟 run 35507491281 量的是同一条片子的另一次编码（12,132,134 字节，
+    # 时长／音画差／dB 全部相同）——**字节数会因编码不确定性变几千**，
+    # 别拿它当「是不是同一版」的判据，判据是 `narration.json` 和成片本身。
+    # 音画等长（视频 363.433 / 音频 363.385，差 **0.048 秒**）；
+    # 全片 mean −24.2 / max −3.9 dB，十个采样窗峰值 **−7.5~−5.2 dB，没有哑场**
+    # （数字静音是 −91）。`check_explainer_voice` 确认云健
+    # `zh-CN-YunjianNeural +22% +0Hz`、**11 段**（封面 ＋ 10 屏）。
+    # `check_explainer_landed` 逐词查过（「18 个必算」「满 18 岁」「同一个结构」全部
+    # 已落地），⚠️ **并拿「羽毛球世界排名」做过负对照**，它报「一个文件都没有」。
+    # 十一屏本地逐屏渲出来看过，成片另抽 4 帧确认**示意图标题和字幕真的烧进了画面**
+    # （第 ⑦ 屏「一年最多能打几站职业赛」、第 ③ 屏「必算的 18 个格子，两边一样多」，
+    # 字幕是阿拉伯数字：「15岁10站 16岁12站 17岁16站」「11个钉死 剩7个自己挑」）。
+    # ⚠️ **这一版修掉的最重一条是事实错**：原来第 ⑧ 屏说「年终总决赛两边的算法正好
+    # 相反」——回两本规则书原文核，**两边都是 18 个必算 ＋ 总决赛额外加一个**，
+    # 差别只在 ATP 把它算进了对外报的那个数。账在 docs/ranking-rules-research.md。
+    # ⚠️ 留一条给下一个人：**画布是 1080×1440**，不是 `finals-venues` 那条记的 1920
+    # ——`canvas_height()` 默认返回 `CARD_H`(1440)，只有 `_OPENINGS` 里显式写
+    # `"canvas": "9:16"` 才是 1920，而活着的那批一条都没写。
+    # ⚠️ 语速按 **5.94 字/秒** 走（2157 字 / 363.4 秒）——比 `finals-venues` 实测的
+    # 4.90 快一档，拿 4.90 去估这条会高估一分多钟。
     "ranking-math",
     # 2026-09-16 验过才加进来的（下面那句「加进来之前先问一句：这条片子验过了吗」）：
     # 在分支上渲的**第四趟**（run 35126806203，explainer.yml push=false）落库成功，
@@ -3352,58 +3356,70 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             "cap",
             "上限",
             "打满一年，只算 19 个",
-            "先说一件很多人没想过的事。网球的世界排名，不是把一年打下来的分数全"
-            "加起来。男子这边，ATP 只数十九个成绩；女子这边，WTA 只数十八个。一年"
-            "打二十五个赛事、三十个赛事都可以，可算进排名的位置就那么多——第二十"
-            "个、第二十五个打得再好，也得先挤掉已经在里面的某一个，否则一分都加"
-            "不上。所以这套规则从一开始就不奖励谁打得更多，它只问你最好的那几个"
-            "赛事打成什么样。",
+            "先把两个官方数字摆出来：男子这边，ATP 对外说一年数十九个成绩；女子那"
+            "边，WTA 说十八个。而一年打二十五站、三十站都可以，算进排名的格子就那么"
+            "多。更反直觉的是下面这件事：这些格子大部分并不是留给分数最高的那几站的"
+            "——哪几站算数，规则书早就写死了。所以这套算法从一开始就不奖励谁打得多，"
+            "它只问你最好的那几站打成什么样。",
             "assets/explainer/masters-format/sinner.jpg",
             "FFT / Roland-Garros 官方 · 2026 年 5 月 28 日，法网次轮，辛纳抽筋后独自站在场上",
             (
-                "ATP 只数 19 个成绩",
-                "WTA 只数 18 个",
-                "多打的那些 不自动加分",
+                "ATP 数 19 个成绩",
+                "WTA 数 18 个",
+                "多打的 不自动加分",
+            ),
+        ),
+        (
+            "slam",
+            "底座",
+            "4 个大满贯，进了签表就算",
+            "先看钉死的那一半。四个大满贯——澳网、法网、温网、美网——两边都必算。这"
+            "里有一条很多人不知道的规矩：只要你的名字进了正赛签表，这一站就算你的分，"
+            "打没打都算。直接入围、从资格赛打上来、幸运落败者递补，一律如此。女子那边"
+            "留了一个例外：拿外卡进正赛的，只有真上场了才算。所以对进得去的人来说，大"
+            "满贯这四个格子从来不是要不要打的选择题，签表出来那一刻就已经占住了。",
+            "assets/explainer/entry-deadline/us_open_court_34.jpg",
+            "美网官方图 · 亚瑟·阿什球场俯瞰，满场看台",
+            (
+                "4 个大满贯 两边都必算",
+                "进了签表 打没打都算",
+                "WTA 外卡 打了才算",
             ),
         ),
         (
             "frame",
             "骨架",
             "一多半位置，轮不到你挑",
-            "那这十九个里，有几个是自己能挑的。男子这边，四个大满贯加八个强制的"
-            "大师赛，十二个位置是钉死的——只要进了正赛签表，打没打都算你的；再加"
-            "上年终总决赛，十三个。剩下六个，才从联合杯、五百赛、二百五十赛、挑战"
-            "赛和更低一级的赛事里挑最好的。女子那边更紧：四个大满贯加七个一千赛，"
-            "十一个钉死，剩七个自己挑。这里还有一个常被记错的地方——大师赛有九个，"
-            "强制的只有八个，蒙特卡洛不在里面，它在承诺和排名两头都是按五百赛那一"
-            "档算的。",
+            "把这些格子摆开看，结构就清楚了。男子这边，四个大满贯加八个强制的大师赛，"
+            "十二个格子钉死，剩下六个才是自己挑的。女子那边，四个大满贯加七个一千赛，"
+            "十一个钉死，剩七个自己挑。两边都是十八个格子，而钉死的比例男子还更高一点"
+            "。也就是说，能靠多打几站去改变的，只有右边那一小截；左边那一大片，你唯一"
+            "能做的是把它打好。年终总决赛不在这十八个里，它是另一件事，后面单说。",
             "",
             "示意图 · 网球时差绘制",
             (
-                "ATP 12 个钉死 加总决赛",
-                "WTA 11 个钉死",
-                "蒙特卡洛不在强制里",
+                "ATP 12 个钉死 剩 6 个",
+                "WTA 11 个钉死 剩 7 个",
+                "能改的 只有右边那截",
             ),
-            """
-<svg viewBox="0 0 900 560" xmlns="http://www.w3.org/2000/svg">
+            """<svg viewBox="0 0 900 560" xmlns="http://www.w3.org/2000/svg">
   <text x="450" y="46" text-anchor="middle" fill="#f4fbf7"
-        font-size="36" font-weight="800">一年只数这么多个成绩</text>
+        font-size="36" font-weight="800">必算的 18 个格子，两边一样多</text>
   <text x="450" y="92" text-anchor="middle" fill="#cfe6d8"
         font-size="26" font-weight="700">左边是钉死的，右边才是自己挑的</text>
 
   <text x="60" y="176" fill="#f4fbf7" font-size="30" font-weight="800">ATP</text>
-  <text x="60" y="212" fill="#cfe6d8" font-size="26" font-weight="700">19 个</text>
+  <text x="60" y="212" fill="#cfe6d8" font-size="26" font-weight="700">18 个</text>
   <rect x="200" y="150" width="138.9" height="72" fill="#8fd6a8"/>
   <rect x="338.9" y="150" width="277.9" height="72" fill="#8fd6a8" opacity=".62"/>
-  <rect x="616.8" y="150" width="34.7" height="72" fill="#c6f65a"/>
-  <rect x="651.6" y="150" width="208.4" height="72" fill="none"
+  <rect x="616.8" y="150" width="208.4" height="72" fill="none"
         stroke="rgba(244,251,247,.34)" stroke-width="3"/>
 
   <text x="60" y="306" fill="#f4fbf7" font-size="30" font-weight="800">WTA</text>
   <text x="60" y="342" fill="#cfe6d8" font-size="26" font-weight="700">18 个</text>
-  <rect x="200" y="280" width="146.7" height="72" fill="#8fd6a8"/>
-  <rect x="346.7" y="280" width="256.7" height="72" fill="#8fd6a8" opacity=".62"/>
-  <rect x="603.3" y="280" width="256.7" height="72" fill="none"
+  <rect x="200" y="280" width="138.9" height="72" fill="#8fd6a8"/>
+  <rect x="338.9" y="280" width="243.1" height="72" fill="#8fd6a8" opacity=".62"/>
+  <rect x="582.0" y="280" width="243.1" height="72" fill="none"
         stroke="rgba(244,251,247,.34)" stroke-width="3"/>
 
   <rect x="60" y="404" width="30" height="30" fill="#8fd6a8"/>
@@ -3411,34 +3427,52 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
   <rect x="470" y="404" width="30" height="30" fill="#8fd6a8" opacity=".62"/>
   <text x="512" y="428" fill="#cfe6d8" font-size="26" font-weight="700">强制的 1000</text>
 
-  <rect x="60" y="474" width="30" height="30" fill="#c6f65a"/>
-  <text x="102" y="498" fill="#cfe6d8" font-size="26" font-weight="700">ATP 年终总决赛</text>
-  <rect x="470" y="474" width="30" height="30" fill="none"
+  <rect x="60" y="474" width="30" height="30" fill="none"
         stroke="rgba(244,251,247,.34)" stroke-width="3"/>
-  <text x="512" y="498" fill="#cfe6d8" font-size="26" font-weight="700">自己挑最好的</text>
+  <text x="102" y="498" fill="#cfe6d8" font-size="26" font-weight="700">自己挑最好的</text>
+  <text x="470" y="498" fill="#cfe6d8" font-size="26" font-weight="700">年终总决赛不在这 18 个里</text>
 </svg>
+
 """,
+        ),
+        (
+            "mandatory",
+            "例外",
+            "9 个大师赛，强制的只有 8 个",
+            "再看第二块，这儿有个常被记错的地方。男子的一千分大师赛一共有九站，可强制"
+            "的只有八站——蒙特卡洛不在里面。规则书把它写得很死：蒙特卡洛在承诺和排名"
+            "两头，都按五百赛那一档算。注意，这不是说它只给五百分——蒙特卡洛的冠军照"
+            "样是一千分；变的是它不占那个自动算数的格子。也就是说你在那儿打得再好，那"
+            "个成绩也得去和五百赛、二百五十赛抢自己挑的位置。女子那边没有这个例外。",
+            "assets/venues/montecarlo-centre-court.jpg",
+            "montecarlotennismasters.com 官方图库 · 蒙特卡洛乡村俱乐部雷尼尔三世球场，背景是地中海",
+            (
+                "大师赛 9 站 强制只有 8 站",
+                "蒙特卡洛 冠军照样 1000 分",
+                "它只是 不占必算的格子",
+            ),
         ),
         (
             "pool",
             "两个桶",
             "7 个里挑 6 个，落选的不作废",
-            "女子这边还有一层，是最容易被讲错的。那七个必算的一千赛其实分成两桶。"
-            "男女合办的有七个——印第安维尔斯、迈阿密、马德里、罗马、多伦多或者"
-            "蒙特利尔、辛辛那提、中网，这七个里只取最好的六个。女子独办的有三个——"
-            "多哈、迪拜、武网，这三个里只取最好的一个。注意中网在合办那一桶，武网"
-            "在独办那一桶，两站都在中国，却不在同一个桶里。而没被取中的那几个并不"
-            "作废：它们会掉进后面那个自选池，跟五百赛、二百五十赛、一百二十五赛"
-            "一起抢剩下的七个位置。所以都去打从来不会白打，只是从保送变成了竞争。",
+            "女子这边还有一层，是最容易被讲错的。那七个必算的一千赛其实分成两桶。男女"
+            "合办的有七站——印第安维尔斯、迈阿密、马德里、罗马、多伦多或者蒙特利尔、"
+            "辛辛那提、中网，这七站里只取最好的六个。女子独办的有三站——多哈、迪拜、"
+            "武网，这三站里只取最好的一个。中网在合办那一桶，武网在独办那一桶，两站都"
+            "在中国，却不在同一个桶里。而没被取中的并不作废：它们会掉进后面那个自选池"
+            "，跟五百赛、二百五十赛一起抢剩下的七个位置。所以都去打从来不会白打，只是"
+            "从保送变成了竞争。顺带说一句：多哈和迪拜以前是逐年在一千赛和五百赛之间"
+            "轮换的，二〇二四年起两站同时固定成了一千赛，女子独办这一桶也是从那一年"
+            "才定型成今天这三站。",
             "",
             "示意图 · 网球时差绘制",
             (
-                "合办 7 个 取最好的 6 个",
-                "独办 3 个 取最好的 1 个",
+                "合办 7 站 取最好的 6 个",
+                "独办 3 站 取最好的 1 个",
                 "落选的 掉进自选池继续抢",
             ),
-            """
-<svg viewBox="0 0 900 560" xmlns="http://www.w3.org/2000/svg">
+            """<svg viewBox="0 0 900 560" xmlns="http://www.w3.org/2000/svg">
   <text x="450" y="46" text-anchor="middle" fill="#f4fbf7"
         font-size="36" font-weight="800">WTA 的 1000 分两桶装</text>
   <text x="450" y="92" text-anchor="middle" fill="#cfe6d8"
@@ -3474,18 +3508,19 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
   <text x="450" y="490" text-anchor="middle" fill="#cfe6d8"
         font-size="26" font-weight="700">和 500 / 250 / 125 / ITF 一起抢</text>
 </svg>
+
 """,
         ),
         (
             "zero",
             "代价",
             "不去，记的是 0",
-            "再说不去的代价。强制的赛事不去，记的不是没有分，是一个零分，而且要在"
-            "排名上挂满五十二周。两边绑的人不一样。男子这边只绑前三十，按上一年"
-            "十一月十号那份排名钉死，一整年不变，规则书管这批人叫承诺球员；女子"
-            "这边不设这个门槛，只要你的排名够得着正赛，你就被绑住了。所以同样是"
-            "世界第五十位，男子可以自己安排赛程，女子不行。女子那边还有一张五百赛"
-            "的阶梯表：够得着六个就得打六个，够得着三个就打三个，少一个记一个零分。",
+            "再说不去的代价。强制的赛事不去，记的不是没有分，是一个零分，而且要在排名"
+            "上挂满五十二周。两边绑的人不一样：男子这边只绑前三十，按上一年十一月的一"
+            "份排名钉死，一整年不变，规则书管这批人叫承诺球员；女子这边不设这个排名门"
+            "槛，十八岁以上的，只要够得着正赛就被绑住。所以同样是世界第五十位，男子可"
+            "以自己安排赛程，女子不行。女子那边还有一张五百赛的阶梯表：够得着六站就得"
+            "打六站，够得着三站就打三站，少一站记一个零分。",
             "assets/explainer/mandatory-1000/monfils_montreal_2026.jpg",
             "Tennis Canada 官方图 · 2026 年 8 月，加拿大大师赛蒙特利尔站，孟菲尔斯走向球场",
             (
@@ -3495,40 +3530,113 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             ),
         ),
         (
+            "ceiling",
+            "配额",
+            "18 岁之前，一年能打几站有上限",
+            "上面说的都是必须打什么。还有一件事正好相反：有些人是不许多打的。WTA "
+            "有一张按年龄排的表——未满十四岁，一站职业赛都不许打；十四岁那一年最多八"
+            "站，其中 W75 以上的最多三站；十五岁十站，十六岁十二站，十七岁十六站"
+            "；满十八岁才没有上限。配套的还有一层：未满十八岁的，强制赛那套要求也跟着"
+            "减免。另一头，世界前十的球员每年最多只能打三个二百五十赛，一百二十五赛更"
+            "是连报名都不许。而 ATP 的规则书里没有这张表。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "14 岁 8 站 15 岁 10 站",
+                "16 岁 12 站 17 岁 16 站",
+                "满 18 岁 才没有上限",
+            ),
+            """<svg viewBox="0 0 900 560" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="46" text-anchor="middle" fill="#f4fbf7"
+        font-size="36" font-weight="800">一年最多能打几站职业赛</text>
+  <text x="450" y="92" text-anchor="middle" fill="#cfe6d8"
+        font-size="26" font-weight="700">WTA 按年龄给的配额，ATP 没有这张表</text>
+
+  <text x="60" y="170" fill="#cfe6d8" font-size="26" font-weight="700">未满 14 岁</text>
+  <rect x="280" y="142" width="6" height="44" fill="#8fd6a8" opacity=".4"/>
+  <text x="306" y="170" fill="#cfe6d8" font-size="26" font-weight="700">一站都不许打</text>
+
+  <text x="60" y="238" fill="#cfe6d8" font-size="26" font-weight="700">14 岁</text>
+  <rect x="280" y="210" width="192" height="44" fill="#8fd6a8"/>
+  <text x="490" y="238" fill="#cfe6d8" font-size="26" font-weight="700">8 站</text>
+
+  <text x="60" y="306" fill="#cfe6d8" font-size="26" font-weight="700">15 岁</text>
+  <rect x="280" y="278" width="240" height="44" fill="#8fd6a8"/>
+  <text x="538" y="306" fill="#cfe6d8" font-size="26" font-weight="700">10 站</text>
+
+  <text x="60" y="374" fill="#cfe6d8" font-size="26" font-weight="700">16 岁</text>
+  <rect x="280" y="346" width="288" height="44" fill="#8fd6a8"/>
+  <text x="586" y="374" fill="#cfe6d8" font-size="26" font-weight="700">12 站</text>
+
+  <text x="60" y="442" fill="#cfe6d8" font-size="26" font-weight="700">17 岁</text>
+  <rect x="280" y="414" width="384" height="44" fill="#8fd6a8"/>
+  <text x="682" y="442" fill="#cfe6d8" font-size="26" font-weight="700">16 站</text>
+
+  <text x="60" y="510" fill="#f4fbf7" font-size="26" font-weight="800">满 18 岁</text>
+  <rect x="280" y="482" width="380" height="44" fill="#c6f65a"/>
+  <path d="M 660 482 L 706 504 L 660 526 Z" fill="#c6f65a"/>
+  <text x="722" y="510" fill="#c6f65a" font-size="26" font-weight="800">没有上限</text>
+</svg>
+
+""",
+        ),
+        (
+            "floor",
+            "池子",
+            "自己挑的那几个，从哪儿挑",
+            "那自己挑的那几个位置，能从哪儿挑。池子比很多人想的宽：男子这边是联合杯、"
+            "蒙特卡洛、五百赛、二百五十赛，再往下还有挑战赛和 ITF；女子那边是所有"
+            "一千赛、五百赛、二百五十赛、一百二十五赛，再加上 ITF。而这儿还藏着一"
+            "条对低排名球员很关键的规矩：那些你压根够不着的大满贯和强制赛，不但不记零"
+            "分，反而会把你自己挑的名额多加一个——够不着一站，就多给一个。所以他们的"
+            "成绩表里可能一个大满贯正赛都没有，那十八个格子照样是满的。同一套算法，顶"
+            "尖球员拿它做减法，往上爬的人拿它做加法。",
+            "assets/explainer/challenger-climb/zhang_usopen_2023.jpg",
+            "Wikimedia Commons · 2023 年 8 月 28 日美网首轮，张之臻在外场发球",
+            (
+                "池子一直通到 ITF",
+                "够不着的 不记 0 分",
+                "反而多给 一个自选名额",
+            ),
+        ),
+        (
             "finals",
             "总决赛",
-            "同一座奖杯，三种算法",
-            "年终总决赛这一项，两边的算法正好相反。男子这边，它占掉第十九个位置，"
-            "是那十九个里的一个；女子这边，单打不占那十八个名额，打了就是额外加"
-            "上去的——也就是说女子的顶尖球员实际上能拿到十九项的分。可女子的双打"
-            "又反了过来，总决赛的分要挤进最好的十二个里去抢位置。同一座奖杯，男单、"
-            "女单、女双三种算法。这也是为什么两边的排名不能直接拿来比：它们连算"
-            "几个成绩都不是同一件事。",
+            "19 和 18，其实是同一个结构",
+            "现在回到开头那两个数。ATP 说十九，WTA 说十八，看着像两套规则，其"
+            "实不是。翻开两边的规则书：女子那边写得明明白白，十八个成绩之外，打了年终"
+            "总决赛再作为奖励赛事额外加上去；男子那边把四个大满贯、八个大师赛、年终总"
+            "决赛和最好的六个成绩加在一起，正好十九。也就是说两边都是十八个必算的格子"
+            "，再加一个总决赛，差别只在于 ATP 把总决赛算进了它对外说的那个数，W"
+            "TA 没算。真正不一样的在双打：那边的总决赛不是额外加的，它得去抢位置—"
+            "—男子抢最好的十九个里的一格，女子抢最好的十二个里的一格。",
             "assets/explainer/finals-venues/rybakina-trophy-riyadh-2025.jpg",
             "WTA 官方图 · 2025 年 11 月 8 日利雅得，莱巴金娜亲吻比利·简·金杯冠军奖杯",
             (
-                "ATP 总决赛 占第 19 个",
-                "WTA 单打 不占名额",
-                "WTA 双打 要挤进 12 个",
+                "单打 两边都是 18 ＋ 总决赛",
+                "差的只是 怎么报那个数",
+                "双打 总决赛要抢位置",
             ),
         ),
         (
             "ask",
             "落点",
             "奖励的是高度，不是出勤",
-            "把这套算法连起来看，它在说一件很明确的事：排名奖励的不是出勤，是高度。"
-            "多打一个赛事换不来分，除非那一个比你手里最差的那个成绩更好。而二〇二六"
-            "年男子这边又收紧了一档，自选的位置从七个减到了六个，留给低级别赛事的"
-            "空间更小了。那么问题来了：这套只数最好那几个成绩的算法，到底是在保护"
-            "球员的身体，还是在把中小赛事推得更远？",
-            "assets/explainer/protected-ranking/zheng_athens_qf_2026.jpg",
-            "赛事官方图库 · 2026 年 7 月 17 日，雅典站 1/4 决赛，郑钦文横向救球",
+            "把这套算法连起来看，它在说一件很明确的事：排名奖励的不是出勤，是高度。对"
+            "已经把自选位置填满的顶尖球员来说，多打一站换不来分，除非那一站比手里最差"
+            "的那个自选成绩更好；而对还在往上爬的人，多打一站就是实实在在的加分——同"
+            "一条规则，对两头的意思正好相反。还有一个数字值得记住：二〇二六年男子这边"
+            "又收紧了一档，自选的位置从七个减到了六个，留给低级别赛事的空间更小了。那"
+            "么问题来了：这套只数最好那几个成绩的算法，到底是在保护球员的身体，还是在"
+            "把中小赛事推得更远？",
+            "assets/explainer/fonseca-oconnell/cincinnati_outer_court_2026.jpg",
+            "Cincinnati Open 官方图库 · 2026 年 8 月 16 日，辛辛那提外场满场",
             (
                 "2026 ATP 自选档 7 减到 6",
-                "排名奖励高度 不是出勤",
-                "低级别赛事 空间更小",
+                "顶尖球员 多打换不来分",
+                "往上爬的 多打就是加分",
             ),
-            None,
+            "",
             "是在保护球员的身体，还是在把中小赛事推得更远？",
         ),
     ),
@@ -8911,8 +9019,10 @@ _CAPTIONS: dict[str, dict] = {
         ],
     },
     "ranking-math": {
-        "hook": "ATP 一年只数 19 个成绩，WTA 只数 18 个——打第 20 个、第 25 个赛事，"
-        "再好也不一定加得上分。\n"
+        "hook": "ATP 说一年数 19 个成绩，WTA 说 18 个——其实两边都是 18 个必算的"
+        "格子，再加一个年终总决赛，差别只在于谁把总决赛算进了对外说的那个数。\n"
+        "而这 18 个里，男子有 12 个、女子有 11 个是规则书钉死的，剩下那几个才轮到"
+        "自己挑。\n"
         "中网和武网都在中国，却不在同一个桶里：中网是男女合办，7 个里取 6 个；"
         "武网是女子独办，3 个里取 1 个。没被取中的不作废，掉进自选池接着抢。",
         "tags": ["网球", "网球时差", "ATP", "WTA", "网球冷知识"],
@@ -9490,9 +9600,10 @@ _OPENINGS: dict[str, dict] = {
     "ranking-math": {
         "topic": "积分不是加法：打得多，不等于算得多",
         "question": "打了一年，为什么只算19个？",
-        "narration": "打了一年，为什么只算十九个？男子的世界排名只数十九个成绩，"
-        "女子只数十八个——多打出来的那些能不能算上，要看它够不够好。",
-        "gloss": "Best 19 = 只数最好的 19 个",
+        "narration": "打了一年，为什么只算十九个？网球的世界排名，不是把一年"
+        "打下来的分数全加起来——男子女子都只有十八个必算的格子，再加一个年终"
+        "总决赛。多打出来的那些能不能算上，要看它够不够好。",
+        "gloss": "18 个必算 ＋ 年终总决赛",
         # 2026-09-19 账号所有者：「封面换一个能表示积分的图片」。
         # 原来是郑钦文举拳的官方实拍——那张表达的是「赢球」，不是「积分」。
         # 积分是**结构**，照片拍不出来（CLAUDE.md「示意图的触发条件是照片讲不清，
@@ -9501,7 +9612,7 @@ _OPENINGS: dict[str, dict] = {
         # 和 `gamesmanship` 封面画规则书原文摘句同一个做法——「证据本身比一张脸
         # 更抓人，不是退而求其次」。⚠️ 和第 ② 屏那张不重复：那张是按长度比例的
         # 条形（谁占多少），这张是**可数的格子**（一共几个）。
-        "diagram": '<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">\n  <text x="450" y="48" text-anchor="middle" fill="#f4fbf7"\n        font-size="38" font-weight="800">算进排名的，就这么多格</text>\n  <text x="450" y="96" text-anchor="middle" fill="#cfe6d8"\n        font-size="28" font-weight="700">打了多少个不重要，够不够好才重要</text>\n\n  <text x="60" y="172" fill="#f4fbf7" font-size="32" font-weight="800">ATP</text>\n  <text x="60" y="208" fill="#cfe6d8" font-size="27" font-weight="700">19 个</text>\n  <rect x="200" y="146" width="32" height="64" rx="7" fill="#8fd6a8"/>\n  <rect x="235" y="146" width="32" height="64" rx="7" fill="#8fd6a8"/>\n  <rect x="270" y="146" width="32" height="64" rx="7" fill="#8fd6a8"/>\n  <rect x="305" y="146" width="32" height="64" rx="7" fill="#8fd6a8"/>\n  <rect x="340" y="146" width="32" height="64" rx="7" fill="#8fd6a8" opacity=".62"/>\n  <rect x="375" y="146" width="32" height="64" rx="7" fill="#8fd6a8" opacity=".62"/>\n  <rect x="410" y="146" width="32" height="64" rx="7" fill="#8fd6a8" opacity=".62"/>\n  <rect x="445" y="146" width="32" height="64" rx="7" fill="#8fd6a8" opacity=".62"/>\n  <rect x="480" y="146" width="32" height="64" rx="7" fill="#8fd6a8" opacity=".62"/>\n  <rect x="515" y="146" width="32" height="64" rx="7" fill="#8fd6a8" opacity=".62"/>\n  <rect x="550" y="146" width="32" height="64" rx="7" fill="#8fd6a8" opacity=".62"/>\n  <rect x="585" y="146" width="32" height="64" rx="7" fill="#8fd6a8" opacity=".62"/>\n  <rect x="620" y="146" width="32" height="64" rx="7" fill="#c6f65a"/>\n  <rect x="655" y="146" width="32" height="64" rx="7" fill="none" stroke="rgba(244,251,247,.38)" stroke-width="2.5"/>\n  <rect x="690" y="146" width="32" height="64" rx="7" fill="none" stroke="rgba(244,251,247,.38)" stroke-width="2.5"/>\n  <rect x="725" y="146" width="32" height="64" rx="7" fill="none" stroke="rgba(244,251,247,.38)" stroke-width="2.5"/>\n  <rect x="760" y="146" width="32" height="64" rx="7" fill="none" stroke="rgba(244,251,247,.38)" stroke-width="2.5"/>\n  <rect x="795" y="146" width="32" height="64" rx="7" fill="none" stroke="rgba(244,251,247,.38)" stroke-width="2.5"/>\n  <rect x="830" y="146" width="32" height="64" rx="7" fill="none" stroke="rgba(244,251,247,.38)" stroke-width="2.5"/>\n\n  <text x="60" y="308" fill="#f4fbf7" font-size="32" font-weight="800">WTA</text>\n  <text x="60" y="344" fill="#cfe6d8" font-size="27" font-weight="700">18 个</text>\n  <rect x="200" y="282" width="32" height="64" rx="7" fill="#8fd6a8"/>\n  <rect x="235" y="282" width="32" height="64" rx="7" fill="#8fd6a8"/>\n  <rect x="270" y="282" width="32" height="64" rx="7" fill="#8fd6a8"/>\n  <rect x="305" y="282" width="32" height="64" rx="7" fill="#8fd6a8"/>\n  <rect x="340" y="282" width="32" height="64" rx="7" fill="#8fd6a8" opacity=".62"/>\n  <rect x="375" y="282" width="32" height="64" rx="7" fill="#8fd6a8" opacity=".62"/>\n  <rect x="410" y="282" width="32" height="64" rx="7" fill="#8fd6a8" opacity=".62"/>\n  <rect x="445" y="282" width="32" height="64" rx="7" fill="#8fd6a8" opacity=".62"/>\n  <rect x="480" y="282" width="32" height="64" rx="7" fill="#8fd6a8" opacity=".62"/>\n  <rect x="515" y="282" width="32" height="64" rx="7" fill="#8fd6a8" opacity=".62"/>\n  <rect x="550" y="282" width="32" height="64" rx="7" fill="#8fd6a8" opacity=".62"/>\n  <rect x="585" y="282" width="32" height="64" rx="7" fill="none" stroke="rgba(244,251,247,.38)" stroke-width="2.5"/>\n  <rect x="620" y="282" width="32" height="64" rx="7" fill="none" stroke="rgba(244,251,247,.38)" stroke-width="2.5"/>\n  <rect x="655" y="282" width="32" height="64" rx="7" fill="none" stroke="rgba(244,251,247,.38)" stroke-width="2.5"/>\n  <rect x="690" y="282" width="32" height="64" rx="7" fill="none" stroke="rgba(244,251,247,.38)" stroke-width="2.5"/>\n  <rect x="725" y="282" width="32" height="64" rx="7" fill="none" stroke="rgba(244,251,247,.38)" stroke-width="2.5"/>\n  <rect x="760" y="282" width="32" height="64" rx="7" fill="none" stroke="rgba(244,251,247,.38)" stroke-width="2.5"/>\n  <rect x="795" y="282" width="32" height="64" rx="7" fill="none" stroke="rgba(244,251,247,.38)" stroke-width="2.5"/>\n\n  <rect x="200" y="424" width="32" height="32" rx="6" fill="#8fd6a8"/>\n  <text x="248" y="450" fill="#cfe6d8" font-size="27" font-weight="700">4 个大满贯</text>\n  <rect x="520" y="424" width="32" height="32" rx="6" fill="#8fd6a8" opacity=".62"/>\n  <text x="568" y="450" fill="#cfe6d8" font-size="27" font-weight="700">强制的 1000</text>\n\n  <rect x="200" y="504" width="32" height="32" rx="6" fill="#c6f65a"/>\n  <text x="248" y="530" fill="#cfe6d8" font-size="27" font-weight="700">年终总决赛</text>\n  <rect x="520" y="504" width="32" height="32" rx="6" fill="none"\n        stroke="rgba(244,251,247,.38)" stroke-width="2.5"/>\n  <text x="568" y="530" fill="#cfe6d8" font-size="27" font-weight="700">自己挑最好的</text>\n</svg>',
+        "diagram": '<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">\n  <text x="450" y="48" text-anchor="middle" fill="#f4fbf7"\n        font-size="38" font-weight="800">算进排名的，就这么多格</text>\n  <text x="450" y="96" text-anchor="middle" fill="#cfe6d8"\n        font-size="28" font-weight="700">打了多少个不重要，够不够好才重要</text>\n\n  <text x="60" y="172" fill="#f4fbf7" font-size="32" font-weight="800">ATP</text>\n  <text x="60" y="208" fill="#cfe6d8" font-size="27" font-weight="700">18 个必算</text>\n  <rect x="200" y="146" width="30" height="60" rx="7" fill="#8fd6a8"/>\n  <rect x="233" y="146" width="30" height="60" rx="7" fill="#8fd6a8"/>\n  <rect x="266" y="146" width="30" height="60" rx="7" fill="#8fd6a8"/>\n  <rect x="299" y="146" width="30" height="60" rx="7" fill="#8fd6a8"/>\n  <rect x="332" y="146" width="30" height="60" rx="7" fill="#8fd6a8" opacity=".62"/>\n  <rect x="365" y="146" width="30" height="60" rx="7" fill="#8fd6a8" opacity=".62"/>\n  <rect x="398" y="146" width="30" height="60" rx="7" fill="#8fd6a8" opacity=".62"/>\n  <rect x="431" y="146" width="30" height="60" rx="7" fill="#8fd6a8" opacity=".62"/>\n  <rect x="464" y="146" width="30" height="60" rx="7" fill="#8fd6a8" opacity=".62"/>\n  <rect x="497" y="146" width="30" height="60" rx="7" fill="#8fd6a8" opacity=".62"/>\n  <rect x="530" y="146" width="30" height="60" rx="7" fill="#8fd6a8" opacity=".62"/>\n  <rect x="563" y="146" width="30" height="60" rx="7" fill="#8fd6a8" opacity=".62"/>\n  <rect x="596" y="146" width="30" height="60" rx="7" fill="none" stroke="rgba(244,251,247,.38)" stroke-width="2.5"/>\n  <rect x="629" y="146" width="30" height="60" rx="7" fill="none" stroke="rgba(244,251,247,.38)" stroke-width="2.5"/>\n  <rect x="662" y="146" width="30" height="60" rx="7" fill="none" stroke="rgba(244,251,247,.38)" stroke-width="2.5"/>\n  <rect x="695" y="146" width="30" height="60" rx="7" fill="none" stroke="rgba(244,251,247,.38)" stroke-width="2.5"/>\n  <rect x="728" y="146" width="30" height="60" rx="7" fill="none" stroke="rgba(244,251,247,.38)" stroke-width="2.5"/>\n  <rect x="761" y="146" width="30" height="60" rx="7" fill="none" stroke="rgba(244,251,247,.38)" stroke-width="2.5"/>\n  <rect x="824" y="146" width="30" height="60" rx="7" fill="#c6f65a"/>\n  <text x="60" y="308" fill="#f4fbf7" font-size="32" font-weight="800">WTA</text>\n  <text x="60" y="344" fill="#cfe6d8" font-size="27" font-weight="700">18 个必算</text>\n  <rect x="200" y="282" width="30" height="60" rx="7" fill="#8fd6a8"/>\n  <rect x="233" y="282" width="30" height="60" rx="7" fill="#8fd6a8"/>\n  <rect x="266" y="282" width="30" height="60" rx="7" fill="#8fd6a8"/>\n  <rect x="299" y="282" width="30" height="60" rx="7" fill="#8fd6a8"/>\n  <rect x="332" y="282" width="30" height="60" rx="7" fill="#8fd6a8" opacity=".62"/>\n  <rect x="365" y="282" width="30" height="60" rx="7" fill="#8fd6a8" opacity=".62"/>\n  <rect x="398" y="282" width="30" height="60" rx="7" fill="#8fd6a8" opacity=".62"/>\n  <rect x="431" y="282" width="30" height="60" rx="7" fill="#8fd6a8" opacity=".62"/>\n  <rect x="464" y="282" width="30" height="60" rx="7" fill="#8fd6a8" opacity=".62"/>\n  <rect x="497" y="282" width="30" height="60" rx="7" fill="#8fd6a8" opacity=".62"/>\n  <rect x="530" y="282" width="30" height="60" rx="7" fill="#8fd6a8" opacity=".62"/>\n  <rect x="563" y="282" width="30" height="60" rx="7" fill="none" stroke="rgba(244,251,247,.38)" stroke-width="2.5"/>\n  <rect x="596" y="282" width="30" height="60" rx="7" fill="none" stroke="rgba(244,251,247,.38)" stroke-width="2.5"/>\n  <rect x="629" y="282" width="30" height="60" rx="7" fill="none" stroke="rgba(244,251,247,.38)" stroke-width="2.5"/>\n  <rect x="662" y="282" width="30" height="60" rx="7" fill="none" stroke="rgba(244,251,247,.38)" stroke-width="2.5"/>\n  <rect x="695" y="282" width="30" height="60" rx="7" fill="none" stroke="rgba(244,251,247,.38)" stroke-width="2.5"/>\n  <rect x="728" y="282" width="30" height="60" rx="7" fill="none" stroke="rgba(244,251,247,.38)" stroke-width="2.5"/>\n  <rect x="761" y="282" width="30" height="60" rx="7" fill="none" stroke="rgba(244,251,247,.38)" stroke-width="2.5"/>\n  <rect x="824" y="282" width="30" height="60" rx="7" fill="#c6f65a"/>\n  <rect x="200" y="424" width="32" height="32" rx="6" fill="#8fd6a8"/>\n  <text x="248" y="450" fill="#cfe6d8" font-size="27" font-weight="700">4 个大满贯</text>\n  <rect x="520" y="424" width="32" height="32" rx="6" fill="#8fd6a8" opacity=".62"/>\n  <text x="568" y="450" fill="#cfe6d8" font-size="27" font-weight="700">强制的 1000</text>\n\n  <rect x="200" y="504" width="32" height="32" rx="6" fill="none"\n        stroke="rgba(244,251,247,.38)" stroke-width="2.5"/>\n  <text x="248" y="530" fill="#cfe6d8" font-size="27" font-weight="700">自己挑最好的</text>\n  <rect x="520" y="504" width="32" height="32" rx="6" fill="#c6f65a"/>\n  <text x="568" y="530" fill="#cfe6d8" font-size="27" font-weight="700">年终总决赛（额外加）</text>\n</svg>',
         # 2026-09-19 认领：走**字卡**而不是默认的视频剪辑那条路。
         # 属于 2026-08-09 定死的第一种例外——**天然图表题材**。
         # 这一条的主语是两套积分公式（ATP 19 项 / WTA 18 项的构成、7 选 6、
