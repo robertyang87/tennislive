@@ -5514,6 +5514,16 @@ APPROVED_LOW_RES_SOURCES: dict[str, int] = {
     # ⚠️ 这条源片和前两条还有一点不同：它**不是全场集锦**，是第三盘最后一局 ＋
     # 整个决胜抢七的近实时长片（722.5 秒），0.5 秒的记分条就读 `DEN 3 6 5 / BUL 6 3 6`。
     "https://www.youtube.com/watch?v=kwm7wpVFQzE": 720,
+    # 约维奇卫冕瓜达拉哈拉（jovic-stearns-guadalajara-2026-final）的**颁奖礼**：
+    # 账号所有者 2026-09-20 直接把这条链接发过来说「把这个也加上」。WTA 官方 X
+    # 账号自己发的 26.5 秒颁奖片段（`Celebration time in Guadalajara! 🎉 #GDLOpen`，
+    # oEmbed 级的 `uploader_id=WTA`），**1280×720 @25fps 就是 X 的天花板**
+    # （`yt-dlp -J` 逐档查过：http-288 480×270 / http-832 640×360 /
+    # http-2176 1280×720，没有更高的一档），而**颁奖画面在别处根本不存在**：
+    # 这条线用的 WTA 官方 YouTube 单场集锦 308.29 秒，比赛画面到 ~257s、
+    # 之后到 298s 是庆祝和转播图形，**整个颁奖礼一帧都没有**。
+    # 也就是「等」也等不出 1080p 的那一档——和上面戴维斯杯那几条同一个形状。
+    "https://x.com/WTA/status/2101474528798867839": 720,
 }
 
 
