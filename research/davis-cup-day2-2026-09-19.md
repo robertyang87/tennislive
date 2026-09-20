@@ -66,3 +66,35 @@
 
 ⚠️ 非 YouTube 的那条路（StayLive，`tools/staylive_bjk.py`，戴维斯杯 2026 频道
 7078/7079/7080，集锦 720p 不锁地域）**这一轮没有接**，也不需要接——下载本来就是通的。
+
+## 四、今天这条片子最后落在哪：**门西克 5-7 6-4 6-3 谢尔顿**（2026-09-20 定）
+
+⚠️ **挪威 v 中国那场双打否掉了，两个互相独立的原因，任一个都足够：**
+
+1. **官方没发这场双打的集锦。** 借 runner 上的 yt-dlp（沙箱够不着 YouTube，runner
+   够得着）搜 `ytsearch8:Davis Cup 2026 Norway China doubles highlights Kjaer Durasovic`
+   → `Downloading 0 items`（run 35478525370）。
+   **空结果自证过**：同一条路子搜 `ytsearch5:Casper Ruud v Rigele Te Highlights…`
+   是绿的、真下到媒体流（run 35478824827），所以方法没问题，零条是真的零条。
+   而且**第二日的片子本身在发**——同一晚 ITF 官方频道挂了两条门西克对谢尔顿
+   （`bXbK9H5f6fI` 完整集锦、`XTrJDT3G1cA` 最后二十分钟），所以不是「还没到时候」，
+   是双打很少单独出片。
+2. **这条线结构性地不支持双打。** 全库 206 条带 `cover.matchup` 的 spec
+   **无一例外都是两个人**；`build_match_reel` 里的判据写着「`cover.matchup`
+   必须包含两位不同球员，才能生成顶栏比分行」，`versus_poster` 的比分板、国旗、
+   即时排名，以及 `stats.a`/`stats.b` 的单人头像全是照 1v1 建的。
+   做双打是**功能改动**，不是写稿，这一轮没动。
+
+**所以改做捷克对美国那条 tie 的第二日反轮单打**：门西克第一日刚 2-6 4-6 输给
+勒纳·钱，回头 5-7 6-4 6-3 拿下谢尔顿把大比分扳成 2-2；谢尔顿两场单打全输。
+源片 `https://www.youtube.com/watch?v=bXbK9H5f6fI`。
+
+两个独立源：Inside American Tennis（day-2 逐场）＋ AP 经 local10
+`https://www.local10.com/sports/2026/09/19/shelton-loses-again-in-davis-cup-as-czechs-level-series-with-us-zverev-wins-for-germany/`
+（同样 5-7 6-4 6-3、布拉格、谢尔顿两连败、捷克进 Final 8）。
+
+⚠️ **口径要交代**：这条不是中国球员，按选题优先级是第二档。中国队第二日只剩
+鲁德 6-2 6-0 尼敦坚赞那场死盘，2 和 0 撑不起一条片子——**是今天做不了，不是没排**。
+⚠️ 和已发的 `lehecka-shelton-davis-cup-2026-qualifiers` 不是同一场，但都带谢尔顿，
+写的时候 `_no_repeat` 要认领：那条讲的是美网决赛五天后一次破发都没有，这条讲的是
+第二场再输、美国出局。
