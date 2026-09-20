@@ -135,6 +135,15 @@ PLAYER_ZH: dict[str, str] = {
     "Marin Cilic": "西里奇",
     "Borna Coric": "丘里奇",
     "Dino Prizmic": "普里兹米奇",
+    # 2026-09 戴维斯杯资格赛第二轮用到的六个双打球员，表里原来都没有
+    # （CLAUDE.md「表里没有的，定下来之后补进表里，别只写在稿子里」）。
+    "Kevin Krawietz": "克拉维茨",
+    "Tim Puetz": "皮茨",
+    "Tim Pütz": "皮茨",
+    "Nikola Mektic": "梅克蒂奇",
+    "Mate Pavic": "帕维奇",
+    "Henry Patten": "帕滕",
+    "Neal Skupski": "斯库普斯基",
     "Damir Dzumhur": "朱姆胡尔",
     "Laslo Djere": "杰雷",
     "Miomir Kecmanovic": "凯茨马诺维奇",

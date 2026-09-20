@@ -1159,93 +1159,11 @@ _MIDDLE_SAME_DIAGRAM = """
 #: 几何：底槽固定 500px＝157 国，填充按真实比例（1 国 = 3.18px），所以
 #: 「28 队」那条只有 89px、「8 队」那条只剩 26px——越往下越窄这一层是
 #: 文字列不出来的，画出来才一眼看见「这条路有多挤」。
-_DC_ROAD_FUNNEL_DIAGRAM = """
-<svg viewBox="0 0 900 560" xmlns="http://www.w3.org/2000/svg">
-  <text x="450" y="46" text-anchor="middle" fill="#e7f3ec"
-        font-size="36" font-weight="800">一年下来，157 变成 8</text>
-  <text x="450" y="92" text-anchor="middle" fill="#9fb4aa"
-        font-size="26" font-weight="700">2025 年有 157 个国家报名，这是全世界最大的年度团体赛</text>
-
-  <text x="60" y="176" fill="#9fb4aa" font-size="28" font-weight="700">报名</text>
-  <rect x="250" y="134" width="500" height="58" rx="10" fill="rgba(231,243,236,.08)"
-        stroke="rgba(231,243,236,.22)" stroke-width="2"/>
-  <rect x="250" y="134" width="500" height="58" rx="10" fill="rgba(231,243,236,.46)"/>
-  <text x="870" y="176" text-anchor="end" fill="#e7f3ec"
-        font-size="30" font-weight="800">157 国</text>
-
-  <text x="60" y="268" fill="#9fb4aa" font-size="28" font-weight="700">年初有机会</text>
-  <rect x="250" y="226" width="500" height="58" rx="10" fill="rgba(231,243,236,.08)"
-        stroke="rgba(231,243,236,.22)" stroke-width="2"/>
-  <rect x="250" y="226" width="89" height="58" rx="10" fill="rgba(231,243,236,.46)"/>
-  <text x="870" y="268" text-anchor="end" fill="#e7f3ec"
-        font-size="30" font-weight="800">28 队</text>
-
-  <text x="60" y="360" fill="#9fb4aa" font-size="28" font-weight="700">9 月最后一关</text>
-  <rect x="250" y="318" width="500" height="58" rx="10" fill="rgba(231,243,236,.08)"
-        stroke="rgba(231,243,236,.22)" stroke-width="2"/>
-  <rect x="250" y="318" width="45" height="58" rx="10" fill="rgba(231,243,236,.46)"/>
-  <text x="870" y="360" text-anchor="end" fill="#e7f3ec"
-        font-size="30" font-weight="800">14 队</text>
-
-  <text x="60" y="452" fill="#c6f65a" font-size="28" font-weight="800">决赛圈</text>
-  <rect x="250" y="410" width="500" height="58" rx="10" fill="none"
-        stroke="#c6f65a" stroke-width="3" stroke-dasharray="12 9"/>
-  <rect x="250" y="410" width="36" height="58" rx="8" fill="#c6f65a"/>
-  <text x="870" y="452" text-anchor="end" fill="#c6f65a"
-        font-size="30" font-weight="800">8 队</text>
-
-  <text x="450" y="528" text-anchor="middle" fill="#c6f65a"
-        font-size="32" font-weight="800">7 张门票要打，只有 1 张是送的</text>
-</svg>
-"""
 
 
 #: 戴维斯杯的四层楼。⚠️ 这张图专治一个常见的记反：**资格赛在世界组上面**
 #: （CLAUDE.md「戴维斯杯的档次」那条记过一次），名字听着像预赛，实际是
 #: 离奖杯最近的那一层。照片讲不清层级和升降级，只能画。
-_DC_ROAD_LADDER_DIAGRAM = """
-<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">
-  <text x="450" y="46" text-anchor="middle" fill="#e7f3ec"
-        font-size="36" font-weight="800">名字听着像预赛，其实是顶层</text>
-  <text x="450" y="92" text-anchor="middle" fill="#9fb4aa"
-        font-size="26" font-weight="700">资格赛在世界组上面，不在下面</text>
-
-  <rect x="150" y="128" width="600" height="66" rx="10" fill="rgba(198,246,90,.28)"
-        stroke="#c6f65a" stroke-width="4"/>
-  <text x="180" y="170" fill="#c6f65a" font-size="32" font-weight="800">决赛圈</text>
-  <text x="720" y="170" text-anchor="end" fill="#c6f65a"
-        font-size="28" font-weight="800">8 队</text>
-
-  <rect x="150" y="216" width="600" height="66" rx="10" fill="rgba(231,243,236,.14)"
-        stroke="rgba(231,243,236,.3)" stroke-width="2"/>
-  <text x="180" y="258" fill="#e7f3ec" font-size="32" font-weight="800">资格赛</text>
-  <text x="720" y="258" text-anchor="end" fill="#9fb4aa"
-        font-size="28" font-weight="700">26 队</text>
-
-  <rect x="150" y="304" width="600" height="66" rx="10" fill="rgba(231,243,236,.10)"
-        stroke="rgba(231,243,236,.22)" stroke-width="2"/>
-  <text x="180" y="346" fill="#e7f3ec" font-size="32" font-weight="800">世界组 I</text>
-  <text x="720" y="346" text-anchor="end" fill="#9fb4aa"
-        font-size="28" font-weight="700">26 队</text>
-
-  <rect x="150" y="392" width="600" height="66" rx="10" fill="rgba(231,243,236,.07)"
-        stroke="rgba(231,243,236,.18)" stroke-width="2"/>
-  <text x="180" y="434" fill="#e7f3ec" font-size="32" font-weight="800">世界组 II</text>
-  <text x="720" y="434" text-anchor="end" fill="#9fb4aa"
-        font-size="28" font-weight="700">26 队</text>
-
-  <rect x="150" y="480" width="600" height="66" rx="10" fill="rgba(231,243,236,.05)"
-        stroke="rgba(231,243,236,.14)" stroke-width="2"/>
-  <text x="180" y="522" fill="#9fb4aa" font-size="32" font-weight="800">地区赛</text>
-  <text x="720" y="522" text-anchor="end" fill="#9fb4aa"
-        font-size="28" font-weight="700">其余各国</text>
-
-  <text x="800" y="180" fill="#c6f65a" font-size="34" font-weight="800">&#8593;</text>
-  <text x="800" y="268" fill="#9fb4aa" font-size="34" font-weight="800">&#8593;</text>
-  <text x="800" y="356" fill="#9fb4aa" font-size="34" font-weight="800">&#8593;</text>
-  <text x="800" y="444" fill="#9fb4aa" font-size="34" font-weight="800">&#8593;</text>
-</svg>
-"""
 
 
 _EXEMPTION_LADDER_DIAGRAM = """
@@ -2095,29 +2013,6 @@ _ACADEMY_SPAN_DIAGRAM = _academy_span_diagram()
 # ⚠️ 加进来之前先问一句：这条片子**验过了吗**。加进来之后它就不再经过人的手，
 # 而微信那条消息发出去收不回来。
 AUTO_PUSH_SLUGS: frozenset[str] = frozenset({
-    # 2026-09-20 验过才加进来的（下面那句「加进来之前先问一句：这条片子验过了吗」）：
-    # 在分支上渲的第一趟 **run 35523769564**（explainer.yml push=false）落库成功，
-    # 微信那步没跑（push=false，对的）。⚠️ 产物落在 **output/2026-09-21/**——
-    # runner 按 `TZ=Asia/Shanghai` 拼日期，触发时 UTC 16:5x 已是北京次日。
-    # 成片从 Release 拉回本地量过——**163.00 秒、1080×1440、30fps、5,646,826 字节**；
-    # 音画等长（视频 163.000 / 音频 162.962，差 **0.035 秒**）；
-    # 全片 mean −24.5 / max −3.6 dB，九个 20 秒窗 mean **−23.5~−25.6**、
-    # max **−3.6~−7.3 dB，没有哑场**（数字静音是 −91）；`silencedetect -50dB:1.5s`
-    # 全片只报一处 **156.607→159.002**，那是片尾前的留白（`test_片头片尾各留一段静音`）。
-    # ⚠️ 量这两项时先踩了一次自己的坑：`-v error` 会把 `volumedetect` /
-    # `silencedetect` 的 info 级输出一起压掉，**空输出被我差点读成「没有静音」**
-    # ——去掉 `-v error` 重跑才有真数据。
-    # `check_explainer_voice --ref <分支>` 确认云健 `zh-CN-YunjianNeural +22% +0Hz`、**7 段**。
-    # `check_explainer_landed --ref <分支>` 三条正对照全部落地（copy.html／push.html／
-    # xiaohongshu.txt），⚠️ **并拿「克罗地亚淘汰了德国」做过负对照**——它报
-    # 「一个文件都没有」，既证明这道检查不是恒真的绿灯，也确认了当天那处
-    # 队序读反的更正真的生效了（真实结果是德国 3-1 胜克罗地亚）。
-    # 七屏本地逐屏渲出来看过（据此把第 ⑤ 屏的配图从整张官方海报换成**裁出登机牌
-    # 那一块**：整张自带 DAVIS CUP 台头和 BOLOGNA BOUND 标题，当底图时我们的台头
-    # 压住它的台头、要点框盖住登机牌名单，渲过一版验证过）；成片另抽帧看过
-    # 第 ⑤、⑥ 屏，确认登机牌逐字可读、字幕烧进画面。
-    # `fake_word_hits` 扫七段切词，**全片 0 处假词**。
-    "davis-cup-road-to-bologna",
     # 2026-09-20 重做之后重验（账号所有者：「重新做视频／不要有逻辑漏洞和让人误解
     # 的地方／把专业性内容讲透」）：在分支上渲的 **run 35508110551**
     # （explainer.yml push=false）落库成功，微信那步没跑（push=false，对的）。
@@ -3236,114 +3131,6 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
     # ⚠️ 全片的口径：**只写已经公布的**。抽签没做就不写对阵（CLAUDE.md「前瞻类事实
     # 要在它定下来之后再核一次」），八强名单按当日 ITF `tieCentre` 的 `tieStatus`
     # 现查现写，不按赛前预测写。
-    "davis-cup-road-to-bologna": (
-        (
-            "tickets",
-            "八张门票",
-            "1 张是送的，7 张要打",
-            "八个名额，只有一张是送的。东道主意大利拿到那张外卡——他们连着三年"
-            "把这座杯子留在家里，今年决赛圈又摆在自己家门口。剩下七张，全要在"
-            "九月这一周打出来：主客场制，五场三胜，赢的人十一月去博洛尼亚，"
-            "输的人等明年二月重来。所以这条路的终点写在十一月，起点却在二月。",
-            "",
-            "示意图 · 网球时差绘制",
-            (
-                "意大利 东道主外卡",
-                "另外 7 席 9 月打出来",
-                "11 月 博洛尼亚 6 天",
-            ),
-            _DC_ROAD_FUNNEL_DIAGRAM,
-        ),
-        (
-            "ladder",
-            "四层楼",
-            "想碰到奖杯，先从底下爬",
-            "可那二十八个名额，本身也是挣来的。戴维斯杯分四层：最上面是资格赛，"
-            "往下是世界组一组、世界组二组，再往下是按地理分区的地区赛。"
-            "每年升降级，赢的往上走，输的往下掉。这里有个容易记反的地方——"
-            "资格赛听着像预赛，它其实是离奖杯最近的那一层，打赢两轮就进决赛圈；"
-            "而二月在资格赛第一轮输掉的队，这个九月只能回到世界组一组去打。",
-            "",
-            "示意图 · 网球时差绘制",
-            (
-                "4 层 每年升降级",
-                "资格赛在世界组上面",
-                "赢两轮就进决赛圈",
-            ),
-            _DC_ROAD_LADDER_DIAGRAM,
-        ),
-        (
-            "gates",
-            "两道关",
-            "2 月赢一次，9 月再赢一次",
-            "所以那七张门票，实际是两道关。第一关在二月，澳网刚打完；"
-            "第二关在九月，美网刚收工。两关都是主客场，五场三胜——"
-            "先两场单打，第二天一场双打，再两场单打，打到有一队先拿下三分。"
-            "布拉格那一场是打满的：捷克三比二淘汰美国，而美国是这项赛事"
-            "夺冠最多的国家，三十二次。定胜负的第五场，是莱赫奇卡打下来的。",
-            "assets/explainer/davis-cup-road-to-bologna/czechia-usa.jpg",
-            "戴维斯杯官方图 · 2026 年 9 月布拉格，莱赫奇卡为捷克拿下决胜的第五场",
-            (
-                "2 月一关 9 月一关",
-                "5 场 3 胜 主客场制",
-                "捷克 3-2 淘汰美国",
-            ),
-        ),
-        (
-            "newcomer",
-            "新面孔",
-            "首尔那块牌子上写着 Final 8",
-            "九月这一关，最值得说的是首尔。韩国二月先在釜山三比二掀翻了"
-            "九号种子阿根廷，九月又在主场三比一送走印度，两轮都赢在自己的球场上。"
-            "而去年站上决赛圈的那八支队伍，是阿根廷加七支欧洲队，一支亚洲球队都没有。"
-            "这一次，韩国人举着一块牌子站在场地中央，牌子上写着：决赛圈见。",
-            "assets/explainer/davis-cup-road-to-bologna/korea-qualify.jpg",
-            "戴维斯杯官方图 · 2026 年 9 月首尔，韩国队晋级决赛圈后在场内合影",
-            (
-                "韩国 2 月淘汰阿根廷",
-                "9 月主场 3-1 送走印度",
-                "去年八强 全是欧洲和阿根廷",
-            ),
-        ),
-        (
-            "eight",
-            "名单",
-            "拿到门票的是这八个",
-            "所以今年站上决赛圈的，是这八支队伍：东道主意大利、去年的亚军西班牙、"
-            "德国、捷克、加拿大、奥地利、英国，还有韩国。其中三个值得单独说一句——"
-            "韩国是队史第一次打进八强；加拿大在魁北克城，第一次在戴维斯杯赢下法国；"
-            "奥地利连续第二年拿到门票。而拿过三十二次冠军、历史上最成功的美国队，"
-            "今年倒在了布拉格。门票一共就八张，发完了。",
-            "assets/explainer/davis-cup-road-to-bologna/bologna-bound/bolognabound-can-ticket.jpg",
-            "戴维斯杯官方 Instagram（@daviscup）· 加拿大队晋级后的「BOLOGNA BOUND」海报，"
-            "裁出登机牌那一块",
-            (
-                "意大利 西班牙 德国 捷克",
-                "加拿大 奥地利 英国 韩国",
-                "韩国队史首次进八强",
-            ),
-        ),
-        (
-            "final",
-            "终点",
-            "6 天，输一场就回家",
-            "十一月二十四号到二十九号，八支队伍在博洛尼亚打六天。"
-            "这里的规矩和前面两关都不一样：不再是五场三胜，改成三场两胜——"
-            "两场单打加一场双打；也不再有主客场，八支队伍抽完签直接单败淘汰，"
-            "输一场就回家。而这个签，现在还没抽。"
-            "意大利已经连着赢了三年，那座杯子在他们家里放了三年，"
-            "今年的决赛圈还摆在自己的主场。这一次，谁能把它从意大利手里拿走？",
-            "assets/explainer/davis-cup-road-to-bologna/bologna-arena.jpg",
-            "戴维斯杯官方图 · 博洛尼亚 SuperTennis Arena，2025 年决赛圈意大利对西班牙",
-            (
-                "11 月 24-29 日 博洛尼亚",
-                "3 场 2 胜 单败淘汰",
-                "意大利 已经 3 连冠",
-            ),
-            "",
-            "这一次，谁能把它从意大利手里拿走？",
-        ),
-    ),
     # 2026-09-19。⚠️ 和同栏目的 `mandatory-1000` 的分界（CLAUDE.md「同一件事，
     # 不同栏目各讲一次不算重复」那条的**同栏目**那一半）：那条铺开讲的是
     # **缺席一站大师赛的账单**（零分 ＋ 奖金池按缺席站数扣 25/50/75/100%
@@ -9006,18 +8793,6 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
 # 这个洞。判据落在 test_每条片子的标签都放满五个。
 _DEFAULT_TAGS = ("网球", "网球时差", "网球冷知识", "网球科普", "网球运动")
 _CAPTIONS: dict[str, dict] = {
-    "davis-cup-road-to-bologna": {
-        "hook": "157 个国家打了一整年，11 月只有 8 支站上决赛圈——"
-        "而这 8 张门票里，只有 1 张是送的。\n"
-        "剩下 7 张全要在 9 月这一周打出来：主客场，5 场 3 胜，输了等明年 2 月重来。",
-        "tags": [
-            "网球",
-            "网球时差",
-            "戴维斯杯",
-            "网球冷知识",
-            "团体赛",
-        ],
-    },
     "ranking-math": {
         "hook": "ATP 说一年数 19 个成绩，WTA 说 18 个——其实两边都是 18 个必算的"
         "格子，再加一个年终总决赛，差别只在于谁把总决赛算进了对外说的那个数。\n"
@@ -9575,28 +9350,6 @@ def column_of(slug: str) -> Column:
 # beat one makes the viewer work out the subject for themselves. Every deck
 # now opens on the question it answers, said out loud and set large.
 _OPENINGS: dict[str, dict] = {
-    "davis-cup-road-to-bologna": {
-        "topic": "通往戴维斯杯决赛圈之路",
-        "question": "157 个国家打了一年\n最后这 8 张门票怎么挣？",
-        "narration": "一百五十七个国家打了一整年，最后只剩八个。"
-        "这八张门票，是怎么挣来的？",
-        "image": "assets/explainer/davis-cup-road-to-bologna/trophy.jpg",
-        "credit": "戴维斯杯官方图 · 戴维斯杯奖杯，碗身上刻着历届冠军的名字",
-        # 走字卡的理由（`test_新的网球有故事默认走视频剪辑_走字卡要认领理由`）：
-        "cards_why": "天然图表题材：整条片子讲的是晋级制度本身——157 国怎么收到 8 队、"
-        "四个层级谁在上谁在下、两道关各是什么赛制、决赛圈又换成另一套。"
-        "这些是结构，没有任何一帧转播画面拍得出来；而讲得清它的两张图"
-        "（收窄的漏斗、四层楼的次序）正是 CLAUDE.md「照片讲不清才画示意图」"
-        "那一类。⚠️ 另一半理由是源片：戴维斯杯的官方集锦只有 720p，"
-        "过不了「1080p 及以上」那道硬门槛，视频剪辑这条路在这项赛事上走不通。",
-        "tags": [
-            "网球",
-            "网球时差",
-            "戴维斯杯",
-            "网球冷知识",
-            "团体赛",
-        ],
-    },
     "ranking-math": {
         "topic": "积分不是加法：打得多，不等于算得多",
         "question": "打了一年，为什么只算19个？",
