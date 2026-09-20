@@ -558,4 +558,13 @@ PLAYER_ZH: dict[str, str] = {
     "Michael Chang": "张德培",
     "Shuai Peng": "彭帅",
     "Jie Zheng": "郑洁",
+    # 2026 名古屋亚运会中国网球队那份名单上的人，表里原来没有（前四位不在 top500，
+    # 所以 player_names_top500.json 也兜不住）。前四位是本人的名字、不是音译，
+    # 英文写法按报名表的「名 姓」序；王蔷是 2018 雅加达亚运会女单金牌得主。
+    "Qiang Wang": "王蔷",
+    "Weiyi Kong": "孔维一",
+    "Tianhui Zhang": "张天汇",
+    "Fanming Meng": "孟凡茗",
+    "Fumin Jiang": "姜福民",
+    "Denis Istomin": "伊斯托明",   # 乌兹别克斯坦，2018 雅加达亚运会男单金牌
 }
