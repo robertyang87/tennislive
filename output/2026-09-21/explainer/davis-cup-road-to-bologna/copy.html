@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>🎾9.21 网球有故事｜通往决赛圈之路</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>157 个国家打了一整年，11 月只有 8 支站上决赛圈——而这 8 张门票里，只有 1 张是送的。
+剩下 7 张全要在 9 月这一周打出来：主客场，5 场 3 胜，输了等明年 2 月重来。
+
+1️⃣ 八张门票：1 张是送的，7 张要打
+· 意大利 东道主外卡
+· 另外 7 席 9 月打出来
+· 11 月 博洛尼亚 6 天
+
+2️⃣ 四层楼：想碰到奖杯，先从底下爬
+· 4 层 每年升降级
+· 资格赛在世界组上面
+· 赢两轮就进决赛圈
+
+3️⃣ 两道关：2 月赢一次，9 月再赢一次
+· 2 月一关 9 月一关
+· 5 场 3 胜 主客场制
+· 捷克 3-2 淘汰美国
+
+4️⃣ 新面孔：首尔那块牌子上写着 Final 8
+· 韩国 2 月淘汰阿根廷
+· 9 月主场 3-1 送走印度
+· 去年八强 全是欧洲和阿根廷
+
+5️⃣ 名单：拿到门票的是这八个
+· 意大利 西班牙 德国 捷克
+· 加拿大 奥地利 英国 韩国
+· 韩国队史首次进八强
+
+6️⃣ 终点：6 天，输一场就回家
+· 11 月 24-29 日 博洛尼亚
+· 3 场 2 胜 单败淘汰
+· 意大利 已经 3 连冠
+
+💬 留个答案
+这一次，谁能把它从意大利手里拿走？
+
+这里是 @网球时差｜网球有故事。
+
+#网球 #网球时差 #戴维斯杯 #网球冷知识 #团体赛</textarea>
+    </section>
+    
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>

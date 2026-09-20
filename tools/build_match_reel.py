@@ -7647,7 +7647,21 @@ def same_line_as_printed(spoken: str, printed: str) -> bool:
     标点换出来的空格）再比。真另说一件事的（`cincinnati-story` 那种）照旧不等。
     """
     def flat(text: str) -> str:
-        return _PRINTED_VS_SPOKEN_NOISE.sub("", drop_punctuation(str(text)))
+        from tennislive.video.explainer import (  # noqa: PLC0415
+            arabic_numerals)
+        # ⚠️ 数字要先归一，**两边用同一套**。CLAUDE.md 那条「给人看的字一律
+        # 阿拉伯数字，只有 TTS 底稿写汉字」保证了钩子和 `cover.narration`
+        # **必然**一个写 `8张` 一个写 `八张`——逐字节比的话，凡是钩子里带数字的
+        # 封面都会被判成「另说了一件事」，于是在海报的大字上再叠一行小字把同一句话
+        # 写第二遍。`davis-cup-road-to-bologna` 第一趟渲出来就是这样（三行字摞在
+        # 一起），`bjk-cup-story`（`16个` vs `十六个`）也一直是这个毛病。
+        # 归一分两步：先 `arabic_numerals`（`十六`→`16`、`一百二十六`→`126`），
+        # 再把剩下的汉字数字逐字映成阿拉伯数字（`八`→`8`——`八张` 的「张」不在
+        # `_NUM_UNITS` 里，第一步够不着它）。**两边走同一条路**，所以哪怕映射
+        # 本身不讲道理（`第一次`→`第1次`）也不影响「一不一样」这个判断。
+        canon = str.maketrans("〇零一二三四五六七八九", "01123456789")
+        return _PRINTED_VS_SPOKEN_NOISE.sub(
+            "", drop_punctuation(arabic_numerals(str(text)))).translate(canon)
     return flat(spoken) == flat(printed.replace("\n", " "))
 
 
