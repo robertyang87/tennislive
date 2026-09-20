@@ -4697,3 +4697,96 @@ def test_假词豁免表自证它豁免的还在违规():
     assert not stale, (
         f"{stale} 已经不违规了（或者 slug/段名写错了），从 _FAKE_WORDS_LEGACY "
         "里删掉——这张表只许减不许加")
+
+
+# ── 多哈／迪拜那条轮换：2024 年就停了，提它必须把终止年一起写出来 ──────────
+#
+# 2026-09-20 读者 @污里纳豆 在 `ranking-math` 底下留言「多哈和迪拜现在都是
+# 1000，没轮换了」——**他是对的**，而片子第 ⑤ 屏旁白写着「档次是逐年轮换的，
+# 这三站的名单每年都要重查」。两个独立源：WTA 官网 `rankings-explained` 把
+# 女子独办 1000 直接列成 `Doha, Dubai, Wuhan` 且全文不提轮换；维基
+# `WTA Qatar Open` 写着 `alternated ... every year **until 2024**, when both
+# events were held as WTA 1000 events`。轮换 2009~2023 是真的，**2024 年停了**。
+#
+# ⚠️ 错的根子不是查漏了，是**拿错了表**：我引的 XIV.B.3.c 全名是
+# `Tournaments that Annually Rotate Between ... Tier Levels (e.g., Doha and
+# Dubai)`，它坐在 **SECTION XIV – PRIZE MONEY FORMULA** 里，讲的是「一个会
+# 轮换档次的赛事，最低奖金怎么算」——**条件条款**，括号里那两个名字是写进去
+# 之后再没更新过的举例。最硬的判据：整本 577 页规则书里 `Doha` 和 `Dubai`
+# **各只出现一次**，就是那个括号，它从头到尾没给这两站定过档。
+#
+# ⚠️⚠️ 而仓库里早就写对了：`video/masters_grid.py` 那条注释（标着「维基，
+# 2026-08-14 查」）写着「2024 …… 多哈和迪拜同时成为常设 1000——十站到这一年
+# 才定型」。**写一个事实之前先 grep 一遍仓库。**
+#
+# 闸做得很窄（CLAUDE.md「判据宁可窄，不可宽」）：**不禁止提轮换**——那段历史
+# 是真的，而且是个好料；只要求**把它的终止年一起写出来**。这样「轮换过」永远
+# 讲得成，「还在轮换」永远讲不成。
+_ROTATION_STATIONS = re.compile(r"多哈|迪拜")
+_ROTATION_WORD = re.compile(r"轮换")
+#: 旁白喂 TTS 写汉字、上屏和正文写阿拉伯数字（CLAUDE.md），所以两种都认。
+_ROTATION_ENDED = re.compile(r"2024|二〇二四")
+
+
+def _outward_texts_everywhere():
+    """所有**会发出去**的文字，带出处标签。`_` 开头的注解一律跳过。
+
+    ⚠️ 注解必须跳过：`docs/` 和 spec 的 `_why` 里正引着「逐年轮换」这个反例
+    本身，连它一起扫就是「判据被自己的注释误伤」——这个仓库记过六次。
+    """
+    from tennislive.video.explainer import _CAPTIONS, _OPENINGS
+
+    for slug, deck in _SCRIPTS.items():
+        for index, seg in enumerate(deck, 1):
+            yield f"_SCRIPTS[{slug}] 第{index}屏 旁白", seg[3]
+            for point in seg[6]:
+                yield f"_SCRIPTS[{slug}] 第{index}屏 要点", point
+            if len(seg) > 7 and seg[7]:
+                yield f"_SCRIPTS[{slug}] 第{index}屏 示意图", seg[7]
+    for slug, opening in _OPENINGS.items():
+        for key in ("topic", "question", "narration", "gloss"):
+            yield f"_OPENINGS[{slug}].{key}", opening.get(key, "")
+    for slug, caption in _CAPTIONS.items():
+        yield f"_CAPTIONS[{slug}].hook", caption.get("hook", "")
+    for story in STORIES:
+        yield f"STORY[{story.slug}].hero", story.hero_fact
+        for index, fact in enumerate(story.facts):
+            yield f"STORY[{story.slug}].facts[{index}]", fact
+    for path in sorted(_REPO.glob("specs/*/*.xhs.txt")):
+        yield str(path.relative_to(_REPO)), path.read_text(encoding="utf-8")
+
+
+def test_提多哈迪拜轮换必须写出它2024年就停了():
+    """提这段轮换史可以，但不能让人读成「现在还在轮换」。
+
+    反向验证做过：把改之前那句「多哈和迪拜的档次是逐年轮换的，这三站的名单
+    每年都要重查」放回第 ⑤ 屏旁白，这条当场红在下面那句断言上。
+    """
+    offenders, scanned = [], 0
+    surfaces: set[str] = set()
+    for where, text in _outward_texts_everywhere():
+        if not isinstance(text, str) or not text:
+            continue
+        scanned += 1
+        surfaces.add(where.split("[")[0].split("/")[0].removesuffix(".xhs.txt")
+                     if where.startswith(("_SCRIPTS", "_OPENINGS", "_CAPTIONS",
+                                          "STORY"))
+                     else "specs")
+        if _ROTATION_STATIONS.search(text) and _ROTATION_WORD.search(text):
+            if not _ROTATION_ENDED.search(text):
+                offenders.append(f"{where}：{text[:120]}")
+
+    # ⚠️⚠️ **自检要按「面」钉，不能只数条数。** 第一版写的是「扫到 >300 段」
+    # ＋「见过一段同时含多哈和武网的」——反向验证里把 `_SCRIPTS` 整个掐掉，
+    # 它**照样绿**：故事那一面的 fact 也同时含这两个词，替它顶住了自检，
+    # 而**旁白才是这次出错的那一面**。现在要求五个面一个不缺，掐掉任何一个都红。
+    assert scanned > 300, f"只扫到 {scanned} 段对外文字，扫描面塌了"
+    for surface in ("_SCRIPTS", "_OPENINGS", "_CAPTIONS", "STORY", "specs"):
+        assert surface in surfaces, (
+            f"扫描面里一段 {surface} 的文字都没有——这条规矩管的是所有会发出去的"
+            f"字段，少一个面就是一条看不见的缺口。当前扫到的面：{sorted(surfaces)}")
+
+    assert offenders == [], (
+        "下面这几处提了多哈／迪拜的轮换，却没写它 2024 年就停了——"
+        "读者会读成「现在还在轮换」，而 2024 年起两站已经同时固定为 WTA 1000：\n"
+        + "\n".join(f"  · {x}" for x in offenders))
