@@ -968,9 +968,18 @@ def test_信箱式封面的钩子让到照片下边缘之外不压主体(
                                 (4000, 1000)) == vp.STORYCOPY_TOP, (
         "照片本来就矮、下边缘在 790 以上时不许把钩子往回提")
     hook_h = round(vp.SOLO_HOOK_MAX_LINES * vp.HOOK_TITLE_PX * 1.24)
+    # ⭐ 2026-09-20 账号所有者：「封面钩子文案是不是要往上移一点更好一点」。
+    # 往下那一头原来钳在 `1440 - hook_h`——行盒贴着画布底边，一口气都不留
+    # （`davis-cup-road-to-bologna` 实测末行墨离底 **17px**）。而全库 6 条
+    # `fit:"width"` 的 solo 封面里 **4 条**顶在这个钳位上，照片一高就必然贴底。
+    # 现在底下留 `SOLO_PAD_HOOK_GAP`，和「照片下边缘到钩子」那口气同一个数。
     assert vp.storycopy_top_for({"portrait": {"zoom": 1.0, "focus_y": 1.0}},
-                                (1080, 1400)) == 1440 - hook_h, (
-        "照片很高的时候要夹住，不然两行钩子顶出画布——而顶出去是静默的")
+                                (1080, 1400)) == 1440 - hook_h - vp.SOLO_PAD_HOOK_GAP, (
+        "照片很高的时候要夹住，不然两行钩子顶出画布——而顶出去是静默的；"
+        "而且底下要留一口气，贴着画布底边读起来像要掉下去")
+    assert 1440 - (1440 - hook_h - vp.SOLO_PAD_HOOK_GAP) - hook_h == 96, (
+        "钩子块的下边缘离画布底不是 96px 了——上下叠那一版（`portrait_above`）"
+        "压到底部用的就是 `bottom:96px`，三处是同一口气")
     assert vp.storycopy_top_for({"portrait": {}}, (0, 0)) == vp.STORYCOPY_TOP, (
         "读不出图的尺寸要退回定版那个值，不许拿 0 去算")
 
