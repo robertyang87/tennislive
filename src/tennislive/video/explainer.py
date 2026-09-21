@@ -3314,6 +3314,62 @@ _APLUS_CLOCK_DIAGRAM = """\
 </svg>
 """
 
+_APLUS_CALENDAR_DIAGRAM = """\
+<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="52" text-anchor="middle" fill="#f4fbf7"
+        font-size="38" font-weight="800">报名截止那天，他日程上有什么</text>
+  <text x="450" y="100" text-anchor="middle" fill="#cfe6d8"
+        font-size="28" font-weight="700">布拉格、伦敦、北京，3 周跨 2 块大陆</text>
+  <line x1="100" y1="268" x2="800" y2="268" stroke="rgba(244,251,247,.30)" stroke-width="3"/>
+  <circle cx="170" cy="268" r="15" fill="#8fd6a8"/>
+  <text x="170" y="196" text-anchor="middle" fill="#f4fbf7" font-size="31" font-weight="800">9 / 18</text>
+  <text x="170" y="236" text-anchor="middle" fill="#f4fbf7" font-size="29" font-weight="800">布拉格</text>
+  <text x="170" y="324" text-anchor="middle" fill="#cfe6d8" font-size="26" font-weight="700">戴维斯杯资格赛</text>
+  <circle cx="450" cy="268" r="15" fill="#8fd6a8"/>
+  <text x="450" y="196" text-anchor="middle" fill="#f4fbf7" font-size="31" font-weight="800">9 / 25-27</text>
+  <text x="450" y="236" text-anchor="middle" fill="#f4fbf7" font-size="29" font-weight="800">伦敦</text>
+  <text x="450" y="324" text-anchor="middle" fill="#cfe6d8" font-size="26" font-weight="700">拉沃杯（首次入选）</text>
+  <circle cx="740" cy="268" r="15" fill="#c6f65a"/>
+  <text x="740" y="196" text-anchor="middle" fill="#c6f65a" font-size="31" font-weight="800">9 / 30</text>
+  <text x="740" y="236" text-anchor="middle" fill="#f4fbf7" font-size="29" font-weight="800">北京</text>
+  <text x="740" y="324" text-anchor="middle" fill="#cfe6d8" font-size="26" font-weight="700">中网开打</text>
+  <text x="450" y="416" text-anchor="middle" fill="#cfe6d8" font-size="28" font-weight="700">拉沃杯名单 6 月 25 日就公布了</text>
+  <text x="450" y="462" text-anchor="middle" fill="#cfe6d8" font-size="28" font-weight="700">比中网报名截止早了两个多月</text>
+  <text x="450" y="524" text-anchor="middle" fill="#f4fbf7" font-size="27" font-weight="800">⚠️ 这是日程，不是他给的理由——双方都没说过</text>
+</svg>
+"""
+
+_APLUS_QUEUE_DIAGRAM = """\
+<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="52" text-anchor="middle" fill="#f4fbf7"
+        font-size="38" font-weight="800">这张卡作废，正赛会少一个人吗</text>
+  <text x="450" y="100" text-anchor="middle" fill="#cfe6d8"
+        font-size="28" font-weight="700">不会——线下面一直排着队</text>
+  <text x="215" y="170" text-anchor="middle" fill="#f4fbf7" font-size="30" font-weight="800">入围名单</text>
+  <rect x="120" y="194" width="190" height="26" rx="6" fill="#8fd6a8" opacity="0.85"/>
+  <rect x="120" y="228" width="190" height="26" rx="6" fill="#8fd6a8" opacity="0.85"/>
+  <rect x="120" y="262" width="190" height="26" rx="6" fill="#8fd6a8" opacity="0.85"/>
+  <rect x="120" y="296" width="190" height="26" rx="6" fill="#8fd6a8" opacity="0.85"/>
+  <rect x="120" y="330" width="190" height="26" rx="6" fill="#8fd6a8" opacity="0.85"/>
+  <rect x="120" y="364" width="190" height="26" rx="6" fill="#8fd6a8" opacity="0.85"/>
+  <line x1="106" y1="400" x2="324" y2="400" stroke="#c6f65a" stroke-width="3" stroke-dasharray="9 7"/>
+  <text x="336" y="408" fill="#c6f65a" font-size="25" font-weight="800">正赛线</text>
+  <rect x="120" y="410" width="190" height="26" rx="6" fill="none" stroke="rgba(244,251,247,.38)" stroke-width="2.5"/>
+  <rect x="120" y="444" width="190" height="26" rx="6" fill="none" stroke="rgba(244,251,247,.38)" stroke-width="2.5"/>
+  <rect x="120" y="478" width="190" height="26" rx="6" fill="none" stroke="rgba(244,251,247,.38)" stroke-width="2.5"/>
+  <rect x="120" y="512" width="190" height="26" rx="6" fill="none" stroke="rgba(244,251,247,.38)" stroke-width="2.5"/>
+  <text x="215" y="568" text-anchor="middle" fill="#cfe6d8" font-size="25" font-weight="700">线下面还排着队</text>
+  <rect x="430" y="186" width="380" height="104" rx="14" fill="#8fd6a8" opacity="0.12" stroke="#8fd6a8" stroke-width="2.5"/>
+  <text x="620" y="230" text-anchor="middle" fill="#cfe6d8" font-size="27" font-weight="700">资格赛还没开打</text>
+  <text x="620" y="270" text-anchor="middle" fill="#f4fbf7" font-size="30" font-weight="800">名单往下顺延一个</text>
+  <rect x="430" y="314" width="380" height="104" rx="14" fill="#8fd6a8" opacity="0.12" stroke="#8fd6a8" stroke-width="2.5"/>
+  <text x="620" y="358" text-anchor="middle" fill="#cfe6d8" font-size="27" font-weight="700">资格赛已经开打</text>
+  <text x="620" y="398" text-anchor="middle" fill="#f4fbf7" font-size="30" font-weight="800">补一个幸运落败者</text>
+  <text x="620" y="470" text-anchor="middle" fill="#cfe6d8" font-size="26" font-weight="700">2025 年中网就有一例：</text>
+  <text x="620" y="508" text-anchor="middle" fill="#cfe6d8" font-size="26" font-weight="700">埃切维里伤退 → 林德克内希递补</text>
+</svg>
+"""
+
 
 _SCRIPTS: dict[str, tuple[tuple, ...]] = {
     "a-plus-wildcard": (
@@ -3392,7 +3448,10 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
         "去年",
         "勒纳·钱上次来没要外卡",
         "先说去年。二〇二五年的中网，勒纳·钱既不是外卡，也不是从资格赛打上来的"
-        "——他靠排名直接进的正赛，连种子都不是。首轮三盘拿下塞伦多洛，"
+        "——ATP 官方签表上，外卡标 W C、资格赛标 Q、幸运落败者标 L L，"
+        "而他名字前面一个标记都没有，那就是纯靠排名直接入围。"
+        "那一年的直入线画在世界第五十九，他站在线里面，只是没拿到种子。"
+        "首轮三盘拿下塞伦多洛，"
         "第二轮六比三、六比三过了马纳里诺；四分之一决赛对四号种子穆塞蒂，"
         "半决赛对八号种子梅德韦杰夫，这两场对手都在第三盘中途退赛；"
         "决赛二比六、二比六输给辛纳。那一年中网的三张外卡，也是三个中国人，"
@@ -3401,7 +3460,7 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
         "中国网球公开赛官网 chinaopen.com 官方图 · 2025 年 10 月 1 日北京，"
         "中网男单颁奖台，勒纳·钱（左）捧亚军盘、辛纳（右）捧冠军杯",
         (
-            "2025 年直接入围，非种子",
+            "官方签表上他没有任何标记",
             "1/4、半决赛对手中途退赛",
             "决赛 2-6 2-6 负于辛纳",
         ),
@@ -3424,6 +3483,37 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             "报了名就自动进，规则原文",
         ),
         _APLUS_ENTRY_DIAGRAM,
+    ),
+    (
+        # ⚠️ 这一屏只摆**日程**，不替任何人给理由——中网和勒纳·钱都没公开解释过
+        # 他为什么不在 9/1 那份名单上（CLAUDE.md「只讲确认过的，不要多说没确认的」）。
+        # 三件事各自可核：
+        #   9/18    戴维斯杯资格赛第二轮 捷克 vs 美国（布拉格）——本仓库
+        #           `specs/reels/mensik-tien-davis-cup-2026-q2.json` 已三源核过，
+        #           他 6-2 6-4 胜门西克；USTA 官网公告标题里写着 `in Prague`。
+        #   9/25-27 拉沃杯 伦敦 O2，世界队。lavercup.com 2026-06-25
+        #           《Learner Tien and Tommy Paul complete Team World lineup》
+        #           ——**名单比中网报名截止早两个多月**。
+        #   9/30    中网男单开打（维基 2026 条目 `30 September – 6 October (ATP)`）。
+        # 推论（「所以他才没报名」）**故意留给观众**，旁白只说「能查到的只有日程」。
+        "mechanism",
+        "日程",
+        "那三周，勒纳·钱在布拉格和伦敦",
+        "那他为什么不报名？中网和他本人都没给过解释，"
+        "能查到的只有他那三周的日程。"
+        "九月十八号，戴维斯杯资格赛，他在布拉格替美国队出战，"
+        "六比二、六比四赢了门西克。"
+        "九月二十五到二十七号，拉沃杯在伦敦，这是他第一次入选世界队——"
+        "而这份名单六月二十五号就公布了，比中网报名截止还早两个多月。"
+        "等中网九月三十号在北京开打，他要在三个星期里跨过两块大陆。",
+        "",
+        "示意图 · 网球时差绘制",
+        (
+            "9/18 布拉格 戴维斯杯",
+            "9/25-27 伦敦 拉沃杯",
+            "9/30 北京 中网开打",
+        ),
+        _APLUS_CALENDAR_DIAGRAM,
     ),
     (
         "mechanism",
@@ -3462,6 +3552,39 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             "不用，位置退回入围名单",
         ),
         _APLUS_SLOT_DIAGRAM,
+    ),
+    (
+        # ⚠️ 回答「那张卡要是作废了，正赛不就少一个人」。规则出处是 7.12 底下那个
+        # 判例 `Unused Wild Cards`：`If the qualifying has not begun, the next
+        # player on the acceptance list is moved into the main draw. If
+        # qualifying has begun, a lucky loser is to be inserted into the main
+        # draw.` 而「名单比正赛线长」不是推的，是**官方签表原件上印着的**：
+        #   2025 中网正赛签表 `Last Direct Acceptance: Etcheverry, Tomas Martin - 59`
+        #   ＋ `Withdrawals: T. Etcheverry (Left rib)` ＋ `Alternates/Lucky
+        #   Losers: A. Rinderknech (LL)` —— 线最后那个人伤退，位置就是这么补的。
+        #   资格赛签表 16 人抢 4 个（`Last Direct Acceptance: N. Basavareddy - 104`），
+        #   落败者 12 个；那张表里还有 3 个 `Alt`，替补队列真的在用。
+        # ⚠️ 译名按表：Rinderknech = **林德克内希**（不是「兰德克内奇」，`player_zh()` 核过）。
+        "today",
+        "补位",
+        "作废了，正赛也不会少人",
+        "那要是这张卡最后没用出去，正赛不就少一个人？不会。"
+        "入围名单从来不止那二十三个——二十三只是够得着正赛的那条线，"
+        "线下面还排着一长队。规则写得很直接：资格赛还没开打，"
+        "就从名单上往下顺延一个；资格赛已经开打，"
+        "就从输掉资格赛的人里补一个幸运落败者进来。"
+        "去年的中网就现成有一例：排在直入线最后一位的埃切维里肋骨伤了退赛，"
+        "那个位置递补给了资格赛输球的林德克内希。"
+        "而那张资格赛签表是十六个人抢四个名额，光落败者就有十二个。"
+        "签表永远不会缺人。",
+        "",
+        "示意图 · 网球时差绘制",
+        (
+            "23 只是线，线下还排着队",
+            "资格赛没开打：名单顺延",
+            "开打了：补幸运落败者",
+        ),
+        _APLUS_QUEUE_DIAGRAM,
     ),
     (
         "today",
@@ -9184,16 +9307,13 @@ _CAPTIONS: dict[str, dict] = {
             "中网男单 4 张正赛外卡，3 张给了中国球员，第 4 张给了世界第 13 的"
             "勒纳·钱。为什么？\n"
             "因为这第 4 张在 ATP 规则书里本来就不在赛事那一栏。ATP 500 的签表"
-            "构成表写着：32 签 ＝ 直接入围 23-25 ＋ 资格赛 4 ＋ 外卡 3-4 ＋ "
-            "特殊豁免 0-1。外卡那个「3-4」后面挂着一个星号——第 4 张是额外加的，"
-            "只能给「A+ 球员」：上一年年终排名前 30 的承诺球员，或者当下持有"
-            "前 10 的保护排名。勒纳·钱 2025 年终第 28，压在线里面。\n"
-            "那世界第 13 为什么还要外卡？ATP 官网 9 月 1 日公布的北京站参赛名单"
-            "23 人，没有他。规则写着承诺球员按规矩报了名就自动进 500 赛正赛"
-            "——挡住他的是报名，不是排名。\n"
-            "那它挤掉人了吗？挤掉了：同一条规则的最后一句说，赛事不用这张卡，"
-            "位置就回到入围名单上的下一个人。所以让出的是直接入围那一栏的最后"
-            "一个，是个外国球员。两条路，都轮不到第 4 个中国人。"
+            "构成表写着：32 签 ＝ 直入 23-25 ＋ 资格赛 4 ＋ 外卡 3-4 ＋ 特殊豁免 "
+            "0-1。外卡那个「3-4」后面挂着星号——第 4 张是额外的，只能给「A+ 球员」："
+            "上一年年终前 30，或持有前 10 保护排名。勒纳·钱 2025 年终第 28。\n"
+            "世界第 13 为什么还要外卡？ATP 9 月 1 日公布的北京站参赛名单 23 人，"
+            "没有他——挡住他的是报名，不是排名。\n"
+            "它挤掉人了吗？挤掉了——让出的是直入那一栏的最后一个，"
+            "不是任何一张中国外卡。"
         ),
         "tags": ("网球", "网球时差", "中网", "勒纳·钱", "网球冷知识"),
     },
