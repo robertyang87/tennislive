@@ -30,11 +30,22 @@ jobs:
             specs/reels
             tools
             src
+            assets/laver-cup-history-2026
             output/2026-09-22/reel/laver-cup-history-2026
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
           cache: pip
+      - name: Cache apt packages for native validation
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/apt-archives
+            ~/.cache/apt-lists
+          key: apt-pkgs-${{ runner.os }}-24.04-approved-laver-${{ github.run_id }}
+          restore-keys: |
+            apt-pkgs-${{ runner.os }}-24.04-approved-laver-
+            apt-pkgs-${{ runner.os }}-24.04-ci-v2-
       - name: Install native validation dependencies
         timeout-minutes: 15
         run: |

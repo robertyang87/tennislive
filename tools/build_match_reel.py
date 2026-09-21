@@ -9402,6 +9402,14 @@ def main() -> int:
         return 0
 
     spec = load_spec(Path(args.spec))
+    # Imported finished masters already contain approved subtitles and voice.
+    # They remain subject to dry-run validation, but must not be burned twice.
+    if ((spec.get("_import") or {}).get("kind") == "finished_master_inspection"
+            and not args.dry_run):
+        raise ReelError(
+            "这是已经完成配音和字幕的导入成片，不能重复渲染。"
+            "请通过对应的成片导入流水线校验并发布原始成片；"
+            "--dry-run 仍会执行完整配置检查。")
     # 会发出去的措辞判据（tools/spec_wording.py，单一出处）。原来只活在
     # pytest 里，而自动出片链用 GITHUB_TOKEN 直推 main、不触发 CI——模型/
     # 自动产的 spec 从生成到发进微信一次都没被扫过，已经漏出去过一条
@@ -9729,3 +9737,4 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
