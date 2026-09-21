@@ -51,3 +51,10 @@ python -m unittest discover -s demos/jev-routing -p 'test_*.py'
 ## 增量控制与净收益验证
 
 参见 [production-value.md](production-value.md)。新增选择性调用、24 小时缓存、调用预算、熔断及独立手动审计工作流；尚未接管生产路由。
+
+### 已完成真实缓存验证
+
+经用户授权，所选真实素材冷调用 13.28 秒、跨数据库重开后的缓存读取 4.23 ms，
+热运行无网络调用。分类为 uncertain（0.39），仍需原流程处理。8 秒调用先超时，
+随后 30 秒隔离诊断成功；候选流程仍保留 8 秒超时。详见 production-value.md 和
+cache-verification-diagnostic/summary.json。
