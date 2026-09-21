@@ -36,7 +36,7 @@ jobs:
           python-version: '3.11'
           cache: pip
       - name: Install native validation dependencies
-        timeout-minutes: 10
+        timeout-minutes: 15
         run: |
           pip install -q -e . numpy
           source tools/ci_apt_install.sh
