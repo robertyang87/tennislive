@@ -2906,6 +2906,9 @@ def test_复制页那道闸装在发的那一步不是渲的那一步():
 # 稿子里**故意**用的写法，不在译名表里但也不是笔误。加进来之前先想清楚：
 # 表里没有的名字，正确做法是补进 `zh/players.py`，这里只留「同一个人的另一种叫法」。
 _ON_PURPOSE = {
+    # Francisco Cerundolo 的完整姓名；表里用姓氏「塞伦多洛」。只遮完整真名，
+    # 避免遮掉姓氏后「西斯科·」被误判成「西斯科娃」，不豁免错写的姓氏。
+    "弗朗西斯科·塞伦多洛",
     "维纳斯·威廉姆斯",   # 表里是「大威廉姆斯」；这条片子通篇叫她维纳斯，是写稿的选择
     # 伊埃拉的名（Alexandra Eala）。下面那条「少一个字」的判据会把它读成
     # 「亚历山德罗娃」——**两个都是真人，判据分不出来**，只能显式声明。
@@ -4790,3 +4793,25 @@ def test_提多哈迪拜轮换必须写出它2024年就停了():
         "下面这几处提了多哈／迪拜的轮换，却没写它 2024 年就停了——"
         "读者会读成「现在还在轮换」，而 2024 年起两站已经同时固定为 WTA 1000：\n"
         + "\n".join(f"  · {x}" for x in offenders))
+
+
+def test_塞伦多洛全名不误报而同句错姓氏仍报错():
+    from tennislive.zh.players import PLAYER_ZH
+
+    assert PLAYER_ZH["Francisco Cerundolo"] == "塞伦多洛"
+    known = sorted(set(PLAYER_ZH.values()) | _ON_PURPOSE, key=len, reverse=True)
+    canon = [name for name in known if len(name) >= 4]
+    index = _typo_index([(name, name) for name in canon])
+
+    def scan(text):
+        for name in known:
+            text = text.replace(name, "　" * len(name))
+        return _near_misses(text, _CJK_DOT_RUN, index)
+
+    full = "弗朗西斯科·塞伦多洛"
+    assert scan("世界队有" + full + "。") == []
+    wrong = "弗朗西斯科·塞伦多罗"
+    hits = scan(full + "，" + wrong + "。")
+    assert ("塞伦多罗", "塞伦多洛") in hits
+    assert (wrong, full) in hits
+
