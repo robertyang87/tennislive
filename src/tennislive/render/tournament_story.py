@@ -1674,6 +1674,122 @@ STORIES = STORIES + (
         ),
     ),
     _trivia_story(
+        slug="a-plus-wildcard",
+        title="ATP 500 有第 4 张外卡",
+        subtitle="网球观察 · 规则篇",
+        identity="中网那张外卡，规则上只能给一种人",
+        chips=("外卡与入围", "ATP 500 · 32 签", "2026 ATP 规则书"),
+        hero=(
+            "2026 中网男单发了 4 张正赛外卡，3 张给了中国球员，第 4 张给了"
+            "世界第 13 的勒纳·钱。这第 4 张不是赛事从自己那 3 张里匀出来的——"
+            "ATP 规则书给 500 赛额外留了一张，而它只能给「A+ 球员」：上一年"
+            "年终排名前 30 的承诺球员，或者当下持有前 10 保护排名的人。"
+            "赛事不用它，位置就回到入围名单上的下一个人，不会变成第 4 张外卡。"
+        ),
+        facts=(
+            "**签表构成表**（7.08 B.1.b）：ATP 500 / 32 签 = 直接入围 23-25 ＋ "
+            "资格赛 4 ＋ 外卡 **3-4\\*** ＋ 特殊豁免 0-1。脚注原文 "
+            "`*Applies only for an A+ player from the region`。"
+            "48 签是 4-5 张、56 签是 5-6 张，星号同理——**多出来的那一张永远只有"
+            "一张，而且只在给 A+ 球员时才存在**。",
+            "**额外外卡那一条**（7.12 A.2「Singles – ATP Tour 500」）："
+            "`An additional Wild Card is awarded to the tournament with the "
+            "following restrictions.` a) 必须在赛事周之前那个**周五美东上午 10 点**"
+            "之前报上名字；b) `The player must be an A+ player as designated by "
+            "that event.`；c) 没用掉，`the position in the main draw goes to the "
+            "next eligible player on the entry list`。"
+            "对照 7.12 A.1.a：**常规外卡「必须在抽签那一刻报上名字」**——"
+            "两张卡差了整整三周的截止时间，晚出来的那扇窗是规则自己留的。",
+            "**A+ 是什么**（EXHIBIT X「Premier Player Protocol」，全书仅此一处定义）："
+            "`Players ranked as a year-end top 30 player (commitment players) or "
+            "have a current protected ranking within the top 10 are eligible to "
+            "be selected in the premier player group for purposes of fulfilling "
+            "the restriction on who is eligible to be named as an additional "
+            "Wild Card at an ATP Tour 500 event.`"
+            "而承诺球员的定义在 1.C：`A 2026 ATP commitment player is any player "
+            "positioned in the Top 30 in the ATP 2025 Rankings (singles) as of "
+            "November 10, 2025.`——**勒纳·钱 2025 年终第 28，够得上第一条**。",
+            "**世界第 13 的人，为什么还需要外卡**：1.E 写着承诺球员 `are automatically "
+            "accepted into the main draw of all ATP Tour 500 events **in which "
+            "they have entered in a proper manner**`——按规矩报了名就自动进。"
+            "而 ATP 官网 2026-09-01 公布的北京站参赛名单只有 **23 人，没有他**"
+            "（辛纳、兹维列夫、德约科维奇都在）。**挡住他的是报名，不是排名。**"
+            "23 这个数还和规则书对得上：23 直入 ＋ 4 资格赛 ＋ 4 外卡 ＋ 1 特殊豁免 = 32。",
+            "**那它挤掉谁了**：挤掉了——但挤掉的是**直接入围那一栏的最后一个**，"
+            "按 7.12 A.2.c，赛事不用这张卡，位置回到入围名单上的下一个人。"
+            "也就是说这张卡的两条路都通向「外国球员」，**不存在「给第 4 个中国人」"
+            "这条路**。2026 中网男女合计 12 张外卡，11 张给了中国球员。",
+            "**星号里那半句「from the region」查得到的只有这些**：`A+` 在 210 页"
+            "规则书里**只出现 2 次**（签表表脚注 ＋ 7.12 A.2.b）；而定义「地理区域」"
+            "的只有 EXHIBIT N，它开头自己写着 `For the purpose of the special "
+            "exempt rule and ATP Challenger Tour prize money currency, a "
+            "geographic region is defined as follows`——**适用范围被这一句钉死，"
+            "够不到这张外卡**。EXHIBIT M 是 `Special Exempts - ATP 250 to ATP 500 "
+            "Events`，赛事对照表，不是分区表。⚠️ 所以只能说「规则书从没为这张卡"
+            "定义过区域」，不能替 ATP 解释它想表达什么。",
+            "**为什么「给第 4 个中国球员」这条路不存在**：A+ 的门槛是**年终**前 30，"
+            "而中网这三位中国球员的**生涯最高**排名分别是张之臻 No. 31（2024-07-22）、"
+            "商竣程 No. 47（2024-10-21）、布云朝克特 No. 64（2025-04-14）——"
+            "**一个都没进过前 30**，更够不到「年终前 30」。"
+            "⚠️ 张之臻那个 **31 差一位**，是这条片子末屏那句话的依据；"
+            "三个数都取自各自维基页 infobox 的 `highestsinglesranking`，"
+            "**是生涯最高不是年终排名**——用它是因为「连生涯最高都没到 30」"
+            "本身就把「年终前 30」排除了，是个更强的条件，不需要再去翻年终表。",
+            "**2025 和 2026 两本逐字比对过，这条规则一个字没改**："
+            "`2025-rulebook_16jan.pdf` 的签表表脚注与 7.12 A.2 和 2026 版完全相同，"
+            "EXHIBIT X 也在。所以它不是为哪一年、哪一个人新开的口子。"
+            "⚠️ 另核：全本 `2026-rulebook_19dec25.pdf` 与晚一个月的第七章修订版 "
+            "`...chapter-7_the-competition_25jan26.pdf` 在这两处也逐字相同。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2025-10-01", player="勒纳·钱", age="2025 中网男单亚军",
+                headline="去年他没要外卡，靠排名直接进正赛，一路打到决赛",
+                detail=(
+                    "2025 中网 `draw = 32 (4Q / 3WC)`，他那一格的席位标记是空的"
+                    "——**既不是外卡也不是资格赛，是直接入围，且非种子**。"
+                    "首轮 4-6 6-3 6-4 胜塞伦多洛，次轮 6-3 6-3 胜马纳里诺(Q)，"
+                    "1/4 决赛对 4 号种子穆塞蒂、半决赛对 8 号种子梅德韦杰夫"
+                    "**两场对手都在第三盘中途退赛**，决赛 2-6 2-6 负于辛纳。"
+                    "那年的 3 张外卡给了张之臻、布云朝克特、商竣程。"
+                ),
+                source_url="https://en.wikipedia.org/wiki/2025_China_Open_%E2%80%93_Men%27s_singles",
+            ),
+            ChampionMoment(
+                date="2026-09-01", player="ATP", age="北京站参赛名单",
+                headline="名单 23 人，没有勒纳·钱",
+                detail=(
+                    "ATP 官网发布 2026 北京站 entry list，23 人，辛纳、兹维列夫、"
+                    "德约科维奇领衔。名单按赛事周周一往前推约 28 天的排名生成"
+                    "（7.13 A.1）。他当时世界第 13，若按规矩报名本会自动入围。"
+                ),
+                source_url="https://www.atptour.com/en/news/beijing-2026-entry-list",
+            ),
+            ChampionMoment(
+                date="2026-09-21", player="中网", age="正赛外卡公布",
+                headline="男单 3 张常规外卡全给中国球员，第 4 张走 A+ 通道",
+                detail=(
+                    "布云朝克特、张之臻、商竣程拿到赛事自己那 3 张；"
+                    "勒纳·钱拿到额外那张 A+ 外卡。男女合计 12 张外卡，"
+                    "11 张给了中国球员。按 7.12 A.2.a，A+ 外卡的截止时间是"
+                    "赛事周之前那个周五的美东上午 10 点。"
+                ),
+                source_url="https://news.qq.com/rain/a/20260921A05V4N00",
+            ),
+        ),
+        image_keys=(),
+        image_credit="中国网球公开赛官网 chinaopen.com 官方图",
+        source_label="2026 ATP 官方规则书 · ATP 官网参赛名单 · 中网官方公告",
+        source_url="https://www.atptour.com/-/media/files/rulebook/2026/2026-rulebook_19dec25.pdf",
+        evidence_urls=(
+            "https://www.atptour.com/-/media/files/rulebook/2026/2026-rulebook-chapter-7_the-competition_25jan26.pdf",
+            "https://www.atptour.com/-/media/files/rulebook/2025/2025-rulebook_16jan.pdf",
+            "https://www.atptour.com/en/news/beijing-2026-entry-list",
+            "https://en.wikipedia.org/wiki/2025_China_Open_%E2%80%93_Men%27s_singles",
+            "https://news.qq.com/rain/a/20260921A05V4N00",
+        ),
+    ),
+    _trivia_story(
         slug="ranking-math",
         title="积分不是全年加起来",
         subtitle="网球观察 · 规则篇",

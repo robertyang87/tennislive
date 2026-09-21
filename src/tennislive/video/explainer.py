@@ -3124,7 +3124,390 @@ _WUHAN_COMMITMENT_DIAGRAM = """
 </svg>
 """
 
+
+# ── 「ATP 500 的第 4 张外卡」六张示意图 ───────────────────────────────
+# 这一条整条是规则题：签表构成表、资格门槛、位置的来去、两个截止时间——
+# **全是结构，没有一样拍得出来**（CLAUDE.md「示意图的触发条件是照片讲不清，
+# 不是照片找不到」）。两张实拍留给「人」那两屏，其余六屏靠图说话。
+# 调色和 `ranking-math` 那两张对齐，每屏只有一处 #c6f65a 强调色。
+
+_APLUS_DRAW_DIAGRAM = """\
+<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="52" text-anchor="middle" fill="#f4fbf7"
+        font-size="38" font-weight="800">中网男单正赛，一共 32 个位置</text>
+  <text x="450" y="100" text-anchor="middle" fill="#cfe6d8"
+        font-size="28" font-weight="700">ATP 500 的签表怎么分，规则书里写死了</text>
+
+  <rect x="101" y="158" width="38" height="46" rx="7" fill="#8fd6a8"/>
+  <rect x="145" y="158" width="38" height="46" rx="7" fill="#8fd6a8"/>
+  <rect x="189" y="158" width="38" height="46" rx="7" fill="#8fd6a8"/>
+  <rect x="233" y="158" width="38" height="46" rx="7" fill="#8fd6a8"/>
+  <rect x="277" y="158" width="38" height="46" rx="7" fill="#8fd6a8"/>
+  <rect x="321" y="158" width="38" height="46" rx="7" fill="#8fd6a8"/>
+  <rect x="365" y="158" width="38" height="46" rx="7" fill="#8fd6a8"/>
+  <rect x="409" y="158" width="38" height="46" rx="7" fill="#8fd6a8"/>
+  <rect x="453" y="158" width="38" height="46" rx="7" fill="#8fd6a8"/>
+  <rect x="497" y="158" width="38" height="46" rx="7" fill="#8fd6a8"/>
+  <rect x="541" y="158" width="38" height="46" rx="7" fill="#8fd6a8"/>
+  <rect x="585" y="158" width="38" height="46" rx="7" fill="#8fd6a8"/>
+  <rect x="629" y="158" width="38" height="46" rx="7" fill="#8fd6a8"/>
+  <rect x="673" y="158" width="38" height="46" rx="7" fill="#8fd6a8"/>
+  <rect x="717" y="158" width="38" height="46" rx="7" fill="#8fd6a8"/>
+  <rect x="761" y="158" width="38" height="46" rx="7" fill="#8fd6a8"/>
+  <rect x="101" y="214" width="38" height="46" rx="7" fill="#8fd6a8"/>
+  <rect x="145" y="214" width="38" height="46" rx="7" fill="#8fd6a8"/>
+  <rect x="189" y="214" width="38" height="46" rx="7" fill="#8fd6a8"/>
+  <rect x="233" y="214" width="38" height="46" rx="7" fill="#8fd6a8"/>
+  <rect x="277" y="214" width="38" height="46" rx="7" fill="#8fd6a8"/>
+  <rect x="321" y="214" width="38" height="46" rx="7" fill="#8fd6a8"/>
+  <rect x="365" y="214" width="38" height="46" rx="7" fill="#8fd6a8"/>
+  <rect x="409" y="214" width="38" height="46" rx="7" fill="#8fd6a8" opacity="0.5"/>
+  <rect x="453" y="214" width="38" height="46" rx="7" fill="#8fd6a8" opacity="0.5"/>
+  <rect x="497" y="214" width="38" height="46" rx="7" fill="#8fd6a8" opacity="0.5"/>
+  <rect x="541" y="214" width="38" height="46" rx="7" fill="#8fd6a8" opacity="0.5"/>
+  <rect x="585" y="214" width="38" height="46" rx="7" fill="none" stroke="rgba(244,251,247,.38)" stroke-width="2.5"/>
+  <rect x="629" y="214" width="38" height="46" rx="7" fill="none" stroke="rgba(244,251,247,.38)" stroke-width="2.5"/>
+  <rect x="673" y="214" width="38" height="46" rx="7" fill="none" stroke="rgba(244,251,247,.38)" stroke-width="2.5"/>
+  <rect x="717" y="214" width="38" height="46" rx="7" fill="#c6f65a"/>
+  <rect x="761" y="214" width="38" height="46" rx="7" fill="#8fd6a8" opacity="0.22"/>
+  <rect x="101" y="316" width="32" height="32" rx="6" fill="#8fd6a8"/>
+  <text x="153" y="341" fill="#cfe6d8" font-size="27" font-weight="700">直接入围 23-25 个（按排名）</text>
+  <rect x="101" y="368" width="32" height="32" rx="6" fill="#8fd6a8" opacity="0.5"/>
+  <text x="153" y="393" fill="#cfe6d8" font-size="27" font-weight="700">资格赛 4 个</text>
+  <rect x="101" y="420" width="32" height="32" rx="6" fill="none" stroke="rgba(244,251,247,.38)" stroke-width="2.5"/>
+  <text x="153" y="445" fill="#cfe6d8" font-size="27" font-weight="700">赛事自己的外卡 3 张</text>
+  <rect x="101" y="472" width="32" height="32" rx="6" fill="#c6f65a"/>
+  <text x="153" y="497" fill="#cfe6d8" font-size="27" font-weight="700">额外那 1 张：只能给 A+ 球员</text>
+  <rect x="101" y="524" width="32" height="32" rx="6" fill="#8fd6a8" opacity="0.22"/>
+  <text x="153" y="549" fill="#cfe6d8" font-size="27" font-weight="700">特殊豁免 0-1 个</text>
+</svg>
+"""
+
+_APLUS_CARDS_DIAGRAM = """\
+<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="52" text-anchor="middle" fill="#f4fbf7"
+        font-size="38" font-weight="800">男单 4 张外卡，3 张归中国球员</text>
+  <text x="450" y="100" text-anchor="middle" fill="#cfe6d8"
+        font-size="28" font-weight="700">第 4 张走的是另一条规则，不占那 3 张</text>
+
+  <rect x="60" y="160" width="190" height="230" rx="16" fill="#8fd6a8" opacity="0.14" stroke="#8fd6a8" stroke-width="2.5"/>
+  <text x="155" y="252" text-anchor="middle" fill="#f4fbf7" font-size="30" font-weight="800">布云朝克特</text>
+  <text x="155" y="316" text-anchor="middle" fill="#cfe6d8" font-size="27" font-weight="700">赛事外卡</text>
+  <rect x="270" y="160" width="190" height="230" rx="16" fill="#8fd6a8" opacity="0.14" stroke="#8fd6a8" stroke-width="2.5"/>
+  <text x="365" y="252" text-anchor="middle" fill="#f4fbf7" font-size="34" font-weight="800">张之臻</text>
+  <text x="365" y="316" text-anchor="middle" fill="#cfe6d8" font-size="27" font-weight="700">赛事外卡</text>
+  <rect x="480" y="160" width="190" height="230" rx="16" fill="#8fd6a8" opacity="0.14" stroke="#8fd6a8" stroke-width="2.5"/>
+  <text x="575" y="252" text-anchor="middle" fill="#f4fbf7" font-size="34" font-weight="800">商竣程</text>
+  <text x="575" y="316" text-anchor="middle" fill="#cfe6d8" font-size="27" font-weight="700">赛事外卡</text>
+  <rect x="690" y="160" width="190" height="230" rx="16" fill="#c6f65a" opacity="0.16" stroke="#c6f65a" stroke-width="3"/>
+  <text x="785" y="252" text-anchor="middle" fill="#c6f65a" font-size="34" font-weight="800">勒纳·钱</text>
+  <text x="785" y="316" text-anchor="middle" fill="#c6f65a" font-size="27" font-weight="700">A+ 外卡</text>
+  <text x="450" y="452" text-anchor="middle" fill="#cfe6d8" font-size="29" font-weight="700">这 3 张一张没少，全给了中国球员</text>
+  <text x="450" y="506" text-anchor="middle" fill="#c6f65a" font-size="29" font-weight="800">第 4 张在规则上只能给 A+ 球员</text>
+</svg>
+"""
+
+_APLUS_ENTRY_DIAGRAM = """\
+<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="52" text-anchor="middle" fill="#f4fbf7"
+        font-size="38" font-weight="800">9 月 1 日的参赛名单，23 个人</text>
+  <text x="450" y="100" text-anchor="middle" fill="#cfe6d8"
+        font-size="28" font-weight="700">名单按赛事周周一往前推约 28 天的排名生成</text>
+
+  <rect x="148" y="158" width="38" height="46" rx="7" fill="#8fd6a8"/>
+  <rect x="192" y="158" width="38" height="46" rx="7" fill="#8fd6a8"/>
+  <rect x="236" y="158" width="38" height="46" rx="7" fill="#8fd6a8"/>
+  <rect x="280" y="158" width="38" height="46" rx="7" fill="#8fd6a8"/>
+  <rect x="324" y="158" width="38" height="46" rx="7" fill="#8fd6a8"/>
+  <rect x="368" y="158" width="38" height="46" rx="7" fill="#8fd6a8"/>
+  <rect x="412" y="158" width="38" height="46" rx="7" fill="#8fd6a8"/>
+  <rect x="456" y="158" width="38" height="46" rx="7" fill="#8fd6a8"/>
+  <rect x="500" y="158" width="38" height="46" rx="7" fill="#8fd6a8"/>
+  <rect x="544" y="158" width="38" height="46" rx="7" fill="#8fd6a8"/>
+  <rect x="588" y="158" width="38" height="46" rx="7" fill="#8fd6a8"/>
+  <rect x="632" y="158" width="38" height="46" rx="7" fill="#8fd6a8"/>
+  <rect x="676" y="158" width="38" height="46" rx="7" fill="#8fd6a8"/>
+  <rect x="720" y="158" width="38" height="46" rx="7" fill="#8fd6a8"/>
+  <rect x="148" y="214" width="38" height="46" rx="7" fill="#8fd6a8"/>
+  <rect x="192" y="214" width="38" height="46" rx="7" fill="#8fd6a8"/>
+  <rect x="236" y="214" width="38" height="46" rx="7" fill="#8fd6a8"/>
+  <rect x="280" y="214" width="38" height="46" rx="7" fill="#8fd6a8"/>
+  <rect x="324" y="214" width="38" height="46" rx="7" fill="#8fd6a8"/>
+  <rect x="368" y="214" width="38" height="46" rx="7" fill="#8fd6a8"/>
+  <rect x="412" y="214" width="38" height="46" rx="7" fill="#8fd6a8"/>
+  <rect x="456" y="214" width="38" height="46" rx="7" fill="#8fd6a8"/>
+  <rect x="500" y="214" width="38" height="46" rx="7" fill="#8fd6a8"/>
+  <text x="450" y="322" text-anchor="middle" fill="#cfe6d8" font-size="28" font-weight="700">辛纳、兹维列夫、德约科维奇都在上面</text>
+  <rect x="250" y="368" width="400" height="96" rx="14" fill="none" stroke="rgba(244,251,247,.38)" stroke-width="2.5"/>
+  <text x="450" y="416" text-anchor="middle" fill="#c6f65a" font-size="34" font-weight="800">名单上没有勒纳·钱</text>
+  <text x="450" y="450" text-anchor="middle" fill="#cfe6d8" font-size="26" font-weight="700">他当时世界第 13</text>
+  <text x="450" y="524" text-anchor="middle" fill="#cfe6d8" font-size="28" font-weight="700">规则：承诺球员报了名，就自动进 500 赛正赛</text>
+</svg>
+"""
+
+_APLUS_TIER_DIAGRAM = """\
+<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="52" text-anchor="middle" fill="#f4fbf7"
+        font-size="38" font-weight="800">A+ 的资格，写死在规则书末尾</text>
+  <text x="450" y="100" text-anchor="middle" fill="#cfe6d8"
+        font-size="28" font-weight="700">「顶级球员规程」，全书只此一处定义</text>
+
+  <rect x="60" y="152" width="370" height="170" rx="16" fill="#8fd6a8" opacity="0.14" stroke="#8fd6a8" stroke-width="2.5"/>
+  <text x="245" y="218" text-anchor="middle" fill="#cfe6d8" font-size="28" font-weight="700">上一年年终排名</text>
+  <text x="245" y="268" text-anchor="middle" fill="#f4fbf7" font-size="33" font-weight="800">前 30 的承诺球员</text>
+  <rect x="470" y="152" width="370" height="170" rx="16" fill="#8fd6a8" opacity="0.14" stroke="#8fd6a8" stroke-width="2.5"/>
+  <text x="655" y="218" text-anchor="middle" fill="#cfe6d8" font-size="28" font-weight="700">当下持有</text>
+  <text x="655" y="268" text-anchor="middle" fill="#f4fbf7" font-size="33" font-weight="800">前 10 的保护排名</text>
+  <text x="450" y="372" text-anchor="middle" fill="#cfe6d8" font-size="28" font-weight="700">两条占一条就行</text>
+  <rect x="212" y="404" width="476" height="112" rx="16" fill="#c6f65a" opacity="0.16" stroke="#c6f65a" stroke-width="3"/>
+  <text x="450" y="452" text-anchor="middle" fill="#c6f65a" font-size="34" font-weight="800">勒纳·钱 2025 年终第 28</text>
+  <text x="450" y="494" text-anchor="middle" fill="#cfe6d8" font-size="26" font-weight="700">压在线里面，够得上第一条</text>
+</svg>
+"""
+
+_APLUS_SLOT_DIAGRAM = """\
+<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="52" text-anchor="middle" fill="#f4fbf7"
+        font-size="38" font-weight="800">第 4 张外卡，占的是谁的位置</text>
+  <text x="450" y="100" text-anchor="middle" fill="#cfe6d8"
+        font-size="28" font-weight="700">它从「直接入围」那一栏让出来，不是从外卡那栏</text>
+
+  <text x="230" y="176" text-anchor="middle" fill="#cfe6d8" font-size="28" font-weight="700">用了这张卡</text>
+  <text x="670" y="176" text-anchor="middle" fill="#cfe6d8" font-size="28" font-weight="700">不用这张卡</text>
+  <rect x="60" y="208" width="340" height="80" rx="14" fill="#8fd6a8" opacity="0.12" stroke="#8fd6a8" stroke-width="2.5"/>
+  <text x="90" y="260" fill="#f4fbf7" font-size="30" font-weight="800">直接入围</text>
+  <text x="370" y="260" text-anchor="end" fill="#f4fbf7" font-size="34" font-weight="800">24</text>
+  <rect x="60" y="304" width="340" height="80" rx="14" fill="#c6f65a" opacity="0.16" stroke="#c6f65a" stroke-width="3"/>
+  <text x="90" y="356" fill="#f4fbf7" font-size="30" font-weight="800">外卡</text>
+  <text x="370" y="356" text-anchor="end" fill="#c6f65a" font-size="34" font-weight="800">4</text>
+  <rect x="500" y="208" width="340" height="80" rx="14" fill="#8fd6a8" opacity="0.12" stroke="#8fd6a8" stroke-width="2.5"/>
+  <text x="530" y="260" fill="#f4fbf7" font-size="30" font-weight="800">直接入围</text>
+  <text x="810" y="260" text-anchor="end" fill="#f4fbf7" font-size="34" font-weight="800">25</text>
+  <rect x="500" y="304" width="340" height="80" rx="14" fill="#8fd6a8" opacity="0.12" stroke="#8fd6a8" stroke-width="2.5"/>
+  <text x="530" y="356" fill="#f4fbf7" font-size="30" font-weight="800">外卡</text>
+  <text x="810" y="356" text-anchor="end" fill="#f4fbf7" font-size="34" font-weight="800">3</text>
+  <text x="450" y="452" text-anchor="middle" fill="#cfe6d8" font-size="28" font-weight="700">赛事不用它，位置回到入围名单</text>
+  <text x="450" y="508" text-anchor="middle" fill="#f4fbf7" font-size="30" font-weight="800">回到名单，不是变成第 4 张外卡</text>
+</svg>
+"""
+
+_APLUS_CLOCK_DIAGRAM = """\
+<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="52" text-anchor="middle" fill="#f4fbf7"
+        font-size="38" font-weight="800">两张外卡，两个截止时间</text>
+  <text x="450" y="100" text-anchor="middle" fill="#cfe6d8"
+        font-size="28" font-weight="700">晚出来的那扇窗，是规则自己留的</text>
+
+  <line x1="90" y1="250" x2="810" y2="250" stroke="rgba(244,251,247,.30)" stroke-width="3"/>
+  <circle cx="170" cy="250" r="14" fill="#8fd6a8"/>
+  <text x="170" y="206" text-anchor="middle" fill="#f4fbf7" font-size="29" font-weight="800">报名名单</text>
+  <text x="170" y="304" text-anchor="middle" fill="#cfe6d8" font-size="26" font-weight="700">赛事周前约 28 天</text>
+  <circle cx="450" cy="250" r="14" fill="#8fd6a8"/>
+  <text x="450" y="206" text-anchor="middle" fill="#f4fbf7" font-size="29" font-weight="800">抽签日</text>
+  <text x="450" y="304" text-anchor="middle" fill="#cfe6d8" font-size="26" font-weight="700">常规外卡必须报名字</text>
+  <circle cx="730" cy="250" r="14" fill="#c6f65a"/>
+  <text x="730" y="206" text-anchor="middle" fill="#c6f65a" font-size="29" font-weight="800">赛事周前的周五</text>
+  <text x="730" y="304" text-anchor="middle" fill="#cfe6d8" font-size="26" font-weight="700">上午 10 点（美东）</text>
+  <text x="450" y="400" text-anchor="middle" fill="#c6f65a" font-size="31" font-weight="800">A+ 外卡的截止，比常规外卡晚一大截</text>
+  <text x="450" y="466" text-anchor="middle" fill="#cfe6d8" font-size="27" font-weight="700">星号里那句「来自该区域」——</text>
+  <text x="450" y="514" text-anchor="middle" fill="#cfe6d8" font-size="27" font-weight="700">「区域」在规则书里从没为这张卡定义过</text>
+</svg>
+"""
+
+
 _SCRIPTS: dict[str, tuple[tuple, ...]] = {
+    "a-plus-wildcard": (
+    # 「中网那张 ATP 外卡为什么给了勒纳·钱」——2026-09-21 中网公布外卡当天做的。
+    #
+    # ⚠️ 这条片子的每一句规则都回了**原文**，不引中文转述稿：
+    #   2026 ATP 规则书全本 `2026-rulebook_19dec25.pdf`（210 页）＋ 第七章单独的
+    #   修订版 `2026-rulebook-chapter-7_the-competition_25jan26.pdf`（晚一个月，
+    #   两处逐字相同）；**2025 版 `2025-rulebook_16jan.pdf` 也拉下来逐字比过，
+    #   这条规则 2025→2026 一个字没改**（CLAUDE.md「判历史事件要用当年那本规则书」
+    #   的反向用法：先确认它不是今年才有的，才敢说「本来就有这一张」）。
+    #   · 7.08 B.1.b 签表构成表，ATP 500／32 签：
+    #     `32 | 23-25 | 4 | 3-4* | 0-1`，脚注 `*Applies only for an A+ player
+    #     from the region`
+    #   · 7.12 A.2「Singles – ATP Tour 500」：`An additional Wild Card is awarded
+    #     to the tournament with the following restrictions.` a) 周五 10 AM ET
+    #     之前报名字；b) `The player must be an A+ player as designated by that
+    #     event.`；c) 没用掉，`the position in the main draw goes to the next
+    #     eligible player on the entry list`
+    #   · EXHIBIT X「Premier Player Protocol」：`Players ranked as a year-end top
+    #     30 player (commitment players) or have a current protected ranking
+    #     within the top 10 are eligible to be selected in the premier player
+    #     group for purposes of fulfilling the restriction on who is eligible to
+    #     be named as an additional Wild Card at an ATP Tour 500 event.`
+    #   · 1.C：`A 2026 ATP commitment player is any player positioned in the Top
+    #     30 in the ATP 2025 Rankings (singles) as of November 10, 2025.`
+    #   · 1.E：承诺球员 `are automatically accepted into the main draw of all ATP
+    #     Tour 500 events **in which they have entered in a proper manner**`
+    #     ——这半句是第 ③ 屏的全部依据：卡住他的是报名，不是排名。
+    #
+    # ⚠️⚠️ 第 ⑥ 屏那个星号是**查出来的，不是推出来的**：`A+` 在整本 210 页规则书里
+    # 只出现 **2 次**（签表表的脚注 ＋ 7.12 A.2.b），而「region」有定义的地方只有
+    # EXHIBIT N，它开头自己写着 `For the purpose of the special exempt rule and
+    # ATP Challenger Tour prize money currency, a geographic region is defined as
+    # follows` —— **适用范围被那一句钉死了，够不到这张外卡**。EXHIBIT M 叫
+    # `Special Exempts - ATP 250 to ATP 500 Events`，是赛事对照表不是分区表。
+    # 所以片子里只说「规则书从没为这张卡定义过『区域』」这个**可核的事实**，
+    # 不替 ATP 解释它想表达什么（CLAUDE.md「只讲确认过的，不要多说没确认的」）。
+    #
+    # 事实那一头的出处：
+    #   · 2025 中网逐轮战绩与席位标记 —— 维基 `2025 China Open – Men's singles`
+    #     的**原始 wikitext**（`Special:Export`）。⚠️ 同一个页面用 WebFetch 摘了
+    #     两次，一次说他是资格赛球员、一次说不是，**两次互相矛盾**；拉原文自己读才
+    #     定下来：他那一格 `RD1-seed03=` 是空的，signup 是直接入围，无种子。
+    #     资格赛那四个名额当年是马纳里诺、阿特马内、卡佐、戈芬，幸运落败者兰德克内奇。
+    #     这是 CLAUDE.md「查产物，不查信号」的又一次——骗人的是摘要。
+    #   · 2025 那站 `draw = 32 (4Q / 3WC)`，3 张外卡是张之臻、布云朝克特、商竣程
+    #   · 2026 参赛名单 —— ATP 官网 `beijing-2026-entry-list`，2026-09-01 发，
+    #     **23 人，没有勒纳·钱**；23 正好是规则书 32 签的直入下限（23＋4Q＋4WC＋1SE＝32），
+    #     两头对得上。⚠️ 新浪那篇说中网男单是「56 签、常规四张外卡」，**是错的**：
+    #     56 签按规则书该有 7 个资格赛名额和 5-6 张外卡，而当天一共只发了 4 张。
+    #     编辑稿的结论不抄（CLAUDE.md），按规则书和官方名单走。
+    #   · 2025 年终第 28 / 现在世界第 13（2026-09-14 那期 2755 分）—— 维基
+    #     `Current tennis rankings` 的原始 wikitext。⚠️ **排名每周一动**，所以
+    #     载重的那个数是「2025 年终第 28」（规则用的就是它，永不变），
+    #     「第 13」只在第 ③ 屏的图上出现一次，当场景不当论据。
+    (
+        "cause",
+        "先说结论",
+        "中网那 3 张，一张都没少",
+        "先把结论放在最前面。那三张常规外卡给了布云朝克特、张之臻和商竣程，"
+        "一张都没少。勒纳·钱拿的那张不在这三张里面——"
+        "ATP 给五百赛的签表额外留了一格，规则上只能给一种人。"
+        "中网就算不用它，这个位置也变不成第四张外卡。",
+        "",
+        "示意图 · 网球时差绘制",
+        (
+            "男单外卡一共 4 张",
+            "前 3 张全给了中国球员",
+            "他拿的是单独的第 4 张",
+        ),
+        _APLUS_CARDS_DIAGRAM,
+    ),
+    (
+        "cause",
+        "去年",
+        "勒纳·钱上次来没要外卡",
+        "先说去年。二〇二五年的中网，勒纳·钱既不是外卡，也不是从资格赛打上来的"
+        "——他靠排名直接进的正赛，连种子都不是。首轮三盘拿下塞伦多洛，"
+        "第二轮六比三、六比三过了马纳里诺；四分之一决赛对四号种子穆塞蒂，"
+        "半决赛对八号种子梅德韦杰夫，这两场对手都在第三盘中途退赛；"
+        "决赛二比六、二比六输给辛纳。那一年中网的三张外卡，也是三个中国人，"
+        "一张都没给他。",
+        "assets/explainer/a-plus-wildcard/beijing_2025_podium.jpg",
+        "中国网球公开赛官网 chinaopen.com 官方图 · 2025 年 10 月 1 日北京，"
+        "中网男单颁奖台，勒纳·钱（左）捧亚军盘、辛纳（右）捧冠军杯",
+        (
+            "2025 年直接入围，非种子",
+            "1/4、半决赛对手中途退赛",
+            "决赛 2-6 2-6 负于辛纳",
+        ),
+    ),
+    (
+        "mechanism",
+        "今年",
+        "挡住勒纳·钱的是报名，不是排名",
+        "那今年呢？ATP 官网九月一日公布了北京站的参赛名单，二十三个人，"
+        "辛纳、兹维列夫、德约科维奇都在上面，没有勒纳·钱。"
+        "这份名单用的是赛事周周一往前推大约二十八天的那期排名。"
+        "而规则书第一章写得很直白：承诺球员，只要按规矩报了名，"
+        "就自动被所有五百赛的正赛接收。"
+        "所以挡住他的从来不是排名——是他不在那份名单上。",
+        "",
+        "示意图 · 网球时差绘制",
+        (
+            "ATP 官方名单 23 人",
+            "名单里没有他",
+            "报了名就自动进，规则原文",
+        ),
+        _APLUS_ENTRY_DIAGRAM,
+    ),
+    (
+        "mechanism",
+        "门槛",
+        "够得上 A+ 的只有两种人",
+        "第四张外卡只能给所谓的 A 加球员。这不是赛事随口定的："
+        "规则书末尾那份顶级球员规程，把够格的人限死在两种——"
+        "上一年年终排名前三十的承诺球员，或者当下持有前十保护排名的人。"
+        "勒纳·钱二〇二五年年终排名第二十八，正好压在线里面。"
+        "全世界够格接这张卡的，一年到头也就三十来个。",
+        "",
+        "示意图 · 网球时差绘制",
+        (
+            "年终前 30 的承诺球员",
+            "或持有前 10 保护排名",
+            "他 2025 年终排名第 28",
+        ),
+        _APLUS_TIER_DIAGRAM,
+    ),
+    (
+        "mechanism",
+        "位置",
+        "挤掉的是入围名单最后一个",
+        "那它占了谁的位置？规则书的签表构成表写得很清楚："
+        "ATP 五百赛、三十二签，直接入围二十三到二十五人，资格赛四个，"
+        "外卡三到四张。外卡那一栏的三到四后面挂着一个星号——"
+        "第四张是额外加出来的，而它加出来的位置，"
+        "是从直接入围那一栏让出来的，不是从外卡那一栏挤出来的。"
+        "下一句更关键：赛事要是不用这张卡，位置就回到入围名单上的下一个人。"
+        "所以它确实挤掉了一个人——挤掉的是入围名单上排最后的那一个。",
+        "",
+        "示意图 · 网球时差绘制",
+        (
+            "第 4 张外卡带着星号",
+            "它从直入那一栏让出来",
+            "不用，位置退回入围名单",
+        ),
+        _APLUS_SLOT_DIAGRAM,
+    ),
+    (
+        "today",
+        "细节",
+        "周五 10 点，和一个星号",
+        "还有两处容易被漏掉。第一是时间：常规外卡必须在抽签那一刻就报上名字，"
+        "而这张额外外卡单写了截止时间——赛事周之前那个周五，"
+        "美国东部时间上午十点。它本来就是一扇留给晚到的人的窗。"
+        "第二是那个星号：星号里写着「来自该区域的 A 加球员」，"
+        "可「区域」这个词，整本规则书只在后面那份地理分区的附录里定义过一次，"
+        "而那一段开头就写明，它只管特殊豁免和挑战赛的奖金币种。"
+        "真正列限制清单的那一条，从头到尾只写了两样："
+        "是 A 加球员，周五之前报上名。",
+        "",
+        "示意图 · 网球时差绘制",
+        (
+            "常规外卡：抽签时就要定",
+            "A+ 外卡：周五 10 点截止",
+            "星号里的区域没被定义过",
+        ),
+        _APLUS_CLOCK_DIAGRAM,
+    ),
+    (
+        "today",
+        "所以",
+        "这张卡只有两条路",
+        "所以这张卡从一开始就只有两条路：要么给一个够得上 A 加的球员，"
+        "要么作废、把位置还给入围名单。"
+        "它从来不是「给中国人还是给外国人」的选择题——"
+        "中网那三位中国球员，生涯最高排名分别是第三十一、第四十七和第六十四，"
+        "没有一个进过前三十，更不用说年终前三十。"
+        "张之臻那个三十一，离这条线差一位。"
+        "中网选了用掉它，理由大概就摆在去年那张照片里——"
+        "一个打到决赛才停下来的人",
+        "assets/explainer/a-plus-wildcard/beijing_2025_plate.jpg",
+        "中国网球公开赛官网 chinaopen.com 官方图 · 2025 年 10 月 1 日北京，"
+        "勒纳·钱决赛后抱着中网男单亚军盘，背景横幅写着 2025 CHINA OPEN、ATP500",
+        (
+            "给 A+ 球员，或者作废",
+            "那 3 人都没进过前 30",
+            "张之臻最高第 31，差一位",
+        ),
+        "",
+        "换你是中网，你愿意为一个去年的亚军，让出一个入围名额吗？",
+    ),
+    ),
     # 2026-09-20，账号所有者点的题：「通往戴维斯杯决赛圈之路」。⚠️ 和 `finals-venues`
     # 的分界：那条讲的是 **ATP 年终总决赛**的举办城市（15 座城市、招标、深圳那十年），
     # 这条讲的是**戴维斯杯**的晋级制度，两个赛事、两件事，一个字都不重。
@@ -8793,6 +9176,27 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
 # 这个洞。判据落在 test_每条片子的标签都放满五个。
 _DEFAULT_TAGS = ("网球", "网球时差", "网球冷知识", "网球科普", "网球运动")
 _CAPTIONS: dict[str, dict] = {
+    "a-plus-wildcard": {
+        # ⚠️ 小红书正文卡 1000 字，而正文 = 这段 hook ＋ 七屏要点 ＋ 收尾 ＋ tag，
+        # **自动那部分就占四百多字**。所以这里只写结论和那几个可核的数，
+        # 别把旁白整段搬过来。
+        "hook": (
+            "中网男单 4 张正赛外卡，3 张给了中国球员，第 4 张给了世界第 13 的"
+            "勒纳·钱。为什么？\n"
+            "因为这第 4 张在 ATP 规则书里本来就不在赛事那一栏。ATP 500 的签表"
+            "构成表写着：32 签 ＝ 直接入围 23-25 ＋ 资格赛 4 ＋ 外卡 3-4 ＋ "
+            "特殊豁免 0-1。外卡那个「3-4」后面挂着一个星号——第 4 张是额外加的，"
+            "只能给「A+ 球员」：上一年年终排名前 30 的承诺球员，或者当下持有"
+            "前 10 的保护排名。勒纳·钱 2025 年终第 28，压在线里面。\n"
+            "那世界第 13 为什么还要外卡？ATP 官网 9 月 1 日公布的北京站参赛名单"
+            "23 人，没有他。规则写着承诺球员按规矩报了名就自动进 500 赛正赛"
+            "——挡住他的是报名，不是排名。\n"
+            "那它挤掉人了吗？挤掉了：同一条规则的最后一句说，赛事不用这张卡，"
+            "位置就回到入围名单上的下一个人。所以让出的是直接入围那一栏的最后"
+            "一个，是个外国球员。两条路，都轮不到第 4 个中国人。"
+        ),
+        "tags": ("网球", "网球时差", "中网", "勒纳·钱", "网球冷知识"),
+    },
     "ranking-math": {
         "hook": "ATP 说一年数 19 个成绩，WTA 说 18 个——其实两边都是 18 个必算的"
         "格子，再加一个年终总决赛，差别只在于谁把总决赛算进了对外说的那个数。\n"
@@ -9350,6 +9754,32 @@ def column_of(slug: str) -> Column:
 # beat one makes the viewer work out the subject for themselves. Every deck
 # now opens on the question it answers, said out loud and set large.
 _OPENINGS: dict[str, dict] = {
+    "a-plus-wildcard": {
+        "topic": "ATP 500 的第 4 张外卡，只能给一种人",
+        "question": "中网外卡为什么给了美国人？",
+        "narration": "中网外卡为什么给了美国人？男单四张正赛外卡，前三张给了"
+        "中国球员，第四张给了世界第十三的勒纳·钱。可这第四张，在 ATP 的规则书里"
+        "本来就不在赛事自己那一栏——它有自己的门槛，也有自己的截止时间。",
+        "gloss": "规则书里的「A+ 外卡」",
+        # 封面画的是**标题问的那个东西**：32 个正赛位置怎么分，第 4 张外卡从哪儿来。
+        # 和 `ranking-math`（19 个格子）同一个做法——答案是一个**可数的结构**，
+        # 一张球员实拍只能证明「有人在打球」，说不出「位置就这么多、第 4 张是额外的」。
+        # ⚠️ 和第 ⑤ 屏那张不重复：那张是「用 / 不用」两栏数字的对照（24 对 25），
+        # 这张是**可数的格子**（一共 32 个，各自属于哪一类）。
+        "diagram": _APLUS_DRAW_DIAGRAM,
+        # 2026-09-21 认领：走**字卡**而不是默认的视频剪辑那条路。
+        # 属于 2026-08-09 定死的第一种例外——**天然图表题材**。
+        # 这一条的主语是一条规则的构造：签表构成表（32 个位置怎么分）、A+ 的
+        # 资格门槛（年终前 30 ／ 前 10 保护排名）、那个位置的来去（用了从直入
+        # 让一个、不用退回名单）、以及两个差了三周的截止时间。**全是结构不是动作**，
+        # 没有任何一段比赛画面拍得出「这一张是额外的、只能给这种人」。
+        # 和 `ranking-math` / `mandatory-1000` / `pr-allowance` 同族（规则原文
+        # ＋ 数据对比）。两张实拍留给「人」那两屏（去年的亚军盘），不占规则屏。
+        "cards_why": "天然图表题材：讲的是 ATP 500 签表构成表的结构（32 ＝ 直入 "
+        "23-25 ＋ 资格赛 4 ＋ 外卡 3-4 ＋ 特殊豁免 0-1）、A+ 的两条资格门槛、"
+        "额外那张外卡的位置来去，以及两个相差三周的截止时间，是结构不是动作，"
+        "比赛画面拍不出来；六张示意图承担主要信息，两张实拍只负责让人看见当事人。",
+    },
     "ranking-math": {
         "topic": "积分不是加法：打得多，不等于算得多",
         "question": "打了一年，为什么只算19个？",
