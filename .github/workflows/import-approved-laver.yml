@@ -30,17 +30,17 @@ jobs:
             specs/reels
             tools
             src
+            output/2026-09-22/reel/laver-cup-history-2026
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
           cache: pip
       - name: Install native validation dependencies
+        timeout-minutes: 10
         run: |
           pip install -q -e . numpy
-          if ! command -v ffmpeg >/dev/null; then
-            sudo apt-get update
-            sudo apt-get install -y ffmpeg
-          fi
+          source tools/ci_apt_install.sh
+          ensure_ffmpeg
       - name: Restore verified transfer chunks
         uses: actions/cache/restore@v4
         with:
@@ -63,8 +63,8 @@ jobs:
         env:
           OUTDIR: ${{ steps.master.outputs.outdir }}
         run: |
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git config user.name "Claude"
+          git config user.email "noreply@anthropic.com"
           # Explicit file list: movie bytes must never become Git tree entries.
           git add --sparse specs/reels/laver-cup-history-2026.json specs/reels/laver-cup-history-2026.xhs.txt
           git add --sparse "$OUTDIR/render.json" "$OUTDIR/subtitles.ass" "$OUTDIR/poster.jpg" "$OUTDIR/qc_attestation.json" "$OUTDIR/copy.html" "$OUTDIR/push.html"
@@ -76,6 +76,7 @@ jobs:
             echo '::error::Movie accidentally staged; refusing publication'
             exit 1
           fi
+          python tools/check_staged_file_sizes.py
           if ! git diff --cached --quiet; then
             git commit -m 'reel: import approved Laver Cup master and native QC evidence'
           fi
