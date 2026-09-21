@@ -1310,6 +1310,11 @@ STORYCOPY_TOP = 790
 #:
 #: 96 是**抄的不是拍的**：上下叠那一版（`portrait_above`）压到底部时用的
 #: `bottom:96px` 就是这个数，两处保持同一口气。
+#:
+#: ⭐ **2026-09-20 起它有两个用处**：照片下边缘到钩子的那口气（本来的用处），
+#: 以及**钩子到画布底边**的那口气（`storycopy_top_for` 往下那一头的钳位）。
+#: 照片一高，前者根本够不着，钳位就成了唯一在起作用的那个数——而它原来
+#: 一口气都不留。来路和那三版实测写在 `storycopy_top_for()` 的 docstring 里。
 SOLO_PAD_HOOK_GAP = 96
 
 
@@ -1324,7 +1329,29 @@ def storycopy_top_for(cover: dict, img: tuple[int, int]) -> int:
     `照片顶边 = (1440 - H) * P`、`照片下边缘 = 顶边 + H`。
 
     ⚠️ 结果要**夹住**：往上不许低于定版的 `STORYCOPY_TOP`（照片本来就矮、
-    下边缘在 790 以上时不许把钩子往回提），往下不许让两行钩子顶出画布。
+    下边缘在 790 以上时不许把钩子往回提），往下不许让两行钩子顶出画布，
+    **而且要给画布底下留同样一口气**（见下）。
+
+    ⚠️⚠️ **2026-09-20 账号所有者：「封面钩子文案是不是要往上移一点更好一点」。**
+    是的，而根子不在这张照片上：往下那一头原来钳在 `1440 - hook_h`，也就是
+    **两行钩子的行盒正好贴着画布底边、一个像素的余地都不留**。量了一下
+    `davis-cup-road-to-bologna`：末行墨迹**离画布底只有 17px**，读起来像要掉
+    下去。而这不是个别现象——全库 6 条 `fit:"width"` 的 solo 封面里
+    **4 条顶在这个钳位上**（`bjk-cup-story`、`davis-cup-china-first-world-group-1`、
+    `davis-cup-road-to-bologna`、`lina-cincinnati-2012`），也就是照片一高就必然
+    贴底。
+
+    所以往下那一头也减掉 `SOLO_PAD_HOOK_GAP`。**96 照旧是抄的不是拍的**——
+    上下叠那一版（`portrait_above`）压到底部时用的就是 `bottom:96px`，说的是
+    同一件事：**文案块的下边缘离画布底 96px**。三处从此是同一口气。
+
+    ⚠️ 渲了 60/96/130 三版摆一起看过（末行墨底离画布底 77 / 113 / 147px）：
+    **130 那版第一行的「8」骑到了奖杯托盘那道亮边上**（托盘墨止于 y=1082，
+    130 那版首行墨从 1086 起）——往上让过头就开始压主体，正是这条规则本来要
+    躲开的那件事。取 96。
+
+    ⚠️ **定版的 `STORYCOPY_TOP = 790` 一个字没动**，铺满那一档和赛场之上照旧
+    走它；这儿改的是信箱式那条 override 的**下界**。
     """
     iw, ih = img
     if not iw or not ih:
@@ -1336,7 +1363,7 @@ def storycopy_top_for(cover: dict, img: tuple[int, int]) -> int:
     want = int(round(photo_bottom + SOLO_PAD_HOOK_GAP))
     # 两行 94px 钩子的高度（和定版那笔账同一个式子）
     hook_h = round(SOLO_HOOK_MAX_LINES * HOOK_TITLE_PX * 1.24)
-    return max(STORYCOPY_TOP, min(want, 1440 - hook_h))
+    return max(STORYCOPY_TOP, min(want, 1440 - hook_h - SOLO_PAD_HOOK_GAP))
 
 
 def _scrim_css(dim_centre: bool = False) -> str:
