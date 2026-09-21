@@ -47,3 +47,7 @@ python -m unittest discover -s demos/jev-routing -p 'test_*.py'
 因此本轮不能证明能提速，不能自动替代现有制作或视觉判据。
 
 模拟样本 5/6 与预设标签一致。足球采访错误分为 interview，置信度 0.41，被复核阈值标记。该错误必须保留为后续非网球规则检查的反例。
+
+## 增量控制与净收益验证
+
+参见 [production-value.md](production-value.md)。新增选择性调用、24 小时缓存、调用预算、熔断及独立手动审计工作流；尚未接管生产路由。

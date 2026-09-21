@@ -62,9 +62,11 @@ class NoRedirect(urllib.request.HTTPRedirectHandler):
         return None
 
 
-def run_one(item, key, live):
+def run_one(item, key, live, *, model=None, timeout=15):
     record = dict(item, status='prepared_not_called', production_action='none')
     body = build_request(item)
+    if model is not None:
+        body['model'] = model
     record['input_sha256'] = hashlib.sha256(json.dumps(body, sort_keys=True).encode()).hexdigest()
     if not live:
         return record
@@ -76,7 +78,7 @@ def run_one(item, key, live):
         request = urllib.request.Request('https://api.typesafe.ai/v1/systemone',
             data=json.dumps(body).encode(), headers={'Authorization': 'Bearer '+key,
             'Content-Type': 'application/json'}, method='POST')
-        with urllib.request.build_opener(NoRedirect).open(request, timeout=15) as response:
+        with urllib.request.build_opener(NoRedirect).open(request, timeout=timeout) as response:
             data = validate(json.load(response))
         record.update(status='ok', response=data)
         a = data['answers']['column']
