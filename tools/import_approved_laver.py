@@ -26,8 +26,8 @@ import requests
 
 SLUG = 'laver-cup-history-2026'
 REPOSITORY = 'robertyang87/tennislive'
-EXPECTED_BYTES = 0  # Fill only from repaired master after native QC passes.
-EXPECTED_SHA = 'AWAITING_NATIVE_QC_PASSED_MASTER'
+EXPECTED_BYTES = 218276856
+EXPECTED_SHA = '84dbd0edc75a11a3940911405245b57f81cb54ecdbf6ff0566f0839af33d6bcd'
 
 def run(*args):
     subprocess.run(args, check=True)
@@ -121,7 +121,7 @@ def assemble(request):
         if (source / folder).is_dir():
             shutil.copytree(source / folder, outdir / folder, dirs_exist_ok=True)
     # These are provenance, never a replacement for native check_reel_landed.py.
-    for name in ['import-provenance.json', 'research.md', 'storyboard.md', 'manual-qc.json', 'subtitle_provenance.json']:
+    for name in ['import-provenance.json', 'research.md', 'storyboard.md', 'manual-qc.json', 'subtitle_provenance.json', 'silence_repair.json', 'repair_review.json', 'qc_landed.txt', 'qc_before_repair.txt', 'silence_detection.txt', 'qc_contact.jpg']:
         if (source / name).is_file():
             shutil.copyfile(source / name, outdir / name)
     run(sys.executable, 'tools/push_reel.py', '--stage', 'check', '--outdir', str(outdir), '--copy', str(spec.with_suffix('.xhs.txt')))
