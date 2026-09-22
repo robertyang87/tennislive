@@ -179,6 +179,14 @@ def run(outdir: Path) -> dict:
     outdir.mkdir(parents=True, exist_ok=True)
     base = benchmark()
     source_dir = ROOT / "output" / "2026-08-23" / "reel" / BENCHMARK_SLUG
+    frames = select_contact_sheets(list(source_dir.glob("contact_*.jpg")))
+    portrait = ROOT / base["cover"]["portrait"]["image"]
+    if not frames:
+        raise FileNotFoundError(
+            f"benchmark contact sheets missing: {source_dir}; restore them from "
+            "the original probe source before calling either model")
+    if not portrait.is_file():
+        raise FileNotFoundError(f"benchmark cover missing: {portrait}")
     facts = "\n".join(base["editorial"]["human_context"]["facts"])
     background = base["editorial"]["human_context"]["angle"]
     chat = Chat()
@@ -192,8 +200,6 @@ def run(outdir: Path) -> dict:
     deep_score, deep_issues = deepseek_score(editorial, push)
 
     probe = json.loads((source_dir / "probe.json").read_text(encoding="utf-8"))
-    frames = select_contact_sheets(list(source_dir.glob("contact_*.jpg")))
-    portrait = ROOT / base["cover"]["portrait"]["image"]
     visual_draft = {
         "_match": {"winner": "菲斯", "loser": "科博利",
                    "winner_result": "6-3 6-4"},
