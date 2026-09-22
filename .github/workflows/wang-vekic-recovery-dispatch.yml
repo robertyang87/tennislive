@@ -1,0 +1,22 @@
+name: Wang Vekic recovery dispatch
+on:
+  push:
+    branches: [codex/wang-vekic-singapore-reel]
+    paths: [.github/workflows/wang-vekic-recovery-dispatch.yml]
+permissions:
+  contents: read
+  actions: write
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Start existing probe with optional alignment fix
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh workflow run match-reel.yml --repo "${{ github.repository }}" --ref codex/wang-vekic-singapore-reel \
+            -f mode=probe -f slug=wang-vekic-singapore-2026-r1 \
+            -f url=https://www.youtube.com/watch?v=q4_xHFJv1eg \
+            -f home="Donna Vekic" -f away="Xinyu Wang" \
+            -f event=Singapore -f year=2026 -f round=R32 -f court="Center Court" \
+            -f home_country=CRO -f away_country=CHN -f push=false
