@@ -21,7 +21,7 @@ WTA 官方接口：
 
 ## 原片审阅（候选剪辑结构，尚非正式 spec）
 
-原片 1920×1080，25 fps，305.156644 秒；末尾 295.14 秒起静音广告尾板不纳入正片。已完整看过 contact_00–05 和 score_00–07 的缩略图覆盖。
+原片 1920×1080，25 fps，305.156644 秒；末尾 295.14 秒起静音广告尾板不纳入正片。已完整看过 contact_00–05 和 score_00–06 的缩略图覆盖。
 
 | 原片窗口（秒） | 叙事作用 | 技战术审阅重点与边界 |
 |---|---|---|
@@ -37,6 +37,8 @@ WTA 官方接口：
 ## 状态与证据
 
 首趟 probe: https://github.com/robertyang87/tennislive/actions/runs/35708122768 ，commit 4a3d5abd214e48aeca4e65bcae51e61dc84403f5。
-原片获取成功；artifact 10686021076 保存字幕、probe.json、14张预览墙与逐分文件。首个阻塞是 prepare_alignment.py 调 MiniMax 比分识别 HTTP 500；已发起一次基础设施重试。
+原片获取成功；artifact 10686021076 保存字幕、probe.json、14张预览墙与逐分文件。首个阻塞是 prepare_alignment.py 调 MiniMax 比分识别 HTTP 500；一次基础设施重试仍返回同样 HTTP 500。可选对齐的故障降级修复及回归测试已提交于本分支，2 项测试通过；独立视觉硬闸未改动。修复 PR：https://github.com/robertyang87/tennislive/pull/983 。
+
+修复后的恢复运行尚未成功发起：GitHub 工作流页面导航多次超时，运行表单停留 Loading。
 尚未形成正式 spec、render、QC 或推送回执，不得标记完成。
 封面查找：WTA 比赛页暂未挂本场赛后稿；WTA highlights 页面暂未出现本场条目；搜索命中的2025新加坡照片已排除；赛事 Instagram 需登录，未能读取。
