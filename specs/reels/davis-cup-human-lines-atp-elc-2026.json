@@ -1,0 +1,364 @@
+{
+  "slug": "davis-cup-human-lines-atp-elc-2026",
+  "_column": "网球有故事",
+  "primary": "davis",
+  "sources": {
+    "davis": "https://www.youtube.com/watch?v=Ao6F5dgyJ2I",
+    "atp": "https://youtu.be/5eniSK6BDZU"
+  },
+  "_source": "戴杯：World Tennis 官方 2026-09-20 德国—克罗地亚资格赛第二轮，468.903764秒/1920×1080/25fps；本次已下载旧制作产物artifact 10607554593并目视contact_00与contact_06，52.5、374.5、384.5秒可见底线后人工司线。ATP：Tennis TV官方2026辛辛那提男单决赛482.649977秒/1920×1080/25fps，probe记录已读；作为2026ATP执裁环境资料画面，不能当作戴杯或者德国主办方决定的证据。成片需继续目视ATP画面。",
+  "_facts": "核实截至2026-09-22。2026戴杯规则第10.1/10.5/22.2及附件二财务第23、24条。成本效益为条件分析，非德国网协公开决策。器材数量、部署报价、故意维持裁判培养通道的政策动机均无可靠证明，已删除。Final 8实际配置不得由规则表反推一刀切强制。ITF官网现使用World Tennis品牌，本期沿规则书称ITF。",
+  "cover": {
+    "eyebrow": "网球有故事",
+    "layout": "solo",
+    "subject": "戴维斯杯人工司线",
+    "hook": "巡回赛已换电子眼\n戴杯为何还靠人判",
+    "narration": "巡回赛已换电子眼，戴杯为何还靠人判？",
+    "topic": "人工司线与电子判罚",
+    "portrait": {
+      "image": "assets/reel/zverev-prizmic-davis-cup-2026-q2.jpg",
+      "focus": 0.5,
+      "focus_y": 0.5,
+      "zoom": 1,
+      "_why": "AP 本场实拍（Christoph Reichwein/dpa via AP），图注原文「Germany's Alexander Zverev plays Croatia's Dino Prizmic during their Davis Cup tennis match in Halle, Germany, Sunday, Sept. 20, 2026.」——人物、对手、地点、时刻四要素全在图注里，而且明写 `during their … match`（过第 2 道闸门）。画面：兹维列夫俯身在网前击球的**近景特写**，球就在他胸前、球网横在前景，眼神盯着球，**眼睛睁着**（CLAUDE.md「封面帧一律不许闭眼」）。画面自证是这一场：白色 adidas 球衣 ＋ 白色 adidas 发带 ＋ 金项链，背景是德国队横幅（德国国旗 ＋ `DAVIS CUP TEAM`）和室内绿色背板，和源片 46.5s / 398.5s 两格的兹维列夫逐项一致。",
+      "_portrait_why": "沿用已核实本场高清AP照片，人物与本期讨论的德国—克罗地亚对抗一致；不使用低清源片抽帧制作封面。",
+      "_resolution_why": "**6172×4117**，铺 1080×1440 只要 `max(1080/6172, 1440/4117) = 0.35×`——不用放大，裁的余量很大。⚠️⚠️ **这一趟挖到一条新渠道，比档案里记的那条高一档**：`find_cover_photo.py` 的 WTA / AP 两档都报空（这场在德国，dpa 供图，美国 TownNews 系报纸没转载），图是从 **WRAL（AP 转载站）** 拿到的——它的 og:image 是 `https://images.wral.com/<uuid>?w=1200&h=630`，**把查询参数整个去掉就是 AP 原图 6172×4117**。档案里记的 springfieldnewssun 那条是 4913×3275，TownNews 其余站只有 1763×1175。**下次 AP 那条路把 images.wral.com 排在最前面试。**",
+      "_focus_why": "原图 6172×4117（3:2），铺 3:4 按高度满铺、水平裁出 `4117×3/4 = 3088` 宽（原图宽度的一半）。`focus 0.5` 让窗口落在 `x ∈ [0.25, 0.75]`：脸在 0.48、球在 0.50、持拍的右手在 0.36，都框得进来。`focus_y` 在满铺时不起作用，留 0.5。⚠️ 脸落在原图 y 0.18~0.42，而钩子那条带从 `STORYCOPY_TOP = 790`（画布 1440）起 ＝ 0.55，**不会压到脸**。"
+    },
+    "scrim": "clear"
+  },
+  "editorial": {
+    "mode": "match_review",
+    "question": "ATP采用实时电子司线之后，戴维斯杯为什么还能使用人工司线？",
+    "thesis": "制度范围先解释合法性，承办条件再解释选择；成本和培养裁判不能冒充个案已证实动机。",
+    "beats": [
+      "真实司线画面提出反差",
+      "区分Live、Review和视频复核",
+      "引用戴杯规则说明选择权",
+      "分析两天赛期和分担费用",
+      "用哈雷场馆纠正装不了的推断",
+      "解释电子系统背后的人与未来路径"
+    ],
+    "human_context": {
+      "angle": "以德国—克罗地亚焦点战切入不同竞赛体系的执裁选择。",
+      "facts": [
+        "2026年9月19至20日哈雷资格赛第二轮采用室内硬地",
+        "规则10.5规定未由ITF提供ELC时，国家协会如欲使用须取得许可",
+        "2025起ATP Tour正赛资格赛各场地采用Live ELC",
+        "短期部署摊销是经济分析，不是德国网协的已证实理由"
+      ],
+      "sources": [
+        "https://assets.ctfassets.net/0gg9pgt9u0k4/1zolhtUmJrhBlkvkxt1ogJ/b00b059cbfb4261aacd40da874f6d8c4/2026_Davis_Cup_Regulations_-_January_2026_Update.pdf",
+        "https://www.atptour.com/en/news/electronic-line-calling-release-april-2023",
+        "https://www.atptour.com/en/news/video-review-atp-masters-1000-2025",
+        "https://www.itftennis.com/en/news-and-media/articles/new-classification-tiers-for-electronic-line-calling-systems/",
+        "https://www.terrawortmann-open.de/news/artikel/davis-cup-emotionen-kehren-nach-halle-zurueck/",
+        "https://www.daviscup.com/en/tie/4533abaa-005c-43bf-86b3-63e267067fe8"
+      ]
+    }
+  },
+  "push": {
+    "auto": true,
+    "summary": "戴杯为何还用人工司线",
+    "lead": "同样是顶级球员、同样打硬地，ATP 已用实时电子司线，戴杯却仍能看到人工司线。差别首先在适用规则，其次才是赛事如何承办。用2026戴杯规则和赛场画面，讲清鹰眼挑战、实时电子司线与视频复核的区别，以及短赛期、成本分担和裁判岗位的变化。"
+  },
+  "_no_quote_why": "这是执裁制度分析，所选比赛原声在讨论战术与胜负，不能冒充对司线政策的解释；保留低音量击球环境声，中文原创旁白为主。",
+  "_rights": "官方源片短窗用于非商业网球评论和技术分析，保留原始来源与年份；不声称获得独占或转授权。封面沿用本场已存库高清实拍。网页规则事实采用独立中文概述。",
+  "segments": [
+    {
+      "source": "davis",
+      "start": 50.96,
+      "end": 56.8,
+      "narration": "看底线后面。戴维斯杯，为什么还有人在喊出界？",
+      "fit": "crop",
+      "mute": false,
+      "_why": "源52.5s目视可见司线；转入同场全景。",
+      "crosses_cut": "专题解说的同场资料镜头组，按该源probe切点有意包含回合、裁判环境及观众反应；不是逐分复盘，不暗示旁白所述规则事件在此回合发生。",
+      "cx": 0.48,
+      "_tts_measured_seconds": 5.184,
+      "_ending_payoff_required": false,
+      "_ending_payoff_why": "50.96秒为比赛前段的底线司线环境镜头，不含赛末结果或庆祝；本期主题是执裁制度，不用胜负作悬念。"
+    },
+    {
+      "source": "atp",
+      "start": 78.84,
+      "end": 86.32,
+      "narration": "ATP巡回赛已经采用实时电子司线，换到国家队比赛，执裁方式却可能不同。",
+      "fit": "full_source",
+      "mute": false,
+      "_why": "2026辛辛那提ATP决赛资料画面，不是戴杯。",
+      "crosses_cut": "专题解说的同场资料镜头组，按该源probe切点有意包含回合、裁判环境及观众反应；不是逐分复盘，不暗示旁白所述规则事件在此回合发生。",
+      "_tts_measured_seconds": 6.816
+    },
+    {
+      "source": "davis",
+      "start": 5.1,
+      "end": 12.62,
+      "narration": "九月十九到二十号，德国和克罗地亚在哈雷打资格赛第二轮。这是室内硬地。",
+      "fit": "full_source",
+      "mute": false,
+      "_why": "双方入场与真实球馆，非临时篮球馆示意。",
+      "crosses_cut": "专题解说的同场资料镜头组，按该源probe切点有意包含回合、裁判环境及观众反应；不是逐分复盘，不暗示旁白所述规则事件在此回合发生。",
+      "_tts_measured_seconds": 6.84
+    },
+    {
+      "title_card": "先分清谁在判",
+      "seconds": 3.64,
+      "narration": "先分清，到底是谁在判。",
+      "_tts_measured_seconds": 2.952
+    },
+    {
+      "source": "davis",
+      "start": 75.96,
+      "end": 86.56,
+      "narration": "人工司线，是人先判断落点；挑战式鹰眼，则是在规定条件下，用电子回放复核。两者可以同时存在。",
+      "fit": "full_source",
+      "mute": false,
+      "_why": "现场人工执裁环境；不声称本场配置Review。",
+      "crosses_cut": "专题解说的同场资料镜头组，按该源probe切点有意包含回合、裁判环境及观众反应；不是逐分复盘，不暗示旁白所述规则事件在此回合发生。",
+      "_tts_measured_seconds": 9.912
+    },
+    {
+      "source": "atp",
+      "start": 166.4,
+      "end": 175.6,
+      "narration": "实时电子司线更进一步：系统直接判断出界并播报，通常不再由司线员先喊，再等球员挑战。",
+      "fit": "full_source",
+      "mute": false,
+      "_why": "ATP公告与2017发布稿，技术运行逻辑。",
+      "crosses_cut": "专题解说的同场资料镜头组，按该源probe切点有意包含回合、裁判环境及观众反应；不是逐分复盘，不暗示旁白所述规则事件在此回合发生。",
+      "_tts_measured_seconds": 8.52
+    },
+    {
+      "source": "atp",
+      "start": 185.5,
+      "end": 194.9,
+      "narration": "还有一种叫视频复核，处理二跳、触网、妨碍等争议。它和电子司线，解决的是不同的问题。",
+      "fit": "full_source",
+      "mute": false,
+      "_why": "ATP2025Video Review公告，非展示该回合发生争议。",
+      "crosses_cut": "专题解说的同场资料镜头组，按该源probe切点有意包含回合、裁判环境及观众反应；不是逐分复盘，不暗示旁白所述规则事件在此回合发生。",
+      "_tts_measured_seconds": 8.712
+    },
+    {
+      "source": "davis",
+      "start": 144.6,
+      "end": 154.96,
+      "narration": "所以，看到人工司线，不能直接说这场比赛没有电子辅助。看见鹰眼回放，也不代表用了全自动司线。",
+      "fit": "full_source",
+      "mute": false,
+      "_why": "区分视觉可证事实和不可证设备配置。",
+      "crosses_cut": "专题解说的同场资料镜头组，按该源probe切点有意包含回合、裁判环境及观众反应；不是逐分复盘，不暗示旁白所述规则事件在此回合发生。",
+      "_tts_measured_seconds": 9.696
+    },
+    {
+      "title_card": "决定权不在同一处",
+      "seconds": 4.12,
+      "narration": "再看规则，决定权不在同一处。",
+      "_tts_measured_seconds": 3.432
+    },
+    {
+      "source": "atp",
+      "start": 21.9,
+      "end": 33.66,
+      "narration": "ATP从二〇二五年起，要求巡回赛正赛和资格赛使用实时电子司线，覆盖各种场地。注意，这不等于所有男子职业比赛。",
+      "fit": "full_source",
+      "mute": false,
+      "_why": "ATP2023发布与2025实施公告；不扩大至挑战赛及全部男子比赛。",
+      "crosses_cut": "专题解说的同场资料镜头组，按该源probe切点有意包含回合、裁判环境及观众反应；不是逐分复盘，不暗示旁白所述规则事件在此回合发生。",
+      "_tts_measured_seconds": 11.088
+    },
+    {
+      "source": "davis",
+      "start": 219.8,
+      "end": 228,
+      "narration": "戴维斯杯属于ITF管理的国家队赛事。球员还是那些球员，适用的赛事规则却换了。",
+      "fit": "full_source",
+      "mute": false,
+      "_why": "戴杯规则1.1管理权，10.5电子司线。",
+      "crosses_cut": "专题解说的同场资料镜头组，按该源probe切点有意包含回合、裁判环境及观众反应；不是逐分复盘，不暗示旁白所述规则事件在此回合发生。",
+      "_tts_measured_seconds": 7.536
+    },
+    {
+      "source": "davis",
+      "start": 245.6,
+      "end": 253,
+      "narration": "二〇二六年戴杯规则第十点五条，给主办方保留了申请使用电子司线的空间。",
+      "fit": "full_source",
+      "mute": false,
+      "_why": "规则书条款中文概述。",
+      "crosses_cut": "专题解说的同场资料镜头组，按该源probe切点有意包含回合、裁判环境及观众反应；不是逐分复盘，不暗示旁白所述规则事件在此回合发生。",
+      "_tts_measured_seconds": 6.744
+    },
+    {
+      "source": "davis",
+      "start": 265.5,
+      "end": 273.18,
+      "narration": "没有由ITF提供系统的场次，国家协会想使用，就要取得许可并符合承办要求。",
+      "fit": "full_source",
+      "mute": false,
+      "_why": "10.5后半，避免擅自选择低规格系统的误读。",
+      "crosses_cut": "专题解说的同场资料镜头组，按该源probe切点有意包含回合、裁判环境及观众反应；不是逐分复盘，不暗示旁白所述规则事件在此回合发生。",
+      "_tts_measured_seconds": 7.008
+    },
+    {
+      "source": "davis",
+      "start": 280.8,
+      "end": 290.36,
+      "narration": "规则也列出了人工司线人员配置。因此，人工执裁本身符合制度，并不能证明这站比赛落后。",
+      "fit": "full_source",
+      "mute": false,
+      "_why": "10.1表；不作全称Final8配置判断。",
+      "crosses_cut": "专题解说的同场资料镜头组，按该源probe切点有意包含回合、裁判环境及观众反应；不是逐分复盘，不暗示旁白所述规则事件在此回合发生。",
+      "_tts_measured_seconds": 8.88
+    },
+    {
+      "title_card": "两天比赛怎么算账",
+      "seconds": 3.8,
+      "narration": "接下来，两天比赛怎么算账？",
+      "_tts_measured_seconds": 3.12
+    },
+    {
+      "source": "davis",
+      "start": 303.95,
+      "end": 312.75,
+      "narration": "资格赛一场国家队对抗，安排两天，赛制是四场单打加一场双打，实际可能提前分出胜负。",
+      "fit": "full_source",
+      "mute": false,
+      "_why": "22.2.2与22.2.4；不是两至三天旧制度。",
+      "crosses_cut": "专题解说的同场资料镜头组，按该源probe切点有意包含回合、裁判环境及观众反应；不是逐分复盘，不暗示旁白所述规则事件在此回合发生。",
+      "_tts_measured_seconds": 8.112
+    },
+    {
+      "source": "davis",
+      "start": 328.99,
+      "end": 336.99,
+      "narration": "可以把部署成本拆成两部分：设备运输、安装和校准，加上比赛期间的技术服务。",
+      "fit": "full_source",
+      "mute": false,
+      "_why": "通用工程成本模型，非本场报价或已确认合同。",
+      "crosses_cut": "专题解说的同场资料镜头组，按该源probe切点有意包含回合、裁判环境及观众反应；不是逐分复盘，不暗示旁白所述规则事件在此回合发生。",
+      "_tts_measured_seconds": 7.344
+    },
+    {
+      "source": "atp",
+      "start": 272.9,
+      "end": 283.62,
+      "narration": "在固定投入相同的假设下，比赛越多，每场分摊越少。但巡回赛场地也更多，不能只拿总场次一除就下结论。",
+      "fit": "full_source",
+      "mute": false,
+      "_why": "明确条件分析；不画伪造精确成本。",
+      "crosses_cut": "专题解说的同场资料镜头组，按该源probe切点有意包含回合、裁判环境及观众反应；不是逐分复盘，不暗示旁白所述规则事件在此回合发生。",
+      "_tts_measured_seconds": 10.032
+    },
+    {
+      "source": "davis",
+      "start": 350.4,
+      "end": 360.64,
+      "narration": "短赛期会影响采购意愿，却不足以证明德国网协就是为了省钱。我没有找到主办方公开解释这个选择。",
+      "fit": "full_source",
+      "mute": false,
+      "_why": "本次检索未得主办方解释，不声称证明不存在。",
+      "crosses_cut": "专题解说的同场资料镜头组，按该源probe切点有意包含回合、裁判环境及观众反应；不是逐分复盘，不暗示旁白所述规则事件在此回合发生。",
+      "_tts_measured_seconds": 9.552
+    },
+    {
+      "source": "davis",
+      "start": 364.2,
+      "end": 374.92,
+      "narration": "而费用也不是主队全包。规则规定，ITF支付指定裁判的往返旅费；主队承担相关酬金、住宿和当地交通等。",
+      "fit": "full_source",
+      "mute": false,
+      "_why": "附件二24.1.1与24.1.2，不泛化为全部接待由主队支付。",
+      "crosses_cut": "专题解说的同场资料镜头组，按该源probe切点有意包含回合、裁判环境及观众反应；不是逐分复盘，不暗示旁白所述规则事件在此回合发生。",
+      "_tts_measured_seconds": 10.056
+    },
+    {
+      "title_card": "硬地也有部署条件",
+      "seconds": 3.76,
+      "narration": "硬地，也有自己的部署条件。",
+      "_tts_measured_seconds": 3.072
+    },
+    {
+      "source": "davis",
+      "start": 403.2,
+      "end": 411.72,
+      "narration": "设备要适应场馆、机位和比赛环境。不过，哈雷这座球馆，本来就举办ATP赛事。",
+      "fit": "full_source",
+      "mute": false,
+      "_why": "球馆实拍；TERRA WORTMANN OPEN官方同馆说明。",
+      "crosses_cut": "专题解说的同场资料镜头组，按该源probe切点有意包含回合、裁判环境及观众反应；不是逐分复盘，不暗示旁白所述规则事件在此回合发生。",
+      "_tts_measured_seconds": 7.848
+    },
+    {
+      "source": "atp",
+      "start": 313.9,
+      "end": 324.38,
+      "narration": "所以不能把这场解释成，临时场馆装不了电子系统。也不能反过来说，办过巡回赛，设备就一定全年留着。",
+      "fit": "full_source",
+      "mute": false,
+      "_why": "两种推断都不冒充个案事实。",
+      "crosses_cut": "专题解说的同场资料镜头组，按该源probe切点有意包含回合、裁判环境及观众反应；不是逐分复盘，不暗示旁白所述规则事件在此回合发生。",
+      "_tts_measured_seconds": 9.792
+    },
+    {
+      "source": "atp",
+      "start": 343.95,
+      "end": 353.71,
+      "narration": "ATP统一采用这项技术，除了追求判罚一致，还看重持续收集球和球员的运动数据，用于分析和新统计。",
+      "fit": "full_source",
+      "mute": false,
+      "_why": "ATP官方2023公告明确写出数据价值。",
+      "crosses_cut": "专题解说的同场资料镜头组，按该源probe切点有意包含回合、裁判环境及观众反应；不是逐分复盘，不暗示旁白所述规则事件在此回合发生。",
+      "_tts_measured_seconds": 9.072
+    },
+    {
+      "source": "davis",
+      "start": 418.9,
+      "end": 429.02,
+      "narration": "电子司线也离不开人。主裁仍要管理比赛，技术岗位要维护系统，出现故障还需要处理和备用方案。",
+      "fit": "full_source",
+      "mute": false,
+      "_why": "规则表Review Officials及备用司线定义。",
+      "crosses_cut": "专题解说的同场资料镜头组，按该源probe切点有意包含回合、裁判环境及观众反应；不是逐分复盘，不暗示旁白所述规则事件在此回合发生。",
+      "_tts_measured_seconds": 9.432
+    },
+    {
+      "source": "davis",
+      "start": 371.6,
+      "end": 380.76,
+      "narration": "保留司线岗位，确实留下了实践机会。但把它说成ITF刻意保护晋升通道，没有足够证据。",
+      "fit": "crop",
+      "mute": false,
+      "_why": "人才机会是效果分析，不归因官方战略。",
+      "crosses_cut": "专题解说的同场资料镜头组，按该源probe切点有意包含回合、裁判环境及观众反应；不是逐分复盘，不暗示旁白所述规则事件在此回合发生。",
+      "cx": 0.56,
+      "_tts_measured_seconds": 8.472
+    },
+    {
+      "source": "atp",
+      "start": 398.9,
+      "end": 407.38,
+      "narration": "未来要扩大使用，关键在可靠性、部署成本和组织安排，而不只是换掉场边的几个人。",
+      "fit": "full_source",
+      "mute": false,
+      "_why": "分析结论，不承诺具体时间表。",
+      "crosses_cut": "专题解说的同场资料镜头组，按该源probe切点有意包含回合、裁判环境及观众反应；不是逐分复盘，不暗示旁白所述规则事件在此回合发生。",
+      "_tts_measured_seconds": 7.824
+    },
+    {
+      "source": "davis",
+      "start": 437.99,
+      "end": 447.15,
+      "narration": "回到开头：戴杯为什么还有人工司线？规则允许，落地条件不同，个案理由还要看证据。",
+      "fit": "full_source",
+      "mute": false,
+      "_why": "赛后实拍回扣主题，人工制度结论不是比分复盘。",
+      "crosses_cut": "专题解说的同场资料镜头组，按该源probe切点有意包含回合、裁判环境及观众反应；不是逐分复盘，不暗示旁白所述规则事件在此回合发生。",
+      "_tts_measured_seconds": 8.496
+    }
+  ],
+  "_timing": "2026-09-22 本地 Edge TTS / zh-CN-YunjianNeural / +6% 28段真实合成，ffprobe逐段量时长，每段留0.65秒；成片仍须native timing/QC验。",
+  "tts_backend": "edge",
+  "_tts_backend_why": "本期采用中性制度解说，不使用Azure情绪风格；已用Edge逐段真实合成并据其时长定窗，固定同一后端确保生产配音与测量一致。"
+}
