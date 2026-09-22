@@ -103,10 +103,25 @@ jobs:
             REVIEWED=$(jq -r '._visual_evidence.cover_image // "__missing__"' "$DRAFT")
             VISUAL_STATUS=$(jq -r '._visual_evidence.visual_status // ""' "$DRAFT")
             RETRYABLE=$(jq -r '._visual_evidence.retryable // false' "$DRAFT")
+            # Compare bytes and auditor version, not only a reused filename.
+            EVIDENCE_CHANGED=$(python - "$DRAFT" "$OUTDIR" <<'PY'
+          import json,sys
+          from pathlib import Path
+          sys.path.insert(0,"tools")
+          from analyze_reel_visuals import evidence_hash,select_contact_sheets
+          draft=json.loads(Path(sys.argv[1]).read_text())
+          frames=select_contact_sheets(list(Path(sys.argv[2]).glob("contact_*.jpg")))
+          portrait=Path(str(((draft.get("cover") or {}).get("portrait") or {}).get("image") or ""))
+          cover=portrait if portrait.is_file() else None
+          old=(draft.get("_visual_evidence") or {}).get("input_sha256")
+          print("true" if frames and evidence_hash(frames,cover) != old else "false")
+          PY
+            )
             # 同一批图片不反复收费问模型；没有报告（含瞬时 API 失败）或官方图
             # 刚补上/换过时才重新审核。
             if [ "$REVIEWED" = "__missing__" ] || [ "$PORTRAIT" != "$REVIEWED" ] \
-              || [ "$VISUAL_STATUS" = "error" ] || [ "$RETRYABLE" = "true" ]; then
+              || [ "$VISUAL_STATUS" = "error" ] || [ "$RETRYABLE" = "true" ] \
+              || [ "$EVIDENCE_CHANGED" = "true" ]; then
               python tools/analyze_reel_visuals.py \
                 --draft "$DRAFT" --outdir "$OUTDIR" --write \
                 || { echo "::warning::$SLUG analyze_reel_visuals 失败，这一份跳过"; continue; }
