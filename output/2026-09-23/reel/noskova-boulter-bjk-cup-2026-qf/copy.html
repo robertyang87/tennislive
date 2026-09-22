@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>9.23 赛场之上 | 诺斯科娃两盘送捷克晋级</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>诺斯科娃两盘送捷克晋级
+
+比利·简·金杯总决赛，深圳湾体育中心。北京时间 9 月 22 号快到晚上 9 点开打，捷克对英国 1/4决赛的第二场单打——1 小时 41 分钟之后，世界第 6 的诺斯科娃 6-2 7-6(3) 赢下世界第 54 的布尔特。捷克 2-0 结束这场 tie，是他们 2023 年以来第一次打进半决赛。
+
+真正值得说的是她的发球局。
+
+全场 15 个 ACE，布尔特 4 个。10 个发球局，诺斯科娃一局没丢——而布尔特整场连一个破发点都没有拿到，flashscore 的破发点那一栏，她是 0 比 0。最接近的一次是第二盘 4-3 领先时她在对方发球局上拿到 0-30，然后这一局还是被保了下来。
+
+第一盘只用了 37 分钟。第一局布尔特发球，诺斯科娃连着拿到两个破发点，第二个兑现；第三局打到三次平分，又是第二个破发点收下。紧接着自己那一局 15-0、30-0、40-0 一分没丢，4-0。5-2 她发球来拿这一盘，40-15 拿到两个盘点——布尔特提前往中路挪去接发球，把她的一发抢了回来，连救两个，第三个才没拦住。
+
+第二盘球风倒了过来。布尔特把击球点整个提前，又把球打深、一拍一拍把诺斯科娃往底线后面推，让她只能退着打。一发得分率从第一盘的 67% 涨到 80%，这一盘自己发了 3 个 ACE，12 局里一次破发都没有出现。5-6 时诺斯科娃的发球局只丢了 1 分，扳成 6-6。
+
+抢七她先拿到 3-1，一记反手失误让布尔特追近。最后一分还是她自己的发球——今晚第 15 个 ACE，落在赛点上。7-3。全场 138 分，她只多赢 12 分。
+
+站在场上关门的这个人，7 月刚在温网捧起奖杯。21 岁，决赛 6-2 5-7 6-3 赢的是她的队友穆霍娃，2011 年科维托娃之后最年轻的温网冠军。而穆霍娃这一周就在捷克队的名单里。
+
+转播赛后的原话：
+
+&quot;Czechia head back to the semi-finals as Linda Noskova once more delivers for her nation.&quot;
+捷克重返半决赛，诺斯科娃又一次替国家把事办成了。
+
+谁扛得住这种发球？
+
+#网球时差 #比利简金杯 #诺斯科娃 #布尔特 #赛场之上</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>谁扛得住这种发球？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>

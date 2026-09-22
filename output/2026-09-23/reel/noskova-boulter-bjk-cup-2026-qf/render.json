@@ -1,0 +1,74 @@
+{
+  "scoreboard_qc_sha256": null,
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 3.827,
+  "layout": "full",
+  "segments_seconds": 187.6,
+  "topbar": {
+    "line1": "2026 比利·简·金杯 1/4决赛",
+    "line2": "诺斯科娃 6-2 7-6(3) 布尔特",
+    "start": 1.2,
+    "end": 188.8
+  },
+  "film_seconds": 192.64,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 6.288,
+    "2": 12.0,
+    "3": 9.48,
+    "4": 8.256,
+    "5": 9.816,
+    "6": 10.512,
+    "7": 6.624,
+    "8": 9.144,
+    "9": 12.84,
+    "10": 9.192,
+    "11": 15.84,
+    "12": 5.664,
+    "13": 10.344,
+    "14": 14.304,
+    "15": 9.576
+  },
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "noskova-boulter-bjk-cup-2026-qf",
+    "received_at": "2026-09-22T16:32:57Z",
+    "artifact_ready_at": "2026-09-22T16:39:17Z",
+    "elapsed_seconds": 380.167,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "b3560cc266a4bd11a00cfa277cc3d490abdfdc230423c01279692f07a0fa010c",
+    "spec_sha256": "0b312af37db19ce142a81026908a91e0fef36513e7f63c29ba17bb44226ec5c0",
+    "run_id": "35754823515",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-09-22T16:35:42Z",
+        "run_id": "35754823515"
+      }
+    ],
+    "render_seconds": 215.167,
+    "pre_render_seconds": 165.0
+  },
+  "film_sha256": "b3560cc266a4bd11a00cfa277cc3d490abdfdc230423c01279692f07a0fa010c",
+  "film_bytes": 92484469,
+  "qc_attestation_sha256": "f3ebd606aa1d403023e7830ed6c78f15b9d1502b5eb500c26a7879f504954777",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-09-22T16:35:42Z",
+      "run_id": "35754823515"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-22T16:39:18Z",
+      "run_id": "35754823515"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-noskova-boulter-bjk-cup-2026-qf/noskova-boulter-bjk-cup-2026-qf.mp4",
+  "video_bytes": 92484469
+}
