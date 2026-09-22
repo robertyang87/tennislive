@@ -62,7 +62,7 @@ jobs:
           PY
       - name: Verify panel and existing production gates
         run: python -m pytest tests/test_visual_panels.py tests/test_visual_duration_citation.py tests/test_reel_production_gates.py -q
-      - name: Published reference shadow benchmark
+      - name: Published reference shadow benchmark with final-content guard
         env:
           MINIMAX_API_KEY: ${{ secrets.MINIMAX_API_KEY }}
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
