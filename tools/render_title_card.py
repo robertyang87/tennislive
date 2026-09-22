@@ -42,7 +42,7 @@ MAX_CHARS = 18
 
 
 def build(text: str, *, kicker: str = "", size: tuple[int, int] = DEFAULT_SIZE,
-          clear_bottom: int = 0) -> str:
+          clear_bottom: int = 0, show_handle: bool = True) -> str:
     """`clear_bottom`：卡底要留空多少像素（字幕会压在这一段上）。全出血下卡铺满
     整幅、字幕从 y=1284 起，@handle 若照片尾页那 64px 贴底就正压在字幕那一行上；
     调用方（`build_match_reel._materialize_title_cards`）按字幕上锚算好传进来，
@@ -63,6 +63,8 @@ def build(text: str, *, kicker: str = "", size: tuple[int, int] = DEFAULT_SIZE,
     # 逗号/句号/顿号/分号换成换行——停顿由换行表达；？！留着，那是语气不是停顿。
     lines = [seg.strip() for seg in re.split(r"[，。、；,;.]", text) if seg.strip()]
     text_html = "<br>".join(html.escape(seg) for seg in lines) if lines else html.escape(text)
+    handle_html = (f'<div class="handle"><img src="{_data_uri(outro_page.ICON)}">'
+                   f'{html.escape(outro_page.HANDLE)}</div>' if show_handle else "")
     return f"""<!doctype html><meta charset="utf-8"><style>
 {_font_css()}
 *{{margin:0;padding:0;box-sizing:border-box}}
@@ -87,16 +89,18 @@ body{{width:{w}px;height:{h}px;overflow:hidden;background:{outro_page.INK};
 .handle img{{width:40px;height:40px}}
 </style><div class="bar"></div><div class="glow"></div>
 <div class="wrap">{kicker_html}<div class="thesis">{text_html}</div></div>
-<div class="handle"><img src="{_data_uri(outro_page.ICON)}">{html.escape(outro_page.HANDLE)}</div>"""
+{handle_html}"""
 
 
 def render(text: str, out: Path, *, kicker: str = "",
-           size: tuple[int, int] = DEFAULT_SIZE, clear_bottom: int = 0) -> Path:
+           size: tuple[int, int] = DEFAULT_SIZE, clear_bottom: int = 0,
+           show_handle: bool = True) -> Path:
     from render_stat_card import _launch_browser  # noqa: PLC0415
     from playwright.sync_api import sync_playwright  # noqa: PLC0415
 
     page = out.with_suffix(".html")
-    page.write_text(build(text, kicker=kicker, size=size, clear_bottom=clear_bottom),
+    page.write_text(build(text, kicker=kicker, size=size, clear_bottom=clear_bottom,
+                          show_handle=show_handle),
                     encoding="utf-8")
     w, h = size
     with sync_playwright() as pw:
