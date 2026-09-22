@@ -1,0 +1,28 @@
+{
+  "status": "blocked_not_complete",
+  "code_fixes": [
+    "visual evidence panels and versioned hashes",
+    "timestamp range validation",
+    "restore benchmark source images",
+    "reject missing final model content",
+    "preserve reviewed silent matchpoint 251.48-282.88"
+  ],
+  "verification": {
+    "focused_tests": 8,
+    "prior_action_production_tests": 72,
+    "benchmark_run": 35719608911,
+    "benchmark_pass": false
+  },
+  "remaining": [
+    "independent model visual identification still fails published-reference benchmark",
+    "same-match high-resolution photographic cover not yet verified",
+    "formal spec, render, QC, delivery all incomplete"
+  ],
+  "cover_search": {
+    "wta": "no verified match photo found",
+    "ap": "no verified match photo found",
+    "tournament_wp": "HTTP 502",
+    "local_paper_script": "Singapore not covered"
+  },
+  "no_publication": true
+}
