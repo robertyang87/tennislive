@@ -210,11 +210,39 @@
   "_visual_evidence": {
     "model": "MiniMax-M3",
     "status": "waiting",
-    "visual_status": "error",
-    "retryable": true,
+    "visual_status": "waiting",
+    "retryable": false,
+    "cold_open": {
+      "start": 251.48,
+      "end": 262.76,
+      "kind": "match_point",
+      "winner_visible": true,
+      "reason": "251.48–258.76s为比赛最后回合场地全景与王欣瑜近景（246.5s发球准备、250.5s近景正面击球、252.5–258.5s比分与场上回合），裁判席显示比分6-1 5-2；260.5–262.5s王欣瑜穿酒红帽+酒红连衣裙可见，且画面随后切到赛后握手，确认为最后一分即赛点。",
+      "confidence": 0.82
+    },
+    "ending": {
+      "start": 251.48,
+      "end": 295.08,
+      "kind": "winner_celebration",
+      "winner_visible": true,
+      "reason": "251.48–262.5s比赛最后回合及赛点；262.5–274.5s维基奇与王欣瑜赛后握手+王欣瑜微笑致意（手拍手背）；276.5–282.5s王欣瑜挥手向观众致谢近景；284.5–294.5s王欣瑜在网前向裁判/对手致意，背景比分板显示最终比分VEKIC 1–6 2–6、WANG 6–1 6–2 MATCH POINT为最终结论。命中王欣瑜完整庆祝与网前致意/握手余波，窗口完整覆盖冷开场。",
+      "confidence": 0.83
+    },
+    "cover": {
+      "same_match": true,
+      "subject": "王欣瑜",
+      "moment": "winner_celebration",
+      "wrong_or_old": false,
+      "reason": "封面人物穿酒红帽+酒红连衣裙，与视频中王欣瑜的着装一致；画面为单手扶拍、向场边挥手微笑的赛后致意动作，与视频276.5–282.5s王欣瑜挥手致谢镜头一致；背景深蓝色图案墙面与视频赛后背景匹配。另一张官方帖白帽图已被排除。",
+      "confidence": 0.82
+    },
     "problems": [
-      "MiniMax API：HTTPError: HTTP Error 500: Internal Server Error"
-    ]
+      "cold_open 理由引用窗口外时间：[246.5, 250.5]",
+      "ending 必须是 3-30 秒的完整收官窗口"
+    ],
+    "model_attempts": 2,
+    "audit_url": "https://github.com/robertyang87/tennislive/actions/runs/35713230326",
+    "review_status": "blocked_after_bounded_correction"
   },
   "_editorial_review": {
     "status": "manually_corrected_pending_independent_review",
@@ -328,5 +356,13 @@
     "lead": "首盘一比一时，王欣瑜从零比三十落后守住发球局，随后拉开比分。次盘二比二后，她再次建立领先，并顶住维基奇在四比二时的抵抗，以6比1、6比2晋级。全场八个发球局全部保发，七次破发机会兑现四次，维基奇唯一的破发机会未能兑现。",
     "auto": true
   },
-  "_duration_source": "https://api.wtatennis.com/tennis/tournaments/1152/2026/matches"
+  "_duration_source": "https://api.wtatennis.com/tennis/tournaments/1152/2026/matches",
+  "_cover_candidate": {
+    "image_url": "https://wx1.sinaimg.cn/large/008CZ4NUgy1ihcimp59qxj31a50wrtfe.jpg",
+    "source_url": "https://www.sina.cn/news/detail/5345982256253548.html",
+    "width": 1661,
+    "height": 1179,
+    "status": "same_match_candidate_official_photo_provenance_unconfirmed",
+    "description": "王欣瑜本场赢球后微笑致意，酒红帽与服装及蓝色背景吻合；仅候选，不冒称官方摄影原图"
+  }
 }
