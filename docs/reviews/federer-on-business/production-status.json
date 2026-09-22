@@ -1,5 +1,5 @@
 {
-  "status": "authorized_preparing_remote_cover_and_render",
+  "status": "revision_after_first_render_qc",
   "checks": {
     "research": "complete; primary-source ledger in research.md",
     "source_probes": "3 accepted 1920x1080 official On sources; 608px football source excluded",
@@ -24,5 +24,16 @@
     "welcome-contact.jpg": "bbb422ee29e032314e50a95789553f00349a48a55c0ec4014e3e64fe7f3f0db6",
     "light-contact-5.jpg": "d00e812081f86546d57b770cce15c631a56241a3830f1713bd87e6d8529d1883"
   },
-  "authorization": "User explicitly confirmed upload and automatic end-to-end production, QC, merge and standard push: 确认，以后都自动完成，不要再问我"
+  "authorization": "User explicitly confirmed upload and automatic end-to-end production, QC, merge and standard push: 确认，以后都自动完成，不要再问我",
+  "first_render": {
+    "run": 35670514534,
+    "film_seconds": 235.57,
+    "failed_check": "one digital-silence second at 111s"
+  },
+  "first_ci": {
+    "run": 35670464502,
+    "passed": 3351,
+    "failed": "ending must ask a question"
+  },
+  "revision": "Shortened video segment tails by 0.75s; question measured at 2.616s, final window 2.77s; no quality gates altered"
 }
