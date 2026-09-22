@@ -35,40 +35,39 @@
     "version": 2,
     "pipeline": "match-reel",
     "slug": "bouzkova-kartal-bjk-cup-2026-qf",
-    "received_at": "2026-09-22T17:23:46Z",
-    "artifact_ready_at": "2026-09-22T17:29:05Z",
-    "elapsed_seconds": 319.604,
+    "received_at": "2026-09-22T18:15:56Z",
+    "artifact_ready_at": "2026-09-22T18:21:14Z",
+    "elapsed_seconds": 318.459,
     "budget_seconds": 600,
     "met": true,
     "film_sha256": "a73f4aed34a0018e05fe2e9bd86c29d026cb6b0c55a1607812e0ed2d108fd4ca",
     "spec_sha256": "7d2273c7c72b942b4e0388b8be4a359ec3fa75264193a77a32920e6e57ff9c4a",
-    "run_id": "35760387665",
+    "run_id": "35766010019",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-09-22T17:26:23Z",
-        "run_id": "35760387665"
+        "at": "2026-09-22T18:18:32Z",
+        "run_id": "35766010019"
       }
     ],
-    "render_seconds": 162.604,
-    "pre_render_seconds": 157.0
+    "render_seconds": 162.459,
+    "pre_render_seconds": 156.0
   },
   "film_sha256": "a73f4aed34a0018e05fe2e9bd86c29d026cb6b0c55a1607812e0ed2d108fd4ca",
   "film_bytes": 64073292,
-  "qc_attestation_sha256": "b8236219d23ab7ea87941dacf666e4d2b94fcfa88eef57c1ec82fe50e0d693f3",
+  "qc_attestation_sha256": "c62ffe7316379b51984faa95ef48f22cda6b649bf996628e2f976f019392d772",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-09-22T17:26:23Z",
-      "run_id": "35760387665"
+      "at": "2026-09-22T18:18:32Z",
+      "run_id": "35766010019"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-09-22T17:29:06Z",
-      "run_id": "35760387665"
+      "at": "2026-09-22T18:21:15Z",
+      "run_id": "35766010019"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-bouzkova-kartal-bjk-cup-2026-qf/bouzkova-kartal-bjk-cup-2026-qf.mp4",
-  "video_bytes": 64073292,
-  "_release_tag_note": "⚠️ 这个 Release tag（`reel-bouzkova-kartal-bjk-cup-2026-qf`）被**两份产物记录共用**：`output/2026-09-22/…`（记 64054894 字节，第一版封面是卡尔塔尔）和 `output/2026-09-23/…`（记 64073292 字节，封面换成布兹科娃、钩子第二行改掉行话之后那一版）。来路：账号所有者 2026-09-22 先要求把封面主体换成赢家，又指出钩子里「破发到零」看不懂，于是同一条片子渲了三趟；而重渲那几趟跨过了北京午夜，工作流按 `TZ=Asia/Shanghai date +%F` 拼目录，产物落进了新的日期目录，`gh release upload --clobber` 每趟都把 tag 上那份换掉。\n**量过一次，没有在仓库里猜**（判据明说按日期、按字节数都会挑反）：`Range: bytes=0-1` → `Content-Range: bytes 0-1/64073292`，也就是 **tag 上现在是 `output/2026-09-23/…` 那一份**（64073292 字节）。\n⚠️ **这一栏每重渲一趟就会被冲掉一次**：render 那一步是整份重写 `render.json` 的，不是就地改键。所以它不是写一次就完的——`test_同一个Release_tag被两份产物共用时每一份都要挂账` 每趟都会重新逮，按它说的重量一次就行。\n**这一份就是当前那一份**：本目录记的 video_bytes 与量出来的总长相等。"
+  "video_bytes": 64073292
 }
