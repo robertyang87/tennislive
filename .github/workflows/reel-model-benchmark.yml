@@ -19,7 +19,7 @@ permissions:
 jobs:
   compare:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 35
     steps:
       - uses: actions/checkout@v4
         with:
@@ -41,8 +41,18 @@ jobs:
       - name: 安装只读基准依赖
         run: pip install -q -e . "yt-dlp[default]>=2026.7.4"
 
+      - name: 缓存 apt 安装包
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/apt-archives
+            ~/.cache/apt-lists
+          key: apt-pkgs-${{ runner.os }}-24.04-ffmpeg-fonts-v2-${{ github.run_id }}
+          restore-keys: |
+            apt-pkgs-${{ runner.os }}-24.04-ffmpeg-fonts-v2-
+
       - name: 安装 ffmpeg（共享缓存与超时）
-        timeout-minutes: 5
+        timeout-minutes: 14
         run: |
           source tools/ci_apt_install.sh
           apt_install_cached ffmpeg

@@ -170,7 +170,7 @@
     {
       "start": 0,
       "end": 14.24,
-      "narration": "北京时间九月二十二日，新加坡女单首轮。王欣瑜迎战八号种子维基奇。六比一、六比二的比分背后，先看她如何化解压力，再把主动权抢回来。",
+      "narration": "北京时间九月二十二日，下午两点四十六分，新加坡女单首轮开打。王欣瑜对阵八号种子维基奇。六比一、六比二，她如何把主动权抢到手？",
       "_why": "本地核验源片选段及比分；使用官方统计桥接集锦未展示的局，不把桥接当成直接画面证据。",
       "fit": "crop",
       "crosses_cut": "保留官方集锦原剪辑及完整回合；片段边界沿已经核实的转播切点，未额外截断回合。",
@@ -286,5 +286,13 @@
     "same_match_evidence": "与源片276.5/281秒王欣瑜赛后微笑、酒红帽裙和场地背景交叉核对；帖子描述对应本场赛果。"
   },
   "_received_at": "2026-09-22T09:02:00Z",
-  "_hit_data": "2026-09-22实际运行 match_stat_hooks.py --from-spec wang-vekic-singapore-2026-r1 --json：王欣瑜连续保发8局，破发点4/7；维基奇0/1。采用8个发球局全保作为封面钩子，以WTA LS024 stats与逐局交叉核对。未使用PBP与stats不一致的总得分或未经逐分核实的连得分。"
+  "_hit_data": "2026-09-22实际运行 match_stat_hooks.py --from-spec wang-vekic-singapore-2026-r1 --json：王欣瑜连续保发8局，破发点4/7；维基奇0/1。采用8个发球局全保作为封面钩子，以WTA LS024 stats与逐局交叉核对。未使用PBP与stats不一致的总得分或未经逐分核实的连得分。",
+  "_opening_time_source": {
+    "url": "https://api.wtatennis.com/tennis/tournaments/1152/2026/matches",
+    "match_id": "LS024",
+    "field": "MatchTimeStamp",
+    "value": "2026-09-22T06:46:37.45+00:00",
+    "beijing": "2026-09-22T14:46:37.45+08:00",
+    "spoken_precision": "minute"
+  }
 }
