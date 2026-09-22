@@ -1,0 +1,82 @@
+{
+  "scoreboard_qc_sha256": null,
+  "cover_seconds": 4.714,
+  "cover_narrated": true,
+  "outro_seconds": 3.827,
+  "layout": "full",
+  "segments_seconds": 234.48,
+  "topbar": null,
+  "film_seconds": 243.04,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "0": 5.184,
+    "1": 6.816,
+    "2": 6.792,
+    "3": 2.952,
+    "4": 9.912,
+    "5": 8.52,
+    "6": 8.712,
+    "7": 9.696,
+    "8": 3.432,
+    "9": 10.92,
+    "10": 7.536,
+    "11": 6.768,
+    "12": 7.008,
+    "13": 8.88,
+    "14": 3.12,
+    "15": 8.112,
+    "16": 7.344,
+    "17": 10.032,
+    "18": 9.552,
+    "19": 10.056,
+    "20": 3.072,
+    "21": 7.848,
+    "22": 9.792,
+    "23": 9.072,
+    "24": 9.432,
+    "25": 8.472,
+    "26": 7.824,
+    "27": 8.496
+  },
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "davis-cup-human-lines-atp-elc-2026",
+    "received_at": "2026-09-22T12:24:55Z",
+    "artifact_ready_at": "2026-09-22T12:32:01Z",
+    "elapsed_seconds": 426.023,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "4c42470bee9f5a473c6804382206a841a88890fe0c48019ef18284ccacd83026",
+    "spec_sha256": "23a241abf22aa69264e079324b82c98127ea794b56e834ad992a57a224d4adb1",
+    "run_id": "35727020121",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-09-22T12:27:41Z",
+        "run_id": "35727020121"
+      }
+    ],
+    "render_seconds": 260.023,
+    "pre_render_seconds": 166.0
+  },
+  "film_sha256": "4c42470bee9f5a473c6804382206a841a88890fe0c48019ef18284ccacd83026",
+  "film_bytes": 140407979,
+  "qc_attestation_sha256": "7bfe426258b749fe84a6fced8e691e604a04c8c328b142c3ddbadcdb78478dde",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-09-22T12:27:41Z",
+      "run_id": "35727020121"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-22T12:32:02Z",
+      "run_id": "35727020121"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-davis-cup-human-lines-atp-elc-2026/davis-cup-human-lines-atp-elc-2026.mp4",
+  "video_bytes": 140407979
+}
