@@ -1112,15 +1112,16 @@ def _rally_seconds_offenders():
 
     ⚠️ 不扫 `_why` / `_source` 这类注解——那儿正引着这条规矩本身的例子，
     连它一起扫就会把「把规矩记下来」判成「又违反了规矩」（这个仓库犯过五次）。
+    ⚠️⚠️ **这句话 2026-09-22 之前是假的**：它只对 spec 顶层成立，而 `push` /
+    `topbar` 两块当时是 `.values()` 全取的，`_summary_why` / `_lead_why` 照样
+    被扫。现在两块都走 `_outward_values()`，docstring 和实现才真的对上。
     """
     out = {}
     for slug, spec in _specs():
         texts = [str((spec.get("cover") or {}).get("hook") or "")]
-        texts += [str(v) for v in (spec.get("push") or {}).values()
-                  if isinstance(v, str)]
+        texts += _outward_values(spec.get("push"))
         texts += [str(s.get("narration") or "") for s in spec.get("segments") or []]
-        texts += [str(v) for v in (spec.get("topbar") or {}).values()
-                  if isinstance(v, str)]
+        texts += _outward_values(spec.get("topbar"))
         xhs = SPEC_DIR / f"{slug}.xhs.txt"
         if xhs.is_file():
             texts.append(xhs.read_text("utf-8"))
@@ -1185,16 +1186,31 @@ from tools.spec_wording import (  # noqa: E402
 )
 
 
+def _outward_values(block) -> list[str]:
+    """`push` / `topbar` 这类块里**真的会发出去**的那几栏。
+
+    ⚠️ **`_` 开头的键一律跳过**——那是写给下一个人看的注解，而注解里正引着
+    规矩本身和它的**反例**（「不写『八成八』」「不报到分」这类）。连它一起扫，
+    就会把「把规矩记下来」判成「又违反了规矩」。
+
+    CLAUDE.md 记过这个形状六次；`voiced_texts` 2026-09-08 为同一个洞修过一次
+    （`zheng-swiatek-us-open-2026-r4` 那趟 render 第 90 秒红在自己刚写的
+    `_rewording_why` 上），**而这个扫描器当时漏了**：它对 `push` 和 `topbar`
+    都是 `.values()` 全取。2026-09-22 `bouzkova-kartal-bjk-cup-2026-qf` 在
+    `_lead_why` 和段落 `_why` 里写「不写『八成八』」时当场撞上。
+    """
+    return [str(v) for k, v in (block or {}).items()
+            if isinstance(v, str) and not str(k).startswith("_")]
+
+
 def _percent_idiom_offenders():
     """{slug: [命中的说法]}，只扫**会发出去**的字段。"""
     out = {}
     for slug, spec in _specs():
         texts = [str((spec.get("cover") or {}).get("hook") or "")]
-        texts += [str(v) for v in (spec.get("push") or {}).values()
-                  if isinstance(v, str)]
+        texts += _outward_values(spec.get("push"))
         texts += [str(s.get("narration") or "") for s in spec.get("segments") or []]
-        texts += [str(v) for v in (spec.get("topbar") or {}).values()
-                  if isinstance(v, str)]
+        texts += _outward_values(spec.get("topbar"))
         xhs = SPEC_DIR / f"{slug}.xhs.txt"
         if xhs.is_file():
             texts.append(xhs.read_text("utf-8"))
@@ -1234,11 +1250,9 @@ def _clock_minute_offenders():
     out = {}
     for slug, spec in _specs():
         texts = [str((spec.get("cover") or {}).get("hook") or "")]
-        texts += [str(v) for v in (spec.get("push") or {}).values()
-                  if isinstance(v, str)]
+        texts += _outward_values(spec.get("push"))
         texts += [str(s.get("narration") or "") for s in spec.get("segments") or []]
-        texts += [str(v) for v in (spec.get("topbar") or {}).values()
-                  if isinstance(v, str)]
+        texts += _outward_values(spec.get("topbar"))
         xhs = SPEC_DIR / f"{slug}.xhs.txt"
         if xhs.is_file():
             texts.append(xhs.read_text("utf-8"))
@@ -1287,6 +1301,42 @@ def test_报时刻的豁免表只许减不许加():
     assert not stale, (
         f"{sorted(stale)} 已经不报到分了，从豁免表里删掉——"
         f"写错名字的豁免就是一盏恒真的绿灯")
+
+
+def test_push和topbar里的注解不算文案():
+    """这三条措辞闸**不许被自己的注释误伤**——而且不许缩到什么都不扫。
+
+    来路：2026-09-22 `bouzkova-kartal-bjk-cup-2026-qf` 的 `push._lead_why` 和
+    段落 `_why` 里按规矩写着反例「**不写「八成八」**」，`test_百分比写百分之多少不写几成几`
+    当场红——**判据被自己的注释误伤，这个仓库记到第七次**。
+    `voiced_texts` 2026-09-08 为同一个洞修过一次，而这三个扫描器漏了：它们对
+    `push` / `topbar` 是 `.values()` 全取的。
+
+    ⚠️ **钉两头，缺一头这条测试就是假的**：只钉「注解不许被扫」的话，一个
+    `return []` 也能过；只钉「真会发出去的栏要扫到」的话，`.values()` 全取也能过。
+    """
+    push = {
+        "summary": "甲赢了乙",
+        "lead": "正文里真的写了八成八。",
+        "auto": True,
+        "_summary_why": "⚠️ 写「百分之八十八」不写「八成八」，不报到分，不说打了多少秒。",
+        "_lead_why": "⚠️ 反例：「凌晨三点十分开球」「这一分打了三十八秒」。",
+    }
+    topbar = {"line1": "2026 某赛 1/4决赛", "_line_why": "⚠️ 不写「八成八」"}
+
+    got = _outward_values(push)
+    assert "正文里真的写了八成八。" in got, "会发出去的 `lead` 一定要扫到"
+    assert "甲赢了乙" in got, "会发出去的 `summary` 一定要扫到"
+    assert not any("_summary_why" in t or "反例" in t for t in got), \
+        "`_` 开头的注解不许被扫到——那儿正引着规矩的反例"
+    assert all("八成八" not in t for t in got if t != "正文里真的写了八成八。")
+
+    got_bar = _outward_values(topbar)
+    assert got_bar == ["2026 某赛 1/4决赛"], \
+        f"topbar 也要跳过 `_` 注解，拿到的是 {got_bar}"
+
+    # 非字符串（`auto: True`）照旧不进来
+    assert True not in got and "True" not in got
 
 
 def test_百分比写百分之多少不写几成几():
