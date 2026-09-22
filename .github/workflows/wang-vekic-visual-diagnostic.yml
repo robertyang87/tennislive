@@ -4,7 +4,7 @@ on:
     branches: [codex/wang-vekic-singapore-reel]
     paths: [.github/workflows/wang-vekic-visual-diagnostic.yml]
 permissions:
-  contents: read
+  contents: write
 jobs:
   inspect:
     runs-on: ubuntu-latest
@@ -27,27 +27,47 @@ jobs:
           path: ~/.cache/tennislive-sources
           key: reel-src-wang-vekic-singapore-2026-r1-7117161ff07cc587
       - run: pip install -q -e .
-      - name: Diagnose same-match visual request
+      - run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+      - name: Audit newly sampled source evidence
         env:
           MINIMAX_API_KEY: ${{ secrets.MINIMAX_API_KEY }}
         run: |
           python - <<'PY'
-          import json,sys,os,urllib.error,urllib.request
+          import json,sys,os,urllib.error,urllib.request,subprocess
+          from PIL import Image,ImageDraw
           from pathlib import Path
           sys.path.insert(0,"tools")
-          from analyze_reel_visuals import ask_minimax,select_contact_sheets,clean_report
+          from analyze_reel_visuals import verified_minimax_report,select_contact_sheets,evidence_hash
           base=Path("output/2026-09-22/reel/wang-vekic-singapore-2026-r1")
           draft=json.loads(Path("specs/reels/pending/wang-vekic-singapore-2026-r1.draft.json").read_text())
           cover=Path("wang-current-match.jpg")
           urllib.request.urlretrieve("https://wx1.sinaimg.cn/large/008CZ4NUgy1ihcimp59qxj31a50wrtfe.jpg",cover)
           draft.setdefault("cover",{}).setdefault("portrait",{})["image"]=str(cover)
           draft["_cover_brief"]={"preferred_subject":"王欣瑜","preferred_moment":"winner_celebration","source_url":"https://www.sina.cn/news/detail/5345982256253548.html","note":"候选是本场赛后微笑致意图片，必须自行核对。另一张官方帖白帽图与本场酒红帽不同，已排除。"}
-          previous={"cold_open":{"start":262.76,"end":282.88,"kind":"match_point"},"ending":{"start":262.5,"end":282.88,"reason":"引用284.5到294.5的窗口外画面"}}
-          problems=["上一轮将赛后画面错误分类为match_point：赛点发生于251.48至258.76秒；262.76秒为维基奇特写，不能说赢家全程可见。请按图片独立核对，选择真实类型。","上一轮理由引用ending窗口外284.5至294.5秒，且错误声称278.5到282.5是教练包厢。该处应核对实际人物，不能重复猜测。","新候选封面需要独立核对，不能因提供了图片就通过；请保留3到30秒窗口与实际时间证据。"]
+          # User requested continued automatic repair. This is a new evidence packet,
+          # not a retry of the rejected coarse contact sheets.
+          src=next(Path.home().glob(".cache/tennislive-sources/*.mp4"))
+          evidence=base/"detailed_review"
+          evidence.mkdir(exist_ok=True)
+          times=[251.48,253,255,258,260,262.32,264,267,270,273,276,279,281.48,282.5,286,291]
+          sheet=Image.new("RGB",(1920,1200),"white")
+          for i,t in enumerate(times):
+              p=evidence/f"frame-{t:g}.jpg"
+              subprocess.run(["ffmpeg","-v","error","-ss",str(t),"-i",str(src),"-frames:v","1","-vf","scale=480:270","-y",str(p)],check=True)
+              x,y=(i%4)*480,(i//4)*300
+              sheet.paste(Image.open(p),(x,y+30))
+              ImageDraw.Draw(sheet).text((x+10,y+5),f"Source {t:.2f} seconds",fill="black")
+          detail=evidence/"ending-detail.jpg"
+          sheet.save(detail,quality=96)
+          frames=select_contact_sheets(list(base.glob("contact_*.jpg")))+[detail]
+          draft["_cover_brief"]["edit_candidates"]={"cold_open":{"start":262.32,"end":276.00,"kind":"aftermath"},"ending":{"start":251.48,"end":281.48},"instruction":"候选窗口仅供核验，可以拒绝，不可假装通过。两窗均小于30秒。照片独立核验。理由只引用窗口内可見的源时间；新补大图左上标Source秒数，勿认成输出片时间。主体结尾另保留到282.88秒，完整赛点与微笑。"}
           report={}
           try:
-              report["response"]=ask_minimax(draft,select_contact_sheets(list(base.glob("contact_*.jpg"))),cover,json.loads((base/"probe.json").read_text()),os.environ["MINIMAX_API_KEY"],previous=previous,validation_problems=problems)
-              report["validated"],report["problems"]=clean_report(report["response"],draft,305.156644)
+              report["validated"],report["problems"]=verified_minimax_report(draft,frames,cover,json.loads((base/"probe.json").read_text()),os.environ["MINIMAX_API_KEY"])
+              report["validated"]["input_sha256"]=evidence_hash(frames,cover)
+              report["validated"]["inputs"]=[str(x) for x in frames]
+              report["validated"]["cover_image"]=str(cover)
+              report["evidence_change"]="New larger time-coded endpoint frames from cached original 1080p source. Previous rejected reports retained."
           except urllib.error.HTTPError as e:
               report={"http_status":e.code,"response_body":e.read(4096).decode("utf-8","replace").replace(os.environ["MINIMAX_API_KEY"],"[REDACTED]")}
           Path("visual-diagnostic.json").write_text(json.dumps(report,ensure_ascii=False,indent=2))
@@ -56,8 +76,9 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: wang-vekic-corrected-visual-review
+          name: wang-vekic-detailed-visual-review
           path: |
             wang-current-match.jpg
             visual-diagnostic.json
+            output/2026-09-22/reel/wang-vekic-singapore-2026-r1/detailed_review/ending-detail.jpg
           retention-days: 7
