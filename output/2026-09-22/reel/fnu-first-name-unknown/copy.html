@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>9.22 网球有故事 | 名字那一栏写着不详</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>尼敦坚赞：名字那一栏，系统写着「不详」
+
+国际网联的数据库里，中国队有一个球员的名字分成两栏。姓那一栏是 Nidunjianzan，名那一栏，写着三个字母：Fnu。
+
+Fnu 不是名字，是 First Name Unknown 的缩写——名字不详。
+
+这是美国政府系统的一个占位符。移民局、海关、国务院、留学生系统、社保，这几套系统的姓名模型都只有两栏：Given Name 和 Family Name。一个只有一个名字的人进来，系统填不满两栏，就往空的那一栏塞一个标记。
+
+他叫尼敦坚赞，藏族，六岁以前住在拉萨。藏族的名字不分姓和名——他母亲、他父亲和他，三个人的名字各不相同，没有一个共同的姓。
+
+普林斯顿大学体育部 2023 年为他写过一篇专题。里面提到，他小时候那个地区只有一片球场，后来那片场地上盖起了一家便利店。六岁那年他跟着母亲从拉萨搬到成都，也是那一年，他在成都看了一场表演赛，桑普拉斯输给了鲁塞德斯基。
+
+后来他去了美国，进了普林斯顿。2023 年 5 月拿到职业生涯第一个冠军，ATP 单打最高排名到过第 800 位。那篇专题的开头写着：1973 年 ATP 开始发布单打排名，而在那之后，出生在西藏、拿到过积分的球员，只有他一个。
+
+2026 年 9 月戴维斯杯，中国队客场 0-4 负于挪威。挪威锁定胜局之后，他打了那场已经不影响结果的比赛，2-6、0-6 输给鲁德。赛后他对着挪威国家广播公司的镜头，笑着把这个名字的来路讲了一遍。
+
+而这不是他一个人的事。同一份数据库里，特日格乐被切成 Rigele 和 Te，布云朝克特本来是一个完整的词，被切成 Yunchaokete 和 Bu；对照之下，张之臻是 Zhizhen 和 Zhang，本来就分得开。
+
+一张表格装不下一个名字的时候，该改的是名字，还是那张表？</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>一张表格装不下一个名字的时候，该改的是名字，还是那张表？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
