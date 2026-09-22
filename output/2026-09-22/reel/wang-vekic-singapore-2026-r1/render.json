@@ -1,0 +1,66 @@
+{
+  "scoreboard_qc_sha256": null,
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 3.827,
+  "layout": "full",
+  "segments_seconds": 190.68,
+  "topbar": {
+    "line1": "2026 新加坡 WTA500 首轮",
+    "line2": "王欣瑜 6-1 6-2 维基奇",
+    "start": 1.2,
+    "end": 191.88
+  },
+  "film_seconds": 195.72,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 13.752,
+    "2": 9.84,
+    "3": 9.0,
+    "4": 12.936,
+    "5": 13.728,
+    "6": 7.392,
+    "7": 17.136
+  },
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "wang-vekic-singapore-2026-r1",
+    "received_at": "2026-09-22T09:02:00Z",
+    "artifact_ready_at": "2026-09-22T12:29:55Z",
+    "elapsed_seconds": 12475.64,
+    "budget_seconds": 600,
+    "met": false,
+    "film_sha256": "1da679238be6bcf13aa881b3bd7873edd63b0d47bd0ef4bf95ff6cf906bf04c6",
+    "spec_sha256": "2684b2b806fe3b0bdfb971ce66d9c62dd9bed590a4c974b184fef667d8d6661a",
+    "run_id": "35726850162",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-09-22T12:25:53Z",
+        "run_id": "35726850162"
+      }
+    ],
+    "render_seconds": 242.64,
+    "pre_render_seconds": 12233.0
+  },
+  "film_sha256": "1da679238be6bcf13aa881b3bd7873edd63b0d47bd0ef4bf95ff6cf906bf04c6",
+  "film_bytes": 116648766,
+  "qc_attestation_sha256": "85436a09a53decb88f86b7007d8acb08599ffa20c29fc82f2069c5aea5a34cc0",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-09-22T12:25:53Z",
+      "run_id": "35726850162"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-22T12:29:56Z",
+      "run_id": "35726850162"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-wang-vekic-singapore-2026-r1/wang-vekic-singapore-2026-r1.mp4",
+  "video_bytes": 116648766
+}
