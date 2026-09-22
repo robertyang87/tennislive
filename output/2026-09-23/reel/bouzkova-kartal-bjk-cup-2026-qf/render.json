@@ -69,5 +69,6 @@
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-bouzkova-kartal-bjk-cup-2026-qf/bouzkova-kartal-bjk-cup-2026-qf.mp4",
-  "video_bytes": 64073292
+  "video_bytes": 64073292,
+  "_release_tag_note": "⚠️ 这个 Release tag（`reel-bouzkova-kartal-bjk-cup-2026-qf`）被**两份产物记录共用**：`output/2026-09-22/…`（记 64054894 字节，第一版封面是卡尔塔尔）和 `output/2026-09-23/…`（记 64073292 字节，封面换成布兹科娃、钩子第二行换掉行话之后那一版）。来路：账号所有者 2026-09-22 先要求把封面主体换成赢家，又指出钩子里「破发到零」看不懂，同一条片子因此渲了多趟；而重渲跨过了北京午夜，工作流按 `TZ=Asia/Shanghai date +%F` 拼目录，产物落进新的日期目录，`gh release upload --clobber` 每趟都把 tag 上那份换掉。\n**量过一次，没有在仓库里猜**（判据明说按日期、按字节数都会挑反）：`Range: bytes=0-1` → `Content-Range: bytes 0-1/64073292`，也就是 **tag 上现在是 `output/2026-09-23/…` 那一份**（64073292 字节）。\n⚠️ **这一栏每重渲一趟就会被冲掉一次**：render 那一步是整份重写 `render.json` 的，不是就地改键。所以它不是写一次就完的——`test_同一个Release_tag被两份产物共用时每一份都要挂账` 每趟都会重新逮，按它说的重量一次就行。\n⚠️ **2026-09-22 实测：不改任何内容重渲，成片逐字节相同**（旁白 TTS 有缓存、x264 同参数同输入是确定性的），所以这两份的字节数只会在**真有内容改动**时才分开；也就是说「重渲一趟去换个指纹」这条路不存在，发布账本那道按指纹拦的闸照旧会报「禁止盲目重发」。\n**这一份就是当前那一份**：本目录记的 video_bytes 与量出来的总长相等。"
 }
