@@ -42,7 +42,9 @@
       "pts_won": 36,
       "pts_total": 96,
       "first_total": 51,
-      "headshot": "assets/players/headshots/wta-318516.jpg"
+      "headshot": "assets/players/headshots/wta-318516.jpg",
+      "winners": 8,
+      "ue": 29
     },
     "b": {
       "aces": 3,
@@ -56,8 +58,11 @@
       "pts_won": 60,
       "pts_total": 96,
       "first_total": 45,
-      "headshot": "assets/players/headshots/wta-326376.jpg"
-    }
+      "headshot": "assets/players/headshots/wta-326376.jpg",
+      "winners": 20,
+      "ue": 17
+    },
+    "_source": "本场flashscore fBE7oN6j / match_stat_hooks与WTA官方LS024 stats交叉核实：https://api.wtatennis.com/tennis/tournaments/1152/2026/matches/LS024/stats 。a对应cover.matchup[0]维基奇，b对应王欣瑜；一发分母按first_in+second_total计算。逐分接口总分与stats不同，数据图采用技术统计口径36:60，不用于虚构连得分。 制胜分/非受迫失误来自TNNS run35727609601，match74857732，hasExtendedStats=true，明确选手顺序[Vekic,Wang]：制胜分[8,20]，UE[29,17]；分盘制胜分3+5/13+7、UE11+18/7+10互相核对。只取这两栏，其余仍为官方/flashscore统计。"
   },
   "editorial": {
     "hook": [
@@ -165,7 +170,7 @@
     {
       "start": 0,
       "end": 14.24,
-      "narration": "北京时间九月二十二日，新加坡女单首轮。王欣瑜迎战八号种子维基奇。六比一、六比二的比分背后，先看首盘一比一时，她怎样守住自己的发球局。",
+      "narration": "北京时间九月二十二日，新加坡女单首轮。王欣瑜迎战八号种子维基奇。六比一、六比二的比分背后，先看她如何化解压力，再把主动权抢回来。",
       "_why": "本地核验源片选段及比分；使用官方统计桥接集锦未展示的局，不把桥接当成直接画面证据。",
       "fit": "crop",
       "crosses_cut": "保留官方集锦原剪辑及完整回合；片段边界沿已经核实的转播切点，未额外截断回合。",
@@ -218,7 +223,7 @@
     {
       "start": 221.36,
       "end": 251.48,
-      "narration": "但四比二之后，维基奇还在抵抗。她把进攻推进到网前，用截击缩短回合，化解破发点。这里要分清：眼前这一分是她的抵抗，整局最终仍由王欣瑜拿下。五比二，接下来是王欣瑜的发球胜赛局。",
+      "narration": "但四比二之后，维基奇还在抵抗。她上网截击，化解破发点。眼前这一分是她的抵抗，整局最终仍由王欣瑜拿下。五比二，王欣瑜将发球胜赛。守住发球，再主动接发，你更看重她哪一点？",
       "_why": "本地核验源片选段及比分；使用官方统计桥接集锦未展示的局，不把桥接当成直接画面证据。",
       "fit": "crop",
       "crosses_cut": "保留官方集锦原剪辑及完整回合；片段边界沿已经核实的转播切点，未额外截断回合。"
@@ -280,5 +285,6 @@
     "classification": "possible_broadcast_crop_not_verified_photograph",
     "same_match_evidence": "与源片276.5/281秒王欣瑜赛后微笑、酒红帽裙和场地背景交叉核对；帖子描述对应本场赛果。"
   },
-  "_received_at": "2026-09-22T09:02:00Z"
+  "_received_at": "2026-09-22T09:02:00Z",
+  "_hit_data": "2026-09-22实际运行 match_stat_hooks.py --from-spec wang-vekic-singapore-2026-r1 --json：王欣瑜连续保发8局，破发点4/7；维基奇0/1。采用8个发球局全保作为封面钩子，以WTA LS024 stats与逐局交叉核对。未使用PBP与stats不一致的总得分或未经逐分核实的连得分。"
 }
