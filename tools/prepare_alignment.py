@@ -22,6 +22,7 @@ import argparse
 import json
 import os
 import sys
+import urllib.error
 from datetime import date, timedelta
 from pathlib import Path
 
@@ -80,7 +81,13 @@ def read_scoreboard(outdir: Path) -> bool:
 
     rows: list[dict] = []
     for frame in frames:
-        got = read_scoreboard._ask(frame, os.environ["MINIMAX_API_KEY"])
+        try:
+            got = read_scoreboard._ask(frame, os.environ["MINIMAX_API_KEY"])
+        except (urllib.error.URLError, TimeoutError, ValueError) as exc:
+            # Alignment is optional enrichment; the independent visual production
+            # gate still has to pass before promotion/render/publication.
+            print(f"⚠️ 比分板服务不可用（{type(exc).__name__}），不写部分对齐结果；后续退回字幕备料")
+            return False
         if got is not None:
             rows.extend(got)
     if not rows:
