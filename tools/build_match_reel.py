@@ -2920,6 +2920,16 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
             _normalize_title_card_segments({"segments": [s]})
             s = {k: v for k, v in s.items() if k not in ("title_card", "kicker")}
         if s.get("image"):
+            image_kind = s.get("image_kind", "evidence")
+            if image_kind not in ("evidence", "photo"):
+                raise ReelError("image_kind 只认 evidence / photo")
+            if image_kind == "photo":
+                if not s.get("_photo_caption_safety") or not str(s.get("_photo_source", "")).startswith("https://"):
+                    raise ReelError("全屏照片必须记录来源与字幕不遮主体的目视依据")
+                from PIL import Image
+                with Image.open(s["image"]) as photo:
+                    if photo.width * VIDEO_H != photo.height * VIDEO_W:
+                        raise ReelError("全屏照片必须先按画布比例裁切，不许拉伸")
             # 整屏证据段：只认 image/seconds/narration/voice（外加 `_` 注解）。
             # 窗口类字段一概不许——它没有源片窗口，写了就是没被读的死键。
             stray = sorted(set(s) & {"start", "end", "source", "track",
@@ -2938,7 +2948,7 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
             return Segment(0.0, secs, 0.5, s["narration"].strip(),
                            "contain", False, primary, "", (),
                            *_seg_voice(s, i), None, 1.0, False,
-                           str(s["image"]))
+                           str(s["image"]), full_bleed=image_kind == "photo")
         return Segment(float(s["start"]), float(s["end"]),
                        None if s.get("cx") is None else float(s["cx"]),
                        s.get("narration", "").strip(),
@@ -3169,7 +3179,7 @@ _REAL_FIELDS: dict[str, tuple[str, ...]] = {
               "narration", "portrait", "portrait_above", "result", "round",
               "score", "scoreboard", "scrim", "split", "sub", "subject",
               "tier", "topic", "versus", "winner"),
-    "segment": ("bed", "crosses_cut", "crop_zoom", "cx", "end", "fit", "image",
+    "segment": ("bed", "crosses_cut", "crop_zoom", "cx", "end", "fit", "image", "image_kind",
                 "inset", "mute", "narration", "point_end_ok", "quote", "score_inset",
                 "score_inset_windows",
                 "seconds", "source", "speed", "square_pan", "start", "stat_card", "title_card",
@@ -7132,6 +7142,11 @@ def evidence_card_overlaps_subtitle(spec: dict) -> str:
     for index, seg in enumerate(spec.get("segments") or (), 1):
         if not isinstance(seg, dict) or not seg.get("image"):
             continue
+        # Photos use the same subtitle overlay as live footage. Evidence cards
+        # still keep every text row clear; parse_segments validates photo intent,
+        # provenance and pre-cropped canvas geometry before rendering.
+        if seg.get("image_kind") == "photo":
+            continue
         path = Path(str(seg["image"]))
         if not path.is_file():
             continue          # 图不在归 parse_segments 报，别在这儿抢
@@ -9737,4 +9752,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

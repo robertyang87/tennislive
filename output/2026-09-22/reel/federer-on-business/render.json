@@ -1,83 +1,65 @@
 {
   "scoreboard_qc_sha256": null,
-  "cover_seconds": 3.682,
+  "cover_seconds": 4.474,
   "cover_narrated": true,
   "outro_seconds": 3.827,
   "layout": "full",
-  "segments_seconds": 213.18,
+  "segments_seconds": 52.42,
   "topbar": null,
-  "film_seconds": 220.72,
+  "film_seconds": 60.76,
   "narration_voice": "zh-CN-YunjianNeural",
   "narration_rate": "+6%",
   "narration_backend": "edge-tts",
   "narration_seconds": {
-    "0": 8.136,
-    "1": 5.064,
-    "2": 7.992,
-    "3": 6.912,
-    "4": 6.864,
-    "5": 5.856,
-    "6": 8.352,
-    "7": 7.608,
-    "8": 4.128,
-    "9": 6.192,
-    "10": 6.72,
-    "11": 6.0,
-    "12": 9.912,
-    "13": 6.36,
-    "14": 6.864,
-    "15": 5.544,
-    "16": 5.76,
-    "17": 9.24,
-    "18": 7.536,
-    "19": 7.776,
-    "20": 6.816,
-    "21": 6.888,
-    "22": 5.304,
-    "23": 6.624,
-    "24": 4.2,
-    "25": 9.456,
-    "26": 8.376,
-    "27": 12.984,
-    "28": 2.616
+    "0": 4.632,
+    "1": 4.8,
+    "2": 4.224,
+    "4": 2.88,
+    "5": 4.008,
+    "6": 4.536,
+    "7": 4.56,
+    "8": 3.144,
+    "9": 4.08,
+    "10": 3.888,
+    "11": 4.512
   },
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "federer-on-business",
-    "received_at": "2026-09-22T00:20:54Z",
-    "artifact_ready_at": "2026-09-22T00:27:12Z",
-    "elapsed_seconds": 378.308,
+    "received_at": "2026-09-22T02:32:32Z",
+    "artifact_ready_at": "2026-09-22T02:36:13Z",
+    "elapsed_seconds": 221.178,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "a3c9152b47e4c1b7202a13b62d0cab65cb1234ca4b7a7070f16d7aa2b65bcf19",
-    "spec_sha256": "52c7c94bf191fecb731f918909ebbfd961adf77a36c66154a7a60f5a914f20e7",
-    "run_id": "35671561141",
+    "film_sha256": "7b43243200cffc05341641adad8b99f9f1d28dd473d1e6750e40c129113462c7",
+    "spec_sha256": "24e79e2e338077d54083e202c74807e284b901a88230cec0385b95c334e9f806",
+    "run_id": "35679830005",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-09-22T00:23:32Z",
-        "run_id": "35671561141"
+        "at": "2026-09-22T02:34:54Z",
+        "run_id": "35679830005"
       }
     ],
-    "render_seconds": 220.308,
-    "pre_render_seconds": 158.0
+    "render_seconds": 79.178,
+    "pre_render_seconds": 142.0
   },
-  "film_sha256": "a3c9152b47e4c1b7202a13b62d0cab65cb1234ca4b7a7070f16d7aa2b65bcf19",
-  "film_bytes": 67119946,
-  "qc_attestation_sha256": "415dd3faa674b517642f647e50432eea798afbc9f2e63a4bd4b902c57d5a7e28",
+  "film_sha256": "7b43243200cffc05341641adad8b99f9f1d28dd473d1e6750e40c129113462c7",
+  "film_bytes": 26533161,
+  "qc_attestation_sha256": "07d6cc1cabd5b9ec4499f80b11b38e947714e025a4d81f5063ab5cdc38a7b152",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-09-22T00:23:32Z",
-      "run_id": "35671561141"
+      "at": "2026-09-22T02:34:54Z",
+      "run_id": "35679830005"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-09-22T00:27:13Z",
-      "run_id": "35671561141"
+      "at": "2026-09-22T02:36:13Z",
+      "run_id": "35679830005"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-federer-on-business/federer-on-business.mp4",
-  "video_bytes": 67119946
+  "video_bytes": 26533161
 }
