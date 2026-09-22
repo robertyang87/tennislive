@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>9.22 赛场之上 | 布兹科娃决胜盘险胜</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>布兹科娃决胜盘险胜
+
+比利·简·金杯总决赛，深圳湾体育中心。北京时间 9 月 22 号下午五点多开打，捷克对英国 1/4决赛的第一场单打——2 小时 59 分钟之后，世界第 26 的布兹科娃 7-6(2) 4-6 6-4 赢下卡尔塔尔。
+
+真正值得说的是输的那一边。
+
+卡尔塔尔今年 3 月在印第安维尔斯因下背伤退赛，之后整个北美硬地赛季连同美网全部缺席，排名从生涯最高的第 44 掉到第 127，全年只打了 10 站。深圳这一场是她半年来的第一场比赛，而英国队把第一单交给了她。
+
+她差一点就赢了。
+
+第二盘她把站位往前压、接发球落地就抢，还甩出几记反弹球截击，一发得分率从第一盘的 61% 飙到 88%，6-4 扳平；中段一度连保 10 个发球局。决胜盘布兹科娃换了打法，反手一路往对角压，抢在她起拍之前出球，把这个数压到了 43%，连破两次做到 5-2。
+
+然后是这场球最长的那一局。
+
+5-2、卡尔塔尔发球，布兹科娃 40-15 拿到两个赛点，打到占先又拿到第三个——三个全被救了下来，这一局 12 分最后是卡尔塔尔的。紧接着布兹科娃的发球胜赛局只拿到 1 分就丢了，5-4。真正结束比赛的是回过头那一局：15-0、30-0、40-0，一分没丢，四个球收场。
+
+全场 223 分，布兹科娃只多赢 7 分。
+
+转播赛后的原话：
+
+&quot;All the credit to Sonay Kartal. To produce this level after six months away, in your first match — is just incredible.&quot;
+这场球要记在卡尔塔尔身上。离开六个月之后打出这种水平，还是复出第一场——太不可思议了。
+
+赢的是布兹科娃。可今天被记住的，会是她吗？
+
+#网球时差 #比利简金杯 #布兹科娃 #卡尔塔尔 #赛场之上</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>可今天被记住的，会是她吗？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
