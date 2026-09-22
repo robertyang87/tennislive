@@ -14,6 +14,7 @@ jobs:
         with:
           filter: blob:none
           sparse-checkout: |
+            .github
             tools
             tests
             src
@@ -26,6 +27,7 @@ jobs:
         with:
           python-version: "3.11"
       - run: pip install -q -e ".[dev]"
+      - run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
       - name: Verify panel and existing production gates
         run: python -m pytest tests/test_visual_panels.py tests/test_visual_duration_citation.py tests/test_reel_production_gates.py -q
       - name: Published reference shadow benchmark
