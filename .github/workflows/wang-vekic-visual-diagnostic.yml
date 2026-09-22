@@ -26,8 +26,40 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - run: pip install -q -e ".[dev]"
+      - run: pip install -q -e ".[dev]" "yt-dlp[default]>=2026.7.4"
       - run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/tennislive-sources
+          key: reel-src-fils-cobolli-cincinnati-2026-sf-visual-benchmark-v2
+          restore-keys: reel-src-fils-cobolli-cincinnati-2026-sf-
+      - name: Restore missing reference contact sheets from original source
+        timeout-minutes: 7
+        env:
+          TENNISLIVE_SOURCE_CACHE: ~/.cache/tennislive-sources
+          YT_COOKIES_TXT: ${{ secrets.YT_COOKIES_TXT }}
+        run: |
+          python - <<'PY'
+          import os,json,sys
+          from pathlib import Path
+          sys.path.insert(0,"tools")
+          from build_match_reel import download,contact_sheet,probe_duration
+          base=Path("output/2026-08-23/reel/fils-cobolli-cincinnati-2026-sf")
+          if not list(base.glob("contact_*.jpg")):
+              cookie=Path(os.environ["RUNNER_TEMP"])/"benchmark-cookies.txt"
+              if os.environ.get("YT_COOKIES_TXT"):
+                  cookie.write_text(os.environ["YT_COOKIES_TXT"])
+                  os.chmod(cookie,0o600)
+                  os.environ["YT_COOKIES"]=str(cookie)
+              try:
+                  probe=json.loads((base/"probe.json").read_text())
+                  source=download(probe["url"],Path(os.environ["RUNNER_TEMP"])/"benchmark-source.mp4")
+                  assert abs(probe_duration(source)-float(probe["duration"])) < .25, "Reference source changed; cannot reuse old timing"
+                  contact_sheet(source,base,every=2)
+              finally:
+                  cookie.unlink(missing_ok=True)
+          assert list(base.glob("contact_*.jpg")), "Reference still has no images"
+          PY
       - name: Verify panel and existing production gates
         run: python -m pytest tests/test_visual_panels.py tests/test_visual_duration_citation.py tests/test_reel_production_gates.py -q
       - name: Published reference shadow benchmark
@@ -64,6 +96,7 @@ jobs:
           name: wang-visual-repair-benchmark
           path: |
             visual-benchmark/
+            output/2026-08-23/reel/fils-cobolli-cincinnati-2026-sf/contact_*.jpg
             visual-diagnostic.json
             wang-current-match.jpg
           retention-days: 7
