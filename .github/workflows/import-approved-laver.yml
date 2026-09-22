@@ -1,0 +1,114 @@
+name: Import approved Laver Cup master
+on:
+  push:
+    branches: [main]
+    paths:
+      - data/approved_reel_imports/laver-cup-history-2026/request.json
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: import-approved-laver-cup
+  cancel-in-progress: false
+jobs:
+  import:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GITHUB_TOKEN: ${{ github.token }}
+      REQUEST: data/approved_reel_imports/laver-cup-history-2026/request.json
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          sparse-checkout: |
+            data/approved_reel_imports/laver-cup-history-2026
+            data/reel_publish_ledger
+            specs/reels
+            tools
+            src
+            assets/laver-cup-history-2026
+            output/2026-09-22/reel/laver-cup-history-2026
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+      - name: Cache apt packages for native validation
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/apt-archives
+            ~/.cache/apt-lists
+          key: apt-pkgs-${{ runner.os }}-24.04-approved-laver-${{ github.run_id }}
+          restore-keys: |
+            apt-pkgs-${{ runner.os }}-24.04-approved-laver-
+            apt-pkgs-${{ runner.os }}-24.04-ci-v2-
+      - name: Install native validation dependencies
+        timeout-minutes: 15
+        run: |
+          pip install -q -e . numpy
+          source tools/ci_apt_install.sh
+          ensure_ffmpeg
+      - name: Restore verified transfer chunks
+        uses: actions/cache/restore@v4
+        with:
+          path: ${{ runner.temp }}/approved-laver-chunks
+          key: approved-laver-${{ hashFiles('data/approved_reel_imports/laver-cup-history-2026/request.json') }}-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: |
+            approved-laver-${{ hashFiles('data/approved_reel_imports/laver-cup-history-2026/request.json') }}-
+      - name: Reconstruct exact master and run native QC
+        id: master
+        run: python tools/import_approved_laver.py assemble --request "$REQUEST"
+      - name: Save verified chunks even after a failed import
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: ${{ runner.temp }}/approved-laver-chunks
+          key: approved-laver-${{ hashFiles('data/approved_reel_imports/laver-cup-history-2026/request.json') }}-${{ github.run_id }}-${{ github.run_attempt }}
+      - name: Upload movie to Release and generate native pages
+        run: python tools/import_approved_laver.py release --request "$REQUEST"
+      - name: Commit metadata, cover, copy and QC evidence
+        env:
+          OUTDIR: ${{ steps.master.outputs.outdir }}
+        run: |
+          git config user.name "Claude"
+          git config user.email "noreply@anthropic.com"
+          # Explicit file list: movie bytes must never become Git tree entries.
+          git add --sparse specs/reels/laver-cup-history-2026.json specs/reels/laver-cup-history-2026.xhs.txt
+          git add --sparse "$OUTDIR/render.json" "$OUTDIR/subtitles.ass" "$OUTDIR/poster.jpg" "$OUTDIR/qc_attestation.json" "$OUTDIR/copy.html" "$OUTDIR/push.html"
+          for name in import-provenance.json research.md storyboard.md manual-qc.json subtitle_provenance.json silence_repair.json repair_review.json qc_landed.txt qc_before_repair.txt silence_detection.txt qc_contact.jpg; do
+            if [ -f "$OUTDIR/$name" ]; then git add --sparse "$OUTDIR/$name"; fi
+          done
+          if [ -d "$OUTDIR/subtitle_sources" ]; then git add --sparse "$OUTDIR/subtitle_sources"; fi
+          if git diff --cached --name-only | grep -E '\.(mp4|mov|mkv)$'; then
+            echo '::error::Movie accidentally staged; refusing publication'
+            exit 1
+          fi
+          python tools/check_staged_file_sizes.py
+          if ! git diff --cached --quiet; then
+            git commit -m 'reel: import approved Laver Cup master and native QC evidence'
+          fi
+          source tools/git_push_retry.sh
+          push_with_rebase_retry main
+      - name: Run complete native publication gate
+        id: publish_gate
+        env:
+          OUTDIR: ${{ steps.master.outputs.outdir }}
+        run: python tools/auto_push_gate.py --changed "$OUTDIR/render.json"
+      - name: Dispatch existing WeChat publisher after gates pass
+        if: steps.publish_gate.outputs.found == 'true'
+        run: |
+          gh workflow run match-reel.yml --ref main -f mode=push -f slug=laver-cup-history-2026 -f push=true
+          echo 'Native push workflow dispatched; completion requires its PushPlus receipt and publication ledger.' >> "$GITHUB_STEP_SUMMARY"
+      - name: Retain failure diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: approved-laver-import-diagnostics
+          path: |
+            output/*/reel/laver-cup-history-2026/*.json
+            output/*/reel/laver-cup-history-2026/*.ass
+          if-no-files-found: ignore

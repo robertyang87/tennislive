@@ -1,0 +1,20 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1440
+WrapStyle: 0
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: TL,TennisStorySC,68,&H00ECF3E7,&H000000FF,&H00181E14,&H00000000,1,0,0,0,100,100,0,0,1,4,1,8,150,150,1284,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.17,0:00:01.91,TL,,0,0,0,,单场比赛前两盘照常打
+Dialogue: 0,0:00:01.91,0:00:04.14,TL,,0,0,0,,如果各赢一盘 就用抢{\fs78}10{\fs68}决胜
+Dialogue: 0,0:00:04.14,0:00:05.70,TL,,0,0,0,,并且要净胜两分
+Dialogue: 0,0:00:05.70,0:00:08.60,TL,,0,0,0,,另一种情况是全队积分打成{\fs78}12{\fs68}比{\fs78}12{\fs68}
+Dialogue: 0,0:00:08.60,0:00:11.17,TL,,0,0,0,,按官网现行规则 加赛一盘双打
+Dialogue: 0,0:00:11.17,0:00:13.87,TL,,0,0,0,,局内有占先 盘内可以抢七
+Dialogue: 0,0:00:13.87,0:00:16.14,TL,,0,0,0,,两个决胜 不是一回事
