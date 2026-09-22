@@ -161,13 +161,23 @@ def main() -> int:
     ap.add_argument("--show", action="store_true", help="顺手存一份缩略图")
     args = ap.parse_args()
 
-    # ① 成都 2026：27 号签位那一行印着 NG
-    piece, mark = _row_box(DRAWS / "chengdu-2026-mds.pdf", "KOUAME",
-                           up_pt=34, down_pt=24, mark_pt=3.5,
+    # ① 成都 2026：同一张签表上，外卡那一格和 NG 那一格
+    #
+    # ⚠️ **两块一起放，是因为封面钩子承诺的就是这个对照**（「别人拿外卡进来／
+    # 他走的是另一扇门」）。第一版只裁了 27 号签位那一块，整条片子从头到尾
+    # 没让人看见「别人那一格」长什么样——钩子说了而画面没兑现。
+    # 账号所有者 2026-09-22 发来 ATP 官方中文签表图（[WC] 商竣程／[NG] 夸梅
+    # 并排）之后补的，用的仍然是官方 PDF 原件，不是转发那张图。
+    wc, wc_mark = _row_box(DRAWS / "chengdu-2026-mds.pdf", "SHANG",
+                           up_pt=12, down_pt=36, mark_pt=3.5,
                            x0_pt=12, x1_pt=170)
-    _card("成都签表 · 27 号签位",
+    ng, ng_mark = _row_box(DRAWS / "chengdu-2026-mds.pdf", "KOUAME",
+                           up_pt=23, down_pt=13, mark_pt=3.5,
+                           x0_pt=12, x1_pt=170)
+    _card("同一张签表，两种入场",
           "ATP 官方正赛签表 Main Draw Singles · 2026 年 9 月 22 日发布",
-          [(piece, mark, "")],
+          [(wc, wc_mark, "WC ＝ 外卡：商竣程、胡佳"),
+           (ng, ng_mark, "NG ＝ 新生代加速计划：全表只有这一个")],
           OUT / "draw-chengdu-ng.png")
 
     # ② 多哈 2024 / 布宜诺斯艾利斯 2025：同一个机制，签表上那一格是空的

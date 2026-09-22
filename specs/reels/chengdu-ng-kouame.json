@@ -1,6 +1,6 @@
 {
   "slug": "chengdu-ng-kouame",
-  "_note": "**网球有故事** · 成都 2026 正赛签表第 27 行，夸梅名字前印着 NG，这条片子解释那两个字母是什么。\n\n⚠️ **这条是「视频剪辑」不是字卡**（CLAUDE.md 2026-09-17 账号所有者第二次说的「不要总用字卡来做视频」）：八条官方集锦源片剪 37 段实拍，静图只有两屏，而那两屏讲的正好是照片和视频都拍不出来的东西——签表上那一格印着什么。\n\n⚠️ **来路是一份外部交接包**（用户 2026-09-22 上传的 `NG-Claude交接包`）。交接稿里那份已经合成好的 8 段 MP3 **没有直接用**：这条线的成片要靠同一条管线出字幕、做现场声闪避、烧台头和常驻角标，所以旁白照交接稿的文字一字不动，由 `match-reel` 自己用同一把嗓子（云见）重新合成。交接稿的 `timeline.json`（正文 237 秒）是这条 spec 的长度基准。\n\n⚠️ **译名跟交接稿走**：交接稿把 Moise Kouame 定为**夸梅**，而 `player_names_top500.json` 里原来是机器音译的「库阿梅」（`translation_source: machine-transliteration`，无出处）。按那张表自己的 policy，人工敲定的译名排在受控音译之前，所以顺手把表里那一条改成夸梅并记下出处。**Khachanov 反过来**：交接稿写「卡恰诺夫」，而表里是 `curated-media` 的**哈恰诺夫**——这一处按表改了旁白。",
+  "_note": "**网球有故事** · 成都 2026 正赛签表第 27 行，夸梅名字前印着 NG，这条片子解释那两个字母是什么。\n\n⚠️ **这条是「视频剪辑」不是字卡**（CLAUDE.md 2026-09-17 账号所有者第二次说的「不要总用字卡来做视频」）：八条官方集锦源片剪 37 段实拍，静图只有两屏，而那两屏讲的正好是照片和视频都拍不出来的东西——签表上那一格印着什么。\n\n⚠️ **来路是一份外部交接包**（用户 2026-09-22 上传的 `NG-Claude交接包`）。交接稿里那份已经合成好的 8 段 MP3 **没有直接用**：这条线的成片要靠同一条管线出字幕、做现场声闪避、烧台头和常驻角标，所以旁白照交接稿的文字一字不动，由 `match-reel` 自己用同一把嗓子（云见）重新合成。交接稿的 `timeline.json`（正文 237 秒）是这条 spec 的长度基准。\n\n⚠️ **译名跟交接稿走**：交接稿把 Moise Kouame 定为**夸梅**，而 `player_names_top500.json` 里原来是机器音译的「库阿梅」（`translation_source: machine-transliteration`，无出处）。按那张表自己的 policy，人工敲定的译名排在受控音译之前，所以顺手把表里那一条改成夸梅并记下出处。**Khachanov 反过来**：交接稿写「卡恰诺夫」，而表里是 `curated-media` 的**哈恰诺夫**——这一处按表改了旁白。\n\n⚠️ **译名有了第三个出处**：账号所有者 2026-09-22 发来 ATP 官方中文签表图（@ATP巡回赛），上面印的就是 `[NG] 夸梅`——ATP 自己的中文渠道用的也是这两个字，和交接稿一致，和表里原来那条机器音译「库阿梅」不一致。",
   "_facts": [
     "⭐ **夸梅本周在成都用的就是这条通道**，ATP 官方 2026-09-21 的原句：「Kouame, the 17-year-old Frenchman, is competing this week at the ATP 250 event in Chengdu through the PIF ATP Next Gen Accelerator.」成都官方正赛签表（protennislive 2026/7581，本轮 09/22/2026 19:35:32 版）第 27 行同样印着 `NG KOUAME, Moise FRA`——两个独立出处。",
     "⭐ **三条规则全部查到 2026 规则手册原文**（itftennis.com/media/15604/atp-2026-rulebook.pdf，210 页，本轮实下 5.9 MB）：第 76 页「Players born in 2006 or later are eligible for the Accelerator in 2026.」；同页「Players aged 20 or under, ranked within the Top 250, may receive up to 1 ATP 250 [主签名额]」；第 82 页「One (1) main draw and two (2) qualifying ATP Next Gen Accelerator spots will be ...」；第 75 页写明报名要按优先顺序指定赛事。⚠️ **交接包里那份 `research/atp-2026.pdf` 是 212 字节的错误页**（`<META NAME=\"robots\">`），不是规则手册——规则那一章是本轮自己重下重查的，不是照抄交接稿。",
@@ -108,9 +108,9 @@
     },
     {
       "image": "assets/reel/chengdu-ng-kouame/draw-chengdu-ng.png",
-      "seconds": 5.2,
+      "seconds": 6.6,
       "narration": "它来自 Next Gen，也就是新生代。",
-      "_why": "成都 2026 官方正赛签表第 27 行，`NG KOUAME, Moise FRA` 圈出来。同屏留着第 25 行的种子号 6、第 26 行的空格、第 28 行的 Qualifier——「NG 不是种子号」这句话的对照组就在同一张图里。"
+      "_why": "成都 2026 官方正赛签表的**两块**：上面 11 号签位 `WC SHANG, Juncheng`（同屏还有14 号的 `WC HU, Jia`），下面 27 号签位 `NG KOUAME, Moise`——**封面钩子「别人拿外卡进来／他走的是另一扇门」承诺的对照，就是这一屏**。\n\n下面那一块还顺手留着第 25 行的种子号 6 和第 28 行的 Qualifier：「NG 不是种子号」这句话的对照组也在同一张图里。\n\n⚠️ **第一版只有下面那一块**，整条片子从头到尾没让人看见「别人那一格」长什么样——钩子说了而画面没兑现。账号所有者 2026-09-22 发来 ATP 官方中文签表图（`[WC] 商竣程` 和 `[NG] 夸梅` 并排）之后补上的；卡用的仍然是官方 PDF 原件，不是转发那张图。\n\n⚠️ 「全表只有这一个」是查过的：32 行里带 NG 的只有第 27 行（WC 三个：11 商竣程、14 胡佳、30 周意；Qualifier 四个）。\n\n⚠️ 卡从 5.2s 加到 6.6s：两块一起看需要时间，旁白 3.4s 之后还有 3.2s 让人读完（哑场门槛 4.0s）。"
     },
     {
       "source": "rg1",
