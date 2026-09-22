@@ -29,7 +29,7 @@ from reel_skill import model_instructions  # noqa: E402
 
 ENDPOINT = "https://api.minimaxi.com/v1/chat/completions"
 MODEL = "MiniMax-M3"
-AUDIT_VERSION = "panels-high-detail-v2"
+AUDIT_VERSION = "panels-high-detail-v3"
 MIN_CONFIDENCE = 0.80
 ALLOWED_MOMENTS = {"match_point", "winning_shot", "winner_celebration", "aftermath"}
 REPAIRABLE_VISUAL_ERRORS = (
@@ -189,8 +189,7 @@ ending 必须完整覆盖 cold_open 的时间窗口，保证正文末尾重新�
         "messages": [{"role": "user", "content": content}],
         "max_completion_tokens": 8192,
         "temperature": 0,
-        "thinking": {"type": "adaptive"},
-        "reasoning_split": True,
+        "thinking": {"type": "disabled"},
     }
     req = urllib.request.Request(
         ENDPOINT, data=json.dumps(payload).encode(),
@@ -198,7 +197,16 @@ ending 必须完整覆盖 cold_open 的时间窗口，保证正文末尾重新�
                  "Content-Type": "application/json"}, method="POST")
     with urllib.request.urlopen(req, timeout=180) as fh:
         data = json.loads(fh.read())
-    text = str(data["choices"][0]["message"]["content"]).strip()
+    choices = data.get("choices") or []
+    choice = choices[0] if choices else {}
+    message = choice.get("message") or {}
+    content = message.get("content")
+    if not isinstance(content, str) or not content.strip():
+        # Never promote reasoning-only or empty responses into visual evidence.
+        raise ValueError("MiniMax returned no final content; "
+                         f"finish_reason={choice.get('finish_reason')!r}; "
+                         f"message_fields={sorted(message)}")
+    text = content.strip()
     if text.startswith("```"):
         text = text.split("\n", 1)[1].rsplit("```", 1)[0]
     try:
