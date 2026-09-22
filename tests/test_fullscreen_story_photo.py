@@ -19,7 +19,7 @@ def test_photo_fills_canvas_but_evidence_keeps_subtitle_guard(tmp_path):
                    _photo_caption_safety='Faces above the caption; no evidence text below.')
     parsed = reel.parse_segments(spec, {'main': 'https://youtu.be/example'}, 'main')[0]
     assert not reel.evidence_card_overlaps_subtitle(spec)
-    canvas, box = reel.still_canvas_for_layout(Image.open(path), Image,
+    canvas, box = reel.still_canvas_for_layout(Image.open(path).convert('RGBA'), Image,
                                              full_bleed=parsed.full_bleed)
     assert box == (0, 0, 1080, 1440)
     assert canvas.getpixel((0, 0))[:3] == canvas.getpixel((500, 500))[:3]
