@@ -69,5 +69,6 @@
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-bouzkova-kartal-bjk-cup-2026-qf/bouzkova-kartal-bjk-cup-2026-qf.mp4",
-  "video_bytes": 64063981
+  "video_bytes": 64063981,
+  "_release_tag_note": "⚠️ 这个 Release tag（`reel-bouzkova-kartal-bjk-cup-2026-qf`）被**两份产物记录共用**：`output/2026-09-22/…`（记 64054894 字节，第一版封面是卡尔塔尔）和 `output/2026-09-23/…`（记 64063981 字节，封面换成布兹科娃的那一版）。来路：2026-09-22 账号所有者要求把封面主体换成赢家，重渲那一趟跑在 16:12 UTC ＝ **北京 9/23 00:12**，工作流按 `TZ=Asia/Shanghai date +%F` 拼目录，于是产物落进了新的日期目录，而 `gh release upload --clobber` 把 tag 上那份换掉了。\n**量过一次，没有在仓库里猜**（判据明说按日期、按字节数都会挑反）：`Range: bytes=0-1` → `Content-Range: bytes 0-1/64063981`，也就是 **tag 上现在是 `output/2026-09-23/…` 那一份**（64063981 字节）。\n**这一份就是当前那一份**：本目录记的 video_bytes 与量出来的总长相等。"
 }
