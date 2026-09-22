@@ -58,6 +58,9 @@ PLAYER_ZH: dict[str, str] = {
     "Grigor Dimitrov": "迪米特洛夫",
     "Tomas Machac": "马哈奇",
     "Alejandro Davidovich Fokina": "达维多维奇·福基纳",
+    # 2025 年退役，进不了 top500 那张表；`chengdu-ng-kouame` 的旁白要提他
+    # （「他的团队里有加斯奎特」），照 CLAUDE.md「表里没有的，定下来之后补进表里」。
+    "Richard Gasquet": "加斯奎特",   # 法国
     "Denis Shapovalov": "沙波瓦洛夫",
     "Alexei Popyrin": "波皮林",
     "Alex Michelsen": "米切尔森",
