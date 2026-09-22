@@ -114,59 +114,27 @@ jobs:
             echo "::notice::未配置 YT_COOKIES_TXT，只能靠 PO token + client 梯子"
           fi
 
-      # ⚠️ 要排在抽帧**之前**：sparse-checkout add 会把 HEAD 上那一版先铺回
-      # 工作区，反过来会拿旧内容盖掉刚生成的。
-      - name: 算目录
-        id: paths
-        run: |
-          OUT_DATE=$(TZ=Asia/Shanghai date +%F)
-          OUT_DIR="output/$OUT_DATE/frames/${{ github.event.inputs.slug }}"
-          echo "outdir=$OUT_DIR" >> "$GITHUB_OUTPUT"
-          git sparse-checkout add "$OUT_DIR" || true
-          mkdir -p "$OUT_DIR"
 
-      - name: 抽帧
+      - name: Download original video only
+        timeout-minutes: 8
         env:
           YT_COOKIES: ${{ steps.cookies.outputs.path }}
-          # 起来了就让 POT 那三档排在前面（`_ladder()` 按这个变量决定顺序）。
-          # 不设的话八档照跑，只是把最可能成的那几档排到了最后。
           YT_POT_PROVIDER: ${{ steps.pot.outputs.up }}
           PYTHONPATH: src
-          # ⚠️ 这两个走 env 不走 `${{ }}` 直插：值可能是空串，而空串插进
-          # `--start ""` 会让 argparse 吃到一个空参数。空就整个不给这个开关。
-          # （CLAUDE.md 记过 `${{ inputs.x }}` 直接拼进 run 正文的引号打架。）
-          GRAB_START: ${{ github.event.inputs.start }}
-          GRAB_END: ${{ github.event.inputs.end }}
+          SOURCE_URL: ${{ inputs.url }}
         run: |
-          RANGE=()
-          [ -n "$GRAB_START" ] && RANGE+=(--start "$GRAB_START")
-          [ -n "$GRAB_END" ] && RANGE+=(--end "$GRAB_END")
-          python tools/grab_frames.py "${{ github.event.inputs.url }}" \
-            -o "${{ steps.paths.outputs.outdir }}" \
-            --every "${{ github.event.inputs.every }}" \
-            --width "${{ github.event.inputs.width }}" \
-            "${RANGE[@]}"
-          ls -la "${{ steps.paths.outputs.outdir }}" | head -20
-
-      - name: 提交候选帧
-        run: |
-          OUTDIR="${{ steps.paths.outputs.outdir }}"
-          git config user.name "Claude"
-          git config user.email "noreply@anthropic.com"
-          # 稀疏模式下裸的 git add 只警告、退出码 0，产物会静默丢掉
-          git add --sparse "$OUTDIR"
-          python tools/check_staged_file_sizes.py
-          git diff --cached --quiet && { echo "没有新内容"; exit 0; }
-          git commit -m "frames: ${{ github.event.inputs.slug }} 候选帧"
-          for attempt in $(seq 1 5); do
-            git push origin "HEAD:${{ github.ref_name }}" && exit 0
-            git fetch origin "${{ github.ref_name }}"
-            git branch -f grabbed HEAD
-            git reset --hard "origin/${{ github.ref_name }}"
-            rm -rf "$OUTDIR"
-            git checkout grabbed -- "$OUTDIR"
-            git add --sparse "$OUTDIR"
-            git diff --cached --quiet || git commit -m "frames: ${{ github.event.inputs.slug }} 候选帧"
-            sleep $((attempt * 5 + RANDOM % 10))
-          done
-          echo "::error::连续 5 次推送失败"; exit 1
+          mkdir -p /tmp/original-video
+          python - <<'PY'
+          import os, sys, subprocess
+          from pathlib import Path
+          sys.path.insert(0, "tools")
+          from grab_frames import download
+          p = download(os.environ["SOURCE_URL"], Path("/tmp/original-video"))
+          subprocess.run(["ffprobe", "-v", "error", "-show_entries", "stream=codec_type,width,height:format=duration", "-of", "json", str(p)], check=True)
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: laver-original-video
+          path: /tmp/original-video/source.*
+          if-no-files-found: error
+          retention-days: 3
