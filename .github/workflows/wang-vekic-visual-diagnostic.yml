@@ -1,0 +1,56 @@
+name: Wang Vekic visual diagnostic
+on:
+  push:
+    branches: [codex/wang-vekic-singapore-reel]
+    paths: [.github/workflows/wang-vekic-visual-diagnostic.yml]
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          filter: blob:none
+          sparse-checkout: |
+            tools
+            src
+            skills
+            specs/reels/pending
+            output/2026-09-22/reel/wang-vekic-singapore-2026-r1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - uses: actions/cache/restore@v4
+        with:
+          path: ~/.cache/tennislive-sources
+          key: reel-src-wang-vekic-singapore-2026-r1-7117161ff07cc587
+      - run: pip install -q -e .
+      - name: Diagnose same-match visual request
+        env:
+          MINIMAX_API_KEY: ${{ secrets.MINIMAX_API_KEY }}
+        run: |
+          python - <<'PY'
+          import json,sys,os,urllib.error
+          from pathlib import Path
+          sys.path.insert(0,"tools")
+          from analyze_reel_visuals import ask_minimax,select_contact_sheets
+          base=Path("output/2026-09-22/reel/wang-vekic-singapore-2026-r1")
+          draft=json.loads(Path("specs/reels/pending/wang-vekic-singapore-2026-r1.draft.json").read_text())
+          report={}
+          try:
+              report["response"]=ask_minimax(draft,select_contact_sheets(list(base.glob("contact_*.jpg"))),None,json.loads((base/"probe.json").read_text()),os.environ["MINIMAX_API_KEY"])
+          except urllib.error.HTTPError as e:
+              report={"http_status":e.code,"response_body":e.read(4096).decode("utf-8","replace").replace(os.environ["MINIMAX_API_KEY"],"[REDACTED]")}
+          Path("visual-diagnostic.json").write_text(json.dumps(report,ensure_ascii=False,indent=2))
+          print(json.dumps(report,ensure_ascii=False))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: wang-vekic-source-and-diagnostic
+          path: |
+            ~/.cache/tennislive-sources/*.mp4
+            visual-diagnostic.json
+          retention-days: 7
