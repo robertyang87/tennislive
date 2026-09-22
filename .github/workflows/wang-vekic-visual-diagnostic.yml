@@ -1,46 +1,30 @@
-name: reel-model-benchmark
-
-# 只做影子练习和对比报告：不提交、不 dispatch render、不调用 PushPlus。
+name: Wang Vekic visual diagnostic
 on:
   workflow_dispatch: {}
-  push:
-    branches: [main]
-    paths:
-      - "skills/tennis-reel-production/**"
-      - "tools/draft_spec.py"
-      - "tools/analyze_reel_visuals.py"
-      - "tools/benchmark_reel_models.py"
-      - "tools/reel_skill.py"
-      - ".github/workflows/reel-model-benchmark.yml"
-
 permissions:
   contents: read
-
 jobs:
-  compare:
+  inspect:
     runs-on: ubuntu-latest
     timeout-minutes: 35
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 1
           filter: blob:none
           sparse-checkout: |
+            .github
+            tools
+            tests
+            src
             assets
-            output/2026-08-23/reel/fils-cobolli-cincinnati-2026-sf
             skills
             specs
-            src
-            tools
-
+            output/2026-08-23/reel/fils-cobolli-cincinnati-2026-sf
+            output/2026-09-22/reel/wang-vekic-singapore-2026-r1
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-          cache: pip
-
-      - name: 安装只读基准依赖
-        run: pip install -q -e . "yt-dlp[default]>=2026.7.4"
-
+      - run: pip install -q -e ".[dev]" "yt-dlp[default]>=2026.7.4"
       - name: 缓存 apt 安装包
         uses: actions/cache@v4
         with:
@@ -56,7 +40,6 @@ jobs:
         run: |
           source tools/ci_apt_install.sh
           apt_install_cached ffmpeg
-
       - uses: actions/cache@v4
         with:
           path: ~/.cache/tennislive-sources
@@ -89,18 +72,43 @@ jobs:
                   cookie.unlink(missing_ok=True)
           assert list(base.glob("contact_*.jpg")), "Reference still has no images"
           PY
-
-
-      - name: DeepSeek + MiniMax 复做已发布样片并对比
+      - name: Verify panel and existing production gates
+        run: python -m pytest tests/test_visual_panels.py tests/test_visual_duration_citation.py tests/test_reel_production_gates.py -q
+      - name: Published reference shadow benchmark with final-content guard
         env:
-          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
           MINIMAX_API_KEY: ${{ secrets.MINIMAX_API_KEY }}
-        run: python tools/benchmark_reel_models.py --outdir /tmp/reel-model-benchmark
-
-      - name: 上传候选 spec 与逐项对比报告
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+        run: python tools/benchmark_reel_models.py --outdir visual-benchmark
+      - name: Audit match only after benchmark passes
+        env:
+          MINIMAX_API_KEY: ${{ secrets.MINIMAX_API_KEY }}
+        run: |
+          python - <<'PY'
+          import json,sys,os,urllib.request
+          from pathlib import Path
+          sys.path.insert(0,"tools")
+          from analyze_reel_visuals import verified_minimax_report,select_contact_sheets,evidence_hash,AUDIT_VERSION
+          base=Path("output/2026-09-22/reel/wang-vekic-singapore-2026-r1")
+          draft=json.loads(Path("specs/reels/pending/wang-vekic-singapore-2026-r1.draft.json").read_text())
+          cover=Path("wang-current-match.jpg")
+          urllib.request.urlretrieve("https://wx1.sinaimg.cn/large/008CZ4NUgy1ihcimp59qxj31a50wrtfe.jpg",cover)
+          draft.setdefault("cover",{}).setdefault("portrait",{})["image"]=str(cover)
+          draft["_cover_brief"]={"preferred_subject":"王欣瑜","preferred_moment":"winner_celebration"}
+          frames=select_contact_sheets(list(base.glob("contact_*.jpg")))
+          report,problems=verified_minimax_report(draft,frames,cover,json.loads((base/"probe.json").read_text()),os.environ["MINIMAX_API_KEY"])
+          report.update(input_sha256=evidence_hash(frames,cover),audit_version=AUDIT_VERSION,cover_image=str(cover))
+          Path("visual-diagnostic.json").write_text(json.dumps({"report":report,"problems":problems},ensure_ascii=False,indent=2))
+          print(json.dumps({"report":report,"problems":problems},ensure_ascii=False))
+          # This is an audit only. A third-party image is not silently promoted
+          # to an official photo, and failed evidence never reaches production.
+          PY
+      - uses: actions/upload-artifact@v4
         if: always()
-        uses: actions/upload-artifact@v4
         with:
-          name: reel-model-benchmark-${{ github.run_number }}
-          path: /tmp/reel-model-benchmark
-          retention-days: 30
+          name: wang-visual-repair-benchmark
+          path: |
+            visual-benchmark/
+            output/2026-08-23/reel/fils-cobolli-cincinnati-2026-sf/contact_*.jpg
+            visual-diagnostic.json
+            wang-current-match.jpg
+          retention-days: 7

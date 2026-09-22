@@ -60,3 +60,25 @@ def test_fetch_pbp接住SystemExit并重试宽窗口(tool, monkeypatch, tmp_path
     assert ok is True, "重试 7 天窗口后该找到"
     assert len(calls) == 2, f"该先试 3 天再试 7 天，实际调了 {len(calls)} 次"
     assert (tmp_path / "pbp.json").is_file(), "拿到逐分要写 pbp.json"
+
+
+
+def test_scoreboard_http_failure_does_not_write_partial_alignment(tool, monkeypatch, tmp_path):
+    import urllib.error
+    import read_scoreboard
+
+    monkeypatch.setenv("MINIMAX_API_KEY", "test-only")
+    for name in ("contact_00.jpg", "contact_01.jpg"):
+        (tmp_path / name).touch()
+    calls = []
+
+    def fake_ask(frame, key):
+        calls.append(frame)
+        if len(calls) == 1:
+            return [{"t": 1, "games": "1-1", "points": "0-30"}]
+        raise urllib.error.HTTPError("https://example.invalid", 500, "unavailable", {}, None)
+
+    monkeypatch.setattr(read_scoreboard, "_ask", fake_ask)
+    assert tool.read_scoreboard(tmp_path) is False
+    assert len(calls) == 2
+    assert not (tmp_path / "scoreboard.json").exists()

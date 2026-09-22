@@ -4762,6 +4762,19 @@ def build_outro(outdir: Path, seconds: float, tail: float = 0.0) -> Path:
     `AUDIO_RATE`/`FPS_EXPR`）——`concat` 那一步只认第一个文件的流参数，
     差一项就会拼出坏流，而它不报错。
     """
+    if outro_page.MASTER.is_file():
+        dest = outdir / "part_outro.mp4"
+        with stage("片尾母版转码"):
+            run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+                "-i", str(outro_page.MASTER), "-f", "lavfi", "-i",
+                f"anullsrc=r={AUDIO_RATE}:cl=stereo",
+                "-map", "0:v:0", "-map", "1:a:0",
+                "-vf", f"fps={FPS_EXPR},setsar=1,tpad=stop_mode=clone:stop_duration={seconds + tail}",
+                "-t", str(seconds + tail), "-c:v", "libx264",
+                "-preset", PART_PRESET, "-crf", PART_CRF,
+                "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "160k",
+                "-ar", AUDIO_RATE, str(dest))
+        return dest
     with stage("片尾渲染"):
         # **动效合成和解说片共用 `outro_page.render_clip`。** 两条线的编码参数
         # 不一样（这儿是中间产物的 `ultrafast`/`crf 12`，解说片按静图调），

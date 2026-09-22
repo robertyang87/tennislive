@@ -1,0 +1,74 @@
+{
+  "response": {
+    "cold_open": {
+      "start": 251.48,
+      "end": 262.76,
+      "kind": "match_point",
+      "winner_visible": true,
+      "reason": "251.48–258.76s为比赛最后回合场地全景与王欣瑜近景（246.5s发球准备、250.5s近景正面击球、252.5–258.5s比分与场上回合），裁判席显示比分6-1 5-2；260.5–262.5s王欣瑜穿酒红帽+酒红连衣裙可见，且画面随后切到赛后握手，确认为最后一分即赛点。",
+      "confidence": 0.82
+    },
+    "ending": {
+      "start": 251.48,
+      "end": 295.08,
+      "kind": "winner_celebration",
+      "winner_visible": true,
+      "reason": "251.48–262.5s比赛最后回合及赛点；262.5–274.5s维基奇与王欣瑜赛后握手+王欣瑜微笑致意（手拍手背）；276.5–282.5s王欣瑜挥手向观众致谢近景；284.5–294.5s王欣瑜在网前向裁判/对手致意，背景比分板显示最终比分VEKIC 1–6 2–6、WANG 6–1 6–2 MATCH POINT为最终结论。命中王欣瑜完整庆祝与网前致意/握手余波，窗口完整覆盖冷开场。",
+      "confidence": 0.83
+    },
+    "cover": {
+      "same_match": true,
+      "subject": "王欣瑜",
+      "moment": "winner_celebration",
+      "wrong_or_old": false,
+      "reason": "封面人物穿酒红帽+酒红连衣裙，与视频中王欣瑜的着装一致；画面为单手扶拍、向场边挥手微笑的赛后致意动作，与视频276.5–282.5s王欣瑜挥手致谢镜头一致；背景深蓝色图案墙面与视频赛后背景匹配。另一张官方帖白帽图已被排除。",
+      "confidence": 0.82
+    }
+  },
+  "validated": {
+    "model": "MiniMax-M3",
+    "status": "waiting",
+    "visual_status": "waiting",
+    "retryable": false,
+    "cold_open": {
+      "start": 251.48,
+      "end": 262.76,
+      "kind": "match_point",
+      "winner_visible": true,
+      "reason": "251.48–258.76s为比赛最后回合场地全景与王欣瑜近景（246.5s发球准备、250.5s近景正面击球、252.5–258.5s比分与场上回合），裁判席显示比分6-1 5-2；260.5–262.5s王欣瑜穿酒红帽+酒红连衣裙可见，且画面随后切到赛后握手，确认为最后一分即赛点。",
+      "confidence": 0.82
+    },
+    "ending": {
+      "start": 251.48,
+      "end": 295.08,
+      "kind": "winner_celebration",
+      "winner_visible": true,
+      "reason": "251.48–262.5s比赛最后回合及赛点；262.5–274.5s维基奇与王欣瑜赛后握手+王欣瑜微笑致意（手拍手背）；276.5–282.5s王欣瑜挥手向观众致谢近景；284.5–294.5s王欣瑜在网前向裁判/对手致意，背景比分板显示最终比分VEKIC 1–6 2–6、WANG 6–1 6–2 MATCH POINT为最终结论。命中王欣瑜完整庆祝与网前致意/握手余波，窗口完整覆盖冷开场。",
+      "confidence": 0.83
+    },
+    "cover": {
+      "same_match": true,
+      "subject": "王欣瑜",
+      "moment": "winner_celebration",
+      "wrong_or_old": false,
+      "reason": "封面人物穿酒红帽+酒红连衣裙，与视频中王欣瑜的着装一致；画面为单手扶拍、向场边挥手微笑的赛后致意动作，与视频276.5–282.5s王欣瑜挥手致谢镜头一致；背景深蓝色图案墙面与视频赛后背景匹配。另一张官方帖白帽图已被排除。",
+      "confidence": 0.82
+    },
+    "problems": [
+      "cold_open 理由引用窗口外时间：[246.5, 250.5]",
+      "ending 必须是 3-30 秒的完整收官窗口"
+    ]
+  },
+  "problems": [
+    "cold_open 理由引用窗口外时间：[246.5, 250.5]",
+    "ending 必须是 3-30 秒的完整收官窗口"
+  ],
+  "review": {
+    "run": "https://github.com/robertyang87/tennislive/actions/runs/35713230326",
+    "status": "blocked_after_bounded_correction",
+    "automatic_promotion_allowed": false,
+    "cover_source": "https://www.sina.cn/news/detail/5345982256253548.html",
+    "cover_image": "https://wx1.sinaimg.cn/large/008CZ4NUgy1ihcimp59qxj31a50wrtfe.jpg",
+    "note": "Candidate is same-match broadcast-like image from a third-party post, not established as an official photographic original. Do not label it official. Manual source review confirms match point starts251.48, winner burgundy visor; 263s is Vekic. No formal render or push permitted from this failed report."
+  }
+}

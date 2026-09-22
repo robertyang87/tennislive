@@ -1723,7 +1723,7 @@ __SCRIM__
        细 3：Noto Sans SC 400 **0.818** ｜ TL Numeral 500 0.584 ｜ 600 0.535
    Barlow Condensed 700 在粗 6 上也是 0.728，但它是压缩字，细 3 只有 0.426。
    ⚠️ 还有一个理由：`TL Numeral` 只有 500/600 两档，**粗细拉不开**。 */
-.score-number{position:relative;flex:0 0 __SCORE_SET_COL_PX__px;text-align:right;
+.score-number{position:relative;width:__SCORE_SET_COL_PX__px;flex:0 0 __SCORE_SET_COL_PX__px;text-align:right;
  font-family:'TL Score','TL Sans SC',sans-serif;font-size:__SCORE_NUM_PX__px;
  font-weight:__SCORE_LOSE_WEIGHT__}
 /* 赢下那一盘的数字加粗，输掉那一盘用 **Light（300）**——参考图分输赢

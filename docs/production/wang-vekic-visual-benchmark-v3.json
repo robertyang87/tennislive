@@ -1,0 +1,107 @@
+{
+  "run_id": 35719608911,
+  "status": "rejected",
+  "automatic_promotion_allowed": false,
+  "report": {
+    "benchmark": "fils-cobolli-cincinnati-2026-sf",
+    "original": {
+      "segments": 8,
+      "cold_open": [
+        317.72,
+        329.5
+      ],
+      "ending": [
+        317.5,
+        329.5
+      ],
+      "cover_subject": "菲斯",
+      "published": true
+    },
+    "deepseek": {
+      "score": 0,
+      "pass": false,
+      "issues": [
+        "没有使用基准事实：三次交手",
+        "写入事实包不存在的示例情节：决胜盘",
+        "算术关系错误：6比3相差3分，不是11分"
+      ],
+      "editorial": {
+        "hook": [
+          "排名低十一位",
+          "三胜零负"
+        ],
+        "question": "排名差十一位，他凭什么三连胜科博利？",
+        "thesis": "排名靠后的菲斯用22比3的制胜分碾压，把三种场地的H2H打成3比0，首次杀进大师赛决赛。",
+        "beats": [
+          "菲斯排名世界第21，科博利第10，还顶着7号种子。此前两次交手，菲斯都赢了。但今天这场，制胜分22比3，科博利几乎打不出自己的分数。",
+          "总得分56对45，菲斯只多11分。他27个非受迫失误，比对手还多5个。科博利拿到更多菲斯送的分数，却没能把比赛拖进决胜盘。",
+          "6比3、6比4，费时1小时8分钟。菲斯生涯第一次站上大师赛决赛，此前6次巡回赛决赛全在250和500级别。"
+        ],
+        "chapters": [
+          "排名差和H2H",
+          "总得分只差11分",
+          "大师赛决赛首秀"
+        ],
+        "human_context": "转播原声点明这是菲斯的生涯突破：'It is Fils into the final here in Cincinnati. He breaks new ground.'",
+        "narration": [
+          "排名低十一位的菲斯，制胜分22比3碾压科博利。",
+          "总得分56对45，菲斯只多11分，却拿下比赛。",
+          "菲斯生涯首次打进大师赛决赛，仅用68分钟。"
+        ]
+      },
+      "push": {
+        "summary": "菲斯两盘横扫首进大师赛决赛",
+        "lead": "菲斯用22比3的制胜分全面压制科博利，6比3、6比4拿下比赛。他只比对手多拿11分，非受迫失误还多5个，却只用68分钟就结束战斗，首次打进大师赛决赛。"
+      }
+    },
+    "minimax": {
+      "score": 20,
+      "pass": false,
+      "issues": [
+        "封面置信度 0.72 低于 0.80",
+        "封面人物应为 菲斯，模型识别为 罗西菲尔克",
+        "封面没有同时认对本场、菲斯和赢家庆祝情绪"
+      ],
+      "report": {
+        "model": "MiniMax-M3",
+        "status": "waiting",
+        "visual_status": "waiting",
+        "retryable": false,
+        "cold_open": {
+          "start": 317.72,
+          "end": 329.84,
+          "kind": "match_point",
+          "winner_visible": true,
+          "reason": "318.5s 菲斯（浅色上衣）走向网前；326.5s 罗西菲尔克低头走向球网；328.5s 菲斯神情严肃接近镜头；328.5s-329.84s 比分板显示 COBOLLI 3 / FILS 6 即第二盘收官。塞点至赛后赛果在窗口内完整呈现。",
+          "confidence": 0.88
+        },
+        "ending": {
+          "start": 317.72,
+          "end": 333.08,
+          "kind": "aftermath",
+          "winner_visible": true,
+          "reason": "330.5s 两人走向球网准备握手；332.5s 在网前相互拥抱（菲斯拥抱罗西菲尔克）；333.08s TennisTV 品牌 outro 卡片出现。窗口完全覆盖冷开场，并包含赢家庆祝、输家反应与完整握手。",
+          "confidence": 0.9
+        },
+        "cover": {
+          "same_match": true,
+          "subject": "罗西菲尔克",
+          "moment": "winner_celebration",
+          "wrong_or_old": false,
+          "reason": "候选人穿浅蓝色 Lacoste Polo、戴白色护腕、卷发蓄须，右手竖起拇指——与 318.5s/326.5s/324.5s 烧录画面中身穿同件上衣、戴同款护腕的球员完全一致；蓝地球场与 Cincinnati 赛事标识也与集锦一致。唯一疑点：封面人物兴奋伸手庆祝而画面中对应球员多为失落形象，需依赖外部信息判定其为赢家。",
+          "confidence": 0.72
+        },
+        "problems": [
+          "封面置信度 0.72 低于 0.80",
+          "封面人物应为 菲斯，模型识别为 罗西菲尔克"
+        ],
+        "model_attempts": 1
+      }
+    },
+    "candidate_dry_run": {
+      "status": "not_run",
+      "reason": "模型评分未同时达标"
+    },
+    "overall_pass": false
+  }
+}
