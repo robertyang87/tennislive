@@ -231,13 +231,6 @@
     "page": "https://www.lta.org.uk/fan-zone/gb-teams/billie-jean-king-cup/news/2026/finals-great-britain-vs-czechia-results-updates/",
     "note": "文件名 `2026-sonay-kartal-bjk-cup-czechia.jpg` 自证四要素（年份／球员／赛事／对手国），挂在 LTA 这场 tie 实时战报页的头图位。2502×1668，铺 1080×1440 是 0.86× 缩小，zoom 1.12 后 0.97×，没有放大。画面自证：胸口米字旗队徽、深蓝英国队战袍、白帽、握拍、身后挡板与看台、左侧转播摄像机——比赛中的场上画面。⚠️ 另与源片交叉核过是同一场：源片里卡尔塔尔的着装同为白帽＋深蓝上衣（probe `contact_04` 250.5/252.5、`contact_06` 370.5）。"
   },
-  "noskova-bjk-cup-2026-qf-shenzhen.jpg": {
-    "artist": "比利·简·金杯官方图，摄影署名站上未给",
-    "license": "billiejeankingcup.com 官网新闻图片，本号非商业编辑使用",
-    "mirror": "https://images.ctfassets.net/gd35ic6j47k5/5a1PZLGC2rNnMKZWCJzbaT/d4e03c5b53bef23b29ed7169c2d2ca1e/LZ1_9855_cUIGIHWX.JPG",
-    "page": "https://www.billiejeankingcup.com/en/news/live-czechia-v-great-britain-2026-billie-jean-king-cup-finals-quarter-final",
-    "note": "站内 `alt` 自己写着 `Noskova after Boulter win`，挂在这场 tie 实时战报页的 `og:image` 位（Contentful 条目 `LZ1_9855_cUIGIHWX.JPG`，3851×2166，原图入库）。铺 1080×1440 是 0.67× 缩小，zoom 1.18 后 0.79×，**没有放大**。\n画面自证：身后蓝色挡板印着 `CZE`，捷克替补席一排队友在鼓掌，她穿蓝色 Yonex 队服、胸前 `RADO` 与 `OKsystem`、白色遮阳帽，右臂举起向看台致意。\n⚠️ 与源片交叉核过是同一场：`contact_07` 460.5s 她发球的特写、`contact_03` 202.5s 赛后特写，着装与赞助逐项一致；她的 WTA 官方头像 `wta-329668.jpg` 穿的也是同一件队服。\n⚠️ 取图要带 `RSC: 1` 请求头去拉那个战报页，不然只拿得到导航和赞助商。\n⚠️ 同一页上 `LZ1_9625_x7eCnOsP.JPG`（4258×2395，alt `Noskova and Boulter shake hands`）没选：网前握手两个人都在画面里，solo 版式放上去等于把输的那一边也印成主角。"
-  },
   "bouzkova-bjk-cup-2026-qf-shenzhen.jpg": {
     "artist": "比利·简·金杯官方（ITF，billiejeankingcup.com 的 Contentful 图库；原文件名 LZ1_1873_q6IhUnnK.JPG 是摄影师相机原名，站上未给摄影署名）",
     "license": "赛事主办方官方新闻配图，本号非商业编辑使用；来源与出处全程记录",
@@ -248,6 +241,23 @@
     "size": "3317×1866（铺 1080×1440 是 0.772× 缩小，zoom 1.0，不用写 _low_res_why）",
     "used_for": "specs/reels/bouzkova-kartal-bjk-cup-2026-qf.json 封面（2026-09-22 账号所有者要求把主体从卡尔塔尔换成布兹科娃之后换上的）",
     "note": "⚠️ 与源片交叉核过是同一场：源片第 ⑫ 段 400.5s 那一格裁出来放大看过，布兹科娃同为白发带＋捷克队蓝背心。同批没选的：LZ1_2129_6TGKt6WZ.JPG（4406×2478，场上握拳，但挂在赛前前瞻稿上，是不是这一场坐实不了）、LZ1_9855 / LZ1_9625（诺斯科娃对博尔特那场，人物不对）。"
-
+  },
+  "bouzkova-bjk-cup-2026-qf-shenzhen-play.jpg": {
+    "artist": "比利·简·金杯官方（ITF，billiejeankingcup.com 的 Contentful 图库；原文件名 LZ1_2129_6TGKt6WZ.JPG 是摄影师相机原名，站上未给摄影署名）",
+    "license": "赛事主办方官方新闻配图，本号非商业编辑使用；来源与出处全程记录",
+    "source": "billiejeankingcup.com 这个 tie 的稿子正文配图，站内 alt 自证「Marie Bouzkova during GB match」。⚠️ 官网正文是 JS 壳，图和正文在 self.__next_f.push([1,\"…\"]) 的 RSC 分片里，要拼起来再 unicode_escape 解码才取得到。画面自证：蓝色捷克队战袍＋胸前捷克国旗队徽、白色 Joma 发带、蓝色 Joma 护腕、红色短裤、手里 Yonex 球拍握拳，背景看台观众与深色挡板——比赛中的场上画面。",
+    "page": "https://www.billiejeankingcup.com/en/news/czechia-v-great-britain-2026-billie-jean-king-cup-finals-quarter-final-preview",
+    "url": "https://images.ctfassets.net/gd35ic6j47k5/4VaxoseJl9PaZ5oupH4kvN/9a78ff72a2d00a271ac3d589813948de/LZ1_2129_6TGKt6WZ.JPG",
+    "date": "2026-09-22",
+    "size": "4406×2478（铺 1080×1440 是 0.581× 缩小，余量比庆祝那张更大）",
+    "used_for": "次选 / 段内配图。封面用的是 bouzkova-bjk-cup-2026-qf-shenzhen.jpg（庆祝那张）",
+    "note": "⚠️ 我第一版把这张判成「是不是这一场坐实不了」（理由是它挂在赛前前瞻稿上），账号所有者 2026-09-22 指出两张都能用，复核之后确认**这张同样是这一场**：官网 alt 点名「during GB match」；捷克 2-0 赢下 tie，布兹科娃在深圳只打了这一场（第二场诺斯科娃，双打没打），所以「她在这个赛事场上」只能是这一场；着装与已坐实的庆祝那张逐项同款，而后者又和源片 400.5s 核过。⚠️ 没查实的细节，不当证据：帧号 1873（庆祝）< 2129（场上），按顺序拍的话场上那张反在庆祝之后，可能是分卡/分机身编号。"
+  },
+  "noskova-bjk-cup-2026-qf-shenzhen.jpg": {
+    "artist": "比利·简·金杯官方图，摄影署名站上未给",
+    "license": "billiejeankingcup.com 官网新闻图片，本号非商业编辑使用",
+    "mirror": "https://images.ctfassets.net/gd35ic6j47k5/5a1PZLGC2rNnMKZWCJzbaT/d4e03c5b53bef23b29ed7169c2d2ca1e/LZ1_9855_cUIGIHWX.JPG",
+    "page": "https://www.billiejeankingcup.com/en/news/live-czechia-v-great-britain-2026-billie-jean-king-cup-finals-quarter-final",
+    "note": "站内 `alt` 自己写着 `Noskova after Boulter win`，挂在这场 tie 实时战报页的 `og:image` 位（Contentful 条目 `LZ1_9855_cUIGIHWX.JPG`，3851×2166，原图入库）。铺 1080×1440 是 0.67× 缩小，zoom 1.18 后 0.79×，**没有放大**。\n画面自证：身后蓝色挡板印着 `CZE`，捷克替补席一排队友在鼓掌，她穿蓝色 Yonex 队服、胸前 `RADO` 与 `OKsystem`、白色遮阳帽，右臂举起向看台致意。\n⚠️ 与源片交叉核过是同一场：`contact_07` 460.5s 她发球的特写、`contact_03` 202.5s 赛后特写，着装与赞助逐项一致；她的 WTA 官方头像 `wta-329668.jpg` 穿的也是同一件队服。\n⚠️ 取图要带 `RSC: 1` 请求头去拉那个战报页，不然只拿得到导航和赞助商。\n⚠️ 同一页上 `LZ1_9625_x7eCnOsP.JPG`（4258×2395，alt `Noskova and Boulter shake hands`）没选：网前握手两个人都在画面里，solo 版式放上去等于把输的那一边也印成主角。"
   }
 }
