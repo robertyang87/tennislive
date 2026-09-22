@@ -1,0 +1,28 @@
+[出网] 挂上代理 CA（/usr/local/share/ca-certificates/nebula-dns.crt）→ /root/.cache/tennislive-ca/bundle.pem；证书链这一关过了
+[片长] 53.6s = 0 分 53 秒，按实测 9230 kb/s 估 59 MiB —— 成片一律走 Release 附件，不进 git
+[dry-run] spec 形状没问题：12 段，画面共 52.4s
+
+[查选段] **一份 probe.json 都没认领上**——这一段没查。
+  probe 把切点、死球、片长都算好并提交进仓库了，按源片 URL 认领；认不上多半是还没跑过 probe，或者 spec 里的 `source_url` 换过了。
+[dry-run] ⚠️ 算不出真推送会拼的标题（从 work/recut 里取不到日期，目录该长成 output/YYYY-MM-DD/…；产物不按日期分目录的线（如 output/interviews/<slug>/）请显式传 --date）——**用占位标题估**：标题不算进 1000 字上限，所以正文字数和真推送一致，不会因此变松
+[dry-run] 文案 federer-on-business.xhs.txt：正文 232 字（上限 1000）、tag 5 个（上限 5）
+
+[估旁白] 11 段有旁白（离线估，误差 ±2.2s）
+  第  1 段 画面   5.0s 估旁白  4.41s 余量 +0.57s ← 悬，跑一次 mode=narration
+  第  2 段 画面   5.2s 估旁白  4.40s 余量 +0.75s ← 悬，跑一次 mode=narration
+  第  3 段 画面   5.0s 估旁白  3.75s 余量 +1.25s ← 悬，跑一次 mode=narration
+  第  5 段 画面   3.0s 估旁白  2.43s 余量 +0.60s ← 悬，跑一次 mode=narration
+  第  6 段 画面   4.2s 估旁白  3.58s 余量 +0.58s ← 悬，跑一次 mode=narration
+  第  7 段 画面   4.7s 估旁白  4.39s 余量 +0.30s ← 悬，跑一次 mode=narration
+  第  8 段 画面   5.1s 估旁白  4.23s 余量 +0.85s ← 悬，跑一次 mode=narration
+  第  9 段 画面   3.3s 估旁白  2.76s 余量 +0.53s ← 悬，跑一次 mode=narration
+  第 10 段 画面   4.2s 估旁白  3.75s 余量 +0.48s ← 悬，跑一次 mode=narration
+  第 11 段 画面   4.3s 估旁白  3.41s 余量 +0.94s ← 悬，跑一次 mode=narration
+  第 12 段 画面   4.9s 估旁白  3.91s 余量 +0.95s ← 悬，跑一次 mode=narration
+
+第 [1, 2, 3, 5, 6, 7, 8, 9, 10, 11, 12] 段落在估算的误差里，**这条离线估判不了**。开跑之前用真语音量一次：
+  match-reel 工作流 mode=narration（或本地 `render --check-narration`，要能联网）
+
+[看画面] 这一条只查数。要看**每一段窗口里到底是什么画面**：
+  PYTHONPATH=src python3 tools/preview_segments_local.py --slug federer-on-business
+  （本地，几秒钟；改了哪几段就 `--seg 3,7` 只看那几段）
