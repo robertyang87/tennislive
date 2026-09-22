@@ -464,6 +464,18 @@ def apply_story(draft: dict, report: dict, caption_rows: list[tuple[float, str]]
         "narration": last_line, "fit": "crop",
         "_why": f"正文重新兑现冷开场的完整结局：{ending.get('reason', '')}",
     }
+    # A reviewed silent winning point must survive editorial assembly. Only
+    # extend across an explicitly preserved, overlapping source interval; do
+    # not invent missing footage or replace the model's evidence timestamps.
+    for segment in draft.get("segments") or []:
+        if segment.get("_preserve_source_window") is not True:
+            continue
+        start, end = float(segment["start"]), float(segment["end"])
+        if start < end and start <= last["end"] and end >= last["start"]:
+            last["start"] = min(last["start"], start)
+            last["end"] = max(last["end"], end)
+            last["_preserve_source_window"] = True
+            last["_why"] += "；保留人工逐帧核实的完整制胜分及赛后反应。"
     draft["segments"] = [first, *body, last]
     draft["_visual_evidence"] = report
     draft["_segments_source"] = (
