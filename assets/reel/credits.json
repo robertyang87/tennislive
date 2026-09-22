@@ -216,5 +216,12 @@
     "mirror": "https://photoresources.wtatennis.com/photo-resources/2026/08/07/b83b67fe-62d7-482e-8b50-b5d3fd3117db/Zhang-R3-Julian-Avram.jpg?width=4000",
     "note": "WTA 官网 2026-08-07 那篇「Zhang snaps seven-match losing streak to Putintseva」视频页挂的头图，文件名 `Zhang-R3-Julian-Avram.jpg` 自证**球员、轮次、摄影师**，路径日期 2026/08/07 ＝ 多伦多 WTA1000 第三轮的比赛日。4000×2667，铺 1080×1440 是 0.54× 缩小，不用写 `_low_res_why`。\n\n四道闸门：① 精准——WTA 自己的 CMS 把这张图挂在这条集锦上，文件名里的 `Zhang` 在 WTA 赛事里只可能是张帅（张之臻是 ATP）；② 在比赛中——反手击球中，球在拍面上；③ 冲击力——近景特写，表情用力，李宁帽和队服看得清，背景是 NATIONAL BANK OPEN 的深蓝挡风布；④ 清晰度——4000px 相机原图。\n\n⚠️ **取原图必须带 `?width=4000`**：不带参数是 400 Bad Request，换成 og:image 那个 `/wta/photo/<uuid>/` 前缀是 403——两种失败都不长得像「这张图不存在」。",
     "page": "https://www.wtatennis.com/videos/4553297/zhang-snaps-seven-match-losing-streak-to-putintseva-into-toronto-second-round"
+  },
+  "kartal-bjk-cup-2026-qf-shenzhen.jpg": {
+    "artist": "LTA（英国网球协会）官方图，摄影署名站上未给",
+    "license": "LTA 官网新闻图片，本号非商业编辑使用",
+    "mirror": "https://www.lta.org.uk/siteassets/news/2026/september/2026-sonay-kartal-bjk-cup-czechia.jpg",
+    "page": "https://www.lta.org.uk/fan-zone/gb-teams/billie-jean-king-cup/news/2026/finals-great-britain-vs-czechia-results-updates/",
+    "note": "文件名 `2026-sonay-kartal-bjk-cup-czechia.jpg` 自证四要素（年份／球员／赛事／对手国），挂在 LTA 这场 tie 实时战报页的头图位。2502×1668，铺 1080×1440 是 0.86× 缩小，zoom 1.12 后 0.97×，没有放大。画面自证：胸口米字旗队徽、深蓝英国队战袍、白帽、握拍、身后挡板与看台、左侧转播摄像机——比赛中的场上画面。⚠️ 另与源片交叉核过是同一场：源片里卡尔塔尔的着装同为白帽＋深蓝上衣（probe `contact_04` 250.5/252.5、`contact_06` 370.5）。"
   }
 }

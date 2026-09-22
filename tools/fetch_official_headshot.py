@@ -16,6 +16,9 @@
        ——这个域名是从球员主页 HTML 里 `headshots/<id>.jpg` 这个模式反查出来的
        （`www.wtatennis.com/players/<id>/<slug>` 页面源码里能找到），
        接口本身不接受 name 参数，必须先查到 id。
+       ⚠️ **后缀两种都有，没有规律，所以两种都要试**（`WTA_HEADSHOT_EXTS`）：
+       布兹科娃 320983 是 `.jpg`，卡尔塔尔 329918 只有 `.png`。2026-09-22 之前
+       这里只拼 `.jpg`，后者报的 404 被读成了「这个人没有官方头像」。
 
 **ATP**——没有按姓名搜索的接口，ID 要事先知道（球员主页 URL 里带着）：
     `atptour.com/en/players/<slug>/<ID>/overview`
@@ -35,6 +38,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import urllib.error
 import urllib.request
 from pathlib import Path
 
@@ -76,23 +80,50 @@ def wta_player_id(name: str) -> int:
         f"搜到的候选：{[r.get('fullName') for r in data.get('content') or []]}")
 
 
+# ⚠️ **这个 blob 上两种后缀都有货，而且没有规律**：布兹科娃（320983）是 `.jpg`，
+# 卡尔塔尔（329918）只有 `.png`。原来这里只拼 `.jpg`，于是后者一律报
+# `404 The specified blob does not exist`——**而那句话和「这个人没有官方头像」
+# 长得一模一样**（CLAUDE.md「空结果 ≠ 不存在」）。
+#
+# ⚠️⚠️ 它已经造出过一条**假的「查空」**：`bartunkova-charaeva` 的 `_no_stats_why`
+# 写着「`fetch_official_headshot.py wta` 对 330364 和 329198 都返回 404」——
+# 2026-09-22 逐个后缀量过，**330364（巴尔通科娃）有 `.png`**，只有 329198
+# （恰拉耶娃）是两个后缀都真没有。也就是说那条注解的**结论**（缺一张就画不成
+# 这张图）仍然成立，**理由却有一半是编的**——CLAUDE.md「编出来的判据 ＋ 正确的
+# 结论」记的正是这种自带免检的形状。那条片子已发，不重渲，只把账记在这儿。
+#
+# 现在两个后缀都试，报错时把两条都打出来，让「真的没有」自己证明自己。
+WTA_HEADSHOT_EXTS = ("jpg", "png")
+
+
 def fetch_wta(name: str, out_dir: Path = OUT_DIR) -> Path:
     pid = wta_player_id(name)
-    dest = out_dir / f"wta-{pid}.jpg"
-    if dest.is_file():
-        print(f"[头像] 命中缓存 {dest}")
+    for ext in WTA_HEADSHOT_EXTS:
+        dest = out_dir / f"wta-{pid}.{ext}"
+        if dest.is_file():
+            print(f"[头像] 命中缓存 {dest}")
+            return dest
+    tried: list[str] = []
+    for ext in WTA_HEADSHOT_EXTS:
+        url = f"https://wtafiles.blob.core.windows.net/images/headshots/{pid}.{ext}"
+        try:
+            data = _get(url)
+        except urllib.error.HTTPError as exc:  # 404 只说明这个后缀没有
+            tried.append(f"{url} → HTTP {exc.code}")
+            continue
+        n = _distinct_colors(data)
+        if n < 20:
+            raise SystemExit(
+                f"{name}（WTA id={pid}）取到的图只有 {n} 种颜色，像是占位剪影，"
+                f"不是真头像：{url}")
+        dest = out_dir / f"wta-{pid}.{ext}"
+        out_dir.mkdir(parents=True, exist_ok=True)
+        dest.write_bytes(data)
+        print(f"[头像] {name} → {dest}（WTA id={pid}，{n} 种颜色，{len(data)} 字节）")
         return dest
-    url = f"https://wtafiles.blob.core.windows.net/images/headshots/{pid}.jpg"
-    data = _get(url)
-    n = _distinct_colors(data)
-    if n < 20:
-        raise SystemExit(
-            f"{name}（WTA id={pid}）取到的图只有 {n} 种颜色，像是占位剪影，"
-            f"不是真头像：{url}")
-    out_dir.mkdir(parents=True, exist_ok=True)
-    dest.write_bytes(data)
-    print(f"[头像] {name} → {dest}（WTA id={pid}，{n} 种颜色，{len(data)} 字节）")
-    return dest
+    raise SystemExit(
+        f"{name}（WTA id={pid}）在 WTA 头像 blob 上两个后缀都没有——"
+        + "；".join(tried))
 
 
 def fetch_atp(name: str, player_id: str, via: str, out_dir: Path = OUT_DIR) -> Path:

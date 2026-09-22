@@ -1,0 +1,356 @@
+{
+  "slug": "bouzkova-kartal-bjk-cup-2026-qf",
+  "_column": "赛场之上",
+  "sources": {
+    "main": "https://www.youtube.com/watch?v=ZysqKBktEM8"
+  },
+  "_source": "比利·简·金杯官方 YouTube 频道（`@BJKCup`，yt-dlp 报 `channel=Billie Jean King Cup`）单场集锦《Marie Bouzkova (CZE) vs Sonay Kartal (GBR) | 2026 Billie Jean King Cup | Highlights》，**1920×1080 / 493.42s / 25fps**（probe 实测；格式表里最高一档就是 1080p25，1080p 硬门槛自然满足，不写 `source_quality_exceptions`）。upload_date 20260922，比赛 12:16:36Z 结束，当天发布。\n\n四处画面自证这是这一场：① 常驻记分条整片挂着 `BOUZKOVA 7 4 x / KARTAL 6 6 x` 并带捷克、英国国旗（`score_*.jpg` 逐格读过）；② 场边广告板 `2026 FINALS SHENZHEN`（`contact_02` 148.5s 那格背景整块烧着这几个字）、`BILLIE JEAN KING CUP` 网前板、`Microsoft` / `Deloitte` / `gainbridge` 赞助墙；③ 480.5s 全屏赛果图形 `MARIE BOUZKOVA 7 4 6 / SONAY KARTAL 6 6 4` 配捷克国旗；④ 自动字幕里解说报的赛果 458.32「76 4664」＋ 462.72「in a minute shy of 3 hours」，和 ITF 官方的 02:59:18 对得上。\n\n⚠️ **片尾订阅卡从 483.7s 起**（`contact_08` 484.5s 已经是 `SUBSCRIBE / WATCH MORE / BJKCup` 蓝底卡，`scene_cuts` 482.4 ＋ loose 483.68；`silent_audio` 也正好从 486.67 起）。**所有窗口收在 482.2 之前**，最末一段段尾 482.2＋SEG_FADE 0.18＝482.38 < 482.4 ✅。\n⚠️ 这是**集锦不是全场**：记分条会在两格之间跳局（362.5s 还是 3-2，364.5s 已经是 5-2），写窗口前逐格读了 `score_*.jpg`，不按时间轴线性推。",
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "卡尔塔尔",
+    "hook": "半年没打过一场球\n3个赛点她全救了",
+    "topic": "比利·简·金杯1/4决赛 · 布兹科娃 vs 卡尔塔尔",
+    "winner": "布兹科娃",
+    "result": "7-6(2) 4-6 6-4",
+    "matchup": [
+      {
+        "name": "布兹科娃",
+        "name_en": "Marie Bouzkova",
+        "country": "CZE",
+        "rank": 26
+      },
+      {
+        "name": "卡尔塔尔",
+        "name_en": "Sonay Kartal",
+        "country": "GBR",
+        "rank": 127
+      }
+    ],
+    "portrait": {
+      "image": "assets/reel/kartal-bjk-cup-2026-qf-shenzhen.jpg",
+      "focus": 0.55,
+      "focus_y": 0.34,
+      "zoom": 1.12,
+      "_why": "**英国网球协会（LTA）官网这场球的实拍**，文件名自证四要素：`siteassets/news/2026/september/**2026-sonay-kartal-bjk-cup-czechia**.jpg`——年份、球员、赛事、对手国全写在里面，而且它挂在 LTA 这场 tie 的实时战报页（`/fan-zone/gb-teams/billie-jean-king-cup/news/2026/finals-great-britain-vs-czechia-results-updates/`）的头图位。2502×1668。\n\n**画面自证**：胸口米字旗队徽、深蓝英国队战袍、白色球帽、手里握拍、身后蓝色挡板与看台、左侧一台转播摄像机——是比赛中的场上画面，不是训练照或发布会。\n⚠️ **和源片交叉核过是同一场**：源片里卡尔塔尔的着装是**白帽＋深蓝上衣**（`contact_04` 250.5/252.5、`contact_06` 370.5 三格都是），和这张逐项一致。也就是说「LTA 说这是那场」和「源片画面」两个独立的源对上了，不是只看文件名。\n\n四道闸门：① 精准——时间地点人物由文件名 ＋ 队徽 ＋ 源片着装三处坐实 ✅；② 在比赛中——她在场上、握着拍、转播机位就在旁边；而**这一屏的题眼正是「复出」**，CLAUDE.md 2026-08-03 那张表把「复出」明确归进「四要素对得上就行，走动、换边、握拳都算」那一档 ✅；③ 冲击力——近景、脸占比大、**眼睛睁着**、表情是比赛中的专注（不是笑脸，也不是大头贴：帽檐、球拍、挡板、摄像机都在，看得出是球场）✅；④ 清晰度——见 `_res_why` ✅。\n\n⚠️ **同一轮看过、没选的三张**：金杯官网 Contentful 的 `LZ1_1873_q6IhUnnK.JPG`（3317×1866，站内 alt 写着「Bouzkova celebrates after win」——布兹科娃赛后转身向捷克替补席鼓掌，背景 `CZE` 板和队友，**是这批里冲击力最强的一张**）、`LZ1_2129_6TGKt6WZ.JPG`（4406×2478，布兹科娃场上握拳，但它挂在**赛前**的前瞻稿上，拍的是不是这一场没有第二个源能坐实——「官方图库把它挂在这一站名下，不等于拍的是这一场」那条）、`_sofiekevanbilsen-bjkcfinals-2026.09.21-04795/09353.jpg`（文件名日期 **09.20 / 09.21**，也就是开赛前一两天，第 1 道闸就过不去）。\n⚠️ **没选那张布兹科娃庆祝照，是为了让脸和钩子对得上**：钩子两行讲的都是卡尔塔尔（半年没打球、救下三个赛点），而 CLAUDE.md「放谁的脸就是在指认谁」——把她的话配在赢家脸上，这一屏就散了。赢家由比分板交代（板上印着 `布兹科娃 7-6(2) 4-6 6-4`，谁赢一眼可见）。",
+      "_res_why": "2502×1668，`fit` 默认按 cover 铺 1080×1440 取 `max(1080/2502, 1440/1668)` ＝ **0.863×（缩小）**；`zoom` **1.12** 之后是 **0.97×**，仍然是缩小，**不用写 `_low_res_why`**。\n⚠️ **`zoom` 是被闸顶回来的，不是一开始就这么写的**：第一版写了 1.25，`cover_photo_problem` 当场报「只有 0.93×，也就是要放大 1.08 倍」——`0.863 × zoom ≤ 1.00` 解出来 `zoom ≤ 1.158`，所以取 1.12 留一点余量。**这个数是算出来的，不是调到看着顺眼为止。**",
+      "_focus_why": "横向 `focus` 0.55：她的脸在原图横向约 55%（2502 宽里落在 x≈1375），居中会把她推到画布左边。竖向 `focus_y` 0.34 ＋ `zoom` 1.12：不推的话她的脸落在画布 y≈300 附近、顶得太高，而钩子那条带从 `STORYCOPY_TOP=790` 起——CLAUDE.md 2026-08-31「挑封面之前先把钩子那条带叠上去」，**790 以下不能有脸**。这一组把脸放到 y≈430、整个人接近铺满、四周留一点空间，钩子带里只有挡板和看台。"
+    },
+    "scrim": "clear",
+    "scoreboard": {
+      "court": "深圳湾体育中心",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%20%222%3A59%3A18%22%2C%20%22source%22%3A%20%22ITF%20tieCentre%20matches%5B%5D.duration%3D02%3A59%3A18%20%2809%3A17%3A18Z%20-%3E%2012%3A16%3A36Z%29%3B%20broadcast%20462.72%20%5C%22a%20minute%20shy%20of%203%20hours%5C%22%22%7D",
+        "field": "duration"
+      },
+      "_court_why": "ITF 官方接口自己给的：`api.itf-production.sports-data.stadion.io/custom/tieCentre/e3ed5961-6492-40b1-b25b-19625981cc3c` → `tie.round.draw.event.venue.name = \"Shenzhen Bay Sports Centre Arena\"`、`.city = \"Shenzhen\"`、`.utcOffset = 08:00:00`，地面 `surface.name = \"Hard\"`。第二个源是画面自证：`contact_02` 148.5s 那格背景整块烧着 `2026 FINALS SHENZHEN`。",
+      "_duration_why": "⚠️ **三个源，而 flashscore 那个是错的**（CLAUDE.md「比赛用时不要只信 flashscore」）：\n\n| 源 | 给的数 |\n|---|---|\n| **ITF 官方 tieCentre** | **`02:59:18`**，且 `actualStartDate 09:17:18Z` → `actualEndDate 12:16:36Z` **相减自洽** |\n| **转播解说**（`captions.txt` 458.32＋462.72） | 「76 4664 … **in a minute shy of 3 hours**」＝ 2:59 |\n| flashscore `df_sui_1` | 分盘 `1:11 + 0:53 + 0:56`，总计报 **3:00** ——三个分盘各自取整之后加出来的，**比官方多 42 秒** |\n\n取 **2:59:18**：官方接口和转播解说两个独立源一致，而且官方那个起止时刻自己就能减出来。分盘用时仍记在 `_durations` 里备查（那三个数只有 flashscore 给）。"
+    },
+    "_hook_why": "按 CLAUDE.md 2026-09-19「**第一行是这个人的经历（影子），第二行才是这场球的形状**」写的，主体是封面上这张脸——卡尔塔尔。\n· 第一行「半年没打过一场球」是**经历不是身份**（排名、年龄、国籍照旧不上钩子）；\n· 第二行「3个赛点她全救了」是这场球的落点。\n**两行之间有落差**：半年没碰过球的人，在赛点上扛了三次——这正是 2026-09-19 那条要的「矛盾」，而不是同一件事说两遍。\n\n⚠️ **两行海报上都没有**（第四问）：海报自己印着赛果 `7-6(2) 4-6 6-4`、两边排名 26 / 127、赛事轮次、场馆和用时 2:59——钩子一个字都没重复它们；而「半年没打球」和「三个赛点被救」**只有钩子给得了**。\n⚠️ **不拿总分差说事**（2026-09-19 那条点名禁掉的）：这场 223 分里布兹科娃只多赢 7 分，是个真数，但三盘球总分本来就接近，说不出这场球的形状——它只放在小红书正文里一句带过。\n⚠️ **数字写阿拉伯**（账号所有者 2026-09-16「给用户看的文案里的数字用阿拉伯数字」）：钩子是手写直接烧上屏的，不过 `arabic_numerals`，所以写「3个赛点」不写「三个赛点」。「半年」是时段词不是数，不动。\n⚠️ 每行 **8 / 8 个字符**，都在 `HOOK_MAX_CHARS=10` 之内；**2 行**，在 `SOLO_HOOK_MAX_LINES=2` 之内。\n⚠️ 「救」的主语显式写了「她」（CLAUDE.md「三个盘点都没救下来」那条：**拿到点的人和救点的人不是同一个**，主语必须写出来）——赛点是布兹科娃的，救的是卡尔塔尔。",
+    "_subject_why": "**主体是输球的那个人，这是想清楚之后的选择。** 这场球的故事在卡尔塔尔身上，而且不是我们的判断——**转播自己就是这么说的**：解说 247.12「hasn't played a competitive match in six months today, Kartal, but you would not know it」，赛后嘉宾 464.56 起整段「all the credit to Sonay Kartal … to produce this kind of level from being 6 months away from tennis and as your first match … is just incredible」。\n⚠️ **赢家没有被藏起来**：`cover.winner` / `result` / 顶栏 / 数据图 / 正文全都写着布兹科娃 7-6(2) 4-6 6-4 赢下这场，比分板就在钩子正下方。封面放谁只决定这一屏在讲谁，不决定赛果怎么印。",
+    "_heat_why": "**两个人都不是中国球员，名次也都够不着前 20（26 / 127），所以按 `_players_are_worth_a_reel` 的第 ③ 条认领热度。**\n\n卡尔塔尔是 CLAUDE.md 记的三种热点形状里的**「复出」**那一种（和账号所有者点名的赫瓦林斯卡同形）：2025 年温网打进 1/8决赛是她的突破，2025-07-14 摸到生涯最高世界第 44；**2026 年 3 月印第安维尔斯 1/8决赛对莱巴金娜时因下背伤退赛**，之后连着退赛、**整个北美硬地赛季连同美网全部缺席**，排名掉到 127（2026-09-21，597 分，全年只打了 10 站）。深圳这场是她**半年来的第一场比赛**，而且是代表英国出战团体赛的第一场——转播从第 247 秒讲到片尾。\n\n布兹科娃这边是世界第 26、今年诺丁汉冠军（草地，决赛 2-1 胜纳瓦罗），② 档同样够不着，靠的是这条线。\n\n⚠️ 没拿「她是种子」「这场数据反常」「这场球很精彩」当理由——那三样是 CLAUDE.md 点名否掉的。",
+    "_name_why": "两个中文名都**实调 `player_zh()` 确认**，不是手打也不是看文件内容：`Marie Bouzkova` → **布兹科娃**、`Sonay Kartal` → **卡尔塔尔**。\n⚠️ `src/tennislive/zh/players.py` 里 Bouzkova 那一行写的是「鲍兹科娃」，而 **`player_names_top500.json` 优先**（第 24 位，`translation_source` 是新华社，带原稿链接），给的是「布兹科娃」——CLAUDE.md「两张表，top500 优先；判断改没改对直接调 `player_zh()`」说的正是这一处。",
+    "_matchup_order_why": "`matchup[0]` ＝ 布兹科娃 ＝ flashscore 的 **home**（`AE÷Bouzkova M.`、`FU÷Czech Republic`），所以这条 spec 里**版式顺序和 feed 顺序碰巧同序**：`stats.a` 跟 `matchup[0]`、`_match.participants` 跟 home/away，两者都是 [布兹科娃, 卡尔塔尔]，不用对调。⚠️ 这是**碰巧**，不是规律——下一条要各自对着旁边的字段再看一眼（`stats.a` 旁边是 `headshot`，`participants` 旁边是 `set_scores_home_away`）。",
+    "_matchup_rank_why": "括号里印的是**即时世界排名**，两个独立源逐字一致，同为 **2026-09-21** 那一期：\n· 布兹科娃 **26**——WTA 官方 `api.wtatennis.com/tennis/players/ranked`（`ranking:26, points:1873, rankedAt:2026-09-21`）＋ tennisexplorer 榜单页（`26.` / `1873`）；LTA 的赛前稿也写着「world No.26」，是第三个源。\n· 卡尔塔尔 **127**——WTA 官方同一个接口第 1 页（`ranking:127, points:597, tournamentsPlayed:10, movement:-6`）＋ tennisexplorer 她的球员页（`Current/Highest rank - singles: 127. / 44.`）。\n⚠️ **维基写的 121 是上一期（9/14）的**，别照抄百科——CLAUDE.md「编辑稿的引语可以抄、结论不可以」同族。\n⚠️ **这一站没有种子号**（团体赛按队排，不按人排），所以不存在「种子和排名混着说」那个老坑。",
+    "_result_why": "`7-6(2) 4-6 6-4`。抢七小分取 `_match.tiebreaks_home_away` ＝ [[7,2], null, null]——第一盘抢七 **7-2**，`(N)` 里写的是**输掉那一盘的人**拿到的分（2），不随视角翻。\n⚠️ 裸的 `7-6` 会撞 `bare_tiebreak_problem`，必须带小分。\n⚠️ **这是三盘两胜，第三盘 6-4 没打到抢七**，所以不涉及「大满贯决胜盘抢十」那条；第一盘那个抢七是**普通盘**的抢七，7-2 合法。",
+    "_topic_why": "台头写「赛事轮次 · 对阵双方」。轮次写 **1/4决赛**——ITF 官方接口给的是 `tie.round.name = \"Quarter Finals\"`，按 CLAUDE.md 2026-09-08 那张阶梯（最后一行）转成分数式，不写「八强」。赛事名用中文全称「比利·简·金杯」，`tie.round.draw.event.name` 是 `Finals`（总决赛），场馆和城市已经在比分板上，台头不重复。"
+  },
+  "_match": {
+    "status": "result_verified",
+    "source": "flashscore_points",
+    "source_id": "dv3mekUj",
+    "flashscore_id": "dv3mekUj",
+    "participants": [
+      "布兹科娃",
+      "卡尔塔尔"
+    ],
+    "set_scores_home_away": [
+      [7, 6],
+      [4, 6],
+      [6, 4]
+    ],
+    "tiebreaks_home_away": [
+      [7, 2],
+      null,
+      null
+    ],
+    "winner": "布兹科娃",
+    "loser": "卡尔塔尔",
+    "winner_result": "7-6(2) 4-6 6-4",
+    "loser_result": "6-7(2) 6-4 4-6",
+    "_participants_why": "⚠️ `participants` 跟 **flashscore 的 home / away**，不跟 `cover.matchup`（CLAUDE.md 2026-09-02 那条：同一份 spec 里两个顺序常常是反的）。这条两者同序：`AE÷Bouzkova M.`＋`FU÷Czech Republic` 是 home，`AF÷Kartal S.`＋`FV÷United Kingdom` 是 away，所以 `set_scores_home_away` 的 [[7,6],[4,6],[6,4]] 和 participants 对齐。分盘比分另取 `df_sui_1` 的 `IG/IH` 独立核过（7-6 / 4-6 / 6-4，抢七 7-2）。",
+    "_tiebreak_why": "第一盘抢七 **7-2**，三个源一致：flashscore 当日表 `DA÷7 / DB÷2`、`df_sui_1` 的 `IG÷7 IG÷7 / IH÷6 IH÷2`、以及 `df_mh_1` 的抢七逐分（最后一行 `HC÷7 HE÷2`，布兹科娃开局连拿四分）。⚠️ CLAUDE.md 记过 flashscore 的 `D*` 字段每盘步进两个字母、**抄错槽位会把第一盘的数填进决胜盘**——这条只有第一盘有抢七，`DC` 起全空，不存在抄串的余地。"
+  },
+  "_durations": [
+    ["Set 1", "1:11"],
+    ["Set 2", "0:53"],
+    ["Set 3", "0:56"],
+    ["全场", "2:59:18"],
+    ["⚠️ flashscore 的总计", "3:00（三个分盘各自取整后相加，比官方多 42 秒，没有采用）"]
+  ],
+  "stats": {
+    "a": {
+      "aces": 1,
+      "df": 0,
+      "first_in": 92,
+      "first_won": 58,
+      "second_total": 18,
+      "second_won": 9,
+      "bp_conv": 4,
+      "bp_chances": 9,
+      "pts_won": 115,
+      "pts_total": 223,
+      "first_total": 110,
+      "headshot": "assets/players/headshots/wta-320983.jpg"
+    },
+    "b": {
+      "aces": 4,
+      "df": 1,
+      "first_in": 73,
+      "first_won": 45,
+      "second_total": 39,
+      "second_won": 20,
+      "bp_conv": 4,
+      "bp_chances": 10,
+      "pts_won": 108,
+      "pts_total": 223,
+      "first_total": 112,
+      "headshot": "assets/players/headshots/wta-329918.png"
+    },
+    "_source": "flashscore `df_st_1_dv3mekUj` 的 Match 汇总（全场）。`a` 跟 `cover.matchup[0]` ＝ 布兹科娃 ＝ feed 的 home，所以 a/b 和 `_match.participants` 同序，没有对调。\n逐项对照（接口原文 → 填进来的字段）：Aces 1/4、Double Faults 0/1、1st serve points won `63% (58/92)` / `62% (45/73)`、2nd serve points won `50% (9/18)` / `51% (20/39)`、Break Points Converted `4/9` / `4/10`、Total Points Won `52% (115/223)` / `48% (108/223)`。\n⚠️ `first_total` 按 `first_in + second_total` 算（110 / **112**），不取接口的 Service Points Won 分母——卡尔塔尔那一头接口写的是 113，和 73+39 差 1（let 的记法差异），而一发成功率画的是 `first_in / first_total`，用和式才自洽：92/110 ＝ 84%、73/112 ＝ 65%，和接口的 `1st serve percentage 84% / 65%` 对得上。\n⚠️ **两张头像都打开看过**，不是只看状态码：布兹科娃 `wta-320983.jpg`（492×656，40906 色）、卡尔塔尔 `wta-329918.png`（492×656，43618 色）——都远离「占位剪影只有 2 种颜色」那条判据，而且卡尔塔尔那张和源片里的人对得上。",
+    "_winners_ue_why": "跑过 tnns-stats（run 35736498292，`--who Bouzkova,Kartal --date 2026-09-22`，认到 id=74967948），**`hasExtendedStats=False`**，TNNS 这场也没有这两行；flashscore `df_st_1` 只有 17 个统计项，同样没有 `Winners` / `Unforced errors`。\n⚠️ **这不是「这一场没查到」，是这项赛事结构性地没有**：CLAUDE.md 的 tennis-media-sources 档案里「戴维斯杯结构性地没有制胜分和非受迫失误」那一节是 2026-09-19 查到底的结论，而金杯和戴维斯杯**是同一个 ITF 平台**（这条 spec 的官方数据就取自同一个 `custom/tieCentre/` 接口）。所以没有再去重探那五处。\n⚠️ 另两条也查了：Match Charting Project 落后约三天，当天的比赛结构性查空；官方编辑稿（billiejeankingcup.com 的实时战报、LTA 的战报）通篇是叙述，一个计数都没有。\n⚠️ `render_stat_card.usable_rows()` 按字段在不在决定画不画，缺字段就整行不显示——**不硬凑一张缺两项的图**。"
+  },
+  "_hit_data": [
+    {
+      "label": "卡尔塔尔的一发得分率，三盘走了一条抛物线",
+      "detail": "第1盘 61% → 第2盘 **88%** → 第3盘 43%。第二盘那个 88% 就是她扳回一盘的全部原因；第三盘掉到 43%，布兹科娃就是从这儿把比赛拿回去的",
+      "source": "flashscore df_st_1（分盘 1st serve points won）· `tools/match_stat_hooks.py dv3mekUj`"
+    },
+    {
+      "label": "她连着保住了 10 个发球局",
+      "detail": "半年没打过比赛的人，中段一度连保 10 个发球局（布兹科娃同期最长 5 个）",
+      "source": "flashscore df_mh_1（逐局）· 同一趟 `match_stat_hooks`"
+    },
+    {
+      "label": "赛点救了 3 个",
+      "detail": "flashscore 的 `Match points saved` 这一栏：布兹科娃 0、卡尔塔尔 **3**——全部发生在决胜盘 2-5 她自己的发球局里",
+      "source": "flashscore df_st_1（Match points saved）＋ df_mh_1 逐分的三个 `|B3|`"
+    },
+    {
+      "label": "总分只差 7 分",
+      "detail": "223 分里布兹科娃 115、卡尔塔尔 108",
+      "source": "flashscore df_mh_1（总分）· ⚠️ **只写进小红书正文，不上钩子**——CLAUDE.md 2026-09-19「钩子不拿全场只差几分说事」"
+    }
+  ],
+  "_turning_points": {
+    "set1_game3": "0-2 落后、卡尔塔尔自己的发球局 **40-0 领先**，布兹科娃连追五分打到平分，第二个破发点回破（逐分 14 分：`0:15, 0:30, 0:40, 15:40, 30:40, 40:40, 40:A, 40:40, A:40 |B1|, 40:40, 40:A, 40:40, A:40 |B1|`）。解说 161.84 回头点过这一局：「that vital third game in the first set where she was up 40 love but couldn't back up the break」——**逐分和解说互相印证，我对 `HL` 字段是「home:away」的读法就是靠这一句坐实的**。",
+    "set1_tiebreak": "抢七布兹科娃**开局连拿 4 分**（逐分 1-0、2-0、3-0、4-0），7-2 拿下。解说 96.88「finishes it in style」、102.96「It was the typical Bouzkova point underlining her class」。",
+    "set2_shape": "卡尔塔尔开局就破（0-1），之后**只在第 3 局被回破过一次**，其余全保，6-4 扳平。解说 130.16「stepped in during the points. It's way more aggressive.」、145.44「There's that drive volley again」——第 5 段旁白的球路描述就出自这两句。⚠️ 自动字幕把 drive volley 转成了 `robotic volley`，按发音校正。",
+    "set3_game5": "**2-2 布兹科娃自己的发球局被打到 30-40**（逐分 `30:40 |B1|`），解说 325.68「That's a great backhand to save the break point」；救下之后 338.72「**three wondrous backhands** to close out the game for Bouzkova」——3-2。记分条逐格印证（`score_08`：320.5~328.5 是 `7 4 2 [30] / 6 6 2 [40]` 发球点在布兹科娃，330.5~340.5 变成 `AD`，342.5 变成 `7 4 3 [0] / 6 6 2 [0]` 发球点换到卡尔塔尔）。",
+    "set3_matchpoints": "**5-2、卡尔塔尔发球，布兹科娃三个赛点**：`40:15 |B1||B3|`（两个）、`40:30 |B1||B3|`、`A:40 |B1||B3|`（第三个）——三个全被救下，这一局 12 分最后是卡尔塔尔的，5-3。记分条逐格读过（`score_09`：364.5~368.5 `40/15` → 370.5~380.5 `40/30` → 382.5~398.5 `AD/40` → 400.5 `40/40`）。",
+    "set3_serving_out": "**5-3 布兹科娃发球胜赛局，只拿到 1 分就被破**（逐分 `0:15, 0:30, 15:30, 15:40 |B1|`），5-4。⚠️ **这一局源片里没有画面**——集锦从 5-2 那局的平分直接跳到 `MATCH POINT` 全屏图形（记分条已经是 `7 4 5 / 6 6 4`），所以旁白把它讲出来的那一段（第 12/13 段）配的是两局之间的空当画面，不是别的一局的回合。",
+    "set3_final_game": "**5-4 回破，而且零封**：`15:0, 30:0, 40:0 |B1||B3|`，第一个赛点就落地，6-4。记分条 404.5~416.5 十格都是 `7 4 5 [40] / 6 6 4 [0]`，发球点在卡尔塔尔。解说 414.08「It's wide」→ 415.84「it's just a classic Marie Bouzkova win as she comes through a marathon」。"
+  },
+  "_claims": [],
+  "_claims_why": "这条片子里没有开集的全称断言，所以 `_claims` 是空的——**而「半年没打过比赛」这一句仍然按两个源以上核过**（它是闭区间的事实陈述，不是「唯一／史上第一／从来没有」那一族）：\n· 转播解说三处独立说到：247.12「hasn't played a competitive match in six months today」、448.32「hasn't played a competitive match for 6 months」、474.48「being 6 months away from tennis … as your first match」；\n· LTA 这场 tie 的战报页原文「playing her first match since March」；\n· 维基 `Sonay Kartal` 词条：2026 年 3 月印第安维尔斯 1/8决赛对莱巴金娜「retired due to a lower back injury」，随后退赛多站、「missed the entire North American hard court swing of the season including the US Open」；\n· WTA 官方排名接口的旁证：`tournamentsPlayed: 10`，全年只打了 10 站。\n四个源，两类（转播画面自证 ＋ 编辑稿／百科），互相对得上。",
+  "_no_repeat": "同栏目最近的邻居里，**和金杯沾边的是 `zheng-bjk-cup-olympic-rule` 和 `bjk-cup-story`（都是「网球有故事」，不是赛场之上）**——那两条讲的是这项赛事的来历、名字的由来、LA28 的资格规则和中国队，**这条一个字都不碰**：不讲金杯是怎么来的、不讲比利·简·金本人、不讲中国队。共用的只有「2026 深圳总决赛」这个坐标，而那是台头上的一行字。\n赛场之上这条线上**布兹科娃和卡尔塔尔都是第一次出现**（`ls specs/reels/ | grep -i` 按两个姓各查过一遍，零命中），不存在和自己重复的问题。",
+  "editorial": {
+    "mode": "match_review",
+    "question": "一个半年没打过比赛的人，怎么把世界第 26 拖进决胜盘，还在赛点上扛了三次？",
+    "thesis": "卡尔塔尔靠的是发球那条线：第二盘她的一发得分率飙到百分之八十八，站位往前压、接发球落地就抢，中段连保十个发球局，硬生生把一盘扳了回来。布兹科娃赢在决胜盘把这条线拆开了——反手一路往对角压，抢在对方起拍之前出球，把卡尔塔尔的一发得分率从百分之八十八打到百分之四十三，连破两次做到五比二。可最后那两局她自己也没收住：三个赛点被对方全救下来，紧接着发球胜赛局只拿到一分就丢了。真正结束比赛的是回过头那一局——她一分没丢，四个球收场。",
+    "beats": [
+      "前段：第一盘十二局各丢一次发球局，咬到六比六；抢七布兹科娃开头连拿四分，七比二",
+      "中段：第二盘卡尔塔尔把站位往前压、甩反弹球截击，一发得分率百分之八十八，六比四扳平",
+      "转折：决胜盘布兹科娃改用反手往对角压，二比二救下破发点后连出三记反手，连破两次到五比二",
+      "结局：三个赛点全被救、发球胜赛局又丢掉，最后回破零封，六比四"
+    ],
+    "human_context": {
+      "angle": "**这一场是卡尔塔尔半年来的第一场比赛，而她一上来就是替国家队打团体赛的第一单。** 2026 年 3 月印第安维尔斯 1/8决赛，她对莱巴金娜时因下背伤退赛；之后整个北美硬地赛季连同美网全部缺席，排名从生涯最高的第 44 掉到第 127，全年只打了 10 站。深圳这一周，英国队还是把第一场单打交给了她，对面是世界第 26。\n⚠️ **不做因果**：片子里没有说「所以她才打得这么放得开」——那是推断。摆的是两件都能核的事：她有半年没打过比赛，和她在这场球里做到了什么。\n⚠️ **这一层不是我们挖出来的角度，是转播自己的落点**：解说从第 247 秒讲到片尾，赛后嘉宾整段都在说这件事。所以片子把它原声留了下来（第 15 段），没有改写成中文转述。",
+      "facts": [
+        "卡尔塔尔 2026 年 3 月在印第安维尔斯 1/8决赛对莱巴金娜时因下背伤退赛，随后退出多站，缺席整个北美硬地赛季包括美网（维基 Sonay Kartal 词条）；深圳这场是她自那以后的第一场比赛（LTA 这场 tie 的战报页「playing her first match since March」＋ 转播解说 247.12 / 448.32 / 474.48 三处）",
+        "她的生涯最高排名是 2025-07-14 的世界第 44，来自 2025 年温网打进 1/8决赛那一轮（击败 20 号种子奥斯塔彭科等）；当前世界第 127、597 分、全年 10 站（WTA 官方 players/ranked 接口，2026-09-21 那期）",
+        "布兹科娃世界第 26、1873 分（同一期，WTA 官方 ＋ tennisexplorer 两源一致）；今年诺丁汉草地站冠军——flashscore 的 last matches 里那一周逐场可查（胜 Klugman、Maria、Pliskova，决赛 2-1 胜 Navarro），LTA 赛前稿写的是「reigning Lexus Nottingham Open champion」",
+        "这是 2026 比利·简·金杯总决赛，9 月 22–27 日在深圳湾体育中心打，这一场是捷克对英国 1/4决赛的第一场单打（ITF tieCentre：`tie.name = W-FC-2026-FLS-M-CZE-GBR-01`、`round.name = Quarter Finals`、`venue = Shenzhen Bay Sports Centre Arena`、`surface = Hard`）",
+        "官方用时 02:59:18（ITF tieCentre `matches[].duration`，起止 09:17:18Z → 12:16:36Z 自洽）；转播解说 462.72 独立说「in a minute shy of 3 hours」",
+        "⚠️ **整个 tie 还没打完**：写这条的时候 ITF 接口报 `tieStatus = In Progress`、捷克 1-0 领先，第二场（博尔特对诺斯科娃）正在进行、双打还没打。所以片子和文案里**一个字都没提 tie 的结果**，只说这一场——CLAUDE.md「前瞻类事实要在它定下来之后再核一次」"
+      ],
+      "voice_label": "半年后的第一场",
+      "sources": [
+        "https://www.billiejeankingcup.com/en/news/live-czechia-v-great-britain-2026-billie-jean-king-cup-finals-quarter-final",
+        "https://www.lta.org.uk/fan-zone/gb-teams/billie-jean-king-cup/news/2026/finals-great-britain-vs-czechia-results-updates/",
+        "https://en.wikipedia.org/wiki/Sonay_Kartal",
+        "https://www.youtube.com/watch?v=ZysqKBktEM8"
+      ],
+      "_sources_why": "第一条是金杯官网这场 tie 的实时战报页（标题实时更新成 `LIVE - Czechia 1 Great Britain 0`），封面备选图和图注都从它的 Contentful 载荷里取的（要带 `RSC: 1` 请求头，不然只拿得到导航和赞助商）。第二条是 LTA 的同场战报，给了「首场自三月以来」「world No.26」「saved three match points」三条，和 flashscore 的 `Match points saved: 3` 机械对得上。第三条只用来核伤病和缺赛范围。第四条是源片本身——解说原声是画面自证，不是转述。\n⚠️ 官方数据另走 ITF 的 `custom/tieCentre/e3ed5961-6492-40b1-b25b-19625981cc3c`（轮次、场馆、地面、官方用时、起止时刻），它不在这张单子里是因为它是接口不是稿子，出处已经写在 `cover.scoreboard._court_why` 和 `_duration_why` 里。"
+    }
+  },
+  "topbar": {
+    "line1": "2026 比利·简·金杯 1/4决赛",
+    "line2": "布兹科娃 7-6(2) 4-6 6-4 卡尔塔尔"
+  },
+  "_topbar_why": "第二行和 `cover.winner` / `cover.result` / `cover.matchup` 机械一致（`build_match_reel.py` 渲染前会拦不一致）。第一行的轮次按 CLAUDE.md 2026-09-08 那张阶梯写 `1/4决赛`，不写「八强」——顶栏是整个比赛段都烧在画面上的，那条闸 2026-09-08 才把扫描面扩到这儿。",
+  "mixed_fps": false,
+  "segments": [
+    {
+      "source": "main",
+      "start": 409.5,
+      "end": 419.2,
+      "narration": "",
+      "quote": [
+        {
+          "at": 4.58,
+          "text": "It's wide.\n出界了。"
+        },
+        {
+          "at": 6.34,
+          "text": "A classic Marie Bouzkova win.\n典型的布兹科娃式胜利。"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_ending_payoff_required": true,
+      "crosses_cut": "416.08 —— 最后一分落地接她转身面向捷克替补席的反应，同一时刻的两个机位。不跨的话冷开场就只剩一个回合、没有落点。",
+      "point_end_ok": "赛点是本场最后一分，之后再没有比分翻牌；`contact_07` 420.5s 那一格已经是替补席在鼓掌。",
+      "_payoff_why": "冷开场里有赛点落地，所以 `_ending_payoff_required: true`——正文第 13 段（403.9→416.0）把**同一分完整重放**，而且比冷开场多含 403.9~409.5 那一段（记分条 `7 4 5 [40] / 6 6 4 [0]`，也就是三个赛点摆在那儿）；第 14 段（416.2→421.1）接着放庆祝。冷开场给英文原声，正文给中文旁白，两段各讲一半。",
+      "_why": "**第①格：全片最强的一格，不配旁白，靠现场声 ＋ 转播原声。** 不是源片开头——集锦 0.5s 那一格是第一盘的一个普通底线回合，戏剧性最低（CLAUDE.md「冷开场不许随手取源片开头」）。\n⚠️ 解说钉在真实时刻：`captions.txt` 414.08 −409.5 ＝ 4.58、415.84 −409.5 ＝ 6.34，不按字数摊。\n⚠️ **英文按发音校正过**：自动字幕把 Bouzkova 转成了 `Boska / Bose / checks`、把 Kartal 转成了 `Martel / Cartel`，照抄就会把两个人的名字都印错（CLAUDE.md「双语字幕的英文要按发音校正，不能照抄 captions.txt」）。\n⚠️ 两行都量过宽度：中文行 6 / 11 格，都在 `_SUB_MAX = 16` 之内。"
+    },
+    {
+      "source": "main",
+      "start": 250.6,
+      "end": 257.0,
+      "narration": "对面那个人，已经半年没打过一场比赛了。",
+      "point_end_ok": "第二盘的最后一分早在 248 秒前后就落地了——这一段整段是**赛后换边**的画面（`contact_04` 250.5/252.5 她走向场边、254.5 和球童交接、256.5 举臂），一个回合都没有。`point_ends_guess` 258.00 那一格是记分条在换边时整块消失造成的，不是下一分打完；紧接着 258.5s 镜头已经切到布兹科娃的板凳。",
+      "_why": "**第②格给落点**，而且是这条片子唯一的反差：她刚刚扳回一盘，画面上是她握拳走回场边（`contact_04` 250.5~256.5），旁白给的是这个人的来路——**话画是合奏不是复读**。\n⚠️ 段尾收在 257.0：loose cut 在 257.24/257.28（镜头从她切到布兹科娃的板凳），收在它前面。\n⚠️ 余量 6.4−4.3 ≈ 2.1s，没到 4.0s 哑场闸。"
+    },
+    {
+      "source": "main",
+      "start": 19.0,
+      "end": 31.5,
+      "narration": "北京时间九月二十二号下午五点多，深圳。比利·简·金杯总决赛，捷克对英国，四分之一决赛的第一场单打。",
+      "_why": "**第③格给坐标**：北京时间、城市、赛事、对阵、轮次。\n⚠️ **钟点只说大概不报到分**：ITF 的 `actualStartDate = 2026-09-22T09:17:18Z` ＝ 北京时间 **17:17**，分钟 17 落在 10~39 档 → 「下午五点多」（CLAUDE.md 2026-08-17）。\n⚠️ 旁白里写「四分之一决赛」是 **TTS 底稿的写法**（直接写 `1/4决赛` 合成器会念成「一除以四」）；烧上屏的顶栏和台头写的是 `1/4决赛`，两处是同一个轮次的两种写法，都不是被禁的「八强」。\n⚠️ 整段落在 `scene_cuts` 18.88~41.44 之内，没跨镜头。余量 12.5−10.6 ≈ 1.9s。"
+    },
+    {
+      "source": "main",
+      "start": 86.0,
+      "end": 99.5,
+      "narration": "第一盘十二局，两个人各丢过一次发球局，之后一路咬到六比六。抢七一开始，布兹科娃就连拿四分，一口气把这一盘收在七比二。",
+      "point_end_ok": "段尾 99.5 落在 `scene_cuts` 99.84 **之前**，而抢七最后一分正是在这儿结束的——`point_ends_guess` 100.96 起那一串是记分条在庆祝镜头里整块消失造成的，不是下一分打完（`contact_01` 100.5s 已经是她握拳的近景，球场画面没了）。",
+      "_why": "**第一盘的形状 ＋ 抢七**。画面是抢七的尾段（`contact_01` 86.5~98.5 连着十格都是回合），解说 96.88「finishes it in style」正好压在段尾。\n⚠️ 逐分核过：第一盘破发各一次（卡尔塔尔 0-2 破、布兹科娃 1-2 回破），之后到 6-6 没有再破；抢七前四分全是布兹科娃（`df_mh_1` 的 1-0/2-0/3-0/4-0）。\n⚠️ **「抢七里布兹科娃」是被本地 `--check-narration` 顶回来改掉的**：真 TTS 把它切成 `抢 ｜ 七里布兹 ｜ 科娃`，「七里布兹」是个不存在的词，念出来名字和前面的字连读了（CLAUDE.md「切词错了不用靠耳朵猜，`voice_NN.words.json` 就是合成器自己报的切词」）。改成「抢七一开始，布兹科娃就……」，用逗号把名字撑开。\n⚠️ 余量 13.5−11.2 ≈ 2.3s。"
+    },
+    {
+      "source": "main",
+      "start": 134.5,
+      "end": 146.4,
+      "narration": "卡尔塔尔把站位往前压，接发球落地就抢，还甩出几记反弹球截击。第二盘她的一发得分率是百分之八十八。",
+      "_why": "**技战术拆解（一）。** 球路不是想当然的，是转播解说当场说的：130.16「stepped in during the points. **It's way more aggressive.**」、145.44「There's that **drive volley** again」——两句都落在这一段的窗口里外紧邻处，画面同步是她上前抢点。⚠️ 自动字幕把 drive volley 转成了 `robotic volley`，按发音校正成「反弹球截击」。\n⚠️ 数字是量出来的：`df_st_1` 的 Set 2，卡尔塔尔 1st serve points won **88%**（第 1 盘 61%、第 3 盘 43%，一条抛物线，见 `_hit_data`）。\n⚠️ **百分比写「百分之八十八」不写「八成八」**（账号所有者 2026-08-16）。\n⚠️ 整段落在 `scene_cuts` 134.4~146.6 之内。余量 11.9−10.3 ≈ 1.6s。"
+    },
+    {
+      "source": "main",
+      "start": 243.6,
+      "end": 250.2,
+      "narration": "六比四。半年没打过比赛的人，把这场球拖进了决胜盘。",
+      "point_end_ok": "段尾 250.3 落在 `scene_cuts` 250.44 之前，而这一分正是第二盘的最后一分——`point_ends_guess` 252.72 起那一串落在庆祝和换边镜头里，不是下一分。",
+      "_why": "第二盘收尾。画面是第二盘最后一分的回合（`contact_04` 244.5~248.5），解说 257.44「Kartal fights back to take the second set 6-4. And we go the distance」紧跟在后面。\n⚠️ 余量 6.7−3.6 ≈ 3.1s，没到 4.0s。"
+    },
+    {
+      "source": "main",
+      "start": 300.6,
+      "end": 311.9,
+      "narration": "决胜盘布兹科娃改了打法，反手一路往对角压，好几次抢在卡尔塔尔起拍之前，就把球送了回去。",
+      "_why": "**技战术拆解（二）。** 出处是解说 309.28~318.48「fine play from Bouzkova **catching Kartal by surprise with that backhand**」——原话就在这一段的窗口里。\n⚠️ **这一段旁白不报比分**：这几局的记分条落在 `score_07` 的覆盖区，没有逐格读过，所以只讲球路不讲局分——宁可少说一句，也不拿没核过的比分去配画面（CLAUDE.md「比分要跟画面对得上」）。\n⚠️ 整段落在 `scene_cuts` 286.08~312.12 之内。余量 11.4−9.2 ≈ 2.2s。"
+    },
+    {
+      "source": "main",
+      "start": 319.0,
+      "end": 327.3,
+      "narration": "二比二，她自己的发球局被打到三十比四十。一记反手救下这个破发点。",
+      "_why": "**技战术拆解（三），而且这一段的比分是逐格读出来的**：`score_08` 的 320.5 / 322.5 / 324.5 / 326.5 / 328.5 五格都是 `BOUZKOVA 7 4 2 [30] / KARTAL 6 6 2 [40]`，**发球点（黄点）在布兹科娃那一行**——也就是她自己的发球局、二比二、三十比四十落后，正是一个破发点。解说 325.68 原话「That's a great **backhand** to save the break point」。\n⚠️ 逐分数据独立印证：`df_mh_1` 第三盘那一局 `15:0, 15:15, 30:15, 30:30, **30:40 |B1|**, 40:40, A:40`，布兹科娃拿下，3-2。\n⚠️ 「救」的主语写出来了（「她自己的发球局」→「一记反手救下」，同一个人），CLAUDE.md「三个盘点都没救下来」那条要的就是这个。\n⚠️ 段尾 327.3 ＋ SEG_FADE 0.18 ＝ 327.48 < `scene_cuts` 327.56 ✅（只剩 0.08s，是故意卡在切点前的）。余量 8.3−7.0 ≈ 1.3s。"
+    },
+    {
+      "source": "main",
+      "start": 331.2,
+      "end": 343.4,
+      "narration": "接着连出三记反手，一记比一记深，卡尔塔尔够得到球，却送不回去。三比二——她转身面向自己的替补席。",
+      "crosses_cut": "340.88 —— 这一局的最后一分就落在这一刀上：刀前是回合，刀后是她转身朝捷克替补席鼓掌（`contact_05` 342.5s）。**不跨的话这一段就停在球还没落地的地方**，正是「完整一分结束再切」要拦的那种。",
+      "point_end_ok": "⚠️ **这一条是被闸顶回来之后改的，原来的 `end=340.70` 确实切在这一分打完之前。** 逐格读 `score_08`：330.5~340.5 六格都还是 `7 4 2 [AD] / 6 6 2 [40]`（布兹科娃占先，球还在打），342.5s 那一格才变成 `7 4 **3** [0] / 6 6 2 [0]` 且发球点换到卡尔塔尔——也就是这一分落在 340.5 和 342.5 之间，记分条 342.64 跟着翻牌。现在段尾 343.4 在翻牌**之后**，观众看得见这一分归谁，也看得见她的反应。\n⚠️ 再往后挪不了：`scene_cuts` 343.68 是切到转播那张换场图形的那一刀（`contact_05` 344.5s），343.4 ＋ SEG_FADE 0.18 ＝ 343.58 < 343.68，刚好卡在它前面。",
+      "_why": "**同一局的下半截。** 解说 338.72 原话「**three wondrous backhands** to close out the game for Bouzkova」——「三记反手」这个数是解说数的，不是我数的。\n⚠️ 记分条印证这一局的走向和收尾：`score_08` 330.5~340.5 六格都是 `7 4 2 [AD] / 6 6 2 [40]`（布兹科娃占先），342.5 那一格变成 `7 4 **3** [0] / 6 6 2 [0]` 且发球点换到卡尔塔尔——局收掉了，3-2。\n⚠️ 末句那个动作是**打开缩略图墙确认过的**（`contact_05` 342.5s：她在替补席前转过身、双手举起），不是按「网球比赛通常这样」编的——CLAUDE.md「动作句只挑能渲染情绪的那几个，而且必须打开片子按帧确认」。它同时是把这一段从「估出来就是哑场」拉回来的那几个字（余量 5.17s → 2.5s）。"
+    },
+    {
+      "source": "main",
+      "start": 365.3,
+      "end": 369.8,
+      "narration": "五比二，四十比十五，两个赛点。",
+      "_why": "画面就是这句话的证据：`score_09` 的 364.5 / 366.5 / 368.5 三格都是 `BOUZKOVA 7 4 **5** [40] / KARTAL 6 6 **2** [15]`，发球点在卡尔塔尔——五比二、她发球、布兹科娃 40-15 领先，也就是**两个赛点**。\n⚠️ 逐分对得上：`df_mh_1` 这一局 `… 40:15 |B1| |B3|`，两个标记叠着（既是破发点也是赛点）。\n⚠️ 整段落在 `scene_cuts` 365.2~370.04 之内。余量 4.6−3.4 ≈ 1.2s。"
+    },
+    {
+      "source": "main",
+      "start": 372.3,
+      "end": 386.0,
+      "narration": "第一个救掉了，第二个也救掉了。打到占先，布兹科娃手里还有第三个赛点——卡尔塔尔顶在底线上，一拍接一拍，又把它扛了过去。",
+      "_why": "**同一局，逐格跟着记分条走**：`score_09` 370.5~380.5 是 `40/30`（第一个赛点没了），382.5~398.5 是 `[AD]/40`（布兹科娃占先 ＝ 第三个赛点），400.5 回到 `40/40`。逐分 `40:15 |B1||B3|, 40:30 |B1||B3|, 40:40, 40:A, 40:40, **A:40 |B1||B3|**, 40:40, 40:A` 三个赛点的位置和记分条一格不差。\n⚠️ **「救」的主语每次都写出来**（CLAUDE.md 那条读者反馈换来的规矩）：赛点是布兹科娃拿到的，救它的是卡尔塔尔，所以第三句把两个人都点了名。\n⚠️ **不写「三个赛点只兑现了一个」那种框架**（CLAUDE.md 2026-08-19）：这里数的是**对手救下了几个**，那个数才会变。\n⚠️ 整段落在 `scene_cuts` 372.2~398.6 之内。余量 13.7−10.8 ≈ 2.9s。"
+    },
+    {
+      "source": "main",
+      "start": 398.7,
+      "end": 403.7,
+      "narration": "三个赛点，卡尔塔尔全救了下来。",
+      "crosses_cut": "401.72 —— 从她擦汗的近景切到转播那张全屏 `MATCH POINT` 图形。两边都不是回合画面，是这一局和下一局之间的空当，跨过去读得通。",
+      "_why": "这一段是**两局之间的空当**：`contact_06` 400.5s 是卡尔塔尔拿毛巾的近景，402.5s 是转播打出的全屏 `MATCH POINT` 蓝底图形。选它是因为下一句旁白要讲的事**源片里没有画面**（见第 13 段），放在没有回合的空当上不会话画不符。\n⚠️ 段尾 403.7 ＋ 0.18 ＝ 403.88，刚过 `scene_cuts` 403.84——溶解落在切点上，不是落在镜头中间。\n⚠️ 余量 5.0−3.1 ≈ 1.9s。"
+    },
+    {
+      "source": "main",
+      "start": 403.9,
+      "end": 415.85,
+      "narration": "她的发球胜赛局也丢了。再站上来是五比四——这一次一分没丢，十五比零、三十比零、四十比零，比赛结束。",
+      "point_end_ok": "段尾 416.0 就是最后一分落地之后，之后再没有比分翻牌；`point_ends_guess` 416.64 那一格是记分条翻成终局、随后整块撤掉造成的。",
+      "_why": "**结局，也是冷开场那一分的完整重放。**\n⚠️ **前半句讲的是源片里没有的两局**（5-3 布兹科娃发球胜赛局被破），所以它被放在**上一段的空当画面**和这一段的**开头**之间：这一段的记分条从第一帧起就是 `BOUZKOVA 7 4 5 [40] / KARTAL 6 6 **4** [0]`（`score_10` 404.5~416.5 十格全是），也就是**已经是五比四**——旁白说「再站上来是五比四」的同时，画面上写着五比四，话画对得上。\n⚠️ **「一分没丢」是逐分数出来的**：最后一局 `15:0, 30:0, 40:0 |B1||B3|` ＋ 决胜的那一分 ＝ 4 分全归布兹科娃（CLAUDE.md「逐分不列制胜的那一分，条数 ＋ 1」）。\n⚠️ **不写「零封」的英文直译**：按 CLAUDE.md「love game 不要字面直译」那条，**逐分说清楚就够了**——「十五比零、三十比零、四十比零」这句话本身已经把它讲完了，不另造词。\n⚠️ 旁白里写汉字数字是 TTS 底稿的写法，字幕由 `arabic_numerals` 自动换成阿拉伯数字。\n⚠️ 整段落在 `scene_cuts` 403.84~416.08 之内。余量 12.1−10.6 ≈ 1.5s。"
+    },
+    {
+      "source": "main",
+      "start": 415.85,
+      "end": 421.0,
+      "narration": "两小时五十九分钟。",
+      "crosses_cut": "416.08 —— 最后一分落地接她转身朝捷克替补席的反应。**两边都是布兹科娃**（`contact_06` 414.5s 是她在底线打完这一分、416.5s 是她转身握拳，`contact_07` 420.5s 是替补席起立），不存在「整句旁白压在别人身上」。这一刀是冷开场那一段共用的同一刀，正文按 `_ending_payoff_required` 必须连续覆盖 409.5~419.2，所以段界只能落在它中间而不是它上面。",
+      "point_end_ok": "比赛已经结束，这一段全是庆祝画面，没有下一分可切。",
+      "_why": "落点。画面是她转身面向捷克替补席、队友起立（`contact_06` 416.5/418.5、`contact_07` 420.5）。\n⚠️ 这个数取 ITF 官方的 `02:59:18`，不是 flashscore 的 3:00（见 `cover.scoreboard._duration_why`）——转播解说 462.72「in a minute shy of 3 hours」是第二个源。\n⚠️ 整段落在 `scene_cuts` 416.08~421.24 之内。余量 4.9−2.0 ≈ 2.9s。"
+    },
+    {
+      "source": "main",
+      "start": 465.8,
+      "end": 476.5,
+      "narration": "",
+      "quote": [
+        {
+          "at": 3.16,
+          "text": "All the credit to Sonay Kartal.\n这场球要记在卡尔塔尔身上。"
+        },
+        {
+          "at": 5.8,
+          "text": "To produce this level after six months away,\n离开六个月之后打出这种水平，"
+        },
+        {
+          "at": 8.7,
+          "text": "in your first match — is just incredible.\n还是复出第一场——太不可思议了。"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "crosses_cut": "469.84 —— 从她走向网前／队友的画面切到看台上举着捷克国旗的球迷。解说是连着说完的一段，画面跟着转播走，跨的是同一段话里的机位切换。",
+      "_why": "**账号所有者 2026-09-19 定的全局要求：精彩的原声解说要留下来，配中英双语字幕。** 这一段是赛后嘉宾对卡尔塔尔的整段评价，也是这条片子的情绪落点——**它同时是 `_subject_why` 的出处**（封面为什么放输球那个人）。\n⚠️ 钉在真实时刻：`captions.txt` 468.96 −465.8 ＝ 3.16、471.60 −465.8 ＝ 5.80、474.48 −465.8 ＝ 8.68≈8.7，不按字数摊。\n⚠️ **英文按发音校正 ＋ 按字幕上限截断**：自动字幕是「to Son Cartel as you said Peter I mean to produce this kind of level from you know being 6 months away from tennis and uh as your first match during this competition with so much pressure with so much eyes on you is just incredible」——口语的填充词（you know / uh / I mean）和主持人名字去掉，名字按发音改回 Sonay Kartal。⚠️ 这不是编，三句的实词一个都没加。\n⚠️ 三行中文各 13 / 13 / 15 格，都在 `_SUB_MAX = 16` 之内。\n⚠️ **这一段不写 `narration`**——同一段既配旁白又配原声，两个人会同时开口。"
+    },
+    {
+      "source": "main",
+      "start": 476.7,
+      "end": 482.2,
+      "narration": "赢的是布兹科娃。可今天被记住的，会是她吗？",
+      "point_end_ok": "比赛早已结束，这一段是赛后的看台和全屏赛果图形，没有比分翻牌。",
+      "_why": "**末屏那一问，旁白必须问出来**（CLAUDE.md 那条硬规矩）。画面是看台上展开的捷克国旗，以及转播打出的全屏赛果 `MARIE BOUZKOVA 7 4 6 / SONAY KARTAL 6 6 4`（`contact_07` 474.5~478.5、`contact_08` 480.5/482.5）——**赛果就印在这一问旁边**，问的不是谁赢，是谁被记住。\n⚠️ **不是封面那一问的回声**：封面钩子讲的是「半年没打球」和「三个赛点」，这一问换了一扇门（谁被记住），字集几乎不重合。\n⚠️ **不提 tie 的结果**：写这条的时候捷克 1-0 领先、第二场还在打，所以一个字都没写（`editorial.human_context.facts` 最后一条）。\n⚠️ **段尾必须收在 482.2**：BJK Cup 的订阅片尾卡从 483.7s 起（`contact_08` 484.5s 已经是 `SUBSCRIBE / WATCH MORE`），482.2 ＋ SEG_FADE 0.18 ＝ 482.38 < `scene_cuts` 482.4 ✅。\n⚠️ 余量 5.5−4.5 ≈ 1.0s。"
+    }
+  ],
+  "_editing_why": "十六段、约 155 秒，全部取自同一条官方集锦（1920×1080 / 25fps，不涉及 `mixed_fps`）。\n\n**顺序按 CLAUDE.md「开场三格」排**：① 冷开场＝最后一分落地＋转播原声（不配旁白）→ ② 落点＝对面那个人半年没打过球 → ③ 坐标＝北京时间／城市／赛事／轮次。之后按比赛时间走：第一盘 → 第二盘 → 决胜盘 → 三个赛点 → 结局 → 赛后原声 → 末屏一问。\n\n⚠️ **每一段的窗口都逐格对过缩略图墙和记分条**，不是按时间轴线性推——这是**集锦不是全场**，记分条会在相邻两格之间跳局（362.5s 还是 3-2，364.5s 已经是 5-2；400.5s 还是 5-2 平分，404.5s 已经是 5-4）。\n⚠️ **源片里没有 5-3 和 5-4 那两局**（集锦从 5-2 那局的平分直接跳到全屏 `MATCH POINT`）。讲它们的那句旁白因此被放在第 12 段的**空当画面**（毛巾近景 ＋ MATCH POINT 图形）和第 13 段的**开头**上，而第 13 段第一帧的记分条已经是 `7 4 5 / 6 6 4`——说「再站上来是五比四」的时候画面上写着五比四。\n⚠️ **片尾卡一帧都没进来**：最末一段收在 482.2，订阅卡从 483.7 起。\n⚠️ **技战术拆解 3 段**（第 5、7、8/9 段），全部有转播解说当场的原话做出处，不是「通常这样打」推出来的：`stepped in / way more aggressive`、`drive volley`、`catching Kartal by surprise with that backhand`、`a great backhand to save the break point`、`three wondrous backhands to close out the game`。\n⚠️ **报发球的段落 2/16 ≈ 13%**，在「旁白不许把每一局都念一遍」那条 25% 的门槛之内。",
+  "push": {
+    "summary": "布兹科娃决胜盘险胜",
+    "lead": "比利·简·金杯总决赛，深圳湾体育中心。北京时间 9 月 22 号下午五点多开打，捷克对英国 1/4决赛的第一场单打——2 小时 59 分钟之后，世界第 26 的布兹科娃 7-6(2) 4-6 6-4 赢下卡尔塔尔。真正值得说的是输的那一边：卡尔塔尔今年 3 月因下背伤退赛，整个北美硬地赛季连同美网全部缺席，排名从生涯最高的第 44 掉到第 127，这是她半年来的第一场比赛。第二盘她把站位往前压、接发球落地就抢，一发得分率从 61% 飙到 88%，6-4 扳平。决胜盘布兹科娃用反手往对角压，把这个数压到 43%，连破两次做到 5-2——然后三个赛点被卡尔塔尔全救了下来，自己的发球胜赛局又只拿到 1 分就丢了。最后结束比赛的是回过头那一局：15-0、30-0、40-0，一分没丢。全场 223 分，布兹科娃只多赢 7 分。",
+    "auto": true,
+    "_summary_why": "9 个字位。⚠️ **第一版写的是「布兹科娃决胜盘险胜卡尔塔尔」（13 字位），dry-run 报「标题 21 个字位，超过 20——日期＋栏目已经占掉 8 个」**，所以把对手的名字从标题里拿掉（正文第一句就写着「赢下卡尔塔尔」）。按「标题写得通顺、一句只留一层铺垫」：主语（布兹科娃）＋ 一层铺垫（决胜盘）＋ 动词收尾（险胜卡尔塔尔），中间不插代词、不叠三层限定。\n⚠️ **首行有球员名字**（CLAUDE.md 2026-09-02：solo 封面的中文名在小红书双列瀑布流里缩到 8.2px，看得见钩子看不见名字，所以名字必须在文案第一行）。",
+    "_lead_why": "⚠️ **开球时刻只说大概不报到分**：ITF `actualStartDate = 09:17:18Z` ＝ 北京 17:17，分钟 17 落在 10~39 档 → 「下午五点多」。写绝对日期不写「今天」。\n⚠️ **给人看的数字一律阿拉伯**（账号所有者 2026-09-16）：9 月 22 号、2 小时 59 分、第 26、第 127、88%、61%、43%、10 个发球局、223 分、7 分、15-0/30-0/40-0 全是阿拉伯数字；序数（第一盘、第一场、第一单）留汉字。\n⚠️ **百分比写 `88%` 不写「八成八」**。\n⚠️ **没有挂「数据来源：」注脚**（账号所有者 2026-09-03）——出处全在 spec 的 `_source` / `stats._source` / `editorial` 里。\n⚠️ **纯文本，没有 markdown**（没有 `**`、表格竖线、`#` 标题）；tag 行在最后，`#` 后不带空格所以不会被当成 markdown 标题。\n⚠️ **不提中英双语字幕**（账号所有者 2026-08-19：那是制作规格不是这场球的内容）。\n⚠️ **提炼在前、原话在后**：前四段是我们的话（坐标 → 她的来路 → 技战术怎么变的 → 最长那一局），转播原话放在收尾前一段。\n⚠️ **一个字都没提 tie 的结果**：写的时候捷克 1-0 领先、第二场还在打。\n⚠️ 正文连 tag 共约 640 字，在 1000 字以内。"
+  }
+}
