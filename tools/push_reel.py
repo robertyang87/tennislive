@@ -619,14 +619,37 @@ def split_copy(copy_text: str) -> tuple[str, str]:
     return split_xhs(copy_text)
 
 
+def asset_ref() -> str:
+    """图片 URL 该钉在哪个 ref 上。
+
+    ⚠️⚠️ **钉 commit，不能停在 `@main`——而这一处 2026-09-22 之前是漏的。**
+    同一条片子重渲，海报和数据图的路径一模一样
+    （`output/<date>/reel/<slug>/poster.jpg`），而**微信的图片缓存按路径算**：
+    URL 停在 `@main` 的话，第二次、第三次推出去的还是第一次那张图，**而且不吭声**。
+
+    `auto-push-reel.yml` 早就把 `TENNISLIVE_ASSET_REV: ${{ github.sha }}` 设上了，
+    **而这两个函数写死的是 `BRANCH`**，于是变量设了等于没设。
+    `bouzkova-kartal` 那条片子连推三次才量出来——三条消息里
+    `[数据图] 带上这一屏：…tennislive@main/…`，而同一步的环境里
+    `TENNISLIVE_ASSET_REV: 606db061b5…` 明明印在日志上。
+
+    这正是本仓库反复记的「**一个数写两处必分叉**」：`pushplus._jsdelivr_delivery`
+    读了这个变量，`push_reel` 这两处没读——**而分叉的样子是「配好了」**
+    （yml 里有、注释里也写着为什么要有），只有把真发出去的 URL 抠出来才看得见。
+
+    判据 `test_push_reel_asset_ref.py`。
+    """
+    return os.environ.get("TENNISLIVE_ASSET_REV") or BRANCH
+
+
 def poster_url(outdir: Path, name: str = POSTER_NAME) -> str:
     """封面海报的图片链接。海报只有几百 KB，稳走 jsDelivr。"""
-    return f"{jsdelivr_base(REPO, BRANCH)}/{outdir.as_posix()}/{name}"
+    return f"{jsdelivr_base(REPO, asset_ref())}/{outdir.as_posix()}/{name}"
 
 
 def stat_card_url(outdir: Path, name: str = STAT_CARD_NAME) -> str:
     """数据统计对照图的图片链接，和海报同一条 CDN 路径规则（同样只有几百 KB）。"""
-    return f"{jsdelivr_base(REPO, BRANCH)}/{outdir.as_posix()}/{name}"
+    return f"{jsdelivr_base(REPO, asset_ref())}/{outdir.as_posix()}/{name}"
 
 
 def build_html(video_url: str, copy_url: str, lead: str, copy_text: str,
