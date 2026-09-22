@@ -4,81 +4,64 @@ on:
     branches: [codex/wang-vekic-singapore-reel]
     paths: [.github/workflows/wang-vekic-visual-diagnostic.yml]
 permissions:
-  contents: write
+  contents: read
 jobs:
   inspect:
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 18
     steps:
       - uses: actions/checkout@v4
         with:
           filter: blob:none
           sparse-checkout: |
             tools
+            tests
             src
+            assets
             skills
-            specs/reels/pending
+            specs
+            output/2026-08-23/reel/fils-cobolli-cincinnati-2026-sf
             output/2026-09-22/reel/wang-vekic-singapore-2026-r1
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - uses: actions/cache/restore@v4
-        with:
-          path: ~/.cache/tennislive-sources
-          key: reel-src-wang-vekic-singapore-2026-r1-7117161ff07cc587
-      - run: pip install -q -e .
-      - run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
-      - name: Audit newly sampled source evidence
+      - run: pip install -q -e ".[dev]"
+      - name: Verify panel and existing production gates
+        run: python -m pytest tests/test_visual_panels.py tests/test_visual_duration_citation.py tests/test_reel_production_gates.py -q
+      - name: Published reference shadow benchmark
+        env:
+          MINIMAX_API_KEY: ${{ secrets.MINIMAX_API_KEY }}
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+        run: python tools/benchmark_reel_models.py --outdir visual-benchmark
+      - name: Audit match only after benchmark passes
         env:
           MINIMAX_API_KEY: ${{ secrets.MINIMAX_API_KEY }}
         run: |
           python - <<'PY'
-          import json,sys,os,urllib.error,urllib.request,subprocess
-          from PIL import Image,ImageDraw
+          import json,sys,os,urllib.request
           from pathlib import Path
           sys.path.insert(0,"tools")
-          from analyze_reel_visuals import verified_minimax_report,select_contact_sheets,evidence_hash
+          from analyze_reel_visuals import verified_minimax_report,select_contact_sheets,evidence_hash,AUDIT_VERSION
           base=Path("output/2026-09-22/reel/wang-vekic-singapore-2026-r1")
           draft=json.loads(Path("specs/reels/pending/wang-vekic-singapore-2026-r1.draft.json").read_text())
           cover=Path("wang-current-match.jpg")
           urllib.request.urlretrieve("https://wx1.sinaimg.cn/large/008CZ4NUgy1ihcimp59qxj31a50wrtfe.jpg",cover)
           draft.setdefault("cover",{}).setdefault("portrait",{})["image"]=str(cover)
-          draft["_cover_brief"]={"preferred_subject":"王欣瑜","preferred_moment":"winner_celebration","source_url":"https://www.sina.cn/news/detail/5345982256253548.html","note":"候选是本场赛后微笑致意图片，必须自行核对。另一张官方帖白帽图与本场酒红帽不同，已排除。"}
-          # User requested continued automatic repair. This is a new evidence packet,
-          # not a retry of the rejected coarse contact sheets.
-          src=next(Path.home().glob(".cache/tennislive-sources/*.mp4"))
-          evidence=base/"detailed_review"
-          evidence.mkdir(exist_ok=True)
-          times=[251.48,253,255,258,260,262.32,264,267,270,273,276,279,281.48,282.5,286,291]
-          sheet=Image.new("RGB",(1920,1200),"white")
-          for i,t in enumerate(times):
-              p=evidence/f"frame-{t:g}.jpg"
-              subprocess.run(["ffmpeg","-v","error","-ss",str(t),"-i",str(src),"-frames:v","1","-vf","scale=480:270","-y",str(p)],check=True)
-              x,y=(i%4)*480,(i//4)*300
-              sheet.paste(Image.open(p),(x,y+30))
-              ImageDraw.Draw(sheet).text((x+10,y+5),f"Source {t:.2f} seconds",fill="black")
-          detail=evidence/"ending-detail.jpg"
-          sheet.save(detail,quality=96)
-          frames=select_contact_sheets(list(base.glob("contact_*.jpg")))+[detail]
-          draft["_cover_brief"]["edit_candidates"]={"cold_open":{"start":262.32,"end":276.00,"kind":"aftermath"},"ending":{"start":251.48,"end":281.48},"instruction":"候选窗口仅供核验，可以拒绝，不可假装通过。两窗均小于30秒。照片独立核验。理由只引用窗口内可見的源时间；新补大图左上标Source秒数，勿认成输出片时间。主体结尾另保留到282.88秒，完整赛点与微笑。"}
-          report={}
-          try:
-              report["validated"],report["problems"]=verified_minimax_report(draft,frames,cover,json.loads((base/"probe.json").read_text()),os.environ["MINIMAX_API_KEY"])
-              report["validated"]["input_sha256"]=evidence_hash(frames,cover)
-              report["validated"]["inputs"]=[str(x) for x in frames]
-              report["validated"]["cover_image"]=str(cover)
-              report["evidence_change"]="New larger time-coded endpoint frames from cached original 1080p source. Previous rejected reports retained."
-          except urllib.error.HTTPError as e:
-              report={"http_status":e.code,"response_body":e.read(4096).decode("utf-8","replace").replace(os.environ["MINIMAX_API_KEY"],"[REDACTED]")}
-          Path("visual-diagnostic.json").write_text(json.dumps(report,ensure_ascii=False,indent=2))
-          print(json.dumps(report,ensure_ascii=False))
+          draft["_cover_brief"]={"preferred_subject":"王欣瑜","preferred_moment":"winner_celebration"}
+          frames=select_contact_sheets(list(base.glob("contact_*.jpg")))
+          report,problems=verified_minimax_report(draft,frames,cover,json.loads((base/"probe.json").read_text()),os.environ["MINIMAX_API_KEY"])
+          report.update(input_sha256=evidence_hash(frames,cover),audit_version=AUDIT_VERSION,cover_image=str(cover))
+          Path("visual-diagnostic.json").write_text(json.dumps({"report":report,"problems":problems},ensure_ascii=False,indent=2))
+          print(json.dumps({"report":report,"problems":problems},ensure_ascii=False))
+          # This is an audit only. A third-party image is not silently promoted
+          # to an official photo, and failed evidence never reaches production.
           PY
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: wang-vekic-detailed-visual-review
+          name: wang-visual-repair-benchmark
           path: |
-            wang-current-match.jpg
+            visual-benchmark/
             visual-diagnostic.json
-            output/2026-09-22/reel/wang-vekic-singapore-2026-r1/detailed_review/ending-detail.jpg
+            wang-current-match.jpg
           retention-days: 7
