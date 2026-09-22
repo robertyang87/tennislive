@@ -1,0 +1,92 @@
+{
+ "slug": "wang-vekic-singapore-2026-r1-interview",
+ "url": "https://www.youtube.com/watch?v=639yiNSj2Cc",
+ "source_title": "Wang Xinyu Speaks After Singapore Win Over Vekic - 6-1 6-2!（Tennis Asia TV，oEmbed 的 author_name 就是这个）",
+ "start": 0.0,
+ "end": 274.0,
+ "whisper_model": "medium.en",
+ "column": "赛后开麦",
+ "requested_content_type": "broadcaster_interview",
+ "interview_kind": "赛后转播商专访",
+ "event": "2026 WTA500 新加坡 女单第一轮",
+ "winner": "王欣瑜",
+ "featured_player": "王欣瑜",
+ "opening": {
+  "kind": "none",
+  "why": "源片整条是赛事媒体墙前的单独专访，一帧比赛画面都没有——抽帧核过（frame-grab run 35722763221，每 8 秒一格排完 274 秒全片，34 格）：0 秒那一格她已经站在背景板前整理耳机，之后每一格都是同一个机位、同一面墙。所以比赛结束那一段只能从同场 WTA 官方集锦接（见 lead_in），不是「我懒得收赛点」。"
+ },
+ "lead_in": {
+  "url": "https://www.youtube.com/watch?v=q4_xHFJv1eg",
+  "start": 249.5,
+  "end": 274.0,
+  "why": "同一场的 WTA 官方集锦（Donna Vekic vs. Xinyu Wang | 2026 Singapore Round 1 | WTA Match Highlights，@WTA，306 秒）的**最后一分到庆祝**那 24.5 秒，一整段连续画面，不是把几个回合拼起来。\n窗口里有什么（frame-grab run 35723122878 每 2 秒一格逐格读记分条核过）：**250 秒她准备发球胜赛局的那一分** → 252/256 两格记分条挂着 `MATCH POINT` 和 `D. VEKIC [8] 1 2 15 / XIN. WANG 6 5 40`（5-2、40-15，她发球胜赛）→ 约 261 秒这一分打完 → 262/264 切维基奇的反应近景 → **266 秒全屏 `GAME SET MATCH` ＋ 两人网前握手**（记分牌 `VEKIC Donna 1 2 / WANG Xinyu 6 6`）→ 270~276 她转身向看台举拍致意。\n**起点为什么是 249.5**：250 秒那一格正是这一分的发球准备，再往前就切进上一分了；而 249.5 留半秒让画面进得稳（CLAUDE.md「卡在那一刀前面要留半秒，别留几帧」）。\n**终点为什么是 274.0**：278 秒开始压全屏 `GAME` 赛果图形、286~294 是赛果板、**296 秒就是 WTA 绿色片尾板**，收到 274 离那张片尾板还有 22 秒，一帧别人的品牌页都不会进来。"
+ },
+ "match": {
+  "id": "2026:singapore:womens-first-round:xinyu-wang-donna-vekic",
+  "event": "2026 WTA500 新加坡",
+  "event_search": "Singapore",
+  "round": "Women's Singles First Round",
+  "year": 2026,
+  "winner": "王欣瑜",
+  "loser": "维基奇",
+  "participants": [
+   "王欣瑜",
+   "维基奇"
+  ],
+  "winner_en": "Xinyu Wang",
+  "loser_en": "Donna Vekic"
+ },
+ "source_verification": {
+  "source_id": "youtube:639yiNSj2Cc",
+  "source_url": "https://www.youtube.com/watch?v=639yiNSj2Cc",
+  "source": "Tennis Asia TV",
+  "title": "Wang Xinyu Speaks After Singapore Win Over Vekic - 6-1 6-2!",
+  "status": "verified",
+  "detected_type": "broadcaster_interview",
+  "method": "human_visual_verdict",
+  "evidence": [
+   {
+    "kind": "human_visual_verdict",
+    "run": "frame-grab 35722763221（每 8 秒一格，274 秒全片 34 格，逐格看过）",
+    "venue_self_certifies": "背景板是本站官方媒体墙：`RALLY THE ROAR` ＋ `OCBC ARENA` ＋ `21 SEP - 27 SEP 2026` ＋ `WTA 500`，三项和 api.wtatennis.com 的赛事记录（id=1152，level=WTA 500，2026-09-21~09-27）逐项对得上；赞助商墙 ASICS / BNP Paribas / Morgan Stanley / Hilton / Sport Singapore / Turkish Airlines / Grab 也是本站阵容",
+    "subject": "王欣瑜本人，全程同一机位、同一面墙，手持话筒受访",
+    "not_studio": "不是演播台对坐——她站着，记者在画外举话筒，背景是赛场区域的媒体墙"
+   },
+   {
+    "kind": "gaps_declared_by_hand",
+    "why": "⚠️ 这条源**不满足 `broadcaster_interview` 判据里的两条**，由账号所有者 2026-09-22 明确授权后采用，如实登记，不当成合格来源复制：\n① **不是受信转播商**：Tennis Asia TV 是 7.59K 订阅的亚洲网球自媒体（频道简介 `Your source for Asian tennis.`），不在 data/oncourt_sources.json 里；\n② **话筒无台标**：画面里是裸的 RODE 话筒，没有任何频道旗；\n③ **不是「还穿着当场比赛服」**：她今天比赛穿酒红无袖连衣裙（官方集锦 266 秒网前握手那一格），采访里换成了深蓝 adidas 短袖。\n④ 唯一成立的那条是「背景是赛场区域」。\n**官方那条路是真空，不是没查**：同日同站 WTA 官方集锦时长自证——这场 306 秒、沃尔夫 307、帕克斯 304，全压在纯集锦 310 秒基线内，而冈村-费尔南德斯那场 458 秒尾巴上就有场上采访；@WTA 频道最近 40 条上传里没有任何独立采访条目；新加坡站没有自己的官方频道（三个句柄全 404）。"
+   }
+  ],
+  "match_id": "2026:singapore:womens-first-round:xinyu-wang-donna-vekic",
+  "attestation_sha256": "61d14421ad53d99140ee678c79493b3f9edb72672ae9bcb50a54f4adc88e78e7"
+ },
+ "zh": [],
+ "cover": {
+  "frame_at": 0.0,
+  "_why": "待定——取完转写、知道她哪一句是落点之后，按 storyboard 挑一格睁眼、正脸、笑开的。"
+ },
+ "takeaway": {
+  "close": {
+   "point": "停了二十天回来 六十六分钟打掉八号种子",
+   "ask": "这一场你看了吗？"
+  }
+ },
+ "push": {
+  "matchup": "王欣瑜 vs 维基奇",
+  "score": "6-1 6-2",
+  "event": "",
+  "summary": "王欣瑜横扫八号种子",
+  "auto": true,
+  "lead": "待定——转写拿回来之后按她自己的原话写。"
+ },
+ "_facts": [
+  "赛果：王欣瑜 6-1 6-2 胜 8 号种子维基奇，WTA500 新加坡女单第一轮，用时 1:06:18。三源一致：WTA 官方 api.wtatennis.com/tennis/tournaments/1152/2026/matches 的 `ResultString` 写着 `X. Wang d [8]D. Vekic 6-1,6-2`、`RoundID=1`、`MatchTimeTotal=01:06:18`；flashscore fBE7oN6j 分盘 1-6 2-6；官方集锦 266 秒烧死的记分牌 `VEKIC Donna 1 2 / WANG Xinyu 6 6`。",
+  "赛事：WTA 500，OCBC Arena，硬地室内，2026-09-21~09-27，28 签，奖金 1,206,446 美元（api.wtatennis.com/tennis/tournaments?from=2026-09-18&to=2026-09-28，tournamentGroup.id=1152）。",
+  "排名：王欣瑜世界第 40（1195 分），维基奇世界第 38（1278 分），均取自 api.wtatennis.com/tennis/players/ranked。维基奇是本站 8 号种子（WTA feed 的 SeedA=8），王欣瑜非种子。",
+  "技术统计（flashscore df_st_1）：王欣瑜发球局 8 保 8（100%）、破发 4/7、3 个 ACE、一发得分率 79%、二发得分率 71%、总得分 60:96（63%）；维基奇发球局 3/7、破发 0/1。",
+  "交手史：第 4 次交手，两人现在 2-2。2021-10-29 库马约尔、2024-02-18 迪拜，维基奇均 2:0 取胜（王欣瑜一盘未得）；2026-08-16 辛辛那提第二轮王欣瑜 3-6 6-1 6-4 首胜，用时 2 小时 11 分。两个独立源：flashscore df_hh_1_fBE7oN6j 的 Head-to-head 段，以及仓库里已核过的 specs/reels/wang-vekic.json。",
+  "近况：9 月 2 日美网第二轮 1:2 负于卡林斯卡娅之后没有再出赛，到今天整整 20 天，这是复出第一场（flashscore df_hh_1 的 `Last matches: Wang Xin.` 段）。",
+  "赛点形状：她 5-2 发球胜赛局，40-15 拿到第一个赛点即兑现（flashscore 逐分 df_mh_1 `2-6 客队发球，客队拿下 ← 1个赛点`；官方集锦 252/256 两格记分条 `MATCH POINT ... XIN. WANG 6 5 40` 自证）。"
+ ],
+ "_notes": "源片身份的缺口和授权见 source_verification.evidence[1]。"
+}
