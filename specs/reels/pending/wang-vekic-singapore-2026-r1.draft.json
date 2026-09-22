@@ -224,7 +224,7 @@
     ]
   },
   "_editorial_review": {
-    "status": "rejected",
+    "status": "blocked_after_bounded_correction",
     "errors": [
       "胜负方向颠倒（落后24分还能赢）",
       "总得分出现70，官方统计为60",
@@ -234,6 +234,13 @@
       "把99秒保发回合、132秒制造破发点写成破发兑现",
       "189秒是维基奇保发片段；244秒仍是维基奇发球，不是王欣瑜发球"
     ],
-    "correction_attempts": 0
+    "correction_attempts": 1,
+    "correction_errors": [
+      "纠错稿新增两记30比0",
+      "未经证据支持的连得四分",
+      "未完整交代次盘四比二时对手抵抗"
+    ],
+    "reviewed_storyboard": "docs/production/wang-vekic-reviewed-edit.md",
+    "model_candidate": "docs/production/wang-vekic-editorial-candidate.json"
   }
 }
