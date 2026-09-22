@@ -6,6 +6,7 @@ from pathlib import Path
 from PIL import Image
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
+import analyze_reel_visuals as visual
 from analyze_reel_visuals import contact_panels
 
 
@@ -33,3 +34,15 @@ def test_unknown_sheet_geometry_is_never_reinterpreted(tmp_path):
     panels = contact_panels(path)
     assert len(panels) == 1
     assert base64.b64decode(panels[0]["image_url"]["url"].split(",")[1]) == path.read_bytes()
+
+
+def test_replacing_same_named_evidence_or_auditor_invalidates_cached_review(tmp_path, monkeypatch):
+    path = tmp_path / "contact_04.jpg"
+    path.write_bytes(b"first reviewed bytes")
+    first = visual.evidence_hash([path], None)
+    assert first == visual.evidence_hash([path], None)
+    path.write_bytes(b"replacement under identical filename")
+    second = visual.evidence_hash([path], None)
+    assert first != second
+    monkeypatch.setattr(visual, "AUDIT_VERSION", "changed-auditor-contract")
+    assert second != visual.evidence_hash([path], None)
