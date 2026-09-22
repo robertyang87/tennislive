@@ -1,0 +1,39 @@
+{
+  "status": "preview_rendered_publish_pending",
+  "slug": "wang-vekic-singapore-2026-r1-local-preview",
+  "formal_slug": "wang-vekic-singapore-2026-r1",
+  "duration_seconds": 195.72,
+  "canvas": [
+    1080,
+    1440
+  ],
+  "fps": 25,
+  "bytes": 111853204,
+  "film_sha256": "e7480e0186faeda60f52f7fbdec4e31b8b037b98127a354e2a7b45b832e27947",
+  "qc": {
+    "scope": "check_reel_landed.py deterministic technical checks, not full publication approval",
+    "status": "pass",
+    "checked_at": "2026-09-22T11:53:15Z",
+    "spec_sha256": "8396efdb2276564f4f16c695a10f0c9b6ec8d7d81ce6acb8b0fbf43fc79ab354",
+    "audio_seconds": 195.71,
+    "sampled_visual_checks": [
+      "cold-open bilingual subtitles",
+      "main narration subtitle frame",
+      "tactics segment",
+      "brand outro"
+    ],
+    "full_audio_listening": "pending"
+  },
+  "production_route": "User-authorized local editorial verification and rendering; previous failed model reports remain failed.",
+  "source_ending_preserved": [
+    251.48,
+    282.88
+  ],
+  "outro_fix_commit": "a84d5dc61c94eea6de0510134eff15453d2ba3b2",
+  "publish_hold": [
+    "Same-match HD photographic cover provenance still unverified; candidate is internal preview only.",
+    "Full publication QC and current-head CI not yet complete."
+  ],
+  "push_sent": false,
+  "merged": false
+}
