@@ -27,39 +27,39 @@
     "version": 2,
     "pipeline": "match-reel",
     "slug": "federer-on-business",
-    "received_at": "2026-09-22T02:24:57Z",
-    "artifact_ready_at": "2026-09-22T02:28:53Z",
-    "elapsed_seconds": 236.881,
+    "received_at": "2026-09-22T02:32:32Z",
+    "artifact_ready_at": "2026-09-22T02:36:13Z",
+    "elapsed_seconds": 221.178,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "3074b5e617905e87f201feda042f5f2a2ad7ebe84a9b1a2bee5a2494f5a1add3",
-    "spec_sha256": "9a3153d2b05e188960992608a722debfd3e1a1fdd291c92886845e8f0e5f6673",
-    "run_id": "35679368918",
+    "film_sha256": "7b43243200cffc05341641adad8b99f9f1d28dd473d1e6750e40c129113462c7",
+    "spec_sha256": "24e79e2e338077d54083e202c74807e284b901a88230cec0385b95c334e9f806",
+    "run_id": "35679830005",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-09-22T02:27:34Z",
-        "run_id": "35679368918"
+        "at": "2026-09-22T02:34:54Z",
+        "run_id": "35679830005"
       }
     ],
-    "render_seconds": 79.881,
-    "pre_render_seconds": 157.0
+    "render_seconds": 79.178,
+    "pre_render_seconds": 142.0
   },
-  "film_sha256": "3074b5e617905e87f201feda042f5f2a2ad7ebe84a9b1a2bee5a2494f5a1add3",
-  "film_bytes": 25453171,
-  "qc_attestation_sha256": "25f77fc77233fd3f288c132e0fb113bab3f05112c6e677a337ec5fcff3ce3d70",
+  "film_sha256": "7b43243200cffc05341641adad8b99f9f1d28dd473d1e6750e40c129113462c7",
+  "film_bytes": 26533161,
+  "qc_attestation_sha256": "07d6cc1cabd5b9ec4499f80b11b38e947714e025a4d81f5063ab5cdc38a7b152",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-09-22T02:27:34Z",
-      "run_id": "35679368918"
+      "at": "2026-09-22T02:34:54Z",
+      "run_id": "35679830005"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-09-22T02:28:54Z",
-      "run_id": "35679368918"
+      "at": "2026-09-22T02:36:13Z",
+      "run_id": "35679830005"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-federer-on-business/federer-on-business.mp4",
-  "video_bytes": 25453171
+  "video_bytes": 26533161
 }
