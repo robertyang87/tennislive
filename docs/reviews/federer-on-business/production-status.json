@@ -1,12 +1,12 @@
 {
-  "status": "revision_after_first_render_qc",
+  "status": "production_qc_passed_ready_for_merge_and_automatic_publication",
   "checks": {
     "research": "complete; primary-source ledger in research.md",
     "source_probes": "3 accepted 1920x1080 official On sources; 608px football source excluded",
-    "visual_inspection": "welcome/pro contact sheets and all 9 LightSpray contact sheets reviewed",
-    "narration": "real local Edge Yunjian +6% synthesis; final 29 segments fit; see narration-check.txt",
-    "final_video_QC": "not run",
-    "push": "not run",
+    "visual_inspection": "31 final-film samples inspected: cover, all 29 segments, outro; captions and evidence cards legible; archive years identified",
+    "narration": "final local real Edge Yunjian +6% check passed; all 29 fit; final question 2.616s in 2.77s window",
+    "final_video_QC": "pass: 0 failures; render run 35671561141; 220.72s, 1080x1440",
+    "push": "publication follows merge; authoritative receipt: output/*/reel/federer-on-business/pushed.json and data/reel_publish_ledger/federer-on-business.json",
     "MiniMax": "not called",
     "DeepSeek": "not called"
   },
@@ -35,5 +35,17 @@
     "passed": 3351,
     "failed": "ending must ask a question"
   },
-  "revision": "Shortened video segment tails by 0.75s; question measured at 2.616s, final window 2.77s; no quality gates altered"
+  "revision": "Shortened video segment tails by 0.75s; question measured at 2.616s, final window 2.77s; no quality gates altered",
+  "final_render": {
+    "run": 35671561141,
+    "commit": "045e2dc6827a35b95c9e8416a73def215d212482",
+    "film_sha256": "a3c9152b47e4c1b7202a13b62d0cab65cb1234ca4b7a7070f16d7aa2b65bcf19",
+    "film_bytes": 67119946,
+    "film_seconds": 220.72
+  },
+  "ci_after_revision": {
+    "run": 35671511956,
+    "passed": 3352,
+    "skipped": 169
+  }
 }
