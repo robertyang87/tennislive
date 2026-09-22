@@ -13,6 +13,7 @@ import argparse
 import base64
 from difflib import SequenceMatcher
 import hashlib
+import io
 import json
 import os
 import re
@@ -28,6 +29,7 @@ from reel_skill import model_instructions  # noqa: E402
 
 ENDPOINT = "https://api.minimaxi.com/v1/chat/completions"
 MODEL = "MiniMax-M3"
+AUDIT_VERSION = "panels-high-detail-v2"
 MIN_CONFIDENCE = 0.80
 ALLOWED_MOMENTS = {"match_point", "winning_shot", "winner_celebration", "aftermath"}
 REPAIRABLE_VISUAL_ERRORS = (
@@ -61,6 +63,7 @@ def select_contact_sheets(paths: list[Path], limit: int = 5) -> list[Path]:
 def evidence_hash(frames: list[Path], cover: Path | None) -> str:
     """钉住 MiniMax 实际看过的字节，供定时重试判断证据有没有变化。"""
     digest = hashlib.sha256()
+    digest.update(AUDIT_VERSION.encode())
     for path in [*frames, *([cover] if cover is not None else [])]:
         digest.update(path.name.encode())
         digest.update(path.read_bytes())
@@ -89,7 +92,35 @@ def captions(path: Path) -> list[tuple[float, str]]:
 def _image(path: Path) -> dict:
     mime = "image/png" if path.suffix.casefold() == ".png" else "image/jpeg"
     encoded = base64.b64encode(path.read_bytes()).decode()
-    return {"type": "image_url", "image_url": {"url": f"data:{mime};base64,{encoded}"}}
+    return {"type": "image_url", "image_url": {
+        "url": f"data:{mime};base64,{encoded}", "detail": "high"}}
+
+
+def contact_panels(path: Path) -> list[dict]:
+    """Split the standard six-column sheet without resizing or losing burned times.
+
+    Endgame sheets have thirty tiny frames. Sending them as one image makes
+    neighboring rows easy to confuse. Keep each original pixel in a two-column,
+    two-row panel; never reconstruct timestamps from the panel's position.
+    Nonstandard sheets remain intact rather than guessing their geometry.
+    """
+    from PIL import Image
+
+    with Image.open(path) as sheet:
+        width, height = sheet.size
+        if width != 2190 or (height + 6) % 208:
+            return [_image(path)]
+        panels = []
+        for top in range(0, height, 416):
+            for left in range(0, width, 732):
+                tile = sheet.crop((left, top, min(left + 726, width),
+                                   min(top + 410, height)))
+                buffer = io.BytesIO()
+                tile.save(buffer, format="PNG")
+                encoded = base64.b64encode(buffer.getvalue()).decode()
+                panels.append({"type": "image_url", "image_url": {
+                    "url": f"data:image/png;base64,{encoded}", "detail": "high"}})
+        return panels
 
 
 def ask_minimax(draft: dict, frames: list[Path], cover: Path | None,
@@ -97,8 +128,9 @@ def ask_minimax(draft: dict, frames: list[Path], cover: Path | None,
                 validation_problems: list[str] | None = None) -> dict | None:
     match = draft.get("_match") or {}
     brief = draft.get("_cover_brief") or {}
-    prompt = f"""你是网球短视频的视觉事实审核员。图片 1 到 {len(frames)} 是同一条
-比赛集锦的带时间码 contact sheet；{('最后一张是候选封面照片' if cover else '没有候选封面照片')}。
+    prompt = f"""你是网球短视频的视觉事实审核员。带 SOURCE 标签的图片是同一条
+比赛集锦的时间码图，尾部图已分成小面板；{('COVER 标签后是候选封面照片' if cover else '没有候选封面照片')}。
+只读每个小画面自己左上角烧录的源时间，不得按面板序号、行列位置或相邻图片推算时间。
 
 结构化赛果（它是事实源，画面不得推翻）：
 {json.dumps(match, ensure_ascii=False)}
@@ -121,6 +153,7 @@ def ask_minimax(draft: dict, frames: list[Path], cover: Path | None,
 }}
 
 硬规则：冷开场必须是制胜分、赛点、赢家庆祝或紧接赛后的余波，不能选普通回合；
+冷开场和 ending 各自必须满足 3 <= end-start <= 30 秒，先计算再返回。
 ending 必须完整覆盖 cold_open 的时间窗口，保证正文末尾重新兑现结局；时间码只能
 来自图上烧录的时间和相邻切点，不能猜；reason 引用的每个时间点都必须落在自己
 返回的 start/end 窗口内。封面要核对人物、比分字样、赛事标识、
@@ -142,14 +175,22 @@ ending 必须完整覆盖 cold_open 的时间窗口，保证正文末尾重新�
 无法用当前图片证明时如实返回 false/低置信度，绝不能为了过闸猜测。
 """
     content: list[dict] = [{"type": "text", "text": prompt}]
-    content.extend(_image(path) for path in frames)
+    for index, path in enumerate(frames):
+        panels = contact_panels(path) if index >= len(frames) - 2 else [_image(path)]
+        for panel_index, panel in enumerate(panels):
+            content.append({"type": "text", "text":
+                f"SOURCE {path.name}, panel {panel_index + 1}: read burned source timestamps."})
+            content.append(panel)
     if cover is not None:
+        content.append({"type": "text", "text": "COVER: candidate still photograph, no source timestamp."})
         content.append(_image(cover))
     payload = {
         "model": MODEL,
         "messages": [{"role": "user", "content": content}],
-        "max_tokens": 1800,
-        "thinking": {"type": "disabled"},
+        "max_completion_tokens": 8192,
+        "temperature": 0,
+        "thinking": {"type": "adaptive"},
+        "reasoning_split": True,
     }
     req = urllib.request.Request(
         ENDPOINT, data=json.dumps(payload).encode(),
