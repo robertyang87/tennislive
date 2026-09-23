@@ -67,7 +67,17 @@ def approved_items(path, verdicts, cfg):
         if not isinstance(record, dict) or not isinstance(record.get('item'), dict):
             continue
         item = record['item']
+        if not all(isinstance(item.get(k), str) and item[k] for k in ('id', 'source', 'url', 'title')):
+            continue
+        try:
+            stamp = datetime.datetime.fromisoformat(record.get('discovered_at', '').replace('Z', '+00:00'))
+            if stamp.tzinfo is None:
+                continue
+        except (ValueError, TypeError, AttributeError):
+            continue
         verdict = verdicts.get(vid, {})
+        if not isinstance(verdict, dict):
+            continue
         source = sources.get(item.get('source'))
         # No new automatic L0 method: require explicit human evidence bound to
         # the same metadata, then still run normal source/sport/freshness gates.

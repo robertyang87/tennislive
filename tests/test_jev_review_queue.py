@@ -110,3 +110,10 @@ def test_frame_queue_rotates_and_does_not_treat_site_posters_as_video_frames(tmp
     state['items'][ITEM['id']]['last_frames_at'] = '2026-09-23T01:00:00Z'
     assert queue.review_items(state, {}, 1)[0]['id'] == second['id']
     assert queue.review_items(state, {second['id']: {'verdict': 'press'}}, 1)[0]['id'] == ITEM['id']
+
+
+def test_malformed_queue_rows_cannot_crash_primary_collector(tmp_path):
+    path = tmp_path / 'queue.json'
+    for row in ({}, {'item': {}}, {'item': dict(ITEM, source=[])}, {'item': ITEM, 'discovered_at': None}):
+        path.write_text(json.dumps({'version': 1, 'items': {ITEM['id']: row}}))
+        assert queue.approved_items(path, {}, CFG) == []
