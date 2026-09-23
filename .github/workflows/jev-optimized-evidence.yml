@@ -1,0 +1,29 @@
+name: Jev optimized comparison
+on:
+  push:
+    branches: [agent/jev-optimized-evidence]
+permissions:
+  contents: read
+jobs:
+  replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            data
+            tools
+            src
+            demos/jev_optimized
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -q Pillow
+      - run: python demos/jev_optimized/replay.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: jev-optimized-comparison
+          path: |
+            jev-optimized-results/report.json
+            jev-optimized-results/visual
