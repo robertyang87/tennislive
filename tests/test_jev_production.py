@@ -48,7 +48,7 @@ class ProductionTest(unittest.TestCase):
         jobs = workflow['jobs']
         self.assertEqual(jobs['draft']['needs'], 'collect')
         self.assertEqual(jobs['jev']['needs'], 'collect')
-        self.assertEqual(jobs['jev']['permissions'], {'contents': 'read'})
+        self.assertEqual(jobs['jev']['permissions'], {'contents': 'write'})
         self.assertEqual(jobs['jev']['concurrency']['group'], 'jev-production-advisory')
 
     def test_api_payload_has_only_title_and_source(self):

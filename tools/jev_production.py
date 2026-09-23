@@ -12,7 +12,7 @@ import jev_selective as selective
 def evaluate(items, cache, *, enabled=True):
     ledger = selective.Ledger(cache)
     try:
-        report = selective.run(items, collector.load_sources(), ledger,
+        report = selective.run([{k: v for k, v in item.items() if k not in ('description', 'transcript')} for item in items], collector.load_sources(), ledger,
                                live=enabled, max_calls=5, daily_limit=20)
     finally:
         ledger.db.close()

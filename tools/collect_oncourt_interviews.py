@@ -854,6 +854,23 @@ def scan(url: str, depth: int) -> tuple[list[dict], str]:
 
 
 
+def write_jev_candidates(path: Path, items: list[dict]) -> bool:
+    """Optional telemetry must never prevent saving the primary inventory."""
+    tmp = path.with_name(path.name + ".tmp")
+    try:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        tmp.write_text(json.dumps({"items": items}, ensure_ascii=False), encoding="utf-8")
+        tmp.replace(path)
+        return True
+    except OSError as exc:
+        print(f"::warning::Jev candidate export failed: {type(exc).__name__}; collection continues", file=sys.stderr)
+        try:
+            tmp.unlink(missing_ok=True)
+        except OSError:
+            pass
+        return False
+
+
 def jev_candidate_eligible(row, source, kind, known, verdicts, cfg, rules):
     """Only unresolved, unseen metadata passes; visual decisions and source gates win."""
     vid = row.get("id")
@@ -963,6 +980,13 @@ def main() -> int:
     with ThreadPoolExecutor(max_workers=min(args.max_parallel, len(sources))) as pool:
         fetched_sources = list(pool.map(_fetch_one, sources))
 
+    # Reintroduce explicitly reviewed Jev discoveries; never let a model verdict
+    # masquerade as a human visual verdict. The binding prevents stale approval.
+    from jev_review_queue import approved_items
+    for approved in approved_items(ROOT / "data/jev_review_queue.json", verdicts, dict(cfg, sources=sources)):
+        src = next(source for source in cfg["sources"] if source["name"] == approved["source"])
+        fetched_sources.append((src, [approved], "jev-reviewed", approved["discovered_at"]))
+
     for src, rows, status, fetched_at in fetched_sources:
         if rows:
             any_fetched = True
@@ -976,7 +1000,9 @@ def main() -> int:
             # `Lilli Tagger Champion Prague 2026`，靠标题正则一条都收不到，
             # 而它 234 条里覆盖了马德里 31、迈阿密 17、印第安维尔斯 9，
             # 全是官方缺口。这类源按源判，不按标题判。
-            if (tail := src.get("tail_interview")) and _tail_interview(r, tail):
+            if status == "jev-reviewed":
+                kind = "oncourt"
+            elif (tail := src.get("tail_interview")) and _tail_interview(r, tail):
                 # **采访藏在集锦片子的后半段里。** 判据是时长，见 `_tail_interview`。
                 kind = "oncourt"
                 r["tail_interview"] = True
@@ -996,8 +1022,9 @@ def main() -> int:
             else:
                 kind = classify(r["title"], rules)
             if args.jev_candidates and jev_candidate_eligible(r, src, kind, known, verdicts, cfg, rules):
-                jev_candidates.append({"id": r["id"], "title": r["title"],
-                                       "source": src["name"], "url": r.get("page_url") or
+                jev_candidates.append({**r, "source": src["name"],
+                                       "discovered_at": fetched_at,
+                                       "url": r.get("page_url") or
                                        f"https://www.youtube.com/watch?v={r['id']}"})
             if kind is None:
                 continue
@@ -1058,8 +1085,7 @@ def main() -> int:
         report.append((src["name"], status, len(rows), n_oncourt, n_skipped, fresh))
 
     if args.jev_candidates:
-        args.jev_candidates.parent.mkdir(parents=True, exist_ok=True)
-        args.jev_candidates.write_text(json.dumps({"items": jev_candidates}, ensure_ascii=False), encoding="utf-8")
+        write_jev_candidates(args.jev_candidates, jev_candidates)
 
     # **先落库，再打印。** 顺序反过来吃过亏：报告有几十行，下游一个
     # `| head -30` 就会把进程 SIGPIPE 掉，报告看着跑完了，产物根本没写。

@@ -270,6 +270,9 @@ def candidate_sets(*, today: datetime.date | None = None) -> tuple[list[dict], l
             "event_zh": event_zh,
             "match_id": match_id,
             "source_verification": source_verification,
+            **({"discovery_method": it["discovery_method"],
+                "jev_input_sha256": it.get("jev_input_sha256")}
+               if it.get("discovery_method") == "jev_human_visual_review" else {}),
             **({"entitlement": it.get("entitlement")} if it.get("entitlement") else {}),
         }
         if resource_problem := production_resource_problem(it):
