@@ -1,0 +1,59 @@
+name: Jev isolated smoke
+on:
+  push:
+    branches: [agent/jev-smoke-20260923]
+    paths: [.github/workflows/jev-smoke.yml]
+permissions:
+  contents: read
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 34da9aa1734324bfc1e35f7965c7e4cf2ea0954e
+          sparse-checkout: |
+            tools
+            data
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Test production secret and persistent cache
+        env:
+          TYPESAFE_API_KEY: ${{ secrets.TYPESAFE_API_KEY }}
+          PYTHONPATH: tools
+        run: |
+          python - <<'PY'
+          import json, os, time
+          from pathlib import Path
+          from unittest.mock import patch
+          import jev_production as prod
+          import jev_client as client
+          assert os.environ.get('TYPESAFE_API_KEY'), 'missing TYPESAFE_API_KEY'
+          items = [{'id':'synthetic-smoke', 'title':'Tennis player reacts after victory', 'source':'Synthetic connectivity test'}]
+          start = time.monotonic()
+          cold = prod.evaluate(items, Path('/tmp/jev-smoke.sqlite'))
+          cold_ms = round((time.monotonic()-start)*1000, 2)
+          Path('/tmp/cold.json').write_text(json.dumps(cold, indent=2))
+          print(json.dumps({'phase':'cold','wall_ms':cold_ms,**cold}))
+          assert cold['counts'].get('api_ok') == 1, 'Jev production request failed; see sanitized cold report'
+          start = time.monotonic()
+          with patch.object(client.urllib.request, 'build_opener', side_effect=AssertionError('warm network forbidden')) as network:
+              warm = prod.evaluate(items, Path('/tmp/jev-smoke.sqlite'))
+              network.assert_not_called()
+          warm_ms = round((time.monotonic()-start)*1000, 2)
+          Path('/tmp/warm.json').write_text(json.dumps(warm, indent=2))
+          print(json.dumps({'phase':'warm','wall_ms':warm_ms,**warm}))
+          assert warm['api_attempts'] == 0 and warm['counts'].get('cache_hit') == 1
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as f:
+              f.write(f'Secret verified; cold={cold_ms}ms / 1 API call; warm={warm_ms}ms / 0 API calls; no production dispatch.\n')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: jev-smoke-receipts
+          path: |
+            /tmp/cold.json
+            /tmp/warm.json
+          retention-days: 14
