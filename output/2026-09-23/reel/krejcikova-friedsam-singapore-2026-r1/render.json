@@ -1,0 +1,68 @@
+{
+  "scoreboard_qc_sha256": null,
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 3.827,
+  "layout": "full",
+  "segments_seconds": 191.16,
+  "topbar": {
+    "line1": "2026 新加坡 WTA500 第一轮",
+    "line2": "克雷吉茨科娃 6-0 5-7 7-6(4) 弗里德萨姆",
+    "start": 1.2,
+    "end": 192.36
+  },
+  "film_seconds": 196.2,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 16.488,
+    "2": 18.6,
+    "3": 15.48,
+    "4": 21.36,
+    "5": 5.448,
+    "6": 21.888,
+    "7": 25.464,
+    "8": 19.8,
+    "9": 20.904
+  },
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "krejcikova-friedsam-singapore-2026-r1",
+    "received_at": "2026-09-23T04:10:50Z",
+    "artifact_ready_at": "2026-09-23T04:17:53Z",
+    "elapsed_seconds": 423.334,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "87d7899e6364d5f8cf50e9841049c51b347c41f7d97243163a47c4959d5793d5",
+    "spec_sha256": "f7554fe9cbdb32e3866cd6f400b5b1decfe708617af4fbc3a779d1be272e623e",
+    "run_id": "35817265244",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-09-23T04:13:41Z",
+        "run_id": "35817265244"
+      }
+    ],
+    "render_seconds": 252.334,
+    "pre_render_seconds": 171.0
+  },
+  "film_sha256": "87d7899e6364d5f8cf50e9841049c51b347c41f7d97243163a47c4959d5793d5",
+  "film_bytes": 119814705,
+  "qc_attestation_sha256": "b9a68fab2bd92223167ded2f5989e789c7c8caf2cd6787f5a953c6012382ea8c",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-09-23T04:13:41Z",
+      "run_id": "35817265244"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-23T04:17:54Z",
+      "run_id": "35817265244"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-krejcikova-friedsam-singapore-2026-r1/krejcikova-friedsam-singapore-2026-r1.mp4",
+  "video_bytes": 119814705
+}

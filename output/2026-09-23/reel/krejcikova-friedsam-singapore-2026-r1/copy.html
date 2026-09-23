@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>9.23 赛场之上 | 克雷吉茨科娃救两个赛点</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>克雷吉茨科娃6-0开局，然后打了三个小时🎾
+
+北京时间9月22日傍晚，新加坡室内硬地，WTA500女单第一轮：世界第44的克雷吉茨科娃 6-0、5-7、7-6(4) 逆转世界第266的弗里德萨姆，2小时58分。
+
+第一盘像一堂练习课。弗里德萨姆的15个发球分只赢下3分，6个发球局一局没保住，整盘送出14个非受迫失误——克雷吉茨科娃这一盘只有3个，制胜分8比3。30分钟，6-0。
+
+第二盘换了个人打。弗里德萨姆的一发进球率涨到73%，克雷吉茨科娃自己吞了3个双误，5-7丢掉这一盘。有意思的是这一盘的小分：38比36，多的那边还是克雷吉茨科娃——丢盘的人赢了更多的分。
+
+真正的坎在决胜盘。3-5，轮到弗里德萨姆发球胜赛，40-30，第一个赛点。那几分没有一拍解决战斗的球，两个人钉在底线上来回相持，谁也不肯先上网。第一个赛点被磨平，回到平分；第二个赛点再来，又被磨掉一次。等这一局打完，拿到优势的已经换成了克雷吉茨科娃——同一局里她自己也拿到3个破发点，第三个兑现。
+
+5-5之后她只有一个破发点，一次就用掉，6-5拿到发球胜赛的机会。可这一局又被破回去，6-6进抢七。5-3那一分转播完整地放了出来，两个人在底线上来回，中间一刀没剪，解说看完只憋出一句：她到底是怎么赢下这一分的。
+
+6-3，三个赛点。第一个被弗里德萨姆救掉，第二个上，7-4。
+
+全场制胜分37比20，非受迫失误50比49——赢球的那一边失误更多，这场球就是这么拖下来的。
+
+这是克雷吉茨科娃7月24日之后的第一场胜利，中间隔着四连败。而7月19日，她刚拿下雅典的冠军；两年前，她在温布尔登捧起过大满贯奖杯。
+
+从2024年的温网冠军，到2026年首轮要救两个赛点——这样的一晚，你觉得是低谷，还是往回走的第一步？
+
+#克雷吉茨科娃 #弗里德萨姆 #新加坡网球公开赛 #赛场之上 #网球时差</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>两年前她在温布尔登捧过大满贯奖杯，今晚要靠首轮的一个抢七，才走出四连败——你觉得她还走得回去吗？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
