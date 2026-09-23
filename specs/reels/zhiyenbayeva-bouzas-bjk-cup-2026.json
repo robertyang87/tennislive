@@ -16,7 +16,7 @@
   "matchup": [
    {
     "name": "博萨斯·马内罗",
-    "name_en": "Jessica Bouzas Maneiro",
+    "name_en": "J. Bouzas Maneiro",
     "country": "ESP",
     "rank": 93
    },
@@ -29,9 +29,10 @@
   ],
   "portrait": {
    "frame_at": 464.5,
-   "focus": 0.45,
+   "focus": 0.62,
    "focus_y": 0.35,
    "zoom": 1.0,
+   "_focus_why": "第一版 focus 0.45 渲出来（run 35871753222 的 poster.jpg）她的脸贴在右边缘、眼睛那一块被裁掉一半——这一帧她站在画面中间偏右，所以把取景中心挪到 0.62。",
    "_frame_why": "⚠️ 抽帧，不是官方实拍——**账号所有者 2026-09-23 逐条批准的例外**（我摆了「授权抽帧现在推」和「等官网赛后稿的图」两条，他选了前者），闸走 `OWNER_APPROVED_FRAME_COVERS`。\n四类源当天各查过：① 赛事/协会官方图库——金杯官网这个 tie 的直播页（`/en/news/live-kazakhstan-v-spain-…`，带 `RSC: 1` 读正文）挂的图只有 `LZ1_2683`「Putintseva celebrates against Bucsa」（第二场的人）、比利时队长和旧图；同站另外三篇（西班牙前瞻、普京采娃前瞻、纪录稿）都没有博萨斯·马内罗；捷克那场的「how the tie was won」是 tie 打完约 5 小时才发的，这场双打还没开打。WTA `photo-resources` 和 AP 用 `tools/find_cover_photo.py --player Bouzas --date 2026-09-23` 跑过，都是 0 张。② 西班牙网协 rfet.es 的金杯栏目最新一篇还是赛前名单稿。③ 新闻站转载：Infobae（EFE）的头图是马德里站的资料图（背景 Mutua Madrid Open 的 `MMOF` 字样），canaltenis 那张是西班牙队服但只有 1200×800、铺 1080×1440 要放大 1.8 倍，也坐实不了是这一场。④ 金杯没有公开的 Flickr（`/photos/billiejeankingcup` 404），Getty 搜索页在这台沙箱是 JS 壳。\n**这一帧**：源片 464.5s，第二个赛点落地后她在底线握拳（`contact_07` 464.5s）——西班牙红黄队服、白色 Joma 遮阳帽、眼睛睁着看向右侧、嘴张开在喊，是这一屏要说的「她赢下这一场」；源片 1920×1080，铺 1080×1440 放大 1.33 倍。"
   },
   "scrim": "clear",
@@ -47,6 +48,7 @@
   "_hook_why": "两行，7 ／ 10 个字符，在 `HOOK_MAX_CHARS=10` 之内。\n· 第一行是**人的来路**当影子（2026-09-19 那条）：**一年前的金杯总决赛，同样在深圳，她输掉了 1/4决赛**——官方战报原文「Bouzas Maneiro lost her quarter-final tie to Marta Kostyuk as Spain tumbled out 2-0 to Ukraine 12 months ago」；2025 年总决赛的场地是深圳湾体育中心（维基 2025 Billie Jean King Cup finals 条目 ＋ 本站官网）。\n· 第二行是**整场的形状**：日延巴耶娃全场一个破发点都没拿到（flashscore `Break Points Converted` 这一栏她是 **0/0**，分盘也各是 0/0；博萨斯·马内罗 8 个发球局 8 个全保）。\n**两行之间有落差**：去年在同一块场地上输掉，今年对手连一次破发的机会都没摸到。\n⚠️ 不拿总分差说事、不写术语（「破发点」这一个词本号钩子里用过，`noskova-boulter` 那条「她1个破发点没给」）；数字写阿拉伯。\n⚠️ 「没拿到」的主语是对手，拿到破发点的人才是发球方的对手——这里没有救不救的问题。",
   "_subject_why": "封面放博萨斯·马内罗，因为这一条讲的是她替西班牙拿下第一分；日延巴耶娃是 20 岁、世界第 384 的总决赛新人，这一场的题眼不在她身上。",
   "_heat_why": "**账号所有者 2026-09-23 点名要做这一条**（直接给了源片链接：「做这个比利简金杯的赛场之上视频」）。而它够格的理由一句话说得出来：**这是深圳主场的比利·简·金杯总决赛 1/4决赛**，同一站前两条（捷克对英国）今天刚推过；这一场是西班牙对哈萨克斯坦的第一场单打，决定的是西班牙能不能拿到 2008 年以来第一次半决赛（官方战报原文「leaves Spain one win away from reaching the semi-finals for the first time since 2008」）。\n⚠️ 名次不是理由（93 和 384 都过不了前 20 那一关），「这场数据反常」「她是种子」也不是。",
+  "_name_en_why": "名条英文写 `J. Bouzas Maneiro`，不写全名：`tools/versus_poster.py` 的 `_english_display` 把最后一个词以外的都当名来缩写，全名会印成 **`J. B. MANEIRO`**（run 35871753222 的海报和数据图上都是这样），把复姓 Bouzas Maneiro 拆开了。函数自己留了出口：第一段已经带 `.` 的原样大写，印出来是 `J. BOUZAS MANEIRO`。",
   "_name_why": "`Jessica Bouzas Maneiro` 两张表都查过：`player_names_top500.json` 第 59 位和 `players.py` 都写 **博萨斯·马内罗**，调 `player_zh()` 返回同一个值。`Sonja Zhiyenbayeva` **两张表都没有**，这次补进 `players.py`：**日延巴耶娃**（按音节 Zhi-yen-ba-ye-va 译，和表里 `Kulambayeva → 库兰巴耶娃`、`Danilina → 达尼利娜` 同一套 -bayeva 的写法），补完调 `player_zh()` 核过。",
   "_matchup_order_why": "`matchup[0]` ＝ 博萨斯·马内罗（赢家、封面主角），`matchup[1]` ＝ 日延巴耶娃。⚠️ **这条和 feed 顺序是反的**：flashscore 的 home 是日延巴耶娃（`AE÷Zhiyenbayeva S.`），away 是博萨斯·马内罗（`AF÷Bouzas Maneiro J.`）。所以 `stats.a/b` 从 `match_stat_hooks --stats-block` 的输出**对调过**（a＝博萨斯·马内罗），而 `_match.participants` 跟 home/away，写的是 [日延巴耶娃, 博萨斯·马内罗]。",
   "_matchup_rank_why": "即时世界排名，两个独立源同为 **2026-09-21** 那一期：\n· 博萨斯·马内罗 **93**——WTA 官方 `api.wtatennis.com/tennis/players/ranked`（id 328139，`ranking:93, points:809, rankedAt:2026-09-21`）＋ tennisexplorer 球员页 `Current/Highest rank - singles: 93. / 40.`；\n· 日延巴耶娃 **384**——同一个接口（id 332297，`ranking:384, points:166`）＋ tennisexplorer `Current/Highest rank - singles: 384. / 382.`。\n⚠️ flashscore `df_hh_1` 里的 `CA÷102 / CB÷176` 不是排名（本仓库记过的老坑）。团体赛没有种子号。",
@@ -283,11 +285,11 @@
   },
   {
    "source": "main",
-   "start": 25.0,
-   "end": 36.6,
+   "start": 24.2,
+   "end": 35.4,
    "narration": "开场第一局，日延巴耶娃发球，她先有局点，没守住。平分之后，第一个破发点，博萨斯·马内罗就兑现了。一比零。",
    "crosses_cut": "32.76 —— 破发这一分落地接西班牙替补席起立鼓掌（`contact_00` 34.5s）。不跨的话段尾会停在刚落地、看不出是谁拿下的那一刻。",
-   "point_end_ok": "段尾 36.6 在这一分落地（32.76 那一刀）之后 3.8 秒；`score_00` 36.5s 记分条已经是下一局 `0 15 / 1 40`，那是换局后图形更新，不是又打完一分。",
+   "point_end_ok": "段尾 35.4 在这一分落地（32.76 那一刀）之后 2.6 秒，停在西班牙替补席起立鼓掌的镜头上。⚠️ **第一版段尾是 36.6，render（run 35871753222）的 `check_reel_landed` 报成片第 55 秒数字静音**——源片 35.6~36.6s 那一段转场是真空的，所以段尾收到 35.4。",
    "_why": "逐分对得上：`df_mh_1` 第一盘第一局 `0:15, 15:15, 30:15, 30:30, 40:30, 40:40, A:40, 40:40, 40:A |B1|`——日延巴耶娃先到 `A:40`（局点）、回到平分，博萨斯·马内罗拿到这一局唯一一个破发点并兑现。`score_00` 18.5~34.5s 记分条一直是 `40 / AD`（她的破发点）。\n⚠️ 破发点写「拿到」不写「要到」；「兑现」的主语是拿到点的人。"
   },
   {
@@ -318,10 +320,10 @@
   {
    "source": "main",
    "start": 187.6,
-   "end": 199.6,
+   "end": 197.4,
    "narration": "第二盘第一局，日延巴耶娃顶住了一个破发点，先保住发球局。一比零，这是她今天第一次领先。",
-   "crosses_cut": "194.72 —— 平分那一分之后的全景接博萨斯·马内罗的特写（196.5s），198.5s 已经是下一局她准备发球。两边都在这一局的前后，旁白说的正是这一局。",
-   "point_end_ok": "`score_04` 188.5~194.5s 是 `30 / 40`（破发点），196.5s `40 / 40`，198.5s 已经是 `2 1 0 / 6 0 40`（1-0，下一局）。段尾 199.6 离 200.76 那一刀之前没有新的翻牌。",
+   "crosses_cut": "194.72 —— 平分那一分之后的全景接博萨斯·马内罗的特写（196.5s），两边都在这一局里，旁白说的正是这一局。",
+   "point_end_ok": "`score_04` 188.5~194.5s 是 `30 / 40`（破发点），196.5s `40 / 40`，198.5s 已经是 `2 1 0 / 6 0 40`（1-0，下一局）。段尾 197.4 停在平分之后她的特写上。⚠️ **第一版段尾是 199.6，render（run 35871753222）报成片第 92 秒数字静音**——源片 198.0 前后（`scene_cuts_loose` 198.0）那一下转场是真空的，所以段尾收到 197.4。",
    "_why": "逐分：第二盘第一局 `15:0, 15:15, 30:15, 30:30, 30:40 |B1|, 40:40, A:40`——救下一个破发点保发。「第一次领先」：第一盘她从 0-1 开始一局都没领先过，这是全场第一次。官方战报「Zhiyenbayeva saved that to take a 1-0 lead」。"
   },
   {
