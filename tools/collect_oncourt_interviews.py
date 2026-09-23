@@ -853,6 +853,24 @@ def scan(url: str, depth: int) -> tuple[list[dict], str]:
     return [], f"rate-limited（{last_err}）" if "429" in last_err else f"error: {last_err}"
 
 
+
+def jev_candidate_eligible(row, source, kind, known, verdicts, cfg, rules):
+    """Only unresolved, unseen metadata passes; visual decisions and source gates win."""
+    vid = row.get("id")
+    title = row.get("title", "")
+    if not vid or not title or kind not in (None, "maybe") or vid in known:
+        return False
+    if vid in cfg.get("deny_ids", []) or vid in cfg.get("allow_ids", []):
+        return False
+    if verdicts.get(vid, {}).get("verdict", "unknown") != "unknown":
+        return False
+    if source.get("require_tennis") and not is_tennis(title, rules):
+        return False
+    if any(p.search(title) for p in rules["exclude"]):
+        return False
+    return not any(p.search(title) for p in compile_deny(cfg).get(source["name"], ()))
+
+
 def main() -> int:
     global _WTA_CURSOR_PENDING
     _WTA_CURSOR_PENDING = None
@@ -871,6 +889,7 @@ def main() -> int:
                     help="连颁奖礼致辞、冠军演讲一起收（默认只收场上接受采访那一类）")
     ap.add_argument("--include-maybe", action="store_true",
                     help="连分不出场合的也收（上海 Reacts After、马德里西语那批）")
+    ap.add_argument("--jev-candidates", type=Path, help="导出待复核新素材，供独立 Jev job 使用")
     args = ap.parse_args()
     if not 1 <= args.max_parallel <= 8:
         ap.error("--max-parallel 必须在 1..8；再高会把源站限流风险放大")
@@ -920,6 +939,7 @@ def main() -> int:
     # review_each 的源里还没看过画面的，攒起来写进判定文件当队列。
     pending: dict[str, dict] = {}
     skipped: list[tuple[str, str, str]] = []
+    jev_candidates = []
     any_fetched = False
 
     # 不同来源是彼此独立的 IO（yt-dlp 子进程 / WTA / Tennis TV 请求）。旧版逐个
@@ -975,6 +995,10 @@ def main() -> int:
                 kind = "oncourt"
             else:
                 kind = classify(r["title"], rules)
+            if args.jev_candidates and jev_candidate_eligible(r, src, kind, known, verdicts, cfg, rules):
+                jev_candidates.append({"id": r["id"], "title": r["title"],
+                                       "source": src["name"], "url": r.get("page_url") or
+                                       f"https://www.youtube.com/watch?v={r['id']}"})
             if kind is None:
                 continue
             # 综合体育频道要过网球闸：那里的 post-match interview 会命中
@@ -1032,6 +1056,10 @@ def main() -> int:
             fresh += 1
 
         report.append((src["name"], status, len(rows), n_oncourt, n_skipped, fresh))
+
+    if args.jev_candidates:
+        args.jev_candidates.parent.mkdir(parents=True, exist_ok=True)
+        args.jev_candidates.write_text(json.dumps({"items": jev_candidates}, ensure_ascii=False), encoding="utf-8")
 
     # **先落库，再打印。** 顺序反过来吃过亏：报告有几十行，下游一个
     # `| head -30` 就会把进程 SIGPIPE 掉，报告看着跑完了，产物根本没写。
