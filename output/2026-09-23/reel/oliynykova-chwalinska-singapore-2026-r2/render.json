@@ -22,45 +22,45 @@
     "3": 23.232,
     "4": 8.64,
     "5": 21.312,
-    "6": 18.84
+    "6": 19.008
   },
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "oliynykova-chwalinska-singapore-2026-r2",
-    "received_at": "2026-09-23T07:34:20Z",
-    "artifact_ready_at": "2026-09-23T07:40:40Z",
-    "elapsed_seconds": 380.503,
+    "received_at": "2026-09-23T07:51:13Z",
+    "artifact_ready_at": "2026-09-23T07:56:51Z",
+    "elapsed_seconds": 338.128,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "18da59e2b66587dd0359621003b3993a3945682f089b640a007b9aefc8e48869",
-    "spec_sha256": "cf7311eda211312d0d2a8c2a95f03896327a12bbc7bcf32c83ea8877c8f810a4",
-    "run_id": "35832403263",
+    "film_sha256": "86e9e1140e76fc08ba5d4d62568d2edd4b77165d10dad21f22e65900bfbc4a4a",
+    "spec_sha256": "e467df6040eb6f57621011e3191d4000462f909441a98e5a5d95b9f52e516d9c",
+    "run_id": "35833897889",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-09-23T07:37:21Z",
-        "run_id": "35832403263"
+        "at": "2026-09-23T07:53:48Z",
+        "run_id": "35833897889"
       }
     ],
-    "render_seconds": 199.503,
-    "pre_render_seconds": 181.0
+    "render_seconds": 183.128,
+    "pre_render_seconds": 155.0
   },
-  "film_sha256": "18da59e2b66587dd0359621003b3993a3945682f089b640a007b9aefc8e48869",
-  "film_bytes": 81082882,
-  "qc_attestation_sha256": "e5c663a896e44dae081e5871d756a34e0f639dc31b7450c1d8e9d3ffaf56fb2d",
+  "film_sha256": "86e9e1140e76fc08ba5d4d62568d2edd4b77165d10dad21f22e65900bfbc4a4a",
+  "film_bytes": 81096560,
+  "qc_attestation_sha256": "18af701f0cf0f1fb789c06eb36ceaeb921cf9cfe391af4c5a592a0aca7e912c2",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-09-23T07:37:21Z",
-      "run_id": "35832403263"
+      "at": "2026-09-23T07:53:48Z",
+      "run_id": "35833897889"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-09-23T07:40:41Z",
-      "run_id": "35832403263"
+      "at": "2026-09-23T07:56:52Z",
+      "run_id": "35833897889"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-oliynykova-chwalinska-singapore-2026-r2/oliynykova-chwalinska-singapore-2026-r2.mp4",
-  "video_bytes": 81082882
+  "video_bytes": 81096560
 }
