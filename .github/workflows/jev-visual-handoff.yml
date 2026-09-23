@@ -1,0 +1,58 @@
+name: Jev visual handoff smoke
+on:
+  push:
+    branches: [agent/jev-visual-handoff-20260923]
+    paths: [.github/workflows/jev-visual-handoff.yml]
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            tools
+            data
+            specs/interviews
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install -q 'Pillow>=10.0'
+      - name: Consume recorded Jev suggestions and prepare actual video frames
+        env:
+          PYTHONPATH: tools
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          import jev_review_queue as q
+          from verify_oncourt_sample import prepare_jev_review
+          slugs=['gauff-pegula-cin2026-final','zheng-liutova-us-open-2026-r1-interview','rybakina-sabalenka-us-open-2026-final-ceremony']
+          report={'review_queue':[]}
+          for slug,confidence in zip(slugs,[.83,.78,.81]):
+              spec=json.loads((Path('specs/interviews')/(slug+'.json')).read_text())
+              src=spec['source_verification']
+              vid=spec['url'].split('v=')[-1] if 'v=' in spec['url'] else spec['url'].rsplit('/',1)[-1]
+              report['review_queue'].append({'id':vid,'title':src['title'],'url':spec['url'],'source':src['source'],
+                  'jev':{'suggestion':'interview','confidence':confidence,'evidence_run':35815540199}})
+          path=Path('/tmp/jev-review-queue.json')
+          state=q.read_queue(path)
+          print(json.dumps(q.merge_report(state,report,{})))
+          path.write_text(json.dumps(state))
+          before=Path('data/oncourt_verify.json').read_bytes()
+          prepare_jev_review(path,Path('/tmp/jev-visual-evidence'),5)
+          assert Path('data/oncourt_verify.json').read_bytes()==before
+          for item in json.loads(Path('/tmp/jev-visual-evidence/index.json').read_text()):
+              print(json.dumps({'id':item['id'],'status':item['status'],'frame_count':item['frame_count']},ensure_ascii=False))
+          print('No model calls, inventory writes, verdict writes, renders or publications.')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: jev-visual-handoff-evidence
+          path: |
+            /tmp/jev-visual-evidence
+            /tmp/jev-review-queue.json
+          retention-days: 30
