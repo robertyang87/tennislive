@@ -7,12 +7,14 @@ from pathlib import Path
 
 import collect_oncourt_interviews as collector
 import jev_selective as selective
+from jev_review_policy import MAX_REVIEW_BATCH, MAX_UNCERTAIN_BATCH, review_reason
 
 
 def evaluate(items, cache, *, enabled=True):
+    cfg = collector.load_sources()
     ledger = selective.Ledger(cache)
     try:
-        report = selective.run([{k: v for k, v in item.items() if k not in ('description', 'transcript')} for item in items], collector.load_sources(), ledger,
+        report = selective.run([{k: v for k, v in item.items() if k not in ('description', 'transcript')} for item in items], cfg, ledger,
                                live=enabled, max_calls=5, daily_limit=20)
     finally:
         ledger.db.close()
@@ -20,11 +22,23 @@ def evaluate(items, cache, *, enabled=True):
     report['activation'] = ('disabled' if not enabled else
                             'enabled' if os.getenv('TYPESAFE_API_KEY') else 'missing_secret')
     by_id = {str(item['id']): item for item in items}
-    report['review_queue'] = [
-        dict(by_id[row['id']], jev=row, requires_visual_review=True)
-        for row in report['records']
-        if row.get('suggestion') == 'interview'
-    ]
+    candidates = []
+    for row in report['records']:
+        item = by_id[row['id']]
+        reason = review_reason(item, row, cfg)
+        if reason:
+            candidates.append(dict(item, jev=row, review_reason=reason, requires_visual_review=True))
+    candidates.sort(key=lambda item: item['review_reason'] == 'model_uncertain')
+    selected, uncertain = [], 0
+    for item in candidates:
+        is_uncertain = item['review_reason'] == 'model_uncertain'
+        if len(selected) >= MAX_REVIEW_BATCH or (is_uncertain and uncertain >= MAX_UNCERTAIN_BATCH):
+            continue
+        selected.append(item)
+        uncertain += int(is_uncertain)
+    report['review_queue'] = selected
+    report['review_deferred'] = len(candidates) - len(selected)
+    report['review_uncertain'] = uncertain
     # Even a confident title classification cannot establish on-court footage.
     report['inventory_promotions'] = 0
     return report
