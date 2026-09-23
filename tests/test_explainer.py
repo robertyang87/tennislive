@@ -2614,6 +2614,7 @@ def test_每条片子的标签都放满五个():
     只查表就漏掉了「没有条目 → 走默认」这条路径，正是出问题的那条。
     兜底那组也一起查，它必须自己就是五个。
     """
+    from tennislive.render.hashtags import CAMPAIGN_TAGS, campaign_tags
     from tennislive.video.explainer import _DEFAULT_TAGS, explainer_xiaohongshu
 
     assert len(_DEFAULT_TAGS) == 5, (
@@ -2628,8 +2629,13 @@ def test_每条片子的标签都放满五个():
             f"{slug} 的文案里有 {len(tags)} 个标签：{' '.join(tags)}\n"
             "小红书最多五个，要放满——在 _CAPTIONS 里给它写自己的五个。")
         assert len(set(tags)) == 5, f"{slug} 的标签有重复：{' '.join(tags)}"
-        assert tags[:2] == ["#网球", "#网球时差"], (
-            f"{slug} 前两个标签不是 #网球 #网球时差：{' '.join(tags)}")
+        if campaign_tags():
+            # 活动期（到 2026-10-31）两格让给活动 tag，泛词 #网球 先让位，账号名留着。
+            assert tags[-2:] == list(CAMPAIGN_TAGS) and "#网球时差" in tags, (
+                f"{slug} 活动期的标签不对：{' '.join(tags)}")
+        else:
+            assert tags[:2] == ["#网球", "#网球时差"], (
+                f"{slug} 前两个标签不是 #网球 #网球时差：{' '.join(tags)}")
 
 
 def test_复制页探不到就不放那个按钮():

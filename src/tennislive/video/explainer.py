@@ -42,6 +42,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable, Sequence
 from ..cdn import jsdelivr_base
+from ..render.hashtags import with_campaign_tags
 from .subtitle_text import drop_punctuation
 
 # The card/image keeps the brand 3:4 (1080x1440); the video canvas is 9:16
@@ -9327,9 +9328,9 @@ _CAPTIONS: dict[str, dict] = {
         "hook": (
             "中网男单 4 张正赛外卡，3 张给了中国球员，第 4 张给了世界第 13 的"
             "勒纳·钱。为什么？\n"
-            "因为这第 4 张在 ATP 规则书里本来就不在赛事那一栏。ATP 500 的签表"
+            "因为这第 4 张在 ATP 规则书里不在赛事那一栏。ATP 500 的签表"
             "构成表写着：32 签 ＝ 直入 23-25 ＋ 资格赛 4 ＋ 外卡 3-4 ＋ 特殊豁免 "
-            "0-1。外卡那个「3-4」后面挂着星号——第 4 张是额外的，只能给「A+ 球员」："
+            "0-1。「3-4」后面挂着星号——第 4 张是额外的，只能给「A+ 球员」："
             "上一年年终前 30，或持有前 10 保护排名。勒纳·钱 2025 年终第 28。\n"
             "世界第 13 为什么还要外卡？ATP 9 月 1 日公布的北京站参赛名单 23 人，"
             "没有他——挡住他的是报名，不是排名。\n"
@@ -13420,7 +13421,7 @@ def explainer_xiaohongshu(
     caption = _CAPTIONS.get(story.slug) or {}
     hook = caption.get("hook") or ""
     tags = " ".join(f"#{tag}" for tag in caption.get("tags") or _DEFAULT_TAGS)
-    return (
+    return with_campaign_tags(
         f"🎾{date_label} {column}｜{story.title}\n\n"
         + (f"{hook}\n\n" if hook else "")
         + "\n\n".join(sections)

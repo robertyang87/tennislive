@@ -54,6 +54,7 @@ from tennislive.publish.pushplus import push  # noqa: E402
 from tennislive.render.hashtags import (  # noqa: E402
     MAX_HASHTAGS,
     hashtag_count,
+    with_campaign_tags,
 )
 from tennislive.render.pushmsg import (  # noqa: E402
     _PAGES,
@@ -809,6 +810,13 @@ def main() -> int:
         raise SystemExit(
             f"{args.copy} 里有 {tags} 个 tag，超过 {MAX_HASHTAGS} 个。\n"
             "删到五个以内再推——留最能被搜到的那几个（人名、赛事、账号）。")
+    # 活动期必带的 tag 在**上限检查之后**补：手写超了照旧报错（那是写的人的事），
+    # 没超的由这儿腾位置接上。复制页和微信正文都从这一段字出，spec 里手写的
+    # `.xhs.txt` 不用逐条改。补成什么样打印出来，别默默改。
+    before = copy_text
+    copy_text = with_campaign_tags(copy_text)
+    if copy_text != before:
+        print(f"[文案] 活动 tag 已补齐：{copy_text.splitlines()[-1]}")
 
     # 格式化标题（`7.28 赛场之上 | 华盛顿 ATP500 首轮 | 锦织圭 2:1 商竣程`）
     # **就是这条帖子的标题**：微信通知栏、推送正文顶部、复制页那一格，三处同一句。
