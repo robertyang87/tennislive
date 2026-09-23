@@ -4,14 +4,14 @@
   "cover_narrated": false,
   "outro_seconds": 3.827,
   "layout": "full",
-  "segments_seconds": 157.3,
+  "segments_seconds": 157.2,
   "topbar": {
     "line1": "2026 比利·简·金杯 1/4决赛",
     "line2": "普汀塞娃 6-2 3-6 6-1 布克沙",
     "start": 1.2,
-    "end": 158.5
+    "end": 158.4
   },
-  "film_seconds": 162.36,
+  "film_seconds": 162.24,
   "narration_voice": "zh-CN-YunjianNeural",
   "narration_rate": "+6%",
   "narration_backend": "edge-tts",
@@ -31,45 +31,46 @@
     "13": 6.336,
     "14": 3.408,
     "15": 6.312,
-    "17": 8.616
+    "17": 4.152,
+    "18": 7.656
   },
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "putintseva-bucsa-bjk-cup-2026",
-    "received_at": "2026-09-23T14:13:27Z",
-    "artifact_ready_at": "2026-09-23T14:19:44Z",
-    "elapsed_seconds": 377.538,
+    "received_at": "2026-09-23T15:37:25Z",
+    "artifact_ready_at": "2026-09-23T15:43:10Z",
+    "elapsed_seconds": 345.63,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "3138635a92d1f54d4d0e6e8d30ad3ed708f27362e9916f0c9f3caf917942d5b3",
-    "spec_sha256": "28f5d390b1ea5cfa078055c9aa2533b61833a485490ae9595aacb51e05ab4ede",
-    "run_id": "35872585682",
+    "film_sha256": "c4adf32ea7cc8ca6b8fbd3f04c860b44d350538728eca499528289351ea9376a",
+    "spec_sha256": "5acf8815709425e1cd0618412f552b28e9f2d0af6930b6d304d2a20c0b4b737e",
+    "run_id": "35882905034",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-09-23T14:16:29Z",
-        "run_id": "35872585682"
+        "at": "2026-09-23T15:39:59Z",
+        "run_id": "35882905034"
       }
     ],
-    "render_seconds": 195.538,
-    "pre_render_seconds": 182.0
+    "render_seconds": 191.63,
+    "pre_render_seconds": 154.0
   },
-  "film_sha256": "3138635a92d1f54d4d0e6e8d30ad3ed708f27362e9916f0c9f3caf917942d5b3",
-  "film_bytes": 80277466,
-  "qc_attestation_sha256": "53886d8d4a3ba231ee86e9cdf73afa605ecd0ad6717dd31d1683e9e69cdc3ad8",
+  "film_sha256": "c4adf32ea7cc8ca6b8fbd3f04c860b44d350538728eca499528289351ea9376a",
+  "film_bytes": 80111357,
+  "qc_attestation_sha256": "c10bc089fa7ddae2367d81c6ef847a434905dd5c1326a8832ece8a4a2e3b8653",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-09-23T14:16:29Z",
-      "run_id": "35872585682"
+      "at": "2026-09-23T15:39:59Z",
+      "run_id": "35882905034"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-09-23T14:19:45Z",
-      "run_id": "35872585682"
+      "at": "2026-09-23T15:43:11Z",
+      "run_id": "35882905034"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-putintseva-bucsa-bjk-cup-2026/putintseva-bucsa-bjk-cup-2026.mp4",
-  "video_bytes": 80277466
+  "video_bytes": 80111357
 }
