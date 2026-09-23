@@ -1,0 +1,32 @@
+name: Jev historical comparison
+on:
+  push:
+    branches: [agent/jev-history-20260923]
+    paths: [.github/workflows/jev-history.yml]
+permissions:
+  contents: read
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            tools
+            data
+            specs/interviews
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Replay three existing source decisions and check L0
+        env:
+          TYPESAFE_API_KEY: ${{ secrets.TYPESAFE_API_KEY }}
+          PYTHONPATH: tools
+        run: python tools/jev_history_comparison.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: jev-history-comparison
+          path: /tmp/jev-history-comparison/*.json
+          retention-days: 30
