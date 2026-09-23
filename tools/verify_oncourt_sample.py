@@ -364,6 +364,15 @@ def prepare_jev_review(queue_path: Path, outdir: Path, limit: int) -> int:
                       fetch_status=status, status="ready_for_human_review" if len(good) == 3 else "waiting_frames")
         manifest.append(record)
         sheets.append((item, good))
+    # Site URLs have no supported automatic video frame extractor here. Make
+    # the blocker visible rather than silently dropping them or using posters.
+    waiting_sites = [dict(record['item'], status='waiting_video_frames',
+                          review_reason=record.get('review_reason'),
+                          required_action='Inspect actual video frames from the source URL; a poster is insufficient')
+                     for vid, record in queue['items'].items()
+                     if not re.fullmatch(r'[A-Za-z0-9_-]{11}', vid)
+                     and verdicts.get(vid, {}).get('verdict', 'unknown') == 'unknown']
+    (outdir / 'waiting-sites.json').write_text(json.dumps(waiting_sites, ensure_ascii=False, indent=2), encoding='utf-8')
     frame_sheets(sheets, outdir)
     (outdir / "index.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
     temp = queue_path.with_suffix(".tmp")

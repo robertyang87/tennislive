@@ -14,6 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'tools'))
 import collect_oncourt_interviews as collector
 import jev_client as demo
+from jev_review_policy import source_url_hint
 
 MODEL = 'jev-1.13.0'
 
@@ -37,9 +38,13 @@ def plan(item, cfg, rules):
         return 'preserve_tail_interview'
     if item.get('kind') in ('oncourt', 'ceremony'):
         return 'existing_inventory'
+    if any(p.search(title) for p in rules['exclude']):
+        return 'existing_title_rule'
     kind = collector.classify(title, rules)
     if kind in ('oncourt', 'ceremony', 'excluded'):
         return 'existing_title_rule'
+    if source_url_hint(item, cfg):
+        return 'source_url_review'
     return 'candidate'
 
 
@@ -102,6 +107,8 @@ def run(items, cfg, ledger, *, live=False, max_calls=20, daily_limit=50, caller=
     for item in items:
         reason=plan(item,cfg,rules)
         row={'id':str(item.get('id','')), 'decision':reason,'production_action':'unchanged'}
+        if reason == 'source_url_review':
+            row.update(review_hint='official_interview_url', needs_review=True)
         if reason=='candidate':
             try: key=fingerprint(item)
             except (ValueError,TypeError):

@@ -31,7 +31,10 @@ def merge_report(queue, report, verdicts, *, now=None):
     now = now or datetime.datetime.now(datetime.timezone.utc).isoformat()
     added = unchanged = resolved = 0
     for row in report.get('review_queue', []):
-        if row.get('jev', {}).get('suggestion') != 'interview':
+        result = row.get('jev', {})
+        if not (result.get('suggestion') == 'interview'
+                or (result.get('suggestion') == 'uncertain' and row.get('review_reason') == 'model_uncertain')
+                or (result.get('decision') == 'source_url_review' and row.get('review_reason') == 'source_url_hint')):
             continue
         vid = str(row.get('id') or '')
         if not vid or not row.get('url') or not row.get('source'):
@@ -50,6 +53,7 @@ def merge_report(queue, report, verdicts, *, now=None):
             'input_sha256': digest, 'suggestion': row['jev'],
             'discovered_at': (old or {}).get('discovered_at') or row.get('discovered_at') or now,
             'status': 'pending_visual_review',
+            'review_reason': row.get('review_reason', 'model_interview'),
         }
         added += 1
     return {'added': added, 'unchanged': unchanged, 'existing_visual_decisions': resolved}

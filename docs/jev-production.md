@@ -74,3 +74,25 @@ Jev 覆盖。下一轮采集只接收摘要一致、明确人审通过且来自�
 
 经该路径入库的条目和下游候选保留 `discovery_method=jev_human_visual_review`
 及 `jev_input_sha256`，便于把“新增有效候选”与原规则候选分开统计。
+
+
+## Bounded review routing (2026-09-23 follow-up)
+
+Before a new model call, registered verified official Tennis TV sources may use
+`https://www.tennistv.com/videos/<matching-id>/<slug-with-interview>` as a review
+lead. This reuses existing source URL metadata; it does not fetch or claim to
+verify the page or footage, and it never grants an on-court verdict. Prior
+inventory, deny rules and title exclusions still win. No extra metadata is sent
+to Jev. Spoofed domains, mismatched IDs, query strings and press/preview slugs
+are not accepted.
+
+Each evaluation emits at most five review suggestions, of which at most two may
+be `uncertain` from verified official/broadcaster sources. Interview and URL
+leads have priority; `review_deferred` exposes omitted suggestions. Deferred
+items are not a durable retry queue, and this per-batch cap is not a global
+backlog cap. Human approval and existing production gates remain required.
+
+The visual artifact includes `waiting-sites.json` for source sites without a
+supported automatic video-frame extractor. These require actual video review;
+site posters do not count. The existing automatic frame extraction remains
+limited to YouTube.
