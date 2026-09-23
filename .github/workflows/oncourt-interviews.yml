@@ -98,10 +98,19 @@ jobs:
           set -o pipefail
           # 默认日常增量（每源 60 条，约 1 分钟）。新内容永远在频道最前面，
           # 每天重刷 800 条历史既慢又没意义——手动派发时勾 full 才深扫。
-          python tools/collect_oncourt_interviews.py \
+          python tools/collect_oncourt_interviews.py --jev-candidates /tmp/jev-candidates.json \
             ${{ github.event.inputs.only && format('--only {0}', github.event.inputs.only) || '' }} \
             ${{ github.event.inputs.full == 'true' && '--full' || '' }} \
             | tee /tmp/oncourt.log
+
+      - name: 保存 Jev 待复核素材
+        continue-on-error: true
+        uses: actions/upload-artifact@v4
+        with:
+          name: jev-candidates
+          path: /tmp/jev-candidates.json
+          retention-days: 2
+          if-no-files-found: error
 
       - name: 用赛果反查缺口（顺带发现新频道）
         run: |
@@ -242,6 +251,57 @@ jobs:
           source tools/nudge_stale_ticks.sh
           nudge_if_stale orchestrate.yml 20 -f apply=true
           nudge_if_stale reel-auto-ready.yml 20
+
+  # Independent advisory branch: draft/render never depend on model latency or success.
+  jev:
+    needs: collect
+    if: always() && needs.collect.result != 'cancelled'
+    permissions:
+      contents: read
+    concurrency:
+      group: jev-production-advisory
+      cancel-in-progress: false
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            tools
+            data
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/download-artifact@v4
+        with:
+          name: jev-candidates
+          path: /tmp/jev-input
+      - uses: actions/cache/restore@v4
+        with:
+          path: .jev-production
+          key: jev-production-v1-${{ github.ref_name }}-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: |
+            jev-production-v1-${{ github.ref_name }}-
+      - name: Jev 辅助分流（每轮 5 次，每日 20 次）
+        timeout-minutes: 2
+        env:
+          TYPESAFE_API_KEY: ${{ secrets.TYPESAFE_API_KEY }}
+          JEV_ENABLED: ${{ vars.JEV_ENABLED }}
+        run: |
+          python tools/jev_production.py --input /tmp/jev-input/jev-candidates.json \
+            --cache .jev-production/ledger.sqlite --output /tmp/jev-report.json
+      - uses: actions/cache/save@v4
+        if: always()
+        with:
+          path: .jev-production
+          key: jev-production-v1-${{ github.ref_name }}-${{ github.run_id }}-${{ github.run_attempt }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: jev-production-review
+          path: /tmp/jev-report.json
+          retention-days: 14
+          if-no-files-found: warn
 
   # 一场比赛一个 runner：下载/ASR/翻译互不抢 4 核 CPU，一场失败也不会取消其余。
   # 同一 candidate id 单飞；不同比赛最多 4 路并行。
