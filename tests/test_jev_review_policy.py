@@ -18,6 +18,8 @@ ITEM = {'id': 'tennistv:123', 'source': 'Official', 'title': 'Player reacts',
 def test_url_hint_reuses_metadata_without_network_and_never_approves(tmp_path):
     with patch.object(production.collector, 'load_sources', return_value=CFG), patch('urllib.request.build_opener', side_effect=AssertionError('network')):
         result = production.evaluate([ITEM], tmp_path/'cache')
+        disabled = production.evaluate([ITEM], tmp_path/'cache', enabled=False)
+        assert not disabled['review_queue']
     assert result['api_attempts'] == 0
     assert result['counts'] == {'source_url_review': 1}
     assert result['review_queue'][0]['review_reason'] == 'source_url_hint'
@@ -38,6 +40,7 @@ def test_url_hint_rejects_spoofs_and_preserves_existing_gates():
                 'https://www.tennistv.com/videos/123/press-conference-interview',
                 'https://www.tennistv.com/videos/123/rome?interview=true']:
         assert policy.source_url_hint(dict(ITEM, url=url), CFG) is None
+    assert policy.source_url_hint(dict(ITEM, url='https://www.tennistv.com/videos/123/rome_round-2-post-match-interview'), CFG)
     rules = selective.collector.compile_rules(CFG)
     assert selective.plan(dict(ITEM, kind='oncourt'), CFG, rules) == 'existing_inventory'
     assert selective.plan(ITEM, dict(CFG, deny_ids=[ITEM['id']]), rules) == 'existing_deny_id'

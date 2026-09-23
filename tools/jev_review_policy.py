@@ -19,12 +19,12 @@ def source_url_hint(item, cfg):
         return None
     try:
         url = urlsplit(item.get('url', ''))
-        match = re.fullmatch(r'/videos/(\d+)/([a-zA-Z0-9-]+)', url.path)
+        match = re.fullmatch(r'/videos/(\d+)/([a-zA-Z0-9_-]+)', url.path)
         if (url.scheme != 'https' or url.netloc != 'www.tennistv.com'
                 or url.query or url.fragment or not match
                 or item.get('id') != 'tennistv:' + match[1]):
             return None
-        words = set(match[2].lower().split('-'))
+        words = set(re.split(r'[-_]', match[2].lower()))
         if 'interview' in words and not words.intersection({'press', 'conference', 'preview'}):
             return 'official_interview_url'
     except (ValueError, TypeError, AttributeError):

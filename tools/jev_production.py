@@ -26,7 +26,7 @@ def evaluate(items, cache, *, enabled=True):
     for row in report['records']:
         item = by_id[row['id']]
         reason = review_reason(item, row, cfg)
-        if reason:
+        if reason and enabled:
             candidates.append(dict(item, jev=row, review_reason=reason, requires_visual_review=True))
     candidates.sort(key=lambda item: item['review_reason'] == 'model_uncertain')
     selected, uncertain = [], 0
