@@ -319,8 +319,8 @@ jobs:
         if: always() && steps.candidates.outputs.present == 'true'
         run: |
           test -f data/jev_review_queue.json
-          git config user.name "Codex"
-          git config user.email "codex@openai.com"
+          git config user.name "Claude"
+          git config user.email "noreply@anthropic.com"
           git add data/jev_review_queue.json
           if git diff --cached --quiet; then exit 0; fi
           python tools/check_staged_file_sizes.py
