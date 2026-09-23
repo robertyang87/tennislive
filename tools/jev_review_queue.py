@@ -92,7 +92,9 @@ def approved_items(path, verdicts, cfg):
             record.get('input_sha256') != identity(item) or
             str(item.get('id')) != vid):
             continue
-        approved.append(dict(item, discovered_at=record['discovered_at']))
+        approved.append(dict(item, discovered_at=record['discovered_at'],
+                             discovery_method='jev_human_visual_review',
+                             jev_input_sha256=record['input_sha256']))
     return approved
 
 

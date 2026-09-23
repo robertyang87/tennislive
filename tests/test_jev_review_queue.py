@@ -84,6 +84,8 @@ def test_reviewed_suggestion_reenters_collector_without_rescan(tmp_path, monkeyp
     assert collector.main() == 0
     row = json.loads((tmp_path / 'inventory.json').read_text())['items'][ITEM['id']]
     assert row['kind'] == 'oncourt'
+    assert row['discovery_method'] == 'jev_human_visual_review'
+    assert row['jev_input_sha256'] == queue.identity(ITEM)
     assert row['discovered_at'] == ITEM['discovered_at']
 
 

@@ -983,7 +983,7 @@ def main() -> int:
     # Reintroduce explicitly reviewed Jev discoveries; never let a model verdict
     # masquerade as a human visual verdict. The binding prevents stale approval.
     from jev_review_queue import approved_items
-    for approved in approved_items(ROOT / "data/jev_review_queue.json", verdicts, cfg):
+    for approved in approved_items(ROOT / "data/jev_review_queue.json", verdicts, dict(cfg, sources=sources)):
         src = next(source for source in cfg["sources"] if source["name"] == approved["source"])
         fetched_sources.append((src, [approved], "jev-reviewed", approved["discovered_at"]))
 
