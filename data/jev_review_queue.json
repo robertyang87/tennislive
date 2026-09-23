@@ -26,7 +26,7 @@
       "discovered_at": "2026-09-23T06:37:10.281909+00:00",
       "status": "pending_visual_review",
       "review_reason": "model_interview",
-      "last_frames_at": "2026-09-23T06:42:13.845099+00:00"
+      "last_frames_at": "2026-09-23T12:13:16.241149+00:00"
     },
     "lVql-4uZ8t8": {
       "item": {
@@ -53,7 +53,7 @@
       "discovered_at": "2026-09-23T06:37:10.281909+00:00",
       "status": "pending_visual_review",
       "review_reason": "model_uncertain",
-      "last_frames_at": "2026-09-23T06:42:13.845307+00:00"
+      "last_frames_at": "2026-09-23T12:13:16.241336+00:00"
     },
     "rNRZHBcZGIo": {
       "item": {
@@ -80,7 +80,34 @@
       "discovered_at": "2026-09-23T06:37:10.281909+00:00",
       "status": "pending_visual_review",
       "review_reason": "model_uncertain",
-      "last_frames_at": "2026-09-23T06:42:13.845482+00:00"
+      "last_frames_at": "2026-09-23T12:13:16.241478+00:00"
+    },
+    "9mup-s7RccE": {
+      "item": {
+        "id": "9mup-s7RccE",
+        "title": "Elena Rybakina Champion Interview | 2026 US Open",
+        "duration_s": 110,
+        "channel": "NA",
+        "source": "Tennis Channel",
+        "discovered_at": "2026-09-23T12:08:13.275797+00:00",
+        "url": "https://www.youtube.com/watch?v=9mup-s7RccE",
+        "review_reason": "model_interview"
+      },
+      "input_sha256": "516dc65d5f58cb3a711a4b8049479776ac4dde31d44169566ca80dc2b801b96d",
+      "suggestion": {
+        "id": "9mup-s7RccE",
+        "decision": "api_ok",
+        "production_action": "unchanged",
+        "elapsed_ms": 246.5,
+        "suggestion": "interview",
+        "confidence": 0.77,
+        "model": "jev-1.13.0",
+        "needs_review": true
+      },
+      "discovered_at": "2026-09-23T12:08:13.275797+00:00",
+      "status": "pending_visual_review",
+      "review_reason": "model_interview",
+      "last_frames_at": "2026-09-23T12:13:16.240906+00:00"
     }
   }
 }
