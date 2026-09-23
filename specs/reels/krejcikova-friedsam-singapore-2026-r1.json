@@ -1,0 +1,298 @@
+{
+  "slug": "krejcikova-friedsam-singapore-2026-r1",
+  "source_url": "https://www.youtube.com/watch?v=EX_hye0-EpQ",
+  "_column": "赛场之上",
+  "tts_backend": "edge",
+  "_match": {
+    "id": "2026:singapore:womens-first-round:barbora-krejcikova-anna-lena-friedsam",
+    "event": "2026 WTA500 新加坡",
+    "event_search": "Singapore",
+    "round": "Women's Singles First Round",
+    "year": 2026,
+    "status": "result_verified",
+    "winner": "克雷吉茨科娃",
+    "loser": "弗里德萨姆",
+    "participants": [
+      "克雷吉茨科娃",
+      "弗里德萨姆"
+    ],
+    "winner_en": "Barbora Krejcikova",
+    "loser_en": "Anna-Lena Friedsam",
+    "set_scores_home_away": [
+      [
+        6,
+        0
+      ],
+      [
+        5,
+        7
+      ],
+      [
+        7,
+        6
+      ]
+    ],
+    "tiebreaks_home_away": [
+      null,
+      null,
+      [
+        7,
+        4
+      ]
+    ],
+    "_source": "三源一致：WTA 官方 tournaments/1152/2026/matches 的 MatchID=LS021，`ResultString` = `B. Krejcikova d A. Friedsam 6-0,5-7,7-6(4)`、`RoundID=1`、`CourtID=1`、`MatchTimeTotal=02:58:49`，两人均非种子；flashscore EBaT4eS1 盘分 6-0 / 5-7 / 7-6 且第三盘抢七小分 DE/DF=7/4；画面自证——源片 298.5 秒的赛果图形烧着 `ROUND 1 / BARBORA KREJCIKOVA 6 5 7 / ANNA-LENA FRIEDSAM 0 7 6`。⚠️ flashscore 的分盘用时加起来报 2:57，比官方的 2:58:49 短，印用时以官方为准（CLAUDE.md「比赛用时不要只信 flashscore」）。",
+    "source": "flashscore_points",
+    "source_id": "EBaT4eS1",
+    "flashscore_id": "EBaT4eS1",
+    "winner_result": "6-0 5-7 7-6(4)",
+    "loser_result": "0-6 7-5 6-7(4)"
+  },
+  "topbar": {
+    "line1": "2026 新加坡 WTA500 第一轮",
+    "line2": "克雷吉茨科娃 6-0 5-7 7-6(4) 弗里德萨姆"
+  },
+  "cover": {
+    "matchup": [
+      {
+        "name": "克雷吉茨科娃",
+        "name_en": "Barbora Krejcikova",
+        "country": "CZE",
+        "rank": 44
+      },
+      {
+        "name": "弗里德萨姆",
+        "name_en": "Anna-Lena Friedsam",
+        "country": "GER",
+        "rank": 266
+      }
+    ],
+    "winner": "克雷吉茨科娃",
+    "result": "6-0 5-7 7-6(4)",
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "克雷吉茨科娃",
+    "hook": "七月底之后就没赢过\n这次救了两个赛点",
+    "topic": "新加坡WTA500 · 女单第一轮",
+    "portrait": {
+      "image": "assets/reel/krejcikova-singapore-2026-r1.jpg",
+      "focus": 0.5,
+      "focus_y": 0.42,
+      "zoom": 1,
+      "_photo_why": "WTA 官方 photoresources 实拍，4951×3302，铺 1080×1440 只需 0.44 倍（缩小，不放大）。来源是 WTA 官网这一场的条目 https://www.wtatennis.com/videos/4580128 的 og:image：photoresources.wtatennis.com/wta/photo/**2026/09/22**/e146e4a7-c3c7-44d9-9c31-456914db6565/**220826-barbora-krejcikova-vs-anna-lena-friedsam**-11.jpg —— 路径日期和文件名自证四要素（这一天、这两个人）。已下载打开逐项核过：酒红 RADO 背心＋黑裙，和集锦里她这一场的比赛服一致；**击球中**（球在画面内，过第二道闸）；场边 ASICS 广告板与源片同一块室内场。"
+    },
+    "scoreboard": {
+      "court": "OCBC Arena",
+      "_court_why": "印**场馆**不印场地名。WTA 官方 `tournaments/1152/2026/matches` 里这一场只给 `CourtID=1`，没给名字——同一份 feed 里带 `CourtName` 的全是还没开打的场次（今天 Center Court 上的 LS008/LS010/LS011、Court 1 上的 LD011/LD012/LD014），一开打就换成数字 id，两套字段从不同时出现，所以「1 是 Center Court 还是 Court 1」在这份数据里推不出来；WTA 自己的比赛页 `scores/LS021` 那一栏直接写着 `Court: -`（LS024/LS026/LD008 同样是 `-`）。场馆倒是两个独立源都写死了：WTA 赛事页「indoor hard courts at the **OCBC Arena**」＋维基 `2026 Singapore Tennis Open` 的 `Venue: OCBC Arena`（2026-09-23 查）。按「只讲确认过的」印这个，不印猜出来的场地名。",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%2010729%2C%20%22unit%22%3A%20%22seconds%22%7D",
+        "field": "duration"
+      }
+    },
+    "_heat_why": "**两座大满贯单打冠军**，而且是刷到的人一眼认得的那两座：2021 年法网、2024 年温网——两条都在 WTA 官方赛事库里核过（api.wtatennis.com/tennis/tournaments/903/2021 与 /904/2024 的 `winners[].singles.player`，2026-09-23 查）。同一份库里她还有七座大满贯女双冠军（2018 法网／温网、2021 法网、2022 澳网／温网／美网、2023 澳网，搭档西尼亚科娃）。认得她的理由是这个，不是她今天的名次——世界第 44 正是这条片子要讲的那件事：她从温网冠军的位置掉到了要在首轮救两个赛点才活下来。"
+  },
+  "_cover_photo_source": "https://photoresources.wtatennis.com/wta/photo/2026/09/22/e146e4a7-c3c7-44d9-9c31-456914db6565/220826-barbora-krejcikova-vs-anna-lena-friedsam-11.jpg",
+  "_opening_time_source": {
+    "url": "https://global.flashscore.ninja/2/x/feed/f_2_-1_0_en_1",
+    "match_id": "EBaT4eS1",
+    "field": "AD",
+    "beijing": "2026-09-22T18:40+08:00",
+    "spoken_precision": "approximate-hour",
+    "_why": "CLAUDE.md「开球时刻只说个大概，不报到分」——旁白说「傍晚六点多」，不报几点几分。两个源给的分钟数本来就不一样：flashscore `AD` 是 18:40（预定开球），WTA 官方 `MatchTimeStamp` 是 2026-09-22T10:24:05Z＝新加坡 18:24（实际开赛），而新加坡和北京同是 +08:00，两者都落在「六点多」里。⚠️ 只说「傍晚」过不了 `test_赛场之上开场要给出北京时间赛事和轮次`——那道闸要的是认得出的钟点，不是时段。"
+  },
+  "stats": {
+    "a": {
+      "aces": 4,
+      "df": 5,
+      "first_in": 48,
+      "first_won": 33,
+      "second_total": 41,
+      "second_won": 21,
+      "bp_conv": 7,
+      "bp_chances": 12,
+      "pts_won": 105,
+      "pts_total": 189,
+      "first_total": 89,
+      "headshot": "assets/players/headshots/wta-318314.jpg",
+      "winners": 37,
+      "ue": 50
+    },
+    "b": {
+      "aces": 3,
+      "df": 3,
+      "first_in": 70,
+      "first_won": 35,
+      "second_total": 30,
+      "second_won": 14,
+      "bp_conv": 5,
+      "bp_chances": 9,
+      "pts_won": 84,
+      "pts_total": 189,
+      "first_total": 100,
+      "headshot": "assets/players/headshots/wta-319091.jpg",
+      "winners": 20,
+      "ue": 49
+    },
+    "_source": "机器抄的，不是手抄：`python3 tools/match_stat_hooks.py EBaT4eS1 --stats-block`（flashscore `df_st_1`）。**a 对应 cover.matchup[0] 克雷吉茨科娃**，b 对应弗里德萨姆——这一场 flashscore 的 home 正好就是克雷吉茨科娃，两个顺序一致，没有对调。\n制胜分与非受迫失误 flashscore 这场没有，按 CLAUDE.md 先跑了一趟 TNNS（run 35815240066，`who=Krejcikova,Friedsam`）：制胜分 37:20、非受迫失误 50:49，日志自证分盘合计＝全场（37/20、50/49 两项都对得上），选手顺序日志里印的就是 `['Krejcikova','Friedsam']`。\n分盘（TNNS 同一趟）：第一盘制胜分 8:3、失误 3:14；第二盘 12:8、21:19；第三盘 17:9、26:16。"
+  },
+  "editorial": {
+    "hook": [
+      "七月底之后就没赢过",
+      "这次救了两个赛点"
+    ],
+    "question": "六比零开局的一场球，怎么会打到三个小时，还要从两个赛点落后里爬回来？",
+    "thesis": "第一盘弗里德萨姆自己送了十四个非受迫失误，克雷吉茨科娃六比零带走；第二盘对手一发进球率升到百分之七十三，比分被扳平；决胜盘三比五、对手发球胜赛，克雷吉茨科娃在底线相持里救下两个赛点完成反破，最后靠抢七七比四拿下。",
+    "beats": [
+      "第一盘三十分钟六比零：弗里德萨姆十五个发球分只拿到三分，全盘十四个非受迫失误。",
+      "第二盘弗里德萨姆一发进球率百分之七十三，克雷吉茨科娃自己三个双误，五比七丢盘——而这一盘的小分是三十八比三十六，赢的是她。",
+      "决胜盘三比五，弗里德萨姆发球胜赛并拿到两个赛点，克雷吉茨科娃在底线相持里全部救下，并用这一局的第三个破发点完成反破。",
+      "五平时她只拿到一个破发点，一次兑现，六比五；随后自己的发球胜赛局被破，六平进抢七，七比四结束。"
+    ],
+    "chapters": [
+      "三十分钟的六比零",
+      "被扳平的第二盘",
+      "两个赛点上的底线相持",
+      "抢七收尾"
+    ],
+    "human_context": {
+      "angle": "她七月二十四日之后连输四场，这是两个月来的第一场胜利，而它是从两个赛点落后里赢回来的。",
+      "facts": [
+        "克雷吉茨科娃 6-0 5-7 7-6(4) 胜弗里德萨姆，用时 2 小时 58 分 49 秒（WTA 官方 MatchTimeTotal）。",
+        "第三盘 3-5、弗里德萨姆发球胜赛局，克雷吉茨科娃救下 2 个赛点并完成反破（WTA 官方统计 Match points saved 主队 2）。",
+        "WTA 官网这一场的条目标题就是 `Krjecikova saves two match points to fend off Friedsam in Singapore opener`。",
+        "两人均非种子；克雷吉茨科娃世界第 44，弗里德萨姆世界第 266。",
+        "她上一场胜利是 2026-07-24 布拉格，之后布拉格半决赛、多伦多、辛辛那提、美网四连败。",
+        "7 月 19 日她刚拿下雅典 WTA250 冠军（WTA 官方赛事记录的单打冠军）。"
+      ],
+      "sources": [
+        "https://api.wtatennis.com/tennis/tournaments/1152/2026/matches",
+        "https://www.wtatennis.com/videos/4580128",
+        "https://global.flashscore.ninja/2/x/feed/df_st_1_EBaT4eS1",
+        "https://global.flashscore.ninja/2/x/feed/df_mh_1_EBaT4eS1"
+      ]
+    },
+    "mode": "match_review",
+    "narration": [
+      "第一盘弗里德萨姆送出十四个非受迫失误，三十分钟六比零。",
+      "第二盘对手一发进球率升到百分之七十三，五比七扳平。",
+      "决胜盘三比五，两个赛点全在底线相持里救下，并完成反破。",
+      "六比五发球胜赛被破，六平进抢七，七比四结束，用时两小时五十八分。"
+    ]
+  },
+  "segments": [
+    {
+      "start": 274.0,
+      "end": 287.24,
+      "narration": "",
+      "fit": "crop",
+      "_quote_kind": "broadcast",
+      "_ending_payoff_required": true,
+      "quote": [
+        {
+          "at": 0.48,
+          "text": "From two match points down,\n两个赛点落后"
+        },
+        {
+          "at": 3.2,
+          "text": "it's Krejcikova who finds a way,\n是她找到了办法"
+        },
+        {
+          "at": 6.8,
+          "text": "makes it happen,\n把它做成了"
+        },
+        {
+          "at": 8.72,
+          "text": "and she is through\n然后她晋级了"
+        },
+        {
+          "at": 10.6,
+          "text": "to the second round.\n第二轮"
+        }
+      ],
+      "_why": "转播解说在她赢下之后说的那一句，正是这场球的全部。原文逐字来自 probe 落的 `captions.txt`（274.48 / 277.20 / 280.80 / 282.72 四个事件），⚠️ 自动字幕把她的姓听成了 `Craikova`，按译名和读音校回 `Krejcikova`。画面是网前握手之后她走向看台致意那一段。",
+      "point_end_ok": "这一段在比赛结束之后，场上没有球在飞——赛果已经落定（缩略图墙 256.5s 起是她走向底线的反应镜头，266.5s 是网前握手），切在哪儿都不会切断一分。"
+    },
+    {
+      "start": 0,
+      "end": 17.4,
+      "narration": "北京时间九月二十二日傍晚六点多，新加坡室内硬地，WTA五百赛女单第一轮。世界第四十四的克雷吉茨科娃，对世界第二百六十六的弗里德萨姆。开场三十分钟，六比零，看上去不会打太久。",
+      "fit": "crop",
+      "crosses_cut": "段尾落在官方集锦自己的转播切点上（probe 的 `scene_cuts`），集锦只在点与点之间切，所以这一刀在死球之后；窗口内保留原剪辑，没有在回合中间挖刀。",
+      "point_end_ok": "17.4 是转播切点，`point_ends_guess` 里 17.44 的翻牌在它之后 0.04 秒（0.3 秒以内不算），下一次翻牌要到 23.04，离得很远。"
+    },
+    {
+      "start": 17.4,
+      "end": 38.08,
+      "narration": "第一盘，弗里德萨姆的十五个发球分，只赢下三分，六个发球局一局没保住。真正的差距在失误上：她这一盘送了十四个非受迫失误，克雷吉茨科娃只有三个，制胜分八比三。对手的发球局，几乎变成了她的底线练习课。",
+      "fit": "crop",
+      "crosses_cut": "段尾落在官方集锦自己的转播切点上（probe 的 `scene_cuts`），集锦只在点与点之间切，所以这一刀在死球之后；窗口内保留原剪辑，没有在回合中间挖刀。",
+      "point_end_ok": "38.08 是转播切点；最近一次翻牌 37.84 在它之前，下一次要到 48.0。窗口末尾正好压着 36.5 秒那张 `ROUND 1 / 6 / 0` 的赛果图形。"
+    },
+    {
+      "start": 94.0,
+      "end": 110.0,
+      "narration": "第二盘完全换了一个样子。弗里德萨姆的一发进球率涨到百分之七十三，克雷吉茨科娃自己吞了三个双误。五比七，她丢掉这一盘——可这一盘的小分是三十八比三十六，多的那一边还是她。",
+      "fit": "crop",
+      "crosses_cut": "段尾落在官方集锦自己的转播切点上（probe 的 `scene_cuts`），集锦只在点与点之间切，所以这一刀在死球之后；窗口内保留原剪辑，没有在回合中间挖刀。",
+      "point_end_ok": "110.0 本身就是 `point_ends_guess` 里的翻牌时刻，也是转播切点；下一次翻牌 120.24。"
+    },
+    {
+      "start": 120.24,
+      "end": 144.64,
+      "narration": "第三盘三比五，弗里德萨姆发球胜赛，四十比三十，第一个赛点。这几分没有一拍解决战斗的球，两个人钉在底线上来回相持，谁也不肯先上网。第一个赛点被磨平，回到平分；第二个赛点再来，又被磨掉一次。等这一局打完，拿到优势的人已经换成了她。",
+      "fit": "crop",
+      "crosses_cut": "段尾落在官方集锦自己的转播切点上（probe 的 `scene_cuts`），集锦只在点与点之间切，所以这一刀在死球之后；窗口内保留原剪辑，没有在回合中间挖刀。",
+      "point_end_ok": "144.64 是转播切点，下一次记分条翻牌在 148.0，离段尾 3.36 秒，落在 `mid_point_findings` 那道闸的 0.3~3 秒窗口之外。这一局是长盘点球，记分条长时间停在 Ad／40 上，所以 123.76 到 148.0 之间本来就没有翻牌。"
+    },
+    {
+      "start": 144.64,
+      "end": 150.4,
+      "narration": "这一局她也拿到三个破发点，第三个兑现。四比五。",
+      "fit": "crop",
+      "crosses_cut": "段尾落在官方集锦自己的转播切点上（probe 的 `scene_cuts`），集锦只在点与点之间切，所以这一刀在死球之后；窗口内保留原剪辑，没有在回合中间挖刀。",
+      "point_end_ok": "150.4 本身就是翻牌时刻（破发完成），下一次要到 159.6。"
+    },
+    {
+      "start": 162.92,
+      "end": 186.8,
+      "narration": "五平，轮到弗里德萨姆发球。三十比四十，这一局只有一个破发点，克雷吉茨科娃一次就用掉了——一拍球把对手的防守打穿，转播解说只来得及说一句「穿过去了」。六比五，发球胜赛的机会第一次到了她手里。这一天她已经在场上站了两个多小时，而抢七还在后面。",
+      "fit": "crop",
+      "crosses_cut": "段尾落在官方集锦自己的转播切点上（probe 的 `scene_cuts`），集锦只在点与点之间切，所以这一刀在死球之后；窗口内保留原剪辑，没有在回合中间挖刀。",
+      "point_end_ok": "186.8 本身就是翻牌时刻（破发完成，比分翻成六比五），也是转播切点 186.76；下一次翻牌要到 257.36。"
+    },
+    {
+      "start": 202.32,
+      "end": 228.68,
+      "narration": "可她没能一次收掉。六比五的发球胜赛局被破回去，六平，决胜盘进抢七。前面两个多小时的账，要在这几分钟里结清。五比三，她再赢一分就是六比三——转播把那一分完整地放了出来，两个人在底线上来回，中间一刀没剪；解说看完只憋出一句：她到底是怎么赢下这一分的。这一年她还没这么打过球。",
+      "fit": "crop",
+      "crosses_cut": "段尾落在官方集锦自己的转播切点上（probe 的 `scene_cuts`），集锦只在点与点之间切，所以这一刀在死球之后；窗口内保留原剪辑，没有在回合中间挖刀。",
+      "point_end_ok": "202.32 和 228.68 是相邻的两个转播切点，中间二十六秒**一刀没有**——这一整段就是抢七里五比三那一分本身，所以段尾必然在死球之后。⚠️ 抢七这一段 `point_ends_guess` 没有数（记分条在抢七里换了式样，探测器认不出），只能按切点定，这是如实登记。"
+    },
+    {
+      "start": 243.8,
+      "end": 265.08,
+      "narration": "六比三，三个赛点。第一个被弗里德萨姆救掉，六比四。第二个上，克雷吉茨科娃没有再给机会——七比四，比赛结束，两小时五十八分钟。这是她七月二十四日以来的第一场胜利，中间隔着四连败；而两个月前，她刚拿下雅典的冠军。",
+      "fit": "crop",
+      "crosses_cut": "段尾落在官方集锦自己的转播切点上（probe 的 `scene_cuts`），集锦只在点与点之间切，所以这一刀在死球之后；窗口内保留原剪辑，没有在回合中间挖刀。",
+      "point_end_ok": "265.08 是转播切点（切去她的反应近景），最近一次翻牌 264.0 在它之前，下一次要到 274.8。"
+    },
+    {
+      "start": 265.08,
+      "end": 287.24,
+      "narration": "网前握手的时候，弗里德萨姆在场上站了快三个小时，而她离赢球只差两分。场边灯牌打出恭喜，克雷吉茨科娃朝看台抬了抬手。两年前她在温布尔登捧过大满贯奖杯，今晚要靠首轮的一个抢七，才走出四连败——你觉得她还走得回去吗？",
+      "fit": "crop",
+      "point_end_ok": "这一段在比赛结束之后，场上没有球在飞——赛果已经落定（缩略图墙 256.5s 起是她走向底线的反应镜头，266.5s 是网前握手），切在哪儿都不会切断一分。",
+      "_why": "冷开场（274.0→287.24）预告了结局，正文必须按时间顺序把它兑现一遍（`_ending_payoff_required: true`）：这一段从网前握手接上第 9 段的制胜分，走到她朝看台致意、灯牌打出 CONGRATULATIONS 为止，覆盖住冷开场用掉的那一段。段内无转播切点（下一刀在 292.44s）。 ⚠️ 末句原写「从四连败里拉出来」，`--check-narration` 报出合成器把它切成「里拉 ｜ 出来」——「里拉」是真实存在的词（货币），读音虽没变但有歧义，换成「里走出来」。"
+    }
+  ],
+  "_editing_why": "⚠️⚠️ **这条源片 299.6 秒之后是场上采访，一帧都没有进片子**——「赛场之上不要赛后采访」管的是画面，不只是原声。所有窗口收在 287.24 秒以内，离采访起点还有十二秒。比赛画面本身到 295.76 那一刀为止（probe 的最后一个 `scene_cuts`）。\n认人靠衣服：克雷吉茨科娃**酒红 RADO 背心＋黑裙**，弗里德萨姆**浅蓝上衣＋白裙**，缩略图墙上一眼分得开。\n十段窗口的端点全部取自 probe 的 `scene_cuts`，并逐个对过 `point_ends_guess` 确认段尾不落在 0.3~3 秒内的记分条翻牌上（逐段写在各自的 `point_end_ok` 里）。",
+  "_hit_data": "封面钩子两行都查过：① 「七月底之后就没赢过」——flashscore `df_hh_1_EBaT4eS1` 的 `Last matches: Krejcikova B.` 段，她上一场胜利是 2026-07-24 布拉格胜萨尔科娃，之后布拉格（塔格尔）、多伦多（萨姆索诺娃）、辛辛那提（贝伊莱克）、美网（拉希莫娃）四连败，到 9-22 正好两个月；② 「这次救了两个赛点」——flashscore 逐分 `4-5 客队发球，主队拿下 ← 破发、3个破发点、2个赛点`，官方统计 `Match points saved 主队 2`，源片 120.5~146.5 秒记分条上依次挂着 `MATCH POINT` 和 `MATCH POINT #2`，而 WTA 官网这一场的条目标题就是 `Krjecikova saves two match points to fend off Friedsam in Singapore opener` —— 四处独立对得上。",
+  "push": {
+    "matchup": "克雷吉茨科娃 vs 弗里德萨姆",
+    "score": "6-0 5-7 7-6(4)",
+    "event": "",
+    "summary": "克雷吉茨科娃救两个赛点",
+    "auto": true,
+    "lead": "2026 WTA500 新加坡女单第一轮：克雷吉茨科娃 6-0、5-7、7-6(4) 逆转弗里德萨姆，用时 2 小时 58 分 49 秒。第一盘她只花了 30 分钟——对手 15 个发球分只拿到 3 分，整盘送出 14 个非受迫失误。第二盘风向变了，弗里德萨姆一发进球率升到 73%，5-7 扳回一盘（这一盘小分其实是 38 比 36，多的那边还是克雷吉茨科娃）。决胜盘 3-5，弗里德萨姆发球胜赛并拿到两个赛点，克雷吉茨科娃在底线相持里全部救下，还用这一局的第三个破发点完成反破；5-5 后她只有一个破发点，一次兑现拿到 6-5，可自己的发球胜赛局又被破回去，6-6 进抢七，最后 7-4 结束。全场制胜分 37 比 20、非受迫失误 50 比 49。这是她 7 月 24 日之后的第一场胜利，中间四连败；而 7 月 19 日她刚拿下雅典 WTA250 冠军。"
+  },
+  "_tts_backend_why": "这一条不用情绪风格（`style` 一段都没写），旁白是平直的复盘叙述，edge 的中文女声足够；走 edge 不是因为钥匙出问题，是这条 spec 本来就用不上 Azure 那套 `style`／`styledegree`。同一站 `wang-vekic-singapore-2026-r1` 也是 edge。"
+}
