@@ -1,0 +1,75 @@
+{
+  "scoreboard_qc_sha256": null,
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 3.827,
+  "layout": "full",
+  "segments_seconds": 157.3,
+  "topbar": {
+    "line1": "2026 比利·简·金杯 1/4决赛",
+    "line2": "普汀塞娃 6-2 3-6 6-1 布克沙",
+    "start": 1.2,
+    "end": 158.5
+  },
+  "film_seconds": 162.36,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 5.328,
+    "2": 10.224,
+    "3": 7.848,
+    "4": 3.888,
+    "5": 6.864,
+    "6": 6.864,
+    "7": 5.352,
+    "8": 6.528,
+    "9": 6.936,
+    "10": 7.416,
+    "11": 9.672,
+    "12": 7.632,
+    "13": 6.336,
+    "14": 3.408,
+    "15": 6.312,
+    "17": 8.616
+  },
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "putintseva-bucsa-bjk-cup-2026",
+    "received_at": "2026-09-23T14:13:27Z",
+    "artifact_ready_at": "2026-09-23T14:19:44Z",
+    "elapsed_seconds": 377.538,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "3138635a92d1f54d4d0e6e8d30ad3ed708f27362e9916f0c9f3caf917942d5b3",
+    "spec_sha256": "28f5d390b1ea5cfa078055c9aa2533b61833a485490ae9595aacb51e05ab4ede",
+    "run_id": "35872585682",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-09-23T14:16:29Z",
+        "run_id": "35872585682"
+      }
+    ],
+    "render_seconds": 195.538,
+    "pre_render_seconds": 182.0
+  },
+  "film_sha256": "3138635a92d1f54d4d0e6e8d30ad3ed708f27362e9916f0c9f3caf917942d5b3",
+  "film_bytes": 80277466,
+  "qc_attestation_sha256": "53886d8d4a3ba231ee86e9cdf73afa605ecd0ad6717dd31d1683e9e69cdc3ad8",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-09-23T14:16:29Z",
+      "run_id": "35872585682"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-23T14:19:45Z",
+      "run_id": "35872585682"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-putintseva-bucsa-bjk-cup-2026/putintseva-bucsa-bjk-cup-2026.mp4",
+  "video_bytes": 80277466
+}

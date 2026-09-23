@@ -1,0 +1,386 @@
+{
+  "slug": "putintseva-bucsa-bjk-cup-2026",
+  "_column": "赛场之上",
+  "sources": {
+    "main": "https://www.youtube.com/watch?v=cp5PdD02JRI"
+  },
+  "_source": "比利·简·金杯官方 YouTube 频道（`@BJKCup`，oEmbed 报 `author_name = Billie Jean King Cup`）单场集锦《Yulia Putintseva (KAZ) vs Cristina Bucsa (ESP) | 2026 Billie Jean King Cup | Highlights》，账号所有者直接给的链接。尺寸/时长/帧率见 probe.json。",
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "普汀塞娃",
+    "hook": "再输一场全队出局\n决胜盘她只丢1局",
+    "topic": "比利·简·金杯1/4决赛 · 普汀塞娃 vs 布克沙",
+    "winner": "普汀塞娃",
+    "result": "6-2 3-6 6-1",
+    "matchup": [
+      {
+        "name": "普汀塞娃",
+        "name_en": "Yulia Putintseva",
+        "country": "KAZ",
+        "rank": 79
+      },
+      {
+        "name": "布克沙",
+        "name_en": "Cristina Bucsa",
+        "country": "ESP",
+        "rank": 35
+      }
+    ],
+    "portrait": {
+      "image": "assets/reel/putintseva-bjk-cup-2026-qf-shenzhen.jpg",
+      "focus": 0.55,
+      "focus_y": 0.3,
+      "zoom": 1.0,
+      "_why": "**比利·简·金杯官方实拍（ITF，billiejeankingcup.com 的 Contentful 图库）**，原文件名 `LZ1_2683_u8dz3zQ3.JPG`（和布兹科娃那条封面 `LZ1_1873` 同一台机身的相机原名序列），是**哈萨克斯坦对西班牙这场 tie 的直播页头图**（`og:image`，页面标题 `LIVE - KAZ 1-1 ESP`）。\n⚠️ **为什么坐实是这一场**：哈萨克斯坦在深圳只打了这一个 tie（今天、1/4决赛），普汀塞娃在这个 tie 里只打了第二场单打（ITF tieCentre `matches[]` 三场：第一单日延巴耶娃、第二单普汀塞娃、双打是达尼利娜/库兰巴耶娃）——**她这一周在场上的画面只可能是这一场**。\n**画面自证**：白色哈萨克斯坦队服、胸前哈萨克斯坦国旗和 `KAZAKHSTAN TENNIS` 队徽、黑色遮阳帽、握拳怒吼；背景是深圳总决赛那面蓝色挡板。源片里她同样是白队服＋黑遮阳帽（缩略图墙核过）。\n四道闸门：① 精准 ✅；② 这一屏讲的是**她顶住了、赢下了这场**，握拳怒吼对得上 ✅；③ 冲击力——近景、情绪外露、眼睛睁着 ✅；④ 清晰度见 `_res_why` ✅。",
+      "_res_why": "2878×1618，`fit` 按 cover 铺 1080×1440 取 `max(1080/2878, 1440/1618)` ＝ **0.890×（缩小）**；`zoom` 1.0，所以始终是缩小，不用写 `_low_res_why`。",
+      "_focus_why": "脸在原图横向约 55%（x≈1600/2878），竖向靠上；`focus_y` 0.30 让下巴收在钩子那条带（`STORYCOPY_TOP=790`）之上，本地 `render_cover_local.py` 渲出来看过。"
+    },
+    "scrim": "clear",
+    "scoreboard": {
+      "court": "深圳湾体育中心",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%20%221%3A51%3A53%22%2C%20%22source%22%3A%20%22ITF%20tieCentre%20matches%5B%5D.duration%3D01%3A51%3A53%20%2810%3A45%3A12Z%20-%3E%2012%3A37%3A06Z%29%22%7D",
+        "field": "duration"
+      },
+      "_court_why": "ITF 官方接口 `https://api.itf-production.sports-data.stadion.io/custom/tieCentre/c9789f83-0d32-4876-89a8-873d82bcfe4b` → `tie.round.draw.event.venue.name = \"Shenzhen Bay Sports Centre Arena\"`、`.city = \"Shenzhen\"`、`surface.name = \"Hard\"`、`tie.round.name = \"Quarter Finals\"`、`tie.name = W-FC-2026-FLS-M-KAZ-ESP-01`。",
+      "_duration_why": "两个源：**ITF 官方 tieCentre `01:51:53`**（`actualStartDate 10:45:12Z → actualEndDate 12:37:06Z`，相减自洽）；flashscore 分盘 `0:33 + 0:47 + 0:33` 报 `1:53`（分盘各自取整后相加，多 1 分钟，没有采用——CLAUDE.md「比赛用时不要只信 flashscore」）。"
+    },
+    "_hook_why": "· 第一行「再输一场全队出局」：这是本场的**赌注**——第一单西班牙的博萨斯·马内罗 6-2 6-2 赢下日延巴耶娃，西班牙 1-0；三场两胜，普汀塞娃这一场再输，哈萨克斯坦就 0-2 出局（ITF tieCentre `matches[]` ＋ 金杯官网直播稿「kept Kazakhstan’s BJK Cup hopes alive」）。\n· 第二行「决胜盘她只丢1局」：第三盘 6-1（flashscore `W6jTirqe`、ITF、官网三源一致）。\n**两行之间有落差**：先是压在身上的那份重量，后是她怎么扛的——决胜盘几乎没给对手机会。讲的是**整场的形状**（丢了第二盘、决胜盘碾过去），不是某一分。\n⚠️ 不含术语（没有破发、抢七这类词）；不写身份（排名、国籍都在海报名条上）；不拿总分差说事。\n⚠️ 数字写阿拉伯（`1局`）；每行 8 / 8 个字符，≤ `HOOK_MAX_CHARS=10`，2 行。",
+    "_subject_why": "主体是赢的那一边——普汀塞娃，封面那张就是她这场里握拳怒吼的实拍。",
+    "_heat_why": "普汀塞娃是这个号**反复出现过的人**，刷到的人认得她：她是 2026 美网第二轮郑钦文的对手（`zheng-putintseva-us-open-2026-r2`）、多伦多张帅那条「连输普汀塞娃七次」的对手（`zhang-putintseva`），美网首轮也单独做过一条（`putintseva-bencic-us-open-2026-r1`）——三条都是赛场之上。这一场本身的分量也在人身上：哈萨克斯坦 0-1 落后、输了就出局，她是队里排名最高、打过 33 次对抗的老将，这一胜是她代表国家队的**第 28 场胜利，追平哈萨克斯坦纪录**（金杯官网直播稿）。\n⚠️ 没拿「她是种子」「这场很精彩」当理由；布克沙世界第 35，同样够不着前 20。",
+    "_name_why": "两个中文名都**实调 `player_zh()`** 确认：`Yulia Putintseva` → **普汀塞娃**、`Cristina Bucsa` → **布克沙**（不是手打的「普京采娃／布克萨」）。第一单那位 `Jessica Bouzas Maneiro` → **博萨斯·马内罗**。",
+    "_matchup_order_why": "`matchup[0]` ＝ 普汀塞娃 ＝ flashscore 的 **home**（`AE÷Putintseva Y.`），所以 `stats.a`、`_match.participants` 和版式同序，不用对调。",
+    "_matchup_rank_why": "即时世界排名，两个独立源一致：WTA 官方 `api.wtatennis.com/tennis/players/ranked`（2026-09-21 那期）普汀塞娃 **79**（904 分）、布克沙 **35**（1349 分）；ITF tieCentre `nominations[].players[].oomSinglesRankingPro` 同为 79 / 35（`oomRankDate 2026-09-14`）；金杯官网直播稿也写着「World No. 79」「World No. 35」。\n⚠️ 金杯的赛前预览稿写的「78th」「44th」是更早的旧数，没有采用。团体赛没有种子号。",
+    "_result_why": "`6-2 3-6 6-1`，三个源一致：flashscore 当日表（`BA÷6 BB÷2 / BC÷3 BD÷6 / BE÷6 BF÷1`，局数合计 15:9 和 `Total games won 15/24` 自洽）、金杯官网直播稿「6-2 3-6 6-1」、ITF tieCentre。没有抢七。\n⚠️ 我第一眼把 flashscore 的字段读成了 6-3 2-6——那是按 BA/BB 横着读错了槽位，已按逐盘局序（第一盘 8 局到 6-2）更正。",
+    "_topic_why": "台头「赛事轮次 · 对阵」。轮次按 ITF `tie.round.name = \"Quarter Finals\"` 写 **1/4决赛**（不写「八强」）。"
+  },
+  "_match": {
+    "status": "result_verified",
+    "source": "flashscore_points",
+    "source_id": "W6jTirqe",
+    "flashscore_id": "W6jTirqe",
+    "participants": [
+      "普汀塞娃",
+      "布克沙"
+    ],
+    "set_scores_home_away": [
+      [
+        6,
+        2
+      ],
+      [
+        3,
+        6
+      ],
+      [
+        6,
+        1
+      ]
+    ],
+    "tiebreaks_home_away": [
+      null,
+      null,
+      null
+    ],
+    "winner": "普汀塞娃",
+    "loser": "布克沙",
+    "winner_result": "6-2 3-6 6-1",
+    "loser_result": "2-6 6-3 1-6",
+    "_participants_why": "`participants` 跟 flashscore 的 home / away：home `AE÷Putintseva Y.`、away `AF÷Bucsa C.`，和 `cover.matchup` 同序。"
+  },
+  "_durations": [
+    [
+      "Set 1",
+      "0:33"
+    ],
+    [
+      "Set 2",
+      "0:47"
+    ],
+    [
+      "Set 3",
+      "0:33"
+    ],
+    [
+      "全场",
+      "1:51:53"
+    ],
+    [
+      "⚠️ flashscore 的总计",
+      "1:53（分盘各自取整后相加，没有采用）"
+    ]
+  ],
+  "stats": {
+    "a": {
+      "aces": 5,
+      "df": 1,
+      "first_in": 50,
+      "first_won": 37,
+      "second_total": 18,
+      "second_won": 9,
+      "bp_conv": 5,
+      "bp_chances": 7,
+      "pts_won": 82,
+      "pts_total": 147,
+      "first_total": 68,
+      "headshot": "assets/players/headshots/wta-317683.jpg"
+    },
+    "b": {
+      "aces": 0,
+      "df": 1,
+      "first_in": 59,
+      "first_won": 33,
+      "second_total": 18,
+      "second_won": 9,
+      "bp_conv": 2,
+      "bp_chances": 4,
+      "pts_won": 65,
+      "pts_total": 147,
+      "first_total": 77,
+      "headshot": "assets/players/headshots/wta-321158.jpg"
+    },
+    "_source": "flashscore `df_st_1_W6jTirqe` 的 Match 汇总（全场）。`a` ＝ 普汀塞娃 ＝ home。\n逐项：Aces 5/0、Double Faults 1/1、1st serve points won `74% (37/50)` / `56% (33/59)`、2nd serve points won `50% (9/18)` / `50% (9/18)`、Break Points Converted `5/7` / `2/4`、Total Points Won `56% (82/147)` / `44% (65/147)`。\n`first_total` ＝ `first_in + second_total`（68 / 77）：50/68 ＝ 74%、59/77 ＝ 77%，和接口的 `1st serve percentage 74% / 77%` 对得上。\n⚠️ 两张头像都打开量过：`wta-317683.jpg`（492×656，58914 色）、`wta-321158.jpg`（492×656，28502 色），不是占位剪影。",
+    "_winners_ue_why": "金杯和戴维斯杯是同一个 ITF 平台，**结构性地没有**制胜分和非受迫失误（tennis-media-sources 档案 2026-09-19 那节）；flashscore `df_st_1` 同样没有这两行。不硬凑。"
+  },
+  "_hit_data": [
+    {
+      "label": "决胜盘布克沙的一发接发，13 分只拿到 2 分",
+      "detail": "第三盘普汀塞娃一发 13 分拿下 11 分（85%），布克沙回一发只赢 2 分（15%）；全盘 43 分布克沙只拿 15 分",
+      "source": "flashscore df_st_1（Set 3：1st serve points won 85% (11/13)、1st return points won 15% (2/13)、Total Points Won 28/43）"
+    },
+    {
+      "label": "5 个 ACE 对 0 个",
+      "detail": "普汀塞娃全场 5 个发球直接得分，布克沙一个没有",
+      "source": "flashscore df_st_1 Aces 5/0"
+    },
+    {
+      "label": "破发 7 次机会兑现 5 次",
+      "detail": "普汀塞娃 5/7，布克沙 2/4",
+      "source": "flashscore df_st_1 Break Points Converted"
+    }
+  ],
+  "_turning_points": {
+    "set3_game4": "决胜盘 2-1、布克沙发球，布克沙 **40-15 领先**，普汀塞娃连拿四分回破到 3-1（逐分 `0:15, 15:15, 15:30, 15:40, 30:40, 40:40, A:40 |B1|`）。金杯官网直播稿：「the turning point came in the fourth game when Putintseva battled back from 40-15 down to break Bucsa with a series of brilliant shots」——逐分和官方稿互相印证。",
+    "set2_game9": "第二盘 3-5 布克沙发球胜盘局，**三个盘点**才兑现（`30:40 |B2|, 40:40, 40:A |B2|, 40:40, 40:A |B2|` 之后拿下），普汀塞娃救了两个。",
+    "set1_game3": "第一盘第三局布克沙发球，普汀塞娃第二个破发点拿下（官网：布克沙一记正手高压出界）。"
+  },
+  "_claims": [],
+  "_claims_why": "没有「唯一／史上第一／从来没有」那一族的全称断言。「第 28 场胜利、追平哈萨克斯坦纪录」是**计数＋追平**，出处两篇金杯官网稿互相咬合：赛前那篇写她「currently boasting 27 … needs two more victories to eclipse Galina Voskoboeva」（27 → 再赢 2 场才超过 ＝ 纪录是 28），赛后直播稿写「28th victory in the BJK Cup matches, equalling the national side's record, set by Galina Voskoboeva」。旁白只说「追平」不说「打破」。",
+  "_no_repeat": "同栏目里普汀塞娃出现过三次（`zhang-putintseva`、`putintseva-bencic-us-open-2026-r1`、`zheng-putintseva-us-open-2026-r2`），讲的都是那几场球本身和她与张帅/郑钦文的交手——**这条一个字都不碰**：不讲美网、不讲交手史，只讲深圳这场对抗里的这一场。和同赛事的 `bouzkova-kartal`、`noskova-boulter` 是不同的 tie、不同的人。「网球有故事」的 `bjk-cup-story` / `zheng-bjk-cup-olympic-rule` 讲赛事来历和中国队，这条不碰。",
+  "segments": [
+    {
+      "source": "main",
+      "start": 449.6,
+      "end": 462.4,
+      "narration": "",
+      "quote": [
+        {
+          "at": 5.36,
+          "text": "A masterclass from Yulia Putintseva,\n普汀塞娃打了一堂大师课，"
+        },
+        {
+          "at": 9.5,
+          "text": "as she banishes the demons from last year here in Shenzhen.\n把去年留在深圳的心魔赶走了。"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_ending_payoff_required": true,
+      "crosses_cut": "456.12 —— 赛点那一分落地，接她握拳怒吼的近景（`contact_07` 456.5）。不跨的话冷开场只剩一个回合、没有落点。",
+      "point_end_ok": "这是全场最后一分，之后没有下一分；`point_ends` 456.72 起那一串是记分条在庆祝镜头里撤掉造成的。",
+      "_why": "**冷开场＝赛点落地＋转播原声**，不配旁白。原声是解说 454.96~461.52 的原话（`captions.txt`：「A masterclass from Julia Patinsa / as she banishes the demons from last / year here in Shenzen to level the tie」，自动字幕把名字和城市转歪了，按发音校正）。「去年的心魔」指 2025 年深圳总决赛 1/4决赛她输给佩古拉、哈萨克斯坦出局（金杯官网直播稿「her heartbreaking defeat to Jessica Pegula during last year's quarter-final exit」）。"
+    },
+    {
+      "source": "main",
+      "start": 429.7,
+      "end": 435.2,
+      "narration": "第一单已经输了。这一场再输，哈萨克斯坦就出局。",
+      "point_end_ok": "整段是换边时她走回场边的画面（`contact_07` 430.5/432.5/434.5，背后是西班牙替补席），一个回合都没有；`point_ends` 432.08~434.72 是记分条在换边时整块撤掉造成的。",
+      "_why": "**第②格给落点：这场球的赌注。** 出处：ITF tieCentre `matches[]` 第一场博萨斯·马内罗 6-2 6-2 胜日延巴耶娃；三场两胜，再输一场就是 0-2。画面是她走回场边、身后坐着西班牙替补席——话画是合奏不是复读。\n⚠️ 原来用的是 255.0~260.1（5.1s，两头都是切点），真 TTS 量出来旁白 5.81s 超 0.71s，换到这个 5.5s 的窗口，旁白删成「第一单已经输了」（主语是哈萨克斯坦，后半句点名）。"
+    },
+    {
+      "source": "main",
+      "start": 5.0,
+      "end": 15.8,
+      "narration": "北京时间九月二十三号晚上快七点，深圳。比利·简·金杯总决赛，哈萨克斯坦对西班牙，四分之一决赛的第二场单打。",
+      "_why": "**第③格给坐标。** ITF `actualStartDate = 10:45:12Z` ＝ 北京 18:45，分钟 45 落在 40~59 档 →「晚上快七点」。旁白写「四分之一决赛」是 TTS 底稿写法，顶栏和台头烧的是 `1/4决赛`。整段在 `scene_cuts` 16.08 之前，是第一盘开局的一个回合（记分条还没出）。",
+      "point_end_ok": "源片前 16 秒是一个回合（记分条还没出场），这一分在 `scene_cuts` 16.08 那一刀上结束，之后是她走回底线的近景。`point_ends` 17.52~20.96 那一串是记分条**第一次出场**（20.5 那格还没有、22.5 才有），不是下一分打完。"
+    },
+    {
+      "source": "main",
+      "start": 52.5,
+      "end": 61.2,
+      "narration": "第一盘第三局她就破了发。她不拼力量，切削、放小球、变线，一拍一拍地换节奏。",
+      "_why": "**技战术（一）。** 球路出处是转播解说：59.20「A bit of ingenuity from Yulia Putintseva」、125.12「Bamboozling Bucsa. So much variety in court craft」；金杯官网稿「Mixing athleticism, aggression and skill」。「第三局破发」是 flashscore 逐分（第一盘 2-1 那一局）和官网稿（「breaking Bucsa when the World No. 35 sent a forehand smash wide」）两源一致。画面记分条 `3 / 1`、布克沙发球 0-30，是破发之后的比分，没有和旁白打架。"
+    },
+    {
+      "source": "main",
+      "start": 109.5,
+      "end": 115.0,
+      "narration": "三十三分钟，六比二，第一盘是她的。",
+      "point_end_ok": "段尾 115.2 落在 `scene_cuts` 115.28 之前，盘点这一分正在这儿结束；115.28 之后是庆祝近景，`point_ends` 116.24 那一串是记分条换成盘分图形造成的。",
+      "_why": "第一盘最后一分（记分条 `5 / 2`、40-15 盘点，`score_02` 110.5~114.5）。「三十三分钟」是转播自己的盘分图形（`score_03` 130.5 `⏱ 33'`）＋ 解说 131.28「takes the opening set 6-2 in 33 minutes」，flashscore 分盘也是 0:33。"
+    },
+    {
+      "source": "main",
+      "start": 172.4,
+      "end": 182.9,
+      "narration": "第二盘布克沙找到了准星。两个人比起了放小球，这一个是布克沙回敬过去的。",
+      "point_end_ok": "段尾在 `scene_cuts` 183.2 之前，这一分就在这儿落地（下一格 184.5 是西班牙替补席鼓掌）。",
+      "_why": "**技战术（二）。** 解说 180.56「it's a drop shot match going on right now and Bucsa gets one back on Putintseva」原话就在窗口里。记分条 `1 / 2`、普汀塞娃发球 30-30（`score_04` 172.5~182.5），这一分之后变成 30-40——布克沙拿到破发点。"
+    },
+    {
+      "source": "main",
+      "start": 204.5,
+      "end": 212.0,
+      "narration": "平分。她想用放高球过人，这一回布克沙早有准备，转身就往后退。",
+      "point_end_ok": "段尾在 `scene_cuts` 212.28 之前，这一分落地后切到布克沙的近景（212.5）。",
+      "_why": "**技战术（三）。** 解说 210.16「this time knew the lob was coming. She's backtracking quickly」。记分条 `1 / 2` 40-40（`score_05` 200.5~210.5），下一格 214.5 变成 40-AD——这一分是布克沙赢的，所以旁白只说她「早有准备、往后退」，不替任何一方编制胜分。\n⚠️ 原来写的是「挑高球」，`--check-narration` 的切词报成了 `选 ｜ 高球`——合成器把「挑」读歪了，换成同义的「放高球」。"
+    },
+    {
+      "source": "main",
+      "start": 223.5,
+      "end": 228.9,
+      "narration": "又是一个破发点。这一次，布克沙兑现了，一比三。",
+      "point_end_ok": "段尾在 `scene_cuts` 229.2 之前；解说 227.84「it's wondrous from Bucsa」正压在这一分落地上，之后切到她的近景。",
+      "_why": "记分条 `1 / 2` 40-AD（`score_05` 214.5~228.5），下一次出现已经是 `3 / 4`——这一分就是那次破发。flashscore：第二盘 1-3 那一局布克沙第三个破发点兑现。"
+    },
+    {
+      "source": "main",
+      "start": 231.5,
+      "end": 238.4,
+      "narration": "她追回一局，三比四；可布克沙一记接发球抢攻，又破了回来，三比五。",
+      "_why": "记分条 `3 / 4`、普汀塞娃发球 30-40（`score_05` 232.5~238.5）。解说 236.48「What a return as Bucsa breaks again」。「追回一局」是 flashscore 逐分的第二盘 3-4（普汀塞娃破发）＋ 官网稿「breaking when Bucsa found the net with an overhead smash, but the Spaniard broke back straightaway to move 5-3 ahead」。"
+    },
+    {
+      "source": "main",
+      "start": 247.0,
+      "end": 254.7,
+      "narration": "三比五，轮到布克沙发球胜盘。前两个盘点，都被普汀塞娃救了下来。",
+      "point_end_ok": "段尾在 `scene_cuts` 254.96 之前，这一分落地后接她走回底线的画面。",
+      "_why": "记分条 `3 / 5` 40-AD（`score_06` 242.5~254.5），258.5 回到 40-40——这一分是普汀塞娃救下的盘点。flashscore 这一局 `30:40 |B2|, 40:40, 40:A |B2|, 40:40, 40:A |B2|`：第一个盘点在 30-40（源片里没有），画面里这个是第二个。解说 253.68「Putintseva is still alive in set two」。「救」的主语写出来：盘点是布克沙的，救下来的是普汀塞娃。"
+    },
+    {
+      "source": "main",
+      "start": 260.4,
+      "end": 269.4,
+      "narration": "第三个盘点，布克沙拿下了。三比六，决胜盘——西班牙离半决赛只差一盘。",
+      "point_end_ok": "段尾在 `scene_cuts` 269.64 之前，第二盘最后一分就在这儿结束，之后是西班牙替补席（270.5）。",
+      "_why": "记分条 `3 / 5` 又是 40-AD（`score_06` 262.5~268.5），之后盘分变成 `3 / 6`。解说 267.92「Bucsa battles back for her nation and it means Spain are a set away from making the semi-finals of the Billie Jean King Cup for the first time since 2008」。"
+    },
+    {
+      "source": "main",
+      "start": 400.3,
+      "end": 411.7,
+      "narration": "决胜盘二比一，布克沙发球，四十比十五领先。普汀塞娃连拿四分，打到占先，再拿下这个破发点，三比一。",
+      "crosses_cut": "408.6 —— 破发这一分落地，接她走回场边的近景（410.5，Rolex 钟 1:38）。不跨的话这一段停在球还没落地的地方。",
+      "point_end_ok": "这一局的最后一分落在 408.6 那一刀上，之后是近景，下一分从 411.84 起。",
+      "_why": "**转折点，逐分和官方稿互相印证**：flashscore 决胜盘第四局 `0:15, 15:15, 15:30, 15:40, 30:40, 40:40, A:40 |B1|`（从 15-40 连拿四分）；金杯官网「the turning point came in the fourth game when Putintseva battled back from 40-15 down to break Bucsa with a series of brilliant shots」。画面记分条 `2 / 1` AD-40（`score_10` 400.5~410.5，段首就是占先），之后是 `3 / 1`。解说 409.76「Magic in the hands for Putintseva」。"
+    },
+    {
+      "source": "main",
+      "start": 419.5,
+      "end": 429.2,
+      "narration": "从这一局往后，布克沙回一发，十三分只赢了两分。整个决胜盘，她只丢了一局。",
+      "point_end_ok": "段尾在 `scene_cuts` 429.52 之前，这一分落地后切到她走回场边。",
+      "_why": "记分条 `3 / 1` 普汀塞娃发球 40-15（`score_10` 412.5~430.5）。数字是量的：flashscore Set 3 `1st return points won` 布克沙 **15% (2/13)**。⚠️ 「从这一局起」说的是这段画面，数字是整个第三盘的——写成「决胜盘，她只丢一局」收住，不说「之后一分没丢」。解说 427.76「Just so good from Putintseva」、431.20「the Kazakh has all the momentum in this third set」。"
+    },
+    {
+      "source": "main",
+      "start": 439.5,
+      "end": 446.8,
+      "narration": "五比一，她发球胜赛，四十比零，三个赛点。第一个被布克沙救了。",
+      "point_end_ok": "段尾在 `scene_cuts` 447.12 之前，第一个赛点在这儿落地，之后是布克沙走回底线的近景（448.5）。",
+      "_why": "记分条 `5 / 1` 40-0（`score_10` 436.5 ~ `score_11` 448.5），450.5 变成 40-15。flashscore 最后一局 `15:0, 30:0, 40:0 |B3|, 40:15 |B3|`。解说 446.64「Bucsa not done yet」。"
+    },
+    {
+      "source": "main",
+      "start": 449.6,
+      "end": 455.85,
+      "narration": "第二个赛点，她没再给布克沙机会。",
+      "point_end_ok": "这一段就是全场最后一分，段尾落在 `scene_cuts` 456.12，之后是庆祝。",
+      "_why": "**结局，也是冷开场那一分的完整重放**（`_ending_payoff_required`，第 ⑮⑯ 段连续覆盖 449.6~462.4）。"
+    },
+    {
+      "source": "main",
+      "start": 455.85,
+      "end": 462.4,
+      "narration": "比赛结束，一比一。她替哈萨克斯坦，把这场对抗拖进了双打。",
+      "point_end_ok": "比赛已经结束，全是庆祝画面，没有下一分。",
+      "_why": "落点。画面是她握拳怒吼、转身（`contact_07` 456.5~462.5）。ITF `tie.teams[].score` 西班牙 1 / 哈萨克斯坦 1；解说 465.36「we go to the doubles」。",
+      "crosses_cut": "456.12 —— 最后一分落地，接她握拳怒吼的近景（`contact_07` 456.5）。两边都是普汀塞娃，旁白「比赛结束」正好压在球落地之后。"
+    },
+    {
+      "source": "main",
+      "start": 464.0,
+      "end": 479.4,
+      "narration": "",
+      "quote": [
+        {
+          "at": 5.84,
+          "text": "For the 28th time, she secures a point for her nation.\n这是她第 28 次替国家队拿下一分。"
+        },
+        {
+          "at": 12.88,
+          "text": "Really couldn't have played any better.\n不可能打得更好了。"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "crosses_cut": "477.64 —— 从网前握手、裁判椅旁收拍，切到她走向替补席的背影。两边都是她赢球后的同一段时间，没有回合。",
+      "point_end_ok": "比赛早已结束，这一段是握手和收拍，没有比分翻牌。",
+      "_why": "**精彩原声留着、配双语**（账号所有者 2026-09-19 全局要求）。原话：469.84「for the 28th time」＋ 472.64「secures a point for her nation」、476.88「Really couldn't have played any better」。「第 28 次」是解说说的，和金杯官网直播稿「Putintseva's 28th victory in the BJK Cup matches, equalling the national side's record」、赛前稿「currently boasting 27」互相咬合，三个源。"
+    },
+    {
+      "source": "main",
+      "start": 480.0,
+      "end": 490.4,
+      "narration": "代表国家队第 28 场胜利，追平了哈萨克斯坦的纪录。她扛回了这一分，剩下那一分，谁来扛？",
+      "point_end_ok": "比赛早已结束，这一段是她走向替补席、队友起身鼓掌和转播的赛果图形，没有比分翻牌。",
+      "_why": "**末屏那一问，旁白必须问出来。** 画面是替补席起立、她挥拍致意，转播赛果图形 `6 3 6 / 2 6 1`（`contact_08` 482.5~490.5）。纪录出处见 `_claims_why`。\n⚠️ **双打的结果一个字都没说**：写这条时 ITF 报 `tieStatus = In Progress`、双打正在打（CLAUDE.md「前瞻类事实要在它定下来之后再核一次」）。这一问问的正是这件没定的事，不是封面那一问的回声（封面讲赌注和决胜盘，这一问讲下一分）。\n⚠️ 旁白里的「第 28 场」TTS 读得出，阿拉伯数字不会被念成逐字母；字幕同样是 28。"
+    }
+  ],
+  "topbar": {
+    "line1": "2026 比利·简·金杯 1/4决赛",
+    "line2": "普汀塞娃 6-2 3-6 6-1 布克沙"
+  },
+  "_topbar_why": "第二行和 `cover.winner` / `cover.result` / `cover.matchup` 机械一致。第一行轮次写 `1/4决赛`（ITF `Quarter Finals`），不写「八强」。",
+  "mixed_fps": false,
+  "_editing_why": "十八段，全部取自同一条官方集锦（1920×1080 / 25fps）。顺序按「开场三格」：① 冷开场＝赛点落地＋转播原声 → ② 落点＝这场球的赌注 → ③ 坐标。之后按比赛时间走：第一盘（技战术一＋6-2）→ 第二盘（放小球、挑高球两处球路、1-3、3-5、三个盘点）→ 决胜盘（第四局 15-40 连拿四分的转折、接发数据）→ 三个赛点 → 结局 → 赛后原声 → 末屏一问。\n⚠️ 每一段的窗口都逐格对过缩略图墙和记分条（`score_*.jpg`，这一次 `--scorebox 145,915,493,1012` 正好框住了金杯的记分条），段尾都放在 `scene_cuts` 之前或写了 `crosses_cut`。\n⚠️ 集锦 492.12 之后是频道片尾（WATCH MORE / SUBSCRIBE）和 495.11~501.85 的静音，一秒都没用。",
+  "editorial": {
+    "mode": "match_review",
+    "question": "西班牙 1-0 领先、再输一场就出局，普汀塞娃怎么把哈萨克斯坦拖进决胜双打？",
+    "thesis": "第一盘她不跟布克沙拼力量，切削、放小球、变线，三十三分钟六比二。第二盘布克沙找到了准星，两次破发、在第三个盘点上六比三扳平，西班牙离半决赛只差一盘。决胜盘的分水岭在第四局：布克沙发球四十比十五领先，普汀塞娃连拿四分破发，之后布克沙回一发十三分只赢两分，六比一。这是她代表国家队的第二十八场胜利，追平哈萨克斯坦纪录，也把去年在深圳输给佩古拉的那一场翻了过去。",
+    "beats": [
+      "前段：第一盘切削、放小球、变线，第三局和第七局两次破发，六比二",
+      "中段：第二盘布克沙两次破发，放小球对攻、挑高球被看穿，三个盘点才拿下，六比三",
+      "转折：决胜盘二比一布克沙四十比十五领先，普汀塞娃连拿四分破发",
+      "结局：布克沙回一发十三分只赢两分，六比一；三个赛点第二个兑现，一比一进双打"
+    ],
+    "human_context": {
+      "angle": "**这一场的分量在赌注上**：第一单西班牙已经赢了，普汀塞娃再输，哈萨克斯坦就出局——而哈萨克斯坦从来没进过金杯半决赛。她是队里排名最高、打过 33 次对抗的老将；去年同一个地方、同一个轮次，她输给佩古拉，哈萨克斯坦出局。\n⚠️ 不做因果：不说「所以她才赢」，摆的是两件能核的事——赌注，和她在这场球里做到了什么。",
+      "facts": [
+        "第一单：博萨斯·马内罗 6-2 6-2 胜日延巴耶娃，62 分钟（ITF tieCentre `01:02:19`、金杯官网直播稿）",
+        "本场：普汀塞娃 6-2 3-6 6-1 胜布克沙，官方用时 01:51:53（ITF，10:45:12Z → 12:37:06Z）；flashscore `W6jTirqe` 逐分与统计",
+        "第 28 场金杯胜利、追平沃斯克博耶娃保持的哈萨克斯坦纪录（金杯官网直播稿；赛前稿写她当时 27 胜、再赢 2 场才超过；转播解说 469.84「for the 28th time」）",
+        "哈萨克斯坦从来没进过金杯半决赛（金杯官网预览稿「would see Kazakhstan reach the BJK Cup semi-finals for the first time in their history」）；去年 1/4决赛输给美国，普汀塞娃输给佩古拉",
+        "排名：普汀塞娃 79、布克沙 35（WTA 官方 2026-09-21 ＝ ITF 名单 9/14）",
+        "⚠️ 整个对抗还没打完：写这条时 ITF 报 `tieStatus = In Progress`、1-1，决胜双打（达尼利娜/库兰巴耶娃 vs 布克沙/索里贝斯·托莫）正在打。片子和文案都没写双打结果"
+      ],
+      "voice_label": "再输就出局",
+      "sources": [
+        "https://www.billiejeankingcup.com/en/news/live-kazakhstan-v-spain-2026-billie-jean-king-cup-finals-quarter-final",
+        "https://www.billiejeankingcup.com/en/news/putintseva-enjoying-lead-role-as-kazakhstan-chase-maiden-bjk-cup-semi-final",
+        "https://www.billiejeankingcup.com/en/news/kazakhstan-v-spain-2026-billie-jean-king-cup-finals-quarter-final-preview",
+        "https://www.youtube.com/watch?v=cp5PdD02JRI"
+      ],
+      "_sources_why": "前三条是金杯官网的直播稿、赛前人物稿和预览稿（要带 `RSC: 1` 请求头才拿得到正文）。第四条是源片本身，解说原声是画面自证。官方数据另走 ITF `custom/tieCentre/c9789f83-0d32-4876-89a8-873d82bcfe4b`。"
+    }
+  },
+  "push": {
+    "summary": "普汀塞娃扛回一分",
+    "lead": "比利·简·金杯总决赛，深圳湾体育中心。北京时间 9 月 23 号晚上快七点，哈萨克斯坦对西班牙 1/4决赛的第二场单打——1 小时 51 分钟之后，普汀塞娃 6-2 3-6 6-1 赢下布克沙，把比分扳成 1-1。第一单西班牙的博萨斯·马内罗 6-2 6-2 已经先拿一分，这一场她再输，哈萨克斯坦就出局。第一盘她不跟布克沙拼力量，切削、放小球、变线，33 分钟 6-2。第二盘布克沙找到了准星，两次破发，在第三个盘点上 6-3 扳平，西班牙离 2008 年之后的第一次四强只差一盘。决胜盘的分水岭是第四局：布克沙发球 40-15 领先，普汀塞娃连拿四分破发；整个第三盘，布克沙回一发 13 分只赢了 2 分，6-1。这是她代表国家队的第 28 场胜利，追平了哈萨克斯坦的纪录——去年同一个地方、同一个轮次，她输给了佩古拉。",
+    "auto": true,
+    "_summary_why": "8 个字位。主语＋动作，首行有球员名字（solo 封面的中文名在瀑布流里看不清，名字必须在文案第一行）。",
+    "_lead_why": "开球时刻按分档说「晚上快七点」（18:45）；给人看的数字一律阿拉伯；纯文本无 markdown；不挂数据来源注脚；不提双语字幕；双打结果没写（还在打）。"
+  }
+}
