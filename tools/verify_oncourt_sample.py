@@ -334,6 +334,45 @@ def report(items: dict) -> int:
     return 0
 
 
+def prepare_jev_review(queue_path: Path, outdir: Path, limit: int) -> int:
+    """Consume Jev suggestions in bounded rotating batches; never write verdicts."""
+    import datetime
+    import hashlib
+    from io import BytesIO
+    from PIL import Image
+    from jev_review_queue import read_queue, review_items
+
+    queue = read_queue(queue_path)
+    verdicts = json.loads(VERDICTS.read_text(encoding="utf-8")).get("verdicts", {})
+    todo = review_items(queue, verdicts, limit)
+    outdir.mkdir(parents=True, exist_ok=True)
+    manifest, sheets = [], []
+    with ThreadPoolExecutor(max_workers=3) as pool:
+        results = list(pool.map(fetch_frames, todo))
+    for item, blobs, status in results:
+        good = []
+        for blob in blobs:
+            try:
+                with Image.open(BytesIO(blob)) as picture:
+                    picture.verify()
+                good.append(blob)
+            except (OSError, ValueError):
+                pass
+        stamp = datetime.datetime.now(datetime.timezone.utc).isoformat()
+        queue["items"][item["id"]]["last_frames_at"] = stamp
+        record = dict(item, frame_count=len(good), frame_sha256=[hashlib.sha256(b).hexdigest() for b in good],
+                      fetch_status=status, status="ready_for_human_review" if len(good) == 3 else "waiting_frames")
+        manifest.append(record)
+        sheets.append((item, good))
+    frame_sheets(sheets, outdir)
+    (outdir / "index.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
+    temp = queue_path.with_suffix(".tmp")
+    temp.write_text(json.dumps(queue, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    temp.replace(queue_path)
+    print(f"Jev review: {len(todo)} prepared; {sum(r['frame_count'] == 3 for r in manifest)} complete; no automatic approval")
+    return 0
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--per-source", type=int, default=4, help="每个来源抽几条")
@@ -345,7 +384,14 @@ def main() -> int:
     ap.add_argument("--reach", action="store_true", help="探可达性")
     ap.add_argument("--report", action="store_true", help="汇总已有判定")
     ap.add_argument("--outdir", default="/tmp/oncourt-verify")
+    ap.add_argument("--jev-queue", type=Path, help="从持久 Jev 队列生成身份复核图，不自动判定")
+    ap.add_argument("--limit", type=int, default=5)
     args = ap.parse_args()
+    if not 1 <= args.limit <= 5:
+        ap.error("--limit must be 1..5")
+    if args.jev_queue:
+        return prepare_jev_review(args.jev_queue, Path(args.outdir), args.limit)
+
 
     items = load_store()
     if args.report:

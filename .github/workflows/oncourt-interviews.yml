@@ -257,12 +257,12 @@ jobs:
     needs: collect
     if: always() && needs.collect.result != 'cancelled'
     permissions:
-      contents: read
+      contents: write
     concurrency:
       group: jev-production-advisory
       cancel-in-progress: false
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
         with:
@@ -273,9 +273,19 @@ jobs:
         with:
           python-version: '3.11'
       - uses: actions/download-artifact@v4
+        continue-on-error: true
         with:
           name: jev-candidates
           path: /tmp/jev-input
+      - name: 检查候选文件
+        id: candidates
+        run: |
+          if [ -f /tmp/jev-input/jev-candidates.json ]; then
+            echo "present=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "::warning::Jev export unavailable; original production continues"
+            echo "present=false" >> "$GITHUB_OUTPUT"
+          fi
       - uses: actions/cache/restore@v4
         with:
           path: .jev-production
@@ -283,6 +293,7 @@ jobs:
           restore-keys: |
             jev-production-v1-${{ github.ref_name }}-
       - name: Jev 辅助分流（每轮 5 次，每日 20 次）
+        if: steps.candidates.outputs.present == 'true'
         timeout-minutes: 2
         env:
           TYPESAFE_API_KEY: ${{ secrets.TYPESAFE_API_KEY }}
@@ -290,6 +301,39 @@ jobs:
         run: |
           python tools/jev_production.py --input /tmp/jev-input/jev-candidates.json \
             --cache .jev-production/ledger.sqlite --output /tmp/jev-report.json
+      - name: 合并持久复核队列
+        if: steps.candidates.outputs.present == 'true'
+        run: |
+          # The job is serialized, but collect may have advanced main meanwhile.
+          git pull --ff-only origin "$GITHUB_REF_NAME"
+          python tools/jev_review_queue.py --report /tmp/jev-report.json
+      - name: 为待复核条目准备真实视频帧
+        if: steps.candidates.outputs.present == 'true'
+        continue-on-error: true
+        timeout-minutes: 4
+        run: |
+          pip install -q 'Pillow>=10.0'
+          python tools/verify_oncourt_sample.py --jev-queue data/jev_review_queue.json \
+            --limit 5 --outdir /tmp/jev-visual-review
+      - name: 保存持久 Jev 队列
+        if: always() && steps.candidates.outputs.present == 'true'
+        run: |
+          test -f data/jev_review_queue.json
+          git config user.name "Codex"
+          git config user.email "codex@openai.com"
+          git add data/jev_review_queue.json
+          if git diff --cached --quiet; then exit 0; fi
+          python tools/check_staged_file_sizes.py
+          git commit -m "data: Jev visual review queue"
+          source tools/git_push_retry.sh
+          push_with_rebase_retry "$GITHUB_REF_NAME" 4
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: jev-visual-review
+          path: /tmp/jev-visual-review
+          retention-days: 14
+          if-no-files-found: warn
       - uses: actions/cache/save@v4
         if: always()
         with:
