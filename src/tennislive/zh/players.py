@@ -358,6 +358,7 @@ PLAYER_ZH: dict[str, str] = {
     "Ella Seidel": "赛德尔",
     "Cristina Bucsa": "布克沙",
     "Jessica Bouzas Maneiro": "博萨斯·马内罗",
+    "Sonja Zhiyenbayeva": "日延巴耶娃",
     "Sara Sorribes Tormo": "索里贝斯·托尔莫",
     "Lucia Bronzetti": "布龙泽蒂",
     "Elisabetta Cocciaretto": "科恰雷托",
