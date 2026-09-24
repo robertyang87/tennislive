@@ -1,0 +1,369 @@
+{
+ "slug": "prozorova-eala-singapore-2026-r2",
+ "source_url": "https://www.youtube.com/watch?v=MiS84c1tvuQ",
+ "_column": "赛场之上",
+ "tts_backend": "edge",
+ "_tts_backend_why": "旁白是平直的复盘叙述，一段 `style` 都没写；同一站 `wang-garland-singapore-2026-r2`、`oliynykova-chwalinska-singapore-2026-r2` 也是 edge。",
+ "_source": "账号所有者点名的源片：WTA 官方 YouTube `MiS84c1tvuQ`，probe（`output/2026-09-24/reel/prozorova-eala/`）1920×1080 / 25fps、477.8s。四要素自证：记分条逐格读过（`T. PROZOROVA / A. EALA [3]`），96.5s 与 224.5s 的盘间图形烧着 `ROUND 2`，场地挡板 `SINGAPORE`、`WTA 500`、`THE KALLANG`。比赛画面到 292s，293~298 是普罗佐罗娃回座位，299s 起是场上采访（不进复盘，见 `_editing_why`）。",
+ "scorebox": [
+  90,
+  870,
+  550,
+  980
+ ],
+ "_scorebox_why": "frame-grab 帧（640 宽，×3 回到源片像素）上量的：板左缘 ≈92、上缘 ≈870、下缘 ≈978；右缘按最宽的一档写——第一盘两列（30s `3 0 / 3 15`）右缘 ≈478，第三盘四列（245s `4 7 3 / 6 5 3 Ad`）右缘 ≈548。probe 的 scorebox_guess 90,870,515,980 左、上、下一致；同站 `wang-garland`、`oliynykova-chwalinska` 的 probe 用的也是 90,870,550,980。板上方的 `BREAK POINT` 小签不进框。全出血＋贴边同比放大回贴左下，照 2026-09-24 的规矩。",
+ "_match": {
+  "status": "result_verified",
+  "source": "flashscore_points",
+  "source_id": "8C99pTjC",
+  "flashscore_id": "8C99pTjC",
+  "participants": [
+   "普罗佐罗娃",
+   "伊埃拉"
+  ],
+  "set_scores_home_away": [
+   [
+    4,
+    6
+   ],
+   [
+    7,
+    5
+   ],
+   [
+    6,
+    3
+   ]
+  ],
+  "tiebreaks_home_away": [
+   null,
+   null,
+   null
+  ],
+  "winner": "普罗佐罗娃",
+  "loser": "伊埃拉",
+  "winner_result": "4-6 7-5 6-3",
+  "loser_result": "6-4 5-7 3-6",
+  "_source": "三源一致：WTA 官方 tournaments/1152/2026/matches 的 MatchID=LS013，`ResultString` = `T. Prozorova d [3]A. Eala 4-6,7-5,6-3`、`RoundID=2`（32 签的第二轮＝1/8决赛）、`MatchTimeTotal=03:09:29`；flashscore 8C99pTjC 盘分 4-6 / 7-5 / 6-3（home＝普罗佐罗娃）；画面自证——源片 224.5s 盘间图形 `ROUND 2 / TATIANA PROZOROVA 4 7 / ALEXANDRA EALA 6 5`，258.5s 记分条 `MATCH POINT 4 7 5 40 / 6 5 3 30`。"
+ },
+ "topbar": {
+  "line1": "2026 WTA500 新加坡站 1/8决赛",
+  "line2": "普罗佐罗娃 4-6 7-5 6-3 伊埃拉"
+ },
+ "_topbar_why": "line1 按账号所有者 2026-09-24 定的格式：新加坡网球公开赛是 WTA500（`zh.tournaments.TOURNAMENT_LEVEL['singapore']='W500'`，挡板 `WTA 500`），WTA 官方 `RoundID=2`、32 签的第二轮＝1/8决赛，和同一天 `wang-garland-singapore-2026-r2` 同一行。`tour_topline` 对 singapore 返回 None（`TOURNAMENT_ZH` 里没有「新加坡站」这个键），手写。",
+ "cover": {
+  "matchup": [
+   {
+    "name": "普罗佐罗娃",
+    "name_en": "Tatiana Prozorova",
+    "country": "RUS",
+    "rank": 180
+   },
+   {
+    "name": "伊埃拉",
+    "name_en": "Alexandra Eala",
+    "country": "PHI",
+    "rank": 18
+   }
+  ],
+  "_rank_why": "WTA 官方 `players/ranked`（`sources.rankings.fetch_rankings`，`rankedAt=2026-09-21`）：伊埃拉第 18（2276 分）、普罗佐罗娃第 180（428 分）；ESPN WTA rankings 同一期伊埃拉 18（ESPN 只列前 150）；WTA 官网赛后稿原文 `World No. 180 Tatiana Prozorova`。",
+  "_name_why": "译名沿用仓库：伊埃拉（`player_names_top500.json`）；普罗佐罗娃与自动草稿、flashscore 转写一致。",
+  "winner": "普罗佐罗娃",
+  "result": "4-6 7-5 6-3",
+  "eyebrow": "赛场之上",
+  "layout": "solo",
+  "subject": "普罗佐罗娃",
+  "hook": "先丢一盘又2比4落后\n最后4局全是她的",
+  "hook_accent": "全是她的",
+  "_hook_why": "两行一个落差，都来自 flashscore 逐局 `df_mh_1_8C99pTjC`：第一盘 4-6 丢掉；第二盘伊埃拉 1-2、2-3 两次破发，2-4 落后（第二个源：WTA 官网赛后稿 `coming from a set and 4-2 down`）；第三盘 3-3、4-3、5-3、6-3——最后 4 局全是普罗佐罗娃拿的（源片 228~264s 记分条 `3 3` → `5 3 MATCH POINT` 同向）。没写排名、年龄、国籍，没有术语；10 字、8 字。",
+  "topic": "新加坡WTA500 · 女单1/8决赛",
+  "_subject_why": "封面放**普罗佐罗娃**——赢家、钩子的主语。⚠️ 自动草稿的 `_visual_evidence` 把这张图认成了伊埃拉，**是错的**：图中人穿卡其色 polo 上衣＋棕色短裙＋白色头带，正是源片里的普罗佐罗娃（伊埃拉这场穿黑色连衣裙），WTA 图库标题也写着 `Tatiana Prozorova, Singapore 2026`。",
+  "_heat_why": "③ 档热点：伊埃拉是账号所有者点名的热点样板，这一站 3 号种子；这一条是账号所有者本人点的题。另一层：普罗佐罗娃下一轮对王欣瑜（中国球员，①档），同栏目 `wang-garland-singapore-2026-r2` 的观众正是这条的观众。",
+  "portrait": {
+   "image": "assets/reel/prozorova-eala-cover.jpg",
+   "focus": 0.66,
+   "focus_y": 0.42,
+   "zoom": 1.0,
+   "_photo_why": "WTA 官方 photoresources 实拍，4777×3186，铺 1080×1440 是缩小不是放大。WTA 官网这场赛后稿 https://www.wtatennis.com/news/4581250/prozorova-stuns-eala-in-marathon-singapore-comeback-for-first-top-20-win 的头图：photoresources.wtatennis.com/wta/photo/**2026/09/24**/1aac255f-f734-4217-a571-b7f4849e3711/**Prozorova-R2**.jpg，图库标题 `Tatiana Prozorova, Singapore 2026`——路径日期 9/24 和文件名「R2」自证是这一站第二轮，她的第二轮就是这一场。已下载打开核过：卡其色上衣＋棕色短裙＋白色头带，和源片 10.5s、208.5s 的近景一致；场边 `Sport Singapore` 挡板；双手反手击球中，球在画面内，睁眼、咬牙的专注表情——对上钩子「一路追回来」那股劲。",
+   "_gates": "① 精准：WTA 官方图库，日期、赛事、轮次、人名都在路径和标题里。② 在比赛中：击球中。③ 冲击力：全身动作、表情外露。④ 清晰度：4777px。"
+  },
+  "scoreboard": {
+   "court": "OCBC Arena",
+   "_court_why": "印场馆不印场地名：WTA 官方 feed 这一场只给 `CourtID=1`，场馆沿用同站 `oliynykova-chwalinska`、`wang-garland` 已核的 OCBC Arena（WTA 赛事页与维基 `2026 Singapore Tennis Open` 两源）。",
+   "duration_source": {
+    "url": "data:application/json,%7B%22duration%22%3A%20%223%3A09%3A29%22%2C%20%22source%22%3A%20%22WTA%20official%20tournaments/1152/2026/matches%20LS013%20MatchTimeTotal%2003%3A09%3A29%22%2C%20%22cross_check%22%3A%20%22WTA%20%E5%AE%98%E7%BD%91%E8%B5%9B%E5%90%8E%E7%A8%BF%20in%203%20hours%20and%209%20minutes%22%7D",
+    "field": "duration"
+   },
+   "_duration_why": "WTA 官方 `MatchTimeTotal=03:09:29`；WTA 官网赛后稿 `in 3 hours and 9 minutes`；flashscore 分盘 1:07＋1:10＋0:54＝3:11，同向。"
+  }
+ },
+ "_opening_time_source": {
+  "url": "https://api.wtatennis.com/tennis/tournaments/1152/2026/matches",
+  "match_id": "LS013",
+  "field": "MatchTimeStamp",
+  "value": "2026-09-24T10:19:40.097+00:00",
+  "beijing": "2026-09-24T18:19+08:00",
+  "spoken_precision": "approximate-hour",
+  "_why": "开球时刻只说个大概：WTA 官方 18:19、flashscore `dc_1` DC=1790246700 → 10:05Z＝北京 18:05，两个都落在「傍晚六点多」。新加坡与北京同为 +08:00。"
+ },
+ "stats": {
+  "a": {
+   "aces": 4,
+   "df": 3,
+   "first_in": 78,
+   "first_won": 50,
+   "second_total": 45,
+   "second_won": 14,
+   "bp_conv": 7,
+   "bp_chances": 12,
+   "pts_won": 118,
+   "pts_total": 231,
+   "first_total": 123,
+   "headshot": "assets/players/headshots/wta-330723.jpg"
+  },
+  "b": {
+   "aces": 1,
+   "df": 7,
+   "first_in": 67,
+   "first_won": 35,
+   "second_total": 41,
+   "second_won": 19,
+   "bp_conv": 6,
+   "bp_chances": 17,
+   "pts_won": 113,
+   "pts_total": 231,
+   "first_total": 108,
+   "headshot": "assets/players/headshots/wta-330332.jpg"
+  },
+  "_source": "`match_feed.py show 8C99pTjC`（flashscore `df_st_1`），a＝普罗佐罗娃（home，也是 cover.matchup[0]），b＝伊埃拉。制胜分／非受迫失误 flashscore 没有，留空（WTA 赛后稿只给了制胜分 52 比 24，没有失误数，不凑）。普罗佐罗娃头像 `fetch_official_headshot.fetch_wta('Tatiana Prozorova')` → WTA id 330723。"
+ },
+ "_hit_data": "`match_feed.py show 8C99pTjC`：第一盘 5-4 伊埃拉发球胜盘那一局 **七个盘点**、中间救下两个破发点，第七个才兑现（`30:40 |B2|` 起六次 `40:A |B2|`；源片 58.5s `DEUCE #7`、72.5s `SET POINT #7`）；第二盘伊埃拉 1-2、2-3 两次破发到 2-4，2-4 普罗佐罗娃发球 30-40 救下破发点（源片 140.5s `BREAK POINT`），之后 4-4 破发、6-5 接发第二个盘点兑现（`40:A` 后 `A:40 |B1||B2|`；源片 164.5s `SET POINT`、200.5s `SET POINT #2`）；第三盘 2-0 → 伊埃拉连破两次 3-2 领先 → 普罗佐罗娃连拿最后四局，3-3 那个发球局救下四个破发点（源片 228.5s `BREAK POINT #3`、242.5s `#4`），5-3 第一个赛点兑现。全场破发 7/12 对 6/17、双误 3 对 7（第三盘伊埃拉 3 个）。WTA 官网赛后稿：她生涯第一次赢前二十、第一次打进巡回赛八强，22 岁，制胜分 52 比 24；下一轮对王欣瑜。",
+ "_no_repeat": "同一站 `wang-garland-singapore-2026-r2` 末屏讲的是「下一轮很可能是伊埃拉，两人今年一比一」——那一问现在由这一场回答了：不是伊埃拉。这一条末屏只说下一轮是王欣瑜，不重讲王欣瑜和伊埃拉的交手。",
+ "_claims": [],
+ "push": {
+  "matchup": "普罗佐罗娃 vs 伊埃拉",
+  "score": "4-6 7-5 6-3",
+  "summary": "世界第180三盘逆转伊埃拉",
+  "auto": true,
+  "lead": "2026 WTA500 新加坡女单 1/8决赛：世界第 180 的普罗佐罗娃 4-6、7-5、6-3 逆转 3 号种子伊埃拉，打了 3 小时 9 分。先丢一盘、第二盘 2-4 落后，她一路追回来；第三盘又从 2-3 连拿最后四局，3-3 那个发球局救下四个破发点。这是她职业生涯最大的一场胜利，1/4决赛对王欣瑜。"
+ },
+ "_push_summary_why": "12 字位，主语是赢家；「世界第180」和 matchup 里登记的 180 一致。",
+ "segments": [
+  {
+   "start": 1.44,
+   "end": 24.2,
+   "cx": 0.5,
+   "narration": "北京时间九月二十四日傍晚六点多，新加坡WTA五百赛八分之一决赛。世界第一百八十的普罗佐罗娃，对三号种子、世界第十八的伊埃拉。第一盘，普罗佐罗娃先破发，三比一领先。这一周的首轮，她也是先丢一盘、落后一个破发，才翻回来的。",
+   "_why": "1.44 起宽景（0~1.44 是普罗佐罗娃近景），记分条 10.5s `3 15 / 1 15`（普罗佐罗娃 3-1，flashscore 第一盘第 4 局破发）；22.48~24.2 是她走回的近景，段尾 24.2 是转播切点。 首轮：WTA 官网赛后稿 `trailed Sofia Costoulas by a set and 4-2`，WTA 官方 LS026 `T. Prozorova d S. Costoulas 5-7,7-6(2),6-2`。",
+   "score_inset": true,
+   "point_end_ok": "12~22 那一分在 22.48 前已经结束（22.5s 普罗佐罗娃已在走回，解说 22.32「so close to the lines」评的是刚打完的一球）；24.24 的「翻牌」是集锦跳到 3-3 那一局（比分从 3-1 直接变 3-3），在段尾之后 0.04 秒。"
+  },
+  {
+   "start": 56.6,
+   "end": 78.76,
+   "cx": 0.5,
+   "narration": "伊埃拉连着破回来两次，五比四轮到她发球胜盘。这一局一次又一次打到平分，她先后拿到七个盘点，中间还被对手拿到两个破发点。直到第七次，她才终于收下，六比四。光这一盘，就打了一个多小时。这一盘，看起来已经定下了整场的走向。",
+   "_why": "记分条 38.5s 起 `4 15 / •5 15`（伊埃拉发球 5-4），58.5s `DEUCE #7`、72.5s `SET POINT #7`、80.5s 翻成盘末。flashscore 这一局 `30:40 |B2|` 起六次 `40:A |B2|`（七个盘点）、两次 `A:40 |B1|`（两个破发点）；此前 3-2、3-4 两局是伊埃拉破发。第一盘 1:07（flashscore）、解说 98.48s「takes it over an hour. 6-4」。",
+   "crosses_cut": "56.6~58.4 伊埃拉发球前近景 → 60.4 起宽景（逐秒帧：近端卡其色是普罗佐罗娃、远端黑裙是伊埃拉）→ 67.92 伊埃拉近景、69.96 看台教练、72.04 伊埃拉发球近景、74.2 宽景第七个盘点那一分：都是这一局，旁白讲的也是这一局。",
+   "score_inset": true,
+   "point_end_ok": "第 2 段和第 3 段首尾相接（78.76），画面不断；第七个盘点那一分的结尾和 80.24 的「What a way to finish」都在第 3 段里完整播出，79.76 的翻牌落在第 3 段里。"
+  },
+  {
+   "start": 78.76,
+   "end": 88.64,
+   "cx": 0.5,
+   "narration": "",
+   "quote": [
+    {
+     "at": 1.48,
+     "text": "What a way to finish.\n这一盘收得漂亮"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "_quote_why": "转播原句，probe 的 `captions.txt` 80.24「What a way to finish.」。后半句自动字幕写作「The lefty swinger gets it done」，拿不准原词，不留。段内 at = 80.24 − 78.76。",
+   "crosses_cut": "79~81 伊埃拉走回座位、81 起看台上的菲律宾球迷起立欢呼：第一盘刚结束，原声评的正是这一盘。",
+   "point_end_ok": "第一盘在 78.76 之前已经结束（逐秒帧 79s 伊埃拉已经背身走向座位）；79~95 秒是看台镜头，记分条不在画面里，`point_ends_guess` 在这段每 0.9 秒一个的「翻牌」是看台画面被误读，不是比分变化。",
+   "score_inset": true
+  },
+  {
+   "start": 101.12,
+   "end": 118.32,
+   "cx": 0.5,
+   "narration": "第二盘一比一，伊埃拉在接发局拿到第二个破发点，破了。之后她又破一次，一路领先到四比二。那一刻，伊埃拉离直落两盘，只差两局。",
+   "_why": "102.5s 记分条 `BREAK POINT #2 / 4 1 / 6 1 Ad`（普罗佐罗娃发球）；118s 伊埃拉握拳、119.28 解说「big play to get the breakthrough」，126.5s 翻成 `1 30 / •2 40`。flashscore 第二盘第 3 局 `40:A |B1|` 两个破发点第二个兑现，第 5 局再破（2-3），第 6 局保发 2-4。 4-2 时伊埃拉再拿两局就是 6-2 直落两盘。",
+   "point_end_ok": "段尾 118.32 是转播切点：118s 伊埃拉已经转身握拳庆祝，这一分在 117s 之前打完。",
+   "score_inset": true
+  },
+  {
+   "start": 140.4,
+   "end": 159.68,
+   "cx": 0.5,
+   "narration": "二比四，三十比四十，普罗佐罗娃在自己的发球局落后，再丢一分就是二比五。这一分她把球抬高、压深，把伊埃拉在底线左右调动，最后一拍打到她够不着的右侧。破发点救了下来。",
+   "_why": "140.5s 记分条 `BREAK POINT / •4 2 30 / 6 4 40`（普罗佐罗娃发球）；逐秒帧 143~157：近端黑裙的伊埃拉在底线从左（144、149）跑到右（146、151~152）来回被调动，157~158 球落在她右侧身后；解说 157.36「Oh yes, just a little bit of extra height on that one」。flashscore 第二盘第 7 局 `30:40 |B1|, 40:40, A:40`——这个破发点救下后保发 3-4。",
+   "point_end_ok": "这一分 158 秒前结束（逐秒帧 158s 球已在伊埃拉右后方场外），段尾 159.68 是转播切点，下一次翻牌是 162.5s 的 40-40（同一局下一分之后）。",
+   "score_inset": true
+  },
+  {
+   "start": 164.4,
+   "end": 181.64,
+   "cx": 0.5,
+   "narration": "四比四，她破了回来。从二比四开始，后面六局她拿了五局。六比五，伊埃拉发球保盘，普罗佐罗娃拿到第一个盘点。这一个，伊埃拉救了下来。",
+   "_why": "164.5s 记分条 `SET POINT / 4 6 40 / 6 5 •30`（伊埃拉发球）；182.5s 翻成伊埃拉 Ad——第一个盘点被救。flashscore 第二盘第 9 局伊埃拉发球被破（4-4），第 12 局 `40:30 |B1| |B2|` 第一个盘点。 2-4 之后六局（3-4、4-4、5-4、5-5、6-5、7-5）普罗佐罗娃拿五局，flashscore 逐局。",
+   "point_end_ok": "段尾 181.64 是转播切点：180.5s 已是普罗佐罗娃捂嘴的近景，这一分打完了；182.5 的翻牌（伊埃拉 Ad）是这一分结束后的比分。",
+   "score_inset": true
+  },
+  {
+   "start": 200.12,
+   "end": 207.92,
+   "cx": 0.5,
+   "narration": "平分之后，第二个盘点。这一次，她拿下了，七比五。",
+   "_why": "200.5s 记分条 `SET POINT #2 / 4 6 Ad / 6 5`；208s 普罗佐罗娃握拳，224.5s 盘间图形 `4 7 / 6 5`。",
+   "point_end_ok": "段尾 207.92 是转播切点，208s 她已经握拳庆祝，这一分打完了；之后记分条离场、224 秒的盘间图形才出来。",
+   "score_inset": true
+  },
+  {
+   "start": 207.92,
+   "end": 228.44,
+   "cx": 0.5,
+   "narration": "",
+   "quote": [
+    {
+     "at": 5.84,
+     "text": "Down a break in that set twice\n这一盘两次被破发落后"
+    },
+    {
+     "at": 8.88,
+     "text": "and was able to fight back.\n她都追了回来"
+    },
+    {
+     "at": 16.0,
+     "text": "And we're level one set all.\n盘分一比一"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "_quote_why": "转播原句，probe 的 `captions.txt`：213.76「Down a break in that set twice and was」、216.80「able to fight back.」、223.92「perfect time. And we're level one set」、227.12「all.」段内 at = 绝对秒 − 207.92。",
+   "crosses_cut": "208 普罗佐罗娃握拳 → 214 看台教练鼓掌 → 220 她走回座位、224 盘间图形：第二盘刚结束，原声讲的就是她。",
+   "point_end_ok": "第二盘已结束，段内没有比赛；段尾 228.44 是转播切点，接第三盘。",
+   "score_inset": true
+  },
+  {
+   "start": 228.44,
+   "end": 242.44,
+   "cx": 0.5,
+   "narration": "决胜盘又是一样的剧本：她先破发二比零，伊埃拉连破两次，三比二反超。三比三，她发球，伊埃拉拿到了破发点。这一盘，伊埃拉发球出了三个双误。",
+   "_why": "228.5s 记分条 `BREAK POINT #3 / •4 7 3 / 6 5 3 Ad`（普罗佐罗娃发球 3-3）；240.5s 仍是 `#3`，242.5s 变成 `#4`。flashscore 第三盘：2-0（普罗佐罗娃破发）、2-1、2-3（伊埃拉两次破发）、3-3（普罗佐罗娃破回）、第 7 局四个破发点。 双误：flashscore df_st_1 Set 3 Double Faults 0 / 3。",
+   "point_end_ok": "段尾 242.44 是转播切点；239.08~242.44 是普罗佐罗娃走回的近景，第三个破发点在 239 秒前打完。",
+   "score_inset": true
+  },
+  {
+   "start": 242.44,
+   "end": 257.0,
+   "cx": 0.5,
+   "narration": "又一个破发点。她先把球压向左边的伊埃拉，再一拍拉开到右侧场外，这一球伊埃拉没能回过来。四个破发点，她全救了。那是伊埃拉全场最后一次破发点。",
+   "_why": "242.5s 记分条 `BREAK POINT #4`；逐秒帧 242~252：近端黑裙的伊埃拉先在左侧（242~246），250 回到中路，251~252 被拉到右侧单打边线外，球留在她身后；253~256 普罗佐罗娃走回，256.5s 翻成 40-40。flashscore 第三盘第 7 局 `15:40 |B1|, 30:40 |B1| … 40:A |B1| … 40:A |B1|` 四个破发点，最后 `A:40` 保发 4-3。 「全场最后一次破发点」：flashscore 逐局，之后 5-3 那局（伊埃拉发球）`15:0, 30:0, 40:0 |B1|` 是普罗佐罗娃的破发点，6-3 那局 `0:15 … 40:30 |B3|` 没有破发点。",
+   "point_end_ok": "这一分 252 秒前结束（252s 伊埃拉已在场外、球在身后）；256.5 的翻牌就是这一分的结果（40-40），段尾 257.0 之后是赛点那一局。",
+   "score_inset": true
+  },
+  {
+   "start": 257.0,
+   "end": 263.64,
+   "cx": 0.5,
+   "narration": "接着她再破一次。五比三，第一个赛点。",
+   "_why": "258.5s 记分条 `MATCH POINT / •4 7 5 40 / 6 5 3 30`；263.6 解说「game, set, match」。flashscore 第三盘第 8 局破发（5-3）、第 9 局 `40:30 |B3|` 第一个赛点兑现。",
+   "point_end_ok": "赛点这一分在 263.64 之前落地——解说 263.60 已经说「game, set, match」，264s 起是她仰头的近景。",
+   "score_inset": true
+  },
+  {
+   "start": 263.64,
+   "end": 286.48,
+   "cx": 0.5,
+   "narration": "",
+   "quote": [
+    {
+     "at": 0.1,
+     "text": "Game, set, match.\n比赛结束"
+    },
+    {
+     "at": 1.8,
+     "text": "What a win.\n了不起的胜利"
+    },
+    {
+     "at": 4.52,
+     "text": "The biggest win of Prozorova's career\n普罗佐罗娃职业生涯最大的一场胜利"
+    },
+    {
+     "at": 9.96,
+     "text": "as she takes out a superstar in Southeast Asia.\n她在东南亚淘汰了一位巨星"
+    },
+    {
+     "at": 15.32,
+     "text": "Can you believe it?\n你敢相信吗"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "_quote_why": "转播原句，probe 的 `captions.txt`：263.60「game match.」、265.44「What a win.」、268.16「The biggest win of Protoarova's career」（自动字幕把 Prozorova 听成 Protoarova，按人名改回；WTA 官网赛后稿同样写 `career-best victory`）、273.60「as she takes out a superstar in」、275.84「Southeast Asia.」、278.96「Can you believe it?」段内 at = 绝对秒 − 263.64。",
+   "crosses_cut": "264 她仰头、270 伊埃拉近景、274 网前拥抱、278~284 两人致意：全在赛点之后。",
+   "point_end_ok": "比赛已经结束。",
+   "score_inset": true
+  },
+  {
+   "start": 286.48,
+   "end": 293.4,
+   "cx": 0.5,
+   "narration": "最后四局都是她的。下一轮对王欣瑜，她还能再翻一次吗？",
+   "_why": "WTA 官方 `MatchTimeTotal=03:09:29`；最后四局见 flashscore 逐局（3-3 → 6-3）；八强对手：WTA 官网赛后稿 `She'll face Wang Xinyu in the last eight`，WTA 官方 LS012 `W. Wang d [Q]J. Garland`（同一签区上半，见 `wang-garland-singapore-2026-r2`）。",
+   "crosses_cut": "286~293 普罗佐罗娃捂嘴、向看台挥手、回到座位：比赛结束之后。",
+   "point_end_ok": "比赛已经结束；段尾 293.4 是转播切点，之后是场上采访（不进复盘）。",
+   "score_inset": true
+  }
+ ],
+ "editorial": {
+  "mode": "match_review",
+  "hook": [
+   "先丢一盘又2比4落后",
+   "最后4局全是她的"
+  ],
+  "question": "先丢一盘、第二盘又二比四落后，世界第一百八十的普罗佐罗娃是怎么把三号种子伊埃拉翻过来的？",
+  "thesis": "第一盘伊埃拉用七个盘点才拿下；第二盘她两次破发领先到四比二，普罗佐罗娃先在二比四救下破发点，再连着把局面扳回，五比六接发第二个盘点兑现；第三盘伊埃拉又一次三比二领先，普罗佐罗娃在三比三的发球局里救下四个破发点，连拿最后四局。三小时九分，她赢下了职业生涯最大的一场球。",
+  "beats": [
+   "北京时间 9 月 24 日傍晚，新加坡 WTA500 1/8决赛：世界第 180 对 3 号种子、世界第 18。",
+   "第一盘 5-4 伊埃拉发球胜盘，七个盘点、救下两个破发点，第七个才兑现，6-4。",
+   "第二盘伊埃拉 1-2、2-3 两次破发，2-4 普罗佐罗娃发球救下破发点。",
+   "4-4 破发、6-5 接发，第一个盘点被救，第二个兑现，7-5。",
+   "第三盘 2-0 → 2-3，伊埃拉连破两次；3-3 普罗佐罗娃发球救下四个破发点。",
+   "5-3 第一个赛点兑现，最后四局全拿。下一轮对王欣瑜。"
+  ],
+  "chapters": [
+   "七个盘点",
+   "二比四之后",
+   "四个破发点",
+   "最后四局"
+  ],
+  "human_context": {
+   "angle": "世界第 180、22 岁的普罗佐罗娃，这一周两场都是先丢一盘、再落后一个破发翻回来的（首轮对科斯图拉斯也是一盘加 2-4 落后）。今天对面是 3 号种子伊埃拉——看台上几乎全是菲律宾球迷。她赢下了生涯最大的一场胜利，1/4决赛对王欣瑜。",
+   "facts": [
+    "WTA 官方 LS013：T. Prozorova d [3]A. Eala 4-6,7-5,6-3，RoundID=2，MatchTimeTotal 03:09:29。",
+    "WTA 官方排名（2026-09-21 版）：伊埃拉第 18、普罗佐罗娃第 180；ESPN 同期伊埃拉 18。",
+    "flashscore 8C99pTjC 逐局：第一盘 4-6 那一局七个盘点、两个破发点；第二盘 2-4 救破发点、4-4 破发、6-5 接发第二个盘点兑现；第三盘 2-0 → 2-3 → 3-3，4-3 那一局救下四个破发点，5-3 破发，6-3 第一个赛点兑现。",
+    "flashscore df_st_1：破发 7/12 对 6/17，双误 3 对 7（第三盘伊埃拉 3 个），Last 10 balls 8 对 2。",
+    "WTA 官网赛后稿：`coming from a set and 4-2 down`、`the 22-year-old's first career Top 20 win`、`career-best victory`、首轮对 Costoulas `trailed ... by a set and 4-2`、八强对 Wang Xinyu。",
+    "转播解说 268.16s：`The biggest win of Prozorova's career`。"
+   ],
+   "sources": [
+    "https://api.wtatennis.com/tennis/tournaments/1152/2026/matches",
+    "https://www.wtatennis.com/news/4581250/prozorova-stuns-eala-in-marathon-singapore-comeback-for-first-top-20-win",
+    "https://global.flashscore.ninja/2/x/feed/df_mh_1_8C99pTjC",
+    "https://global.flashscore.ninja/2/x/feed/df_st_1_8C99pTjC",
+    "https://site.api.espn.com/apis/site/v2/sports/tennis/wta/rankings"
+   ]
+  },
+  "narration": [
+   "第一盘伊埃拉用了七个盘点才拿下。",
+   "第二盘二比四落后，她先救下破发点，再一路追回来，七比五。",
+   "第三盘三比三救下四个破发点，连拿最后四局。"
+  ]
+ },
+ "_editing_why": "源片 477.8 秒：比赛画面到 292 秒，293~298 普罗佐罗娃回座位，299 秒起是场上采访（`赛场之上视频不要赛后采访`，一秒都不进），467.8 起静音片尾。认人：普罗佐罗娃卡其色 polo＋棕色短裙＋白色头带，伊埃拉黑色连衣裙＋青色护腕。段落端点取自 probe 的 `scene_cuts`；球路来自 frame-grab（run 36014232779，`output/2026-09-24/frames/prozorova-eala-frames/`，每秒一帧）逐帧看过，再对照 `captions.txt` 的转播原话。集锦没播的局（第一盘伊埃拉两次破发、第二盘 4-4 破发、第三盘前六局）只在旁白里按 flashscore 逐局一句带过。",
+ "_tactics_why_note": "球路写在第 5 段（底线左右调动、最后一拍到右侧）和第 10 段（先压左、再拉到右侧场外）；其余几段源片是远景宽镜头，正反手判不出，不硬写。",
+ "_quote_why_global": "四段原声：第一盘收尾「What a way to finish」、第二盘「两次被破发落后都追了回来」、赛点之后的「职业生涯最大的一场胜利」。"
+}
