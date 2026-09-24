@@ -1,0 +1,438 @@
+{
+  "slug": "zheng-paolini-bjk-cup-2026-qf",
+  "_column": "赛场之上",
+  "sources": {
+    "main": "https://www.youtube.com/watch?v=MP8ZbrE0lKw"
+  },
+  "_source": "比利·简·金杯官方 YouTube 频道（`@BJKCup`，oEmbed `author_name = Billie Jean King Cup`）单场集锦《Jasmine Paolini (ITA) vs Zheng Qinwen (CHN) | 2026 Billie Jean King Cup | Highlights》，**1920×1080 / 491.87s / 25fps**（probe 实测）。账号所有者给的链接。\n画面自证：常驻记分条 `PAOLINI / ZHENG` 带意大利、中国国旗，右下角 `ITA 0-1 CHN`；482.5 终场比分图 `JASMINE PAOLINI 6 7 / QINWEN ZHENG 3 6`；和同一块场地的 `zhang-cocciaretto-bjk-cup-2026-qf` 同一套转播图形。源片没有场上采访，片尾订阅卡从 483.1 起。",
+  "scorebox": [
+    145,
+    915,
+    520,
+    1012
+  ],
+  "_scorebox_why": "同一届、同一块场地、同一套转播图形的 `zhang-cocciaretto-bjk-cup-2026-qf` 实测的框；probe 这趟传的就是 `--scorebox 145,915,520,1012`，`score_*.jpg` 13 张墙每一格板都完整落在框里（子代理逐格读过）。",
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "郑钦文",
+    "hook": "4次交手全赢过她\n最后8个球只拿到1个",
+    "topic": "比利·简·金杯1/4决赛 · 郑钦文 vs 保利尼",
+    "winner": "保利尼",
+    "result": "6-3 7-6(4)",
+    "matchup": [
+      {
+        "name": "郑钦文",
+        "name_en": "Qinwen Zheng",
+        "country": "CHN",
+        "rank": 52
+      },
+      {
+        "name": "保利尼",
+        "name_en": "Jasmine Paolini",
+        "country": "ITA",
+        "rank": 20
+      }
+    ],
+    "scrim": "clear",
+    "portrait": {
+      "image": "assets/reel/zheng-bjk-cup-2026-qf-shenzhen-ap.jpg",
+      "focus": 0.28,
+      "focus_y": 0.3,
+      "zoom": 1.0,
+      "_why": "**AP 通讯社实拍（Andy Wong）**，说明原文：「China's Zheng Qinwen wipes sweat from her forehead during her match against Italy's Jasmine Paolini in the Billie Jean King Cup women singles quarterfinals between China and Italy, in Shenzhen, China's Guangdong province, Thursday, Sept. 24, 2026」——四要素全在说明里（https://www.dailyrecordnews.com/ap_news/sports/china-billie-jean-king-cup-tennis/image_76273333-f6de-5000-acb3-76d90d21b918.html）。画面：红色 CHINA 队服、adidas、Wilson 蓝拍，和源片里她的着装一致；场边蓝色挡板，是比赛进行中。\n四道闸门：① 精准 ✅（AP 说明）；② 对得上这一屏——这一屏讲的是她输掉的一场球，画面是她低头擦汗，情绪对题 ✅；③ 冲击力——中景偏近、眼睛睁着往下看 ✅；④ 清晰度见 `_low_res_why`。\n⚠️ 当晚查过的其他渠道：金杯官网 Contentful 这场只有一张保利尼特写（`LZ1_6237`，2029×1141，人不对）；Getty 有本场几十张但原图够不着（comp 带水印）；WTA photo-resources 和 AP 主站（沙箱 403）没有。",
+      "_res_why": "原图 1763×1175。铺 1080×1440 取 `max(1080/1763, 1440/1175)` ＝ **1.226×**。",
+      "_low_res_why": "当晚能拿到的**唯一一张本场郑钦文官方实拍**就是这张 AP 的转载版（dailyrecordnews 的 townnews 图床，原件尺寸就是 1763×1175）；金杯官网自己的摄影师这一场只挂出了保利尼。放大 1.23 倍，比抽帧（1080 高的视频帧放大 1.33 倍、而且是转播画面）清楚；等金杯官网挂出本场郑钦文的原图再换。"
+    },
+    "scoreboard": {
+      "court": "深圳湾体育中心",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%20%221%3A43%3A56%22%2C%20%22source%22%3A%20%22ITF%20tieCentre%20matches%5B%5D.duration%3D01%3A43%3A56%20%2812%3A11%3A05Z%20-%3E%2013%3A55%3A02Z%29%22%7D",
+        "field": "duration"
+      },
+      "_court_why": "ITF 官方接口 `api.itf-production.sports-data.stadion.io/custom/tieCentre/3a34e3f2-7885-4d13-bae9-83a1b386811d` → `venue._name = \"Shenzhen Bay Sports Centre Arena - Shenzhen\"`；和同一届 `zhang-cocciaretto-bjk-cup-2026-qf` 同一块场地。",
+      "_duration_why": "两个源：ITF tieCentre `orderInSchedule 5` 这一场 `duration = 01:43:56`，起止 `12:11:05Z → 13:55:02Z` 相减 1:43:57，自洽；flashscore 分盘 0:35 ＋ 1:09 ＝ 1:44，一致。"
+    }
+  },
+  "_hook_why": "两行按「拿人的来路当影子，第二行才是这场球的形状，两行之间要有落差」写：\n· 第一行「4次交手全赢过她」：flashscore `df_hh_1` 交手记录（含本场 Paolini 1 : 4 Zheng）＋ 金杯官网战报「had won all four of her previous meetings with Paolini on tour」，两个源。\n· 第二行「最后8个球只拿到1个」：抢七 0:3 之后 `1:3, 2:3, 3:3, 4:3, 5:3, 5:4, 6:4, 7:4`——这场球最后 8 分，郑钦文只拿到 5:4 那 1 分（flashscore df_mh_1 逐分；源片记分条 392.5 `0/3`、410.5 `5/3`、426.5 `5/4`、440.5 `6/4` 逐格对得上；战报「Zheng took a 3-0 lead in the tie-break」）。\n落差：一直赢她的人，在最该赢的 8 分里只拿到 1 分。没有术语（不写「抢七」「破发」），不拿总分差说事，不写排名国籍。每行 ≤ 10 个字符。",
+  "_subject_why": "主体是中国球员郑钦文（选谁那张表第 ① 档），账号所有者点名要做「郑钦文的赛场之上」。",
+  "_heat_why": "中国球员（第 ① 档）；东道主在深圳总决赛 1/4决赛对两连冠的卫冕冠军，这一场决定了要打决胜双打。",
+  "_name_why": "实调 `tennislive.zh.player_zh()`：`Qinwen Zheng` → 郑钦文、`Jasmine Paolini` → 保利尼、`Sara Errani` → 埃拉尼、`Hanyu Guo` → 郭涵煜。",
+  "_matchup_order_why": "`matchup[0]` ＝ 郑钦文（主体在前，和 `zheng-rybakina` 同一个版式）＝ flashscore 的 **away**（`AF÷Zheng Q.`）；home 是保利尼（`AE÷Paolini J.`）。所以 `stats.a` 跟 matchup（郑钦文），`_match.participants` 跟 home/away（保利尼在前）。",
+  "_matchup_rank_why": "即时世界排名 **2026-09-21** 那一期：WTA 官方 `api.wtatennis.com/tennis/players/ranked` 郑钦文 `ranking:52`、保利尼 `ranking:20`；金杯官网赛前稿「climb back to No. 52 in the world」，郑钦文两源一致。",
+  "_result_why": "`6-3 7-6(4)`（赢家视角）。flashscore `BA/BC = 6/7`（home 保利尼）、`BB/BD = 3/6`、第二盘抢七 `DC/DD = 7/4`；金杯官网「Jasmine Paolini (ITA) d. Zheng Qinwen (CHN) 6-3 7-6(4)」；源片 482.5 终场比分图 `6 7 / 3 6`。",
+  "_topic_why": "台头写「赛事轮次 · 对阵双方」。1/4决赛（金杯官网标题 `quarter-final`），团体赛没有「级别＋站」，和 `zhang-cocciaretto-bjk-cup-2026-qf` 同一写法。",
+  "_match": {
+    "status": "result_verified",
+    "source": "flashscore_points",
+    "source_id": "rNB2wPNr",
+    "flashscore_id": "rNB2wPNr",
+    "participants": [
+      "保利尼",
+      "郑钦文"
+    ],
+    "set_scores_home_away": [
+      [
+        6,
+        3
+      ],
+      [
+        7,
+        6
+      ]
+    ],
+    "tiebreaks_home_away": [
+      null,
+      [
+        7,
+        4
+      ]
+    ],
+    "winner": "保利尼",
+    "loser": "郑钦文",
+    "winner_result": "6-3 7-6(4)",
+    "loser_result": "3-6 6-7(4)",
+    "_participants_why": "`participants` 跟 flashscore home/away：home＝`AE÷Paolini J.`、away＝`AF÷Zheng Q.`，和 `cover.matchup` 顺序**相反**。"
+  },
+  "_durations": [
+    [
+      "Set 1",
+      "0:35（flashscore）"
+    ],
+    [
+      "Set 2",
+      "1:09（flashscore）"
+    ],
+    [
+      "全场",
+      "1:43:56（ITF 官方，12:11:05Z → 13:55:02Z）；flashscore 1:44 一致"
+    ]
+  ],
+  "stats": {
+    "a": {
+      "aces": 9,
+      "df": 4,
+      "first_in": 39,
+      "first_won": 27,
+      "second_total": 28,
+      "second_won": 12,
+      "bp_conv": 2,
+      "bp_chances": 7,
+      "pts_won": 67,
+      "pts_total": 142,
+      "first_total": 67,
+      "headshot": "assets/players/headshots/wta-328120.jpg"
+    },
+    "b": {
+      "aces": 1,
+      "df": 2,
+      "first_in": 54,
+      "first_won": 36,
+      "second_total": 24,
+      "second_won": 13,
+      "bp_conv": 3,
+      "bp_chances": 5,
+      "pts_won": 75,
+      "pts_total": 142,
+      "first_total": 78,
+      "headshot": "assets/players/headshots/wta-319280.jpg"
+    },
+    "_source": "flashscore `df_st_1_rNB2wPNr` 的 Match 汇总（`tools/match_stat_hooks.py rNB2wPNr --stats-block`），按 `cover.matchup` 对调过：a＝郑钦文、b＝保利尼。接口原文（前保利尼、后郑钦文）：Aces 1/9、Double Faults 2/4、1st serve points won `67% (36/54)` / `69% (27/39)`、2nd serve points won `54% (13/24)` / `43% (12/28)`、Break Points Converted `3/5` / `2/7`、Total Points Won `75/142` / `67/142`。两张头像 `tools/fetch_official_headshot.py wta` 新抓，打开看过。",
+    "_winners_ue_why": "flashscore 这场没有 Winners / Unforced errors；金杯是 ITF 平台，同一届 `zhang-cocciaretto` / `bouzkova-kartal` 跑过 tnns-stats 也是 `hasExtendedStats=False`，结构性地没有这两行。"
+  },
+  "_hit_data": [
+    {
+      "label": "最后 8 个球只赢了 1 个",
+      "detail": "抢七 3-0 领先之后，保利尼 8 分里拿 7 分，7-4",
+      "source": "flashscore df_mh_1 抢七逐分 ＋ 源片记分条"
+    },
+    {
+      "label": "9 个 ACE 对 1 个",
+      "detail": "郑钦文发出 9 个 ACE，保利尼 1 个",
+      "source": "flashscore df_st_1"
+    },
+    {
+      "label": "破发点 2/7 对 3/5",
+      "detail": "郑钦文 7 个破发点兑现 2 个，保利尼 5 个兑现 3 个",
+      "source": "flashscore df_st_1"
+    },
+    {
+      "label": "前 4 次交手全赢",
+      "detail": "这是保利尼第一次赢郑钦文，也是她金杯连赢第九场",
+      "source": "flashscore df_hh_1 ＋ 金杯官网战报 ＋ 转播原声"
+    }
+  ],
+  "_turning_points": {
+    "set1_game2": "郑钦文第一个发球局就被破，保利尼一路 3-0。",
+    "set1_game7": "郑钦文一分没丢破回来，3-4。",
+    "set1_game8": "保利尼立刻回破，5-3，然后保发 6-3。",
+    "set2_game1": "郑钦文两个双误 15-40，救下两个破发点保发。",
+    "set2_game4": "郑钦文三个破发点（破了就是 3-1），五次平分，保利尼全救下。",
+    "set2_game11": "保利尼破发 6-5，上来发球胜赛。",
+    "set2_game12": "郑钦文 15-40 → 第三个破发点兑现，6-6。",
+    "set2_tiebreak": "郑钦文 3-0 领先，一记正手高压出界 3-3，之后只拿到 1 分，4-7。"
+  },
+  "_claims": {
+    "这是保利尼第一次赢郑钦文（前四次交手郑钦文全赢）": "① flashscore `df_hh_1_rNB2wPNr` Head-to-head：本场 2:0、利雅得 0:2、武汉 2:1（郑）、郑州 2:0（郑）、巴勒莫 1:2（郑胜）；② 金杯官网战报 https://www.billiejeankingcup.com/en/news/live-ita-v-chn-2026-billie-jean-king-cup-finals-quarter-final 原文「The China No. 1 had won all four of her previous meetings with Paolini on tour」；③ 源片转播原声 https://www.youtube.com/watch?v=MP8ZbrE0lKw 454.32~461.44「a first against Zheng Qinwen」。"
+  },
+  "_claims_why": "唯一一条全称断言是「第一次赢」（「前四次全赢」）——三个源，两类（数据接口 ＋ 编辑稿 ＋ 画面原声）。「第九场连胜」两源（战报 ＋ 原声）。",
+  "_no_repeat": "同栏目里郑钦文的几条（`zheng-rybakina` / `zheng-swiatek-us-open-2026-r4` / `zheng-putintseva-us-open-2026-r2` 等）讲的是美网那一段——这条不碰美网的零比五翻盘、七连胜、排名从 121 回到 52 的来路。`zheng-bjk-cup-olympic-rule` 是「网球有故事」，不同栏目。保利尼在赛场之上作为郑钦文的对手是第一次（`ls specs/reels | grep -i paolini` 零命中）。",
+  "editorial": {
+    "mode": "match_review",
+    "question": "前四次交手全赢保利尼的郑钦文，今天在深圳怎么输掉了一场一度领先的抢七？",
+    "thesis": "第一盘两个人各破一次，保利尼多破一次，六比三。第二盘郑钦文两次被逼到悬崖边——第一局两个双误十五比四十、第十二局发球胜赛的保利尼被她破回——都挺了过来，还在抢七里三比零领先。可之后八个球她只赢了一个。全场九个 ACE，破发点却只兑现七分之二；保利尼五个兑现三个。",
+    "beats": [
+      "前段：开局被破，零比三；零比四十破回来，保利尼马上回破，六比三",
+      "中段：第二盘第一局两个双误救下两个破发点；第四局三个破发点没拿下",
+      "转折：五比五被破、六比五保利尼发球胜赛——郑钦文第三个破发点破回来，拖进抢七",
+      "结局：抢七三比零领先，高压出界三比三，最后八分只拿一分，四比七"
+    ],
+    "human_context": {
+      "angle": "**郑钦文前四次交手全赢保利尼**，这是她去年肘伤手术缺席之后的第一场金杯。今天她把比赛拖到了抢七，也领先了，然后最后八分只拿到一分——保利尼第一次赢她，也是金杯连赢第九场。⚠️ 不做因果：不说「手感没恢复」「压力太大」。",
+      "facts": [
+        "2026 比利·简·金杯总决赛，深圳湾体育中心，1/4决赛中国对意大利第二场单打",
+        "保利尼 6-3 7-6(4) 郑钦文（flashscore `rNB2wPNr`、金杯官网、源片终场图三处一致）",
+        "即时排名郑钦文 52、保利尼 20（WTA 官方 2026-09-21）",
+        "中国 1-1 意大利，要打决胜双打：郭涵煜/张帅 v 埃拉尼/保利尼（写这条时未开赛，不押结果）"
+      ],
+      "voice_label": "被翻盘",
+      "sources": [
+        "https://www.billiejeankingcup.com/en/news/live-ita-v-chn-2026-billie-jean-king-cup-finals-quarter-final",
+        "https://www.billiejeankingcup.com/en/news/italy-v-china-2026-billie-jean-king-cup-finals-quarter-final-preview",
+        "https://www.youtube.com/watch?v=MP8ZbrE0lKw",
+        "https://www.dailyrecordnews.com/ap_news/sports/china-billie-jean-king-cup-tennis/image_76273333-f6de-5000-acb3-76d90d21b918.html"
+      ]
+    }
+  },
+  "topbar": {
+    "line1": "2026 比利·简·金杯 1/4决赛",
+    "line2": "保利尼 6-3 7-6(4) 郑钦文"
+  },
+  "_topbar_why": "第二行和 `cover.winner` / `cover.result` 机械一致（赢家在前）。第一行：团体赛没有「级别＋站」，和同一届的 `zhang-cocciaretto-bjk-cup-2026-qf` 同一写法。",
+  "mixed_fps": false,
+  "segments": [
+    {
+      "source": "main",
+      "start": 441.4,
+      "end": 452.0,
+      "narration": "",
+      "quote": [
+        {
+          "at": 4.44,
+          "text": "The defending champions have a lifeline in Shenzhen\n卫冕冠军在深圳拿回了一线生机"
+        },
+        {
+          "at": 7.56,
+          "text": "and it comes from the unstoppable Jasmine Paolini.\n送来它的，是势不可挡的保利尼。"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_ending_payoff_required": true,
+      "score_inset": true,
+      "crosses_cut": "444.92 —— 赛点落地接保利尼庆祝的近景（`contact` 446.5 / 448.5），同一分的前后。",
+      "point_end_ok": "赛点是本场最后一分（记分条 440.5~446.5 `PAO [6] / ZHE [4]`，发球在保利尼）；448.5 起记分条消失，之后 `point_ends` 447~466 那一串是赛后画面切换，不是下一分。",
+      "_why": "**第①格冷开场**：赛点落地 ＋ 转播原声（captions 445.84~451.28）。结局在第 ⑯ 段重新兑现。"
+    },
+    {
+      "source": "main",
+      "start": 119.0,
+      "end": 130.3,
+      "narration": "前四次交手，郑钦文全赢，上一次六比一、六比一。去年肘伤手术，她没来深圳。这是她二〇二四年之后的第一场金杯。",
+      "score_inset": false,
+      "_score_inset_why": "这一段整段没有转播记分条（开场／局间／赛后画面），子代理逐格读 `score_*.jpg` 这几格都是空的。",
+      "point_end_ok": "第一盘最后一分在 116.24 之前落地；这一段是盘间（意大利替补席鼓掌 120.5~122.5、保利尼回到场边 124.5~128.5）。`point_ends` 在段尾之后到 146.8 才有下一个。",
+      "_why": "**第②格给落点**：交手 4-0（flashscore `df_hh_1` 巴勒莫 2023、郑州、武汉、2024 利雅得 0:2 / 2:0 …，含本场 1:4；金杯官网实时战报「had won all four of her previous meetings with Paolini on tour, with the most recent finishing in a 6-1 6-1 rout at the 2024 WTA Finals in Riyadh」）；肘伤缺席 2025（同一篇战报「having pulled out last year after undergoing elbow surgery in the summer」）。"
+    },
+    {
+      "source": "main",
+      "start": 0.0,
+      "end": 16.8,
+      "narration": "北京时间九月二十四号晚上八点多，深圳。比利·简·金杯总决赛四分之一决赛，中国对意大利的第二场单打。张帅先拿下一分，中国一比零领先。第二场，郑钦文上场。",
+      "score_inset": false,
+      "_score_inset_why": "这一段整段没有转播记分条（开场／局间／赛后画面），子代理逐格读 `score_*.jpg` 这几格都是空的。",
+      "crosses_cut": "13.80 —— 开场回合落地接郑钦文的背影近景（14.5 / 16.5），同一分之后的反应。",
+      "_why": "**第③格给坐标**。钟点只说大概：flashscore `AD = 1790252100` ＝ 12:15Z ＝ 北京 20:15 → 「晚上八点多」。第一场张帅 6-0 6-2 科恰雷托（已发的 `zhang-cocciaretto-bjk-cup-2026-qf`），所以这一场开打时中国 1-0。段尾 16.8 之后 16.94 起是源片静音，不越过去。"
+    },
+    {
+      "source": "main",
+      "start": 32.0,
+      "end": 51.5,
+      "narration": "第二局，郑钦文发球。三十比四十，保利尼拿到破发点，这一分拿下——开局就丢了发球局。保利尼一口气领先到三比零。对面是金杯已经连胜八场的保利尼。",
+      "score_inset": true,
+      "crosses_cut": "49.12 —— 这一分落地接保利尼的近景（50.5），同一分之后。",
+      "_why": "记分条 32.5~48.5 `PAO 1 [40] / ZHE 0 [30]`，发球点在郑钦文——保利尼的破发点；50.5 已经是 `2 / 0`。逐分 df_mh_1 第二局 `40:30 |B1|` 破发；3-0 是第三局保利尼保发（逐分 ＋ 战报「broke her opponent's first service game en route to a 3-0 lead」）。起点 32.0 避开 30.75~31.95 的静音。"
+    },
+    {
+      "source": "main",
+      "start": 53.6,
+      "end": 75.6,
+      "narration": "保利尼四比二上来发球，郑钦文一分都没让。零比四十。最后一个接发球直接打穿，郑钦文破回一局，三比四。解说只喊了一句：好一个接发球。",
+      "score_inset": true,
+      "crosses_cut": "62.52 / 67.28 / 73.08 / 74.40 —— 回合全景和郑钦文的中景（62.5~66.5）交替，都在同一局里（记分条 52.5~72.5 一直是 `PAO 4 / ZHE 2`，分数从 [0]/[15] 走到 [0]/[40]）。",
+      "_why": "**技战术拆解（一）**：接发球。记分条 66.5 `PAO 4 [0] / ZHE 2 [40]` 带 `BREAK POINT` 标签，解说 72.16「What a return」——破发点那一分是接发球直接得分。逐分第七局 `0:15, 0:30, 0:40 |B1|` ＝ 一分没丢破发；战报「breaking Paolini to love in the seventh game」。"
+    },
+    {
+      "source": "main",
+      "start": 75.7,
+      "end": 87.9,
+      "narration": "下一局，郑钦文自己的发球又丢了。三十比四十，保利尼马上破了回去，五比三。她再保一局，六比三，第一盘三十五分钟。",
+      "score_inset": true,
+      "crosses_cut": "86.40 —— 这一分落地接郑钦文的侧脸近景（86.5~88.5），同一分之后。",
+      "point_end_ok": "段尾 87.9 之后 0.18 秒（88.08）是记分条翻成 `5 [0] / 3 [0]`，落在 0.3 秒以内——段尾正好在点与点之间。",
+      "_why": "记分条 74.5~86.5 `PAO 4 [40] / ZHE 3 [30]`，发球在郑钦文——破发点；88.5 已经是 `5 / 3`。解说 84.24「Such a good point again from Jasmine Paolini」。「再保住，六比三」是逐分第九局保利尼保发（`40:15 |B2|`），画面不在这一段，旁白一句带过。"
+    },
+    {
+      "source": "main",
+      "start": 130.5,
+      "end": 150.1,
+      "narration": "第二盘一开局，她就站到了悬崖边上。第一局，郑钦文连着两个双误，十五比四十。一个落点压在线上的球，连保利尼都点头认了。两个破发点，她都救了回来。",
+      "score_inset": true,
+      "crosses_cut": "146.64 —— 这一分落地接保利尼的背影近景（148.5），她正对着那一球点头。",
+      "point_end_ok": "`point_ends` 146.8 / 147.76 / 148.72 在段内；150.24 离段尾 0.14 秒。",
+      "_why": "**技战术拆解（二）**：压线。解说 144.88「Oh, it's dropped on the line and Paolini the first to acknowledge the quality of that」。记分条 130.5~150.5 `PAO 6 0 [40] / ZHE 3 0 [15]`，发球在郑钦文；逐分第二盘第一局 `40:15 |B1|, 40:30 |B1|, 40:40, 40:A`——两个破发点都救下保发。「两个双误」出自战报「immediately found herself 15-40 down in the opening game after two double faults」。"
+    },
+    {
+      "source": "main",
+      "start": 190.1,
+      "end": 210.9,
+      "narration": "保利尼一比二落后的发球局，郑钦文三次拿到破发点，破了就是三比一。保利尼一个一个救回来，这一局打了五次平分。解说说，这一球是压箱底的功夫。",
+      "score_inset": true,
+      "crosses_cut": "203.96 / 207.64 —— 全景回合和保利尼的近景（204.5~206.5）交替，记分条前后都是 `PAO 6 1 [40] / ZHE 3 2 [AD]`，是同一个破发点的前后。",
+      "_why": "记分条 184.5~206.5 `ZHE [AD]`（190.5 `BREAK POINT`），发球在保利尼。逐分这一局 `…40:A |B1|, 40:40, 40:A |B1|, 40:40, A:40, 40:40, 40:A |B1|, 40:40, A:40`：三个破发点，五次 40:40。战报「had three chances to break Paolini and take a 3-1 lead during a gripping fourth game」。解说 203.12「Fabulous. Right out of the top draw from Jasmine Paolini」。"
+    },
+    {
+      "source": "main",
+      "start": 255.5,
+      "end": 273.0,
+      "narration": "保利尼四比五落后时发球。这一分她抢着往前压，解说说，这个判断太敏锐了。她保住了，五比五。",
+      "score_inset": true,
+      "crosses_cut": "268.44 —— 全景回合落地接保利尼的中景（268.5~272.5）。",
+      "point_end_ok": "`point_ends` 273.04 离段尾 0.04 秒。",
+      "_why": "**技战术拆解（三）**：上前。解说 268.24「What about that for a move forward? The awareness off the charts」。记分条 252.5~272.5 `PAO 6 4 / ZHE 3 5`，发球在保利尼；274.5 已经是 `5 / 5`。"
+    },
+    {
+      "source": "main",
+      "start": 285.0,
+      "end": 301.4,
+      "narration": "",
+      "quote": [
+        {
+          "at": 11.48,
+          "text": "It's video game stuff at the moment.\n现在简直像在打电子游戏。"
+        },
+        {
+          "at": 13.48,
+          "text": "They're both trying to take it so early.\n两个人都在抢着早早出手。"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "score_inset": true,
+      "crosses_cut": "297.60 —— 这一分落地接保利尼的中景（298.5~300.5）。",
+      "point_end_ok": "300.5 那一格记分条翻成 `[15] / [0]`，是这一分的比分滞后；下一个 `point_ends` 324.16 离段尾 20 秒以上。",
+      "_why": "**精彩原声**：五比五、郑钦文发球局里的一个底线对攻（记分条 274.5~298.5 `PAO 6 5 [0] / ZHE 3 5 [0]`），解说 296.48~298.48。"
+    },
+    {
+      "source": "main",
+      "start": 325.4,
+      "end": 338.9,
+      "narration": "五比五，两个人都站在底线里面抢着打。三十比四十，保利尼的破发点——她拿下了。保利尼六比五领先，要发球胜赛。",
+      "score_inset": true,
+      "crosses_cut": "327.20 / 336.92 —— 郑钦文发球近景（326.5，181 km/h）→ 全景回合 → 保利尼的中景（338.5）。",
+      "point_end_ok": "`point_ends` 336.96 在段内；下一个 350.0 离段尾 11 秒。",
+      "_why": "「站在底线里面抢着打」出自同一局里的解说 296.48~298.48「They're both trying to take it so early」（第 ⑩ 段）。记分条 326.5~336.5 `PAO 6 5 [40] / ZHE 3 5 [30]`，发球在郑钦文——破发点；338.5 已经是 `6 6 / 3 5`。逐分第 11 局 `40:30 |B1|` 破发。"
+    },
+    {
+      "source": "main",
+      "start": 368.8,
+      "end": 390.3,
+      "narration": "发球胜赛，保利尼先十五比四十落后，救下一个，又被拖到平分。她离赢下比赛只差这一局。第三个破发点，郑钦文的接发球又是直接打穿，破了回来，六比六。",
+      "score_inset": true,
+      "crosses_cut": "380.28 / 381.96 —— 全景回合、保利尼的中景（380.5）、下一分的全景，是这一局相邻两分。",
+      "point_end_ok": "段尾 390.3 之后下一个 `point_ends` 是 407.84。",
+      "_why": "**技战术拆解（四）**：接发。记分条 350.5 `[15]/[40]`、366.5 `[30]/[40]`（`BREAK POINT`）、382.5 `[40]/[AD]`，发球在保利尼；解说 363.36「That's one saved」、389.36「What a return」。逐分第 12 局 `15:40 |B1|, 30:40 |B1|, 40:40, 40:A |B1|`——第三个兑现。战报「Zheng found an extra gear to break back and send the set to a tie-break」。"
+    },
+    {
+      "source": "main",
+      "start": 395.1,
+      "end": 410.6,
+      "narration": "抢七，郑钦文先拿三分，三比零。这一分被保利尼追回来。再之后，一记高压打出了界，三比三。",
+      "score_inset": true,
+      "crosses_cut": "404.92 / 407.80 / 409.44 —— 0-3 那一分的全景回合 → 保利尼的中景（406.5）→ 意大利替补席（408.5）→ 下一分的准备，都在抢七那几分之间。",
+      "point_end_ok": "`point_ends` 407.84 在段内（1-3 那一分落地），409.44 在段内，段尾 410.6 是翻牌后 1.2 秒。",
+      "_why": "记分条 392.5~408.5 抢七 `PAO [0] / ZHE [3]`，发球在郑钦文；解说 403.68「Oh, she's picked off」。「高压出界」画面里没有（集锦从 1-3 直接跳到 3-5），出自战报「Zheng took a 3-0 lead in the tie-break only for Paolini to draw level when her opponent sent a forehand smash long」；逐分 df_mh_1 抢七 `0:1, 0:2, 0:3, 1:3, 2:3, 3:3`。"
+    },
+    {
+      "source": "main",
+      "start": 426.5,
+      "end": 437.1,
+      "narration": "三比三之后，保利尼连拿两分。郑钦文追回一分，四比五。这一分，又是保利尼的，六比四。",
+      "score_inset": true,
+      "point_end_ok": "段尾 437.1 之后下一个 `point_ends` 是 447.36。",
+      "_why": "逐分抢七 `4:3, 5:3, 5:4, 6:4`；记分条 410.5~424.5 `[5]/[3]`、426.5~438.5 `[5]/[4]`（发球在保利尼），解说 436.88「Stunning」。"
+    },
+    {
+      "source": "main",
+      "start": 437.2,
+      "end": 452.1,
+      "narration": "赛点，保利尼第一个就兑现了，七比四。三比零领先之后，最后八个球，郑钦文只赢了一个。第一次，保利尼赢了郑钦文。",
+      "score_inset": true,
+      "crosses_cut": "441.40 / 444.92 —— 两分之间的准备镜头 → 赛点回合 → 保利尼庆祝，同一分的前后。",
+      "point_end_ok": "赛点就是本场最后一分；段尾之后 `point_ends` 450.16 起的一串是赛后画面（记分条已消失），不是下一分。",
+      "_why": "**结局，也是冷开场那一分的完整重放**。记分条 440.5~446.5 `PAO [6] / ZHE [4]`，发球在保利尼。逐分抢七 `…6:4 (HM 赛点), 7:4`——第一个赛点兑现；从 0:3 起 8 分里保利尼拿 7 分（3:3、4:3、5:3、6:4、7:4 …郑钦文只拿到 5:4 那一分）。"
+    },
+    {
+      "source": "main",
+      "start": 452.5,
+      "end": 466.0,
+      "narration": "",
+      "quote": [
+        {
+          "at": 1.82,
+          "text": "A ninth consecutive win in Billie Jean King Cup tennis\n比利·简·金杯连赢第九场，"
+        },
+        {
+          "at": 5.58,
+          "text": "and a first against Zheng Qinwen.\n也是第一次赢郑钦文。"
+        },
+        {
+          "at": 8.94,
+          "text": "And how important will that prove to be?\n这一场，会有多关键？"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "score_inset": false,
+      "_score_inset_why": "这一段整段没有转播记分条（开场／局间／赛后画面），子代理逐格读 `score_*.jpg` 这几格都是空的。",
+      "point_end_ok": "赛后画面（网前握手 454.5~456.5、和替补席握手 458.5~462.5），没有比分，`point_ends` 是画面切换。",
+      "_why": "解说 454.32~464.80。「第九场连胜」两个源：转播原声 ＋ 战报「recorded her ninth successive BJK Cup win」；「第一次赢郑钦文」＝ 交手 1:4（含本场）。"
+    },
+    {
+      "source": "main",
+      "start": 466.0,
+      "end": 474.0,
+      "narration": "全场郑钦文九个ACE，保利尼只有一个。可七个破发点，她只兑现了两个。",
+      "score_inset": false,
+      "_score_inset_why": "这一段整段没有转播记分条（开场／局间／赛后画面），子代理逐格读 `score_*.jpg` 这几格都是空的。",
+      "crosses_cut": "467.24 —— 从意大利球迷挥旗切到保利尼向看台挥手，都是赛后画面。",
+      "point_end_ok": "赛后画面，没有比分。",
+      "_why": "数据落点：flashscore df_st_1 `Aces 1 / 9`、`Break Points Converted 3/5 / 2/7`（前保利尼、后郑钦文）。"
+    },
+    {
+      "source": "main",
+      "start": 474.0,
+      "end": 483.0,
+      "narration": "一比一，决胜双打，郭涵煜、张帅对埃拉尼、保利尼。你觉得，中国队能拿下吗？",
+      "score_inset": false,
+      "_score_inset_why": "这一段整段没有转播记分条（开场／局间／赛后画面），子代理逐格读 `score_*.jpg` 这几格都是空的。",
+      "point_end_ok": "比赛早已结束；483.04 离段尾 0.04 秒，是片尾卡开始前的切换。片尾订阅卡从 483.1 起，一帧都没进来。",
+      "_why": "**末屏那一问，旁白问出来**。双打名单：金杯实时战报「Match 3: Jasmine Paolini/Sara Errani (ITA) v Guo Hanyu/Zhang Shuai (CHN)」；flashscore `jmFAy3he` 同对阵、写这条时 `AB=1`（未开赛）。**不押结果**。"
+    }
+  ],
+  "_editing_why": "十八段，全部取自同一条官方集锦（1920×1080 / 25fps）。顺序按「开场三格」：① 冷开场＝赛点＋转播原声 → ② 落点＝前四次交手全赢、去年肘伤缺席 → ③ 坐标。之后按比赛时间走：第一盘（开局被破、零比四十破回、马上被回破、六比三）→ 第二盘（第一局救两个破发点、第四局三个破发点没拿下、五比五保利尼上前、原声、六比五、破回六比六）→ 抢七 → 赛点重放 → 赛后原声 → 数据 → 末屏一问。\n每一段的窗口都对过子代理逐格读出的记分条时间线（13 张 `score_*.jpg`）和 `scene_cuts`；集锦常在相邻两格之间跳局，旁白讲整局时说「这一局」。技战术拆解 4 段（⑤ 接发、⑦ 压线、⑨ 上前、⑫ 接发），球路都出自当段附近的转播原话。片尾卡一帧都没进来；源片没有采访。",
+  "push": {
+    "summary": "郑钦文被保利尼翻盘",
+    "lead": "比利·简·金杯总决赛，深圳湾体育中心，中国对卫冕冠军意大利 1/4决赛的第二场单打。前 4 次交手全赢的郑钦文，这一次 3-6 6-7(4) 输给保利尼。第二盘她救下第一局的两个破发点，又在保利尼发球胜赛时破了回来，抢七一度 3-0 领先——之后 8 个球只赢了 1 个。全场 9 个 ACE，7 个破发点却只兑现 2 个。中国队和意大利 1-1，决胜双打：郭涵煜、张帅对埃拉尼、保利尼。",
+    "auto": true,
+    "_summary_why": "主语（郑钦文）＋ 动词收尾。",
+    "_lead_why": "不报开球钟点和用时；数字一律阿拉伯；没挂「数据来源：」；不押双打结果。"
+  }
+}
