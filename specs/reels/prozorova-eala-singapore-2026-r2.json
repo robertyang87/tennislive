@@ -119,7 +119,9 @@
    "pts_won": 118,
    "pts_total": 231,
    "first_total": 123,
-   "headshot": "assets/players/headshots/wta-330723.jpg"
+   "headshot": "assets/players/headshots/wta-330723.jpg",
+   "winners": 53,
+   "ue": 63
   },
   "b": {
    "aces": 1,
@@ -133,9 +135,11 @@
    "pts_won": 113,
    "pts_total": 231,
    "first_total": 108,
-   "headshot": "assets/players/headshots/wta-330332.jpg"
+   "headshot": "assets/players/headshots/wta-330332.jpg",
+   "winners": 28,
+   "ue": 52
   },
-  "_source": "`match_feed.py show 8C99pTjC`（flashscore `df_st_1`），a＝普罗佐罗娃（home，也是 cover.matchup[0]），b＝伊埃拉。制胜分／非受迫失误 flashscore 没有，留空（WTA 赛后稿只给了制胜分 52 比 24，没有失误数，不凑）。普罗佐罗娃头像 `fetch_official_headshot.fetch_wta('Tatiana Prozorova')` → WTA id 330723。"
+  "_source": "`match_feed.py show 8C99pTjC`（flashscore `df_st_1`），a＝普罗佐罗娃（home，也是 cover.matchup[0]），b＝伊埃拉。制胜分与非受迫失误 flashscore 没有，走 TNNS（run 36016193535，id=74753600，`hasExtendedStats: True`）：制胜分 53:28、非受迫失误 63:52（顺序 `['Prozorova','Eala']`），分盘 10/25/18 : 10/10/8、26/22/15 : 24/16/12，日志自证分盘合计＝全场。WTA 官网赛后稿写制胜分 52 比 24，同向、差几个——口径不同，数据图按 TNNS（有非受迫失误、能自证），旁白不报这两个数。普罗佐罗娃头像 `fetch_official_headshot.fetch_wta('Tatiana Prozorova')` → WTA id 330723。"
  },
  "_hit_data": "`match_feed.py show 8C99pTjC`：第一盘 5-4 伊埃拉发球胜盘那一局 **七个盘点**、中间救下两个破发点，第七个才兑现（`30:40 |B2|` 起六次 `40:A |B2|`；源片 58.5s `DEUCE #7`、72.5s `SET POINT #7`）；第二盘伊埃拉 1-2、2-3 两次破发到 2-4，2-4 普罗佐罗娃发球 30-40 救下破发点（源片 140.5s `BREAK POINT`），之后 4-4 破发、6-5 接发第二个盘点兑现（`40:A` 后 `A:40 |B1||B2|`；源片 164.5s `SET POINT`、200.5s `SET POINT #2`）；第三盘 2-0 → 伊埃拉连破两次 3-2 领先 → 普罗佐罗娃连拿最后四局，3-3 那个发球局救下四个破发点（源片 228.5s `BREAK POINT #3`、242.5s `#4`），5-3 第一个赛点兑现。全场破发 7/12 对 6/17、双误 3 对 7（第三盘伊埃拉 3 个）。WTA 官网赛后稿：她生涯第一次赢前二十、第一次打进巡回赛八强，22 岁，制胜分 52 比 24；下一轮对王欣瑜。",
  "_no_repeat": "同一站 `wang-garland-singapore-2026-r2` 末屏讲的是「下一轮很可能是伊埃拉，两人今年一比一」——那一问现在由这一场回答了：不是伊埃拉。这一条末屏只说下一轮是王欣瑜，不重讲王欣瑜和伊埃拉的交手。",
