@@ -1,0 +1,344 @@
+{
+ "slug": "zhang-wong-hangzhou-2026-r1",
+ "_column": "赛场之上",
+ "sources": {
+  "yt": "https://www.youtube.com/watch?v=KA-aWjvvzGY"
+ },
+ "primary": "yt",
+ "_source": "Tennis TV 官方 YouTube 频道《Faria Takes On Atmane, Insane Vallejo v Cui Battle & More! | Hangzhou Highlights Day 2》（`KA-aWjvvzGY`，2026-09-24 上传，1920×1080 / 25fps，705.96s），简介章节表写着 `06:00 ZHANG v WONG`、`08:38 BU v ZHENG`，账号所有者 2026-09-24 贴了同一条链接并指出比赛画面从 6:04 开始。probe（run 36020144233）只看 358~520 秒：359.86~362.9 是「ZHANG v WONG」标题卡，364 起是比赛，517 起是下一场「BU v ZHENG」的标题卡。**所有窗口都在 364.3~516.8 之间**。**渠道都量过**：① tennistv.com 这一场只有全场录像 `4581292` 和 10 分钟 premium 集锦 `4581295`（页面 data-entitlement=\"premium\"，entitlementcheck 401）；`Hangzhou 2026 Thursday Highlights`（`4581301`）是 freemium，同样 401；Tennis TV 内容接口（api.tennistv.com/content/atpmedia/video/EN/）截至 2026-09-24 15:23Z 没有这一场的 `Short Highlights`；② 本条 Tennis TV YouTube 当日合集，1080p，这一场约 153 秒；③ ATP Tour YouTube 频道截至 15:25Z 没有这一场的单场集锦。四要素自证：记分条 `ZHANG / WONG`，从首盘第 1 局 `0 15 / 0 40`（张之臻发球）、`0 4 / 40 30`、`3 5 / 30 40 SET POINT #3`、第二盘 `2 3 / 0 15`、`3 4 / 15 40 2 BREAK POINTS`、`3 5 / 0 40` 读到 `3 3 / 6 6`，和 flashscore WYxAMgjR 逐分记录一一对得上；场地印着 `HANGZHOU 杭州`，挡板「杭体集团」「问界」，转播角标 `ATP 250`。解说 507~515s「That is the 10th ace to wrap things up for Coleman Wong」。",
+ "_tennistv_trim": "**片尾**：这是当日合集，这一场后面紧接 517s 起的「BU v ZHENG」标题卡，没有订阅卡；最后一段收在 516.8（probe silent_audio 516.87~519.92 是转场）。前面 359.86~362.9 是本场标题卡，第一段从 364.3 起。**台标**：Tennis TV 台标烧在右上角（960 宽帧上 x≈905~985，即源片 x≈1810~1900），3:4 取景窗 cx=0.5 只取 555~1365，在窗外。",
+ "mixed_fps": {
+  "yt": "单一源片，probe 报 1920×1080 / 25fps，没有混帧率。"
+ },
+ "scorebox": [
+  98,
+  920,
+  466,
+  1029
+ ],
+ "_scorebox_why": "同一站同一套转播记分条：probe 的 scorebox_guess 是 98,920,418,1029（首盘）；第二盘多出一列盘分，右缘按 `bu-zheng-hangzhou-2026-r1` 实测的第二盘最宽状态 466 写（两场同一块板、同一种字段：盘分两列＋当前分）。各段右缘渲染时现量，466 只当兜底。全出血＋贴边同比放大回贴左下，照账号所有者 2026-09-24 定的规矩。",
+ "cover": {
+  "eyebrow": "赛场之上",
+  "layout": "solo",
+  "subject": "张之臻",
+  "hook": "伤后第一场单打\n输了，但打完了",
+  "hook_accent": "打完了",
+  "_hook_why": "两行一个落差：第一行是来路（美网前受伤、退出资格赛，这是他七月底之后的第一场单打），第二行是这场球的结果和他赛前说的愿望——杭州网 2026-09-22 采访原话「我现在最大的愿望，就是可以健康打完比赛」。没写排名、年龄、国籍，没有术语。7 字和 7 字。",
+  "topic": "杭州公开赛首轮 · 张之臻伤后复出负黄泽林",
+  "winner": "黄泽林",
+  "result": "6-3 6-3",
+  "matchup": [
+   {
+    "name": "张之臻",
+    "name_en": "Zhizhen Zhang",
+    "country": "CHN",
+    "rank": 168
+   },
+   {
+    "name": "黄泽林",
+    "name_en": "Coleman Wong",
+    "country": "HKG",
+    "rank": 108
+   }
+  ],
+  "_matchup_rank_why": "ATP 2026-09-21 那一期。张之臻 168：仓库 `sources/rankings.fetch_rankings()`（tennisexplorer，21.09.2026）＋ tennisabstract `jsplayers/ZhizhenZhang.js` 的 `rank = 168`；黄泽林 108：tennisexplorer 108 ＋ ESPN `site.api.espn.com/.../atp/rankings` 108（578 分）。ESPN 只列前 150，张之臻不在上面。⚠️ 戴维斯杯那条 spec 里的 152 是 9 月 14 日 ITF 那一期，别照抄。",
+  "_name_why": "`player_zh(\"Zhizhen Zhang\")` → 张之臻，`player_zh(\"Coleman Wong\")` → 黄泽林。",
+  "_subject_why": "封面放**张之臻**——中国球员、账号所有者点名要做的这一场、钩子的主语。",
+  "_heat_why": "① 档：中国球员单打，不用等额外理由；而且是他伤后复出的第一场单打。",
+  "scoreboard": {
+   "court": "Center Court",
+   "_court_why": "当天的 ATP 赛程 op.pdf 已被第二天那份覆盖（protennislive 4713 op.pdf Released 09/24/2026 21:48:43 是星期五的），Wayback 在本环境被挡，拿不到文字出处；**按画面自证**：本场源片（KA-aWjvvzGY 364~517s）和 `bu-zheng-hangzhou-2026-r1` 源片是同一个主摄机位、同一块场地——场内印着 `问界 M9`、底线后 `HANGZHOU 杭州`、挡板「杭体集团」「问界」、右上角看台前停着展车、主裁椅在左侧网柱，512.8~516.8 握手镜头是带 C / D 分区的多层大看台；而布云朝克特那场 ATP 官方赛程（Released 09/24/2026 17:33:46）明写在 CENTER COURT。同一份合集里瓦列霍-崔杰那场解说 352s 也说「here on center court」。杭州这一站只有 CENTER COURT / COURT 1 / COURT 2 三块场（第二天赛程的表头）。",
+   "duration_source": {
+    "url": "data:application/json,%7B%22duration%22%3A%20%221%3A12%3A00%22%2C%20%22source%22%3A%20%22flashscore%20df_sui_1%EF%BC%88WYxAMgjR%EF%BC%89%E5%88%86%E7%9B%98%200%3A39%20%2B%200%3A33%20%3D%201%3A12%22%2C%20%22cross_check%22%3A%20%22flashscore%20dc_1%20%E5%BC%80%E8%B5%9B%20DC%3D13%3A20%3A00Z%E3%80%81%E7%BB%93%E6%9D%9F%20DD%3D14%3A31%3A08Z%EF%BC%8C%E7%9B%B8%E5%87%8F%201%3A11%3A08%22%7D",
+    "field": "duration"
+   },
+   "_duration_why": "flashscore df_sui_1：0:39 + 0:33 = 1:12；同源 dc_1 的起止时刻相减 1:11:08。两个数同出 flashscore，旁白不报用时。"
+  }
+ },
+ "_result_why": "flashscore 当日表 WYxAMgjR：AE=Zhang Z.（home）/ AF=Wong C.（away），BA/BB=3:6、BC/BD=3:6，df_sui_1 分盘 Set 1 IG/IH=3/6、Set 2 3/6；源片 508s 记分条 `ZHANG 3 3 / WONG 6 6`；解说 511.5s「the 10th ace to wrap things up for Coleman Wong」。ATP 正赛签表 mds.pdf（Released 09/24/2026 21:48:41，比赛结束之前）5/6 号签位 `WC ZHANG, Zhizhen CHN` / `WONG, Coleman HKG`，第一轮（Round of 32）。",
+ "topbar": {
+  "line1": "2026 ATP250 杭州站 首轮",
+  "line2": "黄泽林 6-3 6-3 张之臻"
+ },
+ "_topbar_why": "line1 按账号所有者 2026-09-24 定的格式：杭州公开赛 ATP250，ATP 签表 5/6 号签位在 Round of 32 这一列（首轮），转播角标 `ATP 250`。line2 由 cover.winner / result / matchup 机械拼出。",
+ "_match": {
+  "status": "result_verified",
+  "source": "flashscore_points",
+  "source_id": "WYxAMgjR",
+  "flashscore_id": "WYxAMgjR",
+  "participants": [
+   "张之臻",
+   "黄泽林"
+  ],
+  "set_scores_home_away": [
+   [
+    3,
+    6
+   ],
+   [
+    3,
+    6
+   ]
+  ],
+  "tiebreaks_home_away": [
+   null,
+   null
+  ],
+  "winner": "黄泽林",
+  "loser": "张之臻",
+  "winner_result": "6-3 6-3",
+  "loser_result": "3-6 3-6"
+ },
+ "_hit_data": "跑过 `match_stat_hooks.py WYxAMgjR`（home=Zhang）。进旁白的：**首盘第 1 局张之臻发球 15-40 被破**（df_mh_1 Set 1 第 1 局 `0:15, 15:15, 15:30, 15:40 |B1|`）；**第 3 局 40-15 领先被破**（`15:0, 30:0, 30:15, 40:15, 40:30, 40:40, 40:A |B1|`），0-4；**第 5 局保发 1-4**；**2-5 黄泽林发球胜盘，张之臻救下一个盘点破发**（Set 1 第 8 局 `30:40 |B2|, 40:40, A:40 |B1|, 40:40, A:40 |B1|` 后张之臻赢下）；**3-5 自己发球 15-40 两个盘点，第三个盘点被破 3-6**（第 9 局 `15:40 |B1| |B2|, 30:40 |B1| |B2|`；记分条 `SET POINT #3`）；**第二盘 3-4 发球 15-40 被破**（Set 2 第 8 局 `15:40 |B1|`）；**5-3 黄泽林零封发球胜赛**（`0:40 |B3|`，解说「10th ace」）。**第二盘黄泽林五个发球局 24 分，张之臻只拿到 4 分**（Set 2 第 1/3/5/7/9 局逐分数：1+0+2+1+0）。df_st_1：黄泽林 ACE 10、破发点 4/5；张之臻破发点 1/2。交手（df_hh_1 ＋ 杭州网 2026-09-22）：今年 3 月卡普卡纳挑战赛资格赛黄泽林 2-1 胜，含本场 2:0。",
+ "_turning_points": [
+  "首盘第 1 局（张之臻发球）：15-40 被破。源片 364~383 是 `ZHANG 0 15 / WONG 0 40` 那一分，383.14 切到黄泽林近景。",
+  "首盘第 3 局（张之臻发球）：40-15 领先被破，0-3。源片没有这一局。",
+  "首盘第 8 局（黄泽林发球胜盘 5-2）：张之臻救下盘点、第二个破发点破发，3-5。源片没有这一局，旁白一句带过。",
+  "首盘第 9 局（张之臻发球 3-5）：第三个盘点被破，3-6。源片 429~434 `3 5 / 30 40 SET POINT #3`。",
+  "第二盘第 8 局（张之臻发球 3-4）：15-40，第一个破发点被破，3-5。源片 482~503。",
+  "第二盘第 9 局（黄泽林发球 5-3）：40-0，第十个 ACE 结束。源片 504~507。"
+ ],
+ "editorial": {
+  "mode": "match_review",
+  "hook": [
+   "伤后第一场单打",
+   "输了，但打完了"
+  ],
+  "question": "美网前受伤、退出资格赛，杭州是张之臻两个月里的第一场单打——他输在哪几分上？",
+  "thesis": "开局两个发球局被破，0-4；2-5 他救下盘点破回一局，可第三个盘点还是丢了发球局。第二盘两人一直保发到 3-4，他发球 15-40 被破，黄泽林五个发球局只丢 4 分、第十个 ACE 收尾。",
+  "beats": [
+   "北京时间 9 月 24 日晚上，杭州公开赛首轮。伤后第一场单打，开局 15-40。",
+   "来时路：美网前受伤、退出资格赛；世界第 168 对第 108；今年 3 月资格赛输过黄泽林。",
+   "0-4 后保住第一个发球局；2-5 救盘点破发，追到 3-5；第三个盘点被破，3-6。",
+   "第二盘保发到 3-4，15-40 被破；黄泽林发球胜赛，第十个 ACE。"
+  ],
+  "human_context": {
+   "angle": "这场球的主语是**伤后回来的第一场**：美网前受伤、8 月 24 日前后退出美网资格赛，他七月底之后没再打过单打；杭州赛前他说「我现在最大的愿望，就是可以健康打完比赛」。这一场他两盘都输在自己的发球局上——首盘第 1、3 局两次被破（第 3 局还是 40-15 领先），第二盘 3-4 那一局 15-40 被破；而黄泽林第二盘五个发球局只让他拿到 4 分。",
+   "facts": [
+    "flashscore WYxAMgjR：Wong C. 6-3 6-3 Zhang Z.；分盘用时 0:39 + 0:33 = 1:12；dc_1 开赛 13:20Z（北京 21:20）、结束 14:31:08Z。",
+    "flashscore df_st_1 全场：ACE 1/10、双误 1/2、一发得分 20/30 对 24/30、破发点兑现 1/2 对 4/5、总得分 42 对 61。",
+    "flashscore df_mh_1：首盘第 1 局 15-40 被破、第 3 局 40-15 领先被破、第 8 局救盘点破发 3-5、第 9 局第三个盘点被破；第二盘第 8 局 15-40 被破；第 9 局黄泽林 0:40 后发球胜赛。",
+    "伤病：新浪 2026-08-25「中国选手张之臻因伤退出#美网2026# 男单资格赛」；网易 2026-08-25「张之臻因伤宣布退出今年的美网男单资格赛」；杭州网 2026-09-22「美网赛前训练中脚踝韧带撕裂一半，医生预估恢复期6至8周」（部位只有这一个源，旁白不说部位）。",
+    "flashscore df_hh_1 张之臻最近比赛：本场之前最后一场单打是 2026-07-29（加拿大）负 Wolf。",
+    "交手：flashscore df_hh_1 2026-03-09（Dominican Republic）黄泽林 2-1 胜；杭州网 2026-09-22「今年3月卡普卡纳挑战赛资格赛，两人曾经交手，张之臻1比2不敌黄泽林」。",
+    "排名（2026-09-21 那一期）：张之臻 168（tennisexplorer / tennisabstract）、黄泽林 108（tennisexplorer / ESPN）。"
+   ],
+   "sources": [
+    "https://www.flashscore.com/match/tennis/WYxAMgjR/",
+    "https://www.protennislive.com/posting/2026/4713/mds.pdf",
+    "https://www.youtube.com/watch?v=KA-aWjvvzGY",
+    "https://ori.hangzhou.com.cn/ornews/content/2026-09/22/content_9313880.htm",
+    "https://www.sina.cn/news/detail/5335608509596021.html",
+    "https://m.163.com/dy/article/L550RA8G0529RKNN.html",
+    "https://www.tennisexplorer.com/ranking/atp-men/",
+    "https://site.api.espn.com/apis/site/v2/sports/tennis/atp/rankings"
+   ]
+  }
+ },
+ "_no_repeat": "同栏目里张之臻上一次出现是 `davis-cup-china-first-world-group-1`（讲戴维斯杯阵容），黄泽林是 `wong-paul-us-open-2026-r1` 等（讲他美网对保罗）——这一条不重讲戴维斯杯，也不重讲黄泽林美网那场。",
+ "_claims": [],
+ "push": {
+  "summary": "张之臻伤后复出负黄泽林",
+  "lead": "杭州公开赛首轮，张之臻 3-6 3-6 输给黄泽林——这是他美网前受伤、退出资格赛之后的第一场单打。首盘开局两个发球局被破，0-4；2-5 他救下盘点破回一局，第三个盘点还是丢了。第二盘一直保发到 3-4，15-40 被破，黄泽林第十个 ACE 收下比赛。",
+  "matchup": "张之臻 vs 黄泽林",
+  "score": "3-6 3-6",
+  "auto": true
+ },
+ "_push_summary_why": "11 字位，主语是张之臻；「伤后复出」点出这条片子的切口。标题里不写排名。",
+ "_voice_why": "沿用这条线的默认：云见（`zh-CN-YunjianNeural`）＋6%，不设 `style`。",
+ "stats": {
+  "tour": "atp",
+  "a": {
+   "aces": 1,
+   "df": 1,
+   "first_in": 30,
+   "first_won": 20,
+   "second_total": 21,
+   "second_won": 7,
+   "bp_conv": 1,
+   "bp_chances": 2,
+   "pts_won": 42,
+   "pts_total": 103,
+   "first_total": 51,
+   "headshot": "assets/players/headshots/atp-Z371.png"
+  },
+  "b": {
+   "aces": 10,
+   "df": 2,
+   "first_in": 30,
+   "first_won": 24,
+   "second_total": 22,
+   "second_won": 13,
+   "bp_conv": 4,
+   "bp_chances": 5,
+   "pts_won": 61,
+   "pts_total": 103,
+   "first_total": 52,
+   "headshot": "assets/players/headshots/atp-W0BH.png"
+  },
+  "_source": "`python tools/match_stat_hooks.py WYxAMgjR --stats-block` 机器抄的 flashscore df_st_1 全场统计。a/b 跟 cover.matchup 的顺序（a=张之臻、b=黄泽林）；flashscore 这一场 home=Zhang Z.、away=Wong C.，恰好同序。张之臻头像是这次新抓的 ATP 官方头像（`fetch_official_headshot.py atp \"Zhizhen Zhang\" --id Z371 --via https://www.hangzhouopen.com`，id 取自维基 `{{ATP|Z371}}`，打开看过是他本人）；黄泽林沿用 `wong-paul-us-open-2026-r1` 的 atp-W0BH，挂的中文名一致。",
+  "_winners_ue_why": "制胜分／非受迫失误**不画**：flashscore df_st_1 这一场 17 项，没有这两行；TNNS 那趟（tnns-stats run 36014528838，`who=Zhang,Wong date=2026-09-24` 认到 id=74921794，选手顺序 ['Zhang','Wong']）给了 winners [14,25]、ue [18,14]，**但它自己的自证红了**——分盘合计 winners [9,27]、ue [19,16] 和全场对不上，工具原话「多半解错了，别用」。这两行留空，旁白和文案也不引用。"
+ },
+ "segments": [
+  {
+   "source": "yt",
+   "start": 363.3,
+   "end": 382.9,
+   "cx": 0.5,
+   "narration": "北京时间九月二十四号晚上九点多，杭州公开赛首轮。美网之前，张之臻受伤退出了资格赛，这是他七月底以来第一场单打，世界排名掉到了第一百六十八。开局第一个发球局，十五比四十，他在底线来回跑，还是丢了这一分。",
+   "_why": "首盘第 1 局 `•ZHANG 0 15 / WONG 0 40`：近端是张之臻（长发、头带、红拍），逐 1 秒看过 363.3~382（362.9 标题卡切走之后就是比赛画面），他在底线左右跑动，这一分黄泽林拿下（df_mh_1 第 1 局 `15:40 |B1|` 后破发），383.14 切到黄泽林近景。",
+   "_start_time_why": "开球时刻：flashscore dc_1 WYxAMgjR 的 DC=1790256000（2026-09-24 13:20Z＝北京 21:20），DD=1790260268（14:31:08Z）；和 df_sui_1 的 0:39+0:33=1:12 对得上。只说「晚上」，不报到分。",
+   "score_inset": true,
+   "point_end_ok": "逐 1 秒看过 380~382：382 近端的张之臻已经停下、黄泽林走向场边，这一分在 382.9 之前结束；383.14 切到黄泽林走回的近景，384.16 直接剪到第 4 局——记分条 384 的「翻牌」是剪辑跳局，不是这一分没打完。"
+  },
+  {
+   "source": "yt",
+   "start": 384.3,
+   "end": 396.9,
+   "cx": 0.5,
+   "narration": "第一局就被破了。第三局他四十比十五领先，又被破，零比四。对面的黄泽林世界第一百零八，今年三月的资格赛也赢过他。",
+   "_why": "首盘第 4 局 `ZHANG 0 0 / •WONG 3 15`（黄泽林发球），384.16~397.02 同一机位宽景。第 3 局 40-15 领先被破是 flashscore 逐分，源片没有这一局，旁白带过。",
+   "score_inset": true,
+   "point_end_ok": "逐 1 秒看过 392~396：396 近端的张之臻已经站在底线内、远端黄泽林走向场边，这一分结束；397.02 切到张之臻近景，398.26 剪到第 5 局——397.3 的「翻牌」是剪辑跳局。"
+  },
+  {
+   "source": "yt",
+   "start": 408.4,
+   "end": 416.0,
+   "cx": 0.5,
+   "narration": "零比四之后的第五局。这一分他顶住了，终于保住了自己的第一个发球局。",
+   "_why": "首盘第 5 局 `•ZHANG 0 40 / WONG 4 30`，张之臻近端发球；逐 1 秒看过 408~415，这一分他拿下保发（解说 415.8「it's a game of getting on the board」），416.1 切到换边镜头。",
+   "score_inset": true,
+   "point_end_ok": "逐 1 秒看过 413~415：415 近端的张之臻在底线停下，这一分在 416 之前结束（解说 415.8「it's a game of getting on the board」）；416.1 切到换边镜头，418.24 剪到第 9 局——418.3 的「翻牌」是剪辑跳局。"
+  },
+  {
+   "source": "yt",
+   "start": 418.3,
+   "end": 427.5,
+   "cx": 0.5,
+   "narration": "二比五，他救下盘点，破发追到三比五。这一分，他被调到左边，又顶到了网前。",
+   "_why": "首盘第 9 局 `•ZHANG 3 15 / WONG 5 15`，近端张之臻发球；逐 1 秒看过 418~427：423~424 他被调到左侧边线，425~427 压到发球线附近。第 8 局救盘点破发是 flashscore 逐分（`30:40 |B2|` 后 `A:40 |B1|` 两次），源片没有这一局。427.58 切到近景。",
+   "score_inset": true,
+   "point_end_ok": "逐 1 秒看过 425~427：427 两人都停在场内、没有挥拍，这一分结束；427.58 切到黄泽林近景，428.8 剪到下一个盘点——428.6 的「翻牌」是剪辑跳局。"
+  },
+  {
+   "source": "yt",
+   "start": 428.8,
+   "end": 434.1,
+   "cx": 0.5,
+   "narration": "轮到自己发球，第三个盘点没能救下。三比六。",
+   "_why": "`•ZHANG 3 30 / WONG 5 40 SET POINT #3`，429 张之臻近端发球（场边测速 163），逐 1 秒看过 429~433，这一分黄泽林拿下；434.2 切到黄泽林近景，436 记分条翻成第二盘 `3 2 0 / 6 3 15`。",
+   "score_inset": true,
+   "point_end_ok": "逐 1 秒看过 431~433：433 近端张之臻停在底线后，这一分结束，434.2 切到黄泽林近景（解说 434.4「There it is」）；记分条 435s 翻成第二盘是镜头切换后才更新。"
+  },
+  {
+   "source": "yt",
+   "start": 438.4,
+   "end": 448.1,
+   "cx": 0.5,
+   "narration": "第二盘，两个人都守住了自己的发球局。这一分他上到中场，把贴网的低球处理过去，赢了下来。",
+   "_why": "第二盘第 6 局 `•ZHANG 3 2 0 / WONG 6 3 15`，近端张之臻发球；逐 1 秒看过 436~447：444~446 他上到中场，远端黄泽林在网前右侧；解说 446.5「Just flips it over the net. It was so low.」；这一分他赢下（df_mh_1 第二盘第 6 局 `0:15, 15:15`），448 切到他本人近景。",
+   "point_end_ok": "448.22 切到张之臻近景之前这一分已经结束（解说 446.5 已经在评这一球）；翻牌在下一个镜头。",
+   "score_inset": true
+  },
+  {
+   "source": "yt",
+   "start": 450.1,
+   "end": 466.5,
+   "cx": 0.5,
+   "narration": "三十比十五。他在底线左右跑动，从右边扑到左边，一板一板顶住。最后一拍，把黄泽林调出了场外，三比三。对手的发球局他很难拿分，只能先守住自己的。",
+   "_why": "`•ZHANG 3 2 30 / WONG 6 3 15`，逐 1 秒看过 450~466：455 他向右侧扑出、459~463 又回到左侧，465~466 远端黄泽林被拉到右侧边线外；解说 465.3「Oh, what a shot that is」；df_mh_1 这一分之后 `40:15`，他保发 3-3。466.56 切到他本人（场边测速 202）。",
+   "score_inset": true
+  },
+  {
+   "source": "yt",
+   "start": 467.6,
+   "end": 476.2,
+   "cx": 0.5,
+   "narration": "换到黄泽林发球。张之臻被调得满场跑，从右边追到左边边线外，黄泽林网前一记高压。",
+   "_why": "第二盘第 7 局 `ZHANG 3 3 0 / •WONG 6 3 15`，近端张之臻；逐 1 秒看过 468~477：470~472 他被拉到右侧，474 追到左侧边线外，476~477 远端黄泽林压到网前。",
+   "score_inset": true
+  },
+  {
+   "source": "yt",
+   "start": 476.2,
+   "end": 481.0,
+   "cx": 0.5,
+   "quote": [
+    {
+     "at": 0.28,
+     "text": "Wow, what an incredible point.\n太精彩的一分"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "_quote_why": "转播原句，YouTube 自动字幕 476.48「Wow,」478.40「what an incredible point.」；后半句「up there was the overhead」听不清，不留。段内 at = 476.48 − 476.2。",
+   "_why": "上一分黄泽林网前高压结束 → 478.38 切到张之臻走回（长发、头带、红拍，INTERCONTINENTAL 挡板）。",
+   "crosses_cut": "478.38 从宽景切到张之臻走回的近景，原声评的正是刚结束的这一分。",
+   "score_inset": true
+  },
+  {
+   "source": "yt",
+   "start": 482.2,
+   "end": 490.4,
+   "cx": 0.5,
+   "narration": "三比四，十五比三十。黄泽林在底线耐住性子，等到一个浅球，上前一拍结束。",
+   "_why": "第二盘第 8 局 `•ZHANG 3 3 15 / WONG 6 4 30`，换边后近端是黄泽林（卷发、墨绿红边球衣）；逐 1 秒看过 482~490：488~489 近端的他上到中场；解说 489.2「Wong seized on the short ball having stayed patient throughout the course of the rally」（ASR 写成 while）；492 翻成 `15 40`。490.52 切到黄泽林近景。",
+   "score_inset": true
+  },
+  {
+   "source": "yt",
+   "start": 494.3,
+   "end": 502.8,
+   "cx": 0.5,
+   "narration": "十五比四十。第一个破发点，黄泽林就兑现了，五比三。第二盘唯一一次破发。",
+   "_why": "`•ZHANG 3 3 15 / WONG 6 4 40 2 BREAK POINTS`；这一分黄泽林拿下（df_mh_1 第二盘第 8 局 `15:40 |B1|` 后破发；解说 502.08「Such a good return」），502.94 切到黄泽林走回，504 翻成 `3 0 / 5 40`。",
+   "score_inset": true
+  },
+  {
+   "source": "yt",
+   "start": 503.7,
+   "end": 507.1,
+   "cx": 0.5,
+   "narration": "最后一局，黄泽林发球胜赛。",
+   "_why": "第二盘第 9 局 `ZHANG 3 3 0 / •WONG 6 5 40`，远端黄泽林发球，这一球是 ACE（解说 511.5「the 10th ace to wrap things up」，df_mh_1 `0:40 |B3|` 后结束）；507.16 切到黄泽林近景。",
+   "score_inset": true,
+   "point_end_ok": "赛点这一球是 ACE（解说 511.5「the 10th ace to wrap things up」），507 前球已经死了；507.16 切到黄泽林近景，508.2 记分条翻成 `3 3 / 6 6` 是切镜头后才更新。"
+  },
+  {
+   "source": "yt",
+   "start": 507.2,
+   "end": 516.8,
+   "cx": 0.5,
+   "quote": [
+    {
+     "at": 0.16,
+     "text": "Fitting that it ends in that way.\n以这种方式结束，再合适不过"
+    },
+    {
+     "at": 2.72,
+     "text": "Can't have had too many better days\n发球这么顺的日子"
+    },
+    {
+     "at": 3.9,
+     "text": "on serve than that.\n他不会有太多"
+    },
+    {
+     "at": 4.32,
+     "text": "That is the 10th ace\n这是第十个ACE"
+    },
+    {
+     "at": 6.0,
+     "text": "to wrap things up for Coleman Wong.\n黄泽林收下比赛"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "_quote_why": "转播原句，YouTube 自动字幕：507.36「Fitting that it ends in that way. Can't」509.92「have had too many better days on serve」511.52「than that. That is in the 10th ace to」514.80「wrap things up for Coleman Wong.」；「is in the」按语法校正为「is the」。段内 at = 绝对秒 − 507.2。",
+   "_why": "507.16 黄泽林近景 → 508.72 他转身 → 510.88 教练席鼓掌 → 512.8 网前握手，到 516.8（516.87 起转场静音）。",
+   "crosses_cut": "508.72、510.88、512.80 三刀都在赛点之后：黄泽林、他的团队、双方握手，原声讲的也是这一场的收尾。",
+   "point_end_ok": "比赛在 507 前就结束了（ACE），之后都是赛后画面。",
+   "score_inset": true
+  }
+ ],
+ "_quote_why_global": "两段原声：476.2~481 的「Wow, what an incredible point」、507.2~514.9 的赛点收尾。",
+ "_tactics_why": "源片全是底线高位宽景，球员四五十像素高，正反手多数判不出。写进旁白的球路都是逐 1 秒抽帧（frame-grab zhang-wong-hz）看过的：第 1 段底线左右跑动、第 4 段被调到左边后顶到网前、第 6 段上到中场处理低球、第 7 段左右跑动后把对手调出场外、第 8 段被满场调动后对手网前高压、第 10 段对手耐住等到浅球上前结束。"
+}
