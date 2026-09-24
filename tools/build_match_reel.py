@@ -1551,13 +1551,23 @@ def resolve_board_insets(sources: dict[str, Path], segments: list["Segment"],
         x0, y0, x1, y1 = seg.score_inset
         shown = "  ".join(f"{v}×{n}" for v, n in hist) or "一帧都没检出"
         note = ""
+        # ⭐⭐ 账号所有者 2026-09-24：「不要写死宽度啊」。量到的可信右缘**不再按
+        # spec 的 scorebox 右缘封顶**——原来这里是 `min(量到的 + PAD, x1)`，于是
+        # spec 那个数写窄了，量得再准也照切：`zhang-cocciaretto-bjk-cup-2026-qf`
+        # 写了 520，板带着当前分那一格到 ~548 / ~587，成片里 30/40/AD 只剩半个字、
+        # 第二盘当前分整列不见，渲染和 QC 一声不吭。现在 spec 的右缘只在**量不出**
+        # 和**只有孤票**时当兜底（孤票可能是球员贴板读出来的噪声，仍然封顶），
+        # 可信读数（本段两票起步、或后面段可信读数的下确界）原样用，只按画幅封顶。
+        capped = True
         if trusted:
             final = edge
+            capped = False
             if len(hist) > 1:
                 note = (" ⚠️ 这一段里板不止一种宽度（多半是一盘正好在段中"
                         "打完），按最宽的裁——要裁得更紧就把这一段拆开")
         elif (floor := _later_floor(seg)) is not None:
             final = floor
+            capped = False
             note = ("；本段读数撑不起两票（多半是特写做背景或球员贴板），"
                     f"按时间单调性用后面段可信读数的最小值 {floor}——"
                     "板从不变窄，它是本段的安全上界，比最宽兜底紧")
@@ -1569,7 +1579,16 @@ def resolve_board_insets(sources: dict[str, Path], segments: list["Segment"],
                   f"退回 spec 的 scorebox 右缘 {x1}——板可能整段不在画面里"
                   "（回放/切走），那种段本来就该写 score_inset: false")
             continue
-        got = min(int(final) + BOARD_EDGE_PAD, x1)
+        got = int(final) + BOARD_EDGE_PAD
+        if capped:
+            got = min(got, x1)
+        elif got > x1:
+            # 只在真要越过 spec 右缘时才探画幅——量到的右缘本来就在画面里，
+            # 这一刀只防 PAD 把它推出画外；不越界就不必碰源片
+            got = min(got, probe_size(Path(sources[seg.source]))[0])
+        if not capped and got > x1:
+            note += (f"；⚠️ 比 spec 的 scorebox 右缘 {x1} 宽——按量到的贴，"
+                     "spec 那个数只是量不出来时的兜底，不是上限")
         seg.score_inset = (x0, y0, got, y1)
         print(f"    [score] 第 {i + 1} 段板右缘取 {int(final)}"
               f"（+{BOARD_EDGE_PAD} 余量 → 裁到 {got}，spec 的兜底是 {x1}）"

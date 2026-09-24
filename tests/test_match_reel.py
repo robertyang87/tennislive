@@ -17337,3 +17337,56 @@ def test_原声解说的字幕一律中英双语():
     assert checked >= 200, f"只扫到 {checked} 条原声字幕，扫描面像是不对"
     stale = _QUOTE_NOT_BILINGUAL_LEGACY - legacy_seen
     assert not stale, f"这几条已经改成双语了，从表里删掉：{sorted(stale)}"
+
+
+def test_比分板右缘按现量贴_spec的scorebox右缘写窄了也不许照切(tmp_path, capsys):
+    """账号所有者 2026-09-24：「不要写死宽度啊」。
+
+    来路：`zhang-cocciaretto-bjk-cup-2026-qf` 的 spec 写了 `scorebox` 右缘 520，
+    转播板带着当前分那一格和发球点实际到 ~548 / ~587。`resolve_board_insets`
+    量得出来，可原来收尾是 `min(量到的 + PAD, x1)`——**spec 那个数成了上限**，
+    成片里 30/40/AD 只剩半个字、第二盘当前分整列不见，渲染和 QC 一声不吭。
+
+    钉三件事：
+    ① 本段两票起步的可信读数，**越过 spec 的 x1 也照量到的贴**；
+    ② 只有孤票（可能是球员贴板的噪声）时仍然封顶在 x1——那一档本来就是兜底；
+    ③ 越过 x1 时要出声，别让「spec 写窄了」悄悄过去。
+
+    反向验证：把收尾改回 `min(int(final) + BOARD_EDGE_PAD, x1)` → ① 红（量到 560）；
+    把孤票那一支也放开 → ② 红；拆掉那句 ⚠️ 的 note → ③ 红。
+    """
+    import shutil  # noqa: PLC0415
+
+    assert shutil.which("ffmpeg"), "没有 ffmpeg，这条判据跑不了：apt install ffmpeg"
+    reel = _reel()
+    src = tmp_path / "board.mp4"
+    # 板：深蓝底到 544 ＋ 白格到 584（和上面那条现量判据同一个形状），整段都在。
+    on = "between(t,0,4)"
+    plates = (f"drawbox=x=104:y=887:w=440:h=93:color=0x1B2A5E:t=fill:enable='{on}',"
+              f"drawbox=x=544:y=887:w=40:h=93:color=white:t=fill:enable='{on}'")
+    subprocess.run(
+        ["ffmpeg", "-y", "-v", "error", "-f", "lavfi", "-i",
+         "color=c=0x6E8B6E:s=1920x1080:r=25," + plates,
+         "-t", "4", "-pix_fmt", "yuv420p", str(src)], check=True)
+
+    narrow = (104, 887, 560, 980)       # spec 写窄了：比板的真右缘 584 少 24px
+    seg = reel.Segment(start=0.0, end=4.0, cx=0.5, narration="", track=False,
+                       score_inset=narrow, score_inset_auto=True)
+    reel.resolve_board_insets({"": src}, [seg])
+    out = capsys.readouterr().out
+    got = seg.score_inset[2]
+    assert 584 <= got <= 584 + reel.BOARD_EDGE_PAD + 4, (
+        f"① 可信读数要照量到的贴（板右缘 584），拿到 {got}。等于 {narrow[2]} "
+        "就是又被 spec 的 scorebox 右缘封顶了——那正是被点掉的「写死宽度」。\n" + out)
+    assert "兜底，不是上限" in out, f"③ 越过 spec 右缘要出声：\n{out}"
+
+    # ② 孤票：只给一票可信度不够、后面也没段可借 → 仍按 spec 右缘封顶
+    lone = reel.Segment(start=0.0, end=0.6, cx=0.5, narration="", track=False,
+                        score_inset=narrow, score_inset_auto=True)
+    # ⚠️ 0.6 秒短于 BOARD_SPAN_MIN，另一道闸会报「整段都没有记分条」——它抛在
+    # 函数收尾，右缘在那之前已经写回并打印，所以照样能验这一支。
+    with pytest.raises(reel.ReelError, match="整段都没有记分条"):
+        reel.resolve_board_insets({"": src}, [lone])
+    lone_out = capsys.readouterr().out
+    assert "孤票" in lone_out and lone.score_inset[2] <= narrow[2], (
+        f"② 只有孤票时 spec 右缘仍是兜底上限，拿到 {lone.score_inset[2]}：\n{lone_out}")
