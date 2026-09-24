@@ -29,39 +29,39 @@
     "version": 2,
     "pipeline": "match-reel",
     "slug": "bu-zheng-hangzhou-2026-r1",
-    "received_at": "2026-09-24T10:59:42Z",
-    "artifact_ready_at": "2026-09-24T11:06:11Z",
-    "elapsed_seconds": 389.41,
+    "received_at": "2026-09-24T11:07:19Z",
+    "artifact_ready_at": "2026-09-24T11:13:29Z",
+    "elapsed_seconds": 370.174,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "6b62ed5f7da3fe994ffd04c7ada7c65bd5c0a3f438bf6257ed083c442452ef4b",
-    "spec_sha256": "da633cbe14cb9a94b16fa7ed9d5a3bcdca6091e7e576aa108c49b917e0289cce",
-    "run_id": "35990407235",
+    "film_sha256": "139ceeb6a2db5faf5ff9df5837df7ae02fe12c425d271d75dd12aae8d8422b24",
+    "spec_sha256": "caf118f0e0f1716341189abd72adc0ef39e4563f25e152a2c48542cfb302515b",
+    "run_id": "35991164719",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-09-24T11:02:48Z",
-        "run_id": "35990407235"
+        "at": "2026-09-24T11:10:13Z",
+        "run_id": "35991164719"
       }
     ],
-    "render_seconds": 203.41,
-    "pre_render_seconds": 186.0
+    "render_seconds": 196.174,
+    "pre_render_seconds": 174.0
   },
-  "film_sha256": "6b62ed5f7da3fe994ffd04c7ada7c65bd5c0a3f438bf6257ed083c442452ef4b",
-  "film_bytes": 65595309,
-  "qc_attestation_sha256": "89f736cb64ac305c7d8e556fae22fb852c30ec4ae7e94627e534f8ded24eaf97",
+  "film_sha256": "139ceeb6a2db5faf5ff9df5837df7ae02fe12c425d271d75dd12aae8d8422b24",
+  "film_bytes": 65615410,
+  "qc_attestation_sha256": "d8af6ea42aab581803ee67c0e0f576b8ca178e72d08de1203896e304622fd3c0",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-09-24T11:02:48Z",
-      "run_id": "35990407235"
+      "at": "2026-09-24T11:10:13Z",
+      "run_id": "35991164719"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-09-24T11:06:12Z",
-      "run_id": "35990407235"
+      "at": "2026-09-24T11:13:30Z",
+      "run_id": "35991164719"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-bu-zheng-hangzhou-2026-r1/bu-zheng-hangzhou-2026-r1.mp4",
-  "video_bytes": 65595309
+  "video_bytes": 65615410
 }
