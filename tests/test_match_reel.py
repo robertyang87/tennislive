@@ -16792,13 +16792,11 @@ def test_全出血也能回贴记分条_字幕抬到板上方(tmp_path, monkeypa
     assert '(BAND_TOP if LAYOUT == "band" else 0) + int(round(y0 * ratio))' in src_txt
 
 
-def test_全出血的板整块在窗外时往里收到顶栏那条竖线(tmp_path, monkeypatch):
-    """账号所有者 2026-09-24（杭州 `bu-zheng-hangzhou-2026-r1`）选了「左下原位回贴」，
-    又补一句「从屏幕的左边再往右移一点，移到画布上」。
-
-    巡回赛的板多半整块落在居中窗口外（这条：板 [98,466]、窗口左缘 555），画面里
-    没有残条要盖，贴片就收到顶栏文字那条竖线 `TOPBAR_MARGIN_H`，和「2026 ATP250 …」
-    左对齐；贴片左边那一条留原画面。有残条的情形（上一条测试）照旧贴 0。
+def test_全出血的板贴屏幕左边缘(tmp_path, monkeypatch):
+    """账号所有者 2026-09-24：板的左缘**对齐屏幕左边缘**，ATP 的比赛一律如此
+    （成都 `shang-mannarino-chengdu-2026-r1` 定的全局口径；同一天早些时候杭州那条
+    试过收到顶栏文字那条竖线 x=48，被取代）。巡回赛的板多半整块落在居中窗口外
+    （这条：板 [98,466]、窗口左缘 555），贴片照样贴 x=0，板宽仍是原比例。
     """
     reel = _reel()
     from PIL import Image  # noqa: PLC0415
@@ -16831,67 +16829,9 @@ def test_全出血的板整块在窗外时往里收到顶栏那条竖线(tmp_pat
         p = im.getpixel((x, mid))
         return p[0] > 180 and p[2] > 180 and p[1] < 90
 
-    m = reel.TOPBAR_MARGIN_H
-    assert not magenta(m - 10), f"贴片左边那一条（x<{m}）该是原画面，却是板——还顶在 x=0"
-    assert magenta(m + 10), f"x={m + 10} 没有板——没贴，或者没收到顶栏那条竖线"
-    bw = -(-int(round((x1 - x0) * ratio)) // 2) * 2
-    assert magenta(m + bw - 10) and not magenta(m + bw + 20), "板宽不是原比例"
-
-
-def test_score_inset_left写0时板贴屏幕左边缘(tmp_path, monkeypatch):
-    """账号所有者 2026-09-24（成都 `shang-mannarino-chengdu-2026-r1`）：比分板
-    「对齐那个屏幕的左边缘」，选了 x=0。杭州那条选的是和顶栏文字对齐（48），
-    所以这是 spec 顶层逐条认领的 `score_inset_left`，不改默认——上一条测试
-    钉着默认，这一条钉着认领之后真的贴到 0、板宽仍是原比例。
-    """
-    reel = _reel()
-    from PIL import Image  # noqa: PLC0415
-
-    def _ff(*args):
-        subprocess.run(["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
-                        *args], check=True)
-
-    monkeypatch.setattr(reel, "LAYOUT", "full")
-    reel.resolve_crop(1920, 1080, None, "", layout="full")
-    src = tmp_path / "src.mp4"
-    x0, y0, x1, y1 = 98, 920, 466, 1029
-    _ff("-f", "lavfi", "-i", "color=c=0x1f6f3f:s=1920x1080:r=25:d=3",
-        "-f", "lavfi", "-i", "sine=frequency=440:duration=3",
-        "-vf", f"drawbox=x={x0}:y={y0}:w={x1 - x0}:h={y1 - y0}:color=0xff00ff:t=fill",
-        "-c:v", "libx264", "-preset", "ultrafast", "-crf", "16", "-pix_fmt", "yuv420p",
-        "-c:a", "aac", "-shortest", str(src))
-    seg = reel.Segment(0.5, 2.5, 0.5, "", track=False)
-    seg.score_inset = (x0, y0, x1, y1)
-    seg.score_inset_left = 0
-    out = tmp_path / "part.mp4"
-    reel.cut_segment(src, seg, out, 1920)
-    frame = tmp_path / "f.png"
-    _ff("-ss", "1.0", "-i", str(out), "-frames:v", "1", str(frame))
-    im = Image.open(frame).convert("RGB")
-
-    ratio = reel.VIDEO_W / reel.CROP_W
-    mid = int(round(y0 * ratio)) + int((y1 - y0) * ratio / 2)
-
-    def magenta(x: int) -> bool:
-        p = im.getpixel((x, mid))
-        return p[0] > 180 and p[2] > 180 and p[1] < 90
-
-    assert magenta(2), "x=2 没有板——score_inset_left=0 没生效，还收在顶栏那条竖线"
+    assert magenta(2), "x=2 没有板——板没对齐屏幕左边缘（还收在顶栏那条竖线？）"
     bw = -(-int(round((x1 - x0) * ratio)) // 2) * 2
     assert magenta(bw - 10) and not magenta(bw + 20), "板宽不是原比例"
-
-
-def test_score_inset_left只收0到顶栏边距且要写理由():
-    reel = _reel()
-    assert reel._score_inset_left({}) is None
-    assert reel._score_inset_left({"score_inset_left": 0,
-                                   "_score_inset_left_why": "账号所有者选的"}) == 0
-    for bad in ({"score_inset_left": 0},
-                {"score_inset_left": -1, "_score_inset_left_why": "x"},
-                {"score_inset_left": reel.TOPBAR_MARGIN_H + 1, "_score_inset_left_why": "x"},
-                {"score_inset_left": True, "_score_inset_left_why": "x"}):
-        with pytest.raises(reel.ReelError):
-            reel._score_inset_left(bad)
 
 
 def test_没给scorebox时probe要按猜的框顺手量一遍死球(monkeypatch):

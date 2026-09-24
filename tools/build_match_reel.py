@@ -2506,11 +2506,6 @@ class Segment:
     score_inset_mask: str = ""
     # 经源画面复核的允许时段（段内秒），只收窄自动检测，不能强行认领板在场。
     score_inset_windows: tuple[tuple[float, float], ...] = ()
-    # 全出血、板整块在窗口外时贴片左缘落在画面第几像素。None＝默认
-    # `TOPBAR_MARGIN_H`（和顶栏文字左对齐，杭州 bu-zheng 那条账号所有者选的）；
-    # spec 顶层写 `score_inset_left: 0` ＋ `_score_inset_left_why` 改成贴屏幕
-    # 左边缘（成都 shang-mannarino 那条账号所有者 2026-09-24 选的）。
-    score_inset_left: int | None = None
     # **这一段的 image 是一张按画面区尺寸设计的整幅页**（章节卡），铺满不缩。
     # 由 `_materialize_title_cards` 认领，写 spec 的人碰不到它。为什么不按尺寸
     # 猜：`render_title_card` 出的是 2×（device_scale_factor=2，2160×2880），
@@ -2843,28 +2838,6 @@ _LEGACY_USO_FULLBLEED = frozenset({
 })
 
 
-def _score_inset_left(spec: dict) -> int | None:
-    """spec 顶层 `score_inset_left`：全出血回贴时板的左缘落在画面第几像素。
-
-    不写＝默认 `TOPBAR_MARGIN_H`（和顶栏文字左对齐）。写了就要带一句
-    `_score_inset_left_why`——两个位置账号所有者在不同的片子上各选过一次，
-    所以这是逐条认领的口径，不是改全局默认。只收 0..TOPBAR_MARGIN_H：
-    再往右就是在球场中间开一块，那不是「贴左边」。
-    """
-    if "score_inset_left" not in spec:
-        return None
-    raw = spec["score_inset_left"]
-    if (isinstance(raw, bool) or not isinstance(raw, int)
-            or not 0 <= raw <= TOPBAR_MARGIN_H):
-        raise ReelError(
-            f"score_inset_left 要是 0..{TOPBAR_MARGIN_H} 的整数（画面像素），"
-            f"拿到 {raw!r}")
-    if not str(spec.get("_score_inset_left_why", "")).strip():
-        raise ReelError("写了 score_inset_left 就要写 `_score_inset_left_why`："
-                        "默认是和顶栏文字左对齐，改它要说清是谁选的")
-    return raw
-
-
 def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
     """spec 的 `segments` → `Segment` 列表，顺带把两条互斥/引用的规矩拦在这儿。
 
@@ -2991,10 +2964,8 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
                        score_inset=_seg_score_inset(s, i),
                        score_inset_auto=s.get("score_inset") is True,
                        score_inset_windows=_seg_score_windows(s, i),
-                       score_inset_left=inset_left,
                        square_pan=tuple((float(t), float(cx)) for t, cx in s.get("square_pan", [])))
 
-    inset_left = _score_inset_left(spec)
     segments = [_one(s, i) for i, s in enumerate(spec["segments"])]
     gone_ev = [(i + 1, s.image) for i, s in enumerate(segments)
                if s.image and s.image != STAT_CARD_PLACEHOLDER
@@ -3199,7 +3170,7 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
 _REAL_FIELDS: dict[str, tuple[str, ...]] = {
     "spec": ("archival", "conform", "cover", "crop_y", "crop_zoom",
              "layout", "mixed_fps", "primary", "stat_card_full_canvas", "revision_of",
-             "music", "outro", "push", "rate", "scorebox", "score_inset_left", "segments",
+             "music", "outro", "push", "rate", "scorebox", "segments",
              "silent_source",
              "slug", "source_audio", "source_url", "source_quality_exceptions", "sources", "stats",
              "subtitle_scrim", "subtitle_top", "topbar", "tts_backend", "voice",
@@ -4040,15 +4011,11 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
                 # **字幕抬到板上方**（`subtitle_margin_for_boards`，render 里算，
                 # 整条片子一个锚）；字幕垫跟着锚一起抬。
                 oy = (BAND_TOP if LAYOUT == "band" else 0) + int(round(y0 * ratio))
-                # ⭐ 2026-09-24 账号所有者（杭州 bu-zheng）：「从屏幕的左边再往右
-                # 移一点，移到画布上」。全出血下**窗口左缘已经越过板右缘**时
-                # （x ≥ x1，巡回赛的板多半如此），画面里没有残条要盖，贴片就
-                # 不必顶死在 x=0——往里收到顶栏文字同一条竖线（TOPBAR_MARGIN_H），
-                # 和上面的「2026 ATP250 …」左对齐。有残条（x < x1，美网那种宽板）
-                # 或带式时照旧贴 0：挪开就露出被裁的半截板。
-                ox = ((TOPBAR_MARGIN_H if seg.score_inset_left is None
-                       else seg.score_inset_left)
-                      if LAYOUT != "band" and x >= x1 else 0)
+                # ⭐ 2026-09-24 账号所有者：板的左缘**对齐屏幕左边缘**（x=0），
+                # ATP 的比赛一律如此（成都 shang-mannarino 定的全局口径）。当天
+                # 早些时候杭州 bu-zheng 那条试过收到顶栏文字那条竖线（x=48），
+                # 被这一条取代。有残条（美网那种宽板）时本来也是贴 0。
+                ox = 0
                 strip = max(0, _even((x1 - x) * ratio)) if x < x1 else 0  # 居中窗口天然含住的那一条
                 # ⭐ 2026-08-28 一天里这块地方被账号所有者点了四次，最后定在
                 # 「**按板的实际大小裁，原比例贴回左下角，纵坐标不变**」。
@@ -7934,6 +7901,11 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
         resolve_masks(sources, segments, outdir,
                       Path(__file__).resolve().parents[1] / "specs" / "reels" / f"{spec['slug']}.json",
                       FPS_EXPR, SEG_FADE)
+    elif LAYOUT != "band" and "ATP" in (spec.get("topbar") or {}).get("line1", "").upper():
+        # ⭐ ATP 巡回赛转播的板：逐帧蒙版，板多宽切多宽，BREAK/SET/MATCH POINT
+        # 的黄条单独切、接在板右边（账号所有者 2026-09-24，见 atp_scoreboard）。
+        from atp_scoreboard import resolve_masks as resolve_atp_masks
+        resolve_atp_masks(sources, segments, outdir, FPS_EXPR, SEG_FADE)
     else:
         resolve_board_insets(sources, segments)
 
