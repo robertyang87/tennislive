@@ -1,0 +1,74 @@
+{
+  "scoreboard_qc_sha256": null,
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 3.827,
+  "layout": "full",
+  "segments_seconds": 247.7,
+  "topbar": {
+    "line1": "2026 比利·简·金杯 1/4决赛",
+    "line2": "保利尼 6-3 7-6(4) 郑钦文",
+    "start": 1.2,
+    "end": 248.9
+  },
+  "film_seconds": 252.76,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 11.088,
+    "2": 14.616,
+    "3": 14.28,
+    "4": 9.984,
+    "5": 11.784,
+    "6": 14.568,
+    "7": 13.008,
+    "8": 9.768,
+    "10": 11.208,
+    "11": 13.968,
+    "12": 9.768,
+    "13": 9.384,
+    "14": 10.944,
+    "16": 7.08,
+    "17": 8.376
+  },
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "zheng-paolini-bjk-cup-2026-qf",
+    "received_at": "2026-09-24T15:12:30Z",
+    "artifact_ready_at": "2026-09-24T15:23:17Z",
+    "elapsed_seconds": 647.532,
+    "budget_seconds": 600,
+    "met": false,
+    "film_sha256": "53106f52abedb93d11c2b6897bd6ce13ec5aca29e7a09e0e893781e0e2bddfe8",
+    "spec_sha256": "d648fd23fe0ea6f6e40b106993b0ec5b35b4086505ec109c63fea2773721c7ef",
+    "run_id": "36018446076",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-09-24T15:18:58Z",
+        "run_id": "36018446076"
+      }
+    ],
+    "render_seconds": 259.532,
+    "pre_render_seconds": 388.0
+  },
+  "film_sha256": "53106f52abedb93d11c2b6897bd6ce13ec5aca29e7a09e0e893781e0e2bddfe8",
+  "film_bytes": 131719253,
+  "qc_attestation_sha256": "5108bd636d44ce97b9a2d04a2e66ee25045f279c1d9ecdd021b4c9ac0cd84a43",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-09-24T15:18:58Z",
+      "run_id": "36018446076"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-24T15:23:18Z",
+      "run_id": "36018446076"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-zheng-paolini-bjk-cup-2026-qf/zheng-paolini-bjk-cup-2026-qf.mp4",
+  "video_bytes": 131719253
+}
