@@ -93,7 +93,6 @@
   "winner_result": "6-4 7-5",
   "loser_result": "4-6 5-7"
  },
- "_no_stats_why": "⚠️ **不画数据统计图，因为胡佳没有官方头像，不是因为没有数据。** 数据是齐的（flashscore df_st_1：ACE 2/7、双误 4/3、一发得分率 74%/67%、二发得分率 62%/44%、破发点 3/9 对 1/1、总得分 72/60）。卡上强制要 `stats.a/b.headshot`，而 `tools/fetch_official_headshot.py atp \"Jia Hu\" --id H0LE --via https://www.mubadaladcopen.com` 取回来的是**只有 2 种颜色的占位剪影**（脚本自己的判据拦下的）——他在 ATP 官网还没有正式头像。数字全部进了旁白（第 10 段）。制胜分和非受迫失误：TNNS（run 35900463822）给了数，但分盘合计和全场对不上（winners 分盘 [14,22] vs 全场 [23,26]），脚本自己标了「别用」，不引用。",
  "_hit_data": "跑过 `match_stat_hooks.py EVZwApfT`。进旁白的：**ACE 7 比 2**（df_st_1 Aces 2 / 7，胡佳是 away）；**二发得分率 44% 对 62%**（2nd serve points won 62% (13/21) / 44% (12/27)）；**破发点 9 个被兑现 3 个、救下 6 个**（Break Points Saved 6/9）；**开局第一个接发局就破发**（df_mh_1 Set 1 第 1 局 `HG÷1 HK÷2`，科普日瓦发球、胡佳赢）；**第二盘 3-4 那一局三个破发点全救**（df_mh_1 Set 2 `HC÷4 HE÷4`：`40:15 |B1|`、`40:30 |B1|`、`A:40 |B1|`，最后 `40:A` 保发）。",
  "_turning_points": [
   "首盘第 1 局（科普日瓦发球）：`15:0, 15:15, 30:15, 30:30, 30:40 |B1|`——第一个破发点就兑现，胡佳 1-0。源片 day1 300.5~316.5 记分条 `•KOPRIVA 0 30 / HU 0 30` → `HU 0 40`（310.5）→ `•HU 1 0`（316.5）。",
@@ -288,5 +287,38 @@
    "_why": "网前握手（ttv 138.5~142.5 全是握手画面，和 day1 538.5~542.5 是同一时刻），解说替这条片子说出落点。",
    "_end_why": "源片 ttv 全长 143.56s；段尾加 0.18s 溶解底料不能越过源片末尾（第一趟 render 143.4 越界报「分段比要求的短」），收到 143.3。"
   }
- ]
+ ],
+ "stats": {
+  "tour": "atp",
+  "a": {
+   "aces": 2,
+   "df": 4,
+   "first_in": 39,
+   "first_won": 29,
+   "second_total": 21,
+   "second_won": 13,
+   "bp_conv": 3,
+   "bp_chances": 9,
+   "pts_won": 72,
+   "pts_total": 132,
+   "first_total": 60,
+   "headshot": "assets/players/headshots/atp-KI82.png"
+  },
+  "b": {
+   "aces": 7,
+   "df": 3,
+   "first_in": 45,
+   "first_won": 30,
+   "second_total": 27,
+   "second_won": 12,
+   "bp_conv": 1,
+   "bp_chances": 1,
+   "pts_won": 60,
+   "pts_total": 132,
+   "first_total": 72,
+   "headshot": "assets/players/headshots/hu-jia-chengdu-2026.jpg"
+  },
+  "_source": "`python tools/match_stat_hooks.py EVZwApfT --stats-block` 机器抄的 flashscore df_st_1 全场统计。a/b 跟 cover.matchup 的顺序（a=科普日瓦、b=胡佳）；flashscore 这一场 home=Kopriva V.、away=Hu J.，恰好同序。头像：科普日瓦是 ATP 官方头像（`fetch_official_headshot.py atp \"Vit Kopriva\" --id KI82 --via https://www.mubadaladcopen.com`，246 色，不是占位剪影）；胡佳在 ATP 官网只有占位剪影（同一脚本对 H0LE 报 2 色），头像改用本场封面那张赛事组委会实拍（四川在线 9/23 刊发，`assets/reel/credits.json` 的 hu-kopriva-chengdu-2026.jpg）裁出的头肩 300×300——同一个人、同一场、官方出处。",
+  "_winners_ue_why": "flashscore 这一场没有制胜分/非受迫失误（17 项）。已跑 tnns-stats.yml（who=Kopriva,Hu，date=2026-09-23，run 35900463822，TNNS id 74923154）：hasExtendedStats True，但**分盘合计和全场对不上**（winners 分盘 [10,6]+[4,16]=[14,22] vs 全场 [23,26]；ue [10,17]+[15,21]=[25,38] vs 全场 [21,35]），脚本自己标了「多半解错了，别用」，所以两项留空。"
+ }
 }
