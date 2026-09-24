@@ -1,0 +1,302 @@
+{
+ "slug": "shang-mannarino-chengdu-2026-r1",
+ "_column": "赛场之上",
+ "sources": {
+  "ttv": "https://www.tennistv.com/videos/4581056/chengdu-2026-r1-shang-mannarino-short-highlights"
+ },
+ "primary": "ttv",
+ "_source": "tennistv.com `library/short-highlights`《chengdu-2026-r1-shang-mannarino-short-highlights》，**free 档**（页面 data-entitlement=\"free\"），probe 实测 1920×1080、157.65s（HLS 最高档 1080p/50fps，runner 下到的是 25fps 档）。同一场的全长版 `4581063/chengdu-2026-r1-shang-mannarino-highlights` 是 premium（entitlementcheck 401），下不了。渠道比较（2026-09-24 11:14Z 量的）：① Tennis TV YouTube 单场版——没查到，频道最新只有成都 Day 1 合集和沙波瓦洛夫-格里克斯普尔单场；② tennistv.com short-highlights——157.65s，本片用它；③ ATP Tour YouTube——没查到这一场。四要素自证：记分条逐格读过（`score_*.jpg`，`SHANG / MANNARINO` 两行，3-3、抢七 4-3→6-4→9-10、第二盘 6⁹-7、2-2、2-5 15-40 `2 MATCH POINTS`），和 flashscore f1wODSf4 逐分一致；场地印着 `CHENGDU 成都`；114.5s 转播图形 `ROUND 1 | CENTER COURT | 1:16 | ATP 250`；解说 146.3s「knocking out the 2024 champion here」。",
+ "_tennistv_trim": "**片尾**：比赛画面收在 148.74s（最后一个切点），149.3s 起是 Tennis TV 的 SCORES / BEHIND THE SCENES 推广卡，154s 起是 `THE BEST SEAT IN TENNIS` 应用下载卡——本片最后一段收在 148.5s，离推广卡 0.24 秒、离下载卡 5 秒以上。**台标**：Tennis TV 台标烧在右上角（源片 x≈1780~1900），3:4 取景窗 cx=0.5 时只取 555~1365，角上那块在窗外。",
+ "cover": {
+  "eyebrow": "赛场之上",
+  "layout": "solo",
+  "subject": "商竣程",
+  "hook": "两年前在这里捧杯\n这回4个盘点没拿下",
+  "hook_accent": "4个盘点",
+  "_hook_why": "两行一个落差：第一行是他的来路（2024 年成都公开赛冠军，这是他第一个巡回赛冠军），第二行是这场球的形状——首盘抢七里他四次站上盘点（6-4、6-5、8-7、9-8，flashscore 逐分 HM 标记），一个都没兑现，之后第二盘 2-6。不写排名、年龄、国籍；「盘点」是这条线钩子里用过的词（「3个赛点全丢了」同一族）。9 字和 9 字，都在 10 字以内。",
+  "topic": "成都公开赛首轮 · 前冠军商竣程",
+  "winner": "马纳里诺",
+  "result": "7-6(9) 6-2",
+  "matchup": [
+   {
+    "name": "马纳里诺",
+    "name_en": "Adrian Mannarino",
+    "country": "FRA",
+    "rank": 78
+   },
+   {
+    "name": "商竣程",
+    "name_en": "Juncheng Shang",
+    "country": "CHN",
+    "rank": 253
+   }
+  ],
+  "_matchup_rank_why": "ATP 排名 2026-09-21 那一期：`fetch_rankings()`（tennisexplorer ranking/atp-men，atp_at=21.09.2026）马纳里诺 78、商竣程 253；Tennis Temple 本场赛报写「ranked 78th」「253rd in the ATP rankings」，两源一致。⚠️ 赛前中文稿（凤凰网、新浪）写马纳里诺第 79，是上一期。",
+  "_name_why": "`player_zh(\"Adrian Mannarino\")` → 马纳里诺（players.py 第 88 行）；`player_zh(\"Juncheng Shang\")` → 商竣程。",
+  "_subject_why": "封面放**商竣程**——输的那个，但他是这条片子的主语：前年这站的冠军，这次拿外卡回来首轮出局；中国观众冲他来。",
+  "_heat_why": "① 档：中国球员单打，不用等额外理由。另一层：他是 2024 年成都公开赛冠军（tennisexplorer 逐场：决赛 7-6(4) 6-1 胜穆塞蒂；解说原话「the 2024 champion」），这是他回到夺冠地的第一场。账号所有者亲自点题。",
+  "scoreboard": {
+   "court": "Center Court",
+   "_court_why": "Tennis TV 转播图形（短集锦 114.5s）`ROUND 1 | CENTER COURT`。",
+   "duration_source": {
+    "url": "data:application/json,%7B%22duration%22%3A%20%221%3A42%22%2C%20%22source%22%3A%20%22flashscore%20dc_1%EF%BC%88f1wODSf4%EF%BC%89%E5%BC%80%E8%B5%9B%20DC%3D1790240400%EF%BC%8809%3A00%3A00Z%EF%BC%89%E3%80%81%E5%AE%8C%E8%B5%9B%20DD%3D1790246507%EF%BC%8810%3A41%3A47Z%EF%BC%89%EF%BC%8C%E7%9B%B8%E5%87%8F%201%3A41%3A47%22%2C%20%22cross_check%22%3A%20%22Tennis%20Temple%20%E8%B5%9B%E6%8A%A5%201%20hour%20and%2042%20minutes%EF%BC%9B%E8%BD%AC%E6%92%AD%E7%9B%98%E9%97%B4%E5%9B%BE%E5%BD%A2%EF%BC%88ttv%20114.5s%EF%BC%89%E9%A6%96%E7%9B%98%E7%BB%93%E6%9D%9F%E6%97%B6%E6%AF%94%E8%B5%9B%E6%97%B6%E9%92%9F%201%3A16%EF%BC%8Cflashscore%20df_sui_1%20%E9%A6%96%E7%9B%98%201%3A17%22%7D",
+    "field": "duration"
+   },
+   "_duration_why": "两个源：flashscore 自己的开赛/完赛时间戳相减 1:41:47；Tennis Temple 赛报 1 小时 42 分。⚠️ flashscore df_sui_1 的分盘相加是 1:17+0:27=1:44，它偏长（CLAUDE.md 记过），不用。"
+  }
+ },
+ "topbar": {
+  "line1": "2026 ATP250 成都站 首轮",
+  "line2": "马纳里诺 7-6(9) 6-2 商竣程"
+ },
+ "_topbar_why": "line1 按账号所有者 2026-09-24 定的格式「<年份> <巡回赛><级别> <城市>站 <轮次>」：成都公开赛是 ATP250（ATP 官方签表 protennislive 7581 页眉 `$ 184,085 250 pts`），第一轮写「首轮」。line2 由 cover.winner / result / matchup 机械拼出。",
+ "_result_why": "ATP 官方正赛签表 protennislive.com/posting/2026/7581/mds.pdf（Released 09/24/2026 18:42:19）第一轮 11/12 号签位下印着 `A. Mannarino 769 62`；flashscore 当日表 f1wODSf4：AE=Shang J.（home）BA=6 BC=2 / AF=Mannarino A.（away）BB=7 BD=6，df_sui_1 抢七 9:11；源片 140.5s 记分条 `SHANG 6⁹ 2 / MANNARINO 7 6`。三处一致。",
+ "_match": {
+  "status": "result_verified",
+  "source": "flashscore_points",
+  "source_id": "f1wODSf4",
+  "flashscore_id": "f1wODSf4",
+  "participants": [
+   "商竣程",
+   "马纳里诺"
+  ],
+  "set_scores_home_away": [
+   [
+    6,
+    7
+   ],
+   [
+    2,
+    6
+   ]
+  ],
+  "tiebreaks_home_away": [
+   [
+    9,
+    11
+   ],
+   null
+  ],
+  "winner": "马纳里诺",
+  "loser": "商竣程",
+  "winner_result": "7-6(9) 6-2",
+  "loser_result": "6-7(9) 2-6"
+ },
+ "_hit_data": "跑过 `match_stat_hooks.py f1wODSf4`。进旁白的：**首盘 8 个破发点全救**（df_st_1 Set 1 Break Points Saved 8/8，其中 5 个同时是盘点：df_mh_1 4-5 那一局三个 `|B1| |B2|`、5-6 那一局两个）；**抢七四个盘点没兑现**（df_mh_1 Tiebreak HM÷2,1 出现在 6-4、6-5、8-7、9-8）；**全场一个破发点都没拿到**（df_st_1 Break Points Converted 0/0，tennis.com 本场 Break Points Won 0/0 同样是零）；**第二盘从 2-1 起二十一分只拿到一分**（df_mh_1 Set 2 后五局 4+4+4+4+5 分——逐分不列制胜的那一分，每局加一——商竣程只在最后一局拿到 15；和 df_st_1 Set 2 的 Return Points Won 3/19、Service Points Won 9/20 对得上）。",
+ "_turning_points": [
+  "首盘 4-5（商竣程发球）：`0:15, 15:15, 30:15, 30:30, 30:40 |B1| |B2|, 40:40, 40:A |B1| |B2|, 40:40, 40:A |B1| |B2|, 40:40, A:40`——三个盘点全救，5-5。源片里没有这一局。",
+  "首盘 5-6（商竣程发球）：`0:15, 0:30, 15:30, 15:40 |B1| |B2|, 30:40 |B1| |B2|, 40:40, A:40, 40:40, A:40`——0-30 落后又救两个盘点，6-6。源片里没有这一局。",
+  "抢七：4-3（60.5s）→ 4-4（74.5s）→ 5-4（78.5s，商竣程发球）→ 88s 他握拳、92.5s 记分条翻成 6-4，两个盘点；源片跳到 9-10（94.5s）。flashscore：6-4、6-5、8-7、9-8 四个盘点都没兑现，马纳里诺第三个抢七盘点（全盘第七个盘点）拿下，11-9。",
+  "第二盘 2-2（商竣程发球，118~132s）：马纳里诺一板压线（解说 128.6~131.9「he's made it right on the line」），0-15；这一局零封被破。flashscore：从 2-1 起，21 分商竣程只拿 1 分。",
+  "第二盘 2-5（马纳里诺发球，134.5s `2 MATCH POINTS` 15-40）：第一个赛点兑现，140.5s 翻成 2-6。"
+ ],
+ "editorial": {
+  "mode": "match_review",
+  "hook": [
+   "两年前在这里捧杯",
+   "这回4个盘点没拿下"
+  ],
+  "question": "两年前在这块场地上拿到第一个巡回赛冠军的商竣程，这次拿外卡回来，首盘救下五个盘点、抢七自己手握四个盘点，为什么最后一个都没兑现，第二盘又只撑了二十多分钟？",
+  "thesis": "第一盘是商竣程一分一分顶出来的：马纳里诺八次逼到破发点，其中五个是盘点，他全救了回来；可他自己整场一个破发点都没拿到。抢七里他四次站上盘点，一个也没兑现，9-11 丢掉了这七十多分钟。第二盘从 2-1 起，二十一分他只拿到一分，二十多分钟就结束了。",
+  "beats": [
+   "北京时间 9 月 24 日傍晚，成都公开赛首轮，中心球场。两年前商竣程在这里拿到第一个巡回赛冠军，这次拿外卡回来，对面是法国老将马纳里诺。",
+   "首盘：马纳里诺八次逼到破发点，五个是盘点，商竣程全救；可他自己整场一个破发点都没拿到。",
+   "抢七：他打到 6-4 握拳，之后 6-5、8-7、9-8，四个盘点一个没兑现；马纳里诺第七个盘点拿下。解说原话：绕了一大圈。",
+   "第二盘：2-1 之后二十一分只拿一分，两次零封被破，2-6。收尾解说：knocking out the 2024 champion。末屏一问：四个盘点，差在哪一拍？"
+  ],
+  "human_context": {
+   "angle": "这场球的主语是**商竣程和这块场地**：2024 年他在成都连赢五场（锦织圭、萨菲乌林、布勃利克、汉夫曼、决赛 7-6(4) 6-1 胜穆塞蒂）拿到第一个巡回赛冠军，2025 年止步 1/8 决赛，这一次拿外卡回来，首轮就碰上老将马纳里诺。第一盘他顶得很硬，可抢七握着四个盘点没能兑现，之后第二盘迅速被带走。",
+   "facts": [
+    "tennisexplorer 逐场（player/shang/?annual=2024）：2024 Chengdu 1R 胜 Nishikori 6-4 6-4、R16 胜 Safiullin、QF 胜 Bublik、SF 胜 Hanfmann、F 胜 Musetti 7-6(4) 6-1；同页 Titles 一栏 2024 只有 Chengdu。",
+    "tennisexplorer 逐场（annual=2025）：2025 Chengdu 1R 胜 Bergs、R16 负 Nakashima 5-7 3-6。",
+    "ATP 官方签表 mds.pdf：11 号签位 `WC SHANG, Juncheng CHN`；本场 `A. Mannarino 769 62`；下一轮马纳里诺对 3 号种子塔比洛。",
+    "flashscore f1wODSf4 df_st_1：首盘破发点 商竣程 救 8/8；全场 Break Points Converted 商竣程 0/0、马纳里诺 2/10；第二盘商竣程 Total Points Won 12/39。",
+    "解说（Tennis TV 短集锦，small.en / medium.en 两个模型逐词一致）：87.6s「after saving five set points」、105.7s「it is a seventh set point in which he eventually gets the job done」、110.6s「He had to save four set points himself」、146.3s「knocking out the 2024 champion here」。"
+   ],
+   "sources": [
+    "https://www.protennislive.com/posting/2026/7581/mds.pdf",
+    "https://www.flashscore.com/match/tennis/f1wODSf4/",
+    "https://www.tennisexplorer.com/player/shang/?annual=2024",
+    "https://www.tennis.com/tournaments/chengdu-open/matches/j-shang-vs-a-mannarino-2026-09-24",
+    "https://en.tennistemple.com/actu/chengdu-mannarino-powers-past-shang-to-set-up/qf02",
+    "https://www.tennistv.com/videos/4581056/chengdu-2026-r1-shang-mannarino-short-highlights"
+   ]
+  }
+ },
+ "_no_repeat": "同栏目做过商竣程的 `shang-vallejo` / `shang-rublev` / `shang-darderi-montreal-2026`（蒙特利尔三场）和 `nishikori-shang`，这一条不重讲蒙特利尔救赛点、也不讲五个月伤停；2024 成都夺冠只作来路一句带过。同一站此前 `hu-kopriva-chengdu-2026-r1`（胡佳）是另一个人。",
+ "_injury_why": "账号所有者问过第二盘为什么崩得这么快、是不是体力或伤病。查过：Tennis Temple 赛报、tennis.com 比赛页、中文赛前稿，**都没有提伤病、医疗暂停或叫理疗**；短集锦第二盘画面（100~148s）逐格看过，也没有理疗师入场、护脚或跛行。所以旁白和文案**不写体力、不写伤病**，只写比分和数据上看得见的形状（二十一分只拿一分）。",
+ "push": {
+  "summary": "商竣程成都首轮出局",
+  "lead": "成都公开赛首轮，两年前在这里夺冠的商竣程拿外卡回来，6-7(9) 2-6 负于马纳里诺。第一盘马纳里诺八次逼到破发点、其中五个是盘点，他全救了回来；抢七里他四次站上盘点，一个都没兑现，9-11 丢掉了七十多分钟的首盘。第二盘从 2-1 起，二十一分他只拿到一分。",
+  "matchup": "马纳里诺 vs 商竣程",
+  "score": "7-6(9) 6-2",
+  "auto": true
+ },
+ "_push_summary_why": "9 字位，主语是商竣程；「成都」点出他两年前夺冠的那一站。标题里不写排名。",
+ "_voice_why": "沿用这条线的默认：云见（`zh-CN-YunjianNeural`）＋6%，不设 `style`。",
+ "_tactics_why": "短集锦 157 秒只剪了十来分，几乎全是同一机位的底线高位宽景，球员在 1080p 画面里只有四五十像素高。能判的球路写进了旁白：第 3 段马纳里诺一发压到外角（解说 45.2s「serve was just absolutely pinpoint」）、第 9 段第二盘 2-2 马纳里诺一板压线（解说 128.6s「he's made it right on the line」）；其余只写比分走势和统计。",
+ "segments": [
+  {
+   "source": "ttv",
+   "start": 0.0,
+   "end": 20.6,
+   "cx": 0.5,
+   "narration": "北京时间九月二十四号傍晚五点左右，成都公开赛首轮，中心球场。两年前，商竣程就是在这块场地上，拿到了生涯第一个巡回赛冠军。这一次他拿着外卡回来。首轮碰上世界第七十八，法国老将马纳里诺。",
+   "_why": "首盘第 1 局（马纳里诺发球）40-0 → 40-15（4.5s 解说「brilliant return from Jerry Shang」），跳到 1-1。同一机位底线宽景。 段尾收在 19.3 切到商竣程近景（转播图形 MATCH TIME 0:05）之后 1.3 秒。",
+   "_start_time_why": "开球时刻：flashscore 当日表 f1wODSf4 的 DC=1790240400（2026-09-24 09:00:00Z＝北京 17:00），完赛 DD=10:41:47Z，相减 1:41:47，和 Tennis Temple 的「1 hour and 42 minutes」对得上，说明 09:00Z 是实际开赛而不是排定时刻。只说「五点左右」，不报到分。"
+  },
+  {
+   "source": "ttv",
+   "start": 21.0,
+   "end": 32.6,
+   "cx": 0.5,
+   "narration": "第一盘，两个人谁也没破掉谁。马纳里诺八次把他逼到破发点，其中五个同时是盘点，商竣程一个一个全救了回来。",
+   "_why": "首盘 2-2（马纳里诺发球）30-15 → 40-15。这一段讲的是源片里没剪进来的 4-5、5-6 两局（flashscore 逐分），画面是同一盘的底线宽景。"
+  },
+  {
+   "source": "ttv",
+   "start": 35.0,
+   "end": 50.5,
+   "cx": 0.5,
+   "narration": "可他自己，整场一个破发点都没拿到。马纳里诺的发球一次次压在角上，解说都忍不住说：精准。商竣程能做的，只有一局一局，保住自己。",
+   "_why": "马纳里诺近景（2-2 40-15，32.74 切进来，段首取 35.0）之后 3-3 发球 0-15 → 30-0（49.3 翻牌）；解说 45.2s「serve was just absolutely pinpoint」。"
+  },
+  {
+   "source": "ttv",
+   "start": 50.6,
+   "end": 58.9,
+   "cx": 0.5,
+   "narration": "三比三之后，谁也没破掉谁，局分一路咬到六平。这一盘，只能交给抢七。",
+   "_why": "首盘 3-3 马纳里诺发球 40-0 → 40-15（56.6s 解说「Another return from Jerry Shang」）。"
+  },
+  {
+   "source": "ttv",
+   "start": 59.5,
+   "end": 74.0,
+   "cx": 0.5,
+   "narration": "抢七，商竣程四比三领先。第一盘七十多分钟，他在自己的发球局里救下八个破发点，等的就是这几分。马纳里诺扳成四平。",
+   "_why": "抢七 4-3（60.5s）一直到 4-4 翻牌（约 74s）。"
+  },
+  {
+   "source": "ttv",
+   "start": 77.2,
+   "end": 88.8,
+   "cx": 0.5,
+   "narration": "四平之后，他连拿两分，打到六比四。他转身握拳，吼了出来。手里是两个盘点，离拿下这一盘，只差一分。",
+   "_why": "抢七 5-4（78.5s 起商竣程发球）→ 88s 握拳；记分条 92.5s 才翻成 6-4（翻牌滞后）。段首 77.2 在 4-4→5-4 翻牌之后。",
+   "point_end_ok": "88s 商竣程已经转身握拳庆祝（缩略图墙 1:28 那一格），这一分打完了；记分条要到 92.5s 才翻成 6-4——翻牌滞后，本文件「比分板会滞后」那条。90.4 / 91.3 那两次「翻牌」是 88.9 之后的庆祝近景和转场图形。"
+  },
+  {
+   "source": "ttv",
+   "start": 88.9,
+   "end": 99.5,
+   "cx": 0.5,
+   "narration": "两个盘点都没兑现。八比七、九比八，他又两次站上盘点，还是没拿下。九比十一。",
+   "_why": "88.9 起盘点庆祝近景、92.5 翻成 6-4，94.5 跳到 9-10（马纳里诺发球），99.6 首盘结束。"
+  },
+  {
+   "source": "ttv",
+   "start": 99.7,
+   "end": 117.9,
+   "cx": 0.5,
+   "quote": [
+    {
+     "at": 0.3,
+     "text": "talk about taking the scenic route\n马纳里诺这盘绕了一大圈"
+    },
+    {
+     "at": 6.0,
+     "text": "it is a seventh set point\n第七个盘点"
+    },
+    {
+     "at": 8.4,
+     "text": "he eventually gets the job done\n他终于拿下了这一盘"
+    },
+    {
+     "at": 10.9,
+     "text": "He had to save four set points himself\n他自己也救了四个盘点"
+    },
+    {
+     "at": 13.7,
+     "text": "an intriguing opening hour and a quarter\n扣人心弦的一小时十五分钟"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "_quote_why": "转播原句 ttv 100.0~116.0s，small.en / medium.en 两个模型逐词对得上：Well, talk about taking the scenic route for Adrian Mannarino (100.0~103.6) / And it is a seventh set point in which he eventually gets the job done (105.7~110.3) / He had to save four set points himself, an intriguing opening hour and a quarter out here (110.6~116.0)。和 flashscore 逐分一致：马纳里诺在发球局里有 5 个盘点、抢七里 6-7 和 9-10 两个，第七个兑现；商竣程抢七里 4 个盘点。",
+   "_why": "第二盘第一分（99.6 翻牌之后）和 111.44 起的盘间图形 `ROUND 1 | CENTER COURT | 1:16`。 117.2 是盘间图形退掉、记分条重新出现（`SHANG 6⁹ 2 / MANNARINO 7 2` 前的那一次），段尾留到 117.9。"
+  },
+  {
+   "source": "ttv",
+   "start": 118.0,
+   "end": 131.5,
+   "cx": 0.5,
+   "narration": "第二盘二比二，他发球，马纳里诺一板压线。这一盘，他的一发只拿到一半的分；从二比一开始，二十一分他只拿到一分，二十多分钟就结束了。",
+   "_why": "第二盘 2-2 商竣程发球第一分（记分条 132.5s `SHANG 2 0 / MANNARINO 2 15`），解说 128.6~131.9「Oh, he's made it right on the line」。"
+  },
+  {
+   "source": "ttv",
+   "start": 132.0,
+   "end": 140.4,
+   "cx": 0.5,
+   "narration": "两个发球局都被零封破掉，第一个赛点就兑现。四个盘点，你觉得，差在哪一拍？",
+   "_why": "134.5s `2 MATCH POINTS`（2-5 15-40），139.6 翻成 2-6。"
+  },
+  {
+   "source": "ttv",
+   "start": 140.5,
+   "end": 148.5,
+   "cx": 0.5,
+   "quote": [
+    {
+     "at": 0.2,
+     "text": "it's been a tough couple of months\n这几个月马纳里诺不好过"
+    },
+    {
+     "at": 2.9,
+     "text": "but he's off and running here in Chengdu\n但他在成都开了个好头"
+    },
+    {
+     "at": 5.2,
+     "text": "knocking out the 2024 champion here\n淘汰了2024年的冠军"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "_quote_why": "转播原句 ttv 140.7~148.1s：Well, it's been a tough couple of months for Adrian Mannarino, but he's off and running here in Chengdu, knocking out the 2024 champion here.（small.en 全句；medium.en 到 Manarino 为止一致）。",
+   "_why": "赛后握手与马纳里诺近景，到 148.74 片尾推广卡之前。",
+   "point_end_ok": "比赛在 139.6s 翻成 2-6 就结束了；140.5~148.5 是赛后握手和马纳里诺近景，149.7 那一次「翻牌」发生在 148.74 切到 Tennis TV 推广卡之后，没有球。"
+  }
+ ],
+ "stats": {
+  "tour": "atp",
+  "a": {
+   "aces": 8,
+   "df": 0,
+   "first_in": 45,
+   "first_won": 39,
+   "second_total": 12,
+   "second_won": 8,
+   "bp_conv": 2,
+   "bp_chances": 10,
+   "pts_won": 79,
+   "pts_total": 137,
+   "first_total": 57,
+   "headshot": "assets/players/headshots/atp-ME82.png"
+  },
+  "b": {
+   "aces": 8,
+   "df": 1,
+   "first_in": 48,
+   "first_won": 32,
+   "second_total": 32,
+   "second_won": 16,
+   "bp_conv": 0,
+   "bp_chances": 0,
+   "pts_won": 58,
+   "pts_total": 137,
+   "first_total": 80,
+   "headshot": "assets/players/headshots/atp-S0RE.png"
+  },
+  "_source": "`python tools/match_stat_hooks.py f1wODSf4 --stats-block` 机器抄的 flashscore df_st_1 全场统计。a/b 跟 cover.matchup 的顺序（a=马纳里诺、b=商竣程）；flashscore 这一场 home=Shang J.、away=Mannarino A.，**顺序相反，已对调**。头像：两张都是 ATP 官方头像（`fetch_official_headshot.py atp ... --id ME82 / S0RE --via https://www.mubadaladcopen.com`，256 / 241 色，不是占位剪影），打开看过，脸和名字对得上。",
+  "_winners_ue_why": "两个源都查过，都用不了：① flashscore df_st_1 这一场只有 17 项，没有制胜分和非受迫失误（`match_stat_hooks.py f1wODSf4` 报「flashscore 这场没有」）；② TNNS（tnns-stats.yml，id 74923156，run 35990639752 与 35993068969 两趟一字不差）给了全场制胜分 24/24、非受迫失误 42/23（商竣程/马纳里诺），但分盘合计对不上（制胜分分盘 [16,17] vs 全场 [24,24]，非受迫失误 [43,23] vs [42,23]），工具自己判「多半解错了，别用」；tennis.com 本场统计同样没有这两项。所以数据图只画七项官方统计。"
+ }
+}
