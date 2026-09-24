@@ -7,10 +7,10 @@
  },
  "primary": "day1",
  "_source": "两条源，**都是 Tennis TV 官方**，probe 实测一律 1920×1080 / 25fps：\n· `day1` = 账号所有者 2026-09-24 直接给的 URL，Tennis TV YouTube《Baez Battles Brooksby; Kopriva Takes On Hu To Kick Things Off 💥 | Chengdu 2026 Highlights Day 1》（oEmbed author_name=Tennis TV），553.45s 的**当日合集**；胡佳这一场在 298.5s 片头卡「KOPRIVA v HU」之后、到 543.4s 握手为止，约 245 秒，比单场短集锦多出第二盘 3-3、3-4（15-40）和 5-5 三局。\n· `ttv` = tennistv.com `library/short-highlights`《chengdu-2026-r1-kopriva-hu-short-highlights》，free 档，143.56s。**只用它的片尾 10 秒**（解说那句「we saw enough there of Hu Jia」）：这条源在沙箱里下得动，解说逐词用 faster-whisper small.en 和 medium.en 两个模型分别转过，两份对得上；合集那一条在沙箱里 YouTube 403，听不了。\n四要素自证：记分条逐格读过（`score_*.jpg`），`KOPRIVA / HU` 两行，从 0-30 30-30 读到 6-4、7-5，和 flashscore EVZwApfT 逐分记录一分不差；场地印着 `CHENGDU 成都`；短集锦 96.5s 转播图形 `ROUND 1 | CENTER COURT | 0:40 | ATP 250`。",
- "_tennistv_trim": "两条源都是 Tennis TV。**片尾**：`day1` 的比赛画面收在 543.4s（握手），544.5s 起是 Tennis TV 品牌卡和二维码订阅卡——本片用到的最后一段收在 538.9s，离片尾卡 5.6 秒；`ttv` 那一条到 143.56s 为止都是握手画面，没有片尾卡，末段收在 143.3s。**台标**：Tennis TV 台标烧在右上角（源片 x≈1780~1900），3:4 取景窗 cx=0.5 时只取 555~1365，角上那块在窗外。",
+ "_tennistv_trim": "两条源都是 Tennis TV。**片尾**：`day1` 的比赛画面收在 543.4s（握手），544.5s 起是 Tennis TV 品牌卡和二维码订阅卡——本片用到的最后一段收在 538.9s，离片尾卡 5.6 秒；`ttv` 那一条到 143.56s 为止都是握手画面，没有片尾卡，末段收在 143.3s（离源片末尾 0.26s，留出溶解底料）。**台标**：Tennis TV 台标烧在右上角（源片 x≈1780~1900），3:4 取景窗 cx=0.5 时只取 555~1365，角上那块在窗外。",
  "mixed_fps": {
   "day1": "25fps，1920×1080",
-  "ttv": "25fps，1920×1080——两条同帧率同尺寸，不存在混帧率问题。"
+  "ttv": "runner 上下到的是 50fps 版本（render 日志「高帧率源整除降采样：50/1 / 2 → 25」），整除降到 25fps，和 day1 同帧率；尺寸同为 1920×1080。"
  },
  "cover": {
   "eyebrow": "赛场之上",
@@ -271,7 +271,7 @@
   {
    "source": "ttv",
    "start": 139.1,
-   "end": 143.4,
+   "end": 143.3,
    "cx": 0.5,
    "quote": [
     {
@@ -285,7 +285,8 @@
    ],
    "_quote_kind": "broadcast",
    "_quote_why": "转播原句 ttv 133.5~142.6s「and Kopřiva does what he came to do, but we saw enough there of Hu Jia」——两个模型（small.en / medium.en）逐词对得上；这一段只留后半句 139.3~142.6（but@139.3 we@140.6 saw@140.8 enough@141.0 there@141.4 of@141.7 Hu@142.1）。",
-   "_why": "网前握手（ttv 138.5~142.5 全是握手画面，和 day1 538.5~542.5 是同一时刻），解说替这条片子说出落点。"
+   "_why": "网前握手（ttv 138.5~142.5 全是握手画面，和 day1 538.5~542.5 是同一时刻），解说替这条片子说出落点。",
+   "_end_why": "源片 ttv 全长 143.56s；段尾加 0.18s 溶解底料不能越过源片末尾（第一趟 render 143.4 越界报「分段比要求的短」），收到 143.3。"
   }
  ]
 }
