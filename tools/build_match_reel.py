@@ -8661,13 +8661,13 @@ def _topbar_lines(spec: dict) -> tuple[str, str] | None:
         if column == "赛场之上" and slug not in _LEGACY_NO_TOPBAR:
             raise ReelError(
                 "「赛场之上」的比赛画面必须带比赛信息顶栏，spec.topbar 不能省：\n"
-                '  "topbar": {"line1": "<年份> <赛事> <轮次>", "line2": "<赢家> <比分> <对手>"}\n'
+                '  "topbar": {"line1": "<年份> <巡回赛><级别> <城市>站 <轮次>", "line2": "<赢家> <比分> <对手>"}\n'
                 # line1 的顺序（年份在最前）2026-08-18 跟"赛后开麦"对齐过：
                 # 账号所有者拿两条线的顶栏截图对比，要求"顶部的标题改成和
                 # 赛后开麦一样的文案"——那边印的是「2026 辛辛那提 WTA1000
-                # 第三轮」，年份领头。这个字段本身是自由文本、代码不校验
-                # 格式，这句例文就是唯一的口径出处。
-                f'  例：{{"line1": "2026 加拿大站 WTA 1000 第三轮", '
+                # 第三轮」，年份领头。2026-09-24 起格式由
+                # reel_facts.tour_topline_problem 校验（「2026 ATP250 成都站 首轮」）。
+                f'  例：{{"line1": "2026 WTA1000 加拿大站 第三轮", '
                 f'"line2": "{_expected_topbar_score_line(spec) or "萨巴伦卡 6-3 6-4 张帅"}"}}\n'
                 "line2 必须和 cover 的 winner/result/matchup 一致（不许在顶栏另写一份），"
                 "而且带顶栏的新 spec 还要填 editorial 合同。")
@@ -8683,6 +8683,19 @@ def _topbar_lines(spec: dict) -> tuple[str, str] | None:
     if expected and lines[1] != expected:
         raise ReelError(
             f"spec.topbar.line2 必须与 cover 的 winner/result/matchup 一致：{expected}")
+    # 顶栏赛事行的格式：「2026 ATP250 成都站 首轮」（账号所有者 2026-09-24）。
+    # 定格式之前发出去的挂在 data/legacy_topline_format.json；自动产的 spec
+    # 只报不拦（那一头没人写 `_topbar_format_why`，做硬会把自动链卡住）。
+    from reel_facts import legacy_topline, tour_topline_problem  # noqa: PLC0415
+    column = str((spec.get("cover") or {}).get("eyebrow", "")).strip()
+    slug = str(spec.get("slug", "")).strip()
+    if column == "赛场之上" and slug not in legacy_topline("reels"):
+        problem = tour_topline_problem(lines[0], spec.get("_topbar_format_why", ""))
+        if problem:
+            if (spec.get("_production") or {}).get("status") == "ready_for_render":
+                print(f"[顶栏] ⚠️ {problem}")
+            else:
+                raise ReelError(problem)
     return lines  # type: ignore[return-value]
 
 
