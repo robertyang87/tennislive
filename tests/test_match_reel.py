@@ -15996,6 +15996,67 @@ def test_美网的比赛一律带式版式():
              "segments": list(seg)}, srcs, "r1")
 
 
+def test_全出血赛场之上要回贴比分板_豁免表只许减():
+    """账号所有者 2026-09-24（杭州 `bu-zheng-hangzhou-2026-r1`）：比分板贴边、同比
+    放大贴回左下，「后续比赛也要用同样的方式把这个能力固定下来」。
+
+    钉四头：① 新的全出血「赛场之上」没有 scorebox → 红；② 有 scorebox 但某段
+    没表态 score_inset → 红，写 false 不带理由 → 红；③ 自动产的 spec 只报不拦、
+    带式和别的栏目不受影响；④ 豁免表自检——slug 真的存在、真的还过不了这道闸。
+    """
+    import pytest  # noqa: PLC0415
+
+    reel = _reel()
+    srcs = {"r1": Path("a.mp4")}
+    cover = {"eyebrow": "赛场之上"}
+
+    def seg(**kw):
+        return [{"start": 1, "end": 7, "source": "r1", **kw}]
+
+    with pytest.raises(reel.ReelError, match="scorebox"):
+        reel.parse_segments({"cover": cover, "segments": seg()}, srcs, "r1")
+    with pytest.raises(reel.ReelError, match="没表态"):
+        reel.parse_segments({"cover": cover, "scorebox": [98, 920, 466, 1029],
+                             "segments": seg() + seg(score_inset=True)}, srcs, "r1")
+    with pytest.raises(reel.ReelError, match="没说为什么"):
+        reel.parse_segments({"cover": cover, "scorebox": [98, 920, 466, 1029],
+                             "segments": seg(score_inset=True)
+                             + seg(score_inset=False)}, srcs, "r1")
+    ok = reel.parse_segments(
+        {"cover": cover, "scorebox": [98, 920, 466, 1029],
+         "segments": seg(score_inset=True)
+         + seg(score_inset=False, _score_inset_why="回放，板收走了")}, srcs, "r1")
+    assert ok[0].score_inset == (98, 920, 466, 1029) and ok[1].score_inset is None
+
+    # 自动产的 spec 只报不拦；别的栏目、存档片不受影响
+    assert reel.parse_segments({"cover": cover, "segments": seg(),
+                                "_production": {"status": "ready_for_render"}},
+                               srcs, "r1")
+    assert reel.parse_segments({"cover": {"eyebrow": "网球有故事"},
+                                "segments": seg()}, srcs, "r1")
+    assert reel.parse_segments({"cover": cover, "archival": "x",
+                                "segments": seg()}, srcs, "r1")
+
+    # 豁免表自检（只许减不许加）
+    legacy = json.loads(Path("data/legacy_fullbleed_no_scoreboard.json")
+                        .read_text(encoding="utf-8"))["reels"]
+    assert len(legacy) == len(set(legacy)), "豁免表里有重复的名字"
+    assert len(legacy) <= 177, "豁免表只许减不许加（定规矩那天是 177 条）"
+    for slug in legacy:
+        p = Path("specs/reels") / f"{slug}.json"
+        assert p.is_file(), f"豁免表里的 {slug} 根本不存在"
+        d = json.loads(p.read_text(encoding="utf-8"))
+        col = str((d.get("cover") or {}).get("eyebrow", "") or d.get("_column", ""))
+        assert col.strip() == "赛场之上" and d.get("layout") != "band", (
+            f"{slug} 不是全出血的赛场之上——它不该在豁免表里")
+        passes = d.get("scorebox") is not None and all(
+            s.get("score_inset") is True
+            or ("score_inset" in s and str(s.get("_score_inset_why", "")).strip())
+            for s in d.get("segments") or []
+            if not (s.get("image") or s.get("title_card") or s.get("stat_card")))
+        assert not passes, f"{slug} 已经过得了闸——从豁免表里把它删掉（只许减不许加）"
+
+
 def test_背景音乐要真的落在现场声的4个百分点上(tmp_path):
     """账号所有者 2026-08-28：「配上背景音乐，音量是原声的 4.0%」。
 
@@ -16792,11 +16853,13 @@ def test_全出血也能回贴记分条_字幕抬到板上方(tmp_path, monkeypa
     assert '(BAND_TOP if LAYOUT == "band" else 0) + int(round(y0 * ratio))' in src_txt
 
 
-def test_全出血的板贴屏幕左边缘(tmp_path, monkeypatch):
-    """账号所有者 2026-09-24：板的左缘**对齐屏幕左边缘**，ATP 的比赛一律如此
-    （成都 `shang-mannarino-chengdu-2026-r1` 定的全局口径；同一天早些时候杭州那条
-    试过收到顶栏文字那条竖线 x=48，被取代）。巡回赛的板多半整块落在居中窗口外
-    （这条：板 [98,466]、窗口左缘 555），贴片照样贴 x=0，板宽仍是原比例。
+def test_全出血的板整块在窗外时贴边放大贴回左下(tmp_path, monkeypatch):
+    """账号所有者 2026-09-24（杭州 `bu-zheng-hangzhou-2026-r1`）看过 x=0 / 48 / 131 /
+    不放大四版并排后定的：**贴边 x=0、跟画面同比放大**（1080/810），并要求
+    「后续比赛也用同样的方式把这个能力固定下来」。
+
+    巡回赛的板多半整块落在居中窗口外（这条：板 [98,466]、窗口左缘 555），画面里
+    没有残条要盖——贴片的左缘照样顶在画布左缘，大小是源片板乘画面同一个比例。
     """
     reel = _reel()
     from PIL import Image  # noqa: PLC0415
@@ -16829,9 +16892,10 @@ def test_全出血的板贴屏幕左边缘(tmp_path, monkeypatch):
         p = im.getpixel((x, mid))
         return p[0] > 180 and p[2] > 180 and p[1] < 90
 
-    assert magenta(2), "x=2 没有板——板没对齐屏幕左边缘（还收在顶栏那条竖线？）"
+    assert magenta(2), "画布最左边（x=2）没有板——没贴，或者没贴边（账号所有者定的是 x=0）"
     bw = -(-int(round((x1 - x0) * ratio)) // 2) * 2
-    assert magenta(bw - 10) and not magenta(bw + 20), "板宽不是原比例"
+    assert magenta(bw - 10) and not magenta(bw + 20), (
+        f"板宽不是跟画面同比放大的 {bw}px（源片 {x1 - x0}px × {ratio:.3f}）")
 
 
 def test_没给scorebox时probe要按猜的框顺手量一遍死球(monkeypatch):
