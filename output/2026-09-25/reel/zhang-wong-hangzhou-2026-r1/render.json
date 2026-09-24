@@ -1,0 +1,71 @@
+{
+  "scoreboard_qc_sha256": "3338cb950d9ae2126e36f143cb16b072e844281eaeabb623c45a5d993838d362",
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 3.827,
+  "layout": "full",
+  "segments_seconds": 123.5,
+  "topbar": {
+    "line1": "2026 ATP250 杭州站 首轮",
+    "line2": "黄泽林 6-3 6-3 张之臻",
+    "start": 1.2,
+    "end": 124.7
+  },
+  "film_seconds": 128.56,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "0": 18.528,
+    "1": 11.76,
+    "2": 6.576,
+    "3": 7.872,
+    "4": 5.088,
+    "5": 8.592,
+    "6": 14.952,
+    "7": 8.544,
+    "9": 7.752,
+    "10": 7.944,
+    "11": 3.24,
+    "13": 4.56
+  },
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "zhang-wong-hangzhou-2026-r1",
+    "received_at": "2026-09-24T16:19:21Z",
+    "artifact_ready_at": "2026-09-24T16:24:35Z",
+    "elapsed_seconds": 314.276,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "dbe8921073ba11674d0b4ef75b41de618ca3047ab03e9c8d39f350c255ee7991",
+    "spec_sha256": "3dc04d840396c1b8853f83370b4f83b33f67b27a3efc40092cf91fc3e0d4ebee",
+    "run_id": "36026525885",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-09-24T16:21:47Z",
+        "run_id": "36026525885"
+      }
+    ],
+    "render_seconds": 169.276,
+    "pre_render_seconds": 145.0
+  },
+  "film_sha256": "dbe8921073ba11674d0b4ef75b41de618ca3047ab03e9c8d39f350c255ee7991",
+  "film_bytes": 39022945,
+  "qc_attestation_sha256": "8cb99ad188b89243e5b76f0f561c2a5298244694c8f7cf09dc8cb5426791c76a",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-09-24T16:21:47Z",
+      "run_id": "36026525885"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-24T16:24:36Z",
+      "run_id": "36026525885"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-zhang-wong-hangzhou-2026-r1/zhang-wong-hangzhou-2026-r1.mp4",
+  "video_bytes": 39022945
+}
