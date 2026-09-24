@@ -16838,6 +16838,62 @@ def test_全出血的板整块在窗外时往里收到顶栏那条竖线(tmp_pat
     assert magenta(m + bw - 10) and not magenta(m + bw + 20), "板宽不是原比例"
 
 
+def test_score_inset_left写0时板贴屏幕左边缘(tmp_path, monkeypatch):
+    """账号所有者 2026-09-24（成都 `shang-mannarino-chengdu-2026-r1`）：比分板
+    「对齐那个屏幕的左边缘」，选了 x=0。杭州那条选的是和顶栏文字对齐（48），
+    所以这是 spec 顶层逐条认领的 `score_inset_left`，不改默认——上一条测试
+    钉着默认，这一条钉着认领之后真的贴到 0、板宽仍是原比例。
+    """
+    reel = _reel()
+    from PIL import Image  # noqa: PLC0415
+
+    def _ff(*args):
+        subprocess.run(["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+                        *args], check=True)
+
+    monkeypatch.setattr(reel, "LAYOUT", "full")
+    reel.resolve_crop(1920, 1080, None, "", layout="full")
+    src = tmp_path / "src.mp4"
+    x0, y0, x1, y1 = 98, 920, 466, 1029
+    _ff("-f", "lavfi", "-i", "color=c=0x1f6f3f:s=1920x1080:r=25:d=3",
+        "-f", "lavfi", "-i", "sine=frequency=440:duration=3",
+        "-vf", f"drawbox=x={x0}:y={y0}:w={x1 - x0}:h={y1 - y0}:color=0xff00ff:t=fill",
+        "-c:v", "libx264", "-preset", "ultrafast", "-crf", "16", "-pix_fmt", "yuv420p",
+        "-c:a", "aac", "-shortest", str(src))
+    seg = reel.Segment(0.5, 2.5, 0.5, "", track=False)
+    seg.score_inset = (x0, y0, x1, y1)
+    seg.score_inset_left = 0
+    out = tmp_path / "part.mp4"
+    reel.cut_segment(src, seg, out, 1920)
+    frame = tmp_path / "f.png"
+    _ff("-ss", "1.0", "-i", str(out), "-frames:v", "1", str(frame))
+    im = Image.open(frame).convert("RGB")
+
+    ratio = reel.VIDEO_W / reel.CROP_W
+    mid = int(round(y0 * ratio)) + int((y1 - y0) * ratio / 2)
+
+    def magenta(x: int) -> bool:
+        p = im.getpixel((x, mid))
+        return p[0] > 180 and p[2] > 180 and p[1] < 90
+
+    assert magenta(2), "x=2 没有板——score_inset_left=0 没生效，还收在顶栏那条竖线"
+    bw = -(-int(round((x1 - x0) * ratio)) // 2) * 2
+    assert magenta(bw - 10) and not magenta(bw + 20), "板宽不是原比例"
+
+
+def test_score_inset_left只收0到顶栏边距且要写理由():
+    reel = _reel()
+    assert reel._score_inset_left({}) is None
+    assert reel._score_inset_left({"score_inset_left": 0,
+                                   "_score_inset_left_why": "账号所有者选的"}) == 0
+    for bad in ({"score_inset_left": 0},
+                {"score_inset_left": -1, "_score_inset_left_why": "x"},
+                {"score_inset_left": reel.TOPBAR_MARGIN_H + 1, "_score_inset_left_why": "x"},
+                {"score_inset_left": True, "_score_inset_left_why": "x"}):
+        with pytest.raises(reel.ReelError):
+            reel._score_inset_left(bad)
+
+
 def test_没给scorebox时probe要按猜的框顺手量一遍死球(monkeypatch):
     """账号所有者 2026-09-19 第四次重申「视频剪辑要完整一分结束再切画面」。
 
