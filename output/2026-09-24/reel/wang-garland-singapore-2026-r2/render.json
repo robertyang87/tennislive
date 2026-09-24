@@ -1,0 +1,69 @@
+{
+  "scoreboard_qc_sha256": null,
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 3.827,
+  "layout": "full",
+  "segments_seconds": 223.0,
+  "topbar": {
+    "line1": "2026 WTA500 新加坡站 1/8决赛",
+    "line2": "王欣瑜 7-5 6-4 葛蓝乔安娜",
+    "start": 1.2,
+    "end": 224.2
+  },
+  "film_seconds": 228.04,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "0": 13.104,
+    "1": 18.432,
+    "2": 22.632,
+    "3": 13.608,
+    "4": 9.792,
+    "5": 16.248,
+    "7": 15.696,
+    "8": 14.784,
+    "9": 4.272,
+    "11": 7.752
+  },
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "wang-garland-singapore-2026-r2",
+    "received_at": "2026-09-24T10:25:45Z",
+    "artifact_ready_at": "2026-09-24T10:33:07Z",
+    "elapsed_seconds": 442.961,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "e450f8b7428a429332fbc17dd8dcb925e8a4eab2e9090f26429103b6b2521968",
+    "spec_sha256": "0cdabf8b7863bfd4af238893a77af3d2263d3c438971092d56217aa46b44c639",
+    "run_id": "35987130533",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-09-24T10:28:33Z",
+        "run_id": "35987130533"
+      }
+    ],
+    "render_seconds": 274.961,
+    "pre_render_seconds": 168.0
+  },
+  "film_sha256": "e450f8b7428a429332fbc17dd8dcb925e8a4eab2e9090f26429103b6b2521968",
+  "film_bytes": 128101585,
+  "qc_attestation_sha256": "9683bd8eab819a48ce3ab688d4ba786aa92693dc6c31e05db1224a225dc85317",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-09-24T10:28:33Z",
+      "run_id": "35987130533"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-24T10:33:09Z",
+      "run_id": "35987130533"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-wang-garland-singapore-2026-r2/wang-garland-singapore-2026-r2.mp4",
+  "video_bytes": 128101585
+}
