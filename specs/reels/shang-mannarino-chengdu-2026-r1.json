@@ -16,8 +16,7 @@
  "_scorebox_why": "账号所有者 2026-09-24：比分板照 `bu-zheng-hangzhou-2026-r1` 的做法从同一帧抠出来按原比例贴回画面左下（`score_inset: true`，字幕自动抬到板上方），左缘**对齐屏幕左边缘**（x=0，ATP 全局口径）；板**逐帧**按画面里的实际宽度切，`BREAK POINT` / `SET POINT` / `MATCH POINT` 黄条**单独切**、接在板右边（`tools/atp_scoreboard.py`，逐帧透明蒙版）。坐标是全分辨率帧实测（本地拉的同一条源片）：板左缘 98、上缘 920、下缘 1028；右缘 476 是这场板**最宽状态**的实测（第二盘 `6⁹ 2 15 / 7 5 40` 474），只当上限——近景里板右边是深蓝挡板时两者颜色分不开，逐帧量会一路宽出去，封在 476。逐帧实测的几档：首盘 374（无小分列）/ 426（带小分）、第二盘 422 / 474；134.6~136.2s 的 `2 MATCH POINTS` 黄条外框 (474,974)–(737,1028)，只占下面那一行。",
  "cover": {
   "eyebrow": "赛场之上",
-  "layout": "solo",
-  "subject": "商竣程",
+  "layout": "cutout",
   "hook": "两年前在这里捧杯\n这回4个盘点没拿下",
   "hook_accent": "4个盘点",
   "_hook_why": "两行一个落差：第一行是他的来路（2024 年成都公开赛冠军，这是他第一个巡回赛冠军），第二行是这场球的形状——首盘抢七里他四次站上盘点（6-4、6-5、8-7、9-8，flashscore 逐分 HM 标记），一个都没兑现，之后第二盘 2-6。不写排名、年龄、国籍；「盘点」是这条线钩子里用过的词（「3个赛点全丢了」同一族）。9 字和 9 字，都在 10 字以内。",
@@ -40,7 +39,6 @@
   ],
   "_matchup_rank_why": "ATP 排名 2026-09-21 那一期：`fetch_rankings()`（tennisexplorer ranking/atp-men，atp_at=21.09.2026）马纳里诺 78、商竣程 253；Tennis Temple 本场赛报写「ranked 78th」「253rd in the ATP rankings」，两源一致。⚠️ 赛前中文稿（凤凰网、新浪）写马纳里诺第 79，是上一期。",
   "_name_why": "`player_zh(\"Adrian Mannarino\")` → 马纳里诺（players.py 第 88 行）；`player_zh(\"Juncheng Shang\")` → 商竣程。",
-  "_subject_why": "封面放**商竣程**——输的那个，但他是这条片子的主语：前年这站的冠军，这次拿外卡回来首轮出局；中国观众冲他来。",
   "_heat_why": "① 档：中国球员单打，不用等额外理由。另一层：他是 2024 年成都公开赛冠军（tennisexplorer 逐场：决赛 7-6(4) 6-1 胜穆塞蒂；解说原话「the 2024 champion」），这是他回到夺冠地的第一场。账号所有者亲自点题。",
   "scoreboard": {
    "court": "Center Court",
@@ -50,7 +48,32 @@
     "field": "duration"
    },
    "_duration_why": "两个源：flashscore 自己的开赛/完赛时间戳相减 1:41:47；Tennis Temple 赛报 1 小时 42 分。⚠️ flashscore df_sui_1 的分盘相加是 1:17+0:27=1:44，它偏长（CLAUDE.md 记过），不用。"
-  }
+  },
+  "versus": {
+   "_why": "**两格都用 ATP 官方全身抠图**（`/-/media/alias/player-gladiator-image/<atp_id>`，经赛事域名取）：马纳里诺 ME82（81615 字节、379×603，深蓝 T 恤）、商竣程 S0RE（仓库已有的 `atp-s0re-shang-juncheng.png`，和今天现取的是同一张照片，橙色 Nike 球衣白帽）。两张都打开看过，都不是 ATP 那张 14382 字节的灰色占位剪影。\n为什么不是 solo 实拍：账号所有者 2026-09-24 要求「继续完成、推送微信」，而这场的**当日官方实拍**在出片时各渠道都还没有——四川在线/中新网/新华/封面新闻/川观新闻的赛后稿都没出，WTA photo-resources 和 AP 为空，Getty 上商竣程最新一张停在 9/5 美网，视觉中国有人机验证，搜狗微信里官方号（成都文旅赛事圈、成都网球季）赛后推文还没收录。ATP 这边本来就没有当日官方图（CLAUDE.md「ATP 那半边没有当日官方图」）。抽帧当 solo 封面有闸（不许），官方抠图是这条线用过的正路（`jodar-fritz` / `eala-fernandez`）。\n背景压本场 125.0 秒的转播大全景（第二盘 2-2，底线宽景），虚化压暗的数在模板里，spec 不覆盖。",
+   "background": {
+    "frame_at": 125.0,
+    "shot": "wide_court",
+    "focus": 0.5,
+    "focus_y": 0.5
+   },
+   "names": [
+    "马纳里诺",
+    "商竣程"
+   ],
+   "top": {
+    "cutout": "assets/players/atp-me82-adrian-mannarino.png",
+    "country": "FRA",
+    "rank": 78
+   },
+   "bottom": {
+    "cutout": "assets/players/atp-s0re-shang-juncheng.png",
+    "country": "CHN",
+    "rank": 253
+   },
+   "_rank_why": "同 cover._matchup_rank_why：2026-09-21 那一期 ATP 排名（tennisexplorer 榜单 ＋ Tennis Temple 赛报两源一致）。"
+  },
+  "_layout_why": "退回 VS（cutout）是因为 solo 要的「本场官方高清实拍」在出片时不存在：ATP 这边没有当日官方图（赛事图库次日才上），四川本地媒体的组委会供图、新华、AP、Getty、搜狗微信里的官方号赛后推文都查过、都还没有（逐条记在 `cover.versus._why`）；抽帧当 solo 封面有闸不许。账号所有者 2026-09-24 要求「继续完成、推送微信」「去各个渠道想办法」，两张 ATP 官方全身抠图是查得到的最高清的官方图。"
  },
  "topbar": {
   "line1": "2026 ATP250 成都站 首轮",
