@@ -1,0 +1,67 @@
+{
+  "scoreboard_qc_sha256": null,
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 3.827,
+  "layout": "full",
+  "segments_seconds": 125.75,
+  "topbar": {
+    "line1": "2026 ATP250 杭州站 首轮",
+    "line2": "布云朝克特 6-4 6-3 郑瑞",
+    "start": 1.2,
+    "end": 126.95
+  },
+  "film_seconds": 130.8,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "0": 12.648,
+    "1": 16.488,
+    "2": 21.696,
+    "4": 9.912,
+    "5": 9.312,
+    "6": 21.504,
+    "8": 6.0,
+    "10": 3.744
+  },
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "bu-zheng-hangzhou-2026-r1",
+    "received_at": "2026-09-24T10:59:42Z",
+    "artifact_ready_at": "2026-09-24T11:06:11Z",
+    "elapsed_seconds": 389.41,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "6b62ed5f7da3fe994ffd04c7ada7c65bd5c0a3f438bf6257ed083c442452ef4b",
+    "spec_sha256": "da633cbe14cb9a94b16fa7ed9d5a3bcdca6091e7e576aa108c49b917e0289cce",
+    "run_id": "35990407235",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-09-24T11:02:48Z",
+        "run_id": "35990407235"
+      }
+    ],
+    "render_seconds": 203.41,
+    "pre_render_seconds": 186.0
+  },
+  "film_sha256": "6b62ed5f7da3fe994ffd04c7ada7c65bd5c0a3f438bf6257ed083c442452ef4b",
+  "film_bytes": 65595309,
+  "qc_attestation_sha256": "89f736cb64ac305c7d8e556fae22fb852c30ec4ae7e94627e534f8ded24eaf97",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-09-24T11:02:48Z",
+      "run_id": "35990407235"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-24T11:06:12Z",
+      "run_id": "35990407235"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-bu-zheng-hangzhou-2026-r1/bu-zheng-hangzhou-2026-r1.mp4",
+  "video_bytes": 65595309
+}
