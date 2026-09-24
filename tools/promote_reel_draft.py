@@ -506,13 +506,25 @@ def promote(draft: dict, probe: dict | None = None) -> dict:
     # ⚠️ 注入的 scorebox 是 BO5 满列宽度，对没打到那一档的比赛偏宽——偏宽会
     # 把板右边的球场也抠进贴片，所以终审要逐段按这一段板的真实右缘写
     # `score_inset: {"x2": N}`（美网每打完一盘 +38px）。
-    from reel_facts import US_OPEN_SCOREBOX, us_open_match_line  # noqa: PLC0415
+    from reel_facts import (  # noqa: PLC0415
+        US_OPEN_SCOREBOX, broadcast_profile, spec_tour, us_open_match_line)
     if us_open_match_line(spec["topbar"]["line1"]) and not spec.get("archival"):
         spec["layout"] = "band"
         spec.setdefault("scorebox", list(US_OPEN_SCOREBOX))
         for seg in spec.get("segments") or []:
             if not (seg.get("image") or seg.get("stat_card") or seg.get("title_card")):
                 seg.setdefault("score_inset", True)
+    elif (not spec.get("archival") and (box := fullbleed_scorebox(probe))
+          and not broadcast_profile(spec["topbar"]["line1"], production.get("event", ""),
+                                    spec_tour(spec))):
+        # ⭐⭐ 2026-09-24 账号所有者「那去彻底解决啊」：回贴只认标定过的转播，
+        # 没标定的在渲染时会报错（不再退回整段矩形的老回贴——「狗皮膏药」「右边
+        # 多一块补丁」的来路）。自动链不能因此卡住，所以认不出的转播**不注入**，
+        # 这条片子先不贴比分板，并在草稿里记一句，等人补标定。
+        spec.setdefault("_score_inset_why",
+                        f"顶栏「{spec['topbar']['line1']}」不是标定过的转播"
+                        "（reel_facts.SCOREBOARD_PROFILES），自动链不贴比分板——"
+                        "补一套逐帧判据之后再开")
     elif not spec.get("archival") and (box := fullbleed_scorebox(probe)):
         # ⭐⭐ 账号所有者 2026-09-24（杭州 bu-zheng）：全出血也把转播比分板贴边、
         # 同比放大贴回左下，「后续比赛也要用同样的方式把这个能力固定下来」。

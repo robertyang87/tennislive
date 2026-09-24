@@ -545,6 +545,67 @@ def tour_topline(year, event: str, round_name: str, tour: str | None = None) -> 
     return line if TOUR_TOPLINE_RE.match(line) else None
 
 
+#: 全出血的「赛场之上」回贴比分板时，每一家转播都要有一套**按它自己的图形标定过**
+#: 的逐帧判据（`atp_scoreboard` / `wta_scoreboard` / `itf_scoreboard`）。
+#: 顶栏里认得出的词 → 判据名。**单一出处**：渲染（`build_match_reel.scoreboard_profile`）
+#: 和自动转正（`promote_reel_draft`）都读这一张。
+SCOREBOARD_PROFILES = (
+    ("比利·简·金杯", "itf-bjk"),
+    ("ATP", "atp"),
+    ("WTA", "wta"),
+)
+
+
+_EVENT_ALIASES = (("billie jean king", "itf-bjk"),)
+
+
+def spec_tour(spec: dict) -> str | None:
+    """这条片子是男子还是女子巡回赛：`stats.tour`，没有就看官方头像的编号前缀。"""
+    stats = spec.get("stats") if isinstance(spec.get("stats"), dict) else {}
+    tour = str(stats.get("tour") or "").lower()
+    if tour in ("atp", "wta"):
+        return tour
+    for side in ("a", "b"):
+        shot = str((stats.get(side) or {}).get("headshot") or "") if isinstance(
+            stats.get(side), dict) else ""
+        name = shot.rsplit("/", 1)[-1].lower()
+        for prefix in ("atp", "wta"):
+            if name.startswith(prefix + "-"):
+                return prefix
+    return None
+
+
+def broadcast_profile(line1: str, event: str = "", tour: str | None = None) -> str | None:
+    """这场球的转播该用哪套标定过的比分板判据；认不出返回 None。
+
+    先认顶栏（手写 spec 按「2026 WTA500 新加坡站 1/8决赛」写，一眼就有）；
+    自动草稿的顶栏常常拼不出级别（`tour_topline` 认不出城市站时退回
+    「2026 SINGAPORE 1/8决赛」），再按赛事名查级别表；男女同站的赛事
+    （北京、上海……级别表只记一个）按 `tour`（`spec_tour`）定。
+    大满贯、团体赛这种不是巡回赛转播的，没有别名命中就是 None。
+    """
+    text = str(line1 or "").lower()
+    hit = next((prof for word, prof in SCOREBOARD_PROFILES if word.lower() in text), None)
+    if hit:
+        return hit
+    ev = str(event or "").lower()
+    alias = next((prof for word, prof in _EVENT_ALIASES if word in ev), None)
+    if alias:
+        return alias
+    import sys as _sys
+    from pathlib import Path as _Path
+    src = str(_Path(__file__).resolve().parents[1] / "src")
+    if src not in _sys.path:
+        _sys.path.insert(0, src)
+    from tennislive.zh.tournaments import tournament_level  # noqa: PLC0415
+    level = str(tournament_level(ev, tour) or "")
+    if not level or level in ("GS", "TeamCup"):
+        return None
+    if tour in ("atp", "wta"):
+        return tour
+    return "wta" if level.startswith("W") else "atp"
+
+
 def legacy_fullbleed_no_scoreboard() -> frozenset:
     """「全出血也回贴比分板」定规矩（2026-09-24）之前的「赛场之上」slug，只许减不许加。"""
     import json as _json

@@ -1906,6 +1906,11 @@ ATP 巡回赛），「第三盘＝决胜盘」是一个**默认成立到不会�
   定规矩之前的挂在 `data/legacy_fullbleed_no_scoreboard.json`，只许减不许加
 - 判据 `test_全出血赛场之上要回贴比分板_豁免表只许减`、`test_全出血的板整块在窗外时贴边放大贴回左下`、
   `test_promote全出血草稿按probe的框注入比分板回贴`。美网的带式那一套不变（`docs/us-open-scoreboard-aspect.md`）
+- ⭐⭐ 同日账号所有者：「消失后背景还在……像狗皮膏药」「右边突然多一块补丁」「**那去彻底解决啊**」——
+  回贴**只认标定过的转播**，逐帧蒙版（板不在不贴、板多宽切多宽）：`atp_scoreboard` / `wta_scoreboard` /
+  `itf_scoreboard`（金杯），名单在 `reel_facts.SCOREBOARD_PROFILES`。**认不出的转播 `--dry-run` 就红，不再退回
+  老的整段矩形回贴**（按「暗」认板，夜场看台被当成板）；新转播先 frame-grab 抽帧量颜色补一套。自动链认不出就不注入。
+  判据 `tests/test_scoreboard_profiles.py`
 
 ### 报时间说绝对时刻，不要倒计时
 

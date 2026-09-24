@@ -7409,6 +7409,44 @@ def _narration_craft(spec: dict) -> None:
     raise ReelError("旁白手艺不合格（读者 2026-09-19：文案不专业、技战术交代不清楚）：\n" + body)
 
 
+def scoreboard_profile(spec: dict, segments: list | None = None) -> str | None:
+    """这条片子的比分板回贴走哪套逐帧判据；没开回贴返回 None。
+
+    ⭐⭐ 账号所有者 2026-09-24：「消失后背景还在……像狗皮膏药」「右边突然多一块
+    补丁」，追问「那问题彻底解决了么」「那去彻底解决啊」。
+
+    两个毛病都出在老的 `resolve_board_insets`：它按「离球场色够远＋够暗」认板
+    （夜场看台、花墙比真板还暗，整块被贴出去），一段只切一个矩形（板窄的那几帧
+    多抠一截球场）。而在这之前，**没标定过的转播会静悄悄地走它**——两个毛病
+    原样回来，渲染、质检一声不吭。
+
+    所以全出血的片子现在**只认标定过的转播**（ATP / WTA / 比利·简·金杯 / 美网带式），
+    认不出就在 `--dry-run` 报错，而不是退回老路。老路只剩美网以外的带式版式
+    （全库 0 条）。判据 `tests/test_scoreboard_profiles.py`。
+    """
+    segs = spec.get("segments") if segments is None else segments
+    def _on(seg) -> bool:
+        return bool(seg.get("score_inset") if isinstance(seg, dict)
+                    else getattr(seg, "score_inset", None))
+    if not any(_on(seg) for seg in segs or []):
+        return None
+    from reel_facts import broadcast_profile, spec_tour, us_open_match_line  # noqa: PLC0415
+    line1 = str((spec.get("topbar") or {}).get("line1", ""))
+    if spec.get("layout") == "band":
+        return "us-open" if us_open_match_line(line1) else "band-legacy"
+    event = str((spec.get("_production") or {}).get("event") or "")
+    if (profile := broadcast_profile(line1, event, spec_tour(spec))):
+        return profile
+    raise ReelError(
+        f"全出血的片子开了 score_inset，可顶栏「{line1}」认不出是哪一家转播——"
+        "比分板回贴只认标定过的转播（ATP / WTA / 比利·简·金杯），"
+        "**不再退回老的整段矩形回贴**（账号所有者 2026-09-24：「消失后背景还在……"
+        "像狗皮膏药」「右边突然多一块补丁」）。\n"
+        "新的一家转播：先用 frame-grab 抽几十帧量出它的板长什么样，照 "
+        "tools/itf_scoreboard.py 补一套判据、加进 reel_facts.SCOREBOARD_PROFILES；"
+        '真没有板的段写 "score_inset": false ＋ "_score_inset_why"。')
+
+
 def validate_spec(
     spec: dict, *, allow_published_legacy: bool = False,
 ) -> list[Segment]:
@@ -7474,6 +7512,7 @@ def validate_spec(
     if card:
         raise ReelError(card)
     segments = parse_segments(spec, urls, next(iter(urls)))
+    scoreboard_profile(spec)      # 没标定过的转播在 0.2 秒的 dry-run 就红
     raw_percent = [
         (index, seg.narration)
         for index, seg in enumerate(segments, 1)
@@ -7959,25 +7998,26 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     # **板的右缘现量**（`score_inset: true` 的段）——账号所有者 2026-08-29：
     # 「比分板的宽度会变化的，所以不能固定宽度去切，要自适应」。排在切片之前，
     # 和 track_shots 同一个位置：都是「先把整条量完，再逐段切」。
-    from reel_facts import us_open_match_line
-    if spec.get("layout") == "band" and us_open_match_line((spec.get("topbar") or {}).get("line1", "")):
+    profile = scoreboard_profile(spec, segments)
+    if profile == "us-open":
         from scoreboard_geometry import resolve_masks
         resolve_masks(sources, segments, outdir,
                       Path(__file__).resolve().parents[1] / "specs" / "reels" / f"{spec['slug']}.json",
                       FPS_EXPR, SEG_FADE)
-    elif LAYOUT != "band" and "ATP" in (spec.get("topbar") or {}).get("line1", "").upper():
+    elif profile == "atp":
         # ⭐ ATP 巡回赛转播的板：逐帧蒙版，板多宽切多宽，BREAK/SET/MATCH POINT
         # 的黄条单独切、接在板右边（账号所有者 2026-09-24，见 atp_scoreboard）。
         from atp_scoreboard import resolve_masks as resolve_atp_masks
         resolve_atp_masks(sources, segments, outdir, FPS_EXPR, SEG_FADE)
-    elif LAYOUT != "band" and "WTA" in (spec.get("topbar") or {}).get("line1", "").upper():
-        # ⭐ WTA 巡回赛转播的板同样逐帧蒙版：板不在的帧不贴、板多宽切多宽
-        # （账号所有者 2026-09-24：「消失后背景还在……像狗皮膏药」「右边突然多一块
-        # 补丁」，见 wta_scoreboard）。认不出这家转播的板时返回 None，退回老路。
+    elif profile == "wta":
+        # ⭐ WTA 巡回赛转播：板不在的帧不贴、板多宽切多宽（见 wta_scoreboard）。
         from wta_scoreboard import resolve_masks as resolve_wta_masks
-        if resolve_wta_masks(sources, segments, outdir, FPS_EXPR, SEG_FADE) is None:
-            resolve_board_insets(sources, segments)
-    else:
+        resolve_wta_masks(sources, segments, outdir, FPS_EXPR, SEG_FADE)
+    elif profile == "itf-bjk":
+        # ⭐ 比利·简·金杯（ITF 转播）：宝蓝底＋浅青小分格＋发球小球（见 itf_scoreboard）。
+        from itf_scoreboard import resolve_masks as resolve_itf_masks
+        resolve_itf_masks(sources, segments, outdir, FPS_EXPR, SEG_FADE)
+    elif profile == "band-legacy":
         resolve_board_insets(sources, segments)
 
     # 跟踪要**先整条镜头跟完再切**，所以排在切片之前统一算（见 track_shots）
