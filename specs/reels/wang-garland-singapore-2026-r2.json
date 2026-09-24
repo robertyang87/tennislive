@@ -101,7 +101,9 @@
       "pts_won": 68,
       "pts_total": 128,
       "first_total": 65,
-      "headshot": "assets/players/headshots/wta-326376.jpg"
+      "headshot": "assets/players/headshots/wta-326376.jpg",
+      "winners": 22,
+      "ue": 42
     },
     "b": {
       "aces": 1,
@@ -115,9 +117,11 @@
       "pts_won": 60,
       "pts_total": 128,
       "first_total": 63,
-      "headshot": "assets/players/headshots/wta-326512.png"
+      "headshot": "assets/players/headshots/wta-326512.png",
+      "winners": 11,
+      "ue": 36
     },
-    "_source": "flashscore df_st_1_0zvyTDYp，与 WTA 官方 https://api.wtatennis.com/tennis/tournaments/1152/2026/matches/LS012/stats 交叉：ACE 3/1、双误 3/2、一发得分 31/45 与 20/32、总得分 68/60、破发成功 3 与 1 两源一致。a＝cover.matchup[0] 王欣瑜，b＝葛蓝乔安娜。⚠️ 葛蓝乔安娜的破发机会 flashscore 记 4 个、WTA 记 3 个（`breakptsplayedb`），逐分表里第一盘 0-2 局两个（15:40、30:40）、第二盘 1-1 局两个（15:40、30:40），按逐分取 4；旁白只说「两个破发点都救了回来」，不报全场总数。"
+    "_source": "flashscore df_st_1_0zvyTDYp，与 WTA 官方 https://api.wtatennis.com/tennis/tournaments/1152/2026/matches/LS012/stats 交叉：ACE 3/1、双误 3/2、一发得分 31/45 与 20/32、总得分 68/60、破发成功 3 与 1 两源一致。a＝cover.matchup[0] 王欣瑜，b＝葛蓝乔安娜。⚠️ 葛蓝乔安娜的破发机会 flashscore 记 4 个、WTA 记 3 个（`breakptsplayedb`），逐分表里第一盘 0-2 局两个（15:40、30:40）、第二盘 1-1 局两个（15:40、30:40），按逐分取 4；旁白只说「两个破发点都救了回来」，不报全场总数。 制胜分/非受迫失误来自 TNNS run 35986838124，match 74753598，hasExtendedStats=true，选手顺序 [Wang, Garland]：制胜分 [22,11]、UE [42,36]；分盘 13+9/7+4、23+19/20+16 与全场自证一致。只取这两栏。"
   },
   "_hit_data": "`match_stat_hooks.py`：王欣瑜连续保发 10 个发球局（全场 11 个发球局只在第一盘第二局被破一次）、葛蓝乔安娜第二盘一发得分率 50%→83%（WTA 分盘 stats 10/20 → 10/12 同样）。钩子取第一盘的逆转（见 `cover._hook_why`）；总分差 68:60 不上钩子。「今年第四次打进巡回赛八强」来自 WTA 官网这场集锦说明原文 `advancing to her fourth tour-level quarterfinal of 2026`。",
   "_no_repeat": "同一站兄弟片 `wang-vekic-singapore-2026-r1` 的落点是「八个发球局一个都没丢」——这一条不再拿保发当钩子，落点是第一盘 1-4 的逆转；保发只在收尾一句带过。",
