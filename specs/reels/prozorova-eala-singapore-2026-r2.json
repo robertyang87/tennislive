@@ -318,7 +318,8 @@
    "_why": "WTA 官方 `MatchTimeTotal=03:09:29`；最后四局见 flashscore 逐局（3-3 → 6-3）；八强对手：WTA 官网赛后稿 `She'll face Wang Xinyu in the last eight`，WTA 官方 LS012 `W. Wang d [Q]J. Garland`（同一签区上半，见 `wang-garland-singapore-2026-r2`）。",
    "crosses_cut": "286~293 普罗佐罗娃捂嘴、向看台挥手、回到座位：比赛结束之后。",
    "point_end_ok": "比赛已经结束；段尾 293.4 是转播切点，之后是场上采访（不进复盘）。",
-   "score_inset": true
+   "score_inset": false,
+   "_score_inset_why": "比赛已经结束（赛点在 263.6s），286.5~293.4 是普罗佐罗娃捂嘴、向看台挥手、回座位的近景，转播已经把比分板撤了——逐秒帧 286~291 没有板；render run 36020126044 的逐帧蒙版扫这一段 0 帧有板。上一版在这里贴出去的是她身后的深色背景（账号所有者说的「狗皮膏药」之一）。"
   }
  ],
  "editorial": {
