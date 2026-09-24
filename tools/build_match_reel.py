@@ -7970,6 +7970,13 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
         # 的黄条单独切、接在板右边（账号所有者 2026-09-24，见 atp_scoreboard）。
         from atp_scoreboard import resolve_masks as resolve_atp_masks
         resolve_atp_masks(sources, segments, outdir, FPS_EXPR, SEG_FADE)
+    elif LAYOUT != "band" and "WTA" in (spec.get("topbar") or {}).get("line1", "").upper():
+        # ⭐ WTA 巡回赛转播的板同样逐帧蒙版：板不在的帧不贴、板多宽切多宽
+        # （账号所有者 2026-09-24：「消失后背景还在……像狗皮膏药」「右边突然多一块
+        # 补丁」，见 wta_scoreboard）。认不出这家转播的板时返回 None，退回老路。
+        from wta_scoreboard import resolve_masks as resolve_wta_masks
+        if resolve_wta_masks(sources, segments, outdir, FPS_EXPR, SEG_FADE) is None:
+            resolve_board_insets(sources, segments)
     else:
         resolve_board_insets(sources, segments)
 
