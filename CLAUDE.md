@@ -1892,6 +1892,21 @@ ATP 巡回赛），「第三盘＝决胜盘」是一个**默认成立到不会�
 - 判据 `tests/test_topline_format.py`（`reel_facts.tour_topline_problem`，`--dry-run` 就报）；
   定格式之前已发的挂在 `data/legacy_topline_format.json`，只许减不许加；自动草稿由 `tour_topline` 拼
 
+### ⭐ 全出血的「赛场之上」也要看得到比分：转播比分板贴边、同比放大贴回左下
+
+账号所有者 2026-09-24（杭州 `bu-zheng-hangzhou-2026-r1`）：看过四种摆法选了左下原位回贴，
+再看过 x=0 / 48 / 131 / 不放大四版定了**贴边 x=0、跟画面同比放大（1080/810）、纵坐标 y0×比例**，
+「**后续比赛也要用同样的方式把这个能力固定下来**」，而且「**屏幕上没有比分的时候一定要把这一块消掉**」。
+
+- 居中 3:4 窗口取源片 555~1365，巡回赛的板几乎都整块在窗外——不贴就是画面里没有比分
+- spec 顶层写 `scorebox`（probe 的 `scorebox_guess` 抄过来，**右缘按这场最宽的那一档写**：
+  板每打完一盘长一列，渲染时逐段现量、但封顶在 x1），比赛画面的段写 `"score_inset": true`；
+  整段没有板的写 `false` ＋ `_score_inset_why`。板淡出的那几秒渲染时自动不贴（`board_edge_timeline`）
+- 闸在 `parse_segments`（手写 spec 硬、自动 spec 只报），自动链由 `promote_reel_draft` 按 probe 注入；
+  定规矩之前的挂在 `data/legacy_fullbleed_no_scoreboard.json`，只许减不许加
+- 判据 `test_全出血赛场之上要回贴比分板_豁免表只许减`、`test_全出血的板整块在窗外时贴边放大贴回左下`、
+  `test_promote全出血草稿按probe的框注入比分板回贴`。美网的带式那一套不变（`docs/us-open-scoreboard-aspect.md`）
+
 ### 报时间说绝对时刻，不要倒计时
 
 账号所有者：「不用写距离开赛还有多久，因为我花的时间不固定。你只说开赛的时间就行了。」
