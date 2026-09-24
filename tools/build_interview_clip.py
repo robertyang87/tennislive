@@ -1289,7 +1289,7 @@ def header_runs(spec: dict) -> tuple[list[tuple[str, str, str]], ...]:
     if not (ev := (spec.get("event") or "").strip()):
         raise SystemExit(
             f"{slug} 缺 `event`——顶栏第一行没东西可写。\n"
-            "写赛事＋级别＋轮次，例如「2026 华盛顿 WTA500 1/4 决赛」。\n"
+            "写成「<年份> <巡回赛><级别> <城市>站 <轮次>」，例如「2026 WTA500 华盛顿站 1/4决赛」。\n"
             "⚠️ 别拿 `push.event` 顶：那个是为了把推送标题压进 20 字位故意留空的。")
     push = spec.get("push") or {}
     # **采访是什么性质，跟着源走，不写死——而且必须显式认领，不许有默认值。**
@@ -3397,6 +3397,25 @@ _OPENING_KINDS = {
 }
 
 
+def check_topline_format(spec: dict) -> None:
+    """顶栏赛事行（`event`）的格式：「2026 ATP250 成都站 首轮」。
+
+    账号所有者 2026-09-24 定的，和「赛场之上」的 `topbar.line1` 同一个出处
+    （`reel_facts.tour_topline_problem`）。⚠️ 放在渲染入口的检查链里，**不放
+    `header_runs`**：那个函数被几十条测试拿占位赛事名（「某站 1/4 决赛」）直接
+    调，它管的是排版不是口径。定格式之前发出去的挂在
+    data/legacy_topline_format.json，只许减不许加。
+    """
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from reel_facts import legacy_topline, tour_topline_problem  # noqa: PLC0415
+    slug = str(spec.get("slug", "?"))
+    if slug in legacy_topline("interviews"):
+        return
+    ev = str(spec.get("event") or "").strip()
+    if ev and (problem := tour_topline_problem(ev, spec.get("_topbar_format_why", ""))):
+        raise SystemExit(f"{slug} 的 `event`：{problem}")
+
+
 def check_source_contract(spec: dict) -> str:
     """L0：在任何下载、转写或渲染之前确认这是一条被验证过身份的赛后内容。
 
@@ -4384,6 +4403,7 @@ def main() -> int:
     # L0 必须排在全部准备工作之前。技术成片再漂亮，也不能把演播室采访冒充成
     # 用户要的“本场场上采访”。
     check_source_contract(spec)
+    check_topline_format(spec)
     # **排在最前面，每一趟都过。** 它只读 spec、不联网、不下源片——
     # 「这条片子怎么开头」是写 spec 那一刻就该定下来的事，让它在第 0.2 秒报，
     # 而不是等九分钟的 render 出片之后再由人看出来「怎么一上来就有人在说话」。

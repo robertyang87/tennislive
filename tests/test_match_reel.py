@@ -11786,8 +11786,8 @@ def test_赛场之上的比赛画面必须带比赛信息顶栏():
     good = {"slug": "x", "cover": {"eyebrow": "赛场之上", "winner": "萨巴伦卡",
                                    "result": "6-3 6-4",
                                    "matchup": [{"name": "萨巴伦卡"}, {"name": "张帅"}]},
-            "topbar": {"line1": "WTA 1000 加拿大站 第三轮", "line2": "萨巴伦卡 6-3 6-4 张帅"}}
-    assert reel._topbar_lines(good) == ("WTA 1000 加拿大站 第三轮", "萨巴伦卡 6-3 6-4 张帅")
+            "topbar": {"line1": "2026 WTA1000 加拿大站 第三轮", "line2": "萨巴伦卡 6-3 6-4 张帅"}}
+    assert reel._topbar_lines(good) == ("2026 WTA1000 加拿大站 第三轮", "萨巴伦卡 6-3 6-4 张帅")
     with pytest.raises(reel.ReelError, match="一致"):
         reel._topbar_lines({**good, "topbar": {**good["topbar"], "line2": "张帅 6-3 6-4 萨巴伦卡"}})
 
@@ -12859,7 +12859,7 @@ def test_顶栏复位不许用r否则脉冲被清掉(tmp_path):
     pil = pytest.importorskip("PIL.Image")
 
     line2 = "萨巴伦卡 6-3 4-6 6-4 张帅"
-    ass = reel.write_topbar_ass(("WTA 1000 加拿大站 第三轮", line2),
+    ass = reel.write_topbar_ass(("2026 WTA1000 加拿大站 第三轮", line2),
                                  0.0, 20.0, tmp_path / "tb.ass", pulse_at=[10.0])
 
     def width_at(second: float) -> int:

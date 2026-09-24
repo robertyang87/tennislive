@@ -441,6 +441,7 @@ def promote(draft: dict) -> dict:
     # ——不转的话每一条自动草稿都会被同一个文件里那道零豁免的措辞闸拦下，
     # 草稿转不了正、链子静静卡住。
     from spec_wording import round_display  # noqa: PLC0415
+    from reel_facts import tour_topline  # noqa: PLC0415
     round_out = round_display(production["round"])
     cover.update({
         "eyebrow": "赛场之上",
@@ -463,7 +464,10 @@ def promote(draft: dict) -> dict:
         "cover": cover,
         "editorial": editorial,
         "topbar": {
-            "line1": f"{production['year']} {production['event']} {round_out}",
+            # 巡回赛按「2026 ATP250 成都站 首轮」拼（账号所有者 2026-09-24）；
+            # 大满贯/团体赛这类认不出级别＋城市站的，照旧用原来的写法。
+            "line1": (tour_topline(production["year"], production["event"], round_out)
+                      or f"{production['year']} {production['event']} {round_out}"),
             "line2": f"{match['winner']} {match['winner_result']} {match['loser']}",
         },
     })
