@@ -25,45 +25,45 @@
     "7": 15.696,
     "8": 14.784,
     "9": 4.272,
-    "11": 7.752
+    "11": 9.912
   },
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "wang-garland-singapore-2026-r2",
-    "received_at": "2026-09-24T10:25:45Z",
-    "artifact_ready_at": "2026-09-24T10:33:07Z",
-    "elapsed_seconds": 442.961,
+    "received_at": "2026-09-24T10:45:44Z",
+    "artifact_ready_at": "2026-09-24T10:52:37Z",
+    "elapsed_seconds": 413.843,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "e450f8b7428a429332fbc17dd8dcb925e8a4eab2e9090f26429103b6b2521968",
-    "spec_sha256": "0cdabf8b7863bfd4af238893a77af3d2263d3c438971092d56217aa46b44c639",
-    "run_id": "35987130533",
+    "film_sha256": "eb004ec90daa91d02372c0f81ce566494fc4e13ae0b431086252e75106eec2d9",
+    "spec_sha256": "de22a59ea913e932b19c98e6d637dc6b8d52dc31ddb47f796d6b83fbf8131eba",
+    "run_id": "35989091170",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-09-24T10:28:33Z",
-        "run_id": "35987130533"
+        "at": "2026-09-24T10:48:12Z",
+        "run_id": "35989091170"
       }
     ],
-    "render_seconds": 274.961,
-    "pre_render_seconds": 168.0
+    "render_seconds": 265.843,
+    "pre_render_seconds": 148.0
   },
-  "film_sha256": "e450f8b7428a429332fbc17dd8dcb925e8a4eab2e9090f26429103b6b2521968",
-  "film_bytes": 128101585,
-  "qc_attestation_sha256": "9683bd8eab819a48ce3ab688d4ba786aa92693dc6c31e05db1224a225dc85317",
+  "film_sha256": "eb004ec90daa91d02372c0f81ce566494fc4e13ae0b431086252e75106eec2d9",
+  "film_bytes": 128134498,
+  "qc_attestation_sha256": "402392f5378c835b12d953b16bfd640288feaf24ccb602f69ba0f0a74b5ce065",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-09-24T10:28:33Z",
-      "run_id": "35987130533"
+      "at": "2026-09-24T10:48:12Z",
+      "run_id": "35989091170"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-09-24T10:33:09Z",
-      "run_id": "35987130533"
+      "at": "2026-09-24T10:52:39Z",
+      "run_id": "35989091170"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-wang-garland-singapore-2026-r2/wang-garland-singapore-2026-r2.mp4",
-  "video_bytes": 128101585
+  "video_bytes": 128134498
 }
