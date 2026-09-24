@@ -4058,6 +4058,8 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
                 # 不放大四版并排后定的：**贴边 x=0，大小跟画面同比放大**（1080/810），
                 # 纵坐标照旧 y0×比例。巡回赛的板多半整块在居中窗口外（x ≥ x1，
                 # 没有残条），x=0 也是原来盖残条的那个位置，两种情形一个落点。
+                # 同日成都 shang-mannarino 那条账号所有者也定了同一个口径（ATP 一律），
+                # 并要求板逐帧按实际宽度切、黄条单独切——见 atp_scoreboard。
                 ox = 0
                 strip = max(0, _even((x1 - x) * ratio)) if x < x1 else 0  # 居中窗口天然含住的那一条
                 # ⭐ 2026-08-28 一天里这块地方被账号所有者点了四次，最后定在
@@ -7944,6 +7946,11 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
         resolve_masks(sources, segments, outdir,
                       Path(__file__).resolve().parents[1] / "specs" / "reels" / f"{spec['slug']}.json",
                       FPS_EXPR, SEG_FADE)
+    elif LAYOUT != "band" and "ATP" in (spec.get("topbar") or {}).get("line1", "").upper():
+        # ⭐ ATP 巡回赛转播的板：逐帧蒙版，板多宽切多宽，BREAK/SET/MATCH POINT
+        # 的黄条单独切、接在板右边（账号所有者 2026-09-24，见 atp_scoreboard）。
+        from atp_scoreboard import resolve_masks as resolve_atp_masks
+        resolve_atp_masks(sources, segments, outdir, FPS_EXPR, SEG_FADE)
     else:
         resolve_board_insets(sources, segments)
 
