@@ -393,7 +393,29 @@ def note_evidence_on_screen(spec: dict) -> int:
     return n
 
 
-def promote(draft: dict) -> dict:
+# probe 的 scorebox_guess 量的是**某一帧**的板，而板每打完一盘往右长一列
+# （杭州 bu-zheng 实测：首盘右缘 405，第二盘 466，一列 ≈61px）。渲染时右缘
+# 逐段现量，但**封顶在 scorebox 的 x1**——按猜的那一帧写会把后长出来的盘分列
+# 裁掉（静默的失败）。所以注入时往右预留两列；现量会把贴片收回板的真实右缘。
+FULLBLEED_SCOREBOX_GROW = 130
+
+
+def fullbleed_scorebox(probe: dict | None) -> list[int] | None:
+    """probe.json → 全出血回贴用的 scorebox（右缘预留两列盘分），猜不出来返回 None。"""
+    raw = (probe or {}).get("scorebox_guess")
+    if not raw:
+        return None
+    try:
+        x0, y0, x1, y1 = (int(round(float(v))) for v in str(raw).replace(" ", "").split(","))
+    except ValueError:
+        return None
+    if not (0 <= x0 < x1 and 0 <= y0 < y1):
+        return None
+    width = int((probe or {}).get("width") or 1920)
+    return [x0, y0, min(width, x1 + FULLBLEED_SCOREBOX_GROW), y1]
+
+
+def promote(draft: dict, probe: dict | None = None) -> dict:
     reasons = waiting_reasons(draft)
     if reasons:
         raise ValueError("；".join(dict.fromkeys(reasons)))
@@ -490,6 +512,15 @@ def promote(draft: dict) -> dict:
         for seg in spec.get("segments") or []:
             if not (seg.get("image") or seg.get("stat_card") or seg.get("title_card")):
                 seg.setdefault("score_inset", True)
+    elif not spec.get("archival") and (box := fullbleed_scorebox(probe)):
+        # ⭐⭐ 账号所有者 2026-09-24（杭州 bu-zheng）：全出血也把转播比分板贴边、
+        # 同比放大贴回左下，「后续比赛也要用同样的方式把这个能力固定下来」。
+        # build_match_reel.parse_segments 对手写 spec 是硬闸，对自动 spec 只报——
+        # 所以这一头要自己注入，否则自动链的片子永远没有比分板。
+        spec.setdefault("scorebox", box)
+        for seg in spec.get("segments") or []:
+            if not (seg.get("image") or seg.get("stat_card") or seg.get("title_card")):
+                seg.setdefault("score_inset", True)
     # ⭐ 证据上屏（2026-09-03 review 路线 ④）：131 条已发 spec 带 stats、0 条烧进
     # 片子——数据一直只在旁白里被念出来。DeepSeek 不写 segments（窗口全是机械
     # 工具给的），所以这一段也机械插：收官段之前、一句只讲总得分的旁白。
@@ -528,10 +559,24 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("--draft", required=True, type=Path)
     ap.add_argument("--write", action="store_true")
+    ap.add_argument("--probe", type=Path, default=None,
+                    help="这条源片的 probe.json（给全出血回贴比分板取 scorebox_guess）")
     args = ap.parse_args()
     draft = json.loads(args.draft.read_text(encoding="utf-8"))
+    probe = None
+    if args.probe is None:
+        # 三个调用方（match-reel / reel-auto-ready / finalize-reel）都不传 --probe：
+        # probe 那一趟已经把 probe.json 提交进仓库了，按 slug 认领最晚那份。
+        slug = str(draft.get("slug") or "")
+        found = sorted(Path(__file__).resolve().parents[1].glob(
+            f"output/*/reel/{slug}/probe.json")) if slug else []
+        args.probe = found[-1] if found else None
+    if args.probe and args.probe.is_file():
+        probe = json.loads(args.probe.read_text(encoding="utf-8"))
+    elif args.probe:
+        print(f"[score] {args.probe} 不存在——这条不注入比分板回贴（自动 spec 只报不拦）")
     try:
-        spec = promote(draft)
+        spec = promote(draft, probe)
     except ValueError as exc:
         # 闸没过：这不是故障，是明确「不生产」——调用方按 0 读
         print(f"[waiting] {args.draft.name}: {exc}")

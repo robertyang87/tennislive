@@ -545,6 +545,18 @@ def tour_topline(year, event: str, round_name: str, tour: str | None = None) -> 
     return line if TOUR_TOPLINE_RE.match(line) else None
 
 
+def legacy_fullbleed_no_scoreboard() -> frozenset:
+    """「全出血也回贴比分板」定规矩（2026-09-24）之前的「赛场之上」slug，只许减不许加。"""
+    import json as _json
+    from pathlib import Path as _Path
+    path = (_Path(__file__).resolve().parents[1] / "data"
+            / "legacy_fullbleed_no_scoreboard.json")
+    try:
+        return frozenset(_json.loads(path.read_text(encoding="utf-8")).get("reels") or ())
+    except FileNotFoundError:
+        return frozenset()
+
+
 def legacy_topline(kind: str) -> frozenset:
     """「定格式之前已经发出去」的那批 slug（kind = reels / interviews），只许减不许加。"""
     import json as _json

@@ -606,6 +606,38 @@ def test_promote美网草稿自动带式(tmp_path, monkeypatch):
     assert all("score_inset" not in s for s in plain["segments"])
 
 
+def test_promote全出血草稿按probe的框注入比分板回贴(tmp_path, monkeypatch):
+    """账号所有者 2026-09-24（杭州 bu-zheng）：全出血也把转播比分板贴边、同比放大
+    贴回左下，「后续比赛也要用同样的方式把这个能力固定下来」。
+
+    自动 spec 在 parse_segments 那头只报不拦，所以注入必须在转正时自己做：
+    scorebox 取 probe 的 scorebox_guess，**右缘预留两列盘分**（猜的那一帧是
+    首盘的板，渲染时右缘封顶在 x1——按猜的写会把第二盘长出来的列裁掉）。
+    没有 probe 或猜不出框就什么都不加；终审显式写的 false 原样保住。
+    """
+    promote = load("promote_reel_draft")
+    fake = type("M", (), {"validate_spec": staticmethod(lambda spec: None)})()
+    monkeypatch.setitem(sys.modules, "build_match_reel", fake)
+
+    draft = _ready_draft(tmp_path)
+    draft["segments"][1]["score_inset"] = False
+    draft["segments"].insert(2, {"title_card": "手写章节", "seconds": 2.5})
+    probe = {"scorebox_guess": "98,920,405,1029", "width": 1920}
+    spec = promote.promote(draft, probe)
+    assert "layout" not in spec, "全出血不改版式"
+    assert spec["scorebox"] == [98, 920, 405 + promote.FULLBLEED_SCOREBOX_GROW, 1029]
+    flags = [s.get("score_inset") for s in spec["segments"]
+             if not (s.get("image") or s.get("stat_card") or s.get("title_card"))]
+    assert flags.count(False) == 1 and flags.count(True) == len(flags) - 1, flags
+    assert all("score_inset" not in s for s in spec["segments"] if s.get("title_card"))
+
+    assert promote.fullbleed_scorebox(None) is None
+    assert promote.fullbleed_scorebox({"scorebox_guess": ""}) is None
+    assert promote.fullbleed_scorebox({"scorebox_guess": "a,b,c,d"}) is None
+    assert promote.fullbleed_scorebox(
+        {"scorebox_guess": "1800,900,1900,1000", "width": 1920})[2] == 1920, "右缘不许越过画幅"
+
+
 def test_workflow只有正式ready才从probe派发render():
     body = (ROOT / ".github/workflows/match-reel.yml").read_text(encoding="utf-8")
     step = body.split("probe 正式 spec 就绪后自动派发 render", 1)[1].split(

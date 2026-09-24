@@ -3123,6 +3123,49 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
                    "为什么不在（哪一刀之后收走的），x2 要说清现量哪儿不准。\n"
                    if unclaimed else "")
                 + "账在 docs/us-open-scoreboard-aspect.md。")
+    # ⭐⭐ 账号所有者 2026-09-24（杭州 bu-zheng）：「后续比赛也要用同样的方式
+    # 把这个能力固定下来」——全出血的「赛场之上」也把转播比分板**贴边、同比
+    # 放大、贴回左下**，板不在画面上的那几秒不贴（`board_edge_timeline` 现量）。
+    # 居中 3:4 窗口取源片 555~1365，巡回赛的板几乎都整块落在窗外，不贴就是
+    # 「画面里看不到比分」。和上面美网那道闸同一个形状：顶层要有 `scorebox`
+    # （probe 的 scorebox_guess 直接抄），每一段比赛画面**显式表态**
+    # `score_inset`——true 是主路，false 要写 `_score_inset_why`。
+    # 定规矩之前的全出血片子挂在 data/legacy_fullbleed_no_scoreboard.json，
+    # 只许减不许加；自动产的 spec 由 promote_reel_draft 注入，这里只报不拦
+    # （那一头没人写 `_score_inset_why`，做硬会把自动链卡成「今天没有候选」）。
+    from reel_facts import legacy_fullbleed_no_scoreboard  # noqa: PLC0415
+    column = str((spec.get("cover") or {}).get("eyebrow", "")
+                 or spec.get("_column", "")).strip()
+    if (layout != "band" and column == "赛场之上" and not spec.get("archival")
+            and str(spec.get("slug", "")) not in legacy_fullbleed_no_scoreboard()):
+        missing_box = scorebox is None
+        undeclared, unclaimed = [], []
+        for i, raw in enumerate(spec["segments"]):
+            if raw.get("image") or raw.get("title_card") or raw.get("stat_card"):
+                continue
+            if "score_inset" not in raw:
+                undeclared.append(i + 1)
+            elif (raw["score_inset"] is not True
+                    and not str(raw.get("_score_inset_why", "")).strip()):
+                unclaimed.append(i + 1)
+        if missing_box or undeclared or unclaimed:
+            msg = (
+                "「赛场之上」全出血的比赛画面要把转播比分板贴回左下（账号所有者 "
+                "2026-09-24：「后续比赛也要用同样的方式把这个能力固定下来」）——"
+                "居中 3:4 窗口取源片 555~1365，巡回赛的板整块在窗外，不贴观众就看不到比分。\n"
+                + ("  顶层缺 `scorebox`：写 [x0, y0, x1, y1]（源片像素，probe 的 "
+                   "scorebox_guess 直接抄；右缘按这场最宽的那一档写，渲染时逐段现量）。\n"
+                   if missing_box else "")
+                + (f"  第 {undeclared} 段没表态：比赛画面写 `\"score_inset\": true`"
+                   "（板不在画面上的那几秒渲染时自动不贴），整段都没有板的写 `false`。\n"
+                   if undeclared else "")
+                + (f"  第 {unclaimed} 段写了 false 或 x2 但没说为什么：同一段加 "
+                   "`\"_score_inset_why\"`。\n" if unclaimed else "")
+                + "样板：specs/reels/bu-zheng-hangzhou-2026-r1.json。")
+            if (spec.get("_production") or {}).get("status") == "ready_for_render":
+                print(f"    [score] ⚠️ {msg}")
+            else:
+                raise ReelError(msg)
     bad_motion = [i + 1 for i, s in enumerate(segments) if s.inset
                   and str(s.inset.get("motion", "")) not in {"", "editorial"}]
     if bad_motion:
@@ -4011,14 +4054,11 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
                 # **字幕抬到板上方**（`subtitle_margin_for_boards`，render 里算，
                 # 整条片子一个锚）；字幕垫跟着锚一起抬。
                 oy = (BAND_TOP if LAYOUT == "band" else 0) + int(round(y0 * ratio))
-                # ⭐ 2026-09-24 账号所有者（杭州 bu-zheng）：「从屏幕的左边再往右
-                # 移一点，移到画布上」。全出血下**窗口左缘已经越过板右缘**时
-                # （x ≥ x1，巡回赛的板多半如此），画面里没有残条要盖，贴片就
-                # 不必顶死在 x=0——往里收到顶栏文字同一条竖线（TOPBAR_MARGIN_H），
-                # 和上面的「2026 ATP250 …」左对齐。有残条（x < x1，美网那种宽板）
-                # 或带式时照旧贴 0：挪开就露出被裁的半截板。
-                ox = (TOPBAR_MARGIN_H
-                      if LAYOUT != "band" and x >= x1 else 0)
+                # ⭐ 2026-09-24 账号所有者（杭州 bu-zheng）看过 x=0 / 48 / 131 /
+                # 不放大四版并排后定的：**贴边 x=0，大小跟画面同比放大**（1080/810），
+                # 纵坐标照旧 y0×比例。巡回赛的板多半整块在居中窗口外（x ≥ x1，
+                # 没有残条），x=0 也是原来盖残条的那个位置，两种情形一个落点。
+                ox = 0
                 strip = max(0, _even((x1 - x) * ratio)) if x < x1 else 0  # 居中窗口天然含住的那一条
                 # ⭐ 2026-08-28 一天里这块地方被账号所有者点了四次，最后定在
                 # 「**按板的实际大小裁，原比例贴回左下角，纵坐标不变**」。
