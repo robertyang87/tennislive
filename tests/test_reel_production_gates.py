@@ -620,6 +620,7 @@ def test_promote全出血草稿按probe的框注入比分板回贴(tmp_path, mon
     monkeypatch.setitem(sys.modules, "build_match_reel", fake)
 
     draft = _ready_draft(tmp_path)
+    draft["_production"]["event"] = "Singapore"          # 标定过的转播（WTA500）
     draft["segments"][1]["score_inset"] = False
     draft["segments"].insert(2, {"title_card": "手写章节", "seconds": 2.5})
     probe = {"scorebox_guess": "98,920,405,1029", "width": 1920}
@@ -636,6 +637,20 @@ def test_promote全出血草稿按probe的框注入比分板回贴(tmp_path, mon
     assert promote.fullbleed_scorebox({"scorebox_guess": "a,b,c,d"}) is None
     assert promote.fullbleed_scorebox(
         {"scorebox_guess": "1800,900,1900,1000", "width": 1920})[2] == 1920, "右缘不许越过画幅"
+
+
+def test_promote认不出转播的全出血草稿不注入回贴(tmp_path, monkeypatch):
+    """账号所有者 2026-09-24「那去彻底解决啊」：比分板回贴只认标定过的转播，
+    认不出的在渲染时报错、不再退回老的整段矩形回贴（「狗皮膏药」「右边多一块补丁」）。
+    自动链不能因此卡成「今天没有候选」，所以转正时**不注入**，只记一句为什么。"""
+    promote = load("promote_reel_draft")
+    fake = type("M", (), {"validate_spec": staticmethod(lambda spec: None)})()
+    monkeypatch.setitem(sys.modules, "build_match_reel", fake)
+    draft = _ready_draft(tmp_path)                      # 「Demo Open」：没标定过
+    spec = promote.promote(draft, {"scorebox_guess": "98,920,405,1029", "width": 1920})
+    assert "scorebox" not in spec
+    assert not any(s.get("score_inset") for s in spec["segments"])
+    assert "不是标定过的转播" in spec["_score_inset_why"]
 
 
 def test_workflow只有正式ready才从probe派发render():

@@ -609,6 +609,136 @@ def trigger_pages_build(
     return False
 
 
+#: 一趟 Pages 部署 pending 多久、一个 job 都没起，就算卡死（秒）。
+#: 正常排队时它前面总有一趟 `in_progress`；前面没人在跑而它还 pending，
+#: 那不是排队，是锁没放。实测正常的 dispatch 到上线是 19 秒
+#: （`MEASURED_PAGES_DISPATCH_TO_LIVE_SECONDS`），6 分钟留了二十倍的余量。
+PAGES_STUCK_SECONDS = 360
+_PAGES_WAITING = ("pending", "queued", "waiting", "requested")
+
+
+def stuck_pages_runs(runs: list[dict], jobs_of, *, now: float,
+                     stale: float = PAGES_STUCK_SECONDS) -> list[int]:
+    """从 `pages.yml` 的运行记录里挑出**卡死**的那几趟（纯函数，方便测）。
+
+    2026-09-24 实测的形状：run 3031（workflow_dispatch，15:37）一直 `pending`、
+    **一个 job 都没起**，而前面一趟 15:38 就跑完了——它占着 `concurrency: pages`
+    这把锁不放，之后 3033~3038 六趟部署全部排在它后面，要么 pending 要么被
+    后来的顶掉（cancelled）。普罗佐罗娃那条推送因此探了半个多小时复制页，
+    差一两分钟就被 job 超时作废；手动取消 3031 之后，下一趟立刻 queued、
+    两分钟内上线。
+
+    判据三条，缺一不可：
+
+    1. 状态是等待类（pending / queued / waiting / requested）
+    2. 已经等了 `stale` 秒以上
+    3. **没有任何一趟正在跑**（`in_progress`）——有人在跑，后面的 pending 就是
+       正常排队，不许动
+
+    再加一条：**它一个 job 都没起**（`jobs_of(run_id) == 0`）。起了 job 的是真在
+    跑（或在等 runner），不算锁死。`jobs_of` 读不到返回 None，那一趟不动——
+    「查不了」不能当成「是空的」。
+    """
+    import datetime as _dt
+
+    if any(r.get("status") == "in_progress" for r in runs):
+        return []
+    out = []
+    for r in runs:
+        if r.get("status") not in _PAGES_WAITING:
+            continue
+        try:
+            born = _dt.datetime.fromisoformat(
+                str(r.get("created_at", "")).replace("Z", "+00:00")).timestamp()
+        except ValueError:
+            continue
+        if now - born < stale:
+            continue
+        if jobs_of(int(r["id"])) == 0:
+            out.append(int(r["id"]))
+    return out
+
+
+def unstick_pages(*, timeout: int = 15) -> list[int]:
+    """Pages 部署卡在队里时，取消卡死的那几趟、再点一次部署。返回取消掉的 run id。
+
+    **只在复制页迟迟不上线时才调**（见 `PagesWatchdog`）。取消的只是一趟没有
+    job 的部署请求，它本来就什么都没做；重新点的那一趟会把 main 上的全部页面
+    一起发出去，所以别的片子的复制页不会因此丢。
+    """
+    import time
+
+    token = os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN")
+    if not token:
+        return []
+    repo = os.environ.get("GITHUB_REPOSITORY", "robertyang87/tennislive")
+    base = f"https://api.github.com/repos/{repo}/actions"
+    try:
+        r = requests.get(f"{base}/workflows/{_PAGES_WORKFLOW}/runs?per_page=20",
+                         timeout=timeout, headers=_gh_headers(token))
+        if r.status_code != 200:
+            logger.info("[Pages 看门狗] 读运行列表失败：HTTP %s", r.status_code)
+            return []
+        runs = r.json().get("workflow_runs") or []
+    except (requests.RequestException, ValueError) as exc:
+        logger.info("[Pages 看门狗] 读运行列表失败（%s: %s）", type(exc).__name__, exc)
+        return []
+
+    def jobs_of(rid: int) -> int | None:
+        try:
+            j = requests.get(f"{base}/runs/{rid}/jobs", timeout=timeout,
+                             headers=_gh_headers(token))
+            return int(j.json().get("total_count")) if j.status_code == 200 else None
+        except (requests.RequestException, ValueError, TypeError):
+            return None
+
+    stuck = stuck_pages_runs(runs, jobs_of, now=time.time())
+    if not stuck:
+        logger.info("[Pages 看门狗] 队里没有卡死的部署（%d 条记录里没有「没人在跑、"
+                    "自己 pending 超过 %ds 且没起 job」的）", len(runs), PAGES_STUCK_SECONDS)
+        return []
+    done = []
+    for rid in stuck:
+        try:
+            c = requests.post(f"{base}/runs/{rid}/cancel", timeout=timeout,
+                              headers=_gh_headers(token))
+            ok = c.status_code in (202, 409)
+        except requests.RequestException:
+            ok = False
+        logger.warning("[Pages 看门狗] run %s 卡在队里（没人在跑、它 pending 超过 %ds、"
+                       "一个 job 都没起）→ 取消%s", rid, PAGES_STUCK_SECONDS,
+                       "成功" if ok else "失败")
+        if ok:
+            done.append(rid)
+    if done:
+        trigger_pages_build()
+    return done
+
+
+class PagesWatchdog:
+    """探活循环里每一圈 `tick()` 一次；复制页等了够久还没上线，就查一次 Pages 队列。
+
+    同一趟推送最多每 `every` 秒查一次，不刷接口。
+    """
+
+    def __init__(self, *, first: float = PAGES_STUCK_SECONDS, every: float = 240.0,
+                 clock=None, unstick=None):
+        import time
+        self._clock = clock or time.monotonic
+        self._start = self._clock()
+        self._next = self._start + first
+        self._every = every
+        self._unstick = unstick or unstick_pages
+        self.cancelled: list[int] = []
+
+    def tick(self) -> None:
+        now = self._clock()
+        if now < self._next:
+            return
+        self._next = now + self._every
+        self.cancelled += self._unstick()
+
+
 def drop_dead_copy_button(
     html_body: str, *, probe=None, attempts: int | None = None,
     delay: float | None = None, expect: str = "",
@@ -733,8 +863,10 @@ def _probe_page(
     # **先点一下部署，再开始探。** 工作流自己提交的 push 不会触发 Pages，
     # 不点的话这个循环注定探满全程再摘按钮——见 `trigger_pages_build`。
     trigger_pages_build()
+    watchdog = PagesWatchdog()
 
     for attempt in range(max(1, attempts)):
+        watchdog.tick()
         try:
             response = requests.get(url, timeout=15)
             if response.status_code == 200 and "text/html" in (

@@ -257,6 +257,39 @@ def h2h_set_row_style(sets: int) -> tuple[int, float]:
     return 40, 1.26
 
 
+# 头像底下中文名那一行的字号：短名字给满 41px，长的按宽度缩。
+# ⚠️ 2026-09-25 `cerundolo-zhou-chengdu-2026-r1` 踩的：`.h2h-cn` 原来写死 41px ＋
+# `nowrap`，「胡安·曼努埃尔·塞伦多洛（53）」在 41px 下约 500px，而左边那一栏的
+# 中线在 x=200——文字居中往两边摊，左半截直接出了画布，「胡」字被切掉一半。
+# **渲染、质检、全量测试一律不出声**，是打开 stat_card.jpg 才看见的。
+# 可用宽度 340：名字以头像那一栏（x=58..342，中线 200）为中心摊开，左边离画布
+# 边 200，右边离中间比分那一栏（min-width 170 居中 → 左缘 455）255；取两头里
+# 更紧的一侧再各留 30px → (200-30)×2 = 340。
+# 两个人共用一个字号（取更紧的那个），和封面比分板 `score_cn_px` 同一个理由：
+# 同一张图上两个名字一大一小，看着像渲错了。
+H2H_CN_MAX_PX = 41
+H2H_CN_MIN_PX = 24
+H2H_CN_AVAIL_PX = 340
+
+
+def h2h_cn_px(matchup: list) -> int:
+    """数据图头像底下中文名（含排名）的字号，按两人里更长的那一个算。
+
+    宽度拿真字体量（`versus_poster._name_width_px`，得意黑 ＋ 排名走思源黑），
+    不按「一个汉字一个 em」估。那个函数按 `.62em` 量排名，这张图是 `.6em`，
+    多量出来的一两个像素是往安全的方向偏。
+    """
+    def widest(px: int) -> float:
+        return max((vp._name_width_px(str(m.get("name") or "").strip(),  # noqa: SLF001
+                                      m.get("rank"), px)
+                    for m in matchup), default=0.0)
+
+    px = H2H_CN_MAX_PX
+    while px > H2H_CN_MIN_PX and widest(px) > H2H_CN_AVAIL_PX:
+        px -= 1
+    return px
+
+
 # (标签, 类型, ...字段名)——固定模板，见模块 docstring「每一行谁占优」。
 ROW_SPECS = [
     # ⚠️ 英文写空串＝**这一行故意不要英文**（账号所有者 2026-08-15：「ACE 就
@@ -443,6 +476,7 @@ def build(spec: dict, *, variant: str = "poster") -> str:
     swap = str(left_meta["name"]).strip() != winner
     set_tokens = _reorder_result(result, swap).split()
     set_px, set_lh = h2h_set_row_style(len(set_tokens))
+    cn_px = h2h_cn_px(matchup)
     sets_rows = "".join(
         f'<div class="h2h-set-row">{vp._sets_html(token)}</div>'  # noqa: SLF001
         for token in set_tokens)
@@ -574,7 +608,7 @@ body{{color:{vp.TEXT};font-family:'TL Sans SC','Noto Sans CJK SC',sans-serif;
 .h2h-ring--pair{{width:150px;height:150px;margin:0 -15px;position:relative}}
 .h2h-ring--pair:first-child{{z-index:2}}
 .h2h-ring--pair:last-child{{z-index:1}}
-.h2h-cn{{font-family:'TL Display SC','TL Sans SC',sans-serif;font-size:41px;
+.h2h-cn{{font-family:'TL Display SC','TL Sans SC',sans-serif;font-size:{cn_px}px;
  margin-top:18px;text-align:center;white-space:nowrap}}
 /* ⚠️ 排名数字也走 `TL Score`——它原来什么都没写、跟着 `.h2h-cn` 继承了得意黑，
    于是同一张卡上有两副数字（分盘比分是 Noto，排名是得意黑）。账号所有者

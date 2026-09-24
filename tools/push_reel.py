@@ -59,6 +59,7 @@ from tennislive.render.hashtags import (  # noqa: E402
 from tennislive.render.pushmsg import (  # noqa: E402
     _PAGES,
     XHS_BODY_MAX,
+    PagesWatchdog,
     split_xhs,
     to_copy_page,
     trigger_pages_build,
@@ -159,7 +160,11 @@ def wait_for_copy_page(url: str, expect: str = "", *, attempts: int = 30,
     # 触发 Pages（`GITHUB_TOKEN` 推的 push 不创建 workflow run），不点的话
     # 这个循环注定探满全程——见 `trigger_pages_build` 里那张运行记录表。
     trigger_pages_build()
+    # 2026-09-24：派出去的那趟部署自己卡在队里、占着并发锁不放，这个循环就会
+    # 一直探到 job 超时。等够 6 分钟还没上线，就查一次队列、清掉卡死的那趟。
+    watchdog = PagesWatchdog()
     for attempt in range(attempts):
+        watchdog.tick()
         try:
             response = requests.get(url, timeout=timeout,
                                     headers={"Cache-Control": "no-cache"})
