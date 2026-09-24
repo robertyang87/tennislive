@@ -819,3 +819,27 @@ def test_full_canvas_data_card_preserves_design_and_covers_overlays(tmp_path, mo
     assert f"gte(t,{start:.6f})*lt(t,{start + page.length:.6f})" in graph
     assert '[decorated][clean_canvas]overlay=0:0' in graph
     assert reel.full_canvas_filtergraph('[0:v]null[out]', segs, 1.2) == '[0:v]null[out]'
+
+
+def test_头像底下的长中文名要按宽度缩字号不许出画布():
+    """2026-09-25 `cerundolo-zhou-chengdu-2026-r1`：`.h2h-cn` 写死 41px ＋ nowrap，
+    「胡安·曼努埃尔·塞伦多洛（53）」居中摊开，左半截出了画布、「胡」字被切掉一半，
+    渲染和质检都不出声。钉三头：长名字缩到装得下；短名字照旧 41px（别一刀全缩小）；
+    算出来的字号真的写进了 CSS（占位符没插值、忘了调都长成写死的那一个数）。
+    """
+    long_pair = [{"name": "胡安·曼努埃尔·塞伦多洛", "rank": 53},
+                 {"name": "周意", "rank": 273}]
+    px = sc.h2h_cn_px(long_pair)
+    assert sc.H2H_CN_MIN_PX <= px < sc.H2H_CN_MAX_PX
+    widest = max(sc.vp._name_width_px(m["name"], m["rank"], px) for m in long_pair)  # noqa: SLF001
+    assert widest <= sc.H2H_CN_AVAIL_PX, (px, widest)
+
+    short_pair = [{"name": "商竣程", "rank": 253}, {"name": "马纳里诺", "rank": 78}]
+    assert sc.h2h_cn_px(short_pair) == sc.H2H_CN_MAX_PX
+
+    spec = json.loads((Path(__file__).resolve().parent.parent
+                       / "specs/reels/cerundolo-zhou-chengdu-2026-r1.json").read_text())
+    css = sc.build(spec)
+    got = re.search(r"\.h2h-cn\{[^}]*font-size:(\d+)px", css)
+    assert got and int(got.group(1)) == sc.h2h_cn_px(spec["cover"]["matchup"]), (
+        "`.h2h-cn` 的字号不是按名字宽度算出来的那个数")
