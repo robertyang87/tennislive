@@ -4011,7 +4011,15 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
                 # **字幕抬到板上方**（`subtitle_margin_for_boards`，render 里算，
                 # 整条片子一个锚）；字幕垫跟着锚一起抬。
                 oy = (BAND_TOP if LAYOUT == "band" else 0) + int(round(y0 * ratio))
-                strip = _even((x1 - x) * ratio)    # 居中窗口天然含住的那一条
+                # ⭐ 2026-09-24 账号所有者（杭州 bu-zheng）：「从屏幕的左边再往右
+                # 移一点，移到画布上」。全出血下**窗口左缘已经越过板右缘**时
+                # （x ≥ x1，巡回赛的板多半如此），画面里没有残条要盖，贴片就
+                # 不必顶死在 x=0——往里收到顶栏文字同一条竖线（TOPBAR_MARGIN_H），
+                # 和上面的「2026 ATP250 …」左对齐。有残条（x < x1，美网那种宽板）
+                # 或带式时照旧贴 0：挪开就露出被裁的半截板。
+                ox = (TOPBAR_MARGIN_H
+                      if LAYOUT != "band" and x >= x1 else 0)
+                strip = max(0, _even((x1 - x) * ratio)) if x < x1 else 0  # 居中窗口天然含住的那一条
                 # ⭐ 2026-08-28 一天里这块地方被账号所有者点了四次，最后定在
                 # 「**按板的实际大小裁，原比例贴回左下角，纵坐标不变**」。
                 # 中间试过、被否掉的两条，连同它们的实测记在这儿，别再走一遍：
@@ -4030,7 +4038,7 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
                 # 球场也抠进贴片，再贴到画面上另一个位置。
                 print(f"    [score] {seg.start:.1f}s 段回贴记分条 "
                       f"[{x0},{y0},{x1},{y1}] → "
-                      f"{'画面带' if LAYOUT == 'band' else '画面'} 左下 (0,{oy})，"
+                      f"{'画面带' if LAYOUT == 'band' else '画面'} 左下 ({ox},{oy})，"
                       f"原比例 {bw}×{sh}px；盖住残条 {strip}px 之外"
                       f"再多占 {bw - strip}px 球场（认领过的代价）")
                 # ⭐ 板中途淡出的那几秒**不贴**（`enable`）——贴上去是一块
@@ -4060,7 +4068,7 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
                     f"[wm]crop={CROP_W}:{CROP_H}:{x}:{CROP_Y},"
                     f"{_canvas_fit().rstrip(',')}[m];"
                     + patch +
-                    f"[m][b]overlay=0:{oy}{gate},{sp}fps={FPS_EXPR},setsar=1"
+                    f"[m][b]overlay={ox}:{oy}{gate},{sp}fps={FPS_EXPR},setsar=1"
                 )
                 labeled = True
             else:
