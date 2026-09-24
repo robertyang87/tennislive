@@ -319,6 +319,6 @@
    "headshot": "assets/players/headshots/hu-jia-chengdu-2026.jpg"
   },
   "_source": "`python tools/match_stat_hooks.py EVZwApfT --stats-block` 机器抄的 flashscore df_st_1 全场统计。a/b 跟 cover.matchup 的顺序（a=科普日瓦、b=胡佳）；flashscore 这一场 home=Kopriva V.、away=Hu J.，恰好同序。头像：科普日瓦是 ATP 官方头像（`fetch_official_headshot.py atp \"Vit Kopriva\" --id KI82 --via https://www.mubadaladcopen.com`，246 色，不是占位剪影）；胡佳在 ATP 官网只有占位剪影（同一脚本对 H0LE 报 2 色），头像改用本场封面那张赛事组委会实拍（四川在线 9/23 刊发，`assets/reel/credits.json` 的 hu-kopriva-chengdu-2026.jpg）裁出的头肩 300×300——同一个人、同一场、官方出处。",
-  "_winners_ue_why": "flashscore 这一场没有制胜分/非受迫失误（17 项）。已跑 tnns-stats.yml（who=Kopriva,Hu，date=2026-09-23，run 35900463822，TNNS id 74923154）：hasExtendedStats True，但**分盘合计和全场对不上**（winners 分盘 [10,6]+[4,16]=[14,22] vs 全场 [23,26]；ue [10,17]+[15,21]=[25,38] vs 全场 [21,35]），脚本自己标了「多半解错了，别用」，所以两项留空。"
+  "_winners_ue_why": "这一场**官方统计本来就没有**制胜分和非受迫失误：账号所有者 2026-09-24 看过 ATP 官网本场 Stats 后确认「制胜分和 ue 没有」。另外两处也一样：flashscore df_st_1 只有 17 项（没有这两项），tennis.com 本场 StatsTable 同样没有。TNNS（tnns-stats.yml，id 74923154，run 35900463822 与 35952372338 两趟一字不差）给了全场 23/26、21/35，但分盘合计对不上（winners 分盘 [14,22] vs 全场 [23,26]），而官方没有这两项，TNNS 的数就没有出处可核，不用。所以数据图只画官方有的七项，这就是这场能拿到的全部。"
  }
 }
