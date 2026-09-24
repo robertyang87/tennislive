@@ -1,0 +1,338 @@
+{
+ "slug": "cerundolo-zhou-chengdu-2026-r1",
+ "_column": "赛场之上",
+ "sources": {
+  "ttv": "https://www.tennistv.com/videos/4581270/chengdu-2026-r1-cerundolo-zhou-short-highlights"
+ },
+ "primary": "ttv",
+ "_source": "tennistv.com `library/short-highlights`《chengdu-2026-r1-cerundolo-zhou-short-highlights》，free 档；probe（run 36021439005）实测 1920×1080、153.79s（HLS 最高档 1080p/50fps，runner 下到 25fps 档）。渠道比较（2026-09-24 15:30Z 量的）：① Tennis TV YouTube 单场版——**没有单场，只有 Day 2 合集**（`1Bpyi5DRyvA`《Shapovalov Faces Griekspoor; Hurkacz, Shang & More Feature | Chengdu 2026 Highlights Day 2》，701s，账号所有者贴的就是这条；合集里多场混剪，切不出一段连续窗口，不用）；② tennistv.com short-highlights——153.79s / 1080p，本片用它；③ ATP Tour YouTube——频道列表里没有这一场。四要素自证：记分条逐格读过（`J. CERUNDOLO / ZHOU` 两行：首盘 1-0、2-1 40-30、5-4 AD `SET POINT #2` / `#3`、6-4；第二盘 0-1 15-15、2-1 15-15、3-2 15-0、3-5 AD、6-3），和 flashscore jVJBOq9M 逐分一致；场地挡板印着 `CHENGDU 成都`、转播大屏 `ATP 250`；解说 137~142s「Juan Manuel Cerundolo advancing through to round two here in Chengdu」。",
+ "_tennistv_trim": "**片尾**：比赛画面收在 144.88s（最后一个 scene_cut），之后是 Tennis TV 推广卡和 `GET IT ON Google Play` 下载卡（150.5s 起）；本片最后一段收在 144.3s，离推广卡 0.58 秒。**台标**：Tennis TV 台标烧在右上角（源片 x≈1600~1900），3:4 取景窗 cx=0.5 只取 555~1365，角上那块在窗外。",
+ "mixed_fps": {
+  "ttv": "HLS 最高档 50fps，1920×1080；probe 在 runner 上报 25fps（整除降采样到 25）。单一源片，没有混帧率。"
+ },
+ "scorebox": [
+  98,
+  920,
+  540,
+  1029
+ ],
+ "_scorebox_why": "照 `shang-mannarino-chengdu-2026-r1` / `bu-zheng-hangzhou-2026-r1` 的全出血口径：比分板从同一帧抠出来贴边、同比放大贴回左下（账号所有者 2026-09-24 定的全局做法）。坐标是全分辨率帧实测（本地拉的同一条源片，y=975 那一行量深色板的左右缘）：左缘 98、上缘 920、下缘 1029；右缘首盘 448（20s `2 40 / 1 30`），第二盘带盘分那一档 494（81s `6 0 15`、128.5s `6 5 AD`），往宽里取到 540（右缘渲染时逐段现量，这个数只是钳位，窄了必炸）。",
+ "cover": {
+  "eyebrow": "赛场之上",
+  "layout": "solo",
+  "subject": "周意",
+  "hook": "去年在这儿掀翻诺里\n今年3次机会全没抓住",
+  "hook_accent": "3次机会",
+  "_hook_why": "两行一个落差：第一行是来路（2025 成都首轮，排名 304 的他 6-7(3) 6-4 7-6(2) 胜 5 号种子诺里——维基「Zhou Yi (tennis)」引 tennishead / lastwordonsports，tennisexplorer 逐场同一比分），第二行是这一场的形状：他全场只拿到 3 个破发点（df_st_1 Break Points 0/3，tennis.com Break Points Won 0% (0/3)），全落在首盘 4-5 那一局、每一个都能扳成 5 平，一个没兑现；塞伦多洛 9 个发球局全保。没写排名、年龄、国籍，没有术语（「机会」代替「破发点」）。9 字和 10 字。",
+  "topic": "成都公开赛首轮 · 塞伦多洛 vs 周意",
+  "winner": "胡安·曼努埃尔·塞伦多洛",
+  "result": "6-4 6-3",
+  "matchup": [
+   {
+    "name": "胡安·曼努埃尔·塞伦多洛",
+    "name_en": "Juan Manuel Cerundolo",
+    "country": "ARG",
+    "rank": 53
+   },
+   {
+    "name": "周意",
+    "name_en": "Yi Zhou",
+    "country": "CHN",
+    "rank": 273
+   }
+  ],
+  "_matchup_rank_why": "两源一致：仓库 `sources/rankings.fetch_rankings()`（tennisexplorer ATP 榜，atp_at=21.09.2026）Cerundolo Juan Manuel 53、Zhou Yi 273；tennis.com 本场比赛页 Singles Ranking 53 / 273。",
+  "_name_why": "`player_zh(\"Juan Manuel Cerundolo\")` → 胡安·曼努埃尔·塞伦多洛（和 `auger-aliassime-cerundolo` 同一个名字、同一张 atp-C0C8 头像）；`player_zh(\"Yi Zhou\")` → 周意。旁白里简称塞伦多洛。",
+  "_subject_why": "封面放**周意**——输的那个，但他是这条片子的主语：中国球员、连着第三年拿外卡回到成都，去年在这里掀翻诺里；中国观众冲他来。",
+  "_heat_why": "① 档：中国球员单打，不用等额外理由。",
+  "scoreboard": {
+   "court": "Center Court",
+   "_court_why": "tennis.com 本场比赛页 `Men's Singles · Round 1 · Center Court`；源片场地和同日 `shang-mannarino-chengdu-2026-r1`（Center Court，转播图形自证）是同一块场（`CHENGDU 成都` 挡板、Emirates 网柱牌、同一机位）。",
+   "duration_source": {
+    "url": "data:application/json,%7B%22duration%22%3A%20%221%3A32%3A00%22%2C%20%22source%22%3A%20%22flashscore%20dc_1%EF%BC%88jVJBOq9M%EF%BC%89%E5%BC%80%E8%B5%9B%20DC%3D1790253900%EF%BC%8812%3A45%3A00Z%EF%BC%89%E3%80%81%E5%AE%8C%E8%B5%9B%20DD%3D1790259442%EF%BC%8814%3A17%3A22Z%EF%BC%89%EF%BC%8C%E7%9B%B8%E5%87%8F%201%3A32%3A22%22%2C%20%22cross_check%22%3A%20%22flashscore%20df_sui_1%20%E5%88%86%E7%9B%98%200%3A43%20%2B%200%3A49%20%3D%201%3A32%EF%BC%9B%E6%BA%90%E7%89%87%2033.6s%20%E8%BD%AC%E6%92%AD%E5%A4%A7%E5%B1%8F%20MATCH%20TIME%200%3A39%EF%BC%88%E9%A6%96%E7%9B%98%205-4%20%E9%82%A3%E4%B8%80%E5%B1%80%E4%B8%AD%E9%80%94%EF%BC%89%EF%BC%8C%E5%92%8C%E9%A6%96%E7%9B%98%200%3A43%20%E5%AF%B9%E5%BE%97%E4%B8%8A%22%7D",
+    "field": "duration"
+   },
+   "_duration_why": "flashscore 自己的开赛/完赛时间戳相减 1:32:22，分盘 0:43+0:49=1:32，转播大屏首盘 5-4 那一局中途 MATCH TIME 0:39 对得上。ATP 这一场没有第二个公开的全场用时源，按 1:32 印，旁白不报用时。"
+  },
+  "portrait": {
+   "image": "assets/reel/cerundolo-zhou-chengdu-2026.jpg",
+   "focus": 0.5,
+   "focus_y": 0.3,
+   "zoom": 1.0,
+   "_why": "**本场源片抽帧**（Tennis TV 短集锦 `4581270`，50fps 原片 58.8s）：首盘 4-5 那一局，他一板高压救下第二个盘点之后的近景，正对镜头、眼睛睁着、嘴微张在喘，身后大屏「CHENGDU」；记分条 `5 AD / 4`（翻牌滞后，两秒后翻成 40-40）。情绪是「刚把一分抢回来，下一分还悬着」——正是钩子「3次机会全没抓住」之前的那一刻。58.4~61.4 逐 0.1 秒拉了 30 帧看过，这一帧眼睛睁得最开、脸最正。",
+   "_frame_why": "同日同站 `shang-mannarino-chengdu-2026-r1`：账号所有者 2026-09-24 看过 VS 官方抠图版后明确要求「不要用这种封面……还不如从那个比赛画面中截取那个抽帧去做」。本条出片时（北京 24 日深夜）当日官方实拍各渠道都还没有这一场，按他的口径用本场抽帧。",
+   "_low_res_why": "源片 1920×1080，铺 1080×1440 按高算放大 1.33×。按账号所有者点的抽帧方案（见 `_frame_why`），没有更高清的本场画面。"
+  }
+ },
+ "topbar": {
+  "line1": "2026 ATP250 成都站 首轮",
+  "line2": "胡安·曼努埃尔·塞伦多洛 6-4 6-3 周意"
+ },
+ "_topbar_why": "line1 按账号所有者 2026-09-24 定的格式「<年份> <巡回赛><级别> <城市>站 <轮次>」：成都公开赛是 ATP250（ATP 官方签表 protennislive 7581 页眉 `$ 184,085 250 pts`），签表这一列是 Round of 32（2 号种子轮空），写「首轮」。line2 由 cover.winner / result / matchup 机械拼出。",
+ "_result_why": "ATP 官方正赛签表 protennislive.com/posting/2026/7581/mds.pdf（Released 09/24/2026 22:19:15）第一轮 29/30 号签位下印着 `J. Cerundolo 64 63`，30 号签位 `WC ZHOU, Yi CHN`；flashscore 当日表 jVJBOq9M：AE=Cerundolo J. M.（home）AG=2 BA=6 BC=6 / AF=Zhou Y.（away）AH=0 BB=4 BD=3；tennis.com 比赛页 `J. Cerúndolo 6 6 / Y. Zhou WC 4 3`；源片 136.5s 记分条 `6 6 / 4 3`。四处一致。",
+ "_match": {
+  "status": "result_verified",
+  "source": "flashscore_points",
+  "source_id": "jVJBOq9M",
+  "flashscore_id": "jVJBOq9M",
+  "participants": [
+   "胡安·曼努埃尔·塞伦多洛",
+   "周意"
+  ],
+  "set_scores_home_away": [
+   [
+    6,
+    4
+   ],
+   [
+    6,
+    3
+   ]
+  ],
+  "tiebreaks_home_away": [
+   null,
+   null
+  ],
+  "winner": "胡安·曼努埃尔·塞伦多洛",
+  "loser": "周意",
+  "winner_result": "6-4 6-3",
+  "loser_result": "4-6 3-6"
+ },
+ "_hit_data": "跑过 `match_stat_hooks.py jVJBOq9M`（home=Cerundolo）。进旁白和钩子的：**周意全场 3 个破发点全没兑现**（df_st_1 Break Points 0/3；tennis.com Break Points Won 0% (0/3)），三个全在首盘 4-5 那一局（df_mh_1 Set 1 第 10 局 `40:A |B1|` 出现三次，中间夹着塞伦多洛的三个盘点 `|B2|`）；**塞伦多洛 9 个发球局全保**（df_mh_1 逐局；tennis.com Service Games 100% (9/9)、Zhou Return Games 0% (0/9)）；第二盘第 3 局周意发球四分全丢被破（`15:0, 30:0, 40:0 |B1|`）；第 7 局周意救下一个破发点保发（`A:40 |B1|, 40:40, 40:A`）；最后一局救下第一个赛点、拿到过一次局点，第二个赛点被破（`40:30 |B1| |B3|, 40:40, 40:A, 40:40, A:40 |B1| |B3|`）。没用的候选：总分差 69-56（钩子不拿总分差说事，2026-09-19 那条）。",
+ "_turning_points": [
+  "首盘第 1 局（周意发球）：`0:15, 15:15, 30:15, 40:15 |B1|, 40:30 |B1|`——开局第二个破发点就被破，1-0。源片从 1-0 之后开始。",
+  "首盘 4-5（塞伦多洛发球胜盘）：`0:15, 0:30, 15:30, 30:30, 40:30 |B2|, 40:40, 40:A |B1|, 40:40, A:40 |B2|, 40:40, 40:A |B1|, 40:40, 40:A |B1|, 40:40, A:40 |B2|`——周意 0-30 领先，三个破发点（能扳成 5 平），塞伦多洛第三个盘点拿下。源片 34.3~56.3 是第二个盘点（周意上网高压救下，解说「Couldn't quite find the depth or the height on that lob」），63~73.7 是第三个盘点。",
+  "第二盘第 3 局（周意发球）：四分全丢被破，2-1。源片里没有这一局。",
+  "第二盘 2-1 15-15（源片 93.7~104.3）：塞伦多洛放小球调周意上网，网前对截塞伦多洛赢下，解说「so quick around the court」。",
+  "第二盘 3-5（周意发球保赛，源片 127.6~136.2）：救下第一个赛点、拿到一次局点，第二个赛点被破，6-3。"
+ ],
+ "editorial": {
+  "mode": "match_review",
+  "hook": [
+   "去年在这儿掀翻诺里",
+   "今年3次机会全没抓住"
+  ],
+  "question": "连着第三年拿外卡回到成都、去年在这里掀翻五号种子诺里的周意，这一次为什么一盘都没拿下？他的机会在哪儿，又是怎么溜走的？",
+  "thesis": "周意这一场只有一段真正的机会：首盘 4-5，塞伦多洛发球胜盘，他 0-30 领先、三次拿到能扳成 5 平的破发点，还一板高压救下一个盘点——三个破发点一个没兑现。除此之外，塞伦多洛 9 个发球局全保，第二盘周意第三局被破，就再也没追回来。",
+  "beats": [
+   "北京时间 9 月 24 日晚上快九点，成都公开赛首轮，中心球场。两年前周意在这里拿到生涯第一场巡回赛正赛胜利，去年在这里掀翻五号种子诺里；今年对面是世界第 53 的塞伦多洛。",
+   "首盘 4-5：塞伦多洛发球胜盘，周意三次拿到破发点，上网高压救下第二个盘点；第三个盘点塞伦多洛压他反手底角拿下，6-4。",
+   "第二盘：第三局周意发球被破；网前对截塞伦多洛更快；塞伦多洛 9 个发球局全保。",
+   "收尾：周意救下第一个赛点，第二个没守住，4-6 3-6。末屏一问：明年再回到成都，那一分能拿下来吗？"
+  ],
+  "human_context": {
+   "angle": "这场球的主语是**周意和成都这块场地**：2024 年他拿外卡在这里拿到生涯第一场 ATP 正赛胜利（首轮曾俊欣退赛），2025 年还是外卡、排名 304，在这里 6-7(3) 6-4 7-6(2) 掀翻 5 号种子诺里（生涯最大的一场胜利）；今年第三次拿外卡回来，首轮碰上世界第 53 的塞伦多洛。",
+   "facts": [
+    "维基「Zhou Yi (tennis)」：2024 Chengdu Open main-draw wildcard, first ATP singles win over Tseng Chun-hsin（引 ATP 官网 chengdu-report-2024-thursday）；Ranked No. 304 at the 2025 Chengdu Open, again main-draw wildcard, upset fifth seed Cameron Norrie（引 tennishead / lastwordonsports）。",
+    "tennisexplorer 逐场（player/zhou-472f7）：2024 Chengdu 1R 胜 Tseng C.（2-6 6-1 3-1 退赛）、R16 负 Mannarino；2025 Chengdu 1R 胜 Norrie 6-7(3) 6-4 7-6(2)、R16 负 O'Connell 2-6 4-6。",
+    "ATP 官方签表 mds.pdf：30 号签位 `WC ZHOU, Yi CHN`；本场 `J. Cerundolo 64 63`；下一轮塞伦多洛对 2 号种子达维多维奇-福基纳。",
+    "flashscore jVJBOq9M df_st_1：周意 Break Points 0/3；塞伦多洛 3/6；tennis.com 本场：塞伦多洛 Service Games 100% (9/9)、周意 Return Games 0% (0/9)。",
+    "解说（Tennis TV 短集锦，small.en / medium.en 两个模型）：57.1s「Couldn't quite find the depth or the height on that lob」、75.0s「the first set belongs to Juan Manuel Cerundolo」、104.2s「well done from Cerundolo, so quick around the court」、139.0s「advancing through to round two here in Chengdu」。"
+   ],
+   "sources": [
+    "https://www.protennislive.com/posting/2026/7581/mds.pdf",
+    "https://www.flashscore.com/match/tennis/jVJBOq9M/",
+    "https://www.tennis.com/tournaments/chengdu-open/matches/j-cerundolo-vs-y-zhou-2026-09-24",
+    "https://en.wikipedia.org/wiki/Zhou_Yi_(tennis)",
+    "https://www.tennisexplorer.com/player/zhou-472f7/?annual=2025",
+    "https://www.tennistv.com/videos/4581270/chengdu-2026-r1-cerundolo-zhou-short-highlights"
+   ]
+  }
+ },
+ "_no_repeat": "同栏目没做过周意的「赛场之上」（`specs/reels/` 里按「周意」「zhou」各查过一遍，只有 `davis-cup-china-first-world-group-1` 提到他 2 月那场双打，另一个栏目）；同站同日的 `shang-mannarino-chengdu-2026-r1`、`hu-kopriva-chengdu-2026-r1` 是另外两个人。",
+ "_diabetes_why": "ATP 官网本人简介写着「At 14 was diagnosed with Type 1 Diabetes」，百度百科同句——但后者读起来是照 ATP 简介译的，不算独立的第二源；这场球也和它无关。所以旁白和文案都不写。",
+ "push": {
+  "summary": "周意成都首轮出局",
+  "lead": "成都公开赛首轮，连着第三年拿外卡回到成都的周意 4-6 3-6 负于世界第 53 的塞伦多洛。去年他在这里掀翻了 5 号种子诺里。这一场他只有一段机会：首盘 4-5，塞伦多洛发球胜盘，他三次拿到能扳成 5 平的破发点、还上网一板高压救下一个盘点，三个破发点一个没兑现。塞伦多洛 9 个发球局全部保住。",
+  "matchup": "胡安·曼努埃尔·塞伦多洛 vs 周意",
+  "score": "6-4 6-3",
+  "auto": true
+ },
+ "_push_summary_why": "9 字位，主语是周意；「成都」点出他连着三年回来的那一站。标题里不写排名。",
+ "_voice_why": "沿用这条线的默认：云见（`zh-CN-YunjianNeural`）＋6%，不设 `style`。 切词按 `--check-narration` 报告改过：「塞伦多洛发球／先放／整场」三处会切成「洛发球／洛先／洛整」，改成「塞伦多洛的…」「整场比赛，塞伦多洛…」；「挑高球」被切成「选｜高球」，改「高吊球」。",
+ "segments": [
+  {
+   "source": "ttv",
+   "start": 2.0,
+   "end": 13.2,
+   "cx": 0.5,
+   "narration": "北京时间九月二十四号晚上快九点，成都公开赛首轮，中心球场。二十一岁的周意，拿着外卡，连着第三年站上这块场地。",
+   "_why": "首盘 1-0（周意第一个发球局被破）之后第二局的一分，同一机位底线宽景。12.8 这一分打完，13.5 起溶解到 2-1 那一分，段尾收在溶解之前。",
+   "_start_time_why": "开球时刻：flashscore dc_1 jVJBOq9M 的 DC=1790253900（2026-09-24 12:45:00Z＝北京 20:45），完赛 DD=14:17:22Z，相减 1:32:22，和 df_sui_1 分盘 0:43+0:49 对得上，说明是实际开赛。tennis.com 比赛页 startDate 12:35Z 是排定时刻。20:45 按口径说「快九点」，不报到分。",
+   "score_inset": true
+  },
+  {
+   "source": "ttv",
+   "start": 13.6,
+   "end": 29.3,
+   "cx": 0.5,
+   "narration": "两年前，他在这里，赢下生涯第一场巡回赛正赛；去年，排名三百零四的他，在这里掀翻了五号种子诺里。今年首轮的对手，是阿根廷人塞伦多洛，世界第五十三。",
+   "_why": "首盘 2-1 40-30（塞伦多洛发球），底线相持到 28.5 前后，29.34 切到塞伦多洛近景；解说 26.8~31.0「that's a good one … ball striking there from Cerundolo」。",
+   "score_inset": true,
+   "point_end_ok": "这一分在 26.7 前后就打完了：解说 26.8 起「Oh, that's a good one … ball striking there from Cerundolo」是赛后点评，28.5 那一格两人已经在走动；29.34 切到塞伦多洛近景，记分条 31.2 才翻成 3-1——翻牌滞后。"
+  },
+  {
+   "source": "ttv",
+   "start": 34.3,
+   "end": 56.3,
+   "cx": 0.5,
+   "narration": "四比五，塞伦多洛的发球胜盘局。这一局，周意三次拿到破发点，每一个都能扳成五平。第二个盘点上，他被拉着左右跑，没有往后退，一路压到网前。塞伦多洛的高吊球不够高、也不够深，他一板高压，硬是把这个盘点抢了回来。",
+   "_why": "首盘 5-4 `AD SET POINT #2`（34.5 起黄条），周意在近端被左右调动，53~55 压到网前，54.7 一板高压结束这一分（逐 0.2 秒切过：55.5 起他已经转身往回走）。55.1 这一分打完，段尾 56.3 留 1.2 秒。",
+   "point_end_ok": "54.7 高压落地、55.5 周意转身往回走，这一分在段尾之前已经打完；记分条要到 60 秒前后才翻成 40-40——翻牌滞后，中间是 58.3 切进来的周意近景。",
+   "score_inset": true
+  },
+  {
+   "source": "ttv",
+   "start": 56.4,
+   "end": 62.3,
+   "cx": 0.5,
+   "quote": [
+    {
+     "at": 0.7,
+     "text": "Couldn't quite find the depth or the height on that lob\n那个挑高球不够深也不够高"
+    },
+    {
+     "at": 4.6,
+     "text": "had a lot of time to line it up\n他有足够的时间瞄准"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "_quote_why": "转播原句 ttv 57.1~62.1s（medium.en 逐词时间戳：Couldn't@57.1 … lob@60.2 … had@61.0 … up@62.1）。解说把名字念成 Sirundalo，字幕照发音校正不需要——英文行里没有名字。",
+   "_why": "周意近景（58.3 切进来），60.5 起记分条翻成 40-40：第二个盘点救下来了。62.5 溶解到第三个盘点那一分，段尾收在溶解之前。",
+   "point_end_ok": "这一段没有球，60 秒前后翻成 40-40 是上一段那一分的滞后翻牌；62.5 之后的「翻牌」是溶解进 `SET POINT #3` 那一分。",
+   "score_inset": true,
+   "crosses_cut": "56.4~58.3 是这一分打完之后的全景（两人往回走），58.32 切到周意近景——切前切后都是他，这一段是原声解说，没有旁白压在别人身上。"
+  },
+  {
+   "source": "ttv",
+   "start": 63.0,
+   "end": 73.9,
+   "cx": 0.5,
+   "narration": "平分之后，他又两次拿到破发点，都没拿下。第三个盘点，塞伦多洛，一拍拍压他的反手底角，拿下首盘。",
+   "_why": "首盘 5-4 `SET POINT #3`（63.0 起黄条），周意在近端，65~73 整分都被压在画面左侧——他是右手持拍、背对镜头，画面左边就是他的反手一侧。73.7 这一分结束，74.2 切到塞伦多洛教练席振臂。",
+   "point_end_ok": "73.7 这一分打完（74.2 切到教练席振臂庆祝），记分条 76 秒才翻成 6-4——翻牌滞后。",
+   "score_inset": true
+  },
+  {
+   "source": "ttv",
+   "start": 74.2,
+   "end": 77.1,
+   "cx": 0.5,
+   "quote": [
+    {
+     "at": 0.8,
+     "text": "the first set belongs to Juan Manuel Cerundolo\n首盘归塞伦多洛"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "_quote_why": "转播原句 ttv 75.0~77.3s（the@75.0 first@75.1 set@75.3 belongs@75.6 to@75.9 Juan@76.4 Manuel@76.6 Cerundolo@76.8）。",
+   "_why": "塞伦多洛教练席振臂（74.2）→ 76 秒翻成 6-4；77.2 松切点前收。",
+   "point_end_ok": "这一段没有球，76 秒前后翻成 6-4 是上一段那一分的滞后翻牌。",
+   "score_inset": true
+  },
+  {
+   "source": "ttv",
+   "start": 78.0,
+   "end": 91.9,
+   "cx": 0.5,
+   "narration": "第二盘，周意先保住了发球局，一比零领先——那一局被拖进两次平分，他咬着牙，才保下来。可是第三局，他的发球局四分全丢，被塞伦多洛破掉。",
+   "_why": "第二盘 0-1 15-15（塞伦多洛发球，两人已换边，塞伦多洛在近端），78~91.5 一分底线相持；92.5 起跳到 2-1。第三局那次破发源片里没有，按 flashscore df_mh_1 Set 2 第 3 局 `15:0, 30:0, 40:0 |B1|` 讲。 第一局按 df_mh_1 Set 2 第 1 局 `15:0, 15:15, 15:30, 30:30, 30:40, 40:40, 40:A, 40:40, 40:A`（周意发球，两次平分后保发）。",
+   "point_end_ok": "92.5 那次「翻牌」是 92 秒切到塞伦多洛近景之后跳到 2-1 15-15 的另一局，不是这一分。",
+   "score_inset": true
+  },
+  {
+   "source": "ttv",
+   "start": 93.7,
+   "end": 104.2,
+   "cx": 0.5,
+   "narration": "二比一，塞伦多洛的一记小球，把周意调上了网。周意追到了，两个人在网前对截，还是塞伦多洛出手更快。",
+   "_why": "第二盘 2-1 15-15（塞伦多洛发球，周意在近端）：100.7 起塞伦多洛放小球，101.2~102.7 周意冲上来救到，102~104 两人都在网前对截，104.3 前后这一分结束（逐 0.25 秒切过）。解说随即 104.2「well done from Cerundolo, so quick around the court」。",
+   "score_inset": true
+  },
+  {
+   "source": "ttv",
+   "start": 104.3,
+   "end": 108.8,
+   "cx": 0.5,
+   "quote": [
+    {
+     "at": 1.2,
+     "text": "well done from Cerundolo\n塞伦多洛打得漂亮"
+    },
+    {
+     "at": 3.3,
+     "text": "so quick around the court\n他在场上跑得太快了"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "_quote_why": "转播原句 ttv 104.2~108.4s（Oh@104.2 it's@104.8 well@105.5 done@105.6 from@105.9 … so@107.6 quick@107.7 around@108.0 the@108.3 court@108.4）；名字按发音校正成 Cerundolo。",
+   "_why": "网前那一分打完后的回放前奏和周意近景（108.5），108.86 切走之前收。",
+   "point_end_ok": "这一段没有新的一分；108.5 起记分条翻成 30-15 是上一段那一分的滞后翻牌。",
+   "score_inset": true
+  },
+  {
+   "source": "ttv",
+   "start": 109.0,
+   "end": 126.9,
+   "cx": 0.5,
+   "narration": "整场比赛，塞伦多洛的九个发球局，一局没丢；周意在他的发球局里，再也没拿到过一个破发点。周意一直在咬：第五局保发，第七局又救下一个破发点，把比分咬在三比四。可塞伦多洛，一次都没松口。",
+   "_why": "第二盘 3-2 15-0（塞伦多洛发球，近端），109.5~122 一分底线相持，解说 123.5「So good from Cerundolo」；126.5 溶解到 3-5 那一局。第七局那次救破发点源片里没有，按 flashscore df_mh_1 Set 2 第 7 局 `… A:40 |B1|, 40:40, 40:A` 讲。",
+   "point_end_ok": "126.5 起的翻牌是溶解进 3-5 `AD` 那一局，不是这一分。",
+   "score_inset": true
+  },
+  {
+   "source": "ttv",
+   "start": 127.6,
+   "end": 137.4,
+   "cx": 0.5,
+   "narration": "三比五，周意发球保赛。他救下第一个赛点，还拿到过一次局点，第二个赛点没能守住。四比六，三比六。",
+   "_why": "第二盘 3-5（周意发球，近端）`AD` 塞伦多洛的第二个赛点：127.5~136 一分，136.2 结束，136.5 翻成 6-3。段尾 137.4 在翻牌后 0.9 秒。",
+   "point_end_ok": "136.2 这一分打完、136.5 翻成 6-3，比赛结束；之后没有球。",
+   "score_inset": true
+  },
+  {
+   "source": "ttv",
+   "start": 137.5,
+   "end": 144.3,
+   "cx": 0.5,
+   "narration": "三个破发点，一个没兑现。明年回到成都，那一分他能拿下吗？",
+   "_why": "赛后两人走向网前握手（140 切到网前机位）。144.88 起是 Tennis TV 片尾卡，段尾 144.3 留 0.58 秒。",
+   "point_end_ok": "比赛在 136.2 已经结束，这一段是握手，没有球。",
+   "score_inset": false,
+   "_score_inset_why": "140 切到网前侧面机位之后转播撤了记分条（score_03.jpg 140.5 那一格只剩半截、142.5 起没有板），137.5~140 虽然还有板，但整段贴不贴要一刀切：比赛已经结束，板上 6-3 由顶栏第二行交代。"
+  }
+ ],
+ "stats": {
+  "tour": "atp",
+  "a": {
+   "aces": 7,
+   "df": 1,
+   "first_in": 40,
+   "first_won": 31,
+   "second_total": 21,
+   "second_won": 12,
+   "bp_conv": 3,
+   "bp_chances": 6,
+   "pts_won": 69,
+   "pts_total": 125,
+   "first_total": 61,
+   "headshot": "assets/players/headshots/atp-C0C8.png"
+  },
+  "b": {
+   "aces": 5,
+   "df": 0,
+   "first_in": 39,
+   "first_won": 27,
+   "second_total": 25,
+   "second_won": 11,
+   "bp_conv": 0,
+   "bp_chances": 3,
+   "pts_won": 56,
+   "pts_total": 125,
+   "first_total": 64,
+   "headshot": "assets/players/headshots/atp-Z0CQ.png"
+  },
+  "_source": "`python tools/match_stat_hooks.py jVJBOq9M --stats-block` 机器抄的 flashscore df_st_1 全场统计。a/b 跟 cover.matchup 的顺序（a=塞伦多洛、b=周意）；flashscore 这一场 home=Cerundolo J. M.、away=Zhou Y.，**顺序一致，没有对调**。tennis.com 交叉：Aces 7/5、Double Faults 1/0 一致；1st Serve 41/61 vs 40/61、2nd Serve Points Won 12/19 vs 12/21 有一分之差（let 记法），数据图按 flashscore 这一份自洽的画。头像：atp-C0C8（`auger-aliassime-cerundolo` 里同一张挂的也是胡安·曼努埃尔·塞伦多洛）、atp-Z0CQ（`fetch_official_headshot.py atp \"Yi Zhou\" --id Z0CQ --via https://www.mubadaladcopen.com`，254 色，不是占位剪影；ID 来自 atptour.com/en/players/yi-zhou/z0cq），打开看过。",
+  "_winners_ue_why": "两个源都查过，都用不了：① flashscore df_st_1 这一场只有 17 项，没有制胜分和非受迫失误（`match_stat_hooks.py jVJBOq9M` 报「flashscore 这场没有」）；② TNNS（tnns-stats.yml who=Cerundolo,Zhou，run 36021463711，id 74923144）给了全场制胜分 16/21、非受迫失误 14/33，但分盘合计对不上（制胜分分盘 [21,19] vs 全场 [16,21]，非受迫失误 [15,33] vs [14,33]），工具自己判「多半解错了，别用」；tennis.com 本场统计同样没有这两项。所以数据图只画七项官方统计。"
+ }
+}
