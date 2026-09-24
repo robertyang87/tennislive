@@ -1,0 +1,320 @@
+{
+ "slug": "bu-zheng-hangzhou-2026-r1",
+ "_column": "赛场之上",
+ "sources": {
+  "ttv": "https://www.tennistv.com/videos/4581010/hangzhou-2026-r1-bu-zheng-short-highlights"
+ },
+ "primary": "ttv",
+ "_source": "账号所有者点名「去 tennis tv 官网获取」。tennistv.com `library/short-highlights`《Yunchaokete Bu vs Michael Zheng - Short Highlights》（页面 id 4581010，free 档），HLS 最高档 1920×1080 / 50fps，155.97s；probe（run 35987251439）落的是 1920×1080。**三条渠道都量过**：① Tennis TV YouTube 频道 2026-09-24 10:25Z 列表最近 30 条里杭州只有《Royer Takes On Walton & Jacquet Battles Vukic》一条，**这一场没有单场**；② 本条 tennistv.com 短集锦 155.97s / 1080p；③ 赛事官方频道没查（① 空、② 已是 1080p）。付费全长档 `hangzhou-2026-r1-bu-zheng-highlights`（4581017）要订阅，不用。四要素自证：记分条逐格读过（`BU / ZHENG` 两行），从首盘第 1 局 `0 30`→`0 40`、首盘 `4-2 15-0`、`5-4 AD SET POINT #3`、第二盘 `1-1 40-0`、`2-1 15-15`、`5-3 40-15` 读到 `6 6 / 4 3`，和 flashscore O8Z1OFLE 逐分记录一一对得上；场地挡板印着 `HANGZHOU 杭州`、`杭州·滨江`，转播角标 `ATP 250`。",
+ "_tennistv_trim": "**片尾**：146.9s 起是 Tennis TV 品牌蒙太奇（LIVE / REPLAYS / SCORES…），152s 起是 `THE BEST SEAT IN TENNIS` 订阅卡；本片最后一段收在 146.3s，离品牌片头 0.6 秒（probe 的切点 147.02 是蒙太奇内部的第一刀，品牌画面从 146.9 就开始淡入，按画面算）。**台标**：Tennis TV 台标烧在右上角（源片 x≈1580~1900），3:4 取景窗 cx=0.5 只取 555~1365，角上那块在窗外。",
+ "mixed_fps": {
+  "ttv": "HLS 最高档 50fps，1920×1080；probe 在 runner 上报 25fps（整除降采样到 25）。单一源片，没有混帧率。"
+ },
+ "cover": {
+  "eyebrow": "赛场之上",
+  "layout": "solo",
+  "subject": "布云朝克特",
+  "hook": "三周前美网输给他\n在杭州他赢了回来",
+  "hook_accent": "赢了回来",
+  "_hook_why": "两行一个落差：第一行是来路（9 月 4 日北京时间美网男单第二轮，他 1-3 输给郑瑞），第二行是这一场的结果（同一个对手，二十天后 6-4 6-3）。没写排名、年龄、国籍，没有术语。8 字和 8 字，都在 10 字以内。",
+  "topic": "杭州公开赛首轮 · 布云朝克特复仇郑瑞",
+  "winner": "布云朝克特",
+  "result": "6-4 6-3",
+  "matchup": [
+   {
+    "name": "布云朝克特",
+    "name_en": "Yunchaokete Bu",
+    "country": "CHN",
+    "rank": 111
+   },
+   {
+    "name": "郑瑞",
+    "name_en": "Michael Zheng",
+    "country": "USA",
+    "rank": 92
+   }
+  ],
+  "_matchup_rank_why": "两源一致：仓库 `sources/rankings.fetch_rankings()`（tennisexplorer ATP 榜）Zheng Michael 92、Yunchaokete Bu 111；ESPN `site.api.espn.com/.../atp/rankings` 同一期 92（642 分）/ 111（552 分）。⚠️ 美网那条 spec 里的 124 / 107 是 9 月初那一期，别照抄。",
+  "_name_why": "`player_zh(\"Yunchaokete Bu\")` → 布云朝克特，`player_zh(\"Michael Zheng\")` → 郑瑞，和 `bu-zhengmichael-us-open-2026-r2` 同一对译名。",
+  "_subject_why": "封面放**布云朝克特**——中国球员、这一场的赢家、钩子的主语。",
+  "_heat_why": "① 档：中国球员单打，不用等额外理由。另一层：这是二十天前美网第二轮那场的回访——同一个对手，那次他输了；同栏目那条 `bu-zhengmichael-us-open-2026-r2` 的观众正是这条的观众。",
+  "scoreboard": {
+   "court": "Center Court",
+   "_court_why": "ATP 官方赛程 protennislive.com/posting/2026/4713/op.pdf（ORDER OF PLAY - THURSDAY, SEPTEMBER 24, 2026，Released 09/24/2026 17:33:46）：CENTER COURT「Starts At 13:30」Faria-Atmane，Followed By「Yunchaokete BU (CHN) vs [WC] Michael ZHENG (USA)」。",
+   "duration_source": {
+    "url": "data:application/json,%7B%22duration%22%3A%20%221%3A28%3A00%22%2C%20%22source%22%3A%20%22flashscore%20df_sui_1%EF%BC%88O8Z1OFLE%EF%BC%89%E5%88%86%E7%9B%98%200%3A51%20%2B%200%3A37%20%3D%201%3A28%22%2C%20%22cross_check%22%3A%20%22flashscore%20dc_1%20%E5%BC%80%E8%B5%9B%20DC%3D07%3A05%3A00Z%E3%80%81%E7%BB%93%E6%9D%9F%20DD%3D08%3A32%3A55Z%EF%BC%8C%E7%9B%B8%E5%87%8F%201%3A27%3A55%22%7D",
+    "field": "duration"
+   },
+   "_duration_why": "flashscore df_sui_1：0:51 + 0:37 = 1:28；同源 dc_1 的起止时刻相减 1:27:55。⚠️ 两个数同出 flashscore，而它历史上偏长过（CLAUDE.md 那条）；ATP 这一场没有第二个公开的用时源，按 1:28 印，旁白不报用时。"
+  },
+  "portrait": {
+   "image": "assets/reel/bu-zheng-hangzhou-2026.jpg",
+   "focus": 0.47,
+   "focus_y": 0.4,
+   "zoom": 1.0,
+   "_why": "本场赛事方实拍（出处见 `assets/reel/credits.json`）：握拳庆祝，咬着牙、眼睛睁着，情绪就是钩子那句「在杭州他赢了回来」。服装、球拍和身后「杭体集团」挡板都和 Tennis TV 本场源片逐项对得上。",
+   "_gates": "① 精准：两个公众号的帖子都写明是杭州站首轮胜郑瑞，其中一帖标「图源：杭州网球公开赛」；画面服装、挡板和源片一致。② 在比赛中：场上握拳庆祝。③ 冲击力：半身近景、表情外露。④ 清晰度：见 `_low_res_why`。",
+   "_low_res_why": "原图 2000×1333，铺 1080×1440 按高算要放大 1.08×。认领理由：这是今天唯一拿得到原图的本场实拍——新华网、中新网、澎湃、赛事官网（新闻列表停在 2025）、Getty（最新一张布云朝克特是 9/03 美网）、Imago、VCG 都查过，截至北京 18:30 没有这一场的图；同一组另一帧（2104×3156）被转载号烧了大字，不能用。"
+  }
+ },
+ "_result_why": "ATP 官方正赛签表 protennislive.com/posting/2026/4713/mds.pdf（Released 09/24/2026 17:57:12）第一轮 13/14 号签位下印着 `Y. Bu 64 63`；flashscore 当日表 O8Z1OFLE：AE=Bu Y.（home）AG=2 / AF=Zheng M.（away）AH=0，BA/BB=6:4、BC/BD=6:3；源片 138s 记分条 `BU 6 6 / ZHENG 4 3`。三处一致。",
+ "topbar": {
+  "line1": "2026 ATP250 杭州站 首轮",
+  "line2": "布云朝克特 6-4 6-3 郑瑞"
+ },
+ "_topbar_why": "line1 按账号所有者 2026-09-24 定的格式「<年份> <巡回赛><级别> <城市>站 <轮次>」：杭州公开赛是 ATP250（`zh.tournaments.TOURNAMENT_LEVEL['hangzhou']='250'`，转播角标 `ATP 250`），ATP 签表这一列是 `Round of 32`（首轮，1 号种子轮空），Tennis TV slug 也写着 `r1`，写「首轮」。line2 由 cover.winner / result / matchup 机械拼出。",
+ "_match": {
+  "status": "result_verified",
+  "source": "flashscore_points",
+  "source_id": "O8Z1OFLE",
+  "flashscore_id": "O8Z1OFLE",
+  "participants": [
+   "布云朝克特",
+   "郑瑞"
+  ],
+  "set_scores_home_away": [
+   [
+    6,
+    4
+   ],
+   [
+    6,
+    3
+   ]
+  ],
+  "tiebreaks_home_away": [
+   null,
+   null
+  ],
+  "winner": "布云朝克特",
+  "loser": "郑瑞",
+  "winner_result": "6-4 6-3",
+  "loser_result": "4-6 3-6"
+ },
+ "_hit_data": "跑过 `match_stat_hooks.py O8Z1OFLE`（home=Bu）。进旁白的：**开局第一个发球局 0-40 连救三个破发点**（df_mh_1 Set 1 第 1 局 `0:15, 0:30, 0:40 |B1|, 15:40 |B1|, 30:40 |B1|, 40:40, A:40`）；**五比三发球胜盘被破**（Set 1 第 9 局 `30:0` 领先起连丢，`40:A |B1|`）；**第三个盘点破发 6-4**（Set 1 第 10 局 `|B2|` 三次，第三次兑现）；**第二盘六个 ACE、五个发球局没丢一个破发点**（Set 2 Aces 6/0、Break Points Saved 0/0、Service games won 5/5）；**整场破发点救下 6/7**；**一发得分率 85%**（29/34）；**三比二破发**（Set 2 第 6 局 `40:0 |B1|, 40:15 |B1|` 后破发）；**5-3 第一个赛点兑现**（`40:15 |B3|`）。交手记录（df_hh_1）：含本场 Bu 2:1，上一场是美网 Zheng 3-1。",
+ "_turning_points": [
+  "首盘第 1 局（布云朝克特发球）：0-40 连救三个破发点保发。源片 0~13.5 是 `•BU 0 0 / ZHENG 0 30` 那一分（丢了，14s 翻成 0-40）；15~33.9 是 0-40 那一分（他拿下，35s 翻成 15-40）。",
+  "首盘第 9 局（布云朝克特发球 5-3）：30-0 领先被破，5-4。源片没有这一局，旁白在盘点那段一句带过。",
+  "首盘第 10 局（郑瑞发球 4-5）：第三个盘点破发，6-4。源片 72s `5 AD SET POINT #3`，82.2s 翻成 `6 0`。",
+  "第二盘第 6 局（郑瑞发球 2-3）：40-0 三个破发点，第二个兑现，4-2。源片没有这一局。",
+  "第二盘第 9 局（布云朝克特发球 5-3）：40-15 第一个赛点兑现。源片 132s `6 5 40 / 4 3 15`，138s 翻成 `6 6 / 4 3`。"
+ ],
+ "editorial": {
+  "mode": "match_review",
+  "hook": [
+   "三周前美网输给他",
+   "在杭州他赢了回来"
+  ],
+  "question": "二十天前美网第二轮刚输给同一个人，这一次在杭州，布云朝克特拿什么把它赢回来？",
+  "thesis": "开局 0-40 连救三个破发点，整场破发点救下七个里的六个；首盘五比三发球胜盘被破，但第三个盘点把盘拿了回来；第二盘发球六个 ACE、五个发球局一个破发点都没给。美网那一场的账，他在杭州两盘还了回去。",
+  "beats": [
+   "北京时间 9 月 24 日下午，杭州公开赛首轮。开局第一个发球局 0-40，三个破发点全救。",
+   "来时路：美网从资格赛做幸运落败者进正赛，首轮赢了霍达尔，第二轮输给郑瑞；世界第 111 对第 92。",
+   "五比三发球胜盘被破，第三个盘点破回来，6-4。",
+   "第二盘 6 个 ACE，发球局不丢破发点；三比二破发，5-3 第一个赛点兑现。交手记录 2:1。"
+  ],
+  "human_context": {
+   "angle": "这场球的主语是**二十天前那场输球**：美网男单第二轮，布云朝克特 1-3 输给郑瑞（同栏目 `bu-zhengmichael-us-open-2026-r2`），那是他幸运落败者补进正赛、首轮赢下霍达尔之后的下一场。今天杭州首轮又抽到同一个人，排名还在他前面（第 92 对第 111）。他开局 0-40 连救三个破发点，第二盘发球局一个破发点都没给，两盘拿回来——交手记录 2:1。",
+   "facts": [
+    "flashscore O8Z1OFLE：Bu Y. 6-4 6-3 Zheng M.；分盘用时 0:51 + 0:37 = 1:28；dc_1 开赛 07:05Z、结束 08:32:55Z。",
+    "flashscore df_st_1 全场：ACE 8/2、一发得分率 85%（29/34）对 69%、破发点兑现 3/6 对 1/7（救下 6/7）；第二盘 ACE 6/0、发球局 5/5 全保、破发点 0/0。",
+    "flashscore df_mh_1：首盘第 1 局 0-40 三个破发点全救后保发；首盘 5-3 发球胜盘 30-0 领先被破；第三个盘点破发 6-4；第二盘第 6 局 40-0 后破发 4-2；5-3 第一个赛点兑现。",
+    "flashscore df_hh_1 交手：含本场 Bu 2:1；上一场美网 Zheng 3-1（`bu-zhengmichael-us-open-2026-r2` 记为北京时间 9 月 4 日，6-3 2-6 6-2 6-3）；美网正赛 Bu 以幸运落败者身份进入、首轮 3-0 胜霍达尔（`bu-jodar-us-open-2026-r1`、`bu-lucky-loser-story`）。",
+    "排名（同一期两源）：tennisexplorer ATP 榜 Zheng Michael 92、Yunchaokete Bu 111；ESPN ATP rankings 92（642 分）/ 111（552 分）。"
+   ],
+   "sources": [
+    "https://www.protennislive.com/posting/2026/4713/mds.pdf",
+    "https://www.protennislive.com/posting/2026/4713/op.pdf",
+    "https://www.flashscore.com/match/tennis/O8Z1OFLE/",
+    "https://www.tennistv.com/videos/4581010/hangzhou-2026-r1-bu-zheng-short-highlights",
+    "https://site.api.espn.com/apis/site/v2/sports/tennis/atp/rankings",
+    "https://www.tennisexplorer.com/ranking/atp-men/"
+   ]
+  }
+ },
+ "_no_repeat": "同栏目 `bu-zhengmichael-us-open-2026-r2` 讲过美网那一场的第二盘、制胜分 26 比 48、四个盘点、郑瑞的哥大背景和芝加哥挑战赛那次交手——这一条只用一句话点到「美网输给他」和交手 2:1，不重讲那场的细节，也不重讲郑瑞的来历。`bu-lucky-loser-story`（网球有故事）讲过幸运落败者那条来路，这里只在一句里带到。",
+ "_claims": [],
+ "push": {
+  "summary": "布云朝克特杭州复仇郑瑞",
+  "lead": "杭州公开赛首轮，布云朝克特 6-4 6-3 赢下郑瑞——二十天前的美网第二轮，他正是输给了这个人。开局第一个发球局 0-40，他连救三个破发点；整场七个破发点救下六个。第二盘发出六个 ACE，五个发球局一个破发点都没给对手。",
+  "matchup": "布云朝克特 vs 郑瑞",
+  "score": "6-4 6-3",
+  "auto": true
+ },
+ "_push_summary_why": "11 字位，主语是布云朝克特；「复仇」点出这条片子的切口（同一个对手二十天前在美网赢过他）。标题里不写排名。",
+ "_voice_why": "沿用这条线的默认：云见（`zh-CN-YunjianNeural`）＋6%，不设 `style`。",
+ "stats": {
+  "tour": "atp",
+  "a": {
+   "aces": 8,
+   "df": 1,
+   "first_in": 34,
+   "first_won": 29,
+   "second_total": 25,
+   "second_won": 13,
+   "bp_conv": 3,
+   "bp_chances": 6,
+   "pts_won": 63,
+   "pts_total": 112,
+   "first_total": 59,
+   "headshot": "assets/players/headshots/atp-Y09V.png"
+  },
+  "b": {
+   "aces": 2,
+   "df": 2,
+   "first_in": 32,
+   "first_won": 22,
+   "second_total": 21,
+   "second_won": 10,
+   "bp_conv": 1,
+   "bp_chances": 7,
+   "pts_won": 49,
+   "pts_total": 112,
+   "first_total": 53,
+   "headshot": "assets/players/headshots/atp-Z0BZ.png"
+  },
+  "_source": "`python tools/match_stat_hooks.py O8Z1OFLE --stats-block` 机器抄的 flashscore df_st_1 全场统计。a/b 跟 cover.matchup 的顺序（a=布云朝克特、b=郑瑞）；flashscore 这一场 home=Bu Y.、away=Zheng M.，恰好同序。头像沿用美网那条的 ATP 官方头像（atp-Y09V 布云朝克特、atp-Z0BZ 郑瑞），同一张头像挂的中文名和那条一致。",
+  "_winners_ue_why": "制胜分／非受迫失误**不画**：flashscore df_st_1 这一场 17 项，没有这两行；TNNS 那趟（tnns-stats run 35988303097，`who=Bu,Zheng` 认到 id=74921790，选手顺序 ['Bu','Zheng']）给了 winners [19,21]、ue [19,24]，**但它自己的自证红了**——分盘合计 winners [20,16]、ue [20,26] 和全场对不上，工具原话「多半解错了，别用」。按 CLAUDE.md「数字会赛后修订／分盘合计≠全场就别用」，这两行留空；旁白和文案也不引用。"
+ },
+ "segments": [
+  {
+   "source": "ttv",
+   "start": 0.3,
+   "end": 13.3,
+   "cx": 0.5,
+   "narration": "北京时间九月二十四号下午三点多，杭州公开赛首轮。二十天前的美网，布云朝克特输给了郑瑞。今天开局第一个发球局，他就零比四十落后。",
+   "_why": "首盘第 1 局 `•BU 0 0 / ZHENG 0 30` 那一分，13.5 切到发球近景、14s 翻成 0-40。段尾收在 13.4（13.5 切点前）。",
+   "_start_time_why": "开球时刻：flashscore dc_1 O8Z1OFLE 的 DC=1790238300（2026-09-24 07:05Z＝北京 15:05），DD=1790243575（08:32:55Z）；两者之差 1:27:55 和 df_sui_1 的 0:51+0:37=1:28 对得上。只说「下午三点多」，不报到分。",
+   "point_end_ok": "这一分在 13.5 切到近景之前已经死球（逐帧看过 12~13.4 双方都在走回位置）；14s 那次翻牌是记分条滞后，不是这一分没打完。"
+  },
+  {
+   "source": "ttv",
+   "start": 15.2,
+   "end": 33.85,
+   "cx": 0.5,
+   "narration": "零比四十，连着三个破发点，开局就被逼到了悬崖边。这一分，他站在底线和郑瑞对攻，一板一板顶住，拿了下来。接下来两个破发点，他也都救了回来。三个全救，保住了这一局。",
+   "_why": "首盘第 1 局 0-40 那一分：底线相持（逐 0.4 秒看过 24~34，近端的布云朝克特一直在底线附近左右移动），33.9 前死球，34.06 切到他的近景，35s 翻成 15-40。flashscore 这一局 `0:40 |B1|, 15:40 |B1|, 30:40 |B1|, 40:40, A:40`——第一个破发点就是这一分，之后 30:40、40:40 再救两个，A:40 保发。解说 32.3s「Good hit there」。"
+  },
+  {
+   "source": "ttv",
+   "start": 44.0,
+   "end": 66.4,
+   "cx": 0.5,
+   "narration": "他是怎么来到这里的？美网他从资格赛打起，在最后一轮输了球。幸运落败者补进正赛，首轮赢了霍达尔。第二轮，一比三输给郑瑞。现在他世界第一百一十一，郑瑞第九十二。这一分，底线拉锯之后，他一步步往前压，压到网前终结。",
+   "_why": "首盘第 7 局 `•BU 4 15 / ZHENG 2 0`，同一分从 39.5 发球起一路打到 66；逐 0.5 秒看过 56~69：近端的布云朝克特 59~62 从底线压到发球线，62~65 郑瑞被拉到远端左侧底角，66 他在网前终结，67 走回。段尾 66.4 接下一段的原声。"
+  },
+  {
+   "source": "ttv",
+   "start": 66.4,
+   "end": 71.8,
+   "cx": 0.5,
+   "quote": [
+    {
+     "at": 0.2,
+     "text": "There we go.\n漂亮"
+    },
+    {
+     "at": 1.9,
+     "text": "Talking about skills.\n这就叫手上功夫"
+    },
+    {
+     "at": 4.6,
+     "text": "How good was that?\n这一球太好了"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "_quote_why": "转播原句：faster-whisper small.en 和 medium.en 两个模型逐词对得上——There@66.6 we@67.3 go@67.4 / Talking@68.3~68.6 about@68.6 skills@68.9 / How@71.0 good@71.1 was@71.3 that@71.5。段内 at = 绝对秒 − 66.4。",
+   "_why": "上一分他在网前终结之后走回底线（67~70.8），70.8 切到他的近景。",
+   "crosses_cut": "70.80 切到他本人的近景（走回底线之后），原声评的正是他上一分。"
+  },
+  {
+   "source": "ttv",
+   "start": 71.8,
+   "end": 82.2,
+   "cx": 0.5,
+   "narration": "五比三发球胜盘，他被破了回去。第三个盘点，他先扑出去把球救过网，再把对手拉到了场边。六比四。",
+   "_why": "72s `BU 5 AD SET POINT #3 / •ZHENG 4`；逐 1/3 秒看过 74.3~82.3：75.3~75.6 近端的他扑向左侧救球，81~82 远端郑瑞被拉到左侧场边，82.2 翻成 `6 0 / 4 0`。首盘第 9 局 5-3 发球胜盘被破是 flashscore 逐分（`30:0` 领先后 `40:A |B1|`），源片没有这一局，一句带过。",
+   "point_end_ok": "82.26 切到郑瑞近景时记分条已经翻成第二盘 0-0，这一分已经结束；段尾在翻牌同一刻。",
+   "crosses_cut": "74.30 从他的近景（5-4 SET POINT #3 的记分条已经挂上）切到同一分的宽景，前后都是布云朝克特这一分，旁白讲的也是他。"
+  },
+  {
+   "source": "ttv",
+   "start": 88.0,
+   "end": 98.6,
+   "cx": 0.5,
+   "narration": "第二盘，他的发球变了样：六个ACE，五个发球局，一个破发点都没给郑瑞。一发，他拿下百分之八十五的分。",
+   "_why": "第二盘第 3 局 `•BU 6 1 40 / ZHENG 4 1 0`，88~98.7 同一机位宽景，98.2 翻成 2-1，98.82 切到他近景。统计：flashscore df_st_1 Set 2 Aces 6/0、Break Points Saved 0/0、Service games won 5/5；全场 1st serve points won 85%（29/34）。"
+  },
+  {
+   "source": "ttv",
+   "start": 101.0,
+   "end": 122.9,
+   "cx": 0.5,
+   "narration": "二比一，郑瑞发球。这一分他先被调到左侧底角，一路追出去，把球救回场内。接着郑瑞上了网，他也跟了上去，两个人在网前你来我往。两年前的芝加哥，他赢过郑瑞；二十天前在美网，他输了。今天是第三次，这一次，他没有让比赛溜走。",
+   "_why": "第二盘第 4 局 `BU 6 2 15 / •ZHENG 4 1 15`：逐 1/3 秒看过 116~124.4：117~118 近端的他被拉到左侧底角救球，120~122 郑瑞压到网前、他压到发球线附近，123 前死球，124.42 切到郑瑞走回。交手记录：flashscore df_hh_1 含本场 2:1；芝加哥挑战赛那场和美网那场见 `bu-zhengmichael-us-open-2026-r2`。"
+  },
+  {
+   "source": "ttv",
+   "start": 122.9,
+   "end": 128.8,
+   "cx": 0.5,
+   "quote": [
+    {
+     "at": 0.3,
+     "text": "That's so well done.\n打得太漂亮了"
+    },
+    {
+     "at": 4.2,
+     "text": "Stayed cool there on that final ball.\n最后一球，他很冷静"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "_quote_why": "转播原句，两个模型逐词一致：That's@123.1~123.2 so@123.8 well@123.9 done@124.1 / Stayed@127.0~127.1 cool@127.7 there@127.8 on@128.0 that@128.1 final@128.2 ball@128.5。段内 at = 绝对秒 − 122.9。",
+   "_why": "上一分收尾 → 124.42 郑瑞走回 → 126.64 布云朝克特近景 → 128.66 看台。",
+   "crosses_cut": "124.42 切到郑瑞走回、126.64 切到布云朝克特近景：原声段，解说两句分别评的是上一分和他最后一球的处理，画面正是这两个人。"
+  },
+  {
+   "source": "ttv",
+   "start": 128.8,
+   "end": 136.4,
+   "cx": 0.5,
+   "narration": "三比二，他破了发。五比三，第一个赛点，发球加一拍，结束。",
+   "_why": "128.7~131.6 看台、132~133.5 他发球近景（`6 5 40 / 4 3 15`），133.5 起宽景：发球后第二拍正手，136 前举起双臂，136.84 切到庆祝；138s 翻成 `6 6 / 4 3`。三比二破发是 flashscore 逐分（Set 2 第 6 局 `40:0 |B1|, 40:15 |B1|` 后破发），源片没有这一局。",
+   "point_end_ok": "赛点那一分 134.5 前结束，136 他已经举臂庆祝；138s 的翻牌是记分条滞后（CLAUDE.md「比分板会滞后」），段尾 136.4 之后接的是同一场庆祝的原声段。",
+   "crosses_cut": "133.48 从他发球的近景切到同一分的宽景，同一个人、同一分。"
+  },
+  {
+   "source": "ttv",
+   "start": 136.4,
+   "end": 141.75,
+   "cx": 0.5,
+   "quote": [
+    {
+     "at": 0.1,
+     "text": "And that will seal the deal\n这一球锁定胜局"
+    },
+    {
+     "at": 3.3,
+     "text": "for Bu in some style.\n布云朝克特赢得漂亮"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "_quote_why": "转播原句：medium.en And@136.44 that@137.0 will@137.56 seal@137.74 the@138.1 deal@138.28 for@138.56 Vu@139.78 in@140.26 some@141.06 style@141.32；small.en 同句（that'll seal the deal. For Vu in some style.）。ASR 把 Bu 听成 Vu，按发音和上下文校正为 Bu。段内 at = 绝对秒 − 136.4。",
+   "_why": "赛点落地 → 136.84 庆祝、139.42 近景、142.48 团队鼓掌。",
+   "crosses_cut": "139.42 切到他的近景，都是赛点之后他的庆祝，原声讲的也是他。"
+  },
+  {
+   "source": "ttv",
+   "start": 141.75,
+   "end": 146.3,
+   "cx": 0.5,
+   "narration": "下一轮对八号种子，他能走多远？",
+   "_why": "团队鼓掌（142.48）→ 144.64 网前握手，段尾 146.3 在 146.9 品牌蒙太奇之前。",
+   "_next_why": "ATP 签表 15/16 号签位 `K. Majchrzak 8`（`63 64` 胜 Bellucci），和 13/14 号的胜者在第二轮相遇；片尾只有 4.6 秒，名字（迈赫扎克）进小红书正文，旁白只说「八号种子」。",
+   "crosses_cut": "142.48 从他的团队鼓掌切到 144.64 网前握手：比赛已经结束，旁白是片尾一问，不指认画面里的人。",
+   "point_end_ok": "比赛在 136 前就结束了（138s 记分条翻成 `6 6 / 4 3`）；147.10 那次「翻牌」是 146.9 起 Tennis TV 品牌蒙太奇（LIVE / REPLAYS…）盖过了记分条区域，逐秒缩略图看过，那里已经没有球场。"
+  }
+ ],
+ "_quote_why_global": "三段原声：第 4 段（网前终结后的「Talking about skills」）、第 8 段（「Stayed cool there on that final ball」）、第 10 段（「seal the deal for Bu in some style」）。解说里「Catastrophic end to the set」那一句（83.5s）后半句两个模型都听成「Not the American's perspective」，拿不准，不留。",
+ "_tactics_why": "源片全是底线高位宽景，球员只有四五十像素高，正反手多数判不出。写进旁白的球路都是逐帧抽过的：第 2 段底线对攻顶住、第 3 段从底线压到网前终结、第 5 段先扑救再把对手拉到场边、第 7 段被调到底角后追回并跟到网前、第 9 段发球加一拍。"
+}
