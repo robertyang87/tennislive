@@ -41,14 +41,19 @@
   "_subject_why": "封面放**胡佳**——输的那个，但他是这条片子的主语：账号所有者点名要做他的赛场之上，并讲清来时路、做展望。",
   "_heat_why": "① 档：中国球员单打，不用等额外理由。另外两层：他是 ITF 青少年世界排名里唯一一个进前一百的中国男孩（第 86），三天前刚拿中网青少年 J300 冠军；这是他第一场 ATP 巡回赛正赛。账号所有者亲自点题。",
   "portrait": {
-   "frame_at": 434.6,
-   "_frame_why": "占位，封面实拍还在找。"
+   "image": "assets/reel/hu-kopriva-chengdu-2026.jpg",
+   "focus": 0.56,
+   "focus_y": 0.42,
+   "zoom": 1.0,
+   "_why": "赛事组委会本场实拍（四川在线 2026-09-23 成都公开赛首轮稿，图注「胡佳在比赛中」，署名「图据ATP250成都公开赛组委会」），出处写在 `assets/reel/credits.json`。打开看过：正手击球瞬间，球在拍面上，咬着牙、眼睛睁着，白色 Wilson 帽；身后中心球场的 `CHENGDU` 挡板——人物、赛事、场地三样都在画面和图注里。情绪是「顶上去打」，和钩子「这回他对上了职业老手」对题。",
+   "_gates": "① 精准：图注＋赛事署名＋场地挡板，和源片 day1 434.5s 的胡佳近景（白帽、白衣）逐项一致；② 在比赛中：击球瞬间；③ 冲击力：近景全身、动作张开；④ 清晰度：见 `_low_res_why`。",
+   "_low_res_why": "原图 1600×1067，铺 1080×1440 按高算要放大 1.35×（fill 0.74），够不着 1.00 的地板。认领的理由：这是本场唯一拿得到原图的官方实拍——三个并行的检索把 Getty（Zhong Zhi/Getty 有 27 张本场图，只给 612px 带水印预览）、AP（apnews 403、BLOX 转载站 0 条）、新华/中新网（9/23 图集没有这场）、VCG/EPA/Imago/ZUMA、ATP 官网（Cloudflare）和赛事官方社媒都翻过；组委会这一批经四川在线发布的就是 1600px，URL 不带尺寸参数，没有更大的一档。账号所有者的前置条件是「对应比赛的高清大图」，这张是对应比赛的实拍，比源片 1080p 抽帧放大 1.33× 同档，但没有转播压缩和运动模糊。"
   },
   "scoreboard": {
    "court": "Center Court",
    "_court_why": "Tennis TV 转播图形（短集锦 96.5s）`ROUND 1 | CENTER COURT`；ATP 官方赛程表 protennislive op 同一周的 Center Court 编排。",
    "duration_source": {
-    "url": "data:application/json,%7B%22duration%22%3A%20%221%3A38%22%2C%20%22source%22%3A%20%22flashscore%20df_sui_1%EF%BC%88EVZwApfT%EF%BC%89%E5%88%86%E7%9B%98%200%3A41%20%2B%200%3A57%20%3D%201%3A38%22%2C%20%22cross_check%22%3A%20%22Tennis%20TV%20%E8%BD%AC%E6%92%AD%E7%9B%98%E9%97%B4%E5%9B%BE%E5%BD%A2%EF%BC%88%E7%9F%AD%E9%9B%86%E9%94%A6%2096.5s%EF%BC%89%E5%8D%B0%E7%9D%80%E9%A6%96%E7%9B%98%200%3A40%EF%BC%8Cflashscore%20%E9%A6%96%E7%9B%98%200%3A41%EF%BC%8C%E5%B7%AE%201%20%E5%88%86%E9%92%9F%E5%9C%A8%E5%8F%96%E6%95%B4%E8%8C%83%E5%9B%B4%E5%86%85%22%7D",
+    "url": "data:application/json,%7B%22duration%22%3A%20%221%3A38%3A00%22%2C%20%22source%22%3A%20%22flashscore%20df_sui_1%EF%BC%88EVZwApfT%EF%BC%89%E5%88%86%E7%9B%98%200%3A41%20%2B%200%3A57%20%3D%201%3A38%22%2C%20%22cross_check%22%3A%20%22Tennis%20TV%20%E8%BD%AC%E6%92%AD%E7%9B%98%E9%97%B4%E5%9B%BE%E5%BD%A2%EF%BC%88%E7%9F%AD%E9%9B%86%E9%94%A6%2096.5s%EF%BC%89%E5%8D%B0%E7%9D%80%E9%A6%96%E7%9B%98%200%3A40%EF%BC%8Cflashscore%20%E9%A6%96%E7%9B%98%200%3A41%EF%BC%9Btennis.com%20%E8%BF%99%E5%9C%BA%20endTime%2008%3A47%3A25Z%20%E4%B8%8E%20flashscore%20%E5%BC%80%E8%B5%9B%2007%3A10Z%20%E7%9B%B8%E5%87%8F%201%3A37%EF%BC%8C%E5%B7%AE%201%20%E5%88%86%E9%92%9F%E5%9C%A8%E5%8F%96%E6%95%B4%E8%8C%83%E5%9B%B4%E5%86%85%22%7D",
     "field": "duration"
    },
    "_duration_why": "flashscore df_sui_1：0:41 + 0:57 = 1:38。第二源只核到首盘：转播图形印着 0:40（flashscore 0:41，按惯例它偏长一点）。全场用时没有第二个源，按 flashscore 印 1:38，旁白里只说首盘四十分钟。"
