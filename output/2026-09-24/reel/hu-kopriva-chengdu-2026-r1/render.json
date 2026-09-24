@@ -33,39 +33,39 @@
     "version": 2,
     "pipeline": "match-reel",
     "slug": "hu-kopriva-chengdu-2026-r1",
-    "received_at": "2026-09-24T03:05:54Z",
-    "artifact_ready_at": "2026-09-24T03:11:35Z",
-    "elapsed_seconds": 341.056,
+    "received_at": "2026-09-24T03:26:31Z",
+    "artifact_ready_at": "2026-09-24T03:31:21Z",
+    "elapsed_seconds": 290.671,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "ea8df10b4eee361483dba78023c299041655285b36ecd7648dc8521416c57013",
-    "spec_sha256": "3276401a0a529f942011e0079004af5b4688cc21ac32ba6b6fe003101227d1b4",
-    "run_id": "35950013805",
+    "film_sha256": "38e6172f135021429ee991bcb6aed29ae37095fd49eab341f8455de16eef9e7b",
+    "spec_sha256": "7fee3eaa1b60abe8a00febd8f069f875de023d4e2812a6c925f3bc1cd7c659dd",
+    "run_id": "35951453019",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-09-24T03:08:35Z",
-        "run_id": "35950013805"
+        "at": "2026-09-24T03:29:17Z",
+        "run_id": "35951453019"
       }
     ],
-    "render_seconds": 180.056,
-    "pre_render_seconds": 161.0
+    "render_seconds": 124.671,
+    "pre_render_seconds": 166.0
   },
-  "film_sha256": "ea8df10b4eee361483dba78023c299041655285b36ecd7648dc8521416c57013",
-  "film_bytes": 63514990,
-  "qc_attestation_sha256": "50504dd053e1ef2b131fe7326cf6a50b2647c0c2d447576523f716b232b93ce7",
+  "film_sha256": "38e6172f135021429ee991bcb6aed29ae37095fd49eab341f8455de16eef9e7b",
+  "film_bytes": 63517204,
+  "qc_attestation_sha256": "cff3718bee427f4c0691f317a62da178e59f1bfabdff08229a7c78887743449a",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-09-24T03:08:35Z",
-      "run_id": "35950013805"
+      "at": "2026-09-24T03:29:17Z",
+      "run_id": "35951453019"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-09-24T03:11:35Z",
-      "run_id": "35950013805"
+      "at": "2026-09-24T03:31:22Z",
+      "run_id": "35951453019"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-hu-kopriva-chengdu-2026-r1/hu-kopriva-chengdu-2026-r1.mp4",
-  "video_bytes": 63514990
+  "video_bytes": 63517204
 }
