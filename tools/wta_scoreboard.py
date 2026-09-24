@@ -155,13 +155,12 @@ def debounce(frames: list, hold: int = 3) -> list:
 
 
 def resolve_masks(sources: dict, segments: list, outdir: Path, fps: str,
-                  tail: float) -> Path | None:
+                  tail: float) -> Path:
     """给开了 `score_inset` 的段逐帧出蒙版，就地写回 `seg.score_inset` / `score_inset_mask`。
 
-    **整条片子一帧都没认出这块板**（换了一家转播、图形长得不一样）→ 返回 None，
-    调用方退回老的 `resolve_board_insets`，并在日志里说一声——不把一场没标定过的
-    转播直接挡死。只要有段认出了，其余段一帧都没有就照 ATP 那条报错（那一段
-    写 `score_inset: false`）。
+    **整条片子一帧都没认出这块板**（换了一家转播、图形长得不一样）→ 报错，
+    **不退回老的整段矩形回贴**（账号所有者 2026-09-24「那去彻底解决啊」）。
+    有段认出了、某一段一帧都没有，照 ATP 那条报错（那一段写 `score_inset: false`）。
     """
     rate = float(Fraction(fps))
     scanned = []
@@ -172,9 +171,12 @@ def resolve_masks(sources: dict, segments: list, outdir: Path, fps: str,
         raw, width = scan(Path(sources[seg.source]), seg.score_inset, seg.start, seconds, fps)
         scanned.append((i, seg, debounce(stabilize(raw)), width))
     if scanned and not any(e is not None for _i, _s, fr, _w in scanned for e, _t in fr):
-        print(f"[score-mask] ⚠️ {len(scanned)} 段一帧都没认出 WTA 比分板（{PROFILE} 的"
-              "薄荷绿局分格）——多半是这场转播的图形不一样，退回老的整段回贴")
-        return None
+        raise RuntimeError(
+            f"{len(scanned)} 段一帧都没认出 WTA 比分板（{PROFILE} 的薄荷绿局分格）——"
+            "多半是这场转播的图形和标定的那一版不一样。**不退回老的整段矩形回贴**"
+            "（那正是「消失后背景还在」「右边多一块补丁」的来路）：先用 frame-grab "
+            "抽几帧量颜色、给这家转播补一套判据；整段真没有板的写 "
+            "\"score_inset\": false ＋ \"_score_inset_why\"。")
     records = []
     for i, seg, frames, width in scanned:
         x0, y0, _x1, y1 = seg.score_inset
