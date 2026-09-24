@@ -9,6 +9,13 @@
       "at": "2026-09-24T03:19:32Z",
       "run": "https://github.com/robertyang87/tennislive/actions/runs/35950951376",
       "_why": "2026-09-24 手动核实：run 35950951376 失败在 push_reel.py 的「赛场之上必须带全场技术统计图」闸（SystemExit 在调用 push() 之前），日志里没有任何 PushPlus 请求或流水号——消息没发出去。按 tennis-pipeline-ops「照日志手动把账本那条改成 rejected」处理。"
+    },
+    {
+      "key": "pushplus:reel:hu-kopriva-chengdu-2026-r1:38e6172f135021429ee991bcb6aed29ae37095fd49eab341f8455de16eef9e7b",
+      "fingerprint": "38e6172f135021429ee991bcb6aed29ae37095fd49eab341f8455de16eef9e7b",
+      "status": "sending",
+      "at": "2026-09-24T03:34:36Z",
+      "run": "https://github.com/robertyang87/tennislive/actions/runs/35952006743"
     }
   ]
 }
