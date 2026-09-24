@@ -55,12 +55,13 @@
    "_duration_why": "flashscore df_sui_1：0:39 + 0:33 = 1:12；同源 dc_1 的起止时刻相减 1:11:08。两个数同出 flashscore，旁白不报用时。"
   },
   "portrait": {
-   "frame_at": 449.0,
-   "focus": 0.4,
-   "focus_y": 0.0,
+   "image": "assets/reel/zhang-wong-hangzhou-2026.jpg",
+   "focus": 0.64,
+   "focus_y": 0.1,
    "zoom": 1.0,
-   "_frame_why": "⚠️ 抽帧，不是官方实拍——账号所有者 2026-09-24 00:1x（北京）回「抽帧吧，如果没图的话」，闸走 `OWNER_APPROVED_FRAME_COVERS`。官方图这一档当时确实没有：比赛北京 22:31 结束，到 00:10 WTA photo-resources／AP（`find_cover_photo.py --player Zhang --event Hangzhou`）查空；Getty 按「zhang zhizhen hangzhou」最新是 2024 杭州；赛事官网 hangzhouopen.com 首页挂的 ATP 战报配图里没有这一场（布云朝克特那篇 1920×1080 的有）；微信搜狗扫「张之臻 黄泽林」「张之臻 杭州」「黄泽林 杭州」，比赛结束之后发的帖子 0 篇。\n**为什么是 449.0**：本场源片里张之臻只有两个近景——397s 低头走回（脸被头发和头带挡住大半）、448.22~450.1 第二盘 2-3 他赢下一分之后的正脸（frame-grab 逐秒帧 449：双眼睁开、平视前方、K-SWISS 头带，情绪是「咬着」，和钩子「输了，但打完了」对题）。选 449.0 这一格而不是镜头开头，是因为 448 那格还带着转场的动态模糊。\n**几何是渲出来看的**（`tools/render_cover_local.py`，本地几秒一版）：runner 抽的 449.0 这一格里脸在源片 x≈350~800、y≈0~500，转播记分条在左下 x≈100~420、y≈920~1030。第一趟 render（run 36026525885）用的 focus 0.09 / zoom 1.3 把画面放到只剩半张脸、而且偏到了右边——`background-position` 的百分比语义和我按公式推的不一样；之后逐版渲过 zoom 1.2 / 1.0 / 0.8 × focus 0.23 / 0.25 / 0.36 / 0.40：zoom ≤1.0 时纵向装得下整块转播板，只能靠横向把它推出窗口，focus 0.36 左缘还留一条板边，**0.40 干净**，脸完整、头带在、后脑被切一点。总放大 1.333×（zoom 1.0），比第一版的 1.73× 清楚。\n⚠️ 官方图落地之后要把这条 slug 从 `OWNER_APPROVED_FRAME_COVERS` 里删掉——表自带自检。",
-   "source": "yt"
+   "_why": "本场实拍（出处见 `assets/reel/credits.json`）：第二盘里一记正手，咬着牙、眼睛盯着球，情绪是「咬住」——和钩子「输了，但打完了」对题。黑色 K-SWISS 金边球衣、奶白 K-SWISS 头带和护腕、红拍、身后 `ATP 250` 挡板和夜场灯光，和 Tennis TV 本场源片（KA-aWjvvzGY 364~517s）逐项对得上。",
+   "_gates": "① 精准：微信公众号「网球来啦」2026-09-25 00:02 推文《布云朝克特完胜郑瑞晋级杭网16强 明日卢布列夫出场》，这张图紧贴在「中央球场的最后一场，张之臻0:2（3-6、3-6）不敌中国香港球员黄泽林」那段之前（文中每张图都放在所讲球员那一段前面），画面服装/球拍/挡板和源片一致。② 在比赛中：正手击球瞬间。③ 冲击力：半身、正脸、表情外露。④ 清晰度：见 `_low_res_why`。",
+   "_low_res_why": "原图 1280×853（微信 `/0` 已是原尺寸），铺 1080×1440 按高算要放大 1.69×。认领理由：这是截至北京 01:05 唯一拿得到的本场实拍——Getty（2026 编号段）、hangzhouopen.com 的 ATP 战报图（只有布云朝克特那篇）、新浪/中新网/杭州网/浙江在线/央视体育页都查过为空；之前那版封面是转播抽帧，账号所有者看过说「封面图太糊了」，这张是摄影师的静态照片，锐度远高于同倍率的视频帧。官方高清图（≥1920）落地后可以再换。"
   }
  },
  "_result_why": "flashscore 当日表 WYxAMgjR：AE=Zhang Z.（home）/ AF=Wong C.（away），BA/BB=3:6、BC/BD=3:6，df_sui_1 分盘 Set 1 IG/IH=3/6、Set 2 3/6；源片 508s 记分条 `ZHANG 3 3 / WONG 6 6`；解说 511.5s「the 10th ace to wrap things up for Coleman Wong」。ATP 正赛签表 mds.pdf（Released 09/24/2026 21:48:41，比赛结束之前）5/6 号签位 `WC ZHANG, Zhizhen CHN` / `WONG, Coleman HKG`，第一轮（Round of 32）。",

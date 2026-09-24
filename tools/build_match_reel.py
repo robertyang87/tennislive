@@ -6741,15 +6741,8 @@ COVER_FILL_W, COVER_FILL_H = 1080, 1440
 #:   资料图、另一张只有 1200×800（详见 spec 的 `cover.portrait._frame_why`）。
 #:   我把「授权抽帧现在推」「等官网赛后稿的图」两条摆出来，账号所有者选了前者。
 #:   源片 1920×1080，铺 1080×1440 是放大 1.33 倍。
-#: - `zhang-wong-hangzhou-2026-r1`：2026-09-24 杭州公开赛首轮，北京 22:31 打完的
-#:   夜场。到次日 00:10 本场实拍一张都没有：WTA photo-resources／AP 查空，Getty
-#:   最新的张之臻还是 2024 杭州，赛事官网没有这一场的 ATP 战报（有的也只有
-#:   1920×1080），微信搜狗按「张之臻 黄泽林」「张之臻 杭州」扫比赛结束之后的帖子
-#:   为空。我说明了「等图」「你给图」，账号所有者回「抽帧吧，如果没图的话」。
-#:   源片 1920×1080，铺 1080×1440 是 1.33 倍再乘 zoom。
 OWNER_APPROVED_FRAME_COVERS = frozenset({
     "wu-duckworth-us-open-2026-r2",
-    "zhang-wong-hangzhou-2026-r1",
     "zhiyenbayeva-bouzas-bjk-cup-2026",
 })
 
