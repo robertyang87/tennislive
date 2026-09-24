@@ -1,0 +1,334 @@
+{
+  "slug": "wang-garland-singapore-2026-r2",
+  "source_url": "https://www.youtube.com/watch?v=4I6d_2Evv-s",
+  "_column": "赛场之上",
+  "tts_backend": "edge",
+  "_tts_backend_why": "平直的复盘叙述，一段 `style` 都没写，用不上 Azure 的情绪风格；同一站 `wang-vekic-singapore-2026-r1`、`oliynykova-chwalinska-singapore-2026-r2` 也是 edge。",
+  "_match": {
+    "status": "result_verified",
+    "source": "flashscore_points",
+    "source_id": "0zvyTDYp",
+    "flashscore_id": "0zvyTDYp",
+    "participants": [
+      "王欣瑜",
+      "葛蓝乔安娜"
+    ],
+    "set_scores_home_away": [
+      [
+        7,
+        5
+      ],
+      [
+        6,
+        4
+      ]
+    ],
+    "winner": "王欣瑜",
+    "loser": "葛蓝乔安娜",
+    "winner_result": "7-5 6-4",
+    "loser_result": "5-7 4-6",
+    "tiebreaks_home_away": [
+      null,
+      null
+    ]
+  },
+  "topbar": {
+    "line1": "2026 WTA500 新加坡站 1/8决赛",
+    "line2": "王欣瑜 7-5 6-4 葛蓝乔安娜"
+  },
+  "cover": {
+    "matchup": [
+      {
+        "name": "王欣瑜",
+        "name_en": "Xinyu Wang",
+        "country": "CHN",
+        "rank": 40
+      },
+      {
+        "name": "葛蓝乔安娜",
+        "name_en": "Joanna Garland",
+        "country": null,
+        "rank": 168
+      }
+    ],
+    "_rank_why": "WTA 官方 `players/ranked?...&metric=SINGLES`，`rankedAt=2026-09-21`：王欣瑜第 40、Joanna Garland 第 168（2026-09-24 查）。译名按 `player_names_top500.json`：葛蓝乔安娜（球员原生中文名）。",
+    "winner": "王欣瑜",
+    "result": "7-5 6-4",
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "王欣瑜",
+    "hook": "首盘1比4落后\n后7局赢下6局",
+    "_hook_why": "两行都来自 flashscore 逐局 `df_mh_1_0zvyTDYp`：第一盘 0-1、0-2（自己发球局被破）、0-3、1-3、1-4；之后 2-4、3-4（破回）、4-4、4-5、5-5、6-5（破发）、7-5——1-4 之后 7 局她拿了 6 局。第二个源是 WTA 官网这场集锦的标题与说明「Wang Xinyu came from 4-1 down in the first set」（content/wta/VIDEO/en/4580993），转播解说在源片 195.8s 也说了「4-1, love-30 down」。第一行是落后的形状，第二行是翻过来的形状；不写比分数字、没有术语。",
+    "topic": "新加坡WTA500 · 女单1/8决赛",
+    "portrait": {
+      "image": "assets/reel/wang-garland-singapore-2026-r2.jpg",
+      "focus": 0.52,
+      "focus_y": 0.4,
+      "zoom": 1,
+      "_photo_why": "WTA 官方 photoresources 实拍，`?width=4000` 取到 4000×2667，铺 1080×1440 是缩小不是放大。来源是 WTA 官网这一场集锦条目 https://www.wtatennis.com/videos/4580993/wang-xinyu-overturns-4-1-first-set-deficit-to-beat-garland-in-singapore 挂的图：photoresources.wtatennis.com/photo-resources/**2026/09/24**/23a31899-8e8b-4442-9aa7-4da42fad4745/**Wang-Xinyu-R2**.jpg（同一张另有 og:image 版 50a3c19a…，1621px）——路径日期 9/24 和文件名「R2」自证是这一站第二轮、也就是这一场。已下载打开核过：酒红连衣裙＋白色遮阳帽，和源片 258s 起赛后镜头里她的装束一致；**正手击球中**，球在画面内；睁眼、近景。"
+    },
+    "scoreboard": {
+      "court": "OCBC Arena",
+      "_court_why": "印场馆不印场地名：WTA 官方 feed 这一场没给场地名（和同站 `krejcikova-friedsam`、`oliynykova-chwalinska` 一样），场馆沿用那两条已核的 OCBC Arena。",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%20%221%3A37%3A30%22%2C%20%22source%22%3A%20%22WTA%20official%20tournaments/1152/2026/matches%20LS012%20MatchTimeTotal%2001%3A37%3A30%22%7D",
+        "field": "duration"
+      },
+      "_duration_why": "WTA 官方 `MatchTimeTotal=01:37:30`；flashscore 分盘 0:51＋0:47＝1:38，WTA 分盘 stats `settime` 00:50:49＋00:46:37，三处对得上。"
+    },
+    "_heat_why": "王欣瑜是中国球员（选题第①档）；账号所有者本人点的题（「做王欣瑜赛场之上」）。",
+    "_country_why": "葛蓝乔安娜代表中华台北（TPE）出赛；仓库 `zh/countries.py` 对 TPE 明确不配旗（ISO2 为 None），所以按比分板约定写 `country: null` 保留空旗位，不自行找旗。"
+  },
+  "_opening_time_source": {
+    "url": "https://api.wtatennis.com/tennis/tournaments/1152/2026/matches",
+    "match_id": "LS012",
+    "field": "MatchTimeStamp",
+    "value": "2026-09-24T07:29:23.673+00:00",
+    "beijing": "2026-09-24T15:29+08:00",
+    "spoken_precision": "approximate-hour",
+    "_why": "开球时刻只说个大概：15:29 → 「下午三点多」。flashscore `dc_1` 的 DC=1790236200 → 07:50Z 是批次时刻，不取。新加坡与北京同为 +08:00。"
+  },
+  "stats": {
+    "a": {
+      "aces": 3,
+      "df": 3,
+      "first_in": 45,
+      "first_won": 31,
+      "second_total": 20,
+      "second_won": 13,
+      "bp_conv": 3,
+      "bp_chances": 5,
+      "pts_won": 68,
+      "pts_total": 128,
+      "first_total": 65,
+      "headshot": "assets/players/headshots/wta-326376.jpg",
+      "winners": 22,
+      "ue": 42
+    },
+    "b": {
+      "aces": 1,
+      "df": 2,
+      "first_in": 32,
+      "first_won": 20,
+      "second_total": 31,
+      "second_won": 19,
+      "bp_conv": 1,
+      "bp_chances": 4,
+      "pts_won": 60,
+      "pts_total": 128,
+      "first_total": 63,
+      "headshot": "assets/players/headshots/wta-326512.png",
+      "winners": 11,
+      "ue": 36
+    },
+    "_source": "flashscore df_st_1_0zvyTDYp，与 WTA 官方 https://api.wtatennis.com/tennis/tournaments/1152/2026/matches/LS012/stats 交叉：ACE 3/1、双误 3/2、一发得分 31/45 与 20/32、总得分 68/60、破发成功 3 与 1 两源一致。a＝cover.matchup[0] 王欣瑜，b＝葛蓝乔安娜。⚠️ 葛蓝乔安娜的破发机会 flashscore 记 4 个、WTA 记 3 个（`breakptsplayedb`），逐分表里第一盘 0-2 局两个（15:40、30:40）、第二盘 1-1 局两个（15:40、30:40），按逐分取 4；旁白只说「两个破发点都救了回来」，不报全场总数。 制胜分/非受迫失误来自 TNNS run 35986838124，match 74753598，hasExtendedStats=true，选手顺序 [Wang, Garland]：制胜分 [22,11]、UE [42,36]；分盘 13+9/7+4、23+19/20+16 与全场自证一致。只取这两栏。"
+  },
+  "_hit_data": "`match_stat_hooks.py`：王欣瑜连续保发 10 个发球局（全场 11 个发球局只在第一盘第二局被破一次）、葛蓝乔安娜第二盘一发得分率 50%→83%（WTA 分盘 stats 10/20 → 10/12 同样）。钩子取第一盘的逆转（见 `cover._hook_why`）；总分差 68:60 不上钩子。「今年第四次打进巡回赛八强」来自 WTA 官网这场集锦说明原文 `advancing to her fourth tour-level quarterfinal of 2026`。",
+  "_no_repeat": "同一站兄弟片 `wang-vekic-singapore-2026-r1` 的落点是「八个发球局一个都没丢」——这一条不再拿保发当钩子，落点是第一盘 1-4 的逆转；保发只在收尾一句带过。",
+  "editorial": {
+    "mode": "match_review",
+    "hook": [
+      "首盘1比4落后",
+      "后7局赢下6局"
+    ],
+    "question": "第一盘一比四落后，王欣瑜是怎样把这盘拿回来的？",
+    "thesis": "开局就丢了发球局、一比四落后，王欣瑜先在零比三十时守住自己的发球局，再用三个破发点磨回一个破发；之后五平时接发抢到主动，破发拿下首盘。第二盘对手一发变稳，她靠四平时底线的左右调动完成唯一一次破发。",
+    "beats": [
+      "第二局自己的发球局被破，0-3。",
+      "1-4、0-30 守住发球局；2-4 第三个破发点破回。",
+      "3-4 正手斜线制胜分，一分未丢保发；4-5 反手制胜分保住。",
+      "5-5 接发抢主动，零封破发，7-5。",
+      "第二盘葛蓝乔安娜一发得分率 50%→83%，王欣瑜救下 15-40。",
+      "4-4 底线左右调动，破发；5-4 第一个赛点兑现。"
+    ],
+    "chapters": [
+      "开局被破",
+      "一比四守住",
+      "一盘翻回来",
+      "第二盘的一次破发"
+    ],
+    "human_context": {
+      "angle": "从资格赛打上来的葛蓝乔安娜第一盘一度 4-1 领先，王欣瑜后 7 局拿下 6 局，今年第四次打进巡回赛八强。",
+      "facts": [
+        "王欣瑜 7-5 6-4 胜葛蓝乔安娜，用时 1 小时 37 分 30 秒（WTA 官方 MatchTimeTotal）。",
+        "王欣瑜世界第 40，葛蓝乔安娜世界第 168、资格赛晋级（WTA 官方排名 2026-09-21 版；WTA 集锦说明 `qualifier Joanna Garland`）。",
+        "第一盘 1-4 落后，之后 7 局拿 6 局（flashscore 逐局）。",
+        "今年第四次打进巡回赛八强（WTA 官网集锦说明）。"
+      ],
+      "sources": [
+        "https://api.wtatennis.com/tennis/tournaments/1152/2026/matches",
+        "https://api.wtatennis.com/tennis/tournaments/1152/2026/matches/LS012/stats",
+        "https://api.wtatennis.com/content/wta/VIDEO/en/4580993",
+        "https://global.flashscore.ninja/2/x/feed/df_mh_1_0zvyTDYp",
+        "https://global.flashscore.ninja/2/x/feed/df_st_1_0zvyTDYp"
+      ]
+    },
+    "narration": [
+      "开局第二局就被破发，零比三。",
+      "一比四、零比三十守住发球局，第三个破发点破回来。",
+      "五平接发抢到主动，零封破发，七比五。",
+      "第二盘四平完成唯一一次破发，第一个赛点兑现。"
+    ]
+  },
+  "segments": [
+    {
+      "start": 0.0,
+      "end": 15.24,
+      "fit": "crop",
+      "narration": "北京时间九月二十四日下午三点多，新加坡WTA五百赛八分之一决赛。世界第四十的王欣瑜，对阵世界第一百六十八、从资格赛打上来的葛蓝乔安娜。",
+      "crosses_cut": "0~15.24 是开场第一分和葛蓝乔安娜的近景（10.92、13.44 两处换镜头都在死球之后），主角是对手，旁白也在介绍两个人，没有压错人。",
+      "point_end_ok": "15.24 是转播切点，`point_ends` 15.28 的翻牌在它之后 0.04 秒（0.3 秒以内不算）。"
+    },
+    {
+      "start": 29.24,
+      "end": 55.0,
+      "fit": "crop",
+      "narration": "开局第二局，王欣瑜的发球局就被破了。下一局，她从零比四十开始，一分一分往回追。这一分两个人在底线来回拉了很久。追到了平分，这一局最后还是被对手保住。零比三，一上来就连丢三局。",
+      "crosses_cut": "段首 29.24、段尾 55.0 都是 `scene_cuts`；29.24~53.2 是一整分的底线相持，53.2~55 是王欣瑜近景——窗口内没有在回合中间挖刀。",
+      "point_end_ok": "55.0 是转播切点；`point_ends` 54.72 在它之前，下一次翻牌 73.2。"
+    },
+    {
+      "start": 90.84,
+      "end": 119.76,
+      "fit": "crop",
+      "narration": "到了一比四，她自己发球又是零比三十落后。这一盘看起来已经要丢了，可这一局她守住了。二比四，轮到她接发，拿到破发点。第一个，葛蓝乔安娜一拍巧劲化解。平分之后再来，一直磨到第三个破发点，王欣瑜才终于破回来。三比四，她追回来了。",
+      "_why": "1-4、0-30 保发这一局集锦没播，事实来自 flashscore 逐局（2-4 局 `0:15, 0:30, 15:30, 30:30, 40:30`）和转播解说 195.8s「4-1, love-30 down」；这里只在王欣瑜走回底线（90.84~91）时一句带过，画面接着就是 2-4 的破发点，记分条 92.5s `BREAK POINT` 2-4 40-30、104.5s `BREAK POINT #3`。「巧劲」对应解说 100.7s「What a touch from Garland」。",
+      "crosses_cut": "段尾落在官方集锦自己的转播切点上（probe 的 `scene_cuts`），集锦只在点与点之间切；窗口内保留原剪辑，没有在回合中间挖刀。",
+      "point_end_ok": "119.76 是转播切点，也是翻牌时刻（`point_ends` 119.76）；114~119 秒是王欣瑜破发后走回场边的近景，第三个破发点在 113.7 之前就打完了。"
+    },
+    {
+      "start": 119.76,
+      "end": 137.44,
+      "fit": "crop",
+      "narration": "破发之后马上要保发，这一局再丢，刚追回来的就白费了。几拍相持，她一拍正手斜线，把对手拉出了场外，直接得分。这一局她一分没丢，四比四。",
+      "_why": "记分条 120~134 秒只有局分 3-4、没有分数栏＝这一局第一分；解说 132.6~136.4s「This is much more like it from Wang Xinyu. It's a fabulous crosscourt forehand winner」；逐帧 132s 葛蓝乔安娜在近端右侧大角扑救，133s 王欣瑜握拳。「一分没丢」来自 flashscore 4-4 局 `15:0, 30:0, 40:0`。",
+      "crosses_cut": "段尾落在官方集锦自己的转播切点上（probe 的 `scene_cuts`），集锦只在点与点之间切；窗口内保留原剪辑，没有在回合中间挖刀。",
+      "point_end_ok": "137.44 是转播切点，也是翻牌时刻（`point_ends` 137.44）；133~136 秒是王欣瑜握拳和看台的反应镜头。"
+    },
+    {
+      "start": 148.64,
+      "end": 164.24,
+      "fit": "crop",
+      "narration": "四比五，再丢一局，这一盘就没了。三十平，她一拍反手打出制胜分，接着把这一局拿下。五平。",
+      "_why": "记分条 150~162 秒 4-5 30-30；解说 162.6s「terrific backhand winner」，逐帧 160s 王欣瑜在近端左侧反手击球、162s 握拳走回。「随后拿下」来自 flashscore 5-5 局 `30:30, 40:30` 后保发（集锦没播 40-30 那一分）。",
+      "crosses_cut": "段尾落在官方集锦自己的转播切点上（probe 的 `scene_cuts`），集锦只在点与点之间切；窗口内保留原剪辑，没有在回合中间挖刀。",
+      "point_end_ok": "164.24 是转播切点，也是翻牌时刻（`point_ends` 164.24）；162~164 秒是王欣瑜握拳走回的近景。"
+    },
+    {
+      "start": 164.24,
+      "end": 186.2,
+      "fit": "crop",
+      "narration": "五平之后，王欣瑜的接发先把局面打开，顺势拿下这一分。这一局她一分没让，破发。六比五，四十比十五，盘点。第一个就兑现，七比五。从一比四开始，七局她拿了六局。",
+      "_why": "解说 174.6s「such a good return from Wang Xinyu, set her up to win the point」；flashscore 6-5 局 `15:0, 30:0, 40:0` 零封破发、7-5 局 `40:15` 第一个盘点兑现；记分条 180.5s `SET POINT` 6-5 40-15。",
+      "crosses_cut": "段尾落在官方集锦自己的转播切点上（probe 的 `scene_cuts`），集锦只在点与点之间切；窗口内保留原剪辑，没有在回合中间挖刀。",
+      "point_end_ok": "186.2 是转播切点，`point_ends` 186.24 的翻牌在它之后 0.04 秒；盘点那一分 185 秒前打完，186 秒起是王欣瑜走回场边的镜头。"
+    },
+    {
+      "start": 186.2,
+      "end": 200.32,
+      "fit": "crop",
+      "narration": "",
+      "_quote_kind": "broadcast",
+      "quote": [
+        {
+          "at": 2.84,
+          "text": "Well, a good turnaround in that opening\n首盘这一下翻得漂亮"
+        },
+        {
+          "at": 4.92,
+          "text": "set from Wang Xinyu.\n王欣瑜把这一盘拿了回来"
+        },
+        {
+          "at": 9.56,
+          "text": "4-1, love-30 down.\n一度一比四、零比三十落后"
+        }
+      ],
+      "_quote_why": "转播解说原声，逐字取自 probe 的 `captions.txt`（YouTube 自动字幕 189.04／191.12／195.76；自动字幕把名字写成「Wong Xinu」，按实际人名改回 Wang Xinyu）。",
+      "crosses_cut": "186.2~200.32 是盘间：王欣瑜走回场边（186~197）、第二盘葛蓝乔安娜准备发球（198~200），没有回合在打。",
+      "point_end_ok": "段尾 200.32 是转播切点；189.76、198.56 两次翻牌是盘分换版（第二盘开局记分条），不是一分打完；下一次翻牌在 213.2。"
+    },
+    {
+      "start": 213.2,
+      "end": 230.64,
+      "fit": "crop",
+      "narration": "第二盘，葛蓝乔安娜的一发，明显稳了下来，一发得分率从百分之五十涨到百分之八十三。王欣瑜首个发球局十五比四十落后，两个破发点都救了回来。二比三平分，她又守住了。",
+      "_why": "一发得分率两源一致：flashscore 分盘 50%(10/20)→83%(10/12)，WTA 分盘 stats `ptswon1stservb/ptsplayed1stservb` 10/20→10/12。15-40 救回来自 flashscore 1-1 局 `15:40 |B1|, 30:40 |B1|, 40:40, A:40`。画面是 2-3 平分那一分（记分条 216~228s 2-3 40-40），解说 225.9s「Superb from Wang Xinyu」；3-3 来自 flashscore。",
+      "crosses_cut": "段尾落在官方集锦自己的转播切点上（probe 的 `scene_cuts`），集锦只在点与点之间切；窗口内保留原剪辑，没有在回合中间挖刀。",
+      "point_end_ok": "230.64 是转播切点；这一分 227 秒前打完（227~228s 王欣瑜走回、228.88 翻牌），229~230 是葛蓝乔安娜发球前的近景；231.44 的翻牌是集锦跳到 4-4 那一局的换版，不是一分打完。"
+    },
+    {
+      "start": 230.64,
+      "end": 250.96,
+      "fit": "crop",
+      "narration": "四平，对手的发球局。第一分，王欣瑜就把她从一边调到另一边，连着逼她跑了几个大角。最后一拍，她没能回过来。这一局王欣瑜破发，五比四，她要发球胜赛了。",
+      "_why": "记分条 232~246s 只有局分 4-4、没有分数栏＝这一局第一分（flashscore 5-4 局第一分 `15:0` 是王欣瑜）；逐帧 237s 葛蓝乔安娜在近端右侧、240~243s 两次扑到左侧大角、245s 王欣瑜握拳；解说 244.4s「What a point」。破发来自 flashscore 5-4 局 `40:30 |B1|`。",
+      "crosses_cut": "段尾落在官方集锦自己的转播切点上（probe 的 `scene_cuts`），集锦只在点与点之间切；窗口内保留原剪辑，没有在回合中间挖刀。",
+      "point_end_ok": "250.96 是转播切点；246.8 的翻牌在段内，下一次翻牌 257.68 在段尾之后 6.7 秒。245~251 秒是王欣瑜走回和准备发球的近景。"
+    },
+    {
+      "start": 250.96,
+      "end": 257.28,
+      "fit": "crop",
+      "narration": "四十比十五，赛点。第一个就兑现。",
+      "crosses_cut": "段尾落在官方集锦自己的转播切点上（probe 的 `scene_cuts`），集锦只在点与点之间切；窗口内保留原剪辑，没有在回合中间挖刀。",
+      "point_end_ok": "赛点这一分在 256.5 秒前打完——逐帧 256s 王欣瑜还在底线收拍，257s 已经转身走向网前；257.68 的翻牌是比赛结束后记分条换成赛果，不是这一分还没打完。"
+    },
+    {
+      "start": 257.28,
+      "end": 286.36,
+      "fit": "crop",
+      "narration": "",
+      "_quote_kind": "broadcast",
+      "quote": [
+        {
+          "at": 0.96,
+          "text": "Wang Xinyu is into the quarterfinals in\n王欣瑜打进新加坡站八强"
+        },
+        {
+          "at": 3.36,
+          "text": "Singapore.\n晋级八强"
+        },
+        {
+          "at": 5.44,
+          "text": "She was made to work for it, defeating\n她赢得并不轻松"
+        },
+        {
+          "at": 7.04,
+          "text": "the qualifier Joanna Garland in straight sets.\n直落两盘击败资格赛选手葛蓝乔安娜"
+        },
+        {
+          "at": 14.24,
+          "text": "Under pressure, particularly in the early stages,\n尤其开局阶段压力很大"
+        },
+        {
+          "at": 17.92,
+          "text": "and she came out on top, and with a bit of patience,\n但她顶住了，靠一点耐心"
+        },
+        {
+          "at": 23.2,
+          "text": "she got her opportunity to wrap up the victory.\n等到了机会，拿下比赛"
+        }
+      ],
+      "_quote_why": "赛后转播解说原声，逐字取自 probe 的 `captions.txt`（258.24~283.12，自动字幕的「Wangu」按实际人名改回 Wang Xinyu）。整段只有网前握手和王欣瑜致意，没有赛后采访。",
+      "crosses_cut": "257.28~286.36 全在比赛结束之后：王欣瑜走向网前（257~263）、网前握手（263~278）、王欣瑜致意与 CONGRATULATIONS 图形（278~286），两人都在画面里、解说讲的也是王欣瑜。",
+      "point_end_ok": "比赛已经结束，段内 279~285 秒的翻牌是赛果图形在换；段尾 286.36 是转播切点。"
+    },
+    {
+      "start": 286.36,
+      "end": 296.92,
+      "fit": "crop",
+      "narration": "这是她今年第四次打进巡回赛八强。一比四落后的时候，你还觉得这一盘有得打吗？",
+      "crosses_cut": "286~297 秒是王欣瑜走回座位收拾球包、赛果图形「ROUND 2 7-5 6-4」，298 秒起是 WTA 片尾，已排除。",
+      "point_end_ok": "比赛结束之后；段尾 296.92 是转播切点，`point_ends` 296.96 在它之后 0.04 秒。"
+    }
+  ],
+  "_editing_why": "源片 307 秒：比赛画面到 257 秒，257~297 是握手、致意与赛果图形，298 秒起 WTA 片尾（静音区 296.98~307），**没有场上采访**。认人：王欣瑜酒红连衣裙（第一盘酒红帽、第二盘起白色遮阳帽），葛蓝乔安娜蓝白连衣裙。段落端点全部取自 probe 的 `scene_cuts`，并对过 `point_ends`（这一趟给了 `--scorebox 90,870,550,980`，与同站 `oliynykova-chwalinska` 同一个框，翻牌是真量的）。球路描述来自 frame-grab 每秒一帧逐帧看过，再对照 `captions.txt` 里转播解说的原话。集锦没播 0-2 被破和 1-4 那一局，只在旁白里按 flashscore 逐局一句带过。",
+  "push": {
+    "matchup": "王欣瑜 vs 葛蓝乔安娜",
+    "score": "7-5 6-4",
+    "event": "",
+    "summary": "王欣瑜1比4落后翻盘进八强",
+    "auto": true,
+    "lead": "2026 WTA500 新加坡女单 1/8决赛：世界第 40 的王欣瑜 7-5、6-4 胜资格赛晋级的葛蓝乔安娜，用时 1 小时 37 分。第一盘她开局第二局就丢了发球局，一度 1-4、自己发球 0-30 落后；守住那一局之后，第三个破发点破回，3-4 一分没丢保发，5-5 零封破发，后 7 局拿下 6 局。第二盘葛蓝乔安娜一发得分率从 50% 涨到 83%，王欣瑜第一个发球局 15-40 救回两个破发点，4-4 完成全场唯一一次破发，5-4 第一个赛点兑现。全场 11 个发球局只丢了开局那一个。这是她今年第四次打进巡回赛八强。"
+  }
+}
