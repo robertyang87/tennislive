@@ -53,6 +53,14 @@
     "field": "duration"
    },
    "_duration_why": "flashscore df_sui_1：0:39 + 0:33 = 1:12；同源 dc_1 的起止时刻相减 1:11:08。两个数同出 flashscore，旁白不报用时。"
+  },
+  "portrait": {
+   "frame_at": 449.0,
+   "focus": 0.09,
+   "focus_y": 0.0,
+   "zoom": 1.3,
+   "_frame_why": "⚠️ 抽帧，不是官方实拍——账号所有者 2026-09-24 00:1x（北京）回「抽帧吧，如果没图的话」，闸走 `OWNER_APPROVED_FRAME_COVERS`。官方图这一档当时确实没有：比赛北京 22:31 结束，到 00:10 WTA photo-resources／AP（`find_cover_photo.py --player Zhang --event Hangzhou`）查空；Getty 按「zhang zhizhen hangzhou」最新是 2024 杭州；赛事官网 hangzhouopen.com 首页挂的 ATP 战报配图里没有这一场（布云朝克特那篇 1920×1080 的有）；微信搜狗扫「张之臻 黄泽林」「张之臻 杭州」「黄泽林 杭州」，比赛结束之后发的帖子 0 篇。\n**为什么是 449.0**：本场源片里张之臻只有两个近景——397s 低头走回（脸被头发和头带挡住大半）、448.22~450.1 第二盘 2-3 他赢下一分之后的正脸（frame-grab 逐秒帧 449：双眼睁开、平视前方、K-SWISS 头带，情绪是「咬着」，和钩子「输了，但打完了」对题）。选 449.0 这一格而不是镜头开头，是因为 448 那格还带着转场的动态模糊。\n**几何**：源片里脸在 x≈0.08~0.32、y≈0.02~0.50，转播记分条在左下 x 0.05~0.22、y 0.85~0.95。`zoom` 1.3 把可见纵向区间收到 [0, 0.77]（fy=0），记分条整块推出画面，不会和我们自己的比分板印两遍；横向窗口宽 0.42/1.3≈0.32，fx=0.09 → 窗口 0.06~0.38，脸落在窗口中间偏左、头带不被切。总放大 1.333×1.3≈**1.73×**，认领这个取舍（唯一的替代是等明天的图）。\n⚠️ 官方图落地之后要把这条 slug 从 `OWNER_APPROVED_FRAME_COVERS` 里删掉——表自带自检。",
+   "source": "yt"
   }
  },
  "_result_why": "flashscore 当日表 WYxAMgjR：AE=Zhang Z.（home）/ AF=Wong C.（away），BA/BB=3:6、BC/BD=3:6，df_sui_1 分盘 Set 1 IG/IH=3/6、Set 2 3/6；源片 508s 记分条 `ZHANG 3 3 / WONG 6 6`；解说 511.5s「the 10th ace to wrap things up for Coleman Wong」。ATP 正赛签表 mds.pdf（Released 09/24/2026 21:48:41，比赛结束之前）5/6 号签位 `WC ZHANG, Zhizhen CHN` / `WONG, Coleman HKG`，第一轮（Round of 32）。",
@@ -307,7 +315,7 @@
   {
    "source": "yt",
    "start": 507.2,
-   "end": 516.8,
+   "end": 511.9,
    "cx": 0.5,
    "quote": [
     {
@@ -321,24 +329,27 @@
     {
      "at": 3.9,
      "text": "on serve than that.\n他不会有太多"
-    },
-    {
-     "at": 4.32,
-     "text": "That is the 10th ace\n这是第十个ACE"
-    },
-    {
-     "at": 6.0,
-     "text": "to wrap things up for Coleman Wong.\n黄泽林收下比赛"
     }
    ],
    "_quote_kind": "broadcast",
-   "_quote_why": "转播原句，YouTube 自动字幕：507.36「Fitting that it ends in that way. Can't」509.92「have had too many better days on serve」511.52「than that. That is in the 10th ace to」514.80「wrap things up for Coleman Wong.」；「is in the」按语法校正为「is the」。段内 at = 绝对秒 − 507.2。",
-   "_why": "507.16 黄泽林近景 → 508.72 他转身 → 510.88 教练席鼓掌 → 512.8 网前握手，到 516.8（516.87 起转场静音）。",
-   "crosses_cut": "508.72、510.88、512.80 三刀都在赛点之后：黄泽林、他的团队、双方握手，原声讲的也是这一场的收尾。",
+   "_quote_why": "转播原句，YouTube 自动字幕：507.36「Fitting that it ends in that way. Can't」509.92「have had too many better days on serve」511.52「than that.」；段尾收在 511.9，这一句说完。下一句「That is the 10th ace to wrap things up for Coleman Wong」压在下一段的旁白底下。段内 at = 绝对秒 − 507.2。",
+   "_why": "507.16 黄泽林近景 → 508.72 他转身 → 510.88 教练席鼓掌。",
+   "crosses_cut": "508.72、510.88 两刀都在赛点之后：黄泽林和他的团队，原声讲的也是这一场的收尾。",
    "point_end_ok": "比赛在 507 前就结束了（ACE），之后都是赛后画面。",
+   "score_inset": true
+  },
+  {
+   "source": "yt",
+   "start": 511.9,
+   "end": 516.8,
+   "cx": 0.5,
+   "narration": "第十个ACE收尾。伤后第一场，你怎么看？",
+   "_why": "511.9~512.8 教练席鼓掌 → 512.8 网前握手 → 张之臻走回（红拍），段尾 516.8 在 516.87 转场静音之前。「第十个 ACE」出处：df_st_1 黄泽林 Aces 10 ＋ 解说 511.5「That is the 10th ace to wrap things up for Coleman Wong」。",
+   "crosses_cut": "512.80 从教练席切到网前握手：比赛已经结束，旁白是片尾一问，不指认画面里的人。",
+   "point_end_ok": "比赛在 507 前就结束了（ACE），这一段全是赛后画面。",
    "score_inset": true
   }
  ],
- "_quote_why_global": "两段原声：476.2~481 的「Wow, what an incredible point」、507.2~514.9 的赛点收尾。",
+ "_quote_why_global": "两段原声：476.2~481 的「Wow, what an incredible point」、507.2~511.9 的赛点收尾。",
  "_tactics_why": "源片全是底线高位宽景，球员四五十像素高，正反手多数判不出。写进旁白的球路都是逐 1 秒抽帧（frame-grab zhang-wong-hz）看过的：第 1 段底线左右跑动、第 4 段被调到左边后顶到网前、第 6 段上到中场处理低球、第 7 段左右跑动后把对手调出场外、第 8 段被满场调动后对手网前高压、第 10 段对手耐住等到浅球上前结束。"
 }
