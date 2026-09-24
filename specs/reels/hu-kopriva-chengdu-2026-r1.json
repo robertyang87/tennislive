@@ -1,0 +1,286 @@
+{
+ "slug": "hu-kopriva-chengdu-2026-r1",
+ "_column": "赛场之上",
+ "sources": {
+  "day1": "https://www.youtube.com/watch?v=K22QqaHvcSs",
+  "ttv": "https://www.tennistv.com/videos/4580530/chengdu-2026-r1-kopriva-hu-short-highlights"
+ },
+ "primary": "day1",
+ "_source": "两条源，**都是 Tennis TV 官方**，probe 实测一律 1920×1080 / 25fps：\n· `day1` = 账号所有者 2026-09-24 直接给的 URL，Tennis TV YouTube《Baez Battles Brooksby; Kopriva Takes On Hu To Kick Things Off 💥 | Chengdu 2026 Highlights Day 1》（oEmbed author_name=Tennis TV），553.45s 的**当日合集**；胡佳这一场在 298.5s 片头卡「KOPRIVA v HU」之后、到 543.4s 握手为止，约 245 秒，比单场短集锦多出第二盘 3-3、3-4（15-40）和 5-5 三局。\n· `ttv` = tennistv.com `library/short-highlights`《chengdu-2026-r1-kopriva-hu-short-highlights》，free 档，143.56s。**只用它的片尾 10 秒**（解说那句「we saw enough there of Hu Jia」）：这条源在沙箱里下得动，解说逐词用 faster-whisper small.en 和 medium.en 两个模型分别转过，两份对得上；合集那一条在沙箱里 YouTube 403，听不了。\n四要素自证：记分条逐格读过（`score_*.jpg`），`KOPRIVA / HU` 两行，从 0-30 30-30 读到 6-4、7-5，和 flashscore EVZwApfT 逐分记录一分不差；场地印着 `CHENGDU 成都`；短集锦 96.5s 转播图形 `ROUND 1 | CENTER COURT | 0:40 | ATP 250`。",
+ "_tennistv_trim": "两条源都是 Tennis TV。**片尾**：`day1` 的比赛画面收在 543.4s（握手），544.5s 起是 Tennis TV 品牌卡和二维码订阅卡——本片用到的最后一段收在 538.9s，离片尾卡 5.6 秒；`ttv` 那一条到 143.56s 为止都是握手画面，没有片尾卡，末段收在 143.3s。**台标**：Tennis TV 台标烧在右上角（源片 x≈1780~1900），3:4 取景窗 cx=0.5 时只取 555~1365，角上那块在窗外。",
+ "mixed_fps": {
+  "day1": "25fps，1920×1080",
+  "ttv": "25fps，1920×1080——两条同帧率同尺寸，不存在混帧率问题。"
+ },
+ "cover": {
+  "eyebrow": "赛场之上",
+  "layout": "solo",
+  "subject": "胡佳",
+  "hook": "三天前刚拿青少年冠军\n这回他对上了职业老手",
+  "hook_accent": "职业老手",
+  "_hook_why": "两行一个落差：第一行是他的来路（9 月 20 日中网青少年 J300 冠军，三天后就是这场），第二行是这场球的对面——29 岁、世界第 71 的科普日瓦。没写排名、年龄、国籍（身份不上钩子），没有术语。10 字和 10 字，都在 10 字以内。",
+  "topic": "成都公开赛首轮 · 胡佳首秀",
+  "winner": "科普日瓦",
+  "result": "6-4 7-5",
+  "matchup": [
+   {
+    "name": "科普日瓦",
+    "name_en": "Vit Kopriva",
+    "country": "CZE",
+    "rank": 71
+   },
+   {
+    "name": "胡佳",
+    "name_en": "Jia Hu",
+    "country": "CHN",
+    "rank": 2082
+   }
+  ],
+  "_matchup_rank_why": "胡佳 2082：ITF 官网球员页 PlayerApi/GetPlayerOverview circuitCode=MT 给的 `ATP Singles Ranking 2082（21 September 2026）`，flashscore 球员页 `ATP : 2082`，两源一致。科普日瓦 71：flashscore 球员页 `ATP : 71`；ATP 官网赛报（atptour.com/en/news/brooksby-baez-chengdu-2026-wednesday 的搜索摘要）写 World No. 71。⚠️ 胡佳的青少年排名（ITF 第 86）是另一张榜，只进旁白，不进名条。",
+  "_name_why": "`player_zh(\"Vit Kopriva\")` → 科普日瓦（players.py 第 159 行）。胡佳不在译名表里（`player_zh(\"Jia Hu\")` 原样返回），中文名以中文官方报道为准：中新网、凤凰网、腾讯、虎扑外卡名单一律写「胡佳」。⚠️ 中文媒体有的写「科普里瓦」，按仓库译名表写科普日瓦。",
+  "_subject_why": "封面放**胡佳**——输的那个，但他是这条片子的主语：账号所有者点名要做他的赛场之上，并讲清来时路、做展望。",
+  "_heat_why": "① 档：中国球员单打，不用等额外理由。另外两层：他是 ITF 青少年世界排名里唯一一个进前一百的中国男孩（第 86），三天前刚拿中网青少年 J300 冠军；这是他第一场 ATP 巡回赛正赛。账号所有者亲自点题。",
+  "portrait": {
+   "frame_at": 434.6,
+   "_frame_why": "占位，封面实拍还在找。"
+  },
+  "scoreboard": {
+   "court": "Center Court",
+   "_court_why": "Tennis TV 转播图形（短集锦 96.5s）`ROUND 1 | CENTER COURT`；ATP 官方赛程表 protennislive op 同一周的 Center Court 编排。",
+   "duration_source": {
+    "url": "data:application/json,%7B%22duration%22%3A%20%221%3A38%22%2C%20%22source%22%3A%20%22flashscore%20df_sui_1%EF%BC%88EVZwApfT%EF%BC%89%E5%88%86%E7%9B%98%200%3A41%20%2B%200%3A57%20%3D%201%3A38%22%2C%20%22cross_check%22%3A%20%22Tennis%20TV%20%E8%BD%AC%E6%92%AD%E7%9B%98%E9%97%B4%E5%9B%BE%E5%BD%A2%EF%BC%88%E7%9F%AD%E9%9B%86%E9%94%A6%2096.5s%EF%BC%89%E5%8D%B0%E7%9D%80%E9%A6%96%E7%9B%98%200%3A40%EF%BC%8Cflashscore%20%E9%A6%96%E7%9B%98%200%3A41%EF%BC%8C%E5%B7%AE%201%20%E5%88%86%E9%92%9F%E5%9C%A8%E5%8F%96%E6%95%B4%E8%8C%83%E5%9B%B4%E5%86%85%22%7D",
+    "field": "duration"
+   },
+   "_duration_why": "flashscore df_sui_1：0:41 + 0:57 = 1:38。第二源只核到首盘：转播图形印着 0:40（flashscore 0:41，按惯例它偏长一点）。全场用时没有第二个源，按 flashscore 印 1:38，旁白里只说首盘四十分钟。"
+  },
+  "_result_why": "ATP 官方正赛签表 protennislive.com/posting/2026/7581/mds.pdf（Released 09/23/2026 16:48:20）第一轮 13/14 号签位下印着 `V. Kopriva 64 75`；flashscore 当日表 EVZwApfT：AE=Kopriva V.（home）AG=2 / AF=Hu J.（away）AH=0，BA/BB=6:4、BC/BD=7:5；源片 532.5s 记分条 `KOPRIVA 6 7 / HU 4 5`。三处一致。"
+ },
+ "topbar": {
+  "line1": "2026 成都公开赛 首轮",
+  "line2": "科普日瓦 6-4 7-5 胡佳"
+ },
+ "_topbar_why": "line1：ATP250 成都公开赛第一轮（官方签表 Round of 32）。line2 由 cover.winner / result / matchup 机械拼出。",
+ "_match": {
+  "status": "result_verified",
+  "source": "flashscore_points",
+  "source_id": "EVZwApfT",
+  "flashscore_id": "EVZwApfT",
+  "participants": [
+   "科普日瓦",
+   "胡佳"
+  ],
+  "set_scores_home_away": [
+   [
+    6,
+    4
+   ],
+   [
+    7,
+    5
+   ]
+  ],
+  "tiebreaks_home_away": [
+   null,
+   null
+  ],
+  "winner": "科普日瓦",
+  "loser": "胡佳",
+  "winner_result": "6-4 7-5",
+  "loser_result": "4-6 5-7"
+ },
+ "_no_stats_why": "⚠️ **不画数据统计图，因为胡佳没有官方头像，不是因为没有数据。** 数据是齐的（flashscore df_st_1：ACE 2/7、双误 4/3、一发得分率 74%/67%、二发得分率 62%/44%、破发点 3/9 对 1/1、总得分 72/60）。卡上强制要 `stats.a/b.headshot`，而 `tools/fetch_official_headshot.py atp \"Jia Hu\" --id H0LE --via https://www.mubadaladcopen.com` 取回来的是**只有 2 种颜色的占位剪影**（脚本自己的判据拦下的）——他在 ATP 官网还没有正式头像。数字全部进了旁白（第 10 段）。制胜分和非受迫失误：TNNS（run 35900463822）给了数，但分盘合计和全场对不上（winners 分盘 [14,22] vs 全场 [23,26]），脚本自己标了「别用」，不引用。",
+ "_hit_data": "跑过 `match_stat_hooks.py EVZwApfT`。进旁白的：**ACE 7 比 2**（df_st_1 Aces 2 / 7，胡佳是 away）；**二发得分率 44% 对 62%**（2nd serve points won 62% (13/21) / 44% (12/27)）；**破发点 9 个被兑现 3 个、救下 6 个**（Break Points Saved 6/9）；**开局第一个接发局就破发**（df_mh_1 Set 1 第 1 局 `HG÷1 HK÷2`，科普日瓦发球、胡佳赢）；**第二盘 3-4 那一局三个破发点全救**（df_mh_1 Set 2 `HC÷4 HE÷4`：`40:15 |B1|`、`40:30 |B1|`、`A:40 |B1|`，最后 `40:A` 保发）。",
+ "_turning_points": [
+  "首盘第 1 局（科普日瓦发球）：`15:0, 15:15, 30:15, 30:30, 30:40 |B1|`——第一个破发点就兑现，胡佳 1-0。源片 day1 300.5~316.5 记分条 `•KOPRIVA 0 30 / HU 0 30` → `HU 0 40`（310.5）→ `•HU 1 0`（316.5）。",
+  "首盘第 2 局（胡佳发球）：`15:0, 30:0, 30:15, 30:30, 30:40`（home 在前，所以是 0-30 落后）——连拿四分保发。源片 day1 316.5~330 `KOPRIVA 0 30 / •HU 1 0` → `1 15`（328.5）；这一局里科普日瓦上网被胡佳正手穿越（ttv 19~26.5 同一分，解说 25.9s「He's got a fast arm, hasn't he?」）。",
+  "首盘第 4 局（胡佳发球 2-1）：`15:0, 15:15, 15:30, 30:30, 40:30 |B1|, 40:40, A:40 |B1|`——第二个破发点被破，2-2。源片 day1 344.5~348.5 `KOPRIVA 1 AD / •HU 2`，350.5 `•KOPRIVA 2 / HU 2`。",
+  "首盘第 10 局（胡佳发球 4-5）：`15:0, 30:0, 30:15, 40:15 |B1| |B2|, 40:30 |B1| |B2|`——第二个盘点丢掉，4-6。源片 day1 410.5s `SET POINT #2` `KOPRIVA 5 40 / •HU 4 30`；ttv 76~86 同一分：胡佳压到发球线附近，科普日瓦一板得手，解说 84~86s「Oh, that was a real surprise and beautifully done」。",
+  "第二盘第 4 局（胡佳发球 1-2）：`0:15, 15:15, 15:30, 30:30, 40:30 |B1|, 40:40, 40:A, 40:40, 40:A`——救下破发点保发 2-2。源片 day1 436.5 `KOPRIVA 2 40 / •HU 1 30`，446.5 `HU AD`；ttv 99~107.7 同一分，解说 107.3s「Hu's made it」，108s 切到他的团队握拳。",
+  "第二盘第 8 局（胡佳发球 3-4）：三个破发点全救，4-4；第 10 局零封保发 5-5。源片 day1 474.5~488.5 `KOPRIVA 6 4 40 / •HU 4 3 15`。",
+  "第二盘第 12 局（胡佳发球 5-6）：`15:0, 30:0, 30:15, 40:15 |B1| |B3|`——第一个赛点就被破，5-7。源片 day1 520.5~530.5 `KOPRIVA 6 6 40 / •HU 4 5 15`，532.5 `KOPRIVA 6 7 / HU 4 5`。"
+ ],
+ "editorial": {
+  "mode": "match_review",
+  "hook": [
+   "三天前刚拿青少年冠军",
+   "这回他对上了职业老手"
+  ],
+  "question": "一个三天前还在打青少年赛、ATP 排名两千零八十二的十七岁外卡，第一次站上巡回赛正赛，面对世界第七十一，他能打到什么程度？",
+  "thesis": "开局第一个接发局他就破了科普日瓦的发球，接着从 0-30 保住自己的发球局，2-0 领先；科普日瓦靠经验一局局追回来——胡佳的二发只拿到 44% 的分，九个破发点被兑现三个，盘点和赛点都落在他自己的发球局上。可第二盘他救下 3-4、15-40 那一局的三个破发点，追到 5-5；整场 7 个 ACE 对 2 个。解说最后那句话是这条片子的落点：经验差了一截，但他们已经看够了胡佳。",
+  "beats": [
+   "北京时间 9 月 23 日下午，成都公开赛首轮，中心球场。外卡胡佳第一个接发局就破发，接着从 0-30 保发，2-0。",
+   "第四局发球局被破回 2-2。来时路：江苏人，2009 年出生；中网青少年赛连打四年（资格赛打上来、第三轮、第二轮、今年冠军）；三天前夺冠后青少年世界排名第 86，中国男孩第一；成年赛打过 13 站低级别赛事，正赛只赢过一场，ATP 排名 2082。",
+   "4-5 他发球保盘，第二个盘点丢掉，4-6，40 分钟。第二盘 1-2 救下破发点；3-4、15-40 三个破发点全救，追到 5-5。",
+   "5-6 发球保赛，第一个赛点就被破，4-6 5-7。7 个 ACE 对 2 个，二发得分率 44%。展望：下一次站上这张签表要多久？解说原话收尾：we saw enough there of Hu Jia。"
+  ],
+  "human_context": {
+   "angle": "这场球的主语是**胡佳这个人的来路**：一个 2009 年出生的江苏男孩，2023 年从资格赛打起青少年巡回赛，中网青少年赛连打四年从资格赛打到冠军（9 月 20 日），三天后拿着外卡第一次站上 ATP 巡回赛正赛。他在青少年这一层已经是中国第一（ITF 青少年世界排名第 86），可成年赛才刚起步——13 站 ITF 低级别赛事，正赛只赢过一场，ATP 排名 2082。这一场就是两张排名表之间的那道坎：对面是世界第 71。",
+   "facts": [
+    "ITF 官网（PlayerRankApi/GetPlayerRankings circuitCode=JT playerTypeCode=B nationCode=CHN，21 September 2026）：Jia Hu 第 86、本期上升 81 位、2009 年出生；中国第二是 Hanlei Lu（陆翰檑）第 169。前 100 名里中国男孩只有他一个。",
+    "ITF 官网青少年单打逐场（PlayerApi/GetPlayerActivity circuitCode=JT）：J300 Beijing 2023 资格赛打进正赛、止步第二轮；2024 第三轮；2025 第二轮；2026（9 月 15~20 日）8 号种子夺冠，决赛 6-3 6-3 胜 Nikita Berdin。2024-04 J30 塔什干是他第一个青少年单打冠军。2026 年青少年单打 26 胜 10 负。",
+    "ITF 官网成年赛逐场（circuitCode=MT）：共 13 站（2024-08 张家港挑战赛资格赛起，2025~2026 年银川 M25、马鞍山/武宁/六安/泸州 M15），正赛唯一一场胜利是 2026-07 武宁 M15 首轮对手退赛；PlayerApi/GetPlayerOverview：ATP Singles Ranking 2082（21 September 2026）。flashscore 球员页 ATP : 2082、生日 2009-05-16。",
+    "外卡：虎扑 2026-09-20 11:04 发布的成都外卡名单——单打正赛外卡商竣程、周意、胡佳；双打外卡胡佳/陆翰檑。ATP 官方签表 mds.pdf 14 号签位 `WC HU, Jia CHN`。",
+    "本场：ATP 官方签表 `V. Kopriva 64 75`；flashscore EVZwApfT 统计：ACE 2/7（胡佳 7）、二发得分率 62%/44%、破发点 科普日瓦 3/9、胡佳 1/1。"
+   ],
+   "sources": [
+    "https://www.protennislive.com/posting/2026/7581/mds.pdf",
+    "https://www.flashscore.com/match/tennis/EVZwApfT/",
+    "https://www.itftennis.com/en/players/jia-hu/800757262/chn/jt/s/overview/",
+    "https://www.itftennis.com/en/rankings/world-tennis-tour-juniors-rankings/",
+    "https://news.qq.com/rain/a/20260920A05Y9900",
+    "https://news.qq.com/rain/a/20260920A0DD2600",
+    "https://www.youtube.com/watch?v=K22QqaHvcSs",
+    "https://www.tennistv.com/videos/4580530/chengdu-2026-r1-kopriva-hu-short-highlights"
+   ]
+  }
+ },
+ "_claims": [
+  {
+   "claim": "胡佳是 ITF 青少年世界排名前一百里唯一的中国男孩（第 86）",
+   "sources": [
+    "ITF 官网 PlayerRankApi/GetPlayerRankings（circuitCode=JT，playerTypeCode=B，21 September 2026）前 100 名逐条过，国籍 CHN 只有 Hu Jia 第 86",
+    "同一接口 nationCode=CHN：第 86 Jia Hu、第 169 Hanlei Lu……；凤凰网成都前瞻「目前世界排名最高的中国青少年男球员」"
+   ]
+  },
+  {
+   "claim": "胡佳成年赛正赛只赢过一场",
+   "sources": [
+    "ITF 官网 PlayerApi/GetPlayerActivity circuitCode=MT：13 站逐场，Main Draw 里唯一的 W 是 2026 M15 Wuning 首轮对 Kuan-Yi Lee（RET）",
+    "ITF 同接口 GetPlayerWinLoss：2024 0-1、2025 7-8、2026 1-3，其余胜场全在 Qualifying Draw；flashscore 球员页近况 Wuning 那一场同样是唯一一场正赛胜利"
+   ]
+  }
+ ],
+ "_no_repeat": "这个账号第一次做胡佳。同一站此前做过 `chengdu-ng-kouame`（网球有故事，讲夸梅的 NG 通道，只在签表那一屏带到过 WC 胡佳的名字），另一个栏目，而且这一条一个字不讲 NG。",
+ "_quote_why_global": "见第 13 段。",
+ "push": {
+  "summary": "胡佳首秀负科普日瓦",
+  "lead": "成都公开赛首轮，17 岁的外卡胡佳第一次站上 ATP 巡回赛正赛，4-6 5-7 负于世界第 71 的科普日瓦。开局第一个接发局他就破了对手的发球，2-0 领先；第二盘 3-4、15-40 三个破发点全救，追到 5-5。三天前他刚拿下中网青少年赛冠军，青少年世界排名第 86，中国男孩第一；成年赛这边，ATP 排名 2082。",
+  "matchup": "科普日瓦 vs 胡佳",
+  "score": "6-4 7-5",
+  "auto": true
+ },
+ "_push_summary_why": "10 字位，主语是胡佳（刷到的人要一眼知道是谁）；「首秀」点出这条片子的切口。标题里不写排名。",
+ "_voice_why": "沿用这条线的默认：云见（`zh-CN-YunjianNeural`）＋6%，不设 `style`。",
+ "_tactics_why": "两条源几乎全是同一机位的底线高位宽景，球员在 1080p 画面里只有四五十像素高，正反手、落点多数判不出来。能判的三分都写进了旁白（第 2 段对手上网被正手穿越、第 7 段压到前场被对手一板得手、第 8 段满场追着跑救下破发点），都是拿 ttv 源片逐 1/3 秒抽帧、配合记分条翻牌和解说原话核过的；其余只写比分走势和统计。",
+ "segments": [
+  {
+   "source": "day1",
+   "start": 301.0,
+   "end": 316.9,
+   "cx": 0.5,
+   "narration": "北京时间九月二十三号下午三点多，成都公开赛首轮。十七岁的外卡胡佳，第一次站上巡回赛正赛。开局第一个接发局，他就破了科普日瓦的发球。",
+   "_why": "首盘第 1 局：30-30 → 30-40（310.5）→ 胡佳破发 1-0（316.5 翻牌）。整段是同一机位的底线宽景。",
+   "_start_time_why": "开球时刻：flashscore 当日表 EVZwApfT 的 AD=1790147400（2026-09-23 07:10Z＝北京 15:10）；tennis.com 这场的 endTime 2026-09-23T08:47:25Z 减去 flashscore 用时 1:38 得 07:09Z，两边对得上。官方赛程（protennislive op）是中心球场 13:00 首场之后「Followed By」，所以只说「下午三点多」，不报到分。"
+  },
+  {
+   "source": "day1",
+   "start": 318.5,
+   "end": 331.5,
+   "cx": 0.5,
+   "narration": "下一局他零比三十落后。对手压上网前，他一板正手穿越，解说脱口而出：这手臂真快。随后连拿四分，保住发球局，二比零。",
+   "_why": "首盘第 2 局：`KOPRIVA 0 30 / •HU 1 0` → `1 15`（328.5）→ 330.2 翻牌。穿越那一分和 ttv 19~26.5 是同一分（两边 26.5/328.5 都是 `1 15`）：ttv 逐帧看 23.0~25.3 科普日瓦站在网前，24.0 近端的胡佳在右手侧挥拍，翻牌后是他的 15。"
+  },
+  {
+   "source": "day1",
+   "start": 340.0,
+   "end": 351.4,
+   "cx": 0.5,
+   "narration": "第四局轮到他发球，两次被逼到破发点。第二次，科普日瓦占先拿下，二比二。经验，开始说话了。",
+   "_why": "首盘第 4 局：344.5~348.5 `KOPRIVA 1 AD / •HU 2`，350.0 翻成 2-2、351.2 下一局第一分翻牌。"
+  },
+  {
+   "source": "day1",
+   "start": 352.4,
+   "end": 363.8,
+   "cx": 0.5,
+   "narration": "他是江苏小将，二〇〇九年出生。中网青少年赛他连打四年：资格赛打上来，第三轮，第二轮，今年是冠军。",
+   "_why": "首盘第 5 局（科普日瓦发球 2-2）底线宽景，压来时路第一拍。段尾 363.8 离 366.9 翻牌 3.1 秒。"
+  },
+  {
+   "source": "day1",
+   "start": 368.9,
+   "end": 377.6,
+   "cx": 0.5,
+   "narration": "三天前刚拿下那个冠军，青少年世界排名升到第八十六，中国男孩里排第一。",
+   "_why": "首盘第 6 局（胡佳发球 2-3）。段首在 367.7 翻牌之后，段尾在 377.8 翻牌前 0.2 秒。"
+  },
+  {
+   "source": "day1",
+   "start": 393.0,
+   "end": 406.9,
+   "cx": 0.5,
+   "narration": "而在成年赛，他才刚起步：十三站低级别赛事，正赛只赢过一场，ATP 排名两千零八十二。对面的科普日瓦，二十九岁，世界第七十一。",
+   "_why": "首盘第 10 局（胡佳发球 4-5）前几分的底线宽景。段尾 406.9 离 410.0 翻牌 3.1 秒。"
+  },
+  {
+   "source": "day1",
+   "start": 410.2,
+   "end": 420.5,
+   "cx": 0.5,
+   "narration": "四比五，他发球保盘。第二个盘点，他往前压，科普日瓦一板得手。四比六，四十分钟。",
+   "_why": "410.5 `SET POINT #2`，419.2 翻成 6-4。ttv 76~86 同一分逐帧：80.3~85.3 胡佳压到发球线附近，科普日瓦在远端底线；解说 84~86s「a real surprise and beautifully done」。"
+  },
+  {
+   "source": "day1",
+   "start": 436.3,
+   "end": 444.6,
+   "cx": 0.5,
+   "narration": "第二盘一比二，又是破发点。他被调动得满场跑，硬是一板板追了回来。",
+   "_why": "第二盘第 4 局 `KOPRIVA 2 40 / •HU 1 30`（破发点）。ttv 99~107.7 同一分：104~107 近端的胡佳左右折返、106.0 滑步救球，解说 107.3s「Hu's made it」。段尾 444.6 停在 444.68 切到他团队之前。",
+   "point_end_ok": "这一分在 ttv 源片里逐 1/3 秒看过：ttv 104~107.7 胡佳左右折返、107.3s 解说「Hu's made it」，107.7 之后死球、108.0 切到他的团队。day1 这一分收在 444.6（444.68 切到团队镜头，偏移 336.9 和 ttv 107.7 对得上），445.70 那一次「翻牌」是团队镜头之后记分条从 40-30 直接跳到 `HU AD`——合集在这里剪掉了平分那一分，不是这一分没打完。"
+  },
+  {
+   "source": "day1",
+   "start": 476.5,
+   "end": 489.0,
+   "cx": 0.5,
+   "narration": "三比四，他又落后十五比四十。这一局三个破发点，他一个一个全救了回来。再下一个发球局，他一分没丢，追到五比五。",
+   "_why": "第二盘第 8 局 `KOPRIVA 6 4 40 / •HU 4 3 15`；flashscore 逐分这一局三个破发点全救、保发 4-4，第 10 局零封 5-5。"
+  },
+  {
+   "source": "day1",
+   "start": 494.0,
+   "end": 505.0,
+   "cx": 0.5,
+   "narration": "整场他发出七个ACE，科普日瓦只有两个。可他的二发只拿到百分之四十四的分，九个破发点，被兑现了三个。",
+   "_why": "第二盘第 11 局（科普日瓦发球 5-5 30-30）底线宽景，压统计。"
+  },
+  {
+   "source": "day1",
+   "start": 523.0,
+   "end": 533.4,
+   "cx": 0.5,
+   "narration": "五比六，他发球保赛，十五比四十。第一个赛点，科普日瓦就拿下了。四比六，五比七。",
+   "_why": "第二盘第 12 局 `KOPRIVA 6 6 40 / •HU 4 5 15`（赛点），532.2 翻成 7-5。",
+   "point_end_ok": "赛点那一分 532.2 已经翻成 `KOPRIVA 6 7 / HU 4 5`，段尾 533.4 在翻牌后 1.2 秒。534.60 那一次「翻牌」是 534.5s 起切到科普日瓦的近景、记分条缩成赛果小板（`6 | 7 5`）被当成了变化，之后没有球。"
+  },
+  {
+   "source": "day1",
+   "start": 533.4,
+   "end": 539.0,
+   "cx": 0.5,
+   "narration": "第一场正赛打完了。下一场，你觉得要等多久？",
+   "_why": "科普日瓦赛后近景、走向网前。末屏一问压在这儿，下一段是解说原话收尾。",
+   "point_end_ok": "比赛在 532.2 就结束了；534.6~543.5 那一串「翻牌」全是赛后近景和握手镜头里赛果小板的淡入淡出（`score_13.jpg` 534.5s 起已经没有球场），没有一分在打。"
+  },
+  {
+   "source": "ttv",
+   "start": 139.1,
+   "end": 143.4,
+   "cx": 0.5,
+   "quote": [
+    {
+     "at": 0.2,
+     "text": "but we saw enough\n但胡佳让我们看到的"
+    },
+    {
+     "at": 2.2,
+     "text": "there of Hu Jia\n已经足够多了"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "_quote_why": "转播原句 ttv 133.5~142.6s「and Kopřiva does what he came to do, but we saw enough there of Hu Jia」——两个模型（small.en / medium.en）逐词对得上；这一段只留后半句 139.3~142.6（but@139.3 we@140.6 saw@140.8 enough@141.0 there@141.4 of@141.7 Hu@142.1）。",
+   "_why": "网前握手（ttv 138.5~142.5 全是握手画面，和 day1 538.5~542.5 是同一时刻），解说替这条片子说出落点。"
+  }
+ ]
+}
