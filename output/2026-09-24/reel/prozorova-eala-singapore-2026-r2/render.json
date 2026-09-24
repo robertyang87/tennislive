@@ -1,0 +1,69 @@
+{
+  "scoreboard_qc_sha256": "2a8fc8727337e29fc708accb9bc1a9da314ca7e5148c08b77da1093df8891acd",
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 3.827,
+  "layout": "full",
+  "segments_seconds": 201.8,
+  "topbar": {
+    "line1": "2026 WTA500 新加坡站 1/8决赛",
+    "line2": "普罗佐罗娃 4-6 7-5 6-3 伊埃拉",
+    "start": 1.2,
+    "end": 203.0
+  },
+  "film_seconds": 206.84,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "0": 21.312,
+    "1": 21.432,
+    "3": 12.408,
+    "4": 16.296,
+    "5": 13.344,
+    "6": 5.52,
+    "8": 13.272,
+    "9": 14.232,
+    "10": 4.296,
+    "12": 5.952
+  },
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "prozorova-eala-singapore-2026-r2",
+    "received_at": "2026-09-24T15:31:32Z",
+    "artifact_ready_at": "2026-09-24T15:38:50Z",
+    "elapsed_seconds": 438.283,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "8e63dac7861306bfe853e69424e2aaa418838ba9b85a928808463921464a55be",
+    "spec_sha256": "c8ce6702f508f8d4395d3c1fd32d71397bbe12e6da2e8ac7d116bcea1e5ce7f6",
+    "run_id": "36020819577",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-09-24T15:34:17Z",
+        "run_id": "36020819577"
+      }
+    ],
+    "render_seconds": 273.283,
+    "pre_render_seconds": 165.0
+  },
+  "film_sha256": "8e63dac7861306bfe853e69424e2aaa418838ba9b85a928808463921464a55be",
+  "film_bytes": 114446021,
+  "qc_attestation_sha256": "a7f492be950786d84540c90336bd6b5628bbe5ecbcd1276c5022d620b0cfd0ce",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-09-24T15:34:17Z",
+      "run_id": "36020819577"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-24T15:38:51Z",
+      "run_id": "36020819577"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-prozorova-eala-singapore-2026-r2/prozorova-eala-singapore-2026-r2.mp4",
+  "video_bytes": 114446021
+}
