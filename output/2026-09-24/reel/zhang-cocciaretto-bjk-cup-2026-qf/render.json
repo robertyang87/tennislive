@@ -1,0 +1,73 @@
+{
+  "scoreboard_qc_sha256": null,
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 3.827,
+  "layout": "full",
+  "segments_seconds": 177.7,
+  "topbar": {
+    "line1": "2026 比利·简·金杯 1/4决赛",
+    "line2": "张帅 6-0 6-2 科恰雷托",
+    "start": 1.2,
+    "end": 178.9
+  },
+  "film_seconds": 182.76,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 8.616,
+    "2": 12.84,
+    "3": 10.44,
+    "4": 8.544,
+    "5": 8.784,
+    "6": 9.408,
+    "7": 9.456,
+    "8": 11.352,
+    "9": 5.616,
+    "11": 11.616,
+    "12": 3.96,
+    "13": 10.824,
+    "15": 7.176,
+    "16": 11.304
+  },
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "zhang-cocciaretto-bjk-cup-2026-qf",
+    "received_at": "2026-09-24T13:20:00Z",
+    "artifact_ready_at": "2026-09-24T13:26:42Z",
+    "elapsed_seconds": 402.002,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "49eaf751abb84bf1bd160c1f48f49498c4e0db453079e3b8e0024e0ef65d2133",
+    "spec_sha256": "84304b378bf2c6761cd9c7438b65f39d637873e5080544dd9391697aa15ff22c",
+    "run_id": "36004914006",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-09-24T13:22:37Z",
+        "run_id": "36004914006"
+      }
+    ],
+    "render_seconds": 245.002,
+    "pre_render_seconds": 157.0
+  },
+  "film_sha256": "49eaf751abb84bf1bd160c1f48f49498c4e0db453079e3b8e0024e0ef65d2133",
+  "film_bytes": 105874900,
+  "qc_attestation_sha256": "1738d26cf5397d49e8ffe12c8107af8ca52c5e99be26871068a8124b452fb61b",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-09-24T13:22:37Z",
+      "run_id": "36004914006"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-24T13:26:43Z",
+      "run_id": "36004914006"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-zhang-cocciaretto-bjk-cup-2026-qf/zhang-cocciaretto-bjk-cup-2026-qf.mp4",
+  "video_bytes": 105874900
+}
