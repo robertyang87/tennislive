@@ -1,0 +1,68 @@
+{
+  "scoreboard_qc_sha256": "94782c4132892d08d284edd36bedfb70b6c2724a9364db0b12e9ad596815e8a5",
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 3.827,
+  "layout": "full",
+  "segments_seconds": 132.0,
+  "topbar": {
+    "line1": "2026 ATP250 成都站 首轮",
+    "line2": "胡安·曼努埃尔·塞伦多洛 6-4 6-3 周意",
+    "start": 1.2,
+    "end": 133.2
+  },
+  "film_seconds": 137.04,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "0": 11.064,
+    "1": 14.376,
+    "2": 20.304,
+    "4": 9.984,
+    "6": 12.96,
+    "7": 10.224,
+    "9": 17.688,
+    "10": 9.72,
+    "11": 6.312
+  },
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "cerundolo-zhou-chengdu-2026-r1",
+    "received_at": "2026-09-24T16:02:00Z",
+    "artifact_ready_at": "2026-09-24T16:08:36Z",
+    "elapsed_seconds": 396.23,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "e3a4c4cbfc25d75a63009559cf8d5a41ffb2577048fffed4eb190a209746c94f",
+    "spec_sha256": "593225a8a92d4bbe986fff087f56d661aa2d1ff4f09e589041722c950be81c95",
+    "run_id": "36024470515",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-09-24T16:04:52Z",
+        "run_id": "36024470515"
+      }
+    ],
+    "render_seconds": 224.23,
+    "pre_render_seconds": 172.0
+  },
+  "film_sha256": "e3a4c4cbfc25d75a63009559cf8d5a41ffb2577048fffed4eb190a209746c94f",
+  "film_bytes": 73337221,
+  "qc_attestation_sha256": "22f19bd794a7dfe28be9a0e304120930b4210d44f4bc3f0f099a43e61ae7ebee",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-09-24T16:04:52Z",
+      "run_id": "36024470515"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-24T16:08:37Z",
+      "run_id": "36024470515"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-cerundolo-zhou-chengdu-2026-r1/cerundolo-zhou-chengdu-2026-r1.mp4",
+  "video_bytes": 73337221
+}

@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>9.25 赛场之上 | 周意成都首轮出局</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>周意成都首轮出局，3个破发点一个没兑现🎾
+
+北京时间 9 月 24 日晚上快 9 点，成都公开赛首轮，中心球场：拿外卡的周意 4-6、3-6 负于世界第 53 的阿根廷人塞伦多洛。
+
+这是他连着第三年拿外卡回到成都。2024 年，他在这里赢下生涯第一场巡回赛正赛；去年，排名 304 的他在这里 6-7(3)、6-4、7-6(2) 掀翻了 5 号种子诺里。
+
+这一场，他真正的机会只有一段。首盘 4-5，塞伦多洛发球胜盘，周意先打到 30-0，这一局里三次拿到破发点，每一个都能扳成 5 平。第二个盘点上，他被拉着左右跑，一路压到网前，塞伦多洛的挑高球不够高也不够深，他一板高压抢了回来。可三个破发点一个都没兑现，第三个盘点塞伦多洛压着他反手一侧的底角拿下首盘。
+
+第二盘，周意第一局被拖进两次平分才保住，第三局发球四分全丢被破。之后他第七局又救下一个破发点，把比分咬在 3-4，但塞伦多洛整场 9 个发球局一局没丢。最后一局他救下第一个赛点，第二个没守住。
+
+数据上：塞伦多洛 7 个 ACE、破发点 3/6；周意 5 个 ACE、0 双误，破发点 0/3。
+
+赛后解说：“塞伦多洛晋级成都站第二轮。”下一轮，他对 2 号种子达维多维奇-福基纳。
+
+3 个破发点，明年再回到成都，你觉得他能把那一分拿下来吗？
+
+#周意 #成都公开赛 #网球时差 #网球中国赛季来了 #网球时间到</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>明年回到成都，那一分他能拿下吗？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
