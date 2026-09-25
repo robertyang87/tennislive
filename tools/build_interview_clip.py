@@ -1098,6 +1098,21 @@ _BAND_TOP = VIDEO_TOP + VIDEO_H               # 960，字幕带的上沿
 # body copy keeps Noto for long-form legibility」——得意黑是**斜体加窄身**，
 # 当标题有劲，一整句字幕读下来就累。渲出来两版比过，这条边界是对的。
 _HEAD_A_TOP, _HEAD_B_TOP = 24, 92
+
+# 顶栏第一行最前面那支麦克风（`video/topbar_icon.py`）。高 42：54px 得意黑那一行
+# 的墨是 43px 高（「2026 WTA500 新加坡站 1/4决赛」实测 y44~87），图标和字一样高，
+# 读起来是这一行的一个符号，不是一枚徽章。
+_HEAD_ICON = "mic"
+_HEAD_ICON_H = 42
+
+
+def _run_width(kind: str, size: int, text: str) -> float:
+    """顶栏一段占多宽。图标那段按矢量的步进算（图标＋和文字之间的空隙）。"""
+    if kind == "icon":
+        sys.path.insert(0, str(ROOT / "src"))
+        from tennislive.video.topbar_icon import icon_advance  # noqa: PLC0415
+        return icon_advance(text, _HEAD_ICON_H)
+    return _measure_at(kind, size, text)
 # 渲后顶栏像素闸。顶栏所在的 0–150px 是纯品牌深绿底，不受源片内容影响，
 # 因而可以稳定地数「接近白色」的文字像素。分界取两行上锚之间：HEADA 的墨迹
 # 实测落在 24–71，HEADB 落在 98–126；84px 留足抗锯齿和编码余量。
@@ -1363,7 +1378,7 @@ def header_runs(spec: dict) -> tuple[list[tuple[str, str, str]], ...]:
         lose = next(s for s in sides if s != win)
         # 赢的那个名字要**看得出来**是赢家——账号所有者：「谢尔顿要高亮吧，
         # 赢球的人」。**重用 `_MARK_COLOUR`，不新开一支颜色**：那正是顶栏
-        # 竖条 `▍` 已经在用的那支品牌绿，也是 `highlight_en()` 高亮关键
+        # 最前面那支麦克风（原来是竖条 `▍`）在用的那支品牌绿，也是 `highlight_en()` 高亮关键
         # 短语时用的同一支——「一屏（这条片子从头到尾算一屏）只留一个强调色」，
         # 见 `highlight_en` 的 docstring 和 CLAUDE.md。输的那个名字和比分
         # 前后的「· 赛后场上采访」都留默认色，不然满行都是重点等于没有重点。
@@ -1385,12 +1400,15 @@ def header_runs(spec: dict) -> tuple[list[tuple[str, str, str]], ...]:
         # 留 2% 余量：四舍五入到整数字号之后，量出来的宽度可能比算出来的
         # 缩放比例贴着算得更宽一点点。
         line_b = _build_line_b(_HEAD_PX / w * 0.98)
-    return ([("▍", "zh", _MARK_COLOUR, _HEAD_SIZE["a"]),
+    # 第一段是一支麦克风（账号所有者 2026-09-25，原来是一道 `▍` 竖条）。
+    # 它是 ASS 矢量不是字：文本位写图标名，`kind` 写 "icon"，量宽和出 ASS
+    # 两处按这个 kind 分支——见 `_icon_run_width` / `header_ass`。
+    return ([(_HEAD_ICON, "icon", _MARK_COLOUR, _HEAD_SIZE["a"]),
              (ev, "head", "", _HEAD_SIZE["a"])], line_b)
 
 
 def header_lines(spec: dict) -> tuple[str, str]:
-    """顶栏两行的**纯文本**（不带那道竖条），顺带量宽度。
+    """顶栏两行的**纯文本**（不带最前面那支麦克风），顺带量宽度。
 
     **`WrapStyle=0` 会自动折行，一折就压到下面那行上，而且不报错**——赛事名
     长一点（「2026 加拿大公开赛 WTA1000 女单 1/4 决赛 蒙特利尔」）就够了。
@@ -1401,8 +1419,8 @@ def header_lines(spec: dict) -> tuple[str, str]:
     for runs in header_runs(spec):
         # **按每一段自己的字号量。** 比分那段是 `\fs38` 渲的，拿 32 去量会
         # 少算两成——闸就成了摆设，而溢出照样不报错。
-        w = sum(_measure_at(kind, size, text) for text, kind, _, size in runs)
-        text = "".join(t for t, _, _, _ in runs if t != "▍")
+        w = sum(_run_width(kind, size, text) for text, kind, _, size in runs)
+        text = "".join(t for t, kind, _, _ in runs if kind != "icon")
         if w > _HEAD_PX:
             raise SystemExit(
                 f"顶栏这行 {w:.0f}px，超过可用的 {_HEAD_PX}px，会折到下一行上：{text}\n"
@@ -1414,12 +1432,13 @@ def header_lines(spec: dict) -> tuple[str, str]:
 def header_ass(spec: dict) -> tuple[str, str]:
     """顶栏两行的 ASS 文本，逐段带上 `\\fn` 和颜色。
 
-    ⚠️ **每一段都显式写 `\\fn`，不靠 fontconfig 回退。** 那道竖条 `▍`
-    （U+258D）得意黑里就没有，本地是回退到思源黑体才画出来的，
-    而**回退在 runner 上不保证**（「本地装着不等于 CI 装着」）。
+    ⚠️ **每一段都显式写 `\\fn`，不靠 fontconfig 回退。** 原来最前面那道
+    竖条 `▍`（U+258D）得意黑里就没有，本地是回退到思源黑体才画出来的，
+    而**回退在 runner 上不保证**（「本地装着不等于 CI 装着」）。现在那一段
+    是一支麦克风，画成 ASS 矢量（`video/topbar_icon.py`），根本不走字体。
 
     ⚠️ **每一段都要先 `\\r`。** ASS 的覆盖是**粘连的**——竖条那段设了绿色，
-    不复位的话后面整行标题跟着变绿。渲出来一眼看见，而**它不报错**。
+    不复位的话后面整行标题跟着变绿（麦克风那段一样设了绿色）。渲出来一眼看见，而**它不报错**。
     `\\r` 是「回到本 Style 的默认值」，比逐项写回去稳（颜色、字重、间距
     以后加了哪一项都不用记得跟着复位）。
 
@@ -1433,6 +1452,10 @@ def header_ass(spec: dict) -> tuple[str, str]:
             f"HEADB {_HEAD_SIZE['b']}px；主标题必须严格大于小标题。")
 
     def _run(text: str, kind: str, tags: str, size: int) -> str:
+        if kind == "icon":
+            sys.path.insert(0, str(ROOT / "src"))
+            from tennislive.video.topbar_icon import icon_ass  # noqa: PLC0415
+            return icon_ass(text, _HEAD_ICON_H, rf"\r{tags}", font_px=size)
         if found := re.search(r"\\fs(\d+)", tags):
             if int(found.group(1)) != size:
                 raise SystemExit(
@@ -1573,7 +1596,7 @@ def _subject_topbar_png(spec: dict, outdir: Path) -> Path | None:
 def _topbar_light_pixel_counts(rgb: bytes) -> tuple[int, int]:
     """返回渲染帧 HEADA / HEADB 两个带区里的浅色文字像素数。
 
-    只认 RGB 三通道都高于阈值，故品牌绿竖条不能冒充主标题。传入内容必须正好是
+    只认 RGB 三通道都高于阈值，故品牌绿的麦克风图标不能冒充主标题。传入内容必须正好是
     1080×150 的 ``rgb24``；尺寸不对说明 ffmpeg 的 crop/format 没按合同执行，
     同样 fail closed。
     """

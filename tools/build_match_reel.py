@@ -142,6 +142,7 @@ from tennislive.video.explainer import (  # noqa: E402
     write_subtitles,
 )
 from tennislive.video.subtitle_text import drop_punctuation  # noqa: E402
+from tennislive.video.topbar_icon import COURT, icon_ass  # noqa: E402
 
 # **成片帧率跟着源片走，不要硬定 30。** 这份华盛顿的官方集锦是 25 fps，
 # 而滤镜链里写死 `fps=30`：25 和 30 的比是 5:6，于是每 5 帧就复制一帧，
@@ -9162,6 +9163,24 @@ def _topbar_pulse_tags(pulse_at: list[float], start: float, end: float) -> str:
     return "{" + "".join(tags) + "}" if tags else ""
 
 
+#: 顶栏第一行最前面那块透视球场的高度（`video/topbar_icon.py`）。账号所有者
+#: 2026-09-25 定的：赛后开麦那一头是麦克风，这一头是转播机位看过去的球场，
+#: 和顶栏正下方的比赛画面同一个角度。38：球场是横着的梯形（宽 1.25 倍高），
+#: 比麦克风（42）矮一截，两块墨在各自那一行里看起来一样重。
+TOPBAR_ICON_H = 38
+
+
+def topbar_head_with_icon(line1: str) -> str:
+    """顶栏第一行：透视球场 ＋ 赛事行。颜色用赢家那支绿（一屏只留一个强调色）。
+
+    图标和文字是**同一行里的两段**，libass 把它们当一个整体居中；图标那段
+    自己以 `{\\r\\p0}` 收尾，把颜色和矢量模式复位回 HEAD 样式，不然赛事行
+    跟着变绿。
+    """
+    colour = TOPBAR_SETWIN_ASS.strip("{}")
+    return icon_ass(COURT, TOPBAR_ICON_H, colour, font_px=TOPBAR_HEAD_SIZE) + line1
+
+
 def write_topbar_ass(lines: tuple[str, str], start: float, end: float,
                      path: Path, pulse_at: list[float] | None = None) -> Path:
     """写比赛画面专用顶栏：第一行标题体，第二行正常中文体（比分逐盘上色）。
@@ -9174,6 +9193,7 @@ def write_topbar_ass(lines: tuple[str, str], start: float, end: float,
         raise ReelError(f"顶栏结束时间 {end:.2f}s 不晚于开始时间 {start:.2f}s")
     pulse_tags = _topbar_pulse_tags(pulse_at, start, end) if pulse_at else ""
     body_text = pulse_tags + colorize_topbar_score(lines[1])
+    head_text = topbar_head_with_icon(lines[0])
     body = f"""[Script Info]
 ScriptType: v4.00+
 PlayResX: {VIDEO_W}
@@ -9188,7 +9208,7 @@ Style: BODY,{TOPBAR_BODY_FONT},{TOPBAR_BODY_SIZE},{TOPBAR_BODY_COLOUR},&H0000000
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
-Dialogue: 0,{_ass_timestamp(start)},{_ass_timestamp(end)},HEAD,,0,0,0,,{lines[0]}
+Dialogue: 0,{_ass_timestamp(start)},{_ass_timestamp(end)},HEAD,,0,0,0,,{head_text}
 Dialogue: 0,{_ass_timestamp(start)},{_ass_timestamp(end)},BODY,,0,0,0,,{body_text}
 """
     path.write_text(body, encoding="utf-8")
