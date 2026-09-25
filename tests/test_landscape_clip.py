@@ -39,10 +39,14 @@ def test_超宽的行会被拦下():
     assert any("px" in p for p in probs)
 
 
-def test_ASS_用的是小号衬线字体_中文在上():
+def test_ASS_字体字号_英文在上中文在下():
     ass = lc.build_ass(_spec([{"start": 11, "end": 13, "en": "Hi.", "zh": "你好"}]))
-    assert "Style: ZH,Noto Serif CJK SC,38," in ass
+    # 账号所有者：「中文在下吧」「中文字体不好看」（第一版是宋体在上）
+    assert "Style: ZH,Noto Sans CJK SC,36," in ass
     assert "Style: EN,Noto Serif,27," in ass
+    zh_mv = int(ass.split("Style: ZH,")[1].split("\n")[0].split(",")[-2])
+    en_mv = int(ass.split("Style: EN,")[1].split("\n")[0].split(",")[-2])
+    assert zh_mv < en_mv, "MarginV 越小越贴底：中文要在英文下面"
     # 时间轴相对剪辑起点
     assert "Dialogue: 0,0:00:01.00,0:00:03.00,ZH" in ass
 

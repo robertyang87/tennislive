@@ -19,8 +19,11 @@
 
 字幕的样子（「小且精美」）：
 
-    中文  Noto Serif CJK SC  38px  暖白        ← 主读行，宋体比黑体秀气
-    英文  Noto Serif Italic  27px  浅象牙 85%  ← 原文参照，意大利体压一档
+    英文  Noto Serif Italic  27px  浅象牙 85%  ← 上行，原文，意大利体压一档
+    中文  Noto Sans CJK SC   36px  暖白        ← 下行，主读行
+
+账号所有者看过第一版预览：「中文在下吧」「中文字体不好看」——第一版是
+中文宋体（Noto Serif CJK）在上，笔画细、在 1080p 画面上发虚，换成黑体放到下行。
 
 没有底框，只有一圈 1.6px 的半透明描边加 1px 柔化——底框在 1080p 横屏上会切出
 一条黑带，恰恰把「不裁切」换成了「被挡住」。两行贴着画面底边 46px。
@@ -50,12 +53,12 @@ CANVAS_W, CANVAS_H = 1920, 1080
 LINE_PX = CANVAS_W - 160 - 160
 
 FONT_FILES = {
-    "zh": "/usr/share/fonts/opentype/noto/NotoSerifCJK-Regular.ttc",
+    "zh": "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",
     "en": "/usr/share/fonts/truetype/noto/NotoSerif-Italic.ttf",
 }
 #: ASS 的 Fontname 要写字体**自己声明的名字**，写错 libass 不报错、悄悄回退。
-ASS_FONT = {"zh": "Noto Serif CJK SC", "en": "Noto Serif"}
-FONT_SIZE = {"zh": 38, "en": 27}
+ASS_FONT = {"zh": "Noto Sans CJK SC", "en": "Noto Serif"}
+FONT_SIZE = {"zh": 36, "en": 27}
 #: 两行之间和离底边的距离（px）
 MARGIN_BOTTOM = 46
 LINE_GAP = 8
@@ -125,8 +128,8 @@ def _esc(text: str) -> str:
 
 
 def build_ass(spec: dict) -> str:
-    """中文在上、英文在下，都贴着底边。时间轴相对剪辑起点。"""
-    zh_margin = MARGIN_BOTTOM + FONT_SIZE["en"] + LINE_GAP + 6
+    """英文在上、中文在下，都贴着底边。时间轴相对剪辑起点。"""
+    en_margin = MARGIN_BOTTOM + FONT_SIZE["zh"] + LINE_GAP + 4
     head = f"""[Script Info]
 ScriptType: v4.00+
 PlayResX: {CANVAS_W}
@@ -136,8 +139,8 @@ ScaledBorderAndShadow: yes
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: ZH,{ASS_FONT['zh']},{FONT_SIZE['zh']},&H00F4F7FA,&H00FFFFFF,&H66000000,&H99000000,0,0,0,0,100,100,1.5,0,1,1.6,1,2,160,160,{zh_margin},1
-Style: EN,{ASS_FONT['en']},{FONT_SIZE['en']},&H26DCEBF2,&H00FFFFFF,&H70000000,&H99000000,0,1,0,0,100,100,0.4,0,1,1.4,1,2,160,160,{MARGIN_BOTTOM},1
+Style: ZH,{ASS_FONT['zh']},{FONT_SIZE['zh']},&H00F4F7FA,&H00FFFFFF,&H66000000,&H99000000,0,0,0,0,100,100,1,0,1,1.6,1,2,160,160,{MARGIN_BOTTOM},1
+Style: EN,{ASS_FONT['en']},{FONT_SIZE['en']},&H26DCEBF2,&H00FFFFFF,&H70000000,&H99000000,0,1,0,0,100,100,0.4,0,1,1.4,1,2,160,160,{en_margin},1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
@@ -147,8 +150,8 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
     ev = []
     for ln in spec.get("lines") or []:
         a, b = _ts(float(ln["start"]) - t0), _ts(float(ln["end"]) - t0)
-        ev.append(f"Dialogue: 0,{a},{b},ZH,,0,0,0,,{fade}{_esc(ln['zh'].strip())}")
         ev.append(f"Dialogue: 0,{a},{b},EN,,0,0,0,,{fade}{_esc(ln['en'].strip())}")
+        ev.append(f"Dialogue: 0,{a},{b},ZH,,0,0,0,,{fade}{_esc(ln['zh'].strip())}")
     return head + "\n".join(ev) + "\n"
 
 
