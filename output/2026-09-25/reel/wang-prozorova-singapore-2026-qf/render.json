@@ -1,0 +1,70 @@
+{
+  "scoreboard_qc_sha256": "d0ecbe100715cf55803520d524e82d288c0d945fc6460ed0d8db5b35ee91b921",
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 3.827,
+  "layout": "full",
+  "segments_seconds": 227.48,
+  "topbar": {
+    "line1": "2026 WTA500 新加坡站 1/4决赛",
+    "line2": "普罗佐罗娃 3-6 7-5 6-4 王欣瑜",
+    "start": 1.2,
+    "end": 228.68
+  },
+  "film_seconds": 232.52,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 18.984,
+    "2": 15.576,
+    "3": 10.176,
+    "4": 10.248,
+    "5": 20.736,
+    "7": 22.392,
+    "8": 10.512,
+    "9": 11.424,
+    "10": 8.64,
+    "11": 8.136,
+    "13": 7.32
+  },
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "wang-prozorova-singapore-2026-qf",
+    "received_at": "2026-09-25T10:27:17Z",
+    "artifact_ready_at": "2026-09-25T10:35:40Z",
+    "elapsed_seconds": 503.685,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "8e50a8e1d04e82e9249925e94404d8232d002232d562dc8b1129df0743483120",
+    "spec_sha256": "592fcd60a4cc57f5318ce1ff021a3ddf7bbf8a8d703366e239b50833a15a5344",
+    "run_id": "36124052387",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-09-25T10:30:26Z",
+        "run_id": "36124052387"
+      }
+    ],
+    "render_seconds": 314.685,
+    "pre_render_seconds": 189.0
+  },
+  "film_sha256": "8e50a8e1d04e82e9249925e94404d8232d002232d562dc8b1129df0743483120",
+  "film_bytes": 119789492,
+  "qc_attestation_sha256": "c73d63d389cb3ae987a3ab187997fac31b2f739eab3ec8d4bce2e340c11f19e7",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-09-25T10:30:26Z",
+      "run_id": "36124052387"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-25T10:35:41Z",
+      "run_id": "36124052387"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-wang-prozorova-singapore-2026-qf/wang-prozorova-singapore-2026-qf.mp4",
+  "video_bytes": 119789492
+}
