@@ -1,0 +1,360 @@
+{
+  "slug": "fernandez-andreeva-singapore-2026-qf",
+  "source_url": "https://www.youtube.com/watch?v=KNkmAc0t86U",
+  "_column": "赛场之上",
+  "tts_backend": "edge",
+  "_tts_backend_why": "旁白是平直的复盘叙述，一段 `style` 都没写；同站 `wang-prozorova-singapore-2026-qf`、`chwalinska-mertens-singapore-2026-qf` 也是 edge。",
+  "_source": "账号所有者给的链接（「继续做这个」）。源片是 WTA 官方 YouTube `KNkmAc0t86U`（标题 `Mirra Andreeva vs. Leylah Fernandez | 2026 Singapore Quarterfinal | WTA Match Highlights`），probe 在 `output/2026-09-25/reel/andreeva-fernandez-singapore-2026-qf/`：1920×1080 / 25fps、445.9s，带 `--scorebox 90,870,550,980`，翻牌是真量的。四要素自证：记分条逐格读过（`M. ANDREEVA [1] / L. FERNANDEZ [6]`），挡板 `SINGAPORE`、`SAMSUNG`，294.5s 成绩图形 `QUARTER FINAL`。比赛画面到 252.8s，252.8~292 是赛点之后，**300s 起是场上采访**——不进复盘（「赛场之上不要赛后采访」），只在 `_why` 里引了她一句话当出处。",
+  "scorebox": [
+    90,
+    870,
+    550,
+    980
+  ],
+  "_scorebox_why": "和同站 `wang-prozorova`、`chwalinska-mertens` 同一块转播板，probe 就是按这个框量的翻牌。",
+  "_match": {
+    "id": "2026:singapore:womens-quarterfinal:mirra-andreeva-leylah-fernandez",
+    "event": "2026 WTA500 新加坡",
+    "event_search": "Singapore",
+    "round": "Women's Singles Quarterfinal",
+    "year": 2026,
+    "status": "result_verified",
+    "winner": "费尔南德斯",
+    "loser": "米拉·安德烈耶娃",
+    "participants": [
+      "米拉·安德烈耶娃",
+      "费尔南德斯"
+    ],
+    "winner_en": "Leylah Fernandez",
+    "loser_en": "Mirra Andreeva",
+    "set_scores_home_away": [
+      [
+        2,
+        6
+      ],
+      [
+        5,
+        7
+      ]
+    ],
+    "tiebreaks_home_away": [
+      null,
+      null
+    ],
+    "_source": "三源一致：WTA 官方 tournaments/1152/2026/matches 的 MatchID=LS004，`ResultString` = `[6]L. Fernandez d [1]M. Andreeva 6-2,7-5`、`RoundID=Q`、`MatchTimeTotal=01:32:52`；flashscore 4vccX8Vh 逐局 2-6 / 5-7（home＝安德烈耶娃）；WTA 官网赛后稿 4581896「6-2, 7-5 victory in the quarterfinals」。",
+    "_participants_why": "`participants` 跟 flashscore 的 home / away：[安德烈耶娃, 费尔南德斯]，和 `cover.matchup` 的顺序**相反**。",
+    "source": "flashscore_points",
+    "source_id": "4vccX8Vh",
+    "flashscore_id": "4vccX8Vh",
+    "winner_result": "6-2 7-5",
+    "loser_result": "2-6 5-7"
+  },
+  "topbar": {
+    "line1": "2026 WTA500 新加坡站 1/4决赛",
+    "line2": "费尔南德斯 6-2 7-5 米拉·安德烈耶娃"
+  },
+  "_topbar_why": "line1 按 2026-09-24 定的格式，和同站 `wang-prozorova-singapore-2026-qf` 同一行写法；WTA 官方 `RoundID=Q`＝1/4决赛。",
+  "cover": {
+    "matchup": [
+      {
+        "name": "费尔南德斯",
+        "name_en": "Leylah Fernandez",
+        "country": "CAN",
+        "rank": 31
+      },
+      {
+        "name": "米拉·安德烈耶娃",
+        "name_en": "Mirra Andreeva",
+        "country": "RUS",
+        "rank": 5
+      }
+    ],
+    "_rank_why": "WTA 官方 `players/ranked`（`sources.rankings.fetch_rankings`）：费尔南德斯第 31、安德烈耶娃第 5（2026-09-25 查）。 中文名按仓库里同一张头像 `wta-331809` 的既有写法「米拉·安德烈耶娃」（她姐姐埃里卡也在巡回赛上）。",
+    "winner": "费尔南德斯",
+    "result": "6-2 7-5",
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "费尔南德斯",
+    "_subject_why": "赢家，淘汰头号种子；这一场是爆冷（6 号种子、世界第 31 胜 1 号种子、世界第 5）。",
+    "hook": "次盘5比2被追平\n7比5淘汰头号种子",
+    "hook_accent": "淘汰头号种子",
+    "_hook_why": "账号所有者 2026-09-25 看了第一版「5比2被追成5比5 / 她连拿最后2局」：「钩子文案都看不出什么……只有把比赛的过程和结果呈现出来就行」。所以直接写过程＋结果：第一行是第二盘的过程（flashscore 逐局：她 5-2 领先，安德烈耶娃连拿三局到 5-5），第二行是结果（7-5 赢下第二盘、淘汰头号种子——WTA 官方 `[6]L. Fernandez d [1]M. Andreeva`）。没有术语、没有省掉主语的半句话。",
+    "topic": "新加坡WTA500 · 女单1/4决赛",
+    "_heat_why": "头号种子被淘汰（②档：顶级球员）；费尔南德斯今年第二次赢她。",
+    "portrait": {
+      "image": "assets/reel/fernandez-singapore-2026-r2.jpg",
+      "focus": 0.42,
+      "focus_y": 0.25,
+      "zoom": 1.0,
+      "_photo_why": "WTA 官方 photoresources 实拍 `Fernandez-R2-2.jpg`（`?width=4000` 原图 4731×3155）：https://photoresources.wtatennis.com/wta/photo/2026/09/23/773f1d79-926e-4f62-b5a8-954602d460ce/Fernandez-R2-2.jpg ——WTA 图库标题 `Leylah Fernandez, Singapore 2026`，文件名 `R2`，是她这一站第二轮（对帕克斯）的图，**不是这一场**。⚠️ 这一场到北京 21:00 前后仍然没有她的官方实拍：WTA 图库 9/25 只有集锦缩略图；AP 没有（`find_cover_photo --player Fernandez --event Singapore`）。**而 WTA 自己这一场的赛后稿 4581896（`Fernandez overcomes Andreeva to reach first semifinal of 2026`）头图用的就是这一张**——按「WTA 自己都在用资料图」那条判据，同一站、同一块场地、同一身粉色球衣（和源片 254.5~298.5s 她的着装一致）。画面：她整个人扑出去伸拍够球、正脸、眼睛睁着，背景挡板 `SINGAPORE`；原图铺 1080×1440 是缩小。这张没在任何已发的片子里用过。"
+    },
+    "scoreboard": {
+      "court": "OCBC Arena",
+      "_court_why": "印场馆：沿用同站 `chwalinska-mertens`、`wang-prozorova` 已核的 OCBC Arena。",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%20%221%3A32%3A52%22%2C%20%22source%22%3A%20%22WTA%20official%20tournaments/1152/2026/matches%20LS004%20MatchTimeTotal%2001%3A32%3A52%22%2C%20%22cross_check%22%3A%20%22flashscore%20df_st_1%204vccX8Vh%200%3A41%2B0%3A52%22%7D",
+        "field": "duration"
+      },
+      "_duration_why": "WTA 官方 `MatchTimeTotal=01:32:52`；flashscore 分盘 0:41＋0:52＝1:33，同向；赛后稿「1 hour, 32 minutes」。"
+    }
+  },
+  "_opening_time_source": {
+    "url": "https://global.flashscore.ninja/2/x/feed/f_2_0_0_en_1",
+    "match_id": "4vccX8Vh",
+    "field": "AD",
+    "value": 1790333100,
+    "beijing": "2026-09-25T18:45+08:00",
+    "spoken_precision": "approximate-hour",
+    "_why": "开球时刻只说个大概：flashscore `AD=1790333100` → 10:45Z＝北京 18:45，旁白说「傍晚」。新加坡与北京同为 +08:00。"
+  },
+  "stats": {
+    "a": {
+      "aces": 1,
+      "df": 6,
+      "first_in": 39,
+      "first_won": 27,
+      "second_total": 24,
+      "second_won": 9,
+      "bp_conv": 6,
+      "bp_chances": 11,
+      "pts_won": 67,
+      "pts_total": 121,
+      "first_total": 63,
+      "headshot": "assets/players/headshots/wta-326735.jpg",
+      "winners": 13,
+      "ue": 30
+    },
+    "b": {
+      "aces": 0,
+      "df": 4,
+      "first_in": 40,
+      "first_won": 20,
+      "second_total": 18,
+      "second_won": 7,
+      "bp_conv": 3,
+      "bp_chances": 7,
+      "pts_won": 54,
+      "pts_total": 121,
+      "first_total": 58,
+      "headshot": "assets/players/headshots/wta-331809.jpg",
+      "winners": 12,
+      "ue": 41
+    },
+    "_source": "flashscore 4vccX8Vh `df_st_1`；a＝费尔南德斯（flashscore 客队）、b＝安德烈耶娃（主队），和 `cover.matchup` 同序。制胜分 / 非受迫失误取 WTA 官网赛后稿 4581896 原文「Andreeva's unforced error count stood at 41, compared with 30 for Fernandez. The Canadian also hit more winners - 13 to 12」。"
+  },
+  "_hit_data": "`match_feed.py show 4vccX8Vh` 逐局：第一盘 1-1 她发球救下 2 个破发点 → 1-3 破发 → 2-3 被破回 → 2-4 再破 → 2-5 救下 1 个破发点保发 → 2-6 对手发球，三个盘点第三个双误，41 分钟。第二盘 1-1 安德烈耶娃救下 2 个破发点 → 2-1 安德烈耶娃破发 → 2-2 零封破回 → 2-3 保 → 2-4 破 → 2-5 保 → 3-5、4-5（破）、5-5 安德烈耶娃连拿三局 → 5-6 保 → 5-7 第一个赛点破发。官方统计：破发 6/11 对 3/7，一发得分率 69% 对 50%，`Last 10 balls` 8 比 2。",
+  "_claims": {},
+  "editorial": {
+    "mode": "match_review",
+    "hook": [
+      "次盘5比2被追平",
+      "7比5淘汰头号种子"
+    ],
+    "question": "五比二领先被头号种子追到五比五，费尔南德斯是怎么把最后两局拿下来的？",
+    "thesis": "第一盘一比一她救下两个破发点，之后三局两次破发，五比二，第三个盘点对手双误，六比二。第二盘先被破、马上零封破回，再破一次五比二；安德烈耶娃连拿三局追到五比五，她保住五比六，第一个赛点破发，七比五。",
+    "beats": [
+      "冷开场：赛点之后她的近景，解说「今年第二次赢安德烈耶娃」。",
+      "落点：五比二被追平，最后两局全拿下；坐标。",
+      "第一盘 1-1 救下两个破发点。",
+      "三局两次破发，5-2，第三个盘点对手双误，6-2。",
+      "第二盘被破、零封破回，5-2。",
+      "5-2 被追到 5-5，保发 6-5，第一个赛点破发。"
+    ],
+    "chapters": [
+      "两个破发点",
+      "第三个盘点",
+      "零封破回",
+      "第一个赛点"
+    ],
+    "human_context": {
+      "angle": "费尔南德斯这一季第一次打进半决赛；硬地对安德烈耶娃三战全胜（2023 香港、2026 多伦多、今天），红土两战全负。",
+      "facts": [
+        "WTA 官方 LS004：[6]L. Fernandez d [1]M. Andreeva 6-2,7-5，RoundID=Q，MatchTimeTotal 01:32:52。",
+        "WTA 官方排名：费尔南德斯第 31、安德烈耶娃第 5。",
+        "flashscore 4vccX8Vh 逐局与统计（见 `_hit_data`）。",
+        "WTA 官网赛后稿 4581896：本季第一个半决赛、硬地交手全胜、制胜分 13 比 12、非受迫失误 30 比 41、生涯第 9 场胜前十、半决赛对赫瓦林斯卡（首次交手）。"
+      ],
+      "sources": [
+        "https://api.wtatennis.com/tennis/tournaments/1152/2026/matches",
+        "https://global.flashscore.ninja/2/x/feed/df_mh_1_4vccX8Vh",
+        "https://global.flashscore.ninja/2/x/feed/df_st_1_4vccX8Vh",
+        "https://www.wtatennis.com/news/4581896/fernandez-overcomes-andreeva-to-reach-first-semifinal-of-2026"
+      ]
+    },
+    "narration": [
+      "五比二领先被追平。",
+      "第三个盘点对手双误。",
+      "零封破回来。",
+      "第一个赛点就拿下。"
+    ]
+  },
+  "segments": [
+    {
+      "start": 252.8,
+      "end": 263.0,
+      "cx": 0.5,
+      "score_inset": false,
+      "narration": "",
+      "_score_inset_why": "赛点已经落地：252.8 之后是她的近景、网前握手，转播撤掉了比分板（缩略图墙 254.5~262.5 没有板）。",
+      "quote": [
+        {
+          "at": 1.2,
+          "text": "What a win for Leylah Fernandez.\n费尔南德斯，赢得漂亮"
+        },
+        {
+          "at": 5.84,
+          "text": "Her second win against Mirra Andreeva this year.\n今年第二次赢安德烈耶娃"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_ending_payoff_required": true,
+      "_why": "冷开场：**第一个赛点落地之后费尔南德斯的那一刻**（账号所有者 2026-09-25「视频从赢球后的冷开场……是全局的要求」）。252.8 是转播切点（赛点刚落地，镜头切到她）；不配旁白，只留解说原声＋中英字幕：captions.txt 254.00「What a win for Leila Fernandez」、258.64「Her second win against Mirror Andrea this year」，人名按本名写回，段内 at = 原时刻 − 252.8。",
+      "_payoff_why": "冷开场里有赛点落地后的第一波庆祝，所以 true——正文最后一段原声（252.8→277.12）按时间顺序完整重放这一段并接下去。",
+      "crosses_cut": "255.68 一处换镜头：她的全身 → 近景，都在赛点之后。",
+      "point_end_ok": "比赛已经结束（赛点在 252.8 前落地）；之后记分条不再翻牌。"
+    },
+    {
+      "start": 0.2,
+      "end": 26.32,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "五比二领先被追平，最后两局她全拿下。北京时间九月二十五日傍晚六点多，新加坡WTA五百赛四分之一决赛。世界第三十一的费尔南德斯，对头号种子、世界第五的安德烈耶娃。第一盘一比一，她发球，先落后十五比四十。第一个破发点，她上前低位截击救回来。",
+      "_why": "开场「爆点 → 落点 → 坐标」：落点是第二盘 5-2 被追到 5-5、最后两局全拿（flashscore 逐局）。画面：0~11.84 开场（`MIRRA ANDREEVA` 名牌），14.5~26.5s 记分条 `BREAK POINT / 1 40 / 1 15`（费尔南德斯发球），28.5s 翻成 `BREAK POINT #2 / 40 / 30`。解说 25.44「It's not an easy drive volley. It was down a little low by the knees, but does well with it」——这一分翻给费尔南德斯，所以低位截击是她的。flashscore 第 3 局 `40:15 |B1|, 40:30 |B1|, 40:40, 40:A, 40:40, 40:A`。",
+      "crosses_cut": "11.84 / 14.52 两处换镜头：开场画面 → 回合的底线镜头。",
+      "point_end_ok": "`point_ends` 26.32 是第一个破发点被救的翻牌；段尾正落在它上面（0.3 秒以内）。"
+    },
+    {
+      "start": 51.2,
+      "end": 66.0,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "第二个破发点也救下，平分之后再拿占先。她是左手，把球拉到对手够不着的角度。解说都说，这一拍打得漂亮。保住，二比一。",
+      "_why": "记分条 28.5s `BREAK POINT #2`、30.5~48.5s `40 / 40`、50.5~62.5s `/ Ad`（费尔南德斯占先），66.5s 起是 `2 15 / 4 30`（中间几局没播）。解说 60.40「That's brilliant」、62.08「Such leftiness now playing to maximum width」。flashscore 第 3 局保发、救下 2 个破发点。⚠️ 旁白的「二比一」是费尔南德斯的局数在前（她 2、对手 1）。",
+      "crosses_cut": "51.2 / 61.04 两处换镜头：分与分之间的近景。",
+      "point_end_ok": "`point_ends` 64.0~65.76 是这一分之后记分条翻牌，段尾 66.0 在它们之后。"
+    },
+    {
+      "start": 78.0,
+      "end": 90.88,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "之后三局两次破发，四比二。轮到她发球，对手又拿到一个破发点，费尔南德斯还是救了下来，五比二。",
+      "_why": "记分条 66.5~90.5s `2 15 / 4 30`（费尔南德斯发球），94.5s 起 `2 / 5`。flashscore：第 4 局她破发、第 5 局被破回、第 6 局再破（「三局两次破发」），第 7 局 `15:0, 15:15, 15:30, 30:30, 30:40, 40:40, A:40 |B1|, 40:40, 40:A` 救下 1 个破发点保住。解说 87.76「Andreeva not phased by the backhand slice」。 段首 78.0 不是切点，落在 15-30 那一分的回合里（缩略图墙 76.5~80.5 底线镜头）。",
+      "crosses_cut": "87.72 一处换镜头：这一分之后的近景。 段首不在切点上，是按记分条挑的分与分之间。",
+      "point_end_ok": "`point_ends` 90.88 是保发之后的翻牌，段尾正落在它上面。"
+    },
+    {
+      "start": 118.16,
+      "end": 136.4,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "二比五，安德烈耶娃发球，零比四十，三个盘点。前两个被她救下。第三个，她一发没进，二发也没进，双发失误。六比二，四十一分钟。",
+      "_why": "记分条 110.5s `2 0 / 5 15`、114.5~134.5s `SET POINT #3 / 2 30 / 5 40`，136.5s 起第二盘 `2 0 0 / 6 1 30`。flashscore 第 8 局 `0:15, 0:30, 0:40 |B1||B2|, 15:40, 30:40`：三个盘点，第三个兑现；分盘用时 0:41。解说 131.68「And it's the double fault that seals the deal in the first set」。",
+      "crosses_cut": "115.08 / 118.16 / 126.28 / 128.6 / 131.44 几处换镜头：发球前的近景、底线镜头，都在分与分之间。",
+      "point_end_ok": "`point_ends` 131.44 / 134.64 / 135.44 是盘点那一分（双误）之后的翻牌，段尾 136.4 在它们之后。"
+    },
+    {
+      "start": 146.36,
+      "end": 159.0,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "第二盘，安德烈耶娃开始往前压。一比零之后她自己的发球局，零比三十落后。两个破发点，她都救了下来。一比一。",
+      "_why": "记分条 136.5~146.5s `2 0 0 / 6 1 30`（安德烈耶娃发球，第二盘 0-1），148.5~160.5s `2 0 Ad / 6 1`，162.5s 翻成 `2 1 15 / 6 1 0`。flashscore 第二盘第 2 局 `0:15, 0:30, 15:30, 30:30, 30:40 |B1|, 40:40, 40:A |B1|, 40:40, A:40`：两个破发点都救下。解说 146.08「Such a good volley」。",
+      "crosses_cut": "146.36 一处换镜头：这一分之后的近景。",
+      "point_end_ok": "`point_ends` 146.4 / 148.24 在段内；段尾 159.0 是转播切点，`point_ends` 159.04 就是保发的翻牌（0.04 秒）。"
+    },
+    {
+      "start": 170.0,
+      "end": 188.16,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "下一局费尔南德斯发球，安德烈耶娃连拿三分，这一拍抡满收掉。第二个破发点，她破发，二比一领先。",
+      "_why": "记分条 162.5~178.5s `2 1 15 / 6 1 0` → `30 / 0`，180.5~186.5s `BREAK POINT / 2 1 40 / 6 1 0`，188.5s 翻成 `2 2 0 / 6 2 15`（中间那一局没播）。flashscore 第二盘第 3 局 `15:0, 30:0, 40:0 |B1|, 40:15 |B1|`：第二个破发点破发。解说 175.76「Oh, a lovely swing to finish」。 段首 170.0 不是切点，落在 15-0 那一分的回合里（解说 175.76 的「lovely swing」就是这一分的收尾）。",
+      "crosses_cut": "161.12 / 176.32 / 179.44 / 185.92 几处换镜头：分与分之间。 段首不在切点上，是按记分条挑的分与分之间。",
+      "point_end_ok": "`point_ends` 185.92 / 188.16 是破发之后的翻牌，段尾 188.16 正落在它上面。"
+    },
+    {
+      "start": 192.0,
+      "end": 203.88,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "她马上零封破回来。二比二，这一分对手站在原地没动，她直接把球打进空当。",
+      "_why": "记分条 188.5~202.5s `2 2 0 / 6 2 15`（第二盘 2-2，她发球 15-0）。flashscore 第二盘第 4 局 `0:15, 0:30, 0:40 |B1|` 破发（对手一分没拿）。解说 200.08「takes a chance. There was a gap because Andreeva just didn't move」。 段首 192.0 不是切点，是 2-2 那一局分与分之间（缩略图墙 190.5~192.5 同一记分）。",
+      "crosses_cut": "200.48 一处换镜头：这一分之后的近景。 段首不在切点上，是按记分条挑的分与分之间。",
+      "point_end_ok": "`point_ends` 202.4 是这一分之后的翻牌，段尾 203.88 在它之后。"
+    },
+    {
+      "start": 213.0,
+      "end": 224.96,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "之后她保发，再破一次，四比二。这一局她自己发球，四十比十五，拿下，五比二。只差一局了。",
+      "_why": "记分条 204.5~222.5s `2 2 15 / 6 4 40`（她发球，第二盘 4-2），224.5s `2 2 30 / 6 4 40`、226.5s 起 `MATCH POINT / 2 5 15 / 6 6 40`（中间 5-2 → 5-6 四局没播）。flashscore 第 5 局保发、第 6 局 `40:30 |B1|` 之后破发、第 7 局 `15:40, 30:40` 保住 5-2。解说 222.56「Bit of frustration put into that finish」。 段首 213.0 不是切点，落在 40-15 那一分之前的走动里。",
+      "crosses_cut": "221.36 一处换镜头：这一分之后的近景。 段首不在切点上，是按记分条挑的分与分之间。",
+      "point_end_ok": "`point_ends` 224.96 是保发之后的翻牌，段尾正落在它上面。"
+    },
+    {
+      "start": 236.0,
+      "end": 252.8,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "五比二，只差一局。可安德烈耶娃连拿三局：保发，破发，再保发，五比五。费尔南德斯稳住，保住五比六。接下来对手发球，十五比四十，第一个赛点，她就拿下了。",
+      "_why": "记分条 226.5~252.5s `MATCH POINT / 2 5 15 / 6 6 40`（安德烈耶娃发球，她的赛点）。flashscore 第二盘 `3-5 主队保发`、`4-5 破发（费尔南德斯发球胜赛被破）`、`5-5 主队保发`、`5-6 客队保发`、最后一局 `0:15, 0:30, 15:30, 15:40 |B1||B3|` 第一个赛点兑现。WTA 官网赛后稿「Andreeva rallied … breaking back and leveling the set at 5-5. Fernandez, however, broke again in the 12th game」；费尔南德斯赛后采访「at five all I was able to refocus」。 段首 236.0 不是切点，落在赛点那一局 15-40 那一分之前。",
+      "crosses_cut": "226.92 起一个连续的回合镜头。 段首不在切点上，是按记分条挑的分与分之间。",
+      "point_end_ok": "`point_ends` 252.8 是赛点落地的翻牌，段尾正落在它上面。"
+    },
+    {
+      "start": 252.8,
+      "end": 277.12,
+      "cx": 0.5,
+      "score_inset": false,
+      "narration": "",
+      "_score_inset_why": "比赛已经结束：252.8 起是她的近景、网前握手、向看台致意，没有比分板。",
+      "quote": [
+        {
+          "at": 1.2,
+          "text": "What a win for Leylah Fernandez.\n费尔南德斯，赢得漂亮"
+        },
+        {
+          "at": 5.84,
+          "text": "Her second win against Mirra Andreeva this year.\n今年第二次赢安德烈耶娃"
+        },
+        {
+          "at": 14.4,
+          "text": "An excellent performance sees her through to the semifinal.\n一场出色的比赛，把她送进半决赛"
+        },
+        {
+          "at": 19.2,
+          "text": "She's taken out the top seed.\n她淘汰了头号种子"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_quote_why": "转播原句，probe 的 `captions.txt`：254.00「What a win for Leila Fernandez」、258.64「Her second win against Mirror Andrea / this year」、267.20「An excellent performance sees her / through to the semifinal」、269.60「She's taken out the top seed」。人名按本名写回，段内 at = 原时刻 − 252.8。",
+      "_why": "赛点之后的原声，按时间顺序重放冷开场那一段并接下去（2026-09-19「精彩的原声解说要留下来」）。",
+      "crosses_cut": "255.68 起几处换镜头：她的近景、网前握手、向看台致意，全在赛点之后。",
+      "point_end_ok": "比赛已经结束。"
+    },
+    {
+      "start": 277.12,
+      "end": 290.0,
+      "cx": 0.5,
+      "score_inset": false,
+      "narration": "半决赛，她要碰赫瓦林斯卡，两人从没交过手。五比二都差点守不住，她的第一个半决赛会怎么打？",
+      "_score_inset_why": "比赛已经结束，277.12 起是她向看台挥手、安德烈耶娃收拾球包，没有比分板。",
+      "_why": "收尾一问。WTA 官网赛后稿「Fernandez will face No. 5 seed Maja Chwalinska in the semifinals Saturday … It will be the first meeting between Chwalinska and Fernandez」「reached her first semifinal of the season」。",
+      "crosses_cut": "280.6 一处换镜头：她挥手的近景 → 场上中景，都在比赛之后。",
+      "point_end_ok": "比赛已经结束。"
+    }
+  ],
+  "_editing_why": "源片 445.9 秒：比赛画面到 252.8 秒，252.8~292 是赛点之后（她的近景、网前握手、向看台致意、安德烈耶娃收拾球包），**300 秒起是场上采访**，整段排除在窗口之外。认人：费尔南德斯粉色上衣和短裙；安德烈耶娃黑色上衣、蓝色短裙。段落端点取自 probe 的 `scene_cuts` 和按 `--scorebox` 真量的 `point_ends`，比分按记分条缩略图逐格读过。集锦没播的局（第一盘 1-3~2-4、第二盘 2-5 之后到 5-6）只在旁白里一句带过。",
+  "_tactics_why_note": "球路写在第 2 段（上前低位截击救破发点）、第 3 段（左手把球拉到最大角度）、第 7 段（一拍抡满破发）、第 8 段（对手没动，打进空当）——都以转播解说原句为据（见各段 `_why`）。",
+  "_quote_why_global": "两段原声：冷开场「赢得漂亮／今年第二次赢安德烈耶娃」、赛点之后整段（「送进半决赛／淘汰了头号种子」）。",
+  "_no_repeat": "同一对手的兄弟片：`fernandez-andreeva`（2026 多伦多，6-1 6-4）——这一条不重讲那场，只在冷开场的解说原声里带到「今年第二次」；同站 `chwalinska-mertens-singapore-2026-qf` 的落点是赫瓦林斯卡，这一条只在末句提她是下一轮对手。",
+  "push": {
+    "matchup": "费尔南德斯 vs 米拉·安德烈耶娃",
+    "score": "6-2 7-5",
+    "summary": "费尔南德斯淘汰头号种子",
+    "auto": true,
+    "lead": "2026 WTA500 新加坡女单 1/4决赛：6 号种子、世界第 31 的费尔南德斯 6-2、7-5 胜头号种子、世界第 5 的安德烈耶娃，1 小时 32 分。第一盘 1-1 她救下两个破发点，之后三局两次破发，第三个盘点对手双误，6-2。第二盘先被破，马上零封破回，再破一次 5-2；安德烈耶娃连拿三局追到 5-5，她保住 6-5，第一个赛点破发拿下。这是她本季第一个半决赛，硬地对安德烈耶娃三战全胜；半决赛对赫瓦林斯卡，两人第一次交手。"
+  }
+}
