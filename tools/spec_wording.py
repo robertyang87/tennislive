@@ -25,7 +25,9 @@ validate_spec 够得着的地方**」（bejlek-pliskova 那次）。所以：
 
 from __future__ import annotations
 
+import json
 import re
+from pathlib import Path
 
 # ── 正则（每条的来路见同名测试的 docstring）─────────────────────────────
 
@@ -721,6 +723,85 @@ def check_spec_wording(spec: dict, slug: str,
             f"（2026-09-03 的规矩）。溯源写进 spec 的 `_source` / `_facts` / "
             f"`_claims`，那几栏是给下一个人看的注解，不进正文")
     return problems
+
+
+#: 「正文第一句重复了标题」的门槛：标题（`push.summary`）里相邻两字的组合，
+#: 有这么大比例又出现在正文第一句里，就算重复。
+TITLE_ECHO_MIN = 0.5
+
+
+def _echo_norm(text: str) -> str:
+    text = re.sub(r"[\U0001F000-\U0001FFFF\u2600-\u27BF]", "", str(text or ""))
+    return re.sub(r"[^\w]", "", text)
+
+
+def _bigrams(text: str) -> set[str]:
+    return {text[i:i + 2] for i in range(len(text) - 1)}
+
+
+def first_sentence(xhs_text: str) -> str:
+    """小红书正文的第一句：首个非空行、到第一个句末标点为止。"""
+    line = next((ln.strip() for ln in (xhs_text or "").splitlines() if ln.strip()), "")
+    return re.split(r"[。！？!?]", line, maxsplit=1)[0]
+
+
+def title_echo_ratio(title: str, xhs_text: str, names: list[str] | None = None) -> float:
+    """标题的相邻两字组合里，有多大比例又出现在正文第一句里。
+
+    ⚠️ **球员名先从两边拿掉再比。** 第一句点出是谁是另一条规矩（首行要有球员名）
+    本来就要求的；不拿掉的话「中岛布兰登」「门西克」两个名字就占了标题一半的
+    两字组合——`mensik-nakashima-laver-cup-2026` 第一版正文第一句一个标题里的
+    词都没抄（「抢十逆转」），被报成重合 55%。
+    """
+    def strip(text: str) -> str:
+        text = _echo_norm(text)
+        for name in sorted((n for n in names or [] if n), key=len, reverse=True):
+            text = text.replace(_echo_norm(name), "|")
+        return text
+
+    grams = {g for g in _bigrams(strip(title)) if "|" not in g}
+    if not grams:
+        return 0.0
+    body = {g for g in _bigrams(strip(first_sentence(xhs_text))) if "|" not in g}
+    return len(grams & body) / len(grams)
+
+
+def legacy_title_echo() -> frozenset:
+    """定规矩之前已发的 slug（`data/legacy_title_echo.json`），只许减不许加。"""
+    path = Path(__file__).resolve().parents[1] / "data" / "legacy_title_echo.json"
+    try:
+        return frozenset(json.loads(path.read_text(encoding="utf-8")).get("reels") or ())
+    except FileNotFoundError:
+        return frozenset()
+
+
+def title_echo_problem(spec: dict, slug: str, xhs_text: str | None) -> str | None:
+    """⭐ 正文第一句不许把标题再说一遍。
+
+    账号所有者 2026-09-25 看完 `ruud-cerundolo-laver-cup-2026` 的推送：
+    「**以后标题里有的内容，正文第一句话就不要写了，重复了**」。
+
+    推送和复制页的标题是 `push_reel.headline()` 拿 `push.summary` 拼的
+    （「9.26 赛场之上 | 鲁德抢十扳回柏林旧账」），正文是 `.xhs.txt` 整份——
+    而那份文件的第一行照老习惯又写了一遍「鲁德抢十扳回柏林旧账🎾」。
+    量下来全库 282 条里 151 条是这个形状：**标题和正文开头说的是同一句话**。
+
+    判据：`push.summary` 的相邻两字组合，有 ≥ `TITLE_ECHO_MIN` 又出现在正文
+    第一句里。正文开头该写标题**没说的**东西（坐标、比分、来路）；人名重合一个
+    是正常的（「首行要点出是谁」那道闸本来就要求有名字），两字组合只占一小截。
+    """
+    if not xhs_text or slug in legacy_title_echo():
+        return None
+    title = str((spec.get("push") or {}).get("summary") or "").strip()
+    if not title:
+        return None
+    ratio = title_echo_ratio(title, xhs_text, spec_player_names(spec))
+    if ratio < TITLE_ECHO_MIN:
+        return None
+    return (f"小红书正文第一句重复了标题（重合 {ratio:.0%}）：标题「{title}」／"
+            f"正文第一句「{first_sentence(xhs_text)}」——标题已经单独印在推送和复制页"
+            f"顶上，正文第一句写标题没说的东西（北京时间、赛事、比分、来路），"
+            f"别把标题再抄一遍（账号所有者 2026-09-25）")
 
 
 def spoken_integer(value: int) -> str:

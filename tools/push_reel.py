@@ -584,12 +584,27 @@ def cut_at_tags(copy_text: str) -> str:
 
 
 def copy_body_only(text: str, title: str) -> str:
-    """Drop a standalone dated column headline; keep real opening paragraphs."""
+    """Drop a standalone dated column headline; keep real opening paragraphs.
+
+    ⭐ 也去掉**只是把标题再说一遍**的那一行（账号所有者 2026-09-25：「以后标题里有
+    的内容，正文第一句话就不要写了，重复了」）。标题是「9.26 赛场之上 | 鲁德抢十
+    扳回柏林旧账」，`.xhs.txt` 首行是「鲁德抢十扳回柏林旧账🎾」——原来只比整条标题，
+    日期栏目前缀和表情一挡，永远对不上。现在按「`|` 后面那半截」去掉表情和标点
+    比：**只删一字不差的重复**，带新内容的开头一个字都不动（那种由
+    `spec_wording.title_echo_problem` 在 dry-run 管）。
+    """
     lines = text.strip().splitlines()
     dated = re.compile(r"^(?:🎾\s*)?\d{1,2}[./月]\d{1,2}(?:日)?\s*(?:赛场之上|赛后开麦|网球有故事)\s*[|｜·丨]")
+    tail = re.split(r"[|｜丨]", title)[-1]
+
+    def bare(s: str) -> str:
+        s = re.sub(r"[\U0001F000-\U0001FFFF\u2600-\u27BF]", "", s)
+        return re.sub(r"[^\w]", "", s)
+
     while lines:
         first = lines[0].strip()
-        if not first or first == title.strip() or dated.match(first):
+        if (not first or first == title.strip() or dated.match(first)
+                or (bare(first) and bare(first) == bare(tail))):
             lines.pop(0)
         else:
             break

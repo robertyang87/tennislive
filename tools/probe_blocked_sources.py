@@ -111,6 +111,9 @@ def main() -> int:
                     help="要在正文里找的词，找到就把上下文打出来")
     ap.add_argument("--url", action="append", default=[],
                     help="自定义目标，可给多次；给了就**不再探默认那五条**")
+    ap.add_argument("--grep", action="append", default=[],
+                    help="正则，在**原始正文**（不剥标签）里按出现顺序把每一处匹配打出来，"
+                         "最多 300 处——`--want` 剥了标签、只打前 3 处，图片地址和它的说明对不上号")
     ap.add_argument("--save", default="",
                     help="把取到的图片存进这个目录（工作流当 artifact 传出来）")
     args = ap.parse_args()
@@ -132,6 +135,11 @@ def main() -> int:
         if "Just a moment" in text or "cf-browser-verification" in text:
             print("    ⚠️ Cloudflare 人机校验页——状态码骗人，这不是内容")
             continue
+        for pat in args.grep:
+            found = [m.group(0) for m in re.finditer(pat, text)]
+            print(f"    /{pat}/ 匹配 {len(found)} 处")
+            for g in found[:300]:
+                print(f"      {g[:400]}")
         flat = re.sub(r"\s+", " ", re.sub("<[^>]+>", " ", text))
         for want in wants:
             hits = list(re.finditer(re.escape(want), flat, re.I))
