@@ -1,0 +1,80 @@
+{
+  "scoreboard_qc_sha256": null,
+  "cover_seconds": 3.658,
+  "cover_narrated": true,
+  "outro_seconds": 3.827,
+  "layout": "full",
+  "segments_seconds": 269.56,
+  "topbar": null,
+  "film_seconds": 277.08,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "2": 5.208,
+    "3": 2.592,
+    "4": 4.392,
+    "5": 6.432,
+    "6": 9.312,
+    "7": 5.472,
+    "8": 4.824,
+    "9": 6.96,
+    "10": 7.296,
+    "11": 5.232,
+    "13": 7.92,
+    "14": 7.224,
+    "15": 6.84,
+    "16": 8.28,
+    "17": 5.856,
+    "18": 6.984,
+    "19": 5.904,
+    "20": 5.088,
+    "21": 3.144,
+    "22": 6.936,
+    "23": 4.344,
+    "24": 8.496,
+    "25": 10.056,
+    "26": 8.112,
+    "27": 6.576,
+    "29": 5.928
+  },
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "sinner-beijing-withdrawal-2026",
+    "received_at": "2026-09-25T12:15:24Z",
+    "artifact_ready_at": "2026-09-25T12:24:14Z",
+    "elapsed_seconds": 530.576,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "a2191daf4db0a27f70ee49da053a5b9baef320a5117268b9ae46112c7d2b77d8",
+    "spec_sha256": "42f962775f2b1e0398432b02ef30c57190b942d72747e6a8e409d718b12b972d",
+    "run_id": "36133875369",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-09-25T12:18:16Z",
+        "run_id": "36133875369"
+      }
+    ],
+    "render_seconds": 358.576,
+    "pre_render_seconds": 172.0
+  },
+  "film_sha256": "a2191daf4db0a27f70ee49da053a5b9baef320a5117268b9ae46112c7d2b77d8",
+  "film_bytes": 172258326,
+  "qc_attestation_sha256": "317bf77f4b0997232b00520d6ea3295f38f4d028d7340f24cf3a3fd2c94a1ed7",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-09-25T12:18:16Z",
+      "run_id": "36133875369"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-25T12:24:15Z",
+      "run_id": "36133875369"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-sinner-beijing-withdrawal-2026/sinner-beijing-withdrawal-2026.mp4",
+  "video_bytes": 172258326
+}
