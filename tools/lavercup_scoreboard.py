@@ -20,11 +20,17 @@ frame 96/132/164s 量过），看**结构**：同一列上欧洲行的上下两�
 两条红边**四条都在**，而两行中间是近黑底或字。这样的列连成一段、够宽，才算板。
 50 帧里板在的 44 帧全认出，172s 起没有板的 5 帧（握手近景、片尾板）一帧不误报。
 
-⚠️ **宽版全名板不贴**（开场和赛后的「LAVER CUP | CASPER RUUD / FRANCISCO
-CERUNDOLO」，frame 112/116/120/140/144/168s）：它横跨源片 x 85–960，按画面同比
-放大（1440/1080）后比 1080 的画布还宽，贴不下；而且它右半截本来就落在居中 3:4
-窗口（源片 555–1365）里。认法：两行从带左缘往右 1.2 倍板高以外才开始（紧凑版
-紧贴左缘）。这一帧返回「板不在」，蒙版全透明，画面上就是转播原样。
+⭐ **宽版全名板整块贴**（开场和赛后的「LAVER CUP | CASPER RUUD / FRANCISCO
+CERUNDOLO」，frame 112/116/120/140/144/168s）。第一版是「不贴」，理由是它横跨源片
+x 85–960、放大后比画布宽——**渲出来才看见那条理由站不住**：宽版板的右半截本来就落在
+居中 3:4 窗口（源片 555–1365）里，不贴，画面左缘就露着一截被切掉名字的
+「ERUNDOLO 6⁴ 6 10」（`ruud-cerundolo-laver-cup-2026` 第一版成片 8~11s），正是
+账号所有者点过的「比分板没展示全」。所以整块面板从左下角贴回去，**把窗口里那截原样盖住**：
+名字和比分列（源片 ≤ 870）放大后落在 1053 以内；只有金条最右那几个分盘用时
+（源片 ~960）伸出画布右缘，认领这个代价。
+认法：两行从带左缘往右 1 倍带高以外才开始（紧凑版紧贴左缘）；面板横向取金条那一段。
+标定带因此是 y 862–1036（包住宽版面板上下那两道金边 866 / 1032——带再窄，窗口里
+那截原样的金边会从贴片上下各漏出一线）。
 """
 from __future__ import annotations
 
@@ -36,20 +42,21 @@ from pathlib import Path
 
 import numpy as np
 
-PROFILE = "lavercup-v1"
+PROFILE = "lavercup-v2"
 EDGE_PAD = 2
-MIN_ROWS_W = 1.0    # 两行最窄也有这么宽（×带高）
-WIDE_START = 1.2    # 两行从这么远（×带高）之外才开始 → 宽版全名板，不贴
+MIN_ROWS_W = 0.83   # 两行最窄也有这么宽（×带高）
+WIDE_START = 1.0    # 两行从这么远（×带高）之外才开始 → 宽版全名板
+WIDE_SCAN_PX = 920  # 宽版面板横跨源片 85–960，扫描带至少要这么宽（相对带左缘）
 LABEL_GAP = 40      # 金色标签里黑字把金色切断，隔这么宽以内算同一块
 LEFT_REACH = 70     # 从两行的结构段往左找描边（左端圆头＋队徽那一截）
 
-# 纵向分区，按带高的比例（标定带 y 878–1022，高 144）
-LABEL = (0.035, 0.270)
-ROW1 = (0.285, 0.632)
-ROW2 = (0.632, 0.965)
-_R1_TOP, _R1_BOT = (0.29, 0.35), (0.58, 0.64)
-_R2_TOP, _R2_BOT = (0.62, 0.68), (0.91, 0.97)
-_R1_MID, _R2_MID = (0.37, 0.55), (0.70, 0.88)
+# 纵向分区，按带高的比例（标定带 y 862–1036，高 174；括号里是源片绝对 y）
+LABEL = (0.120, 0.316)                       # 金色标签 884–916
+ROW1 = (0.328, 0.615)                        # 欧洲队一行 920–968
+ROW2 = (0.615, 0.891)                        # 世界队一行 970–1016
+_R1_TOP, _R1_BOT = (0.328, 0.362), (0.580, 0.620)   # 蓝边 922–925 / 964–967
+_R2_TOP, _R2_BOT = (0.612, 0.652), (0.856, 0.896)   # 红边 970–973 / 1012–1015
+_R1_MID, _R2_MID = (0.40, 0.55), (0.67, 0.83)
 
 
 def _rgb(band: np.ndarray):
@@ -118,7 +125,7 @@ def pills(band: np.ndarray):
         return None
     s, e = runs[0]
     if s > WIDE_START * h:
-        return None
+        return wide_panel(band, e)
     # 左端圆头和队徽那一截没有「四条描边都在」，往左接着找描边。⚠️ 两行**同时**
     # 有描边才算（与，不是或）：红色替补席（frame 76s）、欧洲队的蓝色背板
     # （frame 132s）会让单独一种颜色一路延到带边上，把背景抠进贴片。
@@ -139,6 +146,18 @@ def pills(band: np.ndarray):
         ly = _rows(h, LABEL)
         out.append((max(0, lab[0][0] - 3), min(band.shape[1], lab[0][1] + 3), ly.start, ly.stop))
     return out
+
+
+def wide_panel(band: np.ndarray, rows_end: int):
+    """宽版全名板：一整块面板 (x0, x1, 0, 带高)——横向取金条那一段，纵向整条带。"""
+    h, w = band.shape[:2]
+    g = gold(band)[_rows(h, LABEL)].mean(0) > 0.5
+    runs = _runs(g, 60, LABEL_GAP)
+    if not runs:
+        return None
+    x0 = max(0, runs[0][0] - 20)                 # 面板外框在金条左端再往左一点
+    x1 = min(w, max(runs[-1][1], rows_end) + 12)
+    return [(x0, x1, 0, h)]
 
 
 def stabilize(frames: list) -> list:
@@ -164,6 +183,9 @@ def stabilize(frames: list) -> list:
 def paint(mask: np.ndarray, pill: tuple[int, int, int, int]) -> None:
     """一块胶囊：两端半圆，中间矩形——四角外的球场不抠进来。"""
     x0, x1, y0, y1 = pill
+    if y0 == 0 and y1 == mask.shape[0]:          # 宽版面板：直角矩形
+        mask[:, x0:x1] = 255
+        return
     r = (y1 - y0) / 2.0
     cy = y0 + r - 0.5
     ys, xs = np.ogrid[y0:y1, x0:x1]
@@ -210,7 +232,7 @@ def scan(source: Path, box: tuple[int, int, int, int], start: float,
     sw = int(subprocess.check_output(
         ["ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries",
          "stream=width", "-of", "csv=p=0", str(source)], text=True).strip().split(",")[0])
-    width = min(sw - x0, int((x1 - x0) * 1.3))
+    width = min(sw - x0, max(int((x1 - x0) * 1.3), WIDE_SCAN_PX))
     height = y1 - y0
     proc = subprocess.run(
         ["ffmpeg", "-v", "error", "-ss", f"{start:.3f}", "-t", f"{seconds:.3f}",
@@ -249,7 +271,7 @@ def resolve_masks(sources: dict, segments: list, outdir: Path, fps: str,
         if not live:
             raise RuntimeError(
                 f"第 {i + 1} 段（源片 {seg.start:.2f}→{seg.end:.2f}s）一帧都没认出比分板。"
-                "整段都是近景/看台/宽版全名板的话写 \"score_inset\": false ＋ \"_score_inset_why\"。")
+                "整段都是近景/看台的话写 \"score_inset\": false ＋ \"_score_inset_why\"。")
         right = max(p[1] for f in live for p in f) + EDGE_PAD
         right = min(width, right + right % 2)
         dest = Path(outdir) / "score_masks" / f"segment-{i + 1:02d}.mkv"

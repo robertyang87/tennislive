@@ -7,11 +7,11 @@
   "_source": "账号所有者给的链接（https://youtu.be/10c-Msjex6s）。拉沃尔杯官方 YouTube 频道（oEmbed author_name=Laver Cup，@LaverCup）《Casper Ruud v Francisco Cerundolo Highlights | Laver Cup 2026 Match 1 | Laver Cup》，1920×1080 / 29.97fps / 196.09s（probe 实测），upload_date 20260925。四要素自证：①左下角记分条烧着 `RUUD / CERUNDOLO`，标签「MATCH 1」「7 POINT TIEBREAK」「SET POINT #3」「MATCH TIEBREAK」「MATCH POINT」，162.5s 读 `RUUD 6⁴ 6 10 / CERUNDOLO 7⁷ 4 8`——和 flashscore 4ljiuEjn 逐字一致；②黑色场地上印着 `LAVER CUP`，挡板 `Alipay+` `ROLEX` `UBS`；③鲁德蓝色 Team Europe 球衣＋Samsonite 发带，塞伦多洛红色 adidas＋白帽；④宽版全名板写着 `MATCH 1 … 64'`（第一盘 64 分钟）。末尾 193.03 起是片尾板（LAVER CUP 社媒页＋O2 夜景），窗口全部收在 193.0 之前。**没有场上采访**。",
   "scorebox": [
     80,
-    878,
+    862,
     520,
-    1022
+    1036
   ],
-  "_scorebox_why": "拉沃尔杯转播的紧凑版比分板：金色标签胶囊 y 884–916，欧洲队蓝边一行 y 920–968，世界队红边一行 y 970–1016，左缘 x≈97（frame-grab `lavercup-board-match1` 逐像素量的，见 tools/lavercup_scoreboard.py）。右缘写 520：这场最宽的一档是抢十「6⁴ 6 10」，x≈507。probe 的 scorebox_guess 这次没猜出来（null），框是按标定帧手给的。逐帧切法走 `lavercup` 判据：三块胶囊各切各的、板不在的帧不贴、宽版全名板不贴。",
+  "_scorebox_why": "拉沃尔杯转播的比分板：紧凑版金色标签 y 884–916、欧洲队蓝边一行 920–968、世界队红边一行 970–1016，左缘 x≈97；开场/赛后的宽版全名板面板 x 85–885、y 866–1032（frame-grab `lavercup-board-match1` 逐像素量的，见 tools/lavercup_scoreboard.py）。带取 y 862–1036 把宽版面板上下的金边包进来。右缘写 520 是紧凑版最宽一档（抢十「6⁴ 6 10」x≈507）；宽版面板那几帧判据自己把扫描带放到 920px 宽、整块切。probe 的 scorebox_guess 这次没猜出来（null），框是按标定帧手给的。",
   "cover": {
     "eyebrow": "赛场之上",
     "layout": "solo",
@@ -304,8 +304,7 @@
       "start": 137.3,
       "end": 146.9,
       "cx": 0.5,
-      "score_inset": false,
-      "_score_inset_why": "这一段转播挂的是宽版全名板（138.5~146.5s `MATCH 1 / LAVER CUP / CASPER RUUD / FRANCISCO CERUNDOLO`），它横跨源片 85–960、放大后比画布宽，lavercup 判据按设计不贴；居中窗口里露着它右半截（比分那几列），是转播原样。",
+      "score_inset": true,
       "narration": "决胜盘按拉沃尔杯的规矩，打一个抢十。塞伦多洛又走在前面：一比三，三比五，六比七。",
       "_why": "137.2 之后鲁德坐在椅子上、队长诺阿蹲在身边说话（138.5~146.5s）。抢十逐分见 _claims（df_mh_1 Set 3）。"
     },
