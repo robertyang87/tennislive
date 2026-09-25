@@ -1,0 +1,433 @@
+{
+  "slug": "sakkari-gibson-singapore-2026-qf",
+  "source_url": "https://www.youtube.com/watch?v=F1vCWRS4Pxo",
+  "_column": "赛场之上",
+  "tts_backend": "edge",
+  "_tts_backend_why": "旁白是平直的复盘叙述，一段 `style` 都没写；同站 `wang-prozorova-singapore-2026-qf`、`chwalinska-mertens-singapore-2026-qf` 也是 edge。",
+  "_source": "账号所有者直接甩来源片链接（`youtu.be/F1vCWRS4Pxo`）要做这一场。源片是 WTA 官方 YouTube `F1vCWRS4Pxo`（oEmbed 标题 `Maria Sakkari vs. Talia Gibson | 2026 Singapore Quarterfinal | WTA Match Highlights`，作者 `WTA`），probe 在 `output/2026-09-26/reel/sakkari-gibson-singapore-2026-qf/`：1920×1080 / 25fps、441.3s，带 `--scorebox 90,870,550,980`，翻牌是真量的。四要素自证：记分条逐格读过（`M. SAKKARI [7] / T. GIBSON`），156.5s、216.5s、292.5s 的盘间图形烧着 `QUARTER FINAL`，挡板 `SINGAPORE`、`WTA 500`、`THE KALLANG`。比赛画面到 263s，263~296 是赛点之后的庆祝、网前握手、向看台致意；**296.5s 起是吉布森的场上采访，一秒都不用**（采访归赛后开麦）。",
+  "scorebox": [
+    90,
+    870,
+    550,
+    980
+  ],
+  "_scorebox_why": "和同站 `wang-prozorova`、`chwalinska-mertens` 同一块转播板，probe 就是按这个框量的翻牌。右缘按最宽的一档：第三盘三列盘分加一列分数（`1 6 2 30 / 6 4 5 40`），和 `wang-prozorova` 那一档一样宽。",
+  "_match": {
+    "id": "2026:singapore:womens-quarterfinal:maria-sakkari-talia-gibson",
+    "event": "2026 WTA500 新加坡",
+    "event_search": "Singapore",
+    "round": "Women's Singles Quarterfinal",
+    "year": 2026,
+    "status": "result_verified",
+    "winner": "吉布森",
+    "loser": "萨卡里",
+    "participants": [
+      "萨卡里",
+      "吉布森"
+    ],
+    "winner_en": "Talia Gibson",
+    "loser_en": "Maria Sakkari",
+    "set_scores_home_away": [
+      [
+        1,
+        6
+      ],
+      [
+        6,
+        4
+      ],
+      [
+        2,
+        6
+      ]
+    ],
+    "tiebreaks_home_away": [
+      null,
+      null,
+      null
+    ],
+    "_source": "三源一致：WTA 官方 tournaments/1152/2026/matches 的 MatchID=LS007，`ResultString` = `T. Gibson d [7]M. Sakkari 6-1,4-6,6-2`、`RoundID=Q`（1/4决赛）、`MatchTimeTotal=01:56:45`；flashscore Ic9rpKal 逐局 1-6 / 6-4 / 2-6（home＝萨卡里）；画面自证——292.5s 盘间图形 `MARIA SAKKARI 1 6 2 / TALIA GIBSON 6 4 6`，解说 293.04「6-1 4-6 6-2」。",
+    "source": "flashscore_points",
+    "source_id": "Ic9rpKal",
+    "flashscore_id": "Ic9rpKal",
+    "winner_result": "6-1 4-6 6-2",
+    "loser_result": "1-6 6-4 2-6"
+  },
+  "topbar": {
+    "line1": "2026 WTA500 新加坡站 1/4决赛",
+    "line2": "吉布森 6-1 4-6 6-2 萨卡里"
+  },
+  "_topbar_why": "line1 按 2026-09-24 定的格式，和同站 `wang-prozorova-singapore-2026-qf` 同一行写法；WTA 官方 `RoundID=Q`＝1/4决赛。",
+  "cover": {
+    "matchup": [
+      {
+        "name": "吉布森",
+        "name_en": "Talia Gibson",
+        "country": "AUS",
+        "rank": 63
+      },
+      {
+        "name": "萨卡里",
+        "name_en": "Maria Sakkari",
+        "country": "GRE",
+        "rank": 33
+      }
+    ],
+    "_rank_why": "WTA 官方 `players/ranked`（`sources.rankings.fetch_rankings`，`rankedAt=2026-09-21`）：吉布森第 63（997 分）、萨卡里第 33（1355 分）（2026-09-26 查）。萨卡里是本站 7 号种子（`ResultString` 的 `[7]`）。",
+    "winner": "吉布森",
+    "result": "6-1 4-6 6-2",
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "吉布森",
+    "_subject_why": "封面放赢的那一方：这条的落点是她生涯第一次打进 WTA 半决赛。",
+    "hook": "被扳平后决胜盘6比2\n淘汰萨卡里首进半决赛",
+    "hook_accent": "首进半决赛",
+    "_hook_why": "按 2026-09-25 的口径「过程＋结果」：第一行是这场球怎么走的（首盘 6-1 之后第二盘 4-6 被扳平，决胜盘 6-2），第二行是结果＝赢了谁＋走到哪儿。各 10 字。① WTA 官方 LS007 `6-1,4-6,6-2`。② 「首进半决赛」：解说 269.92「The first time in a WTA semifinal」＋ WTA 官方生涯逐场 `players/329393/matches`：此前巡回赛级别（P / IS / PM / GS）最好成绩是 1/4决赛（印第安维尔斯、斯特拉斯堡、诺丁汉），唯一一次半决赛是 2025 京山 WTA125（级别 `C`，不算巡回赛）。",
+    "topic": "新加坡WTA500 · 女单1/4决赛",
+    "_heat_why": "账号所有者直接点名要做这一场。吉布森是今年一条正在展开的线：年初世界百名开外，印第安维尔斯从资格赛打进 1/4决赛、生涯首胜前十（保利尼），迈阿密再赢大坂直美，这一场生涯第一次打进 WTA 半决赛（维基 `Talia Gibson` 2026 段、WTA 官方生涯逐场）。半决赛对手普罗佐罗娃，正是同一天逆转王欣瑜的那一位——接着我们刚发的 `wang-prozorova-singapore-2026-qf`。",
+    "portrait": {
+      "image": "assets/reel/gibson-sakkari-singapore-2026-qf.jpg",
+      "focus": 0.4,
+      "focus_y": 0.3,
+      "zoom": 1.0,
+      "_photo_why": "WTA 官方 photoresources 实拍，就是这一场：https://photoresources.wtatennis.com/photo-resources/2026/09/25/a312a4a5-43f7-4ba3-8eaa-4f10dcadb83b/250826-m-sakkari-vs-t-gibson-31.jpg ——WTA 图库标题 `Talia Gibson, 2026 Singapore`（9/25 15:47Z 上架），文件名 `250826-m-sakkari-vs-t-gibson-31` 自证是萨卡里对吉布森这一场。原图 5731×3823，接口 `?width=` 上限 4000，取 4000×2668；铺 1080×1440 是缩小。已下载打开核过：粉色上衣短裙、白色遮阳帽、墨绿 Wilson 球拍，和源片 14.5s、30.5s、254.5s 的近景一致；场边 `BNP PARIBAS` 挡板和源片 144.5s、201s 同一块。正手击球中、正脸、眼睛睁着、球在画面内。"
+    },
+    "scoreboard": {
+      "court": "OCBC Arena",
+      "_court_why": "印场馆不印场地名：WTA 官方 feed 只给 `CourtID`，场馆沿用同站已核的 OCBC Arena（和 `wang-prozorova`、`chwalinska-mertens` 同一条）。",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%20%221%3A56%3A45%22%2C%20%22source%22%3A%20%22WTA%20official%20tournaments/1152/2026/matches%20LS007%20MatchTimeTotal%2001%3A56%3A45%22%2C%20%22cross_check%22%3A%20%22flashscore%20dc_1_Ic9rpKal%20DD-DC%201%3A54%3A56%22%7D",
+        "field": "duration"
+      },
+      "_duration_why": "WTA 官方 `MatchTimeTotal=01:56:45`；flashscore `dc_1` 的 `DD−DC`＝1:54:56，分盘 0:38＋0:45＋0:35＝1:58，同向。"
+    }
+  },
+  "_opening_time_source": {
+    "url": "https://global.flashscore.ninja/2/x/feed/dc_1_Ic9rpKal",
+    "match_id": "Ic9rpKal",
+    "field": "DC",
+    "value": 1790340000,
+    "beijing": "2026-09-25T20:40+08:00",
+    "spoken_precision": "approximate-hour",
+    "_why": "开球时刻只说个大概：flashscore `dc_1` 的 `DC=1790340000` → 12:40Z＝北京 20:40；`DD=1790346896`（北京 22:34）是结束时刻，相差 1 小时 55 分，和 WTA 官方 `MatchTimeTotal=01:56:45` 自洽。分钟落在 40 以后，旁白说「晚上快九点」。新加坡与北京同为 +08:00。"
+  },
+  "stats": {
+    "a": {
+      "aces": 4,
+      "df": 4,
+      "first_in": 56,
+      "first_won": 43,
+      "second_total": 16,
+      "second_won": 5,
+      "bp_conv": 6,
+      "bp_chances": 14,
+      "pts_won": 90,
+      "pts_total": 158,
+      "first_total": 72,
+      "headshot": "assets/players/headshots/wta-329393.jpg",
+      "winners": 34,
+      "ue": 48
+    },
+    "b": {
+      "aces": 3,
+      "df": 5,
+      "first_in": 53,
+      "first_won": 26,
+      "second_total": 33,
+      "second_won": 18,
+      "bp_conv": 2,
+      "bp_chances": 3,
+      "pts_won": 68,
+      "pts_total": 158,
+      "first_total": 86,
+      "headshot": "assets/players/headshots/wta-318312.jpg",
+      "winners": 10,
+      "ue": 29
+    },
+    "_source": "`match_stat_hooks.py Ic9rpKal --stats-block`（flashscore `df_st_1`），**a 对应 cover.matchup[0] 吉布森**——flashscore 的 home 是萨卡里，这里已经对调过。制胜分与非受迫失误 flashscore 没有，走 TNNS（run 36171877680，id=74753610，`hasExtendedStats: True`）：制胜分 10:34、非受迫失误 29:48（顺序 `['Sakkari','Gibson']`），分盘 2/3/5 : 14/12/8、12/6/11 : 16/22/10，日志自证分盘合计＝全场。头像沿用 `sabalenka-gibson`、`swiatek-sakkari` 已认过的两张。"
+  },
+  "_hit_data": "`match_stat_hooks.py --from-spec` 跑过（⚠️ 那个工具把 flashscore 的 home 按 `cover.matchup[0]` 印名字，这一条 home 是萨卡里，所以它印的「吉布森 68 - 萨卡里 90」「吉布森 破发 2/3」要对调回来读）。真实对应：总分吉布森 90 比 68，净胜 22 分；破发吉布森 6/14、萨卡里 2/3；吉布森一发得分率 77%（43/56），萨卡里分盘 63% → 57% → 21%（决胜盘 3/14）；TNNS 制胜分 34 比 10，首盘 14 比 2。flashscore `df_hh_1`：两人**第一次交手**。逐局 `df_mh_1_Ic9rpKal`：首盘第一局吉布森第三个破发点破掉、0-3 那局第二个破发点再破、1-5 萨卡里发球 `15:40 |B1||B2|` 第一个盘点没兑现、`30:40` 第二个兑现；第二盘第一局萨卡里 `40:15` 破掉吉布森，之后萨卡里五个发球局全保（`Set 2 Break Points Saved 3/3`），5-4 发球胜盘 `15:40 |B1|` 起救回、`A:40 |B2|` 拿下；决胜盘 1-0 吉布森保发、2-0 零封破发、2-1 被回破、3-1 再破、4-1 零封保发、4-2、5-2、最后一局萨卡里发球 `30:40 |B1| |B3|` 赛点上被破。挑进正文的是首盘制胜分 14 比 2 和决胜盘三局两破。",
+  "_claims": {
+    "吉布森生涯第一次打进 WTA 半决赛": [
+      "https://api.wtatennis.com/tennis/players/329393/matches/?page=0&pageSize=100&type=S",
+      "https://en.wikipedia.org/wiki/Talia_Gibson"
+    ],
+    "_why": "「第一次」是全称断言。① WTA 官方生涯逐场（348 场）：巡回赛级别（`TournamentLevel` P / IS / PM / GS）`round_name` 出现过 `Q`（1/4决赛）四次，**从没有 `S`**；唯一一次 `S` 是 2025-09 京山，级别 `C`（WTA125，不是巡回赛）。② 维基 2026 段：印第安维尔斯是她「first WTA Tour quarterfinal」，此后诺丁汉 1/4决赛负普利斯科娃。③ 转播解说原话 269.92「The first time in a WTA semifinal」。⚠️ 维基同一段后面还写着「straight sets」胜萨卡里（错的，是三盘）和普罗佐罗娃退赛、她进决赛——flashscore 那场半决赛 9/26 03:10Z 仍是 `AB=1` 未开赛，**核不上，一个字都没用**。"
+  },
+  "editorial": {
+    "mode": "match_review",
+    "hook": [
+      "被扳平后决胜盘6比2",
+      "淘汰萨卡里首进半决赛"
+    ],
+    "question": "首盘 6-1 之后被萨卡里扳平一盘，世界第六十三的吉布森是怎么在决胜盘把七号种子拿下的？",
+    "thesis": "首盘吉布森三次破发，制胜分 14 比 2，6-1；第二盘萨卡里开局破发、发球局一局不丢，5-4 发球胜盘时从 15-40 救回来，6-4 扳平；决胜盘吉布森先保发，再连着三局破发拿下两次，一路领先，最后在萨卡里的发球局赛点上破发，6-2。生涯第一次打进 WTA 半决赛。",
+    "beats": [
+      "冷开场：赛点之后吉布森的庆祝。",
+      "落点：淘汰七号种子，生涯第一次进 WTA 半决赛；坐标。",
+      "首盘：第二个破发点打穿，三比零；一比五第二个盘点拿下，六比一。",
+      "第二盘：萨卡里开局破发、发球局全保，五比四救下两个破发点，六比四扳平。",
+      "决胜盘：三局里两次破发，五比二；赛点破发，六比二。"
+    ],
+    "chapters": [
+      "十四比二",
+      "被扳平",
+      "三局两破",
+      "赛点"
+    ],
+    "human_context": {
+      "angle": "吉布森二十二岁，年初还在世界百名开外，这一年从印第安维尔斯资格赛打进 1/4决赛开始一路往上走，今天第一次打进 WTA 半决赛。半决赛的对手普罗佐罗娃刚在同一天逆转王欣瑜，也是第一次走到这一步。",
+      "facts": [
+        "WTA 官方 LS007：T. Gibson d [7]M. Sakkari 6-1,4-6,6-2，RoundID=Q，MatchTimeTotal 01:56:45。",
+        "WTA 官方排名（2026-09-21 版）：吉布森第 63、萨卡里第 33。",
+        "flashscore Ic9rpKal 逐局与统计（见 `_hit_data`）；TNNS 制胜分 34 比 10、首盘 14 比 2。",
+        "生涯第一次进 WTA 半决赛：WTA 官方生涯逐场 ＋ 转播 269.92（见 `_claims`）。",
+        "半决赛对手普罗佐罗娃：flashscore rFZSNPBj `Prozorova T. vs Gibson T.`，WTA 官方 LS006 普罗佐罗娃 3-6 7-5 6-4 胜王欣瑜；她生涯第一次进巡回赛半决赛见同站 `wang-prozorova-singapore-2026-qf`（转播 286.00）。"
+      ],
+      "sources": [
+        "https://api.wtatennis.com/tennis/tournaments/1152/2026/matches",
+        "https://global.flashscore.ninja/2/x/feed/df_mh_1_Ic9rpKal",
+        "https://global.flashscore.ninja/2/x/feed/df_st_1_Ic9rpKal",
+        "https://tnnslive.com/match/74753610",
+        "https://api.wtatennis.com/tennis/players/329393/matches/?page=0&pageSize=100&type=S"
+      ]
+    },
+    "narration": [
+      "淘汰七号种子，第一次进WTA半决赛。",
+      "首盘制胜分十四比二，六比一。",
+      "被扳平一盘之后，决胜盘三局两破。",
+      "赛点上破发，六比二。"
+    ]
+  },
+  "segments": [
+    {
+      "start": 263.24,
+      "end": 268.96,
+      "cx": 0.5,
+      "score_inset": false,
+      "_score_inset_why": "赛点已经落地：263.24 起是吉布森举拍庆祝的近景，转播记分条在 264 秒前后撤掉，而且近景里的板落在 3:4 取景窗外。",
+      "narration": "",
+      "_ending_payoff_required": true,
+      "_why": "冷开场：**赛点落地之后吉布森举着球拍笑出来、握拳**（账号所有者 2026-09-25「视频从赢球后的冷开场……是全局的要求」）。263.24、268.96 都是 probe 的 `scene_cuts`；不配旁白，只留现场声——解说 265.52「It's a massive win」留给正文结尾的原声段，不在这里剧透两遍。",
+      "_payoff_why": "冷开场里有赛点落地后的第一波庆祝，所以 true——正文最后的原声段（263.24→287.84）按时间顺序完整重放这一段。",
+      "crosses_cut": "窗口两端都是转播切点，中间一个镜头：吉布森举拍、握拳。",
+      "point_end_ok": "比赛已经结束（赛点在 263 秒前落地）；263.28 / 264.08 的翻牌是记分条撤掉的动画。"
+    },
+    {
+      "start": 0.3,
+      "end": 17.32,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "世界第六十三的吉布森，淘汰七号种子萨卡里，生涯第一次打进WTA半决赛。北京时间九月二十五日晚上快九点，新加坡WTA五百赛四分之一决赛，两人第一次交手。",
+      "_why": "开场顺序「爆点 → 落点 → 坐标」：先一句落点（淘汰七号种子、第一次进 WTA 半决赛，见 `_claims`），再给坐标（开球 20:40 北京，见 `_opening_time_source`）。flashscore `df_hh_1` 两人此前没交过手。画面是首盘 0-2 萨卡里发球的一分：记分条 0.5s `0 15 / 2 15`，13.6 这一分打完，之后是吉布森走回的近景。",
+      "crosses_cut": "13.6 切吉布森的近景：这一分已经打完（`point_ends` 13.6）。",
+      "point_end_ok": "段尾 17.32 是转播切点，也是 `point_ends` 17.36 的翻牌（0.04 秒）。"
+    },
+    {
+      "start": 17.32,
+      "end": 30.0,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "首盘开局，她先破了萨卡里的发球。零比二，萨卡里又被逼到第二个破发点。吉布森在底线和她对拉，最后一拍正手发力打穿，三比零。",
+      "_why": "记分条 18.5s `BREAK POINT #2 / 0 30 / 2 40`（萨卡里发球），30.5s 变成 `0 / 3`。逐秒帧 17~27：近端粉衣的吉布森在底线从左到右来回对拉，27 秒这一分结束；解说 28.96「Gibson blasts her away」。flashscore 首盘第一局吉布森第三个破发点破发，0-3 那一局 `15:40 |B1|` 没兑现、`30:40 |B1|` 兑现。⚠️「正手」是按 25~27 秒她在底线中间偏左、拍头在身体右侧收拍看的。",
+      "crosses_cut": "27.8 切吉布森走回的中景：破发点这一分 27 秒前已经打完。",
+      "point_end_ok": "`point_ends` 27.84 是这一分的结果；段尾 30.0 是切点也是翻牌；之后 31.04 / 31.92 的翻牌落在近景里，是记分条从局中比分收成局分（30.5s 板上只剩 `0 / 3`），不是新的一分。"
+    },
+    {
+      "start": 32.72,
+      "end": 47.92,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "下一局她自己发球，打到平分。又是一记制胜分，保住了，四比零。解说说，她现在满场都能打出威胁。首盘的制胜分，吉布森十四个，萨卡里只有两个。",
+      "_why": "记分条 34.5s `0 40 / 3 40`（吉布森发球）、42.5s `3 Ad`；解说 42.16「It's another winner. Add it to the list.」。TNNS 首盘制胜分 2:14（顺序 萨卡里, 吉布森）；flashscore 首盘用时 0:38。 4-0 见记分条 66.5s `0 30 / 4 0`；「从场上哪个位置都能打出威胁」是解说 77.68「Does feel like she's a threat from all areas of the court right now」的转述。",
+      "crosses_cut": "40.4 / 42.64 / 46.2 几处是分与分之间她走回、近景。",
+      "point_end_ok": "段尾 47.92 是转播切点，也是 `point_ends` 47.92 的翻牌；下一次翻牌 56.4 在 8 秒之后。"
+    },
+    {
+      "start": 84.12,
+      "end": 99.4,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "",
+      "quote": [
+        {
+          "at": 5.64,
+          "text": "Sakkari trying to get that kick, that bite, that jump off the court,\n萨卡里想发一个弹得很高的上旋球"
+        },
+        {
+          "at": 9.4,
+          "text": "but it sits at shoulder height and it gets swiped away.\n可球停在肩膀高度，被一拍抽走"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_quote_why": "转播原句，probe 的 `captions.txt` 89.76「Sakuri trying to get that kick, that bike, that jump off the」、91.84、93.52「court, but it sits at shoulder height」、95.20「and it gets swiped away.」（自动字幕的 Sakuri / bike 按原意写回 Sakkari / bite）。段内 at = 原时刻 − 84.12。",
+      "_why": "首盘 0-4 萨卡里发球：记分条 84.5s `0 30 / 4 15`，逐秒帧 84~87 近端萨卡里发球、这一分很短，88 切吉布森握拳；92.5s 变成 `30 / 30`——吉布森拿下这一分，接发直接抽走。",
+      "crosses_cut": "88.24 切吉布森握拳的中景：这一分 88 秒前已经打完，原声评的就是这一球。",
+      "point_end_ok": "`point_ends` 96.88 / 98.08 落在段内（吉布森走回的近景）；段尾 99.4 是切点，`point_ends` 99.44 在它之后 0.04 秒。"
+    },
+    {
+      "start": 122.96,
+      "end": 144.16,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "萨卡里救下破发点，保住一局，一比四。吉布森再保发。一比五，萨卡里的发球局，吉布森拿到两个盘点，第一个没抓住。第二个，两人在底线来回对拉。吉布森左右跑动，一直没丢球，最后拿下这一分。六比一。",
+      "_why": "记分条 114.5s `1 / 4`（萨卡里 30-40 救下破发点保住，flashscore 1-4 `30:40 |B1|` 后 `A:40`）、126.5s `SET POINT #2 / 1 30 / 5 40`（萨卡里发球）。逐秒帧 128~143：近端粉衣的吉布森在底线从左到右跑了好几个来回，一直在底线后没上网；144 切她握拳的近景。flashscore 1-6 那一局 `15:40 |B1||B2|`、`30:40 |B1||B2|`：第一个盘点没兑现，第二个破发拿下。 flashscore 首盘用时 0:38。",
+      "crosses_cut": "128.44 切进盘点那一分（宽景一整分到 143 秒），144.16 切她握拳：这一分已经打完。",
+      "point_end_ok": "盘点在 143 秒前落地；144.16 是切点，之后 144.96 / 147.84 / 148.72 / 149.52 的翻牌落在下一段的近景里，是记分条收起的动画，不是新的一分。"
+    },
+    {
+      "start": 144.16,
+      "end": 153.48,
+      "cx": 0.5,
+      "score_inset": false,
+      "narration": "",
+      "_score_inset_why": "盘点之后：144~153 是吉布森握拳、萨卡里的近景和换边，145 秒起记分条撤掉。",
+      "quote": [
+        {
+          "at": 1.76,
+          "text": "It's a very comprehensive and confident set of tennis for Talia Gibson.\n非常全面、非常自信的一盘"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_quote_why": "转播原句，probe 的 `captions.txt` 145.92「It's a very comprehensive and confident」、149.20「set of tennis for Katalia Gibson.」（自动字幕的 Katalia 写回 Talia）。段内 at = 原时刻 − 144.16。",
+      "crosses_cut": "146.5 / 150.36 两处：吉布森近景 → 萨卡里近景，全在盘点之后，原声评的就是这一盘。",
+      "point_end_ok": "首盘已经结束；段尾 153.48 是转播切点，之后是盘间图形。"
+    },
+    {
+      "start": 162.56,
+      "end": 179.24,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "第二盘，形势倒了过来。第一局萨卡里就破了吉布森的发球，之后她自己的发球局，一局都没丢。吉布森只能保发跟住。这一盘她三个破发点，一个都没兑现。",
+      "_why": "flashscore 第二盘第一局 `15:0, 30:0, 40:0 |B1|, 40:15 |B1|` 吉布森发球被破；萨卡里五个发球局全保（`Set 2 Service games won 5/5`、`Break Points Saved 3/3`）。记分条 164.5s `1 3 0 / 6 1 40`（吉布森发球 40-0，这一局保住→3-2）；解说 161.76「Very different match after that」。 第二盘吉布森破发 0/3：flashscore `Set 2 Break Points Saved` 萨卡里 3/3。",
+      "crosses_cut": "175.32 切萨卡里走回的中景：分与分之间。",
+      "point_end_ok": "段尾 179.24 是转播切点，`point_ends` 179.28 在它之后 0.04 秒；段内 177.12 是这一局打完的翻牌。"
+    },
+    {
+      "start": 186.52,
+      "end": 201.32,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "五比四，萨卡里发球胜盘。十五比四十，吉布森两个破发点，都被她救了回来。占先，盘点，萨卡里守在底线对拉，拿下了。六比四，一盘打平。",
+      "_why": "flashscore 第二盘 5-4 萨卡里发球 `0:15, 15:15, 15:30, 15:40 |B1|, 30:40, 40:40, A:40 |B2|` 后拿下——两个破发点救回、第一个盘点兑现。记分条 190.5s `SET POINT / 1 5 Ad / 6 4`（萨卡里发球）；逐秒帧 191~200：近端的萨卡里（酒红短裙）在底线左右对拉，201 切她握拳吼出来。",
+      "crosses_cut": "186.52 起吉布森近景 → 190 萨卡里近景 → 191.48 宽景一整分，201.32 切萨卡里握拳：盘点这一分已经打完。",
+      "point_end_ok": "盘点在 201 秒前落地；段尾 201.32 是切点，之后 201.36 / 203.2 / 204.0 的翻牌落在下一段的近景里，是记分条收起的动画。"
+    },
+    {
+      "start": 201.32,
+      "end": 217.44,
+      "cx": 0.5,
+      "score_inset": false,
+      "narration": "",
+      "_score_inset_why": "第二盘已经结束：201~217 是萨卡里握拳、她的包厢、观众、换边，204 秒起记分条撤掉。",
+      "quote": [
+        {
+          "at": 1.8,
+          "text": "really showing all of her fight, her physicality,\n拿出了她全部的斗志和身体对抗"
+        },
+        {
+          "at": 6.44,
+          "text": "and made significant improvements in that set.\n这一盘她进步了很多"
+        },
+        {
+          "at": 8.6,
+          "text": "She was knocked off the court in the first\n第一盘她被打得还不了手"
+        },
+        {
+          "at": 10.6,
+          "text": "but changes it all around\n这一盘全扭了过来"
+        },
+        {
+          "at": 13.8,
+          "text": "and this one is going to three.\n比赛进入决胜盘"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_quote_why": "转播原句，probe 的 `captions.txt` 203.12「really showing all of her fight, her」、206.00「physicality」、207.76「and made significant improvements in」、209.92「that set. She was knocked off the court」、211.92「in the first but changes it all around」、215.12「and this one is going to three.」。段内 at = 原时刻 − 201.32。",
+      "crosses_cut": "203.2 / 205.6 / 207.48 / 209.92 几处：萨卡里近景 → 包厢 → 观众 → 换边，全在盘点之后，原声讲的就是这一盘。",
+      "point_end_ok": "第二盘已经结束；段尾 217.44 是转播切点，之后是决胜盘第一局。"
+    },
+    {
+      "start": 217.44,
+      "end": 230.92,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "决胜盘，吉布森先保住发球局。接下来三局，局局破发。她先破一次，被萨卡里破回；又马上再破，三比一。",
+      "_why": "记分条 218.5s `1 6 0 15 / 6 4 0 30`（吉布森发球）、228.5s `0 40`；flashscore 决胜盘 0-1 保发，0-2 `0:40 |B1|` 破发，1-2 萨卡里 `A:40 |B1|` 回破，1-3 `30:40 |B1|` 再破。集锦没播这三局，只在旁白里一句带过。",
+      "crosses_cut": "224.72 切吉布森走回的中景：分与分之间。",
+      "point_end_ok": "`point_ends` 228.8 / 230.48 是这一局最后两分的翻牌，都在段内；段尾 230.92 是切点，下一次翻牌 251.92 在 21 秒之后。"
+    },
+    {
+      "start": 230.92,
+      "end": 251.88,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "她零封保发，四比一。萨卡里保住一局，四比二。这一分两人在底线拉了很久。吉布森放了一个小球，没放好，球停在网前。萨卡里一路冲上来收掉，握拳给自己打气。她还没放弃。",
+      "_why": "flashscore 决胜盘 4-1 吉布森保发 `15:0, 30:0, 40:0`（零封），4-2 萨卡里保发。记分条 230.5s `1 6 2 0 / 6 4 4 15`（吉布森发球 15-0），252.5s `2 15 / 4 15`——这一分萨卡里拿下。逐秒帧 231~245：近端的萨卡里（酒红短裙）在底线左右对拉，246~248 往前冲到网前，249~250 她握拳；解说 249.20「gets the drop shot wrong and it sits there to be attacked」。",
+      "crosses_cut": "248.9 切萨卡里握拳走回的中景：这一分已经打完。",
+      "point_end_ok": "`point_ends` 251.92 在段尾之后 0.04 秒；253.2 的翻牌落在下一段萨卡里的近景里，是集锦跳到二比五赛点那一局的新比分。"
+    },
+    {
+      "start": 251.88,
+      "end": 263.24,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "吉布森保住这一局，五比二。萨卡里发球，赛点。吉布森从左边跑到右边，这一分，是她的。",
+      "_why": "flashscore 决胜盘 5-2 吉布森保发，2-6 萨卡里发球 `30:40 |B1| |B3|` 被破。记分条 254.5s `MATCH POINT / 1 6 2 30 / 6 4 5 40`（萨卡里发球）。逐秒帧 257~262：近端粉衣的吉布森从左侧底线跑到右侧，263 切她举拍庆祝。",
+      "crosses_cut": "252 萨卡里近景 → 254 吉布森近景 → 257 宽景一整分，263.24 切吉布森庆祝：赛点这一分已经打完。",
+      "point_end_ok": "赛点在 263 秒前落地；段尾 263.24 是切点，之后的翻牌是记分条撤掉的动画。"
+    },
+    {
+      "start": 263.24,
+      "end": 287.84,
+      "cx": 0.5,
+      "score_inset": false,
+      "narration": "",
+      "_score_inset_why": "比赛已经结束：263~287 是吉布森庆祝、网前握手、和主裁握手、走回场边，转播已经把比分板撤了。",
+      "quote": [
+        {
+          "at": 2.28,
+          "text": "It's a massive win for Talia Gibson.\n对吉布森来说，这是一场大胜"
+        },
+        {
+          "at": 6.68,
+          "text": "The first time in a WTA semifinal\n第一次打进WTA半决赛"
+        },
+        {
+          "at": 10.28,
+          "text": "and takes out the seventh seed to get there.\n淘汰的还是7号种子"
+        },
+        {
+          "at": 12.6,
+          "text": "It's been an excellent week. What a year it's been.\n这一周太精彩了，这一年也是"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_quote_why": "转播原句，probe 的 `captions.txt` 265.52「It's a massive win for Talia Gibson.」、269.92「The first time in a WTA semifinal and」、273.52「takes out the seventh seed to get there.」、275.84「It's been an excellent week. What a year」、277.76「it's been.」。段内 at = 原时刻 − 263.24。",
+      "crosses_cut": "268.96 / 270.4 / 272.0 几处：庆祝 → 萨卡里近景 → 网前握手，全在赛点之后，原声讲的就是这一场。",
+      "point_end_ok": "比赛已经结束。"
+    },
+    {
+      "start": 287.84,
+      "end": 296.52,
+      "cx": 0.5,
+      "score_inset": false,
+      "_score_inset_why": "比赛已经结束：287~296 是吉布森走回场边、向看台挥手，没有比分板；292.5 起是盘间式的终局图形。",
+      "narration": "半决赛，对手普罗佐罗娃，刚刚逆转王欣瑜，也是第一次走到这一步。谁能进决赛？",
+      "_why": "flashscore rFZSNPBj `Prozorova T. vs Gibson T.`（半决赛，9/26 开打）；普罗佐罗娃 3-6 7-5 6-4 胜王欣瑜、生涯第一次进巡回赛半决赛见同站 `wang-prozorova-singapore-2026-qf`（WTA 官方 LS006、转播 286.00）。解说 385.04（采访里）也说了下一场对 Prozorova。",
+      "crosses_cut": "287.84 起是吉布森挥手的中景，296.52 是切点，之后是场上采访（不用）。",
+      "point_end_ok": "比赛已经结束；段尾 296.52 是转播切点。"
+    }
+  ],
+  "_editing_why": "源片 441.3 秒：比赛画面到 263 秒，263~296 赛点之后的庆祝和握手，**296.5 起是吉布森的场上采访，整段排除在窗口之外**（「赛场之上不要赛后采访」）。认人：吉布森粉色上衣短裙、白色遮阳帽、墨绿 Wilson 球拍；萨卡里浅粉上衣、酒红短裙、红色球拍。段落端点取自 probe 的 `scene_cuts`，翻牌按 `--scorebox` 真量的 `point_ends` 对过。球路来自 frame-grab 每秒一帧（`output/2026-09-26/frames/sakkari-gibson-sg-qf/`）逐帧看过。集锦没播的局（首盘第一局、1-5，第二盘第一局，决胜盘 0-2~1-3）只在旁白里按 flashscore 逐局一句带过。",
+  "_tactics_why_note": "球路写在第 3 段（底线对拉、最后一拍正手打穿）、第 5 段原声（接发抽走上旋发球）、第 6 段（盘点底线左右跑动）、第 9 段（萨卡里守在底线对拉）、第 12 段（小球没放好、萨卡里冲上网收掉）、第 13 段（赛点从左跑到右）。",
+  "_quote_why_global": "四段原声：接发抽走上旋发球、首盘结束「非常全面、非常自信的一盘」、第二盘结束「第一盘被打得还不了手，这一盘全扭了过来」、赛点之后「第一次打进 WTA 半决赛」。",
+  "_no_repeat": "同站兄弟片 `wang-prozorova-singapore-2026-qf`（普罗佐罗娃逆转王欣瑜）——这一条只在末句一句带过普罗佐罗娃是半决赛对手，不重讲那场。老片 `sabalenka-gibson`（辛辛那提）讲过吉布森今年赢过保利尼、大坂直美——这一条不重提。",
+  "push": {
+    "matchup": "吉布森 vs 萨卡里",
+    "score": "6-1 4-6 6-2",
+    "summary": "吉布森淘汰萨卡里进半决赛",
+    "auto": true,
+    "lead": "2026 WTA500 新加坡女单 1/4决赛：世界第 63 的吉布森 6-1、4-6、6-2 淘汰 7 号种子萨卡里，1 小时 56 分，生涯第一次打进 WTA 半决赛。首盘她三次破发，制胜分 14 比 2；第二盘萨卡里开局破发、发球局一局没丢，5-4 发球胜盘从 15-40 救回，6-4 扳平；决胜盘吉布森三局里破发两次，最后在萨卡里发球的赛点上破发收掉。全场制胜分 34 比 10。半决赛对手是刚逆转王欣瑜的普罗佐罗娃。"
+  }
+}
