@@ -309,12 +309,13 @@
     {
       "source": "main",
       "cx": 0.515,
-      "score_inset": true,
+      "score_inset": false,
       "start": 150.0,
       "end": 163.7,
       "narration": "首日打完，欧洲队三比一领先。可去年在旧金山，他们首日也是三比一，最后还是被世界队翻了盘。第二天，你押哪一边？",
       "_why": "150~160s 阿尔卡拉斯、门西克走回替补席，和世界队队长阿加西拥抱；162.5s 看台上的西班牙国旗。164 起片尾板，收在 163.7。去年首日 3-1、最终 9-15：官网首日赛报「Team Europe also jumped out to a 3-1 advantage last year in San Francisco, only to surrender the Laver Cup on Day 3 to Andre Agassi and Team World, 15-9」。",
-      "point_end_ok": "比赛已经结束，那串翻牌是右下角团体比分板的动画。"
+      "point_end_ok": "比赛已经结束，那串翻牌是右下角团体比分板的动画。",
+      "_score_inset_why": "144.5s 起是赛后替补席、阿加西拥抱、看台近景，score_03 那一排裁图里一帧比分板都没有（右下只剩团体比分小牌），render run 36197683115 也在这一段报「一帧都没认出比分板」。"
     }
   ]
 }
