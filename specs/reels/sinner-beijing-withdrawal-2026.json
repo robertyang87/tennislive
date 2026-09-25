@@ -17,7 +17,7 @@
   "bj24f": "https://www.youtube.com/watch?v=Kv_obyZNKl4",
   "bj25f": "https://www.youtube.com/watch?v=OvwxSWhu1_g",
   "uso26": "https://www.youtube.com/watch?v=hY1epQDmhGQ",
-  "xvid": "https://x.com/janniksin/status/2103431955874226576"
+  "xvid": "https://video.twimg.com/amplify_video/2103431865776398336/vid/avc1/1080x1920/MMKb_xh7XOc9hcEL.mp4?tag=29"
  },
  "primary": "wim",
  "_primary_why": "primary 取 wim：25fps、1080p、这条片子里用得最多的一条（冷开场、最后一场、伤情那几段都在它上面）。",
@@ -415,5 +415,9 @@
    "_why": "2025 中网赛后场边手持镜头：436.5 网前和钱握手、438.5 和主裁握手，440.5~442.5 他转身抬头看满场看台（横幅「礼赞祖国76周年华诞」），444 起走向座椅。末屏一问落在北京的看台上。末屏一问落在北京的看台上。",
    "_ending_payoff_required": false
   }
- ]
+ ],
+ "_xvid_why": "xvid 写的是 X 自己 CDN 上 1080×1920 那一档的直链（yt-dlp -g -f http-10368 从 https://x.com/janniksin/status/2103431955874226576 解出来）。直接写帖子地址时，match-reel 的 yt-dlp 选择器 `bv*[height<=1080]` 对竖版只挑得到 480×852（run 36133328467），直链 curl 下来就是原画。",
+ "archival": {
+  "xvid": "辛纳本人 X 上的竖版退赛视频 1080×1920（不是低清，是朝向不同）：和主源 1920×1080 尺寸不一样，两段都 `fit: contain` 整幅铺、两侧同帧模糊垫底，不套主源的裁切几何——同 djokovic-beijing-return 的 announce。"
+ }
 }
