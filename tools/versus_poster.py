@@ -282,17 +282,32 @@ def _score_flag(meta: dict, where: str) -> str:
         return '<span class="score-flag-slot" aria-hidden="true"></span>'
     from tennislive.zh.countries import country_iso2  # noqa: PLC0415
 
-    iso2 = country_iso2(str(meta["country"]))
-    if not iso2:
-        raise SystemExit(
-            f"{where} 的 country={meta['country']!r} 无法换算 ISO2，"
-            "不能生成矩形国旗。")
-    flag_path = REPO_ROOT / "assets" / "flags" / f"{iso2.lower()}.png"
-    if not flag_path.is_file():
-        raise SystemExit(f"{where} 缺少矩形国旗资源：{flag_path}")
+    def _path(code: object) -> Path:
+        iso2 = country_iso2(str(code))
+        if not iso2:
+            raise SystemExit(
+                f"{where} 的 country={code!r} 无法换算 ISO2，"
+                "不能生成矩形国旗。")
+        flag_path = REPO_ROOT / "assets" / "flags" / f"{iso2.lower()}.png"
+        if not flag_path.is_file():
+            raise SystemExit(f"{where} 缺少矩形国旗资源：{flag_path}")
+        return flag_path
+
+    # 双打：`country` 写成两个码的列表，两面旗在同一个旗位里错开叠放
+    # （第一面左上、第二面右下压在上面），账号所有者 2026-09-26 给的参考图
+    # 就是这个样子。旗位宽度不变，名字那一列不会被挤。
+    if isinstance(meta["country"], list):
+        codes = meta["country"]
+        if len(codes) != 2:
+            raise SystemExit(f"{where} 的 country 是列表时必须正好两个码（双打一对）：{codes!r}")
+        a, b = (_path(code) for code in codes)
+        return (
+            f'<span class="score-flag-slot score-flag-pair">'
+            f'<img class="score-flag score-flag-a" src="{_data_uri(a)}" alt="">'
+            f'<img class="score-flag score-flag-b" src="{_data_uri(b)}" alt=""></span>')
     return (
         f'<span class="score-flag-slot"><img class="score-flag" '
-        f'src="{_data_uri(flag_path)}" alt=""></span>')
+        f'src="{_data_uri(_path(meta["country"]))}" alt=""></span>')
 
 
 def _duration_seconds(value: object) -> int | None:
@@ -433,6 +448,13 @@ def _name_html(name: str, meta: dict, where: str) -> str:
     if meta["country"] is None:
         print(f"[封面] {name} 声明了没有国旗（country: null，中立身份），旗位省略")
         flag = ""
+    elif isinstance(meta["country"], list):
+        flags = [_flag(str(code)) for code in meta["country"]]
+        if len(flags) != 2 or not all(flags):
+            raise SystemExit(
+                f"{where} 的 country 是列表时必须是两个认得出的码（双打一对）："
+                f"{meta['country']!r}")
+        flag = f"<b>{''.join(flags)}</b>"
     else:
         code = str(meta["country"] or "").strip()
         if not code:
@@ -1705,6 +1727,12 @@ __SCRIM__
  justify-content:center}
 .score-flag{display:block;width:__SCORE_FLAG_W__px;height:__SCORE_FLAG_H__px;
  object-fit:cover}
+.score-flag-pair{position:relative}
+.score-flag-pair .score-flag{position:absolute;width:72%;height:72%;
+ border-radius:3px}
+.score-flag-pair .score-flag-a{left:0;top:0}
+.score-flag-pair .score-flag-b{right:0;bottom:0;
+ box-shadow:0 0 0 2px rgba(0,0,0,.35)}
 /* 名字两行：**英文小字在上、中文大字在下**——参考图就是这个节奏（上面一行
    小号的名、下面一行大号的姓）。中文名是这一行的主语，占大字那一行。
    ⚠️ 中文名保留得意黑（我们的中文标题字体，参考图那支字没有中文）；英文名和
