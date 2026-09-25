@@ -16,7 +16,8 @@
   "bj23f": "https://www.youtube.com/watch?v=01st6qqUcO8",
   "bj24f": "https://www.youtube.com/watch?v=Kv_obyZNKl4",
   "bj25f": "https://www.youtube.com/watch?v=OvwxSWhu1_g",
-  "uso26": "https://www.youtube.com/watch?v=hY1epQDmhGQ"
+  "uso26": "https://www.youtube.com/watch?v=hY1epQDmhGQ",
+  "xvid": "https://video.twimg.com/amplify_video/2103431865776398336/vid/avc1/1080x1920/MMKb_xh7XOc9hcEL.mp4?tag=29"
  },
  "primary": "wim",
  "_primary_why": "primary 取 wim：25fps、1080p、这条片子里用得最多的一条（冷开场、最后一场、伤情那几段都在它上面）。",
@@ -77,22 +78,68 @@
  },
  "segments": [
   {
+   "source": "xvid",
+   "start": 0.0,
+   "end": 21.2,
+   "fit": "contain",
+   "narration": "",
+   "_why": "①冷开场，账号所有者 2026-09-25：「建议把辛纳自己的视频加在最前面」。辛纳本人 2026-09-25 发在自己 X 账号（@janniksin，status 2103431955874226576）上的退赛视频，1080×1920/25fps/43.7s，白墙前手持领夹麦、一镜到底。ilgazzettino.it 与 sundayguardianlive.com 两家的报道都嵌着这条帖子。原声保留、配中英双语字幕；英文按 faster-whisper 逐词时间戳切（Hello@0.00 … can.@20.64），措辞和 AOL/Express 刊出的全文逐句核过。这一段取代了原来旁白转述他原话的那两段——账号所有者：「多去找找 X 和 Instagram」。竖版源走 contain（整幅 810×1440 居中、两侧同帧模糊垫底），不套主源的横屏裁切几何。",
+   "quote": [
+    {
+     "at": 0.0,
+     "text": "Hello everyone, Jannik here.\n大家好，我是辛纳。"
+    },
+    {
+     "at": 1.86,
+     "text": "I want to send the warmest greetings\n我想把最温暖的问候"
+    },
+    {
+     "at": 3.5,
+     "text": "to the Chinese fans.\n送给中国的球迷们"
+    },
+    {
+     "at": 5.34,
+     "text": "I'm very sorry to announce\n很抱歉地告诉大家"
+    },
+    {
+     "at": 6.9,
+     "text": "that I won't be able to play in Beijing this year.\n今年我没法去北京比赛了"
+    },
+    {
+     "at": 10.84,
+     "text": "My knee is not there, where I would like it to be,\n我的膝盖还没到我想要的状态"
+    },
+    {
+     "at": 13.7,
+     "text": "and I'm not ready to compete yet,\n我还没准备好比赛"
+    },
+    {
+     "at": 16.12,
+     "text": "but I will do everything possible\n但我会尽一切可能"
+    },
+    {
+     "at": 18.84,
+     "text": "to be there on court as soon as I can.\n尽快回到球场上"
+    }
+   ],
+   "_quote_why": "当事人自己说出退赛理由，是这条片子最硬的一手证据；不是赛后采访，不涉及「赛场之上不许放采访」那条（本条是网球有故事）。",
+   "_ending_payoff_required": false,
+   "_head_open_why": "冷开场就是这条视频自己的开头：他本人对中国球迷说「今年北京来不了了」，从第 0 秒的 Hello everyone 起，不是比赛集锦的开头。"
+  },
+  {
    "source": "wim",
    "start": 728.16,
    "end": 733.9,
    "fit": "crop",
    "narration": "",
-   "_why": "①冷开场：温网 2026 决赛冠军点落地后，辛纳仰面躺在中央球场草地上、全场起立（contact 728.5~732.5，背后机位宽景）。728.16 是 scene_cuts 硬切，从赛点回合切到这一镜；733.9 之前没有下一刀。不配旁白，保留解说原声 729.80「For Sinner.」730.36「Sweet Sinner.」配双语字幕。取自源片后段（源片 834s），不是开头。",
-   "_ending_payoff_required": false,
+   "_why": "温网 2026 决赛冠军点落地后，辛纳仰面躺在中央球场草地上、全场起立（728.16 硬切起，733.9 之前没有下一刀）。不配旁白，保留解说原声「For Sinner. Sweet Sinner.」配双语字幕——紧接在他本人的退赛视频之后，把镜头拉回他最后一次站上球场的那一刻。",
    "_quote_kind": "broadcast",
    "quote": [
     {
      "at": 1.64,
      "text": "For Sinner. Sweet Sinner.\n属于辛纳。甜蜜的辛纳。"
     }
-   ],
-   "_head_open_why": "冷开场取的是 728.16 这一刀之后的冠军庆祝，源片前 7.48s 是温网片头卡，没用。",
-   "_payoff_why": "这条是网球有故事不是赛事复盘：冷开场之后第 2、3 段紧接着就是同一场决赛的捧杯（806.96~817.30），结局在正文里立刻交代了——「四盘赢下兹维列夫，卫冕」，不需要再重放赛点。"
+   ]
   },
   {
    "source": "wim",
@@ -113,18 +160,10 @@
   {
    "source": "wim",
    "start": 591.3,
-   "end": 601.5,
+   "end": 597.5,
    "fit": "crop",
-   "narration": "七十五天过去了。九月二十五号，他自己录了一段视频：今年的北京，我来不了了。",
-   "_why": "第四盘破发到 4-3 之后的低机位回放，辛纳沿底线移动、正反手连续击球（无记分条）；603~604 附近有一刀没进 scene_cuts，窗口停在 601.5。75 天＝07-12 到 09-25。视频是他 9/25 发在自己社交账号上的（ilgazzettino.it / ilfattoquotidiano.it 2026-09-25，原文 AOL/Express 2026-09-25）。"
-  },
-  {
-   "source": "wim",
-   "start": 559.04,
-   "end": 568.9,
-   "fit": "crop",
-   "narration": "他说，我的膝盖，还没到我想要的状态，我还没准备好比赛。但我会尽一切可能，尽快回到球场上。",
-   "_why": "第四盘 3-3 15-0 侧机位：辛纳接发、566~568 一个大劈叉滑步（解说 565.48「The defensive skills of Sinner. Look at that slide」）。569 附近有一个未入 scene_cuts 的机位变化，窗口停在 568.9。旁白是他视频原话的中译：「My knee is not there, where I would like it to be, and I am not ready to compete yet」（AOL/Express 09-25；Il Fatto 09-25 意文版逐句对得上）。⚠️ 画面不是受伤画面——据报道这次伤不是在比赛里出现的，所以不配任何「滑倒／跪地」镜头，不暗示因果。"
+   "narration": "从那天到今天，七十五天，他一场都没打。",
+   "_why": "第四盘破发到 4-3 之后的低机位回放，辛纳沿底线移动、正反手连续击球（无记分条）；603~604 附近有一刀没进 scene_cuts，窗口停在 601.5。75 天＝07-12 到 09-25。"
   },
   {
    "source": "wim",
@@ -254,9 +293,9 @@
   {
    "source": "bj25f",
    "start": 455.0,
-   "end": 465.48,
+   "end": 462.5,
    "fit": "crop",
-   "narration": "他在视频里说：去年在这儿夺冠，今年不能卫冕，很失望；最想念的，是这里的赛事、球迷和气氛。",
+   "narration": "去年，他就是在这儿捧的杯。今年，他没法回来卫冕了。",
    "_why": "颁奖：辛纳捧杯站在两位官员之间、背后中网旗和球童，460.5 奖牌特写「China Open … Men's Singles Champion」，464.5 他低头近景。465.48 之后是片尾卡。原话「winning the title also last year, and I'm very disappointed that I cannot defend it this year」（AOL/Express 09-25 ＋ Il Fatto 意文版）。",
    "point_end_ok": "颁奖段，不在回合里；466.3 的「翻牌」是片尾转场。"
   },
@@ -328,13 +367,56 @@
    "point_end_ok": "解说 544.68「Oh, that is a rocket.」时这一分已经打完，辛纳保发（下一格板 6-6）；板在 549.44 才翻是图形延迟，546.84 是下一刀，窗口停在 546.6 让溶解不跨刀。"
   },
   {
+   "source": "xvid",
+   "start": 21.7,
+   "end": 37.6,
+   "fit": "contain",
+   "narration": "",
+   "_why": "同一条 X 视频的后半段（What@21.88 … year.@37.24，37.48~37.76 是气口）：他自己说最想念北京的赛事、球迷和气氛，不能卫冕很失望，明年很高兴再回来。放在末屏一问之前——结尾让他自己说话。",
+   "quote": [
+    {
+     "at": 0.18,
+     "text": "What I miss the most is, of course,\n我最想念的，当然是"
+    },
+    {
+     "at": 2.26,
+     "text": "the tournament, the fans and the atmosphere.\n这里的赛事、球迷和气氛"
+    },
+    {
+     "at": 4.12,
+     "text": "I've had a great, great time in the past,\n过去我在这里特别开心"
+    },
+    {
+     "at": 7.1,
+     "text": "winning the title also last year,\n去年还拿了冠军"
+    },
+    {
+     "at": 9.02,
+     "text": "and I'm very disappointed\n我很失望"
+    },
+    {
+     "at": 10.96,
+     "text": "that I cannot defend it this year,\n今年没法卫冕"
+    },
+    {
+     "at": 13.56,
+     "text": "but I'm very happy to come back next year.\n但明年我很高兴再回来"
+    }
+   ],
+   "_quote_why": "同上，本人原话。"
+  },
+  {
    "source": "bj25f",
    "start": 434.56,
-   "end": 443.5,
+   "end": 441.0,
    "fit": "crop",
-   "narration": "他在视频最后说，明年很高兴再回来。今年年底的世界第一，你觉得还会是辛纳吗？",
-   "_why": "2025 中网赛后场边手持镜头：436.5 网前和钱握手、438.5 和主裁握手，440.5~442.5 他转身抬头看满场看台（横幅「礼赞祖国76周年华诞」），444 起走向座椅。末屏一问落在北京的看台上。原话「I'm very happy to come back next year」（AOL/Express 09-25）。",
+   "narration": "明年再回北京之前，今年年底的世界第一，你觉得还会是辛纳吗？",
+   "_why": "2025 中网赛后场边手持镜头：436.5 网前和钱握手、438.5 和主裁握手，440.5~442.5 他转身抬头看满场看台（横幅「礼赞祖国76周年华诞」），444 起走向座椅。末屏一问落在北京的看台上。末屏一问落在北京的看台上。",
    "_ending_payoff_required": false
   }
- ]
+ ],
+ "_xvid_why": "xvid 写的是 X 自己 CDN 上 1080×1920 那一档的直链（yt-dlp -g -f http-10368 从 https://x.com/janniksin/status/2103431955874226576 解出来）。直接写帖子地址时，match-reel 的 yt-dlp 选择器 `bv*[height<=1080]` 对竖版只挑得到 480×852（run 36133328467），直链 curl 下来就是原画。",
+ "archival": {
+  "xvid": "辛纳本人 X 上的竖版退赛视频 1080×1920（不是低清，是朝向不同）：和主源 1920×1080 尺寸不一样，两段都 `fit: contain` 整幅铺、两侧同帧模糊垫底，不套主源的裁切几何——同 djokovic-beijing-return 的 announce。"
+ }
 }

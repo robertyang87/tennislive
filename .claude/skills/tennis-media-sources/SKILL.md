@@ -7,6 +7,36 @@ description: 网球时差｜源片与比赛数据的取数档案：集锦源片�
 
 > 从 `CLAUDE.md` 原样搬来，一个字没改。**规矩本身仍在 CLAUDE.md**，这里是撞上问题时才查的档案。
 
+### ⭐⭐ 2026-09-25：**X 和 Instagram 是第一手源，先去那儿找**
+
+账号所有者做完 `sinner-beijing-withdrawal-2026` 之后：「**多去找找 X 和 Instagram**」。
+
+来路：辛纳 9/25 退出中网，**本人的退赛视频只发在他自己的 X / Instagram 上**，YouTube 上没有
+官方版本；ATP 那张「SINNER OUT OF BEIJING」图也**只是 ATP 官方 Instagram 的帖子**，
+atptour.com 上没有对应文章。我先在官网找、找不到就写成「可能只是社交帖、未核实」，
+第一版片子只能用旁白转述他的原话——**而他自己开口说的 44 秒 1080×1920 就在 X 上**。
+
+| 找什么 | 先去哪儿 |
+|---|---|
+| 球员本人的声明（退赛、伤情、复出、告别） | 本人 X / Instagram（辛纳 `@janniksin`） |
+| 巡回赛 / 赛事的官宣图、快讯 | ATP / WTA / 赛事官方的 Instagram、X |
+| 官网找不到的「官方说法」 | **先查它的社交账号，再说「未核实」** |
+
+**怎么拿到帖子地址**：新闻稿常把帖子嵌在页面里——带浏览器 UA curl 下来，
+`grep -oE "(twitter|x)\.com/[A-Za-z0-9_]+/status/[0-9]+|instagram\.com/(p|reel)/[A-Za-z0-9_-]+"`。
+这次 ilgazzettino.it 和 sundayguardianlive.com 两家都嵌着 `x.com/janniksin/status/2103431955874226576`，
+**两家独立嵌同一条就是它真实存在的出处**。
+
+**怎么下**：`yt-dlp -F <x.com 帖子地址>` 在沙箱里直接能列格式（这条有 `http-10368` 1080×1920）；
+⚠️ **spec 的 `sources` 别直接写帖子地址**：match-reel 的选择器是 `bv*[height<=1080]`，
+对**竖版**只挑得到 480×852（run 36133328467，2026-09-25 实测）。写 `yt-dlp -g -f <最高那档 http-*>`
+解出来的 `video.twimg.com/...mp4` 直链，下载那步走 curl、拿到原画。
+竖版源和主源尺寸不同，要在 spec 顶层 `archival` 里认领、每段 `fit: "contain"`
+（`djokovic-beijing-return` 的 `announce`、`sinner-beijing-withdrawal-2026` 的 `xvid` 都是这么写的）。原声没有字幕时，`pip install faster-whisper` 跑 `small.en`
+拿逐词时间戳切双语 cue，措辞再和刊出的全文逐句核一遍（whisper 会把 Jannik 拼成 Janik）。
+
+⚠️ Instagram 帖子在沙箱里多半要登录，拿不到就先找同一段视频在 X 上的那份。
+
 ### ⭐ 源有三类，查空一类不等于查空全部
 
 2026-08-06，账号所有者点名要做「莱巴金娜的 UE 和 Winner 齐飞」。我查了三个地方——
