@@ -3,7 +3,7 @@
  "url": "https://www.youtube.com/watch?v=UYi6Of_-mxk",
  "source_title": "Brandon Nakashima On-Court Interview | Laver Cup 2026 Match 2（Laver Cup 官方频道）",
  "start": 0.0,
- "end": 152.0,
+ "end": 144.85,
  "whisper_model": "medium.en",
  "column": "赛后开麦",
  "requested_content_type": "on_court",
@@ -12,9 +12,8 @@
  "winner": "中岛布兰登",
  "featured_player": "中岛布兰登",
  "opening": {
-  "kind": "match_end",
-  "lead_in": 1,
-  "why": "占位：等 subs 那趟的缩略图墙和字幕回来再定"
+  "kind": "none",
+  "why": "源片从第 0.08 秒起就是主持人举着话筒在场上提问（`Brandon, congratulations. What a roller coaster.`），缩略图墙 78 格（1.95 秒一格）逐格看过：全是 O2 球场上的采访——中岛穿当场比赛的红色世界队球衣、话筒是 LAVER CUP 台标，58 秒起阿加西走过来加入，40.9~42.9 两格是切到板凳的反应镜头，146.2 起是 LAVER CUP 片尾板。一个回合都没有，所以比赛结束那一段从同场官方集锦借（见 lead_in）。"
  },
  "match": {
   "id": "2026:laver-cup:match-2:brandon-nakashima-jakub-mensik",
@@ -48,5 +47,210 @@
   ],
   "match_id": "2026:laver-cup:match-2:brandon-nakashima-jakub-mensik",
   "attestation_sha256": "890c4ce1356b6b123fc081edd1eb1fee6201dbaca64dc4a8042b8a63cafe4a4f"
- }
+ },
+ "lead_in": {
+  "url": "https://www.youtube.com/watch?v=c9OFf0giquc",
+  "start": 150.0,
+  "end": 185.0,
+  "verification": {
+   "match_id": "2026:laver-cup:match-2:brandon-nakashima-jakub-mensik",
+   "winner_en": "Brandon Nakashima",
+   "loser_en": "Jakub Mensik",
+   "event_search": "Laver Cup",
+   "year": 2026,
+   "method": "official_exact_match_highlight",
+   "height": 1080,
+   "channel": "Laver Cup"
+  },
+  "subs": [
+   {
+    "a": 157.2,
+    "b": 160.4,
+    "en": "Team World have their first points at",
+    "zh": "世界队拿到了"
+   },
+   {
+    "a": 160.4,
+    "b": 163.0,
+    "en": "London's Laver Cup.",
+    "zh": "伦敦拉沃尔杯的第一分"
+   },
+   {
+    "a": 167.76,
+    "b": 170.64,
+    "en": "An hour and 20 minutes. A match that",
+    "zh": "1小时20分钟 这场球"
+   },
+   {
+    "a": 170.64,
+    "b": 172.72,
+    "en": "flew one way and then the other. But",
+    "zh": "忽而这边 忽而那边"
+   },
+   {
+    "a": 172.72,
+    "b": 176.5,
+    "en": "it's Nakashima who comes through 6-1, 3-6",
+    "zh": "赢家是中岛布兰登 6比1 3比6"
+   },
+   {
+    "a": 180.64,
+    "b": 183.12,
+    "en": "and then finishes off in the",
+    "zh": "然后一锤定音"
+   },
+   {
+    "a": 183.12,
+    "b": 185.0,
+    "en": "10-point match tiebreak.",
+    "zh": "赢在10分制的抢十"
+   }
+  ],
+  "why": "同一场的 Laver Cup 官方集锦（c9OFf0giquc，`Jakub Mensik v Brandon Nakashima Highlights | Laver Cup 2026 Match 2`，@LaverCup，1920×1080 / 29.97fps，188 秒；本分支 match-reel probe run 36163175878，产物 `output/2026-09-26/reel/mensik-nakashima-laver-cup-2026-hl/`）的最后 35 秒，一整段连续画面。\n窗口里有什么（probe 缩略图墙 2 秒一格逐格看过）：134.0 切点之后是赛点那一分的全场镜头（记分条挂 `MATCH POINTS`），138.5~154.5 中岛在近端底线打完最后一个回合 → 155.82 切点，世界队板凳全体起立 → 158.5 阿加西张开双臂 → 160.5~162.5 门西克低头近景 → 164.5 网前握手、LED 打出 `TEAM WORLD WINS` → 168~184 中岛和队友、阿加西一路击掌拥抱。\n**起点 150.0**：取在赛点那一分的后段——解说从 134.48 到 157.2 一句都没说，从 138.5 发球起收会压着近 19 秒没有字幕的画面；从 150.0 起，没字幕的只剩 7 秒，而那一分怎么结束的、板凳怎么炸开的都在。\n**终点 185.0**：probe 的 `silent_audio` 从 185.09 开始，186.5 起是 LAVER CUP 片尾板，一帧都不收。\n字幕按 probe 的 `captions.txt` 逐句起点切；终点取下一句的起点（160.4 → 167.76、172.72 → 180.64 中间解说停了，终点收在 163.0 / 176.5，不挂满空白）。`London Slaver Cup` 是 `London's Laver Cup` 的误听，`61 36` 按比分写成 6-1, 3-6。"
+ },
+ "zh": [
+  "布兰登 恭喜你",
+  "真是过山车",
+  "开局很好 后来打得有点紧",
+  "对你来说",
+  "给我们讲讲",
+  "是的 第一次打拉沃尔杯",
+  "肯定有点紧张",
+  "不过你知道",
+  "这很正常 后来",
+  "丢掉第二盘的时候",
+  "就告诉自己每一分都要拼",
+  "相信板凳上的队友",
+  "相信自己 然后",
+  "赢了真的很开心",
+  "打得漂亮",
+  "板凳上的队友",
+  "我们就聊聊这个",
+  "因为你平时很少",
+  "打团体赛 而队里有人",
+  "以前来过",
+  "但这是你的首秀",
+  "听他们出主意是什么感觉？",
+  "你喜欢还是不喜欢？",
+  "我觉得很棒 能听听",
+  "他们的想法",
+  "我是说 当然了",
+  "他们都是很出色的球员",
+  "所以听他们怎么看很有意思",
+  "怎么看这场球 看我打得怎样",
+  "而且也很好的是",
+  "队里有几位老将",
+  "打过好几届拉沃尔杯",
+  "所以有全队在身边",
+  "真的很好",
+  "要不把老将请过来",
+  "传奇阿加西",
+  "大家都过来吧",
+  "别走 布兰登 现在问安德烈",
+  "有一阵他第一盘3比0领先",
+  "你当时想的是",
+  "我没什么可说的",
+  "但后来你得干点活了",
+  "没错 毫无疑问",
+  "我是说 听着",
+  "开局打得好的时候",
+  "球网两边",
+  "都没有比分压力",
+  "大家都能放开",
+  "打自己的",
+  "第二盘 门西克早早领先",
+  "两个人 你知道",
+  "他开始放开抡了",
+  "但很快就变成了",
+  "满满的压力",
+  "这种时候我每次都",
+  "押这个家伙",
+  "他稳得像块石头",
+  "欢迎你 你正式入队了",
+  "这一分太重要了",
+  "今天前两场",
+  "第一场你们本来可能拿下",
+  "结果没赢下来",
+  "你们得消化",
+  "那份失望",
+  "没错 毫无疑问",
+  "你当然希望",
+  "开个好头",
+  "但归根结底你会这么看",
+  "有的归他们",
+  "有的归我们",
+  "就算扯平吧 越来越激烈",
+  "这正是这个周末",
+  "这么好玩的原因",
+  "那进入",
+  "晚场呢？",
+  "你们派出的是布勃利克",
+  "你得做的功课就不一样了",
+  "和布兰登性格很不一样",
+  "你觉得呢？",
+  "我是说",
+  "这家伙 我都不信他是真人",
+  "我觉得他是AI 你知道吗？",
+  "他就是闷头打球",
+  "一分接一分",
+  "布勃利克手里武器很多",
+  "所以希望",
+  "结果还能站在我们这边",
+  "不过 我们是客队",
+  "我就不多说了",
+  "我就是",
+  "去干活",
+  "我们是 布兰登 打得好",
+  "安德烈 恭喜"
+ ],
+ "en_fixed": {
+  "6": "Yeah, I mean first match at Laver Cup,",
+  "24": "Yeah, I think it's great just to hear",
+  "32": "that played Laver Cup a few times,",
+  "33": "so definitely good to have all the guys",
+  "39": "at one point he goes up 3-0",
+  "40": "in the first set and he goes,",
+  "50": "Second set, Mensik gets up early.",
+  "58": "Welcome. You're initiated.",
+  "71": "We'll call it even. Intensity builds",
+  "76": "You've got Alexander Bublik coming out.",
+  "85": "Bublik brings a lot of weapons to the table.",
+  "90": "You know, I'm just going"
+ },
+ "_en_fixed_why": "照 YouTube 原始 ASR 轨 `en-orig` 逐行改：第 6、32 行 `Labor Cup` / `Lever Cup` 是 Laver Cup 的误听；第 24、33、58、90 行去掉口吃的重复词（`I think it I think it's`、`all all`、`You're you're`、`I'm just going to I'm just going`），意思不变；第 39 行 `three love` 按比分写 3-0；第 40 行 `he's go` 是 `he goes`；第 50 行 `Mensa` 是门西克 Mensik（这一句讲第二盘他早早领先，flashscore 逐分第二盘门西克 2-0 破发领先对得上）；第 71 行 `even intensity` 中间断句；第 76、85 行 `Bubble` 是晚场出战的布勃利克 Bublik（Laver Cup 官方赛程当晚第三场就是 Jodar vs Bublik）。第 88 行 `we're away` 照原样：伦敦 O2 是欧洲队主场，世界队是客队，阿加西说的就是这个。",
+ "_window_why": "0.0 起：原始 ASR 第一个事件 0.08 秒就是主持人第一句，前面没有别的。**终点 144.85**：143.36 起主持人「Andre, congratulations.」收在 144.88；后面 144.88 起的「We're all tied up at one point each. Team World wins that one. We'll see you tonight.」压在缩略图墙 146.2 起的 LAVER CUP 片尾板上（源片 152 秒），不收——那句「1比1」的赛况，收尾卡和 lead_in 的解说已经交代了。",
+ "cover": {
+  "frame_at": 138.4,
+  "_why": "缩略图墙里中岛的近景一共三段（7.8~21.4、37.0~39.0、44.8~52.6）加 138.4 这一格；138.4 是他**笑得最开**的一格、正脸、身后是满场红色看台——落在阿加西说完「我都不信他是真人，我觉得他是 AI」之后十来秒、他自己接那句「我就是去干活」前后，情绪和钩子第二行对得上。⚠️ storyboard 一格 1.95 秒、320 宽，看不清眼睛睁没睁：靠 runner 上 `audit_interview_cover` 过闸，渲完再把成片拉回来核这一帧。",
+  "title": [
+   "首秀被逼进决胜盘",
+   "阿加西：我怀疑他是AI"
+  ],
+  "sub": "拉沃尔杯首日 赛后场上采访",
+  "tag": "2026 拉沃尔杯 · 中岛布兰登",
+  "_copy_why": "第一行是这场球的形状：他的拉沃尔杯首秀（主持人 `this is your debut`、他自己 `first match at Laver Cup`，外加官方集锦解说（lead_in 那条源片 36.64 秒）也说他是首秀），第一盘 6-1 之后第二盘 3-6 丢掉，被拖进决胜的抢十（flashscore Kvc7yWkB BA/BB=1:6、BC/BD=6:3、BE/BF=7:10，home＝门西克；Spazio Tennis 赛后稿 6-1 3-6 10-7）。第二行是阿加西的原话：`this guy's like, I'm not convinced he's real. I think he's AI`（源片 122.6~125.2），两行之间有落差（首秀被逼到悬崖边 → 队长说他稳得不像真人）。「决胜盘」而不写「抢十」：钩子里不放要解释的术语；拉沃尔杯规则里第三盘本身就由抢十代替，算它是决胜盘不失真。不写排名、国籍。"
+ },
+ "takeaway": {
+  "close": {
+   "point": "首秀丢了第二盘 他只告诉自己每一分都要拼",
+   "ask": "阿加西说他像AI 你觉得呢？"
+  }
+ },
+ "push": {
+  "matchup": "中岛布兰登 vs 门西克",
+  "score": "6-1 3-6 10-7",
+  "event": "",
+  "summary": "阿加西：他像AI",
+  "auto": true,
+  "lead": "2026 拉沃尔杯伦敦站首日第二场：世界队的中岛布兰登 6-1、3-6、10-7 击败欧洲队的门西克，替世界队把总比分扳成 1比1。这是他的拉沃尔杯首秀，第一盘只丢 1 局，第二盘被门西克早早破发拿走，决胜的抢十里他一度 4比6 落后，最后 7 分拿了 6 分。赛后场上采访他说：「丢掉第二盘的时候，就告诉自己每一分都要拼，相信板凳上的队友，相信自己。」队长阿加西被请过来之后，先说开局 3比0 时他「没什么可说的」，第二盘压力上来，「这种时候我每次都押这个家伙，他稳得像块石头」。聊到晚场出战的布勃利克性格完全不同，阿加西反过来说中岛：「这家伙，我都不信他是真人，我觉得他是 AI，就是一分接一分地闷头打球。」"
+ },
+ "_facts": [
+  "赛果：中岛布兰登 6-1 3-6 10-7 胜门西克，2026 拉沃尔杯（伦敦 O2）首日第二场。flashscore Kvc7yWkB（home＝Mensik J.、away＝Nakashima B.）BA/BB=1:6、BC/BD=6:3、BE/BF=7:10、AG/AH=1:2；Spazio Tennis 赛后稿 `Nakashima defeated Mensik 6-1, 3-6, 10-7`；维基 2026 Laver Cup 首日表同一比分；集锦解说 172.72 `it's Nakashima who comes through 61 36 … 10-point match tie break`。",
+  "抢十走势：flashscore df_mh_1 Set 3 逐分（门西克:中岛）0:1 … 5:3、6:4 → 6:5、6:6、6:7、7:7、7:8、7:9、7:10——门西克一度 6-4 领先，中岛拿下最后 7 分里的 6 分。Spazio Tennis：`Mensik led 6-4 … losing 6 of the next 7 points`。两源一致。",
+  "第一盘 6-1：flashscore 逐分，门西克的第 2、4 局发球局被破；第二盘门西克 6-3，第 2 局破发（逐分 `2-0 客队发球，主队拿下`）——和阿加西说的 `Second set, Mensik gets up early` 对得上。",
+  "总比分 1比1：首日第一场鲁德（欧洲队）胜塞伦多洛（仓库 `specs/reels/ruud-cerundolo-laver-cup-2026.json`），第二场中岛扳平；Spazio Tennis `The result leveled the competition`；源片 144.88 主持人 `We're all tied up at one point each`。",
+  "首秀：主持人 32.0 `this is your debut`、他自己 6.3 `first match at Laver Cup`、集锦解说 36.64 `the American on debut`。",
+  "用时：flashscore 分盘用时合计 1:23，Spazio Tennis 写 1 小时 21 分，集锦解说说 `An hour and 20 minutes`——三处不一致，文案里不写用时（lead_in 字幕里那句是解说原话，照译）。",
+  "晚场布勃利克：主持人 113.9 `You've got Alexander Bublik coming out`；Spazio Tennis `Rafael Jodar and Alexander Bublik were scheduled to compete at 20:00 Italian time`。"
+ ]
 }
