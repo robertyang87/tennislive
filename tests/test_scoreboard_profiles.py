@@ -22,6 +22,7 @@ ON = [{"score_inset": True}]
     ("2026 WTA500 新加坡站 1/8决赛", "wta"),
     ("2026 ATP250 成都站 首轮", "atp"),
     ("2026 比利·简·金杯 1/4决赛", "itf-bjk"),
+    ("2026 拉沃尔杯 第一日", "lavercup"),
 ])
 def test_认得出的转播走各自的逐帧判据(line1, want):
     assert b.scoreboard_profile({"topbar": {"line1": line1}, "segments": ON}) == want
@@ -52,7 +53,7 @@ def test_全库开了回贴的全出血片子都落在标定过的转播上():
                    for s in spec.get("segments") or []):
             continue
         seen += 1
-        assert b.scoreboard_profile(spec) in {"atp", "wta", "itf-bjk"}, path.name
+        assert b.scoreboard_profile(spec) in {"atp", "wta", "itf-bjk", "lavercup"}, path.name
     assert seen >= 5, "一条开了回贴的全出血 spec 都没扫到，判据的主语像是没了"
 
 
@@ -68,3 +69,9 @@ def test_自动草稿的顶栏拼不出级别时_按赛事名和男女认转播(
     assert b.scoreboard_profile(beijing) == "wta"
     beijing["stats"]["a"]["headshot"] = "assets/players/headshots/atp-Y09V.png"
     assert b.scoreboard_profile(beijing) == "atp"
+
+
+def test_拉沃尔杯的自动草稿按赛事名认转播():
+    auto = {"topbar": {"line1": "2026 LAVER CUP 第一日"}, "segments": ON,
+            "_production": {"event": "Laver Cup"}}
+    assert b.scoreboard_profile(auto) == "lavercup"

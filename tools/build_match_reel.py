@@ -7567,7 +7567,7 @@ def scoreboard_profile(spec: dict, segments: list | None = None) -> str | None:
     多抠一截球场）。而在这之前，**没标定过的转播会静悄悄地走它**——两个毛病
     原样回来，渲染、质检一声不吭。
 
-    所以全出血的片子现在**只认标定过的转播**（ATP / WTA / 比利·简·金杯 / 美网带式），
+    所以全出血的片子现在**只认标定过的转播**（ATP / WTA / 比利·简·金杯 / 拉沃尔杯 / 美网带式），
     认不出就在 `--dry-run` 报错，而不是退回老路。老路只剩美网以外的带式版式
     （全库 0 条）。判据 `tests/test_scoreboard_profiles.py`。
     """
@@ -7586,7 +7586,7 @@ def scoreboard_profile(spec: dict, segments: list | None = None) -> str | None:
         return profile
     raise ReelError(
         f"全出血的片子开了 score_inset，可顶栏「{line1}」认不出是哪一家转播——"
-        "比分板回贴只认标定过的转播（ATP / WTA / 比利·简·金杯），"
+        "比分板回贴只认标定过的转播（ATP / WTA / 比利·简·金杯 / 拉沃尔杯），"
         "**不再退回老的整段矩形回贴**（账号所有者 2026-09-24：「消失后背景还在……"
         "像狗皮膏药」「右边突然多一块补丁」）。\n"
         "新的一家转播：先用 frame-grab 抽几十帧量出它的板长什么样，照 "
@@ -8167,6 +8167,11 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
         # ⭐ 比利·简·金杯（ITF 转播）：宝蓝底＋浅青小分格＋发球小球（见 itf_scoreboard）。
         from itf_scoreboard import resolve_masks as resolve_itf_masks
         resolve_itf_masks(sources, segments, outdir, FPS_EXPR, SEG_FADE)
+    elif profile == "lavercup":
+        # ⭐ 拉沃尔杯转播（账号所有者 2026-09-25「比分板补一套适配，彻底解决」）：
+        # 蓝边一行＋红边一行＋金色标签，三块胶囊各切各的；宽版全名板不贴（见 lavercup_scoreboard）。
+        from lavercup_scoreboard import resolve_masks as resolve_laver_masks
+        resolve_laver_masks(sources, segments, outdir, FPS_EXPR, SEG_FADE)
     elif profile == "band-legacy":
         resolve_board_insets(sources, segments)
 

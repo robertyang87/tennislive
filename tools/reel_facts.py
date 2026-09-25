@@ -546,17 +546,19 @@ def tour_topline(year, event: str, round_name: str, tour: str | None = None) -> 
 
 
 #: 全出血的「赛场之上」回贴比分板时，每一家转播都要有一套**按它自己的图形标定过**
-#: 的逐帧判据（`atp_scoreboard` / `wta_scoreboard` / `itf_scoreboard`）。
+#: 的逐帧判据（`atp_scoreboard` / `wta_scoreboard` / `itf_scoreboard` /
+#: `lavercup_scoreboard`）。
 #: 顶栏里认得出的词 → 判据名。**单一出处**：渲染（`build_match_reel.scoreboard_profile`）
 #: 和自动转正（`promote_reel_draft`）都读这一张。
 SCOREBOARD_PROFILES = (
     ("比利·简·金杯", "itf-bjk"),
+    ("拉沃尔杯", "lavercup"),
     ("ATP", "atp"),
     ("WTA", "wta"),
 )
 
 
-_EVENT_ALIASES = (("billie jean king", "itf-bjk"),)
+_EVENT_ALIASES = (("billie jean king", "itf-bjk"), ("laver cup", "lavercup"))
 
 
 def spec_tour(spec: dict) -> str | None:
