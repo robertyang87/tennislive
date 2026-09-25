@@ -211,7 +211,8 @@
   "97": "and Bublik.",
   "109": "Yeah, I mean, it's the first day",
   "111": "Tomorrow is double points",
-  "114": "the day session,"
+  "114": "the day session,",
+  "64": "I practice the ball in every practice a lot."
  },
  "word_fix": {
   "Yanik": "Yannick"
@@ -285,8 +286,8 @@
  "_en_fixed_why": "照 YouTube 原始 ASR 轨 `en-orig` 逐行改：第 1、2、48、54 行 `Yakob` / `J` 是 Jakub（门西克的名）；第 37 行 `Lever Cup` 是 Laver Cup；第 97 行 `Bubbleck` 是 Bublik；第 95 行 `Thus exactly` 是 `That's exactly`；`Yanik` 走 `word_fix` 改成 Yannick（队长诺阿；en_fixed 改会让第 81 行超宽）。其余行只去掉口吃的重复词（`he he`、`even even`、`I'm I'm`、`to to`、`bring the bring the`、`every every every`、`I I I`、`how how`、`it's it's`、`is is`、`the the`、`couple couple`、`on on`、`my my`），意思不变。第 18 行 `singlesh` 是 singles。第 64 行 `I practice the ball in every practice a lot.` 照原样（听不出他说的是不是 volley，不猜），中文译「每次训练我都练很多」。",
  "_window_why": "0.0 起：原始 ASR 第一个事件 0.7 秒就是主持人第一句。**终点 244.3**：243.3 起主持人「Guys, congratulations.」；缩略图墙 245.0 已经是片尾板，244.4 起那句「You're up 3-1.」贴着片尾板，不收——3比1 由收尾卡和文案交代。179.8 起副队长亨曼的那一段保留：他讲了这对组合为什么上场、日场两场有多胶着，是这场球的来路。",
  "cover": {
-  "frame_at": 80.0,
-  "_why": "缩略图墙 59.3~98.8 是一整段连续的阿尔卡拉斯近景（他在讲「我平时不怎么打双打，上一次可能就是去年这里」），取中段 80.0：墙上标签实测会比真实画面早 1~2 秒（`nakashima-mensik` 栽过），落在 40 秒近景的正中，前后各留近 20 秒余量。⚠️ 墙上一格看不清眼睛：靠 runner 上 `audit_interview_cover` 过闸，渲完拉回成片核这一帧。",
+  "frame_at": 121.0,
+  "_why": "第一版写 80.0（缩略图墙 59.3~98.8 那段近景的中间），run 36200798904 封面闸拦下：脸 55px、0 只眼——墙上那段并不是连续近景。把那趟成片拉回本地（封面 1.83 秒 ＋ lead_in 32.4 秒，正片源片 t 在成片 34.23+t，用 lead_in 里 125.23 那个切点对过），56–100、114–153 每秒抽一帧，按封面闸同一套 Haar 人脸/双眼检测量过：他大部分时候侧着脸看主持人，过闸的只有 17 格。八格并排看：64/87/97/133 在说话、嘴型收着；72 笑但眼神偏向一边；**121.0 笑开了、脸朝镜头、两眼睁开**——落在他说「好吧，年纪更小的时候吧」自嘲的那一下，和钩子第二行「笑着拿下」对得上。",
   "title": [
    "上次打双打是一年前",
    "阿尔卡拉斯笑着拿下"
