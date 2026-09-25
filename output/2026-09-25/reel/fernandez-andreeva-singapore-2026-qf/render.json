@@ -1,0 +1,69 @@
+{
+  "scoreboard_qc_sha256": "32eee57beac1c9b46cc0ae2e24353ca1ff7dc14be42de6720191fcc3efe55674",
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 3.827,
+  "layout": "full",
+  "segments_seconds": 190.88,
+  "topbar": {
+    "line1": "2026 WTA500 新加坡站 1/4决赛",
+    "line2": "费尔南德斯 6-2 7-5 米拉·安德烈耶娃",
+    "start": 1.2,
+    "end": 192.08
+  },
+  "film_seconds": 195.92,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 23.16,
+    "2": 12.528,
+    "3": 9.24,
+    "4": 13.272,
+    "5": 11.352,
+    "6": 9.36,
+    "7": 7.176,
+    "8": 9.504,
+    "9": 15.648,
+    "11": 9.072
+  },
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "fernandez-andreeva-singapore-2026-qf",
+    "received_at": "2026-09-25T13:21:40Z",
+    "artifact_ready_at": "2026-09-25T13:28:33Z",
+    "elapsed_seconds": 413.637,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "dcea0688ac76f41bf796f02d0c313b5e618fef562b610d451a184778c1b01bbb",
+    "spec_sha256": "e799ac5293fdd790b15237826f1b63f35d25cc0f23105cdbea10abe14e84dfbb",
+    "run_id": "36140412076",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-09-25T13:23:48Z",
+        "run_id": "36140412076"
+      }
+    ],
+    "render_seconds": 285.637,
+    "pre_render_seconds": 128.0
+  },
+  "film_sha256": "dcea0688ac76f41bf796f02d0c313b5e618fef562b610d451a184778c1b01bbb",
+  "film_bytes": 117960878,
+  "qc_attestation_sha256": "6ef125ea83272fe4ca7b176766a51aa21db7d8519525dcfbe9d708579cb46d11",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-09-25T13:23:48Z",
+      "run_id": "36140412076"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-25T13:28:34Z",
+      "run_id": "36140412076"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-fernandez-andreeva-singapore-2026-qf/fernandez-andreeva-singapore-2026-qf.mp4",
+  "video_bytes": 117960878
+}
