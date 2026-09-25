@@ -1,0 +1,68 @@
+{
+  "scoreboard_qc_sha256": "8e3b0b92f8cc35f19558d5abc7c2f985f53d9c613f5dd99ea632408b52aea6c5",
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 3.827,
+  "layout": "full",
+  "segments_seconds": 127.73,
+  "topbar": {
+    "line1": "2026 拉沃尔杯 首日",
+    "line2": "鲁德 6-7(4) 6-4 10-8 塞伦多洛",
+    "start": 1.2,
+    "end": 128.93
+  },
+  "film_seconds": 132.799,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 11.4,
+    "2": 7.8,
+    "3": 17.832,
+    "4": 9.792,
+    "5": 9.408,
+    "6": 9.12,
+    "7": 9.336,
+    "8": 9.96,
+    "9": 11.832
+  },
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "ruud-cerundolo-laver-cup-2026",
+    "received_at": "2026-09-25T15:38:34Z",
+    "artifact_ready_at": "2026-09-25T15:45:14Z",
+    "elapsed_seconds": 400.997,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "4d403f1758e864e444a44a3eaae1449e9307334f13ff4fc3a5449a0c43de8d7f",
+    "spec_sha256": "54f377c5f910088b0d164d4851c6fac50337133d7e62d93053f7a20368c121dc",
+    "run_id": "36155534107",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-09-25T15:41:18Z",
+        "run_id": "36155534107"
+      }
+    ],
+    "render_seconds": 236.997,
+    "pre_render_seconds": 164.0
+  },
+  "film_sha256": "4d403f1758e864e444a44a3eaae1449e9307334f13ff4fc3a5449a0c43de8d7f",
+  "film_bytes": 97101251,
+  "qc_attestation_sha256": "8d513252e49c7235d39b914e0cb6d20fa21a36f36918a041ffcaeda26016d04e",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-09-25T15:41:18Z",
+      "run_id": "36155534107"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-25T15:45:15Z",
+      "run_id": "36155534107"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-ruud-cerundolo-laver-cup-2026/ruud-cerundolo-laver-cup-2026.mp4",
+  "video_bytes": 97101251
+}
