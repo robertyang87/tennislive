@@ -1,0 +1,314 @@
+{
+  "slug": "tabilo-mannarino-chengdu-2026-r2",
+  "_column": "赛场之上",
+  "sources": {
+    "ttv": "https://www.tennistv.com/videos/4581783/chengdu-2026-r2-tabilo-mannarino-short-highlights",
+    "atp": "https://www.youtube.com/watch?v=Qr8Kv__8nF4"
+  },
+  "primary": "ttv",
+  "tts_backend": "edge",
+  "_tts_backend_why": "旁白是平直的复盘叙述，一段 `style` 都没写，用不上 Azure 的情绪风格；同一站 `shang-mannarino-chengdu-2026-r1` 也是云见默认音色。",
+  "_source": "两条官方源，都是 1920×1080、25fps（probe 实测），同一路转播信号（同一块 ATP 比分板、同一机位）。① **ttv**：tennistv.com `library/short-highlights`《chengdu-2026-r2-tabilo-mannarino-short-highlights》（free 档），probe 154.18s，比赛画面到 145.26s；正文主力。② **atp**：ATP Tour 官方 YouTube《Alejandro Tabilo vs Adrian Mannarino Highlights | Chengdu 2026 Round 2》（oEmbed `author_name=ATP Tour`，账号所有者给的链接），probe 118.86s，比赛画面到 103.8s，之后是静音订阅卡；它带 YouTube 自动字幕，赛点之后那句解说「there it is, the champion beaten in his first match here」只有它有转写，所以冷开场和结尾兑现段取它。渠道比较（2026-09-25 09:40Z 量的）：Tennis TV YouTube 单场版——没有，频道最新只有成都 Day 1 / Day 2 合集；tennistv.com short-highlights 154.18s（1080p，HLS 最高档 50fps，runner 下到的是 25fps 档）；ATP Tour YouTube 118.86s。四要素自证：记分条 `TABILO / MANNARINO` 两行逐格读过（1-0 30-40、3-2 15-30、3-3 AD、4-5 AD、第二盘 2-1 15-40、3-4 AD、4-5 AD），和 flashscore b9bVxqEl 逐分一致；场地印着 `CHENGDU 成都`；解说 atp 99.84s「the champion beaten in his first match here」。",
+  "_tennistv_trim": "**片尾**：ttv 比赛画面收在 145.26s（最后一个比赛切点），145.26 起是 Tennis TV 的 HIGHLIGHTS / CLASSICS 推广卡、150.3 起是 `THE BEST SEAT IN TENNIS` 应用下载卡——ttv 用到的最后一段收在 127.24s，离推广卡 18 秒；比赛结尾那一段取的是 atp 源（收在 103.6s，atp 的订阅卡从 103.8 起）。**台标**：Tennis TV 台标烧在右上角（源片 x≈1720~1900），3:4 取景窗 cx=0.5 时只取 555~1365，角上那块在窗外；封面帧 focus=0.47 取 497~1307，同样在窗外。",
+  "scorebox": [
+    98,
+    920,
+    476,
+    1029
+  ],
+  "_scorebox_why": "同一站同一套 ATP 转播比分板，坐标沿用 `shang-mannarino-chengdu-2026-r1` 全分辨率帧实测的框（左缘 98、上缘 920、下缘 1028，右缘 476 是那一场板最宽状态的上限）；这一场最宽的状态是第二盘 `4 2 15`，比那一场的 `6⁹ 2 15` 窄，落在框内。两条源是同一路信号，板的位置一致（缩略图墙 ttv 2.5s 与 atp 6.5s 同一个 `1 30 / 0 40`）。",
+  "_match": {
+    "id": "2026:chengdu:mens-r2:alejandro-tabilo-adrian-mannarino",
+    "event": "2026 ATP250 成都",
+    "event_search": "Chengdu",
+    "round": "Men's Singles Round 2",
+    "year": 2026,
+    "status": "result_verified",
+    "source": "flashscore_points",
+    "source_id": "b9bVxqEl",
+    "flashscore_id": "b9bVxqEl",
+    "participants": [
+      "塔比洛",
+      "马纳里诺"
+    ],
+    "set_scores_home_away": [
+      [
+        4,
+        6
+      ],
+      [
+        4,
+        6
+      ]
+    ],
+    "tiebreaks_home_away": [
+      null,
+      null
+    ],
+    "winner": "马纳里诺",
+    "loser": "塔比洛",
+    "winner_en": "Adrian Mannarino",
+    "loser_en": "Alejandro Tabilo",
+    "winner_result": "6-4 6-4",
+    "loser_result": "4-6 4-6",
+    "_source": "三源一致：ATP 官方正赛签表 protennislive.com/posting/2026/7581/mds.pdf（Released 09/25/2026 16:47:57）第二轮 9/12 号签位下印着 `A. Mannarino 64 64`、`A. Tabilo 3`；flashscore 当日表 b9bVxqEl：AE=Tabilo A.（home）BA=4 BC=4 / AF=Mannarino A.（away）BB=6 BD=6；tennis.com 比赛页 `Men's Singles · Round 2 · Center Court · Completed · A. Tabilo 3 4 4 / A. Mannarino 6 6`（3 是种子号）。"
+  },
+  "topbar": {
+    "line1": "2026 ATP250 成都站 第二轮",
+    "line2": "马纳里诺 6-4 6-4 塔比洛"
+  },
+  "_topbar_why": "line1 按账号所有者 2026-09-24 定的格式「<年份> <巡回赛><级别> <城市>站 <轮次>」：成都公开赛是 ATP250（官方签表页眉 `$ 184,085 250 pts`）。line2 由 cover.winner / result / matchup 机械拼出。",
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "马纳里诺",
+    "hook": "首轮送走2024冠军\n次轮送走卫冕冠军",
+    "hook_accent": "卫冕冠军",
+    "_hook_why": "第一行是他这一周的来路当影子，第二行是这场球的落点，两行一个递进；10 字、8 字，没有排名、年龄、国籍，没有术语，不复述比分。① 「首轮送走2024冠军」：首轮 7-6(9) 6-2 胜商竣程（官方签表 mds.pdf `A. Mannarino 769 62`，已发的 `shang-mannarino-chengdu-2026-r1`）；商竣程是 2024 年成都冠军——维基 `Chengdu Open` 冠军表 `2024 | Shang Juncheng | Lorenzo Musetti | 7–6(7–4), 6–1`，tennisexplorer 逐场（player/shang/?annual=2024）决赛胜穆塞蒂，两源。② 「次轮送走卫冕冠军」：塔比洛是 2025 年成都冠军——维基同一张表 `2025 | Alejandro Tabilo | Lorenzo Musetti | 6–3, 2–6, 7–6(7–5)`；tennisexplorer chengdu/2025/atp-men 决赛 `F Tabilo 2 6 2 7 / Musetti (1) 1 3 6 6`，两源；转播解说 atp 99.84s「the champion beaten in his first match here」。",
+    "topic": "成都公开赛第二轮 · 马纳里诺 vs 塔比洛",
+    "winner": "马纳里诺",
+    "result": "6-4 6-4",
+    "matchup": [
+      {
+        "name": "马纳里诺",
+        "name_en": "Adrian Mannarino",
+        "country": "FRA",
+        "rank": 78
+      },
+      {
+        "name": "塔比洛",
+        "name_en": "Alejandro Tabilo",
+        "country": "CHI",
+        "rank": 32
+      }
+    ],
+    "_matchup_rank_why": "ATP 排名 2026-09-21 那一期：`fetch_rankings()`（tennisexplorer，atp_at=21.09.2026）马纳里诺 78、塔比洛 32；tennis.com 比赛页 `Singles Ranking 32 / 78`；官方签表的种子表 `3 Tabilo, Alejandro 32`。三处一致。",
+    "_name_why": "译名表 `src/tennislive/zh/players.py` 与 `player_names_top500.json`：Mannarino → 马纳里诺，Tabilo → 塔比洛，Shapovalov → 沙波瓦洛夫。",
+    "_heat_why": "账号所有者亲自点的题（「做马纳里诺第二轮赛场之上视频」）。另一层：他首轮刚送走 2024 年冠军商竣程（中国观众冲那一场来的），这一轮又送走 3 号种子、卫冕冠军塔比洛——同一站连着淘汰两届冠军。",
+    "_subject_why": "封面放马纳里诺：他是赢家，也是这条片子的主语（连送两届冠军），中国观众首轮那条片子已经认识他。",
+    "scoreboard": {
+      "court": "Center Court",
+      "_court_why": "tennis.com 比赛页 `Men's Singles · Round 2 · Center Court`；flashscore 当日表同为 Center Court。",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%20%221%3A34%3A00%22%2C%20%22source%22%3A%20%22flashscore%20dc_1%EF%BC%88b9bVxqEl%EF%BC%89%E5%BC%80%E8%B5%9B%20DC%3D1790318100%EF%BC%8806%3A35%3A00Z%EF%BC%89%E3%80%81%E5%AE%8C%E8%B5%9B%20DD%3D1790323725%EF%BC%8808%3A08%3A45Z%EF%BC%89%EF%BC%8C%E7%9B%B8%E5%87%8F%201%3A33%3A45%22%7D",
+        "field": "duration"
+      },
+      "_duration_why": "flashscore 自己的开赛/完赛时间戳相减 1:33:45，印 1:34。⚠️ flashscore df_sui_1 的分盘相加是 0:47+0:49=1:36，它偏长（CLAUDE.md 记过），不用。"
+    },
+    "portrait": {
+      "image": "assets/reel/tabilo-mannarino-chengdu-2026-r2.jpg",
+      "focus": 0.47,
+      "focus_y": 0.35,
+      "zoom": 1.0,
+      "_why": "**本场源片抽帧**（ttv 50fps 原片 127.20s）：第二盘五比四、他发球胜赛的赛点前（记分条 `TABILO 4 4 / MANNARINO 6 5 AD`），他抬眼正对镜头，身后是中心球场大屏上的「成」字。打开看过：正脸、双眼睁着（126.64~127.04 那几帧半闭眼，逐帧放大比过，127.12 起才完全睁开）；同一镜头 126.40~127.36 逐帧按边缘能量比过，睁眼的几帧里这一帧最锐（方差 511.7）。3:4 取景窗 focus=0.47 时横向取 497~1307，左下的转播记分条（98~476）和右上的 Tennis TV 台标（≈1720 起）都在窗外。",
+      "_frame_why": "账号所有者 2026-09-24（同一站 `shang-mannarino`）明确要求「从那个比赛画面中截取那个抽帧去做」，不要 VS 官方抠图版。当日官方实拍查过：`find_cover_photo.py --player Mannarino --event Chengdu --date 2026-09-25` WTA photo-resources、AP 通讯社都没有这一场；同站前一天查过的四川本地媒体、新华、Getty 也没有成都的当日图。",
+      "_low_res_why": "源片 1920×1080，铺 1080×1440 按高算放大 1.33×。这是账号所有者亲自点的抽帧方案（见 `_frame_why`），没有更高清的本场画面；逐帧挑了睁眼里最锐的一帧。"
+    }
+  },
+  "_opening_time_source": {
+    "url": "https://global.flashscore.ninja/2/x/feed/dc_1_b9bVxqEl",
+    "match_id": "b9bVxqEl",
+    "field": "DC",
+    "value": 1790318100,
+    "beijing": "2026-09-25T14:35+08:00",
+    "spoken_precision": "approximate-hour",
+    "_why": "开球时刻只说个大概：flashscore `dc_1` 的 `DC=1790318100` → 06:35Z＝北京 14:35；`DD=1790323725`（北京 16:08）是结束时刻，相差 1 小时 34 分。旁白说「下午两点半左右」。"
+  },
+  "stats": {
+    "tour": "atp",
+    "a": {
+      "aces": 10,
+      "df": 2,
+      "first_in": 42,
+      "first_won": 34,
+      "second_total": 23,
+      "second_won": 12,
+      "bp_conv": 2,
+      "bp_chances": 3,
+      "pts_won": 66,
+      "pts_total": 127,
+      "first_total": 65,
+      "headshot": "assets/players/headshots/atp-ME82.png"
+    },
+    "b": {
+      "aces": 6,
+      "df": 1,
+      "first_in": 42,
+      "first_won": 28,
+      "second_total": 20,
+      "second_won": 14,
+      "bp_conv": 0,
+      "bp_chances": 3,
+      "pts_won": 61,
+      "pts_total": 127,
+      "first_total": 62,
+      "headshot": "assets/players/headshots/atp-TE30.png"
+    },
+    "_source": "`python tools/match_stat_hooks.py b9bVxqEl --stats-block` 机器抄的 flashscore df_st_1 全场统计。a/b 跟 cover.matchup 的顺序（a=马纳里诺、b=塔比洛）；flashscore 这一场 home=Tabilo A.、away=Mannarino A.，**顺序相反，已对调**。头像：马纳里诺 `atp-ME82.png`（同站 `shang-mannarino` 用过、挂的就是马纳里诺），塔比洛 `atp-TE30.png`（`jodar-tabilo` 用过、挂的就是塔比洛）。",
+    "_winners_ue_why": "两个源都查过，都用不了：① flashscore df_st_1 这一场没有制胜分和非受迫失误（`match_stat_hooks.py b9bVxqEl` 报「flashscore 这场没有」）；② TNNS（tnns-stats.yml，id 74753342，run 36119444871）给了全场制胜分 19/27、非受迫失误 18/21（塔比洛/马纳里诺），但分盘合计对不上（制胜分分盘 [17,29] vs 全场 [19,27]，非受迫失误 [19,23] vs [18,21]），工具自己判「多半解错了，别用」。所以数据图只画七项官方统计。"
+  },
+  "_hit_data": "跑过 `match_stat_hooks.py b9bVxqEl`。进旁白的：**马纳里诺十个发球局全保**（df_st_1 Service games won 10/10），**面对的三个破发点全救**（Break Points Saved 3/3：第一盘 5-4 发球胜盘那一局一个，第二盘 5-4 发球胜赛那一局 15-40 两个）；**两盘各破一次**（Break Points Converted 2/3，都是塔比洛 3-3 / 4-4 发球、三次平分之后）；**塔比洛救下一个赛点**（Match points saved 1）。",
+  "_turning_points": [
+    "首盘 3-3（塔比洛发球）：`0:15, 15:15, 30:15, 40:15, 40:30, 40:40, 40:A |B1|, 40:40, A:40, 40:40, 40:A |B1|`——塔比洛 40-15 领先、前后三个局点（40-15、40-30、AD），三次平分之后第二个破发点被破，3-4。ttv 43.7~57.0 是 AD 塔比洛那一分，马纳里诺拿回来平分（58.5s 记分条翻成 40-40）。",
+    "首盘 5-4（马纳里诺发球胜盘）：`15:0, 15:15, 30:15, 30:30, 40:30 |B1|, 40:40, 40:A |B2|`——救下一个破发点，第一个盘点兑现，6-4。ttv 60.5s 记分条 `4 / 5 AD`。",
+    "第二盘 1-2（马纳里诺发球，ttv 76.5~108.8）：`15:40` 之后一个三十多秒的底线长回合，108.5s 记分条翻成 2-2。",
+    "第二盘 4-4（塔比洛发球）：`0:15, 15:15, 15:30, 30:30, 40:30, 40:40, A:40, 40:40, A:40, 40:40, 40:A |B1|`——塔比洛两次局点，三次平分之后被破，4-5。源片没有这一局。",
+    "第二盘 5-4（马纳里诺发球胜赛）：`15:0, 15:15, 30:15, 40:15 |B1|, 40:30 |B1|, 40:40, 40:A |B3|, 40:40, 40:A |B3|`——15-40 落后连救两个破发点，第一个赛点被救，第二个赛点兑现。atp 90.5s / ttv 126.5s 记分条 `4 4 / 6 5 AD`。"
+  ],
+  "_claims": {},
+  "editorial": {
+    "mode": "match_review",
+    "hook": [
+      "首轮送走2024冠军",
+      "次轮送走卫冕冠军"
+    ],
+    "question": "首轮刚送走两年前的冠军商竣程，第二轮又碰上去年的冠军塔比洛，三十八岁的马纳里诺是怎么连着把两届冠军送出成都的？",
+    "thesis": "两个左手将，马纳里诺十个发球局一局没丢，面对的三个破发点全救；两盘各在塔比洛的发球局里熬过三次平分破掉一次，6-4 6-4。最后发球胜赛，他先落后十五比四十，连救两个破发点，第二个赛点拿下。",
+    "beats": [
+      "冷开场：赛点之后解说那句——卫冕冠军首战出局。",
+      "北京时间 9 月 25 日下午两点半左右，成都公开赛第二轮，中心球场：世界第 78 的马纳里诺对 3 号种子、去年成都冠军塔比洛。",
+      "开局塔比洛放小球把他拽上网，他照样保住；前六局各保发球局。",
+      "3-3 塔比洛发球，40-15 领先、三个局点，三次平分之后被破；5-4 发球胜盘，救一个破发点，6-4。",
+      "第二盘 1-2 一个底线长回合，他压上网前收掉；3-4 又在网前保住，4-4 再破一次。",
+      "5-4 发球胜赛，15-40 连救两个破发点，第二个赛点把塔比洛调开拿下。下一轮对 7 号种子沙波瓦洛夫。"
+    ],
+    "human_context": {
+      "angle": "这一场的主语是**马纳里诺和成都这一站的两届冠军**：首轮他 7-6(9) 6-2 送走 2024 年冠军商竣程，第二轮碰上 2025 年冠军、3 号种子塔比洛，两盘都在对方的发球局里熬到第三次平分才破掉，自己十个发球局一局没丢。",
+      "facts": [
+        "ATP 官方签表 mds.pdf（Released 09/25/2026 16:47:57）：`3 TABILO, Alejandro CHI`（9 号签位）、`MANNARINO, Adrian FRA`（12 号签位）；第二轮 `A. Mannarino 64 64`；1/4决赛对 `D. Shapovalov 7`。",
+        "维基 `Chengdu Open` 冠军表：2024 Shang Juncheng（决赛胜穆塞蒂）、2025 Alejandro Tabilo（决赛 6–3, 2–6, 7–6(7–5) 胜穆塞蒂）；tennisexplorer chengdu/2025/atp-men 决赛 `Tabilo 2 6 2 7 / Musetti (1) 1 3 6 6`。",
+        "flashscore b9bVxqEl df_st_1：马纳里诺 Service games won 10/10、Break Points Saved 3/3、Break Points Converted 2/3；塔比洛 Match points saved 1。",
+        "tennis.com 比赛页：两人都是 `Dominant Hand Left`；马纳里诺 `Birth Date Jun 29, 1988`（今天 38 岁）。",
+        "解说（atp 源 YouTube 自动字幕）：23.44s「Think anyone saw that drop shot coming.」、50.72s「a very entertaining and high class set from Adrian Mannarino」、85.36s「did very well to change direction」、96.72s「And there it is, the champion beaten in his first match here.」"
+      ],
+      "sources": [
+        "https://www.protennislive.com/posting/2026/7581/mds.pdf",
+        "https://www.flashscore.com/match/tennis/b9bVxqEl/",
+        "https://www.tennis.com/tournaments/chengdu-open/matches/a-tabilo-vs-a-mannarino-2026-09-25",
+        "https://en.wikipedia.org/wiki/Chengdu_Open",
+        "https://www.tennisexplorer.com/chengdu/2025/atp-men/",
+        "https://www.tennistv.com/videos/4581783/chengdu-2026-r2-tabilo-mannarino-short-highlights",
+        "https://www.youtube.com/watch?v=Qr8Kv__8nF4"
+      ]
+    }
+  },
+  "segments": [
+    {
+      "source": "atp",
+      "start": 96.2,
+      "end": 103.6,
+      "cx": 0.5,
+      "score_inset": false,
+      "_score_inset_why": "赛点已经落地（atp 96.08 翻牌），96.2 起是两人走向网前握手的宽景，转播随后把比分板撤了（缩略图墙 atp 100.5、102.5 没有板）。",
+      "narration": "",
+      "quote": [
+        {
+          "at": 0.52,
+          "text": "And there it is,\n拿下了"
+        },
+        {
+          "at": 3.64,
+          "text": "the champion beaten\n卫冕冠军"
+        },
+        {
+          "at": 5.2,
+          "text": "in his first match here\n首战就出局"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_ending_payoff_required": true,
+      "_why": "冷开场：**赛点之后两人走向网前**（账号所有者 2026-09-25「视频从赢球后的冷开场……是全局的要求」）。96.08 是赛点那一分落地后记分条翻牌，96.2 起宽景里两人往网前走，103.6 收在订阅卡（103.8）之前。不配旁白，只留解说原声＋中英字幕：atp `captions.txt` 96.72「And」96.96「there it is,」99.84「the champion beaten in his first match」102.72「here.」，段内 at = 原时刻 − 96.2。",
+      "_payoff_why": "冷开场里是赛点落地后的握手，所以 true——正文最后一段（atp 87.16→103.6）把第二个赛点整分、落地和走向网前按时间顺序完整重放，覆盖 96.2~103.6 整段。",
+      "point_end_ok": "比赛已经结束（赛点在 96.08 翻牌之前落地）；99.36 那一次「翻牌」是比分板撤下，段尾 103.6 之后 103.84 是切到订阅卡。"
+    },
+    {
+      "source": "ttv",
+      "start": 1.84,
+      "end": 18.52,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "首轮送走两年前的冠军，第二轮，又送走了卫冕冠军。北京时间九月二十五号下午两点半左右，成都公开赛第二轮。世界第七十八的马纳里诺，对三号种子、去年的冠军塔比洛。",
+      "_why": "首盘 1-0 塔比洛（马纳里诺发球）30-40 那一分：记分条 2.5~18.5s `1 30 / 0 40`，底线相持，16~18s 塔比洛放小球、马纳里诺从底线往网前扑（atp 23.44s 解说「Think anyone saw that drop shot coming」）。开场顺序照「画面爆点 → 落点 → 坐标」：第 1 段是冷开场，这一段先一句落点（首轮送走两年前的冠军商竣程、这一轮送走卫冕冠军），再给坐标。",
+      "_start_time_why": "开球时刻见顶层 `_opening_time_source`：北京 14:35，只说「两点半左右」。",
+      "point_end_ok": "放小球那一分在 18.5s 前打完（18.52 切到塔比洛近景）；18.6 翻牌是新比分挂出来，21.0 那一次是近景里记分条换成 `40 / 40` 的同一个比分，没有新的一分。"
+    },
+    {
+      "source": "ttv",
+      "start": 20.96,
+      "end": 43.7,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "开局塔比洛就用一记放小球，把马纳里诺从底线拽到网前，扳成平分。这一局马纳里诺还是保住了。两个人都是左手持拍，谁也破不了谁；轮到马纳里诺发球，他不急着抢攻，先在底线把球一拍一拍送深。保住这一局，就是三比三。",
+      "_why": "20.96~23.1 塔比洛近景（放小球之后，记分条 `1 40 / 0 40`）；23.1 起首盘 2-3 马纳里诺发球 15-30，底线相持，这一分马纳里诺拿下（flashscore 这一局 `0:15, 15:15, 15:30, 15:40, 30:40, 40:40, 40:A` 保发）；42.0 切塔比洛弯腰近景。flashscore 首局 `15:0, 30:0, 30:15, 30:30, 30:40, 40:40, 40:A` 马纳里诺保发——放小球那一分扳成平分之后他照样保住。左手持拍：tennis.com 两人都是 `Dominant Hand Left`。",
+      "crosses_cut": "23.12 从塔比洛近景切宽景，发球之前；42.0 切塔比洛弯腰近景，这一分已经打完。",
+      "point_end_ok": "段尾 43.7 是转播切点，也是 `point_ends` 43.7 的翻牌（`3 AD / 3`，下一局开始）；这一分在 42 秒前打完。"
+    },
+    {
+      "source": "ttv",
+      "start": 43.7,
+      "end": 56.98,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "三比三，塔比洛的发球局。他四十比十五领先，前后握过三个局点。这一分马纳里诺在底线跟他相持，一拍都没送出机会，拿了回来，平分。",
+      "_why": "记分条 42.5~56.5s `3 AD / 3`（塔比洛发球、他的局点），58.5s 翻成 `40 / 40`。flashscore 这一局 `…40:15, 40:30, 40:40, 40:A |B1|, 40:40, A:40, 40:40…`：40-15、40-30、AD 三个局点。逐秒帧 44~56 底线相持，马纳里诺在近端。",
+      "point_end_ok": "段尾 56.98 是转播切点（切到看台），57.0 翻牌在它之后 0.02 秒。"
+    },
+    {
+      "source": "ttv",
+      "start": 59.9,
+      "end": 76.5,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "塔比洛那三个局点，一个都没守住。三次平分之后，马纳里诺破掉这一局，四比三。五比四他发球胜盘，救下一个破发点，第一个盘点拿下，六比四。第一盘，他五个发球局一局没丢。",
+      "_why": "59.9 起马纳里诺拿球准备发球的近景（记分条 `4 / 5 AD`，他的盘点），63.78 起宽景：他发球，几拍之后拿下，70.18 起看台上的女观众鼓掌，72.5s 记分条翻成第二盘 `4 0 / 6 0`。flashscore 3-4 那一局三次 40:40、第二个破发点被破；5-4 那一局 `40:30 |B1|, 40:40, 40:A |B2|`。解说 atp 50.72「a very entertaining and high class set from Adrian Mannarino」。 第一盘五个发球局全保：flashscore df_st_1 Set 1 Service games won 5/5。",
+      "crosses_cut": "63.78 从近景切宽景（发球之前）、70.18 切看台近景（盘点已经打完）。",
+      "point_end_ok": "盘点在 70 秒前打完；70.8 / 72.7 两次翻牌是记分条换到第二盘，段尾 76.5 是转播切点，下一次翻牌 108.8。"
+    },
+    {
+      "source": "ttv",
+      "start": 90.0,
+      "end": 111.0,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "第二盘，塔比洛先拿到二比一。马纳里诺的发球局，这一分，两人在底线打了个长回合。他左右跑动，一拍一拍往回送，不给对手出手的机会。最后他往前压，上网把这一分收掉，这一局保住，二比二平。",
+      "_why": "第二盘 1-2 马纳里诺发球 `2 15 / 1 40`（记分条 76.5~108.5s 一直不变）：76.5 起一个底线长回合，逐秒帧 1:17~1:44 两人都在底线，1:44~1:48 马纳里诺往前压到网前收掉，108.5s 翻成 `2 / 2`。解说 atp 85.36「did very well to change direction」。段首 90.0 取在回合中段（回合太长，整段装不下）。",
+      "crosses_cut": "108.82 切马纳里诺近景，这一分已经打完。",
+      "point_end_ok": "这一分 108.5 前打完；108.8 / 109.8 / 110.8 三次翻牌是近景里记分条换成 `2 / 2`、下一局的同一个比分，段尾 111.0 之后下一次翻牌在 123.8。"
+    },
+    {
+      "source": "ttv",
+      "start": 111.0,
+      "end": 127.24,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "三比四，又是他的发球局，底线几拍之后压上网前，四平。紧接着塔比洛发球，又是三次平分，又被破，五比四。发球胜赛，他先落后十五比四十，两个破发点都救了回来。",
+      "_why": "记分条 112.5~120.5s `4 4 / 6 3 AD`（马纳里诺发球的局点）：逐秒帧 1:52~1:58 底线、1:59~2:01 马纳里诺往网前压，124.5s 翻成 `4 / 4`；121.72 起看台女观众、126.5s 马纳里诺近景，记分条 `4 / 5 AD`。flashscore 4-4 那一局 `…A:40, 40:40, A:40, 40:40, 40:A |B1|` 三次平分被破；5-4 那一局 `40:15 |B1|, 40:30 |B1|, 40:40` 连救两个破发点——源片没有这两局，旁白按逐分带过。",
+      "crosses_cut": "121.72 切看台、126.5 前切马纳里诺近景：这一分已经打完。",
+      "point_end_ok": "段尾 127.24 是转播切点（下一个宽景就是赛点）；123.8 那一次翻牌在段内，段尾之后下一次翻牌 136.0。"
+    },
+    {
+      "source": "atp",
+      "start": 87.16,
+      "end": 103.6,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "第一个赛点被塔比洛救掉。第二个赛点，他把塔比洛调到场地一侧，拿下比赛。十个发球局，一局没丢。连送两届冠军，下一轮的七号种子沙波瓦洛夫，挡得住他吗？",
+      "_why": "atp 87.16 起马纳里诺近景（记分条 `4 4 / 6 5 AD`，赛点），88.76 起第二个赛点整分：逐秒帧（同一分在 ttv 2:07~2:16）塔比洛在近端被调到左侧边线外，回位之后这一分结束；96.08 翻牌，之后两人走向网前，解说 96.72「And there it is, the champion beaten in his first match here」。flashscore 最后一局 `40:A |B3|, 40:40, 40:A |B3|`。下一轮：官方签表 1/4决赛 `A. Mannarino` 对 `D. Shapovalov 7`。",
+      "_payoff_why": "按时间顺序重放第二个赛点、落地和走向网前，覆盖冷开场 96.2~103.6 整段。",
+      "crosses_cut": "88.76 从近景切宽景，发球之前。",
+      "point_end_ok": "比赛在 96.08 翻牌前结束；99.36 是比分板撤下，段尾 103.6 之后 103.84 是切到订阅卡。"
+    }
+  ],
+  "_editing_why": "两条源是同一路转播：ttv 154.18s（比赛画面到 145.26，之后 Tennis TV 推广卡），atp 118.86s（比赛画面到 103.8，之后静音订阅卡）；两条都**没有场上采访**。ttv 的赛点（127.24~145.26）和 atp 的赛点（87.16~103.8）是同一分，只用 atp 那一份（它有解说转写）。认人：马纳里诺白色球衣、光头；塔比洛粉紫色球衣、白色反戴帽、左臂黑色护臂。段落端点取自 probe 的 `scene_cuts`；球路来自本地拉的 ttv 原片逐秒帧（1~19、20~43、43~58、63~71、76~109、111~122、127~146 秒）和 atp 的 `captions.txt`。集锦没播的局（首盘 3-4 破发、5-4 以外的保发，第二盘 4-4 破发、5-4 前三分）只在旁白里按 flashscore 逐局一句带过。",
+  "_tactics_why_note": "球路写在第 3 段（放小球把他拽到网前、底线把球送深）、第 4 段（底线相持）、第 6 段（底线长回合、上网收掉）、第 7 段（压上网前）、第 8 段（把塔比洛调到场地一侧）。",
+  "_quote_why_global": "一段原声：冷开场的「And there it is, the champion beaten in his first match here」——正是钩子第二行。",
+  "_no_repeat": "同栏目做过马纳里诺的只有 `shang-mannarino-chengdu-2026-r1`（首轮），这一条只用一句带过首轮的赛果，不重讲那场的抢七和盘点。塔比洛做过的 `jodar-tabilo`（辛辛那提）是另一场。",
+  "push": {
+    "summary": "马纳里诺送走成都卫冕冠军",
+    "lead": "成都公开赛第二轮，马纳里诺 6-4、6-4 胜 3 号种子、去年在这里夺冠的塔比洛——首轮他刚送走 2024 年冠军商竣程。两个左手将，马纳里诺 10 个发球局一局没丢；两盘都在塔比洛的发球局里熬过三次平分才破掉。最后发球胜赛，他先 15-40 落后，连救两个破发点，第二个赛点拿下。1/4决赛对 7 号种子沙波瓦洛夫。",
+    "matchup": "马纳里诺 vs 塔比洛",
+    "score": "6-4 6-4",
+    "auto": true
+  },
+  "_push_summary_why": "12 字位，主语是马纳里诺；「卫冕冠军」是这一场最硬的落点。标题里不写排名。"
+}
