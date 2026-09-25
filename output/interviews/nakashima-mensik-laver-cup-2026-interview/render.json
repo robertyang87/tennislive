@@ -1,0 +1,67 @@
+{
+  "film_sha256": "62a78ce0c0cf90527c3ded1fbb9813e1aadf31e8d37101e5a61ffa7234592f93",
+  "film_seconds": 192.421,
+  "production_sla": {
+    "version": 2,
+    "pipeline": "interview-clip",
+    "slug": "nakashima-mensik-laver-cup-2026-interview",
+    "received_at": "2026-09-25T17:27:36Z",
+    "artifact_ready_at": "2026-09-25T17:34:00Z",
+    "elapsed_seconds": 384.438,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "62a78ce0c0cf90527c3ded1fbb9813e1aadf31e8d37101e5a61ffa7234592f93",
+    "spec_sha256": "547bb63d481570c31ffe9dacd60ae816297685a2f08cc30f7d3ee6b9c82a0be7",
+    "run_id": "36167241237",
+    "stage_events": [
+      {
+        "stage": "preflight",
+        "at": "2026-09-25T17:28:07Z",
+        "run_id": "36167241237"
+      },
+      {
+        "stage": "asr_verify",
+        "at": "2026-09-25T17:29:43Z",
+        "run_id": "36167241237"
+      },
+      {
+        "stage": "render",
+        "at": "2026-09-25T17:32:00Z",
+        "run_id": "36167241237"
+      }
+    ],
+    "render_seconds": 120.438,
+    "pre_render_seconds": 264.0
+  },
+  "production_stage_events": [
+    {
+      "stage": "preflight",
+      "at": "2026-09-25T17:28:07Z",
+      "run_id": "36167241237"
+    },
+    {
+      "stage": "asr_verify",
+      "at": "2026-09-25T17:29:43Z",
+      "run_id": "36167241237"
+    },
+    {
+      "stage": "render",
+      "at": "2026-09-25T17:32:00Z",
+      "run_id": "36167241237"
+    },
+    {
+      "stage": "qc",
+      "at": "2026-09-25T17:34:01Z",
+      "run_id": "36167241237"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-25T17:34:01Z",
+      "run_id": "36167241237"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/interview-nakashima-mensik-laver-cup-2026-interview/nakashima-mensik-laver-cup-2026-interview.mp4?v=62a78ce0c0cf9052",
+  "video_bytes": 72158634,
+  "release_asset_digest": "sha256:62a78ce0c0cf90527c3ded1fbb9813e1aadf31e8d37101e5a61ffa7234592f93",
+  "qc_attestation_sha256": "52cd28efdf21ea1c1209f6b16e1951efb06857fd5f6683de3236665b9b0a8d13"
+}
