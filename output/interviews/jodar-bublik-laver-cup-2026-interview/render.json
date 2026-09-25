@@ -1,0 +1,101 @@
+{
+  "film_sha256": "ac21db2014120977de3db442aed4deebab0c13d50b80dfda8ca79fc907e3f8d6",
+  "film_seconds": 217.341,
+  "production_stage_events": [
+    {
+      "stage": "preflight",
+      "at": "2026-09-25T23:02:15Z",
+      "run_id": "36199329606"
+    },
+    {
+      "stage": "asr_verify",
+      "at": "2026-09-25T23:04:06Z",
+      "run_id": "36199329606"
+    },
+    {
+      "stage": "render",
+      "at": "2026-09-25T23:06:33Z",
+      "run_id": "36199329606"
+    },
+    {
+      "stage": "qc",
+      "at": "2026-09-25T23:09:17Z",
+      "run_id": "36199329606"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-25T23:09:17Z",
+      "run_id": "36199329606"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/interview-jodar-bublik-laver-cup-2026-interview/jodar-bublik-laver-cup-2026-interview.mp4?v=ac21db2014120977",
+  "video_bytes": 80943745,
+  "release_asset_digest": "sha256:ac21db2014120977de3db442aed4deebab0c13d50b80dfda8ca79fc907e3f8d6",
+  "qc_attestation_sha256": "474915d1e9de0a7c6116850a023126e98e982bb8b7f158c338a60d21789afcd8",
+  "production_sla_history": [
+    {
+      "version": 2,
+      "pipeline": "interview-clip",
+      "slug": "jodar-bublik-laver-cup-2026-interview",
+      "received_at": "2026-09-25T22:52:46Z",
+      "artifact_ready_at": "2026-09-25T23:00:30Z",
+      "elapsed_seconds": 464.328,
+      "budget_seconds": 600,
+      "met": true,
+      "film_sha256": "0f9ee8cc6fa80f24ae02f0da7d664c07565e999f928a4259afc15041a0a8efd9",
+      "spec_sha256": "3219df6d8b784891f492a2f3588b219438998bfa552cfe9c6bb5112703a9f490",
+      "run_id": "36198721933",
+      "stage_events": [
+        {
+          "stage": "preflight",
+          "at": "2026-09-25T22:53:20Z",
+          "run_id": "36198721933"
+        },
+        {
+          "stage": "asr_verify",
+          "at": "2026-09-25T22:55:13Z",
+          "run_id": "36198721933"
+        },
+        {
+          "stage": "render",
+          "at": "2026-09-25T22:57:40Z",
+          "run_id": "36198721933"
+        }
+      ],
+      "render_seconds": 170.328,
+      "pre_render_seconds": 294.0
+    }
+  ],
+  "production_sla": {
+    "version": 2,
+    "pipeline": "interview-clip",
+    "slug": "jodar-bublik-laver-cup-2026-interview",
+    "received_at": "2026-09-25T23:01:42Z",
+    "artifact_ready_at": "2026-09-25T23:09:16Z",
+    "elapsed_seconds": 454.312,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "ac21db2014120977de3db442aed4deebab0c13d50b80dfda8ca79fc907e3f8d6",
+    "spec_sha256": "a5e0307d747dc32dd30e23a0c2b874e1692b77dc007b41738e58edbf8f0ca887",
+    "run_id": "36199329606",
+    "stage_events": [
+      {
+        "stage": "preflight",
+        "at": "2026-09-25T23:02:15Z",
+        "run_id": "36199329606"
+      },
+      {
+        "stage": "asr_verify",
+        "at": "2026-09-25T23:04:06Z",
+        "run_id": "36199329606"
+      },
+      {
+        "stage": "render",
+        "at": "2026-09-25T23:06:33Z",
+        "run_id": "36199329606"
+      }
+    ],
+    "render_seconds": 163.312,
+    "pre_render_seconds": 291.0
+  }
+}
