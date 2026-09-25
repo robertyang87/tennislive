@@ -1468,8 +1468,9 @@ metric 写短、后半句挪进 detail。
 | **正文第一句**（`.xhs.txt` 第一行） | **标题没说的**：北京时间、赛事、比分、来路。人名重合可以，句子不许重合 |
 
 两层：`push_reel.copy_body_only` 把**一字不差**只是重复标题的那一行从正文里去掉（兜底）；
-`spec_wording.title_echo_problem` 管写法——标题的相邻两字组合有 ≥ 50% 又出现在正文第一句里就红，
-手写 spec 在 `--dry-run` 硬拦、自动链只报不拦。存量 150 条挂 `data/legacy_title_echo.json`，
+`spec_wording.title_echo_problem` 管写法——标题的相邻两字组合有 ≥ 50% 又出现在正文第一句里就红（**先把两边的球员名抹掉再比**——
+「中岛布兰登…门西克」这种只是人名重合的第一版会误红），
+手写 spec 在 `--dry-run` 硬拦、自动链只报不拦。存量 140 条挂 `data/legacy_title_echo.json`，
 只许减不许加。判据 `tests/test_title_echo.py`。
 
 ⚠️ 这条**不推翻**下面那条「首行要点出是谁」：首行照样要有球员名，只是别把标题那句抄一遍。

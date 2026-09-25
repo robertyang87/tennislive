@@ -745,12 +745,25 @@ def first_sentence(xhs_text: str) -> str:
     return re.split(r"[。！？!?]", line, maxsplit=1)[0]
 
 
-def title_echo_ratio(title: str, xhs_text: str) -> float:
-    """标题的相邻两字组合里，有多大比例又出现在正文第一句里。"""
-    grams = _bigrams(_echo_norm(title))
+def title_echo_ratio(title: str, xhs_text: str, names: list[str] | None = None) -> float:
+    """标题的相邻两字组合里，有多大比例又出现在正文第一句里。
+
+    ⚠️ **球员名先从两边拿掉再比。** 第一句点出是谁是另一条规矩（首行要有球员名）
+    本来就要求的；不拿掉的话「中岛布兰登」「门西克」两个名字就占了标题一半的
+    两字组合——`mensik-nakashima-laver-cup-2026` 第一版正文第一句一个标题里的
+    词都没抄（「抢十逆转」），被报成重合 55%。
+    """
+    def strip(text: str) -> str:
+        text = _echo_norm(text)
+        for name in sorted((n for n in names or [] if n), key=len, reverse=True):
+            text = text.replace(_echo_norm(name), "|")
+        return text
+
+    grams = {g for g in _bigrams(strip(title)) if "|" not in g}
     if not grams:
         return 0.0
-    return len(grams & _bigrams(_echo_norm(first_sentence(xhs_text)))) / len(grams)
+    body = {g for g in _bigrams(strip(first_sentence(xhs_text))) if "|" not in g}
+    return len(grams & body) / len(grams)
 
 
 def legacy_title_echo() -> frozenset:
@@ -782,7 +795,7 @@ def title_echo_problem(spec: dict, slug: str, xhs_text: str | None) -> str | Non
     title = str((spec.get("push") or {}).get("summary") or "").strip()
     if not title:
         return None
-    ratio = title_echo_ratio(title, xhs_text)
+    ratio = title_echo_ratio(title, xhs_text, spec_player_names(spec))
     if ratio < TITLE_ECHO_MIN:
         return None
     return (f"小红书正文第一句重复了标题（重合 {ratio:.0%}）：标题「{title}」／"

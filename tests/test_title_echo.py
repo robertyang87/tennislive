@@ -11,6 +11,8 @@ sys.path.insert(0, str(ROOT / "tools"))
 import push_reel  # noqa: E402
 import spec_wording as w  # noqa: E402
 
+LEGACY_MAX = 140  # 定规矩那天的存量；只许往下改
+
 
 def _pairs():
     for xhs in sorted((ROOT / "specs" / "reels").glob("*.xhs.txt")):
@@ -37,10 +39,10 @@ def test_重复标题的豁免表只许减_每条都真的还在重复():
             continue
         spec, text = known[slug]
         title = str((spec.get("push") or {}).get("summary") or "")
-        if w.title_echo_ratio(title, text) < w.TITLE_ECHO_MIN:
+        if w.title_echo_ratio(title, text, w.spec_player_names(spec)) < w.TITLE_ECHO_MIN:
             stale.append(f"{slug}（已经不重复了，从表里删掉）")
     assert not stale, "豁免表里有过期的条目：\n" + "\n".join(stale)
-    assert len(legacy) <= 150, "豁免表只许减不许加"
+    assert len(legacy) <= LEGACY_MAX, "豁免表只许减不许加"
 
 
 def test_判据正反两头():
@@ -49,6 +51,10 @@ def test_判据正反两头():
     fresh = "北京时间9月25日晚上8点多开球，拉沃尔杯伦敦站首日：鲁德 6-7(4)、6-4、10-8 胜塞伦多洛。"
     assert w.title_echo_problem(spec, "x-new", echo)
     assert w.title_echo_problem(spec, "x-new", fresh) is None     # 只重合一个人名
+    # 人名不算重合：标题和第一句只共用两个名字，标题里的内容一个字没抄
+    two = {"push": {"summary": "中岛布兰登抢十逆转门西克"},
+           "cover": {"matchup": [{"name": "中岛布兰登"}, {"name": "门西克"}]}}
+    assert w.title_echo_problem(two, "x-new", "北京时间快11点：中岛布兰登 6-1、3-6、10-7 胜门西克。") is None
 
 
 def test_复制页正文去掉只是重复标题的那一行():
