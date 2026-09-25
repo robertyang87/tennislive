@@ -853,30 +853,28 @@ def test_品牌字体是libass认得出的那个名字():
         "换过字体版本？名字对不上就会静默回退。")
 
 
-def test_顶栏那个绿方块不许赌字体回退():
-    """`▍`（U+258D）**得意黑里没有**，本地是靠回退到思源黑体才画出来的。
+def test_顶栏最前面是麦克风矢量不赌字体():
+    """账号所有者 2026-09-25：顶栏原来那道绿色竖条 `▍` 换成麦克风。
 
-    「本地装着不等于 CI 装着」——回退链在 runner 上不保证，赌输了画出来是个
-    豆腐块。所以每一段都内联写死 `\\fn`，不交给 fontconfig 去猜。
-
-    判据是**拿一个必定没有的码位当对照**：缺字时字体画的是 `.notdef`，
-    而 `.notdef` 对任何缺失字符都长得一样。直接断言「墨迹为空」是错的——
-    实测 `.notdef` 有 32×35 的墨，那正是那个豆腐块。
+    `▍`（U+258D）**得意黑里没有**，本地是靠回退到思源黑体才画出来的，而回退链
+    在 runner 上不保证。换成麦克风之后更没有哪支字体带它，所以它是一段 ASS
+    矢量（`\\p1`）——**根本不走字体**。这条钉三头：第一段是矢量不是字、
+    `▍` 不许回来、量宽度时图标那段算进去了（不然顶栏宽度闸少算一截）。
     """
-    from PIL import ImageFont
+    import tools.build_interview_clip as clip
 
-    line_a = header_ass({"slug": "t", "event": "某站 1/4 决赛",
-                         "interview_kind": "赛后场上采访",
-                         "push": {"matchup": "甲 vs 乙"}})[0]
-    assert "▍" in line_a
-    assert line_a.startswith(r"{\r\fnNoto Sans CJK SC"), "画方块那一段要显式指定字体"
-    head = ImageFont.truetype(_FONT_FILES["head"][0], 40)
-    ink = lambda ch: (m := head.getmask(ch)).size + (bytes(m),)  # noqa: E731
-    notdef = ink("")                          # 私用区，必定没有
-    assert ink("▍") == notdef, (
-        "得意黑现在有 ▍ 这个字形了？那 `_HEAD_MARK` 里的 `\\fn` 可以去掉，"
-        "注释也要跟着改")
-    assert ink("决") != notdef, "对照组：汉字必须画得出来"
+    spec = {"slug": "t", "event": "某站 1/4 决赛",
+            "interview_kind": "赛后场上采访", "push": {"matchup": "甲 vs 乙"}}
+    line_a = header_ass(spec)[0]
+    assert "▍" not in line_a, "竖条不许回来——换成麦克风是账号所有者定的"
+    first = line_a[:line_a.index(r"{\r\p0}")]
+    assert r"\p1" in first and clip._MARK_COLOUR in first, "第一段要是品牌绿的矢量"
+    assert r"\fn" not in first, "矢量那段不该指定字体——它不是字"
+    assert header_lines(spec)[0] == "某站 1/4 决赛", "纯文本里不该混进图标的矢量指令"
+    runs = header_runs(spec)[0]
+    assert runs[0][1] == "icon"
+    icon_w = clip._run_width("icon", runs[0][3], runs[0][0])
+    assert icon_w > clip._HEAD_ICON_H * 0.6, "量宽度时图标那段要按它的真实步进算"
 
 
 def test_顶栏太长要报错不许悄悄折行():
