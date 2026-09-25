@@ -28,8 +28,11 @@ atptour.com 上没有对应文章。我先在官网找、找不到就写成「�
 **两家独立嵌同一条就是它真实存在的出处**。
 
 **怎么下**：`yt-dlp -F <x.com 帖子地址>` 在沙箱里直接能列格式（这条有 `http-10368` 1080×1920）；
-spec 的 `sources` 直接写 x.com 地址，match-reel 照常下（`djokovic-beijing-return` 的 `announce` 同理）。
-竖版源走 `fit: "contain"`。原声没有字幕时，`pip install faster-whisper` 跑 `small.en`
+⚠️ **spec 的 `sources` 别直接写帖子地址**：match-reel 的选择器是 `bv*[height<=1080]`，
+对**竖版**只挑得到 480×852（run 36133328467，2026-09-25 实测）。写 `yt-dlp -g -f <最高那档 http-*>`
+解出来的 `video.twimg.com/...mp4` 直链，下载那步走 curl、拿到原画。
+竖版源和主源尺寸不同，要在 spec 顶层 `archival` 里认领、每段 `fit: "contain"`
+（`djokovic-beijing-return` 的 `announce`、`sinner-beijing-withdrawal-2026` 的 `xvid` 都是这么写的）。原声没有字幕时，`pip install faster-whisper` 跑 `small.en`
 拿逐词时间戳切双语 cue，措辞再和刊出的全文逐句核一遍（whisper 会把 Jannik 拼成 Janik）。
 
 ⚠️ Instagram 帖子在沙箱里多半要登录，拿不到就先找同一段视频在 X 上的那份。
