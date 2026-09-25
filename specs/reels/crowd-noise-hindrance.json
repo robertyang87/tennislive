@@ -1,0 +1,480 @@
+{
+  "slug": "crowd-noise-hindrance",
+  "_column": "网球有故事",
+  "primary": "bjk",
+  "sources": {
+    "bjk": "https://www.youtube.com/watch?v=MP8ZbrE0lKw",
+    "henin": "https://www.youtube.com/watch?v=TF4qnZvX-AI",
+    "nadalpc": "https://www.youtube.com/watch?v=wu0vJZQcDfI",
+    "murray": "https://www.youtube.com/watch?v=kT0gBVc8I7U",
+    "swiatek": "https://www.youtube.com/watch?v=alfhAxmcWf4",
+    "djok": "https://www.youtube.com/watch?v=Pkx1VyDRYhg",
+    "medv": "https://www.youtube.com/watch?v=p2lgExFvcug",
+    "nadal": "https://www.youtube.com/watch?v=T7cd71seygs",
+    "swiatekc": "https://www.youtube.com/watch?v=DxN5EU_HXnA",
+    "sabao": "https://www.youtube.com/watch?v=maC-QCgT-zo",
+    "djokdc": "https://www.youtube.com/watch?v=UFxRO5WcSd0"
+  },
+  "mixed_fps": {
+    "nadalpc": "29.97 → 25。新闻发布会，说话头，几乎无感。",
+    "murray": "29.97 → 25。宽景回合垫旁白。",
+    "medv": "29.97 → 25。宽景和看台反应镜头。",
+    "nadal": "29.97 → 25。宽景回合垫旁白。"
+  },
+  "_source": "八条都是官方频道（oEmbed author_name 逐条核过），probe 产物在 output/2026-09-25/reel/quiet-src-*/ 与 output/2026-09-24/reel/zheng-paolini-bjk-cup-2026-qf/：\n· bjk `MP8ZbrE0lKw` Billie Jean King Cup，保利尼 vs 郑钦文集锦，1920×1080/25fps\n· henin `TF4qnZvX-AI` Roland-Garros「Roland-Garros Classic Match」2003 半决赛海宁 vs 小威，1920×1080/25fps，1044.5s；记分条 score_18/19 核到决胜盘小威 4-2 发球 30-0 在 794~800s，contact_13 796~832 就是那一分（发球 802~806、小威找主裁 808~816、海宁举手慢镜头 822~826）\n· nadal `T7cd71seygs` US Open 2017 纳达尔 vs 拉约维奇加长集锦，1280×720/29.97\n· nadalpc `wu0vJZQcDfI` US Open「2017 US Open: Rafael Nadal R1 press conference」，captions 117.52~125.12 就是那句「too much noise … not able to hear the ball」\n· murray `kT0gBVc8I7U` US Open「US Open 2016 In Review: Andy Murray」，章节 SECOND ROUND v. Granollers 在 44.5~96s（contact_00 44.5 打着章节字幕）\n· swiatek `alfhAxmcWf4` Roland-Garros 2024 斯瓦泰克 vs 大坂集锦，1920×1080/25fps；166.5 起是片尾\n· djok `Pkx1VyDRYhg` Wimbledon「Novak Djokovic's Fiery On-court Interview After Holger Rune Win」，captions 100.36~122.32 就是「disrespect … good night」\n· medv `p2lgExFvcug` US Open 2025 梅德韦杰夫 vs 邦齐加长集锦；集锦没有摄影师入场那几秒，370~384 是邦齐第三盘 5-4 的赛点局（记分条 MATCH POINT），386~393 看台起立鼓掌起哄，解说 387.84「He didn't ask the cameraman to run on the court」\n⚠️ 去掉的：克耶高斯 2022 温网决赛（`RO52Y8SOIUU` 限区，runner 下不了）；郑钦文 2026 美网「不要喊」（加长集锦无字幕，比分各家说法互相矛盾，找不到能自证的那几秒）；萨巴伦卡 2026 美网（没等 probe，素材够）。",
+  "_facts": "核实截至 2026-09-25。\n① ITF《Duties and Procedures for Officials 2026》（https://www.itftennis.com/media/2509/duties-procedures-for-officials-2026.pdf）「Outside hindrance」原文：If a player is hindered by anything not within his/her control (a ball rolling onto the court, a paper blowing onto the court, etc.) during play or during his/her service motion, the point should be replayed. Crowd noise, “out” calls from spectators and other similar distractions are not considered a hindrance and the point should stand as played.；「Crowd control」一节：spectators should always be addressed respectfully with statements (preferably in the local language) similar to … “Quiet please, thank you”。\n② ITF《Rules of Tennis 2026》（https://www.itftennis.com/media/7221/2026-rules-of-tennis-english.pdf）Rule 2 PERMANENT FIXTURES：include the backstops and sidestops, the spectators, the stands and seats for spectators … the chair umpire, line umpires, net umpire and ball persons when in their recognised positions；Rule 26 HINDRANCE：the point shall be replayed if a player is hindered … by something outside the player's own control (not including a permanent fixture)；Case 3：A ball in play hits a bird flying over the court → Yes, the point shall be replayed。\n③《2026 Billie Jean King Cup Regulations》（https://assets.ctfassets.net/gd35ic6j47k5/11NnR8Dq9LGY5BK3fZpUBZ/9137aa41e4ee2380231b056551ae7eaa/2026_Billie_Jean_King_Cup_Regulations.pdf）Sch 3 - 14 第 S 条 Partisan crowd/spectator behaviour：each Nation must control its supporting spectators so that play is not interrupted or disturbed … the Referee shall penalise such Nation's player：FIRST offence WARNING / SECOND POINT PENALTY / THIRD AND EACH SUBSEQUENT GAME PENALTY；flagrant … authority to declare a default for a single violation。ITF 裁判手册同一套也写着团体赛的播报格式「Code Violation, Partisan Crowd, Point Penalty, (Nation)」。\n④ 海宁 vs 小威：rolandgarros.com 档案稿（https://www.rolandgarros.com/en-us/article/rg-archives-epic-match-henin-williams-2003-semi-final）「At 30-0 in the third set with Williams serving at 4-2, Henin raised her left hand … The chair umpire didn't see that」「whistles from spectators」「the crowd started to cheer her every error」「losing the point, the game and eventually the match, 6-2, 4-6, 7-5」，2003-06-04；tennis.com「French Open memories #8」同一件事。源片记分条自证 4-2 30-0。\n⑤ 纳达尔 2017 美网首轮胜拉约维奇、下雨关顶：SI/AP https://www.si.com/tennis/2017/08/30/ap-ten-us-open-loud-under-roof「Too much noise, no?」「I was not able to hear the ball when you are hitting」；tennis.com 同引。发布会原声 captions 自证。\n⑥ 穆雷 2016 美网第二轮胜格拉诺勒斯（屋顶下）：AP via Fox「We use our ears when we play. It's not just the eyes. (The sound) helps us pick up the speed of the ball, the spin that's on the ball, how hard someone's hitting it.」；ABC「you couldn't really hear the ball」。\n⑦ Cañal-Bruland, Müller, Lach & Spence (2018) Auditory contributions to visual anticipation in tennis, Psychology of Sport and Exercise 36:100–103, DOI 10.1016/j.psychsport.2018.02.001：击球声越响，受试者判断的落点越远、击球越重。⚠️ 这是实验室合成声，不是真实观众噪音——旁白只说「击球声」。\n⑧ 斯瓦泰克 2024 法网第二轮 7-6(1) 1-6 7-5 胜大坂，决胜盘 2-5 落后、3-5 救下赛点：ABC https://www.abc.net.au/news/2024-05-30/iga-swiatek-french-open-win-over-naomi-osaka/103911120、CNN 2024-05-30；场上原话（Eurosport 片段 DxN5EU_HXnA captions 35.56~42.20）「when you scream something during the rally or right before the return it's really really hard to be focused」。\n⑨ 德约科维奇 2024 温网第四轮 6-3 6-4 6-2 胜鲁内：ESPN / CBS / SI；原话 captions 100.36~122.32。\n⑩ 邦齐 vs 梅德韦杰夫 2025 美网首轮：NBC Sports https://www.nbcsports.com/tennis/news/medvedevs-us-open-match-delayed-by-booing-fans-after-photographer-enters-the-court、CNN 2025-08-25：邦齐第三盘 5-4 发球胜赛、一发失误后摄影师走进场地，主裁判给了邦齐重发一发，看台嘘声让比赛停了约 6 分钟；邦齐最终 6-3 7-5 6-7(5) 0-6 6-4 获胜。\n⑪ 中网 2026 9 月 30 日开赛（WTA 官网 China Open 2026 指南、英文维基两源）。\n⑫ 引子：9/24 深圳，保利尼 6-3 7-6(4) 郑钦文；新浪、网易、凤凰十余篇中文稿在讨论看台上的喊声。那些稿子里的具体细节（提醒几次、抢七高压是否被喊声打乱）只在内容号聚合稿里、互相矛盾，片子一个字都不用。 ⑬ 萨巴伦卡 2026 澳网女单半决赛对斯维托丽娜：主裁判 Louise Azemar Engzell 判她击球后拖长的叫声构成干扰，她申请回看，复核后判罚维持——澳网官方频道集锦 maC-QCgT-zo 的现场原声（captions 8.96「Stop.」「Yeah, that's hindrance.」、34.96 主裁判宣布申请回看、121.04 宣布「after reviewing the video, the hindrance stands」）及记分条 SABALENKA/SVITOLINA。 ⑭ 2023 戴维斯杯总决赛（马拉加）1/4决赛塞尔维亚对英国，德约对诺里：英国球迷起哄，德约赢分后回头冲看台示意——LTA 官方频道集锦 UFxRO5WcSd0，转播解说原声 captions 72.04「it was a little cheeky from the world number one, gives a little message up towards the British fans」，记分条 SERBIA/GREAT BRITAIN。 ⑮ 深圳 9/24 那晚局休期间，场馆广播一直在用中英文提醒观众观赛礼仪——账号所有者 2026-09-25 口述（当天比赛所见）。官方 BJK 频道的集锦（MP8ZbrE0lKw / 2mvy4RJXjr0 / 3mgsKc0F-AI / WCJmb_PxdHg）都是点对点剪辑、不含局休；YouTube 与中文网页搜索都没找到带这段广播原声的视频，所以用旁白讲，不写广播的具体措辞。",
+  "cover": {
+    "eyebrow": "网球有故事",
+    "layout": "solo",
+    "subject": "德约科维奇",
+    "hook": "网球为什么要安静\n德约对看台说晚安",
+    "_hook_why": "两行各 8 个字符（≤10）。第一行是全片的问题，第二行是最出圈的那一幕（2024 温网赛后「good night」），两行之间是「为什么」和「闹到什么程度」的落差。封面人物就是第二行说的那个人。不写身份、不写比分、没有术语。",
+    "narration": "网球为什么要安静？德约对看台说晚安。",
+    "topic": "看台上的喊声，规则怎么管",
+    "portrait": {
+      "image": "assets/reel/quiet-djokovic-wimbledon-2024-ap.jpg",
+      "focus": 0.52,
+      "focus_y": 0.5,
+      "zoom": 1.0,
+      "_why": "AP 实拍（Kirsty Wigglesworth），说明原文「Novak Djokovic of Serbia gestures to the crowd as he is interviewed after defeating Holger Rune of Denmark in their fourth round match at the Wimbledon tennis championships in London, Monday, July 8, 2024.」（WTOP 媒体库 caption 原文）。近景，正脸、眼睛睁着，右手指向看台、嘴张着在说话——情绪就是这条片子的题：球员对看台有话说。",
+      "_resolution_why": "原图 2843×1896（WTOP 媒体库去掉 -scaled 后缀的原件），铺 1080×1440 按高度 1440/1896=0.76×，不用放大。",
+      "_focus_why": "3:4 按高度满铺，水平裁出 1422px（原宽的一半）。focus 0.52 → 窗口 x∈[0.27,0.77]：脸在 0.55~0.68、指向看台的手指尖在 0.27 附近、麦克风在 0.35，都进得来。脸在 y 0.1~0.45，钩子带从 0.55 起，不压脸。"
+    },
+    "scrim": "clear",
+    "_layout_why": "「网球有故事」讲一件事，不印赛果，solo。"
+  },
+  "editorial": {
+    "mode": "match_review",
+    "question": "网球比赛为什么要观众安静？观众真打断了比赛，规则怎么管？",
+    "thesis": "球员靠击球声判断来球，所以网球要安静；历史上海宁举手、斯瓦泰克请求、德约说晚安都是看台和球场撞在一起的时刻。可按规则，观众喊一声这一分照样算，摄影师闯进场反而能重来；只有团体赛，偏袒的观众会让自家球员被罚。",
+    "beats": [
+      "深圳那晚的热议引出问题",
+      "纳达尔、穆雷：球员靠耳朵打球",
+      "2003 法网海宁举手，小威没能重发",
+      "2024 斯瓦泰克的请求、德约的晚安",
+      "摄影师进场能重来，观众喊叫不能",
+      "团体赛罚本方球员",
+      "萨巴伦卡：球员自己的叫声算干扰",
+      "戴维斯杯：英国球迷冲德约起哄",
+      "中网开赛前的一问"
+    ],
+    "human_context": {
+      "angle": "郑钦文金杯主场输球后国内在吵看台上的喊声，这条把「为什么要安静」和「规则到底怎么管」讲清楚，用的是几件真实发生过的事。",
+      "facts": [
+        "纳达尔 2017 美网：太吵了，我听不见球",
+        "2003 法网半决赛：海宁举手，主裁判没看见，小威没能重发一发",
+        "2025 美网：摄影师进场，邦齐重发一发",
+        "ITF 裁判手册：观众喊叫不算妨碍，这一分照算"
+      ],
+      "sources": [
+        "https://www.rolandgarros.com/en-us/article/rg-archives-epic-match-henin-williams-2003-semi-final",
+        "https://www.si.com/tennis/2017/08/30/ap-ten-us-open-loud-under-roof",
+        "https://www.nbcsports.com/tennis/news/medvedevs-us-open-match-delayed-by-booing-fans-after-photographer-enters-the-court",
+        "https://www.itftennis.com/media/2509/duties-procedures-for-officials-2026.pdf"
+      ]
+    }
+  },
+  "push": {
+    "auto": true,
+    "summary": "网球为什么要观众安静",
+    "lead": "纳达尔说太吵了听不见球，海宁一举手让小威没能重发，德约赛后对看台说晚安。可按规则，观众喊一声这一分照样算，摄影师闯进场反而能重来；只有金杯、戴杯这种团体赛，偏袒的观众会让自家球员被罚分。"
+  },
+  "_rights": "官方源片短窗用于非商业网球评论和规则解读，保留原始来源与年份；封面是 AP 实拍。",
+  "tts_backend": "edge",
+  "_tts_backend_why": "规则与历史解读，中性解说；本地 --check-narration 与生产同一后端。",
+  "segments": [
+    {
+      "source": "henin",
+      "start": 822.2,
+      "end": 826.8,
+      "fit": "crop",
+      "_why": "① 冷开场，不配旁白：2003 法网半决赛，海宁举起左手的慢镜头回放（contact_13 822.5~826.5，两人同框、海宁手掌张开）。现场声里是看台的嘈杂。",
+      "_ending_payoff_required": false,
+      "_ending_payoff_why": "这一格不是赛果，是全片第一个案例的核心动作；正文第 ⑨ 段会按顺序完整讲到它。",
+      "_head_open_why": "取的是源片 822s，不是集锦开头。"
+    },
+    {
+      "source": "bjk",
+      "start": 220.5,
+      "end": 226.0,
+      "fit": "crop",
+      "narration": "郑钦文深圳输球之后，微博上很多人在吵看台上的喊声。",
+      "crosses_cut": "规则解读片的引子镜头：郑钦文近景接同一局宽景，不指向任何具体一分。",
+      "_why": "② 引子，一句带过（_facts ⑫）。",
+      "_silence_fix": "run 36091574247 QC：旁白收尾后这段现场声近乎静音（-60~-72 dB，runner TTS 比本地快），段尾收到旁白刚说完。"
+    },
+    {
+      "source": "bjk",
+      "start": 204.1,
+      "end": 209.65,
+      "fit": "crop",
+      "narration": "那天局间休息，广播一直在用中英文提醒观众观赛礼仪。",
+      "crosses_cut": "保利尼发球前拍球、意大利替补席、保利尼近景连切，都是分与分之间的画面；画面不冒充那段广播。",
+      "_why": "⑯ 账号所有者现场所见（_facts ⑮）；没有找到带这段广播原声的视频，所以用旁白讲。",
+      "_silence_fix": "run 36091574247 QC：旁白收尾后这段现场声近乎静音（-60~-72 dB，runner TTS 比本地快），段尾收到旁白刚说完。",
+      "point_end_ok": "缩略图墙 190.5~202.5 是上一分的回合宽景，204.5 起是保利尼发完球后的速度牌、走动（206.5）、意大利替补席（208.5）——窗口里没有正在打的一分；210.88 的翻牌落在 209.7 之后的保利尼近景里。"
+    },
+    {
+      "source": "bjk",
+      "start": 339.3,
+      "end": 345.0,
+      "fit": "crop",
+      "narration": "网球比赛，为什么非要观众安静？",
+      "_why": "③ 全片的问题。画面是深圳这场的宽景回合，看台坐满。"
+    },
+    {
+      "source": "nadal",
+      "start": 45.0,
+      "end": 52.6,
+      "fit": "crop",
+      "narration": "二〇一七年美网首轮，下雨关上了屋顶。纳达尔打完说：",
+      "_why": "④ 纳达尔 2017 美网首轮对拉约维奇的比赛画面（关顶，44.78 一刀之后的宽景回合），为下一段发布会原声铺垫（_facts ⑤）。720p 按 source_quality_exceptions 豁免。"
+    },
+    {
+      "source": "nadalpc",
+      "start": 117.2,
+      "end": 127.0,
+      "fit": "crop",
+      "narration": "",
+      "quote": [
+        {
+          "at": 0.3,
+          "text": "Today under the roof was too much noise.\n今天屋顶关着，太吵了。"
+        },
+        {
+          "at": 4.5,
+          "text": "I was not able to hear the ball when you are hitting.\n对手击球的时候，我听不见球。"
+        }
+      ],
+      "_quote_kind": "interview",
+      "_why": "⑤ 纳达尔 2017 美网首轮赛后发布会原声，captions 117.52~125.12（_facts ⑤）。"
+    },
+    {
+      "source": "nadalpc",
+      "start": 614.4,
+      "end": 631.0,
+      "fit": "crop",
+      "narration": "",
+      "quote": [
+        {
+          "at": 0.3,
+          "text": "Sometimes I say to him stop with the serve,\n我有时候喊他先别发球，"
+        },
+        {
+          "at": 6.4,
+          "text": "and he was not able to hear me.\n他根本听不见我说话。"
+        },
+        {
+          "at": 10.4,
+          "text": "You can imagine how much noise you feel down there.\n你可以想象场上有多吵。"
+        }
+      ],
+      "_quote_kind": "interview",
+      "_why": "⑤b 同一场发布会 captions 614.64~628.40：他请对手等一下再发球，对手听不见——现场噪音到什么程度，由他自己说。"
+    },
+    {
+      "source": "murray",
+      "start": 44.6,
+      "end": 54.2,
+      "fit": "crop",
+      "narration": "网球员是在用耳朵打球的。穆雷说过：声音帮我们判断球速、旋转，还有对手打得多重。",
+      "crosses_cut": "同一段章节：SECOND ROUND v. Granollers 宽景回合接穆雷走动近景。",
+      "_why": "⑥ 穆雷 2016 美网第二轮对格拉诺勒斯（章节字幕在 44.5 那一格），原话见 _facts ⑥。"
+    },
+    {
+      "source": "murray",
+      "start": 54.4,
+      "end": 64.0,
+      "fit": "crop",
+      "narration": "二〇一八年有一项研究：同一个球，击球声放得越响，球员就越觉得它飞得远、打得重。",
+      "_why": "⑦ 研究见 _facts ⑦；只说击球声，不说观众噪音。画面是同一场的宽景回合。"
+    },
+    {
+      "source": "henin",
+      "start": 790.0,
+      "end": 800.6,
+      "fit": "crop",
+      "narration": "最有名的一次，二〇〇三年法网半决赛。决胜盘小威四比二领先发球，看台还在为一个判罚吹口哨。",
+      "_why": "⑧ 记分条 792.5~800.5 `/S.WILLIAMS 2 6 4 / HENIN 6 4 2`，30-0 在 794.5 起（_facts ④）。"
+    },
+    {
+      "source": "henin",
+      "start": 800.9,
+      "end": 806.7,
+      "fit": "crop",
+      "narration": "她抛球那一刻，海宁举起了手，示意还没准备好。",
+      "_why": "⑨ 800.8 一刀之后就是这一分的发球（802.5~806.5）。"
+    },
+    {
+      "source": "henin",
+      "start": 808.1,
+      "end": 819.0,
+      "fit": "crop",
+      "narration": "主裁判说没看见那只手，小威要求重发一发，被拒绝了。之后，看台开始为她的每一个失误叫好。",
+      "crosses_cut": "同一分之后的连续镜头：小威转身、找主裁（810~813 近景）、主裁、海宁，全是这一分的后续。",
+      "_why": "⑩ _facts ④ 原文「The chair umpire didn't see that」「Williams objected to hitting a second serve but was overruled」「the crowd started to cheer her every error」。"
+    },
+    {
+      "source": "henin",
+      "start": 827.2,
+      "end": 832.8,
+      "fit": "crop",
+      "narration": "她丢了这一分、这一局，最后五比七输掉了决胜盘。",
+      "_why": "⑪ 小威低头的近景（828.5~832.5），_facts ④「losing the point, the game and eventually the match, 6-2, 4-6, 7-5」。"
+    },
+    {
+      "source": "swiatek",
+      "start": 145.0,
+      "end": 152.7,
+      "fit": "crop",
+      "narration": "二〇二四年法网，斯瓦泰克顶住赛点，翻盘赢了大坂直美。赛后她说：",
+      "_why": "⑫ _facts ⑧；画面是同一场决胜盘的宽景回合（140.5~146.5）。",
+      "crosses_cut": "决胜盘宽景回合接斯瓦泰克近景，同一场。",
+      "point_end_ok": "缩略图墙 140.5~146.5 是决胜盘这一分的宽景回合，148.56 一刀切到大坂走回（150.5）、151.36 切到斯瓦泰克近景（152.5）——这一分在 148.56 之前已经打完；153.12 的「翻牌」是近景里按猜的框量出的噪声，不是记分条。"
+    },
+    {
+      "source": "swiatekc",
+      "start": 33.0,
+      "end": 45.3,
+      "fit": "contain",
+      "narration": "",
+      "quote": [
+        {
+          "at": 0.3,
+          "text": "But sometimes, under a lot of pressure,\n可有时候压力很大，"
+        },
+        {
+          "at": 2.5,
+          "text": "when you scream something during the rally or right before the return,\n你们在回合中或接发球前喊出来，"
+        },
+        {
+          "at": 7.3,
+          "text": "it's really, really hard to be focused.\n我们真的很难集中。"
+        }
+      ],
+      "_quote_kind": "interview",
+      "_why": "⑬ 斯瓦泰克 2024 法网第二轮赛后场上采访原声（Eurosport 官方频道片段，captions 33.16~45.44）。源片 608×1080 竖版，高度够 1080。",
+      "point_end_ok": "这是赛后场上采访，没有比赛在打；45.76 的「翻牌」是按猜的框在采访画面里量出的噪声。"
+    },
+    {
+      "source": "djok",
+      "start": 68.6,
+      "end": 77.2,
+      "fit": "crop",
+      "narration": "同一年温网，德约科维奇觉得看台在嘘他。赛后，他对着全场说：",
+      "crosses_cut": "中央球场全景接场边观众，同一段场上采访。",
+      "_why": "⑭ _facts ⑨。"
+    },
+    {
+      "source": "djok",
+      "start": 100.1,
+      "end": 123.0,
+      "fit": "crop",
+      "narration": "",
+      "quote": [
+        {
+          "at": 0.3,
+          "text": "And to all those people that have chosen to disrespect the player,\n对那些选择不尊重球员的人，"
+        },
+        {
+          "at": 6.6,
+          "text": "in this case me, have a good night.\n也就是不尊重我的人：晚安。"
+        },
+        {
+          "at": 17.0,
+          "text": "Good night, good night.\n晚安，晚安。"
+        }
+      ],
+      "_quote_kind": "interview",
+      "crosses_cut": "同一段场上采访：看台、他的近景、球场全景交替。",
+      "_why": "⑮ 原声 captions 100.36~122.32（_facts ⑨）。"
+    },
+    {
+      "source": "medv",
+      "start": 371.0,
+      "end": 384.5,
+      "fit": "crop",
+      "narration": "可按规则，什么能让一分重来？二〇二五年美网，邦齐发球胜赛时，摄影师走进场地。主裁判给了他重发一发，看台炸了，停了约六分钟。",
+      "_why": "⑯ 370.5~382.5 记分条 MATCH POINT、邦齐发球（_facts ⑩）。集锦里没有摄影师进场那几秒，旁白讲的是这一局发生的事。"
+    },
+    {
+      "source": "medv",
+      "start": 387.3,
+      "end": 393.4,
+      "fit": "crop",
+      "narration": "",
+      "crosses_cut": "看台起立鼓掌起哄的连续反应镜头（386.5~392.5）。",
+      "_why": "⑰ 转播解说原声 captions 387.84~391.28，画面是看台起立起哄（388.5~392.5）。",
+      "point_end_ok": "看台反应镜头，没有正在打的一分。",
+      "quote": [
+        {
+          "at": 0.5,
+          "text": "I really feel for Benjamin Bonzi, I have to be honest.\n说实话，我真替邦齐难过。"
+        },
+        {
+          "at": 2.6,
+          "text": "He didn't ask the cameraman to run on the court.\n又不是他叫摄影师跑进场的。"
+        }
+      ],
+      "_quote_kind": "broadcast"
+    },
+    {
+      "source": "bjk",
+      "start": 0.5,
+      "end": 15.0,
+      "fit": "crop",
+      "narration": "摄影师闯进场，能重来；观众喊一声，不行。国际网联的裁判手册写着：观众的喊叫、喊出界，都不算干扰，这一分照样算。",
+      "_why": "⑱ _facts ①；画面是深圳湾体育中心开场宽景，看台坐满。",
+      "point_end_ok": "0.5~12.5 是宽景回合，13.8 一刀切到郑钦文近景（14.5 / 16.5 两格），这一分在切走之前已经打完；16.88 是近景之后的下一刀，不是这一分的归属。",
+      "crosses_cut": "深圳开场宽景回合接郑钦文近景；旁白讲的是 ITF 裁判手册的条文，画面只给深圳这个主场垫底，不指向具体一分。"
+    },
+    {
+      "source": "murray",
+      "start": 84.2,
+      "end": 94.8,
+      "fit": "crop",
+      "narration": "反倒是球打中一只飞过的鸟，这一分要重打。因为规则把观众算作球场的一部分，跟挡板、看台一样。",
+      "_why": "⑲ _facts ②（规则第 26 条案例 3、第 2 条永久固定物）。画面是穆雷 2016 美网第二轮的宽景回合（章节 44.5~96 之内）。"
+    },
+    {
+      "source": "sabao",
+      "start": 0.5,
+      "end": 8.8,
+      "fit": "crop",
+      "narration": "球员自己出声，规则却管。今年澳网半决赛，萨巴伦卡叫声拖长，主裁判叫停：",
+      "point_end_ok": "主裁判在回合中叫停，这一分就结束在这里，下一段接她的判罚。",
+      "_why": "sabao 0.5~8.8 回合宽景，captions 8.96「Stop.」（_facts ⑬）。"
+    },
+    {
+      "source": "sabao",
+      "start": 8.8,
+      "end": 15.8,
+      "fit": "crop",
+      "narration": "",
+      "quote": [
+        {
+          "at": 0.1,
+          "text": "Stop.\n停。"
+        },
+        {
+          "at": 0.8,
+          "text": "Yeah, that's hindrance.\n对，这是干扰。"
+        },
+        {
+          "at": 2.9,
+          "text": "What?\n什么？"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "crosses_cut": "叫停、主裁判近景、萨巴伦卡近景连切，同一个判罚时刻。",
+      "point_end_ok": "这一分已被叫停。",
+      "_why": "captions 8.96/9.60/11.68 主裁判与萨巴伦卡原声。"
+    },
+    {
+      "source": "sabao",
+      "start": 34.9,
+      "end": 44.4,
+      "fit": "crop",
+      "narration": "",
+      "quote": [
+        {
+          "at": 0.1,
+          "text": "Ladies and gentlemen, Miss Sabalenka is requesting a video review,\n各位，萨巴伦卡申请回看录像，"
+        },
+        {
+          "at": 4.9,
+          "text": "of the hindrance call, when she said something after the shot.\n复核她击球后出声的干扰判罚。"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "crosses_cut": "教练近景切到主裁判宣布，同一次挑战。",
+      "point_end_ok": "死球期间的宣布。",
+      "_why": "captions 34.96~42.72 主裁判宣布。"
+    },
+    {
+      "source": "sabao",
+      "start": 120.3,
+      "end": 129.5,
+      "fit": "crop",
+      "narration": "",
+      "quote": [
+        {
+          "at": 0.8,
+          "text": "Ladies and gentlemen, after reviewing the video,\n女士们先生们，回看录像之后，"
+        },
+        {
+          "at": 5.2,
+          "text": "the hindrance stands.\n干扰判罚维持。"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "point_end_ok": "死球期间的宣布，画面是球场全景。",
+      "_why": "captions 121.04~125.52 主裁判宣布复核结果（字幕 ASR 写成 the hund stance）。"
+    },
+    {
+      "source": "bjk",
+      "start": 184.8,
+      "end": 197.6,
+      "fit": "crop",
+      "narration": "只有金杯、戴维斯杯这种团体赛，规则才会追到观众头上：偏袒一方、打断比赛，罚的是本方球员。警告、罚分、罚局，严重的直接判负。",
+      "crosses_cut": "中国队替补席起身、郑钦文近景、宽景连切，不暗示这一场出现过判罚。",
+      "_why": "⑳ _facts ③（2026 金杯规程附件 3 第 S 条）。",
+      "_silence_fix": "run 36091574247 QC：旁白收尾后这段现场声近乎静音（-60~-72 dB，runner TTS 比本地快），段尾收到旁白刚说完。"
+    },
+    {
+      "source": "djokdc",
+      "start": 58.0,
+      "end": 69.7,
+      "fit": "crop",
+      "narration": "二〇二三年戴维斯杯总决赛，塞尔维亚对英国，英国球迷整场冲着德约起哄。赢下这一分，他回头看向看台：",
+      "_why": "djokdc 58~67 回合宽景（_facts ⑭）。",
+      "crosses_cut": "67.24 从回合宽景切到德约近景，同一个人，这一分打完后的反应。",
+      "point_end_ok": "缩略图墙 58.5~66.5 是回合宽景，67.24 一刀切到德约近景（68.5）、塞尔维亚看台（70.5）——这一分在切走之前已经打完；68.48/71.20 的「翻牌」是按猜的框在近景和看台画面里量出的噪声。"
+    },
+    {
+      "source": "djokdc",
+      "start": 69.7,
+      "end": 77.0,
+      "fit": "crop",
+      "narration": "",
+      "quote": [
+        {
+          "at": 2.3,
+          "text": "Well, it was a little cheeky from the world number one,\n世界第一这一下有点调皮，"
+        },
+        {
+          "at": 4.1,
+          "text": "gives a little message up towards the British fans.\n冲英国球迷递了个话。"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "crosses_cut": "德约近景、塞尔维亚看台、德约近景连切，同一个反应时刻。",
+      "point_end_ok": "这一分已打完，画面是赛后反应。",
+      "_why": "转播解说原声 captions 72.04~76.60。"
+    },
+    {
+      "source": "bjk",
+      "start": 468.0,
+      "end": 476.8,
+      "fit": "crop",
+      "narration": "九月三十号中网开赛。你在看台上，会在回合里喊出来吗？",
+      "point_end_ok": "赛后保利尼向看台挥手、走回座位，比赛早已结束。",
+      "_ending_payoff_required": false,
+      "_ending_payoff_why": "规则解读片，不复盘这一场的结局。",
+      "_why": "㉑ 末屏一问（_facts ⑪）。封面问「为什么要安静」，这里问「你会不会喊」，不是回声。"
+    }
+  ],
+  "source_quality_exceptions": {
+    "https://www.youtube.com/watch?v=T7cd71seygs": {
+      "min_height": 720,
+      "approved_by": "user",
+      "reason": "账号所有者 2026-09-25：「分辨率不够没关系的，那一段是重要的证据，可以豁免」——纳达尔 2017 美网关顶那场的官方加长集锦只有 1280×720，是「他在那种噪音下打球」的唯一现场画面。"
+    }
+  },
+  "conform": {
+    "nadal": "美网官方频道 2017 纳达尔关顶那场只有 1280×720（账号所有者授权的低清证据）；同为 16:9，等比放大到 1920×1080 不丢画面，只是为了和主源同尺寸好裁 3:4。"
+  },
+  "archival": {
+    "swiatekc": "Eurosport 场上采访的竖版剪辑，原片就是 608×1080 竖屏（不是下载退画质）；整幅 contain 铺，不裁。"
+  }
+}
