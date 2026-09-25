@@ -164,3 +164,35 @@ def test_contain段也回贴整条比分板而且和铺满段同一个落点(tmp
     cut_segment(src, seg_off, out2, 1920)
     r2, g2, _ = _pixel(out2, 1.0, probe)
     assert not (r2 > 150 and g2 < 90), "不开 score_inset 的 contain 段不该凭空多一块板"
+
+
+def test_contain段回贴时原板残条不许从蒙版缝里露出来(tmp_path):
+    """同一天第二个毛病：贴片走逐帧蒙版，胶囊之间是透明的，contain 窗口里剩下的
+    那截原板会从缝里露出来（成片左缘一排「…NSIK」）。先 delogo 掉原板再贴。"""
+    import build_match_reel as reel  # noqa: PLC0415
+
+    src = tmp_path / "board.mp4"
+    subprocess.run(
+        ["ffmpeg", "-y", "-v", "error", "-f", "lavfi",
+         "-i", "color=c=0x303030:size=1920x1080:rate=25:duration=2",
+         "-vf", "drawbox=x=80:y=862:w=440:h=174:color=red:t=fill",
+         "-c:v", "libx264", "-preset", "ultrafast", "-pix_fmt", "yuv420p", str(src)],
+        check=True, capture_output=True, text=True)
+    # 蒙版全黑＝整块透明：贴片一个像素都不盖，看得见的只有 contain 画面自己
+    mask = tmp_path / "mask.mp4"
+    subprocess.run(
+        ["ffmpeg", "-y", "-v", "error", "-f", "lavfi",
+         "-i", "color=c=black:size=440x174:rate=25:duration=2",
+         "-c:v", "libx264", "-preset", "ultrafast", "-pix_fmt", "yuv420p", str(mask)],
+        check=True, capture_output=True, text=True)
+    seg = Segment(0.0, 1.5, 0.515, "", track=False, fit="contain",
+                  score_inset=(80, 862, 520, 1036))
+    seg.score_inset_mask = str(mask)
+    out = tmp_path / "residual.mp4"
+    cut_segment(src, seg, out, 1920)
+    # contain 窗口左缘 365，残板在源片 365~520 → 画面 x 0~140，y≈1149+
+    fratio = reel.VIDEO_W / reel.contain_keep_width(1920)
+    top = round(862 * reel.VIDEO_W / reel.CROP_W) - round(862 * fratio)
+    probe = (60, top + round(950 * fratio))
+    r, g, _ = _pixel(out, 0.8, probe)
+    assert not (r > 150 and g < 90), f"残板从蒙版缝里露出来了：{probe} 是红的"

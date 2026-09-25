@@ -4082,7 +4082,12 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
                 f"[bg]crop={keep}:{native_h}:{x}:0,"
                 f"scale={VIDEO_W}:{VIDEO_H}:force_original_aspect_ratio=increase,"
                 f"crop={VIDEO_W}:{VIDEO_H},boxblur=42:2,eq=brightness=-0.20[bgb];"
-                f"[fg]crop={keep}:{native_h}:{x}:0,"
+                # ⚠️ 转播原板在 contain 窗口里还剩一截（窗口左缘 x < 板右缘），
+                # 而贴片是**逐帧蒙版**的——胶囊之间、标签右边都是透明的，那一截
+                # 残板会从缝里露出来（渲出来左缘一排「…NSIK」）。所以先在源片上
+                # 把板那一块 delogo 掉（按四周的地板插值），再贴整条板。
+                f"[fg]delogo=x={x0}:y={y0}:w={x1 - x0}:h={min(y1, native_h - 2) - y0},"
+                f"crop={keep}:{native_h}:{x}:0,"
                 f"scale={VIDEO_W}:{fh}:flags=lanczos[fgs];"
                 f"[bgb][fgs]overlay=0:{top}[m];"
                 + patch +
