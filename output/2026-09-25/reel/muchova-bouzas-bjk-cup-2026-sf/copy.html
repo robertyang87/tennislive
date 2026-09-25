@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>9.25 赛场之上 | 穆霍娃替捷克拿下第一分</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>穆霍娃替捷克拿下第一分，离决赛只差一场🎾
+
+北京时间9月25日下午，深圳湾体育中心，比利·简·金杯总决赛半决赛，捷克对西班牙第一场单打：世界第8的穆霍娃 7-5、6-4 胜世界第93的博萨斯·马内罗。美网第三轮之后，她一场比赛都没打过。
+
+第一盘是博萨斯·马内罗先动手：3-2时她破发，4-2领先。穆霍娃下一局马上破回来。
+
+接着是全场最长的一局。穆霍娃自己发球，对手先拿到两个破发点，她靠一点运气救下一个；之后一次次平分，一记跟上网前的高压拿到占先，又被追回来。三个破发点她全救了，第五个局点才保住，这一局来回打了5次平分，4-4。
+
+5-5，轮到博萨斯·马内罗发球，15-40，穆霍娃第二个破发点兑现。6-5发球胜盘，15-30时有一分，对手在底线一次次把球救回来，她压了三次才拿下；30-40，第一个盘点拿下，7-5，58分钟。
+
+第二盘第一局她就破发，下一局却被破回：破发点上她第一拍截击很漂亮，第二拍更简单的截击没处理好。之后她发球一分没丢，2-2再破一次。最后一局40-15，两个赛点，第二个拿下。
+
+全场破发4/6对2/7，一发得分率70%对57%。解说说，她上一次代表国家队比赛还是2022年。
+
+捷克1-0领先，再赢一场，就是2018年之后的第一个决赛。
+
+#穆霍娃 #博萨斯马内罗 #网球时差 #网球中国赛季来了 #网球时间到</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>美网之后没打过比赛，你敢第一个上场吗？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
