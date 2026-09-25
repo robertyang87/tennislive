@@ -1,0 +1,43 @@
+{
+ "status": "pass",
+ "method": "silero_vad_plus_dual_asr_coverage",
+ "sha256": "2b97b6d236ffa71f75a89e4a3465cc42516b704a6839b2dea5247b013b732c76",
+ "edge_pad_seconds": 0.35,
+ "max_speech_seconds": 0.12,
+ "results": [
+  {
+   "key": "48.6-51.3",
+   "start": 48.6,
+   "end": 51.28,
+   "speech_seconds": 0,
+   "second_asr_words": [
+    "Carlos"
+   ],
+   "transcript_covered": true,
+   "caption_timeline_covered": false,
+   "status": "transcript_covered"
+  },
+  {
+   "key": "156.4-159.9",
+   "start": 156.36,
+   "end": 159.92,
+   "speech_seconds": 0,
+   "second_asr_words": [],
+   "transcript_covered": false,
+   "caption_timeline_covered": false,
+   "status": "no_speech"
+  },
+  {
+   "key": "166.4-168.8",
+   "start": 166.44,
+   "end": 168.8,
+   "speech_seconds": 0,
+   "second_asr_words": [
+    "Tim"
+   ],
+   "transcript_covered": true,
+   "caption_timeline_covered": false,
+   "status": "transcript_covered"
+  }
+ ]
+}
