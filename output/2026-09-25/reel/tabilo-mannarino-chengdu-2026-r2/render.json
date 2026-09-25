@@ -1,0 +1,66 @@
+{
+  "scoreboard_qc_sha256": "b1f1999e6f0a884d59b50aafa86796b431a624a56aa66c2d30a37df7b417d9f2",
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 3.827,
+  "layout": "full",
+  "segments_seconds": 129.04,
+  "topbar": {
+    "line1": "2026 ATP250 成都站 第二轮",
+    "line2": "马纳里诺 6-4 6-4 塔比洛",
+    "start": 1.2,
+    "end": 130.24
+  },
+  "film_seconds": 134.08,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 15.984,
+    "2": 20.16,
+    "3": 12.936,
+    "4": 16.32,
+    "5": 18.12,
+    "6": 14.496,
+    "7": 15.216
+  },
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "tabilo-mannarino-chengdu-2026-r2",
+    "received_at": "2026-09-25T10:07:12Z",
+    "artifact_ready_at": "2026-09-25T10:13:02Z",
+    "elapsed_seconds": 350.783,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "390ea644a370a2b1116f8657ccb2d2982bec99624ed586db74514158a6f66bc4",
+    "spec_sha256": "9bfbfbc1d27e4b30a745c8717d220f31b50cc4a965e2255d0402f34006bf4c8c",
+    "run_id": "36122218222",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-09-25T10:09:24Z",
+        "run_id": "36122218222"
+      }
+    ],
+    "render_seconds": 218.783,
+    "pre_render_seconds": 132.0
+  },
+  "film_sha256": "390ea644a370a2b1116f8657ccb2d2982bec99624ed586db74514158a6f66bc4",
+  "film_bytes": 73609346,
+  "qc_attestation_sha256": "259ba8775cf71fa8d4e871a5a8d55e8de894b4d844b68312e69d24e59c79d3e3",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-09-25T10:09:24Z",
+      "run_id": "36122218222"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-25T10:13:03Z",
+      "run_id": "36122218222"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-tabilo-mannarino-chengdu-2026-r2/tabilo-mannarino-chengdu-2026-r2.mp4",
+  "video_bytes": 73609346
+}
