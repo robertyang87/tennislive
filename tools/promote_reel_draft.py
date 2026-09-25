@@ -556,6 +556,10 @@ def promote(draft: dict, probe: dict | None = None) -> dict:
     problems = check_spec_wording(spec, spec["slug"], xhs_copy(spec))
     if problems:
         raise ValueError("措辞不合规矩（改文案再来）：" + "；".join(problems))
+    # 正文第一句重复标题：自动链只报不拦（见 spec_wording.title_echo_problem）
+    from spec_wording import title_echo_problem  # noqa: PLC0415
+    if echo := title_echo_problem(spec, spec["slug"], xhs_copy(spec)):
+        print(f"[文案] ⚠️ {echo}")
     return spec
 
 
