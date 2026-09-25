@@ -190,12 +190,32 @@
   },
   "segments": [
     {
+      "start": 270.28,
+      "end": 276.24,
+      "cx": 0.5,
+      "score_inset": false,
+      "_score_inset_why": "赛点已经落地：270.28 起是她握拳、走向网前的近景和中景，转播已经把比分板撤了（缩略图墙 270.5 只剩板的残影在淡出，272.5、274.5 没有板）。",
+      "narration": "",
+      "quote": [
+        {
+          "at": 1.48,
+          "text": "Maja Chwalinska into the semifinals in Singapore.\n赫瓦林斯卡打进新加坡站半决赛"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_ending_payoff_required": true,
+      "_why": "冷开场：**赛点落地之后她握拳的那一刻**（账号所有者 2026-09-25：「视频从赢球后的冷开场……是全局的要求」）。270.28 是转播切点——赛点那一分刚落地、镜头切到她握拳（缩略图墙 270.5），271.76 起她转身走向网前；276.24 是下一个切点（网前握手之前）。不配旁白，只留解说原声＋中英字幕：captions.txt 271.76「Maya Kolinska into the semifinals in Singapore.」，人名按本名写回，段内 at = 271.76 − 270.28。",
+      "_payoff_why": "冷开场里有赛点落地后的第一波庆祝，所以 true——正文倒数第 3、2 段（258.6→271.76、271.76→285.52）把第二个赛点整分、握拳和网前握手按时间顺序完整重放，覆盖 270.28~276.24 整段。",
+      "crosses_cut": "271.76 一处换镜头：握拳近景 → 她走向网前的中景，都在赛点落地之后。",
+      "point_end_ok": "比赛已经结束（赛点在 270 秒前落地）；段尾 276.24 是转播切点，之后记分条不再翻牌。"
+    },
+    {
       "start": 3.52,
       "end": 29.4,
       "cx": 0.5,
       "score_inset": true,
-      "narration": "北京时间九月二十五日下午一点多，新加坡WTA五百赛四分之一决赛。五号种子、世界第二十五的赫瓦林斯卡，对四号种子、世界第十九的梅尔滕斯，她也是这项赛事的卫冕冠军。开局梅尔滕斯打得很主动，第一局，就在对手的发球局里抢到了分。这一局最后，还是赫瓦林斯卡保住了。",
-      "_why": "3.52 起宽景（0~3.52 是她发球前的近景，不要）→ 4~13 宽景 → 14.5 梅尔滕斯近景 → 16.5 起第一局 15-15 那一分（记分条 16.5s `15 / 15`，flashscore 第一局 `15:0, 15:15, 30:15`），解说 27.76「A strong start here from Mertens」。「主动」对 WTA 官网赛后稿 `Mertens had started the match with aggressive intent, advancing to net`。 flashscore 第一局 `15:0, 15:15, 30:15, 30:30, 30:40` 后她保住。",
+      "narration": "她把卫冕冠军送出了新加坡，两盘只让对方拿了四局。北京时间九月二十五日下午一点多，新加坡WTA五百赛四分之一决赛，五号种子赫瓦林斯卡，对四号种子、世界第十九的梅尔滕斯。开局梅尔滕斯打得很主动，第一局，就在对手的发球局里抢到了分。这一局最后，还是赫瓦林斯卡保住了。",
+      "_why": "3.52 起宽景（0~3.52 是她发球前的近景，不要）→ 4~13 宽景 → 14.5 梅尔滕斯近景 → 16.5 起第一局 15-15 那一分（记分条 16.5s `15 / 15`，flashscore 第一局 `15:0, 15:15, 30:15`），解说 27.76「A strong start here from Mertens」。「主动」对 WTA 官网赛后稿 `Mertens had started the match with aggressive intent, advancing to net`。 flashscore 第一局 `15:0, 15:15, 30:15, 30:30, 30:40` 后她保住。 ⚠️ 开场顺序照「画面爆点 → 落点 → 坐标」：第 1 段是冷开场，这一段先用一句落点（卫冕冠军、只丢四局——WTA 官网赛后稿 `dethroning defending champion`、`once again dropping just four games`），再给坐标。",
       "crosses_cut": "窗口内 13.84、15.48、17.52、27.32 几处换镜头都在第一局两分之间或发球前（近景↔宽景），28.5 是梅尔滕斯走回的近景；没有在回合中间挖刀。",
       "point_end_ok": "段尾 29.4 是转播切点，`point_ends_guess` 29.44 的翻牌（`0 / 1`，第一局结束）在它之后 0.04 秒，0.3 秒以内不算。"
     },
@@ -278,10 +298,6 @@
       "narration": "",
       "quote": [
         {
-          "at": 0.0,
-          "text": "Maja Chwalinska into the semifinals in Singapore.\n赫瓦林斯卡打进新加坡站半决赛"
-        },
-        {
           "at": 4.48,
           "text": "This time she has taken out the defending champion\n这一次，她淘汰的是卫冕冠军"
         },
@@ -291,7 +307,7 @@
         }
       ],
       "_quote_kind": "broadcast",
-      "_quote_why": "转播原句，probe 的 `captions.txt`：271.76「Maya Kolinska into the semifinals in / Singapore.」、276.24「Another straight set win. And this time / she has taken out the defending champion」、281.52「and done so quickly and in style.」。自动字幕把人名转写成 Maya Kolinska，按她本名写 Maja Chwalinska；前半句「Another straight set win.」不留。段内 at = 原时刻 − 271.76（第二条从 276.24 算，字幕从「This time」起）。",
+      "_quote_why": "转播原句，probe 的 `captions.txt`：271.76「Maya Kolinska into the semifinals in / Singapore.」、276.24「Another straight set win. And this time / she has taken out the defending champion」、281.52「and done so quickly and in style.」。271.76 那一句已经挪进第 1 段冷开场，这里不再重复；前半句「Another straight set win.」不留。段内 at = 原时刻 − 271.76（第二条从 276.24 算，字幕从「This time」起）。",
       "crosses_cut": "272~275 她走向网前、276~284 网前和梅尔滕斯握手：全在赛点之后，原声讲的就是这一场。",
       "point_end_ok": "比赛已经结束。"
     },
@@ -308,8 +324,8 @@
     }
   ],
   "_editing_why": "源片 309.0 秒：比赛画面到 270 秒，271~292 赛点之后的庆祝与握手，294~299 赛果图形，299 秒起静音片尾，**没有场上采访**。认人：赫瓦林斯卡金发、黑色 Lacoste 连衣裙＋黑护腕；梅尔滕斯紫色连衣裙、白色遮阳帽。段落端点取自 probe 的 `scene_cuts`（206.1 与 259.2 两处在同一个宽景里，分别是翻牌后 1.2 秒、第二个赛点发球前）；球路来自 frame-grab（run 36109159354，每秒一帧，128~271 秒）逐帧看过，再对照 `captions.txt` 的转播原话和 WTA 官网赛后稿。集锦没播的局（第一盘 2-3 破发、第二盘 0-3 与 1-4 两个发球局）只在旁白里按 flashscore 逐局一句带过。0-2 她发球那一分（165.6~188.5，梅尔滕斯底线相持拿下）和第一个赛点（236.4~259）不进片子。",
-  "_tactics_why_note": "球路写在第 1 段（梅尔滕斯主动）、第 2 段（梅尔滕斯网前抢分）、第 4 段（短球拽到网前左侧、再打另一侧底线）、第 5 段（底线左右来回跑）、第 6 段（扑向左侧没回过去）、第 7 段（短球拽上网、再挑高球过头顶）、第 8 段（放小球、挑高球、正手穿越）。",
-  "_quote_why_global": "一段原声：赛点之后解说那句「这一次，她淘汰的是卫冕冠军，赢得又快又漂亮」——正是钩子第二行。",
+  "_tactics_why_note": "球路写在第 3 段（梅尔滕斯主动）、第 3 段（梅尔滕斯网前抢分）、第 4 段（短球拽到网前左侧、再打另一侧底线）、第 5 段（底线左右来回跑）、第 6 段（扑向左侧没回过去）、第 7 段（短球拽上网、再挑高球过头顶）、第 8 段（放小球、挑高球、正手穿越）。",
+  "_quote_why_global": "两段原声：冷开场的「Maja Chwalinska into the semifinals in Singapore」，和赛点之后那句「这一次，她淘汰的是卫冕冠军，赢得又快又漂亮」——正是钩子第二行。",
   "_no_repeat": "⚠️ 赫瓦林斯卡这条线上已经发过五条（`chwalinska-gibson`、`bucsa-chwalinska`、`shnaider-chwalinska`、`chwalinska-townsend-us-open-2026-r1`、`oliynykova-chwalinska-singapore-2026-r2`）：月亮球打法和绰号来历一个字不碰（赛点那一拍高球只描述这一分本身）；「法网后第一次两连胜」是上一条的钩子，这一条不再提；法网只作为「上一次进半决赛」一句带过。同一站兄弟片 `prozorova-eala-singapore-2026-r2`（逆转、救破发点）——这一条的落点是连拿七局和最后两个赛点，不撞。",
   "push": {
     "matchup": "赫瓦林斯卡 vs 梅尔滕斯",

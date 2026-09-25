@@ -1056,6 +1056,77 @@ def test_挂账的冷开场清单只许减不许加():
         )
 
 
+
+def test_赛场之上第1段必须是赢球后的冷开场():
+    """账号所有者 2026-09-25：「之前要求过视频从赢球后的冷开场，以后要记住了，
+    是全局的要求」。
+
+    老判据 `test_冷开场不许随手取源片开头` 只扫**已经是冷开场**的第 1 段，
+    第 1 段直接上旁白的一条都不看——新加坡／成都／杭州那几天手写的 9 条就是
+    这么漏过去的。这条钉的是三个方向，各自反向验证：
+    """
+    reel = _reel()
+
+    def spec(first, **extra):
+        body = [{"start": 10.0, "end": 30.0, "narration": "正文。"},
+                {"start": 250.0, "end": 280.0, "narration": "赛点。"}]
+        return {"slug": "new-on-court", "cover": {"eyebrow": "赛场之上"},
+                "source_url": "https://example.com/v",
+                "segments": [first, *body], **extra}
+
+    late = {"start": 270.0, "end": 276.0,
+            "quote": [{"at": 1.0, "text": "Game, set, match.\n比赛结束"}],
+            "_ending_payoff_required": True}
+    # ✅ 从后段抽出来的赢球那一刻，不配旁白
+    assert reel.cold_open_problem(spec(late)) is None
+    # ❌ 第 1 段配了中文旁白
+    narrated = {**late, "narration": "北京时间……"}
+    assert "旁白" in reel.cold_open_problem(spec(narrated))
+    # ❌ 不配旁白，但不是倒叙（从集锦开头取的）
+    head = {"start": 0.0, "end": 8.0}
+    assert "不比正文任何一段晚" in reel.cold_open_problem(spec(head))
+    # ✅ 两个认领口：集锦开头就是最后一球预告／源片里根本没有赢球后画面
+    assert reel.cold_open_problem(spec({**head, "_head_open_why": "预告"})) is None
+    assert reel.cold_open_problem(
+        spec(narrated, _no_cold_open_why="源片停在赛点之前")) is None
+    # ✅ 别的栏目不管
+    other = spec(narrated)
+    other["cover"] = {"eyebrow": "网球有故事"}
+    assert reel.cold_open_problem(other) is None
+
+
+def test_冷开场豁免表只许减():
+    """`LEGACY_NO_COLD_OPEN` 里每个 slug 都要真的存在、而且真的还在违规。
+
+    写错一个名字、或者修好了没销账，豁免就成了一盏恒真的绿灯——
+    和 `_LEGACY_COLD_OPEN_FROM_HEAD` 同一个自检。另外扫全库：不在表里的
+    「赛场之上」一律要过闸。
+    """
+    reel = _reel()
+    seen = set()
+    for path in sorted(Path("specs/reels").glob("*.json")):
+        spec = json.loads(path.read_text("utf-8"))
+        try:
+            urls = reel.spec_sources(spec)
+        except reel.ReelError:
+            urls = {}                  # 源片地址被别的闸拦下的老 spec，不影响这道闸
+        primary = next(iter(urls)) if urls else None
+        if path.stem in reel.LEGACY_NO_COLD_OPEN:
+            seen.add(path.stem)
+            legacy = reel.LEGACY_NO_COLD_OPEN
+            try:
+                reel.LEGACY_NO_COLD_OPEN = frozenset()
+                assert reel.cold_open_problem(spec, primary=primary), (
+                    f"{path.stem} 已经是赢球后的冷开场了，把它从豁免表里删掉")
+            finally:
+                reel.LEGACY_NO_COLD_OPEN = legacy
+            continue
+        problem = reel.cold_open_problem(spec, primary=primary)
+        assert problem is None, f"{path.stem}：{problem}"
+    missing = reel.LEGACY_NO_COLD_OPEN - seen
+    assert not missing, f"豁免表里这几条 spec 已经不在了：{sorted(missing)}"
+    assert len(reel.LEGACY_NO_COLD_OPEN) <= 28, "豁免表只许减不许加"
+
 def test_冷开场里的结局必须在正文重新兑现(tmp_path):
     """冷开场放过最后一球，不等于正文可以停在赛点还没打完的时候。
 
