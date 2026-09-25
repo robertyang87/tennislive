@@ -28,13 +28,15 @@ from pathlib import Path
 
 import numpy as np
 
-from atp_scoreboard import stabilize, write_mask
+from atp_scoreboard import beyond_hint, report_beyond_hint, stabilize, write_mask
 
 PROFILE = "itf-bjk-v1"
 EDGE_PAD = 2
 NAME_W = 1.5        # 判「板在」看名字栏这么宽（×板高）
 MIN_BOARD_W = 1.5   # 板最窄也有名字栏这么宽（×板高）
 DOT_REACH = 0.4     # 小分格右缘之后这么远（×板高）以内找发球小球
+CELL_TAIL = 8       # 越过提示右缘时：最后一列浅青小分格之后最多再这么宽（源片像素，格子的外框）
+HINT_SLACK = 1.3    # 老的扫描宽度＝spec 板宽 ×1.3；现在它是「提示」，越过要有浅青格撑着
 
 
 def _rgb(band: np.ndarray):
@@ -81,9 +83,12 @@ def board_edge(band: np.ndarray, cap: int | None = None) -> int | None:
         if low[x:x + 4].all():
             edge = x
             break
-    if edge is None:
+    if edge is None:                  # 一路连到带右头：板和背景连成了一片，读数不可信
         edge = len(frac)
-    return min(edge, cap) if cap is not None else edge
+        return min(edge, cap) if cap is not None else edge
+    cells = np.flatnonzero(cell(band).mean(axis=0) > 0.2)
+    anchor = int(cells.max()) + 1 + CELL_TAIL if cells.size else 0
+    return beyond_hint(edge, cap, anchor)
 
 
 def dot_rect(band: np.ndarray, edge: int) -> tuple[int, int, int, int] | None:
@@ -114,7 +119,10 @@ def scan(source: Path, box: tuple[int, int, int, int], start: float,
     sw = int(subprocess.check_output(
         ["ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries",
          "stream=width", "-of", "csv=p=0", str(source)], text=True).strip().split(",")[0])
-    width = min(sw - x0, int((x1 - x0) * 1.3))
+    # spec 的 x1 只是提示：带至少扫到源片一半宽，双打／多一盘的板更长也量得到
+    # （账号所有者 2026-09-25「同时要自适应不同的长度啊」）；原来的 ×1.3 退成提示
+    hint = int((x1 - x0) * HINT_SLACK)
+    width = min(sw - x0, max(hint, sw // 2 - x0))
     height = y1 - y0
     proc = subprocess.run(
         ["ffmpeg", "-v", "error", "-ss", f"{start:.3f}", "-t", f"{seconds:.3f}",
@@ -126,7 +134,7 @@ def scan(source: Path, box: tuple[int, int, int, int], start: float,
     frames = []
     for k in range(len(raw) // per):
         band = np.frombuffer(raw[k * per:(k + 1) * per], np.uint8).reshape(height, width, 3)
-        e = board_edge(band, cap=width)
+        e = board_edge(band, cap=min(width, hint))
         frames.append((e, None if e is None else dot_rect(band, e)))
     if not frames:
         raise RuntimeError(f"{start:.2f}s 起一帧都没解出来（解码失败，不是板不在）")
@@ -151,7 +159,7 @@ def resolve_masks(sources: dict, segments: list, outdir: Path, fps: str,
             "别退回整段一个矩形的老回贴（那正是「消失后背景还在」「右边多一块补丁」的来路）。")
     records = []
     for i, seg, frames, width in scanned:
-        x0, y0, _x1, y1 = seg.score_inset
+        x0, y0, spec_x1, y1 = seg.score_inset
         live = [f for f in frames if f[0] is not None]
         if not live:
             raise RuntimeError(
@@ -164,6 +172,7 @@ def resolve_masks(sources: dict, segments: list, outdir: Path, fps: str,
         seg.score_inset = (x0, y0, x0 + right, y1)
         seg.score_inset_mask = str(dest.resolve())
         seg.score_inset_spans = None
+        report_beyond_hint(i, x0 + right, spec_x1)
         ws = sorted({e for e, _ in live})
         n_dot = sum(1 for _e, t in live if t is not None)
         records.append({"segment": i, "frames": len(frames), "present_frames": len(live),

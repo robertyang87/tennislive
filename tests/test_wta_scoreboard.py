@@ -41,7 +41,8 @@ def _band(board_w: int | None, *, bg=COURT, body=BOARD, mint: bool = True) -> np
 def test_板右缘按这一帧的实际宽度量():
     assert w.board_edge(_band(390)) == 390
     assert w.board_edge(_band(459)) == 459
-    assert w.board_edge(_band(459), cap=420) == 420
+    assert w.board_edge(_band(459), cap=420) == 459, "spec 右缘是提示：薄荷绿撑得住就按量到的走"
+    assert w.board_edge(_band(459, mint=False), cap=420) == 420, "没有签名色撑着照旧封顶"
 
 
 def test_深色背景上右缘钉在局分格右边一格小分宽_不一路量出去():
