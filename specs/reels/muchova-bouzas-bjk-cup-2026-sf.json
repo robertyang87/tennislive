@@ -1,0 +1,423 @@
+{
+  "slug": "muchova-bouzas-bjk-cup-2026-sf",
+  "source_url": "https://www.youtube.com/watch?v=MWhRKGzUnNY",
+  "_column": "赛场之上",
+  "tts_backend": "edge",
+  "_tts_backend_why": "旁白是平直的复盘叙述，一段 `style` 都没写；同一天的 `wang-prozorova-singapore-2026-qf`、`chwalinska-mertens-singapore-2026-qf` 也是 edge。",
+  "_source": "账号所有者给的链接（「继续做 bjk cup 赛场之上视频」）。源片是比利·简·金杯官方 YouTube `MWhRKGzUnNY`（标题 `Jessica Bouzas Maneiro (ESP) vs Karolina Muchova (CZE) | 2026 Billie Jean King Cup | Highlights`），probe 在 `output/2026-09-25/reel/bouzas-muchova-bjk-cup-2026/`：1920×1080 / 25fps、491.9s。四要素自证：记分条逐格读过（`BOUZAS MANEIRO / MUCHOVA`），挡板 `深圳湾`、`BILLIE JEAN KING Cup`、`2026 FINALS SHENZHEN`；比赛画面到 445s，445~476 是赛点之后，之后是成绩图形；**没有场上采访**。",
+  "scorebox": [
+    145,
+    915,
+    600,
+    1012
+  ],
+  "_scorebox_why": "和同一届同一块转播板的 `zhang-cocciaretto-bjk-cup-2026-qf` 同一个框（右缘 600 盖得住第二盘那一列加当前分）；probe 自己猜的是 `145,915,548,1012`，右缘窄了当前分那一格。",
+  "_match": {
+    "id": "2026:bjk-cup-finals:semifinal-1:jessica-bouzas-maneiro-karolina-muchova",
+    "event": "2026 比利·简·金杯总决赛",
+    "event_search": "Billie Jean King Cup",
+    "round": "Semifinal",
+    "year": 2026,
+    "status": "result_verified",
+    "winner": "穆霍娃",
+    "loser": "博萨斯·马内罗",
+    "participants": [
+      "博萨斯·马内罗",
+      "穆霍娃"
+    ],
+    "winner_en": "Karolina Muchova",
+    "loser_en": "Jessica Bouzas Maneiro",
+    "set_scores_home_away": [
+      [
+        5,
+        7
+      ],
+      [
+        4,
+        6
+      ]
+    ],
+    "tiebreaks_home_away": [
+      null,
+      null
+    ],
+    "_source": "三源一致：flashscore foc2PBMj（home＝`AE÷Bouzas Maneiro J.`、away＝`AF÷Muchova K.`，`BA/BB=5/7`、`BC/BD=4/6`）；金杯官网实时战报 `live-cze-v-esp-2026-billie-jean-king-cup-finals-quarter-final`「Match 1: Karolina Muchova (CZE) d. Jessica Bouzas Maneiro (ESP) 7-5 6-4」；维基 `2026 Billie Jean King Cup finals` Semifinals / Spain vs. Czech Republic R1 `5 4 / 7 6`。画面自证——源片 445s 赛点落地，解说 476「beat Jessica 7-5 6-4」。",
+    "_participants_why": "`participants` 跟 flashscore 的 home / away：[博萨斯·马内罗, 穆霍娃]，和 `cover.matchup` 的顺序**相反**——`set_scores_home_away` 紧挨着它，同序。",
+    "source": "flashscore_points",
+    "source_id": "foc2PBMj",
+    "flashscore_id": "foc2PBMj",
+    "winner_result": "7-5 6-4",
+    "loser_result": "5-7 4-6"
+  },
+  "topbar": {
+    "line1": "2026 比利·简·金杯 半决赛",
+    "line2": "穆霍娃 7-5 6-4 博萨斯·马内罗"
+  },
+  "_topbar_why": "第二行和 `cover.winner` / `cover.result` / `cover.matchup` 机械一致。第一行：团体赛没有「级别＋站」，按 2026-09-24「顶栏赛事行」那条的例外，和同一届的 `zhang-cocciaretto-bjk-cup-2026-qf` 同一写法；轮次写 `半决赛`（维基 Semifinals，金杯官网 preview 标题 `semi-final`）。",
+  "cover": {
+    "matchup": [
+      {
+        "name": "穆霍娃",
+        "name_en": "Karolina Muchova",
+        "country": "CZE",
+        "rank": 8
+      },
+      {
+        "name": "博萨斯·马内罗",
+        "name_en": "J. Bouzas Maneiro",
+        "country": "ESP",
+        "rank": 93
+      }
+    ],
+    "_rank_why": "WTA 官方 `players/ranked`（`sources.rankings.fetch_rankings`）：穆霍娃第 8（4683 分）、博萨斯·马内罗第 93（809 分）（2026-09-25 查）；博萨斯·马内罗和同一届 `zhiyenbayeva-bouzas-bjk-cup-2026` 登记的 93 一致。",
+    "winner": "穆霍娃",
+    "result": "7-5 6-4",
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "穆霍娃",
+    "_subject_why": "赢家、世界第八（②档：顶级球员）；而且是半决赛（「半决赛级别的都要做」）。",
+    "hook": "美网后没打过比赛\n2比4落后拿下首盘",
+    "hook_accent": "拿下首盘",
+    "_hook_why": "两行一个落差：第一行是她的来路（金杯官网战报「having not played since the third round of the US Open」），第二行是这场球的形状（flashscore 逐局：第一盘博萨斯·马内罗 4-2 领先，之后穆霍娃赢了 6 局里的 5 局，7-5）。没有排名、年龄、国籍，没有术语。",
+    "topic": "比利·简·金杯半决赛 · 穆霍娃 vs 博萨斯·马内罗",
+    "_heat_why": "半决赛（轮次本身够格）；穆霍娃世界第八（②档）。",
+    "portrait": {
+      "image": "assets/reel/muchova-bjk-cup-2026-sf.jpg",
+      "focus": 0.55,
+      "focus_y": 0.3,
+      "zoom": 1.0,
+      "_why": "**比利·简·金杯官方实拍（ITF，billiejeankingcup.com 的 Contentful 图库）**，原文件名 `LZ1_9355_HkAGB5KK.JPG`（和同一届 `zhang-cocciaretto` 那张 `LZ1_7861` 同一位摄影师、同一套编号），挂在这个 tie 的实时战报页 `https://www.billiejeankingcup.com/en/news/live-cze-v-esp-2026-billie-jean-king-cup-finals-quarter-final` 上，alt 写着 **`Muchova celebrates during Cze-Spa singles`**——人物、对阵、单打都写死了。穆霍娃这一届只打了这一场单打（1/4决赛对英国，捷克派的是布兹科娃和诺斯科娃，维基 QF 表）。\n画面自证：蓝色无袖捷克队服（adidas）、白色发带、灰白护腕——和源片 446.5~478.5s 她的着装逐项一致；背景是看台，是比赛进行中的场上。\n四道闸门：① 精准 ✅；② 对得上这一屏（她赢下这一场，画面是她握拳喊出来）✅；③ 冲击力——近景侧脸、嘴张着在喊、拳头在画面里、**眼睛睁着** ✅；④ 清晰度——原图 4038×2692，铺 1080×1440 是缩小（1440/2692＝0.53×）✅。"
+    },
+    "scoreboard": {
+      "court": "深圳湾体育中心",
+      "_court_why": "印场馆：维基 `2026 Billie Jean King Cup finals` 信息框 `venue = Shenzhen Bay Sports Center`，源片挡板「深圳湾」。",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%20%221%3A40%3A00%22%2C%20%22source%22%3A%20%22flashscore%20df_st_1%20foc2PBMj%20%E5%85%A8%E5%9C%BA%201%3A40%EF%BC%880%3A58%2B0%3A42%EF%BC%89%22%2C%20%22cross_check%22%3A%20%22%E9%87%91%E6%9D%AF%E5%AE%98%E7%BD%91%E6%88%98%E6%8A%A5%20just%20over%20an%20hour%20and%20a%20half%EF%BC%9B%E8%A7%A3%E8%AF%B4%20227.04%20%E3%80%8C75%20in%2058%20minutes%E3%80%8D%22%7D",
+        "field": "duration"
+      },
+      "_duration_why": "flashscore 分盘用时 0:58＋0:42＝1:40；金杯官网战报「just over an hour and a half」，同向；解说第一盘「58 minutes」和分盘一致。"
+    }
+  },
+  "_opening_time_source": {
+    "url": "https://global.flashscore.ninja/2/x/feed/f_2_0_0_en_1",
+    "match_id": "foc2PBMj",
+    "field": "AD",
+    "value": 1790328000,
+    "beijing": "2026-09-25T17:20+08:00",
+    "spoken_precision": "approximate-hour",
+    "_why": "开球时刻只说个大概：flashscore `AD=1790328000` → 09:20Z＝北京 17:20，旁白说「下午五点多」。深圳就是北京时间。"
+  },
+  "stats": {
+    "a": {
+      "aces": 3,
+      "df": 0,
+      "first_in": 54,
+      "first_won": 38,
+      "second_total": 17,
+      "second_won": 7,
+      "bp_conv": 4,
+      "bp_chances": 6,
+      "pts_won": 76,
+      "pts_total": 139,
+      "first_total": 71,
+      "headshot": "assets/players/headshots/wta-322191.jpg"
+    },
+    "b": {
+      "aces": 1,
+      "df": 0,
+      "first_in": 42,
+      "first_won": 24,
+      "second_total": 22,
+      "second_won": 11,
+      "bp_conv": 2,
+      "bp_chances": 7,
+      "pts_won": 63,
+      "pts_total": 139,
+      "first_total": 64,
+      "headshot": "assets/players/headshots/wta-328139.jpg"
+    },
+    "_source": "flashscore foc2PBMj `df_st_1`（`tools/match_stat_hooks.py foc2PBMj --stats-block`）；a＝穆霍娃（flashscore 客队）、b＝博萨斯·马内罗（主队），和 `cover.matchup` 同序。",
+    "_winners_ue_why": "跑过 tnns-stats（run 36131809275，id=75036576），hasExtendedStats=False，TNNS 这场也没有这两行；flashscore 同样没有。"
+  },
+  "_hit_data": "`match_feed.py show foc2PBMj` 逐局：第一盘 3-2 博萨斯·马内罗破发 4-2（第 6 局两个破发点）→ 穆霍娃马上破回 4-3 → 4-4 那一局穆霍娃发球 18 分、救下 3 个破发点、第 5 个局点保住 → 5-5 博萨斯·马内罗发球 15-40，第二个破发点被破 → 6-5 穆霍娃发球 15-30 → 30-40 第一个盘点拿下，7-5，58 分钟。第二盘第 1 局穆霍娃破发 → 第 2 局被破回 → 2-2 她零封保发 → 2-3 再破 → 最后一局 40-15 两个赛点，第二个兑现，6-4。官方统计：破发 4/6 对 2/7，一发得分率 70% 对 57%，总得分 76 比 63，`Match points saved` 主队 1。",
+  "_claims": {
+    "捷克只差一场，就能打进八年来的第一个决赛": "① 金杯官网实时战报 https://www.billiejeankingcup.com/en/news/live-cze-v-esp-2026-billie-jean-king-cup-finals-quarter-final 原文「leave Czechia one win away from reaching their first Billie Jean King Cup final since 2018」；② 维基 https://en.wikipedia.org/wiki/2026_Billie_Jean_King_Cup_finals Semifinals「Spain vs. Czech Republic」score 0-1（三场制，再赢一场即晋级）；2018 年捷克夺冠见维基 https://en.wikipedia.org/wiki/2018_Fed_Cup ，2019~2025 决赛双方都不是捷克（法国/澳大利亚、俄罗斯/瑞士、瑞士/澳大利亚、加拿大/意大利、意大利/斯洛伐克、意大利/美国）。"
+  },
+  "editorial": {
+    "mode": "match_review",
+    "hook": [
+      "美网后没打过比赛",
+      "2比4落后拿下首盘"
+    ],
+    "question": "美网之后一场比赛都没打过，穆霍娃是怎么在第一盘二比四落后时，把博萨斯·马内罗翻过去的？",
+    "thesis": "第一盘博萨斯·马内罗先破发四比二，穆霍娃马上破回；四比四那一局她救下三个破发点、第五个局点才保住；五比五她破发，六比五发球胜盘，七比五，五十八分钟。第二盘第一局她就破发，被破回之后二比二再破，最后一局第二个赛点拿下，六比四。捷克二比零之前先拿一分，离八年来第一个决赛只差一场。",
+    "beats": [
+      "冷开场：赛点之后穆霍娃的近景，解说「捷克再一次召唤她，她站了出来」。",
+      "落点：美网第三轮之后没打过比赛；坐标。",
+      "第一盘 3-2 博萨斯·马内罗破发 4-2，马上被破回 4-3。",
+      "4-4 那一局：三个破发点全救，第五个局点保住，十八分。",
+      "5-5 破发，6-5 发球胜盘，7-5，58 分钟。",
+      "第二盘第一局破发、被破回，2-2 零封保发，再破 3-2。",
+      "最后一局第二个赛点拿下，6-4；离八年来第一个决赛只差一场。"
+    ],
+    "chapters": [
+      "四比二之后",
+      "十八分的一局",
+      "五十八分钟",
+      "第二个赛点"
+    ],
+    "human_context": {
+      "angle": "世界第八、温网亚军穆霍娃，美网第三轮之后没打过比赛；这一届 1/4决赛捷克派的是布兹科娃和诺斯科娃，半决赛才轮到她打头阵。这场赢下来，捷克离 2018 年之后的第一个决赛只差一场。",
+      "facts": [
+        "flashscore foc2PBMj：Muchova K. d Bouzas Maneiro J. 7-5 6-4，分盘用时 0:58 / 0:42。",
+        "WTA 官方排名：穆霍娃第 8、博萨斯·马内罗第 93。",
+        "金杯官网实时战报：没打过比赛（美网第三轮之后）、离 2018 年以来第一个决赛只差一场、「just over an hour and a half」。",
+        "维基 2026 Billie Jean King Cup finals：半决赛西班牙对捷克，第一场 5-7 4-6；1/4决赛捷克对英国的单打是布兹科娃、诺斯科娃。"
+      ],
+      "sources": [
+        "https://global.flashscore.ninja/2/x/feed/df_mh_1_foc2PBMj",
+        "https://global.flashscore.ninja/2/x/feed/df_st_1_foc2PBMj",
+        "https://www.billiejeankingcup.com/en/news/live-cze-v-esp-2026-billie-jean-king-cup-finals-quarter-final",
+        "https://en.wikipedia.org/wiki/2026_Billie_Jean_King_Cup_finals"
+      ]
+    },
+    "narration": [
+      "美网之后一场比赛都没打过。",
+      "四比二落后，马上破回。",
+      "四比四那一局救下三个破发点。",
+      "第二个赛点拿下，七比五、六比四。"
+    ]
+  },
+  "segments": [
+    {
+      "start": 445.16,
+      "end": 456.0,
+      "cx": 0.5,
+      "score_inset": false,
+      "narration": "",
+      "_score_inset_why": "赛点已经落地：445.16 起是穆霍娃的近景和网前握手，转播撤掉了比分板（缩略图墙 446.5~454.5 没有板）。",
+      "quote": [
+        {
+          "at": 3.32,
+          "text": "But when Czechia came calling again,\n可当捷克队再一次召唤她"
+        },
+        {
+          "at": 5.72,
+          "text": "Karolina Muchova steps up.\n穆霍娃站了出来"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_ending_payoff_required": true,
+      "_why": "冷开场：**第二个赛点落地之后穆霍娃的那一刻**（账号所有者 2026-09-25：「视频从赢球后的冷开场……是全局的要求」）。445.16 是转播切点（赛点那一分刚落地，镜头切到她的近景）；不配旁白，只留解说原声＋中英字幕：captions.txt 448.48「But when Czecha came calling again,」、450.88「Carolina Muka steps up」，人名按本名写回，段内 at = 原时刻 − 445.16。",
+      "_payoff_why": "冷开场里有赛点落地后的第一波庆祝，所以 true——正文最后一段原声（445.16→469.52）按时间顺序完整重放这一段。",
+      "crosses_cut": "445.16 起一个连续段落：她的近景 → 走向网前，都在赛点之后。",
+      "point_end_ok": "比赛已经结束（赛点在 445 秒前落地）；之后记分条不再翻牌。"
+    },
+    {
+      "start": 0.2,
+      "end": 24.04,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "美网第三轮之后，穆霍娃一场比赛都没打过。北京时间九月二十五日下午五点多，深圳，比利·简·金杯总决赛半决赛。捷克对西班牙第一场单打，世界第八的穆霍娃，对世界第九十三的博萨斯·马内罗。第一盘三比二，博萨斯·马内罗先破发。",
+      "_why": "开场顺序「爆点 → 落点 → 坐标」：落点是她的来路（金杯官网战报原文「having not played since the third round of the US Open」），再给坐标。画面是第一盘 3-2 穆霍娃发球 30-40（记分条 0.5~26.5s `3 40 / 2 30`，发球点在穆霍娃一侧），24.04 切点之后记分条翻成 `4 0 / 2 15`；解说 22.48「What a point from Bouzas」、24.88「And it's Spain who strike first」。",
+      "crosses_cut": "0.2~24.04 是一个连续的回合镜头。",
+      "point_end_ok": "段尾 24.04 是转播切点，破发那一分正好在这里落地（下一格记分条已经是 4-2）。"
+    },
+    {
+      "start": 40.28,
+      "end": 54.84,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "四比二，她马上还手。博萨斯·马内罗的发球局，穆霍娃拿到破发点。三十比四十，对手一拍打出边线，破回来，四比三。",
+      "_why": "记分条 42.5~54.5s `4 30 / 2 40`（博萨斯·马内罗发球，破发点），56.5s 翻成 `4 0 / 3 0`；解说 50.80「That one's just wide. And Muka breaks straight back」。flashscore 逐局第 7 局「主队发球，客队拿下」。",
+      "crosses_cut": "46.96 / 52.76 两处换镜头：发球前的近景、破发之后捷克替补席鼓掌，都在分与分之间或这一分之后。",
+      "point_end_ok": "段尾 54.84 是切点，破发那一分在 50.8 落地，54.5 已经是捷克席的反应镜头。"
+    },
+    {
+      "start": 71.4,
+      "end": 87.0,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "接下来这一局最长。她自己的发球局，博萨斯·马内罗先拿到破发点。四十比十五、四十比三十，穆霍娃靠一点运气救下一个，解说直说她走运。",
+      "_why": "记分条 70.5s `4 15 / 3 0`、72.5~86.5s `4 40 / 3 30`（穆霍娃发球，博萨斯·马内罗破发点）。flashscore 第 8 局序列（主队在前）`15:0, 15:15, 30:15, 40:15 |B1|, 40:30 |B1|, 40:40, 40:A …`：40-15、40-30 两个破发点、之后还有一个 `A:40 |B1|`，一共三个。解说 81.04「Oh well, real slice of fortune」、84.40「What a time for it to come. Break point down」。",
+      "crosses_cut": "82.12 一处换镜头：这一分之后她走回底线的近景。",
+      "point_end_ok": "段尾 87.0 是切点，88.5s 记分条已经翻成 40-40。"
+    },
+    {
+      "start": 91.0,
+      "end": 101.0,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "平分，占先，再平分，来回拉锯。这一分她跟到网前，一记高压扣死，又一个局点。",
+      "_why": "记分条 88.5~98.5s `40 / 40`，100.5s 翻成 `40 / AD`（穆霍娃占先）；解说 97.28「That's a terrific overhead」——这一分之后记分条翻给穆霍娃，所以高压是她打的。缩略图墙 94.5~96.5 有一方到了网前。 段首 91.0 不是切点，是 88.5~98.5 平分那一分的发球之前（缩略图墙 90.5 双方在底线准备）。",
+      "crosses_cut": "97.76 一处换镜头：高压之后她走回的近景。",
+      "point_end_ok": "`point_ends_guess` 没有落在这一段里；段尾 101.0 是切点，高压那一分在 97.3 前后落地。"
+    },
+    {
+      "start": 118.36,
+      "end": 134.88,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "博萨斯·马内罗一次次把局点追回来，穆霍娃一次次再拿回去。三个破发点，她全救了下来。第五个局点，才把这一局拿下。这一局打了十八分，四比四。",
+      "_why": "记分条 100.5~132.5s 一直是 `40 / AD`（集锦只放了她的几个局点），134.5s 翻成 `5 0 / 5 0`（中间 4-4 → 5-4 → 5-5 两个保发没播）。flashscore 第 8 局一共 18 分、`40:A` 出现 5 次（第 5 个兑现）、破发点 3 个全救。解说 112.16「A little short and Bouzas read it quickly」、129.92「Finally able to close out the game」。⚠️ 旁白只说到「四比四」，下一段再交代 5-5。",
+      "crosses_cut": "114.32 / 118.36 / 120.4 / 129.56 几处换镜头：博萨斯·马内罗、穆霍娃的近景和底线镜头，都在分与分之间。",
+      "point_end_ok": "段尾 134.88 是切点，保发那一分在 129.9 前落地。"
+    },
+    {
+      "start": 146.4,
+      "end": 159.76,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "五比四、五比五，各自保住发球局。轮到博萨斯·马内罗发球，十五比四十，两个破发点。第二个穆霍娃兑现，六比五。",
+      "_why": "记分条 134.5~148.5s `5 0 / 5 0`（博萨斯·马内罗发球），150.5~156.5s `5 30 / 5 40`，160.5s 翻成 `5 15 / 6 0`。flashscore 第 11 局 `15:0, 15:15, 15:30, 15:40 |B1|, 30:40 |B1|`：两个破发点，第二个兑现。解说 146.24「such confidence leaning into that backhand」、157.12「You can see the reaction」。",
+      "crosses_cut": "148.68 / 156.76 两处换镜头：发球前的中景、破发之后的反应，都在分与分之间或这一分之后。",
+      "point_end_ok": "`point_ends_guess` 156.88 / 157.68 是这一分之后记分条翻牌，段尾 159.76 在它们之后。"
+    },
+    {
+      "start": 176.96,
+      "end": 204.8,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "六比五，她发球胜盘，先是十五比三十。这一分，博萨斯·马内罗在底线，一次次把球救回来。穆霍娃压了三次，才终于拿下。解说说，对手的防守好到这个地步。三十平。",
+      "_why": "记分条 176.5~202.5s `5 30 / 6 15`（博萨斯·马内罗 30、穆霍娃 15），204.5s 翻成 `5 30 / 6 30`。解说 198.32「Oh, it's an amazing point. Muka had to win it about three times. The defense was that good from Busousin」——这一分翻给穆霍娃。flashscore 第 12 局（主队在前）`15:0, 30:0, 30:15, 30:30, 30:40`。",
+      "crosses_cut": "200.24 / 202.76 两处换镜头：这一分之后她走回的近景。",
+      "point_end_ok": "段尾 204.8 是切点，那一分在 198 前后落地，200.5s 已经是她走回的近景。"
+    },
+    {
+      "start": 204.8,
+      "end": 210.96,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "三十比四十，盘点，第一个就拿下。",
+      "_why": "记分条 206.5~210.5s `5 30 / 6 40`（盘点），212.5s 起是盘间图形；flashscore 第 12 局最后一分 `30:40 |B2|` 之后这一盘结束。",
+      "crosses_cut": "206.88 一处换镜头：她发球的近景 → 回合的底线镜头。",
+      "point_end_ok": "段尾 210.96 是切点，盘点那一分在它之前落地（212.5s 起记分条换成盘间图形）。"
+    },
+    {
+      "start": 210.96,
+      "end": 228.5,
+      "cx": 0.5,
+      "score_inset": false,
+      "narration": "",
+      "_score_inset_why": "盘间：212.5s 起记分条换成盘末图形，之后是两人走回场边、换边休息的画面，没有比分板。",
+      "quote": [
+        {
+          "at": 4.24,
+          "text": "Karolina Muchova finding her best tennis when it really mattered most.\n关键时刻，她打出了最好的网球"
+        },
+        {
+          "at": 13.52,
+          "text": "It goes the way of the Czech, 7-5 in 58 minutes.\n这一盘归捷克人，7比5，58分钟"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_quote_why": "转播原句，probe 的 `captions.txt`：215.20「Carolina Muka finding her best tennis / when it really mattered most」、224.48「opening set. But it goes the way of the / check. 75 in 58 minutes.」。人名按本名写回，段内 at = 原时刻 − 210.96。",
+      "_why": "第一盘结束的解说原声，留下来配中英字幕（2026-09-19「精彩的原声解说要留下来」）。flashscore 分盘用时第一盘 0:58，和解说一致。",
+      "crosses_cut": "216.5 / 220.5 / 222.5 几处换镜头：盘末的近景、换边，都在这一盘结束之后。",
+      "point_end_ok": "这一盘已经结束，盘间没有翻牌。"
+    },
+    {
+      "start": 250.32,
+      "end": 266.32,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "第二盘第一局，博萨斯·马内罗发球，穆霍娃连拿三分，零比四十。第一个破发点被救，第二个兑现，一比零。",
+      "_why": "记分条 240.5~248.5s `5 0 0 / 7 0 30`、250.5~264.5s `5 0 15 / 7 0 40`（博萨斯·马内罗发球），266.5s 翻成 `5 0 / 7 1`。flashscore 第二盘第 1 局 `0:15, 0:30, 0:40 |B1|, 15:40 |B1|`：第二个破发点兑现。金杯官网战报「Muchova broke in the opening game of the set」。",
+      "crosses_cut": "245.52 / 250.32 / 262.16 几处换镜头：发球前的近景、分与分之间走动。",
+      "point_end_ok": "段尾 266.32 是切点，破发那一分在 264.5 之后落地，266.5s 记分条已经是 1-0。"
+    },
+    {
+      "start": 288.68,
+      "end": 305.36,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "可下一局就被破回来。破发点上，她上到网前，第一拍截击很漂亮。第二拍更简单的截击，却没处理好。一比一。",
+      "_why": "记分条 290.5~302.5s `5 0 40 / 7 1 30`（穆霍娃发球，博萨斯·马内罗破发点），304.5s 翻成 `5 1 / 7 1`。解说 298.72「Oh no. Well, it was a phenomenal first volley. An easier second volley」；缩略图墙 298.5 远端的穆霍娃在网前。flashscore 第二盘第 2 局「客队发球，主队拿下」。",
+      "crosses_cut": "288.68 / 300.48 两处换镜头：博萨斯·马内罗走回的近景、破发之后她握拳。",
+      "point_end_ok": "段尾 305.36 是切点，破发那一分在 300 之前落地。"
+    },
+    {
+      "start": 338.6,
+      "end": 354.76,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "下一局她发球，一分没丢。一拍拍压到中场，逼得对手退回底线去救。解说说，这一局打得真好看。二比二。",
+      "_why": "记分条 336.5~350.5s `5 2 0 / 7 1 40`（穆霍娃发球，她 40-0），352.5s 翻成 `5 2 / 7 2`。flashscore 第二盘第 4 局 `0:15, 0:30, 0:40` 之后保发——零封。解说 333.04「great dexterity and reach from Muka」、348.96「What a fun game that was from Muka」、351.20「If you're aggressive player, you don't want to feel from a midcourt ball that you need to retrieve back to the baseline」。",
+      "crosses_cut": "347.04 一处换镜头：这一分之后她的近景。",
+      "point_end_ok": "段尾 354.76 是切点，保发那一分在 350.5 之后落地（352.5s 已经是 2-2）。"
+    },
+    {
+      "start": 380.28,
+      "end": 394.4,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "二比二，博萨斯·马内罗发球。穆霍娃的反手一次次压进来，三十比四十，再破一次，三比二。之后四局，两人各自保发。",
+      "_why": "记分条 368.5~382.5s `5 2 15 / 7 2 15`、384.5~392.5s `5 2 30 / 7 2 40`（博萨斯·马内罗发球，穆霍娃破发点），394.5s 翻成 `5 3 / 7 5`（集锦跳过了 2-3 → 2-4 → 3-4 → 3-5 四局）。解说 378.96「leaning in on the backhand once more」、390.96「it does break again」；金杯官网战报「breaking decisively in the fifth game」。",
+      "crosses_cut": "380.28 / 383.8 / 385.52 / 391.64 几处换镜头：博萨斯·马内罗的近景、穆霍娃接发前、分与分之间。",
+      "point_end_ok": "`point_ends_guess` 392.96 / 393.92 是破发之后记分条翻牌，段尾 394.4 在它们之后。"
+    },
+    {
+      "start": 433.88,
+      "end": 445.16,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "最后一局，穆霍娃发球胜赛。四十比十五，两个赛点，第一个被救，第二个拿下。",
+      "_why": "记分条 394.5s 起 `5 3 / 7 5`、432.5s `5 4 15 / 7 5 40`（穆霍娃发球，两个赛点）、440.5~444.5s `5 4 30 / 7 5 40`。flashscore 最后一局（主队在前）`15:0, 15:15, 15:30, 15:40 |B3|, 30:40 |B3|`：两个赛点，第二个兑现；官方统计「Match points saved 主队 1」。",
+      "crosses_cut": "433.88~445.16 是一个连续的回合镜头。",
+      "point_end_ok": "`point_ends_guess` 445.92 之后是赛点落地；段尾 445.16 是转播切点，赛点那一分正好在这里落地。"
+    },
+    {
+      "start": 445.16,
+      "end": 469.52,
+      "cx": 0.5,
+      "score_inset": false,
+      "narration": "",
+      "_score_inset_why": "比赛已经结束：445.16 起是她的近景、网前握手、看台，没有比分板。",
+      "quote": [
+        {
+          "at": 3.32,
+          "text": "But when Czechia came calling again,\n可当捷克队再一次召唤她"
+        },
+        {
+          "at": 5.72,
+          "text": "Karolina Muchova steps up and produces a fine performance\n穆霍娃站了出来，打出一场好球"
+        },
+        {
+          "at": 13.4,
+          "text": "to put them one match away from the final.\n让捷克离决赛只差一场"
+        },
+        {
+          "at": 18.76,
+          "text": "Super performance, full of experience, maturity and quality.\n经验、成熟、质量，一样不少"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_quote_why": "转播原句，probe 的 `captions.txt`：448.48「But when Czecha came calling again,」、450.88「Carolina Muka steps up and produces a」、454.80「fine performance to put one match went」、458.56「away from the final」、463.92「Super performance,」、465.76「full of experience, maturity」、468.72「and quality」。人名按本名写回，段内 at = 原时刻 − 445.16。444.56 那一句「hasn't played a match for a nation since 2022」在窗口之前、只有一个出处，不上字幕。",
+      "_why": "赛点之后的原声，按时间顺序重放冷开场那一段并接下去。",
+      "crosses_cut": "446.5~469.5 几处换镜头：她的近景、网前握手、看台上的捷克球迷，全在赛点之后。",
+      "point_end_ok": "比赛已经结束。"
+    },
+    {
+      "start": 469.52,
+      "end": 478.0,
+      "cx": 0.5,
+      "score_inset": false,
+      "narration": "捷克只差一场，就能进八年来的第一个决赛。美网之后没打过比赛，你敢第一个上场吗？",
+      "_score_inset_why": "比赛已经结束，469.5 起是她和捷克队员拥抱、走回场边，没有比分板。",
+      "_why": "收尾一问。「八年来的第一个决赛」：金杯官网战报「reaching their first Billie Jean King Cup final since 2018」，见 `_claims`。",
+      "crosses_cut": "469.52 起她和队友拥抱、走回场边；476 起转播叠上成绩图形，都在比赛结束之后。",
+      "point_end_ok": "比赛已经结束。"
+    }
+  ],
+  "_editing_why": "源片 491.9 秒：比赛画面到 445 秒，445~476 是赛点之后（她的近景、网前握手、看台、和队友拥抱），之后是成绩图形；**没有场上采访**。认人：穆霍娃蓝色上衣、红色短裙、白色发带；博萨斯·马内罗红色上衣、白色短裙、白色遮阳帽。段落端点取自 probe 的 `scene_cuts`，比分按 probe 的记分条缩略图（`score_*.jpg`）逐格读过。集锦没播的局（第一盘 1-1~3-2 之前、5-4 / 5-5 两个保发；第二盘 2-3~3-5 四局）只在旁白里一句带过。",
+  "_tactics_why_note": "球路写在第 5 段（跟到网前高压）、第 8 段（对手从底线一次次救回、她压了三次）、第 12 段（两拍截击，第二拍失手）、第 13 段（压到中场、逼对手退回底线）、第 14 段（反手压进来）——都以转播解说原句为据（见各段 `_why`）。",
+  "_quote_why_global": "三段原声：冷开场「捷克再一次召唤她，她站了出来」、第一盘结束「最关键的时候打出最好的网球／7比5，58分钟」、赛点之后整段（「离决赛只差一场／经验、成熟、质量」）。",
+  "_no_repeat": "同一届兄弟片：`zhiyenbayeva-bouzas-bjk-cup-2026`（博萨斯·马内罗 1/4决赛 6-2 6-2）——这一条不重讲那场；`zhang-cocciaretto-bjk-cup-2026-qf`、`zheng-paolini-bjk-cup-2026-qf`（中国对意大利）不相干。",
+  "push": {
+    "matchup": "穆霍娃 vs 博萨斯·马内罗",
+    "score": "7-5 6-4",
+    "summary": "穆霍娃替捷克拿下第一分",
+    "auto": true,
+    "lead": "2026 比利·简·金杯总决赛半决赛，深圳湾体育中心，捷克对西班牙第一场单打：世界第 8 的穆霍娃 7-5、6-4 胜世界第 93 的博萨斯·马内罗。美网第三轮之后她一场比赛都没打过。第一盘博萨斯·马内罗先破发 4-2，穆霍娃马上破回；4-4 那一局她自己发球，救下 3 个破发点、第 5 个局点才保住，一局打了 18 分；5-5 她再破发，7-5，58 分钟。第二盘第一局就破发，被破回之后 2-2 再破一次，最后一局第二个赛点拿下。全场破发 4/6 对 2/7。捷克 1-0 领先，只差一场就能打进 2018 年之后的第一个决赛。"
+  }
+}
