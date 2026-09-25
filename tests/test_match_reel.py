@@ -17461,3 +17461,68 @@ def test_比分板右缘按现量贴_spec的scorebox右缘写窄了也不许照�
     lone_out = capsys.readouterr().out
     assert "孤票" in lone_out and lone.score_inset[2] <= narrow[2], (
         f"② 只有孤票时 spec 右缘仍是兜底上限，拿到 {lone.score_inset[2]}：\n{lone_out}")
+
+
+def test_竖屏源一律铺满画布不留模糊垫底(tmp_path):
+    """账号所有者 2026-09-25：「下次用的竖屏的视频要铺满整个画布」。
+
+    来路：`sinner-beijing-withdrawal-2026` 的辛纳本人 X 视频（1080×1920）走
+    `fit: contain`，被缩成 810 宽、左右各垫一条 135px 的模糊。现在竖屏源
+    （w<h）在 contain 那一支一律等比放大盖满 1080×1440：横向居中裁，纵向按
+    `fill_y`（0 顶、1 底，默认居中）取落点。横幅存档不受影响。
+
+    合成一条 1080×1920 的源：左边 60px 纯绿竖条、顶 240px 红、底 240px 黄、
+    其余灰。钉三头：
+    ① 铺满：成片 x=10 是纯绿（没有模糊垫底），x=100 已经是灰——contain 老路
+       会把绿条缩放到 135~180 之间，x=10 是模糊垫底
+    ② 默认居中：裁掉上下各 240，顶行不红、底行不黄
+    ③ fill_y=0：顶行是红的（落点真的按这个数走）
+    ④ fill_y 写出 0~1 当场报错
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import build_match_reel as reel  # noqa: PLC0415
+    from PIL import Image  # noqa: PLC0415
+
+    src = tmp_path / "vertical.mp4"
+    subprocess.run(
+        ["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+         "-f", "lavfi", "-i", "color=c=gray:size=1080x1920:rate=25:duration=3",
+         "-f", "lavfi", "-i", "sine=frequency=440:duration=3",
+         "-vf", "drawbox=x=0:y=0:w=60:h=1920:color=0x00ff00:t=fill,"
+                "drawbox=x=60:y=0:w=1020:h=240:color=red:t=fill,"
+                "drawbox=x=60:y=1680:w=1020:h=240:color=yellow:t=fill",
+         "-c:v", "libx264", "-preset", "ultrafast", "-crf", "10",
+         "-pix_fmt", "yuv420p", "-c:a", "aac", "-shortest", str(src)],
+        check=True)
+
+    def _frame(seg, name):
+        out = tmp_path / f"{name}.mp4"
+        reel.cut_segment(src, seg, out, 1080)
+        png = tmp_path / f"{name}.png"
+        subprocess.run(["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+                        "-ss", "1", "-i", str(out), "-frames:v", "1", str(png)],
+                       check=True)
+        im = Image.open(png).convert("RGB")
+        assert im.size == (reel.VIDEO_W, reel.VIDEO_H)
+        return im
+
+    def _green(px):
+        r, g, b = px
+        return g > 180 and r < 90 and b < 90
+
+    mid = _frame(reel.Segment(0.5, 2.0, 0.5, "", "contain", False), "mid")
+    y = reel.VIDEO_H // 2
+    assert _green(mid.getpixel((10, y))), (
+        f"x=10 是 {mid.getpixel((10, y))}，不是纯绿——竖屏源两侧又垫回模糊了")
+    assert not _green(mid.getpixel((100, y))), "绿条被放宽了，不是等比铺满"
+    top, bottom = mid.getpixel((540, 4)), mid.getpixel((540, reel.VIDEO_H - 5))
+    assert not (top[0] > 180 and top[1] < 90), f"默认该居中裁，顶行却是红的 {top}"
+    assert not (bottom[0] > 180 and bottom[1] > 180 and bottom[2] < 90), (
+        f"默认该居中裁，底行却是黄的 {bottom}")
+
+    hi = _frame(reel.Segment(0.5, 2.0, 0.5, "", "contain", False, fill_y=0.0), "top")
+    r, g, b = hi.getpixel((540, 4))
+    assert r > 180 and g < 90, f"fill_y=0 应该贴顶取景，顶行却是 {(r, g, b)}"
+
+    with pytest.raises(reel.ReelError, match="fill_y"):
+        reel._seg_fill_y({"fill_y": 1.5}, 0)

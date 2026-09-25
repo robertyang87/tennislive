@@ -2534,11 +2534,29 @@ class Segment:
     # 一张恰好 3:4 的照片会被误当成设计页顶到边。所以显式认领。
     full_bleed: bool = False
     full_canvas: bool = False
+    # 竖屏源（w<h）铺满画布时纵向的落点，0 顶 / 1 底，None＝居中。见 cut 里
+    # contain 那一支——竖屏一律铺满，这个数只管裁掉上面多少、下面多少。
+    fill_y: float | None = None
 
     @property
     def length(self) -> float:
         return seg_seconds({"start": self.start, "end": self.end,
                             "speed": self.speed})
+
+
+def _seg_fill_y(s: dict, i: int) -> float | None:
+    """竖屏源铺满画布时的纵向落点（0 顶、1 底）；不写就是居中。"""
+    v = s.get("fill_y")
+    if v is None:
+        return None
+    try:
+        f = float(v)
+    except (TypeError, ValueError):
+        f = -1.0
+    if not 0.0 <= f <= 1.0:
+        raise ReelError(f"第 {i + 1} 段的 `fill_y` 要写 0~1 之间的数"
+                        f"（0 顶、1 底），拿到的是 {v!r}")
+    return f
 
 
 def seg_seconds(s: dict) -> float:
@@ -2984,7 +3002,8 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
                        score_inset=_seg_score_inset(s, i),
                        score_inset_auto=s.get("score_inset") is True,
                        score_inset_windows=_seg_score_windows(s, i),
-                       square_pan=tuple((float(t), float(cx)) for t, cx in s.get("square_pan", [])))
+                       square_pan=tuple((float(t), float(cx)) for t, cx in s.get("square_pan", [])),
+                       fill_y=_seg_fill_y(s, i))
 
     segments = [_one(s, i) for i, s in enumerate(spec["segments"])]
     gone_ev = [(i + 1, s.image) for i, s in enumerate(segments)
@@ -3242,7 +3261,7 @@ _REAL_FIELDS: dict[str, tuple[str, ...]] = {
               "narration", "portrait", "portrait_above", "result", "round",
               "score", "scoreboard", "scrim", "split", "sub", "subject",
               "tier", "topic", "versus", "winner"),
-    "segment": ("bed", "crosses_cut", "crop_zoom", "cx", "end", "fit", "image", "image_kind",
+    "segment": ("bed", "crosses_cut", "crop_zoom", "cx", "end", "fill_y", "fit", "image", "image_kind",
                 "inset", "mute", "narration", "point_end_ok", "quote", "score_inset",
                 "score_inset_windows",
                 "seconds", "source", "speed", "square_pan", "start", "stat_card", "title_card",
@@ -4009,15 +4028,21 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
         )
         labeled = True
         if native_w < native_h:
-            # 竖屏本人存档保留整幅动作和来源标识，不套主比赛的横屏裁切几何。
+            # **竖屏源一律铺满整个画布，不留两侧模糊垫底**——账号所有者
+            # 2026-09-25 看完 sinner-beijing-withdrawal-2026（辛纳本人 X 上
+            # 1080×1920 的退赛视频按 contain 缩成 810 宽、两边各垫一条模糊）：
+            # 「下次用的竖屏的视频要铺满整个画布」。等比放大到盖满 1080×1440，
+            # 横向居中裁，纵向按 `fill_y`（0 顶、1 底，默认 0.5 居中）取落点——
+            # 9:16 的说话人头多在上三分之一，居中会切掉头顶，那种段写小一点。
+            # 横幅存档（640×480 新闻片那类）不走这条，照旧整幅 contain。
+            fy = 0.5 if seg.fill_y is None else seg.fill_y
             chain = (
-                "split=2[bg][fg];"
-                f"[bg]scale={VIDEO_W}:{VIDEO_H}:force_original_aspect_ratio=increase,"
-                f"crop={VIDEO_W}:{VIDEO_H},boxblur=42:2,eq=brightness=-0.20[bgb];"
-                f"[fg]scale={VIDEO_W}:{VIDEO_H}:force_original_aspect_ratio=decrease:"
-                "force_divisible_by=2:flags=lanczos[fgs];"
-                f"[bgb][fgs]overlay=(W-w)/2:(H-h)/2,{sp}fps={FPS_EXPR},setsar=1"
+                f"scale={VIDEO_W}:{VIDEO_H}:force_original_aspect_ratio=increase:"
+                "flags=lanczos,"
+                f"crop={VIDEO_W}:{VIDEO_H}:(iw-{VIDEO_W})/2:(ih-{VIDEO_H})*{fy:g},"
+                f"{sp}fps={FPS_EXPR},setsar=1"
             )
+            labeled = False
     else:
         x = int(round(seg.cx * source_w - CROP_W / 2))
         x = max(0, min(x, source_w - CROP_W))
