@@ -86,11 +86,11 @@
     "topic": "新加坡WTA500 · 女单1/4决赛",
     "_heat_why": "① 档：中国球员单打；而且是账号所有者本人点的题。轮次已经到 1/4决赛。",
     "portrait": {
-      "frame_at": 289.0,
-      "focus": 0.47,
-      "focus_y": 0.2,
+      "frame_at": 23.0,
+      "focus": 0.5,
+      "focus_y": 0.35,
       "zoom": 1.0,
-      "_frame_why": "⚠️ 抽帧，不是官方实拍——**账号所有者 2026-09-25 逐条批准的例外**（我把 A 普罗佐罗娃本场官方图、B 王欣瑜美网官方图、C 本场转播抽帧、等官方图四条渲成预览摆出来，他选了 C）；看过 23.0s 那一帧后他说「换一张。最好是输球后的表情图」，闸走 `OWNER_APPROVED_FRAME_COVERS`。\n此前两版都被否：第一版 `Wang-Xinyu-R2.jpg`（第二轮对加兰）、第二版 `Wang-Xinyu-R1.jpg`（第一轮对维基奇）——账号所有者「这张用过了」「这张太丑了」，两张都已在本站前两轮的片子上用过。\n四类源当天各查过：① WTA 图库 `content/wta/photo` 按时间扫最新 100 条，9/25 只有 `Prozorova-QF.jpg`（赢家）和集锦缩略图；`fetch_wta_cover_photo --match LS006` 四次都没有赛后稿。② `tools/find_cover_photo.py --player Wang --event Singapore --date 2026-09-25`：WTA photo-resources、AP 都是 0 张。③ 赛事官网 singaporetennisopen.com 在沙箱 ProxyError，够不着。④ 王欣瑜本季别的官方图（美网 5780px）不是这一站这一场。\n**这一帧**：源片 289.0s，赛点落地之后她走向网前握手，失落的表情、眼睛睁着，身后半步是赢家普罗佐罗娃（抽帧 `frame_0289s`）——正是账号所有者要的「输球后的表情」。本场她第三盘换了粉色上衣，所以和开场那几帧的酒红色不一样。源片 1920×1080，铺 1080×1440 放大 1.33 倍，这一镜头没有转播记分条。"
+      "_frame_why": "⚠️ 抽帧，不是官方实拍——**账号所有者 2026-09-25 逐条批准的例外**（我把 A 普罗佐罗娃本场官方图、B 王欣瑜美网官方图、C 本场转播抽帧、等官方图四条渲成预览摆出来，他选了 C），闸走 `OWNER_APPROVED_FRAME_COVERS`。\n此前两版都被否：第一版 `Wang-Xinyu-R2.jpg`（第二轮对加兰）、第二版 `Wang-Xinyu-R1.jpg`（第一轮对维基奇）——账号所有者「这张用过了」「这张太丑了」，两张都已在本站前两轮的片子上用过。\n四类源当天各查过：① WTA 图库 `content/wta/photo` 按时间扫最新 100 条，9/25 只有 `Prozorova-QF.jpg`（赢家）和集锦缩略图；`fetch_wta_cover_photo --match LS006` 四次都没有赛后稿。② `tools/find_cover_photo.py --player Wang --event Singapore --date 2026-09-25`：WTA photo-resources、AP 都是 0 张。③ 赛事官网 singaporetennisopen.com 在沙箱 ProxyError，够不着。④ 王欣瑜本季别的官方图（美网 5780px）不是这一站这一场。\n**这一帧**：源片 23.0s，第一盘盘点前她在底线等接发，近景正脸、眼睛睁着、球拍竖在身前（抽帧 `frame_0023s`），是这场球本身的画面；源片 1920×1080，铺 1080×1440 放大 1.33 倍，转播记分条在左下、落在 3:4 取景窗外。"
     },
     "scoreboard": {
       "court": "OCBC Arena",
