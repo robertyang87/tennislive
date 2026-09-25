@@ -1,0 +1,53 @@
+name: render-laver-walkout
+
+# 一次性的临时任务（不是流水线，不合并进 main）：把本地定稿的双语字幕
+# （scratch-laver/subs.ass）按 1080p 烧进拉沃尔杯出场源片，完整版挂到 Release。
+on:
+  push:
+    branches: [claude/laver-cup-entrance-video-jdvqqw]
+    paths: [.github/workflows/render-laver-walkout.yml, scratch-laver/subs.ass]
+
+permissions:
+  contents: write
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            tools
+            scratch-laver
+      - name: 装 ffmpeg 和字体
+        timeout-minutes: 15
+        run: |
+          source tools/ci_apt_install.sh
+          apt_install_cached fonts-noto-cjk fonts-noto-core
+          ensure_ffmpeg
+          fc-list | grep -c "Noto Sans CJK SC"
+      - name: 取源片
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release download scratch-laver-walkout-2026 -R "$GITHUB_REPOSITORY" \
+            -p 'laver-walkout-source.f399.mp4' -p 'laver-walkout-source.f140-7.m4a'
+          ls -l
+      - name: 烧字幕出片
+        run: |
+          ffmpeg -y -v error -i laver-walkout-source.f399.mp4 -i laver-walkout-source.f140-7.m4a \
+            -map 0:v:0 -map 1:a:0 -vf "ass=scratch-laver/subs.ass,format=yuv420p" \
+            -c:v libx264 -preset medium -crf 21 -maxrate 6M -bufsize 12M \
+            -c:a aac -b:a 192k -movflags +faststart laver-cup-2026-walkout-1080p.mp4
+          ffprobe -v error -show_entries stream=codec_type,width,height:format=duration -of compact laver-cup-2026-walkout-1080p.mp4
+          ls -l laver-cup-2026-walkout-1080p.mp4
+      - name: 挂到 Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for i in 1 2 3 4; do
+            if gh release upload scratch-laver-walkout-2026 -R "$GITHUB_REPOSITORY" laver-cup-2026-walkout-1080p.mp4 --clobber; then exit 0; fi
+            sleep $((5 * i))
+          done
+          exit 1
