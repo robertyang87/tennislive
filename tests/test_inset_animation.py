@@ -134,3 +134,33 @@ def test_画常驻角标的栏目里顶角贴图要让开角标块(monkeypatch):
     import inspect  # noqa: PLC0415
     body = inspect.getsource(reel.render)
     assert body.index("_INSET_TOP_CLEAR_Y = inset_top_clear_y(spec)") < body.index("def _encode_one(")
+
+
+def test_contain段也回贴整条比分板而且和铺满段同一个落点(tmp_path):
+    """2026-09-26 拉沃尔杯双打：四人回合宽景走 contain，62% 居中窗口把左下角的
+    转播板切成半截（`…SIK 3 40`），铺满段却有整条板——一条片子里一段有板一段
+    半截。现在 contain 段也贴，而且贴在铺满段同一个位置、同一个大小。"""
+    import build_match_reel as reel  # noqa: PLC0415
+
+    src = tmp_path / "board.mp4"
+    # 灰底，左下角 [80,862,520,1036] 一块纯红「比分板」
+    subprocess.run(
+        ["ffmpeg", "-y", "-v", "error", "-f", "lavfi",
+         "-i", "color=c=0x303030:size=1920x1080:rate=25:duration=3",
+         "-vf", "drawbox=x=80:y=862:w=440:h=174:color=red:t=fill",
+         "-c:v", "libx264", "-preset", "ultrafast", "-pix_fmt", "yuv420p", str(src)],
+        check=True, capture_output=True, text=True)
+    oy = round(862 * reel.VIDEO_W / reel.CROP_W)
+    probe = (40, oy + 60)          # 贴板左侧：contain 画面里这里本来是左边外面的灰
+    seg = Segment(0.0, 2.0, 0.515, "", track=False, fit="contain",
+                  score_inset=(80, 862, 520, 1036))
+    out = tmp_path / "contain_board.mp4"
+    cut_segment(src, seg, out, 1920)
+    r, g, b = _pixel(out, 1.0, probe)
+    assert r > 150 and g < 90, f"contain 段该贴上整条板，({probe}) 实际 {(r, g, b)}"
+
+    seg_off = Segment(0.0, 2.0, 0.515, "", track=False, fit="contain")
+    out2 = tmp_path / "contain_plain.mp4"
+    cut_segment(src, seg_off, out2, 1920)
+    r2, g2, _ = _pixel(out2, 1.0, probe)
+    assert not (r2 > 150 and g2 < 90), "不开 score_inset 的 contain 段不该凭空多一块板"

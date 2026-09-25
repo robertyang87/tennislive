@@ -4036,6 +4036,58 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
             f"[bgb][fgs]overlay=(W-w)/2:(H-h)/2,{sp}fps={FPS_EXPR},setsar=1"
         )
         labeled = True
+        box = seg.score_inset if native_w >= native_h else None
+        if box and LAYOUT != "band":
+            # **contain 段也回贴记分条**（2026-09-26 拉沃尔杯双打
+            # alcaraz-mensik-doubles-laver-cup-2026）：双打四人回合宽景走
+            # contain，62% 的居中窗口把左下角转播板切成半截（`…SIK 3 40`），
+            # 而铺满段都有整条板贴在左下——同一条片子里一段有板一段半截，
+            # 正是账号所有者骂过的「狗皮膏药 / 补丁」那种观感。
+            # 做法：① 把 contain 画面**竖向挪到**「它自己那条板的行」正好落在
+            # 铺满段贴板的那一行（oy = y0 × VIDEO_W/CROP_W）；② 贴的板和铺满段
+            # **同一个大小、同一个落点**（x=0，比例 VIDEO_W/CROP_W）。贴片比
+            # contain 里的残条宽也高（比例 1.33 > 0.91），整块盖住；全片的板
+            # 从头到尾停在同一个位置，字幕锚也就不用另算。
+            # 板淡出的那几秒照旧不贴（spans / 逐帧蒙版，和铺满段同一套）。
+            x0, y0, x1, y1 = box
+            ratio = VIDEO_W / CROP_W
+            fratio = VIDEO_W / keep
+
+            def _even(v: float) -> int:
+                return max(2, -(-int(round(v)) // 2) * 2)
+
+            fh = _even(native_h * fratio)
+            oy = int(round(y0 * ratio))
+            top = max(0, min(VIDEO_H - fh, oy - int(round(y0 * fratio))))
+            sh = _even((y1 - y0) * ratio)
+            bw = _even((x1 - x0) * ratio)
+            print(f"    [score] {seg.start:.1f}s 段（contain）回贴记分条 "
+                  f"[{x0},{y0},{x1},{y1}] → 左下 (0,{oy}) {bw}×{sh}px；"
+                  f"contain 画面竖向落在 {top}（让它自己的板行对齐贴板那一行）")
+            gate = ""
+            if seg.score_inset_spans:
+                gate = ":enable='" + "+".join(
+                    f"between(t,{a:.3f},{b:.3f})"
+                    for a, b in seg.score_inset_spans) + "'"
+            patch = (f"[wb]crop={x1 - x0}:{y1 - y0}:{x0}:{y0},"
+                     f"scale={bw}:{sh}:flags=lanczos[b];")
+            if seg.score_inset_mask:
+                patch = (
+                    f"[wb]crop={x1-x0}:{y1-y0}:{x0}:{y0},format=rgb24[bc];"
+                    f"movie='{_escape(Path(seg.score_inset_mask))}':dec_threads=1,format=gray[mask];"
+                    f"[bc][mask]alphamerge,scale={bw}:{sh}:flags=lanczos[b];")
+                gate = ""
+            chain = (
+                f"split=3[bg][fg][wb];"
+                f"[bg]crop={keep}:{native_h}:{x}:0,"
+                f"scale={VIDEO_W}:{VIDEO_H}:force_original_aspect_ratio=increase,"
+                f"crop={VIDEO_W}:{VIDEO_H},boxblur=42:2,eq=brightness=-0.20[bgb];"
+                f"[fg]crop={keep}:{native_h}:{x}:0,"
+                f"scale={VIDEO_W}:{fh}:flags=lanczos[fgs];"
+                f"[bgb][fgs]overlay=0:{top}[m];"
+                + patch +
+                f"[m][b]overlay=0:{oy}{gate},{sp}fps={FPS_EXPR},setsar=1"
+            )
         if native_w < native_h:
             # **竖屏源一律铺满整个画布，不留两侧模糊垫底**——账号所有者
             # 2026-09-25 看完 sinner-beijing-withdrawal-2026（辛纳本人 X 上
