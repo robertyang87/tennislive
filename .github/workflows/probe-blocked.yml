@@ -16,6 +16,10 @@ on:
         description: "http 模式：自定义目标 URL，逗号分隔（给了就不探默认那五条）。图片会存成 artifact"
         required: false
         default: ""
+      grep:
+        description: "http 模式：正则，在原始正文里按顺序打出每一处匹配（多个用 ;; 分隔）"
+        required: false
+        default: ""
       mode:
         description: "http=urllib 探那几个固定源；browser=用 Chromium 探 TNNS"
         required: false
@@ -213,6 +217,7 @@ jobs:
           P_LINK: ${{ github.event.inputs.link }}
           P_FETCH: ${{ github.event.inputs.fetch }}
           P_URLS: ${{ github.event.inputs.urls }}
+          P_GREP: ${{ github.event.inputs.grep }}
           P_TOP_KEYS: ${{ github.event.inputs.top_keys }}
           P_HTML_CONTEXT: ${{ github.event.inputs.html_context }}
         run: |
@@ -234,7 +239,11 @@ jobs:
             URL_ARGS=()
             IFS=',' read -ra URLS <<< "$P_URLS"
             for u in "${URLS[@]}"; do [ -n "$u" ] && URL_ARGS+=(--url "$u"); done
-            python tools/probe_blocked_sources.py --save probe_out "${WANT_ARGS[@]}" "${URL_ARGS[@]}"
+            GREP_ARGS=()
+            if [ -n "$P_GREP" ]; then
+              while IFS= read -r g; do [ -n "$g" ] && GREP_ARGS+=(--grep "$g"); done < <(printf '%s' "$P_GREP" | sed 's/;;/\n/g')
+            fi
+            python tools/probe_blocked_sources.py --save probe_out "${WANT_ARGS[@]}" "${URL_ARGS[@]}" "${GREP_ARGS[@]}"
           fi
       # 取到的图要能拿回来看——**光有日志里的尺寸没法过那四道闸门**，
       # 精准/在比赛中/冲击力/清晰度全都得打开看。
