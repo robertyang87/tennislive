@@ -1,0 +1,242 @@
+name: landscape-clip
+
+# 横屏原片 ＋ 中英双语字幕（`tools/build_landscape_clip.py`）。
+#
+# 账号所有者 2026-09-25（拉沃尔杯两队出场）：「单独出一个视频，配上中英文字幕，
+# 而且是横屏的，不裁切画面」。三条常规线的画布都是竖的，这条单独走。
+#
+# 为什么在 runner 上跑：沙箱的 IP 被 YouTube 挡了（取字幕、下源片都一样），
+# cookie 也只在 Actions secret 里。安装、cookie、PO token 三步照 `interview-clip.yml`
+# 抄的，**注释的道理也一样**：yt-dlp 要装 `[default]`（带 yt-dlp-ejs，否则解不了
+# n challenge、报的却是「没有格式」）。
+#
+#   subs    取自动字幕 → 按 1600px 切行 → 打进日志（拷进 spec 的 `lines` 填中文）
+#   render  下 ≤1080p 源片 → 等比进 1920×1080 不裁 → 烧字幕 → 验片 → 传 Release
+on:
+  workflow_dispatch:
+    inputs:
+      slug:
+        description: "spec 文件名（specs/landscape/<slug>.json，不带 .json）"
+        required: true
+      mode:
+        description: "subs=只取字幕切行｜render=出片"
+        type: choice
+        options: [subs, render]
+        default: render
+  # **新工作流在进 main 之前拨不动**（workflow_dispatch 只认默认分支上有的文件），
+  # 所以分支上改 spec 也能直接跑：`lines` 还空着 → subs，填好了 → render。
+  push:
+    paths:
+      - "specs/landscape/*.json"
+
+permissions:
+  contents: write
+
+# 同一个 slug 只留一个在跑，分组名带 slug，不同片子互不掐
+concurrency:
+  group: landscape-clip-${{ github.event.inputs.slug || github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  clip:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+          sparse-checkout: |
+            .github
+            assets
+            data
+            specs
+            src
+            tools
+            output/landscape
+
+      # dispatch 用表单上的；push 从这次改动的 spec 里认 slug，按 `lines` 空不空定 mode
+      - name: 定 slug 和 mode
+        id: job
+        env:
+          IN_SLUG: ${{ github.event.inputs.slug }}
+          IN_MODE: ${{ github.event.inputs.mode }}
+        run: |
+          if [ -n "$IN_SLUG" ]; then
+            SLUG="$IN_SLUG"; MODE="$IN_MODE"
+          else
+            F=$(git diff --name-only HEAD~1 HEAD -- 'specs/landscape/*.json' | head -1)
+            [ -n "$F" ] || { echo "::error::这次 push 没改到 specs/landscape/*.json"; exit 1; }
+            SLUG=$(basename "$F" .json)
+            MODE=$(python -c 'import json,sys; print("render" if json.load(open(sys.argv[1]))["lines"] else "subs")' "$F")
+          fi
+          echo "slug=$SLUG" >> "$GITHUB_OUTPUT"
+          echo "mode=$MODE" >> "$GITHUB_OUTPUT"
+          echo "slug=$SLUG mode=$MODE"
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: 缓存 apt 包（字体 + ffmpeg，绕开镜像抽风）
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/apt-archives
+            ~/.cache/apt-lists
+          key: apt-pkgs-${{ runner.os }}-24.04-landscape-clip-v1-${{ github.run_id }}
+          restore-keys: |
+            apt-pkgs-${{ runner.os }}-24.04-landscape-clip-v1-
+
+      - name: 装系统依赖
+        timeout-minutes: 15
+        run: |
+          source tools/ci_apt_install.sh
+          apt_install_cached fonts-noto-cjk fonts-noto-core
+          ensure_ffmpeg
+
+      - name: 装依赖
+        timeout-minutes: 10
+        run: pip install -q -e . "yt-dlp[default]"
+
+      - name: 开跑前预检
+        run: |
+          PYTHONPATH=src python - <<'PY'
+          import shutil, sys
+          sys.path.insert(0, "tools")
+          import yt_dlp  # noqa: F401
+          from build_landscape_clip import measure
+          assert shutil.which("ffmpeg"), "没有 ffmpeg"
+          print(f"字宽 en={measure('en', 'welcome'):.1f} zh={measure('zh', '网球'):.1f}")
+          PY
+
+      - name: 落 cookies（配了 Secret 才有）
+        id: cookies
+        env:
+          YT_COOKIES_TXT: ${{ secrets.YT_COOKIES_TXT }}
+        run: |
+          if [ -n "$YT_COOKIES_TXT" ]; then
+            printf '%s' "$YT_COOKIES_TXT" > "$RUNNER_TEMP/yt-cookies.txt"
+            echo "path=$RUNNER_TEMP/yt-cookies.txt" >> "$GITHUB_OUTPUT"
+            echo "已写入 cookies（$(wc -l < "$RUNNER_TEMP/yt-cookies.txt") 行）"
+          else
+            echo "没有配 YT_COOKIES_TXT，裸下试试"
+          fi
+
+      - name: 启动 YouTube PO token provider
+        timeout-minutes: 3
+        run: |
+          pip install -q bgutil-ytdlp-pot-provider
+          docker run --name bgutil-pot -d -p 4416:4416 \
+            brainicism/bgutil-ytdlp-pot-provider
+          READY=0
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:4416/ping; then
+              READY=1
+              break
+            fi
+            sleep 1
+          done
+          [ "$READY" = 1 ] || {
+            docker logs bgutil-pot 2>&1 | tail -30 || true
+            echo "::error::PO token provider 没有就绪"
+            exit 1
+          }
+
+      - name: 取字幕切行
+        if: steps.job.outputs.mode == 'subs'
+        env:
+          COOKIES: ${{ steps.cookies.outputs.path }}
+        run: |
+          set -o pipefail
+          PYTHONPATH=src python tools/build_landscape_clip.py \
+            --spec "specs/landscape/${{ steps.job.outputs.slug }}.json" --stage subs
+
+      - name: 出片
+        if: steps.job.outputs.mode == 'render'
+        env:
+          COOKIES: ${{ steps.cookies.outputs.path }}
+        run: |
+          set -o pipefail
+          PYTHONPATH=src python tools/build_landscape_clip.py \
+            --spec "specs/landscape/${{ steps.job.outputs.slug }}.json" --stage render
+
+      # 成片一律走 Release，不进 git（仓库 .git 早就几个 GB，见 interview-clip.yml
+      # 同名步骤）。传完自己探一次，探不到就别写链接。循环里一律用 if，
+      # 不写 `[ A ] && break`——`bash -e` 下整条为假会把这一步直接杀掉。
+      - name: 成片发到 Release（不进 git）
+        if: steps.job.outputs.mode == 'render'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          SLUG="${{ steps.job.outputs.slug }}"
+          OUTDIR="output/landscape/$SLUG"
+          CLIP="$OUTDIR/$SLUG.mp4"
+          SZ=$(stat -c%s "$CLIP")
+          SHA=$(sha256sum "$CLIP" | cut -d' ' -f1)
+          TAG="landscape-$SLUG"
+          echo "成片 $((SZ/1048576)) MiB —— 发到 Release $TAG"
+          gh release view "$TAG" >/dev/null 2>&1 \
+            || gh release create "$TAG" --title "横屏双语 · $SLUG" \
+                 --notes "横屏原片（不裁切）＋中英双语字幕。成片走 Release 附件，不进 git。"
+          UPLOADED=0
+          for i in 1 2 3 4; do
+            if gh release upload "$TAG" "$CLIP" --clobber; then UPLOADED=1; break; fi
+            if [ "$i" != 4 ]; then sleep $((5 * i * i)); fi
+          done
+          [ "$UPLOADED" = 1 ] || { echo "::error::Release 附件传了 4 次都没上去"; exit 1; }
+          URL="https://github.com/$GITHUB_REPOSITORY/releases/download/$TAG/$SLUG.mp4?v=${SHA:0:16}"
+          CODE=000
+          for i in 1 2 3 4 5 6 7 8; do
+            CODE=$(curl -s -o /dev/null -w '%{http_code}' -L -r 0-99 "$URL" || echo 000)
+            if [ "$CODE" = "206" ] || [ "$CODE" = "200" ]; then break; fi
+            sleep 5
+          done
+          if [ "$CODE" != "206" ] && [ "$CODE" != "200" ]; then
+            echo "::error::Release 附件 $URL 探不到（$CODE）"; exit 1
+          fi
+          python - "$OUTDIR/render.json" "$URL" "$SZ" "$SHA" <<'PY'
+          import json, sys
+          from pathlib import Path
+          path, url, size, sha = Path(sys.argv[1]), sys.argv[2], int(sys.argv[3]), sys.argv[4]
+          data = json.loads(path.read_text(encoding="utf-8"))
+          data.update(video_url=url, video_bytes=size, film_sha256=sha)
+          path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+          print("render.json 记下", url)
+          PY
+          rm -f "$CLIP"
+
+      - name: 提交产物记录
+        if: steps.job.outputs.mode == 'render'
+        run: |
+          D="output/landscape/${{ steps.job.outputs.slug }}"
+          rm -rf "$D"/source.* "$D"/_* "$D"/cap_*
+          git config user.name "Claude"
+          git config user.email "noreply@anthropic.com"
+          git add -A "$D"
+          git diff --cached --quiet && { echo "没有变化"; exit 0; }
+          python tools/check_staged_file_sizes.py
+          MSG="landscape: ${{ steps.job.outputs.slug }} 横屏双语成片"
+          git commit -m "$MSG"
+          BRANCH="${{ github.ref_name }}"
+          for attempt in $(seq 1 10); do
+            if git push origin "HEAD:$BRANCH"; then exit 0; fi
+            git fetch origin "$BRANCH"
+            git branch -f rendered HEAD
+            git reset --hard "origin/$BRANCH"
+            rm -rf "$D"
+            git checkout rendered -- "$D"
+            git add -A "$D"
+            git diff --cached --quiet || git commit -m "$MSG"
+            sleep $((attempt * 5 + RANDOM % 10))
+          done
+          echo "::error::连续 10 次推送失败；产物记录没有落库"
+          exit 1
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: landscape-${{ steps.job.outputs.slug }}
+          path: |
+            output/landscape/${{ steps.job.outputs.slug }}/
+            !output/landscape/${{ steps.job.outputs.slug }}/source.*

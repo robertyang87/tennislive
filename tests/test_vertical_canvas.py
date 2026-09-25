@@ -54,3 +54,18 @@ def test_竖版判据的主语没丢():
     `test_出片画布一律竖版` 红在「品牌片尾 outro_page 的画布是 1440×1080」那一行。
     """
     assert len(_canvases()) >= 4, "扫到的画布少于四条线，判据的主语丢了"
+
+
+def test_横屏只许出现在那条单独认领的小路上():
+    """竖版是三条常规线的口径；**唯一的例外是账号所有者点名要的横屏原片**。
+
+    2026-09-25 拉沃尔杯出场：「单独出一个视频……横屏的，不裁切画面」。它走
+    `tools/build_landscape_clip.py`，不挂任何栏目、不进上面那张画布表——
+    所以这里钉两件事：那条小路确实是 16:9 横屏（它存在的全部理由），
+    而且它**不许被上面三条线 import 去用**（那等于把横屏偷渡进常规线）。
+    """
+    lc = _tools("build_landscape_clip")
+    assert (lc.CANVAS_W, lc.CANVAS_H) == (1920, 1080)
+    for f in ("build_match_reel.py", "build_interview_clip.py"):
+        assert "build_landscape_clip" not in (Path("tools") / f).read_text(encoding="utf-8"), (
+            f"{f} 引用了横屏那条小路——横屏只给单独认领的原片用，常规线一律竖版")
