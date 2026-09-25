@@ -47,7 +47,7 @@
 | 41 | 1:28.2 | [▶](https://youtu.be/ir2EMOVy1LQ?t=88) | We would love for you to play | 我们很希望你 |  |
 | 42 | 1:29.3 | [▶](https://youtu.be/ir2EMOVy1LQ?t=89) | in Singapore all the time, | 一直在新加坡打球 |  |
 | 43 | 1:32.1 | [▶](https://youtu.be/ir2EMOVy1LQ?t=92) | but you are through to the semifinals. | 不过你已经打进半决赛了 |  |
-| 44 | 1:35.0 | [▶](https://youtu.be/ir2EMOVy1LQ?t=94) | Good, Joe. | 好啊 |  |
+| 44 | 1:35.0 | [▶](https://youtu.be/ir2EMOVy1LQ?t=94) | [inaudible] | （听不清） | ✏️ 已订正 |
 | 45 | 1:36.0 | [▶](https://youtu.be/ir2EMOVy1LQ?t=96) | Thank you. | 谢谢 |  |
 | 46 | 1:39.0 | [▶](https://youtu.be/ir2EMOVy1LQ?t=99) | You are through to the semi-finals here | 你打进了半决赛 |  |
 | 47 | 1:40.7 | [▶](https://youtu.be/ir2EMOVy1LQ?t=100) | in Singapore. | 在新加坡 |  |

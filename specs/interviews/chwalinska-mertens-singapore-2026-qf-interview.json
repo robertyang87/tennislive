@@ -166,7 +166,7 @@
   "我们很希望你",
   "一直在新加坡打球",
   "不过你已经打进半决赛了",
-  "好啊",
+  "（听不清）",
   "谢谢",
   "你打进了半决赛",
   "在新加坡",
@@ -200,9 +200,10 @@
   "9": "She's definitely a great player.",
   "12": "to win today.",
   "48": "It's your second tour-level semifinal.",
-  "70": "let's hear it for Maja Chwalinska."
+  "70": "let's hear it for Maja Chwalinska.",
+  "44": "[inaudible]"
  },
- "_en_fixed_why": "全部照 YouTube 原始 ASR 轨 `en-orig` 逐行改：第 5 行 ASR 把比分写成 `62 62`；第 8 行 `Ellis` 是梅尔滕斯的名 Elise 的误听（同一句接着说 `She's definitely a great player`，指的就是今天的对手）；第 9、12 行去掉口吃的重复词（`She she's`、`to to`），意思不变；第 48 行按惯例写 `tour-level`；第 70 行 `Mayainska` 是主持人报她全名 Maja Chwalinska 的误听。第 24 行整行只有 `Um,`（主持人追问前她停顿的那一下），英文原样留着，中文写「嗯」。第 44 行 `Good, Joe.` 听不准，原样留着等 runner 上第二份 ASR（medium.en）比对。",
+ "_en_fixed_why": "全部照 YouTube 原始 ASR 轨 `en-orig` 逐行改：第 5 行 ASR 把比分写成 `62 62`；第 8 行 `Ellis` 是梅尔滕斯的名 Elise 的误听（同一句接着说 `She's definitely a great player`，指的就是今天的对手）；第 9、12 行去掉口吃的重复词（`She she's`、`to to`），意思不变；第 48 行按惯例写 `tour-level`；第 70 行 `Mayainska` 是主持人报她全名 Maja Chwalinska 的误听。第 24 行整行只有 `Um,`（主持人追问前她停顿的那一下），英文原样留着，中文写「嗯」。第 44 行 YouTube 写成 `Good, Joe.`，而第二份 ASR（medium.en，run 36113410455）在这个位置一个词都没听出来（`semifinals good joe` → `semi finals`）——两份对不上、我又听不了音轨，不把一个猜的词印上屏，写成 `[inaudible]`／「（听不清）」。",
  "_window_why": "0.0 起：YouTube 原始 ASR 第一个事件 0.32 秒就是主持人的第一问，前面没有别的。**终点 155.0**：主持人 149.76 起「Ladies and gentlemen, let's hear it for Maja Chwalinska」，缩略图墙 153.2 / 155.1 两格切到看台上举着 `POLSKA` 围巾的波兰球迷——那是这句话之后的掌声；157.1 起是看台儿童和网球的空镜，而 157.52 起转播解说开口（`Well, as she touched on there, Maja Chwalinska, she has had a few tough weeks…`），那是转播自己的话，不收。源片 163 秒。",
  "cover": {
   "frame_at": 133.5,
@@ -236,5 +237,9 @@
   "生涯第二次巡回赛半决赛、上一次是法网：WTA 官网赛后稿 `her first semifinal since her shock run to the Roland Garros title match as a qualifier in June -- and her second tour-level semifinal overall`；转播解说 290.72 秒 `for only the second time in her career`；主持人 `It's your second tour level semifinal`。",
   "法网之后 5 站 1 胜：见 `cover._copy_why`（WTA 官方逐场 ＋ flashscore 两源）。",
   "种子：赫瓦林斯卡 5 号、梅尔滕斯 4 号（WTA feed `[5]` / `[4]`）。比赛北京时间 9 月 25 日 13:10 前后开球（flashscore `DC=1790313000`），采访视频 06:06Z 上传。"
- ]
+ ],
+ "transcript_disagree_ok": {
+  "rate": 0.126,
+  "why": "run 36113410455 的 transcript_diff 逐处看过（367 词 vs 334 词，12.5%）：① 大半是 whisper 整段丢掉**主持人**的话——`now i'd like to ask you about`、`you are through to the semi finals here in`（主持人重复了一遍问题）、`and lastly lastly`、`ladies and gentlemen let's hear it for maja chwalinska`；② 写法差异——`got to`/`gotta`、`going to`/`gonna`、`semifinal`/`semi final`、`6 2 6 2`/`six to six to`（比分已用 en_fixed 写成 6-2, 6-2）、`you've`/`you`；③ `she`/`to` 两处是她口吃的重复词（en_fixed 第 9、12 行已去掉）；④ `yes i mean`、`yeah`、`a` 是短虚词。她的回答没有一处两份读法不同。唯一实质的一处是第 44 行 `Good, Joe.`——whisper 什么都没听出来，已改成 `[inaudible]`（见 `_en_fixed_why`）。"
+ }
 }
