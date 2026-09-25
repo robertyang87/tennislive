@@ -1,0 +1,405 @@
+{
+  "slug": "bucsa-noskova-bjk-cup-2026-sf",
+  "source_url": "https://www.youtube.com/watch?v=sYtfbRkEaRM",
+  "_column": "赛场之上",
+  "tts_backend": "edge",
+  "_tts_backend_why": "旁白是平直的复盘叙述，一段 `style` 都没写；同一天同一届的 `muchova-bouzas-bjk-cup-2026-sf` 也是 edge。",
+  "_source": "账号所有者给的链接（「赶紧做这个」）。源片是比利·简·金杯官方 YouTube `sYtfbRkEaRM`（标题 `Cristina Bucsa (ESP) vs Linda Noskova (CZE) | 2026 Billie Jean King Cup | Highlights`），probe 在 `output/2026-09-25/reel/bucsa-noskova-bjk-cup-2026-sf/`：1920×1080 / 25fps、495.3s。四要素自证：记分条逐格读过（`BUCSA / NOSKOVA`），挡板 `深圳湾`、`2026 FINALS SHENZHEN`、角标 `ESP 0-1 CZE`；比赛画面到 453s，453~485 是赛点之后，485.5 起是片尾订阅板；**没有场上采访**。",
+  "scorebox": [
+    145,
+    915,
+    600,
+    1012
+  ],
+  "_scorebox_why": "同一届同一块转播板，和 `muchova-bouzas-bjk-cup-2026-sf` 同一个框（probe 的 `scorebox_guess` 这次没猜出来，按兄弟片的框给的 `--scorebox`，记分条缩略图逐格读得出比分）。",
+  "_match": {
+    "id": "2026:bjk-cup-finals:semifinal-1:cristina-bucsa-linda-noskova",
+    "event": "2026 比利·简·金杯总决赛",
+    "event_search": "Billie Jean King Cup",
+    "round": "Semifinal",
+    "year": 2026,
+    "status": "result_verified",
+    "winner": "诺斯科娃",
+    "loser": "布克沙",
+    "participants": [
+      "布克沙",
+      "诺斯科娃"
+    ],
+    "winner_en": "Linda Noskova",
+    "loser_en": "Cristina Bucsa",
+    "set_scores_home_away": [
+      [
+        6,
+        7
+      ],
+      [
+        2,
+        6
+      ]
+    ],
+    "tiebreaks_home_away": [
+      [
+        5,
+        7
+      ],
+      null
+    ],
+    "_source": "三源一致：flashscore nuplmFEc（home＝`AE÷Bucsa C.`、away＝`AF÷Noskova L.`，`BA/BB=6/7`、`BC/BD=2/6`，第一盘抢七 `DA/DB=5/7`）；金杯官网实时战报「Match 2: Linda Noskova (CZE) d. Cristina Bucsa (ESP) 7-6 6-2」；画面自证——源片 478.5s 起成绩图形 `CRISTINA BUCSA 6 2 / LINDA NOSKOVA 7 6`，解说 478.64「Noskova beats Bucsa 7-6 6-2」。",
+    "_participants_why": "`participants` 跟 flashscore 的 home / away：[布克沙, 诺斯科娃]，和 `cover.matchup` 的顺序**相反**——`set_scores_home_away` 紧挨着它，同序。",
+    "source": "flashscore_points",
+    "source_id": "nuplmFEc",
+    "flashscore_id": "nuplmFEc",
+    "winner_result": "7-6(5) 6-2",
+    "loser_result": "6-7(5) 2-6"
+  },
+  "topbar": {
+    "line1": "2026 比利·简·金杯 半决赛",
+    "line2": "诺斯科娃 7-6(5) 6-2 布克沙"
+  },
+  "_topbar_why": "第二行和 `cover.winner` / `cover.result` / `cover.matchup` 机械一致。第一行：团体赛没有「级别＋站」，和同一届同一场 tie 的 `muchova-bouzas-bjk-cup-2026-sf` 同一写法。",
+  "cover": {
+    "matchup": [
+      {
+        "name": "诺斯科娃",
+        "name_en": "Linda Noskova",
+        "country": "CZE",
+        "rank": 6
+      },
+      {
+        "name": "布克沙",
+        "name_en": "Cristina Bucsa",
+        "country": "ESP",
+        "rank": 35
+      }
+    ],
+    "_rank_why": "金杯官网战报「World No. 6 Noskova」「The World No. 35」（Bucsa）；和同一届 `noskova-boulter-bjk-cup-2026-qf`（诺斯科娃 6）、`putintseva-bucsa-bjk-cup-2026`（布克沙 35）登记的一致。",
+    "winner": "诺斯科娃",
+    "result": "7-6(5) 6-2",
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "诺斯科娃",
+    "_subject_why": "赢家、世界第六（②档：顶级球员）；半决赛（「半决赛级别的都要做」），而且这一场把捷克送进了决赛。",
+    "hook": "5比2被追成5平\n最后8个球全是她的",
+    "hook_accent": "全是她的",
+    "_hook_why": "两行一个落差：第一行是第一盘的险（flashscore 逐局：她 5-2 领先，5-3 发球胜盘时拿到过盘点仍被破，之后 5-5；金杯官网「moved 5-2 ahead but Bucsa … broke back」），第二行是结尾的碾压（金杯官网「reeling off eight successive points」；flashscore 逐分从第二盘 2-4 那一局的 40-30 起其实一口气连拿 11 分，「最后8个球」两边都成立）。没有排名、年龄、国籍，没有术语。",
+    "topic": "比利·简·金杯半决赛 · 诺斯科娃 vs 布克沙",
+    "_heat_why": "半决赛（轮次本身够格）；诺斯科娃世界第六、2026 温网冠军（②档）；这场赢下捷克晋级决赛。",
+    "portrait": {
+      "image": "assets/reel/noskova-bjk-cup-2026-sf.jpg",
+      "focus": 0.3,
+      "focus_y": 0.3,
+      "zoom": 1.0,
+      "_why": "**比利·简·金杯官方实拍（ITF，billiejeankingcup.com 的 Contentful 图库）**，原文件名 `LZ1_5789_dPHQJsQM.JPG`（和 `muchova-bouzas` 那张 `LZ1_9355` 同一位摄影师、同一套编号），是这个 tie 的实时战报页 https://www.billiejeankingcup.com/en/news/live-cze-v-esp-2026-billie-jean-king-cup-finals-quarter-final 的头图，alt 写着 **`Noskova during singles win v Spain`**——人物、对手国、单打、赢球都写死了。\n画面自证：蓝色捷克队服（Yonex）、红色短裙、白色遮阳帽——和源片 453~485s 她的着装逐项一致；背景是看台，是比赛进行中的正手击球。\n四道闸门：① 精准 ✅；② 击球中 ✅；③ 冲击力——侧身正手、球刚离拍、眼睛睁着看球 ✅；④ 清晰度——原图 2891×1626，铺 1080×1440 是缩小（1440/1626＝0.89×）✅。"
+    },
+    "scoreboard": {
+      "court": "深圳湾体育中心",
+      "_court_why": "印场馆：维基 `2026 Billie Jean King Cup finals` 信息框 `venue = Shenzhen Bay Sports Center`，源片挡板「深圳湾」。",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%20%221%3A27%22%2C%20%22source%22%3A%20%22%E6%BA%90%E7%89%87%20324.5s%EF%BC%8F480.5s%20%E8%BD%AC%E6%92%AD%E6%88%90%E7%BB%A9%E5%9B%BE%E5%BD%A2%EF%BC%9A%E7%AC%AC%E4%B8%80%E7%9B%98%2060%27%E3%80%81%E7%AC%AC%E4%BA%8C%E7%9B%98%2027%27%22%2C%20%22cross_check%22%3A%20%22flashscore%20df_st_1%20nuplmFEc%20%E5%88%86%E7%9B%98%201%3A01%20%2B%200%3A30%20%3D%201%3A31%EF%BC%8C%E5%90%8C%E5%90%91%EF%BC%9B%E8%A7%A3%E8%AF%B4%20328.96%E3%80%8Ctakes%20it%20on%20the%20hour%E3%80%8D%22%7D",
+        "field": "duration"
+      },
+      "_duration_why": "印转播自己的成绩图形（第一盘 60'＋第二盘 27'＝1:27）；flashscore 1:31 差 4 分钟，同向，取赛事方自己的数。"
+    }
+  },
+  "_opening_time_source": {
+    "url": "https://global.flashscore.ninja/2/x/feed/f_2_0_0_en_1",
+    "match_id": "nuplmFEc",
+    "field": "AD",
+    "value": 1790335200,
+    "beijing": "2026-09-25T19:20+08:00",
+    "spoken_precision": "approximate-hour",
+    "_why": "开球时刻只说个大概：flashscore `AD=1790335200` → 11:20Z＝北京 19:20，旁白说「晚上七点多」。"
+  },
+  "stats": {
+    "a": {
+      "aces": 7,
+      "df": 5,
+      "first_in": 38,
+      "first_won": 28,
+      "second_total": 21,
+      "second_won": 17,
+      "bp_conv": 3,
+      "bp_chances": 4,
+      "pts_won": 75,
+      "pts_total": 130,
+      "first_total": 59,
+      "headshot": "assets/players/headshots/wta-329668.jpg"
+    },
+    "b": {
+      "aces": 0,
+      "df": 1,
+      "first_in": 45,
+      "first_won": 30,
+      "second_total": 20,
+      "second_won": 6,
+      "bp_conv": 1,
+      "bp_chances": 5,
+      "pts_won": 55,
+      "pts_total": 130,
+      "first_total": 65,
+      "headshot": "assets/players/headshots/wta-321158.jpg"
+    },
+    "_source": "flashscore nuplmFEc `df_st_1`（`tools/match_stat_hooks.py nuplmFEc --stats-block`）；a＝诺斯科娃（flashscore 客队）、b＝布克沙（主队），和 `cover.matchup` 同序。",
+    "_winners_ue_why": "flashscore 这场没有制胜分／非受迫失误；TNNS 另拨了一趟 tnns-stats 去问。"
+  },
+  "_hit_data": "`match_feed.py show nuplmFEc` 逐局：第一盘第 5 局诺斯科娃发球 0-40 落后、三个破发点全救、连拿五分保住 → 第 6 局她破发 2-4（占先时的破发点）→ 5-2 → 布克沙保发 3-5 → 5-3 诺斯科娃发球胜盘，30-40 拿到盘点没兑现，被破 4-5（这一局三次双误）→ 5-5 → 她零封保发 6-5 → 布克沙 30-40 救下盘点（兼破发点）保发 → 抢七：先 2-0、再 2-4 落后，7-5。第二盘 2-2 布克沙发球 15-0 之后诺斯科娃连拿四分破发 3-2 → 她下一局一次双误给出破发点、保住 → 再破 5-2（0-40 第一个破发点）→ 发球胜赛 0-40 第一个赛点拿下。官方统计：ACE 7 对 0，破发 3/4 对 1/5，总得分 75 比 55，`Last 10 balls` 客队 10。",
+  "_claims": {
+    "捷克2018年之后第一次打进决赛": "① 金杯官网实时战报 https://www.billiejeankingcup.com/en/news/live-cze-v-esp-2026-billie-jean-king-cup-finals-quarter-final 原文「That saw Czechia reach the final for the first time since last lifting the trophy in 2018」；② 转播解说 457.92~461.36「Linda Noskova ensures they make the final for the first time since 2018」、赛事官方 X 账号「CZECHIA REACH THE BJK CUP FINAL — The first final since 2018」；兄弟片 `muchova-bouzas-bjk-cup-2026-sf` 的 `_claims` 已核过 2019~2025 决赛双方都不是捷克（维基）。"
+  },
+  "editorial": {
+    "mode": "match_review",
+    "hook": [
+      "5比2被追成5平",
+      "最后8个球全是她的"
+    ],
+    "question": "第一盘五比二领先还被追成五平，诺斯科娃是怎么把捷克送进决赛的？",
+    "thesis": "第一盘她先扛住零比四十，马上破发，五比二；五比三发球胜盘三次双误被破，五比五；布克沙又救下盘点，抢七她二比四落后，七比五拿下。第二盘二比二连拿四分破发，最后八个球全是她的，六比二。捷克 2018 年之后第一次进决赛。",
+    "beats": [
+      "冷开场：赛点之后诺斯科娃握拳，解说「她把捷克送进决赛，2018 年之后第一次」。",
+      "落点＋坐标：两盘赢下捷克就进决赛。",
+      "0-40 扛住，下一局破发，5-2。",
+      "5-3 发球胜盘三次双误被破，5-5。",
+      "布克沙救下盘点，抢七 2-4 落后翻成 7-5。",
+      "第二盘连拿四分破发，最后八个球全拿，6-2。"
+    ],
+    "chapters": [
+      "零比四十",
+      "三次双误",
+      "抢七",
+      "最后八个球"
+    ],
+    "human_context": {
+      "angle": "世界第六、2026 温网冠军诺斯科娃，第二场单打；捷克 1-0 领先，她赢下来捷克就进 2018 年之后的第一个决赛。",
+      "facts": [
+        "flashscore nuplmFEc：Noskova L. d Bucsa C. 7-6(5) 6-2。",
+        "金杯官网战报：World No. 6 / World No. 35，5-2 被追回、三次双误、抢七 2-4 落后、连拿八分收尾、2018 年之后第一个决赛。"
+      ],
+      "sources": [
+        "https://global.flashscore.ninja/2/x/feed/df_mh_1_nuplmFEc",
+        "https://global.flashscore.ninja/2/x/feed/df_st_1_nuplmFEc",
+        "https://www.billiejeankingcup.com/en/news/live-cze-v-esp-2026-billie-jean-king-cup-finals-quarter-final"
+      ]
+    },
+    "narration": [
+      "五比二被追成五平。",
+      "抢七二比四落后。",
+      "最后八个球全是她的。"
+    ]
+  },
+  "segments": [
+    {
+      "start": 453.04,
+      "end": 465.0,
+      "cx": 0.5,
+      "score_inset": false,
+      "narration": "",
+      "_score_inset_why": "赛点已经落地：453.04 起是诺斯科娃握拳的近景、捷克替补席、网前握手，转播撤掉了比分板（记分条缩略图 454.5 起没有板）。",
+      "quote": [
+        {
+          "at": 0.0,
+          "text": "Czechia showing everyone just why they were pre-tournament favourites,\n捷克为什么是夺冠热门"
+        },
+        {
+          "at": 4.88,
+          "text": "as Linda Noskova ensures they make the final\n诺斯科娃把她们送进了决赛"
+        },
+        {
+          "at": 8.32,
+          "text": "for the first time since 2018.\n2018年之后第一次"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_ending_payoff_required": true,
+      "_why": "冷开场：**赛点落地之后诺斯科娃握拳的那一刻**。不配旁白，只留解说原声＋中英字幕：captions.txt 451.76「Czecha showing everyone just why they」、454.96「were pre-ournament favorites」、457.92「as Linda Noshka ensures they make the」、461.36「final for the first time since 2018」，人名按本名写回，段内 at = 原时刻 − 453.04（第一句从 451.76 起，段首已在句中，字幕从 0 起挂）。",
+      "_payoff_why": "冷开场里有赛点落地后的第一波庆祝，所以 true——正文倒数第二段（453.04→465.0）按时间顺序完整重放这一段。",
+      "crosses_cut": "453.04 起一个连续段落：她的近景 → 捷克替补席 → 网前握手，都在赛点之后。",
+      "point_end_ok": "比赛已经结束（赛点在 453 秒前落地）；之后记分条不再翻牌。"
+    },
+    {
+      "start": 3.0,
+      "end": 28.56,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "两盘赢下来，捷克就进决赛。北京时间九月二十五日晚上七点多，深圳，比利·简·金杯总决赛半决赛。穆霍娃已经替捷克拿下第一分，第二场单打，世界第六的诺斯科娃，对世界第三十五的布克沙。两天前的1/4决赛对英国，也是她打完第二场单打，把捷克送进四强。",
+      "_why": "开场顺序「爆点 → 落点 → 坐标」：落点是这一场的赌注（金杯官网「with World No. 6 Linda Noskova looking to finish things off」），再给坐标。画面是第一局诺斯科娃发球：记分条 16.5~26.5s `0 0 / 0 15`、28.5s `0 0 / 0 30`；解说 11.44「Really sound body, sound opening point」。板在 16 秒之前没出现，渲染时自动不贴。 「两天前的1/4决赛」：金杯官网「Noskova beat Katie Boulter in straight sets on Tuesday to seal a 2-0 quarter-final victory over Great Britain」，兄弟片 `noskova-boulter-bjk-cup-2026-qf`。 段首 3.0 在第一分的回合中段（前面几秒是发球前的站位），为了让旁白铺满窗口。",
+      "crosses_cut": "10.88 / 14.72 / 25.36 几处换镜头：第一分之后她走回的近景、分与分之间。",
+      "point_end_ok": "段尾 28.56 是转播切点，这一分已经落地（28.5s 记分条 30-0）；29.84 / 30.64 的翻牌是集锦跳过这一局剩下几分、直接翻成 1-0，下一段画面是布克沙的近景，不是切在回合里。"
+    },
+    {
+      "start": 150.84,
+      "end": 164.48,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "二比二，诺斯科娃先吃了一记闷棍。自己的发球局零比四十，三个破发点，她连拿五分全救了回来。下一局轮到布克沙发球。",
+      "_why": "集锦没播第 5 局，旁白一句带过：flashscore 第一盘第 5 局（主队在前）`15:0, 30:0, 40:0 |B1|, 40:15 |B1|, 40:30 |B1|, 40:40, 40:A` → 布克沙 40-0 三个破发点、诺斯科娃连拿五分保发；金杯官网「raced into a 0-40 lead in the fifth game … Noskova won five successive points to hold」。画面是第 6 局布克沙发球：记分条 140.5~150.5s `2 15 / 3 0`、152.5~162.5s `2 40 / 3 40`。",
+      "crosses_cut": "150.84~164.48 是一个连续的回合镜头。",
+      "point_end_ok": "段尾 164.48 是转播切点，也是 probe 量到的一分结束（point_ends 164.48），下一次翻牌在 168.32。"
+    },
+    {
+      "start": 164.48,
+      "end": 176.92,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "刚才没抓住的机会，马上变成了对手的。平分，她拿到占先，破发点。这一分又是一拍漂亮的接发，正手压下去，破发，四比二。",
+      "_why": "记分条 164.5s `2 40 / 3 40`、168.5~176.5s `2 40 / 3 AD`（布克沙发球，诺斯科娃破发点），178.5s 已经是 `3 / 5`（集锦跳过 2-5、3-5 两局）。解说 172.80「And that is what happens here. Another stunning return from Noskova」；金杯官网战报 X 帖「A forehand down the line secures a vital break midway through the first set」、正文「claiming the first break of the match in the very next game」。flashscore 第 6 局 `…40:40, 40:A |B1|` 之后客队拿下。",
+      "crosses_cut": "168.32 / 170.2 / 174.2 几处换镜头：发球前的近景、回合的底线镜头、破发之后的反应，都在分与分之间或这一分之后。",
+      "point_end_ok": "段尾 176.92 是切点，point_ends 176.96 就在切点上（破发那一分落地）；下一次翻牌是 196.24。"
+    },
+    {
+      "start": 176.92,
+      "end": 200.16,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "她一路领先到五比二。五比三发球胜盘，还拿到过一个盘点。可这一局她三次双误。布克沙拿到破发点，这一拍诺斯科娃打长了，被破回来，五比四。解说说，布克沙是被对手扶了一把。",
+      "_why": "记分条 178.5~194.5s `3 AD / 5 40`（诺斯科娃发球，布克沙破发点），之后撤板、198.5 起是场边。flashscore 第 9 局（主队在前）`0:15, 0:30, 15:30, 30:30, 30:40 |B2|, 40:40, A:40 |B1|` → 盘点没兑现、被破。解说 192.40「It's long and Bucsa breaks back」、196.32「given a helping hand by Noskova. Three double faults in the game」；金杯官网「aided by three doubles faults from a previously immaculate Noskova, she broke back」。「五比二」：金杯官网「subsequently moved 5-2 ahead」。",
+      "crosses_cut": "194.16 / 196.84 两处换镜头：破发之后布克沙的反应、场边，都在这一分之后。",
+      "point_end_ok": "`point_ends` 196.24 / 199.84 是破发之后撤板和翻成 4-5 的时刻，都在段尾 200.16 之前。"
+    },
+    {
+      "start": 212.0,
+      "end": 224.64,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "布克沙保发，追到五平。诺斯科娃自己的发球局，这一次一分没丢，六比五。解说说，这才像温网冠军。",
+      "_why": "记分条 200.5~208.5s `4 0 / 5 0`（布克沙发球），210.5s 翻成 `5 0 / 5 15`（诺斯科娃发球）、226.5s 已是 `5 0 / 6 15`（下一局布克沙发球）。flashscore 第 11 局 `0:15, 0:30, 0:40` 之后保发——零封。解说 223.84「That's more like it from the Wimbledon champion」。段首 212.0 是 5-5 第一分之后（记分条 212.5 已是 0-15）。 「温网冠军」：金杯官网「the Wimbledon champion」，仓库 `anisimova-noskova` 等 spec 的 `_claims` 已登记 2026 温网女单冠军。",
+      "crosses_cut": "212.0~224.64 是一个连续的回合镜头。",
+      "point_end_ok": "段尾 224.64 是转播切点，下一次翻牌在 244.0。"
+    },
+    {
+      "start": 248.64,
+      "end": 262.44,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "六比五，布克沙发球，三十比四十，诺斯科娃拿到盘点。这一分布克沙打得漂亮，解说说，看看诺斯科娃被调到了哪儿。盘点救下，进抢七。",
+      "_why": "记分条 248.5~262.5s `5 30 / 6 40`（布克沙发球，诺斯科娃盘点兼破发点），264.5s 翻成 `5 40 / 6 40`，266.5s 起是抢七。flashscore 第 12 局 `30:40 |B1| |B2|, 40:40, A:40` 之后主队保发。解说 259.44「What a great point that is from Bucsa」、261.60「Yeah, look at where Noskova was placed」。",
+      "crosses_cut": "248.64~262.44 是一个连续的回合镜头。",
+      "point_end_ok": "段尾 262.44 是转播切点，盘点那一分在 259.4 解说「What a great point」之前落地；262.48 / 263.6 是之后切进的近景里记分条翻成 40-40。"
+    },
+    {
+      "start": 280.84,
+      "end": 300.84,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "抢七，诺斯科娃先二比零。可接下来，她一拍反手打出边线。两拍正手一个出底线、一个下网，布克沙连拿四分，反倒二比四落后。五比二领先的这一盘，眼看又要丢了。然后轮到她还手。",
+      "_why": "记分条 266.5~278.5s 抢七 `1 / 2`、280.5s `2 / 2`、282.5~300.5s `4 / 2`（布克沙 4-2），302.5s 翻成 `4 / 3`。金杯官网「having led 2-0 she found herself in trouble at 4-2 down after sending a backhand wide and forehands long and into the net」；解说 298.96「this time it's Noskova's turn to maybe give Bucsa a taste of her own medicine」。",
+      "crosses_cut": "280.84~300.84 是一个连续段落（段首就在 280.84 切点上）。",
+      "point_end_ok": "段尾 300.84 是转播切点，那一分在 298.96 解说之前落地（302.5s 记分条 4-3）。"
+    },
+    {
+      "start": 300.84,
+      "end": 310.28,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "两拍斜线大角度正手追平，五平之后连拿两分，七比五拿下抢七。",
+      "_why": "记分条 302.5s `4 / 3`、304.5~310.5s `5 / 6`（诺斯科娃盘点），312.5s 撤板。金杯官网「She levelled with a pair of thunderous crosscourt forehands before Bucsa put just too much juice on an attempted lob, leaving Noskova 5-4 ahead. It became 5-5 when Noskova found the net again」；flashscore 抢七 `DA/DB=5/7`。",
+      "crosses_cut": "303.32 一处换镜头：分与分之间的近景。",
+      "point_end_ok": "段尾 310.28 是转播切点，盘点那一分在 310.32 落地；311.2 起的翻牌是这一盘结束、记分条收起。"
+    },
+    {
+      "start": 310.28,
+      "end": 331.04,
+      "cx": 0.5,
+      "score_inset": false,
+      "narration": "",
+      "_score_inset_why": "盘末：312.5s 起记分条收起，之后是握拳、换边，324.5s 起转播叠上盘分图形。",
+      "quote": [
+        {
+          "at": 0.3,
+          "text": "Linda Noskova gets over the line in the end,\n诺斯科娃最终拿下这一盘"
+        },
+        {
+          "at": 3.8,
+          "text": "and Czechia are a set away from their first Billie Jean King Cup final since 2018.\n离2018年后第一个决赛只差一盘"
+        },
+        {
+          "at": 13.96,
+          "text": "Super tight set, but it's Noskova who takes it on the hour.\n咬得很紧，一个小时拿下"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_quote_why": "转播原句，probe 的 `captions.txt`：310.56「Linda Noska, but gets over」、314.08「the line in the end and Sheia are a set」、317.52「away from making their first Beijing」、320.08「King Cup final since 2018」、324.24「Super tight set. Bushka has so many」、326.96「questions, but it's Noska who takes it」、328.96「on the hour. 76.」。人名、赛事名按本名写回，段内 at = 原时刻 − 310.28。",
+      "_why": "第一盘结束的解说原声，留下来配中英字幕（2026-09-19「精彩的原声解说要留下来」）。",
+      "crosses_cut": "312.96 / 324.24 前后几处换镜头：盘末的近景、换边、盘分图形，都在这一盘结束之后。",
+      "point_end_ok": "这一盘已经结束，盘间的翻牌是记分条收起和盘分图形。"
+    },
+    {
+      "start": 385.12,
+      "end": 396.8,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "第二盘二比二，布克沙发球，先拿一分。之后诺斯科娃连拿四分，破发，三比二。解说说，这一局打得真漂亮。",
+      "_why": "记分条 378.5~386.5s `6 2 0 / 7 1 0`（诺斯科娃发球）→ 388.5~396.5s `6 2 15 / 7 2 40`（布克沙发球，诺斯科娃破发点）。flashscore 第二盘第 5 局 `15:0, 15:15, 15:30, 15:40 |B1|` 之后客队拿下；金杯官网「winning four successive points to break Bucsa and take a 3-2 lead」；解说 395.28「What a game. And Noskova breaks first in set two」。",
+      "crosses_cut": "389.88 一处换镜头：分与分之间的近景。",
+      "point_end_ok": "段尾 396.8 是转播切点，破发那一分在它之前落地（398.5 起是场边座椅）；397.6 是换边画面上记分条翻成 3-2。"
+    },
+    {
+      "start": 435.2,
+      "end": 445.08,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "她下一局扛住一个破发点。四比二，布克沙发球。零比四十，一记漂亮的接发，再破，五比二。",
+      "_why": "记分条 400.5~414.5s `6 2 15 / 7 3 0`（诺斯科娃发球）；416.5s `6 2 0 / 7 4 15`、436.5~442.5s `6 2 0 / 7 4 40`（布克沙发球，诺斯科娃破发点），446.5s 已是 `7 5`。flashscore 第二盘第 6 局 `…40:30 |B1|, 40:40, 40:A` 客队保发（金杯官网「A double fault from the Czech No. 1 gave Bucsa the chance to break back immediately but Noskova recovered」）、第 7 局 `0:15, 0:30, 0:40 |B1|` 客队破发。解说 440.00「Oh yes」、442.40「What a return to close out the game」。",
+      "crosses_cut": "441.84 一处换镜头：破发之后布克沙走回的中景。",
+      "point_end_ok": "段尾 445.08 是转播切点，破发那一分在 442 解说之前落地；445.12 翻牌就在切点上，下一次在 453.2。"
+    },
+    {
+      "start": 445.08,
+      "end": 453.04,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "最后一局她发球，四十比零，第一个赛点就拿下。最后八个球，全是她的。",
+      "_why": "记分条 446.5~452.5s `6 2 0 / 7 5 40`（诺斯科娃发球，三个赛点）。flashscore 最后一局 `0:15, 0:30, 0:40 |B3|` → 第一个赛点兑现；「最后八个球」：金杯官网「reeling off eight successive points」，flashscore 第 7、8 两局都是零封（4＋4），`Last 10 balls` 客队 10。",
+      "crosses_cut": "445.08~453.04 是一个连续的回合镜头。",
+      "point_end_ok": "段尾 453.04 是转播切点，赛点那一分正好在这里落地；之后比赛已经结束。"
+    },
+    {
+      "start": 453.04,
+      "end": 465.0,
+      "cx": 0.5,
+      "score_inset": false,
+      "narration": "",
+      "_score_inset_why": "比赛已经结束：453.04 起是她握拳的近景、捷克替补席、网前握手，没有比分板。",
+      "quote": [
+        {
+          "at": 0.0,
+          "text": "Czechia showing everyone just why they were pre-tournament favourites,\n捷克为什么是夺冠热门"
+        },
+        {
+          "at": 4.88,
+          "text": "as Linda Noskova ensures they make the final\n诺斯科娃把她们送进了决赛"
+        },
+        {
+          "at": 8.32,
+          "text": "for the first time since 2018.\n2018年之后第一次"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_quote_why": "同冷开场那一段（captions.txt 451.76~461.36），段内 at = 原时刻 − 453.04。",
+      "_why": "赛点之后的原声，按时间顺序重放冷开场那一段。",
+      "crosses_cut": "453.04~465.0 几处换镜头：她的近景、捷克替补席、网前握手，全在赛点之后。",
+      "point_end_ok": "比赛已经结束。"
+    },
+    {
+      "start": 465.0,
+      "end": 481.2,
+      "cx": 0.5,
+      "score_inset": false,
+      "narration": "捷克二比零，两场单打，一盘没丢，二〇一八年之后第一次打进决赛，对手是意大利和乌克兰的胜者。第一盘五比二被追成五平、抢七里二比四落后，换你站在场上，还能把正手一拍一拍抡出去吗？",
+      "_score_inset_why": "比赛已经结束，465 起是和布克沙握手、与捷克队员拥抱，478.5 起转播叠上成绩图形。",
+      "_why": "收尾一问。「2018 年之后第一次」见 `_claims`。485.52 起是片尾订阅板，段尾收在它之前。 决赛对手：金杯官网「they will face either two-time defending champions Italy or Ukraine at the Shenzhen Bay Sports Centre Arena on Sunday」。「一盘没丢」：穆霍娃 7-5 6-4、诺斯科娃 7-6 6-2。 段尾收在 481.2（和队长拥抱之后），旁白正好铺满。",
+      "crosses_cut": "465~485 几处换镜头：握手、队长拥抱、向看台挥手，都在比赛结束之后。",
+      "point_end_ok": "比赛已经结束。"
+    }
+  ],
+  "_editing_why": "源片 495.3 秒：比赛画面到 453 秒，453~485 是赛点之后（她握拳、捷克替补席、握手、拥抱、向看台挥手），485.5 起是片尾订阅板；**没有场上采访**。认人：诺斯科娃蓝色上衣、红色短裙、白色遮阳帽；布克沙红黄上衣、白色短裙。段落端点取自 probe 的 `scene_cuts`，比分按 probe 的记分条缩略图（`score_*.jpg`）逐格读过（记分条上的黄点是发球方）。集锦没播的局（第一盘第 5 局、2-5 / 3-5；第二盘 2-4 之后的第 6 局破发点）只在旁白里一句带过。",
+  "_tactics_why_note": "球路写在第 4 段（接发、正手压下去破发）、第 5 段（三次双误、一拍打长）、第 8 段（反手出界、正手出底线和下网）、第 9 段（两拍斜线大角度正手）、第 12 段（接发破发）——都以转播解说原句和金杯官网战报为据（见各段 `_why`）。",
+  "_quote_why_global": "两段原声：冷开场／赛点之后「她把捷克送进决赛，2018 年之后第一次」、第一盘结束「离决赛只差一盘／一个小时拿下」。",
+  "_no_repeat": "同一届兄弟片：`muchova-bouzas-bjk-cup-2026-sf`（同一场 tie 的第一场单打）——这一条只一句带过「穆霍娃已经拿下第一分」；`noskova-boulter-bjk-cup-2026-qf`（诺斯科娃 1/4决赛）、`putintseva-bucsa-bjk-cup-2026`（布克沙 1/4决赛）不重讲。",
+  "push": {
+    "matchup": "诺斯科娃 vs 布克沙",
+    "score": "7-6(5) 6-2",
+    "summary": "诺斯科娃送捷克进决赛",
+    "auto": true,
+    "lead": "2026 比利·简·金杯总决赛半决赛，深圳湾体育中心，捷克对西班牙第二场单打：世界第 6 的诺斯科娃 7-6(5)、6-2 胜世界第 35 的布克沙，捷克 2-0 晋级，2018 年之后第一次打进决赛。第一盘她先在 0-40 落后时连拿五分保发，下一局破发，一路领先到 5-2；5-3 发球胜盘拿到过盘点，却三次双误被破，布克沙追到 5-5，还救下一个盘点。抢七她 2-4 落后，两拍斜线正手追平，7-5 拿下，这一盘 60 分钟。第二盘 2-2 连拿四分破发，再破一次 5-2，最后 8 个球全是她的。全场 ACE 7 比 0，破发 3/4 对 1/5。"
+  }
+}
