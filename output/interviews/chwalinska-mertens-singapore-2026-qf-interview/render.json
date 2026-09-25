@@ -1,0 +1,67 @@
+{
+  "film_sha256": "71c3b72c597d5c0b489588f6296de3013e854805ce4499e2c722d9e642811e6d",
+  "film_seconds": 195.051,
+  "production_sla": {
+    "version": 2,
+    "pipeline": "interview-clip",
+    "slug": "chwalinska-mertens-singapore-2026-qf-interview",
+    "received_at": "2026-09-25T08:37:23Z",
+    "artifact_ready_at": "2026-09-25T08:43:09Z",
+    "elapsed_seconds": 346.059,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "71c3b72c597d5c0b489588f6296de3013e854805ce4499e2c722d9e642811e6d",
+    "spec_sha256": "8fb8881cf98d8281c122a9d6453b93acd4275f5c3f46ce3db947a3d9427f198b",
+    "run_id": "36113920065",
+    "stage_events": [
+      {
+        "stage": "preflight",
+        "at": "2026-09-25T08:38:00Z",
+        "run_id": "36113920065"
+      },
+      {
+        "stage": "asr_verify",
+        "at": "2026-09-25T08:39:54Z",
+        "run_id": "36113920065"
+      },
+      {
+        "stage": "render",
+        "at": "2026-09-25T08:41:16Z",
+        "run_id": "36113920065"
+      }
+    ],
+    "render_seconds": 113.059,
+    "pre_render_seconds": 233.0
+  },
+  "production_stage_events": [
+    {
+      "stage": "preflight",
+      "at": "2026-09-25T08:38:00Z",
+      "run_id": "36113920065"
+    },
+    {
+      "stage": "asr_verify",
+      "at": "2026-09-25T08:39:54Z",
+      "run_id": "36113920065"
+    },
+    {
+      "stage": "render",
+      "at": "2026-09-25T08:41:16Z",
+      "run_id": "36113920065"
+    },
+    {
+      "stage": "qc",
+      "at": "2026-09-25T08:43:09Z",
+      "run_id": "36113920065"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-25T08:43:10Z",
+      "run_id": "36113920065"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/interview-chwalinska-mertens-singapore-2026-qf-interview/chwalinska-mertens-singapore-2026-qf-interview.mp4?v=71c3b72c597d5c0b",
+  "video_bytes": 54432799,
+  "release_asset_digest": "sha256:71c3b72c597d5c0b489588f6296de3013e854805ce4499e2c722d9e642811e6d",
+  "qc_attestation_sha256": "5cede06e9a41b3669242c1ad56c8481a7cce9c9a9c9e9a871978e82fa0c7c0cb"
+}

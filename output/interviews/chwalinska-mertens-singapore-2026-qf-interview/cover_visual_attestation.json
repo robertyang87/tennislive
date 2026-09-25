@@ -1,0 +1,56 @@
+{
+  "status": "pass",
+  "checked_at": "2026-09-25T08:43:09Z",
+  "auditor": "opencv-haar-v1",
+  "expected_subject": "赫瓦林斯卡",
+  "identity_evidence": "L0-bound spec subject + same-source frame_at",
+  "spec_sha256": "8fb8881cf98d8281c122a9d6453b93acd4275f5c3f46ce3db947a3d9427f198b",
+  "poster_sha256": "9101dd264415b2a9eaef1aa32f37f94d84b26134a6fd1043a773a2ff61a2e5b4",
+  "thresholds": {
+    "close_up_zoom": 1.5,
+    "face_height_ratio": 0.08,
+    "close_up_face_height_ratio": 0.14,
+    "face_area_ratio": 0.01,
+    "face_sharpness": 45.0,
+    "face_contrast": 32.0,
+    "eyes": 2
+  },
+  "result": {
+    "poster": {
+      "decodable": true,
+      "format": "JPEG",
+      "width": 1080,
+      "height": 1440,
+      "photo_region": [
+        0,
+        150,
+        1080,
+        810
+      ]
+    },
+    "face": {
+      "detector": "frontal-default",
+      "box": [
+        408,
+        277,
+        264,
+        264
+      ],
+      "detected_faces": 3,
+      "eyes": 2,
+      "face_height_ratio": 0.32593,
+      "face_area_ratio": 0.07967,
+      "center_x_ratio": 0.5,
+      "center_y_ratio": 0.31975,
+      "sharpness": 276.993,
+      "contrast": 209.0
+    },
+    "contract": {
+      "shot_type": "",
+      "frame_at": 133.5,
+      "zoom": 1.0,
+      "focus_y": 0.5
+    }
+  },
+  "issues": []
+}

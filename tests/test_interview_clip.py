@@ -2872,6 +2872,34 @@ def test_取字幕单档失败要换client重试(monkeypatch, tmp_path):
     assert words == [(0.0, "hi")]
 
 
+def test_取字幕每一档都要带ignore_no_formats_error(monkeypatch, tmp_path):
+    """**取字幕本来就 `--skip-download`，媒体格式解不出来不该让这一档失败。**
+
+    2026-09-25 `chwalinska-mertens-singapore-2026-qf-interview` 撞的：沙箱没有
+    cookie，`web_embedded` 只解得出 storyboard，yt-dlp 报 `Requested format is
+    not available`、一个字幕文件都不写；梯子落到 `android+ios`，那一档的字幕
+    每个事件只有一段（滚动字幕两行拼成一段、没有逐词时间戳），切出来是 32 行
+    「两行英文挤一行」。同一条 URL 手工带上这个开关，`web_embedded` 拿到 129 个
+    逐词事件。缩略图墙那一步早就带着它，注释还写着「fetch_words 一直带着」——
+    而这儿从来没带过。
+    """
+    from tools import build_interview_clip as m
+
+    calls = []
+
+    def fake_run(cmd, **kw):
+        calls.append(cmd)
+        return type("P", (), {"returncode": 1, "stdout": "",
+                               "stderr": "ERROR: Requested format is not available"})()
+
+    monkeypatch.setattr(m.subprocess, "run", fake_run)
+    with pytest.raises(SystemExit):
+        m.fetch_words("https://www.youtube.com/watch?v=xyz", tmp_path, {})
+    assert calls, "一档都没试"
+    missing = [c for c in calls if "--ignore-no-formats-error" not in c]
+    assert not missing, f"{len(missing)}/{len(calls)} 档取字幕没带 --ignore-no-formats-error"
+
+
 def test_换了候选视频不许复用上一条的字幕缓存(monkeypatch, tmp_path):
     """真实事故（谢尔顿那条 spec）：先探了一个候选视频 `SOUMru-EDI8`，写下
     `cap_SOUMru-EDI8.en.json3`，判定不合适之后把 spec 的 `url` 换成账号
