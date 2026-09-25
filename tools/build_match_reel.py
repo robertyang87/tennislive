@@ -6786,10 +6786,16 @@ COVER_FILL_W, COVER_FILL_H = 1080, 1440
 #:   太丑了」）。我把赢家本场官方图、她美网官方图、本场抽帧、等图四条渲成
 #:   预览摆出来，账号所有者选了抽帧（23.0s 近景，render run 36128217087）。
 #:   源片 1920×1080，放大 1.33 倍。
+#: - `mensik-nakashima-laver-cup-2026`：2026-09-25 拉沃尔杯伦敦站首日第二场。
+#:   官网本场只发了一张实拍、拍的是输家门西克；我按那张出了一版，账号所有者
+#:   两次回「还是找中岛布兰登的照片」「要用中岛布兰登做封面」。中岛的本场
+#:   实拍 Getty 有、但只有水印预览，X／AP／ATP 沙箱和 runner 上都挡着（详见
+#:   spec 的 `cover.portrait._frame_why`）。取集锦 37.6s 近景，放大 1.33 倍。
 OWNER_APPROVED_FRAME_COVERS = frozenset({
     "wu-duckworth-us-open-2026-r2",
     "zhiyenbayeva-bouzas-bjk-cup-2026",
     "wang-prozorova-singapore-2026-qf",
+    "mensik-nakashima-laver-cup-2026",
 })
 
 #: 「封面大图一律用官方高清实拍」这条规矩（账号所有者 2026-08-16 重申）立起来
