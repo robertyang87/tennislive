@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "at": "2026-09-25T20:35:33Z",
+  "pipeline": "match-reel",
+  "slug": "bublik-jodar-laver-cup-2026",
+  "mode": "render",
+  "outcome": "success",
+  "error": null,
+  "elapsed_seconds": 257.115,
+  "last_stage": "数据统计对照图",
+  "stage_seconds": {
+    "下载源片 main": 0.061,
+    "片尾配音": 0.589,
+    "TTS 合成": 4.67,
+    "VS 抓帧 portrait（源 main）": 0.148,
+    "封面海报": 2.537,
+    "封面编码": 0.244,
+    "分段编码": 144.91,
+    "片尾母版转码": 0.612,
+    "拼接": 36.527,
+    "混音": 4.0,
+    "烧字幕+成片": 137.707,
+    "数据统计对照图": 1.444
+  },
+  "stage_counts": {
+    "下载源片 main": 1,
+    "片尾配音": 1,
+    "TTS 合成": 1,
+    "VS 抓帧 portrait（源 main）": 1,
+    "封面海报": 1,
+    "封面编码": 1,
+    "分段编码": 12,
+    "片尾母版转码": 1,
+    "拼接": 1,
+    "混音": 1,
+    "烧字幕+成片": 1,
+    "数据统计对照图": 1
+  },
+  "cpu_count": 4,
+  "run_id": "36186010583",
+  "run_attempt": "1",
+  "on_runner": true
+}
