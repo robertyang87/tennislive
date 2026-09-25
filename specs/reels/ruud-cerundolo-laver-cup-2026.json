@@ -1,0 +1,350 @@
+{
+  "slug": "ruud-cerundolo-laver-cup-2026",
+  "_column": "赛场之上",
+  "sources": {
+    "main": "https://www.youtube.com/watch?v=10c-Msjex6s"
+  },
+  "_source": "账号所有者给的链接（https://youtu.be/10c-Msjex6s）。拉沃尔杯官方 YouTube 频道（oEmbed author_name=Laver Cup，@LaverCup）《Casper Ruud v Francisco Cerundolo Highlights | Laver Cup 2026 Match 1 | Laver Cup》，1920×1080 / 29.97fps / 196.09s（probe 实测），upload_date 20260925。四要素自证：①左下角记分条烧着 `RUUD / CERUNDOLO`，标签「MATCH 1」「7 POINT TIEBREAK」「SET POINT #3」「MATCH TIEBREAK」「MATCH POINT」，162.5s 读 `RUUD 6⁴ 6 10 / CERUNDOLO 7⁷ 4 8`——和 flashscore 4ljiuEjn 逐字一致；②黑色场地上印着 `LAVER CUP`，挡板 `Alipay+` `ROLEX` `UBS`；③鲁德蓝色 Team Europe 球衣＋Samsonite 发带，塞伦多洛红色 adidas＋白帽；④宽版全名板写着 `MATCH 1 … 64'`（第一盘 64 分钟）。末尾 193.03 起是片尾板（LAVER CUP 社媒页＋O2 夜景），窗口全部收在 193.0 之前。**没有场上采访**。",
+  "scorebox": [
+    80,
+    862,
+    520,
+    1036
+  ],
+  "_scorebox_why": "拉沃尔杯转播的比分板：紧凑版金色标签 y 884–916、欧洲队蓝边一行 920–968、世界队红边一行 970–1016，左缘 x≈97；开场/赛后的宽版全名板面板 x 85–885、y 866–1032（frame-grab `lavercup-board-match1` 逐像素量的，见 tools/lavercup_scoreboard.py）。带取 y 862–1036 把宽版面板上下的金边包进来。右缘写 520 是紧凑版最宽一档（抢十「6⁴ 6 10」x≈507）；宽版面板那几帧判据自己把扫描带放到 920px 宽、整块切。probe 的 scorebox_guess 这次没猜出来（null），框是按标定帧手给的。",
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "鲁德",
+    "hook": "两年前揭幕战输给他\n今晚丢一盘翻了回来",
+    "_hook_why": "第一行是影子：2024 柏林拉沃尔杯揭幕战，塞伦多洛 6-4 6-4 赢了鲁德，那是鲁德此前在拉沃尔杯单打里唯一一场输球（lavercup.com 首日对阵稿＋维基 2024 Laver Cup 两源）；第二行是这场球整场的形状（第一盘抢七丢了，后两盘翻回来）。两行之间有落差（输给他 → 翻了回来），主语都是封面上的鲁德。不写总分差（全场总得分 79:80 他还少一分——按 2026-09-19 那条，这个数不上钩子），不写「抢十」「抢七」这类要解释的词。每行 9 个字符，≤ 10。",
+    "topic": "拉沃尔杯 · 欧洲队 vs 世界队",
+    "winner": "鲁德",
+    "result": "6-7(4) 6-4 10-8",
+    "matchup": [
+      {
+        "name": "鲁德",
+        "name_en": "Casper Ruud",
+        "country": "NOR",
+        "rank": 17
+      },
+      {
+        "name": "塞伦多洛",
+        "name_en": "Francisco Cerundolo",
+        "country": "ARG",
+        "rank": 22
+      }
+    ],
+    "_matchup_rank_why": "两源一致：lavercup.com 球员页「ATP RANKING: 17」（casper-ruud）／「ATP RANKING: 22」（francisco-cerundolo）；仓库 `sources/rankings.fetch_rankings()`（tennisexplorer ATP 榜）Ruud Casper 17、Cerundolo Francisco 22。拉沃尔杯没有种子。",
+    "_name_why": "两个中文名都走 `player_zh()`：`player_zh(\"Casper Ruud\")` → 鲁德，`player_zh(\"Francisco Cerundolo\")` → 塞伦多洛。没有手打。",
+    "_heat_why": "两个人都在 HEAT_TOP_RANK=20 附近（17 / 22），外加这一场自己的话题：拉沃尔杯伦敦站揭幕战，而且是 2024 柏林揭幕战的重演（lavercup.com 首日对阵稿「In a rematch of their Laver Cup 2024 opener in Berlin」）。",
+    "_result_why": "第一盘抢七小分 (4) 是输掉那一盘的鲁德拿到的分：flashscore df_mh_1 第一盘抢七逐分走到 4:7，df_sui_1 `IG÷6¬IG÷4 / IH÷7¬IH÷7`；源片 110.5s 记分条 `RUUD 6⁴ / CERUNDOLO 7⁷`。第三盘是拉沃尔杯规则里的**抢十**（lavercup.com「Match Tiebreak」；源片 136.5s 标签 `MATCH TIEBREAK`），按一盘记成 10-8——df_sui_1 Set 3 `IG÷10 / IH÷8`，源片 162.5s `6 10 / 4 8`。",
+    "scoreboard": {
+      "court": "The O2",
+      "_court_why": "flashscore df_sui_1 `VEN÷O2 Arena ¬ TWN÷London`；拉沃尔杯官网「The O2」（首日对阵稿标题 Ruud and Cerundolo open at The O2）。拉沃尔杯只有这一块场地，印场馆名。",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%20%222%3A06%3A00%22%2C%20%22source%22%3A%20%22%E6%8B%89%E6%B2%83%E5%B0%94%E6%9D%AF%E5%AE%98%E7%BD%91%E8%B5%9B%E6%8A%A5%E3%80%8CThe%20nervy%20two-hour%2C%20six-minute%20match%E3%80%8D%EF%BC%88lavercup.com/news/2026/09/25/ruud-provides-early-team-europe-lead-in-cerundolo-rematch%EF%BC%89%22%2C%20%22cross_check%22%3A%20%22TNNS%20%E6%AF%94%E8%B5%9B%E9%A1%B5%202%3A06%EF%BC%88%E8%B4%A6%E5%8F%B7%E6%89%80%E6%9C%89%E8%80%85%E6%88%AA%E5%9B%BE%EF%BC%89%EF%BC%9Bflashscore%20%E5%BC%80%E7%90%83%20AD%2012%3A20Z%20%E2%86%92%20%E7%BB%88%E5%9C%BA%20AO%2014%3A25%3A10Z%20%EF%BC%9D%202%3A05%3A10%E3%80%82flashscore%20df_sui_1%20%E7%9A%84%20RB%3D2%3A09%20%E6%98%AF%E5%88%86%E7%9B%98%E5%90%84%E8%87%AA%E5%8F%96%E6%95%B4%E7%9B%B8%E5%8A%A0%EF%BC%8C%E5%81%8F%E9%95%BF%EF%BC%8C%E4%B8%8D%E7%94%A8%22%7D",
+        "field": "duration"
+      }
+    },
+    "_duration_why": "印 2:06：拉沃尔杯官网赛报「two-hour, six-minute」＋ TNNS 2:06 两源一致；flashscore 开球→终场 2:05:10 旁证。flashscore df_sui_1 的 RB=2:09 是分盘各自取整相加（1:06+0:46+0:17），偏长，不用。",
+    "portrait": {
+      "image": "assets/reel/ruud-cerundolo-laver-cup-2026.jpg",
+      "focus": 0.6,
+      "focus_y": 0.5,
+      "zoom": 1.0,
+      "_why": "拉沃尔杯官网 WordPress 媒体库本场实拍 `BS2_3439.jpg`（https://lavercup.com/wp-content/uploads/2026/09/BS2_3439.jpg，2026-09-25T14:48 上传，图注「Casper Ruud opens again for Team Europe.」）：人物、赛事（黑底场馆、蓝色 Team Europe 球衣＋Samsonite 发带）、时刻（这一场开局发球）都在图注和画面里。情绪是发球抛球那一刻的专注，眼睛睁着。",
+      "_low_res_why": "账号所有者 2026-09-25 看过取舍后选的（三条摆出来：授权抽帧现在推／用官网 1200×800 实拍／等官方赛后高清图，他选了这一条）。推片窗口内官方赛后高清实拍还没放出来：拉沃尔杯官网 WordPress 媒体库本场只有 BS2_3439 / BS2_3490 两张 1200×800（14:48 上传，开局时拍的）；Getty 有赛后庆祝的 2297087956 / 2297087591 等，但只有带水印的预览；AP 在沙箱里 hub 和 search 都回 403（requests / curl 都一样），这一档没查成；ATP 的 /-/media/ 镜像站（mubadaladcopen.com / dallasopen.com）不挂拉沃尔杯的稿子。铺 1080×1440 是 min(1200/1080, 800/1440)=0.56×，也就是放大 1.80 倍——认领这个代价。"
+    }
+  },
+  "topbar": {
+    "line1": "2026 拉沃尔杯 首日",
+    "line2": "鲁德 6-7(4) 6-4 10-8 塞伦多洛"
+  },
+  "_topbar_why": "line1：拉沃尔杯是团体赛，没有「级别＋站」，和金杯、戴维斯杯同一写法；轮次按拉沃尔杯自己的叫法写「首日」（Day 1，这一天每场记 1 分）。line2 由 cover.winner / result / matchup 机械拼出。",
+  "_opening_time_source": {
+    "url": "https://global.flashscore.ninja/2/x/feed/f_2_0_0_en_1",
+    "match_id": "4ljiuEjn",
+    "field": "AD",
+    "value": 1790338800,
+    "beijing": "2026-09-25T20:20+08:00",
+    "spoken_precision": "approximate-hour",
+    "_why": "开球时刻只说个大概：flashscore AD=1790338800 → 12:20Z ＝ 北京 20:20，旁白说「晚上八点多」。"
+  },
+  "_match": {
+    "status": "result_verified",
+    "source": "flashscore_points",
+    "source_id": "4ljiuEjn",
+    "flashscore_id": "4ljiuEjn",
+    "participants": [
+      "鲁德",
+      "塞伦多洛"
+    ],
+    "set_scores_home_away": [
+      [
+        6,
+        7
+      ],
+      [
+        6,
+        4
+      ],
+      [
+        10,
+        8
+      ]
+    ],
+    "tiebreaks_home_away": [
+      [
+        4,
+        7
+      ],
+      null,
+      null
+    ],
+    "winner": "鲁德",
+    "loser": "塞伦多洛",
+    "winner_result": "6-7(4) 6-4 10-8",
+    "loser_result": "7-6(4) 4-6 8-10",
+    "_direction_why": "flashscore 当日表 f_2_0：AE=Ruud C.（home）、AF=Cerundolo F.（away），BA/BB=6:7、BC/BD=6:4、BE/BF=10:8、DA/DB=4:7（第一盘抢七小分）、AG/AH=2:1。源片 162.5s 记分条 `RUUD 6⁴ 6 10 / CERUNDOLO 7⁷ 4 8`。participants 跟 home/away（和 set_scores_home_away 同序），这一场恰好也是 cover.matchup 的版式顺序。第三盘按抢十记 10-8，不是局分。"
+  },
+  "stats": {
+    "a": {
+      "aces": 6,
+      "df": 2,
+      "winners": 21,
+      "ue": 35,
+      "first_in": 51,
+      "first_won": 38,
+      "second_total": 30,
+      "second_won": 17,
+      "bp_conv": 1,
+      "bp_chances": 4,
+      "pts_won": 79,
+      "pts_total": 159,
+      "first_total": 81,
+      "headshot": "assets/players/headshots/atp-RH16.png"
+    },
+    "b": {
+      "aces": 5,
+      "df": 4,
+      "winners": 27,
+      "ue": 42,
+      "first_in": 50,
+      "first_won": 39,
+      "second_total": 28,
+      "second_won": 15,
+      "bp_conv": 0,
+      "bp_chances": 1,
+      "pts_won": 80,
+      "pts_total": 159,
+      "first_total": 78,
+      "headshot": "assets/players/headshots/atp-C0AU.png"
+    },
+    "_source": "flashscore 本场 4ljiuEjn 的 df_st_1，整块由 `match_stat_hooks.py 4ljiuEjn --home Ruud --away Cerundolo --stats-block` 机器抄出，没有手打；**这场有制胜分和非受迫失误**（21/27、35/42），照填。a 跟 cover.matchup[0]=鲁德，flashscore 的 home 也是 Ruud——两个顺序这一次一致，不用对调。锚点核过：Break Points Saved 主队 1/1（鲁德第二盘 2-2 救下的那一个）、客队 3/4（塞伦多洛 4-4 那一局前两个救下、第三个被破）。first_total 按 first_in + second_total 算（51+30=81、50+28=78）。头像：鲁德 atp-RH16（ruud-te-davis-cup-2026-wg1 同一张）、塞伦多洛 atp-C0AU（fritz-cerundolo-us-open-2026-r3 同一张；⚠️ atp-C0C8 是他哥哥胡安·曼努埃尔，第一版填错过，test_数据图的头像和matchup里的名字必须是同一个人 当场抓出来的）。",
+    "_winners_ue_why": "制胜分／非受迫失误照 flashscore 填（21/27、35/42），第三源 TNNS（账号所有者截图）是 20/27、35/42，只差鲁德一个制胜分。⚠️ 拉沃尔杯官网赛报写鲁德「33 unforced errors to just 15 winners」——口径不同：15 ＝ 21 − 6 个 Ace，33 ＝ 35 − 2 个双误，官方这一版不把发球直接得分和双误算进去。数据图沿用这条线一贯的 flashscore 口径，旁白里不引用这两个数。"
+  },
+  "_hit_data": "跑过 `match_stat_hooks.py 4ljiuEjn` 和 `match_feed.py show 4ljiuEjn`。挑进正文的：**第一盘 12 个发球局全保、一个破发点都没有**（df_mh_1 第一盘没有一个 |B1|）；**第二盘全场唯一一次破发**：4-4 塞伦多洛发球，鲁德 40-0 拿到三个破发点、第三个兑现（`15:0, 30:0, 40:0 |B1|, 40:15 |B1|, 40:30 |B1|`），5-4 发球胜盘又是 40-0 到第三个盘点才拿下；**抢十鲁德一路落后**：0-1、1-3、3-5、5-6、6-7，8-7 才第一次领先，8-8 被追平，9-8 赛点，10-8（df_mh_1 Set 3 逐分）。备选：全场总得分 79:80，赢的人少一分（按 2026-09-19 那条不上钩子、不进旁白）。",
+  "_durations": "TNNS 2:06（账号所有者截图）；flashscore 开球 12:20Z → 终场 14:25:10Z ＝ 2:05；转播宽版板第一盘 64'。",
+  "_turning_points": [
+    "第一盘抢七第一分（6-6，鲁德发球）：源片 22.6–50.3 一个长回合，塞伦多洛站在中路把鲁德左右调动，最后一记正手打穿（解说 50.96「unleashes a cannonball of a forehand to grab the opening point」）。之后塞伦多洛一路领先到 5-2、6-3，4-6 时他发球，第二个盘点拿下（解说 103.92「What a second serve」），7-4。",
+    "第二盘 4-4（塞伦多洛发球）：鲁德 40-0 三个破发点，第三个兑现——全场唯一一次破发。集锦没播这一局。",
+    "第二盘 5-4 鲁德发球胜盘：40-0 三个盘点，第三个（40-30，源片 126~132s 标签 `SET POINT #3`）拿下，塞伦多洛被拉到场外救球（129.5s）。",
+    "抢十：0-1、1-3、3-5、5-6、6-7 一路落后，8-7 第一次领先，9-8 赛点（源片 148.5–159.5 `MATCH POINT`，鲁德发球），10-8。"
+  ],
+  "editorial": {
+    "mode": "match_review",
+    "hook": [
+      "两年前揭幕战输给他",
+      "今晚丢一盘翻了回来"
+    ],
+    "question": "两年前柏林的揭幕战，鲁德两盘输给了塞伦多洛；今晚伦敦又是他们开场，丢了第一盘的抢七之后，他是怎么翻回来的？",
+    "thesis": "第一盘十二个发球局全保，抢七塞伦多洛从第一分就领先，七比四。第二盘四比四，鲁德拿到全场唯一一次破发，五比四发球胜盘到第三个盘点才兑现。抢十他一路落后，八比七才第一次领先，十比八。欧洲队一比零。",
+    "beats": [
+      "冷开场：赛点之后欧洲队替补席跳起来，鲁德抹脸，和塞伦多洛网前拥抱；解说「这像是接下来三天的一场小预演」。",
+      "两年前柏林揭幕战塞伦多洛 6-4 6-4 赢了他，那是鲁德在拉沃尔杯单打里唯一一场输球；北京时间 9 月 25 日晚上八点多，伦敦 O2，首日每场一分。",
+      "第一盘两人十二个发球局全保，抢七第一分塞伦多洛打出一记正手，一路领先，七比四。",
+      "第二盘四比四鲁德破发，五比四第三个盘点兑现；抢十一路落后，八比七第一次领先，十比八。"
+    ],
+    "_hook_why": "这一栏和 cover.hook 逐行相同（闸要求）。理由见 cover._hook_why。",
+    "human_context": {
+      "angle": "这是 2024 柏林拉沃尔杯揭幕战的重演：那一场塞伦多洛 6-4 6-4 赢了鲁德，是鲁德此前拉沃尔杯单打 4 胜 1 负里唯一的那一负（lavercup.com 球员页「Singles matches 4-1」）。今晚他又是先丢一盘，抢十一路被压着打，到 8-7 才第一次领先。",
+      "facts": [
+        "lavercup.com 2026-09-24《Laver Cup 2026 Day 1 Lineups: Ruud and Cerundolo open at The O2》：「In a rematch of their Laver Cup 2024 opener in Berlin … Cerundolo took that former encounter, 6-4, 6-4, handing Ruud his lone singles loss in Laver Cup play」。",
+        "维基 2024 Laver Cup：20 Sep 第 1 场单打 Casper Ruud vs Francisco Cerúndolo 4–6, 4–6，团体比分 0–1。",
+        "lavercup.com 球员页：鲁德 Laver Cup Record 单打 4-1（本场之前）、五次参赛（Boston 2021, London 2022, Vancouver 2023, Berlin 2024, San Francisco 2025）；塞伦多洛单打 3-1。",
+        "拉沃尔杯规则：首日每场 1 分、次日 2 分、末日 3 分，先到 13 分赢（lavercup.com team-europe 页「13 points needed for victory」）；第三盘打抢十（源片 136.5s 标签 `MATCH TIEBREAK`）。",
+        "赛果与逐分：flashscore 4ljiuEjn，6-7(4) 6-4 10-8；df_mh_1 第一盘无破发点，第二盘 4-4 鲁德破发，Set 3 逐分 0-1…6-7、7-7、8-7、8-8、9-8、10-8。",
+        "拉沃尔杯官网赛报（2026-09-25T16:08）：鲁德赛后「I have to thank my team and my bench … They pushed me all the way. They kept me in it, really. It was tough to lose that first set. Europe can build on this.」；「The nervy two-hour, six-minute match would come down to a 10-point Laver Breaker」；塞伦多洛 4-4 发球局「couldn't dig himself out of a 0-40 hole」；塞伦多洛拉沃尔杯单打现在 3-2。",
+        "拉沃尔杯官方 X（@LaverCup）2026-09-25 11:53Z「Day 1 is locked in 🔒 Four matches. One point each.」；14:33Z「@CasperRuud98 defeats Cerundolo 6-7(4), 6-4, [10-8] in Match 1」；14:48Z 替补席慢镜头（白色 Nike 帽的阿尔卡拉斯、长发的兹维列夫；Getty 2297087297 等图注「Carlos Alcaraz of Team Europe celebrates after Casper Ruud …」）。Instagram 要登录，沙箱拿不到。"
+      ],
+      "sources": [
+        "https://lavercup.com/news/2026/09/24/laver-cup-2026-day-1-lineups-ruud-and-cerundolo-open-at-the-o2",
+        "https://en.wikipedia.org/wiki/2024_Laver_Cup",
+        "https://lavercup.com/player/casper-ruud",
+        "https://lavercup.com/player/francisco-cerundolo",
+        "https://www.flashscore.com/match/tennis/4ljiuEjn/",
+        "https://www.youtube.com/watch?v=10c-Msjex6s",
+        "https://lavercup.com/news/2026/09/25/ruud-provides-early-team-europe-lead-in-cerundolo-rematch",
+        "https://x.com/LaverCup/status/2103493183346766142",
+        "https://x.com/LaverCup/status/2103452809622393157"
+      ],
+      "voice_label": "柏林欠下的一分"
+    }
+  },
+  "_claims": [
+    {
+      "claim": "两年前柏林揭幕战塞伦多洛赢了鲁德，是鲁德拉沃尔杯单打唯一一场输球",
+      "sources": [
+        "https://lavercup.com/news/2026/09/24/laver-cup-2026-day-1-lineups-ruud-and-cerundolo-open-at-the-o2 「handing Ruud his lone singles loss in Laver Cup play」",
+        "https://en.wikipedia.org/wiki/2024_Laver_Cup 20 Sep 第 1 场 Ruud 4–6 4–6 Cerúndolo；https://lavercup.com/player/casper-ruud Singles matches 4-1"
+      ]
+    },
+    {
+      "claim": "第一盘两人十二个发球局全保，一个破发点都没有",
+      "sources": [
+        "flashscore df_mh_1（4ljiuEjn）第一盘 12 局没有一个 |B1|",
+        "flashscore df_st_1 Set 1：Break Points Saved 0/0 / 0/0、Service games won 6/6 / 6/6"
+      ]
+    },
+    {
+      "claim": "抢十鲁德到八比七才第一次领先",
+      "sources": [
+        "flashscore df_mh_1 Set 3 逐分：0-1, 1-1, 1-2, 1-3, 2-3, 3-3, 3-4, 3-5, 4-5, 5-5, 5-6, 6-6, 6-7, 7-7, 8-7, 8-8, 9-8, 10-8",
+        "源片 148.5–159.5 记分条 `MATCH POINT … 9 / 8`，162.5s `10 / 8`"
+      ]
+    }
+  ],
+  "_no_repeat": "同栏目此前有鲁德的 fonseca-ruud、ruud-te-davis-cup-2026-wg1，塞伦多洛的 fritz-cerundolo-us-open-2026-r3、auger-aliassime-cerundolo——这一条不重讲那几条铺开的东西（丰塞卡抢七逆转、特隆赫姆红土、美网第三轮）。laver-cup-history-2026 是**网球有故事**的解说片，讲拉沃尔杯的来历，另一个栏目；这一条只用一句交代「首日每场一分」。",
+  "push": {
+    "summary": "鲁德抢十扳回柏林旧账",
+    "lead": "拉沃尔杯伦敦站揭幕战，两年前柏林的重演。那一场塞伦多洛 6-4 6-4 赢了鲁德，是鲁德拉沃尔杯单打唯一一场输球。今晚鲁德第一盘抢七 4-7 先丢，第二盘 4-4 拿到全场唯一一次破发，6-4 扳回；抢十一路落后，8-7 才第一次领先，10-8 拿下。欧洲队 1-0。",
+    "matchup": "鲁德 vs 塞伦多洛",
+    "score": "6-7(4) 6-4 10-8",
+    "auto": true
+  },
+  "_push_summary_why": "10 字位，主语鲁德；「柏林旧账」就是钩子第一行那条影子（2024 柏林揭幕战输给同一个人）。标题里不写排名。",
+  "segments": [
+    {
+      "source": "main",
+      "start": 159.6,
+      "end": 170.9,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "",
+      "quote": [
+        {
+          "at": 6.32,
+          "text": "And that feels like just a small preview\n这像是一场小小的预演"
+        },
+        {
+          "at": 8.72,
+          "text": "for the next three days.\n预告接下来这三天"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_why": "冷开场：赛点落地之后。159.53 那一刀之后 160.5s 欧洲队替补席跳起来、162.5s 记分条 `MATCH 1 … 6 10 / 4 8`，164.5s 鲁德近景张着嘴笑，166.5s 他抹脸，168.5s 起网前和塞伦多洛拥抱。不配旁白，只留解说原声＋中英字幕：captions.txt 165.92「And that feels like just a small preview」、168.32「for the next three days.」，段内 at = 原时刻 − 159.6。",
+      "crosses_cut": "164.16 / 167.6 —— 欧洲队替补席 → 鲁德近景 → 网前拥抱，都是赛点落地之后的同一段庆祝。",
+      "point_end_ok": "比赛已经结束（赛点在 159.5 之前落地），之后记分条不再翻牌。",
+      "_ending_payoff_required": true,
+      "_ending_payoff_why": "冷开场用的是赛点之后（159.6–170.9），正文倒数第二段按时间顺序重放同一段、这次配旁白，末段 180.0–192.9 是和队长诺阿拥抱。"
+    },
+    {
+      "source": "main",
+      "start": 1.8,
+      "end": 13.5,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "两年前柏林揭幕战，塞伦多洛两盘赢了鲁德。那是鲁德在拉沃尔杯单打，唯一的一场输球。今晚伦敦，开场的还是他们俩。",
+      "_why": "② 落点：这一场是 2024 柏林揭幕战的重演（两源见 _claims）。画面是第一盘 1-0 塞伦多洛发球的平分局（记分条 `RUUD 1 / CERUNDOLO •0 AD`，2.5~8.5s 底线宽景），9.18 之后是塞伦多洛保发走回的近景，12.5s 换到鲁德身后的机位。没有指认谁。",
+      "crosses_cut": "9.18 —— 这一分打完，塞伦多洛保发后的近景（解说 8.80「cleans up nicely after the approach shot」），同一局收尾。"
+    },
+    {
+      "source": "main",
+      "start": 13.7,
+      "end": 22.38,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "北京时间九月二十五号晚上八点多，拉沃尔杯伦敦站首日。这一轮每赢一场，记一分。",
+      "_why": "③ 坐标。画面是第一盘 2-2 鲁德发球 40-15（记分条 12.5~22.5s `MATCH 1 / RUUD •2 40 / CERUNDOLO 2 15`），镜头 13.58–22.59 之内，收在 22.59 那一刀前。开球时刻见 _opening_time_source（20:20，说「晚上八点多」）。每场一分：首日一分、次日两分、末日三分，见 human_context.facts。"
+    },
+    {
+      "source": "main",
+      "start": 22.7,
+      "end": 50.2,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "第一盘两人十二个发球局全部保住，一个破发点都没出现，六比六进抢七。抢七第一分是鲁德发球，一个很长的底线相持。塞伦多洛呢，就站在中路，把他左右调动，最后一记正手重炮打穿，先拿一分。",
+      "_why": "第一盘抢七第一分：记分条 24.5~50.5s `7 POINT TIEBREAK / RUUD •6 / CERUNDOLO 6`。frame-grab `ruud-cer-tb1` 每秒一帧逐格看过：鲁德（蓝，近端）在底线从左跑到右（29s、31s 在左，34~35s 在右，38~43s 又回到左），塞伦多洛（红，远端）一直在中路附近；22.59 一刀之后 23s 是塞伦多洛的近景，24s 起回到宽景一个回合打到 49s。解说 50.96「Cerundolo unleashes a cannonball of a forehand to grab the opening point and the advantage」（自动字幕把 Cerundolo 转成 Surrender）。df_mh_1 抢七第一分 `0:1`。十二个发球局全保见 _claims。",
+      "crosses_cut": "22.59 —— 2-2 那一局收在切点前，切点之后 23s 塞伦多洛近景接 24s 起抢七第一分的宽景，同一段落。",
+      "point_end_ok": "段尾 50.2 收在 50.32 那一刀前：这一分已经打完（下一镜头 50.5s 是塞伦多洛握拳走回、记分条翻成 `6 0 / •6 1`）。"
+    },
+    {
+      "source": "main",
+      "start": 96.4,
+      "end": 107.8,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "这个抢七，鲁德一次都没领先过。六比四，塞伦多洛发球拿到第二个盘点，一记漂亮的二发拿下，七比四。",
+      "_why": "96.33 之后：98.5s 塞伦多洛近景（记分条 `2 SET POINTS / RUUD 6 4 / CERUNDOLO •6 6`），100.5~102.5s 他在近端发球，104.5~106.5s 近景握拍走回。解说 103.92「What a second serve. And what an opening set between these two」。df_mh_1 抢七 3:6（HM 盘点）→ 4:6 → 4:7，所以 6-3 那个盘点鲁德救了，第二个兑现。「鲁德一次都没领先过」：df_mh_1 抢七逐分 0-1, 0-2, 1-2, 2-2, 2-3, 2-4, 2-5, 3-5, 3-6, 4-6, 4-7——只在 2-2 追平过一次，从没领先。",
+      "crosses_cut": "99.7 / 104.37 —— 盘点那一分：发球前的近景 → 宽景那一分 → 拿下之后的近景，同一分。"
+    },
+    {
+      "source": "main",
+      "start": 126.0,
+      "end": 136.9,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "第二盘四比四，鲁德拿到全场唯一一次破发。五比四他发球胜盘，第三个盘点，他把对手拉出了场外，六比四。",
+      "_why": "记分条 126~133s `SET POINT #3 / RUUD •6⁴ 5 40 / CERUNDOLO 7⁷ 4 30`，鲁德发球（远端）。frame-grab `ruud-cer-sp` 每 0.5 秒一帧：128~128.5s 塞伦多洛（红，近端）在底线，129.5s 被拉到边线外扑着救球，130.5s 回到中间，130.83 一刀之后是鲁德近景、133s 队长诺阿鼓掌、134.5s 记分条 `6⁴ 6 / 7⁷ 4`。4-4 破发、5-4 三个盘点见 _hit_data（df_mh_1 `40:0 |B2|, 40:15 |B2|, 40:30 |B2|`）。集锦没播 4-4 那一局，旁白一句带过。",
+      "crosses_cut": "130.83 / 133.07 / 134.77 —— 第三个盘点那一分 → 鲁德近景 → 诺阿鼓掌 → 136.5s 记分条换成 `MATCH TIEBREAK`，同一段收盘。"
+    },
+    {
+      "source": "main",
+      "start": 137.3,
+      "end": 146.9,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "决胜盘按拉沃尔杯的规矩，打一个抢十。塞伦多洛又走在前面：一比三，三比五，六比七。",
+      "_why": "137.2 之后鲁德坐在椅子上、队长诺阿蹲在身边说话（138.5~146.5s）。抢十逐分见 _claims（df_mh_1 Set 3）。"
+    },
+    {
+      "source": "main",
+      "start": 147.0,
+      "end": 159.45,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "直到八比七，鲁德才第一次领先，马上又被追平。九比八，赛点。他在底线把塞伦多洛左右调动——",
+      "_why": "记分条 147~159s `MATCH POINT / RUUD •6⁴ 6 9 / CERUNDOLO 7⁷ 4 8`，鲁德发球（远端）。frame-grab `ruud-cer-mp` 每 0.5 秒一帧：147~149s 鲁德近景，149.5s 起宽景，塞伦多洛（红，近端）151.5s 在左、152~152.5s 扑到右、153.5~155s 又回左、156~158.5s 左右来回，鲁德一直在远端底线中间。159.53 一刀之后是欧洲队替补席跳起来。这一分的最后一拍集锦没给清楚，所以旁白停在「左右调动」，结局交给下一段。",
+      "crosses_cut": "149.75 —— 发球前的近景接这一分的宽景。",
+      "point_end_ok": "段尾 159.45 在 159.53 那一刀前：这一分已经落地（下一镜头就是欧洲队替补席庆祝），比赛结束。"
+    },
+    {
+      "source": "main",
+      "start": 159.6,
+      "end": 170.9,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "十比八。欧洲队替补席跳了起来。赛后鲁德说，要谢谢替补席：他们一路推着他，是他们把他留在了比赛里。",
+      "_why": "和冷开场同一段画面，这次按时间顺序重放、配旁白：160.5s 欧洲队替补席跳起来、162.5s 记分条 `6 10 / 4 8`、164.5~166.5s 鲁德近景、168.5~170.5s 网前拥抱。鲁德原话出自拉沃尔杯官网赛报《Ruud provides early Team Europe lead in Cerundolo rematch》（2026-09-25T16:08）：「I have to thank my team and my bench … They pushed me all the way. They kept me in it, really. It was tough to lose that first set. Europe can build on this.」——旁白是转述，压在替补席跳起来的那几格上。",
+      "crosses_cut": "164.16 / 167.6 —— 同第 1 段。",
+      "point_end_ok": "比赛已经结束。"
+    },
+    {
+      "source": "main",
+      "start": 180.0,
+      "end": 192.9,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "欧洲队先拿一分。两年前在柏林输给他的那一场，今晚在伦敦扳了回来。明天每场记两分。这一次，欧洲队能把奖杯拿回来吗？",
+      "_why": "180.0 起：180.5s 裁判椅旁、182.5~186.5s 两位队长诺阿和阿加西拥抱，188.5~190.5s 鲁德和诺阿抱在一起、笑着说话，192.5s 他和队友击掌。193.03 起是片尾板，收在 192.9。「明天每场两分」：拉沃尔杯首日一分、次日两分、末日三分（laver-cup-history-2026 已核过的赛制＋lavercup.com「13 points needed for victory」）。「把奖杯拿回来」：2025 旧金山世界队 15-9 赢了（lavercup.com 首日对阵稿「seek revenge for a 15-9 defeat last year」）。",
+      "crosses_cut": "193.03 之前的几刀（裁判椅 → 两位队长 → 鲁德和诺阿）都是赛后同一段，不跨进片尾板。"
+    }
+  ],
+  "_editing_why": "源片 196.09 秒：比赛画面到 159.5（赛点），159.6~192.9 是赛后（替补席、握手、两位队长、鲁德和诺阿），193.03 起片尾板；**没有场上采访**。按「开场三格：画面爆点 → 落点 → 坐标」排：第 1 段冷开场（赛点之后，解说原声＋双语字幕），第 2 段落点，第 3 段坐标，之后按时间顺序：第一盘抢七第一分（长回合）、第一盘盘点、第二盘第三个盘点、抢十、赛点、重放庆祝、队长拥抱。认人：鲁德蓝色 Team Europe 球衣＋白发带，塞伦多洛红色 adidas＋白帽（近景）。集锦跳过的局（第二盘 4-4 破发、抢十前 16 分）只在旁白里交代，不指认画面。没用的：50.4~96.3（抢七 0-1 到 2-5 那几分和世界队替补席）、108~125（第一盘结束后的替补席和宽版板）。",
+  "mixed_fps": {
+    "main": "单源，29.97fps，不存在混帧率问题。"
+  },
+  "_voice_why": "沿用这条线的默认：云见（`zh-CN-YunjianNeural`）＋6%，不设 `style`。",
+  "_narration_why": "本地 edge-tts（zh-CN-YunjianNeural +6%）`--check-narration` 真跑过：10 段里 9 段有旁白，全部装得下；按报告改了四处——第 5 段超 0.26s（删「第一盘是他的」）、第 4 段「塞伦多洛站」和第 6 段「洛拉」「洛被」骑在人名边界上（改成「塞伦多洛呢，就站在中路」「他把对手拉出了场外」）、第 2/3 段余量 +0.11 / −0.01（各删几个字）。第 4 段 9.7s 没旁白是抢七第一分那个长回合的现场声，故意留着。"
+}
