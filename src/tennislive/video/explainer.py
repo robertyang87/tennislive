@@ -11696,9 +11696,20 @@ def speakable(text: str) -> str:
     会分叉）。上面每一行都是 edge-tts 量的；Azure 那头**没有复现过**，所以这条
     修法的依据是「让年份可被识别」这件事本身，不是「我听见 Azure 读错了什么」。
     真正的闭环是下一次 render 出来听那一句。
+
+    ### 柏林：柏 是 bó，不是 bǎi
+
+    账号所有者 2026-09-25 听完 `ruud-cerundolo-laver-cup-2026`：「**柏林读 bo**」。
+    「柏」是多音字（bǎi 柏树 / bó 柏林 / bò 黄柏），合成器在「两年前柏林揭幕战」里
+    读成了 bǎi。地名「柏林」只有 bó lín 一个读法，而这条线讲拉沃尔杯、戴维斯杯、
+    WTA500 柏林站都会提它，所以和「硬地」一样**全局**换，不靠每条片子改文案。
+    照 挑→选 / 硬地→硬帝 那套：喂给合成器的是「**伯林**」（伯只读 bó），
+    屏幕上仍然是「柏林」；**两边字数一样**，字幕时间轴照旧成立。
+    ⚠️ 只换「柏林」两个字，不碰单独的「柏」——松柏、柏树那儿它就该读 bǎi。
     """
     text = re.sub(r"挑(?![战衅拨逗剔眉])", "选", readable(text))
-    return text.replace("硬地", "硬帝").replace("〇", "零")
+    return (text.replace("硬地", "硬帝").replace("〇", "零")
+            .replace("柏林", "伯林"))
 
 
 def token_spans(text: str, tokens: Sequence[str]) -> list[tuple[int, int, str]]:

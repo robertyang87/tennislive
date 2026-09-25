@@ -1,0 +1,68 @@
+{
+  "scoreboard_qc_sha256": "0865c9191e8e9936dfcc0190cf932316734be65e375337d4d064a6748f2a1849",
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 3.827,
+  "layout": "full",
+  "segments_seconds": 127.73,
+  "topbar": {
+    "line1": "2026 拉沃尔杯 首日",
+    "line2": "鲁德 6-7(4) 6-4 10-8 塞伦多洛",
+    "start": 1.2,
+    "end": 128.93
+  },
+  "film_seconds": 132.799,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 11.328,
+    "2": 7.8,
+    "3": 17.832,
+    "4": 9.792,
+    "5": 9.408,
+    "6": 9.12,
+    "7": 9.336,
+    "8": 9.96,
+    "9": 11.832
+  },
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "ruud-cerundolo-laver-cup-2026",
+    "received_at": "2026-09-25T16:11:16Z",
+    "artifact_ready_at": "2026-09-25T16:16:44Z",
+    "elapsed_seconds": 328.594,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "9204aae1bf8e02b9575fbd3fe62ec7ecd97fe4356cda1964b2415adf078fc17b",
+    "spec_sha256": "be94e1af35e10947e17f64a2c18aad72ad67af1f1addeaa576ba98953be53db5",
+    "run_id": "36159028957",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-09-25T16:13:36Z",
+        "run_id": "36159028957"
+      }
+    ],
+    "render_seconds": 188.594,
+    "pre_render_seconds": 140.0
+  },
+  "film_sha256": "9204aae1bf8e02b9575fbd3fe62ec7ecd97fe4356cda1964b2415adf078fc17b",
+  "film_bytes": 95757143,
+  "qc_attestation_sha256": "bf0a4f6e5eae1fd2bda3e9800a9e4d7f34e9c8194e281688542ec8d27d922706",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-09-25T16:13:36Z",
+      "run_id": "36159028957"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-25T16:16:45Z",
+      "run_id": "36159028957"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-ruud-cerundolo-laver-cup-2026/ruud-cerundolo-laver-cup-2026.mp4",
+  "video_bytes": 95757143
+}

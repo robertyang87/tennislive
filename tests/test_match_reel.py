@@ -17526,3 +17526,15 @@ def test_竖屏源一律铺满画布不留模糊垫底(tmp_path):
 
     with pytest.raises(reel.ReelError, match="fill_y"):
         reel._seg_fill_y({"fill_y": 1.5}, 0)
+
+
+def test_柏林喂给合成器的是伯林_屏幕字数不变():
+    """账号所有者 2026-09-25：「柏林读 bo」——合成器把「柏林」的柏读成了 bǎi。
+    speakable 换成只有 bó 一个读音的「伯」，字数 1:1（字幕时间轴按字位对齐），
+    单独的「柏」（松柏）不许被一起换掉。"""
+    reel = _reel()
+    raw = "两年前柏林揭幕战，松柏常青。"
+    out = reel.speakable(raw)
+    assert "柏林" not in out and "伯林" in out
+    assert "松柏" in out, "单独的柏（松柏）不是地名，不许换"
+    assert len(out) == len(raw)
