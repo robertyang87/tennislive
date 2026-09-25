@@ -1,0 +1,68 @@
+{
+  "scoreboard_qc_sha256": "3d441a3434391e153934f1b64f498e09fe8b7344d6174fa50747ba24079ebd38",
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 3.827,
+  "layout": "full",
+  "segments_seconds": 113.5,
+  "topbar": {
+    "line1": "2026 拉沃尔杯 首日",
+    "line2": "中岛布兰登 6-1 3-6 10-7 门西克",
+    "start": 1.2,
+    "end": 114.7
+  },
+  "film_seconds": 118.552,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 6.576,
+    "2": 10.104,
+    "3": 6.552,
+    "4": 9.432,
+    "5": 4.944,
+    "6": 6.984,
+    "7": 11.64,
+    "8": 8.136,
+    "9": 14.184
+  },
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "mensik-nakashima-laver-cup-2026",
+    "received_at": "2026-09-25T18:02:56Z",
+    "artifact_ready_at": "2026-09-25T18:08:54Z",
+    "elapsed_seconds": 358.553,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "84815678bd813501383a5f6ed8131155e9b65108c3ccf59e9e976b93558f86ce",
+    "spec_sha256": "0e17b014e4cfad40283d880bd1e20d4777b3967e6dcad8324b96bb3d9b18d053",
+    "run_id": "36170929399",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-09-25T18:05:32Z",
+        "run_id": "36170929399"
+      }
+    ],
+    "render_seconds": 202.553,
+    "pre_render_seconds": 156.0
+  },
+  "film_sha256": "84815678bd813501383a5f6ed8131155e9b65108c3ccf59e9e976b93558f86ce",
+  "film_bytes": 77428359,
+  "qc_attestation_sha256": "2d0a8bcdbd4723d71c1e6801e7194935aac4c8c7fb0d3116d86d3a346e558d1a",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-09-25T18:05:32Z",
+      "run_id": "36170929399"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-25T18:08:55Z",
+      "run_id": "36170929399"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-mensik-nakashima-laver-cup-2026/mensik-nakashima-laver-cup-2026.mp4",
+  "video_bytes": 77428359
+}

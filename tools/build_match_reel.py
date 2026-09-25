@@ -3394,6 +3394,15 @@ def enforce_spec_wording(spec: dict, spec_path: Path) -> None:
     decider = decider_set_problem(spec, [xhs_text] if xhs_text else [])
     if decider:
         raise ReelError(decider)
+    # ⭐ 正文第一句不许把标题再说一遍（账号所有者 2026-09-25）。手写 spec 硬拦；
+    # 自动转正的只报不拦（那一头没人改文案，做硬会把自动链卡成「今天没有候选」）。
+    from spec_wording import title_echo_problem  # noqa: PLC0415
+    echo = title_echo_problem(spec, spec_path.stem, xhs_text)
+    if echo:
+        if (spec.get("_production") or {}).get("status") == "ready_for_render":
+            print(f"    [文案] ⚠️ {echo}")
+        else:
+            raise ReelError(echo)
 
 
 def _normalize_stat_card_segments(spec: dict) -> None:
