@@ -83,3 +83,18 @@ def test_中位数压掉一两帧的毛刺_黄条要连着出现才认():
     assert [e for e, _ in a.stabilize(frames)] == [330] * 5
     lone = [(330, None), (330, (330, 54, 540, H)), (330, None)]
     assert all(t is None for _, t in a.stabilize(lone)), "只闪一帧的黄条不认"
+
+
+def test_半透明小分格压在蓝场上也算板():
+    """杭州蓝场：小分格 (36,62,86)，蓝通道被球场抬过 80（zhang-wong 两趟 render 整列没贴）。"""
+    band = np.zeros((H, W, 3), np.uint8)
+    band[:] = (100, 165, 220)                       # 杭州球场蓝
+    band[:, :330] = NAVY
+    band[:, 270:320] = BLUE                         # 盘分格
+    band[:, 320:372] = (36, 62, 86)                 # 小分格（半透明，透着蓝场）
+    band[40:70, 330:360] = (240, 255, 250)          # 小分里的白字
+    band[20:30, 20:120] = (240, 255, 250)
+    assert a.board_edge(band) == 372
+    # 球场本身不许被这一档扫进来
+    assert not a.board_mask(np.full((4, 4, 3), (100, 165, 220), np.uint8)).any()
+    assert not a.board_mask(np.full((4, 4, 3), (123, 167, 128), np.uint8)).any()

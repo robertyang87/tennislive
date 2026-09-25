@@ -80,7 +80,10 @@ def main(argv: list[str] | None = None) -> int:
     if args.dir:
         lo, hi = args.range if args.range else (0, 10**9)
         frames += [p for p in sorted(args.dir.glob("frame_*s.jpg"))
-                   if lo <= int(p.stem[6:-1]) <= hi]
+                   # 文件名是 `grab_frames.frame_stamp` 定的：整秒 `frame_0364s`，
+                   # 亚秒 `frame_00448.3s`——按 int 解后者当场 ValueError，
+                   # 而 `--every 0.2` 抽封面候选正是最常用到它的时候
+                   if lo <= float(p.stem[6:-1]) <= hi]
     if not frames:
         raise SystemExit("一张候选帧都没给——空结果先自证是真空：--dir 写对了吗？")
 
