@@ -109,3 +109,62 @@ def test_图标的步进就是矢量里最远的那个点():
         xs = nums[0::2]                     # 只有 m / l，数字严格是 x y 交替
         assert max(xs) == pytest.approx(icon_advance(name, h), abs=0.2)
         assert max(xs) > h * ASPECT[name], "步进里要带着和文字之间的空隙"
+
+
+def test_全局_每一条顶栏都带着自己栏目的图标():
+    """账号所有者 2026-09-25：「推广到全局使用」。
+
+    扫仓库里**每一条**正式 spec，不是挑一条看：
+    - 赛场之上：凡是有 `topbar` 的，第一行都是透视球场 ＋ 赛事行，而且装得下
+    - 赛后开麦：凡是走两行版式的（场上采访、发布会、颁奖、告别……），第一段
+      都是麦克风，而且整行装得下（麦克风占了宽度，顶栏宽度闸要把它算进去）
+
+    ⚠️ **唯一不带图标的是 `subject_primary`（人物主标题那一种，名人堂致辞 /
+    赛前出场秀）**：那一行是**故意只留一段**的——两次正式 runner artifact
+    证明「装饰段 ＋ 中途 `\\r` ＋ 正文段」在生产上是 0 像素（见 `header_runs`
+    那段注释），这个变量还没隔离出来之前，不往那一行里加第二段。表自己钉着，
+    多出第三种没图标的版式就当场红。
+    """
+    import build_interview_clip as clip
+    import build_match_reel as reel
+    from PIL import ImageFont
+
+    icon_less = []
+    n_interview = 0
+    for f in sorted((ROOT / "specs/interviews").glob("*.json")):
+        if f.name.endswith(".draft.json"):
+            continue
+        spec = json.loads(f.read_text(encoding="utf-8"))
+        try:
+            clip.header_lines(spec)          # 宽度闸：含麦克风那一截
+            runs = clip.header_runs(spec)[0]
+        except SystemExit as exc:
+            if "缺 `interview_kind`" in str(exc):
+                continue                      # 老片子缺字段，和图标无关
+            raise
+        n_interview += 1
+        if runs[0][1] != "icon":
+            icon_less.append(clip.topbar_layout(spec))
+        else:
+            assert runs[0][0] == MIC, f"{f.name} 顶栏图标不是麦克风"
+    assert n_interview >= 90, f"只扫到 {n_interview} 条采访 spec，扫描写空了？"
+    assert set(icon_less) <= {"subject_primary"}, (
+        f"这几种版式的顶栏没有麦克风：{sorted(set(icon_less))}")
+
+    head = ImageFont.truetype(str(ROOT / "assets/fonts/SmileySans-Oblique.ttf"),
+                              reel.TOPBAR_HEAD_SIZE)
+    avail = reel.VIDEO_W - 2 * reel.TOPBAR_MARGIN_H
+    n_reel = 0
+    for f in sorted((ROOT / "specs/reels").glob("*.json")):
+        spec = json.loads(f.read_text(encoding="utf-8"))
+        if not spec.get("topbar"):
+            continue
+        n_reel += 1
+        line1 = spec["topbar"]["line1"]
+        head_text = reel.topbar_head_with_icon(line1)
+        assert head_text.endswith(line1) and r"\p1" in head_text, f"{f.name} 顶栏没有球场"
+        # 得意黑 HEAD 带 1px 字距；加上球场那一截的步进，整行要装得下
+        w = (head.getlength(line1) + len(line1) * 1
+             + icon_advance(COURT, reel.TOPBAR_ICON_H))
+        assert w <= avail, f"{f.name} 顶栏第一行 {w:.0f}px 超过 {avail}px"
+    assert n_reel >= 200, f"只扫到 {n_reel} 条带顶栏的赛场之上 spec，扫描写空了？"
