@@ -86,11 +86,11 @@
     "topic": "新加坡WTA500 · 女单1/4决赛",
     "_heat_why": "① 档：中国球员单打；而且是账号所有者本人点的题。轮次已经到 1/4决赛。",
     "portrait": {
-      "image": "assets/reel/wang-garland-singapore-2026-r2.jpg",
+      "image": "assets/reel/wang-singapore-2026-r1.jpg",
       "focus": 0.52,
-      "focus_y": 0.4,
+      "focus_y": 0.35,
       "zoom": 1,
-      "_photo_why": "WTA 官方 photoresources 实拍 `Wang-Xinyu-R2.jpg`（路径日期 2026/09/24，4000×2667），**是她这一站第二轮（对葛蓝乔安娜）的图，不是这一场**——同站 `wang-garland-singapore-2026-r2` 已经核过、在用。⚠️ 这一场本身查过还没有官方实拍：`fetch_wta_cover_photo.py --match LS006` 两次（北京 18:05、18:20）都是「比赛页上还没有这一场的赛后稿」，`find_cover_photo.py --player Wang --event Singapore` 的 WTA photo-resources 和 AP 两档都是「没有对得上的」。所以按 `oliynykova-chwalinska` 的先例用**同一站、同一块场地、前一天**的官方实拍，而不是抽帧；她这一场同样是酒红下装、白色遮阳帽。正手击球中、睁眼、球在画面内。"
+      "_photo_why": "账号所有者 2026-09-25 看完第一版说「换一张封面吧」。WTA 官方 photoresources 实拍 `Wang-Xinyu-R1.jpg`，`?width=4000` 取到 4000×2669，铺 1080×1440 是缩小不是放大：https://photoresources.wtatennis.com/photo-resources/2026/09/22/95b141ef-b215-4f5c-ad76-16251ccd0ca7/Wang-Xinyu-R1.jpg ——WTA 图库条目 4579899 标题 `Wang Xinyu, Singapore 2026`，路径日期 9/22、文件名 `R1`，是她这一站第一轮（6-1 6-2 胜维基奇）的图，**不是这一场**。⚠️ 这一场本身到北京 19:10 仍然没有她的官方实拍：WTA 图库 `content/wta/photo` 按标题扫，9/25 只有 `Prozorova-QF.jpg`（赢家）和集锦缩略图 `D4vkTrm6.jpg`（1280×720 转播截图）；`fetch_wta_cover_photo --match LS006` 四次都是「还没有赛后稿」；AP 没有。所以仍按 `oliynykova-chwalinska` 的先例用同一站、同一块场地的官方实拍。第一版用的 `Wang-Xinyu-R2.jpg` 是咬牙的表情；这张正手击球中、睁眼、脸是正面；`focus 0.52` 本地渲过三版（0.6 / 0.44 / 0.52）：脸完整落在钩子带上方、左边留着球拍。"
     },
     "scoreboard": {
       "court": "OCBC Arena",
