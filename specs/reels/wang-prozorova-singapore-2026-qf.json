@@ -1,0 +1,380 @@
+{
+  "slug": "wang-prozorova-singapore-2026-qf",
+  "source_url": "https://www.youtube.com/watch?v=jAsCiJVZjiw",
+  "_column": "赛场之上",
+  "tts_backend": "edge",
+  "_tts_backend_why": "旁白是平直的复盘叙述，一段 `style` 都没写；同一站 `chwalinska-mertens-singapore-2026-qf`、`prozorova-eala-singapore-2026-r2` 也是 edge。",
+  "_source": "账号所有者点名要做这一场（「盯着王欣瑜跟那个俄罗斯的选手比赛的结果……立马出王欣瑜赛场之上的视频」）。源片是 WTA 官方 YouTube `jAsCiJVZjiw`（标题 `Wang Xinyu vs. Tatiana Prozorova | 2026 Singapore Quarterfinal | WTA Match Highlights`，北京 18:10 上传），probe 在 `output/2026-09-25/reel/wang-prozorova-singapore-2026-qf/`：1920×1080 / 25fps、308.6s，带 `--scorebox 90,870,550,980`，翻牌是真量的。四要素自证：记分条逐格读过（`XIN. WANG / T. PROZOROVA`），58.5s、180.5s 的盘间图形烧着 `QUARTER FINAL`，挡板 `SINGAPORE`、`WTA 500`、`THE KALLANG`。比赛画面到 266s，266~298 是普罗佐罗娃倒在场上、网前握手、向看台致意，298.5s 起静音片尾；**没有场上采访**。",
+  "scorebox": [
+    90,
+    870,
+    550,
+    980
+  ],
+  "_scorebox_why": "和同站 `prozorova-eala`、`chwalinska-mertens` 同一块转播板，probe 就是按这个框量的翻牌。右缘按最宽的一档：第三盘三列盘分加一列分数（`6 5 4 / 3 7 5 Ad`）。",
+  "_match": {
+    "id": "2026:singapore:womens-quarterfinal:xinyu-wang-tatiana-prozorova",
+    "event": "2026 WTA500 新加坡",
+    "event_search": "Singapore",
+    "round": "Women's Singles Quarterfinal",
+    "year": 2026,
+    "status": "result_verified",
+    "winner": "普罗佐罗娃",
+    "loser": "王欣瑜",
+    "participants": [
+      "王欣瑜",
+      "普罗佐罗娃"
+    ],
+    "winner_en": "Tatiana Prozorova",
+    "loser_en": "Xinyu Wang",
+    "set_scores_home_away": [
+      [
+        6,
+        3
+      ],
+      [
+        5,
+        7
+      ],
+      [
+        4,
+        6
+      ]
+    ],
+    "tiebreaks_home_away": [
+      null,
+      null,
+      null
+    ],
+    "_source": "三源一致：WTA 官方 tournaments/1152/2026/matches 的 MatchID=LS006，`ResultString` = `T. Prozorova d X. Wang 3-6,7-5,6-4`、`RoundID=Q`（1/4决赛）、`MatchTimeTotal=03:01:24`；flashscore MVc0A1e3 逐局 6-3 / 5-7 / 4-6（home＝王欣瑜）；画面自证——源片 266s 起普罗佐罗娃倒地，解说 275.28「Tatiana Prozorova has done it again」。",
+    "source": "flashscore_points",
+    "source_id": "MVc0A1e3",
+    "flashscore_id": "MVc0A1e3",
+    "winner_result": "3-6 7-5 6-4",
+    "loser_result": "6-3 5-7 4-6"
+  },
+  "topbar": {
+    "line1": "2026 WTA500 新加坡站 1/4决赛",
+    "line2": "普罗佐罗娃 3-6 7-5 6-4 王欣瑜"
+  },
+  "_topbar_why": "line1 按 2026-09-24 定的格式，和同站 `chwalinska-mertens-singapore-2026-qf` 同一行写法；WTA 官方 `RoundID=Q`＝1/4决赛。",
+  "cover": {
+    "matchup": [
+      {
+        "name": "王欣瑜",
+        "name_en": "Xinyu Wang",
+        "country": "CHN",
+        "rank": 40
+      },
+      {
+        "name": "普罗佐罗娃",
+        "name_en": "Tatiana Prozorova",
+        "country": "RUS",
+        "rank": 180
+      }
+    ],
+    "_rank_why": "WTA 官方 `players/ranked`（`sources.rankings.fetch_rankings`，`rankedAt=2026-09-21`）：王欣瑜第 40（1195 分）、普罗佐罗娃第 180（428 分）（2026-09-25 查）；和同站 `wang-garland`（40）、`prozorova-eala`（180）登记的一致。",
+    "winner": "普罗佐罗娃",
+    "result": "3-6 7-5 6-4",
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "王欣瑜",
+    "_subject_why": "账号所有者点名做「王欣瑜赛场之上」；她是中国球员（①档）。封面放输的那一方，赛果行照旧印「赢家 比分 输家」，和 `chwalinska-townsend-us-open-2026-r1` 同一个形状。",
+    "hook": "0比4追到5比5\n第3个赛点没救下",
+    "hook_accent": "没救下",
+    "_hook_why": "两行一个落差：第一行是她怎么追的，第二行是怎么结束的；8 字、8 字，没有排名、年龄、国籍，不复述比分。① flashscore 逐局 `df_mh_1_MVc0A1e3`：第二盘 0-4 落后，2-4、3-5、5-5 三次破发追平（源片 112.5s 记分条 `2 5 / BREAK POINT #2`、126.5s `5 5`）。② 最后一局普罗佐罗娃发球 `30:40 |B3|`、`40:A |B3|` 两个赛点被救，第三个兑现；官方统计 `Match points saved 2`，源片 210.5s `MATCH POINT`、242.5s `MATCH POINT #2`、252.5s `MATCH POINT #3`。",
+    "topic": "新加坡WTA500 · 女单1/4决赛",
+    "_heat_why": "① 档：中国球员单打；而且是账号所有者本人点的题。轮次已经到 1/4决赛。",
+    "portrait": {
+      "image": "assets/reel/wang-garland-singapore-2026-r2.jpg",
+      "focus": 0.52,
+      "focus_y": 0.4,
+      "zoom": 1,
+      "_photo_why": "WTA 官方 photoresources 实拍 `Wang-Xinyu-R2.jpg`（路径日期 2026/09/24，4000×2667），**是她这一站第二轮（对葛蓝乔安娜）的图，不是这一场**——同站 `wang-garland-singapore-2026-r2` 已经核过、在用。⚠️ 这一场本身查过还没有官方实拍：`fetch_wta_cover_photo.py --match LS006` 两次（北京 18:05、18:20）都是「比赛页上还没有这一场的赛后稿」，`find_cover_photo.py --player Wang --event Singapore` 的 WTA photo-resources 和 AP 两档都是「没有对得上的」。所以按 `oliynykova-chwalinska` 的先例用**同一站、同一块场地、前一天**的官方实拍，而不是抽帧；她这一场同样是酒红下装、白色遮阳帽。正手击球中、睁眼、球在画面内。"
+    },
+    "scoreboard": {
+      "court": "OCBC Arena",
+      "_court_why": "印场馆不印场地名：WTA 官方 feed 只给 `CourtID`，场馆沿用同站已核的 OCBC Arena（WTA 赛事页与维基 `2026 Singapore Tennis Open` 两源）。",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%20%223%3A01%3A24%22%2C%20%22source%22%3A%20%22WTA%20official%20tournaments/1152/2026/matches%20LS006%20MatchTimeTotal%2003%3A01%3A24%22%2C%20%22cross_check%22%3A%20%22flashscore%20df_st_1%20MVc0A1e3%200%3A41%2B1%3A06%2B1%3A04%22%7D",
+        "field": "duration"
+      },
+      "_duration_why": "WTA 官方 `MatchTimeTotal=03:01:24`；flashscore 分盘 0:41＋1:06＋1:04＝2:51，差的是盘间休息，同向。"
+    }
+  },
+  "_opening_time_source": {
+    "url": "https://global.flashscore.ninja/2/x/feed/f_2_0_0_en_1",
+    "match_id": "MVc0A1e3",
+    "field": "AD",
+    "value": 1790319300,
+    "beijing": "2026-09-25T13:35+08:00",
+    "spoken_precision": "approximate-hour",
+    "_why": "开球时刻只说个大概：flashscore `AD=1790319300` → 05:35Z＝北京 13:35；打了 3 小时 01 分，WTA 官方在北京 17:58 前后把状态改成 F，自洽。旁白说「下午一点半」。新加坡与北京同为 +08:00。"
+  },
+  "stats": {
+    "a": {
+      "aces": 1,
+      "df": 5,
+      "first_in": 79,
+      "first_won": 49,
+      "second_total": 36,
+      "second_won": 15,
+      "bp_conv": 5,
+      "bp_chances": 13,
+      "pts_won": 109,
+      "pts_total": 222,
+      "first_total": 115,
+      "headshot": "assets/players/headshots/wta-326376.jpg",
+      "winners": 31,
+      "ue": 58
+    },
+    "b": {
+      "aces": 2,
+      "df": 4,
+      "first_in": 74,
+      "first_won": 45,
+      "second_total": 31,
+      "second_won": 16,
+      "bp_conv": 5,
+      "bp_chances": 15,
+      "pts_won": 113,
+      "pts_total": 222,
+      "first_total": 105,
+      "headshot": "assets/players/headshots/wta-330723.jpg",
+      "winners": 37,
+      "ue": 46
+    },
+    "_source": "`match_stat_hooks.py MVc0A1e3 --stats-block`（flashscore `df_st_1`），a＝王欣瑜（home，也是 cover.matchup[0]），b＝普罗佐罗娃。制胜分与非受迫失误走 TNNS（run 36121471072，id=74753608，`hasExtendedStats: True`）：制胜分 31:37、非受迫失误 58:46（顺序 `['Wang','Prozorova']`），分盘 11/9/11 : 13/12/12、11/24/23 : 13/21/12，日志自证分盘合计＝全场。头像沿用同站已认过的两张。"
+  },
+  "_hit_data": "`match_feed.py show MVc0A1e3` 逐局：第一盘 5-3 接发 `40:15 |B1||B2|`、`40:30 |B1||B2|`，第二个盘点兑现（源片 24.5s `SET POINT`、32.5s `SET POINT #2`，解说 40.64「another break which seals the opening set」）；第二盘 0-4 → 1-4 保发（救下 4 个破发点）→ 2-4 破 → 2-5 被破 → 3-5 破 → 4-5 保 → 5-5 破（救下 1 个盘点）→ 5-6 被破 → 5-7；第三盘 2-2 她发球 `0:40` 起救下 5 个破发点保住，3-4 被破；最后一局普罗佐罗娃发球，王欣瑜 3 个破发点全没兑现，救下 2 个赛点，第 3 个没救下。官方统计 `Match points saved 2`、破发 5/13 对 5/15。TNNS：决胜盘非受迫失误 23 比 12。转播 286.00「Another comeback victory to book her place in her first ever semifinal at tour level」。",
+  "_claims": {},
+  "editorial": {
+    "mode": "match_review",
+    "hook": [
+      "0比4追到5比5",
+      "第3个赛点没救下"
+    ],
+    "question": "先赢一盘、第二盘又从零比四追平，王欣瑜是怎么在决胜盘最后一局，被普罗佐罗娃翻过去的？",
+    "thesis": "第一盘王欣瑜两次破发、第二个盘点拿下；第二盘零比四落后三次破发追到五比五，却在五比五自己的发球局被破；决胜盘二比二她从零比四十救下五个破发点，三比四还是被破；最后一局她救下两个赛点，三个破发点一个没兑现，第三个赛点输掉。三小时零一分。",
+    "beats": [
+      "冷开场：普罗佐罗娃倒在场上。",
+      "落点：三个赛点救下两个，第三个没救下；坐标。",
+      "第一盘 5-3 接发，第二个盘点兑现，6-3。",
+      "第二盘 0-4 落后，三次破发追到 5-5，5-5 发球被破，5-7。",
+      "决胜盘 2-2 从 0-40 救下 5 个破发点，3-4 被破。",
+      "最后一局：救下两个赛点，三个破发点没兑现，第三个赛点输掉。"
+    ],
+    "chapters": [
+      "第二个盘点",
+      "零比四之后",
+      "五个破发点",
+      "第三个赛点"
+    ],
+    "human_context": {
+      "angle": "王欣瑜这一站连胜维基奇、葛蓝乔安娜打进八强，今天先赢一盘、两次追平，最后一局离五比五只差一个破发点。普罗佐罗娃这一周三场都是先丢一盘再翻回来，这是她生涯第一次打进巡回赛半决赛。",
+      "facts": [
+        "WTA 官方 LS006：T. Prozorova d X. Wang 3-6,7-5,6-4，RoundID=Q，MatchTimeTotal 03:01:24。",
+        "WTA 官方排名（2026-09-21 版）：王欣瑜第 40、普罗佐罗娃第 180。",
+        "flashscore MVc0A1e3 逐局与统计（见 `_hit_data`）。",
+        "TNNS：制胜分 31 比 37、非受迫失误 58 比 46，决胜盘 23 比 12。",
+        "转播：普罗佐罗娃生涯第一次打进巡回赛半决赛（286.00s）；她这一站首轮、第二轮都是先丢一盘再翻盘（同站 `prozorova-eala-singapore-2026-r2` 引的 WTA 官网赛后稿）。"
+      ],
+      "sources": [
+        "https://api.wtatennis.com/tennis/tournaments/1152/2026/matches",
+        "https://global.flashscore.ninja/2/x/feed/df_mh_1_MVc0A1e3",
+        "https://global.flashscore.ninja/2/x/feed/df_st_1_MVc0A1e3",
+        "https://tnnslive.com/match/74753608",
+        "https://www.wtatennis.com/news/4581250/prozorova-stuns-eala-in-marathon-singapore-comeback"
+      ]
+    },
+    "narration": [
+      "三个赛点救下两个，第三个没救下。",
+      "第一盘第二个盘点拿下，六比三。",
+      "零比四追到五比五，五比五又被破。",
+      "最后一局救下两个赛点，第三个没救下。"
+    ]
+  },
+  "segments": [
+    {
+      "start": 265.24,
+      "end": 276.96,
+      "cx": 0.5,
+      "score_inset": false,
+      "_score_inset_why": "赛点已经落地：265.24 起是普罗佐罗娃扑倒、躺在场上的中景，转播已经把比分板撤了（缩略图墙 268.5~276.5 没有板）。",
+      "narration": "",
+      "_ending_payoff_required": true,
+      "_why": "冷开场：**第三个赛点落地之后，普罗佐罗娃倒在场上**（账号所有者 2026-09-25「视频从赢球后的冷开场……是全局的要求」）。265.24、276.96 都是 probe 的 `scene_cuts`；不配旁白，只留现场声——解说的那句「has done it again」留给正文结尾的原声段，不在这里剧透两遍。",
+      "_payoff_why": "冷开场里有赛点落地后的第一波庆祝，所以 true——正文最后的原声段（265.24→290.76）按时间顺序完整重放这一段。",
+      "crosses_cut": "窗口两端都是转播切点，中间一个镜头：普罗佐罗娃倒地、躺在场上。",
+      "point_end_ok": "比赛已经结束（赛点在 265 秒落地）；之后记分条不再翻牌。"
+    },
+    {
+      "start": 2.04,
+      "end": 24.6,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "三个赛点，王欣瑜救下两个，第三个没救下。北京时间九月二十五日下午一点半，新加坡WTA五百赛四分之一决赛，世界第四十的王欣瑜，对世界第一百八十的普罗佐罗娃。开局她的发球局打到平分，最后一拍收掉，保住了。",
+      "_why": "开场顺序「爆点 → 落点 → 坐标」：先一句落点（最后一局救下两个赛点、第三个没救下，官方统计 `Match points saved 2`），再给坐标。画面是第一盘她的一个发球局：记分条 2.5s `0 40 / 1 30`、10.5s 起 `Ad`，解说 20.16「Finished the point nicely there to hold serve」。",
+      "crosses_cut": "10.16 / 11.96 / 19.52 / 21.08 / 22.56 几处换镜头都在分与分之间（普罗佐罗娃近景、王欣瑜走回、她的近景）。",
+      "point_end_ok": "段尾 24.6 是转播切点，`point_ends` 24.64 的翻牌（盘点那一局）在它之后 0.04 秒。"
+    },
+    {
+      "start": 24.6,
+      "end": 43.16,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "五比三，普罗佐罗娃发球，王欣瑜拿到盘点。第一次，她被左右调动，丢了。第二次，她守在底线，一拍一拍回过去，等到对手先出错。第二次破发，四十一分钟，六比三。",
+      "_why": "记分条 24.5s `SET POINT / 5 40 / 3 15`、32.5s `SET POINT #2 / 5 40 / 3 30`；逐秒帧（frame-grab `output/2026-09-25/frames/wang-prozorova-sg-qf/`）25~30 近端酒红下装的王欣瑜从右到左被调动、第一个盘点丢掉，33~39 她在底线中后场对拉，40 她的近景；解说 40.64「It is another break which seals the opening set」。flashscore 分盘用时 0:41、第一盘 `Break Points Converted 2/4`。⚠️「对手先出错」是按帧里她一直在底线、没有上网抢分推的——TNNS 第一盘普罗佐罗娃非受迫失误 13 个。",
+      "crosses_cut": "31.0 / 32.8 两处是两个盘点之间她的近景；40.24 切她走回的近景，盘点已经落地。",
+      "point_end_ok": "`point_ends` 40.24 是第二个盘点的结果（盘分翻成 6-3）；段尾 43.16 是转播切点，之后 47.52 的翻牌是盘间图形。"
+    },
+    {
+      "start": 60.72,
+      "end": 72.8,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "第二盘一开局，形势就倒了过来：她自己的发球局，普罗佐罗娃拿到第二个破发点，破了。之后对手连拿四局，零比四。",
+      "_why": "记分条 60.5s `BREAK POINT #2 / 6 0 30 / 3 0 40`（王欣瑜发球）；解说 71.52「Oh, what a start to the second set here」。flashscore 第二盘 0-1（`30:40 |B1|` 后被破）、0-2、0-3（再被破）、0-4。",
+      "point_end_ok": "段尾 72.8 是转播切点，也是 `point_ends` 72.8 的翻牌（0-1）；下一次翻牌 73.76 在段尾之后 0.96 秒——那是下一局开局的换分，集锦从这里切进 0-1 普罗佐罗娃发球那一局，本段这一分已经打完（逐帧 71~72 普罗佐罗娃已经走开）。"
+    },
+    {
+      "start": 111.52,
+      "end": 125.52,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "零比四之后，她开始往回追。普罗佐罗娃五比二领先、发球胜盘的那一局，王欣瑜拿到第二个破发点，破了回来，三比五。",
+      "_why": "记分条 112.5s `BREAK POINT #2 / 6 2 40 / 3 5 30`（普罗佐罗娃发球）；解说 123.84「Well, it's a break」。flashscore 第二盘 1-4 保发（救 4 个破发点）、2-4 破、2-5 被破、3-5 破。",
+      "point_end_ok": "段尾 125.52 是转播切点，也是 `point_ends` 125.52 的翻牌。",
+      "crosses_cut": "123.04 切王欣瑜握拳走回的近景：破发点那一分在 122 秒前打完，解说 123.84 才说「it's a break」。"
+    },
+    {
+      "start": 127.48,
+      "end": 150.88,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "接着她保发，四比五。对手第二次发球胜盘，她救下盘点，又破了回来。零比四，追平到五比五。可五比五轮到她自己发球，三十比四十。这一分她被左右调动，最后扑向右边，没够着。这是她这一盘第四次被破。",
+      "_why": "flashscore 第二盘 4-5 保发（`15:0, 30:0, 40:0`）、5-5 破发（`30:40 |B2|` 是普罗佐罗娃的盘点，被救下）、5-6 她发球 `30:40 |B1|` 被破；记分条 126.5s `BREAK POINT / 6 5 30 / 3 5 40`（王欣瑜发球 5-5），解说 147.28「Remarkably, she leads again」。 逐秒帧 127~145：近端酒红下装的王欣瑜发球后在底线左右移动，144~145 被拉到右边扑救，146 切普罗佐罗娃近景。 第二盘她的发球局被破四次：0-1、0-3、2-5、5-6（flashscore 逐局；`Set 2 Break Points Saved 5/9`）。",
+      "crosses_cut": "127.48 起宽景一整分（发球到 145 秒），146.36 切普罗佐罗娃的近景——破发点已经打完。",
+      "point_end_ok": "`point_ends` 147.28 是这一分的结果（5-6）；段尾 150.88 是转播切点，也是翻牌时刻。"
+    },
+    {
+      "start": 150.88,
+      "end": 168.08,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "",
+      "quote": [
+        {
+          "at": 8.8,
+          "text": "And this time she does it.\n这一次，她拿下了"
+        },
+        {
+          "at": 11.28,
+          "text": "We will have a deciding set.\n比赛进入决胜盘"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_quote_why": "转播原句，probe 的 `captions.txt` 159.68「And this time she does it. We will have」、162.16「a deciding set.」。段内 at = 原时刻 − 150.88。",
+      "_why": "记分条 152.5s `SET POINT #2 / 6 5 30 / 3 6 40`（普罗佐罗娃发球 6-5）；第二个盘点兑现，7-5。",
+      "crosses_cut": "153.28 / 159.16 / 162.6 几处：盘点那一分之后是普罗佐罗娃握拳、走回的镜头，原声评的就是这一盘。",
+      "point_end_ok": "第二个盘点在 159 秒前落地（解说 159.68 已说「this time she does it」）；段尾 168.08 是转播切点，之后是盘间镜头。"
+    },
+    {
+      "start": 183.64,
+      "end": 207.28,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "七比五，一盘打平。决胜盘二比二她的发球局，零比四十落后。这一分，她把普罗佐罗娃从左边调到右边，最后一拍逼到右侧场外。她一分一分往回扳，打到三次平分，前后救下五个破发点，把这一局保住了。可到了三比四，她的发球局还是被破了。",
+      "_why": "记分条 184.5s `BREAK POINT / 6 5 2 0 / 3 7 2 40`（王欣瑜发球 2-2）。flashscore 第三盘那一局 `0:15, 0:30, 0:40 |B1|, 15:40 |B1|, 30:40 |B1|, 40:40, 40:A |B1|, 40:40, 40:A |B1|, 40:40, A:40` 后保住——五个破发点、三次平分；3-4 `40:A |B1|` 被破。flashscore 第二盘用时 1:06。 逐秒帧 184~206：这一局近端白绿上衣的是普罗佐罗娃（接发），她从左侧（184~185）被调到右侧（187~188、199~200），205~206 扑到右侧场外——这一分王欣瑜拿下（0-40 → 15-40）。",
+      "crosses_cut": "183.64 起宽景一整分（0-40 那一分），207.28 切走：分打完之后才切。",
+      "point_end_ok": "段尾 207.28 是转播切点；这一分在 206 秒前打完（206.5 缩略图墙球已出界、普罗佐罗娃走开），下一次翻牌 210.08 是集锦跳到 4-5 那一局之后的新比分。"
+    },
+    {
+      "start": 211.84,
+      "end": 225.72,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "四比五，普罗佐罗娃发球胜赛，第一个赛点。王欣瑜先在底线被左右调动，接着一路压到网前，把这一分收掉，救了下来。",
+      "_why": "记分条 210.5s `MATCH POINT / 6 5 4 30 / 3 7 5 40`（普罗佐罗娃发球）；逐秒帧 212~217 近端酒红下装的王欣瑜在底线左右移动，218 往前，219~221 她站到网前右侧收掉这一分；222~225 普罗佐罗娃的近景；解说 222.88「Incredible」。",
+      "crosses_cut": "221.08 / 222.44 两处：这一分在网前打完之后切到普罗佐罗娃的近景。",
+      "point_end_ok": "段尾 225.72 是转播切点；下一次翻牌是 226 起的 `BREAK POINT #2 / Ad`，这一分在 221 秒前已经打完。"
+    },
+    {
+      "start": 225.72,
+      "end": 239.16,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "紧接着她拿到破发点，只差一分，就能追到五比五。这一分两人在底线拉了好几拍，最后她被调到右边场外，没能回过来。",
+      "_why": "记分条 226.5s `BREAK POINT #2 / 6 5 4 Ad / 3 7 5`；逐秒帧 226~233 王欣瑜在底线左中路，234~235 被拉到右侧场外，236 她已在右边；240.5s 记分条回到 `40 / 40`。",
+      "point_end_ok": "`point_ends` 239.28 是这一分的结果（平分），在段尾之后 0.12 秒——0.3 秒以内不算；逐帧 237 已是普罗佐罗娃走回的近景。",
+      "crosses_cut": "237.32 切普罗佐罗娃的近景：这一分在 236 秒前已经打完（236 王欣瑜在右侧场外）。"
+    },
+    {
+      "start": 241.48,
+      "end": 253.72,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "第二个赛点，她站在底线和对手对拉，又救了下来。平分之后她又拿到破发点，这一次也没兑现。",
+      "_why": "记分条 242.5s `MATCH POINT #2 / 3 7 5 Ad`；逐秒帧 243~247 王欣瑜在底线左中路对拉，248~251 她走回底线的中景（第二个赛点救下）。flashscore 最后一局 `40:A |B3|` → `40:40` → `A:40 |B1|` → `40:40` → `40:A |B3|`：第三个破发点没兑现。",
+      "crosses_cut": "247.92 切她走回的中景、252 切普罗佐罗娃近景：分与分之间。",
+      "point_end_ok": "段尾 253.72 是转播切点，也是 `point_ends` 253.76 的翻牌（0.04 秒）。"
+    },
+    {
+      "start": 253.72,
+      "end": 265.24,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "第三个赛点。普罗佐罗娃先压她左边，再一拍拉到右边，王欣瑜跑过去，这一球没能回过来。",
+      "_why": "记分条 254.5s `MATCH POINT #3`；逐秒帧 254~257 王欣瑜在左侧底线，258~263 被拉到右侧，264 她在底线，265 切普罗佐罗娃扑倒。",
+      "point_end_ok": "赛点在 265 秒前落地——265.24 起是普罗佐罗娃倒地的镜头；段尾是转播切点。"
+    },
+    {
+      "start": 265.24,
+      "end": 290.76,
+      "cx": 0.5,
+      "score_inset": false,
+      "narration": "",
+      "_score_inset_why": "比赛已经结束，265~290 是普罗佐罗娃倒在场上、坐起、网前握手，转播已经把比分板撤了。",
+      "quote": [
+        {
+          "at": 10.04,
+          "text": "Tatiana Prozorova has done it again.\n普罗佐罗娃又做到了"
+        },
+        {
+          "at": 16.44,
+          "text": "She can barely believe it.\n她自己都不敢相信"
+        },
+        {
+          "at": 20.76,
+          "text": "Another comeback victory.\n又一场逆转"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_quote_why": "转播原句，probe 的 `captions.txt`：275.28「Tatiana Prosorova has done it again.」（人名写回本名）、281.68「She can barely believe it.」、286.00「Another comeback victory」。段内 at = 原时刻 − 265.24。",
+      "crosses_cut": "276.96 / 284.52 两处：倒地 → 坐起 → 网前握手，全在赛点之后，原声讲的就是这一场。",
+      "point_end_ok": "比赛已经结束。"
+    },
+    {
+      "start": 290.76,
+      "end": 298.48,
+      "cx": 0.5,
+      "score_inset": false,
+      "_score_inset_why": "比赛已经结束，290~298 是网前握手之后普罗佐罗娃向看台致意，没有比分板。",
+      "narration": "普罗佐罗娃这周三场，都是先丢一盘再翻盘。一盘的领先，怎么就守不住了？",
+      "_why": "首轮、第二轮先丢一盘再翻盘见同站 `prozorova-eala-singapore-2026-r2`（WTA 官网赛后稿原文 `coming from a set and 4-2 down`、首轮对科斯图拉斯 `trailed ... by a set and 4-2`）；这一场 3-6 7-5 6-4。",
+      "crosses_cut": "290.76 起握手之后的中景，298.48 是切点，之后静音片尾。",
+      "point_end_ok": "比赛已经结束；段尾 298.48 是转播切点。"
+    }
+  ],
+  "_editing_why": "源片 308.6 秒：比赛画面到 265 秒，265~298 赛点之后，298.5 起静音片尾，**没有场上采访**。认人：王欣瑜酒红短裙、粉白上衣、白色遮阳帽；普罗佐罗娃白绿上衣、墨绿短裙、白色发带。段落端点取自 probe 的 `scene_cuts`（211.84 起、241.48 起都是切点），翻牌按 `--scorebox` 真量的 `point_ends` 对过。球路来自 frame-grab 每秒一帧逐帧看过。集锦没播的局（第二盘 0-2~0-4、1-4、2-4、4-5、5-5，第三盘除 2-2、4-5 之外）只在旁白里按 flashscore 逐局一句带过。",
+  "_tactics_why_note": "球路写在第 3 段（盘点被左右调动、守在底线等对手出错）、第 9 段（被调动后压上网收掉）、第 10 段（被拉到右边场外）、第 11 段（底线对拉）、第 12 段（先压左再拉右）。",
+  "_quote_why_global": "两段原声：第二盘结束「这一次，她拿下了／比赛进入决胜盘」，赛点之后「普罗佐罗娃又做到了……又一场逆转」。",
+  "_no_repeat": "同一站兄弟片：`wang-garland-singapore-2026-r2`（王欣瑜第二轮，首盘 1-4 落后翻盘）——这一条不重提那场；`prozorova-eala-singapore-2026-r2`（普罗佐罗娃逆转伊埃拉）——那条的落点是七个盘点和最后四局，这一条的落点是王欣瑜的两次追平和最后一局两个赛点，只在末句一句带过她这一周的逆转。",
+  "push": {
+    "matchup": "王欣瑜 vs 普罗佐罗娃",
+    "score": "3-6 7-5 6-4",
+    "summary": "王欣瑜救下两个赛点仍惜败",
+    "auto": true,
+    "lead": "2026 WTA500 新加坡女单 1/4决赛：世界第 40 的王欣瑜 6-3、5-7、4-6 负于世界第 180 的普罗佐罗娃，打了 3 小时 01 分。第一盘她两次破发 6-3 先拿；第二盘 0-4 落后，三次破发追到 5-5，5-5 自己的发球局被破，5-7。决胜盘 2-2 她从 0-40 救下 5 个破发点，3-4 还是被破；最后一局她救下两个赛点，三个破发点一个没兑现，第三个赛点输掉。普罗佐罗娃这一周三场都是先丢一盘再翻盘，生涯第一次打进巡回赛半决赛。"
+  }
+}
