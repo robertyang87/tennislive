@@ -1,0 +1,321 @@
+{
+  "slug": "chwalinska-mertens-singapore-2026-qf",
+  "source_url": "https://www.youtube.com/watch?v=rynRcxsDncY",
+  "_column": "赛场之上",
+  "tts_backend": "edge",
+  "_tts_backend_why": "旁白是平直的复盘叙述，一段 `style` 都没写，用不上 Azure 的情绪风格；同一站 `oliynykova-chwalinska-singapore-2026-r2`、`prozorova-eala-singapore-2026-r2` 也是 edge。",
+  "_source": "账号所有者点名的源片：WTA 官方 YouTube `rynRcxsDncY`，自动链已经 probe 过（`output/2026-09-25/reel/mertens-chwalinska/`，1920×1080 / 25fps、309.0s），这一条直接复用那一趟的缩略图墙、切点、记分条猜框和 `captions.txt`，没有再 probe。四要素自证：记分条逐格读过（`E. MERTENS [4] / M. CHWALINSKA [5]`），124.5s 与 294.5s 的赛果图形烧着 `QUARTER FINAL`，挡板 `SINGAPORE`、`WTA 500`、`THE KALLANG`。比赛画面到 270s，271~292 是赛点之后她庆祝、网前握手、向看台挥手，294~299 是赛果图形，299s 起静音片尾；**没有场上采访**。",
+  "scorebox": [
+    90,
+    870,
+    550,
+    980
+  ],
+  "_scorebox_why": "probe 的 `scorebox_guess` 90,870,480,980 左、上、下沿用；右缘按这场最宽的一档写——第二盘三列（`2 2 15 / 6 5 40`），和同站 `prozorova-eala`、`oliynykova-chwalinska` 同一块转播板，用的都是 90,870,550,980。板上方的 `BREAK POINT` / `MATCH POINT` 小签不进框。全出血＋贴边同比放大回贴左下，照 2026-09-24 的规矩。",
+  "_match": {
+    "id": "2026:singapore:womens-quarterfinal:elise-mertens-maja-chwalinska",
+    "event": "2026 WTA500 新加坡",
+    "event_search": "Singapore",
+    "round": "Women's Singles Quarterfinal",
+    "year": 2026,
+    "status": "result_verified",
+    "winner": "赫瓦林斯卡",
+    "loser": "梅尔滕斯",
+    "participants": [
+      "梅尔滕斯",
+      "赫瓦林斯卡"
+    ],
+    "winner_en": "Maja Chwalinska",
+    "loser_en": "Elise Mertens",
+    "set_scores_home_away": [
+      [
+        2,
+        6
+      ],
+      [
+        2,
+        6
+      ]
+    ],
+    "tiebreaks_home_away": [
+      null,
+      null
+    ],
+    "_source": "三源一致：WTA 官方 tournaments/1152/2026/matches 的 MatchID=LS005，`ResultString` = `[5]M. Chwalinska d [4]E. Mertens 6-2,6-2`、`RoundID=Q`（1/4决赛）、`MatchTimeTotal=01:29:25`；flashscore 423l2eSj 盘分 2-6 / 2-6（home＝梅尔滕斯）；画面自证——源片 294.5 秒的赛果图形烧着 `QUARTER FINAL / ELISE MERTENS [4] 2 2 / MAJA CHWALINSKA [5] 6 6`，WTA 官网赛后稿标题 `Chwalinska dethrones defending champ Mertens to make Singapore semis`。",
+    "source": "flashscore_points",
+    "source_id": "423l2eSj",
+    "flashscore_id": "423l2eSj",
+    "winner_result": "6-2 6-2",
+    "loser_result": "2-6 2-6"
+  },
+  "topbar": {
+    "line1": "2026 WTA500 新加坡站 1/4决赛",
+    "line2": "赫瓦林斯卡 6-2 6-2 梅尔滕斯"
+  },
+  "_topbar_why": "line1 按账号所有者 2026-09-24 定的格式：新加坡网球公开赛是 WTA500（`zh.tournaments.TOURNAMENT_LEVEL['singapore']='W500'`，挡板 `WTA 500`），WTA 官方 `RoundID=Q`＝1/4决赛，和同站 `prozorova-eala-singapore-2026-r2` 同一行写法。",
+  "cover": {
+    "matchup": [
+      {
+        "name": "赫瓦林斯卡",
+        "name_en": "Maja Chwalinska",
+        "country": "POL",
+        "rank": 25
+      },
+      {
+        "name": "梅尔滕斯",
+        "name_en": "Elise Mertens",
+        "country": "BEL",
+        "rank": 19
+      }
+    ],
+    "_rank_why": "WTA 官方 `players/ranked`（`sources.rankings.fetch_rankings`，`rankedAt=2026-09-21`）：梅尔滕斯第 19（2165 分）、赫瓦林斯卡第 25（1888 分）（2026-09-25 查）；自动草稿从同一接口取到的也是 19 / 25。",
+    "winner": "赫瓦林斯卡",
+    "result": "6-2 6-2",
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "赫瓦林斯卡",
+    "hook": "上次进半决赛是法网\n这次送走卫冕冠军",
+    "hook_accent": "卫冕冠军",
+    "_hook_why": "第一行是她的来路当影子，第二行是这场球的赛果，两行一个落差；9 字、8 字，没有排名、年龄、国籍，没有术语，不复述比分。① 「上次进半决赛是法网」：WTA 官网赛后稿原文 `her first semifinal since her shock run to the Roland Garros title match as a qualifier in June -- and her second tour-level semifinal overall`；转播解说 285.52s `into the final four of a tour level event for only the second time in her career`——两个独立源。② 「这次送走卫冕冠军」：WTA 官网赛后稿 `dethroning defending champion and No. 4 seed Elise Mertens`；转播解说 276.24s `this time she has taken out the defending champion`（梅尔滕斯是 2025 年新加坡站冠军）。",
+    "topic": "新加坡WTA500 · 女单1/4决赛",
+    "_subject_why": "账号所有者点名要做「月亮姐」，封面放她；她也是这场的赢家。",
+    "_heat_why": "赫瓦林斯卡是账号所有者 2026-08-16 亲口点名的热点样板（「排名不是最重要的，要有热点，比如格瓦林斯卡……」），这一条又是账号所有者本人点的题（「做月亮姐的赛场之上视频」）。另外轮次已经是 1/4决赛、对手是卫冕冠军。",
+    "portrait": {
+      "image": "assets/reel/mertens-chwalinska-cover.jpg",
+      "focus": 0.56,
+      "focus_y": 0.32,
+      "zoom": 1.0,
+      "_photo_why": "WTA 官方 photoresources 实拍，5234×3491，铺 1080×1440 是缩小不是放大。https://photoresources.wtatennis.com/photo-resources/2026/09/25/c0b69e29-0b89-45de-9d57-196c1dd6083c/Chwalinska-QF.jpg ——就是 WTA 官网这场赛后稿的头图（`image` 字段），路径日期 9/25、文件名 `Chwalinska-QF` 自证是这一站 1/4决赛，也就是这一场（她这一站只有这一场 1/4决赛）。已下载打开核过：黑色 Lacoste 连衣裙＋黑护腕，和源片 114.5s、232.5s、270.5s 的近景一致；场边 `BNP PARIBAS` 挡板和源片 86.5s、166.5s 同一块。⚠️ 自动草稿的 MiniMax 视觉证据把这张认成了梅尔滕斯，是认错了——梅尔滕斯这一场穿紫色、戴白色遮阳帽。反手击球中、睁眼、球在画面内。"
+    },
+    "scoreboard": {
+      "court": "OCBC Arena",
+      "_court_why": "印场馆不印场地名：WTA 官方 feed 这一场只给 `CourtID`、没给名字，场馆沿用同站 `oliynykova-chwalinska`、`prozorova-eala` 已核的 OCBC Arena（WTA 赛事页与维基 `2026 Singapore Tennis Open` 两源）。",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%20%221%3A29%3A25%22%2C%20%22source%22%3A%20%22WTA%20official%20tournaments/1152/2026/matches%20LS005%20MatchTimeTotal%2001%3A29%3A25%22%2C%20%22cross_check%22%3A%20%22flashscore%20df_st_1%20423l2eSj%200%3A39%2B0%3A49%22%7D",
+        "field": "duration"
+      },
+      "_duration_why": "WTA 官方 `MatchTimeTotal=01:29:25`；flashscore 分盘 0:39＋0:49＝1:28，两个源对得上。"
+    }
+  },
+  "_opening_time_source": {
+    "url": "https://global.flashscore.ninja/2/x/feed/dc_1_423l2eSj",
+    "match_id": "423l2eSj",
+    "field": "DC",
+    "value": 1790313000,
+    "beijing": "2026-09-25T13:10+08:00",
+    "spoken_precision": "approximate-hour",
+    "_why": "开球时刻只说个大概：flashscore `dc_1` 的 `DC=1790313000` → 05:10Z＝北京 13:10；`DD=1790318257`（北京 14:37）是结束时刻，相差 1 小时 28 分，和 WTA 官方 `MatchTimeTotal=01:29:25` 自洽。旁白说「下午一点多」。新加坡与北京同为 +08:00。"
+  },
+  "stats": {
+    "a": {
+      "aces": 1,
+      "df": 2,
+      "first_in": 33,
+      "first_won": 23,
+      "second_total": 15,
+      "second_won": 9,
+      "bp_conv": 5,
+      "bp_chances": 9,
+      "pts_won": 62,
+      "pts_total": 104,
+      "first_total": 48,
+      "headshot": "assets/players/headshots/wta-325639.jpg",
+      "winners": 9,
+      "ue": 14
+    },
+    "b": {
+      "aces": 3,
+      "df": 2,
+      "first_in": 31,
+      "first_won": 14,
+      "second_total": 25,
+      "second_won": 12,
+      "bp_conv": 1,
+      "bp_chances": 4,
+      "pts_won": 42,
+      "pts_total": 104,
+      "first_total": 56,
+      "headshot": "assets/players/headshots/wta-317964.jpg",
+      "winners": 15,
+      "ue": 40
+    },
+    "_source": "`match_feed.py show 423l2eSj`（flashscore `df_st_1`），**a 对应 cover.matchup[0] 赫瓦林斯卡**——flashscore 的 home 是梅尔滕斯，这里已经对调过。头像沿用已发 spec 认过的两张（自动草稿的 `_notes` 同）。 制胜分与非受迫失误 flashscore 没有，走 TNNS（run 36109192078，id=74753592，`hasExtendedStats: True`）：制胜分 15:9、非受迫失误 40:14（顺序 `['Mertens','Chwalinska']`），分盘 9/6 : 3/6、22/18 : 6/8，日志自证分盘合计＝全场。WTA 官网赛后稿 `Mertens' error count climbed sharply to a total of 40`，同一个数。"
+  },
+  "_hit_data": "`match_feed.py show 423l2eSj` 逐局：第一盘 2-2 之后赫瓦林斯卡连拿七局（2-3 保、2-4 破、2-5 保、2-6 破；第二盘 0-1 保、0-2 破、0-3 保），WTA 官网赛后稿原文同向 `from 2-2, she reeled off seven consecutive games, and nine of the next 10, to jump out to 5-1 in the second set`。她前七个发球局全保，第一次面对破发点是 5-1 发球胜赛那一局（`40:15 |B1|` 起四个破发点，第四个被破）——赛后稿 `did not face a break point until the penultimate game of the match`。最后一局梅尔滕斯发球 `0:40 |B1| |B3|`、`15:40 |B1| |B3|`：第一个赛点被救、第二个兑现；官方统计 `Match points saved 1`。赛点那一分赛后稿写作 `a perfect combination of drop shot, lob and forehand pass`。全场破发 5/9 对 1/4、总得分 62 比 42。 非受迫失误 14 比 40（TNNS；赛后稿同写 40）。",
+  "_claims": {},
+  "editorial": {
+    "mode": "match_review",
+    "hook": [
+      "上次进半决赛是法网",
+      "这次送走卫冕冠军"
+    ],
+    "question": "开局梅尔滕斯一直往网前压，赫瓦林斯卡是怎么把卫冕冠军打得只拿四局的？",
+    "thesis": "前四局梅尔滕斯主动上网、两人各保两局；二比二之后赫瓦林斯卡用短球把她往网前拽、再打她身后，连拿七局；她前七个发球局一个破发点都没给，直到五比一发球胜赛才第一次被破；下一局梅尔滕斯发球，第二个赛点上她放小球、挑高球、正手穿越，六比二、六比二，把卫冕冠军送出新加坡。",
+    "beats": [
+      "北京时间 9 月 25 日下午一点多，新加坡 WTA500 1/4决赛：5 号种子、世界第 25 对 4 号种子、世界第 19、卫冕冠军。",
+      "开局梅尔滕斯主动上网，前四局各保两局。",
+      "2-2 之后连拿七局：第一盘两次破发，40 分钟 6-2；第二盘第一分就用短球加底线空当拿下。",
+      "第二盘 0-1 破发点，一分长相持拿下，0-2。",
+      "5-1 发球胜赛，全场第一次面对破发点，救三个、第四个被破。",
+      "下一局 0-40 三个赛点，第一个被救，第二个放小球、挑高球、正手穿越。"
+    ],
+    "chapters": [
+      "网前的梅尔滕斯",
+      "连拿七局",
+      "第一次破发点",
+      "第二个赛点"
+    ],
+    "human_context": {
+      "angle": "法网决赛之后她一直没把状态接上，新加坡这一周三场只丢了十一局；这是她生涯第二次打进巡回赛半决赛，上一次就是法网。半决赛可能再碰法网决赛赢了她的安德烈耶娃。",
+      "facts": [
+        "WTA 官方 LS005：[5]M. Chwalinska d [4]E. Mertens 6-2,6-2，RoundID=Q，MatchTimeTotal 01:29:25。",
+        "WTA 官方排名（2026-09-21 版）：梅尔滕斯第 19、赫瓦林斯卡第 25。",
+        "flashscore 423l2eSj 逐局：2-2 之后连拿七局；前七个发球局全保，5-1 那一局四个破发点第四个被破；最后一局第二个赛点兑现。",
+        "WTA 官网赛后稿：卫冕冠军、第二次打进巡回赛半决赛（上一次法网）、这一周三场只丢 11 局、法网第二轮她也是 6-4 6-0 赢梅尔滕斯、赛点是 drop shot, lob and forehand pass、半决赛对安德烈耶娃或费尔南德斯。",
+        "转播解说 276.24s：`this time she has taken out the defending champion and done so quickly and in style`；285.52s：`for only the second time in her career`。"
+      ],
+      "sources": [
+        "https://api.wtatennis.com/tennis/tournaments/1152/2026/matches",
+        "https://www.wtatennis.com/news/4581751/chwalinska-dethrones-defending-champ-mertens-to-make-singapore-semis",
+        "https://global.flashscore.ninja/2/x/feed/df_st_1_423l2eSj",
+        "https://global.flashscore.ninja/2/x/feed/df_mh_1_423l2eSj"
+      ]
+    },
+    "narration": [
+      "开局梅尔滕斯主动上网，前四局各保两局。",
+      "二比二之后，赫瓦林斯卡连拿七局。",
+      "五比一发球胜赛，全场第一次面对破发点，第四个被破。",
+      "第二个赛点，放小球、挑高球、正手穿越，六比二、六比二。"
+    ]
+  },
+  "segments": [
+    {
+      "start": 3.52,
+      "end": 29.4,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "北京时间九月二十五日下午一点多，新加坡WTA五百赛四分之一决赛。五号种子、世界第二十五的赫瓦林斯卡，对四号种子、世界第十九的梅尔滕斯，她也是这项赛事的卫冕冠军。开局梅尔滕斯打得很主动，第一局，就在对手的发球局里抢到了分。这一局最后，还是赫瓦林斯卡保住了。",
+      "_why": "3.52 起宽景（0~3.52 是她发球前的近景，不要）→ 4~13 宽景 → 14.5 梅尔滕斯近景 → 16.5 起第一局 15-15 那一分（记分条 16.5s `15 / 15`，flashscore 第一局 `15:0, 15:15, 30:15`），解说 27.76「A strong start here from Mertens」。「主动」对 WTA 官网赛后稿 `Mertens had started the match with aggressive intent, advancing to net`。 flashscore 第一局 `15:0, 15:15, 30:15, 30:30, 30:40` 后她保住。",
+      "crosses_cut": "窗口内 13.84、15.48、17.52、27.32 几处换镜头都在第一局两分之间或发球前（近景↔宽景），28.5 是梅尔滕斯走回的近景；没有在回合中间挖刀。",
+      "point_end_ok": "段尾 29.4 是转播切点，`point_ends_guess` 29.44 的翻牌（`0 / 1`，第一局结束）在它之后 0.04 秒，0.3 秒以内不算。"
+    },
+    {
+      "start": 85.48,
+      "end": 103.28,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "二比二之后，形势变了。赫瓦林斯卡先保发，再破掉梅尔滕斯的发球局，四比二。轮到她发球，梅尔滕斯还在往网前冲，这一分在网前抢了回来，三十比四十。可这一局，还是赫瓦林斯卡保住了。",
+      "_why": "记分条 74.5s `2 0 / 4 15`（赫瓦林斯卡发球 4-2）、88.5s `15 / 40`、102.5s `30 / 40`；解说 100.08「It's excellent work at the net from Mertens」。flashscore 第一盘 2-3 保、2-4 破、2-5 保（`0:15, 0:30, 0:40, 15:40, 30:40`）。",
+      "crosses_cut": "85.48 起是她发球前的近景（86.5、88.5），88.92 起宽景一整分，101~103 梅尔滕斯近景：没有在回合中间挖刀。",
+      "point_end_ok": "段尾 103.28 是转播切点，也是 `point_ends_guess` 103.28 的翻牌（`2 / 5` 盘点那一局开始）；30-40 那一分在 101 秒前打完（101~103 是梅尔滕斯网前那一分之后的近景），下一次翻牌在 110.72。"
+    },
+    {
+      "start": 103.28,
+      "end": 117.4,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "二比五，梅尔滕斯发球。平分之后，赫瓦林斯卡拿到盘点，一次兑现，第二次破发。四十分钟，六比二。她自己的发球局，一个破发点都没给。",
+      "_why": "记分条 104.5s `SET POINT / 2 / 5 Ad`（梅尔滕斯发球），110.64 起她走回的近景；解说 111.12「taking the opening set of this quarterfinal and getting a second break」、122.64「40 minutes to take that opener by six games to two」。flashscore 第一盘最后一局 `40:A |B1| |B2|`、分盘用时 0:39。 第一盘她发球 `Break Points Saved 0/0`（flashscore Set 1）。",
+      "crosses_cut": "110.64 / 112.04 / 114.16 三处换镜头都在盘点之后：110.6 起是赫瓦林斯卡走回、近景，第一盘已经结束。",
+      "point_end_ok": "盘点在 110.6 前打完（110.5s 记分条还挂着 Ad，111.12 解说已说「there it is」）；段尾 117.4 是转播切点，之后 117.44、118.32 的「翻牌」是换边时的球包近景被误读，不是比分变化（逐帧 118~123 是她坐回场边）。"
+    },
+    {
+      "start": 130.92,
+      "end": 146.48,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "梅尔滕斯想上网，那就先把她请上来。第二盘第一分，赫瓦林斯卡一拍短球，把她拽到网前左侧。等梅尔滕斯退回中路，她再把球打到另一侧底线，第二盘就这么开了头。",
+      "_why": "记分条 132.5~144.5s `2 0 / 6 0` 没有分数列＝第二盘第一分（赫瓦林斯卡发球，远端黑裙）。逐秒帧（frame-grab run 36109159354，`output/2026-09-25/frames/mertens-chwalinska-sg-qf/`）：131~137 近端紫衣的梅尔滕斯在底线，138 往前，139~141 被拉到网前左侧，142 退回中路、球落在她右后方底线，143 她还在中路；144~145 赫瓦林斯卡近景。解说 143.28「It's brilliant from Chwalinska. What a start to set two」。",
+      "crosses_cut": "130.92 起宽景一整分，143.56 切赫瓦林斯卡近景：这一分打完之后才切。",
+      "point_end_ok": "这一分在 143 秒前打完；段尾 146.48 是转播切点，也是 `point_ends_guess` 146.48 的翻牌（下一局 `0 1 30 / 40`）。"
+    },
+    {
+      "start": 148.4,
+      "end": 165.6,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "零比一，梅尔滕斯发球，三十比四十，破发点。这一分在底线拉了十几秒，赫瓦林斯卡左右来回跑，每一拍都送了回去，梅尔滕斯等不到上网的机会。这一分，还是她的。破发，零比二。",
+      "_why": "记分条 146.5s `2 0 30 / 6 1 40`（梅尔滕斯发球）、148.5s `BREAK POINT`；逐秒帧 149~164：远端的梅尔滕斯一直在底线（150~163），近端黑裙的赫瓦林斯卡在底线从中路（150）到右（153）、再到左（156、158~159）、回中路（160~163）；165 她捂嘴的近景。解说 163.12「It's absolutely outstanding from Chwalinska」。flashscore 第二盘第二局 `30:40 |B1|` 后她拿下。",
+      "crosses_cut": "148.4 起宽景一整分（148.5 `BREAK POINT` 签），164.84 切赫瓦林斯卡近景：分打完之后才切。",
+      "point_end_ok": "`point_ends_guess` 164.88 的翻牌就是这一分的结果，在段尾之前；段尾 165.6 是转播切点，下一次翻牌 189.6。"
+    },
+    {
+      "start": 189.56,
+      "end": 206.1,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "从二比二算起，她一口气连拿七局，一路到五比一，发球胜赛。前七个发球局，她一个破发点都没给过。这一局，她救下三个，第四个，扑向左侧那一拍没回过去。",
+      "_why": "记分条 190.5s `BREAK POINT #4 / 2 1 Ad / 6 5`（赫瓦林斯卡发球 5-1）；逐秒帧 192 近端黑裙的她发球，196~203 被左右调动，204 扑向左侧，205 球已过；207.5 起记分条 `2 2 0 / 6 5 15`。flashscore 第二盘 5-1 那一局 `40:15 |B1|` 起四个破发点第四个被破；赛后稿 `did not face a break point until the penultimate game of the match`。",
+      "point_end_ok": "`point_ends_guess` 204.88 的翻牌是这一分的结果（被破，2-5）；段尾 206.1 在翻牌之后 1.2 秒，下一次翻牌在 232.32。"
+    },
+    {
+      "start": 209.0,
+      "end": 232.32,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "刚丢了发球局，她没有急。二比五，梅尔滕斯发球，零比十五，她离比赛结束只差三分。这一分拉了二十秒，前十几秒两人都在底线对拉。然后赫瓦林斯卡一拍短球把她拽上网，再一拍高球越过她头顶，梅尔滕斯转身往回追，还是没够着。",
+      "_why": "记分条 208.5s `2 2 0 / 6 5 15`（梅尔滕斯发球）；逐秒帧 209 近端紫衣的梅尔滕斯发球，210~224 底线相持，225~228 她被拉到网前（左侧→中路），229~231 转身往底线退、球越过头顶；232 赫瓦林斯卡握拳近景。解说 219.76~232.40「Absolutely sensational this from Chwalinska」。",
+      "point_end_ok": "这一分在 231 秒前打完（231s 梅尔滕斯已背身在底线、球在身后）；段尾 232.32 是转播切点，也是 `point_ends_guess` 232.32 的翻牌。234.4 那一次翻牌是集锦跳过了一分之后的新比分（`0 / 40 MATCH POINT`），不是这一分没打完。",
+      "crosses_cut": "209.0 起是梅尔滕斯发球前的同一个宽景（208.5 记分条已是 `2 2 0 / 6 5 15`），一整分到 231 秒，232.32 切近景：分打完之后才切。",
+      "_tts_note": "「挑高球」合成器切成「选 ｜ 高球」（`--check-narration` 切词），改写成「一拍高球」。"
+    },
+    {
+      "start": 258.6,
+      "end": 271.76,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "零比四十，三个赛点，第一个被梅尔滕斯救了。第二个，赫瓦林斯卡先放小球把她引上网，再一拍高球，最后一拍正手穿越。",
+      "_why": "记分条 234.5s `MATCH POINT / 2 2 0 / 6 5 40`、260.5s `MATCH POINT #2 / 2 2 15 / 6 5 40`（梅尔滕斯发球）。逐秒帧 260~261 近端紫衣的梅尔滕斯发球，263~266 底线，267~269 被引到网前左侧，270 赫瓦林斯卡握拳近景。球路按 WTA 官网赛后稿原文 `her finest point of the match, a perfect combination of drop shot, lob and forehand pass`。flashscore 最后一局 `0:40 |B1| |B3|`、`15:40 |B1| |B3|`。",
+      "crosses_cut": "258.6 起是第二个赛点前的同一个宽景（第一个赛点已打完，梅尔滕斯走回发球位），270.28 切赫瓦林斯卡握拳近景：赛点落地之后才切。",
+      "point_end_ok": "赛点在 270 秒前落地（270.5s 起是她握拳庆祝），`point_ends_guess` 270.88 的翻牌是比赛结束后记分条撤下；段尾 271.76 是转播切点，下一次翻牌 284.08 是赛后画面被误读。"
+    },
+    {
+      "start": 271.76,
+      "end": 285.52,
+      "cx": 0.5,
+      "score_inset": false,
+      "_score_inset_why": "比赛已经结束（赛点在 270s），271.76~285.5 是她走向网前、网前握手的画面，转播已经把比分板撤了——逐秒帧、缩略图墙 272.5~284.5 都没有板。",
+      "narration": "",
+      "quote": [
+        {
+          "at": 0.0,
+          "text": "Maja Chwalinska into the semifinals in Singapore.\n赫瓦林斯卡打进新加坡站半决赛"
+        },
+        {
+          "at": 4.48,
+          "text": "This time she has taken out the defending champion\n这一次，她淘汰的是卫冕冠军"
+        },
+        {
+          "at": 9.76,
+          "text": "and done so quickly and in style.\n赢得又快又漂亮"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_quote_why": "转播原句，probe 的 `captions.txt`：271.76「Maya Kolinska into the semifinals in / Singapore.」、276.24「Another straight set win. And this time / she has taken out the defending champion」、281.52「and done so quickly and in style.」。自动字幕把人名转写成 Maya Kolinska，按她本名写 Maja Chwalinska；前半句「Another straight set win.」不留。段内 at = 原时刻 − 271.76（第二条从 276.24 算，字幕从「This time」起）。",
+      "crosses_cut": "272~275 她走向网前、276~284 网前和梅尔滕斯握手：全在赛点之后，原声讲的就是这一场。",
+      "point_end_ok": "比赛已经结束。"
+    },
+    {
+      "start": 285.52,
+      "end": 298.96,
+      "cx": 0.5,
+      "score_inset": false,
+      "_score_inset_why": "比赛已经结束：285.5~292 是她向看台挥手的近景，294 起是转播自己的赛果图形（`QUARTER FINAL / 2 2 / 6 6`），这里再贴一块比分板就是同一个比分印两遍。",
+      "narration": "这是她生涯第二次打进巡回赛半决赛，上一次是今年法网。半决赛，她可能再碰上安德烈耶娃，法网决赛赢了她的那个人。这一次呢？",
+      "_why": "赛后稿 `her second tour-level semifinal overall`、`her first semifinal since ... Roland Garros`、`Chwalinska will take on either No. 1 seed Mirra Andreeva in what would be a rematch of the Roland Garros final, or No. 6 seed Leylah Fernandez`；转播 285.52「for only the second time in her career」。",
+      "crosses_cut": "285.6 她挥手、289 / 291.9 近景、292.5 起走回座位、294 赛果图形：全在比赛结束之后。",
+      "point_end_ok": "比赛已经结束；段尾 298.96 是转播切点，299s 起静音片尾。"
+    }
+  ],
+  "_editing_why": "源片 309.0 秒：比赛画面到 270 秒，271~292 赛点之后的庆祝与握手，294~299 赛果图形，299 秒起静音片尾，**没有场上采访**。认人：赫瓦林斯卡金发、黑色 Lacoste 连衣裙＋黑护腕；梅尔滕斯紫色连衣裙、白色遮阳帽。段落端点取自 probe 的 `scene_cuts`（206.1 与 259.2 两处在同一个宽景里，分别是翻牌后 1.2 秒、第二个赛点发球前）；球路来自 frame-grab（run 36109159354，每秒一帧，128~271 秒）逐帧看过，再对照 `captions.txt` 的转播原话和 WTA 官网赛后稿。集锦没播的局（第一盘 2-3 破发、第二盘 0-3 与 1-4 两个发球局）只在旁白里按 flashscore 逐局一句带过。0-2 她发球那一分（165.6~188.5，梅尔滕斯底线相持拿下）和第一个赛点（236.4~259）不进片子。",
+  "_tactics_why_note": "球路写在第 1 段（梅尔滕斯主动）、第 2 段（梅尔滕斯网前抢分）、第 4 段（短球拽到网前左侧、再打另一侧底线）、第 5 段（底线左右来回跑）、第 6 段（扑向左侧没回过去）、第 7 段（短球拽上网、再挑高球过头顶）、第 8 段（放小球、挑高球、正手穿越）。",
+  "_quote_why_global": "一段原声：赛点之后解说那句「这一次，她淘汰的是卫冕冠军，赢得又快又漂亮」——正是钩子第二行。",
+  "_no_repeat": "⚠️ 赫瓦林斯卡这条线上已经发过五条（`chwalinska-gibson`、`bucsa-chwalinska`、`shnaider-chwalinska`、`chwalinska-townsend-us-open-2026-r1`、`oliynykova-chwalinska-singapore-2026-r2`）：月亮球打法和绰号来历一个字不碰（赛点那一拍高球只描述这一分本身）；「法网后第一次两连胜」是上一条的钩子，这一条不再提；法网只作为「上一次进半决赛」一句带过。同一站兄弟片 `prozorova-eala-singapore-2026-r2`（逆转、救破发点）——这一条的落点是连拿七局和最后两个赛点，不撞。",
+  "push": {
+    "matchup": "赫瓦林斯卡 vs 梅尔滕斯",
+    "score": "6-2 6-2",
+    "summary": "月亮姐送走卫冕冠军进四强",
+    "auto": true,
+    "lead": "2026 WTA500 新加坡女单 1/4决赛：5 号种子赫瓦林斯卡 6-2、6-2 胜 4 号种子、卫冕冠军梅尔滕斯，用时 1 小时 29 分。开局梅尔滕斯主动上网，前四局各保两局；2-2 之后赫瓦林斯卡连拿七局，前七个发球局一个破发点都没给，直到 5-1 发球胜赛才第一次被破。下一局 0-40 三个赛点，第二个上她放小球、挑高球、正手穿越收下比赛。这是她生涯第二次打进巡回赛半决赛，上一次是今年法网；半决赛对手在安德烈耶娃和费尔南德斯之间产生。"
+  }
+}
