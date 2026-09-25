@@ -7186,6 +7186,116 @@ def ending_payoff_problem(
         "第一波庆祝必须真的出现在正文里。")
 
 
+
+#: 「赛场之上」冷开场硬闸落地（2026-09-25）之前就已经发出去、第 1 段不是赢球后
+#: 冷开场的片子。按「已发的不重渲」豁免（消息收不回来）。
+#:
+#: ⚠️ **只许减不许加**，表自带自检（`test_冷开场豁免表只许减`）：每个 slug 必须
+#: 真的存在、而且真的还在违规——修好一条就删一条，不然它会替新的违规兜底。
+LEGACY_NO_COLD_OPEN = frozenset({
+    "bu-zheng-hangzhou-2026-r1",
+    "cerundolo-zhou-chengdu-2026-r1",
+    "chwalinska-gibson",
+    "eala-fernandez",
+    "eala-osaka",
+    "eala-parks",
+    "eala-svitolina",
+    "eala-zheng",
+    "fritz-jodar-final",
+    "gea-shapovalov",
+    "hu-kopriva-chengdu-2026-r1",
+    "medvedev-damm",
+    "nishikori-shang",
+    "oliynykova-chwalinska-singapore-2026-r2",
+    "potapova-venus",
+    "prozorova-eala-singapore-2026-r2",
+    "shang-darderi-montreal-2026",
+    "shang-mannarino-chengdu-2026-r1",
+    "shang-vallejo",
+    "wang-garland-singapore-2026-r2",
+    "wang-kasatkina",
+    "wang-pareja",
+    "wang-samsonova",
+    "wong-brooksby",
+    "wong-gea",
+    "wong-lehecka",
+    "zhang-putintseva",
+    "zhang-wong-hangzhou-2026-r1",
+})
+
+
+def _is_on_court_reel(spec: dict) -> bool:
+    """「赛场之上」：认 `cover.eyebrow`，没有封面时退回 `_column`。"""
+    eyebrow = (spec.get("cover") or {}).get("eyebrow")
+    if eyebrow:
+        return eyebrow == "赛场之上"
+    return spec.get("_column") == "赛场之上"
+
+
+def cold_open_problem(spec: dict, *, primary: str | None = None) -> str | None:
+    """「赛场之上」第 1 段必须是**赢球之后**的冷开场。
+
+    账号所有者 2026-08-05 定的开场顺序「画面爆点 → 落点 → 坐标」，
+    2026-09-25 重申：「**之前要求过视频从赢球后的冷开场，以后要记住了，是全局的
+    要求**」。那一轮量出来：244 条里 209 条做到了，而最近几天手写的 9 条
+    （新加坡／成都／杭州）第 1 段直接上旁白、从坐标开讲——**原有的判据
+    `test_冷开场不许随手取源片开头` 只查「已经是冷开场的，取没取源片开头」，
+    第 1 段根本不是冷开场的它一条都不扫**，于是规矩只活在 promote 的自动链里。
+
+    判据两条，都是机械的：
+
+    1. 第 1 段**不配中文旁白**（英文原声 `quote` 可以有，那是氛围）；
+    2. 第 1 段是**倒叙**：它在同一条源片里比正文某一段更晚——赢球那一刻在
+       集锦末尾，从后面抽出来放到最前面，这就是冷开场的定义。集锦开头恰好是
+       最后一球预告的例外，写 `_head_open_why` 认领（和老判据同一个口）。
+
+    真没有赢球后画面的源片（整条只到某一分为止）在 spec 顶层写
+    `_no_cold_open_why` 说清楚。结局要在正文里重新兑现，由
+    `ending_payoff_problem` 接着管。
+    """
+    if not _is_on_court_reel(spec):
+        return None
+    slug = str(spec.get("slug") or "")
+    if slug in LEGACY_NO_COLD_OPEN:
+        return None
+    if str(spec.get("_no_cold_open_why") or "").strip():
+        return None
+    raw = spec.get("segments") or []
+    if not raw:
+        return None
+    first = raw[0]
+    hint = ("第 1 段要换成赢球那一刻（赛点落地／握拳／网前握手）："
+            "从源片后段抽出来放到最前面，不配旁白，只留现场声或英文原声＋中英字幕，"
+            "写 `_ending_payoff_required`；原来的坐标句挪到第 2 段、先说一句落点。"
+            "真没有赢球后画面的源片，在 spec 顶层写 `_no_cold_open_why`。")
+    if first.get("image"):
+        return "「赛场之上」第 1 段是静图，不是赢球后的冷开场。\n" + hint
+    if str(first.get("narration") or "").strip():
+        return ("「赛场之上」第 1 段配了中文旁白——那不是冷开场。"
+                "账号所有者 2026-09-25：「视频从赢球后的冷开场……是全局的要求」。\n"
+                + hint)
+    if str(first.get("_head_open_why") or "").strip():
+        return None
+    if primary is None:
+        declared = spec.get("sources")
+        primary = (str(next(iter(declared)))
+                   if isinstance(declared, dict) and declared else "")
+    source = str(first.get("source", primary))
+    try:
+        first_start = float(first["start"])
+    except (KeyError, TypeError, ValueError):
+        return None                    # 字段形状由 parse_segments 报更准确的错
+    for seg in raw[1:]:
+        if seg.get("image") or str(seg.get("source", primary)) != source:
+            continue
+        try:
+            if float(seg["start"]) + ENDING_PAYOFF_TOL < first_start:
+                return None            # 倒叙成立：第 1 段取自正文之后
+        except (KeyError, TypeError, ValueError):
+            continue
+    return (f"「赛场之上」第 1 段（源片 {first_start:.2f}s 起）不比正文任何一段晚，"
+            "不是从赢球那一刻抽出来的冷开场。\n" + hint)
+
 #: 装闸之前**已经发出去**的两条，按「已发的不重渲」豁免（消息收不回来）。
 #:
 #: ⚠️ **只许减不许加**，表自带自检（`test_证据卡不许压在字幕上`）：每个 slug
@@ -7499,6 +7609,9 @@ def validate_spec(
         allow_published_legacy=allow_published_legacy)
     if ending:
         raise ReelError(ending)
+    cold = cold_open_problem(spec, primary=next(iter(urls)))
+    if cold:
+        raise ReelError(cold)
     photo = cover_photo_problem(spec)
     if photo:
         raise ReelError(photo)

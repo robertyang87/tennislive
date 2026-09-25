@@ -342,7 +342,7 @@ def storyboard_sheet(url: str, workdir: Path, spec: dict | None = None,
     for label, extra in _ytdlp_ladder():
         proc = subprocess.run(
             # ⚠️ **`--ignore-no-formats-error` 不能少，`fetch_words` 那条路
-            # 一直带着它。** 沙箱里（没有 cookie）`web_embedded` 这一档只解得出
+            # 也带着它**（2026-09-25 才补上——这句原来写「一直带着」，是假的）。 沙箱里（没有 cookie）`web_embedded` 这一档只解得出
             # storyboard、解不出媒体格式，而 `-J` 默认把「一个可下载格式都没有」
             # 当成致命错——于是这一整趟报 `Requested format is not available`，
             # 和「这条片子取不到信息」长得一模一样，梯子走完打印「8 档 client
@@ -625,8 +625,19 @@ def fetch_words(url: str, workdir: Path,
         proc = None
         for label, extra in _ytdlp_ladder():
             proc = subprocess.run(
+                # ⚠️ **`--ignore-no-formats-error` 不能少**（和缩略图墙那一步
+                # 同一个坑，那边的注释原来写着「fetch_words 一直带着它」，而这儿
+                # 从来没带过）。沙箱里没有 cookie 时 `web_embedded` 只解得出
+                # storyboard，yt-dlp 就算 `--skip-download` 也会先报「Requested
+                # format is not available」、一个字幕文件都不写；梯子于是落到
+                # `android+ios`，而那一档给的字幕**每个事件只有一段**（滚动字幕
+                # 两行拼在一起、没有逐词时间戳）——切出来是 32 行「两行英文挤一行」，
+                # 而不是逐词的时间轴。2026-09-25
+                # `chwalinska-mertens-singapore-2026-qf-interview` 撞上的：同一条
+                # URL 带上这个开关，`web_embedded` 拿到 129 个事件、每个最多 9 个词。
                 ["yt-dlp", "--no-warnings", "--js-runtimes", "node",
-                 "--skip-download", "--write-auto-subs",
+                 "--skip-download", "--ignore-no-formats-error",
+                 "--write-auto-subs",
                  "--sub-langs", CAPTION_LANGS, "--sub-format", "json3",
                  *cookie_args(spec or {}), *extra,
                  "-o", str(workdir / "cap_%(id)s"), url],
