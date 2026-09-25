@@ -617,6 +617,12 @@ SCORE_FLAG_GAP = 20
 #: 挤出来的 5×16=80px 全给名字那一格（五盘 290→370）。渲了 96/86/80/74 四档
 #: 并排比的：74 那一档抢七上标和下一盘的数字开始挤在一起，80 是下限。
 SCORE_SET_COL_PX = 80        # 每一盘一列；**两行共用同一个宽度，列才对得齐**
+#: ⭐ 两位数的那一盘（拉沃尔杯 / 团体赛的抢十，记成 `10-8`）要多一个数字宽。
+#: 2026-09-25 `ruud-cerundolo-laver-cup-2026` 渲出来第一行印成「6 610」：
+#: 「10」在 72px 下墨宽 85px，比 80 的列还宽，右对齐之后左半截伸进上一列、
+#: 贴在那个「6」上。**只加宽这一列，两行一起加**（列还是对得齐）；多出来的
+#: 这一截从名字那一格里扣，`score_name_avail_px` 同一份账。
+SCORE_WIDE_EXTRA_PX = 44     # 一个数字的墨宽（TL Score Bold 72px 实测 42）＋ 2
 SCORE_ROW_H = 104            # 一行的高度
 SCORE_ROW_GAP = 10           # 两行之间的缝
 #: 盘分数字的字号。⚠️ 这个数是**量参考图定的**，不是拍的：那张图里数字的墨迹
@@ -700,7 +706,17 @@ def _set_count(result: object) -> int:
     return sum(1 for token in str(result or "").split() if _SET_RE.match(token))
 
 
-def score_name_avail_px(sets: int) -> float:
+def _wide_set_count(result: object) -> int:
+    """赛果里有几盘是两位数（抢十记成的 `10-8` 这种）——这几列要加宽。"""
+    n = 0
+    for token in str(result or "").split():
+        m = _SET_RE.match(token)
+        if m and max(int(m.group(1)), int(m.group(2))) >= 10:
+            n += 1
+    return n
+
+
+def score_name_avail_px(sets: int, wide: int = 0) -> float:
     """名字那一格**留给文字**的宽度（px）——盘越多越窄。
 
     版式是一条 `SCORE_BOARD_W` 宽的高亮长条：两端各一颗端帽（外加一道缝）、
@@ -719,7 +735,8 @@ def score_name_avail_px(sets: int) -> float:
     """
     fixed = (SCORE_FILL_PAD_L + SCORE_FILL_PAD_R
              + SCORE_FLAG_W + SCORE_FLAG_GAP)
-    return SCORE_BOARD_W - fixed - max(1, sets) * SCORE_SET_COL_PX
+    return (SCORE_BOARD_W - fixed - max(1, sets) * SCORE_SET_COL_PX
+            - wide * SCORE_WIDE_EXTRA_PX)
 
 
 def _name_width_px(name: str, rank: object, px: int) -> float:
@@ -740,7 +757,7 @@ def _name_width_px(name: str, rank: object, px: int) -> float:
     return width
 
 
-def score_cn_px(matchup: list, sets: int) -> int:
+def score_cn_px(matchup: list, sets: int, wide: int = 0) -> int:
     """比分板上中文名的字号：短名字给满 `SCORE_CN_MAX_PX`，长的按宽度缩。
 
     和封面钩子那条 `hook_title_px` 是同一个形状——**字号是算出来的，不是写死
@@ -749,7 +766,7 @@ def score_cn_px(matchup: list, sets: int) -> int:
     ⚠️ **两位球员共用一个字号**（取两人里更紧的那个）。各算各的会让同一块板
     上两行字一大一小，看着像渲错了。
     """
-    avail = score_name_avail_px(sets) - SCORE_NAME_SLACK_PX
+    avail = score_name_avail_px(sets, wide) - SCORE_NAME_SLACK_PX
     px = SCORE_CN_MAX_PX
     for meta in matchup:
         name = str(meta.get("name") or "").strip()
@@ -939,6 +956,8 @@ def _scoreboard_html(cover: dict) -> str:
         for value, other, bucket in ((left, right, win_cells),
                                      (right, left, lose_cells)):
             cls = "setwin" if value > other else "setlose"
+            if max(left, right) >= 10:
+                cls += " setwide"
             tb = f"<sup>{tiebreak}</sup>" if tiebreak and value < other else ""
             bucket.append(f'<span class="score-number {cls}">{value}{tb}</span>')
 
@@ -1735,6 +1754,7 @@ __SCRIM__
    4773/2141 = **2.23**，和参考图对得上。
    ⚠️ 想再拉开就该动**粗**那一头（参考图那个粗字接近 Black 900，不是 700），
    但账号所有者点名要动的是细的那一头，没有顺手改。 */
+.score-number.setwide{width:__SCORE_WIDE_COL_PX__px;flex:0 0 __SCORE_WIDE_COL_PX__px}
 .score-number.setwin{font-weight:__SCORE_WIN_WEIGHT__;color:__SCORE_INK__;
  text-shadow:none}
 .score-number.setlose{font-weight:__SCORE_LOSE_WEIGHT__;color:__SCORE_INK__}
@@ -1834,8 +1854,10 @@ def _fill_score_layout(css: str, cover: dict) -> str:
         "__SCORE_HEAD_PAD_L__": SCORE_HEAD_PAD_L,
         "__SCORE_HEAD_PAD_R__": SCORE_HEAD_PAD_R,
         "__SCORE_EN_PX__": SCORE_EN_PX,
+        "__SCORE_WIDE_COL_PX__": SCORE_SET_COL_PX + SCORE_WIDE_EXTRA_PX,
         "__SCORE_CN_PX__": score_cn_px(cover.get("matchup") or [],
-                                       _set_count(cover.get("result"))),
+                                       _set_count(cover.get("result")),
+                                       _wide_set_count(cover.get("result"))),
     }.items():
         css = css.replace(token, str(value))
     left = sorted(set(re.findall(r"__SCORE_[A-Z_]+__", css)))

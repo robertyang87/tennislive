@@ -165,8 +165,9 @@ def test_中文名字号按最长的名字算不许超出那一列():
             continue
         matchup = cover.get("matchup") or []
         sets = vp._set_count(cover.get("result"))
-        px = vp.score_cn_px(matchup, sets)
-        room = vp.score_name_avail_px(sets)
+        wide = vp._wide_set_count(cover.get("result"))
+        px = vp.score_cn_px(matchup, sets, wide)
+        room = vp.score_name_avail_px(sets, wide)
         for meta in matchup:
             width = vp._name_width_px(str(meta.get("name") or ""), meta.get("rank"), px)
             assert width + vp.SCORE_NAME_SLACK_PX <= room, (
@@ -1065,3 +1066,25 @@ def test_钩子重点词可选品牌绿_一屏只留一处(tmp_path):
     accented = green_ink({**base, "hook_accent": "第一次"})
     assert plain < 50, f"没写 hook_accent 钩子带里就有品牌绿墨 {plain} 像素"
     assert accented > 600, f"写了 hook_accent 钩子带里只有 {accented} 像素品牌绿——没渲上去"
+
+
+def test_两位数的那一盘要加宽那一列_抢十不许和上一盘贴在一起():
+    """拉沃尔杯的抢十记成 `10-8`：72px 下「10」墨宽 85px，比 80 的列宽，
+    右对齐之后伸进上一列，`ruud-cerundolo-laver-cup-2026` 第一版封面印成「6 610」。"""
+    from PIL import ImageFont  # noqa: PLC0415
+    vp = versus_poster
+    bold = ImageFont.truetype("assets/fonts/TLScore-Bold.ttf", vp.SCORE_NUM_PX)
+    assert vp.SCORE_SET_COL_PX + vp.SCORE_WIDE_EXTRA_PX >= bold.getlength("10") + 30, (
+        "加宽之后的列也装不下「10」加上和上一列之间的缝")
+    assert vp._wide_set_count("6-7(4) 6-4 10-8") == 1
+    assert vp._wide_set_count("7-6(10) 6-4") == 0      # 抢七小分两位数不算
+    assert (vp.score_name_avail_px(3, 1)
+            == vp.score_name_avail_px(3) - vp.SCORE_WIDE_EXTRA_PX)
+    html = vp._scoreboard_html({
+        "result": "6-7(4) 6-4 10-8", "winner": "甲",
+        "matchup": [{"name": "甲", "name_en": "A", "country": "NOR", "rank": 17},
+                    {"name": "乙", "name_en": "B", "country": "ARG", "rank": 22}],
+        "scoreboard": {"court": "X", "duration_source": {
+            "url": "data:application/json,%7B%22duration%22%3A%222%3A06%3A00%22%7D",
+            "field": "duration"}}})
+    assert html.count("setwide") == 2          # 两行同一列一起加宽
