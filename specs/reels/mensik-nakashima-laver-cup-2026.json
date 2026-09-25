@@ -1,0 +1,321 @@
+{
+  "slug": "mensik-nakashima-laver-cup-2026",
+  "_column": "赛场之上",
+  "sources": {
+    "main": "https://www.youtube.com/watch?v=c9OFf0giquc"
+  },
+  "scorebox": [
+    80,
+    862,
+    520,
+    1036
+  ],
+  "_scorebox_why": "和同一届 ruud-cerundolo-laver-cup-2026 同一块转播板、同一个框（紧凑版 y 884–1016、宽版全名板 866–1032，见 tools/lavercup_scoreboard.py）；逐帧切法走 lavercup 判据。",
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "门西克",
+    "hook": "离胜利只差4分\n7分里只赢了1分",
+    "topic": "拉沃尔杯 · 欧洲队 vs 世界队",
+    "winner": "中岛布兰登",
+    "result": "6-1 3-6 10-7",
+    "matchup": [
+      {
+        "name": "中岛布兰登",
+        "name_en": "Brandon Nakashima",
+        "country": "USA",
+        "rank": 16
+      },
+      {
+        "name": "门西克",
+        "name_en": "Jakub Mensik",
+        "country": "CZE",
+        "rank": 15
+      }
+    ],
+    "_matchup_rank_why": "两源一致：lavercup.com 球员页「ATP RANKING: 16」（brandon-nakashima）／「ATP RANKING: 15」（jakub-mensik）；官网赛报「The World No.16」「Mensik, ranked No.15」；仓库 rankings.fetch_rankings()（tennisexplorer）Nakashima 16、Mensik 15。",
+    "_name_why": "两个中文名都走 `player_zh()`：Brandon Nakashima → 中岛布兰登（全库 6 条同名），Jakub Mensik → 门西克。",
+    "_heat_why": "两个人都在 HEAT_TOP_RANK=20 以内（16 / 15），拉沃尔杯首日第 2 场，这一场把团体比分扳成 1-1。",
+    "scoreboard": {
+      "court": "The O2",
+      "_court_why": "flashscore df_sui_1 `VEN÷O2 Arena ¬ TWN÷London`，同一届 ruud-cerundolo 同一块场地。",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%20%221%3A23%3A00%22%2C%20%22source%22%3A%20%22flashscore%20%E6%9C%AC%E5%9C%BA%20Kvc7yWkB%20df_sui_1%EF%BC%9A0%3A26%20%2B%200%3A40%20%2B%200%3A17%20%3D%201%3A23%22%2C%20%22cross_check%22%3A%20%22flashscore%20%E5%BC%80%E7%90%83%20AD%2014%3A45Z%EF%BC%88%E5%8C%97%E4%BA%AC%2022%3A45%EF%BC%8C%E6%8E%92%E5%AE%9A%E6%97%B6%E5%88%BB%EF%BC%89%E2%86%92%20%E7%BB%88%E5%9C%BA%20AO%2016%3A09%3A02Z%20%EF%BC%9D%201%3A24%EF%BC%9B%E6%8B%89%E6%B2%83%E5%B0%94%E6%9D%AF%E5%AE%98%E7%BD%91%E8%B5%9B%E6%8A%A5%E5%8F%AA%E5%86%99%E4%BA%86%E9%A6%96%E7%9B%98%205-0%20%E7%94%A8%E4%BA%86%2016%20%E5%88%86%E9%92%9F%22%7D",
+        "field": "duration"
+      }
+    },
+    "_duration_why": "印 1:23：flashscore 分盘 0:26+0:40+0:17；开球→终场时刻差 1:24 旁证（开球那个是排定时刻）。",
+    "_hook_why": "封面是官网唯一一张本场实拍（门西克发球），所以钩子从门西克这一边写。第一行：抢十门西克 6-4 领先，拿到 10 分就赢，还差 4 分（df_mh_1 Set 3）；第二行：从 6-4 起的 7 分里他只赢了 1 分，7-10（不写「最后7分」——读得成「最后 7 分钟」，test_旁白里的分不许读成分钟 那条口径）。两行有落差（只差 4 分 → 只拿 1 分），主语都是封面上的门西克；不写「抢十」这类要解释的词，不写总分差。每行 ≤ 10 字符。",
+    "portrait": {
+      "image": "assets/reel/mensik-nakashima-laver-cup-2026.jpg",
+      "focus": 0.7,
+      "focus_y": 0.0,
+      "zoom": 1.58,
+      "_why": "拉沃尔杯官网 WordPress 媒体库本场实拍 `JF2_3549_rGbEJIZv_20260925041923.jpg`（https://lavercup.com/wp-content/uploads/2026/09/JF2_3549_rGbEJIZv_20260925041923.jpg，2026-09-25T16:27Z 上传，Getty 图注「LONDON, ENGLAND – SEPTEMBER 25: Jakub Mensik of Team Europe serves against Brandon Nakashima of Team World during the Men's Singles match on day one of Laver Cup 2026 at The O2」），也是官网赛报「Nakashima levels the score 1-1」的头图：人物、赛事、日期、对手都写在图注里。抛球那一刻，眼睛睁着。",
+      "_low_res_why": "账号所有者 2026-09-25 选的（三条摆出来：授权抽帧中岛／用官网门西克这张 1200×800 实拍／等官方补图，他选了这一条）。官网媒体库本场只有这一张比赛实拍，没有中岛的；X @LaverCup 的 syndication 接口连续 429；AP 在沙箱 403。按 `fit: width` 铺、zoom 1.58：背景宽 1706px，相对源图放大 1.42 倍（比竖向铺满的 1.80 倍软得少）——认领这个代价。",
+      "fit": "width",
+      "_zoom_why": "竖向铺满（fit cover）时他的脸在源图 y 43%~65%，正落进钩子两行（渲出来一行横穿嘴），focus_y 在那条路上是死的；所以走 fit: width 让 focus_y 活起来，钉在 0（照片顶边贴画布顶边）。zoom 1.4 时照片下沿停在 y≈1008，在钩子第二行底下露出一条硬边；1.58 把下沿推到比分板后面，脸落在台头和钩子之间，抛球的手和球都在框内（球贴右缘）。四版都渲出来看过。"
+    }
+  },
+  "topbar": {
+    "line1": "2026 拉沃尔杯 首日",
+    "line2": "中岛布兰登 6-1 3-6 10-7 门西克"
+  },
+  "_topbar_why": "和 ruud-cerundolo-laver-cup-2026 同一写法：团体赛没有「级别＋站」，轮次写「首日」。line2 由 cover.winner / result / matchup 机械拼出。",
+  "_opening_time_source": {
+    "url": "https://global.flashscore.ninja/2/x/feed/f_2_0_0_en_1",
+    "match_id": "Kvc7yWkB",
+    "field": "AD",
+    "value": 1790347500,
+    "beijing": "2026-09-25T22:45+08:00",
+    "spoken_precision": "approximate-hour",
+    "_why": "flashscore AD=1790347500 → 14:45Z ＝ 北京 22:45，说「快十一点」。"
+  },
+  "_match": {
+    "status": "result_verified",
+    "source": "flashscore_points",
+    "source_id": "Kvc7yWkB",
+    "flashscore_id": "Kvc7yWkB",
+    "participants": [
+      "门西克",
+      "中岛布兰登"
+    ],
+    "set_scores_home_away": [
+      [
+        1,
+        6
+      ],
+      [
+        6,
+        3
+      ],
+      [
+        7,
+        10
+      ]
+    ],
+    "tiebreaks_home_away": [
+      null,
+      null,
+      null
+    ],
+    "winner": "中岛布兰登",
+    "loser": "门西克",
+    "winner_result": "6-1 3-6 10-7",
+    "loser_result": "1-6 6-3 7-10",
+    "_direction_why": "flashscore 当日表：AE=Mensik J.（home）、AF=Nakashima B.（away），BA/BB=1:6、BC/BD=6:3、BE/BF=7:10、AG/AH=1:2。participants 跟 home/away——**和 cover.matchup 的版式顺序相反**（matchup[0] 是赢家中岛）。第三盘按抢十记 10-7。"
+  },
+  "stats": {
+    "a": {
+      "aces": 3,
+      "df": 1,
+      "winners": 13,
+      "ue": 11,
+      "first_in": 30,
+      "first_won": 22,
+      "second_total": 23,
+      "second_won": 16,
+      "bp_conv": 2,
+      "bp_chances": 3,
+      "pts_won": 55,
+      "pts_total": 104,
+      "first_total": 53,
+      "headshot": "assets/players/headshots/atp-N0AE.png"
+    },
+    "b": {
+      "aces": 2,
+      "df": 1,
+      "winners": 18,
+      "ue": 28,
+      "first_in": 27,
+      "first_won": 17,
+      "second_total": 24,
+      "second_won": 17,
+      "bp_conv": 1,
+      "bp_chances": 2,
+      "pts_won": 49,
+      "pts_total": 104,
+      "first_total": 51,
+      "headshot": "assets/players/headshots/atp-M0NI.png"
+    },
+    "_source": "flashscore Kvc7yWkB 的 df_st_1，`match_stat_hooks.py Kvc7yWkB --home Mensik --away Nakashima --stats-block` 机器抄出；⚠️ 那份输出的 a/b 是 home/away（门西克在前），**这里按 cover.matchup 对调**：a＝中岛布兰登、b＝门西克。锚点核过：Break Points Saved 客队 1/2（中岛只丢一次发球局，第二盘 1-0 后被破）＝a；主队 1/3＝b。头像：中岛 atp-N0AE、门西克 atp-M0NI，全库同名同图。"
+  },
+  "segments": [
+    {
+      "source": "main",
+      "cx": 0.515,
+      "score_inset": true,
+      "start": 155.9,
+      "end": 167.6,
+      "narration": "",
+      "quote": [
+        {
+          "at": 1.3,
+          "text": "Team World have their first point\n世界队拿到了第一分"
+        },
+        {
+          "at": 4.5,
+          "text": "at London Laver Cup.\n伦敦拉沃尔杯的第一分"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_why": "冷开场：赛点落地之后。155.82 那一刀之后 156.5s 世界队替补席跳起来、158.5s 队长阿加西张开双臂（记分条 `MATCH 2 / 6 3 10`），159.83 之后门西克低头走回（160.5~162.5s），164.5s 网前握手、166.5s 门西克走开。解说原声 captions.txt 157.20「Team World have their first points at」、160.40「London Slaver Cup」（ASR，按发音写回 Laver Cup），段内 at = 原时刻 − 155.9。",
+      "crosses_cut": "159.83 / 162.76 —— 世界队替补席 → 门西克近景 → 网前握手，都是赛点之后。",
+      "point_end_ok": "比赛已经结束（赛点在 155.8 之前落地），之后记分条不再翻牌。",
+      "_ending_payoff_required": true,
+      "_ending_payoff_why": "正文倒数第二段按时间顺序重放 155.9–167.6，这次配旁白。"
+    },
+    {
+      "source": "main",
+      "cx": 0.515,
+      "score_inset": true,
+      "start": 0.3,
+      "end": 9.7,
+      "narration": "中岛布兰登第一次打拉沃尔杯。八月在华盛顿，他三盘赢过门西克。",
+      "_why": "② 落点：中岛拉沃尔杯首秀、八月华盛顿赢过门西克（拉沃尔杯官网首日对阵稿「Washington R16, 2026 Winner: Nakashima, 7-6(5), 3-6, 6-4」＋官网赛报「beating the Czech 7-6(5), 3-6, 6-4 in Washington this August」）。画面是第一盘 2-0 中岛发球 40-30 那一分的底线宽景（记分条 `MENSIK 0 30 / NAKASHIMA •2 40`），收在 9.78 那一刀、9.81 那次翻牌之前。"
+    },
+    {
+      "source": "main",
+      "cx": 0.515,
+      "score_inset": true,
+      "start": 10.6,
+      "end": 23.4,
+      "narration": "北京时间九月二十五号快十一点，拉沃尔杯首日第二场，这一轮赢一场记一分。开局十六分钟，中岛就五比零领先。",
+      "_why": "③ 坐标。画面是第一盘 0-5 门西克发球 40-0（记分条 `MENSIK •0 40 / NAKASHIMA 5 0`），镜头 9.78–23.52 之内。开球时刻见 _opening_time_source（22:45，说「快十一点」）。「十六分钟五比零」：官网赛报「racing to a 5-0 lead in just 16 minutes」。"
+    },
+    {
+      "source": "main",
+      "cx": 0.515,
+      "score_inset": true,
+      "start": 26.0,
+      "end": 35.7,
+      "narration": "五比一，中岛发球，占先拿到盘点。二十六分钟，第一盘六比一。",
+      "_why": "记分条 26.5~34.5s `SET POINT / MENSIK 1 / NAKASHIMA •5 AD`——中岛 5-1 发球局占先的盘点（df_mh_1 那一局 `40:40, 40:A |B2|`）。收在 35.8 那一刀、35.84 那次翻牌前 0.14s。用时 0:26 见 df_sui_1。",
+      "point_end_ok": "段尾 35.7 离 35.84 的翻牌只有 0.14s，是这一分落地后的溶解。"
+    },
+    {
+      "source": "main",
+      "cx": 0.515,
+      "score_inset": true,
+      "start": 54.6,
+      "end": 64.9,
+      "narration": "第二盘变了。一比零，门西克拿到两个破发点，第一个就兑现。这一盘他的穿越球，一次次压在边线上。",
+      "_why": "记分条 54.5~64.5s `2 BREAK POINTS / MENSIK 1 1 40 / NAKASHIMA •6 0 15`——第二盘 1-0 中岛发球 15-40（df_mh_1 那一局 `40:15 |B1|` 在门西克视角就是两个破发点、第一个兑现）。解说 63.84「There's the break」。「穿越球压在边线上」：官网赛报「His passing shots repeatedly found the lines as he moved Nakashima around the court」。镜头 54.49–64.96 之内。"
+    },
+    {
+      "source": "main",
+      "cx": 0.515,
+      "score_inset": true,
+      "start": 122.4,
+      "end": 128.75,
+      "narration": "五比三，门西克发球拿下这一盘，六比三，拖进抢十。",
+      "_why": "记分条 122.5~130.5s `2 SET POINTS / MENSIK •1 5 40 / NAKASHIMA 6 3 15`。解说 128.40「It's not how you start, it's how you finish」。收在 128.8 那一刀、128.83 翻牌前。",
+      "point_end_ok": "段尾 128.75 离 128.83 的翻牌只有 0.08s，这一分已经落地。"
+    },
+    {
+      "source": "main",
+      "cx": 0.515,
+      "score_inset": true,
+      "start": 130.8,
+      "end": 138.2,
+      "narration": "决胜盘按拉沃尔杯的规矩打抢十。门西克先领先，五比三，六比四。",
+      "_why": "130.5s 门西克握拳、132.5s 队长诺阿、134.5s 门西克和诺阿、136.5s 宽版全名板 `MATCH 2 … 1 6 / 6 3`（v2 整块贴回）。抢十逐分 df_mh_1 Set 3：0-1, 1-1, 2-1, 2-2, 2-3, 3-3, 4-3, 5-3, 5-4, 6-4 ——门西克 5-3、6-4 领先；官网赛报「Mensik moved ahead 6-4」。",
+      "crosses_cut": "134.0 —— 门西克拿下第二盘之后的反应 → 和队长说话 → 回到场上，同一段盘间。",
+      "point_end_ok": "段尾 138.2 离 138.34 的翻牌 0.14s，抢十前面的分集锦没播，下一段直接是 9-7 的赛点。"
+    },
+    {
+      "source": "main",
+      "cx": 0.515,
+      "score_inset": true,
+      "start": 138.2,
+      "end": 155.75,
+      "narration": "然后中岛追了上来：五比六，六比六，八比七反超，九比七拿到两个赛点。两个人在底线来回对拉，第一个赛点，门西克反手打长。",
+      "_why": "记分条 138.5~154.5s `2 MATCH POINTS / MENSIK 1 6 7 / NAKASHIMA •6 3 9`，中岛近端发球。df_mh_1 Set 3：6-4 之后 6-5, 6-6, 6-7, 7-7, 7-8, 7-9, 7-10（主队门西克在前）——中岛从 4-6 起最后 7 分拿下 6 分。最后一分：官网赛报「When Mensik sent his backhand long on the next point, Nakashima had completed the comeback」。",
+      "point_end_ok": "段尾 155.75 在 155.82 那一刀前，赛点已经落地（下一镜头世界队替补席跳起来）。"
+    },
+    {
+      "source": "main",
+      "cx": 0.515,
+      "score_inset": true,
+      "start": 155.9,
+      "end": 167.6,
+      "narration": "十比七。世界队替补席跳了起来，阿加西张开双臂。门西克低着头，走到网前握手。",
+      "_why": "和冷开场同一段画面，按时间顺序重放、配旁白：156.5s 替补席、158.5s 阿加西、160.5~162.5s 门西克、164.5s 握手。",
+      "crosses_cut": "159.83 / 162.76 —— 同第 1 段。",
+      "point_end_ok": "比赛已经结束。"
+    },
+    {
+      "source": "main",
+      "cx": 0.515,
+      "score_inset": true,
+      "start": 168.3,
+      "end": 184.9,
+      "narration": "拉沃尔杯首秀，中岛布兰登替世界队扳成一比一。今晚还有布勃利克对霍达尔，和阿尔卡拉斯搭档门西克的双打，门西克还要再上一次场。第一天打完，你押哪一边？",
+      "_why": "168.5s 中岛和世界队队友、172.5~176.5s 和阿加西、队友拥抱，180.5~184.5s 阿加西、中岛和替补席。185.08 起是片尾板，收在 184.9。今晚两场：官网赛报「Alexander Bublik versus Rafael Jodar in the first night session, followed by Bublik and Taylor Fritz against Carlos Alcaraz and Mensik in doubles」。",
+      "crosses_cut": "170~184 之间几刀都是赛后同一段庆祝，不跨进 185.08 的片尾板。",
+      "point_end_ok": "比赛已经结束，之后记分条的翻动是赛后动画。"
+    }
+  ],
+  "_frame_why": "全片 cx=0.515：和同一届 ruud-cerundolo-laver-cup-2026 同一个转播主机位（球场中线在源片 x≈989），账号所有者看过那条说「球场不居中」之后量出来的。",
+  "_editing_why": "源片 188.15 秒：比赛画面到 155.8（赛点），155.8~184.9 是赛后，185.08 起片尾板；没有场上采访。开场三格：冷开场（赛点之后＋解说原声）→ 落点（首秀＋八月华盛顿）→ 坐标，然后按时间顺序：第一盘盘点、第二盘破发、第二盘盘点、抢十、赛点、重放、赛后。认人：中岛红色 Team World 球衣，门西克蓝色 Team Europe 球衣＋白帽。集锦没播抢十前 15 分，旁白按 df_mh_1 逐分交代，不指认画面。",
+  "mixed_fps": {
+    "main": "单源，29.97fps。"
+  },
+  "_voice_why": "沿用默认：云见（`zh-CN-YunjianNeural`）＋6%。",
+  "_source": "账号所有者给的链接（https://youtu.be/c9OFf0giquc）。拉沃尔杯官方 YouTube（oEmbed author_name=Laver Cup）《Jakub Mensik v Brandon Nakashima Highlights | Laver Cup 2026 Match 2 | Laver Cup》，1920×1080 / 29.97fps / 188.15s（probe 实测），upload_date 20260925。四要素：①记分条 `MATCH 2 / MENSIK / NAKASHIMA`，158.5s `1 6 7 / 6 3 10`，和 flashscore Kvc7yWkB 逐字一致；②黑色场地 `LAVER CUP`、挡板 `Alipay+` `ROLEX` `UBS`；③门西克蓝色 Team Europe、中岛红色 Team World；④宽版全名板 `JAKUB MENSIK / BRANDON NAKASHIMA`。",
+  "_hit_data": "`match_feed.py show Kvc7yWkB`：第一盘中岛 5-0（第 2、4 局两次破门西克的发球局），6-1 用时 0:26；第二盘门西克 1-0 后接发破发、6-3，中岛只丢这一个发球局；抢十门西克 5-3、6-4 领先，中岛最后 7 分拿下 6 分，10-7。全场非受迫失误门西克 28、中岛 11（进数据图，不进钩子）。",
+  "_turning_points": [
+    "第一盘 0-2、0-4 两次破发（df_mh_1 `15:40 |B1|` 两次），5-0。",
+    "第二盘 1-0 门西克接发 40-15 破发，唯一一次破中岛。",
+    "抢十 6-4 门西克领先 → 6-5, 6-6, 6-7, 7-7, 7-8, 7-9, 7-10。"
+  ],
+  "editorial": {
+    "mode": "match_review",
+    "hook": [
+      "离胜利只差4分",
+      "7分里只赢了1分"
+    ],
+    "question": "拉沃尔杯首秀，第一盘二十六分钟六比一，第二盘被门西克扳回，抢十四比六落后——中岛布兰登是怎么拿下来的？",
+    "thesis": "第一盘中岛两次破发，十六分钟五比零、六比一；第二盘门西克接发破发，六比三；抢十门西克六比四领先，中岛最后七分拿下六分，十比七，世界队一比一。",
+    "beats": [
+      "冷开场：赛点之后世界队替补席跳起来，阿加西张开双臂。",
+      "中岛首秀；八月华盛顿他三盘赢过门西克。北京时间九月二十五号快十一点，首日第二场。",
+      "第一盘十六分钟五比零、二十六分钟六比一；第二盘门西克破发、六比三。",
+      "抢十门西克六比四领先，中岛从四比六追到十比七，最后一分门西克反手打长。"
+    ],
+    "_hook_why": "和 cover.hook 逐行相同。",
+    "human_context": {
+      "angle": "中岛布兰登是阿加西最后才召进世界队的（官网赛报「Called into Agassi's team late in the piece」），这是他的拉沃尔杯首秀；八月华盛顿他刚三盘赢过门西克。第一盘一边倒，第二盘被扳回，抢十 4-6 落后。",
+      "facts": [
+        "官网赛报《Nakashima levels the score 1-1 for Team World》（2026-09-25T17:29）：6-1, 3-6, 10-7；5-0 用时 16 分钟；Mensik moved ahead 6-4 before Nakashima fought back and regained the mini-break at 8-7；A second mini-break put Nakashima 9-7 ahead；Mensik sent his backhand long。",
+        "排名：中岛 16、门西克 15（官网球员页 ＋ tennisexplorer）。",
+        "flashscore Kvc7yWkB：分盘用时 0:26 / 0:40 / 0:17，逐分与赛报一致。"
+      ],
+      "sources": [
+        "https://lavercup.com/news/2026/09/25/nakashima-levels-the-score-1-1-for-team-world",
+        "https://lavercup.com/news/2026/09/24/laver-cup-2026-day-1-lineups-ruud-and-cerundolo-open-at-the-o2",
+        "https://www.flashscore.com/match/tennis/Kvc7yWkB/",
+        "https://www.youtube.com/watch?v=c9OFf0giquc"
+      ],
+      "voice_label": "首秀的抢十"
+    }
+  },
+  "_claims": [
+    {
+      "claim": "中岛从四比六起最后七分拿下六分",
+      "sources": [
+        "flashscore df_mh_1（Kvc7yWkB）Set 3 逐分：…5-3, 5-4, 6-4, 6-5, 6-6, 6-7, 7-7, 7-8, 7-9, 7-10（主队门西克在前）",
+        "拉沃尔杯官网赛报：Mensik moved ahead 6-4 before Nakashima fought back … 8-7 … 9-7 … backhand long"
+      ]
+    }
+  ],
+  "_no_repeat": "同一届兄弟片 ruud-cerundolo-laver-cup-2026（第 1 场）——这一条只一句带过赛制（首日一场一分），不重讲柏林旧账。",
+  "push": {
+    "summary": "中岛布兰登抢十逆转门西克",
+    "lead": "拉沃尔杯伦敦站首日第二场，中岛布兰登的拉沃尔杯首秀。第一盘 16 分钟 5-0、26 分钟 6-1；第二盘门西克接发破发扳回 6-3；抢十门西克 6-4 领先，中岛从 4-6 起 7 分里拿下 6 分，10-7。世界队扳成 1-1。",
+    "matchup": "中岛布兰登 vs 门西克",
+    "score": "6-1 3-6 10-7",
+    "auto": true
+  },
+  "_push_summary_why": "11 字位，主语中岛；「逆转」对的是抢十 4-6 落后。"
+}
