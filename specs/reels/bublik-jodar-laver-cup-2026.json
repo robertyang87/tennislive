@@ -1,0 +1,328 @@
+{
+  "slug": "bublik-jodar-laver-cup-2026",
+  "_column": "赛场之上",
+  "sources": {
+    "main": "https://www.youtube.com/watch?v=odd9fHGN0Zw"
+  },
+  "scorebox": [
+    80,
+    862,
+    520,
+    1036
+  ],
+  "_scorebox_why": "和同一届 ruud-cerundolo / mensik-nakashima 同一块转播板、同一个框；probe 带这个框量出 48 个翻牌时刻（point_ends）。",
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "霍达尔",
+    "hook": "替欧洲队拿回领先\n霍达尔横扫布勃利克",
+    "topic": "拉沃尔杯 · 欧洲队 vs 世界队",
+    "winner": "霍达尔",
+    "result": "6-2 6-3",
+    "matchup": [
+      {
+        "name": "霍达尔",
+        "name_en": "Rafael Jodar",
+        "country": "ESP",
+        "rank": 14
+      },
+      {
+        "name": "布勃利克",
+        "name_en": "Alexander Bublik",
+        "country": "KAZ",
+        "rank": 21
+      }
+    ],
+    "_matchup_rank_why": "两源一致：lavercup.com 球员页「ATP RANKING: 14」（rafael-jodar）／「ATP RANKING: 21」（alexander-bublik）；仓库 rankings.fetch_rankings()（tennisexplorer，21.09.2026）Jodar 14、Bublik 21。",
+    "_name_why": "两个中文名都走 `player_zh()`：Rafael Jodar → 霍达尔，Alexander Bublik → 布勃利克。",
+    "_heat_why": "霍达尔世界第 14（HEAT_TOP_RANK=20 以内），拉沃尔杯首日第 3 场，这一场让欧洲队重新领先 2-1。",
+    "scoreboard": {
+      "court": "The O2",
+      "_court_why": "同一届 ruud-cerundolo / mensik-nakashima 同一块场地（flashscore df_sui_1 `VEN÷O2 Arena ¬ TWN÷London`）。",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%20%221%3A25%3A00%22%2C%20%22source%22%3A%20%22flashscore%20%E6%9C%AC%E5%9C%BA%20hheFZ9KN%20df_sui_1%EF%BC%9A0%3A45%20%2B%200%3A40%20%3D%201%3A25%22%2C%20%22cross_check%22%3A%20%22flashscore%20%E7%BB%88%E5%9C%BA%20AO%2019%3A49%3A00Z%EF%BC%9B%E9%9B%86%E9%94%A6%E8%AE%B0%E5%88%86%E6%9D%A1%E5%AE%BD%E7%89%88%E6%9D%BF%E7%AC%AC%E4%B8%80%E7%9B%98%E7%BB%93%E6%9D%9F%E6%97%B6%2044%27%EF%BC%8884.5s%EF%BC%89%EF%BC%8C%E4%B8%8E%200%3A45%20%E5%B7%AE%E4%B8%80%E5%88%86%E9%92%9F%E4%BB%A5%E5%86%85%22%7D",
+        "field": "duration"
+      }
+    },
+    "_duration_why": "印 1:25：flashscore 分盘 0:45 + 0:40。",
+    "_hook_why": "按账号所有者 2026-09-25「钩子只讲重点或关键内容，以及结果」：第一行＝关键内容（这一场让欧洲队 2-1 重新领先——第 1 场鲁德赢、第 2 场中岛扳平、第 3 场霍达尔赢），不带比分数字和术语；第二行＝结果（霍达尔两盘拿下布勃利克）。每行 ≤ 10 字符（8／9）。",
+    "portrait": {
+      "frame_at": 172.0,
+      "focus": 0.6,
+      "focus_y": 0.4,
+      "zoom": 1.0,
+      "_frame_why": "集锦 172.0s：五比二那一分之后霍达尔握拳怒吼，背后是「LAVER CUP」大字，蓝色 Team Europe 球衣、睁眼、正脸偏侧——情绪和「横扫」对题。无人值守兜底：推片窗口内拉沃尔杯官网 WordPress 媒体库本场没有霍达尔的比赛实拍（20:45Z 扫最近 40 条，只有 9/24 发布会一张 1200×782、上一场的门西克一张；官网第 2 场的赛中图是赛后 18 分钟才上的，这一场过了 50 分钟仍然没有），X／AP／ATP 沙箱和 runner 都挡、Getty 只有带水印预览。",
+      "_low_res_why": "源片 1920×1080，铺 1080×1440 是放大 1.33 倍——认领这个代价。"
+    }
+  },
+  "topbar": {
+    "line1": "2026 拉沃尔杯 首日",
+    "line2": "霍达尔 6-2 6-3 布勃利克"
+  },
+  "_topbar_why": "和 ruud-cerundolo / mensik-nakashima 同一写法：团体赛没有「级别＋站」，轮次写「首日」。",
+  "_opening_time_source": {
+    "url": "https://global.flashscore.ninja/2/x/feed/f_2_0_0_en_1",
+    "match_id": "hheFZ9KN",
+    "field": "AD",
+    "value": 1790359800,
+    "beijing": "2026-09-26T02:10+08:00",
+    "spoken_precision": "approximate-hour",
+    "_why": "flashscore AD=1790359800 → 18:10Z ＝ 北京 9/26 02:10，说「凌晨两点多」；终场 AO 19:49Z 减用时 1:25 ≈ 18:24Z 开打，同一个钟点。"
+  },
+  "_match": {
+    "status": "result_verified",
+    "source": "flashscore_points",
+    "source_id": "hheFZ9KN",
+    "flashscore_id": "hheFZ9KN",
+    "participants": [
+      "霍达尔",
+      "布勃利克"
+    ],
+    "set_scores_home_away": [
+      [
+        6,
+        2
+      ],
+      [
+        6,
+        3
+      ]
+    ],
+    "tiebreaks_home_away": [
+      null,
+      null
+    ],
+    "winner": "霍达尔",
+    "loser": "布勃利克",
+    "winner_result": "6-2 6-3",
+    "loser_result": "2-6 3-6",
+    "_direction_why": "flashscore 当日表：AE=Jodar R.（home）、AF=Bublik A.（away），BA/BB=6:2、BC/BD=6:3，AB=3。participants 跟 home/away，和 cover.matchup 同序（霍达尔在前）。"
+  },
+  "stats": {
+    "a": {
+      "aces": 1,
+      "df": 3,
+      "winners": 23,
+      "ue": 18,
+      "first_in": 26,
+      "first_won": 21,
+      "second_total": 25,
+      "second_won": 15,
+      "bp_conv": 4,
+      "bp_chances": 9,
+      "pts_won": 69,
+      "pts_total": 113,
+      "first_total": 51,
+      "headshot": "assets/players/headshots/atp-J0DZ.png"
+    },
+    "b": {
+      "aces": 1,
+      "df": 3,
+      "winners": 12,
+      "ue": 25,
+      "first_in": 36,
+      "first_won": 23,
+      "second_total": 26,
+      "second_won": 6,
+      "bp_conv": 1,
+      "bp_chances": 3,
+      "pts_won": 44,
+      "pts_total": 113,
+      "first_total": 62,
+      "headshot": "assets/players/headshots/atp-BK92.png"
+    },
+    "_source": "flashscore hheFZ9KN 的 df_st_1，`match_stat_hooks.py hheFZ9KN --home Jodar --away Bublik --stats-block` 机器抄出；home＝霍达尔＝cover.matchup[0]，不用对调。锚点：Break Points Converted 主队 4/9、客队 1/3（布勃利克只破了一次，第二盘 4-0 之后）。头像：霍达尔 atp-J0DZ、布勃利克 atp-BK92。"
+  },
+  "_frame_why": "全片 cx=0.515：和同一届 ruud-cerundolo / mensik-nakashima 同一个转播主机位。",
+  "_editing_why": "源片 209.17 秒：比赛画面到 178.68（赛点），178.68~205.4 是赛后（霍达尔怒吼、握手、回替补席），205.5 起片尾板；没有场上采访。开场三格：冷开场（赛点之后＋解说原声「Perfect debut for the 20-year-old」）→ 落点（二十岁首秀＋去年奖杯被世界队拿走）→ 坐标，然后按时间顺序：第一盘 1-1 保发、3-2 破发、5-2 盘点、第二盘 1-0 破发、4-0 被破、4-2 保发、5-3 赛点、重放、赛后。132~156（第二盘 4-1 布勃利克发球局）那一分看不出胜负，整段不用。认人：霍达尔蓝色 Team Europe，布勃利克红色 Team World＋白色 EA7 发带。frame-grab bublik-jodar-lc（每秒一帧）逐帧核过盘点、第二盘长回合、4-2 那一分的击球方。",
+  "mixed_fps": {
+    "main": "单源，29.97fps。"
+  },
+  "_voice_why": "沿用默认：云见（`zh-CN-YunjianNeural`）＋6%。",
+  "_source": "拉沃尔杯官方 YouTube（watcher 从频道 RSS 抓到）《Rafael Jodar v Alexander Bublik Highlights | Laver Cup 2026 Match 3》，1920×1080 / 29.97fps / 209.17s（probe 实测）。四要素：①记分条 `MATCH 3 / JODAR / BUBLIK`，182.5s `6 6 / 2 3`，和 flashscore hheFZ9KN 逐字一致；②黑色场地 `LAVER CUP LONDON 2026`、挡板 `Alipay+` `ROLEX` `UBS`；③霍达尔蓝色 Team Europe、布勃利克红色 Team World；④宽版全名板 `RAFAEL JODAR / ALEXANDER BUBLIK`。",
+  "_hit_data": "`match_feed.py show hheFZ9KN`：第一盘 1-1 霍达尔发球救下两个破发点，3-2 接发 40-0 第一个破发点兑现，5-2 接发 40-30 盘点兑现，6-2（0:45）；第二盘 1-0 布勃利克两次占先、霍达尔第二个破发点兑现 2-0，3-0 再破成 4-0，4-0 发球 15-40 被破（布勃利克全场唯一一次、全场第 3 个破发点），5-3 发球 40-0 第一个赛点兑现，6-3（0:40）。布勃利克二发 26 分只赢 6 分（霍达尔二发接发 77%）。",
+  "_turning_points": [
+    "第一盘 3-2 布勃利克发球 0-40（记分条 48.5s `3 BREAK POINTS`），第一个就破。",
+    "第一盘 5-2 盘点：霍达尔被调到正手位外侧扑救摔倒，布勃利克打空门没进（67~72s，解说「open goal, Bublik missed it」）。",
+    "第二盘 1-0 布勃利克发球局两次占先被扳回，破发 2-0。"
+  ],
+  "editorial": {
+    "mode": "match_review",
+    "hook": [
+      "替欧洲队拿回领先",
+      "霍达尔横扫布勃利克"
+    ],
+    "question": "二十岁第一次打拉沃尔杯，对面是世界第二十一的布勃利克——霍达尔是怎么只丢五局的？",
+    "thesis": "第一盘霍达尔两次破发，盘点上他摔倒在地、布勃利克却打丢了空门，六比二；第二盘又两次破发，四比零，只被破一次，六比三，欧洲队二比一重新领先。",
+    "beats": [
+      "冷开场：赛点之后霍达尔怒吼，解说「Perfect debut for the 20-year-old」。",
+      "二十岁首秀；去年旧金山奖杯被世界队拿走。北京时间九月二十六号凌晨两点多，首日第三场。",
+      "第一盘保发、破发、盘点上摔倒还是拿下，六比二。",
+      "第二盘长回合破发、四比零、被破一次、五比三赛点，六比三，欧洲队二比一。"
+    ],
+    "_hook_why": "和 cover.hook 逐行相同。",
+    "human_context": {
+      "angle": "霍达尔二十岁，第一次打拉沃尔杯（集锦解说「Perfect debut for the 20-year-old for Team Europe」）；去年旧金山世界队 15-9 夺冠（仓库 laver-cup-history-2026 已核），解说「as they look to reclaim the trophy here in London」。这一场让欧洲队 2-1 重新领先。",
+      "facts": [
+        "flashscore hheFZ9KN：6-2 6-3，分盘用时 0:45 / 0:40，终场 19:49Z。",
+        "排名：霍达尔 14、布勃利克 21（官网球员页 ＋ tennisexplorer）。",
+        "首日前两场：鲁德胜塞伦多洛（欧洲队 1-0）、中岛布兰登胜门西克（1-1），见同届两条 spec。"
+      ],
+      "sources": [
+        "https://www.flashscore.com/match/tennis/hheFZ9KN/",
+        "https://www.youtube.com/watch?v=odd9fHGN0Zw",
+        "https://lavercup.com/player/rafael-jodar"
+      ],
+      "voice_label": "二十岁的首秀"
+    }
+  },
+  "_no_repeat": "同一届兄弟片 ruud-cerundolo（第 1 场）和 mensik-nakashima（第 2 场）——这一条不重讲赛制细节和柏林旧账，只一句「赢一场记一分」。",
+  "push": {
+    "summary": "霍达尔直落两盘胜布勃利克",
+    "lead": "拉沃尔杯伦敦站首日第三场，20 岁的霍达尔第一次打拉沃尔杯。第一盘 3-2 破发，5-2 盘点上他被调到场外摔倒，布勃利克面对空门却没打进，6-2；第二盘两次破发 4-0，6-3。欧洲队 2-1 重新领先。",
+    "matchup": "霍达尔 vs 布勃利克",
+    "score": "6-2 6-3",
+    "auto": true
+  },
+  "_push_summary_why": "12 字位，主语霍达尔。",
+  "segments": [
+    {
+      "source": "main",
+      "cx": 0.515,
+      "score_inset": true,
+      "start": 178.7,
+      "end": 190.0,
+      "narration": "",
+      "quote": [
+        {
+          "at": 0.3,
+          "text": "Perfect debut for the 20-year-old\n20岁的他，完美首秀"
+        },
+        {
+          "at": 2.7,
+          "text": "for Team Europe.\n为欧洲队"
+        },
+        {
+          "at": 5.3,
+          "text": "Puts another point on the board\n又给欧洲队添了一分"
+        },
+        {
+          "at": 7.8,
+          "text": "as they look to reclaim the trophy here in London.\n他们要在伦敦把奖杯拿回来"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_why": "冷开场：赛点落地之后。178.68 那一刀切到霍达尔近景怒吼（179~181s），182.5s 记分条 `6 6 / 2 3`，184.5s 宽版全名板，186.5~190s 网前握手。解说原声 179.04~187.36（captions.txt）。",
+      "point_end_ok": "比赛已经结束，190.19 起是宽版板动画。",
+      "_ending_payoff_required": true,
+      "_ending_payoff_why": "正文倒数第二段按时间顺序重放 155.9–167.6，这次配旁白。"
+    },
+    {
+      "source": "main",
+      "cx": 0.515,
+      "score_inset": true,
+      "start": 0.3,
+      "end": 11.2,
+      "narration": "二十岁的霍达尔，第一次打拉沃尔杯。去年在旧金山，奖杯被世界队拿走了，今年欧洲队要在伦敦拿回来。",
+      "_why": "② 落点：二十岁首秀（集锦解说 179.04「Perfect debut for the 20-year-old」）；去年旧金山世界队夺冠（laver-cup-history-2026 已核「二〇二五年旧金山，世界队又以十五比九夺冠」＋解说「reclaim the trophy」）。画面：第一盘第一局霍达尔发球 15-15（记分条 `MATCH 3 / JODAR •15 / BUBLIK 15`），收在 11.31 那一刀之前。"
+    },
+    {
+      "source": "main",
+      "cx": 0.515,
+      "score_inset": true,
+      "start": 28.0,
+      "end": 45.0,
+      "narration": "北京时间九月二十六号凌晨两点多，拉沃尔杯首日第三场，赢一场，记一分。第一盘一比一，霍达尔的发球局被一次次拖进平分，两个破发点，他都保了下来。",
+      "_why": "③ 坐标，见 _opening_time_source。画面：第一盘 1-1 霍达尔发球占先（记分条 `JODAR •1 AD / BUBLIK 1`），40.5s 起布勃利克走回、42.5s `DEUCE #3`。df_mh_1 那一局（2-1）`30:40 |B1| … 40:A |B1| …`，两个破发点都救下、最后保发。段尾放到 45.0：43.74 那次翻牌之后 1.26 秒，44~45s 是看台镜头。"
+    },
+    {
+      "source": "main",
+      "cx": 0.515,
+      "score_inset": true,
+      "start": 46.8,
+      "end": 54.35,
+      "narration": "再轮到他接发，零比四十，第一个破发点就破了，四比二。",
+      "_why": "记分条 48.5~54.5s `3 BREAK POINTS / JODAR 3 40 / BUBLIK •2 0`；df_mh_1 第一盘 4-2 那一局 `15:0, 30:0, 40:0 |B1|` 之后主队拿下＝第一个破发点兑现。收在 54.42 那一刀、54.45 翻牌之前。"
+    },
+    {
+      "source": "main",
+      "cx": 0.515,
+      "score_inset": true,
+      "start": 56.0,
+      "end": 74.4,
+      "narration": "又一个接发局，霍达尔拿到盘点。他被调到正手位外侧，扑过去救球，摔倒在地，半边场地全空了。可布勃利克这一拍，没打进。他从地上爬起来，第一盘六比二，已经是他的了。",
+      "_why": "记分条 56.5~70.5s `SET POINT / JODAR 5 40 / BUBLIK •2 30`。frame-grab 逐帧：霍达尔在近端，66s 被拉到右侧（他的正手位）边线外救球，67s 摔倒，68~70s 躺在场上、半场空着，布勃利克在远端；72.5s 记分条 `6 / 2`。解说 67.6「down he goes and the set goes his way anyway」、78.08「it was an open goal, Bublik missed it」。",
+      "point_end_ok": "这一盘已经结束（72.5s 记分条已是 6-2），75.28 起那串翻牌是整盘板的切换动画。"
+    },
+    {
+      "source": "main",
+      "cx": 0.515,
+      "score_inset": true,
+      "start": 83.0,
+      "end": 91.6,
+      "narration": "第一盘打了四十四分钟。欧洲队的替补席，站起来迎他，一个个和他击掌。",
+      "_why": "76.5~90.5s 欧洲队替补席（蓝色 LAVER CUP 外套、队长诺阿）、84.5s 宽版板 `MATCH 3 … 44'`。",
+      "point_end_ok": "盘间，没有比赛进行。"
+    },
+    {
+      "source": "main",
+      "cx": 0.515,
+      "score_inset": true,
+      "start": 98.0,
+      "end": 116.4,
+      "narration": "第二盘第二局，布勃利克两次占先，两次被扳平。他的二发一直在挨打，全场二发二十六分，只赢了六分。这一分两个人在底线相持了很久，霍达尔一拍打穿。第二个破发点，他兑现了，二比零。",
+      "_why": "记分条 92.5~116.5s `JODAR 6 1 / BUBLIK •2 0 AD`。frame-grab：布勃利克近端、霍达尔远端，104~113s 底线来回，114s 球从布勃利克正手侧穿过；解说 114.96「that is as good as it gets」。df_mh_1 第二盘 2-0 那一局 `40:30 |B1|, 40:40, 40:A, 40:40, 40:A, 40:40, A:40 |B1|` 之后主队拿下＝两次占先被扳平、第二个破发点兑现。收在 116.4，117 起溶解到下一分。 「二发二十六分只赢六分」：df_st_1 客队 2nd serve points won 23% (6/26)。"
+    },
+    {
+      "source": "main",
+      "cx": 0.515,
+      "score_inset": true,
+      "start": 118.4,
+      "end": 131.3,
+      "narration": "他接着又破一次，四比零。可四比零之后，布勃利克拿到全场第三个破发点，终于破了他一次，也是全场唯一的一次。",
+      "_why": "记分条 118.5~128.5s `2 BREAK POINTS / JODAR •6 4 15 / BUBLIK 2 0 40`；132.5s `6 4 / 2 1`。解说 128.48「Third time lucky. Signs of life for Team World」。df_mh_1 4-1 那一局 `15:40 |B1|` 客队拿下；布勃利克全场破发 1/3。 「接着又破一次、四比零」：df_mh_1 第二盘 4-0 那一局客队发球、主队拿下（破发）。「唯一的一次」：Break Points Converted 客队 1/3、Service games won 主队 8/9。",
+      "point_end_ok": "127.93 那一分落地之后留到 131.3（130.23 那次翻牌后 1.07 秒），130.5s 布勃利克走回。"
+    },
+    {
+      "source": "main",
+      "cx": 0.515,
+      "score_inset": true,
+      "start": 164.0,
+      "end": 172.9,
+      "narration": "四比二，霍达尔发球。他一拍大角度，把布勃利克调到了场外，拿到五比二。",
+      "_why": "记分条 164.5~172.5s `JODAR •6 4 40 / BUBLIK 2 2 15`。frame-grab：169s 霍达尔在远端击球，170s 布勃利克扑向右侧边线外（他的正手侧）没够到；171.94 切到霍达尔握拳。df_mh_1 5-2 那一局主队拿下。",
+      "crosses_cut": "171.94 —— 同一分落地后的反应镜头。"
+    },
+    {
+      "source": "main",
+      "cx": 0.515,
+      "score_inset": true,
+      "start": 173.0,
+      "end": 180.9,
+      "narration": "五比三，霍达尔发球，三个赛点，第一个就拿下。",
+      "_why": "记分条 174.5~178.5s `3 MATCH POINTS / JODAR •6 5 40 / BUBLIK 2 3 0`；df_mh_1 6-3 那一局 `15:0, 30:0, 40:0 |B3|` 之后主队拿下。收在 178.68 那一刀前。",
+      "point_end_ok": "赛点在 178.6 前落地，179.58 那次翻牌是记分条把「3 MATCH POINTS」撤成终局比分；段尾 180.9 在翻牌后 1.3 秒。"
+    },
+    {
+      "source": "main",
+      "cx": 0.515,
+      "score_inset": true,
+      "start": 180.9,
+      "end": 193.4,
+      "narration": "六比二，六比三，一小时二十五分钟，布勃利克全场只拿到五局。赛后两个人在网前握手，这是霍达尔在拉沃尔杯的第一场胜利。",
+      "_why": "和冷开场同一段画面，按时间顺序重放、配旁白：179~181s 霍达尔怒吼、186.5~190.5s 网前握手、192.5s 回替补席。用时见 cover.scoreboard。",
+      "point_end_ok": "比赛已经结束。"
+    },
+    {
+      "source": "main",
+      "cx": 0.515,
+      "score_inset": true,
+      "start": 193.5,
+      "end": 205.4,
+      "narration": "欧洲队二比一，重新领先。最后一场双打，阿尔卡拉斯搭档门西克，布勃利克还要再上一次场。第一天打完，你押哪一边？",
+      "_why": "194.5~204.5s 两人走回替补席、霍达尔和欧洲队队友击掌；205.5 起片尾板，收在 205.4。团体比分：第 1 场鲁德（欧洲）、第 2 场中岛（世界）、第 3 场霍达尔（欧洲）→ 2-1；首日双打 GrlWiizh `Alcaraz C./Mensik J. v Bublik A./Fritz T.`（flashscore 当日表）。",
+      "point_end_ok": "比赛已经结束，193~206 那串翻牌是片尾板动画。"
+    }
+  ],
+  "_claims": []
+}

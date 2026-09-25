@@ -6786,10 +6786,18 @@ COVER_FILL_W, COVER_FILL_H = 1080, 1440
 #:   太丑了」）。我把赢家本场官方图、她美网官方图、本场抽帧、等图四条渲成
 #:   预览摆出来，账号所有者选了抽帧（23.0s 近景，render run 36128217087）。
 #:   源片 1920×1080，放大 1.33 倍。
+#: - `bublik-jodar-laver-cup-2026`：2026-09-25 拉沃尔杯首日第 3 场。⚠️ **这一条
+#:   不是他当面点的头**：账号所有者睡前说「继续盯着拉沃尔杯后面两场比赛，然后做
+#:   赛场之上视频」，授权无人值守做完；推片窗口内官网 WordPress 媒体库本场没有
+#:   霍达尔的赛中实拍（终场后 80 分钟只多了播客和采访缩略图，find_cover_photo
+#:   三档查过），X／AP／ATP 沙箱和 runner 都挡。同样的情形他前三次都选了抽帧
+#:   （上面三条），所以按那个口径先推；**早上他要换图，删掉这一行、换 image、
+#:   重渲重推**。源片 1920×1080，放大 1.33 倍。
 OWNER_APPROVED_FRAME_COVERS = frozenset({
     "wu-duckworth-us-open-2026-r2",
     "zhiyenbayeva-bouzas-bjk-cup-2026",
     "wang-prozorova-singapore-2026-qf",
+    "bublik-jodar-laver-cup-2026",
 })
 
 #: 「封面大图一律用官方高清实拍」这条规矩（账号所有者 2026-08-16 重申）立起来
