@@ -1,0 +1,73 @@
+{
+  "scoreboard_qc_sha256": "6f7b4f3d5607aa58df3b78f6e6e3b021c65052c15b376bc61b0904435a26ac74",
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 3.827,
+  "layout": "full",
+  "segments_seconds": 251.82,
+  "topbar": {
+    "line1": "2026 比利·简·金杯 半决赛",
+    "line2": "穆霍娃 7-5 6-4 博萨斯·马内罗",
+    "start": 1.2,
+    "end": 253.02
+  },
+  "film_seconds": 256.88,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 20.832,
+    "2": 11.52,
+    "3": 12.864,
+    "4": 7.944,
+    "5": 14.64,
+    "6": 11.112,
+    "7": 16.44,
+    "8": 3.864,
+    "10": 9.504,
+    "11": 10.968,
+    "12": 10.704,
+    "13": 11.832,
+    "14": 7.656,
+    "16": 8.064
+  },
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "muchova-bouzas-bjk-cup-2026-sf",
+    "received_at": "2026-09-25T12:38:29Z",
+    "artifact_ready_at": "2026-09-25T12:46:33Z",
+    "elapsed_seconds": 484.236,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "20c4d4837e847b2bc9629e95888963a04aefb40a408cc3e482441aaf31cbf495",
+    "spec_sha256": "692aa117d59cb252436702e78722bcfd6c5ee40cee9bfe2c100b389bb169d289",
+    "run_id": "36136082913",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-09-25T12:40:44Z",
+        "run_id": "36136082913"
+      }
+    ],
+    "render_seconds": 349.236,
+    "pre_render_seconds": 135.0
+  },
+  "film_sha256": "20c4d4837e847b2bc9629e95888963a04aefb40a408cc3e482441aaf31cbf495",
+  "film_bytes": 139044528,
+  "qc_attestation_sha256": "0e8ed4d344272d64340622f06f7dbe71c6e14a50a4a5be873f73d7926d7e7db4",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-09-25T12:40:44Z",
+      "run_id": "36136082913"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-25T12:46:34Z",
+      "run_id": "36136082913"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-muchova-bouzas-bjk-cup-2026-sf/muchova-bouzas-bjk-cup-2026-sf.mp4",
+  "video_bytes": 139044528
+}
