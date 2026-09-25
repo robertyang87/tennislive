@@ -1,0 +1,24 @@
+{
+  "verified_at": "2026-09-21T12:53:01.652155+00:00",
+  "sample_count": 1,
+  "diagnostic_socket_timeout_s": 30,
+  "cold_api_attempts": 1,
+  "warm_api_attempts": 0,
+  "cold_wall_ms": 13283.65,
+  "warm_wall_ms": 4.232,
+  "input_tokens": 644,
+  "estimated_known_cost_usd": 2.7048000000000003e-05,
+  "network_disabled_during_warm_verification": true,
+  "cache_survived_database_reopen": true,
+  "classification": {
+    "id": "tennistv:4213580",
+    "decision": "api_ok",
+    "production_action": "unchanged",
+    "elapsed_ms": 13276.3,
+    "suggestion": "uncertain",
+    "confidence": 0.39,
+    "model": "jev-1.13.0",
+    "needs_review": true
+  },
+  "production_dispatches": 0
+}
