@@ -19,13 +19,16 @@
 
 字幕的样子（「小且精美」）：
 
-    英文  Noto Serif Italic  27px  浅象牙 85%  ← 上行，原文，意大利体压一档
-    中文  Noto Sans CJK SC   36px  暖白        ← 下行，主读行
+    英文  Noto Sans          31px  白  ← 上行，原文
+    中文  Noto Sans CJK SC   36px  白  ← 下行，主读行
 
 账号所有者看过第一版预览：「中文在下吧」「中文字体不好看」——第一版是
 中文宋体（Noto Serif CJK）在上，笔画细、在 1080p 画面上发虚，换成黑体放到下行。
+随后给了一张参照截图（拉沃尔杯官方片自带的字幕）：中英都是常规无衬线体、
+字号相近、纯白、没有底框只有一点柔影——英文跟着从意大利衬线体换成 Noto Sans，
+字号 27 → 31。
 
-没有底框，只有一圈 1.6px 的半透明描边加 1px 柔化——底框在 1080p 横屏上会切出
+没有底框，只有一圈 1px 的半透明描边加一点柔影——底框在 1080p 横屏上会切出
 一条黑带，恰恰把「不裁切」换成了「被挡住」。两行贴着画面底边 46px。
 
 用法：
@@ -54,11 +57,11 @@ LINE_PX = CANVAS_W - 160 - 160
 
 FONT_FILES = {
     "zh": "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",
-    "en": "/usr/share/fonts/truetype/noto/NotoSerif-Italic.ttf",
+    "en": "/usr/share/fonts/truetype/noto/NotoSans-Regular.ttf",
 }
 #: ASS 的 Fontname 要写字体**自己声明的名字**，写错 libass 不报错、悄悄回退。
-ASS_FONT = {"zh": "Noto Sans CJK SC", "en": "Noto Serif"}
-FONT_SIZE = {"zh": 36, "en": 27}
+ASS_FONT = {"zh": "Noto Sans CJK SC", "en": "Noto Sans"}
+FONT_SIZE = {"zh": 36, "en": 31}
 #: 两行之间和离底边的距离（px）
 MARGIN_BOTTOM = 46
 LINE_GAP = 8
@@ -139,14 +142,14 @@ ScaledBorderAndShadow: yes
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: ZH,{ASS_FONT['zh']},{FONT_SIZE['zh']},&H00F4F7FA,&H00FFFFFF,&H66000000,&H99000000,0,0,0,0,100,100,1,0,1,1.6,1,2,160,160,{MARGIN_BOTTOM},1
-Style: EN,{ASS_FONT['en']},{FONT_SIZE['en']},&H26DCEBF2,&H00FFFFFF,&H70000000,&H99000000,0,1,0,0,100,100,0.4,0,1,1.4,1,2,160,160,{en_margin},1
+Style: ZH,{ASS_FONT['zh']},{FONT_SIZE['zh']},&H00FFFFFF,&H00FFFFFF,&H80000000,&H90000000,0,0,0,0,100,100,1,0,1,1.0,1.2,2,160,160,{MARGIN_BOTTOM},1
+Style: EN,{ASS_FONT['en']},{FONT_SIZE['en']},&H00FFFFFF,&H00FFFFFF,&H80000000,&H90000000,0,0,0,0,100,100,0.3,0,1,1.0,1.2,2,160,160,{en_margin},1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 """
     t0 = float(spec["start"])
-    fade = r"{\blur0.8\fad(120,120)}"
+    fade = r"{\blur1\fad(120,120)}"
     ev = []
     for ln in spec.get("lines") or []:
         a, b = _ts(float(ln["start"]) - t0), _ts(float(ln["end"]) - t0)

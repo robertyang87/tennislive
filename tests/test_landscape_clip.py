@@ -43,7 +43,7 @@ def test_ASS_字体字号_英文在上中文在下():
     ass = lc.build_ass(_spec([{"start": 11, "end": 13, "en": "Hi.", "zh": "你好"}]))
     # 账号所有者：「中文在下吧」「中文字体不好看」（第一版是宋体在上）
     assert "Style: ZH,Noto Sans CJK SC,36," in ass
-    assert "Style: EN,Noto Serif,27," in ass
+    assert "Style: EN,Noto Sans,31," in ass
     zh_mv = int(ass.split("Style: ZH,")[1].split("\n")[0].split(",")[-2])
     en_mv = int(ass.split("Style: EN,")[1].split("\n")[0].split(",")[-2])
     assert zh_mv < en_mv, "MarginV 越小越贴底：中文要在英文下面"
