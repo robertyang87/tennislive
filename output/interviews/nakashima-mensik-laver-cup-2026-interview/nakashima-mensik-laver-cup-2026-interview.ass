@@ -1,0 +1,204 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1440
+WrapStyle: 0
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: EN,Noto Sans,46,&H00FFFFFF,&H00000000,&H00000000,1,0,0,0,100,100,0,0,1,0,0,8,64,64,1141,1
+Style: ZH,Noto Sans CJK SC,70,&H0074DCC3,&H00000000,&H00000000,1,0,0,0,100,100,0,0,1,0,0,8,64,64,1194,1
+Style: HEADA,得意黑,54,&H00FFFFFF,&H00000000,&H00000000,0,0,0,0,100,100,1,0,1,0,0,8,48,48,24,1
+Style: HEADB,Noto Sans CJK SC,38,&H00DBE2D5,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,1.5,0,8,48,48,92,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 2,0:00:00.00,0:02:24.85,HEADA,,0,0,0,,{\r\c&H8CDC4A&\an8\pos(540,24)\bord0\shad0\p1\pbo3.5}m 6.8 6.2 l 7.1 4.3 8.0 2.6 9.3 1.2 11.1 0.3 13.0 0.0 15.0 0.3 16.7 1.2 18.1 2.6 19.0 4.3 19.3 6.2 19.3 19.0 19.0 20.9 18.1 22.6 16.7 24.0 15.0 24.9 13.0 25.2 11.1 24.9 9.3 24.0 8.0 22.6 7.1 20.9 6.8 19.0 m 24.5 16.8 l 24.2 20.2 23.3 23.4 22.0 26.2 20.2 28.6 18.0 30.4 15.6 31.5 13.0 31.9 10.5 31.5 8.0 30.4 5.9 28.6 4.1 26.2 2.7 23.4 1.8 20.2 1.6 16.8 5.1 16.8 5.3 19.4 5.9 21.8 6.9 24.0 8.1 25.8 9.6 27.2 11.3 28.1 13.0 28.4 14.8 28.1 16.4 27.2 17.9 25.8 19.2 24.0 20.1 21.8 20.7 19.4 20.9 16.8 m 11.2 31.9 l 14.8 31.9 14.8 39.1 11.2 39.1 m 6.2 38.2 l 19.8 38.2 19.8 42.0 6.2 42.0 m 9.6 9.0 l 16.5 9.0 16.5 7.0 9.6 7.0 m 9.6 13.6 l 16.5 13.6 16.5 11.6 9.6 11.6 m 9.6 18.2 l 16.5 18.2 16.5 16.2 9.6 16.2 m 41.2 0{\r\p0}{\r\fn得意黑\fs54}2026 拉沃尔杯 首日
+Dialogue: 1,0:00:00.00,0:02:24.85,HEADB,,0,0,0,,{\r\fnNoto Sans CJK SC\fs38\c&H8CDC4A&\an8\pos(540,92)}中岛布兰登 {\r\fnTL Score\c&H8CDC4A&\b1\fs44}6-{\r\fnTL Score\b300\fs44}1 {\r\fnTL Score\b300\fs44}3-{\r\fnTL Score\c&H8CDC4A&\b1\fs44}6 {\r\fnTL Score\c&H8CDC4A&\b1\fs44}10-{\r\fnTL Score\b300\fs44}7{\r\fnNoto Sans CJK SC\fs38} 门西克 · 赛后场上采访
+Dialogue: 0,0:00:00.08,0:00:01.52,EN,,0,0,0,,Brandon, congratulations.
+Dialogue: 0,0:00:00.08,0:00:01.52,ZH,,0,0,0,,布兰登 恭喜你
+Dialogue: 0,0:00:01.52,0:00:02.80,EN,,0,0,0,,What a roller coaster.
+Dialogue: 0,0:00:01.52,0:00:02.80,ZH,,0,0,0,,真是过山车
+Dialogue: 0,0:00:02.80,0:00:04.72,EN,,0,0,0,,Great start and then things got a little tight
+Dialogue: 0,0:00:02.80,0:00:04.72,ZH,,0,0,0,,开局很好 后来打得有点紧
+Dialogue: 0,0:00:04.72,0:00:05.12,EN,,0,0,0,,for you.
+Dialogue: 0,0:00:04.72,0:00:05.12,ZH,,0,0,0,,对你来说
+Dialogue: 0,0:00:05.12,0:00:06.32,EN,,0,0,0,,Talk us through.
+Dialogue: 0,0:00:05.12,0:00:06.32,ZH,,0,0,0,,给我们讲讲
+Dialogue: 0,0:00:06.32,0:00:08.64,EN,,0,0,0,,Yeah, I mean first match at Laver Cup,
+Dialogue: 0,0:00:06.32,0:00:08.64,ZH,,0,0,0,,是的 第一次打拉沃尔杯
+Dialogue: 0,0:00:08.64,0:00:10.08,EN,,0,0,0,,obviously some nerves coming out,
+Dialogue: 0,0:00:08.64,0:00:10.08,ZH,,0,0,0,,肯定有点紧张
+Dialogue: 0,0:00:10.08,0:00:11.04,EN,,0,0,0,,but you know,
+Dialogue: 0,0:00:10.08,0:00:11.04,ZH,,0,0,0,,不过你知道
+Dialogue: 0,0:00:11.04,0:00:13.04,EN,,0,0,0,,it's pretty normal and eventually
+Dialogue: 0,0:00:11.04,0:00:13.04,ZH,,0,0,0,,这很正常 后来
+Dialogue: 0,0:00:13.04,0:00:14.72,EN,,0,0,0,,when I lost the second set,
+Dialogue: 0,0:00:13.04,0:00:14.72,ZH,,0,0,0,,丢掉第二盘的时候
+Dialogue: 0,0:00:14.72,0:00:16.96,EN,,0,0,0,,just try to tell myself to fight for every point.
+Dialogue: 0,0:00:14.72,0:00:16.96,ZH,,0,0,0,,就告诉自己每一分都要拼
+Dialogue: 0,0:00:16.96,0:00:19.20,EN,,0,0,0,,You know, trust the guys on the bench,
+Dialogue: 0,0:00:16.96,0:00:19.20,ZH,,0,0,0,,相信板凳上的队友
+Dialogue: 0,0:00:19.20,0:00:20.88,EN,,0,0,0,,trust myself, and, yeah,
+Dialogue: 0,0:00:19.20,0:00:20.88,ZH,,0,0,0,,相信自己 然后
+Dialogue: 0,0:00:20.88,0:00:23.04,EN,,0,0,0,,really happy with the win.
+Dialogue: 0,0:00:20.88,0:00:23.04,ZH,,0,0,0,,赢了真的很开心
+Dialogue: 0,0:00:23.04,0:00:25.20,EN,,0,0,0,,Nicely done.
+Dialogue: 0,0:00:23.04,0:00:25.20,ZH,,0,0,0,,打得漂亮
+Dialogue: 0,0:00:25.20,0:00:26.32,EN,,0,0,0,,the guys on the bench.
+Dialogue: 0,0:00:25.20,0:00:26.32,ZH,,0,0,0,,板凳上的队友
+Dialogue: 0,0:00:26.32,0:00:27.84,EN,,0,0,0,,Let's talk about that for you
+Dialogue: 0,0:00:26.32,0:00:27.84,ZH,,0,0,0,,我们就聊聊这个
+Dialogue: 0,0:00:27.84,0:00:29.36,EN,,0,0,0,,because you don't get to play a lot
+Dialogue: 0,0:00:27.84,0:00:29.36,ZH,,0,0,0,,因为你平时很少
+Dialogue: 0,0:00:29.36,0:00:31.20,EN,,0,0,0,,of team events and there are guys
+Dialogue: 0,0:00:29.36,0:00:31.20,ZH,,0,0,0,,打团体赛 而队里有人
+Dialogue: 0,0:00:31.20,0:00:32.00,EN,,0,0,0,,that have been here
+Dialogue: 0,0:00:31.20,0:00:32.00,ZH,,0,0,0,,以前来过
+Dialogue: 0,0:00:32.00,0:00:33.92,EN,,0,0,0,,before, but this is your debut.
+Dialogue: 0,0:00:32.00,0:00:33.92,ZH,,0,0,0,,但这是你的首秀
+Dialogue: 0,0:00:33.92,0:00:35.28,EN,,0,0,0,,What's it like having that input?
+Dialogue: 0,0:00:33.92,0:00:35.28,ZH,,0,0,0,,听他们出主意是什么感觉？
+Dialogue: 0,0:00:35.28,0:00:37.20,EN,,0,0,0,,Do you like that or not?
+Dialogue: 0,0:00:35.28,0:00:37.20,ZH,,0,0,0,,你喜欢还是不喜欢？
+Dialogue: 0,0:00:37.20,0:00:38.96,EN,,0,0,0,,Yeah, I think it's great just to hear
+Dialogue: 0,0:00:37.20,0:00:38.96,ZH,,0,0,0,,我觉得很棒 能听听
+Dialogue: 0,0:00:38.96,0:00:39.60,EN,,0,0,0,,their thoughts.
+Dialogue: 0,0:00:38.96,0:00:39.60,ZH,,0,0,0,,他们的想法
+Dialogue: 0,0:00:39.60,0:00:40.64,EN,,0,0,0,,I mean, you know, of course,
+Dialogue: 0,0:00:39.60,0:00:40.64,ZH,,0,0,0,,我是说 当然了
+Dialogue: 0,0:00:40.64,0:00:41.92,EN,,0,0,0,,they're all great tennis players,
+Dialogue: 0,0:00:40.64,0:00:41.92,ZH,,0,0,0,,他们都是很出色的球员
+Dialogue: 0,0:00:41.92,0:00:44.24,EN,,0,0,0,,so very interesting to hear their thoughts
+Dialogue: 0,0:00:41.92,0:00:44.24,ZH,,0,0,0,,所以听他们怎么看很有意思
+Dialogue: 0,0:00:44.24,0:00:45.76,EN,,0,0,0,,on the match, how I'm playing.
+Dialogue: 0,0:00:44.24,0:00:45.76,ZH,,0,0,0,,怎么看这场球 看我打得怎样
+Dialogue: 0,0:00:45.76,0:00:46.80,EN,,0,0,0,,And it's also nice
+Dialogue: 0,0:00:45.76,0:00:46.80,ZH,,0,0,0,,而且也很好的是
+Dialogue: 0,0:00:46.80,0:00:49.12,EN,,0,0,0,,to have some veterans out here that
+Dialogue: 0,0:00:46.80,0:00:49.12,ZH,,0,0,0,,队里有几位老将
+Dialogue: 0,0:00:49.12,0:00:50.64,EN,,0,0,0,,that played Laver Cup a few times,
+Dialogue: 0,0:00:49.12,0:00:50.64,ZH,,0,0,0,,打过好几届拉沃尔杯
+Dialogue: 0,0:00:50.64,0:00:53.20,EN,,0,0,0,,so definitely good to have all the guys
+Dialogue: 0,0:00:50.64,0:00:53.20,ZH,,0,0,0,,所以有全队在身边
+Dialogue: 0,0:00:53.20,0:00:54.08,EN,,0,0,0,,on the team.
+Dialogue: 0,0:00:53.20,0:00:54.08,ZH,,0,0,0,,真的很好
+Dialogue: 0,0:00:54.08,0:00:55.60,EN,,0,0,0,,What about we bring over the veteran
+Dialogue: 0,0:00:54.08,0:00:55.60,ZH,,0,0,0,,要不把老将请过来
+Dialogue: 0,0:00:55.60,0:00:57.52,EN,,0,0,0,,and the legend in Andre Agassi?
+Dialogue: 0,0:00:55.60,0:00:57.52,ZH,,0,0,0,,传奇阿加西
+Dialogue: 0,0:00:57.52,0:00:59.92,EN,,0,0,0,,Everybody, come on in.
+Dialogue: 0,0:00:57.52,0:00:59.92,ZH,,0,0,0,,大家都过来吧
+Dialogue: 0,0:00:59.92,0:01:05.52,EN,,0,0,0,,Don't go. Brandon, now Andre,
+Dialogue: 0,0:00:59.92,0:01:05.52,ZH,,0,0,0,,别走 布兰登 现在问安德烈
+Dialogue: 0,0:01:05.52,0:01:07.12,EN,,0,0,0,,at one point he goes up 3-0
+Dialogue: 0,0:01:05.52,0:01:07.12,ZH,,0,0,0,,有一阵他第一盘3比0领先
+Dialogue: 0,0:01:07.12,0:01:08.08,EN,,0,0,0,,in the first set and he goes,
+Dialogue: 0,0:01:07.12,0:01:08.08,ZH,,0,0,0,,你当时想的是
+Dialogue: 0,0:01:08.08,0:01:09.28,EN,,0,0,0,,I got nothing to say.
+Dialogue: 0,0:01:08.08,0:01:09.28,ZH,,0,0,0,,我没什么可说的
+Dialogue: 0,0:01:09.28,0:01:11.28,EN,,0,0,0,,But then you had to try to do some work.
+Dialogue: 0,0:01:09.28,0:01:11.28,ZH,,0,0,0,,但后来你得干点活了
+Dialogue: 0,0:01:11.28,0:01:12.40,EN,,0,0,0,,Well, no question about it.
+Dialogue: 0,0:01:11.28,0:01:12.40,ZH,,0,0,0,,没错 毫无疑问
+Dialogue: 0,0:01:12.40,0:01:12.96,EN,,0,0,0,,I mean, listen,
+Dialogue: 0,0:01:12.40,0:01:12.96,ZH,,0,0,0,,我是说 听着
+Dialogue: 0,0:01:12.96,0:01:14.56,EN,,0,0,0,,when you get off to a great start,
+Dialogue: 0,0:01:12.96,0:01:14.56,ZH,,0,0,0,,开局打得好的时候
+Dialogue: 0,0:01:14.56,0:01:16.08,EN,,0,0,0,,there's no scoreboard pressure sort
+Dialogue: 0,0:01:14.56,0:01:16.08,ZH,,0,0,0,,球网两边
+Dialogue: 0,0:01:16.08,0:01:17.36,EN,,0,0,0,,of on both sides of the net
+Dialogue: 0,0:01:16.08,0:01:17.36,ZH,,0,0,0,,都没有比分压力
+Dialogue: 0,0:01:17.36,0:01:18.80,EN,,0,0,0,,and everybody's kind of free
+Dialogue: 0,0:01:17.36,0:01:18.80,ZH,,0,0,0,,大家都能放开
+Dialogue: 0,0:01:18.80,0:01:19.68,EN,,0,0,0,,to do their thing.
+Dialogue: 0,0:01:18.80,0:01:19.68,ZH,,0,0,0,,打自己的
+Dialogue: 0,0:01:19.68,0:01:21.68,EN,,0,0,0,,Second set, Mensik gets up early.
+Dialogue: 0,0:01:19.68,0:01:21.68,ZH,,0,0,0,,第二盘 门西克早早领先
+Dialogue: 0,0:01:21.68,0:01:22.56,EN,,0,0,0,,They both, you know,
+Dialogue: 0,0:01:21.68,0:01:22.56,ZH,,0,0,0,,两个人 你知道
+Dialogue: 0,0:01:22.56,0:01:23.76,EN,,0,0,0,,he's just started letting it fly,
+Dialogue: 0,0:01:22.56,0:01:23.76,ZH,,0,0,0,,他开始放开抡了
+Dialogue: 0,0:01:23.76,0:01:25.36,EN,,0,0,0,,but then it quickly turns into a lot
+Dialogue: 0,0:01:23.76,0:01:25.36,ZH,,0,0,0,,但很快就变成了
+Dialogue: 0,0:01:25.36,0:01:25.84,EN,,0,0,0,,of pressure.
+Dialogue: 0,0:01:25.36,0:01:25.84,ZH,,0,0,0,,满满的压力
+Dialogue: 0,0:01:25.84,0:01:26.96,EN,,0,0,0,,And that's where I bet
+Dialogue: 0,0:01:25.84,0:01:26.96,ZH,,0,0,0,,这种时候我每次都
+Dialogue: 0,0:01:26.96,0:01:27.92,EN,,0,0,0,,on this guy every time.
+Dialogue: 0,0:01:26.96,0:01:27.92,ZH,,0,0,0,,押这个家伙
+Dialogue: 0,0:01:27.92,0:01:29.44,EN,,0,0,0,,I mean, he's rock solid.
+Dialogue: 0,0:01:27.92,0:01:29.44,ZH,,0,0,0,,他稳得像块石头
+Dialogue: 0,0:01:29.44,0:01:32.96,EN,,0,0,0,,Welcome. You're initiated.
+Dialogue: 0,0:01:29.44,0:01:32.96,ZH,,0,0,0,,欢迎你 你正式入队了
+Dialogue: 0,0:01:32.96,0:01:34.56,EN,,0,0,0,,And it was such an important point.
+Dialogue: 0,0:01:32.96,0:01:34.56,ZH,,0,0,0,,这一分太重要了
+Dialogue: 0,0:01:34.56,0:01:36.32,EN,,0,0,0,,I mean, the first two matches of the day,
+Dialogue: 0,0:01:34.56,0:01:36.32,ZH,,0,0,0,,今天前两场
+Dialogue: 0,0:01:36.32,0:01:37.68,EN,,0,0,0,,the first one could have gone your way,
+Dialogue: 0,0:01:36.32,0:01:37.68,ZH,,0,0,0,,第一场你们本来可能拿下
+Dialogue: 0,0:01:37.68,0:01:38.16,EN,,0,0,0,,it doesn't.
+Dialogue: 0,0:01:37.68,0:01:38.16,ZH,,0,0,0,,结果没赢下来
+Dialogue: 0,0:01:38.16,0:01:39.04,EN,,0,0,0,,And you have to absorb
+Dialogue: 0,0:01:38.16,0:01:39.04,ZH,,0,0,0,,你们得消化
+Dialogue: 0,0:01:39.04,0:01:40.16,EN,,0,0,0,,that disappointment.
+Dialogue: 0,0:01:39.04,0:01:40.16,ZH,,0,0,0,,那份失望
+Dialogue: 0,0:01:40.16,0:01:41.20,EN,,0,0,0,,No, no question about it.
+Dialogue: 0,0:01:40.16,0:01:41.20,ZH,,0,0,0,,没错 毫无疑问
+Dialogue: 0,0:01:41.20,0:01:41.92,EN,,0,0,0,,I mean, you definitely want
+Dialogue: 0,0:01:41.20,0:01:41.92,ZH,,0,0,0,,你当然希望
+Dialogue: 0,0:01:41.92,0:01:42.96,EN,,0,0,0,,to get off to a good start,
+Dialogue: 0,0:01:41.92,0:01:42.96,ZH,,0,0,0,,开个好头
+Dialogue: 0,0:01:42.96,0:01:45.04,EN,,0,0,0,,but ultimately you're looking at this like
+Dialogue: 0,0:01:42.96,0:01:45.04,ZH,,0,0,0,,但归根结底你会这么看
+Dialogue: 0,0:01:45.04,0:01:46.64,EN,,0,0,0,,if you know, some go their way,
+Dialogue: 0,0:01:45.04,0:01:46.64,ZH,,0,0,0,,有的归他们
+Dialogue: 0,0:01:46.64,0:01:47.68,EN,,0,0,0,,some go our way.
+Dialogue: 0,0:01:46.64,0:01:47.68,ZH,,0,0,0,,有的归我们
+Dialogue: 0,0:01:47.68,0:01:49.60,EN,,0,0,0,,We'll call it even. Intensity builds
+Dialogue: 0,0:01:47.68,0:01:49.60,ZH,,0,0,0,,就算扯平吧 越来越激烈
+Dialogue: 0,0:01:49.60,0:01:50.96,EN,,0,0,0,,is one reason why this weekend's
+Dialogue: 0,0:01:49.60,0:01:50.96,ZH,,0,0,0,,这正是这个周末
+Dialogue: 0,0:01:50.96,0:01:51.68,EN,,0,0,0,,so much fun.
+Dialogue: 0,0:01:50.96,0:01:51.68,ZH,,0,0,0,,这么好玩的原因
+Dialogue: 0,0:01:51.68,0:01:52.88,EN,,0,0,0,,And what about as we go
+Dialogue: 0,0:01:51.68,0:01:52.88,ZH,,0,0,0,,那进入
+Dialogue: 0,0:01:52.88,0:01:53.92,EN,,0,0,0,,into the evening session?
+Dialogue: 0,0:01:52.88,0:01:53.92,ZH,,0,0,0,,晚场呢？
+Dialogue: 0,0:01:53.92,0:01:55.76,EN,,0,0,0,,You've got Alexander Bublik coming out.
+Dialogue: 0,0:01:53.92,0:01:55.76,ZH,,0,0,0,,你们派出的是布勃利克
+Dialogue: 0,0:01:55.76,0:01:57.28,EN,,0,0,0,,So you got some different work to do.
+Dialogue: 0,0:01:55.76,0:01:57.28,ZH,,0,0,0,,你得做的功课就不一样了
+Dialogue: 0,0:01:57.28,0:01:59.28,EN,,0,0,0,,Very different personality to Brandon.
+Dialogue: 0,0:01:57.28,0:01:59.28,ZH,,0,0,0,,和布兰登性格很不一样
+Dialogue: 0,0:01:59.28,0:02:01.92,EN,,0,0,0,,You think?
+Dialogue: 0,0:01:59.28,0:02:01.92,ZH,,0,0,0,,你觉得呢？
+Dialogue: 0,0:02:01.92,0:02:02.56,EN,,0,0,0,,I mean
+Dialogue: 0,0:02:01.92,0:02:02.56,ZH,,0,0,0,,我是说
+Dialogue: 0,0:02:02.56,0:02:04.80,EN,,0,0,0,,this guy's like I'm not convinced he's real.
+Dialogue: 0,0:02:02.56,0:02:04.80,ZH,,0,0,0,,这家伙 我都不信他是真人
+Dialogue: 0,0:02:04.80,0:02:06.00,EN,,0,0,0,,I think he's AI, you know?
+Dialogue: 0,0:02:04.80,0:02:06.00,ZH,,0,0,0,,我觉得他是AI 你知道吗？
+Dialogue: 0,0:02:06.00,0:02:08.56,EN,,0,0,0,,He just goes about his business like point
+Dialogue: 0,0:02:06.00,0:02:08.56,ZH,,0,0,0,,他就是闷头打球
+Dialogue: 0,0:02:08.56,0:02:09.76,EN,,0,0,0,,after point after point.
+Dialogue: 0,0:02:08.56,0:02:09.76,ZH,,0,0,0,,一分接一分
+Dialogue: 0,0:02:09.76,0:02:12.00,EN,,0,0,0,,Bublik brings a lot of weapons to the table.
+Dialogue: 0,0:02:09.76,0:02:12.00,ZH,,0,0,0,,布勃利克手里武器很多
+Dialogue: 0,0:02:12.00,0:02:12.56,EN,,0,0,0,,So let's hope
+Dialogue: 0,0:02:12.00,0:02:12.56,ZH,,0,0,0,,所以希望
+Dialogue: 0,0:02:12.56,0:02:14.72,EN,,0,0,0,,that things fall our way again.
+Dialogue: 0,0:02:12.56,0:02:14.72,ZH,,0,0,0,,结果还能站在我们这边
+Dialogue: 0,0:02:14.72,0:02:17.68,EN,,0,0,0,,But you know, you know, we're away,
+Dialogue: 0,0:02:14.72,0:02:17.68,ZH,,0,0,0,,不过 我们是客队
+Dialogue: 0,0:02:17.68,0:02:19.04,EN,,0,0,0,,so I'm not going to say too much.
+Dialogue: 0,0:02:17.68,0:02:19.04,ZH,,0,0,0,,我就不多说了
+Dialogue: 0,0:02:19.04,0:02:20.56,EN,,0,0,0,,You know, I'm just going
+Dialogue: 0,0:02:19.04,0:02:20.56,ZH,,0,0,0,,我就是
+Dialogue: 0,0:02:20.56,0:02:21.60,EN,,0,0,0,,to go to work, too.
+Dialogue: 0,0:02:20.56,0:02:21.60,ZH,,0,0,0,,去干活
+Dialogue: 0,0:02:21.60,0:02:23.36,EN,,0,0,0,,We are. Well done to you, Brandon.
+Dialogue: 0,0:02:21.60,0:02:23.36,ZH,,0,0,0,,我们是 布兰登 打得好
+Dialogue: 0,0:02:23.36,0:02:25.34,EN,,0,0,0,,Andre, congratulations.
+Dialogue: 0,0:02:23.36,0:02:25.34,ZH,,0,0,0,,安德烈 恭喜
