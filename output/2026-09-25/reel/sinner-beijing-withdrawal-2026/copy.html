@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>9.25 网球有故事 | 辛纳因膝伤退出中网</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>辛纳退出中网：温网捧杯之后，他75天没打一场
+
+7月12日，温网决赛，辛纳四盘赢下兹维列夫，卫冕。那是他到今天为止最后一场正式比赛。
+
+9月25日，他自己录了一段视频：今年的北京，我来不了了。我的膝盖还没到我想要的状态，我还没准备好比赛。去年在这里拿了冠军，今年不能卫冕，我很失望。
+
+这是他连续缺席的第四站：蒙特利尔、辛辛那提、美网，现在是北京。团队一直只说是「右膝的问题」，没公布过具体诊断。按意大利媒体的报道，疼是7月底在摩纳哥恢复训练、备战北美硬地时开始的，检查排除了结构性损伤，是膝关节外的肌腱炎症。退赛前一天，意大利媒体还在说他周日就飞北京，第二天他自己推翻了。
+
+北京偏偏是他的福地。2023年中网，半决赛两盘赢阿尔卡拉斯；决赛对梅德韦杰夫，此前6次交手一次没赢过，这一次两个抢七全拿下，赛后升到世界第4。接下来8个月：维也纳夺冠、年终总决赛亚军、戴维斯杯冠军、2024年澳网第一个大满贯，6月登上世界第一。2024年他又打进中网决赛，决胜盘抢七3比0领先，然后连丢7分，输给阿尔卡拉斯。2025年6-2 6-2，冠军拿回来了。3次来北京，3次进决赛，2次捧杯。
+
+他缺席的这两个多月，兹维列夫拿下了今年的法网和美网。9月21日这一期排名，辛纳11500分，兹维列夫9690分，差1810分。辛纳去年北京那500分，今年一分都拿不回来。按意大利媒体算的账：如果兹维列夫北京、上海连续夺冠，而辛纳这两站加起来不超过110分，最早10月19日，世界第一就要换人。
+
+上海大师赛10月7日开打，他还在报名名单上，可已经有意大利媒体在说，上海也可能不去。从北京到都灵年终总决赛，辛纳去年拿了3550分，兹维列夫只有1080分。
+
+今年年底的世界第一，你觉得还是辛纳吗？
+
+#网球时差 #辛纳 #中网 #网球中国赛季来了 #网球时间到</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>今年年底的世界第一，你觉得还会是辛纳吗？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
