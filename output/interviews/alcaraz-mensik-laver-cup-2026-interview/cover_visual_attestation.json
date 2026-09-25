@@ -1,0 +1,56 @@
+{
+  "status": "pass",
+  "checked_at": "2026-09-25T23:43:49Z",
+  "auditor": "opencv-haar-v1",
+  "expected_subject": "阿尔卡拉斯/门西克",
+  "identity_evidence": "L0-bound spec subject + same-source frame_at",
+  "spec_sha256": "23be1c836ac20f8d6762c2038c6b944da7fb11ee6acc72e9f3a2e76b7f5b5bc1",
+  "poster_sha256": "55433e826f996b09c6eaf47f04445fe95286c1404a91012129d8bfcd417f2313",
+  "thresholds": {
+    "close_up_zoom": 1.5,
+    "face_height_ratio": 0.08,
+    "close_up_face_height_ratio": 0.14,
+    "face_area_ratio": 0.01,
+    "face_sharpness": 45.0,
+    "face_contrast": 32.0,
+    "eyes": 2
+  },
+  "result": {
+    "poster": {
+      "decodable": true,
+      "format": "JPEG",
+      "width": 1080,
+      "height": 1440,
+      "photo_region": [
+        0,
+        150,
+        1080,
+        810
+      ]
+    },
+    "face": {
+      "detector": "frontal-default",
+      "box": [
+        335,
+        264,
+        331,
+        331
+      ],
+      "detected_faces": 2,
+      "eyes": 2,
+      "face_height_ratio": 0.40864,
+      "face_area_ratio": 0.12524,
+      "center_x_ratio": 0.46343,
+      "center_y_ratio": 0.34506,
+      "sharpness": 306.448,
+      "contrast": 158.0
+    },
+    "contract": {
+      "shot_type": "",
+      "frame_at": 121.0,
+      "zoom": 1.0,
+      "focus_y": 0.5
+    }
+  },
+  "issues": []
+}

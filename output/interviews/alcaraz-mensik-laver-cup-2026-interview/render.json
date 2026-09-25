@@ -1,0 +1,67 @@
+{
+  "film_sha256": "c5dd97b475a4bdab3126972399aeadeeec69d736d70fa76ea5355435f657d0ed",
+  "film_seconds": 288.981,
+  "production_sla": {
+    "version": 2,
+    "pipeline": "interview-clip",
+    "slug": "alcaraz-mensik-laver-cup-2026-interview",
+    "received_at": "2026-09-25T23:36:53Z",
+    "artifact_ready_at": "2026-09-25T23:43:48Z",
+    "elapsed_seconds": 415.846,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "c5dd97b475a4bdab3126972399aeadeeec69d736d70fa76ea5355435f657d0ed",
+    "spec_sha256": "23be1c836ac20f8d6762c2038c6b944da7fb11ee6acc72e9f3a2e76b7f5b5bc1",
+    "run_id": "36201692069",
+    "stage_events": [
+      {
+        "stage": "preflight",
+        "at": "2026-09-25T23:37:22Z",
+        "run_id": "36201692069"
+      },
+      {
+        "stage": "asr_verify",
+        "at": "2026-09-25T23:39:04Z",
+        "run_id": "36201692069"
+      },
+      {
+        "stage": "render",
+        "at": "2026-09-25T23:40:56Z",
+        "run_id": "36201692069"
+      }
+    ],
+    "render_seconds": 172.846,
+    "pre_render_seconds": 243.0
+  },
+  "production_stage_events": [
+    {
+      "stage": "preflight",
+      "at": "2026-09-25T23:37:22Z",
+      "run_id": "36201692069"
+    },
+    {
+      "stage": "asr_verify",
+      "at": "2026-09-25T23:39:04Z",
+      "run_id": "36201692069"
+    },
+    {
+      "stage": "render",
+      "at": "2026-09-25T23:40:56Z",
+      "run_id": "36201692069"
+    },
+    {
+      "stage": "qc",
+      "at": "2026-09-25T23:43:49Z",
+      "run_id": "36201692069"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-25T23:43:50Z",
+      "run_id": "36201692069"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/interview-alcaraz-mensik-laver-cup-2026-interview/alcaraz-mensik-laver-cup-2026-interview.mp4?v=c5dd97b475a4bdab",
+  "video_bytes": 102753525,
+  "release_asset_digest": "sha256:c5dd97b475a4bdab3126972399aeadeeec69d736d70fa76ea5355435f657d0ed",
+  "qc_attestation_sha256": "cb8b994ccef5b738fc0e70aec4521e3da968441c6582dc5dd30bbe256760d392"
+}
