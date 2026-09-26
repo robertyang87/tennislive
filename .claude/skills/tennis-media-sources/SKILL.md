@@ -41,6 +41,22 @@ atptour.com 上没有对应文章。我先在官网找、找不到就写成「�
 
 ⚠️ Instagram 帖子在沙箱里多半要登录，拿不到就先找同一段视频在 X 上的那份。
 
+### ⚠️⚠️ 2026-09-26：YouTube 频道 RSS **不许按顺序两两配对** videoId 和 title
+
+拉沃尔杯那两条就栽在这儿：`grep -oE '<yt:videoId>…|<title>…' | paste - -`，
+而 feed 里**频道自己的 `<title>` 排在第一个**，于是每个标题都配上了**下一条**
+视频的 ID——「Cobolli v Tien Highlights」配成了 21.7 秒的短片 `QJk1rymSYBQ`
+（真的是 `UQ0YA0F2Nyg`），「Zverev v de Minaur Highlights」配成了 52 秒竖屏
+`snJJvh1NCyw`（真的是 `vewcPfBgHrg`）。**probe 报的时长和画幅会当场露馅**
+（21.71s / 608×1080），别拿「官方集锦这次只剪了 20 秒」去解释它。
+
+    python3 -c "import sys,xml.etree.ElementTree as ET; ns={'a':'http://www.w3.org/2005/Atom','yt':'http://www.youtube.com/xml/schemas/2015'}
+    [print(e.find('yt:videoId',ns).text, e.find('a:title',ns).text) for e in ET.fromstring(sys.stdin.read()).findall('a:entry',ns)]"
+
+逐个 `<entry>` 取，ID 和标题才是同一条。拉沃尔杯官网视频页嵌的是 Brightcove
+（`players.brightcove.net/6199586113001/default_default/index.html?videoId=…`），
+那一版沙箱能直接 `yt-dlp` 下（Match 5 实测 204.89s、1920×1080），YouTube 在沙箱下不动时可以拿它在本地逐帧看。
+
 ### ⭐ 源有三类，查空一类不等于查空全部
 
 2026-08-06，账号所有者点名要做「莱巴金娜的 UE 和 Winner 齐飞」。我查了三个地方——
