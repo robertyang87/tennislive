@@ -1,0 +1,21 @@
+{
+ "status": "pass",
+ "method": "silero_vad_plus_dual_asr_coverage",
+ "sha256": "5953410d32d1ac0fd774055de448d297377dd68d509599af7a2041ad93e52aea",
+ "edge_pad_seconds": 0.35,
+ "max_speech_seconds": 0.12,
+ "results": [
+  {
+   "key": "77.3-79.4",
+   "start": 77.34,
+   "end": 79.36,
+   "speech_seconds": 0,
+   "second_asr_words": [
+    "I'm"
+   ],
+   "transcript_covered": true,
+   "caption_timeline_covered": false,
+   "status": "transcript_covered"
+  }
+ ]
+}

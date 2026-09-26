@@ -1,0 +1,67 @@
+{
+  "film_sha256": "2debe9893c90fcddc84189ec0f2f4243f392c162c53240fb408e32c8f048b517",
+  "film_seconds": 191.181,
+  "production_sla": {
+    "version": 2,
+    "pipeline": "interview-clip",
+    "slug": "deminaur-zverev-laver-cup-2026-interview",
+    "received_at": "2026-09-26T17:47:18Z",
+    "artifact_ready_at": "2026-09-26T17:53:26Z",
+    "elapsed_seconds": 368.559,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "2debe9893c90fcddc84189ec0f2f4243f392c162c53240fb408e32c8f048b517",
+    "spec_sha256": "3d3023f8baa40215fe1c30076778170452f07fcfef15f5fa93173d6954d725ad",
+    "run_id": "36260258115",
+    "stage_events": [
+      {
+        "stage": "preflight",
+        "at": "2026-09-26T17:47:50Z",
+        "run_id": "36260258115"
+      },
+      {
+        "stage": "asr_verify",
+        "at": "2026-09-26T17:49:25Z",
+        "run_id": "36260258115"
+      },
+      {
+        "stage": "render",
+        "at": "2026-09-26T17:50:58Z",
+        "run_id": "36260258115"
+      }
+    ],
+    "render_seconds": 148.559,
+    "pre_render_seconds": 220.0
+  },
+  "production_stage_events": [
+    {
+      "stage": "preflight",
+      "at": "2026-09-26T17:47:50Z",
+      "run_id": "36260258115"
+    },
+    {
+      "stage": "asr_verify",
+      "at": "2026-09-26T17:49:25Z",
+      "run_id": "36260258115"
+    },
+    {
+      "stage": "render",
+      "at": "2026-09-26T17:50:58Z",
+      "run_id": "36260258115"
+    },
+    {
+      "stage": "qc",
+      "at": "2026-09-26T17:53:27Z",
+      "run_id": "36260258115"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-26T17:53:27Z",
+      "run_id": "36260258115"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/interview-deminaur-zverev-laver-cup-2026-interview/deminaur-zverev-laver-cup-2026-interview.mp4?v=2debe9893c90fcdd",
+  "video_bytes": 62224024,
+  "release_asset_digest": "sha256:2debe9893c90fcddc84189ec0f2f4243f392c162c53240fb408e32c8f048b517",
+  "qc_attestation_sha256": "abcb4ccb185675b69de9b102e92e52a15106ce85c60e0c2a100a74f8c7e139e4"
+}
