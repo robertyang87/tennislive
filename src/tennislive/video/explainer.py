@@ -3393,6 +3393,166 @@ _APLUS_QUEUE_DIAGRAM = """\
 """
 
 
+# ── fils-tokyo-qualifying（网球有故事）的六张示意图 ─────────────────────────
+# 全套出处写在 `_SCRIPTS["fils-tokyo-qualifying"]` 开头那段注释里：
+# 名单与排名抄东京官网参赛名单原件（排名截至 2026-08-31），规则抄 2026 ATP
+# 规则书第七章原文。⚠️ 图里的排名都是**那份名单上印着的数**，不是今天的排名。
+_FILS_LIST_DIAGRAM = """\
+<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="52" text-anchor="middle" fill="#f4fbf7"
+        font-size="38" font-weight="800">东京站正赛名单，24 个直接入围</text>
+  <text x="450" y="98" text-anchor="middle" fill="#cfe6d8"
+        font-size="28" font-weight="700">排名按 8 月 31 日那一期</text>
+
+  <rect x="150" y="128" width="600" height="46" rx="10" fill="#8fd6a8" opacity="0.12"/>
+  <text x="180" y="160" fill="#f4fbf7" font-size="28" font-weight="800">1　阿尔卡拉斯</text>
+  <text x="720" y="160" text-anchor="end" fill="#f4fbf7" font-size="28" font-weight="800">第 3</text>
+  <rect x="150" y="182" width="600" height="46" rx="10" fill="#8fd6a8" opacity="0.12"/>
+  <text x="180" y="214" fill="#f4fbf7" font-size="28" font-weight="800">2　弗里茨</text>
+  <text x="720" y="214" text-anchor="end" fill="#f4fbf7" font-size="28" font-weight="800">第 10</text>
+  <rect x="150" y="236" width="600" height="46" rx="10" fill="none" stroke="#c6f65a" stroke-width="3" stroke-dasharray="10 8"/>
+  <text x="180" y="268" fill="#c6f65a" font-size="28" font-weight="800">菲斯 不在名单上</text>
+  <text x="720" y="268" text-anchor="end" fill="#c6f65a" font-size="28" font-weight="800">第 11</text>
+  <rect x="150" y="290" width="600" height="46" rx="10" fill="#8fd6a8" opacity="0.12"/>
+  <text x="180" y="322" fill="#f4fbf7" font-size="28" font-weight="800">3　蒂亚福</text>
+  <text x="720" y="322" text-anchor="end" fill="#f4fbf7" font-size="28" font-weight="800">第 12</text>
+  <text x="450" y="366" text-anchor="middle" fill="#cfe6d8" font-size="28" font-weight="700">……</text>
+  <rect x="150" y="384" width="600" height="46" rx="10" fill="#8fd6a8" opacity="0.12"/>
+  <text x="180" y="416" fill="#f4fbf7" font-size="28" font-weight="800">22　米切尔森</text>
+  <text x="720" y="416" text-anchor="end" fill="#f4fbf7" font-size="28" font-weight="800">第 46</text>
+  <rect x="150" y="438" width="600" height="46" rx="10" fill="#8fd6a8" opacity="0.12"/>
+  <text x="180" y="470" fill="#f4fbf7" font-size="28" font-weight="800">24　鲁内（承诺球员）</text>
+  <text x="720" y="470" text-anchor="end" fill="#f4fbf7" font-size="28" font-weight="800">第 133</text>
+  <text x="450" y="540" text-anchor="middle" fill="#cfe6d8" font-size="27" font-weight="700">剩下 8 个位置：外卡 3 · 资格赛 4 · 特殊豁免 1</text>
+</svg>
+"""
+
+_FILS_DEADLINE_DIAGRAM = """\
+<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="52" text-anchor="middle" fill="#f4fbf7"
+        font-size="38" font-weight="800">东京站的几个截止时间</text>
+  <text x="450" y="98" text-anchor="middle" fill="#cfe6d8"
+        font-size="28" font-weight="700">都按美东时间，从赛事周周一 9 月 28 日倒推</text>
+
+  <line x1="200" y1="140" x2="200" y2="552" stroke="rgba(244,251,247,.38)" stroke-width="3"/>
+  <circle cx="200" cy="160" r="10" fill="#8fd6a8"/>
+  <text x="90" y="170" fill="#cfe6d8" font-size="28" font-weight="700">8/23</text>
+  <text x="236" y="170" fill="#f4fbf7" font-size="28" font-weight="700">他拿下辛辛那提冠军</text>
+  <circle cx="200" cy="236" r="14" fill="#c6f65a"/>
+  <text x="90" y="246" fill="#c6f65a" font-size="28" font-weight="800">8/31</text>
+  <text x="236" y="246" fill="#c6f65a" font-size="30" font-weight="800">正赛报名截止（前 28 天中午）</text>
+  <circle cx="200" cy="312" r="10" fill="#8fd6a8"/>
+  <text x="90" y="322" fill="#cfe6d8" font-size="28" font-weight="700">9/7</text>
+  <text x="236" y="322" fill="#f4fbf7" font-size="28" font-weight="700">资格赛报名截止（前 21 天）</text>
+  <circle cx="200" cy="388" r="10" fill="#8fd6a8"/>
+  <text x="90" y="398" fill="#cfe6d8" font-size="28" font-weight="700">9/25</text>
+  <text x="236" y="398" fill="#f4fbf7" font-size="28" font-weight="700">额外那张 A+ 外卡截止</text>
+  <circle cx="200" cy="464" r="10" fill="#8fd6a8"/>
+  <text x="90" y="474" fill="#cfe6d8" font-size="28" font-weight="700">9/28</text>
+  <text x="236" y="474" fill="#f4fbf7" font-size="28" font-weight="700">资格赛开打，两天打完</text>
+  <circle cx="200" cy="540" r="10" fill="#8fd6a8"/>
+  <text x="90" y="550" fill="#cfe6d8" font-size="28" font-weight="700">9/30</text>
+  <text x="236" y="550" fill="#f4fbf7" font-size="28" font-weight="700">正赛开打</text>
+</svg>
+"""
+
+_FILS_DOORS_DIAGRAM = """\
+<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="52" text-anchor="middle" fill="#f4fbf7"
+        font-size="38" font-weight="800">截止之后才报名，只剩 3 种身份</text>
+  <text x="450" y="98" text-anchor="middle" fill="#cfe6d8"
+        font-size="28" font-weight="700">ATP 规则书 7.03 A.6「晚报名」，原文就这一句</text>
+
+  <rect x="60" y="150" width="240" height="260" rx="18" fill="#8fd6a8" opacity="0.12" stroke="#8fd6a8" stroke-width="2.5"/>
+  <text x="180" y="236" text-anchor="middle" fill="#f4fbf7" font-size="38" font-weight="800">外卡</text>
+  <text x="180" y="300" text-anchor="middle" fill="#cfe6d8" font-size="27" font-weight="700">赛事说了算</text>
+  <rect x="330" y="150" width="240" height="260" rx="18" fill="#c6f65a" opacity="0.14" stroke="#c6f65a" stroke-width="3"/>
+  <text x="450" y="236" text-anchor="middle" fill="#c6f65a" font-size="38" font-weight="800">资格赛</text>
+  <text x="450" y="300" text-anchor="middle" fill="#cfe6d8" font-size="27" font-weight="700">自己打进去</text>
+  <rect x="600" y="150" width="240" height="260" rx="18" fill="#8fd6a8" opacity="0.12" stroke="#8fd6a8" stroke-width="2.5"/>
+  <text x="720" y="236" text-anchor="middle" fill="#f4fbf7" font-size="38" font-weight="800">特殊豁免</text>
+  <text x="720" y="300" text-anchor="middle" fill="#cfe6d8" font-size="27" font-weight="700">要够条件</text>
+  <text x="450" y="484" text-anchor="middle" fill="#f4fbf7" font-size="30" font-weight="800">没有第 4 种</text>
+  <text x="450" y="530" text-anchor="middle" fill="#cfe6d8" font-size="27" font-weight="700">排名再高，也补不回那份名单</text>
+</svg>
+"""
+
+_FILS_WILDCARD_DIAGRAM = """\
+<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="52" text-anchor="middle" fill="#f4fbf7"
+        font-size="38" font-weight="800">东京的外卡，一张也轮不到他</text>
+  <text x="450" y="98" text-anchor="middle" fill="#cfe6d8"
+        font-size="28" font-weight="700">3 张常规外卡 ＋ 1 张额外的 A+ 外卡</text>
+
+  <text x="200" y="164" text-anchor="middle" fill="#cfe6d8" font-size="28" font-weight="700">常规 3 张：赛事定</text>
+  <rect x="60" y="186" width="280" height="62" rx="12" fill="#8fd6a8" opacity="0.12"/>
+  <text x="84" y="228" fill="#f4fbf7" font-size="28" font-weight="800">岛袋将</text>
+  <text x="316" y="228" text-anchor="end" fill="#cfe6d8" font-size="27" font-weight="700">第 88</text>
+  <rect x="60" y="258" width="280" height="62" rx="12" fill="#8fd6a8" opacity="0.12"/>
+  <text x="84" y="300" fill="#f4fbf7" font-size="28" font-weight="800">坂本怜</text>
+  <text x="316" y="300" text-anchor="end" fill="#cfe6d8" font-size="27" font-weight="700">第 157</text>
+  <rect x="60" y="330" width="280" height="62" rx="12" fill="#8fd6a8" opacity="0.12"/>
+  <text x="84" y="372" fill="#f4fbf7" font-size="28" font-weight="800">锦织圭</text>
+  <text x="316" y="372" text-anchor="end" fill="#cfe6d8" font-size="27" font-weight="700">第 481</text>
+
+  <text x="630" y="164" text-anchor="middle" fill="#cfe6d8" font-size="28" font-weight="700">A+ 那张：看去年年终排名</text>
+  <line x1="420" y1="300" x2="840" y2="300" stroke="rgba(244,251,247,.6)" stroke-width="3" stroke-dasharray="10 8"/>
+  <text x="836" y="288" text-anchor="end" fill="#f4fbf7" font-size="27" font-weight="800">前 30 这条线</text>
+  <rect x="420" y="200" width="300" height="62" rx="12" fill="#8fd6a8" opacity="0.12"/>
+  <text x="444" y="242" fill="#f4fbf7" font-size="28" font-weight="800">勒纳·钱 第 28</text>
+  <rect x="420" y="330" width="300" height="62" rx="12" fill="#c6f65a" opacity="0.16" stroke="#c6f65a" stroke-width="3"/>
+  <text x="444" y="372" fill="#c6f65a" font-size="28" font-weight="800">菲斯 第 39</text>
+
+  <text x="450" y="468" text-anchor="middle" fill="#cfe6d8" font-size="27" font-weight="700">勒纳·钱同一周在北京就是拿这张卡进的正赛</text>
+  <text x="450" y="516" text-anchor="middle" fill="#f4fbf7" font-size="29" font-weight="800">菲斯 2025 背伤，年终掉到第 39</text>
+</svg>
+"""
+
+_FILS_EXEMPT_DIAGRAM = """\
+<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="52" text-anchor="middle" fill="#f4fbf7"
+        font-size="38" font-weight="800">特殊豁免，只救排名不够的人</text>
+  <text x="450" y="98" text-anchor="middle" fill="#cfe6d8"
+        font-size="28" font-weight="700">ATP 规则书 7.10，两个条件要同时满足</text>
+
+  <rect x="80" y="146" width="740" height="120" rx="16" fill="#8fd6a8" opacity="0.12" stroke="#8fd6a8" stroke-width="2.5"/>
+  <text x="120" y="198" fill="#cfe6d8" font-size="28" font-weight="700">条件一</text>
+  <text x="120" y="244" fill="#f4fbf7" font-size="30" font-weight="800">上一周还在别的比赛里，赶不上资格赛</text>
+  <rect x="80" y="290" width="740" height="120" rx="16" fill="#c6f65a" opacity="0.14" stroke="#c6f65a" stroke-width="3"/>
+  <text x="120" y="342" fill="#cfe6d8" font-size="28" font-weight="700">条件二</text>
+  <text x="120" y="388" fill="#c6f65a" font-size="30" font-weight="800">截止那天的排名，本来够不上直接入围</text>
+  <text x="450" y="476" text-anchor="middle" fill="#cfe6d8" font-size="28" font-weight="700">东京靠排名直接进的最后一个：第 46</text>
+  <text x="450" y="526" text-anchor="middle" fill="#f4fbf7" font-size="30" font-weight="800">菲斯第 11，第二条就不成立</text>
+</svg>
+"""
+
+_FILS_QUALIFYING_DIAGRAM = """\
+<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="52" text-anchor="middle" fill="#f4fbf7"
+        font-size="38" font-weight="800">资格赛：连赢 2 场才进正赛</text>
+  <text x="450" y="98" text-anchor="middle" fill="#cfe6d8"
+        font-size="28" font-weight="700">东京的资格赛，4 个正赛名额</text>
+
+  <rect x="60" y="160" width="220" height="130" rx="16" fill="#8fd6a8" opacity="0.12" stroke="#8fd6a8" stroke-width="2.5"/>
+  <text x="170" y="214" text-anchor="middle" fill="#cfe6d8" font-size="27" font-weight="700">9 月 28 日</text>
+  <text x="170" y="262" text-anchor="middle" fill="#f4fbf7" font-size="32" font-weight="800">第一轮</text>
+  <text x="315" y="238" text-anchor="middle" fill="#cfe6d8" font-size="40" font-weight="800">→</text>
+  <rect x="350" y="160" width="220" height="130" rx="16" fill="#8fd6a8" opacity="0.12" stroke="#8fd6a8" stroke-width="2.5"/>
+  <text x="460" y="214" text-anchor="middle" fill="#cfe6d8" font-size="27" font-weight="700">9 月 29 日</text>
+  <text x="460" y="262" text-anchor="middle" fill="#f4fbf7" font-size="32" font-weight="800">第二轮</text>
+  <text x="605" y="238" text-anchor="middle" fill="#cfe6d8" font-size="40" font-weight="800">→</text>
+  <rect x="640" y="160" width="200" height="130" rx="16" fill="#c6f65a" opacity="0.14" stroke="#c6f65a" stroke-width="3"/>
+  <text x="740" y="214" text-anchor="middle" fill="#cfe6d8" font-size="27" font-weight="700">9 月 30 日</text>
+  <text x="740" y="262" text-anchor="middle" fill="#c6f65a" font-size="32" font-weight="800">正赛</text>
+
+  <rect x="110" y="346" width="680" height="96" rx="14" fill="none" stroke="rgba(244,251,247,.38)" stroke-width="2.5"/>
+  <text x="450" y="390" text-anchor="middle" fill="#f4fbf7" font-size="29" font-weight="800">资格赛第一个球打出去之后</text>
+  <text x="450" y="428" text-anchor="middle" fill="#cfe6d8" font-size="27" font-weight="700">这一周他不能再接受任何外卡（7.12）</text>
+  <text x="450" y="516" text-anchor="middle" fill="#cfe6d8" font-size="27" font-weight="700">资格赛报名截止在赛事周前 21 天，比正赛晚一周</text>
+</svg>
+"""
+
+
 _SCRIPTS: dict[str, tuple[tuple, ...]] = {
     "a-plus-wildcard": (
     # 「中网那张 ATP 外卡为什么给了勒纳·钱」——2026-09-21 中网公布外卡当天做的。
@@ -3651,6 +3811,216 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
         ),
         "",
         "换你是中网，你愿意为一个去年的亚军，让出一个入围名额吗？",
+    ),
+    ),
+    "fils-tokyo-qualifying": (
+    # 「世界第 11 的菲斯为什么要打东京资格赛」——2026-09-26 账号所有者甩来一张
+    # X 截图（José Morón @jmgmoron，Grok 译自西班牙语）要「详细调研，把现状和规则
+    # 讲清楚」，并点名「字卡配图片」。
+    #
+    # ⚠️ 和 `a-plus-wildcard`（9/21，同栏目）的分界：那条讲的是 ATP 500 第 4 张
+    # 外卡**本身**（签表构成表、A+ 的门槛、位置从哪儿让出来）。这条只用它**一句话**
+    # （第 ⑤ 屏：门槛是去年年终前 30，勒纳·钱第 28 够得上、菲斯第 39 够不上），
+    # 主体是「晚报名」那一条规则和它留下的三扇门。和 `entry-deadline`（美网那条）
+    # 的分界同理：28 天那条线只在第 ③ 屏一句带过（CLAUDE.md「铺开重讲 vs 一句带过」）。
+    #
+    # 规则全部回 **2026 ATP 规则书原文**（`2026-rulebook_14jan26.pdf`，第七章）：
+    #   · 7.03 A.1 正赛截止 `12 Noon, Eastern Time, USA, twenty-eight (28) days prior
+    #     to the Monday of the tournament week`；A.2 资格赛 `twenty-one (21) days prior`
+    #   · 7.03 A.6 `Late Entries. Any player who submits an entry after the deadline
+    #     may only be accepted into the singles main draw as a wild card, qualifier,
+    #     or as a special exempt (if eligible).` ← 第 ④ 屏的全部依据
+    #   · 1.E 承诺球员 `automatically accepted into the main draw of all ATP Tour 500
+    #     events in which they have entered in a proper manner`（鲁内第 133 在正赛里）
+    #   · 7.12 A.1.a 外卡 `at the sole discretion of the tournament`；A.1.c `Once a
+    #     qualifying competition has commenced ... an entered player may not be offered
+    #     nor the player accept a wild card into any tournament that week`
+    #   · 7.12 A.2 ＋ EXHIBIT X：A+ ＝ 上一年年终前 30 的承诺球员，或当下持有前 10
+    #     保护排名（`a-plus-wildcard` 那条逐字核过，这里不重抄）
+    #   · 7.10 A.1 特殊豁免：`still competing on the date the qualifying competition
+    #     begins in another qualified event, **and** his current ranking as of the date
+    #     of the entry deadline would not have otherwise qualified him as a direct
+    #     acceptance`
+    #
+    # 事实那一头：
+    #   · 东京官网参赛名单原件 japanopentennis.com/atp/players/player-entry-lists/
+    #     （2026-09-26 抓）：`世界ランキングは2026年8月31日付け`；阿尔卡拉斯 3、弗里茨
+    #     10、蒂亚福 12……米切尔森 46（最后一个靠排名直入的）、沙波瓦洛夫 48＋、
+    #     鲁内 133＋（＋ ＝ Top 30 Commitment Player）；WC 岛袋将 88 / 坂本怜 157 /
+    #     锦织圭 481；Q×4；SE×1。注脚原文 `アルトゥール・フィスは、選手側のエントリー
+    #     手続き上の事情により、本戦からの出場ではなく、予選からの出場となる予定です`。
+    #     ⚠️ 他在那一期是第 11：名单上 10 是弗里茨、12 是蒂亚福；维基 infobox
+    #     `No. 11 (24 August 2026)` ＋ tennisactu / Tennis Gazette 都写第 11。
+    #   · 2025 年终第 39：维基生涯表 `Year-end ranking … 39` ＋ coretennis
+    #     `Year End Ranking 39 · Season High 14`，两源一致。生涯最高是 2026-08-24 的
+    #     第 11 ——**从没进过前十**，所以「前 10 保护排名」那一条也不可能成立。
+    #   · 「在北京和东京之间犹豫到最后」**是推测**：最早出自 puntodebreak 2026-09-03，
+    #     原文 `posiblemente al estar pendiente hasta el último momento de si competía
+    #     esa semana o si acudía al torneo japonés o a Pekín`。截图那条推文把它说成了
+    #     事实；片子里照原文说「可能」（CLAUDE.md「只讲确认过的」）。
+    #   · 2024 东京：胜弗里茨、谢尔顿、鲁内，决赛 5-7 7-6(6) 6-3 胜安贝尔，第二盘抢七
+    #     救下冠军点（ATP 官网 ＋ tennis.com ＋ 维基）。2025 年法网后背伤，下半年只在
+    #     加拿大打了两场，没回东京（2025 东京名单原件上没有他）。
+    #   · 2026-08-23 辛辛那提决赛 6-3 1-6 6-0 胜蒂亚福，生涯第一个 1000 赛冠军（维基
+    #     ＋ 辛辛那提官网 8/23 那批官方图的文件名日期）。
+    #   · 「2007 年以来最高排名的资格赛球员」**只有一个源**（TennisTemple），所以片子里
+    #     点名出处，不当成我们自己的断言。「下周一升到第 9」是 tennisactu 和
+    #     TennisTemple 两家的**测算**，片子里说「法国媒体算过」。
+    #   · 资格赛 9/28、9/29 两天、正赛 9/30 开打：东京官网 `9/28(月)～10/6(火)` ＋
+    #     tennisactu `lundi 28 et mardi 29 septembre`。
+    #   · ⚠️ **没查到、所以片子里不说的**：他有没有在 9/7 之前报上资格赛（还是现场
+    #     sign-in）、资格赛签表多大、对手是谁、他本人或团队的任何回应、他在不在北京
+    #     的名单上（只有一个源）。
+    (
+        "cause",
+        "先说结论",
+        "东京的名单上，没有世界第 11",
+        "先说结论。东京站的正赛名单，排名按八月三十一号那一期算：阿尔卡拉斯第三，"
+        "弗里茨第十，蒂亚福第十二。世界第十一的菲斯本该排在第三个，名单上却没有他。"
+        "赛事官网在名单底下加了一行注：因为选手这边报名手续上的原因，菲斯预定从资格赛出场。"
+        "而同一张名单的最后一个，是世界第一百三十三的鲁内——他是去年年终前三十的承诺球员，"
+        "按规矩报了名，就自动进正赛。菲斯差的不是排名，是那一步报名。",
+        "",
+        "示意图 · 网球时差绘制",
+        (
+            "名单按 8 月 31 日排名",
+            "第 133 的鲁内在正赛里",
+            "第 11 的菲斯不在",
+        ),
+        _FILS_LIST_DIAGRAM,
+    ),
+    (
+        "cause",
+        "来路",
+        "两年前，菲斯在这里捧杯",
+        "这件事扎眼，是因为东京对他不一样。二〇二四年，二十岁的菲斯在这里连赢弗里茨、"
+        "谢尔顿和鲁内，决赛第二盘抢七，他先救下对手一个冠军点，"
+        "再五比七、七比六、六比三逆转安贝尔，捧起了这座奖杯。"
+        "二〇二五年法网之后他伤了背，下半年几乎没打，没能回来卫冕。"
+        "今年八月二十三号，他刚在辛辛那提拿到生涯第一个大师赛冠军——"
+        "而东京的报名截止，就在八天之后。",
+        "assets/explainer/fils-tokyo-qualifying/fils_tokyo_2024_trophy.jpg",
+        "ATP 官网官方图（Getty Images）· 2024 年 10 月 1 日东京有明，"
+        "菲斯决赛胜安贝尔后举起日本公开赛冠军奖杯",
+        (
+            "2024 东京夺冠 救下冠军点",
+            "2025 背伤 没能回来卫冕",
+            "截止前 8 天 刚拿辛辛那提",
+        ),
+    ),
+    (
+        "mechanism",
+        "截止",
+        "美东 8 月 31 日中午，名单锁上",
+        "报名截止是怎么算的？ATP 规则书第七章写得很死：巡回赛的正赛，"
+        "截止在赛事周周一往前推二十八天、美国东部时间中午十二点。"
+        "东京的赛事周从九月二十八号算起，倒推回去就是八月三十一号——"
+        "正好是那份名单用的排名日期。过了这一刻，名单只认已经交上来的名字。"
+        "至于他为什么没赶上，官方只说是报名手续上的原因。"
+        "网上传得最广的说法，是他的团队在同一周的北京和东京之间犹豫到了最后一刻——"
+        "这句最早出自西班牙媒体，原文用的词是「可能」。",
+        "",
+        "示意图 · 网球时差绘制",
+        (
+            "正赛截止：赛事周前 28 天",
+            "东京：美东 8 月 31 日中午",
+            "没赶上的原因 官方没细说",
+        ),
+        _FILS_DEADLINE_DIAGRAM,
+    ),
+    (
+        "mechanism",
+        "规则",
+        "晚报名的人，只剩 3 扇门",
+        "那晚交报名的人，还能怎么进正赛？同一章里只有一句话："
+        "截止之后才报名的球员，只能以三种身份进单打正赛——"
+        "外卡、资格赛打上来的，或者，如果够条件的话，特殊豁免。"
+        "没有第四种。排名再高，也换不回那份名单上的位置。"
+        "接下来，一扇一扇看。",
+        "",
+        "示意图 · 网球时差绘制",
+        (
+            "规则 7.03：只认 3 种身份",
+            "外卡 · 资格赛 · 特殊豁免",
+            "排名再高也补不回名单",
+        ),
+        _FILS_DOORS_DIAGRAM,
+    ),
+    (
+        "mechanism",
+        "第一扇",
+        "4 张外卡，没有一张给菲斯",
+        "第一扇是外卡。五百赛常规有三张，给谁全凭赛事自己决定："
+        "东京给了岛袋将、坂本怜和锦织圭，三个日本球员。"
+        "另外还有一张额外的——我们讲中网那张外卡时说过，"
+        "它只能给 A 加球员：上一年年终排名前三十，或者手里有前十的保护排名。"
+        "同一周的北京，没报名的勒纳·钱就是拿这张卡进的正赛，他去年年终第二十八。"
+        "菲斯去年法网之后伤了背，年终掉到第三十九；他又从没进过前十，"
+        "保护排名也够不着。这张卡，规则上就给不了他。",
+        "",
+        "示意图 · 网球时差绘制",
+        (
+            "3 张常规外卡给了日本球员",
+            "A+ 外卡看去年年终前 30",
+            "他 2025 年终第 39",
+        ),
+        _FILS_WILDCARD_DIAGRAM,
+    ),
+    (
+        "mechanism",
+        "第二扇",
+        "特殊豁免，只救排名不够的人",
+        "第二扇是特殊豁免。它是留给上一周还在别的比赛里打、赶不上资格赛的人的，"
+        "可规则同时写着另一个条件：他在报名截止那天的排名，本来够不上直接入围。"
+        "东京这份名单上，靠排名直接进的最后一个，是第四十六位的米切尔森；"
+        "菲斯是第十一。特殊豁免只救排名不够的人——他的排名太高，"
+        "这扇门反而对他关着。",
+        "",
+        "示意图 · 网球时差绘制",
+        (
+            "豁免给上周还在打的人",
+            "前提：排名够不上直入",
+            "直入到第 46 他是第 11",
+        ),
+        _FILS_EXEMPT_DIAGRAM,
+    ),
+    (
+        "today",
+        "第三扇",
+        "只剩资格赛，要连赢 2 场",
+        "剩下的只有资格赛。它的报名截止比正赛晚一周，是赛事周前二十一天。"
+        "东京的资格赛九月二十八、二十九号两天打完，四个正赛名额，"
+        "他得连赢两场才进得去。规则还顺手把退路关上了："
+        "资格赛的第一个球打出去之后，这一周他就不能再接受任何外卡。"
+        "法国网球网站 TennisTemple 翻了记录：二〇〇七年以来，"
+        "还没有排名这么高的人打过 ATP 的资格赛。",
+        "",
+        "示意图 · 网球时差绘制",
+        (
+            "资格赛截止：赛事周前 21 天",
+            "9 月 28、29 日 连赢 2 场",
+            "开打后 这周不能再拿外卡",
+        ),
+        _FILS_QUALIFYING_DIAGRAM,
+    ),
+    (
+        "today",
+        "下周一",
+        "进前十那天，也是资格赛开打那天",
+        "最拧巴的是时间。法国媒体算过，下周一新排名出来，菲斯会升到世界第九，"
+        "生涯第一次进前十——而同一天，东京的资格赛开打。"
+        "这件事里没有人违规：赛事按规则发了外卡，规则也没给漏报名的人留后门。"
+        "两年前在这里捧杯的人，这一次，得从最外面那道门走进来。",
+        "assets/explainer/fils-tokyo-qualifying/fils_cincinnati_2026_final.jpg",
+        "辛辛那提公开赛官网官方图 · 2026 年 8 月 23 日辛辛那提男单决赛，"
+        "菲斯反手击球",
+        (
+            "法媒测算 下周一升到第 9",
+            "同一天 东京资格赛开打",
+            "规则没给漏报名留后门",
+        ),
+        "",
+        "漏了一次报名，规则该不该给他开一扇门？",
     ),
     ),
     # 2026-09-20，账号所有者点的题：「通往戴维斯杯决赛圈之路」。⚠️ 和 `finals-venues`
@@ -9321,6 +9691,19 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
 # 这个洞。判据落在 test_每条片子的标签都放满五个。
 _DEFAULT_TAGS = ("网球", "网球时差", "网球冷知识", "网球科普", "网球运动")
 _CAPTIONS: dict[str, dict] = {
+    "fils-tokyo-qualifying": {
+        # ⚠️ 小红书正文卡 1000 字，要点那部分自动拼进来就占五百多字（第一版
+        # 1031 字当场红），所以这里只写结论和那几个数，规则细节交给要点。
+        "hook": (
+            "2024 年东京冠军菲斯，这次不在东京站的正赛名单上。官网注脚：因为选手这边"
+            "报名手续上的原因，预定从资格赛出场。正赛报名截止是美东 8 月 31 日中午，"
+            "他 8 天前刚拿下辛辛那提冠军。「在北京和东京之间犹豫太久」只是西班牙媒体的推测。\n"
+            "ATP 规则书 7.03 A.6：截止之后才报名，只能靠外卡、资格赛、特殊豁免进正赛。"
+            "A+ 外卡要去年年终前 30，他 2025 背伤后年终第 39；特殊豁免只给排名够不上直入的人。"
+            "同一张名单上，第 133 的鲁内是承诺球员，报了名就自动进正赛。"
+        ),
+        "tags": ("网球", "网球时差", "菲斯", "东京", "网球冷知识"),
+    },
     "a-plus-wildcard": {
         # ⚠️ 小红书正文卡 1000 字，而正文 = 这段 hook ＋ 七屏要点 ＋ 收尾 ＋ tag，
         # **自动那部分就占四百多字**。所以这里只写结论和那几个可核的数，
@@ -9896,6 +10279,34 @@ def column_of(slug: str) -> Column:
 # beat one makes the viewer work out the subject for themselves. Every deck
 # now opens on the question it answers, said out loud and set large.
 _OPENINGS: dict[str, dict] = {
+    "fils-tokyo-qualifying": {
+        "topic": "世界第 11，要从资格赛打起",
+        "question": "世界第 11\n为什么要打资格赛？",
+        # ⚠️ 第一句 16 字，落在 5 秒决定窗口里。第二句把「两年前在这儿捧杯」
+        # 提到最前面——那是这条片子的情绪落点，别让它等到第 ② 屏。
+        "narration": "世界第十一，为什么要打资格赛？东京站下周开打，"
+        "两年前在这里捧杯的菲斯，这次不在正赛名单上。"
+        "他的排名一点问题都没有——卡住他的，是报名那一步。",
+        "gloss": "ATP 规则书里的「晚报名」",
+        # 封面用人，不用示意图：这一问的反差就在人身上——一个刚捧起大师赛奖杯
+        # 的人，下周要去打资格赛。规则结构交给正文六张示意图。
+        # ⚠️ 原图 2560×1707 横构图，封面是居中裁；居中裁会切掉他半边身子，所以
+        # **入库前预裁成 3:4**（x=300..1580，整高 1707），人和奖杯落在正中，
+        # 铺满 1080×1440 只要 0.84×，不放大。
+        "image": "assets/explainer/fils-tokyo-qualifying/fils_cincinnati_2026_trophy.jpg",
+        "credit": "辛辛那提公开赛官网官方图 · 2026 年 8 月 23 日，"
+                  "菲斯夺得辛辛那提男单冠军后抱着奖杯",
+        "tags": ("网球", "网球时差", "菲斯", "东京", "网球冷知识"),
+        # 2026-09-26 认领：走**字卡**。账号所有者点名要「字卡配图片」，而且题材
+        # 本身属于 2026-08-09 定的第一种例外——**天然图表题材**：主语是一条规则
+        # （7.03 A.6 晚报名只剩三种身份）和三扇门各自的门槛、四个截止时间，
+        # 是结构不是动作。何况这件事**还没打**：资格赛 9/28 才开始，没有任何比赛
+        # 画面拍得到「他不在名单上」。
+        "cards_why": "账号所有者点名要字卡配图片；题材也是天然图表题材：讲的是"
+        "ATP 规则书「晚报名只剩外卡、资格赛、特殊豁免三种身份」和三扇门各自的门槛、"
+        "东京站的四个截止时间，是结构不是动作，而资格赛还没开打、没有比赛画面可剪；"
+        "六张示意图承担主要信息，三张官方实拍负责让人看见当事人。",
+    },
     "a-plus-wildcard": {
         "topic": "ATP 500 的第 4 张外卡，只能给一种人",
         "question": "中网外卡为什么给了美国人？",
