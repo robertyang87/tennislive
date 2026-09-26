@@ -1,0 +1,128 @@
+{
+ "slug": "zverev-deminaur-laver-cup-2026",
+ "_column": "赛场之上",
+ "sources": {
+  "main": "https://www.youtube.com/watch?v=vewcPfBgHrg"
+ },
+ "scorebox": [
+  80,
+  862,
+  520,
+  1036
+ ],
+ "_scorebox_why": "和同一届 ruud-cerundolo / bublik-jodar / cobolli-tien 同一块转播板、同一个框。",
+ "cover": {
+  "eyebrow": "赛场之上",
+  "layout": "solo",
+  "subject": "德米纳尔",
+  "hook": "决胜盘挽救赛点\n德米纳尔逆转兹维列夫",
+  "_hook_why": "按账号所有者 2026-09-25「钩子只讲重点或关键内容，以及结果」：第一行＝关键内容（抢十 8-9 兹维列夫的赛点被他救下——flashscore df_mh_1 Set 3 `9:8` 带 HM 标记），第二行＝结果（输掉第一盘之后赢下两盘）。不带比分数字；每行 7／10 字符，≤ 10。",
+  "topic": "拉沃尔杯 · 欧洲队 vs 世界队",
+  "winner": "德米纳尔",
+  "result": "2-6 7-6(5) 11-9",
+  "matchup": [
+   {
+    "name": "德米纳尔",
+    "name_en": "Alex de Minaur",
+    "country": "AUS",
+    "rank": 9
+   },
+   {
+    "name": "兹维列夫",
+    "name_en": "Alexander Zverev",
+    "country": "GER",
+    "rank": 2
+   }
+  ],
+  "_matchup_rank_why": "两源一致：lavercup.com 球员页「ATP RANKING: 9」（alex-de-minaur）／「ATP RANKING: 2」（alexander-zverev）；仓库 rankings.fetch_rankings()（tennisexplorer，21.09.2026）De Minaur 9、Zverev 2。",
+  "_name_why": "两个中文名都走 `player_zh()`：Alex de Minaur → 德米纳尔，Alexander Zverev → 兹维列夫。",
+  "_heat_why": "世界第 2 对世界第 9，拉沃尔杯第二天第 2 场；去年旧金山拉沃尔杯德米纳尔就赢过他（flashscore H2H 2025-09-20 0:2＋官网赛前稿），这一场让世界队 5-3 反超。",
+  "scoreboard": {
+   "court": "The O2",
+   "_court_why": "同一届前几条同一块场地（flashscore df_sui_1 `VEN÷O2 Arena ¬ TWN÷London`）。",
+   "duration_source": {
+    "url": "data:application/json,%7B%22duration%22%3A%20%222%3A03%3A00%22%2C%20%22source%22%3A%20%22flashscore%20xvQdqyYj%20df_sui_1%EF%BC%9A0%3A38%20%2B%201%3A04%20%2B%200%3A21%20%3D%202%3A03%22%2C%20%22cross_check%22%3A%20%22flashscore%20%E5%BC%80%E7%90%83%20AD%2014%3A25%3A00Z%20%E2%86%92%20%E7%BB%88%E5%9C%BA%20AO%2016%3A26%3A09Z%20%EF%BC%9D%202%3A01%3A09%22%7D",
+    "field": "duration"
+   }
+  },
+  "_duration_why": "印 2:03：flashscore 分盘 0:38 + 1:04 + 0:21。"
+ },
+ "topbar": {
+  "line1": "2026 拉沃尔杯 第二天",
+  "line2": "德米纳尔 2-6 7-6(5) 11-9 兹维列夫"
+ },
+ "_topbar_why": "和同届几条同一写法：团体赛没有「级别＋站」，轮次写「第二天」。",
+ "_match": {
+  "status": "result_verified",
+  "source": "flashscore_points",
+  "source_id": "xvQdqyYj",
+  "flashscore_id": "xvQdqyYj",
+  "participants": [
+   "兹维列夫",
+   "德米纳尔"
+  ],
+  "set_scores_home_away": [
+   [
+    6,
+    2
+   ],
+   [
+    6,
+    7
+   ],
+   [
+    9,
+    11
+   ]
+  ],
+  "tiebreaks_home_away": [
+   null,
+   [
+    5,
+    7
+   ],
+   null
+  ],
+  "winner": "德米纳尔",
+  "loser": "兹维列夫",
+  "winner_result": "2-6 7-6(5) 11-9",
+  "loser_result": "6-2 6-7(5) 9-11",
+  "_direction_why": "flashscore 当日表 f_2_0：AE=Zverev A.（home）、AF=De Minaur A.（away），BA/BB=6:2、BC/BD=6:7、BE/BF=9:11、DC/DD=5:7（第二盘抢七小分）、AG/AH=1:2。第三盘是拉沃尔杯抢十，按一盘记 11-9。"
+ },
+ "stats": {
+  "a": {
+   "aces": 1,
+   "df": 0,
+   "winners": 21,
+   "ue": 16,
+   "first_in": 37,
+   "first_won": 22,
+   "second_total": 33,
+   "second_won": 21,
+   "bp_conv": 2,
+   "bp_chances": 5,
+   "pts_won": 70,
+   "pts_total": 145,
+   "first_total": 70,
+   "headshot": "assets/players/headshots/atp-DH58.png"
+  },
+  "b": {
+   "aces": 5,
+   "df": 3,
+   "winners": 32,
+   "ue": 32,
+   "first_in": 48,
+   "first_won": 34,
+   "second_total": 27,
+   "second_won": 14,
+   "bp_conv": 4,
+   "bp_chances": 9,
+   "pts_won": 75,
+   "pts_total": 145,
+   "first_total": 75,
+   "headshot": "assets/players/headshots/atp-Z355.png"
+  },
+  "_source": "flashscore xvQdqyYj 的 df_st_1，`match_stat_hooks.py xvQdqyYj --home Zverev --away \"De Minaur\" --stats-block` 机器抄出；home＝兹维列夫，cover.matchup[0]＝德米纳尔，所以 a/b **对调**。锚点：Double Faults 客队（德米纳尔）0、主队 3；Unforced errors 客队 16、主队 32。头像：德米纳尔 atp-DH58、兹维列夫 atp-Z355（仓库已发片子同一张）。"
+ },
+ "segments": []
+}
