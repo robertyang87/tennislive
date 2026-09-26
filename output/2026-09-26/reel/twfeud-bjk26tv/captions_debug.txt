@@ -1,0 +1,41 @@
+拿不到自动字幕，各 client 的原因如下：
+
+### web(+POT)
+WARNING: Only images are available for download. use --list-formats to see them
+ERROR: [youtube] nD-K_WOzG2g: Requested format is not available. Use --list-formats for a list of available formats
+
+### mweb(+POT)
+[youtube] Extracting URL: https://www.youtube.com/watch?v=nD-K_WOzG2g
+[youtube] nD-K_WOzG2g: Downloading webpage
+[youtube] nD-K_WOzG2g: Downloading mweb client config
+[youtube] nD-K_WOzG2g: Downloading mweb player API JSON
+[youtube] [pot:bgutil:http] Generating a gvs PO Token for mweb client via bgutil HTTP server
+[youtube] nD-K_WOzG2g: Downloading player 7460dd14-main
+[youtube] [jsc:node] Solving JS challenges using node
+[info] nD-K_WOzG2g: Downloading 1 format(s): 399+251
+[info] There are no subtitles for the requested languages
+
+### tv(+POT)
+ERROR: [youtube] nD-K_WOzG2g: The page needs to be reloaded.
+
+### 默认
+ERROR: [youtube] nD-K_WOzG2g: Video unavailable
+
+### android_vr
+WARNING: [youtube] Skipping client "android_vr" since it does not support cookies
+WARNING: Only images are available for download. use --list-formats to see them
+ERROR: [youtube] nD-K_WOzG2g: Requested format is not available. Use --list-formats for a list of available formats
+
+### tv_simply
+WARNING: [youtube] Skipping client "tv_simply" since it does not support cookies
+WARNING: Only images are available for download. use --list-formats to see them
+ERROR: [youtube] nD-K_WOzG2g: Requested format is not available. Use --list-formats for a list of available formats
+
+### web_embedded
+ERROR: [youtube] nD-K_WOzG2g: Video unavailable
+
+### android+ios
+WARNING: [youtube] Skipping client "android" since it does not support cookies
+WARNING: [youtube] Skipping client "ios" since it does not support cookies
+WARNING: Only images are available for download. use --list-formats to see them
+ERROR: [youtube] nD-K_WOzG2g: Requested format is not available. Use --list-formats for a list of available formats
