@@ -1815,6 +1815,86 @@ STORIES = STORIES + (
         ),
     ),
     _trivia_story(
+        slug="fils-tokyo-qualifying",
+        title="世界第 11 要打资格赛",
+        subtitle="网球观察 · 规则篇",
+        identity="菲斯错过东京报名，规则只给他留了资格赛",
+        chips=("报名与入围", "ATP 500 · 东京", "2026 ATP 规则书"),
+        hero=(
+            "2026 东京站（ATP 500）正赛名单按 8 月 31 日排名生成，世界第 11 的菲斯"
+            "不在上面——官网注脚写着「因选手方报名手续上的原因，预定从资格赛出场」。"
+            "ATP 规则书 7.03 A.6：截止之后才报名的球员，只能以外卡、资格赛、特殊豁免"
+            "三种身份进正赛。外卡给了三个日本球员，额外的 A+ 外卡要上一年年终前 30"
+            "（他 2025 年终第 39），特殊豁免只给排名够不上直入的人——只剩资格赛。"
+        ),
+        facts=(
+            "**正赛报名截止**（7.03 A.1）：`12 Noon, Eastern Time, USA, twenty-eight "
+            "(28) days prior to the Monday of the tournament week`。东京赛事周从 "
+            "9/28 算起 → 8/31 中午（美东）；东京官网名单原件写着 "
+            "`世界ランキングは2026年8月31日付け`，两头对得上。资格赛是 21 天（7.03 A.2），"
+            "即 9/7。",
+            "**晚报名**（7.03 A.6）：截止之后才报名，只剩外卡、资格赛、特殊豁免三种身份。"
+            "原文：`Any player who submits an entry after the "
+            "deadline may only be accepted into the singles main draw as a wild card, "
+            "qualifier, or as a special exempt (if eligible).`",
+            "**东京名单原件**（japanopentennis.com，2026-09-26 抓）：阿尔卡拉斯 3、弗里茨 "
+            "10、蒂亚福 12……米切尔森 46、沙波瓦洛夫 48＋、鲁内 133＋（＋ ＝ Top 30 "
+            "Commitment Player）；WC 岛袋将 88 / 坂本怜 157 / 锦织圭 481；Q×4；SE×1。"
+            "注脚：`アルトゥール・フィスは、選手側のエントリー手続き上の事情により、"
+            "本戦からの出場ではなく、予選からの出場となる予定です`。",
+            "**A+ 外卡**（7.12 A.2 ＋ EXHIBIT X）：上一年年终前 30 的承诺球员，或当下"
+            "持有前 10 保护排名。菲斯 2025 年终第 39（维基 ＋ coretennis 两源），生涯最高"
+            "是 2026-08-24 的第 11，没进过前十。截止是赛事周前那个周五美东上午 10 点（9/25）。",
+            "**特殊豁免**（7.10 A.1）两个条件同时要：上周还在别的合格赛事里打、赶不上资格赛，"
+            "**且**截止那天的排名本来够不上直入。东京靠排名直入的最后一个是第 46 的米切尔森，"
+            "菲斯第 11，第二条不成立。",
+            "**资格赛开打后不能再拿外卡**（7.12 A.1.c）：`Once a qualifying competition has "
+            "commenced ... an entered player may not be offered nor the player accept a "
+            "wild card into any tournament that week.`",
+            "**原因只有推测**：「在北京和东京之间犹豫到最后」出自 puntodebreak 2026-09-03，"
+            "原文 `posiblemente`。官方与球员本人都没有进一步说明。「2007 年以来排名最高的"
+            "资格赛球员」只有 TennisTemple 一个源，片子里点名出处。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2024-10-01", player="菲斯", age="20 岁",
+                headline="东京夺冠，决赛救下冠军点",
+                detail=(
+                    "一路胜弗里茨、谢尔顿、鲁内，决赛 5-7 7-6(6) 6-3 逆转安贝尔，"
+                    "第二盘抢七救下冠军点，生涯第 3 个巡回赛冠军。"
+                ),
+                source_url="https://www.atptour.com/en/news/humbert-fils-tokyo-2024-final",
+            ),
+            ChampionMoment(
+                date="2026-08-23", player="菲斯", age="22 岁",
+                headline="辛辛那提夺冠，生涯第一个大师赛",
+                detail="决赛 6-3 1-6 6-0 胜蒂亚福。8 天后，东京正赛报名截止。",
+                source_url="https://en.wikipedia.org/wiki/Arthur_Fils",
+            ),
+            ChampionMoment(
+                date="2026-09-03", player="东京站", age="参赛名单",
+                headline="名单上没有菲斯，注脚写他预定打资格赛",
+                detail=(
+                    "3 张正赛外卡给了岛袋将、坂本怜、锦织圭。资格赛 9/28、9/29，"
+                    "正赛 9/30 开打。"
+                ),
+                source_url="https://www.japanopentennis.com/atp/players/player-entry-lists/",
+            ),
+        ),
+        image_keys=(),
+        image_credit="ATP 官网官方图 · 辛辛那提公开赛官网官方图",
+        source_label="2026 ATP 官方规则书 · 东京站官方参赛名单",
+        source_url="https://www.atptour.com/-/media/files/rulebook/2026/2026-rulebook_14jan26.pdf",
+        evidence_urls=(
+            "https://www.japanopentennis.com/atp/players/player-entry-lists/",
+            "https://www.puntodebreak.com/2026/09/03/arthur-fils-ganar-masters-1000-jugar-fase-previa-tokio",
+            "https://www.tennisactu.net/news-atp-tokyo-arthur-fils-dans-le-top-10-mais-oblige-de-jouer-les-qualifs-127223.html",
+            "https://en.tennistemple.com/actu/world-no-11-arthur-fils-forced-into-qualifying/zBr9",
+            "https://www.coretennis.net/tennis-player/arthur-fils/116860/ranking.html",
+            "https://en.wikipedia.org/wiki/Arthur_Fils",
+        ),
+    ),
+    _trivia_story(
         slug="ranking-math",
         title="积分不是全年加起来",
         subtitle="网球观察 · 规则篇",

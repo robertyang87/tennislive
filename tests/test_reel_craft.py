@@ -169,3 +169,60 @@ def test_存量一条都不许被这三道闸拦下():
             if found:
                 bad.append(f"{path.stem}: {found.splitlines()[0]}")
     assert not bad, "存量被拦下了，豁免表漏了：\n  " + "\n  ".join(bad)
+
+
+# ---------------------------------------------------------------- 「解说说」
+# 账号所有者 2026-09-26：「配音的 tts 里不要再说解说说这三个字了」。
+
+from reel_craft import (COMMENTATOR_SAID, COMMENTATOR_SAID_LEGACY,  # noqa: E402
+                        commentator_said_problem)
+
+
+def test_配音里不许出现解说说():
+    spec = {"slug": "new-one", "cover": {"narration": "开场"},
+            "segments": [{"narration": "这一分打了很久。"},
+                         {"narration": "解说说，这一拍太漂亮了。"},
+                         {"narration": "转播解说说，他回来了。"}]}
+    problem = commentator_said_problem(spec, legacy=COMMENTATOR_SAID_LEGACY)
+    assert problem and "第 2 段" in problem and "第 3 段" in problem, problem
+    # 封面口播也是 TTS
+    spec2 = {"slug": "new-one", "cover": {"narration": "解说说今晚最好"}, "segments": []}
+    assert "封面" in (commentator_said_problem(spec2) or "")
+    # 原声段（quote）和注解字段不是配音，不管
+    ok = {"slug": "new-one", "segments": [
+        {"narration": "", "quote": ["解说说什么都行"], "_why": "解说说了 X"}]}
+    assert commentator_said_problem(ok) is None
+
+
+def test_新写的reel配音里一条都没有解说说():
+    bad = []
+    for path in SPECS:
+        if path.name.endswith(".draft.json"):
+            continue
+        spec = json.loads(path.read_text(encoding="utf-8"))
+        spec.setdefault("slug", path.stem)
+        problem = commentator_said_problem(spec, legacy=COMMENTATOR_SAID_LEGACY)
+        if problem:
+            bad.append(f"{path.stem}: {problem.splitlines()[0]}")
+    assert not bad, "\n  ".join(["这些 spec 的配音里有「解说说」："] + bad)
+
+
+def test_解说说豁免表只许减不许加_每条都真的存在且真的还有():
+    assert COMMENTATOR_SAID_LEGACY, "豁免表是空的——导入错了会让整条判据静静失效"
+    assert len(COMMENTATOR_SAID_LEGACY) <= 19, "只许减不许加（定规矩那天 19 条）"
+    for slug in sorted(COMMENTATOR_SAID_LEGACY):
+        path = Path(f"specs/reels/{slug}.json")
+        assert path.is_file(), f"豁免表里的 {slug} 不存在"
+        spec = json.loads(path.read_text(encoding="utf-8"))
+        spec["slug"] = "probe-" + slug
+        assert commentator_said_problem(spec), (
+            f"{slug} 的配音里已经没有「{COMMENTATOR_SAID}」了，从豁免表删掉")
+
+
+def test_解说说那道闸接在dry_run上():
+    import build_match_reel as reel
+    spec = _load("medvedev-royer-hangzhou-2026-r2")
+    spec["segments"][2]["narration"] = "解说说，" + spec["segments"][2]["narration"]
+    with pytest.raises(reel.ReelError, match="解说说"):
+        reel._narration_craft(spec)
+    reel._narration_craft(_load("medvedev-royer-hangzhou-2026-r2"))
