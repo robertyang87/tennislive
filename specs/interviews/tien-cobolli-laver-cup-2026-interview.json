@@ -6,7 +6,7 @@
   "url": "https://www.youtube.com/watch?v=NPJ0nTLVkbs",
   "source_title": "Learner Tien On-Court Interview | Laver Cup 2026 Match 5",
   "start": 0.0,
-  "end": 117.42,
+  "end": 114.2,
   "asr_model": "small.en",
   "whisper_model": "medium.en",
   "segment_budget_px": null,
@@ -189,14 +189,14 @@
     "elapsed_seconds": 1.178
   },
   "cover": {
-    "frame_at": 97.0,
+    "frame_at": 79.6,
     "title": [
       "队友喊他锁死比赛",
       "勒纳·钱险胜科博利"
     ],
     "sub": "拉沃尔杯第二天单打 赛后场上采访",
     "tag": "2026 拉沃尔杯 · 勒纳·钱",
-    "_why": "97.0 是他答阿加西那一问的中段（`he's giving me more energy than everyone else combined`，95.6~100.4），沙箱下不动 YouTube，没看过这一帧；渲完拉成片回来按封面闸逐秒抽帧复核，不过就换。",
+    "_why": "第一版写 97.0（估的，没看过画面），渲出来那一帧镜头切到了场边的阿加西——封面闸只查人脸和眼睛，不查是谁，一路放行推了出去。把成片拉回本地逐 2 秒扫一遍、再逐 0.5 秒看：源片 79.6（成片 97.5）是勒纳·钱正脸、笑着、双眼睁开的近景，正好在他说「just happy to get through」那一句（78.6~81.5）。",
     "_copy_why": "第一行是他自己的话：`that's what my teammates told me in between the second and third just to go into lockdown`（源片 57.7~62.7），账号所有者 2026-09-25 口径「钩子只讲关键内容和结果」——第一行＝决胜盘前队友那一句，不带数字和术语；第二行＝结果（6-3 2-6 10-7，flashscore 6eZQlcAT，同场赛场之上已核），「险胜」对应决胜盘抢十 10-7。不写排名、国籍。"
   },
   "takeaway": {
@@ -365,5 +365,6 @@
   },
   "caption_gaps_ok": {
     "89.6-94.6": "推的，没听音轨：主持人 88.9~89.2 问完「how much does it help you having the great Andre Agassi on your bench for your confidence?」，他 94.6 才开口答「It's amazing.」——一问一答之间的停顿。两份 ASR（small.en、medium.en）在这 5 秒里都没听出词，VAD 没能证明无人声，多半是主持人提到阿加西时的现场欢呼。问句和答句两头都完整，不是漏了谁的话。"
-  }
+  },
+  "_window_why": "0.0 起：主持人第一句 0.4 秒。终点 114.2：最后一句主持人「3-3.」113.22 说完；第一版收在源片末尾 117.42，把成片拉回来逐帧量（run 36264007367 那版，源片＝成片−17.9 秒：封面 1.8 ＋ 冷开场 16.1），成片 132.2→132.4 整幅亮度 32.9→23.6，源片约 114.4 起是 LAVER CUP 片尾板，所以收在它前面 0.2 秒。"
 }
