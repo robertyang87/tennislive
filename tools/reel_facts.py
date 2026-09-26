@@ -545,6 +545,72 @@ def tour_topline(year, event: str, round_name: str, tour: str | None = None) -> 
     return line if TOUR_TOPLINE_RE.match(line) else None
 
 
+# ---------------------------------------------------------------- 封面副标题
+# 账号所有者 2026-09-26：「以后所有 ATP 或者 WTA 的比赛的赛场之上视频的左上角，
+# 封面左上角的副标题都是用 ATP500 或者是 WTA500 类似的这种开头，然后再说地名，
+# 然后再说第几轮。然后后面，点开始的是对战双方的名字，VS」。看过样例后定的：
+#     ATP250 杭州站 第二轮 · 梅德韦杰夫 VS 鲁瓦耶
+#     WTA500 新加坡站 半决赛 · 费尔南德斯 VS 赫瓦林斯卡
+#     比利·简·金杯 半决赛 · 斯维托丽娜 VS 保利尼     ← 他选的全称写法（没改成简称）
+# 也就是**顶栏赛事行去掉年份** ＋「 · 」＋ 版式顺序的两个名字（`cover.matchup`，
+# 没有就 `cover.versus.names`）＋「 VS 」。前半截不另起一套规则——顶栏那一行已经
+# 有 `tour_topline_problem` 管着，这里只要求两处是同一句话，写两处必分叉。
+# 这一行同时是**封面台头第二行**和**正片常驻角标的第二行**（`brand_watermark`）。
+COVER_TOPIC_EXAMPLE = "ATP250 杭州站 第二轮 · 梅德韦杰夫 VS 鲁瓦耶"
+
+
+def _cover_names(cover: dict) -> list[str]:
+    matchup = cover.get("matchup")
+    if isinstance(matchup, list) and len(matchup) >= 2:
+        return [str((m or {}).get("name") or "").strip() for m in matchup[:2]]
+    versus = cover.get("versus")
+    names = versus.get("names") if isinstance(versus, dict) else None
+    if isinstance(names, list) and len(names) >= 2:
+        return [str(n or "").strip() for n in names[:2]]
+    return []
+
+
+def cover_topic(line1: str, cover: dict) -> str | None:
+    """按顶栏赛事行和封面上的两个名字拼出副标题；拼不出（缺名字/缺赛事行）返回 None。"""
+    event = re.sub(r"^\d{4}\s+", "", str(line1 or "").strip())
+    names = _cover_names(cover if isinstance(cover, dict) else {})
+    if not event or len(names) < 2 or not all(names):
+        return None
+    return f"{event} · {names[0]} VS {names[1]}"
+
+
+def cover_topic_problem(spec: dict) -> str | None:
+    """「赛场之上」的 `cover.topic` 合不合「ATP250 杭州站 第二轮 · A VS B」；合格返回 None。
+
+    拼不出期望值（没有顶栏、没有两个名字）就不管——那不是这条规矩能判的。
+    特例写 `_topic_format_why` 认领。
+    """
+    cover = spec.get("cover") if isinstance(spec.get("cover"), dict) else {}
+    line1 = (spec.get("topbar") or {}).get("line1") if isinstance(spec.get("topbar"), dict) else ""
+    expected = cover_topic(line1, cover)
+    if expected is None or str(spec.get("_topic_format_why") or "").strip():
+        return None
+    got = str(cover.get("topic") or "").strip()
+    if got == expected:
+        return None
+    return (
+        f"封面副标题 cover.topic「{got}」不合格式，应为「{expected}」。\n"
+        f"格式（账号所有者 2026-09-26）：顶栏赛事行去掉年份 ＋「 · 」＋ 两个名字"
+        f"（版式顺序，cover.matchup）用「 VS 」连，例：{COVER_TOPIC_EXAMPLE}。"
+        "它同时印在封面台头和正片常驻角标上。真有特例，写 `_topic_format_why` 说清楚。")
+
+
+def legacy_cover_topic() -> frozenset:
+    """「封面副标题定格式」（2026-09-26）之前的「赛场之上」slug，只许减不许加。"""
+    import json as _json
+    from pathlib import Path as _Path
+    path = _Path(__file__).resolve().parents[1] / "data" / "legacy_cover_topic_format.json"
+    try:
+        return frozenset(_json.loads(path.read_text(encoding="utf-8")).get("reels") or ())
+    except FileNotFoundError:
+        return frozenset()
+
+
 #: 全出血的「赛场之上」回贴比分板时，每一家转播都要有一套**按它自己的图形标定过**
 #: 的逐帧判据（`atp_scoreboard` / `wta_scoreboard` / `itf_scoreboard` /
 #: `lavercup_scoreboard`）。

@@ -6927,6 +6927,10 @@ COVER_FILL_W, COVER_FILL_H = 1080, 1440
 #:   三档查过），X／AP／ATP 沙箱和 runner 都挡。同样的情形他前三次都选了抽帧
 #:   （上面三条），所以按那个口径先推；**早上他要换图，删掉这一行、换 image、
 #:   重渲重推**。源片 1920×1080，放大 1.33 倍。
+#: - `medvedev-royer-hangzhou-2026-r2`：2026-09-26 杭州 ATP250 第二轮（北京 21:20
+#:   打完）。按下面那条常设授权走：终场后约 20 分钟，find_cover_photo 查 AP、WTA
+#:   photo-resources 都是 0，赛后稿没有图、主办方战报未发。用 161.4s 赛点后正脸
+#:   直视镜头的近景，源片 1920×1080，放大 1.33 倍。
 #: - **2026-09-26 起**账号所有者给了常设授权：「没有高清大图可备选的话，抽帧也
 #:   可以，但是要尽量清晰偏正面的图片」（CLAUDE.md 同名一节）。之后的条目不用再
 #:   逐条问，但照旧要在这里登记一行、在 spec 的 `_frame_why` 写清四类源各查了什么。
@@ -6935,6 +6939,7 @@ OWNER_APPROVED_FRAME_COVERS = frozenset({
     "zhiyenbayeva-bouzas-bjk-cup-2026",
     "wang-prozorova-singapore-2026-qf",
     "bublik-jodar-laver-cup-2026",
+    "medvedev-royer-hangzhou-2026-r2",
 })
 
 #: 「封面大图一律用官方高清实拍」这条规矩（账号所有者 2026-08-16 重申）立起来
@@ -9126,6 +9131,16 @@ def _topbar_lines(spec: dict) -> tuple[str, str] | None:
                 print(f"[顶栏] ⚠️ {problem}")
             else:
                 raise ReelError(problem)
+        # 封面副标题：「ATP250 杭州站 第二轮 · A VS B」（账号所有者 2026-09-26），
+        # 由顶栏这一行去掉年份再接两个名字——两处是同一句话。同样的豁免口径。
+        from reel_facts import cover_topic_problem, legacy_cover_topic  # noqa: PLC0415
+        if slug not in legacy_cover_topic():
+            problem = cover_topic_problem(spec)
+            if problem:
+                if (spec.get("_production") or {}).get("status") == "ready_for_render":
+                    print(f"[副标题] ⚠️ {problem}")
+                else:
+                    raise ReelError(problem)
     return lines  # type: ignore[return-value]
 
 

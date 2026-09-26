@@ -11856,6 +11856,8 @@ def test_赛场之上的比赛画面必须带比赛信息顶栏():
     # ---- 写了就要过原来那几关：两行、非空、line2 和 cover 一致 ----
     good = {"slug": "x", "cover": {"eyebrow": "赛场之上", "winner": "萨巴伦卡",
                                    "result": "6-3 6-4",
+                                   # 副标题的格式另有判据（test_cover_topic_format）
+                                   "topic": "WTA1000 加拿大站 第三轮 · 萨巴伦卡 VS 张帅",
                                    "matchup": [{"name": "萨巴伦卡"}, {"name": "张帅"}]},
             "topbar": {"line1": "2026 WTA1000 加拿大站 第三轮", "line2": "萨巴伦卡 6-3 6-4 张帅"}}
     assert reel._topbar_lines(good) == ("2026 WTA1000 加拿大站 第三轮", "萨巴伦卡 6-3 6-4 张帅")
