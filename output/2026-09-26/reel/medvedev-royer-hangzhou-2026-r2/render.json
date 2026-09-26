@@ -1,0 +1,68 @@
+{
+  "scoreboard_qc_sha256": "64cbb2295a394b1f447154f701ddcfbc2b62998060fe78146138a48c72caee89",
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 3.827,
+  "layout": "full",
+  "segments_seconds": 131.5,
+  "topbar": {
+    "line1": "2026 ATP250 杭州站 第二轮",
+    "line2": "梅德韦杰夫 7-6(6) 6-3 鲁瓦耶",
+    "start": 1.2,
+    "end": 132.7
+  },
+  "film_seconds": 136.56,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 23.712,
+    "2": 12.552,
+    "3": 8.592,
+    "4": 15.696,
+    "5": 5.832,
+    "6": 14.592,
+    "7": 16.2,
+    "8": 10.008,
+    "9": 5.64
+  },
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "medvedev-royer-hangzhou-2026-r2",
+    "received_at": "2026-09-26T14:00:24Z",
+    "artifact_ready_at": "2026-09-26T14:04:26Z",
+    "elapsed_seconds": 242.715,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "f93c05f9a0587450ca819adf6040ea1df559113fbdb627a6d9674c2c3ff69195",
+    "spec_sha256": "62abadbf61251f99323b3b02c2cbf480dff8e11e7e589989c93ee7314caeaf85",
+    "run_id": "36247023091",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-09-26T14:02:28Z",
+        "run_id": "36247023091"
+      }
+    ],
+    "render_seconds": 118.715,
+    "pre_render_seconds": 124.0
+  },
+  "film_sha256": "f93c05f9a0587450ca819adf6040ea1df559113fbdb627a6d9674c2c3ff69195",
+  "film_bytes": 51097204,
+  "qc_attestation_sha256": "4b4699fd1dc7b1a9c5775b8e2ea312301c32531269312ef52e852228d16a2860",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-09-26T14:02:28Z",
+      "run_id": "36247023091"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-26T14:04:27Z",
+      "run_id": "36247023091"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-medvedev-royer-hangzhou-2026-r2/medvedev-royer-hangzhou-2026-r2.mp4",
+  "video_bytes": 51097204
+}
