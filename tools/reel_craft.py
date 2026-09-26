@@ -327,6 +327,57 @@ MOLD_LEGACY = frozenset({
 })
 
 
+#: ⭐ 配音里不许出现「解说说」三个字。
+#:
+#: 账号所有者 2026-09-26：「**配音的 tts 里不要再说解说说这三个字了**」。
+#: 「解说说，这一拍太漂亮了」这种转述，在 TTS 里是两个「说」连读，而且把转播的话
+#: 换成我们的声音再说一遍——要引解说就留原声配双语字幕（CLAUDE.md「精彩的原声
+#: 解说要留下来」），要讲就直接讲那一拍，不必借解说的嘴。
+#: 管的是**进 TTS 的文本**：`cover.narration` 和 `segments[].narration`。
+COMMENTATOR_SAID = "解说说"
+
+#: 定规矩那天已经发出去的：只许减不许加，自检在 tests/test_reel_craft.py。
+COMMENTATOR_SAID_LEGACY = frozenset({
+    "boulter-volynets",
+    "bucsa-noskova-bjk-cup-2026-sf",
+    "chung-nagal-davis-cup-2026",
+    "chwalinska-townsend-us-open-2026-r1",
+    "cobolli-jodar",
+    "djokovic-beijing-return",
+    "djokovic-tirante",
+    "fritz-cerundolo-us-open-2026-r3",
+    "gea-van-de-zandschulp-us-open-2026-r4",
+    "grant-kalinina-bjk-cup-2026-sf",
+    "muchova-bouzas-bjk-cup-2026-sf",
+    "safiullin-alcaraz-us-open-2026-r1",
+    "sakkari-gibson-singapore-2026-qf",
+    "shelton-nakashima-montreal-final",
+    "svitolina-paolini-bjk-cup-2026-sf",
+    "tien-monfils-us-open-2026-r2",
+    "zhang-fernandez-us-open-2026-r1",
+    "zheng-paolini-bjk-cup-2026-qf",
+    "zhiyenbayeva-bouzas-bjk-cup-2026",
+})
+
+
+def commentator_said_problem(spec: dict, *,
+                             legacy: frozenset[str] = frozenset()) -> str | None:
+    """配音文本里出现「解说说」就报，给出是哪几段。"""
+    if str(spec.get("slug") or "") in legacy:
+        return None
+    where = []
+    if COMMENTATOR_SAID in str((spec.get("cover") or {}).get("narration") or ""):
+        where.append("封面")
+    for i, seg in enumerate(spec.get("segments") or [], start=1):
+        if COMMENTATOR_SAID in str((seg or {}).get("narration") or ""):
+            where.append(f"第 {i} 段")
+    if not where:
+        return None
+    return (f"配音里出现「{COMMENTATOR_SAID}」（{'、'.join(where)}）——账号所有者 2026-09-26："
+            "「配音的 tts 里不要再说解说说这三个字了」。要引解说就留原声段配中英字幕，"
+            "要讲就直接讲那一拍怎么打的，别借解说的嘴转述。")
+
+
 def _narrations(spec: dict) -> list[str]:
     """按段取旁白原文，空段和纯画面段不算。"""
     out = []
