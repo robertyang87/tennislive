@@ -1,0 +1,347 @@
+{
+ "slug": "bu-majchrzak-hangzhou-2026-r2",
+ "_column": "赛场之上",
+ "sources": {
+  "ttv": "https://www.tennistv.com/videos/4582104/hangzhou-2026-r2-bu-majchrzak-short-highlights"
+ },
+ "primary": "ttv",
+ "_source": "tennistv.com `library/short-highlights`《Yunchaokete Bu vs Kamil Majchrzak - Short Highlights》（页面 id 4582104，`data-entitlement=\"free\"`），HLS 最高档 1920×1080 / 50fps，156.8s；probe（run 36239960725）落的是 1920×1080。**三条渠道都查过**（北京 2026-09-26 19:47）：① Tennis TV YouTube 频道 `/videos` 最新 30 条里杭州只有《Rublev Faces Hijikata…》《Rinky Hijikata Faces Andrey Rublev》两条合集，**这一场没有单场**；② 本条 tennistv.com 短集锦 156.8s / 1080p；③ ATP Tour YouTube 频道杭州只到《Quentin Halys vs Roman Safiullin Highlights | Hangzhou 2026 Round 2》，**这一场还没发**。同页的 `hangzhou-2026-r2-bu-majchrzak-highlights`（4582108）和整场回放（4582103）是 `premium`，要订阅，不用。四要素自证：记分条逐格读过（`BU / MAJCHRZAK` 两行）——首盘 `2 40 / 1 40`、`3 0 / 1 30`、抢七 `6 6 / 6 4 SET POINT`、第二盘 `7 6 1 / 6⁴ 6 2`、抢七 `6 5 / 6 6`、决胜盘 `7 6⁵ 5 40 / 6⁴ 7 2 15`，和 flashscore OOPXFfzQ 逐分记录一一对得上；72.5s 转播全宽比分板写着 `ROUND 2 · CENTER COURT · 1:01 · ATP 250 / YUNCHAOKETE BU 7 / KAMIL MAJCHRZAK 6⁴`；场地印 `HANGZHOU 杭州`、挡板 `杭体集团`。",
+ "_tennistv_trim": "**片尾**：147.86s 起是 Tennis TV 品牌蒙太奇（LIVE / SOCIAL / BEHIND THE SCENES），154s 起是 `THE BEST SEAT IN TENNIS` 订阅卡；最后一段收在 147.6，离 147.86 那一刀 0.26 秒，逐 0.5 秒看过 147.5 还是网前握手。**台标**：Tennis TV 台标烧在右上角（源片 x≈1580~1900），3:4 取景窗 cx=0.5 只取 555~1365，角上那块在窗外。",
+ "mixed_fps": {
+  "ttv": "HLS 最高档 50fps，1920×1080；probe 在 runner 上报 25fps（整除降采样到 25）。单一源片，没有混帧率。"
+ },
+ "scorebox": [
+  98,
+  920,
+  519,
+  1029
+ ],
+ "_scorebox_why": "同一台杭州转播（atp_scoreboard 标定过的那一套），和 `bu-zheng-hangzhou-2026-r1` 同位置。全分辨率帧实测（130s，决胜盘板最宽的状态 `7 6⁵ 5 40 / 6⁴ 7 2 15`）：左缘 98、上缘 920、下缘 1027~1029、右缘 519。首盘板只到 ~405，各段右缘渲染时现量，519 只当兜底。",
+ "cover": {
+  "eyebrow": "赛场之上",
+  "layout": "solo",
+  "subject": "布云朝克特",
+  "hook": "只差一分被拖进决胜盘\n他还是挺进了8强",
+  "hook_accent": "挺进了8强",
+  "_hook_why": "按 2026-09-25 口径：第一行＝关键内容（第二盘 5-4 他拿到赛点没兑现、被拖进决胜盘——「只差一分」不用懂网球也读得懂），第二行＝结果。第二行原来是「他还是淘汰了八号种子」，账号所有者 2026-09-26 推送后要求改：「封面别说淘汰八号种子，说挺进 8 强」。「打进／挺进 8 强」是成绩不是轮次名，`strength_round_hits` 放行。10 字和 8 字。",
+  "topic": "杭州公开赛第二轮 · 布云朝克特挺进8强",
+  "winner": "布云朝克特",
+  "result": "7-6(4) 6-7(5) 6-2",
+  "matchup": [
+   {
+    "name": "布云朝克特",
+    "name_en": "Yunchaokete Bu",
+    "country": "CHN",
+    "rank": 111
+   },
+   {
+    "name": "迈赫扎克",
+    "name_en": "Kamil Majchrzak",
+    "country": "POL",
+    "rank": 73
+   }
+  ],
+  "_matchup_rank_why": "两源一致（2026-09-21 那一期）：仓库 `sources/rankings.fetch_rankings()`（tennisexplorer ATP 榜，`atp_at=21.09.2026`）Majchrzak Kamil 73、Yunchaokete Bu 111；ESPN `site.api.espn.com/.../atp/rankings` 73（777 分）/ 111（552 分）。",
+  "_name_why": "`player_zh(\"Kamil Majchrzak\")` → 迈赫扎克，`player_zh(\"Yunchaokete Bu\")` → 布云朝克特。",
+  "_subject_why": "封面放**布云朝克特**——中国球员、这一场的赢家、钩子的主语。",
+  "_heat_why": "① 档：中国球员单打，不用等额外理由；而且这一场他淘汰了八号种子、打进 1/4 决赛。同栏目上一条是他首轮胜郑瑞（`bu-zheng-hangzhou-2026-r1`），同一批观众。",
+  "portrait": {
+   "image": "assets/reel/bu-majchrzak-hangzhou-2026.jpg",
+   "focus": 0.5,
+   "focus_y": 0.3,
+   "zoom": 1.0,
+   "_why": "本场赛后实拍：他右手食指贴在嘴边，正脸、眼睛睁着、表情是较劲的那种笃定——对上钩子「只差一分被拖进决胜盘／他还是挺进了8强」。白色 FILA 无袖衫黑领、蓝色 FILA 头带、白色护腕，和本场源片逐项一致。",
+   "_gates": "① 精准：图出自网球之家（作者陆小天）2026-09-26 北京 21 点多发的本场赛后稿《锐评布云朝克特进八强…》；首轮那天（9/24）的七篇赛后稿（主办方「杭州市体育产业发展集团」15 张图组、同一作者陆小天tennis 9 张、十八般网球、硬核网球、星闻球事等）逐张算过图像指纹，这一组一张都没出现过（最小差 102/256，同一张图压缩前后只差 4）——是今天才首次发出的图，不是首轮那天的。② 在比赛中：场上。③ 冲击力：近景正脸、情绪外露。④ 清晰度：1280×1829 原图（公众号 `/0` 原尺寸），铺 1080×1440 不用放大。",
+   "_photo_hunt_why": "账号所有者 2026-09-26：「去各大社交媒体找一下官方的一些大图……刚给的这个封面图太丑了，不清晰」。查过：X（`syndication.twitter.com` 公开时间线，atptour／TennisTV／ATPChallenger／BuYunchaokete，沙箱和 GitHub runner（probe-blocked run 36244602341）都回 429）；Instagram（`web_profile_info` 公开接口，沙箱 401）；微博（m.weibo.cn 沙箱连接被重置；「中国网球」公众号转载的一张带 `@ATP巡回赛` 水印的庆祝照只有 690×460）；AP／WTA photo-resources（`find_cover_photo` 两趟 0 张）；新浪赛后稿无正文配图。公众号里能拿到原尺寸的，这一张最清楚、最正面。⚠️ 摄影师不详，稿子没署名。"
+  },
+  "scoreboard": {
+   "court": "Center Court",
+   "_court_why": "源片 72.5s 转播全宽比分板自证：`ROUND 2 · CENTER COURT · 1:01`。",
+   "duration_source": {
+    "url": "data:application/json,%7B%22duration%22%3A%20%222%3A55%3A00%22%2C%20%22source%22%3A%20%22flashscore%20df_sui_1%EF%BC%88OOPXFfzQ%EF%BC%89%E5%88%86%E7%9B%98%201%3A03%20%2B%201%3A12%20%2B%200%3A40%20%3D%202%3A55%22%2C%20%22cross_check%22%3A%20%22flashscore%20dc_1%20DC%3D1790410800%EF%BC%8808%3A20%3A00Z%EF%BC%89%E3%80%81DD%3D1790421164%EF%BC%8811%3A12%3A44Z%EF%BC%89%EF%BC%8C%E7%9B%B8%E5%87%8F%202%3A52%3A44%22%7D",
+    "field": "duration"
+   },
+   "_duration_why": "flashscore df_sui_1：1:03 + 1:12 + 0:40 = 2:55；同源 dc_1 的起止时刻相减 2:52:44。⚠️ 两个数同出 flashscore，它历史上偏长过；ATP 这一场没有第二个公开的用时源，按 2:55 印；旁白只说「将近三个小时」。源片 72.5s 转播板写首盘结束时 `1:01`，和首盘 1:03 在同一量级。"
+  }
+ },
+ "_result_why": "flashscore 当日表 OOPXFfzQ：AE=Bu Y.（home）AG=2 / AF=Majchrzak K.（away）AH=1，BA/BB=7:6、BC/BD=6:7、BE/BF=6:2；df_mh_1 两个抢七 7-4、5-7；全网球 APP 赛后稿赛后稿《势不可挡…》（2026-09-26 19:16）「7-6(4)/6-7(5)/6-2击败波兰好手迈赫扎克」；源片 121s 记分条 `7 6⁵ 5 40 / 6⁴ 7 2 15`。三处一致。",
+ "topbar": {
+  "line1": "2026 ATP250 杭州站 第二轮",
+  "line2": "布云朝克特 7-6(4) 6-7(5) 6-2 迈赫扎克"
+ },
+ "_topbar_why": "line1 按「<年份> <巡回赛><级别> <城市>站 <轮次>」：杭州公开赛 ATP250（转播角标 `ATP 250`），转播全宽比分板印着 `ROUND 2`，Tennis TV slug 也是 `r2`，写「第二轮」。line2 由 cover.winner / result / matchup 机械拼出。",
+ "_match": {
+  "status": "result_verified",
+  "source": "flashscore_points",
+  "source_id": "OOPXFfzQ",
+  "flashscore_id": "OOPXFfzQ",
+  "participants": [
+   "布云朝克特",
+   "迈赫扎克"
+  ],
+  "set_scores_home_away": [
+   [
+    7,
+    6
+   ],
+   [
+    6,
+    7
+   ],
+   [
+    6,
+    2
+   ]
+  ],
+  "tiebreaks_home_away": [
+   [
+    7,
+    4
+   ],
+   [
+    5,
+    7
+   ],
+   null
+  ],
+  "winner": "布云朝克特",
+  "loser": "迈赫扎克",
+  "winner_result": "7-6(4) 6-7(5) 6-2",
+  "loser_result": "6-7(4) 7-6(5) 2-6"
+ },
+ "_hit_data": "跑过 `match_stat_hooks.py OOPXFfzQ`（home=Bu）。进旁白的：**首盘第 3 局先破发**（df_mh_1 Set 1 `HC=2 HE=1 HG=2 HH=2 HK=1`，`40:30 |B1|` 破发）；**首盘第 4 局平分后被拿到破发点、救回保发**（`40:40, 40:A |B1|, 40:40, A:40`）；**首盘 3-2 发球局被破**（`HC=3 HE=3 HG=1 HH=1 HK=2`）；**首盘抢七第二个盘点兑现 7-4**（`HM 2,1` 在 6-3、6-4 两分）；**第二盘第 1 局连救三个破发点**（`30:40 |B1|, 40:A |B1|, 40:A |B1|` 后 `A:40`）；**第二盘两人发球局 6/6 全保**（df_st_1 Set 2 Service games won 100% / 100%）；**第二盘 5-4 迈赫扎克发球，他 40-30 拿到赛点没兑现**（`40:30 |B1| |B3|, 40:40, 40:A`，df_st_1 Match points saved 迈赫扎克 1）；**第二盘抢七 5-7**（`HM 2,2` 在 5-6）；**决胜盘第 1、3 局破发 3-0**（两局都是 `A:40 |B1|` 第二次兑现）；**5-2 第一个赛点兑现**（`40:15 |B3|`）。交手记录（df_hh_1）：含本场 Bu 1:0，首次交手。",
+ "_turning_points": [
+  "首盘第 4 局（布云朝克特发球 2-1）：平分后迈赫扎克拿到破发点，他救回保发。源片 0.3~33 就是平分那一分（记分条 `•BU 2 40 / MAJCHRZAK 1 40`），逐 0.5 秒看过 27~33：近端的迈赫扎克左右跑动一路追，33.0 切到他握拳——这一分归迈赫扎克（40:A）。",
+  "首盘第 6 局（布云朝克特发球 3-2）：被破，3-3。源片没有这一局，旁白一句带过。",
+  "首盘抢七 6-4（布云朝克特发球）：第二个盘点兑现 7-4。源片 46.5 `SET POINT` 字牌、55.9 解说「And this time he does get it done」。",
+  "第二盘第 10 局（迈赫扎克发球 4-5）：40-30 布云朝克特的赛点没兑现，5-5。源片没有这一局，旁白讲。",
+  "第二盘抢七 5-6（布云朝克特发球，迈赫扎克的盘点）：丢了，5-7。源片 93~113.6，113.46 解说「And he's missed that, having saved a match point」，114 迈赫扎克庆祝。",
+  "决胜盘第 1、3 局破发 3-0；5-2 第一个赛点兑现。源片 119~134 是赛点那一分（`7 6⁵ 5 40 / 6⁴ 7 2 15`），133 迈赫扎克扑出去没够着。"
+ ],
+ "editorial": {
+  "mode": "match_review",
+  "hook": [
+   "只差一分被拖进决胜盘",
+   "他还是挺进了8强"
+  ],
+  "question": "第二盘离胜利只差一分却被追平，决胜盘布云朝克特是怎么把八号种子拿下的？",
+  "thesis": "第二盘五比四他拿到赛点没兑现，抢七又丢在迈赫扎克的盘点上；决胜盘他一开局连破两次发球，四个发球局全保，第一个赛点就兑现——在杭州淘汰八号种子，打进 1/4 决赛。",
+  "beats": [
+   "冷开场：赛点落地，迈赫扎克扑倒，他转身指向看台。",
+   "落点＋坐标：北京时间 9 月 26 日下午，杭州公开赛第二轮，世界第 111 对八号种子。",
+   "首盘：先破发、被破回、抢七第二个盘点 7-4。",
+   "第二盘：十二个发球局全保；5-4 赛点没兑现，抢七 5-7。",
+   "决胜盘：连破两次 3-0，5-2 第一个赛点兑现。"
+  ],
+  "human_context": {
+   "angle": "这场球的主语是**第二盘那一分**：五比四，迈赫扎克发球，他拿到赛点没兑现，抢七又丢了，比赛被拖进第三盘。对一个世界第 111、面对八号种子的球员，这种时刻最容易崩——他在决胜盘一开局就连破两次，没让比赛再有悬念。",
+   "facts": [
+    "flashscore OOPXFfzQ：Bu Y. 7-6(4) 6-7(5) 6-2 Majchrzak K.；分盘用时 1:03 + 1:12 + 0:40 = 2:55；dc_1 08:20Z 至 11:12:44Z。",
+    "flashscore df_st_1 全场：ACE 14/12、一发得分率 81%（59/73）对 76%（52/68）、破发点兑现 3/6 对 1/6；迈赫扎克救下赛点 1 个；第二盘发球局 6/6 对 6/6；决胜盘布云朝克特发球局 4/4。",
+    "flashscore df_mh_1：见 `_hit_data`。",
+    "排名（同一期两源）：tennisexplorer 73 / 111；ESPN 73（777 分）/ 111（552 分）。迈赫扎克是八号种子（ATP 签表 15/16 号签位 `K. Majchrzak 8`，见 `bu-zheng-hangzhou-2026-r1` 的 `_next_why`；TNNS app 比分页名字旁标 `8`）。",
+    "下一轮 1/4 决赛对萨菲乌林：全网球 APP 赛后稿原文「他1/4决赛的对手将是萨菲乌林」；ATP YouTube《Quentin Halys vs Roman Safiullin Highlights | Hangzhou 2026 Round 2》。"
+   ],
+   "sources": [
+    "https://www.flashscore.com/match/tennis/OOPXFfzQ/",
+    "https://www.tennistv.com/videos/4582104/hangzhou-2026-r2-bu-majchrzak-short-highlights",
+    "https://site.api.espn.com/apis/site/v2/sports/tennis/atp/rankings",
+    "https://www.tennisexplorer.com/ranking/atp-men/"
+   ]
+  }
+ },
+ "_no_repeat": "同栏目 `bu-zheng-hangzhou-2026-r1` 讲过他首轮对郑瑞、美网那场输球和「复仇」、幸运落败者来路——这一条一个字都不提郑瑞和美网，只讲这一场。",
+ "_claims": [],
+ "push": {
+  "summary": "布云朝克特淘汰八号种子",
+  "lead": "杭州公开赛第二轮，布云朝克特 7-6(4) 6-7(5) 6-2 淘汰八号种子迈赫扎克，打进 1/4 决赛。第二盘五比四，他拿到赛点没能兑现，抢七 5-7 被拖进决胜盘；决胜盘他一开局连破两次发球，四个发球局全保，第一个赛点就拿下。",
+  "matchup": "布云朝克特 vs 迈赫扎克",
+  "score": "7-6(4) 6-7(5) 6-2",
+  "auto": true
+ },
+ "_push_summary_why": "11 字位，主语是布云朝克特；「淘汰八号种子」是这一场的结果和份量。标题里不写排名。⚠️ 2026-09-26 账号所有者要求**封面**别说「淘汰八号种子」、改说「挺进8强」——封面钩子和 topic 已改；推送标题没跟着改，因为它要和已经发出去的复制页标题逐字相同（`test_每条spec都算得出一句过得了闸的标题`）。",
+ "_voice_why": "沿用这条线的默认：云见（`zh-CN-YunjianNeural`）＋6%，不设 `style`。",
+ "stats": {
+  "tour": "atp",
+  "a": {
+   "aces": 14,
+   "df": 4,
+   "first_in": 73,
+   "first_won": 59,
+   "second_total": 36,
+   "second_won": 17,
+   "bp_conv": 3,
+   "bp_chances": 6,
+   "pts_won": 115,
+   "pts_total": 221,
+   "first_total": 109,
+   "headshot": "assets/players/headshots/atp-Y09V.png"
+  },
+  "b": {
+   "aces": 12,
+   "df": 2,
+   "first_in": 68,
+   "first_won": 52,
+   "second_total": 44,
+   "second_won": 21,
+   "bp_conv": 1,
+   "bp_chances": 6,
+   "pts_won": 106,
+   "pts_total": 221,
+   "first_total": 112,
+   "headshot": "assets/players/headshots/atp-MQ75.png"
+  },
+  "_source": "`python tools/match_stat_hooks.py OOPXFfzQ --stats-block` 机器抄的 flashscore df_st_1 全场统计（北京 19:58 那一趟；19:20 那一趟一发是 60/74，赛后修订过一次，自洽：59+17+(112−52−21)=115 ＝ pts_won）。a/b 跟 cover.matchup 的顺序（a=布云朝克特、b=迈赫扎克）；flashscore 这一场 home=Bu Y.、away=Majchrzak K.，恰好同序。头像：atp-Y09V 布云朝克特（沿用），atp-MQ75 迈赫扎克（本条新取，ATP id MQ75，看过是本人）。",
+  "_winners_ue_why": "制胜分／非受迫失误**不画**：flashscore df_st_1 这一场没有这两行；TNNS 跑了两趟（tnns-stats run 36238374832、36239965830，`who=Bu,Majchrzak date=2026-09-26` 认到 id=74753266，选手顺序 ['Bu','Majchrzak']），两趟都给 winners [42,34]、ue [49,26]，**但自证都红了**——分盘合计 winners [41,31]、ue [53,28] 和全场对不上，工具原话「多半解错了，别用」。按规矩这两行留空；旁白和文案也不引用。"
+ },
+ "segments": [
+  {
+   "source": "ttv",
+   "start": 132.8,
+   "end": 141.0,
+   "cx": 0.5,
+   "narration": "",
+   "quote": [
+    {
+     "at": 2.16,
+     "text": "And he's done it,\n他做到了"
+    },
+    {
+     "at": 3.06,
+     "text": "and what a way to finish.\n这样收尾，太漂亮了"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "_ending_payoff_required": true,
+   "_ending_payoff_why": "倒数第二段按时间顺序重放 119.2–141.0（赛点那一分到团队席鼓掌），这次配旁白。",
+   "_quote_why": "转播原句，两个模型逐词一致：medium.en And@134.96 he's@135.08 done@135.32 it@135.44 and@135.86 what@136.38 a@136.48 way@136.64 to@136.82 finish@137.08；small.en 同句（And@134.26 he's@135.06 done@135.26 it@135.44 and@136.22 … finish@137.04）。段内 at = 绝对秒 − 132.8。",
+   "_why": "冷开场：赛点最后一拍。逐 0.5 秒看过 126~135.5：远端的布云朝克特发球（记分条 `•BU 7 6⁵ 5 40 / MAJCHRZAK 6⁴ 7 2 15`），近端迈赫扎克被左右调动，132.5 向右扑出去、133 摔在场上没够着，134 他在远端举起双臂；135.62 切到他转身指向看台，136.92 切到团队席起立鼓掌。",
+   "point_end_ok": "比赛在 133.5 前就结束了；136.9 那次翻牌是记分条补上终局（`6` 局）。",
+   "crosses_cut": "135.62 切到他本人的近景、136.92 切到他的团队席——都是赛点之后同一时刻的反应，原声说的也是他。",
+   "score_inset": true
+  },
+  {
+   "source": "ttv",
+   "start": 0.3,
+   "end": 16.0,
+   "cx": 0.5,
+   "narration": "第二盘，他离胜利只差一分，却被拖进了决胜盘。北京时间九月二十六号下午四点多，杭州公开赛第二轮，世界第一百一十一的布云朝克特，对八号种子迈赫扎克。",
+   "_why": "② 落点＋③ 坐标。画面：首盘第 4 局 `•BU 2 40 / MAJCHRZAK 1 40` 平分那一分的前半段（远端布云朝克特发球，近端迈赫扎克底线接发后对拉）。",
+   "_start_time_why": "开球时刻：flashscore dc_1 OOPXFfzQ 的 DC=1790410800（2026-09-26 08:20Z＝北京 16:20），DD=1790421164（11:12:44Z）。只说「下午四点多」，不报到分。",
+   "point_end_ok": "这一段收在同一分中间，下一段紧接着从 16.0 把这一分放完（段与段首尾相接，没有跳切）。",
+   "score_inset": true
+  },
+  {
+   "source": "ttv",
+   "start": 16.0,
+   "end": 33.0,
+   "cx": 0.5,
+   "narration": "第一盘他先破了发，接下来自己的发球局打到平分。这一分两人在底线来回对拉，迈赫扎克被调到左右两个底角。他都追了回来，最后拿下这一分，拿到破发点。这个破发点，他后来救了回来。",
+   "_why": "首盘第 4 局平分那一分的后半段：逐 0.5 秒看过 27~33，近端迈赫扎克从左侧底角追到右侧再回到中路，33.0 切到他握拳（这一分归他，40:A）。flashscore 这一局 `40:40, 40:A |B1|, 40:40, A:40`：破发点就是这一分，之后布云朝克特救回保发。「先破了发」：Set 1 第 3 局 `40:30 |B1|` 破发。",
+   "point_end_ok": "这一分 32.5 前已经死球，33.0 切到迈赫扎克握拳；35.4 那次翻牌是记分条滞后（33~35 近景镜头里记分条还挂着 `40 / 40`）。",
+   "score_inset": true
+  },
+  {
+   "source": "ttv",
+   "start": 46.4,
+   "end": 55.9,
+   "cx": 0.5,
+   "narration": "三比二，他的发球局被破了回来，首盘拖进抢七。第一个盘点没拿下，他又拿到了第二个。",
+   "_why": "首盘抢七 `•BU 6 6 / MAJCHRZAK 6 4`，46.5 挂 `SET POINT` 字牌；逐秒看过 48~56 同一分。三比二被破：flashscore Set 1 第 6 局 `HG=1 HH=1 HK=2`，源片没有这一局，一句带过。「第二个盘点」：抢七 `HM 2,1` 在 6-3、6-4 两分，第一个没兑现。",
+   "point_end_ok": "这一段收在同一分中间，下一段（原声）紧接着从 55.9 放完这一分，57.22 才切到团队席。",
+   "score_inset": true,
+   "crosses_cut": "49.42 从他发球前的近景（46.5~49.4，`SET POINT` 字牌）切到同一分的宽景：同一个人、同一分。"
+  },
+  {
+   "source": "ttv",
+   "start": 55.9,
+   "end": 62.8,
+   "cx": 0.5,
+   "narration": "",
+   "quote": [
+    {
+     "at": 0.0,
+     "text": "And this time\n这一次"
+    },
+    {
+     "at": 0.8,
+     "text": "he does get it done.\n他拿下了"
+    },
+    {
+     "at": 4.1,
+     "text": "An intense opening set,\n第一盘打得太紧了"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "_quote_why": "转播原句，两个模型逐词一致：medium.en And@55.90 this@56.50 time@56.70 he@56.96 does@57.12 get@57.32 it@57.58 done@57.78 / An@60.00 intense@60.46 opening@61.10 set@61.92；small.en「This time, he does get it done」「And the tense opening set」（intense/the tense 两个模型分歧，按 medium.en 取 intense，意思相同）。段内 at = 绝对秒 − 55.9。",
+   "_why": "首盘盘点那一分打完（57.22 切到他的团队席鼓掌、58.58 切到他走回座位），抢七 7-4 拿下首盘。",
+   "crosses_cut": "57.22 切到团队席、58.58 切到他本人——都是拿下首盘那一刻的反应，原声讲的也是这一盘。",
+   "score_inset": true
+  },
+  {
+   "source": "ttv",
+   "start": 77.7,
+   "end": 89.1,
+   "cx": 0.5,
+   "narration": "第二盘开局，他的发球局连救三个破发点。之后两个人谁都没再丢发球局，十二个发球局全部保住。",
+   "_why": "第二盘 `•BU 7 6 1 / MAJCHRZAK 6⁴ 6 2`，他发球的一分（远端发球），85~89 他走回底线。统计：flashscore Set 2 第 1 局 `30:40 |B1|, 40:A |B1|, 40:A |B1|` 后 `A:40`；df_st_1 Set 2 Service games won 100%（6/6）对 100%（6/6）。",
+   "score_inset": true
+  },
+  {
+   "source": "ttv",
+   "start": 92.9,
+   "end": 113.6,
+   "cx": 0.5,
+   "narration": "第二盘五比四，他在迈赫扎克的发球局拿到赛点，没能兑现，这一盘又被拖进抢七。抢七里，迈赫扎克先拿到盘点。这一分两人在底线来回对拉，他被调到左右两边，都追了回来，最后一拍打丢了。离胜利只差一分，比赛又回到了原点。",
+   "_why": "第二盘抢七 `•BU 7 6 5 / MAJCHRZAK 6⁴ 6 6`：逐秒看过 93~113，近端的布云朝克特在底线左右跑动，远端迈赫扎克；113.46 解说「And he's missed that」。赛点：flashscore Set 2 第 10 局 `40:30 |B1| |B3|, 40:40, 40:A`，df_st_1 Match points saved 迈赫扎克 1；源片没有这一局，旁白讲。抢七 5-6 是 `HM 2,2`，这一分之后 5-7。",
+   "point_end_ok": "这一分 113.4 前结束，113.7 切到迈赫扎克庆祝，下一段原声从 113.72 接上。",
+   "score_inset": true
+  },
+  {
+   "source": "ttv",
+   "start": 113.72,
+   "end": 118.6,
+   "cx": 0.5,
+   "narration": "",
+   "quote": [
+    {
+     "at": 0.0,
+     "text": "And he's missed that,\n他打丢了"
+    },
+    {
+     "at": 2.66,
+     "text": "having saved a match point.\n对手救下了赛点"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "_quote_why": "转播原句，两个模型逐词一致：medium.en And@113.46 he's@114.38 missed@114.62 that@114.84 having@116.38 saved@116.72 a@117.28 match@117.52 point@117.74；small.en 同句。第一个 cue 的 at 钉在段首 0.0（绝对 113.72，And 从 113.46 起，段首切在 113.7 那一刀之后）。段内 at = 绝对秒 − 113.72。",
+   "_why": "113.7 切到迈赫扎克拿下第二盘后握拳走回（114~116），117 他的教练鼓掌、118 布云朝克特在场边（`SET BREAK`）。",
+   "crosses_cut": "原声段：画面是拿下这一盘的迈赫扎克和他的教练，原声说的正是「他打丢了、对手救下赛点」这件事。",
+   "score_inset": true
+  },
+  {
+   "source": "ttv",
+   "start": 119.2,
+   "end": 141.0,
+   "cx": 0.5,
+   "narration": "决胜盘，他一开局就破了发，第三局又破一次，三比零。这一盘他四个发球局全保。五比二，他发球，赛点。他把迈赫扎克在底线左右调动，最后一拍打向空当，迈赫扎克扑了出去，没够着。他转身指向看台，团队席全站了起来。",
+   "_why": "和冷开场同一分，按时间顺序重放、配旁白：`•BU 7 6⁵ 5 40 / MAJCHRZAK 6⁴ 7 2 15`，逐 0.5 秒看过 126~135.5（近端迈赫扎克左右追、132.5 向右扑、133 摔倒），135.62 切到他转身指向看台，136.92 切到团队席起立鼓掌（137~141）。决胜盘两次破发：flashscore Set 3 第 1、3 局 `HG=2 HH=2 HK=1`；5-2 `40:15 |B3|` 第一个赛点兑现。 「四个发球局全保」：df_st_1 Set 3 Service games won 100%（4/4）。",
+   "point_end_ok": "赛点那一分 133.5 前结束；136.9 的翻牌是记分条补上终局，之后是庆祝和团队席。",
+   "crosses_cut": "135.62 从赛点宽景切到他本人的近景、136.92 切到他的团队席起立鼓掌：同一刻的反应，旁白说的正是这两个画面。",
+   "score_inset": true
+  },
+  {
+   "source": "ttv",
+   "start": 141.05,
+   "end": 147.6,
+   "cx": 0.5,
+   "narration": "打了将近三个小时。四分之一决赛对萨菲乌林，他能走多远？",
+   "_why": "141~142.5 他在网前、143.38 看台、145.92 网前握手，段尾 147.6 在 147.86 品牌蒙太奇之前。用时见 cover.scoreboard。",
+   "_next_why": "下一轮对手：全网球 APP 赛后稿「他1/4决赛的对手将是萨菲乌林，后者以5-7/6-3/6-4淘汰4号种子」；ATP YouTube 已发《Quentin Halys vs Roman Safiullin Highlights | Hangzhou 2026 Round 2》。",
+   "crosses_cut": "143.38 切到看台、145.92 切到网前握手：比赛已经结束，旁白是片尾一问，不指认画面里的人。",
+   "point_end_ok": "比赛已经结束。",
+   "score_inset": false,
+   "_score_inset_why": "141 起是赛后网前、看台、握手，逐秒看过没有比分板（142.5 宽景左下已经空了）。"
+  }
+ ]
+}

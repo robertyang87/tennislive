@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>9.26 赛场之上 | 斯维托丽娜送乌克兰进决赛</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>去年被保利尼翻盘，今年两盘只让她拿4局🎾
+
+北京时间9月26日晚上，深圳湾体育中心，比利·简·金杯总决赛半决赛，意大利对乌克兰第二场单打：世界第7的斯维托丽娜 6-2、6-2 胜世界第20的保利尼，用时1小时3分。乌克兰2-0淘汰卫冕冠军意大利，拿到队史第一个金杯决赛资格，周日对捷克。
+
+这一场有影子。去年半决赛同样是这两个人、同样是第二场单打，保利尼先丢一盘，3-6、6-4、6-4逆转了斯维托丽娜，意大利由此翻盘晋级，最后卫冕。赛前乌克兰队长马尔琴科说：我们要复仇。
+
+第一局，斯维托丽娜一记漂亮的接发，零封破掉保利尼的发球；第三局一个救球逼出第二次破发，3-0。保利尼在自己的接发局打到40-30，从一记好接发开始破回一局，全场斯维托丽娜只丢了这一个发球局。2-4之后，斯维托丽娜被拉到场边还是一拍穿越，保利尼0-40救下两个破发点，第三个没守住。第一个盘点拿下，6-2，31分钟。
+
+第二盘保利尼的前两个发球局都被破，0-3。一记几乎没有角度的斜线，解说都说「角度根本不存在」。这一盘斯维托丽娜的发球局，保利尼18分里只拿到2分。1-5时保利尼三次平分保住一局，看台还在替她喊；可斯维托丽娜发球胜赛，40-15，第一个赛点就拿下。
+
+全场斯维托丽娜7个破发点兑现5个，89分里拿下58分。
+
+去年先赢一盘还被翻盘，今年两盘只让对手拿4局，换你是保利尼，还能从哪儿下手？
+
+#斯维托丽娜 #保利尼 #网球时差 #网球中国赛季来了 #网球时间到</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>换你是保利尼，还能从哪儿下手？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>

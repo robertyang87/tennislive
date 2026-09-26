@@ -6927,6 +6927,9 @@ COVER_FILL_W, COVER_FILL_H = 1080, 1440
 #:   三档查过），X／AP／ATP 沙箱和 runner 都挡。同样的情形他前三次都选了抽帧
 #:   （上面三条），所以按那个口径先推；**早上他要换图，删掉这一行、换 image、
 #:   重渲重推**。源片 1920×1080，放大 1.33 倍。
+#: - **2026-09-26 起**账号所有者给了常设授权：「没有高清大图可备选的话，抽帧也
+#:   可以，但是要尽量清晰偏正面的图片」（CLAUDE.md 同名一节）。之后的条目不用再
+#:   逐条问，但照旧要在这里登记一行、在 spec 的 `_frame_why` 写清四类源各查了什么。
 OWNER_APPROVED_FRAME_COVERS = frozenset({
     "wu-duckworth-us-open-2026-r2",
     "zhiyenbayeva-bouzas-bjk-cup-2026",

@@ -1,0 +1,66 @@
+{
+  "scoreboard_qc_sha256": "f058af6c82045286aeef7f8e86d41fde64a90cc8ad40f164174af03b528da63a",
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 3.827,
+  "layout": "full",
+  "segments_seconds": 122.63,
+  "topbar": {
+    "line1": "2026 ATP250 杭州站 第二轮",
+    "line2": "布云朝克特 7-6(4) 6-7(5) 6-2 迈赫扎克",
+    "start": 1.2,
+    "end": 123.83
+  },
+  "film_seconds": 127.68,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 13.488,
+    "2": 16.584,
+    "3": 7.776,
+    "5": 8.808,
+    "6": 20.496,
+    "8": 21.024,
+    "9": 6.144
+  },
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "bu-majchrzak-hangzhou-2026-r2",
+    "received_at": "2026-09-26T13:30:12Z",
+    "artifact_ready_at": "2026-09-26T13:35:58Z",
+    "elapsed_seconds": 346.617,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "dcf1098c3da8edba199ca00ed071095ff8f13d5be79782b1b071f05d403a2f6d",
+    "spec_sha256": "45f6820b5472c2e0fd5fe03d423372f290943c8fd72c5e8d603bf3ba09a909e7",
+    "run_id": "36245373059",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-09-26T13:32:35Z",
+        "run_id": "36245373059"
+      }
+    ],
+    "render_seconds": 203.617,
+    "pre_render_seconds": 143.0
+  },
+  "film_sha256": "dcf1098c3da8edba199ca00ed071095ff8f13d5be79782b1b071f05d403a2f6d",
+  "film_bytes": 66812820,
+  "qc_attestation_sha256": "9a883f96c2d5e29dc54f85fd07da630e5d32020385e976dcbb2cb5d074ef52a3",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-09-26T13:32:35Z",
+      "run_id": "36245373059"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-26T13:35:59Z",
+      "run_id": "36245373059"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-bu-majchrzak-hangzhou-2026-r2/bu-majchrzak-hangzhou-2026-r2.mp4",
+  "video_bytes": 66812820
+}
