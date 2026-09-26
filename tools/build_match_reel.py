@@ -7695,8 +7695,9 @@ def _narration_craft(spec: dict) -> None:
     ⚠️ 坐在 `validate_spec` 里而不是 `enforce_spec_wording`：这三条只读
     `segments[].narration`，`--dry-run` 0.2 秒就能报，不用等 render。
     """
-    from reel_craft import (ECHO_LEGACY, MOLD_LEGACY,  # noqa: PLC0415
-                            SHOT_CRAFT_LEGACY, echo_narration_problem,
+    from reel_craft import (COMMENTATOR_SAID_LEGACY, ECHO_LEGACY,  # noqa: PLC0415
+                            MOLD_LEGACY, SHOT_CRAFT_LEGACY,
+                            commentator_said_problem, echo_narration_problem,
                             sentence_mold_problem, shot_craft_problem)
 
     auto = (spec.get("_production") or {}).get("status") == "ready_for_render"
@@ -7704,6 +7705,7 @@ def _narration_craft(spec: dict) -> None:
         shot_craft_problem(spec, legacy=SHOT_CRAFT_LEGACY),
         echo_narration_problem(spec, legacy=ECHO_LEGACY),
         sentence_mold_problem(spec, legacy=MOLD_LEGACY),
+        commentator_said_problem(spec, legacy=COMMENTATOR_SAID_LEGACY),
     ]
     hits = [f for f in found if f]
     if not hits:
