@@ -17561,3 +17561,20 @@ def test_双打一对的国旗两面叠放():
     # ④ 列表不是两个 → 报错（双打就是一对）
     with pytest.raises(SystemExit):
         vp._score_flag({"country": ["ESP"]}, "t")
+
+
+def test_轮次分数在字幕里写成1斜杠N决赛():
+    """旁白给合成器写「四分之一决赛」，屏幕上要印「1/4决赛」。
+
+    2026-09-26 `bu-majchrzak-hangzhou-2026-r2` 渲完抽帧，第 120 秒字幕原样印着
+    「四分之一决赛对萨菲乌林」：`arabic_numerals` 对裸的「四」「一」都不动，
+    这个形状从来没被接过。判据只认「X分之一决赛」，别的分数（「三分之一的时间」）
+    不碰。
+    """
+    from tennislive.video.explainer import arabic_numerals as A
+
+    assert A("四分之一决赛对萨菲乌林") == "1/4决赛对萨菲乌林"
+    assert A("打进八分之一决赛") == "打进1/8决赛"
+    assert A("三十二分之一决赛") == "1/32决赛"
+    assert A("三分之一的时间") == "三分之一的时间"
+    assert A("百分之六十四") == "64%"
