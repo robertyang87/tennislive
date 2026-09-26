@@ -7827,6 +7827,16 @@ def validate_spec(
     if card:
         raise ReelError(card)
     segments = parse_segments(spec, urls, next(iter(urls)))
+    # quote 的 `at` 落在段外：`explicit_quote_cues` 原来要等十几段全编完、拼接
+    # 之后写字幕时才报——zverev-deminaur-laver-cup-2026 第二趟 render 就这么白跑了
+    # 两分钟（`at` 8.98 而段长 8.90）。段长只看 spec，dry-run 就能算。
+    for index, seg in enumerate(segments, 1):
+        ats = [float(q["at"]) for q in seg.quote_cues if isinstance(q, dict)]
+        bad = [a for a in ats if not 0 <= a < seg.length]
+        if bad:
+            raise ReelError(
+                f"第 {index} 段 quote 的 `at` 超出这一段（0–{seg.length:.2f}s）：{bad}\n"
+                "把段尾往后挪到那句话开口之后，或者删掉这一条。")
     scoreboard_profile(spec)      # 没标定过的转播在 0.2 秒的 dry-run 就红
     raw_percent = [
         (index, seg.narration)
