@@ -8,6 +8,11 @@
  },
  "slug": "prozorova-concussion-withdrawal-2026",
  "source_quality_exceptions": {
+  "https://www.youtube.com/watch?v=c9y75dSg4oU": {
+   "min_height": 720,
+   "approved_by": "user",
+   "reason": "账号所有者 2026-09-26「视频分辨率可以放宽」「汤森那个也加上吧」；WTA 官方 2025 迈阿密这条集锦最高只有 1280×720。"
+  },
   "https://video.twimg.com/amplify_video/2103471133798612993/vid/avc1/1282x720/WpKIDtbreb2v0CHM.mp4?tag=14": {
    "min_height": 720,
    "approved_by": "user",
@@ -20,7 +25,8 @@
   "hit": "https://video.twimg.com/amplify_video/2103471133798612993/vid/avc1/1282x720/WpKIDtbreb2v0CHM.mp4?tag=14",
   "rome24": "https://www.youtube.com/watch?v=CpB2AZkiRe0",
   "rg23": "https://www.youtube.com/watch?v=MzRsBu5xKgQ",
-  "uso15": "https://www.youtube.com/watch?v=P-db5M9Iz2o"
+  "uso15": "https://www.youtube.com/watch?v=P-db5M9Iz2o",
+  "mia25": "https://www.youtube.com/watch?v=c9y75dSg4oU"
  },
  "primary": "sgqf",
  "_primary_why": "primary 取 sgqf（她对王欣瑜的 1/4决赛官方集锦，1920×1080/25fps）：这条片子里用得最多的一条。",
@@ -201,6 +207,15 @@
    "point_end_ok": "比赛已经结束，这一段是握手、比分牌和向看台致意。"
   },
   {
+   "source": "mia25",
+   "start": 1.96,
+   "end": 17.92,
+   "fit": "crop",
+   "narration": "二〇二五年迈阿密，汤森在双打四分之一决赛摔倒，轻度脑震荡，当时没被查出来。歇了两天，她照样打了半决赛，结果越来越糟，一路缺席到罗马。",
+   "_why": "WTA 官方《Zheng Qinwen vs. Taylor Townsend | 2025 Third Round Miami》（probe output/2026-09-26/reel/proz-mia25，1280×720）：近端粉衣的汤森发球、底线对拉，16.5 她的近景（1.96 / 17.92 两刀）。她摔倒那场双打没有集锦，这是同一站、同一周她的单打画面。事实：本人原话「I fell and ended up getting a mild concussion in my quarterfinal doubles match」，歇两天后打半决赛「ended up getting a lot worse」，退出到罗马为止的所有比赛（tennis.com 2025-04-26 ＋ Yahoo）。",
+   "point_end_ok": "这一分在 16.5 之前已经打完（16.5 是汤森走回的近景），17.92 是切点。"
+  },
+  {
    "source": "rome24",
    "start": 184.48,
    "end": 200.64,
@@ -223,10 +238,10 @@
   {
    "source": "rg23",
    "start": 17.6,
-   "end": 34.2,
+   "end": 36.2,
    "fit": "crop",
-   "narration": "主裁先只给了警告，裁判长和大满贯监督复核后，改判取消资格，申诉也被驳回。德约那次，没人拦他；加藤那次，裁判长说了算。普罗佐罗娃撞上的，是后一种。",
-   "_why": "18.5~22.5 主裁和球员交谈，26.5 起加藤坐在椅子上、裁判长和监督站在她面前（同一个镜头，34.2 停在里面）。主裁 Juge 先警告、裁判长 Azémar 与大满贯监督 McEwen 复核后取消资格（SI ＋ CBS）；申诉被驳回（Sportskeeda ＋ CBS）。",
+   "narration": "主裁先只给了警告，裁判长和大满贯监督复核后，改判取消资格，申诉也被驳回。汤森和德约那两次，没人拦；加藤那次，裁判长说了算。普罗佐罗娃撞上的，是后一种。",
+   "_why": "18.5~22.5 主裁和球员交谈，26.5 起加藤坐在椅子上、裁判长和监督站在她面前（同一个镜头，36.2 停在里面）。主裁 Juge 先警告、裁判长 Azémar 与大满贯监督 McEwen 复核后取消资格（SI ＋ CBS）；申诉被驳回（Sportskeeda ＋ CBS）。",
    "crop_zoom": 1.3,
    "_crop_zoom_why": "Guardian 成片顶上压着「sport and discovery+」字条和右上角 The Guardian 台标，按 3:4 裁时正好落在我们的台头上；放大 1.3 倍把顶部约 125px 裁出画外（源片 1920×1080）。"
   },

@@ -5742,6 +5742,11 @@ APPROVED_LOW_RES_SOURCES: dict[str, int] = {
     # `yt-dlp -J` 逐档查过：480×270 / 640×360 / 1282×720，没有更高的一档；
     # WTA 官方 YouTube 和图库都没有这一分。
     "https://video.twimg.com/amplify_video/2103471133798612993/vid/avc1/1282x720/WpKIDtbreb2v0CHM.mp4?tag=14": 720,
+    # 同一条片子的历史案例：汤森 2025 迈阿密（账号所有者 2026-09-26「汤森那个也加上吧」）。
+    # 她那一周双打摔倒脑震荡的比赛没有集锦，这是同一站、同一周她单打的 WTA 官方
+    # 集锦（《Zheng Qinwen vs. Taylor Townsend | 2025 Third Round Miami》），
+    # probe 实测 1280×720，WTA 频道 2025 年这条就这一档。
+    "https://www.youtube.com/watch?v=c9y75dSg4oU": 720,
 }
 
 
