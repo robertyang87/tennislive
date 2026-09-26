@@ -1,0 +1,67 @@
+{
+  "scoreboard_qc_sha256": "8ba327fd217d27ff4d8c4678406948c74c8bdcfbf89be7b8ef943ad4293d0089",
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 3.827,
+  "layout": "full",
+  "segments_seconds": 123.6,
+  "topbar": {
+    "line1": "2026 拉沃尔杯 首日",
+    "line2": "阿尔卡拉斯 / 门西克 6-4 6-4 布勃利克 / 弗里茨",
+    "start": 1.2,
+    "end": 124.8
+  },
+  "film_seconds": 128.662,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 11.088,
+    "2": 16.872,
+    "3": 8.712,
+    "4": 7.656,
+    "5": 10.224,
+    "6": 5.616,
+    "7": 12.768,
+    "8": 11.088
+  },
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "alcaraz-mensik-doubles-laver-cup-2026",
+    "received_at": "2026-09-26T01:22:35Z",
+    "artifact_ready_at": "2026-09-26T01:28:46Z",
+    "elapsed_seconds": 371.525,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "91f824b51c0de6c57ec0d6eab573fd535ab43fb2fe69b29cac54e6cece661960",
+    "spec_sha256": "57974e472b427fe031f93182943cc7f191393dffb60cb601d3ee0cd04d43cbcd",
+    "run_id": "36208134371",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-09-26T01:24:48Z",
+        "run_id": "36208134371"
+      }
+    ],
+    "render_seconds": 238.525,
+    "pre_render_seconds": 133.0
+  },
+  "film_sha256": "91f824b51c0de6c57ec0d6eab573fd535ab43fb2fe69b29cac54e6cece661960",
+  "film_bytes": 95211985,
+  "qc_attestation_sha256": "653cc9d3f2a80591f3f4f6f581cfbdacae5114a72f51fadbeb3958f9e61b7dc3",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-09-26T01:24:48Z",
+      "run_id": "36208134371"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-26T01:28:47Z",
+      "run_id": "36208134371"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-alcaraz-mensik-doubles-laver-cup-2026/alcaraz-mensik-doubles-laver-cup-2026.mp4",
+  "video_bytes": 95211985
+}

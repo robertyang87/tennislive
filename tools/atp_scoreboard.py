@@ -45,6 +45,7 @@ EDGE_PAD = 2          # 板右缘外多留的源片像素（抗锯齿的那一�
 SCAN_W = 760          # 从板左缘往右扫多宽：板 ≤ ~420、黄条 ≤ ~260
 MIN_BOARD_W = 150     # 板最窄也有名字那一栏宽；比这窄就不是板
 MEDIAN = 5            # 右缘按前后 5 帧取中位数，压掉球员走过板边那一两帧
+POINTS_MAX = 64       # 越过 spec 右缘时：最后一列盘分蓝之后，小分格最多这么宽（源片像素）
 
 
 def board_mask(band: np.ndarray) -> np.ndarray:
@@ -89,9 +90,28 @@ def board_edge(band: np.ndarray, cap: int | None = None) -> int | None:
             break
     if edge is None:                  # 一路连到带的右头：板和深色背景连成了一片
         edge = len(frac)
-    # 近景里板右边是深蓝挡板时，两者颜色分不开，量出来会一路宽出去。上限是 spec
-    # `scorebox` 的右缘——那是这场板**最宽状态**的实测值，板不会比它更宽。
-    return min(edge, cap) if cap is not None else edge
+        # 近景里板右边是深蓝挡板时，两者颜色分不开，量出来会一路宽出去——这种读数
+        # 不可信，退回 spec `scorebox` 的右缘（老行为）
+        return min(edge, cap) if cap is not None else edge
+    return beyond_hint(edge, cap, int(np.flatnonzero(blue_cols).max()) + 1 + POINTS_MAX)
+
+
+def beyond_hint(edge: int, cap: int | None, anchor: int) -> int:
+    """spec `scorebox` 的右缘是**提示**，不是上限：板真的更长（双打名字、多打一盘
+    多一列）时按量到的走，但越过提示的那一截要有板自己的特征撑着。
+
+    ⭐ 账号所有者 2026-09-25：「比分板剪切有问题，双打的比较长」「同时要自适应
+    不同的长度啊」。原来这里是 `min(edge, cap)`——spec 的 x1 是照单打那场量的，
+    双打板比它长，最右的小分那一列就被静默切掉，渲染和 QC 一声不吭。
+
+    - 量到的没越过提示 → 原样用（单打、板本来就在 x1 以内的，和原来逐帧相同）
+    - 越过了 → 最多到 `anchor`：板上最后一格**签名色**（ATP 盘分蓝／WTA 薄荷绿／
+      ITF 浅青）再往右一格小分宽。近景深色挡板能让「暗」一路连出去，但不会长出
+      签名色，所以挡板骗不过这一刀；而且结果不会比提示更窄（最坏退回老行为）。
+    """
+    if cap is None or edge <= cap:
+        return edge
+    return max(cap, min(edge, anchor))
 
 
 def tag_rect(band: np.ndarray, edge: int) -> tuple[int, int, int, int] | None:
@@ -117,6 +137,14 @@ def tag_rect(band: np.ndarray, edge: int) -> tuple[int, int, int, int] | None:
     if rows.size < 12:
         return None
     return (edge, int(rows.min()), x1, int(rows.max()) + 1)
+
+
+def report_beyond_hint(i: int, got: int, spec_x1: int) -> None:
+    """量到的贴片比 spec 的 scorebox 右缘宽时**出声**（仓库的规矩：兜底和越界都不许不吭声）。"""
+    if got > spec_x1:
+        print(f"[score-mask] 第 {i + 1} 段：板量到 {got}，比 spec scorebox 右缘 {spec_x1} "
+              f"宽 {got - spec_x1}px（双打／多一盘的板更长）——按量到的贴，"
+              "spec 的 x1 只是提示，不是上限")
 
 
 def _sha256(path: Path) -> str:
@@ -210,7 +238,7 @@ def resolve_masks(sources: dict, segments: list, outdir: Path, fps: str,
     for i, seg in enumerate(segments):
         if not seg.score_inset:
             continue
-        x0, y0, _x1, y1 = seg.score_inset
+        x0, y0, spec_x1, y1 = seg.score_inset
         seconds = seg.end - seg.start + tail * seg.speed
         raw, width = scan(Path(sources[seg.source]), seg.score_inset, seg.start, seconds, fps)
         frames = stabilize(raw)
@@ -227,6 +255,7 @@ def resolve_masks(sources: dict, segments: list, outdir: Path, fps: str,
         seg.score_inset = (x0, y0, x0 + right, y1)
         seg.score_inset_mask = str(dest.resolve())
         seg.score_inset_spans = None
+        report_beyond_hint(i, x0 + right, spec_x1)
         n_tag = sum(1 for f in present if f[1] is not None)
         widths = sorted({e for e, _ in present})
         records.append({"segment": i, "frames": len(frames), "present_frames": len(present),

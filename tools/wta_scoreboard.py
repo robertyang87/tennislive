@@ -44,7 +44,7 @@ from pathlib import Path
 
 import numpy as np
 
-from atp_scoreboard import stabilize, write_mask
+from atp_scoreboard import beyond_hint, report_beyond_hint, stabilize, write_mask
 
 PROFILE = "wta-tour-v1"
 EDGE_PAD = 2          # 板右缘外多留的源片像素（抗锯齿的那一列）
@@ -105,6 +105,10 @@ def board_edge(band: np.ndarray, cap: int | None = None) -> int | None:
     mint_cols = np.flatnonzero(mint_mask(band).mean(axis=0) > 0.4)
     if mint_cols.size >= MINT_COLS:
         edge = min(edge, int(mint_cols.max()) + 1 + POINTS_MAX)
+        # 有薄荷绿钉着：spec 右缘只是提示，板更长（双打、多一盘）就按量到的走
+        return beyond_hint(edge, cap, edge)
+    # 没有薄荷绿（开局还没有局分那几秒）：没有签名色撑着，
+    # 越过 spec 右缘的读数不可信，照旧封顶
     return min(edge, cap) if cap is not None else edge
 
 
@@ -179,7 +183,7 @@ def resolve_masks(sources: dict, segments: list, outdir: Path, fps: str,
             "\"score_inset\": false ＋ \"_score_inset_why\"。")
     records = []
     for i, seg, frames, width in scanned:
-        x0, y0, _x1, y1 = seg.score_inset
+        x0, y0, spec_x1, y1 = seg.score_inset
         live = [e for e, _ in frames if e is not None]
         if not live:
             raise RuntimeError(
@@ -193,6 +197,7 @@ def resolve_masks(sources: dict, segments: list, outdir: Path, fps: str,
         seg.score_inset = (x0, y0, x0 + right, y1)
         seg.score_inset_mask = str(dest.resolve())
         seg.score_inset_spans = None
+        report_beyond_hint(i, x0 + right, spec_x1)
         widths = sorted(set(live))
         records.append({"segment": i, "frames": len(frames), "present_frames": len(live),
                         "board_edges": [widths[0], widths[-1]], "right": right,

@@ -1642,7 +1642,7 @@ def require_live_sound(source: Path, spec: dict) -> float | None:
     return peak
 
 
-def contain_keep_width(source_w: int) -> int:
+def contain_keep_width(source_w: int, ratio: float | None = None) -> int:
     """contain 模式横向保留多少像素。**从源片宽度算，不是写死 1920。**
 
     原来写的是 `int(1920 * CONTAIN_KEEP)`，隐含「源片一定是 1920 宽」。
@@ -1653,7 +1653,10 @@ def contain_keep_width(source_w: int) -> int:
     所以这里两层：按比例算，再用 `CONTAIN_MAX_UPSCALE` 兜住下限。
     1920 的源片算出来 1190，远在下限之上，**一格都不动**。
     """
-    keep = int(source_w * CONTAIN_KEEP) // 2 * 2
+    # `ratio`：这一段 spec 里写的 `contain_keep`（没写就是全局 CONTAIN_KEEP）。
+    # 双打四人回合宽景要比单打留得宽——账号所有者 2026-09-26 看拉沃尔杯双打：
+    # 「你这画面裁切过多了啊」。
+    keep = int(source_w * (CONTAIN_KEEP if ratio is None else ratio)) // 2 * 2
     floor = min(source_w, int(math.ceil(VIDEO_W / CONTAIN_MAX_UPSCALE))) // 2 * 2
     if keep < floor:
         print(f"    [contain] 源片只有 {source_w} 宽，按 {CONTAIN_KEEP:g} 裁到 "
@@ -2537,6 +2540,8 @@ class Segment:
     # 竖屏源（w<h）铺满画布时纵向的落点，0 顶 / 1 底，None＝居中。见 cut 里
     # contain 那一支——竖屏一律铺满，这个数只管裁掉上面多少、下面多少。
     fill_y: float | None = None
+    # contain 段横向留源片宽的多少（spec `contain_keep`）；None＝全局 CONTAIN_KEEP。
+    contain_keep: float | None = None
 
     @property
     def length(self) -> float:
@@ -2925,6 +2930,19 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
             '或 {"x2": N}（这一段打到更深的盘、板更宽时单独放宽右缘），'
             f"拿到的是 {raw!r}。")
 
+    def _seg_contain_keep(s: dict, i: int) -> float | None:
+        """contain 段横向留多宽（源片宽的比例）。只认 fit=contain，0.5~1.0。"""
+        if "contain_keep" not in s:
+            return None
+        raw = s["contain_keep"]
+        if s.get("fit") != "contain":
+            raise ReelError(f"第 {i + 1} 段写了 contain_keep，却不是 fit=contain——"
+                            "它只管 contain 窗口留多宽，别的取景读不到它")
+        if (not isinstance(raw, (int, float)) or isinstance(raw, bool)
+                or not 0.5 <= raw <= 1.0):
+            raise ReelError(f"第 {i + 1} 段 contain_keep 要是 0.5~1.0 的比例（拿到 {raw!r}）")
+        return float(raw)
+
     def _seg_score_windows(s: dict, i: int) -> tuple[tuple[float, float], ...]:
         if "score_inset_windows" not in s:
             return ()
@@ -3003,7 +3021,8 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
                        score_inset_auto=s.get("score_inset") is True,
                        score_inset_windows=_seg_score_windows(s, i),
                        square_pan=tuple((float(t), float(cx)) for t, cx in s.get("square_pan", [])),
-                       fill_y=_seg_fill_y(s, i))
+                       fill_y=_seg_fill_y(s, i),
+                       contain_keep=_seg_contain_keep(s, i))
 
     segments = [_one(s, i) for i, s in enumerate(spec["segments"])]
     gone_ev = [(i + 1, s.image) for i, s in enumerate(segments)
@@ -3261,7 +3280,7 @@ _REAL_FIELDS: dict[str, tuple[str, ...]] = {
               "narration", "portrait", "portrait_above", "result", "round",
               "score", "scoreboard", "scrim", "split", "sub", "subject",
               "tier", "topic", "versus", "winner"),
-    "segment": ("bed", "crosses_cut", "crop_zoom", "cx", "end", "fill_y", "fit", "image", "image_kind",
+    "segment": ("bed", "contain_keep", "crosses_cut", "crop_zoom", "cx", "end", "fill_y", "fit", "image", "image_kind",
                 "inset", "mute", "narration", "point_end_ok", "quote", "score_inset",
                 "score_inset_windows",
                 "seconds", "source", "speed", "square_pan", "start", "stat_card", "title_card",
@@ -4024,7 +4043,8 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
         # 那条的 640×480 百代新闻片走到这儿被裁成 `crop=1190:1080`，ffmpeg 当场拒掉
         # （run 35074495144）：`check_sources_match` 放行横幅存档源的前提正是
         # 「contain 不套主源几何」，而这一行还套着。同尺寸的源两个数相等，一格不变。
-        keep = native_w if seg.fit == "full_source" else contain_keep_width(native_w)
+        keep = (native_w if seg.fit == "full_source"
+                else contain_keep_width(native_w, seg.contain_keep))
         x = (native_w - keep) // 2
         chain = (
             f"split=2[bg][fg];"
@@ -4036,6 +4056,64 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
             f"[bgb][fgs]overlay=(W-w)/2:(H-h)/2,{sp}fps={FPS_EXPR},setsar=1"
         )
         labeled = True
+        box = seg.score_inset if native_w >= native_h else None
+        if box and LAYOUT != "band":
+            # **contain 段也回贴记分条**（2026-09-26 拉沃尔杯双打
+            # alcaraz-mensik-doubles-laver-cup-2026）：双打四人回合宽景走
+            # contain，62% 的居中窗口把左下角转播板切成半截（`…SIK 3 40`），
+            # 而铺满段都有整条板贴在左下——同一条片子里一段有板一段半截，
+            # 正是账号所有者骂过的「狗皮膏药 / 补丁」那种观感。
+            # 做法：贴的板和铺满段**同一个大小、同一个落点**（x=0，
+            # oy = y0 × VIDEO_W/CROP_W）；contain 画面里残留的原板先 delogo 掉。
+            # 全片的板从头到尾停在同一个位置，字幕锚也就不用另算。
+            # 板淡出的那几秒照旧不贴（spans / 逐帧蒙版，和铺满段同一套）。
+            x0, y0, x1, y1 = box
+            ratio = VIDEO_W / CROP_W
+            fratio = VIDEO_W / keep
+
+            def _even(v: float) -> int:
+                return max(2, -(-int(round(v)) // 2) * 2)
+
+            fh = _even(native_h * fratio)
+            oy = int(round(y0 * ratio))
+            # 画面**竖向居中**，板贴在铺满段同一个落点（oy）。原来是把画面挪到
+            # 「自己的板行对齐 oy」，80% 宽的窗口下画面被压到下半屏、上面空出
+            # 五百多像素的模糊垫底——居中之后画面在中间，板落在画面下沿下方一点。
+            top = max(0, (VIDEO_H - fh) // 2)
+            sh = _even((y1 - y0) * ratio)
+            bw = _even((x1 - x0) * ratio)
+            print(f"    [score] {seg.start:.1f}s 段（contain）回贴记分条 "
+                  f"[{x0},{y0},{x1},{y1}] → 左下 (0,{oy}) {bw}×{sh}px；"
+                  f"contain 画面竖向居中，落在 {top}")
+            gate = ""
+            if seg.score_inset_spans:
+                gate = ":enable='" + "+".join(
+                    f"between(t,{a:.3f},{b:.3f})"
+                    for a, b in seg.score_inset_spans) + "'"
+            patch = (f"[wb]crop={x1 - x0}:{y1 - y0}:{x0}:{y0},"
+                     f"scale={bw}:{sh}:flags=lanczos[b];")
+            if seg.score_inset_mask:
+                patch = (
+                    f"[wb]crop={x1-x0}:{y1-y0}:{x0}:{y0},format=rgb24[bc];"
+                    f"movie='{_escape(Path(seg.score_inset_mask))}':dec_threads=1,format=gray[mask];"
+                    f"[bc][mask]alphamerge,scale={bw}:{sh}:flags=lanczos[b];")
+                gate = ""
+            chain = (
+                f"split=3[bg][fg][wb];"
+                f"[bg]crop={keep}:{native_h}:{x}:0,"
+                f"scale={VIDEO_W}:{VIDEO_H}:force_original_aspect_ratio=increase,"
+                f"crop={VIDEO_W}:{VIDEO_H},boxblur=42:2,eq=brightness=-0.20[bgb];"
+                # ⚠️ 转播原板在 contain 窗口里还剩一截（窗口左缘 x < 板右缘），
+                # 而贴片是**逐帧蒙版**的——胶囊之间、标签右边都是透明的，那一截
+                # 残板会从缝里露出来（渲出来左缘一排「…NSIK」）。所以先在源片上
+                # 把板那一块 delogo 掉（按四周的地板插值），再贴整条板。
+                f"[fg]delogo=x={x0}:y={y0}:w={x1 - x0}:h={min(y1, native_h - 2) - y0},"
+                f"crop={keep}:{native_h}:{x}:0,"
+                f"scale={VIDEO_W}:{fh}:flags=lanczos[fgs];"
+                f"[bgb][fgs]overlay=0:{top}[m];"
+                + patch +
+                f"[m][b]overlay=0:{oy}{gate},{sp}fps={FPS_EXPR},setsar=1"
+            )
         if native_w < native_h:
             # **竖屏源一律铺满整个画布，不留两侧模糊垫底**——账号所有者
             # 2026-09-25 看完 sinner-beijing-withdrawal-2026（辛纳本人 X 上

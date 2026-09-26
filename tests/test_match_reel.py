@@ -17538,3 +17538,26 @@ def test_柏林喂给合成器的是伯林_屏幕字数不变():
     assert "柏林" not in out and "伯林" in out
     assert "松柏" in out, "单独的柏（松柏）不是地名，不许换"
     assert len(out) == len(raw)
+
+
+def test_双打一对的国旗两面叠放():
+    """账号所有者 2026-09-26 看 `alcaraz-mensik-doubles-laver-cup-2026` 时给了参考图
+    （比分 App 的双打行：西班牙＋捷克、哈萨克斯坦＋美国两面旗错开叠在一个旗位里），
+    「封面国旗可以参考这个」。所以 `country` 可以写成两个码的列表。"""
+    sys.path.insert(0, str(Path("tools").resolve()))
+    sys.path.insert(0, str(Path("src").resolve()))
+    import pytest  # noqa: PLC0415
+    import versus_poster as vp
+
+    # ① 比分板：同一个旗位里两张图，挂 score-flag-pair
+    board = vp._score_flag({"country": ["ESP", "CZE"]}, "t")
+    assert "score-flag-pair" in board and board.count("<img") == 2
+    # ② 单打那条不许被带坏：一张图，没有 pair
+    single = vp._score_flag({"country": "ESP"}, "t")
+    assert "score-flag-pair" not in single and single.count("<img") == 1
+    # ③ 名字旁的 emoji 旗：两面都在
+    out = vp._name_html("阿尔卡拉斯 / 门西克", {"country": ["ESP", "CZE"], "rank": None}, "t")
+    assert "🇪🇸" in out and "🇨🇿" in out
+    # ④ 列表不是两个 → 报错（双打就是一对）
+    with pytest.raises(SystemExit):
+        vp._score_flag({"country": ["ESP"]}, "t")

@@ -48,7 +48,9 @@ MIN_ROWS_W = 0.83   # 两行最窄也有这么宽（×带高）
 WIDE_START = 1.0    # 两行从这么远（×带高）之外才开始 → 宽版全名板
 WIDE_SCAN_PX = 920  # 宽版面板横跨源片 85–960，扫描带至少要这么宽（相对带左缘）
 LABEL_GAP = 40      # 金色标签里黑字把金色切断，隔这么宽以内算同一块
-LEFT_REACH = 70     # 从两行的结构段往左找描边（左端圆头＋队徽那一截）
+LEFT_REACH = 70     # 描边接到扫描带右头（失控）时，右端退回结构段外这么远
+PANEL_REACH = 40    # 宽版面板：两行／金条之外，面板深色底最多再往右这么宽
+PANEL_DARK = 70     # 面板深色底：一列的 max(r,g,b) 中位数低于它（球场 ~95，面板 ~45）
 
 # 纵向分区，按带高的比例（标定带 y 862–1036，高 174；括号里是源片绝对 y）
 LABEL = (0.120, 0.316)                       # 金色标签 884–916
@@ -117,6 +119,42 @@ def structure(band: np.ndarray) -> np.ndarray:
             & (fl[_rows(h, _R2_MID)].mean(0) > 0.6))
 
 
+def _reach_right(zone: np.ndarray, e: int) -> int:
+    """从结构段的右端 `e` 顺着「两行同时有描边」往右接，接到描边断开为止。
+
+    ⭐ 账号所有者 2026-09-25：「比分板剪切有问题，双打的比较长」「同时要自适应
+    不同的长度啊」。原来这里往右最多接 `LEFT_REACH`（70px）——单打板的结构段
+    离右端圆头不远，70 够；双打板名字是「ALCARAZ / MENSIK」，结构段在名字后面
+    就断了（比分数字那一截 `fill` 过不了 0.6），到右端圆头有 70~100px，于是
+    `alcaraz-mensik` 抽帧 123s 那一帧（6 5 40 三列）量到 502、真右缘 ~508，
+    右端圆头和最后半格比分被切掉。板每打完一盘长一列，同一个问题只会更重。
+
+    所以不设固定的顶，**板多长接多长**；只有一种情况收回来：一路接到扫描带的
+    右头（描边和背景连成了一片——带宽本来已经 ≥ 源片一半，真板到不了那儿），
+    那不是板的右缘，退回老的 `e + LEFT_REACH`。
+    """
+    n = len(zone)
+    right = e
+    while right < n and zone[right:right + 4].any():
+        right += 1
+    if right >= n:
+        return min(n, e + LEFT_REACH)
+    return right
+
+
+def _reach_left(zone: np.ndarray, s: int) -> int:
+    """从结构段左端 `s` 顺着「两行同时有描边」往左接，接到描边断开为止（左圆头＋队徽）。
+
+    原来最多接 `LEFT_REACH`；双打板结构段在名字那一截就碎了（见 pills），左端离
+    结构段可以远过 70px，所以同 `_reach_right` 一样不设固定的顶——带左缘就是 spec
+    的板左缘，接到 0 是正常的，不是失控。
+    """
+    left = s
+    while left > 0 and zone[max(0, left - 4):left].any():
+        left -= 1
+    return left
+
+
 def pills(band: np.ndarray):
     """这一帧的板：[(x0, x1, y0, y1), …]（相对带），板不在或是宽版就 None。"""
     h = band.shape[0]
@@ -124,19 +162,21 @@ def pills(band: np.ndarray):
     if not runs:
         return None
     s, e = runs[0]
-    if s > WIDE_START * h:
-        return wide_panel(band, e)
     # 左端圆头和队徽那一截没有「四条描边都在」，往左接着找描边。⚠️ 两行**同时**
     # 有描边才算（与，不是或）：红色替补席（frame 76s）、欧洲队的蓝色背板
     # （frame 132s）会让单独一种颜色一路延到带边上，把背景抠进贴片。
     zone = (blue_edge(band)[_rows(h, ROW1)].any(0) & red_edge(band)[_rows(h, ROW2)].any(0))
-    left = s
-    while left > max(0, s - LEFT_REACH) and zone[max(0, left - 4):left].any():
-        left -= 1
-    # 右端圆头同理
-    right = e
-    while right < min(band.shape[1], e + LEFT_REACH) and zone[right:right + 4].any():
-        right += 1
+    left = _reach_left(zone, s)
+    # ⚠️ 判「宽版」看**两行描边从哪儿开始**（left），不看结构段从哪儿开始（s）：
+    # 双打板名字长（「ALCARAZ / MENSIK」），名字那一截的行中间被白字占掉，结构段
+    # 碎成几截、第一截够宽的要到 x≈187 才出现——按 s 判就把紧凑版双打板认成了宽版，
+    # 整条带高抠一块矩形（`alcaraz-mensik` 抽帧 93s / 99s）。描边是连着的，不受字影响。
+    if left > WIDE_START * h:
+        return wide_panel(band, e)
+    # 右端圆头同理——但**不设 LEFT_REACH 那道 70px 的顶**：两行的「四条描边都在」
+    # 在比分数字那一截常常断开（字把行中间的底色占掉，`fill` 过不了 0.6），于是
+    # 结构段在名字后面就停了，真正的右端要靠描边一路接过去。
+    right = _reach_right(zone, e)
     y1a, y1b = _rows(h, ROW1).start, _rows(h, ROW1).stop
     y2a, y2b = _rows(h, ROW2).start, _rows(h, ROW2).stop
     out = [(left, right, y1a, y1b), (left, right, y2a, y2b)]
@@ -156,7 +196,18 @@ def wide_panel(band: np.ndarray, rows_end: int):
     if not runs:
         return None
     x0 = max(0, runs[0][0] - 20)                 # 面板外框在金条左端再往左一点
-    x1 = min(w, max(runs[-1][1], rows_end) + 12)
+    # 两行的右端也按描边接到底（结构段在比分数字前就断，见 pills）——赛后的宽版板
+    # 两行比金条还长，只按金条和结构段取会把最右那格比分和面板外框切掉。
+    zone = (blue_edge(band)[_rows(h, ROW1)].any(0) & red_edge(band)[_rows(h, ROW2)].any(0))
+    x1 = max(runs[-1][1], _reach_right(zone, rows_end))
+    # 面板本身是一块半透明深色底，右边框在金条／两行之外还有十几像素（`alcaraz-mensik`
+    # 抽帧 135s：两行止于 675、面板止于 ~686，球场亮度 ~95、面板底 ~45）。顺着深色底
+    # 再往右接，最多 PANEL_REACH；原来固定 +12，会把面板右框切掉一截。
+    dark = np.median(band.max(axis=2), axis=0) < PANEL_DARK
+    edge = x1
+    while edge < min(w, x1 + PANEL_REACH) and dark[edge:edge + 3].any():
+        edge += 1
+    x1 = min(w, max(x1 + 12, edge + 2))
     return [(x0, x1, 0, h)]
 
 
@@ -232,7 +283,9 @@ def scan(source: Path, box: tuple[int, int, int, int], start: float,
     sw = int(subprocess.check_output(
         ["ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries",
          "stream=width", "-of", "csv=p=0", str(source)], text=True).strip().split(",")[0])
-    width = min(sw - x0, max(int((x1 - x0) * 1.3), WIDE_SCAN_PX))
+    # spec 的 x1 只是提示，不是上限：带至少扫到源片一半宽（双打板、赛后宽版板都比
+    # 单打 spec 的 x1 长），板多长由 pills 自己量
+    width = min(sw - x0, max(int((x1 - x0) * 1.3), WIDE_SCAN_PX, sw // 2 - x0))
     height = y1 - y0
     proc = subprocess.run(
         ["ffmpeg", "-v", "error", "-ss", f"{start:.3f}", "-t", f"{seconds:.3f}",
@@ -266,7 +319,7 @@ def resolve_masks(sources: dict, segments: list, outdir: Path, fps: str,
             "补标定，别退回整段一个矩形的老回贴。")
     records = []
     for i, seg, frames, width in scanned:
-        x0, y0, _x1, y1 = seg.score_inset
+        x0, y0, spec_x1, y1 = seg.score_inset
         live = [f for f in frames if f is not None]
         if not live:
             raise RuntimeError(
@@ -279,6 +332,10 @@ def resolve_masks(sources: dict, segments: list, outdir: Path, fps: str,
         seg.score_inset = (x0, y0, x0 + right, y1)
         seg.score_inset_mask = str(dest.resolve())
         seg.score_inset_spans = None
+        if x0 + right > spec_x1:
+            print(f"[score-mask] 第 {i + 1} 段：板量到 {x0 + right}，比 spec scorebox 右缘 "
+                  f"{spec_x1} 宽 {x0 + right - spec_x1}px（双打／多一盘的板更长）——按量到的贴，"
+                  "spec 的 x1 只是提示，不是上限")
         ws = sorted({max(p[1] for p in f) for f in live})
         n_label = sum(1 for f in live if len(f) > 2)
         records.append({"segment": i, "frames": len(frames), "present_frames": len(live),

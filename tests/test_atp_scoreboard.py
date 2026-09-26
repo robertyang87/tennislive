@@ -40,7 +40,10 @@ def _band(board_w: int, tag: tuple[int, int] | None = None,
 def test_板右缘按这一帧的实际宽度量():
     assert a.board_edge(_band(280)) == 280
     assert a.board_edge(_band(330)) == 330
-    assert a.board_edge(_band(330), cap=300) == 300, "上限是 spec scorebox 的最宽状态"
+    # spec scorebox 的右缘是提示不是上限（账号所有者 2026-09-25「双打的比较长」「要自适应
+    # 不同的长度」）：板真的更长、盘分蓝撑得住，就按量到的贴。越界的判据见
+    # test_scoreboard_adaptive_width.py
+    assert a.board_edge(_band(330), cap=300) == 330
 
 
 def test_板不在或没有盘分格就不是板():
