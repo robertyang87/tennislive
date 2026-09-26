@@ -70,8 +70,8 @@ def test_豁免表只许减不许加_名字要真的存在且真的还不合格�
     assert not missing, f"豁免表里的 slug 不存在：{missing}"
     fixed = sorted(s for s in legacy if rf.cover_topic_problem(seen[s]) is None)
     assert not fixed, f"这些已经合格式了，从豁免表里删掉：{fixed}"
-    # 只许减不许加：定格式那天是 232 条
-    assert len(legacy) <= 232
+    # 只许减不许加：定格式那天是 232 条，加上当天并行发出去的 cobolli-tien 一条
+    assert len(legacy) <= 233
 
 
 def test_渲染入口在dry_run就拦():
