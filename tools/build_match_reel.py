@@ -7420,6 +7420,67 @@ LEGACY_NO_COLD_OPEN = frozenset({
 })
 
 
+#: 冷开场原声字幕那道闸（2026-09-26）落地之前已经发出去的「赛场之上」，
+#: 表在 `data/legacy_cold_open_quote.json`，只许减不许加。
+_COLD_OPEN_QUOTE_LEGACY = Path(__file__).resolve().parents[1] / "data" / "legacy_cold_open_quote.json"
+_CJK = re.compile(r"[\u4e00-\u9fff]")
+
+
+def legacy_cold_open_quote() -> frozenset:
+    try:
+        data = json.loads(_COLD_OPEN_QUOTE_LEGACY.read_text(encoding="utf-8"))
+    except FileNotFoundError:
+        return frozenset()
+    return frozenset(data.get("reels") or ())
+
+
+def cold_open_quote_problem(spec: dict, *, legacy: frozenset | None = None) -> str | None:
+    """「赛场之上」冷开场里的解说，必须留成 `quote` 配中英双语字幕。
+
+    账号所有者 2026-09-26（看完 `wong-vallejo-hangzhou-2026-r2`）：「**以后务必要
+    保证冷开场的解说有中英文字幕**」。那一条的冷开场是赛点那一分，解说在喊，
+    画面上一个字都没有——冷开场不配中文旁白，听得见解说却读不懂，等于白留。
+    当天量的账：234 条冷开场里 **190 条**没有原声字幕。
+
+    判据（冷开场＝第 1 段不是静图、也没配中文旁白）：
+
+    1. 第 1 段要有 `quote`；
+    2. 每一条字幕都是「原文一行＋中文一行」（有带汉字的一行，也有不带汉字的一行，
+       和 `test_原声解说的字幕一律中英双语` 同一个判法——原文可以是纯数字）。
+
+    这几秒解说真的没开口（只有现场声／纯音乐集锦），在第 1 段写
+    `_cold_open_quote_why` 说清楚。
+    """
+    if not _is_on_court_reel(spec):
+        return None
+    slug = str(spec.get("slug") or "")
+    if slug in (legacy_cold_open_quote() if legacy is None else legacy):
+        return None
+    raw = spec.get("segments") or []
+    if not raw:
+        return None
+    first = raw[0]
+    if first.get("image") or str(first.get("narration") or "").strip():
+        return None                     # 不是冷开场，由 cold_open_problem 管
+    if str(first.get("_cold_open_quote_why") or "").strip():
+        return None
+    hint = ("把冷开场里解说说的话写成第 1 段的 `quote`，每条「原文\n中文」两行、"
+            "`at` 钉在开口的那一秒（probe 的 captions.txt 里有时间码）；"
+            "这几秒解说真没开口，在第 1 段写 `_cold_open_quote_why`。"
+            "账号所有者 2026-09-26：「以后务必要保证冷开场的解说有中英文字幕」。")
+    q = first.get("quote")
+    items = [q] if isinstance(q, str) else list(q or [])
+    if not items:
+        return "「赛场之上」冷开场（第 1 段）没有原声字幕。\n" + hint
+    for it in items:
+        text = it if isinstance(it, str) else str((it or {}).get("text") or "")
+        lines = [x for x in text.split("\n") if x.strip()]
+        if not (len(lines) >= 2 and any(_CJK.search(x) for x in lines)
+                and any(not _CJK.search(x) for x in lines)):
+            return f"「赛场之上」冷开场的原声字幕不是中英双语：{text[:40]!r}\n" + hint
+    return None
+
+
 def _is_on_court_reel(spec: dict) -> bool:
     """「赛场之上」：认 `cover.eyebrow`，没有封面时退回 `_column`。"""
     eyebrow = (spec.get("cover") or {}).get("eyebrow")
@@ -7810,6 +7871,12 @@ def validate_spec(
     cold = cold_open_problem(spec, primary=next(iter(urls)))
     if cold:
         raise ReelError(cold)
+    cold_quote = cold_open_quote_problem(spec)
+    if cold_quote:
+        if (spec.get("_production") or {}).get("status") == "ready_for_render":
+            print(f"[冷开场] 自动 spec，只报不拦：{cold_quote}")
+        else:
+            raise ReelError(cold_quote)
     photo = cover_photo_problem(spec)
     if photo:
         raise ReelError(photo)
