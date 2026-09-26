@@ -5792,6 +5792,12 @@ APPROVED_LOW_RES_SOURCES: dict[str, int] = {
     # 集锦（《Zheng Qinwen vs. Taylor Townsend | 2025 Third Round Miami》），
     # probe 实测 1280×720，WTA 频道 2025 年这条就这一档。
     "https://www.youtube.com/watch?v=c9y75dSg4oU": 720,
+    # 谢淑薇×詹皓晴美网不握手（hsieh-chan-handshake-feud-2026）：账号所有者 2026-09-26
+    # 选「放宽到 720p」。美网女双第三轮那一场官方没发集锦（@usopen 频道最近 500 条逐条
+    # 扫过，只有这对组合的 1/4决赛和詹皓晴首轮），网前没握手那一幕只有 X 上
+    # @hsieh_n_wong 的转播片段（status 2097070765837541743，X CDN 直链），
+    # `yt-dlp -J` 最高一档就是 http-2176 1298×720。
+    "https://video.twimg.com/amplify_video/2097070560262119424/vid/avc1/1298x720/n05xE1nleDY12yvP.mp4?tag=14": 720,
 }
 
 
