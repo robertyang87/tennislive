@@ -1,0 +1,304 @@
+{
+  "slug": "medvedev-royer-hangzhou-2026-r2",
+  "_column": "赛场之上",
+  "sources": {
+    "ttv": "https://www.youtube.com/watch?v=YWA5xuwr8dc"
+  },
+  "primary": "ttv",
+  "_source": "Tennis TV 官方 YouTube 频道《Daniil Medvedev Battles Valentin Royer 💥 | Hangzhou 2026 Highlights》（`YWA5xuwr8dc`，oEmbed `author_name=Tennis TV`），182.2s，probe（run 36245776860）落的是 1920×1080 / 25fps。**三条渠道都查过**（北京 2026-09-26 21:37）：① Tennis TV YouTube 频道 `/videos` 最新一条就是本条单场；② tennistv.com `library/short-highlights` 杭州只到 `hangzhou-2026-r2-bu-majchrzak`，**这一场还没挂**；③ ATP Tour YouTube 频道杭州只到《Yunchaokete Bu vs Kamil Majchrzak Highlights》，**这一场还没发**。四要素自证：记分条逐格读过（`MEDVEDEV / ROYER` 两行）——首盘第 1 局 `0 / •0 AD`、`2 15 / •2 15`、`3 0 / •3 30`，抢七 `6 4 / •6 4`、`6 6 / •6 5`、`•6 7 / 6 6`，第二盘 `7 1 15 / •6⁶ 0 0`、`7 2 40 / •6⁶ 1 40`、`7 3 0 / •6⁶ 2 15`、`7 4 40 / •6⁶ 3 15`、`•7 5 40 / 6⁶ 3 0`，和 flashscore OWZ0gYVj 逐分记录一一对得上；场地印 `HANGZHOU 杭州`、挡板 `杭体集团` `问界`。",
+  "_tennistv_trim": "**片尾**：172.14s 那一刀之后是 Tennis TV 品牌卡和 `SCAN TO DOWNLOAD & WATCH LIVE` 二维码（176.06 起静音）；最后一段收在 172.0，逐 0.5 秒看过 171.5 还是网前握手之后的场上画面。**台标**：Tennis TV 台标烧在右上角（源片 x≈1580~1860），3:4 取景窗 cx=0.5 只取 555~1365，角上那块在窗外。",
+  "mixed_fps": {
+    "ttv": "YouTube 399+251（1080p），probe 在 runner 上报 25fps。单一源片，没有混帧率。"
+  },
+  "scorebox": [
+    98,
+    920,
+    519,
+    1029
+  ],
+  "_scorebox_why": "同一台杭州转播（和 `bu-majchrzak-hangzhou-2026-r2` 同一套板），probe 时按这个框给了 `--scorebox`，point_ends 量出来了。全分辨率帧实测（161.4s，第二盘板 `•MEDVEDEV 7 5 40 / ROYER 6⁶ 3 0`）：左缘 98、上缘 920、下缘 1028、右缘约 452；首盘板更窄，各段右缘渲染时现量，519 只当兜底。",
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "梅德韦杰夫",
+    "hook": "对手5次机会全落空\n梅德韦杰夫挺进8强",
+    "hook_accent": "挺进8强",
+    "_hook_why": "按 2026-09-25 口径：第一行＝关键内容——鲁瓦耶拿到 5 个破发点一个没兑现（「机会全落空」不用懂网球也读得懂：他有机会、没抓住），不写「破发」这个术语；第二行＝结果。9 字和 9 字。",
+    "topic": "杭州公开赛第二轮 · 梅德韦杰夫挺进8强",
+    "winner": "梅德韦杰夫",
+    "result": "7-6(6) 6-3",
+    "matchup": [
+      {
+        "name": "梅德韦杰夫",
+        "name_en": "Daniil Medvedev",
+        "country": "RUS",
+        "rank": 6
+      },
+      {
+        "name": "鲁瓦耶",
+        "name_en": "Valentin Royer",
+        "country": "FRA",
+        "rank": 104
+      }
+    ],
+    "_matchup_rank_why": "两源一致（2026-09-21 那一期）：仓库 `sources/rankings.fetch_rankings()`（tennisexplorer ATP 榜，`atp_at=21.09.2026`）Medvedev Daniil 6、Royer Valentin 104；ESPN `site.api.espn.com/.../atp/rankings` 6（3770 分）/ 104（585 分）。",
+    "_name_why": "`player_zh(\"Daniil Medvedev\")` → 梅德韦杰夫，`player_zh(\"Valentin Royer\")` → 鲁瓦耶（和 `tsitsipas-royer` 同名）。",
+    "_subject_why": "封面放**梅德韦杰夫**——这一场的赢家、钩子第二行的主语。",
+    "_heat_why": "② 档顶级球员：世界第 6、本站头号种子（TNNS 比分页名字旁标 `1`）。对手鲁瓦耶是去年杭州亚军（维基《2025 Hangzhou Open》决赛 Bublik def. Royer 7–6(4) 7–6(4)；flashscore 他 2025-09 杭州两轮资格赛＋正赛胜 Kovacevic、Rublev、Tien、Moutet，决赛 0:2 负 Bublik），这一轮有来路。",
+    "portrait": {
+      "frame_at": 161.4,
+      "focus": 0.66,
+      "focus_y": 1.0,
+      "zoom": 1.2,
+      "_frame_why": "⚠️ 抽帧，不是官方实拍——走账号所有者 2026-09-26 的常设授权（「没有高清大图可备选的话，抽帧也可以，但是要尽量清晰偏正面的图片」），登记进 `OWNER_APPROVED_FRAME_COVERS`。\n四类源各查过（北京 21:40 前后，终场后约 20 分钟）：① 官方图库——`tools/find_cover_photo.py --player Medvedev --event Hangzhou --date 2026-09-26` WTA photo-resources、AP 都是 0 张；杭州公开赛没有可探的 WordPress 媒体库（`bu-zheng-hangzhou-2026-r1` 记过赛事官网新闻列表停在 2025）。② 赛后稿：tennistonic 赛后快讯（沙箱 403）、tennismajors 比赛页，WebSearch 没有这一场的图。③ 主办方公众号当天战报此时未发。④ Getty / Imago 沙箱搜不了。\n**这一帧**：源片 161.4s，赛点之后切到的近景（frame-grab 逐 0.2 秒抽了 161.4~166.2，1920 宽）：**正脸直视镜头、眼睛睁着、脸最清楚**；162.0 之后他转头看向右侧、成了侧脸，164.6 之后前景有人物挡住。蓝色 Lacoste 球衣，和本场所有镜头一致。",
+      "_low_res_why": "源片 1920×1080，铺 1080×1440 按高算 1.33 倍（抽帧的理由见 `_frame_why`）。",
+      "_focus_why": "focus 0.66：这一帧脸的中心在源片横向约 1270px（0.66），3:4 窗口取 865~1675，左下角转播记分条（右缘约 452）在窗外；脸在纵向约 0.44。"
+    },
+    "scoreboard": {
+      "court": "Center Court",
+      "_court_why": "TNNS app 比分页（账号所有者截图）写 `Center Court`。",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%20%221%3A49%3A00%22%2C%20%22source%22%3A%20%22flashscore%20df_sui_1%EF%BC%88OWZ0gYVj%EF%BC%89%E5%88%86%E7%9B%98%201%3A01%20%2B%200%3A48%20%3D%201%3A49%22%2C%20%22cross_check%22%3A%20%22TNNS%20app%20%E6%AF%94%E5%88%86%E9%A1%B5%EF%BC%88%E8%B4%A6%E5%8F%B7%E6%89%80%E6%9C%89%E8%80%85%E6%88%AA%E5%9B%BE%EF%BC%8C%E5%8C%97%E4%BA%AC%2021%3A34%EF%BC%89%E8%AE%A1%E6%97%B6%201%3A49%22%7D",
+        "field": "duration"
+      },
+      "_duration_why": "flashscore df_sui_1：1:01 + 0:48 = 1:49；TNNS app 比分页同样 1:49（两个不同的源）。"
+    }
+  },
+  "_result_why": "flashscore 当日表 OWZ0gYVj：AE=Medvedev D.（home）/ AF=Royer V.（away），BA/BB=7:6、BC/BD=6:3；df_mh_1 首盘抢七逐分到 8:6；TNNS app 比分页（账号所有者截图）`7 6⁶ / 6 3`；源片 165s 记分条翻成 `7 6 / 6⁶ 3`。三处一致。",
+  "topbar": {
+    "line1": "2026 ATP250 杭州站 第二轮",
+    "line2": "梅德韦杰夫 7-6(6) 6-3 鲁瓦耶"
+  },
+  "_topbar_why": "line1 按「<年份> <巡回赛><级别> <城市>站 <轮次>」：杭州公开赛 ATP250。轮次：头号种子首轮轮空，这是签表第二轮——TNNS 写 `Round of 16`、tennistonic 写「2nd round」，和 `bu-majchrzak-hangzhou-2026-r2` 同一轮，写「第二轮」。line2 由 cover.winner / result / matchup 机械拼出。",
+  "_match": {
+    "status": "result_verified",
+    "source": "flashscore_points",
+    "source_id": "OWZ0gYVj",
+    "flashscore_id": "OWZ0gYVj",
+    "participants": [
+      "梅德韦杰夫",
+      "鲁瓦耶"
+    ],
+    "set_scores_home_away": [
+      [
+        7,
+        6
+      ],
+      [
+        6,
+        3
+      ]
+    ],
+    "tiebreaks_home_away": [
+      [
+        8,
+        6
+      ],
+      null
+    ],
+    "winner": "梅德韦杰夫",
+    "loser": "鲁瓦耶",
+    "winner_result": "7-6(6) 6-3",
+    "loser_result": "6-7(6) 3-6"
+  },
+  "_hit_data": "跑过 `match_stat_hooks.py OWZ0gYVj` 和 `match_feed.py show OWZ0gYVj`（home=Medvedev，逐分按 home:away 记）。进旁白的：**首盘第 1 局鲁瓦耶救下破发点保发**（`A:40 |B1|, 40:40, 40:A, 40:40, 40:A`）；**首盘 12 个发球局全保**（df_st_1 Set 1 Service games won 6/6 对 6/6）；**抢七 8-6**（df_mh_1 Tiebreak - Set 1：4-4 那一分鲁瓦耶发球 `HG=2 HH=2 HK=1` 被他拿下；6-5 时 `HM 2,1` 他的第一个盘点、鲁瓦耶发球 `HK=2` 救下；7-6 时第二个盘点、他自己发球 `HG=1 HK=1` 兑现）；**第二盘 2-1 鲁瓦耶发球救下他两个破发点**（`40:30 |B1|, 40:40, A:40 |B1|` 后 `40:A` 两次）；**第二盘 2-2 他发球 0-40 连拿 5 分保发**（`0:15, 0:30, 0:40 |B1|, 15:40 |B1|, 30:40 |B1|, 40:40, A:40` 后第 5 分）；**全场破发点 5/5 全救**（df_st_1 Break Points Saved 5/5）；**4-3 鲁瓦耶发球被破，5-3**（`40:15 |B1|`）；**5-3 发球一分不丢、第一个赛点兑现**（`15:0, 30:0, 40:0 |B3|`）；**最后 10 分拿 9 分**（df_st_1 `Last 10 balls 9 / 1`，逐分自己也数得出来：4-3 局最后 1 分 ＋ 5-3 局 4/5 ＋ 6-3 局 4/4）。交手记录（df_hh_1）：含本场 Medvedev 1:0，首次交手。",
+  "_turning_points": [
+    "首盘第 1 局（鲁瓦耶发球）：他先被拿到破发点，救回保发。源片 1.0~25.0 是这一局 `0 / •0 AD` 那一分（鲁瓦耶的局点），逐 0.5 秒看过：底线长相持，21~23 鲁瓦耶压到前场，26 他握拳。",
+    "首盘抢七 4-4（鲁瓦耶发球）：被梅德韦杰夫拿下，5-4。源片 54.0~67.4（`6 4 / •6 4`），逐 0.5 秒看过 64.5~67：近端的鲁瓦耶被左右调动，65.5 向右扑、66 追到左边场外弯腰。",
+    "首盘抢七 6-5（鲁瓦耶发球，梅德韦杰夫的第一个盘点）：鲁瓦耶发球上网、网前连续截击救下，6-6。源片 69.7~79.3（`6 6 / •6 5`），逐 0.5 秒看过 73~79：73.5 他从底线压上来，74~78.5 一直在网前。",
+    "首盘抢七 7-6（梅德韦杰夫发球，第二个盘点）：兑现，8-6。源片 79.9~94.3（`•6 7 / 6 6`），92.5~94 他被调到右侧场外又追回来；94.5~99 他走回座位。",
+    "第二盘 2-2（梅德韦杰夫发球）：0-40，连救三个破发点，连拿 5 分保发。源片没有这一局，旁白讲。",
+    "第二盘 4-3（鲁瓦耶发球）：40-15 破发，5-3。源片 139.0~153.4（`7 4 40 / •6⁶ 3 15`），153.5~155.5 鲁瓦耶摸着帽子低头的近景。",
+    "第二盘 5-3（梅德韦杰夫发球）：40-0 第一个赛点兑现。源片 155.6~161.3（`•7 5 40 / 6⁶ 3 0`），161.4 切到他的近景，165 记分条翻成终局。"
+  ],
+  "editorial": {
+    "mode": "match_review",
+    "hook": [
+      "对手5次机会全落空",
+      "梅德韦杰夫挺进8强"
+    ],
+    "question": "去年杭州的亚军拿到了五个破发点，梅德韦杰夫是怎么一个都没丢、直落两盘的？",
+    "thesis": "首盘两人十二个发球局全保，抢七里鲁瓦耶发球上网救下第一个盘点，他靠自己的发球局兑现第二个，8-6；第二盘 2-2 他发球 0-40 落后，连拿五分保住，之后 5-3 破发、一分不丢发球胜赛——全场五个破发点一个没丢，打进 1/4 决赛。",
+    "beats": [
+      "冷开场：5-3 他发球的赛点，之后他正脸看向镜头。",
+      "落点＋坐标：北京时间 9 月 26 日晚上，杭州公开赛第二轮，头号种子对去年亚军。",
+      "首盘：开局鲁瓦耶救破发点；十二个发球局全保；抢七 4-4 他拿下一分，6-5 鲁瓦耶发球上网救下盘点，7-6 他发球兑现，8-6。",
+      "第二盘：2-1 他没拿下破发点；2-2 自己发球 0-40 连拿五分；4-3 破发；5-3 第一个赛点兑现。",
+      "结尾：1/4 决赛可能碰上黄泽林。"
+    ],
+    "human_context": {
+      "angle": "这场球的主语是**鲁瓦耶那五个破发点**：一个去年从资格赛打进杭州决赛的人，拿着五次机会对头号种子，一次都没兑现。梅德韦杰夫那边的答案是发球：全场 16 个 ACE，11 个发球局全保，抢七的第二个盘点也是在自己的发球局上拿下的。",
+      "facts": [
+        "flashscore OWZ0gYVj：Medvedev D. 7-6(6) 6-3 Royer V.；分盘用时 1:01 + 0:48 = 1:49；dc_1 DC=1790422500（11:35Z＝北京 19:35）。",
+        "flashscore df_st_1 全场：ACE 16/3（首盘 10/2）、一发得分率 84%（38/45）对 66%（33/50）、破发点 救下 5/5 对 3/4、发球局 11/11 对 9/10、总得分 80/148 对 68/148、最后 10 分 9/1。",
+        "flashscore df_mh_1：见 `_hit_data`。",
+        "排名（同一期两源）：tennisexplorer 6 / 104；ESPN 6（3770 分）/ 104（585 分）。梅德韦杰夫是头号种子（TNNS 比分页名字旁 `1`）。",
+        "鲁瓦耶 2025 杭州：维基《2025 Hangzhou Open》决赛 `Alexander Bublik def. Valentin Royer, 7–6(7–4), 7–6(7–4)`；flashscore df_hh_1 他 2025-09-16/17 两场资格赛、正赛胜 Kovacevic、Rublev、Tien、Moutet，09-23 决赛 0:2 负 Bublik。两源一致。",
+        "下一轮：TNNS 比分页 `Plays the winner of Coleman Wong / Adolfo Daniel Vallejo 5`（21:30 开打，截图时还没打完）。"
+      ],
+      "sources": [
+        "https://www.flashscore.com/match/tennis/OWZ0gYVj/",
+        "https://www.youtube.com/watch?v=YWA5xuwr8dc",
+        "https://site.api.espn.com/apis/site/v2/sports/tennis/atp/rankings",
+        "https://www.tennisexplorer.com/ranking/atp-men/",
+        "https://en.wikipedia.org/wiki/2025_Hangzhou_Open"
+      ]
+    }
+  },
+  "_no_repeat": "同栏目 `tsitsipas-royer` 讲过鲁瓦耶在辛辛那提对西西帕斯；`medvedev-*` 那几条讲的是别的赛事。这一条只讲这一场，鲁瓦耶的来路只提去年杭州那一句。",
+  "_claims": [],
+  "_no_quote_why": "这条源片**这一轮判不了**：YouTube 还没给它生成自动字幕（probe 的 captions_debug 各 client 都报 `There are no subtitles`），沙箱下不动媒体流、whisper 这一轮没跑，没法做双模型核对。听不了就不留——全片走中文旁白加现场声，冷开场只留现场声。不是「这条集锦没有值得留的解说」。",
+  "push": {
+    "summary": "梅德韦杰夫直落两盘进8强",
+    "lead": "杭州公开赛第二轮，头号种子梅德韦杰夫 7-6(6) 6-3 击败去年杭州亚军鲁瓦耶，打进 1/4 决赛。鲁瓦耶全场拿到五个破发点，一个都没兑现；首盘抢七他在第二个盘点上拿下，第二盘 2-2 他的发球局 0-40 落后，连拿五分保住，之后 5-3 破发、第一个赛点就拿下。",
+    "matchup": "梅德韦杰夫 vs 鲁瓦耶",
+    "score": "7-6(6) 6-3",
+    "auto": true
+  },
+  "_push_summary_why": "主语梅德韦杰夫；「直落两盘进8强」是结果，标题里不写排名。",
+  "_voice_why": "沿用这条线的默认：云见（`zh-CN-YunjianNeural`）＋6%，不设 `style`。",
+  "stats": {
+    "tour": "atp",
+    "a": {
+      "aces": 16,
+      "df": 4,
+      "first_in": 45,
+      "first_won": 38,
+      "second_total": 28,
+      "second_won": 15,
+      "bp_conv": 1,
+      "bp_chances": 4,
+      "pts_won": 80,
+      "pts_total": 148,
+      "first_total": 73,
+      "headshot": "assets/players/headshots/atp-MM58.png"
+    },
+    "b": {
+      "aces": 3,
+      "df": 1,
+      "first_in": 50,
+      "first_won": 33,
+      "second_total": 27,
+      "second_won": 15,
+      "bp_conv": 0,
+      "bp_chances": 5,
+      "pts_won": 68,
+      "pts_total": 148,
+      "first_total": 77,
+      "headshot": "assets/players/headshots/atp-R0EB.png"
+    },
+    "_source": "`python tools/match_stat_hooks.py OWZ0gYVj --stats-block` 机器抄的 flashscore df_st_1 全场统计（北京 21:40 那一趟；自洽：38+15+(77−33−15)=80 ＝ pts_won）。a/b 跟 cover.matchup 的顺序（a=梅德韦杰夫、b=鲁瓦耶）；flashscore 这一场 home=Medvedev D.、away=Royer V.，恰好同序。头像：atp-MM58 梅德韦杰夫（`medvedev-damm` 等沿用），atp-R0EB 鲁瓦耶（`tsitsipas-royer` 沿用）。",
+    "_winners_ue_why": "制胜分／非受迫失误**不画**：flashscore df_st_1 这一场没有这两行；TNNS 跑了一趟（tnns-stats run 36245876964，`who=Medvedev,Royer date=2026-09-26` 认到 id=74753260，选手顺序 ['Medvedev','Royer']），全场给 winners [26,25]、ue [24,25]（和账号所有者截图的 TNNS app 一致），**但自证红了**——分盘合计 winners [27,13]、ue [28,26] 和全场对不上，工具原话「多半解错了，别用」。按规矩这两行留空；旁白和文案也不引用。"
+  },
+  "segments": [
+    {
+      "source": "ttv",
+      "start": 155.6,
+      "end": 166.2,
+      "cx": 0.5,
+      "narration": "",
+      "_ending_payoff_required": true,
+      "_ending_payoff_why": "倒数第二段按时间顺序重放 155.6–166.2（赛点那一分到他的近景），这次配旁白。",
+      "_why": "冷开场：赛点。记分条 `•MEDVEDEV 7 5 40 / ROYER 6⁶ 3 0`，远端的梅德韦杰夫发球，近端鲁瓦耶；161.4 切到他正脸看向镜头的近景（冷开场只留现场声，原声核不了，见 `_no_quote_why`），165 记分条翻成 `7 6`。",
+      "point_end_ok": "赛点那一分 161.3 前结束，161.4 切到他的近景；165 那次翻牌是记分条补上终局。",
+      "crosses_cut": "161.4 切到他本人的近景：赛点之后同一时刻的反应。",
+      "score_inset": true
+    },
+    {
+      "source": "ttv",
+      "start": 1.0,
+      "end": 25.0,
+      "cx": 0.5,
+      "narration": "五个破发点，鲁瓦耶一个都没拿到。北京时间九月二十六号晚上七点多，杭州公开赛第二轮，头号种子梅德韦杰夫，对世界第一百零四的鲁瓦耶。去年在杭州，鲁瓦耶从资格赛一路打进了决赛。开局第一局，他就救下一个破发点，这一分在底线和梅德韦杰夫相持，最后压上来拿下。",
+      "_why": "② 落点＋③ 坐标。画面：首盘第 1 局鲁瓦耶发球 `MEDVEDEV 0 / •ROYER 0 AD`（他的局点，前面已经救过一个破发点），1~21 底线长相持，21~23 鲁瓦耶压到前场，25 切到他握拳（26）。flashscore 这一局 `A:40 |B1|, 40:40, 40:A, 40:40, 40:A`。",
+      "_start_time_why": "开球时刻：flashscore dc_1 OWZ0gYVj 的 DC=1790422500（2026-09-26 11:35Z＝北京 19:35）。只说「晚上七点多」，不报到分。",
+      "point_end_ok": "这一分 24.9 前结束（point_ends 25.0），25.0 切到鲁瓦耶的近景。",
+      "score_inset": true
+    },
+    {
+      "source": "ttv",
+      "start": 54.0,
+      "end": 67.4,
+      "cx": 0.5,
+      "narration": "第一盘发球局谁都没丢，打进抢七。四平，鲁瓦耶发球。梅德韦杰夫退在底线后很深，一拍拍送回去，鲁瓦耶被左右调动，最后一拍没追上。",
+      "_why": "首盘抢七 `MEDVEDEV 6 4 / •ROYER 6 4`：近端鲁瓦耶发球，远端梅德韦杰夫站在底线后很深；逐 0.5 秒看过 64.5~67：64.5 鲁瓦耶在左侧、65.5 向右扑、66 追到左边场外弯腰。df_mh_1 抢七第 9 分 `HG=2 HH=2 HK=1`（鲁瓦耶发球、梅德韦杰夫拿下，5-4）。「谁都没丢过发球局」：df_st_1 Set 1 Service games won 6/6 对 6/6。",
+      "point_end_ok": "这一分 66.5 前结束，67.4 在 67.68 切到梅德韦杰夫走回之前。",
+      "score_inset": true
+    },
+    {
+      "source": "ttv",
+      "start": 69.7,
+      "end": 79.3,
+      "cx": 0.5,
+      "narration": "六比五，梅德韦杰夫的盘点。鲁瓦耶发完球直接上网，在网前连着截击，把这个盘点救了回来。",
+      "_why": "首盘抢七 `MEDVEDEV 6 6 / •ROYER 6 5`：逐 0.5 秒看过 73~79，73.5 鲁瓦耶从底线压上来，74~78.5 一直在网前，远端梅德韦杰夫在左侧底角。df_mh_1 抢七 6-5 `HM 2,1`（梅德韦杰夫的第一个盘点），下一分 `HG=2 HK=2`（鲁瓦耶发球拿下，6-6）。",
+      "point_end_ok": "这一分 78.9 前结束，79.3 在 79.30 那一刀之前。",
+      "score_inset": true
+    },
+    {
+      "source": "ttv",
+      "start": 79.9,
+      "end": 97.0,
+      "cx": 0.5,
+      "narration": "七比六，第二个盘点，轮到他自己发球。这一分又是底线相持，他被调到右边的场外，又一路追了回来，最后拿下。抢七打到八比六，第一盘是他的。这一盘，他发出了十个ACE。",
+      "_why": "首盘抢七 `•MEDVEDEV 6 7 / ROYER 6 6`：近端梅德韦杰夫发球，80~94 底线长相持，92.5~94 他被调到右侧场外又追回来；94.5~99 切到他走回座位。df_mh_1 抢七最后一分 `HG=1 HK=1`（他发球拿下，8-6）；「十个ACE」：df_st_1 Set 1 Aces 10/2；7-6 前一分是鲁瓦耶发球被他拿下（`HG=2 HH=2 HK=1`），源片没有那一分。",
+      "point_end_ok": "这一分 94.3 前结束，94.5 切到他走回座位；98.0/98.9 的 point_ends 是走回镜头里的记分条，段尾 97.0 收在同一个走回镜头里（99.46 才切）。",
+      "crosses_cut": "94.5 从宽景切到他本人走回座位：同一分打完之后的反应，旁白说的就是拿下第一盘。",
+      "score_inset": true
+    },
+    {
+      "source": "ttv",
+      "start": 111.3,
+      "end": 118.5,
+      "cx": 0.5,
+      "narration": "第二盘二比一，鲁瓦耶发球，梅德韦杰夫拿到破发点，被他救了回去。",
+      "_why": "第二盘 `MEDVEDEV 7 2 40 / •ROYER 6⁶ 1 40`：这一局平分那一分。flashscore Set 2 第 4 局（记作 2-2）`40:30 |B1|, 40:40, A:40 |B1|, 40:40, 40:A, 40:40, 40:A`——梅德韦杰夫两个破发点都没兑现。",
+      "point_end_ok": "段尾 118.5 在 118.52 那一刀之前；这一分平分之后的下一分源片没有。",
+      "score_inset": true
+    },
+    {
+      "source": "ttv",
+      "start": 121.5,
+      "end": 138.4,
+      "cx": 0.5,
+      "narration": "真正的险情在他自己的发球局。二比二，他零比四十落后，鲁瓦耶一下有了三次破发的机会。他连拿五分，保住了这一局。整场被拿到的破发点，他一个都没丢。",
+      "_why": "画面是之后那一局 `MEDVEDEV 7 3 0 / •ROYER 6⁶ 2 15`（鲁瓦耶发球），122~138 底线相持。旁白讲的那一局源片没有：flashscore Set 2 第 5 局（记作 3-2）`0:15, 0:30, 0:40 |B1|, 15:40 |B1|, 30:40 |B1|, 40:40, A:40` 后他拿下；df_st_1 Break Points Saved 5/5。",
+      "point_end_ok": "这一分 138.3 前结束，段尾 138.4 在 138.46 切到他近景之前。",
+      "score_inset": true
+    },
+    {
+      "source": "ttv",
+      "start": 139.0,
+      "end": 155.4,
+      "cx": 0.5,
+      "narration": "四比三，鲁瓦耶发球，梅德韦杰夫拿到破发点。两人在底线来回相持，这一分还是他拿下，破发，五比三。鲁瓦耶摸着帽子，低头走回去。梅德韦杰夫全场只破了这一次，够了。",
+      "_why": "第二盘 `MEDVEDEV 7 4 40 / •ROYER 6⁶ 3 15`：近端鲁瓦耶发球，139~153 相持；153.48 切到鲁瓦耶摸帽子低头的近景（153.5~155.5）。flashscore Set 2 第 8 局 `15:0, 30:0, 30:15, 40:15 |B1|` 后破发；df_st_1 Break Points Converted 1/4，全场唯一一次。",
+      "point_end_ok": "这一分 153.4 前结束，153.48 切到鲁瓦耶近景；段尾 155.4 在 155.54 那一刀之前。",
+      "crosses_cut": "153.48 切到鲁瓦耶摸帽子低头：丢掉这一局之后的反应，旁白说的正是他。",
+      "score_inset": true
+    },
+    {
+      "source": "ttv",
+      "start": 155.6,
+      "end": 166.2,
+      "cx": 0.5,
+      "narration": "五比三，他发球，一分都没丢，第一个赛点就拿下。最后十个球，他拿了九个。拿下之后，他脸上没什么表情。",
+      "_why": "和冷开场同一分，按时间顺序重放、配旁白：`•MEDVEDEV 7 5 40 / ROYER 6⁶ 3 0`，161.4 切到他的近景（161.4~164.4 逐 0.2 秒看过：面无表情，没有庆祝动作），165 记分条翻成终局。flashscore Set 2 第 9 局 `15:0, 30:0, 40:0 |B3|`；df_st_1 `Last 10 balls 9 / 1`。",
+      "point_end_ok": "赛点那一分 161.3 前结束；165 的翻牌是记分条补上终局。",
+      "crosses_cut": "161.4 从赛点宽景切到他本人的近景：同一刻的反应。",
+      "score_inset": true
+    },
+    {
+      "source": "ttv",
+      "start": 166.3,
+      "end": 172.0,
+      "cx": 0.5,
+      "narration": "四分之一决赛，他可能碰上黄泽林。你想看这一场吗？",
+      "_why": "166.24 起网前握手（166~169），170~171 鲁瓦耶走向裁判椅；段尾 172.0 在 172.14 品牌卡之前。下一轮：TNNS 比分页 `Plays the winner of Coleman Wong / Adolfo Daniel Vallejo`。",
+      "crosses_cut": "比赛已经结束，旁白是片尾一问，不指认画面里的人。",
+      "point_end_ok": "比赛已经结束。",
+      "score_inset": false,
+      "_score_inset_why": "比赛已经结束：166.24 起是网前握手的低机位，记分条已经淡出（166.5~171.5 缩略图左下角没有板），终局比分顶栏里有。"
+    }
+  ]
+}
