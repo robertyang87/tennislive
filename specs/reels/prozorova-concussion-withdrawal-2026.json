@@ -19,16 +19,18 @@
   "sgr2": "https://www.youtube.com/watch?v=MiS84c1tvuQ",
   "hit": "https://video.twimg.com/amplify_video/2103471133798612993/vid/avc1/1282x720/WpKIDtbreb2v0CHM.mp4?tag=14",
   "rome24": "https://www.youtube.com/watch?v=CpB2AZkiRe0",
-  "rg23": "https://www.youtube.com/watch?v=MzRsBu5xKgQ"
+  "rg23": "https://www.youtube.com/watch?v=MzRsBu5xKgQ",
+  "uso15": "https://www.youtube.com/watch?v=P-db5M9Iz2o"
  },
  "primary": "sgqf",
  "_primary_why": "primary 取 sgqf（她对王欣瑜的 1/4决赛官方集锦，1920×1080/25fps）：这条片子里用得最多的一条。",
- "_sources_why": "sgqf＝WTA 官方《Wang Xinyu vs Tatiana Prozorova | 2026 Singapore Quarterfinal》（probe output/2026-09-25/reel/wang-prozorova）；sgr2＝WTA 官方《Tatiana Prozorova vs. Alexandra Eala | 2026 Singapore Round of 16》（probe output/2026-09-24/reel/prozorova-eala）；sggib＝WTA 官方吉布森对萨卡里 1/4决赛集锦（probe output/2026-09-26/reel/sakkari-gibson-singapore-2026-qf，尾巴上是她的场上采访）；hit＝X 上 @kostekcanu 转发的双打转播片段 1282×720、原片 120fps（probe output/2026-09-26/reel/proz-hit，只有现场声没有解说）——账号所有者 2026-09-26「视频分辨率可以放宽」；rome24＝Tennis TV《Alejandro Tabilo Stuns Novak Djokovic! | Rome 2024》；rg23＝Guardian Sport《French Open: doubles pair disqualified after stray shot leaves ball girl in tears》（2023 法网那一幕没有赛事官方版本，用新闻台成片）。",
+ "_sources_why": "sgqf＝WTA 官方《Wang Xinyu vs Tatiana Prozorova | 2026 Singapore Quarterfinal》（probe output/2026-09-25/reel/wang-prozorova）；sgr2＝WTA 官方《Tatiana Prozorova vs. Alexandra Eala | 2026 Singapore Round of 16》（probe output/2026-09-24/reel/prozorova-eala）；sggib＝WTA 官方吉布森对萨卡里 1/4决赛集锦（probe output/2026-09-26/reel/sakkari-gibson-singapore-2026-qf，尾巴上是她的场上采访）；hit＝X 上 @kostekcanu 转发的双打转播片段 1282×720、原片 120fps（probe output/2026-09-26/reel/proz-hit，只有现场声没有解说）——账号所有者 2026-09-26「视频分辨率可以放宽」；rome24＝Tennis TV《Alejandro Tabilo Stuns Novak Djokovic! | Rome 2024》；uso15＝美网官方频道《Eugenie Bouchard vs. Dominkia Cibulkova Full Match | 2015 US Open Round 3》（1920×1080，只 probe 8150~8561 的结尾）；rg23＝Guardian Sport《French Open: doubles pair disqualified after stray shot leaves ball girl in tears》（2023 法网那一幕没有赛事官方版本，用新闻台成片）。",
  "_xvid_why": "hit 写的是 X 自己 CDN 上 1282×720 那一档的直链（yt-dlp 从 https://x.com/kostekcanu/status/2103471501211271209 解出来，http-2176），直接写帖子地址时 match-reel 的选择器可能挑到更低一档。",
  "archival": {
   "hit": "X 上的转播片段只有 720p（账号所有者 2026-09-26：「视频分辨率可以放宽」），这是这一刻唯一的画面。整幅 contain 铺进来（放大 1.26 倍左右），两侧同帧模糊垫底，不按主源裁 3:4（那样要放大近 3 倍）。"
  },
  "mixed_fps": {
+  "uso15": "美网官方 2015 整场录像 29.97fps，主源 25fps，6:5 丢帧；用的是赛点和赛后庆祝、握手，不是要盯走位的回合。",
   "hit": "原片 120fps，probe 整除降采样到 30；主源 25fps，30→25 是 6:5 丢帧。用的是一个固定宽景机位的一分和倒地之后，不是要盯走位的回合。"
  },
  "_crop_zoom_why": "全部是转播机位，不写 crop_zoom（默认 1.0）。",
@@ -179,6 +181,24 @@
    "narration": "那项闭眼单脚站立，是平衡测试的一环。研究发现，人累了也会站不稳，休息二十分钟左右才恢复，她的抱怨不是没道理。可规则的底线是：疑似脑震荡，当天就不能再上场。",
    "_why": "对伊埃拉第二盘 2-4 破发点那一分（同站 spec 已核：143~157 伊埃拉被左右调动），只当旁白底料。mBESS：闭眼、双手叉腰、非惯用脚单脚站 20 秒数失误（Moran 2025 PMC11694282 ＋ Shirley Ryan AbilityLab）；疲劳：Susco 2004（运动后单脚／前后脚站失误变多，约 20 分钟恢复）＋ Wilkins 2004 J Athl Train PMC419510；当天不再上场：CRT6「should not return to play that day」（SIRC ＋ SMA）。",
    "point_end_ok": "同站 spec 已核：157~158 球落在伊埃拉身后，这一分打完；159.68 是切点。"
+  },
+  {
+   "source": "uso15",
+   "start": 8526.0,
+   "end": 8542.8,
+   "fit": "crop",
+   "narration": "规矩这么硬，是有来路的。二〇一五年美网，布沙尔三盘赢下齐布尔科娃，打进第四轮。之后的一个晚上，她在光线昏暗的理疗室里滑倒，撞到了头，脑震荡。",
+   "_why": "美网官方频道《Eugenie Bouchard vs. Dominkia Cibulkova Full Match | 2015 US Open Round 3》（probe output/2026-09-26/reel/proz-uso15，只看 8150~8561 这一段）：8528.5 记分条「MATCH POINT」、布沙尔发球近景，8532~8534 宽景赛点回合，8534.73 切点后 8536.5 起她握拳庆祝。比分 7-6 4-6 6-3（源片 8546.5 转播比分牌「2015 US OPEN WOMEN'S SINGLES 3RD ROUND」）。滑倒脑震荡：进十六强之后、对文奇那场之前，在美网的理疗／训练室滑倒（SI 2018-02-23 ＋ CBC ＋ ABC News 2016-03-03）。旁白只说「之后的一个晚上」，不钉日期。",
+   "point_end_ok": "赛点在 8534.73 切点之前已经打完，之后全是庆祝近景。"
+  },
+  {
+   "source": "uso15",
+   "start": 8542.8,
+   "end": 8557.0,
+   "fit": "crop",
+   "narration": "她退出了第四轮单打和两项双打，一个月后在北京又因为头晕退赛，那个赛季就此结束。三年后，陪审团判美国网协承担百分之七十五的责任。",
+   "_why": "8544.5 网前握手、8546.5 转播比分牌 7-6 4-6 6-3、8550~8552 走向座椅、8554.5 起向看台挥手（8552.94 一处切点）。退出十六强（对文奇）、女双、混双；北京对彼得科娃因头晕退赛、2015 赛季就此结束；2018-02 陪审团判美国网协 75%、布沙尔 25% 责任（SI ＋ CBC ＋ Open Court）。",
+   "point_end_ok": "比赛已经结束，这一段是握手、比分牌和向看台致意。"
   },
   {
    "source": "rome24",
