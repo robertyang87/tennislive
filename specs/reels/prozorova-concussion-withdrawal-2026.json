@@ -33,6 +33,7 @@
  "_sources_why": "sgqf＝WTA 官方《Wang Xinyu vs Tatiana Prozorova | 2026 Singapore Quarterfinal》（probe output/2026-09-25/reel/wang-prozorova）；sgr2＝WTA 官方《Tatiana Prozorova vs. Alexandra Eala | 2026 Singapore Round of 16》（probe output/2026-09-24/reel/prozorova-eala）；sggib＝WTA 官方吉布森对萨卡里 1/4决赛集锦（probe output/2026-09-26/reel/sakkari-gibson-singapore-2026-qf，尾巴上是她的场上采访）；hit＝X 上 @kostekcanu 转发的双打转播片段 1282×720、原片 120fps（probe output/2026-09-26/reel/proz-hit，只有现场声没有解说）——账号所有者 2026-09-26「视频分辨率可以放宽」；rome24＝Tennis TV《Alejandro Tabilo Stuns Novak Djokovic! | Rome 2024》；uso15＝美网官方频道《Eugenie Bouchard vs. Dominkia Cibulkova Full Match | 2015 US Open Round 3》（1920×1080，只 probe 8150~8561 的结尾）；rg23＝Guardian Sport《French Open: doubles pair disqualified after stray shot leaves ball girl in tears》（2023 法网那一幕没有赛事官方版本，用新闻台成片）。",
  "_xvid_why": "hit 写的是 X 自己 CDN 上 1282×720 那一档的直链（yt-dlp 从 https://x.com/kostekcanu/status/2103471501211271209 解出来，http-2176），直接写帖子地址时 match-reel 的选择器可能挑到更低一档。",
  "archival": {
+  "mia25": "WTA 官方 2025 迈阿密集锦只有 1280×720（和主源 1920×1080 尺寸不同），整幅 contain 铺进来、两侧同帧模糊垫底；账号所有者 2026-09-26「视频分辨率可以放宽」。",
   "hit": "X 上的转播片段只有 720p（账号所有者 2026-09-26：「视频分辨率可以放宽」），这是这一刻唯一的画面。整幅 contain 铺进来（放大 1.26 倍左右），两侧同帧模糊垫底，不按主源裁 3:4（那样要放大近 3 倍）。"
  },
  "mixed_fps": {
@@ -210,7 +211,7 @@
    "source": "mia25",
    "start": 1.96,
    "end": 17.92,
-   "fit": "crop",
+   "fit": "contain",
    "narration": "二〇二五年迈阿密，汤森在双打四分之一决赛摔倒，轻度脑震荡，当时没被查出来。歇了两天，她照样打了半决赛，结果越来越糟，一路缺席到罗马。",
    "_why": "WTA 官方《Zheng Qinwen vs. Taylor Townsend | 2025 Third Round Miami》（probe output/2026-09-26/reel/proz-mia25，1280×720）：近端粉衣的汤森发球、底线对拉，16.5 她的近景（1.96 / 17.92 两刀）。她摔倒那场双打没有集锦，这是同一站、同一周她的单打画面。事实：本人原话「I fell and ended up getting a mild concussion in my quarterfinal doubles match」，歇两天后打半决赛「ended up getting a lot worse」，退出到罗马为止的所有比赛（tennis.com 2025-04-26 ＋ Yahoo）。",
    "point_end_ok": "这一分在 16.5 之前已经打完（16.5 是汤森走回的近景），17.92 是切点。"
