@@ -1,0 +1,70 @@
+{
+  "scoreboard_qc_sha256": "709a613c3a0c015c16515ff2856e4b702473f20a492fede25ce877d62e3be74e",
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 3.827,
+  "layout": "full",
+  "segments_seconds": 251.76,
+  "topbar": {
+    "line1": "2026 WTA500 新加坡站 半决赛",
+    "line2": "费尔南德斯 1-6 6-4 6-2 赫瓦林斯卡",
+    "start": 1.2,
+    "end": 252.96
+  },
+  "film_seconds": 256.8,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 28.584,
+    "2": 19.968,
+    "3": 19.464,
+    "4": 16.896,
+    "5": 24.864,
+    "6": 10.512,
+    "7": 18.984,
+    "8": 25.224,
+    "9": 11.76,
+    "10": 11.904,
+    "12": 9.936
+  },
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "fernandez-chwalinska-singapore-2026-sf",
+    "received_at": "2026-09-26T13:49:18Z",
+    "artifact_ready_at": "2026-09-26T13:55:59Z",
+    "elapsed_seconds": 401.996,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "0f0f675e8820c6e00d99ea7620ea54ad89db809d08e7391646c953407ce496b6",
+    "spec_sha256": "b6ae42adfdc0db143580cc50474b1efbece1a4c3b5ebb1cac22cc44fa252cf90",
+    "run_id": "36246429694",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-09-26T13:51:36Z",
+        "run_id": "36246429694"
+      }
+    ],
+    "render_seconds": 263.996,
+    "pre_render_seconds": 138.0
+  },
+  "film_sha256": "0f0f675e8820c6e00d99ea7620ea54ad89db809d08e7391646c953407ce496b6",
+  "film_bytes": 125981757,
+  "qc_attestation_sha256": "bf9102e673c14b4fbd073da1fca5de335c450b35475a5c819926694ddb14084a",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-09-26T13:51:36Z",
+      "run_id": "36246429694"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-26T13:56:01Z",
+      "run_id": "36246429694"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-fernandez-chwalinska-singapore-2026-sf/fernandez-chwalinska-singapore-2026-sf.mp4",
+  "video_bytes": 125981757
+}
