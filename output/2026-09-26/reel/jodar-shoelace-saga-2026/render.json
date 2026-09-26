@@ -1,0 +1,72 @@
+{
+  "scoreboard_qc_sha256": null,
+  "cover_seconds": 5.866,
+  "cover_narrated": true,
+  "outro_seconds": 3.827,
+  "layout": "full",
+  "segments_seconds": 249.5,
+  "topbar": null,
+  "film_seconds": 259.24,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 12.192,
+    "2": 12.456,
+    "3": 8.16,
+    "4": 8.952,
+    "5": 11.04,
+    "6": 9.576,
+    "7": 5.784,
+    "8": 7.104,
+    "10": 10.368,
+    "11": 5.208,
+    "12": 4.104,
+    "13": 7.92,
+    "15": 9.528,
+    "16": 6.912,
+    "17": 15.6,
+    "18": 6.576,
+    "20": 6.552,
+    "21": 10.776
+  },
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "jodar-shoelace-saga-2026",
+    "received_at": "2026-09-26T09:14:13Z",
+    "artifact_ready_at": "2026-09-26T09:21:39Z",
+    "elapsed_seconds": 446.948,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "3f6bc043af54bbecb4921ed433865d261008cf6c2c847dfaa6b5f707509f1b5e",
+    "spec_sha256": "dfb9e0d0a2266512eacc2f2a0cf4665254b50b74848294647d0d6d145ef22e83",
+    "run_id": "36232153333",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-09-26T09:16:13Z",
+        "run_id": "36232153333"
+      }
+    ],
+    "render_seconds": 327.948,
+    "pre_render_seconds": 119.0
+  },
+  "film_sha256": "3f6bc043af54bbecb4921ed433865d261008cf6c2c847dfaa6b5f707509f1b5e",
+  "film_bytes": 174743356,
+  "qc_attestation_sha256": "86e25fe29c1b52f967d9c3afcc15d31de528d82a4b725ed100068e348102c513",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-09-26T09:16:13Z",
+      "run_id": "36232153333"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-26T09:21:40Z",
+      "run_id": "36232153333"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-jodar-shoelace-saga-2026/jodar-shoelace-saga-2026.mp4",
+  "video_bytes": 174743356
+}

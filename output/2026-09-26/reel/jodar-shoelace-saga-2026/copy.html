@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>9.26 网球有故事 | 霍达尔的鞋带又断了</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>霍达尔：两个月至少5次停赛换鞋，拉沃尔杯上队长诺阿亲手帮他穿
+
+9月25日伦敦拉沃尔杯，20岁的霍达尔第一次替欧洲队出场，开场没几局追一个放小球，鞋带断了。他回到替补席换鞋，队长诺阿坐到他身边亲手帮他穿鞋带，科博利帮他收拾另一双，门西克过来问要不要备用鞋。换完鞋，他6-2、6-3赢了布勃利克。
+
+往回倒，见诸报道的这已经是至少第5次：
+8月3日华盛顿500赛决赛，第二盘第一局被弗里茨破发之后，他坐下来换鞋带，一换好几分钟，网友吐槽「慢得离谱」，弗里茨接着又破一次，最后7-6、6-4夺冠。
+一周多以后蒙特利尔半决赛对中岛布兰登，第二盘2-3、0-30落后时又停下来换鞋带，球迷开始说「怎么只在落后的时候断」。
+8月15日辛辛那提第二轮对沙波瓦洛夫，决胜盘1-4断一次、3-5又断一次。第二次他没有现成的鞋，工作人员把鞋送到看台，父亲在包厢里一个孔一个孔地穿鞋带，转播计时「距离上一分4分08秒」。沙波瓦洛夫当场喊了一句「上一次你也在喝水」。回到场上，霍达尔连赢四局7-5翻盘，赛后网前两人还在争。他在场上说：「我控制不了，鞋带断了，下一场我会多准备几双鞋。」
+两天后对塔比洛，他真的背着一整袋鞋上场，一双没用上。美网首轮0-3输给布云朝克特之后，发布会上被问到鞋带，他反问：「问题是什么？今天鞋带又没断。」
+
+他自己在拉沃尔杯发布会上的解释：是滑步的方式，硬地上打正手、上网追放小球时，鞋带张力很大。2019年华盛顿，西西帕斯也连着三场断鞋带，说的几乎是同一句话；他和克耶高斯那场半决赛，克耶高斯亲自给他送了新鞋。
+
+ATP规则书写的是：鞋坏了，主裁应当给时间换；鞋没坏想换，不准。所以每一次停下来都在规则里。只是华盛顿、蒙特利尔、辛辛那提那四次，都落在他落后的时候。
+
+鞋带一断就能停上几分钟，这条规则该不该改？
+
+#网球时差 #霍达尔 #拉沃尔杯 #网球中国赛季来了 #网球时间到</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>鞋带一断就能停上几分钟，这条规则，该不该改？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
