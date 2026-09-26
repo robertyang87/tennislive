@@ -8031,8 +8031,10 @@ def _materialize_title_cards(spec: dict, segments: list[Segment], outdir: Path,
                 continue
             card = json.loads(s.image[len(TITLE_CARD_PREFIX):])
             out = outdir / f"title_card_{i + 1:02d}.jpg"
+            handle_options = ({"show_handle": False}
+                              if spec.get("title_card_show_handle") is False else {})
             renderer(card["text"], out, kicker=card.get("kicker", ""), size=size,
-                     clear_bottom=clear_bottom)
+                     clear_bottom=clear_bottom, **handle_options)
             if not out.is_file():
                 raise ReelError(f"第 {i + 1} 段的章节卡没渲出来：{out}")
             print(f"[章节卡] 第 {i + 1} 段「{card['text']}」→ {out.name}（{size[0]}×{size[1]}）")
