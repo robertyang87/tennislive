@@ -2,7 +2,7 @@
  "slug": "cobolli-tien-laver-cup-2026",
  "_column": "赛场之上",
  "sources": {
-  "main": "TBD"
+  "main": "https://players.brightcove.net/6199586113001/default_default/index.html?videoId=6405670488112"
  },
  "scorebox": [
   80,
@@ -10,7 +10,7 @@
   520,
   1036
  ],
- "_scorebox_why": "和同一届 ruud-cerundolo / mensik-nakashima / bublik-jodar 同一块转播板、同一个框。",
+ "_scorebox_why": "和同一届 ruud-cerundolo / mensik-nakashima / bublik-jodar 同一块转播板、同一个框；probe 带这个框量出 39 个翻牌时刻（point_ends）。",
  "cover": {
   "eyebrow": "赛场之上",
   "layout": "solo",
@@ -94,5 +94,280 @@
   "loser_result": "3-6 6-2 7-10",
   "_direction_why": "flashscore 当日表 f_2_0：AE=Cobolli F.（home）、AF=Tien L.（away），BA/BB=3:6、BC/BD=6:2、BE/BF=7:10、AG/AH=1:2。participants 跟 home/away。第三盘按拉沃尔杯规则是抢十，按一盘记 10-7。"
  },
- "segments": []
+ "segments": [
+  {
+   "source": "main",
+   "cx": 0.515,
+   "score_inset": true,
+   "start": 185.5,
+   "end": 201.8,
+   "narration": "",
+   "quote": [
+    {
+     "at": 11.36,
+     "text": "That swung in all kinds of directions.\n这场球来回摇摆"
+    },
+    {
+     "at": 13.52,
+     "text": "But in the end, the young American wins.\n可最后，赢的是这位年轻的美国人"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "_why": "冷开场：赛点落地之后。185.45 那一刀切到勒纳·钱近景怒吼（185~187s），188~190s 阿加西在场边振臂，191~194s 全景庆祝，195~201s 网前握手、诺阿拥抱。解说原声 196.86~201.56（本地 faster-whisper 逐词：`That swung in all kinds of directions. But in the end, the young American wins 6-3, 2-6`），字幕收在 wins。201.89 起静音、202 起片尾板。",
+   "point_end_ok": "比赛已经结束，185.49 起那串翻牌是记分条换成终局比分、再换宽版全名板。",
+   "_ending_payoff_required": true,
+   "_ending_payoff_why": "正文最后两段按时间顺序重放 164.0–185.4 的赛点和 185.5–195.2 的庆祝，这次配旁白。"
+  },
+  {
+   "source": "main",
+   "cx": 0.515,
+   "score_inset": true,
+   "start": 0.3,
+   "end": 11.3,
+   "narration": "二十岁的勒纳·钱，第一次打拉沃尔杯。将近四个月前的法网，他只从科博利手里拿到七局。",
+   "_why": "② 落点：首秀（拉沃尔杯官网球员页「Learner Tien is making his Laver Cup debut」＋ Laver Cup Record 0 场）；法网交手（官网赛前稿「Last played: Roland Garros R3, 2026 Winner: Cobolli, 6-2, 6-2, 6-3」＋ flashscore H2H `French Open Cobolli F. Tien L. 3:0`，2026-05-30）。画面：第一盘 0-2 科博利发球平分、勒纳·钱占先（记分条 `BREAK POINT / COBOLLI •0 / TIEN 2 AD`），收在 11.51 那一刀之前。"
+  },
+  {
+   "source": "main",
+   "cx": 0.515,
+   "score_inset": true,
+   "start": 30.0,
+   "end": 51.7,
+   "narration": "北京时间九月二十六号晚上八点多，拉沃尔杯第二天第一场，这一天赢一场，记两分。开局科博利两个发球局都被破，一比四。这一局他三次拿到破发点，把勒纳·钱从一边底角拉到另一边，第三个，破了回来。替补席上，诺阿跳了起来。",
+   "_why": "③ 坐标，见 _opening_time_source；「第二天赢一场记两分」见仓库 laver-cup-history-2026（周六两分）。画面：第一盘 1-4 勒纳·钱发球，记分条 17~48s `BREAK POINT #3 / COBOLLI 1 AD / TIEN •4`。逐帧（本地 0.5 秒一帧）：勒纳·钱在近端，40.5~41.5s 被拉到右侧边线外，42~43.5s 又被拉到左侧，45~45.5s 扑向左侧底角；46.5s 科博利在远端往前压。df_mh_1 第一盘 2-4 那一局 `… A:40 |B1|, 40:40, A:40 |B1|, 40:40, A:40 |B1|` 之后主队拿下＝第三个破发点兑现。0-1、0-3 两局客队拿下＝科博利前两个发球局被破。收在 47.01 那一刀、47.05 翻牌之前。 47~48s 科博利近景握拳，49~50s 欧洲队替补席诺阿握拳起身（蓝色 Team Europe 外套）。",
+   "crosses_cut": "47.01 —— 同一分落地后的反应镜头（科博利握拳、诺阿起身）。",
+   "point_end_ok": "这一分在 47.01 那一刀之前已经落地，之后是反应镜头；48.25 / 49.85 那两次翻牌是记分条撤掉 BREAK POINT #3、换成 MATCH 5 的动画，段尾 51.7 之后第一次翻牌在 63.46。"
+  },
+  {
+   "source": "main",
+   "cx": 0.515,
+   "score_inset": true,
+   "start": 51.8,
+   "end": 63.2,
+   "narration": "可三比五，轮到科博利发球，十五比四十。勒纳·钱第一个盘点就拿下，第一盘，六比三。",
+   "_why": "记分条 51~65s `2 SET POINTS / COBOLLI •3 15 / TIEN 5 40`；63~65s 勒纳·钱近景握拳；66s 记分条 `3 / 6`。df_mh_1 第一盘 3-6 那一局 `0:15, 15:15, 15:30, 15:40 |B1| |B2|` 客队拿下＝第一个盘点兑现。收在 63.43 那一刀、63.46 翻牌之前。",
+   "point_end_ok": "盘点在 63.43 那一刀之前已经落地（63.43 起是勒纳·钱握拳的反应镜头，下一段 63.5 接着放）；65.47 起那串翻牌是记分条换成整盘比分、再换宽版全名板的动画。"
+  },
+  {
+   "source": "main",
+   "cx": 0.515,
+   "score_inset": true,
+   "start": 63.5,
+   "end": 71.9,
+   "narration": "",
+   "quote": [
+    {
+     "at": 0.5,
+     "text": "That will do very nicely.\n这一拍，干得漂亮"
+    },
+    {
+     "at": 3.28,
+     "text": "And the rookie getting Team World off to a great start\n这位新人给世界队开了个好头"
+    },
+    {
+     "at": 6.58,
+     "text": "in this Saturday day session.\n在周六的日场"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "_why": "63.5~65.6s 勒纳·钱握拳，66~69s 回替补席和阿加西击掌，70~71s 场馆全景＋宽版全名板。解说原声 64.00~71.34（本地 faster-whisper 逐词）。",
+   "point_end_ok": "盘间，没有比赛进行；那串翻牌是整盘板和宽版板的切换动画，71.97 那一次在段尾之后 0.07 秒。"
+  },
+  {
+   "source": "main",
+   "cx": 0.515,
+   "score_inset": true,
+   "start": 88.0,
+   "end": 95.5,
+   "narration": "第二盘轮到科博利。零比一落后，他连赢五局，两次破发，五比一。",
+   "_why": "画面：第二盘 0-1 科博利发球（记分条 72~93s `COBOLLI •3 0 / TIEN 6 1`，94s 翻成 15-0），科博利近端；92~95s 他走回、近景。df_mh_1 第二盘：0-1 客队保发，1-1、3-1、5-1 主队保发，2-1、4-1 主队破发＝从 0-1 连赢五局、两次破发。",
+   "point_end_ok": "这一分 92s 之前已经落地（92~93s 科博利走回），93.99 翻成 15-0 在段尾之前；95.7 / 96.6 那两次翻牌落在下一段阿尔卡拉斯的镜头上，是记分条的换局动画，不是这一分。"
+  },
+  {
+   "source": "main",
+   "cx": 0.515,
+   "score_inset": true,
+   "start": 98.0,
+   "end": 107.1,
+   "narration": "五比二，科博利的盘点。他一拍放小球，勒纳·钱从底线冲上来，没追到。六比二，拖进抢十。",
+   "_why": "记分条 98~108s `2 SET POINTS / COBOLLI •3 5 40 / TIEN 6 2 15`；109s `MATCH TIEBREAK 3 6 / 6 2`。逐帧：104.9~106.9s 勒纳·钱（近端）从底线一路冲到发球线附近；解说 106.77~110.61「what a way to finish it off, the Noah-inspired drop shot」＋112.39「Team Europe take the second set by six games to two」。df_mh_1 第二盘 6-2 那一局 `40:15 |B2|` 主队拿下＝第一个盘点兑现。收在 107.24 那一刀、107.31 翻牌之前。「抢十」＝拉沃尔杯第三盘的 Match Tiebreak（记分条 119s `10 PT MATCH TIEBREAK`）。",
+   "point_end_ok": "盘点在 107.24 那一刀之前已经落地（106.9s 勒纳·钱冲到发球线附近，107.24 切到欧洲队替补席起身）；107.31 / 108.21 那两次翻牌是记分条换成 MATCH TIEBREAK 的动画。"
+  },
+  {
+   "source": "main",
+   "cx": 0.515,
+   "score_inset": true,
+   "start": 107.3,
+   "end": 115.0,
+   "narration": "第二盘三十六分钟。欧洲队的替补席，全站了起来。",
+   "_why": "107~110s 欧洲队替补席起身（蓝色 LAVER CUP 外套），111~112s 科博利近景，113~114s 诺阿鼓掌。用时：flashscore df_sui_1 Set 2 0:36。",
+   "point_end_ok": "盘间，没有比赛进行；115.42 那次翻牌是宽版全名板的动画。"
+  },
+  {
+   "source": "main",
+   "cx": 0.515,
+   "score_inset": true,
+   "start": 118.5,
+   "end": 124.5,
+   "narration": "",
+   "quote": [
+    {
+     "at": 0.13,
+     "text": "This has a big feeling to it.\n这一分，分量很重"
+    },
+    {
+     "at": 2.71,
+     "text": "It's a big swing.\n会左右整个局面"
+    },
+    {
+     "at": 3.67,
+     "text": "Either 5-1 Europe or tied up after this.\n要么欧洲队5比1，要么3比3"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "_why": "118.5~120s 科博利近景弯腰，121s 起抢十 3-3 科博利发球（记分条 `10 PT MATCH TIEBREAK / COBOLLI 3 6 3 / TIEN 6 2 3`）。解说原声 118.63~124.01（本地 faster-whisper 逐词）：开赛前欧洲队 3-1，这一场赢的一方记 2 分。",
+   "point_end_ok": "段尾 124.5 这一分还在打，下一段从 124.6 接着放同一分，两段之间没有切走。"
+  },
+  {
+   "source": "main",
+   "cx": 0.515,
+   "score_inset": true,
+   "start": 124.6,
+   "end": 140.9,
+   "narration": "抢十，勒纳·钱先拿三分，科博利连追四分，四比三反超。可勒纳·钱接着连拿五分，八比四。科博利再追到七比八，九比七，勒纳·钱拿到两个赛点。",
+   "_why": "画面：124.6~134.5 抢十 3-3 那一分（科博利近端），135~136s 诺阿在替补席振臂，137~140s 勒纳·钱近景，137s 起记分条 `2 MATCH POINTS / COBOLLI 3 6 7 / TIEN •6 2 9`。df_mh_1 Set 3 逐分（主:客）0:1、0:2、0:3、1:3、2:3、3:3、4:3、4:4、4:5、4:6、4:7、4:8、5:8、6:8、7:8、7:9、7:10。旁白不指认画面上是哪一分。",
+   "crosses_cut": "134.53 —— 同一分落地后的反应镜头；136.34 那次翻牌是集锦跳到 9-7。",
+   "point_end_ok": "段尾 140.9 之后第一次翻牌在 185.49；139.24 / 140.14 在段尾之前。"
+  },
+  {
+   "source": "main",
+   "cx": 0.515,
+   "score_inset": true,
+   "start": 172.0,
+   "end": 185.25,
+   "narration": "赛点，一个很长的回合，勒纳·钱一直被压在底线，一度滑到角上救球。科博利终于上网，他从外角一拍打过去，第一个赛点就拿下。",
+   "_why": "记分条 141~184s `2 MATCH POINTS / COBOLLI 3 6 7 / TIEN •6 2 9`，勒纳·钱近端发球。逐帧（本地 0.5 秒／0.2 秒一帧）：179.5~180.5s 勒纳·钱滑向左侧底角救球；183s 起科博利往网前压，184.0~184.6s 在网前扑救，球从他身边过去；183.4~183.6s 勒纳·钱在左侧外角击球；185.4s 举起双臂。df_mh_1 Set 3 `7:9 |HM 3,2|` 之后 7:10＝第一个赛点兑现。回合长度不报拍数（逐帧数不准）。收在 185.45 那一刀、185.49 翻牌之前。",
+   "point_end_ok": "比赛在 185.4 之前结束。"
+  },
+  {
+   "source": "main",
+   "cx": 0.515,
+   "score_inset": true,
+   "start": 185.5,
+   "end": 194.2,
+   "narration": "六比三，二比六，十比七，一小时三十七分钟。阿加西在场边，张开了双臂。",
+   "_why": "和冷开场同一段画面，按时间顺序重放、配旁白：185~187s 勒纳·钱怒吼，188~190s 阿加西振臂（红色 Team World），191~194s 全景。用时见 cover.scoreboard。",
+   "point_end_ok": "比赛已经结束。"
+  },
+  {
+   "source": "main",
+   "cx": 0.515,
+   "score_inset": true,
+   "start": 194.3,
+   "end": 201.8,
+   "narration": "世界队把总比分追成三比三。下一场，兹维列夫对德米纳尔，你押哪一边？",
+   "_why": "195~201s 网前握手、诺阿拥抱科博利。团体比分：开赛前 3-1（flashscore v5KxNhxh AG/AH=3/1＋官网赛前稿「Team Europe carries a 3-1 lead into Day 2」），这一场第二天记 2 分 → 3-3；解说 122.17「Either 5-1 Europe or tied up after this」。下一场：flashscore 当日表 xvQdqyYj `Zverev A. vs De Minaur A.`＋官网赛前稿。收在 201.89 静音、202 片尾板之前。",
+   "point_end_ok": "比赛已经结束，199.6 / 201.9 是宽版板动画。"
+  }
+ ],
+ "_source": "拉沃尔杯官网视频页《2026 | Match Highlights – Cobolli v Tien (Match 5)》（https://lavercup.com/videos/2026/09/26/2026-match-highlights-cobolli-v-tien-match-5，14:21Z 发布）嵌的 Brightcove `6405670488112`（标题「Flavio/Cobolli v Learner/Tien Highlights | Laver Cup 2026 Match X」），1920×1080 / 29.97fps / 204.89s（probe 实测）。官方 YouTube 同名那条 `QJk1rymSYBQ`《Flavio Cobolli v Learner Tien Highlights | Laver Cup 2026 Match 5》probe 实测只有 21.71 秒（抢十一分＋片尾板），不是完整集锦，所以换官网这一版。四要素：①记分条 `MATCH 5 / COBOLLI / TIEN`，188s `3 6 7 / 6 2 10`，和 flashscore 6eZQlcAT 逐字一致；②黑色场地 `LAVER CUP LONDON 2026`、挡板 `Alipay+` `ROLEX` `UBS`；③科博利蓝色 Team Europe、勒纳·钱红色 Team World＋白帽；④宽版全名板 `FLAVIO COBOLLI / LEARNER TIEN`。",
+ "_editing_why": "源片 204.89 秒（官网 Brightcove 版）：比赛画面到 185.4（赛点），185.45~201.8 是赛后（勒纳·钱怒吼、阿加西振臂、握手），201.89 起静音、202 起片尾板；没有场上采访。开场三格：冷开场（赛后＋解说原声）→ 落点（首秀＋法网只拿七局）→ 坐标，然后按时间顺序：第一盘 0-3 → 1-4 第三个破发点破回 → 3-5 盘点 → 第二盘 0-1 起连赢五局 → 5-2 放小球盘点 → 抢十 3-3（解说「5-1 Europe or tied up」）→ 9-7 赛点 → 重放庆祝。没用的：11.5~27（第一盘 1-4 前半局的铺垫和科博利近景）、141~164（赛点那一分前半截的底线相持，留 164 起那一段交代球路）、96~98（阿尔卡拉斯鼓掌）。认人：科博利蓝色 Team Europe，勒纳·钱红色 Team World＋白帽。本地逐秒记分条裁切＋0.5 秒逐帧核过每一段的比分和击球方。解说原声用本地 faster-whisper（small.en）逐词定时刻——Brightcove 源没有字幕轨，probe 的 captions.txt 还是 YouTube 那条 21 秒短片的。",
+ "mixed_fps": {
+  "main": "单源，29.97fps。"
+ },
+ "_voice_why": "沿用默认：云见（`zh-CN-YunjianNeural`）＋6%。",
+ "_opening_time_source": {
+  "url": "https://global.flashscore.ninja/2/x/feed/f_2_0_0_en_1",
+  "match_id": "6eZQlcAT",
+  "field": "AD",
+  "value": 1790425500,
+  "beijing": "2026-09-26T20:25+08:00",
+  "spoken_precision": "approximate-hour",
+  "_why": "flashscore AD=1790425500 → 12:25Z ＝ 北京 9/26 20:25，说「晚上八点多」；官网赛前稿 DAY SESSION (1 p.m.) 伦敦时间 13:00 ＝ 12:00Z 是整个日场的开场时刻（含入场仪式），同一个钟点。"
+ },
+ "stats": {
+  "a": {
+   "aces": 1,
+   "df": 4,
+   "winners": 15,
+   "ue": 49,
+   "first_in": 40,
+   "first_won": 26,
+   "second_total": 26,
+   "second_won": 10,
+   "bp_conv": 3,
+   "bp_chances": 6,
+   "pts_won": 68,
+   "pts_total": 136,
+   "first_total": 66,
+   "headshot": "assets/players/headshots/atp-T0HA.png"
+  },
+  "b": {
+   "aces": 0,
+   "df": 5,
+   "winners": 8,
+   "ue": 35,
+   "first_in": 39,
+   "first_won": 26,
+   "second_total": 31,
+   "second_won": 12,
+   "bp_conv": 3,
+   "bp_chances": 7,
+   "pts_won": 68,
+   "pts_total": 136,
+   "first_total": 70,
+   "headshot": "assets/players/headshots/atp-C0E9.png"
+  },
+  "_source": "flashscore 6eZQlcAT 的 df_st_1，`match_stat_hooks.py 6eZQlcAT --home Cobolli --away Tien --stats-block` 机器抄出；flashscore 的 home 是科博利、away 是勒纳·钱，而 cover.matchup[0] 是勒纳·钱——所以 a/b **对调**了（a＝勒纳·钱＝原 b 块，b＝科博利＝原 a 块）。锚点：Break Points Converted 主队（科博利）3/7、客队（勒纳·钱）3/6；Winners 客队 15、主队 8。头像：勒纳·钱 atp-T0HA（已发 shelton-tien-montreal-sf / tien-monfils-us-open-2026-r2 同一张）、科博利 atp-C0E9（已发 cobolli-jodar 等同一张）。"
+ },
+ "_hit_data": "`match_feed.py show 6eZQlcAT`：第一盘科博利前两个发球局被破（0-1 15:40 第一个破发点、0-3 平分后第一个破发点），0-4；1-4 勒纳·钱发球局三次平分、第三个破发点被破，2-4；3-4 科博利救三个破发点保发；3-6 科博利发球 15-40 第一个盘点丢掉（0:43）。第二盘 0-1 之后科博利连赢五局（2-1、4-1 两次破发），6-2 发球 40-15 第一个盘点兑现（0:36）。抢十 0-3 → 4-3 → 4-8 → 7-8 → 7-10，第一个赛点兑现（0:18）。全场总得分 68:68；制胜分 15:8（勒纳·钱多），非受迫失误 49:35（勒纳·钱也多）。",
+ "_turning_points": [
+  "第一盘 1-4 勒纳·钱发球局，科博利第三个破发点破回（记分条 17~48s `BREAK POINT #3`），之后替补席诺阿起身。",
+  "第二盘 5-2 盘点，科博利放小球（解说「the Noah-inspired drop shot」），拖进抢十。",
+  "抢十 3-0 → 3-4 被反超，又连拿五分到 8-4；9-7 第一个赛点，科博利上网被打穿（141~185s）。"
+ ],
+ "editorial": {
+  "mode": "match_review",
+  "hook": [
+   "决胜盘一度被反超",
+   "勒纳·钱击败科博利"
+  ],
+  "question": "二十岁第一次打拉沃尔杯，四个月前还只从科博利手里拿到七局——勒纳·钱是怎么在抢十里把比赛拿回来的？",
+  "thesis": "第一盘勒纳·钱开局四比零，六比三；第二盘科博利从零比一连赢五局，放小球拿下盘点，六比二；抢十勒纳·钱先拿三分被反超，又连拿五分，九比七第一个赛点就拿下，世界队追成三比三。",
+  "beats": [
+   "冷开场：赛点之后勒纳·钱怒吼、阿加西振臂，解说「That swung in all kinds of directions. But in the end, the young American wins」。",
+   "二十岁首秀；法网只从科博利手里拿到七局。北京时间九月二十六号晚上八点多，第二天第一场，赢一场记两分。",
+   "第一盘一比四，科博利第三个破发点破回，三比五再被破，六比三。",
+   "第二盘科博利连赢五局，五比二放小球拿下盘点，六比二。",
+   "抢十前解说「要么欧洲队五比一，要么三比三」；零比三、四比三、八比四、七比八、九比七。",
+   "赛点科博利上网被打穿，十比七；世界队追成三比三。"
+  ],
+  "_hook_why": "和 cover.hook 逐行相同。",
+  "human_context": {
+   "angle": "勒纳·钱二十岁、第一次打拉沃尔杯（官网球员页 debut）；将近四个月前法网第三轮他 2-6 2-6 3-6 输给科博利（官网赛前稿＋flashscore H2H）。这一场第二天记 2 分，赢了世界队就从 1-3 追成 3-3（解说「Either 5-1 Europe or tied up after this」）。",
+   "facts": [
+    "flashscore 6eZQlcAT：6-3 2-6 10-7（勒纳·钱在前），分盘用时 0:43 / 0:36 / 0:18。",
+    "排名：勒纳·钱 13、科博利 7（官网球员页＋tennisexplorer 21.09）。",
+    "交手 1-1：2025 北京勒纳·钱胜、2026 法网科博利胜（flashscore H2H＋官网赛前稿 Head-to-head: 1-1）。",
+    "首日：欧洲队 3-1（官网《Team Europe Leads 3-1 After Day 1》）。"
+   ],
+   "sources": [
+    "https://www.flashscore.com/match/tennis/6eZQlcAT/",
+    "https://lavercup.com/videos/2026/09/26/2026-match-highlights-cobolli-v-tien-match-5",
+    "https://lavercup.com/news/2026/09/26/cobolli-and-tien-launch-blockbuster-day-2",
+    "https://lavercup.com/player/learner-tien"
+   ],
+   "voice_label": "二十岁的首秀"
+  }
+ },
+ "_claims": [],
+ "_no_repeat": "同一届兄弟片 ruud-cerundolo / mensik-nakashima / bublik-jodar / alcaraz-mensik-doubles——这一条不重讲拉沃尔杯赛制和去年旧金山，只一句「这一天赢一场，记两分」。",
+ "push": {
+  "summary": "勒纳·钱抢十险胜科博利",
+  "lead": "拉沃尔杯伦敦站第二天第一场，20 岁的勒纳·钱第一次打拉沃尔杯。第一盘他开局 4-0，6-3；第二盘科博利连赢五局，放小球拿下盘点，6-2。抢十他先被反超到 3-4，又连拿五分，9-7 第一个赛点就拿下。世界队把总比分追成 3-3。",
+  "matchup": "勒纳·钱 vs 科博利",
+  "score": "6-3 2-6 10-7",
+  "auto": true
+ },
+ "_push_summary_why": "11 字位，主语勒纳·钱。"
 }
