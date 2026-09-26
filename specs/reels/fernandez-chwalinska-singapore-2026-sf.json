@@ -1,0 +1,191 @@
+{
+  "slug": "fernandez-chwalinska-singapore-2026-sf",
+  "source_url": "TBD",
+  "_column": "赛场之上",
+  "tts_backend": "edge",
+  "_tts_backend_why": "平直复盘叙述，不写 `style`；同站 `fernandez-andreeva-singapore-2026-qf`、`chwalinska-mertens-singapore-2026-qf` 都是 edge。",
+  "_source": "TBD",
+  "scorebox": [
+    90,
+    870,
+    550,
+    980
+  ],
+  "_scorebox_why": "同站 `fernandez-andreeva`、`chwalinska-mertens`、`wang-prozorova` 同一块转播板；三盘那一档更宽，probe 后按 score_*.jpg 复量。",
+  "_match": {
+    "id": "2026:singapore:womens-semifinal:leylah-fernandez-maja-chwalinska",
+    "event": "2026 WTA500 新加坡",
+    "event_search": "Singapore",
+    "round": "Women's Singles Semifinal",
+    "year": 2026,
+    "status": "result_verified",
+    "winner": "费尔南德斯",
+    "loser": "赫瓦林斯卡",
+    "participants": [
+      "费尔南德斯",
+      "赫瓦林斯卡"
+    ],
+    "winner_en": "Leylah Fernandez",
+    "loser_en": "Maja Chwalinska",
+    "set_scores_home_away": [
+      [
+        1,
+        6
+      ],
+      [
+        6,
+        4
+      ],
+      [
+        6,
+        2
+      ]
+    ],
+    "tiebreaks_home_away": [
+      null,
+      null,
+      null
+    ],
+    "_source": "两源一致：WTA 官方 tournaments/1152/2026/matches 的 MatchID=LS002，`ResultString` = `[6]L. Fernandez d [5]M. Chwalinska 1-6,6-4,6-2`、`RoundID=S`（半决赛）、`MatchTimeTotal=02:08:27`；flashscore b1rbH9QE 盘分 1-6 / 6-4 / 6-2（home＝费尔南德斯，`AE=Fernandez L.`）。",
+    "source": "flashscore_points",
+    "source_id": "b1rbH9QE",
+    "flashscore_id": "b1rbH9QE",
+    "winner_result": "1-6 6-4 6-2",
+    "loser_result": "6-1 4-6 2-6"
+  },
+  "topbar": {
+    "line1": "2026 WTA500 新加坡站 半决赛",
+    "line2": "费尔南德斯 1-6 6-4 6-2 赫瓦林斯卡"
+  },
+  "_topbar_why": "line1 按 2026-09-24 定的格式，和同站 `fernandez-andreeva-singapore-2026-qf` 同一行写法；WTA 官方 `RoundID=S`＝半决赛。",
+  "cover": {
+    "matchup": [
+      {
+        "name": "费尔南德斯",
+        "name_en": "Leylah Fernandez",
+        "country": "CAN",
+        "rank": 31
+      },
+      {
+        "name": "赫瓦林斯卡",
+        "name_en": "Maja Chwalinska",
+        "country": "POL",
+        "rank": 25
+      }
+    ],
+    "_rank_why": "WTA 官方 `players/ranked`（`sources.rankings.fetch_rankings`，`rankedAt=2026-09-21`）：赫瓦林斯卡第 25（1888 分）、费尔南德斯第 31（1454 分）（2026-09-26 查）；和同站两条 1/4决赛 spec 一致。",
+    "winner": "费尔南德斯",
+    "result": "1-6 6-4 6-2",
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "费尔南德斯",
+    "hook": "首盘只拿到1局\n逆转赫瓦林斯卡进决赛",
+    "hook_accent": "逆转",
+    "_hook_why": "第一行是这场球的关键局面（第一盘 1-6，WTA 官方 LS002），第二行是结果：赢了谁、晋级到哪儿。7 字、10 字，没有术语、没有裸比分，不复述排名。",
+    "topic": "新加坡WTA500 · 女单半决赛",
+    "_subject_why": "赢家；账号所有者点的题是「月亮姐的半决赛」，她输了，照 solo 默认放赢家，赫瓦林斯卡在钩子第二行和旁白里。",
+    "_heat_why": "轮次已是半决赛（2026-08-12：半决赛级别的都要做）；对手赫瓦林斯卡是账号所有者点名的热点样板、本场是他亲口点的题。",
+    "portrait": "TBD",
+    "scoreboard": {
+      "court": "OCBC Arena",
+      "_court_why": "沿用同站 `chwalinska-mertens`、`fernandez-andreeva` 已核的 OCBC Arena。",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%20%222%3A08%3A27%22%2C%20%22source%22%3A%20%22WTA%20official%20tournaments/1152/2026/matches%20LS002%20MatchTimeTotal%2002%3A08%3A27%3B%20stats%20settime%2000%3A31%3A00%2B00%3A47%3A16%2B00%3A50%3A05%22%2C%20%22cross_check%22%3A%20%22flashscore%20dc_1%20b1rbH9QE%20DC%201790417400%20%5Cu2192%20DD%201790425058%20%3D%202%3A07%3A38%22%7D",
+        "field": "duration"
+      },
+      "_duration_why": "WTA 官方 `MatchTimeTotal=02:08:27`，三盘 `settime` 31:00＋47:16＋50:05＝2:08:21，自洽；flashscore 开赛/结束时间戳相差 2:07:38。⚠️ flashscore 分盘用时加总 2:10，偏长，不用。"
+    }
+  },
+  "_opening_time_source": {
+    "url": "https://global.flashscore.ninja/2/x/feed/dc_1_b1rbH9QE",
+    "match_id": "b1rbH9QE",
+    "field": "DC",
+    "value": 1790417400,
+    "beijing": "2026-09-26T18:10+08:00",
+    "spoken_precision": "approximate-hour",
+    "_why": "开球只说个大概：`DC=1790417400` → 10:10Z＝北京 18:10；`DD=1790425058`（北京 20:17）是结束，差 2:07:38，和 WTA 官方用时自洽。旁白说「傍晚六点多」。"
+  },
+  "stats": {
+    "a": {
+      "aces": 2,
+      "df": 4,
+      "first_in": 47,
+      "first_won": 30,
+      "second_total": 27,
+      "second_won": 12,
+      "bp_conv": 5,
+      "bp_chances": 8,
+      "pts_won": 72,
+      "pts_total": 141,
+      "first_total": 74,
+      "headshot": "assets/players/headshots/wta-326735.jpg",
+      "winners": 32,
+      "ue": 43
+    },
+    "b": {
+      "aces": 0,
+      "df": 1,
+      "first_in": 49,
+      "first_won": 31,
+      "second_total": 18,
+      "second_won": 6,
+      "bp_conv": 5,
+      "bp_chances": 8,
+      "pts_won": 69,
+      "pts_total": 141,
+      "first_total": 67,
+      "headshot": "assets/players/headshots/wta-325639.jpg",
+      "winners": 17,
+      "ue": 28
+    },
+    "_source": "`match_stat_hooks.py b1rbH9QE --stats-block`（flashscore `df_st_1`），a＝cover.matchup[0]＝费尔南德斯＝flashscore home，不用对调；和 WTA 官方 `/matches/LS002/stats` 逐项一致（Ace 2/0、双误 4/1、一发 30/47 对 31/49、破发 5/8 对 5/8、总得分 72 对 69）。制胜分／非受迫失误走 TNNS（run 36241572196，id=74753612，`hasExtendedStats: True`）：制胜分 [32, 17]、非受迫失误 [43, 28]，选手顺序 `['Fernandez','Chwalinska']`，分盘合计＝全场自证 ✅。头像沿用已发 spec 认过的两张。"
+  },
+  "_hit_data": "`match_feed.py show b1rbH9QE` 逐局：第一盘赫瓦林斯卡连下五局到 5-0，费尔南德斯前四个发球局全被破（连续被破 4 局），1-5 破回一局，1-6 31 分钟。第二盘 3-1 领先，3-3 被破、3-4；之后连拿三局：4-4 保、5-4 破（`40:30 |B1|`）、6-4 两个盘点保发。第三盘 1-1 她发球平分两次、救下一个破发点保住；之后 2-1 破、3-1 零封保、4-1 破、5-1 保，5-2 赫瓦林斯卡发球，`30:40` 起到第四个局点才保住（`40:A` 三次，flashscore 比分 home:away＝费尔南德斯:赫瓦林斯卡），6-2 第一个赛点拿下。**第二盘 3-3 被破之后她最后 6 个发球局全保**。TNNS 分盘：费尔南德斯非受迫失误 21 → 14 → 8，制胜分 6 → 13 → 13；赫瓦林斯卡非受迫失误 4 → 9 → 15。flashscore 第三盘：赫瓦林斯卡二发得分 1/10、费尔南德斯发球得分 18/24。全场总得分 72 比 69（只多 3 分——⚠️ 不上钩子，2026-09-19 规矩）。",
+  "_claims": {},
+  "push": {
+    "matchup": "费尔南德斯 vs 赫瓦林斯卡",
+    "score": "1-6 6-4 6-2",
+    "summary": "费尔南德斯逆转月亮姐进决赛",
+    "auto": true,
+    "lead": "2026 WTA500 新加坡女单半决赛：6 号种子、世界第 31 的费尔南德斯 1-6、6-4、6-2 逆转 5 号种子、世界第 25 的赫瓦林斯卡，用时 2 小时 08 分。第一盘她前 4 个发球局全被破，一个人送出 21 个非受迫失误，31 分钟 1-6。第二盘 3-1 领先被追到 3-4，之后连拿三局 6-4。决胜盘 1-1 救下一个破发点保发，随后两次破发到 5-1，第一个赛点拿下。从第二盘 3-3 起她最后 6 个发球局全保，非受迫失误三盘是 21、14、8。这是她本季第一个决赛，对手是不战晋级的吉布森。"
+  },
+  "editorial": {
+    "mode": "match_review",
+    "hook": [
+      "首盘只拿到1局",
+      "逆转赫瓦林斯卡进决赛"
+    ],
+    "question": "第一盘只拿到一局、送出二十一个非受迫失误，费尔南德斯是怎么把这场球翻过来的？",
+    "thesis": "第一盘她前四个发球局全被破，二十一个非受迫失误，一比六；第二盘三比一被追到三比四，她连拿三局六比四；从三比三被破之后，她最后六个发球局一个没丢，非受迫失误从二十一个降到第三盘的八个，赫瓦林斯卡的二发在第三盘十分只拿一分，六比二。",
+    "beats": [
+      "TBD（等源片）"
+    ],
+    "chapters": [
+      "零比五",
+      "三比四",
+      "最后六个发球局",
+      "第一个赛点"
+    ],
+    "human_context": {
+      "angle": "赫瓦林斯卡这一周前三场只丢了 11 局（R32 6-4 6-2 斯拉姆科娃、R16 6-0 6-1 奥利尼科娃、1/4决赛 6-2 6-2 梅尔滕斯），今天第一盘又只让出一局；费尔南德斯是从这里翻过来的。决赛对手吉布森，是因为普罗佐罗娃被脑震荡评估强制退赛才不战晋级。",
+      "facts": [
+        "WTA 官方 LS002：[6]L. Fernandez d [5]M. Chwalinska 1-6,6-4,6-2，RoundID=S，MatchTimeTotal 02:08:27。",
+        "WTA 官方排名（2026-09-21）：赫瓦林斯卡第 25、费尔南德斯第 31。",
+        "flashscore b1rbH9QE 逐局与统计（见 `_hit_data`）；TNNS 制胜分 32:17、非受迫失误 43:28。",
+        "赫瓦林斯卡前三场：WTA 官方 LS023 6-4 6-2、LS011 6-0 6-1、LS005 6-2 6-2（共丢 11 局）。",
+        "本季第一个决赛：WTA 官网 4581896 标题 `Fernandez overcomes Andreeva to reach first semifinal of 2026`——本季第一个半决赛就是这一周，所以这也是本季第一个决赛。",
+        "吉布森不战晋级：WTA 签表 MDS.pdf `T. Gibson WO`，同站 `prozorova-concussion-withdrawal-2026` 已核。"
+      ],
+      "sources": [
+        "https://api.wtatennis.com/tennis/tournaments/1152/2026/matches",
+        "https://api.wtatennis.com/tennis/tournaments/1152/2026/matches/LS002/stats",
+        "https://global.flashscore.ninja/2/x/feed/df_mh_1_b1rbH9QE",
+        "https://global.flashscore.ninja/2/x/feed/df_st_1_b1rbH9QE",
+        "https://www.wtatennis.com/news/4581896/fernandez-overcomes-andreeva-to-reach-first-semifinal-of-2026"
+      ]
+    },
+    "narration": [
+      "TBD"
+    ]
+  }
+}
