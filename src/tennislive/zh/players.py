@@ -330,6 +330,12 @@ PLAYER_ZH: dict[str, str] = {
     "Kimberly Birrell": "比勒尔",
     "Ajla Tomljanovic": "汤姆贾诺维奇",
     "Talia Gibson": "吉布森",
+    # prozorova-concussion-withdrawal-2026（2026-09-26）定下的译名
+    "Eugenie Bouchard": "布沙尔",
+    "Dominika Cibulkova": "齐布尔科娃",
+    "Miyu Kato": "加藤未唯",
+    "Sofya Lansere": "兰瑟雷",
+    "Ellen Perez": "佩雷斯",
     "Priscilla Hon": "韩天遇",
     "Emerson Jones": "埃默生·琼斯",
     "Katie Boulter": "布尔特",

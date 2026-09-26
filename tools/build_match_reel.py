@@ -2542,6 +2542,12 @@ class Segment:
     fill_y: float | None = None
     # contain 段横向留源片宽的多少（spec `contain_keep`）；None＝全局 CONTAIN_KEEP。
     contain_keep: float | None = None
+    # 段落级放大（spec `crop_zoom`，1.0~2.0）：3:4 窗口按比例缩小再铺满画布，
+    # 横向中心不变，纵向落点按 `fill_y`（0 顶、1 底，None＝居中）。
+    # 来路：prozorova-concussion-withdrawal-2026 要把 Guardian 成片顶上的
+    # 水印条裁出画外——这个键原来在允许字段表里、**渲染一处都没读**，
+    # 写了不报错也不生效（run 36214015142 渲出来水印原样还在）。
+    crop_zoom: float = 1.0
 
     @property
     def length(self) -> float:
@@ -2562,6 +2568,43 @@ def _seg_fill_y(s: dict, i: int) -> float | None:
         raise ReelError(f"第 {i + 1} 段的 `fill_y` 要写 0~1 之间的数"
                         f"（0 顶、1 底），拿到的是 {v!r}")
     return f
+
+
+CROP_ZOOM_MAX = 2.0
+
+
+def _seg_crop_zoom(s: dict, i: int) -> float:
+    """段落级放大倍数；不写是 1.0。只认 1.0~CROP_ZOOM_MAX，写错当场报。"""
+    v = s.get("crop_zoom")
+    if v is None:
+        return 1.0
+    try:
+        z = float(v)
+    except (TypeError, ValueError):
+        z = -1.0
+    if not 1.0 <= z <= CROP_ZOOM_MAX:
+        raise ReelError(f"第 {i + 1} 段的 `crop_zoom` 要写 1.0~{CROP_ZOOM_MAX:g} 之间的数，"
+                        f"拿到的是 {v!r}")
+    if z > 1.0 and (s.get("track") or s.get("score_inset") or s.get("square_pan")
+                    or str(s.get("fit", "crop")) != "crop"):
+        raise ReelError(f"第 {i + 1} 段写了 `crop_zoom`，但它只支持普通裁切段"
+                        "（fit=crop、不跟拍、不回贴记分条）")
+    return z
+
+
+def zoomed_window(x: int, zoom: float, fill_y: float | None) -> tuple[int, int, int, int]:
+    """把 3:4 窗口（CROP_W×CROP_H，左上 x/CROP_Y）按 `zoom` 收小：返回 (w, h, x, y)。
+
+    横向中心不变；纵向落点 `fill_y`（0 顶、1 底，None＝居中）。宽高取偶数。
+    """
+    if zoom <= 1.0:
+        return CROP_W, CROP_H, x, CROP_Y
+    w = int(CROP_W / zoom) // 2 * 2
+    h = int(CROP_H / zoom) // 2 * 2
+    fy = 0.5 if fill_y is None else fill_y
+    nx = x + (CROP_W - w) // 2
+    ny = CROP_Y + int(round((CROP_H - h) * fy))
+    return w, h, nx, ny
 
 
 def seg_seconds(s: dict) -> float:
@@ -3022,7 +3065,8 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
                        score_inset_windows=_seg_score_windows(s, i),
                        square_pan=tuple((float(t), float(cx)) for t, cx in s.get("square_pan", [])),
                        fill_y=_seg_fill_y(s, i),
-                       contain_keep=_seg_contain_keep(s, i))
+                       contain_keep=_seg_contain_keep(s, i),
+                       crop_zoom=_seg_crop_zoom(s, i))
 
     segments = [_one(s, i) for i, s in enumerate(spec["segments"])]
     gone_ev = [(i + 1, s.image) for i, s in enumerate(segments)
@@ -4246,7 +4290,8 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
                 )
                 labeled = True
             else:
-                chain = (f"crop={CROP_W}:{CROP_H}:{x}:{CROP_Y},"
+                zw, zh, zx, zy = zoomed_window(x, seg.crop_zoom, seg.fill_y)
+                chain = (f"crop={zw}:{zh}:{zx}:{zy},"
                          f"{_canvas_fit()}"
                          f"{sp}fps={FPS_EXPR},setsar=1")
     # 认领了 conform 的源：放大裁边前置到这条链最前面，只处理这一段用到的几秒
@@ -5736,6 +5781,17 @@ APPROVED_LOW_RES_SOURCES: dict[str, int] = {
     # 那一段是重要的证据，可以豁免」。美网官方频道 2017 纳达尔 vs 拉约维奇加长集锦
     # （关顶、纳达尔赛后说「太吵了听不见球」的那一场），probe 实测 1280×720 @29.97。
     "https://www.youtube.com/watch?v=T7cd71seygs": 720,
+    # 普罗佐罗娃被强制退赛（prozorova-concussion-withdrawal-2026）：账号所有者 2026-09-26
+    # 「要交代清楚来龙去脉，视频分辨率可以放宽」。双打里被高压球击中那一刻只有这条
+    # X 上的转播片段（@kostekcanu status 2103471501211271209，X CDN 直链），
+    # `yt-dlp -J` 逐档查过：480×270 / 640×360 / 1282×720，没有更高的一档；
+    # WTA 官方 YouTube 和图库都没有这一分。
+    "https://video.twimg.com/amplify_video/2103471133798612993/vid/avc1/1282x720/WpKIDtbreb2v0CHM.mp4?tag=14": 720,
+    # 同一条片子的历史案例：汤森 2025 迈阿密（账号所有者 2026-09-26「汤森那个也加上吧」）。
+    # 她那一周双打摔倒脑震荡的比赛没有集锦，这是同一站、同一周她单打的 WTA 官方
+    # 集锦（《Zheng Qinwen vs. Taylor Townsend | 2025 Third Round Miami》），
+    # probe 实测 1280×720，WTA 频道 2025 年这条就这一档。
+    "https://www.youtube.com/watch?v=c9y75dSg4oU": 720,
 }
 
 
