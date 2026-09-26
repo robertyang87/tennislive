@@ -7426,6 +7426,71 @@ LEGACY_NO_COLD_OPEN = frozenset({
 })
 
 
+#: 「没配音的段要有中英原声字幕」那道闸（2026-09-26）落地之前已经发出去的片子，
+#: 表在 `data/legacy_unvoiced_quote.json`，只许减不许加。
+_UNVOICED_QUOTE_LEGACY = Path(__file__).resolve().parents[1] / "data" / "legacy_unvoiced_quote.json"
+_CJK = re.compile(r"[\u4e00-\u9fff]")
+
+
+def legacy_unvoiced_quote() -> frozenset:
+    try:
+        data = json.loads(_UNVOICED_QUOTE_LEGACY.read_text(encoding="utf-8"))
+    except FileNotFoundError:
+        return frozenset()
+    return frozenset(data.get("reels") or ())
+
+
+def _bilingual(text: str) -> bool:
+    """「原文一行＋中文一行」：有带汉字的一行，也有不带汉字的一行（原文可以是纯数字，
+    和 `test_原声解说的字幕一律中英双语` 同一个判法）。"""
+    lines = [x for x in str(text).split("\n") if x.strip()]
+    return (len(lines) >= 2 and any(_CJK.search(x) for x in lines)
+            and any(not _CJK.search(x) for x in lines))
+
+
+def unvoiced_quote_problem(spec: dict, *, legacy: frozenset | None = None) -> str | None:
+    """没有我们配音的视频段，解说要留成 `quote`，配中英双语字幕。
+
+    账号所有者 2026-09-26，两句话：
+    「**以后务必要保证冷开场的解说有中英文字幕**」（看完 `wong-vallejo-hangzhou-2026-r2`，
+    冷开场里解说在喊、画面上一个字没有），紧接着放宽到全片：
+    「**没有我们配音的地方，如果有关键解说也务必要有中英文字幕**」。
+    当天量的：223 条片子里 319 段没配旁白、也没有原声字幕。
+
+    判据：每一段**视频段**（不是静图）只要没配 `narration`，就要么有 `quote`、且每一条
+    都是「原文＋中文」两行；要么在这一段写 `_quote_skip_why` 说清为什么不留——
+    这几秒解说没开口、只有现场声、说的只是报比分。**「关键不关键」是判断题，
+    机械挡不住**，所以闸只要求认领，不替人决定（和 `_no_quote_why` 同一个形状）。
+    """
+    slug = str(spec.get("slug") or "")
+    if slug in (legacy_unvoiced_quote() if legacy is None else legacy):
+        return None
+    bad = []
+    for i, seg in enumerate(spec.get("segments") or [], 1):
+        if seg.get("image") or str(seg.get("narration") or "").strip():
+            continue
+        if str(seg.get("_quote_skip_why") or "").strip():
+            continue
+        where = "冷开场（第 1 段）" if i == 1 else f"第 {i} 段"
+        q = seg.get("quote")
+        items = [q] if isinstance(q, str) else list(q or [])
+        if not items:
+            bad.append(f"{where}没配旁白，也没有原声字幕")
+            continue
+        for it in items:
+            text = it if isinstance(it, str) else str((it or {}).get("text") or "")
+            if not _bilingual(text):
+                bad.append(f"{where}的原声字幕不是中英双语：{text[:40]!r}")
+                break
+    if not bad:
+        return None
+    return ("没有我们配音的地方，解说要配中英双语字幕：\n  - " + "\n  - ".join(bad) + "\n"
+            "把解说说的话写成这一段的 `quote`，每条「原文\n中文」两行、`at` 钉在开口那一秒"
+            "（probe 的 captions.txt 有时间码）；这几秒解说没开口／只有现场声／只是报比分，"
+            "在这一段写 `_quote_skip_why`。账号所有者 2026-09-26：「没有我们配音的地方，"
+            "如果有关键解说也务必要有中英文字幕」。")
+
+
 def _is_on_court_reel(spec: dict) -> bool:
     """「赛场之上」：认 `cover.eyebrow`，没有封面时退回 `_column`。"""
     eyebrow = (spec.get("cover") or {}).get("eyebrow")
@@ -7816,6 +7881,12 @@ def validate_spec(
     cold = cold_open_problem(spec, primary=next(iter(urls)))
     if cold:
         raise ReelError(cold)
+    unvoiced = unvoiced_quote_problem(spec)
+    if unvoiced:
+        if (spec.get("_production") or {}).get("status") == "ready_for_render":
+            print(f"[原声字幕] 自动 spec，只报不拦：{unvoiced}")
+        else:
+            raise ReelError(unvoiced)
     photo = cover_photo_problem(spec)
     if photo:
         raise ReelError(photo)
