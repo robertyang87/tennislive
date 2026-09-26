@@ -6943,6 +6943,10 @@ COVER_FILL_W, COVER_FILL_H = 1080, 1440
 #: - **2026-09-26 起**账号所有者给了常设授权：「没有高清大图可备选的话，抽帧也
 #:   可以，但是要尽量清晰偏正面的图片」（CLAUDE.md 同名一节）。之后的条目不用再
 #:   逐条问，但照旧要在这里登记一行、在 spec 的 `_frame_why` 写清四类源各查了什么。
+#: - `alcaraz-fritz-laver-cup-2026`：2026-09-27 拉沃尔杯第二天第 3 场（北京 04:13 打完）。
+#:   按常设授权走：终场后约 25 分钟官网 WordPress 媒体库本场没有赛中实拍，AP 沙箱 403、
+#:   Getty 只有水印预览。用 168.8s 赛点后正脸、带笑、眼睛睁着的近景，源片 1920×1080，
+#:   放大 1.33 倍。
 OWNER_APPROVED_FRAME_COVERS = frozenset({
     "wu-duckworth-us-open-2026-r2",
     "zhiyenbayeva-bouzas-bjk-cup-2026",
@@ -6950,6 +6954,7 @@ OWNER_APPROVED_FRAME_COVERS = frozenset({
     "bublik-jodar-laver-cup-2026",
     "medvedev-royer-hangzhou-2026-r2",
     "wong-vallejo-hangzhou-2026-r2",
+    "alcaraz-fritz-laver-cup-2026",
 })
 
 #: 「封面大图一律用官方高清实拍」这条规矩（账号所有者 2026-08-16 重申）立起来

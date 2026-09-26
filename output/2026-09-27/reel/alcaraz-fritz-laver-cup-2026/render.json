@@ -1,0 +1,70 @@
+{
+  "scoreboard_qc_sha256": "57f1dd174a745b6d773c4b9bc73d60e2c73c66ad849580998416881f65b02d04",
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 3.827,
+  "layout": "full",
+  "segments_seconds": 121.65,
+  "topbar": {
+    "line1": "2026 拉沃尔杯 第二天",
+    "line2": "阿尔卡拉斯 6-3 4-6 13-11 弗里茨",
+    "start": 1.2,
+    "end": 122.85
+  },
+  "film_seconds": 126.693,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 7.944,
+    "2": 9.792,
+    "3": 8.952,
+    "4": 4.992,
+    "5": 6.744,
+    "6": 3.84,
+    "7": 5.232,
+    "8": 7.224,
+    "9": 8.184,
+    "10": 6.0,
+    "11": 10.368
+  },
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "alcaraz-fritz-laver-cup-2026",
+    "received_at": "2026-09-26T20:44:56Z",
+    "artifact_ready_at": "2026-09-26T20:50:45Z",
+    "elapsed_seconds": 349.696,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "1369e149660cfe1802cedbe1e16db5d80cd8218c7bc62ac8254759796d2a7c69",
+    "spec_sha256": "e5c8be58ab5fea2336ee130da0d7fca98f7f2ea546a206ab8d48930e2c5f1940",
+    "run_id": "36270579902",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-09-26T20:47:31Z",
+        "run_id": "36270579902"
+      }
+    ],
+    "render_seconds": 194.696,
+    "pre_render_seconds": 155.0
+  },
+  "film_sha256": "1369e149660cfe1802cedbe1e16db5d80cd8218c7bc62ac8254759796d2a7c69",
+  "film_bytes": 87033979,
+  "qc_attestation_sha256": "f6e0a06f3ae01ac2bc917dc3939edea3df1dabe0029744d2eb252dc78ddd0543",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-09-26T20:47:31Z",
+      "run_id": "36270579902"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-26T20:50:46Z",
+      "run_id": "36270579902"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-alcaraz-fritz-laver-cup-2026/alcaraz-fritz-laver-cup-2026.mp4",
+  "video_bytes": 87033979
+}
