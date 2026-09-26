@@ -42,3 +42,14 @@ def test_result_predicate_dui_is_complete_but_preposition_is_not():
     for phrase in ("我对", "我需要面对", "我没做对的", "你说得对而"):
         assert has_dangling_tail(phrase)
     assert not _translation_line_ok("我状态没打对", 3)
+
+
+def test_verbs_ending_in_de_are_complete_but_particle_de_is_not():
+    """勒纳·钱拉沃尔杯采访：英文行在 "I think" 处断开，译成「我觉得」是忠实的，
+    而「得」在 _BAD_TAIL 里，整条请求在翻译那一步被拒了三次、run 红了。"""
+    from draft_interview_spec import _translation_line_ok
+    for phrase in ("是啊，我想说，我觉得", "我还记得", "这很值得", "他懂得", "谁晓得"):
+        assert not has_dangling_tail(phrase)
+        assert _translation_line_ok(phrase, None)
+    for phrase in ("他打得", "跑得", "我觉得的", "记得和"):
+        assert has_dangling_tail(phrase)
