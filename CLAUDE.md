@@ -1933,6 +1933,10 @@ ATP 巡回赛），「第三盘＝决胜盘」是一个**默认成立到不会�
 
     ATP250 杭州 第二轮 · 梅德韦杰夫 VS 鲁瓦耶 ｜ WTA500 新加坡 半决赛 · 费尔南德斯 VS 赫瓦林斯卡
     比利·简·金杯 半决赛 · 斯维托丽娜 VS 保利尼   ← 没有「级别＋站」的赛事同一条规则，他选了全称
+    拉沃尔杯 首日 · 阿尔卡拉斯 / 门西克 VS 布勃利克 / 弗里茨   ← 双打用「 / 」连搭档
+
+⚠️ **这是全局规则**（账号所有者 2026-09-26「落进全局规则」）：所有「赛场之上」，不分
+ATP / WTA / 大满贯 / 团体赛、手写还是自动产，一律这么写。城市**不带「站」**（同日第二次改，见上一节）。
 
 - 判据 `tests/test_cover_topic_format.py`（`reel_facts.cover_topic_problem`，`--dry-run` 就报）；特例写 `_topic_format_why`
 - 定格式之前的挂在 `data/legacy_cover_topic_format.json`，只许减不许加；自动草稿由 `promote_reel_draft` 用 `cover_topic` 拼
