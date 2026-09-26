@@ -1,0 +1,69 @@
+{
+  "scoreboard_qc_sha256": "728effbfa39bd13b700ed0dc9c57b716f793440845033852f53f576b9d1b38d8",
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 3.827,
+  "layout": "full",
+  "segments_seconds": 144.85,
+  "topbar": {
+    "line1": "2026 拉沃尔杯 第二天",
+    "line2": "勒纳·钱 6-3 2-6 10-7 科博利",
+    "start": 1.2,
+    "end": 146.05
+  },
+  "film_seconds": 149.916,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 8.64,
+    "2": 19.44,
+    "3": 8.256,
+    "5": 6.696,
+    "6": 9.192,
+    "7": 5.112,
+    "9": 13.752,
+    "10": 11.352,
+    "11": 7.536,
+    "12": 6.984
+  },
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "cobolli-tien-laver-cup-2026",
+    "received_at": "2026-09-26T14:42:38Z",
+    "artifact_ready_at": "2026-09-26T14:50:00Z",
+    "elapsed_seconds": 442.236,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "7f223180a2406c99422b15e0e60c38b565495f567f34641d014bd0f18758193c",
+    "spec_sha256": "23c57cde02d43b397858c2bef681d5d35cf4efcc05d5832a3c8125fb27877cd3",
+    "run_id": "36249421919",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-09-26T14:45:26Z",
+        "run_id": "36249421919"
+      }
+    ],
+    "render_seconds": 275.236,
+    "pre_render_seconds": 167.0
+  },
+  "film_sha256": "7f223180a2406c99422b15e0e60c38b565495f567f34641d014bd0f18758193c",
+  "film_bytes": 111918128,
+  "qc_attestation_sha256": "2688eba50ff4fcb418fdb2a4bc2aec3d6d5e80d85dc4e7a5612b205f12e5cb52",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-09-26T14:45:26Z",
+      "run_id": "36249421919"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-26T14:50:01Z",
+      "run_id": "36249421919"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-cobolli-tien-laver-cup-2026/cobolli-tien-laver-cup-2026.mp4",
+  "video_bytes": 111918128
+}
