@@ -2303,6 +2303,59 @@ def test_同一句里不许一个年份是中文另一个是阿拉伯数字():
     )
 
 
+# 定这条判据之前已经发出去的。⚠️ **只许减不许加**，表自带自检。
+_MIXED_RANK_LEGACY = frozenset({
+    "big-three",  # 「德约科维奇从第五掉到第12」，2026-09-15 已发
+})
+
+
+def test_同一句里的排名不许一个中文一个阿拉伯数字():
+    """「弗里茨第十 蒂亚福第12」——渲完抽帧才看见的第二个形状。
+
+    2026-09-26 `fils-tokyo-qualifying` 第一版旁白写「阿尔卡拉斯第三，弗里茨第十，
+    蒂亚福第十二」。`arabic_numerals` 只把两位以上的「第十二」换成 12，
+    单字的「第三」「第十」按序数留着，于是**同一行字幕里三个排名两种写法**。
+    `--dry-run`、全量测试、本地逐屏渲一律绿，是把成片从 Release 拉回来抽帧看见的。
+
+    修法是旁白写「世界第N」（转换器对它一律换数字），不是改转换器：单字序数
+    留中文是既有口径（「第一次」「第二轮」），而它分不出「第三」是排名还是序数。
+
+    ⚠️ 判据只认**光秃秃的「第N」**（后面不跟轮／次／盘／个这类量词）：带量词的
+    是序数，和阿拉伯数字的排名同句出现是正常的（「第二轮输给世界第109」），
+    扫全库这种有 27 处，一处都不该拦。收窄之后全库只命中两处，一处是这条片子。
+    """
+    import re
+
+    from tennislive.render.tournament_story import find_story_by_slug
+    from tennislive.video.explainer import _SCRIPTS, arabic_numerals as A
+    from tennislive.video.explainer import explainer_script
+
+    classifiers = "轮次盘个局场章届座条区号种批期周年岁天名位张代任"
+    cn = re.compile(rf"第[一二三四五六七八九十]+(?![一二三四五六七八九十\d{classifiers}])")
+    ar = re.compile(rf"第\s*\d+(?![\d{classifiers}])")
+    checked, offenders = 0, {}
+    for slug in _SCRIPTS:
+        story = find_story_by_slug(slug)
+        if story is None:
+            continue
+        try:
+            segments = explainer_script(story)
+        except Exception:  # noqa: BLE001
+            continue
+        checked += 1
+        for index, segment in enumerate(segments):
+            for sentence in re.split(r"[。！？；]", A(segment.narration)):
+                if cn.search(sentence) and ar.search(sentence):
+                    offenders.setdefault(slug, []).append(f"第 {index} 段：{sentence}")
+    assert checked >= 20, f"只扫到 {checked} 个选题，判据没真的跑起来"
+    new = {s: v for s, v in offenders.items() if s not in _MIXED_RANK_LEGACY}
+    assert new == {}, (
+        "同一句里的排名半中半洋（旁白写「世界第三」，转换器会一律换成数字）：" + str(new)
+    )
+    stale = _MIXED_RANK_LEGACY - set(offenders)
+    assert not stale, f"豁免表里这几条已经不违规了，删掉：{sorted(stale)}"
+
+
 def test_字幕里的数字用阿拉伯数字():
     """屏幕上「19 岁」比「十九岁」好读，但只在它真的是个数字的时候。
 
