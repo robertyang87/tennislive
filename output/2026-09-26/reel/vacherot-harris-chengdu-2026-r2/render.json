@@ -1,5 +1,5 @@
 {
-  "scoreboard_qc_sha256": "8007058b3c74cede89bcd4a246b54a14025263f50bd0c3a004156e1feda60f4e",
+  "scoreboard_qc_sha256": "d24710aced3dc9f9f4c364de48731e403e405fff824350ca9c279e2e96179732",
   "cover_seconds": 1.2,
   "cover_narrated": false,
   "outro_seconds": 3.827,
@@ -24,45 +24,45 @@
     "6": 18.312,
     "7": 8.088,
     "8": 20.208,
-    "9": 24.048
+    "9": 23.16
   },
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "vacherot-harris-chengdu-2026-r2",
-    "received_at": "2026-09-26T11:50:30Z",
-    "artifact_ready_at": "2026-09-26T11:56:33Z",
-    "elapsed_seconds": 363.026,
+    "received_at": "2026-09-26T12:00:28Z",
+    "artifact_ready_at": "2026-09-26T12:07:16Z",
+    "elapsed_seconds": 408.009,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "dbb018bcda47d3ac8945b355b04b7152441c6135e903ae2dab73536a2d5286f5",
-    "spec_sha256": "fa231573f30e02a6f22e9c71645579d161e29e5fa8d7596b5fca61eb1b0fced3",
-    "run_id": "36240070628",
+    "film_sha256": "18307dea54084f28566a43181dcd7ea86d1d861cd2669a006ba97073731a0a3b",
+    "spec_sha256": "6037f78ad8cf6072e6b2b487928739a047dd74bf0173b570b3e9d149d4afecf4",
+    "run_id": "36240560294",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-09-26T11:53:09Z",
-        "run_id": "36240070628"
+        "at": "2026-09-26T12:02:51Z",
+        "run_id": "36240560294"
       }
     ],
-    "render_seconds": 204.026,
-    "pre_render_seconds": 159.0
+    "render_seconds": 265.009,
+    "pre_render_seconds": 143.0
   },
-  "film_sha256": "dbb018bcda47d3ac8945b355b04b7152441c6135e903ae2dab73536a2d5286f5",
-  "film_bytes": 89534803,
-  "qc_attestation_sha256": "145e55d071f35ffb999345015e1c2362c3d1c065c64b421280a61d44c44d060b",
+  "film_sha256": "18307dea54084f28566a43181dcd7ea86d1d861cd2669a006ba97073731a0a3b",
+  "film_bytes": 89546209,
+  "qc_attestation_sha256": "799161c538ca606a8cc411915dc0b9329bf65440c1f1a6be5b5ac47b499dae5a",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-09-26T11:53:09Z",
-      "run_id": "36240070628"
+      "at": "2026-09-26T12:02:51Z",
+      "run_id": "36240560294"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-09-26T11:56:33Z",
-      "run_id": "36240070628"
+      "at": "2026-09-26T12:07:17Z",
+      "run_id": "36240560294"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-vacherot-harris-chengdu-2026-r2/vacherot-harris-chengdu-2026-r2.mp4",
-  "video_bytes": 89534803
+  "video_bytes": 89546209
 }
