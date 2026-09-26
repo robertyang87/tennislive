@@ -5736,6 +5736,12 @@ APPROVED_LOW_RES_SOURCES: dict[str, int] = {
     # 那一段是重要的证据，可以豁免」。美网官方频道 2017 纳达尔 vs 拉约维奇加长集锦
     # （关顶、纳达尔赛后说「太吵了听不见球」的那一场），probe 实测 1280×720 @29.97。
     "https://www.youtube.com/watch?v=T7cd71seygs": 720,
+    # 普罗佐罗娃被强制退赛（prozorova-concussion-withdrawal-2026）：账号所有者 2026-09-26
+    # 「要交代清楚来龙去脉，视频分辨率可以放宽」。双打里被高压球击中那一刻只有这条
+    # X 上的转播片段（@kostekcanu status 2103471501211271209，X CDN 直链），
+    # `yt-dlp -J` 逐档查过：480×270 / 640×360 / 1282×720，没有更高的一档；
+    # WTA 官方 YouTube 和图库都没有这一分。
+    "https://video.twimg.com/amplify_video/2103471133798612993/vid/avc1/1282x720/WpKIDtbreb2v0CHM.mp4?tag=14": 720,
 }
 
 
