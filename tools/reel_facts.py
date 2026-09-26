@@ -475,12 +475,14 @@ def decider_tiebreak_problem(spec: dict) -> str | None:
 
 # ---------------------------------------------------------------- 顶栏赛事行
 # 账号所有者 2026-09-24：「视频顶部要写上 2026 ATP250 成都站 首轮 这样的格式，
-# 以后其他比赛都按这个格式写」。
+# 以后其他比赛都按这个格式写」。⚠️ 2026-09-26 他改了一处：「把文案里的站去掉吧」
+# ——副标题和视频顶栏**都不带「站」**（他在「只改副标题 / 两处都去 / 所有文案都去」
+# 里选的第二个）。
 #
-# 格式固定成四段：`<年份> <巡回赛><级别> <城市>站 <轮次>`——
-#     2026 ATP250 成都站 首轮
-#     2026 WTA1000 武汉站 1/4决赛
-#     2026 ATP1000 辛辛那提站 第三轮
+# 格式固定成四段：`<年份> <巡回赛><级别> <城市> <轮次>`——
+#     2026 ATP250 成都 首轮
+#     2026 WTA1000 武汉 1/4决赛
+#     2026 ATP1000 辛辛那提 第三轮
 # 在这之前这一行是自由文本，同一个级别在仓库里有五六种写法（「WTA1000 辛辛那提
 # 第一轮」「2026 辛辛那提 WTA1000 1/8决赛」「2026 新加坡 WTA500 首轮」「2026 成都
 # 公开赛 首轮」……），而代码只校验它非空。
@@ -490,16 +492,16 @@ def decider_tiebreak_problem(spec: dict) -> str | None:
 # 就是完整的名字），`NON_TOUR_EVENT_WORDS` 里的词出现在这一行就不管。别的特例
 # 在 spec 里写 `_topbar_format_why` 认领——和 `_layout_why` 一个形状。
 TOUR_TOPLINE_RE = re.compile(
-    r"^\d{4} (?:ATP|WTA)(?:125|250|500|1000) \S+站 \S+$")
+    r"^\d{4} (?:ATP|WTA)(?:125|250|500|1000) \S*[^站\s] \S+$")
 NON_TOUR_EVENT_WORDS = (
     "澳网", "法网", "温网", "美网", "大满贯", "戴维斯杯", "比利·简·金杯", "金杯",
     "联合杯", "拉沃尔杯", "总决赛", "奥运", "全运会", "亚运会", "挑战赛",
 )
-TOUR_TOPLINE_EXAMPLE = "2026 ATP250 成都站 首轮"
+TOUR_TOPLINE_EXAMPLE = "2026 ATP250 成都 首轮"
 
 
 def tour_topline_problem(line: str, claim: str = "") -> str | None:
-    """这一行顶栏赛事行合不合「2026 ATP250 成都站 首轮」的格式；合格返回 None。"""
+    """这一行顶栏赛事行合不合「2026 ATP250 成都 首轮」的格式；合格返回 None。"""
     text = str(line or "").strip()
     if TOUR_TOPLINE_RE.match(text):
         return None
@@ -509,16 +511,16 @@ def tour_topline_problem(line: str, claim: str = "") -> str | None:
         return None
     return (
         f"顶栏赛事行「{text}」不合格式。巡回赛一律写成"
-        f"「<年份> <巡回赛><级别> <城市>站 <轮次>」，例：{TOUR_TOPLINE_EXAMPLE}"
-        "（账号所有者 2026-09-24 定的）。\n"
-        "级别连写（ATP250 / WTA1000，中间不空格）；城市后面带「站」；轮次按「首轮 / "
+        f"「<年份> <巡回赛><级别> <城市> <轮次>」，例：{TOUR_TOPLINE_EXAMPLE}"
+        "（账号所有者 2026-09-24 定的，2026-09-26 去掉了「站」）。\n"
+        "级别连写（ATP250 / WTA1000，中间不空格）；城市后面**不带**「站」；轮次按「首轮 / "
         "第二轮 / 1/8决赛 / 1/4决赛 / 半决赛 / 决赛」。\n"
         "大满贯、团体赛、总决赛这类没有级别和「站」的赛事不受这条管；真有别的特例，"
         "在 spec 里写 `_topbar_format_why` 说清楚。")
 
 
 def tour_topline(year, event: str, round_name: str, tour: str | None = None) -> str | None:
-    """按赛事名拼出「2026 ATP250 成都站 首轮」；认不出级别或城市站就返回 None。
+    """按赛事名拼出「2026 ATP250 成都 首轮」；认不出级别或城市站就返回 None。
 
     ⚠️ **返回 None 不是失败**：大满贯、团体赛本来就没有这个形状，调用方照旧用
     原来的写法——那一类 `tour_topline_problem` 不管。
@@ -541,7 +543,7 @@ def tour_topline(year, event: str, round_name: str, tour: str | None = None) -> 
                  if k in key and zh.endswith("站")), None)
     if not city:
         return None
-    line = f"{year} {tier} {city} {round_name}"
+    line = f"{year} {tier} {city[:-1]} {round_name}"  # 去掉「站」（2026-09-26）
     return line if TOUR_TOPLINE_RE.match(line) else None
 
 
@@ -549,14 +551,14 @@ def tour_topline(year, event: str, round_name: str, tour: str | None = None) -> 
 # 账号所有者 2026-09-26：「以后所有 ATP 或者 WTA 的比赛的赛场之上视频的左上角，
 # 封面左上角的副标题都是用 ATP500 或者是 WTA500 类似的这种开头，然后再说地名，
 # 然后再说第几轮。然后后面，点开始的是对战双方的名字，VS」。看过样例后定的：
-#     ATP250 杭州站 第二轮 · 梅德韦杰夫 VS 鲁瓦耶
-#     WTA500 新加坡站 半决赛 · 费尔南德斯 VS 赫瓦林斯卡
+#     ATP250 杭州 第二轮 · 梅德韦杰夫 VS 鲁瓦耶      ← 2026-09-26 同日又去掉了「站」
+#     WTA500 新加坡 半决赛 · 费尔南德斯 VS 赫瓦林斯卡
 #     比利·简·金杯 半决赛 · 斯维托丽娜 VS 保利尼     ← 他选的全称写法（没改成简称）
 # 也就是**顶栏赛事行去掉年份** ＋「 · 」＋ 版式顺序的两个名字（`cover.matchup`，
 # 没有就 `cover.versus.names`）＋「 VS 」。前半截不另起一套规则——顶栏那一行已经
 # 有 `tour_topline_problem` 管着，这里只要求两处是同一句话，写两处必分叉。
 # 这一行同时是**封面台头第二行**和**正片常驻角标的第二行**（`brand_watermark`）。
-COVER_TOPIC_EXAMPLE = "ATP250 杭州站 第二轮 · 梅德韦杰夫 VS 鲁瓦耶"
+COVER_TOPIC_EXAMPLE = "ATP250 杭州 第二轮 · 梅德韦杰夫 VS 鲁瓦耶"
 
 
 def _cover_names(cover: dict) -> list[str]:
@@ -580,7 +582,7 @@ def cover_topic(line1: str, cover: dict) -> str | None:
 
 
 def cover_topic_problem(spec: dict) -> str | None:
-    """「赛场之上」的 `cover.topic` 合不合「ATP250 杭州站 第二轮 · A VS B」；合格返回 None。
+    """「赛场之上」的 `cover.topic` 合不合「ATP250 杭州 第二轮 · A VS B」；合格返回 None。
 
     拼不出期望值（没有顶栏、没有两个名字）就不管——那不是这条规矩能判的。
     特例写 `_topic_format_why` 认领。
