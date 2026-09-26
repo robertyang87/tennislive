@@ -1,0 +1,138 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1440
+WrapStyle: 0
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: EN,Noto Sans,46,&H00FFFFFF,&H00000000,&H00000000,1,0,0,0,100,100,0,0,1,0,0,8,64,64,1141,1
+Style: ZH,Noto Sans CJK SC,70,&H0074DCC3,&H00000000,&H00000000,1,0,0,0,100,100,0,0,1,0,0,8,64,64,1194,1
+Style: HEADA,得意黑,54,&H00FFFFFF,&H00000000,&H00000000,0,0,0,0,100,100,1,0,1,0,0,8,48,48,24,1
+Style: HEADB,Noto Sans CJK SC,38,&H00DBE2D5,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,1.5,0,8,48,48,92,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 2,0:00:00.00,0:02:18.90,HEADA,,0,0,0,,{\r\c&H8CDC4A&\an8\pos(540,24)\bord0\shad0\p1\pbo3.5}m 6.8 6.2 l 7.1 4.3 8.0 2.6 9.3 1.2 11.1 0.3 13.0 0.0 15.0 0.3 16.7 1.2 18.1 2.6 19.0 4.3 19.3 6.2 19.3 19.0 19.0 20.9 18.1 22.6 16.7 24.0 15.0 24.9 13.0 25.2 11.1 24.9 9.3 24.0 8.0 22.6 7.1 20.9 6.8 19.0 m 24.5 16.8 l 24.2 20.2 23.3 23.4 22.0 26.2 20.2 28.6 18.0 30.4 15.6 31.5 13.0 31.9 10.5 31.5 8.0 30.4 5.9 28.6 4.1 26.2 2.7 23.4 1.8 20.2 1.6 16.8 5.1 16.8 5.3 19.4 5.9 21.8 6.9 24.0 8.1 25.8 9.6 27.2 11.3 28.1 13.0 28.4 14.8 28.1 16.4 27.2 17.9 25.8 19.2 24.0 20.1 21.8 20.7 19.4 20.9 16.8 m 11.2 31.9 l 14.8 31.9 14.8 39.1 11.2 39.1 m 6.2 38.2 l 19.8 38.2 19.8 42.0 6.2 42.0 m 9.6 9.0 l 16.5 9.0 16.5 7.0 9.6 7.0 m 9.6 13.6 l 16.5 13.6 16.5 11.6 9.6 11.6 m 9.6 18.2 l 16.5 18.2 16.5 16.2 9.6 16.2 m 41.2 0{\r\p0}{\r\fn得意黑\fs54}2026 拉沃尔杯 第二天
+Dialogue: 1,0:00:00.00,0:02:18.90,HEADB,,0,0,0,,{\r\fnNoto Sans CJK SC\fs38\c&H8CDC4A&\an8\pos(540,92)}德米纳尔 {\r\fnTL Score\b300\fs44}2-{\r\fnTL Score\c&H8CDC4A&\b1\fs44}6 {\r\fnTL Score\c&H8CDC4A&\b1\fs44}7-{\r\fnTL Score\b300\fs44}6{\r\fnTL Score\fs44}⁵ {\r\fnTL Score\c&H8CDC4A&\b1\fs44}11-{\r\fnTL Score\b300\fs44}9{\r\fnNoto Sans CJK SC\fs38} 兹维列夫 · 赛后场上采访
+Dialogue: 0,0:00:01.36,0:00:02.56,EN,,0,0,0,,I can't believe it.
+Dialogue: 0,0:00:01.36,0:00:02.56,ZH,,0,0,0,,真不敢相信
+Dialogue: 0,0:00:02.56,0:00:04.96,EN,,0,0,0,,I mean, I've been coming here to the O2
+Dialogue: 0,0:00:02.56,0:00:04.96,ZH,,0,0,0,,我是说 我一直来O2看球
+Dialogue: 0,0:00:04.96,0:00:07.76,EN,,0,0,0,,since 2009 when the Tour Finals came here.
+Dialogue: 0,0:00:04.96,0:00:07.76,ZH,,0,0,0,,从2009年总决赛来这里开始
+Dialogue: 0,0:00:07.76,0:00:10.48,EN,,0,0,0,,I don't think I have seen a better match
+Dialogue: 0,0:00:07.76,0:00:10.48,ZH,,0,0,0,,我觉得我从没见过
+Dialogue: 0,0:00:10.48,0:00:10.96,EN,,0,0,0,,than that.
+Dialogue: 0,0:00:10.48,0:00:10.96,ZH,,0,0,0,,比这更精彩的比赛
+Dialogue: 0,0:00:10.96,0:00:15.24,EN,,0,0,0,,It was all on the line, Alex.
+Dialogue: 0,0:00:10.96,0:00:15.24,ZH,,0,0,0,,一切都押上了 亚历克斯
+Dialogue: 0,0:00:19.92,0:00:21.76,EN,,0,0,0,,Or should I call you Houdini?
+Dialogue: 0,0:00:19.92,0:00:21.76,ZH,,0,0,0,,还是该叫你逃脱大师胡迪尼？
+Dialogue: 0,0:00:21.76,0:00:24.16,EN,,0,0,0,,How have you won that?
+Dialogue: 0,0:00:21.76,0:00:24.16,ZH,,0,0,0,,这场你是怎么赢下来的？
+Dialogue: 0,0:00:24.16,0:00:30.20,EN,,0,0,0,,Wow. What a day, huh?
+Dialogue: 0,0:00:24.16,0:00:30.20,ZH,,0,0,0,,哇 真是不得了的一天
+Dialogue: 0,0:00:30.56,0:00:32.80,EN,,0,0,0,,And we're only halfway through it.
+Dialogue: 0,0:00:30.56,0:00:32.80,ZH,,0,0,0,,而且今天才过了一半
+Dialogue: 0,0:00:32.80,0:00:34.32,EN,,0,0,0,,Only halfway through it.
+Dialogue: 0,0:00:32.80,0:00:34.32,ZH,,0,0,0,,才过了一半
+Dialogue: 0,0:00:34.32,0:00:36.08,EN,,0,0,0,,Pretty good start for Team World,
+Dialogue: 0,0:00:34.32,0:00:36.08,ZH,,0,0,0,,世界队开局不错
+Dialogue: 0,0:00:36.08,0:00:38.96,EN,,0,0,0,,but what a place to play some tennis.
+Dialogue: 0,0:00:36.08,0:00:38.96,ZH,,0,0,0,,不过在这里打球真是太棒了
+Dialogue: 0,0:00:38.96,0:00:40.48,EN,,0,0,0,,This is special.
+Dialogue: 0,0:00:38.96,0:00:40.48,ZH,,0,0,0,,这很特别
+Dialogue: 0,0:00:40.48,0:00:41.44,EN,,0,0,0,,Thank you guys.
+Dialogue: 0,0:00:40.48,0:00:41.44,ZH,,0,0,0,,谢谢大家
+Dialogue: 0,0:00:41.44,0:00:43.20,EN,,0,0,0,,And yeah,
+Dialogue: 0,0:00:41.44,0:00:43.20,ZH,,0,0,0,,嗯
+Dialogue: 0,0:00:43.20,0:00:48.44,EN,,0,0,0,,let's just have ourselves a little day, huh?
+Dialogue: 0,0:00:43.20,0:00:48.44,ZH,,0,0,0,,今天就好好享受一下吧
+Dialogue: 0,0:00:50.16,0:00:50.56,EN,,0,0,0,,Alex,
+Dialogue: 0,0:00:50.16,0:00:50.56,ZH,,0,0,0,,亚历克斯
+Dialogue: 0,0:00:50.56,0:00:53.28,EN,,0,0,0,,I want to say you literally left it all out there.
+Dialogue: 0,0:00:50.56,0:00:53.28,ZH,,0,0,0,,我想说你真的是拼尽了一切
+Dialogue: 0,0:00:53.28,0:00:55.20,EN,,0,0,0,,Half of your leg is out there.
+Dialogue: 0,0:00:53.28,0:00:55.20,ZH,,0,0,0,,半条腿都留在场上了
+Dialogue: 0,0:00:55.20,0:00:58.40,EN,,0,0,0,,Yeah. If you can notice my blood is red
+Dialogue: 0,0:00:55.20,0:00:58.40,ZH,,0,0,0,,是啊 你们注意到的话
+Dialogue: 0,0:00:58.40,0:00:59.12,EN,,0,0,0,,as well.
+Dialogue: 0,0:00:58.40,0:00:59.12,ZH,,0,0,0,,我流的血也是红的
+Dialogue: 0,0:00:59.12,0:01:01.76,EN,,0,0,0,,So what can I say?
+Dialogue: 0,0:00:59.12,0:01:01.76,ZH,,0,0,0,,我还能说什么呢？
+Dialogue: 0,0:01:01.76,0:01:05.28,EN,,0,0,0,,It was a, you know, a very tough match,
+Dialogue: 0,0:01:01.76,0:01:05.28,ZH,,0,0,0,,这是一场非常艰难的比赛
+Dialogue: 0,0:01:05.28,0:01:06.00,EN,,0,0,0,,a tough battle.
+Dialogue: 0,0:01:05.28,0:01:06.00,ZH,,0,0,0,,一场硬仗
+Dialogue: 0,0:01:06.00,0:01:08.48,EN,,0,0,0,,I left it all out there and got fortunate
+Dialogue: 0,0:01:06.00,0:01:08.48,ZH,,0,0,0,,我拼尽了全力 也有点运气
+Dialogue: 0,0:01:08.48,0:01:11.92,EN,,0,0,0,,in the end to get the job done and happy
+Dialogue: 0,0:01:08.48,0:01:11.92,ZH,,0,0,0,,最后把比赛拿下 很开心
+Dialogue: 0,0:01:11.92,0:01:16.76,EN,,0,0,0,,to give some points for Team World.
+Dialogue: 0,0:01:11.92,0:01:16.76,ZH,,0,0,0,,能给世界队拿到分
+Dialogue: 0,0:01:19.36,0:01:20.88,EN,,0,0,0,,I'm going to have to disagree with you.
+Dialogue: 0,0:01:19.36,0:01:20.88,ZH,,0,0,0,,这点我可不同意
+Dialogue: 0,0:01:20.88,0:01:22.16,EN,,0,0,0,,You didn't get lucky.
+Dialogue: 0,0:01:20.88,0:01:22.16,ZH,,0,0,0,,你不是靠运气
+Dialogue: 0,0:01:22.16,0:01:24.16,EN,,0,0,0,,You got tough as nails out there.
+Dialogue: 0,0:01:22.16,0:01:24.16,ZH,,0,0,0,,你在场上硬得像钉子
+Dialogue: 0,0:01:24.16,0:01:26.00,EN,,0,0,0,,You're 6-2 down to the US Open
+Dialogue: 0,0:01:24.16,0:01:26.00,ZH,,0,0,0,,第一盘2比6输给
+Dialogue: 0,0:01:26.00,0:01:27.60,EN,,0,0,0,,and the Roland Garros champion.
+Dialogue: 0,0:01:26.00,0:01:27.60,ZH,,0,0,0,,美网和法网冠军
+Dialogue: 0,0:01:27.60,0:01:28.56,EN,,0,0,0,,You're a break down.
+Dialogue: 0,0:01:27.60,0:01:28.56,ZH,,0,0,0,,第二盘又被破发
+Dialogue: 0,0:01:28.56,0:01:30.08,EN,,0,0,0,,He's serving for the match.
+Dialogue: 0,0:01:28.56,0:01:30.08,ZH,,0,0,0,,他都发球胜赛了
+Dialogue: 0,0:01:30.08,0:01:32.72,EN,,0,0,0,,How have you turned that around?
+Dialogue: 0,0:01:30.08,0:01:32.72,ZH,,0,0,0,,你是怎么翻过来的？
+Dialogue: 0,0:01:32.72,0:01:34.56,EN,,0,0,0,,Just stay in there, right?
+Dialogue: 0,0:01:32.72,0:01:34.56,ZH,,0,0,0,,就是一直顶住 对吧
+Dialogue: 0,0:01:34.56,0:01:35.84,EN,,0,0,0,,Keep asking questions.
+Dialogue: 0,0:01:34.56,0:01:35.84,ZH,,0,0,0,,不停给他出难题
+Dialogue: 0,0:01:35.84,0:01:37.44,EN,,0,0,0,,Give yourself a chance
+Dialogue: 0,0:01:35.84,0:01:37.44,ZH,,0,0,0,,给自己留机会
+Dialogue: 0,0:01:37.44,0:01:40.00,EN,,0,0,0,,and you never know if you put the ball
+Dialogue: 0,0:01:37.44,0:01:40.00,ZH,,0,0,0,,谁知道呢 只要把球打进场
+Dialogue: 0,0:01:40.00,0:01:42.16,EN,,0,0,0,,in the court, you might get lucky.
+Dialogue: 0,0:01:40.00,0:01:42.16,ZH,,0,0,0,,说不定就走运了
+Dialogue: 0,0:01:42.16,0:01:45.96,EN,,0,0,0,,So that's what I did today.
+Dialogue: 0,0:01:42.16,0:01:45.96,ZH,,0,0,0,,我今天就是这么做的
+Dialogue: 0,0:01:49.28,0:01:51.20,EN,,0,0,0,,You were the first team last year to come
+Dialogue: 0,0:01:49.28,0:01:51.20,ZH,,0,0,0,,去年你们成了第一支
+Dialogue: 0,0:01:51.20,0:01:53.20,EN,,0,0,0,,from a deficit on the opening day
+Dialogue: 0,0:01:51.20,0:01:53.20,ZH,,0,0,0,,首日落后
+Dialogue: 0,0:01:53.20,0:01:54.48,EN,,0,0,0,,of the Laver Cup.
+Dialogue: 0,0:01:53.20,0:01:54.48,ZH,,0,0,0,,还能在拉沃尔杯翻盘的队伍
+Dialogue: 0,0:01:54.48,0:01:55.92,EN,,0,0,0,,You found yourself down 3-1
+Dialogue: 0,0:01:54.48,0:01:55.92,ZH,,0,0,0,,这次你们首日打完
+Dialogue: 0,0:01:55.92,0:01:57.04,EN,,0,0,0,,after the opening day.
+Dialogue: 0,0:01:55.92,0:01:57.04,ZH,,0,0,0,,又是1比3落后
+Dialogue: 0,0:01:57.04,0:01:58.32,EN,,0,0,0,,What was the mood in the locker room
+Dialogue: 0,0:01:57.04,0:01:58.32,ZH,,0,0,0,,昨晚回到更衣室
+Dialogue: 0,0:01:58.32,0:02:00.24,EN,,0,0,0,,when you went back last night?
+Dialogue: 0,0:01:58.32,0:02:00.24,ZH,,0,0,0,,大家是什么心情？
+Dialogue: 0,0:02:00.24,0:02:00.80,EN,,0,0,0,,Yeah, look,
+Dialogue: 0,0:02:00.24,0:02:00.80,ZH,,0,0,0,,嗯 你看
+Dialogue: 0,0:02:00.80,0:02:03.84,EN,,0,0,0,,we were in the same position last year,
+Dialogue: 0,0:02:00.80,0:02:03.84,ZH,,0,0,0,,我们去年也是同样的处境
+Dialogue: 0,0:02:03.84,0:02:04.00,EN,,0,0,0,,right?
+Dialogue: 0,0:02:03.84,0:02:04.00,ZH,,0,0,0,,对吧
+Dialogue: 0,0:02:04.00,0:02:05.60,EN,,0,0,0,,And it worked out pretty well for us.
+Dialogue: 0,0:02:04.00,0:02:05.60,ZH,,0,0,0,,结果挺不错的
+Dialogue: 0,0:02:05.60,0:02:09.04,EN,,0,0,0,,So, we know we can do some damage.
+Dialogue: 0,0:02:05.60,0:02:09.04,ZH,,0,0,0,,所以我们知道能搞出动静
+Dialogue: 0,0:02:09.04,0:02:10.40,EN,,0,0,0,,We know we're the underdogs,
+Dialogue: 0,0:02:09.04,0:02:10.40,ZH,,0,0,0,,我们知道自己不被看好
+Dialogue: 0,0:02:10.40,0:02:12.48,EN,,0,0,0,,but we also know that we can step out
+Dialogue: 0,0:02:10.40,0:02:12.48,ZH,,0,0,0,,但我们也知道 只要走上
+Dialogue: 0,0:02:12.48,0:02:14.00,EN,,0,0,0,,on this court and light it up.
+Dialogue: 0,0:02:12.48,0:02:14.00,ZH,,0,0,0,,这片场地就能把它点燃
+Dialogue: 0,0:02:14.00,0:02:15.76,EN,,0,0,0,,So, happy days.
+Dialogue: 0,0:02:14.00,0:02:15.76,ZH,,0,0,0,,所以 开心
+Dialogue: 0,0:02:15.76,0:02:17.52,EN,,0,0,0,,On to the next one and let's see
+Dialogue: 0,0:02:15.76,0:02:17.52,ZH,,0,0,0,,接着打下一场 看看
+Dialogue: 0,0:02:17.52,0:02:19.82,EN,,0,0,0,,if we can keep it going.
+Dialogue: 0,0:02:17.52,0:02:19.82,ZH,,0,0,0,,能不能一直赢下去

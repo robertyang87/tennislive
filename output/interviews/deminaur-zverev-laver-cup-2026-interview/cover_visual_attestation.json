@@ -1,0 +1,56 @@
+{
+  "status": "pass",
+  "checked_at": "2026-09-26T17:53:27Z",
+  "auditor": "opencv-haar-v1",
+  "expected_subject": "德米纳尔",
+  "identity_evidence": "L0-bound spec subject + same-source frame_at",
+  "spec_sha256": "3d3023f8baa40215fe1c30076778170452f07fcfef15f5fa93173d6954d725ad",
+  "poster_sha256": "2d030f7940caa3b83f69b6e1a7352e441a6ed654cb46c19a442cae7f90c9c8bd",
+  "thresholds": {
+    "close_up_zoom": 1.5,
+    "face_height_ratio": 0.08,
+    "close_up_face_height_ratio": 0.14,
+    "face_area_ratio": 0.01,
+    "face_sharpness": 45.0,
+    "face_contrast": 32.0,
+    "eyes": 2
+  },
+  "result": {
+    "poster": {
+      "decodable": true,
+      "format": "JPEG",
+      "width": 1080,
+      "height": 1440,
+      "photo_region": [
+        0,
+        150,
+        1080,
+        810
+      ]
+    },
+    "face": {
+      "detector": "frontal-default",
+      "box": [
+        155,
+        202,
+        614,
+        614
+      ],
+      "detected_faces": 1,
+      "eyes": 3,
+      "face_height_ratio": 0.75802,
+      "face_area_ratio": 0.43095,
+      "center_x_ratio": 0.42778,
+      "center_y_ratio": 0.44321,
+      "sharpness": 1074.176,
+      "contrast": 234.0
+    },
+    "contract": {
+      "shot_type": "",
+      "frame_at": 37.8,
+      "zoom": 1.0,
+      "focus_y": 0.5
+    }
+  },
+  "issues": []
+}
