@@ -85,7 +85,13 @@
     "topic": "新加坡WTA500 · 女单半决赛",
     "_subject_why": "赢家；账号所有者点的题是「月亮姐的半决赛」，她输了，照 solo 默认放赢家，赫瓦林斯卡在钩子第二行和旁白里。",
     "_heat_why": "轮次已是半决赛（2026-08-12：半决赛级别的都要做）；对手赫瓦林斯卡是账号所有者点名的热点样板、本场是他亲口点的题。",
-    "portrait": "TBD",
+    "portrait": {
+      "image": "assets/reel/fernandez-chwalinska-sf-cover.jpg",
+      "focus": 0.46,
+      "focus_y": 0.25,
+      "zoom": 1.0,
+      "_photo_why": "WTA 官方 photoresources 实拍，5737×3825，铺 1080×1440 是缩小：https://photoresources.wtatennis.com/wta/photo/2026/09/26/f01a725e-a26d-4551-be26-6907dc696826/Leylah-Frnandez-Singapore-2026.jpg ——就是 WTA 官网这场赛后稿 4582131（`From 1-6 down to the final: Fernandez rallies past Chwalinska`）的头图（og:image），路径日期 9/26＝比赛当天。已下载打开看过：双手反手击球中、正脸、睁眼，球在画面右上，挡板 BNP PARIBAS。⚠️ 粉色上衣和她 1/4决赛同一身，所以日期目录 9/26 ＋ 挂在这一场赛后稿上是认它的判据，probe 之后再拿源片同一身着装核一次。"
+    },
     "scoreboard": {
       "court": "OCBC Arena",
       "_court_why": "沿用同站 `chwalinska-mertens`、`fernandez-andreeva` 已核的 OCBC Arena。",
@@ -119,7 +125,6 @@
       "pts_total": 141,
       "first_total": 74,
       "headshot": "assets/players/headshots/wta-326735.jpg",
-      "winners": 32,
       "ue": 43
     },
     "b": {
@@ -135,12 +140,11 @@
       "pts_total": 141,
       "first_total": 67,
       "headshot": "assets/players/headshots/wta-325639.jpg",
-      "winners": 17,
       "ue": 28
     },
-    "_source": "`match_stat_hooks.py b1rbH9QE --stats-block`（flashscore `df_st_1`），a＝cover.matchup[0]＝费尔南德斯＝flashscore home，不用对调；和 WTA 官方 `/matches/LS002/stats` 逐项一致（Ace 2/0、双误 4/1、一发 30/47 对 31/49、破发 5/8 对 5/8、总得分 72 对 69）。制胜分／非受迫失误走 TNNS（run 36241572196，id=74753612，`hasExtendedStats: True`）：制胜分 [32, 17]、非受迫失误 [43, 28]，选手顺序 `['Fernandez','Chwalinska']`，分盘合计＝全场自证 ✅。头像沿用已发 spec 认过的两张。"
+    "_source": "`match_stat_hooks.py b1rbH9QE --stats-block`（flashscore `df_st_1`），a＝cover.matchup[0]＝费尔南德斯＝flashscore home，不用对调；和 WTA 官方 `/matches/LS002/stats` 逐项一致（Ace 2/0、双误 4/1、一发 30/47 对 31/49、破发 5/8 对 5/8、总得分 72 对 69）。非受迫失误走 TNNS（run 36241572196，id=74753612，`hasExtendedStats: True`）：制胜分 [32, 17]、非受迫失误 [43, 28]，选手顺序 `['Fernandez','Chwalinska']`，分盘合计＝全场自证 ✅。头像沿用已发 spec 认过的两张。 ⚠️ **制胜分两个源对不上，不画**：TNNS [32, 17]，WTA 官网赛后稿 4582131 写 `Fernandez hit 31 winners, compared with 15 for Chwalinska`；非受迫失误两边一致（43 对 28），留下。"
   },
-  "_hit_data": "`match_feed.py show b1rbH9QE` 逐局：第一盘赫瓦林斯卡连下五局到 5-0，费尔南德斯前四个发球局全被破（连续被破 4 局），1-5 破回一局，1-6 31 分钟。第二盘 3-1 领先，3-3 被破、3-4；之后连拿三局：4-4 保、5-4 破（`40:30 |B1|`）、6-4 两个盘点保发。第三盘 1-1 她发球平分两次、救下一个破发点保住；之后 2-1 破、3-1 零封保、4-1 破、5-1 保，5-2 赫瓦林斯卡发球，`30:40` 起到第四个局点才保住（`40:A` 三次，flashscore 比分 home:away＝费尔南德斯:赫瓦林斯卡），6-2 第一个赛点拿下。**第二盘 3-3 被破之后她最后 6 个发球局全保**。TNNS 分盘：费尔南德斯非受迫失误 21 → 14 → 8，制胜分 6 → 13 → 13；赫瓦林斯卡非受迫失误 4 → 9 → 15。flashscore 第三盘：赫瓦林斯卡二发得分 1/10、费尔南德斯发球得分 18/24。全场总得分 72 比 69（只多 3 分——⚠️ 不上钩子，2026-09-19 规矩）。",
+  "_hit_data": "`match_feed.py show b1rbH9QE` 逐局：第一盘赫瓦林斯卡连下五局到 5-0，费尔南德斯前四个发球局全被破（连续被破 4 局），1-5 破回一局，1-6 31 分钟。第二盘 3-1 领先，3-3 被破、3-4；之后连拿三局：4-4 保、5-4 破（`40:30 |B1|`）、6-4 两个盘点保发。第三盘 1-1 她发球平分两次、救下一个破发点保住；之后 2-1 破、3-1 零封保、4-1 破、5-1 保，5-2 赫瓦林斯卡发球，`30:40` 起到第四个局点才保住（`40:A` 三次，flashscore 比分 home:away＝费尔南德斯:赫瓦林斯卡），6-2 第一个赛点拿下。**第二盘 3-3 被破之后她最后 6 个发球局全保**。TNNS 分盘：费尔南德斯非受迫失误 21 → 14 → 8，制胜分 6 → 13 → 13；赫瓦林斯卡非受迫失误 4 → 9 → 15。flashscore 第三盘：赫瓦林斯卡二发得分 1/10、费尔南德斯发球得分 18/24。全场总得分 72 比 69（只多 3 分——⚠️ 不上钩子，2026-09-19 规矩）。 WTA 官网赛后稿：上网 37 次拿下 22 分；开局赫瓦林斯卡连拿 15 分；第二盘费尔南德斯开局连拿 8 分。",
   "_claims": {},
   "push": {
     "matchup": "费尔南德斯 vs 赫瓦林斯卡",
@@ -174,14 +178,16 @@
         "flashscore b1rbH9QE 逐局与统计（见 `_hit_data`）；TNNS 制胜分 32:17、非受迫失误 43:28。",
         "赫瓦林斯卡前三场：WTA 官方 LS023 6-4 6-2、LS011 6-0 6-1、LS005 6-2 6-2（共丢 11 局）。",
         "本季第一个决赛：WTA 官网 4581896 标题 `Fernandez overcomes Andreeva to reach first semifinal of 2026`——本季第一个半决赛就是这一周，所以这也是本季第一个决赛。",
-        "吉布森不战晋级：WTA 签表 MDS.pdf `T. Gibson WO`，同站 `prozorova-concussion-withdrawal-2026` 已核。"
+        "吉布森不战晋级：WTA 签表 MDS.pdf `T. Gibson WO`，同站 `prozorova-concussion-withdrawal-2026` 已核。",
+        "WTA 官网赛后稿 4582131：两人首次交手（`Playing for the first time`）；赫瓦林斯卡开局连下五局、连拿 15 分；第二盘费尔南德斯开局连拿 8 分 2-0；决胜盘 0-1 她救下一个会让对手 2-0 的破发点；反手制胜分结束比赛；上网 37 次拿下 22 分；非受迫失误 43 对 28；本季第一个决赛、生涯第 9 个决赛，5 个冠军全在硬地；决赛首次对吉布森，吉布森因普罗佐罗娃脑震荡退赛不战晋级。"
       ],
       "sources": [
         "https://api.wtatennis.com/tennis/tournaments/1152/2026/matches",
         "https://api.wtatennis.com/tennis/tournaments/1152/2026/matches/LS002/stats",
         "https://global.flashscore.ninja/2/x/feed/df_mh_1_b1rbH9QE",
         "https://global.flashscore.ninja/2/x/feed/df_st_1_b1rbH9QE",
-        "https://www.wtatennis.com/news/4581896/fernandez-overcomes-andreeva-to-reach-first-semifinal-of-2026"
+        "https://www.wtatennis.com/news/4581896/fernandez-overcomes-andreeva-to-reach-first-semifinal-of-2026",
+        "https://www.wtatennis.com/news/4582131/from-1-6-down-to-the-final-fernandez-rallies-past-chwalinska"
       ]
     },
     "narration": [
