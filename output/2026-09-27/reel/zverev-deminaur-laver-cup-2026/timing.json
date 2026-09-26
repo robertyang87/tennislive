@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "at": "2026-09-26T17:23:36Z",
+  "pipeline": "match-reel",
+  "slug": "zverev-deminaur-laver-cup-2026",
+  "mode": "render",
+  "outcome": "success",
+  "error": null,
+  "elapsed_seconds": 156.396,
+  "last_stage": "数据统计对照图",
+  "stage_seconds": {
+    "下载源片 main": 0.044,
+    "片尾配音": 0.471,
+    "TTS 合成": 4.3,
+    "VS 抓帧 portrait（源 main）": 0.146,
+    "封面海报": 1.445,
+    "封面编码": 0.166,
+    "分段编码": 94.104,
+    "片尾母版转码": 0.392,
+    "拼接": 22.591,
+    "混音": 2.143,
+    "烧字幕+成片": 79.649,
+    "数据统计对照图": 0.931
+  },
+  "stage_counts": {
+    "下载源片 main": 1,
+    "片尾配音": 1,
+    "TTS 合成": 1,
+    "VS 抓帧 portrait（源 main）": 1,
+    "封面海报": 1,
+    "封面编码": 1,
+    "分段编码": 12,
+    "片尾母版转码": 1,
+    "拼接": 1,
+    "混音": 1,
+    "烧字幕+成片": 1,
+    "数据统计对照图": 1
+  },
+  "cpu_count": 4,
+  "run_id": "36258579685",
+  "run_attempt": "1",
+  "on_runner": true
+}
