@@ -1,0 +1,67 @@
+{
+  "scoreboard_qc_sha256": "784c02f2a3b58a1707c5326f982a7ea08a5a903e24da713374816dd41ed3e329",
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 3.827,
+  "layout": "full",
+  "segments_seconds": 116.5,
+  "topbar": {
+    "line1": "2026 ATP250 杭州 第二轮",
+    "line2": "黄泽林 7-6(2) 4-6 6-3 巴列霍",
+    "start": 1.2,
+    "end": 117.7
+  },
+  "film_seconds": 121.56,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 17.04,
+    "2": 7.872,
+    "3": 13.488,
+    "4": 9.12,
+    "5": 4.8,
+    "6": 15.312,
+    "8": 11.592,
+    "9": 5.592
+  },
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "wong-vallejo-hangzhou-2026-r2",
+    "received_at": "2026-09-26T17:30:07Z",
+    "artifact_ready_at": "2026-09-26T17:35:39Z",
+    "elapsed_seconds": 332.638,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "c3404c64723e0eb475c3fe252a1e3e5ecd7f07da74bdac29f1b5bfe4a2c2f39a",
+    "spec_sha256": "e8a84072604a0c8002a1d9949c9e16a9be926482d8545a6229a171041edca171",
+    "run_id": "36259237956",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-09-26T17:32:45Z",
+        "run_id": "36259237956"
+      }
+    ],
+    "render_seconds": 174.638,
+    "pre_render_seconds": 158.0
+  },
+  "film_sha256": "c3404c64723e0eb475c3fe252a1e3e5ecd7f07da74bdac29f1b5bfe4a2c2f39a",
+  "film_bytes": 52300555,
+  "qc_attestation_sha256": "205cea7749b8841234bceada3d417003f4b6d638e6dbc0a140b1c4643cbaa3dc",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-09-26T17:32:45Z",
+      "run_id": "36259237956"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-26T17:35:40Z",
+      "run_id": "36259237956"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-wong-vallejo-hangzhou-2026-r2/wong-vallejo-hangzhou-2026-r2.mp4",
+  "video_bytes": 52300555
+}
