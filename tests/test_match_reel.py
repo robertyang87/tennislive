@@ -1394,7 +1394,10 @@ def test_赛场之上开场要给出北京时间赛事和轮次():
             why = f"开场没给开球时刻：{opening}"
         elif not re.search(r"[月][一二三四五六七八九十]+[号日]", opening):
             why = f"开场没给日期：{opening}"
-        elif not re.search(r"(强|轮|决赛|资格赛)", opening):
+        # 「第 N 天」：拉沃尔杯这类团体赛没有轮次，顶栏写的就是「2026 拉沃尔杯 第二天」
+        # （和 _topbar_why 同一口径）。不认它的话，cobolli-tien-laver-cup-2026 只是因为
+        # 旁白里碰巧有一句「轮到科博利发球」才过——那是撞上的绿，不是守住的绿。
+        elif not re.search(r"(强|轮|决赛|资格赛|第[一二三]天)", opening):
             why = f"开场没给轮次：{opening}"
         if why is None:
             continue

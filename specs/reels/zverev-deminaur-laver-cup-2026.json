@@ -17,7 +17,7 @@
   "subject": "德米纳尔",
   "hook": "决胜盘挽救赛点\n德米纳尔逆转兹维列夫",
   "_hook_why": "按账号所有者 2026-09-25「钩子只讲重点或关键内容，以及结果」：第一行＝关键内容（抢十 8-9 兹维列夫的赛点被他救下——flashscore df_mh_1 Set 3 `9:8` 带 HM 标记），第二行＝结果（输掉第一盘之后赢下两盘）。不带比分数字；每行 7／10 字符，≤ 10。",
-  "topic": "拉沃尔杯 · 欧洲队 vs 世界队",
+  "topic": "拉沃尔杯 第二天 · 德米纳尔 VS 兹维列夫",
   "winner": "德米纳尔",
   "result": "2-6 7-6(5) 11-9",
   "matchup": [
@@ -45,7 +45,15 @@
     "field": "duration"
    }
   },
-  "_duration_why": "印 2:03：flashscore 分盘 0:38 + 1:04 + 0:21。"
+  "_duration_why": "印 2:03：flashscore 分盘 0:38 + 1:04 + 0:21。",
+  "portrait": {
+   "focus": 0.6,
+   "focus_y": 0.35,
+   "zoom": 1.0,
+   "_frame_why": "集锦 162.4s（YouTube vewcPfBgHrg，frame-grab zverev-deminaur-cover 0.2 秒一帧 158.2~164s 挑的）：赛点之后德米纳尔正脸直视镜头、在笑，红色 Team World 球衣＋白色 Wilson 帽，眼睛睁着。情绪对「逆转」。160.4s 手放耳边那一帧情绪更外放，但脸偏侧，按账号所有者 2026-09-26「尽量清晰偏正面」选正脸。无人值守兜底：推片窗口内拉沃尔杯官网 WordPress 媒体库本场没有赛中实拍（终场后约 40 分钟扫最近 12 条，只有 Match 6 集锦缩略图），AP 沙箱 403、Getty 只有水印预览、ATP 镜像站不挂拉沃尔杯。",
+   "_low_res_why": "源片 1920×1080，铺 1080×1440 是放大 1.33 倍——认领这个代价（按常设授权登记进 OWNER_APPROVED_FRAME_COVERS）。",
+   "frame_at": 162.4
+  }
  },
  "topbar": {
   "line1": "2026 拉沃尔杯 第二天",
@@ -124,5 +132,233 @@
   },
   "_source": "flashscore xvQdqyYj 的 df_st_1，`match_stat_hooks.py xvQdqyYj --home Zverev --away \"De Minaur\" --stats-block` 机器抄出；home＝兹维列夫，cover.matchup[0]＝德米纳尔，所以 a/b **对调**。锚点：Double Faults 客队（德米纳尔）0、主队 3；Unforced errors 客队 16、主队 32。头像：德米纳尔 atp-DH58、兹维列夫 atp-Z355（仓库已发片子同一张）。"
  },
- "segments": []
+ "segments": [
+  {
+   "source": "main",
+   "cx": 0.515,
+   "score_inset": true,
+   "start": 158.2,
+   "end": 167.8,
+   "narration": "",
+   "quote": [
+    {
+     "at": 0.28,
+     "text": "From the depths of despair,\n从绝境里"
+    },
+    {
+     "at": 2.44,
+     "text": "De Minaur finds a way.\n德米纳尔找到了出路"
+    },
+    {
+     "at": 7.24,
+     "text": "Team World are in the lead.\n世界队领先了"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "_why": "冷开场：赛点落地之后。158.09 那一刀切到德米纳尔近景（158~162s 笑着把手放到耳边、指向看台），164~166s 阿加西在场边，166.5s 宽版板 `6 6⁵ 9 / 2 7⁷ 11`。解说原声 158.48~166（captions.txt；ASR 把 De Minaur 听成「Demon」，按人名写回）。",
+   "point_end_ok": "比赛已经结束，167.87 之后那串翻牌是宽版板动画。",
+   "_ending_payoff_required": true,
+   "_ending_payoff_why": "正文按时间顺序重放 138–158 的赛点和 158.2–167.8 的庆祝，这次配旁白。"
+  },
+  {
+   "source": "main",
+   "cx": 0.515,
+   "score_inset": true,
+   "start": 3.2,
+   "end": 13.95,
+   "narration": "兹维列夫今年拿下法网和美网，世界第二。可去年在旧金山的拉沃尔杯，德米纳尔六比一、六比四赢过他。",
+   "_why": "② 落点：官网赛前稿「He won two major singles titles in a matter of three months, including Roland Garros and, most recently, the US Open」「Zverev, No. 2」「Last played: Laver Cup RR, 2025 Winner: de Minaur, 6-1, 6-4」＋ flashscore H2H `2025-09-20 Laver Cup Zverev A. *De Minaur A. 0:2`。画面：第一盘 3-1 德米纳尔发球、兹维列夫占先（记分条 `BREAK POINT #3 / ZVEREV 3 AD / DE MINAUR •1`），兹维列夫近端。收在 14.15 那一刀之前。",
+   "point_end_ok": "这一分在 14.15 之前落地（解说 13.52「rips a forehand winner」），15.82 起那串翻牌是记分条换局＋撤掉 BREAK POINT 的动画，14.5s 兹维列夫已经走回。"
+  },
+  {
+   "source": "main",
+   "cx": 0.515,
+   "score_inset": true,
+   "start": 24.2,
+   "end": 37.6,
+   "narration": "北京时间九月二十六号晚上十点多，拉沃尔杯第二天第二场。第一盘兹维列夫一记正手制胜，两次破发。五比二的盘点，他兑现了，六比二，三十七分钟。",
+   "_why": "③ 坐标，见 _opening_time_source。画面：第一盘 5-2 兹维列夫发球 40-30 盘点（记分条 24.5~32.5s `SET POINT / ZVEREV •5 40 / DE MINAUR 2 30`），32.5s 兹维列夫近景，34~36s 欧洲队替补席诺阿，36.5s `6 / 2`。解说 13.52「rips a forehand winner. And with a double break, it is Team Europe go ahead 4-1」、30.80「The opening set in favor of Team Europe in 37 minutes, six games to two」。df_mh_1 Set 1 用时 0:38（官方解说 37 分钟，旁白按解说说）。",
+   "crosses_cut": "31.16 —— 同一分落地后的反应镜头。",
+   "point_end_ok": "盘点在 31.16 之前落地，之后是反应镜头；38.14 那次翻牌是宽版板动画。"
+  },
+  {
+   "source": "main",
+   "cx": 0.515,
+   "score_inset": true,
+   "start": 42.2,
+   "end": 54.0,
+   "narration": "第二盘三比三，兹维列夫又拿到三个破发点。第三个兑现，四比三。接着保发，五比三。",
+   "_why": "画面：第二盘 3-3 德米纳尔发球 0-40（记分条 42.5~52.5s `3 BREAK POINTS / ZVEREV 6 3 40 / DE MINAUR •2 3 0`），54.5s 翻成 40-15（这一分德米纳尔救下第一个）。df_mh_1 第二盘 4-3 那一局 `40:0 |B1|, 40:15 |B1|, 40:30 |B1|` 之后主队拿下＝第三个破发点兑现；5-3 主队保发。旁白不指认画面上是哪一分。"
+  },
+  {
+   "source": "main",
+   "cx": 0.515,
+   "score_inset": true,
+   "start": 60.0,
+   "end": 73.0,
+   "narration": "五比四，兹维列夫发球胜赛，却被德米纳尔破了回来。六比六，抢七。第一分，德米纳尔就拿下了，阿加西在场边站了起来。",
+   "_why": "画面：第二盘抢七第一分（记分条 56.5~66.5s `7 PT TIEBREAK / ZVEREV 6 6 / DE MINAUR •2 6`），68.5s 阿加西振臂、70.5s `6 6 0 / 2 6 1`。df_mh_1 第二盘 5-4 客队保发、5-5 主队发球客队拿下（`15:40 |B1|, 30:40 |B1|` 之后客队拿下＝破发）＝兹维列夫 5-4 发球胜赛被破；6-6 主队保发。集锦没播那一局，旁白不指认画面。收在 67.93 那一刀、67.97 翻牌之前。 延到 73.0：68~70s 阿加西振臂、70.5s 记分条 `6 6 0 / 2 6 1`＝抢七第一分德米纳尔拿下。",
+   "crosses_cut": "67.93 —— 同一分落地后的反应镜头（阿加西）。",
+   "point_end_ok": "抢七第一分在 67.93 之前落地；68~73 是反应镜头，那串翻牌是记分条换成抢七小分的动画，段尾 73.0 之后下一次翻牌在 86.49。"
+  },
+  {
+   "source": "main",
+   "cx": 0.515,
+   "score_inset": true,
+   "start": 76.2,
+   "end": 86.25,
+   "narration": "抢七五比六，德米纳尔又拿到盘点。这一次他兑现了，七比五，一比一。",
+   "_why": "记分条 76.5~88.5s `SET POINT #3 / ZVEREV 6 6 5 / DE MINAUR •2 6 6`；90.5s `10 PT MATCH TIEBREAK / 6 6⁵ / 2 7⁷`。flashscore DC/DD=5:7（第二盘抢七小分）。收在 86.45 那一刀、86.49 翻牌之前。",
+   "point_end_ok": "盘点在 86.45 那一刀之前落地，下一段 86.5 接着放德米纳尔的反应镜头；86.49 起那串翻牌是记分条换成抢十的动画。"
+  },
+  {
+   "source": "main",
+   "cx": 0.515,
+   "score_inset": true,
+   "start": 86.5,
+   "end": 95.9,
+   "narration": "",
+   "quote": [
+    {
+     "at": 0.0,
+     "text": "Oh, he's got himself back in it.\n他把自己拉回来了"
+    },
+    {
+     "at": 1.82,
+     "text": "The grit and determination of De Minaur\n德米纳尔的韧劲和决心"
+    },
+    {
+     "at": 5.9,
+     "text": "has leveled the match at one set apiece.\n把比分扳成一比一"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "_why": "86.5~88.5s 德米纳尔近景，90~92s 全景，94.5s 近景。解说原声 86.08~94.72（captions.txt；ASR「Demon」写回 De Minaur）。",
+   "point_end_ok": "盘间，没有比赛进行；96.6 那次翻牌是宽版板动画。"
+  },
+  {
+   "source": "main",
+   "cx": 0.515,
+   "score_inset": true,
+   "start": 124.0,
+   "end": 136.0,
+   "narration": "抢十兹维列夫先拿三分，九比八，拿到赛点。可这一分他打得太保守，最后一拍，出了边线。九平。",
+   "_why": "记分条 102.5~132.5s `MATCH POINT / ZVEREV 6 6⁵ 9 / DE MINAUR •2 7⁷ 8`（德米纳尔发球），134.5s `9 / 9`。解说 130.24「Oh, that's wide.」、132.88「And that was as passive as a point could be played by」（兹维列夫）。df_mh_1 Set 3：1:0、2:0、3:0 … 9:8（HM 标记＝赛点）→ 9:9。「先拿三分」：Set 3 逐分 1:0、2:0、3:0（主:客）。133.8 起 134~136s 世界队替补席笑成一片，134.5s 记分条 `9 / 9`，收在 136.0。",
+   "crosses_cut": "133.8 —— 同一分落地后的反应镜头（134~136s 世界队替补席在笑）。"
+  },
+  {
+   "source": "main",
+   "cx": 0.515,
+   "score_inset": true,
+   "start": 146.0,
+   "end": 157.9,
+   "narration": "十比九，轮到德米纳尔的赛点。一个很长的回合，他被兹维列夫左右调动，一次次滑到角上把球救回来。最后一拍，兹维列夫没打进。",
+   "_why": "记分条 136.5~160.5s `MATCH POINT / ZVEREV •6 6⁵ 9 / DE MINAUR 2 7⁷ 10`（兹维列夫发球），162.5s `9 / 11`。frame-grab zverev-deminaur-mp（0.5 秒一帧，138~158s）：德米纳尔在近端（138s 起整段底线相持），146~146.5s 滑向右侧底角，148~148.5s 扑向左侧，151~152.5s 又被拉到左侧；兹维列夫在远端底线，156.5s 向右侧扑出去击球；157.5s 球停在球网中间，德米纳尔站在底线中央没有再击球＝兹维列夫最后一拍没过网。解说 173.20「What an extraordinary point to finish」。df_mh_1 Set 3 `9:10 |HM|` → 9:11＝第一个赛点兑现。收在 158.09 那一刀、158.16 翻牌之前。",
+   "point_end_ok": "比赛在 158.0 之前结束。"
+  },
+  {
+   "source": "main",
+   "cx": 0.515,
+   "score_inset": true,
+   "start": 158.2,
+   "end": 167.8,
+   "narration": "二比六，七比六，十一比九，两小时零三分。阿加西在场边，笑了。",
+   "_why": "和冷开场同一段画面，按时间顺序重放、配旁白：158~162s 德米纳尔庆祝，164~166s 阿加西。用时见 cover.scoreboard。",
+   "point_end_ok": "比赛已经结束。"
+  },
+  {
+   "source": "main",
+   "cx": 0.515,
+   "score_inset": true,
+   "start": 167.9,
+   "end": 176.8,
+   "narration": "",
+   "quote": [
+    {
+     "at": 5.3,
+     "text": "What an extraordinary point to finish.\n最后这一分，太不可思议了"
+    },
+    {
+     "at": 8.98,
+     "text": "And what a fighter that Alex is.\n亚历克斯真是个斗士"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "_why": "168~176s 网前握手（兹维列夫蓝、德米纳尔红，背景横幅 TEAM WORLD WINS）。解说原声 173.20~178（captions.txt；ASR「Alexor」写回 Alex），第二句收在段尾之后 0.9 秒内，字幕钉在 176.88。",
+   "point_end_ok": "比赛已经结束，那串翻牌是宽版板动画。"
+  },
+  {
+   "source": "main",
+   "cx": 0.515,
+   "score_inset": true,
+   "start": 176.9,
+   "end": 187.5,
+   "narration": "世界队五比三反超。晚上阿尔卡拉斯对弗里茨，去年输给他的那一场，今年讨得回来吗？",
+   "_why": "176.9~180s 阿加西近景，182~187s 德米纳尔回替补席和阿加西拥抱，画面右下团体比分条 `EUROPE 3 : 5 WORLD`（182.5~186.5s）。下一场：官网赛前稿「NIGHT SESSION (7 p.m.) CARLOS ALCARAZ (TEAM EUROPE) VS. TAYLOR FRITZ」「Carlos Alcaraz is still smarting from his loss to Taylor Fritz last year at the Laver Cup」。收在 187.72 静音之前。",
+   "point_end_ok": "比赛已经结束，那串翻牌是宽版板动画。"
+  }
+ ],
+ "_source": "拉沃尔杯官方 YouTube《Alexander Zverev v Alex de Minaur Highlights | Laver Cup 2026 Match 6》`vewcPfBgHrg`（频道 RSS 逐 entry 解析取到的 ID），1920×1080 / 29.97fps / 190.75s（probe 实测）。四要素：①记分条 `MATCH 6 / ZVEREV / DE MINAUR`，166.5s 宽版板 `ALEXANDER ZVEREV 6 6⁵ 9 / ALEX DE MINAUR 2 7⁷ 11`，和 flashscore xvQdqyYj 逐字一致；②黑色场地 `LAVER CUP LONDON 2026`、挡板 `Alipay+` `ROLEX` `UBS`；③兹维列夫蓝色 Team Europe＋白发带，德米纳尔红色 Team World＋白帽；④182.5~186.5s 团体比分条 `EUROPE 3 : 5 WORLD`。⚠️ 之前按 RSS 顺序两两配对拿到的 `snJJvh1NCyw` 是 52 秒竖屏短片（probe 608×1080），不是这条。",
+ "_opening_time_source": {
+  "url": "https://global.flashscore.ninja/2/x/feed/f_2_0_0_en_1",
+  "match_id": "xvQdqyYj",
+  "field": "AD",
+  "value": 1790432700,
+  "beijing": "2026-09-26T22:25+08:00",
+  "spoken_precision": "approximate-hour",
+  "_why": "flashscore AD=1790432700 → 14:25Z ＝ 北京 9/26 22:25，说「晚上十点多」。"
+ },
+ "_hit_data": "`match_feed.py show xvQdqyYj`：第一盘兹维列夫两次破发 6-2（0:38；官方解说 37 分钟）。第二盘 1-0 兹维列夫破发、1-1 德米纳尔破回，3-3 之后兹维列夫第三个破发点破成 4-3、保发 5-3，5-4 发球胜赛被破（德米纳尔第二个破发点兑现），抢七德米纳尔 7-5（1:04）。抢十兹维列夫 3-0 开局，3-4、7-8 两次落后又追上，9-8 赛点没兑现，德米纳尔 9-9、10-9、11-9，第一个赛点兑现（0:21）。统计：兹维列夫制胜分 32／非受迫 32、德米纳尔 21／16，德米纳尔双误 0。",
+ "_turning_points": [
+  "第二盘 5-4 兹维列夫发球胜赛被破（df_mh_1 5-5 那一局）。",
+  "第二盘抢七德米纳尔 7-5，扳平（记分条 76.5~88.5s SET POINT #3）。",
+  "抢十 9-8 兹维列夫赛点，打得保守、最后一拍出界（解说「as passive as a point could be played」），德米纳尔连拿三分 11-9。"
+ ],
+ "_editing_why": "源片 190.75 秒：比赛画面到 158.09（赛点），158.09~187.7 是赛后（德米纳尔庆祝、阿加西、握手、回替补席），187.72 起静音、188 起片尾板；没有场上采访。开场三格：冷开场（赛后＋解说原声）→ 落点（今年两个大满贯的世界第二／去年拉沃尔杯输给德米纳尔）→ 坐标＋第一盘，然后按时间顺序：第二盘 3-3 破发点 → 抢七第一分 → 抢七盘点 → 解说「leveled the match」→ 抢十 9-8 赛点 → 10-9 赛点 → 重放庆祝。没用的：16~24（兹维列夫走回、替补席、宽版板）、68~76（阿加西、观众）、96~118（盘间替补席、抢十前半段）。认人：兹维列夫蓝色 Team Europe＋白发带，德米纳尔红色 Team World＋白帽。",
+ "mixed_fps": {
+  "main": "单源，29.97fps。"
+ },
+ "_voice_why": "沿用默认：云见（`zh-CN-YunjianNeural`）＋6%。",
+ "editorial": {
+  "mode": "match_review",
+  "hook": [
+   "决胜盘挽救赛点",
+   "德米纳尔逆转兹维列夫"
+  ],
+  "question": "兹维列夫今年拿了两个大满贯，第二盘五比四发球胜赛、抢十九比八握着赛点——德米纳尔是怎么把这场球拿回来的？",
+  "thesis": "第一盘兹维列夫两次破发六比二；第二盘五比四他发球胜赛被破，抢七德米纳尔七比五扳平；抢十兹维列夫九比八拿到赛点却打得保守出界，德米纳尔连拿三分，十一比九，世界队五比三反超。",
+  "beats": [
+   "冷开场：德米纳尔庆祝、网前握手，解说「From the depths of despair, De Minaur finds a way」。",
+   "今年两个大满贯的世界第二；去年拉沃尔杯德米纳尔六比一六比四赢过他。北京时间晚上十点多，第二天第二场。",
+   "第一盘两次破发，六比二。",
+   "第二盘四比三、五比三，五比四发球胜赛被破，抢七七比五。",
+   "抢十九比八赛点，保守出界；十比九赛点兑现。",
+   "世界队五比三反超；晚上阿尔卡拉斯对弗里茨。"
+  ],
+  "_hook_why": "和 cover.hook 逐行相同。",
+  "human_context": {
+   "angle": "兹维列夫今年法网、美网两个大满贯，世界第二（官网赛前稿）；德米纳尔去年在旧金山拉沃尔杯 6-1 6-4 赢过他（官网赛前稿＋flashscore H2H）。这一场他被逼到赛点又翻回来，世界队 5-3 反超（画面团体比分条）。",
+   "facts": [
+    "flashscore xvQdqyYj：2-6 7-6(5) 11-9（德米纳尔在前），分盘用时 0:38 / 1:04 / 0:21。",
+    "排名：兹维列夫 2、德米纳尔 9（官网球员页＋tennisexplorer）。",
+    "团体比分：画面 182.5~186.5s `EUROPE 3 : 5 WORLD`。"
+   ],
+   "sources": [
+    "https://www.flashscore.com/match/tennis/xvQdqyYj/",
+    "https://www.youtube.com/watch?v=vewcPfBgHrg",
+    "https://lavercup.com/news/2026/09/26/cobolli-and-tien-launch-blockbuster-day-2"
+   ],
+   "voice_label": "绝境里的翻盘"
+  }
+ },
+ "_claims": [],
+ "_no_repeat": "同一届兄弟片（首日三场单打＋双打、cobolli-tien）——不重讲赛制和去年旧金山的总比分，只讲去年这两个人的那一场。",
+ "push": {
+  "summary": "德米纳尔抢十逆转兹维列夫",
+  "lead": "拉沃尔杯伦敦站第二天第二场。第一盘兹维列夫 6-2；第二盘他 5-4 发球胜赛被德米纳尔破回，抢七 7-5 扳平。抢十兹维列夫 9-8 拿到赛点没兑现，德米纳尔连拿三分 11-9。世界队 5-3 反超。",
+  "matchup": "德米纳尔 vs 兹维列夫",
+  "score": "2-6 7-6(5) 11-9",
+  "auto": true
+ },
+ "_push_summary_why": "12 字位，主语德米纳尔。"
 }
