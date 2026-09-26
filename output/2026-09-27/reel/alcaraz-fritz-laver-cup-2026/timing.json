@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "at": "2026-09-26T20:50:45Z",
+  "pipeline": "match-reel",
+  "slug": "alcaraz-fritz-laver-cup-2026",
+  "mode": "render",
+  "outcome": "success",
+  "error": null,
+  "elapsed_seconds": 193.432,
+  "last_stage": "数据统计对照图",
+  "stage_seconds": {
+    "下载源片 main": 0.055,
+    "片尾配音": 0.734,
+    "TTS 合成": 6.484,
+    "VS 抓帧 portrait（源 main）": 0.112,
+    "封面海报": 2.939,
+    "封面编码": 0.233,
+    "分段编码": 99.349,
+    "片尾母版转码": 0.485,
+    "拼接": 23.466,
+    "混音": 2.863,
+    "烧字幕+成片": 103.276,
+    "数据统计对照图": 1.218
+  },
+  "stage_counts": {
+    "下载源片 main": 1,
+    "片尾配音": 1,
+    "TTS 合成": 1,
+    "VS 抓帧 portrait（源 main）": 1,
+    "封面海报": 1,
+    "封面编码": 1,
+    "分段编码": 13,
+    "片尾母版转码": 1,
+    "拼接": 1,
+    "混音": 1,
+    "烧字幕+成片": 1,
+    "数据统计对照图": 1
+  },
+  "cpu_count": 4,
+  "run_id": "36270579902",
+  "run_attempt": "1",
+  "on_runner": true
+}
