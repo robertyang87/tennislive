@@ -1394,7 +1394,10 @@ def test_赛场之上开场要给出北京时间赛事和轮次():
             why = f"开场没给开球时刻：{opening}"
         elif not re.search(r"[月][一二三四五六七八九十]+[号日]", opening):
             why = f"开场没给日期：{opening}"
-        elif not re.search(r"(强|轮|决赛|资格赛)", opening):
+        # 「第 N 天」：拉沃尔杯这类团体赛没有轮次，顶栏写的就是「2026 拉沃尔杯 第二天」
+        # （和 _topbar_why 同一口径）。不认它的话，cobolli-tien-laver-cup-2026 只是因为
+        # 旁白里碰巧有一句「轮到科博利发球」才过——那是撞上的绿，不是守住的绿。
+        elif not re.search(r"(强|轮|决赛|资格赛|第[一二三]天)", opening):
             why = f"开场没给轮次：{opening}"
         if why is None:
             continue
@@ -17580,3 +17583,17 @@ def test_轮次分数在字幕里写成1斜杠N决赛():
     assert A("三十二分之一决赛") == "1/32决赛"
     assert A("三分之一的时间") == "三分之一的时间"
     assert A("百分之六十四") == "64%"
+
+
+def test_quote的at超出段长在dry_run就红():
+    """`explicit_quote_cues` 原来要等全部分段编完、拼接写字幕时才报——
+    zverev-deminaur-laver-cup-2026 第二趟 render 就这么白跑了两分钟。
+    段长只看 spec，`validate_spec` 里就该拦下。"""
+    import copy  # noqa: PLC0415
+    reel = _reel()
+    spec = json.loads(Path("specs/reels/cobolli-tien-laver-cup-2026.json").read_text("utf-8"))
+    reel.validate_spec(copy.deepcopy(spec))          # 原样放行
+    seg = next(s for s in spec["segments"] if isinstance(s.get("quote"), list))
+    seg["quote"][-1]["at"] = reel.seg_seconds(seg) + 0.05
+    with pytest.raises(reel.ReelError, match="超出这一段"):
+        reel.validate_spec(spec)
