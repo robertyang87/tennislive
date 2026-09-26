@@ -1,0 +1,427 @@
+{
+  "slug": "svitolina-paolini-bjk-cup-2026-sf",
+  "source_url": "https://www.youtube.com/watch?v=1_JPRuekfeg",
+  "_column": "赛场之上",
+  "tts_backend": "edge",
+  "_tts_backend_why": "旁白是平直的复盘叙述，一段 `style` 都没写；同一个 tie 的 `grant-kalinina-bjk-cup-2026-sf` 也是 edge。",
+  "_source": "账号所有者给了 TNNS 的赛果截图（「盯这场比赛视频，然后做赛场之上」），会话后台每 3 分钟扫一次 @BJKCup 频道等到的。源片是比利·简·金杯官方 YouTube `1_JPRuekfeg`（oEmbed 标题 `Elina Svitolina (UKR) vs Jasmine Paolini (ITA) | 2026 Billie Jean King Cup Finals | Highlights`，author_name `Billie Jean King Cup`）。 probe 在 `output/2026-09-26/reel/svitolina-paolini-bjk-cup-2026-sf/`：1920×1080 / 25fps、497.0s。四要素自证：记分条逐格读过（`PAOLINI / SVITOLINA`、意大利和乌克兰旗），挡板「2026 FINALS SHENZHEN」；比赛画面到 434.84s，之后是赛点后的庆祝，488 起是片尾订阅板；**没有场上采访**。",
+  "scorebox": [
+    145,
+    915,
+    600,
+    1012
+  ],
+  "_scorebox_why": "同一届同一块转播板，和 `grant-kalinina-bjk-cup-2026-sf` / `bucsa-noskova-bjk-cup-2026-sf` 同一个框（probe 按它给的 `--scorebox`）。",
+  "_match": {
+    "id": "2026:bjk-cup-finals:semifinal-2:jasmine-paolini-elina-svitolina",
+    "event": "2026 比利·简·金杯总决赛",
+    "event_search": "Billie Jean King Cup",
+    "round": "Semifinal",
+    "year": 2026,
+    "status": "result_verified",
+    "winner": "斯维托丽娜",
+    "loser": "保利尼",
+    "participants": [
+      "保利尼",
+      "斯维托丽娜"
+    ],
+    "winner_en": "Elina Svitolina",
+    "loser_en": "Jasmine Paolini",
+    "set_scores_home_away": [
+      [
+        2,
+        6
+      ],
+      [
+        2,
+        6
+      ]
+    ],
+    "tiebreaks_home_away": [
+      null,
+      null
+    ],
+    "_source": "三源一致：flashscore h2xoAGSg（home＝`AE÷Paolini J.`、away＝`AF÷Svitolina E.`，`BA/BB=2/6`、`BC/BD=2/6`）；金杯官网战报「ITA 0-2 UKR: Brilliant Svitolina powers Ukraine into first BJK Cup final」原文「a stunning 6-2 6-2 victory in just over an hour」；ITF tieCentre 8ff02770 第 2 场（Jasmine Paolini / Elina Svitolina，`tie.teams[].score` 2 / 0）；账号所有者给的 TNNS 截图 6 6 / 2 2。",
+    "_participants_why": "`participants` 跟 flashscore 的 home / away：[保利尼, 斯维托丽娜]，和 `cover.matchup` 的顺序**相反**——`set_scores_home_away` 紧挨着它，同序。",
+    "source": "flashscore_points",
+    "source_id": "h2xoAGSg",
+    "flashscore_id": "h2xoAGSg",
+    "winner_result": "6-2 6-2",
+    "loser_result": "2-6 2-6"
+  },
+  "topbar": {
+    "line1": "2026 比利·简·金杯 半决赛",
+    "line2": "斯维托丽娜 6-2 6-2 保利尼"
+  },
+  "_topbar_why": "第二行和 `cover.winner` / `cover.result` / `cover.matchup` 机械一致。第一行：团体赛没有「级别＋站」，和同一个 tie 的 `grant-kalinina-bjk-cup-2026-sf` 同一写法。",
+  "cover": {
+    "matchup": [
+      {
+        "name": "斯维托丽娜",
+        "name_en": "Elina Svitolina",
+        "country": "UKR",
+        "rank": 7
+      },
+      {
+        "name": "保利尼",
+        "name_en": "Jasmine Paolini",
+        "country": "ITA",
+        "rank": 20
+      }
+    ],
+    "_rank_why": "WTA 官方 `players/ranked`（rankedAt 2026-09-21）：斯维托丽娜（316738）7、保利尼（319280）20；金杯官网战报「The World No. 7」——两个源对得上。",
+    "winner": "斯维托丽娜",
+    "result": "6-2 6-2",
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "斯维托丽娜",
+    "_subject_why": "赢家；半决赛（「半决赛级别的都要做」），而且这一场把乌克兰送进了队史第一个金杯决赛。",
+    "hook": "去年被保利尼逆转\n今年2比0赢回来",
+    "hook_accent": "今年2比0赢回来",
+    "_hook_why": "第一行＝人的来路当影子：2025 金杯半决赛保利尼 3-6 6-4 6-4 逆转她（flashscore W8UfCgGr；金杯官网「Paolini sparked an Italian fightback with a comeback victory over Svitolina」）；第二行＝结果：今年 2-0（6-2 6-2）。两行有落差（逆转她 ↔ 赢回来），不带术语、排名和裸比分。",
+    "topic": "比利·简·金杯半决赛 · 斯维托丽娜 vs 保利尼",
+    "_heat_why": "半决赛（轮次本身够格）；斯维托丽娜世界第 7；乌克兰队史第一次进决赛，淘汰的是两届卫冕冠军意大利。",
+    "portrait": {
+      "image": "assets/reel/svitolina-bjk-cup-2026-sf.jpg",
+      "focus": 0.64,
+      "focus_y": 0.33,
+      "zoom": 1.0,
+      "_why": "**比利·简·金杯官方实拍（ITF，billiejeankingcup.com 的 Contentful 图库）**，原文件名 `LZ1_6582_ILFl0IvF.JPG`（3637×2045），是这场赛后战报 https://www.billiejeankingcup.com/en/news/live-ita-v-ukr-2026-billie-jean-king-cup-finals-semi-final 的头图，alt 写着 `Svitolina during Paolini 2026 win`。和 `grant-kalinina` 封面 `LZ1_8560` 同一位摄影师同一台相机。画面打开看过：乌克兰蓝色队服胸口三叉戟、左手举拍右手握拳、睁眼微笑，背景挡板 `UKR` 和乌克兰国旗——赢球后的情绪，对题。"
+    },
+    "scoreboard": {
+      "court": "深圳湾体育中心",
+      "_court_why": "印场馆：维基 `2026 Billie Jean King Cup finals` 信息框 `venue = Shenzhen Bay Sports Center`（兄弟片 `bucsa-noskova` 已核），TNNS 截图同样写着 Shenzhen Bay Sports Center。",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%20%221%3A03%3A34%22%2C%20%22source%22%3A%20%22ITF%20tieCentre%208ff02770%20tie.matches%5B1%5D.duration%2001%3A03%3A34%EF%BC%88actualStartDate%2011%3A08%3A23Z%20%E2%86%92%20actualEndDate%2012%3A11%3A58Z%EF%BC%8C%E7%9B%B8%E5%87%8F%E8%87%AA%E6%B4%BD%EF%BC%89%22%2C%20%22cross_check%22%3A%20%22flashscore%20h2xoAGSg%20%E5%88%86%E7%9B%98%200%3A31%20%2B%200%3A33%20%3D%201%3A04%EF%BC%8C%E5%90%8C%E5%90%91%EF%BC%9B%E9%87%91%E6%9D%AF%E5%AE%98%E7%BD%91%E6%88%98%E6%8A%A5%20in%20just%20over%20an%20hour%22%7D",
+        "field": "duration"
+      },
+      "_duration_why": "印 ITF 官方的比赛用时 1:03:34（tieCentre 起止时刻相减自洽）；flashscore 分盘合计 1:04 同向。写成 h:mm:ss。"
+    }
+  },
+  "_opening_time_source": {
+    "url": "https://global.flashscore.ninja/2/x/feed/f_2_0_0_en_1",
+    "match_id": "h2xoAGSg",
+    "field": "AD",
+    "value": 1790421000,
+    "beijing": "2026-09-26T19:10+08:00",
+    "spoken_precision": "approximate-hour",
+    "_why": "开球时刻只说个大概：flashscore `AD=1790421000` → 11:10Z＝北京 19:10；ITF tieCentre `actualStartDate` 11:08:23Z。旁白说「晚上七点多」。"
+  },
+  "stats": {
+    "a": {
+      "aces": 2,
+      "df": 1,
+      "first_in": 21,
+      "first_won": 17,
+      "second_total": 19,
+      "second_won": 13,
+      "bp_conv": 5,
+      "bp_chances": 7,
+      "pts_won": 58,
+      "pts_total": 89,
+      "first_total": 40,
+      "headshot": "assets/players/headshots/wta-316738.jpg"
+    },
+    "b": {
+      "aces": 1,
+      "df": 0,
+      "first_in": 37,
+      "first_won": 15,
+      "second_total": 12,
+      "second_won": 6,
+      "bp_conv": 1,
+      "bp_chances": 1,
+      "pts_won": 31,
+      "pts_total": 89,
+      "first_total": 49,
+      "headshot": "assets/players/headshots/wta-319280.jpg"
+    },
+    "_source": "flashscore h2xoAGSg `df_st_1`（`tools/match_stat_hooks.py h2xoAGSg --stats-block`，一个数没改）；工具按 flashscore home/away 排（home＝保利尼），这里 **a/b 对调**成 a＝斯维托丽娜、b＝保利尼，和 `cover.matchup` 同序。和 TNNS 截图对得上：1st Serve In 53% / 76%、1st Serve Win 81% / 41%、Break Points Saved 0/1 / 2/7。",
+    "_winners_ue_why": "flashscore 这场没有制胜分／非受迫失误；团体赛场次不在 `tnns-stats.yml` 验过的范围里，这条赶当天没拨，按 `render_stat_card.OPTIONAL_FIELDS` 留空。",
+    "_headshot_why": "两张都是仓库里已有的 WTA 官方头像：`wta-316738.jpg`（斯维托丽娜，`svitolina-alexandrova` 等用过）、`wta-319280.jpg`（保利尼，`zheng-paolini-bjk-cup-2026-qf` 用过）。"
+  },
+  "_hit_data": "`match_feed.py show h2xoAGSg` 逐局（主队＝保利尼在前）：第一盘保利尼先发球，第 1 局 0-40 被零封破发 0-1 → 斯维托丽娜保发 0-2 → 保利尼发球 30-40 再被破 0-3 → 斯维托丽娜发球 40-30 被保利尼破回 1-3（她全场唯一一次被破）→ 保利尼零封保发 2-3 → 斯维托丽娜保发 2-4 → 保利尼发球 0-40 三个破发点，救两个、第三个被破 2-5 → 斯维托丽娜 40-15 第一个盘点拿下 6-2（31 分钟）。第二盘第 1 局保利尼发球 15-40 被破 → 0-2 零封保发 → 第 3 局又被破 → 0-4 零封保发 → 保利尼保发 1-4 → 1-5 → 保利尼发球三次平分保住 2-5 → 斯维托丽娜发球胜赛 40-15，第一个赛点拿下。全场斯维托丽娜破发点 5/7、发球局 7/8、总得分 58/89；保利尼一发得分 41%（15/37）、二发接发只拿 6/19。",
+  "_claims": {
+    "乌克兰队史第一个金杯决赛": "① 金杯官网战报 https://www.billiejeankingcup.com/en/news/live-ita-v-ukr-2026-billie-jean-king-cup-finals-semi-final 标题「Brilliant Svitolina powers Ukraine into first BJK Cup final」、正文「fired Ukraine into their first-ever Billie Jean King Cup by Gainbridge final」；② 维基 https://en.wikipedia.org/wiki/Ukraine_Billie_Jean_King_Cup_team 信息框 `Best = Semifinals (2025, 2026)`——决赛从没进过。"
+  },
+  "editorial": {
+    "mode": "match_review",
+    "hook": [
+      "去年被保利尼逆转",
+      "今年2比0赢回来"
+    ],
+    "question": "去年半决赛被保利尼逆转的斯维托丽娜，今年是怎么只让她拿四局、把乌克兰送进队史第一个决赛的？",
+    "thesis": "第一局零封破发，第三局再破；保利尼破回一次，全场斯维托丽娜只丢了这一个发球局。第一盘三次破发，第二盘两次，第一个赛点就拿下，6-2 6-2。",
+    "beats": [
+      "冷开场：赛点之后斯维托丽娜吼出来，解说「乌克兰队史第一次打进决赛，复仇完成」。",
+      "落点＋坐标：这一场赢下来，乌克兰第一次进决赛；去年保利尼逆转过她。",
+      "第一局零封破发，第三局救球逼出第二次破发，3-0。",
+      "保利尼破回一次，1-3。",
+      "穿越球、第三个破发点，5-2；第一个盘点 6-2。",
+      "原声：队长说要复仇，已经完成一半。",
+      "第二盘两次破发，3-0；5-1。",
+      "保利尼三次平分保住 2-5；第一个赛点拿下。"
+    ],
+    "chapters": [
+      "零封破发",
+      "破回一次",
+      "复仇",
+      "赛点"
+    ],
+    "human_context": {
+      "angle": "世界第 7 的斯维托丽娜，去年金杯半决赛被保利尼逆转；今年 6-2 6-2 还回去，乌克兰 2-0 淘汰卫冕冠军意大利，队史第一次进决赛。",
+      "facts": [
+        "flashscore h2xoAGSg：Svitolina E. d Paolini J. 6-2 6-2。",
+        "金杯官网战报：first-ever final、World No. 7、broke Paolini three times in the opening set and twice more in the second、avenge their 2-1 defeat to Italy in last year's semi-finals。"
+      ],
+      "sources": [
+        "https://global.flashscore.ninja/2/x/feed/df_mh_1_h2xoAGSg",
+        "https://global.flashscore.ninja/2/x/feed/df_st_1_h2xoAGSg",
+        "https://www.billiejeankingcup.com/en/news/live-ita-v-ukr-2026-billie-jean-king-cup-finals-semi-final",
+        "https://api.itf-production.sports-data.stadion.io/custom/tieCentre/8ff02770-40e0-4fb2-94c9-91a0b9d64a47"
+      ]
+    },
+    "narration": [
+      "第一局就零封破发。",
+      "保利尼只破回一次。",
+      "第一个赛点就拿下。"
+    ]
+  },
+  "segments": [
+    {
+      "start": 434.84,
+      "end": 449.36,
+      "cx": 0.5,
+      "score_inset": false,
+      "narration": "",
+      "_score_inset_why": "赛点已经落地：434.84 起是斯维托丽娜吼叫的近景、网前拥抱、乌克兰替补席，画面里没有比分板。",
+      "quote": [
+        {
+          "at": 0.0,
+          "text": "For the first time in their history,\n乌克兰队史第一次"
+        },
+        {
+          "at": 2.92,
+          "text": "Ukraine make the Billie Jean King Cup final\n打进比利·简·金杯决赛"
+        },
+        {
+          "at": 5.64,
+          "text": "as revenge is served,\n复仇完成"
+        },
+        {
+          "at": 10.76,
+          "text": "and Italy's fabulous run is finally over.\n意大利这一路连胜终于到头"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_ending_payoff_required": true,
+      "_why": "冷开场：**赛点落地之后斯维托丽娜吼出来的那一刻**，不配旁白，只留解说原声＋中英字幕：captions.txt 434.56「For the first time in their history,」、437.76「Ukraine make the Billy Jean King Cup」、440.48「final as revenge is served」、445.60「and Italy's fabulous run is finally」、449.12「over.」，赛事名按本名写回；段首 434.84 已在第一句里，字幕从 0 起挂，其余三条 at = 437.76 / 440.48 / 445.60 − 434.84。",
+      "_payoff_why": "冷开场里有赛点落地后的庆祝，所以 true——正文最后一段（434.84→449.36）按时间顺序完整重放。",
+      "crosses_cut": "434.84 起一个连续段落：吼叫近景 → 网前拥抱 → 替补席，都在赛点之后（下一处切点 455.36）。",
+      "point_end_ok": "比赛已经结束（赛点在 434.84 落地）；之后记分条不再出现。"
+    },
+    {
+      "start": 2.24,
+      "end": 13.6,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "这一场赢下来，乌克兰就是队史第一次打进金杯决赛。北京时间九月二十六日晚上七点多，深圳，半决赛第二场单打。",
+      "_why": "开场「爆点 → 落点 → 坐标」：落点是赌注（金杯官网「fired Ukraine into their first-ever Billie Jean King Cup by Gainbridge final」），坐标里的「晚上七点多」按 `_opening_time_source`。画面是第一局保利尼发球：记分条 0.5~10.5s `0 0 / 0 40`（斯维托丽娜 0-40），12.5s 翻成 `0 / 1`；解说 7.92「Super return and an ideal start for Ukraine」。",
+      "crosses_cut": "2.24~9.72 回合镜头，9.72 之后是破发后的近景，都在这一局里。",
+      "point_end_ok": "段尾 13.6 是 point_ends 13.6，零封破发之后翻牌（12.5s 已是 `0 / 1`）。"
+    },
+    {
+      "start": 26.24,
+      "end": 48.64,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "第一局她就零封破掉了保利尼的发球。去年半决赛，正是保利尼先丢一盘，三比六、六比四、六比四把她逆转，意大利一路走到卫冕。今年第三局，这一分她把正手压得又深又准，一拍一拍把保利尼逼到场外。解说说，这一分无可挑剔。",
+      "_why": "「零封破发」：flashscore 第一盘第 1 局 `0:15, 0:30, 0:40 |B1|` 之后客队拿下。「去年逆转」：flashscore W8UfCgGr（2025-09-19 金杯半决赛，Paolini 3-6 6-4 6-4 Svitolina），金杯官网「Paolini sparked an Italian fightback with a comeback victory over Svitolina in the second singles」。画面是第三局保利尼发球：记分条 26.5~46.5s `0 30 / 2 30`，48.5s 翻成 `30 / 40`（BREAK POINT）。解说 27.28「Impeccable length to set the forehand up. Great point」。 「意大利一路走到卫冕」：金杯官网战报称意大利为 holders、「kept Italy on course for their hat-trick」。",
+      "crosses_cut": "45.2 一处换镜头：这一分结束后的近景。",
+      "point_end_ok": "段尾挪到 48.64（切点）：48.5s 记分条已翻成 30-40（BREAK POINT），下一段从同一刻接上。"
+    },
+    {
+      "start": 48.64,
+      "end": 62.08,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "三十比四十，破发点。斯维托丽娜一个漂亮的救球，把难题又还给了保利尼。再破一次，三比零。",
+      "_why": "记分条 48.5~58.5s `30 / 40`（BREAK POINT，斯维托丽娜破发点），62.5s 已是 `0 / 3`（斯维托丽娜发球）。flashscore 第一盘第 3 局 `…30:40 |B1|` 后客队拿下。解说 58.16「Yes, great get from Svitolina. Made it tough for Paolini」。",
+      "crosses_cut": "59.52 一处换镜头：破发之后乌克兰替补席。",
+      "point_end_ok": "段尾 62.08 是 point_ends 62.08，破发之后记分条收起、下一局翻牌。"
+    },
+    {
+      "start": 94.96,
+      "end": 118.56,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "在金杯上连赢了十场的保利尼，没有就这么认。下一局斯维托丽娜发球，保利尼打到四十比三十，拿到破发点。这一分从一记很好的接发开始，她一路抢在前面，破发成功，追到一比三。看台上的声音一下子起来了。全场斯维托丽娜只被破了这一次。",
+      "_why": "记分条 94.5~114.5s `0 40 / 3 30`（斯维托丽娜发球，保利尼破发点），120.5s 翻成 `1 / 3`。flashscore 第一盘第 4 局 `15:0, 30:0, 30:15, 30:30, 40:30 |B1|` → 主队破发。解说 114.08「Such good tennis. All started with a quite amazing return. And listen to the noise」。「只被破了这一次」：flashscore `Break Points Saved` 客队 0/1、`Service games won` 7/8；账号所有者给的 TNNS 截图同样是 `0% (0/1)`。 「连赢了十场」：金杯官网战报「Paolini had been on a 10-game winning streak in the women's World Cup of Tennis」、「That was Paolini's 10th successive victory in the competition」（含双打）。",
+      "crosses_cut": "116.2 一处换镜头：破发之后的意大利看台。",
+      "point_end_ok": "段尾 118.56 是 point_ends 118.56。"
+    },
+    {
+      "start": 198.2,
+      "end": 212.32,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "下一个保利尼的发球局，斯维托丽娜被拉到场边。看起来已经来不及，她还是一拍穿越，从保利尼身边擦了过去。解说说，简直是神来之笔。",
+      "_why": "记分条 196.5~208.5s `2 0 / 4 15`（保利尼发球），210.5s 翻成 `0 / 30`。解说 205.52「Oh, glorious. Simply sensational pass from Elina」。",
+      "crosses_cut": "198.2~206.76 回合镜头，206.76 之后是这一分之后的近景。",
+      "point_end_ok": "段尾 212.32 是 point_ends 212.32，212.5s 的 `30 / 40` 在段尾之后 0.18 秒（新比分在下一镜头首帧）。"
+    },
+    {
+      "start": 212.44,
+      "end": 222.08,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "零比四十，保利尼救下两个。第三个破发点还是没守住，五比二。",
+      "_why": "flashscore 第一盘第 7 局 `0:15, 0:30, 0:40 |B1|, 15:40 |B1|, 30:40 |B1|` → 三个破发点，第三个兑现。记分条 212.5~218.5s `30 / 40`，222.5s 翻成 `2 / 5`。解说 217.28「But it doesn't matter. Still able to break」。",
+      "crosses_cut": "219.36 一处换镜头：破发之后的近景。",
+      "point_end_ok": "段尾 222.08 是 point_ends 222.08，翻牌就在段尾。"
+    },
+    {
+      "start": 224.32,
+      "end": 231.76,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "发球胜盘，第一个盘点就拿下，六比二，三十一分钟。",
+      "_why": "记分条 222.5~230.5s `2 15 / 5 40`（斯维托丽娜发球，盘点）。flashscore 第一盘最后一局 `0:15, 15:15, 15:30, 15:40 |B2|` → 第一个盘点兑现；分盘用时 0:31。",
+      "crosses_cut": "224.32~231.76 是一个连续的回合镜头。",
+      "point_end_ok": "段尾 231.76 是 point_ends 231.76——盘点落地。"
+    },
+    {
+      "start": 231.76,
+      "end": 246.16,
+      "cx": 0.5,
+      "score_inset": false,
+      "narration": "",
+      "_score_inset_why": "盘末：231.76 起是替补席、换边，没有比分板。",
+      "quote": [
+        {
+          "at": 0.0,
+          "text": "Before this tie began, Illya Marchenko said,\n赛前乌克兰队长马尔琴科说"
+        },
+        {
+          "at": 1.2,
+          "text": "\"We want revenge.\"\n我们要复仇"
+        },
+        {
+          "at": 4.32,
+          "text": "They're halfway there to revenge in this match,\n这一场的复仇完成了一半"
+        },
+        {
+          "at": 9.52,
+          "text": "three quarters of the way as far as the tie is concerned.\n整个对决已走完四分之三"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_quote_why": "转播原句，probe 的 captions.txt：229.92「Number four. This tie began. Ilia」（自动转写，开头那几个词听写不准，按语义写成 Before this tie began）、232.96「Marenko said, \"We want revenge.\"」、236.08「They're halfway there to revenge in this」、238.56「match.」、241.28「3/4 of the way there as far as the tire」、244.48「is concerned.」。队长名按金杯官网名单「Captain: Illya Marchenko」写回；段内 at = 原时刻 − 231.76（第一句从 0 起挂）。",
+      "_why": "第一盘结束的解说原声，留下来配中英字幕（2026-09-19「精彩的原声解说要留下来」）；「复仇」正是这一场的影子。",
+      "crosses_cut": "235.76 / 242.32 几处换镜头：替补席、换边，都在这一盘结束之后。",
+      "point_end_ok": "这一盘已经结束，盘间没有记分条。"
+    },
+    {
+      "start": 265.2,
+      "end": 279.12,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "第二盘第一局，还是保利尼发球，还是破发点。斯维托丽娜满场跑，什么球都接得回来。解说说，她无处不在。破发，一比零。",
+      "_why": "记分条 264.5~274.5s `2 0 15 / 6 0 40`（保利尼发球，斯维托丽娜破发点），278.5s 翻成 `6 1`。flashscore 第二盘第 1 局 `0:15, 15:15, 15:30, 15:40 |B1|` → 第一个破发点兑现。解说 273.04「Oh, she's everywhere. Ready for everything」。",
+      "crosses_cut": "274.6 一处换镜头：破发之后的近景。",
+      "point_end_ok": "段尾 279.12 是 point_ends 279.12，278.5s 的翻牌在段尾之前。"
+    },
+    {
+      "start": 307.84,
+      "end": 330.88,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "零比二，又是保利尼的发球局。十五比四十，斯维托丽娜一拍斜线，角度几乎不存在，她还是打了进去。解说说，她冷静得可怕。赢了这一分，她脸上也没什么表情。这一盘保利尼的一发，十九分只拿了九分。再破一次，三比零。",
+      "_why": "记分条 308.5~314.5s `2 0 15 / 6 2 30`（保利尼发球）、318.5~328.5s `15 / 40`，332.5s 翻成 `6 3`。flashscore 第二盘第 3 局 `15:0, 15:15, 15:30, 15:40 |B1|` → 破发。解说 314.56「I mean, that's ridiculous. The angle wasn't even there. How composed Svitolina is」、328.56「Yeah. Again, no reaction」。 「十九分只拿了九分」：flashscore `Set 2/Service 1st serve points won` 主队 47% (9/19)。",
+      "crosses_cut": "315.8 / 321.52 / 327.6 几处换镜头：分与分之间。",
+      "point_end_ok": "段尾 330.88 是 point_ends 330.88，破发之后翻牌。"
+    },
+    {
+      "start": 344.4,
+      "end": 358.28,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "一比四，轮到她自己发球。又一拍漂亮的正手，这一局稳稳保住。五比一。这一盘她的发球局，保利尼十八分里只拿到两分。",
+      "_why": "记分条 344.5~354.5s `2 1 15 / 6 4 30`（斯维托丽娜发球），356.5s 翻成 `6 5`。解说 351.92「Oh, it's glorious once again」。 「十八分里只拿到两分」：flashscore `Set 2/Points Return Points Won` 主队 11% (2/18)。",
+      "crosses_cut": "345.12 / 353.24 两处换镜头：分与分之间。",
+      "point_end_ok": "段尾挪到 358.28（切点）：356.5s 记分条已翻成 `6 5`、point_ends 357.84 是换发球后的翻牌，都在段尾之前。"
+    },
+    {
+      "start": 370.64,
+      "end": 383.84,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "落后一比五，保利尼没有放弃。三次平分，她每一次都多撑一拍。这一局她抢了下来，二比五。看台还在替她喊。",
+      "_why": "记分条 370.5~382.5s `2 1 40 / 6 5 40`（保利尼发球，平分），384.5s 翻成 `2 2 / 6 5`（SERVING FOR THE MATCH）。flashscore 第二盘第 7 局三个 40:40。解说 377.92「still made a play. One extra ball, but the crowd still believe」。",
+      "crosses_cut": "380.12 一处换镜头：这一局结束之前的近景。",
+      "point_end_ok": "段尾 383.84 是 point_ends 383.84，翻牌就在段尾。"
+    },
+    {
+      "start": 383.84,
+      "end": 397.96,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "二比五，斯维托丽娜发球胜赛。第一分，保利尼拿下。解说说，她在告诉乌克兰：还没完。可去年那样的翻盘，今天没有再来。",
+      "_why": "记分条 384.5~396.5s `2 2 0 / 6 5 0`（斯维托丽娜发球，SERVING FOR THE MATCH），398.5s 翻成 `15 / 0`。解说 385.92「serving for the match」、393.44「Oh, but Paolini just says not yet, Ukraine」。",
+      "crosses_cut": "395.64 一处换镜头：这一分之后。",
+      "point_end_ok": "段尾 397.96 是切点，398.5s 的 `15 / 0` 在下一镜头首帧（0.54 秒，这一分已在 395.64 之前落地）。"
+    },
+    {
+      "start": 408.84,
+      "end": 434.84,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "斯维托丽娜眼都没眨。连拿三分，四十比十五，赛点。去年她先赢一盘，被保利尼翻了盘。今年两盘，只让她拿了四局。全场八十九分，她拿下五十八分。乌克兰队史第一个决赛，就差这一分。第一个赛点就拿下，一小时零三分。换你是保利尼，还能从哪儿下手？",
+      "_why": "记分条 410.5~420.5s `15 / 15`、422.5~434.5s `15 / 40`（斯维托丽娜发球，赛点）。flashscore 最后一局 `15:0, 15:15, 15:30, 15:40 |B3|` → 第一个赛点兑现。解说 407.84「Not blinking」、418.88「Oh, stop it」。「只让她拿了四局」：flashscore `Total games won` 主队 4/16。末句落在一问上（`test_收尾要落在一问上不能停在数据上`）。 「八十九分拿下五十八分」：flashscore `Total Points Won` 客队 58/89；「一小时零三分」：ITF tieCentre 01:03:34、flashscore 1:04。",
+      "crosses_cut": "420.52 / 423.68 两处换镜头：分与分之间。",
+      "point_end_ok": "段尾 434.84 是转播切点，也是 point_ends 434.88——赛点落地。"
+    },
+    {
+      "start": 434.84,
+      "end": 449.36,
+      "cx": 0.5,
+      "score_inset": false,
+      "narration": "",
+      "_score_inset_why": "比赛已经结束：434.84 起是吼叫近景、网前拥抱，没有比分板。",
+      "quote": [
+        {
+          "at": 0.0,
+          "text": "For the first time in their history,\n乌克兰队史第一次"
+        },
+        {
+          "at": 2.92,
+          "text": "Ukraine make the Billie Jean King Cup final\n打进比利·简·金杯决赛"
+        },
+        {
+          "at": 5.64,
+          "text": "as revenge is served,\n复仇完成"
+        },
+        {
+          "at": 10.76,
+          "text": "and Italy's fabulous run is finally over.\n意大利这一路连胜终于到头"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_quote_why": "同冷开场那一段（captions.txt 434.56~449.12），段内 at = 原时刻 − 434.84。",
+      "_why": "赛点之后的原声，按时间顺序重放冷开场那一段。",
+      "crosses_cut": "434.84~449.36 几处换镜头：吼叫、网前拥抱、替补席，全在赛点之后。",
+      "point_end_ok": "比赛已经结束。"
+    }
+  ],
+  "_editing_why": "源片 497.0 秒：比赛画面到 434.84 秒（赛点落地），434.84~487.3 是赛点之后（吼叫、网前拥抱、乌克兰看台、保利尼离场、比利·简·金本人鼓掌），488 起是片尾订阅板，490.27 起静音；**没有场上采访**。认人：斯维托丽娜青绿色连衣裙、左腿黑色护具；保利尼蓝色上衣白色短裙。段落端点取自 probe 的 `scene_cuts` / `point_ends`，比分按 probe 的记分条缩略图（`score_*.jpg`）逐格读过（记分条上的黄点是发球方）。集锦没播的局（第一盘第 2、5、6 局，第二盘第 2、4、5 局）只在旁白的比分里带过。",
+  "_tactics_why_note": "球路写在第 3 段（正手压得又深又准）、第 4 段（救球把难题还回去）、第 5 段（保利尼从接发开始压住）、第 6 段（被拉到场边一拍穿越）、第 10 段（满场跑什么球都接得回来）、第 11 段（没有角度的斜线）、第 12 段（正手保发）——都以转播解说原句为据（见各段 `_why`）。",
+  "_quote_why_global": "两段原声：冷开场／赛点之后「乌克兰队史第一次打进决赛，复仇完成」、第一盘结束「队长说要复仇，已经完成一半」。",
+  "_no_repeat": "同一个 tie 的 `grant-kalinina-bjk-cup-2026-sf`（第一场单打，已推）讲的是格兰特首秀、卡利尼娜发球局全保；这一条不重讲，只一句带过「乌克兰一比零领先」。",
+  "push": {
+    "matchup": "斯维托丽娜 vs 保利尼",
+    "score": "6-2 6-2",
+    "summary": "斯维托丽娜送乌克兰进决赛",
+    "auto": true,
+    "lead": "2026 比利·简·金杯总决赛半决赛，深圳湾体育中心，意大利对乌克兰第二场单打：世界第 7 的斯维托丽娜 6-2、6-2 胜世界第 20 的保利尼，用时 1 小时 3 分。乌克兰 2-0 淘汰两届卫冕冠军意大利，拿到队史第一个金杯决赛资格，周日对捷克。去年半决赛，正是保利尼先丢一盘、3-6 6-4 6-4 逆转了她，意大利由此翻盘晋级。今年第一盘斯维托丽娜三次破发，第二盘两次破发，全场 7 个破发点兑现 5 个；保利尼只破了她一次，一发得分率只有 41%。"
+  }
+}
