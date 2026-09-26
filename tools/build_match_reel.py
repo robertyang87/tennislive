@@ -6927,13 +6927,6 @@ COVER_FILL_W, COVER_FILL_H = 1080, 1440
 #:   三档查过），X／AP／ATP 沙箱和 runner 都挡。同样的情形他前三次都选了抽帧
 #:   （上面三条），所以按那个口径先推；**早上他要换图，删掉这一行、换 image、
 #:   重渲重推**。源片 1920×1080，放大 1.33 倍。
-#: - `bu-majchrzak-hangzhou-2026-r2`：2026-09-26 杭州 ATP250 第二轮（北京 19:12
-#:   打完）。推片窗口内官方实拍**还没发**：AP、WTA photo-resources 用
-#:   find_cover_photo 跑过两趟都是 0；搜狗微信收录的赛后稿只有全网球 APP 一组
-#:   「图片来源：杭州网球公开赛」的 945×1260，被转载号烧了大字；主办方公众号当天
-#:   战报还没发。我把「批准抽帧现在就发」「先渲、等官方图再推」两条摆出来，
-#:   账号所有者选了前者。推送后他要求换成偏正面的帧，现在是 76.6s 接发前的正脸，
-#:   源片 1920×1080，放大约 1.6 倍（zoom 1.2 让脸躲开钩子带）。
 #: - `medvedev-royer-hangzhou-2026-r2`：2026-09-26 杭州 ATP250 第二轮（北京 21:20
 #:   打完）。按下面那条常设授权走：终场后约 20 分钟，find_cover_photo 查 AP、WTA
 #:   photo-resources 都是 0，赛后稿没有图、主办方战报未发。用 161.4s 赛点后正脸
@@ -6946,7 +6939,6 @@ OWNER_APPROVED_FRAME_COVERS = frozenset({
     "zhiyenbayeva-bouzas-bjk-cup-2026",
     "wang-prozorova-singapore-2026-qf",
     "bublik-jodar-laver-cup-2026",
-    "bu-majchrzak-hangzhou-2026-r2",
     "medvedev-royer-hangzhou-2026-r2",
 })
 

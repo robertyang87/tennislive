@@ -1,0 +1,386 @@
+{
+  "slug": "fernandez-chwalinska-singapore-2026-sf",
+  "source_url": "https://www.youtube.com/watch?v=XWfAKjEnQ8U",
+  "_column": "赛场之上",
+  "tts_backend": "edge",
+  "_tts_backend_why": "平直复盘叙述，不写 `style`；同站 `fernandez-andreeva-singapore-2026-qf`、`chwalinska-mertens-singapore-2026-qf` 都是 edge。",
+  "_source": "账号所有者给的链接。源片是 WTA 官方 YouTube `XWfAKjEnQ8U`（oEmbed：`Leylah Fernandez vs. Maja Chwalinska | 2026 Singapore Semifinal | WTA Match Highlights`，author `WTA`），probe 在 `output/2026-09-26/reel/fernandez-chwalinska-singapore-2026-sf/`：1920×1080 / 25fps、464.4s，带 `--scorebox 90,870,550,980`。四要素自证：记分条逐格读过（`L. FERNANDEZ [6] / M. CHWALINSKA [5]`），挡板 `SINGAPORE`、`THE KALLANG`，66.5s／188.5s 赛间图形 `SEMI-FINAL`。比赛画面到 262.4s，262.4~299.4 是赛点之后的庆祝与握手，**299.76s 起是场上采访**——不进复盘，只在最后一段旁白里转述她一句话（出处见那一段 `_why`）。逐秒帧：frame-grab 落在 `output/2026-09-26/frames/fernandez-chwalinska-sf/`。",
+  "scorebox": [
+    90,
+    870,
+    550,
+    980
+  ],
+  "_scorebox_why": "同站 `fernandez-andreeva`、`chwalinska-mertens`、`wang-prozorova` 同一块转播板；三盘那一档更宽，probe 后按 score_*.jpg 复量。",
+  "_match": {
+    "id": "2026:singapore:womens-semifinal:leylah-fernandez-maja-chwalinska",
+    "event": "2026 WTA500 新加坡",
+    "event_search": "Singapore",
+    "round": "Women's Singles Semifinal",
+    "year": 2026,
+    "status": "result_verified",
+    "winner": "费尔南德斯",
+    "loser": "赫瓦林斯卡",
+    "participants": [
+      "费尔南德斯",
+      "赫瓦林斯卡"
+    ],
+    "winner_en": "Leylah Fernandez",
+    "loser_en": "Maja Chwalinska",
+    "set_scores_home_away": [
+      [
+        1,
+        6
+      ],
+      [
+        6,
+        4
+      ],
+      [
+        6,
+        2
+      ]
+    ],
+    "tiebreaks_home_away": [
+      null,
+      null,
+      null
+    ],
+    "_source": "两源一致：WTA 官方 tournaments/1152/2026/matches 的 MatchID=LS002，`ResultString` = `[6]L. Fernandez d [5]M. Chwalinska 1-6,6-4,6-2`、`RoundID=S`（半决赛）、`MatchTimeTotal=02:08:27`；flashscore b1rbH9QE 盘分 1-6 / 6-4 / 6-2（home＝费尔南德斯，`AE=Fernandez L.`）。",
+    "source": "flashscore_points",
+    "source_id": "b1rbH9QE",
+    "flashscore_id": "b1rbH9QE",
+    "winner_result": "1-6 6-4 6-2",
+    "loser_result": "6-1 4-6 2-6"
+  },
+  "topbar": {
+    "line1": "2026 WTA500 新加坡站 半决赛",
+    "line2": "费尔南德斯 1-6 6-4 6-2 赫瓦林斯卡"
+  },
+  "_topbar_why": "line1 按 2026-09-24 定的格式，和同站 `fernandez-andreeva-singapore-2026-qf` 同一行写法；WTA 官方 `RoundID=S`＝半决赛。",
+  "cover": {
+    "matchup": [
+      {
+        "name": "费尔南德斯",
+        "name_en": "Leylah Fernandez",
+        "country": "CAN",
+        "rank": 31
+      },
+      {
+        "name": "赫瓦林斯卡",
+        "name_en": "Maja Chwalinska",
+        "country": "POL",
+        "rank": 25
+      }
+    ],
+    "_rank_why": "WTA 官方 `players/ranked`（`sources.rankings.fetch_rankings`，`rankedAt=2026-09-21`）：赫瓦林斯卡第 25（1888 分）、费尔南德斯第 31（1454 分）（2026-09-26 查）；和同站两条 1/4决赛 spec 一致。",
+    "winner": "费尔南德斯",
+    "result": "1-6 6-4 6-2",
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "费尔南德斯",
+    "hook": "首盘只拿到1局\n逆转月亮姐进决赛",
+    "hook_accent": "逆转",
+    "_hook_why": "账号所有者 2026-09-26 定的第二行「逆转月亮姐」（月亮姐＝赫瓦林斯卡，推送标题「月亮姐送走卫冕冠军进四强」同一个叫法）。第一行是这场球的关键局面（第一盘 1-6，WTA 官方 LS002），第二行是结果：赢了谁、晋级到哪儿。7 字、8 字，没有术语、没有裸比分。",
+    "topic": "新加坡WTA500 · 女单半决赛",
+    "_subject_why": "赢家；账号所有者点的题是「月亮姐的半决赛」，她输了，照 solo 默认放赢家，赫瓦林斯卡在钩子第二行和旁白里。",
+    "_heat_why": "轮次已是半决赛（2026-08-12：半决赛级别的都要做）；对手赫瓦林斯卡是账号所有者点名的热点样板、本场是他亲口点的题。",
+    "portrait": {
+      "image": "assets/reel/fernandez-chwalinska-sf-cover.jpg",
+      "focus": 0.46,
+      "focus_y": 0.25,
+      "zoom": 1.0,
+      "_photo_why": "WTA 官方 photoresources 实拍，5737×3825，铺 1080×1440 是缩小：https://photoresources.wtatennis.com/wta/photo/2026/09/26/f01a725e-a26d-4551-be26-6907dc696826/Leylah-Frnandez-Singapore-2026.jpg ——就是 WTA 官网这场赛后稿 4582131（`From 1-6 down to the final: Fernandez rallies past Chwalinska`）的头图（og:image），路径日期 9/26＝比赛当天。已下载打开看过：双手反手击球中、正脸、睁眼，球在画面右上，挡板 BNP PARIBAS。⚠️ 粉色上衣和她 1/4决赛同一身，所以日期目录 9/26 ＋ 挂在这一场赛后稿上是认它的判据，probe 之后再拿源片同一身着装核一次。"
+    },
+    "scoreboard": {
+      "court": "OCBC Arena",
+      "_court_why": "沿用同站 `chwalinska-mertens`、`fernandez-andreeva` 已核的 OCBC Arena。",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%20%222%3A08%3A27%22%2C%20%22source%22%3A%20%22WTA%20official%20tournaments/1152/2026/matches%20LS002%20MatchTimeTotal%2002%3A08%3A27%3B%20stats%20settime%2000%3A31%3A00%2B00%3A47%3A16%2B00%3A50%3A05%22%2C%20%22cross_check%22%3A%20%22flashscore%20dc_1%20b1rbH9QE%20DC%201790417400%20%5Cu2192%20DD%201790425058%20%3D%202%3A07%3A38%22%7D",
+        "field": "duration"
+      },
+      "_duration_why": "WTA 官方 `MatchTimeTotal=02:08:27`，三盘 `settime` 31:00＋47:16＋50:05＝2:08:21，自洽；flashscore 开赛/结束时间戳相差 2:07:38。⚠️ flashscore 分盘用时加总 2:10，偏长，不用。"
+    }
+  },
+  "_opening_time_source": {
+    "url": "https://global.flashscore.ninja/2/x/feed/dc_1_b1rbH9QE",
+    "match_id": "b1rbH9QE",
+    "field": "DC",
+    "value": 1790417400,
+    "beijing": "2026-09-26T18:10+08:00",
+    "spoken_precision": "approximate-hour",
+    "_why": "开球只说个大概：`DC=1790417400` → 10:10Z＝北京 18:10；`DD=1790425058`（北京 20:17）是结束，差 2:07:38，和 WTA 官方用时自洽。旁白说「傍晚六点多」。"
+  },
+  "stats": {
+    "a": {
+      "aces": 2,
+      "df": 4,
+      "first_in": 47,
+      "first_won": 30,
+      "second_total": 27,
+      "second_won": 12,
+      "bp_conv": 5,
+      "bp_chances": 8,
+      "pts_won": 72,
+      "pts_total": 141,
+      "first_total": 74,
+      "headshot": "assets/players/headshots/wta-326735.jpg",
+      "ue": 43
+    },
+    "b": {
+      "aces": 0,
+      "df": 1,
+      "first_in": 49,
+      "first_won": 31,
+      "second_total": 18,
+      "second_won": 6,
+      "bp_conv": 5,
+      "bp_chances": 8,
+      "pts_won": 69,
+      "pts_total": 141,
+      "first_total": 67,
+      "headshot": "assets/players/headshots/wta-325639.jpg",
+      "ue": 28
+    },
+    "_source": "`match_stat_hooks.py b1rbH9QE --stats-block`（flashscore `df_st_1`），a＝cover.matchup[0]＝费尔南德斯＝flashscore home，不用对调；和 WTA 官方 `/matches/LS002/stats` 逐项一致（Ace 2/0、双误 4/1、一发 30/47 对 31/49、破发 5/8 对 5/8、总得分 72 对 69）。非受迫失误走 TNNS（run 36241572196，id=74753612，`hasExtendedStats: True`）：制胜分 [32, 17]、非受迫失误 [43, 28]，选手顺序 `['Fernandez','Chwalinska']`，分盘合计＝全场自证 ✅。头像沿用已发 spec 认过的两张。 ⚠️ **制胜分两个源对不上，不画**：TNNS [32, 17]，WTA 官网赛后稿 4582131 写 `Fernandez hit 31 winners, compared with 15 for Chwalinska`；非受迫失误两边一致（43 对 28），留下。",
+    "_winners_ue_why": "TNNS 跑过（run 36241572196，id=74753612，`hasExtendedStats: True`）：制胜分 [32, 17]、非受迫失误 [43, 28]。非受迫失误和 WTA 官网赛后稿 4582131 一致（43 对 28），填了；制胜分赛后稿写 `31 winners, compared with 15`，和 TNNS 对不上，两个源不一致就不画这一行。"
+  },
+  "_hit_data": "`match_feed.py show b1rbH9QE` 逐局：第一盘赫瓦林斯卡连下五局到 5-0，费尔南德斯前四个发球局全被破（连续被破 4 局），1-5 破回一局，1-6 31 分钟。第二盘 3-1 领先，3-3 被破、3-4；之后连拿三局：4-4 保、5-4 破（`40:30 |B1|`）、6-4 两个盘点保发。第三盘 1-1 她发球平分两次、救下一个破发点保住；之后 2-1 破、3-1 零封保、4-1 破、5-1 保，5-2 赫瓦林斯卡发球，`30:40` 起到第四个局点才保住（`40:A` 三次，flashscore 比分 home:away＝费尔南德斯:赫瓦林斯卡），6-2 第一个赛点拿下。**第二盘 3-3 被破之后她最后 6 个发球局全保**。TNNS 分盘：费尔南德斯非受迫失误 21 → 14 → 8，制胜分 6 → 13 → 13；赫瓦林斯卡非受迫失误 4 → 9 → 15。flashscore 第三盘：赫瓦林斯卡二发得分 1/10、费尔南德斯发球得分 18/24。全场总得分 72 比 69（只多 3 分——⚠️ 不上钩子，2026-09-19 规矩）。 WTA 官网赛后稿：上网 37 次拿下 22 分；开局赫瓦林斯卡连拿 15 分；第二盘费尔南德斯开局连拿 8 分。",
+  "_claims": {},
+  "push": {
+    "matchup": "费尔南德斯 vs 赫瓦林斯卡",
+    "score": "1-6 6-4 6-2",
+    "summary": "费尔南德斯逆转月亮姐",
+    "auto": true,
+    "lead": "2026 WTA500 新加坡女单半决赛：6 号种子、世界第 31 的费尔南德斯 1-6、6-4、6-2 逆转 5 号种子、世界第 25 的赫瓦林斯卡，用时 2 小时 08 分。第一盘她前 4 个发球局全被破，一个人送出 21 个非受迫失误，31 分钟 1-6。第二盘 3-1 领先被追到 3-4，之后连拿三局 6-4。决胜盘 1-1 救下一个破发点保发，随后两次破发到 5-1，第一个赛点拿下。从第二盘 3-3 起她最后 6 个发球局全保，非受迫失误三盘是 21、14、8。这是她本季第一个决赛，对手是不战晋级的吉布森。",
+    "_summary_why": "推送标题上限 20 字位（日期＋栏目已占 8），「…进决赛」放不下，交给 lead 第一句。"
+  },
+  "editorial": {
+    "mode": "match_review",
+    "hook": [
+      "首盘只拿到1局",
+      "逆转月亮姐进决赛"
+    ],
+    "question": "第一盘只拿到一局、送出二十一个非受迫失误，费尔南德斯是怎么把这场球翻过来的？",
+    "thesis": "第一盘她前四个发球局全被破，二十一个非受迫失误，一比六；第二盘三比一被追到三比四，她连拿三局六比四；从三比三被破之后，她最后六个发球局一个没丢，非受迫失误从二十一个降到第三盘的八个，赫瓦林斯卡的二发在第三盘十分只拿一分，六比二。",
+    "beats": [
+      "冷开场：赛点之后她握拳，解说「本赛季第一个决赛」。",
+      "落点＋坐标；开局零比五，底线被左右调动。",
+      "第三个破发点才破回一局；盘点压上网前还是丢了，一比六，二十一个非受迫失误。",
+      "第二盘开局连拿八分，二比零。",
+      "三比三被破、三比四落后，之后最后六个发球局全保；四比四破发。",
+      "第二个盘点六比四。",
+      "决胜盘零比一救下破发点。",
+      "短球加两边调动破发；上网三十七次拿二十二分。",
+      "五比一、五比二，第一个赛点反手制胜分。",
+      "赛后她骗自己对面是右手；决赛对吉布森。"
+    ],
+    "chapters": [
+      "零比五",
+      "三比四",
+      "最后六个发球局",
+      "第一个赛点"
+    ],
+    "human_context": {
+      "angle": "赫瓦林斯卡这一周前三场只丢了 11 局（R32 6-4 6-2 斯拉姆科娃、R16 6-0 6-1 奥利尼科娃、1/4决赛 6-2 6-2 梅尔滕斯），今天第一盘又只让出一局；费尔南德斯是从这里翻过来的。决赛对手吉布森，是因为普罗佐罗娃被脑震荡评估强制退赛才不战晋级。",
+      "facts": [
+        "WTA 官方 LS002：[6]L. Fernandez d [5]M. Chwalinska 1-6,6-4,6-2，RoundID=S，MatchTimeTotal 02:08:27。",
+        "WTA 官方排名（2026-09-21）：赫瓦林斯卡第 25、费尔南德斯第 31。",
+        "flashscore b1rbH9QE 逐局与统计（见 `_hit_data`）；TNNS 制胜分 32:17、非受迫失误 43:28。",
+        "赫瓦林斯卡前三场：WTA 官方 LS023 6-4 6-2、LS011 6-0 6-1、LS005 6-2 6-2（共丢 11 局）。",
+        "本季第一个决赛：WTA 官网 4581896 标题 `Fernandez overcomes Andreeva to reach first semifinal of 2026`——本季第一个半决赛就是这一周，所以这也是本季第一个决赛。",
+        "吉布森不战晋级：WTA 签表 MDS.pdf `T. Gibson WO`，同站 `prozorova-concussion-withdrawal-2026` 已核。",
+        "WTA 官网赛后稿 4582131：两人首次交手（`Playing for the first time`）；赫瓦林斯卡开局连下五局、连拿 15 分；第二盘费尔南德斯开局连拿 8 分 2-0；决胜盘 0-1 她救下一个会让对手 2-0 的破发点；反手制胜分结束比赛；上网 37 次拿下 22 分；非受迫失误 43 对 28；本季第一个决赛、生涯第 9 个决赛，5 个冠军全在硬地；决赛首次对吉布森，吉布森因普罗佐罗娃脑震荡退赛不战晋级。"
+      ],
+      "sources": [
+        "https://api.wtatennis.com/tennis/tournaments/1152/2026/matches",
+        "https://api.wtatennis.com/tennis/tournaments/1152/2026/matches/LS002/stats",
+        "https://global.flashscore.ninja/2/x/feed/df_mh_1_b1rbH9QE",
+        "https://global.flashscore.ninja/2/x/feed/df_st_1_b1rbH9QE",
+        "https://www.wtatennis.com/news/4581896/fernandez-overcomes-andreeva-to-reach-first-semifinal-of-2026",
+        "https://www.wtatennis.com/news/4582131/from-1-6-down-to-the-final-fernandez-rallies-past-chwalinska"
+      ]
+    },
+    "narration": [
+      "第一盘只拿到一局，费尔南德斯还是逆转了月亮姐。",
+      "从三比四起，她最后六个发球局一局都没丢。",
+      "决胜盘零比一，救下破发点。",
+      "第一个赛点，一记反手制胜分。"
+    ]
+  },
+  "segments": [
+    {
+      "start": 262.44,
+      "end": 269.88,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "",
+      "quote": [
+        {
+          "at": 3.24,
+          "text": "It's the first final of the 2026 season\n费尔南德斯拿到本赛季第一个决赛"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_ending_payoff_required": true,
+      "_why": "冷开场：赛点落地之后她握拳吼出来的近景（262.44 是转播切点）。不配旁白，只留解说原声＋中英字幕：captions.txt 265.68「It's the first final of the 2026 season for Leila Fernandez」，段内 at＝265.68−262.44。",
+      "_payoff_why": "倒数第三段（256.92→269.88）把赛点整分和这一段完整重放。",
+      "point_end_ok": "比赛已经结束（赛点在 262 秒前落地）；段尾 269.88 是转播切点。"
+    },
+    {
+      "start": 0.0,
+      "end": 31.8,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "第一盘只拿到一局，费尔南德斯还是逆转了月亮姐，打进决赛。北京时间九月二十六日傍晚六点多，新加坡WTA五百赛半决赛，六号种子、世界第三十一的费尔南德斯，对五号种子、世界第二十五的赫瓦林斯卡。赫瓦林斯卡这一周前三场，一共只丢了十一局。开局零比五。这一分又是底线相持，她被左右调动，第二个破发点也没拿下。",
+      "_why": "记分条 0.5~30.5s `BREAK POINT #2 / 0 40 / 5 15`（赫瓦林斯卡发球，费尔南德斯 40-15）；逐秒帧 0~31：近端粉衣的费尔南德斯在底线右（0~7）→中（8~15）→左（17~27）→左前（29~31），一分打到 31 秒；32.5s 记分条变 `0 40 / 5 30`（BREAK POINT #3），这一分是赫瓦林斯卡的。flashscore 第一盘 0-5 那一局 `40:0 |B1|, 40:15 |B1|, 40:30 |B1|` 后破发。开场顺序：第 1 段冷开场，这一段先落点再坐标。 前三场只丢 11 局＝WTA 官方 LS023 6-4 6-2、LS011 6-0 6-1、LS005 6-2 6-2。 21 比 4＝TNNS Set 1 非受迫失误 `[21, 4]`。",
+      "crosses_cut": "0~31.8 同一个宽景一整分，31.8 切赫瓦林斯卡近景。",
+      "point_end_ok": "这一分在 31 秒前打完；段尾 31.8 是转播切点，之后 33.44 是下一分的切点，`point_ends` 33.44 的翻牌是 1-5 的新比分，之间 1.6 秒是近景——翻牌前那一分已经在 31 秒打完。"
+    },
+    {
+      "start": 33.44,
+      "end": 57.04,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "第三个破发点，她才破回一局，一比五。可紧接着，她又被拿到盘点。这一分她压到网前，还是没拿下。第一盘只打了三十一分钟，一比六。她前四个发球局全被破，一个人送出二十一个非受迫失误，赫瓦林斯卡只有四个。",
+      "_why": "记分条 34.5~56.5s `SET POINT / 1 30 / 5 40`（费尔南德斯发球）；逐秒帧 35~53 近端的她在底线左右跑，54~56 压到网前；57 切赫瓦林斯卡近景，解说 68.40「It is a 6-1 set in 31 minutes」。前四个发球局全被破＝flashscore 第一盘；21 个非受迫失误＝TNNS Set 1 `[21, 4]`。",
+      "crosses_cut": "33.44 起同一个宽景一整分，57.04 切近景。",
+      "point_end_ok": "盘点在 57 秒前打完（57.04 已切到赫瓦林斯卡近景）；58.0 起的几次翻牌是盘末记分条收起、换成盘分图形，不是比分变化。"
+    },
+    {
+      "start": 71.56,
+      "end": 93.68,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "第二盘，她一上来连拿八分。第一盘她只破过对手一次，这一盘第一局就破了。再保住自己的发球，二比零。这一分就是那八分里的一分，两人在底线来回拉了很久，最后还是她拿下。第一盘她的二发，一分都没拿到。",
+      "_why": "记分条 72.5~92.5s `1 0 15 / 6 0 0`、96.5s `30 / 0`（赫瓦林斯卡发球的第二盘第一局）。连拿八分：WTA 官网赛后稿 `winning the first eight points to take a 2-0 lead`；flashscore 第二盘前两局 `15:0, 30:0, 40:0` ×2。 第一盘只破过一次＝flashscore Set 1 `Break Points Converted 1/4`。 二发 0/6＝flashscore Set 1 `2nd serve points won 0% (0/6)`。",
+      "crosses_cut": "71.56 起同一个宽景一整分，93.68 切费尔南德斯近景。",
+      "point_end_ok": "这一分在 93 秒前打完；段尾 93.68 是转播切点，之后 96.96 那次翻牌在 3.28 秒之后。"
+    },
+    {
+      "start": 120.44,
+      "end": 140.6,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "三比一领先，三比三又被破回，三比四落后。下一局她保住了，四比四。从这一局起，最后六个发球局她一局都没丢。她的一发得分率，从第一盘的百分之四十，涨到这一盘的百分之七十九。",
+      "_why": "记分条 120.5~140.5s `1 3 30 / 6 4 0`（费尔南德斯发球，3-4）。flashscore 第二盘：3-1 → 3-3 被破 → 3-4 → 4-4 保；她 4-4 起的六个发球局（4-4、6-4、决胜盘 1-1、3-1、5-1、6-2）全保——`match_stat_hooks` `[主队 连续保发] 6 个发球局`。 一发得分率 40%→79%＝flashscore `df_st_1` Set 1 `6/15`、Set 2 `15/19`。",
+      "crosses_cut": "120.44~140.6 同一个宽景；140.6 是转播没被 `scene_cuts` 认出的硬切（逐秒帧 140 赫瓦林斯卡走回、141 她已在发球位、记分条换成 `BREAK POINT / 4 40 / 4 30`）。",
+      "point_end_ok": "这一分在 140 秒前打完（139~140 赫瓦林斯卡往回走）；140.6 之后是下一局的破发点，`point_ends` 下一次翻牌在 169.28。"
+    },
+    {
+      "start": 140.6,
+      "end": 169.24,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "四比四，赫瓦林斯卡发球，费尔南德斯拿到破发点。这一分两人在底线对拉了很久。她耐心地一拍一拍往两边送，最后把赫瓦林斯卡逼到左侧底角。这一分拿下，破发，五比四。第一盘她二十一个非受迫失误，这一盘降到了十四个。这一盘，她自己的发球局只丢了一个。",
+      "_why": "记分条 142.5~168.5s `BREAK POINT / 1 4 40 / 6 4 30`（赫瓦林斯卡发球）；逐秒帧 141~168 远端粉衣的费尔南德斯一直在底线，近端黑衣的赫瓦林斯卡左右跑，165~168 在近端左侧底角；169 切费尔南德斯握拳近景，172.5 记分条 `5 40 / 4 30`。flashscore 第二盘 5-4 `40:30 |B1|` 破发。TNNS 分盘非受迫失误 Set 1 21、Set 2 14。 第二盘发球局 4/5＝flashscore Set 2 `Service games won 80% (4/5)`。",
+      "crosses_cut": "140.6 起同一个宽景一整分，169.24 切近景。",
+      "point_end_ok": "这一分在 169 秒前打完；段尾 169.24 是转播切点，也是 `point_ends` 169.28 的翻牌（0.04 秒）。",
+      "_tts_note": "「把赫瓦林斯卡拉到」切成 `赫瓦林斯卡拉`，改成「逼到」。"
+    },
+    {
+      "start": 172.32,
+      "end": 184.2,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "五比四轮到她胜盘。第一个盘点没拿下，第二个拿下了，六比四，盘分一比一。第一盘那个一比六，她已经扔在脑后。",
+      "_why": "记分条 172.5~180.5s `SET POINT #2 / 1 5 40 / 6 4 30`；解说 179.76「Fernandez levels this one up at one set」、185.84「showing such a strong mentality to forget about that first set as quickly as she possibly could」。flashscore 第二盘最后一局 `40:15 |B2|, 40:30 |B2|`。",
+      "crosses_cut": "172.32 起宽景一整分，178.92 切她的近景（盘点之后）。",
+      "point_end_ok": "盘点在 178.9 前打完；段内 181/182/183 的翻牌是盘末换成盘分图形；段尾 184.2 之后下一次翻牌 189.04。"
+    },
+    {
+      "start": 193.32,
+      "end": 215.56,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "决胜盘零比一，她自己发球，三十比四十。一个破发点，丢了就是零比二。这一分她站在底线，把赫瓦林斯卡左右调动。对手几次扑着救球，这一分还是她的，一比一。从这一局起，这一盘就归她掌控了。",
+      "_why": "记分条 194.5~214.5s `BREAK POINT / 1 6 0 30 / 6 4 1 40`（费尔南德斯发球）；逐秒帧 195~213 近端黑衣的赫瓦林斯卡从左（195~199）被调到右（201~202 扑球）、207~210 再扑向右侧、211 回左；远端的费尔南德斯一直在底线。214 切她的近景，216.5 记分条 `1 / 1`。WTA 官网赛后稿 `Chwalinska had an early break point in the third set that would have given her a 2-0 lead. However, Fernandez saved it`。 「这一盘就归她掌控了」＝赛后稿 `leveled the set at 1-1 before taking control`。",
+      "crosses_cut": "193.32~213.72 同一个宽景一整分，213.72~215.56 她走回的近景。",
+      "point_end_ok": "这一分在 213 秒前打完；段尾 215.56 是转播切点，也是 `point_ends` 215.6 的翻牌（0.04 秒）。"
+    },
+    {
+      "start": 215.56,
+      "end": 243.2,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "下一局赫瓦林斯卡发球。这一分，费尔南德斯先打一拍短球，把她拽到网前。再把球打向两边，赫瓦林斯卡满场追，还是没追回来，解说都说这追得太夸张了。这一局她破发，二比一。赛后统计，她全场上网三十七次，拿下二十二分。这一盘赫瓦林斯卡的二发，十分里只拿到一分。",
+      "_why": "记分条 216.5~238.5s `1 6 1 / 6 4 1`（赫瓦林斯卡发球，这一局第一分）、242.5s `15 / 0`；逐秒帧 226~237：近端黑衣的赫瓦林斯卡 229~230 被拽到网前，232 退到右侧，234~235 扑向左侧底角，236~237 回中路；238 切费尔南德斯握拳近景、240~243 看台。解说 237.92「That is ridiculous chasing」。flashscore 决胜盘 2-1 破发；上网 37 次拿 22 分＝WTA 官网赛后稿；二发 1/10＝flashscore Set 3 `2nd serve points won 10% (1/10)`。",
+      "crosses_cut": "215.56~238.0 同一个宽景一整分，238.0 起她的近景、240.4 起看台。",
+      "point_end_ok": "这一分在 238 秒前打完；段尾 243.2 是转播切点，也是 `point_ends` 243.2 的翻牌。"
+    },
+    {
+      "start": 243.2,
+      "end": 256.92,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "再保发、再破发，五比一。五比二这一局赫瓦林斯卡发球，到第四个局点才保住。决胜盘，费尔南德斯的非受迫失误只有八个。",
+      "_why": "记分条 244.5~256.5s `1 6 5 / 6 4 1 Ad`（赫瓦林斯卡发球，占先）；解说 254.64「Oh, and fires it off」，256.92 切赫瓦林斯卡近景，258.5 记分条 `5 40 / 2 15`。flashscore 决胜盘 5-2 那一局 `30:40, 40:40, 40:A, 40:40, 40:A, 40:40, 40:A`＝第四个局点保住；TNNS Set 3 非受迫失误 `[8, 15]`。",
+      "crosses_cut": "243.2~254.84 同一个宽景一整分，254.84 起赫瓦林斯卡近景。",
+      "point_end_ok": "这一分在 254.8 前打完；段尾 256.92 是转播切点，下一次翻牌 262.48 在 5.56 秒之后。"
+    },
+    {
+      "start": 256.92,
+      "end": 269.88,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "最后一局，费尔南德斯发球胜赛。四十比十五，第一个赛点，反手一拍，直接得分。一比六、六比四、六比二，两小时零八分。",
+      "_why": "记分条 258.5~262.5s `MATCH POINT / 1 6 5 40 / 6 4 2 15`（费尔南德斯发球）；逐秒帧 257~261 近端粉衣的她发球、底线；262.44 切她握拳吼的近景。反手制胜分结束比赛＝WTA 官网赛后稿 `sealed the 1-6, 6-4, 6-2 victory with a backhand winner after 2 hours, 8 minutes`；flashscore 最后一局 `40:15 |B3|`。",
+      "crosses_cut": "256.92~262.44 宽景一整分，262.44 起赛点之后的近景（冷开场那一段）。",
+      "point_end_ok": "赛点在 262 秒前落地；段尾 269.88 是转播切点，段内 262.48 起的翻牌是比赛结束后记分条撤下。",
+      "_tts_note": "「一记反手制胜分」合成器切成 `反 ｜ 手制 ｜ 胜分`，改写成「反手一拍，直接得分」。"
+    },
+    {
+      "start": 269.88,
+      "end": 287.68,
+      "cx": 0.5,
+      "score_inset": false,
+      "_score_inset_why": "比赛已经结束，269.9~287.7 是网前握手和她向看台挥手，转播撤了记分条（缩略图墙 270.5~286.5 没有板）。",
+      "narration": "",
+      "quote": [
+        {
+          "at": 3.24,
+          "text": "An excellent battle.\n一场漂亮的硬仗"
+        },
+        {
+          "at": 4.52,
+          "text": "She got swept aside in the first set.\n第一盘她被打得毫无还手之力"
+        },
+        {
+          "at": 8.6,
+          "text": "Had to completely turn things around,\n她得把局面彻底翻过来"
+        },
+        {
+          "at": 11.16,
+          "text": "and she did just that.\n她做到了"
+        },
+        {
+          "at": 12.72,
+          "text": "Fought hard, made the changes,\n拼到底，做出调整"
+        },
+        {
+          "at": 14.12,
+          "text": "and got better and better.\n越打越好"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_quote_why": "转播原句，captions.txt：273.12「An excellent battle. She got swept aside」、276.16「in the first set.」、278.48「Had to completely turn things around,」、281.04「but she did just that. fought hard, made」、284.00「the changes, and got better and better.」。段内 at＝原时刻−269.88；一句跨两条 cue 的按 cue 起点摊开。",
+      "crosses_cut": "270~278 网前握手、278~287 她向看台挥手：全在赛点之后。",
+      "point_end_ok": "比赛已经结束。"
+    },
+    {
+      "start": 287.68,
+      "end": 299.44,
+      "cx": 0.5,
+      "score_inset": false,
+      "_score_inset_why": "比赛已经结束：287.7~292 近景、292.8 起她走回座位、298.5 赛果图形 `SEMI-FINAL 1 6 6 / 6 4 2`，再贴一块比分板就是同一个比分印两遍。",
+      "narration": "两人都是左手。赛后她说，第二盘干脆骗自己，对面是右手。本季第一个决赛，对手吉布森，她拿得下吗？",
+      "_why": "「骗自己对面是右手」：场上采访 381.60~392.96「in the second set, I just kind of switched it off and just said that she's a righty and just try to convince myself that that was the case…I tricked my mind」，主持人 355.04「a fellow Southpaw」——两人都是左手。采访画面和原声都不进片子，只在这里转述。本季第一个决赛＝解说 265.68 ＋ WTA 官网赛后稿；吉布森＝WTA 签表 `T. Gibson WO`。",
+      "crosses_cut": "287.7~299.4 全在赛点之后；299.44 收在采访开始（299.76）之前。",
+      "point_end_ok": "比赛已经结束；段尾 299.44 是转播切点。"
+    }
+  ],
+  "_editing_why": "源片 464.4 秒：比赛画面到 262.4 秒，262.4~299.4 赛点之后的庆祝、握手、赛果图形，**299.76 秒起是场上采访**，整段排除在窗口之外（最后一段收在 299.44）。认人：费尔南德斯粉色上衣短裙；赫瓦林斯卡黑色连衣裙。段落端点取自 probe 的 `scene_cuts` / `scene_cuts_loose`（140.6 是一处没被认出的硬切，逐秒帧核过）和按 `--scorebox` 真量的 `point_ends`；球路按 frame-grab 逐秒帧看过，比分按记分条缩略图逐格读过。集锦没播的局只在旁白里按 flashscore 逐局一句带过。",
+  "_tactics_why_note": "球路写在第 2 段（底线被左右调动）、第 3 段（压到网前）、第 6 段（往两边送、拉到左侧底角）、第 8 段（底线左右调动、对手扑球）、第 9 段（短球拽到网前再打两边；全场上网 37 次拿 22 分）、第 11 段（反手制胜分）。",
+  "_quote_why_global": "两段原声：冷开场「It's the first final of the 2026 season」，赛点之后解说那一整句「第一盘被横扫……越打越好」。",
+  "_no_repeat": "同站兄弟片：`chwalinska-mertens-singapore-2026-qf`（赫瓦林斯卡连拿七局、赛点月亮球）——这一条不碰月亮球打法和绰号来历，只用「月亮姐」这个叫法；`fernandez-andreeva-singapore-2026-qf`（5-2 被追平）——这一条不重讲那场，只说「本季第一个决赛」；`prozorova-concussion-withdrawal-2026`——只一句带过吉布森不战晋级（在小红书正文里）。"
+}

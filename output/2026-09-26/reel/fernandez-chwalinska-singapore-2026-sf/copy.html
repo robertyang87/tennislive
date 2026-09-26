@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>9.26 赛场之上 | 费尔南德斯逆转月亮姐</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>第一盘只拿到1局，费尔南德斯还是把赫瓦林斯卡挡在了决赛门外🎾
+
+北京时间9月26日傍晚，新加坡室内硬地，WTA500女单半决赛：6号种子、世界第31的费尔南德斯 1-6、6-4、6-2 逆转5号种子、世界第25的赫瓦林斯卡，用时2小时08分。
+
+第一盘31分钟。费尔南德斯前4个发球局全被破，0-5落后，这一盘她一个人送出21个非受迫失误。赫瓦林斯卡这一周前三场一共只丢了11局，这一盘又只让出1局。
+
+第二盘她先破发，3-1领先，3-3被破回，3-4落后。之后连拿三局：保发、破发、保发，6-4。
+
+决胜盘1-1，她自己的发球局两次平分，救下一个破发点保住。接着破发、零封保发、再破发，5-1。5-2那一局赫瓦林斯卡发球，拿到第4个局点才保住；下一局费尔南德斯第一个赛点就拿下。
+
+从第二盘3-3被破开始，她最后6个发球局一个没丢。她的非受迫失误三盘是21、14、8，赫瓦林斯卡是4、9、15。第三盘赫瓦林斯卡的二发，10分里只拿到1分。
+
+她赢球靠的是往前压：全场上网37次，拿下22分。非受迫失误43比28，破发都是5/8，总得分72比69。
+
+这是两人第一次交手，也是费尔南德斯本季第一个决赛、生涯第9个决赛；决赛对吉布森——她的半决赛对手普罗佐罗娃被脑震荡评估强制退赛，不战晋级。
+
+第一盘1比6的时候，你还信她能翻过来吗？
+
+#费尔南德斯 #赫瓦林斯卡 #网球时差 #网球中国赛季来了 #网球时间到</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>本季第一个决赛，对手吉布森，她拿得下吗？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
