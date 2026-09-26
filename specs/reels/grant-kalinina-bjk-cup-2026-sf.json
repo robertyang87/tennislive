@@ -1,0 +1,403 @@
+{
+  "slug": "grant-kalinina-bjk-cup-2026-sf",
+  "source_url": "https://www.youtube.com/watch?v=Ex_l7eFv2WU",
+  "_column": "赛场之上",
+  "tts_backend": "edge",
+  "_tts_backend_why": "旁白是平直的复盘叙述，一段 `style` 都没写；同一届的 `bucsa-noskova-bjk-cup-2026-sf` 也是 edge。",
+  "_source": "账号所有者给的链接（「做这个 bjkc 赛场之上」）。源片是比利·简·金杯官方 YouTube `Ex_l7eFv2WU`（标题 `Tyra Grant (ITA) vs Anhelina Kalinina (UKR) | 2026 Billie Jean King Cup Finals | Highlights`），probe 在 `output/2026-09-26/reel/grant-kalinina-bjk-cup-2026-sf/`：1920×1080 / 25fps、489.1s。四要素自证：记分条逐格读过（`GRANT / KALININA`、意大利和乌克兰旗），挡板「深圳湾」「2026 FINALS SHENZHEN」；比赛画面到 469.6s，469.6~479.3 是赛点之后，479.32 起是片尾订阅板；**没有场上采访**。",
+  "scorebox": [
+    145,
+    915,
+    600,
+    1012
+  ],
+  "_scorebox_why": "同一届同一块转播板，和 `bucsa-noskova-bjk-cup-2026-sf` 同一个框（按兄弟片的框给的 `--scorebox`，probe 的记分条缩略图逐格读得出比分，point_ends 也量出来了）。",
+  "_match": {
+    "id": "2026:bjk-cup-finals:semifinal-2:tyra-caterina-grant-anhelina-kalinina",
+    "event": "2026 比利·简·金杯总决赛",
+    "event_search": "Billie Jean King Cup",
+    "round": "Semifinal",
+    "year": 2026,
+    "status": "result_verified",
+    "winner": "卡利尼娜",
+    "loser": "格兰特",
+    "participants": [
+      "格兰特",
+      "卡利尼娜"
+    ],
+    "winner_en": "Anhelina Kalinina",
+    "loser_en": "Tyra Caterina Grant",
+    "set_scores_home_away": [
+      [
+        3,
+        6
+      ],
+      [
+        4,
+        6
+      ]
+    ],
+    "tiebreaks_home_away": [
+      null,
+      null
+    ],
+    "_source": "三源一致：flashscore pxZxCxbs（home＝`AE÷Grant T. C.`、away＝`AF÷Kalinina A.`，`BA/BB=3/6`、`BC/BD=4/6`）；金杯官网实时战报「Anhelina Kalinina (UKR) d. Tyra Grant (ITA) 6-3 6-4」；ITF tieCentre 8ff02770 第 1 场（Tyra Caterina Grant / Anhelina Kalinina，`tie.teams[].score` 意大利 0 乌克兰 1）；画面自证——源片 244.5s 盘分图形 `TYRA GRANT 3 / ANHELINA KALININA 6`、第二盘记分条走到 `4 / 5` 卡利尼娜发球胜赛。",
+    "_participants_why": "`participants` 跟 flashscore 的 home / away：[格兰特, 卡利尼娜]，和 `cover.matchup` 的顺序**相反**——`set_scores_home_away` 紧挨着它，同序。",
+    "source": "flashscore_points",
+    "source_id": "pxZxCxbs",
+    "flashscore_id": "pxZxCxbs",
+    "winner_result": "6-3 6-4",
+    "loser_result": "3-6 4-6"
+  },
+  "topbar": {
+    "line1": "2026 比利·简·金杯 半决赛",
+    "line2": "卡利尼娜 6-3 6-4 格兰特"
+  },
+  "_topbar_why": "第二行和 `cover.winner` / `cover.result` / `cover.matchup` 机械一致。第一行：团体赛没有「级别＋站」，和同一届的 `bucsa-noskova-bjk-cup-2026-sf` 同一写法。",
+  "cover": {
+    "matchup": [
+      {
+        "name": "卡利尼娜",
+        "name_en": "Anhelina Kalinina",
+        "country": "UKR",
+        "rank": 48
+      },
+      {
+        "name": "格兰特",
+        "name_en": "Tyra Caterina Grant",
+        "country": "ITA",
+        "rank": 150
+      }
+    ],
+    "_rank_why": "WTA 官方 `players/ranked`（rankedAt 2026-09-21）：卡利尼娜（320567）48、格兰特（333121）150；金杯官网战报「World No. 48 Kalinina」，ITF tieCentre 名单 `oomSinglesRankingPro` 格兰特 150——两个源对得上。",
+    "winner": "卡利尼娜",
+    "result": "6-3 6-4",
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "卡利尼娜",
+    "_subject_why": "赢家；半决赛（「半决赛级别的都要做」），而且这一场让乌克兰离队史第一个决赛只差一场。",
+    "hook": "自己发球一局没丢\n2比0胜格兰特",
+    "hook_accent": "2比0胜格兰特",
+    "_hook_why": "第一行＝关键内容：全场她 10 个发球局全保（flashscore `Service games won 10/10`、格兰特拿到的破发点被救下），不带术语、不用算；第二行＝结果：盘分 2-0 胜格兰特（6-3 6-4）。",
+    "topic": "比利·简·金杯半决赛 · 卡利尼娜 vs 格兰特",
+    "_heat_why": "半决赛（轮次本身够格）；乌克兰队史第一次冲决赛，对手是两届卫冕冠军意大利。",
+    "portrait": {
+      "image": "assets/reel/kalinina-bjk-cup-2026-sf.jpg",
+      "focus": 0.55,
+      "focus_y": 0.35,
+      "zoom": 1.0,
+      "_why": "**比利·简·金杯官方实拍（ITF，billiejeankingcup.com 的 Contentful 图库）**，原文件名 `LZ1_8560_UXkb0YLH.JPG`（3284×2189），是这个 tie 的实时战报页 https://www.billiejeankingcup.com/en/news/live-ita-v-ukr-2026-billie-jean-king-cup-finals-semi-final 的头图，alt 写着 `Kalinina plays forehand shot`。\n**是哪一天拍的**：同一位摄影师的相机编号——`LZ1_9355`（9/25 第一场单打，`muchova-bouzas` 封面）→ 编号回卷 → `LZ1_5789`（9/25 诺斯科娃 v 布克沙）→ `LZ1_8345`（alt「Noskova celebrates after semi-final win over Spain」，9/25 那场结束）→ **`LZ1_8560`**：拍在 9/25 诺斯科娃赛后之后，而乌克兰 9/25 没有比赛，卡利尼娜之后打的第一场就是 9/26 这一场。\n画面自证：白色上衣（胸前乌克兰队徽）、黑色发带、白色护腕、红框球拍——和源片 470~479s 她握拳、握手的着装逐项一致；背景是看台，比赛进行中的正手。\n四道闸门：① 精准 ✅；② 击球中 ✅；③ 冲击力——近景正手、球刚要触拍、眼睛睁着盯球 ✅；④ 清晰度——原图 3284×2189，铺 1080×1440 是缩小（1440/2189＝0.66×）✅。"
+    },
+    "scoreboard": {
+      "court": "深圳湾体育中心",
+      "_court_why": "印场馆：维基 `2026 Billie Jean King Cup finals` 信息框 `venue = Shenzhen Bay Sports Center`（兄弟片 `bucsa-noskova` 已核），源片挡板「深圳湾」。",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%20%221%3A25%3A22%22%2C%20%22source%22%3A%20%22ITF%20tieCentre%208ff02770%20tie.matches%5B0%5D.duration%2001%3A25%3A22%EF%BC%88actualStartDate%2009%3A17%3A32Z%20%E2%86%92%20actualEndDate%2010%3A42%3A55Z%EF%BC%8C%E7%9B%B8%E5%87%8F%E8%87%AA%E6%B4%BD%EF%BC%89%22%2C%20%22cross_check%22%3A%20%22flashscore%20pxZxCxbs%20%E5%88%86%E7%9B%98%200%3A33%20%2B%200%3A53%20%3D%201%3A26%EF%BC%8C%E5%90%8C%E5%90%91%EF%BC%9B%E9%87%91%E6%9D%AF%E5%AE%98%E7%BD%91%E6%88%98%E6%8A%A5%20one%20hour%20and%2020%20minutes%22%7D",
+        "field": "duration"
+      },
+      "_duration_why": "印 ITF 官方的比赛用时 1:25:22（tieCentre 起止时刻相减自洽）；flashscore 分盘合计 1:26 同向。写成 h:mm:ss。"
+    }
+  },
+  "_opening_time_source": {
+    "url": "https://global.flashscore.ninja/2/x/feed/f_2_0_0_en_1",
+    "match_id": "pxZxCxbs",
+    "field": "AD",
+    "value": 1790414100,
+    "beijing": "2026-09-26T17:15+08:00",
+    "spoken_precision": "approximate-hour",
+    "_why": "开球时刻只说个大概：flashscore `AD=1790414100` → 09:15Z＝北京 17:15；ITF tieCentre `actualStartDate` 09:17:32Z。旁白说「下午五点多」。"
+  },
+  "stats": {
+    "a": {
+      "aces": 1,
+      "df": 2,
+      "first_in": 41,
+      "first_won": 31,
+      "second_total": 20,
+      "second_won": 13,
+      "bp_conv": 2,
+      "bp_chances": 7,
+      "pts_won": 67,
+      "pts_total": 121,
+      "first_total": 61,
+      "headshot": "assets/players/headshots/wta-320567.jpg"
+    },
+    "b": {
+      "aces": 4,
+      "df": 3,
+      "first_in": 40,
+      "first_won": 29,
+      "second_total": 20,
+      "second_won": 8,
+      "bp_conv": 0,
+      "bp_chances": 1,
+      "pts_won": 54,
+      "pts_total": 121,
+      "first_total": 60,
+      "headshot": "assets/players/headshots/itf-GRA1473416.jpg"
+    },
+    "_source": "flashscore pxZxCxbs `df_st_1`（`tools/match_stat_hooks.py pxZxCxbs --stats-block`，一个数没改）；工具按 flashscore home/away 排（home＝格兰特），这里 **a/b 对调**成 a＝卡利尼娜、b＝格兰特，和 `cover.matchup` 同序。",
+    "_winners_ue_why": "flashscore 这场没有制胜分／非受迫失误；团体赛场次不在 `tnns-stats.yml` 验过的范围里，这条赶当天没拨，按 `render_stat_card.OPTIONAL_FIELDS` 留空。",
+    "_headshot_why": "卡利尼娜 `wta-320567.jpg` 是仓库里已有的 WTA 官方头像（`navarro-kalinina` 用过）。**格兰特没有 WTA 官方头像**——`fetch_official_headshot.py wta` 报 333121 的 `.jpg`/`.png` 两个后缀都 404（同一条路对卡利尼娜 200，对照组非空）；改用 ITF 官方头像：tieCentre 名单里 `person.images[description=headshot].url` = `https://assetbank.itf-production.sports-data.stadion.io/GRA1473416`（690×1035，意大利队服棚拍，存为 `itf-GRA1473416.jpg`，和 `heide-wawrinka` 的 `itf-HEI1441075.jpg` 同一条路）。"
+  },
+  "_hit_data": "`match_feed.py show pxZxCxbs` 逐局（主队＝格兰特在前）：第一盘卡利尼娜先发球，2-2 之后第 6 局格兰特发球 15-40、两个破发点救到平分，第三个（占先）被破 2-4 → 5-2 → 格兰特保发 3-5 → 卡利尼娜 40-15 第一个盘点拿下 6-3（33 分钟）。第二盘第 1 局格兰特发球四个破发点、两次平分，第四个被破 → 2-0 → 格兰特零封保发 1-2 → 卡利尼娜发球 30-40 面对格兰特全场第一个破发点，三次平分保住 3-1 → 4-2 → 4-3、5-3、4-5 → 卡利尼娜发球胜赛 40-15 三个赛点，救下两个，平分之后占先拿下。全场卡利尼娜发球局 10/10、破发点 1/1 全救；格兰特破发点 5/7 救下。二发得分 65% 对 40%。",
+  "_claims": {
+    "再赢一场，就是她们历史上第一个决赛": "① 金杯官网实时战报 https://www.billiejeankingcup.com/en/news/live-ita-v-ukr-2026-billie-jean-king-cup-finals-semi-final 原文「That left Ukraine one victory away from reaching their first-ever BJK Cup final」；② 维基 https://en.wikipedia.org/wiki/Ukraine_Billie_Jean_King_Cup_team 信息框 `Best = Semifinals (2025, 2026)`——决赛从没进过；金杯官网同一页的「That was Ukraine's first semi-final appearance」（2025）也对得上。",
+    "乌克兰第一次打进决赛只差一场": "① 金杯官网实时战报 https://www.billiejeankingcup.com/en/news/live-ita-v-ukr-2026-billie-jean-king-cup-finals-semi-final 原文「That left Ukraine one victory away from reaching their first-ever BJK Cup final」、导语「Ukraine go in search of their maiden BJK Cup final」；② 维基 https://en.wikipedia.org/wiki/Ukraine_Billie_Jean_King_Cup_team 信息框 `Best = Semifinals (2025, 2026)`——决赛从没进过。"
+  },
+  "editorial": {
+    "mode": "match_review",
+    "hook": [
+      "自己发球一局没丢",
+      "2比0胜格兰特"
+    ],
+    "question": "十八岁的格兰特第一次代表意大利出场，卡利尼娜是怎么一局发球都没丢、把乌克兰带到决赛门口的？",
+    "thesis": "第一盘二比三，她在格兰特的发球局连拿三个破发点，第三个一记接发加正手破掉，六比三。第二盘第一局四个破发点，第四个破发；格兰特全场第一个破发点被她三次平分顶住。最后一局三个赛点救了两个，第三个拿下。乌克兰一比零领先。",
+    "beats": [
+      "冷开场：赛点之后卡利尼娜握拳，解说「两天前她就是乌克兰的主角，今天又站了出来」。",
+      "落点＋坐标：这一场赢下来，乌克兰离第一个决赛只差一场；意大利临场换上十八岁的格兰特。",
+      "第一盘第三个破发点，接发加正手，4-2。",
+      "格兰特的小球被看穿，5-2；第一个盘点拿下，6-3。",
+      "第二盘第一局四个破发点，第四个破发。",
+      "格兰特全场第一个破发点，三次平分被顶住，3-1。",
+      "三个赛点救了两个，第三个拿下。"
+    ],
+    "chapters": [
+      "破发点",
+      "盘点",
+      "第一个破发点",
+      "三个赛点"
+    ],
+    "human_context": {
+      "angle": "世界第 48 的卡利尼娜，打第一场单打；意大利临场换上 18 岁、世界第 150 的格兰特首秀。乌克兰赢下这个 tie 就是队史第一个决赛。",
+      "facts": [
+        "flashscore pxZxCxbs：Kalinina A. d Grant T. C. 6-3 6-4。",
+        "金杯官网战报：World No. 48、18-year-old、Cup bow、first-ever BJK Cup final、15-40 → deuce → pinpoint forehand。"
+      ],
+      "sources": [
+        "https://global.flashscore.ninja/2/x/feed/df_mh_1_pxZxCxbs",
+        "https://global.flashscore.ninja/2/x/feed/df_st_1_pxZxCxbs",
+        "https://www.billiejeankingcup.com/en/news/live-ita-v-ukr-2026-billie-jean-king-cup-finals-semi-final",
+        "https://api.itf-production.sports-data.stadion.io/custom/tieCentre/8ff02770-40e0-4fb2-94c9-91a0b9d64a47"
+      ]
+    },
+    "narration": [
+      "三个破发点，第三个破掉。",
+      "格兰特的破发点，被她顶住。",
+      "三个赛点，第三个拿下。"
+    ]
+  },
+  "segments": [
+    {
+      "start": 469.6,
+      "end": 479.2,
+      "cx": 0.5,
+      "score_inset": false,
+      "narration": "",
+      "_score_inset_why": "赛点已经落地：469.6 起是卡利尼娜握拳的近景、乌克兰看台、网前握手，472.5 起画面里没有比分板。",
+      "quote": [
+        {
+          "at": 0.0,
+          "text": "Two days ago, she was the star of the show for her nation,\n两天前她就是乌克兰的主角"
+        },
+        {
+          "at": 5.28,
+          "text": "and Anhelina Kalinina steps up once again.\n今天卡利尼娜又站了出来"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_ending_payoff_required": true,
+      "_why": "冷开场：**赛点落地之后卡利尼娜握拳的那一刻**，不配旁白，只留解说原声＋中英字幕：captions.txt 469.20「Two days ago, she was the star of the」、471.92「show for her nation.」、474.88「And Angelina Catalina」、477.52「steps up once again.」，人名按本名写回；段首 469.6 已在第一句里，字幕从 0 起挂，第二句 at = 474.88 − 469.6。479.32 起是片尾订阅板，段尾收在它之前。",
+      "_payoff_why": "冷开场里有赛点落地后的庆祝，所以 true——正文最后一段（469.6→479.2）按时间顺序完整重放。",
+      "crosses_cut": "469.6 起一个连续段落：握拳近景 → 乌克兰看台 → 网前握手，都在赛点之后。",
+      "point_end_ok": "比赛已经结束（赛点在 469.6 落地）；之后记分条不再翻牌。"
+    },
+    {
+      "start": 10.68,
+      "end": 31.76,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "这一场赢下来，乌克兰离第一个决赛只差一场。北京时间九月二十六日下午五点多，深圳，比利·简·金杯总决赛半决赛，意大利对乌克兰第一场单打。意大利临场换人。格兰特，十八岁，第一次代表国家队出场。对面是世界第四十八的卡利尼娜。",
+      "_why": "开场「爆点 → 落点 → 坐标」：落点是赌注（金杯官网「That left Ukraine one victory away from reaching their first-ever BJK Cup final」），再给坐标和人。「临场换人／第一次出场」：金杯官网「Italy captain Garbin decided to make a change first up … with Grant handed her Cup bow against World No. 48 Kalinina. The 18-year-old came in for Elisabetta Cocciaretto」。画面是第一局卡利尼娜发球：记分条 12.5~18.5s `0 0 / 0 15`、20.5s 翻成 `0 / 1`（格兰特发球）；解说 17.84「Oh, wow. What a start」、30.40「when a player makes their debut, they can either sink or swim」。板在 12 秒之前没出现，渲染时自动不贴。",
+      "crosses_cut": "18.92 / 20.0 两处换镜头：第一局结束后的近景，在分与分之间。",
+      "point_end_ok": "段尾 31.76 是转播切点，也是 probe 量到的一分结束（point_ends 31.76）。"
+    },
+    {
+      "start": 102.44,
+      "end": 123.28,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "第一盘二比三，格兰特发球，十五比四十，一下子两个破发点。第一个，她自己顶了回来。第二个，卡利尼娜这一分打得偏保守。格兰特又扛住了，追到平分。十八岁，第一次替国家队打比赛，她没慌。",
+      "_why": "记分条 102.5~118.5s `2 30 / 3 40`（格兰特发球，卡利尼娜破发点），120.5s 翻成 `2 40 / 3 40`。flashscore 第一盘第 6 局（主队＝格兰特在前）`15:0, 15:15, 15:30, 15:40 |B1|, 30:40 |B1|, 40:40, 40:A |B1|` 之后客队拿下——三个破发点，第三个兑现。解说 116.96「a slightly safe point from Kalinina」、120.32「Grant doing enough to save the second break point」。金杯官网「Kalinina put her opponent under pressure as she built a 15-40 lead, and although the Italian battled back to deuce」。",
+      "crosses_cut": "120.12 一处换镜头：第二个破发点救下之后格兰特的近景，在分与分之间。",
+      "point_end_ok": "段尾挪到 123.28（切点）：point_ends 120.16 / 121.04 是第二个破发点救下之后翻成 40-40，都在段尾之前留足 1.2s；120.12~123.28 是格兰特的近景。"
+    },
+    {
+      "start": 123.28,
+      "end": 132.36,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "平分之后她又占先。一记接发抢到主动。再一拍精准的正手，破发，四比二。",
+      "_why": "记分条 124.5~130.5s `2 40 / 3 AD`（卡利尼娜破发点），132.5s 翻成 `2 15 / 4 40`（下一局卡利尼娜发球）。解说 127.04「Oh, what a return. And what a time to find it for Kalinina」；金杯官网「a pinpoint forehand ultimately secured the first break」。",
+      "crosses_cut": "129.12 一处换镜头：破发之后卡利尼娜走回的中景。",
+      "point_end_ok": "段尾 132.36 是切点，point_ends 132.4 就在切点上（破发那一分落地之后翻牌）。"
+    },
+    {
+      "start": 134.32,
+      "end": 141.76,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "下一局格兰特放了一个小球，卡利尼娜很早就看出来，冲上去处理掉，五比二。",
+      "_why": "记分条 132.5~144.5s `2 15 / 4 40`（卡利尼娜发球），146.5s 已是 `2 / 5`。解说 140.00「Oh, that's well dealt with」、143.60「Saw the drop shot early. Was up to it in a flash」。",
+      "crosses_cut": "134.32~141.76 是一个连续的回合镜头。",
+      "point_end_ok": "这一分在 140.00 解说之前落地；段尾 141.76 是转播切点，之后 142~146 是格兰特走回的中景，146.08 翻牌是这一局结束。"
+    },
+    {
+      "start": 210.56,
+      "end": 230.4,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "轮到卡利尼娜发球胜盘。四十比十五，第一个盘点就拿下。这一盘她自己的发球局稳稳当当，格兰特一次破发机会都没摸到。二十六个发球分，她拿了二十个。解说说，这一盘赢得漂亮，收得也干脆。",
+      "_why": "记分条 206.5~226.5s `3 15 / 5 40`（卡利尼娜发球，盘点），228.5s 起切到乌克兰替补席、撤板。flashscore 第一盘最后一局 `0:15, 15:15, 15:30, 15:40 |B2|` → 第一个盘点兑现。解说 224.32「Just a really impressive set and closed out in emphatic fashion」。 「二十六个发球分拿了二十个」：flashscore `Set 1/Points Service Points Won` 客队 77% (20/26)；「一次破发机会都没摸到」：`Set 1/Return Break Points Converted` 主队 0/0。",
+      "crosses_cut": "226.16 / 228.2 两处换镜头：盘点落地之后的反应、乌克兰替补席。",
+      "point_end_ok": "段尾挪到 230.4：point_ends 227.44 / 228.24 / 229.12 是盘点落地后撤板、切到替补席，都在段尾之前。"
+    },
+    {
+      "start": 230.4,
+      "end": 246.64,
+      "cx": 0.5,
+      "score_inset": false,
+      "narration": "",
+      "_score_inset_why": "盘末：228.2 起是乌克兰替补席、换边，244.5s 起转播叠上盘分图形，没有比分板。",
+      "quote": [
+        {
+          "at": 0.8,
+          "text": "Ukraine are a set away from taking this opening match\n乌克兰离拿下第一场只差一盘"
+        },
+        {
+          "at": 9.52,
+          "text": "Kalinina takes the opener 6-3 in 33 minutes.\n卡利尼娜6比3先下一城，33分钟"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_quote_why": "转播原句，probe 的 captions.txt：231.20「as Ukraine are a set away from taking」、234.08「this opening match in this mini King Cup」、239.92「Kalina takes the opener 6-3 in 33」、244.56「minutes.」。人名按本名写回，段内 at = 原时刻 − 230.4。",
+      "_why": "第一盘结束的解说原声，留下来配中英字幕（2026-09-19「精彩的原声解说要留下来」）。33 分钟和 flashscore 第一盘 0:33 一致。",
+      "crosses_cut": "232.32 / 246.64 前后几处换镜头：替补席、换边、盘分图形，都在这一盘结束之后。",
+      "point_end_ok": "这一盘已经结束，盘间的翻牌是记分条收起和盘分图形。"
+    },
+    {
+      "start": 257.52,
+      "end": 278.2,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "第二盘第一局，格兰特发球，一上来又被逼出两个破发点，她都救了回来。这一分她一拍一拍，把格兰特压在底线后面。解说说，这就是卡利尼娜最好的样子，让对手喘不过气。这一盘格兰特的二发，十一分里被她接走了七分。",
+      "_why": "记分条 248.5~254.5s `0 15 / 0 40`（格兰特发球，两个破发点）、256.5s `30 / 40`、258.5~278.5s `40 / 40`（平分），280.5s 翻成 `40 / AD`。flashscore 第二盘第 1 局 `0:15, 15:15, 15:30, 15:40 |B1|, 30:40 |B1|, 40:40, 40:A |B1|, 40:40, 40:A |B1|` → 四个破发点，第四个兑现。解说 277.28「This is Kalinina at her best, isn't it? Suffocating her opponent」。 「十一分里被她接走了七分」：flashscore `Set 2/Return 2nd return points won` 客队 64% (7/11)——这一盘的数，不是这一局。",
+      "crosses_cut": "257.52~278.2 是一个连续的回合镜头。",
+      "point_end_ok": "段尾 278.2 是转播切点，这一分在 277.28 解说之前落地；下一个 point_ends 是 291.92。"
+    },
+    {
+      "start": 281.12,
+      "end": 294.12,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "来回两次平分，又是卡利尼娜占先。格兰特这一拍没打进，开局就被破发。第二盘还没坐稳，她已经落后了。",
+      "_why": "记分条 280.5~290.5s `40 / AD`（卡利尼娜破发点），292.5s 翻成 `3 0 0 / 6 1 0`（卡利尼娜 1-0，发球）。解说 287.44「Missed it. And Kalinina breaks early in set two」。「两次平分」「第四个破发点」：flashscore 这一局两个 40:40、四个 |B1|。",
+      "crosses_cut": "289.12 一处换镜头：破发之后的近景。",
+      "point_end_ok": "段尾 294.12 是切点，point_ends 291.92 / 292.72 是破发之后翻牌，都在段尾之前，294.08 就在切点上。"
+    },
+    {
+      "start": 337.8,
+      "end": 348.52,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "轮到卡利尼娜发球，格兰特拿到全场第一个破发点。卡利尼娜救了回来，下一分来球别扭，她反应极快。",
+      "_why": "记分条 324.5~338.5s `1 30 / 2 30`（卡利尼娜发球）、340.5s `1 40 / 2 30`（格兰特破发点）、342.5~350.5s `40 / 40`、352.5s 翻成 `40 / AD`。flashscore 第二盘第 4 局 `15:0, 15:15, 15:30, 30:30, 40:30 |B1|, 40:40, 40:A, 40:40, 40:A, 40:40, 40:A` → 格兰特全场第一个破发点（`Break Points Converted 0/1`）。解说 338.08「Maybe this is the game to get Grant going」、347.76「it was such an awkward ball, but how sharp was Kalinina to react to it?」；金杯官网「a few games later she earned her first break point of the match. However, Kalinina remained resolute」。「连拿两分」：15-30 → 30-30 → 40-30（记分条 322.5 `15 / 30`、324.5 `30 / 30`、340.5 `40 / 30`）。",
+      "crosses_cut": "342.92 一处换镜头：分与分之间。",
+      "point_end_ok": "段尾 348.52 是转播切点，point_ends 348.56 就在切点上。"
+    },
+    {
+      "start": 352.92,
+      "end": 366.44,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "来回三次平分，格兰特一直咬着。最后一分，卡利尼娜下手毫不犹豫。解说说，这么关键的分，她打得这么坚决。保发，三比一。",
+      "_why": "记分条 352.5s `40 / AD`、354.5~364.5s `40 / 40`，366.5s 翻成 `3 1 0 / 6 3 0`（卡利尼娜 3-1）。flashscore 这一局三个 40:40。解说 361.28「That's great conviction」、363.44「Such positivity from Kalinina on such a big point」。",
+      "crosses_cut": "362.6 一处换镜头：这一局最后一分之后。",
+      "point_end_ok": "段尾 366.44 是切点，366.5 的翻牌就在切点上（这一局结束）。"
+    },
+    {
+      "start": 392.56,
+      "end": 411.04,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "格兰特没有放弃。二比四，自己的发球局，她打出一拍角度极大的斜线，拿下这一分。解说说，这种球也许能让她打开局面。这一局她保住了，三比四。可要追回来，得先破一次卡利尼娜的发球。",
+      "_why": "记分条 390.5~404.5s `2 30 / 4 15`（格兰特发球），406.5s 翻成 `40 / 15`。解说 403.12「That's the type of point that might get Grant really going. A wondrous angle from the Italian」。 「三比四」：flashscore 第二盘 `3-4 主队发球，主队拿下`（集锦没播到这一局结束）。",
+      "crosses_cut": "404.12 / 405.92 / 408.68 几处换镜头：这一分之后格兰特的近景、场边和替补席。",
+      "point_end_ok": "段尾 411.04 是切点，point_ends 408.72 / 410.0 / 411.04 是这一分之后记分条翻成 40-15、切到场边，都不晚于段尾。"
+    },
+    {
+      "start": 442.28,
+      "end": 449.92,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "五比四，卡利尼娜发球胜赛，四十比十五，三个赛点。格兰特救下第一个。",
+      "_why": "记分条 442.5~448.5s `4 15 / 5 40`（卡利尼娜发球，三个赛点），450.5s 翻成 `30 / 40`。flashscore 最后一局 `0:15, 15:15, 15:30, 15:40 |B3|, 30:40 |B3|, 40:40, 40:A |B3|` → 第三个赛点兑现（`Match points saved` 主队 2）。集锦没播的 3-4、4-5 两局只在这一句的比分里带过。",
+      "crosses_cut": "442.28~449.92 是一个连续的回合镜头。",
+      "point_end_ok": "段尾 449.92 是转播切点，point_ends 449.92 就在切点上。"
+    },
+    {
+      "start": 452.16,
+      "end": 459.08,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "她又救下一个，追到平分。十八岁的格兰特，还在咬。",
+      "_why": "记分条 452.5~458.5s `30 / 40`（第二个赛点），460.5s 已是 `40 / AD`（集锦跳过了平分那一分）。flashscore `30:40 |B3|, 40:40`。",
+      "crosses_cut": "452.16~457.0 是回合镜头，457.0 之后是格兰特的近景。",
+      "point_end_ok": "段尾 459.08 是切点，第二个赛点在切进近景之前落地；记分条下一次变化在 460 秒，是跳过平分那一分之后的占先。"
+    },
+    {
+      "start": 459.08,
+      "end": 469.6,
+      "cx": 0.5,
+      "score_inset": true,
+      "narration": "再到占先，这一次她没再给机会。整场十个发球局一个没丢，换你是十八岁的格兰特，还能从哪儿下手？",
+      "_why": "记分条 460.5~470.5s `40 / AD`（第三个赛点），469.6 起是卡利尼娜握拳的近景。 「十个发球局一个没丢」：flashscore `Service games won` 客队 100% (10/10)。末句落在一问上（`test_收尾要落在一问上不能停在数据上`）。",
+      "crosses_cut": "459.08~469.6 是一个连续的回合镜头。",
+      "point_end_ok": "段尾 469.6 是转播切点，也是 point_ends 469.6——赛点落地。"
+    },
+    {
+      "start": 469.6,
+      "end": 479.2,
+      "cx": 0.5,
+      "score_inset": false,
+      "narration": "",
+      "_score_inset_why": "比赛已经结束：469.6 起是握拳近景、乌克兰看台、网前握手，472.5 起没有比分板。",
+      "quote": [
+        {
+          "at": 0.0,
+          "text": "Two days ago, she was the star of the show for her nation,\n两天前她就是乌克兰的主角"
+        },
+        {
+          "at": 5.28,
+          "text": "and Anhelina Kalinina steps up once again.\n今天卡利尼娜又站了出来"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_quote_why": "同冷开场那一段（captions.txt 469.20~477.52），段内 at = 原时刻 − 469.6。",
+      "_why": "赛点之后的原声，按时间顺序重放冷开场那一段。",
+      "crosses_cut": "469.6~479.2 几处换镜头：握拳、看台、握手，全在赛点之后。",
+      "point_end_ok": "比赛已经结束。"
+    }
+  ],
+  "_editing_why": "源片 489.1 秒：比赛画面到 469.6 秒（赛点落地），469.6~479.3 是赛点之后（握拳、乌克兰看台、网前握手），479.32 起是片尾订阅板；**没有场上采访**。认人：卡利尼娜白色上衣、黑色短裙、黑色发带；格兰特蓝色上衣、白色短裙、脏辫。段落端点取自 probe 的 `scene_cuts` / `point_ends`，比分按 probe 的记分条缩略图（`score_*.jpg`）逐格读过（记分条上的黄点是发球方）。集锦没播的局（第一盘第 2~5 局只挑了第 6 局；第二盘第 2、3、6 局和 3-4、4-5 两局）只在旁白的比分里带过。",
+  "_tactics_why_note": "球路写在第 3 段（卡利尼娜打得偏保守）、第 4 段（接发抢主动、正手破发）、第 5 段（小球被提前看穿）、第 8 段（一拍一拍压在底线后面）、第 9 段（格兰特一拍没打进）、第 10 段（别扭来球反应快）、第 12 段（格兰特大角度斜线）——都以转播解说原句和金杯官网战报为据（见各段 `_why`）。",
+  "_quote_why_global": "两段原声：冷开场／赛点之后「两天前她就是乌克兰的主角，今天又站了出来」、第一盘结束「离拿下第一场只差一盘／6比3，33分钟」。",
+  "_no_repeat": "同一届兄弟片：`bucsa-noskova-bjk-cup-2026-sf`（另一场半决赛）只在「决赛对手」一处有交集，这一条不重讲。",
+  "push": {
+    "matchup": "卡利尼娜 vs 格兰特",
+    "score": "6-3 6-4",
+    "summary": "卡利尼娜送乌克兰1比0",
+    "auto": true,
+    "lead": "2026 比利·简·金杯总决赛半决赛，深圳湾体育中心，意大利对乌克兰第一场单打：世界第 48 的卡利尼娜 6-3、6-4 胜 18 岁的格兰特，乌克兰 1-0 领先，离队史第一个决赛只差一场。意大利临场换上世界第 150 的格兰特，这是她第一次代表国家队出场。第一盘 2-3 格兰特发球 15-40，两个破发点救到平分，第三个被卡利尼娜一记接发加精准正手破掉，6-3，33 分钟。第二盘第一局四个破发点，第四个破发；格兰特全场第一个破发点，被卡利尼娜在三次平分里顶住。最后一局三个赛点救了两个，第三个拿下。全场卡利尼娜 10 个发球局全保，二发得分 65% 对 40%。"
+  }
+}

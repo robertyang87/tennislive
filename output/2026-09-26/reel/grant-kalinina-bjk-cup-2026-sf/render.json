@@ -1,0 +1,72 @@
+{
+  "scoreboard_qc_sha256": "cddce39b848408ef879061c5cfdf3de1a55a226b24becff49f75b1aca76b978a",
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 3.827,
+  "layout": "full",
+  "segments_seconds": 215.2,
+  "topbar": {
+    "line1": "2026 比利·简·金杯 半决赛",
+    "line2": "卡利尼娜 6-3 6-4 格兰特",
+    "start": 1.2,
+    "end": 216.4
+  },
+  "film_seconds": 220.24,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 20.664,
+    "2": 17.952,
+    "3": 8.136,
+    "4": 6.864,
+    "5": 18.048,
+    "7": 19.584,
+    "8": 10.176,
+    "9": 8.856,
+    "10": 12.528,
+    "11": 17.76,
+    "12": 7.08,
+    "13": 5.904,
+    "14": 9.264
+  },
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "grant-kalinina-bjk-cup-2026-sf",
+    "received_at": "2026-09-26T12:07:11Z",
+    "artifact_ready_at": "2026-09-26T12:14:20Z",
+    "elapsed_seconds": 429.378,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "c4b12c998745775d25379d06b4f1c636bac5b737348ca6fd813a69bd755041a9",
+    "spec_sha256": "2b9f0fed8ad0666798900fae6e3dc752a231668915b551918a7f38080018b4c7",
+    "run_id": "36240916072",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-09-26T12:09:37Z",
+        "run_id": "36240916072"
+      }
+    ],
+    "render_seconds": 283.378,
+    "pre_render_seconds": 146.0
+  },
+  "film_sha256": "c4b12c998745775d25379d06b4f1c636bac5b737348ca6fd813a69bd755041a9",
+  "film_bytes": 104782328,
+  "qc_attestation_sha256": "f41dfbea2d28d764c6e9e3795b77398228a1f28f38afe780ae991049600a6440",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-09-26T12:09:37Z",
+      "run_id": "36240916072"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-26T12:14:21Z",
+      "run_id": "36240916072"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-grant-kalinina-bjk-cup-2026-sf/grant-kalinina-bjk-cup-2026-sf.mp4",
+  "video_bytes": 104782328
+}
