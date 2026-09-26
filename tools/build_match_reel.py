@@ -6931,6 +6931,9 @@ COVER_FILL_W, COVER_FILL_H = 1080, 1440
 #:   打完）。按下面那条常设授权走：终场后约 20 分钟，find_cover_photo 查 AP、WTA
 #:   photo-resources 都是 0，赛后稿没有图、主办方战报未发。用 161.4s 赛点后正脸
 #:   直视镜头的近景，源片 1920×1080，放大 1.33 倍。
+#: - `wong-vallejo-hangzhou-2026-r2`：2026-09-26 杭州 ATP250 第二轮（北京深夜打完）。
+#:   按下面那条常设授权走：find_cover_photo 查 AP、ATP 赛事图库都是 0，赛后稿没有图。
+#:   用源片（Tennis TV 第四比赛日合集最后一段）689.8s 赢球后正脸的近景。
 #: - **2026-09-26 起**账号所有者给了常设授权：「没有高清大图可备选的话，抽帧也
 #:   可以，但是要尽量清晰偏正面的图片」（CLAUDE.md 同名一节）。之后的条目不用再
 #:   逐条问，但照旧要在这里登记一行、在 spec 的 `_frame_why` 写清四类源各查了什么。
@@ -6945,6 +6948,7 @@ OWNER_APPROVED_FRAME_COVERS = frozenset({
     "wang-prozorova-singapore-2026-qf",
     "bublik-jodar-laver-cup-2026",
     "medvedev-royer-hangzhou-2026-r2",
+    "wong-vallejo-hangzhou-2026-r2",
     "zverev-deminaur-laver-cup-2026",
 })
 
