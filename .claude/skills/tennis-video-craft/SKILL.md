@@ -2553,6 +2553,26 @@ verified。**新类型必须用一个映射表里没有的键名。** 反向验�
 反倒是发布会和演播室专访那一档收不到——那就是 `none` 的正当用法。
 
 
+##### ⭐⭐ 2026-09-26：冷开场里**每一句解说都要有中英字幕**——手挑字幕会漏，所以做成了闸
+
+账号所有者：「**前面冷开场的解说没有中英文字幕啊，下次一定要注意啊**」。
+
+拉沃尔杯首日三条采访的 `lead_in.subs` 都是我照 probe 的 `captions.txt` **手挑**的，漏了两种：
+
+| | 源片里有 | 我做了什么 |
+|---|---|---|
+| `alcaraz-mensik` 123.68 | `and there it is in the evening session.`（赛点那一句） | **没写**——整段窗口前 8.6 秒屏幕上一个字都没有 |
+| `alcaraz-mensik` 126.88 | `It is a clean sweep for team Europe.` | **以为 ASR 听错删了**（当天 3比1），而它说的是**晚场**两场全赢，本来就对 |
+| `jodar-bublik` 171.44 | `Haven't … seen too many great kick serves tonight.` | 窗口从 172.0 起，开场第一秒是一句**说到一半、没字幕**的话 |
+
+⚠️ `_check_side_block` 只查「写了的字幕合不合格」，**没写的那几句它看不见**——「交叉校验只比得上说错了，比不到什么都没说」同一个形状。
+
+**闸**：`lead_in_uncovered_speech`，接在 `check_lead_in` 上（下载之前、每个 stage 都过）。spec 要带
+`lead_in.source_captions`（`[[起点秒, 原文], ...]`，照 probe `captions.txt` 抄窗口前后十秒），起点落在窗口里、
+或窗口开始前 1.5 秒内（话没说完）的每一句，要么被一条 sub 盖住，要么写进 `lead_in.subs_skip`（键＝起点秒，值＝理由）。
+**「我觉得 ASR 听错了」不算理由，先核**（上面那句 clean sweep）。自动链 `attach_interview_lead_in` 一并写这个字段。
+已有的 42 条挂 `_LEGACY_LEAD_IN_NO_SOURCE_CAPTIONS`，只许减不许加。判据 `test_冷开场每一句解说都要有字幕`（反向验证过）。
+
 ### ⭐ 烧进画面的英文里不许有语气词——而它只能**在切行之后**去
 
 账号所有者 2026-08-15：「**以后把英文字幕里的语气词去掉比如 uh en 之类的**」。

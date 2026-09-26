@@ -161,6 +161,13 @@ def attach(spec: dict, chat) -> dict:
         "start": start,
         "end": end,
         "subs": subs,
+        # `check_lead_in` 拿它核「窗口里每一句解说都有字幕」。这里的 subs 本来就是
+        # 窗口里的整段直落，所以只抄起点落在窗口里的——被 `select_window` 修掉的
+        # 更早那几句不抄：它们的结尾在窗口之前，抄进来只会让自动链卡在一条
+        # 本来就不在画面里的话上（手写的 spec 才要管「窗口前开口、话没说完」）。
+        "source_captions": [
+            [c["a"], c["en"]] for c in cues if start <= c["a"] < end
+        ],
         "why": (
             f"自动同场核验：{match['winner_en']} vs {match['loser_en']}，"
             f"{match['event_search']} {match['year']}；来源 {channel or via}，"
