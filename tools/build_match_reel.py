@@ -2542,6 +2542,12 @@ class Segment:
     fill_y: float | None = None
     # contain 段横向留源片宽的多少（spec `contain_keep`）；None＝全局 CONTAIN_KEEP。
     contain_keep: float | None = None
+    # 段落级放大（spec `crop_zoom`，1.0~2.0）：3:4 窗口按比例缩小再铺满画布，
+    # 横向中心不变，纵向落点按 `fill_y`（0 顶、1 底，None＝居中）。
+    # 来路：prozorova-concussion-withdrawal-2026 要把 Guardian 成片顶上的
+    # 水印条裁出画外——这个键原来在允许字段表里、**渲染一处都没读**，
+    # 写了不报错也不生效（run 36214015142 渲出来水印原样还在）。
+    crop_zoom: float = 1.0
 
     @property
     def length(self) -> float:
@@ -2562,6 +2568,43 @@ def _seg_fill_y(s: dict, i: int) -> float | None:
         raise ReelError(f"第 {i + 1} 段的 `fill_y` 要写 0~1 之间的数"
                         f"（0 顶、1 底），拿到的是 {v!r}")
     return f
+
+
+CROP_ZOOM_MAX = 2.0
+
+
+def _seg_crop_zoom(s: dict, i: int) -> float:
+    """段落级放大倍数；不写是 1.0。只认 1.0~CROP_ZOOM_MAX，写错当场报。"""
+    v = s.get("crop_zoom")
+    if v is None:
+        return 1.0
+    try:
+        z = float(v)
+    except (TypeError, ValueError):
+        z = -1.0
+    if not 1.0 <= z <= CROP_ZOOM_MAX:
+        raise ReelError(f"第 {i + 1} 段的 `crop_zoom` 要写 1.0~{CROP_ZOOM_MAX:g} 之间的数，"
+                        f"拿到的是 {v!r}")
+    if z > 1.0 and (s.get("track") or s.get("score_inset") or s.get("square_pan")
+                    or str(s.get("fit", "crop")) != "crop"):
+        raise ReelError(f"第 {i + 1} 段写了 `crop_zoom`，但它只支持普通裁切段"
+                        "（fit=crop、不跟拍、不回贴记分条）")
+    return z
+
+
+def zoomed_window(x: int, zoom: float, fill_y: float | None) -> tuple[int, int, int, int]:
+    """把 3:4 窗口（CROP_W×CROP_H，左上 x/CROP_Y）按 `zoom` 收小：返回 (w, h, x, y)。
+
+    横向中心不变；纵向落点 `fill_y`（0 顶、1 底，None＝居中）。宽高取偶数。
+    """
+    if zoom <= 1.0:
+        return CROP_W, CROP_H, x, CROP_Y
+    w = int(CROP_W / zoom) // 2 * 2
+    h = int(CROP_H / zoom) // 2 * 2
+    fy = 0.5 if fill_y is None else fill_y
+    nx = x + (CROP_W - w) // 2
+    ny = CROP_Y + int(round((CROP_H - h) * fy))
+    return w, h, nx, ny
 
 
 def seg_seconds(s: dict) -> float:
@@ -3022,7 +3065,8 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
                        score_inset_windows=_seg_score_windows(s, i),
                        square_pan=tuple((float(t), float(cx)) for t, cx in s.get("square_pan", [])),
                        fill_y=_seg_fill_y(s, i),
-                       contain_keep=_seg_contain_keep(s, i))
+                       contain_keep=_seg_contain_keep(s, i),
+                       crop_zoom=_seg_crop_zoom(s, i))
 
     segments = [_one(s, i) for i, s in enumerate(spec["segments"])]
     gone_ev = [(i + 1, s.image) for i, s in enumerate(segments)
@@ -4246,7 +4290,8 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
                 )
                 labeled = True
             else:
-                chain = (f"crop={CROP_W}:{CROP_H}:{x}:{CROP_Y},"
+                zw, zh, zx, zy = zoomed_window(x, seg.crop_zoom, seg.fill_y)
+                chain = (f"crop={zw}:{zh}:{zx}:{zy},"
                          f"{_canvas_fit()}"
                          f"{sp}fps={FPS_EXPR},setsar=1")
     # 认领了 conform 的源：放大裁边前置到这条链最前面，只处理这一段用到的几秒
