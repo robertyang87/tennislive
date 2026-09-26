@@ -1,0 +1,79 @@
+{
+ "status": "pass",
+ "method": "silero_vad_plus_dual_asr_coverage",
+ "sha256": "5752bd07d4c45c4f3c7ab1cef7b1da8590575a4aef8d882e8ae6fad3b84b844c",
+ "edge_pad_seconds": 0.35,
+ "max_speech_seconds": 0.12,
+ "results": [
+  {
+   "key": "50.5-55.5",
+   "start": 50.54,
+   "end": 55.54,
+   "speech_seconds": 0,
+   "second_asr_words": [
+    "Congrats"
+   ],
+   "transcript_covered": true,
+   "caption_timeline_covered": false,
+   "status": "transcript_covered"
+  },
+  {
+   "key": "167.1-169.8",
+   "start": 167.08,
+   "end": 169.76,
+   "speech_seconds": 0,
+   "second_asr_words": [
+    "Question"
+   ],
+   "transcript_covered": true,
+   "caption_timeline_covered": true,
+   "status": "transcript_covered"
+  },
+  {
+   "key": "223.1-225.9",
+   "start": 223.06,
+   "end": 225.86,
+   "speech_seconds": 0.266,
+   "second_asr_words": [
+    "Congratulations."
+   ],
+   "transcript_covered": true,
+   "caption_timeline_covered": true,
+   "status": "transcript_covered"
+  },
+  {
+   "key": "249.5-251.6",
+   "start": 249.46,
+   "end": 251.62,
+   "speech_seconds": 0.986,
+   "second_asr_words": [
+    "I"
+   ],
+   "transcript_covered": true,
+   "caption_timeline_covered": true,
+   "status": "transcript_covered"
+  },
+  {
+   "key": "317.0-319.9",
+   "start": 316.98,
+   "end": 319.94,
+   "speech_seconds": 0,
+   "second_asr_words": [
+    "A"
+   ],
+   "transcript_covered": true,
+   "caption_timeline_covered": true,
+   "status": "transcript_covered"
+  },
+  {
+   "key": "386.7-389.1",
+   "start": 386.68,
+   "end": 389.1,
+   "speech_seconds": 0,
+   "second_asr_words": [],
+   "transcript_covered": false,
+   "caption_timeline_covered": true,
+   "status": "caption_timeline_covered"
+  }
+ ]
+}

@@ -1,0 +1,67 @@
+{
+  "film_sha256": "7ceab9aeb203791e964af02772b411daf7769be91d34bf863cc598db40a2bd1c",
+  "film_seconds": 405.821,
+  "production_sla": {
+    "version": 2,
+    "pipeline": "interview-clip",
+    "slug": "ruud-cerundolo-laver-cup-2026-presser",
+    "received_at": "2026-09-26T18:51:15Z",
+    "artifact_ready_at": "2026-09-26T19:01:16Z",
+    "elapsed_seconds": 601.497,
+    "budget_seconds": 600,
+    "met": false,
+    "film_sha256": "7ceab9aeb203791e964af02772b411daf7769be91d34bf863cc598db40a2bd1c",
+    "spec_sha256": "8aaf2a09acec545be13e93fe20a84eef6f507698d0fa44d7fab455f9e4f28745",
+    "run_id": "36264005750",
+    "stage_events": [
+      {
+        "stage": "preflight",
+        "at": "2026-09-26T18:51:53Z",
+        "run_id": "36264005750"
+      },
+      {
+        "stage": "asr_verify",
+        "at": "2026-09-26T18:53:18Z",
+        "run_id": "36264005750"
+      },
+      {
+        "stage": "render",
+        "at": "2026-09-26T18:57:39Z",
+        "run_id": "36264005750"
+      }
+    ],
+    "render_seconds": 217.497,
+    "pre_render_seconds": 384.0
+  },
+  "production_stage_events": [
+    {
+      "stage": "preflight",
+      "at": "2026-09-26T18:51:53Z",
+      "run_id": "36264005750"
+    },
+    {
+      "stage": "asr_verify",
+      "at": "2026-09-26T18:53:18Z",
+      "run_id": "36264005750"
+    },
+    {
+      "stage": "render",
+      "at": "2026-09-26T18:57:39Z",
+      "run_id": "36264005750"
+    },
+    {
+      "stage": "qc",
+      "at": "2026-09-26T19:01:17Z",
+      "run_id": "36264005750"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-26T19:01:19Z",
+      "run_id": "36264005750"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/interview-ruud-cerundolo-laver-cup-2026-presser/ruud-cerundolo-laver-cup-2026-presser.mp4?v=7ceab9aeb203791e",
+  "video_bytes": 75737980,
+  "release_asset_digest": "sha256:7ceab9aeb203791e964af02772b411daf7769be91d34bf863cc598db40a2bd1c",
+  "qc_attestation_sha256": "97dd3ab21cd2120fe6099c08cf0d0058c7728388bd75bd2276177ae880a6310b"
+}
