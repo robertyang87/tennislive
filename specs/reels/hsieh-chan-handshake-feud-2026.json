@@ -14,12 +14,12 @@
   }
  },
  "sources": {
-  "uso3": "https://video.twimg.com/amplify_video/2097070560262119424/vid/avc1/1298x720/n05xE1nleDY12yvP.mp4?tag=14",
   "usoqf": "https://www.youtube.com/watch?v=Vmxr4zGh0oo",
-  "usor1": "https://www.youtube.com/watch?v=lyFo4UJRVbs"
+  "usor1": "https://www.youtube.com/watch?v=lyFo4UJRVbs",
+  "uso3": "https://video.twimg.com/amplify_video/2097070560262119424/vid/avc1/1298x720/n05xE1nleDY12yvP.mp4?tag=14"
  },
  "primary": "usoqf",
- "_primary_why": "primary 取 usoqf（美网官方《Hsieh/Ostapenko vs. Mertens/Shnaider Highlights | 2026 US Open Quarterfinal》，1920×1080/29.97fps）：两条官方源里用得最多的一条。",
+ "_primary_why": "primary 取 usoqf（美网官方《Hsieh/Ostapenko vs. Mertens/Shnaider Highlights | 2026 US Open Quarterfinal》，1920×1080/29.97fps）：两条官方源里用得最多的一条。 ⚠️ sources 里 usoqf 必须写在第一个：check_sources_match 按 sources 的第一个键当尺寸基准（run 36260393395 把写在最前面的 720p uso3 当成基准，两条 1080p 反被判成尺寸对不上）。",
  "_sources_why": "uso3＝X 上 @hsieh_n_wong 9/7 发的转播片段（帖子 x.com/hsieh_n_wong/status/2097070765837541743，自由时报 5566462、知新闻、Yahoo Sports 都嵌着同一条；31.3s，第三个赛点 → 网前致意 → 奥斯塔彭科冲包厢吼；probe output/2026-09-27/reel/hsieh-chan-uso3）；usoqf＝美网官方 1/4决赛集锦（probe output/2026-09-27/reel/hsieh-chan-usoqf）；usor1＝美网官方《Williams/Williams vs. Joint/Chan Highlights | 2026 US Open Round 1》，詹皓晴近景从这里取（probe output/2026-09-27/reel/hsieh-chan-usor1）。2025 中网那次只有 X 上 640×360 的片段（@1gamesetmatch），太糊，不用。",
  "_xvid_why": "uso3 写的是 X 自己 CDN 上 1298×720 那一档的直链（yt-dlp 从帖子解出来的 http-2176），直接写帖子地址时 match-reel 的选择器可能挑到更低一档。",
  "archival": {
