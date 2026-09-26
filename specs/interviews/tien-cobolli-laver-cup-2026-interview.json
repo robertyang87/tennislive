@@ -362,5 +362,8 @@
       ]
     ],
     "why": "同场 Laver Cup 官方集锦 UQ0YA0F2Nyg（`Flavio Cobolli v Learner Tien Highlights | Laver Cup 2026 Match 5`，@LaverCup，205 秒）。窗口与同场赛场之上 `cobolli-tien-laver-cup-2026` 第 0 段冷开场同一段：那条用的是官网 Brightcove 版同一条集锦（204.89 秒，probe 产物 output/2026-09-26/reel/cobolli-tien-laver-cup-2026/），缩略图墙逐格看过——185.45 那一刀切到勒纳·钱近景怒吼（185~187s）、188~190s 阿加西在场边振臂、191~194s 全景庆祝、195~201s 网前握手、诺阿拥抱；201.89 起静音、202 起片尾板，所以终点收在 201.6。起点 185.5：赛点那一分在 185.4 落地，这一刀之后就是赛后。解说原声在这一段只有两句（那条片子本地 faster-whisper 逐词：196.86 `That swung in all kinds of directions.`、199.02 `But in the end, the young American wins 6-3, 2-6`，比分被 201.6 截在片尾板前），两句都上了字幕。⚠️ 自动补片头那一步 run 36260067279 报「集锦末段没有足够的英文解说字幕」没补上，所以手写；YouTube 版和 Brightcove 版是按时长认的同一个剪辑（205 vs 204.89 秒），渲完要拉成片回来核一次冷开场画面对不对得上。"
+  },
+  "caption_gaps_ok": {
+    "89.6-94.6": "推的，没听音轨：主持人 88.9~89.2 问完「how much does it help you having the great Andre Agassi on your bench for your confidence?」，他 94.6 才开口答「It's amazing.」——一问一答之间的停顿。两份 ASR（small.en、medium.en）在这 5 秒里都没听出词，VAD 没能证明无人声，多半是主持人提到阿加西时的现场欢呼。问句和答句两头都完整，不是漏了谁的话。"
   }
 }
