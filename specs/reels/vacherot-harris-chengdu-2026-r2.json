@@ -1,0 +1,350 @@
+{
+  "slug": "vacherot-harris-chengdu-2026-r2",
+  "_column": "赛场之上",
+  "sources": {
+    "tv": "https://www.youtube.com/watch?v=Y_cP9vjbIGk"
+  },
+  "primary": "tv",
+  "tts_backend": "edge",
+  "_tts_backend_why": "旁白是平直的复盘叙述，一段 `style` 都没写，用不上 Azure 的情绪风格；同一站 `tabilo-mannarino-chengdu-2026-r2` / `shang-mannarino-chengdu-2026-r1` 也是云见默认音色。",
+  "_source": "账号所有者给的链接：Tennis TV 官方 YouTube《Vacherot Battles Harris; Davidovich Fokina, Hurkacz & More 🤩 | Chengdu 2026 Highlights Day 4》（oEmbed `author_name=Tennis TV`），probe 1920×1080、25fps、639.43s。**这是 Day 4 合集，瓦舍罗-哈里斯是开篇第一场**：3.0s 片头卡「VACHEROT v HARRIS」之后到 219.26（静音区 219.29~222.36 是换场片头卡，220.5 起是塞伦多洛-达维多维奇），这一场单独占 216 秒，比同一站 ATP Tour 单场版（~119s）和 tennistv.com 短集锦（~154s）都长，所以 CLAUDE.md「合集不算一条源」那条在这儿不成立——它不是五场摊一段，而是一场连续的整段，所有窗口都收在 3.06~219.2 之内。渠道比较（2026-09-26 11:20Z 量的）：① Tennis TV YouTube 单场版——没有，频道最新就是这条 Day 4 合集；② tennistv.com short-highlights——成都只挂到第二轮 Tabilo/Kopriva/Basilashvili/Cerundolo 四条，没有这一场；③ ATP Tour YouTube——成都第二轮只有 Damm-Hurkacz、Cerundolo-Davidovich Fokina、Tabilo-Mannarino、Kopriva-Shapovalov 四条，没有这一场。四要素自证：片头卡「VACHEROT v HARRIS」；记分条 `VACHEROT / HARRIS` 逐格读过（1-1 30-40、1-3 15-0、2-4 15-30、4-5 40-0、第二盘 2-1 0-15、2-2 15-0、3-2 30-30、4-4、6-5 15-15、抢七 5-5、5-6），和 flashscore fDNspIf4 逐分一致；场地印着 `CHENGDU 成都`；84.5s 转播图形 `ROUND 2 | CENTER COURT | 0:35 | ATP250 | VALENTIN VACHEROT 4 / LLOYD HARRIS 6`；解说 207.44「Big win for Harris」217.52「the number one seed here」。",
+  "_tennistv_trim": "**片尾**：这条合集的瓦舍罗-哈里斯那一段收在 219.26（之后是静音换场卡和别的比赛），最后一段收在 219.2，离换场卡 0.09 秒、离合集末尾的 Tennis TV 片尾（633.32 起静音）四百多秒；片头卡 0~3.0 不取，第一段从 3.1 起。**台标**：Tennis TV 台标烧在右上角（缩略图墙每一格右上 `TennisTV`，源片 x≈1720~1900），3:4 取景窗 cx=0.5 时只取 555~1365，角上那块在窗外。",
+  "scorebox": [
+    98,
+    920,
+    476,
+    1029
+  ],
+  "_scorebox_why": "同一站同一套 ATP 转播比分板（Tennis TV 用的是同一路信号），坐标沿用 `tabilo-mannarino-chengdu-2026-r2` / `shang-mannarino-chengdu-2026-r1` 全分辨率帧实测的框；probe 按这个框裁出来的 score_00~05 每一格板都整块在框内，这一场最宽的状态是第二盘 `4 6 15`，比那一场的 `6⁹ 2 15` 窄。",
+  "_match": {
+    "id": "2026:chengdu:mens-r2:valentin-vacherot-lloyd-harris",
+    "event": "2026 ATP250 成都",
+    "event_search": "Chengdu",
+    "round": "Men's Singles Round 2",
+    "year": 2026,
+    "status": "result_verified",
+    "source": "flashscore_points",
+    "source_id": "fDNspIf4",
+    "flashscore_id": "fDNspIf4",
+    "participants": [
+      "瓦舍罗",
+      "哈里斯"
+    ],
+    "set_scores_home_away": [
+      [
+        4,
+        6
+      ],
+      [
+        6,
+        7
+      ]
+    ],
+    "tiebreaks_home_away": [
+      null,
+      [
+        5,
+        7
+      ]
+    ],
+    "winner": "哈里斯",
+    "loser": "瓦舍罗",
+    "winner_en": "Lloyd Harris",
+    "loser_en": "Valentin Vacherot",
+    "winner_result": "6-4 7-6(5)",
+    "loser_result": "4-6 6-7(5)",
+    "_source": "三源一致：ATP 官方正赛签表 protennislive.com/posting/2026/7581/mds.pdf（Released 09/26/2026 18:44:05）1 号签位 `1 VACHEROT, Valentin MON`、2 号 `Bye`、3 号 `Q HARRIS, Lloyd RSA`，第二轮 `L. Harris 64 765`；flashscore 当日表 fDNspIf4：AE=Vacherot V.（home）BA=4 BC=6 / AF=Harris L.（away）BB=6 BD=7，DC=5（抢七小分）；tennis.com 比赛页 `Men's Singles · Round 2 · Center Court · Completed · V. Vacherot 1 4 6⁵ / L. Harris Q 6 7⁷`。"
+  },
+  "topbar": {
+    "line1": "2026 ATP250 成都站 第二轮",
+    "line2": "哈里斯 6-4 7-6(5) 瓦舍罗"
+  },
+  "_topbar_why": "line1 按账号所有者 2026-09-24 定的格式「<年份> <巡回赛><级别> <城市>站 <轮次>」：成都公开赛是 ATP250（官方签表页眉 `$ 184,085 250 pts`），瓦舍罗首轮轮空、这是他的第一场，但签表上是第二轮。line2 由 cover.winner / result / matchup 机械拼出。",
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "瓦舍罗",
+    "hook": "去年从资格赛夺冠\n今年输给资格赛选手",
+    "hook_accent": "资格赛选手",
+    "_hook_why": "第一行是他的来路当影子，第二行是这场球的结果，两行一个镜像（同一个「资格赛」，一年前在他这边、今天在对手那边）；8 字、9 字，没有排名、没有比分、没有术语。① 「去年从资格赛夺冠」：2025 上海大师赛——ATP 官方签表 protennislive.com/posting/2025/5014/mds.pdf 116 号签位 `Q VACHEROT, Valentin MON`、冠军栏 `Champion Valentin Vacherot 46 63 63`；tennisexplorer shanghai/2025/atp-men 签表 `Vacherot [Q]`、决赛 `F Vacherot 2 4 6 6 / Rinderknech 1 6 3 3`、半决赛 `SF Vacherot 2 6 6 / Djokovic (4) 0 3 4`。两源。② 「今年输给资格赛选手」：本站官方签表 3 号签位 `Q HARRIS, Lloyd RSA`，第二轮 `L. Harris 64 765`；tennis.com 比赛页 `L. Harris Q`。两源。",
+    "topic": "成都公开赛第二轮 · 瓦舍罗 vs 哈里斯",
+    "winner": "哈里斯",
+    "result": "6-4 7-6(5)",
+    "matchup": [
+      {
+        "name": "瓦舍罗",
+        "name_en": "Valentin Vacherot",
+        "country": "MON",
+        "rank": 19
+      },
+      {
+        "name": "哈里斯",
+        "name_en": "Lloyd Harris",
+        "country": "RSA",
+        "rank": 136
+      }
+    ],
+    "_matchup_rank_why": "ATP 排名 2026-09-21 那一期：`fetch_rankings()`（tennisexplorer，atp_at=21.09.2026）瓦舍罗 19、哈里斯 136；tennis.com 比赛页 `Singles Ranking 19 / 136`；官方签表种子表 `1 Vacherot, Valentin 19`。三处一致。",
+    "_name_why": "`player_zh()`：Valentin Vacherot → 瓦舍罗，Lloyd Harris → 哈里斯（player_names_top500.json 有 Lloyd Harris 这一条，和 Billy Harris 分开），Hubert Hurkacz → 胡尔卡奇，Novak Djokovic → 德约科维奇，Arthur Rinderknech → 林德克内希。",
+    "_heat_why": "账号所有者亲自点的题（「做瓦舍罗比赛赛场之上，作为去年上海大师赛冠军，成都首场比赛出局」）。另一层：本站 1 号种子、2025 上海大师赛冠军（从资格赛打到冠军、半决赛赢德约科维奇），首战输给资格赛选手，是今天成都最大的冷门。",
+    "_subject_why": "封面放瓦舍罗：这条片子的主语是他（上海冠军首战出局），钩子两行讲的都是他；账号所有者点的题也是冲他来的。",
+    "scoreboard": {
+      "court": "Center Court",
+      "_court_why": "tennis.com 比赛页 `Men's Singles · Round 2 · Center Court`；源片 84.5s 转播图形 `ROUND 2 | CENTER COURT`。",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%20%221%3A34%3A00%22%2C%20%22source%22%3A%20%22flashscore%20dc_1%EF%BC%88fDNspIf4%EF%BC%89%E5%BC%80%E8%B5%9B%20DC%3D1790413500%EF%BC%8809%3A05%3A00Z%EF%BC%89%E3%80%81%E5%AE%8C%E8%B5%9B%20DD%3D1790419155%EF%BC%8810%3A39%3A15Z%EF%BC%89%EF%BC%8C%E7%9B%B8%E5%87%8F%201%3A34%3A15%22%7D",
+        "field": "duration"
+      },
+      "_duration_why": "flashscore 自己的开赛/完赛时间戳相减 1:34:15，印 1:34。⚠️ flashscore df_sui_1 分盘相加 0:35+1:00=1:35，它偏长（CLAUDE.md 记过），不用；源片 84.5s 转播图形第一盘 `0:35` 和 df_sui_1 一致。"
+    },
+    "portrait": {
+      "image": "assets/reel/vacherot-harris-chengdu-2026-r2.jpg",
+      "focus": 0.62,
+      "focus_y": 0.2,
+      "zoom": 1.0,
+      "_why": "**本场源片抽帧**（合集 1920×1080 原片 34.3s，frame-grab run 按 0.2 秒抽 33.9~34.9）：第一盘 1-2 被破发之后、1-3 那一局开始前的近景（记分条 `1 / 3`），瓦舍罗白色正戴帽、抿着嘴，身后是中心球场大屏上的「成 都」。打开看过：正脸、双眼睁着；33.9 那帧球拍挡脸、34.1 球拍挡嘴，34.3 起脸完全露出来，34.3~34.9 按边缘能量比过（402.5 / 380.2 / 358.1 / 382.2），34.3 最锐。情绪对题：刚丢掉全场唯一一次发球局，钩子讲的就是他输了。3:4 取景窗 focus=0.62 横向取约 785~1595，左下的转播记分条（98~476）在窗外，右上 Tennis TV 台标（≈1720 起）也在窗外。",
+      "_frame_why": "账号所有者 2026-09-24（同一站 `shang-mannarino`）明确要求这一站「从那个比赛画面中截取那个抽帧去做」，`tabilo-mannarino-chengdu-2026-r2` 同样走抽帧。当日官方实拍查过：`find_cover_photo.py --player Vacherot --event Chengdu --date 2026-09-26` WTA photo-resources、AP 通讯社都没有这一场。",
+      "_low_res_why": "源片 1920×1080，铺 1080×1440 按高算放大 1.33×。这是账号所有者对这一站点的抽帧方案（见 `_frame_why`），没有更高清的本场画面；逐帧挑了脸没被挡、最锐的一帧。"
+    }
+  },
+  "_opening_time_source": {
+    "url": "https://global.flashscore.ninja/2/x/feed/dc_1_fDNspIf4",
+    "match_id": "fDNspIf4",
+    "field": "DC",
+    "value": 1790413500,
+    "beijing": "2026-09-26T17:05+08:00",
+    "spoken_precision": "approximate-hour",
+    "_why": "开球时刻只说个大概：flashscore `dc_1` 的 `DC=1790413500` → 09:05Z＝北京 17:05；tennis.com 比赛页 `startDate 2026-09-26T08:50:00Z`（北京 16:50，是排定时刻）。两个都落在五点上下，旁白说「下午五点左右」。"
+  },
+  "stats": {
+    "tour": "atp",
+    "a": {
+      "aces": 4,
+      "df": 2,
+      "first_in": 40,
+      "first_won": 31,
+      "second_total": 30,
+      "second_won": 18,
+      "bp_conv": 0,
+      "bp_chances": 0,
+      "pts_won": 58,
+      "pts_total": 128,
+      "first_total": 70,
+      "headshot": "assets/players/headshots/atp-VA25.png"
+    },
+    "b": {
+      "aces": 16,
+      "df": 2,
+      "first_in": 45,
+      "first_won": 40,
+      "second_total": 13,
+      "second_won": 9,
+      "bp_conv": 1,
+      "bp_chances": 2,
+      "pts_won": 70,
+      "pts_total": 128,
+      "first_total": 58,
+      "headshot": "assets/players/headshots/atp-HG86.png"
+    },
+    "_source": "`python tools/match_stat_hooks.py fDNspIf4 --stats-block` 机器抄的 flashscore df_st_1 全场统计。a/b 跟 cover.matchup 的顺序（a=瓦舍罗、b=哈里斯）；flashscore 这一场 home=Vacherot V.、away=Harris L.，顺序相同，没对调。交叉：tennis.com 比赛页 Aces 4/16、Double Faults 2/2、1st Serve % 57% (40/70) / 78% (45/58)、1st Serve Points Won 78% (31/40) / 89% (40/45) 逐项一致（它的二发一栏 18/28、9/11 和 flashscore 差 2 分，数据图只用 flashscore 一个口径）。头像：`fetch_official_headshot.py atp --id VA25 / HG86 --via mubadaladcopen.com`（ID 取自维基两人词条里的 atptour.com 球员页链接 `valentin-vacherot/va25`、`lloyd-harris/hg86`），两张都打开看过：瓦舍罗卷发络腮胡、哈里斯白色反戴帽。",
+    "_winners_ue_why": "两个源都查过，都用不了：① flashscore df_st_1 这一场没有制胜分和非受迫失误（`match_stat_hooks.py fDNspIf4` 报「flashscore 这场没有」）；② TNNS（tnns-stats.yml，run 36238662763，id 74753334，`who=Vacherot,Harris date=2026-09-26`，选手顺序 ['Vacherot','Harris']）给了全场制胜分 [17, 24]、非受迫失误 [15, 27]，但分盘合计对不上（制胜分分盘 [11, 31] vs 全场 [17, 24]，非受迫失误 [17, 29] vs [15, 27]），工具自己判「多半解错了，别用」。所以数据图只画七项官方统计。"
+  },
+  "_hit_data": "跑过 `match_stat_hooks.py fDNspIf4` 和 `match_feed.py show fDNspIf4`。进旁白的：**全场唯一一次破发在第一盘第三局**（瓦舍罗发球 30-40，df_st_1 哈里斯 Break Points Converted 1/2，瓦舍罗 0/0——**瓦舍罗整场一个破发点都没拿到**）；**哈里斯第一盘发球 21 分只丢 1 分**（Set 1 Service Points Won 20/21），盘末发球胜盘局一分没丢（逐分 `0:15, 0:30, 0:40`）；**第二盘 12 个发球局全保**（Set 2 Service games won 6/6 对 6/6）；**抢七瓦舍罗 4-1 领先，之后 7 分只拿 1 分**（df_mh_1 抢七逐分：1-0、2-0、2-1、3-1、4-1、4-2、4-3、4-4、5-4、5-5、5-6、5-7；HG 标发球方，4-4 和 5-7 两分是瓦舍罗自己的发球分丢掉）；**哈里斯 16 个 ACE、一发得分率 89%**（40/45）。",
+  "_turning_points": [
+    "首盘 1-1（瓦舍罗发球）：`0:15, 15:15, 15:30, 30:30, 30:40 |B1|`——第一个破发点就被破，1-2，全场唯一一次破发。源片 16.4~22.1 是这一分（记分条 `1 30 / 1 40`，22.1 翻成 `1 / 2`）。",
+    "首盘 2-4（瓦舍罗发球）：`0:15, 15:15, 15:30, 30:30, 30:40 |B1|, 40:40, A:40`——救下一个破发点保住，3-4。源片 35.0~59.0 是 15-30 那一分（记分条 `2 15 / 4 30`，60.5 翻成 `30 / 30`）。",
+    "首盘 4-5（哈里斯发球胜盘）：`0:15, 0:30, 0:40 |B2|`——一分没丢，6-4。源片 63.2~71.4 是 40-0 盘点那一分。",
+    "第二盘 12 个发球局全保，6-6 抢七。",
+    "抢七：瓦舍罗 4-1 领先（2-0 时哈里斯发球分丢掉，小分落后），之后哈里斯 6 分里拿 5 分；5-5 哈里斯发球那一分（源片 169.7~192.8）他把瓦舍罗左右调动、压上网前截击得手，拿到赛点；5-6 瓦舍罗发球，赛点兑现，7-5。"
+  ],
+  "_claims": {},
+  "editorial": {
+    "mode": "match_review",
+    "hook": [
+      "去年从资格赛夺冠",
+      "今年输给资格赛选手"
+    ],
+    "question": "一年前从资格赛一路打成上海大师赛冠军的瓦舍罗，作为成都头号种子，为什么第一场就输给了一位资格赛选手？",
+    "thesis": "哈里斯的发球几乎没给机会：16 个 ACE、一发得分率 89%，瓦舍罗整场一个破发点都没拿到；第一盘第三局唯一一次破发定了盘，第二盘抢七瓦舍罗 4-1 领先，之后 7 分只拿到 1 分。",
+    "beats": [
+      "冷开场：赛点之后哈里斯庆祝、两人网前握手，解说那句「他淘汰了头号种子」。",
+      "北京时间 9 月 26 日下午五点左右，成都公开赛第二轮：去年从资格赛打成上海冠军的 1 号种子瓦舍罗，对世界第 136 的资格赛选手哈里斯。",
+      "第一盘第三局瓦舍罗 30-40 被破，全场唯一一次破发；2-4 他在底线把哈里斯左右调动，救下一个破发点保住。",
+      "哈里斯发球胜盘一分没丢，第一盘发球 21 分只丢 1 分，6-4。",
+      "第二盘瓦舍罗的发球局里两次把哈里斯拉开再上网，12 个发球局全保，进抢七。",
+      "抢七瓦舍罗 4-1 领先，之后 7 分只拿 1 分；5-5 哈里斯压上网前拿到赛点，5-6 赛点兑现。下一轮对 5 号种子胡尔卡奇。"
+    ],
+    "human_context": {
+      "angle": "这一场的主语是**瓦舍罗和一年前的自己**：2025 上海大师赛他从资格赛打起、半决赛赢德约科维奇、决赛逆转林德克内希拿到冠军；一年后在成都，他是 1 号种子，第一场输给了从资格赛打上来的哈里斯。",
+      "facts": [
+        "ATP 官方签表 2026/7581/mds.pdf（Released 09/26/2026 18:44:05）：`1 VACHEROT, Valentin MON`、`Bye`、`Q HARRIS, Lloyd RSA`；第二轮 `L. Harris 64 765`；1/4决赛对 `H. Hurkacz 5`（`M. Damm 61 64 H. Hurkacz 5`）。",
+        "ATP 官方签表 2025/5014/mds.pdf（Rolex Shanghai Masters，Released 10/12/2025）：`116 Q VACHEROT, Valentin MON`，`Champion Valentin Vacherot 46 63 63`，半决赛 `V. Vacherot 63 64` 对 `N. Djokovic 4`；tennisexplorer shanghai/2025/atp-men：`F Vacherot 2 4 6 6 / Rinderknech 1 6 3 3`、`SF Vacherot 2 6 6 / Djokovic (4) 0 3 4`。",
+        "维基 `Lloyd Harris (tennis)`：`highestsinglesranking = No. 31 (13 September 2021)`；tennis.com 比赛页 `Career High Singles Ranking 17 / 31`。",
+        "flashscore fDNspIf4 df_st_1：哈里斯 Aces 16、1st serve points won 89% (40/45)、Break Points Converted 1/2；瓦舍罗 Break Points Converted 0/0；Set 1 哈里斯 Service Points Won 20/21。",
+        "解说（源片 `captions.txt`）：73.60「there was only the one break」、79.52「And Lloyd Harris, the qualifier, is just a set away now from the quarterfinal」、191.92「He's made it.」、207.44「Big win for Harris. And to come back from being a mini break down, even more impressive. He's taken out the number one seed here.」"
+      ],
+      "sources": [
+        "https://www.protennislive.com/posting/2026/7581/mds.pdf",
+        "https://www.protennislive.com/posting/2025/5014/mds.pdf",
+        "https://www.flashscore.com/match/tennis/fDNspIf4/",
+        "https://www.tennis.com/tournaments/chengdu-open/matches/v-vacherot-vs-l-harris-2026-09-26",
+        "https://www.tennisexplorer.com/shanghai/2025/atp-men/",
+        "https://en.wikipedia.org/wiki/Lloyd_Harris_(tennis)",
+        "https://www.youtube.com/watch?v=Y_cP9vjbIGk"
+      ]
+    }
+  },
+  "segments": [
+    {
+      "source": "tv",
+      "cx": 0.5,
+      "start": 204.2,
+      "end": 219.2,
+      "score_inset": false,
+      "_score_inset_why": "赛点已经落地（204.12 切哈里斯近景握拳），206.5 起转播换成终场比分图形、之后是庆祝和网前握手的近景，比分板撤了。",
+      "narration": "",
+      "quote": [
+        {
+          "at": 3.24,
+          "text": "Big win for Harris.\n哈里斯赢得漂亮"
+        },
+        {
+          "at": 6.12,
+          "text": "To come back from\n抢七里先落后"
+        },
+        {
+          "at": 7.4,
+          "text": "a mini break down,\n还能翻回来"
+        },
+        {
+          "at": 10.04,
+          "text": "even more impressive.\n更了不起"
+        },
+        {
+          "at": 12.0,
+          "text": "He's taken out\n他淘汰了"
+        },
+        {
+          "at": 13.32,
+          "text": "the number one seed.\n头号种子"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_ending_payoff_required": true,
+      "_why": "冷开场：**赛点落地之后**（账号所有者 2026-09-25「视频从赢球后的冷开场……是全局的要求」）。204.12 切点起是哈里斯握拳近景，206.5 瓦舍罗低头、207~208 哈里斯走向看台庆祝，215~218 两人网前握手（认人：瓦舍罗白色正戴帽、胸前 `GROUPE MICHEL PASTOR`；哈里斯深绿反戴帽、十字项链），219.2 收在换场静音区（219.29）之前。不配旁白，只留解说原声＋中英字幕：`captions.txt` 207.44「Big win for Harris. And to come back」210.32「from being a mini breakdown,」214.24「even more impressive. He's taken out」217.52「the number one seed here.」，段内 at = 原时刻 − 204.2。",
+      "_payoff_why": "冷开场里是赛点落地后的庆祝与握手，所以 true——正文最后一段（193.2→219.2）把赛点整分、落地和握手按时间顺序完整重放，覆盖 204.2~219.2 整段。",
+      "point_end_ok": "比赛已经结束（赛点在 204.12 切近景之前落地，204.3 那一次翻牌是终场比分）；206.0~210.0 几次「翻牌」是比分图形换版和撤下，219.1 / 220.1 是换场片头卡。"
+    },
+    {
+      "source": "tv",
+      "cx": 0.5,
+      "start": 3.1,
+      "end": 22.1,
+      "score_inset": true,
+      "narration": "一年前，他从资格赛一路打成上海大师赛冠军；今天在成都，第一场就出局了。北京时间九月二十六号下午五点左右，成都公开赛第二轮，头号种子瓦舍罗首轮轮空，对手是世界第一百三十六、从资格赛打上来的哈里斯。",
+      "_why": "首盘 1-1 瓦舍罗发球：记分条 4.5~14.5 `1 0 / 1 15`、16.5~20.5 `1 30 / 1 40`（破发点），22.1 翻成 `1 / 2`。开场顺序照「画面爆点 → 落点 → 坐标」：第 1 段是冷开场，这一段先一句落点，再给坐标。",
+      "_start_time_why": "开球时刻见顶层 `_opening_time_source`：北京 17:05，只说「五点左右」。",
+      "point_end_ok": "段尾 22.1 就是破发那一分落地后的翻牌（`1 / 2`）；24.6 那一次是切到下一局之后新比分 `1 15 / 3 0` 挂出来（中间 1-2 那一局哈里斯保发，集锦没播），不是这一分没打完。"
+    },
+    {
+      "source": "tv",
+      "cx": 0.5,
+      "start": 35.0,
+      "end": 59.0,
+      "score_inset": true,
+      "narration": "第三局他三十比四十被破发，这是全场唯一的一次破发，而这一次，就够哈里斯拿下第一盘。二比四，还是他的发球局，十五比三十。这一分他在底线，把哈里斯从一边调到另一边，来回跑了二十多秒，才把这一分拿下。这一局他又救下一个破发点，保住了发球局。",
+      "_why": "首盘 2-4 瓦舍罗发球 `2 15 / 4 30`（记分条 36.5~58.5 不变，60.5 翻成 `30 / 30`）：逐秒帧（frame-grab 1s）近端是哈里斯（40、47s 近景看得到深绿反戴帽），36s 在左侧角、44~47 左侧、54~55 被拉到右侧扑球、56~58 右侧，远端瓦舍罗在底线中路调度；这一分瓦舍罗拿下。flashscore 这一局 `…30:30, 30:40 |B1|, 40:40, A:40` 救一个破发点保发。第一句「唯一一次破发」：df_st_1 哈里斯 Break Points Converted 1/2、瓦舍罗 0/0；解说 73.60「there was only the one break」。",
+      "crosses_cut": "35.0 是 scene_cuts_loose 的切点（33.84 切瓦舍罗近景、35.0 回宽景），发球之前。",
+      "point_end_ok": "这一分在 58.2 前打完（58.2 / 59.1 翻牌是新比分挂出来），段尾 59.0 在 59.08 切近景之前。"
+    },
+    {
+      "source": "tv",
+      "cx": 0.5,
+      "start": 63.2,
+      "end": 78.3,
+      "score_inset": true,
+      "narration": "盘点在哈里斯自己手里，这一局他一分没丢，六比四。这一盘他的发球局，二十一分只丢了一分。二零二一年，他排到过世界第三十一，这一站是从资格赛打上来的。",
+      "_why": "记分条 62.5~70.5 `4 0 / 5 40`（哈里斯发球、盘点），71.4 这一分落地，72.5 翻成第二盘 `4 0 / 6 0`，74~78 是换边的宽景。flashscore 4-5 那一局 `0:15, 0:30, 0:40 |B2|`，一分没丢。Set 1 Service Points Won 20/21。解说 79.52「And Lloyd Harris, the qualifier」。世界第 31：维基 `highestsinglesranking = No. 31 (13 September 2021)`、tennis.com `Career High Singles Ranking 31`。",
+      "crosses_cut": "63.14 切宽景（发球之前）。",
+      "point_end_ok": "盘点在 71.4 落地；74.1 是第二盘比分挂出来，段尾 78.3 在 78.38 切近景之前，下一次翻牌 81.5 是转播的盘间图形。"
+    },
+    {
+      "source": "tv",
+      "cx": 0.5,
+      "start": 97.6,
+      "end": 118.4,
+      "score_inset": true,
+      "narration": "第二盘二比二，瓦舍罗发球。他在底线把哈里斯拉到两边，哈里斯扑在地上才救回一拍；他顺势压上网前，把这一分收掉。这一局他一分没丢。可到了哈里斯的发球局，他一直找不到机会：整场比赛，他一个破发点都没拿到。",
+      "_why": "第二盘 2-2 瓦舍罗发球 `4 2 15 / 6 2 0`（98.5~118.5 不变）：近端是哈里斯（100、110s 近景深绿反戴帽），远端瓦舍罗发球；逐秒帧 100 中路、103 左侧、109 近端扑地救球、110 被拉到右侧，117~118 远端瓦舍罗压到发球线以内；119 起切到下一局 `3 30 / 2 30`。flashscore 这一局 `15:0, 30:0, 40:0`，这一分瓦舍罗拿下。解说 116.56「Well played from both players」。",
+      "point_end_ok": "这一分在 118.4 前打完（118 远端已在网前、球出界），119 起是下一局；point_ends 里这一段之后下一次翻牌在 130.7。"
+    },
+    {
+      "source": "tv",
+      "cx": 0.5,
+      "start": 119.6,
+      "end": 134.1,
+      "score_inset": true,
+      "narration": "轮到哈里斯的发球局，三十平。这一次是瓦舍罗被左右拉开，他往前一压，还是被哈里斯拿走了这一分，这一局哈里斯也保住。",
+      "_why": "记分条 120.5~132.5 `4 3 30 / 6 2 30`（哈里斯发球）：这一局两人换边后近端是瓦舍罗；逐秒帧 120~127 近端左右跑动、128~130 往前压到发球线，131~133 哈里斯近景握拳；134.2 翻成 `4 / 4`（中间 3-3、4-3 两局集锦没播）。flashscore 那一局 `…15:30, 30:30, 30:40` 哈里斯保发。解说 130.24「Beautifully read.」133.28「So well delivered.」",
+      "point_end_ok": "这一分在 130.7 落地（翻牌），131~134 是哈里斯握拳近景；段尾 134.1 在 134.2 翻牌之前 0.1 秒。"
+    },
+    {
+      "source": "tv",
+      "cx": 0.5,
+      "start": 134.2,
+      "end": 152.8,
+      "score_inset": true,
+      "narration": "四平，瓦舍罗的发球局。第一分两人在底线对攻了十几拍，最后还是哈里斯拿下。这一局瓦舍罗先落后十五比三十，一路追到平分，才把发球局保住。哈里斯那边，这一盘的一发，二十八分拿下了二十四分。",
+      "_why": "记分条 134.5~150.5 `4 4 / 6 4`（瓦舍罗发球、局首），154.5 翻成 `0 / 15`：近端哈里斯（137s 近景深绿反戴帽），逐秒帧 135~151 两人都在底线；解说 150.08「Beautiful hammer blows and then the velvet touch」。flashscore 5-4 那一局 `0:15, 15:15, 15:30, 30:30, 40:30, 40:40, A:40` 瓦舍罗保发。 第二盘哈里斯 1st serve points won 86% (24/28)；5-4 那一局瓦舍罗 15-30 落后（逐分 `0:15, 15:15, 15:30`）。",
+      "crosses_cut": "134.14 切宽景（局首发球之前）。",
+      "point_end_ok": "这一分在 152.2 前打完（152.2 翻牌 `0 0`→154.5 `0 15`），段尾 152.8 在 152.86 切近景之前。"
+    },
+    {
+      "source": "tv",
+      "cx": 0.5,
+      "start": 155.3,
+      "end": 165.8,
+      "score_inset": true,
+      "narration": "六比五，哈里斯这一局照样保住。这一盘十二个发球局，两个人谁都没丢，比赛进了抢七。",
+      "_why": "记分条 156.5~164.5 `4 6 15 / 6 5 15`（哈里斯发球），166.5 近景翻成 `15 / 30`；flashscore 6-6 那一局 `0:15, 15:15, 15:30, 15:40` 哈里斯保发。Set 2 Service games won 6/6 对 6/6。",
+      "crosses_cut": "155.24 切宽景，发球之前。",
+      "point_end_ok": "这一分在 165.8 切哈里斯近景之前打完，166.0 翻牌是新比分挂出来（0.2 秒）。"
+    },
+    {
+      "source": "tv",
+      "cx": 0.5,
+      "start": 169.7,
+      "end": 192.8,
+      "score_inset": true,
+      "narration": "抢七，瓦舍罗一度以四比一领先，那一刻，胜负还在他手里。接下来七分，他只拿到一分，四平那一分还丢在自己的发球上。五平，哈里斯发球。他把瓦舍罗在底线左右调动，自己压上网前，一记截击打向空当。赛点到了哈里斯手里。",
+      "_why": "抢七 5-5 哈里斯发球（记分条 170.5~190.5 `4 6 5 / 6 6 5`，194.5 翻成 `5 / 6`）：近端是瓦舍罗（白色正戴帽），远端哈里斯 170s 抛球发球；逐秒帧 178/180 瓦舍罗在左侧、184 右侧、186~187 扑到右侧角、188 右侧、190 被调到左侧角外，189~190 远端哈里斯压到网前，191s 球落在近端右侧空当；192 哈里斯握拳近景。解说 191.92「He's made it.」抢七逐分见 `_hit_data`。 4-4 那一分：df_mh_1 抢七第 8 分 HG=1（瓦舍罗发球）、HH=1（发球方丢分）。",
+      "crosses_cut": "169.66 切宽景，发球之前。",
+      "point_end_ok": "这一分在 191.84 切近景之前落地，192.8 是新比分挂出来，段尾正落在这一次翻牌上。"
+    },
+    {
+      "source": "tv",
+      "cx": 0.5,
+      "start": 193.2,
+      "end": 219.2,
+      "score_inset": true,
+      "narration": "赛点在瓦舍罗自己的发球局上，几拍相持之后，这一分他没守住。去年从资格赛拿下上海的人，今天输给了一位资格赛选手。哈里斯全场十六个ACE，一发得分率百分之八十九。这一站的头号种子，第一场就走了。下一轮，哈里斯对五号种子胡尔卡奇，他还能走多远？",
+      "_why": "193.18 切宽景：记分条 `4 6 5 / 6 6 6`（瓦舍罗发球、哈里斯的赛点），近端瓦舍罗 194s 抛球发球、197s 正手，195~203 两人底线相持，204.12 切哈里斯握拳近景、205 终场比分 `6 7`；之后与冷开场同一段庆祝和握手。flashscore 抢七最后一分 `5-7`，HG=1（瓦舍罗发球分）。下一轮：官方签表 1/4决赛 `L. Harris` 对 `H. Hurkacz 5`。 数据：df_st_1 哈里斯 Aces 16、1st serve points won 89% (40/45)。",
+      "_payoff_why": "按时间顺序重放赛点整分、落地、庆祝和握手，覆盖冷开场 204.2~219.2 整段。",
+      "crosses_cut": "204.12 切近景：赛点已经落地。",
+      "point_end_ok": "比赛在 204.12 之前结束；204.3~210.0 几次翻牌是终场比分图形，219.1 / 220.1 是换场片头卡。",
+      "_narration_order_why": "第一趟 render（run 36240070628）抽帧看过：原来「网前握手，这一站的头号种子，第一场就走了」落在成片 175s＝源片 206s，那一格是哈里斯（长卷发、刚摘帽）低头的近景，旁白讲瓦舍罗、画面是哈里斯。改成按画面排：哈里斯的数据那句压在 205~210 他庆祝的镜头上，瓦舍罗那句挪到 211~214 宽景、紧挨着 215 起的网前握手（那里瓦舍罗白帽入镜）。"
+    }
+  ],
+  "_editing_why": "源片是 Tennis TV 的 Day 4 合集，瓦舍罗-哈里斯这一场占 3.06~219.26 一整段（片头卡 0~3.0、换场卡 219.29 起），所有窗口都在这一段之内；**没有场上采访**。认人：瓦舍罗白色正戴帽、胸前 `GROUPE MICHEL PASTOR`（摩纳哥的赞助商）；哈里斯深绿反戴帽、十字项链（215~218 网前握手那一格两人并排，逐格对过）。段落端点取自 probe 的 `scene_cuts` / `point_ends`；球路来自 frame-grab 抽的 1 秒一帧（4~219s，960 宽，run 36239167813）和 `captions.txt`。集锦没播的局（首盘 1-2、2-3、3-4 以外的保发，第二盘 1-0 到 2-1、3-3、4-3、5-5 等）只在旁白里按 flashscore 逐局一句带过。",
+  "_tactics_why_note": "球路写在第 3 段（底线把哈里斯左右调动）、第 5 段（拉到两边、扑地救球、压上网前收掉）、第 6 段（瓦舍罗被拉开往前压）、第 7 段（底线对轰）、第 9 段（左右调动、上网截击打空当）、第 10 段（底线相持）。",
+  "_quote_why_global": "一段原声：冷开场解说「Big win for Harris … He's taken out the number one seed here」——正是钩子第二行的结果。",
+  "_no_repeat": "同栏目做过瓦舍罗的只有 `specs/reels/pending/vacherot-tiafoe.draft.json`（美网第三轮，自动草稿，没转正没发）；做过哈里斯的没有。同一站已发的 `shang-mannarino` / `tabilo-mannarino` / `hu-kopriva` / `cerundolo-zhou` 都是别的场次。",
+  "push": {
+    "summary": "上海冠军成都首战出局",
+    "lead": "成都公开赛第二轮，1 号种子瓦舍罗首轮轮空，第一场就 4-6、6-7(5) 输给资格赛选手哈里斯——一年前的上海大师赛，他自己也是从资格赛打成冠军的。哈里斯 16 个 ACE、一发得分率 89%，瓦舍罗整场一个破发点都没拿到；第一盘第三局唯一一次破发定了盘，第二盘抢七瓦舍罗 4-1 领先，之后 7 分只拿到 1 分。哈里斯 1/4决赛对 5 号种子胡尔卡奇。",
+    "matchup": "哈里斯 vs 瓦舍罗",
+    "score": "6-4 7-6(5)",
+    "auto": true
+  },
+  "_push_summary_why": "10 字位，主语是瓦舍罗（「上海冠军」是他一年前的来路），结果「成都首战出局」；标题里不写排名。"
+}

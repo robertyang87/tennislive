@@ -1,0 +1,68 @@
+{
+  "scoreboard_qc_sha256": "d24710aced3dc9f9f4c364de48731e403e405fff824350ca9c279e2e96179732",
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 3.827,
+  "layout": "full",
+  "segments_seconds": 186.6,
+  "topbar": {
+    "line1": "2026 ATP250 成都站 第二轮",
+    "line2": "哈里斯 6-4 7-6(5) 瓦舍罗",
+    "start": 1.2,
+    "end": 187.8
+  },
+  "film_seconds": 191.64,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 18.216,
+    "2": 21.768,
+    "3": 13.992,
+    "4": 18.816,
+    "5": 10.872,
+    "6": 18.312,
+    "7": 8.088,
+    "8": 20.208,
+    "9": 23.16
+  },
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "vacherot-harris-chengdu-2026-r2",
+    "received_at": "2026-09-26T12:00:28Z",
+    "artifact_ready_at": "2026-09-26T12:07:16Z",
+    "elapsed_seconds": 408.009,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "18307dea54084f28566a43181dcd7ea86d1d861cd2669a006ba97073731a0a3b",
+    "spec_sha256": "6037f78ad8cf6072e6b2b487928739a047dd74bf0173b570b3e9d149d4afecf4",
+    "run_id": "36240560294",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-09-26T12:02:51Z",
+        "run_id": "36240560294"
+      }
+    ],
+    "render_seconds": 265.009,
+    "pre_render_seconds": 143.0
+  },
+  "film_sha256": "18307dea54084f28566a43181dcd7ea86d1d861cd2669a006ba97073731a0a3b",
+  "film_bytes": 89546209,
+  "qc_attestation_sha256": "799161c538ca606a8cc411915dc0b9329bf65440c1f1a6be5b5ac47b499dae5a",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-09-26T12:02:51Z",
+      "run_id": "36240560294"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-26T12:07:17Z",
+      "run_id": "36240560294"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-vacherot-harris-chengdu-2026-r2/vacherot-harris-chengdu-2026-r2.mp4",
+  "video_bytes": 89546209
+}
