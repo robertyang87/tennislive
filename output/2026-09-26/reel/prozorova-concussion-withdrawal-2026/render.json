@@ -4,9 +4,9 @@
   "cover_narrated": true,
   "outro_seconds": 3.827,
   "layout": "full",
-  "segments_seconds": 221.44,
+  "segments_seconds": 239.4,
   "topbar": null,
-  "film_seconds": 229.24,
+  "film_seconds": 247.2,
   "narration_voice": "zh-CN-YunjianNeural",
   "narration_rate": "+6%",
   "narration_backend": "edge-tts",
@@ -24,48 +24,49 @@
     "11": 15.48,
     "12": 14.688,
     "13": 13.152,
-    "14": 14.136,
-    "15": 10.968,
-    "16": 15.648,
-    "17": 8.712
+    "14": 12.984,
+    "15": 14.136,
+    "16": 10.968,
+    "17": 16.224,
+    "18": 8.712
   },
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "prozorova-concussion-withdrawal-2026",
-    "received_at": "2026-09-26T03:52:16Z",
-    "artifact_ready_at": "2026-09-26T04:00:59Z",
-    "elapsed_seconds": 523.731,
+    "received_at": "2026-09-26T04:10:15Z",
+    "artifact_ready_at": "2026-09-26T04:17:47Z",
+    "elapsed_seconds": 452.574,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "7a9baacdf849f559a323dcc60fcc22b0b266d68c0754d45ba1327dff2fcb9e0f",
-    "spec_sha256": "9431c9496aa58d1640aebdb99dc06fab4e1c89053ca338217d76ac0855f34b6e",
-    "run_id": "36216126330",
+    "film_sha256": "75361c03b47e0352e3f9fc207ffd49b1c81cd136ccc7fb14e8a344380bfdf027",
+    "spec_sha256": "bf6952454267092e134075369d6bf1ec9419fe2822c51b49951c1aa8d7ec272d",
+    "run_id": "36217020736",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-09-26T03:54:40Z",
-        "run_id": "36216126330"
+        "at": "2026-09-26T04:12:59Z",
+        "run_id": "36217020736"
       }
     ],
-    "render_seconds": 379.731,
-    "pre_render_seconds": 144.0
+    "render_seconds": 288.574,
+    "pre_render_seconds": 164.0
   },
-  "film_sha256": "7a9baacdf849f559a323dcc60fcc22b0b266d68c0754d45ba1327dff2fcb9e0f",
-  "film_bytes": 110127873,
-  "qc_attestation_sha256": "e43b5f64720f970c39c57924190eb2552a5b4c4c19d6cd287022fd5778424fbe",
+  "film_sha256": "75361c03b47e0352e3f9fc207ffd49b1c81cd136ccc7fb14e8a344380bfdf027",
+  "film_bytes": 115906097,
+  "qc_attestation_sha256": "4704220fc5b3f34a742880fa1709ce7720bbbaaaf0707abc581bd09a7cc4280b",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-09-26T03:54:40Z",
-      "run_id": "36216126330"
+      "at": "2026-09-26T04:12:59Z",
+      "run_id": "36217020736"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-09-26T04:01:00Z",
-      "run_id": "36216126330"
+      "at": "2026-09-26T04:17:48Z",
+      "run_id": "36217020736"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-prozorova-concussion-withdrawal-2026/prozorova-concussion-withdrawal-2026.mp4",
-  "video_bytes": 110127873
+  "video_bytes": 115906097
 }
