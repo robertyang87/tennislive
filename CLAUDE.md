@@ -1925,6 +1925,17 @@ ATP 巡回赛），「第三盘＝决胜盘」是一个**默认成立到不会�
 - 判据 `tests/test_topline_format.py`（`reel_facts.tour_topline_problem`，`--dry-run` 就报）；
   定格式之前已发的挂在 `data/legacy_topline_format.json`，只许减不许加；自动草稿由 `tour_topline` 拼
 
+### ⭐ 封面副标题（左上角第二行）：「ATP250 杭州站 第二轮 · 梅德韦杰夫 VS 鲁瓦耶」
+
+账号所有者 2026-09-26 看过样例定的：`cover.topic` ＝ **顶栏赛事行去掉年份 ＋「 · 」＋ 两个名字用「 VS 」连**
+（版式顺序，`cover.matchup`）。它同时印在封面台头和正片常驻角标上。
+
+    ATP250 杭州站 第二轮 · 梅德韦杰夫 VS 鲁瓦耶 ｜ WTA500 新加坡站 半决赛 · 费尔南德斯 VS 赫瓦林斯卡
+    比利·简·金杯 半决赛 · 斯维托丽娜 VS 保利尼   ← 没有「级别＋站」的赛事同一条规则，他选了全称
+
+- 判据 `tests/test_cover_topic_format.py`（`reel_facts.cover_topic_problem`，`--dry-run` 就报）；特例写 `_topic_format_why`
+- 定格式之前的挂在 `data/legacy_cover_topic_format.json`，只许减不许加；自动草稿由 `promote_reel_draft` 用 `cover_topic` 拼
+
 ### ⭐ 全出血的「赛场之上」也要看得到比分：转播比分板贴边、同比放大贴回左下
 
 账号所有者 2026-09-24（杭州 `bu-zheng-hangzhou-2026-r1`）：看过四种摆法选了左下原位回贴，
