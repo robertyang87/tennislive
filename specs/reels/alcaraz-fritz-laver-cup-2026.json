@@ -1,0 +1,125 @@
+{
+ "slug": "alcaraz-fritz-laver-cup-2026",
+ "_column": "赛场之上",
+ "sources": {
+  "main": "TBD"
+ },
+ "scorebox": [
+  80,
+  862,
+  520,
+  1036
+ ],
+ "_scorebox_why": "和同一届几条同一块转播板、同一个框。",
+ "cover": {
+  "eyebrow": "赛场之上",
+  "layout": "solo",
+  "subject": "阿尔卡拉斯",
+  "hook": "决胜盘救下两个赛点\n阿尔卡拉斯击败弗里茨",
+  "_hook_why": "按账号所有者 2026-09-25「钩子只讲重点或关键内容，以及结果」：第一行＝关键内容（抢十 9-10、10-11 弗里茨两个赛点都被他救下——flashscore df_mh_1 Set 3 `9:10 [3,2]`、`10:11 [3,2]`），不带比分和术语；第二行＝结果。每行 9／10 字符，≤ 10。",
+  "topic": "拉沃尔杯 第二天 · 阿尔卡拉斯 VS 弗里茨",
+  "winner": "阿尔卡拉斯",
+  "result": "6-3 4-6 13-11",
+  "matchup": [
+   {
+    "name": "阿尔卡拉斯",
+    "name_en": "Carlos Alcaraz",
+    "country": "ESP",
+    "rank": 3
+   },
+   {
+    "name": "弗里茨",
+    "name_en": "Taylor Fritz",
+    "country": "USA",
+    "rank": 10
+   }
+  ],
+  "_matchup_rank_why": "两源一致：lavercup.com 球员页「ATP RANKING: 3」（carlos-alcaraz）／「ATP RANKING: 10」（taylor-fritz）；仓库 rankings.fetch_rankings()（tennisexplorer，21.09.2026）Alcaraz 3、Fritz 10。",
+  "_name_why": "两个中文名都走 `player_zh()`：Carlos Alcaraz → 阿尔卡拉斯，Taylor Fritz → 弗里茨。",
+  "_heat_why": "世界第 3 对世界第 10，拉沃尔杯第二天夜场；去年旧金山拉沃尔杯弗里茨赢了他——那是他对弗里茨唯一一场输球（flashscore H2H＋官网赛前稿「the one loss coming against Fritz」）。",
+  "scoreboard": {
+   "court": "The O2",
+   "_court_why": "同一届前几条同一块场地。",
+   "duration_source": {
+    "url": "data:application/json,%7B%22duration%22%3A%20%221%3A51%3A00%22%2C%20%22source%22%3A%20%22flashscore%20UXCr7vQc%20df_sui_1%EF%BC%9A0%3A46%20%2B%200%3A43%20%2B%200%3A22%20%3D%201%3A51%22%2C%20%22cross_check%22%3A%20%22flashscore%20%E5%BC%80%E7%90%83%20AD%2018%3A25%3A00Z%20%E2%86%92%20%E7%BB%88%E5%9C%BA%20AO%2020%3A13%3A38Z%20%EF%BC%9D%201%3A48%3A38%22%7D",
+    "field": "duration"
+   }
+  },
+  "_duration_why": "印 1:51：flashscore 分盘 0:46 + 0:43 + 0:22。"
+ },
+ "topbar": {
+  "line1": "2026 拉沃尔杯 第二天",
+  "line2": "阿尔卡拉斯 6-3 4-6 13-11 弗里茨"
+ },
+ "_topbar_why": "和同届几条同一写法。",
+ "_match": {
+  "status": "result_verified",
+  "source": "flashscore_points",
+  "source_id": "UXCr7vQc",
+  "flashscore_id": "UXCr7vQc",
+  "participants": [
+   "阿尔卡拉斯",
+   "弗里茨"
+  ],
+  "set_scores_home_away": [
+   [
+    6,
+    3
+   ],
+   [
+    4,
+    6
+   ],
+   [
+    13,
+    11
+   ]
+  ],
+  "tiebreaks_home_away": [
+   null,
+   null,
+   null
+  ],
+  "winner": "阿尔卡拉斯",
+  "loser": "弗里茨",
+  "winner_result": "6-3 4-6 13-11",
+  "loser_result": "3-6 6-4 11-13",
+  "_direction_why": "flashscore 当日表 f_2_0：AE=Alcaraz C.（home）、AF=Fritz T.（away），BA/BB=6:3、BC/BD=4:6、BE/BF=13:11、AG/AH=2:1。第三盘拉沃尔杯抢十，按一盘记 13-11。"
+ },
+ "stats": {
+  "a": {
+   "aces": 3,
+   "df": 3,
+   "winners": 45,
+   "ue": 33,
+   "first_in": 43,
+   "first_won": 29,
+   "second_total": 24,
+   "second_won": 11,
+   "bp_conv": 3,
+   "bp_chances": 8,
+   "pts_won": 73,
+   "pts_total": 143,
+   "first_total": 67,
+   "headshot": "assets/players/headshots/atp-A0E2.png"
+  },
+  "b": {
+   "aces": 4,
+   "df": 0,
+   "winners": 24,
+   "ue": 9,
+   "first_in": 49,
+   "first_won": 30,
+   "second_total": 30,
+   "second_won": 15,
+   "bp_conv": 2,
+   "bp_chances": 4,
+   "pts_won": 70,
+   "pts_total": 143,
+   "first_total": 79,
+   "headshot": "assets/players/headshots/atp-FB98.png"
+  },
+  "_source": "flashscore UXCr7vQc 的 df_st_1，`match_stat_hooks.py UXCr7vQc --home Alcaraz --away Fritz --stats-block` 机器抄出；home＝阿尔卡拉斯＝cover.matchup[0]，不用对调。锚点：Winners 45／24、Unforced errors 33／9、Double Faults 3／0。头像：阿尔卡拉斯 atp-A0E2、弗里茨 atp-FB98（仓库已发片子同一张）。"
+ },
+ "segments": []
+}
