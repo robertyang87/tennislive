@@ -3668,6 +3668,114 @@ def check_lead_in(spec: dict) -> None:
                 " `_LEGACY_ONCOURT_NO_LEAD_IN` 逐条移除，不能加入新 slug。")
         return
     _check_side_block(spec, "lead_in", "official_exact_match_highlight")
+    bad = lead_in_uncovered_speech(spec)
+    if bad:
+        raise SystemExit(
+            f"{spec.get('slug', '?')} 的冷开场里有解说开了口、屏幕上却没有字幕：\n  "
+            + "\n  ".join(bad)
+            + "\n每一句都要配中英字幕（`lead_in.subs` 加一条，a 取这句的起点）；"
+            "真不该上屏的（口误、听不清、不是解说）写进 `lead_in.subs_skip`，"
+            "键是那句的起点秒数，值写为什么——「我觉得 ASR 听错了」要先核过"
+            "（`alcaraz-mensik` 那句 `clean sweep` 就是这么被错删的）。\n"
+            "窗口起点落在一句话中间的，把 `start` 往前挪到这句开头。")
+
+
+#: 冷开场的字幕要**盖住源片里每一句解说**，不是挑几句好听的。
+#:
+#: 来路（2026-09-26，账号所有者：「前面冷开场的解说没有中英文字幕啊，下次一定
+#: 要注意」）：`lead_in.subs` 是照 probe 的 `captions.txt` **手挑**的，于是
+#: 三条拉沃尔杯采访里漏了两处——`alcaraz-mensik` 赛点那一分的
+#: `and there it is in the evening session.`（123.68）一条没写，紧跟着的
+#: `It is a clean sweep for team Europe.`（126.88）被我以为是「当天 3比1，ASR
+#: 听错」删掉了，而它说的是**晚场**两场全赢，本来就对；`jodar-bublik` 窗口从
+#: 172.0 起，而解说那句 `Haven't ... seen too many great kick serves tonight.`
+#: 从 163.52 说到 171.44 之后，开场第一秒就是一句没字幕的话。
+#: `_check_side_block` 只查「写了的字幕合不合格」，**没写的那几句它看不见**——
+#: 和「交叉校验只比得上说错了，比不到什么都没说」是同一个形状。
+#:
+#: 所以 spec 要带着源片自己的字幕事件（`lead_in.source_captions`：`[[起点秒,
+#: 原文], ...]`，照 probe 的 `captions.txt` 抄窗口内外 10 秒的），这道闸只吃
+#: spec：起点落在窗口里、或窗口开始前 `_LEAD_IN_PRE_ROLL` 秒内（话还没说完）
+#: 的每一句，要么被某条字幕盖住，要么在 `subs_skip` 里认领理由。
+#: 自动链（`attach_interview_lead_in`）的字幕本来就是整段直落，一并写这个字段。
+_LEAD_IN_PRE_ROLL = 1.5
+
+#: 这条闸装上（2026-09-26）之前写的 lead_in 没有 `source_captions`。
+#: **只许减不许加**（`test_冷开场每一句解说都要有字幕_老债只许减`）。
+_LEGACY_LEAD_IN_NO_SOURCE_CAPTIONS = frozenset({
+    "alcaraz-mensik-laver-cup-2026-interview",
+    "bejlek-keys-cincinnati-2026-qf",
+    "bu-jodar-us-open-2026-r1-interview",
+    "chwalinska-mertens-singapore-2026-qf-interview",
+    "fils-cobolli-cincinnati-2026-sf-interview",
+    "fils-tiafoe-cin2026-final",
+    "gauff-andreeva-us-open-2026-qf-interview",
+    "gauff-bejlek-cincinnati-2026-sf",
+    "gauff-kostyuk-cincinnati-2026-qf",
+    "gauff-pegula-cin2026-final",
+    "jodar-bublik-laver-cup-2026-interview",
+    "khachanov-blockx-us-open-2026-qf-interview",
+    "monfils-tien-us-open-2026-r2-farewell",
+    "monfils-vallejo-us-open-2026-r1-interview",
+    "nakashima-fritz-cincinnati-2026-qf",
+    "nakashima-mensik-laver-cup-2026-interview",
+    "nishikori-sakamoto-us-open-2026-q3-farewell",
+    "pegula-gauff-cin2026-final-runnerup",
+    "pegula-navarro-us-open-2026-qf-interview",
+    "pegula-swiatek-cincinnati-2026-sf",
+    "rybakina-gauff-us-open-2026-sf-interview",
+    "rybakina-sabalenka-us-open-2026-final-ceremony",
+    "rybakina-zheng-us-open-2026-qf-interview",
+    "sabalenka-noskova-usopen-2026-qf-oncourt",
+    "sabalenka-pegula-us-open-2026-sf-interview",
+    "sabalenka-rybakina-us-open-2026-final-interview",
+    "shelton-alcaraz-us-open-2026-qf-interview",
+    "shelton-tiafoe-us-open-2026-sf-interview",
+    "shelton-zverev-us-open-2026-final-interview",
+    "tiafoe-fils-cin2026-final-runnerup",
+    "tiafoe-michelsen-us-open-2026-qf-interview",
+    "tiafoe-musetti-cincinnati-2026-qf-interview",
+    "tiafoe-nakashima-cincinnati-2026-sf-interview",
+    "wang-vekic-singapore-2026-r1-interview",
+    "wawrinka-berrettini-us-open-2026-r1-farewell",
+    "zheng-keys-us-open-2026-r3-interview",
+    "zheng-keys-us-open-2026-r3-tennis-channel",
+    "zheng-liutova-us-open-2026-r1-interview",
+    "zheng-swiatek-us-open-2026-r4-interview",
+    "zverev-khachanov-us-open-2026-sf-interview",
+    "zverev-shelton-us-open-2026-final-ceremony",
+    "zverev-vandezandschulp-us-open-2026-qf-interview",
+})
+
+
+def lead_in_uncovered_speech(spec: dict) -> list[str]:
+    """冷开场里源片开了口、`subs` 却没盖住的那几句（空列表＝全盖住了）。"""
+    lead = spec.get("lead_in")
+    if not isinstance(lead, dict) or spec.get("requested_content_type") != "on_court":
+        return []
+    caps = lead.get("source_captions")
+    if caps is None:
+        if spec.get("slug") in _LEGACY_LEAD_IN_NO_SOURCE_CAPTIONS:
+            return []
+        return ["缺 `lead_in.source_captions`——照 probe 的 `captions.txt` 把窗口"
+                "前后的字幕事件抄进来（`[[起点秒, 原文], ...]`），没有它就查不出"
+                "哪句解说漏了字幕"]
+    start, end = float(lead["start"]), float(lead["end"])
+    subs = lead.get("subs") or []
+    skip = {str(k): str(v).strip() for k, v in (lead.get("subs_skip") or {}).items()}
+    bad = []
+    for item in caps:
+        t, text = float(item[0]), str(item[1]).strip()
+        if not text or text.startswith("[") or not (start - _LEAD_IN_PRE_ROLL <= t < end - 0.3):
+            continue
+        at = max(t, start)
+        if any(float(c["a"]) - 1.0 <= at <= float(c["b"]) for c in subs):
+            continue
+        if skip.get(f"{t:g}") or skip.get(f"{t:.2f}"):
+            continue
+        where = "窗口开始前就开口、话没说完" if t < start else "窗口里"
+        bad.append(f"{t:.2f}  「{text}」（{where}）")
+    return bad
 
 
 def check_trail_in(spec: dict) -> None:

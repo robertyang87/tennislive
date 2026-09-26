@@ -83,6 +83,8 @@ def test_正式片头verification必须与当前比赛逐字段一致():
         "url": "https://youtu.be/highlight", "start": 70.0, "end": 78.0,
         "why": "同场赛点和获胜后解说",
         "subs": [{"a": 70.0, "b": 72.0, "en": "Match point", "zh": "赛点"}],
+        # 2026-09-26 起新 spec 要带源片字幕事件，冷开场的每一句解说都得有字幕
+        "source_captions": [[70.0, "Match point"]],
         "verification": {
             "match_id": spec["match"]["id"], "channel": "ATP Tour", "height": 1080,
             "method": "official_exact_match_highlight",

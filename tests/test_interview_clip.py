@@ -6661,3 +6661,93 @@ def test_赛后开麦不画左上角角标(tmp_path, capsys):
     itw_src = Path("tools/build_interview_clip.py").read_text("utf-8")
     assert "column_wants_watermark" in itw_src, (
         "采访线没走共享的那个 helper")
+
+
+# 2026-09-26 账号所有者：「前面冷开场的解说没有中英文字幕啊，下次一定要注意」。
+# 真实源片的字幕事件（probe `captions.txt`，alcaraz-mensik 那条集锦 sQB2Q3Lq-70），
+# 冻在这儿当判据——CI 的稀疏检出里没有 output/。
+_ALCARAZ_HL_CAPS = [
+    [116.56, "the hands to keep him in it. And then"],
+    [123.68, ">> and there it is in the evening session."],
+    [126.88, "It is a clean sweep for team Europe."],
+    [129.20, "They take the doubles. in straight sets."],
+    [138.24, ">> Rock solid performance from team Europe."],
+    [151.84, "team world."],
+    [152.72, ">> Having you there once a"],
+]
+
+
+def _lead_spec(**lead):
+    base = {
+        "url": "https://www.youtube.com/watch?v=sQB2Q3Lq-70",
+        "start": 120.6, "end": 153.0,
+        "subs": [
+            {"a": 129.2, "b": 131.5, "en": "They take the doubles in straight sets.", "zh": "直落两盘拿下双打"},
+            {"a": 138.24, "b": 141.04, "en": "Rock-solid performance from Team Europe.", "zh": "欧洲队打得稳如磐石"},
+            {"a": 151.84, "b": 153.0, "en": "Team World.", "zh": "可不是好兆头"},
+        ],
+        "source_captions": _ALCARAZ_HL_CAPS,
+    }
+    base.update(lead)
+    return {"slug": "x-new", "requested_content_type": "on_court", "lead_in": base}
+
+
+def test_冷开场每一句解说都要有字幕():
+    """手挑字幕漏掉的那两句（赛点那一句、被误删的 clean sweep）必须当场红。"""
+    import tools.build_interview_clip as clip
+
+    bad = clip.lead_in_uncovered_speech(_lead_spec())
+    assert [b.split()[0] for b in bad] == ["123.68", "126.88"], bad
+    # 窗口外的（116.56 早于起点 4 秒、152.72 贴着终点）不归它管
+    assert not any(b.startswith(("116.56", "152.72")) for b in bad)
+
+    # 补上字幕就过
+    s = _lead_spec()
+    s["lead_in"]["subs"] = [
+        {"a": 123.68, "b": 126.88, "en": "And there it is in the evening session.", "zh": "晚场拿下了"},
+        {"a": 126.88, "b": 129.2, "en": "It is a clean sweep for Team Europe.", "zh": "欧洲队晚场全胜"},
+    ] + s["lead_in"]["subs"]
+    assert clip.lead_in_uncovered_speech(s) == []
+
+    # 认领理由也过，但理由不许是空的
+    ok = _lead_spec(subs_skip={"123.68": "口误，下一句重说了", "126.88": "同上"})
+    assert clip.lead_in_uncovered_speech(ok) == []
+    blank = _lead_spec(subs_skip={"123.68": " ", "126.88": ""})
+    assert len(clip.lead_in_uncovered_speech(blank)) == 2
+
+    # 窗口起点落在一句话中间（jodar-bublik：171.44 开口，窗口 172.0 起）
+    mid = _lead_spec(start=124.0)
+    assert any(b.startswith("123.68") and "话没说完" in b
+               for b in clip.lead_in_uncovered_speech(mid))
+
+    # 新 spec 不带 source_captions 就查不了——红，不许静静放过
+    s = _lead_spec()
+    del s["lead_in"]["source_captions"]
+    assert clip.lead_in_uncovered_speech(s), "没有源字幕时这道闸不许恒绿"
+
+    # 闸接在 check_lead_in 上（在下载源片之前），不是只有函数本身
+    src = Path(clip.__file__).read_text(encoding="utf-8")
+    body = src.split("def check_lead_in(")[1].split("\ndef ")[0]
+    assert "lead_in_uncovered_speech(spec)" in body
+
+
+def test_冷开场每一句解说都要有字幕_老债只许减():
+    import tools.build_interview_clip as clip
+
+    # 草稿（`*.draft.json`）也算：它们是自动链写的，转正时一样过这道闸
+    root = Path(__file__).resolve().parent.parent / "specs" / "interviews"
+    存量 = {json.loads(p.read_text("utf-8")).get("slug"): json.loads(p.read_text("utf-8"))
+            for p in root.glob("*.json")}
+    assert len(clip._LEGACY_LEAD_IN_NO_SOURCE_CAPTIONS) <= 42, "老债表只许减不许加"
+    for slug in clip._LEGACY_LEAD_IN_NO_SOURCE_CAPTIONS:
+        spec = 存量.get(slug)
+        assert spec is not None, f"豁免表里的 {slug} 根本不存在——名字写错了？"
+        lead = spec.get("lead_in") or {}
+        assert lead and "source_captions" not in lead, (
+            f"{slug} 已经带 source_captions 了，从豁免表里删掉它")
+
+
+def test_自动链接冷开场时也写源字幕():
+    src = (Path(__file__).resolve().parent.parent / "tools" / "attach_interview_lead_in.py").read_text("utf-8")
+    body = src.split("def attach(")[1].split("\ndef ")[0]
+    assert '"source_captions"' in body
