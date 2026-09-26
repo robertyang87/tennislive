@@ -1,0 +1,98 @@
+{
+ "slug": "cobolli-tien-laver-cup-2026",
+ "_column": "赛场之上",
+ "sources": {
+  "main": "TBD"
+ },
+ "scorebox": [
+  80,
+  862,
+  520,
+  1036
+ ],
+ "_scorebox_why": "和同一届 ruud-cerundolo / mensik-nakashima / bublik-jodar 同一块转播板、同一个框。",
+ "cover": {
+  "eyebrow": "赛场之上",
+  "layout": "solo",
+  "subject": "勒纳·钱",
+  "hook": "决胜盘一度被反超\n勒纳·钱击败科博利",
+  "_hook_why": "按账号所有者 2026-09-25「钩子只讲重点或关键内容，以及结果」：第一行＝关键内容（第三盘抢十他 3-0 领先，被科博利连拿四分反超成 3-4——flashscore df_mh_1 Set 3 逐分），不带数字和术语；第二行＝结果。不写总分差（全场 68:68，按 2026-09-19 那条不上钩子）。每行 8／9 字符，≤ 10。",
+  "topic": "拉沃尔杯 · 欧洲队 vs 世界队",
+  "winner": "勒纳·钱",
+  "result": "6-3 2-6 10-7",
+  "matchup": [
+   {
+    "name": "勒纳·钱",
+    "name_en": "Learner Tien",
+    "country": "USA",
+    "rank": 13
+   },
+   {
+    "name": "科博利",
+    "name_en": "Flavio Cobolli",
+    "country": "ITA",
+    "rank": 7
+   }
+  ],
+  "_matchup_rank_why": "两源一致：lavercup.com 球员页「ATP RANKING: 13」（learner-tien）／「ATP RANKING: 7」（flavio-cobolli）；仓库 rankings.fetch_rankings()（tennisexplorer，21.09.2026）Tien 13、Cobolli 7。拉沃尔杯没有种子。",
+  "_name_why": "两个中文名都走 `player_zh()`：Learner Tien → 勒纳·钱，Flavio Cobolli → 科博利。",
+  "_heat_why": "两个人都在 HEAT_TOP_RANK=20 以内（13 / 7）；拉沃尔杯第二天第 1 场，这一场（第二天赢一场记 2 分）让世界队从 1-3 追成 3-3。",
+  "scoreboard": {
+   "court": "The O2",
+   "_court_why": "同一届前三条同一块场地（flashscore df_sui_1 `VEN÷O2 Arena ¬ TWN÷London`）。",
+   "duration_source": {
+    "url": "data:application/json,%7B%22duration%22%3A%20%221%3A37%3A00%22%2C%20%22source%22%3A%20%22flashscore%206eZQlcAT%20df_sui_1%EF%BC%9A0%3A43%20%2B%200%3A36%20%2B%200%3A18%20%3D%201%3A37%22%2C%20%22cross_check%22%3A%20%22flashscore%20%E5%BC%80%E7%90%83%20AD%2012%3A25%3A00Z%20%E2%86%92%20%E7%BB%88%E5%9C%BA%20AO%2013%3A59%3A22Z%20%EF%BC%9D%201%3A34%3A22%EF%BC%88%E5%90%AB%E8%B5%9B%E5%89%8D%E7%83%AD%E8%BA%AB%E4%B9%8B%E5%90%8E%E7%9A%84%E5%BC%80%E7%90%83%E6%97%B6%E5%88%BB%E5%8F%96%E6%95%B4%EF%BC%89%EF%BC%9B%E5%BE%85%E6%8B%89%E6%B2%83%E5%B0%94%E6%9D%AF%E5%AE%98%E7%BD%91%E8%B5%9B%E6%8A%A5%E4%BA%A4%E5%8F%89%22%7D",
+    "field": "duration"
+   }
+  },
+  "_duration_why": "印 1:37：flashscore 分盘 0:43 + 0:36 + 0:18。",
+  "portrait": {
+   "image": "assets/reel/cobolli-tien-laver-cup-2026.jpg",
+   "focus": 0.62,
+   "focus_y": 0.45,
+   "zoom": 1.0,
+   "_why": "拉沃尔杯官网 WordPress 媒体库本场实拍 `BS2_2666.jpg`（https://lavercup.com/wp-content/uploads/2026/09/BS2_2666.jpg，2026-09-26T13:39Z 上传，图注「Team World debutant, Learner Tien.」）：人物、赛事（黑底 O2 场地、UBS 挡板、红色 Team World 球衣）、时刻（本场比赛中，同批上传的 BS2_2537 图注「Flavio Cobolli splits sets with Tien on Saturday」）。反手击球中、眼睛盯球、脸在正中偏上——击球中是第一选择。",
+   "_low_res_why": "推片窗口内官方高清实拍只有这一批 1200×800（13:39Z 上传；同届前几条同一个档次）。铺 1080×1440 是放大 1.80 倍——认领这个代价。"
+  }
+ },
+ "topbar": {
+  "line1": "2026 拉沃尔杯 第二天",
+  "line2": "勒纳·钱 6-3 2-6 10-7 科博利"
+ },
+ "_topbar_why": "和同届三条同一写法：团体赛没有「级别＋站」，轮次写「第二天」。",
+ "_match": {
+  "status": "result_verified",
+  "source": "flashscore_points",
+  "source_id": "6eZQlcAT",
+  "flashscore_id": "6eZQlcAT",
+  "participants": [
+   "科博利",
+   "勒纳·钱"
+  ],
+  "set_scores_home_away": [
+   [
+    3,
+    6
+   ],
+   [
+    6,
+    2
+   ],
+   [
+    7,
+    10
+   ]
+  ],
+  "tiebreaks_home_away": [
+   null,
+   null,
+   null
+  ],
+  "winner": "勒纳·钱",
+  "loser": "科博利",
+  "winner_result": "6-3 2-6 10-7",
+  "loser_result": "3-6 6-2 7-10",
+  "_direction_why": "flashscore 当日表 f_2_0：AE=Cobolli F.（home）、AF=Tien L.（away），BA/BB=3:6、BC/BD=6:2、BE/BF=7:10、AG/AH=1:2。participants 跟 home/away。第三盘按拉沃尔杯规则是抢十，按一盘记 10-7。"
+ },
+ "segments": []
+}
