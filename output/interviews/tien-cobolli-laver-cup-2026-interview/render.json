@@ -1,0 +1,67 @@
+{
+  "film_sha256": "b73aa0f2de265f8f926b2a25ad795510f957ae271b89dc5504fe78f9d5b81b30",
+  "film_seconds": 146.021,
+  "production_sla": {
+    "version": 2,
+    "pipeline": "interview-clip",
+    "slug": "tien-cobolli-laver-cup-2026-interview",
+    "received_at": "2026-09-26T18:51:17Z",
+    "artifact_ready_at": "2026-09-26T18:56:26Z",
+    "elapsed_seconds": 309.875,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "b73aa0f2de265f8f926b2a25ad795510f957ae271b89dc5504fe78f9d5b81b30",
+    "spec_sha256": "67635b713e037e34734ba48b4f363d635db0a9fb6efb31fabad416e38bfad62a",
+    "run_id": "36264007367",
+    "stage_events": [
+      {
+        "stage": "preflight",
+        "at": "2026-09-26T18:52:02Z",
+        "run_id": "36264007367"
+      },
+      {
+        "stage": "asr_verify",
+        "at": "2026-09-26T18:53:37Z",
+        "run_id": "36264007367"
+      },
+      {
+        "stage": "render",
+        "at": "2026-09-26T18:54:52Z",
+        "run_id": "36264007367"
+      }
+    ],
+    "render_seconds": 94.875,
+    "pre_render_seconds": 215.0
+  },
+  "production_stage_events": [
+    {
+      "stage": "preflight",
+      "at": "2026-09-26T18:52:02Z",
+      "run_id": "36264007367"
+    },
+    {
+      "stage": "asr_verify",
+      "at": "2026-09-26T18:53:37Z",
+      "run_id": "36264007367"
+    },
+    {
+      "stage": "render",
+      "at": "2026-09-26T18:54:52Z",
+      "run_id": "36264007367"
+    },
+    {
+      "stage": "qc",
+      "at": "2026-09-26T18:56:27Z",
+      "run_id": "36264007367"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-26T18:56:27Z",
+      "run_id": "36264007367"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/interview-tien-cobolli-laver-cup-2026-interview/tien-cobolli-laver-cup-2026-interview.mp4?v=b73aa0f2de265f8f",
+  "video_bytes": 48630630,
+  "release_asset_digest": "sha256:b73aa0f2de265f8f926b2a25ad795510f957ae271b89dc5504fe78f9d5b81b30",
+  "qc_attestation_sha256": "745307fd74af897f1180992e4c4c9332bb46b7136a19f460310fb1778cd0a6b6"
+}

@@ -1,0 +1,130 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1440
+WrapStyle: 0
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: EN,Noto Sans,46,&H00FFFFFF,&H00000000,&H00000000,1,0,0,0,100,100,0,0,1,0,0,8,64,64,1141,1
+Style: ZH,Noto Sans CJK SC,70,&H0074DCC3,&H00000000,&H00000000,1,0,0,0,100,100,0,0,1,0,0,8,64,64,1194,1
+Style: HEADA,得意黑,54,&H00FFFFFF,&H00000000,&H00000000,0,0,0,0,100,100,1,0,1,0,0,8,48,48,24,1
+Style: HEADB,Noto Sans CJK SC,38,&H00DBE2D5,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,1.5,0,8,48,48,92,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 2,0:00:00.00,0:01:57.42,HEADA,,0,0,0,,{\r\c&H8CDC4A&\an8\pos(540,24)\bord0\shad0\p1\pbo3.5}m 6.8 6.2 l 7.1 4.3 8.0 2.6 9.3 1.2 11.1 0.3 13.0 0.0 15.0 0.3 16.7 1.2 18.1 2.6 19.0 4.3 19.3 6.2 19.3 19.0 19.0 20.9 18.1 22.6 16.7 24.0 15.0 24.9 13.0 25.2 11.1 24.9 9.3 24.0 8.0 22.6 7.1 20.9 6.8 19.0 m 24.5 16.8 l 24.2 20.2 23.3 23.4 22.0 26.2 20.2 28.6 18.0 30.4 15.6 31.5 13.0 31.9 10.5 31.5 8.0 30.4 5.9 28.6 4.1 26.2 2.7 23.4 1.8 20.2 1.6 16.8 5.1 16.8 5.3 19.4 5.9 21.8 6.9 24.0 8.1 25.8 9.6 27.2 11.3 28.1 13.0 28.4 14.8 28.1 16.4 27.2 17.9 25.8 19.2 24.0 20.1 21.8 20.7 19.4 20.9 16.8 m 11.2 31.9 l 14.8 31.9 14.8 39.1 11.2 39.1 m 6.2 38.2 l 19.8 38.2 19.8 42.0 6.2 42.0 m 9.6 9.0 l 16.5 9.0 16.5 7.0 9.6 7.0 m 9.6 13.6 l 16.5 13.6 16.5 11.6 9.6 11.6 m 9.6 18.2 l 16.5 18.2 16.5 16.2 9.6 16.2 m 41.2 0{\r\p0}{\r\fn得意黑\fs54}2026 拉沃尔杯 第二天
+Dialogue: 1,0:00:00.00,0:01:57.42,HEADB,,0,0,0,,{\r\fnNoto Sans CJK SC\fs38\c&H8CDC4A&\an8\pos(540,92)}勒纳·钱 {\r\fnTL Score\c&H8CDC4A&\b1\fs44}6-{\r\fnTL Score\b300\fs44}3 {\r\fnTL Score\b300\fs44}2-{\r\fnTL Score\c&H8CDC4A&\b1\fs44}6 {\r\fnTL Score\c&H8CDC4A&\b1\fs44}10-{\r\fnTL Score\b300\fs44}7{\r\fnNoto Sans CJK SC\fs38} 科博利 · 赛后场上采访
+Dialogue: 0,0:00:00.40,0:00:02.58,EN,,0,0,0,,Learner Tien, and you've tied this thing up
+Dialogue: 0,0:00:00.40,0:00:02.58,ZH,,0,0,0,,勒纳·钱 你把比分扳平了
+Dialogue: 0,0:00:02.58,0:00:06.80,EN,,0,0,0,,with an incredible match point.
+Dialogue: 0,0:00:02.58,0:00:06.80,ZH,,0,0,0,,靠一个不可思议的赛点
+Dialogue: 0,0:00:09.83,0:00:11.97,EN,,0,0,0,,I want to know in this unique format,
+Dialogue: 0,0:00:09.83,0:00:11.97,ZH,,0,0,0,,我想问 在这种特别的赛制下
+Dialogue: 0,0:00:11.97,0:00:14.07,EN,,0,0,0,,normally if you had lost a second set 6-2,
+Dialogue: 0,0:00:11.97,0:00:14.07,ZH,,0,0,0,,通常第二盘2比6输掉的话
+Dialogue: 0,0:00:14.07,0:00:15.55,EN,,0,0,0,,you wouldn't have much momentum going
+Dialogue: 0,0:00:14.07,0:00:15.55,ZH,,0,0,0,,你不会有多少势头
+Dialogue: 0,0:00:15.55,0:00:16.79,EN,,0,0,0,,into a third set.
+Dialogue: 0,0:00:15.55,0:00:16.79,ZH,,0,0,0,,带进第三盘
+Dialogue: 0,0:00:16.79,0:00:19.17,EN,,0,0,0,,In this case, it's just a tiebreaker.
+Dialogue: 0,0:00:16.79,0:00:19.17,ZH,,0,0,0,,可这里只是一个抢十
+Dialogue: 0,0:00:19.17,0:00:20.65,EN,,0,0,0,,After losing that second set,
+Dialogue: 0,0:00:19.17,0:00:20.65,ZH,,0,0,0,,丢掉第二盘之后
+Dialogue: 0,0:00:20.65,0:00:22.05,EN,,0,0,0,,do you feel like things just reset
+Dialogue: 0,0:00:20.65,0:00:22.05,ZH,,0,0,0,,你会不会觉得一切都归零了
+Dialogue: 0,0:00:22.05,0:00:24.51,EN,,0,0,0,,because it's just a tiebreaker to 10?
+Dialogue: 0,0:00:22.05,0:00:24.51,ZH,,0,0,0,,因为只是一个抢十？
+Dialogue: 0,0:00:24.51,0:00:26.03,EN,,0,0,0,,Yeah, I mean, I think
+Dialogue: 0,0:00:24.51,0:00:26.03,ZH,,0,0,0,,是啊 我觉得
+Dialogue: 0,0:00:26.03,0:00:28.27,EN,,0,0,0,,in general I can reset pretty well mentally.
+Dialogue: 0,0:00:26.03,0:00:28.27,ZH,,0,0,0,,总的来说我心态调整得挺快
+Dialogue: 0,0:00:28.27,0:00:29.75,EN,,0,0,0,,I think that's a big strength of mine,
+Dialogue: 0,0:00:28.27,0:00:29.75,ZH,,0,0,0,,我觉得这是我的一大长处
+Dialogue: 0,0:00:29.75,0:00:31.49,EN,,0,0,0,,but I think just in this format,
+Dialogue: 0,0:00:29.75,0:00:31.49,ZH,,0,0,0,,但我觉得在这种赛制里
+Dialogue: 0,0:00:31.49,0:00:32.53,EN,,0,0,0,,you know, no matter what the score
+Dialogue: 0,0:00:31.49,0:00:32.53,ZH,,0,0,0,,不管比分是多少
+Dialogue: 0,0:00:32.53,0:00:34.29,EN,,0,0,0,,is, I think everyone still has a chance.
+Dialogue: 0,0:00:32.53,0:00:34.29,ZH,,0,0,0,,我觉得每个人都还有机会
+Dialogue: 0,0:00:34.29,0:00:36.17,EN,,0,0,0,,You know, the match can just turn
+Dialogue: 0,0:00:34.29,0:00:36.17,ZH,,0,0,0,,比赛可能一下子
+Dialogue: 0,0:00:36.17,0:00:36.83,EN,,0,0,0,,on a dime.
+Dialogue: 0,0:00:36.17,0:00:36.83,ZH,,0,0,0,,就翻过来
+Dialogue: 0,0:00:36.83,0:00:38.63,EN,,0,0,0,,So I think just being able to put
+Dialogue: 0,0:00:36.83,0:00:38.63,ZH,,0,0,0,,所以我觉得能把第二盘
+Dialogue: 0,0:00:38.63,0:00:43.43,EN,,0,0,0,,the second behind me was really big today.
+Dialogue: 0,0:00:38.63,0:00:43.43,ZH,,0,0,0,,抛在脑后 今天真的很关键
+Dialogue: 0,0:00:48.75,0:00:49.75,EN,,0,0,0,,Tactically speaking,
+Dialogue: 0,0:00:48.75,0:00:49.75,ZH,,0,0,0,,从战术上说
+Dialogue: 0,0:00:49.75,0:00:50.95,EN,,0,0,0,,did you change anything
+Dialogue: 0,0:00:49.75,0:00:50.95,ZH,,0,0,0,,你有没有做什么调整
+Dialogue: 0,0:00:50.95,0:00:52.53,EN,,0,0,0,,in that third set tiebreaker?
+Dialogue: 0,0:00:50.95,0:00:52.53,ZH,,0,0,0,,在决胜的抢十里？
+Dialogue: 0,0:00:52.53,0:00:53.97,EN,,0,0,0,,I know this court is slow.
+Dialogue: 0,0:00:52.53,0:00:53.97,ZH,,0,0,0,,我知道这块场地很慢
+Dialogue: 0,0:00:53.97,0:00:55.33,EN,,0,0,0,,Did you just tell yourself, I'm gonna go
+Dialogue: 0,0:00:53.97,0:00:55.33,ZH,,0,0,0,,你是不是跟自己说 我要
+Dialogue: 0,0:00:55.33,0:00:57.71,EN,,0,0,0,,into lockdown mode and not miss?
+Dialogue: 0,0:00:55.33,0:00:57.71,ZH,,0,0,0,,进入锁死模式 不再失误？
+Dialogue: 0,0:00:57.71,0:00:59.31,EN,,0,0,0,,Yeah, that's what my teammates told me
+Dialogue: 0,0:00:57.71,0:00:59.31,ZH,,0,0,0,,对 这正是队友们跟我说的话
+Dialogue: 0,0:00:59.31,0:01:01.73,EN,,0,0,0,,in between the second and third just to go
+Dialogue: 0,0:00:59.31,0:01:01.73,ZH,,0,0,0,,在第二盘和第三盘之间 让我
+Dialogue: 0,0:01:01.73,0:01:02.73,EN,,0,0,0,,into lockdown.
+Dialogue: 0,0:01:01.73,0:01:02.73,ZH,,0,0,0,,进入锁死模式
+Dialogue: 0,0:01:02.73,0:01:03.79,EN,,0,0,0,,And I was able to do it
+Dialogue: 0,0:01:02.73,0:01:03.79,ZH,,0,0,0,,大部分时间
+Dialogue: 0,0:01:03.79,0:01:04.69,EN,,0,0,0,,for most of the breaker,
+Dialogue: 0,0:01:03.79,0:01:04.69,ZH,,0,0,0,,我都做到了
+Dialogue: 0,0:01:04.69,0:01:06.91,EN,,0,0,0,,but there are some moments
+Dialogue: 0,0:01:04.69,0:01:06.91,ZH,,0,0,0,,但有些时候
+Dialogue: 0,0:01:06.91,0:01:08.81,EN,,0,0,0,,where the ball just seems very enticing
+Dialogue: 0,0:01:06.91,0:01:08.81,ZH,,0,0,0,,球看起来特别诱人
+Dialogue: 0,0:01:08.81,0:01:09.81,EN,,0,0,0,,to go for it.
+Dialogue: 0,0:01:08.81,0:01:09.81,ZH,,0,0,0,,忍不住想去打
+Dialogue: 0,0:01:09.81,0:01:11.61,EN,,0,0,0,,But Taylor actually told me
+Dialogue: 0,0:01:09.81,0:01:11.61,ZH,,0,0,0,,不过弗里茨跟我说
+Dialogue: 0,0:01:11.61,0:01:14.19,EN,,0,0,0,,that the 8-7 point was the first point
+Dialogue: 0,0:01:11.61,0:01:14.19,ZH,,0,0,0,,8比7那一分是第一分
+Dialogue: 0,0:01:14.19,0:01:15.13,EN,,0,0,0,,in the whole breaker that whoever
+Dialogue: 0,0:01:14.19,0:01:15.13,ZH,,0,0,0,,整个抢十里 谁在进攻
+Dialogue: 0,0:01:15.13,0:01:18.63,EN,,0,0,0,,was on offense actually won the point.
+Dialogue: 0,0:01:15.13,0:01:18.63,ZH,,0,0,0,,谁就真的赢下了那一分
+Dialogue: 0,0:01:18.63,0:01:21.55,EN,,0,0,0,,So, yeah, I mean, just happy to get through.
+Dialogue: 0,0:01:18.63,0:01:21.55,ZH,,0,0,0,,所以 就是很高兴能挺过来
+Dialogue: 0,0:01:21.55,0:01:23.33,EN,,0,0,0,,In these stressful matches,
+Dialogue: 0,0:01:21.55,0:01:23.33,ZH,,0,0,0,,这种压力很大的比赛
+Dialogue: 0,0:01:23.33,0:01:25.99,EN,,0,0,0,,and that certainly was one at the end,
+Dialogue: 0,0:01:23.33,0:01:25.99,ZH,,0,0,0,,最后那场确实就是
+Dialogue: 0,0:01:25.99,0:01:27.17,EN,,0,0,0,,how much does it help you having
+Dialogue: 0,0:01:25.99,0:01:27.17,ZH,,0,0,0,,有传奇阿加西
+Dialogue: 0,0:01:27.17,0:01:28.89,EN,,0,0,0,,the great Andre Agassi on your bench
+Dialogue: 0,0:01:27.17,0:01:28.89,ZH,,0,0,0,,坐在你的替补席上
+Dialogue: 0,0:01:28.89,0:01:32.21,EN,,0,0,0,,for your confidence?
+Dialogue: 0,0:01:28.89,0:01:32.21,ZH,,0,0,0,,对你的信心帮助有多大？
+Dialogue: 0,0:01:34.62,0:01:35.60,EN,,0,0,0,,It's amazing.
+Dialogue: 0,0:01:34.62,0:01:35.60,ZH,,0,0,0,,太棒了
+Dialogue: 0,0:01:35.60,0:01:37.64,EN,,0,0,0,,I mean, he's giving me more energy
+Dialogue: 0,0:01:35.60,0:01:37.64,ZH,,0,0,0,,他给我的能量
+Dialogue: 0,0:01:37.64,0:01:40.44,EN,,0,0,0,,than everyone else combined, maybe.
+Dialogue: 0,0:01:37.64,0:01:40.44,ZH,,0,0,0,,可能比其他人加起来还多
+Dialogue: 0,0:01:40.44,0:01:41.96,EN,,0,0,0,,But it's great to have him there.
+Dialogue: 0,0:01:40.44,0:01:41.96,ZH,,0,0,0,,有他在那儿真好
+Dialogue: 0,0:01:41.96,0:01:43.06,EN,,0,0,0,,It's great just to have, you know,
+Dialogue: 0,0:01:41.96,0:01:43.06,ZH,,0,0,0,,真好 场边能有
+Dialogue: 0,0:01:43.06,0:01:43.98,EN,,0,0,0,,a voice on the sidelines,
+Dialogue: 0,0:01:43.06,0:01:43.98,ZH,,0,0,0,,这样一个声音
+Dialogue: 0,0:01:43.98,0:01:45.70,EN,,0,0,0,,always encouraging you.
+Dialogue: 0,0:01:43.98,0:01:45.70,ZH,,0,0,0,,一直在给你鼓劲
+Dialogue: 0,0:01:45.70,0:01:47.24,EN,,0,0,0,,And I think just staying mentally calm
+Dialogue: 0,0:01:45.70,0:01:47.24,ZH,,0,0,0,,而且我觉得保持心态冷静
+Dialogue: 0,0:01:47.24,0:01:48.88,EN,,0,0,0,,was very helpful.
+Dialogue: 0,0:01:47.24,0:01:48.88,ZH,,0,0,0,,帮了很大的忙
+Dialogue: 0,0:01:48.88,0:01:50.14,EN,,0,0,0,,Awesome. Well, well done today.
+Dialogue: 0,0:01:48.88,0:01:50.14,ZH,,0,0,0,,太棒了 今天打得漂亮
+Dialogue: 0,0:01:50.14,0:01:51.66,EN,,0,0,0,,You've tied things up.
+Dialogue: 0,0:01:50.14,0:01:51.66,ZH,,0,0,0,,你把比分扳平了
+Dialogue: 0,0:01:51.66,0:01:53.22,EN,,0,0,0,,3-3.
+Dialogue: 0,0:01:51.66,0:01:53.22,ZH,,0,0,0,,3比3
