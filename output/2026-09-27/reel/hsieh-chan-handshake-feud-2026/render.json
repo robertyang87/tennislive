@@ -1,0 +1,64 @@
+{
+  "scoreboard_qc_sha256": null,
+  "cover_seconds": 4.45,
+  "cover_narrated": true,
+  "outro_seconds": 3.827,
+  "layout": "full",
+  "segments_seconds": 123.27,
+  "topbar": null,
+  "film_seconds": 131.565,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 9.912,
+    "2": 12.192,
+    "3": 4.872,
+    "4": 12.576,
+    "5": 11.04,
+    "6": 17.856,
+    "7": 19.464,
+    "8": 4.872,
+    "9": 4.08,
+    "10": 3.96
+  },
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "hsieh-chan-handshake-feud-2026",
+    "received_at": "2026-09-26T18:10:42Z",
+    "artifact_ready_at": "2026-09-26T18:16:00Z",
+    "elapsed_seconds": 318.959,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "213b0360fcc9b528d2ec3d471a125ed5fe5056464e65514196e1af563ea4abef",
+    "spec_sha256": "368834f3287084e507ff42b519e6764ed16080743d7e2f4909c10854addb731a",
+    "run_id": "36261611737",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-09-26T18:13:19Z",
+        "run_id": "36261611737"
+      }
+    ],
+    "render_seconds": 161.959,
+    "pre_render_seconds": 157.0
+  },
+  "film_sha256": "213b0360fcc9b528d2ec3d471a125ed5fe5056464e65514196e1af563ea4abef",
+  "film_bytes": 105189196,
+  "qc_attestation_sha256": "a405029870fd78ff531ddd8d1cc43aafe5fc425711bc7589a3dc6071c52364cd",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-09-26T18:13:19Z",
+      "run_id": "36261611737"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-09-26T18:16:01Z",
+      "run_id": "36261611737"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-hsieh-chan-handshake-feud-2026/hsieh-chan-handshake-feud-2026.mp4",
+  "video_bytes": 105189196
+}
