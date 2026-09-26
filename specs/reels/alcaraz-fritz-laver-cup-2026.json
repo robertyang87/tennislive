@@ -2,7 +2,7 @@
  "slug": "alcaraz-fritz-laver-cup-2026",
  "_column": "赛场之上",
  "sources": {
-  "main": "TBD"
+  "main": "https://players.brightcove.net/6199586113001/default_default/index.html?videoId=6405677225112"
  },
  "scorebox": [
   80,
@@ -45,7 +45,15 @@
     "field": "duration"
    }
   },
-  "_duration_why": "印 1:51：flashscore 分盘 0:46 + 0:43 + 0:22。"
+  "_duration_why": "印 1:51：flashscore 分盘 0:46 + 0:43 + 0:22。",
+  "portrait": {
+   "frame_at": 168.8,
+   "focus": 0.48,
+   "focus_y": 0.3,
+   "zoom": 1.0,
+   "_frame_why": "集锦 168.8s：赛点之后阿尔卡拉斯正脸近景、在笑、眼睛睁着（本地 0.2 秒一帧 165~172s 挑的；166.4s 双臂上举那一帧情绪更外放，但脸在画面纵向 52%，铺 3:4 会落进钩子带）。无人值守兜底：推片窗口内拉沃尔杯官网 WordPress 媒体库本场没有赛中实拍（终场后约 25 分钟扫最近 15 条，只有穆雷、罗迪克和上一场德米纳尔），AP 沙箱 403、Getty 只有水印预览。本地 render_cover_local 用同一帧渲过看过。",
+   "_low_res_why": "源片 1920×1080，铺 1080×1440 放大 1.33 倍——按常设授权认领（登记进 OWNER_APPROVED_FRAME_COVERS）。"
+  }
  },
  "topbar": {
   "line1": "2026 拉沃尔杯 第二天",
@@ -121,5 +129,211 @@
   },
   "_source": "flashscore UXCr7vQc 的 df_st_1，`match_stat_hooks.py UXCr7vQc --home Alcaraz --away Fritz --stats-block` 机器抄出；home＝阿尔卡拉斯＝cover.matchup[0]，不用对调。锚点：Winners 45／24、Unforced errors 33／9、Double Faults 3／0。头像：阿尔卡拉斯 atp-A0E2、弗里茨 atp-FB98（仓库已发片子同一张）。"
  },
- "segments": []
+ "segments": [
+  {
+   "source": "main",
+   "cx": 0.515,
+   "score_inset": true,
+   "start": 165.4,
+   "end": 176.9,
+   "narration": "",
+   "_why": "冷开场：赛点落地之后。165.3 那一刀切到阿尔卡拉斯近景，165~167s 双臂上举、168~172s 近景笑，172s 起宽版全名板 `6 4 13 / 3 6 11`，173~176s 网前和弗里茨拥抱。只留现场声（这一段解说没说话，本地 faster-whisper 165~177s 零识别）。",
+   "point_end_ok": "比赛已经结束，177.48 那次翻牌是宽版板动画。",
+   "_ending_payoff_required": true,
+   "_ending_payoff_why": "正文倒数第二段按时间顺序重放 165.4–176.9，这次配旁白。"
+  },
+  {
+   "source": "main",
+   "cx": 0.515,
+   "score_inset": true,
+   "start": 8.0,
+   "end": 17.75,
+   "narration": "去年在旧金山的拉沃尔杯，阿尔卡拉斯输给了弗里茨。那是他对弗里茨唯一的一场败仗。",
+   "_why": "② 落点：官网赛前稿「Carlos Alcaraz is still smarting from his loss to Taylor Fritz last year at the Laver Cup」「owns a 19-1 combined record against Team World players, the one loss coming against Fritz」「Head-to-head: 5-1 Alcaraz」＋ flashscore H2H `2025-09-21 Laver Cup Alcaraz C. *Fritz T. 0:2`（其余对弗里茨的正式比赛全胜）。画面：第一盘 3-3 弗里茨发球 30-15 那一分（记分条 `MATCH 7 / ALCARAZ 3 30 / FRITZ •3 15`），阿尔卡拉斯拿下、翻成 40-15（19s）。收在 17.95 那一刀、18.02 翻牌之前。",
+   "point_end_ok": "这一分在 17.95 那一刀之前落地（16~17s 弗里茨走回底线），18.02 起那串翻牌是记分条换成 2 BREAK POINTS 的动画。"
+  },
+  {
+   "source": "main",
+   "cx": 0.515,
+   "score_inset": true,
+   "start": 29.6,
+   "end": 40.65,
+   "narration": "北京时间九月二十七号凌晨两点多，第二天最后一场单打，世界队五比三领先。第一盘阿尔卡拉斯三次破发，六比三。",
+   "_why": "③ 坐标，见 _opening_time_source。团体比分：官网《De Minaur stages extraordinary comeback against Zverev, World takes 5-3 lead》（17:10Z）＋画面右下团体条 `3 : 5`（150s、165s）。画面：29.6~32s 场边近景，32s 起第一盘 5-3 弗里茨发球 15-40（记分条 32~41s `2 SET POINTS / ALCARAZ 5 40 / FRITZ •3 15`），42s 翻成 `6 1 / 3 2`＝盘点兑现。df_mh_1 Set 1：1-0、4-3、6-3 三次主队在客队发球局拿下（破发），3-3 客队破回。收在 40.87 那一刀、40.94 翻牌之前。",
+   "point_end_ok": "盘点在 40.87 那一刀之前落地，41s 起是阿尔卡拉斯近景；41.74 那次翻牌是记分条换成第二盘的动画。"
+  },
+  {
+   "source": "main",
+   "cx": 0.515,
+   "score_inset": true,
+   "start": 46.0,
+   "end": 58.0,
+   "narration": "第二盘第三局，阿尔卡拉斯发球，一分没拿就被破了。下一局他拿到三个破发点，弗里茨全救了回来。",
+   "_why": "画面：第二盘 1-2 弗里茨发球，阿尔卡拉斯 40-15（记分条 42~58s `2 BREAK POINTS / ALCARAZ 6 1 40 / FRITZ •3 2 15`）。df_mh_1 Set 2：1-2 那一局主队发球 `0:15, 0:30, 0:40 |B1|` 客队拿下＝零分被破；1-3 那一局 `40:15 |B1|, 40:30 |B1|, 40:40, A:40 |B1|, 40:40, 40:A` 客队拿下＝三个破发点都救下。旁白不指认画面是哪一分。",
+   "point_end_ok": "这一分在 58.0 之前落地，集锦 58.5s 直接跳到 4-5 的盘点；段尾之后下一次翻牌在 64.86。"
+  },
+  {
+   "source": "main",
+   "cx": 0.515,
+   "score_inset": true,
+   "start": 59.0,
+   "end": 64.6,
+   "narration": "四比五，弗里茨发球拿到盘点，六比四，拖进抢十。",
+   "_why": "记分条 59~66s `SET POINT / ALCARAZ 6 4 30 / FRITZ •3 5 40`，67s `10 PT MATCH TIEBREAK / 6 4 / 3 6`。收在 64.83 那一刀、64.86 翻牌之前。「抢十」＝拉沃尔杯第三盘 Match Tiebreak。",
+   "point_end_ok": "盘点在 64.83 那一刀之前落地；65~67s 那串翻牌是记分条换成抢十的动画。"
+  },
+  {
+   "source": "main",
+   "cx": 0.515,
+   "score_inset": true,
+   "start": 72.0,
+   "end": 81.1,
+   "narration": "抢十，阿尔卡拉斯一上来五比一领先，一路打到九比七，手握两个赛点。",
+   "_why": "画面：抢十第二分（记分条 68~82s `10 PT MATCH TIEBREAK / ALCARAZ 6 4 1 / FRITZ •3 6 0`），集锦 83s 直接跳到 9-7。df_mh_1 Set 3 逐分（主:客）1:0、2:0、2:1、3:1、4:1、5:1 … 9:7（HM 3,1＝主队赛点）。旁白不指认画面。收在 81.31 那一刀、81.38 翻牌之前。",
+   "point_end_ok": "这一分在 81.2 之前落地，81.38 起那串翻牌是集锦跳到 9-7 的记分条动画。"
+  },
+  {
+   "source": "main",
+   "cx": 0.515,
+   "score_inset": true,
+   "start": 98.5,
+   "end": 104.0,
+   "narration": "阿尔卡拉斯发球，第一个赛点，他没拿下。",
+   "_why": "记分条 83~105s `2 MATCH POINTS / ALCARAZ •6 4 9 / FRITZ 3 6 7`（阿尔卡拉斯发球），106s 翻成 `9 / 8`＝第一个赛点丢了。收在 104.2 那一刀之前。",
+   "point_end_ok": "这一分在 104.2 之前落地（104~105s 诺阿近景），104.2 那次翻牌就是那一刀。"
+  },
+  {
+   "source": "main",
+   "cx": 0.515,
+   "score_inset": true,
+   "start": 112.0,
+   "end": 119.8,
+   "narration": "第二个赛点，轮到弗里茨发球，又被他顶了回来，九平。",
+   "_why": "记分条 106~119s `MATCH POINT #2 / ALCARAZ 6 4 9 / FRITZ •3 6 8`（弗里茨发球），120s `9 / 9`。收在 119.92 翻牌之前。df_mh_1 Set 3 `9:8 [3,1]` → 9:9。"
+  },
+  {
+   "source": "main",
+   "cx": 0.515,
+   "score_inset": true,
+   "start": 120.3,
+   "end": 128.35,
+   "narration": "九比十，弗里茨的赛点。阿尔卡拉斯把他调到左侧底角，弗里茨扑倒在场上。",
+   "_why": "120.3~122s 世界队替补席起身（记分条 `10 PT MATCH TIEBREAK / 9 / 9`），记分条 123~129s `MATCH POINT / ALCARAZ •6 4 9 / FRITZ 3 6 10`（阿尔卡拉斯发球、弗里茨赛点），130s 翻成 `10 / 11`（集锦跳过了 10-10 那一分）。本地 0.4 秒一帧：弗里茨在近端，126.2~127.0s 扑向左侧底角、倒地；127.8~128.2s 爬起来。df_mh_1 Set 3 `9:10 [3,2]` → 10:10＝弗里茨第一个赛点被救下。收在 128.56 那一刀之前。"
+  },
+  {
+   "source": "main",
+   "cx": 0.515,
+   "score_inset": true,
+   "start": 140.0,
+   "end": 151.7,
+   "narration": "十比十一，弗里茨又拿到赛点，这次是他发球。一个长回合，阿尔卡拉斯还是把它救了回来。",
+   "_why": "记分条 130~151s `MATCH POINT #2 / ALCARAZ 6 4 10 / FRITZ •3 6 11`（弗里茨发球），152s `11 / 11`。本地 0.5 秒一帧：弗里茨在近端，144~146s 一度压到网前又退回底线，148~151s 底线相持。df_mh_1 Set 3 `10:11 [3,2]` → 11:11。收在 151.89 那一刀、151.95 翻牌之前。",
+   "point_end_ok": "这一分在 151.89 那一刀之前落地，152s 起是阿尔卡拉斯近景怒吼；152.75 那次翻牌是记分条换成 11-11 的动画。"
+  },
+  {
+   "source": "main",
+   "cx": 0.515,
+   "score_inset": true,
+   "start": 158.2,
+   "end": 165.1,
+   "narration": "十二比十一，第三个赛点。弗里茨冲到网前截击，没能封住。",
+   "_why": "记分条 155~167s `MATCH POINT #3 / ALCARAZ •6 4 12 / FRITZ 3 6 11`，168s `13 / 11`。解说 157.66「Third match point」。本地 0.2 秒一帧：弗里茨在近端，162.6~163.8s 一路冲到网前，164.2~164.4s 网前截击；165.0~165.2s 阿尔卡拉斯在远端底线举起双臂。df_mh_1 Set 3 `12:11 [3,1]` → 13:11。收在 165.3 那一刀之前。",
+   "point_end_ok": "比赛在 165.2 之前结束。"
+  },
+  {
+   "source": "main",
+   "cx": 0.515,
+   "score_inset": true,
+   "start": 165.4,
+   "end": 176.9,
+   "narration": "六比三，四比六，十三比十一。两个人在网前抱在一起。欧洲队扳成五比五，最后一场双打，你押哪一边？",
+   "_why": "和冷开场同一段画面，按时间顺序重放、配旁白：165~172s 阿尔卡拉斯庆祝，173~176s 网前拥抱。团体比分：开赛前 3-5（官网 17:10Z 稿＋画面团体条），第二天赢一场记 2 分（仓库 laver-cup-history-2026）→ 5-5。最后一场双打：flashscore 当日表 2aQk5IfA `Ruud C./Zverev A. vs Bublik A./Nakashima B.`＋官网赛前稿。",
+   "point_end_ok": "比赛已经结束。"
+  },
+  {
+   "source": "main",
+   "cx": 0.515,
+   "score_inset": true,
+   "start": 177.0,
+   "end": 188.2,
+   "narration": "",
+   "quote": [
+    {
+     "at": 5.28,
+     "text": "some of the most dramatic scenes\n最戏剧性的场面"
+    },
+    {
+     "at": 7.48,
+     "text": "at the back end of a Laver Breaker we've ever had here.\n抢十打到最后，这里从没这么激烈过"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "_why": "177~179s 看台起立，180~182s 全景＋场边横幅 `TEAM EUROPE WINS`，186~188s 阿尔卡拉斯和世界队替补席握手。解说原声 182.28~187.94（本地 faster-whisper 逐词；ASR 把 Laver 听成 Labour，按赛事名写回；这一句前半截 179.2~182 识别不全，不上字幕）。收在 188.2，190.84 起静音。",
+   "point_end_ok": "比赛已经结束，那串翻牌是宽版板动画。"
+  }
+ ],
+ "_source": "拉沃尔杯官网视频页《2026 | Match Highlights – Alcaraz v Fritz (Match 7)》（https://lavercup.com/videos/2026/09/26/2026-match-highlights-alcaraz-v-fritz-match-7，20:30Z 发布）嵌的 Brightcove `6405677225112`（标题「Carlos/Alcaraz v Taylor/Fritz Highlights | Laver Cup 2026 Match X」），1920×1080 / 193.83s（probe 实测）。四要素：①记分条 `MATCH 7 / ALCARAZ / FRITZ`，168s `6 4 13 / 3 6 11`，和 flashscore UXCr7vQc 一致；②黑色场地 `LAVER CUP LONDON 2026`、挡板 `Alipay+` `ROLEX` `UBS`；③阿尔卡拉斯蓝色 Team Europe＋白发带，弗里茨红色 Team World；④172~182s 宽版全名板 `CARLOS ALCARAZ / TAYLOR FRITZ`、180s 起场边横幅 `TEAM EUROPE WINS`。",
+ "_editing_why": "源片 193.83 秒（官网 Brightcove 版）：比赛画面到 165.2（赛点），165.3~190.8 是赛后，190.84 起静音、191 起片尾板；没有场上采访。开场三格：冷开场（赛后现场声）→ 落点（去年输给弗里茨、唯一一场败仗）→ 坐标＋第一盘，然后按时间顺序：第二盘被破、三个破发点被救、4-5 盘点 → 抢十 5-1 → 9-7 两个赛点丢掉 → 9-10、10-11 弗里茨两个赛点被救 → 12-11 第三个赛点 → 重放庆祝 → 解说原声收尾。没用的：18~32（第一盘 4-3 后的替补席、看台、阿加西）、43~45、64.8~68、104~110（替补席、近景）、128.6~140（10-11 那一分前半截）、152~158（阿尔卡拉斯近景）。认人：阿尔卡拉斯蓝色 Team Europe＋白发带，弗里茨红色 Team World。解说原声用本地 faster-whisper（small.en）逐词定时刻——Brightcove 源没有字幕轨。",
+ "mixed_fps": {
+  "main": "单源，29.97fps。"
+ },
+ "_voice_why": "沿用默认：云见（`zh-CN-YunjianNeural`）＋6%。",
+ "_opening_time_source": {
+  "url": "https://global.flashscore.ninja/2/x/feed/f_2_0_0_en_1",
+  "match_id": "UXCr7vQc",
+  "field": "AD",
+  "value": 1790447100,
+  "beijing": "2026-09-27T02:25+08:00",
+  "spoken_precision": "approximate-hour",
+  "_why": "flashscore AD=1790447100 → 18:25Z ＝ 北京 9/27 02:25，说「凌晨两点多」；官网赛前稿 NIGHT SESSION (7 p.m.) 伦敦时间 19:00 ＝ 18:00Z 是夜场开场（含入场），同一个钟点。"
+ },
+ "_hit_data": "`match_feed.py show UXCr7vQc`：第一盘阿尔卡拉斯三次破发（1-0、4-3、6-3），3-3 被破一次，6-3（0:46）。第二盘 1-2 零分被破，1-3 救不下三个破发点，4-6（0:43）。抢十 5-1 领先，9-7 两个赛点、9-8 都没兑现；9-10、10-11 弗里茨两个赛点都被救下；12-11 第三个赛点兑现，13-11（0:22）。统计：阿尔卡拉斯制胜分 45／非受迫 33，弗里茨 24／9、双误 0。",
+ "_turning_points": [
+  "抢十 9-7、9-8 阿尔卡拉斯两个赛点没兑现（记分条 83~119s）。",
+  "9-10 弗里茨赛点：阿尔卡拉斯把他调到左侧底角，弗里茨扑倒（126~127s）。",
+  "10-11 弗里茨第二个赛点被救，12-11 第三个赛点：弗里茨上网截击没封住（158~165s）。"
+ ],
+ "editorial": {
+  "mode": "match_review",
+  "hook": [
+   "决胜盘救下两个赛点",
+   "阿尔卡拉斯击败弗里茨"
+  ],
+  "question": "去年在拉沃尔杯输给弗里茨，那是他对弗里茨唯一的败仗——这一场抢十，他是怎么在对手两个赛点下活下来的？",
+  "thesis": "第一盘阿尔卡拉斯三次破发六比三；第二盘第三局零分被破，四比六；抢十他五比一、九比七领先却丢了两个赛点，又救下弗里茨两个赛点，十二比十一第三个赛点兑现，欧洲队五比五扳平。",
+  "beats": [
+   "冷开场：阿尔卡拉斯双臂上举、和弗里茨网前拥抱。",
+   "去年拉沃尔杯输给弗里茨，那是他对弗里茨唯一的败仗。北京时间凌晨两点多，第二天最后一场单打，世界队五比三领先。",
+   "第一盘三次破发，六比三。",
+   "第二盘零分被破，弗里茨救下三个破发点，六比四。",
+   "抢十五比一、九比七，两个赛点丢掉；九比十、十比十一救下弗里茨两个赛点；十三比十一。",
+   "欧洲队五比五；解说「some of the most dramatic scenes at the back end of a Laver Breaker」。"
+  ],
+  "_hook_why": "和 cover.hook 逐行相同。",
+  "human_context": {
+   "angle": "去年旧金山拉沃尔杯阿尔卡拉斯输给弗里茨，那是他对世界队球员 19 战唯一一负、对弗里茨唯一一负（官网赛前稿＋flashscore H2H）；这一场抢十他先丢两个赛点、再救下对手两个赛点，欧洲队 5-5 扳平。",
+   "facts": [
+    "flashscore UXCr7vQc：6-3 4-6 13-11，分盘用时 0:46 / 0:43 / 0:22。",
+    "排名：阿尔卡拉斯 3、弗里茨 10（官网球员页＋tennisexplorer）。",
+    "团体比分：开赛前 3-5（官网 17:10Z 稿＋画面团体条）。"
+   ],
+   "sources": [
+    "https://www.flashscore.com/match/tennis/UXCr7vQc/",
+    "https://lavercup.com/videos/2026/09/26/2026-match-highlights-alcaraz-v-fritz-match-7",
+    "https://lavercup.com/news/2026/09/26/cobolli-and-tien-launch-blockbuster-day-2",
+    "https://lavercup.com/news/2026/09/26/de-minaur-stages-extraordinary-comeback-against-zverev-world-takes-5-3-lead"
+   ],
+   "voice_label": "救回来的两个赛点"
+  }
+ },
+ "_claims": [],
+ "_no_repeat": "同一届兄弟片（首日、cobolli-tien、zverev-deminaur）——不重讲赛制，只一句团体比分。",
+ "push": {
+  "summary": "阿尔卡拉斯抢十险胜弗里茨",
+  "lead": "拉沃尔杯伦敦站第二天最后一场单打。第一盘阿尔卡拉斯三次破发 6-3；第二盘零分被破，4-6。抢十他 9-7 领先丢了两个赛点，又救下弗里茨两个赛点，13-11 拿下。欧洲队 5-5 扳平。",
+  "matchup": "阿尔卡拉斯 vs 弗里茨",
+  "score": "6-3 4-6 13-11",
+  "auto": true
+ },
+ "_push_summary_why": "12 字位，主语阿尔卡拉斯。"
 }
