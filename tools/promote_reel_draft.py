@@ -494,6 +494,11 @@ def promote(draft: dict, probe: dict | None = None) -> dict:
             "line2": f"{match['winner']} {match['winner_result']} {match['loser']}",
         },
     })
+    # 封面副标题跟着顶栏走：「ATP250 杭州站 第二轮 · A VS B」（账号所有者
+    # 2026-09-26）。拼不出（草稿没有两个名字）就留原来那句。
+    from reel_facts import cover_topic  # noqa: PLC0415
+    spec["cover"]["topic"] = (cover_topic(spec["topbar"]["line1"], spec["cover"])
+                              or spec["cover"]["topic"])
     # ⭐ 「美网期间的比赛都用这个比例做视频」（账号所有者 2026-08-28）：美网的
     # 自动草稿转正时直接带上带式版式，不指望模型或终审记得写——parse_segments
     # 那头有同一判据的硬闸（reel_facts.us_open_match_line，单一出处），漏了这里

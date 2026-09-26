@@ -9131,6 +9131,16 @@ def _topbar_lines(spec: dict) -> tuple[str, str] | None:
                 print(f"[顶栏] ⚠️ {problem}")
             else:
                 raise ReelError(problem)
+        # 封面副标题：「ATP250 杭州站 第二轮 · A VS B」（账号所有者 2026-09-26），
+        # 由顶栏这一行去掉年份再接两个名字——两处是同一句话。同样的豁免口径。
+        from reel_facts import cover_topic_problem, legacy_cover_topic  # noqa: PLC0415
+        if slug not in legacy_cover_topic():
+            problem = cover_topic_problem(spec)
+            if problem:
+                if (spec.get("_production") or {}).get("status") == "ready_for_render":
+                    print(f"[副标题] ⚠️ {problem}")
+                else:
+                    raise ReelError(problem)
     return lines  # type: ignore[return-value]
 
 
