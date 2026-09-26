@@ -1,0 +1,320 @@
+{
+  "slug": "wong-vallejo-hangzhou-2026-r2",
+  "_column": "赛场之上",
+  "sources": {
+    "ttv": "https://www.youtube.com/watch?v=Dv6-qq8jqO0"
+  },
+  "primary": "ttv",
+  "_source": "Tennis TV 官方 YouTube 频道的日合集《Medvedev Headlines Day Four Action 💥 | Hangzhou 2026 Highlights》（`Dv6-qq8jqO0`，712.1s，1920×1080 / 25fps），**只用最后一段黄泽林-巴列霍**：511.65 起是 `WONG vs VALLEJO` 的片头卡，515.7~702.1 是这一场（probe run 用 clip 480~713）。⚠️ **合集按规矩本来不当源片**——账号所有者 2026-09-27 北京 01:10 指定：「这里面最后一段是的」。当时三条渠道都查过：① Tennis TV YouTube 只有这条合集和梅德韦杰夫-鲁瓦耶单场；② tennistv.com `short-highlights` 杭州只到 `medvedev-royer`；③ ATP Tour YouTube 杭州只到布云朝克特-迈赫扎克。四要素自证：记分条逐格读过（`WONG / VALLEJO` 两行）——首盘 `1 15 / •1 0`、抢七 `6 / •6` 到 `6 6 / •6 2`，第二盘 `7 1 40 / •6² 0 15`、`•7 4 / 6² 4 AD`、`7 4 / •6² 5 AD`，决胜盘 `7 4 2 AD / •6² 6 1`、`•7 4 5 40 / 6² 6 3 30 MATCH POINT #3`，和 flashscore x0TAQY2b 逐分记录一一对得上；场地印 `HANGZHOU 杭州`。",
+  "_tennistv_trim": "**片尾**：702.1s 那一刀之后是 Tennis TV 品牌卡和 `TAP TO SUBSCRIBE`（706.03 起静音）；最后一段收在 701.9。**片头**：511.65~515.7 的 `WONG vs VALLEJO` 片头卡不进任何一段（最早一段从 526.3 起）。**台标**：Tennis TV 台标烧在右上角（源片 x≈1580~1860），3:4 取景窗 cx=0.5 只取 555~1365，角上那块在窗外。",
+  "mixed_fps": {
+    "ttv": "YouTube 1080p，probe 在 runner 上报 25fps。单一源片，没有混帧率。"
+  },
+  "scorebox": [
+    98,
+    920,
+    519,
+    1029
+  ],
+  "_scorebox_why": "同一台杭州转播（和 `medvedev-royer-hangzhou-2026-r2` 同一套板），probe 按这个框给了 `--scorebox`，point_ends 量出来了。决胜盘板最宽（`7 4 5 40` 带 `MATCH POINT` 字牌）；各段右缘渲染时现量，519 只当兜底。",
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "黄泽林",
+    "hook": "前10次机会全落空\n黄泽林挺进8强",
+    "hook_accent": "挺进8强",
+    "_hook_why": "按 2026-09-25 口径：第一行＝关键内容——他前 10 个破发点一个没兑现（「机会全落空」不写「破发」这个术语，不用懂网球也读得懂），第二行＝结果。8 字和 7 字。",
+    "topic": "ATP250 杭州 第二轮 · 黄泽林 VS 巴列霍",
+    "winner": "黄泽林",
+    "result": "7-6(2) 4-6 6-3",
+    "matchup": [
+      {
+        "name": "黄泽林",
+        "name_en": "Coleman Wong",
+        "country": "HKG",
+        "rank": 108
+      },
+      {
+        "name": "巴列霍",
+        "name_en": "Adolfo Daniel Vallejo",
+        "country": "PAR",
+        "rank": 58
+      }
+    ],
+    "_matchup_rank_why": "两源一致（2026-09-21 那一期）：仓库 `sources/rankings.fetch_rankings()`（tennisexplorer ATP 榜，`atp_at=21.09.2026`）Wong Coleman 108、Vallejo Adolfo Daniel 58；ESPN `site.api.espn.com/.../atp/rankings` 108（578 分）/ 58（939 分）。巴列霍是 5 号种子（TNNS 比分页名字旁 `5`）。",
+    "_name_why": "`player_zh(\"Coleman Wong\")` → 黄泽林，`player_zh(\"Adolfo Daniel Vallejo\")` → 巴列霍（和 `monfils-vallejo-us-open-2026-r1` 同名）。",
+    "_subject_why": "封面放**黄泽林**——中国香港球员、这一场的赢家、钩子第二行的主语。",
+    "_heat_why": "① 档中国球员单打（中国香港），不用等额外理由；而且这一场他淘汰 5 号种子、打进 1/4 决赛，下一轮对头号种子梅德韦杰夫。同栏目上一条是他首轮胜张之臻（`zhang-wong-hangzhou-2026-r1`）。",
+    "portrait": {
+      "frame_at": 689.8,
+      "focus": 0.58,
+      "focus_y": 0.5,
+      "zoom": 1.0,
+      "_frame_why": "⚠️ 抽帧，不是官方实拍——走账号所有者 2026-09-26 的常设授权（「没有高清大图可备选的话，抽帧也可以，但是要尽量清晰偏正面的图片」），登记进 `OWNER_APPROVED_FRAME_COVERS`。\n四类源各查过（北京 00:25~01:30）：① 官方图库——`tools/find_cover_photo.py --player Wong --event Hangzhou --date 2026-09-26` WTA photo-resources、AP 都是 0 张；杭州公开赛没有可探的 WordPress 媒体库。② 赛后稿：搜狗微信「黄泽林 巴列霍」只有首轮对张之臻那几篇，这一场的赛后稿还没发。③ 主办方公众号当天战报未发。④ Getty / Imago 沙箱搜不了。\n**这一帧**：源片 689.8s，第三个赛点拿下之后切到的近景（frame-grab 逐 0.2 秒抽了 687.8~692.4，1920 宽）：**正脸直视镜头、眼睛睁着、抿着嘴**，脸最清楚；690.4 起他仰头吼、脸糊了，691 起低头抓头发。黑色 Nike 球衣红领、黑色头带，和本场所有镜头一致。",
+      "_low_res_why": "源片 1920×1080，铺 1080×1440 按高算 1.33 倍（抽帧的理由见 `_frame_why`）。",
+      "_focus_why": "focus 0.58：这一帧脸的中心在源片横向约 1115px（0.58），3:4 窗口取 710~1520，左下角的名字条（右缘约 360）在窗外；下巴在纵向约 0.39，铺满后在 y≈560，钩子带从 790 起，脸整张在钩子上方。"
+    },
+    "scoreboard": {
+      "court": "Center Court",
+      "_court_why": "TNNS app 比分页（账号所有者截图）写 `Center Court`。",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%20%222%3A34%3A00%22%2C%20%22source%22%3A%20%22flashscore%20df_sui_1%EF%BC%88x0TAQY2b%EF%BC%89%E5%88%86%E7%9B%98%200%3A55%20%2B%200%3A53%20%2B%200%3A46%20%3D%202%3A34%22%2C%20%22cross_check%22%3A%20%22flashscore%20dc_1%20DC%3D1790430000%EF%BC%8813%3A40%3A00Z%EF%BC%89%E3%80%81DD%3D1790439341%EF%BC%8816%3A15%3A41Z%EF%BC%89%EF%BC%8C%E7%9B%B8%E5%87%8F%202%3A35%3A41%22%7D",
+        "field": "duration"
+      },
+      "_duration_why": "flashscore df_sui_1：0:55 + 0:53 + 0:46 = 2:34；同源 dc_1 起止相减 2:35:41，同一量级。旁白不报用时。"
+    }
+  },
+  "_result_why": "flashscore 当日表 x0TAQY2b：AE=Wong C.（home）/ AF=Vallejo D.（away），BA/BB=7:6、BC/BD=4:6、BE/BF=6:3；df_mh_1 首盘抢七逐分到 7:2；源片 688.5 记分条 `•WONG 7 4 6 40 / VALLEJO 6² 6 3 30`（终局那一分）、689.36 解说「Coleman Wong, two sets to one」。三处一致。",
+  "topbar": {
+    "line1": "2026 ATP250 杭州 第二轮",
+    "line2": "黄泽林 7-6(2) 4-6 6-3 巴列霍"
+  },
+  "_topbar_why": "line1 按「<年份> <巡回赛><级别> <城市> <轮次>」（2026-09-26 起不带「站」）：杭州公开赛 ATP250，和 `medvedev-royer-hangzhou-2026-r2` 同一轮（TNNS 写 `Round of 16`）。line2 由 cover.winner / result / matchup 机械拼出。",
+  "_match": {
+    "status": "result_verified",
+    "source": "flashscore_points",
+    "source_id": "x0TAQY2b",
+    "flashscore_id": "x0TAQY2b",
+    "participants": [
+      "黄泽林",
+      "巴列霍"
+    ],
+    "set_scores_home_away": [
+      [
+        7,
+        6
+      ],
+      [
+        4,
+        6
+      ],
+      [
+        6,
+        3
+      ]
+    ],
+    "tiebreaks_home_away": [
+      [
+        7,
+        2
+      ],
+      null,
+      null
+    ],
+    "winner": "黄泽林",
+    "loser": "巴列霍",
+    "winner_result": "7-6(2) 4-6 6-3",
+    "loser_result": "6-7(2) 6-4 3-6"
+  },
+  "_hit_data": "跑过 `match_stat_hooks.py x0TAQY2b` 和 `match_feed.py show x0TAQY2b`（home=Wong，逐分按 home:away 记）。进旁白的：**首盘 12 个发球局全保**（df_st_1 Set 1 Service games won 6/6 对 6/6）；**抢七 7-2**（df_mh_1：第 1 分巴列霍发球被他拿下；6-2 `HM 2,1` 第一个盘点兑现）；**第二盘 5 个破发点全没兑现**（Set 2 第 2 局两个、第 6 局两个、第 10 局一个；df_st_1 Set 2 Break Points Converted 0/5）；**第二盘 4-4 他发球被破**（`40:30, 40:40, A:40, 40:40, 40:A |B1|`）；**巴列霍发球胜盘 6-4**（`40:A |B2|`）；**决胜盘第 2 局两个破发点没兑现**；**2-1 巴列霍发球那一局第四个破发点兑现**（`40:15 |B1|, 40:30 |B1|, 40:40, A:40 |B1|, 40:40, A:40 |B1|`）——全场第 11 个、唯一一次（df_st_1 Break Points Converted 1/11，巴列霍 Break Points Saved 10/11）；**5-3 发球胜赛，第三个赛点兑现**（`40:0 |B3|, 40:15 |B3|, 40:30 |B3|`）。交手记录（df_hh_1）：首次交手。",
+  "_turning_points": [
+    "首盘抢七第 1 分（巴列霍发球）：黄泽林拿下，1-0。源片 526.3~544.7，542.96 解说「what a change of direction」。",
+    "首盘抢七 6-2（巴列霍发球，黄泽林的第一个盘点）：巴列霍上网截击没处理好，7-2。源片 557.4~565.5。",
+    "第二盘第 2 局（巴列霍发球）：黄泽林 40-15 两个破发点没兑现。源片 572.5~586.8 是第一个。",
+    "第二盘第 9 局（黄泽林发球 4-4）：两次平分后被破，4-5。源片 608.9~619.4。",
+    "第二盘第 10 局（巴列霍发球 5-4）：盘点兑现，6-4。源片 622.3~628.4。",
+    "决胜盘第 4 局（巴列霍发球 2-1）：第四个破发点兑现，3-1——全场第 11 个破发点、唯一一次。源片 632.5~648.0，647.2 解说「He's finally got a break」。",
+    "决胜盘第 9 局（黄泽林发球 5-3）：第三个赛点兑现。源片 682.2~687.7，`MATCH POINT #3` 字牌。"
+  ],
+  "editorial": {
+    "mode": "match_review",
+    "hook": [
+      "前10次机会全落空",
+      "黄泽林挺进8强"
+    ],
+    "question": "黄泽林前十个破发点一个都没拿到，他是怎么靠唯一的一次破发，淘汰五号种子的？",
+    "thesis": "首盘两人十二个发球局全保，抢七他 7-2 拿下；第二盘五个破发点全没兑现，自己 4-4 反被破，4-6；决胜盘又错过两个，直到 2-1 巴列霍发球那一局的第四个破发点才破掉——全场第 11 个，也是唯一一个——之后保住发球局，第三个赛点拿下，打进 1/4 决赛。",
+    "beats": [
+      "冷开场：第三个赛点，他正脸看向镜头、仰头吼出来。",
+      "落点＋坐标：北京时间 9 月 26 日晚上，杭州公开赛第二轮，世界第 108 对五号种子。",
+      "首盘：发球局全保，抢七第一分他变线拿下，6-2 巴列霍上网截击失误，7-2。",
+      "第二盘：五个破发点全被救；4-4 自己被破，4-6。",
+      "决胜盘：第 2 局又错过两个；2-1 那一局第四个破发点终于兑现；5-3 第三个赛点拿下。",
+      "结尾：1/4 决赛对头号种子梅德韦杰夫。"
+    ],
+    "human_context": {
+      "angle": "这场球的主语是**第 11 个破发点**：他一整晚都在巴列霍的发球局里拿到机会，前十个全被救了回去，自己还在第二盘被破丢了一盘。一个世界第 108 面对 5 号种子，这种场面最容易泄气——他等到了第 11 个，然后就靠这一次破发赢下了比赛。",
+      "facts": [
+        "flashscore x0TAQY2b：Wong C. 7-6(2) 4-6 6-3 Vallejo D.；分盘用时 0:55 + 0:53 + 0:46 = 2:34；dc_1 DC=1790430000（13:40Z＝北京 21:40）。",
+        "flashscore df_st_1 全场：ACE 17/4、破发点 兑现 1/11 对 1/2、发球局 15/16 对 14/15、总得分 104/192 对 88/192。",
+        "flashscore df_mh_1：见 `_hit_data`。",
+        "排名（同一期两源）：tennisexplorer 108 / 58；ESPN 108（578 分）/ 58（939 分）。巴列霍是 5 号种子（TNNS 比分页）。",
+        "下一轮：梅德韦杰夫（`medvedev-royer-hangzhou-2026-r2` 已发，TNNS 比分页 `Plays the winner of Coleman Wong / Adolfo Daniel Vallejo`）。"
+      ],
+      "sources": [
+        "https://www.flashscore.com/match/tennis/x0TAQY2b/",
+        "https://www.youtube.com/watch?v=Dv6-qq8jqO0",
+        "https://site.api.espn.com/apis/site/v2/sports/tennis/atp/rankings",
+        "https://www.tennisexplorer.com/ranking/atp-men/"
+      ]
+    }
+  },
+  "_no_repeat": "同栏目 `zhang-wong-hangzhou-2026-r1` 讲过他首轮胜张之臻、`wong-paul-us-open-2026-r1` 讲过他美网对保罗——这一条不提张之臻、不提美网，只讲这一场。",
+  "_claims": [],
+  "push": {
+    "summary": "黄泽林淘汰5号种子进8强",
+    "lead": "杭州公开赛第二轮，黄泽林 7-6(2) 4-6 6-3 击败 5 号种子巴列霍，打进 1/4 决赛。他全场拿到 11 个破发点，前 10 个全被救回，第二盘还被破丢了一盘；决胜盘 2-1 巴列霍发球那一局，第 11 个终于兑现——全场唯一一次破发——第三个赛点拿下。1/4 决赛对头号种子梅德韦杰夫。",
+    "matchup": "黄泽林 vs 巴列霍",
+    "score": "7-6(2) 4-6 6-3",
+    "auto": true
+  },
+  "_push_summary_why": "主语黄泽林；「淘汰5号种子进8强」是这一场的结果和份量，标题里不写排名。",
+  "_voice_why": "沿用这条线的默认：云见（`zh-CN-YunjianNeural`）＋6%，不设 `style`。",
+  "stats": {
+    "tour": "atp",
+    "a": {
+      "aces": 17,
+      "df": 1,
+      "first_in": 52,
+      "first_won": 44,
+      "second_total": 36,
+      "second_won": 24,
+      "bp_conv": 1,
+      "bp_chances": 11,
+      "pts_won": 104,
+      "pts_total": 192,
+      "first_total": 88,
+      "headshot": "assets/players/headshots/atp-W0BH.png"
+    },
+    "b": {
+      "aces": 4,
+      "df": 4,
+      "first_in": 66,
+      "first_won": 50,
+      "second_total": 38,
+      "second_won": 18,
+      "bp_conv": 1,
+      "bp_chances": 2,
+      "pts_won": 88,
+      "pts_total": 192,
+      "first_total": 104,
+      "headshot": "assets/players/headshots/atp-V0DP.png"
+    },
+    "_source": "`python tools/match_stat_hooks.py x0TAQY2b --stats-block` 机器抄的 flashscore df_st_1 全场统计（北京 00:25 那一趟；自洽：44+24+(104−50−18)=104 ＝ pts_won）。a/b 跟 cover.matchup 的顺序（a=黄泽林、b=巴列霍）；flashscore 这一场 home=Wong C.、away=Vallejo D.，恰好同序。头像：atp-W0BH 黄泽林（`zhang-wong-hangzhou-2026-r1` 沿用），atp-V0DP 巴列霍（`monfils-vallejo-us-open-2026-r1` 沿用）。",
+    "_winners_ue_why": "制胜分／非受迫失误**不画**：flashscore df_st_1 这一场没有这两行；TNNS 跑了一趟（tnns-stats run 36255119191，`who=Wong,Vallejo date=2026-09-26` 认到 id=74753262，选手顺序 ['Wong','Vallejo']），全场给 winners [43,40]、ue [39,31]，**但自证红了**——分盘合计 winners [43,15]、ue [40,35] 和全场对不上，工具原话「多半解错了，别用」。按规矩这两行留空；旁白和文案也不引用。"
+  },
+  "segments": [
+    {
+      "source": "ttv",
+      "start": 682.2,
+      "end": 696.1,
+      "cx": 0.5,
+      "narration": "",
+      "_ending_payoff_required": true,
+      "_ending_payoff_why": "倒数第二段按时间顺序重放 682.2–696.1（第三个赛点到看台），这次配旁白。",
+      "_why": "冷开场：第三个赛点。682~683.5 他发球前的近景（记分条 `•WONG 7 4 5 40 / VALLEJO 6² 6 3 30` 挂 `MATCH POINT #3` 字牌），683.92 切宽景这一分，687.76 切他走回、688.5 记分条翻成 `6 40`，689.5~690.2 他正脸看向镜头、690.5 仰头吼出来，692~695.5 看台上的球迷。只留现场声。",
+      "point_end_ok": "赛点那一分 687.7 前结束，之后是他本人的反应和看台，段尾 696.1 在 696.14 那一刀之前。",
+      "crosses_cut": "683.92 从发球前近景切到同一分的宽景、687.76 切到他走回、689.5 切到他正脸、692 切到看台：同一分和它之后同一刻的反应。",
+      "score_inset": true
+    },
+    {
+      "source": "ttv",
+      "start": 526.3,
+      "end": 544.7,
+      "cx": 0.5,
+      "narration": "前十个破发点，他一个都没拿到。北京时间九月二十六号晚上九点多，杭州公开赛第二轮，世界第一百零八的黄泽林，对五号种子巴列霍。第一盘谁都没被破发，抢七第一分，他打出一记变线拿下。",
+      "_why": "② 落点＋③ 坐标。画面：首盘抢七第一分（记分条 `WONG 6 / •VALLEJO 6`，巴列霍发球），526~544 底线长相持，近端黄泽林；542.96 解说「Oh, what a change of direction. Stunning.」，546.5 记分条翻成抢七 `1 / 0`。df_mh_1 抢七第 1 分 `HG=2 HH=2 HK=1`（巴列霍发球、黄泽林拿下）。「谁都没丢发球局」：df_st_1 Set 1 Service games won 6/6 对 6/6。",
+      "_start_time_why": "开球时刻：flashscore dc_1 x0TAQY2b 的 DC=1790430000（2026-09-26 13:40Z＝北京 21:40）。只说「晚上九点多」，不报到分。",
+      "point_end_ok": "这一分 544.5 前结束（解说 542.96 已经在喊这一拍），544.82 切到黄泽林近景；546.5 的翻牌是记分条滞后。",
+      "score_inset": true
+    },
+    {
+      "source": "ttv",
+      "start": 557.4,
+      "end": 568.9,
+      "cx": 0.5,
+      "narration": "抢七他一路领先到六比二。巴列霍上网，第一拍截击没处理好，第一个盘点就拿下，七比二。",
+      "_why": "首盘抢七 `WONG 6 6 / •VALLEJO 6 2`：巴列霍发球（近端红衣），逐 0.5 秒看过 557.5~565.5：563~565 巴列霍压到网前，解说 566.0「Vallejo not looking comfortable with the first volley」；565.5 记分条翻成 `7 0`（第二盘开始）。df_mh_1 抢七 6-2 时 `HM 2,1`，下一分 `HG=2 HH=2 HK=1` 兑现，7-2。",
+      "point_end_ok": "这一分 565.3 前结束，565.5 记分条已经翻到第二盘；之后是换边，段尾 568.9 在 568.94 那一刀之前。",
+      "score_inset": true
+    },
+    {
+      "source": "ttv",
+      "start": 572.5,
+      "end": 586.8,
+      "cx": 0.5,
+      "narration": "第二盘，巴列霍的发球局一次次被逼到破发点。这是第一个，四十比十五，巴列霍在底线稳住，救了回来。这一盘他拿到五次机会，一次都没兑现。",
+      "_why": "第二盘 `WONG 7 1 40 / •VALLEJO 6² 0 15`：巴列霍发球、黄泽林 40-15 两个破发点，572.5~585 这一分；586.5 切到巴列霍近景、记分条已是 `40 / 30`（救下一个）。flashscore Set 2 第 2 局 `40:15 |B1|, 40:30 |B1|, 40:40, 40:A`；df_st_1 Set 2 Break Points Converted 黄泽林 0/5。",
+      "point_end_ok": "这一分 585.2 前结束，585.24 切到巴列霍近景，586.5 记分条翻成 `40 / 30`；段尾 586.8 在 586.84 那一刀之前。",
+      "crosses_cut": "585.24 从宽景切到巴列霍本人：刚救下这个破发点的人，旁白说的正是他救了回来。",
+      "score_inset": true
+    },
+    {
+      "source": "ttv",
+      "start": 608.9,
+      "end": 619.4,
+      "cx": 0.5,
+      "narration": "四平，轮到他自己发球，来回打了两次平分。巴列霍拿到破发点，这一分他打丢了，被破，四比五。",
+      "_why": "第二盘 `•WONG 7 4 / VALLEJO 6² 4 AD`：黄泽林发球（近端黑衣）、巴列霍占先＝破发点，609~619 这一分；解说 618.24「Oh no」、620.24「That is a shocker」，619.5 切到黄泽林近景、记分条翻成 `4 / 5`。flashscore Set 2 第 9 局 `40:30, 40:40, A:40, 40:40, 40:A |B1|` 后被破。",
+      "point_end_ok": "这一分 619.2 前结束，619.5 切到他本人的近景；段尾 619.4 在那一刀之前。",
+      "score_inset": true
+    },
+    {
+      "source": "ttv",
+      "start": 622.3,
+      "end": 628.4,
+      "cx": 0.5,
+      "narration": "巴列霍发球胜盘，盘点兑现，这一盘四比六。",
+      "_why": "第二盘 `WONG 7 4 / •VALLEJO 6² 5 AD`：巴列霍发球、占先＝盘点（flashscore Set 2 第 10 局 `40:30 |B1|, 40:40, 40:A |B2|`），622.3~628.4 这一分；628.44 切到巴列霍走回，记分条 `7 4 / 6² 6`。",
+      "point_end_ok": "这一分 628.2 前结束，段尾 628.4 在 628.44 那一刀之前。",
+      "score_inset": true
+    },
+    {
+      "source": "ttv",
+      "start": 630.1,
+      "end": 646.9,
+      "cx": 0.5,
+      "narration": "决胜盘第二局，他又错过两次机会。二比一，巴列霍发球，他又连着被救下三个。现在是第四个，也是他全场第十一个破发点。巴列霍被调到两边，一直跑，一直救。",
+      "_why": "决胜盘 `WONG 7 4 2 AD / •VALLEJO 6² 6 1`：巴列霍发球、黄泽林占先＝破发点。630~632 巴列霍的包厢、632.5~634 巴列霍发球近景，634.5~646.9 底线相持（近端蓝衣巴列霍左右跑动）。flashscore Set 3 第 2 局 `40:15 |B1|, 40:30 |B1|` 两个没兑现；第 4 局 `40:15 |B1|, 40:30 |B1|, 40:40, A:40 |B1|, 40:40, A:40 |B1|`——前三个被救，这一分是第四个。",
+      "point_end_ok": "这一段收在同一分中间，下一段（原声）紧接着从 646.9 把这一分放完。",
+      "crosses_cut": "630.06 从巴列霍的包厢切到他发球的近景、634.48 切到同一分的宽景：同一分之前的准备和这一分本身。",
+      "score_inset": true
+    },
+    {
+      "source": "ttv",
+      "start": 646.9,
+      "end": 652.3,
+      "cx": 0.5,
+      "narration": "",
+      "quote": [
+        {
+          "at": 0.3,
+          "text": "He's finally got a break.\n他终于破发了"
+        },
+        {
+          "at": 3.98,
+          "text": "Would you believe it?\n你敢信吗"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_quote_why": "转播原句，时刻取自 YouTube 自动字幕（probe 的 captions.txt：647.20「He's finally got a break.」、650.88「>> Would you believe it?」）。段内 at = 绝对秒 − 646.9。⚠️ 只有这一份 ASR，没跑第二个模型核对；两句都短、词都常见。",
+      "_why": "破发那一分打完（648.0 前结束），648.5 切到黄泽林近景、记分条翻成 `3 AD`，650~651.5 他走回。这是他全场第 11 个破发点，也是唯一一次兑现（df_st_1 Break Points Converted 1/11）。",
+      "point_end_ok": "这一分 648.0 前结束，之后是他本人的近景；段尾 652.3 在 651.84 之后的同一个近景镜头里。",
+      "crosses_cut": "648.5 从宽景切到黄泽林近景：破发之后同一刻的反应，原声说的正是这件事。",
+      "score_inset": true
+    },
+    {
+      "source": "ttv",
+      "start": 682.2,
+      "end": 696.1,
+      "cx": 0.5,
+      "narration": "五比三，他发球胜赛，前两个赛点被救。第三个，他拿下了。全场十一个破发点，他只兑现了一个，就靠这一个，赢下了比赛。",
+      "_why": "和冷开场同一分，按时间顺序重放、配旁白：`•WONG 7 4 5 40 / VALLEJO 6² 6 3 30`，`MATCH POINT #3` 字牌。flashscore Set 3 第 9 局 `40:0 |B3|, 40:15 |B3|, 40:30 |B3|` 后拿下；df_st_1 Break Points Converted 1/11。",
+      "point_end_ok": "赛点那一分 687.7 前结束，688.5 记分条翻成 `6 40`；之后是他的反应和看台。",
+      "crosses_cut": "683.92 从发球前近景切到同一分的宽景、687.76 切到他走回、689.5 切到他正脸、692 切到看台：同一分和它之后同一刻的反应。",
+      "score_inset": true
+    },
+    {
+      "source": "ttv",
+      "start": 696.2,
+      "end": 701.9,
+      "cx": 0.5,
+      "narration": "下一轮碰上头号种子梅德韦杰夫。还能再赢吗？",
+      "_why": "696.14 起网前握手（696~701.5）；段尾 701.9 在 702.1 片尾品牌卡之前。下一轮：梅德韦杰夫 7-6(6) 6-3 胜鲁瓦耶后等的就是这一场的胜者（TNNS 比分页 `Plays the winner of Coleman Wong / Adolfo Daniel Vallejo`）。",
+      "crosses_cut": "比赛已经结束，旁白是片尾一问，不指认画面里的人。",
+      "point_end_ok": "比赛已经结束。",
+      "score_inset": false,
+      "_score_inset_why": "比赛已经结束：696.14 起是网前握手的低机位，记分条已经淡出。"
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "at": "2026-09-26T17:35:39Z",
+  "pipeline": "match-reel",
+  "slug": "wong-vallejo-hangzhou-2026-r2",
+  "mode": "render",
+  "outcome": "success",
+  "error": null,
+  "elapsed_seconds": 172.914,
+  "last_stage": "数据统计对照图",
+  "stage_seconds": {
+    "下载源片 ttv": 0.109,
+    "片尾配音": 0.821,
+    "TTS 合成": 4.784,
+    "VS 抓帧 portrait（源 ttv）": 0.386,
+    "封面海报": 1.893,
+    "封面编码": 0.235,
+    "分段编码": 133.691,
+    "片尾母版转码": 0.552,
+    "拼接": 21.641,
+    "混音": 3.119,
+    "烧字幕+成片": 81.33,
+    "数据统计对照图": 1.399
+  },
+  "stage_counts": {
+    "下载源片 ttv": 1,
+    "片尾配音": 1,
+    "TTS 合成": 1,
+    "VS 抓帧 portrait（源 ttv）": 1,
+    "封面海报": 1,
+    "封面编码": 1,
+    "分段编码": 10,
+    "片尾母版转码": 1,
+    "拼接": 1,
+    "混音": 1,
+    "烧字幕+成片": 1,
+    "数据统计对照图": 1
+  },
+  "cpu_count": 4,
+  "run_id": "36259237956",
+  "run_attempt": "1",
+  "on_runner": true
+}
