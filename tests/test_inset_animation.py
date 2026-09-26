@@ -192,7 +192,24 @@ def test_contain段回贴时原板残条不许从蒙版缝里露出来(tmp_path)
     cut_segment(src, seg, out, 1920)
     # contain 窗口左缘 365，残板在源片 365~520 → 画面 x 0~140，y≈1149+
     fratio = reel.VIDEO_W / reel.contain_keep_width(1920)
-    top = round(862 * reel.VIDEO_W / reel.CROP_W) - round(862 * fratio)
+    fh = -(-round(1080 * fratio) // 2) * 2
+    top = (reel.VIDEO_H - fh) // 2
     probe = (60, top + round(950 * fratio))
     r, g, _ = _pixel(out, 0.8, probe)
     assert not (r > 150 and g < 90), f"残板从蒙版缝里露出来了：{probe} 是红的"
+
+
+def test_contain段可以按段放宽窗口():
+    """账号所有者 2026-09-26 看拉沃尔杯双打：「你这画面裁切过多了啊」——四人回合宽景
+    62% 的窗口把双打边线外的跑动裁掉了。`contain_keep` 按段放宽，只认 fit=contain。"""
+    import pytest  # noqa: PLC0415
+    import build_match_reel as reel  # noqa: PLC0415
+
+    assert reel.contain_keep_width(1920) == 1190
+    assert reel.contain_keep_width(1920, 0.8) == 1536
+    spec = {"slug": "t", "sources": {"main": "x"}, "segments": [
+        {"start": 0, "end": 2, "fit": "contain", "contain_keep": 0.8}]}
+    assert reel.parse_segments(spec, spec["sources"], "main")[0].contain_keep == 0.8
+    with pytest.raises(reel.ReelError):
+        reel.parse_segments({"slug": "t", "sources": {"main": "x"}, "segments": [
+            {"start": 0, "end": 2, "contain_keep": 0.8}]}, {"main": "x"}, "main")
