@@ -8,11 +8,12 @@ name: reel-cover-upgrade
 #
 # 一趟做什么、每道闸是什么，全在 tools/cover_upgrade.py 的 docstring 里（写进 YAML
 # 就测不了了）。这里只管接线：
-#   找近 48 小时推过、封面还是抽帧的「赛场之上」 → 查官方图 → 机器闸全过才换
-#   → spec ＋ 原图 ＋ data/cover_upgrades.json 推上 main（同日重渲会撞上的
-#   pushed.json 一并删掉，2026-09-22「重渲之后默认就是重推」）
-#   → 派发 match-reel mode=render push=true，走正常的渲 → 质检 → 推送
-# 一个 slug 最多换一次；查不到、拿不准就不换，下一班再查。
+#   先不装依赖，找目标、对账（换了图却一直没推出去的，重派 render）——都没有就收工
+#   → 装依赖、备模型 → 找近 48 小时推过、封面还是抽帧的「赛场之上」 → 查官方图
+#   → 机器闸全过才换 → spec ＋ 原图 ＋ data/cover_upgrades.json 推上 main（同日重渲
+#   会撞上的 pushed.json 一并删掉，2026-09-22「重渲之后默认就是重推」）
+#   → 派发 match-reel mode=render push=true（重试三次），走正常的渲 → 质检 → 推送
+# 一个 slug 最多换一次；查不到、拿不准就不换，下一班再查（下过的候选不重下）。
 on:
   schedule:
     # 20 分钟一班，避开 :00/:30 和编排器（1,11,…）、提升班次（6,16,…）的分钟。
@@ -72,24 +73,49 @@ jobs:
           python-version: "3.11"
           cache: pip
 
+      # 先看有没有活，再装依赖（评审 N4）：这一步只读账和 spec（纯标准库），算出
+      # 要查图的目标、要重派 render 的 slug。两样都没有，后面的装包、拉模型、查图全部
+      # 跳过——一天 72 班，绝大多数是 0 条，原来每一班都装一遍 onnxruntime／opencv。
+      # 带 --apply 时顺手把「这次要重派」记进账（下面的提交步骤一起推上去）。
+      # 按模块跑（`python -m cover_upgrade`）：这一步不碰人脸模型；
+      # `test_人脸模型缓存键跟着模型版本走` 认 `tools/cover_upgrade.py` 那一步为
+      # 第一次用到模型，那一步排在缓存和「备好」之后。
+      - name: 找目标、对账（不装依赖）
+        id: plan
+        env:
+          SLUG: ${{ github.event.inputs.slug }}
+          APPLY: ${{ github.event_name == 'schedule' || github.event.inputs.apply == 'true' }}
+        run: |
+          ARGS=(--plan --summary "$GITHUB_STEP_SUMMARY"
+                --out-targets "$RUNNER_TEMP/targets.txt"
+                --out-redispatch "$RUNNER_TEMP/redispatch.txt")
+          [ "$APPLY" = "true" ] && ARGS+=(--apply)
+          [ -n "$SLUG" ] && ARGS+=(--slug "$SLUG")
+          PYTHONPATH=tools python -m cover_upgrade "${ARGS[@]}"
+          echo "targets=$(grep -c . "$RUNNER_TEMP/targets.txt" || true)" >> "$GITHUB_OUTPUT"
+
       # visualqa 是 cv2（headless，<5），faces 是 onnxruntime——认人＋睁眼要这两个。
       - name: 装依赖
+        if: steps.plan.outputs.targets != '0'
         run: pip install -q -e ".[visualqa,faces]"
 
       # 认人＋睁眼的三个 onnx（face_checks.MODEL_VERSION）。键钉在模型版本上，
       # `test_人脸模型缓存键跟着模型版本走` 逼着它和 face_checks 一起改。
       - name: 缓存人脸模型
+        if: steps.plan.outputs.targets != '0'
         uses: actions/cache@v4
         with:
           path: ~/.cache/tennislive/face-models
           key: face-models-buffalo_s-v0.7
       # 备不上不拖红：工具会把每张候选记成「人脸模型不可用」——**不换**，不是放行。
       - name: 备好人脸模型
+        if: steps.plan.outputs.targets != '0'
         run: |
           python tools/face_checks.py fetch \
             || echo "::warning::人脸模型没备好——这一班所有候选都会因「认人／睁眼没查」而不换"
 
       - name: 查官方图、过闸、换
+        if: steps.plan.outputs.targets != '0'
         timeout-minutes: 15
         env:
           SLUG: ${{ github.event.inputs.slug }}
@@ -102,15 +128,17 @@ jobs:
           python tools/cover_upgrade.py "${ARGS[@]}"
 
       # always()：上一步可能因为「某一条换完过不了正式的封面闸、已退回」而红（红是为了
-      # 让人看见），别的条换好的照样要推。上一步真崩了的话 upgraded.txt 根本没写，
-      # 这一步什么都不提交。
-      - name: 换了的推上 main（没换不制造空提交）
+      # 让人看见），别的条换好的照样要推。upgraded.txt 是**换成一条就当场追加**的，
+      # 上一步半路崩了，已经换好的那几条也在清单上（账和 spec 一起提交，不会只提交账）。
+      # 没换图也可能要提交账：对账重派记了一笔、下过没过闸的候选（下一班跳过）、退避。
+      - name: 换了的、账变了的推上 main（都没变不制造空提交）
         id: commit
         if: always()
         run: |
-          touch "$RUNNER_TEMP/upgraded.txt"
-          if [ ! -s "$RUNNER_TEMP/upgraded.txt" ]; then
-            echo "这一班没有换图"
+          touch "$RUNNER_TEMP/upgraded.txt" "$RUNNER_TEMP/redispatch.txt"
+          if [ ! -s "$RUNNER_TEMP/upgraded.txt" ] \
+             && [ -z "$(git status --porcelain -- data/cover_upgrades.json)" ]; then
+            echo "这一班没有换图，账也没变"
             exit 0
           fi
           git config user.name "Claude"
@@ -123,29 +151,57 @@ jobs:
           done < "$RUNNER_TEMP/upgraded.txt"
           git add --sparse data/cover_upgrades.json
           python tools/check_staged_file_sizes.py
-          git commit -m "reel: 抽帧封面自动换成官方实拍（O4）$(paste -sd' ' "$RUNNER_TEMP/upgraded.txt")"
+          if [ -s "$RUNNER_TEMP/upgraded.txt" ]; then
+            MSG="reel: 抽帧封面自动换成官方实拍（O4）$(paste -sd' ' "$RUNNER_TEMP/upgraded.txt")"
+          else
+            MSG="reel: 封面自动换图的账（对账重派／下过的候选／退避）"
+          fi
+          git commit -m "$MSG"
           source tools/git_push_retry.sh
           if ! push_with_rebase_retry main 5; then
-            echo "::error::换好的封面连续 5 次推不上 main；没有派发重渲"
+            echo "::error::连续 5 次推不上 main；没有派发重渲（换好的图下一班对账会补派）"
             exit 1
           fi
           echo "pushed=true" >> "$GITHUB_OUTPUT"
 
       # render 只认 main 上的 spec，所以排在推上去之后。push=true：换图就是要重推
       # （表单那个勾只放宽「spec 没写 push.auto」那一道，质检/账本/成片身份照旧拦）。
-      - name: 派发重渲重推
+      # 每一条重试三次（评审 N1：原来一次失败、或 bash -e 在循环里停下，spec 在 main 上
+      # 已经是新图、成片还是抽帧，而账里记着 upgraded，从此没人再派）。三次都不行就红，
+      # 下一班的对账（一小时后）会看到「换了图、发布账本里没有新推送」再派。
+      - name: 派发重渲重推（换了的 ＋ 对账要重派的）
         if: always() && steps.commit.outputs.pushed == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          dispatch() {
+            local slug=$1 n
+            for n in 1 2 3; do
+              if gh workflow run match-reel.yml --ref main \
+                   -f mode=render -f slug="$slug" -f push=true \
+                   -f received_at="$(date -u +%FT%TZ)" </dev/null; then
+                return 0
+              fi
+              echo "::warning::派发 $slug 的 render 第 $n 次失败"
+              sleep $((n * 15))
+            done
+            return 1
+          }
+          FAILED=()
           while read -r SLUG; do
             [ -n "$SLUG" ] || continue
-            gh workflow run match-reel.yml --ref main \
-              -f mode=render -f slug="$SLUG" -f push=true \
-              -f received_at="$(date -u +%FT%TZ)"
-            echo "[dispatch] render $SLUG（推完用 tools/push_link.py --slug $SLUG 取新的推送网页）" \
+            if dispatch "$SLUG"; then
+              echo "[dispatch] render $SLUG（推完用 tools/push_link.py --slug $SLUG 取新的推送网页）" \
+                | tee -a "$GITHUB_STEP_SUMMARY"
+            else
+              FAILED+=("$SLUG")
+            fi
+          done < <(cat "$RUNNER_TEMP/upgraded.txt" "$RUNNER_TEMP/redispatch.txt" | sort -u)
+          if [ "${#FAILED[@]}" -gt 0 ]; then
+            echo "::error::派发 render 连续 3 次失败：${FAILED[*]}——账里记着换过图，下一班对账会重派" \
               | tee -a "$GITHUB_STEP_SUMMARY"
-          done < "$RUNNER_TEMP/upgraded.txt"
+            exit 1
+          fi
 
       - name: 失败时写摘要
         if: failure() || cancelled()

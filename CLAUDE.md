@@ -805,7 +805,7 @@ CLAUDE.md，省下一次重查；那是它该待的地方。（`wawrinka-wildcar
 
 账号所有者选的 O4「自动换图重推」（来路 6b49049b / 5beecfa6 / 1a4f92d3，三次都是他看见了才换）。
 `reel-cover-upgrade.yml` 20 分钟一班，查近 48 小时推过、封面还是抽帧的「赛场之上」；候选官方图
-**机器闸全过才换**（说明点名人＋赛事＋当地同一天、铺满不放大、认得出是封面主角、睁眼、脸不进钩子带），
+**机器闸全过才换**（说明点名主角全名＋对手＋赛事＋当地同一天、不是训练／发布会／双打、铺满不放大、认得出是封面主角、睁眼、脸不进钩子带和台头），
 然后改 spec、删同日 `pushed.json`、派发 `render push=true`。一个 slug 只换一次（`data/cover_upgrades.json`）；
 当面点过「就用这一帧」的写 `cover.portrait._keep_frame_why`。推完照旧 `tools/push_link.py --slug <slug>`。
 闸、渠道和「拉沃尔杯 1200 宽的图过不了」在 `tennis-cover-photos` 同名一节。

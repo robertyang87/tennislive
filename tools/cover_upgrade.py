@@ -30,11 +30,12 @@
 
    | 闸 | 判据 |
    |---|---|
-   | 说明／元数据点名 | 封面主角的姓 ＋ 赛事（或图就在赛事自己的官网媒体库里）＋ **这场球的当地日期**（说明里写了日期就按说明；没写才看元数据日期；写了星期几也要对得上） |
+   | 说明／元数据点名 | 封面主角的**姓和名**（同姓的兄弟姐妹认人闸分不开）＋ **对手的姓**（点了对手才知道是哪一场）＋ 赛事（或图就在赛事自己的官网媒体库里）＋ **这场球的当地日期**（说明里写了日期就按说明；没写才看元数据的**上传时刻**，要晚于开赛——只有日子没有时刻的不换；写了星期几也要对得上） |
+   | 在比赛中 | 说明／文件名里出现训练、热身、发布会、采访、签名、抵达、定妆、双打／混双（`NOT_IN_MATCH`）一律不换——CLAUDE.md 选图第 2 道闸门 |
    | 分辨率 | 按选定的 `zoom` 铺 1080×1440 **不放大**（`build_match_reel.cover_photo_problem` 那道闸，不写 `_low_res_why`——机器不替人认领放大） |
    | 认人 | `face_checks`：最大那张脸**认得出是封面主角**（match ≥ 0.34）；认成对手、`unknown`、模型不可用一律不换 |
    | 睁眼 | `face_checks` 的 EAR ≥ 0.16（闭眼、垂眼、量不了一律不换） |
-   | 钩子带 | 按真实铺图数学（`fit: cover` ＋ `focus` / `focus_y` / `zoom`）算脸落在哪：脸的下沿要在钩子顶边（`versus_poster.STORYCOPY_TOP`）之上——钩子和比分板都在它下面 |
+   | 钩子带／台头 | 按真实铺图数学（`fit: cover` ＋ `focus` / `focus_y` / `zoom`）算脸落在哪：脸的下沿要在钩子顶边（`versus_poster.STORYCOPY_TOP`）之上——钩子和比分板都在它下面；上沿不许压进左上角台头（y 0~170） |
 
    全过的里面挑**脸最大**的（「优先近景特写」）。**「情绪对不对题」机器判不了**，
    这一条就是不判——O4 授权的是「官方图过了这几道就换」。
@@ -49,6 +50,27 @@
    重推……把它从仓库里删掉」删掉（`stale_markers`）；工作流随后
    `match-reel mode=render push=true` 走正常的渲 → 质检 → 推送。推完会话用
    `python3 tools/push_link.py --slug <slug>` 把新的推送网页发进对话。
+   **派发会丢**（`gh workflow run` 失败、runner 被砍）：工作流重试三次；再不行，
+   下一班的对账（`redispatch_plan`）看到「换了图、一小时了发布账本里没有新的推送
+   尝试」就重派，最多两次。
+
+## 每一班先对账、先看有没有活（`--plan`，不装依赖）
+
+工作流第一步只读 json：要查图的目标有几条、要重派的 render 有几条。都是 0 就不装
+onnxruntime／opencv、不拉模型，直接收工（一天 72 班，绝大多数是 0 条）。
+
+## 查过的不重下，退回的要退避
+
+- 下过、闸没过的候选记进 `data/cover_upgrades.json` 的 `attempts.<slug>.tried`，
+  下一班跳过它们接着往后下——`MAX_DOWNLOADS` 的「留给下一班」才是真的
+- 换完过不了正式封面闸（已退回）的：那张图记成下过，这一条按 `REVERT_BACKOFF`
+  退避（2 小时起、每次翻倍），不再每 20 分钟红一次
+
+## ⚠️ 权利那一半机器不判（评审 N7，口径归账号所有者）
+
+AP／Getty 的图过了这几道闸就会自动发出去，**没有人再看授权**——而
+`find_cover_photo.sweep_ap` 的 docstring 写的是「发布前人工判断」。O4 选的是
+「自动换图重推」，这一半是不是也交给机器，是账号所有者的口径，这里不替他改。
 
 ## 一个 slug 最多换一次
 
@@ -84,8 +106,21 @@ LEDGER = Path("data/cover_upgrades.json")
 PUBLISH_LEDGER = Path("data/reel_publish_ledger")
 SPEC_DIR = Path("specs/reels")
 KEEP_FRAME_WHY = "_keep_frame_why"
-#: 过了元数据闸之后最多下载几张。一辑能翻出几十张，而封面只要一张。
+#: 过了元数据闸之后最多下载几张。一辑能翻出几十张，而封面只要一张。下过、闸没过的
+#: 记进账的 `attempts.<slug>.tried`，下一班跳过它们接着往后下——不然第 11 张永远
+#: 轮不到（评审 N3：每一班按同样的顺序重下同样的前十张）。
 MAX_DOWNLOADS = 10
+#: 换完、派发 render 之后，发布账本里多久还没出现新的推送尝试，就当那次派发丢了、
+#: 再派一次（评审 N1：`gh workflow run` 失败一次，spec 已经在 main 上用新图、成片还是
+#: 抽帧，而账里记着 upgraded，从此没人再派）。render 7~15 分钟加排队，留足一小时。
+REDISPATCH_AFTER = timedelta(minutes=60)
+#: 最多重派几次。render 自己红在质检闸上的话，派多少次都一样——那要人看。
+MAX_REDISPATCH = 2
+#: 换完过不了正式封面闸（已退回）之后，这一条要等多久再查；每退回一次翻倍
+#: （评审 N2：原来每 20 分钟重来一次、红一次，48 小时红一百多次）。
+REVERT_BACKOFF = timedelta(hours=2)
+#: `attempts` 里多久没动过的条目在下次写账时清掉（48 小时窗口早过了，留着只是占地方）。
+ATTEMPTS_TTL = timedelta(days=7)
 #: 下载体积上限：AP 原图 8 MB 级，再大就不是一张照片了。
 MAX_BYTES = 40 * 1024 * 1024
 #: 封面画布（`build_match_reel.COVER_FILL_W/H`，海报是 1080×1440）。
@@ -187,6 +222,15 @@ def _parse_utc(stamp: str) -> datetime | None:
     return got if got.tzinfo else None
 
 
+def _parse_gmt(stamp: str) -> datetime | None:
+    """WordPress 的 `date_gmt` 不带时区后缀（`2026-09-26T20:57:38`）——它就是 UTC。"""
+    try:
+        got = datetime.fromisoformat(str(stamp or "").replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    return got if got.tzinfo else got.replace(tzinfo=timezone.utc)
+
+
 def _safe_date(y: int, m: int, d: int) -> date | None:
     try:
         return date(y, m, d)
@@ -225,6 +269,8 @@ class Target:
     spec: dict
     first_sent: datetime
     spec_path: Path
+    #: 前几班已经下过、闸没过的候选 URL（`attempts.<slug>.tried`）
+    tried: set[str] = field(default_factory=set)
 
 
 def load_ledger(repo: Path) -> dict:
@@ -234,7 +280,61 @@ def load_ledger(repo: Path) -> dict:
     except FileNotFoundError:
         data = {}
     data.setdefault("upgrades", {})
+    data.setdefault("attempts", {})
     return data
+
+
+def _stamp(now: datetime) -> str:
+    return now.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
+def save_ledger(repo: Path, ledger: dict, now: datetime) -> None:
+    ledger.setdefault("_why", (
+        "tools/cover_upgrade.py 自动把抽帧封面换成官方实拍的账（账号所有者 2026-09-27 "
+        "O4「自动换图重推」）。upgrades：status=upgraded 的 slug 不再换第二次，而且从 "
+        "build_match_reel.OWNER_APPROVED_FRAME_COVERS 里减掉；dispatches 是对账重派 "
+        "render 的时刻。attempts：还没换成的——tried 是下过、闸没过的候选（下一班跳过），"
+        "reverts／next_at 是换完过不了正式封面闸之后的退避。"))
+    attempts = ledger.get("attempts") or {}
+    for slug in list(attempts):
+        seen = _parse_utc((attempts[slug] or {}).get("updated") or "")
+        if seen is None or now - seen > ATTEMPTS_TTL:
+            attempts.pop(slug)
+    if not attempts:
+        ledger.pop("attempts", None)
+    path = repo / LEDGER
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(ledger, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    ledger.setdefault("attempts", {})
+
+
+def record_tried(repo: Path, slug: str, urls: Iterable[str], now: datetime) -> bool:
+    """把这一班下过、闸没过的候选记进账（N3）。有新的才写，返回写没写。"""
+    ledger = load_ledger(repo)
+    row = ledger["attempts"].setdefault(slug, {})
+    before = set(row.get("tried") or [])
+    after = before | {u for u in urls if u}
+    if after == before:
+        return False
+    row["tried"] = sorted(after)
+    row["updated"] = _stamp(now)
+    save_ledger(repo, ledger, now)
+    return True
+
+
+def record_revert(repo: Path, slug: str, url: str, problem: str, now: datetime) -> datetime:
+    """换完过不了正式封面闸、已退回：这张图记成下过，这一条退避（N2）。返回下次再查的时刻。"""
+    ledger = load_ledger(repo)
+    row = ledger["attempts"].setdefault(slug, {})
+    reverts = [r for r in row.get("reverts") or [] if isinstance(r, dict)]
+    reverts.append({"at": _stamp(now), "url": url, "problem": problem[:300]})
+    row["reverts"] = reverts
+    row["tried"] = sorted(set(row.get("tried") or []) | {url})
+    nxt = now + REVERT_BACKOFF * (2 ** (len(reverts) - 1))
+    row["next_at"] = _stamp(nxt)
+    row["updated"] = _stamp(now)
+    save_ledger(repo, ledger, now)
+    return nxt
 
 
 def upgraded_slugs(repo: Path) -> set[str]:
@@ -263,6 +363,7 @@ def targets(repo: Path, now: datetime) -> tuple[list[Target], list[str]]:
     """(要查的, 为什么别的不查)。**每一条不查的都说出理由**——只在找到时出声的
     检查，证明不了它看过。"""
     done = upgraded_slugs(repo)
+    attempts = load_ledger(repo)["attempts"]
     found: list[Target] = []
     notes: list[str] = []
     for ledger in sorted((repo / PUBLISH_LEDGER).glob("*.json")):
@@ -289,8 +390,71 @@ def targets(repo: Path, now: datetime) -> tuple[list[Target], list[str]]:
         if why:
             notes.append(f"{slug}：`cover.portrait.{KEEP_FRAME_WHY}` 认领了这一帧（{why}），不换")
             continue
-        found.append(Target(slug=slug, spec=spec, first_sent=sent, spec_path=spec_path))
+        row = attempts.get(slug) if isinstance(attempts.get(slug), dict) else {}
+        nxt = _parse_utc(row.get("next_at") or "")
+        if nxt is not None and now < nxt:
+            notes.append(f"{slug}：上次换完过不了正式封面闸、已退回（第 {len(row.get('reverts') or [])} 次），"
+                         f"退避到 {nxt:%m-%d %H:%M}Z 再查（{LEDGER} 的 attempts）")
+            continue
+        found.append(Target(slug=slug, spec=spec, first_sent=sent, spec_path=spec_path,
+                            tried=set(row.get("tried") or [])))
     return found, notes
+
+
+def last_publish_attempt(repo: Path, slug: str) -> datetime | None:
+    """发布账本里**任何**一次推送尝试的最晚时刻——sent／uncertain／rejected 都算
+    「render 走到了推送那一步」。"""
+    try:
+        data = json.loads((repo / PUBLISH_LEDGER / f"{slug}.json").read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return None
+    stamps = [_parse_utc(a.get("at") or "") for a in data.get("attempts") or []
+              if isinstance(a, dict)]
+    stamps = [s for s in stamps if s is not None]
+    return max(stamps) if stamps else None
+
+
+def redispatch_plan(repo: Path, now: datetime) -> tuple[list[str], list[str]]:
+    """对账（N1）：账里记着 upgraded、换图之后发布账本里一直没有新的推送尝试——
+    当成那次 render 派发丢了（`gh workflow run` 失败、runner 被砍），再派一次。
+    返回 (要重派的 slug, 每一条为什么派／为什么不派)。"""
+    due: list[str] = []
+    notes: list[str] = []
+    for slug, row in sorted(load_ledger(repo)["upgrades"].items()):
+        if not isinstance(row, dict) or row.get("status") != "upgraded":
+            continue
+        at = _parse_utc(row.get("at") or "")
+        if at is None or now - at > WINDOW:
+            continue
+        pushed = last_publish_attempt(repo, slug)
+        if pushed is not None and pushed >= at:
+            continue
+        sends = [t for t in (_parse_utc(x or "") for x in row.get("dispatches") or []) if t]
+        last = max([at, *sends])
+        waited = int((now - last).total_seconds() // 60)
+        if now - last < REDISPATCH_AFTER:
+            notes.append(f"{slug}：换图／上次派发在 {waited} 分钟前，render 可能还在跑，先等")
+            continue
+        if len(sends) >= MAX_REDISPATCH:
+            notes.append(f"::warning::{slug}：{at:%m-%d %H:%M}Z 换了图、重派了 {len(sends)} 次 render，"
+                         "发布账本里还是没有新的推送——不再重派，要人看 match-reel 的 run")
+            continue
+        due.append(slug)
+        notes.append(f"{slug}：{at:%m-%d %H:%M}Z 换了图，{waited} 分钟了发布账本里没有新的推送尝试——"
+                     f"当成派发丢了，重派 render（第 {len(sends) + 1} 次，最多 {MAX_REDISPATCH} 次）")
+    return due, notes
+
+
+def mark_redispatched(repo: Path, slugs: Iterable[str], now: datetime) -> None:
+    slugs = list(slugs)
+    if not slugs:
+        return
+    ledger = load_ledger(repo)
+    for slug in slugs:
+        row = ledger["upgrades"].get(slug)
+        if isinstance(row, dict):
+            row.setdefault("dispatches", []).append(_stamp(now))
+    save_ledger(repo, ledger, now)
 
 
 # ---------------------------------------------------------------- 这场球
@@ -315,19 +479,33 @@ class MatchContext:
 def event_of(spec: dict) -> tuple[str, object, str | None] | None:
     """(英文名, 时区, 官网域名)。先认自动草稿带来的 `_production.event`（英文），
     再认顶栏 `topbar.line1` 里的中文词——**认最长的那个**（「比利·简·金杯」不许被
-    一个更短的词抢走）。"""
+    一个更短的词抢走）。
+
+    ⚠️ **`_production.event` 不一定是英文**（仓库里就有「美网」「美网资格赛」）。
+    `_key` 只留 ASCII 字母数字，中文归一出来是空串，而**空串是任何串的子串**——
+    原来那句 `_key(prod) in _key(en)` 对 `EVENTS` 第一行恒真，于是任何中文赛事名都
+    被认成美网、时区 `America/New_York`（「杭州」＋ 03:00Z 开赛算成当地 9/25，真实是
+    9/26），而赛事名那道闸拿 `_key("")` 去比也恒过（评审 B2）。所以：
+    - 归一后是空的 `prod` 当没写，回退顶栏；
+    - 只认「表里的英文名**包含在** `prod` 里」，挑最长的——反方向（`prod` 是表里某个名
+      的子串）会让「Open」这种残片认成 US Open；
+    - `prod` 认不出、顶栏认得出，就按顶栏（顶栏是人看过的那一行）。"""
     prod = str((spec.get("_production") or {}).get("event") or "").strip()
-    if prod:
-        for _zh, en, tz, site in EVENTS:
-            if _key(en) in _key(prod) or _key(prod) in _key(en):
-                return prod, tz, site
-        return prod, None, None
+    pkey = _key(prod)
+    if pkey:
+        hits = [(len(_key(en)), en, tz, site) for _zh, en, tz, site in EVENTS
+                if _key(en) and _key(en) in pkey]
+        if hits:
+            _n, _en, tz, site = max(hits, key=lambda h: h[0])
+            return prod, tz, site
     line1 = str((spec.get("topbar") or {}).get("line1") or "")
     hits = [(len(zh), en, tz, site) for zh, en, tz, site in EVENTS if zh in line1]
-    if not hits:
-        return None
-    _n, en, tz, site = max(hits, key=lambda h: h[0])
-    return en, tz, site
+    if hits:
+        _n, en, tz, site = max(hits, key=lambda h: h[0])
+        return en, tz, site
+    if pkey:
+        return prod, None, None
+    return None
 
 
 def _registry_tz(event_en: str) -> str | None:
@@ -442,48 +620,127 @@ class Candidate:
     name: str = ""
     page: str = ""
     credit: str = ""
+    #: 元数据里的日期（站点当地的日子，`YYYY-MM-DD…`，只用前 10 位）
     meta_date: str = ""
+    #: 元数据里的**上传时刻**（UTC，WordPress 的 `date_gmt`）。说明没写日期时，
+    #: 它要晚于这场开赛（评审 B3）——只有日子没有时刻的，判不了，不换。
+    meta_utc: str = ""
     event_owned: bool = False
     wh: tuple[int, int] | None = None
 
+    @property
+    def filename(self) -> str:
+        """文件名：候选自己带的 `name`，没有就取 URL 最后一段（去掉 `?width=`）。"""
+        return self.name or self.url.split("?", 1)[0].rstrip("/").rsplit("/", 1)[-1]
+
     def text(self) -> str:
-        return f"{self.caption} {self.name}"
+        return f"{self.caption} {self.filename}"
+
+
+#: 说明／文件名里出现这些词，拍的就不是「这场单打正在打」的那一刻——CLAUDE.md 选图
+#: 第 2 道闸门「在比赛中」：训练、热身、发布会、采访、签名、抵达、定妆照一律不算；
+#: 双打／混双是**同一个人的另一场**（拉沃尔杯同一站单打双打都打：
+#: `alcaraz-mensik-doubles` 首日夜场、`alcaraz-fritz` 单打第二天）。认人认得出是他，
+#: 认不出他在干什么——所以只能靠说明自己的字（评审 B1：「…speaks during a news
+#: conference after his second-round match…」「…practices ahead of his match…」
+#: 原来都换上了，而 `evaluate` 挑脸最大的，恰好偏爱发布会和定妆照）。
+#: 在 `_fold` 之后的文本上匹配（小写、标点变空格），所以 `warm-up` 是 `warm up`。
+NOT_IN_MATCH = re.compile(
+    r"\b(?:practi[cs]\w*|training|trains|warm\w*|(?:news|press) conferences?"
+    r"|interview\w*|autograph\w*|arriv\w*|portraits?|pos(?:e|es|ed|ing)"
+    r"|doubles|mixed)\b")
+
+
+def _has_word(text: str, word: str) -> bool:
+    return bool(word) and re.search(rf"\b{re.escape(word)}\b", text) is not None
+
+
+def name_problem(text: str, full_en: str) -> str | None:
+    """封面主角要被**点全名**：姓 ＋ 名（或整个英文名）。只认姓会把双胞胎和兄弟认成
+    一个人——卡罗利娜／克里斯蒂娜·普利斯科娃是同卵双胞胎（`bejlek-pliskova` 就在
+    仓库里），塞伦多洛、西西帕斯也是兄弟俩都在打，认人闸分不开，只能靠名字（评审 B4）。
+    按**词**查、不按顺序查：中文名的英文写法有「Zhang Zhizhen」和「Zhizhen Zhang」两种。"""
+    tokens = _fold(full_en).split()
+    if not tokens:
+        return "cover.matchup 里没有主角的英文名"
+    surname, given = tokens[-1], tokens[0]
+    if not _has_word(text, surname):
+        return f"说明／文件名里没有「{full_en}」"
+    if len(tokens) > 1 and not (_has_word(text, given) or " ".join(tokens) in text):
+        return (f"说明／文件名里只有姓「{surname}」、没有名「{given}」——同姓的兄弟姐妹"
+                "（普利斯科娃、塞伦多洛、西西帕斯）认人闸分不开，不换")
+    return None
 
 
 def metadata_problems(c: Candidate, ctx: MatchContext) -> list[str]:
-    """说明／元数据有没有**点名**这场球：人、赛事、日期。只看文字，不下图。"""
+    """说明／元数据有没有**点名**这场球：人（全名）、对手、赛事、日期，而且拍的是
+    比赛本身。只看文字，不下图。**拿不准就算没过**——任何一项缺了都不换。"""
     problems: list[str] = []
     text = _fold(c.text())
-    if not ctx.surname or not re.search(rf"\b{re.escape(ctx.surname)}\b", text):
-        problems.append(f"说明／文件名里没有「{ctx.subject_en}」")
-    if not c.event_owned and _key(ctx.event_en) not in _key(c.text()):
+    if (bad := name_problem(text, ctx.subject_en)):
+        problems.append(bad)
+    # 对手也要在：同一个人在同一站可能有好几场（单打／双打、前一轮、后一轮），
+    # 说明里点了对手才知道拍的是**这一场**。拉沃尔杯那张 BS2_8696 写的就是
+    # 「takes the singles against Fritz」，AP 的比赛图也都点对手。
+    if not ctx.opponent_surname:
+        problems.append("不知道对手是谁（cover.matchup 里没有对手的英文名），判不了是不是这一场")
+    elif not _has_word(text, ctx.opponent_surname):
+        problems.append(f"说明／文件名里没有对手「{ctx.opponent_surname}」，判不了是不是这一场")
+    if (hit := NOT_IN_MATCH.search(text)):
+        problems.append(f"说明里有「{hit.group(0)}」——不是这场单打在打的时刻"
+                        "（训练／热身／发布会／采访／签名／抵达／定妆／双打一律不换）")
+    event_key = _key(ctx.event_en)
+    if not event_key:
+        # 空串是任何串的子串——不拦就恒过（评审 B2）
+        problems.append(f"赛事名「{ctx.event_en}」归一之后是空的，判不了是不是这一站")
+    elif not c.event_owned and event_key not in _key(c.text()):
         problems.append(f"说明／文件名里没有赛事「{ctx.event_en}」")
     want = ctx.match_dates
     shown = "／".join(d.isoformat() for d in sorted(want)) or "?"
-    said = caption_dates(c.caption) | caption_dates(c.name)
+    said = caption_dates(c.caption) | caption_dates(c.filename)
     if said:
         if not said & want:
             problems.append(f"说明写的是 {'／'.join(sorted(d.isoformat() for d in said))}，"
                             f"这场是 {shown}（当地）")
     else:
-        meta = c.meta_date or ""
-        if not meta:
-            m = _URL_PATH_DATE.search(c.url)
-            meta = f"{m.group(1)}-{m.group(2)}-{m.group(3)}" if m else ""
-        got = None
-        if meta:
-            try:
-                got = date.fromisoformat(meta[:10])
-            except ValueError:
-                got = None
-        if got is None:
-            problems.append("说明和元数据里都没有日期，判不了是不是这一场")
-        elif got not in want:
-            problems.append(f"元数据日期 {got.isoformat()}，这场是 {shown}（当地）")
+        problems += _upload_problems(c, ctx, shown)
     days = caption_weekdays(c.caption)
     if days and want and not days & {d.weekday() for d in want}:
         problems.append(f"说明写的是{'／'.join(_WEEKDAYS[i] for i in sorted(days))}，"
                         f"这场是{'／'.join(_WEEKDAYS[d.weekday()] for d in sorted(want))}")
+    return problems
+
+
+def _upload_problems(c: Candidate, ctx: MatchContext, shown: str) -> list[str]:
+    """说明里**没写日期**时，拿上传时刻判：它要落在这场的当地日子里，**而且晚于开赛**。
+
+    ⚠️ 只看上传的**日子**不够（评审 B3）：前一晚夜场的图过了当地午夜才传，日子就和
+    第二天这一场一样，而认人认得出是他。所以要**时刻**（WordPress 的 `date_gmt`），
+    早于这场开赛的一律不是这一场。只有日子没有时刻（WTA 图床 URL 里的
+    `/2026/08/16/`、没带 `date_gmt` 的元数据）判不了先后——**不换**。"""
+    stamp = _parse_gmt(c.meta_utc)
+    if stamp is None:
+        meta = c.meta_date or ""
+        if not meta:
+            m = _URL_PATH_DATE.search(c.url)
+            meta = f"{m.group(1)}-{m.group(2)}-{m.group(3)}" if m else ""
+        if meta:
+            return [f"说明没写日期，元数据只有上传日子 {meta[:10]}、没有上传时刻——"
+                    "判不了是不是这场开赛之后拍的（前一晚夜场的图过了午夜才传，日子一样），不换"]
+        return ["说明和元数据里都没有日期，判不了是不是这一场"]
+    problems: list[str] = []
+    if ctx.start_utc is None:
+        problems.append("不知道这场的开赛时刻，判不了上传时刻在不在它之后")
+    elif stamp < ctx.start_utc:
+        problems.append(f"上传于 {stamp:%Y-%m-%dT%H:%M}Z，比这场开赛（"
+                        f"{ctx.start_utc.astimezone(timezone.utc):%Y-%m-%dT%H:%M}Z）还早——"
+                        "拍的是别的场")
+    local = (date.fromisoformat(c.meta_date[:10]) if _DATE_ISO.match(c.meta_date or "")
+             else stamp.astimezone(ZoneInfo(ctx.tz)).date() if ctx.tz else None)
+    if local is None:
+        problems.append("时区不知道，判不了上传是当地哪一天")
+    elif local not in ctx.match_dates:
+        problems.append(f"元数据日期 {local.isoformat()}，这场是 {shown}（当地）")
     return problems
 
 
@@ -550,7 +807,8 @@ def default_sweeps(ctx: MatchContext) -> list[tuple[str, Callable[[], Iterable[C
                     "event-site", r.get("original") or r["url"],
                     caption=" ".join(str(r.get(k) or "") for k in ("title", "alt", "caption")),
                     name=str(r["url"]).rsplit("/", 1)[-1], page=f"https://{ctx.site}",
-                    meta_date=str(r.get("date") or "")[:10], event_owned=True,
+                    meta_date=str(r.get("date") or "")[:10],
+                    meta_utc=str(r.get("date_gmt") or ""), event_owned=True,
                     wh=(int(w), int(h)) if w.isdigit() and h.isdigit() and not r.get("original")
                     else None))
             return out
@@ -662,6 +920,11 @@ def place_face(w: int, h: int, face: Iterable[float], top: int) -> dict:
         if out[0] < 0 or out[2] > CANVAS_W or out[1] < 0:
             tried.append(f"zoom {zoom:g} 脸被裁出画布（{[round(v) for v in out]}）")
             continue
+        if out[1] < HEAD_BAND:
+            # 目标本来是台头和钩子之间的正中，可图在这一向上没有余量时（2560×1440 铺
+            # 1440 高正好不剩）偏移被夹住，脸就照原位落进左上角那块台头（评审 N5）
+            tried.append(f"zoom {zoom:g} 脸上沿 y{out[1]:.0f} 压进台头（0~{HEAD_BAND}）")
+            continue
         if out[3] > top:
             tried.append(f"zoom {zoom:g} 脸下沿 y{out[3]:.0f} 落进钩子带（{top} 起）")
             continue
@@ -749,8 +1012,14 @@ def evaluate(target: Target, ctx: MatchContext, candidates: list[Candidate], *,
         rows.append(row)
         if row["problems"]:
             continue
+        if c.url in target.tried:
+            # 前几班下过、闸没过（N3）——不占这一班的下载名额，让后面的候选轮得到
+            row["problems"].append("前几班下过、闸没过（账的 attempts.tried），不再下")
+            row["skipped"] = True
+            continue
         if downloads >= MAX_DOWNLOADS:
-            row["problems"].append(f"这一趟已经下了 {MAX_DOWNLOADS} 张，留给下一班")
+            row["problems"].append(f"这一趟已经下了 {MAX_DOWNLOADS} 张，留给下一班"
+                                   "（下过的记进账，下一班从这里接着下）")
             continue
         downloads += 1
         try:
@@ -763,6 +1032,11 @@ def evaluate(target: Target, ctx: MatchContext, candidates: list[Candidate], *,
         row["evidence"] = got["evidence"]
         if not row["problems"]:
             passed.append({"candidate": c, "blob": blob, "evidence": got["evidence"]})
+        elif ((got["evidence"].get("face") or {}).get("status") == "ok"
+              or any(p.startswith(("图打不开", "分辨率不够")) for p in got["problems"])):
+            # 结论是确定的（图本身的毛病），下一班不用再下；模型没加载上的不算——
+            # 那一班什么都没查成，下一班还要再试
+            row["tried"] = True
     if not passed:
         return None, rows
     best = max(passed, key=lambda p: (
@@ -899,14 +1173,9 @@ def apply_upgrade(repo: Path, target: Target, ctx: MatchContext, chosen: dict,
                        for r in considered[:20]],
     }
     ledger = load_ledger(repo)
-    ledger.setdefault("_why", (
-        "tools/cover_upgrade.py 自动把抽帧封面换成官方实拍的账（账号所有者 2026-09-27 "
-        "O4「自动换图重推」）。status=upgraded 的 slug 不再换第二次，而且从 "
-        "build_match_reel.OWNER_APPROVED_FRAME_COVERS 里减掉。"))
     ledger["upgrades"][target.slug] = entry
-    path = repo / LEDGER
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(ledger, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    ledger["attempts"].pop(target.slug, None)      # 换成了，查图的草稿账不用留
+    save_ledger(repo, ledger, now)
     return entry
 
 
@@ -914,12 +1183,17 @@ def apply_upgrade(repo: Path, target: Target, ctx: MatchContext, chosen: dict,
 
 def run(repo: Path, now: datetime, *, apply: bool = False, only: str = "",
         sweeps_for=None, times=flashscore_times, fetch=fetch_image, checker=None,
-        final_gate=_final_gate, git_rm: bool = True) -> dict:
+        final_gate=_final_gate, git_rm: bool = True, out_slugs: Path | None = None) -> dict:
     """返回 `{"upgraded": [slug…], "reverted": [slug…], "report": [行…]}`。
 
     一条换完过不了正式封面闸（`reverted`）不拖累别的条——它的文件已经退回，
     接着查下一条；`main` 最后按它返回 1，让这一班红出来（挑图的闸和正式的闸
-    说法不一致，是代码的毛病，不是这张图的毛病）。"""
+    说法不一致，是代码的毛病，不是这张图的毛病）。那一条随后**退避**
+    （`REVERT_BACKOFF`，每次翻倍），那张图记成下过——不会每 20 分钟红一次（N2）。
+
+    `out_slugs`：换成一条就**当场**追加一行。工作流按它提交 spec 和图；要是后面哪条
+    把进程搞崩了，已经换好、账里记了 upgraded 的那几条照样在清单上——不然账会被单独
+    提交上去，而 spec 没跟上（豁免表减掉了、spec 还是抽帧，CI 当场红）。"""
     report: list[str] = []
     upgraded: list[str] = []
     reverted: list[str] = []
@@ -946,13 +1220,19 @@ def run(repo: Path, now: datetime, *, apply: bool = False, only: str = "",
             ctx, sweeps=sweeps_for(ctx) if sweeps_for else None)
         report += [f"    · {n}" for n in sweep_notes]
         chosen, rows = evaluate(target, ctx, cands, fetch=fetch, checker=checker)
-        for r in rows[:12]:
+        shown = [r for r in rows if not r.get("skipped")]
+        for r in shown[:12]:
             mark = "✅" if not r["problems"] else "  "
             report.append(f"    {mark} {r['channel']} {r['url'][:110]}")
             for p in r["problems"][:3]:
                 report.append(f"         - {p}")
-        if len(rows) > 12:
-            report.append(f"    …另外 {len(rows) - 12} 张没列")
+        if len(shown) > 12:
+            report.append(f"    …另外 {len(shown) - 12} 张没列")
+        if len(rows) > len(shown):
+            report.append(f"    · 跳过 {len(rows) - len(shown)} 张前几班下过、闸没过的（{LEDGER} 的 attempts）")
+        tried = [r["url"] for r in rows if r.get("tried")]
+        if apply and tried and chosen is None:
+            record_tried(repo, target.slug, tried, now)
         if chosen is None:
             report.append(f"    → 不换：{len(rows)} 张候选没有一张全过（下一班再查）")
             continue
@@ -964,9 +1244,14 @@ def run(repo: Path, now: datetime, *, apply: bool = False, only: str = "",
                                   final_gate=final_gate, git_rm=git_rm)
         except RuntimeError as exc:
             reverted.append(target.slug)
-            report.append(f"::error::{exc}")
+            nxt = record_revert(repo, target.slug, chosen["candidate"].url, str(exc), now)
+            record_tried(repo, target.slug, tried, now)
+            report.append(f"::error::{exc}（这张图不再试；这一条退避到 {nxt:%m-%d %H:%M}Z 再查）")
             continue
         upgraded.append(target.slug)
+        if out_slugs is not None:
+            with open(out_slugs, "a", encoding="utf-8") as fh:
+                fh.write(f"{target.slug}\n")
         report.append(f"    → 已换成 {entry['image']}；删掉 {entry['removed_markers'] or '（没有同日的 pushed.json）'}；"
                       "接下来 match-reel mode=render push=true")
     return {"upgraded": upgraded, "reverted": reverted, "report": report}
@@ -980,20 +1265,56 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--repo", default=str(ROOT))
     ap.add_argument("--summary", default="", help="报告另写一份到这里（$GITHUB_STEP_SUMMARY）")
     ap.add_argument("--out-slugs", default="", help="换了的 slug 一行一个写到这里（工作流据此派发 render）")
+    ap.add_argument("--plan", action="store_true",
+                    help="只找目标、只对账，不查图不下图——只读 json，不用装依赖（N4）。"
+                         "带 --apply 时把重派记进账")
+    ap.add_argument("--out-targets", default="", help="--plan：要查图的 slug 一行一个")
+    ap.add_argument("--out-redispatch", default="", help="--plan：要重派 render 的 slug 一行一个")
     args = ap.parse_args(argv)
     now = _parse_utc(args.now) if args.now else datetime.now(timezone.utc)
     if now is None:
         ap.error(f"--now 要带时区的 ISO 时刻：{args.now!r}")
-    got = run(Path(args.repo), now, apply=args.apply, only=args.slug)
+    repo = Path(args.repo)
+    if args.plan:
+        got = plan(repo, now, apply=args.apply, only=args.slug)
+        title = "抽帧封面自动换官方图 · 找目标／对账"
+    else:
+        if args.out_slugs:
+            Path(args.out_slugs).write_text("", encoding="utf-8")
+        got = run(repo, now, apply=args.apply, only=args.slug,
+                  out_slugs=Path(args.out_slugs) if args.out_slugs else None)
+        title = "抽帧封面自动换官方图"
     text = "\n".join(got["report"])
     print(text)
     if args.summary:
         with open(args.summary, "a", encoding="utf-8") as fh:
-            fh.write("## 抽帧封面自动换官方图\n\n```\n" + text + "\n```\n")
-    if args.out_slugs:
-        Path(args.out_slugs).write_text("".join(f"{s}\n" for s in got["upgraded"]),
-                                        encoding="utf-8")
-    return 1 if got["reverted"] else 0
+            fh.write(f"## {title}\n\n```\n" + text + "\n```\n")
+    for flag, key in ((args.out_targets, "targets"), (args.out_redispatch, "redispatch")):
+        if flag:
+            Path(flag).write_text("".join(f"{s}\n" for s in got.get(key) or []),
+                                  encoding="utf-8")
+    return 1 if got.get("reverted") else 0
+
+
+def plan(repo: Path, now: datetime, *, apply: bool = False, only: str = "") -> dict:
+    """工作流第一步（N4）：**不装依赖**先看有没有活——要查图的目标、要重派的 render。
+    两样都没有，后面的装包、拉模型、查图全部跳过（原来每 20 分钟一班、一天 72 班，
+    每一班都装一遍 onnxruntime／opencv、拉一遍模型，而绝大多数班次是 0 条）。"""
+    found, notes = targets(repo, now)
+    due, dnotes = redispatch_plan(repo, now)
+    if only:
+        found = [t for t in found if t.slug == only]
+        due = [s for s in due if s == only]
+    # `::warning::` 要顶格才是 Actions 的注解，前面加了标签就只是一行普通日志
+    report = ([f"[跳过] {n}" for n in notes]
+              + [n if n.startswith("::") else f"[对账] {n}" for n in dnotes])
+    report.append(f"[封面升级] 要查图的：{len(found)} 条" +
+                  (f"（{'、'.join(t.slug for t in found)}）" if found else ""))
+    report.append(f"[封面升级] 要重派 render 的：{len(due)} 条" +
+                  (f"（{'、'.join(due)}）" if due else ""))
+    if apply:
+        mark_redispatched(repo, due, now)
+    return {"targets": [t.slug for t in found], "redispatch": due, "report": report}
 
 
 if __name__ == "__main__":

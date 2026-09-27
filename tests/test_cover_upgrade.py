@@ -78,8 +78,12 @@ def _photo(kind: str) -> bytes:
         frame = raw.convert("RGB")
     if kind == "low-res":
         return _jpeg(frame)                                   # 1920×1080：铺满要放大 1.33
-    big = frame.resize((2560, 1440), Image.LANCZOS)            # 铺满正好 1.00×，脸在上半截
-    if kind == "ok":
+    big = frame.resize((2560, 1440), Image.LANCZOS)            # 铺满正好 1.00×，脸在 y67~568
+    if kind == "ok":                                           # 往下挪 150px：脸在 y217~718，
+        canvas = Image.new("RGB", (2560, 1440), (40, 60, 40))  # 台头（0~170）和钩子（790 起）之间
+        canvas.paste(big, (0, 150))
+        return _jpeg(canvas)
+    if kind == "face-high":                                    # 原样：脸上沿 y67 压进台头（N5）
         return _jpeg(big)
     if kind == "face-low":                                     # 同一张脸往下挪 720px
         canvas = Image.new("RGB", (2560, 1440), (40, 60, 40))
@@ -142,7 +146,7 @@ def _one(candidate: cu.Candidate, calls: list | None = None):
     return sweeps_for
 
 
-def _ap(url: str = "https://assets.apnews.com/x/wong.jpg", caption: str = AP_CAPTION):
+def _ap(url: str = "https://assets.apnews.com/x/5f0c2a9e.jpg", caption: str = AP_CAPTION):
     return cu.Candidate("ap", url, caption=caption, page="https://apnews.com/article/x")
 
 
@@ -188,7 +192,8 @@ def test_找目标只要近48小时推过且封面还是抽帧的(tmp_path):
 
 def _ctx(**kw) -> cu.MatchContext:
     ctx = cu.MatchContext(slug=SLUG, subject_zh="黄泽林", subject_en="Coleman Wong",
-                          surname="wong", event_en="Hangzhou", tz="Asia/Shanghai",
+                          surname="wong", opponent_surname="vallejo", event_en="Hangzhou",
+                          tz="Asia/Shanghai", start_utc=START,
                           match_dates={date(2026, 9, 26)})
     for k, v in kw.items():
         setattr(ctx, k, v)
@@ -206,25 +211,33 @@ def test_说明点名三件事_人赛事日期缺一不换():
     other_event = _ap(caption=AP_CAPTION.replace("Hangzhou", "Chengdu"))
     assert any("Hangzhou" in p for p in cu.metadata_problems(other_event, ctx))
     # 说明写的星期几和这场对不上（资料图最常见的样子：图注只写「on Friday night」）
-    weekday = cu.Candidate("event-site", "https://e/x.jpg", caption="Coleman Wong on Friday night",
-                           meta_date="2026-09-26", event_owned=True)
+    weekday = cu.Candidate("event-site", "https://e/x.jpg",
+                           caption="Coleman Wong beats Vallejo on Friday night",
+                           meta_date="2026-09-26", meta_utc="2026-09-26T13:40:00",
+                           event_owned=True)
     assert any("friday" in p for p in cu.metadata_problems(weekday, ctx))
-    # 赛事自己的媒体库：赛事由站点担保，日期看元数据
-    owned = cu.Candidate("event-site", "https://e/x.jpg", caption="Coleman Wong celebrates",
-                         meta_date="2026-09-26", event_owned=True)
+    # 赛事自己的媒体库：赛事由站点担保，日期看元数据（上传时刻要晚于开赛，见 B3 那条）
+    owned = cu.Candidate("event-site", "https://e/x.jpg",
+                         caption="Coleman Wong celebrates against Vallejo",
+                         meta_date="2026-09-26", meta_utc="2026-09-26T13:40:00",
+                         event_owned=True)
     assert cu.metadata_problems(owned, ctx) == []
-    owned.meta_date = "2026-09-25"
+    owned.meta_date, owned.meta_utc = "2026-09-25", "2026-09-26T13:40:00"
     assert any("元数据日期" in p for p in cu.metadata_problems(owned, ctx))
-    owned.meta_date = ""
+    owned.meta_date, owned.meta_utc = "", ""
     assert any("都没有日期" in p for p in cu.metadata_problems(owned, ctx))
-    # WTA 文件名里是下划线——不先抹掉的话 \bswiatek\b 恒不命中
+    # WTA 文件名里是下划线——不先抹掉的话 \bswiatek\b 恒不命中。点名那一半认得出；
+    # 而图床文件名不写对手、URL 里只有上传的日子没有时刻，所以这一张**不换**（B1/B3）
     wta = cu.Candidate(
         "wta", "https://photoresources.wtatennis.com/photo-resources/2026/08/16/u/"
                "Iga_Swiatek_-_Cincinnati_Open_2026_-_Day_6-DSC_2955.jpg?width=4000",
         name="Iga_Swiatek_-_Cincinnati_Open_2026_-_Day_6-DSC_2955.jpg")
-    assert cu.metadata_problems(wta, _ctx(surname="swiatek", subject_en="Iga Swiatek",
-                                          event_en="Cincinnati",
-                                          match_dates={date(2026, 8, 16)})) == []
+    got = cu.metadata_problems(wta, _ctx(surname="swiatek", subject_en="Iga Swiatek",
+                                         opponent_surname="gauff", event_en="Cincinnati",
+                                         tz="America/New_York",
+                                         match_dates={date(2026, 8, 16)}))
+    assert not any("Iga Swiatek" in p or "赛事" in p for p in got), got
+    assert any("对手" in p for p in got) and any("上传时刻" in p for p in got), got
 
 
 def test_说明里的日期几种写法都认得():
@@ -237,6 +250,118 @@ def test_说明里的日期几种写法都认得():
     assert cu.caption_dates("USTA1234_20260901_Z9.jpg") == {date(2026, 9, 1)}
     # 14 位的时间戳不是日期（拉沃尔杯的文件名 `…_20260924123713.jpg`）
     assert cu.caption_dates("TD1_4251_3uk3Lh7f_20260924123713.jpg") == set()
+
+
+AP_NEWS_CONF = ("Coleman Wong of Hong Kong speaks during a news conference after his "
+                "second-round match at the Hangzhou Open in Hangzhou, China, on "
+                "Saturday, Sept. 26, 2026. (AP Photo)")
+
+
+@pytest.mark.parametrize("caption, expect", [
+    # 评审 B1 原样复现的两条：认人认得出是他，认不出他在开发布会／在训练
+    (AP_NEWS_CONF, "对手"),
+    (AP_NEWS_CONF.replace("match at", "match against Adolfo Daniel Vallejo at"), "news conference"),
+    (AP_CAPTION.replace("reacts after winning a point against", "practices ahead of his match against"),
+     "practices"),
+    (AP_CAPTION.replace("reacts after winning a point", "warms up before his match"), "warms"),
+    (AP_CAPTION.replace("reacts after winning a point", "signs autographs after his win"), "autographs"),
+    (AP_CAPTION.replace("reacts after winning a point", "arrives for his match"), "arrives"),
+    (AP_CAPTION.replace("reacts after winning a point", "poses for a portrait before playing"), "poses"),
+    (AP_CAPTION.replace("reacts after winning a point", "talks in an interview after playing"), "interview"),
+    (AP_CAPTION.replace("reacts after winning a point", "plays a men's doubles match"), "doubles"),
+    (AP_CAPTION.replace("reacts after winning a point", "plays a mixed match"), "mixed"),
+    (AP_CAPTION.replace("reacts after winning a point", "during a press conference after beating"),
+     "press conference"),
+    (AP_CAPTION.replace("reacts after winning a point", "during a training session with"), "training"),
+])
+def test_说明不点对手或写的不是比赛本身_不换(caption, expect):
+    """B1：同一个人在同一站不止一个时刻——发布会、训练、双打（拉沃尔杯单打双打都打）。
+    认人闸分不开，只能靠说明自己的字：**要点名对手**，而且不许是那几类场合。"""
+    got = cu.metadata_problems(_ap(caption=caption), _ctx())
+    assert any(expect in p for p in got), got
+    assert cu.metadata_problems(_ap(), _ctx()) == [], "对照组：AP 的比赛图（点了对手）要过"
+
+
+def test_拉沃尔杯BS2_8696那张的说明过得了点名闸():
+    """B1 的反方向：6b49049b 手动换上的那张（官网 WP 媒体库 21299，20:57:38Z 上传），
+    图注写的是「takes the singles against Fritz on Saturday night」——对手、单打、星期都在。
+    `singles` 不许被当成 `doubles` 那一类拦掉。"""
+    spec = json.loads((ROOT / "specs" / "reels" / "alcaraz-fritz-laver-cup-2026.json")
+                      .read_text("utf-8"))
+    start = datetime(2026, 9, 26, 18, 0, tzinfo=timezone.utc)
+    ctx = cu.match_context(spec, times=lambda _id: (start, start + timedelta(hours=2)))
+    assert not ctx.problems and ctx.opponent_surname == "fritz" and ctx.site == "lavercup.com"
+    cand = cu.Candidate(
+        "event-site", "https://lavercup.com/wp-content/uploads/2026/09/BS2_8696.jpg",
+        caption="Carlos Alcaraz Carlos Alcaraz takes the singles against Fritz on Saturday night.",
+        name="BS2_8696.jpg", meta_date="2026-09-26", meta_utc="2026-09-26T20:57:38",
+        event_owned=True)
+    assert cu.metadata_problems(cand, ctx) == []
+
+
+def test_同姓的兄弟姐妹要点到名_不能只认姓():
+    """B4：普利斯科娃是同卵双胞胎，塞伦多洛、西西帕斯是兄弟俩——认人闸分不开，
+    说明里只有姓不换；名字的顺序不管（中文名两种英文写法都有）。"""
+    ctx = _ctx(subject_zh="普利斯科娃", subject_en="Karolina Pliskova", surname="pliskova",
+               opponent_surname="bejlek")
+    base = ("{} of Czech Republic returns a shot against Sara Bejlek during the Hangzhou "
+            "Open on Saturday, Sept. 26, 2026. (AP Photo)")
+    assert cu.metadata_problems(_ap(caption=base.format("Karolina Pliskova")), ctx) == []
+    twin = cu.metadata_problems(_ap(caption=base.format("Kristyna Pliskova")), ctx)
+    assert any("karolina" in p for p in twin), twin
+    bare = cu.metadata_problems(_ap(caption=base.format("Pliskova")), ctx)
+    assert any("karolina" in p for p in bare), bare
+    zhang = _ctx(subject_en="Zhizhen Zhang", surname="zhang", opponent_surname="vallejo")
+    assert cu.metadata_problems(_ap(caption=AP_CAPTION.replace(
+        "Coleman Wong of Hong Kong", "Zhang Zhizhen of China")), zhang) == []
+
+
+def test_中文的_production_event_不许把赛事认成美网():
+    """B2：`_key("杭州") == ""`，空串是任何串的子串——原来认成 EVENTS 第一行（美网、
+    纽约时区），03:00Z 开赛算成当地 9/25，真实是 9/26；赛事名那道闸也拿空串去比、恒过。"""
+    spec = _spec()
+    spec["_production"] = {"event": "杭州"}
+    start = datetime(2026, 9, 26, 3, 0, tzinfo=timezone.utc)
+    ctx = cu.match_context(spec, times=lambda _id: (start, None))
+    assert not ctx.problems, ctx.problems
+    assert (ctx.event_en, ctx.tz, ctx.match_dates) == (
+        "Hangzhou", "Asia/Shanghai", {date(2026, 9, 26)}), (ctx.event_en, ctx.tz, ctx.match_dates)
+    chengdu = _ap(caption="Coleman Wong reacts against Adolfo Daniel Vallejo during the "
+                          "Chengdu Open in Chengdu, China, on Friday, Sept. 25, 2026. (AP Photo)")
+    assert cu.metadata_problems(chengdu, ctx), "成都那一站前一天的图放进来了"
+    # 英文的照旧认；表里的名字**包含在** prod 里才算，残片「Open」不许认成 US Open
+    assert cu.event_of({"_production": {"event": "US OPEN"}, "topbar": {}})[1] == "America/New_York"
+    assert cu.event_of({"_production": {"event": "Open"}, "topbar": {}})[1] is None
+    # 中文 prod ＋ 顶栏也认不出：不猜
+    assert cu.event_of({"_production": {"event": "美网资格赛"}, "topbar": {"line1": "x"}}) is None
+    # 赛事名归一出来是空的：点名闸自己也要拦（fail closed），赛事官网担保的也一样
+    blank = _ctx(event_en="美网")
+    assert any("归一之后是空的" in p for p in cu.metadata_problems(_ap(), blank))
+    owned = cu.Candidate("event-site", "https://e/x.jpg", caption=AP_CAPTION, event_owned=True)
+    assert any("归一之后是空的" in p for p in cu.metadata_problems(owned, blank))
+
+
+def test_说明没写日期时上传时刻要晚于开赛():
+    """B3：前一晚夜场的图过了当地午夜才传，上传的**日子**和第二天这一场一样。
+    说明没写日期就看 WordPress 的 `date_gmt`：早于开赛的不是这一场；只有日子没有时刻的
+    判不了，不换。"""
+    ctx = _ctx()                                                # 开赛 9/26 12:00Z
+    def owned(**kw):
+        return cu.Candidate("event-site", "https://e/wp-content/uploads/2026/09/x.jpg",
+                            caption="Coleman Wong against Vallejo", event_owned=True, **kw)
+    assert cu.metadata_problems(owned(meta_date="2026-09-26", meta_utc="2026-09-26T13:40:00"),
+                                ctx) == []
+    last_night = cu.metadata_problems(owned(meta_date="2026-09-26",
+                                            meta_utc="2026-09-25T16:30:00"), ctx)
+    assert any("比这场开赛" in p for p in last_night), last_night
+    day_only = cu.metadata_problems(owned(meta_date="2026-09-26"), ctx)
+    assert any("没有上传时刻" in p for p in day_only), day_only
+    url_only = cu.metadata_problems(owned(), ctx)               # 只有 URL 路径里的 /2026/09/
+    assert url_only, url_only
+    # 带 Z 的也认；日子按赛事当地（上海）从 UTC 换算
+    assert cu.metadata_problems(owned(meta_utc="2026-09-26T13:40:00Z"), ctx) == []
+    assert any("元数据日期 2026-09-27" in p
+               for p in cu.metadata_problems(owned(meta_utc="2026-09-26T16:30:00Z"), ctx))
 
 
 def test_时区不知道就判不了同一天_不换():
@@ -259,6 +384,7 @@ def test_时区不知道就判不了同一天_不换():
     # 别退回 UTC 或一个两天宽的窗口——同一个人前后两天各打一场时会放进别场的图
     no_tz = _spec()
     no_tz["_production"] = {"event": "Nowhere Open"}
+    no_tz["topbar"]["line1"] = "2026 ATP250 某个没登记的城市 第二轮"
     ctx = cu.match_context(no_tz, times=lambda _id: (START, None))
     assert ctx.event_en == "Nowhere Open" and not ctx.match_dates
     assert any("时区不在" in p for p in ctx.problems), ctx.problems
@@ -277,9 +403,13 @@ def test_时区不知道就判不了同一天_不换():
 
 def test_铺图几何_脸落进钩子带就推zoom_推不动就不换():
     top = cu.hook_top()
-    ok = cu.place_face(2560, 1440, (1275, 67, 1652, 568), top)
+    ok = cu.place_face(2560, 1440, (1275, 217, 1652, 718), top)
     assert ok["ok"] and ok["zoom"] == 1.0 and ok["face_out"][3] <= top, ok
+    assert ok["face_out"][1] >= cu.HEAD_BAND, ok
     assert 0.55 < ok["focus"] < 0.7, "脸横向没放到正中"
+    # N5：图在纵向没有余量（1440 高铺 1440）时偏移被夹住，脸就照原位落进台头——不许放行
+    high = cu.place_face(2560, 1440, (1275, 67, 1652, 568), top)
+    assert not high["ok"] and "台头" in high["why"], high
     # 2560×1440 铺满正好 1.00×：脸低了也不许靠放大去躲（一放大就过不了分辨率）
     low = cu.place_face(2560, 1440, (1275, 787, 1652, 1288), top)
     assert not low["ok"] and "钩子带" in low["why"] and "放大" in low["why"], low
@@ -381,13 +511,14 @@ def test_日期对不上不下图(tmp_path):
     ("ok", "巴列霍", None, "认出来是黄泽林"),                   # 认成对手
     ("ok", "黄泽林", {"a": {}, "b": {}}, "认人没过（unknown）"),   # 没有官方头像：不敢判
     ("face-low", "黄泽林", None, "钩子带"),
+    ("face-high", "黄泽林", None, "压进台头"),                     # N5：脸落在台头底下
 ])
 def test_过不了闸的不换(tmp_path, model, kind, subject, headshots, expect):
     spec = _spec(subject=subject)
     if subject == "巴列霍":
         spec["cover"]["matchup"][1]["name_en"] = "Adolfo Daniel Vallejo"
-        cand = _ap(caption=AP_CAPTION.replace("Coleman Wong of Hong Kong reacts",
-                                              "Adolfo Daniel Vallejo reacts"))
+        cand = _ap(caption=AP_CAPTION.replace("Coleman Wong of Hong Kong", "Adolfo Daniel Vallejo")
+                   .replace("against Adolfo Daniel Vallejo", "against Coleman Wong"))
     else:
         cand = _ap()
     if headshots is not None:
@@ -401,7 +532,7 @@ def test_过不了闸的不换(tmp_path, model, kind, subject, headshots, expect
     assert got["upgraded"] == [], "\n".join(got["report"])
     assert any(expect in line for line in got["report"]), "\n".join(got["report"])
     assert (repo / "specs" / "reels" / f"{SLUG}.json").read_bytes() == before
-    assert not (repo / cu.LEDGER).exists(), "没换也记了一笔「upgraded」"
+    assert cu.upgraded_slugs(repo) == set(), "没换也记了一笔「upgraded」"
 
 
 def test_闭眼的不换(tmp_path, model):
@@ -413,7 +544,8 @@ def test_闭眼的不换(tmp_path, model):
                      "b": {"headshot": "assets/players/headshots/atp-C0AU.png"}}
     repo = _repo(tmp_path, {SLUG: (spec, NOW - timedelta(hours=6))})
     cand = cu.Candidate("event-site", "https://lavercup.com/wp-content/uploads/2026/09/r.jpg",
-                        caption="Casper Ruud on Saturday", meta_date="2026-09-26",
+                        caption="Casper Ruud against Cerundolo on Saturday",
+                        meta_date="2026-09-26", meta_utc="2026-09-26T19:30:00",
                         event_owned=True)
     got = cu.run(repo, NOW, apply=True, sweeps_for=_one(cand),
                  times=lambda _id: (datetime(2026, 9, 26, 18, 0, tzinfo=timezone.utc), None),
@@ -443,7 +575,7 @@ def test_换完过不了正式的封面闸就全部退回(tmp_path, model):
     assert any(line.startswith("::error::") and "已退回" in line for line in got["report"])
     assert (repo / "specs" / "reels" / f"{SLUG}.json").read_bytes() == before
     assert not (repo / "assets" / "reel" / f"{SLUG}-official.jpg").exists()
-    assert not (repo / cu.LEDGER).exists()
+    assert cu.upgraded_slugs(repo) == set(), "退回了还记成 upgraded"
 
 
 # ---------------------------------------------------------------- 重推（不要模型）
@@ -501,13 +633,176 @@ def test_定时班次的接线():
     steps = [s for job in wf["jobs"].values() for s in job["steps"]]
     runs = [str(s.get("run") or "") for s in steps]
     at = {key: next(i for i, r in enumerate(runs) if key in r) for key in (
-        "tools/face_checks.py fetch", "tools/cover_upgrade.py",
+        "--plan", "pip install", "tools/face_checks.py fetch", "tools/cover_upgrade.py",
         "push_with_rebase_retry main", "gh workflow run match-reel.yml")}
-    assert at["tools/face_checks.py fetch"] < at["tools/cover_upgrade.py"] \
-        < at["push_with_rebase_retry main"] < at["gh workflow run match-reel.yml"], (
-        "顺序：备好模型 → 换 → spec 推上 main → 才派发 render（render 只认 main 上的 spec）")
+    assert at["--plan"] < at["pip install"] < at["tools/face_checks.py fetch"] \
+        < at["tools/cover_upgrade.py"] < at["push_with_rebase_retry main"] \
+        < at["gh workflow run match-reel.yml"], (
+        "顺序：先不装依赖找目标对账 → 装包 → 备好模型 → 换 → spec 推上 main → "
+        "才派发 render（render 只认 main 上的 spec）")
     assert "--apply" in runs[at["tools/cover_upgrade.py"]], "定时班次要真换，不是只报告"
     dispatch = runs[at["gh workflow run match-reel.yml"]]
     assert "mode=render" in dispatch and "push=true" in dispatch, "换完要重渲重推"
     commit = runs[at["push_with_rebase_retry main"]]
     assert "git add --sparse" in commit, "assets/reel 不在稀疏检出里，裸 git add 会静默丢图"
+
+
+def test_没有目标就不装依赖_不拉模型():
+    """N4：一天 72 班，绝大多数是 0 条。装包、缓存模型、拉模型、查图四步都要挂在
+    `--plan` 算出来的目标数上；`--plan` 本身只许用标准库。"""
+    import yaml  # noqa: PLC0415
+
+    wf = yaml.safe_load((ROOT / ".github" / "workflows" / "reel-cover-upgrade.yml")
+                        .read_text("utf-8"))
+    steps = [s for job in wf["jobs"].values() for s in job["steps"]]
+    plan = next(s for s in steps if "--plan" in str(s.get("run") or ""))
+    assert plan.get("id") == "plan" and "targets=" in plan["run"] and "GITHUB_OUTPUT" in plan["run"]
+    heavy = [s for s in steps if any(k in str(s.get("run") or "") + str(s.get("with") or {})
+                                     for k in ("pip install", "face-models", "face_checks.py fetch",
+                                               "tools/cover_upgrade.py"))]
+    assert len(heavy) == 4, [s.get("name") for s in heavy]
+    for step in heavy:
+        assert "steps.plan.outputs.targets != '0'" in str(step.get("if") or ""), step.get("name")
+    # 真跑一遍 --plan：一个重模块都不许 import（装包那一步被跳过时它照样要能跑）
+    probe = (
+        "import sys; sys.path.insert(0, 'tools'); import cover_upgrade as cu; "
+        "rc = cu.main(['--plan', '--repo', sys.argv[1], '--now', '2026-09-27T03:00:00Z']); "
+        "bad = [m for m in ('PIL', 'cv2', 'onnxruntime', 'numpy', 'requests', "
+        "'build_match_reel', 'face_checks', 'find_cover_photo') if m in sys.modules]; "
+        "print('HEAVY', bad); sys.exit(rc or bool(bad))")
+    out = subprocess.run([sys.executable, "-c", probe, str(ROOT)], cwd=ROOT,
+                         capture_output=True, text=True, check=False)
+    assert out.returncode == 0 and "HEAVY []" in out.stdout, out.stdout + out.stderr
+
+
+def test_派发失败要重试_下一班对账补派(tmp_path):
+    """N1：`gh workflow run` 失败一次，spec 已经在 main 上用新图、成片还是抽帧，账里记着
+    upgraded——原来从此没人再派。现在：工作流每条重试三次；下一班的对账看到「换了图、
+    一小时了发布账本里没有新的推送尝试」就重派，最多两次。"""
+    repo = _repo(tmp_path, {SLUG: (_spec(), NOW - timedelta(hours=6))})
+    ledger = {"upgrades": {SLUG: {"status": "upgraded",
+                                  "at": (NOW - timedelta(minutes=90)).strftime("%Y-%m-%dT%H:%M:%SZ")}}}
+    (repo / cu.LEDGER).parent.mkdir(parents=True, exist_ok=True)
+    (repo / cu.LEDGER).write_text(json.dumps(ledger), "utf-8")
+    due, notes = cu.redispatch_plan(repo, NOW)
+    assert due == [SLUG], notes
+    # --plan --apply：把这次重派记进账，并写出清单给工作流
+    out_t, out_r = tmp_path / "t.txt", tmp_path / "r.txt"
+    rc = cu.main(["--plan", "--apply", "--repo", str(repo), "--now", NOW.isoformat(),
+                  "--out-targets", str(out_t), "--out-redispatch", str(out_r)])
+    assert rc == 0 and out_r.read_text("utf-8") == f"{SLUG}\n"
+    row = cu.load_ledger(repo)["upgrades"][SLUG]
+    assert len(row["dispatches"]) == 1
+    # 刚重派过：一小时内不再派
+    assert cu.redispatch_plan(repo, NOW + timedelta(minutes=30))[0] == []
+    # 又过了一小时还没推：第二次；再往后：不派了，要人看
+    later = NOW + timedelta(minutes=70)
+    assert cu.redispatch_plan(repo, later)[0] == [SLUG]
+    cu.mark_redispatched(repo, [SLUG], later)
+    due, notes = cu.redispatch_plan(repo, later + timedelta(minutes=70))
+    assert due == [] and any("::warning::" in n and "要人看" in n for n in notes), notes
+    report = cu.plan(repo, later + timedelta(minutes=70))["report"]
+    assert any(line.startswith("::warning::") for line in report), "注解要顶格，不然 Actions 不认"
+    # 换图之后发布账本里有了新的推送尝试（sent／uncertain 都算走到了）：不再派
+    led = repo / "data" / "reel_publish_ledger" / f"{SLUG}.json"
+    data = json.loads(led.read_text("utf-8"))
+    data["attempts"].append({"status": "uncertain", "at": (NOW - timedelta(minutes=60))
+                             .strftime("%Y-%m-%dT%H:%M:%SZ")})
+    led.write_text(json.dumps(data), "utf-8")
+    ledger["upgrades"][SLUG].pop("dispatches", None)
+    (repo / cu.LEDGER).write_text(json.dumps(ledger), "utf-8")
+    assert cu.redispatch_plan(repo, NOW) == ([], [])
+    # 工作流：每条重试三次、不读循环的 stdin、清单里带对账那一份、失败要红
+    import yaml  # noqa: PLC0415
+
+    wf = yaml.safe_load((ROOT / ".github" / "workflows" / "reel-cover-upgrade.yml")
+                        .read_text("utf-8"))
+    runs = [str(s.get("run") or "") for job in wf["jobs"].values() for s in job["steps"]]
+    step = next(r for r in runs if "gh workflow run match-reel.yml" in r)
+    assert "for n in 1 2 3" in step and "</dev/null" in step and "redispatch.txt" in step
+    assert "exit 1" in step
+
+
+def _cands(n: int) -> list:
+    return [_ap(url=f"https://assets.apnews.com/x/{i:02d}.jpg") for i in range(n)]
+
+
+def _stub_checker(img, expected):
+    return {"status": "ok", "identity": {"verdict": "match", "name": "黄泽林",
+                                         "face": [1275, 217, 1652, 718],
+                                         "similarity": {"黄泽林": 0.6}},
+            "eyes": {"verdict": "open", "ear": 0.3}}
+
+
+def test_下过没过闸的记进账_下一班轮得到第11张(tmp_path):
+    """N3：原来每一班按同样的顺序重下同样的前十张，第 11 张永远轮不到。"""
+    repo = _repo(tmp_path, {SLUG: (_spec(), NOW - timedelta(hours=6))})
+    cands = _cands(12)
+    fetched: list = []
+
+    def go(now, blob=None, checker=_stub_checker):
+        def fetch(url):
+            fetched.append(url)
+            return blob if blob is not None else _photo("low-res")
+        return cu.run(repo, now, apply=True, sweeps_for=lambda ctx: [("测试渠道", lambda: cands)],
+                      times=lambda _id: (START, None), fetch=fetch, checker=checker,
+                      final_gate=lambda spec: None)
+
+    first = go(NOW)
+    assert first["upgraded"] == [] and fetched == [c.url for c in cands[:10]]
+    assert sorted(cu.load_ledger(repo)["attempts"][SLUG]["tried"]) == [c.url for c in cands[:10]]
+    fetched.clear()
+    second = go(NOW + timedelta(minutes=20))
+    assert fetched == [c.url for c in cands[10:]], fetched
+    assert any("跳过 10 张" in line for line in second["report"]), second["report"]
+    # 模型没加载上的那一班什么都没查成：不记，下一班还要再下
+    repo2 = _repo(tmp_path / "b", {SLUG: (_spec(), NOW - timedelta(hours=6))})
+    got = cu.run(repo2, NOW, apply=True, sweeps_for=_one(_ap()), times=lambda _id: (START, None),
+                 fetch=lambda _url: _photo("ok"),
+                 checker=lambda img, exp: {"status": "unavailable", "error": "没装"},
+                 final_gate=lambda spec: None)
+    assert got["upgraded"] == []
+    assert SLUG not in cu.load_ledger(repo2)["attempts"], "模型不可用也记成下过了"
+    # 干跑不写账
+    repo3 = _repo(tmp_path / "c", {SLUG: (_spec(), NOW - timedelta(hours=6))})
+    cu.run(repo3, NOW, apply=False, sweeps_for=_one(_ap()), times=lambda _id: (START, None),
+           fetch=lambda _url: _photo("low-res"), checker=_stub_checker)
+    assert not (repo3 / cu.LEDGER).exists()
+
+
+def test_退回的要退避_不许每班都红(tmp_path):
+    """N2：换完过不了正式封面闸、已退回的，原来每 20 分钟重来一次、红一次（48 小时红一百多次）。
+    现在那张图记成下过，这一条退避 2 小时起、每次翻倍。"""
+    repo = _repo(tmp_path, {SLUG: (_spec(), NOW - timedelta(hours=6))})
+    cands = [_ap(url="https://assets.apnews.com/x/a.jpg"), _ap(url="https://assets.apnews.com/x/b.jpg")]
+    calls: list = []
+    fetched: list = []
+
+    def go(now):
+        def sweeps_for(ctx):
+            calls.append(now)
+            return [("测试渠道", lambda: cands)]
+        def fetch(url):
+            fetched.append(url)
+            return _photo("ok")
+        return cu.run(repo, now, apply=True, sweeps_for=sweeps_for,
+                      times=lambda _id: (START, None), fetch=fetch, checker=_stub_checker,
+                      final_gate=lambda spec: "封面大图撑不满卡片")
+
+    first = go(NOW)
+    assert first["reverted"] == [SLUG]
+    row = cu.load_ledger(repo)["attempts"][SLUG]
+    assert row["next_at"] == (NOW + timedelta(hours=2)).strftime("%Y-%m-%dT%H:%M:%SZ")
+    assert cu.main(["--plan", "--repo", str(repo), "--now",
+                    (NOW + timedelta(minutes=20)).isoformat()]) == 0
+    soon = go(NOW + timedelta(minutes=20))
+    assert soon["reverted"] == [] and len(calls) == 1, "退避期内又去查了"
+    assert any("退避到" in line for line in soon["report"]), soon["report"]
+    fetched.clear()
+    later = go(NOW + timedelta(hours=2, minutes=1))
+    assert later["reverted"] == [SLUG] and "https://assets.apnews.com/x/a.jpg" not in fetched, \
+        "退回过的那张又下了一遍"
+    row = cu.load_ledger(repo)["attempts"][SLUG]
+    assert len(row["reverts"]) == 2
+    assert row["next_at"] == (NOW + timedelta(hours=2, minutes=1) + timedelta(hours=4)) \
+        .strftime("%Y-%m-%dT%H:%M:%SZ"), "第二次要翻倍"

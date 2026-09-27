@@ -2205,16 +2205,25 @@ GET 签的，HEAD 过不去，而 401 看起来像「没权限」。带 `Range: 
 
 | 闸 | 判据 | 为什么这么窄 |
 |---|---|---|
-| 点名 | 说明／文件名有主角的姓、有赛事（赛事自己的 WP 媒体库由站点担保）、**当地**日期对上这一场（说明写了按说明，没写才看元数据；写了星期几也要对上） | 同一个人前一天、后一天各打一场时，认人认得出是他、认不出是哪一场 |
+| 点名 | 说明／文件名有主角的**姓和名**、有**对手的姓**、有赛事（赛事自己的 WP 媒体库由站点担保）、**当地**日期对上这一场（说明写了按说明；没写才看 WP 的 `date_gmt`，**上传时刻要晚于开赛**，只有日子没有时刻的不换；写了星期几也要对上） | 同一个人前一天、后一天各打一场时，认人认得出是他、认不出是哪一场；前一晚夜场的图过了午夜才传，**日子**和第二天一样；普利斯科娃是同卵双胞胎、塞伦多洛和西西帕斯是兄弟俩，认人闸分不开 |
+| 在比赛中 | 说明／文件名里有 practice／training／warm／news conference／press conference／interview／autograph／arriv／portrait／poses／doubles／mixed 一律不换（`NOT_IN_MATCH`） | 认人认得出是他、认不出他在干什么；挑「脸最大的」恰好偏爱发布会和定妆照。拉沃尔杯同一站单打双打都打（`alcaraz-mensik-doubles` 首日、`alcaraz-fritz` 第二天） |
 | 当地日期 | flashscore `dc_1_<id>` 的 `DC÷`／`DD÷`（开赛／结束）＋ `EVENTS` 表的时区；夜场跨午夜两天都算 | **时区不在表里就不换**，不退回宽窗口；新赛事在 `cover_upgrade.EVENTS` 加一行 |
 | 分辨率 | 按选定 zoom 铺 1080×1440 **不放大**（`cover_photo_problem` 同一个式子） | 机器不写 `_low_res_why`——那是人替取舍认领 |
 | 认人 | `face_checks`：最大那张脸 match 到 `cover.subject`（认成对手、unknown、模型不可用都不换） | O2 的闸，门槛不另调 |
 | 睁眼 | EAR ≥ 0.16 | O3 的闸 |
-| 钩子带 | 真实铺图数学算脸落在哪：下沿在 `STORYCOPY_TOP` 之上；zoom 从 1.0 推到 1.3，推一档要过一次分辨率 | 本节「挑封面之前先把钩子那条带叠上去」 |
+| 钩子带／台头 | 真实铺图数学算脸落在哪：下沿在 `STORYCOPY_TOP` 之上、上沿不压进台头（y 0~170）；zoom 从 1.0 推到 1.3，推一档要过一次分辨率 | 本节「挑封面之前先把钩子那条带叠上去」；图在纵向没余量时偏移被夹住，脸会照原位落进台头 |
 
 全过的里面挑**脸最大**的（近景特写优先）。**情绪对不对题机器判不了，就是不判**——
 O4 授权的是「过了这几道就换」。换完拿**正式的** `validate_spec` ＋ `cover_photo_problem`
 （去掉 slug，不走豁免表）再过一遍，不过就把写过的文件全部退回、这一班红出来。
+
+⚠️ **2026-09-27 评审（BLOCKING）之后收紧的几处**，都是「认人认得出是他、认不出是哪一场／在干什么」
+那一类：第一版只要姓＋赛事＋同一天，`…speaks during a news conference after his second-round match…`
+和 `…practices ahead of his match…` 实跑都换上了；中文的 `_production.event`（仓库里有「美网」）归一
+出来是空串，空串是任何串的子串，于是**任何中文赛事名都被认成美网、纽约时区**，赛事那道闸也恒过——
+现在空的当没写、回退顶栏，点名闸遇到空赛事名直接不换。**代价**：WTA 图床的 `<球员>_-_<赛事>_-_Day_N-DSC_…`
+文件名既不写对手、URL 里也只有上传的日子，这一档基本换不上了；拉沃尔杯 `BS2_8696` 那种「against Fritz」
+的图注照样过（`test_拉沃尔杯BS2_8696那张的说明过得了点名闸`）。
 
 **一个 slug 最多换一次**：`data/cover_upgrades.json` 里 `status: upgraded` 的不再查（换回
 抽帧也不再动）；它同时让 `build_match_reel.OWNER_APPROVED_FRAME_COVERS` 减掉这个 slug
@@ -2233,8 +2242,18 @@ O4 授权的是「过了这几道就换」。换完拿**正式的** `validate_sp
 （`sweep_ap` 自己把失败吞成空列表，所以工具先敲一次 `/hub/tennis`，敲不开记「取不到」，
 不记「0 张」）；Getty `/detail/<id>` 301 跳到带说明的页。runner 上 AP 通不通没验过。
 
+**班次的账**（都在 `data/cover_upgrades.json`）：每一班先 `--plan`（只读 json、不装依赖）看有没有
+活，0 条就不装 onnxruntime／opencv、不拉模型；下过、闸没过的候选记进 `attempts.<slug>.tried`，下一班
+跳过它们接着往后下（不然第 11 张永远轮不到）；换完过不了正式封面闸的，那张图记成下过、这一条退避 2 小时
+起每次翻倍；派发 render 每条重试三次，还丢了的话下一班对账看到「换了图、一小时了发布账本里没有新的推送
+尝试」就重派，最多两次，再不行打 `::warning::` 要人看。
+
+⚠️ **AP／Getty 的授权没人看**（评审 N7）：`sweep_ap` 的 docstring 写的是「发布前人工判断」，而这条链
+过了机器闸就发。O4 授权的是「自动换图重推」，这一半交不交给机器是账号所有者的口径，代码没替他改。
+
     python3 tools/cover_upgrade.py                    # 只查、只报告（不写）
     python3 tools/cover_upgrade.py --slug <slug>      # 只查一条
+    python3 tools/cover_upgrade.py --plan             # 只看有没有活（目标、要重派的 render），不查图
     # 工作流：定时班次带 --apply；推完会话用 tools/push_link.py --slug <slug> 取新推送网页
 
 

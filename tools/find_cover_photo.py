@@ -844,9 +844,11 @@ def sweep_tournament(site: str, date: str | None, player: str | None = None) -> 
             # 才是「这张拍的是哪一场」的出处——拉沃尔杯 BS2_8696 的 title 只写
             # 「Carlos Alcaraz」，caption 写着「takes the singles against Fritz on
             # Saturday night」（2026-09-27 实测）。`cover_upgrade.py` 拿它过点名闸。
+            # `date_gmt` 也要：`date` 是站点当地的钟点、不带时区，判不了「上传在不在
+            # 开赛之后」——前一晚夜场的图过了午夜才传，日子和第二天那场一样。
             named = json.loads(_get(
                 f"{base}/media?per_page=40&search={player}"
-                "&_fields=date,source_url,media_details,title,caption,alt_text"))
+                "&_fields=date,date_gmt,source_url,media_details,title,caption,alt_text"))
             for m in named:
                 md = m.get("media_details") or {}
                 if not md.get("width"):
@@ -855,7 +857,8 @@ def sweep_tournament(site: str, date: str | None, player: str | None = None) -> 
                 cap = html_mod.unescape(re.sub(
                     r"<[^>]+>", "", (m.get("caption") or {}).get("rendered", ""))).strip()
                 res["by_name"].append({
-                    "date": m.get("date"), "wh": f"{md.get('width')}x{md.get('height')}",
+                    "date": m.get("date"), "date_gmt": m.get("date_gmt"),
+                    "wh": f"{md.get('width')}x{md.get('height')}",
                     "title": html_mod.unescape((m.get("title") or {}).get("rendered", "")),
                     "alt": html_mod.unescape(str(m.get("alt_text") or "")).strip(),
                     "caption": cap,
