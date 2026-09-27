@@ -19,9 +19,9 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           for attempt in $(seq 1 45); do
-            STATUS=$(gh api repos/robertyang87/tennislive/actions/runs/36323549463 --jq .status)
+            STATUS=$(gh api repos/robertyang87/tennislive/actions/runs/36323849002 --jq .status)
             if [ "$STATUS" = completed ]; then
-              test "$(gh api repos/robertyang87/tennislive/actions/runs/36323549463 --jq .conclusion)" = success
+              test "$(gh api repos/robertyang87/tennislive/actions/runs/36323849002 --jq .conclusion)" = success
               exit $?
             fi
             sleep 10
@@ -56,3 +56,8 @@ jobs:
         with:
           name: safiullin-bu-final-film-b
           path: parts/film.part-ab
+      - uses: actions/upload-artifact@v4
+        with:
+          name: safiullin-bu-final-film-c
+          path: parts/film.part-ac
+          if-no-files-found: ignore
