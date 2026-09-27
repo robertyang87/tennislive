@@ -89,7 +89,7 @@ def full(sex,arr,slug):
 def half(sex,arr,slug,start):
     part='上半区' if start==0 else '下半区'
     im,d=base(sex,part+' · 分区放大')
-    for x,s in [(56,'首战位置'),(480,'16强'),(660,'八强'),(835,'半决赛')]:text(d,(x,263),s,27,MUTED)
+    for x,s in [(56,'首战位置'),(480,'16强'),(660,'八强'),(835,'半决赛')]:text(d,(x,243),s,27,MUTED)
     ys=[310+i*44 for i in range(16)]
     for i,it in enumerate(arr[start:start+16]):row(d,it,56,ys[i],350,32)
     tree(d,ys,425,143,4)
