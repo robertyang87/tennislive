@@ -1,0 +1,35 @@
+name: noskova-final-review-export
+on:
+  push:
+    branches: [codex/noskova-svitolina-bjk-final-20260927]
+    paths: [.github/workflows/noskova-final-review-export.yml]
+permissions:
+  contents: read
+  actions: read
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            tools
+          sparse-checkout-cone-mode: true
+      - name: Wait for corrected render and retrieve actual film
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          gh run watch 36325918901 --exit-status --interval 15
+          mkdir -p review
+          gh release download reel-noskova-svitolina-bjk-cup-2026-final --pattern '*.mp4' --dir review
+          source tools/ci_apt_install.sh
+          ensure_ffmpeg
+          python tools/review_copy.py review/noskova-svitolina-bjk-cup-2026-final.mp4
+          sha256sum review/*.mp4 > review/SHA256SUMS
+      - uses: actions/upload-artifact@v4
+        with:
+          name: noskova-final-reviewed-film
+          path: review/
+          retention-days: 7
