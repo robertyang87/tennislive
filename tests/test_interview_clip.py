@@ -786,9 +786,11 @@ def test_顶栏走品牌显示体字幕不走():
     styles = {r.split(",")[0].removeprefix("Style: "): r.split(",")
               for r in _ASS_HEAD.splitlines() if r.startswith("Style: ")}
     assert styles["HEADA"][1] == "得意黑", "顶栏主行该走品牌显示体"
-    assert styles["EN"][1] == "Noto Sans" and styles["ZH"][1] == "Noto Sans CJK SC", \
+    assert styles["EN"][1] == "Inter 24pt SemiBold" and styles["ZH"][1] == "Noto Sans CJK SC", \
         "字幕不许换成显示体——它是斜体窄身，一整句读下来累"
-    assert styles["EN"][6] == "1", "英文太细会被旁边的粗中文压住，要加粗"
+    # 英文 2026-09-26 换成 Inter **SemiBold 那一档的文件**（账号所有者选的）：字重在文件里，
+    # 不再让 libass 合成加粗——合成的粗体会把字怀糊掉，正是「不够精致」的那个样子
+    assert styles["EN"][6] == "0", "英文走 SemiBold 文件，不要再叠一层合成加粗"
 
 
 def _sfnt_names(path: Path) -> set[str]:

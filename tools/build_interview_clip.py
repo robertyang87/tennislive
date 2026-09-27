@@ -139,8 +139,9 @@ _HEAD_PX = 1080 - 48 - 48
 # 现在工作流里加了 `fonts-noto-core`，缺了就**报错**而不是回退——
 # 回退不吭声，是这条线上栽过三次的那个毛病。
 _FONT_FILES = {
-    "en": ("/usr/share/fonts/truetype/noto/NotoSans-Regular.ttf",
-           "fonts-noto-core"),
+    # 英文走 Inter SemiBold（2026-09-26 账号所有者选的，三条线统一，见
+    # `explainer._ASS_EN_FONT` 那段）。**在仓库里**，不是 apt 装的。
+    "en": (str(ROOT / "assets/fonts/Inter-SemiBold.ttf"), None),
     "zh": ("/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",
            "fonts-noto-cjk"),
     # 顶栏走品牌显示体（得意黑）。**它在仓库里，不是 apt 装的**——`webcards`
@@ -164,7 +165,7 @@ _FONT_FILES = {
 #
 # **回退不报错**，画面照样出得来，只是不是那支字体。判据见 `test_ASS 里的字体名…`。
 _ASS_NAME = {
-    "en": "Noto Sans",
+    "en": "Inter 24pt SemiBold",      # 必须和 explainer._ASS_EN_FONT 一字不差
     "zh": "Noto Sans CJK SC",
     "head": "得意黑",
     # ⚠️ 2026-08-29 换了两次：Barlow Condensed SemiBold → Noto Sans CJK SC →
@@ -1144,7 +1145,7 @@ ScaledBorderAndShadow: yes
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: EN,{_EN_FONT},{_FONT_SIZE['en']},&H00FFFFFF,&H00000000,&H00000000,1,0,0,0,100,100,0,0,1,0,0,8,64,64,{_EN_TOP},1
+Style: EN,{_EN_FONT},{_FONT_SIZE['en']},&H00FFFFFF,&H00000000,&H00000000,0,0,0,0,100,100,0.6,0,1,0,0,8,64,64,{_EN_TOP},1
 Style: ZH,{_ZH_FONT},{_FONT_SIZE['zh']},&H0074DCC3,&H00000000,&H00000000,1,0,0,0,100,100,0,0,1,0,0,8,64,64,{_ZH_TOP},1
 Style: HEADA,{_HEAD_FONT},{_HEAD_SIZE['a']},&H00FFFFFF,&H00000000,&H00000000,0,0,0,0,100,100,1,0,1,0,0,8,48,48,{_HEAD_A_TOP},1
 Style: HEADB,{_ZH_FONT},{_HEAD_SIZE['b']},&H00DBE2D5,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,1.5,0,8,48,48,{_HEAD_B_TOP},1

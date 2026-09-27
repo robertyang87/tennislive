@@ -8312,11 +8312,12 @@ def test_双语字幕要真的排成两行(tmp_path):
     head, _, tail = rows[0].partition(nl)
     assert "title" in head and "生涯第一个巡回赛冠军" in tail, \
         f"英文和中文没落在各自那一行：{rows[0]}"
-    assert r"{\fs46}A first ever tour title" in head, \
+    from tennislive.video import explainer as E  # noqa: PLC0415
+    assert "\\fs" + str(E._ASS_BILINGUAL_EN_SIZE) in head and E._ASS_EN_FONT in head, \
         f"双语字幕的英文仍按单行字幕放大，会折行把中文顶出画布：{rows[0]}"
     assert r"{\fs78}" not in head, \
         f"英文行里的逐词放大标签盖掉了双语小字号：{rows[0]}"
-    assert ",0,0,86,," in rows[0] and r"{\an2}" in rows[0], \
+    assert f",0,0,{E.bilingual_bottom_margin(1440, 1284)},," in rows[0] and r"{\an2}" in rows[0], \
         f"双语事件没有下锚，多出来的行会把最下面那行中文顶出画布：{rows[0]}"
     assert r"{\an2}" not in rows[1], \
         f"单行旁白被一起改成下锚了，一行两行会落在不同高度、跳来跳去：{rows[1]}"
@@ -8361,7 +8362,8 @@ def test_双语字幕下锚_行数再多也切不掉最下面那行中文(tmp_pa
         subprocess.run(
             ["ffmpeg", "-v", "error", "-y", "-f", "lavfi",
              "-i", f"color=c=black:s={E.VIDEO_W}x{height}:d=2",
-             "-vf", f"subtitles={ass}", "-ss", "0.7", "-frames:v", "1", str(png)],
+             "-vf", f"subtitles={ass}:fontsdir={E._ASS_EN_FONT_FILE.parent}",
+             "-ss", "0.7", "-frames:v", "1", str(png)],
             check=True)
         a = np.asarray(pil.open(png).convert("L"))
         ys = np.where((a > 40).any(axis=1))[0]
@@ -8392,8 +8394,8 @@ def test_双语字幕下锚_行数再多也切不掉最下面那行中文(tmp_pa
 
     # ② 最常见的两行：和上锚那一版逐像素一样，已发片子的位置不许动
     two = "A first ever tour title\n生涯第一个巡回赛冠军"
-    rows = [f"{{\\fs{E._ASS_BILINGUAL_EN_SIZE}}}A first ever tour title"
-            f"{{\\fs{E._ASS_SIZE}}}", E._ass_text("生涯第一个巡回赛冠军")]
+    rows = [E.ass_en_row("A first ever tour title", outline=reel.SUB_OUTLINE_PX),
+            E._ass_text("生涯第一个巡回赛冠军")]
     old = tmp_path / "old.ass"
     old.write_text(
         E._ass_header(height, margin_v, outline=reel.SUB_OUTLINE_PX,

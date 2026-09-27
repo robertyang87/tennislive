@@ -77,3 +77,17 @@
   checksum that follows it) — verified by diffing all 19 tables — which would
   churn 200 KB of binary into git on every rebuild and make
   "regenerate and compare" useless as a check.
+
+## Inter (SemiBold, latin subset)
+
+- Files: `Inter-SemiBold.ttf`
+- Project: <https://github.com/rsms/inter>
+- Source: Google Fonts `ofl/inter/Inter[opsz,wght].ttf`, instanced with fontTools
+  at `wght=600, opsz=24` (`instantiateVariableFont`), then `pyftsubset` to Latin
+  (U+0020–007E, U+00A0–00FF, common punctuation). Family name as declared:
+  `Inter 24pt SemiBold` — that exact string is what the ASS `\fn` uses.
+- Copyright: Copyright 2020 The Inter Project Authors.
+- License: SIL Open Font License 1.1. The full license is included in `OFL-Inter.txt`.
+- Usage in TennisLive: the English line of every bilingual subtitle (赛场之上 /
+  网球有故事 / 赛后开麦). Chosen by the account owner 2026-09-26 from a
+  side-by-side of five faces; replaces the Latin glyphs of Noto Sans CJK SC.
