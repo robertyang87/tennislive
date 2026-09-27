@@ -400,6 +400,18 @@ def promote_all(*, write: bool = False) -> tuple[list[str], list[str]]:
             skipped.append(
                 f"{f.name}: 措辞不合规矩（{'；'.join(problems)}），不提升")
             continue
+        # 全称断言（「唯一一个」「N 次打进，N 次都…」）同一个座位拦：转正之后
+        # interview-clip 会被自动 dispatch，前置检查 `production_preflight`
+        # 那道闸是硬的——放过去就是一趟红着的 render。模板本身过得了这道闸
+        # （`test_采访线自动转正的模板文案过得了全称断言那道闸`），会撞上的只有
+        # **手改过的草稿**——有人往 `.draft.json` 里补了 push／cover／takeaway、
+        # 却没在 `_claims` 认领两个源：留草稿等终审。（人工请求不经过这儿：
+        # `build_interview_request` 直接写正式 spec，它的闸在 `check_request`。）
+        from absolute_claims import interview_problem  # noqa: PLC0415
+        if interview_problem(spec, spec["slug"]):
+            skipped.append(
+                f"{f.name}: 全称断言没认领两个独立源（`_claims`），不提升")
+            continue
         # 口味闸（tools/taste_gates.py）：自动转正这一头**只报不拦**——模板标题
         # 本来碰不到它，真碰到了也不能把自动链卡成「今天没有候选」；渲染入口
         # （build_interview_clip.check_taste / production_preflight）照旧硬拦。
