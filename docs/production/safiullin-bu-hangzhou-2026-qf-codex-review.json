@@ -18,7 +18,8 @@
     "final actual MP4 overview and selected full-resolution frames checked",
     "full_source tactical segments preserve sideline movement and volley",
     "final match point and handshake retained; promotional card excluded",
-    "final stat card Bu 23/40 correctly displays 58%"
+    "final stat card Bu 23/40 correctly displays 58%",
+    "v4 actual 102s final serve/return frame preserves both players; 114s handshake verified"
   ],
   "pending": [
     "current head CI",
@@ -39,13 +40,14 @@
     "status": "failed",
     "reason": "ffmpeg score mask 109px versus YUV crop108px"
   },
-  "current_render_run": 36323849002,
+  "current_render_run": 36324598388,
   "fixed": [
     "cover hook center option",
     "nine segments matched to exact TTS offsets",
     "full_source framing for key lateral movement and volley",
     "scorebox even110px height",
-    "stat-card percent half-up 23/40=58%"
+    "stat-card percent half-up 23/40=58%",
+    "v4 final segment full_source preserves Bu receiving outside right sideline"
   ],
   "local_validation": {
     "stat_tests": "33 passed",
@@ -53,12 +55,12 @@
     "pronunciation": "Actual nine words.json files scanned against repo FAKE_TOKENS: no hits. Eight narration segments fit; timing/pauses checked. Direct listening was unavailable; no auditory correctness claim."
   },
   "current_render": {
-    "run": 36323849002,
-    "film_sha256": "f2723e143cad05cba719479f0221a94e20f74a79a3a0911bac24c76826817e1f",
-    "film_bytes": 56471448,
+    "run": 36324598388,
+    "film_sha256": "b76c6fb69c0eb1dd841c5766930bb3864ad78503f5c681dd1bf8567de5a3da0e",
+    "film_bytes": 53792588,
     "seconds": 118.88,
     "formal_qc": "pass",
-    "final_evidence_run": 36323902530,
+    "final_evidence_run": 36324677933,
     "downloaded_complete_and_hash_verified": true
   },
   "limitations": [
