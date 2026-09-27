@@ -29,6 +29,7 @@ import argparse
 import collections
 import json
 import re
+import shlex
 import sys
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass, field
@@ -557,7 +558,17 @@ def spoken_texts(slug: str | None = None, spec_path: Path | None = None) -> list
     return explainer_texts(slug)
 
 
-def static_report(texts: list[Spoken], slug: str | None = None) -> tuple[list[str], list[Risk]]:
+def _measure_cmd(slug: str | None, spec_path: str | Path | None) -> str:
+    """提示里那行 `--measure` 命令。给了 spec 路径就指路径：`repair_reel_spec`、
+    `taste_preflight` 这些拿**临时副本**跑 dry-run 的，按 slug 会指回仓库里那份
+    没改过的 spec，量的就不是刚报出来的这几处。"""
+    target = (f"--spec {shlex.quote(str(spec_path))}" if spec_path
+              else f"--slug {slug or '<slug>'}")
+    return f"python3 tools/check_polyphones.py {target} --measure"
+
+
+def static_report(texts: list[Spoken], slug: str | None = None,
+                  spec_path: str | Path | None = None) -> tuple[list[str], list[Risk]]:
     """`render --dry-run` 印的那几行。**没有也要出声**。
 
     逐条列的只有「不在词典词里」的——词典词（`银行`「重复」「露怯」这类，词典给的正是
@@ -583,7 +594,7 @@ def static_report(texts: list[Spoken], slug: str | None = None) -> tuple[list[st
             lines.append(f"  {r.label}「{ctx}」 {r.char} 应读 {_show(r.intended)}"
                          f"（不看上下文会读 {_show(r.default)}）［{tag}］")
         lines.append("  要知道合成器到底读成什么（要联网，一处十几秒）：\n"
-                     f"    python3 tools/check_polyphones.py --slug {slug or '<slug>'} --measure"
+                     f"    {_measure_cmd(slug, spec_path)}"
                      "\n  读错了就把它量出来的表项抄进 pronounce.HOMOPHONES；只报不拦。")
     else:
         lines.append("[多音字] 没有换字表管不到的非常用读音"
@@ -600,7 +611,8 @@ def static_report(texts: list[Spoken], slug: str | None = None) -> tuple[list[st
     return lines, risks
 
 
-def report_lines(texts: list[Spoken], slug: str | None = None) -> list[str]:
+def report_lines(texts: list[Spoken], slug: str | None = None,
+                 spec_path: str | Path | None = None) -> list[str]:
     """给出片前的预检座位用（`render --dry-run`、采访片每一趟开头）：只报不拦，
     查不了要**出声**——「没查」和「查过没有」在日志里不许长得一样。"""
     try:
@@ -609,7 +621,7 @@ def report_lines(texts: list[Spoken], slug: str | None = None) -> list[str]:
         return ["[多音字] ⚠️ 这趟没查：没装 pypinyin（pip install -e \".[polyphone]\"）"
                 "——**没查不等于没有**"]
     try:
-        return static_report(texts, slug)[0]
+        return static_report(texts, slug, spec_path)[0]
     except Exception as exc:  # noqa: BLE001 — 预检自己出错不许拖垮出片，但要说出来
         return [f"[多音字] ⚠️ 这趟没查完：{type(exc).__name__}: {exc}"[:300]]
 
@@ -746,7 +758,7 @@ def main(argv: list[str] | None = None) -> int:
         print(f"[多音字] 找不到 {a.slug or a.spec} 的旁白（specs/reels、specs/interviews、"
               "explainer._SCRIPTS 都查过）")
         return 2
-    lines, risks = static_report(texts, a.slug)
+    lines, risks = static_report(texts, a.slug, a.spec)
     print("\n".join(lines))
     if a.measure:
         try:

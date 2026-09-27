@@ -14,6 +14,7 @@ from __future__ import annotations
 import ast
 import json
 import re
+import shlex
 import subprocess
 import sys
 from pathlib import Path
@@ -148,9 +149,26 @@ def test_换字只在量过的上下文里咬():
         "拆了重做的": "拆了重做的",
         "挑战": "挑战",
         "松柏": "松柏",
+        # 2026-09-27 复查抓到的四个方向：本来读对（zhōng／shù／kōng），第一版换错了
+        "世界前十中三人来自西班牙。": "世界前十中三人来自西班牙。",
+        "前五十中两个是中国球员": "前五十中两个是中国球员",
+        "破发点数十二个": "破发点数十二个",
+        "他的双误数十一个": "他的双误数十一个",
+        "ACE 数十一个": "ACE 数十一个",
+        "球场上空出了一道彩虹": "球场上空出了一道彩虹",
+        "夜空着火一样": "夜空着火一样",
+        # 而量过的那几处照旧换（收窄不许收过头）
+        "名单上空出一格": "名单上控出一格",
+        "博尔热斯四中三": "博尔热斯四众三",
+        "一年数十九个成绩": "一年署十九个成绩",
     }
     for text, want in cases.items():
         assert P.apply(text) == want, (text, P.apply(text))
+        # 预检拿 `substitutions`／`covered_positions` 判「表里管了」——它俩和 `apply`
+        # 必须是同一套命中，否则没换的字会被当成已经管了，预检就不出声
+        spots = {s for s, _, _, _ in P.substitutions(text)}
+        assert spots == P.covered_positions(text) == {
+            i for i, (a, b) in enumerate(zip(text, want)) if a != b}, text
 
 
 # ------------------------------------------------ 2. 只进合成器，不上屏幕
@@ -305,6 +323,10 @@ def test_多音字预检只报换字表管不到的非常用读音():
     assert [(r.label, r.char, r.intended) for r in shown] == [("第 1 段", "场", "chang2")], shown
     text = "\n".join(lines)
     assert "场 应读 cháng" in text and "--slug demo --measure" in text
+    # dry-run 常拿**临时副本**跑（repair_reel_spec、taste_preflight）：给了路径就指路径，
+    # 按 slug 会指回仓库里那份没改过的 spec
+    tmp = C.static_report(texts[:1], "demo", spec_path="/tmp/x y/demo.json")[0]
+    assert "--spec '/tmp/x y/demo.json' --measure" in "\n".join(tmp), tmp
     # 空出：换字表管了；银行：词典词只计数；还得（děi）：这个读音整类量过读对
     assert "空" not in "".join(r.char for r in shown)
     assert "词典词" in text and "量过读对" in text
@@ -352,4 +374,9 @@ def test_dry_run真的印出多音字预检(tmp_path):
          "--outdir", str(tmp_path / "out"), "--dry-run"],
         cwd=ROOT, capture_output=True, text=True, timeout=120)
     assert proc.returncode == 0, proc.stdout[-800:] + proc.stderr[-800:]
-    assert "[多音字] 1 处" in proc.stdout and "场 应读 cháng" in proc.stdout, proc.stdout
+    # 只钉塞进去的那一处：这条 spec 以后改旁白、多报一处别的，不该让这条红
+    m = re.search(r"\[多音字\] (\d+) 处", proc.stdout)
+    assert m and int(m.group(1)) >= 1, proc.stdout
+    assert re.search(r"「[^」]*那场雨[^」]*」 场 应读 cháng", proc.stdout), proc.stdout
+    assert f"check_polyphones.py --spec {shlex.quote(str(path))} --measure" in proc.stdout, \
+        proc.stdout

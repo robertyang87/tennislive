@@ -41,7 +41,8 @@ from __future__ import annotations
 
 import re
 from dataclasses import dataclass
-from typing import Iterable
+from functools import lru_cache
+from typing import Iterable, Iterator
 
 
 @dataclass(frozen=True)
@@ -57,12 +58,16 @@ class Homophone:
     examples: tuple[tuple[str, str], ...]   # (原文, 喂给合成器的)
     guards: tuple[str, ...] = ()            # 必须原样不动的上下文
     kind: str = "homophone"                 # 挑→选 是同义字，不是同音字
+    # 变宽的「前面不许是」：命中处前面的文字**以它结尾**就不换。Python 的
+    # lookbehind 只收定宽，而「前十中三」「前五十中两个」前面那串数字是变宽的。
+    skip_before: str = ""
 
 
 # 「空」读 kōng 的词里，紧挨在「空」前面的那个字。命中它就不是「腾出／闲置」
 # 那个 kòng：天空在下雨、凌空出击、腾空出世、真空、时空、太空、虚空、高空、
-# 轮空（首轮轮空出战——轮空是 lún kōng，语料里还没有，先挡上）……
-_KONG_NOUN_BEFORE = "凌腾高半天悬落真时太虚轮"
+# 轮空（首轮轮空出战——轮空是 lún kōng，语料里还没有，先挡上）、
+# 夜空／星空（2026-09-27 复查：「夜空着火一样」原来被换成「夜控着」）……
+_KONG_NOUN_BEFORE = "凌腾高半天悬落真时太虚轮夜星"
 # 「长」读 zhǎng 的词里，紧挨在「长」前面的那个字（队长、成长、家长……）。
 # 命中就不换——那儿的「长」本来就可能是 zhǎng，换成「常」会念错。
 _ZHANG_BEFORE = "队成增生年家部兄师院校市局署首酋组班团社处科馆镇"
@@ -157,7 +162,13 @@ HOMOPHONES: tuple[Homophone, ...] = (
     ),
     Homophone(
         key="kong-chu",
-        pattern=rf"(?<![{_KONG_NOUN_BEFORE}])空(?=出(?![现击世]))", replace="控",
+        # 「上空出」两头都有：「名单上空出一格」是腾出（量过读错，要换），
+        # 「球场上空出了一道彩虹」是天上（kōng，本来就对）。前面是「上」时再多要一条
+        # ——后面不是「出了」；「名单上空出了一格」因此也不换，那只是留着原来的读法，
+        # 而换错一个本来读对的字是新添的错（2026-09-27 复查）。
+        pattern=(rf"(?:(?<![{_KONG_NOUN_BEFORE}上])空(?=出(?![现击世]))"
+                 r"|(?<=上)空(?=出(?![现击世了])))"),
+        replace="控",
         word="空出", reading="kòng",
         evidence=(
             "2026-09-27 实测：语料里「空出」（腾出位置）全读成 kōng——"
@@ -170,7 +181,7 @@ HOMOPHONES: tuple[Homophone, ...] = (
                   ("可几个小时后正赛有人退出，空出一个位置，",
                    "可几个小时后正赛有人退出，控出一个位置，")),
         guards=("球场上空出现一架无人机", "凌空出击", "腾空出世", "真空出现", "空中",
-                "首轮轮空出战"),
+                "首轮轮空出战", "球场上空出了一道彩虹", "夜空出现流星"),
     ),
     Homophone(
         key="kong-zhe",
@@ -182,7 +193,7 @@ HOMOPHONES: tuple[Homophone, ...] = (
             "换「控着」：4 句都读 kòng（dA 0.03~0.48，dB 2.8~6.9），切词不变（没有｜控｜着）。"),
         examples=(("不过深圳湾体育中心并没有空着。", "不过深圳湾体育中心并没有控着。"),
                   ("为什么会空着？他是藏族，", "为什么会控着？他是藏族，")),
-        guards=("空着手", "空着肚子", "天空着火"),
+        guards=("空着手", "空着肚子", "天空着火", "夜空着火一样"),
     ),
     Homophone(
         key="kong-zai",
@@ -192,11 +203,15 @@ HOMOPHONES: tuple[Homophone, ...] = (
             "2026-09-27 实测（+22%）：「位置已经空在那儿」读 kōng，与「箜」相同（0.29，"
             "调形 −0.998）。换「控在」：读 kòng（离 kōng 4.47），切词不变（已经｜控｜在｜那儿）。"),
         examples=(("想一下就明白：位置已经空在那儿，", "想一下就明白：位置已经控在那儿，"),),
-        guards=("天空在下雨", "场馆上空在放烟花", "悬空在网前"),
+        guards=("天空在下雨", "场馆上空在放烟花", "悬空在网前", "星空在头顶"),
     ),
     Homophone(
         key="n-zhong-m",
         pattern=rf"(?<=[{_CN_DIGIT}])中(?=[{_CN_DIGIT}零])(?!八九)", replace="众",
+        # 「世界前十中三人来自西班牙」「前五十中两个是中国球员」「排名第四中」的「中」
+        # 是 zhōng（……里面），换成「众」反而念错（2026-09-27 复查）。量过的只有破发点
+        # 那种「N 中 M」，所以数字串前面是 前／第／排名 的一律不换。
+        skip_before=rf"(?:前|第|排名)[{_CN_DIGIT}]+",
         word="四中三", reading="zhòng",
         evidence=(
             "2026-09-27 实测：破发点「四中三」「四中一」「三中二」的「中」读 zhōng"
@@ -206,7 +221,8 @@ HOMOPHONES: tuple[Homophone, ...] = (
         examples=(("破发点，博尔热斯四中三；卢布列夫，四中一。",
                    "破发点，博尔热斯四众三；卢布列夫，四众一。"),
                   ("破发点丰塞卡三中二，鲁德七中一。", "破发点丰塞卡三众二，鲁德七众一。")),
-        guards=("其中一个", "中国", "十中八九", "三中全会"),
+        guards=("其中一个", "中国", "十中八九", "三中全会", "世界前十中三人来自西班牙",
+                "前五十中两个是中国球员", "排名前二十中一个都没有", "第三中一"),
     ),
     Homophone(
         key="kai-chongzuo", pattern=r"(?<=开)重(?=做)", replace="崇",
@@ -220,9 +236,11 @@ HOMOPHONES: tuple[Homophone, ...] = (
     ),
     Homophone(
         key="shu-count",
-        # 只认「数 N 个」这个动宾形状：「局数十二比六」「盘数十一」里的「数」是名词
-        # shù，前一个字就是它的词头；「数十个」「数十万」是「几十」，后面不跟个位数。
-        pattern=r"(?<![局盘分场次人总岁倍位指函变常系基奇偶约])数(?=十[一二三四五六七八九]个)",
+        # 白名单，只认量过的那一个形状「（一）年数十N个」：「数」前面是名词时它自己
+        # 就是名词 shù（局数、破发点数、双误数、ACE 数……），黑名单列不完——第一版
+        # 「破发点数十二个」→「破发点署十二个」（2026-09-27 复查）。「数十个」「数十万」
+        # 是「几十」，后面不跟个位数，也不换。
+        pattern=r"(?<=年)数(?=十[一二三四五六七八九]个)",
         replace="署",
         word="数十九个", reading="shǔ",
         evidence=(
@@ -231,7 +249,8 @@ HOMOPHONES: tuple[Homophone, ...] = (
             "切词修成 一｜年｜署｜十九｜个。「数十个」（几十个）不动。"),
         examples=(("男子这边，ATP 对外说一年数十九个成绩；",
                    "男子这边，ATP 对外说一年署十九个成绩；"),),
-        guards=("数十个国家", "数十万", "数据", "往前数", "局数十二比六", "盘数十一个"),
+        guards=("数十个国家", "数十万", "数据", "往前数", "局数十二比六", "盘数十一个",
+                "破发点数十二个", "他的双误数十一个", "ACE 数十一个", "每年数十个国家"),
     ),
     Homophone(
         key="chang-huihe", pattern=rf"(?<![{_ZHANG_BEFORE}])长(?=回合)", replace="常",
@@ -273,21 +292,45 @@ class PronounceError(ValueError):
     """表项把字数改了——字幕时间轴会漂，宁可当场炸。"""
 
 
+@lru_cache(maxsize=None)
+def _skip_rx(skip_before: str) -> re.Pattern[str] | None:
+    return re.compile(rf"(?:{skip_before})\Z") if skip_before else None
+
+
+def _hits(h: Homophone, rx: re.Pattern[str], text: str) -> Iterator[re.Match[str]]:
+    """这一条在 `text` 上真要换的那几处（`skip_before` 否掉的剔除）。
+
+    `apply` 和 `substitutions` 都从这儿取，两边不许各写一份——否则预检以为
+    「表里管了」的地方，合成那份其实没换（或者反过来）。
+    """
+    skip = _skip_rx(h.skip_before)
+    for m in rx.finditer(text):
+        # endpos 截在命中处：`\Z` 就落在「命中处前面那段文字的结尾」
+        if skip is not None and skip.search(text, 0, m.start()):
+            continue
+        yield m
+
+
+def _apply_one(h: Homophone, rx: re.Pattern[str], text: str) -> str:
+    parts: list[str] = []
+    last = 0
+    for m in _hits(h, rx, text):
+        if len(m.group(0)) != len(h.replace):
+            raise PronounceError(
+                f"换字表 {h.key}：命中「{m.group(0)}」换成「{h.replace}」字数不一样"
+                "——字幕时间轴按字位映射，长度一变整段就漂")
+        parts += [text[last:m.start()], h.replace]
+        last = m.end()
+    return "".join(parts) + text[last:] if parts else text
+
+
 def apply(text: str, only: Iterable[str] | None = None) -> str:
     """按表依次换字。`only` 给了就只用那几条（回归判据用）。"""
     keys = set(only) if only is not None else None
     for h, rx in _COMPILED:
         if keys is not None and h.key not in keys:
             continue
-
-        def _sub(m: re.Match[str], h: Homophone = h) -> str:
-            if len(m.group(0)) != len(h.replace):
-                raise PronounceError(
-                    f"换字表 {h.key}：命中「{m.group(0)}」换成「{h.replace}」字数不一样"
-                    "——字幕时间轴按字位映射，长度一变整段就漂")
-            return h.replace
-
-        text = rx.sub(_sub, text)
+        text = _apply_one(h, rx, text)
     return text
 
 
@@ -300,9 +343,9 @@ def substitutions(text: str) -> list[tuple[int, int, str, Homophone]]:
     out: list[tuple[int, int, str, Homophone]] = []
     cur = text
     for h, rx in _COMPILED:
-        for m in rx.finditer(cur):
+        for m in _hits(h, rx, cur):
             out.append((m.start(), m.end(), text[m.start():m.end()], h))
-        cur = rx.sub(h.replace, cur)
+        cur = _apply_one(h, rx, cur)
     return sorted(out, key=lambda x: x[0])
 
 

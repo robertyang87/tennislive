@@ -3114,7 +3114,7 @@ def _takeaway_speech(card: dict) -> str:
     return text if text.endswith(("。", "？", "！")) else text + "。"
 
 
-def report_takeaway_polyphones(spec: dict) -> None:
+def report_takeaway_polyphones(spec: dict, spec_path: str | None = None) -> None:
     """解读卡口播里换字表管不到的多音字，每一趟开头报一声。**只报不拦。**
 
     账号所有者 2026-09-27「配音 tts 里的多音字最好在生成语音时候替换成同音的字」。
@@ -3129,7 +3129,8 @@ def report_takeaway_polyphones(spec: dict) -> None:
     import check_polyphones  # noqa: PLC0415
 
     texts = check_polyphones.interview_texts(spec, speech=_takeaway_speech)
-    print("\n".join(check_polyphones.report_lines(texts, slug=spec.get("slug"))))
+    print("\n".join(check_polyphones.report_lines(texts, slug=spec.get("slug"),
+                                                  spec_path=spec_path)))
 
 
 # yt-dlp 认的合流容器（`--merge-output-format` 的取值）。别往里加 `m4a`——
@@ -4572,7 +4573,7 @@ def main() -> int:
     check_lead_in(spec)
     check_trail_in(spec)
     check_copy_page(spec)
-    report_takeaway_polyphones(spec)
+    report_takeaway_polyphones(spec, spec_path=args.spec)
     outdir = OUTDIR / spec["slug"]
     outdir.mkdir(parents=True, exist_ok=True)
     ass = outdir / f"{spec['slug']}.ass"

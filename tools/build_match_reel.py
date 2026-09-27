@@ -10161,7 +10161,8 @@ def main() -> int:
         import check_polyphones  # noqa: PLC0415
 
         print("\n" + "\n".join(check_polyphones.report_lines(
-            check_polyphones.reel_texts(spec), slug=Path(args.spec).stem)))
+            check_polyphones.reel_texts(spec), slug=Path(args.spec).stem,
+            spec_path=args.spec)))
         # **选段的机械判据全在 probe.json 里躺着，而这儿原来不看它。**
         #
         # 这句注释原来写的是「裁切越界、frame_at 超出片长这类要等源片，这里
