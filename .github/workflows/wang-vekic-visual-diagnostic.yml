@@ -32,11 +32,16 @@ jobs:
           path: |
             ~/.cache/apt-archives
             ~/.cache/apt-lists
-          # v2 → v3（2026-09-27）：main 上 v2 这个前缀只剩 probe 存的 243 字节空壳，
-          # 见 match-reel.yml 同一步的注释（`test_apt缓存不许再认被空壳污染的前缀`）
-          key: apt-pkgs-${{ runner.os }}-24.04-ffmpeg-fonts-v3-${{ github.run_id }}
+          # 自己一个前缀，**不跟 match-reel 共用**（2026-09-27）：这里只装 ffmpeg，
+          # match-reel 的 render / cover 装 ffmpeg ＋ 字体。共用一个前缀时，这条线在
+          # main 上补一次包就存下一份只有 ffmpeg 的缓存，挂在那个前缀最新一格——
+          # 会话分支上的 render 按前缀先捞到它（排在 CI 那份前面），字体
+          # `--no-download` 落空、又去摸镜像。v2 那个前缀在 main 上还只剩 probe 的
+          # 243 字节空壳（`test_apt缓存不许再认被空壳污染的前缀`）。
+          # 判据 `test_共用一个apt缓存前缀的几条线装的包一样`。
+          key: apt-pkgs-${{ runner.os }}-24.04-ffmpeg-only-v1-${{ github.run_id }}
           restore-keys: |
-            apt-pkgs-${{ runner.os }}-24.04-ffmpeg-fonts-v3-
+            apt-pkgs-${{ runner.os }}-24.04-ffmpeg-only-v1-
 
       - name: 安装 ffmpeg（共享缓存与超时）
         timeout-minutes: 14

@@ -431,7 +431,14 @@ jobs:
       # 目录，先试一次零网络的本地安装，缓存没命中才回退到会摸网的老路。
       - name: 缓存 apt 包（ffmpeg + 字体，绕开镜像抽风）
         id: apt_cache
-        if: github.event.inputs.mode != 'push'
+        # **只有 render / cover 恢复（也就只有它们回写）**，2026-09-27 从
+        # `mode != 'push'` 收窄：probe / narration 只 `ensure_ffmpeg`（静态构建，
+        # 不碰 apt），恢复一份完整的缓存回来（索引就五十来 MB，字体包另算）是白下；
+        # 更要紧的是它们的静态构建一落空、退到 `apt_install_cached ffmpeg` 就会
+        # 标脏，在这个前缀下存一份**只有 ffmpeg** 的缓存，下一趟 render 按前缀先
+        # 捞到它、字体照样摸网。下面的回写认的是这一步的 `cache-primary-key`，
+        # 这一步跳过它就跟着跳过。判据 `test_同一把apt缓存键在每个会存它的mode下装的包都一样`。
+        if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover'
         uses: actions/cache/restore@v4
         with:
           path: |
@@ -455,13 +462,15 @@ jobs:
           #   （`test_apt缓存不许再认被空壳污染的前缀`）。
           # - **退到 CI 那份**：`ci.yml` 在 main 上每次合并都跑、装的是
           #   cjk ＋ core ＋ emoji——这条线要的 cjk ＋ emoji 是它的子集，而 CI 的缓存
-          #   存在 main 上、所有分支都看得见。只给 render / cover 加这一格：probe、
-          #   narration 不装字体，捞一份一百来 MB 的缓存回来白下载。
+          #   存在 main 上、所有分支都看得见。
           #   判据 `test_装字体的apt缓存都能退到CI在main上存的那份`。
+          # - **这个前缀只许装同一批包的线来存**：reel-model-benchmark 和
+          #   wang-vekic 只装 ffmpeg，走自己的 `ffmpeg-only-v1-`
+          #   （`test_共用一个apt缓存前缀的几条线装的包一样`）。
           key: apt-pkgs-${{ runner.os }}-24.04-ffmpeg-fonts-v3-${{ github.run_id }}
           restore-keys: |
             apt-pkgs-${{ runner.os }}-24.04-ffmpeg-fonts-v3-
-            ${{ (github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover') && format('apt-pkgs-{0}-24.04-ci-v2-', runner.os) || '' }}
+            apt-pkgs-${{ runner.os }}-24.04-ci-v2-
       - name: 装 ffmpeg
         # push 模式一帧都不碰：`push_reel.py` 那条路里 ffmpeg / ffprobe /
         # subprocess **一个都没出现**，装它白花半分钟。
