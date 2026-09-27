@@ -7891,12 +7891,14 @@ def validate_spec(
     _absolute_claims_need_a_source(spec)
     # 写了「正式名单要等抽签日」就要回头查（davis-china 895dad7b），常青栏目不钉「今天」
     # （qualifier-ceiling 2756cec3）。判据和量法在 `reel_facts.time_sensitive_problems`。
-    from reel_facts import time_sensitive_problems  # noqa: PLC0415
-    for problem in time_sensitive_problems(spec):
-        if (spec.get("_production") or {}).get("status") == "ready_for_render":
-            print(f"[时效] 自动 spec，只报不拦：{problem}")
-        else:
-            raise ReelError(problem)
+    # ⚠️ 这儿是**渲染入口**的口径：外加「回头查的时刻要晚于上一次推送」那一半（读账本）。
+    # 全库扫描用 `at_render=False`——那一半放进全库，片子推送一落账就会把 main 打红。
+    from reel_facts import time_sensitive_gate  # noqa: PLC0415
+    blocking, report_only = time_sensitive_gate(spec)
+    for problem in report_only:
+        print(f"[时效] 自动 spec，只报不拦：{problem}")
+    if blocking:
+        raise ReelError(blocking[0])
     _players_are_worth_a_reel(spec)
     _hook_lines_fit_the_title(spec)
     voice = cover_voice_matches_hook_problem(spec)
@@ -8884,6 +8886,7 @@ def _ass_timestamp(seconds: float) -> str:
 # 量法和为什么没按词放宽，见那个模块的 docstring。
 from absolute_claims import (  # noqa: E402
     REEL_COUNT_LEGACY,
+    is_count_phrase as _is_count_phrase,
     problem_text as _absolute_claim_problem_text,
     unsourced as _unsourced_claims,
 )
@@ -8926,6 +8929,16 @@ def _absolute_claims_need_a_source(spec: dict) -> None:
         return
     missing = _unsourced_claims(spec_outward_text(spec), spec.get("_claims"),
                                 count_form=slug not in REEL_COUNT_LEGACY)
+    # ⚠️ 自动产的 spec：**计数式那一档只报不拦**，词表那一档照旧硬。
+    # 模型写不了 `_claims`（它没有两个源可引），计数式做成硬的，promote 就会把一条
+    # 写着「三次交手，三次都赢」的草稿静静跳过——自动链卡成「今天没有候选」，
+    # 和 `_narration_craft` / 时效那两道闸同一个理由。词表那一档（零胜／史上第一）
+    # 是出过事、而且存量里扫得干净的那一族，不跟着松。
+    if (spec.get("_production") or {}).get("status") == "ready_for_render":
+        counted = [(p, n) for p, n in missing if _is_count_phrase(p)]
+        for phrase, hosts in counted:
+            print(f"[全称断言] 自动 spec，计数式只报不拦：{phrase}（现在只有 {hosts} 个源）")
+        missing = [(p, n) for p, n in missing if not _is_count_phrase(p)]
     if missing:
         raise ReelError(_absolute_claim_problem_text(missing, "spec 的 `_claims`"))
 

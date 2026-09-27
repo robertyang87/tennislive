@@ -44,6 +44,10 @@ _IN_MATCH = (
     "两次拿到盘点，两次都被他救掉。",                          # wu-walton
     # 动词对了、宾语是这一场之内的——存量里没有，写判据时自己造句造出来的
     "两次打进抢七，两次都拿下了。",
+    # 同形的另外三句，2026-09-27 对抗 review 造出来的：宾语是盘和局，一场／一周之内数得完
+    "他两次站上发球胜赛局，两次都没能拿下",
+    "这一周她三次打进第三盘，三次都赢了",
+    "本届他两次打进五盘大战，两次都赢",
     # 比分不是断言：采访线 swiatek-arango 的封面文字当场被老词表误认过
     "斯瓦泰克六比零胜阿朗戈",
 )
@@ -97,6 +101,26 @@ def test_竖版短片的闸也认计数式_存量表只豁免计数式那一句(
     with pytest.raises(reel.ReelError, match="零胜"):
         reel._absolute_claims_need_a_source({
             **bad, "slug": legacy, "cover": {"hook": "三次交手，三次都输 硬地零胜"}})
+
+
+def test_自动产的竖版短片_计数式只报不拦_词表照旧硬拦(capsys):
+    """模型写不了 `_claims`——计数式做成硬的，promote 会把一条写着「三次交手，三次都赢」
+    的草稿静静跳过（自动链卡成「今天没有候选」）。词表那一档不跟着松。"""
+    reel = _reel()
+    counted = {"slug": "全新的一条", "segments": [],
+               "cover": {"hook": "三次交手，三次都输给了他"}}
+    auto = {**counted, "_production": {"status": "ready_for_render"}}
+    # 手写的：计数式照旧拦
+    with pytest.raises(reel.ReelError, match="全称断言"):
+        reel._absolute_claims_need_a_source(counted)
+    # 自动的：计数式只报——报要真的报出来，别变成静默放行
+    reel._absolute_claims_need_a_source(auto)
+    out = capsys.readouterr().out
+    assert "自动 spec，计数式只报不拦" in out and "三次交手" in out, out
+    # 自动的：词表那一档照旧拦（和计数式写在同一条里也一样）
+    with pytest.raises(reel.ReelError, match="零胜"):
+        reel._absolute_claims_need_a_source(
+            {**auto, "cover": {"hook": "三次交手，三次都输 硬地零胜"}})
 
 
 def test_竖版短片计数式存量表只许减不许加():

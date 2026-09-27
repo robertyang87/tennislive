@@ -36,12 +36,16 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 import explainer_preflight as P  # noqa: E402
 
 
-def _decks(date_label: str = "7.26"):
-    """每条字卡稿按预检的口径装一遍（slug 没注册会在这儿当场炸，不会静静跳过）。"""
+def _decks(date_label: str = P.WIDEST_DATE_LABEL):
+    """每条字卡稿按预检的口径装一遍（slug 没注册会在这儿当场炸，不会静静跳过）。
+
+    日期默认按**最宽**的那个（「12.28」）：标题字位跟着日期变，拿窄日期（7.26）量，
+    十月以后重渲的那一趟就没人替它量过（2026-09-27 对抗 review）。
+    """
     return [P.load_deck(slug, date_label) for slug in _SCRIPTED]
 
 
-def _problems(check, *, having: str = "", date_label: str = "7.26") -> list[str]:
+def _problems(check, *, having: str = "", date_label: str = P.WIDEST_DATE_LABEL) -> list[str]:
     """全库跑一项预检；`having` 只留报错里带这几个字的那一类。"""
     return [p for deck in _decks(date_label) for p in check(deck) if having in p]
 
@@ -523,8 +527,22 @@ def test_文案标题带上品牌语且不超小红书上限():
     0.5), and a truncated headline loses the topic — the part that makes
     someone tap. Check every deck, not just the short ones.
     """
-    bad = _problems(P.copy_title_problems, date_label="7.26")
+    bad = _problems(P.copy_title_problems)      # 按最宽的日期量，不按今天
     assert not bad, "\n".join(bad)
+
+    # 存量豁免表自检（只许降不许升）：名字要在、而且按最宽的日期量**真的还超**——
+    # 改短了就从表里删掉，否则它就是一盏恒真的绿灯。
+    from tennislive.render.xiaohongshu import xhs_title_len
+
+    frozen = {"a-plus-wildcard": 20.5}      # 2026-09-27 冻结：名单只许减、登记值只许降
+    for slug, registered in P.TITLE_TOO_WIDE.items():
+        assert slug in frozen and registered <= frozen[slug], (
+            f"TITLE_TOO_WIDE 只许减不许加、登记值只许降不许升：{slug} = {registered:g}")
+        assert slug in _SCRIPTED, f"{slug} 已经不是字卡稿了，从 TITLE_TOO_WIDE 里删掉"
+        head = P.load_deck(slug).xhs.splitlines()[0]
+        assert 20 < xhs_title_len(head) <= registered, (
+            f"{slug} 按 {P.WIDEST_DATE_LABEL} 量是 {xhs_title_len(head):g} 字位（登记 {registered:g}）"
+            "——不超了就从 TITLE_TOO_WIDE 里删掉，变宽了不许往上改登记值")
 
 
 def test_封面大标题声明了两行就真的断在那儿():

@@ -116,6 +116,21 @@ CARD_DECK_LEGACY = frozenset({
     "wildcard", "wimbledon-whites", "wuhan-alternate", "yellow-ball",
 })
 
+#: 标题「🎾<日期> <栏目>｜<选题>」里**最宽**的那个日期。日期是 `f"{月}.{日}"`，
+#: 10.10–12.31 比 9.27 宽一个半角（0.5 字位）——拿「今天」去量标题字位，等于只替
+#: 今天这个日期量：9 月里过得了的标题，同一条稿子 10 月重渲就超 20。所以测试和
+#: 默认口径一律按最宽的量（2026-09-27 对抗 review 指出来的：测试原来钉的 7.26 /
+#: 9.27 都是窄的那一档，`a-plus-wildcard` 在两位数的月份里是 20.5）。
+WIDEST_DATE_LABEL = "12.28"
+
+#: 按 `WIDEST_DATE_LABEL` 量、标题超 20 字位的**已发**稿子：{slug: 最宽日期下的字位}。
+#: ⚠️ **只许降不许升**（和 `HOOK_TOO_LONG` 同一个形状）：豁免的是「装闸之前已经
+#: 按窄日期发出去了」，不是「这条标题合格」——十月以后重渲它，小红书照样截断；
+#: 真要重渲先把选题标题改短，改完从这儿删掉。
+TITLE_TOO_WIDE = {
+    "a-plus-wildcard": 20.5,   # 🎾12.28 网球有故事｜ATP 500 有第 4 张外卡（9/21 已推）
+}
+
 #: 旁白里已知会被切词器念错的串，已经发出去的那几处。只许减不许加。
 FAKE_WORDS_LEGACY = frozenset({
     # 挑战赛那条第 ④ 屏：「规则书写着挑战赛必须给正赛球员提供免费房间」。
@@ -200,7 +215,7 @@ class Deck:
         return [s for s in self.segments if s.kind != "cover"]
 
 
-def load_deck(slug: str, date_label: str = "9.27") -> Deck:
+def load_deck(slug: str, date_label: str = WIDEST_DATE_LABEL) -> Deck:
     story = find_story_by_slug(slug)
     if story is None:
         raise PreflightError(f"找不到 slug 为「{slug}」的选题（tournament_story 里没注册）")
@@ -244,9 +259,12 @@ def copy_title_problems(deck: Deck) -> list[str]:
         problems.append(f"{deck.slug} 标题格式不对：{head}")
     if deck.story.title not in head:
         problems.append(f"{deck.slug} 标题里没有选题「{deck.story.title}」：{head}")
-    if xhs_title_len(head) > 20:
+    width, limit = xhs_title_len(head), TITLE_TOO_WIDE.get(deck.slug, 20)
+    if width > limit:
         problems.append(
-            f"{deck.slug} 标题 {xhs_title_len(head):g} 字位，超小红书上限 20：{head}")
+            f"{deck.slug} 标题 {width:g} 字位，超小红书上限 "
+            + (f"20（存量豁免只许降不许升，登记的是 {limit:g}）" if limit != 20 else "20")
+            + f"：{head}")
     return problems
 
 
@@ -464,8 +482,18 @@ def claim_problems(deck: Deck) -> list[str]:
 
 
 def dated_word_problems(deck: Deck) -> list[str]:
-    """常青栏目不许把一件事钉在发布那一天（「北京时间今天」「今晚」「刚刚结束」）。"""
-    if E.column_of(deck.slug).perishable or deck.slug in DATED_WORDS_LEGACY:
+    """常青栏目不许把一件事钉在发布那一天（「北京时间今天」「今晚」「刚刚结束」）。
+
+    ⚠️ 栏目认不出（没登记、或者撤掉了）时 `column_of` 会抛——这一项就**判不了**是
+    常青还是易逝，报成一行 ✗，而不是让整份预检炸成一段 traceback（「判不了」不是
+    「没问题」，也不该把其余十几项的报告一起吞掉）。真因在「栏目」那一项里。
+    """
+    try:
+        perishable = E.column_of(deck.slug).perishable
+    except KeyError as exc:
+        why = str(exc).strip("'\"")
+        return [f"{deck.slug}：栏目认不出（{why}），判不了是不是常青栏目——先修「栏目」那一项"]
+    if perishable or deck.slug in DATED_WORDS_LEGACY:
         return []
     if str(deck.opening.get("dated_why", "")).strip():
         return []
@@ -503,7 +531,7 @@ CHECKS: tuple[tuple[str, Callable[[Deck], list[str]]], ...] = (
 )
 
 
-def preflight(slug: str, date_label: str = "9.27") -> list[tuple[str, list[str]]]:
+def preflight(slug: str, date_label: str = WIDEST_DATE_LABEL) -> list[tuple[str, list[str]]]:
     """每一项的 (名字, 问题列表)——**合格的也列出来**，只在出错时出声的检查证明不了它看过。"""
     deck = load_deck(slug, date_label)
     return [(name, check(deck)) for name, check in CHECKS]

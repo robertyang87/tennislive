@@ -7,6 +7,7 @@ Flashscore 的逐盘数据固定是 home/away 顺序；封面和顶栏固定是�
 from __future__ import annotations
 
 import re
+from pathlib import Path
 
 from spec_wording import outward_deep
 
@@ -765,13 +766,16 @@ def _utc(text):
     return when.astimezone(timezone.utc)
 
 
+#: 竖版短片的发布账本。模块级常量是为了测试能把它指到 tmp_path——
+#: **判据测试一律不许读真账本**：真账本每推一条就变一次，读它的测试会跟着日历红。
+REEL_LEDGER_DIR = Path(__file__).resolve().parents[1] / "data" / "reel_publish_ledger"
+
+
 def newest_sent_at(slug: str, ledger_dir=None):
     """发布账本里这条片子**最近一次 sent** 的时刻；没发过返回 None。"""
     import json as _json
-    from pathlib import Path as _Path
 
-    base = _Path(ledger_dir) if ledger_dir else (
-        _Path(__file__).resolve().parents[1] / "data" / "reel_publish_ledger")
+    base = Path(ledger_dir) if ledger_dir else REEL_LEDGER_DIR
     path = base / f"{slug}.json"
     try:
         attempts = _json.loads(path.read_text(encoding="utf-8")).get("attempts") or []
@@ -783,7 +787,14 @@ def newest_sent_at(slug: str, ledger_dir=None):
     return max(sent) if sent else None
 
 
-def waiting_fact_problem(spec: dict, *, ledger_dir=None) -> str | None:
+def _waiting_hits(spec: dict) -> str:
+    """注解里「这件事还没定」的那几处，拼成一句；没有返回空串。"""
+    hits = sorted({(path, m.group(0)) for path, text in annotation_strings(spec)
+                   for m in WAITING_FACT_RE.finditer(text)})
+    return "、".join(f"{path}「{word}」" for path, word in hits[:4])
+
+
+def waiting_fact_problem(spec: dict) -> str | None:
     """注解里写了「正式名单要等抽签日」这类话 → 每次渲之前都要回头查，并把查的时刻记下来。
 
     来路：`davis-cup-china-first-world-group-1`（895dad7b）。第一版 `_facts` 里明明写着
@@ -791,36 +802,57 @@ def waiting_fact_problem(spec: dict, *, ledger_dir=None) -> str | None:
     中国那半边；第二版重发时 ITF 正式名单已经公布了 58 分钟，一次都没回头看。
     **写了要等、没回头查**——CLAUDE.md「前瞻类事实要在它定下来之后再核一次」那节。
 
-    认领口：spec 顶层 `_rechecked_at`（带时区的 ISO 时刻，如 `2026-09-18T06:50Z`），
-    而且必须**晚于**发布账本里最近一次 `sent`——重发之前没回头查，这个数就过不去。
+    认领口：spec 顶层 `_rechecked_at`（带时区的 ISO 时刻，如 `2026-09-18T06:50Z`）。
     闸替人查不了名单，它逼的是「查过」这件事留下一个可比的时刻。
+
+    ⚠️ **这一半是静态的**：只看 spec 自己，不读账本、不看时钟——全库扫描用的就是它。
+    「这个时刻要晚于上一次推送」那一半在 `waiting_fact_stale_problem`，**只在渲染入口跑**
+    （见那个函数的 docstring：为什么它不能进全库扫描）。
     """
     slug = str(spec.get("slug") or "").strip()
     if slug in LEGACY_WAITING_FACT:
         return None
-    hits = sorted({(path, m.group(0)) for path, text in annotation_strings(spec)
-                   for m in WAITING_FACT_RE.finditer(text)})
-    if not hits:
+    said = _waiting_hits(spec)
+    if not said:
         return None
-    said = "、".join(f"{path}「{word}」" for path, word in hits[:4])
+    raw = spec.get("_rechecked_at")
+    if _utc(raw) is not None:
+        return None
+    return (
+        f"注解里写着这件事还没定：{said}。\n"
+        "每次渲之前都要回头查它定了没——定了就按它改旁白和文案，没定就仍按「领衔」这类"
+        "不押具体阵容的写法；查完在 spec 顶层写 `_rechecked_at`（带时区，如 "
+        "\"2026-09-18T06:50Z\"）。"
+        + (f"现在写的是 {raw!r}，认不出时刻。" if raw else "")
+        + "\n来路：davis-cup-china 前两版写着「正式名单要等抽签日」，却把 2 月的名单"
+        "当成这一周的阵容推了两次（CLAUDE.md「前瞻类事实要在它定下来之后再核一次」）。")
+
+
+def waiting_fact_stale_problem(spec: dict, *, ledger_dir=None) -> str | None:
+    """`_rechecked_at` 不晚于账本里最近一次 `sent` → **重发之前没回头查**。
+
+    ⚠️⚠️ **只在渲染入口跑（`validate_spec` / `--dry-run`），不许进全库扫描。**
+    回头查永远排在渲之前、推送永远排在渲之后，所以一条**做对了**的片子，推送一落账
+    `_rechecked_at` 就必然早于那一笔 `sent`——放进全库扫描，它会在自己推送的那一刻
+    变红：auto-push 那个提交写账本、在 main 上跑 CI，main 红，之后每个 PR 都红
+    （2026-09-27 对抗 review 复现过：`_rechecked_at` 05:00Z、`sent` 05:40Z）。
+    这一半问的是「**这一趟**重渲之前查过没有」，只有正要渲的那一刻问得出意义。
+    """
+    slug = str(spec.get("slug") or "").strip()
+    if slug in LEGACY_WAITING_FACT:
+        return None
+    said = _waiting_hits(spec)
     raw = spec.get("_rechecked_at")
     when = _utc(raw)
-    if when is None:
-        return (
-            f"注解里写着这件事还没定：{said}。\n"
-            "每次渲之前都要回头查它定了没——定了就按它改旁白和文案，没定就仍按「领衔」这类"
-            "不押具体阵容的写法；查完在 spec 顶层写 `_rechecked_at`（带时区，如 "
-            "\"2026-09-18T06:50Z\"）。"
-            + (f"现在写的是 {raw!r}，认不出时刻。" if raw else "")
-            + "\n来路：davis-cup-china 前两版写着「正式名单要等抽签日」，却把 2 月的名单"
-            "当成这一周的阵容推了两次（CLAUDE.md「前瞻类事实要在它定下来之后再核一次」）。")
+    if not said or when is None:
+        return None       # 没写「要等」不归这条管；没写时刻归静态那一半报
     sent = newest_sent_at(slug, ledger_dir)
-    if sent is not None and when <= sent:
-        return (
-            f"注解里写着这件事还没定（{said}），而 `_rechecked_at` = {raw} "
-            f"不晚于上一次推送（{sent:%Y-%m-%dT%H:%MZ}）——**重发之前没回头查**。\n"
-            "查一遍那件事现在定了没，按查到的改，再把 `_rechecked_at` 更新成这次查的时刻。")
-    return None
+    if sent is None or when > sent:
+        return None
+    return (
+        f"注解里写着这件事还没定（{said}），而 `_rechecked_at` = {raw} "
+        f"不晚于上一次推送（{sent:%Y-%m-%dT%H:%MZ}）——**重发之前没回头查**。\n"
+        "查一遍那件事现在定了没，按查到的改，再把 `_rechecked_at` 更新成这次查的时刻。")
 
 
 #: 「网球有故事」是常青栏目，**相对时间词一过那一天就是错的**。只认把某件事钉在
@@ -881,7 +913,30 @@ def dated_words_problem(spec: dict) -> str | None:
         "来路：qualifier-ceiling 第 ① 屏「北京时间今天，美网正赛开打」（2756cec3）。")
 
 
-def time_sensitive_problems(spec: dict, *, ledger_dir=None) -> list[str]:
-    """上面两条，按 `validate_spec` 的口径一起跑。合格返回空列表。"""
-    return [p for p in (waiting_fact_problem(spec, ledger_dir=ledger_dir),
-                        dated_words_problem(spec)) if p]
+def is_auto_spec(spec: dict) -> bool:
+    """自动链产的 spec（`_production.status == ready_for_render`）——那一头没人写认领。"""
+    return (spec.get("_production") or {}).get("status") == "ready_for_render"
+
+
+def time_sensitive_problems(spec: dict, *, at_render: bool = True,
+                            ledger_dir=None) -> list[str]:
+    """上面几条一起跑。合格返回空列表。
+
+    `at_render=True` 是渲染入口的口径（`validate_spec`）：外加读账本的那一半
+    （`waiting_fact_stale_problem`）。`at_render=False` 是全库扫描的口径：**不读账本、
+    不看时钟**，只查 spec 自己——为什么两个口径不能合成一个，见
+    `waiting_fact_stale_problem` 的 docstring。
+    """
+    found = [waiting_fact_problem(spec)]
+    if at_render:
+        found.append(waiting_fact_stale_problem(spec, ledger_dir=ledger_dir))
+    found.append(dated_words_problem(spec))
+    return [p for p in found if p]
+
+
+def time_sensitive_gate(spec: dict, *, at_render: bool = True,
+                        ledger_dir=None) -> tuple[list[str], list[str]]:
+    """(拦的, 只报的)。手写 spec 硬拦；自动 spec 只报不拦——没人写认领，做成硬的会把
+    自动链卡成「今天没有候选」。`validate_spec` 和全库扫描共用这一刀，别各写一份。"""
+    problems = time_sensitive_problems(spec, at_render=at_render, ledger_dir=ledger_dir)
+    return ([], problems) if is_auto_spec(spec) else (problems, [])
