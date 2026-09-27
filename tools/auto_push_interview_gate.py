@@ -33,6 +33,9 @@
 6. 一趟**最多一条**。常规主路按 slug dispatch，因此不同比赛由不同 run 并行；
    兜底 push 事件若一次混入多条则一条都不发，避免批量误发。
    批量自动发微信，错一次就是错一片
+7. **封面扫描记录对账**（2026-09-27）：提交过 `cover_candidates.json` 的话，
+   `cover.frame_at` 必须是其中过闸的那一格——见 `cover_scan_gate`。没有记录
+   不对账（存量一份都没有）
 
 **共用的基础判据是 import 来的。** `Skip` / `tracked` / 旧 `MARKER` 从
 `auto_push_gate` 直接拿；采访的 `record` 故意独立，因为发布历史必须放在
@@ -382,6 +385,38 @@ def _spec_paths(repo: Path, slug: str) -> tuple[Path, Path]:
             repo / SPEC_DIR / f"{slug}.xhs.txt")
 
 
+def cover_scan_gate(repo: Path, slug: str, outdir: Path) -> None:
+    """已提交的封面扫描记录要和当前 `cover.frame_at` 对得上，否则 ``Skip``。
+
+    来路（2026-09-27 返工审计）：推出去的 spec 里写着「没看过这一帧」而
+    `push.auto` 是 true；封面挑帧对着 160×90 的缩略图墙，一格里眼睛两个像素。
+    `mode=cover` 现在逐格扫一段、落 `cover_candidates.json`＋候选墙——这里
+    要的是**推出去的那一帧就是扫过、过了闸、上过候选墙的那一格**。
+
+    这是**机器记录**，不是人工批准：记录本身由扫描写，判据在
+    `interview_cover_scan.record_problem`（render 的封面前置那一步调同一个
+    函数，所以通常在编码之前就红了，走不到这儿）。
+
+    **不拦存量**：没有这份记录就不对账——这道闸落地时全库 0 份记录，已发的
+    一条都不会因为它回头被拦；取景变过的旧记录也管不到当前海报，不拦。
+    ⚠️ 查 `tracked()` 不查 `is_file()`：这一步排在稀疏检出加回产物之前，
+    理由同下面海报那道闸。
+    """
+    from interview_cover_scan import RECORD_NAME, record_problem  # noqa: PLC0415
+
+    path = outdir / RECORD_NAME
+    if not tracked(repo, path):
+        return
+    try:
+        record = json.loads(_tracked_bytes(repo, path))
+    except (ValueError, UnicodeDecodeError):
+        record = {"method": "unreadable"}
+    spec_path, _ = _spec_paths(repo, slug)
+    spec = json.loads(spec_path.read_text(encoding="utf-8"))
+    if problem := record_problem(record, spec):
+        raise Skip(f"{slug}：{problem}")
+
+
 def wants_auto_push(repo: Path, slug: str, outdir: Path) -> None:
     """发布门禁，过不了就 ``Skip``（带理由）。"""
     # **render.json 必须还在仓库里。** 工作流那头已经用 --diff-filter=AM 滤掉了
@@ -447,6 +482,8 @@ def wants_auto_push(repo: Path, slug: str, outdir: Path) -> None:
                        f"平台接收凭据（{when}），状态不明，不自动重发")
         print(f"[重渲发布] {slug}：旧 pushed.json 绑定 {marker_hash[:12]}…，"
               f"当前成片是 {film_hash[:12]}…；保留旧账，允许新成片进入发布。")
+
+    cover_scan_gate(repo, slug, outdir)
 
     # **海报这道闸在这条线上现在会拦下所有存量，那是对的，不是 bug。**
     #

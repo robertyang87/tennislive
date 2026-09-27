@@ -687,6 +687,26 @@ ASR 比全段，`check_human_quote` 拿赛事官网的人工引语比那几句�
 `probe_gap_speech` **不下第二个模型、不切音频**——它摊的是 `verify_transcript`
 已经跑完的那份结果，这几秒的答案本来就在里面。
 
+**⭐ 2026-09-27：第二份 ASR 和空档 VAD 挪到了 `mode=subs`**，报告在 render 之前就提交。
+来路是返工审计：10 趟 render（41.7 runner-分钟）红在「两份转写对不上」「空档没销账」，
+每趟都是装完依赖、下完源片才知道（alcaraz-fritz 三趟、tien-cobolli 两趟）。现在：
+
+- `mode=subs` 切行照旧先提交（lines.json 一分多钟就落库，写中文等的是它），**提交之后**
+  再跑 `--stage verify`，`transcript_diff.md` / `caption_gaps.md` /
+  `gap_vad_attestation.json` / 过了的话 `verify_fingerprint.json` 第二次提交——
+  **先交报告再定颜色**：只报了分歧／空档（`VERIFY_FINDINGS_EXIT`＝3，人核之前的常态）
+  是 `::warning::` 收尾、run 绿着——红了会顶高 `pipeline_health` 的失败率、推告警；
+  下不动音轨、模型起不来这类工具毛病照样红。分歧和空档一次收齐一起报。
+  这一步要 ffmpeg（Brightcove HLS 的音轨），subs 那一档单独 `ensure_ffmpeg`
+- ⚠️ 这一步三到五分钟，concurrency 按 slug 分组：期间发同 slug 的 `cover`／`render`
+  会把它掐掉、报告丢掉——**同一个 slug 的几档串着发**（先 cover、绿了再 subs，
+  或者反过来），别叠在对方还在跑的时候；不同 slug 照样并行
+- `--stage verify` 不再要求 `zh` 已填（它比的是两份英文，指纹里本来就没有中文）
+- 空档闸挪成 `blocking_gaps`，`--stage verify` 和 `--stage render` 共用同一个函数：
+  subs 那一趟就按 render 的判据报出会红的键
+- render 照旧再验一遍；**指纹没变且 `transcript_verified: true` 才跳过**（老规矩，没放宽）。
+  所以 subs 报告看完、没改 `en_fixed` 就置上 `transcript_verified`，render 那 3~5 分钟就省了
+
 #### 但这道闸只是「让你看一眼」，不是「必须查实」
 
 账号所有者 2026-08-03（冠军版那条的两处空档）：「**没人说话很正常啊，可能是

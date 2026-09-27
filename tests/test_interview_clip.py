@@ -2172,14 +2172,20 @@ def test_每个mode都各干各的活():
     `subs` 是 2026-08-02 加的：沙箱连字幕都取不到了，切行只能搬到 runner 上。
     加之前只有 render 一条路，取个字幕要白装 Chromium + whisper + ffmpeg
     三分多钟，而且 `zh` 还空着的时候出片那步会空转，整趟红着结束。
+
+    2026-09-27 这张表按返工审计改过两处，**都是挪顺序，不是互相带着跑**：
+    subs 在切行提交之后多跑一步第二份 ASR（只要音轨，报告 render 之前就摊出来）；
+    render／cover 先出封面验视觉、再转写校验、再编码（封面红在编码之前）。
     """
     stage = {}                                  # mode -> 它跑到的那几个 --stage
-    for mode in ("subs", "render", "push"):
+    for mode in ("subs", "render", "cover", "push"):
         stage[mode] = [s.get("name") for s in _steps()
                        if _if_holds(s.get("if"), mode=mode)
                        and "--stage" in _step_run(s)]
-    assert stage["subs"] == ["取字幕切行"], stage["subs"]
-    assert stage["render"] == ["转写交叉校验", "剪 + 烧字幕"], stage["render"]
+    assert stage["subs"] == ["取字幕切行", "第二份 ASR 交叉校验并提交报告（subs）"], stage["subs"]
+    assert stage["render"] == ["出封面并验视觉（完全本地，排在转写和编码之前）",
+                               "转写交叉校验", "剪 + 烧字幕"], stage["render"]
+    assert stage["cover"] == ["出封面并验视觉（完全本地，排在转写和编码之前）"], stage["cover"]
     assert stage["push"] == [], stage["push"]
 
 
@@ -3727,7 +3733,16 @@ def test_缩略图墙只在取字幕那一趟出():
     assert render_branch > call, "render 那一趟不许再出一次缩略图墙"
 
 
-def test_缩略图墙两头都不许进仓库():
+def _workbench_sheets() -> list[str]:
+    """挑封面用的两张「工作台」：缩略图墙、候选墙。候选墙的文件名从扫描模块
+    本身拿（`SHEET_NAME`），别在这儿再写一遍——两处各写一遍必分叉。"""
+    from tools.interview_cover_scan import SHEET_NAME  # noqa: PLC0415
+
+    return ["storyboard.jpg", SHEET_NAME]
+
+
+@pytest.mark.parametrize("name", _workbench_sheets())
+def test_缩略图墙两头都不许进仓库(name):
     """缩略图墙是**挑封面用的草稿**，runner 和本地两头都要挡住。
 
     这条规矩原来只写在了 runner 那一半：「丢掉不进仓库的中间物」里有
@@ -3746,27 +3761,32 @@ def test_缩略图墙两头都不许进仓库():
 
     ⚠️ 顺带钉住**仓库里现在一张都没有**——防的是「规则加上了，可之前
     已经提交进去的那些还在」，那种情况下这条测试会假绿。
+
+    ⚠️ **2026-09-27 第二张墙**：封面候选墙 `cover_scan_sheet.jpg`（`--stage
+    cover-scan`，一张约 0.6 MB、每趟 mode=cover 一张）是同一种工作台——第一版
+    既没进 `.gitignore` 也没进清理，每趟 cover 都往仓库里塞一个新 blob。
+    它只走 artifact；进仓库的是几 KB 的 `cover_candidates.json`。
     """
     import subprocess  # noqa: PLC0415
 
-    probe = "output/interviews/__probe__/storyboard.jpg"
+    probe = f"output/interviews/__probe__/{name}"
     r = subprocess.run(["git", "check-ignore", "-q", probe],
                        cwd=ROOT, capture_output=True)
     assert r.returncode == 0, (
-        f".gitignore 没挡住 {probe}——本地 `--stage subs` 生成的缩略图墙"
+        f".gitignore 没挡住 {probe}——本地生成的这张工作台"
         "会被 `git add` 吃进仓库（一张就是六百多 KB）")
 
-    step = next((s for s in _steps() if "storyboard.jpg" in _step_run(s)), None)
+    step = next((s for s in _steps() if name in _step_run(s)), None)
     assert step is not None, (
-        "工作流里没有一步删 storyboard.jpg。**本地忽略了不等于 runner 上安全**："
+        f"工作流里没有一步删 {name}。**本地忽略了不等于 runner 上安全**："
         "runner 那边是 `git add <目录>`，走的是索引")
-    assert re.search(r"rm\s+-f\b[^\n]*storyboard\.jpg", _step_run(step)), (
-        f"步骤「{step.get('name')}」提到了 storyboard.jpg，但不是在删它")
+    assert re.search(rf"rm\s+-f\b[^\n]*{re.escape(name)}", _step_run(step)), (
+        f"步骤「{step.get('name')}」提到了 {name}，但不是在删它")
 
-    tracked = subprocess.run(["git", "ls-files", "output/**/storyboard.jpg"],
+    tracked = subprocess.run(["git", "ls-files", f"output/**/{name}"],
                              cwd=ROOT, capture_output=True, text=True).stdout.split()
     assert not tracked, (
-        f"仓库里已经躺着 {len(tracked)} 张缩略图墙：{tracked[:3]}。"
+        f"仓库里已经躺着 {len(tracked)} 张 {name}：{tracked[:3]}。"
         "加规则挡不住已经提交进去的——要 `git rm --cached` 一遍，"
         "否则这条测试对它们是绿的")
 
@@ -3791,8 +3811,10 @@ def test_只出海报那一档要够得着而且真的短():
     options = on["workflow_dispatch"]["inputs"]["mode"]["options"]
     assert "cover" in options, f"工作流的 mode 只有 {options}——CLI 加了也够不着"
 
-    step, = [s for s in _steps() if s.get("name") == "只出海报（不出片）"]
-    assert step.get("if") == "github.event.inputs.mode == 'cover'"
+    # 2026-09-27 起它和 render 的「封面前置」是**同一步**（同一份 `--stage cover`、
+    # 同一把像素闸）——按行为找：mode=cover 时成立、跑 `--stage cover` 的那一步。
+    step, = [s for s in _steps() if _if_holds(s.get("if"), mode="cover")
+             and "--stage cover " in _step_run(s) + " "]
     run = _step_run(step)
     assert "--stage cover" in run, "那一步没跑 `--stage cover`"
     # **短**的判据是它不碰这几样：碰了就说明有人把它写成了完整 render
@@ -3826,8 +3848,13 @@ def test_出海报那一档不许被出片的闸挡住():
     才能看一眼封面，而那正是这一档要省掉的那六分钟。
     """
     src = (ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8")
-    cover = src.split('if args.stage == "cover":')[1].split(
-        'if args.stage == "render":')[0]
+    # 按 AST 取 `if args.stage == "cover":` **那一个分支本身**。原来按文本切到
+    # 「下一个 render 分支」为止——2026-09-27 cover 挪到取字幕之前以后，中间夹着
+    # 切行/verify 那一大段，切出来的就不是 cover 那一档了。
+    main = next(n for n in ast.parse(src).body
+                if isinstance(n, ast.FunctionDef) and n.name == "main")
+    branch, = [n for n in main.body if _stage_guard(n) == "cover"]
+    cover = ast.get_source_segment(src, branch)
     # ⚠️ **先去掉整行注释再扫。** 这一档的注释里正写着「不设
     # `transcript_verified` 那几道闸」——连注释一起扫，「把理由记下来」会被
     # 判成「又挂上了那道闸」。写这条测试时当场被自己的注释误伤了一次，
