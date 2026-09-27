@@ -1830,6 +1830,7 @@ __SCRIM__
         # 和下格的上半（那只搭在眉骨上的手，正是这条片子的落点）一起盖住。
         # 追加在最后，同特异性下后写的赢。
         + (".storycopy{top:auto;bottom:96px;transform:none;gap:26px}"
+           ".storytitle{width:100%;text-align:center}"
            if above else "")
         # ⭐ 账号所有者 2026-09-05：「封面钩子文案可以下移，不遮住主体」。
         # 信箱式（`fit: "width"`）且没有比分板时，钩子让到照片下边缘之外——
