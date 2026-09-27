@@ -10,6 +10,12 @@ name: match-reel
 #                「先验产物再推」意味着推是**另一次**动作；没有这个模式就得为了
 #                发一条消息把整条片子重渲一遍（一轮十五分钟：装中文字体 4 分 20、
 #                渲片 7 分半），而重渲出来的那一版还得再验一次。
+#   mode=reattest **spec 渲完又改了、但渲染输入一处没动**（只改了 `_why` 这类注解
+#                或 `push.*`）：不下源片、不渲，拿 spec 按渲染那一刻的口径重算、
+#                逐字节比 `render_inputs.json`，Release 上那份成片现算 sha256，
+#                全对得上才重出一张绑定新 spec 的质检凭证（账号所有者 2026-09-27
+#                选的「重核对，不重渲」）。动了渲染输入就当场红、让你走 render。
+#                本地先问一句 `python tools/reattest_check.py --slug <slug>`
 #   mode=cookies 什么都不产，只验 YouTube 还下不下得动（cookie 会过期）
 #
 # **为什么不在本地跑**：沙箱那台机器的 IP 被 YouTube 挡了——yt-dlp 拿得到格式表，
@@ -24,7 +30,7 @@ on:
   workflow_dispatch:
     inputs:
       mode:
-        description: "probe=下载并出缩略图墙；cover=只出封面海报；narration=只查旁白装不装得下；render=按 spec 出成片；push=只推已落库的成片；cookies=只验 YouTube 还能不能下"
+        description: "probe=下载并出缩略图墙；cover=只出封面海报；narration=只查旁白装不装得下；render=按 spec 出成片；reattest=spec 只改了注解/推送字段时重核对质检凭证、不重渲；push=只推已落库的成片；cookies=只验 YouTube 还能不能下"
         required: true
         type: choice
         # **`cover` 是给返工用的。** 封面是全流程返工最多的那一屏，而
@@ -32,7 +38,9 @@ on:
         # 出海报，省掉分段编码 + TTS + 成片那四五分钟。实测整趟 3 分 19 秒。
         # ⚠️ `--cover-only` 的 CLI 开关先落地了而这一行没跟着改，于是它在唯一
         # 能用的那台机器上够不着（源片只在 runner 上活过几分钟）。
-        options: [probe, cover, narration, render, push, cookies]
+        # **`reattest` 是加在这儿的选项，不是新输入**——表单 25 项已满（见
+        # `apply_tts_backend` 的 docstring）。它什么都不下、不渲，见文件头那段。
+        options: [probe, cover, narration, render, reattest, push, cookies]
         default: probe
       slug:
         description: "片子 slug，决定目录名与 spec 文件名"
@@ -171,7 +179,10 @@ concurrency:
   # probe 最后一跳会自动派发同 slug 的 render。两者若共用旧的 slug-only 组，
   # render 一启动就会把尚未结束的 probe 取消，表现成“正式 spec 已落库但链路红”。
   # 同 mode 仍然只保留最新一趟；不同 mode 各写自己的产物阶段，可以顺序衔接。
-  group: ${{ github.event.inputs.mode == 'push' && 'match-reel-publish' || format('match-reel-{0}-{1}', github.event.inputs.slug, github.event.inputs.mode) }}
+  # ⚠️ **reattest 和 render 共用一组**：它核的是「上一趟 render 落下的那条链」，
+  # 两者同时跑的话，render 的 `--clobber` 会在它核完之后换掉 Release 上的成片，
+  # 而它的提交会把旧凭证重放回来。同组 + cancel-in-progress：后派的顶掉先派的。
+  group: ${{ github.event.inputs.mode == 'push' && 'match-reel-publish' || format('match-reel-{0}-{1}', github.event.inputs.slug, github.event.inputs.mode == 'reattest' && 'render' || github.event.inputs.mode) }}
   cancel-in-progress: ${{ github.event.inputs.mode != 'push' }}
 
 jobs:
@@ -352,6 +363,16 @@ jobs:
           # 活不活，不渲、不抠、不合语音——rembg 拖着 176 MB 模型的 onnxruntime、
           # opencv、playwright 全用不上。装全套只是把失败面铺大：那几个包里
           # 任何一个装不上，都会让一条**只是验 cookie**的 run 挂掉。
+          # **reattest 装得和 narration 差不多少**：它只跑 production_preflight、
+          # `--dry-run`（只读 spec 和 probe.json）和 reattest_check（纯标准库），
+          # 不下片、不渲、不合语音——rembg / opencv / playwright / yt-dlp / edge-tts
+          # 一个都用不上。numpy 留着：dry-run 的 probe 层有几处按需 import 它。
+          if [ "${{ github.event.inputs.mode }}" = "reattest" ]; then
+            pip install -q -e . numpy
+            python -c "import numpy, tennislive"
+            echo "reattest 模式：只装主依赖 + numpy，重核对那条路的 import 已验过"
+            exit 0
+          fi
           if [ "${{ github.event.inputs.mode }}" = "cookies" ]; then
             pip install -q -e . "yt-dlp[default]"
             node --version
@@ -405,7 +426,7 @@ jobs:
       # ⚠️ 只给要读 spec 的三档（render / cover / narration）——probe 那档
       # 常常还没有 spec（它自己就是来备料写草稿的），cookies / push 不读 spec。
       - name: 发布文案前置检查
-        if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover'
+        if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover' || github.event.inputs.mode == 'reattest'
         env:
           SLUG: ${{ github.event.inputs.slug }}
         run: python tools/production_preflight.py --spec "specs/reels/$SLUG.json" --column 赛场之上
@@ -446,10 +467,13 @@ jobs:
           key: face-models-buffalo_s-v0.7-17d6bb6dfcd3
 
       - name: dry-run — 先把 spec 的形状错拦在编码之前
+        # reattest 也要过：它替掉的是一趟 render，render 之前该红的闸一道都不能少
+        # （这一趟 spec 改过，新改的注解照样要满足那些认领闸）。
         if: >-
           github.event.inputs.mode == 'render'
           || github.event.inputs.mode == 'cover'
           || github.event.inputs.mode == 'narration'
+          || github.event.inputs.mode == 'reattest'
         timeout-minutes: 3
         run: |
           # tee 进 /tmp/render-findings.log：render 红了之后「判据回喂模型修一轮」
@@ -502,7 +526,7 @@ jobs:
       # 目录，先试一次零网络的本地安装，缓存没命中才回退到会摸网的老路。
       - name: 缓存 apt 包（ffmpeg + 字体，绕开镜像抽风）
         id: apt_cache
-        if: github.event.inputs.mode != 'push'
+        if: github.event.inputs.mode != 'push' && github.event.inputs.mode != 'reattest'
         uses: actions/cache/restore@v4
         with:
           path: |
@@ -536,7 +560,8 @@ jobs:
       - name: 装 ffmpeg
         # push 模式一帧都不碰：`push_reel.py` 那条路里 ffmpeg / ffprobe /
         # subprocess **一个都没出现**，装它白花半分钟。
-        if: github.event.inputs.mode != 'push'
+        # reattest 同理：它比的是 JSON 和字节，dry-run 也不碰 ffmpeg。
+        if: github.event.inputs.mode != 'push' && github.event.inputs.mode != 'reattest'
         timeout-minutes: 15
         run: |
           source tools/ci_apt_install.sh
@@ -751,7 +776,7 @@ jobs:
       # 恢复源片缓存对它是纯开销，还会在结束时把这份缓存重传一遍挤 10 GB 池子。
       - name: 算出源片缓存的键
         id: srckey
-        if: github.event.inputs.mode != 'push' && github.event.inputs.mode != 'narration' && github.event.inputs.mode != 'cookies'
+        if: github.event.inputs.mode != 'push' && github.event.inputs.mode != 'narration' && github.event.inputs.mode != 'cookies' && github.event.inputs.mode != 'reattest'
         env:
           URL_INPUT: ${{ github.event.inputs.url }}
           SLUG: ${{ github.event.inputs.slug }}
@@ -791,7 +816,7 @@ jobs:
           echo "hash=$(cat "$RUNNER_TEMP/srckey")" >> "$GITHUB_OUTPUT"
 
       - name: 缓存源片（同一条片子只下一次）
-        if: github.event.inputs.mode != 'push' && github.event.inputs.mode != 'narration' && github.event.inputs.mode != 'cookies'
+        if: github.event.inputs.mode != 'push' && github.event.inputs.mode != 'narration' && github.event.inputs.mode != 'cookies' && github.event.inputs.mode != 'reattest'
         uses: actions/cache@v4
         with:
           path: ~/.cache/tennislive-sources
@@ -833,7 +858,9 @@ jobs:
           # 同一个 slug 可能有多个日期目录（重渲过，比如 wong-brooksby 两次）
           # ——排序取最新的那个，和「查产物按最新那一份，别拿被顶替掉的当基准」
           # 一个道理。
-          if [ "${{ github.event.inputs.mode }}" = "push" ]; then
+          # **reattest 同理**：它核的是已经渲好的那一版，目录是渲的那天，不是今天。
+          if [ "${{ github.event.inputs.mode }}" = "push" ] \
+             || [ "${{ github.event.inputs.mode }}" = "reattest" ]; then
             MATCH=$(git ls-tree -r HEAD --name-only \
               | grep -E "^output/[0-9]{4}-[0-9]{2}-[0-9]{2}/reel/${SLUG}/render\.json$" \
               | sort | tail -1)
@@ -844,7 +871,7 @@ jobs:
             fi
             OUT_DIR=$(dirname "$MATCH")
             OUT_DATE=$(echo "$OUT_DIR" | sed -E 's#^output/([0-9-]+)/.*#\1#')
-            echo "[push] 按 slug 反查到 $OUT_DIR（这条片子渲的那天，不是今天）"
+            echo "[${{ github.event.inputs.mode }}] 按 slug 反查到 $OUT_DIR（这条片子渲的那天，不是今天）"
           else
             OUT_DATE=$(TZ=Asia/Shanghai date +%F)
             OUT_DIR="output/$OUT_DATE/reel/$SLUG"
@@ -922,6 +949,7 @@ jobs:
           github.event.inputs.mode != 'push'
           && github.event.inputs.mode != 'narration'
           && github.event.inputs.mode != 'cookies'
+          && github.event.inputs.mode != 'reattest'
         continue-on-error: true
         run: |
           pip install -q bgutil-ytdlp-pot-provider
@@ -1198,6 +1226,19 @@ jobs:
             --summary "$GITHUB_STEP_SUMMARY"
           ls -la "$OUTDIR"
 
+      # **重核对，不重渲**（账号所有者 2026-09-27，O1）。前面 production_preflight
+      # 和 --dry-run 已经把新 spec 过了一遍；这一步核旧凭证链、逐字节比渲染输入、
+      # 现下载 Release 成片算 sha256，全对得上才写新凭证。任何一处对不上就红，
+      # 报出是哪一处——那时该走的是 mode=render。判据 tests/test_reattest.py。
+      - name: reattest — 渲染输入没变就重出凭证，不重渲
+        if: github.event.inputs.mode == 'reattest'
+        run: |
+          python tools/reattest_check.py \
+            --slug "${{ github.event.inputs.slug }}" \
+            --outdir "${{ steps.paths.outputs.outdir }}" \
+            --apply \
+            --run "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+
       # 复制页**必须写在提交之前**。它由 GitHub Pages 提供，没进仓库就是 404。
       # 之前这一句藏在推送那一步里，而推送排在提交之后——文件只活在 runner 的
       # 工作区，从来没被 commit 过：run 30342567879 推送步骤 success，
@@ -1210,7 +1251,7 @@ jobs:
       # HTTP 404，第 13 次才中，240 秒纯空转）。
       # 写它几乎不要钱（一个 HTML），却决定后面那趟推送要不要空等。
       - name: 写复制页（必须排在提交之前）
-        if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'push'
+        if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'push' || github.event.inputs.mode == 'reattest'
         run: |
           COPY="specs/reels/${{ github.event.inputs.slug }}.xhs.txt"
           test -f "$COPY" || { echo "::error::找不到 $COPY"; exit 1; }
@@ -1338,7 +1379,7 @@ jobs:
       # mp4 当成「漏网的大文件」`exit 1`，在写复制页之前就把唯一受支持的
       # 手动推送路径杀掉。清理是给 probe/cover/render 这几条**产中间物**的路的。
       - name: 丢掉不进仓库的中间物
-        if: github.event.inputs.mode != 'narration' && github.event.inputs.mode != 'cookies' && github.event.inputs.mode != 'push'
+        if: github.event.inputs.mode != 'narration' && github.event.inputs.mode != 'cookies' && github.event.inputs.mode != 'push' && github.event.inputs.mode != 'reattest'
         run: |
           OUTDIR="${{ steps.paths.outputs.outdir }}"
           # 源片 50MB 上下，逐帧图几百张——都不进仓库，只留缩略图墙和成片。
@@ -1429,7 +1470,7 @@ jobs:
       # 排查红了的 run 要的就是这些（第 209 秒那 1 秒数字静音正是从 artifact
       # 里的成片量出来的）。判据 `test_失败时的artifact不许带源片`。
       - name: 上传 artifact
-        if: always() && github.event.inputs.mode != 'narration' && github.event.inputs.mode != 'cookies'
+        if: always() && github.event.inputs.mode != 'narration' && github.event.inputs.mode != 'cookies' && github.event.inputs.mode != 'reattest'
         uses: actions/upload-artifact@v4
         with:
           name: reel-${{ github.event.inputs.slug }}-${{ github.run_number }}
@@ -1632,7 +1673,11 @@ jobs:
       # 不跑：它的成片还没进 main，等合并后的 auto-push-reel 接手。
       - name: render 质检落库后读取 spec 自动推送规则
         id: render_auto_gate
-        if: github.event.inputs.mode == 'render' && github.ref_name == 'main'
+        # reattest 落库之后和 render 一样：工作流自己的提交不触发 auto-push-reel，
+        # 所以 main 上要自己过一遍完整门禁（成片是同一份，账本 sent 过的照旧拦住）。
+        if: >-
+          (github.event.inputs.mode == 'render' || github.event.inputs.mode == 'reattest')
+          && github.ref_name == 'main'
         run: |
           # 表单勾了「强制推送」＝人把**意图**说出口了，交给门禁去放宽那一道
           # （spec 没写 push.auto），**不是**跳过门禁。见下一步的注释。
@@ -1658,7 +1703,7 @@ jobs:
       # 那一道，「已经发过了」「成片身份对不上」照旧拦得住。
       - name: render 质检落库后自动派发微信推送
         if: >-
-          github.event.inputs.mode == 'render' &&
+          (github.event.inputs.mode == 'render' || github.event.inputs.mode == 'reattest') &&
           steps.render_auto_gate.outputs.found == 'true'
         env:
           GH_TOKEN: ${{ github.token }}

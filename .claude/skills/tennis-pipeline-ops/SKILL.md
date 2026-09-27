@@ -97,6 +97,50 @@ tools/auto_push_gate.py`。
 只有 0.7~1.1 / 255、PSNR 41.7~44.6 dB，是 x264 重编码的量化噪声，不是内容变了）。
 所以**别拿「帧哈希不一样」去判「片子变了」**，要量差的量级。
 
+#### ⭐⭐ 2026-09-27 账号所有者选了「重核对，不重渲」：`match-reel mode=reattest`
+
+上面「所以重渲」那句**对竖版短片那条线作废了一半**。O1（质检指纹管到哪儿）三个方向
+摆出来，账号所有者选的是 **c「重核对，不重渲」**——不是 b「凭证的哈希里摘掉注解」
+（那条要证明渲染器从不读被排除的键，没人证得了），也不是 a「照旧重渲、只加个闸」。
+
+来路是量出来的账：**五趟 7~10 分钟的重渲，成片一个像素都没变**——
+`eala-jovic` 85b94e74（`_why`/`_no_repeat` 段号交叉引用）、`mensik-tien` d338e77d
+（`stats._winners_ue_why`）、`wong-paul` d5bbc48c（`_facts` 里一个分钟数）、
+`medvedev-damm` e15e73e5（`push._no_auto_why` → `push.auto`）；`gauff-jovic` 80bbdd1a
+推送之后改了两段 `_score_inset_why`，链从此断着。（`zheng-liutova` 93df2572 是采访线，
+同一个形状，**采访线这次没做**，那边照旧重渲。）
+
+**机制**（`tools/render_inputs.py` / `tools/reattest_check.py`）：
+
+| 什么时候 | 做什么 |
+|---|---|
+| 渲染刚结束（`build_match_reel.main`） | 写 `render_inputs.json`：spec 的**渲染投影**（去掉注解和 `push` 块）、引用素材的字节 sha、落下的产物（`subtitles.ass` / `topbar.ass` / `poster.jpg` / `stat_card.jpg` / `scoreboard_qc.json`）、成片 sha。`render.json` 和 L2 凭证都钉它的 sha |
+| spec 改完、派之前（本地） | `python tools/reattest_check.py --slug <slug>`：0 ＝ 派 `mode=reattest` 就够；1 ＝ 动了渲染输入，走 `mode=render`；2 ＝ 判不了（没有清单的老片子 / 链本身对不上），也走 render |
+| runner 上 `mode=reattest` | 照旧先跑 `production_preflight` 和 `--dry-run`；再核旧凭证链、逐字节比投影/认领/素材/产物、**现下载 Release 成片算 sha256**；全对才写一张绑定新 spec 字节、指着同一份成片的新凭证，提交。不下源片、不装 ffmpeg/Chromium，和 render 同一个并发组 |
+
+「投影里去掉哪些」**不是靠记的**：`tests/test_reattest.py::test_渲染路径读到的注解键都要归类`
+从渲染和质检入口顺着 import 走一遍，每一处 `_` 键的读取都要在
+`render_inputs.RENDER_ANNOTATIONS`（进成片：`_column` 管字幕下锚、`_production.event`
+挑比分板那一套）或 `GATE_ANNOTATIONS`（只进闸）里认领，`push` 只许在措辞闸/推送元数据
+那几个函数里读。**以后在渲染路径上新读一个 `_` 键，那条测试当场红**，逼着回答
+「它进不进成片」。只进闸的注解**值**不进指纹（dry-run 重跑那些闸），但渲染那一刻
+非空的必须仍然非空——`build_cover` 的 `_layout_why` 这类认领只在编码里查，删掉就等于绕过。
+
+**一个字都没松的**（「发出去的必须和质检过的是同一份」）：
+
+- `auto_push_gate.validate_qc` 原来那几道全在（spec 字节、字幕、成片 hash、Release 字节），
+  **还多了一道**：凭证带 `reattest` 的，门禁自己拿当前 spec 重算投影和认领再比一次，不信
+  runner 那一步的一面之词
+- **发布账本按成片 hash 记**，重核对之后还是同一份成片——已经 `sent` 的照样拦住。
+  「没有真改动就不该有新消息」（CLAUDE.md 9/22 那节），重核对**不是**重推的门路
+- 同一个路径换了一张图（O4 自动换图的形状）、动了旁白/窗口/钩子/`_column`、产物被换过、
+  Release 被别的一趟 `--clobber` 过——**一律判 render**
+
+⚠️ 所以上面那句「注解要在发 `mode=render` 之前改完」仍然是**最便宜**的做法（一秒都不花）；
+重核对是**改晚了**时的出路：一趟只装主依赖、跑 dry-run、拉一份成片算 sha256 的 runner，
+而不是 7~10 分钟的重渲（2026-09-27 落地时**还没在 runner 上量过实际耗时**，第一趟跑完补在这儿）。
+⚠️ 2026-09-27 之前渲的片子没有清单，重核对判不了，照旧重渲。
+
 #### ⭐⭐ 判据的扫描面，往往比规矩的适用面窄——#726 那条当天就撞上了
 
 同一天 #726 给「赛场之上」立了一条：**小红书正文首行必须出现球员名字**。理由是

@@ -11,7 +11,9 @@ run 30755226229）。43 秒不值得优化，真正的成本是**人的往返**�
 
 1. **路径形状**必须是 `output/<日期>/reel/<slug>/render.json`
 2. **L2 不可变凭证**必须与当前 spec、烧片字幕、成片 hash/bytes 以及 Release
-   文件大小完全一致；`render.json` 只是流程信号，不能冒充“质检通过”
+   文件大小完全一致；`render.json` 只是流程信号，不能冒充“质检通过”。
+   `mode=reattest` 重出的凭证（2026-09-27）另外复核渲染输入清单和渲染投影，
+   见 `_validate_render_inputs`
 3. spec 里必须显式写 `"push": {"auto": true}` ——**默认关**，
    和 `mixed_fps` / `silent_source` 一个形状：认领这一步把「想清楚了」和
    「凑合一下」分开。**这是六道里唯一一道 `--forced` 放得宽的**（它问的是
@@ -155,7 +157,50 @@ def validate_qc(repo: Path, slug: str, outdir: Path) -> str:
         raise Skip(f"{slug}：Release 文件大小与 QC 成片不一致")
     if not render.get("video_url"):
         raise Skip(f"{slug}：render.json 没有 Release video_url")
+    _validate_render_inputs(repo, slug, outdir, qc, spec_path)
     return film_hash
+
+
+def _validate_render_inputs(repo: Path, slug: str, outdir: Path, qc: dict,
+                            spec_path: Path) -> None:
+    """凭证钉着渲染输入清单时，清单本身也要对得上；重核对过的凭证**再核一遍**。
+
+    账号所有者 2026-09-27 选了「重核对，不重渲」（`match-reel mode=reattest`，
+    `tools/reattest_check.py`）：spec 渲完之后只改注解/推送字段时，不重渲，
+    重出一张绑定新 spec 字节、指着同一份成片的凭证。**上面那几道一道都没松**
+    （spec / 字幕 / 成片 hash / Release 字节照旧逐一比），这里只**加**：
+
+    - 凭证写了 `render_inputs_sha256`，仓库里那份 `render_inputs.json` 就必须
+      是它、而且描述的是同一份成片
+    - 凭证带 `reattest`（重核对出的），就不信它一面之词：拿当前 spec 按同一个
+      口径重算渲染投影和认领注解，和清单逐字节比——runner 那一步算错了、或者
+      有人手搓了一张凭证，在发微信之前这里再拦一次。素材字节这一半这里核不了
+      （这条工作流稀疏检出，不拉 assets/），它由 runner 那一步现算
+    """
+    digest = qc.get("render_inputs_sha256")
+    if qc.get("reattest") and not digest:
+        raise Skip(f"{slug}：重核对凭证没有钉住渲染输入清单，不认")
+    if not digest:
+        return
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    import render_inputs  # noqa: PLC0415
+
+    manifest_path = outdir / render_inputs.MANIFEST_NAME
+    if not tracked(repo, manifest_path):
+        raise Skip(f"{slug}：凭证钉着 {render_inputs.MANIFEST_NAME}，而它不在仓库里")
+    manifest_bytes = _tracked_bytes(repo, manifest_path)
+    if _sha256_bytes(manifest_bytes) != digest:
+        raise Skip(f"{slug}：{render_inputs.MANIFEST_NAME} 在质检后变过")
+    try:
+        manifest = json.loads(manifest_bytes)
+    except (ValueError, UnicodeDecodeError) as exc:
+        raise Skip(f"{slug}：{render_inputs.MANIFEST_NAME} 不是有效 JSON") from exc
+    if manifest.get("film_sha256") != qc.get("film_sha256"):
+        raise Skip(f"{slug}：渲染输入清单描述的不是凭证里那份成片")
+    if qc.get("reattest"):
+        problems = render_inputs.spec_problems(spec_path.read_bytes(), manifest)
+        if problems:
+            raise Skip(f"{slug}：重核对凭证不成立——" + "；".join(problems[:3]))
 
 
 def wants_auto_push(repo: Path, slug: str, outdir: Path,

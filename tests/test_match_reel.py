@@ -6258,11 +6258,12 @@ def test_dry_run闸在runner上排在重准备之前且拉回probe产物():
     text = WORKFLOW.read_text(encoding="utf-8")
     gate = _step_block("dry-run — 先把 spec 的形状错拦在编码之前", text)
 
-    # ① == 白名单，恰好三档
+    # ① == 白名单，恰好读 spec 的那几档。2026-09-27 加了 reattest（「重核对，不重渲」）：
+    #    它替掉的是一趟 render，render 之前该红的闸一道都不能少
     head = gate.split("run:", 1)[0]
     allowed = set(re.findall(r"inputs\.mode\s*==\s*'([a-z-]+)'", head))
-    assert allowed == {"render", "cover", "narration"}, (
-        f"dry-run 闸放行的是 {sorted(allowed)}，该恰好是 render/cover/narration")
+    assert allowed == {"render", "cover", "narration", "reattest"}, (
+        f"dry-run 闸放行的是 {sorted(allowed)}，该恰好是 render/cover/narration/reattest")
     assert not _excluded_modes(gate), "该用 == 白名单，不是 != 黑名单"
 
     # ② 真调 --dry-run；probe 产物按 slug 拉回，查不到要出声
