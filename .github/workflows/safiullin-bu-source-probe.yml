@@ -27,8 +27,23 @@ jobs:
           python -c "import cv2, numpy, requests"
           command -v ffmpeg
           node --version
+      - name: Use existing authorized YouTube credentials
+        id: cookies
+        env:
+          YT_COOKIES_TXT: ${{ secrets.YT_COOKIES_TXT }}
+        run: |
+          if [ -z "$YT_COOKIES_TXT" ]; then
+            echo "::error::Existing YouTube credentials are not configured"
+            exit 1
+          fi
+          umask 077
+          printf '%s' "$YT_COOKIES_TXT" > "$RUNNER_TEMP/yt-cookies.txt"
+          echo "path=$RUNNER_TEMP/yt-cookies.txt" >> "$GITHUB_OUTPUT"
       - name: Download official match and produce evidence
         timeout-minutes: 10
+        env:
+          YT_COOKIES: ${{ steps.cookies.outputs.path }}
+          PYTHONUNBUFFERED: '1'
         run: |
           python tools/build_match_reel.py probe --url "https://www.youtube.com/watch?v=-i-__KqEvXE" --outdir source-probe
           find source-probe -maxdepth 2 -type f -printf '%f %s bytes\n'
