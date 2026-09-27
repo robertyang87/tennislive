@@ -1,5 +1,5 @@
 {
-  "scoreboard_qc_sha256": "1a8f01e35e8f64d6aaa10a519f5fcf41d62af55a2d01fbe057c65160cf89b5a7",
+  "scoreboard_qc_sha256": "7bf7aa19bc9d891cae895a78f1d985f77aaaf371f764809460a0a4ed5b5be511",
   "cover_seconds": 1.2,
   "cover_narrated": false,
   "outro_seconds": 3.827,
@@ -129,18 +129,10 @@
           "faces": 0,
           "named_seen": 0,
           "other_seen": 0
-        },
-        {
-          "segment": 9,
-          "named": "萨菲乌林",
-          "frames": 2,
-          "faces": 0,
-          "named_seen": 0,
-          "other_seen": 0
         }
       ],
       "findings": [],
-      "frames": 10,
+      "frames": 8,
       "faces": 1
     }
   },
@@ -148,39 +140,39 @@
     "version": 2,
     "pipeline": "match-reel",
     "slug": "safiullin-bu-hangzhou-2026-qf",
-    "received_at": "2026-09-27T13:51:33Z",
-    "artifact_ready_at": "2026-09-27T13:56:08Z",
-    "elapsed_seconds": 275.449,
+    "received_at": "2026-09-27T14:04:27Z",
+    "artifact_ready_at": "2026-09-27T14:09:01Z",
+    "elapsed_seconds": 274.882,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "f2723e143cad05cba719479f0221a94e20f74a79a3a0911bac24c76826817e1f",
-    "spec_sha256": "8a422522f8cc3ab3f0f3b976b0fa3846df76008480b8a34febae8191f97809ee",
-    "run_id": "36323849002",
+    "film_sha256": "b76c6fb69c0eb1dd841c5766930bb3864ad78503f5c681dd1bf8567de5a3da0e",
+    "spec_sha256": "a85be406319a189bdc4bc08cdb7f370bd3ca1dfcf036748e8c90beff8f921c13",
+    "run_id": "36324598388",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-09-27T13:53:22Z",
-        "run_id": "36323849002"
+        "at": "2026-09-27T14:06:27Z",
+        "run_id": "36324598388"
       }
     ],
-    "render_seconds": 166.449,
-    "pre_render_seconds": 109.0
+    "render_seconds": 154.882,
+    "pre_render_seconds": 120.0
   },
-  "film_sha256": "f2723e143cad05cba719479f0221a94e20f74a79a3a0911bac24c76826817e1f",
-  "film_bytes": 56471448,
-  "qc_attestation_sha256": "b43c065b96d22b56b35be462dc6370f8cb7268c65e37a94028f7e26501ee2809",
+  "film_sha256": "b76c6fb69c0eb1dd841c5766930bb3864ad78503f5c681dd1bf8567de5a3da0e",
+  "film_bytes": 53792588,
+  "qc_attestation_sha256": "d83e3c36335832217adf9c3d2c4dc0eda2b2fab2b2f1cb8caf3a4b2c8902f201",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-09-27T13:53:22Z",
-      "run_id": "36323849002"
+      "at": "2026-09-27T14:06:27Z",
+      "run_id": "36324598388"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-09-27T13:56:09Z",
-      "run_id": "36323849002"
+      "at": "2026-09-27T14:09:02Z",
+      "run_id": "36324598388"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-safiullin-bu-hangzhou-2026-qf/safiullin-bu-hangzhou-2026-qf.mp4",
-  "video_bytes": 56471448
+  "video_bytes": 53792588
 }
