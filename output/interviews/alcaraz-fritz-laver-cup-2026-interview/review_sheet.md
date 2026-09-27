@@ -1,6 +1,6 @@
 # 转写核对表：alcaraz-fritz-laver-cup-2026-interview
 
-源片 https://www.youtube.com/watch?v=UdC3wvhTQpE　采访段 0.0–286.7 秒（共 114 行）
+源片 https://www.youtube.com/watch?v=UdC3wvhTQpE　采访段 0.0–283.5 秒（共 114 行）
 
 | # | 片内 | 跳到源片 | 英文 | 中文 | 判据 |
 |--:|:--|:--|:--|:--|:--|
