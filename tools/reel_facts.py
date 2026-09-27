@@ -6,6 +6,7 @@ Flashscore 的逐盘数据固定是 home/away 顺序；封面和顶栏固定是�
 
 from __future__ import annotations
 
+import os
 import re
 from pathlib import Path
 
@@ -768,7 +769,11 @@ def _utc(text):
 
 #: 竖版短片的发布账本。模块级常量是为了测试能把它指到 tmp_path——
 #: **判据测试一律不许读真账本**：真账本每推一条就变一次，读它的测试会跟着日历红。
-REEL_LEDGER_DIR = Path(__file__).resolve().parents[1] / "data" / "reel_publish_ledger"
+#: 测试起的子进程（`build_match_reel.py render --dry-run`）monkeypatch 够不着，
+#: 所以同时认 `TENNISLIVE_REEL_LEDGER_DIR`（`tests/conftest.py::_empty_reel_ledger`
+#: 两样都设）；生产上没人设它，走默认路径。
+REEL_LEDGER_DIR = Path(os.environ.get("TENNISLIVE_REEL_LEDGER_DIR")
+                       or Path(__file__).resolve().parents[1] / "data" / "reel_publish_ledger")
 
 
 def newest_sent_at(slug: str, ledger_dir=None):

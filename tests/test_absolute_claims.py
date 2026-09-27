@@ -10,6 +10,7 @@
 
 from __future__ import annotations
 
+import copy
 import json
 import sys
 from pathlib import Path
@@ -219,7 +220,8 @@ def test_采访线自动转正的模板文案过得了全称断言那道闸():
     成立的前提是**自动草稿不带文案、promote 只填模板**。模板里哪天写进「唯一一个」
     「N 次打进，N 次都」，自动 dispatch 的 render 会在前置检查上整批红，这里先红。
 
-    带着 push/takeaway 的草稿来自人工请求（人写得了 `_claims`），照旧硬拦。
+    带着 push/takeaway 的草稿只可能是**手改过的**（人写得了 `_claims`），照旧硬拦；
+    人工请求不经过草稿（`build_interview_request` 直接写正式 spec），见下一条。
     """
     import promote_interview_draft as PI  # noqa: PLC0415
 
@@ -244,10 +246,85 @@ def test_采访线自动转正的模板文案过得了全称断言那道闸():
     assert any("兹维列夫" in t for t in texts) and spec["takeaway"] and spec["cover"], texts
     assert A.interview_problem(spec, spec["slug"]) is None, A.claim_phrases(texts)
 
-    # 人工请求带进来的文案 promote 原样保留——写了断言没认领，照旧红
+    # 手补进草稿的文案 promote 原样保留——写了断言没认领，照旧红
     asked = {**draft, "push": {"lead": "他此前六次打进正赛，六次全部首轮出局。"}}
     spec = PI.promote(asked, ("兹维列夫", "阿特马内", "兹维列夫 vs 阿特马内"))
     assert A.interview_problem(spec, spec["slug"]), "人写的文案不在自动分流里，要硬拦"
+
+
+def test_人工请求的_claims跟进正式spec_没认领在build那一刻就红(tmp_path, monkeypatch):
+    """人工请求**不经过草稿**：`build_interview_request` 直接写 specs/interviews/<slug>.json，
+    `promote_all` 那道闸看不见它。所以要两件事——
+
+    ① 请求里的 `_claims` 跟着文案进正式 spec。原来 `build_spec` 和「只改元数据」那条路
+       都不抄：push 原样进去了、认领丢了，人核过源的断言照样红在 render 前置检查上；
+    ② 没认领的在 build 那一刻（`production_preflight.check_request`，ASR／翻译之前）就红，
+       报错指回请求文件——不等 dispatch 之后再红一趟。
+
+    复现（对抗 review 2026-09-27）：alcaraz-fritz 的真请求，push.lead 换成一句计数式。
+    """
+    import build_interview_request as B  # noqa: PLC0415
+    import interview_source_gate  # noqa: PLC0415
+    import production_preflight as PP  # noqa: PLC0415
+
+    req = json.loads((ROOT / "requests" / "interviews"
+                      / "alcaraz-fritz-laver-cup-2026-interview.json").read_text("utf-8"))
+    slug = req["slug"]
+    benign = copy.deepcopy(req)
+    claim = "他此前六次打进正赛，六次全部首轮出局。"
+    sourced = {claim: "逐场表核过 https://a.example/x ；https://b.example/y"}
+    req["push"] = {**req["push"], "lead": claim}
+
+    # ① build_spec：认领跟进正式 spec，render 前置检查那一关放行
+    spec = B.build_spec({**req, "_claims": sourced}, ["谢谢大家"], duration=300.0)
+    assert spec.get("_claims") == sourced, "请求里的认领没进正式 spec"
+    assert A.interview_problem(spec, slug) is None
+    # ……没认领的照红（上面那句放行不是空转）；没写 `_claims` 的请求 spec 里也不凭空多一个空键
+    bare = B.build_spec(req, ["谢谢大家"], duration=300.0)
+    assert "_claims" not in bare and A.interview_problem(bare, slug)
+
+    # ② check_request：build 那一刻就拦，报错指回请求文件
+    copies = []
+    monkeypatch.setattr(PP, "check_copy", lambda *a, **k: copies.append(a))
+    with pytest.raises(ValueError, match="全称断言") as err:
+        PP.check_request(req)
+    assert f"requests/interviews/{slug}.json 的 `_claims`" in str(err.value)
+    assert not copies, "断言那一关排在文案检查前面，红了就不用再起子进程"
+    PP.check_request({**req, "_claims": sourced})
+    PP.check_request(benign)                        # 真请求原样过得了
+    assert len(copies) == 2
+
+    # ③ 「只改元数据」那条路（转写相关的键没变，不重跑 ASR）：
+    #    文案改成断言、没认领 → build 红、正式 spec 不动；补上认领 → 认领和文案一起落盘
+    specs, out = tmp_path / "specs", tmp_path / "output"
+    (out / slug).mkdir(parents=True)
+    specs.mkdir()
+    (out / slug / "cap_asr.json3").write_text("{}", encoding="utf-8")
+    monkeypatch.setattr(B, "SPECS", specs)
+    monkeypatch.setattr(B, "OUTDIR", out)
+    monkeypatch.setattr(B, "_transcribe_request",
+                        lambda *a, **k: pytest.fail("只改元数据不许重跑 ASR"))
+    existing = B.build_spec(benign, ["谢谢大家"], duration=300.0)
+    existing["_request_origin"] = {"request": copy.deepcopy(benign), "duration": 300.0}
+    spec_path = specs / f"{slug}.json"
+    spec_path.write_text(json.dumps(existing, ensure_ascii=False), encoding="utf-8")
+    (specs / f"{slug}.xhs.txt").write_text(str(benign.get("xhs") or ""), encoding="utf-8")
+    before = spec_path.read_bytes()
+    req_path = tmp_path / "request.json"
+
+    req_path.write_text(json.dumps(req, ensure_ascii=False), encoding="utf-8")
+    with pytest.raises(ValueError, match="全称断言"):
+        B._build_one(req_path, object(), write=True)
+    assert spec_path.read_bytes() == before, "红了就不许写正式 spec"
+
+    req_path.write_text(json.dumps({**req, "_claims": sourced}, ensure_ascii=False),
+                        encoding="utf-8")
+    B._build_one(req_path, object(), write=True)
+    written = json.loads(spec_path.read_text("utf-8"))
+    assert written["push"]["lead"] == claim
+    assert written.get("_claims") == sourced, "只改元数据那条路没把认领带进 spec"
+    assert A.interview_problem(written, slug) is None
+    interview_source_gate.validate_source_contract(written)
 
 
 def test_采访线的全称断言在runner的前置检查里就红(tmp_path, monkeypatch):

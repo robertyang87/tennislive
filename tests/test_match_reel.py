@@ -610,25 +610,6 @@ def _reel():
     return build_match_reel
 
 
-@pytest.fixture()
-def _empty_reel_ledger(monkeypatch, tmp_path):
-    """发布账本钉成空目录——给「拿真的已发 spec 测别的闸」的测试用。
-
-    `validate_spec(spec)` 的默认口径是渲染入口，会读 `data/reel_publish_ledger`
-    （`reel_facts.waiting_fact_stale_problem`：`_facts` 里写着「抽签后／正式名单」
-    这类要等的事、`_rechecked_at` 又早于最近一次推送，就红）。哪天有人给这几条已发
-    spec 补上那两个字段，它们会先红在时效那道闸上：写了 `match=` 的对不上，没写的
-    （`pytest.raises(ReelError)`）是假绿。测的不是账本，就别读账本。
-    """
-    _reel()
-    import reel_facts  # noqa: PLC0415
-
-    empty = tmp_path / "empty-reel-ledger"
-    empty.mkdir()
-    monkeypatch.setattr(reel_facts, "REEL_LEDGER_DIR", empty)
-    return empty
-
-
 def test_tts内容键同文同参数同键不同文不同键():
     """缓存键按内容算：改一个字、换一把嗓子、改一个参数都要换键——
     「改了字」和「没改字」只有内容 hash 分得开。"""
@@ -1146,6 +1127,7 @@ def test_冷开场豁免表只许减():
     assert not missing, f"豁免表里这几条 spec 已经不在了：{sorted(missing)}"
     assert len(reel.LEGACY_NO_COLD_OPEN) <= 28, "豁免表只许减不许加"
 
+@pytest.mark.usefixtures("_empty_reel_ledger")
 def test_冷开场里的结局必须在正文重新兑现(tmp_path):
     """冷开场放过最后一球，不等于正文可以停在赛点还没打完的时候。
 
@@ -6595,6 +6577,7 @@ def test_比分板的英文名只在名里缩写姓整个留下():
         "又出现了那个孤零零的 `-.`——连字符被当成一个名字了")
 
 
+@pytest.mark.usefixtures("_empty_reel_ledger")
 def test_赛场之上的比分板形状要在dry_run就拦下来():
     """`cover.scoreboard` 缺不缺，`--dry-run` 就要报，不许留到 runner 上。
 

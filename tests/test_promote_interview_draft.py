@@ -240,11 +240,15 @@ def test_promote_all写盘时保留注解并删草稿(tool, monkeypatch, tmp_pat
     assert spec["_zh_draft"] == ["机器译文"], "注解键要跟着进正式 spec"
 
 
-def test_人工请求带着没认领的全称断言_转正时留草稿(tool, monkeypatch, tmp_path):
+def test_手改过的草稿带着没认领的全称断言_转正时留草稿(tool, monkeypatch, tmp_path):
     """转正之后 interview-clip 会被自动 dispatch，而前置检查里那道全称断言闸是
-    硬的（`production_preflight.check_interview_claims`）。人工请求带进来的文案
-    写了「N 次打进，N 次都…」却没在 `_claims` 认领两个源——拦在 promote 这一关，
-    草稿留在原地等终审，别让它变成一趟红着的 render。认领够了照常转正。"""
+    硬的（`production_preflight.check_interview_claims`）。有人往 `.draft.json`
+    里手补了文案、写了「N 次打进，N 次都…」却没在 `_claims` 认领两个源——拦在
+    promote 这一关，草稿留在原地等终审，别让它变成一趟红着的 render。认领够了照常转正。
+
+    ⚠️ 人工请求（`requests/interviews/*.json`）**不走这儿**：`build_interview_request`
+    直接写正式 spec，它的闸在 `check_request`（`tests/test_absolute_claims.py`
+    `test_人工请求的_claims跟进正式spec_没认领在build那一刻就红`）。"""
     specs = tmp_path / "specs" / "interviews"
     specs.mkdir(parents=True)
     claim = "他此前六次打进正赛，六次全部首轮出局。"

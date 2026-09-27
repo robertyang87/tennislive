@@ -458,7 +458,8 @@ def numeral_problems(deck: Deck) -> list[str]:
 
 
 def outward_texts(deck: Deck) -> list[str]:
-    """这条稿子会发到读者眼前的字：每屏标题、旁白、问句、要点、示意图，封面台头，小红书钩子。"""
+    """这条稿子会发到读者眼前的字：每屏标题、旁白、问句、小标、示意图、注释、要点，
+    封面台头与注释，小红书钩子（正文不扫）。"""
     texts: list[str] = []
     for seg in deck.segments:
         texts += [seg.title, seg.narration, seg.question or "", seg.label,

@@ -192,11 +192,16 @@ def interview_texts(spec: dict) -> list[str]:
     return [without_quotes(t) for t in interview_outward_texts(spec)]
 
 
-def interview_problem(spec: dict, slug: str) -> str | None:
-    """采访 spec 的全称断言没认领够两个源 → 报错正文；合格或在存量表里 → None。"""
+def interview_problem(spec: dict, slug: str, *, where: str = "") -> str | None:
+    """采访 spec 的全称断言没认领够两个源 → 报错正文；合格或在存量表里 → None。
+
+    `where` 是报错里「去哪儿认领」那个文件：默认正式 spec；人工请求在 build 那一刻
+    查（`production_preflight.check_request`）时指回请求文件——`_claims` 写在请求里，
+    `build_interview_request.build_spec` 原样带进正式 spec。
+    """
     if slug in INTERVIEW_LEGACY:
         return None
     missing = unsourced(interview_texts(spec), spec.get("_claims"))
     if not missing:
         return None
-    return problem_text(missing, f"specs/interviews/{slug}.json 的 `_claims`")
+    return problem_text(missing, f"{where or f'specs/interviews/{slug}.json'} 的 `_claims`")

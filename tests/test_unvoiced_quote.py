@@ -20,18 +20,6 @@ import build_match_reel as reel  # noqa: E402
 NONE = frozenset()
 
 
-@pytest.fixture()
-def _empty_reel_ledger(monkeypatch, tmp_path):
-    """发布账本钉成空目录：`validate_spec` 的默认口径（渲染入口）会读
-    `data/reel_publish_ledger`，而下面拿的是**真的已发 spec**——测的是字幕那道闸，
-    不该跟着账本变（详见 `tests/test_match_reel.py` 同名 fixture）。"""
-    import reel_facts  # noqa: PLC0415
-
-    empty = tmp_path / "empty-reel-ledger"
-    empty.mkdir()
-    monkeypatch.setattr(reel_facts, "REEL_LEDGER_DIR", empty)
-
-
 def _spec(first: dict, middle: dict | None = None) -> dict:
     return {"slug": "x", "cover": {"eyebrow": "赛场之上"},
             "segments": [{"source": "ttv", "start": 680.0, "end": 690.0, **first},

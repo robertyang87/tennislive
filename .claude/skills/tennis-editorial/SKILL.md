@@ -2738,7 +2738,7 @@ PR 正在改同一条工作流；把 `check_interview_copy_wording` 那个**零�
 （「一共出现三次，三次都」）。闸扫的面上那 9 份就是下面两张存量表里的 8 ＋ 1。
 ⚠️ **三条线的闸都不扫小红书正文**（竖版短片 `spec_outward_text`、采访 `interview_texts`、
 解说片 `explainer_preflight.outward_texts`——它扫每屏的标题／旁白／问句／小标／示意图／
-注释／要点和封面台头，**小红书那一面只扫 `_CAPTIONS` 的 hook**，正文不扫），要扩三条一起扩。
+注释／要点，封面台头与注释，**小红书那一面只扫 `_CAPTIONS` 的 hook**，正文不扫），要扩三条一起扩。
 
 所以词表**没有按词放宽**，是加了这一个形状；上面那句「留给写的时候自己问那一句」仍然管
 它认不出的那一半（`zverev-norrie`「八次全输」只说一遍数；示意图标题「三次大满贯决赛，
@@ -2752,12 +2752,25 @@ PR 正在改同一条工作流；把 `check_interview_copy_wording` 那个**零�
 计数式只报不拦`），判据 `test_自动产的竖版短片_计数式只报不拦_词表照旧硬拦`。
 ⚠️ **采访线没有这一刀，是因为那条线上没有模型写的文案**：自动草稿（`draft_interview_spec`）
 不写 push／cover／takeaway，`promote_interview_draft` 只填模板，模板里没有全称断言
-（`test_采访线自动转正的模板文案过得了全称断言那道闸` 钉着）；带着文案的草稿来自**人工请求**
-（`build_interview_request` 从请求里原样抄 push／takeaway），人写的就该和手写 spec 一样硬拦——
-人写得了 `_claims`。**promote 那一关也先查一遍**（`promote_all` 跟措辞判据坐同一个座位）：
-人工请求带着没认领的断言，就**留草稿、不转正**，而不是转正之后在自动 dispatch 的 render
-前置检查上红一趟（判据 `test_人工请求带着没认领的全称断言_转正时留草稿`）。哪天草稿开始带
-模型写的文案，要在 promote 那一关另做分流——模型写不了 `_claims`，照现在这样会被静静留成草稿。
+（`test_采访线自动转正的模板文案过得了全称断言那道闸` 钉着）。人写的文案就该和手写 spec 一样
+硬拦——人写得了 `_claims`——而它走两条路，**各在自己的入口先查**，不等自动 dispatch 的 render
+前置检查才红：
+
+- **人工请求**（`requests/interviews/*.json`）**不经过草稿**：`build_interview_request` 直接写
+  正式 spec，`promote_all` 根本看不见它。闸在 `production_preflight.check_request`（build 那一刻，
+  ASR 和翻译之前）；`_claims` 写在请求里，`build_spec` 和「只改元数据」那条路都原样带进 spec
+  （判据 `test_人工请求的_claims跟进正式spec_没认领在build那一刻就红`）
+- **手改过的草稿**（有人往 `.draft.json` 里补了 push／cover／takeaway）：`promote_all` 跟措辞
+  判据坐同一个座位查，没认领就**留草稿、不转正**（判据
+  `test_手改过的草稿带着没认领的全称断言_转正时留草稿`）
+
+⚠️ main 上 `cobolli-mensik-laver-cup-2026-doubles-interview` 的**请求**里 push.lead 还是没加引号的
+「此前一场没赢过」（spec 已经手改成引语「之前一场都没赢过……」，已推送）。有 `pushed.json` 保护，
+请求不会自己重跑；哪天带 revision 从请求**整条重建**（改了转写相关的键，或 `_rebuild_once`），
+会红在 `check_request` 上——那时把请求里那句对齐成 spec 的写法。
+
+哪天草稿开始带模型写的文案，要在 promote 那一关另做分流——模型写不了 `_claims`，照现在这样
+会被静静留成草稿。
 
 存量：竖版短片 8 条挂 `REEL_COUNT_LEGACY`（**只豁免计数式那一句**，词表那一档照旧要认领），
 解说片 9 条挂 `EXPLAINER_LEGACY`、采访 2 条挂 `INTERVIEW_LEGACY`，都只许减不许加。

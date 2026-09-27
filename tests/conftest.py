@@ -191,3 +191,37 @@ def sample_digest() -> Digest:
 def _isolate_production_research(monkeypatch, tmp_path):
     monkeypatch.setenv("TENNISLIVE_TACTICAL_RESEARCH", "0")
     monkeypatch.setenv("TENNISLIVE_PRODUCTION_CACHE", str(tmp_path / "production-cache"))
+
+
+@pytest.fixture()
+def _empty_reel_ledger(monkeypatch, tmp_path):
+    """竖版短片的发布账本钉成空目录——给「拿真的已发 spec 测别的闸」的测试用
+    （`@pytest.mark.usefixtures("_empty_reel_ledger")`）。
+
+    `validate_spec(spec)` 的默认口径是渲染入口，会读 `data/reel_publish_ledger`
+    （`reel_facts.waiting_fact_stale_problem`：`_facts` 里写着「抽签后／正式名单」
+    这类要等的事、`_rechecked_at` 又早于最近一次推送，就红）。哪天有人给那几条已发
+    spec 补上那两个字段，它们会先红在时效那道闸上：写了 `match=` 的对不上，没写的
+    （`pytest.raises(ReelError)`）是假绿。测的不是账本，就别读账本
+    （`reel_facts.REEL_LEDGER_DIR` 那行注释：判据测试一律不许读真账本）。
+
+    进程内改 `reel_facts.REEL_LEDGER_DIR`，子进程靠 `TENNISLIVE_REEL_LEDGER_DIR`。
+    ⚠️ 不做成 autouse：`tests/test_time_sensitive_facts.py` 那几条测的就是账本，
+    它们自己把账本建在 tmp_path 上。原来这个 fixture 在 `test_match_reel.py` 和
+    `test_unvoiced_quote.py` 各抄了一份，挪到这儿只留一份。
+    """
+    import sys  # noqa: PLC0415
+    from pathlib import Path  # noqa: PLC0415
+
+    tools = str(Path(__file__).resolve().parents[1] / "tools")
+    if tools not in sys.path:
+        sys.path.insert(0, tools)
+    import reel_facts  # noqa: PLC0415
+
+    empty = tmp_path / "empty-reel-ledger"
+    empty.mkdir()
+    monkeypatch.setattr(reel_facts, "REEL_LEDGER_DIR", empty)
+    # 子进程（`build_match_reel.py render --dry-run`）重新 import，monkeypatch 够不着——
+    # `test_冷开场里的结局必须在正文重新兑现` 后半段就是这么走的，靠环境变量带过去。
+    monkeypatch.setenv("TENNISLIVE_REEL_LEDGER_DIR", str(empty))
+    return empty
