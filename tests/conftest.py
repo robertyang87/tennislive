@@ -206,14 +206,22 @@ def _empty_reel_ledger(monkeypatch, tmp_path):
     """竖版短片的发布账本钉成空目录——给「拿真的已发 spec 测别的闸」的测试用
     （`@pytest.mark.usefixtures("_empty_reel_ledger")`）。
 
-    `validate_spec(spec)` 的默认口径是渲染入口，会读 `data/reel_publish_ledger`
-    （`reel_facts.waiting_fact_stale_problem`：`_facts` 里写着「抽签后／正式名单」
-    这类要等的事、`_rechecked_at` 又早于最近一次推送，就红）。哪天有人给那几条已发
-    spec 补上那两个字段，它们会先红在时效那道闸上：写了 `match=` 的对不上，没写的
-    （`pytest.raises(ReelError)`）是假绿。测的不是账本，就别读账本
-    （`reel_facts.REEL_LEDGER_DIR` 那行注释：判据测试一律不许读真账本）。
+    `validate_spec(spec)` 的默认口径是渲染入口，有**两处**读发布记录：
 
-    进程内改 `reel_facts.REEL_LEDGER_DIR`，子进程靠 `TENNISLIVE_REEL_LEDGER_DIR`。
+    - `reel_facts.waiting_fact_stale_problem`：`_facts` 里写着「抽签后／正式名单」
+      这类要等的事、`_rechecked_at` 又早于最近一次推送，就红；
+    - `reel_asset_gates.cover_reuse_finding`（④ 封面复用）：封面照片和一条**比它先
+      发出去**的片子是同一张，就红——读账本，也读 `output/*/reel/*/pushed.json`。
+
+    哪天账本多一笔（推送落账）、或者有人给那几条已发 spec 补上时效那两个字段，它们会先
+    红在这两道闸上：写了 `match=` 的对不上，没写的（`pytest.raises(ReelError)`）是
+    假绿。测的不是账本，就别读账本（`reel_facts.REEL_LEDGER_DIR` 那行注释：判据测试
+    一律不许读真账本）。
+
+    进程内改 `reel_facts.REEL_LEDGER_DIR`；`TENNISLIVE_REEL_LEDGER_DIR` 管子进程，
+    也管 `reel_asset_gates`——它在**调用那一刻**读这个变量（`publication_record`），
+    设了就把整份发布记录（账本＋`pushed.json`＋账本之前那批的冻结表）钉成这个空目录。判据
+    `tests/test_reel_asset_gates.py::test_真账本多一笔_全库扫描和钉空账本的渲染入口都不许跟着红`。
     ⚠️ 不做成 autouse：`tests/test_time_sensitive_facts.py` 那几条测的就是账本，
     它们自己把账本建在 tmp_path 上。原来这个 fixture 在 `test_match_reel.py` 和
     `test_unvoiced_quote.py` 各抄了一份，挪到这儿只留一份。

@@ -8203,8 +8203,9 @@ def validate_spec(
     # 素材与格式那几道（封面用时、数据统计图、图片解码、封面复用、字幕数字），
     # 原来要等 render 甚至合并之后才红——逻辑和来路在 tools/reel_asset_gates.py，
     # 这儿只接一刀。排在最后：别的闸先报，已有的判据报错顺序不变。
+    # ⚠️ 全仓盘点口径不问「发没发过」（封面复用读发布账本，同上面时效那一刀的理由）。
     from reel_asset_gates import spec_asset_problems  # noqa: PLC0415
-    hard, soft = spec_asset_problems(spec)
+    hard, soft = spec_asset_problems(spec, at_render=not allow_published_legacy)
     for note in soft:
         print(f"[素材] 自动 spec，只报不拦：{note}")
     if hard:

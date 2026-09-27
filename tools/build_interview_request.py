@@ -205,13 +205,22 @@ def is_pending(path: Path) -> bool:
 
 
 def pending_paths(only_slug: str = "") -> list[Path]:
+    """待 build 的请求。读不了的（JSON 坏了、顶层不是对象、slug 缺或非法）**照样列进来**，
+    按文件名认 slug（`requests/interviews/<slug>.json`，存量全是这个约定）：交给 `main`
+    那个逐条 try 记进失败清单、`::error file=` 指回它，同一趟其余请求照常 build。
+    原来这里一抛，整趟连 `--count-pending` / `--pending-slugs` 一起炸，那个逐条兜底
+    根本走不到——一条坏请求每 10 分钟卡死一整趟（复审 2026-09-27 nit）。"""
     out = []
     for path in _request_paths():
-        req = _read(path)
-        slug = _slug(req, path)
+        slug, pending = path.stem, True
+        try:
+            slug = _slug(_read(path), path)
+            pending = is_pending(path)   # 正式 spec 坏了也抛——一样交给 build 那一步报
+        except (OSError, ValueError):   # JSONDecodeError 是 ValueError
+            pass
         if only_slug and slug != only_slug:
             continue
-        if is_pending(path):
+        if pending:
             out.append(path)
     return out
 
@@ -555,7 +564,12 @@ def _build_one_unlocked(path: Path, chat, *, write: bool) -> tuple[str, int, flo
                     "topbar_layout", "interview_kind", "requested_content_type",
                     "_claims"):
             if req.get(key) != previous.get(key):
-                spec[key] = _apply_request_delta(spec.get(key), previous.get(key), req.get(key))
+                if key not in req:
+                    # 请求把这一项整个删了：spec 里也删，和下一层 `_apply_request_delta`
+                    # 删叶子是同一个口径——原来写成 `"_claims": null` 留在 spec 里。
+                    spec.pop(key, None)
+                else:
+                    spec[key] = _apply_request_delta(spec.get(key), previous.get(key), req[key])
         from interview_source_gate import finalize_source_contract, validate_source_contract
         finalize_source_contract(spec)
         validate_source_contract(spec)
@@ -655,13 +669,33 @@ def _build_one(path: Path, chat, *, write: bool) -> tuple[str, int, float]:
         return _build_one_unlocked(path, chat, write=True)
 
 
+def _rel(path: Path) -> str:
+    try:
+        return path.resolve().relative_to(ROOT).as_posix()
+    except ValueError:
+        return str(path)
+
+
+def _annotation(text: str) -> str:
+    """GitHub 工作流命令的消息体：换行要编码，不然 `::error::` 只认第一行。"""
+    return text.replace("%", "%25").replace("\r", "%0D").replace("\n", "%0A")
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("--count-pending", action="store_true")
     ap.add_argument("--pending-slugs", action="store_true")
     ap.add_argument("--slug", default="")
     ap.add_argument("--write", action="store_true")
+    ap.add_argument(
+        "--failed-list", default="",
+        help="单条请求失败记进这个文件（每行：请求路径<TAB>slug<TAB>原因），退出码不再"
+             "因为单条变 1——interview-auto-render 靠它让同一趟的其余请求照常提交，"
+             "整趟到最后一步再标红。整趟跑不起来（没配 key）照旧非 0。")
     args = ap.parse_args()
+    failed_list = Path(args.failed_list) if args.failed_list else None
+    if failed_list:
+        failed_list.write_text("", encoding="utf-8")
 
     paths = pending_paths(args.slug)
     if args.count_pending:
@@ -669,7 +703,12 @@ def main() -> int:
         return 0
     if args.pending_slugs:
         for path in paths:
-            print(_slug(_read(path), path))
+            try:
+                print(_slug(_read(path), path))
+            except (OSError, ValueError) as exc:
+                # 不进 stdout（那是给 sparse-checkout add 的 slug 清单）；build 那一步会把它
+                # 记进失败清单并 `::error`，这里只在日志里留一句
+                print(f"[跳过] {_rel(path)} 读不了：{exc}", file=sys.stderr)
         return 0
     if not paths:
         print("没有待生成的人工采访请求。")
@@ -682,15 +721,32 @@ def main() -> int:
         print("::error::没配 DEEPSEEK_API_KEY，中文字幕无法生成")
         return 2
 
-    failed = 0
+    # 一条失败不连坐：每条请求各自 try，失败的那条**什么都不写**（所有落盘都排在
+    # `_build_one_unlocked` 末尾、所有闸之后），其余照常写。原来单条红就整步退出 1，
+    # 同一趟后面的「补片头」「提交」全被跳过，别的请求白转写一遍、每 10 分钟重来一趟。
+    failed: list[tuple[str, str, str]] = []
     for path in paths:
         try:
             slug, n_lines, duration = _build_one(path, chat, write=args.write)
             mode = "已写入" if args.write else "干跑"
             print(f"✅ {slug}: {n_lines} 行，源长 {duration:.1f}s，{mode}")
         except Exception as exc:  # noqa: BLE001 — 一条失败不吞掉后续请求
-            failed += 1
-            print(f"::error::{path.name}: {type(exc).__name__}: {exc}")
+            rel = _rel(path)
+            try:
+                slug = _slug(_read(path), path)
+            except Exception:  # noqa: BLE001 — 请求本身读不了，原因里已经写了
+                # 按文件名认（requests/interviews/<slug>.json，存量 17 条全是这个约定）。
+                # 空着的话 dispatch／提交那两道按 `cut -f2` 过滤的闸拦不住它上一版的正式 spec
+                # （复审 2026-09-27 nit）。
+                slug = path.stem
+            reason = f"{type(exc).__name__}: {exc}"
+            failed.append((rel, slug, reason))
+            print(f"::error file={rel}::{_annotation(f'{rel} 没过闸，不进这一趟的提交：{reason}')}")
+    if failed_list:
+        failed_list.write_text("".join(
+            f"{rel}\t{slug}\t{' ⏎ '.join(reason.split(chr(10)))}\n"
+            for rel, slug, reason in failed), encoding="utf-8")
+        return 0
     return 1 if failed else 0
 
 
