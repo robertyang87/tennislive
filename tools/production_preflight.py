@@ -21,23 +21,27 @@ def check_copy(copy: Path, column: str, *, date: str = '', quiet: bool = False) 
                    **({'capture_output': True, 'text': True} if quiet else {}))
 
 
+class RequestNotReady(ValueError):
+    """请求本身没过 `check_request`——**确定性的**：不改请求，每一趟都一样红。
+
+    `build_interview_request --write` 见到它只把这一条留在待生成名单、报一句
+    `::warning::`，**不让整个 step 红**：那一步后面的「配结尾／提交／dispatch」只挂着
+    `if: steps.gate.outputs.work == 'true'`，隐式的 success() 会把它们一起跳过——
+    一条请求的解读卡写长了，就把**别的 spec** 的提交和 dispatch 每 10 分钟卡一趟，
+    直到有人改这条请求（review 那条）。网络、ASR、翻译那类失败照旧让 step 红。"""
+
+
 def check_request(req: dict) -> None:
     # No download, fonts, browser or ASR import required here.
     cov = req.get('cover') or {}
     zoom, focus = float(cov.get('zoom', 1)), float(cov.get('focus_y', .5))
     if not 1 <= zoom <= 2.4 or not 0 <= focus <= 1:
-        raise ValueError('cover zoom/focus_y 超出安全范围')
+        raise RequestNotReady('cover zoom/focus_y 超出安全范围')
     if cov.get('shot_type') == 'close_up' and zoom < 1.5:
-        raise ValueError('close_up 封面 zoom 必须至少1.5')
+        raise RequestNotReady('close_up 封面 zoom 必须至少1.5')
     start, end = float(req.get('start') or 0), req.get('end')
     if start < 0 or (end is not None and float(end) <= start):
-        raise ValueError('正文时间窗无效')
-    # 收尾卡那一句要一行放得下——和 render 的 `check_takeaway`、picker 的预检**同一份
-    # 判据**（`interview_spec_gates.takeaway_point_problems`，含豁免表和 `_wrap_ok`）。
-    # 原来请求里写长了，要等自动链把它建成 spec、picker 预检报红才知道，多花一整趟循环。
-    # 只要 PIL ＋ 仓库里的字体，不下载、不开浏览器。
-    if problems := _takeaway_wrap(req):
-        raise ValueError('解读卡的字放不下一行：' + '；'.join(problems))
+        raise RequestNotReady('正文时间窗无效')
     # 全称断言：人工请求**不经过草稿**，`build_interview_request` 直接写正式 spec，
     # 所以这道闸要在 build 这一刻（ASR／翻译之前）查，别等 render 前置检查
     # （`check_interview_claims`）才红。`_claims` 写在请求里，`build_spec` 原样带进 spec。
@@ -46,7 +50,14 @@ def check_request(req: dict) -> None:
     slug = str(req.get('slug') or '')
     problem = interview_problem(req, slug, where=f'requests/interviews/{slug}.json')
     if problem:
-        raise ValueError(problem)
+        raise RequestNotReady(problem)
+    # （排在全称断言后面：runner 上也是「发布文案前置检查」先、出片那一趟的 check_takeaway 后。）
+    # 收尾卡那一句要一行放得下——和 render 的 `check_takeaway`、picker 的预检**同一份
+    # 判据**（`interview_spec_gates.takeaway_point_problems`，含豁免表和 `_wrap_ok`）。
+    # 原来请求里写长了，要等自动链把它建成 spec、picker 预检报红才知道，多花一整趟循环。
+    # 只要 PIL ＋ 仓库里的字体，不下载、不开浏览器。
+    if problems := _takeaway_wrap(req):
+        raise RequestNotReady('解读卡的字放不下一行：' + '；'.join(problems))
     with tempfile.TemporaryDirectory() as td:
         base = Path(td) / 'request'
         base.with_suffix('.json').write_text(json.dumps(req, ensure_ascii=False))
@@ -89,11 +100,20 @@ def check_interview_claims(spec_path: Path) -> None:
       `promote_interview_draft.promote_all` 转正前查，没认领就留草稿。
     哪天草稿开始带模型写的文案，先在 promote 那一关分流。
     """
+    spec = json.loads(spec_path.read_text(encoding='utf-8'))
+    check_interview_spec_claims(spec, spec_path.stem)
+
+
+def check_interview_spec_claims(spec: dict, slug: str = '') -> None:
+    """同一道闸，吃 spec 本身（`slug` 不给就取 `spec["slug"]`）。
+
+    `interview_preflight` 在 dispatch 之前调它——runner「发布文案前置检查」那一步
+    先跑 `check_interview_claims`，预检漏了它就是一条假绿：picker 投出去、runner
+    第一步就红、stale 规则每 70 分钟再投一次。只要标准库，探针也跑。"""
     sys.path.insert(0, str(ROOT / 'tools'))
     from absolute_claims import interview_problem  # noqa: PLC0415
 
-    spec = json.loads(spec_path.read_text(encoding='utf-8'))
-    problem = interview_problem(spec, spec_path.stem)
+    problem = interview_problem(spec, slug or str(spec.get('slug') or ''))
     if problem:
         raise SystemExit(problem)
 

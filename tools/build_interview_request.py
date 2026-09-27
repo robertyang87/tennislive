@@ -704,12 +704,28 @@ def main() -> int:
         print("::error::没配 DEEPSEEK_API_KEY，中文字幕无法生成")
         return 2
 
+    return build_all(paths, chat, write=args.write)
+
+
+def build_all(paths: list[Path], chat, *, write: bool) -> int:
+    """逐条建 spec → 退出码。一条失败不吞掉后续请求。
+
+    ⚠️ 请求自己没过前置检查（`production_preflight.RequestNotReady`：解读卡写长了、
+    全称断言没认领、时间窗无效……）**不算这一步失败**：这条留在待生成名单、报一句
+    `::warning::`，退出码照旧看别的失败。这一步红了，工作流后面的提交和 dispatch 会被
+    隐式的 success() 一起跳过——一条写错的请求会把所有别的 spec 每 10 分钟卡一趟。
+    """
+    from production_preflight import RequestNotReady  # noqa: PLC0415
+
     failed = 0
     for path in paths:
         try:
-            slug, n_lines, duration = _build_one(path, chat, write=args.write)
-            mode = "已写入" if args.write else "干跑"
+            slug, n_lines, duration = _build_one(path, chat, write=write)
+            mode = "已写入" if write else "干跑"
             print(f"✅ {slug}: {n_lines} 行，源长 {duration:.1f}s，{mode}")
+        except RequestNotReady as exc:
+            print(f"::warning::{path.name}: 请求没过前置检查，留在待生成名单"
+                  f"（改好请求下一趟自动接上，别的请求照常走）：{exc}")
         except Exception as exc:  # noqa: BLE001 — 一条失败不吞掉后续请求
             failed += 1
             print(f"::error::{path.name}: {type(exc).__name__}: {exc}")

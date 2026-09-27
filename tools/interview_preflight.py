@@ -28,11 +28,12 @@ runner 上必红的那些「只看 spec 就判得出」的错在 dispatch 之前
 
 ## 查什么
 
-**红（runner 上一定会红的）**：L0 来源身份、顶栏赛事行格式、顶栏比分方向、开场认领、
-冷开场／片尾那两段、小红书正文在不在、解读卡（含「一行放得下」）、文案的 tag／标题
-（`push_reel --stage check`，和 runner 的「发布文案前置检查」同一条命令）、以及
-**按仓库里的字幕缓存重切一遍行**之后走 `write_ass` 那一整套（行数对齐、中英超宽、
-吊尾虚词、顶栏宽度、`highlight_en`）。
+**红（runner 上一定会红的）**：全称断言要认领两个源（runner「发布文案前置检查」那一步
+的 `check_interview_claims`）、L0 来源身份、顶栏赛事行格式、顶栏比分方向、开场认领、
+冷开场／片尾那两段、小红书正文在不在、封面 `hook_accent`、解读卡（含「一行放得下」）、
+文案的 tag／标题（`push_reel --stage check`，和 runner 的「发布文案前置检查」同一条命令）、以及
+**按仓库里的字幕缓存重切一遍行**之后走 `write_ass` 那一整套（`en_fixed` 行号错位、
+行数对齐、中英超宽、吊尾虚词、顶栏宽度、`highlight_en`）。
 
 **⚠️（只报不拦）**：没有字幕缓存所以行数没对上号；`end` 离最后一个词还有好几秒
 （片尾板要在出片那一趟按帧量，见 `interview_tail`）；转正那道措辞闸的口径。
@@ -200,6 +201,13 @@ def subtitle_findings(spec: dict) -> tuple[list[str], list[str]]:
             lines = clip.segment(words, spec["start"], spec["end"],
                                  budget=spec.get("segment_budget_px"),
                                  word_fix=spec.get("word_fix"))
+        # `main()` 在套 `en_fixed` 之前先查行号挂没挂错（0 起写成 1 起就整体错一行），
+        # 挂错了当场 SystemExit——这里同一个位置、同一个函数；后面的量宽建在错位的行上，
+        # 报出来也是噪声，所以和 runner 一样到此为止。
+        if bad := clip.en_fixed_misaligned(lines, spec.get("en_fixed") or {}):
+            problems.append("`en_fixed` 行号像是挂错了行（键是 **1 起** 的行号）："
+                            + "；".join(bad))
+            return problems, notes
         for k, v in (spec.get("en_fixed") or {}).items():
             idx = int(k) - 1
             if 0 <= idx < len(lines):
@@ -241,10 +249,24 @@ def copy_problem(slug: str, date: str = "") -> str | None:
 
 
 def _spec_gates(clip) -> tuple:
-    """出片那一趟 `main()`／`render()` 开头的只读 spec 的闸，同一个顺序。"""
-    return (clip.check_source_contract, clip.check_topline_format,
+    """runner 上只读 spec 的闸，**同一份函数、同一个顺序**：
+
+    1. 「发布文案前置检查」那一步（`production_preflight.main`）的全称断言闸——
+       那一步排在出片之前，文案那一半是 `copy_problem`；
+    2. 出片那一趟 `main()` 开头那一排 `check_*(spec)`；
+    3. `render()` 开头的 `check_takeaway`。
+
+    ⚠️ 2、3 两段**不许手抄**：判据 `test_预检的闸和出片那一趟main开头那一排是同一份`
+    按 ast 从 `main()`／`render()` 抠出来比。手抄过一次就漏了 `check_cover_hook`
+    （review 那条：`hook_accent` 不在标题里，预检绿、runner 第一秒红、stale 规则
+    每 70 分钟重投一次）。
+    """
+    from production_preflight import check_interview_spec_claims  # noqa: PLC0415
+    return (check_interview_spec_claims,
+            clip.check_source_contract, clip.check_topline_format,
             clip.check_score_orientation, clip.check_opening,
             clip.check_lead_in, clip.check_trail_in, clip.check_copy_page,
+            clip.check_cover_hook,
             clip.check_takeaway)
 
 

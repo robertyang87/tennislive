@@ -4523,7 +4523,7 @@ tag 行的字符数量出 953，闸算出 1031。要这个数就让 dry-run 印�
 | | 在哪儿 | 一句话 |
 |---|---|---|
 | 片尾板／冻帧 | `interview_tail.tail_verdict`，`render()` 下完源片、**编码之前** | 源片最后一张「硬切或黑场淡入之后一直不动」的板，`end` 压进去就红并给出该收到的终点；`end` 越过源片视频流也红（成片会冻住）。认领 `_end_board_ok` / `_frozen_tail_ok`。⚠️ **`end` 是生成器算的默认值（`_end_default` 还等于 `end`）时不红，直接收到算出来的终点**，日志和 `render.json["end_trim"]` 记一笔——自动产的 spec 没人会来改 `end`，红了就是每 70 分钟重投一次；**人给的 `end` 照旧红** |
-| 默认终点 | `interview_tail.default_end` | 自动链没给 `end` 时＝最后一个词的词尾 ＋ 0.5 秒，不再是源片全长；生成器同时记 `_end_default` |
+| 默认终点 | `interview_tail.default_end` | 自动链没给 `end` 时＝最后一个词的词尾 ＋ 0.8 秒（人手收尾的中位，偏向多留；撞上板由出片那一趟收），不再是源片全长；生成器同时记 `_end_default` |
 | 拼接清单 | `interview_assembly`，`render()` 写进 `render.json["assembly"]`，`check_interview_landed --film` 照 spec 核 | 收尾卡口播没合上（退回静音卡）、品牌片尾渲不出来，原来都是绿着退的 |
 | 推送后修订 | `interview_revision.post_push_edit`，`pick_interview_renders.todo_slugs` | 推送后 24 小时内改了**会进成片的字段**（`interview_revision.FILM_KEYS` 白名单，按 `qc_attestation.spec_content_sha256` 比）＝一次修订，自动重渲重推；过了窗口进等待名单，要重渲写 `_publication_revision`。⚠️ **是白名单不是「去掉 `_` 注解」**：`transcript_verified`／`caption_gaps_ok`／`whisper_model`／`match`／`source_verification`／`push.lead` 这些不进画面，改了不重渲——edge-tts 和 Chromium 不是逐字节确定的，重渲出来指纹一变就是微信上多一条一样的消息。加了会进成片的新字段要同时进白名单（`test_内容指纹白名单盖住出片读的每一个键` 替你记得） |
 

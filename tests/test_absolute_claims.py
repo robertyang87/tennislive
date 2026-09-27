@@ -270,6 +270,13 @@ def test_人工请求的_claims跟进正式spec_没认领在build那一刻就红
     req = json.loads((ROOT / "requests" / "interviews"
                       / "alcaraz-fritz-laver-cup-2026-interview.json").read_text("utf-8"))
     slug = req["slug"]
+    # 请求文件里的解读卡还是第一版「抢十丢了两个赛点 他又救回两个」（873px，卡上一行只有
+    # 860px）；正式 spec 后来改成了一行放得下的那句，这条请求也不在待生成名单里（不会再 build）。
+    # 这条测的是全称断言，解读卡那道闸另有判据（test_interview_preflight
+    # `test_请求预检就拦收尾卡折行_不等自动链建完spec`）——夹具换上定稿那句，别让两道闸
+    # 在同一个夹具上互相遮蔽。⚠️ 别去改请求文件本身：改了它就算一次新修订，会重建、重渲、重推。
+    req["takeaway"] = json.loads((ROOT / "specs" / "interviews" / f"{slug}.json")
+                                 .read_text("utf-8"))["takeaway"]
     benign = copy.deepcopy(req)
     claim = "他此前六次打进正赛，六次全部首轮出局。"
     sourced = {claim: "逐场表核过 https://a.example/x ；https://b.example/y"}

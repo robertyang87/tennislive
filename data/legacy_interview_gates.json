@@ -1,7 +1,7 @@
 {
  "_why": "赛后开麦只读 spec 的新闸（interview_spec_gates）上线时（2026-09-27），已经发出去、按新判据会红的存量。已发的不为版式重渲（微信那条消息收不回来），**只许减不许加**：tests/test_interview_preflight.py 自检每个名字都真的存在、而且真的还不合格——改好了就从这里删掉。",
  "takeaway_point_wrap": {
-  "_why": "收尾卡 `point` 那一句超出卡上一行（得意黑 76px ＋ 0.5px 字距）。上线当天（正文区 838px，Chromium 在任意两个字之间折行）折点多半落在词中间（jodar-bublik 48a60760「费 ／ 德勒」、deminaur 617db353「一 ／ 直顶住」，两次都是渲完抽帧才看见），全库 103 张卡里 61 张超一行。同一天 main 的评审 I2／I3 把卡改成 keep-all＋balance、左边距收到 70（正文区 860px）：rybakina-swiatek-tor2026-final（858px）、zheng-swiatek-us-open-2026-r4-interview（849px）放得下一行了，从表里删掉，剩 59 条。判据 interview_spec_gates.takeaway_point_problems。合并 main 时又补进 3 条：这张表初建之后 main 上并行发出去的 cobolli-mensik-laver-cup-2026-doubles-interview、fernandez-gibson-singapore-2026-final-ceremony、zverev-tien-laver-cup-2026-interview（都有 pushed.json；keep-all 下都在空格处折成两行）——闸在合并那一刻才上线，它们和那 59 条一样是上线时的存量，共 62 条。",
+  "_why": "收尾卡 `point` 那一句超出卡上一行（得意黑 76px ＋ 0.5px 字距）。上线当天（正文区 838px，Chromium 在任意两个字之间折行）折点多半落在词中间（jodar-bublik 48a60760「费 ／ 德勒」、deminaur 617db353「一 ／ 直顶住」，两次都是渲完抽帧才看见），全库 103 张卡里 61 张超一行。同一天 main 的评审 I2／I3 把卡改成 keep-all＋balance、左边距收到 70（正文区 860px）：rybakina-swiatek-tor2026-final（858px）、zheng-swiatek-us-open-2026-r4-interview（849px）放得下一行了，从表里删掉，剩 59 条。判据 interview_spec_gates.takeaway_point_problems。合并 main 时又补进 3 条：这张表初建之后 main 上并行发出去的 cobolli-mensik-laver-cup-2026-doubles-interview、fernandez-gibson-singapore-2026-final-ceremony、zverev-tien-laver-cup-2026-interview（都有 pushed.json；keep-all 下都在空格处折成两行）——闸在合并那一刻才上线，它们和那 59 条一样是上线时的存量，共 62 条。豁免**钉在那一句上**（`points`：slug → 卡 → 当时那句原文）：改写成另一句、照样超一行的，不再算存量（review 那条：原来只按 slug 认，改了句子也照样放行，「只许减不许加」只管住了名字）。",
   "slugs": [
    "alexandrova-sabalenka-tor2026-r16",
    "arango-venus-cincinnati-2026-r1",
@@ -65,7 +65,195 @@
    "zverev-khachanov-us-open-2026-sf-presser",
    "zverev-tien-laver-cup-2026-interview",
    "zverev-vandezandschulp-us-open-2026-qf-interview"
-  ]
+  ],
+  "points": {
+   "alexandrova-sabalenka-tor2026-r16": {
+    "close": "赛场曾经没有一点开心 她说现在感觉很棒"
+   },
+   "arango-venus-cincinnati-2026-r1": {
+    "close": "从小在电视上看大威 现在把她赢了"
+   },
+   "bejlek-keys-cincinnati-2026-qf": {
+    "close": "她说这几天最大的收获，是更相信自己了。"
+   },
+   "bu-jodar-us-open-2026-r1-interview": {
+    "close": "六次正赛全部首轮出局 第七次他等到了"
+   },
+   "bu-jodar-us-open-2026-r1-presser": {
+    "close": "他小时候中国男子一个前一百都没有 现在有四个"
+   },
+   "chwalinska-mertens-singapore-2026-qf-interview": {
+    "close": "难熬了一个夏天 她说这一场滋味相当好"
+   },
+   "cobolli-mensik-laver-cup-2026-doubles-interview": {
+    "close": "等了3年的第1胜 3小时后欧洲队捧杯"
+   },
+   "cobolli-paul-cincinnati-2026-qf": {
+    "close": "达尔代里换边喝咖啡 他吃M&M豆"
+   },
+   "deminaur-fery-cincinnati-2026-r3": {
+    "close": "五比一被雨拖到抢七 还是笑着赢下来"
+   },
+   "djokovic-cincinnati-2026-presser": {
+    "close": "冠军是他拿的 空间是全家人腾的"
+   },
+   "eala-mcnally-toronto-2026-r3": {
+    "close": "有球迷说「今晚想当一次菲律宾人」"
+   },
+   "eala-mcnally-toronto-2026-r3-presser": {
+    "close": "聊完两周的重压之后她笑着聊起蓝色恐龙粉丝"
+   },
+   "eala-mcnally-toronto-2026-r3-presser-full": {
+    "close": "脚踝崴了两周没喘过气她说的还是准备好了"
+   },
+   "eala-parks-toronto-2026": {
+    "close": "伊埃拉把多伦多的掌声变成主场优势。"
+   },
+   "faria-shelton-cincinnati-2026-r2": {
+    "close": "问他什么变了 他答的是心态和训练态度"
+   },
+   "fernandez-gibson-singapore-2026-final-ceremony": {
+    "close": "首盘4比5落后 她连赢最后9局夺冠"
+   },
+   "fils-cobolli-cincinnati-2026-sf-interview": {
+    "close": "生涯首个大师赛决赛 他说先别想太远"
+   },
+   "fils-lehecka-cincinnati-2026-r3": {
+    "close": "赛点没进 抢七又丢 决胜盘照样拿下"
+   },
+   "gauff-andreeva-us-open-2026-qf-interview": {
+    "close": "救下那两个赛点的不是技术 是那颗心"
+   },
+   "gauff-kostyuk-cincinnati-2026-qf": {
+    "close": "她说今晚打得好 也不忘替对手留体面"
+   },
+   "gauff-pegula-cin2026-final": {
+    "close": "去年在停车场哭，今年二夺辛辛那提"
+   },
+   "gauff-samsonova-cincinnati-2026-r2": {
+    "close": "她对爸爸们说 「对你们的女儿好一点」"
+   },
+   "jodar-tabilo-cincinnati-2026-r3": {
+    "close": "他说最重要的是专注自己 不是对手"
+   },
+   "keys-zheng-us-open-2026-r3-presser": {
+    "close": "5-0 领先被翻盘 她说该做些改变了"
+   },
+   "mensik-hijikata-cincinnati-2026-r3": {
+    "close": "赢得干脆的那场球 他讲的全是难"
+   },
+   "monfils-tien-us-open-2026-r2-farewell": {
+    "close": "他二〇〇四年转职业，对面这人还没出生。"
+   },
+   "monfils-vallejo-us-open-2026-r1-interview": {
+    "close": "四十岁生日赢球 上一次是三十四年前"
+   },
+   "nakashima-mensik-laver-cup-2026-interview": {
+    "close": "首秀丢了第二盘 他只告诉自己每一分都要拼"
+   },
+   "nakashima-shelton-mtl2026-final": {
+    "close": "「在蒙特利尔比在多伦多更开心」"
+   },
+   "nishikori-sakamoto-us-open-2026-q3-farewell": {
+    "close": "纽约见证奇迹，也见证他的大满贯告别。"
+   },
+   "noskova-boulter-cincinnati-2026-r2": {
+    "close": "拿了大满贯 她说自己没变得更自信"
+   },
+   "pegula-anisimova-cincinnati-2026-qf": {
+    "close": "采访途中 一只蝴蝶飞到了她头上"
+   },
+   "pegula-gauff-cin2026-final-runnerup": {
+    "close": "两年两次亚军，她说这个奖杯也很漂亮"
+   },
+   "pegula-navarro-us-open-2026-qf-interview": {
+    "close": "让负面声音闭嘴 她继续寻找办法"
+   },
+   "ruud-cerundolo-laver-cup-2026-presser": {
+    "close": "丢了第一盘也不慌 他说不到最后不算完"
+   },
+   "ruud-zverev-laver-cup-2026-doubles-interview": {
+    "close": "单打选手打双打 他说靠的是正手"
+   },
+   "rybakina-frech-cincinnati-2026-r3": {
+    "close": "她先谢的不是自己扛住 是看台坐住了"
+   },
+   "rybakina-gauff-tor2026-sf": {
+    "close": "十一个半小时 四场三盘全咬下来了"
+   },
+   "rybakina-gauff-us-open-2026-sf-interview": {
+    "close": "怀疑能不能来打的人 打进了决赛"
+   },
+   "rybakina-osaka-tor2026-qf": {
+    "close": "说过拼了就能翻盘 这次她又做到了"
+   },
+   "rybakina-townsend-cincinnati-2026-r2": {
+    "close": "八站一千分赛 她首战一场没输过"
+   },
+   "rybakina-zheng-us-open-2026-qf-interview": {
+    "close": "排开负面念头 她把目光放回比赛"
+   },
+   "sabalenka-noskova-usopen-2026-qf-oncourt": {
+    "close": "以为要输的念头 反而让她放开手脚"
+   },
+   "sabalenka-pegula-us-open-2026-sf-interview": {
+    "close": "客场赢球 她先谢了希望对手赢的人"
+   },
+   "sabalenka-wang-cincinnati-2026-r3": {
+    "close": "连续四十五场千分赛不败 现役排第一"
+   },
+   "sabalenka-zhang-tor2026-r3": {
+    "close": "被问到破发点，她先说的是对手。"
+   },
+   "swiatek-arango-cincinnati-2026-r2": {
+    "close": "赢成六比零的人 说的是我得先熟悉场地"
+   },
+   "swiatek-rybakina-tor2026-final": {
+    "close": "冠军献给「正在承受不公评判和恶意的人」"
+   },
+   "swiatek-sakkari-cincinnati-2026-r3": {
+    "close": "赢完球她想的是 明天能歇一会儿"
+   },
+   "swiatek-zheng-us-open-2026-r4-presser": {
+    "close": "她反问记者 你觉得这很了不得吗"
+   },
+   "tien-cobolli-laver-cup-2026-interview": {
+    "close": "决胜盘前队友喊他锁死 他说谁都有机会"
+   },
+   "tirante-djokovic-cincinnati-2026-r2": {
+    "close": "赢下德约 他先谈的是没兑现的那十三个破发点"
+   },
+   "wawrinka-berrettini-us-open-2026-r1-farewell": {
+    "close": "他为这张外卡，从瑞士又飞了回来。"
+   },
+   "zheng-keys-us-open-2026-r3-interview": {
+    "close": "决胜盘 0-5 落后 救回赛点 连赢七局"
+   },
+   "zheng-keys-us-open-2026-r3-presser": {
+    "close": "伤病之后她说 我忘了该怎么竞技"
+   },
+   "zheng-keys-us-open-2026-r3-tennis-channel": {
+    "close": "四个月没赢过球 她说苦练终于有了回报"
+   },
+   "zheng-liutova-us-open-2026-r1-interview": {
+    "close": "带病拼完三盘 等了十五个月的一场胜利"
+   },
+   "zverev-atmane-cincinnati-2026-r3": {
+    "close": "两盘都拖进抢七 才把这场硬仗拿下"
+   },
+   "zverev-khachanov-us-open-2026-sf-interview": {
+    "close": "三次亚军之后 他终于不用再上那个播客"
+   },
+   "zverev-khachanov-us-open-2026-sf-presser": {
+    "close": "他说主动不是临场决定，是练出来的"
+   },
+   "zverev-tien-laver-cup-2026-interview": {
+    "close": "体育里最好的感觉 是作为团队赢球"
+   },
+   "zverev-vandezandschulp-us-open-2026-qf-interview": {
+    "close": "深夜赛程把作息打碎 他说像在纽约打澳网"
+   }
+  }
  },
  "frozen_tail_short": {
   "_why": "`end` 越过源片视频流 0.2~1 秒的已发片（interview_tail.FROZEN_SLACK＝0.2）。那道闸校准时只量过 1.1~1.7 秒的五条（那五条照旧红，重渲就该收掉），而 0.2~1 秒的短冻帧在重渲时同样会红——**新闸撞旧内容**。2026-09-27 从 Release 拉回全部 102 条已发采访正片、按正片末尾那一刀往前数逐帧相同（相邻帧差 < 0.03，排除 29.97→25 帧率换算出来的单帧重复、也排除锁机位发布会的低动量）的帧：落在 0.2~1 秒的只有这两条。豁免只在 `end` 还等于量的那一刻、且越过的秒数不超过 interview_tail.LEGACY_FROZEN_MAX 时生效——改了 `end` 就回到正常的闸。**只许减不许加**。",

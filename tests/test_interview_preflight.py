@@ -111,14 +111,50 @@ def test_请求预检就拦收尾卡折行_不等自动链建完spec(monkeypatch
     monkeypatch.setattr(pp, "check_copy", lambda *a, **k: copies.append(a))
     long_req = {"slug": "new-one", "xhs": "正文",
                 "takeaway": {"close": {"point": "首秀赢完球 他先谢看台上的费德勒"}}}
-    with pytest.raises(ValueError, match="首秀赢完球 ／ 他先谢看台上的费德勒"):
+    with pytest.raises(pp.RequestNotReady, match="首秀赢完球 ／ 他先谢看台上的费德勒"):
         pp.check_request(long_req)
     assert not copies, "折行那一项应该排在文案检查之前就拦下"
     pp.check_request({**long_req, "takeaway": {"close": {"point": "赢完球 先谢看台上的费德勒"}}})
     legacy = sorted(gates.legacy("takeaway_point_wrap"))[0]
-    pp.check_request({**long_req, "slug": legacy})          # 豁免表里的老 slug 和 render 一样放行
+    pinned = gates.legacy_table("takeaway_point_wrap")["points"][legacy]["close"]
+    # 豁免表里的老 slug、原句没动：和 render 一样放行
+    pp.check_request({**long_req, "slug": legacy, "takeaway": {"close": {"point": pinned}}})
+    with pytest.raises(ValueError, match="放不下一行"):     # 老 slug 换了一句照样超宽：不认
+        pp.check_request({**long_req, "slug": legacy})
     pp.check_request({"slug": "no-card", "xhs": "正文"})     # 没写解读卡的请求不判
     assert len(copies) == 3
+
+
+def test_一条请求没过前置检查_不让整个请求生成步骤红(monkeypatch, tmp_path, capsys):
+    """review 那条：`check_request` 抛了，`build_interview_request --write` 原来退 1——
+    interview-auto-render 里它后面的「配结尾／提交／dispatch」只挂着
+    `if: steps.gate.outputs.work == 'true'`，隐式的 success() 把它们一起跳过，
+    一条请求的解读卡写长了，别的 spec 的提交和 dispatch 每 10 分钟卡一趟。
+    请求自己的错（确定性的）只留名单、报 warning；别的失败照旧让 step 红。"""
+    import build_interview_request as bir
+    import production_preflight as pp
+
+    long_req = {"slug": "too-long", "xhs": "正文",
+                "takeaway": {"close": {"point": "首秀赢完球 他先谢看台上的费德勒"}}}
+    monkeypatch.setattr(pp, "check_copy", lambda *a, **k: None)
+    built = []
+
+    def one(path, chat, *, write):
+        if path.stem == "too-long":
+            pp.check_request(long_req)                     # 真闸，不是桩
+        if path.stem == "net-down":
+            raise RuntimeError("第一份 ASR 为空")
+        built.append(path.stem)
+        return path.stem, 3, 60.0
+    monkeypatch.setattr(bir, "_build_one", one)
+    paths = [tmp_path / f"{n}.json" for n in ("too-long", "ok")]
+    assert bir.build_all(paths, None, write=True) == 0
+    out = capsys.readouterr().out
+    assert built == ["ok"], "没过前置检查的那条之后的请求照常建"
+    assert "::warning::too-long.json" in out and "放不下一行" in out
+    assert "::error::" not in out
+    assert bir.build_all([tmp_path / "net-down.json", *paths], None, write=True) == 1, \
+        "网络／ASR 那类失败照旧让这一步红"
 
 
 def test_量卡片宽度和渲卡片用的是同一组常量(monkeypatch, tmp_path):
@@ -136,10 +172,26 @@ def test_量卡片宽度和渲卡片用的是同一组常量(monkeypatch, tmp_pa
 
 
 def test_新的收尾卡都放得下一行():
-    legacy = gates.legacy("takeaway_point_wrap")
-    bad = [f"{s['slug']}: {p}" for s in _corpus() if s["slug"] not in legacy
+    """存量也扫：豁免只认钉住的那一句（`points`），不再按 slug 整条跳过。"""
+    bad = [f"{s['slug']}: {p}" for s in _corpus()
            for p in gates.takeaway_point_problems(s)]
     assert not bad, "\n".join(bad)
+
+
+def test_收尾卡折行豁免钉在原句上_老slug改写成另一句照样超宽就红():
+    """review 那条：豁免原来只按 slug 认——已发的那张卡改写成另一句、照样超一行，
+    也静静放行，「只许减不许加」只管住了名字没管住内容。`frozen_tail_short` 钉 `end`，
+    这张表钉 `point`。"""
+    slug = sorted(gates.legacy("takeaway_point_wrap"))[0]
+    pinned = gates.legacy_table("takeaway_point_wrap")["points"][slug]["close"]
+    assert gates.takeaway_point_problems(_card_spec(pinned, slug)) == []
+    rewritten = _card_spec("落后一盘又被破发 他说只是一直顶住", slug)
+    assert any("直顶住" in p for p in gates.takeaway_point_problems(rewritten))
+    with pytest.raises(SystemExit, match="直顶住"):
+        bic.check_takeaway(rewritten)
+    other_card = _card_spec(pinned, slug)
+    other_card["takeaway"] = {"open": other_card["takeaway"]["close"]}
+    assert gates.takeaway_point_problems(other_card), "钉的是哪张卡也要对得上"
 
 
 def test_收尾卡折行豁免表只许减不许加_名字要真的存在且真的还放不下():
@@ -156,6 +208,13 @@ def test_收尾卡折行豁免表只许减不许加_名字要真的存在且真�
                     if isinstance(c, dict)))
     assert not missing, f"豁免表里有不存在的 slug（写错了就是一盏恒真的绿灯）：{missing}"
     assert not fixed, f"这些已经放得下一行了，从 data/legacy_interview_gates.json 删掉：{fixed}"
+    points = gates.legacy_table("takeaway_point_wrap").get("points") or {}
+    assert set(points) == set(legacy), \
+        f"`points` 和 `slugs` 要一一对应：多 {sorted(set(points) - legacy)}、缺 {sorted(legacy - set(points))}"
+    stale = sorted(f"{s}.{w}" for s, cards in points.items() if s in seen
+                   for w, text in cards.items()
+                   if str(((seen[s].get("takeaway") or {}).get(w) or {}).get("point")) != text)
+    assert not stale, f"钉住的原句和 spec 对不上了（改过就不是存量，删掉这一条）：{stale}"
 
 
 # ── 二、顶栏比分是赢家视角 ───────────────────────────────────────────────
@@ -184,6 +243,13 @@ def test_顶栏比分写成输家视角就红():
     ("7-6(10-8) 3-6 6-2", False),
     ("6-4 3-6 1-0(10-8)", False),               # 抢十代替决胜盘记成 1-0(10-8)
     ("6-4 3-6 [10-8]", False),                  # 方括号的抢十盘算一盘
+    ("6-4 3-6 1-0[10-8]", False),               # 贴着 1-0 的方括号＝抢十盘，同 1-0(10-8)
+    ("6-4 6-7(3) [10-8]", False),               # 抢七输掉的一盘后面单独一格的抢十盘
+    # review 那条：贴在一盘后面的方括号是抢七注脚，原来被数成一盘 → 2:2 误红
+    ("6-7[5-7] 6-4 6-4", False),
+    ("6-7 [5-7] 6-4 6-4", False),               # 单独一格但到不了 10 分：只能是抢七小分
+    ("6-7[5-7] 4-6", True),
+    ("6-4 3-6 [8-10]", True),                   # 抢十盘输了照样算输家视角
     ("6-7(5-7) 4-6", True),                     # 注脚剥干净之后输家视角照样红
     ("7-6(7-5) 3-6 6-7(4-7)", True),
 ])
@@ -271,12 +337,70 @@ def test_预检全绿的合成采访(monkeypatch, tmp_path):
     (lambda s: s["push"].__setitem__("score", "6-3 1-6 4-6"), "输家视角"),
     (lambda s: s["takeaway"]["close"].__setitem__(
         "point", "落后一盘又被破发 他说只是一直顶住"), "直顶住"),
+    # review 那条：`main()` 开头那排里有 `check_cover_hook`，手抄的闸表漏了它
+    (lambda s: s["cover"].update(title=["赢完球", "先谢看台"], hook_accent="不在标题里的词"),
+     "出现了 0 次"),
+    # runner「发布文案前置检查」那一步的全称断言闸（main #1112 起）
+    (lambda s: s["push"].__setitem__("lead", "他此前六次打进正赛，六次全部首轮出局。"),
+     "全称断言"),
+    # `main()` 在套 `en_fixed` 之前先查行号错位：0 起写成 1 起，第 2 行挂上了第 1 行的话
+    (lambda s: s.__setitem__("en_fixed", {"2": "Thank you so much."}), "挂错了行"),
 ])
 def test_预检把runner上必红的spec错在本地报出来(monkeypatch, tmp_path, mutate, expect):
     spec = _full_spec(monkeypatch, tmp_path)
     mutate(spec)
     problems, _ = pf.spec_problems(spec, copy=False)
     assert any(expect in p for p in problems), problems
+
+
+def _leading_checks(fn_name: str) -> list[str]:
+    """`build_interview_clip.<fn_name>` 函数体里**第一排连着的** `check_*(spec)` 调用。"""
+    import ast
+
+    tree = ast.parse((ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8"))
+    fn = next(n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == fn_name)
+    out: list[str] = []
+    for stmt in fn.body:
+        call = stmt.value if isinstance(stmt, ast.Expr) else None
+        name = (call.func.id if isinstance(call, ast.Call) and isinstance(call.func, ast.Name)
+                else "")
+        if name.startswith("check_"):
+            assert [ast.unparse(a) for a in call.args] == ["spec"] and not call.keywords, \
+                f"{fn_name}() 里的 {name} 不再只吃 spec——预检跑不了它，要重新想"
+            out.append(name)
+        elif out:
+            break
+    return out
+
+
+def test_预检的闸和出片那一趟main开头那一排是同一份():
+    """review 那条：`_spec_gates` 是手抄的，`main()` 开头那排早就有 `check_cover_hook`
+    （8f7bbd94 起），闸表里却没有——`hook_accent` 不在标题里，预检和探针都绿，runner
+    第一秒红，stale 规则每 70 分钟再投一次。**按 ast 从 `main()`／`render()` 抠出来比**，
+    两边再也分不了叉；排在最前面的是 runner「发布文案前置检查」那一步的全称断言闸。"""
+    import production_preflight as pp
+
+    main_checks = _leading_checks("main")
+    assert len(main_checks) >= 8 and "check_cover_hook" in main_checks, \
+        f"扫描面坏了：main() 开头只抠到 {main_checks}"
+    expected = main_checks + _leading_checks("render")
+    got = pf._spec_gates(bic)
+    assert got[0] is pp.check_interview_spec_claims
+    assert [g.__name__ for g in got[1:]] == expected
+    assert all(getattr(bic, g.__name__) is g for g in got[1:])
+
+
+def test_探针不要PIL也拦得住封面重点词和全称断言(monkeypatch, tmp_path):
+    """两道都只读 spec、只要标准库——探针那台系统 python3 上照样判得出红，不许记成判不了。"""
+    spec = _full_spec(monkeypatch, tmp_path)
+    _no_pil(monkeypatch)
+    spec["cover"].update(title=["赢完球", "先谢看台"], hook_accent="不在标题里的词")
+    spec["push"]["lead"] = "他此前六次打进正赛，六次全部首轮出局。"
+    red, unknown = pf.probe_problems(spec)
+    assert any(r.startswith("check_cover_hook") for r in red), red
+    assert any(r.startswith("check_interview_spec_claims") for r in red), red
+    assert not any(u.startswith(("check_cover_hook", "check_interview_spec_claims"))
+                   for u in unknown), unknown
 
 
 def test_预检的文案项和runner同一条命令_tag超过五个就红(monkeypatch, tmp_path):
@@ -613,7 +737,12 @@ def test_采访工作流在取字幕之前跑离线预检():
 
 
 #: picker／预检 import 了、但改了也不改变「谁能投」的模块（只出提示）。
-_WAKE_EXEMPT = {"spec_wording": "预检里只拿它出 ⚠️ 提示，不进红的判据"}
+#: ⚠️ `spec_wording` 原来在这儿（预检只拿它出 ⚠️ 措辞提示）——预检接上全称断言闸之后，
+#: `absolute_claims.interview_texts` 的扫描面就是它的 `interview_outward_texts`，改了会变红绿。
+_WAKE_EXEMPT: dict[str, str] = {}
+#: 预检那排闸在 picker／预检之外的模块里：全称断言闸（`production_preflight`）→ 判据本身
+#: （`absolute_claims`）。它们 import 的本地模块同样要叫醒。
+_WAKE_GATE_MODULES = ("production_preflight", "absolute_claims")
 
 
 def test_auto_render被预检和picker的判据改动叫醒():
@@ -628,8 +757,11 @@ def test_auto_render被预检和picker的判据改动叫醒():
         encoding="utf-8"))
     paths = set((wf.get(True) or wf.get("on"))["push"]["paths"])
     local = {p.stem for p in (ROOT / "tools").glob("*.py")}
+    gate_mods = {g.__module__ for g in pf._spec_gates(bic)} - {"build_interview_clip"}
+    assert gate_mods <= set(_WAKE_GATE_MODULES), \
+        f"预检那排闸来自这些模块，`_WAKE_GATE_MODULES` 没跟上：{sorted(gate_mods)}"
     need = set()
-    for mod in ("pick_interview_renders", "interview_preflight"):
+    for mod in ("pick_interview_renders", "interview_preflight", *_WAKE_GATE_MODULES):
         src = (ROOT / "tools" / f"{mod}.py").read_text(encoding="utf-8")
         found = set(_re.findall(r"^\s*(?:from|import) ([a-z_]+)", src, _re.M)) & local
         assert found, f"{mod} 一个本地 import 都没扫到——扫描面坏了"
@@ -650,16 +782,26 @@ def _rows(last_end: float) -> list[dict]:
             {"t": last_end + 0.5, "end": last_end + 0.9, "text": "[Music]"}]
 
 
+#: `interview_tail` 模块 docstring 第一节：话说完就收的 12 条人手终点，离词尾的中位。
+_HUMAN_TRIM_MEDIAN = 0.79
+
+
 @pytest.mark.parametrize(("last_end", "board", "duration"), [
     (111.98, 114.4, 117.42),    # tien-cobolli：第一版 end＝全长 117.42，板从 114.4 起
     (115.35, 116.1, 119.15),    # sabalenka-pegula：end＝全长，板从 116.1 起淡入（已发）
 ])
-def test_没给end时默认收在最后一个词之后_躲开量到的片尾板(last_end, board, duration):
+def test_没给end时默认收在最后一个词之后_偏向多留(last_end, board, duration):
+    """review 那条（首轮 nit 7 起）：默认终点原来是「词尾 ＋ 0.5」，比人手收尾的中位 0.79
+    还紧——为的是躲开 sabalenka-pegula 那张 +0.75 的板，代价是话音后的掌声和庆祝。
+    第四节上线之后自动默认的 `end` 撞上板由出片那一趟当场收
+    （`test_自动默认的end撞上片尾板_直接收到算出来的终点_不红`），躲板不必再从默认值里扣；
+    「默认取值要偏向多留」（tennis-video-craft 2026-08-12）。"""
     import build_interview_request as bir
 
     start, end = bir.request_window({}, duration, _rows(last_end))
-    assert start == 0.0 and end < board, f"默认终点 {end} 压进了 {board} 起的片尾板"
-    assert end >= last_end, "默认终点把最后一个词切掉了"
+    assert start == 0.0 and end >= last_end + _HUMAN_TRIM_MEDIAN - 0.005, \
+        f"默认终点 {end} 离词尾 {last_end} 不到人手收尾的中位 {_HUMAN_TRIM_MEDIAN}：偏向少留了"
+    assert end < duration, "默认终点不许退回源片全长"
     assert bir.request_window({"end": 100.0}, duration, _rows(last_end)) == (0.0, 100.0)
     assert bir.request_window({}, duration, None) == (0.0, duration)
 

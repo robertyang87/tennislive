@@ -30,7 +30,8 @@ CSS：任意字间可断、左边距 92、正文区 838px），改短之后的�
 折点逐字一样**。所以报错里印的折点就是卡上会出现的那个。
 
 全库量过（860px，合并 main 那一刻）：104 张卡里 62 张 `point` 超一行，全是已发的——
-**已发的不重渲**，挂在 `data/legacy_interview_gates.json` 的 `takeaway_point_wrap`，只许减不许加。
+**已发的不重渲**，挂在 `data/legacy_interview_gates.json` 的 `takeaway_point_wrap`，只许减不许加；
+豁免钉在当时那一句上（`points`），改写成另一句就回到正常的闸（`legacy_point_ok`）。
 真要两行，在那张卡里写 `"_wrap_ok": "<为什么>"` 认领。
 
 ⚠️ **「在空格处折成匀称的两行」算不算合格，是账号所有者还没定的口径**（2026-09-27
@@ -174,11 +175,19 @@ def card_lines(text: str, box: float | None = None, *, keep_all: bool = True) ->
     return _fill(text, hi, keep_all)[0]
 
 
+def legacy_point_ok(slug: str, which: str, text: str) -> bool:
+    """这张卡是不是豁免表里那张**原样没动**的存量：slug 在表里，而且这张卡的 `point`
+    还是量的那一刻那一句（`points`）。改写成另一句（哪怕照样超一行）就回到正常的闸——
+    和 `frozen_tail_short` 钉 `end` 同一个道理，「只许减不许加」要管住内容，不只管住名字。"""
+    table = legacy_table("takeaway_point_wrap")
+    if slug not in (table.get("slugs") or ()):
+        return False
+    return ((table.get("points") or {}).get(slug) or {}).get(which) == text
+
+
 def takeaway_point_problems(spec: dict) -> list[str]:
-    """每张卡的 `point` 超出一行 → 一条问题（带折点）。豁免表和 `_wrap_ok` 认领除外。"""
+    """每张卡的 `point` 超出一行 → 一条问题（带折点）。豁免表（钉着原句）和 `_wrap_ok` 认领除外。"""
     slug = str(spec.get("slug") or "")
-    if slug in legacy("takeaway_point_wrap"):
-        return []
     box = point_box_px()
     out = []
     for which, card in (spec.get("takeaway") or {}).items():
@@ -187,6 +196,8 @@ def takeaway_point_problems(spec: dict) -> list[str]:
         if str(card.get("_wrap_ok") or "").strip():
             continue
         text = str(card["point"])
+        if legacy_point_ok(slug, which, text):
+            continue
         if (w := point_width(text)) > box:
             lines = card_lines(text, box)
             shown = " ／ ".join(ln.strip() for ln in lines)
@@ -204,16 +215,32 @@ def takeaway_point_problems(spec: dict) -> list[str]:
 #: 一盘：`6-4`，后面可以跟一个抢七注脚——只写输家小分的 `7-6(5)`，也可能写全的
 #: `7-6(7-5)` / `7-6（10-8）`。**注脚整个吃掉，不许被当成另一盘**：第一版只剥 `(\d+)`，
 #: `6-7(5-7) 6-4 6-4` 里的 `5-7` 会被数成赢家丢的第二盘，2:2 → 误判成输家视角。
-#: 方括号不算注脚：`[10-8]` 是抢十代替的决胜盘，本来就该算一盘。
+#: 方括号要看它**站在哪儿**（`_bracket_notes`）：单独一格、分数到 10 的 `[10-8]` 是
+#: 抢十代替的决胜盘，算一盘；紧贴在一盘后面的 `6-7[5-7]`、或者到不了 10 分的 `[5-7]`
+#: 是那一盘的抢七注脚，不算（review 那条：原来一律算一盘，`6-7[5-7] 6-4 6-4` 数成 2:2 误红）。
 _SET = re.compile(r"(\d+)\s*[-–]\s*(\d+)(\s*[(（]\s*\d+(?:\s*[-–:]\s*\d+)?\s*[)）])?")
+_BRACKET = re.compile(r"(\s*)[\[［]\s*(\d+)\s*([-–:])\s*(\d+)\s*[\]］]")
 _RETIRED = re.compile(r"ret\.?|退赛|w\.?/?o\.?|walkover|不战而胜", re.I)
+
+
+def _bracket_notes(score: str) -> str:
+    """方括号 → 注脚还是一盘：紧贴前一盘（中间没有空格）的改写成圆括号注脚，交给 `_SET`
+    整个吃掉（`1-0[10-8]` 于是和 `1-0(10-8)` 一样算一盘）；单独一格但到不了 10 分的，
+    只可能是抢七小分，删掉；单独一格、到 10 分的是抢十盘，原样留着。"""
+    def one(m: re.Match) -> str:
+        if m.start() > 0 and not m.group(1):
+            return f"({m.group(2)}{m.group(3)}{m.group(4)})"
+        if max(int(m.group(2)), int(m.group(4))) < 10:
+            return m.group(1)
+        return m.group(0)
+    return _BRACKET.sub(one, score)
 
 
 def completed_sets(score: str) -> list[tuple[int, int]]:
     """`push.score` → 打完的盘 [(赢家这边, 对面)]。抢七注脚不算盘；`1-0(10-8)` 这种
     拿抢十代替决胜盘的写法算一盘。"""
     out = []
-    for a, b, tb in _SET.findall(score):
+    for a, b, tb in _SET.findall(_bracket_notes(score)):
         a, b = int(a), int(b)
         if max(a, b) >= 6 or (tb and {a, b} == {0, 1}):
             out.append((a, b))

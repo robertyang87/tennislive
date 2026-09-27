@@ -19,9 +19,14 @@
     片尾板起点
         alcaraz-fritz +0.11 ｜ sabalenka-pegula +0.75（淡入起）｜ tien-cobolli +2.42
 
-取 0.5：比人手收尾的中位略紧，为的是躲开后两张板；alcaraz-fritz 那种话音一落
-就甩板的（+0.11），以及主持人的话**压在板上**还在说的（ruud-zverev、nakashima-mensik、
-jodar-bublik、alcaraz-mensik 的源片都是），按词算不出来，靠下面第二道闸。⚠️ 它**只是没给 end 时的默认值**——人手写的
+取 0.8：人手收尾的中位（0.79）。**默认取值要偏向多留**（tennis-video-craft
+2026-08-12，账号所有者「不要过多剪辑」）——话音一落的掌声、庆祝是真内容。
+⚠️ 第一版取的是 0.5（比中位还紧），为的是躲开 sabalenka-pegula（+0.75）那张板；
+第四节上线之后，**自动默认的 `end` 撞上板由出片那一趟当场收到板前**，躲板不必再拿
+话音后那几帧去换（review 那条）。tien-cobolli（+2.42）照样在默认终点之外；
+alcaraz-fritz 那种话音一落就甩板的（+0.11），以及主持人的话**压在板上**还在说的
+（ruud-zverev、nakashima-mensik、jodar-bublik、alcaraz-mensik 的源片都是），按词本来
+就算不出来，靠下面第二、四节。⚠️ 它**只是没给 end 时的默认值**——人手写的
 `end` 一个字都不动；而且「话说完之后还有 3 秒庆祝」是真内容（谢尔顿那条打电话的
 庆祝就是，源片没有板），所以离线预检对「尾巴没人声」**只报不拦**，拦的是下面这道。
 
@@ -73,7 +78,7 @@ pegula-gauff-cin2026-final-runnerup 1.7、tiafoe-fils-cin2026-final-runnerup 1.3
 ## 四、`end` 是**自动默认值**时，闸直接收到它算出来的终点；人给的照旧红
 
 默认终点（第一节）是按逐词稿算的，它**看不见板**：alcaraz-fritz 那种话音一落就甩板
-（+0.11 秒）、拉沃尔杯四条主持人的话压在板上还在说，「最后一个词 ＋ 0.5」都落在板里。
+（+0.11 秒）、拉沃尔杯四条主持人的话压在板上还在说，「最后一个词 ＋ `DEFAULT_TAIL`」都落在板里。
 这道闸原来对所有 spec 一律红——而自动产出的 spec **没有人会来改 `end`**：它下完源片
 才红，picker 的 stale 规则每 70 分钟重投一次，一直红下去。闸自己已经算出了该收到的
 终点，所以：
@@ -96,7 +101,7 @@ import subprocess
 from pathlib import Path
 
 #: 自动草稿没给 `end` 时：终点＝最后一个词的词尾 ＋ 这么多秒（量法见模块 docstring）。
-DEFAULT_TAIL = 0.5
+DEFAULT_TAIL = 0.8
 #: 离线预检报「最后一个词之后还有这么多秒没人声」的门槛——**只报不拦**。
 QUIET_TAIL_NOTE = 1.5
 
