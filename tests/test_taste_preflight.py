@@ -512,3 +512,20 @@ def test_预检把推断规则列成提醒_从不进退出码(tp, tmp_path, monk
     assert all(r.id not in tail for r in inferred), "推断规则不许出现在闸那一段"
     # 图例、头部提到这个标记（后面不跟反引号编号）不许被认成一条规则
     assert tp.parse_inferred(f"标着〔{tp.INFERRED_TAG}〕的是推断\n- **x**：y｜〔{tp.INFERRED_TAG}〕**") == []
+
+
+def test_采访线预检跑全了main开头那排spec闸_含封面钩子(tp):
+    """`run_interview_checks` 是 `build_interview_clip.main()` 开头那排只读 spec 的闸的
+    预演；少一道，预检报绿、render 第 0.2 秒红——`check_cover_hook` 原来就漏了
+    （2026-09-27 评审 nit）。判据是行为：`hook_accent` 写错，预检那一行就得红。"""
+    spec = json.loads(_PROBE_INTERVIEW.read_text(encoding="utf-8"))
+    def hook(s: dict):
+        got = {r.name: r for r in tp.run_interview_checks(s, "")}.get("check_cover_hook")
+        assert got is not None, "预检没跑 check_cover_hook——main() 开头跑它，预检就得跑"
+        return got
+
+    assert hook(spec).status == "pass", "对照组：真 spec 过得了"
+    bad = copy.deepcopy(spec)
+    bad.setdefault("cover", {})["hook_accent"] = "标题里根本没有这几个字"
+    got = hook(bad)
+    assert got.status == "fail" and "hook_accent" in got.detail, got

@@ -3422,19 +3422,10 @@ def test_轮次写分数式不写N强():
     里面正引着账号所有者那两句原话，含被废掉的旧叫法）——连它一起扫会把
     「把规矩记下来」判成「又违反了规矩」，同一个错这个仓库已经犯过好几次。
     """
+    from tools.spec_wording import non_annotation_strings as outward  # noqa: PLC0415
     from tools.spec_wording import strength_round_hits as bad  # noqa: PLC0415
-
-    def outward(obj):
-        if isinstance(obj, dict):
-            for k, v in obj.items():
-                if isinstance(k, str) and k.startswith("_"):
-                    continue
-                yield from outward(v)
-        elif isinstance(obj, list):
-            for v in obj:
-                yield from outward(v)
-        elif isinstance(obj, str):
-            yield obj
+    # ↑ 面和 `promote_interview_draft.promote_all` 的转正闸共用一份（含 `zh`）：
+    # 这条对自动 spec 也是硬的，转正闸各抄一份就会分叉成「转正放行、main 红」。
 
     offenders = {}
     for path in _specs():

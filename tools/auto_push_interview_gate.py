@@ -94,6 +94,16 @@ class AlreadyAccepted(Skip):
     """当前成片已经被 PushPlus 接收；点名重放可安全地成功 no-op。"""
 
 
+class GateRed(Skip):
+    """**闸拦住了**：这条片子本该发，是内容过不了闸才没发。
+
+    和别的 `Skip`（没开 auto、账本已发、不是渲染产物……）不是一类：那些是「本来就
+    不该发」，这个是 CLAUDE.md「仍然要停下来的只有两种」里的「闸拦住了」——要当场修，
+    所以 `pick()` 打 `::error::`，不能和一串 `[跳过]` 混在一条绿 run 的日志里
+    （「没有人会去读一条绿 run 的日志」）。2026-09-27 评审。
+    """
+
+
 def _tracked_bytes(repo: Path, path: Path) -> bytes:
     """稀疏检出下读取仓库版本；工作区有文件时也只认当前字节。"""
     rel = path.relative_to(repo) if path.is_absolute() else path
@@ -489,7 +499,7 @@ def wants_auto_push(repo: Path, slug: str, outdir: Path) -> None:
     try:
         check_copy_bilingual(json.loads(spec.read_text(encoding="utf-8")), root=repo)
     except SystemExit as exc:
-        raise Skip(f"{slug}：{exc}") from None
+        raise GateRed(f"{slug}：{exc}") from None
 
     cover_scan_gate(repo, slug, outdir)
 
@@ -537,6 +547,9 @@ def pick(changed: list[str], repo: Path) -> tuple[str, Path] | None:
         try:
             slug, outdir = candidate(path.strip(), repo)
             wants_auto_push(repo, slug, outdir)
+        except GateRed as why:
+            print(f"::error::[闸拦住了，没发] {why}")
+            continue
         except Skip as why:
             print(f"[跳过] {why}")
             continue

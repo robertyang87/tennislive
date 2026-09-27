@@ -406,10 +406,21 @@ def promote_all(*, write: bool = False) -> tuple[list[str], list[str]]:
         # 同样绕过 CI（自动链直推 main），所以采访线的转正入口也要过全套。
         # 红一次好过豁免表长一格；跳过不炸，草稿留在原地等终审。
         copy_text = xhs_copy(spec)
-        from spec_wording import check_interview_copy_wording  # noqa: PLC0415
+        from spec_wording import (check_interview_copy_wording,  # noqa: PLC0415
+                                  non_annotation_strings, strength_round_hits)
         if problems := check_interview_copy_wording(spec, copy_text):
             skipped.append(
                 f"{f.name}: 措辞不合规矩（{'；'.join(problems)}），不提升")
+            continue
+        # 上面那道故意不扫 `zh`（译文），而全库测试 `test_轮次写分数式不写N强` 扫整份
+        # spec **含 `zh`**、对自动 spec 也是硬的：译文把 quarterfinals 写成「八强」，
+        # 转正直推 main 就是 main 红（评审 2026-09-27，bonzi-winston-salem-2026-r 草稿
+        # 「大概是八强左右」）。同一份面（`non_annotation_strings`），留草稿等人改译文——
+        # 不替他改，也不往翻译提示里加约束（账号所有者 2026-09-27：不再加强那两个模型）。
+        if hits := strength_round_hits(non_annotation_strings(spec)):
+            skipped.append(
+                f"{f.name}: 字幕或文案把轮次写成「N 强」（{'、'.join(hits)}），不提升"
+                "——改成 1/8决赛 / 1/4决赛 / 半决赛 / 决赛")
             continue
         # 全称断言（「唯一一个」「N 次打进，N 次都…」）同一个座位拦：转正之后
         # interview-clip 会被自动 dispatch，前置检查 `production_preflight`

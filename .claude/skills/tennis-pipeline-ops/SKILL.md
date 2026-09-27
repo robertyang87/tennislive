@@ -4524,6 +4524,11 @@ spec 也不改），销章看 `_protected`：人核过（`transcript_verified` /
 这张表里每一条全库测试对它都只报；同一个盲区早在 8/29 就让 `is_pending` 放行了一次重建
 （519816362 给这条 `opening.why` 写着「按账号所有者明确要求不补冷开场」的片子挂上了 `lead_in`）。
 `_protected` 现在读账本，两处一起堵上。
+⚠️ **读账本的代价：只把 `SPECS` / `OUTDIR` 指到 tmp_path 的测试会静静读到真账本**（账本跟着 `ROOT` 走）。
+合 main 时撞上过：`test_人工请求的_claims跟进正式spec_没认领在build那一刻就红` 拿真的已发 slug 走 `_build_one`，
+读到 `accepted`，红在「已确认版本受保护」上。拿真 slug 走 `build_interview_request` 的测试用
+`@pytest.mark.usefixtures("_empty_interview_ledger")`（`publication_ledger.INTERVIEW_LEDGER_ENV`）；
+**不做成 autouse**——全库扫描要读真账本才认得出锦织圭那条推过。
 
 | 全库测试（只对未销章的自动 spec 只报） | 拦同一个缺陷的渲染闸 |
 |---|---|
@@ -4533,7 +4538,7 @@ spec 也不改），销章看 `_protected`：人核过（`transcript_verified` /
 | `test_interview_visual::test_封面重点词写错了在spec闸就红_不等出封面`（全库那一圈） | `main()` 开头 `check_cover_hook` |
 | `test_topline_format::test_新片子的顶栏赛事行都合格式[interviews]`（连草稿：`oncourt` 草稿的 `event` 是「2026 中国网球公开赛」） | `main()` 开头 `check_topline_format` |
 | `test_interview_clip::test_新的采访片必须认领怎么开头` | `main()` 开头 `check_opening`（`promote_interview_draft` 只给三种核验方式补 `opening`） |
-| `test_interview_clip::test_文案不许再提中英双语字幕` | **这次新装**：`main()` 的 `check_copy_bilingual`（式子和 78 个文件的豁免表搬进 `build_interview_clip`，测试和闸读同一份）；`.xhs.txt` 不在 QC 哈希链里，所以**推送闸 `wants_auto_push` 再查一次**（渲完到推之间手改正文） |
+| `test_interview_clip::test_文案不许再提中英双语字幕` | **这次新装**：`main()` 的 `check_copy_bilingual`（式子和 78 个文件的豁免表搬进 `build_interview_clip`，测试和闸读同一份）；`.xhs.txt` 不在 QC 哈希链里，所以**推送闸 `wants_auto_push` 再查一次**（渲完到推之间手改正文；拦下时打 `::error::`，不混进一串 `[跳过]`） |
 | `test_interview_clip::test_TennisTV的源片必须真的把台标挪出窗口` | **这次新装**：`main()` 的 `check_tennistv_logo`；`promote_interview_draft` 转正 Tennis TV 草稿时按 `TENNISTV_CROP_SHIFT`（−0.06，台标左沿推出来的）补上，自动链不再停在这道闸上 |
 
 ⚠️ **没有渲染闸的照判，不许拿这个判据当通用豁免**：`test_explainer::test_人名要以译名表为准`
@@ -4545,6 +4550,11 @@ spec 也不改），销章看 `_protected`：人核过（`transcript_verified` /
 `build_interview_clip.main()` / `wants_auto_push` 一个都不查（`check_interview_copy_wording` 只在
 `promote_interview_draft` 和 `taste_preflight` 里跑，而且不扫 `zh`）。**自动链还能经由这四条把 main 打红**；
 堵法是同一个：先在 `main()` 装同一个判据，再让测试对自动 spec 只报。
+⚠️ 其中「N 强」那条**草稿转正那条路堵上了一半**（评审 2026-09-27：main 上真草稿
+`bonzi-winston-salem-2026-r` 的 DeepSeek 译文「大概是八强左右」，转正 `check_interview_copy_wording`
+返回空、全库测试红）：`promote_all` 按全库测试同一份面（`spec_wording.non_annotation_strings`，**含 `zh`**）
+跑 `strength_round_hits`，命中就留草稿。**人工请求那条路（`build_interview_request` 直接写正式 spec）
+仍然不查**——译文命中时是让 build 红、还是标 `manual_review_required`，没替账号所有者定。
 ⚠️ **这些「照判」拦不住出片，只守 main 的绿**：GITHUB_TOKEN 推的提交不触发 ci.yml，自动链提交完
 渲染已经派出去了，全库测试是之后才跑的。所以「照判」的意思是「这条缺陷只有它在查，红给下一个人工
 PR 看」，不是「它挡在出片前面」。

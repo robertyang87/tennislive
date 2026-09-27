@@ -157,12 +157,12 @@ def test_promote给TennisTV草稿补台标那一挪_渲染闸放行(tool):
     draft = _draft(url=tv)
     draft["source_verification"] = dict(draft["source_verification"], source_url=tv)
     spec = tool.promote(draft, who)
-    assert spec["crop_shift_x"] == clip.TENNISTV_CROP_SHIFT
+    assert spec.get("crop_shift_x") == clip.TENNISTV_CROP_SHIFT, "转正没给 Tennis TV 草稿补台标那一挪"
     assert clip.tennistv_logo_problem(spec) is None, "补了还过不了渲染那道闸"
     assert "crop_shift_x" in (clip.tennistv_logo_problem(draft) or ""), "对照组：草稿本身过不了"
 
     kept = dict(draft, crop_shift_x=-0.1)
-    assert tool.promote(kept, who)["crop_shift_x"] == -0.1, "人写过的不许覆盖"
+    assert tool.promote(kept, who).get("crop_shift_x") == -0.1, "人写过的不许覆盖"
     boxed = dict(draft, logo_box=[1, 2, 3, 4])
     assert "crop_shift_x" not in tool.promote(boxed, who), "走 logo_box 的不再挪窗口"
     assert "crop_shift_x" not in tool.promote(_draft(), who), "不是 Tennis TV 的不挪"
@@ -298,5 +298,37 @@ def test_手改过的草稿带着没认领的全称断言_转正时留草稿(too
     draft_p.write_text(json.dumps({**base, "_claims": {
         claim: "逐场表核过 https://a.example/x ；https://b.example/y"}}),
         encoding="utf-8")
+    promoted, skipped = tool.promote_all(write=True)
+    assert promoted and not skipped, (promoted, skipped)
+
+
+def test_字幕译文把轮次写成N强_转正时留草稿(tool, monkeypatch, tmp_path):
+    """`check_interview_copy_wording` 故意不扫 `zh`（译文），而全库测试
+    `test_轮次写分数式不写N强` 扫整份 spec、含 `zh`，对自动 spec 也是硬的——转正直推
+    main 就是 main 红。主语是 main 上真草稿 `bonzi-winston-salem-2026-r` 的那一行
+    （评审 2026-09-27）。改成 1/4决赛 照常转正（闸不是一刀切掉译文）。"""
+    specs = tmp_path / "specs" / "interviews"
+    specs.mkdir(parents=True)
+    draft_p = specs / "zverev-cincinnati-2026-r3.draft.json"
+    base = {**_draft(), "source_title": "Cincinnati 2026 R3 Alexander Zverev Interview"}
+    monkeypatch.setattr(tool, "SPECS", specs)
+
+    class _Digest:
+        results = [_match("Zverev A.", "Atmane T.", winner_idx=0)]
+
+    monkeypatch.setattr(tool, "_collect_digests", lambda: [_Digest()])
+    monkeypatch.setattr(tool, "player_zh", lambda en: {
+        "Zverev A.": "兹维列夫", "Atmane T.": "阿特马内"}.get(en, en))
+
+    draft_p.write_text(json.dumps({**base, "zh": ["大概是八强左右，所以是的，我很开心"]}),
+                       encoding="utf-8")
+    promoted, skipped = tool.promote_all(write=True)
+    assert promoted == [], promoted
+    assert any("N 强" in s and "八强" in s for s in skipped), skipped
+    assert draft_p.exists(), "拦下来的草稿要留在原地等终审"
+    assert not (specs / "zverev-cincinnati-2026-r3.json").exists()
+
+    draft_p.write_text(json.dumps({**base, "zh": ["大概是 1/4 决赛左右，所以是的，我很开心"]}),
+                       encoding="utf-8")
     promoted, skipped = tool.promote_all(write=True)
     assert promoted and not skipped, (promoted, skipped)
