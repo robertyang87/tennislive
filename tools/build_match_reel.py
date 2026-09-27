@@ -7961,6 +7961,15 @@ def validate_spec(
             f"{detail}"
         )
     check_archival_fit(spec, segments)
+    # 素材与格式那几道（封面用时、数据统计图、图片解码、封面复用、字幕数字），
+    # 原来要等 render 甚至合并之后才红——逻辑和来路在 tools/reel_asset_gates.py，
+    # 这儿只接一刀。排在最后：别的闸先报，已有的判据报错顺序不变。
+    from reel_asset_gates import spec_asset_problems  # noqa: PLC0415
+    hard, soft = spec_asset_problems(spec)
+    for note in soft:
+        print(f"[素材] 自动 spec，只报不拦：{note}")
+    if hard:
+        raise ReelError("\n\n".join(hard))
     return segments
 
 
@@ -10167,28 +10176,20 @@ def main() -> int:
             # 的字数比真推送少了一整段。bencic-townsend 就是这么骗过 dry-run 的：
             # 这儿报「959 字」，真推送报「1086 字，超过 1000 字上限」
             # （run 31249674110）。两处必须算同一件事，缺一步就分叉。
-            try:
-                column = push_reel.column_of(copy_path)
-                meta = push_reel.push_meta(copy_path)
-                title = push_reel.headline(
-                    Path(args.outdir), column, meta["matchup"], meta["score"],
-                    meta["event"], meta["summary"])
-                text_with_title = f"{title}\n\n{text}"
-            except SystemExit as exc:
-                # ⚠️ **退路不许把第一段甩掉。** 原来这儿写 `text_with_title =
-                # text`，于是 `split_copy` 把文件自己的第一段当标题免费扔了，
-                # 估出来比真推送少一整段——eala-story 那次这儿报 859 字、
-                # 真闸报 1019 字（run 31658290756，合并之后才红，微信没发出去
-                # 但白跑一趟）。它确实**打了警告**，可它同时给了一个具体数字，
-                # 而一个具体数字就是会被读成结论。
-                #
-                # 拼一个占位标题就够了：`split_copy` 甩掉的是第一行加空行，
-                # 标题本身本来就不算进 1000 字上限，所以**算出来的 body 长度
-                # 和真推送一模一样**——不是「估得保守一点」，是完全对得上。
-                print(f"[dry-run] ⚠️ 算不出真推送会拼的标题（{exc}）——"
-                      "**用占位标题估**：标题不算进 1000 字上限，所以正文字数"
-                      "和真推送一致，不会因此变松")
-                text_with_title = f"（占位标题）\n\n{text}"
+            # ⚠️ 标题和正文走**推送自己那个函数**（`push_reel.prepare_copy`，runner 上
+            # `production_preflight` 调的也是它），日期取北京今天。原来这儿自己拼标题、
+            # 拿 `--outdir /tmp/dryrun` 调 `headline()`——那个目录里没有日期，于是
+            # **每一趟**都撞上「取不到日期」、退回占位标题，标题那两道字数闸在本地一次
+            # 都没跑过（2026-09-27 取证）。现在算不出标题就是红：runner 上一样过不去。
+            # 正文也换成推送真发的那一份（补过活动 tag、去掉和标题重复的首行），
+            # 1000 字量的和真推送是同一段字（eala-story run 31658290756 那笔老账）。
+            from reel_asset_gates import push_copy_check  # noqa: PLC0415
+            title, pushed_body, problem = push_copy_check(copy_path)
+            if problem:
+                print(f"[dry-run] 推送文案前置检查不过（和 runner 上 production_preflight "
+                      f"同一个函数）：\n  {problem}")
+                return 1
+            text_with_title = f"{title}\n\n{pushed_body}"
             _title, body = push_reel.split_copy(text_with_title)
             print(f"[dry-run] 文案 {copy_path.name}："
                   f"正文 {len(body)} 字（上限 1000）、tag {tags} 个"

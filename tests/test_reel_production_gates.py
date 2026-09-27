@@ -276,8 +276,11 @@ def test_双语字幕调用也实际加载制作skill并纠正核实人名():
 
 
 def _ready_draft(tmp_path: Path) -> dict:
+    # 真图，不是占位字节：`validate_spec` 现在要把引用的每张图解到底
+    # （tools/reel_asset_gates.py，zheng-you 那张半截 PNG 白渲两趟之后加的）
+    from PIL import Image
     photo = tmp_path / "cover.jpg"
-    photo.write_bytes(b"photo")
+    Image.new("RGB", (1600, 2000), (40, 90, 60)).save(photo, "JPEG")  # 撑得满 1080×1440
     return {
         "_draft": True,
         "slug": "demo-match",
