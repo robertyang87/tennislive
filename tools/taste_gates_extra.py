@@ -69,12 +69,18 @@ def _quote_texts(seg: dict) -> list[str]:
     return out
 
 
-def _outward(spec: dict) -> list[str]:
-    """会发出去的字：旁白、cover/push/topbar 里非注解的字符串、原声段的双语字幕。"""
+def _our_copy(spec: dict) -> list[str]:
+    """**我们写的**字：旁白、cover/push/topbar 里非注解的字符串、钩子。不含原声段——
+    `quote` 是解说／当事人自己的话的双语字幕，照实翻（账号所有者 2026-09-19「精彩的原声
+    解说……配上中英文字幕保留下来」），管「我们的文案怎么写」的硬闸不许扫它。"""
     from spec_wording import outward_deep  # noqa: PLC0415
 
-    texts = [str(t) for t in outward_deep(spec) if t]
-    texts.append(_hook_text(spec))
+    return [str(t) for t in outward_deep(spec) if t] + [_hook_text(spec)]
+
+
+def _outward(spec: dict) -> list[str]:
+    """会发出去的字：`_our_copy` ＋ 原声段的双语字幕。只给只报的提醒用。"""
+    texts = _our_copy(spec)
     for seg in spec.get("segments") or []:
         if isinstance(seg, dict):
             texts += _quote_texts(seg)
@@ -148,9 +154,9 @@ def total_margin_problem(spec: dict) -> str | None:
         return None
     return ("钩子／推送标题拿全场总分差说事：" + "、".join(bad) + "。\n"
             "账号所有者 2026-09-19：「以后尽量避免比较全场得分只差几分……其实网球差距就在"
-            "一两分的关键分」。差距写在关键分上（几个破发点、盘点、赛点，救了几个，第几个"
-            "兑现），或者拿人物的来路当影子（chung-nagal「背伤毁掉的生涯／他咬了三小时翻"
-            "回来」）。旁白和小红书正文不管。")
+            "一两分的关键分」。差距写在关键分上（几个盘点、赛点，对手救下了几个——钩子里"
+            "不写「破发」「抢七」，账号所有者 2026-09-27），或者拿人物的来路当影子"
+            "（chung-nagal「背伤毁掉的生涯／他咬了三小时翻回来」）。旁白和小红书正文不管。")
 
 
 # ─────────────────────────────────────── ② 「三个赛点只兑现了一个」的同义反复 ──
@@ -168,9 +174,12 @@ ONE_OF_N_LEGACY = frozenset({"bouzkova-jovic"})
 
 
 def one_of_n_problem(spec: dict, xhs_text: str | None = None) -> str | None:
+    """只扫我们写的字（`_our_copy` ＋ 小红书正文），不扫原声段：解说喊一句「三个盘点只
+    拿下一个」照实配双语字幕，不许因此把手写 spec 拦在渲染入口——和采访那边不扫 `zh`
+    同一个形状（`test_赛点同义反复只管我们的文案_解说原声照实翻`）。"""
     if _slug(spec) in ONE_OF_N_LEGACY:
         return None
-    hits = _hits(ONE_OF_N, _outward(spec) + ([xhs_text] if xhs_text else []))
+    hits = _hits(ONE_OF_N, _our_copy(spec) + ([xhs_text] if xhs_text else []))
     if not hits:
         return None
     return (f"写了「N 个赛点／盘点只兑现了一个」：{hits}——赢家永远只兑现最后一个，"
@@ -606,15 +615,32 @@ SCREEN_COUNT = re.compile(
 _DELIVERED = frozenset({"sent", "accepted"})
 
 
-def already_published(slug: str, ledger: str) -> bool:
-    """`data/<ledger>/<slug>.json` 里有一条发出去了的记录。读一个文件，不扫目录。
+def reel_ledger_dir() -> Path:
+    """竖版短片的发布账本——只认 `reel_facts.REEL_LEDGER_DIR` 这一个出处（它认
+    `TENNISLIVE_REEL_LEDGER_DIR`，`tests/conftest.py::_empty_reel_ledger` 钉得住）。
+    **调用时再取**：模块级抄一份的话 monkeypatch 够不着，判据测试就只能读真账本。"""
+    import reel_facts  # noqa: PLC0415
+
+    return Path(reel_facts.REEL_LEDGER_DIR)
+
+
+def interview_ledger_dir() -> Path:
+    """采访线的发布账本——只认 `auto_push_interview_gate.LEDGER_DIR`（相对仓库根）。"""
+    import auto_push_interview_gate  # noqa: PLC0415
+
+    return ROOT / auto_push_interview_gate.LEDGER_DIR
+
+
+def already_published(slug: str, ledger_dir: Path) -> bool:
+    """`<ledger_dir>/<slug>.json` 里有一条发出去了的记录。读一个文件，不扫目录。
+    `ledger_dir` 从 `reel_ledger_dir()` / `interview_ledger_dir()` 拿，别在这儿再拼一份路径。
 
     只给「汉字数字」那条只报用：它在全库 307 条里报一半（规矩之前的写法），而已发的不为
     文案重渲——对一条已经发出去的片子每趟 dry-run 都印一遍，只会把它训练成没人看的噪音
     （review 量过：09-17 之后手改的 114 条里 35 条会印）。⚠️ 账本 2026-08-24 起才有，更早
     发的那批查不到、照旧会印；那批本来就很少再被跑到。"""
     try:
-        doc = json.loads((ROOT / "data" / ledger / f"{slug}.json").read_text(encoding="utf-8"))
+        doc = json.loads((Path(ledger_dir) / f"{slug}.json").read_text(encoding="utf-8"))
     except (OSError, ValueError):
         return False
     attempts = doc.get("attempts") if isinstance(doc, dict) else None
@@ -669,7 +695,7 @@ def spec_taste_extra(spec: dict) -> tuple[list[str], list[str]]:
     if note := peng_shuai_note(_outward(spec)):
         soft.append(note)                     # 转述来的规则：只报，永不做成闸（见 peng_shuai_note）
     cover, push = spec.get("cover") or {}, spec.get("push") or {}
-    numerals = None if already_published(_slug(spec), "reel_publish_ledger") else \
+    numerals = None if already_published(_slug(spec), reel_ledger_dir()) else \
         screen_numerals_note([("钩子", cover.get("hook")), ("副标题", cover.get("topic")),
                               ("推送标题", push.get("summary"))])
     for note in (hook_identity_note(spec), social_first_note(spec), numerals,
@@ -714,7 +740,7 @@ def interview_taste_extra(spec: dict, xhs_text: str | None = None
     hard = [p for p in (total_margin_problem(shadow), one_of_n,
                         xhs_markdown_problem(xhs_text)) if p]
     soft = [n for n in (peng_shuai_note(texts + ([xhs_text] if xhs_text else [])),
-                        None if already_published(_slug(spec), "interview_publish_ledger") else
+                        None if already_published(_slug(spec), interview_ledger_dir()) else
                         screen_numerals_note([("标题", title), ("推送标题", push.get("summary"))]),
                         nickname_note([str(z) for z in spec.get("zh") or []])) if n]
     return hard, soft

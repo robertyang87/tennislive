@@ -45,7 +45,11 @@ def _court(**cover) -> dict:
 def test_钩子和推送标题不拿全场总分差说事():
     # chung-nagal 第一版（3a72b12e^），账号所有者 2026-09-19 否掉的原文
     rejected = _court(hook="一盘落后翻上来\n全场只多赢一分")
-    assert T.total_margin_problem(rejected)
+    msg = T.total_margin_problem(rejected)
+    assert msg
+    # 改法提示不许把人往 O6 上送（09-27：钩子里「破发」「抢七」也不用）——照着「写破发点」
+    # 改完，下一趟就红在 O6 上，又是一轮返工（review 第 3 轮）
+    assert "破发点" not in msg and "不写「破发」「抢七」" in msg, msg
     assert T.total_margin_problem({**_court(hook="背伤毁掉的生涯\n他咬了三小时翻回来"),
                                    "push": {"summary": "纳瓦罗多赢一分逆转"}})
     for hook in ("总分九十七平\n最后四局全拿走", "她少赢了七个小分\n比分却是她赢"):
@@ -110,6 +114,22 @@ def test_采访的赛点同义反复只管我们的文案_当事人的原话照�
     assert not T.interview_taste_extra(said)[0], "当事人的原话被判成了我们的文案"
     wrote = {**iv, "takeaway": {**(iv.get("takeaway") or {}), "point": "三个盘点只兑现了一个"}}
     assert any("只兑现了一个" in h for h in T.interview_taste_extra(wrote)[0]), "我们写的照样红"
+
+
+def test_赛点同义反复只管我们的文案_解说原声照实翻():
+    """赛场之上那一面同一个形状：`quote` 段是转播解说自己的话（账号所有者 2026-09-19
+    「精彩的原声解说……配上中英文字幕保留下来」），解说喊一句「三个盘点只拿下一个」就照实
+    配双语字幕，不许因此把手写 spec 在 `--dry-run` 拦红（review 第 3 轮复现过这个假红）。"""
+    spec = _reels()["alcaraz-fritz-laver-cup-2026"]
+    assert not T.spec_taste_extra(spec)[0], "底稿原样要是绿的"
+    seg = next(i for i, s in enumerate(spec["segments"]) if s.get("_quote_kind") == "broadcast")
+    said = {**spec, "segments": [dict(s) for s in spec["segments"]]}
+    said["segments"][seg]["quote"] = [
+        {"at": 5.28, "text": "Three set points, and he only converts one!\n三个盘点，他只拿下了一个！"}]
+    assert not T.spec_taste_extra(said)[0], "解说的原话被判成了我们的文案"
+    wrote = {**spec, "segments": [dict(s) for s in spec["segments"]]}
+    wrote["segments"][0]["narration"] = "三个盘点，他只拿下了一个。"
+    assert any("只拿下了一个" in h for h in T.spec_taste_extra(wrote)[0]), "我们写的旁白照样红"
 
 
 # ─────────────────────────────────────────────────── ③ 彭帅（转述来的，只报） ──
@@ -323,19 +343,44 @@ def test_只报的四道真的会报_也不会报错好写法():
     assert T.nickname_note(["你支持的是凯斯还是我"]) is None
 
 
-def test_汉字数字那条只对还没发出去的片子出声():
+def _ledger(directory: Path, slug: str, status: str) -> None:
+    directory.mkdir(parents=True, exist_ok=True)
+    (directory / f"{slug}.json").write_text(json.dumps(
+        {"slug": slug, "attempts": [{"status": status, "at": "2026-09-19T02:36:40Z"}]}),
+        encoding="utf-8")
+
+
+def test_汉字数字那条只对还没发出去的片子出声(_empty_reel_ledger, monkeypatch, tmp_path):
     """它在全库报一半（规矩之前的写法），而已发的不为文案重渲——对已经发出去的片子每趟
-    dry-run 都印一遍，只会把它训练成没人看的噪音。按发布账本认「发出去了」。"""
-    spec = _reels()["chung-nagal-davis-cup-2026"]
+    dry-run 都印一遍，只会把它训练成没人看的噪音。按发布账本认「发出去了」。
+
+    ⚠️ 账本一律钉在 tmp_path 上（`reel_facts.REEL_LEDGER_DIR` 那行注释：判据测试一律不许读
+    真账本）——所以 `already_published` 的路径只从 `reel_ledger_dir()` / `interview_ledger_dir()`
+    来；它原来自己拼 `ROOT/data/<账本>`，fixture 钉不住（review 第 3 轮）。"""
+    slug = "chung-nagal-davis-cup-2026"
+    spec = _reels()[slug]
     assert T.screen_numerals_note([("钩子", spec["cover"]["hook"])]), "底稿要真的有汉字计数"
-    assert T.already_published("chung-nagal-davis-cup-2026", "reel_publish_ledger")
+    assert T.reel_ledger_dir() == _empty_reel_ledger, "fixture 钉不住账本路径"
+    _, soft = T.spec_taste_extra(spec)
+    assert [n for n in soft if "汉字" in n], "账本是空的＝没发过，照旧要报"
+    _ledger(_empty_reel_ledger, slug, "sent")
     _, soft = T.spec_taste_extra(spec)
     assert not [n for n in soft if "汉字" in n], soft
     _, soft = T.spec_taste_extra({**spec, "slug": "chung-nagal-new"})
     assert [n for n in soft if "汉字" in n], "没发过的照旧要报"
-    assert T.already_published("alcaraz-fritz-laver-cup-2026-interview",
-                               "interview_publish_ledger"), "采访账本写的是 accepted"
-    assert not T.already_published("no-such-slug", "reel_publish_ledger")
+    _ledger(_empty_reel_ledger, "failed-once", "failed")
+    assert not T.already_published("failed-once", T.reel_ledger_dir()), "失败的那次不算发出去"
+    assert not T.already_published("no-such-slug", T.reel_ledger_dir())
+
+    import auto_push_interview_gate  # noqa: PLC0415
+
+    iv_dir = tmp_path / "interview-ledger"
+    monkeypatch.setattr(auto_push_interview_gate, "LEDGER_DIR", iv_dir)
+    iv = {"slug": "x-interview", "cover": {"title": ["三天前刚拿冠军", "「我一直相信自己」"]}}
+    assert [n for n in T.interview_taste_extra(iv)[1] if "汉字" in n], "没发过的采访照旧要报"
+    _ledger(iv_dir, "x-interview", "accepted")
+    assert T.already_published("x-interview", T.interview_ledger_dir()), "采访账本写的是 accepted"
+    assert not [n for n in T.interview_taste_extra(iv)[1] if "汉字" in n]
 
 
 # ═════════════════════════════════════════════ 全库误伤 0 ＋ 存量表只许减 ══
