@@ -5875,6 +5875,7 @@ def probe_dry_run(spec: dict, segments: list["Segment"]) -> bool:
     | 这条源片的死球时刻整个没量过 | `point_ends`／`scorebox_guess` | 只报，**见下** |
     | 源片分辨率不到 1080p | `height` | **硬**，2026-08-23 补的，见下 |
     | 段窗口撞源片静音区、旁白盖不住 | `silent_audio` | 必红的对谁都硬；大概率红的**自动 spec 硬、手写只报**（`silence_findings`） |
+    | 回贴开关和板对不上（开着却一帧板都没有／关着而板连着在） | `board` | 见 `probe_board.board_findings`（2026-09-27） |
 
     ⚠️ **1080p 那条 2026-08-18 就定了，实现晚了五天。** 「视频一定要选
     1080p 及以上的清晰度，如果没有的话就等」是账号所有者说得最重的一条，
@@ -6037,6 +6038,13 @@ def probe_dry_run(spec: dict, segments: list["Segment"]) -> bool:
     # ⑦ 回贴的开关在镜头中间翻转——2026-09-13 补的，理由见
     #    `board_paste_flips_mid_shot` 的 docstring。**只报不拦。**
     flips_drawn, flips_broadcast = board_paste_flips_mid_shot(segments, probes, urls)
+
+    # ⑧ 回贴：probe 逐帧量过的板对 spec 的每一段——render 会在哪一段红，0.2 秒就知道。
+    from probe_board import board_findings  # noqa: PLC0415
+    b_hard, b_soft = board_findings(spec, segments, probes, urls,
+                                    profile=scoreboard_profile(spec, segments), tail=SEG_FADE)
+    hard.extend(b_hard)
+    soft.extend(b_soft)
 
     if mid:
         mid.sort(reverse=True)          # 越靠中间越可疑，排前面
@@ -9950,6 +9958,10 @@ def main() -> int:
             print(f"[区间] 只看 {clip_from:.1f}–"
                   f"{(clip_to if clip_to is not None else duration):.1f}s"
                   "（缩略图上烧的仍是源片绝对秒数）")
+        # **板在不在、右缘在哪，也趁源片还在的时候逐帧量**——render 用的同一套判据，
+        # 后台线程和下面的切点、缩略图墙一起跑，写 probe.json 前收（tools/probe_board.py）。
+        from probe_board import BoardScan  # noqa: PLC0415
+        board_scan = BoardScan(source, (w, h), clip_from, clip_to)
         cuts = scene_changes(source, start=clip_from, stop=clip_to)
         # **低门槛那一份也趁源片还在的时候量。** 和死球时刻同一个道理：源片
         # 渲完就删，事后想查得自己再下一份几百 MB。
@@ -10004,6 +10016,7 @@ def main() -> int:
                     "（--dry-run 会按旁白离线估预判这一层）")
         else:
             print("[静音] 量过：源片音频没有 ≥0.8s 的静音区间")
+        board = board_scan.finish(args.scorebox or scorebox_guess or "")
         (outdir / "probe.json").write_text(json.dumps({
             "url": args.url, "width": w, "height": h, "duration": duration,
             "fps": fps_expr, "fps_value": round(fps, 3),
@@ -10031,6 +10044,8 @@ def main() -> int:
             # 预览就会稳稳地画错一段，而且不吭声。
             "every": args.every,
             "captions": captions.name if captions else None,
+            # 逐帧量的板（在不在、右缘在哪），dry-run 拿它预判回贴（probe_board.board_findings）
+            "board": board,
         }, ensure_ascii=False, indent=2), encoding="utf-8")
         print("缩略图墙:", ", ".join(s.name for s in sheets))
         return 0
