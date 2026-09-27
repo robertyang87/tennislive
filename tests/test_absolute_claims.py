@@ -253,6 +253,41 @@ def test_采访线自动转正的模板文案过得了全称断言那道闸():
     assert A.interview_problem(spec, spec["slug"]), "人写的文案不在自动分流里，要硬拦"
 
 
+def _interview_request(slug: str) -> dict:
+    """一份内联的人工采访请求，形状照 `requests/interviews/zverev-tien-laver-cup-2026-interview.json`
+    剪的（复审 2026-09-27 的 nit）：原来这几条测试直接读仓库里的真请求，那几份一归档、
+    改名，测试就死在 FileNotFoundError 上，什么都没测。文案里没有全称断言，原样过得了闸。"""
+    return {
+        "slug": slug,
+        "url": "https://www.youtube.com/watch?v=SJlfFppeoF4",
+        "source": "Laver Cup",
+        "source_title": "Alexander Zverev On-Court Interview | Laver Cup 2026 Match 10",
+        "requested_content_type": "on_court",
+        "received_at": "2026-09-27T15:58:40Z",
+        "event": "2026 拉沃尔杯 第三天",
+        "winner": "兹维列夫",
+        "featured_player": "兹维列夫",
+        "opening": {"kind": "none", "why": "官方场上采访，源片就是采访本身。"},
+        "match": {
+            "id": f"2026:laver-cup:{slug}", "event": "2026 Laver Cup",
+            "event_search": "Laver Cup", "round": "Day 3 Match 10 (singles)", "year": 2026,
+            "winner": "兹维列夫", "loser": "勒纳·钱", "participants": ["兹维列夫", "勒纳·钱"],
+            "winner_en": "Alexander Zverev", "loser_en": "Learner Tien",
+            "score": "7-6(3) 6-3", "court": "The O2",
+        },
+        "cover": {"frame_at": 30, "title": ["前一天握赛点被逆转", "兹维列夫锁定欧洲夺冠"],
+                  "sub": "拉沃尔杯第三天单打 赛后场上采访", "tag": "2026 拉沃尔杯 · 兹维列夫"},
+        "takeaway": {"close": {"point": "前一天被逆转 今天他亲手锁定冠军",
+                               "ask": "欧洲队13比5夺冠 下一届你看好谁？"}},
+        "push": {"matchup": "兹维列夫 vs 勒纳·钱", "score": "7-6(3) 6-3", "event": "",
+                 "summary": "兹维列夫赛后开麦",
+                 "lead": "兹维列夫 7-6(3)、6-3 胜勒纳·钱，欧洲队 13-5 夺回拉沃尔杯。",
+                 "auto": False},
+        "xhs": "前一天握着赛点被逆转，今天兹维列夫亲手把拉沃尔杯拿回了欧洲。\n\n"
+               "#网球时差 #拉沃尔杯 #兹维列夫 #赛后开麦",
+    }
+
+
 def test_人工请求的_claims跟进正式spec_没认领在build那一刻就红(tmp_path, monkeypatch):
     """人工请求**不经过草稿**：`build_interview_request` 直接写 specs/interviews/<slug>.json，
     `promote_all` 那道闸看不见它。所以要两件事——
@@ -262,14 +297,14 @@ def test_人工请求的_claims跟进正式spec_没认领在build那一刻就红
     ② 没认领的在 build 那一刻（`production_preflight.check_request`，ASR／翻译之前）就红，
        报错指回请求文件——不等 dispatch 之后再红一趟。
 
-    复现（对抗 review 2026-09-27）：alcaraz-fritz 的真请求，push.lead 换成一句计数式。
+    复现（对抗 review 2026-09-27）：一份真请求的形状（`_interview_request`），
+    push.lead 换成一句计数式。
     """
     import build_interview_request as B  # noqa: PLC0415
     import interview_source_gate  # noqa: PLC0415
     import production_preflight as PP  # noqa: PLC0415
 
-    req = json.loads((ROOT / "requests" / "interviews"
-                      / "alcaraz-fritz-laver-cup-2026-interview.json").read_text("utf-8"))
+    req = _interview_request("claims-follow-interview")
     slug = req["slug"]
     benign = copy.deepcopy(req)
     claim = "他此前六次打进正赛，六次全部首轮出局。"
@@ -292,7 +327,7 @@ def test_人工请求的_claims跟进正式spec_没认领在build那一刻就红
     assert f"requests/interviews/{slug}.json 的 `_claims`" in str(err.value)
     assert not copies, "断言那一关排在文案检查前面，红了就不用再起子进程"
     PP.check_request({**req, "_claims": sourced})
-    PP.check_request(benign)                        # 真请求原样过得了
+    PP.check_request(benign)                        # 没改过的请求原样过得了
     assert len(copies) == 2
 
     # ③ 「只改元数据」那条路（转写相关的键没变，不重跑 ASR）：
@@ -379,6 +414,7 @@ def test_一条人工请求没过闸_不连坐同一趟的其余请求(tmp_path,
     ① `build_interview_request --failed-list` 退出 0，好的那条照常落盘；坏的那条一个字节
        都不写、`::error file=` 指回请求文件、记进失败清单；
     ② 提交那一步跳过坏的那条的转写，好的照常 add（真跑那段 bash，git 打桩）；
+    ④ dispatch 那一步也跳过坏的那条（它的正式 spec 还是上一版），好的照常投；
     ③ 最后一步读失败清单：有就写 run 摘要、把整趟标红；没有就绿。
     """
     import subprocess  # noqa: PLC0415
@@ -405,8 +441,7 @@ def test_一条人工请求没过闸_不连坐同一趟的其余请求(tmp_path,
     monkeypatch.setattr(brief, "Chat", _Ready)
 
     def seed(name: str, lead: str) -> tuple[str, Path]:
-        benign = json.loads((ROOT / "requests" / "interviews" / f"{name}.json")
-                            .read_text("utf-8"))
+        benign = _interview_request(name)
         slug = benign["slug"]
         (out / slug).mkdir(parents=True)
         (out / slug / "cap_asr.json3").write_text("{}", encoding="utf-8")
@@ -421,12 +456,11 @@ def test_一条人工请求没过闸_不连坐同一趟的其余请求(tmp_path,
                                                    encoding="utf-8")
         return slug, requests_dir / f"{name}.json"
 
-    bad_slug, bad_path = seed("alcaraz-fritz-laver-cup-2026-interview",
-                              "他此前六次打进正赛，六次全部首轮出局。")
-    good_slug, _ = seed("zverev-tien-laver-cup-2026-interview",
-                        "兹维列夫拿下决定性的 3 分，欧洲队夺回拉沃尔杯。")
+    bad_slug, bad_path = seed("unclaimed-interview", "他此前六次打进正赛，六次全部首轮出局。")
+    good_slug, _ = seed("benign-interview", "兹维列夫拿下决定性的 3 分，欧洲队夺回拉沃尔杯。")
     bad_before = {p: p.read_bytes() for p in (specs / f"{bad_slug}.json",
-                                              specs / f"{bad_slug}.xhs.txt", bad_path)}
+                                              specs / f"{bad_slug}.xhs.txt", bad_path,
+                                              out / bad_slug / "cap_asr.json3")}
     assert len(B.pending_paths()) == 2, "两条都该是待 build 的——不然下面测的不是「同一趟」"
 
     # ① 一条红、一条照常写；退出码不因为单条变 1
@@ -479,6 +513,31 @@ def test_一条人工请求没过闸_不连坐同一趟的其余请求(tmp_path,
     assert f"output/interviews/{bad_slug}/" not in ran.stdout.replace(f"[跳过] {bad_slug}", "")
     assert f"[跳过] {bad_slug}" in ran.stdout
 
+    # ④ dispatch 那一步：没过闸的那条不投——它的正式 spec 还是上一版，上一版的 render 要是
+    #    没落地（过了 STALE_MINUTES），pick 会把它当待渲再投，push.auto 的话旧版就抢先发了
+    #    （复审 2026-09-27 的 nit）。pick / gh / git 打桩，真跑那段 bash。
+    dispatch = _workflow_run("dispatch 未 render 的正式 spec（每 slug 一个 run，并行）")
+    stubs = ('python() { if [ "$2" = "--mark-one" ]; then echo "MARK $3"; '
+             f'else printf "待渲：\\n%s\\n%s\\n" {bad_slug} {good_slug}; fi; }}\n'
+             'gh() { echo "GH $*"; }\ngit() { echo "GIT $*"; }\n')
+
+    def dispatched(listing: Path) -> subprocess.CompletedProcess:
+        body = (dispatch.replace("/tmp/request-failed.txt", str(listing))
+                .replace("/tmp/todo.txt", str(tmp_path / "todo.txt")))
+        return subprocess.run(["bash", "-eo", "pipefail", "-c", stubs + body],
+                              cwd=tmp_path, capture_output=True, text=True, timeout=30,
+                              env={**os.environ, "GITHUB_STEP_SUMMARY": str(tmp_path / "d.md")})
+
+    ran = dispatched(failed)
+    assert ran.returncode == 0, ran.stderr
+    assert f"-f slug={good_slug} -f mode=render" in ran.stdout and f"MARK {good_slug}" in ran.stdout
+    assert f"slug={bad_slug}" not in ran.stdout and f"MARK {bad_slug}" not in ran.stdout
+    assert f"[跳过] {bad_slug}" in ran.stdout
+    # 清单空着（这一趟都过了闸）：两条照常投——上面那句不投不是把 dispatch 整个关了
+    ran = dispatched(tmp_path / "none-failed.txt")
+    assert ran.returncode == 0, ran.stderr
+    assert all(f"MARK {s}" in ran.stdout for s in (bad_slug, good_slug)), ran.stdout
+
     # ③ 最后一步：有失败就写摘要、整趟标红；清单空着就绿
     report = _workflow_run(report_name)
     summary = tmp_path / "summary.md"
@@ -504,8 +563,7 @@ def test_check_request逐条调用不许把sys_path越撑越长(monkeypatch):
     import production_preflight as PP  # noqa: PLC0415
 
     monkeypatch.setattr(PP, "check_copy", lambda *a, **k: None)
-    req = json.loads((ROOT / "requests" / "interviews"
-                      / "zverev-tien-laver-cup-2026-interview.json").read_text("utf-8"))
+    req = _interview_request("sys-path-interview")
     PP.check_request(req)
     before = list(sys.path)
     for _ in range(3):

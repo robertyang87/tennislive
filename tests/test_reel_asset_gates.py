@@ -357,10 +357,43 @@ def test_同一个数不许一半中文一半阿拉伯():
 
 # ─────────────────────────────────────────────────── 全库：零误报、只许减 ──
 
-def _specs():
-    for path in sorted((ROOT / "specs" / "reels").glob("*.json")):
+def _specs(folder: Path | None = None):
+    for path in sorted((ROOT / "specs" / "reels" if folder is None else folder).glob("*.json")):
         spec = json.loads(path.read_text(encoding="utf-8"))
         yield str(spec.get("slug") or path.stem), spec
+
+
+#: 本地（带 `output/**/pushed.json`）量到 276 条发出去过、runner 视角（只剩账本）151 条。
+#: 下限只防「`first_sent` 读不到任何记录、封面复用那一格整个空转」，不追具体条数。
+_MIN_JUDGED_REUSE = 100
+
+
+def _corpus_reuse_hits(*, judge_output: Path | None = None, specs: Path | None = None,
+                       ledger: Path | None = None, output: Path | None = None,
+                       root: Path = ROOT) -> tuple[list[str], int]:
+    """全库封面复用：`(红了的, 判了几条)`，判法和渲染入口（`spec_asset_problems`）一致。
+
+    两刀，都是复审（2026-09-27）在临时 worktree 里复现过的：
+    - **只算同一栏目**。跨栏目入口只报不拦（「同一件事，不同栏目各讲一次不算重复」）；
+      拿不分栏目的 `cover_reuse_problem` 判全库，会比入口严。
+    - **只判自己发出去过的**（「发没发过」按本地出处认，`judge_output` 只换判的那一步——
+      runner 视角那条要是也按账本认，08-24 之前只在 `pushed.json` 里的老片子一条都判不到，
+      它就空转了）。已发的片子判词是定死的：闸只看**比我先发**的那几条，以后谁再发都翻
+      不动它。没发过的那条，判词会随别人的一次推送翻面——`data/reel_publish_ledger/
+      eala-zheng.json` 落一笔 sent，`eala-washington-story` 就红了，而那一笔是
+      auto-push 在 main 上提交的，CI 红在一个没有 PR 可修的地方。没发过的由它自己
+      渲染那一刻的 dry-run 判（`spec_asset_problems` 的 `at_render`）。
+    """
+    bad, judged = [], 0
+    for slug, spec in _specs(specs):
+        if gates.first_sent(slug, ledger=ledger, output=output) is None:
+            continue
+        judged += 1
+        found = gates.cover_reuse_finding(spec, specs=specs, ledger=ledger, root=root,
+                                          output=output if judge_output is None else judge_output)
+        if found and found[1]:
+            bad.append(f"{slug}: {found[0].splitlines()[0]}")
+    return bad, judged
 
 
 def test_全库存量对新闸零误报():
@@ -368,24 +401,57 @@ def test_全库存量对新闸零误报():
 
     图片这里只查**在不在**（整张解码 300 条 spec 要 20 秒，交给 dry-run 按条做；
     坏块由 `test_仓库里的图都解得开` 在全库那一层兜住）。
+    封面复用那一道的判法见 `_corpus_reuse_hits`。
     """
     bad = []
     for slug, spec in _specs():
         found = [gates.duration_problem(spec), gates.stats_card_problem(spec),
-                 gates.cover_reuse_problem(spec), *gates.numeral_display_problems(spec)]
+                 *gates.numeral_display_problems(spec)]
         found += [f"{where} 指的 {rel} 不在"
                   for where, rel in gates._images_in(spec) if not (ROOT / rel).is_file()]
         bad += [f"{slug}: {p.splitlines()[0]}" for p in found if p]
+    reuse, judged = _corpus_reuse_hits()
+    assert judged >= _MIN_JUDGED_REUSE, f"封面复用只判到 {judged} 条——发布记录读不到了？"
+    bad += reuse
     assert not bad, "新闸在存量上红了：\n  " + "\n  ".join(bad)
 
 
 def test_runner视角下封面复用那道闸和本地一样零误报():
     """runner 上不检出 `output/`（只剩发布账本）。这道闸在那儿要么和本地一样判，
     要么少报——**不许多报**：多报就是本地绿、runner 红，正是这次要消掉的分叉。"""
-    no_output = ROOT / "does-not-exist-output"
-    bad = [slug for slug, spec in _specs()
-           if gates.cover_reuse_problem(spec, output=no_output)]
-    assert not bad, f"runner 视角下这几条会红、本地却是绿的：{bad}"
+    bad, judged = _corpus_reuse_hits(judge_output=ROOT / "does-not-exist-output")
+    assert judged >= _MIN_JUDGED_REUSE, f"封面复用只判到 {judged} 条——发布记录读不到了？"
+    assert not bad, "runner 视角下这几条会红、本地却是绿的：\n  " + "\n  ".join(bad)
+
+
+def test_别人的一次推送不许把全库扫描翻红(tmp_path):
+    """复审复现的那一笔：账本给一条没发过的 spec 记一次 sent，全库那两条测试就红在
+    **另一条**没发过、跨栏目的 spec 上。这里把几种形状摆在一起：没发过的两条（同栏目／
+    跨栏目）不判；后发、跨栏目借图的只报不算；后发、同栏目借图的**照样红**——
+    证明扫描没被关掉，只是和渲染入口判得一样。"""
+    specs, ledger, output = tmp_path / "specs", tmp_path / "ledger", tmp_path / "output"
+    for folder in (specs, ledger, output, tmp_path / "assets"):
+        folder.mkdir()
+    _jpg(tmp_path / "assets" / "shared.jpg")
+    cover = {"portrait": {"image": "assets/shared.jpg"}}
+    for slug, column, sent in (("just-sent", "赛场之上", "2026-09-28T01:00:00Z"),
+                               ("later-story", "网球有故事", "2026-09-28T05:00:00Z"),
+                               ("later-reel", "赛场之上", "2026-09-28T06:00:00Z"),
+                               ("never-reel", "赛场之上", None),
+                               ("never-story", "网球有故事", None)):
+        (specs / f"{slug}.json").write_text(json.dumps(
+            {"slug": slug, "cover": {"eyebrow": column, **cover}}), encoding="utf-8")
+        if sent:
+            (ledger / f"{slug}.json").write_text(json.dumps(
+                {"attempts": [{"status": "sent", "at": sent}]}), encoding="utf-8")
+    kw = {"specs": specs, "ledger": ledger, "output": output, "root": tmp_path}
+    bad, judged = _corpus_reuse_hits(**kw)
+    assert judged == 3
+    assert [b.split(":")[0] for b in bad] == ["later-reel"], bad
+    # 没发过的那条不是闸放过了，是留给它自己渲染那一刻：同栏目照样硬红
+    never = json.loads((specs / "never-reel.json").read_text(encoding="utf-8"))
+    found = gates.cover_reuse_finding(never, legacy_set=NONE, **kw)
+    assert found and found[1] is True and "just-sent" in found[0]
 
 
 @pytest.mark.parametrize("kind,check,cap", [
@@ -512,6 +578,29 @@ def test_封面复用只有同一栏目才硬红_跨栏目只报(tmp_path, monke
     assert any("wang-garland" in h for h in hard) and not soft
     hard, soft = gates.spec_asset_problems(story)
     assert not hard and any("跨栏目" in s for s in soft)
+
+
+def test_跨栏目的命中排在前面_不许盖掉同栏目的(tmp_path):
+    """闸原来在第一次命中就返回：按文件名排在前面的恰好是一条跨栏目的（网球有故事先借过
+    这张图），后面那条同栏目、先发出去的赛场之上就被盖掉——该硬红的降成了只报。"""
+    kw = _reuse_world(tmp_path)
+    for slug, column, sent in (("a-story", "网球有故事", "2026-09-01T00:00:00Z"),
+                               ("b-reel", "赛场之上", "2026-09-02T00:00:00Z")):
+        (kw["specs"] / f"{slug}.json").write_text(json.dumps(
+            {"slug": slug, "cover": {"eyebrow": column,
+                                     "portrait": {"image": "assets/wang-copy.jpg"}}}),
+            encoding="utf-8")
+        (kw["ledger"] / f"{slug}.json").write_text(json.dumps(
+            {"attempts": [{"status": "sent", "at": sent}]}), encoding="utf-8")
+    reel_spec = {"slug": "z-reel", "cover": {"eyebrow": "赛场之上",
+                                              "portrait": {"image": "assets/wang-copy.jpg"}}}
+    found = gates.cover_reuse_finding(reel_spec, **kw)
+    assert found and found[1] is True and "`b-reel`" in found[0], found
+    # 只有跨栏目的命中时，照旧报第一条跨栏目的（只报不拦）
+    story = {"slug": "z-story", "cover": {"eyebrow": "网球有故事-外传",
+                                           "portrait": {"image": "assets/wang-copy.jpg"}}}
+    found = gates.cover_reuse_finding(story, **kw)
+    assert found and found[1] is False and "`a-story`" in found[0], found
 
 
 def test_存量表读不到时当没有存量_不许抛(monkeypatch, tmp_path):

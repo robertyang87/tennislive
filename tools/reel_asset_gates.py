@@ -392,6 +392,10 @@ def cover_reuse_finding(spec: dict, *, specs: Path | None = None,
         by_size.setdefault(path.stat().st_size, []).append(path)
     published = _published(*_record(ledger, output))
     my_sent = published.get(slug)
+    mine_col = str((spec.get("cover") or {}).get("eyebrow") or "")
+    # 跨栏目的命中先记着、接着往下找：按文件名排在前面的恰好是一条跨栏目的，不许把
+    # 后面那条同栏目的盖掉（a-story 先发、b-reel 后发、我是赛场之上——该硬红的被降成只报）
+    cross: tuple[str, bool] | None = None
     for other_path in sorted(Path(SPECS if specs is None else specs).glob("*.json")):
         other_slug = other_path.stem
         their_sent = published.get(other_slug)
@@ -421,14 +425,17 @@ def cover_reuse_finding(spec: dict, *, specs: Path | None = None,
                 # 第二个值＝同一栏目。CLAUDE.md「同一件事，不同栏目各讲一次不算重复」：
                 # 存量 7 次命中里 6 次是网球有故事借同一个人的赛场之上封面，唯一的证据
                 # （wang-prozorova「换一张封面吧」）是同栏目同站——跨栏目只报不拦。
-                mine_col = str((spec.get("cover") or {}).get("eyebrow") or "")
                 their_col = str((other.get("cover") or {}).get("eyebrow") or "")
-                return (f"封面照片 {rel} 已经在 `{other_slug}` 上发出去过（{their_sent}）——"
-                        "读者刷到的是同一张图。换一张这一场自己的图（官方图库／抽帧，见 "
-                        "tennis-cover-photos）；真要沿用（同一个人的系列、按要求重做）就在 "
-                        "spec 顶层写 `_cover_reuse_why` 说清为什么。",
-                        mine_col == their_col)
-    return None
+                found = (f"封面照片 {rel} 已经在 `{other_slug}` 上发出去过（{their_sent}）——"
+                         "读者刷到的是同一张图。换一张这一场自己的图（官方图库／抽帧，见 "
+                         "tennis-cover-photos）；真要沿用（同一个人的系列、按要求重做）就在 "
+                         "spec 顶层写 `_cover_reuse_why` 说清为什么。",
+                         mine_col == their_col)
+                if found[1]:
+                    return found
+                cross = cross or found
+                break
+    return cross
 
 
 # ─────────────────────────────────────────────────────── ⑥ 字幕里的数字 ──

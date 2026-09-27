@@ -228,7 +228,8 @@ jobs:
 
       # 一条请求没过闸（没认领的全称断言、封面 zoom 越界、窗口无效……）不连坐：
       # 每条各自 build，失败的那条什么都不写、`::error file=` 指回请求文件、记进
-      # /tmp/request-failed.txt；这一步照样退出 0，后面补片头、提交、dispatch 照常走，
+      # /tmp/request-failed.txt；这一步照样退出 0，后面补片头、提交、dispatch 照常走
+      # （没过闸的那几个 slug 在提交和 dispatch 两步都跳过），
       # 最后一步「人工请求没过闸」再把整趟标红。原来单条红就整步退出 1，别的请求
       # 白转写一遍、没提交，每 10 分钟重来一趟。判据
       # `tests/test_absolute_claims.py::test_一条人工请求没过闸_不连坐同一趟的其余请求`。
@@ -260,6 +261,9 @@ jobs:
           git config user.email "noreply@anthropic.com"
           git add specs/interviews
           git add requests/interviews
+          # 防御性的一刀：没过闸的那条本来一个字节都不写（build 的落盘全排在所有闸之后，
+          # 测试钉着），所以它的 cap_asr.json3 要么不在、要么还是上次提交的那份。这里跳过
+          # 是防哪天有人把写挪到闸前面——今天它不拦任何东西。
           FAILED_SLUGS=""
           if [ -s /tmp/request-failed.txt ]; then
             FAILED_SLUGS=$(cut -f2 /tmp/request-failed.txt)
@@ -296,8 +300,20 @@ jobs:
           set -o pipefail
           python tools/pick_interview_renders.py | tee /tmp/todo.txt
           mapfile -t SLUGS < <(tail -n +2 /tmp/todo.txt | grep -v '^$' || true)
+          # 这一趟人工请求没过闸的 slug 不投：改过的请求没落盘，此刻的正式 spec 还是上一版。
+          # 上一版的 render 要是一直没落地（过了 STALE_MINUTES），pick 会把它当待渲再投一次，
+          # push.auto 的话旧版就抢在改过的请求前面发出去了。不记 dispatch 状态，
+          # 下一趟请求过了闸自然接上。
+          BLOCKED=""
+          if [ -s /tmp/request-failed.txt ]; then
+            BLOCKED=$(cut -f2 /tmp/request-failed.txt)
+          fi
           FAILED=()
           for slug in "${SLUGS[@]}"; do
+            if [ -n "$BLOCKED" ] && printf '%s\n' "$BLOCKED" | grep -qxF -- "$slug"; then
+              echo "[跳过] $slug 这一趟人工请求没过闸，不投上一版 spec"
+              continue
+            fi
             RECEIVED_AT=$(date -u +%FT%TZ)
             echo "[dispatch] interview-clip render $slug"
             if gh workflow run interview-clip.yml --ref main \
