@@ -78,16 +78,17 @@
     "hook_accent": "连赢8局",
     "_hook_why": "第一行是关键局面：第一盘 4-5 她发球 30-40，吉布森拿到盘点（flashscore `30:40 |B1| |B2|`，解说「she was set point down」）；第二行是结果：从 5-5 起连赢 8 局（WTA 赛后稿标题 `Fernandez wins final eight games`）拿下冠军。同一个人、同一条线的「铺垫→落点」；8 字、8 字，没有破发／抢七这类术语，「盘」可以用（2026-09-27 口径）。",
     "topic": "WTA500 新加坡 决赛 · 费尔南德斯 VS 吉布森",
-    "_subject_why": "赢家、冠军；照 solo 默认放赢家。",
+    "_subject_why": "赢家、冠军；账号所有者点名封面用捧杯照（2026-09-27）。",
     "_heat_why": "决赛（2026-08-12：半决赛级别的都要做）；账号所有者亲口点的题（截图）。",
     "portrait": {
-      "frame_at": 244.4,
-      "focus": 0.55,
-      "focus_y": 0.3,
+      "image": "assets/reel/fernandez-gibson-final-trophy.jpg",
+      "focus": 0.5,
+      "focus_y": 0.5,
       "zoom": 1.0,
-      "_frame_why": "⚠️ 抽帧，不是官方实拍——走账号所有者 2026-09-26 的常设授权（「没有高清大图可备选的话，抽帧也可以，但是要尽量清晰偏正面的图片」），登记进 `OWNER_APPROVED_FRAME_COVERS`。\n四类源各查过（北京 19:20 前后，终场后约 40 分钟）：① 官方图库——`tools/find_cover_photo.py --player Fernandez --event Singapore` 两趟 WTA photo-resources、AP 都是 0；手扫 WTA 官网新闻、视频、赛事页、球员页的 `photo-resources/2026/09/27/`，本场只有一张：赛后稿 4582367 的头图 `270927-l-fernandez-vs-t-gibson-5.jpg`（6769×4515），已下载打开看过——**她低头看向地面、眼皮垂着**，过不了「睁眼、正脸」那道（B8），不用；另一张 `CmUQT2u4.jpg` 是视频缩略图（吉布森发球）。② 赛事官网 singaporetennisopen.com 沙箱 ProxyError（`--discover` 五扇门全不通，同站 `wang-prozorova` 记过）。③ 集锦里没有捧杯画面（颁奖只拍到捧花致辞）。④ Getty / X / Instagram 沙箱搜不了。\n**这一帧**：源片 244.4s，冠军点之后切到的近景（frame-grab 逐 0.2 秒抽了 242.4~251.6，1920 宽）：**正脸、双眼睁着、咧嘴大笑、左拳举过头**，是这一段脸最清楚的一帧；245.4 之后双臂张开、脸被动作糊掉，246 起低头走向网前。",
-      "_low_res_why": "源片 1920×1080，铺 1080×1440 按高算 1.33 倍（抽帧的理由见 `_frame_why`）。",
-      "_focus_why": "focus 0.55：这一帧脸的中心在源片横向约 1060px（0.55），3:4 窗口取 655~1465，左下角转播记分条（右缘 550）在窗外、右上角球拍头部分出画；脸在纵向 200~420px（台头带 0~170 之下、钩子带 790 之上，按 1.33 倍折成封面 y 267~560）。"
+      "_owner_words": "账号所有者 2026-09-27：「用他举起奖杯的照片做封面吧」。",
+      "_frame_why": "⚠️ 抽帧，不是官方实拍——账号所有者点名要捧杯照（2026-09-27），走 2026-09-26 的常设授权（「没有高清大图可备选的话，抽帧也可以，但是要尽量清晰偏正面的图片」）（素材是预裁进仓库的图，不走 `frame_at`，所以不用登记 `OWNER_APPROVED_FRAME_COVERS`）。\n捧杯的官方实拍查过（北京 20:20 前后，终场后约 1.5 小时）：WTA photo-resources 9/27 目录本场仍只有赛后稿头图一张（比赛中低头握拳，不是捧杯）；`find_cover_photo.py` AP 0 张；Yahoo／The Big Lead／TennisNow／CBC 的稿子配的都是旧图；比赛集锦 `972H4pIo248` 颁奖段只拍到捧花致辞、没有捧杯；赛事官网沙箱够不着。\n**这一帧**：WTA 官方 YouTube Short `oN3peuz8iaY`（「Your Champion, Leylah Annie Fernandez! 🏆」，1080×1920，frame-grab 落在 `output/2026-09-27/frames/fernandez-gibson-final-trophy/`）13.5s：她站在中心球场上双手把奖杯捧到胸前，**正脸、双眼睁着、笑**，身后是 `WTA500`、`THE KALLANG`、`OCBC ARENA` 挡板＝本场场地。0.5s 起每一帧都烧着英文字幕，13.5s 那一条 `BYE.` 落在源片 y≈1400~1480，所以预裁取 (90,170)–(990,1370)，字幕整条在框外；0s 那一帧没字幕但她张嘴说话，不如这一帧。",
+      "_low_res_why": "预裁 900×1200，铺 1080×1440 放大 1.2 倍（源是竖版 Short，只能在字幕上方裁 3:4）。",
+      "_focus_why": "预裁已经是 3:4，focus 居中即可：脸在封面 y≈440~700（台头带 0~170 之下），奖杯顶在 y≈830，钩子两行压在奖杯和上衣上、不压脸。"
     },
     "scoreboard": {
       "court": "OCBC Arena",
