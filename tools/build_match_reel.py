@@ -5086,7 +5086,14 @@ def _word_splits(spec, segments, voices) -> list[tuple[int, str, list, list, str
 
     ⚠️ **喂进去的必须是 `speakable()` 之后那份**——合成器念的是它，不是 spec 里
     写的那份。拿原文去 find token，「硬地」那种替换过的字一个都对不上。
+
+    ⚠️ **要保护的名字也得换成念出来的样子**（2026-09-27 换字表扩到十几条之后）：
+    名字里有字被换（「鲁塞」→「鲁赛」），拿原名去换过字的那份里找，一处都找不到，
+    `word_split_report` 就当这段没有这个名字——**保护静默失效**。按字位从合成那份
+    里切（`pronounce.spoken_forms`），两份字数 1:1。
     """
+    from tennislive.video.pronounce import spoken_forms  # noqa: PLC0415
+
     out = []
     names = _protected_names(spec)
     for index, seg in enumerate(segments):
@@ -5097,7 +5104,8 @@ def _word_splits(spec, segments, voices) -> list[tuple[int, str, list, list, str
         if not marks:
             continue
         spoken = speakable(text)
-        line, crossing, inside = word_split_report(spoken, marks, names)
+        line, crossing, inside = word_split_report(
+            spoken, marks, spoken_forms(readable(text), names))
         tokens = [t for t in (str(m.get("text", "")).strip() for m in marks) if t]
         out.append((index, line, crossing, inside, spoken, tokens))
     return out
@@ -10143,6 +10151,17 @@ def main() -> int:
         segments = validate_spec(spec)
         total = sum(s.length for s in segments)
         print(f"[dry-run] spec 形状没问题：{len(segments)} 段，画面共 {total:.1f}s")
+        # **多音字：换字表管不到的，出片前列出来。** 账号所有者 2026-09-27「配音 tts
+        # 里的多音字最好在生成语音时候替换成同音的字」——换字表（video/pronounce.py）
+        # 只收量过读错的；新写的旁白里冒出来的新词，在这儿（0.x 秒、不联网）先报一声，
+        # 要真合成比对就照它印的那行跑 `check_polyphones.py --measure`。**只报不拦**：
+        # 静态这一半是 pypinyin 的代理，不是合成器本身，做成硬闸就是一条常年红。
+        # 排在查选段、文案、估旁白那几道会 `return 1` 的闸前面：哪一道先红，这几行都照样印。
+        sys.path.insert(0, str(Path(__file__).resolve().parent))
+        import check_polyphones  # noqa: PLC0415
+
+        print("\n" + "\n".join(check_polyphones.report_lines(
+            check_polyphones.reel_texts(spec), slug=Path(args.spec).stem)))
         # **选段的机械判据全在 probe.json 里躺着，而这儿原来不看它。**
         #
         # 这句注释原来写的是「裁切越界、frame_at 超出片长这类要等源片，这里

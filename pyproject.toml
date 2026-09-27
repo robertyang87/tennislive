@@ -33,7 +33,14 @@ dependencies = [
 # 判据落在 `test_测试用到的第三方包都在dev依赖里`。
 # `pytest-xdist` 是 CI 那行 `-n auto` 要的。缺了它 pytest 报
 # `unrecognized arguments: -n`——**红得很响，不会假绿**，所以这一条不用另设判据。
-dev = ["pytest>=7.0", "pytest-xdist>=3.5", "ruff>=0.6", "pyyaml>=6.0"]
+# `pypinyin` 是多音字预检（`tools/check_polyphones.py`）拿读音的——`tests/test_pronounce.py`
+# 真跑它的静态那一半，CI 上没有就 ImportError。
+dev = ["pytest>=7.0", "pytest-xdist>=3.5", "ruff>=0.6", "pyyaml>=6.0", "pypinyin>=0.50"]
+# 多音字：`tools/check_polyphones.py`（静态，只要 pypinyin；`render --dry-run` 缺它就出声说
+# 「这趟没查」）和 `--measure` / `tools/measure_polyphone.py`（真合成器声学比对，要全套）。
+# 生产的换字本身（`video/pronounce.py`）一个第三方包都不用。
+polyphone = ["pypinyin>=0.50", "numpy>=1.24", "librosa>=0.10", "praat-parselmouth>=0.4",
+             "edge-tts>=7.0"]
 # HTML/Chromium 精细卡片渲染（缺失时自动回退 Pillow 版）
 webrender = ["playwright>=1.40"]
 # numpy 一直是 opencv-python-headless 的传递依赖，装 visualqa 就有——但
