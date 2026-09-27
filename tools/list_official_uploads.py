@@ -91,21 +91,28 @@ def spec_surnames(spec: dict) -> list[str]:
     """
     found: list[str] = []
 
-    def add(full: str, country: str = "") -> None:
-        toks = [t for t in re.split(r"\s+", str(full or "").strip()) if t]
-        if not toks:
-            return
-        picks = [toks[-1]]
-        if country.upper() in _EAST_ASIAN and len(toks) > 1:
-            picks.append(toks[0])                   # 「Zheng Qinwen」「Qinwen Zheng」都有人写
-        for pick in picks:
-            if pick not in found:
-                found.append(pick)
+    def add(full: str, country="") -> None:
+        # 双打一边写成「C. Alcaraz / J. Mensik」、country 是 `["ESP", "CZE"]`：先按「/」
+        # 拆成两个人各取姓——原来整串只取最后一个词，四个人只认出两个
+        people = [p for p in re.split(r"\s*/\s*", str(full or "").strip()) if p.strip()]
+        countries = (list(country) if isinstance(country, (list, tuple))
+                     else [country] * len(people))
+        for i, person in enumerate(people):
+            toks = [t for t in re.split(r"\s+", person.strip()) if t]
+            if not toks:
+                continue
+            nation = str((countries[i] if i < len(countries) else "") or "")
+            picks = [toks[-1]]
+            if nation.upper() in _EAST_ASIAN and len(toks) > 1:
+                picks.append(toks[0])               # 「Zheng Qinwen」「Qinwen Zheng」都有人写
+            for pick in picks:
+                if pick not in found:
+                    found.append(pick)
 
     cover = spec.get("cover") if isinstance(spec.get("cover"), dict) else {}
     for side in cover.get("matchup") or []:
         if isinstance(side, dict):
-            add(side.get("name_en") or "", str(side.get("country") or ""))
+            add(side.get("name_en") or "", side.get("country") or "")
     match = spec.get("_match") if isinstance(spec.get("_match"), dict) else {}
     for key in ("winner_en", "loser_en"):
         add(match.get(key) or "")
@@ -154,8 +161,9 @@ def _uploads_playlist(channel_id: str) -> str:
 def parse_uploads_page(page: str, now: _dt.datetime) -> list[dict]:
     """上传列表页（`/playlist?list=UU…`）→ `[{video_id, title, published, approx}]`。
 
-    时间只有「12h ago / 1d ago」这种相对量：换成**最早可能的发布时刻**（`1d ago`
-    记成 24 小时前），并标 `approx`——窗口判断宁可放进来让人看一眼，也别漏。
+    时间只有「12h ago / 1d ago」这种相对量：换成**最晚可能的发布时刻**（`1d ago`
+    真实落在 24~48 小时前，记成 24 小时前——离现在最近的那一头），并标 `approx`：
+    窗口判断宁可放进来让人看一眼，也别漏。
     """
     m = re.search(r"var ytInitialData = (\{.*?\});</script>", page or "", re.DOTALL)
     if not m:

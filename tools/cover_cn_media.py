@@ -234,7 +234,10 @@ def _window(date: str | None, days: int) -> tuple[_dt.datetime, _dt.datetime] | 
 def sweep_cn_media(names: list[str], *, date: str | None = None, days: int = 2,
                    city: str | None = None, max_articles: int = 6,
                    session: requests.Session | None = None, sizes: bool = True) -> dict:
-    """两条中文渠道一起扫。返回 `{"rows": [...], "notes": [...], "ran": [...]}`。
+    """两条中文渠道一起扫。返回 `{"rows": [...], "notes": [...], "ran": [...], "skipped": [...]}`。
+
+    `ran` 只收**真拿回过一页结果**的那几档；取不到、撞反爬、没登记的进 `skipped`——
+    `find_cover_photo` 的「这一趟查了什么」按这两张单子印，而那份清单要照抄进 `_frame_why`。
 
     `names[0]` 是**要找谁的封面**（标题里必须有它）；其余是对手，只用来拼查询词。
     日期窗口按**北京时间**：比赛日前 12 小时起、往后 `days` 天（赛后稿常常次日才发）。
@@ -242,11 +245,12 @@ def sweep_cn_media(names: list[str], *, date: str | None = None, days: int = 2,
     session = session or requests.Session()
     notes: list[str] = []
     ran: list[str] = []
+    skipped: list[str] = []
     rows: list[dict] = []
     who = names[0] if names else ""
     if not who:
         return {"rows": rows, "notes": ["没给中文名（--zh），中文媒体这一档没跑"],
-                "ran": ran}
+                "ran": ran, "skipped": ["搜狗微信", "当地网站"]}
     win = _window(date, days)
 
     # ① 搜狗微信
@@ -255,6 +259,10 @@ def sweep_cn_media(names: list[str], *, date: str | None = None, days: int = 2,
     queries += [who]
     found: dict[tuple[str, str], dict] = {}
     blocked = False
+    # ⚠️ 「跑过」要按**真拿回一页结果**的查询数算，不是按「没撞上反爬」算：
+    # 代理 403、断网时每一条查询都抛异常，`blocked` 一直是 False，原来照样记
+    # 「跑过：中文媒体·搜狗微信」——而那份清单是要照抄进 `_frame_why` 的。
+    answered = 0
     for query in queries:
         try:
             resp = session.get(f"{SOGOU}/weixin", params={"type": 2, "query": query},
@@ -267,12 +275,18 @@ def sweep_cn_media(names: list[str], *, date: str | None = None, days: int = 2,
             notes.append(f"搜狗微信「{query}」撞上反爬（antispider）——**这一档没跑完，"
                          "不是没有**；隔几分钟再跑")
             break
+        answered += 1
         hits = parse_sogou_results(resp.text)
         notes.append(f"搜狗微信「{query}」：{len(hits)} 条")
         for hit in hits:
             found.setdefault((hit["title"], hit["account"]), {**hit, "_ref": resp.url})
-    if not blocked:
+    if not blocked and answered:
         ran.append("搜狗微信")
+    else:
+        skipped.append("搜狗微信")
+        if not blocked:
+            notes.append(f"搜狗微信 {len(queries)} 条查询一条结果页都没取到——"
+                         "**这一档没跑**，不是没有")
     kept, off_name, off_date = [], 0, 0
     for hit in found.values():
         if who not in hit["title"]:
@@ -313,6 +327,9 @@ def sweep_cn_media(names: list[str], *, date: str | None = None, days: int = 2,
     if city and not outlets:
         notes.append(f"「{city}」没有登记当地网站（CN_OUTLETS 只有 "
                      f"{'、'.join(CN_OUTLETS)}）——这一档没跑")
+        skipped.append(f"当地网站（{city}没登记）")
+    elif not city:
+        skipped.append("当地网站（没给 --city）")
     seen_urls: set[str] = set()
     for listing in outlets:
         try:
@@ -320,7 +337,8 @@ def sweep_cn_media(names: list[str], *, date: str | None = None, days: int = 2,
             resp.encoding = resp.apparent_encoding
             arts = parse_outlet_listing(resp.text, listing)
         except Exception as exc:                                # noqa: BLE001
-            notes.append(f"{listing} 取不到（{exc}）")
+            notes.append(f"{listing} 取不到（{exc}）——这一页没跑")
+            skipped.append(listing)
             continue
         mine = [(u, t) for u, t in arts if who in t and u not in seen_urls]
         seen_urls.update(u for u, _ in mine)
@@ -339,7 +357,7 @@ def sweep_cn_media(names: list[str], *, date: str | None = None, days: int = 2,
             except Exception as exc:                            # noqa: BLE001
                 row["error"] = f"文章取不到：{exc}"
             rows.append(row)
-    return {"rows": rows, "notes": notes, "ran": ran}
+    return {"rows": rows, "notes": notes, "ran": ran, "skipped": skipped}
 
 
 def report(res: dict) -> list[str]:

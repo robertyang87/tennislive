@@ -168,7 +168,8 @@ def test_这一趟查了什么要列出中文媒体那一档(monkeypatch, capsys
     for name in ("sweep_wta", "sweep_ap"):
         monkeypatch.setattr(fc, name, lambda *a, **k: [])
     monkeypatch.setattr(fc, "sweep_wta_articles",
-                        lambda *a, **k: {"rows": [], "notes": [], "window": "w"})
+                        lambda *a, **k: {"rows": [], "notes": [], "window": "w",
+                                         "pages_read": 1})
     monkeypatch.setattr(sys, "argv", ["find_cover_photo.py", "--player", "Bu",
                                       "--event", "Hangzhou"])
     assert fc.main() == 0
@@ -176,6 +177,25 @@ def test_这一趟查了什么要列出中文媒体那一档(monkeypatch, capsys
     tail = out.split("=== 这一趟查了什么")[1]
     assert "WTA 赛后稿头图" in tail.split("没跑")[0]
     assert "中文媒体" in tail.split("没跑")[1], tail
+
+
+def test_这一趟查了什么_一页都没取到的那一档不许记成跑过(monkeypatch, capsys):
+    """那份清单是要照抄进 `_frame_why` 的——第 0 页就取不到、搜狗全抛异常，都是「没跑」。"""
+    for name in ("sweep_wta", "sweep_ap"):
+        monkeypatch.setattr(fc, name, lambda *a, **k: [])
+    monkeypatch.setattr(fc, "sweep_wta_articles",
+                        lambda *a, **k: {"rows": [], "window": "w", "pages_read": 0,
+                                         "notes": ["第 0 页取不到（403）——**这一档没翻完，不是没有**"]})
+    monkeypatch.setattr(cc, "sweep_cn_media", lambda *a, **k: {
+        "rows": [], "notes": [], "ran": [], "skipped": ["搜狗微信", "当地网站（杭州没登记）"]})
+    monkeypatch.setattr(sys, "argv", ["find_cover_photo.py", "--player", "Bu",
+                                      "--event", "Hangzhou", "--zh", "布云朝克特"])
+    assert fc.main() == 0
+    tail = capsys.readouterr().out.split("=== 这一趟查了什么")[1]
+    ran, skipped = tail.split("没跑")[0], tail.split("没跑")[1]
+    assert "WTA 赛后稿头图" not in ran and "WTA 赛后稿头图" in skipped, tail
+    assert "搜狗微信" not in ran and "中文媒体·搜狗微信" in skipped, tail
+    assert "当地网站（杭州没登记）" in skipped, tail
 
 
 # ——— 中文媒体 ———
@@ -289,11 +309,28 @@ def test_中文媒体按名字和发文时刻筛_筛掉几条要报出来():
     assert not res["rows"]
 
 
+def test_搜狗每条查询都取不到_不许记成跑过():
+    """代理 403／断网时每条查询都抛异常，`blocked` 一直是 False——原来照样记「跑过」。"""
+    class _Down:
+        def get(self, *a, **k):
+            raise ConnectionError("403 Forbidden (proxy)")
+
+    res = cc.sweep_cn_media(["布云朝克特"], session=_Down(), sizes=False)
+    assert "搜狗微信" not in res["ran"], res
+    assert "搜狗微信" in res["skipped"], res
+    assert any("没跑" in n for n in res["notes"]), res["notes"]
+    # 至少一条查询拿回了结果页（哪怕 0 条命中）才算跑过
+    ok = cc.sweep_cn_media(["布云朝克特"], session=_Session([("/weixin", "<ul></ul>")]),
+                           sizes=False)
+    assert "搜狗微信" in ok["ran"] and "搜狗微信" not in ok["skipped"], ok
+
+
 def test_撞上反爬要说没跑完不是没有():
     session = _Session([("/weixin", _Resp("<html>验证码</html>",
                                           url="https://weixin.sogou.com/antispider/?x"))])
     res = cc.sweep_cn_media(["布云朝克特"], session=session, sizes=False)
     assert "搜狗微信" not in res["ran"]
+    assert "搜狗微信" in res["skipped"]
     assert any("antispider" in n and "不是没有" in n for n in res["notes"])
 
 

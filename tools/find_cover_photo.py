@@ -581,7 +581,8 @@ def sweep_wta_articles(player: str | None, date: str | None = None, *,
     # Montgomery returns…」），提到名字不等于头图是他——2026-09-27 实测
     # `--player Zheng` 同一窗口两篇，另一篇的头图是蒙哥马利。
     rows.sort(key=lambda r: not r["lead_is_player"])
-    return {"rows": rows, "notes": notes,
+    # `pages_read` 给「这一趟查了什么」用：第 0 页就取不到时这一档**没跑**，不许记成跑过
+    return {"rows": rows, "notes": notes, "pages_read": pages_read,
             "window": f"{start:%Y-%m-%d %H:%MZ} ~ {end:%Y-%m-%d %H:%MZ}"}
 
 
@@ -1180,7 +1181,10 @@ def main() -> int:
     ap.add_argument("--event", help="按赛事名过滤，如 Cincinnati（⚠️ 是名字不是 id）")
     ap.add_argument("--day", help="按第几个比赛日过滤，如 6")
     ap.add_argument("--site", help="赛事官网域名，如 cincinnatiopen.com")
-    ap.add_argument("--date", help="赛事图库按这一天筛，如 2026-08-16")
+    ap.add_argument("--date", help="比赛日，如 2026-08-16：WTA 图库按上传日筛、赛后稿按发稿时刻筛、"
+                                   "赛事图库按这一天翻。⚠️ WTA 那一档的赛事过滤只在文件名／Getty 说明"
+                                   "写着赛事时才生效（`<姓>-<轮次>-<摄影师>.jpg` 这种不写）——"
+                                   "**别站的同名图是靠 --date 挡掉的**，不给就会混进来")
     ap.add_argument("--getty", help="只查一个 Getty 编号是哪一场")
     ap.add_argument("--paper", help="当地报纸域名（不给就按 --event 从 "
                                     "_LOCAL_PAPERS 查；查不到就跳过这一档并说明）")
@@ -1226,8 +1230,14 @@ def main() -> int:
     old = [r for r in rows if not in_window(r.get("path_date"), args.date, args.days)]
     rows = [r for r in rows if r not in old]
     if old:
+        # ⚠️ 别一律标「资料图」：实测筛掉的里面有同一站**更晚一天**的本场赛事图
+        # （`Qinwen_Zheng_-_US_Open_2026_-_Day_9-DSC_0031.jpg`）——它只是不在这场的窗口里
         print(f"  · 上传日不在 {args.date} 起 {args.days} 天里的 {len(old)} 张没列"
-              f"（资料图）：{'、'.join(r['name'] for r in old[:4])}")
+              f"（不在这场的上传窗口——资料图、同站别的比赛日都会落在这儿；要看就放宽 --days）："
+              f"{'、'.join(r['name'] for r in old[:4])}")
+    elif not args.date and rows:
+        print("  · ⚠️ 没给 --date：赛事不写在文件名里的（`<姓>-<轮次>-<摄影师>.jpg`、"
+              "没说明的 Getty）别站的也会列出来——逐张核上传日")
     if not rows:
         print("  没有对得上的。⚠️ 这是「还没发」不是「没有」——"
               "WTA 一批只发几个人，赛事图库另有上线时刻，见下。")
@@ -1239,9 +1249,11 @@ def main() -> int:
 
     # ⭐⭐ WTA 赛后稿头图——**大满贯照样有**（zheng-pridankina 64525b36 那张就在这儿）。
     print("\n=== WTA 赛后稿头图（WTA 内容接口；大满贯也有，原图尺寸接口直接给）")
+    arts_ran = False
     if args.player:
         arts = sweep_wta_articles(args.player, args.date, days=args.days,
                                   wta_id=args.wta_id)
+        arts_ran = arts.get("pages_read", 0) > 0
         print(f"  · 发稿时刻窗口 {arts['window']}")
         for n in arts["notes"]:
             print(f"  · ⚠️ {n}")
@@ -1388,6 +1400,7 @@ def main() -> int:
 
     # ⭐ 中文媒体（搜狗微信／当地网站）——亚洲赛季换上的照片一半出自这儿。
     cn_ran: list[str] = []
+    cn_skipped: list[str] = []
     if args.zh:
         import cover_cn_media  # 只在给了 --zh 时才用
 
@@ -1396,6 +1409,7 @@ def main() -> int:
                                            city=args.city)
         print("\n".join(cover_cn_media.report(cn)))
         cn_ran = cn["ran"]
+        cn_skipped = cn.get("skipped") or []
     else:
         print("\n=== 中文媒体（搜狗微信／当地网站）　⚠️ **这一档没跑**")
         print("  没给 `--zh <中文名>`。亚洲赛季（成都、杭州、北京、上海、武汉……）"
@@ -1406,13 +1420,13 @@ def main() -> int:
     # 的人要照抄这份清单，不许写成「四类源都翻过」——没跑的那一档不算翻过。
     ran = ["WTA photo-resources", "AP 通讯社"]
     skipped = []
-    (ran if args.player else skipped).append("WTA 赛后稿头图")
+    (ran if arts_ran else skipped).append("WTA 赛后稿头图")
     (ran if is_uso else skipped).append("美网官方图片接口")
     (ran if paper else skipped).append("当地报纸每日图集")
     (ran if args.site else skipped).append("赛事官网 WordPress 媒体库")
-    if cn_ran:
-        ran.extend(f"中文媒体·{c}" for c in cn_ran)
-    else:
+    ran.extend(f"中文媒体·{c}" for c in cn_ran)
+    skipped.extend(f"中文媒体·{c}" for c in cn_skipped)
+    if not cn_ran and not cn_skipped:
         skipped.append("中文媒体（搜狗微信／当地网站）")
     print("\n=== 这一趟查了什么")
     print(f"  跑过：{'、'.join(ran)}")

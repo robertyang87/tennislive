@@ -40,12 +40,20 @@ def test_声明类选题按标题层认_逆转和回归不算():
     # slug 那一层：英文词要整段（-withdrawal-），不许半截命中
     assert rf.statement_topic(_story(slug="x-withdrawal-2026", summary="a", hook="b",
                                      topic="c")) == "withdrawal"
+    # 复数也要认：china-open-withdrawals-story-2026 原来只靠中文标题兜住，slug 这一层漏了
+    assert rf.statement_topic(_story(slug="china-open-withdrawals-story-2026", summary="a",
+                                     hook="b", topic="c")) == "withdrawals"
+    assert rf.statement_topic(_story(slug="x-injuries-2026", summary="a", hook="b",
+                                     topic="c")) == "injuries"
     # ⚠️ 故意不收的：场上逆转、重返决赛——收了就是误伤（comeback-five-love-down / tiafoe-story）
     for slug, summary, hook in (
             ("comeback-five-love-down", "零比五落后也能赢回来", "决胜盘零比五\n他们都赢回来了"),
             ("tiafoe-story", "两年后，重回决赛", "两年前，输给辛纳\n今天，他回来了"),
             ("djokovic-beijing-return", "德约时隔11年回北京", "六次来，六次捧杯"),
-            ("x", "伤心的夜晚", "b")):
+            ("x", "伤心的夜晚", "b"),
+            # 「伤」前面是 悲／忧／哀 的是情绪词，不是伤情
+            ("x", "a", "最悲伤的一夜"),
+            ("x", "忧伤的蓝土", "b")):
         assert rf.statement_topic(_story(slug=slug, summary=summary, hook=hook, topic="t")) \
             is None, slug
     # 只管「网球有故事」：赛场之上的「对手退赛」不是当事人声明类选题
@@ -80,7 +88,8 @@ def test_全库网球有故事_新片子都过闸():
     bad = [f"{slug}: {rf.social_search_problem(spec).splitlines()[0]}"
            for slug, spec in _story_specs()
            if slug not in legacy and rf.social_search_problem(spec)]
-    assert not bad, "\n".join(bad)
+    assert not bad, ("\n".join(bad) + "\n→ 补 `_social_search`（X 和 Instagram 各查了什么）；"
+                     "已经推送过的（改 spec 字节会断哈希链）才挂 data/legacy_social_search.json")
 
 
 def test_豁免表只许减不许加_名字要真的存在且真的还过不了闸():
@@ -93,8 +102,9 @@ def test_豁免表只许减不许加_名字要真的存在且真的还过不了�
                    if rf.statement_topic(seen[s]) is None
                    or rf.social_search_problem({**seen[s], "slug": "probe"}) is None)
     assert not fixed, f"这些已经过闸了，从豁免表里删掉：{fixed}"
-    # 定规矩那天（2026-09-27）扫全部「网球有故事」剪辑片命中 3 条
-    assert len(legacy) <= 3
+    # 定规矩那天（2026-09-27）扫全部「网球有故事」剪辑片命中 3 条；第 4 条
+    # china-open-withdrawals-story-2026 是闸写好之后、合进 main 之前落地的（998bae43）
+    assert len(legacy) <= 4
 
 
 def test_闸接在validate_spec上_手写硬拦_自动产只报(monkeypatch, capsys):

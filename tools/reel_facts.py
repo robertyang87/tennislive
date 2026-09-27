@@ -703,14 +703,19 @@ def legacy_topline(kind: str) -> frozenset:
 
 #: 「网球有故事」里讲**当事人声明**的那一类（退赛、伤情、复出、告别、隔空喊话、官宣）。
 #: 只看**标题层**（slug、`push.summary`、`cover.hook`、`cover.topic`）——旁白里提一句
-#: 「上一站她退赛了」不算这一类。2026-09-27 拿它扫全部 41 条「网球有故事」剪辑片，
-#: 命中 3 条，三条都是真的这一类（sinner 退赛、prozorova 被强制退赛、谢淑薇詹皓晴
-#: 隔空开吵）；「comeback」「return」这两个词**故意不收**——`comeback-five-love-down`
+#: 「上一站她退赛了」不算这一类。2026-09-27 拿它扫全部 42 条「网球有故事」剪辑片，
+#: 命中 4 条，四条都是真的这一类（sinner 退赛、prozorova 被强制退赛、谢淑薇詹皓晴
+#: 隔空开吵、中网女单退赛潮）；「comeback」「return」这两个词**故意不收**——`comeback-five-love-down`
 #: 是场上逆转、`tiafoe-story` 的「他回来了」是重返决赛，收了就是误伤。
-_STATEMENT_ZH = re.compile(r"退赛|退出|伤(?!心|感)|声明|宣布|官宣|告别|退役|复出|隔空|怀孕|手术")
+#: 「伤」前面是 悲／忧／哀／感 的是情绪词（「最悲伤的一夜」），后面是 心／感 的同理——
+#: 都不是伤情。slug 那一层的英文词要认复数（`china-open-withdrawals-story-2026`
+#: 原来只靠中文标题兜住，slug 这一层是漏的）。
+_STATEMENT_ZH = re.compile(
+    r"退赛|退出|(?<![悲忧哀感])伤(?!心|感)|声明|宣布|官宣|告别|退役|复出|隔空|怀孕|手术")
 _STATEMENT_SLUG = re.compile(
-    r"(?:^|-)(?:withdraw(?:al|n|s)?|injur(?:y|ed|ies)|retire(?:ment|d|s)?|statement"
-    r"|announce(?:ment|d|s)?|farewell|feud|pregnan(?:t|cy)|surgery)(?=-|$)")
+    r"(?:^|-)(?:withdraw(?:als?|n|s)?|injur(?:y|ed|ies)|retire(?:ments?|d|s)?"
+    r"|statements?|announce(?:ments?|d|s)?|farewells?|feuds?|pregnan(?:t|cy)"
+    r"|surger(?:y|ies))(?=-|$)")
 _X_MARK = re.compile(r"x\.com|twitter|推特|(?<![A-Za-z])X(?![A-Za-z])")
 _IG_MARK = re.compile(r"instagram|(?<![A-Za-z])(?:IG|ins)(?![A-Za-z])", re.IGNORECASE)
 

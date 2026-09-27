@@ -64,13 +64,21 @@ def test_spec里认英文姓_中国球员两个词都认():
     assert lu.spec_surnames(spec) == ["Bu", "Yunchaokete", "Majchrzak"]
     assert lu.spec_surnames({"_match": {"winner_en": "Alex de Minaur"}}) == ["Minaur"]
     assert lu.spec_surnames({"cover": {}}) == []
+    # 双打一边是「A / B」、country 是列表：四个人都要认出来（原来整串只取最后一个词）
+    doubles = {"cover": {"matchup": [
+        {"name_en": "C. Alcaraz / J. Mensik", "country": ["ESP", "CZE"]},
+        {"name_en": "A. Bublik / T. Fritz", "country": ["KAZ", "USA"]}]}}
+    assert lu.spec_surnames(doubles) == ["Alcaraz", "Mensik", "Bublik", "Fritz"]
+    assert lu.spec_surnames({"cover": {"matchup": [
+        {"name_en": "Zhang Shuai / Wang Xinyu", "country": ["CHN", "CHN"]}]}}) \
+        == ["Shuai", "Zhang", "Xinyu", "Wang"]
     assert lu.used_video_ids({"sources": {
         "a": "https://www.youtube.com/watch?v=Fphz30iUGMw",
         "b": "https://youtu.be/eZSXaGpkmsU",
         "c": "https://www.tennistv.com/videos/4582104/x"}}) == {"Fphz30iUGMw", "eZSXaGpkmsU"}
 
 
-def test_列表页的相对时间换成最早可能时刻并标约数():
+def test_列表页的相对时间换成最晚可能时刻并标约数():
     rows = lu.parse_uploads_page(_playlist([
         ("aaaaaaaaaaa", "Naomi Osaka Stuns in her Walk-Out Outfit!", "12h ago"),
         ("bbbbbbbbbbb", "Osaka vs Zakharova Highlights", "1d ago"),
